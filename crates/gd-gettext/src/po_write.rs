@@ -2,6 +2,8 @@
 
 use std::borrow::Cow;
 use std::fmt::Write as _;
+use std::fs::File;
+use std::io::{self, BufWriter, Write};
 use std::path::Path;
 
 use crate::catalog::{Catalog, Message};
@@ -55,40 +57,63 @@ pub fn write_po(cat: &Catalog, options: &WriteOptions) -> String {
 
 /// [`write_po`] appending to `out`, so a caller can reuse one buffer for many catalogs.
 pub fn write_po_into(out: &mut String, cat: &Catalog, options: &WriteOptions) {
-    let mut first = true;
-    if let Some(header) = &cat.header {
-        write_entry(out, header, options);
-        first = false;
-    }
-    let live = cat.messages.iter().filter(|m| !m.obsolete);
-    let obsolete = cat.messages.iter().filter(|m| m.obsolete && options.obsolete);
-    for m in live.chain(obsolete) {
-        if !first {
+    for (k, m) in entries_in_order(cat, options).enumerate() {
+        if k > 0 {
             out.push('\n');
         }
-        first = false;
         write_entry(out, m, options);
     }
 }
 
-/// Writes a catalog to a file as [`write_po`] formats it. Fails with an error of kind
-/// [`ErrorKind::Io`] when the file cannot be written.
+/// [`write_po`] streaming into `out` one entry at a time, through one reused buffer, so
+/// the whole text is never held. Pass a buffered writer for a file. Fails with
+/// [`ErrorKind::Io`] when writing fails.
+pub fn write_po_to(
+    out: &mut impl Write,
+    cat: &Catalog,
+    options: &WriteOptions,
+) -> Result<(), Error> {
+    let mut entry = String::new();
+    for (k, m) in entries_in_order(cat, options).enumerate() {
+        entry.clear();
+        if k > 0 {
+            entry.push('\n');
+        }
+        write_entry(&mut entry, m, options);
+        out.write_all(entry.as_bytes()).map_err(|err| write_error(&cat.name, &err))?;
+    }
+    Ok(())
+}
+
+/// The header, the live messages, then the obsolete ones when the options keep them.
+fn entries_in_order<'c>(
+    cat: &'c Catalog,
+    options: &WriteOptions,
+) -> impl Iterator<Item = &'c Message> + 'c {
+    let keep_obsolete = options.obsolete;
+    let live = cat.messages.iter().filter(|m| !m.obsolete);
+    let obsolete = cat.messages.iter().filter(move |m| m.obsolete && keep_obsolete);
+    cat.header.iter().chain(live).chain(obsolete)
+}
+
+/// Writes a catalog to a file as [`write_po`] formats it, entry by entry through a
+/// buffer. Fails with [`ErrorKind::Io`] when the file cannot be written.
 pub fn save_po(
     cat: &Catalog,
     path: impl AsRef<Path>,
     options: &WriteOptions,
 ) -> Result<(), Error> {
     let path = path.as_ref();
-    std::fs::write(path, write_po(cat, options)).map_err(|err| {
-        let name = path.display().to_string();
-        let message = format!("Cannot write {name}: {err}.");
-        Error::new(
-            ErrorKind::Io,
-            &name,
-            &message,
-            "Check that the directory exists and is writable.",
-        )
-    })
+    let name = path.display().to_string();
+    let file = File::create(path).map_err(|err| write_error(&name, &err))?;
+    let mut out = BufWriter::new(file);
+    write_po_to(&mut out, cat, options)?;
+    out.flush().map_err(|err| write_error(&name, &err))
+}
+
+fn write_error(name: &str, err: &io::Error) -> Error {
+    let message = format!("Cannot write {name}: {err}.");
+    Error::new(ErrorKind::Io, name, &message, "Check that the directory exists and is writable.")
 }
 
 fn write_entry(b: &mut String, m: &Message, o: &WriteOptions) {

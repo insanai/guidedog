@@ -1,8 +1,6 @@
 //! Messages, catalogs, and the header entry.
 
-use std::cell::OnceCell;
-
-use crate::lookup::Index;
+use crate::index::Indexes;
 use crate::plural::PluralRule;
 
 /// A fuzzy message's earlier msgctxt, msgid, and msgid_plural (the `#|` comments msgmerge
@@ -60,6 +58,11 @@ impl Message {
         !self.strs.is_empty() && self.strs.iter().all(|s| !s.is_empty())
     }
 
+    /// Tells whether this is the header entry: msgid "" without a context, not obsolete.
+    pub fn is_header(&self) -> bool {
+        self.id.is_empty() && self.ctx.is_none() && !self.obsolete
+    }
+
     /// Tells whether the message has a msgid_plural.
     pub fn is_plural(&self) -> bool {
         self.id_plural.is_some()
@@ -89,7 +92,7 @@ pub(crate) fn message_key(m: &Message) -> String {
 
 /// One message catalog: a PO, POT, or MO file's messages.
 ///
-/// The catalog owns everything it holds. Lookups ([`Catalog::text`] and friends) use an
+/// The catalog owns everything it holds. Lookups (the [`crate::Lookup`] trait) use an
 /// index built on first use; [`Catalog::add_message`], [`Catalog::set_header_field`] and
 /// [`crate::sort_by_reference`] drop it. After editing `messages` or `header` directly,
 /// call [`Catalog::build_index`] before the next lookup.
@@ -106,7 +109,7 @@ pub struct Catalog {
     /// Look fuzzy translations up too (Sphinx's `gettext_allow_fuzzy_translations`).
     pub allow_fuzzy: bool,
     /// The lookup indexes: without fuzzy messages, and with them.
-    pub(crate) index: [OnceCell<Index>; 2],
+    pub(crate) index: Indexes,
 }
 
 impl Default for Catalog {
@@ -124,7 +127,7 @@ impl Catalog {
             messages: Vec::new(),
             plural: PluralRule::default(),
             allow_fuzzy: false,
-            index: [OnceCell::new(), OnceCell::new()],
+            index: Indexes::default(),
         }
     }
 
@@ -144,17 +147,13 @@ impl Catalog {
 
     /// Forgets the lookup indexes, so the next lookup builds them again.
     pub(crate) fn drop_index(&mut self) {
-        self.index = [OnceCell::new(), OnceCell::new()];
+        self.index = Indexes::default();
     }
 
     /// Returns the value of a header field (`"Name: value"` line), compared
     /// case-insensitively, borrowed from the header.
     pub fn header_field(&self, name: &str) -> Option<&str> {
-        let header = self.header.as_ref()?.strs.first()?;
-        header.lines().find_map(|line| {
-            let (key, value) = line.split_once(':')?;
-            key.trim().eq_ignore_ascii_case(name).then(|| value.trim())
-        })
+        header_field_in(self.header.as_ref()?.strs.first()?, name)
     }
 
     /// Replaces a header field, or appends it, keeping the others in order. Setting
@@ -194,12 +193,25 @@ impl Catalog {
 
     /// Returns the charset the header's Content-Type names, or `""` without one.
     pub fn charset(&self) -> &str {
-        let Some(ct) = self.header_field("Content-Type") else { return "" };
-        let Some(at) = ct.find("charset=") else { return "" };
-        let rest = &ct[at + "charset=".len()..];
-        let end = rest.find([';', ' ']).unwrap_or(rest.len());
-        &rest[..end]
+        self.header.as_ref().and_then(|h| h.strs.first()).map_or("", |text| charset_in(text))
     }
+}
+
+/// Returns the value of field `name` in header text, compared case-insensitively.
+pub(crate) fn header_field_in<'h>(header: &'h str, name: &str) -> Option<&'h str> {
+    header.lines().find_map(|line| {
+        let (key, value) = line.split_once(':')?;
+        key.trim().eq_ignore_ascii_case(name).then(|| value.trim())
+    })
+}
+
+/// Returns the charset the Content-Type field of header text names, or `""`.
+pub(crate) fn charset_in(header: &str) -> &str {
+    let Some(ct) = header_field_in(header, "Content-Type") else { return "" };
+    let Some(at) = ct.find("charset=") else { return "" };
+    let rest = &ct[at + "charset=".len()..];
+    let end = rest.find([';', ' ']).unwrap_or(rest.len());
+    &rest[..end]
 }
 
 /// Tells whether a charset name is UTF-8 or a subset of it. POT templates say `CHARSET`

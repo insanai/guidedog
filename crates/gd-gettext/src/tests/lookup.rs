@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 
-use crate::{Catalog, Message, Translator, language_candidates, parse_po};
+use crate::Lookup;
+use crate::{Catalog, LoadOptions, Message, Translator, language_candidates, parse_po};
 
 const FR: &str = r#"msgid ""
 msgstr ""
@@ -30,7 +31,7 @@ msgstr[1] ""
 
 #[test]
 fn lookups_follow_gettext() {
-    let mut cat = parse_po(FR, "fr.po", false).expect("FR parses");
+    let mut cat = parse_po(FR, "fr.po").expect("FR parses");
     assert_eq!(cat.text("Next"), "Suivant");
     assert_eq!(cat.with_context("button", "Next"), "Continuer");
     assert_eq!(cat.with_context("", "Next"), "Suivant (vide)");
@@ -52,7 +53,7 @@ fn lookups_follow_gettext() {
 
 #[test]
 fn lookups_return_slices_of_the_pool() {
-    let cat = parse_po(FR, "fr.po", false).expect("FR parses");
+    let cat = parse_po(FR, "fr.po").expect("FR parses");
     let pool = cat.pool();
     let s = cat.translation("Next", Some("button")).expect("a translation");
     // The test is that s lies inside the pool, which only the addresses can show.
@@ -113,11 +114,10 @@ fn translator_chains_domains() {
     let project = "msgid \"Next\"\nmsgstr \"Seguinte\"\n";
     std::fs::write(messages.join("guidedog.po"), project).expect("a temporary file");
     let mut tr = Translator::new("pt_BR");
-    assert_eq!(tr.bind_text_domain("guidedog", &dir.0, false), Ok(true));
+    assert_eq!(tr.bind_text_domain("guidedog", &dir.0, &LoadOptions::default()), Ok(true));
     let builtin = parse_po(
         "msgid \"Next\"\nmsgstr \"Próximo\"\nmsgid \"Previous\"\nmsgstr \"Anterior\"\n",
         "embedded",
-        false,
     )
     .expect("the built-in catalog parses");
     tr.add_catalog("guidedog", builtin);
@@ -125,5 +125,5 @@ fn translator_chains_domains() {
     assert_eq!(tr.text("Next"), "Seguinte"); // the project's wins...
     assert_eq!(tr.text("Previous"), "Anterior"); // ...then the built-in.
     assert_eq!(tr.domain_text("sphinx", "Next"), "Next");
-    assert_eq!(tr.bind_text_domain("sphinx", &dir.0, false), Ok(false));
+    assert_eq!(tr.bind_text_domain("sphinx", &dir.0, &LoadOptions::default()), Ok(false));
 }

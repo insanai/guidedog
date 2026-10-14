@@ -149,17 +149,26 @@ pub struct Stats {
     pub obsolete: usize,
 }
 
+impl Stats {
+    /// Counts one message, as sphinx-intl stat does; the header does not count. With a
+    /// [`crate::PoReader`], this counts a file without holding it.
+    pub fn add(&mut self, m: &Message) {
+        if m.is_header() {
+            return;
+        }
+        match (m.obsolete, m.is_translated(), m.fuzzy) {
+            (true, _, _) => self.obsolete += 1,
+            (false, true, true) => self.fuzzy += 1,
+            (false, true, false) => self.translated += 1,
+            (false, false, _) => self.untranslated += 1,
+        }
+    }
+}
+
 /// Counts a catalog's messages as sphinx-intl stat does; the header does not count.
 pub fn stats(cat: &Catalog) -> Stats {
     let mut s = Stats::default();
-    for m in &cat.messages {
-        match (m.obsolete, m.is_translated(), m.fuzzy) {
-            (true, _, _) => s.obsolete += 1,
-            (false, true, true) => s.fuzzy += 1,
-            (false, true, false) => s.translated += 1,
-            (false, false, _) => s.untranslated += 1,
-        }
-    }
+    cat.messages.iter().for_each(|m| s.add(m));
     s
 }
 

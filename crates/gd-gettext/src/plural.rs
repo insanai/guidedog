@@ -15,11 +15,9 @@ pub const MAX_PLURAL_DEPTH: usize = 100;
 /// The most plural forms a catalog may have.
 pub const MAX_NPLURALS: usize = 32;
 
-/// A node number in a [`PluralRule`]; `NONE` marks a failed parse.
+/// A node number: an index into [`PluralRule`]'s node list.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct NodeId(u16);
-
-const NONE: NodeId = NodeId(u16::MAX);
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Op {
@@ -138,24 +136,24 @@ pub fn compile_plural(expr: &str, nplurals: usize) -> Result<PluralRule, PluralP
     if !(1..=MAX_NPLURALS).contains(&nplurals) {
         return Err(PluralProblem { message: "nplurals must be between 1 and 32", column: 1 });
     }
-    let mut p = Parser { src: expr.as_bytes(), at: 0, nodes: Vec::new(), problem: None };
-    let root = p.choose(0);
+    let mut p = Parser { src: expr.as_bytes(), at: 0, nodes: Vec::new() };
+    let root = p.choose(0)?;
     p.skip_space();
-    if p.problem.is_none() && p.at < p.src.len() {
-        p.fail("unexpected text after the expression");
+    if p.at < p.src.len() {
+        return Err(p.problem("unexpected text after the expression"));
     }
-    match p.problem {
-        Some(problem) => Err(problem),
-        None => Ok(PluralRule { nplurals, nodes: p.nodes, root }),
-    }
+    Ok(PluralRule { nplurals, nodes: p.nodes, root })
 }
 
+/// A recursive-descent parser over the expression's bytes. Each rule returns the node it
+/// built, or the first problem found, which `?` carries straight out.
 struct Parser<'a> {
     src: &'a [u8],
     at: usize,
     nodes: Vec<Op>,
-    problem: Option<PluralProblem>,
 }
+
+type Parsed = Result<NodeId, PluralProblem>;
 
 /// Binary operators from the loosest to the tightest binding, as in C.
 const LEVELS: [&[(&str, BinOp)]; 6] = [
@@ -173,22 +171,26 @@ const LEVELS: [&[(&str, BinOp)]; 6] = [
 ];
 
 impl Parser<'_> {
-    fn fail(&mut self, message: &'static str) -> NodeId {
-        if self.problem.is_none() {
-            self.problem = Some(PluralProblem { message, column: self.at + 1 });
-        }
-        NONE
+    /// A problem at the current position.
+    fn problem(&self, message: &'static str) -> PluralProblem {
+        PluralProblem { message, column: self.at + 1 }
     }
 
-    fn add(&mut self, op: Op) -> NodeId {
-        if self.problem.is_some() {
-            return NONE;
-        }
+    fn add(&mut self, op: Op) -> Parsed {
         if self.nodes.len() >= MAX_PLURAL_NODES {
-            return self.fail("the expression is too long");
+            return Err(self.problem("the expression is too long"));
         }
         self.nodes.push(op);
-        NodeId((self.nodes.len() - 1) as u16)
+        Ok(NodeId((self.nodes.len() - 1) as u16))
+    }
+
+    /// Refuses to go deeper than `MAX_PLURAL_DEPTH`, so hostile input cannot exhaust the
+    /// stack.
+    fn check_depth(&self, depth: usize) -> Result<(), PluralProblem> {
+        if depth > MAX_PLURAL_DEPTH {
+            return Err(self.problem("the expression nests too deeply"));
+        }
+        Ok(())
     }
 
     fn skip_space(&mut self) {
@@ -216,56 +218,49 @@ impl Parser<'_> {
         true
     }
 
-    fn choose(&mut self, depth: usize) -> NodeId {
-        if depth > MAX_PLURAL_DEPTH {
-            return self.fail("the expression nests too deeply");
-        }
-        let cond = self.binary(0, depth + 1);
+    fn choose(&mut self, depth: usize) -> Parsed {
+        self.check_depth(depth)?;
+        let cond = self.binary(0, depth + 1)?;
         if !self.accept("?") {
-            return cond;
+            return Ok(cond);
         }
-        let yes = self.choose(depth + 1);
+        let yes = self.choose(depth + 1)?;
         if !self.accept(":") {
-            return self.fail("expected ':' of a ?: choice");
+            return Err(self.problem("expected ':' of a ?: choice"));
         }
-        let no = self.choose(depth + 1);
+        let no = self.choose(depth + 1)?;
         self.add(Op::Choose(cond, yes, no))
     }
 
-    fn binary(&mut self, level: usize, depth: usize) -> NodeId {
-        if depth > MAX_PLURAL_DEPTH {
-            return self.fail("the expression nests too deeply");
-        }
+    fn binary(&mut self, level: usize, depth: usize) -> Parsed {
+        self.check_depth(depth)?;
         let Some(ops) = LEVELS.get(level) else { return self.unary(depth + 1) };
-        let mut left = self.binary(level + 1, depth + 1);
-        'outer: while self.problem.is_none() {
-            for &(token, op) in ops.iter() {
-                if self.accept(token) {
-                    let right = self.binary(level + 1, depth + 1);
-                    left = self.add(Op::Binary(op, left, right));
-                    continue 'outer;
-                }
-            }
-            break;
+        let mut left = self.binary(level + 1, depth + 1)?;
+        while let Some(op) = self.accept_any(ops) {
+            let right = self.binary(level + 1, depth + 1)?;
+            left = self.add(Op::Binary(op, left, right))?;
         }
-        left
+        Ok(left)
     }
 
-    fn unary(&mut self, depth: usize) -> NodeId {
-        if depth > MAX_PLURAL_DEPTH {
-            return self.fail("the expression nests too deeply");
-        }
+    /// Consumes the first operator of `ops` that comes next.
+    fn accept_any(&mut self, ops: &[(&str, BinOp)]) -> Option<BinOp> {
+        ops.iter().find(|(token, _)| self.accept(token)).map(|&(_, op)| op)
+    }
+
+    fn unary(&mut self, depth: usize) -> Parsed {
+        self.check_depth(depth)?;
         self.skip_space();
         if self.accept("!") {
-            let operand = self.unary(depth + 1);
+            let operand = self.unary(depth + 1)?;
             return self.add(Op::Not(operand));
         }
         if self.accept("(") {
-            let inner = self.choose(depth + 1);
+            let inner = self.choose(depth + 1)?;
             if !self.accept(")") {
-                return self.fail("expected ')'");
+                return Err(self.problem("expected ')'"));
             }
-            return inner;
+            return Ok(inner);
         }
         match self.src.get(self.at) {
             Some(b'n') if !self.src.get(self.at + 1).is_some_and(|&c| is_word(c)) => {
@@ -273,19 +268,19 @@ impl Parser<'_> {
                 self.add(Op::N)
             }
             Some(c) if c.is_ascii_digit() => self.number(),
-            None => self.fail("the expression ends too early"),
-            Some(_) => self.fail("expected n, a number, '!' or '('"),
+            None => Err(self.problem("the expression ends too early")),
+            Some(_) => Err(self.problem("expected n, a number, '!' or '('")),
         }
     }
 
-    fn number(&mut self) -> NodeId {
+    fn number(&mut self) -> Parsed {
         let mut value: u64 = 0;
         while let Some(&c) = self.src.get(self.at).filter(|c| c.is_ascii_digit()) {
             let digit = u64::from(c - b'0');
-            match value.checked_mul(10).and_then(|v| v.checked_add(digit)) {
-                Some(v) => value = v,
-                None => return self.fail("the number is too large"),
-            }
+            let Some(next) = value.checked_mul(10).and_then(|v| v.checked_add(digit)) else {
+                return Err(self.problem("the number is too large"));
+            };
+            value = next;
             self.at += 1;
         }
         self.add(Op::Number(value))

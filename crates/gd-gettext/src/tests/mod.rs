@@ -5,6 +5,7 @@ mod fuzz;
 mod lookup;
 mod merge;
 mod mo;
+mod mo_compat;
 mod plural;
 mod po;
 

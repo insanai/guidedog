@@ -21,6 +21,8 @@ pub enum ErrorKind {
     Io,
     /// There was not enough memory to hold the catalog.
     Memory,
+    /// The file is larger than [`crate::LoadOptions::max_bytes`].
+    TooLarge,
 }
 
 impl ErrorKind {
@@ -35,6 +37,7 @@ impl ErrorKind {
             ErrorKind::MoFormat => "BAD MO FILE",
             ErrorKind::Io => "CANNOT ACCESS FILE",
             ErrorKind::Memory => "OUT OF MEMORY",
+            ErrorKind::TooLarge => "CATALOG TOO LARGE",
         }
     }
 }

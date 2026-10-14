@@ -1,59 +1,9 @@
-//! Reading PO and POT text.
+//! The line-by-line PO parser behind [`crate::PoReader`].
 
 use std::collections::HashMap;
-use std::path::Path;
 
-use crate::catalog::{Catalog, Message, Previous, is_utf8_charset, message_key};
-use crate::error::{Error, ErrorKind, read_error};
-
-/// Reads a PO or POT file. `allow_fuzzy` sets [`Catalog::allow_fuzzy`].
-///
-/// Fails when the file cannot be read, is not UTF-8, or breaks the PO format; the error
-/// names the file, line and column.
-pub fn load_po(path: impl AsRef<Path>, allow_fuzzy: bool) -> Result<Catalog, Error> {
-    let path = path.as_ref();
-    let name = path.display().to_string();
-    let data = std::fs::read(path).map_err(|e| read_error(&name, &e))?;
-    parse_po_bytes(&data, &name, allow_fuzzy)
-}
-
-/// Parses PO bytes: [`parse_po`] after checking they are UTF-8. Fails with an error of
-/// kind [`ErrorKind::Encoding`] at the first byte that does not start a UTF-8 character.
-pub fn parse_po_bytes(data: &[u8], name: &str, allow_fuzzy: bool) -> Result<Catalog, Error> {
-    let text = check_utf8(data, name)?;
-    parse_po(text, name, allow_fuzzy)
-}
-
-/// Parses PO or POT text; `name` labels errors and the catalog. The catalog copies what
-/// it keeps, so `text` is only borrowed.
-///
-/// Fails on the first syntax error, a duplicate message, a header naming a charset other
-/// than UTF-8, or an invalid Plural-Forms header.
-pub fn parse_po(text: &str, name: &str, allow_fuzzy: bool) -> Result<Catalog, Error> {
-    parse_po_counted(text, name, allow_fuzzy).map(|(cat, _)| cat)
-}
-
-/// [`parse_po`], also returning how many bytes were copied into the catalog's fields:
-/// the cost check of the tests.
-pub(crate) fn parse_po_counted(
-    text: &str,
-    name: &str,
-    allow_fuzzy: bool,
-) -> Result<(Catalog, usize), Error> {
-    let mut cat = Catalog::new(name);
-    cat.allow_fuzzy = allow_fuzzy;
-    let mut p = Parser::new(&mut cat, text, name);
-    let body = text.strip_prefix('\u{feff}').unwrap_or(text);
-    for raw in body.split('\n') {
-        p.line_no += 1;
-        p.line = raw.strip_suffix('\r').unwrap_or(raw);
-        p.parse_line()?;
-    }
-    p.finish_entry()?;
-    let copied = p.copied;
-    settle_header(&mut cat, name)?;
-    Ok((cat, copied))
-}
+use crate::catalog::{Message, Previous, message_key};
+use crate::error::{Error, ErrorKind};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 enum Field {
@@ -69,13 +19,19 @@ enum Field {
 
 const FIELDS: usize = 8;
 
-struct Parser<'a> {
-    cat: &'a mut Catalog,
-    text: &'a str,
-    name: &'a str,
+/// Parses PO text one line at a time and hands out each message as it ends.
+#[derive(Debug)]
+pub(crate) struct Parser {
+    name: String,
     line_no: usize,
-    line: &'a str,
+    /// A copy of the line being parsed, for error excerpts (the buffer is reused).
+    current: String,
+    /// The first line of the current entry, for errors about the whole entry.
+    entry_line: String,
     cur: Message,
+    /// A message that ended on the line just parsed.
+    finished: Option<Message>,
+    seen_header: bool,
     field: Field,
     str_index: usize,
     seen_id: bool,
@@ -84,25 +40,26 @@ struct Parser<'a> {
     keys: HashMap<String, usize>,
     /// Each field's strings, gathered until the entry (or, for msgstr, the form) ends
     /// and copied into the message once, so a field of many continuation lines costs its
-    /// length: the gathered string moves into the message without another copy.
+    /// length.
     pending: [String; FIELDS],
     /// Scratch for decoding one quoted string, reused.
     decoded: Vec<u8>,
-    /// Bytes copied into messages; see [`parse_po_counted`].
-    copied: usize,
+    /// Bytes gathered into messages; the cost test checks it grows with the text.
+    pub(crate) copied: usize,
 }
 
 type Step = Result<(), Error>;
 
-impl<'a> Parser<'a> {
-    fn new(cat: &'a mut Catalog, text: &'a str, name: &'a str) -> Parser<'a> {
+impl Parser {
+    pub(crate) fn new(name: &str) -> Parser {
         Parser {
-            cat,
-            text,
-            name,
+            name: name.to_string(),
             line_no: 0,
-            line: "",
+            current: String::new(),
+            entry_line: String::new(),
             cur: Message::default(),
+            finished: None,
+            seen_header: false,
             field: Field::None,
             str_index: 0,
             seen_id: false,
@@ -114,8 +71,23 @@ impl<'a> Parser<'a> {
         }
     }
 
-    fn parse_line(&mut self) -> Step {
-        let line = self.line;
+    /// Parses line `line_no` (without its line break) and returns the message it ended,
+    /// if any.
+    pub(crate) fn feed(&mut self, line_no: usize, line: &str) -> Result<Option<Message>, Error> {
+        self.line_no = line_no;
+        self.current.clear();
+        self.current.push_str(line);
+        self.parse_line(line)?;
+        Ok(self.finished.take())
+    }
+
+    /// Ends the input and returns the last message, if any.
+    pub(crate) fn finish(&mut self) -> Result<Option<Message>, Error> {
+        self.finish_entry()?;
+        Ok(self.finished.take())
+    }
+
+    fn parse_line(&mut self, line: &str) -> Step {
         if line.trim().is_empty() {
             self.field = Field::None;
             return Ok(());
@@ -145,6 +117,7 @@ impl<'a> Parser<'a> {
     fn touch(&mut self) {
         if self.cur.line == 0 {
             self.cur.line = self.line_no;
+            self.entry_line.clone_from(&self.current);
         }
     }
 
@@ -364,7 +337,10 @@ impl<'a> Parser<'a> {
                 continue;
             }
             self.copied += buf.len();
-            let text = std::mem::take(buf);
+            // Copy at the exact size and keep the buffer's capacity for the next entry:
+            // the message holds no slack, and the buffer stops reallocating.
+            let text = buf.as_str().to_owned();
+            buf.clear();
             let m = &mut self.cur;
             match field {
                 Field::None => {}
@@ -451,8 +427,8 @@ impl<'a> Parser<'a> {
         }
     }
 
-    /// Stores the current message: the header, a live message (checked for duplicates),
-    /// or an obsolete one; then starts the next.
+    /// Ends the current message: the header (once), a live message (checked for
+    /// duplicates), or an obsolete one; then starts the next.
     fn finish_entry(&mut self) -> Step {
         self.settle(None);
         let m = std::mem::take(&mut self.cur);
@@ -472,7 +448,7 @@ impl<'a> Parser<'a> {
             ));
         }
         if m.id.is_empty() && m.ctx.is_none() && !m.obsolete {
-            if self.cat.header.is_some() {
+            if self.seen_header {
                 return Err(self.entry_error(
                     &m,
                     ErrorKind::Duplicate,
@@ -480,7 +456,8 @@ impl<'a> Parser<'a> {
                     "Keep one header entry at the top of the file.",
                 ));
             }
-            self.cat.header = Some(m);
+            self.seen_header = true;
+            self.finished = Some(m);
             return Ok(());
         }
         if !m.obsolete {
@@ -495,17 +472,17 @@ impl<'a> Parser<'a> {
             }
             self.keys.insert(key, m.line);
         }
-        self.cat.messages.push(m);
+        self.finished = Some(m);
         Ok(())
     }
 
     fn syntax_error(&self, column: usize, message: &str, hint: &str) -> Error {
-        Error::new(ErrorKind::Syntax, self.name, message, hint).at(self.line_no, column, self.line)
+        let error = Error::new(ErrorKind::Syntax, &self.name, message, hint);
+        error.at(self.line_no, column, &self.current)
     }
 
     fn entry_error(&self, m: &Message, kind: ErrorKind, message: &str, hint: &str) -> Error {
-        let excerpt = line_of(self.text, m.line);
-        Error::new(kind, self.name, message, hint).at(m.line, 0, excerpt)
+        Error::new(kind, &self.name, message, hint).at(m.line, 0, &self.entry_line)
     }
 }
 
@@ -573,58 +550,4 @@ fn parse_escape(s: &[u8], i: usize) -> Option<(u8, usize)> {
         _ => return None,
     };
     Some((simple, 2))
-}
-
-/// Applies the header: its charset must be UTF-8, and a Plural-Forms field replaces the
-/// default rule.
-fn settle_header(cat: &mut Catalog, name: &str) -> Step {
-    let Some(header) = &cat.header else { return Ok(()) };
-    let line = header.line;
-    let set = cat.charset();
-    if !is_utf8_charset(set) {
-        let excerpt = format!("\"Content-Type: text/plain; charset={set}\\n\"");
-        let message =
-            format!("The catalog says it is encoded in {set}; Guidedog reads UTF-8 only.");
-        let hint = "Convert it with `msgconv --to-code=UTF-8` (or iconv) and set charset=UTF-8 \
-                    in the header.";
-        return Err(Error::new(ErrorKind::Charset, name, &message, hint).at(line, 0, &excerpt));
-    }
-    let Some(forms) = cat.header_field("Plural-Forms") else { return Ok(()) };
-    match crate::parse_plural_forms(forms) {
-        Ok(rule) => {
-            cat.plural = rule;
-            Ok(())
-        }
-        Err(mut err) => {
-            name.clone_into(&mut err.file);
-            err.line = line;
-            Err(err)
-        }
-    }
-}
-
-/// Finds line `n` (1-based) of the input again, for an excerpt.
-fn line_of(text: &str, n: usize) -> &str {
-    let line = text.split('\n').nth(n.saturating_sub(1)).unwrap_or("");
-    line.strip_suffix('\r').unwrap_or(line)
-}
-
-/// Checks that `data` is UTF-8; fails at the first byte that does not start a character.
-pub(crate) fn check_utf8<'d>(data: &'d [u8], name: &str) -> Result<&'d str, Error> {
-    let err = match std::str::from_utf8(data) {
-        Ok(text) => return Ok(text),
-        Err(err) => err,
-    };
-    let at = err.valid_up_to();
-    let line_start = data[..at].iter().rposition(|&c| c == b'\n').map_or(0, |i| i + 1);
-    let line_end = data[at..].iter().position(|&c| c == b'\n').map_or(data.len(), |i| at + i);
-    let line = 1 + data[..at].iter().filter(|&&c| c == b'\n').count();
-    let excerpt = String::from_utf8_lossy(&data[line_start..line_end]).replace('\u{fffd}', "?");
-    let message = format!(
-        "The byte 0x{:02x} at column {} does not start a UTF-8 character.",
-        data[at],
-        at - line_start + 1
-    );
-    let hint = "Convert the file to UTF-8, for example with `msgconv --to-code=UTF-8`.";
-    Err(Error::new(ErrorKind::Encoding, name, &message, hint).at(line, 0, &excerpt))
 }

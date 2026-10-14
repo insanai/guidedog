@@ -47,8 +47,8 @@ msgstr ""
 
 #[test]
 fn merge_updates_like_msgmerge() {
-    let def = parse_po(OLD, "de.po", false).expect("OLD parses");
-    let reference = parse_po(NEW, "index.pot", false).expect("NEW parses");
+    let def = parse_po(OLD, "de.po").expect("OLD parses");
+    let reference = parse_po(NEW, "index.pot").expect("NEW parses");
     let out = merge(&def, &reference, &MergeOptions::default());
     assert_eq!(out.messages.len(), 4);
     let fresh = &out.messages[0];
@@ -79,8 +79,8 @@ fn merge_updates_like_msgmerge() {
 
 #[test]
 fn merge_without_fuzzy_matching() {
-    let def = parse_po(OLD, "de.po", false).expect("OLD parses");
-    let reference = parse_po(NEW, "index.pot", false).expect("NEW parses");
+    let def = parse_po(OLD, "de.po").expect("OLD parses");
+    let reference = parse_po(NEW, "index.pot").expect("NEW parses");
     let options = MergeOptions { fuzzy_matching: false, keep_obsolete: false };
     let out = merge(&def, &reference, &options);
     assert_eq!(out.messages.len(), 3);
@@ -89,9 +89,9 @@ fn merge_without_fuzzy_matching() {
 
 #[test]
 fn merge_resurrects_obsolete_messages() {
-    let def = parse_po("#~ msgid \"back\"\n#~ msgstr \"zurück\"\n", "de.po", false)
+    let def = parse_po("#~ msgid \"back\"\n#~ msgstr \"zurück\"\n", "de.po")
         .expect("an obsolete message parses");
-    let reference = parse_po("msgid \"back\"\nmsgstr \"\"\n", "x.pot", false).expect("parses");
+    let reference = parse_po("msgid \"back\"\nmsgstr \"\"\n", "x.pot").expect("parses");
     let out = merge(&def, &reference, &MergeOptions::default());
     assert_eq!(out.messages.len(), 1);
     assert_eq!(out.messages[0].strs[0], "zurück");
@@ -101,9 +101,9 @@ fn merge_resurrects_obsolete_messages() {
 #[test]
 fn merge_fits_plural_forms() {
     let header = "msgid \"\"\nmsgstr \"Plural-Forms: nplurals=3; plural=0;\\n\"\n";
-    let def = parse_po(header, "ru.po", false).expect("the header parses");
+    let def = parse_po(header, "ru.po").expect("the header parses");
     let template = "msgid \"file\"\nmsgid_plural \"files\"\nmsgstr[0] \"\"\nmsgstr[1] \"\"\n";
-    let reference = parse_po(template, "x.pot", false).expect("the template parses");
+    let reference = parse_po(template, "x.pot").expect("the template parses");
     let out = merge(&def, &reference, &MergeOptions::default());
     assert_eq!(out.messages[0].strs.len(), 3);
 }
@@ -122,7 +122,7 @@ fn sorting_by_reference() {
     let text = "#: b.rst:2\nmsgid \"b2\"\nmsgstr \"\"\n\n#: a.rst:10 a.rst:9\nmsgid \"a10\"\n\
                 msgstr \"\"\n\nmsgid \"none\"\nmsgstr \"\"\n\n#: a.rst:2\nmsgid \"a2\"\n\
                 msgstr \"\"\n";
-    let mut cat = parse_po(text, "x.pot", false).expect("parses");
+    let mut cat = parse_po(text, "x.pot").expect("parses");
     sort_by_reference(&mut cat);
     let ids: Vec<&str> = cat.messages.iter().map(|m| m.id.as_str()).collect();
     assert_eq!(ids, ["a2", "a10", "b2", "none"]);

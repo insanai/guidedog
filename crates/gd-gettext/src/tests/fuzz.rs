@@ -1,7 +1,10 @@
 //! Mutated catalogs must give a catalog or an error, never a panic.
 
 use super::Rng;
-use crate::{WriteOptions, compile_plural, parse_mo, parse_po, parse_po_bytes, plural_index};
+use crate::Lookup;
+use crate::{
+    MoCatalog, WriteOptions, compile_plural, parse_mo, parse_po, parse_po_bytes, plural_index,
+};
 use crate::{write_mo, write_po};
 
 const SEED: &str = r#"msgid ""
@@ -51,7 +54,7 @@ fn fuzz_malformed_po() {
         buf.clear();
         buf.extend_from_slice(SEED.as_bytes());
         mutate(&mut rng, &mut buf);
-        let cat = match parse_po_bytes(&buf, "fuzz.po", false) {
+        let cat = match parse_po_bytes(&buf, "fuzz.po") {
             Ok(cat) => cat,
             Err(err) => {
                 assert!(!err.to_string().is_empty());
@@ -60,7 +63,7 @@ fn fuzz_malformed_po() {
         };
         parsed += 1;
         let out = write_po(&cat, &WriteOptions::default());
-        if let Err(err) = parse_po(&out, "again.po", false) {
+        if let Err(err) = parse_po(&out, "again.po") {
             panic!("rewritten catalog fails: {err}\n{out}");
         }
         let mo = write_mo(&cat, false).expect("a parsed catalog compiles");
@@ -75,7 +78,7 @@ fn fuzz_malformed_po() {
 #[test]
 fn fuzz_random_mo_bytes() {
     let mut rng = Rng::new(7);
-    let cat = parse_po(SEED, "seed.po", false).expect("SEED parses");
+    let cat = parse_po(SEED, "seed.po").expect("SEED parses");
     let good = write_mo(&cat, false).expect("SEED compiles");
     let mut buf = good.clone();
     for _ in 0..3000 {
@@ -87,6 +90,16 @@ fn fuzz_random_mo_bytes() {
         let n = if rng.below(4) > 0 { buf.len() } else { rng.below(buf.len()) };
         if let Ok(mo) = parse_mo(&buf[..n], "fuzz.mo") {
             let _ = mo.plural("a\nb", "as", 3);
+        }
+        // The zero-copy reader accepts exactly what the copying one does, and then
+        // answers every lookup without panicking.
+        let zero_copy = MoCatalog::from_bytes(buf[..n].to_vec(), "fuzz.mo");
+        assert_eq!(zero_copy.is_ok(), parse_mo(&buf[..n], "fuzz.mo").is_ok());
+        if let Ok(mo) = zero_copy {
+            for e in mo.entries() {
+                assert!(mo.find(e.id, e.ctx).is_some(), "{e:?} is not found");
+            }
+            let _ = mo.with_context("c", "a\nb");
         }
     }
 }

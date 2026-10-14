@@ -1,5 +1,7 @@
-use crate::mo::{MoReader, hashpjw};
-use crate::{Catalog, ErrorKind, WriteOptions, parse_mo, parse_po, write_mo, write_po};
+use crate::Lookup;
+use crate::{
+    Catalog, ErrorKind, MoCatalog, MoSearch, WriteOptions, parse_mo, parse_po, write_mo, write_po,
+};
 
 const RU: &str = r#"msgid ""
 msgstr ""
@@ -29,7 +31,7 @@ msgstr ""
 "#;
 
 fn russian() -> Catalog {
-    parse_po(RU, "ru.po", false).expect("RU parses")
+    parse_po(RU, "ru.po").expect("RU parses")
 }
 
 #[test]
@@ -46,7 +48,7 @@ fn mo_round_trips() {
     assert_eq!(mo.plural("%d file", "%d files", 11), "%d файлов");
     assert_eq!(mo.text("Previous"), "Previous");
     let back = write_po(&mo, &WriteOptions::default());
-    let again = parse_po(&back, "back.po", false).expect("the written PO parses");
+    let again = parse_po(&back, "back.po").expect("the written PO parses");
     assert_eq!(write_mo(&again, false), Ok(bytes));
 }
 
@@ -74,25 +76,12 @@ fn mo_includes_fuzzy_on_request() {
 #[test]
 fn mo_hash_table_finds_every_key() {
     let bytes = write_mo(&russian(), false).expect("RU compiles");
-    let r = MoReader::new(&bytes);
-    let word = |at| r.word(at).expect("a header word") as usize;
-    let (count, originals, size, at) = (word(8), word(12), word(20), word(24));
-    for i in 0..count {
-        let key = r.string(originals, i).expect("a key");
-        let h = hashpjw(key) as usize;
-        let (mut slot, step) = (h % size, 1 + h % (size - 2));
-        let mut found = false;
-        for _ in 0..size {
-            match word(at + 4 * slot) {
-                0 => break,
-                v if v == i + 1 => {
-                    found = true;
-                    break;
-                }
-                _ => slot = (slot + step) % size,
-            }
-        }
-        assert!(found, "key {key:?} is not in the hash table");
+    let mo = MoCatalog::from_bytes(bytes, "ru.mo").expect("the MO file reads");
+    let MoSearch::Hash { size, offset, probes } = *mo.search() else {
+        panic!("our own file's hash table is not used: {:?}", mo.search());
+    };
+    for (i, e) in mo.entries().enumerate() {
+        assert_eq!(mo.find_by_hash(size, offset, probes, e.id, e.ctx), Some(i), "{e:?}");
     }
 }
 

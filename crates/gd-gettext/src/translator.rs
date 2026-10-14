@@ -2,24 +2,26 @@
 
 use std::path::{Path, PathBuf};
 
-use crate::catalog::Catalog;
 use crate::error::Error;
-use crate::lookup::{Forms, plural_form};
+use crate::load::LoadOptions;
+use crate::lookup::{Forms, Lookup, plural_form};
+use crate::mo_read::MoCatalog;
 
 /// A catalog a translator serves for a domain.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct BoundCatalog {
     /// The text domain, e.g. `guidedog` or `sphinx`.
     pub domain: String,
-    /// The catalog, owned by the translator.
-    pub catalog: Catalog,
+    /// The catalog, owned by the translator: an editable [`crate::Catalog`], a
+    /// zero-copy [`MoCatalog`], or anything else that implements [`Lookup`].
+    pub catalog: Box<dyn Lookup + Send + Sync>,
 }
 
 /// Serves several text domains, each from a chain of catalogs: the first bound catalog
 /// that translates a message wins, as Sphinx searches `locale_dirs` in order before its
 /// own catalogs. It stands in for the C library's global state (bindtextdomain,
 /// textdomain, setlocale).
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Translator {
     /// The language catalogs are looked for, e.g. `pt_BR`.
     pub language: String,
@@ -37,8 +39,8 @@ impl Translator {
     }
 
     /// Binds a catalog to a domain after those already bound; the translator owns it.
-    pub fn add_catalog(&mut self, domain: &str, catalog: Catalog) {
-        self.bound.push(BoundCatalog { domain: domain.to_string(), catalog });
+    pub fn add_catalog(&mut self, domain: &str, catalog: impl Lookup + Send + Sync + 'static) {
+        self.bound.push(BoundCatalog { domain: domain.to_string(), catalog: Box::new(catalog) });
     }
 
     /// Sets the current domain, as textdomain does.
@@ -48,33 +50,37 @@ impl Translator {
 
     /// Looks for `dir/<language>/LC_MESSAGES/<domain>.po`, then `.mo`, trying the
     /// language, then its base language (pt_BR, then pt), and binds the first catalog
-    /// found. Returns `Ok(false)` when there is none; fails when the file found cannot
-    /// be read or parsed.
+    /// found: a `.mo` file as a zero-copy [`MoCatalog`], a `.po` file as an editable
+    /// catalog. Returns `Ok(false)` when there is none; fails when the file found cannot
+    /// be read or parsed, or is larger than `options.max_bytes`.
     pub fn bind_text_domain(
         &mut self,
         domain: &str,
         dir: &Path,
-        allow_fuzzy: bool,
+        options: &LoadOptions,
     ) -> Result<bool, Error> {
         let Some(path) = find_catalog_file(dir, &self.language, domain) else {
             return Ok(false);
         };
-        let mut cat = if path.extension().is_some_and(|e| e == "mo") {
-            crate::load_mo(&path)?
+        if path.extension().is_some_and(|e| e == "mo") {
+            self.add_catalog(domain, MoCatalog::load(&path, options)?);
         } else {
-            crate::load_po(&path, allow_fuzzy)?
-        };
-        cat.allow_fuzzy = allow_fuzzy;
-        self.add_catalog(domain, cat);
+            self.add_catalog(domain, crate::load_po(&path, options)?);
+        }
         Ok(true)
     }
 
     /// Returns the first bound catalog of a domain that translates `id`, and its forms.
-    fn search(&self, domain: &str, id: &str, ctx: Option<&str>) -> Option<(&Catalog, Forms<'_>)> {
-        self.bound
-            .iter()
-            .filter(|b| b.domain == domain)
-            .find_map(|b| b.catalog.find(id, ctx).map(|forms| (&b.catalog, forms)))
+    fn search(
+        &self,
+        domain: &str,
+        id: &str,
+        ctx: Option<&str>,
+    ) -> Option<(&dyn Lookup, Forms<'_>)> {
+        self.bound.iter().filter(|b| b.domain == domain).find_map(|b| {
+            let catalog: &dyn Lookup = b.catalog.as_ref();
+            catalog.find(id, ctx).map(|forms| (catalog, forms))
+        })
     }
 
     /// dgettext: the translation of `id` in a domain, or `id`.
@@ -118,7 +124,7 @@ impl Translator {
         n: u64,
     ) -> &'a str {
         let found = self.search(domain, id, ctx);
-        let form = found.and_then(|(cat, forms)| plural_form(cat, Some(forms), n));
+        let form = found.and_then(|(cat, forms)| plural_form(cat.plural_rule(), Some(forms), n));
         form.unwrap_or(if n == 1 { id } else { id_plural })
     }
 

@@ -48,7 +48,7 @@ msgstr ""
 
 #[test]
 fn po_reads_every_construct() {
-    let cat = parse_po(SAMPLE, "de.po", false).expect("SAMPLE parses");
+    let cat = parse_po(SAMPLE, "de.po").expect("SAMPLE parses");
     let header = cat.header.as_ref().expect("a header");
     assert!(header.fuzzy);
     assert_eq!(header.comments.len(), 2);
@@ -82,9 +82,9 @@ fn po_reads_every_construct() {
 
 #[test]
 fn po_round_trips() {
-    let cat = parse_po(SAMPLE, "de.po", false).expect("SAMPLE parses");
+    let cat = parse_po(SAMPLE, "de.po").expect("SAMPLE parses");
     let once = write_po(&cat, &WriteOptions::default());
-    let again = parse_po(&once, "again.po", false).expect("the written text parses");
+    let again = parse_po(&once, "again.po").expect("the written text parses");
     let twice = write_po(&again, &WriteOptions::default());
     assert_eq!(twice, once);
     assert_eq!(again.messages.len(), cat.messages.len());
@@ -146,7 +146,7 @@ fn po_reference_styles() {
 
 #[track_caller]
 fn expect_error(text: &[u8], kind: ErrorKind, line: usize, fragment: &str) {
-    let Err(err) = parse_po_bytes(text, "bad.po", false) else {
+    let Err(err) = parse_po_bytes(text, "bad.po") else {
         panic!("{:?} parsed", String::from_utf8_lossy(text));
     };
     assert_eq!(err.kind, kind);
@@ -183,7 +183,7 @@ fn po_errors_are_explained() {
 
 #[test]
 fn po_error_report_shape() {
-    let err = parse_po("msgid \"a\"\nmsgstr \"b\n", "de.po", false).expect_err("no quote");
+    let err = parse_po("msgid \"a\"\nmsgstr \"b\n", "de.po").expect_err("no quote");
     let report = err.to_string();
     let lines: Vec<&str> = report.lines().collect();
     assert!(lines[0].starts_with("-- PO SYNTAX ERROR ---"));
@@ -197,7 +197,7 @@ fn po_error_report_shape() {
 fn po_accepts_crlf_bom_and_templates() {
     let text = "\u{feff}msgid \"\"\r\nmsgstr \"Content-Type: text/plain; charset=CHARSET\\n\"\
                 \r\n\r\nmsgid \"a\"\r\nmsgstr \"\"\r\n";
-    let cat = parse_po(text, "t.pot", false).expect("a template parses");
+    let cat = parse_po(text, "t.pot").expect("a template parses");
     assert_eq!(cat.messages.len(), 1);
     assert_eq!(cat.messages[0].id, "a");
 }

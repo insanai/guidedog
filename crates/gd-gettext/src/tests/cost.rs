@@ -5,7 +5,8 @@
 use std::time::{Duration, Instant};
 
 use super::Rng;
-use crate::po_read::parse_po_counted;
+use crate::PoReader;
+use crate::po_read::collect_catalog;
 use crate::{
     Catalog, ErrorKind, FUZZY_MIN_WORK, FUZZY_THRESHOLD, FUZZY_WORK_PER_BYTE, MergeOptions,
     Message, WriteOptions, merge_counted, parse_mo, parse_po, similarity, write_mo, write_po,
@@ -20,7 +21,8 @@ fn po_continuation_lines_cost_their_length() {
     text.push_str(&line.repeat(1000));
     text.push_str("msgstr[1] \"\"\n");
     text.push_str(&line.repeat(1000));
-    let (cat, copied) = parse_po_counted(&text, "long.po", false).expect("the text parses");
+    let reader = PoReader::new(text.as_bytes(), "long.po");
+    let (cat, copied) = collect_catalog(reader, "long.po").expect("the text parses");
     let strs = &cat.messages[0].strs;
     assert_eq!(strs[0].len(), 1000 * (line.len() - 3));
     assert_eq!(strs[0], strs[1]);
@@ -195,6 +197,6 @@ fn wrapping_a_long_line_costs_its_length() {
     assert!(elapsed < Duration::from_secs(2), "wrapping took {elapsed:?}");
     let lines = text.matches('\n').count();
     assert!(lines > 400_000 * 3 / 76 && lines < 400_000 * 3 / 60, "{lines} lines");
-    let back = parse_po(&text, "w.po", false).expect("the wrapped text parses");
+    let back = parse_po(&text, "w.po").expect("the wrapped text parses");
     assert_eq!(back.messages[0].id, id);
 }

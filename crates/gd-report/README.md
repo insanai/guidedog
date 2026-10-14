@@ -1,0 +1,29 @@
+# gd-report cheat sheet
+
+Elm-style diagnostic reports shared by every crate. Standard library only; it renders
+and never prints. New in the Rust port: it gathers what the Odin code spread over
+`lib/host/diagnostics.odin`, `excerpt.odin`, `graphdog/format.odin` and `jinja/errors.odin`.
+
+```rust
+let report = gd_report::Report::error("toml.duplicate", "DUPLICATE KEY", "`a` is set twice.")
+    .hint("Remove one of them.")
+    .at("conf.toml", source, start, end);           // line, column, excerpt, carets
+eprint!("{}", gd_report::render_text(&report, &gd_report::Style { color: true, width: 80 }));
+println!("{}", gd_report::render_json(&report));     // one JSON object (SCHEMA 1)
+```
+
+| Item | Does |
+|---|---|
+| `Report { code, severity, title, message, hints, path, line, column, end_line, end_column, excerpt, category }` | plain data, `Default` |
+| `Report::error(code, title, message)`, `.hint(h)`, `.at(path, source, start, end)` | chaining builders |
+| `set_span(&mut r, source, start, end)`, `set_line_column(&mut r, source, line, col)` | position from bytes or line/column |
+| `render_text(&r, &Style)` / `write_text(&mut String, ..)` | `-- TITLE [code] ---- path:line:col`, message, `N| line`, carets, `Hint:` |
+| `render_json(&r)` / `write_json` / `escape_json` | JSON form for tools |
+| `line_column`, `line_bounds`, `line_offset`, `floor_boundary` | positions; columns count Unicode scalars |
+| `char_width`, `display_width`, `is_wide`, `is_zero_width`, `is_control` | terminal cells (Unicode 15.1 East Asian Width) |
+| `escape_terminal(s) -> Cow<str>` | escapes control characters except `\n`; borrows when clean |
+| `wrap` / `write_wrapped`, `suggest(name, candidates)`, `edit_distance` | prose wrapping and "Did you mean" |
+
+Redesigns: `Excerpt` is an `Option` holding the source line and byte span instead of
+pre-rendered excerpt/marker strings, so the terminal window is computed at render time;
+several hints replace one; the Odin template filling (`{0}`) stays in the engine.

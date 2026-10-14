@@ -1,0 +1,16 @@
+[package]
+name = "gd-pyscan"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Static analysis of Python source for autodoc: nothing is executed."
+
+# tree-sitter and its Python grammar parse Python; writing a Python parser is the
+# genuinely large problem CLAUDE.md allows these two crates for.
+[dependencies]
+tree-sitter = { workspace = true }
+tree-sitter-python = { workspace = true }
+
+[lints]
+workspace = true

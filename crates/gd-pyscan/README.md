@@ -1,0 +1,54 @@
+# gd-pyscan cheat sheet
+
+Static analysis of Python source through tree-sitter: modules, docstrings, `__all__`,
+imports; classes (bases, decorators, members in source order); functions (parameters as
+written, `# type:` comments); and the attribute documentation Sphinx's `ModuleAnalyzer`
+finds (`#:` comments, docstrings after assignments). Names resolve across the modules of
+the source roots. Nothing is executed. `gd-autodoc` builds Sphinx autodoc output on it.
+
+```rust
+use gd_pyscan::{Object, Project};
+
+let mut p = Project::new(&["src"])?;                  // Err only if the grammar is refused
+let Some(id) = p.load_module("mypackage.core") else { return Ok(()) };
+let m = p.module(id).clone();                         // Rc<Module>: immutable once loaded
+println!("{:?}", m.doc);
+let thing = p.get_attr(&Object::of_module(id), "Thing");
+if let Some(c) = thing.class {
+    let (order, complete) = p.mro(c);
+    println!("{} classes in the MRO (complete: {complete})", order.len());
+}
+```
+
+| Call | Does |
+|---|---|
+| `Project::new(roots)`, `Project::with_reader(roots, reader)` | a project; `reader` confines reads |
+| `load_module(name) -> Option<ModuleId>` | find, read, analyse a module by dotted name, once |
+| `module(id)`, `class(ClassRef)`, `def(DefRef)`, `files()` | loaded data; files read (dependencies) |
+| `get_attr`, `module_attr`, `class_attr`, `lookup_name`, `reference`, `def_object` | resolve names to an `Object` without running code |
+| `exported(m, name)` | whether `from m import *` binds a name |
+| `mro(c)`, `base_objects(c)`, `slots(c)`, `is_exception(c)` | MRO (C3), bases, `__slots__` |
+| `parse_expression(m, text)` | a string annotation parsed in `m`'s namespace |
+| `Module::node(id)` → `Node` | `kind`, `text`, `field`, `named_children`, `children`, ... |
+| `unparse`, `try_unparse`, `write_arguments`, `number_repr` | expressions written back (Sphinx or Python style) |
+| `string_value`, `str_value`, `repr_str`, `repr_bytes` | literals as Python evaluates and `repr`s them |
+| `prepare_docstring`, `split_lines` | docstring lines as Sphinx prepares them |
+| `is_builtin`, `is_builtin_exception` | Python's builtin names |
+
+Limits: `MAX_SYNTAX_DEPTH` (256; deeper modules are `too_deep`, kind `Native`), and per
+lookup `MAX_DEPTH` (48), `MAX_STEPS` (100,000), `LOOKUP_STACK_BYTES` (256 KiB, doubled in
+debug builds), `MAX_MRO_DEPTH` (100). Past a limit a lookup finds nothing; nothing panics.
+
+## Redesigned from the Odin package
+
+- No arenas: the tree-sitter tree is copied into a flat `Syntax` (one `Vec` of nodes,
+  children contiguous, `NodeId` indices) that owns its source, so analysed data holds ids
+  and tree-sitter's tree is dropped right after parsing; `destroy` is gone (`Drop`).
+- Classes, functions and bindings are `Vec`s in their `Module`, named by `ClassRef`,
+  `FunctionRef`, `DefRef` (module id + index) instead of pointers; lambdas become
+  `FunctionKind::Lambda` and are built on demand. Loaded modules are `Rc<Module>`
+  (immutable, shared); the MRO cache lives in the project.
+- `Option` replaces null nodes and `Doc{text, ok}`; enums replace string kinds where they
+  were closed sets. Bytes literals hold one `char` per byte (Latin-1), since `String`
+  must be UTF-8.
+- `files()` yields the normalised text of each module read (the host hashes it).

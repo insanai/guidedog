@@ -8,9 +8,9 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::atomic::{AtomicU64, Ordering};
 
-use crate::{Backend, Diagnostic, Error, Options, Outcome, Severity, Target};
+use crate::{Compiled, Diagnostic, Error, Options, Severity, Target};
 
-/// The most compiler output an [`Outcome`] keeps.
+/// The most compiler output a result keeps.
 const DETAIL_LIMIT: usize = 8192;
 
 /// What the program compiles: a file, or generated text fed on stdin.
@@ -22,14 +22,13 @@ pub(crate) enum Input<'a> {
 /// Runs the typst program; generated text goes through a temporary file fed on stdin, so
 /// no file is written beside the user's sources and no pipe can deadlock.
 pub(crate) fn run(
-    backend: &Backend,
+    program: &Path,
     input: Input<'_>,
     root: &Path,
     output: &Path,
-    target: Target,
     options: &Options<'_>,
-) -> Outcome {
-    let mut command = Command::new(&backend.program);
+) -> Result<Compiled, Error> {
+    let mut command = Command::new(program);
     command.arg("compile").arg("--root").arg(root).args(["--diagnostic-format", "short"]);
     for path in &options.font_paths {
         command.arg("--font-path").arg(path);
@@ -40,7 +39,7 @@ pub(crate) fn run(
     if let Some(cache) = &options.package_cache {
         command.arg("--package-cache-path").arg(cache);
     }
-    match target {
+    match options.target {
         Target::Pdf => command.args(["--format", "pdf"]),
         Target::Html => command.args(["--features", "html", "--format", "html"]),
     };
@@ -49,34 +48,29 @@ pub(crate) fn run(
             command.arg(source).stdin(Stdio::null());
             None
         }
-        Input::Text(text) => match TempFile::create(text) {
-            Ok((temp, file)) => {
-                command.arg("-").stdin(Stdio::from(file));
-                Some(temp)
-            }
-            Err(error) => return Outcome::failed(error),
-        },
-    };
-    command.arg(output);
-    let result = match command.output() {
-        Ok(result) => result,
-        Err(err) => {
-            let program = backend.program.clone();
-            return Outcome::failed(Error::Launch { program, message: err.to_string() });
+        Input::Text(text) => {
+            let (temp, file) = TempFile::create(text)?;
+            command.arg("-").stdin(Stdio::from(file));
+            Some(temp)
         }
     };
+    command.arg(output);
+    let result = command.output().map_err(|err| Error::Launch {
+        program: program.display().to_string(),
+        message: err.to_string(),
+    })?;
     let errors = String::from_utf8_lossy(&result.stderr);
     let text = match errors.trim() {
         "" => String::from_utf8_lossy(&result.stdout).trim().to_string(),
         trimmed => trimmed.to_string(),
     };
-    Outcome {
-        ok: result.status.success(),
-        exit_code: result.status.code().unwrap_or(-1),
-        diagnostics: parse_diagnostics(&text),
-        detail: bounded(text),
-        error: None,
+    let diagnostics = parse_diagnostics(&text);
+    let detail = bounded(text);
+    if !result.status.success() {
+        let exit_code = result.status.code();
+        return Err(Error::Compile { exit_code, diagnostics, detail });
     }
+    Ok(Compiled { diagnostics, detail })
 }
 
 fn bounded(mut text: String) -> String {

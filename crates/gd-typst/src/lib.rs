@@ -4,14 +4,18 @@
 //!
 //! ```no_run
 //! let backend = gd_typst::locate("typst").expect("Typst is installed or embedded");
-//! if !gd_typst::is_pinned(&backend) {
+//! if !backend.is_pinned() {
 //!     eprintln!("expected Typst {}", gd_typst::PINNED_VERSION);
 //! }
 //! let options = gd_typst::Options { offline: true, ..Default::default() };
-//! let outcome = gd_typst::compile_text(&backend, "= Hello\n", ".".as_ref(),
-//!     "hello.pdf".as_ref(), gd_typst::Target::Pdf, &options);
-//! for d in &outcome.diagnostics {
-//!     eprintln!("{d}");
+//! match gd_typst::compile_text(&backend, "= Hello\n", ".".as_ref(), "hello.pdf".as_ref(),
+//!     &options)
+//! {
+//!     Ok(compiled) => compiled.diagnostics.iter().for_each(|w| eprintln!("{w}")),
+//!     Err(gd_typst::Error::Compile { diagnostics, .. }) => {
+//!         diagnostics.iter().for_each(|d| eprintln!("{d}"))
+//!     }
+//!     Err(error) => eprintln!("{error}"),
 //! }
 //! ```
 //!
@@ -60,22 +64,48 @@ pub enum Target {
     Html,
 }
 
-/// The compiler a compile runs: an installed typst program, or the embedded one.
+/// The compiler a compile runs: the embedded one, or an installed typst program.
 /// [`locate`] makes it.
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
-pub struct Backend {
-    /// The program's path, or `"embedded"`.
-    pub program: String,
-    /// The compiler's version, `""` when the program could not tell it.
-    pub version: String,
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Backend {
     /// The statically linked compiler; no external program runs.
-    pub embedded: bool,
+    Embedded,
+    /// An installed typst program.
+    Program {
+        /// The program's path.
+        path: PathBuf,
+        /// The version it reported; `None` when it could not tell.
+        version: Option<String>,
+    },
 }
 
-/// Compile settings, mirroring the typst CLI. The default downloads missing packages into
-/// the system cache and uses system fonts before the embedded ones.
+impl Backend {
+    /// The compiler's version: [`PINNED_VERSION`] when embedded, the program's own
+    /// otherwise; `None` when the program could not tell. Borrows from the backend.
+    pub fn version(&self) -> Option<&str> {
+        match self {
+            Backend::Embedded => Some(PINNED_VERSION),
+            Backend::Program { version, .. } => version.as_deref(),
+        }
+    }
+
+    /// Reports whether this is the Typst release Guidedog is tested with.
+    pub fn is_pinned(&self) -> bool {
+        self.version() == Some(PINNED_VERSION)
+    }
+
+    /// Reports whether this is the embedded compiler.
+    pub fn is_embedded(&self) -> bool {
+        matches!(self, Backend::Embedded)
+    }
+}
+
+/// Compile settings, mirroring the typst CLI. The default writes a PDF, downloads missing
+/// packages into the system cache and uses system fonts before the embedded ones.
 #[derive(Default)]
 pub struct Options<'a> {
+    /// The artifact to write.
+    pub target: Target,
     /// Use only packages already on disk (honoured by the embedded backend only).
     pub offline: bool,
     /// The package cache directory; `None` is the system cache.
@@ -92,6 +122,7 @@ pub struct Options<'a> {
 impl fmt::Debug for Options<'_> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Options")
+            .field("target", &self.target)
             .field("offline", &self.offline)
             .field("package_cache", &self.package_cache)
             .field("embedded_fonts_only", &self.embedded_fonts_only)
@@ -101,27 +132,13 @@ impl fmt::Debug for Options<'_> {
     }
 }
 
-/// What a compile did. `error` is set when Typst could not run or its output could not be
-/// written; `diagnostics` hold what Typst itself reported.
+/// What a successful compile reports besides the artifact it wrote.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
-pub struct Outcome {
-    /// The artifact was written.
-    pub ok: bool,
-    /// The program's exit code; for the embedded backend 0 ok, 1 compile error, 2 rejected
-    /// request, 3 internal failure, 4 no embedded compiler, 5 refused by `reserve`.
-    pub exit_code: i32,
-    /// The problems Typst reported, errors and warnings.
+pub struct Compiled {
+    /// The warnings Typst reported.
     pub diagnostics: Vec<Diagnostic>,
     /// The compiler's output (or the diagnostics as lines), bounded.
     pub detail: String,
-    /// Why Typst did not run or its artifact was not written.
-    pub error: Option<Error>,
-}
-
-impl Outcome {
-    fn failed(error: Error) -> Outcome {
-        Outcome { error: Some(error), ..Outcome::default() }
-    }
 }
 
 /// Looks `name` up on PATH, handling Windows' `;` and `.exe`; a name holding a path
@@ -146,89 +163,76 @@ pub fn find_program(name: &str) -> Option<PathBuf> {
 
 /// Returns the embedded compiler when this build links one and `program` is `""` or
 /// `"typst"`; otherwise finds the program and asks for its version. `None` when no program
-/// is found; a program that cannot tell its version has version `""`.
+/// is found.
 pub fn locate(program: &str) -> Option<Backend> {
     if EMBEDDED && (program.is_empty() || program == "typst") {
-        let version = PINNED_VERSION.to_string();
-        return Some(Backend { program: "embedded".into(), version, embedded: true });
+        return Some(Backend::Embedded);
     }
     let path = find_program(program)?;
-    let program = path.to_string_lossy().into_owned();
     let output = std::process::Command::new(&path).arg("--version").output();
     let version = match output {
         Ok(out) if out.status.success() => {
             let text = String::from_utf8_lossy(&out.stdout);
             let version = text.split_whitespace().nth(1).unwrap_or(text.trim());
-            version.to_string()
+            (!version.is_empty()).then(|| version.to_string())
         }
-        _ => String::new(),
+        _ => None,
     };
-    Some(Backend { program, version, embedded: false })
-}
-
-/// Reports whether `backend` is the Typst release Guidedog is tested with.
-pub fn is_pinned(backend: &Backend) -> bool {
-    backend.version == PINNED_VERSION
+    Some(Backend::Program { path, version })
 }
 
 /// Compiles the Typst file `source` into `output`; paths resolve against `root`, and Typst
-/// reads nothing outside it. Borrows everything for the call. Failures are in the
-/// returned [`Outcome`]. Write to a staged path and rename it on success when a failed
-/// compile must not disturb an earlier artifact.
+/// reads nothing outside it. Borrows everything for the call. Returns the warnings, or
+/// an [`Error`]: [`Error::Compile`] with Typst's diagnostics when the source has errors.
+/// Write to a staged path and rename it on success when a failed compile must not
+/// disturb an earlier artifact.
 pub fn compile_file(
     backend: &Backend,
     source: &Path,
     root: &Path,
     output: &Path,
-    target: Target,
     options: &Options<'_>,
-) -> Outcome {
-    if backend.embedded {
-        let Some(main) = rooted_path(root, source) else {
-            return Outcome::failed(Error::OutsideRoot {
-                source: source.to_path_buf(),
-                root: root.to_path_buf(),
-            });
-        };
-        return embedded_compile(root, Some(&main), "", output, target, options);
+) -> Result<Compiled, Error> {
+    match backend {
+        Backend::Embedded => {
+            let Some(main) = rooted_path(root, source) else {
+                return Err(Error::OutsideRoot {
+                    source: source.to_path_buf(),
+                    root: root.to_path_buf(),
+                });
+            };
+            embedded_compile(root, Some(&main), "", output, options)
+        }
+        Backend::Program { path, .. } => {
+            cli::run(path, cli::Input::File(source), root, output, options)
+        }
     }
-    let input = cli::Input::File(source);
-    cli::run(backend, input, root, output, target, options)
 }
 
 /// Compiles generated Typst `text`, so no file is written beside the user's sources;
-/// relative paths in the text resolve against `root`. Failures are in the [`Outcome`].
+/// relative paths in the text resolve against `root`. Fails like [`compile_file`].
 pub fn compile_text(
     backend: &Backend,
     text: &str,
     root: &Path,
     output: &Path,
-    target: Target,
     options: &Options<'_>,
-) -> Outcome {
-    if backend.embedded {
-        return embedded_compile(root, None, text, output, target, options);
+) -> Result<Compiled, Error> {
+    match backend {
+        Backend::Embedded => embedded_compile(root, None, text, output, options),
+        Backend::Program { path, .. } => {
+            cli::run(path, cli::Input::Text(text), root, output, options)
+        }
     }
-    cli::run(backend, cli::Input::Text(text), root, output, target, options)
 }
 
 /// Converts a 1-based `line` and `column` (in characters) into a byte offset of `text`,
 /// clamped to the line's (or text's) end. Allocates nothing.
 pub fn offset_of(text: &str, line: usize, column: usize) -> usize {
-    let bytes = text.as_bytes();
-    let (mut current, mut i) = (1, 0);
-    while i < bytes.len() && current < line {
-        if bytes[i] == b'\n' {
-            current += 1;
-        }
-        i += 1;
-    }
-    for (col, (at, ch)) in (1..).zip(text[i..].char_indices()) {
-        if col >= column || ch == '\n' {
-            return i + at;
-        }
-    }
-    text.len()
+    let Some(start) = gd_report::line_offset(text, line.max(1)) else { return text.len() };
+    let (_, end) = gd_report::line_bounds(text, start);
+    let mut chars = text[start..end].char_indices().map(|(at, _)| start + at);
+    chars.nth(column.saturating_sub(1)).unwrap_or(end)
 }
 
 /// The root-relative Typst path (`/dir/file.typ`) of `source`, comparing absolute forms
@@ -262,10 +266,9 @@ fn embedded_compile(
     main: Option<&str>,
     text: &str,
     output: &Path,
-    target: Target,
     options: &Options<'_>,
-) -> Outcome {
-    embedded::compile(root, main, text, output, target, options)
+) -> Result<Compiled, Error> {
+    embedded::compile(root, main, text, output, options)
 }
 
 #[cfg(not(feature = "embedded"))]
@@ -274,10 +277,9 @@ fn embedded_compile(
     _main: Option<&str>,
     _text: &str,
     _output: &Path,
-    _target: Target,
     _options: &Options<'_>,
-) -> Outcome {
-    Outcome { exit_code: 4, ..Outcome::failed(Error::NotEmbedded) }
+) -> Result<Compiled, Error> {
+    Err(Error::NotEmbedded)
 }
 
 #[cfg(test)]

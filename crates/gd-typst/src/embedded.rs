@@ -21,7 +21,7 @@ use typst_kit::fonts::FontStore;
 use typst_kit::packages::{FsPackages, SystemPackages, UniversePackages};
 
 use crate::clock::{Civil, compiler_clock};
-use crate::{Diagnostic, Error, GENERATED_MAIN, Options, Outcome, Severity, Target};
+use crate::{Compiled, Diagnostic, Error, GENERATED_MAIN, Options, Severity, Target};
 
 const USER_AGENT: &str = concat!("guidedog/", env!("CARGO_PKG_VERSION"));
 
@@ -32,33 +32,21 @@ pub(crate) fn compile(
     main: Option<&str>,
     text: &str,
     output: &Path,
-    target: Target,
     options: &Options<'_>,
-) -> Outcome {
-    let Some(world) = make_world(root, main, text, target, options) else {
-        return Outcome { exit_code: 2, ..Outcome::failed(Error::InvalidRequest) };
-    };
+) -> Result<Compiled, Error> {
+    let world = make_world(root, main, text, options).ok_or(Error::InvalidRequest)?;
     let compiled = catch_unwind(AssertUnwindSafe(|| run(&world)));
-    let Ok((artifact, diagnostics)) = compiled else {
-        return Outcome { exit_code: 3, ..Outcome::failed(Error::Internal) };
-    };
+    let (artifact, diagnostics) = compiled.map_err(|_| Error::Internal)?;
     let detail = detail_of(&diagnostics);
-    let mut outcome = Outcome { exit_code: 1, diagnostics, detail, ..Outcome::default() };
-    let Some(artifact) = artifact else { return outcome };
+    let Some(artifact) = artifact else {
+        return Err(Error::Compile { exit_code: None, diagnostics, detail });
+    };
     if options.reserve.is_some_and(|reserve| !reserve(artifact.len())) {
-        outcome.exit_code = 5;
-        outcome.error = Some(Error::OutputTooLarge { bytes: artifact.len() });
-        return outcome;
+        return Err(Error::OutputTooLarge { bytes: artifact.len() });
     }
-    outcome.exit_code = 0;
-    match std::fs::write(output, &artifact) {
-        Ok(()) => outcome.ok = true,
-        Err(err) => {
-            let path = output.to_path_buf();
-            outcome.error = Some(Error::Io { path, message: err.to_string() });
-        }
-    }
-    outcome
+    std::fs::write(output, &artifact)
+        .map_err(|err| Error::Io { path: output.to_path_buf(), message: err.to_string() })?;
+    Ok(Compiled { diagnostics, detail })
 }
 
 fn detail_of(diagnostics: &[Diagnostic]) -> String {
@@ -135,7 +123,6 @@ fn make_world(
     root: &Path,
     main: Option<&str>,
     text: &str,
-    target: Target,
     options: &Options<'_>,
 ) -> Option<EmbeddedWorld> {
     let vpath = VirtualPath::new(main.unwrap_or(GENERATED_MAIN)).ok()?;
@@ -148,7 +135,7 @@ fn make_world(
         Datetime::from_ymd_hms(utc.year, utc.month, utc.day, utc.hour, utc.minute, utc.second);
     Some(EmbeddedWorld {
         fonts: fonts(!options.embedded_fonts_only, &options.font_paths),
-        html: target == Target::Html,
+        html: options.target == Target::Html,
         download: !options.offline,
         package_cache: options.package_cache.clone(),
         package_roots: Mutex::new(HashMap::new()),

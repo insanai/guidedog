@@ -48,35 +48,46 @@ pub struct Diagnostic {
 }
 
 impl Diagnostic {
-    /// Renders the diagnostic in the Elm style with an excerpt of `source`, the text of
-    /// [`Diagnostic::file`] when the caller has it, and a caret under the span. Returns
-    /// an owned report; never fails (a position outside `source` drops the excerpt).
-    pub fn report(&self, source: Option<&str>) -> String {
-        let mut out = String::with_capacity(160 + self.message.len());
-        // Writing into a String cannot fail.
-        let _ = self.write_report(&mut out, source);
-        out
-    }
-
-    /// Writes the report [`Diagnostic::report`] returns into `out`, so a caller reporting
-    /// many diagnostics reuses one buffer. Fails only when `out` does.
-    pub fn write_report(&self, out: &mut impl fmt::Write, source: Option<&str>) -> fmt::Result {
-        let title = match self.severity {
-            Severity::Error => "TYPST ERROR",
-            Severity::Warning => "TYPST WARNING",
+    /// The Elm-style report of this diagnostic, with an excerpt of `source` (the text of
+    /// [`Diagnostic::file`], when the caller has it) and carets under the span. A
+    /// position outside `source` drops the excerpt. Copies what it needs.
+    pub fn report(&self, source: Option<&str>) -> gd_report::Report {
+        let (severity, code, title) = match self.severity {
+            Severity::Error => (gd_report::Severity::Error, "typst.error", "TYPST ERROR"),
+            Severity::Warning => (gd_report::Severity::Warning, "typst.warning", "TYPST"),
         };
-        write_bar(out, title, &Location(self))?;
-        write!(out, "\n\n{}", self.message)?;
-        if let Some(text) = source {
-            self.write_excerpt(out, text)?;
+        let mut report = gd_report::Report::error(code, title, &self.message);
+        report.severity = severity;
+        report.path.clone_from(&self.file);
+        match source {
+            Some(text) => self.place(&mut report, text),
+            None => (report.line, report.column) = (self.line, self.column),
         }
         if self.hints.is_empty() {
-            write!(out, "\nHint: {}", self.default_hint())?;
+            report.hints.push(self.default_hint().to_owned());
         }
-        for hint in &self.hints {
-            write!(out, "\nHint: {hint}")?;
+        report.hints.extend(self.hints.iter().cloned());
+        report
+    }
+
+    /// Renders [`Diagnostic::report`] as plain text, 80 columns wide.
+    pub fn render(&self, source: Option<&str>) -> String {
+        gd_report::render_text(&self.report(source), &gd_report::Style::default())
+    }
+
+    /// Positions `report` in `text`: at the span the embedded compiler gave when it
+    /// starts at the reported position, else at the line and column.
+    fn place(&self, report: &mut gd_report::Report, text: &str) {
+        if self.line == 0 {
+            return;
         }
-        Ok(())
+        let start = crate::offset_of(text, self.line, self.column.max(1));
+        match &self.span {
+            Some(span) if span.end > span.start && span.start == start => {
+                gd_report::set_span(report, text, span.start, span.end);
+            }
+            _ => gd_report::set_line_column(report, text, self.line, self.column.max(1)),
+        }
     }
 
     fn default_hint(&self) -> &'static str {
@@ -91,53 +102,28 @@ impl Diagnostic {
             }
         }
     }
-
-    /// Writes `\n\n12| line` and a caret line, or nothing when the position is not in
-    /// `text`.
-    fn write_excerpt(&self, out: &mut impl fmt::Write, text: &str) -> fmt::Result {
-        if self.line == 0 {
-            return Ok(());
-        }
-        let Some(line_text) = text.split('\n').nth(self.line - 1) else { return Ok(()) };
-        let line_text = line_text.trim_end_matches('\r');
-        let start = crate::offset_of(text, self.line, self.column.max(1));
-        let line_start = crate::offset_of(text, self.line, 1);
-        let width = match &self.span {
-            Some(span) if span.end > span.start && span.start == start => {
-                let end = span.end.min(line_start + line_text.len());
-                text.get(start..end).map_or(1, |s| s.chars().count().max(1))
-            }
-            _ => 1,
-        };
-        let number = self.line;
-        let indent = number.ilog10() as usize + 1 + 2 + self.column.max(1) - 1;
-        write!(out, "\n\n{number}| {line_text}\n{:indent$}{:^<width$}", "", "")
-    }
 }
 
-/// A diagnostic's `file:line:column`, `file`, or nothing.
-struct Location<'a>(&'a Diagnostic);
-
-impl fmt::Display for Location<'_> {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let d = self.0;
-        match (d.file.is_empty(), d.line) {
-            (true, _) => Ok(()),
-            (false, 0) => f.write_str(&d.file),
-            (false, line) => write!(f, "{}:{}:{}", d.file, line, d.column),
-        }
-    }
-}
-
+/// Renders [`Diagnostic::report`] without an excerpt.
 impl fmt::Display for Diagnostic {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        self.write_report(f, None)
+        f.write_str(self.render(None).trim_end())
     }
 }
 
 /// Why Typst did not run, or its artifact was not written.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Error {
+    /// The source has errors: Typst wrote no artifact.
+    Compile {
+        /// The typst program's exit code; `None` for the embedded compiler, or when a
+        /// signal stopped the program.
+        exit_code: Option<i32>,
+        /// Every error and warning Typst reported, in its order.
+        diagnostics: Vec<Diagnostic>,
+        /// The compiler's output (or the diagnostics as lines), bounded.
+        detail: String,
+    },
     /// The typst program could not be started.
     Launch {
         /// The program that was run.
@@ -176,19 +162,21 @@ impl Error {
     /// A short, stable code for the error kind.
     pub fn code(&self) -> &'static str {
         match self {
-            Error::Launch { .. } => "typst-launch",
-            Error::Io { .. } => "typst-io",
-            Error::OutsideRoot { .. } => "typst-outside-root",
-            Error::InvalidRequest => "typst-invalid-request",
-            Error::Internal => "typst-internal",
-            Error::NotEmbedded => "typst-not-embedded",
-            Error::OutputTooLarge { .. } => "typst-output-too-large",
+            Error::Compile { .. } => "typst.compile",
+            Error::Launch { .. } => "typst.launch",
+            Error::Io { .. } => "typst.io",
+            Error::OutsideRoot { .. } => "typst.outside-root",
+            Error::InvalidRequest => "typst.invalid-request",
+            Error::Internal => "typst.internal",
+            Error::NotEmbedded => "typst.not-embedded",
+            Error::OutputTooLarge { .. } => "typst.output-too-large",
         }
     }
 
     /// The title of the report.
     pub fn title(&self) -> &'static str {
         match self {
+            Error::Compile { .. } => "TYPST COMPILE FAILED",
             Error::Launch { .. } => "TYPST DID NOT RUN",
             Error::Io { .. } => "TYPST FILE ERROR",
             Error::OutsideRoot { .. } => "SOURCE OUTSIDE ROOT",
@@ -202,6 +190,9 @@ impl Error {
     /// The plain explanation; borrowed for the kinds whose text is fixed.
     pub fn message(&self) -> Cow<'static, str> {
         match self {
+            Error::Compile { exit_code, diagnostics, .. } => {
+                compile_message(*exit_code, diagnostics)
+            }
             Error::Launch { program, message } => Cow::Owned(format!(
                 "The Typst program `{program}` could not be started: {message}."
             )),
@@ -223,6 +214,9 @@ impl Error {
     /// How to fix it.
     pub fn hint(&self) -> &'static str {
         match self {
+            Error::Compile { .. } => {
+                "Fix the errors Typst reported; each diagnostic shows the source position."
+            }
             Error::Launch { .. } => {
                 "Install Typst 0.15.1 (https://github.com/typst/typst/\
                 releases) and put it on PATH, or use a build with the embedded compiler."
@@ -250,39 +244,42 @@ impl Error {
     }
 }
 
+impl Error {
+    /// The Elm-style report of this error, placed at the file it concerns.
+    pub fn report(&self) -> gd_report::Report {
+        let mut report = gd_report::Report::error(self.code(), self.title(), &self.message());
+        report.hints.push(self.hint().to_owned());
+        match self {
+            Error::Io { path, .. } => report.path = path.display().to_string(),
+            Error::OutsideRoot { source, .. } => report.path = source.display().to_string(),
+            _ => {}
+        }
+        report
+    }
+}
+
+/// Explains a failed compile by its first error.
+fn compile_message(exit_code: Option<i32>, diagnostics: &[Diagnostic]) -> Cow<'static, str> {
+    let errors = diagnostics.iter().filter(|d| d.severity == Severity::Error);
+    let count = errors.clone().count();
+    match (errors.clone().next(), exit_code) {
+        (Some(first), _) if count == 1 => {
+            Cow::Owned(format!("Typst reported an error: {}", first.message))
+        }
+        (Some(first), _) => {
+            Cow::Owned(format!("Typst reported {count} errors; the first: {}", first.message))
+        }
+        (None, Some(code)) => Cow::Owned(format!("The typst program failed (exit code {code}).")),
+        (None, None) => "Typst could not compile the document.".into(),
+    }
+}
+
+/// Renders [`Error::report`] as plain text, 80 columns wide.
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Error::Io { path, .. } => write_bar(f, self.title(), &path.display())?,
-            Error::OutsideRoot { source, .. } => write_bar(f, self.title(), &source.display())?,
-            _ => write_bar(f, self.title(), &"")?,
-        }
-        write!(f, "\n\n{}\n\nHint: {}", self.message(), self.hint())
+        let text = gd_report::render_text(&self.report(), &gd_report::Style::default());
+        f.write_str(text.trim_end())
     }
 }
 
 impl std::error::Error for Error {}
-
-/// Writes `-- TITLE ------------------------------ location`, 80 columns wide when it
-/// fits; the location is measured without being formatted into a buffer.
-fn write_bar(out: &mut impl fmt::Write, title: &str, location: &dyn fmt::Display) -> fmt::Result {
-    let mut counted = Count(0);
-    // Counting cannot fail.
-    let _ = fmt::Write::write_fmt(&mut counted, format_args!("{location}"));
-    let dashes = 80usize.saturating_sub(title.chars().count() + counted.0 + 5).max(3);
-    write!(out, "-- {title} {:-<dashes$}", "")?;
-    if counted.0 > 0 {
-        write!(out, " {location}")?;
-    }
-    Ok(())
-}
-
-/// A sink that counts characters.
-struct Count(usize);
-
-impl fmt::Write for Count {
-    fn write_str(&mut self, s: &str) -> fmt::Result {
-        self.0 += s.chars().count();
-        Ok(())
-    }
-}

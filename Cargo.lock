@@ -647,6 +647,11 @@ version = "0.7.0"
 [[package]]
 name = "gd-discussion"
 version = "0.7.0"
+dependencies = [
+ "gd-json",
+ "gd-report",
+ "gd-toml",
+]
 
 [[package]]
 name = "gd-fetch"
@@ -675,6 +680,9 @@ dependencies = [
 [[package]]
 name = "gd-graphdog"
 version = "0.7.0"
+dependencies = [
+ "gd-report",
+]
 
 [[package]]
 name = "gd-highlight"
@@ -683,6 +691,11 @@ version = "0.7.0"
 [[package]]
 name = "gd-host"
 version = "0.7.0"
+dependencies = [
+ "gd-report",
+ "gd-typst",
+ "guidedoc",
+]
 
 [[package]]
 name = "gd-i18n"
@@ -823,6 +836,7 @@ name = "graphdog-cmd"
 version = "0.7.0"
 dependencies = [
  "gd-graphdog",
+ "gd-report",
 ]
 
 [[package]]
@@ -840,14 +854,24 @@ version = "0.7.0"
 [[package]]
 name = "guidedoc-html"
 version = "0.7.0"
+dependencies = [
+ "guidedoc",
+]
 
 [[package]]
 name = "guidedoc-rst"
 version = "0.7.0"
+dependencies = [
+ "guidedoc",
+ "guidedoc-rst-inline",
+]
 
 [[package]]
 name = "guidedoc-rst-inline"
 version = "0.7.0"
+dependencies = [
+ "guidedoc",
+]
 
 [[package]]
 name = "guidedoc-sphinx"
@@ -856,6 +880,9 @@ version = "0.7.0"
 [[package]]
 name = "guidedoc-text"
 version = "0.7.0"
+dependencies = [
+ "guidedoc",
+]
 
 [[package]]
 name = "guidedoc-typst"

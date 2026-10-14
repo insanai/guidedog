@@ -54,6 +54,12 @@ typst-kit = { version = "=0.15.1", default-features = false }
 tree-sitter = "0.25"
 tree-sitter-python = "0.25"
 tree-sitter-rust = "0.24"
+# JSON for gd-json. Already compiled in by the embedded Typst compiler (same version and
+# features, see Cargo.lock), so it adds no crate; mature, widely used and well tested.
+# preserve_order keeps object keys in insertion order (indexmap, also already in the tree).
+serde_json = { version = "1.0.154", features = ["preserve_order"] }
+# serde's Deserializer/Visitor traits, for gd-json's validating parse and `from_value`.
+serde = "1"
 
 [workspace.lints.rust]
 unsafe_op_in_unsafe_fn = "deny"

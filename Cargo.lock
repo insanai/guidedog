@@ -636,6 +636,9 @@ dependencies = [
 [[package]]
 name = "gd-autodoc"
 version = "0.7.0"
+dependencies = [
+ "gd-pyscan",
+]
 
 [[package]]
 name = "gd-cli"
@@ -660,6 +663,11 @@ version = "0.7.0"
 [[package]]
 name = "gd-git"
 version = "0.7.0"
+dependencies = [
+ "gd-flate",
+ "gd-report",
+ "gd-sha",
+]
 
 [[package]]
 name = "gd-graphdog"
@@ -680,6 +688,10 @@ version = "0.7.0"
 [[package]]
 name = "gd-inventory"
 version = "0.7.0"
+dependencies = [
+ "gd-flate",
+ "gd-report",
+]
 
 [[package]]
 name = "gd-jinja"
@@ -688,6 +700,11 @@ version = "0.7.0"
 [[package]]
 name = "gd-json"
 version = "0.7.0"
+dependencies = [
+ "gd-report",
+ "serde",
+ "serde_json",
+]
 
 [[package]]
 name = "gd-odindoc"
@@ -700,6 +717,12 @@ version = "0.7.0"
 [[package]]
 name = "gd-plugins"
 version = "0.7.0"
+dependencies = [
+ "gd-json",
+ "gd-report",
+ "gd-sha",
+ "gd-toml",
+]
 
 [[package]]
 name = "gd-project"
@@ -732,6 +755,9 @@ version = "0.7.0"
 [[package]]
 name = "gd-toml"
 version = "0.7.0"
+dependencies = [
+ "gd-report",
+]
 
 [[package]]
 name = "gd-typst"

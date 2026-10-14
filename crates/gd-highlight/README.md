@@ -112,3 +112,18 @@ code it describes.
   holding their order to the enums'.
 - The "never allocates" test is gone (writers append to `String`); scanning still does not
   allocate, and the linear-work probe counts work in test builds only.
+
+## Why not syntect?
+
+Evaluated on 2026-10-14 against `syntect` 5.3 (the main Rust highlighter):
+
+- **Compatibility.** Guidedog follows Sphinx: themes and `pygments_style` expect Pygments
+  token classes (`k`, `nf`, `s2`, ...) and the 51 Pygments styles. syntect emits TextMate
+  scopes; mapping scopes back to Pygments tokens is lossy and grammar-dependent.
+- **Self-containment.** syntect needs Oniguruma (C) or `fancy-regex`, plus `bincode`,
+  `plist`, `yaml-rust`, `flate2`, `serde_json` and megabytes of serialized grammars.
+  `gd-highlight` is std-only.
+- **Bounded work.** Our scanner keeps an explicit 24-frame state stack and linear scanning;
+  backtracking regex grammars give weaker guarantees on hostile input.
+
+Decision: keep `gd-highlight`. Add lexers here when a language is needed.

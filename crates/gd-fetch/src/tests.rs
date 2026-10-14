@@ -41,7 +41,7 @@ fn files_and_limits() {
     let path = dir.file("objects.inv", b"hello");
     let options = Options::default();
     let r = get(&path, &options).expect("the file");
-    assert_eq!((r.data.as_slice(), r.url.as_str(), r.status), (&b"hello"[..], &*path, 0));
+    assert_eq!((r.data.as_slice(), r.url.as_str(), r.status), (&b"hello"[..], &*path, None));
     assert!(get(&format!("file://{path}"), &options).is_ok());
     let small = Options { max_bytes: 3, ..Options::default() };
     assert_eq!(kind_of(get(&path, &small)), ErrorKind::TooLarge);
@@ -86,23 +86,22 @@ fn requests_are_sent_as_given() {
     let o = Options::default();
     let auth = vec![Header::new("Authorization", "Bearer secret")];
     let post = Request {
-        method: "POST".into(),
+        method: Method::Post,
         url: s.url("/echo"),
         headers: auth.clone(),
-        body: b"hello".to_vec(),
-        ..Request::default()
+        body: Body::Bytes(b"hello".to_vec()),
     };
     let r = send(&post, &o);
     assert!(r.is_ok(), "{:?}", r.error);
-    assert_eq!(r.status, 201);
+    assert_eq!(r.status, Some(201));
     assert_eq!(r.body, b"POST Bearer secret hello");
     assert_eq!(r.header("retry-after"), Some("7"));
     let dir = TempDir::new();
     let path = dir.file("body", &vec![b'y'; 300_000]);
     let put = Request {
-        method: "PUT".into(),
+        method: Method::Put,
         url: s.url("/echo"),
-        body_path: Some(path.into()),
+        body: Body::File(path.into()),
         ..Request::default()
     };
     assert_eq!(send(&put, &o).body.len(), "PUT  ".len() + 300_000);
@@ -111,7 +110,7 @@ fn requests_are_sent_as_given() {
     assert_eq!(r.error.as_ref().map(|e| e.kind), Some(ErrorKind::Redirect));
     assert_eq!(r.header("location"), Some("http://elsewhere.test/"));
     let r = send(&Request { url: s.url("/missing"), ..Request::default() }, &o);
-    assert_eq!(r.error.as_ref().map(|e| (e.kind, e.status)), Some((ErrorKind::Status, 404)));
+    assert_eq!(r.error.as_ref().map(|e| (e.kind, e.status)), Some((ErrorKind::Status, Some(404))));
     assert_eq!(r.body, br#"{"message": "Not Found"}"#);
     let small = Options { max_bytes: 100, ..Options::default() };
     let r = send(&Request { url: s.url("/big"), ..Request::default() }, &small);
@@ -121,6 +120,8 @@ fn requests_are_sent_as_given() {
     assert_eq!(r.error.map(|e| e.kind), Some(ErrorKind::Unsupported));
     let r = send(&Request { url: "ftp://example.com/".into(), ..Request::default() }, &o);
     assert_eq!(r.error.map(|e| e.kind), Some(ErrorKind::Unsupported));
+    let bodied = Request { url: s.url("/echo"), body: Body::Bytes(vec![1]), ..Request::default() };
+    assert_eq!(send(&bodied, &o).error.map(|e| e.kind), Some(ErrorKind::Unsupported));
     assert_eq!(s.served_count(), 5);
 }
 
@@ -129,11 +130,11 @@ fn gets_follow_redirects_and_report_statuses() {
     let s = testserver::start(answer).expect("a loopback port");
     let o = Options { user_agent: "Guidedog test".into(), ..Options::default() };
     let r = get(&s.url("/hop"), &o).expect("the redirected body");
-    assert_eq!((r.data.as_slice(), r.status), (&b"plain"[..], 200));
+    assert_eq!((r.data.as_slice(), r.status), (&b"plain"[..], Some(200)));
     assert_eq!(r.url, s.url("/plain"));
     assert_eq!(get(&s.url("/agent"), &o).map(|r| r.data), Ok(b"Guidedog test".to_vec()));
     let e = get(&s.url("/missing"), &o).expect_err("a 404");
-    assert_eq!((e.kind, e.status), (ErrorKind::Status, 404));
+    assert_eq!((e.kind, e.status), (ErrorKind::Status, Some(404)));
     let small = Options { max_bytes: 100, ..Options::default() };
     assert_eq!(kind_of(get(&s.url("/big"), &small)), ErrorKind::TooLarge);
 }
@@ -160,7 +161,7 @@ fn a_missing_curl_has_an_install_hint() {
     let e = get("http://127.0.0.1:1/", &o).expect_err("no curl");
     assert_eq!(e.kind, ErrorKind::CurlMissing);
     let report = e.to_string();
-    assert!(report.starts_with("-- CURL NOT FOUND ---"), "{report}");
+    assert!(report.starts_with("-- CURL NOT FOUND [fetch.curl-missing] ---"), "{report}");
     assert!(report.contains("Hint: Install curl"), "{report}");
 }
 
@@ -176,7 +177,7 @@ fn network_failures_carry_curls_message() {
 fn tokens_and_lines_are_checked() {
     assert!(is_token("X-GitHub-Api-Version") && !is_token("") && !is_token("a b"));
     assert!(is_one_line("value") && !is_one_line("a\nb") && !is_one_line("a\0"));
-    let report = Error { status: 404, ..Error::new(ErrorKind::Status, "https://x/y", "") };
+    let report = Error { status: Some(404), ..Error::new(ErrorKind::Status, "https://x/y", "") };
     let text = report.to_string();
     assert!(text.contains("HTTP status 404") && text.contains("Hint: Check the URL"), "{text}");
 }

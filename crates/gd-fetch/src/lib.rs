@@ -45,15 +45,19 @@ pub const MAX_HEADERS: usize = 128;
 /// The most bytes a response's headers may take in all.
 pub const MAX_HEADER_BYTES: usize = 64 * 1024;
 
-/// Options bound one [`get`] or [`send`]. `Options::default()` is the defaults.
+/// The default for [`Options::user_agent`].
+pub const DEFAULT_USER_AGENT: &str = "Guidedog";
+
+/// Options bound one [`get`] or [`send`]. `Options::default()` is the defaults; change
+/// fields with struct-update syntax.
 #[derive(Debug, Clone)]
 pub struct Options {
     /// The whole transfer's limit; `None` is no limit.
     pub timeout: Option<Duration>,
-    /// The most body bytes read; 0 means [`DEFAULT_MAX_BYTES`].
+    /// The most body bytes read ([`DEFAULT_MAX_BYTES`] by default).
     pub max_bytes: usize,
-    /// The `User-Agent`; empty means `"Guidedog"`.
-    pub user_agent: String,
+    /// The `User-Agent` ([`DEFAULT_USER_AGENT`] by default).
+    pub user_agent: Cow<'static, str>,
     /// When set, the transfer stops (with [`ErrorKind::Cancelled`]) once it becomes true.
     pub cancel: Option<Arc<AtomicBool>>,
     /// The curl executable to run; `None` looks `curl` up on `PATH`.
@@ -65,20 +69,10 @@ impl Default for Options {
         Options {
             timeout: Some(DEFAULT_TIMEOUT),
             max_bytes: DEFAULT_MAX_BYTES,
-            user_agent: String::new(),
+            user_agent: Cow::Borrowed(DEFAULT_USER_AGENT),
             cancel: None,
             curl: None,
         }
-    }
-}
-
-impl Options {
-    fn limit(&self) -> usize {
-        if self.max_bytes == 0 { DEFAULT_MAX_BYTES } else { self.max_bytes }
-    }
-
-    fn agent(&self) -> &str {
-        if self.user_agent.is_empty() { "Guidedog" } else { &self.user_agent }
     }
 }
 
@@ -89,8 +83,8 @@ pub struct Fetched {
     pub data: Vec<u8>,
     /// Where the data came from, after redirects (the path for a file).
     pub url: String,
-    /// The HTTP status, or 0 for files.
-    pub status: u16,
+    /// The HTTP status; `None` for files.
+    pub status: Option<u16>,
 }
 
 /// One HTTP header. A response's names are in lowercase.
@@ -109,20 +103,66 @@ impl Header {
     }
 }
 
-/// One HTTP request for [`send`]. The body is `body`, or the contents of the file
-/// `body_path`, read as it is sent; at most one of them is given.
+/// The HTTP methods [`send`] makes.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+pub enum Method {
+    /// `GET`, which has no body.
+    #[default]
+    Get,
+    /// `HEAD`, which has no body.
+    Head,
+    /// `POST`.
+    Post,
+    /// `PUT`.
+    Put,
+    /// `PATCH`.
+    Patch,
+    /// `DELETE`.
+    Delete,
+}
+
+impl Method {
+    /// The method's name as HTTP spells it, such as `"POST"`.
+    pub fn name(self) -> &'static str {
+        match self {
+            Method::Get => "GET",
+            Method::Head => "HEAD",
+            Method::Post => "POST",
+            Method::Put => "PUT",
+            Method::Patch => "PATCH",
+            Method::Delete => "DELETE",
+        }
+    }
+
+    /// Whether requests with this method never carry a body.
+    fn is_bodyless(self) -> bool {
+        matches!(self, Method::Get | Method::Head)
+    }
+}
+
+/// A request's body.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub enum Body {
+    /// No body.
+    #[default]
+    None,
+    /// Bytes in memory.
+    Bytes(Vec<u8>),
+    /// The contents of a file, read as they are sent.
+    File(PathBuf),
+}
+
+/// One HTTP request for [`send`].
 #[derive(Debug, Clone, Default)]
 pub struct Request {
-    /// The method; empty means `"GET"`.
-    pub method: String,
+    /// The method.
+    pub method: Method,
     /// An http or https URL.
     pub url: String,
     /// Headers to send as they are.
     pub headers: Vec<Header>,
-    /// A body in memory.
-    pub body: Vec<u8>,
-    /// A file whose contents are the body.
-    pub body_path: Option<PathBuf>,
+    /// The body; GET and HEAD requests have none.
+    pub body: Body,
 }
 
 /// What [`send`] received, or why it could not.
@@ -132,8 +172,8 @@ pub struct Request {
 /// and its `location` header. The caller owns all of it.
 #[derive(Debug, Clone, Default)]
 pub struct Response {
-    /// The HTTP status, or 0 when none was received.
-    pub status: u16,
+    /// The HTTP status; `None` when none was received.
+    pub status: Option<u16>,
     /// The body as received.
     pub body: Vec<u8>,
     /// The final response's headers, names in lowercase.
@@ -175,14 +215,15 @@ pub fn get(location: &str, options: &Options) -> Result<Fetched, Error> {
             "Only http://, https:// and file:// URLs, and paths, can be read.",
         ));
     }
-    get_file(path, options.limit())
+    get_file(path, options.max_bytes)
 }
 
 /// Makes the HTTP request `request` and returns the response.
 ///
-/// It never follows a redirect and never sends a method, URL or header that holds a line
-/// break ([`ErrorKind::Unsupported`]). Failure is in [`Response::error`], never a panic.
-/// It blocks until the transfer ends; threads may call it at once.
+/// It never follows a redirect and never sends a URL or header that holds a line break,
+/// nor a body with GET or HEAD ([`ErrorKind::Unsupported`]). Failure is in
+/// [`Response::error`], never a panic. It blocks until the transfer ends; threads may
+/// call it at once.
 pub fn send(request: &Request, options: &Options) -> Response {
     if let Err(detail) = check_request(request) {
         return Response::failure(ErrorKind::Unsupported, &request.url, detail);
@@ -194,15 +235,11 @@ fn check_request(r: &Request) -> Result<(), &'static str> {
     if !r.url.starts_with("http://") && !r.url.starts_with("https://") {
         return Err("Only http and https URLs can be sent to.");
     }
-    if !r.body.is_empty() && r.body_path.is_some() {
-        return Err("A request has a body or a body file, not both.");
+    if r.method.is_bodyless() && r.body != Body::None {
+        return Err("A GET or HEAD request has no body.");
     }
-    let method = if r.method.is_empty() { "GET" } else { r.method.as_str() };
-    if method == "GET" && (!r.body.is_empty() || r.body_path.is_some()) {
-        return Err("A GET request has no body.");
-    }
-    if !is_token(method) || !is_one_line(&r.url) {
-        return Err("The method or URL is not one line.");
+    if !is_one_line(&r.url) {
+        return Err("The URL is not one line.");
     }
     if r.headers.iter().any(|h| !is_token(&h.name) || !is_one_line(&h.value)) {
         return Err("A header name or value is not one line.");
@@ -238,7 +275,7 @@ fn get_file(path: &str, max: usize) -> Result<Fetched, Error> {
             Err(e) if e.kind() == std::io::ErrorKind::Interrupted => continue,
             Err(e) => return Err(missing(e)),
         };
-        if n > max - data.len() {
+        if n > max.saturating_sub(data.len()) {
             let detail = format!("The file is larger than the limit of {max} bytes.");
             return Err(Error::new(ErrorKind::TooLarge, path, detail));
         }
@@ -247,5 +284,5 @@ fn get_file(path: &str, max: usize) -> Result<Fetched, Error> {
         }
         data.extend_from_slice(&chunk[..n]);
     }
-    Ok(Fetched { data, url: path.to_owned(), status: 0 })
+    Ok(Fetched { data, url: path.to_owned(), status: None })
 }

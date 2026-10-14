@@ -47,7 +47,7 @@ pub struct Reply {
     pub close: bool,
 }
 
-/// A running server; dropping it (or [`Server::stop`]) ends it and waits for its thread.
+/// A running server; dropping it ends it and waits for its thread.
 #[derive(Debug)]
 pub struct Server {
     port: u16,
@@ -95,9 +95,6 @@ impl Server {
     pub fn served_count(&self) -> usize {
         self.served.load(Ordering::Acquire)
     }
-
-    /// Ends the server and waits for its thread.
-    pub fn stop(self) {}
 }
 
 impl Drop for Server {

@@ -17,8 +17,8 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::thread;
 use std::time::Duration;
 
+use crate::{Body, Method, Request, Response};
 use crate::{Error, ErrorKind, Fetched, Header, MAX_HEADER_BYTES, MAX_HEADERS, Options};
-use crate::{Request, Response};
 
 const MARKER: &str = "@@gd-fetch@@ ";
 const WRITE_OUT: &str = "%{stderr}\n@@gd-fetch@@ %{http_code} %{url_effective}\n";
@@ -32,16 +32,30 @@ enum Input<'a> {
     File(File),
 }
 
+/// How reading curl's stdout ended.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+enum Drained {
+    /// curl closed it (or it failed, which curl's exit code explains).
+    #[default]
+    Complete,
+    /// More arrived than the limit allows; the pipe was closed.
+    Overflow,
+    /// Memory for the data could not be reserved.
+    OutOfMemory,
+}
+
 /// What one run of curl produced.
 #[derive(Default)]
 struct Run {
     stdout: Vec<u8>,
-    overflow: bool,
-    memory: bool,
+    drained: Drained,
     cancelled: bool,
+    /// The exit code; `None` when a signal stopped curl.
     exit: Option<i32>,
-    status: u16,
-    url: String,
+    status: Option<u16>,
+    /// The final URL after redirects, when curl reported it.
+    url: Option<String>,
+    /// curl's own messages, joined on one line.
     message: String,
 }
 
@@ -49,34 +63,36 @@ pub(crate) fn get_url(url: &str, options: &Options) -> Result<Fetched, Error> {
     let mut args = base_args(options);
     args.push("--location".into());
     push_url(&mut args, url);
-    let run = run(options, &args, Input::None, options.limit())?;
-    if let Some(mut e) = failure(&run, url, options.limit()) {
+    let run = run(options, &args, Input::None, options.max_bytes)?;
+    if let Some(mut e) = failure(&run, url, options.max_bytes) {
         e.status = run.status;
         return Err(e);
     }
-    if !(200..=299).contains(&run.status) {
-        let detail = format!("The server answered with HTTP status {}.", run.status);
+    let status = run.status.unwrap_or(0);
+    if !(200..=299).contains(&status) {
+        let detail = format!("The server answered with HTTP status {status}.");
         let mut e = Error::new(ErrorKind::Status, url, detail);
         e.status = run.status;
         return Err(e);
     }
-    let final_url = if run.url.is_empty() { url.to_owned() } else { run.url };
+    let final_url = run.url.unwrap_or_else(|| url.to_owned());
     Ok(Fetched { data: run.stdout, url: final_url, status: run.status })
 }
 
 pub(crate) fn send_url(r: &Request, options: &Options) -> Response {
-    let input = match (&r.body_path, r.body.is_empty()) {
-        (Some(path), _) => match File::open(path) {
+    let input = match &r.body {
+        Body::File(path) => match File::open(path) {
             Ok(f) => Input::File(f),
             Err(e) => {
                 let shown = path.display().to_string();
                 return Response::failure(ErrorKind::Missing, &shown, e.to_string());
             }
         },
-        (None, false) => Input::Bytes(&r.body),
-        (None, true) => Input::None,
+        Body::Bytes(bytes) => Input::Bytes(bytes),
+        // curl sends an empty body for `--data-binary @-` fed nothing.
+        Body::None if !r.method.is_bodyless() => Input::Bytes(&[]),
+        Body::None => Input::None,
     };
-    let method = if r.method.is_empty() { "GET" } else { r.method.as_str() };
     let mut args = base_args(options);
     args.extend(["--dump-header".into(), "-".into(), "--header".into(), "Expect:".into()]);
     for h in &r.headers {
@@ -88,22 +104,18 @@ pub(crate) fn send_url(r: &Request, options: &Options) -> Response {
         };
         args.extend(["--header".into(), line.into()]);
     }
-    let input = if method == "GET" {
-        input
-    } else {
+    if !r.method.is_bodyless() {
         args.extend(["--data-binary".into(), "@-".into()]);
-        if method != "POST" {
-            args.extend(["--request".into(), method.into()]);
-        }
-        match input {
-            Input::None => Input::Bytes(&[]),
-            other => other,
-        }
-    };
+    }
+    match r.method {
+        Method::Get | Method::Post => {}
+        Method::Head => args.push("--head".into()),
+        other => args.extend(["--request".into(), other.name().into()]),
+    }
     push_url(&mut args, &r.url);
-    let room = options.limit().saturating_add(2 * MAX_HEADER_BYTES);
+    let room = options.max_bytes.saturating_add(2 * MAX_HEADER_BYTES);
     match run(options, &args, input, room) {
-        Ok(run) => response_of(run, &r.url, options.limit()),
+        Ok(run) => response_of(run, &r.url, options.max_bytes),
         Err(e) => Response { error: Some(e), ..Response::default() },
     }
 }
@@ -125,7 +137,7 @@ fn base_args(options: &Options) -> Vec<OsString> {
     // The fixed flags, the agent, a timeout, and room for a request's headers and URL.
     let mut args = Vec::with_capacity(FIXED.len() + 16);
     args.extend(FIXED.iter().map(OsString::from));
-    args.push(options.agent().into());
+    args.push(options.user_agent.as_ref().into());
     if let Some(t) = options.timeout {
         let ms = t.as_millis().max(1);
         args.extend(["--max-time".into(), format!("{}.{:03}", ms / 1000, ms % 1000).into()]);
@@ -139,9 +151,9 @@ fn push_url(args: &mut Vec<OsString>, url: &str) {
 
 /// The failure a finished run shows, apart from its HTTP status.
 fn failure(run: &Run, location: &str, max: usize) -> Option<Error> {
-    let (kind, detail): (ErrorKind, Cow<'static, str>) = if run.memory {
+    let (kind, detail): (ErrorKind, Cow<'static, str>) = if run.drained == Drained::OutOfMemory {
         (ErrorKind::Memory, "Memory ran out while reading the response.".into())
-    } else if run.overflow {
+    } else if run.drained == Drained::Overflow {
         (
             ErrorKind::TooLarge,
             format!("The response is larger than the limit of {max} bytes.").into(),
@@ -179,7 +191,7 @@ fn response_of(run: Run, url: &str, max: usize) -> Response {
     response.headers = headers;
     let mut stdout = run.stdout;
     response.body = stdout.split_off(start);
-    let (kind, detail): (ErrorKind, Cow<'static, str>) = match run.status {
+    let (kind, detail): (ErrorKind, Cow<'static, str>) = match run.status.unwrap_or(0) {
         _ if failed.is_some() => (ErrorKind::Network, Cow::Borrowed("")),
         _ if response.body.len() > max => (
             ErrorKind::TooLarge,
@@ -269,8 +281,8 @@ fn run(options: &Options, args: &[OsString], input: Input, limit: usize) -> Resu
         let reader = child.stdout.take().map(|o| scope.spawn(move || drain(o, limit)));
         let (exit, cancelled) = wait(&mut child, options.cancel.as_ref());
         let mut run = Run { exit, cancelled, ..Run::default() };
-        if let Some(Ok((data, overflow, memory))) = reader.map(|r| r.join()) {
-            (run.stdout, run.overflow, run.memory) = (data, overflow, memory);
+        if let Some(Ok((data, drained))) = reader.map(|r| r.join()) {
+            (run.stdout, run.drained) = (data, drained);
         }
         let text = errors.and_then(|e| e.join().ok()).unwrap_or_default();
         (run, text)
@@ -290,22 +302,22 @@ fn feed(mut stdin: std::process::ChildStdin, input: Input) {
 }
 
 /// Reads `out` to its end, or until it would pass `limit` bytes (then it closes the pipe,
-/// which stops curl). Returns the bytes, whether they overflowed, and whether memory ran out.
-fn drain(mut out: impl Read, limit: usize) -> (Vec<u8>, bool, bool) {
+/// which stops curl). Returns the bytes and how reading ended.
+fn drain(mut out: impl Read, limit: usize) -> (Vec<u8>, Drained) {
     let mut data = Vec::new();
     let mut chunk = vec![0u8; 64 * 1024];
     loop {
         let n = match out.read(&mut chunk) {
-            Ok(0) => return (data, false, false),
+            Ok(0) => return (data, Drained::Complete),
             Ok(n) => n,
             Err(e) if e.kind() == io::ErrorKind::Interrupted => continue,
-            Err(_) => return (data, false, false),
+            Err(_) => return (data, Drained::Complete),
         };
-        if n > limit - data.len() {
-            return (data, true, false);
+        if n > limit.saturating_sub(data.len()) {
+            return (data, Drained::Overflow);
         }
         if data.try_reserve(n).is_err() {
-            return (Vec::new(), false, true);
+            return (Vec::new(), Drained::OutOfMemory);
         }
         data.extend_from_slice(&chunk[..n]);
     }
@@ -337,9 +349,9 @@ fn read_stderr(run: &mut Run, text: &str) {
     for line in text.lines() {
         if let Some(rest) = line.strip_prefix(MARKER) {
             let (code, url) = rest.split_once(' ').unwrap_or((rest, ""));
-            run.status = code.parse().unwrap_or(0);
-            run.url.clear();
-            run.url.push_str(url);
+            // curl writes 000 when no response arrived.
+            run.status = code.parse().ok().filter(|&status| status != 0);
+            run.url = (!url.is_empty()).then(|| url.to_owned());
         } else if !line.trim().is_empty() {
             if !run.message.is_empty() {
                 run.message.push(' ');

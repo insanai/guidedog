@@ -1,7 +1,7 @@
 //! Fetch errors: a kind, the location, the HTTP status, a detail, and an Elm-style report.
 
 use std::borrow::Cow;
-use std::fmt::{self, Write as _};
+use std::fmt;
 
 /// Why a [`crate::get`] or [`crate::send`] failed.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -36,8 +36,8 @@ pub struct Error {
     pub kind: ErrorKind,
     /// The URL or path the failure concerns.
     pub location: String,
-    /// The HTTP status, or 0 when none was received.
-    pub status: u16,
+    /// The HTTP status; `None` when none was received.
+    pub status: Option<u16>,
     /// What went wrong, in a sentence (curl's own message for network failures).
     pub detail: Cow<'static, str>,
 }
@@ -46,7 +46,35 @@ impl Error {
     /// Makes an error of `kind` for `location`, copying the location; a `&'static str`
     /// detail is borrowed, a `String` moved.
     pub fn new(kind: ErrorKind, location: &str, detail: impl Into<Cow<'static, str>>) -> Error {
-        Error { kind, location: location.to_owned(), status: 0, detail: detail.into() }
+        Error { kind, location: location.to_owned(), status: None, detail: detail.into() }
+    }
+
+    /// A short, stable code for the kind, such as `fetch.status`.
+    pub fn code(&self) -> &'static str {
+        match self.kind {
+            ErrorKind::Unsupported => "fetch.unsupported",
+            ErrorKind::Missing => "fetch.missing",
+            ErrorKind::Network => "fetch.network",
+            ErrorKind::Timeout => "fetch.timeout",
+            ErrorKind::Status => "fetch.status",
+            ErrorKind::TooLarge => "fetch.too-large",
+            ErrorKind::Redirect => "fetch.redirect",
+            ErrorKind::Cancelled => "fetch.cancelled",
+            ErrorKind::Memory => "fetch.memory",
+            ErrorKind::CurlMissing => "fetch.curl-missing",
+        }
+    }
+
+    /// The Elm-style report of this error, for [`gd_report::render_text`] or
+    /// [`gd_report::render_json`]; it is placed at the URL or path.
+    pub fn report(&self) -> gd_report::Report {
+        let mut message = String::new();
+        // Writing into a String cannot fail.
+        let _ = self.write_explanation(&mut message);
+        let mut report = gd_report::Report::error(self.code(), self.title(), &message);
+        report.hints.push(self.hint().to_owned());
+        report.path.clone_from(&self.location);
+        report
     }
 
     /// The report's title, in capitals.
@@ -78,7 +106,7 @@ impl Error {
                  HTTPS_PROXY."
             }
             ErrorKind::Timeout => "Try again later, or raise the timeout.",
-            ErrorKind::Status => status_hint(self.status),
+            ErrorKind::Status => status_hint(self.status.unwrap_or(0)),
             ErrorKind::TooLarge => "Raise the size limit if the resource is meant to be large.",
             ErrorKind::Redirect => "Send the request to the URL in the location header.",
             ErrorKind::Cancelled => "The transfer was cancelled on request; run it again.",
@@ -94,7 +122,8 @@ impl Error {
     fn write_explanation(&self, f: &mut impl fmt::Write) -> fmt::Result {
         match self.kind {
             ErrorKind::Status => {
-                write!(f, "The server answered with HTTP status {}.", self.status)
+                let status = self.status.unwrap_or(0);
+                write!(f, "The server answered with HTTP status {status}.")
             }
             _ if self.detail.is_empty() => {
                 write!(f, "The transfer of `{}` failed.", self.location)
@@ -114,19 +143,11 @@ fn status_hint(status: u16) -> &'static str {
     }
 }
 
+/// Renders the [`Error::report`] as plain text, 80 columns wide.
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let title = self.title();
-        let used = 3 + title.len() + 1 + 1 + self.location.len();
-        let dashes = 80usize.saturating_sub(used).max(3);
-        write!(f, "-- {title} ")?;
-        for _ in 0..dashes {
-            f.write_char('-')?;
-        }
-        writeln!(f, " {}\n", self.location)?;
-        self.write_explanation(f)?;
-        writeln!(f, "\n")?;
-        write!(f, "Hint: {}", self.hint())
+        let text = gd_report::render_text(&self.report(), &gd_report::Style::default());
+        f.write_str(text.trim_end())
     }
 }
 

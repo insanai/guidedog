@@ -2,9 +2,10 @@
 //! held, so one process-wide buffer is enough.
 
 use std::ffi::{CStr, c_char, c_int};
+use std::marker::PhantomData;
 use std::sync::{Mutex, MutexGuard};
 
-use crate::ffi;
+use crate::{Locked, ffi};
 
 /// Bytes kept from one render's messages; the rest is dropped.
 const CAPACITY: usize = 16384;
@@ -22,7 +23,10 @@ fn log() -> MutexGuard<'static, Log> {
     LOG.lock().unwrap_or_else(std::sync::PoisonError::into_inner)
 }
 
-/// The handler Graphviz calls with each formatted message.
+/// The handler Graphviz calls with each formatted message. It is installed only while a
+/// render holds the Graphviz lock, so it never runs concurrently with `begin` or the
+/// session's drop, which take the log's own lock without calling into Graphviz's error
+/// reporting.
 unsafe extern "C" fn capture(message: *mut c_char) -> c_int {
     if message.is_null() {
         return 0;
@@ -36,30 +40,30 @@ unsafe extern "C" fn capture(message: *mut c_char) -> c_int {
     0
 }
 
-/// Starts capturing Graphviz messages. Call with the Graphviz lock held; the returned
-/// session restores the previous handler when dropped.
-pub(crate) fn begin() -> Session {
+/// Starts capturing Graphviz messages; the returned session restores the previous
+/// handler and level when dropped, before the borrowed lock is released.
+pub(crate) fn begin(_lock: &Locked) -> Session<'_> {
     let mut log = log();
     log.data.clear();
-    // SAFETY: the Graphviz lock is held by the caller, so no other thread is inside
-    // Graphviz; `capture` matches `agusererrf` and lives for the whole program.
+    // SAFETY: the Graphviz lock is held, so no other thread is inside Graphviz;
+    // `capture` matches `agusererrf` and lives for the whole program.
     unsafe {
         log.previous = ffi::agseterrf(Some(capture));
         log.previous_level = ffi::agseterr(ffi::AGWARN);
         ffi::agreseterrors();
     }
-    Session { _private: () }
+    Session { _lock: PhantomData }
 }
 
 /// A capture in progress: dropping it restores the previous handler and level.
-pub(crate) struct Session {
-    _private: (),
+pub(crate) struct Session<'l> {
+    _lock: PhantomData<&'l Locked>,
 }
 
-impl Drop for Session {
+impl Drop for Session<'_> {
     fn drop(&mut self) {
         let log = log();
-        // SAFETY: the session lives inside the Graphviz lock (see `begin`), and the
+        // SAFETY: the session borrows the Graphviz lock, which is still held, and the
         // previous handler came from Graphviz itself.
         unsafe {
             ffi::agseterrf(log.previous);
@@ -69,7 +73,7 @@ impl Drop for Session {
 }
 
 /// The messages captured so far, as text.
-pub(crate) fn text() -> String {
+fn text() -> String {
     String::from_utf8_lossy(&log().data).into_owned()
 }
 
@@ -118,14 +122,14 @@ fn next_raw_message<'a>(rest: &mut &'a str) -> Option<Message<'a>> {
     Some(Message { error, text: body })
 }
 
-/// The text of the first error message in the current log, or "".
-pub(crate) fn first_error() -> String {
+/// The text of the first error message in the current log, if there is one.
+pub(crate) fn first_error() -> Option<String> {
     let text = text();
-    messages(&text).find(|m| m.error).map(|m| m.text.to_string()).unwrap_or_default()
+    messages(&text).find(|m| m.error).map(|m| m.text.to_string())
 }
 
-/// Appends the text of every warning in the current log to `out`.
-pub(crate) fn append_warnings(out: &mut Vec<String>) {
+/// The text of every warning in the current log.
+pub(crate) fn warnings() -> Vec<String> {
     let text = text();
-    out.extend(messages(&text).filter(|m| !m.error).map(|m| m.text.to_string()));
+    messages(&text).filter(|m| !m.error).map(|m| m.text.to_string()).collect()
 }

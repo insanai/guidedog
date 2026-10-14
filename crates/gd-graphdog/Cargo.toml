@@ -5,8 +5,9 @@ edition.workspace = true
 license.workspace = true
 rust-version.workspace = true
 
-# No crates: Graphviz (libgvc, libcgraph) is bound by hand in src/ffi.rs.
+# No external crates: Graphviz (libgvc, libcgraph) is bound by hand in src/ffi.rs.
 [dependencies]
+gd-report = { workspace = true }
 
 [lints]
 workspace = true

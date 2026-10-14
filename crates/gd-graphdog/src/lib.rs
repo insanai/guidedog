@@ -2,10 +2,10 @@
 //! Graphviz C library in process: no external `dot` binary, no temporary files.
 //!
 //! ```no_run
-//! let ctx = gd_graphdog::init()?;                  // plugins load once
+//! let ctx = gd_graphdog::Context::new()?;          // plugins load once
 //! let source = "digraph { a -> b }";
-//! match gd_graphdog::render(&ctx, source, gd_graphdog::Options::default()) {
-//!     Ok(svg) => std::fs::write("g.svg", svg).expect("write"),
+//! match ctx.render(source, gd_graphdog::Options::default()) {
+//!     Ok(rendered) => std::fs::write("g.svg", rendered.output).expect("write"),
 //!     Err(err) => eprint!("{}", gd_graphdog::format_error(&err, source, "g.dot")),
 //! }
 //! # Ok::<(), gd_graphdog::Error>(())
@@ -26,11 +26,12 @@ mod log;
 
 use std::ffi::{CStr, CString, c_char};
 use std::fmt;
-use std::ptr;
+use std::marker::PhantomData;
+use std::ptr::{self, NonNull};
 use std::sync::{Mutex, MutexGuard};
 
-pub use errors::{Error, ErrorKind, error_title};
-pub use format::{format_error, format_message};
+pub use errors::{Error, ErrorKind};
+pub use format::format_error;
 
 /// True when Graphviz is linked statically. This port always links the shared libraries.
 pub const STATIC: bool = false;
@@ -61,17 +62,38 @@ pub enum Engine {
     Patchwork,
 }
 
-/// Every engine, in declaration order.
-pub const ENGINES: [Engine; 8] = [
-    Engine::Dot,
-    Engine::Neato,
-    Engine::Fdp,
-    Engine::Sfdp,
-    Engine::Circo,
-    Engine::Twopi,
-    Engine::Osage,
-    Engine::Patchwork,
-];
+impl Engine {
+    /// Every engine, in declaration order.
+    pub const ALL: [Engine; 8] = [
+        Engine::Dot,
+        Engine::Neato,
+        Engine::Fdp,
+        Engine::Sfdp,
+        Engine::Circo,
+        Engine::Twopi,
+        Engine::Osage,
+        Engine::Patchwork,
+    ];
+
+    /// The Graphviz name of the engine (`"dot"`, `"neato"`, ...).
+    pub fn name(self) -> &'static str {
+        match self {
+            Engine::Dot => "dot",
+            Engine::Neato => "neato",
+            Engine::Fdp => "fdp",
+            Engine::Sfdp => "sfdp",
+            Engine::Circo => "circo",
+            Engine::Twopi => "twopi",
+            Engine::Osage => "osage",
+            Engine::Patchwork => "patchwork",
+        }
+    }
+
+    /// The engine Graphviz calls `name`, or `None` for an unknown name.
+    pub fn from_name(name: &str) -> Option<Engine> {
+        Engine::ALL.into_iter().find(|e| e.name() == name)
+    }
+}
 
 /// Output formats. The default is `Svg`, which the core plugin always provides.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
@@ -85,7 +107,24 @@ pub enum Format {
     Dot,
 }
 
-const FORMATS: [Format; 3] = [Format::Svg, Format::Png, Format::Dot];
+impl Format {
+    /// Every format, in declaration order.
+    pub const ALL: [Format; 3] = [Format::Svg, Format::Png, Format::Dot];
+
+    /// The -T name of the format (`"svg"`, `"png"`, `"dot"`).
+    pub fn name(self) -> &'static str {
+        match self {
+            Format::Svg => "svg",
+            Format::Png => "png",
+            Format::Dot => "dot",
+        }
+    }
+
+    /// The format whose -T name is `name`, or `None` for an unknown name.
+    pub fn from_name(name: &str) -> Option<Format> {
+        Format::ALL.into_iter().find(|f| f.name() == name)
+    }
+}
 
 /// What a default attribute applies to: -G, -N and -E on the dot command line.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
@@ -122,6 +161,13 @@ pub enum FileDecision {
     Refuse,
 }
 
+/// The decision procedure of [`Options::files`]: called with the attribute's name (or
+/// `"src"`) and the file name the graph gives.
+pub type FileAccess<'a> = dyn FnMut(&str, &str) -> FileDecision + 'a;
+
+/// The procedure of [`Options::reserve`]: called with the output's size in bytes.
+pub type Reserve<'a> = dyn FnMut(usize) -> bool + 'a;
+
 /// How to render. Fill it with struct-update syntax:
 /// `Options { engine: Engine::Neato, ..Default::default() }`.
 #[derive(Default)]
@@ -132,8 +178,6 @@ pub struct Options<'a> {
     pub format: Format,
     /// -G/-N/-E defaults.
     pub attributes: &'a [Attribute],
-    /// When set, receives each Graphviz warning ("using box for unknown shape boxx").
-    pub warnings: Option<&'a mut Vec<String>>,
     /// When set, decides every file the graph names, called with the attribute's name (or
     /// `"src"` for an `<IMG>`) and the file name, after parsing and before layout.
     /// Otherwise Graphviz opens what the graph names, as dot does.
@@ -143,118 +187,112 @@ pub struct Options<'a> {
     pub reserve: Option<&'a mut Reserve<'a>>,
 }
 
-/// The decision procedure of [`Options::files`]: called with the attribute's name (or
-/// `"src"`) and the file name the graph gives.
-pub type FileAccess<'a> = dyn FnMut(&str, &str) -> FileDecision + 'a;
-
-/// The procedure of [`Options::reserve`]: called with the output's size in bytes.
-pub type Reserve<'a> = dyn FnMut(usize) -> bool + 'a;
-
 impl fmt::Debug for Options<'_> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Options")
             .field("engine", &self.engine)
             .field("format", &self.format)
             .field("attributes", &self.attributes)
-            .field("warnings", &self.warnings.is_some())
             .field("files", &self.files.is_some())
             .field("reserve", &self.reserve.is_some())
             .finish()
     }
 }
 
-/// A Graphviz context: loaded plugins and nothing else. Make one with [`init`] and keep
-/// it; loading plugins is the expensive part. Dropping it frees the context; rendered
-/// output stays valid.
-#[derive(Debug)]
-pub struct Context {
-    gvc: *mut ffi::Gvc,
+/// What [`Context::render`] made: the output and the warnings Graphviz gave on the way.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct Rendered {
+    /// The rendered bytes (SVG or DOT text, or PNG data).
+    pub output: Vec<u8>,
+    /// Each Graphviz warning, such as "using box for unknown shape boxx".
+    pub warnings: Vec<String>,
 }
 
-// SAFETY: the context is only touched through Graphviz calls made while holding GV_LOCK,
-// so moving it to, or sharing it with, another thread cannot race.
+/// A Graphviz context: loaded plugins and nothing else. Make one with [`Context::new`]
+/// and keep it; loading plugins is the expensive part. Dropping it frees the context;
+/// rendered output stays valid.
+#[derive(Debug)]
+pub struct Context {
+    gvc: NonNull<ffi::Gvc>,
+}
+
+// SAFETY: the context is only touched through Graphviz calls made while holding GV_LOCK
+// (`new`, `version`, `render` and `drop` all take it first), so moving it to another
+// thread cannot race with a call on the thread it came from.
 unsafe impl Send for Context {}
-// SAFETY: as above: every use through `&Context` takes GV_LOCK first.
+// SAFETY: as above: every use through `&Context` takes GV_LOCK first, so shared
+// references on several threads never call into Graphviz at the same time.
 unsafe impl Sync for Context {}
+
+impl Context {
+    /// Creates a Graphviz context and loads the plugins listed in Graphviz's config file
+    /// (written by `dot -c`). Fails with [`ErrorKind::NotInitialized`] only when Graphviz
+    /// cannot make one.
+    pub fn new() -> Result<Context, Error> {
+        let _lock = lock();
+        // SAFETY: the lock is held; gvContext takes no arguments and returns an owned
+        // context or null.
+        let gvc = unsafe { ffi::gvContext() };
+        NonNull::new(gvc).map(|gvc| Context { gvc }).ok_or(Error::new(ErrorKind::NotInitialized))
+    }
+
+    /// The linked Graphviz version, such as `"2.42.4"`, copied into a new string.
+    pub fn version(&self) -> String {
+        let _lock = lock();
+        // SAFETY: the lock is held and `self.gvc` is live; the result is null or a
+        // NUL-terminated string Graphviz owns until the context is freed, and it is
+        // copied before the lock is released.
+        unsafe {
+            let text = ffi::gvcVersion(self.gvc.as_ptr());
+            if text.is_null() {
+                return String::new();
+            }
+            CStr::from_ptr(text).to_string_lossy().into_owned()
+        }
+    }
+
+    /// Lays out the first graph in `source` and renders it, as `dot` does without -O.
+    ///
+    /// Borrows `source` for the call; returns the rendered bytes, which the caller owns
+    /// (Graphviz's own buffers are already freed), and the warnings. Fails with an
+    /// [`Error`] saying what went wrong and how to fix it: a syntax or HTML-label problem
+    /// with its location, a missing plugin, a refused file, or a refused output size.
+    /// Source text after a NUL byte is ignored, as C would.
+    pub fn render(&self, source: &str, mut options: Options<'_>) -> Result<Rendered, Error> {
+        let text = c_string(source);
+        let lock = lock();
+        let session = log::begin(&lock);
+        let output = render_locked(&lock, self, source, &text, &mut options);
+        let warnings = log::warnings();
+        drop(session);
+        Ok(Rendered { output: output?, warnings })
+    }
+}
 
 impl Drop for Context {
     fn drop(&mut self) {
-        let _guard = lock();
-        // SAFETY: `gvc` came from gvContext, is non-null, and is freed only here.
-        unsafe { ffi::gvFreeContext(self.gvc) };
+        let _lock = lock();
+        // SAFETY: `gvc` came from gvContext and is freed only here; no graph or layout
+        // outlives the `&Context` borrow that made it, so nothing uses it afterwards.
+        unsafe { ffi::gvFreeContext(self.gvc.as_ptr()) };
     }
 }
 
 /// Graphviz is not thread-safe, so every call into it takes this lock.
 static GV_LOCK: Mutex<()> = Mutex::new(());
 
-fn lock() -> MutexGuard<'static, ()> {
-    GV_LOCK.lock().unwrap_or_else(std::sync::PoisonError::into_inner)
+/// Proof that the current thread holds [`GV_LOCK`]. Helpers that call Graphviz take a
+/// `&Locked`, and the handles they return borrow it, so no Graphviz call or handle can
+/// escape the lock.
+pub(crate) struct Locked {
+    _guard: MutexGuard<'static, ()>,
 }
 
-/// Creates a Graphviz context and loads the plugins listed in Graphviz's config file
-/// (written by `dot -c`). Fails with [`ErrorKind::NotInitialized`] only when Graphviz
-/// cannot make one.
-pub fn init() -> Result<Context, Error> {
-    let _guard = lock();
-    // SAFETY: the lock is held; gvContext takes no arguments.
-    let gvc = unsafe { ffi::gvContext() };
-    if gvc.is_null() {
-        return Err(Error::new(ErrorKind::NotInitialized));
-    }
-    Ok(Context { gvc })
-}
-
-/// Frees the context; the same as dropping it.
-pub fn close(ctx: Context) {
-    drop(ctx);
-}
-
-/// The linked Graphviz version, such as `"2.42.4"`, copied into a new string.
-pub fn version(ctx: &Context) -> String {
-    let _guard = lock();
-    // SAFETY: the lock is held and `ctx.gvc` is live; the result is a NUL-terminated
-    // string Graphviz owns until the context is freed, copied here at once.
-    unsafe {
-        let text = ffi::gvcVersion(ctx.gvc);
-        if text.is_null() {
-            return String::new();
-        }
-        CStr::from_ptr(text).to_string_lossy().into_owned()
-    }
-}
-
-/// The Graphviz name of an engine (`"dot"`, `"neato"`, ...).
-pub fn engine_name(engine: Engine) -> &'static str {
-    match engine {
-        Engine::Dot => "dot",
-        Engine::Neato => "neato",
-        Engine::Fdp => "fdp",
-        Engine::Sfdp => "sfdp",
-        Engine::Circo => "circo",
-        Engine::Twopi => "twopi",
-        Engine::Osage => "osage",
-        Engine::Patchwork => "patchwork",
-    }
-}
-
-/// The -T name of a format (`"svg"`, `"png"`, `"dot"`).
-pub fn format_name(format: Format) -> &'static str {
-    match format {
-        Format::Svg => "svg",
-        Format::Png => "png",
-        Format::Dot => "dot",
-    }
-}
-
-/// Maps a Graphviz engine name to an [`Engine`], or `None` for an unknown name.
-pub fn parse_engine(name: &str) -> Option<Engine> {
-    ENGINES.into_iter().find(|&e| engine_name(e) == name)
-}
-
-/// Maps a -T format name to a [`Format`], or `None` for an unknown name.
-pub fn parse_format(name: &str) -> Option<Format> {
-    FORMATS.into_iter().find(|&f| format_name(f) == name)
+fn lock() -> Locked {
+    // A panic inside a render leaves no Graphviz state half-changed that a later render
+    // depends on (each render resets the log and restores the prototypes), so a poisoned
+    // lock is recovered.
+    Locked { _guard: GV_LOCK.lock().unwrap_or_else(std::sync::PoisonError::into_inner) }
 }
 
 /// A C string of `text` up to its first NUL byte, as C would read it.
@@ -263,99 +301,110 @@ pub(crate) fn c_string(text: &str) -> CString {
     CString::new(&text[..end]).unwrap_or_default()
 }
 
-/// Lays out the first graph in `source` and renders it, as `dot` does without -O.
-///
-/// Borrows `source` for the call; returns the rendered bytes (Graphviz's own buffers are
-/// already freed). Fails with an [`Error`] saying what went wrong and how to fix it: a
-/// syntax or HTML-label problem with its location, a missing plugin, a refused file, or a
-/// refused output size. Source text after a NUL byte is ignored, as C would.
-pub fn render(ctx: &Context, source: &str, mut options: Options<'_>) -> Result<Vec<u8>, Error> {
-    let text = c_string(source);
-    let warnings = options.warnings.take();
-    let _guard = lock();
-    let session = log::begin();
-    let result = render_locked(ctx, source, &text, &mut options);
-    if let Some(out) = warnings {
-        log::append_warnings(out);
-    }
-    drop(session);
-    result
+/// A parsed root graph, closed when dropped. It borrows the lock, so it is closed
+/// before the lock is released.
+pub(crate) struct Graph<'l> {
+    ptr: NonNull<ffi::Agraph>,
+    _lock: PhantomData<&'l Locked>,
 }
 
-/// A parsed graph, closed when dropped.
-struct Graph(*mut ffi::Agraph);
+impl<'l> Graph<'l> {
+    /// Parses the first graph in `text`; `None` when there is none.
+    fn read(_lock: &'l Locked, text: &CStr) -> Option<Graph<'l>> {
+        // SAFETY: the lock is held and `text` is NUL-terminated; agmemread returns an
+        // owned root graph or null.
+        let ptr = NonNull::new(unsafe { ffi::agmemread(text.as_ptr()) })?;
+        Some(Graph { ptr, _lock: PhantomData })
+    }
 
-impl Drop for Graph {
-    fn drop(&mut self) {
-        // SAFETY: the graph came from agmemread and is closed only here, inside the lock.
-        unsafe { ffi::agclose(self.0) };
+    pub(crate) fn as_ptr(&self) -> *mut ffi::Agraph {
+        self.ptr.as_ptr()
     }
 }
 
-/// A graph's layout, freed when dropped.
-struct Layout<'g>(*mut ffi::Gvc, &'g Graph);
-
-impl Drop for Layout<'_> {
+impl Drop for Graph<'_> {
     fn drop(&mut self) {
-        // SAFETY: gvLayout succeeded on this graph and context; freed once, in the lock.
-        unsafe { ffi::gvFreeLayout(self.0, self.1.0) };
+        // SAFETY: the graph came from agmemread and is closed only here; the borrowed
+        // lock is still held, and any layout of it (which borrows it) is already freed.
+        unsafe { ffi::agclose(self.as_ptr()) };
+    }
+}
+
+/// A graph's layout, freed when dropped; it borrows the context and the graph, so it is
+/// freed before either.
+struct Layout<'c, 'g, 'l> {
+    ctx: &'c Context,
+    graph: &'g Graph<'l>,
+}
+
+impl<'c, 'g, 'l> Layout<'c, 'g, 'l> {
+    /// Lays `graph` out with `engine`; `None` when Graphviz reports a failure.
+    fn new(ctx: &'c Context, graph: &'g Graph<'l>, engine: Engine) -> Option<Self> {
+        let engine = c_string(engine.name());
+        // SAFETY: the graph's borrow of the lock proves it is held; context and graph are
+        // live and the engine name is NUL-terminated.
+        let status = unsafe { ffi::gvLayout(ctx.gvc.as_ptr(), graph.as_ptr(), engine.as_ptr()) };
+        (status == 0).then_some(Layout { ctx, graph })
+    }
+}
+
+impl Drop for Layout<'_, '_, '_> {
+    fn drop(&mut self) {
+        // SAFETY: gvLayout succeeded on this graph and context, both still borrowed, and
+        // the lock the graph borrows is held; the layout is freed only here.
+        unsafe { ffi::gvFreeLayout(self.ctx.gvc.as_ptr(), self.graph.as_ptr()) };
     }
 }
 
 fn render_locked(
+    lock: &Locked,
     ctx: &Context,
     source: &str,
     text: &CStr,
     options: &mut Options<'_>,
 ) -> Result<Vec<u8>, Error> {
-    let engine = options.engine;
-    let saved = defaults::fix(options.attributes);
-    // SAFETY: the lock is held and `text` is NUL-terminated.
-    let g = unsafe { ffi::agmemread(text.as_ptr()) };
-    defaults::restore(saved); // the graph has its own copy now
+    let fixed = defaults::fix(lock, options.attributes);
+    let graph = Graph::read(lock, text);
+    drop(fixed); // the graph has its own copy of the defaults now
     // Older Graphviz versions can return a partial graph after a syntax error.
-    if g.is_null() || log::first_error().contains("syntax error") {
-        if !g.is_null() {
-            drop(Graph(g));
-        }
+    let syntax_error = log::first_error().is_some_and(|e| e.contains("syntax error"));
+    let Some(graph) = graph.filter(|_| !syntax_error) else {
         return Err(errors::parse_failure(source));
-    }
-    let graph = Graph(g);
+    };
     if let Some(access) = options.files.as_deref_mut() {
-        files::check(graph.0, access)?;
+        files::check(&graph, access)?;
     }
-    let engine_c = c_string(engine_name(engine));
-    // SAFETY: the lock is held; context and graph are live.
-    if unsafe { ffi::gvLayout(ctx.gvc, graph.0, engine_c.as_ptr()) } != 0 {
-        return Err(errors::layout_failure(source, engine));
-    }
-    let _layout = Layout(ctx.gvc, &graph);
+    let Some(layout) = Layout::new(ctx, &graph, options.engine) else {
+        return Err(errors::layout_failure(source, options.engine));
+    };
     // Some errors do not stop the layout: Graphviz drops a malformed HTML-like label,
     // reports it, and carries on. dot exits with status 1 then, and so does graphdog.
-    if !log::first_error().is_empty() {
-        return Err(errors::layout_failure(source, engine));
+    if log::first_error().is_some() {
+        return Err(errors::layout_failure(source, options.engine));
     }
-    render_layout(ctx, &graph, options.format, options.reserve.as_deref_mut())
+    render_layout(&layout, options.format, options.reserve.as_deref_mut())
 }
 
 fn render_layout(
-    ctx: &Context,
-    graph: &Graph,
+    layout: &Layout<'_, '_, '_>,
     format: Format,
     reserve: Option<&mut Reserve<'_>>,
 ) -> Result<Vec<u8>, Error> {
-    let format_c = c_string(format_name(format));
+    let format_c = c_string(format.name());
     let mut data: *mut c_char = ptr::null_mut();
     let mut length: usize = 0; // zeroed on purpose: see gvRenderData in ffi.rs
-    // SAFETY: the lock is held; the graph is laid out; data and length are valid outputs.
+    // SAFETY: the lock is held (the layout's graph borrows it); the graph is laid out
+    // in this context; `data` and `length` are valid places for the outputs.
     let status = unsafe {
-        ffi::gvRenderData(ctx.gvc, graph.0, format_c.as_ptr(), &mut data, &mut length)
+        let (gvc, graph) = (layout.ctx.gvc.as_ptr(), layout.graph.as_ptr());
+        ffi::gvRenderData(gvc, graph, format_c.as_ptr(), &mut data, &mut length)
     };
     let buffer = RenderData(data);
     if status != 0 {
         return Err(errors::render_failure(format));
     }
-    // SAFETY: Graphviz returned `data` holding `length` bytes, or reported no output.
+    // SAFETY: Graphviz returned `data` holding `length` bytes, or reported no output;
+    // the view is dropped before `buffer` frees them.
     let Some(rendered) = (unsafe { rendered_bytes(buffer.0, length) }) else {
         return Err(errors::render_failure(format));
     };
@@ -364,7 +413,7 @@ fn render_layout(
     {
         return Err(Error::with(
             ErrorKind::OutOfMemory,
-            "The output is larger than the memory the caller allows.".to_string(),
+            "The output is larger than the memory the caller allows.",
         ));
     }
     let mut output = Vec::new();
@@ -381,7 +430,8 @@ struct RenderData(*mut c_char);
 impl Drop for RenderData {
     fn drop(&mut self) {
         if !self.0.is_null() {
-            // SAFETY: the buffer came from gvRenderData and is freed only here.
+            // SAFETY: the buffer came from gvRenderData and is freed only here, inside
+            // the render that holds the lock; gvFreeRenderData only calls free().
             unsafe { ffi::gvFreeRenderData(self.0) };
         }
     }

@@ -13,15 +13,22 @@
 use std::ffi::{CStr, CString, c_int};
 use std::ptr;
 
-use crate::{Attribute, AttributeKind, c_string, ffi};
+use crate::{Attribute, AttributeKind, Locked, c_string, ffi};
 
 /// One prototype attribute as it was before graphdog changed it.
-pub(crate) struct Saved {
+struct Saved {
     kind: c_int,
     name: CString,
     /// The previous default, or `None` if graphdog declared the attribute.
     value: Option<CString>,
     fixed: u8,
+}
+
+/// Defaults fixed on the prototype graph; dropping it restores what they replaced. It
+/// borrows the lock, so the prototypes are restored before the lock is released.
+pub(crate) struct Fixed<'l> {
+    saved: Vec<Saved>,
+    _lock: &'l Locked,
 }
 
 fn kind_code(kind: AttributeKind) -> c_int {
@@ -32,9 +39,9 @@ fn kind_code(kind: AttributeKind) -> c_int {
     }
 }
 
-/// Declares each attribute on the prototype graph and returns what it replaced. Call with
-/// the Graphviz lock held, and [`restore`] after parsing.
-pub(crate) fn fix(attributes: &[Attribute]) -> Vec<Saved> {
+/// Declares each attribute on the prototype graph, for the graph parsed next; drop the
+/// result once it is parsed.
+pub(crate) fn fix<'l>(lock: &'l Locked, attributes: &[Attribute]) -> Fixed<'l> {
     let mut saved = Vec::with_capacity(attributes.len());
     for attribute in attributes {
         let kind = kind_code(attribute.kind);
@@ -47,34 +54,37 @@ pub(crate) fn fix(attributes: &[Attribute]) -> Vec<Saved> {
             (None, 0)
         } else {
             // SAFETY: `old` is a live symbol of the prototype graph; defval is a
-            // NUL-terminated string cgraph owns.
+            // NUL-terminated string cgraph owns, copied here.
             unsafe { (Some(CStr::from_ptr((*old).defval).to_owned()), (*old).fixed) }
         };
         // SAFETY: as above; cgraph copies name and value.
         let sym = unsafe { ffi::agattr(ptr::null_mut(), kind, name.as_ptr(), value.as_ptr()) };
         if !sym.is_null() {
-            // SAFETY: `sym` is a live symbol of the prototype graph (see ffi::Agsym).
+            // SAFETY: `sym` is a live symbol of the prototype graph whose layout matches
+            // ffi::Agsym up to `fixed`; no other thread can touch it under the lock.
             unsafe { (*sym).fixed = 1 };
         }
         saved.push(Saved { kind, name, value: previous, fixed });
     }
-    saved
+    Fixed { saved, _lock: lock }
 }
 
 /// Undoes [`fix`], newest first, so a name given twice ends up with its original default.
-pub(crate) fn restore(saved: Vec<Saved>) {
-    for entry in saved.into_iter().rev() {
-        let value = entry.value.unwrap_or_else(|| {
-            let label = entry.kind == ffi::AG_NODE && entry.name.as_bytes() == b"label";
-            CString::from(if label { c"\\N" } else { c"" })
-        });
-        // SAFETY: the Graphviz lock is held; cgraph copies name and value.
-        let sym = unsafe {
-            ffi::agattr(ptr::null_mut(), entry.kind, entry.name.as_ptr(), value.as_ptr())
-        };
-        if !sym.is_null() {
-            // SAFETY: `sym` is a live symbol of the prototype graph.
-            unsafe { (*sym).fixed = entry.fixed };
+impl Drop for Fixed<'_> {
+    fn drop(&mut self) {
+        for entry in self.saved.drain(..).rev() {
+            let value = entry.value.unwrap_or_else(|| {
+                let label = entry.kind == ffi::AG_NODE && entry.name.as_bytes() == b"label";
+                CString::from(if label { c"\\N" } else { c"" })
+            });
+            // SAFETY: the lock this value borrows is held; cgraph copies name and value.
+            let sym = unsafe {
+                ffi::agattr(ptr::null_mut(), entry.kind, entry.name.as_ptr(), value.as_ptr())
+            };
+            if !sym.is_null() {
+                // SAFETY: `sym` is a live symbol of the prototype graph (see `fix`).
+                unsafe { (*sym).fixed = entry.fixed };
+            }
         }
     }
 }

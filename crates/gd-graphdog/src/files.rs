@@ -6,16 +6,18 @@
 //! SVG `<image>` names its file).
 
 use std::borrow::Cow;
-use std::ffi::{CStr, c_int, c_void};
+use std::ffi::{CStr, c_char, c_int, c_void};
 use std::ptr;
 
 use crate::errors::{Error, ErrorKind};
-use crate::{FILE_ATTRIBUTES, FileAccess as Access, FileDecision, c_string, ffi};
+use crate::{FILE_ATTRIBUTES, FileAccess as Access, FileDecision, Graph, c_string, ffi};
 
 /// Attributes that may hold HTML-like labels, whose `<IMG SRC="...">` Graphviz reads.
 const LABEL_ATTRIBUTES: [&str; 4] = ["label", "xlabel", "headlabel", "taillabel"];
 
 /// One graph's check: the root graph, the caller's decision, and the first refusal.
+/// Every function below runs while `check` borrows a [`Graph`], which proves the
+/// Graphviz lock is held and the root graph is open.
 struct Walk<'w, 'a> {
     root: *mut ffi::Agraph,
     access: &'w mut Access<'a>,
@@ -23,10 +25,10 @@ struct Walk<'w, 'a> {
     refused: Option<(String, String)>,
 }
 
-/// Shows `access` every file name in `g` and sets what it returns, before `g` is laid
-/// out. Call with the Graphviz lock held. Fails with `FileRefused` for the first name
-/// `access` refuses.
-pub(crate) fn check(g: *mut ffi::Agraph, access: &mut Access<'_>) -> Result<(), Error> {
+/// Shows `access` every file name in `graph` and sets what it returns, before the graph
+/// is laid out. Fails with `FileRefused` for the first name `access` refuses.
+pub(crate) fn check(graph: &Graph<'_>, access: &mut Access<'_>) -> Result<(), Error> {
+    let g = graph.as_ptr();
     let mut w = Walk { root: g, access, refused: None };
     check_graph(&mut w, g);
     // SAFETY: the lock is held and `g` is a live root graph; the traversal functions
@@ -78,34 +80,54 @@ fn check_object(w: &mut Walk<'_, '_>, g: *mut ffi::Agraph, obj: *mut c_void, kin
 
 fn check_symbol(w: &mut Walk<'_, '_>, obj: *mut c_void, sym: *mut ffi::Agsym) {
     // SAFETY: `obj` belongs to the graph whose dictionary holds `sym`; agxget returns a
-    // NUL-terminated string cgraph owns (or null), and `sym.name` is NUL-terminated.
-    let (raw, name) = unsafe {
-        let raw = ffi::agxget(obj, sym);
-        if raw.is_null() || *raw == 0 {
-            return;
-        }
-        (raw, CStr::from_ptr((*sym).name).to_string_lossy().into_owned())
-    };
-    // SAFETY: as above; copied before the attribute is set again.
-    let value = unsafe { CStr::from_ptr(raw) }.to_string_lossy().into_owned();
-    if FILE_ATTRIBUTES.contains(&name.as_str()) {
-        let path = match (w.access)(&name, &value) {
-            FileDecision::Open(path) => path,
-            FileDecision::Omit => String::new(),
-            FileDecision::Refuse => {
-                w.refused = Some((name, value));
-                return;
-            }
-        };
-        let path = c_string(&path);
-        // SAFETY: the lock is held; cgraph copies the value.
-        unsafe { ffi::agxset(obj, sym, path.as_ptr()) };
+    // NUL-terminated string cgraph owns (or null), and `sym.name` is NUL-terminated and
+    // lives as long as the graph.
+    let (raw, name) = unsafe { (ffi::agxget(obj, sym), CStr::from_ptr((*sym).name)) };
+    // SAFETY: `raw` is null or a valid C string (see above).
+    if raw.is_null() || unsafe { *raw } == 0 {
         return;
     }
+    let name = name.to_string_lossy();
+    let is_file = FILE_ATTRIBUTES.contains(&&*name);
     // SAFETY: `raw` is a cgraph string, which is what aghtmlstr inspects.
-    if LABEL_ATTRIBUTES.contains(&name.as_str()) && unsafe { ffi::aghtmlstr(raw) } != 0 {
+    let is_html = || LABEL_ATTRIBUTES.contains(&&*name) && unsafe { ffi::aghtmlstr(raw) } != 0;
+    if !is_file && !is_html() {
+        return;
+    }
+    // SAFETY: as above. Setting the attribute may free `raw`, so the value is copied
+    // before anything is set.
+    let value = unsafe { CStr::from_ptr(raw) }.to_string_lossy().into_owned();
+    if is_file {
+        check_file(w, obj, sym, &name, value);
+    } else {
         check_label(w, obj, sym, &value);
     }
+}
+
+/// Shows `access` the file attribute `name` and sets the path it chooses.
+fn check_file(
+    w: &mut Walk<'_, '_>,
+    obj: *mut c_void,
+    sym: *mut ffi::Agsym,
+    name: &str,
+    value: String,
+) {
+    let path = match (w.access)(name, &value) {
+        FileDecision::Open(path) => c_string(&path),
+        FileDecision::Omit => c_string(""),
+        FileDecision::Refuse => {
+            w.refused = Some((name.to_string(), value));
+            return;
+        }
+    };
+    set(obj, sym, path.as_ptr());
+}
+
+/// Sets attribute `sym` of `obj` to `value`, which cgraph copies.
+fn set(obj: *mut c_void, sym: *mut ffi::Agsym, value: *const c_char) {
+    // SAFETY: the lock is held (see `Walk`), `obj` and `sym` belong to the open graph,
+    // and `value` is a NUL-terminated string that cgraph copies.
+    unsafe { ffi::agxset(obj, sym, value) };
 }
 
 /// Rewrites the SRC of every `<IMG>` in an HTML-like label.
@@ -133,13 +155,11 @@ fn check_label(w: &mut Walk<'_, '_>, obj: *mut c_void, sym: *mut ffi::Agsym, lab
     }
     out.push_str(rest);
     let text = c_string(&out);
-    // SAFETY: the lock is held and `w.root` is the live root graph; agstrdup_html returns
-    // a reference-counted cgraph string that keeps its HTML kind, and agxset copies it.
-    unsafe {
-        let html = ffi::agstrdup_html(w.root, text.as_ptr());
-        if !html.is_null() {
-            ffi::agxset(obj, sym, html);
-        }
+    // SAFETY: the lock is held and `w.root` is the open root graph; agstrdup_html
+    // returns a reference-counted cgraph string that keeps its HTML kind, or null.
+    let html = unsafe { ffi::agstrdup_html(w.root, text.as_ptr()) };
+    if !html.is_null() {
+        set(obj, sym, html);
     }
 }
 
@@ -147,19 +167,24 @@ fn check_label(w: &mut Walk<'_, '_>, obj: *mut c_void, sym: *mut ffi::Agsym, lab
 /// text, without the quotes. Tags and attributes match in any case, as Graphviz's lexer
 /// matches them.
 pub(crate) fn next_img_src(text: &str) -> Option<(usize, usize)> {
-    let lower = text.to_ascii_lowercase();
     let mut from = 0;
     loop {
-        let tag = from + lower[from..].find("<img")? + "<img".len();
-        let close = lower[tag..].find('>')?;
-        if let Some((s, e)) = src_value(&lower[tag..tag + close]) {
+        let tag = from + find_ignore_case(&text[from..], "<img")? + "<img".len();
+        let close = text[tag..].find('>')?;
+        if let Some((s, e)) = src_value(&text[tag..tag + close]) {
             return Some((tag + s, tag + e));
         }
         from = tag + close;
     }
 }
 
-/// Finds `src="..."` or `src='...'` among a tag's attributes.
+/// The byte offset of the first `needle` (ASCII) in `text`, ignoring ASCII case.
+fn find_ignore_case(text: &str, needle: &str) -> Option<usize> {
+    let needle = needle.as_bytes();
+    text.as_bytes().windows(needle.len()).position(|w| w.eq_ignore_ascii_case(needle))
+}
+
+/// Finds `src="..."` or `src='...'` (in any case) among a tag's attributes.
 fn src_value(attrs: &str) -> Option<(usize, usize)> {
     let b = attrs.as_bytes();
     let skip = |mut j: usize| {
@@ -169,18 +194,16 @@ fn src_value(attrs: &str) -> Option<(usize, usize)> {
         j
     };
     for i in 0..b.len().saturating_sub(2) {
-        if &b[i..i + 3] != b"src" || (i > 0 && !is_space(b[i - 1])) {
+        if !b[i..i + 3].eq_ignore_ascii_case(b"src") || (i > 0 && !is_space(b[i - 1])) {
             continue;
         }
         let j = skip(i + 3);
-        if j >= b.len() || b[j] != b'=' {
+        if b.get(j) != Some(&b'=') {
             continue;
         }
         let j = skip(j + 1);
-        if j >= b.len() || (b[j] != b'"' && b[j] != b'\'') {
-            continue;
-        }
-        if let Some(length) = b[j + 1..].iter().position(|&c| c == b[j]) {
+        let Some(&quote) = b.get(j).filter(|&&c| c == b'"' || c == b'\'') else { continue };
+        if let Some(length) = b[j + 1..].iter().position(|&c| c == quote) {
             return Some((j + 1, j + 1 + length));
         }
     }

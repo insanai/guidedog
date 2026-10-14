@@ -3,17 +3,24 @@
 
 use super::*;
 
+fn context() -> Context {
+    Context::new().expect("context")
+}
+
+/// Renders `source` and returns only the output.
+fn render(ctx: &Context, source: &str, options: Options<'_>) -> Result<Vec<u8>, Error> {
+    ctx.render(source, options).map(|r| r.output)
+}
+
 fn render_svg(source: &str, options: Options<'_>) -> String {
-    let ctx = init().expect("context");
-    match render(&ctx, source, options) {
+    match render(&context(), source, options) {
         Ok(out) => String::from_utf8(out).expect("utf-8 svg"),
         Err(err) => panic!("render failed: {err}"),
     }
 }
 
 fn render_error(source: &str) -> Error {
-    let ctx = init().expect("context");
-    render(&ctx, source, Options::default()).expect_err("an error")
+    render(&context(), source, Options::default()).expect_err("an error")
 }
 
 #[test]
@@ -70,9 +77,9 @@ fn unicode_labels_render() {
 
 #[test]
 fn every_engine_renders() {
-    let ctx = init().expect("context");
+    let ctx = context();
     let source = "graph { a -- b -- c -- a; c -- d; subgraph cluster_x { e -- f } }";
-    for engine in ENGINES {
+    for engine in Engine::ALL {
         let out = render(&ctx, source, Options { engine, ..Options::default() });
         let out = out.unwrap_or_else(|err| panic!("{engine:?} failed: {err}"));
         assert!(String::from_utf8_lossy(&out).contains("<title>d</title>"), "{engine:?}");
@@ -81,7 +88,7 @@ fn every_engine_renders() {
 
 #[test]
 fn defaults_override_like_dot() {
-    let ctx = init().expect("context");
+    let ctx = context();
     let source = "digraph { bgcolor=red; node [shape=box]; a -> b; c [shape=circle] }";
     let attribute = |kind, name: &str, value: &str| Attribute {
         kind,
@@ -123,7 +130,7 @@ fn defaults_apply_to_svg() {
 
 #[test]
 fn one_context_renders_twice() {
-    let ctx = init().expect("context");
+    let ctx = context();
     let first = render(&ctx, "digraph { x -> y }", Options::default()).expect("first");
     let second = render(&ctx, "digraph { x -> y }", Options::default()).expect("second");
     assert_eq!(first, second);
@@ -135,7 +142,7 @@ fn one_context_renders_twice() {
 
 #[test]
 fn threads_share_one_context() {
-    let ctx = init().expect("context");
+    let ctx = context();
     std::thread::scope(|scope| {
         let jobs: Vec<_> = (0..4)
             .map(|_| {
@@ -156,8 +163,8 @@ fn threads_share_one_context() {
 
 #[test]
 fn dot_format_and_version() {
-    let ctx = init().expect("context");
-    assert!(!version(&ctx).is_empty());
+    let ctx = context();
+    assert!(!ctx.version().is_empty());
     let options = Options { format: Format::Dot, ..Options::default() };
     let out = render(&ctx, "digraph { a -> b }", options).expect("render");
     assert!(String::from_utf8_lossy(&out).contains("pos="));
@@ -170,16 +177,16 @@ fn dot_format_and_version() {
 
 #[test]
 fn names_round_trip() {
-    for engine in ENGINES {
-        assert_eq!(parse_engine(engine_name(engine)), Some(engine));
+    for engine in Engine::ALL {
+        assert_eq!(Engine::from_name(engine.name()), Some(engine));
     }
-    assert_eq!(parse_engine("dotty"), None);
-    assert_eq!(parse_format("svg"), Some(Format::Svg));
+    assert_eq!(Engine::from_name("dotty"), None);
+    assert_eq!(Format::from_name("svg"), Some(Format::Svg));
 }
 
 #[test]
 fn unicode_labels_are_measured() {
-    let ctx = init().expect("context");
+    let ctx = context();
     let options = Options { format: Format::Dot, ..Options::default() };
     let wide = render(&ctx, r#"digraph { "日本語テキスト" }"#, options).expect("wide");
     let options = Options { format: Format::Dot, ..Options::default() };
@@ -237,10 +244,8 @@ fn bad_html_label_is_located() {
 
 #[test]
 fn warnings_are_collected() {
-    let ctx = init().expect("context");
-    let mut warnings = Vec::new();
-    let options = Options { warnings: Some(&mut warnings), ..Options::default() };
-    render(&ctx, "digraph { a [shape=boxx] }", options).expect("render");
+    let rendered = context().render("digraph { a [shape=boxx] }", Options::default());
+    let warnings = rendered.expect("render").warnings;
     assert_eq!(warnings.len(), 1, "{warnings:?}");
     assert!(warnings[0].contains("boxx"));
 }
@@ -250,13 +255,16 @@ fn format_error_points_at_the_problem() {
     let source = "digraph {\n  a -> b\n  b -> -> c\n}\n";
     let text = format_error(&render_error(source), source, "flow.dot");
     let lines: Vec<&str> = text.lines().collect();
-    assert!(lines[0].starts_with("-- DOT SYNTAX ERROR ---"));
-    assert!(lines[0].ends_with(" flow.dot"));
+    assert!(lines[0].starts_with("-- DOT SYNTAX ERROR [graphdog.syntax] ---"));
+    assert!(lines[0].ends_with(" flow.dot:3:8"));
     assert_eq!(lines[0].len(), 80);
-    assert_eq!(lines[2], "2 |   a -> b");
-    assert_eq!(lines[3], "3 |   b -> -> c");
-    assert_eq!(lines[4], "           ^^");
+    assert_eq!(lines[4], "2|   a -> b");
+    assert_eq!(lines[5], "3|   b -> -> c");
+    assert_eq!(lines[6], "          ^^");
     assert!(text.contains("\nHint: "));
+    // An unknown column underlines the whole line.
+    let err = Error { column: 0, ..render_error(source) };
+    assert!(format_error(&err, source, "flow.dot").contains("3|   b -> -> c\n   ^^^^^^^^^^^\n"));
 }
 
 #[test]
@@ -323,7 +331,7 @@ fn the_caller_decides_every_file_a_graph_names() {
     let source = r#"digraph { imagepath="/elsewhere"; a [image="a.png", label=""]; "#.to_string()
         + r#"b [shape=box, shapefile="b.png"]; "#
         + r#"c [label=<<TABLE><TR><TD><IMG SRC="c&amp;.png"/></TD></TR></TABLE>>] }"#;
-    let ctx = init().expect("context");
+    let ctx = context();
     let options = Options { files: Some(&mut decide), ..Options::default() };
     let out = render(&ctx, &source, options);
     let options = Options { files: Some(&mut decide), ..Options::default() };
@@ -343,7 +351,7 @@ fn the_caller_decides_every_file_a_graph_names() {
 /// A caller's reserve counts the output before render copies it.
 #[test]
 fn the_caller_can_refuse_the_output() {
-    let ctx = init().expect("context");
+    let ctx = context();
     let mut no = |_bytes: usize| false;
     let options = Options { reserve: Some(&mut no), ..Options::default() };
     let err = render(&ctx, "digraph { a -> b }", options).expect_err("refused");

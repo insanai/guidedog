@@ -7,10 +7,11 @@
 
 mod args;
 
-use std::io::{Read, Write};
+use std::io::{IsTerminal, Read, Write};
 use std::process::ExitCode;
 
 use gd_graphdog as gv;
+use gd_report::Report;
 
 /// The graph has a problem.
 const EXIT_GRAPH: u8 = 1;
@@ -50,7 +51,7 @@ fn run() -> u8 {
     let mut cmd = match args::parse_args(&argv) {
         Ok(cmd) => cmd,
         Err(usage) => {
-            report(usage.title, "command line", &usage.message, &usage.hint);
+            report(&usage);
             return EXIT_USAGE;
         }
     };
@@ -58,16 +59,16 @@ fn run() -> u8 {
         print!("{HELP}");
         return 0;
     }
-    let ctx = match gv::init() {
+    let ctx = match gv::Context::new() {
         Ok(ctx) => ctx,
         Err(err) => {
-            eprint!("{}", gv::format_error(&err, "", "graphdog"));
+            report(&err.report("", "graphdog"));
             return EXIT_GRAPH;
         }
     };
     if cmd.version {
         let linkage = if gv::STATIC { "static" } else { "shared" };
-        let version = gv::version(&ctx);
+        let version = ctx.version();
         println!("graphdog {} (Graphviz {version}, {linkage})", env!("CARGO_PKG_VERSION"));
         return 0;
     }
@@ -81,41 +82,44 @@ fn render_all(ctx: &gv::Context, cmd: &mut args::Command) -> u8 {
         cmd.inputs.push("-".to_string());
     }
     let mut out = Vec::new();
-    let mut warnings = Vec::new();
     for input in &cmd.inputs {
         let name = if input == "-" { "<stdin>" } else { input.as_str() };
         let Some(source) = read_input(input) else { return EXIT_FILE };
-        warnings.clear();
         let options = gv::Options {
             engine: cmd.engine,
             format: cmd.format,
             attributes: &cmd.attributes,
-            warnings: Some(&mut warnings),
             ..gv::Options::default()
         };
-        let rendered = gv::render(ctx, &source, options);
-        if !cmd.quiet {
-            for warning in &warnings {
-                eprintln!("Warning: {name}: {warning}");
+        match ctx.render(&source, options) {
+            Ok(rendered) => {
+                if !cmd.quiet {
+                    for warning in &rendered.warnings {
+                        eprintln!("Warning: {name}: {warning}");
+                    }
+                }
+                out.extend_from_slice(&rendered.output);
             }
-        }
-        match rendered {
-            Ok(bytes) => out.extend_from_slice(&bytes),
             Err(err) => {
-                eprint!("{}", gv::format_error(&err, &source, name));
+                report(&err.report(&source, name));
                 return EXIT_GRAPH;
             }
         }
     }
-    write_output(&cmd.output, &out)
+    write_output(cmd.output.as_deref(), &out)
 }
 
 fn read_input(path: &str) -> Option<String> {
     if path == "-" {
         let mut data = Vec::new();
         if std::io::stdin().read_to_end(&mut data).is_err() {
-            report("CANNOT READ INPUT", "<stdin>", "graphdog could not read standard input.",
-                "Pass the graph as a file instead: graphdog graph.dot");
+            report(&file_problem(
+                "graphdog.read",
+                "CANNOT READ INPUT",
+                "<stdin>",
+                "graphdog could not read standard input.",
+                "Pass the graph as a file instead: graphdog graph.dot",
+            ));
             return None;
         }
         return Some(String::from_utf8_lossy(&data).into_owned());
@@ -123,29 +127,46 @@ fn read_input(path: &str) -> Option<String> {
     match std::fs::read(path) {
         Ok(data) => Some(String::from_utf8_lossy(&data).into_owned()),
         Err(err) => {
-            report("CANNOT READ FILE", path, &format!("graphdog cannot read {path}: {err}."),
-                "Check the path. To read standard input, pass - or no file at all.");
+            report(&file_problem(
+                "graphdog.read",
+                "CANNOT READ FILE",
+                path,
+                &format!("graphdog cannot read {path}: {err}."),
+                "Check the path. To read standard input, pass - or no file at all.",
+            ));
             None
         }
     }
 }
 
-fn write_output(path: &str, data: &[u8]) -> u8 {
-    if path.is_empty() || path == "-" {
+fn write_output(path: Option<&str>, data: &[u8]) -> u8 {
+    let Some(path) = path.filter(|&p| p != "-") else {
         let mut stdout = std::io::stdout().lock();
-        return if stdout.write_all(data).and_then(|()| stdout.flush()).is_ok() { 0 } else {
-            EXIT_FILE
-        };
-    }
+        let written = stdout.write_all(data).and_then(|()| stdout.flush());
+        return if written.is_ok() { 0 } else { EXIT_FILE };
+    };
     if let Err(err) = std::fs::write(path, data) {
-        report("CANNOT WRITE FILE", path, &format!("graphdog cannot write {path}: {err}."),
-            "Check that the directory exists and that you may write to it.");
+        report(&file_problem(
+            "graphdog.write",
+            "CANNOT WRITE FILE",
+            path,
+            &format!("graphdog cannot write {path}: {err}."),
+            "Check that the directory exists and that you may write to it.",
+        ));
         return EXIT_FILE;
     }
     0
 }
 
-/// Prints an Elm-style error that has no source excerpt.
-fn report(title: &str, place: &str, message: &str, hint: &str) {
-    eprint!("{}", gv::format_message(title, place, message, hint));
+/// A report about the file `path`, which has no source excerpt.
+fn file_problem(code: &str, title: &str, path: &str, message: &str, hint: &str) -> Report {
+    let mut report = Report::error(code, title, message).hint(hint);
+    report.path = path.to_string();
+    report
+}
+
+/// Prints an Elm-style report to standard error, in colour on a terminal.
+fn report(report: &Report) {
+    let style = gd_report::Style { color: std::io::stderr().is_terminal(), width: 80 };
+    eprint!("{}", gd_report::render_text(report, &style));
 }

@@ -1,0 +1,13 @@
+[package]
+name = "gd-autodoc"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Sphinx autodoc's reStructuredText, generated from static analysis of Python source."
+
+[dependencies]
+gd-pyscan = { workspace = true }
+
+[lints]
+workspace = true

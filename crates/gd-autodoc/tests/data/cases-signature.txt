@@ -1,0 +1,576 @@
+=== INPUT [autodoc] index.rst:4: input:
+.. automodule:: cases.basics
+   :members:
+   :undoc-members:
+   :private-members:
+   :special-members: __special__
+   :show-inheritance:
+
+=== OUTPUT
+
+.. py:module:: cases.basics
+
+   Basics module.
+
+   More text.
+
+
+.. py:data:: Alias
+   :module: cases.basics
+
+   an alias
+
+   alias of :py:class:`int` | :py:class:`str`
+
+
+.. py:class:: Child(a, b=2, *args, c: int = 3, d, **kw)
+   :module: cases.basics
+
+   Bases: :py:class:`~cases.basics.WithInit`
+
+   Child.
+
+
+   .. py:method:: Child.__special__()
+      :module: cases.basics
+
+      Special.
+
+
+   .. py:method:: Child._private()
+      :module: cases.basics
+
+      Private.
+
+
+   .. py:method:: Child.make(y=None)
+      :module: cases.basics
+      :classmethod:
+
+      Make.
+
+
+   .. py:method:: Child.method(x: Shape, y: int | None = None) -> int
+      :module: cases.basics
+
+      Method.
+
+
+   .. py:property:: Child.prop
+      :module: cases.basics
+      :type: str
+
+      Prop.
+
+
+   .. py:method:: Child.run()
+      :module: cases.basics
+      :async:
+
+      Run.
+
+
+   .. py:method:: Child.undocumented()
+      :module: cases.basics
+
+
+   .. py:method:: Child.util(z, /, w)
+      :module: cases.basics
+      :staticmethod:
+
+      Util.
+
+
+   .. py:method:: Child.with_default(color=Color.RED, cls=<class 'cases.basics.Plain'>, f=<built-in function len>, s=20)
+      :module: cases.basics
+
+      Defaults.
+
+
+.. py:class:: Color(*values)
+   :module: cases.basics
+
+   Bases: :py:class:`~enum.Enum`
+
+   Colors.
+
+
+   .. py:attribute:: Color.GREEN
+      :module: cases.basics
+      :value: 2
+
+
+   .. py:attribute:: Color.RED
+      :module: cases.basics
+      :value: 1
+
+      red
+
+
+.. py:class:: DictSub
+   :module: cases.basics
+
+   Bases: :py:class:`dict`
+
+   A dict.
+
+
+.. py:data:: FLOAT
+   :module: cases.basics
+   :value: 1000.0
+
+   float
+
+
+.. py:data:: LIMIT
+   :module: cases.basics
+   :value: 10
+
+   A constant.
+
+
+.. py:data:: MAPPING
+   :module: cases.basics
+   :value: {'a': 1, 'b': 2}
+
+   sorted mapping
+
+
+.. py:exception:: MyError
+   :module: cases.basics
+
+   Bases: :py:class:`Exception`
+
+   An error.
+
+
+.. py:data:: NAMES
+   :module: cases.basics
+   :value: ['a', 'b']
+
+   Names docstring.
+
+
+.. py:data:: NEG
+   :module: cases.basics
+   :value: -5
+
+   neg
+
+
+.. py:class:: Plain()
+   :module: cases.basics
+
+   Bases: :py:class:`object`
+
+   Plain class.
+
+
+.. py:data:: SENTINEL
+   :module: cases.basics
+   :value: <object object>
+
+   a sentinel
+
+
+.. py:data:: TEXT
+   :module: cases.basics
+   :type: str
+   :value: "it's"
+
+   text
+
+
+.. py:data:: TUP
+   :module: cases.basics
+   :value: (1,)
+
+   tuple
+
+
+.. py:class:: WithInit(a, b=2, *args, c: int = 3, d, **kw)
+   :module: cases.basics
+
+   Bases: :py:class:`object`
+
+   With init.
+
+   Extra.
+
+
+   .. py:attribute:: WithInit.a
+      :module: cases.basics
+
+      attribute a
+
+
+   .. py:attribute:: WithInit.b
+      :module: cases.basics
+      :type: int
+
+      attribute b
+
+
+   .. py:attribute:: WithInit.shared
+      :module: cases.basics
+      :type: ~typing.ClassVar[int]
+      :value: 1
+
+      class attribute
+
+
+.. py:data:: annotated
+   :module: cases.basics
+   :type: int
+
+   annotated only
+
+
+.. py:function:: deco(f)
+   :module: cases.basics
+
+   A decorator.
+
+
+.. py:function:: func(a, b: int = 1, *, c=None) -> str
+   :module: cases.basics
+
+   Func doc.
+
+
+.. py:function:: multi(a={'x': 1}, b=(1, 2))
+   :module: cases.basics
+
+   Multi-line defaults.
+
+
+.. py:function:: over(x: int) -> int
+                 over(x: str) -> str
+   :module: cases.basics
+
+   Overloaded.
+
+
+.. py:function:: sig_in_doc(a, b) -> int
+   :module: cases.basics
+
+   Real doc.
+
+=== INPUT [autodoc] index.rst:11: input:
+.. autoclass:: cases.basics.Child
+   :members:
+   :inherited-members:
+   :member-order: bysource
+   :no-index:
+
+=== OUTPUT
+
+.. py:class:: Child(a, b=2, *args, c: int = 3, d, **kw)
+   :no-index:
+   :module: cases.basics
+
+   Child.
+
+
+   .. py:method:: Child.method(x: Shape, y: int | None = None) -> int
+      :no-index:
+      :module: cases.basics
+
+      Method.
+
+
+   .. py:method:: Child.make(y=None)
+      :no-index:
+      :module: cases.basics
+      :classmethod:
+
+      Make.
+
+
+   .. py:method:: Child.util(z, /, w)
+      :no-index:
+      :module: cases.basics
+      :staticmethod:
+
+      Util.
+
+
+   .. py:property:: Child.prop
+      :no-index:
+      :module: cases.basics
+      :type: str
+
+      Prop.
+
+
+   .. py:method:: Child.run()
+      :no-index:
+      :module: cases.basics
+      :async:
+
+      Run.
+
+
+   .. py:method:: Child.with_default(color=Color.RED, cls=<class 'cases.basics.Plain'>, f=<built-in function len>, s=20)
+      :no-index:
+      :module: cases.basics
+
+      Defaults.
+
+
+   .. py:attribute:: Child.shared
+      :no-index:
+      :module: cases.basics
+      :type: ~typing.ClassVar[int]
+      :value: 1
+
+      class attribute
+
+
+   .. py:attribute:: Child.b
+      :no-index:
+      :module: cases.basics
+      :type: int
+
+      attribute b
+
+
+   .. py:attribute:: Child.a
+      :no-index:
+      :module: cases.basics
+
+      attribute a
+
+=== INPUT [autodoc] index.rst:17: input:
+.. automodule:: cases
+   :members:
+   :show-inheritance:
+
+=== OUTPUT
+
+.. py:module:: cases
+
+   Cases package.
+
+
+.. py:class:: Shape(sides: int, name: str | None = None)
+   :module: cases
+   :canonical: cases.shapes.Shape
+
+   Bases: :py:class:`~typing.Generic`\ [:py:obj:`~cases.shapes.T`]
+
+   A shape.
+
+   :param sides: How many sides.
+
+
+   .. py:method:: Shape.area(scale: float = 1.0) -> float
+      :module: cases
+
+      The area.
+
+      :param scale: A factor.
+
+
+   .. py:attribute:: Shape.sides
+      :module: cases
+      :type: int
+
+      Number of sides.
+
+
+.. py:class:: Square(sides: int, name: str | None = None)
+   :module: cases
+   :canonical: cases.shapes.Square
+
+   Bases: :py:class:`~cases.shapes.Shape`\ [:py:class:`int`]
+
+   A square.
+
+
+   .. py:method:: Square.area(scale: float = 1.0) -> float
+      :module: cases
+
+      The area.
+
+      :param scale: A factor.
+
+
+.. py:function:: helper()
+   :module: cases
+
+   Helper.
+
+=== INPUT [autodoc] index.rst:21: input:
+.. autoclass:: cases.shapes.Square
+   :members:
+   :inherited-members:
+   :no-index:
+
+=== OUTPUT
+
+.. py:class:: Square(sides: int, name: str | None = None)
+   :no-index:
+   :module: cases.shapes
+
+   A square.
+
+
+   .. py:method:: Square.area(scale: float = 1.0) -> float
+      :no-index:
+      :module: cases.shapes
+
+      The area.
+
+      :param scale: A factor.
+
+
+   .. py:attribute:: Square.sides
+      :no-index:
+      :module: cases.shapes
+      :type: int
+
+      Number of sides.
+
+=== INPUT [autodoc] index.rst:26: input:
+.. autodecorator:: cases.basics.deco
+   :no-index:
+
+=== OUTPUT
+
+.. py:decorator:: deco
+   :no-index:
+   :module: cases.basics
+
+   A decorator.
+
+=== INPUT [autodoc] index.rst:29: input:
+.. autodata:: cases.basics.LIMIT
+   :no-index:
+
+=== OUTPUT
+
+.. py:data:: LIMIT
+   :no-index:
+   :module: cases.basics
+   :value: 10
+
+   A constant.
+
+=== INPUT [autodoc] index.rst:32: input:
+.. autoattribute:: cases.basics.WithInit.a
+   :no-index:
+
+=== OUTPUT
+
+.. py:attribute:: WithInit.a
+   :no-index:
+   :module: cases.basics
+
+   attribute a
+
+=== INPUT [autodoc] index.rst:35: input:
+.. autoexception:: cases.basics.MyError
+   :no-index:
+
+=== OUTPUT
+
+.. py:exception:: MyError
+   :no-index:
+   :module: cases.basics
+
+   An error.
+
+=== INPUT [autodoc] index.rst:38: input:
+.. autoclass:: cases.basics.DictSub
+   :no-index:
+
+=== OUTPUT
+
+.. py:class:: DictSub
+   :no-index:
+   :module: cases.basics
+
+   A dict.
+
+=== INPUT [autodoc] index.rst:41: input:
+.. autofunction:: cases.basics.over
+   :no-index:
+
+=== OUTPUT
+
+.. py:function:: over(x: int) -> int
+                 over(x: str) -> str
+   :no-index:
+   :module: cases.basics
+
+   Overloaded.
+
+=== INPUT [autodoc] index.rst:44: input:
+.. automethod:: cases.basics.Child.make
+   :no-index:
+
+=== OUTPUT
+
+.. py:method:: Child.make(y=None)
+   :no-index:
+   :module: cases.basics
+   :classmethod:
+
+   Make.
+
+=== INPUT [autodoc] index.rst:47: input:
+.. autoclass:: cases.basics.WithInit
+   :members:
+   :undoc-members:
+   :member-order: groupwise
+   :class-doc-from: both
+   :no-index:
+
+=== OUTPUT
+
+.. py:class:: WithInit(a, b=2, *args, c: int = 3, d, **kw)
+   :no-index:
+   :module: cases.basics
+
+   With init.
+
+   Extra.
+
+   Init doc.
+
+
+   .. py:attribute:: WithInit.a
+      :no-index:
+      :module: cases.basics
+
+      attribute a
+
+
+   .. py:attribute:: WithInit.b
+      :no-index:
+      :module: cases.basics
+      :type: int
+
+      attribute b
+
+
+   .. py:attribute:: WithInit.shared
+      :no-index:
+      :module: cases.basics
+      :type: ~typing.ClassVar[int]
+      :value: 1
+
+      class attribute
+
+=== INPUT [autodoc] index.rst:54: input:
+.. autofunction:: cases.basics.multi
+   :no-index:
+=== OUTPUT
+
+.. py:function:: multi(a={'x': 1}, b=(1, 2))
+   :no-index:
+   :module: cases.basics
+
+   Multi-line defaults.
+

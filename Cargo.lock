@@ -651,6 +651,9 @@ version = "0.7.0"
 [[package]]
 name = "gd-fetch"
 version = "0.7.0"
+dependencies = [
+ "gd-report",
+]
 
 [[package]]
 name = "gd-flate"
@@ -763,6 +766,7 @@ dependencies = [
 name = "gd-typst"
 version = "0.7.0"
 dependencies = [
+ "gd-report",
  "typst",
  "typst-html",
  "typst-kit",
@@ -839,6 +843,10 @@ version = "0.7.0"
 
 [[package]]
 name = "guidedoc-rst"
+version = "0.7.0"
+
+[[package]]
+name = "guidedoc-rst-inline"
 version = "0.7.0"
 
 [[package]]

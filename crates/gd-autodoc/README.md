@@ -1,0 +1,58 @@
+# gd-autodoc cheat sheet
+
+Generates the reStructuredText Sphinx 9.1's `sphinx.ext.autodoc` generates, from Python
+source that `gd-pyscan` analyses instead of imported modules: the same `py:` directives,
+docstrings prepared as Sphinx prepares them, members chosen, filtered and ordered as the
+options say. What static analysis cannot know (compiled modules, objects made at run
+time, members of classes outside the source roots) is a `Message` naming the object.
+
+```rust
+use gd_autodoc::{Config, DirectiveOption, MemberOrder, Request, Session, document};
+
+let mut session = Session::new(gd_pyscan::Project::new(&["src"])?);
+let config = Config { autodoc_member_order: MemberOrder::Bysource, ..Config::default() };
+let request = Request {
+    directive: "autoclass".into(),
+    argument: "mypackage.core.Parser".into(),
+    options: vec![DirectiveOption::flag("members")],
+    ..Request::default()
+};
+let out = document(&mut session, &config, &request);
+for m in &out.messages { eprintln!("{m}"); }           // Elm-style: title, text, hint
+println!("{}", out.lines.join("\n"));                 // ".. py:class:: Parser(...)", ...
+```
+
+| Item | Does |
+|---|---|
+| `Session::new(project)`, `project()`, `into_project()` | one build's state; owns the project |
+| `document(&mut session, &config, &request) -> Output` | the reST of one directive: `automodule`, `autoclass`, `autoexception`, `autofunction`, `automethod`, `autoattribute`, `autodata`, `autoproperty`, `autodecorator`, `autotype` |
+| `Config` (`Default` = Sphinx's defaults) | `autoclass_content`, `autodoc_*`, `tab_width`, `typehint_fields` |
+| `ClassContent`, `ClassSignature`, `MemberOrder`, `Typehints`, `DescriptionTarget`, `TypehintsFormat` | the string settings as enums; `parse("bysource")` reads Sphinx's names |
+| `Request`, `DirectiveOption::{flag, new}`, `DefaultOption`, `TypeAlias` | inputs |
+| `Output { lines, messages }`, `Output::has_message(code)` | results |
+| `Message { severity, code, title, text, hint }` (`Display`, `Error`) | Elm-style diagnostics |
+| `ALL_OPTIONS` | every option an autodoc directive may take, for a reader's table |
+
+Codes: `autodoc.directive`, `.option`, `.signature`, `.module`, `.import`, `.native`,
+`.too_deep`, `.outside`, `.kind`, `.all`, `.member`, `.members`, `.docstring`, `.value`,
+`.default`, `.decorator`, `.limit`.
+
+Limits: `MAX_EVAL_STEPS` (10,000 nodes per annotation), `MAX_DESCRIBE_STEPS` (10,000
+nodes per value), member nesting 24, `MAX_GENERATED` (10,000 directives, then warning
+`autodoc.limit`).
+
+## Redesigned from the Odin package
+
+- No arenas or `session_init`: `Session` owns the `Project`, `document` returns an owned
+  `Output`; the Odin `Result` is `Output` (no clash with `std::result::Result`).
+- Settings Sphinx takes as strings (`autodoc_member_order`, `autodoc_typehints`, ...) are
+  enums, so unknown values are rejected by the host when it reads `conf.toml`.
+- Evaluated annotations are a `TypeValue` enum with data per variant; the docstring
+  "None vs empty" distinction is `Option<Vec<Vec<String>>>`; `__doc__` lookups return
+  `Result<Option<String>, Unknown>`; signature sources are an enum (`Function` or
+  `Fixed`); annotation sources are `Node` or `Text`.
+- Values that were `value` + `has_value` pairs (`value_repr`, `property_type`,
+  `type_annotation`, `__all__`, recorded hints, `:annotation:`) are `Option`s.
+- Not ported: the Odin allocation-refusal test (`memory_test.odin`), which needs a
+  failing allocator; Rust aborts on allocation failure instead. `autodoc_type_aliases`
+  and `autodoc_mock_imports` are carried in `Config` but, as in the Odin code, unused.

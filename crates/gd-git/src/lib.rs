@@ -21,25 +21,25 @@
 //! println!("{}", gd_git::object_id(gd_git::Kind::Commit, &commit));
 //! ```
 
-mod deflate;
 mod error;
 mod pack;
 mod protocol;
-mod sha1;
 mod tree;
 
 #[cfg(test)]
 mod tests;
 
 use std::fmt;
-use std::io::{BufRead, BufReader, Write};
+use std::io::{BufReader, Write};
 use std::path::Path;
+
+use gd_sha::Sha1;
 
 pub use error::{Error, ErrorKind};
 pub use pack::PackWriter;
 pub use protocol::{
-    Advertisement, MAX_ADVERTISEMENT, Ref, RefStatus, Report, parse_advertisement, parse_report,
-    write_request,
+    Advertisement, MAX_ADVERTISEMENT, Ref, RefStatus, Report, Update, parse_advertisement,
+    parse_report, write_request,
 };
 pub use tree::{File, Tree, build_trees, is_valid_path};
 
@@ -135,7 +135,7 @@ pub struct Commit {
     pub message: String,
 }
 
-pub(crate) fn hex_into(out: &mut [u8], id: &Id) {
+fn hex_into(out: &mut [u8], id: &Id) {
     const DIGITS: &[u8; 16] = b"0123456789abcdef";
     for (i, &c) in id.0.iter().enumerate() {
         out[2 * i] = DIGITS[usize::from(c >> 4)];
@@ -181,35 +181,20 @@ pub fn file_id(path: &Path) -> Result<(Id, u64), Error> {
     let file = std::fs::File::open(path).map_err(|e| Error::unreadable(path, &e))?;
     let size = file.metadata().map_err(|e| Error::unreadable(path, &e))?.len();
     let mut hash = start(Kind::Blob, size);
-    let mut file = BufReader::with_capacity(pack::CHUNK, file);
-    let mut read = 0u64;
-    loop {
-        let n = match file.fill_buf() {
-            Ok([]) => break,
-            Ok(chunk) => {
-                hash.update(chunk);
-                chunk.len()
-            }
-            Err(e) if e.kind() == std::io::ErrorKind::Interrupted => continue,
-            Err(e) => return Err(Error::unreadable(path, &e)),
-        };
-        file.consume(n);
-        read += n as u64;
-    }
+    // The hasher is an `io::Write` sink: the file streams through it a chunk at a time.
+    let mut reader = BufReader::with_capacity(pack::CHUNK, file);
+    let read = std::io::copy(&mut reader, &mut hash).map_err(|e| Error::unreadable(path, &e))?;
     if read != size {
         return Err(Error::changed(path, "changed while it was read"));
     }
     Ok((Id(hash.finish()), read))
 }
 
-pub(crate) fn start(kind: Kind, size: u64) -> sha1::Sha1 {
-    let mut hash = sha1::Sha1::new();
-    let mut header = [0u8; 32];
-    let mut sink = &mut header[..];
-    // "commit 18446744073709551615\0" is 28 bytes: the header always fits.
-    let _ = write!(sink, "{} {size}\0", kind.name());
-    let used = 32 - sink.len();
-    hash.update(&header[..used]);
+/// A SHA-1 hasher that has seen the header of an object of `kind` and `size` bytes.
+pub(crate) fn start(kind: Kind, size: u64) -> Sha1 {
+    let mut hash = Sha1::new();
+    // Writing into the hasher cannot fail.
+    let _ = write!(hash, "{} {size}\0", kind.name());
     hash
 }
 

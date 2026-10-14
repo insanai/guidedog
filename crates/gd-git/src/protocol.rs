@@ -6,7 +6,7 @@ use std::io::{BufReader, Write};
 use std::path::Path;
 
 use crate::pack::{CHUNK, create_private};
-use crate::{Error, ErrorKind, Id, digit, hex_into, parse_id};
+use crate::{Error, ErrorKind, Id, digit, parse_id};
 
 /// A reference and the object it names.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -41,27 +41,54 @@ impl Advertisement {
     }
 }
 
-/// How receive-pack answered the update of one reference: ok, or why not.
+/// How receive-pack answered the update of one reference: applied, or why not.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct RefStatus {
     /// The reference's full name.
     pub name: String,
-    /// Whether the update was applied.
-    pub ok: bool,
-    /// Why it was refused, such as `fetch first`; empty when `ok`.
-    pub reason: String,
+    /// Why the update was refused, such as `fetch first`; `None` when it was applied.
+    pub refusal: Option<String>,
+}
+
+impl RefStatus {
+    /// Tells whether the update was applied.
+    pub fn is_ok(&self) -> bool {
+        self.refusal.is_none()
+    }
 }
 
 /// Receive-pack's answer to an update: whether it unpacked the pack, and the status of
 /// each reference.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Report {
-    /// Whether receive-pack unpacked the pack (`unpack == "ok"`).
-    pub unpacked: bool,
-    /// Receive-pack's word on unpacking: `ok`, or the error.
-    pub unpack: String,
+    /// Why receive-pack could not unpack the pack; `None` when it did (`unpack ok`).
+    pub unpack_error: Option<String>,
     /// The status of each reference.
     pub refs: Vec<RefStatus>,
+}
+
+impl Report {
+    /// Tells whether receive-pack unpacked the pack.
+    pub fn is_unpacked(&self) -> bool {
+        self.unpack_error.is_none()
+    }
+}
+
+/// One reference update for [`write_request`]: change `reference` from `old` to `new`
+/// ([`Id::ZERO`] `old` creates it), sending the pack at `pack`. `agent` names the client,
+/// such as `guidedog-pages/0.7.0`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Update<'a> {
+    /// The reference's full name, such as `refs/heads/gh-pages`.
+    pub reference: &'a str,
+    /// The ID the reference must still have; [`Id::ZERO`] when it must not exist.
+    pub old: Id,
+    /// The ID to set.
+    pub new: Id,
+    /// The pack holding the objects the server lacks.
+    pub pack: &'a Path,
+    /// The client's name and version.
+    pub agent: &'a str,
 }
 
 /// Bounds the advertisement and the report the parsers read.
@@ -136,7 +163,8 @@ pub fn parse_report(data: &[u8]) -> Result<Report, Error> {
     let Some(unpack) = unpack else {
         return Err(Error::protocol("The answer is not a receive-pack report."));
     };
-    let mut r = Report { unpacked: unpack == "ok", unpack: unpack.to_string(), refs: vec![] };
+    let unpack_error = (unpack != "ok").then(|| unpack.to_string());
+    let mut r = Report { unpack_error, refs: vec![] };
     loop {
         let line = match next_packet(&mut rest) {
             None => return Err(Error::protocol("The report ends early.")),
@@ -144,12 +172,11 @@ pub fn parse_report(data: &[u8]) -> Result<Report, Error> {
             Some(Packet::Line(line)) => line,
         };
         if let Some(name) = line.strip_prefix("ok ") {
-            r.refs.push(RefStatus { name: name.to_string(), ok: true, reason: String::new() });
+            r.refs.push(RefStatus { name: name.to_string(), refusal: None });
         } else if let Some(text) = line.strip_prefix("ng ") {
             let (name, reason) = text.split_once(' ').unwrap_or((text, ""));
-            let status =
-                RefStatus { name: name.to_string(), ok: false, reason: reason.to_string() };
-            r.refs.push(status);
+            let refusal = Some(reason.to_string());
+            r.refs.push(RefStatus { name: name.to_string(), refusal });
         } else {
             return Err(Error::protocol("The report lists a malformed reference."));
         }
@@ -185,49 +212,44 @@ fn too_large(what: &str) -> Error {
     )
 }
 
-/// Writes to `path`, which must not exist, an update request: change `reference` from
-/// `old` to `new` ([`Id::ZERO`] `old` creates it), sending the pack at `pack_path` and
-/// asking for a report. `agent` names the client, such as `guidedog-pages/0.7.0`.
+/// Writes to `path`, which must not exist, the request for `update`: the command, a
+/// request for a report, and the pack, streamed from its file.
 ///
 /// An update applies only while the reference still has the ID `old`: a compare-and-swap,
 /// so a publisher never overwrites a branch someone else moved. Fails with
 /// [`ErrorKind::Protocol`] for an empty or too long reference or agent, or one holding
 /// whitespace or NUL, and [`ErrorKind::Io`] when a file cannot be read or written.
-pub fn write_request(
-    path: &Path,
-    reference: &str,
-    old: Id,
-    new: Id,
-    pack_path: &Path,
-    agent: &str,
-) -> Result<(), Error> {
+pub fn write_request(path: &Path, update: &Update<'_>) -> Result<(), Error> {
+    let command = update_command(update)?;
+    let mut out = create_private(path).map_err(|e| Error::uncreatable(path, &e))?;
+    let unwritable = || Error::unwritable(path, "request");
+    out.write_all(&command).map_err(|_| unwritable())?;
+    let pack = File::open(update.pack).map_err(|e| Error::unreadable(update.pack, &e))?;
+    // Stream the pack: a large site never sits in memory whole.
+    let mut pack = BufReader::with_capacity(CHUNK, pack);
+    std::io::copy(&mut pack, &mut out).map_err(|_| unwritable())?;
+    out.sync_all().map_err(|_| unwritable())
+}
+
+/// The update command as one packet, followed by a flush.
+fn update_command(u: &Update<'_>) -> Result<Vec<u8>, Error> {
     let bad = |s: &str| s.is_empty() || s.contains([' ', '\t', '\r', '\n', '\0']);
-    if reference.len() > 65_000 || agent.len() > 256 || bad(reference) || bad(agent) {
+    if u.reference.len() > 65_000 || u.agent.len() > 256 || bad(u.reference) || bad(u.agent) {
         return Err(Error::new(
             ErrorKind::Protocol,
             "The reference or agent is not a valid Git protocol field.",
             "Use a branch name without spaces, such as `refs/heads/gh-pages`.",
         ));
     }
-    let (mut old_text, mut new_text) = ([0u8; 40], [0u8; 40]);
-    hex_into(&mut old_text, &old);
-    hex_into(&mut new_text, &new);
-    let mut command = Vec::with_capacity(reference.len() + agent.len() + 128);
-    command.extend_from_slice(b"0000");
-    command.extend_from_slice(&old_text);
-    command.push(b' ');
-    command.extend_from_slice(&new_text);
-    // Writing into a Vec cannot fail.
-    let _ = writeln!(command, " {reference}\0report-status agent={agent}");
+    let mut command = Vec::with_capacity(u.reference.len() + u.agent.len() + 128);
+    // Writing into a Vec cannot fail. The length is patched in once it is known.
+    let _ = writeln!(
+        command,
+        "0000{} {} {}\0report-status agent={}",
+        u.old, u.new, u.reference, u.agent
+    );
     let size = command.len();
     let _ = write!(&mut command[..4], "{size:04x}");
     command.extend_from_slice(b"0000");
-    let mut out = create_private(path).map_err(|e| Error::uncreatable(path, &e))?;
-    let unwritable = || Error::unwritable(path, "request");
-    out.write_all(&command).map_err(|_| unwritable())?;
-    let mut pack = File::open(pack_path).map_err(|e| Error::unreadable(pack_path, &e))?;
-    // Stream the pack: a large site never sits in memory whole.
-    let mut pack = BufReader::with_capacity(CHUNK, &mut pack);
-    std::io::copy(&mut pack, &mut out).map_err(|_| unwritable())?;
-    out.sync_all().map_err(|_| unwritable())
+    Ok(command)
 }

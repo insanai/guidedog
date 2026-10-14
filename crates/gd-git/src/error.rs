@@ -21,7 +21,20 @@ pub enum ErrorKind {
 }
 
 impl ErrorKind {
-    fn title(self) -> &'static str {
+    /// A short, stable code for the kind, such as `git.invalid-path`.
+    pub fn code(self) -> &'static str {
+        match self {
+            ErrorKind::InvalidPath => "git.invalid-path",
+            ErrorKind::Io => "git.io",
+            ErrorKind::Changed => "git.changed",
+            ErrorKind::Protocol => "git.protocol",
+            ErrorKind::TooLarge => "git.too-large",
+            ErrorKind::Pack => "git.pack",
+        }
+    }
+
+    /// The report's title, in capitals.
+    pub fn title(self) -> &'static str {
         match self {
             ErrorKind::InvalidPath => "INVALID GIT PATH",
             ErrorKind::Io => "FILE ERROR",
@@ -98,20 +111,25 @@ impl Error {
     }
 }
 
+impl Error {
+    /// The Elm-style report of this error, for [`gd_report::render_text`] or
+    /// [`gd_report::render_json`]; it names the file when there is one.
+    pub fn report(&self) -> gd_report::Report {
+        let mut report =
+            gd_report::Report::error(self.kind.code(), self.kind.title(), &self.message)
+                .hint(&self.hint);
+        if let Some(path) = &self.path {
+            report.path = path.display().to_string();
+        }
+        report
+    }
+}
+
+/// Renders the [`Error::report`] as plain text, 80 columns wide.
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let title = self.kind.title();
-        let place = self.path.as_ref().map(|p| p.display().to_string()).unwrap_or_default();
-        let used = title.len() + place.len() + 5;
-        let dashes = "-".repeat(80usize.saturating_sub(used).max(3));
-        writeln!(f, "-- {title} {dashes} {place}")?;
-        writeln!(f)?;
-        writeln!(f, "{}", self.message)?;
-        if !self.hint.is_empty() {
-            writeln!(f)?;
-            write!(f, "Hint: {}", self.hint)?;
-        }
-        Ok(())
+        let text = gd_report::render_text(&self.report(), &gd_report::Style::default());
+        f.write_str(text.trim_end())
     }
 }
 

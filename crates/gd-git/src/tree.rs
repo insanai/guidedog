@@ -140,21 +140,14 @@ fn tree_bytes(entries: &mut [Entry]) -> Vec<u8> {
 }
 
 fn compare(a: &Entry, b: &Entry) -> Ordering {
-    for i in 0..=a.name.len().min(b.name.len()) {
-        let (av, bv) = (name_byte(a, i), name_byte(b, i));
-        if av != bv {
-            return av.cmp(&bv);
-        }
-    }
-    Ordering::Equal
+    // Git compares names as if a folder's ended with `/`; the end of any name is decisive
+    // because names hold no NUL and no `/`.
+    sort_key(a).cmp(sort_key(b))
 }
 
-fn name_byte(e: &Entry, at: usize) -> u8 {
-    match e.name.as_bytes().get(at) {
-        Some(&c) => c,
-        None if e.mode == Mode::Tree => b'/',
-        None => 0,
-    }
+fn sort_key<'a>(e: &Entry<'a>) -> impl Iterator<Item = u8> + 'a {
+    let end = if e.mode == Mode::Tree { b'/' } else { 0 };
+    e.name.bytes().chain(std::iter::once(end))
 }
 
 fn mode_text(mode: Mode) -> &'static str {

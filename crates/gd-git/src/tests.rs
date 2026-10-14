@@ -22,8 +22,8 @@ fn ids_match_git() {
     }
     // A message spanning several SHA-1 blocks.
     let long = vec![b'a'; 1000];
-    assert_eq!(sha1::Sha1::new().finish().len(), 20);
-    assert_eq!(object_id(Kind::Blob, &long), object_id(Kind::Blob, &long[..]));
+    let id = object_id(Kind::Blob, &long);
+    assert_eq!(id.to_hex(), "a50be72b20f0e3f078d252e8e56b11b4bec67509");
 }
 
 fn file(path: &str, mode: Mode, id: Id) -> File {
@@ -79,8 +79,8 @@ fn packets_parse() {
     let report =
         format!("{}{}0000", packet("unpack ok\n"), packet("ng refs/heads/gh-pages fetch first\n"));
     let r = parse_report(report.as_bytes()).expect("report");
-    assert!(r.unpacked && r.refs.len() == 1);
-    assert!(!r.refs[0].ok && r.refs[0].reason == "fetch first");
+    assert!(r.is_unpacked() && r.refs.len() == 1);
+    assert!(!r.refs[0].is_ok() && r.refs[0].refusal.as_deref() == Some("fetch first"));
     for bad in ["", "zzzz", "0005", "0009unpa"] {
         assert!(parse_report(bad.as_bytes()).is_err(), "accepted {bad:?}");
         assert!(parse_advertisement(bad.as_bytes()).is_err(), "accepted {bad:?}");
@@ -91,7 +91,7 @@ fn packets_parse() {
 fn errors_render_in_elm_style() {
     let err = build_trees(&[]).expect_err("empty tree");
     let text = err.to_string();
-    assert!(text.starts_with("-- INVALID GIT PATH ---"), "{text}");
+    assert!(text.starts_with("-- INVALID GIT PATH [git.invalid-path] ---"), "{text}");
     assert!(text.contains("A tree needs at least one file.\n\nHint: "), "{text}");
 }
 
@@ -108,8 +108,39 @@ fn packs_refuse_misuse() {
     let w = PackWriter::begin(&path, 2).expect("begin");
     assert_eq!(w.end().map_err(|e| e.kind), Err(ErrorKind::Pack));
     let request = dir.join("r");
-    let bad = write_request(&request, "a b", Id::ZERO, Id::ZERO, &path, "x");
+    let update =
+        Update { reference: "a b", old: Id::ZERO, new: Id::ZERO, pack: &path, agent: "x" };
+    let bad = write_request(&request, &update);
     assert_eq!(bad.map_err(|e| e.kind), Err(ErrorKind::Protocol));
+    let _ = std::fs::remove_dir_all(&dir);
+}
+
+// Each object is a header and a zlib stream that inflates to its contents.
+#[test]
+fn packs_hold_zlib_streams() {
+    let dir = temp_dir("streams");
+    let path = dir.join("p.pack");
+    let page = sample(3, 5000);
+    let mut w = PackWriter::begin(&path, 2).expect("begin");
+    w.add(Kind::Blob, &page).expect("add");
+    w.add(Kind::Tree, b"").expect("add empty");
+    let size = w.end().expect("end");
+    let pack = std::fs::read(&path).expect("read pack");
+    assert_eq!(pack.len() as u64, size);
+    assert_eq!(&pack[..12], b"PACK\0\0\0\x02\0\0\0\x02");
+    let mut at = 12;
+    let mut out = Vec::new();
+    for (kind, data) in [(Kind::Blob, &page[..]), (Kind::Tree, &[][..])] {
+        assert_eq!(pack[at] >> 4 & 7, kind as u8);
+        while pack[at] & 0x80 != 0 {
+            at += 1;
+        }
+        out.clear();
+        let used = gd_flate::zlib_decompress_into(&mut out, &pack[at + 1..], 1 << 20);
+        at += 1 + used.expect("a zlib stream");
+        assert_eq!(out, data);
+    }
+    assert_eq!(&pack[at..], &gd_sha::sha1(&pack[..at])[..]);
     let _ = std::fs::remove_dir_all(&dir);
 }
 
@@ -203,13 +234,19 @@ fn push(dir: &Path, bare: &Path, site: &Path, old: Id, known: &[&str]) -> Id {
     w.add(Kind::Commit, &commit).expect("add commit");
     w.end().expect("end");
     let request_path = dir.join(format!("{new}.request"));
-    write_request(&request_path, "refs/heads/gh-pages", old, new, &pack_path, "gd-test/1")
-        .expect("request");
+    let update = Update {
+        reference: "refs/heads/gh-pages",
+        old,
+        new,
+        pack: &pack_path,
+        agent: "gd-test/1",
+    };
+    write_request(&request_path, &update).expect("request");
     let request = std::fs::read(&request_path).expect("read request");
     let out = receive_pack(bare, &request);
     let report = parse_report(&out).expect("report");
-    assert!(report.unpacked, "{}", report.unpack);
-    if report.refs.len() != 1 || !report.refs[0].ok {
+    assert!(report.is_unpacked(), "{:?}", report.unpack_error);
+    if report.refs.len() != 1 || !report.refs[0].is_ok() {
         return Id::ZERO;
     }
     new

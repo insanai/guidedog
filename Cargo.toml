@@ -41,6 +41,7 @@ gd-discussion = { path = "crates/gd-discussion" }
 gd-plugins = { path = "crates/gd-plugins" }
 gd-pages = { path = "crates/gd-pages" }
 gd-cli = { path = "crates/gd-cli" }
+gd-rustdoc = { path = "crates/gd-rustdoc" }
 
 # External crates: only mature, self-contained ones that solve a genuinely large problem.
 # The Typst compiler, pinned to the toolchain version GDS 0002 names.
@@ -52,6 +53,7 @@ typst-kit = { version = "=0.15.1", default-features = false }
 # Python parsing for autodoc (replaces the old C tree-sitter build).
 tree-sitter = "0.25"
 tree-sitter-python = "0.25"
+tree-sitter-rust = "0.24"
 
 [workspace.lints.rust]
 unsafe_op_in_unsafe_fn = "deny"

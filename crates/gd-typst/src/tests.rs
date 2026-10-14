@@ -1,0 +1,186 @@
+use std::path::PathBuf;
+
+use super::*;
+
+/// A fresh, empty directory for one test, removed when dropped.
+struct TempDir(PathBuf);
+
+impl TempDir {
+    fn new(name: &str) -> TempDir {
+        let dir = std::env::temp_dir().join(format!("gd-typst-{}-{name}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).expect("create a test directory");
+        TempDir(dir)
+    }
+}
+
+impl Drop for TempDir {
+    fn drop(&mut self) {
+        let _ = std::fs::remove_dir_all(&self.0);
+    }
+}
+
+fn offline() -> Options<'static> {
+    Options { offline: true, embedded_fonts_only: true, ..Options::default() }
+}
+
+#[test]
+fn diagnostics_are_read_from_the_short_format() {
+    let found = cli::parse_diagnostics(
+        "book.typ:3:7: error: unknown variable: x\n  hint: define it first\n\
+         C:\\docs\\a.typ:1:2: warning: unused\n<stdin>:4:1: error: bad\nnoise line\n",
+    );
+    assert_eq!(found.len(), 3);
+    assert_eq!(found[0].file, "book.typ");
+    assert_eq!((found[0].line, found[0].column), (3, 7));
+    assert_eq!(found[0].message, "unknown variable: x");
+    assert_eq!(found[0].hints, ["define it first"]);
+    assert_eq!(found[1].file, "C:\\docs\\a.typ");
+    assert_eq!(found[1].severity, Severity::Warning);
+    assert!(found[2].stdin);
+}
+
+#[test]
+fn offsets_count_characters_and_stop_at_the_end() {
+    let text = "ab\nçd\n";
+    assert_eq!(offset_of(text, 1, 1), 0);
+    assert_eq!(offset_of(text, 2, 2), 5); // "ç" is two bytes.
+    assert_eq!(offset_of(text, 2, 99), 6); // the line's end.
+    assert_eq!(offset_of(text, 99, 1), text.len());
+}
+
+#[test]
+fn missing_programs_are_not_found() {
+    assert!(find_program("guidedog-no-such-typst").is_none());
+    assert!(locate("/no/such/typst").is_none());
+}
+
+#[test]
+fn sources_are_rooted_or_refused() {
+    let root = Path::new("/book");
+    assert_eq!(rooted_path(root, Path::new("/book/ch/a.typ")).as_deref(), Some("/ch/a.typ"));
+    assert_eq!(rooted_path(root, Path::new("/book/./a.typ")).as_deref(), Some("/a.typ"));
+    assert_eq!(rooted_path(root, Path::new("/elsewhere/a.typ")), None);
+    assert_eq!(rooted_path(root, Path::new("/book/../a.typ")), None);
+}
+
+#[test]
+fn diagnostics_render_in_the_elm_style() {
+    let d = Diagnostic {
+        file: "/book.typ".into(),
+        line: 2,
+        column: 2,
+        span: Some(5..9),
+        message: "unknown variable: nope".into(),
+        hints: vec!["define `nope` with `#let`".into()],
+        ..Diagnostic::default()
+    };
+    let report = d.report(Some("= A\n#nope\n"));
+    assert!(report.starts_with("-- TYPST ERROR --"), "{report}");
+    assert!(report.contains("/book.typ:2:2\n\nunknown variable: nope"), "{report}");
+    assert!(report.contains("2| #nope\n    ^^^^\nHint: define `nope`"), "{report}");
+    let error = Error::OutsideRoot { source: "/x.typ".into(), root: "/book".into() };
+    let text = error.to_string();
+    assert!(text.starts_with("-- SOURCE OUTSIDE ROOT --") && text.contains("\nHint: "));
+}
+
+/// Compiles a document to PDF and a broken one to diagnostics with `backend`.
+fn compile_both_ways(backend: &Backend, name: &str) {
+    let dir = TempDir::new(name);
+    let output = dir.0.join("out.pdf");
+    let ok = compile_text(backend, "= Hello\n", &dir.0, &output, Target::Pdf, &offline());
+    assert!(ok.ok, "{ok:?}");
+    let data = std::fs::read(&output).expect("the PDF was written");
+    assert!(data.starts_with(b"%PDF-"));
+    let bad = compile_text(backend, "#nope\n", &dir.0, &output, Target::Pdf, &offline());
+    assert!(!bad.ok);
+    assert!(bad.diagnostics.first().is_some_and(|d| d.line == 1 && d.stdin), "{bad:?}");
+    let source = dir.0.join("book.typ");
+    std::fs::write(&source, "= Book\n#include \"part.typ\"\n").expect("write the source");
+    std::fs::write(dir.0.join("part.typ"), "Part.\n").expect("write the part");
+    let file = compile_file(backend, &source, &dir.0, &output, Target::Pdf, &offline());
+    assert!(file.ok, "{file:?}");
+}
+
+#[test]
+fn the_installed_program_compiles_to_pdf() {
+    let Some(path) = find_program("typst") else { return };
+    let backend = locate(&path.to_string_lossy()).expect("the program is found");
+    assert!(!backend.embedded);
+    compile_both_ways(&backend, "cli");
+}
+
+#[test]
+fn a_missing_program_reports_a_launch_error() {
+    let backend = Backend { program: "/no/such/typst".into(), ..Backend::default() };
+    let dir = TempDir::new("launch");
+    let out = compile_text(&backend, "x", &dir.0, &dir.0.join("o.pdf"), Target::Pdf, &offline());
+    assert!(matches!(out.error, Some(Error::Launch { .. })), "{out:?}");
+}
+
+#[cfg(feature = "embedded")]
+mod embedded {
+    use super::*;
+
+    fn backend() -> Backend {
+        let backend = locate("typst").expect("the embedded compiler");
+        assert!(backend.embedded && is_pinned(&backend));
+        backend
+    }
+
+    #[test]
+    fn the_embedded_compiler_compiles_to_pdf() {
+        compile_both_ways(&backend(), "embedded");
+    }
+
+    #[test]
+    fn embedded_diagnostics_carry_spans_and_html_compiles() {
+        let dir = TempDir::new("spans");
+        let output = dir.0.join("out.html");
+        let text = "= Hi\n#nope\n";
+        let bad = compile_text(&backend(), text, &dir.0, &output, Target::Html, &offline());
+        let mut errors = bad.diagnostics.iter();
+        let d = errors.find(|d| d.severity == Severity::Error).expect("an error");
+        assert_eq!((d.file.as_str(), d.line, d.column), (GENERATED_MAIN, 2, 2), "{d:?}");
+        assert_eq!(d.span.clone().map(|s| &text[s]), Some("nope"));
+        assert!(d.report(Some(text)).contains("2| #nope\n    ^^^^"), "{}", d.report(Some(text)));
+        let good = compile_text(&backend(), "= Hi\n", &dir.0, &output, Target::Html, &offline());
+        assert!(good.ok, "{good:?}");
+        let html = std::fs::read_to_string(&output).expect("the HTML was written");
+        assert!(html.contains("<h2>Hi</h2>") || html.contains("Hi</h"), "{html}");
+    }
+
+    #[test]
+    fn the_embedded_compiler_confines_reads_and_asks_before_writing() {
+        let dir = TempDir::new("confined");
+        let output = dir.0.join("out.pdf");
+        let text = "#read(\"../../etc/passwd\")\n";
+        let out = compile_text(&backend(), text, &dir.0, &output, Target::Pdf, &offline());
+        assert!(!out.ok && !out.diagnostics.is_empty(), "{out:?}");
+        let asked = std::cell::Cell::new(0usize);
+        let refuse = |bytes: usize| {
+            asked.set(bytes);
+            false
+        };
+        let options = Options { reserve: Some(&refuse), ..offline() };
+        let out = compile_text(&backend(), "Hi", &dir.0, &output, Target::Pdf, &options);
+        assert!(matches!(out.error, Some(Error::OutputTooLarge { .. })) && asked.get() > 0);
+        let outside = compile_file(
+            &backend(),
+            Path::new("/x.typ"),
+            &dir.0,
+            &output,
+            Target::Pdf,
+            &offline(),
+        );
+        assert!(matches!(outside.error, Some(Error::OutsideRoot { .. })));
+    }
+}
+
+#[cfg(not(feature = "embedded"))]
+#[test]
+fn without_the_feature_the_program_is_located() {
+    if let Some(backend) = locate("typst") {
+        assert!(!backend.embedded);
+    }
+}

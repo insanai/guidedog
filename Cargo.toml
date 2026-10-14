@@ -1,0 +1,66 @@
+[workspace]
+resolver = "3"
+members = ["crates/*", "cmd/*", "tools/*"]
+
+[workspace.package]
+version = "0.7.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+rust-version = "1.90"
+
+[workspace.dependencies]
+# Internal crates.
+guidedoc = { path = "crates/guidedoc" }
+guidedoc-rst = { path = "crates/guidedoc-rst" }
+guidedoc-commonmark = { path = "crates/guidedoc-commonmark" }
+guidedoc-sphinx = { path = "crates/guidedoc-sphinx" }
+guidedoc-html = { path = "crates/guidedoc-html" }
+guidedoc-typst = { path = "crates/guidedoc-typst" }
+guidedoc-text = { path = "crates/guidedoc-text" }
+guidedoc-defaults = { path = "crates/guidedoc-defaults" }
+gd-report = { path = "crates/gd-report" }
+gd-toml = { path = "crates/gd-toml" }
+gd-json = { path = "crates/gd-json" }
+gd-flate = { path = "crates/gd-flate" }
+gd-sha = { path = "crates/gd-sha" }
+gd-jinja = { path = "crates/gd-jinja" }
+gd-highlight = { path = "crates/gd-highlight" }
+gd-gettext = { path = "crates/gd-gettext" }
+gd-graphdog = { path = "crates/gd-graphdog" }
+gd-fetch = { path = "crates/gd-fetch" }
+gd-git = { path = "crates/gd-git" }
+gd-pyscan = { path = "crates/gd-pyscan" }
+gd-autodoc = { path = "crates/gd-autodoc" }
+gd-odindoc = { path = "crates/gd-odindoc" }
+gd-inventory = { path = "crates/gd-inventory" }
+gd-i18n = { path = "crates/gd-i18n" }
+gd-typst = { path = "crates/gd-typst" }
+gd-host = { path = "crates/gd-host" }
+gd-project = { path = "crates/gd-project" }
+gd-discussion = { path = "crates/gd-discussion" }
+gd-plugins = { path = "crates/gd-plugins" }
+gd-pages = { path = "crates/gd-pages" }
+gd-cli = { path = "crates/gd-cli" }
+
+# External crates: only mature, self-contained ones that solve a genuinely large problem.
+# The Typst compiler, pinned to the toolchain version GDS 0002 names.
+typst = "=0.15.1"
+typst-layout = "=0.15.1"
+typst-pdf = "=0.15.1"
+typst-html = "=0.15.1"
+typst-kit = { version = "=0.15.1", default-features = false }
+# Python parsing for autodoc (replaces the old C tree-sitter build).
+tree-sitter = "0.25"
+tree-sitter-python = "0.25"
+
+[workspace.lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+missing_debug_implementations = "warn"
+
+[workspace.lints.clippy]
+too_many_lines = "warn"
+unwrap_used = "warn"
+
+[profile.release]
+lto = "thin"
+codegen-units = 4

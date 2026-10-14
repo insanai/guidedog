@@ -1,11 +1,21 @@
-//! The JSON grammar, read with bounded nesting.
+//! Parsing: serde_json reads the text, a small `DeserializeSeed` builds the [`Value`] and
+//! enforces [`Limits`] (duplicate keys, nesting depth) as it goes, in one pass.
 
+use crate::error::Refusal;
 use crate::{Error, ErrorKind, Object, Value};
+use serde::de::{self, DeserializeSeed, MapAccess, SeqAccess, Visitor};
+use std::cell::RefCell;
+use std::fmt;
+
+/// The deepest nesting serde_json accepts: its built-in stack guard stops at 128 open
+/// arrays and objects, so 127 is the most a text can use.
+pub const MAX_DEPTH: usize = 127;
 
 /// Bounds on what [`parse_with`] accepts.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Limits {
-    /// The deepest nesting of arrays and objects (default 128).
+    /// The deepest nesting of arrays and objects (default and maximum [`MAX_DEPTH`],
+    /// 127; a larger value acts as 127).
     pub max_depth: usize,
     /// Whether an object may repeat a key; the last value then wins (default false).
     pub allow_duplicate_keys: bool,
@@ -13,326 +23,135 @@ pub struct Limits {
 
 impl Default for Limits {
     fn default() -> Limits {
-        Limits { max_depth: 128, allow_duplicate_keys: false }
+        Limits { max_depth: MAX_DEPTH, allow_duplicate_keys: false }
     }
-}
-
-type Result<T> = std::result::Result<T, Error>;
-
-struct Parser<'a> {
-    src: &'a str,
-    b: &'a [u8],
-    at: usize,
-    depth: usize,
-    limits: Limits,
 }
 
 /// Reads `text` as one JSON value with the default [`Limits`]. The value owns its
 /// strings. Fails with an [`Error`] at the first mistake, including text after the value.
-pub fn parse(text: &str) -> Result<Value> {
+pub fn parse(text: &str) -> Result<Value, Error> {
     parse_with(text, &Limits::default())
 }
 
 /// Reads `text` as one JSON value within `limits`; a leading byte order mark is skipped.
-/// Fails as [`parse`] does, and with [`ErrorKind::Depth`] beyond `limits.max_depth`.
-pub fn parse_with(text: &str, limits: &Limits) -> Result<Value> {
-    let start = if text.starts_with('\u{feff}') { 3 } else { 0 };
-    let mut p = Parser { src: text, b: text.as_bytes(), at: start, depth: 0, limits: *limits };
-    p.skip_space();
-    let value = p.value()?;
-    p.skip_space();
-    if p.at < p.b.len() {
-        return Err(p.fail(
-            ErrorKind::Syntax,
-            p.at,
-            "There is more text after the JSON value.",
-            "A JSON text holds one value; wrap several in an array [ ... ].",
-        ));
-    }
-    Ok(value)
+/// Fails as [`parse`] does, with [`ErrorKind::Duplicate`] for a repeated key (unless
+/// allowed) and [`ErrorKind::Depth`] beyond `limits.max_depth`.
+pub fn parse_with(text: &str, limits: &Limits) -> Result<Value, Error> {
+    let skipped = if text.starts_with('\u{feff}') { 3 } else { 0 };
+    let refusal = RefCell::new(None);
+    let build = Build { depth: 0, limits, refusal: &refusal };
+    let mut reader = serde_json::Deserializer::from_str(&text[skipped..]);
+    let result = build.deserialize(&mut reader).and_then(|value| {
+        reader.end()?;
+        Ok(value)
+    });
+    result.map_err(|err| Error::from_parse(&err, text, skipped, refusal.into_inner()))
 }
 
-impl Parser<'_> {
-    fn fail(&self, kind: ErrorKind, at: usize, message: impl Into<String>, hint: &str) -> Error {
-        let offset = gd_report::floor_boundary(self.src, at);
-        let end = gd_report::floor_boundary(self.src, offset + 1);
-        let (line, column) = gd_report::line_column(self.src, offset);
-        Error { kind, message: message.into(), hint: hint.to_string(), offset, end, line, column }
+/// Builds one value at nesting `depth`. A refusal is
+/// recorded beside serde_json's error so the error keeps serde_json's position but
+/// carries this crate's kind and message.
+struct Build<'a> {
+    depth: usize,
+    limits: &'a Limits,
+    refusal: &'a RefCell<Option<Refusal>>,
+}
+
+impl Build<'_> {
+    fn child(&self) -> Build<'_> {
+        Build { depth: self.depth + 1, limits: self.limits, refusal: self.refusal }
     }
 
-    fn byte(&self) -> Option<u8> {
-        self.b.get(self.at).copied()
+    fn refuse<E: de::Error>(&self, refusal: Refusal) -> E {
+        let error = E::custom(&refusal.message);
+        *self.refusal.borrow_mut() = Some(refusal);
+        error
     }
 
-    fn skip_space(&mut self) {
-        while matches!(self.byte(), Some(b' ' | b'\t' | b'\n' | b'\r')) {
-            self.at += 1;
+    /// Refuses to open an array or object at this depth when it is too deep.
+    fn check_depth<E: de::Error>(&self) -> Result<(), E> {
+        if self.depth < self.limits.max_depth {
+            return Ok(());
         }
-    }
-
-    fn literal(&mut self, word: &str, value: Value) -> Result<Value> {
-        if self.b[self.at..].starts_with(word.as_bytes()) {
-            self.at += word.len();
-            return Ok(value);
-        }
-        Err(self.unexpected())
-    }
-
-    fn unexpected(&self) -> Error {
-        let message = match self.byte() {
-            None => "The text ends where a value should be.",
-            Some(_) => "Expected a value here.",
+        let refusal = Refusal {
+            kind: ErrorKind::Depth,
+            message: format!("Arrays and objects nest more than {} deep.", self.limits.max_depth),
+            hint: "Flatten the data, or raise the nesting limit if the text is trusted.",
+            key: None,
         };
-        let hint = "A value is a \"string\", a number, true, false, null, an array [ ... ] or \
-                    an object { ... }; JSON has no comments or trailing commas.";
-        self.fail(ErrorKind::Syntax, self.at, message, hint)
+        Err(self.refuse(refusal))
+    }
+}
+
+impl<'de> DeserializeSeed<'de> for Build<'_> {
+    type Value = Value;
+
+    fn deserialize<D: de::Deserializer<'de>>(self, reader: D) -> Result<Value, D::Error> {
+        reader.deserialize_any(self)
+    }
+}
+
+impl<'de> Visitor<'de> for Build<'_> {
+    type Value = Value;
+
+    fn expecting(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("a JSON value")
     }
 
-    /// Reads one value; arrays and objects recurse through here, bounded by depth.
-    fn value(&mut self) -> Result<Value> {
-        match self.byte() {
-            Some(b'{') => self.nested(Parser::object),
-            Some(b'[') => self.nested(Parser::array),
-            Some(b'"') => self.string().map(Value::String),
-            Some(b't') => self.literal("true", Value::Bool(true)),
-            Some(b'f') => self.literal("false", Value::Bool(false)),
-            Some(b'n') => self.literal("null", Value::Null),
-            Some(b'-' | b'0'..=b'9') => self.number(),
-            _ => Err(self.unexpected()),
-        }
+    fn visit_unit<E>(self) -> Result<Value, E> {
+        Ok(Value::Null)
     }
 
-    fn nested(&mut self, read: fn(&mut Self) -> Result<Value>) -> Result<Value> {
-        if self.depth >= self.limits.max_depth {
-            let message =
-                format!("Arrays and objects nest more than {} deep.", self.limits.max_depth);
-            let hint = "Flatten the data, or raise the nesting limit if the text is trusted.";
-            return Err(self.fail(ErrorKind::Depth, self.at, message, hint));
-        }
-        self.depth += 1;
-        let value = read(self);
-        self.depth -= 1;
-        value
+    fn visit_bool<E>(self, b: bool) -> Result<Value, E> {
+        Ok(Value::Bool(b))
     }
 
-    /// After a value in an array or object: consumes `,` (returns true) or `close`.
-    fn separator(&mut self, close: u8, what: &str) -> Result<bool> {
-        self.skip_space();
-        match self.byte() {
-            Some(b',') => {
-                self.at += 1;
-                self.skip_space();
-                Ok(true)
-            }
-            Some(c) if c == close => {
-                self.at += 1;
-                Ok(false)
-            }
-            _ => {
-                let message = format!("Expected , or {} in this {what}.", close as char);
-                let hint = "Separate items with commas and close every [ and { you open.";
-                Err(self.fail(ErrorKind::Syntax, self.at, message, hint))
-            }
-        }
+    fn visit_i64<E>(self, n: i64) -> Result<Value, E> {
+        Ok(Value::from(n))
     }
 
-    fn array(&mut self) -> Result<Value> {
-        self.at += 1;
-        self.skip_space();
-        let mut items = Vec::new();
-        if self.byte() == Some(b']') {
-            self.at += 1;
-            return Ok(Value::Array(items));
-        }
-        loop {
-            items.push(self.value()?);
-            if !self.separator(b']', "array")? {
-                return Ok(Value::Array(items));
-            }
-        }
+    fn visit_u64<E>(self, n: u64) -> Result<Value, E> {
+        Ok(Value::from(n))
     }
 
-    fn object(&mut self) -> Result<Value> {
-        self.at += 1;
-        self.skip_space();
-        let mut object = Object::new();
-        if self.byte() == Some(b'}') {
-            self.at += 1;
-            return Ok(Value::Object(object));
-        }
-        loop {
-            let key_at = self.at;
-            if self.byte() != Some(b'"') {
-                let hint = "Object keys are strings in double quotes, as in {\"name\": 1}.";
-                return Err(self.fail(
-                    ErrorKind::Syntax,
-                    key_at,
-                    "Expected a key in quotes.",
-                    hint,
-                ));
-            }
-            let key = self.string()?;
-            self.skip_space();
-            if self.byte() != Some(b':') {
-                let hint = "Write each member as \"key\": value.";
-                return Err(self.fail(
-                    ErrorKind::Syntax,
-                    self.at,
-                    "Expected : after the key.",
-                    hint,
-                ));
-            }
-            self.at += 1;
-            self.skip_space();
-            let value = self.value()?;
-            if object.contains_key(&key) {
-                if !self.limits.allow_duplicate_keys {
-                    let message = format!("The key \"{key}\" appears twice in this object.");
-                    let hint = "Remove one of them; each key may appear once.";
-                    return Err(self.fail(ErrorKind::Duplicate, key_at, message, hint));
-                }
-                object.insert(&key, value);
-            } else {
-                object.push(key, value);
-            }
-            if !self.separator(b'}', "object")? {
-                return Ok(Value::Object(object));
-            }
-        }
+    fn visit_f64<E>(self, f: f64) -> Result<Value, E> {
+        Ok(Value::from(f))
     }
 
-    fn number(&mut self) -> Result<Value> {
-        let start = self.at;
-        let digits = |p: &mut Self| {
-            let from = p.at;
-            while p.byte().is_some_and(|c| c.is_ascii_digit()) {
-                p.at += 1;
-            }
-            p.at - from
-        };
-        if self.byte() == Some(b'-') {
-            self.at += 1;
-        }
-        let int_start = self.at;
-        let whole = digits(self);
-        let leading_zero = whole > 1 && self.b[int_start] == b'0';
-        let mut is_float = false;
-        let mut ok = whole > 0 && !leading_zero;
-        if ok && self.byte() == Some(b'.') {
-            self.at += 1;
-            is_float = true;
-            ok = digits(self) > 0;
-        }
-        if ok && matches!(self.byte(), Some(b'e' | b'E')) {
-            self.at += 1;
-            if matches!(self.byte(), Some(b'+' | b'-')) {
-                self.at += 1;
-            }
-            is_float = true;
-            ok = digits(self) > 0;
-        }
-        if !ok {
-            let hint = "Write numbers as 12, -3.5 or 1e6: no leading zeros, digits on both \
-                        sides of the point, no + sign, and no NaN or Infinity.";
-            return Err(self.fail(ErrorKind::Number, start, "This number is malformed.", hint));
-        }
-        let text = &self.src[start..self.at];
-        if !is_float && let Ok(n) = text.parse::<i64>() {
-            return Ok(Value::Integer(n));
-        }
-        // A well-formed number always parses as f64 (huge ones become infinite).
-        Ok(Value::Float(text.parse::<f64>().unwrap_or(f64::NAN)))
+    fn visit_str<E>(self, s: &str) -> Result<Value, E> {
+        Ok(Value::String(s.to_string()))
     }
 
-    /// Reads a string at its opening quote, resolving escapes.
-    fn string(&mut self) -> Result<String> {
-        let open = self.at;
-        self.at += 1;
-        let mut out = String::new();
-        let mut run = self.at;
-        loop {
-            match self.byte() {
-                Some(b'"') => {
-                    out.push_str(&self.src[run..self.at]);
-                    self.at += 1;
-                    return Ok(out);
-                }
-                Some(b'\\') => {
-                    out.push_str(&self.src[run..self.at]);
-                    self.escape(&mut out)?;
-                    run = self.at;
-                }
-                Some(c) if c < 0x20 => {
-                    let hint = "Write line breaks and tabs in strings as \\n and \\t.";
-                    let message = "This string holds a raw control character.";
-                    return Err(self.fail(ErrorKind::String, self.at, message, hint));
-                }
-                Some(_) => self.at += 1,
-                None => {
-                    let hint = "End the string with a double quote.";
-                    return Err(self.fail(
-                        ErrorKind::String,
-                        open,
-                        "This string is not closed.",
-                        hint,
-                    ));
-                }
+    fn visit_string<E>(self, s: String) -> Result<Value, E> {
+        Ok(Value::String(s))
+    }
+
+    fn visit_seq<A: SeqAccess<'de>>(self, mut items: A) -> Result<Value, A::Error> {
+        self.check_depth()?;
+        let mut out = Vec::with_capacity(items.size_hint().unwrap_or(0));
+        while let Some(item) = items.next_element_seed(self.child())? {
+            out.push(item);
+        }
+        Ok(Value::Array(out))
+    }
+
+    fn visit_map<A: MapAccess<'de>>(self, mut members: A) -> Result<Value, A::Error> {
+        self.check_depth()?;
+        let mut out = Object::new();
+        while let Some(key) = members.next_key::<String>()? {
+            if !self.limits.allow_duplicate_keys && out.contains_key(&key) {
+                let refusal = Refusal {
+                    kind: ErrorKind::Duplicate,
+                    message: format!("The key `{key}` appears twice in this object."),
+                    hint: "Remove or rename one of them; JSON readers disagree on which wins.",
+                    key: Some(key),
+                };
+                return Err(self.refuse(refusal));
             }
+            let value = members.next_value_seed(self.child())?;
+            // A repeated key (when allowed) keeps its first place and takes the last value.
+            out.insert(key, value);
         }
-    }
-
-    fn escape(&mut self, out: &mut String) -> Result<()> {
-        let start = self.at;
-        let c = self.b.get(start + 1).copied();
-        self.at += 2;
-        let plain = match c {
-            Some(b'"') => '"',
-            Some(b'\\') => '\\',
-            Some(b'/') => '/',
-            Some(b'b') => '\u{8}',
-            Some(b'f') => '\u{c}',
-            Some(b'n') => '\n',
-            Some(b'r') => '\r',
-            Some(b't') => '\t',
-            Some(b'u') => self.unicode_escape(start)?,
-            _ => {
-                let hint = "Use \\\" \\\\ \\/ \\b \\f \\n \\r \\t or \\uXXXX.";
-                return Err(self.fail(ErrorKind::String, start, "Unknown escape sequence.", hint));
-            }
-        };
-        out.push(plain);
-        Ok(())
-    }
-
-    fn hex4(&mut self) -> Option<u32> {
-        let digits = self.b.get(self.at..self.at + 4)?;
-        let mut n = 0;
-        for &d in digits {
-            n = n * 16 + (d as char).to_digit(16)?;
-        }
-        self.at += 4;
-        Some(n)
-    }
-
-    /// Reads the digits of `\uXXXX`, joining a UTF-16 surrogate pair into one character.
-    fn unicode_escape(&mut self, start: usize) -> Result<char> {
-        let bad = |p: &Self| {
-            let hint = "Write \\u with four hex digits; characters beyond U+FFFF are a \
-                        surrogate pair such as \\ud83d\\ude00.";
-            p.fail(ErrorKind::String, start, "This \\u escape is not a valid character.", hint)
-        };
-        let high = self.hex4().ok_or_else(|| bad(self))?;
-        if !(0xD800..0xDC00).contains(&high) {
-            return char::from_u32(high).ok_or_else(|| bad(self));
-        }
-        if !self.b[self.at..].starts_with(b"\\u") {
-            return Err(bad(self));
-        }
-        self.at += 2;
-        let low = self.hex4().ok_or_else(|| bad(self))?;
-        if !(0xDC00..0xE000).contains(&low) {
-            return Err(bad(self));
-        }
-        char::from_u32(0x10000 + ((high - 0xD800) << 10) + (low - 0xDC00)).ok_or_else(|| bad(self))
+        Ok(Value::Object(out))
     }
 }

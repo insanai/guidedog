@@ -7,6 +7,11 @@ rust-version.workspace = true
 
 [dependencies]
 gd-report.workspace = true
+# serde_json does the parsing and writing; it is already compiled into the workspace by
+# the embedded Typst compiler, so this crate is a thin API over it (see README.md).
+serde_json.workspace = true
+# The Deserializer/Visitor traits for the validating parse (duplicate keys, depth).
+serde.workspace = true
 
 [lints]
 workspace = true

@@ -1,0 +1,16 @@
+[package]
+name = "gd-rustdoc"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Rust API documentation by static analysis: reST for Guidedog's rust domain."
+
+# tree-sitter and its Rust grammar parse Rust; writing a Rust parser is the genuinely
+# large problem CLAUDE.md allows tree-sitter for (as gd-pyscan does for Python).
+[dependencies]
+tree-sitter = { workspace = true }
+tree-sitter-rust = { workspace = true }
+
+[lints]
+workspace = true

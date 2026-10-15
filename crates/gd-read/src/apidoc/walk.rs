@@ -20,7 +20,7 @@ fn is_initpy(file: &str) -> bool {
 }
 
 /// `fnmatch.fnmatchcase`: `*` and `?` match any character, `/` included; `[...]` a set.
-fn fnmatch(name: &str, pattern: &str) -> bool {
+pub(crate) fn fnmatch(name: &str, pattern: &str) -> bool {
     let (n, p): (Vec<char>, Vec<char>) = (name.chars().collect(), pattern.chars().collect());
     let (mut i, mut j) = (0, 0);
     let (mut star, mut mark) = (None, 0);

@@ -6,6 +6,8 @@
 
 mod walk;
 
+pub(crate) use walk::fnmatch;
+
 use std::path::{Path, PathBuf};
 
 use gd_conf::{ApidocModule, Config};

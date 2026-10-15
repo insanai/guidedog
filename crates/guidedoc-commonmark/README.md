@@ -35,7 +35,9 @@ Implement `Extension` and put it in `Settings::extension` (`Arc<dyn Extension>`)
 Handlers use the `Host`: `parse_body(lines, source, sections, classes)`,
 `parse_inline(lines, source)`, `builder()`, `context()`, `list_items(lines, source)`,
 `include_paths(images, docs)`, `set_classes_for_next(text)`, `name_text(s)`,
-`set_extension_state(T)` / `extension_state::<T>()`.
+`set_extension_state(T)` / `extension_state::<T>()`. A handler that lends the read
+context to another parser takes the host apart with `detach(|ctx, detached| ..)` and
+parses nested Markdown with `detached.attach(ctx, |h| ..)`.
 
 ## Redesigns from the Odin package
 

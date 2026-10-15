@@ -154,3 +154,103 @@ impl<'h, 'a> Host<'h, 'a> {
         })
     }
 }
+
+/// A host without its read context: everything else of the read's state. A handler
+/// that lends the context to another parser (the Sphinx layer's embedded
+/// reStructuredText parser) uses it to parse nested Markdown with that parser's context
+/// (`Detached::attach`), so the two readers never hold the context at once.
+pub struct Detached<'h> {
+    settings: &'h Settings,
+    myst: bool,
+    disabled: Rules,
+    syntax: SyntaxExtensions,
+    refs: HashMap<String, Ref>,
+    label_tmp: String,
+    html_format: Option<Text>,
+    rel_images: bool,
+    rel_docs: String,
+    ms: MystState,
+    ext_state: Option<Box<dyn Any>>,
+}
+
+impl std::fmt::Debug for Detached<'_> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Detached").field("myst", &self.myst).finish_non_exhaustive()
+    }
+}
+
+impl<'h, 'a> Host<'h, 'a> {
+    /// Runs `f` with the read context and the rest of the host apart; the host is whole
+    /// again afterwards (with what `f` changed in either part).
+    pub fn detach<R>(
+        &mut self,
+        f: impl FnOnce(&mut ReadContext<'a>, &mut Detached<'h>) -> R,
+    ) -> R {
+        let mut d = Detached {
+            settings: self.settings,
+            myst: self.myst,
+            disabled: self.disabled,
+            syntax: self.syntax,
+            refs: std::mem::take(&mut self.refs),
+            label_tmp: std::mem::take(&mut self.label_tmp),
+            html_format: self.html_format.take(),
+            rel_images: self.rel_images,
+            rel_docs: std::mem::take(&mut self.rel_docs),
+            ms: std::mem::take(&mut self.ms),
+            ext_state: self.ext_state.take(),
+        };
+        let r = f(self.ctx, &mut d);
+        self.refs = d.refs;
+        self.label_tmp = d.label_tmp;
+        self.html_format = d.html_format;
+        self.rel_images = d.rel_images;
+        self.rel_docs = d.rel_docs;
+        self.ms = d.ms;
+        self.ext_state = d.ext_state;
+        r
+    }
+}
+
+impl<'h> Detached<'h> {
+    /// Runs `f` with a host made of `ctx` and this state, as `Host::detach` took it
+    /// apart; the state takes back what `f` changed.
+    pub fn attach<'a, R>(
+        &mut self,
+        ctx: &mut ReadContext<'a>,
+        f: impl FnOnce(&mut Host<'_, 'a>) -> R,
+    ) -> R {
+        let mut h = Host {
+            ctx,
+            settings: self.settings,
+            myst: self.myst,
+            disabled: self.disabled,
+            syntax: self.syntax,
+            refs: std::mem::take(&mut self.refs),
+            label_tmp: std::mem::take(&mut self.label_tmp),
+            html_format: self.html_format.take(),
+            rel_images: self.rel_images,
+            rel_docs: std::mem::take(&mut self.rel_docs),
+            ms: std::mem::take(&mut self.ms),
+            ext_state: self.ext_state.take(),
+        };
+        let r = f(&mut h);
+        self.refs = h.refs;
+        self.label_tmp = h.label_tmp;
+        self.html_format = h.html_format;
+        self.rel_images = h.rel_images;
+        self.rel_docs = h.rel_docs;
+        self.ms = h.ms;
+        self.ext_state = h.ext_state;
+        r
+    }
+
+    /// Stores the extension's per-read state, as `Host::set_extension_state`.
+    pub fn set_extension_state<T: Any>(&mut self, state: T) {
+        self.ext_state = Some(Box::new(state));
+    }
+
+    /// Returns the extension's per-read state, as `Host::extension_state`.
+    pub fn extension_state<T: Any>(&mut self) -> Option<&mut T> {
+        self.ext_state.as_mut().and_then(|s| s.downcast_mut::<T>())
+    }
+}

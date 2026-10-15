@@ -34,7 +34,7 @@ use guidedoc::{Conformance, Fail, ReadContext, Reader, SourceSpan, Status};
 pub use extension::{
     Directive, DirectiveOption, DirectiveResult, DirectiveShape, Extension, Line, ListItems, Role,
 };
-pub use host::Host;
+pub use host::{Detached, Host};
 pub use settings::{
     DEFAULT_URL_SCHEMES, Meta, Rule, Settings, Substitution, SyntaxExtension, SyntaxExtensions,
 };

@@ -51,15 +51,12 @@ read), `plugins.config` (a plugin asset takes a project file's path), `build.bui
   `gd_host::run_workers` in batches (16 per thread), each worker with its own
   `gd_link::Worker` and `HtmlHighlighter`; the main thread lays them out and writes them
   in docname order, so output does not depend on scheduling.
-- **Templates through gd-jinja's `'static` closures.** Functions cannot borrow the
-  build, so `pathto` and `hasdoc` use page names owned by the layout, and `_()`,
-  `gettext()`, `ngettext()` and `toctree()` answer from a cache: an unanswered
-  question gets a placeholder, the builder answers it with the view, and the page is
-  rendered again (at most three renders). Interface words stay cached for the build,
-  so most pages render once; per-page `toctree()` answers are cleared per page. The
+- **Template functions borrow the build.** `css_tag`, `js_tag` and Sphinx's fixed
+  names are the environment's; `pathto`, `hasdoc`, `toctree`, `_`, `gettext` and
+  `ngettext` are gd-jinja `Locals` of each page's render (`Template::render_with`),
+  borrowing the `BuildView` and the page, so each page renders exactly once. The
   loader is `Loader::custom` (templates_path first, then gd-theme's `layout.html` for
-  `layout.html`, `!layout.html`, `basic/...` and known theme names); gd-jinja is
-  unchanged.
+  `layout.html`, `!layout.html`, `basic/...` and known theme names).
 - **Plugins** go through `gd_env::PluginRun` (`process_html` per page, special pages
   included; `assets()` written in the site unit), not a build-wide mutex.
 - **Additional pages and plugin assets** check the site unit's own files

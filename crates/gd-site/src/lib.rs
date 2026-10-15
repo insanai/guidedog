@@ -39,6 +39,11 @@ mod site;
 mod site_files;
 mod templates;
 
+#[cfg(test)]
+extern crate self as gd_site; // the shared test harness names the crate.
+#[cfg(test)]
+mod tests;
+
 pub use nav::{TocOptions, outline_html, sidebar_html};
 pub use search::{STOPWORDS_EN, tokenize};
 pub use site_files::pygments_css;

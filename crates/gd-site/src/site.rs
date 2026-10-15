@@ -28,9 +28,8 @@ impl Site<'_, '_> {
         reports: &mut Vec<Report>,
     ) -> Result<String, Problem> {
         let (ctx, state) = page_context(self.view, Page::Doc(id), body);
-        let file = state.page.clone();
-        self.layout.begin_page(state);
-        let html = self.layout.render(self.view, LAYOUT, &ctx, reports)?;
+        let html = self.layout.render(self.view, LAYOUT, &ctx, &state, reports)?;
+        let file = state.page;
         self.plugin_html(&file, &self.view.doc(id).docname, html)
     }
 
@@ -45,9 +44,8 @@ impl Site<'_, '_> {
         let (ctx, state) = page_context(self.view, Page::Doc(root), body);
         ctx.set("prev", Value::None);
         ctx.set("next", Value::None);
-        let file = state.page.clone();
-        self.layout.begin_page(state);
-        let html = self.layout.render(self.view, LAYOUT, &ctx, reports)?;
+        let html = self.layout.render(self.view, LAYOUT, &ctx, &state, reports)?;
+        let file = state.page;
         self.plugin_html(&file, &self.view.config.root_doc, html)
     }
 
@@ -62,8 +60,7 @@ impl Site<'_, '_> {
     ) -> Result<String, Problem> {
         let (ctx, state) = page_context(self.view, Page::Special(name), body);
         ctx.set("title", Value::from(title));
-        self.layout.begin_page(state);
-        let html = self.layout.render(self.view, LAYOUT, &ctx, reports)?;
+        let html = self.layout.render(self.view, LAYOUT, &ctx, &state, reports)?;
         self.plugin_html(name, name, html)
     }
 
@@ -78,8 +75,7 @@ impl Site<'_, '_> {
     ) -> Result<String, Problem> {
         let (ctx, state) = page_context(self.view, Page::Special(file), "");
         ctx.set("pagename", Value::from(name));
-        self.layout.begin_page(state);
-        let html = self.layout.render(self.view, template, &ctx, reports)?;
+        let html = self.layout.render(self.view, template, &ctx, &state, reports)?;
         self.plugin_html(file, name, html)
     }
 

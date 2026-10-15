@@ -2,22 +2,19 @@
 //! intl.odin): `layout.html` in a gd-jinja environment whose loader looks first in
 //! `templates_path`, then among the built-in theme's templates (gd-theme).
 //!
-//! gd-jinja's functions are `'static` closures, so they cannot borrow the build. What
-//! they need is either owned here (the documents' page names for `pathto` and
-//! `hasdoc`), or asked of the build between renders: `_()`, `gettext()`, `ngettext()`
-//! and `toctree()` answer from a cache; a question the cache cannot answer yet is noted
-//! and answered with a placeholder, and the page is rendered again once the builder
-//! has answered it ([`Layout::render`]). Interface words stay cached for the whole
-//! build, so after the first pages a page renders once.
+//! Functions that need nothing of the build (`css_tag`, `js_tag`) and Sphinx's fixed
+//! names are the environment's. Those that read the build or the page (`pathto`,
+//! `hasdoc`, `toctree`, `_`, `gettext`, `ngettext`) are gd-jinja `Locals` of each
+//! render, borrowing the view and the page, so a page is rendered exactly once.
 
 use std::cell::RefCell;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 
 use gd_env::{BuilderKind, DocId};
 use gd_host::{Confinement, Problem};
-use gd_jinja::{Autoescape, Call, Environment, Error, ErrorKind, Loader, Options, Value};
+use gd_jinja::{Autoescape, Call, Environment, Error, ErrorKind, Loader, Locals, Options, Value};
 use gd_report::Report;
 use gd_resolve::BuildView;
 
@@ -26,10 +23,6 @@ use crate::nav::{TocOptions, sidebar_html};
 
 /// The layout every page is rendered with.
 pub(crate) const LAYOUT: &str = "layout.html";
-
-/// How many times a page is rendered at most while its questions are answered: a
-/// template whose questions depend on earlier answers may need a third render.
-const MAX_RENDERS: usize = 3;
 
 /// A keyword-only argument of a template function (Sphinx's `toctree(maxdepth=..)`).
 const KEYWORD_ONLY: usize = usize::MAX;
@@ -43,57 +36,6 @@ pub(crate) struct PageState {
     pub page: String,
     /// From the page to the output root, such as `"../"`.
     pub root: String,
-}
-
-/// What a template function asks of the build.
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-enum Question {
-    /// `_(message)` and `gettext(message)`.
-    Word(String),
-    /// `ngettext(singular, plural, n)`.
-    Plural(String, String, u64),
-    /// `toctree(...)`, for the current page.
-    Toctree(TocOptions),
-}
-
-/// The answers known so far, and the questions asked that have none yet.
-#[derive(Debug, Default)]
-struct Answers {
-    known: HashMap<Question, String>,
-    asked: Vec<Question>,
-}
-
-impl Answers {
-    /// The answer to `question`, or `None` after noting it to be answered.
-    fn answer(&mut self, question: Question) -> Option<String> {
-        if let Some(known) = self.known.get(&question) {
-            return Some(known.clone());
-        }
-        if !self.asked.contains(&question) {
-            self.asked.push(question);
-        }
-        None
-    }
-}
-
-/// The names `pathto` and `hasdoc` resolve, owned for the template functions.
-#[derive(Debug, Default)]
-struct SiteLinks {
-    kind: BuilderKind,
-    file_suffix: String,
-    /// Per docname: its page below the output folder, and in singlehtml the fragment
-    /// of its section of the single page.
-    pages: HashMap<String, (String, String)>,
-    /// The root document's page (the single page of singlehtml).
-    root_page: String,
-}
-
-/// What the template functions share with the builder.
-#[derive(Debug, Default)]
-struct TemplateState {
-    page: RefCell<PageState>,
-    answers: RefCell<Answers>,
-    links: SiteLinks,
 }
 
 /// Where templates come from: the project's template files (listed once, before the
@@ -110,9 +52,11 @@ struct TemplateSources {
 /// The page layout: a template environment with Guidedog's template functions.
 pub(crate) struct Layout {
     env: Environment,
-    state: Rc<TemplateState>,
     sources: Rc<TemplateSources>,
     files: Vec<PathBuf>,
+    /// How many templates were rendered, for tests that a page renders once.
+    #[cfg(test)]
+    pub(crate) renders: std::cell::Cell<usize>,
 }
 
 impl std::fmt::Debug for Layout {
@@ -136,15 +80,20 @@ impl Layout {
             files: files.iter().cloned().collect(),
             errors: RefCell::default(),
         });
-        let state = Rc::new(TemplateState { links: site_links(view), ..TemplateState::default() });
         let loader_sources = Rc::clone(&sources);
         let mut env = Environment::new(Options {
             autoescape: Autoescape::Always,
             loader: Some(Loader::custom(move |name| template_source(&loader_sources, name))),
             ..Options::default()
         });
-        register_functions(&mut env, &state);
-        let layout = Layout { env, state, sources, files };
+        register_functions(&mut env);
+        let layout = Layout {
+            env,
+            sources,
+            files,
+            #[cfg(test)]
+            renders: std::cell::Cell::new(0),
+        };
         if let Err(e) = layout.env.load_template(LAYOUT) {
             return Err(layout.problem(&e));
         }
@@ -156,41 +105,23 @@ impl Layout {
         &self.files
     }
 
-    /// Starts a page: the template functions work for it from now on.
-    pub(crate) fn begin_page(&self, page: PageState) {
-        *self.state.page.borrow_mut() = page;
-        let mut answers = self.state.answers.borrow_mut();
-        answers.known.retain(|q, _| !matches!(q, Question::Toctree(_)));
-        answers.asked.clear();
-    }
-
-    /// Renders the template `name` with `ctx` for the current page, answering what its
-    /// functions asked and rendering again until nothing is left unanswered. Problems
-    /// reading a template it loads are added to `reports`. Fails with `template.error`.
+    /// Renders the template `name` with `ctx` for `page`, once, with the functions that
+    /// read the build. Problems reading a template it loads are added to `reports`.
+    /// Fails with `template.error`.
     pub(crate) fn render(
         &self,
         view: &BuildView<'_>,
         name: &str,
         ctx: &Value,
+        page: &PageState,
         reports: &mut Vec<Report>,
     ) -> Result<String, Problem> {
-        let mut renders = 0;
-        loop {
-            renders += 1;
-            let rendered = self.env.load_template(name).and_then(|t| t.render(ctx));
-            reports.append(&mut self.sources.errors.borrow_mut());
-            let html = rendered.map_err(|e| self.problem(&e))?;
-            let asked = std::mem::take(&mut self.state.answers.borrow_mut().asked);
-            if asked.is_empty() || renders == MAX_RENDERS {
-                return Ok(html);
-            }
-            let doc = self.state.page.borrow().doc;
-            let mut answers = self.state.answers.borrow_mut();
-            for question in asked {
-                let answer = answer(view, doc, &question);
-                answers.known.insert(question, answer);
-            }
-        }
+        #[cfg(test)]
+        self.renders.set(self.renders.get() + 1);
+        let locals = page_functions(view, page);
+        let rendered = self.env.load_template(name).and_then(|t| t.render_with(ctx, &locals));
+        reports.append(&mut self.sources.errors.borrow_mut());
+        rendered.map_err(|e| self.problem(&e))
     }
 
     /// A template error as the problem that stops the build, at the template's file
@@ -226,54 +157,8 @@ fn template_title(kind: ErrorKind) -> &'static str {
     }
 }
 
-/// Answers a question with the build.
-fn answer(view: &BuildView<'_>, doc: Option<DocId>, question: &Question) -> String {
-    match question {
-        Question::Word(message) => view.ui.gettext(message).into_owned(),
-        Question::Plural(one, many, n) => view.ui.ngettext(one, many, *n).into_owned(),
-        Question::Toctree(options) => sidebar_html(view, doc, *options),
-    }
-}
-
-/// The page names `pathto` and `hasdoc` need.
-fn site_links(view: &BuildView<'_>) -> SiteLinks {
-    let pages = view
-        .env
-        .iter()
-        .map(|(id, d)| {
-            let fragment = if view.kind == BuilderKind::Singlehtml {
-                view.page_anchor(id, "")
-            } else {
-                String::new()
-            };
-            (d.docname.clone(), (view.page_name(&d.docname), fragment))
-        })
-        .collect();
-    SiteLinks {
-        kind: view.kind,
-        file_suffix: view.config.html.file_suffix.clone(),
-        pages,
-        root_page: view.page_name(&view.config.root_doc),
-    }
-}
-
-/// Registers Guidedog's template functions and Sphinx's fixed names.
-fn register_functions(env: &mut Environment, state: &Rc<TemplateState>) {
-    let s = Rc::clone(state);
-    env.add_function("_", move |c| Ok(word(&s, c)));
-    let s = Rc::clone(state);
-    env.add_function("gettext", move |c| Ok(word(&s, c)));
-    let s = Rc::clone(state);
-    env.add_function("ngettext", move |c| plural(&s, c));
-    let s = Rc::clone(state);
-    env.add_function("pathto", move |c| Ok(pathto(&s, c)));
-    let s = Rc::clone(state);
-    env.add_function("hasdoc", move |c| {
-        let name = gd_jinja::to_str(&c.arg(0, "name")).into_owned();
-        Ok(Value::from(s.links.pages.contains_key(&name)))
-    });
-    let s = Rc::clone(state);
-    env.add_function("toctree", move |c| toctree(&s, c));
+/// Registers the functions that need nothing of the build, and Sphinx's fixed names.
+fn register_functions(env: &mut Environment) {
     env.add_function("css_tag", |c| Ok(css_tag(c)));
     env.add_function("js_tag", |c| Ok(Value::markup(&script_tag(&c.arg(0, "file"), &url_of(c)))));
     // The separators Sphinx's basic theme defines for its navigation bars.
@@ -282,27 +167,39 @@ fn register_functions(env: &mut Environment, state: &Rc<TemplateState>) {
     env.add_global("embedded", Value::from(false)); // true only for help-file builders.
 }
 
+/// The functions of one page's render, borrowing the view and the page.
+fn page_functions<'a>(view: &'a BuildView<'a>, page: &'a PageState) -> Locals<'a> {
+    let mut locals = Locals::new();
+    locals.add_function("_", move |c| Ok(word(view, c)));
+    locals.add_function("gettext", move |c| Ok(word(view, c)));
+    locals.add_function("ngettext", move |c| plural(view, c));
+    locals.add_function("pathto", move |c| Ok(pathto(view, page, c)));
+    locals.add_function("hasdoc", move |c| {
+        let name = gd_jinja::to_str(&c.arg(0, "name")).into_owned();
+        Ok(Value::from(view.doc_named(&name).is_some()))
+    });
+    locals.add_function("toctree", move |c| toctree(view, page, c));
+    locals
+}
+
 /// `_(message)` and `gettext(message)`: Guidedog's interface words in the build's
 /// language.
-fn word(state: &TemplateState, c: &Call<'_, '_>) -> Value {
+fn word(view: &BuildView<'_>, c: &Call<'_, '_>) -> Value {
     let message = gd_jinja::to_str(&c.arg_or(0, "message", Value::from(""))).into_owned();
-    let asked = state.answers.borrow_mut().answer(Question::Word(message.clone()));
-    Value::from(asked.unwrap_or(message))
+    Value::from(view.ui.gettext(&message).into_owned())
 }
 
 /// `ngettext(singular, plural, n)`.
-fn plural(state: &TemplateState, c: &Call<'_, '_>) -> Result<Value, Error> {
+fn plural(view: &BuildView<'_>, c: &Call<'_, '_>) -> Result<Value, Error> {
     let one = gd_jinja::to_str(&c.arg_or(0, "singular", Value::from(""))).into_owned();
     let many = gd_jinja::to_str(&c.arg_or(1, "plural", Value::from(""))).into_owned();
     let n = c.arg_int(2, "n", 1)?.unsigned_abs();
-    let fallback = if n == 1 { one.clone() } else { many.clone() };
-    let asked = state.answers.borrow_mut().answer(Question::Plural(one, many, n));
-    Ok(Value::from(asked.unwrap_or(fallback)))
+    Ok(Value::from(view.ui.ngettext(&one, &many, n).into_owned()))
 }
 
 /// Sphinx's `toctree()` with its keyword arguments: `maxdepth` (-1 unlimited),
 /// `collapse` (default true), `titles_only`, `includehidden`.
-fn toctree(state: &TemplateState, c: &Call<'_, '_>) -> Result<Value, Error> {
+fn toctree(view: &BuildView<'_>, page: &PageState, c: &Call<'_, '_>) -> Result<Value, Error> {
     let mut options = TocOptions::TOCTREE;
     let depth = c.arg_int(KEYWORD_ONLY, "maxdepth", -1)?;
     if depth > 0 {
@@ -311,34 +208,28 @@ fn toctree(state: &TemplateState, c: &Call<'_, '_>) -> Result<Value, Error> {
     options.collapse = c.arg_flag(KEYWORD_ONLY, "collapse", options.collapse);
     options.titles_only = c.arg_flag(KEYWORD_ONLY, "titles_only", false);
     options.include_hidden = c.arg_flag(KEYWORD_ONLY, "includehidden", false);
-    let asked = state.answers.borrow_mut().answer(Question::Toctree(options));
-    Ok(Value::markup(&asked.unwrap_or_default()))
+    Ok(Value::markup(&sidebar_html(view, page.doc, options)))
 }
 
 /// Sphinx's `pathto(otheruri, resource=False)`: a document's page, or with `resource`
 /// a file below the output root, from the current page. In singlehtml a document is
 /// its section of the single page. Any other name, such as genindex or a page of
 /// html_additional_pages, is a page at the output root, with every builder.
-fn pathto(state: &TemplateState, c: &Call<'_, '_>) -> Value {
+fn pathto(view: &BuildView<'_>, page: &PageState, c: &Call<'_, '_>) -> Value {
     let target = gd_jinja::to_str(&c.arg_or(0, "otheruri", Value::from(""))).into_owned();
     if target.contains("://") || target.starts_with('#') {
         return Value::from(target);
     }
-    let page = state.page.borrow();
     if c.arg_flag(1, "resource", false) {
         return Value::from(format!("{}{target}", page.root));
     }
-    let links = &state.links;
-    let Some((name, fragment)) = links.pages.get(&target) else {
-        return Value::from(format!("{}{target}{}", page.root, links.file_suffix));
+    let Some(id) = view.doc_named(&target) else {
+        return Value::from(format!("{}{target}{}", page.root, view.config.html.file_suffix));
     };
-    if links.kind != BuilderKind::Singlehtml {
-        return Value::from(format!("{}{name}", page.root));
+    if view.kind == BuilderKind::Singlehtml {
+        return Value::from(view.page_url(page.doc, id, ""));
     }
-    if page.page == links.root_page {
-        return Value::from(format!("#{fragment}"));
-    }
-    Value::from(format!("{}#{fragment}", gd_resolve::relative_url(&page.page, &links.root_page)))
+    Value::from(format!("{}{}", page.root, view.page_name(&target)))
 }
 
 /// A `css_files` or `js_files` entry's URL: a dict's `url` (none for an inline script),
@@ -476,18 +367,5 @@ mod tests {
         assert_eq!(builtin_name("basic/layout.html"), "layout.html");
         assert_eq!(builtin_name("alabaster/layout.html"), "layout.html");
         assert_eq!(builtin_name("partials/nav.html"), "partials/nav.html");
-    }
-
-    #[test]
-    fn a_question_is_asked_once_until_answered() {
-        let mut answers = Answers::default();
-        assert_eq!(answers.answer(Question::Word("Index".into())), None);
-        assert_eq!(answers.answer(Question::Word("Index".into())), None);
-        assert_eq!(answers.asked.len(), 1);
-        answers.known.insert(Question::Word("Index".into()), "Stichwortverzeichnis".into());
-        assert_eq!(
-            answers.answer(Question::Word("Index".into())).as_deref(),
-            Some("Stichwortverzeichnis")
-        );
     }
 }

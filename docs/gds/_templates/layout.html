@@ -68,7 +68,7 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
   {%- endif %}
   <ul class="rellinks">
     {%- block rootrellink %}
-    {#- In the published website (tools/build-site.sh), site_home is the way from this
+    {#- In the published website (cargo xtask build-site), site_home is the way from this
         project's root up to the site's root. -#}
     {%- if site_home %}
     <li><a href="{{ pathto_root }}{{ site_home }}index.html">Home</a></li>
@@ -139,7 +139,7 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
         <span>{{ release or version }}</span></div>
       {#- pdf_downloads, when set, is the folder below the project's root that holds the
           PDF of each record (guidedog build pdf names it gds-RECORD-LANGUAGE.pdf) and of
-          the index (gds-index-LANGUAGE.pdf). tools/build-site.sh sets it. -#}
+          the index (gds-index-LANGUAGE.pdf). cargo xtask build-site sets it. -#}
       {%- if pdf_downloads and (pagename[:8] == 'records/' or pagename == root_doc) %}
       <p class="gd-download"><a type="application/pdf" href="{{ pathto_root }}
         {{- pdf_downloads }}gds-{{ pagename[8:] if pagename != root_doc else 'index' }}-

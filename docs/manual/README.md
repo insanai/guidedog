@@ -53,7 +53,7 @@ target/release/guidedog build -b pdf docs/manual docs/manual/_editions/books/de 
 
 The English build copies `_editions` into the site (`html_extra_path`), so build the editions first. Typst applies language-aware hyphenation, paragraph breaking, and non-Latin shaping. CJK editions use Noto Serif CJK and Hindi uses Noto Serif Devanagari, from `docs/shared/fonts` and `_static/data/fonts`. The language selector works without JavaScript; JavaScript adds detection of the browser's language.
 
-`sh tools/fetch-fonts.sh` downloads the CJK fonts into `docs/shared/fonts` with checked SHA-256 sums. For the complete release site, run `sh tools/build-site.sh`: it builds the landing page and the manual in all seven languages, their PDF books, and the GDS project, and assembles them with relative links.
+`cargo xtask fetch-fonts` downloads the CJK fonts into `docs/shared/fonts` with checked SHA-256 sums. For the complete release site, run `cargo xtask build-site`: it builds the landing page and the manual in all seven languages, their PDF books, and the GDS project, and assembles them with relative links.
 
 ## Reusing the manual theme
 

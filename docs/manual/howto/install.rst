@@ -94,9 +94,10 @@ Before we propose a change, we run the same checks as the project's continuous i
    cargo test --workspace
    cargo clippy --workspace --all-targets
    cargo run -p check
+   cargo xtask tables --check
 
 ``cargo run -p check`` is the source-limit checker in ``tools/check``: function and file
-lengths and line widths.
+lengths and line widths. ``cargo xtask tables --check`` checks that the generated data tables match the upstream data in ``tools/data``. ``cargo xtask --help`` lists the other repository tasks: the website, the fonts, and the release steps.
 
 Discussion programs
 -------------------

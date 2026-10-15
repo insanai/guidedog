@@ -14,6 +14,7 @@ Running the tests
    cargo test --workspace                  # everything, the end-to-end tests included
    cargo clippy --workspace --all-targets  # lints, missing docs and unsafe code included
    cargo run -p check                      # function, file and line-length limits
+   cargo xtask tables --check              # the data tables match tools/data
    cargo test -p guidedog-tests --test gates     # only the quality gates
    cargo test -p guidedog-tests --test projects  # one end-to-end group
 

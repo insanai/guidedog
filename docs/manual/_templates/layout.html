@@ -68,7 +68,7 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
   {%- endif %}
   <ul class="rellinks">
     {%- block rootrellink %}
-    {#- In the published website (tools/build-site.sh), site_home is the way from the
+    {#- In the published website (cargo xtask build-site), site_home is the way from the
         manual's root up to the site's root, and these links lead to the landing page
         of the same language and to the discussions. -#}
     {%- if site_home %}

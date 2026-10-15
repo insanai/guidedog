@@ -83,7 +83,7 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
     -D language=de -D 'html_extra_path=[]' -W
 ```
 
-Übersetzen und prüfen Sie die `msgstr`-Werte der PO-Dateien. Guidedog extrahiert POT, führt Kataloge zusammen, zeigt den Stand und baut jede Ausgabe. Übersetzungen verfasst es nicht selbst. Befehle, Pfade, Code, API-Namen und Verweisziele bleiben unverändert. Nur Handbuch und Repositoryübersicht werden übersetzt; API und GDS bleiben Englisch. `tools/build-site.sh` stellt alle Ausgaben, ihre PDF-Bücher und die Diskussionen zur Website zusammen.
+Übersetzen und prüfen Sie die `msgstr`-Werte der PO-Dateien. Guidedog extrahiert POT, führt Kataloge zusammen, zeigt den Stand und baut jede Ausgabe. Übersetzungen verfasst es nicht selbst. Befehle, Pfade, Code, API-Namen und Verweisziele bleiben unverändert. Nur Handbuch und Repositoryübersicht werden übersetzt; API und GDS bleiben Englisch. `cargo xtask build-site` stellt alle Ausgaben, ihre PDF-Bücher und die Diskussionen zur Website zusammen.
 
 Auf GitHub wählen Leser die README-Sprache über die Links oben. Die automatische Sprachwahl erfolgt auf der erzeugten Dokumentationswebsite.
 

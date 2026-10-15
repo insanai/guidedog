@@ -1,6 +1,6 @@
 # Configuration file for Guidedog: the Guidedog website's landing page.
 #
-# tools/build-site.sh builds it with the manual and the discussions into one static site
+# cargo xtask build-site builds it with the manual and the discussions into one static site
 # and publishes it at https://insanai.github.io/guidedog/. The settings use the names of
 # Sphinx's conf.py, written in TOML.
 
@@ -26,7 +26,7 @@ gettext_last_translator = "Guidedog translation contributors"
 gettext_language_team = "Guidedog translation contributors"
 
 # The links from the page into the rest of the site. They are relative to this edition:
-# tools/build-site.sh gives each translated edition its own, which go up one folder and
+# cargo xtask build-site gives each translated edition its own, which go up one folder and
 # into the manual of the same language.
 rst_epilog = """
 .. _manual: manual/index.html

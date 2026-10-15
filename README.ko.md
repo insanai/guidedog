@@ -83,7 +83,7 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
     -D language=de -D 'html_extra_path=[]' -W
 ```
 
-PO 파일의 `msgstr` 을 번역하고 검토하세요. Guidedog은 POT 추출, 카탈로그 병합, 진행 상황 표시, 각 언어판 빌드를 처리하지만 번역문을 만들어 주지는 않습니다. 명령, 경로, 코드, API 이름, 참조 대상은 바꾸지 않습니다. 매뉴얼과 저장소 개요만 번역하며 API와 GDS는 영어로 유지합니다. `tools/build-site.sh` 는 모든 언어판과 그 PDF 책, 논의 기록을 웹사이트로 조합합니다.
+PO 파일의 `msgstr` 을 번역하고 검토하세요. Guidedog은 POT 추출, 카탈로그 병합, 진행 상황 표시, 각 언어판 빌드를 처리하지만 번역문을 만들어 주지는 않습니다. 명령, 경로, 코드, API 이름, 참조 대상은 바꾸지 않습니다. 매뉴얼과 저장소 개요만 번역하며 API와 GDS는 영어로 유지합니다. `cargo xtask build-site` 는 모든 언어판과 그 PDF 책, 논의 기록을 웹사이트로 조합합니다.
 
 GitHub에서는 위 링크로 README 언어를 선택합니다. 자동 언어 선택은 생성된 문서 웹사이트에서 동작합니다.
 

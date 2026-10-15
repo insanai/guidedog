@@ -83,7 +83,7 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
     -D language=de -D 'html_extra_path=[]' -W
 ```
 
-Translate and review `msgstr` values in the PO files. Guidedog extracts POT files, merges catalogs, reports progress, and builds each edition. It does not invent translations. Commands, paths, code, API names, and reference targets stay unchanged. Only the manual and repository overview are translated; API and GDS remain English. `tools/build-site.sh` assembles all editions, their PDF books, and the discussions into the website.
+Translate and review `msgstr` values in the PO files. Guidedog extracts POT files, merges catalogs, reports progress, and builds each edition. It does not invent translations. Commands, paths, code, API names, and reference targets stay unchanged. Only the manual and repository overview are translated; API and GDS remain English. `cargo xtask build-site` assembles all editions, their PDF books, and the discussions into the website.
 
 GitHub readers choose a README language using the links above. Automatic language selection belongs to the generated documentation website.
 

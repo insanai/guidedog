@@ -83,7 +83,7 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
     -D language=de -D 'html_extra_path=[]' -W
 ```
 
-在 PO 文件中填写并审阅 `msgstr`。Guidedog 负责提取 POT、合并目录、报告进度和构建各语言版本，不会自动编写翻译。命令、路径、代码、API 名称和引用目标保持不变。只翻译手册和仓库概览，API 与 GDS 保持英文。`tools/build-site.sh` 把所有语言版本、它们的 PDF 图书和讨论记录汇总成网站。
+在 PO 文件中填写并审阅 `msgstr`。Guidedog 负责提取 POT、合并目录、报告进度和构建各语言版本，不会自动编写翻译。命令、路径、代码、API 名称和引用目标保持不变。只翻译手册和仓库概览，API 与 GDS 保持英文。`cargo xtask build-site` 把所有语言版本、它们的 PDF 图书和讨论记录汇总成网站。
 
 GitHub 上的读者用上方链接选择 README 语言。自动语言选择由生成的文档网站提供。
 

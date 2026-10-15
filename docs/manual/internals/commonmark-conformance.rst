@@ -13,7 +13,7 @@ MyST (myst-parser 0.16.1)
 -------------------------
 
 ``crates/guidedoc-commonmark/tests/myst_conformance`` reads myst-parser 0.16.1's own test
-data (``tests/data/myst``, MIT license, used as data only) with the ``myst`` reader, as a
+data (``crates/guidedoc-sphinx/tests/data/myst``, MIT license, used as data only; both harnesses read this one copy) with the ``myst`` reader, as a
 project reads ``.md`` documents, and compares the document trees. ``MYST_ONLY=<file.md>``
 (or ``<directory>/<document>``) checks one fixture and prints its differences;
 ``MYST_DUMP=<dir>`` writes both normalized trees of every case for diffing.

@@ -145,12 +145,6 @@ brew tap insanai/guidedog
 brew install insanai/guidedog/guidedog
 ```
 
-The tap's Update workflow checks the latest stable release daily and can be run
-manually after publication. It verifies the formula and checksum manifest against
-GitHub's asset digests, checks all four archive URLs and hashes, and installs and
-tests the candidate on Apple silicon before committing it. The tap also tests
-formula changes on Apple silicon and Intel macOS. The release workflow remains the
-source of the packages and formula; the tap does not rebuild the engine or change
-published assets. No cross-repository write token is needed.
+The tap's Update workflow checks published releases every hour, including prereleases, and selects the greatest version. We can also run it manually after publication with an explicit tag. It verifies the formula and checksum manifest against GitHub's asset digests, checks all four archive URLs and hashes, and installs and tests the candidate on Apple silicon and Intel macOS before committing it. The release workflow remains the source of the packages and formula; the tap does not rebuild the engine or change published assets. No cross-repository write token is needed.
 
-Beta releases use GitHub's prerelease flag. The tap Update workflow accepts an explicit tag (including a beta); its daily run follows stable releases only. We select `v1.0.0-beta.1` explicitly for this release.
+Beta releases use GitHub's prerelease flag. Scheduled tap updates include `v1.0.0-beta.1` and later prereleases, then follow the stable release when its version is greater. The updater rejects downgrades.

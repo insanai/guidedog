@@ -11,8 +11,9 @@ pub(crate) struct Date {
     pub day: u32,
 }
 
-/// Today's date as `YYYY-MM-DD`: `SOURCE_DATE_EPOCH`'s when it is set and a whole number,
-/// otherwise the local date (the UTC date where the local time zone cannot be read).
+/// Today's date as `YYYY-MM-DD`: `SOURCE_DATE_EPOCH`'s when it is set and a whole number
+/// whose date has four digits, otherwise the local date (the UTC date where the local
+/// time zone cannot be read).
 pub fn today() -> String {
     let d = now();
     format!("{:04}-{:02}-{:02}", d.year, d.month, d.day)
@@ -20,9 +21,9 @@ pub fn today() -> String {
 
 /// Today's date, as [`today`] chooses it.
 pub(crate) fn now() -> Date {
-    let fixed = std::env::var("SOURCE_DATE_EPOCH").ok().and_then(|t| t.trim().parse().ok());
-    if let Some(seconds) = fixed {
-        return date_from_unix(seconds);
+    let fixed = std::env::var("SOURCE_DATE_EPOCH").ok().and_then(|t| fixed_date(&t));
+    if let Some(date) = fixed {
+        return date;
     }
     let seconds = match SystemTime::now().duration_since(UNIX_EPOCH) {
         Ok(d) => i64::try_from(d.as_secs()).unwrap_or(i64::MAX),
@@ -30,6 +31,13 @@ pub(crate) fn now() -> Date {
     };
     let offset = local::offset_seconds(seconds).unwrap_or(0);
     date_from_unix(seconds.saturating_add(offset))
+}
+
+/// The date `SOURCE_DATE_EPOCH`'s text fixes, or `None` when it is not a whole number or
+/// its year is not one a record's `YYYY-MM-DD` can hold (then the clock decides).
+fn fixed_date(text: &str) -> Option<Date> {
+    let date = date_from_unix(text.trim().parse().ok()?);
+    (1..=9999).contains(&date.year).then_some(date)
 }
 
 /// The civil date of a Unix timestamp (Howard Hinnant's days-from-civil inverse).
@@ -102,5 +110,8 @@ mod tests {
         assert_eq!(date_from_unix(0), Date { year: 1970, month: 1, day: 1 });
         assert_eq!(date_from_unix(951_782_400), Date { year: 2000, month: 2, day: 29 });
         assert_eq!(date_from_unix(-86_400), Date { year: 1969, month: 12, day: 31 });
+        assert_eq!(fixed_date(" 0 "), Some(Date { year: 1970, month: 1, day: 1 }));
+        assert_eq!(fixed_date("9223372036854775807"), None);
+        assert_eq!(fixed_date("soon"), None);
     }
 }

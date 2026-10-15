@@ -55,6 +55,7 @@ For an exact contract, use :doc:`reference/index`.
    :caption: Document code
 
    autodoc
+   sources-and-diagrams
    rust
    odin
    object-types

@@ -134,17 +134,17 @@ Every extension in Sphinx's ``sphinx.ext`` package is built in. A project lists 
    * - ``autosummary`` and ``apidoc``
      - Summary tables and API pages are generated from the source, in memory. Nothing is written into the source folder.
    * - ``viewcode``
-     - Highlighted source pages under ``_modules/``, linked to the descriptions and back.
+     - Highlighted source pages under ``_modules/``, linked to the descriptions and back (:doc:`sources-and-diagrams`).
    * - ``linkcode``
-     - A URL template, ``linkcode_url``, replaces the Python function ``linkcode_resolve``.
+     - A URL template, ``linkcode_url``, replaces the Python function ``linkcode_resolve`` (:doc:`sources-and-diagrams`).
    * - ``inheritance_diagram``
-     - Class graphs from the source, drawn by the linked Graphviz.
+     - Class graphs from the source, drawn by the linked Graphviz (:doc:`sources-and-diagrams`).
    * - ``coverage``
      - ``guidedog build coverage`` writes ``python.txt`` from the source and the documents.
    * - ``duration``
-     - The slowest documents to read, in the build summary and a JSON file.
+     - The slowest documents to read, in the build summary and a JSON file (:doc:`sources-and-diagrams`).
    * - ``imgconverter``
-     - Accepted, and nothing runs: Typst reads SVG, PNG, JPEG and GIF itself. Other formats are reported.
+     - Accepted, and nothing runs: Typst reads SVG, PNG, JPEG and GIF itself. Other formats are reported (:doc:`sources-and-diagrams`).
    * - ``myst_parser``
      - The implemented project Markdown layer.
 

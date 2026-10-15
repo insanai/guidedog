@@ -23,8 +23,7 @@ uploaded by hand, and a published release is never changed.
   - `build`: per platform, natively on that platform, `cargo xtask release build` runs
     `cargo build --release --locked` for `guidedog`, with the embedded Typst compiler and linked Pages and discussion plugins. Graphviz 16.1.0 is linked
     statically: `cargo xtask graphviz` builds it (cached between runs) and the build
-    sets `GUIDEDOG_GRAPHVIZ_STATIC`. The integration tests run again against the release
-    build. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices, `SOURCE.txt`, and a build manifest
+    sets `GUIDEDOG_GRAPHVIZ_STATIC`. Full workspace tests run once per qualification OS in `qualify`; archive jobs do not recompile the suite with release optimization. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices, `SOURCE.txt`, and a build manifest
     (`guidedog.build.json`).
   - `smoke`: each archive, unpacked on a fresh machine of its platform with nothing
     installed, runs quickstart and builds HTML and PDF with an empty
@@ -56,7 +55,7 @@ every other crate; release builds use `--locked`.
 Each archive is built natively, with the static Graphviz built on that platform
 (`cargo xtask graphviz`). The archives carry Graphviz's and Expat's licences
 (`COPYING-graphviz`, `COPYING-expat`), and `SOURCE.txt` names their source tarballs with
-their SHA-256. Windows ships a ZIP with the official Graphviz 16.1.0 DLLs and configuration beside the three executables. The prepare action verifies the upstream archive SHA-256. A fresh Windows runner extracts the ZIP, checks the programs against the manifest, and runs HTML, PDF, discussion, Pages and graph rendering smoke tests.
+their SHA-256. Windows ships a ZIP with the official Graphviz 16.1.0 DLLs and configuration beside `guidedog.exe`. The prepare action verifies the upstream archive SHA-256. A fresh Windows runner extracts the ZIP, checks the programs against the manifest, and runs HTML, PDF, discussion, Pages and graph rendering smoke tests.
 
 ## Build a release locally
 
@@ -96,10 +95,8 @@ It prints a record of versions, pins and results, and exits 1 on any incompatibi
 2. Add the release to `CHANGELOG.md`, and write `.github/release-notes.md`: what changed,
    the downloads, how to verify and install, and the platform notes.
 3. Push to `main` and wait for Verify to pass.
-4. Run Release by hand on `main` (Actions, Release, Run workflow, platform `all`). This
-   candidate run builds and tests everything but publishes nothing. Download its
-   artifacts and try them if you like.
-5. Tag the same commit and push the tag:
+4. We can run Release by hand on `main` (Actions, Release, Run workflow, platform `all`) to inspect candidate artifacts before tagging. This is optional: a tagged run applies the same qualification and archive smoke checks before publication.
+5. Tag the verified commit and push the tag:
 
    ```sh
    git tag -a v1.0.0-beta.1 -m "Guidedog 1.0.0-beta.1"

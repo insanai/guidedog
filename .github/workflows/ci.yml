@@ -1,7 +1,7 @@
 name: Verify
 # Quick feedback for every change, on Linux and macOS: build, every test suite, clippy,
 # the source limits, and the smoke tests of the built programs.
-# The release workflow runs the same checks again on every platform it packages.
+# Release qualification runs the full suite on Linux and macOS; each archive gets smoke tests.
 on:
   push:
     branches: [main]

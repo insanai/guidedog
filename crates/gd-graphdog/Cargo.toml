@@ -11,9 +11,15 @@ homepage.workspace = true
 readme = "README.md"
 keywords = ["graphviz", "dot", "svg", "diagram", "graph"]
 categories = ["visualization", "api-bindings", "rendering"]
-include = ["src/**", "README.md"]
+include = ["src/**", "build.rs", "README.md"]
 
-# No external crates: Graphviz (libgvc, libcgraph) is bound by hand in src/ffi.rs.
+# No external crates: Graphviz (libgvc, libcgraph) is bound by hand in src/ffi.rs, and
+# build.rs (std only) picks shared or static linking.
+[features]
+# Links the static Graphviz that `cargo xtask graphviz` builds into target/graphviz;
+# setting GUIDEDOG_GRAPHVIZ_STATIC=<dir> does the same for any folder.
+static-graphviz = []
+
 [dependencies]
 gd-report = { workspace = true }
 

@@ -20,6 +20,8 @@
 // The crate is the binding to the Graphviz C library: every module calls it.
 #![allow(unsafe_code)]
 
+#[cfg(graphviz_static)]
+mod builtin;
 mod defaults;
 mod errors;
 mod ffi;
@@ -36,8 +38,10 @@ use std::sync::{Mutex, MutexGuard};
 pub use errors::{Error, ErrorKind};
 pub use format::format_error;
 
-/// True when Graphviz is linked statically. This port always links the shared libraries.
-pub const STATIC: bool = false;
+/// True when Graphviz is linked statically (built with `GUIDEDOG_GRAPHVIZ_STATIC` or the
+/// `static-graphviz` feature): the program then needs no Graphviz installation, and its
+/// plugins are the built-in dot and neato layouts and the core SVG and DOT renderers.
+pub const STATIC: bool = cfg!(graphviz_static);
 
 /// The attributes through which Graphviz reads files; [`Options::files`] decides them.
 pub const FILE_ATTRIBUTES: [&str; 4] = ["image", "shapefile", "imagepath", "fontpath"];
@@ -228,14 +232,12 @@ unsafe impl Send for Context {}
 unsafe impl Sync for Context {}
 
 impl Context {
-    /// Creates a Graphviz context and loads the plugins listed in Graphviz's config file
-    /// (written by `dot -c`). Fails with [`ErrorKind::NotInitialized`] only when Graphviz
-    /// cannot make one.
+    /// Creates a Graphviz context and loads its plugins: those listed in Graphviz's config
+    /// file (written by `dot -c`), or the built-in ones in a static build ([`STATIC`]).
+    /// Fails with [`ErrorKind::NotInitialized`] only when Graphviz cannot make one.
     pub fn new() -> Result<Context, Error> {
-        let _lock = lock();
-        // SAFETY: the lock is held; gvContext takes no arguments and returns an owned
-        // context or null.
-        let gvc = unsafe { ffi::gvContext() };
+        let lock = lock();
+        let gvc = new_gvc(&lock);
         NonNull::new(gvc).map(|gvc| Context { gvc }).ok_or(Error::new(ErrorKind::NotInitialized))
     }
 
@@ -296,6 +298,22 @@ fn lock() -> Locked {
     // depends on (each render resets the log and restores the prototypes), so a poisoned
     // lock is recovered.
     Locked { _guard: GV_LOCK.lock().unwrap_or_else(std::sync::PoisonError::into_inner) }
+}
+
+/// A new Graphviz context with the plugins of the config file, or null.
+#[cfg(not(graphviz_static))]
+fn new_gvc(_lock: &Locked) -> *mut ffi::Gvc {
+    // SAFETY: the lock is held; gvContext takes no arguments and returns an owned context
+    // or null.
+    unsafe { ffi::gvContext() }
+}
+
+/// A new Graphviz context with the built-in plugins, or null.
+#[cfg(graphviz_static)]
+fn new_gvc(_lock: &Locked) -> *mut ffi::Gvc {
+    // SAFETY: the lock is held; the table is a static that ends with a null entry and
+    // outlives every context, and 0 loads every plugin at once.
+    unsafe { ffi::gvContextPlugins(builtin::builtins(), 0) }
 }
 
 /// A C string of `text` up to its first NUL byte, as C would read it.

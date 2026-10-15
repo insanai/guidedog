@@ -1,7 +1,7 @@
 # gd-graphdog cheat sheet
 
 Graphviz DOT to SVG, PNG or laid-out DOT with the Graphviz C library in process (bound by
-hand in `src/ffi.rs`; links `-lgvc -lcgraph`).
+hand in `src/ffi.rs`; links `-lgvc -lcgraph`, or a static Graphviz, see below).
 
 ## Use
 
@@ -40,9 +40,23 @@ The API documentation is on [docs.rs](https://docs.rs/gd-graphdog). This is one 
 Every Graphviz call runs under one process-wide mutex; renders from many threads are
 serialized.
 
+## Static Graphviz
+
+`cargo xtask graphviz` builds Graphviz 16.1.0 (with Expat) as static libraries into
+`target/graphviz/16.1.0`. With `GUIDEDOG_GRAPHVIZ_STATIC=<that folder>` (or the
+`static-graphviz` feature, which uses the default folder), `build.rs` links them instead
+of the shared libraries, `STATIC` is `true`, and the program needs no Graphviz at run
+time. The static build has the dot and neato layout plugins (all eight engines) and the
+core renderers (SVG, DOT); PNG fails with `MissingFormat`. `src/builtin.rs` hands the
+plugins to `gvContextPlugins`, like Graphviz's `dot_static`, plus a text-layout plugin
+that sizes non-ASCII labels (CJK at one em) where Graphviz's ASCII-only tables would warn.
+
 ## Design notes
 
 - `Context::new`/`Drop` replace `init`/`close`; `version` and `render` are methods.
+- The static build is chosen by `build.rs` from an environment variable or a feature,
+  not by a compile-time define; the plugin tables are Rust statics, so no C shim is
+  compiled.
 - Warnings come back in `Rendered::warnings` instead of an `Option<&mut Vec<String>>`
   out-parameter in `Options`.
 - `Engine::name`/`from_name`/`ALL`, `Format::...` and `ErrorKind::title`/`code` replace

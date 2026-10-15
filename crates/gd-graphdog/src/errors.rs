@@ -154,9 +154,17 @@ impl ErrorKind {
                  and write & < > as &amp; &lt; &gt; inside text."
             }
             ErrorKind::EmptyInput => "Write a graph, for example `digraph { a -> b }`.",
+            ErrorKind::MissingEngine if crate::STATIC => {
+                "This program has Graphviz built in with the dot, neato, fdp, sfdp, circo, \
+                 twopi, osage and patchwork layouts; use one of them."
+            }
             ErrorKind::MissingEngine => {
                 "Register the installed plugins with `sudo dot -c`, or install the package \
                  that holds the layout plugins (graphviz on Homebrew, Debian and Ubuntu)."
+            }
+            ErrorKind::MissingFormat if crate::STATIC => {
+                "This program has Graphviz built in without PNG support; use SVG or DOT \
+                 output."
             }
             ErrorKind::MissingFormat => {
                 "Register the installed plugins with `sudo dot -c`. PNG output needs the \

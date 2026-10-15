@@ -170,7 +170,7 @@ fn dot_format_and_version() {
     assert!(String::from_utf8_lossy(&out).contains("pos="));
     let options = Options { format: Format::Png, ..Options::default() };
     match render(&ctx, "digraph { a -> b }", options) {
-        Ok(png) => assert!(png.len() > 8 && &png[1..4] == b"PNG"),
+        Ok(png) => assert!(!STATIC && png.len() > 8 && &png[1..4] == b"PNG"),
         Err(err) => assert_eq!(err.kind, ErrorKind::MissingFormat),
     }
 }
@@ -188,7 +188,13 @@ fn names_round_trip() {
 fn unicode_labels_are_measured() {
     let ctx = context();
     let options = Options { format: Format::Dot, ..Options::default() };
-    let wide = render(&ctx, r#"digraph { "日本語テキスト" }"#, options).expect("wide");
+    let wide = ctx.render(r#"digraph { "日本語テキスト" }"#, options).expect("wide");
+    // The static build's text-layout plugin measures non-ASCII text without Graphviz's
+    // "no value for width of non-ASCII character" warning.
+    if STATIC {
+        assert_eq!(wide.warnings, Vec::<String>::new());
+    }
+    let wide = wide.output;
     let options = Options { format: Format::Dot, ..Options::default() };
     let narrow = render(&ctx, r#"digraph { "abcdefg" }"#, options).expect("narrow");
     assert!(

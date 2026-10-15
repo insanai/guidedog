@@ -1,9 +1,10 @@
 //! The raw Graphviz C API that graphdog uses, and nothing more.
 //!
 //! Every signature was checked against the headers of Graphviz 16.1 and 2.42 (Debian);
-//! where they differ, the note says how this binding stays correct for both. The shared
-//! libraries a package manager installs (`apt install libgraphviz-dev`, `brew install
-//! graphviz`) are linked: `-lgvc -lcgraph`.
+//! where they differ, the note says how this binding stays correct for both. By default the
+//! shared libraries a package manager installs (`apt install libgraphviz-dev`, `brew
+//! install graphviz`) are linked: `-lgvc -lcgraph`. A static build (`cfg(graphviz_static)`)
+//! links the archives that build.rs names instead.
 
 use std::ffi::{c_char, c_int, c_void};
 
@@ -66,9 +67,22 @@ pub(crate) type Agusererrf = Option<unsafe extern "C" fn(message: *mut c_char) -
 #[cfg(target_endian = "big")]
 compile_error!("gd-graphdog's gvRenderData binding assumes a little-endian target");
 
-#[link(name = "gvc")]
+/// `lt_symlist_t` in gvcext.h: one entry of a built-in plugin table, which ends with a
+/// null entry.
+#[cfg(graphviz_static)]
+#[repr(C)]
+pub(crate) struct LtSymlist {
+    pub name: *const c_char,
+    pub address: *const c_void,
+}
+
+#[cfg_attr(not(graphviz_static), link(name = "gvc"))]
 unsafe extern "C" {
+    #[cfg(not(graphviz_static))]
     pub(crate) fn gvContext() -> *mut Gvc;
+    /// Like `gvContext`, but with the built-in plugins instead of the config file.
+    #[cfg(graphviz_static)]
+    pub(crate) fn gvContextPlugins(builtins: *const LtSymlist, demand_loading: c_int) -> *mut Gvc;
     pub(crate) fn gvcVersion(gvc: *mut Gvc) -> *mut c_char;
     pub(crate) fn gvLayout(gvc: *mut Gvc, g: *mut Agraph, engine: *const c_char) -> c_int;
     pub(crate) fn gvRenderData(
@@ -84,7 +98,7 @@ unsafe extern "C" {
 }
 
 // 2.42 declares names and values as `char *`; neither version writes to them.
-#[link(name = "cgraph")]
+#[cfg_attr(not(graphviz_static), link(name = "cgraph"))]
 unsafe extern "C" {
     pub(crate) fn agfstnode(g: *mut Agraph) -> *mut Agnode;
     pub(crate) fn agnxtnode(g: *mut Agraph, n: *mut Agnode) -> *mut Agnode;

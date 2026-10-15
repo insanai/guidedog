@@ -20,13 +20,15 @@ What we verified
    * - Check
      - Result
    * - Tests
-     - Every test of ``cargo test --workspace`` passes; 4 are ignored.
+     - All 1,893 tests of ``cargo test --workspace`` pass; 4 are ignored.
    * - Lint and limits
      - ``cargo clippy --workspace --all-targets`` is clean. ``cargo run -p check`` finds no violations of the function, file and line limits. ``cargo fmt --check`` is clean. The 9 generated tables match ``tools/data``.
    * - Docutils
      - ``cargo xtask verify-docutils`` regenerated all 98 reference trees and ``ids.txt`` with a pinned Docutils 0.22.4. All are identical to the committed fixtures.
    * - Sphinx
      - ``cargo xtask sphinxdiff-roots`` built 42 of Sphinx 9.1.0's test roots (43 builds) with Sphinx and with Guidedog. Every difference is explained in :doc:`sphinx-comparison`. The run found one defect, which we fixed: errors in a document's content were reported as warnings.
+   * - Sphinx extensions
+     - All of Sphinx 9.1's built-in extensions are handled without running Python (GDS 0011, "Sphinx's built-in extensions"). napoleon converts all 148 docstrings of Sphinx's own tests as Sphinx does; the test roots of napoleon, autosummary, apidoc, coverage and imgconverter come out identical in what the comparison checks. ``doctest`` shows its examples and does not run them.
    * - CommonMark and MyST
      - All 652 CommonMark 0.31.2 examples pass. 215 of 218 MyST reader fixtures match.
    * - Plugins
@@ -55,12 +57,12 @@ What is open
 Decisions for the maintainers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. **Version.** We have to choose between ``1.0.0-beta.1`` and a plain ``1.0.0``.
+#. **Scope.** Guidedog supports all of reStructuredText and all of Sphinx's built-in extensions, in its own way. Extensions a project writes itself (CPython's, Django's ``djangodocs``) and third-party ones (``sphinx-tabs``, Pallets) are outside the beta; their directives are reported where they occur.
 
 Work not yet done
 ~~~~~~~~~~~~~~~~~
 
-#. **Large books.** The CPython book did not fit a machine with 12 GB of memory: Typst lays out the whole book in one compilation. We must build it on a larger machine and record the peak, or split large books.
+#. **Large books.** The CPython book did not fit a machine with 12 GB of memory: Typst lays out the whole book in one compilation. CPython splits its PDF into about 40 books, which ``conf.py`` computes; declared as ``pdf_documents``, each is much smaller. Guidedog now empties Typst's cache after every book.
 #. **Unchanged builds.** An unchanged build of CPython's manual takes 0.92 s and 170 MB, close to the 1.24 s of a clean build. Most of that time is checking and loading what the last build stored. We should profile it.
 #. **Other platforms.** We checked that Windows and macOS compile. We did not run the tests or the release programs there.
 #. **Credential store.** The store of ``guidedog-pages`` was not tried against a real keyring. ``cargo xtask release credential-store`` runs it against a private Secret Service, which this machine lacks.
@@ -77,4 +79,4 @@ Known limits
 Recommendation
 --------------
 
-We recommend tagging ``1.0.0-beta.1`` now. The open items can follow in later betas.
+We recommend tagging ``1.0.0-beta.1``. The work not yet done can follow in later betas.

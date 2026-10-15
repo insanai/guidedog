@@ -4,7 +4,7 @@
 //! as the footnote mark. Later references repeat the mark through the footnote's label.
 //! A footnote nothing refers to is a labelled block where it stands.
 
-use guidedoc::{LinkKind, Node, NodeFlag, NodeId, NodeKind, arg_span, make_id, write_id};
+use guidedoc::{LinkKind, Node, NodeFlag, NodeId, NodeKind, arg_span};
 
 use crate::messages::{CITATION_MISSING, FOOTNOTE_MISSING, SUBSTITUTION_MISSING};
 use crate::state::{Mark, State};
@@ -30,18 +30,11 @@ impl State<'_, '_> {
         label: &str,
         matches: impl Fn(&Self, NodeId) -> bool,
     ) -> Option<NodeId> {
-        self.key.clear();
-        if !self.options.anchor_prefix.is_empty() {
-            write_id(&mut self.key, self.options.anchor_prefix);
-            self.key.push('-');
-        }
-        let body = self.key.len();
-        make_id(&mut self.key, label);
-        let keyed = self.key.len() > body;
+        let keyed = self.anchors.write_anchor_key(&mut self.key, label);
+        let named = keyed.then(|| self.anchors.node_with_anchor(&self.key)).flatten();
         let candidates = || self.notes.iter().copied().filter(|&n| self.doc.kind(n) == kind);
-        let named = |n: NodeId| self.anchors.anchor_ids(n).any(|a| a == self.key);
-        if keyed && let Some(found) = candidates().find(|&n| named(n) && matches(self, n)) {
-            return Some(found);
+        if let Some(n) = named.filter(|&n| candidates().any(|c| c == n) && matches(self, n)) {
+            return Some(n);
         }
         candidates().find(|&n| matches(self, n))
     }

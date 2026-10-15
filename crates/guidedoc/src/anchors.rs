@@ -134,6 +134,39 @@ impl Anchors {
         Some(self.span_text(e.span))
     }
 
+    /// Returns every generated element's id record, sorted by owner and, for one owner,
+    /// in the order the ids were given.
+    pub fn extras(&self) -> &[AnchorExtra] {
+        &self.extras
+    }
+
+    /// Returns the node that carries the id `anchor` (with the anchor prefix, as
+    /// `anchor_ids` gives it); `None` when no node carries it.
+    pub fn node_with_anchor(&self, anchor: &str) -> Option<NodeId> {
+        match self.names.get(anchor) {
+            Some(&node) if node != NONE => Some(NodeId(node)),
+            _ => None,
+        }
+    }
+
+    /// Writes into `out` the id `build_anchors` derives from `name` (the anchor prefix,
+    /// then `make_id`), for `node_with_anchor`. Returns false, leaving `out` cleared,
+    /// when the name gives no id.
+    pub fn write_anchor_key(&self, out: &mut String, name: &str) -> bool {
+        out.clear();
+        if !self.prefix.is_empty() {
+            write_id(out, &self.prefix);
+            out.push('-');
+        }
+        let body = out.len();
+        make_id(out, name);
+        if out.len() == body {
+            out.clear();
+            return false;
+        }
+        true
+    }
+
     /// Returns the id of a generated element.
     pub fn extra_text(&self, e: &AnchorExtra) -> &str {
         self.span_text(e.span)

@@ -138,18 +138,10 @@ impl Html<'_, '_> {
     fn write_note_backrefs(&mut self, directive: NodeId, note: AnchorExtra) {
         let is_backref =
             |e: &&AnchorExtra| e.item == directive && e.note == note.item && e.owner != directive;
-        let owners = (0..self.doc.node_count()).map(NodeId::from_index);
-        let count: usize = owners
-            .clone()
-            .map(|o| self.anchors.anchor_extras(o).iter().filter(is_backref).count())
-            .sum();
-        let mut k = 0;
-        for owner in owners {
-            for e in self.anchors.anchor_extras(owner).iter().filter(is_backref) {
-                k += 1;
-                let text = self.anchors.extra_text(e);
-                write_backref(&mut self.w, text, if count > 1 { k } else { 0 });
-            }
+        let count = self.anchors.extras().iter().filter(is_backref).count();
+        for (k, e) in self.anchors.extras().iter().filter(is_backref).enumerate() {
+            let text = self.anchors.extra_text(e);
+            write_backref(&mut self.w, text, if count > 1 { k + 1 } else { 0 });
         }
     }
 

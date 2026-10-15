@@ -68,6 +68,7 @@ impl ResourceProvider for Files {
             "b.txt" => "beta",
             "loop.txt" => "again",
             "secret" => return Err(ResourceStatus::Refused),
+            "latin1" => return Err(ResourceStatus::NotUtf8),
             _ => return Err(ResourceStatus::Missing),
         };
         Ok(Resource { text: Arc::from(text), canonical: name.to_owned() })
@@ -112,11 +113,12 @@ fn includes_are_checked_and_recorded() {
     assert_eq!(texts, Ok(vec!["alpha".to_owned(), "again".to_owned()]));
     let codes: Vec<_> = ws.reports().items().iter().map(|d| d.code).collect();
     assert_eq!(codes, ["core.include.cycle"]);
-    let refused = Request { resources: Some(&Files), ..common::toy_request("secret\nnone") };
+    let text = "secret\nnone\nlatin1";
+    let refused = Request { resources: Some(&Files), ..common::toy_request(text) };
     let fail = read_document(&mut ws, &reader, &refused).err();
     assert_eq!(fail.map(|f| f.code()), Some("core.include.refused"));
     let codes: Vec<_> = ws.reports().items().iter().map(|d| d.code).collect();
-    assert_eq!(codes, ["core.include.refused", "core.include.missing"]);
+    assert_eq!(codes, ["core.include.refused", "core.include.missing", "core.include.not-utf8"]);
     let none = common::toy_request("a.txt");
     let fail = read_document(&mut ws, &reader, &none).err();
     assert_eq!(fail.map(|f| f.code()), Some("core.include.no-provider"));

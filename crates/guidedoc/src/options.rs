@@ -230,6 +230,48 @@ pub enum Label {
 /// The number of labels.
 pub const LABEL_COUNT: usize = 36;
 
+impl Label {
+    /// Every label, in declaration order (`l as usize` is its index here).
+    pub const ALL: [Label; LABEL_COUNT] = [
+        Label::Attention,
+        Label::Caution,
+        Label::Danger,
+        Label::Error,
+        Label::Hint,
+        Label::Important,
+        Label::Note,
+        Label::Tip,
+        Label::Warning,
+        Label::SeeAlso,
+        Label::Todo,
+        Label::Contents,
+        Label::VersionAdded,
+        Label::VersionChanged,
+        Label::VersionDeprecated,
+        Label::VersionRemoved,
+        Label::SectionAuthor,
+        Label::ModuleAuthor,
+        Label::CodeAuthor,
+        Label::LinkHeading,
+        Label::LinkDefinition,
+        Label::LinkImage,
+        Label::LinkTable,
+        Label::LinkCode,
+        Label::LinkEquation,
+        Label::LinkTerm,
+        Label::Parameters,
+        Label::Variables,
+        Label::Raises,
+        Label::Returns,
+        Label::ReturnType,
+        Label::ReturnValues,
+        Label::TemplateParameters,
+        Label::Throws,
+        Label::Arguments,
+        Label::Availability,
+    ];
+}
+
 /// Translated labels; a label without a translation falls back to English.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Labels {
@@ -419,6 +461,8 @@ pub enum ResourceStatus {
     Refused,
     /// The host's memory budget cannot hold it.
     Limit,
+    /// It exists, but its text is not UTF-8.
+    NotUtf8,
 }
 
 /// A provided resource: its text, shared so a host can cache it, and a canonical name
@@ -551,5 +595,12 @@ mod tests {
         assert_eq!(admonition_label(&options, AdmonitionKind::Seealso), "See also");
         assert_eq!(split_label("Added in version %s"), ("Added in version ", ""));
         assert_eq!(ENGLISH_LABELS[Label::Availability as usize], "Availability");
+    }
+
+    #[test]
+    fn all_labels_are_listed_in_order() {
+        for (i, l) in Label::ALL.into_iter().enumerate() {
+            assert_eq!(l as usize, i);
+        }
     }
 }

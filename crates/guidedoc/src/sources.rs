@@ -60,6 +60,16 @@ const INCLUDE_LIMIT: Message = Message {
     hint: "Include smaller files, or increase the memory budget of the host's resource provider.",
 };
 
+/// The provided resource is not UTF-8 text.
+const INCLUDE_NOT_UTF8: Message = Message {
+    code: "core.include.not-utf8",
+    severity: Severity::Error,
+    status: Status::InvalidInput,
+    title: "INCLUDED FILE IS NOT UTF-8",
+    message: "I found {0}, but its text is not UTF-8.",
+    hint: "Convert the file to UTF-8, for example with `iconv -t UTF-8`, and build again.",
+};
+
 /// A source includes itself.
 const INCLUDE_CYCLE: Message = Message {
     code: "core.include.cycle",
@@ -127,6 +137,7 @@ impl ReadContext<'_> {
                     ResourceStatus::Missing => INCLUDE_MISSING,
                     ResourceStatus::Refused => INCLUDE_REFUSED,
                     ResourceStatus::Limit => INCLUDE_LIMIT,
+                    ResourceStatus::NotUtf8 => INCLUDE_NOT_UTF8,
                 };
                 self.report(m, span, quoted, Arg::None);
                 return None;

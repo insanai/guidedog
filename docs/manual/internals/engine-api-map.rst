@@ -137,9 +137,9 @@ Conversion: workspace, requests, running
 |                                            | ) -> Result<Resource, ResourceStatus> }``; |
 |                                            | ``Resource { text: Arc<str>, canonical }`` |
 +--------------------------------------------+--------------------------------------------+
-| ``Resource_Status``                        | ``R                                        |
-|                                            | esourceStatus::{Missing, Refused, Limit}`` |
-|                                            | (no ``Ok``: the ``Result`` says it)        |
+| ``Resource_Status``                        | ``ResourceStatus::{Missing, Refused,``     |
+|                                            | ``Limit, NotUtf8}`` (no ``Ok``: the        |
+|                                            | ``Result`` says it)                        |
 +--------------------------------------------+--------------------------------------------+
 | ``Cancel_Probe``                           | ``r                                        |
 |                                            | equest.cancel: Option<&dyn Fn() -> bool>`` |

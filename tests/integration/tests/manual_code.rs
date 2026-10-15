@@ -18,6 +18,7 @@ use guidedog_tests::{repository_root, rst_code_block_list};
 #[path = "../../../crates/gd-plugins/examples/build_plugin/badge.rs"]
 mod badge;
 
+#[rustfmt::skip] // a twin keeps the manual's exact text
 mod install_embed {
     // manual: docs/manual/howto/install.rst#1
     use guidedoc::{Registry, Workspace, convert_text};
@@ -41,6 +42,7 @@ mod install_embed {
     }
 }
 
+#[rustfmt::skip] // a twin keeps the manual's exact text
 mod plugins_linked {
     use super::badge;
 
@@ -64,6 +66,7 @@ mod plugins_linked {
     // end manual
 }
 
+#[rustfmt::skip] // a twin keeps the manual's exact text
 mod cli_linked {
     use super::badge;
 
@@ -83,6 +86,7 @@ mod cli_linked {
 }
 
 /// The discussion how-to's fragment: `dir` is the catalog's folder.
+#[rustfmt::skip] // a twin keeps the manual's exact text
 fn discussions_state_change(dir: &std::path::Path) -> Result<(), gd_discussion::Problem> {
     // manual: docs/manual/howto/discussions.rst#1
     use gd_discussion as ds;
@@ -102,6 +106,7 @@ fn discussions_state_change(dir: &std::path::Path) -> Result<(), gd_discussion::
 }
 
 #[test]
+#[rustfmt::skip] // a twin keeps the manual's exact text
 fn the_engine_example_runs() {
     // manual: docs/manual/internals/engine.rst#1
     use guidedoc::{convert_text, Workspace};
@@ -185,10 +190,12 @@ fn every_rust_block_of_the_manual_is_compiled_here() {
                      `// manual: {name}` and `// end manual`, or mark it `:class: sketch`",
                     block.line
                 )),
-                Some((_, code)) if code.trim_end() != block.code.trim_end() => problems.push(
-                    format!("{rel}:{}: the manual and its twin differ:\n{}\n---\n{code}",
-                        block.line, block.code),
-                ),
+                Some((_, code)) if code.trim_end() != block.code.trim_end() => {
+                    problems.push(format!(
+                        "{rel}:{}: the manual and its twin differ:\n{}\n---\n{code}",
+                        block.line, block.code
+                    ))
+                }
                 Some(_) => {}
             }
         }

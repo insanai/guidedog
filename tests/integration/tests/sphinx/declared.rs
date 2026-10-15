@@ -63,13 +63,16 @@ fn declared_object_types_follow_sphinx() {
 fn migrate_reads_extension_declarations() {
     let dir = Scratch::new("declared-migrate");
     dir.write("conf.py", "project = \"D\"\nextensions = [\"djangodocs\"]\n");
-    dir.write("_ext/djangodocs.py", "from sphinx.domains.std import Cmdoption\n\n\
+    dir.write(
+        "_ext/djangodocs.py",
+        "from sphinx.domains.std import Cmdoption\n\n\
         def setup(app):\n    app.add_crossref_type(\n        directivename=\"setting\",\n        \
         rolename=\"setting\",\n        indextemplate=\"pair: %s; setting\",\n    )\n    \
         app.add_object_type('django-admin', 'djadmin', 'pair: %s; command',\n        \
         parse_node=parse_django_admin_node)\n    \
         app.add_directive(\"django-admin-option\", Cmdoption)\n    \
-        app.add_role(\"sourcefile\", sourcefile)\n");
+        app.add_role(\"sourcefile\", sourcefile)\n",
+    );
     let r = guidedog(&dir.path, 0, &["migrate", "conf.py", "--color=never"]);
     in_order(
         &dir.read("conf.toml"),

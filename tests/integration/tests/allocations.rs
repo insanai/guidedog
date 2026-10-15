@@ -84,15 +84,19 @@ const CEILINGS: &[(&str, &str, usize)] = &[
     ("rst", "html", 128),
     ("rst", "typst", 126),
     ("rst", "text", 138),
+    ("rst", "rst", 301),
     ("sphinx", "html", 244),
     ("sphinx", "typst", 242),
     ("sphinx", "text", 254),
+    ("sphinx", "rst", 418),
     ("commonmark", "html", 50),
     ("commonmark", "typst", 50),
     ("commonmark", "text", 56),
+    ("commonmark", "rst", 155),
     ("myst", "html", 53),
     ("myst", "typst", 52),
     ("myst", "text", 58),
+    ("myst", "rst", 157),
 ];
 
 /// The allocations `f` makes on this thread.
@@ -126,11 +130,6 @@ fn every_reader_and_renderer_converts_again_within_its_ceiling() {
     for reader in &registry.readers {
         for renderer in &registry.renderers {
             let pair = (reader.id, renderer.id);
-            let ceiling = CEILINGS.iter().find(|c| (c.0, c.1) == pair).map(|c| c.2);
-            let Some(ceiling) = ceiling else {
-                failures.push(format!("{pair:?} has no ceiling: add one to CEILINGS"));
-                continue;
-            };
             let text = sample(pair.0);
             let mut ws = Workspace::new();
             let len = convert_text(&mut ws, &registry, pair.0, pair.1, text)
@@ -141,12 +140,18 @@ fn every_reader_and_renderer_converts_again_within_its_ceiling() {
             if third > second {
                 failures.push(format!("{pair:?} grows: {second} then {third} allocation(s)"));
             }
+            // A new pair reports its count, so its ceiling can be recorded as measured.
+            let ceiling = CEILINGS.iter().find(|c| (c.0, c.1) == pair).map(|c| c.2);
+            let Some(ceiling) = ceiling else {
+                failures.push(format!("{pair:?} has no ceiling: record {second} in CEILINGS"));
+                continue;
+            };
             if second > ceiling {
                 failures.push(format!("{pair:?}: {second} allocation(s), ceiling {ceiling}"));
             }
             checked += 1;
         }
     }
-    assert!(checked >= 12, "expected 4 readers x 3 renderers, checked {checked}");
+    assert!(checked >= 16, "expected 4 readers x 4 renderers, checked {checked}");
     assert!(failures.is_empty(), "repeated conversions:\n{}", failures.join("\n"));
 }

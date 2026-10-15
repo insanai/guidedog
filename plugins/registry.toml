@@ -1,0 +1,52 @@
+# Guidedog's public plugin catalog (GDS 0009): discovery metadata, reviewed by the
+# maintainers. Nothing reads it to install or run code; guidedog plugin register
+# records the programs a user chooses, on that user's machine.
+#
+# api_version and protocol_version are the versions the plugin speaks, as gd-plugins
+# names them: API_VERSION (publishers, 1.1), PLUGIN_API_VERSION (build plugins, 1.0),
+# PROTOCOL_VERSION (guidedog-publisher, 1.0), and BUILD_PROTOCOL_VERSION
+# (guidedog-build-plugin, 1.0).
+schema = 1
+
+[[plugins]]
+id = "pages"
+kind = "publisher"
+name = "GitHub Pages publisher"
+description = "Publish complete Guidedog sites to GitHub Pages from a local machine."
+status = "released"
+program = "guidedog-pages"
+source = "https://github.com/insanai/guidedog/tree/main/crates/gd-pages"
+license = "AGPL-3.0-or-later"
+maintainers = ["Vikrant Rathore"]
+designs = ["GDS 0009", "GDS 0008"]
+api_version = "1.1"
+protocol = "guidedog-publisher"
+protocol_version = "1.0"
+# The program ships in the guidedog archives of each release; SHA256SUMS lists them.
+# From 0.7.0 it is built from the Rust crate gd-pages (cmd/guidedog-pages); earlier
+# releases carry the Odin implementation.
+releases = [
+    { version = "0.6.3", archives = "https://github.com/insanai/guidedog/releases/tag/v0.6.3" },
+    { version = "0.6.2", archives = "https://github.com/insanai/guidedog/releases/tag/v0.6.2" },
+    { version = "0.6.1", archives = "https://github.com/insanai/guidedog/releases/tag/v0.6.1" },
+    { version = "0.6.0", archives = "https://github.com/insanai/guidedog/releases/tag/v0.6.0" },
+]
+
+[[plugins]]
+id = "product-badge"
+kind = "build"
+name = "Product badge example"
+description = "Transform a product marker, label HTML pages, and supply the badge stylesheet."
+status = "example"
+program = "product-badge"
+source = "https://github.com/insanai/guidedog/tree/main/crates/gd-plugins/examples/build_plugin"
+license = "AGPL-3.0-or-later"
+maintainers = ["Vikrant Rathore"]
+designs = ["GDS 0010"]
+api_version = "1.0"
+protocol = "guidedog-build-plugin"
+protocol_version = "1.0"
+hooks = ["source", "html", "assets"]
+releases = []
+# Compile this teaching example from source (cargo build --release -p gd-plugins
+# --example build_plugin). It is not an installed release program.

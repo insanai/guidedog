@@ -99,7 +99,17 @@ pub struct State {
 /// A lock on a target or the settings; dropping it releases the lock.
 #[derive(Debug)]
 pub struct StateLock {
-    _file: File,
+    file: File,
+}
+
+impl Drop for StateLock {
+    /// Unlocks before the file closes. Closing alone is not enough: the lock belongs to
+    /// the open file, which a child process started meanwhile by another thread also
+    /// holds until it runs its program, so the lock would outlive this value. Unlocking
+    /// releases it for every holder of the open file at once.
+    fn drop(&mut self) {
+        let _ = self.file.unlock();
+    }
 }
 
 /// Names a target's files: its repository ID and branch, with the branch's slashes
@@ -264,7 +274,7 @@ impl State {
         std::os::unix::fs::OpenOptionsExt::mode(&mut options, 0o600);
         let file = options.open(&path).map_err(|e| io_problem(&shown, &e))?;
         match file.try_lock() {
-            Ok(()) => Ok(StateLock { _file: file }),
+            Ok(()) => Ok(StateLock { file }),
             Err(fs::TryLockError::WouldBlock) => Err(problem(
                 "pages.busy",
                 "Another publication of this target is running",
@@ -526,5 +536,32 @@ mod tests {
         assert_eq!(state.lock("7-gh-pages").unwrap_err().code, "pages.busy");
         drop(held);
         assert!(state.lock("7-gh-pages").is_ok());
+    }
+
+    /// A child process started by another thread holds the lock file open until it
+    /// runs its program; the lock must still be free as soon as it is dropped.
+    #[cfg(unix)]
+    #[test]
+    fn a_dropped_lock_is_free_while_programs_start() {
+        use std::sync::atomic::{AtomicBool, Ordering};
+        let dir = TestDir::new("state-spawn");
+        let state = State::open(Some(dir.path())).unwrap();
+        let stop = AtomicBool::new(false);
+        std::thread::scope(|scope| {
+            scope.spawn(|| {
+                while !stop.load(Ordering::Relaxed) {
+                    let _ = std::process::Command::new("true").status();
+                }
+            });
+            for _ in 0..500 {
+                drop(state.lock("7-gh-pages").unwrap());
+                let again = state.lock("7-gh-pages");
+                if again.is_err() {
+                    stop.store(true, Ordering::Relaxed);
+                }
+                assert!(again.is_ok(), "the dropped lock is still held");
+            }
+            stop.store(true, Ordering::Relaxed);
+        });
     }
 }

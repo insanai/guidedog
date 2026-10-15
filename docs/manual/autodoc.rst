@@ -207,7 +207,7 @@ Summary tables and stub pages (autosummary)
 
       shop
 
-With ``:toctree:`` each entry gets a stub page in the folder ``generated`` beside the document. The stub of a module lists its attributes, functions, classes and exceptions in tables of their own. With ``:recursive:`` it also lists the package's submodules, and each of them gets a stub page in turn. The stub pages are listed in a hidden table of contents, so they appear in the navigation.
+With ``:toctree:`` each entry gets a stub page in the folder ``generated`` beside the document. The stub of a module lists its attributes, functions, classes and exceptions in tables of their own. With ``:recursive:`` it also lists the package's submodules, and each of them gets a stub page in turn. The stub pages are listed in a hidden table of contents, so they appear in the navigation. The ``autolink`` role refers to a Python object as ``:py:obj:`` does.
 
 Sphinx writes stub pages as ``.rst`` files into the source folder. Guidedog makes them in memory, as generated documents, and reads them like any other page. The source folder stays clean, and a stub changes as soon as its source does. A page we wrote ourselves at a stub's name wins over the stub, with the note ``autosummary.exists``.
 

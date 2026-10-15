@@ -1,0 +1,17 @@
+[package]
+name = "gd-migrate"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "guidedog migrate (Sphinx conf.py to conf.toml, without Python) and quickstart."
+
+[dependencies]
+gd-theme.workspace = true
+gd-conf = { workspace = true }
+gd-toml = { workspace = true }
+gd-report = { workspace = true }
+gd-host = { workspace = true }
+
+[lints]
+workspace = true

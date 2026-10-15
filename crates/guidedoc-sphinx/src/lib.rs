@@ -80,16 +80,21 @@ pub fn reader() -> Reader {
 /// another type is refused with `InvalidInput`. The read keeps nothing of the
 /// configuration afterwards. Otherwise it fails as `guidedoc_rst::read`.
 pub fn read(ctx: &mut ReadContext<'_>) -> Result<(), Fail> {
-    let default;
     let config = match ctx.reader_settings::<Config>()? {
         Some(c) => c,
-        None => {
-            default = Config::default();
-            &default
-        }
+        None => default_config(),
     };
-    let sx = Sphinx::new(config);
-    guidedoc_rst::read_with(ctx, &config.settings, Some(&sx))
+    // The per-document state's storage is kept in the workspace between reads.
+    let sx = Sphinx::reusing(config, ctx.take_scratch());
+    let result = guidedoc_rst::read_with(ctx, &config.settings, Some(&sx));
+    ctx.put_scratch(sx.into_state());
+    result
+}
+
+/// The configuration a read without settings uses, made once.
+fn default_config() -> &'static Config {
+    static DEFAULT: std::sync::OnceLock<Config> = std::sync::OnceLock::new();
+    DEFAULT.get_or_init(Config::default)
 }
 
 /// Parses a span of `ctx.source` as reStructuredText inline content with Sphinx's

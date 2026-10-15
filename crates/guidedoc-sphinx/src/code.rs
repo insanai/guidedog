@@ -62,9 +62,13 @@ pub(crate) fn code_directive(
     p: &mut Parser<'_, '_>,
     d: &Directive<'_>,
 ) -> Result<(), Fail> {
-    let mut lines = d.content.clone();
+    // The content is copied only when `:dedent:` changes it.
+    let mut dedented;
+    let mut lines: &[Line<'_>] = &d.content;
     if let Some(v) = d.option_value("dedent") {
-        dedent_code(p, d, &mut lines, &v);
+        dedented = d.content.clone();
+        dedent_code(p, d, &mut dedented, &v);
+        lines = &dedented;
     }
     if let Some(v) = d.option_value("emphasize-lines") {
         let span = d.option("emphasize-lines").map_or(d.span, |o| o.span);
@@ -80,18 +84,24 @@ pub(crate) fn code_directive(
         }
     }
     let id = p.open(NodeKind::CodeBlock, d.span)?;
-    let arg = d.argument();
-    let language =
-        if d.arg.is_empty() { sx.state().highlight.clone() } else { trim_space(&arg).to_owned() };
-    if !language.is_empty() {
-        p.ctx.b.add_attribute_string(id, AttributeKey::Language, &language)?;
+    if d.arg.is_empty() {
+        let state = sx.state();
+        if !state.highlight.is_empty() {
+            p.ctx.b.add_attribute_string(id, AttributeKey::Language, &state.highlight)?;
+        }
+    } else {
+        let arg = d.argument();
+        let language = trim_space(&arg);
+        if !language.is_empty() {
+            p.ctx.b.add_attribute_string(id, AttributeKey::Language, language)?;
+        }
     }
     class_attribute(p, id, d)?;
     code_numbers(p, &sx.state(), id, d, lines.len(), 1)?;
     code_common(p, id, d)?;
     value_attribute(p, id, d, "caption")?;
     caption_child(p, d, &[])?;
-    let text = p.code_text(&lines)?;
+    let text = p.code_text(lines)?;
     p.ctx.b.set_text(id, text);
     p.close(id)
 }

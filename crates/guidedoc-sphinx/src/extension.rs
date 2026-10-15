@@ -37,21 +37,26 @@ pub(crate) struct Sphinx<'c> {
 impl<'c> Sphinx<'c> {
     /// The layer for one read with `config`.
     pub(crate) fn new(config: &'c Config) -> Sphinx<'c> {
+        Sphinx::with_state(config, State::new(config))
+    }
+
+    /// The layer for one read with `config`, in the storage of an earlier read's state
+    /// (`into_state` gives it back), which starts over.
+    pub(crate) fn reusing(config: &'c Config, mut state: State) -> Sphinx<'c> {
+        state.reset(config);
+        Sphinx::with_state(config, state)
+    }
+
+    /// The layer for one read with `config`, continuing from `state` (the MyST
+    /// extension keeps the state between its calls).
+    pub(crate) fn with_state(config: &'c Config, state: State) -> Sphinx<'c> {
         let declared = config
             .object_types
             .iter()
             .take(MAX_OBJECT_TYPES)
             .map(|t| format!("std:{}", t.directive))
             .collect();
-        Sphinx { config, state: RefCell::new(State::new(config)), declared }
-    }
-
-    /// The layer for one read with `config`, continuing from `state` (the MyST
-    /// extension keeps the state between its calls).
-    pub(crate) fn with_state(config: &'c Config, state: State) -> Sphinx<'c> {
-        let sx = Sphinx::new(config);
-        *sx.state.borrow_mut() = state;
-        sx
+        Sphinx { config, state: RefCell::new(state), declared }
     }
 
     /// Gives the per-document state back.
@@ -99,7 +104,8 @@ impl<'c> Sphinx<'c> {
                 return Some(declared_handler(&self.declared[k], t.target, k));
             }
         }
-        let domain = self.state.borrow().domain.clone();
+        let state = self.state.borrow();
+        let domain = state.domain.as_str();
         for a in &self.config.directive_aliases {
             if !equal_fold(&a.name, name) || equal_fold(&a.target, name) {
                 continue;
@@ -112,7 +118,7 @@ impl<'c> Sphinx<'c> {
                 return Some(h);
             }
             if !domain.is_empty()
-                && let Some(h) = self.qualified(&domain, &a.target)
+                && let Some(h) = self.qualified(domain, &a.target)
             {
                 return Some(h);
             }
@@ -160,13 +166,12 @@ impl Extension for Sphinx<'_> {
         if name.contains(':') {
             return self.with_domain(name);
         }
-        let domain = self.state.borrow().domain.clone();
-        if !domain.is_empty()
-            && let Some(h) = self.qualified(&domain, name)
-        {
-            return Some(h);
-        }
-        self.qualified("std", name).or_else(|| self.declared(name))
+        let in_domain = {
+            let state = self.state.borrow();
+            let domain = state.domain.as_str();
+            if domain.is_empty() { None } else { self.qualified(domain, name) }
+        };
+        in_domain.or_else(|| self.qualified("std", name)).or_else(|| self.declared(name))
     }
 
     fn run_directive(&self, p: &mut Parser<'_, '_>, d: &Directive<'_>) -> Result<(), Fail> {

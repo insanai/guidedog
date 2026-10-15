@@ -244,7 +244,8 @@ impl Embedded<'_, '_, '_> {
             let r = det.attach(ctx, f);
             let md = det.extension_state::<MdState>()?;
             if let Some(real) = md.reader.take() {
-                *st = real;
+                // The stand-in state gives its storage back to the workspace.
+                std::mem::replace(st, real).end(ctx);
             }
             *self.sx.state() = std::mem::take(&mut md.sphinx);
             Some(r)

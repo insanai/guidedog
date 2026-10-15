@@ -135,4 +135,16 @@ impl State {
             ..State::default()
         }
     }
+
+    /// Starts over as `new` would, keeping the domain's and highlight language's
+    /// strings, so a reused state does not allocate them again.
+    pub(crate) fn reset(&mut self, config: &Config) {
+        let mut domain = std::mem::take(&mut self.domain);
+        domain.clear();
+        domain.push_str(&config.primary_domain);
+        let mut highlight = std::mem::take(&mut self.highlight);
+        highlight.clear();
+        highlight.push_str(&config.highlight_language);
+        *self = State { domain, highlight, ..State::default() };
+    }
 }

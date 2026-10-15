@@ -155,7 +155,10 @@ fn update_catalog(
         let existing = load_po(po, &LoadOptions::default()).map_err(|e| catalog_problem(&e))?;
         let options = MergeOptions { fuzzy_matching: true, keep_obsolete: write.obsolete };
         let merged = merge(&existing, &reference, &options);
-        (IntlAction::Update, merged, write_po(&existing, write))
+        // The file as it is, every entry kept: compared with the options' layout, a file
+        // whose only change is dropping obsolete entries would look unchanged.
+        let as_is = WriteOptions { obsolete: true, ..*write };
+        (IntlAction::Update, merged, write_po(&existing, &as_is))
     } else {
         (IntlAction::Create, new_catalog(&reference, language), String::new())
     };

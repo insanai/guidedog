@@ -110,6 +110,29 @@ fn intl_update_creates_and_merges() {
     assert_eq!(files[0].stats.fuzzy, 1);
 }
 
+// --no-obsolete drops obsolete entries, also from a catalog that has nothing else to change.
+#[test]
+fn intl_update_drops_obsolete_messages() {
+    let dir = TempDir::new("obsolete");
+    let config = config_in(&dir.0);
+    dir.write("src/_build/gettext/index.pot", "msgid \"New\"\nmsgstr \"\"\n");
+    let po = dir.write(
+        "src/locales/de/LC_MESSAGES/index.po",
+        "msgid \"\"\nmsgstr \"Language: de\\n\"\n\nmsgid \"New\"\nmsgstr \"Neu\"\n\n\
+         #~ msgid \"Old\"\n#~ msgstr \"Alt\"\n",
+    );
+    let de = IntlOptions { languages: vec!["de".into()], ..IntlOptions::default() };
+    let mut files = Vec::new();
+    intl_update(&config, &de, &mut files).unwrap();
+    assert!(std::fs::read_to_string(&po).unwrap().contains("#~ msgid \"Old\""));
+    let drop = IntlOptions { obsolete: false, ..de };
+    files.clear();
+    intl_update(&config, &drop, &mut files).unwrap();
+    assert_eq!(files[0].action, IntlAction::Update);
+    let text = std::fs::read_to_string(&po).unwrap();
+    assert!(!text.contains("Old") && text.contains("Neu"), "{text}");
+}
+
 #[test]
 fn intl_update_needs_templates() {
     let dir = TempDir::new("no-templates");

@@ -171,7 +171,10 @@ fn fatal_problems_count_in_the_summary() {
     has(&r.out, "build failed, 1 error(s), 1 warning(s). Nothing was published.");
     let r = build(&dir.path, 0, &["html"]);
     has(&r.out, "output(s) written");
-    has(&r.out, "build succeeded, 0 error(s), 1 warning(s). Output in _build/html");
+    has(
+        &r.out,
+        "build succeeded with 0 error(s) and 1 warning(s) in the documents. Output in _build/html",
+    );
     dir.write("index.rst", "Demo\n====\n\nSee :ref:`absent`.\n");
     let r = build(&dir.path, 1, &["html", "-W"]);
     has(&r.out, "The previous output in _build/html is unchanged.");

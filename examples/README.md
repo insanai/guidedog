@@ -17,11 +17,10 @@ and renderer crates (`guidedoc-rst`, `guidedoc-commonmark`, `guidedoc-html`,
 | [plain_text](guidedoc-examples/examples/plain_text.rs) | a registry of our own with the `text` renderer | `cargo run -p guidedoc-examples --example plain_text -- FILE.rst` |
 | [graphdog](guidedoc-examples/examples/graphdog.rs) | DOT to SVG with Graphviz linked in, and an Elm-style error | `cargo run -p guidedoc-examples --example graphdog` |
 
-`reuse_workspace` replaces the Odin `no_heap` example. The Odin engine ran on storage
-the caller sized up front, so that example used fixed static arrays and a panicking
-allocator. The Rust `Workspace` owns its tables and clears them between conversions
-without giving back their capacity, so once a document of a given size has been
-converted, converting another of that size allocates nothing in the engine. The test
+`reuse_workspace` shows bounded memory without storage the caller sizes up front. The
+`Workspace` owns its tables and clears them between conversions without giving back
+their capacity, so once a document of a given size has been converted, converting
+another of that size allocates nothing in the engine. The test
 `steady_state_conversion_does_not_allocate` in `crates/guidedoc/tests/services.rs`
 checks this with a counting global allocator; the example shows the same effect by
 watching the output buffer stay in place. Limits stay explicit: `Limits` bounds nodes,

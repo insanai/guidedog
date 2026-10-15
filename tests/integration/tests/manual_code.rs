@@ -6,8 +6,8 @@
 //!
 //! Programs (`fn main`) become modules; a fragment becomes the body of a function whose
 //! parameters declare what the prose around it names. The engine examples also run.
-//! This is the Odin suite's examples test; the example programs themselves are the
-//! `guidedoc-examples` crate's, built and run by its own tests.
+//! The example programs themselves are the `guidedoc-examples` crate's, built and run by
+//! its own tests.
 
 #![allow(clippy::unwrap_used)] // a test failing on unexpected input is the point.
 #![allow(dead_code)] // the documented programs' `main`s are compiled, not all called.

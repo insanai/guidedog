@@ -33,21 +33,17 @@ cargo xtask verify-docutils DOCUTILS WORK [RECORD] # recheck them byte for byte
 External programs run through `std::process::Command` with argument vectors; failures
 are gd-report reports with a hint (exit 1, usage problems exit 2).
 
-Changes from the shell scripts they replace:
+Notes:
 
-- `release check-run` parses GitHub's answers with gd-json instead of `jq`; checksums are
-  computed with gd-sha instead of `sha256sum`/`shasum`, and `publish` verifies
-  `SHA256SUMS` itself.
-- `release credential-store` runs itself again inside `dbus-run-session` instead of an
-  inline `sh -c` script.
+- `release check-run` parses GitHub's answers with gd-json; checksums are computed with
+  gd-sha, and `publish` verifies `SHA256SUMS` itself.
+- `release credential-store` runs itself again inside `dbus-run-session`.
 - `release publish --dry-run` and `release build --dry-run` print the commands without
   running them.
-- The smoke tests keep the same set of variables (TMPDIR and the Windows ones) for every
-  program; `cygpath` is gone, since Rust's paths are already native.
-- `build.json`'s `requires` no longer ends with a stray space.
+- The smoke tests pass the same set of variables (TMPDIR and the Windows ones) to every
+  program; Rust's paths are already native, so no path conversion is needed.
 - `tables` checks `tools/data/SHA256SUMS` before it reads the data.
-- `sphinxdiff`, `sphinxdiff-roots`, `rstref` and `verify-docutils` replace the Odin
-  tools and their `roots.sh`, `run.sh` and `docutils-corpus.sh` scripts. The comparison
-  runs in process for each root (no second binary); `rstref` refuses a setting
-  `corpus.txt` names that it does not know instead of skipping it; `verify-docutils`
-  refuses a work folder that holds the repository, since it empties it first.
+- `sphinxdiff-roots` runs the comparison in process for each root (no second binary);
+  `rstref` refuses a setting `corpus.txt` names that it does not know instead of skipping
+  it; `verify-docutils` refuses a work folder that holds the repository, since it empties
+  it first.

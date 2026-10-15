@@ -3,9 +3,8 @@
 //! (the workspace's node tables, text pool and output buffer are reused, so nothing grows
 //! with the number of conversions), and no more than the ceiling recorded for the pair.
 //!
-//! This is the Rust form of the Odin suite's allocation tests, which ran each conversion
-//! with no allocator at all. Rust has no per-call allocator to take away, so a counting
-//! global allocator observes the conversions instead. The engine core converts without
+//! Rust has no per-call allocator to take away, so a counting global allocator observes
+//! the conversions. The engine core converts without
 //! allocating (`guidedoc`'s `steady_state_conversion_does_not_allocate`), and the
 //! readers and renderers keep their working storage in the workspace's scratch store
 //! (`guidedoc::Scratch`), so most pairs convert again without a single allocation. The

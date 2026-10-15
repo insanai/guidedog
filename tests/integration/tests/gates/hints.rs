@@ -15,7 +15,7 @@
 //! it with. "Did you mean ...?" and "Nothing to do: <why>" pass by themselves.
 //!
 //! Hints computed at run time (a variable passed on) are checked where their text is
-//! written. This is the Odin suite's hints test, re-read for Rust's token shapes.
+//! written.
 
 use std::collections::BTreeMap;
 

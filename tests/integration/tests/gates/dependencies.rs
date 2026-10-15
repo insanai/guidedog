@@ -2,9 +2,8 @@
 //! embeddable, the supporting libraries stay independent of the engine, Typst stays
 //! inside `gd-typst`, external crates are the few the project chose, dependencies point
 //! one way (core <- readers/renderers <- defaults <- host <- project <- cli <- programs),
-//! and the reusable crates are published and need only each other. This replaces the
-//! Odin suite's import scans (independence and boundary tests): cargo already knows
-//! every crate's dependencies, so the gate asks it.
+//! and the reusable crates are published and need only each other. Cargo already knows every
+//! crate's dependencies, so the gate asks it rather than scanning imports.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::process::Command;

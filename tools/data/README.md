@@ -17,8 +17,8 @@ read as text.
 `cargo xtask tables` (tools/xtask/src/tables) writes every table from these files, and
 `cargo xtask tables --check` (run by CI) fails when a committed table differs from what
 the data gives. The style modules are read by a small Rust reader for the Python they
-use, never run. The tables were first converted from the ones the Odin implementation
-generated (Guidedog 0.6.3); the generator reproduces them byte for byte.
+use, never run. The generator is deterministic: run again on the same data, it
+reproduces the committed tables byte for byte.
 
 `SHA256SUMS` records every data file here; `cargo xtask tables` checks them before it
 reads anything. A new upstream version is added beside the old one, its tables

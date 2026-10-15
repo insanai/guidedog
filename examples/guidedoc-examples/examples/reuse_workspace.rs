@@ -2,14 +2,13 @@
 //!
 //!     cargo run -p guidedoc-examples --example reuse_workspace
 //!
-//! The Odin engine showed bounded memory with an example that ran on fixed static
-//! arrays and a panicking allocator. Rust needs no caller-provided storage: a
-//! `Workspace` owns its node, text, and output tables as `Vec`s and `String`s and only
-//! clears them between conversions, which keeps their capacity. The first conversion
-//! grows the tables; the next ones of a similar size find room already there. The
-//! engine's own test `steady_state_conversion_does_not_allocate`
-//! (crates/guidedoc/tests/services.rs) counts allocations with a counting global
-//! allocator and checks that a repeated conversion makes none. Readers may still
+//! Bounded memory needs no caller-provided storage: a `Workspace` owns its node, text,
+//! and output tables as `Vec`s and `String`s and only clears them between conversions,
+//! which keeps their capacity. The first conversion grows the tables; the next ones of a
+//! similar size find room already there. The engine's own test
+//! `steady_state_conversion_does_not_allocate` (crates/guidedoc/tests/services.rs)
+//! counts allocations with a counting global allocator and checks that a repeated
+//! conversion makes none. Readers may still
 //! allocate small vectors while parsing (crates/guidedoc-rst/README.md says where).
 //!
 //! This program shows the same reuse without an allocator hook: the output buffer, which

@@ -24,8 +24,8 @@ offline once the pinned release assets are downloaded:
                           the folder publisher example; it must refuse the build-plugin
                           example cleanly, since 0.6.0 has no build plugins
   new host, old plugins   this checkout's guidedog runs the 0.6.0 guidedog-pages and
-                          the 0.6.0 folder publisher example (built with odin, when it
-                          is installed)
+                          the 0.6.0 folder publisher example (built from that
+                          release's source when its compiler is installed)
 
 Each pairing registers (the handshake) and inspects the program, plans a dry run that
 writes nothing, and the folder publisher also publishes, republishes unchanged and
@@ -123,7 +123,7 @@ fn build_new_programs() -> Result<NewPrograms> {
 }
 
 /// Downloads and verifies the pinned assets, unpacks the programs, and builds the old
-/// publisher example from the source archive when odin is installed.
+/// publisher example from the source archive when its compiler is installed.
 fn prepare_old_programs(work: &Path, platform: &str, program_pin: &Pin) -> Result<OldPrograms> {
     let downloads = work.join("downloads");
     create_dir(&downloads)?;
@@ -147,7 +147,8 @@ fn untar(archive: &Path, into: &Path, strip: bool) -> Result<()> {
 }
 
 /// Builds `examples/publisher` of the 0.6.0 source, a publisher made with the 0.6.0 SDK,
-/// exactly as the Odin script did; without odin the pairing is skipped.
+/// with the flags that release's own build used; without the compiler (`odin`) the
+/// pairing is skipped.
 fn build_old_publisher(work: &Path, archive: &Path) -> Step<PathBuf> {
     let installed = Command::new("odin").arg("version").output().is_ok();
     if !installed {
@@ -211,7 +212,7 @@ fn run_new_host(record: &mut Record, old: &OldPrograms, new: &NewPrograms, dir: 
         .and_then(|()| scenarios::check_declines_publisher(host, &old.pages, &dir.join("pages")));
     let ops = "init, register, inspect, dry run, unregister, check declines";
     push(record, DIRECTION, "guidedog-pages 0.6.0 (release asset)", ops, outcome);
-    let plugin = "folder publisher (0.6.0 example, Odin)";
+    let plugin = "folder publisher (0.6.0 example)";
     match &old.publisher {
         Ok(program) => {
             let outcome = scenarios::folder_publisher(host, program, &dir.join("folder"));

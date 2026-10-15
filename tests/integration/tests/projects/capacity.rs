@@ -3,8 +3,8 @@
 //! naming the output and the exact size, and documents whose anchors outgrow their nodes
 //! (long and wide headings, many headings) convert.
 //!
-//! The Odin engine had eight preallocated regions; the Rust engine grows owned buffers,
-//! so only the limits a caller sets (output, nodes, text) can be one short.
+//! The engine grows owned buffers, so only the limits a caller sets (output, nodes, text)
+//! can be one short.
 
 use guidedoc::{Region, Status, Workspace, convert, convert_text, default_request};
 

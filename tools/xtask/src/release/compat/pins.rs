@@ -22,7 +22,7 @@ pub(super) struct Pin {
     pub sha256: &'static str,
 }
 
-/// The source archive: it holds the 0.6.0 publisher example, built with Odin.
+/// The source archive: it holds the 0.6.0 publisher example, built from that source.
 pub(super) const SOURCE: Pin = Pin {
     name: "guidedog-0.6.0-source.tar.gz",
     sha256: "0335f7082dc7e69c88b651f961612f99c7c640f64f272c4564d8023b95ad05d8",

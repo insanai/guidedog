@@ -3,8 +3,7 @@
 //! sound in a `// SAFETY:` comment just above it. The compiler enforces the first part
 //! too (`unsafe_code = "deny"` for the workspace, `#![forbid(unsafe_code)]` in every crate
 //! without FFI); this gate keeps the list of exceptions short and visible, and checks
-//! the comments, which the compiler cannot. It replaces the Odin suite's scan for
-//! `#no_bounds_check`, multi-pointers and `uintptr`.
+//! the comments, which the compiler cannot.
 
 use super::source::{Located, Token, tokenize, workspace_sources};
 

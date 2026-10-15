@@ -1,4 +1,4 @@
-//! Repository-wide quality gates, the Rust form of the Odin suite's source scans:
+//! Repository-wide quality gates, scans of the workspace sources:
 //!
 //! - `dependencies`: crate dependency rules, read from `cargo metadata`;
 //! - `unsafe_code`: unsafe code only in FFI modules, each block with a SAFETY comment;

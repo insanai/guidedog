@@ -14,7 +14,7 @@ use crate::fsutil::read_text;
 /// The Unicode version of the data files.
 const VERSION: &str = "17.0.0";
 
-/// The widest line of the Unicode tables, whose layout the Odin generators set.
+/// The widest line of the Unicode tables; the committed tables are laid out to it.
 const WIDTH: usize = 96;
 
 /// The line every generated Unicode table names its generator with.

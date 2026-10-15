@@ -114,6 +114,13 @@ impl Html<'_, '_> {
             }
             return Visit::Skip;
         }
+        if !self.w.reference && self.custom(id, "interactive") == "1" {
+            self.write_object(id);
+            if block {
+                self.w.cr();
+            }
+            return Visit::Skip;
+        }
         self.w.put("<img");
         if !self.write_target("src", id) {
             self.w.put(" src=\"\"");
@@ -142,6 +149,26 @@ impl Html<'_, '_> {
             self.w.cr();
         }
         Visit::Skip
+    }
+
+    /// Writes a drawing whose links work (Custom `interactive`, an inheritance diagram):
+    /// an object element, which follows the links of the SVG it shows, as Sphinx shows
+    /// its SVG graphs. Its content is the alternative text.
+    fn write_object(&mut self, id: NodeId) {
+        self.w.put("<object");
+        if !self.write_target("data", id) {
+            self.w.put(" data=\"\"");
+        }
+        self.w.put(" type=\"image/svg+xml\"");
+        self.write_id_attribute(id);
+        self.write_classes(id, "");
+        self.w.put_byte(b'>');
+        if self.doc.has_children(id) {
+            self.write_alt(id);
+        } else if let Some(alt) = self.doc.attribute(id, AttributeKey::Alt) {
+            self.w.esc(alt);
+        }
+        self.w.put("</object>");
     }
 
     /// Writes a video or audio player. Its content, a link to the file, is what a

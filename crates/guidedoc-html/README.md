@@ -54,6 +54,10 @@ Options it reads (`guidedoc::RenderOptions`): `standalone`, `reference_profile`,
 `math_display`. Policy: `raw` and `unsafe_urls` (refuse / omit / allow),
 `keep_documents_with_errors` (problematic text instead of errors).
 
+An Image with Custom `interactive` (a drawing whose nodes link, such as an inheritance
+diagram) is written as `<object data="..." type="image/svg+xml">alt</object>`, since an
+`img` element does not follow the links of its SVG.
+
 ## Design notes
 
 - **One exhaustive match.** `walk.rs::enter` routes every `NodeKind` to the code that

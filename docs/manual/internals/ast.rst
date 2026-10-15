@@ -694,7 +694,10 @@ Other Sphinx constructs use existing kinds:
    Role{accelerator}; ``-->`` of ``menuselection`` as "‣"). ``abbr``: Abbreviation with
    Title. ``index``: Index then the text.
 -  *host*: Section ``secnumber`` ("1.2"); Figure, Table, CodeBlock, MathBlock ``number`` and
-   ``number-label`` ("Fig. 1.2"); Directive{todolist} is replaced by the collected todos.
+   ``number-label`` ("Fig. 1.2"); Directive{todolist} is replaced by the collected todos;
+   in HTML, a drawn graph whose nodes link (an inheritance diagram) is an Image with
+   ``interactive`` = "1", which HTML writes as an ``object`` element, and a DescSignature
+   with ``[source]`` links (viewcode, linkcode) ends with Links of class ``viewcode-link``.
 
 The host's link pass replaces Toctree with Container{class ``toctree-wrapper compound``}
 holding the caption (Paragraph with class ``caption``) and nested Lists of Links, and

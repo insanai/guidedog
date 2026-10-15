@@ -155,3 +155,44 @@ pub fn remember_token(
 pub(crate) fn short(id: &str) -> &str {
     id.get(..12).unwrap_or(id)
 }
+
+/// What `review` found, as lines for people: the account, the repository with its
+/// GitHub ID, the branch and what it holds, and the Pages settings.
+pub fn review_lines(config: &Config, review: &Review) -> Vec<String> {
+    let r = &review.repository;
+    let visibility = if r.private { "private" } else { "public" };
+    let mut lines = vec![
+        format!("Account     {}", review.account.login),
+        format!("Repository  {} ({visibility}, GitHub ID {})", r.full_name, r.id),
+        format!("Branch      {}", config.branch),
+    ];
+    lines.push(match &review.head {
+        None => "The branch does not exist yet; the first publication makes it.".to_string(),
+        Some(head) if review.others => format!(
+            "The branch holds commit {}, which Guidedog did not publish: publishing replaces \
+             all its files.",
+            short(head)
+        ),
+        Some(_) => "The branch holds earlier Guidedog publications.".to_string(),
+    });
+    lines.extend(site_lines(config, &review.site));
+    lines
+}
+
+/// A repository's Pages settings as lines for people.
+pub fn site_lines(config: &Config, s: &Site) -> Vec<String> {
+    let mut lines = vec![if !s.readable {
+        "Pages       the token may not read the Pages settings".to_string()
+    } else if !s.exists {
+        "Pages       not set up yet".to_string()
+    } else if s.build_type == "workflow" {
+        "Pages       deployed by a GitHub Actions workflow".to_string()
+    } else {
+        let note = if s.publishes(&config.branch) { "" } else { " (not this branch)" };
+        format!("Pages       from {}, folder {}{note}", s.branch, s.path)
+    }];
+    if !s.cname.is_empty() {
+        lines.push(format!("Domain      {}", s.cname));
+    }
+    lines
+}

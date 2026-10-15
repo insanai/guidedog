@@ -1,10 +1,10 @@
 //! `init`, `bind`, `unbind`, `setup`, and `doctor`.
 
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use gd_plugins::Problem;
 
-use super::display::{Console, confirm, not_confirmed, short};
+use super::display::{Console, confirm, not_confirmed};
 use super::publish::{guidedog_missing, guidedog_version};
 use super::{Context, usage};
 use crate::config::{
@@ -13,7 +13,7 @@ use crate::config::{
 use crate::credential::Secret;
 use crate::github::Site;
 use crate::problem::problem;
-use crate::target::{Review, review_target};
+use crate::target::{Review, review_lines, review_target, site_lines};
 
 /// Writes a `pages.toml`; it changes nothing at GitHub.
 pub(crate) fn init(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
@@ -46,7 +46,7 @@ pub(crate) fn init(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
             "Name a branch of its own, such as --branch=gh-pages.",
         ));
     }
-    let path = Path::new(&o.config);
+    let path = &ctx.config_path();
     if path.exists() && !o.force {
         return console.report(
             &problem(
@@ -84,7 +84,7 @@ pub(crate) fn init(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
 
 /// Reads the configuration and the token it names.
 fn config_and_token(ctx: &Context<'_>) -> Result<(Config, Secret), Problem> {
-    let c = read_config(Path::new(&ctx.o.config))?;
+    let c = read_config(&ctx.config_path())?;
     let token = ctx.settings.load_token(ctx.settings.profile_for(&c.profile))?;
     Ok((c, token))
 }
@@ -103,24 +103,11 @@ pub(crate) fn bind(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
         Ok(found) => found,
         Err(p) => return console.report(&p),
     };
-    let visibility = if r.repository.private { "private" } else { "public" };
     console.print("\n");
-    console.line(&format!("Account     {}", r.account.login));
-    console.line(&format!(
-        "Repository  {} ({visibility}, GitHub ID {})",
-        r.repository.full_name, r.repository.id
-    ));
-    console.line(&format!("Branch      {}", c.branch));
-    match &r.head {
-        None => console.line("The branch does not exist yet; the first publication makes it."),
-        Some(head) if r.others => console.line(&format!(
-            "The branch holds commit {}, which \
-            Guidedog did not publish: publishing replaces all its files.",
-            short(head)
-        )),
-        Some(_) => console.line("The branch holds earlier Guidedog publications."),
+    for line in review_lines(&c, &r) {
+        console.line(&line);
     }
-    describe_site(console, &c, &r.site);
+    console.line("");
     if r.repository.private {
         console.say(
             "A site published from a private repository is not necessarily private: \
@@ -150,25 +137,15 @@ pub(crate) fn bind(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
 }
 
 fn describe_site(console: &mut Console<'_>, c: &Config, s: &Site) {
-    if !s.readable {
-        console.line("Pages       the token may not read the Pages settings");
-    } else if !s.exists {
-        console.line("Pages       not set up yet");
-    } else if s.build_type == "workflow" {
-        console.line("Pages       deployed by a GitHub Actions workflow");
-    } else {
-        let note = if s.branch == c.branch && s.path == "/" { "" } else { " (not this branch)" };
-        console.line(&format!("Pages       from {}, folder {}{note}", s.branch, s.path));
-    }
-    if !s.cname.is_empty() {
-        console.line(&format!("Domain      {}", s.cname));
+    for line in site_lines(c, s) {
+        console.line(&line);
     }
     console.line("");
 }
 
 /// Removes the target's binding from this machine.
 pub(crate) fn unbind(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
-    let c = match read_config(Path::new(&ctx.o.config)) {
+    let c = match read_config(&ctx.config_path()) {
         Ok(c) => c,
         Err(p) => return console.report(&p),
     };
@@ -252,7 +229,7 @@ pub(crate) fn doctor(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
 }
 
 fn diagnose(ctx: &Context<'_>, console: &mut Console<'_>) -> Result<(), Problem> {
-    let c = read_config(Path::new(&ctx.o.config))?;
+    let c = read_config(&ctx.config_path())?;
     console.success(&format!(
         "{} is valid: {}, branch {}, profile {}",
         c.shown_path(),

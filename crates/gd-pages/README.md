@@ -29,7 +29,10 @@ let plugin = gd_pages::plugin_with(settings);
 | Machine state | `State::open` + `profiles`, `find_profile`, `save_profile`, `remove_profile`, `bindings`, `find_binding`, `save_binding`, `remove_binding`, `read_journal`, `write_journal`, `drop_journal`, `read_last`, `write_last`, `lock` (`StateLock`); `Profile`, `Binding`, `Journal`, `target_key`, `today` |
 | Targets | `review_target` (`Review`), `bind`, `setup`, `remember_token` |
 | GitHub | `Client`, `Roots`, `account`, `read_repository`, `pages_site`, `configure_pages`, `pages_build` (`BuildState`), `commit_tree`, `remote_files`, `branch_head`, `push` (`PushOutcome`), `start_device`, `wait_device` (`DeviceCode`, `CLIENT_ID`) |
-| Command line | `command::{run, run_with, Program}` |
+| Guided publish | `publish_guided(&GuideOptions, &mut dyn Prompt)`, `Prompt` (`show`, `confirm`, `choose`), `GuideOptions`, `plan_lines`; inference: `parse_github_remote`, `origin_url`, `find_project`, `gh_token` |
+| Actions workflow | `render_workflow(&WorkflowOptions)`, `check_workflow`, `release_sha256`, `is_safe_workflow_name`, `ACTION_PINS` (reviewed commits), `WORKFLOW_PATH`, `SHA256_PLACEHOLDER` |
+| Building | `freeze_site`, `guidedog_program`, `guidedog_version`, `GUIDEDOG_VARIABLE` |
+| Command line | `command::{run, run_with, Program}` (`publish` is guided; `watch --serve[=PORT]` previews with `gd-serve`; `workflow [--write] [--check]`) |
 
 Exit statuses: 0 live or unchanged, 1 failed (nothing published), 2 usage or
 configuration, 4 files, network or programs, 6 accepted but not confirmed live, 7
@@ -46,6 +49,32 @@ unknown (run `recover`), 130 cancelled.
   `pages.store`, and `--credential=env` is the way. There is never a plaintext fallback.
 - Hidden token input: `stty -g` / `stty -echo` on Unix (see `command/secret_input.rs`
   for why not a `termios` binding), `SetConsoleMode` on Windows.
+
+## Guided publish, workflow, preview
+
+- `publish_guided` does each missing step once and skips what is done: `pages.toml`
+  (repository from `git remote get-url origin`, confirmed unless `--repository` names
+  it; project from the nearest `conf.toml`), a token, the binding (review shown, asked
+  once), the Pages source (asked once; after the first push when the repository had no
+  Pages site), then build, push and wait. With `interactive` false it never asks: a
+  step that needs an answer fails with `pages.guide` and a hint naming the flag or step
+  command. `assume_yes` (`--yes`) answers confirmations, but never signs in and never
+  adopts a branch holding others' work.
+- **The GitHub CLI's token** (`gh auth token`) is offered only on a terminal and is
+  used for that run only, never stored: it is gh's credential, with gh's scopes, and
+  gh refreshes or revokes it; a stored copy would outlive that. The device flow stores
+  its token in the credential store as `auth login` does. Without a usable store only
+  the gh route is offered.
+- `render_workflow` reproduces the manual's workflow exactly (golden test); action
+  commits live in `ACTION_PINS`, which needs a security review on every update.
+  `--offline` writes a placeholder checksum that makes the workflow's own checksum test
+  fail, and exits 1.
+- `watch --serve` runs the `gd-serve` preview on a thread over the build folder (or the
+  built site); the run's cancel stops the watch, which stops the server. It is the
+  optional `preview` feature (gd-serve brings gd-host, the engine and Typst; a debug
+  binary grows from ~20 MB to ~450 MB), which `guidedog-pages` enables; without it
+  `--serve` is `pages.preview`. `cargo test -p gd-pages --features preview` runs its
+  test.
 
 ## Redesign notes (from Odin `lib/pages` and `lib/pages/command`)
 
@@ -66,7 +95,7 @@ unknown (run `recover`), 130 cancelled.
 - **Reports** use `gd-report` (Elm style, `Hint:`), text or JSON lines, instead of the
   custom "Try:" layout.
 - **Arenas, `release_*` and memory-refusal checks** are gone with Odin's allocators.
-- **Not ported:** the crash reporter (it lives in `gd-host`, which links the engine and
-  Typst; `guidedog-pages` stays small). Tokens never appear on a command line: `gd-fetch`
+- **Not wired yet:** `gd-host`'s crash reporter in `guidedog-pages` (gd-host is now
+  linked for the preview, so it could be). Tokens never appear on a command line: `gd-fetch`
   hands curl its headers in a private file (`--header @file`, mode 0600, removed after
   the request).

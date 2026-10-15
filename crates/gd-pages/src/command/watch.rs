@@ -5,9 +5,18 @@
 use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant, UNIX_EPOCH};
 
+#[cfg(feature = "preview")]
+use gd_plugins::Cancel;
+#[cfg(feature = "preview")]
+use gd_serve::{ServeOptions, Server, Watch};
+
 use super::Context;
 use super::display::Console;
 use super::publish::publish_once;
+#[cfg(feature = "preview")]
+use crate::build_dir;
+#[cfg(feature = "preview")]
+use crate::config::SiteSource;
 use crate::config::{Config, read_config};
 
 const MAX_FOLDERS: usize = 100_000;
@@ -25,10 +34,84 @@ enum Round {
 }
 
 pub(crate) fn watch(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
-    let c = match read_config(Path::new(&ctx.o.config)) {
+    let c = match read_config(&ctx.config_path()) {
         Ok(c) => c,
         Err(p) => return console.report(&p),
     };
+    match ctx.o.serve {
+        Some(port) => watch_with_preview(ctx, console, &c, port),
+        None => watch_loop(ctx, console, &c),
+    }
+}
+
+/// Without the `preview` feature there is no server to start.
+#[cfg(not(feature = "preview"))]
+fn watch_with_preview(
+    _ctx: &Context<'_>,
+    console: &mut Console<'_>,
+    _c: &Config,
+    _port: u16,
+) -> i32 {
+    console.report(
+        &crate::problem::problem(
+            "pages.preview",
+            "This build has no preview",
+            "--serve",
+            "This program was built without the preview server (the preview feature).",
+            "Run guidedog-pages watch without --serve, or use a guidedog-pages built with it.",
+        )
+        .exit(2),
+    )
+}
+
+/// Serves the published site's folder (the build folder of a project) on `port` while
+/// the watch publishes. One Ctrl+C stops both: the watch stops on the run's cancel and
+/// then stops the server; a server that ends stops the watch.
+#[cfg(feature = "preview")]
+fn watch_with_preview(ctx: &Context<'_>, console: &mut Console<'_>, c: &Config, port: u16) -> i32 {
+    let site_dir = match &c.source {
+        SiteSource::Built(site) => site.clone(),
+        SiteSource::Project(_) => match build_dir(ctx.settings, c, false) {
+            Ok(dir) => dir,
+            Err(p) => return console.report(&p),
+        },
+    };
+    let options =
+        ServeOptions { site_dir, port, stop_on_interrupt: false, ..ServeOptions::default() };
+    let server = match Server::bind(options) {
+        Ok(server) => server,
+        Err(p) => return console.report(&host_problem(&p)),
+    };
+    console.say(&format!("Previewing at {}", server.url()));
+    let stop = server.stop_handle();
+    let (outer, ended) = (ctx.cancel.clone(), stop.clone());
+    let cancel = Cancel::from_fn(move || outer.is_cancelled() || ended.is_stopped());
+    let inner =
+        Context { o: ctx.o, settings: ctx.settings, cancel: &cancel, dir: ctx.dir.clone() };
+    std::thread::scope(|scope| {
+        let ender = stop.clone();
+        let serving = scope.spawn(move || {
+            // The preview only serves what the watch builds; it never rebuilds itself.
+            let served = server.run(Watch::default(), |_| true);
+            ender.stop();
+            served
+        });
+        let status = watch_loop(&inner, console, c);
+        stop.stop();
+        match serving.join() {
+            Ok(Err(p)) => console.report(&host_problem(&p)),
+            _ => status,
+        }
+    })
+}
+
+/// A preview server's problem as this crate reports it.
+#[cfg(feature = "preview")]
+fn host_problem(p: &gd_host::Problem) -> gd_plugins::Problem {
+    crate::problem::problem(p.code, p.title, &p.path, &p.message, &p.hint).exit(p.exit)
+}
+
+fn watch_loop(ctx: &Context<'_>, console: &mut Console<'_>, c: &Config) -> i32 {
     let folder = c.source.folder().to_path_buf();
     console.say(&format!(
         "Watching {}; publishing to {} (Ctrl+C stops)",
@@ -44,7 +127,7 @@ pub(crate) fn watch(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
         if round != Round::Published {
             console.say("Will publish again when sources change.");
         }
-        match wait_for_change(ctx, &folder, stamp, &c) {
+        match wait_for_change(ctx, &folder, stamp, c) {
             Some(next) => stamp = next,
             None => break,
         }

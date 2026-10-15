@@ -13,6 +13,18 @@ gd-git.workspace = true
 gd-toml.workspace = true
 gd-json.workspace = true
 gd-report.workspace = true
+# The local preview of `watch --serve`. Optional: gd-serve brings gd-host, and with it
+# the engine and the Typst compiler, which the publisher itself never needs.
+gd-serve = { workspace = true, optional = true }
+gd-host = { workspace = true, optional = true }
+
+[features]
+# `guidedog-pages watch --serve`; guidedog-pages enables it.
+preview = ["dep:gd-serve", "dep:gd-host"]
+
+[[test]]
+name = "preview"
+required-features = ["preview"]
 
 [lints]
 workspace = true

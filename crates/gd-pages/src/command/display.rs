@@ -225,3 +225,37 @@ pub(crate) fn not_confirmed(what: &str) -> Problem {
          it shows.",
     )
 }
+
+/// The guided publish's questions on the terminal; its lines go to standard error.
+pub(crate) struct ConsolePrompt<'c, 'a> {
+    pub console: &'c mut Console<'a>,
+}
+
+/// Asks `question` on standard error and reads one line of standard input.
+fn ask_line(question: &str) -> Option<String> {
+    eprint!("  {} ", escape_terminal(question));
+    let mut answer = String::new();
+    std::io::stdin().read_line(&mut answer).ok()?;
+    Some(answer.trim().to_string())
+}
+
+impl crate::Prompt for ConsolePrompt<'_, '_> {
+    fn show(&mut self, text: &str) {
+        self.console.say(text);
+    }
+
+    fn confirm(&mut self, question: &str) -> bool {
+        let answer = ask_line(&format!("{question} [y/N]")).unwrap_or_default();
+        matches!(answer.to_lowercase().as_str(), "y" | "yes")
+    }
+
+    fn choose(&mut self, question: &str, choices: &[&str]) -> Option<usize> {
+        self.console.say(question);
+        for (i, choice) in choices.iter().enumerate() {
+            self.console.say(&format!("  {}. {choice}", i + 1));
+        }
+        let answer = ask_line(&format!("Choose 1 to {} (empty to stop):", choices.len()))?;
+        let n = answer.parse::<usize>().ok()?;
+        (1..=choices.len()).contains(&n).then(|| n - 1)
+    }
+}

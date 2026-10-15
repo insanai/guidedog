@@ -15,6 +15,7 @@ mod tests;
 mod watch;
 #[cfg(windows)]
 mod windows_console;
+mod workflow;
 
 use std::io::Write;
 
@@ -36,11 +37,15 @@ pub struct Program {
     pub settings: Settings,
     /// Stops transfers and waits; `guidedog-pages` sets it on Ctrl+C.
     pub cancel: Cancel,
+    /// The working folder (repository and project inference, `workflow`); `None` is the
+    /// current folder.
+    pub dir: Option<std::path::PathBuf>,
 }
 
 /// The commands `guidedog-pages` has.
 pub const COMMANDS: &[&str] = &[
     "init", "auth", "bind", "unbind", "setup", "doctor", "publish", "watch", "status", "recover",
+    "workflow",
 ];
 
 const VALUES: &[&str] = &[
@@ -58,9 +63,16 @@ const VALUES: &[&str] = &[
     "wait",
     "color",
     "diagnostics",
+    "sha256",
+    "release-repository",
 ];
-const FLAGS: &[&str] =
-    &["dry-run", "adopt", "yes", "open", "replace", "force", "verbose", "help", "version"];
+/// Options that are switches alone and take a value with `=`: `--serve[=PORT]`, and
+/// `--version` (the program's version) or `--version=X` (workflow: Guidedog's).
+const OPTIONAL_VALUES: &[&str] = &["serve", "version"];
+const FLAGS: &[&str] = &[
+    "dry-run", "adopt", "yes", "open", "replace", "force", "verbose", "help", "version", "write",
+    "check", "offline",
+];
 
 /// A command line's settings.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -92,6 +104,19 @@ pub(crate) struct Options {
     pub verbose: bool,
     pub help: bool,
     pub version: bool,
+    /// `--branch` was given (workflow's default branch differs).
+    pub branch_given: bool,
+    /// watch: serve a preview on this port.
+    pub serve: Option<u16>,
+    /// workflow: the Guidedog release; empty for this program's version.
+    pub release: String,
+    /// workflow: the release archive's SHA-256.
+    pub sha256: String,
+    /// workflow: the repository releases come from; empty for the default.
+    pub release_repository: String,
+    pub write: bool,
+    pub check: bool,
+    pub offline: bool,
 }
 
 impl Default for Options {
@@ -122,6 +147,14 @@ impl Default for Options {
             verbose: false,
             help: false,
             version: false,
+            branch_given: false,
+            serve: None,
+            release: String::new(),
+            sha256: String::new(),
+            release_repository: String::new(),
+            write: false,
+            check: false,
+            offline: false,
         }
     }
 }
@@ -159,7 +192,7 @@ pub fn run_with(
         console.print(&format!(
             "guidedog-pages {VERSION}\npublishes to GitHub Pages with an \
             installed guidedog (--guidedog, ${}, or PATH)\n",
-            publish::GUIDEDOG_VARIABLE
+            crate::GUIDEDOG_VARIABLE
         ));
         return 0;
     }
@@ -171,7 +204,8 @@ pub fn run_with(
     if o.credential == ENV_PROFILE {
         settings.credential = Credential::Env;
     }
-    let ctx = Context { o: &o, settings: &settings, cancel: &program.cancel };
+    let dir = program.dir.clone().unwrap_or_else(|| std::path::PathBuf::from("."));
+    let ctx = Context { o: &o, settings: &settings, cancel: &program.cancel, dir };
     match o.command.as_str() {
         "init" => target::init(&ctx, &mut console),
         "auth" => auth::run(&ctx, &mut console),
@@ -181,6 +215,7 @@ pub fn run_with(
         "doctor" => target::doctor(&ctx, &mut console),
         "publish" => publish::publish(&ctx, &mut console),
         "watch" => watch::watch(&ctx, &mut console),
+        "workflow" => workflow::workflow(&ctx, &mut console),
         "status" => publish::status(&ctx, &mut console),
         _ => publish::recover(&ctx, &mut console),
     }
@@ -191,6 +226,14 @@ pub(crate) struct Context<'a> {
     pub o: &'a Options,
     pub settings: &'a Settings,
     pub cancel: &'a Cancel,
+    pub dir: std::path::PathBuf,
+}
+
+impl Context<'_> {
+    /// The configuration's path: `--config` from the working folder.
+    pub fn config_path(&self) -> std::path::PathBuf {
+        self.dir.join(&self.o.config)
+    }
 }
 
 /// The options each command takes, beyond `--help`, `--color`, and `--diagnostics`.
@@ -204,8 +247,32 @@ fn allowed(command: &str, sub: &str) -> &'static [&'static str] {
         ("unbind", _) => &["config"],
         ("setup", _) => &["config", "yes", "credential"],
         ("doctor" | "recover", _) => &["config", "credential"],
-        ("publish", _) => &["config", "dry-run", "wait", "guidedog", "credential", "verbose"],
-        ("watch", _) => &["config", "guidedog", "credential"],
+        ("publish", _) => &[
+            "config",
+            "dry-run",
+            "wait",
+            "guidedog",
+            "credential",
+            "verbose",
+            "repository",
+            "project",
+            "branch",
+            "profile",
+            "client-id",
+            "yes",
+        ],
+        ("watch", _) => &["config", "guidedog", "credential", "serve"],
+        ("workflow", _) => &[
+            "project",
+            "branch",
+            "version",
+            "sha256",
+            "offline",
+            "release-repository",
+            "write",
+            "check",
+            "force",
+        ],
         ("status", _) => &["config", "operation", "credential"],
         _ => &[],
     }
@@ -244,15 +311,16 @@ fn parse_into(o: &mut Options, args: &[String]) -> Result<(), Problem> {
             Some((k, v)) => (k, Some(v.to_string())),
             None => (option, None),
         };
-        let is_flag = FLAGS.contains(&key);
-        if !is_flag && !VALUES.contains(&key) {
+        let optional = OPTIONAL_VALUES.contains(&key);
+        let is_flag = FLAGS.contains(&key) || (optional && value.is_none());
+        if !is_flag && !optional && !VALUES.contains(&key) {
             return Err(usage(
                 "Unknown option",
                 arg,
                 "See guidedog-pages --help for the options of each command.",
             ));
         }
-        if is_flag && value.is_some() {
+        if is_flag && !optional && value.is_some() {
             return Err(usage("A switch takes no value", arg, &format!("Write --{key} alone.")));
         }
         let value = match value {
@@ -270,7 +338,9 @@ fn parse_into(o: &mut Options, args: &[String]) -> Result<(), Problem> {
     check_words(o, &words)?;
     let takes = allowed(&o.command, &o.sub);
     for key in given {
-        if ["help", "version", "color", "diagnostics"].contains(&key) || takes.contains(&key) {
+        let global = ["help", "color", "diagnostics"].contains(&key)
+            || (key == "version" && o.release.is_empty());
+        if global || takes.contains(&key) {
             continue;
         }
         let name =
@@ -323,11 +393,17 @@ fn set_option(o: &mut Options, key: &str, value: &str) -> Result<(), Problem> {
         "repository" => o.repository = text,
         "project" => o.project = text,
         "site" => o.site = text,
-        "branch" => o.branch = text,
+        "branch" => {
+            o.branch = text;
+            o.branch_given = true;
+        }
         "profile" => o.profile = text,
         "client-id" => o.client_id = text,
         "guidedog" => o.guidedog = text,
         "operation" => o.operation = text,
+        "version" => o.release = text,
+        "release-repository" => o.release_repository = text,
+        "sha256" | "serve" => return set_checked(o, key, value),
         "scope" if value == "public" || value == "private" => o.scope = text,
         "scope" => {
             return Err(usage(
@@ -375,8 +451,38 @@ fn set_option(o: &mut Options, key: &str, value: &str) -> Result<(), Problem> {
     Ok(())
 }
 
+/// Sets an option whose value is checked.
+fn set_checked(o: &mut Options, key: &str, value: &str) -> Result<(), Problem> {
+    if key == "sha256" {
+        if value.len() != 64 || !value.bytes().all(|c| c.is_ascii_hexdigit()) {
+            return Err(usage(
+                "Not a SHA-256",
+                value,
+                "Write --sha256= and the 64 hexadecimal digits of the archive's SHA-256.",
+            ));
+        }
+        o.sha256 = value.to_ascii_lowercase();
+        return Ok(());
+    }
+    match value.parse::<u16>() {
+        Ok(port) if !value.starts_with('+') => o.serve = Some(port),
+        _ => {
+            return Err(usage(
+                "Not a port",
+                value,
+                "Write --serve for port 8000, or --serve=PORT with a port from 0 to 65535.",
+            ));
+        }
+    }
+    Ok(())
+}
+
 fn set_flag(o: &mut Options, key: &str) {
     match key {
+        "serve" => o.serve = Some(8000),
+        "write" => o.write = true,
+        "check" => o.check = true,
+        "offline" => o.offline = true,
         "dry-run" => o.dry_run = true,
         "adopt" => o.adopt = true,
         "yes" => o.yes = true,

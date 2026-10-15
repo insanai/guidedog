@@ -70,9 +70,10 @@ fn the_commands_take_a_target_from_bind_to_live() {
     let (status, out, _) = with(&["unbind"]);
     assert_eq!(status, 0);
     assert!(out.contains("Unbound octo/site"), "{out}");
+    // Unbound again: publish would bind, which needs an answer this run cannot give.
     let (status, _, err) = with(&["publish"]);
     assert_eq!(status, 2);
-    assert!(err.contains("pages.unbound"), "{err}");
+    assert!(err.contains("pages.guide") && err.contains("guidedog-pages bind"), "{err}");
 }
 
 /// The folder cargo builds examples into: `target/<profile>/examples`.

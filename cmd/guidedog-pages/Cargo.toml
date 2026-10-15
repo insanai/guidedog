@@ -11,7 +11,7 @@ name = "guidedog-pages"
 path = "src/main.rs"
 
 [dependencies]
-gd-pages.workspace = true
+gd-pages = { workspace = true, features = ["preview"] }
 gd-plugins.workspace = true
 
 [lints]

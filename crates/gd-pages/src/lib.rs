@@ -33,6 +33,7 @@
 // In unit tests, a test failing on unexpected input is the point.
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
+mod build;
 mod client;
 pub mod command;
 mod config;
@@ -40,6 +41,8 @@ mod credential;
 mod device;
 mod files;
 mod github;
+mod guide;
+mod infer;
 mod outcome;
 mod problem;
 mod push;
@@ -48,11 +51,13 @@ mod state;
 mod target;
 #[cfg(test)]
 mod testdir;
+mod workflow;
 
 use std::path::PathBuf;
 
 use gd_plugins::{Cancel, Plugin, Problem};
 
+pub use build::{GUIDEDOG_VARIABLE, freeze_site, guidedog_program, guidedog_version};
 pub use client::{API_ROOT, Client, Roots, WEB_ROOT};
 pub use config::{
     CONFIG_FILE, Config, SiteSource, default_site_url, is_valid_branch, is_valid_owner,
@@ -67,10 +72,17 @@ pub use github::{
     Account, Build, BuildState, RemoteFiles, Repository, Site, account, commit_tree,
     configure_pages, pages_build, pages_site, read_repository, remote_files,
 };
+pub use guide::{GuideOptions, Prompt, plan_lines, publish_guided};
+pub use infer::{find_project, gh_token, origin_url, parse_github_remote};
 pub use push::{PushOutcome, branch_head, push};
 pub use session::{MARK, Pages};
 pub use state::{Binding, Journal, Profile, State, StateLock, target_key, today};
-pub use target::{Review, bind, remember_token, review_target, setup};
+pub use target::{Review, bind, remember_token, review_lines, review_target, setup, site_lines};
+pub use workflow::{
+    ACTION_PINS, ARCHIVE, ActionPin, RELEASE_REPOSITORY, RELEASE_ROOT, SHA256_PLACEHOLDER,
+    WORKFLOW_PATH, WorkflowOptions, check_workflow, is_safe_workflow_name, release_sha256,
+    render_workflow,
+};
 
 /// The publisher's version, which its handshake declares: Guidedog's.
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");

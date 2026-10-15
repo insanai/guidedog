@@ -1,94 +1,29 @@
-//! `publish`, `status`, and `recover`, and building a project with the installed
-//! `guidedog`.
+//! `publish`, `status`, and `recover`.
 
-use std::path::Path;
-use std::process::{Command, Stdio};
+use std::io::IsTerminal;
+use std::path::PathBuf;
 
-use gd_plugins::{
-    LoadOptions, Plugin, Problem, PublisherSession, Snapshot, SnapshotMode, SnapshotOptions,
-    State, snapshot,
-};
+use gd_plugins::{LoadOptions, Plugin, Problem, PublisherSession, Snapshot, State};
 
-use super::display::Console;
+use super::display::{Console, ConsolePrompt};
 use super::{Context, Options};
-use crate::config::{Config, SiteSource, read_config};
-use crate::problem::problem;
-use crate::{Pages, build_dir};
+use crate::build::{freeze_site, guidedog_program};
+use crate::config::{Config, read_config};
+use crate::{GuideOptions, Pages, publish_guided};
 
-/// Names the `guidedog` that builds a project when `--guidedog` does not.
-pub const GUIDEDOG_VARIABLE: &str = "GUIDEDOG_PAGES_GUIDEDOG";
-
-/// The program that builds: `--guidedog`, `$GUIDEDOG_PAGES_GUIDEDOG`, or `guidedog` on
-/// `PATH`.
+/// The program that builds for this command line.
 fn guidedog(o: &Options) -> String {
-    if !o.guidedog.is_empty() {
-        return o.guidedog.clone();
-    }
-    std::env::var(GUIDEDOG_VARIABLE)
-        .ok()
-        .filter(|v| !v.is_empty())
-        .unwrap_or_else(|| "guidedog".to_string())
+    guidedog_program(&o.guidedog)
 }
 
 /// The first line `guidedog --version` prints, or `None` when it cannot run.
 pub(crate) fn guidedog_version(o: &Options) -> Option<String> {
-    let out = Command::new(guidedog(o)).arg("--version").stdin(Stdio::null()).output().ok()?;
-    if !out.status.success() {
-        return None;
-    }
-    let text = String::from_utf8_lossy(&out.stdout);
-    Some(text.lines().next().unwrap_or_default().trim().to_string())
+    crate::build::guidedog_version(&guidedog(o))
 }
 
 /// `pages.guidedog` (exit 4): no `guidedog` could be run.
 pub(crate) fn guidedog_missing(o: &Options) -> Problem {
-    problem(
-        "pages.guidedog",
-        "Guidedog was not found",
-        &guidedog(o),
-        "guidedog-pages builds projects with an installed guidedog, and none could be run.",
-        &format!(
-            "Install Guidedog and put guidedog on PATH, pass --guidedog=PATH, or set \
-            {GUIDEDOG_VARIABLE}. To publish a site you built, set site in pages.toml."
-        ),
-    )
-    .exit(4)
-}
-
-/// Builds `project` as HTML into `out` with the installed `guidedog`. A build that
-/// fails publishes nothing.
-fn build(
-    o: &Options,
-    console: &mut Console<'_>,
-    c: &Config,
-    project: &Path,
-    out: &Path,
-) -> Result<(), Problem> {
-    let program = guidedog(o);
-    let mut command = Command::new(&program);
-    command.args(["build", "-b", "html"]).arg(project).arg(out);
-    if c.strict {
-        command.arg("-W");
-    }
-    command.arg("-D").arg(format!("html_baseurl={}", c.site_url));
-    // Its report goes to standard error, so that a script's output stays the outcome.
-    command.stdin(Stdio::inherit()).stdout(Stdio::from(std::io::stderr()));
-    console.say(&format!("Building {} with {program}...", project.display()));
-    let status = command.status().map_err(|_| guidedog_missing(o))?;
-    if !status.success() {
-        let code = status.code().unwrap_or(1);
-        return Err(problem(
-            "pages.build",
-            "The project did not build",
-            &project.display().to_string(),
-            &format!(
-                "guidedog stopped with status {code}; its report is above. Nothing was \
-                published."
-            ),
-            "Fix what Guidedog reported, then publish again.",
-        ));
-    }
-    Ok(())
+    crate::build::guidedog_missing(&guidedog(o))
 }
 
 /// The site a session publishes: its project built, or its site copied.
@@ -98,31 +33,26 @@ fn freeze(
     c: &Config,
     dry_run: bool,
 ) -> Result<Snapshot, Problem> {
-    let project = match &c.source {
-        SiteSource::Built(site) => return snapshot(site, &SnapshotOptions::default()),
-        SiteSource::Project(p) => p,
-    };
-    let out = build_dir(ctx.settings, c, dry_run)?;
-    let built = build(ctx.o, console, c, project, &out);
-    // A real publication holds the target's lock; dry runs use folders of their own.
-    let mode = if dry_run { SnapshotMode::Adopt } else { SnapshotMode::Borrow };
-    let frozen = built.and_then(|()| snapshot(&out, &SnapshotOptions::new(mode)));
-    if frozen.is_err() && dry_run {
-        let _ = std::fs::remove_dir_all(&out);
+    let program = guidedog(ctx.o);
+    freeze_site(ctx.settings, c, &program, dry_run, &mut |line| console.say(line))
+}
+
+/// `--wait` as `LoadOptions::wait_seconds`: none given is the configuration's, 0 is
+/// not at all.
+fn wait_seconds(o: &Options) -> i64 {
+    match o.wait {
+        None => 0,
+        Some(0) => -1,
+        Some(n) => i64::from(n),
     }
-    frozen
 }
 
 /// The publisher's load options for a run.
 fn load_options(ctx: &Context<'_>, dry_run: bool) -> LoadOptions {
-    let wait_seconds = match ctx.o.wait {
-        None => 0,
-        Some(0) => -1,
-        Some(n) => i64::from(n),
-    };
-    let mut options = LoadOptions::new(&ctx.o.config);
+    let config = ctx.config_path();
+    let mut options = LoadOptions::new(&config.to_string_lossy());
     options.dry_run = dry_run;
-    options.wait_seconds = wait_seconds;
+    options.wait_seconds = wait_seconds(ctx.o);
     options.cancel = ctx.cancel.clone();
     options
 }
@@ -132,9 +62,35 @@ fn load(ctx: &Context<'_>, dry_run: bool) -> Result<PublisherSession, Problem> {
     PublisherSession::load(&plugin, &load_options(ctx, dry_run))
 }
 
-/// Builds or copies the site, plans, shows the plan, and publishes it.
+/// Publishes the site, doing first whatever is missing (see `crate::guide`); a dry run
+/// only plans, and needs a configured target.
 pub(crate) fn publish(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
-    publish_once(ctx, console, ctx.o.dry_run).0
+    if ctx.o.dry_run {
+        return publish_once(ctx, console, true).0;
+    }
+    let o = ctx.o;
+    let options = GuideOptions {
+        settings: ctx.settings.clone(),
+        cancel: ctx.cancel.clone(),
+        config: ctx.config_path(),
+        dir: ctx.dir.clone(),
+        repository: o.repository.clone(),
+        project: (!o.project.is_empty()).then(|| PathBuf::from(&o.project)),
+        branch: o.branch.clone(),
+        profile: o.profile.clone(),
+        client_id: o.client_id.clone(),
+        guidedog: o.guidedog.clone(),
+        wait_seconds: wait_seconds(o),
+        interactive: std::io::stdin().is_terminal() && !o.yes,
+        assume_yes: o.yes,
+        verbose: o.verbose,
+        ..GuideOptions::default()
+    };
+    let result = publish_guided(&options, &mut ConsolePrompt { console: &mut *console });
+    match result {
+        Ok(r) => console.show_result(&r),
+        Err(p) => console.report(&p),
+    }
 }
 
 /// One publication; returns the exit status and the problem's code (empty for none).
@@ -144,7 +100,7 @@ pub(crate) fn publish_once(
     dry_run: bool,
 ) -> (i32, String) {
     let staged = load(ctx, dry_run).and_then(|s| {
-        let c = read_config(Path::new(&ctx.o.config))?;
+        let c = read_config(&ctx.config_path())?;
         let snap = freeze(ctx, console, &c, dry_run)?;
         Ok((s, snap))
     });

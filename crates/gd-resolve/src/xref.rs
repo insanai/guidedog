@@ -8,9 +8,13 @@
 
 use std::fmt;
 
-use gd_env::{Digest, DocId, Lookup, OutputFormat, Trace};
+use gd_env::{Asset, DocId, OutputFormat, Trace};
+use gd_report::{Report, Severity};
 
+use crate::lookups::Look;
 use crate::view::BuildView;
+
+pub use crate::lookups::{lookup_answer, role_takes};
 
 /// One reference to resolve, as the reader left it on a `pending_xref` node.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -33,6 +37,43 @@ pub struct XrefQuery {
     pub external: bool,
     /// The format the page is linked for: URLs in HTML and text, anchors in the book.
     pub format: OutputFormat,
+    /// The reference has an explicit title (`refexplicit`).
+    pub explicit: bool,
+    /// The reference's content as plain text: a `:numref:` title's template, and what an
+    /// inventory link shows when its entry has no display name.
+    pub content: String,
+    /// `:external+name:`: the one inventory to search; empty for all.
+    pub inventory: String,
+    /// The rest of the context the reader left on the reference, as (name, value)
+    /// pairs: `js:module`, `js:object`, `c:parent`, `std:program`, `odin:package`,
+    /// `odin:type`, `cpp:name`, `cpp:parent`, ... An `any` reference carries every
+    /// domain's. `py:module`, `py:class` and `rust:module` may be given here or in
+    /// `module` and `class`.
+    pub context: Vec<(String, String)>,
+}
+
+impl XrefQuery {
+    /// The context value `key` (such as `"js:module"`), borrowed; empty when the
+    /// reference has none. `<domain>:module` and `<domain>:class` of the reference's own
+    /// domain fall back to `module` and `class`.
+    pub fn context(&self, key: &str) -> &str {
+        if let Some((_, value)) = self.context.iter().find(|(k, _)| k == key) {
+            return value;
+        }
+        let Some((domain, name)) = key.split_once(':') else { return "" };
+        let own = self.reftype.split_once(':').is_some_and(|(d, _)| d == domain);
+        match name {
+            "module" if own => &self.module,
+            "class" if own => &self.class,
+            _ => "",
+        }
+    }
+
+    /// Whether the context value `key` is set and is not `"0"`, as a flag.
+    pub fn flag(&self, key: &str) -> bool {
+        let value = self.context(key);
+        !value.is_empty() && value != "0"
+    }
 }
 
 /// Where a reference points, and what it shows when it has no explicit title.
@@ -53,6 +94,12 @@ pub struct Resolved {
     pub no_link: bool,
     /// Show the reference's own content rather than `title`.
     pub keep_content: bool,
+    /// A download the page needs copied into the output.
+    pub asset: Option<Asset>,
+    /// A warning about a reference that still resolved: a `:numref:` to an item without
+    /// a number, a heading anchor not found, a C++ role for another kind of
+    /// declaration. gd-link reports it at the reference.
+    pub warning: Option<Box<Unresolved>>,
 }
 
 /// Why a reference did not resolve, Elm style: what was not found, a hint, and the
@@ -62,10 +109,12 @@ pub struct Unresolved {
     /// Whether the build warns (Sphinx's `warn_dangling`, `nitpicky` and the
     /// `nitpick_ignore` lists decide).
     pub warn: bool,
-    /// The warning's code, such as `build.xref.missing`.
+    /// The warning's code, such as `build.xref.unresolved`.
     pub code: String,
     /// The category `suppress_warnings` silences, such as `ref.ref`.
     pub category: String,
+    /// The report's title, such as `REFERENCE TARGET NOT FOUND`.
+    pub title: String,
     /// What was not found.
     pub message: String,
     /// How to fix it.
@@ -74,11 +123,41 @@ pub struct Unresolved {
     pub suggestion: Option<String>,
 }
 
+impl Unresolved {
+    /// The warning as a report on `path` (the document's path below the source folder),
+    /// with no position yet: the caller places it at the reference.
+    pub fn report(&self, path: &str) -> Report {
+        let mut report = Report::error(&self.code, &self.title, &self.message).hint(&self.hint);
+        if let Some(name) = &self.suggestion {
+            report.hints.push(format!("Did you mean `{name}`?"));
+        }
+        Report {
+            severity: Severity::Warning,
+            path: path.to_string(),
+            category: self.category.clone(),
+            ..report
+        }
+    }
+
+    pub(crate) fn warning(parts: [&str; 5]) -> Box<Unresolved> {
+        let [code, title, category, message, hint] = parts;
+        Box::new(Unresolved {
+            warn: true,
+            code: code.into(),
+            category: category.into(),
+            title: title.into(),
+            message: message.into(),
+            hint: hint.into(),
+            suggestion: None,
+        })
+    }
+}
+
 impl fmt::Display for Unresolved {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{} Hint: {}", self.message, self.hint)?;
         if let Some(name) = &self.suggestion {
-            write!(f, " Did you mean {name}?")?;
+            write!(f, " Did you mean `{name}`?")?;
         }
         Ok(())
     }
@@ -99,25 +178,19 @@ pub fn resolve_xref(
     query: &XrefQuery,
     trace: &mut Trace,
 ) -> Result<Resolved, Box<Unresolved>> {
-    let _ = (view, query, trace);
-    todo!("wave 1: port xref.odin resolution, odin_xref, cpp_lookup, intersphinx_resolve, rust")
-}
-
-/// Answers a lookup the page of `page` (a docname) made, against this build's tables
-/// and folders, as the digest of the answer: the target's document, anchor, title,
-/// kind, type, number and key for a name; the title for a document; whether a file
-/// exists; the file an image resolves to; whether there is a module index; the C++
-/// tree's digest. A missing target has its own answer. `Generation::reuse` compares it
-/// with the digest stored when the page was written.
-pub fn lookup_answer(view: &BuildView<'_>, page: &str, lookup: &Lookup) -> Digest {
-    let _ = (view, page, lookup);
-    todo!("wave 1: port lookup_value as digests")
-}
-
-/// The roles a domain's object type may be named by (Sphinx's `object_types`), for
-/// suffix searches and `any`: `role_takes("py:meth", "method")` is true. Roles of other
-/// domains, and an empty role, take any type.
-pub fn role_takes(role: &str, objtype: &str) -> bool {
-    let _ = (role, objtype);
-    todo!("wave 1: port role_takes, odin_role_takes, cpp_role_takes and the rust roles")
+    if query.external {
+        return crate::external::resolve_external(view, query, true)
+            .ok_or_else(|| crate::external::external_missing(view, query));
+    }
+    let mut look = Look { view, query, trace, warning: None };
+    if let Some(mut found) = look.resolve_local() {
+        if found.warning.is_none() {
+            found.warning = look.warning.take();
+        }
+        return Ok(found);
+    }
+    if let Some(found) = crate::external::resolve_external(view, query, false) {
+        return Ok(found);
+    }
+    Err(crate::suggest::unresolved(view, query))
 }

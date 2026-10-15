@@ -20,29 +20,41 @@
 //! # }
 //! ```
 //!
-//! Wave 0 of the port: the types and signatures are final; the bodies are ported from
-//! resolve.odin, numbering.odin, lookups.odin, xref.odin, cpp_*.odin, odin_xref.odin,
-//! intersphinx*.odin, inventory.odin, genindex.odin and modindex.odin in wave 1.
+//! Docs: docs/manual/internals/project.rst (the crate split) and incremental.rst (what
+//! each lookup's answer covers). Nothing here prints; warnings are `gd_report::Report`s.
 
-// Wave 0 holds signatures only; the fields are used once wave 1 ports the bodies.
-#![allow(dead_code)]
+#![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod cpp;
+mod cpp_lookup;
+mod external;
 mod index;
 mod intersphinx;
+mod inventory;
+mod local;
+mod lookups;
+mod modindex;
+mod numbering;
+mod odin_xref;
+mod rust_xref;
+mod suggest;
 mod tables;
+mod toctree;
 mod view;
 mod xref;
 
 pub use cpp::{CppDeclaration, CppSymbol, CppSymbolId, CppTree};
-pub use index::{
-    IndexGroup, IndexLink, IndexSub, IndexTerm, ModindexEntry, ModindexLetter, create_index,
-    has_module_index, module_index, write_inventory,
-};
+pub use index::{IndexGroup, IndexLink, IndexSub, IndexTerm, create_index};
 pub use intersphinx::{Intersphinx, IntersphinxOptions, load_intersphinx};
-pub use tables::{Tables, TargetRef, TreeEntry, object_key, resolve};
+pub use inventory::write_inventory;
+pub use local::option_key;
+pub use modindex::{ModindexEntry, ModindexLetter, has_module_index, module_index};
+pub use tables::{Tables, TargetRef, TreeEntry, normalize_name, object_key, resolve};
 pub use view::{
-    BuildView, Dates, OutputBuilder, doc_target, file_target, generated_page, normalize_doc,
-    relative_url,
+    BuildView, Dates, ImageFile, OutputBuilder, chapter_key, doc_target, file_target,
+    format_number, generated_page, normalize_doc, python_format, relative_url,
 };
 pub use xref::{Resolved, Unresolved, XrefQuery, lookup_answer, resolve_xref, role_takes};
+
+#[cfg(test)]
+mod tests;

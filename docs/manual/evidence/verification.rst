@@ -166,7 +166,7 @@ resulting contract.
     check rejects duplicate final output paths before compiling any book. The regression
     checks the diagnostic and preservation of the previous PDF.
 
-7.  **An API doc comment treated ``file:line`` as a URI.** It now marks that notation as
+7.  **An API doc comment treated** ``file:line`` **as a URI.** It now marks that notation as
     code. Browser inspection confirms code text rather than a spurious link.
 
 8.  **Preview reloads reused stale configuration and ignored shared assets.** Each rebuild
@@ -240,15 +240,16 @@ The earlier complete engine run used the source snapshot with SHA-256
 ``b15fb5a1dd4c7553ed923bb3bc6aa70c56a2e2357659787245f8ba7e18979739``. Its PDF collision
 overlay was tested separately:
 
-+---------------------------------+-------------------------------------------------------+
-| File                            | SHA-256                                               |
-+=================================+=======================================================+
-| ``lib/project/builders.odin``   | ``eb7980d152512                                       |
-|                                 | dda6432886bdb4a65b5250fd7d4f867ddc0932e57fdf8b81684`` |
-+---------------------------------+-------------------------------------------------------+
-| ``tests/incremental_test.odin`` | ``691695effcd3d                                       |
-|                                 | 8841be511858d7f2168d5b3765b701ebb793e971feb5a5a3e66`` |
-+---------------------------------+-------------------------------------------------------+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - File
+     - SHA-256
+   * - ``lib/project/builders.odin``
+     - ``eb7980d152512dda6432886bdb4a65b5250fd7d4f867ddc0932e57fdf8b81684``
+   * - ``tests/incremental_test.odin``
+     - ``691695effcd3d8841be511858d7f2168d5b3765b701ebb793e971feb5a5a3e66``
 
 The later reading-edition changes have separate ``reading-*`` and ``showcase-*`` logs. The
 earlier snapshot hash is historical; it does not identify this later edition. The final

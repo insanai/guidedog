@@ -40,21 +40,20 @@ Homebrew formula and ``SHA256SUMS``. All twelve manifest entries match GitHub's 
 asset digests. The downloaded Apple silicon Guidedog and dscc archives, Linux x86-64
 Guidedog archive and formula match their manifest checksums.
 
-+---------------------------------+-------------------------------------------------------+
-| Download                        | SHA-256                                               |
-+=================================+=======================================================+
-| ``guidedog-macos-arm64.tar.gz`` | ``d7dddca37d4c9                                       |
-|                                 | 4bfdb97dfe30562581d930d9e6d48dd772e9e85ce89c3815dae`` |
-+---------------------------------+-------------------------------------------------------+
-| ``dscc-macos-arm64.tar.gz``     | ``611a016e6abc2                                       |
-|                                 | 0a3a1480a740bae9d0787acca74f42c037f14beae919035ed7d`` |
-+---------------------------------+-------------------------------------------------------+
-| ``guidedog-linux-amd64.tar.gz`` | ``35eca388ac7a4                                       |
-|                                 | 061076bfa688102127acdb2f1db30e183c8a5b8002362e359d0`` |
-+---------------------------------+-------------------------------------------------------+
-| ``guidedog.rb``                 | ``59cd87c8cd909                                       |
-|                                 | 0f71d8dfdf13ae1bc2c43aa793bbe26c0b493d04b431fdb7b5e`` |
-+---------------------------------+-------------------------------------------------------+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Download
+     - SHA-256
+   * - ``guidedog-macos-arm64.tar.gz``
+     - ``d7dddca37d4c94bfdb97dfe30562581d930d9e6d48dd772e9e85ce89c3815dae``
+   * - ``dscc-macos-arm64.tar.gz``
+     - ``611a016e6abc20a3a1480a740bae9d0787acca74f42c037f14beae919035ed7d``
+   * - ``guidedog-linux-amd64.tar.gz``
+     - ``35eca388ac7a4061076bfa688102127acdb2f1db30e183c8a5b8002362e359d0``
+   * - ``guidedog.rb``
+     - ``59cd87c8cd9090f71d8dfdf13ae1bc2c43aa793bbe26c0b493d04b431fdb7b5e``
 
 The published Apple silicon programs all report 0.6.3: guidedog, dsc, dscc and
 guidedog-pages. Guidedog also passed the smoke script locally with an empty ``PATH``:

@@ -399,7 +399,7 @@ Inline markup:
 +============================================+============================================+
 | ``*emphasis*``, ``**strong**``             | Emphasis, Strong                           |
 +--------------------------------------------+--------------------------------------------+
-| :literal:`\``literal`\``                   | Code                                       |
+| :literal:`\`\`literal\`\``                 | Code                                       |
 +--------------------------------------------+--------------------------------------------+
 | interpreted text                           | per role: emphasis, strong, literal →      |
 |                                            | Code, code → Code{Language}, math → Math,  |
@@ -412,19 +412,19 @@ Inline markup:
 |                                            | RawInline{Format}, other custom roles →    |
 |                                            | Role{text = role name; Class}              |
 +--------------------------------------------+--------------------------------------------+
-| :literal:`\`text <uri>`\_`                 | Link{External, destination = uri, name =   |
+| :literal:`\`text <uri>\`_`                 | Link{External, destination = uri, name =   |
 |                                            | normalized text (defines a target)};       |
 |                                            | ``__`` gives no name                       |
 +--------------------------------------------+--------------------------------------------+
-| :literal:`\`text <name\_>`\_`              | Reference{name = refname}; attribute       |
+| :literal:`\`text <name_>\`_`               | Reference{name = refname}; attribute       |
 |                                            | Custom "target-name" = normalized text,    |
 |                                            | which also names an indirect target        |
 +--------------------------------------------+--------------------------------------------+
-| ``name_``, :literal:`\`phrase`\_`,         | Reference{links name; flag Anonymous for   |
+| ``name_``, :literal:`\`phrase\`_`,         | Reference{links name; flag Anonymous for   |
 | anonymous ``__``                           | ``__``}; resolution sets kind + resolved   |
 |                                            | or destination                             |
 +--------------------------------------------+--------------------------------------------+
-| :literal:`\_`name\``                       | InlineTarget{text = normalized name} >     |
+| :literal:`_\`name\``                       | InlineTarget{text = normalized name} >     |
 |                                            | inlines                                    |
 +--------------------------------------------+--------------------------------------------+
 | ``[1]_``, ``[#]_``, ``[#l]_``, ``[*]_``    | FootnoteReference{text = label as written; |

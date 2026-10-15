@@ -42,7 +42,7 @@ was validated at load.
    hash table and decodes every string at load (via ``encoding``). Plurals come from the
    header. That makes one allocation per message and copies the whole file. Its offset
    arithmetic is unchecked on 32-bit targets.
--  ```gettext-rs``/``gettext-sys`` <https://docs.rs/gettext-rs/latest/gettextrs/>`__ bind
+-  `gettext-rs/gettext-sys <https://docs.rs/gettext-rs/latest/gettextrs/>`__ bind
    libintl: fast (mmap plus hash) but global, LGPL, and C-only (its docs say it "CAN'T
    HANDLE NON-UTF-8 DATA").
 -  `polib <https://docs.rs/polib>`__ and `rspolib <https://docs.rs/rspolib>`__ build

@@ -93,9 +93,9 @@ Conversion: workspace, requests, running
    * - ``Limits``, ``default_limits()``
      - ``Limits`` (``Default``), adds ``max_text_bytes``, ``max_reports``, ``max_output_bytes``
    * - ``Resource_Provider{procedure, user}``
-     - ``trait ResourceProvider{ fn provide(&self, from: &str, name: &str) -> Result<Resource, ResourceStatus> }``; ``Resource { text: Arc<str>, canonical }``
+     - ``trait ResourceProvider { fn provide(&self, from: &str, name: &str) -> Result<Resource, ResourceStatus> }``; ``Resource { text: Arc<str>, canonical }``
    * - ``Resource_Status``
-     - ``ResourceStatus::{Missing, Refused,`` ``Limit, NotUtf8}`` (no ``Ok``: the ``Result`` says it)
+     - ``ResourceStatus::{Missing, Refused, Limit, NotUtf8}`` (no ``Ok``: the ``Result`` says it)
    * - ``Cancel_Probe``
      - ``request.cancel: Option<&dyn Fn() -> bool>``
    * - ``Pass{name, procedure, user}``, ``Pass_Outcome``
@@ -254,7 +254,7 @@ Adapters
 
    * - Odin ``gd.``
      - Rust
-   * - ``Reader{id, name,version, conformance, read, read_inline}``
+   * - ``Reader{id, name, version, conformance, read, read_inline}``
      - ``Reader { id, name, version, conformance, read: ReadFn, read_inline: Option<ReadInlineFn> }`` (a ``const``)
    * - ``Renderer{..., media_type, render}``
      - ``Renderer { ..., media_type, render: RenderFn }``
@@ -320,7 +320,7 @@ Building
    * - ``set_list``, ``set_link -> row``, ``set_cell``
      - ``b.set_list(id, info)?``, ``b.set_link(id, info)? -> u32``, ``b.set_cell(id, info)?``
    * - ``resolve_link(b, row, target, kind, dest)``
-     - ``b.resolve_link(row, target, kind, dest)``(``Text::default()`` keeps thedestination)
+     - ``b.resolve_link(row, target, kind, dest)`` (``Text::default()`` keeps the destination)
    * - ``unwrap_node(b, id)``
      - ``b.unwrap_node(id)?``
    * - ``copy_subtree(b, v, id)``, ``copy_payload(b, v, from, to)``

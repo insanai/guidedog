@@ -232,86 +232,59 @@ refusal harness now captures to files and reads them after waiting for the child
 the same exit and diagnostic assertions. This makes a missing CLI report fail independently
 of live pipe polling. Final suite results below use that capture path.
 
-+-----------------------------+-----------------------------+-----------------------------+
-| Check                       | Result                      | Retained evidence           |
-+=============================+=============================+=============================+
-| Ordinary libraries and      | All 29 suites pass with     | ``test-*.log``              |
-| tools                       | allocation tracking and     |                             |
-|                             | failure on bad memory.      |                             |
-+-----------------------------+-----------------------------+-----------------------------+
-| Embedded Typst and static   | All 29 library and tool     | ``embedded-lib-*.log``,     |
-| Graphviz                    | suites pass with the same   | ``embedded-tools-*.log``    |
-|                             | memory checks.              |                             |
-+-----------------------------+-----------------------------+-----------------------------+
-| Final integration candidate | All 166 tests pass for      | ``integration.log``,        |
-|                             | ordinary, embedded, and     | ``                          |
-|                             | AddressSanitizer binaries.  | embedded-integration.log``, |
-|                             |                             | ``a                         |
-|                             |                             | san-integration-final.log`` |
-+-----------------------------+-----------------------------+-----------------------------+
-| Library and tool            | All 26 library suites and   | ``asan.log``,               |
-| AddressSanitizer            | three tool suites pass;     | `                           |
-|                             | affected packages were      | `asan-final-affected.log``, |
-|                             | rerun after their final     | ``asan-gds-final.log``,     |
-|                             | changes. The final project  | ``asan-project-final.log``  |
-|                             | suite has 57 tests.         |                             |
-+-----------------------------+-----------------------------+-----------------------------+
-| macOS                       | Focused watcher, cleanup,   | ``mac-*.log``               |
-|                             | root, clock, metadata,      |                             |
-|                             | refusal, and capture checks |                             |
-|                             | pass; metadata/refusal      |                             |
-|                             | checks also pass with       |                             |
-|                             | AddressSanitizer.           |                             |
-+-----------------------------+-----------------------------+-----------------------------+
-| Rust bridge                 | The old-short-request ABI   | ``bridge-test.log``         |
-|                             | regression test passes.     |                             |
-+-----------------------------+-----------------------------+-----------------------------+
-| Windows                     | Ordinary and embedded       | `                           |
-|                             | configurations type-check.  | `windows-check-final.log``, |
-|                             | No Windows runtime test was | ``windows                   |
-|                             | run.                        | -embedded-check-final.log`` |
-+-----------------------------+-----------------------------+-----------------------------+
-| Implementation rules        | 653 source files checked;   | ``rules.log``               |
-|                             | zero violations.            |                             |
-|                             | ``git diff --check`` also   |                             |
-|                             | passes.                     |                             |
-+-----------------------------+-----------------------------+-----------------------------+
-| GDS and API                 | Native strict HTML and PDF  | ``gds-*-final.log``,        |
-|                             | builds pass. GDS: 16 HTML   | ``gds-links.log``,          |
-|                             | pages, 1,030 internal       | ``api-*-final.log``         |
-|                             | links; API: 30 pages,       |                             |
-|                             | 19,398 links. No missing    |                             |
-|                             | files or anchors in either. |                             |
-+-----------------------------+-----------------------------+-----------------------------+
-| Book inspection             | Six GDS books have 15, 18,  | ``qa/pdf-qa.json``,         |
-|                             | 29, 14, 9, and 21 pages.    | ``qa/api-qa.json``,         |
-|                             | The API book has 309. Fonts | rendered contact sheets     |
-|                             | are embedded; no text lies  |                             |
-|                             | outside page bounds.        |                             |
-|                             | Sampled rendered pages and  |                             |
-|                             | the GDS HTML header were    |                             |
-|                             | inspected.                  |                             |
-+-----------------------------+-----------------------------+-----------------------------+
-| Allocation-before-expansion | The 60-million-character    | ``budget-rss.log``,         |
-| repro                       | template with               | ``budget.err``              |
-|                             | ``--budget=4`` exits 3 at   |                             |
-|                             | 14,008 KiB peak RSS, about  |                             |
-|                             | 13.7 MiB. Its report        |                             |
-|                             | identifies                  |                             |
-|                             | `                           |                             |
-|                             | `_templates/layout.html:1`` |                             |
-|                             | and suggests                |                             |
-|                             | ``--budget=256`` or         |                             |
-|                             | ``--memory=disk``.          |                             |
-+-----------------------------+-----------------------------+-----------------------------+
-| Sphinx comparison probe     | 43 pinned roots attempted;  | ``sphinx-normalized.txt``,  |
-|                             | 41 compare, two fail in the | ``evidence-summary.json``   |
-|                             | reference build. Remaining  |                             |
-|                             | documented differences      |                             |
-|                             | persist. The maxdepth       |                             |
-|                             | diagnostic difference       |                             |
-|                             | improves from four to zero. |                             |
-+-----------------------------+-----------------------------+-----------------------------+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Check
+     - Result
+     - Retained evidence
+   * - Ordinary libraries and tools
+     - All 29 suites pass with allocation tracking and failure on bad memory.
+     - ``test-*.log``
+   * - Embedded Typst and static Graphviz
+     - All 29 library and tool suites pass with the same memory checks.
+     - ``embedded-lib-*.log``, ``embedded-tools-*.log``
+   * - Final integration candidate
+     - All 166 tests pass for ordinary, embedded, and AddressSanitizer binaries.
+     - ``integration.log``, ``embedded-integration.log``, ``asan-integration-final.log``
+   * - Library and tool AddressSanitizer
+     - All 26 library suites and three tool suites pass; affected packages were rerun after
+       their final changes. The final project suite has 57 tests.
+     - ``asan.log``, ``asan-final-affected.log``, ``asan-gds-final.log``,
+       ``asan-project-final.log``
+   * - macOS
+     - Focused watcher, cleanup, root, clock, metadata, refusal, and capture checks pass;
+       metadata/refusal checks also pass with AddressSanitizer.
+     - ``mac-*.log``
+   * - Rust bridge
+     - The old-short-request ABI regression test passes.
+     - ``bridge-test.log``
+   * - Windows
+     - Ordinary and embedded configurations type-check. No Windows runtime test was run.
+     - ``windows-check-final.log``, ``windows-embedded-check-final.log``
+   * - Implementation rules
+     - 653 source files checked; zero violations. ``git diff --check`` also passes.
+     - ``rules.log``
+   * - GDS and API
+     - Native strict HTML and PDF builds pass. GDS: 16 HTML pages, 1,030 internal links;
+       API: 30 pages, 19,398 links. No missing files or anchors in either.
+     - ``gds-*-final.log``, ``gds-links.log``, ``api-*-final.log``
+   * - Book inspection
+     - Six GDS books have 15, 18, 29, 14, 9, and 21 pages. The API book has 309. Fonts are
+       embedded; no text lies outside page bounds. Sampled rendered pages and the GDS HTML
+       header were inspected.
+     - ``qa/pdf-qa.json``, ``qa/api-qa.json``, rendered contact sheets
+   * - Allocation-before-expansion repro
+     - The 60-million-character template with ``--budget=4`` exits 3 at 14,008 KiB peak RSS,
+       about 13.7 MiB. Its report identifies ``_templates/layout.html:1`` and suggests
+       ``--budget=256`` or ``--memory=disk``.
+     - ``budget-rss.log``, ``budget.err``
+   * - Sphinx comparison probe
+     - 43 pinned roots attempted; 41 compare, two fail in the reference build. Remaining
+       documented differences persist. The maxdepth diagnostic difference improves from four
+       to zero.
+     - ``sphinx-normalized.txt``, ``evidence-summary.json``
 
 The Sphinx probe uses Sphinx 9.1.0, Docutils 0.22.4, and Pygments 2.19.2 only as a test
 reference. Guidedog's documentation builds do not run that Python toolchain. This comparison

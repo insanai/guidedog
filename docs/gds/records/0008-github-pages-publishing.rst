@@ -72,12 +72,12 @@ states were sound and are kept. Four parts would not have worked as written:
      - Push with Git's smart HTTP protocol: one ``git-receive-pack`` request carries a
        pack of every object the branch lacks and the update from the observed commit
        to the new one. receive-pack applies an update only while the reference still
-       has its old ID: a true compare-and-swap. ``lib/git`` writes the objects and
+       has its old ID: a true compare-and-swap. ``gd-git`` writes the objects and
        messages; no git program runs.
    * - A "thin embedded renderer" links the project engine into ``guidedog-pages``.
-     - A second full engine (Typst, Graphviz, tree-sitter) to build, qualify, and ship,
-       unlike ``dsc``, which builds with the installed ``guidedog``.
-     - ``guidedog-pages`` builds with the installed ``guidedog``, as ``dsc`` does.
+     - A second full engine (Typst, Graphviz, tree-sitter) to build, qualify, and ship.
+     - ``guidedog-pages`` builds with the installed ``guidedog``; linked into ``guidedog``,
+       the publisher uses the host's own build.
        ``guidedog publish`` builds with its own engine and gives the frozen site to the
        publisher. One engine; the publisher links none.
    * - Freeze the output "under the build coordinator's output lock".
@@ -164,27 +164,39 @@ Programs and libraries
 
    * - Part
      - What it does
-   * - ``lib/git``
+   * - ``gd-git``
      - Git object IDs, trees from a list of files, commits, packs (zlib), and the
        receive-pack advertisement, request, and report. No networking, no git program.
-   * - ``lib/fetch``
+       ``PackWriter`` removes an unfinished pack when it is dropped.
+   * - ``gd-fetch``
      - ``send``: any HTTP method, headers, a body in memory or streamed from a file,
        bounded answers, cancellation, and no redirects (an ``Authorization`` header
-       reaches only the URL it was meant for). libcurl, and WinHTTP on Windows.
-   * - ``lib/pages``
-     - The ``pages`` publisher of ``lib/plugins``: configuration, credential stores,
+       reaches only the URL it was meant for). HTTP and TLS run in-process (``ureq``
+       and ``rustls``), so no ``curl`` program, OpenSSL or system certificate store is
+       needed.
+   * - ``gd-pages``
+     - The ``pages`` publisher of ``gd-plugins``: configuration, credential stores,
        bindings, journals, locks, the GitHub client, the device flow, and the
-       publication itself.
+       publication itself. It also adds ``guidedog publish pages`` (guided) and
+       ``guidedog pages workflow`` to ``guidedog``.
    * - ``guidedog-pages``
-     - The command (``lib/pages/command``); started with ``--guidedog-protocol``, it
-       serves GDS 0009's process protocol instead.
+     - The command (``cmd/guidedog-pages`` over ``gd_pages::command``); started with
+       ``--guidedog-protocol``, it serves GDS 0009's process protocol instead.
    * - ``guidedog publish``
-     - Builds with the engine, freezes, and drives the registered ``pages`` program.
+     - Builds with the engine, freezes, and drives the ``pages`` publisher, linked in or
+       registered.
 
-``lib/pages`` imports ``lib/fetch``, ``lib/git``, ``lib/plugins``, and ``lib/toml``,
-and nothing of the document engine. Registration is explicit: ``guidedog plugin
-register pages PATH``. Neither a project nor a working directory selects code, and a
-normal build never starts a publisher.
+``gd-pages`` depends on ``gd-fetch``, ``gd-git``, ``gd-plugins``, and ``gd-toml``, and
+nothing of the document engine. A publisher is either linked into the ``guidedog`` binary
+or registered explicitly: ``guidedog plugin register pages PATH``. Neither a project nor
+a working directory selects code, and a normal build never starts a publisher.
+
+Credentials stay in the system's store. On Linux and other Unix desktops the Secret
+Service is reached through the ``secret-tool`` program with the token on standard input
+and output, never on a command line. macOS uses the Keychain and Windows the Credential
+Manager through small FFI modules. There is never a plaintext fallback, and ``Secret``
+zeroes itself on drop. Settings are plain data (``Settings``, ``Roots``), so only code,
+never the environment, can point a release away from GitHub.
 
 Configuration and binding
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -387,7 +399,7 @@ Watching and recovery
 source folder (paths, sizes, and times of its files, without build output, caches,
 and hidden folders such as ``.git``) every half second, and publishes once the
 sources have been quiet for ``debounce_ms``, or ``max_wait_ms`` after the first
-change. Each round has an arena of its own, so a long watch does not grow. A failed
+change. Each round frees what it made, so a long watch does not grow. A failed
 build or publication is reported, and the site stays as it was. A refused or missing
 token pauses publication without opening a browser. Network failures are retried
 after 2, 4, 8, 16, and 32 seconds. Ctrl+C stops it between steps; a push already sent
@@ -410,8 +422,8 @@ git program, no shell, and no credential helper; the token goes in an
 ``Authorization`` header of two requests to github.com. A future transport must keep
 the same transaction and credential contracts.
 
-Building with the installed ``guidedog`` keeps one engine and one qualification, as
-``dsc`` does; ``guidedog publish`` offers the in-process build to those who prefer it.
+Building with the installed ``guidedog`` keeps one engine and one qualification;
+``guidedog publish`` offers the in-process build to those who prefer it.
 A private build folder freezes a generation without a lock in the build coordinator;
 a copy covers sites built elsewhere.
 
@@ -450,7 +462,7 @@ Acceptance criteria and implementation status
 ---------------------------------------------
 
 Guidedog 0.6.0 ships ``guidedog-pages`` in the ``guidedog`` archives and the Homebrew
-formula, beside ``guidedog`` and ``dsc``.
+formula, beside ``guidedog``.
 
 .. list-table:: Criteria and evidence
    :header-rows: 1
@@ -458,14 +470,13 @@ formula, beside ``guidedog`` and ``dsc``.
 
    * - Criterion
      - Status
-   * - Native Odin, explicit ownership, checked bounds and allocations, bounded HTTP,
-       cancellation, no Python.
-     - Done. ``lib/plugins`` refuses each allocation of a publication in turn; the
-       suites run under AddressSanitizer on Linux and macOS; ``tests/no_python_test``.
+   * - Explicit ownership, checked bounds, bounded HTTP, cancellation, no Python.
+     - Done. Ownership and bounds are Rust's; HTTP answers are bounded by
+       ``Options::max_bytes`` and the timeout; ``builds_run_without_python``.
    * - A fresh site, a changed site, byte-identical output that writes nothing,
        removed files, underscore paths.
      - Done, against a real ``git receive-pack`` behind a local GitHub stand-in
-       (``lib/pages/fake_test.odin``); ``git fsck --strict`` checks every push.
+       (``crates/gd-pages/tests/publish.rs``); ``git fsck --strict`` checks every push.
    * - Concurrent writers, a branch of other work, lost answers, journals, failed and
        pending deployments.
      - Done in the same tests: conflict, adoption, lost-before and lost-after, recover,
@@ -473,7 +484,7 @@ formula, beside ``guidedog`` and ``dsc``.
    * - Unbound, renamed, re-created, and default-branch targets; another account.
      - Done.
    * - The same outcomes linked in and through the process protocol.
-     - Done: the ``guidedog-pages`` program, driven through ``lib/plugins``, publishes
+     - Done: the ``guidedog-pages`` program, driven through ``gd-plugins``, publishes
        as the linked publisher does.
    * - Device flow: pending, slow down, success; denial, expiry, cancellation.
      - Done against the stand-in. The release ships no app: an app registered by the
@@ -532,42 +543,6 @@ in the qualification. Whether it does on every plan, or the deployments API is n
 as a second source, is still to be seen. Enterprise Server, custom domains, and forward
 rollback each need their own qualification.
 
-Implementation in Rust
-----------------------
-
-GDS 0011 moves the implementation to Rust. Both routes, the configuration, bindings,
-commands, outcomes and exit statuses (0, 1, 2, 4, 6, 7, 130) are unchanged.
-
-.. list-table:: Where the publisher lives in Rust
-   :header-rows: 1
-   :widths: 30 70
-
-   * - Odin
-     - Rust
-   * - ``lib/git``
-     - ``gd-git``: objects, trees, commits, packs (``PackWriter`` removes an unfinished
-       pack on drop), receive-pack messages.
-   * - ``lib/fetch``
-     - ``gd-fetch``: the ``curl`` program with an argument vector instead of libcurl and
-       WinHTTP. Headers go to curl in a private file (``--header @file``, mode 0600,
-       removed after the request), never on its command line; the body on its stdin.
-   * - ``lib/pages``, ``lib/pages/command``
-     - ``gd-pages`` (the ``pages`` publisher of ``gd-plugins``) and
-       ``cmd/guidedog-pages``.
-
-Credentials: on Linux and other Unix desktops the Secret Service is reached through the
-``secret-tool`` program with the token on standard input and output, keeping the Odin
-schema's attributes so existing tokens are found. macOS uses the Keychain and Windows the
-Credential Manager through small FFI modules. There is never a plaintext fallback, and
-``Secret`` zeroes itself on drop. Package globals became plain data (``Settings``,
-``Roots``), so only code, never the environment, can point a release away from GitHub.
-``guidedog-pages workflow`` writes or checks the GitHub Actions workflow of the second
-route; ``gd-cli`` is planned to offer the guided ``guidedog publish pages`` and
-``guidedog pages workflow`` over the same library.
-
-The acceptance evidence above, including the GitHub.com run of 2026-10-13, was made with
-the Odin implementation and stays as history; the Rust crates carry the stand-in tests.
-
 Review history
 --------------
 
@@ -581,9 +556,8 @@ built with the installed ``guidedog`` instead of a linked engine, froze a privat
 folder instead of an output lock that does not exist, and made the device-flow app a
 build setting. The record now describes the implementation.
 
-2026-10-15: the implementation moved from Odin to Rust (GDS 0011). Added
-"Implementation in Rust"; the decisions, evidence and lifecycle above are kept as
-they were recorded.
+2026-10-15: the guided ``guidedog publish pages`` and ``guidedog pages workflow`` join the
+commands, linked into ``guidedog``.
 
 References
 ----------
@@ -601,7 +575,7 @@ References
 * `GitHub App user tokens <https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-user-access-token-for-a-github-app>`_.
 * `GitHub Pages limits <https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits>`_.
 * ``docs/manual/howto/github-pages.rst``, both routes, step by step.
-* ``lib/pages``, ``lib/git``, ``lib/fetch``, and ``lib/pages/command``.
+* ``crates/gd-pages``, ``crates/gd-git``, ``crates/gd-fetch``, and ``cmd/guidedog-pages``.
 
 .. rubric:: Lifecycle event
 
@@ -626,9 +600,3 @@ References
    docs/gds/evidence/plugin-acceptance-20261014.rst;
    docs/manual/evidence/plugin-review-20261014.md; successful 0.6.2 release run
    38434657070.
-
-.. rubric:: Implementation revision, 2026-10-15
-
-The implementation moved from Odin to Rust; see GDS 0011 and the section
-"Implementation in Rust". This is an implementation revision. It does not change
-this record's review state or assert new acceptance evidence.

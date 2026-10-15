@@ -22,8 +22,7 @@ It aims for clear operation, predictable output, and useful diagnostics. Sphinx 
 specification. Guidedog keeps what Sphinx's users rely on: the project layout
 ``guidedog quickstart`` creates, ``guidedog build html`` and ``guidedog build pdf`` in the
 project folder, ``toctree``, cross-references, domains, the index, glossaries, numbered
-figures, conditional content, and stable link anchors. It designs the rest idiomatically
-in Odin: declarative ``conf.toml`` in place of executed ``conf.py``, declared object types in
+figures, conditional content, and stable link anchors. It designs the rest in its own way: declarative ``conf.toml`` in place of executed ``conf.py``, declared object types in
 place of Python extensions, static analysis of source code in place of importing it,
 typed data and explicit state in place of runtime hooks. Where Sphinx's way is worse,
 Guidedog differs and says so in the support matrix. Typst is the PDF layer: the book
@@ -51,7 +50,7 @@ Principles
 ~~~~~~~~~~
 
 
-- **Capability, not imitation.** Supported authoring features follow Odin's idioms.
+- **Capability, not imitation.** Supported authoring features follow Guidedog's own design.
   Arbitrary Python configuration and extensions remain outside the support boundary.
 - **Data over code.** Settings and object declarations are checked data. Python
   configuration is never executed. Trusted PDF templates run in Typst;
@@ -63,7 +62,7 @@ Principles
   memory is bounded.
 - **Migrate, don't emulate.** Guidedog is a new system that supports Sphinx projects,
   with caveats. Sphinx fidelity is pursued so existing projects build, but it is not the
-  final goal. Where Odin's idioms conflict with Sphinx's Python runtime (executed
+  final goal. Where Guidedog's design conflicts with Sphinx's Python runtime (executed
   ``conf.py``, extensions' ``setup()``, event hooks, imported code), Guidedog does not
   emulate the runtime: it has a migration path instead. ``guidedog migrate`` converts
   literal settings and declared object types today. Later, a Guidedoc migration plugin
@@ -75,13 +74,13 @@ Principles
 
 This record supersedes the project builder of GDS 0002 (``init``, ``build``, ``serve`` over
 ``guidedog.toml``). GDS 0003 retains a conservative ``partial`` RST conformance descriptor;
-benchmark matches do not promise every possible input. The allocation-free Guidedoc
+benchmark matches do not promise every possible input. The Guidedoc
 engine, its readers and renderers, the Typst backends, and ``guidedog convert`` remain.
 
 In scope: the command line, the project layout, ``conf.toml``, builders, the build
 environment and incremental builds, the supported native directives and roles, the
 Python, C, C++, JavaScript, reStructuredText, and standard domains, generated index,
-search, and module-index pages, Odin's Jinja implementation, CommonMark and supported
+search, and module-index pages, Guidedog's own Jinja implementation, CommonMark and supported
 MyST syntax, Graphviz graphs, static Python autodoc (source parsed, never run), themes,
 and the PDF book. Complete Sphinx compatibility is not a goal. Out of scope: executing
 ``conf.py``, other Python extensions (autosummary, napoleon, viewcode, and projects' own),
@@ -396,7 +395,7 @@ the two folders.
   it exists nothing published has changed; once it exists the commit is decided.
 + The switch: where the system can, the output folder and the next are exchanged in one
   step (``renameat2`` with ``RENAME_EXCHANGE`` on Linux, ``renamex_np`` with ``RENAME_SWAP`` on
-  macOS; ``host.exchange``), so a reader of the output folder, ``guidedog serve`` or a web
+  macOS; ``gd_host::exchange``), so a reader of the output folder, ``guidedog serve`` or a web
   server, sees the old tree or the new one and never neither. Elsewhere (Windows, file
   systems without the operation) it is two renames, output to ``.html.old``, next to
   output. Then each record is renamed over its destination, the renamed folders are
@@ -419,7 +418,7 @@ permission) is a failed step, never "not there".
 - When undoing fails too, the journal stays and the problem is `PUBLICATION NOT
   FINISHED`; the summary says the publication is not finished and that the next build
   finishes or undoes it, never that the previous output is unchanged
-  (``Build_Result.unsettled``).
+  (``BuildResult::unsettled``).
 - A build begins by settling every journal it finds, of any builder, before it reads
   anything: it finishes the commit; if a step cannot be done, it undoes it, warns
   (``INTERRUPTED PUBLICATION UNDONE``), and goes on. A journal whose new output is gone is
@@ -440,14 +439,14 @@ has its own manifest, so existing filenames in a different output cannot stand i
 that target's published contents. Journal paths are absolute and resolve existing
 ancestors before naming a not-yet-created output, so recovery is independent of the
 next process's working directory and filesystem aliases. An output cannot contain the
-source directory. ``lib/project/build_paths_test.odin`` checks fresh and unchanged direct
+source directory. ``crates/gd-outputs/src/tests/paths.rs`` checks fresh and unchanged direct
 outputs, interrupted commits, destination isolation, and that source-layout refusal.
 
 **Cost: the spare output.** Linking every file of the site into a fresh folder, and
 removing the replaced tree afterwards, costs two system calls per file for every
 publishing build. On an 1,800-document project (3,692 entries; Linux, ZFS, 32 cores),
 this made a one-page rebuild 0.62 s instead of 0.43 s, then 0.55 s with folder listings
-that open no entry (``host.list_folder``, from ``readdir``'s names, types and inodes). So the
+that open no entry (``gd_host::list_folder``, from ``readdir``'s names, types and inodes). So the
 replaced output is not removed. After an exchange it is already in the next folder;
 after two renames it is moved there once the journal is gone. It is the spare output the
 next build writes into and completes. It shares every unchanged file with the live
@@ -471,12 +470,12 @@ waits for storage. Flushing each output as it was written made a clean build of
 CPython's documentation spend about 91% of its time in 1,742 flushes on ZFS. The
 journal needs only that what it names is durable before it is saved, and that its
 renames are durable before it is removed. So files are written without flushing
-(``host.write_unsynced``, still through a temporary file and a rename): the files this
+(``gd_host::write_unsynced``, still through a temporary file and a rename): the files this
 build wrote, the files copied where they could not be linked, the ``.next`` and
 ``.previous`` records, and the objects and search words a build reads. Just before the
-journal is saved, ``host.sync_all`` flushes all of them with a small pool of threads
+journal is saved, ``gd_host::sync_all`` flushes all of them with a small pool of threads
 (``SYNC_WORKERS``, 8), then each folder of the next output whose names changed, up to the
-build folder, once (``host.folders_of``). A linked file is the published file itself,
+build folder, once (``gd_host::folders_of``). A linked file is the published file itself,
 already durable. After the switch and the record renames, the build folder and the
 records' folder are flushed, then the journal is removed. Windows flushes no folder (it
 keeps names durable itself). A crash before the journal is durable leaves the previous
@@ -487,10 +486,9 @@ the output folder, ``environment.json``, and ``<builder>.outputs.json`` as they 
 and inodes included (``an_unchanged_build_rewrites_no_records``). A build that changes
 only records leaves the output folder in place.
 
-**Memory.** Every allocation a commit makes before it is decided is checked; one the
-system refuses is ``OUT OF MEMORY`` (a problem that allocates nothing), and nothing is
-published. After the decision, the steps allocate only paths' C strings and state reads
-in stack buffers, and a refused one is a failed step, undone as above.
+**Memory.** A commit prepares what it needs (paths, messages, room for its warnings)
+before it is decided, so a failure there publishes nothing. After the decision, its steps
+are renames, links and removals whose failure is a failed step, undone as above.
 
 **Alternatives rejected.**
 
@@ -516,7 +514,7 @@ instead. The next folder and the previous one are siblings of the output folder,
 by their leading dot (``.html.next``, ``.html.old``); ``guidedog clean`` removes them with the
 rest of the build folder. With ``-o``, they are beside the named folder.
 
-**Tests.** ``lib/project/commit_test.odin``: the review's case, a page change with a file
+**Tests.** ``crates/gd-outputs/src/tests/commit.rs``: the review's case, a page change with a file
 that becomes a folder, and back (``a_file_that_becomes_a_folder_is_published``); a failure
 injected at every step of the commit, with the folders exchanged and with two renames,
 leaves the previous output and records byte for byte, and the next build publishes
@@ -528,53 +526,80 @@ build folder made read-only just before the switch
 read-only after it, so that undoing fails too
 (``a_commit_that_cannot_be_undone_is_finished_by_the_next_build``); an unreadable journal
 (``an_unreadable_journal_is_discarded``); a user's file in the way; and the spare output
-never leaking. ``tests/publication_test.odin`` runs the review's case and the real
+never leaking. ``tests/integration/tests/projects/publication.rs`` runs the review's case and the real
 failures through the ``guidedog`` command, checking the summary's words.
 
 Cross-document resolution happens between reading and writing, in the host: a pass over
 each document replaces toctrees with navigation lists and cross-references with links,
-using the environment. Documents are still read and rendered by the allocation-free
-engine.
+using the environment. Documents are still read and rendered by the Guidedoc engine.
 
 
 Project surface
 ^^^^^^^^^^^^^^^
 
 
-The builder is a library, ``lib/project``, and ``lib/cli`` is only its command line, so any
-Odin program can drive a build the way ``guidedog`` does. Its public surface is a handful
-of verbs over a loaded project and the types they take and return; everything else
+The builder is a library, ``gd-project``, and ``gd-cli`` is only its command line, so any
+Rust program can drive a build the way ``guidedog`` does. Its public surface is a handful
+of functions over a loaded project and the types they take and return; everything else
 (discovery, reading, the environment and its cache, cross-references, templates,
-search, graphs, intersphinx, and the commit journal) lives in ``#+private`` files.
+search, graphs, intersphinx, and the commit journal) lives in the stage crates below and
+is private to them.
 
-- **Projects**: ``Project``, ``Load_Options``, ``load(dir, options, registry)``, ``unload``, and
-  ``CONFIG_FILE``. ``Config`` is public with the types of its fields (``Pdf_Document``,
-  ``Flag_Or_Name``, ``Intersphinx_Project``, ``Toml_Value``), since a caller may change the
-  loaded configuration before a build, as ``--typst`` does.
-- **Building**: ``Builder_Kind`` with ``BUILDER_NAMES`` and ``builder_named`` (the LaTeX
-  builders' names map to ``pdf``), ``Build_Options``, ``BUILD_BUDGET``, ``build_limits`` (for
-  refusing options before a build), ``build``, ``Build_Result``, ``release``, and ``clean``.
-- **Preview, translations, starting, migrating**: ``Server`` and ``serve``; ``Intl_Options``,
-  ``intl_update``, ``intl_stat``, ``Intl_File``, ``Intl_Action``; ``Quickstart_Options`` and
-  ``quickstart``; ``Migrate_Options``, ``migrate``, ``Migrate_Result``.
-- **Paths**: ``absolute`` (against the working directory, without resolving a folder that
-  does not exist yet) and ``join``.
+- **Projects**: ``LoadOptions``, ``Project`` (its ``config``, ``warnings``, ``settings``,
+  ``registry``, and ``plugins``), and ``load``. ``Config`` is public with the types of its
+  fields, since a caller may change the loaded configuration before a build, as
+  ``--typst`` does.
+- **Building**: ``BuilderKind`` (the LaTeX builders' names map to ``pdf``),
+  ``BuildOptions``, ``build_limits`` (for refusing options before a build),
+  ``build(&Project, BuilderKind, &BuildOptions) -> BuildResult``, and ``clean``.
+- **Preview**: ``watch_roots`` and ``Project::watch_skip``, what ``guidedog serve`` watches.
 
-Ownership is explicit and uniform. ``load`` keeps the project in an arena of its own that
-``unload`` frees, the text of a failed load's problem included, so ``unload`` is called
-either way. ``build`` allocates the build and its result in an arena of the result's own,
-which ``release`` frees; a build never changes the project (it works on a copy of the
-configuration), so one project may be built any number of times. ``serve`` answers each
-request in an arena it frees, and its rebuild callback releases the results of the
-builds it runs. The other verbs allocate their results in ``context.allocator``, which a
-caller on the heap makes an arena. ``load``, ``build``, ``release``, ``unload`` leaves nothing
-live. Failure is a ``host.Problem`` with a non-zero exit, never a panic.
+A build borrows the loaded project and works on a copy of its configuration, so a build
+cannot change the project, and one project may be built any number of times. Results
+are owned values, freed when dropped. Failure is a ``Problem`` with a non-zero exit, never
+a panic. ``crates/gd-project/README.md`` lists the surface with a complete program. The
+host services the builder uses are GDS 0003's host surface.
 
-``lib/project/README.md`` lists the surface with a complete program. The doc-comment test
-requires a contract comment on each exported procedure, and ``tests/surface_test.odin``
-requires each exported name to appear in the cheat sheet, so the surface cannot grow
-without being advertised. The host services the builder uses are GDS 0003's host
-surface.
+The builder is split into crates by stage:
+
+.. list-table:: The project builder
+   :header-rows: 1
+   :widths: 22 78
+
+   * - Crate
+     - Responsibility
+   * - ``gd-conf``
+     - ``conf.toml``: loading, ``-D`` overrides, checks with "Did you mean", trust
+       (``confine_untrusted``, readable roots); one static table of settings.
+   * - ``gd-migrate``
+     - ``conf.py`` to ``conf.toml``, and ``quickstart``.
+   * - ``gd-env``
+     - Discovery, the environment cache, the content-addressed object store, builder
+       kinds, and the plugin run of a build.
+   * - ``gd-outputs``
+     - Generations, the manifest, the commit journal, publication, recovery, ``clean``.
+   * - ``gd-resolve``
+     - Project tables and cross-reference resolution without the AST, intersphinx,
+       inventories, and the index data.
+   * - ``gd-link``
+     - The link pass and page rendering, navigation, graphs.
+   * - ``gd-read``
+     - Incremental reading and the autodoc, odindoc and rustdoc hosts.
+   * - ``gd-intl``, ``gd-i18n``
+     - Build catalogs, the gettext builder, ``intl update`` and ``stat``; document
+       translation.
+   * - ``gd-site``, ``gd-book``
+     - ``html``, ``dirhtml``, ``singlehtml``; ``pdf`` and ``text``.
+   * - ``gd-serve``
+     - The preview server and watching.
+   * - ``gd-project``, ``gd-cli``
+     - The coordinator (load, build, clean) and the command line.
+
+Each source is read once (hashed, parsed only if changed). Incremental builds verify
+traces with dynamic dependencies and early cutoff, with ``Generation::reuse`` as the
+single cutoff point. Rendering runs on ``gd_host::run_workers``, each worker owning a
+workspace; outputs are emitted in docname order. Publication uses ``gd_host::Stage`` and
+``exchange``; cleanup uses ``gd_host::remove_path``.
 
 
 Directives and roles
@@ -613,7 +638,7 @@ Themes, templates, and pages
 
 
 HTML pages are produced from ``layout.html``, a Jinja template. Guidedog includes its own
-implementation of the Jinja language in Odin, ``lib/jinja``: inheritance with ``extends``
+implementation of the Jinja language, ``gd-jinja``: inheritance with ``extends``
 and ``block``, ``include``, ``import``, macros and ``call``, ``set``, ``with``, ``filter``, loops with
 the ``loop`` variable, conditionals, whitespace control, autoescaping, and Jinja's
 built-in filters, tests, and globals. Page variables include ``project``, ``title``, ``body``,
@@ -635,13 +660,13 @@ Code highlighting
 
 
 Sphinx highlights code with Pygments, a Python library. Guidedog has its own highlighter,
-written in Odin as a separate library (``lib/highlight``): 35 languages with Pygments'
+written as a separate library (``gd-highlight``): 35 languages with Pygments'
 aliases, including console sessions, tracebacks, reStructuredText, and Graphviz, and
 Pygments' token classes, so stylesheets written for Pygments apply. ``highlight_language``
 (with Sphinx's ``default``, which falls back to plain text when code is not Python) and
 ``pygments_style`` work as in Sphinx, with every built-in Pygments style; ``pygments_dark_style``
 styles dark pages. Unset, they are the theme's: ``default`` and ``github-dark``. Renderers
-call it through ``Render_Options.highlighter``; the book keeps Typst's highlighting. No
+call it through ``RenderOptions::highlighter``; the book keeps Typst's highlighting. No
 Python runs at any point: not in builds, not in highlighting.
 
 
@@ -686,8 +711,8 @@ Graphs
 
 ``sphinx.ext.graphviz``'s markup (``graphviz``, ``graph``, and ``digraph``, with every option)
 and Markdown's `````dot`` fences draw graphs. Graphviz is linked into Guidedog through
-graphdog, an Odin library over Graphviz's C library that can also be built statically;
-no ``dot`` program runs. Each graph is laid out once per distinct source and cached as an
+``gd-graphdog``, a library over Graphviz's C library, linked from the system; no ``dot``
+program runs. Each graph is laid out once per distinct source and cached as an
 SVG in ``_images``; pages show it as an image and the book embeds the same SVG. A captioned
 graph is a numbered figure. A graph with an error stays code, with a warning at its line.
 
@@ -716,9 +741,9 @@ Intersphinx
 URI and a location, or a list of locations; ``""`` stands for None, the ``objects.inv`` at
 the target URI. ``intersphinx_cache_limit``, ``intersphinx_timeout``,
 ``intersphinx_disabled_reftypes`` (default ``std:doc``), and ``intersphinx_resolve_self``
-work as in Sphinx. Inventories are fetched over HTTP(S) through libcurl (``lib/fetch``)
-and cached in ``.doctrees/__intersphinx_cache__``; they are read and written by
-``lib/inventory``. Resolution follows Sphinx's: a reference the project cannot resolve is
+work as in Sphinx. Inventories are fetched over HTTP(S) by ``gd-fetch`` (in-process, with
+its own TLS) and cached in ``.doctrees/__intersphinx_cache__``; they are read and written
+by ``gd-inventory``. Resolution follows Sphinx's: a reference the project cannot resolve is
 looked up by the object types its role names, then qualified by its scope; a target
 ``name:target`` looks only in that inventory; labels and terms match ignoring case; and
 the ``:external:`` roles resolve only through the inventories. Guidedog's own
@@ -794,23 +819,23 @@ The supported project surface is implemented. Evidence is retained in
 - The Docutils comparison matches 98 of 98 corpus sources. CommonMark passes
   all 652 pinned examples. MyST matches 215 of 218 reader fixtures and 8 of
   10 Sphinx fixtures; the recorded differences remain explicit.
-- The Sphinx 9.1 differential harness exists in ``tools/sphinxdiff`` and runs
+- The Sphinx 9.1 differential harness exists (``cargo xtask sphinxdiff``) and runs
   against Sphinx's own roots. C++ identifiers, inventories, and grouped info
   fields are implemented. The fixture notes explain the remaining differences.
 - Publication switches complete generations with recovery and rollback tests.
   Unchanged outputs are reused; ``-W`` is decided before publication.
 - Generation cleanup uses a checked iterative postorder work list. Files and
   symbolic links are unlinked without traversing their targets. ``clean`` refuses
-  a symlink root. Tests cover ordinary files, outside links, and refusal of each
-  cleanup allocation; deep trees do not require recursive stack growth.
-- Project allocations are charged before allocation. Load failures return a
-  memory problem and remain safe to unload. Native compiler allocations have
-  a separate operating-system boundary; GDS 0004 specifies it.
+  a symlink root. Tests cover ordinary files and outside links; deep trees do not
+  require recursive stack growth.
+- The files a build reads are charged to its budget before they are read.
+  Native compiler allocations have a separate operating-system boundary; GDS 0004
+  specifies it.
 - The preview fingerprints watched paths and file metadata. Deletions, edits
   below a future timestamp, shared extra files, and removed roots are covered
   by regression tests. Generated outputs and hidden runtime state are excluded.
 - The manual exercises native PO/POT translation in six languages. The API
-  project exercises the Odin domain without executing the documented code.
+  project (``docs/api``) exercises the Rust domain without compiling the documented code.
 - CPython, Django, and Flask clean and unchanged HTML/PDF runs are repeated
   remotely. Their extension warnings remain measured limitations.
 - The embedded and external Typst backends share the reproducible-date contract.
@@ -831,63 +856,10 @@ Open questions
 The plugin interface is left to a later record.
 
 
-Implementation in Rust
-----------------------
+Rust API documentation
+~~~~~~~~~~~~~~~~~~~~~~
 
-GDS 0011 moves the implementation to Rust. Commands, options, the project layout,
-``conf.toml`` keys, builders, directives, roles and outputs are those specified above;
-``lib/project`` is split into crates by stage:
-
-.. list-table:: The project builder in Rust
-   :header-rows: 1
-   :widths: 22 78
-
-   * - Crate
-     - Responsibility
-   * - ``gd-conf``
-     - ``conf.toml``: loading, ``-D`` overrides, checks with "Did you mean", trust
-       (``confine_untrusted``, readable roots); one static table of settings.
-   * - ``gd-migrate``
-     - ``conf.py`` to ``conf.toml``, and ``quickstart``.
-   * - ``gd-env``
-     - Discovery, the environment cache, the content-addressed object store, builder
-       kinds, and the plugin run of a build.
-   * - ``gd-outputs``
-     - Generations, the manifest, the commit journal, publication, recovery, ``clean``.
-   * - ``gd-resolve``
-     - Project tables and cross-reference resolution without the AST, intersphinx,
-       inventories, and the index data.
-   * - ``gd-link``
-     - The link pass and page rendering, navigation, graphs.
-   * - ``gd-read``
-     - Incremental reading and the autodoc, odindoc and rustdoc hosts.
-   * - ``gd-intl``, ``gd-i18n``
-     - Build catalogs, the gettext builder, ``intl update`` and ``stat``; document
-       translation.
-   * - ``gd-site``, ``gd-book``
-     - ``html``, ``dirhtml``, ``singlehtml``; ``pdf`` and ``text``.
-   * - ``gd-serve``
-     - The preview server and watching.
-   * - ``gd-project``, ``gd-cli``
-     - The coordinator (load, build, clean) and the command line.
-
-Notable redesigns: a build borrows the loaded project and clones its configuration, so a
-build cannot change the project; each source is read once (hashed, parsed only if
-changed); callbacks become traits and closures; sentinels become ``Option``; lookup
-strings become a typed ``Lookup``; JSON goes through ``gd-json``. Incremental builds keep
-the semantics above (verifying traces with dynamic dependencies and early cutoff), with
-``Generation::reuse`` as the single cutoff point; the environment version is bumped, so
-Odin caches are rebuilt. Rendering runs on ``gd_host::run_workers``, each worker owning a
-workspace; outputs are emitted in docname order. Publication uses ``gd_host::Stage`` and
-``exchange``; cleanup uses ``gd_host::remove_path``.
-
-New keys, Rust-only: ``rust_autoapi_crates``, ``rust_autoapi_root``,
-``rust_autoapi_options``, ``rust_autoapi_member_order``,
-``rust_autoapi_add_toctree_entry`` and ``rust_autoapi_generate_api_docs`` select crates
-for ``gd-rustdoc`` (GDS 0011).
-
-Status on 2026-10-15: these crates are being ported; the evidence above describes the
-Odin implementation and must be re-established in Rust (GDS 0011).
+``gd-rustdoc`` documents Rust crates as GDS 0005 documents Odin packages. It reads a crate's source with tree-sitter (nothing is compiled or run), follows the module tree as rustc does, applies rustdoc's visibility and inlining rules, and writes reStructuredText of the ``rust`` domain: one page per documented module plus an index. Roles link by full ``::`` path, with the Python domain's ``~`` and leading ``.``. Projects select crates with ``rust_autoapi_crates``, ``rust_autoapi_root``, ``rust_autoapi_options``, ``rust_autoapi_member_order``, ``rust_autoapi_add_toctree_entry`` and ``rust_autoapi_generate_api_docs``. ``--untrusted`` drops the crate folders from the readable roots.
 
 Review history
 --------------
@@ -904,7 +876,7 @@ by document; links are confined like paths; ``--untrusted``; search indexes ever
 
 30 September 2026, direction: Guidedog is not a drop-in replacement. The earlier wording
 aspired to everything Sphinx does. On 11 October the maintainer clarified the target:
-an independent modern documentation system, designed idiomatically in Odin, with no
+an independent modern documentation system, designed on its own terms, with no
 Python execution and no goal of complete Sphinx compatibility. Sphinx is inspiration,
 not the specification. Comparisons measure useful authoring behavior and differences.
 
@@ -921,21 +893,17 @@ clean build of 400 documents on ZFS: about 9 s to 0.45 s); a damaged or unusable
 cached object is read again from its source instead of failing every build until ``-E``;
 and the build summary says whether the output was published.
 
-30 September 2026, API review: ``lib/project`` exports only the project verbs and the
-types they take ("Project surface"); its implementation files are private, every
-exported procedure states its contract, and its cheat sheet lists the surface.
+30 September 2026, API review: the builder exports only the project verbs and the
+types they take ("Project surface"); its implementation is private, every public item
+states its contract, and its cheat sheet lists the surface.
 
-
-2026-10-15: the implementation moved from Odin to Rust (GDS 0011). Added
-"Implementation in Rust"; the decisions, evidence and lifecycle above are kept as
-they were recorded.
 
 References
 ----------
 
 
 - GDS 0002, Guidedog: CLI and documentation toolchain.
-- GDS 0003, Guidedoc: Odin conversion engine.
+- GDS 0003, Guidedoc: the conversion engine.
 - `Sphinx documentation <https://www.sphinx-doc.org/en/master/>`_ (9.1).
 - `reStructuredText specification <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html>`_.
 
@@ -959,13 +927,7 @@ References
 ::
 
    2026-10-11: accepted -> committed. Current supported design implemented; beta
-   review fixes and limitations are recorded. Native library and integration
-   suites with leak checks; sanitizer and embedded-backend validation;
+   review fixes and limitations are recorded. Library and integration
+   suites; embedded-backend validation;
    docs/manual/evidence/beta-review-20261011.md. Deferred features are not
    claimed as implemented.
-
-.. rubric:: Implementation revision, 2026-10-15
-
-The implementation moved from Odin to Rust; see GDS 0011 and the section
-"Implementation in Rust". This is an implementation revision. It does not change
-this record's review state or assert new acceptance evidence.

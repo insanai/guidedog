@@ -7,7 +7,7 @@
 use std::ffi::OsString;
 use std::fs;
 use std::io;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use crate::publish::is_not_found;
 use crate::sys;
@@ -175,4 +175,25 @@ pub fn exchange(a: &Path, b: &Path) -> io::Result<bool> {
 /// Removes a file, a link, or an empty folder.
 pub fn remove_path(path: &Path) -> io::Result<()> {
     if fs::symlink_metadata(path)?.is_dir() { fs::remove_dir(path) } else { fs::remove_file(path) }
+}
+
+/// Removes what is at `path`, a whole folder tree included, without following a
+/// symbolic link: a link is removed, never what it leads to. A work list replaces
+/// recursion, so deep folders cannot exhaust the stack. Nothing at `path` is nothing
+/// to remove; the first entry that cannot be removed ends it with its error.
+pub fn remove_tree(path: &Path) -> io::Result<()> {
+    // (path, its entries are gone): a folder is visited twice, before and after them.
+    let mut pending: Vec<(PathBuf, bool)> = vec![(path.to_path_buf(), false)];
+    while let Some((entry, emptied)) = pending.pop() {
+        let Some(kind) = path_type(&entry)? else { continue };
+        if kind != PathKind::Folder || emptied {
+            remove_path(&entry)?;
+            continue;
+        }
+        let entries = list_folder(&entry)?;
+        pending.try_reserve(entries.len() + 1).map_err(|_| io::ErrorKind::OutOfMemory)?;
+        pending.push((entry.clone(), true));
+        pending.extend(entries.into_iter().map(|e| (entry.join(e.name), false)));
+    }
+    Ok(())
 }

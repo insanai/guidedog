@@ -55,7 +55,7 @@ pub use files::{
 };
 pub use folders::{
     FolderEntry, Identity, PathKind, exchange, identity, link_file, list_folder, path_type,
-    remove_path,
+    remove_path, remove_tree,
 };
 pub use interrupt::{
     cancel_probe, catch_interrupts, clear_interrupt, request_interrupt, was_interrupted,

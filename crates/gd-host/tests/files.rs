@@ -60,6 +60,16 @@ fn project_rooted_names_and_byte_order_marks() {
     assert_eq!(text.as_deref(), Ok("shared"));
 }
 
+#[test]
+fn text_that_is_not_utf8_has_its_own_status() {
+    let root = TempDir::new("latin1");
+    fs::write(root.join("latin1.rst"), b"caf\xe9\n").expect("written");
+    let files = Files::new(&[&root.0]);
+    let from = root.join("main.rst");
+    let from = from.to_str().unwrap_or_default();
+    assert_eq!(status(&files, from, "latin1.rst"), Err(ResourceStatus::NotUtf8));
+}
+
 // Files are charged to a ledger before they are read: an include the budget cannot hold
 // is refused as over the budget, and read_file says so.
 #[test]
@@ -248,4 +258,19 @@ fn link_file_links_without_copying() {
     assert!(names.iter().all(|e| e.kind != PathKind::Folder));
     assert_eq!(remove_path(&to).ok(), Some(()));
     assert_eq!(path_type(&to).ok(), Some(None));
+}
+
+#[test]
+fn remove_tree_removes_folders_but_not_what_links_lead_to() {
+    let dir = TempDir::new("remove-tree");
+    let kept = dir.write("kept/file.txt", "kept");
+    dir.write("tree/a/b/c.txt", "c");
+    dir.write("tree/top.txt", "top");
+    #[cfg(unix)]
+    std::os::unix::fs::symlink(dir.join("kept"), dir.join("tree/a/link")).expect("link");
+    assert_eq!(remove_tree(&dir.join("tree")).ok(), Some(()));
+    assert_eq!(path_type(&dir.join("tree")).ok(), Some(None));
+    assert_eq!(fs::read_to_string(&kept).ok().as_deref(), Some("kept"));
+    // Nothing there is nothing to remove.
+    assert_eq!(remove_tree(&dir.join("tree")).ok(), Some(()));
 }

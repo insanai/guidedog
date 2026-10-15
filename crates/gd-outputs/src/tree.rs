@@ -1,36 +1,15 @@
-//! Removing output trees (remove.odin) and clearing the spare output.
+//! Clearing the spare output; removing whole trees is `gd_host::remove_tree`.
 
 use std::io;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use gd_host::PathKind;
-
-/// Removes what is at `path`, a whole folder tree included, without following a
-/// symbolic link: a link is removed, never what it leads to. A work list replaces
-/// recursion, so deep folders cannot exhaust the stack. Nothing at `path` is nothing
-/// to remove; the first entry that cannot be removed ends it with its error.
-pub(crate) fn remove_tree(path: &Path) -> io::Result<()> {
-    // (path, its entries are gone): a folder is visited twice, before and after them.
-    let mut pending: Vec<(PathBuf, bool)> = vec![(path.to_path_buf(), false)];
-    while let Some((entry, emptied)) = pending.pop() {
-        let Some(kind) = gd_host::path_type(&entry)? else { continue };
-        if kind != PathKind::Folder || emptied {
-            gd_host::remove_path(&entry)?;
-            continue;
-        }
-        let entries = gd_host::list_folder(&entry)?;
-        pending.try_reserve(entries.len() + 1).map_err(|_| io::ErrorKind::OutOfMemory)?;
-        pending.push((entry.clone(), true));
-        pending.extend(entries.into_iter().map(|e| (entry.join(e.name), false)));
-    }
-    Ok(())
-}
 
 /// Removes a file or folder of the spare output. A folder there that a user made
 /// read-only, when it was part of the output, is made writable again first: the spare
 /// output is Guidedog's own, and its folders are not the output's.
 pub(crate) fn remove_spare(path: &Path, kind: PathKind) -> io::Result<()> {
-    match remove_tree(path) {
+    match gd_host::remove_tree(path) {
         Err(e) if e.kind() == io::ErrorKind::PermissionDenied => {
             if let Some(parent) = path.parent() {
                 make_writable(parent);
@@ -38,7 +17,7 @@ pub(crate) fn remove_spare(path: &Path, kind: PathKind) -> io::Result<()> {
             if kind == PathKind::Folder {
                 unlock(path);
             }
-            remove_tree(path)
+            gd_host::remove_tree(path)
         }
         other => other,
     }

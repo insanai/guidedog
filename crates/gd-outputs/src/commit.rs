@@ -14,7 +14,7 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 
 use gd_env::{Environment, ObjectStore};
-use gd_host::{PathKind, Problem, io_problem};
+use gd_host::{PathKind, Problem, io_problem, remove_tree};
 use gd_report::Report;
 
 use crate::generation::Generation;
@@ -22,7 +22,6 @@ use crate::journal::{Journal, PendingFile};
 use crate::next::{Completed, complete_next};
 use crate::paths::{OutputPaths, contained};
 use crate::publish::{finish_commit, remove_previous_output};
-use crate::tree::remove_tree;
 
 /// The commit journal's format version.
 pub const JOURNAL_VERSION: u32 = 2;

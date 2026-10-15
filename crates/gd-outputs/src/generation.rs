@@ -20,7 +20,7 @@ use gd_host::{Budget, Ledger, PathKind, Problem};
 use gd_report::Report;
 
 use crate::commit::abandon_paths;
-use crate::manifest::{Manifest, OutputRecord};
+use crate::manifest::{Manifest, OutputRecord, SITE_UNIT};
 use crate::paths::{OutputPaths, unit_path};
 use crate::publish::finish_interrupted_commits;
 use crate::tree::{make_writable, remove_spare};
@@ -46,6 +46,10 @@ pub struct Generation {
     pub(crate) staged: HashSet<String>,
     pub(crate) failed: usize,
     pub(crate) unsettled: bool,
+    /// Units besides the site unit written, and kept, this generation.
+    written: usize,
+    reused: usize,
+    site_written: bool,
 }
 
 impl Generation {
@@ -78,6 +82,9 @@ impl Generation {
             staged: HashSet::new(),
             failed: 0,
             unsettled: false,
+            written: 0,
+            reused: 0,
+            site_written: false,
         })
     }
 
@@ -113,6 +120,9 @@ impl Generation {
             return None;
         }
         let kept = old.clone();
+        if key != SITE_UNIT {
+            self.reused += 1;
+        }
         self.current.units.insert(key.to_string(), kept);
         self.current.units.get(key)
     }
@@ -127,6 +137,23 @@ impl Generation {
     /// How many units could not be written.
     pub fn failed_count(&self) -> usize {
         self.failed
+    }
+
+    /// How many units besides the site unit ([`SITE_UNIT`]) were written this
+    /// generation: the pages, books or indexes the build's summary counts.
+    pub fn written_count(&self) -> usize {
+        self.written
+    }
+
+    /// How many units besides the site unit were kept from the previous generation.
+    pub fn reused_count(&self) -> usize {
+        self.reused
+    }
+
+    /// Whether the site unit was written (a builder whose whole output is that unit,
+    /// such as singlehtml or gettext, writes only it).
+    pub fn is_site_written(&self) -> bool {
+        self.site_written
     }
 
     /// Whether a decided commit is neither finished nor undone (the next build settles
@@ -396,6 +423,11 @@ impl Unit<'_> {
             lookups: record.lookups,
             reports: record.reports,
         };
+        if self.key == SITE_UNIT {
+            self.generation.site_written = true;
+        } else {
+            self.generation.written += 1;
+        }
         self.generation.current.units.insert(std::mem::take(&mut self.key), unit);
     }
 

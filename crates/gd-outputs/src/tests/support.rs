@@ -109,7 +109,7 @@ impl Project {
     }
 
     pub fn remove(&self, rel: &str) {
-        let _ = crate::tree::remove_tree(&self.dir.join(rel));
+        let _ = gd_host::remove_tree(&self.dir.join(rel));
     }
 
     pub fn out(&self) -> PathBuf {

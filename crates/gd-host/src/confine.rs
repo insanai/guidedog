@@ -105,8 +105,7 @@ impl ResourceProvider for Files<'_> {
             Err(_) => return Err(ResourceStatus::Missing),
         };
         let canonical = path.to_str().ok_or(ResourceStatus::Refused)?.to_string();
-        // The core has no status for text that is not UTF-8; refusing it is the closest.
-        let text = source_text(data, &canonical).map_err(|_| ResourceStatus::Refused)?;
+        let text = source_text(data, &canonical).map_err(|_| ResourceStatus::NotUtf8)?;
         Ok(Resource { text: Arc::from(text), canonical })
     }
 }

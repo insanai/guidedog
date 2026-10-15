@@ -20,7 +20,7 @@ use std::io;
 use std::path::{Path, PathBuf};
 
 use gd_env::Digest;
-use gd_host::{Budget, PathKind, Problem, io_problem};
+use gd_host::{Budget, PathKind, Problem, io_problem, remove_tree};
 use gd_report::Report;
 
 use crate::commit::{CommitState, JOURNAL_SUFFIX, keep_spare};
@@ -28,7 +28,6 @@ use crate::hook::{StepAction, renames_only, step_action};
 use crate::journal::{Journal, PendingFile};
 use crate::manifest::{Manifest, load_text};
 use crate::paths::MANIFEST_SUFFIX;
-use crate::tree::remove_tree;
 
 /// The code of the problem a commit stopped by a test hook gives.
 const STOPPED: &str = "build.commit-stopped";

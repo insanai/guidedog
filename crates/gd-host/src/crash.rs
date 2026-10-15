@@ -101,7 +101,7 @@ pub(crate) fn crash_parts(args: &[String], version: &str, tracker: &str) -> (Str
         "\n\nThis is a bug in Guidedog, not in your documents. Guidedog prepares its\n\
          output in a staging folder and publishes it only when a command succeeds, so\n\
          nothing this command wrote was published: the previous output is as it was.\n\
-         If a guidedog gds command crashed, run guidedog gds recover --rollback to\n\
+         If a guidedog dsc command crashed, run guidedog dsc recover --rollback to\n\
          restore the records it was changing.\n\n\
          Run the same command again. If it crashes again, report it ",
     );

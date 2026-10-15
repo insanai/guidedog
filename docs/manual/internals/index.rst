@@ -26,6 +26,7 @@ conformance evidence.
    rst-inline-ledger
    commonmark-conformance
    commonmark-ledger
+   cpp-declarations
 
 .. toctree::
    :maxdepth: 1

@@ -1,0 +1,702 @@
+member	char c	=>	ok	c__c	_CPPv21c	_CPPv31c	_CPPv41c	c	c			char c	char c	c|||c|c|1c|1c|1c	false
+member	signed char c	=>	ok	c__signed-c	_CPPv21c	_CPPv31c	_CPPv41c	c	c			signed char c	signed char c	c|||c|c|1c|1c|1c	false
+member	unsigned char c	=>	ok	c__unsigned-c	_CPPv21c	_CPPv31c	_CPPv41c	c	c			unsigned char c	unsigned char c	c|||c|c|1c|1c|1c	false
+member	short s	=>	ok	s__short	_CPPv21s	_CPPv31s	_CPPv41s	s	s			short s	short s	s|||s|s|1s|1s|1s	false
+member	unsigned short int s	=>	ok	s__unsigned-short-i	_CPPv21s	_CPPv31s	_CPPv41s	s	s			unsigned short int s	unsigned short int s	s|||s|s|1s|1s|1s	false
+member	long long int x	=>	ok	x__l-l-i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			long long int x	long long int x	x|||x|x|1x|1x|1x	false
+member	unsigned long long y	=>	ok	y__unsigned-l-l	_CPPv21y	_CPPv31y	_CPPv41y	y	y			unsigned long long y	unsigned long long y	y|||y|y|1y|1y|1y	false
+member	long double ld	=>	ok	ld__l-double	_CPPv22ld	_CPPv32ld	_CPPv42ld	ld	ld			long double ld	long double ld	ld|||ld|ld|2ld|2ld|2ld	false
+member	_Complex double cd	=>	ok	cd___Complex-double	_CPPv22cd	_CPPv32cd	_CPPv42cd	cd	cd			_Complex double cd	_Complex double cd	cd|||cd|cd|2cd|2cd|2cd	false
+member	_Imaginary long double il	=>	ok	il___Imaginary-l-double	_CPPv22il	_CPPv32il	_CPPv42il	il	il			_Imaginary long double il	_Imaginary long double il	il|||il|il|2il|2il|2il	false
+member	__int128 i	=>	ok	i____int128	_CPPv21i	_CPPv31i	_CPPv41i	i	i			__int128 i	__int128 i	i|||i|i|1i|1i|1i	false
+member	unsigned __int128 i	=>	ok	i__unsigned-__int128	_CPPv21i	_CPPv31i	_CPPv41i	i	i			unsigned __int128 i	unsigned __int128 i	i|||i|i|1i|1i|1i	false
+member	char8_t c	=>	ok	c__char8_t	_CPPv21c	_CPPv31c	_CPPv41c	c	c			char8_t c	char8_t c	c|||c|c|1c|1c|1c	false
+member	char16_t c	=>	ok	c__char16_t	_CPPv21c	_CPPv31c	_CPPv41c	c	c			char16_t c	char16_t c	c|||c|c|1c|1c|1c	false
+member	char32_t c	=>	ok	c__char32_t	_CPPv21c	_CPPv31c	_CPPv41c	c	c			char32_t c	char32_t c	c|||c|c|1c|1c|1c	false
+member	wchar_t w	=>	ok	w__wchar_t	_CPPv21w	_CPPv31w	_CPPv41w	w	w			wchar_t w	wchar_t w	w|||w|w|1w|1w|1w	false
+member	bool b	=>	ok	b__b	_CPPv21b	_CPPv31b	_CPPv41b	b	b			bool b	bool b	b|||b|b|1b|1b|1b	false
+member	auto a	=>	ok	a__auto	_CPPv21a	_CPPv31a	_CPPv41a	a	a			auto a	auto a	a|||a|a|1a|1a|1a	false
+member	signed s	=>	ok	s__signed	_CPPv21s	_CPPv31s	_CPPv41s	s	s			signed s	signed s	s|||s|s|1s|1s|1s	false
+member	unsigned u	=>	ok	u__unsigned	_CPPv21u	_CPPv31u	_CPPv41u	u	u			unsigned u	unsigned u	u|||u|u|1u|1u|1u	false
+member	float f	=>	ok	f__float	_CPPv21f	_CPPv31f	_CPPv41f	f	f			float f	float f	f|||f|f|1f|1f|1f	false
+member	double d	=>	ok	d__double	_CPPv21d	_CPPv31d	_CPPv41d	d	d			double d	double d	d|||d|d|1d|1d|1d	false
+member	long  long    int spaced	=>	ok	spaced__l-l-i	_CPPv26spaced	_CPPv36spaced	_CPPv46spaced	spaced	spaced			long long int spaced	long long int spaced	spaced|||spaced|spaced|6spaced|6spaced|6spaced	false
+member	int unsigned long weird	=>	ok	weird__unsigned-l-i	_CPPv25weird	_CPPv35weird	_CPPv45weird	weird	weird			int unsigned long weird	int unsigned long weird	weird|||weird|weird|5weird|5weird|5weird	false
+member	long short bad	=>	invalid
+member	signed unsigned bad	=>	invalid
+member	unsigned double bad	=>	invalid
+member	long long long bad	=>	invalid
+member	__float128 q	=>	ok	q____float128	_CPPv21q	_CPPv31q	_CPPv41q	q	q			__float128 q	__float128 q	q|||q|q|1q|1q|1q	false
+member	std::nullptr_t n	=>	ok	n__std::nullptr_t	_CPPv21n	_CPPv31n	_CPPv41n	n	n			std::nullptr_t n	std::nullptr_t n	n|||n|n|1n|1n|1n	false
+member	int a	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int a	int a	a|||a|a|1a|1a|1a	false
+member	int a = 42	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int a = 42	int a = 42	a|||a|a|1a|1a|1a	false
+member	int a{42}	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int a{42}	int a{42}	a|||a|a|1a|1a|1a	false
+member	int a = {1, 2,}	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int a = {1, 2,}	int a = {1, 2,}	a|||a|a|1a|1a|1a	false
+member	static int a	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			static int a	static int a	a|||a|a|1a|1a|1a	false
+member	extern int a	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			extern int a	extern int a	a|||a|a|1a|1a|1a	false
+member	mutable int a	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			mutable int a	mutable int a	a|||a|a|1a|1a|1a	false
+member	thread_local int a	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			thread_local int a	thread_local int a	a|||a|a|1a|1a|1a	false
+member	constinit int a	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			constinit int a	constinit int a	a|||a|a|1a|1a|1a	false
+member	constexpr int a = 1	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			constexpr int a = 1	constexpr int a = 1	a|||a|a|1a|1a|1a	false
+member	inline int a	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			inline int a	inline int a	a|||a|a|1a|1a|1a	false
+member	register int a	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			register int a	register int a	a|||a|a|1a|1a|1a	false
+member	const int a	=>	ok	a__iC	_CPPv21a	_CPPv31a	_CPPv41a	a	a			const int a	const int a	a|||a|a|1a|1a|1a	false
+member	int const a	=>	ok	a__iC	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int const a	int const a	a|||a|a|1a|1a|1a	false
+member	volatile int a	=>	ok	a__iV	_CPPv21a	_CPPv31a	_CPPv41a	a	a			volatile int a	volatile int a	a|||a|a|1a|1a|1a	false
+member	const volatile int a	=>	ok	a__iVC	_CPPv21a	_CPPv31a	_CPPv41a	a	a			volatile const int a	volatile const int a	a|||a|a|1a|1a|1a	false
+member	int *a	=>	ok	a__iP	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int *a	int *a	a|||a|a|1a|1a|1a	false
+member	int **a	=>	ok	a__iPP	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int **a	int **a	a|||a|a|1a|1a|1a	false
+member	int *const a	=>	ok	a__iPC	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int *const a	int *const a	a|||a|a|1a|1a|1a	false
+member	int *volatile a	=>	ok	a__iPV	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int *volatile a	int *volatile a	a|||a|a|1a|1a|1a	false
+member	int *const volatile a	=>	ok	a__iPVC	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int *volatile const a	int *volatile const a	a|||a|a|1a|1a|1a	false
+member	int &a	=>	ok	a__iR	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int &a	int &a	a|||a|a|1a|1a|1a	false
+member	int &&a	=>	ok	a__iRR	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int &&a	int &&a	a|||a|a|1a|1a|1a	false
+member	int a[]	=>	ok	a__iA	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int a[]	int a[]	a|||a|a|1a|1a|1a	false
+member	int a[42]	=>	ok	a__iA	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int a[42]	int a[42]	a|||a|a|1a|1a|1a	false
+member	int a[N][M]	=>	ok	a__iAA	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int a[N][M]	int a[N][M]	a|||a|a|1a|1a|1a	false
+member	int a : 3	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int a : 3	int a : 3	a|||a|a|1a|1a|1a	false
+member	int a : 3 = 1	=>	ok	a__i	_CPPv21a	_CPPv31a	_CPPv41a	a	a			int a : 3 = 1	int a : 3 = 1	a|||a|a|1a|1a|1a	false
+member	int (*p)(double)	=>	ok	-	_CPPv21p	_CPPv31p	_CPPv41p	p	p			int (*p)(double)	int (*p)(double)	p|||p|p|1p|1p|1p	false
+member	int (*p)[3]	=>	ok	-	_CPPv21p	_CPPv31p	_CPPv41p	p	p			int (*p)[3]	int (*p)[3]	p|||p|p|1p|1p|1p	false
+member	int (&r)[3]	=>	ok	-	_CPPv21r	_CPPv31r	_CPPv41r	r	r			int (&r)[3]	int (&r)[3]	r|||r|r|1r|1r|1r	false
+member	int A::*p	=>	ok	-	_CPPv21p	_CPPv31p	_CPPv41p	p	p			int A::* p	int A::* p	p|||p|p|1p|1p|1p	false
+member	int (A::*p)(double) const	=>	ok	-	_CPPv21p	_CPPv31p	_CPPv41p	p	p			int (A::* p)(double) const	int (A::* p)(double) const	p|||p|p|1p|1p|1p	false
+member	int (A::* const p)()	=>	ok	-	_CPPv21p	_CPPv31p	_CPPv41p	p	p			int (A::*const p)()	int (A::*const p)()	p|||p|p|1p|1p|1p	false
+member	void (*const f)()	=>	ok	-	_CPPv21f	_CPPv31f	_CPPv41f	f	f			void (*const f)()	void (*const f)()	f|||f|f|1f|1f|1f	false
+member	std::string name	=>	ok	name__ss	_CPPv24name	_CPPv34name	_CPPv44name	name	name			std::string name	std::string name	name|||name|name|4name|4name|4name	false
+member	std::vector<int> v	=>	ok	v__std::vector:i:	_CPPv21v	_CPPv31v	_CPPv41v	v	v			std::vector<int> v	std::vector<int> v	v|||v|v|1v|1v|1v	false
+member	std::map<std::string, int> m	=>	ok	m__std::map:ss.i:	_CPPv21m	_CPPv31m	_CPPv41m	m	m			std::map<std::string, int> m	std::map<std::string, int> m	m|||m|m|1m|1m|1m	false
+member	A<B<C>> abc	=>	ok	abc__A:B:C::	_CPPv23abc	_CPPv33abc	_CPPv43abc	abc	abc			A<B<C>> abc	A<B<C>> abc	abc|||abc|abc|3abc|3abc|3abc	false
+member	A<int, 42> x	=>	ok	x__A:i.42:	_CPPv21x	_CPPv31x	_CPPv41x	x	x			A<int, 42> x	A<int, 42> x	x|||x|x|1x|1x|1x	false
+member	A<(1 > 2)> x	=>	ok	x__A:(1->-2):	_CPPv21x	_CPPv31x	_CPPv41x	x	x			A<(1 > 2)> x	A<(1 > 2)> x	x|||x|x|1x|1x|1x	false
+member	A<1 + 2> x	=>	ok	x__A:1-+-2:	_CPPv21x	_CPPv31x	_CPPv41x	x	x			A<1 + 2> x	A<1 + 2> x	x|||x|x|1x|1x|1x	false
+member	A<sizeof(int)> x	=>	ok	x__A:sizeof(int):	_CPPv21x	_CPPv31x	_CPPv41x	x	x			A<sizeof(int)> x	A<sizeof(int)> x	x|||x|x|1x|1x|1x	false
+member	A<T...> x	=>	ok	x__A:TDp:	_CPPv21x	_CPPv31x	_CPPv41x	x	x			A<T...> x	A<T...> x	x|||x|x|1x|1x|1x	false
+member	A<int...> x	=>	ok	x__A:iDp:	_CPPv21x	_CPPv31x	_CPPv41x	x	x			A<int...> x	A<int...> x	x|||x|x|1x|1x|1x	false
+member	T::template X<int> x	=>	ok	x__T::X:i:	_CPPv21x	_CPPv31x	_CPPv41x	x	x			T::template X<int> x	T::template X<int> x	x|||x|x|1x|1x|1x	false
+member	typename T::type x	=>	ok	x__T::type	_CPPv21x	_CPPv31x	_CPPv41x	x	x			typename T::type x	typename T::type x	x|||x|x|1x|1x|1x	false
+member	class C c	=>	ok	c__C	_CPPv21c	_CPPv31c	_CPPv41c	c	c			class C c	class C c	c|||c|c|1c|1c|1c	false
+member	struct S s	=>	ok	s__S	_CPPv21s	_CPPv31s	_CPPv41s	s	s			struct S s	struct S s	s|||s|s|1s|1s|1s	false
+member	enum E e	=>	ok	e__E	_CPPv21e	_CPPv31e	_CPPv41e	e	e			enum E e	enum E e	e|||e|e|1e|1e|1e	false
+member	union U u	=>	ok	u__U	_CPPv21u	_CPPv31u	_CPPv41u	u	u			union U u	union U u	u|||u|u|1u|1u|1u	false
+member	decltype(a) x	=>	ok	-	_CPPv21x	_CPPv31x	_CPPv41x	x	x			decltype(a) x	decltype(a) x	x|||x|x|1x|1x|1x	false
+member	decltype(auto) x	=>	ok	-	_CPPv21x	_CPPv31x	_CPPv41x	x	x			decltype(auto) x	decltype(auto) x	x|||x|x|1x|1x|1x	false
+member	decltype(a + b) x	=>	ok	-	_CPPv21x	_CPPv31x	_CPPv41x	x	x			decltype(a + b) x	decltype(a + b) x	x|||x|x|1x|1x|1x	false
+member	auto x = 1	=>	ok	x__auto	_CPPv21x	_CPPv31x	_CPPv41x	x	x			auto x = 1	auto x = 1	x|||x|x|1x|1x|1x	false
+member	C auto x	=>	ok	x__C	_CPPv21x	_CPPv31x	_CPPv41x	x	x			C auto x	C auto x	x|||x|x|1x|1x|1x	false
+member	C decltype(auto) x	=>	ok	x__C	_CPPv21x	_CPPv31x	_CPPv41x	x	x			C decltype(auto) x	C decltype(auto) x	x|||x|x|1x|1x|1x	false
+member	int @a::b	=>	ok	-	-	_CPPv3NUt1_a1bE	_CPPv4NUt1_a1bE	@a::b	[anonymous]::b			int @a::b	int [anonymous]::b	@a|||[anonymous]|-|-|Ut1_a|Ut1_a;b|||b|b|1b|1b|1b	false
+member	@a x	=>	ok	-	_CPPv21x	_CPPv31x	_CPPv41x	x	x			@a x	[anonymous] x	x|||x|x|1x|1x|1x	false
+member	int x [[deprecated]]	=>	ok	x__iA	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x[[deprecated]]	int x[[deprecated]]	x|||x|x|1x|1x|1x	true
+member	[[nodiscard]] int x	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			[[nodiscard]] int x	[[nodiscard]] int x	x|||x|x|1x|1x|1x	false
+member	__attribute__((unused)) int x	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			__attribute__((unused)) int x	__attribute__((unused)) int x	x|||x|x|1x|1x|1x	false
+member	__attribute__((aligned(16))) int x	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			__attribute__((aligned(16))) int x	__attribute__((aligned(16))) int x	x|||x|x|1x|1x|1x	false
+member	int *[[a]] p	=>	ok	p__iP	_CPPv21p	_CPPv31p	_CPPv41p	p	p			int *[[a]] p	int *[[a]] p	p|||p|p|1p|1p|1p	false
+member	int &[[a]] r	=>	ok	r__iR	_CPPv21r	_CPPv31r	_CPPv41r	r	r			int &[[a]] r	int &[[a]] r	r|||r|r|1r|1r|1r	false
+member	public int x	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x	int x	x|||x|x|1x|1x|1x	false
+member	protected int x	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			protected int x	protected int x	x|||x|x|1x|1x|1x	false
+member	private int x	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			private int x	private int x	x|||x|x|1x|1x|1x	false
+member	int x;	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x;	int x;	x|||x|x|1x|1x|1x	false
+member	template<> int A<int>::x	=>	ok	-	_CPPv2IEN1AIiE1xE	_CPPv3IEN1AIiE1xE	_CPPv4IEN1AIiE1xE	A<int>::x	A<int>::x			template<> int A<int>::x	template<> int A<int>::x	A|<int>|template<> |A<int>|A:i:|1AIiE|1AIiE|1AIiE;x|||x|x|1x|1x|1x	false
+member	template int A<int>::x	=>	ok	-	_CPPv2IEN1AIiE1xE	_CPPv3IEN1AIiE1xE	_CPPv4IEN1AIiE1xE	A<int>::x	A<int>::x			template<> int A<int>::x	template<> int A<int>::x	A|<int>|template<> |A<int>|A:i:|1AIiE|1AIiE|1AIiE;x|||x|x|1x|1x|1x	false
+member	template<typename T> int A<T>::x	=>	ok	-	_CPPv2I0EN1A1xE	_CPPv3I0EN1A1xE	_CPPv4I0EN1A1xE	A::x	A::x			template<typename T> int A<T>::x	template<typename T> int A<T>::x	A||template<typename T> |A|A|1A|1A|1A;x|||x|x|1x|1x|1x	false
+member	int x = a ? b : c	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a ? b : c	int x = a ? b : c	x|||x|x|1x|1x|1x	false
+member	int x = a = b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a = b	int x = a = b	x|||x|x|1x|1x|1x	false
+member	int x = (a, b)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = (a, b)	int x = (a, b)	x|||x|x|1x|1x|1x	false
+member	int x = a << b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a << b	int x = a << b	x|||x|x|1x|1x|1x	false
+member	int x = a <=> b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a <=> b	int x = a <=> b	x|||x|x|1x|1x|1x	false
+member	int x = !a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = !a	int x = !a	x|||x|x|1x|1x|1x	false
+member	int x = not a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = not a	int x = not a	x|||x|x|1x|1x|1x	false
+member	int x = ~a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = ~a	int x = ~a	x|||x|x|1x|1x|1x	false
+member	int x = compl a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = compl a	int x = compl a	x|||x|x|1x|1x|1x	false
+member	int x = -a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = -a	int x = -a	x|||x|x|1x|1x|1x	false
+member	int x = +a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = +a	int x = +a	x|||x|x|1x|1x|1x	false
+member	int x = *a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = *a	int x = *a	x|||x|x|1x|1x|1x	false
+member	int x = &a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = &a	int x = &a	x|||x|x|1x|1x|1x	false
+member	int x = ++a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = ++a	int x = ++a	x|||x|x|1x|1x|1x	false
+member	int x = --a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = --a	int x = --a	x|||x|x|1x|1x|1x	false
+member	int x = a++	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a++	int x = a++	x|||x|x|1x|1x|1x	false
+member	int x = a--	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a--	int x = a--	x|||x|x|1x|1x|1x	false
+member	int x = a[1]	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a[1]	int x = a[1]	x|||x|x|1x|1x|1x	false
+member	int x = a.b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a.b	int x = a.b	x|||x|x|1x|1x|1x	false
+member	int x = a->b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a->b	int x = a->b	x|||x|x|1x|1x|1x	false
+member	int x = a.*b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a .* b	int x = a .* b	x|||x|x|1x|1x|1x	false
+member	int x = a->*b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a ->* b	int x = a ->* b	x|||x|x|1x|1x|1x	false
+member	int x = f()	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = f()	int x = f()	x|||x|x|1x|1x|1x	false
+member	int x = f(1, 2)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = f(1, 2)	int x = f(1, 2)	x|||x|x|1x|1x|1x	false
+member	int x = f{1}	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = f{1}	int x = f{1}	x|||x|x|1x|1x|1x	false
+member	int x = this	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = this	int x = this	x|||x|x|1x|1x|1x	false
+member	int x = nullptr	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = nullptr	int x = nullptr	x|||x|x|1x|1x|1x	false
+member	int x = true	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = true	int x = true	x|||x|x|1x|1x|1x	false
+member	int x = false	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = false	int x = false	x|||x|x|1x|1x|1x	false
+member	int x = 0x1F	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = 0x1F	int x = 0x1F	x|||x|x|1x|1x|1x	false
+member	int x = 0b1010	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = 0b1010	int x = 0b1010	x|||x|x|1x|1x|1x	false
+member	int x = 017	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = 017	int x = 017	x|||x|x|1x|1x|1x	false
+member	int x = 1'000'000	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = 1'000'000	int x = 1'000'000	x|||x|x|1x|1x|1x	false
+member	int x = 42u	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = 42u	int x = 42u	x|||x|x|1x|1x|1x	false
+member	int x = 42UL	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = 42UL	int x = 42UL	x|||x|x|1x|1x|1x	false
+member	int x = 42ll	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = 42ll	int x = 42ll	x|||x|x|1x|1x|1x	false
+member	int x = 42LLu	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = 42LLu	int x = 42LLu	x|||x|x|1x|1x|1x	false
+member	double x = 1.5	=>	ok	x__double	_CPPv21x	_CPPv31x	_CPPv41x	x	x			double x = 1.5	double x = 1.5	x|||x|x|1x|1x|1x	false
+member	double x = 1.5e10	=>	ok	x__double	_CPPv21x	_CPPv31x	_CPPv41x	x	x			double x = 1.5e10	double x = 1.5e10	x|||x|x|1x|1x|1x	false
+member	double x = .5	=>	ok	x__double	_CPPv21x	_CPPv31x	_CPPv41x	x	x			double x = .5	double x = .5	x|||x|x|1x|1x|1x	false
+member	double x = 1.	=>	ok	x__double	_CPPv21x	_CPPv31x	_CPPv41x	x	x			double x = 1.	double x = 1.	x|||x|x|1x|1x|1x	false
+member	double x = 1.5f	=>	ok	x__double	_CPPv21x	_CPPv31x	_CPPv41x	x	x			double x = 1.5f	double x = 1.5f	x|||x|x|1x|1x|1x	false
+member	double x = 0x1.8p3	=>	ok	x__double	_CPPv21x	_CPPv31x	_CPPv41x	x	x			double x = 0x1.8p3	double x = 0x1.8p3	x|||x|x|1x|1x|1x	false
+member	double x = 1.5_km	=>	ok	x__double	_CPPv21x	_CPPv31x	_CPPv41x	x	x			double x = 1.5_km	double x = 1.5_km	x|||x|x|1x|1x|1x	false
+member	int x = 42_km	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = 42_km	int x = 42_km	x|||x|x|1x|1x|1x	false
+member	const char *x = "hello"	=>	ok	x__cCP	_CPPv21x	_CPPv31x	_CPPv41x	x	x			const char *x = "hello"	const char *x = "hello"	x|||x|x|1x|1x|1x	false
+member	const char *x = "a\"b"	=>	ok	x__cCP	_CPPv21x	_CPPv31x	_CPPv41x	x	x			const char *x = "a\"b"	const char *x = "a\"b"	x|||x|x|1x|1x|1x	false
+member	const char *x = "hi"_s	=>	ok	x__cCP	_CPPv21x	_CPPv31x	_CPPv41x	x	x			const char *x = "hi"_s	const char *x = "hi"_s	x|||x|x|1x|1x|1x	false
+member	char x = 'a'	=>	ok	x__c	_CPPv21x	_CPPv31x	_CPPv41x	x	x			char x = 'a'	char x = 'a'	x|||x|x|1x|1x|1x	false
+member	char x = u8'a'	=>	ok	x__c	_CPPv21x	_CPPv31x	_CPPv41x	x	x			char x = u8'a'	char x = u8'a'	x|||x|x|1x|1x|1x	false
+member	char16_t x = u'a'	=>	ok	x__char16_t	_CPPv21x	_CPPv31x	_CPPv41x	x	x			char16_t x = u'a'	char16_t x = u'a'	x|||x|x|1x|1x|1x	false
+member	char32_t x = U'a'	=>	ok	x__char32_t	_CPPv21x	_CPPv31x	_CPPv41x	x	x			char32_t x = U'a'	char32_t x = U'a'	x|||x|x|1x|1x|1x	false
+member	wchar_t x = L'a'	=>	ok	x__wchar_t	_CPPv21x	_CPPv31x	_CPPv41x	x	x			wchar_t x = L'a'	wchar_t x = L'a'	x|||x|x|1x|1x|1x	false
+member	char x = '\n'	=>	ok	x__c	_CPPv21x	_CPPv31x	_CPPv41x	x	x			char x = '\n'	char x = '\n'	x|||x|x|1x|1x|1x	false
+member	char x = '\x41'	=>	ok	x__c	_CPPv21x	_CPPv31x	_CPPv41x	x	x			char x = '\x41'	char x = '\x41'	x|||x|x|1x|1x|1x	false
+member	char x = '\101'	=>	ok	x__c	_CPPv21x	_CPPv31x	_CPPv41x	x	x			char x = '\101'	char x = '\101'	x|||x|x|1x|1x|1x	false
+member	char x = '\\'	=>	ok	x__c	_CPPv21x	_CPPv31x	_CPPv41x	x	x			char x = '\\'	char x = '\\'	x|||x|x|1x|1x|1x	false
+member	char x = 'ab'	=>	ok	x__c	_CPPv21x	_CPPv31x	_CPPv41x	x	x			char x = 'ab'	char x = 'ab'	x|||x|x|1x|1x|1x	true
+member	char x = 'a'_c	=>	ok	x__c	_CPPv21x	_CPPv31x	_CPPv41x	x	x			char x = 'a'_c	char x = 'a'_c	x|||x|x|1x|1x|1x	false
+member	int x = sizeof(int)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = sizeof(int)	int x = sizeof(int)	x|||x|x|1x|1x|1x	false
+member	int x = sizeof a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = sizeof a	int x = sizeof a	x|||x|x|1x|1x|1x	false
+member	int x = sizeof...(Ts)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = sizeof...(Ts)	int x = sizeof...(Ts)	x|||x|x|1x|1x|1x	false
+member	int x = alignof(int)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = alignof(int)	int x = alignof(int)	x|||x|x|1x|1x|1x	false
+member	bool x = noexcept(f())	=>	ok	x__b	_CPPv21x	_CPPv31x	_CPPv41x	x	x			bool x = noexcept(f())	bool x = noexcept(f())	x|||x|x|1x|1x|1x	false
+member	int *x = new int	=>	ok	x__iP	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int *x = new int	int *x = new int	x|||x|x|1x|1x|1x	false
+member	int *x = new int(1)	=>	ok	x__iP	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int *x = new int(1)	int *x = new int(1)	x|||x|x|1x|1x|1x	false
+member	int *x = new int{1}	=>	ok	x__iP	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int *x = new int{1}	int *x = new int{1}	x|||x|x|1x|1x|1x	false
+member	int *x = ::new int	=>	ok	x__iP	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int *x = ::new int	int *x = ::new int	x|||x|x|1x|1x|1x	false
+member	int *x = new int[3]	=>	ok	x__iP	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int *x = new int[3]	int *x = new int[3]	x|||x|x|1x|1x|1x	false
+member	int x = delete p	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = delete p	int x = delete p	x|||x|x|1x|1x|1x	false
+member	int x = delete[] p	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = delete [] p	int x = delete [] p	x|||x|x|1x|1x|1x	false
+member	int x = ::delete p	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = ::delete p	int x = ::delete p	x|||x|x|1x|1x|1x	false
+member	int x = (int)y	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = (int)y	int x = (int)y	x|||x|x|1x|1x|1x	false
+member	int x = (int)(y)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = (int)(y)	int x = (int)(y)	x|||x|x|1x|1x|1x	false
+member	int x = static_cast<int>(y)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = static_cast<int>(y)	int x = static_cast<int>(y)	x|||x|x|1x|1x|1x	false
+member	int x = dynamic_cast<A*>(p)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = dynamic_cast<A*>(p)	int x = dynamic_cast<A*>(p)	x|||x|x|1x|1x|1x	false
+member	int x = const_cast<A&>(r)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = const_cast<A&>(r)	int x = const_cast<A&>(r)	x|||x|x|1x|1x|1x	false
+member	int x = reinterpret_cast<A*>(p)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = reinterpret_cast<A*>(p)	int x = reinterpret_cast<A*>(p)	x|||x|x|1x|1x|1x	false
+member	int x = typeid(int)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = typeid(int)	int x = typeid(int)	x|||x|x|1x|1x|1x	false
+member	int x = typeid(a)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = typeid(a)	int x = typeid(a)	x|||x|x|1x|1x|1x	false
+member	int x = (... + args)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = (... + args)	int x = (... + args)	x|||x|x|1x|1x|1x	false
+member	int x = (args + ...)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = (args + ...)	int x = (args + ...)	x|||x|x|1x|1x|1x	false
+member	int x = (0 + ... + args)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = (0 + ... + args)	int x = (0 + ... + args)	x|||x|x|1x|1x|1x	false
+member	int x = (args + ... + 0)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = (args + ... + 0)	int x = (args + ... + 0)	x|||x|x|1x|1x|1x	false
+member	int x = (args && ...)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = (args && ...)	int x = (args && ...)	x|||x|x|1x|1x|1x	false
+member	int x = int(1)	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = int(1)	int x = int(1)	x|||x|x|1x|1x|1x	false
+member	int x = A<int>::value	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = A<int>::value	int x = A<int>::value	x|||x|x|1x|1x|1x	false
+member	int x = ::a	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = ::a	int x = ::a	x|||x|x|1x|1x|1x	false
+member	int x = a + b * c - d / e % f	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a + b * c - d / e % f	int x = a + b * c - d / e % f	x|||x|x|1x|1x|1x	false
+member	int x = a | b ^ c & d	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a | b ^ c & d	int x = a | b ^ c & d	x|||x|x|1x|1x|1x	false
+member	int x = a && b || c	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a && b || c	int x = a && b || c	x|||x|x|1x|1x|1x	false
+member	int x = a and b or c	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a and b or c	int x = a and b or c	x|||x|x|1x|1x|1x	false
+member	int x = a bitand b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a bitand b	int x = a bitand b	x|||x|x|1x|1x|1x	false
+member	int x = a == b != c	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a == b != c	int x = a == b != c	x|||x|x|1x|1x|1x	false
+member	int x = a not_eq b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a not_eq b	int x = a not_eq b	x|||x|x|1x|1x|1x	false
+member	int x = a < b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a < b	int x = a < b	x|||x|x|1x|1x|1x	false
+member	int x = a <= b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a <= b	int x = a <= b	x|||x|x|1x|1x|1x	false
+member	int x = a >= b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a >= b	int x = a >= b	x|||x|x|1x|1x|1x	false
+member	int x = a > b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a > b	int x = a > b	x|||x|x|1x|1x|1x	false
+member	int x = a >> b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a >> b	int x = a >> b	x|||x|x|1x|1x|1x	false
+member	int x = a += b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a += b	int x = a += b	x|||x|x|1x|1x|1x	false
+member	int x = a and_eq b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a and_eq b	int x = a and_eq b	x|||x|x|1x|1x|1x	false
+member	int x = a xor_eq b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a xor_eq b	int x = a xor_eq b	x|||x|x|1x|1x|1x	false
+member	int x = a or_eq b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a or_eq b	int x = a or_eq b	x|||x|x|1x|1x|1x	false
+member	int x = {}	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = {}	int x = {}	x|||x|x|1x|1x|1x	false
+member	int x = {1}	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = {1}	int x = {1}	x|||x|x|1x|1x|1x	false
+member	int x = (((1)))	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = (((1)))	int x = (((1)))	x|||x|x|1x|1x|1x	false
+member	int x = f(1)(2)[3].a->b	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = f(1)(2)[3].a->b	int x = f(1)(2)[3].a->b	x|||x|x|1x|1x|1x	false
+member	int x = @#$ garbage	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = @#$ garbage	int x = @#$ garbage	x|||x|x|1x|1x|1x	true
+member	int x = a[	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = a[	int x = a[	x|||x|x|1x|1x|1x	true
+member	int x = "unterminated	=>	ok	x__i	_CPPv21x	_CPPv31x	_CPPv41x	x	x			int x = "unterminated	int x = "unterminated	x|||x|x|1x|1x|1x	true
+member	int	=>	invalid
+member	int x y	=>	invalid
+member	int x[3	=>	invalid
+var	int v	=>	ok	v__i	_CPPv21v	_CPPv31v	_CPPv41v	v	v			int v	int v	v|||v|v|1v|1v|1v	false
+var	static const std::size_t npos = -1	=>	ok	npos__std::sC	_CPPv24npos	_CPPv34npos	_CPPv44npos	npos	npos			static const std::size_t npos = -1	static const std::size_t npos = -1	npos|||npos|npos|4npos|4npos|4npos	false
+function	void f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f()	void f()	f|||f|f|1f|1f|1f	false
+function	void f(int)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f			void f(int)	void f(int)	f|||f|f|1f|1f|1f	false
+function	void f(int i)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		i	void f(int i)	void f(int i)	f|||f|f|1f|1f|1f	false
+function	void f(int i = 42)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		i	void f(int i = 42)	void f(int i = 42)	f|||f|f|1f|1f|1f	false
+function	void f(int i, double d)	=>	ok	f__i.double	_CPPv21fid	_CPPv31fid	_CPPv41fid	f	f		i,d	void f(int i, double d)	void f(int i, double d)	f|||f|f|1f|1f|1f	false
+function	void f(...)	=>	ok	f__z	_CPPv21fz	_CPPv31fz	_CPPv41fz	f	f			void f(...)	void f(...)	f|||f|f|1f|1f|1f	false
+function	void f(int, ...)	=>	ok	f__i.z	_CPPv21fiz	_CPPv31fiz	_CPPv41fiz	f	f			void f(int, ...)	void f(int, ...)	f|||f|f|1f|1f|1f	false
+function	void f(int a[])	=>	ok	f__iA	_CPPv21fA_i	_CPPv31fA_i	_CPPv41fA_i	f	f		a	void f(int a[])	void f(int a[])	f|||f|f|1f|1f|1f	false
+function	void f(int a[3])	=>	ok	f__iA	_CPPv21fA3_i	_CPPv31fAL3E_i	_CPPv41fAL3E_i	f	f		a	void f(int a[3])	void f(int a[3])	f|||f|f|1f|1f|1f	false
+function	void f(int *p)	=>	ok	f__iP	_CPPv21fPi	_CPPv31fPi	_CPPv41fPi	f	f		p	void f(int *p)	void f(int *p)	f|||f|f|1f|1f|1f	false
+function	void f(int &r)	=>	ok	f__iR	_CPPv21fRi	_CPPv31fRi	_CPPv41fRi	f	f		r	void f(int &r)	void f(int &r)	f|||f|f|1f|1f|1f	false
+function	void f(int &&r)	=>	ok	f__iRR	_CPPv21fRRi	_CPPv31fRRi	_CPPv41fRRi	f	f		r	void f(int &&r)	void f(int &&r)	f|||f|f|1f|1f|1f	false
+function	void f(const int &r)	=>	ok	f__iCR	_CPPv21fRKi	_CPPv31fRKi	_CPPv41fRKi	f	f		r	void f(const int &r)	void f(const int &r)	f|||f|f|1f|1f|1f	false
+function	void f(int (*cb)(double))	=>	ok	-	_CPPv21fPFidE	_CPPv31fPFidE	_CPPv41fPFidE	f	f		cb	void f(int (*cb)(double))	void f(int (*cb)(double))	f|||f|f|1f|1f|1f	false
+function	void f(int (&a)[3])	=>	ok	-	_CPPv21fRA3_i	_CPPv31fRAL3E_i	_CPPv41fRAL3E_i	f	f		a	void f(int (&a)[3])	void f(int (&a)[3])	f|||f|f|1f|1f|1f	false
+function	void f(void)	=>	ok	f__void	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f(void)	void f(void)	f|||f|f|1f|1f|1f	false
+function	void f(std::string s)	=>	ok	f__ss	_CPPv21fNSt6stringE	_CPPv31fNSt6stringE	_CPPv41fNSt6stringE	f	f		s	void f(std::string s)	void f(std::string s)	f|||f|f|1f|1f|1f	false
+function	void f(std::vector<int> v)	=>	ok	f__std::vector:i:	_CPPv21fNSt6vectorIiEE	_CPPv31fNSt6vectorIiEE	_CPPv41fNSt6vectorIiEE	f	f		v	void f(std::vector<int> v)	void f(std::vector<int> v)	f|||f|f|1f|1f|1f	false
+function	void f(Ts... args)	=>	ok	f__TsDp	_CPPv21fDp2Ts	_CPPv31fDp2Ts	_CPPv41fDp2Ts	f	f		args	void f(Ts... args)	void f(Ts... args)	f|||f|f|1f|1f|1f	false
+function	void f(Ts &&...args)	=>	ok	f__TsRRDp	_CPPv21fDpRR2Ts	_CPPv31fDpRR2Ts	_CPPv41fDpRR2Ts	f	f		args	void f(Ts&&... args)	void f(Ts&&... args)	f|||f|f|1f|1f|1f	false
+function	void f(int A::*p)	=>	ok	-	_CPPv21fM1Ai	_CPPv31fM1Ai	_CPPv41fM1Ai	f	f		p	void f(int A::* p)	void f(int A::* p)	f|||f|f|1f|1f|1f	false
+function	void f(int (A::*p)(double))	=>	ok	-	_CPPv21fM1AFidE	_CPPv31fM1AFidE	_CPPv41fM1AFidE	f	f		p	void f(int (A::* p)(double))	void f(int (A::* p)(double))	f|||f|f|1f|1f|1f	false
+function	void f() const	=>	ok	fC	_CPPv2NK1fEv	_CPPv3NK1fEv	_CPPv4NK1fEv	f	f			void f() const	void f() const	f|||f|f|1f|1f|1f	false
+function	void f() volatile	=>	ok	fV	_CPPv2NV1fEv	_CPPv3NV1fEv	_CPPv4NV1fEv	f	f			void f() volatile	void f() volatile	f|||f|f|1f|1f|1f	false
+function	void f() const volatile	=>	ok	fVC	_CPPv2NVK1fEv	_CPPv3NVK1fEv	_CPPv4NVK1fEv	f	f			void f() volatile const	void f() volatile const	f|||f|f|1f|1f|1f	false
+function	void f() &	=>	ok	fR	_CPPv2NR1fEv	_CPPv3NR1fEv	_CPPv4NR1fEv	f	f			void f() &	void f() &	f|||f|f|1f|1f|1f	false
+function	void f() &&	=>	ok	fO	_CPPv2NO1fEv	_CPPv3NO1fEv	_CPPv4NO1fEv	f	f			void f() &&	void f() &&	f|||f|f|1f|1f|1f	false
+function	void f() const &	=>	ok	fCR	_CPPv2NKR1fEv	_CPPv3NKR1fEv	_CPPv4NKR1fEv	f	f			void f() const &	void f() const &	f|||f|f|1f|1f|1f	false
+function	void f() noexcept	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() noexcept	void f() noexcept	f|||f|f|1f|1f|1f	false
+function	void f() noexcept(true)	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() noexcept(true)	void f() noexcept(true)	f|||f|f|1f|1f|1f	false
+function	void f() noexcept(false)	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() noexcept(false)	void f() noexcept(false)	f|||f|f|1f|1f|1f	false
+function	void f() override	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() override	void f() override	f|||f|f|1f|1f|1f	false
+function	void f() final	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() final	void f() final	f|||f|f|1f|1f|1f	false
+function	void f() final override	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() final override	void f() final override	f|||f|f|1f|1f|1f	false
+function	void f() override final	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() final override	void f() final override	f|||f|f|1f|1f|1f	false
+function	void f() = 0	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() = 0	void f() = 0	f|||f|f|1f|1f|1f	false
+function	void f() = delete	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() = delete	void f() = delete	f|||f|f|1f|1f|1f	false
+function	void f() = default	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() = default	void f() = default	f|||f|f|1f|1f|1f	false
+function	void f() const = 0	=>	ok	fC	_CPPv2NK1fEv	_CPPv3NK1fEv	_CPPv4NK1fEv	f	f			void f() const = 0	void f() const = 0	f|||f|f|1f|1f|1f	false
+function	void f() [[deprecated]]	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() [[deprecated]]	void f() [[deprecated]]	f|||f|f|1f|1f|1f	false
+function	auto f() -> int	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			auto f() -> int	auto f() -> int	f|||f|f|1f|1f|1f	false
+function	auto f() -> std::vector<int>	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			auto f() -> std::vector<int>	auto f() -> std::vector<int>	f|||f|f|1f|1f|1f	false
+function	auto f() const -> int	=>	ok	fC	_CPPv2NK1fEv	_CPPv3NK1fEv	_CPPv4NK1fEv	f	f			auto f() const -> int	auto f() const -> int	f|||f|f|1f|1f|1f	false
+function	static void f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			static void f()	static void f()	f|||f|f|1f|1f|1f	false
+function	inline void f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			inline void f()	inline void f()	f|||f|f|1f|1f|1f	false
+function	virtual void f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			virtual void f()	virtual void f()	f|||f|f|1f|1f|1f	false
+function	virtual void f() = 0	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			virtual void f() = 0	virtual void f() = 0	f|||f|f|1f|1f|1f	false
+function	explicit A(int)	=>	ok	A__i	_CPPv21Ai	_CPPv31Ai	_CPPv41Ai	A	A			explicit A(int)	explicit A(int)	A|||A|A|1A|1A|1A	false
+function	explicit(true) A(int)	=>	ok	A__i	_CPPv21Ai	_CPPv31Ai	_CPPv41Ai	A	A			explicit(true) A(int)	explicit(true) A(int)	A|||A|A|1A|1A|1A	false
+function	constexpr int f()	=>	ok	fCE	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			constexpr int f()	constexpr int f()	f|||f|f|1f|1f|1f	false
+function	consteval int f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			consteval int f()	consteval int f()	f|||f|f|1f|1f|1f	false
+function	friend void f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			friend void f()	friend void f()	f|||f|f|1f|1f|1f	false
+function	extern void f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			extern void f()	extern void f()	f|||f|f|1f|1f|1f	false
+function	A()	=>	ok	A	_CPPv21Av	_CPPv31Av	_CPPv41Av	A	A			A()	A()	A|||A|A|1A|1A|1A	false
+function	A(int)	=>	ok	A__i	_CPPv21Ai	_CPPv31Ai	_CPPv41Ai	A	A			A(int)	A(int)	A|||A|A|1A|1A|1A	false
+function	~A()	=>	ok	~A	_CPPv2D0v	_CPPv3D0v	_CPPv4D0v	~A	~A			~A()	~A()	~A|||~A|~A|D0|D0|D0	false
+function	A::A()	=>	ok	A::A	_CPPv2N1A1AEv	_CPPv3N1A1AEv	_CPPv4N1A1AEv	A::A	A::A			A::A()	A::A()	A|||A|A|1A|1A|1A;A|||A|A|1A|1A|1A	false
+function	A::~A()	=>	ok	A::~A	_CPPv2N1AD0Ev	_CPPv3N1AD0Ev	_CPPv4N1AD0Ev	A::~A	A::~A			A::~A()	A::~A()	A|||A|A|1A|1A|1A;~A|||~A|~A|D0|D0|D0	false
+function	A::A(const A&)	=>	ok	A::A__ACR	_CPPv2N1A1AERK1A	_CPPv3N1A1AERK1A	_CPPv4N1A1AERK1A	A::A	A::A			A::A(const A&)	A::A(const A&)	A|||A|A|1A|1A|1A;A|||A|A|1A|1A|1A	false
+function	A::A(A&&)	=>	ok	A::A__ARR	_CPPv2N1A1AERR1A	_CPPv3N1A1AERR1A	_CPPv4N1A1AERR1A	A::A	A::A			A::A(A&&)	A::A(A&&)	A|||A|A|1A|1A|1A;A|||A|A|1A|1A|1A	false
+function	A &A::operator=(const A&)	=>	ok	A::assign-operator__ACR	_CPPv2N1AaSERK1A	_CPPv3N1AaSERK1A	_CPPv4N1AaSERK1A	A::operator=	A::operator=			A &A::operator=(const A&)	A &A::operator=(const A&)	A|||A|A|1A|1A|1A;operator=|||operator=|assign-operator|aS|aS|aS	false
+function	void A::f()	=>	ok	A::f	_CPPv2N1A1fEv	_CPPv3N1A1fEv	_CPPv4N1A1fEv	A::f	A::f			void A::f()	void A::f()	A|||A|A|1A|1A|1A;f|||f|f|1f|1f|1f	false
+function	void ns::A::f()	=>	ok	ns::A::f	_CPPv2N2ns1A1fEv	_CPPv3N2ns1A1fEv	_CPPv4N2ns1A1fEv	ns::A::f	ns::A::f			void ns::A::f()	void ns::A::f()	ns|||ns|ns|2ns|2ns|2ns;A|||A|A|1A|1A|1A;f|||f|f|1f|1f|1f	false
+function	void ::f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void ::f()	void ::f()	f|||f|f|1f|1f|1f	false
+function	int operator+(int, int)	=>	ok	add-operator__i.i	_CPPv2plii	_CPPv3plii	_CPPv4plii	operator+	operator+			int operator+(int, int)	int operator+(int, int)	operator+|||operator+|add-operator|pl|pl|pl	false
+function	int operator-(int)	=>	ok	sub-operator__i	_CPPv2mii	_CPPv3mii	_CPPv4mii	operator-	operator-			int operator-(int)	int operator-(int)	operator-|||operator-|sub-operator|mi|mi|mi	false
+function	int operator*(int, int)	=>	ok	mul-operator__i.i	_CPPv2mlii	_CPPv3mlii	_CPPv4mlii	operator*	operator*			int operator*(int, int)	int operator*(int, int)	operator*|||operator*|mul-operator|ml|ml|ml	false
+function	int operator/(int, int)	=>	ok	div-operator__i.i	_CPPv2dvii	_CPPv3dvii	_CPPv4dvii	operator/	operator/			int operator/(int, int)	int operator/(int, int)	operator/|||operator/|div-operator|dv|dv|dv	false
+function	int operator%(int, int)	=>	ok	mod-operator__i.i	_CPPv2rmii	_CPPv3rmii	_CPPv4rmii	operator%	operator%			int operator%(int, int)	int operator%(int, int)	operator%|||operator%|mod-operator|rm|rm|rm	false
+function	int operator&(int, int)	=>	ok	and-operator__i.i	_CPPv2anii	_CPPv3anii	_CPPv4anii	operator&	operator&			int operator&(int, int)	int operator&(int, int)	operator&|||operator&|and-operator|an|an|an	false
+function	int operator|(int, int)	=>	ok	or-operator__i.i	_CPPv2orii	_CPPv3orii	_CPPv4orii	operator|	operator|			int operator|(int, int)	int operator|(int, int)	operator||||operator||or-operator|or|or|or	false
+function	int operator^(int, int)	=>	ok	xor-operator__i.i	_CPPv2eoii	_CPPv3eoii	_CPPv4eoii	operator^	operator^			int operator^(int, int)	int operator^(int, int)	operator^|||operator^|xor-operator|eo|eo|eo	false
+function	int operator~()	=>	ok	inv-operator	_CPPv2cov	_CPPv3cov	_CPPv4cov	operator~	operator~			int operator~()	int operator~()	operator~|||operator~|inv-operator|co|co|co	false
+function	bool operator!()	=>	ok	not-operator	_CPPv2ntv	_CPPv3ntv	_CPPv4ntv	operator!	operator!			bool operator!()	bool operator!()	operator!|||operator!|not-operator|nt|nt|nt	false
+function	int operator=(int)	=>	ok	assign-operator__i	_CPPv2aSi	_CPPv3aSi	_CPPv4aSi	operator=	operator=			int operator=(int)	int operator=(int)	operator=|||operator=|assign-operator|aS|aS|aS	false
+function	int operator+=(int)	=>	ok	add-assign-operator__i	_CPPv2pLi	_CPPv3pLi	_CPPv4pLi	operator+=	operator+=			int operator+=(int)	int operator+=(int)	operator+=|||operator+=|add-assign-operator|pL|pL|pL	false
+function	int operator-=(int)	=>	ok	sub-assign-operator__i	_CPPv2mIi	_CPPv3mIi	_CPPv4mIi	operator-=	operator-=			int operator-=(int)	int operator-=(int)	operator-=|||operator-=|sub-assign-operator|mI|mI|mI	false
+function	int operator*=(int)	=>	ok	mul-assign-operator__i	_CPPv2mLi	_CPPv3mLi	_CPPv4mLi	operator*=	operator*=			int operator*=(int)	int operator*=(int)	operator*=|||operator*=|mul-assign-operator|mL|mL|mL	false
+function	int operator/=(int)	=>	ok	div-assign-operator__i	_CPPv2dVi	_CPPv3dVi	_CPPv4dVi	operator/=	operator/=			int operator/=(int)	int operator/=(int)	operator/=|||operator/=|div-assign-operator|dV|dV|dV	false
+function	int operator%=(int)	=>	ok	mod-assign-operator__i	_CPPv2rMi	_CPPv3rMi	_CPPv4rMi	operator%=	operator%=			int operator%=(int)	int operator%=(int)	operator%=|||operator%=|mod-assign-operator|rM|rM|rM	false
+function	int operator&=(int)	=>	ok	and-assign-operator__i	_CPPv2aNi	_CPPv3aNi	_CPPv4aNi	operator&=	operator&=			int operator&=(int)	int operator&=(int)	operator&=|||operator&=|and-assign-operator|aN|aN|aN	false
+function	int operator|=(int)	=>	ok	or-assign-operator__i	_CPPv2oRi	_CPPv3oRi	_CPPv4oRi	operator|=	operator|=			int operator|=(int)	int operator|=(int)	operator|=|||operator|=|or-assign-operator|oR|oR|oR	false
+function	int operator^=(int)	=>	ok	xor-assign-operator__i	_CPPv2eOi	_CPPv3eOi	_CPPv4eOi	operator^=	operator^=			int operator^=(int)	int operator^=(int)	operator^=|||operator^=|xor-assign-operator|eO|eO|eO	false
+function	int operator<<(int)	=>	ok	lshift-operator__i	_CPPv2lsi	_CPPv3lsi	_CPPv4lsi	operator<<	operator<<			int operator<<(int)	int operator<<(int)	operator<<|||operator<<|lshift-operator|ls|ls|ls	false
+function	int operator>>(int)	=>	ok	rshift-operator__i	_CPPv2rsi	_CPPv3rsi	_CPPv4rsi	operator>>	operator>>			int operator>>(int)	int operator>>(int)	operator>>|||operator>>|rshift-operator|rs|rs|rs	false
+function	int operator<<=(int)	=>	ok	lshift-assign-operator__i	_CPPv2lSi	_CPPv3lSi	_CPPv4lSi	operator<<=	operator<<=			int operator<<=(int)	int operator<<=(int)	operator<<=|||operator<<=|lshift-assign-operator|lS|lS|lS	false
+function	int operator>>=(int)	=>	ok	rshift-assign-operator__i	_CPPv2rSi	_CPPv3rSi	_CPPv4rSi	operator>>=	operator>>=			int operator>>=(int)	int operator>>=(int)	operator>>=|||operator>>=|rshift-assign-operator|rS|rS|rS	false
+function	bool operator==(int)	=>	ok	eq-operator__i	_CPPv2eqi	_CPPv3eqi	_CPPv4eqi	operator==	operator==			bool operator==(int)	bool operator==(int)	operator==|||operator==|eq-operator|eq|eq|eq	false
+function	bool operator!=(int)	=>	ok	neq-operator__i	_CPPv2nei	_CPPv3nei	_CPPv4nei	operator!=	operator!=			bool operator!=(int)	bool operator!=(int)	operator!=|||operator!=|neq-operator|ne|ne|ne	false
+function	bool operator<(int)	=>	ok	lt-operator__i	_CPPv2lti	_CPPv3lti	_CPPv4lti	operator<	operator<			bool operator<(int)	bool operator<(int)	operator<|||operator<|lt-operator|lt|lt|lt	false
+function	bool operator>(int)	=>	ok	gt-operator__i	_CPPv2gti	_CPPv3gti	_CPPv4gti	operator>	operator>			bool operator>(int)	bool operator>(int)	operator>|||operator>|gt-operator|gt|gt|gt	false
+function	bool operator<=(int)	=>	ok	lte-operator__i	_CPPv2lei	_CPPv3lei	_CPPv4lei	operator<=	operator<=			bool operator<=(int)	bool operator<=(int)	operator<=|||operator<=|lte-operator|le|le|le	false
+function	bool operator>=(int)	=>	ok	gte-operator__i	_CPPv2gei	_CPPv3gei	_CPPv4gei	operator>=	operator>=			bool operator>=(int)	bool operator>=(int)	operator>=|||operator>=|gte-operator|ge|ge|ge	false
+function	auto operator<=>(int)	=>	ok	-	_CPPv2ssi	_CPPv3ssi	_CPPv4ssi	operator<=>	operator<=>			auto operator<=>(int)	auto operator<=>(int)	operator<=>|||operator<=>|-|ss|ss|ss	false
+function	bool operator&&(int)	=>	ok	sand-operator__i	_CPPv2aai	_CPPv3aai	_CPPv4aai	operator&&	operator&&			bool operator&&(int)	bool operator&&(int)	operator&&|||operator&&|sand-operator|aa|aa|aa	false
+function	bool operator||(int)	=>	ok	sor-operator__i	_CPPv2ooi	_CPPv3ooi	_CPPv4ooi	operator||	operator||			bool operator||(int)	bool operator||(int)	operator|||||operator|||sor-operator|oo|oo|oo	false
+function	int operator++()	=>	ok	inc-operator	_CPPv2ppv	_CPPv3ppv	_CPPv4ppv	operator++	operator++			int operator++()	int operator++()	operator++|||operator++|inc-operator|pp|pp|pp	false
+function	int operator++(int)	=>	ok	inc-operator__i	_CPPv2ppi	_CPPv3ppi	_CPPv4ppi	operator++	operator++			int operator++(int)	int operator++(int)	operator++|||operator++|inc-operator|pp|pp|pp	false
+function	int operator--()	=>	ok	dec-operator	_CPPv2mmv	_CPPv3mmv	_CPPv4mmv	operator--	operator--			int operator--()	int operator--()	operator--|||operator--|dec-operator|mm|mm|mm	false
+function	int operator,(int)	=>	ok	comma-operator__i	_CPPv2cmi	_CPPv3cmi	_CPPv4cmi	operator,	operator,			int operator,(int)	int operator,(int)	operator,|||operator,|comma-operator|cm|cm|cm	false
+function	int operator->*(int)	=>	ok	pointer-by-pointer-operator__i	_CPPv2pmi	_CPPv3pmi	_CPPv4pmi	operator->*	operator->*			int operator->*(int)	int operator->*(int)	operator->*|||operator->*|pointer-by-pointer-operator|pm|pm|pm	false
+function	int *operator->()	=>	ok	pointer-operator	_CPPv2ptv	_CPPv3ptv	_CPPv4ptv	operator->	operator->			int *operator->()	int *operator->()	operator->|||operator->|pointer-operator|pt|pt|pt	false
+function	int operator()(int)	=>	ok	call-operator__i	_CPPv2cli	_CPPv3cli	_CPPv4cli	operator()	operator()			int operator()(int)	int operator()(int)	operator()|||operator()|call-operator|cl|cl|cl	false
+function	int operator ()()	=>	ok	call-operator	_CPPv2clv	_CPPv3clv	_CPPv4clv	operator()	operator()			int operator()()	int operator()()	operator()|||operator()|call-operator|cl|cl|cl	false
+function	int operator[](int)	=>	ok	subscript-operator__i	_CPPv2ixi	_CPPv3ixi	_CPPv4ixi	operator[]	operator[]			int operator[](int)	int operator[](int)	operator[]|||operator[]|subscript-operator|ix|ix|ix	false
+function	int operator [ ](int)	=>	noid
+function	void *operator new(std::size_t)	=>	ok	new-operator__std::s	_CPPv2nwNSt6size_tE	_CPPv3nwNSt6size_tE	_CPPv4nwNSt6size_tE	operator new	operator new			void *operator new(std::size_t)	void *operator new(std::size_t)	operator new|||operator new|new-operator|nw|nw|nw	false
+function	void *operator new[](std::size_t)	=>	ok	new-array-operator__std::s	_CPPv2naNSt6size_tE	_CPPv3naNSt6size_tE	_CPPv4naNSt6size_tE	operator new[]	operator new[]			void *operator new[](std::size_t)	void *operator new[](std::size_t)	operator new[]|||operator new[]|new-array-operator|na|na|na	false
+function	void operator delete(void*)	=>	ok	delete-operator__voidP	_CPPv2dlPv	_CPPv3dlPv	_CPPv4dlPv	operator delete	operator delete			void operator delete(void*)	void operator delete(void*)	operator delete|||operator delete|delete-operator|dl|dl|dl	false
+function	void operator delete[](void*)	=>	ok	delete-array-operator__voidP	_CPPv2daPv	_CPPv3daPv	_CPPv4daPv	operator delete[]	operator delete[]			void operator delete[](void*)	void operator delete[](void*)	operator delete[]|||operator delete[]|delete-array-operator|da|da|da	false
+function	void *operator new [ ](std::size_t)	=>	ok	new-array-operator__std::s	_CPPv2naNSt6size_tE	_CPPv3naNSt6size_tE	_CPPv4naNSt6size_tE	operator new[]	operator new[]			void *operator new[](std::size_t)	void *operator new[](std::size_t)	operator new[]|||operator new[]|new-array-operator|na|na|na	false
+function	bool operator and(int)	=>	ok	-	_CPPv2aai	_CPPv3aai	_CPPv4aai	operator and	operator and			bool operator and(int)	bool operator and(int)	operator and|||operator and|-|aa|aa|aa	false
+function	bool operator not()	=>	ok	-	_CPPv2ntv	_CPPv3ntv	_CPPv4ntv	operator not	operator not			bool operator not()	bool operator not()	operator not|||operator not|-|nt|nt|nt	false
+function	int operator bitor(int)	=>	ok	-	_CPPv2ori	_CPPv3ori	_CPPv4ori	operator bitor	operator bitor			int operator bitor(int)	int operator bitor(int)	operator bitor|||operator bitor|-|or|or|or	false
+function	int operator compl()	=>	ok	-	_CPPv2cov	_CPPv3cov	_CPPv4cov	operator compl	operator compl			int operator compl()	int operator compl()	operator compl|||operator compl|-|co|co|co	false
+function	int operator xor_eq(int)	=>	ok	-	_CPPv2eOi	_CPPv3eOi	_CPPv4eOi	operator xor_eq	operator xor_eq			int operator xor_eq(int)	int operator xor_eq(int)	operator xor_eq|||operator xor_eq|-|eO|eO|eO	false
+function	operator int()	=>	ok	castto-i-operator	_CPPv2cviv	_CPPv3cviv	_CPPv4cviv	operator int	operator int			operator int()	operator int()	operator int|||operator int|castto-i-operator|cvi|cvi|cvi	false
+function	operator bool() const	=>	ok	castto-b-operatorC	_CPPv2NKcvbEv	_CPPv3NKcvbEv	_CPPv4NKcvbEv	operator bool	operator bool			operator bool() const	operator bool() const	operator bool|||operator bool|castto-b-operator|cvb|cvb|cvb	false
+function	explicit operator bool() const	=>	ok	castto-b-operatorC	_CPPv2NKcvbEv	_CPPv3NKcvbEv	_CPPv4NKcvbEv	operator bool	operator bool			explicit operator bool() const	explicit operator bool() const	operator bool|||operator bool|castto-b-operator|cvb|cvb|cvb	false
+function	operator int*()	=>	ok	castto-iP-operator	_CPPv2cvPiv	_CPPv3cvPiv	_CPPv4cvPiv	operator int*	operator int*			operator int*()	operator int*()	operator int*|||operator int*|castto-iP-operator|cvPi|cvPi|cvPi	false
+function	operator const char*()	=>	ok	castto-cCP-operator	_CPPv2cvPKcv	_CPPv3cvPKcv	_CPPv4cvPKcv	operator const char*	operator const char*			operator const char*()	operator const char*()	operator const char*|||operator const char*|castto-cCP-operator|cvPKc|cvPKc|cvPKc	false
+function	operator A<int>()	=>	ok	castto-A:i:-operator	_CPPv2cv1AIiEv	_CPPv3cv1AIiEv	_CPPv4cv1AIiEv	operator A<int>	operator A<int>			operator A<int>()	operator A<int>()	operator A<int>|||operator A<int>|castto-A:i:-operator|cv1AIiE|cv1AIiE|cv1AIiE	false
+function	A::operator int()	=>	ok	A::castto-i-operator	_CPPv2N1AcviEv	_CPPv3N1AcviEv	_CPPv4N1AcviEv	A::operator int	A::operator int			A::operator int()	A::operator int()	A|||A|A|1A|1A|1A;operator int|||operator int|castto-i-operator|cvi|cvi|cvi	false
+function	int operator""_lit()	=>	ok	-	_CPPv2li4_litv	_CPPv3li4_litv	_CPPv4li4_litv	operator""_lit	operator""_lit			int operator""_lit()	int operator""_lit()	operator""_lit|||operator""_lit|-|li4_lit|li4_lit|li4_lit	false
+function	int operator"" _lit(const char*)	=>	ok	-	_CPPv2li4_litPKc	_CPPv3li4_litPKc	_CPPv4li4_litPKc	operator""_lit	operator""_lit			int operator""_lit(const char*)	int operator""_lit(const char*)	operator""_lit|||operator""_lit|-|li4_lit|li4_lit|li4_lit	false
+function	unsigned long long operator""_km(unsigned long long)	=>	ok	-	_CPPv2li3_kmy	_CPPv3li3_kmy	_CPPv4li3_kmy	operator""_km	operator""_km			unsigned long long operator""_km(unsigned long long)	unsigned long long operator""_km(unsigned long long)	operator""_km|||operator""_km|-|li3_km|li3_km|li3_km	false
+function	void paren_5::operator()(int)	=>	ok	paren_5::call-operator__i	_CPPv2N7paren_5clEi	_CPPv3N7paren_5clEi	_CPPv4N7paren_5clEi	paren_5::operator()	paren_5::operator()			void paren_5::operator()(int)	void paren_5::operator()(int)	paren_5|||paren_5|paren_5|7paren_5|7paren_5|7paren_5;operator()|||operator()|call-operator|cl|cl|cl	false
+function	template<typename T> void f(T t)	=>	ok	-	_CPPv2I0E1f1T	_CPPv3I0E1f1T	_CPPv4I0E1fv1T	f	f	T	t	template<typename T> void f(T t)	template<typename T> void f(T t)	f||template<typename T> |f|f|1f|1f|1f	false
+function	template<typename T> void f()	=>	ok	-	_CPPv2I0E1fv	_CPPv3I0E1fv	_CPPv4I0E1fvv	f	f	T		template<typename T> void f()	template<typename T> void f()	f||template<typename T> |f|f|1f|1f|1f	false
+function	template<class T> void f(T)	=>	ok	-	_CPPv2I0E1f1T	_CPPv3I0E1f1T	_CPPv4I0E1fv1T	f	f	T		template<class T> void f(T)	template<class T> void f(T)	f||template<class T> |f|f|1f|1f|1f	false
+function	template<typename T, typename U> void f(T, U)	=>	ok	-	_CPPv2I00E1f1T1U	_CPPv3I00E1f1T1U	_CPPv4I00E1fv1T1U	f	f	T,U		template<typename T, typename U> void f(T, U)	template<typename T, typename U> void f(T, U)	f||template<typename T, typename U> |f|f|1f|1f|1f	false
+function	template<typename... Ts> void f(Ts... ts)	=>	ok	-	_CPPv2IDpE1fDp2Ts	_CPPv3IDpE1fDp2Ts	_CPPv4IDpE1fvDp2Ts	f	f	Ts	ts	template<typename ...Ts> void f(Ts... ts)	template<typename ...Ts> void f(Ts... ts)	f||template<typename ...Ts> |f|f|1f|1f|1f	false
+function	template<typename T = int> void f()	=>	ok	-	_CPPv2I0E1fv	_CPPv3I0E1fv	_CPPv4I0E1fvv	f	f	T		template<typename T = int> void f()	template<typename T = int> void f()	f||template<typename T = int> |f|f|1f|1f|1f	false
+function	template<int N> void f()	=>	ok	-	_CPPv2I_iE1fv	_CPPv3I_iE1fv	_CPPv4I_iE1fvv	f	f	N		template<int N> void f()	template<int N> void f()	f||template<int N> |f|f|1f|1f|1f	false
+function	template<int N = 3> void f()	=>	ok	-	_CPPv2I_iE1fv	_CPPv3I_iE1fv	_CPPv4I_iE1fvv	f	f	N		template<int N = 3> void f()	template<int N = 3> void f()	f||template<int N = 3> |f|f|1f|1f|1f	false
+function	template<int... Ns> void f()	=>	ok	-	_CPPv2I_DpiE1fv	_CPPv3I_DpiE1fv	_CPPv4I_DpiE1fvv	f	f	Ns		template<int... Ns> void f()	template<int... Ns> void f()	f||template<int... Ns> |f|f|1f|1f|1f	false
+function	template<template<typename> typename T> void f()	=>	ok	-	_CPPv2II0E0E1fv	_CPPv3II0E0E1fv	_CPPv4II0E0E1fvv	f	f	T		template<template<typename> typename T> void f()	template<template<typename> typename T> void f()	f||template<template<typename> typename T> |f|f|1f|1f|1f	false
+function	template<template<typename> class T> void f()	=>	ok	-	_CPPv2II0E0E1fv	_CPPv3II0E0E1fv	_CPPv4II0E0E1fvv	f	f	T		template<template<typename> class T> void f()	template<template<typename> class T> void f()	f||template<template<typename> class T> |f|f|1f|1f|1f	false
+function	template<template<typename...> typename... Ts> void f()	=>	ok	-	_CPPv2IIDpEDpE1fv	_CPPv3IIDpEDpE1fv	_CPPv4IIDpEDpE1fvv	f	f	Ts		template<template<typename...> typename ...Ts> void f()	template<template<typename...> typename ...Ts> void f()	f||template<template<typename...> typename ...Ts> |f|f|1f|1f|1f	false
+function	template<typename T> requires C<T> void f()	=>	ok	-	-	-	_CPPv4I0EIQ1CI1TEE1fvv	f	f	T		template<typename T> requires C<T> void f()	template<typename T> requires C<T> void f()	f||template<typename T> requires C<T> |f|f|1f|1f|1f	false
+function	template<typename T> void f() requires C<T>	=>	ok	-	-	-	_CPPv4I0EIQ1CI1TEE1fvv	f	f	T		template<typename T> void f() requires C<T>	template<typename T> void f() requires C<T>	f||template<typename T> |f|f|1f|1f|1f	false
+function	template<typename T> requires C<T> void f() requires D<T>	=>	ok	-	-	-	_CPPv4I0EIQaa1CI1TE1DI1TEE1fvv	f	f	T		template<typename T> requires C<T> void f() requires D<T>	template<typename T> requires C<T> void f() requires D<T>	f||template<typename T> requires C<T> |f|f|1f|1f|1f	false
+function	template<typename T> requires C<T> && D<T> void f()	=>	ok	-	-	-	_CPPv4I0EIQaa1CI1TE1DI1TEE1fvv	f	f	T		template<typename T> requires C<T> && D<T> void f()	template<typename T> requires C<T> && D<T> void f()	f||template<typename T> requires C<T> && D<T> |f|f|1f|1f|1f	false
+function	template<typename T> requires C<T> || D<T> void f()	=>	ok	-	-	-	_CPPv4I0EIQoo1CI1TE1DI1TEE1fvv	f	f	T		template<typename T> requires C<T> || D<T> void f()	template<typename T> requires C<T> || D<T> void f()	f||template<typename T> requires C<T> || D<T> |f|f|1f|1f|1f	false
+function	template<typename T> requires C<T> and D<T> void f()	=>	ok	-	-	-	_CPPv4I0EIQaa1CI1TE1DI1TEE1fvv	f	f	T		template<typename T> requires C<T> and D<T> void f()	template<typename T> requires C<T> and D<T> void f()	f||template<typename T> requires C<T> and D<T> |f|f|1f|1f|1f	false
+function	template<typename T> requires (sizeof(T) > 1) void f()	=>	ok	-	-	-	_CPPv4I0EIQgtst1TL1EE1fvv	f	f	T		template<typename T> requires (sizeof(T) > 1) void f()	template<typename T> requires (sizeof(T) > 1) void f()	f||template<typename T> requires (sizeof(T) > 1) |f|f|1f|1f|1f	false
+function	void f() requires C<int>	=>	ok	-	-	-	_CPPv4IQ1CIiEE1fv	f	f			void f() requires C<int>	void f() requires C<int>	f|||f|f|1f|1f|1f	false
+function	template<C T> void f()	=>	ok	-	_CPPv2I_1CE1fv	_CPPv3I_1CE1fv	_CPPv4I_1CE1fvv	f	f	T		template<C T> void f()	template<C T> void f()	f||template<C T> |f|f|1f|1f|1f	false
+function	template<C auto N> void f()	=>	ok	-	_CPPv2I_1CE1fv	_CPPv3I_1CE1fv	_CPPv4I_1CE1fvv	f	f	N		template<C auto N> void f()	template<C auto N> void f()	f||template<C auto N> |f|f|1f|1f|1f	false
+function	template<C T = int> void f()	=>	ok	-	_CPPv2I_1CE1fv	_CPPv3I_1CE1fv	_CPPv4I_1CE1fvv	f	f	T		template<C T = int> void f()	template<C T = int> void f()	f||template<C T = int> |f|f|1f|1f|1f	false
+function	template<typename T> template<typename U> void A<T>::f(U)	=>	ok	-	_CPPv2I0EI0EN1A1fE1U	_CPPv3I0EI0EN1A1fE1U	_CPPv4I0EI0EN1A1fEv1U	A::f	A::f	U		template<typename T> template<typename U> void A<T>::f(U)	template<typename T> template<typename U> void A<T>::f(U)	A||template<typename T> |A|A|1A|1A|1A;f||template<typename U> |f|f|1f|1f|1f	false
+function	template<> void f<int>()	=>	ok	-	_CPPv2IE1fIiEv	_CPPv3IE1fIiEv	_CPPv4IE1fIiEvv	f<int>	f<int>			template<> void f<int>()	template<> void f<int>()	f|<int>|template<> |f<int>|f:i:|1fIiE|1fIiE|1fIiE	false
+function	template<> void A<int>::f()	=>	ok	-	_CPPv2IEN1AIiE1fEv	_CPPv3IEN1AIiE1fEv	_CPPv4IEN1AIiE1fEvv	A<int>::f	A<int>::f			template<> void A<int>::f()	template<> void A<int>::f()	A|<int>|template<> |A<int>|A:i:|1AIiE|1AIiE|1AIiE;f|||f|f|1f|1f|1f	false
+function	template<typename T> void A<T>::f()	=>	ok	-	_CPPv2I0EN1A1fEv	_CPPv3I0EN1A1fEv	_CPPv4I0EN1A1fEvv	A::f	A::f			template<typename T> void A<T>::f()	template<typename T> void A<T>::f()	A||template<typename T> |A|A|1A|1A|1A;f|||f|f|1f|1f|1f	false
+function	void A<int>::f()	=>	ok	-	_CPPv2IEN1AIiE1fEv	_CPPv3IEN1AIiE1fEv	_CPPv4IEN1AIiE1fEvv	A<int>::f	A<int>::f			template<> void A<int>::f()	template<> void A<int>::f()	A|<int>|template<> |A<int>|A:i:|1AIiE|1AIiE|1AIiE;f|||f|f|1f|1f|1f	false
+function	template<typename T> T A<T>::f() const	=>	ok	-	_CPPv2I0ENK1A1fEv	_CPPv3I0ENK1A1fEv	_CPPv4I0ENK1A1fE1Tv	A::f	A::f			template<typename T> T A<T>::f() const	template<typename T> T A<T>::f() const	A||template<typename T> |A|A|1A|1A|1A;f|||f|f|1f|1f|1f	false
+function	template<typename T> auto f() -> decltype(T())	=>	ok	-	_CPPv2I0E1fv	_CPPv3I0E1fv	_CPPv4I0E1fDTcl1TEEv	f	f	T		template<typename T> auto f() -> decltype(T())	template<typename T> auto f() -> decltype(T())	f||template<typename T> |f|f|1f|1f|1f	false
+function	C{T} void f(T)	=>	ok	-	_CPPv2I0EX1CI1TEE1f1T	_CPPv3I0EX1CI1TEE1f1T	_CPPv4I0EX1CI1TEE1fv1T	f	f	T		C{T} void f(T)	C{T} void f(T)	f||C{T} |f|f|1f|1f|1f	false
+function	C{T, U} void f()	=>	ok	-	_CPPv2I00EX1CI1T1UEE1fv	_CPPv3I00EX1CI1T1UEE1fv	_CPPv4I00EX1CI1T1UEE1fvv	f	f	T,U		C{T, U} void f()	C{T, U} void f()	f||C{T, U} |f|f|1f|1f|1f	false
+function	C{...Ts} void f()	=>	ok	-	_CPPv2IDpEX1CIsp2TsEE1fv	_CPPv3IDpEX1CIsp2TsEE1fv	_CPPv4IDpEX1CIsp2TsEE1fvv	f	f	Ts		C{...Ts} void f()	C{...Ts} void f()	f||C{...Ts} |f|f|1f|1f|1f	false
+function	A::B{T} void f()	=>	ok	-	_CPPv2I0EXN1A1BEI1TEE1fv	_CPPv3I0EXN1A1BEI1TEE1fv	_CPPv4I0EXN1A1BEI1TEE1fvv	f	f	T		A::B{T} void f()	A::B{T} void f()	f||A::B{T} |f|f|1f|1f|1f	false
+function	void f(int x = a + b)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		x	void f(int x = a + b)	void f(int x = a + b)	f|||f|f|1f|1f|1f	false
+function	void f(int x = (1, 2))	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		x	void f(int x = (1, 2))	void f(int x = (1, 2))	f|||f|f|1f|1f|1f	false
+function	void f(int x = g(1, 2))	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		x	void f(int x = g(1, 2))	void f(int x = g(1, 2))	f|||f|f|1f|1f|1f	false
+function	void f(int x = A<1>::v)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		x	void f(int x = A<1>::v)	void f(int x = A<1>::v)	f|||f|f|1f|1f|1f	false
+function	void f(int x = sizeof(T))	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		x	void f(int x = sizeof(T))	void f(int x = sizeof(T))	f|||f|f|1f|1f|1f	false
+function	void f(int x = T{})	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		x	void f(int x = T{})	void f(int x = T{})	f|||f|f|1f|1f|1f	false
+function	void f(A<int> = A<int>{})	=>	ok	f__A:i:	_CPPv21f1AIiE	_CPPv31f1AIiE	_CPPv41f1AIiE	f	f			void f(A<int> = A<int>{})	void f(A<int> = A<int>{})	f|||f|f|1f|1f|1f	false
+function	void f(std::function<void(int)> f)	=>	ok	-	_CPPv21fNSt8functionIFviEEE	_CPPv31fNSt8functionIFviEEE	_CPPv41fNSt8functionIFviEEE	f	f		f	void f(std::function<void(int)> f)	void f(std::function<void(int)> f)	f|||f|f|1f|1f|1f	false
+function	void f(std::function<int(double, char)> f)	=>	ok	-	_CPPv21fNSt8functionIFidcEEE	_CPPv31fNSt8functionIFidcEEE	_CPPv41fNSt8functionIFidcEEE	f	f		f	void f(std::function<int(double, char)> f)	void f(std::function<int(double, char)> f)	f|||f|f|1f|1f|1f	false
+function	void f(int (*)(int))	=>	ok	-	_CPPv21fPFiiE	_CPPv31fPFiiE	_CPPv41fPFiiE	f	f			void f(int (*)(int))	void f(int (*)(int))	f|||f|f|1f|1f|1f	false
+function	void f(int *const)	=>	ok	f__iPC	_CPPv21fPCi	_CPPv31fPCi	_CPPv41fPCi	f	f			void f(int*const)	void f(int*const)	f|||f|f|1f|1f|1f	false
+function	void f(int[])	=>	ok	f__iA	_CPPv21fA_i	_CPPv31fA_i	_CPPv41fA_i	f	f			void f(int[])	void f(int[])	f|||f|f|1f|1f|1f	false
+function	void f(int [3])	=>	ok	f__iA	_CPPv21fA3_i	_CPPv31fAL3E_i	_CPPv41fAL3E_i	f	f			void f(int[3])	void f(int[3])	f|||f|f|1f|1f|1f	false
+function	void f(int (&)[3])	=>	ok	-	_CPPv21fRA3_i	_CPPv31fRAL3E_i	_CPPv41fRAL3E_i	f	f			void f(int (&)[3])	void f(int (&)[3])	f|||f|f|1f|1f|1f	false
+function	void f(decltype(x) y)	=>	ok	-	_CPPv21fDT1xE	_CPPv31fDT1xE	_CPPv41fDT1xE	f	f		y	void f(decltype(x) y)	void f(decltype(x) y)	f|||f|f|1f|1f|1f	false
+function	void f(auto x)	=>	ok	f__auto	_CPPv21fDa	_CPPv31fDa	_CPPv41fDa	f	f		x	void f(auto x)	void f(auto x)	f|||f|f|1f|1f|1f	false
+function	void f(C auto x)	=>	ok	f__C	_CPPv21f1C	_CPPv31f1C	_CPPv41f1C	f	f		x	void f(C auto x)	void f(C auto x)	f|||f|f|1f|1f|1f	false
+function	void f(int x [[maybe_unused]])	=>	ok	f__iA	_CPPv21fA[maybe_unused]_i	_CPPv31fA[maybe_unused]_i	_CPPv41fA[maybe_unused]_i	f	f		x	void f(int x[[maybe_unused]])	void f(int x[[maybe_unused]])	f|||f|f|1f|1f|1f	true
+function	[[nodiscard]] int f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			[[nodiscard]] int f()	[[nodiscard]] int f()	f|||f|f|1f|1f|1f	false
+function	__attribute__((noreturn)) void f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			__attribute__((noreturn)) void f()	__attribute__((noreturn)) void f()	f|||f|f|1f|1f|1f	false
+function	void f() __attribute__((pure))	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f() __attribute__((pure))	void f() __attribute__((pure))	f|||f|f|1f|1f|1f	false
+function	int f() noexcept(noexcept(g()))	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			int f() noexcept(noexcept(g()))	int f() noexcept(noexcept(g()))	f|||f|f|1f|1f|1f	false
+function	int (*f(int))(double)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f			int (*f(int))(double)	int (*f(int))(double)	f|||f|f|1f|1f|1f	false
+function	int (*f())[3]	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			int (*f())[3]	int (*f())[3]	f|||f|f|1f|1f|1f	false
+function	int (A::*f())(double)	=>	ok	-	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			int (A::* f())(double)	int (A::* f())(double)	f|||f|f|1f|1f|1f	false
+function	int (&f())[3]	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			int (&f())[3]	int (&f())[3]	f|||f|f|1f|1f|1f	false
+function	void f(int (A::*)())	=>	ok	-	_CPPv21fM1AFivE	_CPPv31fM1AFivE	_CPPv41fM1AFivE	f	f			void f(int (A::*)())	void f(int (A::*)())	f|||f|f|1f|1f|1f	false
+function	void f(int (A::*)() const)	=>	ok	-	_CPPv21fM1AKFivE	_CPPv31fM1AKFivE	_CPPv41fM1AKFivE	f	f			void f(int (A::*)() const)	void f(int (A::*)() const)	f|||f|f|1f|1f|1f	false
+function	void f(int A::*)	=>	ok	-	_CPPv21fM1Ai	_CPPv31fM1Ai	_CPPv41fM1Ai	f	f			void f(int A::*)	void f(int A::*)	f|||f|f|1f|1f|1f	false
+function	protected void f()	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			protected void f()	protected void f()	f|||f|f|1f|1f|1f	false
+function	private virtual void f() const = 0	=>	ok	fC	_CPPv2NK1fEv	_CPPv3NK1fEv	_CPPv4NK1fEv	f	f			private virtual void f() const = 0	private virtual void f() const = 0	f|||f|f|1f|1f|1f	false
+function	void f();	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			void f();	void f();	f|||f|f|1f|1f|1f	false
+function	void f(int x, int y = 2, ...)	=>	ok	f__i.i.z	_CPPv21fiiz	_CPPv31fiiz	_CPPv41fiiz	f	f		x,y	void f(int x, int y = 2, ...)	void f(int x, int y = 2, ...)	f|||f|f|1f|1f|1f	false
+function	int @a::f()	=>	ok	-	-	_CPPv3NUt1_a1fEv	_CPPv4NUt1_a1fEv	@a::f	[anonymous]::f			int @a::f()	int [anonymous]::f()	@a|||[anonymous]|-|-|Ut1_a|Ut1_a;f|||f|f|1f|1f|1f	false
+function	void f(@a x)	=>	ok	-	-	_CPPv31fUt1_a	_CPPv41fUt1_a	f	f		x	void f(@a x)	void f(@a x)	f|||f|f|1f|1f|1f	false
+function	void	=>	invalid
+function	f	=>	invalid
+function	void f(	=>	invalid
+function	void f() extra	=>	invalid
+function	void f() = 1	=>	invalid
+function	int f() -> int	=>	ok	f	_CPPv21fv	_CPPv31fv	_CPPv41fv	f	f			int f() -> int	int f() -> int	f|||f|f|1f|1f|1f	false
+function	void A<int>::B<char>::f()	=>	ok	-	_CPPv2IEIEN1AIiE1BIcE1fEv	_CPPv3IEIEN1AIiE1BIcE1fEv	_CPPv4IEIEN1AIiE1BIcE1fEvv	A<int>::B<char>::f	A<int>::B<char>::f			template<> template<> void A<int>::B<char>::f()	template<> template<> void A<int>::B<char>::f()	A|<int>|template<> |A<int>|A:i:|1AIiE|1AIiE|1AIiE;B|<char>|template<> |B<char>|B:c:|1BIcE|1BIcE|1BIcE;f|||f|f|1f|1f|1f	false
+function	template<typename T> void A<T>::B<char>::f()	=>	ok	-	_CPPv2IEI0EN1AI1TE1BIcE1fEv	_CPPv3IEI0EN1AI1TE1BIcE1fEv	_CPPv4IEI0EN1AI1TE1BIcE1fEvv	A<T>::B<char>::f	A<T>::B<char>::f			template<> template<typename T> void A<T>::B<char>::f()	template<> template<typename T> void A<T>::B<char>::f()	A|<T>|template<> |A<T>|A:T:|1AI1TE|1AI1TE|1AI1TE;B|<char>|template<typename T> |B<char>|B:c:|1BIcE|1BIcE|1BIcE;f|||f|f|1f|1f|1f	false
+function	template<typename T> template<> void A<T>::B<char>::f()	=>	ok	-	_CPPv2I0EIEN1A1BIcE1fEv	_CPPv3I0EIEN1A1BIcE1fEv	_CPPv4I0EIEN1A1BIcE1fEvv	A::B<char>::f	A::B<char>::f			template<typename T> template<> void A<T>::B<char>::f()	template<typename T> template<> void A<T>::B<char>::f()	A||template<typename T> |A|A|1A|1A|1A;B|<char>|template<> |B<char>|B:c:|1BIcE|1BIcE|1BIcE;f|||f|f|1f|1f|1f	false
+function	void std::string::f()	=>	ok	std::string::f	_CPPv2NSt6string1fEv	_CPPv3NSt6string1fEv	_CPPv4NSt6string1fEv	std::string::f	std::string::f			void std::string::f()	void std::string::f()	std|||std|std|St|St|St;string|||string|string|6string|6string|6string;f|||f|f|1f|1f|1f	false
+function	void f(std::string, std::ostream, std::istream, std::iostream)	=>	ok	f__ss.os.is.ios	_CPPv21fNSt6stringENSt7ostreamENSt7istreamENSt8iostreamE	_CPPv31fNSt6stringENSt7ostreamENSt7istreamENSt8iostreamE	_CPPv41fNSt6stringENSt7ostreamENSt7istreamENSt8iostreamE	f	f			void f(std::string, std::ostream, std::istream, std::iostream)	void f(std::string, std::ostream, std::istream, std::iostream)	f|||f|f|1f|1f|1f	false
+function	void f(size_t)	=>	ok	f__s	_CPPv21f6size_t	_CPPv31f6size_t	_CPPv41f6size_t	f	f			void f(size_t)	void f(size_t)	f|||f|f|1f|1f|1f	false
+function	constexpr void f() const	=>	ok	fCCE	_CPPv2NK1fEv	_CPPv3NK1fEv	_CPPv4NK1fEv	f	f			constexpr void f() const	constexpr void f() const	f|||f|f|1f|1f|1f	false
+function	void f(unsigned long)	=>	ok	f__unsigned-l	_CPPv21fm	_CPPv31fm	_CPPv41fm	f	f			void f(unsigned long)	void f(unsigned long)	f|||f|f|1f|1f|1f	false
+function	void f(signed char, unsigned char, char)	=>	ok	f__signed-c.unsigned-c.c	_CPPv21fahc	_CPPv31fahc	_CPPv41fahc	f	f			void f(signed char, unsigned char, char)	void f(signed char, unsigned char, char)	f|||f|f|1f|1f|1f	false
+function	void f(long double, short)	=>	ok	f__l-double.short	_CPPv21fes	_CPPv31fes	_CPPv41fes	f	f			void f(long double, short)	void f(long double, short)	f|||f|f|1f|1f|1f	false
+function	void f(const char *)	=>	ok	f__cCP	_CPPv21fPKc	_CPPv31fPKc	_CPPv41fPKc	f	f			void f(const char*)	void f(const char*)	f|||f|f|1f|1f|1f	false
+function	void f(char *const *p)	=>	ok	f__cPCP	_CPPv21fPPCc	_CPPv31fPPCc	_CPPv41fPPCc	f	f		p	void f(char *const *p)	void f(char *const *p)	f|||f|f|1f|1f|1f	false
+function	void f(volatile int *p)	=>	ok	f__iVP	_CPPv21fPVi	_CPPv31fPVi	_CPPv41fPVi	f	f		p	void f(volatile int *p)	void f(volatile int *p)	f|||f|f|1f|1f|1f	false
+function	void f(int *volatile *p)	=>	ok	f__iPVP	_CPPv21fPPVi	_CPPv31fPPVi	_CPPv41fPPVi	f	f		p	void f(int *volatile *p)	void f(int *volatile *p)	f|||f|f|1f|1f|1f	false
+function	void f(const A &a = A())	=>	ok	f__ACR	_CPPv21fRK1A	_CPPv31fRK1A	_CPPv41fRK1A	f	f		a	void f(const A &a = A())	void f(const A &a = A())	f|||f|f|1f|1f|1f	false
+function	void f(int a = -1)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = -1)	void f(int a = -1)	f|||f|f|1f|1f|1f	false
+function	void f(int a = ~0)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = ~0)	void f(int a = ~0)	f|||f|f|1f|1f|1f	false
+function	void f(int a = 'x')	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = 'x')	void f(int a = 'x')	f|||f|f|1f|1f|1f	false
+function	void f(const char *s = "x")	=>	ok	f__cCP	_CPPv21fPKc	_CPPv31fPKc	_CPPv41fPKc	f	f		s	void f(const char *s = "x")	void f(const char *s = "x")	f|||f|f|1f|1f|1f	false
+function	void f(double d = 1.0)	=>	ok	f__double	_CPPv21fd	_CPPv31fd	_CPPv41fd	f	f		d	void f(double d = 1.0)	void f(double d = 1.0)	f|||f|f|1f|1f|1f	false
+function	void f(bool b = true)	=>	ok	f__b	_CPPv21fb	_CPPv31fb	_CPPv41fb	f	f		b	void f(bool b = true)	void f(bool b = true)	f|||f|f|1f|1f|1f	false
+function	void f(void *p = nullptr)	=>	ok	f__voidP	_CPPv21fPv	_CPPv31fPv	_CPPv41fPv	f	f		p	void f(void *p = nullptr)	void f(void *p = nullptr)	f|||f|f|1f|1f|1f	false
+function	void f(int a = A::b)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = A::b)	void f(int a = A::b)	f|||f|f|1f|1f|1f	false
+function	void f(int a = A<1>{})	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = A<1>{})	void f(int a = A<1>{})	f|||f|f|1f|1f|1f	false
+function	void f(int a = {})	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = {})	void f(int a = {})	f|||f|f|1f|1f|1f	false
+function	void f(int a = {1, 2})	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = {1, 2})	void f(int a = {1, 2})	f|||f|f|1f|1f|1f	false
+function	void f(int a = a > b)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = a > b)	void f(int a = a > b)	f|||f|f|1f|1f|1f	false
+function	void f(int a = (a > b))	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = (a > b))	void f(int a = (a > b))	f|||f|f|1f|1f|1f	false
+function	void f(int a = f<1>())	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = f<1>())	void f(int a = f<1>())	f|||f|f|1f|1f|1f	false
+function	void f(int a = new int)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = new int)	void f(int a = new int)	f|||f|f|1f|1f|1f	false
+function	void f(int a = this->x)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = this->x)	void f(int a = this->x)	f|||f|f|1f|1f|1f	false
+function	void f(int a = x.template f<int>())	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f		a	void f(int a = x.template f<int>())	void f(int a = x.template f<int>())	f|||f|f|1f|1f|1f	true
+function	void f(T &&...)	=>	ok	f__TRRDp	_CPPv21fDpRR1T	_CPPv31fDpRR1T	_CPPv41fDpRR1T	f	f			void f(T&&...)	void f(T&&...)	f|||f|f|1f|1f|1f	false
+function	void f(T...)	=>	ok	f__TDp	_CPPv21fDp1T	_CPPv31fDp1T	_CPPv41fDp1T	f	f			void f(T...)	void f(T...)	f|||f|f|1f|1f|1f	false
+function	template<typename... T> void f(T &&... t)	=>	ok	-	_CPPv2IDpE1fDpRR1T	_CPPv3IDpE1fDpRR1T	_CPPv4IDpE1fvDpRR1T	f	f	T	t	template<typename ...T> void f(T&&... t)	template<typename ...T> void f(T&&... t)	f||template<typename ...T> |f|f|1f|1f|1f	false
+function	void f(int = 0)	=>	ok	f__i	_CPPv21fi	_CPPv31fi	_CPPv41fi	f	f			void f(int = 0)	void f(int = 0)	f|||f|f|1f|1f|1f	false
+class	A	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A	A	A|||A|A|1A|1A|1A	false
+class	A : B	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : B	A : B	A|||A|A|1A|1A|1A	false
+class	A : public B	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : public B	A : public B	A|||A|A|1A|1A|1A	false
+class	A : protected B	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : protected B	A : protected B	A|||A|A|1A|1A|1A	false
+class	A : private B	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : private B	A : private B	A|||A|A|1A|1A|1A	false
+class	A : virtual B	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : virtual B	A : virtual B	A|||A|A|1A|1A|1A	false
+class	A : virtual public B	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : public virtual B	A : public virtual B	A|||A|A|1A|1A|1A	false
+class	A : public virtual B	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : public virtual B	A : public virtual B	A|||A|A|1A|1A|1A	false
+class	A : B, C	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : B, C	A : B, C	A|||A|A|1A|1A|1A	false
+class	A : public B, private C	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : public B, private C	A : public B, private C	A|||A|A|1A|1A|1A	false
+class	A : B...	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : B...	A : B...	A|||A|A|1A|1A|1A	false
+class	A : public Bs...	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : public Bs...	A : public Bs...	A|||A|A|1A|1A|1A	false
+class	A final	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A final	A final	A|||A|A|1A|1A|1A	false
+class	A final : B	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A final : B	A final : B	A|||A|A|1A|1A|1A	false
+class	ns::A	=>	ok	ns::A	_CPPv2N2ns1AE	_CPPv3N2ns1AE	_CPPv4N2ns1AE	ns::A	ns::A			ns::A	ns::A	ns|||ns|ns|2ns|2ns|2ns;A|||A|A|1A|1A|1A	false
+class	::A	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			::A	::A	A|||A|A|1A|1A|1A	false
+class	A::B::C	=>	ok	A::B::C	_CPPv2N1A1B1CE	_CPPv3N1A1B1CE	_CPPv4N1A1B1CE	A::B::C	A::B::C			A::B::C	A::B::C	A|||A|A|1A|1A|1A;B|||B|B|1B|1B|1B;C|||C|C|1C|1C|1C	false
+class	template<typename T> A	=>	ok	-	_CPPv2I0E1A	_CPPv3I0E1A	_CPPv4I0E1A	A	A	T		template<typename T> A	template<typename T> A	A||template<typename T> |A|A|1A|1A|1A	false
+class	template<typename T> A<T*>	=>	ok	-	_CPPv2I0E1AIP1TE	_CPPv3I0E1AIP1TE	_CPPv4I0E1AIP1TE	A<T*>	A<T*>	T		template<typename T> A<T*>	template<typename T> A<T*>	A|<T*>|template<typename T> |A<T*>|A:TP:|1AIP1TE|1AIP1TE|1AIP1TE	false
+class	template<> A<int>	=>	ok	-	_CPPv2IE1AIiE	_CPPv3IE1AIiE	_CPPv4IE1AIiE	A<int>	A<int>			template<> A<int>	template<> A<int>	A|<int>|template<> |A<int>|A:i:|1AIiE|1AIiE|1AIiE	false
+class	A<int>	=>	ok	-	_CPPv2IE1AIiE	_CPPv3IE1AIiE	_CPPv4IE1AIiE	A<int>	A<int>			template<> A<int>	template<> A<int>	A|<int>|template<> |A<int>|A:i:|1AIiE|1AIiE|1AIiE	false
+class	template<typename T, int V, template<typename> typename U> C	=>	ok	-	_CPPv2I0_iI0E0E1C	_CPPv3I0_iI0E0E1C	_CPPv4I0_iI0E0E1C	C	C	T,V,U		template<typename T, int V, template<typename> typename U> C	template<typename T, int V, template<typename> typename U> C	C||template<typename T, int V, template<typename> typename U> |C|C|1C|1C|1C	false
+class	template<typename T> A<T>	=>	ok	-	_CPPv2I0E1A	_CPPv3I0E1A	_CPPv4I0E1A	A	A	T		template<typename T> A<T>	template<typename T> A<T>	A||template<typename T> |A|A|1A|1A|1A	false
+class	template<typename T, typename U> A<T, U>	=>	ok	-	_CPPv2I00E1A	_CPPv3I00E1A	_CPPv4I00E1A	A	A	T,U		template<typename T, typename U> A<T, U>	template<typename T, typename U> A<T, U>	A||template<typename T, typename U> |A|A|1A|1A|1A	false
+class	template<typename T, typename U> A<U, T>	=>	ok	-	_CPPv2I00E1AI1U1TE	_CPPv3I00E1AI1U1TE	_CPPv4I00E1AI1U1TE	A<U, T>	A<U, T>	T,U		template<typename T, typename U> A<U, T>	template<typename T, typename U> A<U, T>	A|<U, T>|template<typename T, typename U> |A<U, T>|A:U.T:|1AI1U1TE|1AI1U1TE|1AI1U1TE	false
+class	template<typename... Ts> A<Ts...>	=>	ok	-	_CPPv2IDpE1A	_CPPv3IDpE1A	_CPPv4IDpE1A	A	A	Ts		template<typename ...Ts> A<Ts...>	template<typename ...Ts> A<Ts...>	A||template<typename ...Ts> |A|A|1A|1A|1A	false
+class	template<typename T> template<typename U> A<T>::B	=>	ok	-	_CPPv2I0EI0EN1A1BE	_CPPv3I0EI0EN1A1BE	_CPPv4I0EI0EN1A1BE	A::B	A::B	U		template<typename T> template<typename U> A<T>::B	template<typename T> template<typename U> A<T>::B	A||template<typename T> |A|A|1A|1A|1A;B||template<typename U> |B|B|1B|1B|1B	false
+class	template<typename T> A<T>::B	=>	ok	-	_CPPv2I0EN1A1BE	_CPPv3I0EN1A1BE	_CPPv4I0EN1A1BE	A::B	A::B			template<typename T> A<T>::B	template<typename T> A<T>::B	A||template<typename T> |A|A|1A|1A|1A;B|||B|B|1B|1B|1B	false
+class	template<typename T> requires C<T> A	=>	ok	-	-	-	_CPPv4I0EIQ1CI1TEE1A	A	A	T		template<typename T> requires C<T> A	template<typename T> requires C<T> A	A||template<typename T> requires C<T> |A|A|1A|1A|1A	false
+class	C{T} A	=>	ok	-	_CPPv2I0EX1CI1TEE1A	_CPPv3I0EX1CI1TEE1A	_CPPv4I0EX1CI1TEE1A	A	A	T		C{T} A	C{T} A	A||C{T} |A|A|1A|1A|1A	false
+class	[[deprecated]] A	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			[[deprecated]] A	[[deprecated]] A	A|||A|A|1A|1A|1A	false
+class	__attribute__((packed)) A	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			__attribute__((packed)) A	__attribute__((packed)) A	A|||A|A|1A|1A|1A	false
+class	@a	=>	ok	-	-	_CPPv3Ut1_a	_CPPv4Ut1_a	@a	[anonymous]			@a	[anonymous]	@a|||[anonymous]|-|-|Ut1_a|Ut1_a	false
+class	@a::A	=>	ok	-	-	_CPPv3NUt1_a1AE	_CPPv4NUt1_a1AE	@a::A	[anonymous]::A			@a::A	[anonymous]::A	@a|||[anonymous]|-|-|Ut1_a|Ut1_a;A|||A|A|1A|1A|1A	false
+class	A::@b	=>	ok	-	-	_CPPv3N1AUt1_bE	_CPPv4N1AUt1_bE	A::@b	A::[anonymous]			A::@b	A::[anonymous]	A|||A|A|1A|1A|1A;@b|||[anonymous]|-|-|Ut1_b|Ut1_b	false
+class	protected A	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			protected A	protected A	A|||A|A|1A|1A|1A	false
+class	A<int>::B	=>	ok	-	_CPPv2IEN1AIiE1BE	_CPPv3IEN1AIiE1BE	_CPPv4IEN1AIiE1BE	A<int>::B	A<int>::B			template<> A<int>::B	template<> A<int>::B	A|<int>|template<> |A<int>|A:i:|1AIiE|1AIiE|1AIiE;B|||B|B|1B|1B|1B	false
+class	A : B<int>	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : B<int>	A : B<int>	A|||A|A|1A|1A|1A	false
+class	A : ::B	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : ::B	A : ::B	A|||A|A|1A|1A|1A	false
+class	A : ns::B<T>	=>	ok	A	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A : ns::B<T>	A : ns::B<T>	A|||A|A|1A|1A|1A	false
+class	A :	=>	invalid
+class	A B	=>	invalid
+struct	S	=>	ok	S	_CPPv21S	_CPPv31S	_CPPv41S	S	S			S	S	S|||S|S|1S|1S|1S	false
+struct	template<typename T> S	=>	ok	-	_CPPv2I0E1S	_CPPv3I0E1S	_CPPv4I0E1S	S	S	T		template<typename T> S	template<typename T> S	S||template<typename T> |S|S|1S|1S|1S	false
+struct	S : public B	=>	ok	S	_CPPv21S	_CPPv31S	_CPPv41S	S	S			S : public B	S : public B	S|||S|S|1S|1S|1S	false
+union	U	=>	ok	-	_CPPv21U	_CPPv31U	_CPPv41U	U	U			U	U	U|||U|U|1U|1U|1U	false
+union	A::U	=>	ok	-	_CPPv2N1A1UE	_CPPv3N1A1UE	_CPPv4N1A1UE	A::U	A::U			A::U	A::U	A|||A|A|1A|1A|1A;U|||U|U|1U|1U|1U	false
+union	template<typename T> U	=>	ok	-	_CPPv2I0E1U	_CPPv3I0E1U	_CPPv4I0E1U	U	U	T		template<typename T> U	template<typename T> U	U||template<typename T> |U|U|1U|1U|1U	false
+union	[[deprecated]] U	=>	ok	-	_CPPv21U	_CPPv31U	_CPPv41U	U	U			[[deprecated]] U	[[deprecated]] U	U|||U|U|1U|1U|1U	false
+union	@u	=>	ok	-	-	_CPPv3Ut1_u	_CPPv4Ut1_u	@u	[anonymous]			@u	[anonymous]	@u|||[anonymous]|-|-|Ut1_u|Ut1_u	false
+union	U : int	=>	invalid
+enum	E	=>	ok	-	_CPPv21E	_CPPv31E	_CPPv41E	E	E			E	E	E|||E|E|1E|1E|1E	false
+enum	E : int	=>	ok	-	_CPPv21E	_CPPv31E	_CPPv41E	E	E			E : int	E : int	E|||E|E|1E|1E|1E	false
+enum	E : unsigned long	=>	ok	-	_CPPv21E	_CPPv31E	_CPPv41E	E	E			E : unsigned long	E : unsigned long	E|||E|E|1E|1E|1E	false
+enum	E : std::underlying_type<S>::type	=>	ok	-	_CPPv21E	_CPPv31E	_CPPv41E	E	E			E : std::underlying_type<S>::type	E : std::underlying_type<S>::type	E|||E|E|1E|1E|1E	false
+enum	A::E	=>	ok	-	_CPPv2N1A1EE	_CPPv3N1A1EE	_CPPv4N1A1EE	A::E	A::E			A::E	A::E	A|||A|A|1A|1A|1A;E|||E|E|1E|1E|1E	false
+enum	[[deprecated]] E	=>	ok	-	_CPPv21E	_CPPv31E	_CPPv41E	E	E			[[deprecated]] E	[[deprecated]] E	E|||E|E|1E|1E|1E	false
+enum	@e	=>	ok	-	-	_CPPv3Ut1_e	_CPPv4Ut1_e	@e	[anonymous]			@e	[anonymous]	@e|||[anonymous]|-|-|Ut1_e|Ut1_e	false
+enum-struct	E	=>	ok	-	_CPPv21E	_CPPv31E	_CPPv41E	E	E			E	E	E|||E|E|1E|1E|1E	false
+enum-struct	protected E : std::underlying_type<S>::type	=>	ok	-	_CPPv21E	_CPPv31E	_CPPv41E	E	E			protected E : std::underlying_type<S>::type	protected E : std::underlying_type<S>::type	E|||E|E|1E|1E|1E	false
+enum-class	E	=>	ok	-	_CPPv21E	_CPPv31E	_CPPv41E	E	E			E	E	E|||E|E|1E|1E|1E	false
+enum-class	E : char	=>	ok	-	_CPPv21E	_CPPv31E	_CPPv41E	E	E			E : char	E : char	E|||E|E|1E|1E|1E	false
+enum	template<typename T> E	=>	invalid
+enumerator	A	=>	ok	-	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A	A	A|||A|A|1A|1A|1A	false
+enumerator	A = 42	=>	ok	-	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A = 42	A = 42	A|||A|A|1A|1A|1A	false
+enumerator	A = 1 << 2	=>	ok	-	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A = 1 << 2	A = 1 << 2	A|||A|A|1A|1A|1A	false
+enumerator	A = B | C	=>	ok	-	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A = B | C	A = B | C	A|||A|A|1A|1A|1A	false
+enumerator	E::A	=>	ok	-	_CPPv2N1E1AE	_CPPv3N1E1AE	_CPPv4N1E1AE	E::A	E::A			E::A	E::A	E|||E|E|1E|1E|1E;A|||A|A|1A|1A|1A	false
+enumerator	A = @#$	=>	ok	-	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A = @#$	A = @#$	A|||A|A|1A|1A|1A	true
+enumerator	A [[deprecated]]	=>	ok	-	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A [[deprecated]]	A [[deprecated]]	A|||A|A|1A|1A|1A	false
+enumerator	A [[deprecated]] = 1	=>	ok	-	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A [[deprecated]] = 1	A [[deprecated]] = 1	A|||A|A|1A|1A|1A	false
+enumerator	A = 'x'	=>	ok	-	_CPPv21A	_CPPv31A	_CPPv41A	A	A			A = 'x'	A = 'x'	A|||A|A|1A|1A|1A	false
+enumerator	@a::A	=>	ok	-	-	_CPPv3NUt1_a1AE	_CPPv4NUt1_a1AE	@a::A	[anonymous]::A			@a::A	[anonymous]::A	@a|||[anonymous]|-|-|Ut1_a|Ut1_a;A|||A|A|1A|1A|1A	false
+type	T	=>	ok	T	_CPPv21T	_CPPv31T	_CPPv41T	T	T			T	T	T|||T|T|1T|1T|1T	false
+type	A::T	=>	ok	A::T	_CPPv2N1A1TE	_CPPv3N1A1TE	_CPPv4N1A1TE	A::T	A::T			A::T	A::T	A|||A|A|1A|1A|1A;T|||T|T|1T|1T|1T	false
+type	int T	=>	ok	T	_CPPv21T	_CPPv31T	_CPPv41T	T	T			int T	int T	T|||T|T|1T|1T|1T	false
+type	std::vector<int> T	=>	ok	T	_CPPv21T	_CPPv31T	_CPPv41T	T	T			std::vector<int> T	std::vector<int> T	T|||T|T|1T|1T|1T	false
+type	int (*F)(double)	=>	ok	F	_CPPv21F	_CPPv31F	_CPPv41F	F	F			int (*F)(double)	int (*F)(double)	F|||F|F|1F|1F|1F	false
+type	int A::*P	=>	ok	P	_CPPv21P	_CPPv31P	_CPPv41P	P	P			int A::* P	int A::* P	P|||P|P|1P|1P|1P	false
+type	using T = int	=>	invalid
+type	T = int	=>	ok	-	_CPPv21T	_CPPv31T	_CPPv41T	T	T			T = int	T = int	T|||T|T|1T|1T|1T	false
+type	T = std::vector<int>	=>	ok	-	_CPPv21T	_CPPv31T	_CPPv41T	T	T			T = std::vector<int>	T = std::vector<int>	T|||T|T|1T|1T|1T	false
+type	template<typename T> T = std::vector<T>	=>	ok	-	_CPPv2I0E1T	_CPPv3I0E1T	_CPPv4I0E1T	T	T	T		template<typename T> T = std::vector<T>	template<typename T> T = std::vector<T>	T||template<typename T> |T|T|1T|1T|1T	false
+type	template<typename T> V = std::vector<T>	=>	ok	-	_CPPv2I0E1V	_CPPv3I0E1V	_CPPv4I0E1V	V	V	T		template<typename T> V = std::vector<T>	template<typename T> V = std::vector<T>	V||template<typename T> |V|V|1V|1V|1V	false
+type	template<typename T> V	=>	ok	-	_CPPv2I0E1V	_CPPv3I0E1V	_CPPv4I0E1V	V	V	T		template<typename T> V	template<typename T> V	V||template<typename T> |V|V|1V|1V|1V	false
+type	typename T::type U	=>	ok	U	_CPPv21U	_CPPv31U	_CPPv41U	U	U			typename T::type U	typename T::type U	U|||U|U|1U|1U|1U	false
+type	unsigned long long U	=>	ok	U	_CPPv21U	_CPPv31U	_CPPv41U	U	U			unsigned long long U	unsigned long long U	U|||U|U|1U|1U|1U	false
+type	int T[3]	=>	ok	T	_CPPv21T	_CPPv31T	_CPPv41T	T	T			int T[3]	int T[3]	T|||T|T|1T|1T|1T	false
+type	const int *T	=>	ok	T	_CPPv21T	_CPPv31T	_CPPv41T	T	T			const int *T	const int *T	T|||T|T|1T|1T|1T	false
+type	A<int> T	=>	ok	T	_CPPv21T	_CPPv31T	_CPPv41T	T	T			A<int> T	A<int> T	T|||T|T|1T|1T|1T	false
+type	T = int (*)(double)	=>	ok	-	_CPPv21T	_CPPv31T	_CPPv41T	T	T			T = int (*)(double)	T = int (*)(double)	T|||T|T|1T|1T|1T	false
+type	template<typename T> A<T>::type	=>	ok	-	_CPPv2I0EN1A4typeE	_CPPv3I0EN1A4typeE	_CPPv4I0EN1A4typeE	A::type	A::type			template<typename T> A<T>::type	template<typename T> A<T>::type	A||template<typename T> |A|A|1A|1A|1A;type|||type|type|4type|4type|4type	false
+type	public T	=>	ok	T	_CPPv21T	_CPPv31T	_CPPv41T	T	T			T	T	T|||T|T|1T|1T|1T	false
+type	@t	=>	ok	-	-	_CPPv3Ut1_t	_CPPv4Ut1_t	@t	[anonymous]			@t	[anonymous]	@t|||[anonymous]|-|-|Ut1_t|Ut1_t	false
+type	int	=>	invalid
+concept	template<typename T> C	=>	ok	-	_CPPv2I0E1C	_CPPv3I0E1C	_CPPv4I0E1C	C	C	T		template<typename T> C	template<typename T> C	C||template<typename T> |C|C|1C|1C|1C	false
+concept	template<typename T> C = true	=>	ok	-	_CPPv2I0E1C	_CPPv3I0E1C	_CPPv4I0E1C	C	C	T		template<typename T> C = true	template<typename T> C = true	C||template<typename T> |C|C|1C|1C|1C	false
+concept	template<typename T> C = sizeof(T) > 1	=>	ok	-	_CPPv2I0E1C	_CPPv3I0E1C	_CPPv4I0E1C	C	C	T		template<typename T> C = sizeof(T) > 1	template<typename T> C = sizeof(T) > 1	C||template<typename T> |C|C|1C|1C|1C	false
+concept	template<typename T> C = A<T> && B<T>	=>	ok	-	_CPPv2I0E1C	_CPPv3I0E1C	_CPPv4I0E1C	C	C	T		template<typename T> C = A<T> && B<T>	template<typename T> C = A<T> && B<T>	C||template<typename T> |C|C|1C|1C|1C	false
+concept	template<typename T> A::C	=>	ok	-	_CPPv2I0EN1A1CE	_CPPv3I0EN1A1CE	_CPPv4I0EN1A1CE	A::C	A::C	T		template<typename T> A::C	template<typename T> A::C	A|||A|A|1A|1A|1A;C||template<typename T> |C|C|1C|1C|1C	false
+concept	C	=>	invalid
+concept	template<typename T> requires D<T> C	=>	invalid
+concept	template<typename T> template<typename U> C	=>	invalid
+concept	template<typename T, typename U> C = std::is_same_v<T, U>	=>	ok	-	_CPPv2I00E1C	_CPPv3I00E1C	_CPPv4I00E1C	C	C	T,U		template<typename T, typename U> C = std::is_same_v<T, U>	template<typename T, typename U> C = std::is_same_v<T, U>	C||template<typename T, typename U> |C|C|1C|1C|1C	false
+function@ns	void f()	=>	ok	ns::f	_CPPv2N2ns1fEv	_CPPv3N2ns1fEv	_CPPv4N2ns1fEv	ns::f	ns::f			void f()	void f()	ns|||ns|ns|2ns|2ns|2ns;f|||f|f|1f|1f|1f	false
+function@ns	void f(int)	=>	ok	ns::f__i	_CPPv2N2ns1fEi	_CPPv3N2ns1fEi	_CPPv4N2ns1fEi	ns::f	ns::f			void f(int)	void f(int)	ns|||ns|ns|2ns|2ns|2ns;f|||f|f|1f|1f|1f	false
+function@ns::inner	void f()	=>	ok	ns::inner::f	_CPPv2N2ns5inner1fEv	_CPPv3N2ns5inner1fEv	_CPPv4N2ns5inner1fEv	ns::inner::f	ns::inner::f			void f()	void f()	ns|||ns|ns|2ns|2ns|2ns;inner|||inner|inner|5inner|5inner|5inner;f|||f|f|1f|1f|1f	false
+function@A<int>	void f()	=>	ok	A:i:::f	_CPPv2N1AIiE1fEv	_CPPv3N1AIiE1fEv	_CPPv4N1AIiE1fEv	A<int>::f	A<int>::f			void f()	void f()	A|<int>|template<> |A<int>|A:i:|1AIiE|1AIiE|1AIiE;f|||f|f|1f|1f|1f	false
+function@template<typename T> A	void f()	=>	ok	A::f	_CPPv2N1A1fEv	_CPPv3N1A1fEv	_CPPv4N1A1fEv	A::f	A::f			void f()	void f()	A||template<typename T> |A|A|1A|1A|1A;f|||f|f|1f|1f|1f	false
+member@A	int x	=>	ok	A::x__i	_CPPv2N1A1xE	_CPPv3N1A1xE	_CPPv4N1A1xE	A::x	A::x			int x	int x	A|||A|A|1A|1A|1A;x|||x|x|1x|1x|1x	false
+member@ns	std::string name	=>	ok	ns::name__ss	_CPPv2N2ns4nameE	_CPPv3N2ns4nameE	_CPPv4N2ns4nameE	ns::name	ns::name			std::string name	std::string name	ns|||ns|ns|2ns|2ns|2ns;name|||name|name|4name|4name|4name	false
+class@ns	A	=>	ok	ns::A	_CPPv2N2ns1AE	_CPPv3N2ns1AE	_CPPv4N2ns1AE	ns::A	ns::A			A	A	ns|||ns|ns|2ns|2ns|2ns;A|||A|A|1A|1A|1A	false
+class@ns	@a::A	=>	ok	-	-	_CPPv3N2nsUt1_a1AE	_CPPv4N2nsUt1_a1AE	ns::@a::A	ns::[anonymous]::A			@a::A	[anonymous]::A	ns|||ns|ns|2ns|2ns|2ns;@a|||[anonymous]|-|-|Ut1_a|Ut1_a;A|||A|A|1A|1A|1A	false
+class@ns	template<typename T, int V, template<typename> typename U> C	=>	ok	-	_CPPv2I0_iI0E0EN2ns1CE	_CPPv3I0_iI0E0EN2ns1CE	_CPPv4I0_iI0E0EN2ns1CE	ns::C	ns::C	T,V,U		template<typename T, int V, template<typename> typename U> C	template<typename T, int V, template<typename> typename U> C	ns|||ns|ns|2ns|2ns|2ns;C||template<typename T, int V, template<typename> typename U> |C|C|1C|1C|1C	false
+class@ns::B	C	=>	ok	ns::B::C	_CPPv2N2ns1B1CE	_CPPv3N2ns1B1CE	_CPPv4N2ns1B1CE	ns::B::C	ns::B::C			C	C	ns|||ns|ns|2ns|2ns|2ns;B|||B|B|1B|1B|1B;C|||C|C|1C|1C|1C	false
+type@ns	T = int	=>	ok	-	_CPPv2N2ns1TE	_CPPv3N2ns1TE	_CPPv4N2ns1TE	ns::T	ns::T			T = int	T = int	ns|||ns|ns|2ns|2ns|2ns;T|||T|T|1T|1T|1T	false
+enum@ns	E	=>	ok	-	_CPPv2N2ns1EE	_CPPv3N2ns1EE	_CPPv4N2ns1EE	ns::E	ns::E			E	E	ns|||ns|ns|2ns|2ns|2ns;E|||E|E|1E|1E|1E	false
+enumerator@ns::E	A	=>	ok	-	_CPPv2N2ns1E1AE	_CPPv3N2ns1E1AE	_CPPv4N2ns1E1AE	ns::E::A	ns::E::A			A	A	ns|||ns|ns|2ns|2ns|2ns;E|||E|E|1E|1E|1E;A|||A|A|1A|1A|1A	false
+concept@ns	template<typename T> C	=>	ok	-	_CPPv2I0EN2ns1CE	_CPPv3I0EN2ns1CE	_CPPv4I0EN2ns1CE	ns::C	ns::C	T		template<typename T> C	template<typename T> C	ns|||ns|ns|2ns|2ns|2ns;C||template<typename T> |C|C|1C|1C|1C	false
+function@std	void f()	=>	ok	std::f	_CPPv2NSt1fEv	_CPPv3NSt1fEv	_CPPv4NSt1fEv	std::f	std::f			void f()	void f()	std|||std|std|St|St|St;f|||f|f|1f|1f|1f	false
+member@std	string s	=>	ok	std::s__string	_CPPv2NSt1sE	_CPPv3NSt1sE	_CPPv4NSt1sE	std::s	std::s			string s	string s	std|||std|std|St|St|St;s|||s|s|1s|1s|1s	false
+class@std	string	=>	ok	ss	_CPPv2NSt6stringE	_CPPv3NSt6stringE	_CPPv4NSt6stringE	std::string	std::string			string	string	std|||std|std|St|St|St;string|||string|string|6string|6string|6string	false
+class@std	vector	=>	ok	v	_CPPv2NSt6vectorE	_CPPv3NSt6vectorE	_CPPv4NSt6vectorE	std::vector	std::vector			vector	vector	std|||std|std|St|St|St;vector|||vector|vector|6vector|6vector|6vector	false
+function@::ns	void f()	=>	ok	ns::f	_CPPv2N2ns1fEv	_CPPv3N2ns1fEv	_CPPv4N2ns1fEv	ns::f	ns::f			void f()	void f()	ns|||ns|ns|2ns|2ns|2ns;f|||f|f|1f|1f|1f	false
+ns	ns	=>	ok	ns|||ns|ns|2ns|2ns|2ns
+ns	ns::inner	=>	ok	ns|||ns|ns|2ns|2ns|2ns;inner|||inner|inner|5inner|5inner|5inner
+ns	::ns	=>	ok	ns|||ns|ns|2ns|2ns|2ns
+ns	NULL	=>	root
+ns	0	=>	root
+ns	nullptr	=>	root
+ns	A<int>	=>	ok	A|<int>|template<> |A<int>|A:i:|1AIiE|1AIiE|1AIiE
+ns	template<typename T> A	=>	ok	A||template<typename T> |A|A|1A|1A|1A
+ns	template<typename T> A<T>	=>	ok	A||template<typename T> |A|A|1A|1A|1A
+ns	template<typename T> A<T*>	=>	ok	A|<T*>|template<typename T> |A<T*>|A:TP:|1AIP1TE|1AIP1TE|1AIP1TE
+ns	@a	=>	ok	@a|||[anonymous]|-|-|Ut1_a|Ut1_a
+ns	std	=>	ok	std|||std|std|St|St|St
+ns	1bad	=>	invalid
+ns	A::	=>	invalid
+ns	operator+	=>	ok	operator+|||operator+|add-operator|pl|pl|pl
+ns@outer	ns	=>	ok	outer|||outer|outer|5outer|5outer|5outer;ns|||ns|ns|2ns|2ns|2ns
+ns@outer	A::B	=>	ok	outer|||outer|outer|5outer|5outer|5outer;A|||A|A|1A|1A|1A;B|||B|B|1B|1B|1B
+ns@outer::x	y	=>	ok	outer|||outer|outer|5outer|5outer|5outer;x|||x|x|1x|1x|1x;y|||y|y|1y|1y|1y
+xref	A	=>	ok	true	A|	false		
+xref	A::B	=>	ok	true	A|;B|	false		
+xref	::A	=>	ok	true	A|	true		
+xref	A<int>	=>	ok	true	A|<int>	false	template<> 	
+xref	A<int>::f	=>	ok	true	A|<int>;f|	false	template<> 	
+xref	f()	=>	ok	true	f|	false		
+xref	A::f()	=>	ok	true	A|;f|	false		
+xref	f(int)	=>	ok	false	f|	false		_CPPv4$$i	1f
+xref	void f(int)	=>	ok	false	f|	false		_CPPv4$$i	1f
+xref	void A::f(int) const	=>	ok	false	A|;f|	false		_CPPv4$K$i	1f
+xref	int A::f(double, char) const &&	=>	ok	false	A|;f|	false		_CPPv4$KO$dc	1f
+xref	template<typename T> A	=>	ok	true	A|	false	template<typename T> 	
+xref	template<typename T> A<T>::f	=>	ok	true	A|<T>;f|	false	template<typename T> 	
+xref	template<typename T> void f(T)	=>	ok	false	f|	false	template<typename T> 	_CPPv4I0E$$v1T	1f
+xref	operator+	=>	ok	true	operator+|	false		
+xref	operator()	=>	ok	true	operator()|	false		
+xref	operator int	=>	ok	true	operator int|	false		
+xref	A::operator+	=>	ok	true	A|;operator+|	false		
+xref	f(int x)	=>	ok	false	f|	false		_CPPv4$$i	1f
+xref	f(int) const	=>	ok	false	f|	false		_CPPv4$K$i	1f
+xref	@a::b	=>	ok	true	@a|;b|	false		
+xref	A::template B<int>	=>	ok	true	A|;B|<int>	false	template<> 	
+xref	std::string	=>	ok	true	std|;string|	false		
+xref	auto f() -> int	=>	ok	false	f|	false		_CPPv4$$v	1f
+xref	operator""_x	=>	ok	true	operator""_x|	false		
+xref	1bad	=>	invalid
+xref	f(	=>	invalid
+xref	A B C	=>	invalid
+xref	template<> A<int>	=>	ok	true	A|<int>	false	template<> 	
+xref	template A<int>	=>	invalid
+xref	f(int) noexcept	=>	ok	false	f|	false		_CPPv4$$i	1f
+xref	f() requires C<int>	=>	ok	false	f|	false		_CPPv4IQ1CIiEE$$v	1f
+xref	template<typename T> void f() requires C<T>	=>	ok	false	f|	false	template<typename T> 	_CPPv4I0EIQ1CI1TEE$$vv	1f
+xref()	f	=>	ok	true	f|	false		
+xref()	A::f	=>	ok	true	A|;f|	false		
+xref()	f(int)	=>	invalid
+xref()	A::f(int) const	=>	invalid
+xref()	operator+	=>	ok	true	operator+|	false		
+expr	a	=>	ok	a	a	Postfix	1a	1a	1a
+expr	a + b	=>	ok	a + b	a + b	Bin_Op	pl1a1b	pl1a1b	pl1a1b
+expr	A::b	=>	ok	A::b	A::b	Postfix	N1A1bE	N1A1bE	N1A1bE
+expr	f(1, 2)	=>	ok	f(1, 2)	f(1, 2)	Postfix	cl1fL1EL2EE	cl1fL1EL2EE	cl1fL1EL2EE
+expr	sizeof(item) + 1	=>	ok	sizeof(item) + 1	sizeof(item) + 1	Bin_Op	plst4itemL1E	plst4itemL1E	plst4itemL1E
+expr	const item &	=>	ok	const item&	const item&	Type	RK4item	RK4item	RK4item
+expr	int	=>	ok	int	int	Type	i	i	i
+expr	std::vector<int>	=>	ok	std::vector<int>	std::vector<int>	Postfix	NSt6vectorIiEE	NSt6vectorIiEE	NSt6vectorIiEE
+expr	a ? b : c	=>	ok	a ? b : c	a ? b : c	Conditional	qu1a1b1c	qu1a1b1c	qu1a1b1c
+expr	(a, b)	=>	ok	(a, b)	(a, b)	Postfix	cm1a1b	cm1a1b	cm1a1b
+expr	a = b	=>	ok	a = b	a = b	Assignment	aS1a1b	aS1a1b	aS1a1b
+expr	new int	=>	ok	new int	new int	New_Expr	nw_iE	nw_iE	nw_iE
+expr	"str"	=>	ok	"str"	"str"	Postfix	LA3_KcE	LA3_KcE	LA3_KcE
+expr	'c'	=>	ok	'c'	'c'	Postfix	c99	c99	c99
+expr	42	=>	ok	42	42	Postfix	L42E	L42E	L42E
+expr	1.5	=>	ok	1.5	1.5	Postfix	L1.5E	L1.5E	L1.5E
+expr	nullptr	=>	ok	nullptr	nullptr	Postfix	LDnE	LDnE	LDnE
+expr	this	=>	ok	this	this	Postfix	fpT	fpT	fpT
+expr	true	=>	ok	true	true	Postfix	L1E	L1E	L1E
+expr	x.f()	=>	ok	x.f()	x.f()	Postfix	cldt1x1fE	cldt1x1fE	cldt1x1fE
+expr	p->f()	=>	ok	p->f()	p->f()	Postfix	clpt1p1fE	clpt1p1fE	clpt1p1fE
+expr	-a	=>	ok	-a	-a	Unary	ng1a	ng1a	ng1a
+expr	!a	=>	ok	!a	!a	Unary	nt1a	nt1a	nt1a
+expr	a[0]	=>	ok	a[0]	a[0]	Postfix	ix1aL0E	ix1aL0E	ix1aL0E
+expr	(int)a	=>	ok	(int)a	(int)a	Cast_Expr	cvi1a	cvi1a	cvi1a
+expr	static_cast<int>(a)	=>	ok	static_cast<int>(a)	static_cast<int>(a)	Postfix	sci1a	sci1a	sci1a
+expr	typeid(a)	=>	ok	typeid(a)	typeid(a)	Postfix	ti1a	ti1a	ti1a
+expr	sizeof...(Ts)	=>	ok	sizeof...(Ts)	sizeof...(Ts)	Sizeof_Pack	sZ2Ts	sZ2Ts	sZ2Ts
+expr	alignof(int)	=>	ok	alignof(int)	alignof(int)	Alignof	ati	ati	ati
+expr	noexcept(a)	=>	ok	noexcept(a)	noexcept(a)	Noexcept_Expr	nx1a	nx1a	nx1a
+expr	(... + a)	=>	ok	(... + a)	(... + a)	Postfix	-	(... + a)	flpl1a
+expr	(a + ...)	=>	ok	(a + ...)	(a + ...)	Postfix	-	(a + ...)	frpl1a
+expr	(a + ... + b)	=>	ok	(a + ... + b)	(a + ... + b)	Postfix	-	(a + ... + b)	fLpl1a1b
+expr	a...	=>	ok	a...	a...	Type	Dp1a	Dp1a	Dp1a
+expr	@#$	=>	invalid
+expr	int *	=>	ok	int*	int*	Type	Pi	Pi	Pi
+expr	int (*)(double)	=>	ok	int (*)(double)	int (*)(double)	Type	PFidE	PFidE	PFidE
+expr	A<1>	=>	ok	A<1>	A<1>	Postfix	1AIX1EE	1AIXL1EEE	1AIXL1EEE
+expr	{1, 2}	=>	invalid
+expr	f{1}	=>	ok	f{1}	f{1}	Postfix	cl1fL1EE	cl1fL1EE	cl1fL1EE
+expr	delete p	=>	ok	delete p	delete p	Delete_Expr	dl1p	dl1p	dl1p
+expr	a.*b	=>	ok	a .* b	a .* b	Bin_Op	ds1a1b	ds1a1b	ds1a1b
+expr	a->*b	=>	ok	a ->* b	a ->* b	Bin_Op	pm1a1b	pm1a1b	pm1a1b
+expr	a <=> b	=>	ok	a <=> b	a <=> b	Bin_Op	ss1a1b	ss1a1b	ss1a1b
+expr	a not_eq b	=>	ok	a not_eq b	a not_eq b	Bin_Op	ne1a1b	ne1a1b	ne1a1b
+expr	a bitand b	=>	ok	a bitand b	a bitand b	Bin_Op	an1a1b	an1a1b	an1a1b
+expr	1_km	=>	ok	1_km	1_km	Postfix	clL_Zli3_kmEL1EE	clL_Zli3_kmEL1EE	clL_Zli3_kmEL1EE
+expr	"s"_s	=>	ok	"s"_s	"s"_s	Postfix	clL_Zli2_sELA1_KcEE	clL_Zli2_sELA1_KcEE	clL_Zli2_sELA1_KcEE
+expr	'c'_c	=>	ok	'c'_c	'c'_c	Postfix	clL_Zli2_cEc99E	clL_Zli2_cEc99E	clL_Zli2_cEc99E
+expr	a++	=>	ok	a++	a++	Postfix	pp1a	pp1a	pp1a
+expr	a--	=>	ok	a--	a--	Postfix	mm1a	mm1a	mm1a
+expr	++a	=>	ok	++a	++a	Unary	pp_1a	pp_1a	pp_1a
+expr	--a	=>	ok	--a	--a	Unary	mm_1a	mm_1a	mm_1a
+expr	~a	=>	ok	~a	~a	Unary	co1a	co1a	co1a
+expr	compl a	=>	ok	compl a	compl a	Unary	co1a	co1a	co1a
+expr	*a	=>	ok	*a	*a	Unary	de1a	de1a	de1a
+expr	&a	=>	ok	&a	&a	Unary	ad1a	ad1a	ad1a
+expr	+a	=>	ok	+a	+a	Unary	ps1a	ps1a	ps1a
+expr	a += 1	=>	ok	a += 1	a += 1	Assignment	pL1aL1E	pL1aL1E	pL1aL1E
+expr	a ? b : c = d	=>	ok	a ? b : c = d	a ? b : c = d	Conditional	qu1a1baS1c1d	qu1a1baS1c1d	qu1a1baS1c1d
+expr	::a	=>	ok	::a	::a	Postfix	1a	1a	1a
+expr	a::template b<int>	=>	ok	a::template b<int>	a::template b<int>	Postfix	N1a1bIiEE	N1a1bIiEE	N1a1bIiEE
+expr	int(1)	=>	ok	int(1)	int(1)	Postfix	cliL1EE	cliL1EE	cliL1EE
+expr	A<int>{}	=>	ok	A<int>{}	A<int>{}	Postfix	cl1AIiEE	cl1AIiEE	cl1AIiEE
+expr	decltype(a)	=>	ok	decltype(a)	decltype(a)	Type	DT1aE	DT1aE	DT1aE
+expr	unsigned	=>	ok	unsigned	unsigned	Type	j	j	j

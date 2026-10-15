@@ -1,0 +1,715 @@
+# fundamentals
+member	char c
+member	signed char c
+member	unsigned char c
+member	short s
+member	unsigned short int s
+member	long long int x
+member	unsigned long long y
+member	long double ld
+member	_Complex double cd
+member	_Imaginary long double il
+member	__int128 i
+member	unsigned __int128 i
+member	char8_t c
+member	char16_t c
+member	char32_t c
+member	wchar_t w
+member	bool b
+member	auto a
+member	signed s
+member	unsigned u
+member	float f
+member	double d
+member	long  long    int spaced
+member	int unsigned long weird
+member	long short bad
+member	signed unsigned bad
+member	unsigned double bad
+member	long long long bad
+member	__float128 q
+member	std::nullptr_t n
+# members
+member	int a
+member	int a = 42
+member	int a{42}
+member	int a = {1, 2,}
+member	static int a
+member	extern int a
+member	mutable int a
+member	thread_local int a
+member	constinit int a
+member	constexpr int a = 1
+member	inline int a
+member	register int a
+member	const int a
+member	int const a
+member	volatile int a
+member	const volatile int a
+member	int *a
+member	int **a
+member	int *const a
+member	int *volatile a
+member	int *const volatile a
+member	int &a
+member	int &&a
+member	int a[]
+member	int a[42]
+member	int a[N][M]
+member	int a : 3
+member	int a : 3 = 1
+member	int (*p)(double)
+member	int (*p)[3]
+member	int (&r)[3]
+member	int A::*p
+member	int (A::*p)(double) const
+member	int (A::* const p)()
+member	void (*const f)()
+member	std::string name
+member	std::vector<int> v
+member	std::map<std::string, int> m
+member	A<B<C>> abc
+member	A<int, 42> x
+member	A<(1 > 2)> x
+member	A<1 + 2> x
+member	A<sizeof(int)> x
+member	A<T...> x
+member	A<int...> x
+member	T::template X<int> x
+member	typename T::type x
+member	class C c
+member	struct S s
+member	enum E e
+member	union U u
+member	decltype(a) x
+member	decltype(auto) x
+member	decltype(a + b) x
+member	auto x = 1
+member	C auto x
+member	C decltype(auto) x
+member	int @a::b
+member	@a x
+member	int x [[deprecated]]
+member	[[nodiscard]] int x
+member	__attribute__((unused)) int x
+member	__attribute__((aligned(16))) int x
+member	int *[[a]] p
+member	int &[[a]] r
+member	public int x
+member	protected int x
+member	private int x
+member	int x;
+member	template<> int A<int>::x
+member	template int A<int>::x
+member	template<typename T> int A<T>::x
+member	int x = a ? b : c
+member	int x = a = b
+member	int x = (a, b)
+member	int x = a << b
+member	int x = a <=> b
+member	int x = !a
+member	int x = not a
+member	int x = ~a
+member	int x = compl a
+member	int x = -a
+member	int x = +a
+member	int x = *a
+member	int x = &a
+member	int x = ++a
+member	int x = --a
+member	int x = a++
+member	int x = a--
+member	int x = a[1]
+member	int x = a.b
+member	int x = a->b
+member	int x = a.*b
+member	int x = a->*b
+member	int x = f()
+member	int x = f(1, 2)
+member	int x = f{1}
+member	int x = this
+member	int x = nullptr
+member	int x = true
+member	int x = false
+member	int x = 0x1F
+member	int x = 0b1010
+member	int x = 017
+member	int x = 1'000'000
+member	int x = 42u
+member	int x = 42UL
+member	int x = 42ll
+member	int x = 42LLu
+member	double x = 1.5
+member	double x = 1.5e10
+member	double x = .5
+member	double x = 1.
+member	double x = 1.5f
+member	double x = 0x1.8p3
+member	double x = 1.5_km
+member	int x = 42_km
+member	const char *x = "hello"
+member	const char *x = "a\"b"
+member	const char *x = "hi"_s
+member	char x = 'a'
+member	char x = u8'a'
+member	char16_t x = u'a'
+member	char32_t x = U'a'
+member	wchar_t x = L'a'
+member	char x = '\n'
+member	char x = '\x41'
+member	char x = '\101'
+member	char x = '\\'
+member	char x = 'ab'
+member	char x = 'a'_c
+member	int x = sizeof(int)
+member	int x = sizeof a
+member	int x = sizeof...(Ts)
+member	int x = alignof(int)
+member	bool x = noexcept(f())
+member	int *x = new int
+member	int *x = new int(1)
+member	int *x = new int{1}
+member	int *x = ::new int
+member	int *x = new int[3]
+member	int x = delete p
+member	int x = delete[] p
+member	int x = ::delete p
+member	int x = (int)y
+member	int x = (int)(y)
+member	int x = static_cast<int>(y)
+member	int x = dynamic_cast<A*>(p)
+member	int x = const_cast<A&>(r)
+member	int x = reinterpret_cast<A*>(p)
+member	int x = typeid(int)
+member	int x = typeid(a)
+member	int x = (... + args)
+member	int x = (args + ...)
+member	int x = (0 + ... + args)
+member	int x = (args + ... + 0)
+member	int x = (args && ...)
+member	int x = int(1)
+member	int x = A<int>::value
+member	int x = ::a
+member	int x = a + b * c - d / e % f
+member	int x = a | b ^ c & d
+member	int x = a && b || c
+member	int x = a and b or c
+member	int x = a bitand b
+member	int x = a == b != c
+member	int x = a not_eq b
+member	int x = a < b
+member	int x = a <= b
+member	int x = a >= b
+member	int x = a > b
+member	int x = a >> b
+member	int x = a += b
+member	int x = a and_eq b
+member	int x = a xor_eq b
+member	int x = a or_eq b
+member	int x = {}
+member	int x = {1}
+member	int x = (((1)))
+member	int x = f(1)(2)[3].a->b
+member	int x = @#$ garbage
+member	int x = a[
+member	int x = "unterminated
+member	int
+member	int x y
+member	int x[3
+var	int v
+var	static const std::size_t npos = -1
+# functions
+function	void f()
+function	void f(int)
+function	void f(int i)
+function	void f(int i = 42)
+function	void f(int i, double d)
+function	void f(...)
+function	void f(int, ...)
+function	void f(int a[])
+function	void f(int a[3])
+function	void f(int *p)
+function	void f(int &r)
+function	void f(int &&r)
+function	void f(const int &r)
+function	void f(int (*cb)(double))
+function	void f(int (&a)[3])
+function	void f(void)
+function	void f(std::string s)
+function	void f(std::vector<int> v)
+function	void f(Ts... args)
+function	void f(Ts &&...args)
+function	void f(int A::*p)
+function	void f(int (A::*p)(double))
+function	void f() const
+function	void f() volatile
+function	void f() const volatile
+function	void f() &
+function	void f() &&
+function	void f() const &
+function	void f() noexcept
+function	void f() noexcept(true)
+function	void f() noexcept(false)
+function	void f() override
+function	void f() final
+function	void f() final override
+function	void f() override final
+function	void f() = 0
+function	void f() = delete
+function	void f() = default
+function	void f() const = 0
+function	void f() [[deprecated]]
+function	auto f() -> int
+function	auto f() -> std::vector<int>
+function	auto f() const -> int
+function	static void f()
+function	inline void f()
+function	virtual void f()
+function	virtual void f() = 0
+function	explicit A(int)
+function	explicit(true) A(int)
+function	constexpr int f()
+function	consteval int f()
+function	friend void f()
+function	extern void f()
+function	A()
+function	A(int)
+function	~A()
+function	A::A()
+function	A::~A()
+function	A::A(const A&)
+function	A::A(A&&)
+function	A &A::operator=(const A&)
+function	void A::f()
+function	void ns::A::f()
+function	void ::f()
+function	int operator+(int, int)
+function	int operator-(int)
+function	int operator*(int, int)
+function	int operator/(int, int)
+function	int operator%(int, int)
+function	int operator&(int, int)
+function	int operator|(int, int)
+function	int operator^(int, int)
+function	int operator~()
+function	bool operator!()
+function	int operator=(int)
+function	int operator+=(int)
+function	int operator-=(int)
+function	int operator*=(int)
+function	int operator/=(int)
+function	int operator%=(int)
+function	int operator&=(int)
+function	int operator|=(int)
+function	int operator^=(int)
+function	int operator<<(int)
+function	int operator>>(int)
+function	int operator<<=(int)
+function	int operator>>=(int)
+function	bool operator==(int)
+function	bool operator!=(int)
+function	bool operator<(int)
+function	bool operator>(int)
+function	bool operator<=(int)
+function	bool operator>=(int)
+function	auto operator<=>(int)
+function	bool operator&&(int)
+function	bool operator||(int)
+function	int operator++()
+function	int operator++(int)
+function	int operator--()
+function	int operator,(int)
+function	int operator->*(int)
+function	int *operator->()
+function	int operator()(int)
+function	int operator ()()
+function	int operator[](int)
+function	int operator [ ](int)
+function	void *operator new(std::size_t)
+function	void *operator new[](std::size_t)
+function	void operator delete(void*)
+function	void operator delete[](void*)
+function	void *operator new [ ](std::size_t)
+function	bool operator and(int)
+function	bool operator not()
+function	int operator bitor(int)
+function	int operator compl()
+function	int operator xor_eq(int)
+function	operator int()
+function	operator bool() const
+function	explicit operator bool() const
+function	operator int*()
+function	operator const char*()
+function	operator A<int>()
+function	A::operator int()
+function	int operator""_lit()
+function	int operator"" _lit(const char*)
+function	unsigned long long operator""_km(unsigned long long)
+function	void paren_5::operator()(int)
+function	template<typename T> void f(T t)
+function	template<typename T> void f()
+function	template<class T> void f(T)
+function	template<typename T, typename U> void f(T, U)
+function	template<typename... Ts> void f(Ts... ts)
+function	template<typename T = int> void f()
+function	template<int N> void f()
+function	template<int N = 3> void f()
+function	template<int... Ns> void f()
+function	template<template<typename> typename T> void f()
+function	template<template<typename> class T> void f()
+function	template<template<typename...> typename... Ts> void f()
+function	template<typename T> requires C<T> void f()
+function	template<typename T> void f() requires C<T>
+function	template<typename T> requires C<T> void f() requires D<T>
+function	template<typename T> requires C<T> && D<T> void f()
+function	template<typename T> requires C<T> || D<T> void f()
+function	template<typename T> requires C<T> and D<T> void f()
+function	template<typename T> requires (sizeof(T) > 1) void f()
+function	void f() requires C<int>
+function	template<C T> void f()
+function	template<C auto N> void f()
+function	template<C T = int> void f()
+function	template<typename T> template<typename U> void A<T>::f(U)
+function	template<> void f<int>()
+function	template<> void A<int>::f()
+function	template<typename T> void A<T>::f()
+function	void A<int>::f()
+function	template<typename T> T A<T>::f() const
+function	template<typename T> auto f() -> decltype(T())
+function	C{T} void f(T)
+function	C{T, U} void f()
+function	C{...Ts} void f()
+function	A::B{T} void f()
+function	void f(int x = a + b)
+function	void f(int x = (1, 2))
+function	void f(int x = g(1, 2))
+function	void f(int x = A<1>::v)
+function	void f(int x = sizeof(T))
+function	void f(int x = T{})
+function	void f(A<int> = A<int>{})
+function	void f(std::function<void(int)> f)
+function	void f(std::function<int(double, char)> f)
+function	void f(int (*)(int))
+function	void f(int *const)
+function	void f(int[])
+function	void f(int [3])
+function	void f(int (&)[3])
+function	void f(decltype(x) y)
+function	void f(auto x)
+function	void f(C auto x)
+function	void f(int x [[maybe_unused]])
+function	[[nodiscard]] int f()
+function	__attribute__((noreturn)) void f()
+function	void f() __attribute__((pure))
+function	int f() noexcept(noexcept(g()))
+function	int (*f(int))(double)
+function	int (*f())[3]
+function	int (A::*f())(double)
+function	int (&f())[3]
+function	void f(int (A::*)())
+function	void f(int (A::*)() const)
+function	void f(int A::*)
+function	protected void f()
+function	private virtual void f() const = 0
+function	void f();
+function	void f(int x, int y = 2, ...)
+function	int @a::f()
+function	void f(@a x)
+function	void
+function	f
+function	void f(
+function	void f() extra
+function	void f() = 1
+function	int f() -> int
+function	void A<int>::B<char>::f()
+function	template<typename T> void A<T>::B<char>::f()
+function	template<typename T> template<> void A<T>::B<char>::f()
+function	void std::string::f()
+function	void f(std::string, std::ostream, std::istream, std::iostream)
+function	void f(size_t)
+function	constexpr void f() const
+function	void f(unsigned long)
+function	void f(signed char, unsigned char, char)
+function	void f(long double, short)
+function	void f(const char *)
+function	void f(char *const *p)
+function	void f(volatile int *p)
+function	void f(int *volatile *p)
+function	void f(const A &a = A())
+function	void f(int a = -1)
+function	void f(int a = ~0)
+function	void f(int a = 'x')
+function	void f(const char *s = "x")
+function	void f(double d = 1.0)
+function	void f(bool b = true)
+function	void f(void *p = nullptr)
+function	void f(int a = A::b)
+function	void f(int a = A<1>{})
+function	void f(int a = {})
+function	void f(int a = {1, 2})
+function	void f(int a = a > b)
+function	void f(int a = (a > b))
+function	void f(int a = f<1>())
+function	void f(int a = new int)
+function	void f(int a = this->x)
+function	void f(int a = x.template f<int>())
+function	void f(T &&...)
+function	void f(T...)
+function	template<typename... T> void f(T &&... t)
+function	void f(int = 0)
+# classes
+class	A
+class	A : B
+class	A : public B
+class	A : protected B
+class	A : private B
+class	A : virtual B
+class	A : virtual public B
+class	A : public virtual B
+class	A : B, C
+class	A : public B, private C
+class	A : B...
+class	A : public Bs...
+class	A final
+class	A final : B
+class	ns::A
+class	::A
+class	A::B::C
+class	template<typename T> A
+class	template<typename T> A<T*>
+class	template<> A<int>
+class	A<int>
+class	template<typename T, int V, template<typename> typename U> C
+class	template<typename T> A<T>
+class	template<typename T, typename U> A<T, U>
+class	template<typename T, typename U> A<U, T>
+class	template<typename... Ts> A<Ts...>
+class	template<typename T> template<typename U> A<T>::B
+class	template<typename T> A<T>::B
+class	template<typename T> requires C<T> A
+class	C{T} A
+class	[[deprecated]] A
+class	__attribute__((packed)) A
+class	@a
+class	@a::A
+class	A::@b
+class	protected A
+class	A<int>::B
+class	A : B<int>
+class	A : ::B
+class	A : ns::B<T>
+class	A :
+class	A B
+struct	S
+struct	template<typename T> S
+struct	S : public B
+# unions
+union	U
+union	A::U
+union	template<typename T> U
+union	[[deprecated]] U
+union	@u
+union	U : int
+# enums
+enum	E
+enum	E : int
+enum	E : unsigned long
+enum	E : std::underlying_type<S>::type
+enum	A::E
+enum	[[deprecated]] E
+enum	@e
+enum-struct	E
+enum-struct	protected E : std::underlying_type<S>::type
+enum-class	E
+enum-class	E : char
+enum	template<typename T> E
+# enumerators
+enumerator	A
+enumerator	A = 42
+enumerator	A = 1 << 2
+enumerator	A = B | C
+enumerator	E::A
+enumerator	A = @#$
+enumerator	A [[deprecated]]
+enumerator	A [[deprecated]] = 1
+enumerator	A = 'x'
+enumerator	@a::A
+# types
+type	T
+type	A::T
+type	int T
+type	std::vector<int> T
+type	int (*F)(double)
+type	int A::*P
+type	using T = int
+type	T = int
+type	T = std::vector<int>
+type	template<typename T> T = std::vector<T>
+type	template<typename T> V = std::vector<T>
+type	template<typename T> V
+type	typename T::type U
+type	unsigned long long U
+type	int T[3]
+type	const int *T
+type	A<int> T
+type	T = int (*)(double)
+type	template<typename T> A<T>::type
+type	public T
+type	@t
+type	int
+# concepts
+concept	template<typename T> C
+concept	template<typename T> C = true
+concept	template<typename T> C = sizeof(T) > 1
+concept	template<typename T> C = A<T> && B<T>
+concept	template<typename T> A::C
+concept	C
+concept	template<typename T> requires D<T> C
+concept	template<typename T> template<typename U> C
+concept	template<typename T, typename U> C = std::is_same_v<T, U>
+# scoped declarations
+function@ns	void f()
+function@ns	void f(int)
+function@ns::inner	void f()
+function@A<int>	void f()
+function@template<typename T> A	void f()
+member@A	int x
+member@ns	std::string name
+class@ns	A
+class@ns	@a::A
+class@ns	template<typename T, int V, template<typename> typename U> C
+class@ns::B	C
+type@ns	T = int
+enum@ns	E
+enumerator@ns::E	A
+concept@ns	template<typename T> C
+function@std	void f()
+member@std	string s
+class@std	string
+class@std	vector
+function@::ns	void f()
+# namespaces
+ns	ns
+ns	ns::inner
+ns	::ns
+ns	NULL
+ns	0
+ns	nullptr
+ns	A<int>
+ns	template<typename T> A
+ns	template<typename T> A<T>
+ns	template<typename T> A<T*>
+ns	@a
+ns	std
+ns	1bad
+ns	A::
+ns	operator+
+ns@outer	ns
+ns@outer	A::B
+ns@outer::x	y
+# xrefs
+xref	A
+xref	A::B
+xref	::A
+xref	A<int>
+xref	A<int>::f
+xref	f()
+xref	A::f()
+xref	f(int)
+xref	void f(int)
+xref	void A::f(int) const
+xref	int A::f(double, char) const &&
+xref	template<typename T> A
+xref	template<typename T> A<T>::f
+xref	template<typename T> void f(T)
+xref	operator+
+xref	operator()
+xref	operator int
+xref	A::operator+
+xref	f(int x)
+xref	f(int) const
+xref	@a::b
+xref	A::template B<int>
+xref	std::string
+xref	auto f() -> int
+xref	operator""_x
+xref	1bad
+xref	f(
+xref	A B C
+xref	template<> A<int>
+xref	template A<int>
+xref	f(int) noexcept
+xref	f() requires C<int>
+xref	template<typename T> void f() requires C<T>
+xref()	f
+xref()	A::f
+xref()	f(int)
+xref()	A::f(int) const
+xref()	operator+
+# expressions
+expr	a
+expr	a + b
+expr	A::b
+expr	f(1, 2)
+expr	sizeof(item) + 1
+expr	const item &
+expr	int
+expr	std::vector<int>
+expr	a ? b : c
+expr	(a, b)
+expr	a = b
+expr	new int
+expr	"str"
+expr	'c'
+expr	42
+expr	1.5
+expr	nullptr
+expr	this
+expr	true
+expr	x.f()
+expr	p->f()
+expr	-a
+expr	!a
+expr	a[0]
+expr	(int)a
+expr	static_cast<int>(a)
+expr	typeid(a)
+expr	sizeof...(Ts)
+expr	alignof(int)
+expr	noexcept(a)
+expr	(... + a)
+expr	(a + ...)
+expr	(a + ... + b)
+expr	a...
+expr	@#$
+expr	int *
+expr	int (*)(double)
+expr	A<1>
+expr	{1, 2}
+expr	f{1}
+expr	delete p
+expr	a.*b
+expr	a->*b
+expr	a <=> b
+expr	a not_eq b
+expr	a bitand b
+expr	1_km
+expr	"s"_s
+expr	'c'_c
+expr	a++
+expr	a--
+expr	++a
+expr	--a
+expr	~a
+expr	compl a
+expr	*a
+expr	&a
+expr	+a
+expr	a += 1
+expr	a ? b : c = d
+expr	::a
+expr	a::template b<int>
+expr	int(1)
+expr	A<int>{}
+expr	decltype(a)
+expr	unsigned

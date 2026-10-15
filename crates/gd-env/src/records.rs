@@ -4,9 +4,10 @@
 //! Every field is written, and reading requires every field: a record from another
 //! format is not half-read but refused, and the build reads everything again.
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use gd_conf::Digest;
+use gd_host::{Budget, Ledger, Problem};
 use gd_json::{Object, Value};
 use gd_report::{Excerpt, Report, Severity};
 
@@ -16,6 +17,18 @@ use crate::environment::{
     LabelInfo, LabelKind, ModuleInfo, NumberedInfo, ObjectInfo, RefInfo, SectionInfo, TermInfo,
     TocEntry, TocObjectInfo, ToctreeInfo, TodoInfo,
 };
+
+/// The text of a record file at `path` (the environment, a manifest, a journal), read
+/// within `budget`; `None` when it is missing, unreadable, or not UTF-8. Fails only when
+/// the budget cannot hold it.
+pub fn read_record(path: &Path, budget: &Budget) -> Result<Option<String>, Problem> {
+    let ledger = Ledger::new(budget);
+    match gd_host::read_file(path, Some(&ledger), usize::MAX) {
+        Ok(bytes) => Ok(String::from_utf8(bytes).ok()),
+        Err(p) if p.code == "host.budget" => Err(p),
+        Err(_) => Ok(None),
+    }
+}
 
 /// Builds a JSON object field by field, for records saved with gd-json (the
 /// environment here, the manifest and the commit journal in gd-outputs).
@@ -76,6 +89,21 @@ impl ObjectBuilder {
 pub struct ObjectReader<'a>(pub &'a Object);
 
 impl<'a> ObjectReader<'a> {
+    /// Parses `text` as a JSON object whose `version` field is `version`, and reads it
+    /// with `read`; `None` for malformed JSON, another version, or what `read` refuses.
+    pub fn read_versioned<T>(
+        text: &str,
+        version: u64,
+        read: impl FnOnce(ObjectReader<'_>) -> Option<T>,
+    ) -> Option<T> {
+        let value = gd_json::parse(text).ok()?;
+        let r = ObjectReader::of(&value)?;
+        if r.number("version")? != version {
+            return None;
+        }
+        read(r)
+    }
+
     /// Reads `value` when it is an object.
     pub fn of(value: &'a Value) -> Option<ObjectReader<'a>> {
         value.as_object().map(ObjectReader)
@@ -134,12 +162,9 @@ pub(crate) fn environment_to_json(env: &Environment) -> String {
 
 /// Reads the environment's JSON; `None` for another version or a malformed record.
 pub(crate) fn environment_from_json(text: &str) -> Option<Environment> {
-    let value = gd_json::parse(text).ok()?;
-    let r = ObjectReader::of(&value)?;
-    if r.number("version")? != u64::from(ENVIRONMENT_VERSION) {
-        return None;
-    }
-    Some(Environment { settings: r.digest("settings")?, docs: r.list("docs", doc_from_json)? })
+    ObjectReader::read_versioned(text, u64::from(ENVIRONMENT_VERSION), |r| {
+        Some(Environment { settings: r.digest("settings")?, docs: r.list("docs", doc_from_json)? })
+    })
 }
 
 fn cached_to_json(file: &Option<CachedFile>) -> Value {

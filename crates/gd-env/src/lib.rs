@@ -46,13 +46,13 @@ pub use environment::{
     CachedFile, CppDeclInfo, Dependency, DocId, DocInfo, ENVIRONMENT_VERSION, Environment,
     IndexInfo, LabelInfo, LabelKind, ModuleInfo, NumberedInfo, ObjectInfo, RefInfo, SectionInfo,
     TermInfo, TocEntry, TocObjectInfo, ToctreeInfo, TodoInfo, dependencies_changed, digest_name,
-    doctrees_dir, environment_path, load_environment,
+    doctrees_dir, environment_path, load_environment, normalize_name, option_key,
 };
 pub use gd_conf::{Digest, Digester};
 pub use lookup::{Lookup, LookupKind, Trace};
 pub use objects::{OBJECTS_FOLDER, ObjectError, ObjectStore, SEARCH_FOLDER};
 pub use plugins::{PluginRun, PluginStart, assets_url, host_problem};
-pub use records::{ObjectBuilder, ObjectReader, report_from_json, report_to_json};
+pub use records::{ObjectBuilder, ObjectReader, read_record, report_from_json, report_to_json};
 pub use rendered::{Asset, EnglishUi, Rendered, UiText};
 pub use settings::{
     build_settings, executable_stamp, file_digest, output_settings, reading_settings,

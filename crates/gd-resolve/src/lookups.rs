@@ -144,6 +144,54 @@ fn odin_role_takes(role: &str, objtype: &str) -> bool {
     }
 }
 
+/// What every document's output shares (html_builder.odin's `document_settings`): the
+/// output settings, the translations and reading settings (`Environment::settings`), the
+/// inventories, every document's name and title (a page may test whether any page
+/// exists), and in toctree order, per document: its name, anchor key, parent, number of
+/// toctrees, and per section its title, anchor and number. A change of navigation
+/// therefore rewrites every page. The HTML and book builders share it.
+pub fn document_settings(view: &BuildView<'_>) -> Digest {
+    let mut d = Digester::new();
+    d.digest(&view.settings).digest(&view.env.settings).digest(&view.intersphinx.digest);
+    for doc in &view.env.docs {
+        d.text(&doc.docname).text(&doc.title);
+    }
+    for &id in &view.tables.order {
+        let doc = view.doc(id);
+        let parent = view.tables.parent.get(id.index()).copied().flatten();
+        d.text(&doc.docname).text(view.doc_key(id));
+        d.number(parent.map_or(-1, |p| i64::from(p.0))).number(doc.toctrees.len() as i64);
+        let numbers = view.tables.secnumbers.get(id.index());
+        for (i, s) in doc.sections.iter().enumerate() {
+            let number = numbers.and_then(|n| n.get(i)).map_or("", String::as_str);
+            d.text(&s.title).text(&s.anchor).text(number);
+        }
+    }
+    d.finish()
+}
+
+/// A document page's own inputs besides `common`: its source and object, its figure
+/// numbers, what it was made from, and for a page with a todolist every document with
+/// todos. What its references found is in its lookups (see [`lookup_answer`]), not here.
+pub fn page_inputs(view: &BuildView<'_>, id: DocId, common: &Digest) -> Digest {
+    let doc = view.doc(id);
+    let mut d = Digester::new();
+    d.digest(common).digest(&doc.digest);
+    d.digest(&doc.object.as_ref().map_or(Digest::default(), |o| o.digest));
+    if let Some(numbers) = view.tables.fignumbers.get(id.index()) {
+        d.texts(numbers);
+    }
+    for dep in &doc.deps {
+        d.digest(&dep.digest);
+    }
+    if doc.todolist {
+        for other in view.env.docs.iter().filter(|o| !o.todos.is_empty()) {
+            d.digest(&other.digest);
+        }
+    }
+    d.finish()
+}
+
 /// Answers a lookup the page of `page` (a docname) made, against this build's tables
 /// and folders, as the digest of the answer: the target's document, anchor, title,
 /// kind, type, number and key for a name; the title for a document; whether a file

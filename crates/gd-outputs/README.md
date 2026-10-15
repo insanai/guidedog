@@ -22,7 +22,7 @@ let outcome = generation.commit(CommitRecords { environment: &env, store: &store
 | Item | Does |
 |---|---|
 | `OutputPaths { out_dir, next, old, legacy, build_dir, doctrees, manifest, journal }`, `output_paths`, `output_absolute`, `contained` | where things go |
-| `Generation` (`begin`, `reuse`, `unit`, `commit`, `abandon`, `failed_count`, `written_count`, `reused_count`, `is_site_written`, `is_unsettled`, `taken_path`) | one generation; `Drop` abandons |
+| `Generation` (`begin`, `reuse`, `unit`, `commit`, `abandon`, `failed_count`, `written_count`, `reused_count`, `is_site_written`, `taken_path`) | one generation; `Drop` abandons |
 | `Unit` (`emit`, `emit_text`, `emit_copy`, `emit_tree`, `stage_path`, `keep_file`, `files`, `taken_path`, `finish`, `fail`), `UnitRecord` | one output unit |
 | `Manifest`, `OutputRecord { inputs, files, assets, lookups: Vec<(Lookup, Digest)>, reports }`, `MANIFEST_VERSION` (2), `SITE_UNIT` | the manifest |
 | `CommitRecords`, `CommitOutcome { state, problem, reports }`, `CommitState` | publication |

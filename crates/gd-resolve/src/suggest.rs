@@ -4,9 +4,9 @@
 
 use crate::external::xref_domain;
 use crate::lookups::role_takes;
-use crate::tables::normalize_name;
 use crate::view::{BuildView, dir_of, doc_target};
 use crate::xref::{Unresolved, XrefQuery};
+use gd_env::normalize_name;
 
 /// The failure of a reference nothing resolves.
 pub(crate) fn unresolved(view: &BuildView<'_>, q: &XrefQuery) -> Box<Unresolved> {

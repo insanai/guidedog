@@ -10,7 +10,7 @@
 use std::path::{Path, PathBuf};
 
 use gd_conf::{Config, Digest};
-use gd_host::{Budget, Ledger, Problem};
+use gd_host::{Budget, Problem};
 use gd_report::Report;
 
 use crate::discover::SourceKind;
@@ -172,6 +172,22 @@ pub struct LabelInfo {
     pub title: String,
     /// What it names.
     pub kind: LabelKind,
+}
+
+/// Lowercases a label or term and collapses its white space, as Sphinx does: the key
+/// labels and terms are filed under.
+pub fn normalize_name(name: &str) -> String {
+    name.to_lowercase().split_whitespace().collect::<Vec<_>>().join(" ")
+}
+
+/// An option's name as Sphinx files it: the program's words joined with `-`, a space,
+/// then the option; the option alone without a program.
+pub fn option_key(program: &str, option: &str) -> String {
+    if program.is_empty() {
+        return option.to_string();
+    }
+    let words: Vec<&str> = program.split_whitespace().collect();
+    format!("{} {option}", words.join("-"))
 }
 
 /// A glossary term.
@@ -452,14 +468,8 @@ pub fn load_environment(
     if fresh || !path.is_file() {
         return Ok(empty);
     }
-    let ledger = Ledger::new(budget);
-    let bytes = match gd_host::read_file(path, Some(&ledger), usize::MAX) {
-        Ok(bytes) => bytes,
-        Err(p) if p.code == "host.budget" => return Err(p),
-        Err(_) => return Ok(empty),
-    };
-    let Ok(text) = std::str::from_utf8(&bytes) else { return Ok(empty) };
-    match Environment::from_json(text) {
+    let Some(text) = records::read_record(path, budget)? else { return Ok(empty) };
+    match Environment::from_json(&text) {
         Some(env) if env.settings == settings => Ok(env),
         _ => Ok(empty),
     }

@@ -19,14 +19,14 @@
 use std::io;
 use std::path::{Path, PathBuf};
 
-use gd_env::Digest;
+use gd_env::{Digest, read_record};
 use gd_host::{Budget, PathKind, Problem, io_problem, remove_tree};
 use gd_report::Report;
 
 use crate::commit::{CommitState, JOURNAL_SUFFIX, keep_spare};
 use crate::hook::{StepAction, renames_only, step_action};
 use crate::journal::{Journal, PendingFile};
-use crate::manifest::{Manifest, load_text};
+use crate::manifest::Manifest;
 use crate::paths::MANIFEST_SUFFIX;
 
 /// The code of the problem a commit stopped by a test hook gives.
@@ -283,7 +283,7 @@ pub(crate) fn finish_interrupted_commits(
             continue;
         }
         let path = doctrees.join(&e.name);
-        let text = load_text(&path, budget)?;
+        let text = read_record(&path, budget)?;
         let Some(j) = text.as_deref().and_then(Journal::from_json) else {
             discard_journal(doctrees, &path, budget, reports)?;
             continue;
@@ -313,7 +313,7 @@ fn discard_journal(
     let name = journal.file_name().map(|n| n.to_string_lossy()).unwrap_or_default();
     let builder = name.strip_suffix(JOURNAL_SUFFIX).unwrap_or(&name);
     let manifest_path = doctrees.join(format!("{builder}{MANIFEST_SUFFIX}"));
-    let text = load_text(&manifest_path, budget)?;
+    let text = read_record(&manifest_path, budget)?;
     match text.as_deref().and_then(Manifest::from_json) {
         Some(mut manifest) => {
             for unit in manifest.units.values_mut() {

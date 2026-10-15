@@ -23,12 +23,13 @@ let text = run.process_source(&source, &config.language, &text)?;
 | `BuilderKind` (`name`, `from_name`, `is_html`, `format`), `OutputFormat`, `BuildOptions`, `Jobs`, `BuildResult`, `BuildStage`, `BUILD_BUDGET` | build vocabulary |
 | `SourceFile { docname, path, relative, kind, generated: Option<Generated> }`, `SourceKind`, `discover`, `glob_match`, `is_excluded`, `contents_root`, `with_generated` | discovery |
 | `Environment { settings, docs }`, `DocInfo` and its infos, `DocId(u32)`, `ENVIRONMENT_VERSION` (26), `load_environment`, `dependencies_changed` | the environment |
+| `normalize_name`, `option_key` | the keys labels, terms and options are filed under |
 | `ObjectStore` (`save_object`, `load_object`, `save_search`, `load_bytes`, `sweep`), `CachedFile` | content-addressed cache |
 | `Lookup { kind: LookupKind, key }`, `Trace` | verifying traces |
 | `Asset`, `Rendered { body, assets, trace, reports, failed }`, `UiText`, `EnglishUi` | rendering |
 | `reading_settings`, `build_settings`, `output_settings`, `executable_stamp`, `file_digest` | digests |
 | `PluginRun`, `PluginStart`, `host_problem`, `assets_url` | build plugins |
-| `ObjectBuilder`, `ObjectReader`, `report_to_json`, `report_from_json` | JSON records |
+| `ObjectBuilder`, `ObjectReader`, `read_record`, `report_to_json`, `report_from_json` | JSON records |
 
 ## Redesign notes
 

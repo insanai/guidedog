@@ -139,6 +139,15 @@ impl Generation {
         self.failed
     }
 
+    /// Fails with [`pages_not_written`] when a unit could not be written; the reports say
+    /// why, and the previous output stays in place.
+    pub fn check_written(&self) -> Result<(), Problem> {
+        match self.failed {
+            0 => Ok(()),
+            failed => Err(pages_not_written(failed, &self.paths().out_dir)),
+        }
+    }
+
     /// How many units besides the site unit ([`SITE_UNIT`]) were written this
     /// generation: the pages, books or indexes the build's summary counts.
     pub fn written_count(&self) -> usize {
@@ -154,12 +163,6 @@ impl Generation {
     /// such as singlehtml or gettext, writes only it).
     pub fn is_site_written(&self) -> bool {
         self.site_written
-    }
-
-    /// Whether a decided commit is neither finished nor undone (the next build settles
-    /// it).
-    pub fn is_unsettled(&self) -> bool {
-        self.unsettled
     }
 
     /// The files a unit of this generation, or of the previous one, already makes:
@@ -406,11 +409,16 @@ impl Unit<'_> {
         &self.files
     }
 
+    /// The file this unit has emitted that `rel` would conflict with: the same file
+    /// ignoring case, or one is a folder of the other.
+    pub fn own_path(&self, rel: &str) -> Option<&str> {
+        self.files.iter().find(|f| paths_conflict(f, rel)).map(String::as_str)
+    }
+
     /// The files this unit, or another of its generation or the previous one, already
     /// makes that `rel` would conflict with, as [`Generation::taken_path`].
     pub fn taken_path(&self, rel: &str) -> Option<&str> {
-        let own = self.files.iter().find(|f| paths_conflict(f, rel)).map(String::as_str);
-        own.or_else(|| self.generation.taken_path(rel))
+        self.own_path(rel).or_else(|| self.generation.taken_path(rel))
     }
 
     /// Records the unit as written, with its record.
@@ -448,4 +456,20 @@ impl Drop for Unit<'_> {
             self.generation.failed += 1;
         }
     }
+}
+
+/// `build.output`: `failed` documents could not be written to `out_dir`, so the build's
+/// output was not published; the previous output is unchanged.
+pub fn pages_not_written(failed: usize, out_dir: &Path) -> Problem {
+    Problem::new(
+        "build.output",
+        "PAGES NOT WRITTEN",
+        &out_dir.display().to_string(),
+        format!(
+            "{failed} document(s) could not be written, so this build's output was not \
+             published. The previous output is unchanged."
+        ),
+        "Fix the errors reported above for each page, then run the build again.",
+        1,
+    )
 }

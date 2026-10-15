@@ -23,8 +23,9 @@ builder.write(&view, &mut generation, &mut reports)?;       // impl OutputBuilde
 | `Intersphinx { named, main, digest }`, `IntersphinxOptions`, `load_intersphinx` | inventories |
 | `BuildView<'b>` (+ `doc`, `doc_key`, `page_name`, `page_url`, `generated_url`, `page_anchor`, `item_number`, `section_number`, `number_template`, `image_file` -> `ImageFile`), `Dates`, `OutputBuilder` | what builders read |
 | `XrefQuery` (+ `explicit`, `content`, `inventory`, `context` pairs; `context(key)`, `flag(key)`), `Resolved` (+ `asset`, `warning`), `Unresolved` (warn, code, category, title, message, hint, suggestion; `report(path)`), `resolve_xref`, `lookup_answer`, `role_takes` | references |
+| `document_settings`, `page_inputs` | the input digests every page builder shares |
 | `IndexGroup`/`IndexTerm`/`IndexSub`/`IndexLink`, `create_index`, `ModindexLetter`/`ModindexEntry`, `module_index`, `has_module_index`, `write_inventory` | index data |
-| `relative_url`, `normalize_doc`, `doc_target`, `file_target`, `generated_page`, `chapter_key`, `normalize_name`, `option_key`, `format_number`, `python_format` | names, URLs, formats |
+| `relative_url`, `normalize_doc`, `doc_target`, `file_target`, `generated_page`, `chapter_key`, `normalize_name` and `option_key` (from gd-env), `format_number`, `python_format` | names, URLs, formats |
 
 Warning codes: `build.toctree.{missing,duplicate,untitled,cycle,orphan,renumbered}`,
 `build.root.missing` (error), `build.label.duplicate`, `build.object.duplicate`,

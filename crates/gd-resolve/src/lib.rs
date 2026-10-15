@@ -45,12 +45,13 @@ mod view;
 mod xref;
 
 pub use cpp::{CppDeclaration, CppSymbol, CppSymbolId, CppTree};
+pub use gd_env::{normalize_name, option_key};
 pub use index::{IndexGroup, IndexLink, IndexSub, IndexTerm, create_index};
 pub use intersphinx::{Intersphinx, IntersphinxOptions, load_intersphinx};
 pub use inventory::write_inventory;
-pub use local::option_key;
+pub use lookups::{document_settings, page_inputs};
 pub use modindex::{ModindexEntry, ModindexLetter, has_module_index, module_index};
-pub use tables::{Tables, TargetRef, TreeEntry, normalize_name, object_key, resolve};
+pub use tables::{Tables, TargetRef, TreeEntry, object_key, resolve};
 pub use view::{
     BuildView, Dates, ImageFile, OutputBuilder, chapter_key, doc_target, file_target,
     format_number, generated_page, normalize_doc, python_format, relative_url,

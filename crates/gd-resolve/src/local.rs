@@ -5,9 +5,9 @@
 use gd_env::{Asset, Digest, LabelKind, OutputFormat};
 
 use crate::lookups::Look;
-use crate::tables::normalize_name;
 use crate::view::{dir_of, file_target, format_number, generated_title, relative_url};
 use crate::xref::{Resolved, Unresolved};
+use gd_env::{normalize_name, option_key};
 
 impl Look<'_, '_> {
     /// Resolves the query in the project's tables; `None` when nothing matches.
@@ -319,13 +319,4 @@ impl Look<'_, '_> {
     pub(crate) fn find_object(&mut self, kind: &str, name: &str) -> Option<Resolved> {
         self.object(&format!("{kind}{name}")).map(Look::at)
     }
-}
-
-/// An option's key: the program's words joined with `-`, a space, the option.
-pub fn option_key(program: &str, option: &str) -> String {
-    if program.is_empty() {
-        return option.to_string();
-    }
-    let words: Vec<&str> = program.split_whitespace().collect();
-    format!("{} {option}", words.join("-"))
 }

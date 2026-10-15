@@ -51,6 +51,6 @@ pub use commit::{
     CommitOutcome, CommitRecords, CommitState, JOURNAL_SUFFIX, JOURNAL_VERSION, PENDING_SUFFIX,
     PREVIOUS_SUFFIX,
 };
-pub use generation::{Generation, GenerationOptions, Unit, UnitRecord};
+pub use generation::{Generation, GenerationOptions, Unit, UnitRecord, pages_not_written};
 pub use manifest::{MANIFEST_VERSION, Manifest, OutputRecord, SITE_UNIT};
 pub use paths::{OutputPaths, contained, output_absolute, output_paths};

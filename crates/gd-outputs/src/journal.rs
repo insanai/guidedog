@@ -77,25 +77,8 @@ impl Journal {
     /// a switch needs, and at most [`MAX_RECORDS`] records that each name a file to
     /// rename and its destination. `None` for anything else, which is discarded.
     pub fn from_json(text: &str) -> Option<Journal> {
-        let value = gd_json::parse(text).ok()?;
-        let r = ObjectReader::of(&value)?;
-        if r.number("version")? != u64::from(JOURNAL_VERSION) {
-            return None;
-        }
-        let next_id = match r.value("next_id")? {
-            Value::Null => None,
-            id => {
-                let id = ObjectReader::of(id)?;
-                Some(Identity { device: id.number("device")?, inode: id.number("inode")? })
-            }
-        };
-        let journal = Journal {
-            out_dir: path_from(&r, "out_dir")?,
-            next: optional_from(&r, "next")?,
-            old: path_from(&r, "old")?,
-            next_id,
-            records: r.list("records", record_from_json)?,
-        };
+        let journal =
+            ObjectReader::read_versioned(text, u64::from(JOURNAL_VERSION), read_journal)?;
         journal.is_valid().then_some(journal)
     }
 
@@ -107,6 +90,24 @@ impl Journal {
             && self.next.as_deref().is_none_or(named)
             && self.records.iter().all(|r| named(&r.from) && named(&r.to))
     }
+}
+
+/// A journal's fields, before [`Journal::is_valid`] checks them.
+fn read_journal(r: ObjectReader<'_>) -> Option<Journal> {
+    let next_id = match r.value("next_id")? {
+        Value::Null => None,
+        id => {
+            let id = ObjectReader::of(id)?;
+            Some(Identity { device: id.number("device")?, inode: id.number("inode")? })
+        }
+    };
+    Some(Journal {
+        out_dir: path_from(&r, "out_dir")?,
+        next: optional_from(&r, "next")?,
+        old: path_from(&r, "old")?,
+        next_id,
+        records: r.list("records", record_from_json)?,
+    })
 }
 
 fn record_from_json(value: &Value) -> Option<PendingFile> {

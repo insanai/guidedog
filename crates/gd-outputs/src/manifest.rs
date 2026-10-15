@@ -4,8 +4,8 @@
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
-use gd_env::{Asset, Digest, Lookup, ObjectBuilder, ObjectReader};
-use gd_host::{Budget, Ledger, Problem};
+use gd_env::{Asset, Digest, Lookup, ObjectBuilder, ObjectReader, read_record};
+use gd_host::{Budget, Problem};
 use gd_json::{Object, Value};
 use gd_report::Report;
 
@@ -59,34 +59,20 @@ impl Manifest {
     /// Reads a manifest; `None` for another version or anything that is not one (the
     /// build then writes every unit).
     pub fn from_json(text: &str) -> Option<Manifest> {
-        let value = gd_json::parse(text).ok()?;
-        let r = ObjectReader::of(&value)?;
-        if r.number("version")? != u64::from(MANIFEST_VERSION) {
-            return None;
-        }
-        let mut units = BTreeMap::new();
-        for (key, unit) in r.value("units")?.as_object()? {
-            units.insert(key.clone(), record_from_json(unit)?);
-        }
-        Some(Manifest { units })
+        ObjectReader::read_versioned(text, u64::from(MANIFEST_VERSION), |r| {
+            let mut units = BTreeMap::new();
+            for (key, unit) in r.value("units")?.as_object()? {
+                units.insert(key.clone(), record_from_json(unit)?);
+            }
+            Some(Manifest { units })
+        })
     }
 
     /// The manifest saved at `path`, read within `budget`: empty when there is none, it
     /// cannot be read, or it is not a manifest of this version. Fails only when the
     /// budget cannot hold the file (`host.budget`).
     pub(crate) fn load(path: &Path, budget: &Budget) -> Result<Manifest, Problem> {
-        Ok(load_text(path, budget)?.and_then(|t| Manifest::from_json(&t)).unwrap_or_default())
-    }
-}
-
-/// The text of a record file at `path`, read within `budget`; `None` when it is missing,
-/// unreadable, or not UTF-8. Fails only when the budget cannot hold it.
-pub(crate) fn load_text(path: &Path, budget: &Budget) -> Result<Option<String>, Problem> {
-    let ledger = Ledger::new(budget);
-    match gd_host::read_file(path, Some(&ledger), usize::MAX) {
-        Ok(bytes) => Ok(String::from_utf8(bytes).ok()),
-        Err(p) if p.code == "host.budget" => Err(p),
-        Err(_) => Ok(None),
+        Ok(read_record(path, budget)?.and_then(|t| Manifest::from_json(&t)).unwrap_or_default())
     }
 }
 

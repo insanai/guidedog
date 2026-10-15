@@ -5,7 +5,7 @@ use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
 use gd_conf::Config;
-use gd_env::{DocId, DocInfo, Environment, LabelKind, ObjectInfo, UiText};
+use gd_env::{DocId, DocInfo, Environment, LabelKind, ObjectInfo, UiText, normalize_name};
 use gd_report::{Report, Severity};
 
 use crate::cpp::CppTree;
@@ -127,12 +127,6 @@ pub fn object_key(domain: &str, objtype: &str, fullname: &str) -> String {
         return format!("std:{objtype}:{fullname}");
     }
     format!("{domain}:{fullname}")
-}
-
-/// Lowercases a label or term and collapses white space, as Sphinx does.
-pub fn normalize_name(name: &str) -> String {
-    let lower = name.to_lowercase();
-    lower.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
 /// One run of `resolve`: what it reads, what it fills, where its warnings go.

@@ -380,7 +380,7 @@ fn fixture_inputs(text: &str) -> Vec<(String, String)> {
 #[test]
 fn myst_fixtures_round_trip() {
     use guidedoc_commonmark::{Settings as Myst, SyntaxExtension};
-    let data = root().join("crates/guidedoc-commonmark/tests/data/myst");
+    let data = root().join("crates/guidedoc-sphinx/tests/data/myst");
     let manifest = std::fs::read_to_string(data.join("fixtures.txt")).unwrap();
     let mut config = guidedoc_sphinx::Config::default();
     config.settings.smart_quotes = SmartQuotes::Off;

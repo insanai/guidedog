@@ -1,9 +1,10 @@
 //! Differential conformance of the "myst" reader against myst-parser 0.16.1.
 //!
-//! `tests/data/myst/fixtures` holds myst-parser's own test fixtures: Markdown and the
-//! Docutils tree myst-parser builds for it, in pseudo-XML; `tests/data/myst/sphinx`
-//! holds its Sphinx build tests. Each case is read with Guidedoc, both trees are brought
-//! into one structural form (`norm.rs`), and the cases that differ are reported.
+//! `crates/guidedoc-sphinx/tests/data/myst/fixtures` holds myst-parser's own test
+//! fixtures: Markdown and the Docutils tree myst-parser builds for it, in pseudo-XML;
+//! `crates/guidedoc-sphinx/tests/data/myst/sphinx` holds its Sphinx build tests. Each
+//! case is read with Guidedoc, both trees are brought into one structural form
+//! (`norm.rs`), and the cases that differ are reported.
 //! docs/manual/internals/commonmark-conformance.rst explains the rules of the common
 //! form and every documented difference (`DIFFERENCES`).
 //!
@@ -52,7 +53,7 @@ fn extension() -> Option<Arc<dyn Extension>> {
 }
 
 fn data() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/data/myst")
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("../guidedoc-sphinx/tests/data/myst")
 }
 
 fn documented(file: &str, title: &str) -> bool {

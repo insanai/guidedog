@@ -1,6 +1,5 @@
 //! The styles' definitions, generated from the style modules of Pygments 2.19.2 and
-//! Sphinx 9.1.0 (both BSD-licensed) by the Odin project's `tools/pygments_styles`, and
-//! converted mechanically; do not edit by hand.
+//! Sphinx 9.1.0 (both BSD-licensed) by `cargo xtask tables`; do not edit by hand.
 
 use crate::styles::{StyleInfo, StyleRule};
 use crate::token::TokenKind as K;
@@ -943,7 +942,6 @@ const NATIVE_RULES: &[StyleRule] = &[
 
 #[rustfmt::skip]
 const NONE_RULES: &[StyleRule] = &[
-   
 ];
 
 #[rustfmt::skip]

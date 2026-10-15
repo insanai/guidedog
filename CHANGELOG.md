@@ -9,7 +9,7 @@ beside it.
 
 The Rust port. Guidedog, Guidedoc and every supporting library are rewritten in Rust as a
 Cargo workspace. Commands, options, `conf.toml` keys, directives, roles and output are
-unchanged; existing projects build as before.
+unchanged, except the discussion commands below; existing projects build as before.
 
 - **One toolchain.** `cargo build --release -p guidedog-cmd` builds Guidedog; `cargo test
   --workspace` runs every suite and `cargo run -p check` checks the source limits. The
@@ -38,6 +38,13 @@ unchanged; existing projects build as before.
   `guidedog` of your own with `gd_cli::run_with`, or register them as programs as
   before. The product-badge and folder publisher examples are crate examples of
   `gd-plugins`.
+- **Discussion catalogs are a plugin of guidedog.** `guidedog dsc init`, `new`, `list`,
+  `show`, `promote`, `state`, `index`, `check`, `build`, `recover` and `config` replace
+  the `dsc` and `dscc` programs and `guidedog gds`. They work on any catalog, with its
+  own prefix, lifecycle, record types and numbering in `discussion.toml`; Guidedog's
+  `docs/gds` is one of them (`cd docs/gds && guidedog dsc check`). Builds are
+  guidedog's own, so nothing else needs to be installed, and there is no `dscc`
+  archive. Catalogs, records, locks and journals are unchanged.
 - **`graphdog`** ships in the `guidedog` archive: a `dot`-compatible renderer for DOT to
   SVG, PNG or laid-out DOT, with Elm-style errors.
 - **Examples** are Cargo examples: `cargo run -p guidedoc-examples --example hello`.

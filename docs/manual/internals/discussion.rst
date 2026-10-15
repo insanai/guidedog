@@ -57,31 +57,21 @@ Building
    :class: sketch
 
    pub trait Builder {
-       fn name(&self) -> &str;
-       fn build(&self, request: &BuildRequest) -> Result<PathBuf>;
-       fn build_typst_catalog(&self, catalog: &Catalog, selected: &[&Record],
-           targets: &[Target]) -> Result<Vec<PathBuf>>; // default: legacy-build problem
+       fn build(&mut self, request: &BuildRequest) -> Result<PathBuf>;
    }
 
-``GuidedogProgram`` runs the installed ``guidedog`` without a shell. ``dscc`` and
-``guidedog gds`` implement the trait over gd-project's in-process builder
-(``gd_cli::discussion_builder``), with the Typst compiler for older catalogs. The builder's own program
-(``--guidedog`` or ``--typst``) is given to ``Program::make_builder`` rather than carried
-in every request.
+A request names the catalog, the target, the record books and, for a preview, the one record; ``BuildRequest::output()`` is the folder it goes to. The plugin's builder hands the request to its host: ``CommandContext::build_project`` builds the catalog as a Guidedog project, strict, with the books as the ``pdf_documents`` setting. The trait takes ``&mut self`` because the host's context is borrowed mutably for the build. Tests implement it with a recorder.
+
+An older catalog of Typst records never reaches the builder. ``build`` compiles each record with gd-typst (``legacy.rs``: the embedded compiler, or the program ``--typst`` names) into the ``build`` folder beside the catalog, staged and themed as the Odin ``discussion/embedded`` did.
 
 Command line
 ------------
 
-``command::run(&Program, &args)`` is hand-written argument parsing with Elm-style usage
-reports: unknown commands, options, colors, states, labels and records get a
-"Did you mean" suggestion from ``gd_report::suggest``. Reports are rendered by
-``gd_report::render_text`` (or ``render_json`` with ``--diagnostics=json``); text from
-records is escaped with ``escape_terminal``. ``run_with`` takes the output streams so the
-command line is tested end to end.
+The command line is a plugin of guidedog (``plugin()``, ID ``dsc``). It adds commands only, no build hooks: ``guidedog dsc init``, ``new``, ``list``, ``show``, ``promote``, ``state``, ``index``, ``check``, ``build``, ``recover`` and ``config``. Their declarations (summaries, help, options) let guidedog show the help and parse the command line around them; the plugin reads its own arguments. In Odin these were two programs, ``dsc`` and ``dscc``, and ``guidedog gds`` for Guidedog's own catalog with a fixed prefix and folder. Now there is one command for every catalog, and what was particular to GDS (its prefix, workflow, labels and numbering) is in ``docs/gds/discussion.toml``, as for any catalog.
+
+The arguments are parsed by hand, with Elm-style usage reports: unknown options, colors, states, labels and records get a "Did you mean" suggestion from ``gd_report::suggest``. Reports are rendered by ``gd_report::render_text`` (or ``render_json`` with ``--diagnostics=json``) on the host's error stream; text from records is escaped with ``escape_terminal``. The tests run the commands through the plugin with a host over buffers.
 
 Not ported
 ----------
 
-* Building older Typst catalogs and their legacy HTML (``embedded/legacy*.odin``): they
-  need the embedded Typst compiler, and belong to the dscc builder.
-* The crash reporter of the Odin mains (``host.install_crash_reporter``).
+* The crash reporter of the Odin mains: guidedog's own crash report covers the commands.

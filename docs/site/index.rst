@@ -141,8 +141,7 @@ Guidedog's design decisions are written down as numbered discussions: the proble
 alternatives, the decision, and the evidence. We can read each one on the web or
 download it as a PDF.
 
-Our own project can keep its discussions the same way, with ``dsc``. It comes with
-Guidedog. The `manual <manual-discussions_>`_ shows how.
+Our own project can keep its discussions the same way, with ``guidedog dsc``. The `manual <manual-discussions_>`_ shows how.
 
 .. container:: gd-actions gd-actions-quiet
 

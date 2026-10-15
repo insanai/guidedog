@@ -4,35 +4,24 @@ Keep a discussion catalog
 A discussion catalog keeps proposals and decisions. Each discussion is one
 reStructuredText record. A record gets a number when it opens for review, and its
 state says where the decision stands. Guidedog's own design records, GDS, are one such
-catalog. This page uses ``dsc``.
+catalog.
 
-Choose a program
-----------------
+The commands are ``guidedog dsc init``, ``new``, ``list``, ``show``, ``promote``, ``state``, ``index``, ``check``, ``build``, ``recover``, and ``config``. They come from the discussion plugin, which every ``guidedog`` links, so there is nothing else to install. Each command works on the catalog the current folder is in, or the one ``--dir`` names. ``guidedog dsc --help`` lists the commands, and ``guidedog dsc build --help`` shows one command's options.
 
-.. list-table:: Three ways to run the same commands
-   :header-rows: 1
-   :widths: 25 75
+Guidedog's own catalog is no exception. We run the same commands in ``docs/gds``:
 
-   * - Program
-     - Use it when
-   * - ``dsc``
-     - Guidedog is installed. ``dsc`` keeps the catalog itself, and asks ``guidedog``
-       to build it. It comes in the Guidedog archive.
-   * - ``dscc``
-     - Nothing else is installed. ``dscc`` is ``dsc`` with Guidedog built in. Each
-       release has a ``dscc`` archive for every platform.
-   * - ``guidedog gds``
-     - We work on Guidedog itself. It runs the same commands on ``docs/gds``.
+.. code-block:: sh
 
-Graphviz, Typst, and the other tools a build needs belong to Guidedog. ``dsc`` never
-looks for them. It uses whichever ``guidedog`` we have.
+   cd docs/gds
+   guidedog dsc check
+   guidedog dsc index --check
 
 Create a catalog
 ----------------
 
 .. code-block:: sh
 
-   dsc init docs/eds --prefix=eds --name="Enso Discussions" --author="Ada"
+   guidedog dsc init docs/eds --prefix=eds --name="Enso Discussions" --author="Ada"
 
 The prefix names the catalog's fields, such as ``:eds-number:``. It is 2 to 16 lowercase
 letters. ``init`` writes a complete catalog into a missing or empty folder:
@@ -58,12 +47,12 @@ We run the commands in the catalog folder, or in any folder inside it.
 
 .. code-block:: sh
 
-   dsc new "Cache policy" --labels=architecture
-   dsc list
-   dsc show cache-policy
-   dsc promote cache-policy
-   dsc state 1 --to=accepted --reason="Review converged"
-   dsc state 1 --to=committed --reason="Shipped" --evidence="Tests and review"
+   guidedog dsc new "Cache policy" --labels=architecture
+   guidedog dsc list
+   guidedog dsc show cache-policy
+   guidedog dsc promote cache-policy
+   guidedog dsc state 1 --to=accepted --reason="Review converged"
+   guidedog dsc state 1 --to=committed --reason="Shipped" --evidence="Tests and review"
 
 A new draft has the number ``XXXXX``. Promotion gives it the next number and opens it
 for discussion. A state change needs ``--reason``, and ``committed`` also needs
@@ -85,7 +74,7 @@ A record starts with its metadata, one field per line:
    :eds-labels: ["architecture"]
 
 Authors and labels are JSON lists. ``last-updated`` may stand for ``updated``. A record
-may also carry ``category``, ``status``, and ``summary``. ``dsc`` keeps ``status`` in step
+may also carry ``category``, ``status``, and ``summary``. ``guidedog dsc`` keeps ``status`` in step
 with the state. HTML and PDF show the fields as Number, Title, Authors, Updated, Labels,
 and so on, with the lists as plain text.
 
@@ -93,12 +82,12 @@ Configure the lifecycle and numbering
 -------------------------------------
 
 ``discussion.toml`` holds the catalog's settings. ``init`` writes every one of them,
-with comments. ``dsc config`` prints the settings in effect. A catalog without the
+with comments. ``guidedog dsc config`` prints the settings in effect. A catalog without the
 file follows the defaults below. They are the process of Guidedog's own GDS.
 
 .. code-block:: sh
 
-   dsc config > discussion.toml.new && mv discussion.toml.new discussion.toml
+   guidedog dsc config > discussion.toml.new && mv discussion.toml.new discussion.toml
 
 .. code-block:: toml
 
@@ -142,7 +131,7 @@ digits gets them, so 10000 follows 9999, and lists sort by value. Promotion numb
 ``limit`` later is safe. Changing ``width`` is not, once records are numbered: their
 numbers would no longer match it.
 
-``dsc`` checks the file whenever it reads the catalog. A mistake names the line and what
+``guidedog dsc`` checks the file whenever it reads the catalog. A mistake names the line and what
 to write instead:
 
 .. code-block:: text
@@ -165,15 +154,14 @@ Build
 
 .. code-block:: sh
 
-   dsc build
-   dsc build cache-policy --target=pdf
+   guidedog dsc build
+   guidedog dsc build cache-policy --target=pdf
 
-``dsc build`` writes the website to ``_build/html`` and one PDF per record to
+``guidedog dsc build`` writes the website to ``_build/html`` and one PDF per record to
 ``_build/pdf``. Naming a record writes only its PDF, to ``_build/selected``, and leaves
 the complete output alone. Warnings stop the build.
 
-``dsc`` runs the ``guidedog`` named by ``--guidedog=PATH``, then by ``DSC_GUIDEDOG``, then
-the one on ``PATH``. ``dscc`` builds with the Guidedog inside it.
+The build is guidedog's own: the same build as ``guidedog build``, with the catalog as the project. Graphviz, Typst, and the other tools it needs are guidedog's too. An older catalog of Typst records compiles each record with Typst; ``--typst=PATH`` names a Typst program to use instead of the embedded compiler.
 
 When an update is interrupted
 -----------------------------
@@ -184,20 +172,20 @@ command says so:
 
 .. code-block:: sh
 
-   dsc recover --rollback --dry-run
-   dsc recover --rollback
+   guidedog dsc recover --rollback --dry-run
+   guidedog dsc recover --rollback
 
 Recovery puts back the files as they were. It refuses to overwrite a file someone edited
-since. ``dsc`` also checks each change before it writes anything. It refuses an empty or cut-short
+since. ``guidedog dsc`` also checks each change before it writes anything. It refuses an empty or cut-short
 record, and an index without its generated region.
 
-``dsc`` keeps only each record's metadata in memory. It reads a record whole only to
+``guidedog dsc`` keeps only each record's metadata in memory. It reads a record whole only to
 change it. So checking a large catalog stays fast and small.
 
 Use the library
 ---------------
 
-The three programs share one Rust crate, ``gd-discussion``. Its ``README.md`` shows how
+The commands are one Rust crate, ``gd-discussion``. Its ``README.md`` shows how
 to load a catalog, plan a change, and apply it from our own program:
 
 .. code-block:: rust
@@ -215,6 +203,4 @@ to load a catalog, plan a change, and apply it from our own program:
    })?;                                            // changes nothing yet
    ds::apply(&lock, &plan)?;                       // journaled; ds::recover rolls back
 
-``ds::command::run`` is the whole ``dsc`` command line. It serves a program of our own with
-another name, prefix, or builder. The design notes are in
-:doc:`../internals/discussion`.
+``ds::plugin()`` is the whole ``guidedog dsc`` command line, as a plugin. A ``guidedog`` of our own links it beside its other plugins (see :doc:`../plugins`). The design notes are in :doc:`../internals/discussion`.

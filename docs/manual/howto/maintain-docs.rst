@@ -49,11 +49,12 @@ Build and check discussions
 
 .. code-block:: sh
 
-   target/release/guidedog gds index
-   target/release/guidedog gds check
-   target/release/guidedog gds build --target=both
+   cd docs/gds
+   ../../target/release/guidedog dsc index
+   ../../target/release/guidedog dsc check
+   ../../target/release/guidedog dsc build --target=both
 
-``guidedog gds`` runs the commands of ``dsc`` on this catalog (see :doc:`discussions`).
+``docs/gds`` is a discussion catalog like any other, so ``guidedog dsc`` runs in it (see :doc:`discussions`).
 It manages metadata, numbers, state, and recovery.
 Its RST publication path calls the project engine in process.
 It produces a complete HTML site and a separate PDF for each record.
@@ -63,7 +64,7 @@ It leaves the complete catalog in ``_build/pdf`` intact.
 
 .. code-block:: sh
 
-   target/release/guidedog gds build guidedog-in-rust --target=pdf
+   target/release/guidedog dsc build guidedog-in-rust --target=pdf --dir=docs/gds
    target/release/guidedog build html docs/gds -W
    target/release/guidedog build pdf docs/gds -W
 

@@ -560,6 +560,8 @@ different ``Program`` (GDS 0007). The commands, options, transactions and recove
 those specified above. The project build behind ``guidedog gds build`` is ``gd-project``
 with the crates GDS 0006 lists. Documentation stays reStructuredText built by Guidedog.
 
+Implementation revision, 2026-10-15: ``guidedog gds`` and the ``dsc`` program are replaced by ``guidedog dsc``, the commands of the discussion plugin linked into ``guidedog`` (GDS 0007). We run them in ``docs/gds``; the commands above keep their words after ``gds``.
+
 Review history
 --------------
 

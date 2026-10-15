@@ -31,12 +31,12 @@ La documentación de API se lee del código fuente sin ejecutarlo: Python (`auto
 
 ## Instalar
 
-Cada [versión](https://github.com/insanai/guidedog/releases) incluye un archivo comprimido para Linux (x86-64 y ARM64) y macOS (Apple silicon e Intel). El archivo `guidedog` contiene `guidedog`, `dsc`, `guidedog-pages` y `graphdog`; el archivo `dscc` contiene solo `dscc`. El compilador de Typst va integrado y tree-sitter está compilado dentro. Graphviz se enlaza desde el sistema, así que instale antes sus bibliotecas: en Debian y Ubuntu `sudo apt install libgvc6` (o el paquete `graphviz`), en Fedora `sudo dnf install graphviz`, en macOS `brew install graphviz`. Linux necesita glibc 2.35 o posterior; macOS, la versión 12 o posterior. Descargamos el archivo para nuestro sistema y `SHA256SUMS`, lo comprobamos y lo instalamos:
+Cada [versión](https://github.com/insanai/guidedog/releases) incluye un archivo comprimido para Linux (x86-64 y ARM64) y macOS (Apple silicon e Intel). El archivo `guidedog` contiene `guidedog`, `guidedog-pages` y `graphdog`. El compilador de Typst va integrado y tree-sitter está compilado dentro. Graphviz se enlaza desde el sistema, así que instale antes sus bibliotecas: en Debian y Ubuntu `sudo apt install libgvc6` (o el paquete `graphviz`), en Fedora `sudo dnf install graphviz`, en macOS `brew install graphviz`. Linux necesita glibc 2.35 o posterior; macOS, la versión 12 o posterior. Descargamos el archivo para nuestro sistema y `SHA256SUMS`, lo comprobamos y lo instalamos:
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # en macOS: shasum -a 256 -c --ignore-missing SHA256SUMS
 tar -xzf guidedog-linux-amd64.tar.gz
-sudo install guidedog-linux-amd64/guidedog guidedog-linux-amd64/dsc \
+sudo install guidedog-linux-amd64/guidedog \
     guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
 ```
 
@@ -55,7 +55,7 @@ Los programas no están firmados: en macOS, quite la cuarentena de una descarga 
 Instale Rust 1.90 o posterior (con [rustup](https://rustup.rs)), un compilador de C (las gramáticas de tree-sitter están escritas en C) y los archivos de desarrollo de Graphviz: `libgraphviz-dev` en Debian y Ubuntu, `graphviz-devel` en Fedora, `graphviz` de Homebrew en macOS. Después compile el espacio de trabajo:
 
 ```sh
-cargo build --release -p guidedog-cmd -p dsc-cmd -p dscc-cmd -p guidedog-pages-cmd -p graphdog-cmd
+cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd
 target/release/guidedog --version
 ```
 
@@ -106,18 +106,18 @@ Los plugins de compilación transforman texto fuente, páginas HTML completas y 
 
 ## Mantener discusiones
 
-`dsc` guarda propuestas y decisiones como registros reStructuredText, un archivo por registro, y los convierte con Guidedog en un sitio web y libros PDF. Cada catálogo tiene un prefijo: los registros de diseño de Guidedog usan `gds`, y otro proyecto podría usar `eds`.
+`guidedog dsc` guarda propuestas y decisiones como registros reStructuredText, un archivo por registro, y los convierte en un sitio web y libros PDF. Cada catálogo tiene un prefijo: los registros de diseño de Guidedog usan `gds`, y otro proyecto podría usar `eds`.
 
 ```sh
-dsc init docs/eds --prefix=eds --name="Enso Discussions"
+guidedog dsc init docs/eds --prefix=eds --name="Enso Discussions"
 cd docs/eds
-dsc new "Cache policy" --labels=architecture
-dsc promote cache-policy
-dsc state 1 --to=accepted --reason="Review converged"
-dsc build
+guidedog dsc new "Cache policy" --labels=architecture
+guidedog dsc promote cache-policy
+guidedog dsc state 1 --to=accepted --reason="Review converged"
+guidedog dsc build
 ```
 
-El `discussion.toml` de un catálogo fija los estados de su ciclo de vida, sus tipos de registro y su numeración, y `dsc config` lo muestra. `dsc` viene en el archivo de Guidedog y compila con el `guidedog` instalado. `dscc` es `dsc` con Guidedog integrado, para una máquina sin nada más instalado; cada versión incluye un archivo `dscc` para cada plataforma. `guidedog gds` ejecuta los mismos comandos sobre `docs/gds`, el catálogo propio de Guidedog. Consulte [Mantener un catálogo de discusiones](docs/manual/howto/discussions.rst).
+El `discussion.toml` de un catálogo fija los estados de su ciclo de vida, sus tipos de registro y su numeración, y `guidedog dsc config` lo muestra. Los comandos vienen del plugin de discusiones, que todo `guidedog` lleva enlazado, así que no hace falta instalar nada más. El propio `docs/gds` de Guidedog es uno de esos catálogos: ejecutamos `guidedog dsc check` en esa carpeta. Consulte [Mantener un catálogo de discusiones](docs/manual/howto/discussions.rst).
 
 `graphdog` convierte DOT de Graphviz en SVG, PNG o DOT con disposición calculada, con la misma biblioteca que usan los diagramas de Guidedog, como un subconjunto del comando `dot`: `echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`.
 
@@ -128,7 +128,7 @@ El `discussion.toml` de un catálogo fija los estados de su ciclo de vida, sus t
 - [Guía del motor](crates/guidedoc/README.md): espacios de trabajo, solicitudes, adaptadores y pases; los [ejemplos](examples/README.md) son programas pequeños que ejecutamos con `cargo run`.
 - [Plantillas](docs/manual/templates.rst): personalizar HTML con Jinja y libros con Typst.
 - [GDS](docs/gds/README.md): registros numerados de diseño y decisiones de implementación.
-- [Biblioteca de discusiones](crates/gd-discussion/README.md): los catálogos que mantienen `dsc`, `dscc` y `guidedog gds`.
+- [Biblioteca de discusiones](crates/gd-discussion/README.md): los catálogos que mantiene `guidedog dsc`.
 - [Biblioteca de plugins](crates/gd-plugins/README.md): servicios de compilación con tipos definidos y la interfaz de publicadores que usan `guidedog publish` y `guidedog-pages`.
 - [Crates reutilizables](docs/manual/internals/crates.rst): el motor, las bibliotecas, los generadores de API y el SDK de plugins que otros proyectos Rust pueden tomar de crates.io, y cómo dependen unos de otros.
 

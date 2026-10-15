@@ -240,6 +240,8 @@ commands and exit statuses are unchanged; this catalog is checked by the Rust ``
 - Problems carry a line, an excerpt with a caret and a "Did you mean" suggestion, rendered
   by ``gd-report``.
 
+Implementation revision, 2026-10-15: the discussion commands became a plugin of guidedog. ``guidedog dsc`` (``init``, ``new``, ``list``, ``show``, ``promote``, ``state``, ``index``, ``check``, ``build``, ``recover``, ``config``) replaces the ``dsc`` and ``dscc`` programs and ``guidedog gds``. ``gd_discussion::plugin()`` contributes the commands through the gd-plugins command interface, and ``cmd/guidedog`` links it beside the Pages plugin. A build asks the host to build the catalog as a Guidedog project, warnings as errors, with the books as ``pdf_documents``; older Typst catalogs compile with gd-typst inside gd-discussion. Guidedog's own catalog has no command of its own: its prefix, workflow, labels and numbering are in ``docs/gds/discussion.toml``, and we run ``guidedog dsc`` in ``docs/gds``. The external builder (``GuidedogProgram``, ``--guidedog``, ``DSC_GUIDEDOG``) is gone. Records, fields, journals, locks and exit statuses are unchanged.
+
 Review history
 --------------
 

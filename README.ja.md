@@ -31,12 +31,12 @@ API ドキュメントはソースを実行せずに読み取ります。対象�
 
 ## インストール
 
-各[リリース](https://github.com/insanai/guidedog/releases)には Linux（x86-64 と ARM64）と macOS（Apple シリコンと Intel）向けのアーカイブがあります。`guidedog` アーカイブには `guidedog`、`dsc`、`guidedog-pages`、`graphdog` が、`dscc` アーカイブには `dscc` だけが入っています。Typst コンパイラーは組み込まれ、tree-sitter もプログラムにコンパイルされています。Graphviz はシステムのものをリンクするので、先にそのライブラリーをインストールしてください。Debian と Ubuntu では `sudo apt install libgvc6`（または `graphviz` パッケージ）、Fedora では `sudo dnf install graphviz`、macOS では `brew install graphviz` です。Linux には glibc 2.35 以降、macOS にはバージョン 12 以降が必要です。対象のシステム向けのアーカイブと `SHA256SUMS` をダウンロードし、確認してからインストールします。
+各[リリース](https://github.com/insanai/guidedog/releases)には Linux（x86-64 と ARM64）と macOS（Apple シリコンと Intel）向けのアーカイブがあります。`guidedog` アーカイブには `guidedog`、`guidedog-pages`、`graphdog` が入っています。Typst コンパイラーは組み込まれ、tree-sitter もプログラムにコンパイルされています。Graphviz はシステムのものをリンクするので、先にそのライブラリーをインストールしてください。Debian と Ubuntu では `sudo apt install libgvc6`（または `graphviz` パッケージ）、Fedora では `sudo dnf install graphviz`、macOS では `brew install graphviz` です。Linux には glibc 2.35 以降、macOS にはバージョン 12 以降が必要です。対象のシステム向けのアーカイブと `SHA256SUMS` をダウンロードし、確認してからインストールします。
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS では: shasum -a 256 -c --ignore-missing SHA256SUMS
 tar -xzf guidedog-linux-amd64.tar.gz
-sudo install guidedog-linux-amd64/guidedog guidedog-linux-amd64/dsc \
+sudo install guidedog-linux-amd64/guidedog \
     guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
 ```
 
@@ -55,7 +55,7 @@ guidedog --version
 Rust 1.90 以降（[rustup](https://rustup.rs) で入手）、C コンパイラー（tree-sitter の文法は C で書かれています）、Graphviz の開発ファイルを用意します。Debian と Ubuntu では `libgraphviz-dev`、Fedora では `graphviz-devel`、macOS では Homebrew の `graphviz` です。そのうえでワークスペースをビルドします。
 
 ```sh
-cargo build --release -p guidedog-cmd -p dsc-cmd -p dscc-cmd -p guidedog-pages-cmd -p graphdog-cmd
+cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd
 target/release/guidedog --version
 ```
 
@@ -106,18 +106,18 @@ guidedog-pages watch                # ソースが変わるたびに公開し直
 
 ## 議論を管理する
 
-`dsc` は提案と決定を reStructuredText の記録として 1 件 1 ファイルで保管し、Guidedog でウェブサイトと PDF の本にビルドします。カタログにはそれぞれプレフィックスがあります。Guidedog の設計記録は `gds` を使い、別のプロジェクトなら `eds` などを使います。
+`guidedog dsc` は提案と決定を reStructuredText の記録として 1 件 1 ファイルで保管し、ウェブサイトと PDF の本にビルドします。カタログにはそれぞれプレフィックスがあります。Guidedog の設計記録は `gds` を使い、別のプロジェクトなら `eds` などを使います。
 
 ```sh
-dsc init docs/eds --prefix=eds --name="Enso Discussions"
+guidedog dsc init docs/eds --prefix=eds --name="Enso Discussions"
 cd docs/eds
-dsc new "Cache policy" --labels=architecture
-dsc promote cache-policy
-dsc state 1 --to=accepted --reason="Review converged"
-dsc build
+guidedog dsc new "Cache policy" --labels=architecture
+guidedog dsc promote cache-policy
+guidedog dsc state 1 --to=accepted --reason="Review converged"
+guidedog dsc build
 ```
 
-カタログの `discussion.toml` は、ライフサイクルの状態、記録の種類、番号付けを設定し、`dsc config` はその内容を表示します。`dsc` は Guidedog のアーカイブに含まれ、インストール済みの `guidedog` でビルドします。`dscc` は Guidedog を組み込んだ `dsc` で、ほかに何もインストールされていないマシン向けです。各リリースには全プラットフォームの `dscc` アーカイブがあります。`guidedog gds` は Guidedog 自身の `docs/gds` に対して同じコマンドを実行します。[議論カタログの管理](docs/manual/howto/discussions.rst)を参照してください。
+カタログの `discussion.toml` は、ライフサイクルの状態、記録の種類、番号付けを設定し、`guidedog dsc config` はその内容を表示します。これらのコマンドは、すべての `guidedog` にリンクされている議論プラグインが提供するため、ほかに何もインストールする必要はありません。Guidedog 自身の `docs/gds` もそうしたカタログの一つで、そのフォルダーで `guidedog dsc check` を実行しています。[議論カタログの管理](docs/manual/howto/discussions.rst)を参照してください。
 
 `graphdog` は、Guidedog の図と同じライブラリーで Graphviz DOT を SVG、PNG、またはレイアウト済みの DOT に描画します。`dot` コマンドのサブセットとして動きます: `echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`。
 
@@ -128,7 +128,7 @@ dsc build
 - [エンジンガイド](crates/guidedoc/README.md): ワークスペース、リクエスト、アダプター、パス。[例](examples/README.md)は `cargo run` で実行できる小さなプログラムです。
 - [テンプレート](docs/manual/templates.rst): Jinja で HTML、Typst で本を調整します。
 - [GDS](docs/gds/README.md): 番号付きの設計記録と実装上の判断。
-- [議論ライブラリ](crates/gd-discussion/README.md): `dsc`、`dscc`、`guidedog gds` が管理するカタログ。
+- [議論ライブラリ](crates/gd-discussion/README.md): `guidedog dsc` が管理するカタログ。
 - [プラグインライブラリ](crates/gd-plugins/README.md): 型付きのビルドサービスと、`guidedog publish` と `guidedog-pages` が使うパブリッシャーインターフェース。
 - [再利用できるクレート](docs/manual/internals/crates.rst): 他の Rust プロジェクトが crates.io から使えるエンジン、ライブラリ、API ジェネレーター、プラグイン SDK と、それらの依存関係。
 

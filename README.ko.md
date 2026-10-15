@@ -31,12 +31,12 @@ API 문서는 소스를 실행하지 않고 읽습니다. Python(`autodoc`), Odi
 
 ## 설치
 
-각 [릴리스](https://github.com/insanai/guidedog/releases)에는 Linux(x86-64, ARM64)와 macOS(Apple 실리콘, Intel)용 압축 파일이 있습니다. `guidedog` 압축 파일에는 `guidedog`, `dsc`, `guidedog-pages`, `graphdog` 가 들어 있고, `dscc` 압축 파일에는 `dscc` 만 들어 있습니다. Typst 컴파일러는 내장되어 있고 tree-sitter도 프로그램에 컴파일되어 있습니다. Graphviz는 시스템의 것을 링크하므로 먼저 그 라이브러리를 설치하세요. Debian과 Ubuntu에서는 `sudo apt install libgvc6`(또는 `graphviz` 패키지), Fedora에서는 `sudo dnf install graphviz`, macOS에서는 `brew install graphviz` 입니다. Linux에는 glibc 2.35 이상이, macOS에는 버전 12 이상이 필요합니다. 우리 시스템에 맞는 압축 파일과 `SHA256SUMS` 를 내려받아 확인한 뒤 설치합니다.
+각 [릴리스](https://github.com/insanai/guidedog/releases)에는 Linux(x86-64, ARM64)와 macOS(Apple 실리콘, Intel)용 압축 파일이 있습니다. `guidedog` 압축 파일에는 `guidedog`, `guidedog-pages`, `graphdog` 가 들어 있습니다. Typst 컴파일러는 내장되어 있고 tree-sitter도 프로그램에 컴파일되어 있습니다. Graphviz는 시스템의 것을 링크하므로 먼저 그 라이브러리를 설치하세요. Debian과 Ubuntu에서는 `sudo apt install libgvc6`(또는 `graphviz` 패키지), Fedora에서는 `sudo dnf install graphviz`, macOS에서는 `brew install graphviz` 입니다. Linux에는 glibc 2.35 이상이, macOS에는 버전 12 이상이 필요합니다. 우리 시스템에 맞는 압축 파일과 `SHA256SUMS` 를 내려받아 확인한 뒤 설치합니다.
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS에서는: shasum -a 256 -c --ignore-missing SHA256SUMS
 tar -xzf guidedog-linux-amd64.tar.gz
-sudo install guidedog-linux-amd64/guidedog guidedog-linux-amd64/dsc \
+sudo install guidedog-linux-amd64/guidedog \
     guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
 ```
 
@@ -55,7 +55,7 @@ guidedog --version
 Rust 1.90 이상([rustup](https://rustup.rs)으로 설치), C 컴파일러(tree-sitter의 문법은 C로 작성되어 있습니다), Graphviz 개발 파일을 설치하세요. Debian과 Ubuntu에서는 `libgraphviz-dev`, Fedora에서는 `graphviz-devel`, macOS에서는 Homebrew의 `graphviz` 입니다. 그런 다음 워크스페이스를 빌드합니다.
 
 ```sh
-cargo build --release -p guidedog-cmd -p dsc-cmd -p dscc-cmd -p guidedog-pages-cmd -p graphdog-cmd
+cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd
 target/release/guidedog --version
 ```
 
@@ -106,18 +106,18 @@ guidedog-pages watch                # 소스가 바뀔 때마다 다시 게시�
 
 ## 논의 기록 관리
 
-`dsc` 는 제안과 결정을 파일 하나에 하나씩 reStructuredText 기록으로 보관하고, Guidedog으로 웹사이트와 PDF 책을 만듭니다. 카탈로그마다 접두사가 있습니다. Guidedog의 설계 기록은 `gds` 를 쓰고, 다른 프로젝트는 `eds` 를 쓸 수 있습니다.
+`guidedog dsc` 는 제안과 결정을 파일 하나에 하나씩 reStructuredText 기록으로 보관하고, 이를 웹사이트와 PDF 책으로 만듭니다. 카탈로그마다 접두사가 있습니다. Guidedog의 설계 기록은 `gds` 를 쓰고, 다른 프로젝트는 `eds` 를 쓸 수 있습니다.
 
 ```sh
-dsc init docs/eds --prefix=eds --name="Enso Discussions"
+guidedog dsc init docs/eds --prefix=eds --name="Enso Discussions"
 cd docs/eds
-dsc new "Cache policy" --labels=architecture
-dsc promote cache-policy
-dsc state 1 --to=accepted --reason="Review converged"
-dsc build
+guidedog dsc new "Cache policy" --labels=architecture
+guidedog dsc promote cache-policy
+guidedog dsc state 1 --to=accepted --reason="Review converged"
+guidedog dsc build
 ```
 
-카탈로그의 `discussion.toml` 은 수명 주기의 상태, 기록 유형, 번호 매기기를 정하고, `dsc config` 는 이를 출력합니다. `dsc` 는 Guidedog 압축 파일에 들어 있으며 설치된 `guidedog` 으로 빌드합니다. `dscc` 는 Guidedog을 내장한 `dsc` 로, 다른 것이 설치되지 않은 기기에서 씁니다. 각 릴리스에는 플랫폼마다 `dscc` 압축 파일이 있습니다. `guidedog gds` 는 Guidedog 자체의 `docs/gds` 에서 같은 명령을 실행합니다. [논의 카탈로그 관리하기](docs/manual/howto/discussions.rst)를 참고하세요.
+카탈로그의 `discussion.toml` 은 수명 주기의 상태, 기록 유형, 번호 매기기를 정하고, `guidedog dsc config` 는 이를 출력합니다. 이 명령들은 모든 `guidedog` 에 링크된 논의 플러그인이 제공하므로 따로 설치할 것이 없습니다. Guidedog 자체의 `docs/gds` 도 그런 카탈로그 중 하나로, 그 폴더에서 `guidedog dsc check` 를 실행합니다. [논의 카탈로그 관리하기](docs/manual/howto/discussions.rst)를 참고하세요.
 
 `graphdog` 는 Guidedog의 도표와 같은 라이브러리로 Graphviz DOT를 SVG, PNG 또는 레이아웃이 적용된 DOT로 렌더링하며, `dot` 명령의 일부 기능을 제공합니다: `echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`.
 
@@ -128,7 +128,7 @@ dsc build
 - [엔진 안내](crates/guidedoc/README.md): 작업 공간, 요청, 어댑터, 패스. [예제](examples/README.md)는 우리가 `cargo run` 으로 실행할 수 있는 작은 프로그램입니다.
 - [템플릿](docs/manual/templates.rst): Jinja로 HTML을, Typst로 책을 사용자화합니다.
 - [GDS](docs/gds/README.md): 번호가 지정된 설계 기록과 구현 결정.
-- [논의 라이브러리](crates/gd-discussion/README.md): `dsc`, `dscc`, `guidedog gds` 가 관리하는 카탈로그.
+- [논의 라이브러리](crates/gd-discussion/README.md): `guidedog dsc` 가 관리하는 카탈로그.
 - [플러그인 라이브러리](crates/gd-plugins/README.md): 타입이 명확한 빌드 서비스와 `guidedog publish` 및 `guidedog-pages` 가 사용하는 게시기 인터페이스.
 - [재사용 가능한 크레이트](docs/manual/internals/crates.rst): 다른 Rust 프로젝트가 crates.io 에서 가져다 쓸 수 있는 엔진, 라이브러리, API 생성기, 플러그인 SDK 와 그 의존 관계.
 

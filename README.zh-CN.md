@@ -31,12 +31,12 @@ API 文档直接从源码读取，不运行源码：Python（`autodoc`）、Odin
 
 ## 安装
 
-每个[版本](https://github.com/insanai/guidedog/releases)都提供 Linux（x86-64 和 ARM64）和 macOS（Apple 芯片和 Intel）的压缩包。`guidedog` 压缩包包含 `guidedog`、`dsc`、`guidedog-pages` 和 `graphdog`；`dscc` 压缩包只包含 `dscc`。Typst 编译器已内置，tree-sitter 已编译进程序。Graphviz 从系统链接，因此请先安装它的库：Debian 和 Ubuntu 上运行 `sudo apt install libgvc6`（或安装 `graphviz` 包），Fedora 上运行 `sudo dnf install graphviz`，macOS 上运行 `brew install graphviz`。Linux 需要 glibc 2.35 或更新版本；macOS 需要 12 或更新版本。我们下载与系统对应的压缩包和 `SHA256SUMS`，校验后安装：
+每个[版本](https://github.com/insanai/guidedog/releases)都提供 Linux（x86-64 和 ARM64）和 macOS（Apple 芯片和 Intel）的压缩包。`guidedog` 压缩包包含 `guidedog`、`guidedog-pages` 和 `graphdog`。Typst 编译器已内置，tree-sitter 已编译进程序。Graphviz 从系统链接，因此请先安装它的库：Debian 和 Ubuntu 上运行 `sudo apt install libgvc6`（或安装 `graphviz` 包），Fedora 上运行 `sudo dnf install graphviz`，macOS 上运行 `brew install graphviz`。Linux 需要 glibc 2.35 或更新版本；macOS 需要 12 或更新版本。我们下载与系统对应的压缩包和 `SHA256SUMS`，校验后安装：
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS 上：shasum -a 256 -c --ignore-missing SHA256SUMS
 tar -xzf guidedog-linux-amd64.tar.gz
-sudo install guidedog-linux-amd64/guidedog guidedog-linux-amd64/dsc \
+sudo install guidedog-linux-amd64/guidedog \
     guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
 ```
 
@@ -55,7 +55,7 @@ guidedog --version
 安装 Rust 1.90 或更新版本（使用 [rustup](https://rustup.rs)）、C 编译器（tree-sitter 的语法以 C 编写），以及 Graphviz 开发文件：Debian 和 Ubuntu 上为 `libgraphviz-dev`，Fedora 上为 `graphviz-devel`，macOS 上为 Homebrew 的 `graphviz`。然后构建工作区：
 
 ```sh
-cargo build --release -p guidedog-cmd -p dsc-cmd -p dscc-cmd -p guidedog-pages-cmd -p graphdog-cmd
+cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd
 target/release/guidedog --version
 ```
 
@@ -106,18 +106,18 @@ guidedog-pages watch                # 源文件每次变化后重新发布
 
 ## 维护讨论
 
-`dsc` 把提案和决策保存为 reStructuredText 记录，每条一个文件，并用 Guidedog 构建成网站和 PDF 图书。每个目录都有前缀：Guidedog 的设计记录使用 `gds`，其他项目可以使用 `eds`。
+`guidedog dsc` 把提案和决策保存为 reStructuredText 记录，每条一个文件，并构建成网站和 PDF 图书。每个目录都有前缀：Guidedog 的设计记录使用 `gds`，其他项目可以使用 `eds`。
 
 ```sh
-dsc init docs/eds --prefix=eds --name="Enso Discussions"
+guidedog dsc init docs/eds --prefix=eds --name="Enso Discussions"
 cd docs/eds
-dsc new "Cache policy" --labels=architecture
-dsc promote cache-policy
-dsc state 1 --to=accepted --reason="Review converged"
-dsc build
+guidedog dsc new "Cache policy" --labels=architecture
+guidedog dsc promote cache-policy
+guidedog dsc state 1 --to=accepted --reason="Review converged"
+guidedog dsc build
 ```
 
-目录的 `discussion.toml` 设定它的生命周期状态、记录类型和编号，`dsc config` 会打印它。`dsc` 随 Guidedog 发行包提供，用已安装的 `guidedog` 构建。`dscc` 是内置 Guidedog 的 `dsc`，适合未安装其他程序的机器；每个版本都为各平台提供 `dscc` 发行包。`guidedog gds` 对 Guidedog 自己的 `docs/gds` 运行同样的命令。见[维护讨论目录](docs/manual/howto/discussions.rst)。
+目录的 `discussion.toml` 设定它的生命周期状态、记录类型和编号，`guidedog dsc config` 会打印它。这些命令来自讨论插件，每个 `guidedog` 都链接了该插件，因此无需另外安装任何东西。Guidedog 自己的 `docs/gds` 就是这样一个目录：我们在该文件夹中运行 `guidedog dsc check`。见[维护讨论目录](docs/manual/howto/discussions.rst)。
 
 `graphdog` 使用与 Guidedog 图表相同的库，把 Graphviz DOT 渲染为 SVG、PNG 或带布局信息的 DOT，相当于 `dot` 命令的一个子集：`echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`。
 
@@ -128,7 +128,7 @@ dsc build
 - [引擎指南](crates/guidedoc/README.md)：工作区、请求、适配器和处理步骤（pass）；[示例](examples/README.md)是我们可以用 `cargo run` 运行的小程序。
 - [模板](docs/manual/templates.rst)：用 Jinja 自定义 HTML，用 Typst 自定义图书。
 - [GDS](docs/gds/README.md)：编号的设计记录和实现决策。
-- [讨论库](crates/gd-discussion/README.md)：`dsc`、`dscc` 和 `guidedog gds` 维护的目录。
+- [讨论库](crates/gd-discussion/README.md)：`guidedog dsc` 维护的目录。
 - [插件库](crates/gd-plugins/README.md)：带类型的构建服务，以及 `guidedog publish` 和 `guidedog-pages` 使用的发布器接口。
 - [可复用的 crate](docs/manual/internals/crates.rst)：其他 Rust 项目可以从 crates.io 使用的引擎、库、API 生成器和插件 SDK，以及它们之间的依赖关系。
 

@@ -68,7 +68,7 @@ A plugin of either kind may also add commands to guidedog's command line. The Gi
 Neither is written in ``gd-cli``. The plugin declares them, and guidedog finds them when it meets a word it does not know.
 
 Declaring
-   ``BuildPlugin::commands`` and ``Publisher::commands`` return a list of ``CommandInfo``. Each has a ``path`` of 1 to 4 lowercase words (``["pages", "workflow"]``), a one-line ``summary``, plain-text ``help``, and the ``options`` it takes (``CommandOption``: a name such as ``--write``, a value placeholder such as ``DIR`` or nothing for a switch, and a summary). The default is no commands. ``Registry::new`` checks the declarations: at most 32 commands, distinct names, bounded text. The declared options serve the help and the host's parsing; the plugin still reads its own arguments, so a command is free to have nested subcommands of its own.
+   ``BuildPlugin::commands`` and ``Publisher::commands`` return a list of ``CommandInfo``. Each has a ``path`` of 1 to 4 lowercase words (``["pages", "workflow"]``), a one-line ``summary``, plain-text ``help``, and the ``options`` it takes (``CommandOption``: a name such as ``--write``, a value placeholder such as ``DIR`` or nothing for a switch, and a summary). The default is no commands. A build plugin that only adds commands may offer no hooks (``Hooks::NONE``), as the discussion plugin (``guidedog dsc``) does; a session cannot load it. ``Registry::new`` checks the declarations: at most 32 commands, distinct names, bounded text. The declared options serve the help and the host's parsing; the plugin still reads its own arguments, so a command is free to have nested subcommands of its own.
 
 Running
    ``run_command(&mut self, ctx: &mut CommandContext, name, args) -> Result<i32, Problem>`` runs the command ``name`` (its words joined by spaces) on a fresh, unloaded value. ``args`` is the command line without the command's words, global options included. ``Ok`` is the exit status; a ``Problem`` is reported by the host and its ``exit`` becomes the status.
@@ -79,7 +79,7 @@ Running
 Dispatch in ``gd-cli``
    ``extensions(&linked, machine)`` lists the commands of the linked plugins, then those of the registered programs (the machine registry is read only when the command line may name one). A name guidedog already has is skipped, except targets of ``publish``; an earlier plugin wins a name. The parser matches the longest path against the command line's words, skipping the values of options (guidedog's and every declared option that takes a value), so ``publish --config pages.toml`` never names a target ``pages.toml``. ``--help`` on a contributed command prints help made from its declaration, without running the plugin. ``guidedog --help`` lists the commands under PLUGIN COMMANDS with their plugin IDs, ``guidedog publish --help`` lists the targets, and "Did you mean" draws on both guidedog's commands and the plugins'. ``guidedog plugin inspect ID`` shows the commands a plugin adds.
 
-Which plugins are linked is the program's decision, not the command line's: ``cmd/guidedog`` passes ``Registry::new(vec![gd_pages::plugin()])`` to ``gd_cli::run_status``, and ``gd-cli`` depends only on ``gd-plugins``. The dependency gate holds that rule.
+Which plugins are linked is the program's decision, not the command line's: ``cmd/guidedog`` passes ``Registry::new(vec![gd_pages::plugin(), gd_discussion::plugin()])`` to ``gd_cli::run_status``, and ``gd-cli`` depends only on ``gd-plugins``. The dependency gate holds that rule.
 
 Identity and cache keys
 ~~~~~~~~~~~~~~~~~~~~~~~

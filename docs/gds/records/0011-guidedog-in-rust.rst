@@ -48,7 +48,7 @@ in them, and each is a cost of the language boundary rather than of the design:
   scripts under ``native/``. Rust has maintained tree-sitter crates, and the system
   Graphviz library is linked like any other.
 
-Scope: every crate of the workspace, the binaries (``guidedog``, ``dsc``, ``dscc``,
+Scope: every crate of the workspace, the binaries (``guidedog``,
 ``graphdog``, ``guidedog-pages``), the source-limit checker, and this documentation.
 Out of scope: changing any user-visible behaviour without its own record, and the Odin
 domain and odindoc, which stay because Odin remains a documented *language*.
@@ -110,7 +110,7 @@ There is one Cargo workspace. Every crate inherits the single workspace version
    * - ``gd-project``, ``gd-cli``
      - The coordinator (load, build, clean) and the ``guidedog`` command line.
    * - ``cmd/*``
-     - ``guidedog``, ``dsc``, ``dscc``, ``graphdog``, ``guidedog-pages``: composition and
+     - ``guidedog``, ``graphdog``, ``guidedog-pages``: composition and
        exit status only.
    * - ``tools/check``
      - The source-limit checker.
@@ -129,7 +129,7 @@ depends on ``gd-pages``: publishers reach it through ``gd-plugins``.
      node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
            color="#216553", fontcolor="#16382f", fontname="Helvetica", fontsize=11];
      edge [color="#216553", arrowsize=0.7];
-     cmd [label="cmd/*\nguidedog, dsc, dscc, graphdog, guidedog-pages"];
+     cmd [label="cmd/*\nguidedog, graphdog, guidedog-pages"];
      cli [label="gd-cli"];
      project [label="gd-project\ngd-site, gd-book, gd-read, gd-link,\ngd-resolve, gd-outputs, gd-env, gd-conf"];
      host [label="gd-host"];
@@ -395,6 +395,8 @@ Status on 2026-10-15: the engine, readers, renderers, defaults, host, supporting
 libraries, discussion catalogs (``dsc``), plugins and the Pages publisher are ported, with
 their tests. The project builder (``gd-conf`` through ``gd-cli``) and the in-process
 ``dscc`` builder are being ported, so ``guidedog build`` is not yet available from Rust.
+
+Implementation revision, 2026-10-15: the binaries are ``guidedog``, ``graphdog`` and ``guidedog-pages``. ``dsc`` and ``dscc`` are gone: discussion catalogs are the plugin ``guidedog dsc``, linked into ``guidedog``, and ``guidedog gds`` with them (GDS 0007).
 
 Open questions
 --------------

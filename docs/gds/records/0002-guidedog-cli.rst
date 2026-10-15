@@ -684,6 +684,8 @@ and a clean-machine check, now of the Rust executable with its declared system
 dependencies (Graphviz and ``curl``). The October evidence above describes the Odin
 build and is kept as history.
 
+Implementation revision, 2026-10-15: ``guidedog gds`` is removed. The discussion commands come from the discussion plugin, linked into ``guidedog``, as ``guidedog dsc`` (GDS 0007). They run on any catalog, Guidedog's own included.
+
 Review history
 --------------
 

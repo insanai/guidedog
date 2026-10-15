@@ -55,13 +55,19 @@ Rust crates compiled into the programs (versions as in Cargo.lock):
   (option-ext), CDLA-Permissive-2.0 (webpki-roots). `cargo metadata` lists every
   crate with its license.
 
-Linked from the system, not distributed with Guidedog:
+C libraries linked statically into the release programs (built by `cargo xtask
+graphviz` from the pinned source tarballs, which each release also publishes):
 
-- Graphviz (libgvc and libcgraph, linked dynamically by crates/gd-graphdog): Eclipse
-  Public License 1.0 for current releases (older distribution packages may carry the
-  Common Public License); see the COPYING file of the installed Graphviz. The
-  additional permission above covers this combination. The release archives do not
-  contain Graphviz; install it from the system's package manager or Homebrew.
+- Graphviz 16.1.0 (libgvc, libcgraph, libcdt, libpathplan, libxdot, the core,
+  dot_layout and neato_layout plugins; crates/gd-graphdog): Eclipse Public License
+  2.0 (earlier releases: 1.0); see COPYING-graphviz in the release archive, or COPYING
+  in the Graphviz source. The additional permission above covers this combination.
+  Source: https://gitlab.com/graphviz/graphviz (release 16.1.0). Programs built from
+  source without GUIDEDOG_GRAPHVIZ_STATIC link the system's shared Graphviz instead.
+- Expat 2.7.1 (used by Graphviz for HTML-like labels): MIT License; see COPYING-expat
+  in the release archive. Source: https://github.com/libexpat/libexpat (R_2_7_1).
+- libstdc++ (GCC's C++ runtime, for Graphviz's C++ parts; Linux only): GNU GPL 3
+  with the GCC Runtime Library Exception, which allows this linking.
 
 Files kept in this repository:
 

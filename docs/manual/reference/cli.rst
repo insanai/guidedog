@@ -104,8 +104,6 @@ Commands overview
      - Converts one file, or standard input, without a project.
    * - ``formats``
      - Lists the readers and renderers built in, and the Typst backend.
-   * - ``gds COMMAND``
-     - Keeps Guidedog's own discussion records in ``docs/gds``, as ``dsc`` does.
    * - ``publish --publisher=ID``
      - Builds the project a publisher's configuration names, and publishes the site.
    * - ``plugin COMMAND``
@@ -123,6 +121,8 @@ Plugins add commands of their own (see `Commands plugins add`_). The GitHub Page
      - Publishes to GitHub Pages, doing first whatever setup is still missing.
    * - ``pages workflow``
      - Writes a GitHub Actions workflow that builds and deploys the site.
+
+The discussion plugin, also linked into every ``guidedog``, adds ``dsc`` and its commands: ``guidedog dsc init``, ``new``, ``build``, and the rest (see `guidedog dsc`_).
 
 A command word that is neither guidedog's nor a plugin's is a usage error (exit status 2). Its hint lists the commands, and suggests the closest of both kinds.
 
@@ -470,50 +470,28 @@ conformance (``planned``, ``partial``, ``conformant``). It also reports the Typs
    guidedog formats --format=json
    guidedog formats --typst=/opt/typst/bin/typst
 
-guidedog gds
+guidedog dsc
 ------------
 
-Keeps Guidedog's own discussion records, the GDS, in ``docs/gds``. It runs the commands
-of ``dsc`` (below) with the prefix ``gds``. It builds with this program's engine:
+Keeps a discussion catalog and builds it. The commands come from the discussion plugin, which every ``guidedog`` links. They work on any catalog: its prefix, lifecycle, record types, and numbering are in its ``discussion.toml``. Each command works on the catalog the current folder is in, or the one ``--dir`` names. Guidedog's own design records are one catalog, in ``docs/gds``. :doc:`../howto/discussions` shows the whole workflow.
 
 .. code-block:: sh
 
-   guidedog gds new "Feature Title" --author="Name"
-   guidedog gds list --state=prediscussion
-   guidedog gds show 0003
-   guidedog gds promote 0003 --dry-run
-   guidedog gds state 0003 --to=accepted --reason="Consensus reached"
-   guidedog gds index
-   guidedog gds check --render
-   guidedog gds recover --rollback
+   guidedog dsc init DIR --prefix=eds --name="Enso Discussions" --author="Ada"
+   guidedog dsc new "Cache policy" --labels=architecture
+   guidedog dsc list --state=discussion
+   guidedog dsc show cache-policy --format=json
+   guidedog dsc promote cache-policy --dry-run
+   guidedog dsc state 1 --to=accepted --reason="Review converged"
+   guidedog dsc index --check
+   guidedog dsc check
+   guidedog dsc build --target=both
+   guidedog dsc recover --rollback
+   guidedog dsc config > discussion.toml
 
-dsc and dscc
-------------
+``guidedog dsc build`` builds the catalog as a Guidedog project, as ``guidedog build`` does, with ``pdf_documents`` set to the record books and warnings as errors. ``guidedog dsc config`` prints the catalog's settings in effect, as ``discussion.toml``. ``guidedog dsc --help`` lists the commands; ``guidedog dsc COMMAND --help`` shows one command's options.
 
-``dsc`` keeps a discussion catalog and builds it with the installed ``guidedog``.
-``dscc`` is ``dsc`` with Guidedog built in. It builds a catalog as a Guidedog project
-in its own process (``pdf_documents`` set to the books, warnings as errors).
-``dscc --version`` names the Guidedog inside it. Both take the same commands (see
-:doc:`../howto/discussions`).
-
-.. code-block:: sh
-
-   dsc init DIR --prefix=eds --name="Enso Discussions" --author="Ada"
-   dsc new "Cache policy" --labels=architecture
-   dsc list --state=discussion
-   dsc show cache-policy --format=json
-   dsc promote cache-policy --dry-run
-   dsc state 1 --to=accepted --reason="Review converged"
-   dsc index --check
-   dsc check
-   dsc build --target=both
-   dsc recover --rollback
-   dsc config > discussion.toml
-
-``dsc config`` prints the catalog's settings in effect, as ``discussion.toml``.
-:doc:`../howto/discussions` explains each setting.
-
-.. list-table:: Options of dsc and dscc
+.. list-table:: Options of guidedog dsc
    :header-rows: 1
    :widths: 35 65
 
@@ -540,12 +518,9 @@ in its own process (``pdf_documents`` set to the books, warnings as errors).
      - ``index``: check without writing; ``check``: also build the artifacts.
    * - ``--target=html|pdf|both``
      - What ``build`` writes (default: both). A record selects one PDF.
-   * - ``--guidedog=PATH``
-     - ``dsc`` only: the ``guidedog`` to build with (default: ``DSC_GUIDEDOG``, then
-       ``PATH``).
    * - ``--typst=PATH``
-     - ``dscc`` and ``guidedog gds`` only: a Typst program, for a Guidedog without one
-       built in.
+     - ``build`` and ``check``: the Typst program for a catalog of older Typst records
+       (default: the embedded compiler), and for the PDF books.
    * - ``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, ``-q``
      - Preview a change; machine-readable output; quiet success.
 

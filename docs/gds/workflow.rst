@@ -2,7 +2,7 @@ Work on a discussion
 ====================
 
 A GDS explains one decision. Start with the problem and the proposed result.
-Other projects keep catalogs like this one with ``dsc``; see GDS 0007.
+We keep this catalog, and other projects keep theirs, with ``guidedog dsc``, run in the catalog's folder; see GDS 0007.
 State the assumptions. Give a worked example. Name the alternatives.
 Keep the implementation status separate from the proposal.
 
@@ -11,9 +11,9 @@ Create and inspect
 
 .. code-block:: sh
 
-   guidedog gds new "Cache policy" --author="Ada" --labels=build
-   guidedog gds show cache-policy
-   guidedog gds list --state=prediscussion
+   guidedog dsc new "Cache policy" --author="Ada" --labels=build
+   guidedog dsc show cache-policy
+   guidedog dsc list --state=prediscussion
 
 The draft has an ``XXXXX`` number. Its filename ends in ``.rst``.
 Metadata occupies the first field list. Authors and labels are JSON arrays.
@@ -48,9 +48,9 @@ Review and promote
 
 .. code-block:: sh
 
-   guidedog gds check
-   guidedog gds promote cache-policy --dry-run
-   guidedog gds promote cache-policy
+   guidedog dsc check
+   guidedog dsc promote cache-policy --dry-run
+   guidedog dsc promote cache-policy
 
 Promotion assigns a permanent number and opens discussion.
 It does not accept the design. Numbered records are not renumbered or reused.
@@ -80,8 +80,8 @@ Record a decision
 
 .. code-block:: sh
 
-   guidedog gds state 4 --to=accepted --reason="Review converged"
-   guidedog gds state 4 --to=committed --reason="Implemented" --evidence="Tests and review"
+   guidedog dsc state 4 --to=accepted --reason="Review converged"
+   guidedog dsc state 4 --to=committed --reason="Implemented" --evidence="Tests and review"
 
 A committed state requires evidence. The source history is not evidence by itself.
 Do not claim another person's approval. The maintainer owns the state decision.
@@ -91,10 +91,10 @@ Publish and recover
 
 .. code-block:: sh
 
-   guidedog gds index
-   guidedog gds build --target=both
-   guidedog gds build guidedoc-odin --target=pdf
-   guidedog gds recover --rollback
+   guidedog dsc index
+   guidedog dsc build --target=both
+   guidedog dsc build guidedoc-odin --target=pdf
+   guidedog dsc recover --rollback
 
 HTML builds the whole discussion site. A selector limits separate PDFs.
 A selected PDF preview uses ``_build/selected/<artifact>/pdf``.

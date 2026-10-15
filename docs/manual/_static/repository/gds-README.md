@@ -9,27 +9,25 @@ Read [the workflow guide](workflow.rst) and [GDS 0001 (Process Specification)](r
 quick commands
 --------------
 
-From the repository root, after `cargo build --release -p guidedog-cmd`:
+This folder is a discussion catalog like any other, kept with `guidedog dsc`. In
+`docs/gds`, after `cargo build --release -p guidedog-cmd`:
 
 ```sh
 # Refresh the registry and discussion catalog index
-target/release/guidedog gds index
+../../target/release/guidedog dsc index
 
 # Check records for style and structural validity
-target/release/guidedog gds check
+../../target/release/guidedog dsc check
 
 # Build both HTML site and all PDF records
-target/release/guidedog gds build --target=both
+../../target/release/guidedog dsc build --target=both
 
 # Build a single record's PDF preview
-target/release/guidedog gds build guidedog-in-rust --target=pdf
+../../target/release/guidedog dsc build guidedog-in-rust --target=pdf
 
 # Preview the discussion website locally
-target/release/guidedog serve docs/gds
+../../target/release/guidedog serve .
 ```
-
-`dsc` (`cargo build --release -p dsc-cmd`) manages the same catalog from inside
-`docs/gds`: `dsc list`, `dsc check`, `dsc index --check`.
 
 lifecycle and records
 ---------------------
@@ -55,7 +53,7 @@ Rust: GDS 0011 records that decision, and each earlier record keeps its decision
 evidence and lifecycle events and gains an "Implementation in Rust" section stating how
 the crates realize it. A record's state does not change just because code is ported.
 
-New drafts are created with number `XXXXX` (e.g. `guidedog gds new "Feature title"`). Permanent numbers are assigned upon promotion into discussion.
+New drafts are created with number `XXXXX` (e.g. `guidedog dsc new "Feature title"`). Permanent numbers are assigned upon promotion into discussion.
 
 safety and transactions
 -----------------------
@@ -63,7 +61,7 @@ safety and transactions
 All GDS metadata modifications (`new`, `promote`, `state`, and `index`) use transactional file locking and atomic stage replacement:
   - Use `--dry-run` to preview planned changes before applying them.
   - Lifecycle state changes require a clear rationale string.
-  - If a command is interrupted, `guidedog gds recover --rollback` safely restores prior state from the journal.
+  - If a command is interrupted, `guidedog dsc recover --rollback` safely restores prior state from the journal.
 
 Related documentation: the [user manual](../manual/) and the crate cheat sheets
 (`crates/*/README.md`).

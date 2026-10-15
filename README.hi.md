@@ -31,12 +31,12 @@ API दस्तावेज़ स्रोत कोड को चलाए �
 
 ## स्थापित करें
 
-हर [रिलीज़](https://github.com/insanai/guidedog/releases) में Linux (x86-64 और ARM64) और macOS (Apple silicon और Intel) के लिए एक आर्काइव है। `guidedog` आर्काइव में `guidedog`, `dsc`, `guidedog-pages` और `graphdog` हैं; `dscc` आर्काइव में केवल `dscc` है। Typst कंपाइलर अंतर्निहित है और tree-sitter प्रोग्राम में ही कंपाइल है। Graphviz सिस्टम से लिंक होता है, इसलिए पहले उसकी लाइब्रेरी स्थापित करें: Debian और Ubuntu पर `sudo apt install libgvc6` (या `graphviz` पैकेज), Fedora पर `sudo dnf install graphviz`, macOS पर `brew install graphviz`। Linux को glibc 2.35 या नया चाहिए; macOS को संस्करण 12 या नया। हम अपने सिस्टम का आर्काइव और `SHA256SUMS` डाउनलोड करते हैं, फिर जाँचकर स्थापित करते हैं:
+हर [रिलीज़](https://github.com/insanai/guidedog/releases) में Linux (x86-64 और ARM64) और macOS (Apple silicon और Intel) के लिए एक आर्काइव है। `guidedog` आर्काइव में `guidedog`, `guidedog-pages` और `graphdog` हैं। Typst कंपाइलर अंतर्निहित है और tree-sitter प्रोग्राम में ही कंपाइल है। Graphviz सिस्टम से लिंक होता है, इसलिए पहले उसकी लाइब्रेरी स्थापित करें: Debian और Ubuntu पर `sudo apt install libgvc6` (या `graphviz` पैकेज), Fedora पर `sudo dnf install graphviz`, macOS पर `brew install graphviz`। Linux को glibc 2.35 या नया चाहिए; macOS को संस्करण 12 या नया। हम अपने सिस्टम का आर्काइव और `SHA256SUMS` डाउनलोड करते हैं, फिर जाँचकर स्थापित करते हैं:
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS पर: shasum -a 256 -c --ignore-missing SHA256SUMS
 tar -xzf guidedog-linux-amd64.tar.gz
-sudo install guidedog-linux-amd64/guidedog guidedog-linux-amd64/dsc \
+sudo install guidedog-linux-amd64/guidedog \
     guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
 ```
 
@@ -55,7 +55,7 @@ guidedog --version
 Rust 1.90 या नया ([rustup](https://rustup.rs) से), एक C कंपाइलर (tree-sitter के व्याकरण C में हैं), और Graphviz की डेवलपमेंट फ़ाइलें स्थापित करें: Debian और Ubuntu पर `libgraphviz-dev`, Fedora पर `graphviz-devel`, macOS पर Homebrew से `graphviz`। फिर workspace बिल्ड करें:
 
 ```sh
-cargo build --release -p guidedog-cmd -p dsc-cmd -p dscc-cmd -p guidedog-pages-cmd -p graphdog-cmd
+cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd
 target/release/guidedog --version
 ```
 
@@ -106,18 +106,18 @@ Build plugins एक typed, versioned अनुबंध के ज़रिए 
 
 ## चर्चाएँ सँभालें
 
-`dsc` प्रस्तावों और निर्णयों को reStructuredText रिकॉर्ड के रूप में रखता है, हर एक की अलग फ़ाइल, और Guidedog से उनकी वेबसाइट और PDF पुस्तकें बनाता है। हर कैटलॉग का एक उपसर्ग होता है: Guidedog के डिज़ाइन रिकॉर्ड `gds` का उपयोग करते हैं, और कोई दूसरा प्रोजेक्ट `eds` का उपयोग कर सकता है।
+`guidedog dsc` प्रस्तावों और निर्णयों को reStructuredText रिकॉर्ड के रूप में रखता है, हर एक की अलग फ़ाइल, और उनसे वेबसाइट और PDF पुस्तकें बनाता है। हर कैटलॉग का एक उपसर्ग होता है: Guidedog के डिज़ाइन रिकॉर्ड `gds` का उपयोग करते हैं, और कोई दूसरा प्रोजेक्ट `eds` का उपयोग कर सकता है।
 
 ```sh
-dsc init docs/eds --prefix=eds --name="Enso Discussions"
+guidedog dsc init docs/eds --prefix=eds --name="Enso Discussions"
 cd docs/eds
-dsc new "Cache policy" --labels=architecture
-dsc promote cache-policy
-dsc state 1 --to=accepted --reason="Review converged"
-dsc build
+guidedog dsc new "Cache policy" --labels=architecture
+guidedog dsc promote cache-policy
+guidedog dsc state 1 --to=accepted --reason="Review converged"
+guidedog dsc build
 ```
 
-कैटलॉग की `discussion.toml` फ़ाइल उसकी जीवनचक्र स्थितियाँ, रिकॉर्ड प्रकार और क्रमांकन तय करती है, और `dsc config` उसे प्रिंट करता है। `dsc` Guidedog आर्काइव में आता है और स्थापित `guidedog` से बिल्ड करता है। `dscc` वह `dsc` है जिसमें Guidedog अंतर्निहित है, उस मशीन के लिए जिस पर और कुछ स्थापित नहीं है; हर रिलीज़ में हर प्लेटफ़ॉर्म के लिए एक `dscc` आर्काइव है। `guidedog gds` वही कमांड Guidedog के अपने `docs/gds` पर चलाता है। [चर्चा कैटलॉग रखना](docs/manual/howto/discussions.rst) देखें।
+कैटलॉग की `discussion.toml` फ़ाइल उसकी जीवनचक्र स्थितियाँ, रिकॉर्ड प्रकार और क्रमांकन तय करती है, और `guidedog dsc config` उसे प्रिंट करता है। ये कमांड चर्चा प्लगइन से आते हैं, जो हर `guidedog` में लिंक है, इसलिए और कुछ स्थापित करने की ज़रूरत नहीं है। Guidedog का अपना `docs/gds` भी ऐसा ही एक कैटलॉग है: हम उस फ़ोल्डर में `guidedog dsc check` चलाते हैं। [चर्चा कैटलॉग रखना](docs/manual/howto/discussions.rst) देखें।
 
 `graphdog` Graphviz DOT को SVG, PNG या लेआउट किए गए DOT में बदलता है, उसी लाइब्रेरी से जिसे Guidedog के आरेख इस्तेमाल करते हैं, `dot` कमांड के एक उपसमुच्चय के रूप में: `echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`।
 
@@ -128,7 +128,7 @@ dsc build
 - [इंजन गाइड](crates/guidedoc/README.md): कार्यक्षेत्र (workspace), अनुरोध, एडेप्टर और पास; [उदाहरण](examples/README.md) छोटे प्रोग्राम हैं जिन्हें हम `cargo run` से चला सकते हैं।
 - [टेम्पलेट](docs/manual/templates.rst): Jinja से HTML और Typst से पुस्तक का रूप बदलें।
 - [GDS](docs/gds/README.md): क्रमांकित डिज़ाइन अभिलेख और कार्यान्वयन के निर्णय।
-- [चर्चा लाइब्रेरी](crates/gd-discussion/README.md): वे कैटलॉग जिन्हें `dsc`, `dscc` और `guidedog gds` सँभालते हैं।
+- [चर्चा लाइब्रेरी](crates/gd-discussion/README.md): वे कैटलॉग जिन्हें `guidedog dsc` सँभालता है।
 - [प्लगइन लाइब्रेरी](crates/gd-plugins/README.md): typed build services और `guidedog publish` तथा `guidedog-pages` में इस्तेमाल होने वाला publisher इंटरफ़ेस।
 - [पुन: उपयोग योग्य crates](docs/manual/internals/crates.rst): engine, libraries, API generators और plugin SDK, जिन्हें दूसरे Rust प्रोजेक्ट crates.io से ले सकते हैं, और उनकी आपसी निर्भरताएँ।
 

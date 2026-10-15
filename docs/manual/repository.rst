@@ -53,7 +53,7 @@ Check and install the archive:
 
    sha256sum -c --ignore-missing SHA256SUMS      # on macOS: shasum -a 256 -c --ignore-missing SHA256SUMS
    tar -xzf guidedog-linux-amd64.tar.gz
-   sudo install guidedog-linux-amd64/guidedog guidedog-linux-amd64/dsc /usr/local/bin/
+   sudo install guidedog-linux-amd64/guidedog /usr/local/bin/
 
 The release notes describe each platform's requirements and limits. See the :doc:`installation
 guide <howto/install>` for the details.
@@ -117,24 +117,21 @@ again.
 Keep discussions
 ----------------
 
-``dsc`` keeps proposals and decisions as reStructuredText records, one file each. It builds
-them into a website and PDF books with Guidedog. Each catalog has a prefix: Guidedog's
+``guidedog dsc`` keeps proposals and decisions as reStructuredText records, one file each. It builds
+them into a website and PDF books. Each catalog has a prefix: Guidedog's
 design records use ``gds``, and another project might use ``eds``.
 
 .. code:: sh
 
-   dsc init docs/eds --prefix=eds --name="Enso Discussions"
+   guidedog dsc init docs/eds --prefix=eds --name="Enso Discussions"
    cd docs/eds
-   dsc new "Cache policy" --labels=architecture
-   dsc promote cache-policy
-   dsc state 1 --to=accepted --reason="Review converged"
-   dsc build
+   guidedog dsc new "Cache policy" --labels=architecture
+   guidedog dsc promote cache-policy
+   guidedog dsc state 1 --to=accepted --reason="Review converged"
+   guidedog dsc build
 
 A catalog's ``discussion.toml`` sets its lifecycle states, record types, and numbering.
-``dsc config`` prints it. ``dsc`` comes in the Guidedog archive and builds with the
-installed ``guidedog``. ``dscc`` is ``dsc`` with Guidedog built in, for a machine with
-nothing else installed. ``guidedog gds`` runs the same commands on Guidedog's own
-``docs/gds``. See :doc:`Keep a discussion catalog <howto/discussions>`.
+``guidedog dsc config`` prints it. The commands come from the discussion plugin, which every ``guidedog`` links, so nothing else needs to be installed. Guidedog's own ``docs/gds`` is one such catalog: we run ``guidedog dsc check`` in that folder. See :doc:`Keep a discussion catalog <howto/discussions>`.
 
 Read and embed
 --------------
@@ -148,7 +145,7 @@ Read and embed
 -  :download:`GDS <_static/repository/gds-README.md>`: numbered design records and
    implementation decisions.
 -  :download:`Discussion library <_static/repository/discussion-README.md>`: the
-   catalogs that ``dsc``, ``dscc``, and ``guidedog gds`` keep.
+   catalogs that ``guidedog dsc`` keeps.
 -  :download:`Beta review <_static/repository/beta-review-20261011.md>`: the review of
    the Odin implementation's beta: fixes, verification, support scope.
 

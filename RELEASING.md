@@ -22,20 +22,21 @@ uploaded by hand, and a published release is never changed.
     it cannot be reached.
   - `build`: per platform, natively on that platform, `cargo xtask release build` runs
     `cargo build --release --locked` for `guidedog` (with the embedded Typst compiler),
-    `dsc`, `dscc`, `guidedog-pages`, and `graphdog`. Graphviz is linked from the
-    runner's system libraries. The integration tests run again against the release
-    build. `cargo xtask release package` packages `guidedog`, `dsc`, `guidedog-pages`, and
-    `graphdog` together, and `dscc` alone, each with its notices, `SOURCE.txt`, and a
-    build manifest (`guidedog.build.json`, `dscc.build.json`).
-  - `smoke`: each archive, unpacked on a fresh machine of its platform with only the
-    Graphviz runtime installed, runs quickstart and builds HTML and PDF with an empty
-    `PATH`; `dsc` keeps and builds a discussion catalog with the packaged `guidedog`,
-    and `dscc` with nothing else (`cargo xtask release smoke-discussion`); `guidedog-pages`
+    `guidedog-pages`, and `graphdog`. Graphviz 16.1.0 is linked
+    statically: `cargo xtask graphviz` builds it (cached between runs) and the build
+    sets `GUIDEDOG_GRAPHVIZ_STATIC`. The integration tests run again against the release
+    build. `cargo xtask release package` packages `guidedog`, `guidedog-pages`, and
+    `graphdog` together, with their notices, `SOURCE.txt`, and a build manifest
+    (`guidedog.build.json`).
+  - `smoke`: each archive, unpacked on a fresh machine of its platform with nothing
+    installed, runs quickstart and builds HTML and PDF with an empty
+    `PATH`; `guidedog dsc` keeps and builds a discussion catalog
+    (`cargo xtask release smoke-discussion`); `guidedog-pages`
     registers and stops safely offline (`smoke-pages`); `graphdog` renders a graph
     (`smoke-graphdog`).
   - `source`: the source archive (`git archive` of the tagged commit).
-  - `homebrew`: renders `guidedog.rb`, which depends on Homebrew's `graphviz` and
-    installs `guidedog`, `dsc`, `guidedog-pages`, and `graphdog`, then installs and
+  - `homebrew`: renders `guidedog.rb`, which has no dependencies and
+    installs `guidedog`, `guidedog-pages`, and `graphdog`, then installs and
     tests it from a local tap.
   - `publish` (tags only): writes `SHA256SUMS`, attests build provenance, creates a draft
     release with `.github/release-notes.md`, uploads every file, and publishes it as the
@@ -56,16 +57,18 @@ every other crate; release builds use `--locked`.
 | `macos-arm64` | `aarch64-apple-darwin` | `macos-15` |
 | `macos-amd64` | `x86_64-apple-darwin` | `macos-15-intel` |
 
-Each archive is built natively, because the programs link the Graphviz of the platform
-they are built on. Windows has no release archive yet.
+Each archive is built natively, with the static Graphviz built on that platform
+(`cargo xtask graphviz`). The archives carry Graphviz's and Expat's licences
+(`COPYING-graphviz`, `COPYING-expat`), and `SOURCE.txt` names their source tarballs with
+their SHA-256. Windows has no release archive yet.
 
 ## Build a release locally
 
 ```sh
-cargo xtask release build                   # build/guidedog, dsc, dscc, guidedog-pages, graphdog
+cargo xtask release build                   # build/guidedog, guidedog-pages, graphdog
 cargo xtask release check-version build/guidedog
 cargo xtask release smoke build/guidedog
-cargo xtask release package linux-amd64    # dist/guidedog-linux-amd64.tar.gz, dist/dscc-...
+cargo xtask release package linux-amd64    # dist/guidedog-linux-amd64.tar.gz
 cargo xtask release checksums dist         # dist/SHA256SUMS
 ```
 
@@ -119,7 +122,7 @@ Re-running only the failed jobs of the original run works too.
 ## Homebrew tap
 
 Each release carries `guidedog.rb`, a formula that installs the release archive for the
-machine and depends on Homebrew's `graphviz`. The official tap is
+machine; Graphviz is built in, so it has no dependencies. The official tap is
 [insanai/homebrew-guidedog](https://github.com/insanai/homebrew-guidedog):
 
 ```sh

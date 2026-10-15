@@ -120,7 +120,7 @@ The libraries never depend on the engine. That is why the engine can use them th
 ``gd-gettext``
    GNU gettext PO and MO catalogs, plural forms, merging and statistics.
 ``gd-graphdog``
-   Graphviz DOT to SVG, PNG or DOT with the Graphviz C library in process. It is the one crate that links a system library (``libgvc`` and ``libcgraph``).
+   Graphviz DOT to SVG, PNG or DOT with the Graphviz C library in process. It is the one crate that links a C library: the system's shared ``libgvc`` and ``libcgraph`` by default, or the static Graphviz that ``cargo xtask graphviz`` builds when ``GUIDEDOG_GRAPHVIZ_STATIC`` names it (as release builds do).
 ``gd-inventory``
    Sphinx object inventories (``objects.inv``) for intersphinx.
 

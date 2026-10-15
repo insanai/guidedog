@@ -31,16 +31,16 @@ API documentation is read from source without running it: Python (`autodoc`), Od
 
 ## Install
 
-Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64) and macOS (Apple silicon and Intel). The `guidedog` archive holds `guidedog`, `dsc`, `guidedog-pages`, and `graphdog`; the `dscc` archive holds `dscc` alone. The Typst compiler is embedded and tree-sitter is compiled in. Graphviz is linked from the system, so install its libraries first: on Debian and Ubuntu `sudo apt install libgvc6` (or the `graphviz` package), on Fedora `sudo dnf install graphviz`, on macOS `brew install graphviz`. Linux needs glibc 2.35 or later; macOS needs version 12 or later. We download the archive for our system and `SHA256SUMS`, then check and install it:
+Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64) and macOS (Apple silicon and Intel). The `guidedog` archive holds `guidedog`, `guidedog-pages`, and `graphdog`. The Typst compiler is embedded, tree-sitter is compiled in, and Graphviz is linked statically, so nothing else needs to be installed. Linux needs glibc 2.35 or later; macOS needs version 12 or later. We download the archive for our system and `SHA256SUMS`, then check and install it:
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # on macOS: shasum -a 256 -c --ignore-missing SHA256SUMS
 tar -xzf guidedog-linux-amd64.tar.gz
-sudo install guidedog-linux-amd64/guidedog guidedog-linux-amd64/dsc \
+sudo install guidedog-linux-amd64/guidedog \
     guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
 ```
 
-On macOS, install from the official [Guidedog Homebrew tap](https://github.com/insanai/homebrew-guidedog). Homebrew selects the Apple silicon or Intel archive and installs Graphviz with it. The tap also supports Linux:
+On macOS, install from the official [Guidedog Homebrew tap](https://github.com/insanai/homebrew-guidedog). Homebrew selects the Apple silicon or Intel archive. The tap also supports Linux:
 
 ```sh
 brew tap insanai/guidedog
@@ -52,10 +52,10 @@ The programs are not code-signed: on macOS, remove the quarantine from a browser
 
 ## Build from source
 
-Install Rust 1.90 or later (with [rustup](https://rustup.rs)), a C compiler (tree-sitter's grammars are C), and the Graphviz development files: `libgraphviz-dev` on Debian and Ubuntu, `graphviz-devel` on Fedora, `graphviz` from Homebrew on macOS. Then build the workspace:
+Install Rust 1.90 or later (with [rustup](https://rustup.rs)), a C compiler (tree-sitter's grammars are C), and the Graphviz development files: `libgraphviz-dev` on Debian and Ubuntu, `graphviz-devel` on Fedora, `graphviz` from Homebrew on macOS. (Or build Graphviz statically, as the releases do: `cargo xtask graphviz`, then build with `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0`; the programs then need no Graphviz at run time.) Then build the workspace:
 
 ```sh
-cargo build --release -p guidedog-cmd -p dsc-cmd -p dscc-cmd -p guidedog-pages-cmd -p graphdog-cmd
+cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd
 target/release/guidedog --version
 ```
 
@@ -106,18 +106,18 @@ Build plugins transform source text, complete HTML pages, and static assets thro
 
 ## Keep discussions
 
-`dsc` keeps proposals and decisions as reStructuredText records, one file each, and builds them into a website and PDF books with Guidedog. Each catalog has a prefix: Guidedog's design records use `gds`, and another project might use `eds`.
+`guidedog dsc` keeps proposals and decisions as reStructuredText records, one file each, and builds them into a website and PDF books. Each catalog has a prefix: Guidedog's design records use `gds`, and another project might use `eds`.
 
 ```sh
-dsc init docs/eds --prefix=eds --name="Enso Discussions"
+guidedog dsc init docs/eds --prefix=eds --name="Enso Discussions"
 cd docs/eds
-dsc new "Cache policy" --labels=architecture
-dsc promote cache-policy
-dsc state 1 --to=accepted --reason="Review converged"
-dsc build
+guidedog dsc new "Cache policy" --labels=architecture
+guidedog dsc promote cache-policy
+guidedog dsc state 1 --to=accepted --reason="Review converged"
+guidedog dsc build
 ```
 
-A catalog's `discussion.toml` sets its lifecycle states, record types, and numbering, and `dsc config` prints it. `dsc` comes in the Guidedog archive and builds with the installed `guidedog`. `dscc` is `dsc` with Guidedog built in, for a machine with nothing else installed; each release has a `dscc` archive for every platform. `guidedog gds` runs the same commands on Guidedog's own `docs/gds`. See [Keep a discussion catalog](docs/manual/howto/discussions.rst).
+A catalog's `discussion.toml` sets its lifecycle states, record types, and numbering, and `guidedog dsc config` prints it. The commands come from the discussion plugin, which every `guidedog` links, so nothing else needs to be installed. Guidedog's own `docs/gds` is one such catalog: we run `guidedog dsc check` in that folder. See [Keep a discussion catalog](docs/manual/howto/discussions.rst).
 
 `graphdog` renders Graphviz DOT to SVG, PNG, or laid-out DOT with the same library Guidedog's diagrams use, as a subset of the `dot` command: `echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`.
 
@@ -128,7 +128,7 @@ A catalog's `discussion.toml` sets its lifecycle states, record types, and numbe
 - [Engine guide](crates/guidedoc/README.md): workspaces, requests, adapters, and passes; [examples](examples/README.md) are small programs we can run with `cargo run`.
 - [Templates](docs/manual/templates.rst): customize HTML with Jinja and books with Typst.
 - [GDS](docs/gds/README.md): numbered design records and implementation decisions.
-- [Discussion library](crates/gd-discussion/README.md): the catalogs that `dsc`, `dscc`, and `guidedog gds` keep.
+- [Discussion library](crates/gd-discussion/README.md): the catalogs that `guidedog dsc` keeps.
 - [Plugin library](crates/gd-plugins/README.md): typed build services and the publisher interface used by `guidedog publish` and `guidedog-pages`.
 - [Reusable crates](docs/manual/internals/crates.rst): the engine, libraries, API generators, and plugin SDK that other Rust projects can take from crates.io, and how they depend on each other.
 

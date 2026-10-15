@@ -19,7 +19,7 @@ Running the tests
    cargo test -p guidedog-tests --test projects  # one end-to-end group
 
 The end-to-end tests run the programs cargo built into ``target/<profile>/``
-(``guidedog``, ``dsc``, ``dscc``, and the plugin examples). ``cargo test --workspace``
+(``guidedog``, ``graphdog``, ``guidedog-pages``, and the plugin examples). ``cargo test --workspace``
 builds them. To run only ``guidedog-tests``, run ``cargo build --workspace`` first. A
 test that finds a program missing says so instead of failing obscurely. Every test
 works in a private temporary folder and sets ``GUIDEDOG_CONFIG_DIR`` and ``NO_COLOR``,
@@ -57,8 +57,8 @@ Which crate tests what
      - Their own behaviour, with fixture programs and local servers where a protocol is
        involved.
    * - ``tests/integration``
-     - The user's view: whole projects built by the real ``guidedog``, ``dsc`` and
-       ``dscc``, and the repository-wide gates below.
+     - The user's view: whole projects built by the real ``guidedog``, and the
+       repository-wide gates below.
 
 End-to-end tests
 ----------------
@@ -90,7 +90,7 @@ the Odin suite's files they were ported from.
        rebuilds across builders, installed build plugins and the public plugin
        catalog, release versions, and the manual's copies of repository files.
    * - ``discussions``
-     - The discussion workflow through ``guidedog gds``, ``dsc`` and ``dscc``: new,
+     - The discussion workflow through ``guidedog dsc``: new,
        promote, state changes and their rules, recovery from an interrupted change, the
        catalog lock, dates, configured workflows and numbering, and building catalogs.
    * - ``manual_code``

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-15 06:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -109,93 +109,93 @@ msgid "The system could not provide a buffer the budget allowed. The command sto
 msgstr ""
 
 #: ../../errors.rst:110
-msgid "A document's own size is bounded separately, by ``--max-nodes``, ``--max-depth`` and ``--stack-kib``. An oversized document is reported with the limit it reached. See :doc:`internals/memory` for how the budget and these limits divide the work. The Odin implementation could also keep working memory on disk (``--memory=disk``). The Rust implementation bounds a conversion by its limits instead, so there is no disk mode."
+msgid "A document's own size is bounded separately, by ``--max-nodes``, ``--max-depth`` and ``--stack-kib``. An oversized document is reported with the limit it reached. See :doc:`internals/memory` for how the budget and these limits divide the work. A conversion is bounded by these limits, so there is no mode that keeps working memory on disk."
 msgstr ""
 
-#: ../../errors.rst:116
+#: ../../errors.rst:114
 msgid "Both end with status 3."
 msgstr ""
 
-#: ../../errors.rst:118
+#: ../../errors.rst:116
 msgid "Exit status"
 msgstr ""
 
-#: ../../errors.rst:121
+#: ../../errors.rst:119
 msgid "Every command ends with one of these statuses, so scripts can tell kinds of failure apart:"
 msgstr ""
 
-#: ../../errors.rst:125
+#: ../../errors.rst:123
 msgid "Status"
 msgstr ""
 
-#: ../../errors.rst:125
+#: ../../errors.rst:123
 msgid "Meaning"
 msgstr ""
 
-#: ../../errors.rst:127
+#: ../../errors.rst:125
 msgid "0"
 msgstr ""
 
-#: ../../errors.rst:127
+#: ../../errors.rst:125
 msgid "Success. The output was written (and, for a build, published)."
 msgstr ""
 
-#: ../../errors.rst:128
+#: ../../errors.rst:126
 msgid "1"
 msgstr ""
 
-#: ../../errors.rst:128
+#: ../../errors.rst:126
 msgid "The input has a problem: an error in a document, a policy refusal (raw content without ``--raw``), a document that could not be read, or a warning when ``-W`` or ``--strict`` treats warnings as errors."
 msgstr ""
 
-#: ../../errors.rst:131
+#: ../../errors.rst:129
 msgid "2"
 msgstr ""
 
-#: ../../errors.rst:131
+#: ../../errors.rst:129
 msgid "The command was used wrongly: an unknown flag or command, a missing or invalid value, or an invalid setting in ``conf.toml`` or ``-D``."
 msgstr ""
 
-#: ../../errors.rst:133
+#: ../../errors.rst:131
 msgid "3"
 msgstr ""
 
-#: ../../errors.rst:133
+#: ../../errors.rst:131
 msgid "A limit was reached: the memory budget (``--budget``), the nesting depth (``--max-depth``), the node count (``--max-nodes``), the stack (``--stack-kib``), a source too large, or memory the system could not provide."
 msgstr ""
 
-#: ../../errors.rst:136
+#: ../../errors.rst:134
 msgid "4"
 msgstr ""
 
-#: ../../errors.rst:136
+#: ../../errors.rst:134
 msgid "A file or an outside program failed: a path that cannot be read or written, a file that changed while it was read, or Typst not starting or not finishing."
 msgstr ""
 
-#: ../../errors.rst:138
+#: ../../errors.rst:136
 msgid "5"
 msgstr ""
 
-#: ../../errors.rst:138
+#: ../../errors.rst:136
 msgid "Guidedog failed internally, and the report asks us to report it."
 msgstr ""
 
-#: ../../errors.rst:139
+#: ../../errors.rst:137
 msgid "70"
 msgstr ""
 
-#: ../../errors.rst:139
+#: ../../errors.rst:137
 msgid "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with the command that ran, the fault, and what ``guidedog --version`` prints, and says where to report it: the issue tracker our build names, or else whoever provided our build. Because builds publish only at the end, a crash leaves the previous output in place."
 msgstr ""
 
-#: ../../errors.rst:144
+#: ../../errors.rst:142
 msgid "130"
 msgstr ""
 
-#: ../../errors.rst:144
+#: ../../errors.rst:142
 msgid "The command was interrupted with Ctrl+C. Published files were left unchanged."
 msgstr ""
 
-#: ../../errors.rst:147
+#: ../../errors.rst:145
 msgid "A build that fails for any reason leaves the previous output, and the records of what it built, as they were. We fix the problem and build again."
 msgstr ""

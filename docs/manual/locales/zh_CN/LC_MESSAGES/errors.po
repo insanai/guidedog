@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-15 06:56+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -197,49 +197,45 @@ msgid ""
 "A document's own size is bounded separately, by ``--max-nodes``, "
 "``--max-depth`` and ``--stack-kib``. An oversized document is reported "
 "with the limit it reached. See :doc:`internals/memory` for how the budget "
-"and these limits divide the work. The Odin implementation could also keep "
-"working memory on disk (``--memory=disk``). The Rust implementation "
-"bounds a conversion by its limits instead, so there is no disk mode."
-msgstr ""
-"文档本身的规模另由 ``--max-nodes``、``--max-depth`` 和 ``--stack-kib`` "
-"限制。超出规模的文档会报告它触及的限制。预算与这些限制如何分工，见 :doc:`internals/memory`。Odin "
-"实现还可以把工作内存放在磁盘上（``--memory=disk``）。Rust 实现则用这些限制约束每次转换，因此没有磁盘模式。"
+"and these limits divide the work. A conversion is bounded by these "
+"limits, so there is no mode that keeps working memory on disk."
+msgstr "文档本身的规模另由 ``--max-nodes``、``--max-depth`` 和 ``--stack-kib`` 限制。超出规模的文档会报告它触及的限制。预算与这些限制如何分工，见 :doc:`internals/memory`。每次转换都受这些限制约束，因此没有把工作内存放在磁盘上的模式。"
 
-#: ../../errors.rst:116
+#: ../../errors.rst:114
 msgid "Both end with status 3."
 msgstr "两种情况都以状态 3 退出。"
 
-#: ../../errors.rst:118
+#: ../../errors.rst:116
 msgid "Exit status"
 msgstr "退出状态"
 
-#: ../../errors.rst:121
+#: ../../errors.rst:119
 msgid ""
 "Every command ends with one of these statuses, so scripts can tell kinds "
 "of failure apart:"
 msgstr "每条命令都以以下状态之一结束，脚本可据此区分失败类型："
 
-#: ../../errors.rst:125
+#: ../../errors.rst:123
 msgid "Status"
 msgstr "状态"
 
-#: ../../errors.rst:125
+#: ../../errors.rst:123
 msgid "Meaning"
 msgstr "含义"
 
-#: ../../errors.rst:127
+#: ../../errors.rst:125
 msgid "0"
 msgstr "0"
 
-#: ../../errors.rst:127
+#: ../../errors.rst:125
 msgid "Success. The output was written (and, for a build, published)."
 msgstr "成功。输出已写入；若为构建命令，也已发布。"
 
-#: ../../errors.rst:128
+#: ../../errors.rst:126
 msgid "1"
 msgstr "1"
 
-#: ../../errors.rst:128
+#: ../../errors.rst:126
 msgid ""
 "The input has a problem: an error in a document, a policy refusal (raw "
 "content without ``--raw``), a document that could not be read, or a "
@@ -248,21 +244,21 @@ msgstr ""
 "输入有问题：文档错误、策略拒绝（未使用 ``--raw`` 的原始内容）、文档无法读取，或 ``-W``\\ 、\\ ``--strict`` "
 "将警告视为错误。"
 
-#: ../../errors.rst:131
+#: ../../errors.rst:129
 msgid "2"
 msgstr "2"
 
-#: ../../errors.rst:131
+#: ../../errors.rst:129
 msgid ""
 "The command was used wrongly: an unknown flag or command, a missing or "
 "invalid value, or an invalid setting in ``conf.toml`` or ``-D``."
 msgstr "命令用法错误：未知参数或命令、缺失或无效的值，或者 ``conf.toml``\\ 、\\ ``-D`` 中的无效设置。"
 
-#: ../../errors.rst:133
+#: ../../errors.rst:131
 msgid "3"
 msgstr "3"
 
-#: ../../errors.rst:133
+#: ../../errors.rst:131
 msgid ""
 "A limit was reached: the memory budget (``--budget``), the nesting depth "
 "(``--max-depth``), the node count (``--max-nodes``), the stack "
@@ -272,30 +268,30 @@ msgstr ""
 "达到限制：内存预算（\\ ``--budget``\\ ）、嵌套深度（\\ ``--max-depth``\\ ）、节点数（\\ "
 "``--max-nodes``\\ ）、栈（\\ ``--stack-kib``\\ ）、源文件过大，或系统无法提供内存。"
 
-#: ../../errors.rst:136
+#: ../../errors.rst:134
 msgid "4"
 msgstr "4"
 
-#: ../../errors.rst:136
+#: ../../errors.rst:134
 msgid ""
 "A file or an outside program failed: a path that cannot be read or "
 "written, a file that changed while it was read, or Typst not starting or "
 "not finishing."
 msgstr "文件或外部程序失败：路径无法读取或写入、文件读取期间发生变化，或者 Typst 无法启动或完成。"
 
-#: ../../errors.rst:138
+#: ../../errors.rst:136
 msgid "5"
 msgstr "5"
 
-#: ../../errors.rst:138
+#: ../../errors.rst:136
 msgid "Guidedog failed internally, and the report asks us to report it."
 msgstr "Guidedog 内部出错，报告会请我们提交问题。"
 
-#: ../../errors.rst:139
+#: ../../errors.rst:137
 msgid "70"
 msgstr "70"
 
-#: ../../errors.rst:139
+#: ../../errors.rst:137
 msgid ""
 "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
 "the command that ran, the fault, and what ``guidedog --version`` prints, "
@@ -307,17 +303,17 @@ msgstr ""
 "``guidedog --version`` "
 "的输出，并说明到哪里报告：我们所用构建版本指定的问题跟踪器，没有的话就是提供该构建版本的人。由于构建只在最后发布，崩溃时之前的输出保持不变。"
 
-#: ../../errors.rst:144
+#: ../../errors.rst:142
 msgid "130"
 msgstr "130"
 
-#: ../../errors.rst:144
+#: ../../errors.rst:142
 msgid ""
 "The command was interrupted with Ctrl+C. Published files were left "
 "unchanged."
 msgstr "命令被 Ctrl+C 中断。已发布的文件保持不变。"
 
-#: ../../errors.rst:147
+#: ../../errors.rst:145
 msgid ""
 "A build that fails for any reason leaves the previous output, and the "
 "records of what it built, as they were. We fix the problem and build "

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-15 06:56+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -233,27 +233,19 @@ msgid ""
 "A document's own size is bounded separately, by ``--max-nodes``, "
 "``--max-depth`` and ``--stack-kib``. An oversized document is reported "
 "with the limit it reached. See :doc:`internals/memory` for how the budget "
-"and these limits divide the work. The Odin implementation could also keep "
-"working memory on disk (``--memory=disk``). The Rust implementation "
-"bounds a conversion by its limits instead, so there is no disk mode."
-msgstr ""
-"El tamaño de cada documento se acota por separado, con ``--max-nodes``, "
-"``--max-depth`` y ``--stack-kib``. Un documento demasiado grande se "
-"notifica junto con el límite que alcanzó. En :doc:`internals/memory` se "
-"explica cómo se reparten el trabajo el presupuesto y estos límites. La "
-"implementación en Odin también podía mantener memoria de trabajo en disco "
-"(``--memory=disk``). La implementación en Rust acota cada conversión con "
-"sus límites, así que no tiene modo de disco."
+"and these limits divide the work. A conversion is bounded by these "
+"limits, so there is no mode that keeps working memory on disk."
+msgstr "El tamaño de cada documento se acota por separado, con ``--max-nodes``, ``--max-depth`` y ``--stack-kib``. Un documento demasiado grande se notifica junto con el límite que alcanzó. En :doc:`internals/memory` se explica cómo se reparten el trabajo el presupuesto y estos límites. Cada conversión queda acotada por estos límites, así que no existe ningún modo que mantenga la memoria de trabajo en disco."
 
-#: ../../errors.rst:116
+#: ../../errors.rst:114
 msgid "Both end with status 3."
 msgstr "Ambos terminan con estado 3."
 
-#: ../../errors.rst:118
+#: ../../errors.rst:116
 msgid "Exit status"
 msgstr "Estado de salida"
 
-#: ../../errors.rst:121
+#: ../../errors.rst:119
 msgid ""
 "Every command ends with one of these statuses, so scripts can tell kinds "
 "of failure apart:"
@@ -261,27 +253,27 @@ msgstr ""
 "Cada comando termina con uno de estos estados, para que los scripts "
 "distingan los tipos de fallo:"
 
-#: ../../errors.rst:125
+#: ../../errors.rst:123
 msgid "Status"
 msgstr "Estado"
 
-#: ../../errors.rst:125
+#: ../../errors.rst:123
 msgid "Meaning"
 msgstr "Significado"
 
-#: ../../errors.rst:127
+#: ../../errors.rst:125
 msgid "0"
 msgstr "0"
 
-#: ../../errors.rst:127
+#: ../../errors.rst:125
 msgid "Success. The output was written (and, for a build, published)."
 msgstr "Éxito. La salida se escribió y, en un build, se publicó."
 
-#: ../../errors.rst:128
+#: ../../errors.rst:126
 msgid "1"
 msgstr "1"
 
-#: ../../errors.rst:128
+#: ../../errors.rst:126
 msgid ""
 "The input has a problem: an error in a document, a policy refusal (raw "
 "content without ``--raw``), a document that could not be read, or a "
@@ -291,11 +283,11 @@ msgstr ""
 "(contenido sin procesar sin ``--raw``\\ ), documento ilegible o "
 "advertencia tratada como error por ``-W`` o ``--strict``\\ ."
 
-#: ../../errors.rst:131
+#: ../../errors.rst:129
 msgid "2"
 msgstr "2"
 
-#: ../../errors.rst:131
+#: ../../errors.rst:129
 msgid ""
 "The command was used wrongly: an unknown flag or command, a missing or "
 "invalid value, or an invalid setting in ``conf.toml`` or ``-D``."
@@ -303,11 +295,11 @@ msgstr ""
 "Uso incorrecto del comando: opción o comando desconocido, valor ausente o "
 "inválido, o configuración inválida en ``conf.toml`` o ``-D``\\ ."
 
-#: ../../errors.rst:133
+#: ../../errors.rst:131
 msgid "3"
 msgstr "3"
 
-#: ../../errors.rst:133
+#: ../../errors.rst:131
 msgid ""
 "A limit was reached: the memory budget (``--budget``), the nesting depth "
 "(``--max-depth``), the node count (``--max-nodes``), the stack "
@@ -319,11 +311,11 @@ msgstr ""
 "(\\ ``--stack-kib``\\ ), fuente demasiado grande o memoria que el sistema "
 "no pudo proporcionar."
 
-#: ../../errors.rst:136
+#: ../../errors.rst:134
 msgid "4"
 msgstr "4"
 
-#: ../../errors.rst:136
+#: ../../errors.rst:134
 msgid ""
 "A file or an outside program failed: a path that cannot be read or "
 "written, a file that changed while it was read, or Typst not starting or "
@@ -333,20 +325,20 @@ msgstr ""
 "escribir, archivo modificado durante la lectura, o Typst que no pudo "
 "iniciarse o terminar."
 
-#: ../../errors.rst:138
+#: ../../errors.rst:136
 msgid "5"
 msgstr "5"
 
-#: ../../errors.rst:138
+#: ../../errors.rst:136
 msgid "Guidedog failed internally, and the report asks us to report it."
 msgstr ""
 "Guidedog falló internamente y el informe nos pide que lo comuniquemos."
 
-#: ../../errors.rst:139
+#: ../../errors.rst:137
 msgid "70"
 msgstr "70"
 
-#: ../../errors.rst:139
+#: ../../errors.rst:137
 msgid ""
 "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
 "the command that ran, the fault, and what ``guidedog --version`` prints, "
@@ -361,11 +353,11 @@ msgstr ""
 "proporcionó. Como las compilaciones solo publican al final, un fallo así "
 "deja intacta la salida anterior."
 
-#: ../../errors.rst:144
+#: ../../errors.rst:142
 msgid "130"
 msgstr "130"
 
-#: ../../errors.rst:144
+#: ../../errors.rst:142
 msgid ""
 "The command was interrupted with Ctrl+C. Published files were left "
 "unchanged."
@@ -373,7 +365,7 @@ msgstr ""
 "El comando se interrumpió con Ctrl+C. Los archivos publicados no "
 "cambiaron."
 
-#: ../../errors.rst:147
+#: ../../errors.rst:145
 msgid ""
 "A build that fails for any reason leaves the previous output, and the "
 "records of what it built, as they were. We fix the problem and build "

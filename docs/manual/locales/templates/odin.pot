@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-15 06:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -233,7 +233,7 @@ msgid "``true`` (default). ``false`` reads the folders for the directives only."
 msgstr ""
 
 #: ../../odin.rst:223
-msgid "Types from packages we do not document (``core:io.Writer``) cannot be linked. With ``-n``, we silence them with ``nitpick_ignore_regex = [[\"odin:type\", \"(core|base):.*\"]]``. Guidedog's own API reference, ``docs/api``, is now built the same way from Rust source with ``rust_autoapi_crates``. See :doc:`rust`."
+msgid "Types from packages we do not document (``core:io.Writer``) cannot be linked. With ``-n``, we silence them with ``nitpick_ignore_regex = [[\"odin:type\", \"(core|base):.*\"]]``. Guidedog's own API reference, ``docs/api``, is built the same way from Rust source with ``rust_autoapi_crates``. See :doc:`rust`."
 msgstr ""
 
 #: ../../odin.rst:228
@@ -269,7 +269,7 @@ msgid "A declaration that mentions a private type shows it as text, since privat
 msgstr ""
 
 #: ../../odin.rst:264
-msgid "Guidedog reads declarations with its own port of Odin's tokenizer and parser. The parser skips procedure bodies. A syntax error in a declaration is reported (``odin.autodoc.syntax``), and what could be read is still documented."
+msgid "Guidedog reads declarations with its own tokenizer and parser for Odin. The parser skips procedure bodies. A syntax error in a declaration is reported (``odin.autodoc.syntax``), and what could be read is still documented."
 msgstr ""
 
 #: ../../odin.rst:267

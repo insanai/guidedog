@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-15 06:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -261,25 +261,25 @@ msgid "11. Version and distribute the contract"
 msgstr ""
 
 #: ../../plugins.rst:375
-msgid "The build-plugin interface (``PLUGIN_API_VERSION``) is 1.0 and uses protocol ``guidedog-build-plugin`` 1.0. The publisher interface (``API_VERSION``) is 1.1 and keeps ``guidedog-publisher`` protocol 1.0. These are separate contracts. The wire format is the one that programs built with the Odin SDK speak, so registered programs from earlier releases keep working. Product versions are separate from interface versions. New hooks arrive as trait methods with \"absent\" defaults, and host-made inputs are ``#[non_exhaustive]``, so a new field does not break a plugin. Contributed commands have their own command protocol (1.0), announced in optional handshake fields: programs without commands are unchanged."
+msgid "The build-plugin interface (``PLUGIN_API_VERSION``) is 1.0 and uses protocol ``guidedog-build-plugin`` 1.0. The publisher interface (``API_VERSION``) is 1.1 and keeps ``guidedog-publisher`` protocol 1.0. These are separate contracts. The wire format is stable, so registered programs from earlier releases keep working. Product versions are separate from interface versions. New hooks arrive as trait methods with \"absent\" defaults, and host-made inputs are ``#[non_exhaustive]``, so a new field does not break a plugin. Contributed commands have their own command protocol (1.0), announced in optional handshake fields: programs without commands are unchanged."
 msgstr ""
 
-#: ../../plugins.rst:385
+#: ../../plugins.rst:384
 msgid "Register each rebuilt program deliberately, because its checksum changes. ``guidedog plugin inspect ID`` shows its kind and declared hooks. The public catalog describes plugins. It does not download, install or run them. Custom markup readers, renderers, directives and roles are not part of this interface. They use the ``guidedoc::Registry`` API in a program that embeds the engine."
 msgstr ""
 
-#: ../../plugins.rst:391
+#: ../../plugins.rst:390
 msgid "12. Check a plugin before registering it"
 msgstr ""
 
-#: ../../plugins.rst:394
+#: ../../plugins.rst:393
 msgid "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises a build plugin without changing the registry. Registration runs the same checks automatically: two fresh loads, repeated source and HTML results, generated asset validation and cleanup. ``--timeout=SECONDS`` defaults to 60 per process request. Supply a real configuration when the plugin needs one. Relative configuration paths resolve from ``--project``, whose default is the current directory."
 msgstr ""
 
-#: ../../plugins.rst:401
+#: ../../plugins.rst:400
 msgid "Passing checks shows that the plugin works with Guidedog. It is not a proof of safety. Guidedog keeps checking every runtime response and runs installed plugins in separate processes. A crash, bounds failure or stalled process becomes a diagnostic and cannot publish an incomplete generation. Linked plugins remain trusted code."
 msgstr ""
 
-#: ../../plugins.rst:406
+#: ../../plugins.rst:405
 msgid "Generic checks never invoke a publisher. Qualify publishers with their own tests and an explicitly configured dry run. The protocol and the SDK's design are recorded in :doc:`internals/plugins`."
 msgstr ""

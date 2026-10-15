@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-15 06:56+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -230,26 +230,19 @@ msgid ""
 "A document's own size is bounded separately, by ``--max-nodes``, "
 "``--max-depth`` and ``--stack-kib``. An oversized document is reported "
 "with the limit it reached. See :doc:`internals/memory` for how the budget "
-"and these limits divide the work. The Odin implementation could also keep "
-"working memory on disk (``--memory=disk``). The Rust implementation "
-"bounds a conversion by its limits instead, so there is no disk mode."
-msgstr ""
-"दस्तावेज़ का अपना आकार अलग से ``--max-nodes``, ``--max-depth`` और "
-"``--stack-kib`` से सीमित होता है। बहुत बड़े दस्तावेज़ की रिपोर्ट उस सीमा "
-"के साथ आती है जिस तक वह पहुँचा। बजट और ये सीमाएँ काम को कैसे बाँटती हैं, "
-"यह :doc:`internals/memory` में देखें। Odin कार्यान्वयन कार्यशील मेमोरी को "
-"डिस्क पर भी रख सकता था (``--memory=disk``)। Rust कार्यान्वयन इसके बजाय "
-"रूपांतरण को उसकी सीमाओं से बाँधता है, इसलिए इसमें कोई डिस्क मोड नहीं है।"
+"and these limits divide the work. A conversion is bounded by these "
+"limits, so there is no mode that keeps working memory on disk."
+msgstr "दस्तावेज़ का अपना आकार अलग से ``--max-nodes``, ``--max-depth`` और ``--stack-kib`` से सीमित होता है। बहुत बड़े दस्तावेज़ की रिपोर्ट उस सीमा के साथ आती है जिस तक वह पहुँचा। बजट और ये सीमाएँ काम को कैसे बाँटती हैं, यह :doc:`internals/memory` में देखें। हर रूपांतरण इन्हीं सीमाओं में बँधा रहता है, इसलिए कार्यशील मेमोरी को डिस्क पर रखने वाला कोई मोड नहीं है।"
 
-#: ../../errors.rst:116
+#: ../../errors.rst:114
 msgid "Both end with status 3."
 msgstr "दोनों स्टेटस 3 पर समाप्त होते हैं।"
 
-#: ../../errors.rst:118
+#: ../../errors.rst:116
 msgid "Exit status"
 msgstr "एग्ज़िट स्टेटस"
 
-#: ../../errors.rst:121
+#: ../../errors.rst:119
 msgid ""
 "Every command ends with one of these statuses, so scripts can tell kinds "
 "of failure apart:"
@@ -257,27 +250,27 @@ msgstr ""
 "हर कमांड इनमें से एक स्टेटस पर समाप्त होता है, जिससे स्क्रिप्ट विफलता के "
 "प्रकार पहचान सकती हैं:"
 
-#: ../../errors.rst:125
+#: ../../errors.rst:123
 msgid "Status"
 msgstr "स्थिति"
 
-#: ../../errors.rst:125
+#: ../../errors.rst:123
 msgid "Meaning"
 msgstr "अर्थ"
 
-#: ../../errors.rst:127
+#: ../../errors.rst:125
 msgid "0"
 msgstr "0"
 
-#: ../../errors.rst:127
+#: ../../errors.rst:125
 msgid "Success. The output was written (and, for a build, published)."
 msgstr "सफलता। आउटपुट लिखा गया और build में प्रकाशित हुआ।"
 
-#: ../../errors.rst:128
+#: ../../errors.rst:126
 msgid "1"
 msgstr "1"
 
-#: ../../errors.rst:128
+#: ../../errors.rst:126
 msgid ""
 "The input has a problem: an error in a document, a policy refusal (raw "
 "content without ``--raw``), a document that could not be read, or a "
@@ -287,11 +280,11 @@ msgstr ""
 "बिना raw सामग्री), न पढ़ा जा सकने वाला दस्तावेज़, या ``-W`` अथवा "
 "``--strict`` से त्रुटि मानी गई चेतावनी।"
 
-#: ../../errors.rst:131
+#: ../../errors.rst:129
 msgid "2"
 msgstr "2"
 
-#: ../../errors.rst:131
+#: ../../errors.rst:129
 msgid ""
 "The command was used wrongly: an unknown flag or command, a missing or "
 "invalid value, or an invalid setting in ``conf.toml`` or ``-D``."
@@ -299,11 +292,11 @@ msgstr ""
 "कमांड का गलत उपयोग: अज्ञात फ़्लैग या कमांड, लापता या अमान्य मान, अथवा "
 "``conf.toml`` या ``-D`` में अमान्य विकल्प।"
 
-#: ../../errors.rst:133
+#: ../../errors.rst:131
 msgid "3"
 msgstr "3"
 
-#: ../../errors.rst:133
+#: ../../errors.rst:131
 msgid ""
 "A limit was reached: the memory budget (``--budget``), the nesting depth "
 "(``--max-depth``), the node count (``--max-nodes``), the stack "
@@ -314,11 +307,11 @@ msgstr ""
 "``--max-depth``\\ ), नोड संख्या (\\ ``--max-nodes``\\ ), स्टैक (\\ "
 "``--stack-kib``\\ ), बहुत बड़ी सोर्स फ़ाइल या सिस्टम से न मिल सकी मेमोरी।"
 
-#: ../../errors.rst:136
+#: ../../errors.rst:134
 msgid "4"
 msgstr "4"
 
-#: ../../errors.rst:136
+#: ../../errors.rst:134
 msgid ""
 "A file or an outside program failed: a path that cannot be read or "
 "written, a file that changed while it was read, or Typst not starting or "
@@ -327,21 +320,21 @@ msgstr ""
 "फ़ाइल या बाहरी प्रोग्राम विफल हुआ: न पढ़ा या लिखा जा सकने वाला पथ, पढ़ते "
 "समय बदली फ़ाइल, या Typst का शुरू या पूरा न होना।"
 
-#: ../../errors.rst:138
+#: ../../errors.rst:136
 msgid "5"
 msgstr "5"
 
-#: ../../errors.rst:138
+#: ../../errors.rst:136
 msgid "Guidedog failed internally, and the report asks us to report it."
 msgstr ""
 "Guidedog आंतरिक रूप से विफल हुआ, और रिपोर्ट हमसे इसे रिपोर्ट करने को कहती "
 "है।"
 
-#: ../../errors.rst:139
+#: ../../errors.rst:137
 msgid "70"
 msgstr "70"
 
-#: ../../errors.rst:139
+#: ../../errors.rst:137
 msgid ""
 "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
 "the command that ran, the fault, and what ``guidedog --version`` prints, "
@@ -355,17 +348,17 @@ msgstr ""
 "हमें यह build दिया। build केवल अंत में प्रकाशित होती हैं, इसलिए क्रैश "
 "होने पर पिछला आउटपुट अपनी जगह बना रहता है।"
 
-#: ../../errors.rst:144
+#: ../../errors.rst:142
 msgid "130"
 msgstr "130"
 
-#: ../../errors.rst:144
+#: ../../errors.rst:142
 msgid ""
 "The command was interrupted with Ctrl+C. Published files were left "
 "unchanged."
 msgstr "कमांड Ctrl+C से रोका गया। प्रकाशित फ़ाइलें नहीं बदलीं।"
 
-#: ../../errors.rst:147
+#: ../../errors.rst:145
 msgid ""
 "A build that fails for any reason leaves the previous output, and the "
 "records of what it built, as they were. We fix the problem and build "

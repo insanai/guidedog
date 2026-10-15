@@ -118,7 +118,6 @@ const OVERVIEW: &str = "  USAGE
   FILES
     convert     Convert RST, Markdown, or Typst to HTML, PDF, or RST
     formats     Show readers, renderers, and the Typst backend
-    gds         Manage and build Guidedog's own discussions (as dsc does)
 
 ";
 

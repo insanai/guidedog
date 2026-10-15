@@ -1,6 +1,6 @@
 //! guidedog: builds HTML sites and PDF books from reStructuredText and Markdown. The
 //! whole command line is the gd-cli crate; this program chooses the plugins linked in
-//! (the GitHub Pages plugin), and adds the crash report and the stack its conversions
+//! (GitHub Pages and discussion catalogs), and adds the crash report and the stack its conversions
 //! are sized for.
 
 #![forbid(unsafe_code)]
@@ -25,11 +25,13 @@ fn main() -> ExitCode {
 }
 
 /// The plugins every `guidedog` links: the GitHub Pages publisher (`pages`), which also
-/// adds `guidedog publish pages` and `guidedog pages workflow`.
+/// adds `guidedog publish pages` and `guidedog pages workflow`, and the discussion
+/// catalogs (`dsc`), which add `guidedog dsc init`, `new`, `promote`, `build`, and more.
 fn linked_plugins() -> gd_plugins::Registry {
-    // The pages plugin is valid by construction; an empty registry is the fallback a
-    // broken build would still run with.
-    gd_plugins::Registry::new(vec![gd_pages::plugin()]).unwrap_or_default()
+    // The plugins are valid by construction; an empty registry is the fallback a broken
+    // build would still run with.
+    gd_plugins::Registry::new(vec![gd_pages::plugin(), gd_discussion::plugin()])
+        .unwrap_or_default()
 }
 
 #[cfg(test)]
@@ -37,9 +39,10 @@ mod tests {
     #[test]
     fn the_linked_plugins_are_valid_and_share_the_version() {
         let registry = super::linked_plugins();
-        assert!(registry.find("pages").is_some());
+        assert!(registry.find("pages").is_some() && registry.find("dsc").is_some());
         let names: Vec<String> = registry.commands().map(|(_, c)| c.name()).collect();
-        assert_eq!(names, ["publish pages", "pages workflow"]);
+        assert_eq!(names[..3], ["publish pages", "pages workflow", "dsc init"]);
+        assert!(names.contains(&"dsc build".to_string()), "{names:?}");
         assert_eq!(gd_pages::VERSION, gd_cli::VERSION);
     }
 }

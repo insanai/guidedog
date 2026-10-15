@@ -17,10 +17,9 @@ gd-report = { workspace = true }
 gd-clock = { workspace = true }
 gd-typst = { workspace = true }
 gd-plugins = { workspace = true }
-gd-discussion = { workspace = true }
 gd-conf = { workspace = true }
 gd-env = { workspace = true }
-# build, clean, serve, intl, and the in-process build of publish and gds.
+# build, clean, serve, intl, and the in-process build of publish and plugin commands.
 gd-project = { workspace = true }
 gd-serve = { workspace = true }
 gd-intl = { workspace = true }
@@ -31,8 +30,6 @@ gd-migrate = { workspace = true }
 # `guidedog --version` names the Graphviz library linked in.
 gd-graphdog = { workspace = true }
 gd-sha = { workspace = true }
-# `gds` passes book settings to the build as `-D` TOML strings.
-gd-toml = { workspace = true }
 
 [lints]
 workspace = true

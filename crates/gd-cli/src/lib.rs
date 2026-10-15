@@ -25,9 +25,7 @@ mod console;
 mod convert;
 mod extension;
 mod extension_run;
-mod gds;
 mod help;
-mod legacy;
 mod memory;
 mod ops;
 mod parse;
@@ -49,7 +47,6 @@ pub use command::{FormatsCommand, IntlAction, IntlCommand, MemoryMode, MigrateCo
 pub use command::{MigrateOutput, Output, Parsed, PluginAction, PluginCommand, PublishCommand};
 pub use console::{Streams, Terminals};
 pub use extension::{Extension, extensions};
-pub use gds::discussion_builder;
 pub use parse::{parse_command, parse_command_with};
 pub use version::{VERSION, VERSION_SUFFIX, full_version, version_text};
 
@@ -147,7 +144,6 @@ fn execute(
         Command::Clean(c) => project::clean(console, c, linked),
         Command::Migrate(m) => project::migrate(console, m),
         Command::Intl(i) => project::intl(console, i, linked),
-        Command::Gds(words) => gds::gds(console, words),
         Command::Plugin(p) => plugin::plugin(console, p, linked),
         Command::Publish(p) => publish::publish(console, p, linked),
     }

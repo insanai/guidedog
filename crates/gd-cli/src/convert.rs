@@ -11,7 +11,7 @@ use crate::console::Console;
 /// Converts one file as `c` says, reports what happened, and returns the exit status.
 pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
     gd_host::catch_interrupts();
-    let today = gd_discussion::today();
+    let today = gd_clock::build_time().local().date.to_string();
     let mut limits = guidedoc::default_limits();
     if let Some(n) = c.max_depth {
         limits.max_depth = n;

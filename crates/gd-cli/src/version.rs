@@ -40,7 +40,8 @@ pub fn version_text() -> String {
     let _ = writeln!(text, "{} (MIT; see --licenses)", grammars.join(", "));
     match gd_graphdog::Context::new() {
         Ok(graphviz) => {
-            let _ = writeln!(text, "graphviz {} (linked)", graphviz.version());
+            let linkage = if gd_graphdog::STATIC { "static" } else { "linked" };
+            let _ = writeln!(text, "graphviz {} ({linkage})", graphviz.version());
         }
         Err(_) => text.push_str("graphviz: the linked library could not start\n"),
     }
@@ -82,8 +83,8 @@ mod tests {
     use super::*;
 
     /// Release tooling reads the version from the file VERSION and checks a release tag
-    /// against it, so the command must report the same version; dsc and guidedog-pages
-    /// are released under it too.
+    /// against it, so the command must report the same version; graphdog and
+    /// guidedog-pages are released under it too.
     #[test]
     fn the_version_matches_the_repository_version_file() {
         let file = include_str!("../../../VERSION").trim();
@@ -92,7 +93,6 @@ mod tests {
         assert_eq!(parts.len(), 3, "{VERSION} is not MAJOR.MINOR.PATCH");
         assert!(parts.iter().all(|p| !p.is_empty() && p.bytes().all(|b| b.is_ascii_digit())));
         assert!(full_version().starts_with(VERSION));
-        assert_eq!(gd_discussion::command::VERSION, VERSION);
     }
 
     #[test]

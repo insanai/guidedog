@@ -499,10 +499,8 @@ fn publish_needs_a_publisher_and_its_configuration() {
     // Without a plugin that adds it, `publish pages` is no target.
     assert_eq!(problem(&["publish", "pages"]).title, "UNKNOWN PUBLISH TARGET");
     assert_eq!(problem(&["pages", "workflow"]).title, "UNKNOWN COMMAND");
-    let Ok(Command::Gds(rest)) = parse(&["--color=never", "gds", "list", "--state=draft"]) else {
-        panic!()
-    };
-    assert_eq!(rest, words(&["--color=never", "list", "--state=draft"]));
+    // Discussion catalogs are a plugin's commands (guidedog dsc), not guidedog's own.
+    assert_eq!(problem(&["dsc", "list"]).title, "UNKNOWN COMMAND");
 }
 
 #[test]

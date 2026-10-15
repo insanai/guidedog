@@ -23,7 +23,6 @@ pub(crate) const COMMANDS: &[&str] = &[
     "intl",
     "convert",
     "formats",
-    "gds",
     "publish",
     "plugin",
 ];
@@ -73,7 +72,6 @@ fn parse_into(
     }
     let rest = without(args, at);
     match word {
-        "gds" => Ok(Command::Gds(rest)),
         "plugin" => crate::parse_plugin::parse_plugin(&rest, output),
         "publish" => crate::parse_plugin::parse_publish(&rest, output),
         "convert" => parse_convert(&rest, output),
@@ -90,7 +88,7 @@ fn parse_into(
 fn unknown_command(word: &str, extensions: &[Extension]) -> Problem {
     let added = first_words(extensions);
     let hint = if added.is_empty() {
-        "Use quickstart, build, serve, clean, migrate, intl, convert, formats, gds, publish, \
+        "Use quickstart, build, serve, clean, migrate, intl, convert, formats, publish, \
          or plugin; see guidedog --help."
             .to_string()
     } else {

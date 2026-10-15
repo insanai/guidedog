@@ -1,5 +1,5 @@
-//! The commands end to end, in process: conversions, Guidedog's discussion catalog, and
-//! publishing with a linked publisher.
+//! The commands end to end, in process: conversions, and publishing with a linked
+//! publisher.
 
 #![allow(clippy::unwrap_used)] // a test failing on unexpected input is the point.
 
@@ -102,38 +102,6 @@ fn a_failed_conversion_says_nothing_was_written() {
     assert_eq!(status, 1, "{err}");
     assert!(err.contains("No output was written."), "{err}");
     assert!(!dir.join("r.html").exists());
-}
-
-/// A gds catalog made with dsc's init, then kept with guidedog gds.
-#[test]
-fn gds_keeps_guidedog_s_catalog() {
-    let root = TempDir::new("gds");
-    let dir = format!("--dir={}", root.arg("docs/gds"));
-    let init: Vec<String> =
-        ["init", &dir, "--prefix=gds", "--author=Ada"].iter().map(|s| s.to_string()).collect();
-    let dsc = gd_discussion::command::Program::default();
-    let (mut out, mut err) = (Vec::new(), Vec::new());
-    assert_eq!(
-        gd_discussion::command::run_with(&dsc, &init, &mut out, &mut err, (false, false)),
-        0
-    );
-    let none = Registry::default();
-    let (status, _, err) =
-        run(&["gds", "new", "Cache policy", &dir, "--labels=architecture", "--author=Ada"], &none);
-    assert_eq!(status, 0, "{err}");
-    let (status, out, _) = run(&["gds", "list", &dir], &none);
-    assert_eq!(status, 0);
-    assert!(out.contains("Cache policy"), "{out}");
-    let (status, out, _) = run(&["gds", "--version"], &none);
-    assert_eq!(status, 0);
-    assert!(out.starts_with("guidedog "), "{out}");
-    let (status, _, err) = run(&["gds", "lsit", &dir], &none);
-    assert_eq!(status, 2);
-    assert!(err.contains("Did you mean `list`?"), "{err}");
-    // Building goes through this program's project builder, in this process.
-    let (status, _, err) = run(&["gds", "build", &dir, "--target=html"], &none);
-    assert_eq!(status, 0, "{err}");
-    assert!(root.join("docs/gds/_build/html/index.html").is_file());
 }
 
 /// Publishes a built site to a local folder, as the gd-plugins example does.

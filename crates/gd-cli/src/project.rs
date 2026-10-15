@@ -303,7 +303,7 @@ pub(crate) fn quickstart(console: &mut Console<'_>, command: &QuickstartCommand)
              prompts without -q.",
         ));
     }
-    let date = gd_discussion::today();
+    let date = gd_clock::build_time().local().date.to_string();
     let separate = q.separate.unwrap_or(false);
     let options = gd_migrate::QuickstartOptions {
         dir: q.dir.clone(),

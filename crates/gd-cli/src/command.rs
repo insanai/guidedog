@@ -80,8 +80,6 @@ pub enum Command {
     Migrate(MigrateCommand),
     /// `intl update` and `intl stat`.
     Intl(IntlCommand),
-    /// `gds ...`: the words after `gds`, for the discussion command.
-    Gds(Vec<String>),
     /// `plugin ...`.
     Plugin(PluginCommand),
     /// `publish --publisher=ID`.

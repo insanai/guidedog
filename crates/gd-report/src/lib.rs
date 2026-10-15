@@ -33,10 +33,12 @@
 #![forbid(unsafe_code)]
 
 mod json;
+mod symbols;
 mod text;
 mod width;
 
 pub use json::{escape_json, render_json, write_json};
+pub use symbols::{SymbolEnv, Symbols, symbols_for, terminal_symbols};
 pub use text::{Style, render_text, wrap, write_text, write_wrapped};
 pub use width::{char_width, display_width, escape_terminal, is_control, is_wide, is_zero_width};
 

@@ -64,12 +64,15 @@ fn options_apply_only_to_their_commands() {
 #[test]
 fn misspellings_get_a_suggestion() {
     let dsc = Program::default();
-    assert_eq!(check(&dsc, &["promot", "x"]).unwrap_err().suggestion.as_deref(),
-        Some("promote"));
-    assert_eq!(check(&dsc, &["list", "--lavel=x"]).unwrap_err().suggestion.as_deref(),
-        Some("--label"));
-    assert_eq!(check(&dsc, &["list", "--color=allways"]).unwrap_err().suggestion.as_deref(),
-        Some("always"));
+    assert_eq!(check(&dsc, &["promot", "x"]).unwrap_err().suggestion.as_deref(), Some("promote"));
+    assert_eq!(
+        check(&dsc, &["list", "--lavel=x"]).unwrap_err().suggestion.as_deref(),
+        Some("--label")
+    );
+    assert_eq!(
+        check(&dsc, &["list", "--color=allways"]).unwrap_err().suggestion.as_deref(),
+        Some("always")
+    );
 }
 
 #[test]

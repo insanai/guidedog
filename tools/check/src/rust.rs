@@ -206,8 +206,8 @@ fn raw_string_end(bytes: &[u8], start: usize, line: &mut usize) -> Option<usize>
         if bytes[i] == b'\n' {
             *line += 1;
         }
-        if bytes[i] == b'"' && bytes[i + 1..].iter().take(hashes).filter(|&&b| b == b'#').count()
-            == hashes
+        if bytes[i] == b'"'
+            && bytes[i + 1..].iter().take(hashes).filter(|&&b| b == b'#').count() == hashes
             && bytes.len() >= i + 1 + hashes
         {
             return Some(i + 1 + hashes);

@@ -319,10 +319,7 @@ fn info_field_list_translated_labels() {
     config.labels.set(guidedoc::Label::Parameters, "Paramètres");
     config.labels.set(guidedoc::Label::Returns, "Renvoie");
     expect_contains(
-        concat!(
-            ".. py:function:: f(a)\n\n   :param a: A.\n   :returns: B.\n   ",
-            ":rtype: int\n",
-        ),
+        concat!(".. py:function:: f(a)\n\n   :param a: A.\n   :returns: B.\n   ", ":rtype: int\n",),
         &[
             "text +generated \"Paramètres\"",
             "text +generated \"Renvoie\"",

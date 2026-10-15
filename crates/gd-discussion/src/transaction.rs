@@ -65,9 +65,13 @@ impl Lock {
 pub fn lock_catalog(dir: &Path, prefix: &Prefix) -> Result<Lock> {
     let path = dir.join(format!(".{prefix}.lock"));
     if std::fs::symlink_metadata(&path).is_ok_and(|info| !info.is_file()) {
-        return Err(Problem::new(prefix.code("lock"), "Unsafe lock file", shown(&path),
+        return Err(Problem::new(
+            prefix.code("lock"),
+            "Unsafe lock file",
+            shown(&path),
             "The lock path is not a regular file.",
-            "Remove the unexpected link or special file.")
+            "Remove the unexpected link or special file.",
+        )
         .exit(4));
     }
     let file = OpenOptions::new()
@@ -90,8 +94,13 @@ pub fn lock_catalog(dir: &Path, prefix: &Prefix) -> Result<Lock> {
             }
         }
     }
-    Err(Problem::new(prefix.code("busy"), "Another discussion command is working", shown(dir),
-        "The discussion directory is locked.", "Wait for the other command, then retry.")
+    Err(Problem::new(
+        prefix.code("busy"),
+        "Another discussion command is working",
+        shown(dir),
+        "The discussion directory is locked.",
+        "Wait for the other command, then retry.",
+    )
     .exit(4))
 }
 
@@ -105,16 +114,24 @@ pub(crate) fn journal_path(dir: &Path, prefix: &Prefix) -> PathBuf {
 
 /// The problem of a catalog whose last update did not finish.
 pub(crate) fn recovery_needed(prefix: &Prefix, dir: &Path) -> Problem {
-    Problem::new(prefix.code("recovery-needed"), "An update needs recovery", shown(dir),
+    Problem::new(
+        prefix.code("recovery-needed"),
+        "An update needs recovery",
+        shown(dir),
         "A previous multi-file update did not finish.",
-        "Run the recover command with --rollback and the same --dir.")
+        "Run the recover command with --rollback and the same --dir.",
+    )
     .exit(4)
 }
 
 fn pending_problem(prefix: &Prefix, path: &str) -> Problem {
-    Problem::new(prefix.code("recovery-needed"), "The update stopped before completion", path,
+    Problem::new(
+        prefix.code("recovery-needed"),
+        "The update stopped before completion",
+        path,
         "Recovery data is retained; do not edit the affected files yet.",
-        "Run the recover command with --rollback and the same --dir.")
+        "Run the recover command with --rollback and the same --dir.",
+    )
     .exit(4)
 }
 
@@ -168,19 +185,29 @@ fn check_plan(lock: &Lock, plan: &Plan) -> Result<()> {
     }
     for (i, c) in plan.changes.iter().enumerate() {
         let incomplete = |message: &str| {
-            Problem::new(prefix.code("incomplete-plan"), "The update is not whole", &c.path,
-                message, "Make the plan again with the new, promote, state, or index \
-                command; no file was changed.")
+            Problem::new(
+                prefix.code("incomplete-plan"),
+                "The update is not whole",
+                &c.path,
+                message,
+                "Make the plan again with the new, promote, state, or index \
+                command; no file was changed.",
+            )
             .exit(4)
         };
         if plan.changes[..i].iter().any(|p| p.path == c.path) {
             return Err(incomplete("The plan changes the same file twice."));
         }
-        if !is_safe_change_path(&c.path) || !same_snapshot(dir, &c.path, c.before.as_deref(),
-            prefix) {
-            return Err(Problem::new(prefix.code("changed"), "A file changed during preparation",
-                &c.path, "The update no longer matches the original files.",
-                "Review the changes to the file named, then run the command again.")
+        if !is_safe_change_path(&c.path)
+            || !same_snapshot(dir, &c.path, c.before.as_deref(), prefix)
+        {
+            return Err(Problem::new(
+                prefix.code("changed"),
+                "A file changed during preparation",
+                &c.path,
+                "The update no longer matches the original files.",
+                "Review the changes to the file named, then run the command again.",
+            )
             .exit(4));
         }
         let Some(after) = &c.after else { continue };
@@ -216,8 +243,8 @@ pub(crate) fn replace_file(ns: &str, path: &Path, text: &str) -> Result<()> {
     let folder = path.parent().filter(|f| !f.as_os_str().is_empty()).unwrap_or(Path::new("."));
     let stage = Stage(folder.join(unique_name(".discussion-stage-")));
     let fail = |e: &std::io::Error| io_problem(ns, path, e);
-    let mut file = OpenOptions::new().write(true).create_new(true).open(&stage.0)
-        .map_err(|e| fail(&e))?;
+    let mut file =
+        OpenOptions::new().write(true).create_new(true).open(&stage.0).map_err(|e| fail(&e))?;
     file.write_all(text.as_bytes()).map_err(|e| fail(&e))?;
     file.sync_all().map_err(|e| fail(&e))?;
     drop(file);
@@ -297,8 +324,9 @@ pub fn recover(lock: &Lock) -> Result<()> {
         let path = dir.join(&c.path);
         match &c.before {
             Some(text) => replace_file(prefix.as_str(), &path, text)?,
-            None => std::fs::remove_file(&path)
-                .map_err(|e| io_problem(prefix.as_str(), &path, &e))?,
+            None => {
+                std::fs::remove_file(&path).map_err(|e| io_problem(prefix.as_str(), &path, &e))?
+            }
         }
     }
     let journal = journal_path(dir, prefix);
@@ -314,9 +342,13 @@ fn load_journal(dir: &Path, prefix: &Prefix) -> Result<Option<Vec<Change>>> {
     }
     let source = read_text(prefix.as_str(), &path, MAX_JOURNAL_BYTES)?;
     let Some(changes) = read_journal(&source) else {
-        return Err(Problem::new(prefix.code("journal"), "Recovery data is malformed",
-            shown(&path), "No files have been changed by recovery.",
-            "Restore the journal from a backup.")
+        return Err(Problem::new(
+            prefix.code("journal"),
+            "Recovery data is malformed",
+            shown(&path),
+            "No files have been changed by recovery.",
+            "Restore the journal from a backup.",
+        )
         .exit(4));
     };
     for (i, c) in changes.iter().enumerate() {
@@ -327,10 +359,13 @@ fn load_journal(dir: &Path, prefix: &Prefix) -> Result<Option<Vec<Change>>> {
         if !same_snapshot(dir, &c.path, c.before.as_deref(), prefix)
             && !same_snapshot(dir, &c.path, c.after.as_deref(), prefix)
         {
-            return Err(Problem::new(prefix.code("recovery-conflict"),
-                "Recovery would overwrite a later edit", &c.path,
+            return Err(Problem::new(
+                prefix.code("recovery-conflict"),
+                "Recovery would overwrite a later edit",
+                &c.path,
                 "The file matches neither the original nor the staged content.",
-                "Save your edit separately, restore one recorded version, then retry recovery.")
+                "Save your edit separately, restore one recorded version, then retry recovery.",
+            )
             .exit(4));
         }
     }

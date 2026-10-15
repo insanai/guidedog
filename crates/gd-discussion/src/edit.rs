@@ -49,37 +49,54 @@ pub fn new_plan(catalog: &Catalog, draft: &NewDraft) -> Result<Plan> {
     let (dir, prefix) = (catalog.dir.as_path(), &catalog.prefix);
     let slug = if draft.slug.is_empty() { make_slug(&draft.title) } else { draft.slug.clone() };
     if !is_valid_slug(&slug) {
-        return Err(Problem::new(prefix.code("slug"), "Choose a valid slug", &slug,
+        return Err(Problem::new(
+            prefix.code("slug"),
+            "Choose a valid slug",
+            &slug,
             "Slugs use lowercase letters, digits, and separating hyphens.",
-            "Pass --slug=short-descriptive-name.")
+            "Pass --slug=short-descriptive-name.",
+        )
         .exit(2));
     }
     if let Some(r) = catalog.records.iter().find(|r| r.slug == slug) {
-        return Err(Problem::new(prefix.code("slug-taken"), "That discussion already exists",
-            shown(&r.path), "Slugs identify drafts as well as numbered records.",
-            "Choose another title or pass --slug with a unique name.")
+        return Err(Problem::new(
+            prefix.code("slug-taken"),
+            "That discussion already exists",
+            shown(&r.path),
+            "Slugs identify drafts as well as numbered records.",
+            "Choose another title or pass --slug with a unique name.",
+        )
         .exit(2));
     }
     let author = if draft.author.is_empty() { git_author(dir) } else { draft.author.clone() };
     if author.is_empty() {
-        return Err(Problem::new(prefix.code("author"), "An author is needed", shown(dir),
+        return Err(Problem::new(
+            prefix.code("author"),
+            "An author is needed",
+            shown(dir),
             "No Git author identity is configured.",
-            "Pass --author='Your name' when creating the record.")
+            "Pass --author='Your name' when creating the record.",
+        )
         .exit(2));
     }
     let labels = draft_labels(catalog, &draft.labels)?;
     let suffix = catalog_format(dir).suffix();
     let template_path = dir.join(format!("template/rfc-template{suffix}"));
     let template = read_text(prefix.as_str(), &template_path, MAX_RECORD_BYTES)?;
-    let mut source = fill_draft(&template, &draft.title, &author, &labels, prefix,
-        &catalog.process)?;
+    let mut source =
+        fill_draft(&template, &draft.title, &author, &labels, prefix, &catalog.process)?;
     if suffix == ".rst" {
         source = rst::draft_title(&source, &draft.title, prefix);
     }
     let path = format!("records/{DRAFT_NUMBER}-{slug}{suffix}");
     if exists(&dir.join(&path)) {
-        return Err(Problem::new(prefix.code("exists"), "File already exists", &path,
-            "Creating a draft would overwrite a file.", "Use a different --slug.")
+        return Err(Problem::new(
+            prefix.code("exists"),
+            "File already exists",
+            &path,
+            "Creating a draft would overwrite a file.",
+            "Use a different --slug.",
+        )
         .exit(2));
     }
     let r = read_record(catalog, &dir.join(&path), &source)?;
@@ -96,9 +113,13 @@ fn draft_labels(c: &Catalog, given: &[String]) -> Result<Vec<String>> {
     let labels: Vec<String> = if !given.is_empty() {
         given.iter().map(|l| l.trim().to_string()).collect()
     } else if let Some(allowed) = c.vocabulary().filter(|v| !v.contains(&"documentation")) {
-        return Err(Problem::new(c.prefix.code("label"), "Choose the draft's labels",
-            shown(&c.dir), "This catalog has no documentation label, the default of a new draft.",
-            format!("Pass --labels with labels from: {}.", allowed.join(", ")))
+        return Err(Problem::new(
+            c.prefix.code("label"),
+            "Choose the draft's labels",
+            shown(&c.dir),
+            "This catalog has no documentation label, the default of a new draft.",
+            format!("Pass --labels with labels from: {}.", allowed.join(", ")),
+        )
         .exit(2));
     } else {
         vec!["documentation".to_string()]
@@ -110,8 +131,14 @@ fn draft_labels(c: &Catalog, given: &[String]) -> Result<Vec<String>> {
 }
 
 /// Fills a template's metadata for a new draft dated today.
-pub(crate) fn fill_draft(template: &str, title: &str, author: &str, labels: &[String],
-    prefix: &Prefix, process: &Process) -> Result<String> {
+pub(crate) fn fill_draft(
+    template: &str,
+    title: &str,
+    author: &str,
+    labels: &[String],
+    prefix: &Prefix,
+    process: &Process,
+) -> Result<String> {
     let date = today();
     let authors = [author.to_string()];
     let fields = [
@@ -126,10 +153,16 @@ pub(crate) fn fill_draft(template: &str, title: &str, author: &str, labels: &[St
     let mut source = template.to_string();
     for (key, value) in fields {
         source = crate::replace_field(&source, prefix, key, value).map_err(|mut p| {
-            Problem::new(prefix.code("template"), "The record template is incomplete",
-                "template", std::mem::take(&mut p.message),
-                format!("Add the {prefix}-{key} field to the metadata at the start of the \
-                    template."))
+            Problem::new(
+                prefix.code("template"),
+                "The record template is incomplete",
+                "template",
+                std::mem::take(&mut p.message),
+                format!(
+                    "Add the {prefix}-{key} field to the metadata at the start of the \
+                    template."
+                ),
+            )
             .exit(2)
         })?;
     }
@@ -179,12 +212,20 @@ pub fn next_number(catalog: &Catalog, requested: Option<u32>) -> Result<u32> {
     let n = requested.unwrap_or_else(|| reserved.saturating_add(1).max(process.numbering.start));
     let limit = process.number_limit();
     if n <= reserved || n > limit || n < process.numbering.start {
-        return Err(Problem::new(prefix.code("number-taken"),
-            "Number is reserved or out of range", shown(&catalog.dir),
-            format!("Numbers through {reserved} are taken; this catalog numbers from {} to \
-                {limit}.", process.numbering.start),
-            format!("Omit --number to take the next free number, or change numbering.limit \
-                in {CONFIG_FILE}."))
+        return Err(Problem::new(
+            prefix.code("number-taken"),
+            "Number is reserved or out of range",
+            shown(&catalog.dir),
+            format!(
+                "Numbers through {reserved} are taken; this catalog numbers from {} to \
+                {limit}.",
+                process.numbering.start
+            ),
+            format!(
+                "Omit --number to take the next free number, or change numbering.limit \
+                in {CONFIG_FILE}."
+            ),
+        )
         .exit(2));
     }
     Ok(n)
@@ -217,11 +258,16 @@ pub fn promote_plan(catalog: &Catalog, decision: &Decision) -> Result<Plan> {
     let (r, text) = changeable_record(catalog, &decision.identifier)?;
     let (prefix, process) = (&catalog.prefix, &catalog.process);
     if !r.is_draft() || r.state != process.draft {
-        return Err(Problem::new(prefix.code("promote"), "Only a draft can be promoted",
+        return Err(Problem::new(
+            prefix.code("promote"),
+            "Only a draft can be promoted",
             shown(&r.path),
-            format!("This record is {}, {}; a draft is {DRAFT_NUMBER} and {}.", r.number,
-                r.state, process.draft),
-            "Use the state command for a record that is not a draft.")
+            format!(
+                "This record is {}, {}; a draft is {DRAFT_NUMBER} and {}.",
+                r.number, r.state, process.draft
+            ),
+            "Use the state command for a record that is not a draft.",
+        )
         .exit(2));
     }
     let n = next_number(catalog, decision.number)?;
@@ -243,9 +289,13 @@ pub fn state_plan(catalog: &Catalog, decision: &Decision) -> Result<Plan> {
 fn changeable_record(c: &Catalog, id: &str) -> Result<(Record, String)> {
     let r = resolve(c, id)?;
     if r.historical {
-        return Err(Problem::new(c.prefix.code("historical"), "Historical record is read-only",
-            shown(&r.path), "Inherited records cannot be promoted or rewritten.",
-            "Create a new proposal with the new command instead.")
+        return Err(Problem::new(
+            c.prefix.code("historical"),
+            "Historical record is read-only",
+            shown(&r.path),
+            "Inherited records cannot be promoted or rewritten.",
+            "Create a new proposal with the new command instead.",
+        )
         .exit(2));
     }
     let text = read_text(c.prefix.as_str(), &r.path, MAX_RECORD_BYTES)?;
@@ -258,17 +308,28 @@ fn check_move(d: &Decision, c: &Catalog, r: &Record) -> Result<()> {
     let next: &[String] = process.state(&r.state).map_or(&[], |s| &s.next);
     if process.state(&d.to).is_none() || !contains(next, &d.to) {
         let moves = if next.is_empty() { "none".to_string() } else { next.join(", ") };
-        return Err(Problem::new(prefix.code("transition"), "That lifecycle move is not allowed",
-            shown(&r.path), format!("A record in {} may move to: {moves}.", r.state),
-            format!("Choose one of those states, or add the move to workflow.states.{}.next \
-                in {CONFIG_FILE}.", r.state))
+        return Err(Problem::new(
+            prefix.code("transition"),
+            "That lifecycle move is not allowed",
+            shown(&r.path),
+            format!("A record in {} may move to: {moves}.", r.state),
+            format!(
+                "Choose one of those states, or add the move to workflow.states.{}.next \
+                in {CONFIG_FILE}.",
+                r.state
+            ),
+        )
         .exit(2)
         .suggest(gd_report::suggest(&d.to, next.iter().map(String::as_str))));
     }
     if r.is_draft() && !process.is_unnumbered(&d.to) {
-        return Err(Problem::new(prefix.code("transition"), "A draft needs a number first",
-            shown(&r.path), format!("{} is a state for numbered records.", d.to),
-            "Use the promote command, which numbers the draft and opens it.")
+        return Err(Problem::new(
+            prefix.code("transition"),
+            "A draft needs a number first",
+            shown(&r.path),
+            format!("{} is a state for numbered records.", d.to),
+            "Use the promote command, which numbers the draft and opens it.",
+        )
         .exit(2));
     }
     check_decision(d, c, r, &d.to, true)
@@ -276,21 +337,35 @@ fn check_move(d: &Decision, c: &Catalog, r: &Record) -> Result<()> {
 
 /// Every move into an evidence-bearing state needs evidence, including promotion. A
 /// promotion has a default reason; a state change needs its own.
-fn check_decision(d: &Decision, c: &Catalog, r: &Record, target: &str, needs_reason: bool)
-    -> Result<()> {
+fn check_decision(
+    d: &Decision,
+    c: &Catalog,
+    r: &Record,
+    target: &str,
+    needs_reason: bool,
+) -> Result<()> {
     let reason = |message: String, hint: &str| {
-        Err(Problem::new(c.prefix.code("reason"), "Record the decision", shown(&r.path),
-            message, hint)
+        Err(Problem::new(
+            c.prefix.code("reason"),
+            "Record the decision",
+            shown(&r.path),
+            message,
+            hint,
+        )
         .exit(2))
     };
     if needs_reason && d.reason.trim().is_empty() {
-        return reason("State changes need a reason.".into(),
-            "Pass --reason='Explain why this decision is appropriate'.");
+        return reason(
+            "State changes need a reason.".into(),
+            "Pass --reason='Explain why this decision is appropriate'.",
+        );
     }
     if c.process.state(target).is_some_and(|s| s.evidence) && d.evidence.trim().is_empty() {
-        return reason(format!("Moving into {target} needs evidence, including by promotion."),
-            "Pass --evidence='path/to/review-notes.rst' naming the review or validation.")
-            .map_err(|p| p.with_title("Record the evidence"));
+        return reason(
+            format!("Moving into {target} needs evidence, including by promotion."),
+            "Pass --evidence='path/to/review-notes.rst' naming the review or validation.",
+        )
+        .map_err(|p| p.with_title("Record the evidence"));
     }
     Ok(())
 }

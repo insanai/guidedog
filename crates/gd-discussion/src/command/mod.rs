@@ -17,8 +17,8 @@ mod tests;
 
 use crate::edit::git_author;
 use crate::problem::usage;
-use crate::{Builder, Catalog, Definition, GuidedogProgram, Init, Lock, Prefix, Problem, Result};
 use crate::{BuildOptions, Decision, NewDraft, Target};
+use crate::{Builder, Catalog, Definition, GuidedogProgram, Init, Lock, Prefix, Problem, Result};
 use display::Console;
 use options::{Color, Options, split_labels, usage_problem};
 use std::io::{IsTerminal, Write};
@@ -78,15 +78,22 @@ pub fn run(program: &Program<'_>, args: &[String]) -> i32 {
 
 /// Runs the command line, writing to `out` and `err`; `terminals` says whether each is a
 /// terminal, for `--color=auto`.
-pub fn run_with(program: &Program<'_>, args: &[String], out: &mut dyn Write,
-    err: &mut dyn Write, terminals: (bool, bool)) -> i32 {
+pub fn run_with(
+    program: &Program<'_>,
+    args: &[String],
+    out: &mut dyn Write,
+    err: &mut dyn Write,
+    terminals: (bool, bool),
+) -> i32 {
     let parsed = options::parse(program, args);
     let o = parsed.as_ref().ok().cloned().unwrap_or_default();
     let color = |tty: bool| match o.color {
         Color::Always => true,
         Color::Never => false,
-        Color::Auto => tty && std::env::var_os("NO_COLOR").is_none()
-            && std::env::var("TERM").map_or(true, |t| t != "dumb"),
+        Color::Auto => {
+            tty && std::env::var_os("NO_COLOR").is_none()
+                && std::env::var("TERM").map_or(true, |t| t != "dumb")
+        }
     };
     let mut console = Console {
         out,
@@ -102,8 +109,7 @@ pub fn run_with(program: &Program<'_>, args: &[String], out: &mut dyn Write,
     }
 }
 
-fn run_command(program: &Program<'_>, o: &mut Options, console: &mut Console<'_>)
-    -> Result<i32> {
+fn run_command(program: &Program<'_>, o: &mut Options, console: &mut Console<'_>) -> Result<i32> {
     if o.version {
         console.print(program.version);
         return Ok(0);
@@ -129,8 +135,12 @@ fn run_command(program: &Program<'_>, o: &mut Options, console: &mut Console<'_>
     dispatch(program, o, &catalog, lock.as_ref(), console)
 }
 
-fn recover(dir: &Path, prefix: &Prefix, lock: Option<&Lock>, console: &mut Console<'_>)
-    -> Result<i32> {
+fn recover(
+    dir: &Path,
+    prefix: &Prefix,
+    lock: Option<&Lock>,
+    console: &mut Console<'_>,
+) -> Result<i32> {
     match lock {
         Some(lock) => {
             crate::recover(lock)?;
@@ -144,8 +154,13 @@ fn recover(dir: &Path, prefix: &Prefix, lock: Option<&Lock>, console: &mut Conso
     Ok(0)
 }
 
-fn dispatch(program: &Program<'_>, o: &Options, c: &Catalog, lock: Option<&Lock>,
-    console: &mut Console<'_>) -> Result<i32> {
+fn dispatch(
+    program: &Program<'_>,
+    o: &Options,
+    c: &Catalog,
+    lock: Option<&Lock>,
+    console: &mut Console<'_>,
+) -> Result<i32> {
     let plan = match o.command.as_str() {
         "list" => {
             check_state_filter(o, c)?;
@@ -211,20 +226,30 @@ fn decision(o: &Options) -> Decision {
     }
 }
 
-fn build_records(program: &Program<'_>, o: &Options, c: &Catalog, console: &mut Console<'_>)
-    -> Result<i32> {
+fn build_records(
+    program: &Program<'_>,
+    o: &Options,
+    c: &Catalog,
+    console: &mut Console<'_>,
+) -> Result<i32> {
     let mut record = o.record.clone();
     if !o.identifier.is_empty() {
         if !record.is_empty() || o.number.is_some() {
-            return Err(usage_problem("Use one record selector", &o.identifier,
-                "Choose a positional selector, --record, or --number."));
+            return Err(usage_problem(
+                "Use one record selector",
+                &o.identifier,
+                "Choose a positional selector, --record, or --number.",
+            ));
         }
         record = o.identifier.clone();
     }
     if let Some(n) = o.number {
         if !record.is_empty() {
-            return Err(usage_problem("Use one selector", &record,
-                "Choose --record or --number, not both."));
+            return Err(usage_problem(
+                "Use one selector",
+                &record,
+                "Choose --record or --number, not both.",
+            ));
         }
         record = n.to_string();
     }
@@ -233,9 +258,13 @@ fn build_records(program: &Program<'_>, o: &Options, c: &Catalog, console: &mut 
         "html" => Some(Target::Html),
         "pdf" => Some(Target::Pdf),
         other => {
-            return Err(Problem::new(c.prefix.code("target"), "Unsupported build target", other,
+            return Err(Problem::new(
+                c.prefix.code("target"),
+                "Unsupported build target",
+                other,
                 "The available targets are pdf, html, and both.",
-                "Use --target=html or --target=pdf.")
+                "Use --target=html or --target=pdf.",
+            )
             .exit(2)
             .suggest(gd_report::suggest(other, ["pdf", "html", "both"])));
         }
@@ -253,8 +282,11 @@ fn check_state_filter(o: &Options, c: &Catalog) -> Result<()> {
         return Ok(());
     }
     let names: Vec<&str> = c.process.state_names().collect();
-    Err(usage("Unknown discussion state", &o.state,
-        format!("Pass --state one of: {}.", names.join(", ")))
+    Err(usage(
+        "Unknown discussion state",
+        &o.state,
+        format!("Pass --state one of: {}.", names.join(", ")),
+    )
     .suggest(gd_report::suggest(&o.state, names)))
 }
 
@@ -299,10 +331,13 @@ fn resolve_catalog(program: &Program<'_>, o: &mut Options) -> Result<(PathBuf, P
     };
     if let Some(d) = crate::definition(&dir)? {
         if !o.prefix.is_empty() && o.prefix != d.prefix.as_str() {
-            return Err(Problem::new("discussion.prefix", "The prefix differs from the catalog's",
+            return Err(Problem::new(
+                "discussion.prefix",
+                "The prefix differs from the catalog's",
                 dir.display().to_string(),
                 format!("The catalog's configuration names prefix {}.", d.prefix),
-                format!("Pass --prefix={}, or leave --prefix out.", d.prefix))
+                format!("Pass --prefix={}, or leave --prefix out.", d.prefix),
+            )
             .exit(2));
         }
         if o.author.is_empty() {
@@ -314,11 +349,17 @@ fn resolve_catalog(program: &Program<'_>, o: &mut Options) -> Result<(PathBuf, P
     if let Ok(prefix) = Prefix::new(&text) {
         return Ok((dir, prefix));
     }
-    Err(Problem::new("discussion.catalog", "No discussion catalog here",
+    Err(Problem::new(
+        "discussion.catalog",
+        "No discussion catalog here",
         dir.display().to_string(),
         "This folder has no discussion.toml and no record template to name its prefix.",
-        format!("Run {0} in a catalog, pass --dir=PATH and --prefix=NAME, or create one with \
-            {0} init DIR --prefix=NAME.", program.name))
+        format!(
+            "Run {0} in a catalog, pass --dir=PATH and --prefix=NAME, or create one with \
+            {0} init DIR --prefix=NAME.",
+            program.name
+        ),
+    )
     .exit(2))
 }
 
@@ -345,12 +386,18 @@ pub(crate) fn template_prefix(dir: &Path) -> String {
 fn init_catalog(program: &Program<'_>, o: &Options, console: &mut Console<'_>) -> Result<i32> {
     let dir = match (&o.dir, o.identifier.is_empty()) {
         (Some(_), false) => {
-            return Err(usage_problem("Name the folder once", &o.identifier,
-                "Give the new catalog's folder as DIR or as --dir, not both."));
+            return Err(usage_problem(
+                "Name the folder once",
+                &o.identifier,
+                "Give the new catalog's folder as DIR or as --dir, not both.",
+            ));
         }
         (None, true) => {
-            return Err(usage("Name the new catalog's folder", "init",
-                format!("Write {} init DIR --prefix=NAME.", program.name)));
+            return Err(usage(
+                "Name the new catalog's folder",
+                "init",
+                format!("Write {} init DIR --prefix=NAME.", program.name),
+            ));
         }
         (Some(dir), true) => dir.clone(),
         (None, false) => PathBuf::from(&o.identifier),
@@ -394,9 +441,12 @@ fn init_settings(o: &Options, dir: PathBuf) -> Result<Init> {
         }
     }
     if prefix.is_empty() {
-        return Err(usage("Choose the catalog's prefix", "init",
+        return Err(usage(
+            "Choose the catalog's prefix",
+            "init",
             "Pass --prefix with 2 to 16 lowercase letters, such as eds; records use \
-             :eds-number:."));
+             :eds-number:.",
+        ));
     }
     init.prefix = Prefix::new(&prefix)?;
     if init.name.is_empty() {
@@ -406,8 +456,11 @@ fn init_settings(o: &Options, dir: PathBuf) -> Result<Init> {
         init.author = git_author(Path::new("."));
     }
     if init.author.is_empty() {
-        return Err(usage("An author is needed", "init",
-            "Pass --author='Your name'; it is the catalog's default author."));
+        return Err(usage(
+            "An author is needed",
+            "init",
+            "Pass --author='Your name'; it is the catalog's default author.",
+        ));
     }
     if !o.process.is_empty() {
         init.draft = read_file(&o.process, "--process")?;
@@ -420,8 +473,13 @@ fn init_settings(o: &Options, dir: PathBuf) -> Result<Init> {
 
 fn read_file(path: &str, option: &str) -> Result<String> {
     std::fs::read_to_string(path).map_err(|e| {
-        Problem::new("discussion.io", "Cannot read this file", path, e.to_string(),
-            format!("Check the path given to {option}."))
+        Problem::new(
+            "discussion.io",
+            "Cannot read this file",
+            path,
+            e.to_string(),
+            format!("Check the path given to {option}."),
+        )
         .exit(4)
     })
 }

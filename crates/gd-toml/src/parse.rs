@@ -55,8 +55,9 @@ pub fn parse(source: &str) -> Result<Table> {
             section = p.table_header(&mut root)?;
         } else {
             let at = p.at;
-            let table = section_table(&mut root, &section)
-                .ok_or_else(|| p.fail(ErrorKind::Syntax, at, at, "Lost the current table.", LOST_TABLE))?;
+            let table = section_table(&mut root, &section).ok_or_else(|| {
+                p.fail(ErrorKind::Syntax, at, at, "Lost the current table.", LOST_TABLE)
+            })?;
             p.key_value(table)?;
         }
         p.end_line()?;

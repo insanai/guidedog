@@ -84,12 +84,15 @@ impl Console<'_> {
 
     /// Lists the records `o` selects (by state, label, and whether historical ones show).
     pub fn list(&mut self, o: &Options, c: &Catalog, heading: &str) {
-        let rows: Vec<&Record> = c.records.iter().filter(|r| {
-            (o.historical || !r.historical)
-                && (o.state.is_empty() || r.state == o.state)
-                && (o.label.is_empty() || r.labels.contains(&o.label))
-        })
-        .collect();
+        let rows: Vec<&Record> = c
+            .records
+            .iter()
+            .filter(|r| {
+                (o.historical || !r.historical)
+                    && (o.state.is_empty() || r.state == o.state)
+                    && (o.label.is_empty() || r.labels.contains(&o.label))
+            })
+            .collect();
         if o.json_format {
             let items = rows.iter().map(|r| record_json(r)).collect();
             let _ = writeln!(self.out, "{}", gd_json::to_string(&Value::Array(items)));
@@ -99,15 +102,24 @@ impl Console<'_> {
         let _ = writeln!(self.out, "\n  {}\n", styled(heading, BOLD_CYAN, color));
         let _ = writeln!(self.out, "  {:<7} {:<14} TITLE", c.prefix.upper(), "STATE");
         for r in &rows {
-            let _ = writeln!(self.out, "  {:<7} {:<14} {}", r.number, r.state,
-                escape_terminal(&r.title));
+            let _ = writeln!(
+                self.out,
+                "  {:<7} {:<14} {}",
+                r.number,
+                r.state,
+                escape_terminal(&r.title)
+            );
             let _ = writeln!(self.out, "  {:<7} {:<14} {}", "", "", styled(&r.slug, FAINT, color));
         }
         if rows.is_empty() {
             let _ = writeln!(self.out, "  No discussions match these filters.");
         }
-        let _ = writeln!(self.out, "\n  {} discussion(s) · {}\n", rows.len(),
-            escape_terminal(&c.dir.display().to_string()));
+        let _ = writeln!(
+            self.out,
+            "\n  {} discussion(s) · {}\n",
+            rows.len(),
+            escape_terminal(&c.dir.display().to_string())
+        );
     }
 
     /// Shows one record's metadata.
@@ -116,8 +128,13 @@ impl Console<'_> {
             let _ = writeln!(self.out, "{}", gd_json::to_string(&record_json(r)));
             return;
         }
-        let _ = writeln!(self.out, "\n  {} {} · {}\n", c.prefix.upper(), r.number,
-            escape_terminal(&r.title));
+        let _ = writeln!(
+            self.out,
+            "\n  {} {} · {}\n",
+            c.prefix.upper(),
+            r.number,
+            escape_terminal(&r.title)
+        );
         let source = r.path.display().to_string();
         let fields = [
             ("State", r.state.clone()),

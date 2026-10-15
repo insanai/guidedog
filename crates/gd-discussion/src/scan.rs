@@ -32,14 +32,21 @@ struct Scan<'p> {
 /// Reads the record at `path` through a buffer of `chunk` bytes: the metadata at its
 /// start, which it returns, and which required sections it has. It stops once the rest
 /// of the record cannot change either.
-pub(crate) fn scan_record(prefix: &Prefix, path: &Path, chunk: usize)
-    -> Result<(String, Sections)> {
+pub(crate) fn scan_record(
+    prefix: &Prefix,
+    path: &Path,
+    chunk: usize,
+) -> Result<(String, Sections)> {
     let ns = prefix.as_str();
     let info = std::fs::symlink_metadata(path).map_err(|e| io_problem(ns, path, &e))?;
     if !info.is_file() {
-        return Err(Problem::new(prefix.code("file-type"), "Expected a regular file",
-            shown(path), "Symbolic links and special files are not accepted.",
-            "Use a regular local file."));
+        return Err(Problem::new(
+            prefix.code("file-type"),
+            "Expected a regular file",
+            shown(path),
+            "Symbolic links and special files are not accepted.",
+            "Use a regular local file.",
+        ));
     }
     let large = || too_large(ns, path, "A record may be at most 16 MiB.");
     if info.len() > MAX_RECORD_BYTES {
@@ -134,7 +141,9 @@ pub(crate) fn metadata_line(prefix: &Prefix, rst: bool, line: &str) -> bool {
     let trimmed = line.trim();
     if rst {
         trimmed.is_empty()
-            || trimmed.strip_prefix(':').and_then(|t| t.strip_prefix(prefix.as_str()))
+            || trimmed
+                .strip_prefix(':')
+                .and_then(|t| t.strip_prefix(prefix.as_str()))
                 .is_some_and(|t| t.starts_with('-'))
     } else {
         !trimmed.starts_with("#show:") && !trimmed.starts_with("= ")
@@ -143,9 +152,13 @@ pub(crate) fn metadata_line(prefix: &Prefix, rst: bool, line: &str) -> bool {
 
 /// The problem of metadata over 64 KiB, or with a line over 4 KiB.
 pub(crate) fn metadata_size_problem(prefix: &Prefix, path: &Path) -> Problem {
-    Problem::new(prefix.code("metadata"), "The metadata is too long", shown(path),
+    Problem::new(
+        prefix.code("metadata"),
+        "The metadata is too long",
+        shown(path),
         "A record's metadata may be at most 64 KiB, with lines up to 4 KiB.",
-        "Shorten the metadata fields at the start of the record.")
+        "Shorten the metadata fields at the start of the record.",
+    )
 }
 
 /// Marks a section whose title is the previous line, as `rst::has_section` finds it.

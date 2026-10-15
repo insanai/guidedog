@@ -80,7 +80,8 @@ impl Error {
             kind: ErrorKind::Io,
             path: Some(path.to_path_buf()),
             message: format!("{} cannot be created: {err}.", path.display()),
-            hint: "Choose a path that does not exist yet, in a folder you can write to.".to_string(),
+            hint: "Choose a path that does not exist yet, in a folder you can write to."
+                .to_string(),
         }
     }
 

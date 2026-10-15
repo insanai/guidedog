@@ -138,8 +138,10 @@ fn building_sends_whole_requests_for_checked_catalogs() {
     assert_eq!(requests[0].selection.as_deref(), Some("eds-XXXXX-eds-process"));
     // A stale index is refused before the builder runs.
     write(&dir.join("bundle.rst"), "Order\n=====\n");
-    assert_eq!(build(&c, &BuildOptions::default(), &recorder).unwrap_err().code,
-        "eds.index-drift");
+    assert_eq!(
+        build(&c, &BuildOptions::default(), &recorder).unwrap_err().code,
+        "eds.index-drift"
+    );
     assert!(recorder.requests.take().is_empty());
 }
 
@@ -147,8 +149,11 @@ fn building_sends_whole_requests_for_checked_catalogs() {
 fn index_plans_rewrite_only_the_generated_region() {
     let (_root, dir) = catalog_fixture("index");
     let p = prefix("eds");
-    write(&dir.join("registry.rst"), ":eds-reserved-through: 0\n\nOur prose.\n\n\
-        .. eds-generated-start\n.. eds-generated-end\nAfter.\n");
+    write(
+        &dir.join("registry.rst"),
+        ":eds-reserved-through: 0\n\nOur prose.\n\n\
+        .. eds-generated-start\n.. eds-generated-end\nAfter.\n",
+    );
     let c = load_catalog(&dir, &p).unwrap();
     let plan = index_plan(&c).unwrap();
     assert_eq!(plan.changes.len(), 1);

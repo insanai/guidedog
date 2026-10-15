@@ -22,10 +22,14 @@ pub fn definition(dir: &Path) -> Result<Option<Definition>> {
     }
     let source = read_text("discussion", &path, 64 * 1024)?;
     legacy_definition(&source).map(Some).ok_or_else(|| {
-        Problem::new("discussion.definition", "Invalid catalog definition", shown(&path),
+        Problem::new(
+            "discussion.definition",
+            "Invalid catalog definition",
+            shown(&path),
             "A definition is JSON with schema 1, a prefix of 2 to 16 lowercase letters, a \
              one-line name, and optionally an author and a list of lowercase labels.",
-            "Restore the file from version control; a live catalog's prefix never changes.")
+            "Restore the file from version control; a live catalog's prefix never changes.",
+        )
     })
 }
 
@@ -38,9 +42,11 @@ fn legacy_definition(source: &str) -> Option<Definition> {
     }
     let labels = match value.get("labels") {
         None | Some(gd_json::Value::Null) => Vec::new(),
-        Some(v) => v.as_array()?.iter().map(|l| l.as_str().map(str::to_string)).collect::<
-            Option<Vec<_>>,
-        >()?,
+        Some(v) => v
+            .as_array()?
+            .iter()
+            .map(|l| l.as_str().map(str::to_string))
+            .collect::<Option<Vec<_>>>()?,
     };
     let d = Definition {
         prefix: Prefix::new(text("prefix")?).ok()?,
@@ -75,8 +81,12 @@ pub fn discover(from: &Path) -> Result<Option<(PathBuf, Definition)>> {
 
 /// The problem of a configuration whose prefix is not the one asked for.
 pub(crate) fn definition_mismatch(dir: &Path, defined: &Prefix, given: &Prefix) -> Problem {
-    Problem::new("discussion.prefix", "The prefix differs from the catalog's", shown(dir),
+    Problem::new(
+        "discussion.prefix",
+        "The prefix differs from the catalog's",
+        shown(dir),
         format!("The catalog's configuration names prefix {defined}, not {given}."),
-        format!("Pass --prefix={defined}, or leave --prefix out in this catalog."))
+        format!("Pass --prefix={defined}, or leave --prefix out in this catalog."),
+    )
     .exit(2)
 }

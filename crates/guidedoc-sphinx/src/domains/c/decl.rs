@@ -116,8 +116,7 @@ pub(crate) fn parse_c_decl<'s>(sig: &'s str, objtype: &str) -> Option<CDecl<'s>>
         return None;
     }
     let name = &t[start..end];
-    let split =
-        name.bytes().enumerate().rfind(|&(_, c)| c == b'.').map_or(0, |(i, _)| i + 1);
+    let split = name.bytes().enumerate().rfind(|&(_, c)| c == b'.').map_or(0, |(i, _)| i + 1);
     let split = name.rfind("::").map_or(split, |i| (i + 2).max(split));
     (d.before, d.qualifier, d.name) = (&t[..start], &name[..split], &name[split..]);
     if d.params.is_none() && paren.is_none() {

@@ -4,8 +4,8 @@
 
 #![forbid(unsafe_code)]
 
-use gd_discussion::command::{self, Program};
 use gd_discussion::ENGINE_VARIABLE;
+use gd_discussion::command::{self, Program};
 
 fn main() {
     let version = format!(

@@ -13,8 +13,22 @@ pub(crate) const COMMANDS: [&str; 11] = [
 
 /// Options that take a value, whatever the program.
 const VALUE_OPTIONS: [&str; 16] = [
-    "dir", "author", "slug", "labels", "state", "label", "to", "reason", "evidence",
-    "discussion", "record", "target", "number", "color", "diagnostics", "format",
+    "dir",
+    "author",
+    "slug",
+    "labels",
+    "state",
+    "label",
+    "to",
+    "reason",
+    "evidence",
+    "discussion",
+    "record",
+    "target",
+    "number",
+    "color",
+    "diagnostics",
+    "format",
 ];
 /// Options that start a catalog, which a program fixed to one catalog does not take.
 const INIT_OPTIONS: [&str; 5] = ["prefix", "name", "process", "template", "config"];
@@ -115,8 +129,11 @@ pub(crate) fn parse(program: &Program<'_>, args: &[String]) -> Result<Options> {
                             args[i - 1].as_str()
                         }
                         None => {
-                            return Err(usage("Missing option value", arg,
-                                format!("Write {arg}=VALUE.")));
+                            return Err(usage(
+                                "Missing option value",
+                                arg,
+                                format!("Write {arg}=VALUE."),
+                            ));
                         }
                     };
                     if value.is_empty() {
@@ -145,12 +162,21 @@ fn take_positional(o: &mut Options, positional: &[&str]) -> Result<()> {
     Ok(())
 }
 
-fn set_flag(program: &Program<'_>, o: &mut Options, arg: &str, key: &str, value: Option<&str>)
-    -> Result<()> {
+fn set_flag(
+    program: &Program<'_>,
+    o: &mut Options,
+    arg: &str,
+    key: &str,
+    value: Option<&str>,
+) -> Result<()> {
     if !FLAGS.contains(&key) {
         if key == "typst" && program.tool == "guidedog" {
-            return Err(usage("Unknown option", arg, "Leave Typst to Guidedog: dsc builds with \
-                the guidedog you have. Pass --guidedog=PATH to choose it."));
+            return Err(usage(
+                "Unknown option",
+                arg,
+                "Leave Typst to Guidedog: dsc builds with \
+                the guidedog you have. Pass --guidedog=PATH to choose it.",
+            ));
         }
         let mut known: Vec<&str> = VALUE_OPTIONS.iter().chain(&FLAGS).copied().collect();
         known.extend(["help", "quiet", "version", program.tool]);
@@ -158,13 +184,19 @@ fn set_flag(program: &Program<'_>, o: &mut Options, arg: &str, key: &str, value:
             known.extend(INIT_OPTIONS);
         }
         let close = gd_report::suggest(key, known).map(|k| format!("--{k}"));
-        return Err(usage("Unknown option", arg,
-            format!("Run {} --help to see the options.", program.name))
+        return Err(usage(
+            "Unknown option",
+            arg,
+            format!("Run {} --help to see the options.", program.name),
+        )
         .suggest(close.as_deref()));
     }
     if let Some(value) = value {
-        return Err(usage("Unexpected option value", arg,
-            format!("Write --{key} without ={value}; this flag takes no value.")));
+        return Err(usage(
+            "Unexpected option value",
+            arg,
+            format!("Write --{key} without ={value}; this flag takes no value."),
+        ));
     }
     match key {
         "dry-run" => o.dry_run = true,
@@ -218,8 +250,11 @@ fn parse_color(value: &str) -> Result<Color> {
         "auto" => Ok(Color::Auto),
         "always" => Ok(Color::Always),
         "never" => Ok(Color::Never),
-        _ => Err(usage("Invalid color mode", value,
-            "Use --color=auto, --color=always, or --color=never.")
+        _ => Err(usage(
+            "Invalid color mode",
+            value,
+            "Use --color=auto, --color=always, or --color=never.",
+        )
         .suggest(gd_report::suggest(value, ["auto", "always", "never"]))),
     }
 }
@@ -229,8 +264,11 @@ fn parse_choice(value: &str, plain: &str, option: &str) -> Result<bool> {
     match value {
         "json" => Ok(true),
         v if v == plain => Ok(false),
-        _ => Err(usage("Invalid output format", value,
-            format!("Use {option}={plain} or {option}=json."))
+        _ => Err(usage(
+            "Invalid output format",
+            value,
+            format!("Use {option}={plain} or {option}=json."),
+        )
         .suggest(gd_report::suggest(value, [plain, "json"]))),
     }
 }
@@ -256,8 +294,9 @@ fn option_applies(program: &Program<'_>, command: &str, key: &str) -> bool {
         "rollback" => command == "recover",
         "check" => command == "index",
         "dry-run" => one_of(&["init", "new", "promote", "state", "index", "recover"]),
-        "format" => one_of(&["list", "show", "new", "promote", "state", "index", "recover",
-            "init"]),
+        "format" => {
+            one_of(&["list", "show", "new", "promote", "state", "index", "recover", "init"])
+        }
         _ => true,
     }
 }
@@ -274,21 +313,33 @@ pub(crate) fn validate(program: &Program<'_>, o: &Options) -> Result<()> {
     }
     let needs_id = ["new", "show", "promote", "state"].contains(&c);
     if c != "build" && c != "init" && needs_id == o.identifier.is_empty() {
-        return Err(usage("Unexpected command arguments", c,
+        return Err(usage(
+            "Unexpected command arguments",
+            c,
             "Give new a title, and show, state, and promote a record; build also accepts a \
-             record."));
+             record.",
+        ));
     }
     if c == "recover" && !o.rollback {
-        return Err(usage("Recovery needs a direction", c,
-            format!("Use {} recover --rollback to restore the original files.", program.name)));
+        return Err(usage(
+            "Recovery needs a direction",
+            c,
+            format!("Use {} recover --rollback to restore the original files.", program.name),
+        ));
     }
     if !o.prefix.is_empty() && !is_valid_prefix(&o.prefix) {
-        return Err(usage("Invalid prefix", &o.prefix,
-            "Pass --prefix with 2 to 16 lowercase letters, such as eds."));
+        return Err(usage(
+            "Invalid prefix",
+            &o.prefix,
+            "Pass --prefix with 2 to 16 lowercase letters, such as eds.",
+        ));
     }
     if let Some((_, arg)) = o.given.iter().find(|(key, _)| !option_applies(program, c, key)) {
-        return Err(usage("Option does not apply to this command", arg,
-            format!("Run {} --help and use the option with its listed command.", program.name)));
+        return Err(usage(
+            "Option does not apply to this command",
+            arg,
+            format!("Run {} --help and use the option with its listed command.", program.name),
+        ));
     }
     Ok(())
 }

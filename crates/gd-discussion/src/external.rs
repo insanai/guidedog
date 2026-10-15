@@ -63,18 +63,25 @@ impl Builder for GuidedogProgram {
         let program = self.program();
         let shown_program = shown(&program);
         let status = Command::new(&program).args(self.arguments(r)).status().map_err(|e| {
-            Problem::new(r.prefix.code("engine-missing"), "Guidedog was not found",
-                &shown_program, format!("Cannot start {shown_program}: {e}."),
+            Problem::new(
+                r.prefix.code("engine-missing"),
+                "Guidedog was not found",
+                &shown_program,
+                format!("Cannot start {shown_program}: {e}."),
                 "Install Guidedog and put guidedog on PATH, pass --guidedog=PATH, or use the \
-                 complete program, dscc, which has Guidedog built in.")
+                 complete program, dscc, which has Guidedog built in.",
+            )
             .exit(4)
         })?;
         if !status.success() {
             let code = status.code().filter(|&c| c != 0).unwrap_or(4);
-            return Err(Problem::new(r.prefix.code("render"),
-                "Guidedog could not build the catalog", shown(&r.dir),
+            return Err(Problem::new(
+                r.prefix.code("render"),
+                "Guidedog could not build the catalog",
+                shown(&r.dir),
                 format!("{shown_program} stopped with status {code}; its report is above."),
-                "Fix the problems Guidedog reported above, then build again.")
+                "Fix the problems Guidedog reported above, then build again.",
+            )
             .exit(code));
         }
         Ok(match &r.selection {
@@ -97,8 +104,14 @@ pub(crate) fn books_setting(books: &[Book]) -> String {
         if i > 0 {
             out.push_str(", ");
         }
-        let _ = write!(out, "{{root={}, file={}, title={}, author={}}}", toml(&book.root),
-            toml(&book.file), toml(&book.title), toml(&book.author));
+        let _ = write!(
+            out,
+            "{{root={}, file={}, title={}, author={}}}",
+            toml(&book.root),
+            toml(&book.file),
+            toml(&book.title),
+            toml(&book.author)
+        );
     }
     out.push(']');
     out

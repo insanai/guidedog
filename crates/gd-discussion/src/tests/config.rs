@@ -9,8 +9,12 @@ use std::path::{Path, PathBuf};
 
 #[test]
 fn the_default_configuration_reads_back_as_itself() {
-    let d = Definition { prefix: prefix("eds"), name: "Enso Discussions".into(),
-        author: "Ada".into(), ..Definition::default() };
+    let d = Definition {
+        prefix: prefix("eds"),
+        name: "Enso Discussions".into(),
+        author: "Ada".into(),
+        ..Definition::default()
+    };
     let text = render_config(&d);
     let back = read_config(CONFIG_FILE, &text).unwrap_or_else(|p| panic!("{p}"));
     assert_eq!(back, d);
@@ -26,11 +30,19 @@ fn configuration_mistakes_name_the_line_and_the_fix() {
         (format!("{base}[numbering]\nwidth = \"four\"\n"), 4, "whole number"),
         (format!("{base}[numbering]\nwidth = 0\n"), 4, "1 to 9 digits"),
         ("prefix = \"eds\"\nname = \n".to_string(), 2, ""),
-        (format!("{base}{WORKFLOW}[workflow.states.review]\nnext = [\"nowhere\"]\n"), 0,
-            "not another state"),
-        (format!("{base}[workflow]\ndraft = \"draft\"\nopen = \"review\"\n\
-            [workflow.states.draft]\nnext = [\"review\"]\n[workflow.states.review]\n"), 0,
-            "the open state"),
+        (
+            format!("{base}{WORKFLOW}[workflow.states.review]\nnext = [\"nowhere\"]\n"),
+            0,
+            "not another state",
+        ),
+        (
+            format!(
+                "{base}[workflow]\ndraft = \"draft\"\nopen = \"review\"\n\
+            [workflow.states.draft]\nnext = [\"review\"]\n[workflow.states.review]\n"
+            ),
+            0,
+            "the open state",
+        ),
         ("name = \"Enso\"\n".to_string(), 0, "prefix is missing"),
         ("prefix = \"../x\"\nname = \"Enso\"\n".to_string(), 1, "is not a prefix"),
     ];
@@ -72,7 +84,8 @@ status = \"Approved\"
 
 ";
 
-const CUSTOM: &str = concat!("prefix = \"adr\"
+const CUSTOM: &str = concat!(
+    "prefix = \"adr\"
 name = \"Architecture decisions\"
 author = \"Ada\"
 types = [\"Decision\"]
@@ -82,7 +95,8 @@ width = 3
 start = 998
 limit = 1001
 
-", "[workflow]
+",
+    "[workflow]
 draft = \"draft\"
 open = \"review\"
 
@@ -96,18 +110,26 @@ status = \"Being written\"
 evidence = true
 status = \"Approved\"
 
-", "[workflow.states.review]
+",
+    "[workflow.states.review]
 next = [\"approved\", \"withdrawn\"]
 status = \"In review\"
-");
+"
+);
 
 /// A catalog with the configuration `config`, in a new temporary folder.
 fn make_catalog(name: &str, config: &str) -> (TempDir, PathBuf) {
     let root = TempDir::new(name);
     let d = read_config(CONFIG_FILE, config).unwrap_or_else(|p| panic!("{p}"));
     let dir = root.0.join("adr");
-    let init = Init { dir: dir.clone(), prefix: d.prefix, name: d.name, author: d.author,
-        process: d.process, ..Init::default() };
+    let init = Init {
+        dir: dir.clone(),
+        prefix: d.prefix,
+        name: d.name,
+        author: d.author,
+        process: d.process,
+        ..Init::default()
+    };
     initialize(&init).unwrap_or_else(|p| panic!("{p}"));
     (root, dir)
 }
@@ -124,8 +146,15 @@ fn run(dir: &Path, step: Step<'_>) -> Result<()> {
     let lock = lock_catalog(dir, &p)?;
     let c = load_catalog(dir, &p)?;
     let plan = match step {
-        Step::New(title) => new_plan(&c, &NewDraft { title: title.into(),
-            author: "Ada".into(), labels: vec!["process".into()], ..NewDraft::default() })?,
+        Step::New(title) => new_plan(
+            &c,
+            &NewDraft {
+                title: title.into(),
+                author: "Ada".into(),
+                labels: vec!["process".into()],
+                ..NewDraft::default()
+            },
+        )?,
         Step::Promote(d) => promote_plan(&c, &d)?,
         Step::State(d) => state_plan(&c, &d)?,
     };
@@ -137,8 +166,13 @@ fn promote(id: &str) -> Step<'_> {
 }
 
 fn move_to(id: &str, to: &str, reason: &str, evidence: &str) -> Step<'static> {
-    Step::State(Decision { identifier: id.into(), to: to.into(), reason: reason.into(),
-        evidence: evidence.into(), ..Decision::default() })
+    Step::State(Decision {
+        identifier: id.into(),
+        to: to.into(),
+        reason: reason.into(),
+        evidence: evidence.into(),
+        ..Decision::default()
+    })
 }
 
 #[test]
@@ -199,8 +233,10 @@ fn numbers_grow_past_their_width_and_sort_by_value() {
 fn an_older_definition_still_names_its_catalog() {
     let (_root, dir) = catalog_fixture("legacy");
     std::fs::remove_file(dir.join(CONFIG_FILE)).unwrap();
-    write(&dir.join(DEFINITION_FILE),
-        "{\"schema\": 1, \"prefix\": \"eds\", \"name\": \"Enso\", \"author\": \"Ada\"}\n");
+    write(
+        &dir.join(DEFINITION_FILE),
+        "{\"schema\": 1, \"prefix\": \"eds\", \"name\": \"Enso\", \"author\": \"Ada\"}\n",
+    );
     let d = definition(&dir).unwrap().expect("a definition");
     assert_eq!(d.name, "Enso");
     assert_eq!(d.process.open, "discussion");
@@ -216,11 +252,13 @@ fn loading_a_catalog_holds_metadata_not_text() {
     let (_root, dir) = catalog_fixture("large");
     let body = "A long paragraph of the record. ".repeat(32 * 1024); // 1 MiB.
     for i in 1..=40 {
-        let source = format!(":eds-number: {i:04}\n:eds-title: Record {i}\n\
+        let source = format!(
+            ":eds-number: {i:04}\n:eds-title: Record {i}\n\
             :eds-state: discussion\n:eds-type: Standards Track\n:eds-authors: [\"Ada\"]\n\
             :eds-created: 2026-10-12\n:eds-updated: 2026-10-12\n:eds-discussion: Here\n\
             :eds-labels: [\"process\"]\n\nRecord\n======\n\nAbstract\n--------\n\n{body}\n\n\
-            References\n----------\n\nNone.\n");
+            References\n----------\n\nNone.\n"
+        );
         write(&dir.join(format!("records/{i:04}-record-{i}.rst")), &source);
     }
     let c = load_catalog(&dir, &prefix("eds")).unwrap_or_else(|p| panic!("{p}"));
@@ -232,13 +270,20 @@ fn loading_a_catalog_holds_metadata_not_text() {
 
 #[test]
 fn promotion_honours_the_open_states_evidence_requirement() {
-    let config = CUSTOM.replace("[workflow.states.review]\n",
-        "[workflow.states.review]\nevidence = true\n");
+    let config = CUSTOM
+        .replace("[workflow.states.review]\n", "[workflow.states.review]\nevidence = true\n");
     let (_root, dir) = make_catalog("evidence", &config);
     let source = std::fs::read_to_string(dir.join("records/XXXXX-adr-process.rst")).unwrap();
     assert!(source.contains("promote, evidence"));
     assert_eq!(run(&dir, promote("adr-process")).unwrap_err().code, "adr.reason");
-    run(&dir, Step::Promote(Decision { identifier: "adr-process".into(),
-        reason: "Reviewed".into(), evidence: "Review notes".into(), ..Decision::default() }))
+    run(
+        &dir,
+        Step::Promote(Decision {
+            identifier: "adr-process".into(),
+            reason: "Reviewed".into(),
+            evidence: "Review notes".into(),
+            ..Decision::default()
+        }),
+    )
     .expect("promoted with evidence");
 }

@@ -47,6 +47,8 @@ jobs:
       - uses: ./.github/actions/prepare
         with:
           keyring: ${{ runner.os == 'Linux' }}
+      - name: Formatting
+        run: cargo fmt --all --check
       - name: Source limits
         run: cargo run --locked -p check
       - name: Build

@@ -112,9 +112,13 @@ pub fn load_catalog(dir: &Path, prefix: &Prefix) -> Result<Catalog> {
         let (header, sections) = scan_record(prefix, &path, SCAN_CHUNK)?;
         metadata += header.len();
         if metadata as u64 > MAX_JOURNAL_BYTES {
-            return Err(Problem::new(prefix.code("count"), "The catalog's metadata is too large",
-                shown(dir), "The metadata of the records together is more than 256 MiB.",
-                "Split the catalog into several catalogs, each with its own prefix.")
+            return Err(Problem::new(
+                prefix.code("count"),
+                "The catalog's metadata is too large",
+                shown(dir),
+                "The metadata of the records together is more than 256 MiB.",
+                "Split the catalog into several catalogs, each with its own prefix.",
+            )
             .exit(3));
         }
         if is_inherited(&header, prefix) {
@@ -140,9 +144,13 @@ fn record_files(dir: &Path, prefix: &Prefix) -> Result<Vec<PathBuf>> {
     let mut files = Vec::new();
     for (count, entry) in entries.enumerate() {
         if count >= MAX_RECORDS {
-            return Err(Problem::new(prefix.code("count"), "Too many files", shown(dir),
+            return Err(Problem::new(
+                prefix.code("count"),
+                "Too many files",
+                shown(dir),
                 "The records folder has more than 100,000 entries.",
-                "Split the catalog into several catalogs, each with its own prefix.")
+                "Split the catalog into several catalogs, each with its own prefix.",
+            )
             .exit(3));
         }
         let path = entry.map_err(|e| io_problem(ns, &folder, &e))?.path();
@@ -218,10 +226,13 @@ fn check_duplicates(c: &Catalog) -> Result<()> {
             taken = numbers.get(r.number.as_str()).copied();
         }
         if let Some(j) = taken {
-            return Err(Problem::new(c.prefix.code("duplicate"),
-                "Discussion identity is already used", shown(&r.path),
+            return Err(Problem::new(
+                c.prefix.code("duplicate"),
+                "Discussion identity is already used",
+                shown(&r.path),
                 format!("{} has the same number or slug.", c.records[j].file_name()),
-                "Rename one record so that its number and slug are unique."));
+                "Rename one record so that its number and slug are unique.",
+            ));
         }
         slugs.insert(&r.slug, i);
         if !r.is_draft() {
@@ -256,9 +267,13 @@ pub fn resolve<'c>(c: &'c Catalog, id: &str) -> Result<&'c Record> {
         candidates.push_str(r.file_name());
     }
     let close = gd_report::suggest(id, c.records.iter().map(|r| r.slug.as_str()));
-    Err(Problem::new(c.prefix.code("record"), "Select one discussion", id,
+    Err(Problem::new(
+        c.prefix.code("record"),
+        "Select one discussion",
+        id,
         format!("The identifier is missing or ambiguous.{candidates}"),
-        "Run the list command; use a number, exact slug, full title, or filename.")
+        "Run the list command; use a number, exact slug, full title, or filename.",
+    )
     .exit(2)
     .suggest(close.filter(|_| first.is_none())))
 }
@@ -275,9 +290,13 @@ pub fn check_sources(c: &Catalog) -> Result<()> {
         } else {
             continue;
         };
-        return Err(Problem::new(c.prefix.code("section"), "A required section is missing",
-            shown(&r.path), format!("{missing} is missing."),
-            format!("Add the {missing} section using the discussion template.")));
+        return Err(Problem::new(
+            c.prefix.code("section"),
+            "A required section is missing",
+            shown(&r.path),
+            format!("{missing} is missing."),
+            format!("Add the {missing} section using the discussion template."),
+        ));
     }
     Ok(())
 }
@@ -296,4 +315,3 @@ pub(crate) fn is_safe_change_path(path: &str) -> bool {
     let Some((number, slug)) = name.split_once('-') else { return false };
     (is_number_shape(number) || number == crate::DRAFT_NUMBER) && is_valid_slug(slug)
 }
-

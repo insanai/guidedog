@@ -9,18 +9,20 @@ use crate::transaction::{Change, Plan};
 use crate::{Problem, Result, exists, replace_field, rst, today, typst};
 
 /// Plans `r`, whose whole text is `text`, moving to `target` with `number`.
-pub(crate) fn record_plan(c: &Catalog, d: &Decision, r: &Record, original: &str, target: &str,
-    number: &str) -> Result<Plan> {
+pub(crate) fn record_plan(
+    c: &Catalog,
+    d: &Decision,
+    r: &Record,
+    original: &str,
+    target: &str,
+    number: &str,
+) -> Result<Plan> {
     let prefix = &c.prefix;
     // Calendar dates can differ between contributors' time zones: keep the latest
     // recorded date when the local clock is behind it.
     let date = today().max(r.updated.clone());
     let status = c.process.state(target).map_or("", |s| s.status.as_str());
-    let mut edits = vec![
-        ("state", target),
-        ("number", number),
-        ("updated", date.as_str()),
-    ];
+    let mut edits = vec![("state", target), ("number", number), ("updated", date.as_str())];
     if !d.discussion.is_empty() {
         edits.push(("discussion", &d.discussion));
     }
@@ -55,8 +57,13 @@ pub(crate) fn record_plan(c: &Catalog, d: &Decision, r: &Record, original: &str,
         plan.changes.push(Change { path: path.clone(), before, after: Some(text) });
     } else {
         if exists(&c.dir.join(&path)) {
-            return Err(Problem::new(prefix.code("exists"), "Destination exists", &path,
-                "Promotion would overwrite a file.", "Choose an unreserved number with --number.")
+            return Err(Problem::new(
+                prefix.code("exists"),
+                "Destination exists",
+                &path,
+                "Promotion would overwrite a file.",
+                "Choose an unreserved number with --number.",
+            )
             .exit(2));
         }
         plan.changes.push(Change { path: old_path.clone(), before, after: None });
@@ -65,4 +72,3 @@ pub(crate) fn record_plan(c: &Catalog, d: &Decision, r: &Record, original: &str,
     plan.summary = format!("{old_path} → {path} ({target})");
     Ok(plan)
 }
-

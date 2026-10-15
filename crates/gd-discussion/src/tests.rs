@@ -40,8 +40,8 @@ impl TempDir {
     pub fn new(name: &str) -> TempDir {
         static COUNTER: AtomicU32 = AtomicU32::new(0);
         let n = COUNTER.fetch_add(1, Ordering::Relaxed);
-        let path = std::env::temp_dir()
-            .join(format!("gd-discussion-{name}-{}-{n}", std::process::id()));
+        let path =
+            std::env::temp_dir().join(format!("gd-discussion-{name}-{}-{n}", std::process::id()));
         let _ = std::fs::remove_dir_all(&path);
         std::fs::create_dir_all(&path).expect("a temporary folder");
         TempDir(path)
@@ -93,8 +93,10 @@ fn every_prefix_names_its_own_fields_and_body_fields_stay() {
         let p = prefix(name);
         let source = format!("{}\n::\n\n   :{name}-state: accepted\n", with_prefix(name));
         let path = "records/XXXXX-cache-policy.rst";
-        let catalog = Catalog { labels: vec!["build".into(), "architecture".into()],
-            ..Catalog::new(p.clone()) };
+        let catalog = Catalog {
+            labels: vec!["build".into(), "architecture".into()],
+            ..Catalog::new(p.clone())
+        };
         let r = read_record(&catalog, Path::new(path), &source).expect("a record");
         assert_eq!(r.authors[1], "René");
         assert!(r.sections.has_abstract && r.sections.has_references);
@@ -122,8 +124,14 @@ fn field_edits_keep_every_other_byte_and_fail_out_loud() {
     assert!(edited.contains(":eds-labels: [\"cli\"]\r\n"));
     // A value that would break the line is quoted, and reads back as itself.
     let edited = replace_field(&crlf, &p, "title", FieldValue::Text("Two\nlines")).unwrap();
-    let r = read_record(&Catalog { labels: vec!["build".into(), "architecture".into()],
-        ..Catalog::new(p.clone()) }, Path::new("records/XXXXX-cache-policy.rst"), &edited);
+    let r = read_record(
+        &Catalog {
+            labels: vec!["build".into(), "architecture".into()],
+            ..Catalog::new(p.clone())
+        },
+        Path::new("records/XXXXX-cache-policy.rst"),
+        &edited,
+    );
     assert_eq!(r.unwrap().title, "Two\nlines");
     let missing = replace_field(&crlf, &p, "status", FieldValue::Text("Open"));
     assert_eq!(missing.unwrap_err().code, "eds.field");
@@ -132,8 +140,11 @@ fn field_edits_keep_every_other_byte_and_fail_out_loud() {
 #[test]
 fn memo_fields_and_the_last_updated_name_are_kept() {
     let p = prefix("sds");
-    let source = format!(":sds-category: Engineering Discussion\n:sds-status: Working draft\n\
-        :sds-summary: Cache safely.\n{}", RECORD.replace(":sds-updated:", ":sds-last-updated:"));
+    let source = format!(
+        ":sds-category: Engineering Discussion\n:sds-status: Working draft\n\
+        :sds-summary: Cache safely.\n{}",
+        RECORD.replace(":sds-updated:", ":sds-last-updated:")
+    );
     let path = "records/XXXXX-cache-policy.rst";
     let r = record_of(&p, path, &source).expect("a record");
     assert_eq!(r.category, "Engineering Discussion");
@@ -151,8 +162,7 @@ fn metadata_mistakes_are_named_with_their_fix() {
     let path = "records/XXXXX-cache-policy.rst";
     let cases = [
         (RECORD.replace("2026-10-12\n:sds-updated", "2026-02-30\n:sds-updated"), "sds.date"),
-        (RECORD.replace(":sds-updated: 2026-10-12", ":sds-updated: 2026-10-11"),
-            "sds.date-order"),
+        (RECORD.replace(":sds-updated: 2026-10-12", ":sds-updated: 2026-10-11"), "sds.date-order"),
         (RECORD.replace("prediscussion", "prediscusion"), "sds.metadata"),
         (RECORD.replace("Standards Track", "Standard"), "sds.metadata"),
         (RECORD.replace("[\"build\", \"architecture\"]", "[\"Build\"]"), "sds.label"),
@@ -223,8 +233,10 @@ fn lifecycle_moves_need_their_reasons() {
 fn history_wraps_at_spaces_without_breaking_words() {
     let first = "2026-10-11: accepted → committed. Reviewed ownership and error handling.";
     let last = "Evidence: tests/typst_test.odin; native PDF and HTML builds.";
-    assert_eq!(rst::history(&format!("{first} {last}  \n")),
-        format!("\n.. rubric:: Lifecycle event\n\n::\n\n   {first}\n   {last}\n"));
+    assert_eq!(
+        rst::history(&format!("{first} {last}  \n")),
+        format!("\n.. rubric:: Lifecycle event\n\n::\n\n   {first}\n   {last}\n")
+    );
     let word = "界".repeat(40);
     assert_eq!(rst::history(&word), format!("\n.. rubric:: Lifecycle event\n\n::\n\n   {word}\n"));
 }
@@ -262,25 +274,42 @@ fn init_makes_a_whole_catalog_and_refuses_to_merge() {
     check_index(&c).expect("a current index");
     let (found, _) = discover(&dir.join("records")).unwrap().expect("a catalog");
     assert!(found.ends_with("eds"));
-    let again = Init { dir: dir.clone(), prefix: prefix("eds"), name: "Again".into(),
-        author: "Ada".into(), ..Init::default() };
+    let again = Init {
+        dir: dir.clone(),
+        prefix: prefix("eds"),
+        name: "Again".into(),
+        author: "Ada".into(),
+        ..Init::default()
+    };
     assert_eq!(initialize(&again).unwrap_err().code, "discussion.init-exists");
     assert_eq!(load_catalog(&dir, &prefix("sds")).unwrap_err().code, "discussion.prefix");
     // A chosen process and template are used, and checked like any record.
     let other = root.0.join("rfc");
     let draft = "Our process\n===========\n\nAbstract\n--------\n\nShort.\n\nReferences\n\
         ----------\n\nNone.\n";
-    initialize(&Init { dir: other.clone(), prefix: prefix("rfc"), name: "RFCs".into(),
-        author: "Ada".into(), labels: Some(vec!["process".into(), "api".into()]),
-        draft: draft.into(), ..Init::default() })
+    initialize(&Init {
+        dir: other.clone(),
+        prefix: prefix("rfc"),
+        name: "RFCs".into(),
+        author: "Ada".into(),
+        labels: Some(vec!["process".into(), "api".into()]),
+        draft: draft.into(),
+        ..Init::default()
+    })
     .expect("a catalog with a chosen process");
     let c = load_catalog(&other, &prefix("rfc")).expect("a catalog");
     let source = std::fs::read_to_string(&c.records[0].path).unwrap();
     assert!(source.contains("Our process\n==="));
     assert_eq!(c.vocabulary().map(|v| v.len()), Some(2));
     let bad = root.0.join("bad");
-    let problem = initialize(&Init { dir: bad.clone(), prefix: prefix("bad"), name: "Bad".into(),
-        author: "Ada".into(), draft: "No sections\n===========\n".into(), ..Init::default() })
+    let problem = initialize(&Init {
+        dir: bad.clone(),
+        prefix: prefix("bad"),
+        name: "Bad".into(),
+        author: "Ada".into(),
+        draft: "No sections\n===========\n".into(),
+        ..Init::default()
+    })
     .unwrap_err();
     assert_eq!(problem.code, "bad.section");
     assert!(!bad.exists());
@@ -290,9 +319,14 @@ fn init_makes_a_whole_catalog_and_refuses_to_merge() {
 
 #[test]
 fn initialization_refuses_an_empty_vocabulary() {
-    let problem = init_plan(&Init { dir: "unused-review-catalog".into(), prefix: prefix("eds"),
-        name: "Enso".into(), author: "Ada".into(), labels: Some(Vec::new()),
-        ..Init::default() })
+    let problem = init_plan(&Init {
+        dir: "unused-review-catalog".into(),
+        prefix: prefix("eds"),
+        name: "Enso".into(),
+        author: "Ada".into(),
+        labels: Some(Vec::new()),
+        ..Init::default()
+    })
     .unwrap_err();
     assert_eq!(problem.code, "discussion.init");
     assert!(problem.message.contains("labels list is empty"));
@@ -305,8 +339,10 @@ fn metadata_line_limits_do_not_depend_on_read_boundaries() {
     let path = dir.join("records/0001-long.rst");
     let source = format!(":eds-summary: {}\n", "x".repeat(scan::MAX_LINE));
     write(&path, &source);
-    assert_eq!(read_record(&Catalog::new(p.clone()), &path, &source).unwrap_err().code,
-        "eds.metadata");
+    assert_eq!(
+        read_record(&Catalog::new(p.clone()), &path, &source).unwrap_err().code,
+        "eds.metadata"
+    );
     for chunk in [scan::SCAN_CHUNK, 127] {
         assert_eq!(scan::scan_record(&p, &path, chunk).unwrap_err().code, "eds.metadata");
     }
@@ -330,8 +366,12 @@ fn a_new_draft_is_planned_whole() {
     let p = prefix("eds");
     let lock = lock_catalog(&dir, &p).unwrap();
     let c = load_catalog(&dir, &p).unwrap();
-    let draft = NewDraft { title: "Cache *policy*".into(), author: "Ada".into(),
-        labels: vec!["architecture".into()], ..NewDraft::default() };
+    let draft = NewDraft {
+        title: "Cache *policy*".into(),
+        author: "Ada".into(),
+        labels: vec!["architecture".into()],
+        ..NewDraft::default()
+    };
     let plan = new_plan(&c, &draft).expect("a plan");
     assert_eq!(plan.summary, "Create records/XXXXX-cache-policy.rst");
     apply(&lock, &plan).expect("applied");

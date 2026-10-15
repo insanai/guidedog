@@ -4,7 +4,7 @@
 use crate::catalog::Catalog;
 use crate::problem::shown;
 use crate::scan::{MAX_HEADER_BYTES, MAX_LINE, metadata_line, metadata_size_problem};
-use crate::{CONFIG_FILE, DRAFT_NUMBER, MAX_RECORD_BYTES, Prefix, Problem, Result, Process};
+use crate::{CONFIG_FILE, DRAFT_NUMBER, MAX_RECORD_BYTES, Prefix, Problem, Process, Result};
 use crate::{contains, rst, too_large, typst};
 use std::path::{Path, PathBuf};
 
@@ -137,13 +137,21 @@ pub(crate) fn sections_of(path: &Path, source: &str) -> Sections {
 /// its own notation (plain text, JSON arrays for lists); an older Typst record gets
 /// string literals and tuples. Only the field's line changes: every other byte, line
 /// endings included, stays. A field the record does not have is `PREFIX.field`.
-pub fn replace_field(source: &str, prefix: &Prefix, key: &str, value: FieldValue<'_>)
-    -> Result<String> {
+pub fn replace_field(
+    source: &str,
+    prefix: &Prefix,
+    key: &str,
+    value: FieldValue<'_>,
+) -> Result<String> {
     let rst = source.trim_start().starts_with(&format!(":{prefix}-"));
     let Some((start, end)) = field_line(source, prefix, key, rst) else {
-        return Err(Problem::new(prefix.code("field"), "The record has no such field", key,
+        return Err(Problem::new(
+            prefix.code("field"),
+            "The record has no such field",
+            key,
             format!("No {prefix}-{key} field starts the record."),
-            format!("Add the {prefix}-{key} field from the record template."))
+            format!("Add the {prefix}-{key} field from the record template."),
+        )
         .exit(2));
     };
     let line = if rst {
@@ -162,8 +170,12 @@ pub fn replace_field(source: &str, prefix: &Prefix, key: &str, value: FieldValue
 
 /// Finds the line of the field `key` in the metadata at the start of `source`: its byte
 /// range without the line break. `updated` is also found as `last-updated`.
-pub(crate) fn field_line(source: &str, prefix: &Prefix, key: &str, rst: bool)
-    -> Option<(usize, usize)> {
+pub(crate) fn field_line(
+    source: &str,
+    prefix: &Prefix,
+    key: &str,
+    rst: bool,
+) -> Option<(usize, usize)> {
     let marker = if rst { format!(":{prefix}-") } else { format!("#let {prefix}-") };
     let mut start = 0;
     while start < source.len() {
@@ -219,10 +231,16 @@ pub(crate) fn take_slug(r: &mut Record, prefix: &Prefix) -> Result<()> {
 
 /// The problem of a missing, repeated, or unreadable field.
 pub(crate) fn metadata_problem(prefix: &Prefix, path: &Path, key: &str) -> Problem {
-    Problem::new(prefix.code("metadata"), "Invalid discussion metadata", shown(path),
+    Problem::new(
+        prefix.code("metadata"),
+        "Invalid discussion metadata",
+        shown(path),
         format!("The {prefix}-{key} field is missing, repeated, or not a literal value."),
-        format!("Put one :{prefix}-name: field per line at the start of the record. Use \
-            plain text for values and JSON string arrays for authors and labels."))
+        format!(
+            "Put one :{prefix}-name: field per line at the start of the record. Use \
+            plain text for values and JSON string arrays for authors and labels."
+        ),
+    )
 }
 
 /// Refuses metadata longer than 64 KiB, or with a line longer than 4 KiB, as load does.
@@ -266,8 +284,7 @@ pub(crate) fn is_valid_date(s: &str) -> bool {
         let part = &s[r];
         part.bytes().all(|c| c.is_ascii_digit()).then(|| part.parse().ok()).flatten()
     };
-    let (Some(year), Some(month), Some(day)) = (digits(0..4), digits(5..7), digits(8..10))
-    else {
+    let (Some(year), Some(month), Some(day)) = (digits(0..4), digits(5..7), digits(8..10)) else {
         return false;
     };
     if year < 1 || !(1..=12).contains(&month) {
@@ -295,10 +312,16 @@ fn validate_record(r: &Record, c: &Catalog) -> Result<()> {
         return Err(state_problem(prefix, r, process));
     }
     if !contains(&process.types, &r.kind) {
-        return Err(Problem::new(prefix.code("metadata"), "Unknown record type", shown(&r.path),
+        return Err(Problem::new(
+            prefix.code("metadata"),
+            "Unknown record type",
+            shown(&r.path),
             format!("{prefix}-type is {:?}, which is not one of this catalog's types.", r.kind),
-            format!("Use one of: {}; or add it to types in {CONFIG_FILE}.",
-                process.types.join(", ")))
+            format!(
+                "Use one of: {}; or add it to types in {CONFIG_FILE}.",
+                process.types.join(", ")
+            ),
+        )
         .suggest(gd_report::suggest(&r.kind, process.types.iter().map(String::as_str))));
     }
     if r.is_draft() {
@@ -326,60 +349,98 @@ fn validate_record(r: &Record, c: &Catalog) -> Result<()> {
 fn state_problem(prefix: &Prefix, r: &Record, process: &Process) -> Problem {
     let path = shown(&r.path);
     if r.is_draft() && process.state(&r.state).is_some() {
-        return Problem::new(prefix.code("metadata"), "A draft has a state only a number allows",
+        return Problem::new(
+            prefix.code("metadata"),
+            "A draft has a state only a number allows",
             path,
             format!("The record is numbered {DRAFT_NUMBER} but its state is {}.", r.state),
             "Promote the draft first, which numbers it; or set its state back to the draft \
-             state.");
+             state.",
+        );
     }
     let names: Vec<&str> = process.state_names().collect();
-    Problem::new(prefix.code("metadata"), "Unknown lifecycle state", path,
+    Problem::new(
+        prefix.code("metadata"),
+        "Unknown lifecycle state",
+        path,
         format!("{prefix}-state is {:?}, which is not one of this catalog's states.", r.state),
-        format!("Use one of: {}.", names.join(", ")))
+        format!("Use one of: {}.", names.join(", ")),
+    )
     .suggest(gd_report::suggest(&r.state, names))
 }
 
 fn number_problem(prefix: &Prefix, r: &Record, process: &Process) -> Problem {
-    Problem::new(prefix.code("metadata"), "Invalid record number", shown(&r.path),
-        format!("{prefix}-number is {:?}; this catalog writes numbers with at least {} \
-            digits, such as {}, or {DRAFT_NUMBER} for a draft.", r.number,
-            process.numbering.width, process.format_number(7)),
-        format!("Correct the number, and the file name that starts with it; numbering.width \
-            in {CONFIG_FILE} sets the digits."))
+    Problem::new(
+        prefix.code("metadata"),
+        "Invalid record number",
+        shown(&r.path),
+        format!(
+            "{prefix}-number is {:?}; this catalog writes numbers with at least {} \
+            digits, such as {}, or {DRAFT_NUMBER} for a draft.",
+            r.number,
+            process.numbering.width,
+            process.format_number(7)
+        ),
+        format!(
+            "Correct the number, and the file name that starts with it; numbering.width \
+            in {CONFIG_FILE} sets the digits."
+        ),
+    )
 }
 
 /// The problem of a label the catalog does not allow, about `path`.
 pub(crate) fn label_problem(c: &Catalog, path: &str, label: &str) -> Problem {
     let prefix = &c.prefix;
     let Some(labels) = c.vocabulary() else {
-        return Problem::new(prefix.code("label"), "Invalid discussion label", path,
-            format!("{label:?} is not a label: labels use lowercase letters, digits, and \
-                separating hyphens."),
-            "Rename the label, such as release-notes.");
+        return Problem::new(
+            prefix.code("label"),
+            "Invalid discussion label",
+            path,
+            format!(
+                "{label:?} is not a label: labels use lowercase letters, digits, and \
+                separating hyphens."
+            ),
+            "Rename the label, such as release-notes.",
+        );
     };
-    Problem::new(prefix.code("label"), "Unknown discussion label", path,
+    Problem::new(
+        prefix.code("label"),
+        "Unknown discussion label",
+        path,
         format!("{label:?} is not one of this catalog's labels."),
-        format!("Use labels from: {}. Add a label to the labels list of the catalog's \
-            {CONFIG_FILE} to allow it.", labels.join(", ")))
+        format!(
+            "Use labels from: {}. Add a label to the labels list of the catalog's \
+            {CONFIG_FILE} to allow it.",
+            labels.join(", ")
+        ),
+    )
     .suggest(gd_report::suggest(label, labels.iter().copied()))
 }
 
 fn validate_dates(r: &Record, prefix: &Prefix) -> Result<()> {
     for (name, value) in [("created", &r.created), ("updated", &r.updated)] {
         if !is_valid_date(value) {
-            return Err(Problem::new(prefix.code("date"), "Invalid discussion date",
+            return Err(Problem::new(
+                prefix.code("date"),
+                "Invalid discussion date",
                 shown(&r.path),
                 format!("{prefix}-{name} is {value:?}, which is not a valid calendar date."),
-                "Use a real date in YYYY-MM-DD format, such as 2026-09-29."));
+                "Use a real date in YYYY-MM-DD format, such as 2026-09-29.",
+            ));
         }
     }
     if r.updated < r.created {
-        return Err(Problem::new(prefix.code("date-order"), "Discussion dates are out of order",
+        return Err(Problem::new(
+            prefix.code("date-order"),
+            "Discussion dates are out of order",
             shown(&r.path),
-            format!("{prefix}-updated ({}) is earlier than {prefix}-created ({}).", r.updated,
-                r.created),
+            format!(
+                "{prefix}-updated ({}) is earlier than {prefix}-created ({}).",
+                r.updated, r.created
+            ),
             "Check both dates and correct the mistaken one; updated must be on or after \
-             created."));
+             created.",
+        ));
     }
     Ok(())
 }

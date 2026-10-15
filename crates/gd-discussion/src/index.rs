@@ -51,9 +51,13 @@ pub fn check_index(catalog: &Catalog) -> Result<()> {
     if index_plan(catalog)?.changes.is_empty() {
         return Ok(());
     }
-    Err(Problem::new(catalog.prefix.code("index-drift"), "The discussion index needs refreshing",
-        shown(&catalog.dir), "Registry or bundle metadata differs from the records.",
-        "Run the index command to regenerate the registry and reading order."))
+    Err(Problem::new(
+        catalog.prefix.code("index-drift"),
+        "The discussion index needs refreshing",
+        shown(&catalog.dir),
+        "Registry or bundle metadata differs from the records.",
+        "Run the index command to regenerate the registry and reading order.",
+    ))
 }
 
 /// The comment lines around the generated region, in RST or Typst.
@@ -64,8 +68,13 @@ fn markers(prefix: &Prefix, rst: bool) -> (String, String) {
 
 /// Replaces the generated region of `old`, or starts a new file with `lead` and the
 /// region when `old` has none. Stray or repeated markers are a problem.
-pub(crate) fn managed_text(old: &str, generated: &str, lead: &str, prefix: &Prefix, rst: bool)
-    -> Result<String> {
+pub(crate) fn managed_text(
+    old: &str,
+    generated: &str,
+    lead: &str,
+    prefix: &Prefix,
+    rst: bool,
+) -> Result<String> {
     let (start, end) = markers(prefix, rst);
     let Some((before, rest)) = old.split_once(&start) else {
         if old.contains(&end) {
@@ -84,9 +93,13 @@ pub(crate) fn managed_text(old: &str, generated: &str, lead: &str, prefix: &Pref
 
 fn markers_problem(prefix: &Prefix, rst: bool) -> Problem {
     let (start, end) = markers(prefix, rst);
-    Problem::new(prefix.code("markers"), "Generated markers are unbalanced", "",
+    Problem::new(
+        prefix.code("markers"),
+        "Generated markers are unbalanced",
+        "",
         "The generated region needs one start marker followed by one end marker.",
-        format!("Restore the lines {start} and {end} around the generated region."))
+        format!("Restore the lines {start} and {end} around the generated region."),
+    )
 }
 
 /// Tells whether `text` has one generated region, as [`index_plan`] writes it.
@@ -102,31 +115,41 @@ fn rst_index_text(c: &Catalog, records: &[&Record], name: &str, old: &str) -> Re
     let mut out = String::with_capacity(128 + records.len() * 96);
     out.push('\n');
     if registry {
-        let _ = write!(out, ".. list-table:: Records and review states\n   :header-rows: 1\n   \
-            :widths: 15 55 30\n\n   * - {}\n     - Discussion\n     - State\n", c.prefix.upper());
+        let _ = write!(
+            out,
+            ".. list-table:: Records and review states\n   :header-rows: 1\n   \
+            :widths: 15 55 30\n\n   * - {}\n     - Discussion\n     - State\n",
+            c.prefix.upper()
+        );
     } else {
         out.push_str(".. toctree::\n   :maxdepth: 1\n\n");
     }
     for r in records.iter().filter(|r| !r.historical) {
         if registry {
-            let _ = write!(out, "   * - {}\n     - :doc:`records/{}`\n     - {}\n", r.number,
-                r.stem(), r.state);
+            let _ = write!(
+                out,
+                "   * - {}\n     - :doc:`records/{}`\n     - {}\n",
+                r.number,
+                r.stem(),
+                r.state
+            );
         } else {
             let _ = writeln!(out, "   records/{}", r.stem());
         }
     }
     out.push('\n');
     let lead = if registry {
-        format!(":{}-reserved-through: {}\n\nDiscussion registry\n===================\n\n",
-            c.prefix, c.reserved)
+        format!(
+            ":{}-reserved-through: {}\n\nDiscussion registry\n===================\n\n",
+            c.prefix, c.reserved
+        )
     } else {
         "Discussion reading order\n========================\n\n".to_string()
     };
     managed_text(old, &out, &lead, &c.prefix, true)
 }
 
-fn typst_index_text(c: &Catalog, records: &[&Record], name: &str, old: &str)
-    -> Result<String> {
+fn typst_index_text(c: &Catalog, records: &[&Record], name: &str, old: &str) -> Result<String> {
     let prefix = &c.prefix;
     let mut out = String::new();
     let mut lead = "// Managed by guidedog gds index.\n".to_string();
@@ -136,9 +159,15 @@ fn typst_index_text(c: &Catalog, records: &[&Record], name: &str, old: &str)
         for r in records {
             out.push_str("  (\n");
             let source = format!("records/{}", r.file_name());
-            for (key, value) in [("number", &r.number), ("slug", &r.slug), ("state", &r.state),
-                ("type", &r.kind), ("title", &r.title), ("source", &source),
-                ("summary", &r.title)] {
+            for (key, value) in [
+                ("number", &r.number),
+                ("slug", &r.slug),
+                ("state", &r.state),
+                ("type", &r.kind),
+                ("title", &r.title),
+                ("source", &source),
+                ("summary", &r.title),
+            ] {
                 let _ = writeln!(out, "    {key}: {},", quote(value));
             }
             out.push_str("  ),\n");
@@ -152,8 +181,11 @@ fn typst_index_text(c: &Catalog, records: &[&Record], name: &str, old: &str)
     } else {
         out.push_str("#include \"index.typ\"\n");
         for r in records {
-            let _ = writeln!(out, "#pagebreak()\n#include {}",
-                quote(&format!("records/{}", r.file_name())));
+            let _ = writeln!(
+                out,
+                "#pagebreak()\n#include {}",
+                quote(&format!("records/{}", r.file_name()))
+            );
         }
         if let Some((before, _)) = old.split_once("#include") {
             lead = before.to_string();

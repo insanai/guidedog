@@ -30,7 +30,6 @@
 //!
 //! Failure is a [`Problem`] with a hint and an exit status, never a panic.
 
-
 mod build;
 mod catalog;
 // The C library's localtime_r for the local calendar date: FFI.
@@ -54,7 +53,7 @@ mod typst;
 #[cfg(test)]
 mod tests;
 
-pub use build::{BuildOptions, BuildRequest, Book, Builder, Target, artifact_name, build};
+pub use build::{Book, BuildOptions, BuildRequest, Builder, Target, artifact_name, build};
 pub use catalog::{Catalog, Format, catalog_format, check_sources, load_catalog, resolve};
 pub use clock::today;
 pub use config::{Definition, Numbering, Process, State, read_config, render_config};

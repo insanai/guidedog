@@ -50,10 +50,14 @@ pub struct Init {
 pub fn init_plan(init: &Init) -> Result<Plan> {
     let labels = init.labels.clone().unwrap_or_default();
     if !is_valid_name(&init.name) || !is_valid_name(&init.author) || !is_valid_labels(&labels) {
-        return Err(Problem::new("discussion.init", "Invalid catalog identity", shown(&init.dir),
+        return Err(Problem::new(
+            "discussion.init",
+            "Invalid catalog identity",
+            shown(&init.dir),
             "The name and author must be single lines of text, and labels lowercase words \
              with hyphens.",
-            "Pass --name, --author, and --labels with plain values.")
+            "Pass --name, --author, and --labels with plain values.",
+        )
         .exit(2));
     }
     let d = Definition {
@@ -65,11 +69,8 @@ pub fn init_plan(init: &Init) -> Result<Plan> {
     };
     check_config(CONFIG_FILE, &d, None)?;
     empty_destination(&init.dir)?;
-    let template = if init.template.is_empty() {
-        built_in_template(init)
-    } else {
-        init.template.clone()
-    };
+    let template =
+        if init.template.is_empty() { built_in_template(init) } else { init.template.clone() };
     let process = process_record(init, &template)?;
     let path = format!("records/{DRAFT_NUMBER}-{}-process.rst", init.prefix);
     let c = Catalog {
@@ -164,9 +165,13 @@ fn process_record(i: &Init, template: &str) -> Result<String> {
     let mut labels = vec!["process".to_string()];
     if let Some(given) = &i.labels {
         let Some(first) = given.first() else {
-            return Err(Problem::new("discussion.init", "No labels to choose from",
-                shown(&i.dir), "The catalog's labels list is empty.",
-                "Pass --labels with at least one label, such as --labels=process.")
+            return Err(Problem::new(
+                "discussion.init",
+                "No labels to choose from",
+                shown(&i.dir),
+                "The catalog's labels list is empty.",
+                "Pass --labels with at least one label, such as --labels=process.",
+            )
             .exit(2));
         };
         if !contains(given, "process") {
@@ -183,8 +188,11 @@ fn process_record(i: &Init, template: &str) -> Result<String> {
     } else {
         i.draft.clone()
     };
-    Ok(format!("{}\n\n{}", metadata.trim_end_matches(['\r', '\n']),
-        body.trim_start_matches(['\r', '\n'])))
+    Ok(format!(
+        "{}\n\n{}",
+        metadata.trim_end_matches(['\r', '\n']),
+        body.trim_start_matches(['\r', '\n'])
+    ))
 }
 
 /// Refuses a destination that exists and is not an empty folder.
@@ -201,9 +209,13 @@ fn empty_destination(dir: &Path) -> Result<()> {
         }
         Ok(_) => {}
     }
-    Err(Problem::new("discussion.init-exists", "The folder is not empty", shown(dir),
+    Err(Problem::new(
+        "discussion.init-exists",
+        "The folder is not empty",
+        shown(dir),
         "A new catalog is made only in a missing or empty folder; nothing was changed.",
-        "Choose a new --dir, or use the new and index commands in an existing catalog.")
+        "Choose a new --dir, or use the new and index commands in an existing catalog.",
+    )
     .exit(2))
 }
 
@@ -225,12 +237,21 @@ fn built_in_template(i: &Init) -> String {
 fn lifecycle_text(p: &Process) -> String {
     let mut out = String::with_capacity(2048);
     let n = p.numbering;
-    let _ = write!(out, "A draft starts with the number ``{DRAFT_NUMBER}`` and the state \
+    let _ = write!(
+        out,
+        "A draft starts with the number ``{DRAFT_NUMBER}`` and the state \
         ``{}``.\nPromotion gives it the next number, from {}, with at least {} digits ({}), \
-        and\nmoves it to ``{}``. A state change needs a reason.\n\n", p.draft, n.start, n.width,
-        p.format_number(n.start.max(7)), p.open);
-    out.push_str(".. list-table:: The states and the moves between them\n   :header-rows: 1\n   \
-        :widths: 30 70\n\n   * - State\n     - May move to\n");
+        and\nmoves it to ``{}``. A state change needs a reason.\n\n",
+        p.draft,
+        n.start,
+        n.width,
+        p.format_number(n.start.max(7)),
+        p.open
+    );
+    out.push_str(
+        ".. list-table:: The states and the moves between them\n   :header-rows: 1\n   \
+        :widths: 30 70\n\n   * - State\n     - May move to\n",
+    );
     for s in &p.states {
         let mut moves = match s.next.is_empty() {
             true => "none: the record is closed".to_string(),
@@ -244,10 +265,12 @@ fn lifecycle_text(p: &Process) -> String {
         }
         let _ = write!(out, "   * - ``{}``\n     - {moves}\n", s.name);
     }
-    out.push_str("\n.. graphviz::\n   :caption: The moves this catalog allows.\n   :alt: The \
+    out.push_str(
+        "\n.. graphviz::\n   :caption: The moves this catalog allows.\n   :alt: The \
         lifecycle states of a record and the moves between them.\n\n   digraph lifecycle {\n     \
         graph [rankdir=TB, bgcolor=\"transparent\"];\n     node [shape=box, \
-        fontname=\"Helvetica\"];\n");
+        fontname=\"Helvetica\"];\n",
+    );
     let open_evidence = p.state(&p.open).is_some_and(|s| s.evidence);
     let promotion = if open_evidence { "promote, evidence" } else { "promote" };
     let _ = writeln!(out, "     \"{}\" -> \"{}\" [label=\"{promotion}\"];", p.draft, p.open);

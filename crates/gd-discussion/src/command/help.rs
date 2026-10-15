@@ -6,7 +6,9 @@ use std::fmt::Write;
 /// The help text of `program`, styled when `color` is set.
 pub(crate) fn help_text(program: &Program<'_>, color: bool) -> String {
     let mut out = String::with_capacity(4096);
-    let name = if color { format!("\x1b[1;36m{}\x1b[0m", program.name) } else {
+    let name = if color {
+        format!("\x1b[1;36m{}\x1b[0m", program.name)
+    } else {
         program.name.to_string()
     };
     let _ = writeln!(out, "\n  {name}  {VERSION}");
@@ -20,10 +22,14 @@ pub(crate) fn help_text(program: &Program<'_>, color: bool) -> String {
     match &program.dir {
         None => out.push_str(
             "    --dir=DIR             The catalog (default: the one you are in)\n    \
-             --prefix=NAME         The catalog's prefix, for one without a configuration\n"),
+             --prefix=NAME         The catalog's prefix, for one without a configuration\n",
+        ),
         Some(dir) => {
-            let _ = writeln!(out, "    --dir=DIR             Discussion root (default: {})",
-                dir.display());
+            let _ = writeln!(
+                out,
+                "    --dir=DIR             Discussion root (default: {})",
+                dir.display()
+            );
         }
     }
     out.push_str(OPTIONS);
@@ -31,8 +37,11 @@ pub(crate) fn help_text(program: &Program<'_>, color: bool) -> String {
         out.push_str("    --guidedog=PATH       Guidedog program (default: $DSC_GUIDEDOG,\n");
         out.push_str("                          then guidedog on PATH)\n");
     } else {
-        let _ = writeln!(out, "    --{}=PATH          The builder's program, when it needs one",
-            program.tool);
+        let _ = writeln!(
+            out,
+            "    --{}=PATH          The builder's program, when it needs one",
+            program.tool
+        );
     }
     out.push_str(GLOBAL);
     out

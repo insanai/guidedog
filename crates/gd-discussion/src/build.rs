@@ -72,13 +72,20 @@ pub trait Builder {
 
     /// Builds an older Typst catalog's `selected` records for `targets`, returning what
     /// it wrote. The default refuses: only a builder with a Typst compiler can.
-    fn build_typst_catalog(&self, catalog: &Catalog, selected: &[&Record], targets: &[Target])
-        -> Result<Vec<PathBuf>> {
+    fn build_typst_catalog(
+        &self,
+        catalog: &Catalog,
+        selected: &[&Record],
+        targets: &[Target],
+    ) -> Result<Vec<PathBuf>> {
         let _ = (selected, targets);
-        Err(Problem::new(catalog.prefix.code("legacy-build"),
-            "This program cannot build a Typst catalog", shown(&catalog.dir),
+        Err(Problem::new(
+            catalog.prefix.code("legacy-build"),
+            "This program cannot build a Typst catalog",
+            shown(&catalog.dir),
             format!("The {} builder builds reStructuredText catalogs only.", self.name()),
-            "Build the Typst catalog with guidedog gds build, or port its records to RST.")
+            "Build the Typst catalog with guidedog gds build, or port its records to RST.",
+        )
         .exit(2))
     }
 }
@@ -96,8 +103,11 @@ pub struct BuildOptions {
 /// Checks `catalog` (sections, and the index unless one record of a Typst catalog is
 /// selected) and publishes it with `builder`: the complete website, and a PDF book per
 /// record or for the record `options.record` names. Returns what it wrote, in order.
-pub fn build(catalog: &Catalog, options: &BuildOptions, builder: &dyn Builder)
-    -> Result<Vec<PathBuf>> {
+pub fn build(
+    catalog: &Catalog,
+    options: &BuildOptions,
+    builder: &dyn Builder,
+) -> Result<Vec<PathBuf>> {
     let prefix = &catalog.prefix;
     let format = catalog_format(&catalog.dir);
     check_sources(catalog)?;
@@ -108,10 +118,13 @@ pub fn build(catalog: &Catalog, options: &BuildOptions, builder: &dyn Builder)
     if !options.record.is_empty() {
         let r = resolve(catalog, &options.record)?;
         if r.historical {
-            return Err(Problem::new(prefix.code("historical"), "Historical record is an archive",
+            return Err(Problem::new(
+                prefix.code("historical"),
+                "Historical record is an archive",
                 shown(&r.path),
                 "This record is kept as provenance, not as an active discussion book.",
-                "Read its archive page in the complete HTML build instead.")
+                "Read its archive page in the complete HTML build instead.",
+            )
             .exit(2));
         }
         selected = vec![r];
@@ -124,17 +137,24 @@ pub fn build(catalog: &Catalog, options: &BuildOptions, builder: &dyn Builder)
         return builder.build_typst_catalog(catalog, &selected, &targets);
     }
     if let Some(r) = catalog.records.iter().find(|r| !r.historical && !is_rst(&r.path)) {
-        return Err(Problem::new(prefix.code("format"), "Mixed publication formats",
-            shown(&r.path), "This RST catalog contains a Typst record.",
-            "Port the record to RST, or build it in an older Typst catalog."));
+        return Err(Problem::new(
+            prefix.code("format"),
+            "Mixed publication formats",
+            shown(&r.path),
+            "This RST catalog contains a Typst record.",
+            "Port the record to RST, or build it in an older Typst catalog.",
+        ));
     }
-    let books: Vec<Book> = selected.iter().filter(|r| !r.historical).map(|r| Book {
-        root: format!("records/{}", r.stem()),
-        file: format!("{}.pdf", artifact_name(prefix, r)),
-        title: r.title.clone(),
-        author: r.authors.join(", "),
-    })
-    .collect();
+    let books: Vec<Book> = selected
+        .iter()
+        .filter(|r| !r.historical)
+        .map(|r| Book {
+            root: format!("records/{}", r.stem()),
+            file: format!("{}.pdf", artifact_name(prefix, r)),
+            title: r.title.clone(),
+            author: r.authors.join(", "),
+        })
+        .collect();
     let mut outputs = Vec::with_capacity(targets.len());
     for target in targets {
         let selection = (target == Target::Pdf && !options.record.is_empty())

@@ -10,7 +10,6 @@ use guidedoc::{Builder, Fail, Label, NodeId, NodeKind, SourceSpan};
 use guidedoc_rst::{ArgRule, ContentRule, Directive, OptSpec, OptType, Parser, opt};
 use guidedoc_rst_inline::RoleCall;
 
-
 use super::object::OPTS_OBJECT;
 use super::{
     Cx, DocField, Domain, DomainDirective, FieldShape, Object, RoleSpec, TocNames, XrefFlags,

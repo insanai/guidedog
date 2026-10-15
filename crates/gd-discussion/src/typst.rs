@@ -3,8 +3,8 @@
 //! optional work.
 
 use crate::metadata::{
-    FieldValue, REQUIRED, Record, literal_end, metadata_problem, parse_literal, quote,
-    set_value, take_slug,
+    FieldValue, REQUIRED, Record, literal_end, metadata_problem, parse_literal, quote, set_value,
+    take_slug,
 };
 use crate::{Prefix, Result};
 use std::path::Path;
@@ -112,10 +112,10 @@ mod tests {
 
     #[test]
     fn tuples_hold_only_string_literals() {
-        assert_eq!(parse_tuple("(\"Ada\", \"René\",) // two"), Some(vec![
-            "Ada".to_string(),
-            "René".to_string()
-        ]));
+        assert_eq!(
+            parse_tuple("(\"Ada\", \"René\",) // two"),
+            Some(vec!["Ada".to_string(), "René".to_string()])
+        );
         assert_eq!(parse_tuple("()"), Some(vec![]));
         assert_eq!(parse_tuple("(read(\"x\"),)"), None);
         assert_eq!(parse_tuple("(\"a\""), None);

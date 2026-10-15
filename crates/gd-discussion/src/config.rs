@@ -106,8 +106,7 @@ impl Process {
     /// draft, zero, more than nine digits, or a number with other padding. `start` and
     /// `limit` govern new numbers only, so changing them keeps every record valid.
     pub fn number_value(&self, number: &str) -> Option<u32> {
-        if number.is_empty() || number.len() > 9 || !number.bytes().all(|c| c.is_ascii_digit())
-        {
+        if number.is_empty() || number.len() > 9 || !number.bytes().all(|c| c.is_ascii_digit()) {
             return None;
         }
         let width = self.numbering.width.max(1) as usize;
@@ -155,8 +154,13 @@ pub(crate) fn config_problem(
     message: impl Into<String>,
     hint: impl Into<String>,
 ) -> Problem {
-    let p = Problem::new("discussion.config", "The catalog configuration is not valid", path,
-        message, hint)
+    let p = Problem::new(
+        "discussion.config",
+        "The catalog configuration is not valid",
+        path,
+        message,
+        hint,
+    )
     .exit(2);
     match source {
         Some(source) if line > 0 => p.at_line(source, line),
@@ -170,17 +174,26 @@ pub(crate) fn config_problem(
 /// name the line and the fix.
 pub fn read_config(path: &str, source: &str) -> Result<Definition> {
     let root = gd_toml::parse(source).map_err(|e| {
-        config_problem(path, Some(source), e.line, e.message.clone(),
-            "Correct the TOML at that line; dsc init writes a complete example.")
+        config_problem(
+            path,
+            Some(source),
+            e.line,
+            e.message.clone(),
+            "Correct the TOML at that line; dsc init writes a complete example.",
+        )
     })?;
     let r = Reader { path, source };
     r.known(&root, "", ROOT_KEYS)?;
     let prefix_text = r.text(&root, 0, "prefix", true, "")?;
     let prefix = Prefix::new(&prefix_text).map_err(|_| {
-        r.fail(config_line(&root, &["prefix"]),
-            format!("prefix = {prefix_text:?} is not a prefix: a prefix is 2 to 16 lowercase \
-                ASCII letters."),
-            "Write a short lowercase prefix, such as prefix = \"eds\".")
+        r.fail(
+            config_line(&root, &["prefix"]),
+            format!(
+                "prefix = {prefix_text:?} is not a prefix: a prefix is 2 to 16 lowercase \
+                ASCII letters."
+            ),
+            "Write a short lowercase prefix, such as prefix = \"eds\".",
+        )
     })?;
     let mut d = Definition {
         prefix,
@@ -231,42 +244,62 @@ impl Reader<'_> {
 
     fn table<'t>(&self, v: &'t Value, name: &str) -> Result<&'t Table> {
         v.as_table().ok_or_else(|| {
-            self.fail(v.line, format!("{name} must be a table."),
-                format!("Write it as a [{name}] section."))
+            self.fail(
+                v.line,
+                format!("{name} must be a table."),
+                format!("Write it as a [{name}] section."),
+            )
         })
     }
 
     /// A one-line text setting; "" when it is missing and not required.
-    fn text(&self, t: &Table, at: usize, key: &str, required: bool, prefix: &str)
-        -> Result<String> {
+    fn text(
+        &self,
+        t: &Table,
+        at: usize,
+        key: &str,
+        required: bool,
+        prefix: &str,
+    ) -> Result<String> {
         let Some(v) = t.get(key) else {
             if required {
-                return Err(self.fail(at, format!("{prefix}{key} is missing."),
-                    format!("Add {key} = \"...\" to the configuration.")));
+                return Err(self.fail(
+                    at,
+                    format!("{prefix}{key} is missing."),
+                    format!("Add {key} = \"...\" to the configuration."),
+                ));
             }
             return Ok(String::new());
         };
         match v.as_str() {
             Some(text) if is_valid_name(text) => Ok(text.to_string()),
-            _ => Err(self.fail(v.line, format!("{prefix}{key} must be one line of text."),
-                format!("Write {key} = \"...\" in quotes."))),
+            _ => Err(self.fail(
+                v.line,
+                format!("{prefix}{key} must be one line of text."),
+                format!("Write {key} = \"...\" in quotes."),
+            )),
         }
     }
 
     fn list(&self, t: &Table, key: &str, prefix: &str) -> Result<Option<Vec<String>>> {
         let Some(v) = t.get(key) else { return Ok(None) };
         let Some(items) = v.as_array() else {
-            return Err(self.fail(v.line, format!("{prefix}{key} must be a list."),
-                format!("Write {key} = [\"a\", \"b\"].")));
+            return Err(self.fail(
+                v.line,
+                format!("{prefix}{key} must be a list."),
+                format!("Write {key} = [\"a\", \"b\"]."),
+            ));
         };
         let mut values = Vec::with_capacity(items.len());
         for item in items {
             match item.as_str() {
                 Some(text) if is_valid_name(text) => values.push(text.to_string()),
                 _ => {
-                    return Err(self.fail(item.line,
+                    return Err(self.fail(
+                        item.line,
                         format!("{prefix}{key} must hold quoted one-line names."),
-                        format!("Quote each item of {key}.")));
+                        format!("Quote each item of {key}."),
+                    ));
                 }
             }
         }
@@ -277,17 +310,22 @@ impl Reader<'_> {
         let Some(v) = t.get(name) else { return Ok(fallback) };
         match v.as_integer().and_then(|n| u32::try_from(n).ok()) {
             Some(n) if n <= MAX_NUMBER => Ok(n),
-            _ => Err(self.fail(v.line,
+            _ => Err(self.fail(
+                v.line,
                 format!("numbering.{name} must be a whole number from 0 to {MAX_NUMBER}."),
-                format!("Write {name} = {fallback}, without quotes."))),
+                format!("Write {name} = {fallback}, without quotes."),
+            )),
         }
     }
 
     fn boolean(&self, t: &Table, key: &str, prefix: &str) -> Result<bool> {
         let Some(v) = t.get(key) else { return Ok(false) };
         v.as_bool().ok_or_else(|| {
-            self.fail(v.line, format!("{prefix}{key} must be true or false."),
-                format!("Write {key} = true, without quotes."))
+            self.fail(
+                v.line,
+                format!("{prefix}{key} must be true or false."),
+                format!("Write {key} = true, without quotes."),
+            )
         })
     }
 
@@ -307,8 +345,11 @@ impl Reader<'_> {
         p.open = self.text(t, v.line, "open", true, "workflow.")?;
         let states = t.get("states").and_then(Value::as_table).filter(|s| !s.is_empty());
         let Some(states) = states else {
-            return Err(self.fail(v.line, "[workflow] has no states.",
-                "Add a [workflow.states.NAME] table for each state, as dsc config prints."));
+            return Err(self.fail(
+                v.line,
+                "[workflow] has no states.",
+                "Add a [workflow.states.NAME] table for each state, as dsc config prints.",
+            ));
         };
         p.states.clear();
         for (name, value) in states.iter() {
@@ -348,33 +389,46 @@ fn config_line(root: &Table, parts: &[&str]) -> usize {
 }
 
 /// Checks that a configuration holds together; `root` is its source, when it has one.
-pub(crate) fn check_config(path: &str, d: &Definition, root: Option<(&Table, &str)>)
-    -> Result<()> {
+pub(crate) fn check_config(
+    path: &str,
+    d: &Definition,
+    root: Option<(&Table, &str)>,
+) -> Result<()> {
     let fail = |parts: &[&str], message: String, hint: &str| {
         let line = root.map_or(0, |(t, _)| config_line(t, parts));
         Err(config_problem(path, root.map(|(_, s)| s), line, message, hint))
     };
     if !is_valid_labels(&d.labels) {
-        return fail(&["labels"], "labels must be lowercase words joined by hyphens.".into(),
-            "Rename the labels, such as release-notes.");
+        return fail(
+            &["labels"],
+            "labels must be lowercase words joined by hyphens.".into(),
+            "Rename the labels, such as release-notes.",
+        );
     }
     let p = &d.process;
     if p.types.is_empty() {
-        return fail(&["types"], "types is empty.".into(),
-            "List the kinds of record, such as types = [\"Standards Track\", \"Process\"].");
+        return fail(
+            &["types"],
+            "types is empty.".into(),
+            "List the kinds of record, such as types = [\"Standards Track\", \"Process\"].",
+        );
     }
     let n = p.numbering;
     if !(1..=9).contains(&n.width) {
-        return fail(&["numbering", "width"],
+        return fail(
+            &["numbering", "width"],
             format!("numbering.width is {}; numbers have 1 to 9 digits.", n.width),
-            "Set width = 4 for numbers such as 0007.");
+            "Set width = 4 for numbers such as 0007.",
+        );
     }
     if n.start < 1 || n.limit.is_some_and(|l| l < n.start) {
         let key = if n.start < 1 { "start" } else { "limit" };
-        return fail(&["numbering", key],
+        return fail(
+            &["numbering", key],
             format!("numbering.start is {} and limit is {}.", n.start, n.limit.unwrap_or(0)),
             "Set the start setting to 1 or more, and the limit setting above it, or leave \
-             it out.");
+             it out.",
+        );
     }
     check_workflow(p, &fail)
 }
@@ -384,36 +438,49 @@ type Fail<'a> = dyn Fn(&[&str], String, &str) -> Result<()> + 'a;
 fn check_workflow(p: &Process, fail: &Fail<'_>) -> Result<()> {
     for s in &p.states {
         if !is_valid_slug(&s.name) {
-            return fail(&["workflow", "states", &s.name],
+            return fail(
+                &["workflow", "states", &s.name],
                 format!("The state {:?} is not a lowercase name.", s.name),
-                "Name states with lowercase letters and hyphens, such as in-review.");
+                "Name states with lowercase letters and hyphens, such as in-review.",
+            );
         }
         for to in &s.next {
             if p.state(to).is_none() || *to == s.name {
-                return fail(&["workflow", "states", &s.name, "next"],
-                    format!("workflow.states.{}.next names {to:?}, which is not another \
-                        state.", s.name),
-                    "List only states defined under [workflow.states].");
+                return fail(
+                    &["workflow", "states", &s.name, "next"],
+                    format!(
+                        "workflow.states.{}.next names {to:?}, which is not another \
+                        state.",
+                        s.name
+                    ),
+                    "List only states defined under [workflow.states].",
+                );
             }
         }
     }
     for (key, name) in [("draft", &p.draft), ("open", &p.open)] {
         if p.state(name).is_none() {
-            return fail(&["workflow", key],
+            return fail(
+                &["workflow", key],
                 format!("The workflow names {name:?}, which is not a state."),
                 "Set workflow.draft and workflow.open to states defined under \
-                 [workflow.states].");
+                 [workflow.states].",
+            );
         }
     }
     if p.draft == p.open {
-        return fail(&["workflow", "open"],
+        return fail(
+            &["workflow", "open"],
             "workflow.draft and workflow.open are the same state.".into(),
-            "Give promotion a state to open drafts in, such as open = \"discussion\".");
+            "Give promotion a state to open drafts in, such as open = \"discussion\".",
+        );
     }
     if p.state(&p.draft).is_some_and(|d| contains(&d.next, &p.open)) {
-        return fail(&["workflow", "states", &p.draft, "next"],
+        return fail(
+            &["workflow", "states", &p.draft, "next"],
             format!("workflow.states.{}.next lists {}, the open state.", p.draft, p.open),
-            "Remove it: the promote command opens a draft, and gives it its number.");
+            "Remove it: the promote command opens a draft, and gives it its number.",
+        );
     }
     Ok(())
 }
@@ -423,10 +490,16 @@ fn check_workflow(p: &Process, fail: &Fail<'_>) -> Result<()> {
 /// `init` writes it; [`read_config`] reads it back as `d`.
 pub fn render_config(d: &Definition) -> String {
     let mut out = String::with_capacity(2048);
-    out.push_str("# A discussion catalog: its identity, the process its records follow, and \
-        how\n# they are numbered. dsc reads it from the catalog folder.\n\n");
-    let _ = writeln!(out, "prefix = {}\nname = {}", toml_quote(d.prefix.as_str()),
-        toml_quote(&d.name));
+    out.push_str(
+        "# A discussion catalog: its identity, the process its records follow, and \
+        how\n# they are numbered. dsc reads it from the catalog folder.\n\n",
+    );
+    let _ = writeln!(
+        out,
+        "prefix = {}\nname = {}",
+        toml_quote(d.prefix.as_str()),
+        toml_quote(&d.name)
+    );
     if !d.author.is_empty() {
         let _ = writeln!(out, "author = {}", toml_quote(&d.author));
     }
@@ -439,18 +512,29 @@ pub fn render_config(d: &Definition) -> String {
     let p = &d.process;
     let _ = writeln!(out, "# The kinds of record.\ntypes = {}", toml_list(&p.types));
     let n = p.numbering;
-    let _ = write!(out, "\n# Numbers have at least width digits, zero-padded ({}); a number \
+    let _ = write!(
+        out,
+        "\n# Numbers have at least width digits, zero-padded ({}); a number \
         that needs\n# more gets them. Promotion numbers from start, up to limit.\n\
-        [numbering]\nwidth = {}\nstart = {}\n", p.format_number(7), n.width, n.start);
+        [numbering]\nwidth = {}\nstart = {}\n",
+        p.format_number(7),
+        n.width,
+        n.start
+    );
     match n.limit {
         Some(limit) => _ = writeln!(out, "limit = {limit}"),
         None => out.push_str("# limit = 99999\n"),
     }
-    let _ = write!(out, "\n# A new draft is in the draft state, numbered {DRAFT_NUMBER}. \
+    let _ = write!(
+        out,
+        "\n# A new draft is in the draft state, numbered {DRAFT_NUMBER}. \
         Promotion gives it a number\n# and moves it to the open state. The state command \
         moves a record to one of\n# its state's next states, with --reason, and --evidence \
         where the state asks for\n# it. status is the text a record's optional status field \
-        takes.\n[workflow]\ndraft = {}\nopen = {}\n", toml_quote(&p.draft), toml_quote(&p.open));
+        takes.\n[workflow]\ndraft = {}\nopen = {}\n",
+        toml_quote(&p.draft),
+        toml_quote(&p.open)
+    );
     for s in &p.states {
         let _ = writeln!(out, "\n[workflow.states.{}]", s.name);
         if !s.next.is_empty() {

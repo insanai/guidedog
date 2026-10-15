@@ -1,0 +1,22 @@
+[package]
+name = "guidedoc-sphinx"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+guidedoc = { workspace = true }
+guidedoc-rst = { workspace = true }
+guidedoc-rst-inline = { workspace = true }
+guidedoc-commonmark = { workspace = true }
+guidedoc-cpp = { workspace = true }
+
+[dev-dependencies]
+# The MyST conformance harness compares HTML in places.
+guidedoc-html = { workspace = true }
+# The rust domain's tests read the pages gd-rustdoc writes for its fixture crate.
+gd-rustdoc = { workspace = true }
+
+[lints]
+workspace = true

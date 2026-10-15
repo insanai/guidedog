@@ -566,7 +566,7 @@ reader.
 |                             |                             | empty                       |
 +-----------------------------+-----------------------------+-----------------------------+
 | Desc                        | DescSignature+, Index\*,    | ``domain`` (py, c, cpp, js, |
-|                             | DescContent                 | rst, std, odin),            |
+|                             | DescContent                 | rst, std, odin, rust),      |
 |                             |                             | ``objtype`` (function,      |
 |                             |                             | class, ...), ``noindex`` =  |
 |                             |                             | "1", ``no-contents-entry``  |
@@ -640,7 +640,9 @@ reader.
 |                             |                             | ``py:class`` = context (C:  |
 |                             |                             | ``c:parent``; Odin:         |
 |                             |                             | ``odin:package`` and        |
-|                             |                             | ``odin:type``; C++:         |
+|                             |                             | ``odin:type``; Rust:        |
+|                             |                             | ``rust:module`` and         |
+|                             |                             | ``rust:type``; C++:         |
 |                             |                             | ``cpp:parent``, the path of |
 |                             |                             | the symbol a name is looked |
 |                             |                             | up from; reftype            |

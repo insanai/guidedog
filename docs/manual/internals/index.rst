@@ -27,6 +27,7 @@ conformance evidence.
    commonmark-conformance
    commonmark-ledger
    cpp-declarations
+   sphinx-ledger
 
 .. toctree::
    :maxdepth: 1

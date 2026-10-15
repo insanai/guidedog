@@ -146,8 +146,6 @@ Read and embed
    implementation decisions.
 -  :download:`Discussion library <_static/repository/discussion-README.md>`: the
    catalogs that ``guidedog dsc`` keeps.
--  :download:`Beta review <_static/repository/beta-review-20261011.md>`: the review of
-   the Odin implementation's beta: fixes, verification, support scope.
 
 Guidedoc works in a caller-owned, reusable workspace and returns structured diagnostics. The
 host manages files, budgets, caching, publication, and native compilers. ``--untrusted``

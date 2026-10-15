@@ -46,8 +46,10 @@ Guidedog prepares a complete generation before deciding a journaled commit:
 
 How atomic commits protect our site:
 
-* **Staging:** All newly rendered pages are written to a hidden staging folder beside
-  the destination (``.<target>.next``).
+* **Staging:** All newly rendered pages are written to a hidden staging folder
+  (``.<target>.next``). For the default builders it sits in the build folder. For an output
+  we name with ``-o``, it sits inside the output's one cache folder beside it
+  (``.<target>.guidedog``), so the output gains a single hidden neighbour.
 * **Isolation:** The live output folder stays untouched while pages compile.
 * **Failure safety:** If any page fails to render, or a warning becomes an error under ``-W``,
   the build abandons the staging folder. The live site stays unchanged.

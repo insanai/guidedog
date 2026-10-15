@@ -24,11 +24,12 @@ pub(crate) const MANIFEST_SUFFIX: &str = ".outputs.json";
 pub struct OutputPaths {
     /// The published output folder.
     pub out_dir: PathBuf,
-    /// The next folder, a sibling: `.<name>.next`, the spare output a build writes to.
+    /// The next folder, `<build_dir>/.<name>.next`: the spare output a build writes to.
     pub next: PathBuf,
-    /// Where a commit moves the previous output: `.<name>.old`.
+    /// Where a commit moves the previous output: `<build_dir>/.<name>.old`.
     pub old: PathBuf,
-    /// The staging folder earlier versions used (`.<name>.stage`), removed when found.
+    /// The staging folder earlier versions used (`.<name>.stage`, a sibling of the
+    /// output), removed when found.
     pub legacy: PathBuf,
     /// The build folder the records live under: the configuration's, or the custom
     /// output's own cache folder. The caller sets `Config::build_dir` to it.
@@ -45,19 +46,11 @@ impl OutputPaths {
     /// The paths of a generation that writes `out_dir` and keeps its records in
     /// `build_dir`, for the builder named `builder`. Both folders are taken as given.
     fn of(out_dir: PathBuf, build_dir: PathBuf, builder: &str) -> OutputPaths {
-        let parent = out_dir.parent().map(Path::to_path_buf).unwrap_or_default();
-        let name = out_dir.file_name().map(OsString::from).unwrap_or_default();
-        let sibling = |suffix: &str| {
-            let mut file = OsString::from(".");
-            file.push(&name);
-            file.push(suffix);
-            parent.join(file)
-        };
         let doctrees = build_dir.join(".doctrees");
         OutputPaths {
-            next: sibling(".next"),
-            old: sibling(".old"),
-            legacy: sibling(".stage"),
+            next: build_dir.join(hidden_name(&out_dir, ".next")),
+            old: build_dir.join(hidden_name(&out_dir, ".old")),
+            legacy: sibling(&out_dir, ".stage"),
             manifest: doctrees.join(format!("{builder}{MANIFEST_SUFFIX}")),
             journal: doctrees.join(format!("{builder}{JOURNAL_SUFFIX}")),
             out_dir,
@@ -66,11 +59,54 @@ impl OutputPaths {
         }
     }
 
+    /// Where earlier versions kept the spare output and the previous output of a custom
+    /// output: `.<name>.next`, `.<name>.old` and `.<name>.old-<n>` beside it, those
+    /// that exist. Empty for a default output, whose folders are still there.
+    pub(crate) fn sibling_spares(&self) -> Vec<PathBuf> {
+        let next = sibling(&self.out_dir, ".next");
+        let old = sibling(&self.out_dir, ".old");
+        if next == self.next {
+            return Vec::new();
+        }
+        let (Some(parent), Some(old_name)) = (old.parent(), old.file_name()) else {
+            return Vec::new();
+        };
+        let old_name = old_name.to_string_lossy();
+        let numbered = |name: &str| {
+            let n = name.strip_prefix(old_name.as_ref()).and_then(|rest| rest.strip_prefix('-'));
+            n.is_some_and(|n| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
+        };
+        let entries = gd_host::list_folder(parent).unwrap_or_default();
+        let mut found: Vec<PathBuf> = entries
+            .iter()
+            .filter(|e| numbered(&e.name.to_string_lossy()))
+            .map(|e| parent.join(&e.name))
+            .collect();
+        found.sort();
+        found.insert(0, old);
+        found.insert(0, next);
+        found
+    }
+
     /// The builder's name, from its journal's file name.
     pub(crate) fn builder(&self) -> String {
         let name = self.journal.file_name().map(|n| n.to_string_lossy()).unwrap_or_default();
         name.strip_suffix(JOURNAL_SUFFIX).unwrap_or(&name).to_string()
     }
+}
+
+/// `.<name><suffix>` for the output folder `out_dir`.
+fn hidden_name(out_dir: &Path, suffix: &str) -> OsString {
+    let mut file = OsString::from(".");
+    file.push(out_dir.file_name().unwrap_or_default());
+    file.push(suffix);
+    file
+}
+
+/// `.<name><suffix>` beside the output folder `out_dir`.
+fn sibling(out_dir: &Path, suffix: &str) -> PathBuf {
+    let parent = out_dir.parent().map(Path::to_path_buf).unwrap_or_default();
+    parent.join(hidden_name(out_dir, suffix))
 }
 
 /// The paths of `kind`'s generation for `config`, with `output_dir` (the sphinx-build
@@ -98,11 +134,7 @@ pub fn output_paths(
         output_absolute(&config.build_dir)?
     } else {
         // A custom output keeps its records beside it, outside what a commit swaps.
-        let parent = out_dir.parent().map(Path::to_path_buf).unwrap_or_default();
-        let mut cache = OsString::from(".");
-        cache.push(out_dir.file_name().unwrap_or_default());
-        cache.push(".guidedog");
-        parent.join(cache)
+        sibling(&out_dir, ".guidedog")
     };
     Ok(OutputPaths::of(out_dir, build_dir, kind.name()))
 }

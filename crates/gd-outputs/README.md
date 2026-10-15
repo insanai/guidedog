@@ -52,6 +52,10 @@ let outcome = generation.commit(CommitRecords { environment: &env, store: &store
 - `emit_tree` walks with a work list (no recursion) and follows links only after
   `gd_host::confinement` accepts them.
 - Unit paths are normalized (`a//./b` is `a/b`) before they reach the manifest.
+- **Spare and previous outputs live in the build folder** (`<build_dir>/.<name>.next`,
+  `.old`): unchanged for default outputs, inside `.<name>.guidedog` for custom ones, so a
+  custom output leaves one hidden sibling. `Generation::begin` moves or removes old-layout
+  siblings that are clearly Guidedog's (`migrate.rs`), with a note.
 - Test hooks (`commit_hook`, `commit_renames_only`) are thread-local and exist only
   under `cfg(test)`; the commit tests run a small simulated builder (`src/tests/
   support.rs`) through the real `Generation` instead of a whole project build.

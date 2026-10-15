@@ -38,6 +38,7 @@ mod generation;
 mod hook;
 mod journal;
 mod manifest;
+mod migrate;
 mod next;
 mod paths;
 mod publish;

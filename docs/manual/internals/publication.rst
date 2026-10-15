@@ -44,6 +44,15 @@ Its location would cease to be stable when recovery needed it most.
 Guidedog keeps records in a stable directory outside the publication tree.
 A custom output uses a sibling cache for this reason.
 
+The spare output and the previous output live in the build directory too, as ``.<name>.next`` and ``.<name>.old``.
+For a default output this is the folder beside it: ``_build/.html.next`` sits next to ``_build/html``.
+For a custom output it is the sibling cache: ``-o locales/templates`` leaves ``locales/.templates.guidedog`` beside the output, and nothing else.
+The cache is a sibling of the output, so it is on the same filesystem, and the switch stays one exchange or two renames.
+Earlier versions kept a custom output's ``.<name>.next`` and ``.<name>.old`` beside it.
+The next build moves such a spare output into the cache, or removes the folder, and says so in a note.
+It does this only when the folder is clearly Guidedog's: every file in it is a stage file, a file the manifest names, or the same file (by inode) as the output's file at that path.
+A folder holding anything else, or a file with such a name, is left as it is, with a note that says so.
+
 Durability and visibility
 -------------------------
 

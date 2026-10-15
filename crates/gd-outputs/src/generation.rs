@@ -57,7 +57,9 @@ impl Generation {
     /// build left decided but unsettled (its journal), adding what that did to
     /// `reports`; then clears what a build that failed or stopped left staged, and the
     /// stage files a killed build left in the doctrees folder; then loads the previous
-    /// manifest (a missing or older one is empty).
+    /// manifest (a missing or older one is empty). Last, the spare and previous outputs
+    /// an earlier version kept beside a custom output move into its cache folder, or
+    /// go, when they are clearly Guidedog's (a note says which).
     ///
     /// Fails when an interrupted commit can be neither finished nor undone (the
     /// problem says how to settle it; nothing is touched), or when the budget cannot
@@ -74,7 +76,7 @@ impl Generation {
         // completes it.
         gd_host::remove_stages(&paths.doctrees);
         let previous = Manifest::load(&paths.manifest, options.budget)?;
-        Ok(Generation {
+        let generation = Generation {
             paths,
             all: options.all,
             previous,
@@ -85,7 +87,9 @@ impl Generation {
             written: 0,
             reused: 0,
             site_written: false,
-        })
+        };
+        generation.migrate_sibling_spares(reports);
+        Ok(generation)
     }
 
     /// The paths of this generation.

@@ -4,6 +4,7 @@
 
 mod clean;
 mod commit;
+mod layout;
 mod ownership;
 mod paths;
 mod reuse;

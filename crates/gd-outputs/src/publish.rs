@@ -60,9 +60,16 @@ pub(crate) fn finish_commit(
     }
     // The switch and the renames are durable before the journal goes, so a crash after
     // its removal cannot bring back the previous output.
-    let mut folders = Vec::with_capacity(1 + j.records.len());
-    if j.next.is_some() {
-        folders.extend(j.out_dir.parent().map(Path::to_path_buf));
+    let mut folders = Vec::with_capacity(3 + j.records.len());
+    if let Some(next) = &j.next {
+        // The next folder and the previous output may live in a cache folder beside the
+        // output: every folder a name moved into or out of is flushed.
+        for path in [&j.out_dir, next, &j.old] {
+            let parent = path.parent().map(Path::to_path_buf);
+            if parent.as_ref().is_some_and(|p| !folders.contains(p)) {
+                folders.extend(parent);
+            }
+        }
     }
     folders.extend(j.records.iter().filter_map(|r| r.to.parent().map(Path::to_path_buf)));
     if let Err(p) = gd_host::sync_each(&folders) {

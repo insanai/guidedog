@@ -1,6 +1,6 @@
-//! Discussion catalogs end to end: `guidedog gds` on a catalog of older Typst records
-//! (the workflow, recovery, dates and Typst builds), `dsc` and `dscc` as users run them,
-//! and the reStructuredText catalog the manual describes. The commands' parts are
+//! Discussion catalogs end to end: `guidedog dsc` on a catalog of older Typst records
+//! (the workflow, recovery, dates and Typst builds), on new catalogs as users make them,
+//! and on the reStructuredText catalog the manual describes. The commands' parts are
 //! tested in gd-discussion; these tests run the built programs.
 
 #![allow(clippy::unwrap_used)] // a test failing on unexpected input is the point.
@@ -38,20 +38,20 @@ impl Legacy {
         write(&dir.join("registry.typ"), "#let gds-reserved-through = 0\n");
         write(&dir.join("index.typ"), "= Fixture discussions\n\nRecords under review.\n");
         let catalog = Legacy { scratch, dir };
-        catalog.gds(0, &["index"]);
+        catalog.dsc(0, &["index"]);
         catalog
     }
 
-    /// Runs `guidedog gds --dir <catalog> args` and expects `status`.
-    fn gds(&self, status: i32, args: &[&str]) -> Run {
+    /// Runs `guidedog dsc --dir <catalog> args` and expects `status`.
+    fn dsc(&self, status: i32, args: &[&str]) -> Run {
         run_command(&mut self.command(args)).expect(status)
     }
 
-    /// The command `guidedog gds --dir <catalog> args`, in the scratch folder, for a
+    /// The command `guidedog dsc --dir <catalog> args`, in the scratch folder, for a
     /// caller that sets its environment.
     fn command(&self, args: &[&str]) -> Command {
         let mut command = Command::new(guidedog_tests::program("guidedog"));
-        command.arg("gds").arg("--dir").arg(&self.dir).args(args);
+        command.arg("dsc").arg("--dir").arg(&self.dir).args(args);
         command.current_dir(&self.scratch.path).env("NO_COLOR", "1");
         command
     }

@@ -69,7 +69,7 @@ const CONCRETE: &[&str] = &[
     "element", "workspace", "region", "array", "probe", "gds", "repository", "token",
     "profile", "commit", "plan", "snapshot", "publisher", "account", "app", "site", "store",
     "rust", "markdown", "myst", "resource", "limit", "crate", "remote", "git", "github", "dsc",
-    "dscc", "state", "reason", "evidence", "author", "slug", "prefix",
+    "state", "reason", "evidence", "author", "slug", "prefix",
 ];
 
 /// One hint as the code writes it.

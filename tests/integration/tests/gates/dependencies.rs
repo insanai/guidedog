@@ -70,7 +70,6 @@ const LAYERS: &[(&str, u8)] = &[
     ("gd-cli", 5),
     // 6: programs, examples, tools and tests.
     ("guidedog-cmd", 6),
-    ("dsc-cmd", 6),
     ("graphdog-cmd", 6),
     ("guidedog-pages-cmd", 6),
     ("guidedoc-examples", 6),
@@ -364,7 +363,7 @@ fn publication_problems(graph: &Graph) -> Vec<String> {
 
 /// Plugins the command line must not need: programs link them and hand gd-cli their
 /// registry, so gd-cli knows only gd-plugins' interface.
-const PROGRAM_PLUGINS: &[&str] = &["gd-pages"];
+const PROGRAM_PLUGINS: &[&str] = &["gd-pages", "gd-discussion"];
 
 /// The command line needing a plugin crate, directly or not.
 fn plugin_problems(graph: &Graph) -> Vec<String> {

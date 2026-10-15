@@ -18,16 +18,16 @@ fn promotion_preserves_later_recorded_dates() {
     }
     let draft = "records/XXXXX-guidedog-cli.typ";
     write(&c.path(draft), &source);
-    c.gds(0, &["index"]);
-    c.gds(0, &["promote", "guidedog-cli", "--dry-run"]);
+    c.dsc(0, &["index"]);
+    c.dsc(0, &["promote", "guidedog-cli", "--dry-run"]);
     assert_eq!(c.read(draft), source);
-    c.gds(0, &["promote", "guidedog-cli"]);
+    c.dsc(0, &["promote", "guidedog-cli"]);
     let promoted = "records/0002-guidedog-cli.typ";
     let record = c.record(promoted).unwrap();
     assert_eq!((record.created.as_str(), record.updated.as_str()), ("2099-01-01", "2099-01-02"));
-    c.gds(0, &["state", "2", "--to=accepted", "--reason=Reviewed"]);
+    c.dsc(0, &["state", "2", "--to=accepted", "--reason=Reviewed"]);
     assert_eq!(c.record(promoted).unwrap().updated, "2099-01-02");
-    c.gds(0, &["check"]);
+    c.dsc(0, &["check"]);
 }
 
 #[test]

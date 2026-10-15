@@ -25,7 +25,7 @@ fn typst_builds_themed_html_and_pdf() {
         std::fs::copy(typst, &alias).unwrap();
         args.extend(["--typst", alias.to_str().unwrap()]);
     }
-    c.gds(0, &args);
+    c.dsc(0, &args);
     let html = c.scratch.read("docs/build/gds-0001-gds-process.html");
     let pdf = std::fs::read(c.scratch.join("docs/build/gds-0001-gds-process.pdf")).unwrap();
     for needle in [
@@ -45,28 +45,28 @@ fn typst_builds_themed_html_and_pdf() {
 #[test]
 fn compiler_failure_preserves_previous_artifact() {
     let c = Legacy::new("gds-typst-failure");
-    c.gds(0, &["build", "--number=1", "--target=pdf"]);
+    c.dsc(0, &["build", "--number=1", "--target=pdf"]);
     assert!(!c.scratch.exists("docs/build/index.html"));
     let path = c.scratch.join("docs/build/gds-0001-gds-process.pdf");
     let before = std::fs::read(&path).unwrap();
     // guidedog refuses Typst's compile arguments: a portable compiler that fails.
     let guidedog = format!("--typst={}", program("guidedog").display());
-    c.gds(4, &["build", "1", "--target=pdf", &guidedog]);
+    c.dsc(4, &["build", "1", "--target=pdf", &guidedog]);
     assert_eq!(std::fs::read(&path).unwrap(), before);
-    has(&c.gds(4, &["build", "1", "--typst=/not/a/typst"]).err, "--typst=");
+    has(&c.dsc(4, &["build", "1", "--typst=/not/a/typst"]).err, "--typst=");
 }
 
 #[test]
 fn full_title_selects_unnumbered_draft() {
     let c = Legacy::new("gds-typst-draft");
-    c.gds(0, &["new", "Cache policy", "--author=Ada"]);
-    c.gds(0, &["build", "Cache policy", "--target=html"]);
+    c.dsc(0, &["new", "Cache policy", "--author=Ada"]);
+    c.dsc(0, &["build", "Cache policy", "--target=html"]);
     has(&c.scratch.read("docs/build/gds-XXXXX-cache-policy.html"), "Cache policy");
     let partial = c.scratch.read("docs/build/index.html");
     has(&partial, "gds-XXXXX-cache-policy.html");
     has(&partial, "This record has not been built yet.");
     lacks(&partial, "href=\"gds-0001-gds-process.html\"");
-    c.gds(0, &["build", "--target=both"]);
+    c.dsc(0, &["build", "--target=both"]);
     let index = c.scratch.read("docs/build/index.html");
     has(&index, "gds-XXXXX-cache-policy.html");
     has(&index, "gds-0001-gds-process.pdf");
@@ -80,7 +80,7 @@ fn full_title_selects_unnumbered_draft() {
 #[test]
 fn builds_remove_pages_of_records_that_are_gone() {
     let c = Legacy::new("gds-typst-gone");
-    c.gds(0, &["build", "1", "--target=html"]);
+    c.dsc(0, &["build", "1", "--target=html"]);
     let build = c.scratch.join("docs/build");
     let (gone, stage, other) = (
         build.join("gds-XXXXX-gone.html"),
@@ -90,7 +90,7 @@ fn builds_remove_pages_of_records_that_are_gone() {
     for path in [&gone, &stage, &other] {
         write(path, "old");
     }
-    c.gds(0, &["build", "1", "--target=html"]);
+    c.dsc(0, &["build", "1", "--target=html"]);
     assert!(!exists(&gone));
     assert!(!exists(&stage));
     assert!(exists(&other));

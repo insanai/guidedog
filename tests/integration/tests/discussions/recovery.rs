@@ -36,14 +36,14 @@ fn recovery_preserves_later_edits() {
     journal(&c, &[change("registry.typ", &original, "interrupted")]);
     // A file edited after the interruption is neither the original nor the update.
     write(&c.path("registry.typ"), "later user edit");
-    has(&c.gds(4, &["recover", "--rollback"]).err, "LATER EDIT");
+    has(&c.dsc(4, &["recover", "--rollback"]).err, "LATER EDIT");
     assert_eq!(c.read("registry.typ"), "later user edit");
     write(&c.path("registry.typ"), "interrupted");
-    c.gds(0, &["recover", "--rollback", "--dry-run"]);
+    c.dsc(0, &["recover", "--rollback", "--dry-run"]);
     assert_eq!(c.read("registry.typ"), "interrupted");
-    c.gds(0, &["recover", "--rollback"]);
+    c.dsc(0, &["recover", "--rollback"]);
     assert_eq!(c.read("registry.typ"), original);
-    c.gds(0, &["check"]);
+    c.dsc(0, &["check"]);
 }
 
 #[test]
@@ -52,7 +52,7 @@ fn recovery_rejects_escaping_paths() {
     let outside = c.path("../outside.txt");
     write(&outside, "keep");
     journal(&c, &[change("../outside.txt", "remove", "keep")]);
-    c.gds(4, &["recover", "--rollback"]);
+    c.dsc(4, &["recover", "--rollback"]);
     assert_eq!(read(&outside), "keep");
 }
 
@@ -60,7 +60,7 @@ fn recovery_rejects_escaping_paths() {
 fn lock_blocks_another_process() {
     let c = Legacy::new("gds-lock");
     let _lock = ds::lock_catalog(&c.dir, &gds()).unwrap();
-    has(&c.gds(4, &["new", "Blocked", "--author=Ada"]).err, "locked");
+    has(&c.dsc(4, &["new", "Blocked", "--author=Ada"]).err, "locked");
     assert!(!exists(&c.path("records/XXXXX-blocked.typ")));
 }
 

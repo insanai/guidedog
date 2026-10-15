@@ -1,18 +1,21 @@
-//! `dsc` and `dscc` as users run them: from inside a catalog, building with an installed
-//! guidedog (or the one linked in), and following a catalog's configuration.
+//! `guidedog dsc` as users run it: from inside a catalog, building it, and following a
+//! catalog's configuration.
 
 use std::path::Path;
 
 use super::Legacy;
-use guidedog_tests::{Run, Scratch, has, program, run_program, write};
+use guidedog_tests::{Run, Scratch, has, run_program, write};
 
-/// Runs `dsc args` in `dir` and expects `status`.
+/// Runs `guidedog dsc args` in `dir` and expects `status`.
 fn dsc(dir: &Path, status: i32, args: &[&str]) -> Run {
-    run_program("dsc", dir, args).expect(status)
+    let mut all = vec!["dsc"];
+    all.extend_from_slice(args);
+    run_program("guidedog", dir, &all).expect(status)
 }
 
+/// guidedog dsc makes, keeps and builds a catalog of any prefix.
 #[test]
-fn dsc_makes_and_keeps_a_catalog_and_builds_it_with_guidedog() {
+fn dsc_makes_keeps_and_builds_a_catalog() {
     let root = Scratch::new("dsc");
     dsc(
         &root.path,
@@ -29,26 +32,12 @@ fn dsc_makes_and_keeps_a_catalog_and_builds_it_with_guidedog() {
     dsc(&dir.join("records"), 0, &["list"]);
     dsc(&dir, 2, &["list", "--prefix=sds"]);
     dsc(&root.path, 2, &["init", "eds", "--prefix=eds", "--author=Ada"]);
-    let guidedog = format!("--guidedog={}", program("guidedog").display());
-    dsc(&dir, 0, &["build", "--target=html", &guidedog]);
+    dsc(&dir, 0, &["build", "--target=html"]);
     assert!(root.exists("eds/_build/html/records/0001-cache-policy.html"));
-    let r = dsc(&dir, 4, &["build", "--target=html", "--guidedog=/no/such/guidedog"]);
-    has(&r.err, "eds.engine-missing");
-    has(&r.err, "dscc");
-}
-
-/// dscc is dsc with Guidedog linked in: it builds without an installed guidedog.
-#[test]
-fn dscc_builds_with_the_linked_guidedog() {
-    let root = Scratch::new("dscc");
-    let dscc =
-        |dir: &Path, status: i32, args: &[&str]| run_program("dscc", dir, args).expect(status);
-    dscc(&root.path, 0, &["init", "eds", "--prefix=eds", "--author=Ada"]);
-    let dir = root.join("eds");
-    dscc(&dir, 0, &["new", "Cache policy", "--labels=architecture"]);
-    dscc(&dir, 0, &["promote", "cache-policy"]);
-    dscc(&dir, 0, &["build", "--target=html"]);
-    assert!(root.exists("eds/_build/html/records/0001-cache-policy.html"));
+    // guidedog builds the catalog itself, so no other guidedog can be named.
+    dsc(&dir, 2, &["build", "--target=html", "--guidedog=/no/such/guidedog"]);
+    // Options that belong to another command are refused, with the command's help.
+    has(&dsc(&dir, 2, &["list", "--reason=x"]).err, "guidedog dsc list --help");
 }
 
 /// A catalog without a definition, such as Guidedog's own, is named by its template.
@@ -59,7 +48,7 @@ fn dsc_manages_a_catalog_named_by_its_template() {
     has(&dsc(&c.scratch.path, 0, &["list", "--dir", dir]).out, "GDS");
     dsc(&c.scratch.path, 0, &["new", "Cache policy", "--dir", dir, "--author=Ada"]);
     assert!(c.path("records/XXXXX-cache-policy.typ").is_file());
-    c.gds(0, &["check"]);
+    c.dsc(0, &["check"]);
 }
 
 const ADR_CONFIG: &str = r#"prefix = "adr"

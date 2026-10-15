@@ -24,7 +24,7 @@ fn rst_gds_cli_manages_and_publishes_the_authored_project() {
     let dir = root.join("docs");
     let dir_arg = format!("--dir={}", dir.display());
     let gds = |status: i32, args: &[&str]| {
-        let mut all = vec!["gds", dir_arg.as_str()];
+        let mut all = vec!["dsc", dir_arg.as_str()];
         all.extend_from_slice(args);
         run_program("guidedog", &root.path, &all).expect(status)
     };

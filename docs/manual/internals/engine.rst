@@ -141,8 +141,7 @@ tree.
 
 Ownership is the key rule, and the compiler enforces it. A ``Document<'ws>`` borrows
 its workspace, so a document or an output cannot outlive the next conversion, and a
-stale or foreign handle does not compile. The Odin engine checked generations and
-revisions at run time instead. :doc:`engine-api-map` maps its names to the Rust ones.
+stale or foreign handle does not compile, so no generation or revision check is needed at run time.
 A result the host keeps must own its text. The crate's ``README.md`` is the API cheat
 sheet. The generated reference is :rust:mod:`guidedoc`, and the design record is GDS
 0003 in ``docs/gds``.

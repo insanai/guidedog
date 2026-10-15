@@ -49,13 +49,3 @@ conformance evidence.
    gettext
    plugins
    discussion
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Porting reference
-
-   engine-api-map
-
-:doc:`engine-api-map` is kept from the port of Guidedog from Odin to Rust. It maps every
-name of the Odin engine to its Rust form, for readers of the GDS records and of code
-written against the Odin API.

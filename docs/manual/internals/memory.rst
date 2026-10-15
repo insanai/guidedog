@@ -40,10 +40,7 @@ error rather than a run-time check. A value that must outlive the conversion is 
 into an owned ``String`` or ``Box<str>`` by the code that keeps it. Shared immutable data
 (an included file read once and used by several documents) is an ``Arc<str>``.
 
-The Odin implementation planned slabs, sized arenas before a session, grew them on a
-``Capacity`` result, and paired every owner with a release call. None of that remains:
-``Drop`` releases, and ``Vec`` growth replaces the plans. The names that were dropped are
-listed in :doc:`engine-api-map`.
+No memory is planned ahead. ``Drop`` releases what an owner holds, and ``Vec`` grows as the content needs, so no caller sizes an arena before a session or pairs an owner with a release call.
 
 Working state between conversions
 ---------------------------------
@@ -113,11 +110,7 @@ A refused request reports the operation that needed the memory and suggests a
 ``/proc/meminfo``). A probe that cannot learn the free memory says so; an unknown amount
 is never treated as zero.
 
-The Odin implementation metered every allocation, could spill working memory to
-memory-mapped files (``--memory=disk``), and scanned cgroup limits. Rust's global
-allocator aborts on exhaustion instead of returning a refusal to each caller, and the
-engine's growth is already bounded by ``Limits``, so per-allocation metering and disk
-spilling are not part of the Rust design.
+Single allocations are not metered, and working memory never spills to disk. The global allocator aborts on exhaustion instead of returning a refusal to each caller, and the engine's growth is already bounded by ``Limits``, so a meter on every allocation would add cost without adding a bound.
 
 Reports outlive workspaces
 --------------------------
@@ -136,8 +129,5 @@ Typst compiler run in the host process, outside these bounds. The ``typst`` prog
 backend and installed plugins run as child processes with their own address spaces.
 These are different isolation boundaries.
 
-Large PDF books can consume much more memory than the host budget. A CPython
-validation of the Odin implementation measured about 14.5 GiB peak RSS including Typst.
-Treat that measurement as workload evidence, not a universal upper bound, and use
-operating-system limits when a hard bound is needed. See :doc:`../errors` for the
+Large PDF books can consume much more memory than the host budget, because the Typst compiler's memory is outside it. We use operating-system limits when a hard bound is needed. See :doc:`../errors` for the
 user's choices when the budget is reached.

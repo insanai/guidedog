@@ -4,7 +4,8 @@
 //!
 //! ```no_run
 //! fn main() -> std::process::ExitCode {
-//!     gd_cli::run()
+//!     let linked = gd_plugins::Registry::new(Vec::new()).unwrap_or_default();
+//!     gd_cli::run_with(linked)
 //! }
 //! ```
 //!
@@ -22,12 +23,13 @@ mod args;
 mod command;
 mod console;
 mod convert;
+mod extension;
+mod extension_run;
 mod gds;
 mod help;
 mod legacy;
 mod memory;
 mod ops;
-mod pages;
 mod parse;
 mod parse_plugin;
 mod parse_project;
@@ -42,27 +44,21 @@ use std::process::ExitCode;
 use gd_plugins::Registry;
 
 pub use command::{BuildCommand, CleanCommand, ColorMode, Command, ConvertCommand, Diagnostics};
+pub use command::{ExtensionCommand, QuickstartCommand, ServeCommand};
 pub use command::{FormatsCommand, IntlAction, IntlCommand, MemoryMode, MigrateCommand};
 pub use command::{MigrateOutput, Output, Parsed, PluginAction, PluginCommand, PublishCommand};
-pub use command::{QuickstartCommand, ServeCommand};
 pub use console::{Streams, Terminals};
+pub use extension::{Extension, extensions};
 pub use gds::discussion_builder;
-pub use parse::parse_command;
+pub use parse::{parse_command, parse_command_with};
 pub use version::{VERSION, VERSION_SUFFIX, full_version, version_text};
 
 use console::Console;
 
-/// Runs the process's command line with the default plugins ([`default_registry`]) and
-/// returns its exit status.
+/// Runs the process's command line with no linked plugin (registered programs are still
+/// found) and returns its exit status.
 pub fn run() -> ExitCode {
-    run_with(default_registry())
-}
-
-/// The plugins every `guidedog` has linked in: the GitHub Pages publisher (`pages`).
-pub fn default_registry() -> Registry {
-    // The pages plugin is valid by construction; an empty registry is the fallback a
-    // broken build would still run with.
-    Registry::new(vec![gd_pages::plugin()]).unwrap_or_default()
+    run_with(Registry::default())
 }
 
 /// Runs the process's command line (its arguments after the program name) with the
@@ -101,10 +97,11 @@ pub fn run_status(args: &[String], linked: &Registry) -> i32 {
 /// streams given, and returns the exit status. Commands that run other programs
 /// (`plugin run`) or ask questions during a build use the process's own streams.
 pub fn run_in(args: &[String], linked: &Registry, streams: Streams<'_>) -> i32 {
-    let parsed = parse_command(args);
+    let added = extensions(linked, extension::may_name_extension(args));
+    let parsed = parse_command_with(args, &added);
     let mut console = Console::new(streams, parsed.output);
     let status = match &parsed.command {
-        Ok(command) => execute(&mut console, command, linked),
+        Ok(command) => execute(&mut console, command, linked, &added),
         Err(problem) => console.problem(problem),
     };
     let _ = console.out.flush();
@@ -112,13 +109,27 @@ pub fn run_in(args: &[String], linked: &Registry, streams: Streams<'_>) -> i32 {
     status
 }
 
-fn execute(console: &mut Console<'_>, command: &Command, linked: &Registry) -> i32 {
+fn execute(
+    console: &mut Console<'_>,
+    command: &Command,
+    linked: &Registry,
+    added: &[Extension],
+) -> i32 {
     match command {
         Command::Help(topic) => {
-            let text = help::help_text(*topic, console.color_out);
+            let text = help::help_text(*topic, console.color_out, added);
             console.print(&text);
             0
         }
+        Command::ExtensionHelp(word) => {
+            console.print(&help::group_help(word, console.color_out, added));
+            0
+        }
+        Command::Extension(e) if e.help => {
+            console.print(&help::extension_help(&e.extension, console.color_out));
+            0
+        }
+        Command::Extension(e) => extension_run::run_extension(console, e, linked),
         Command::Version { typst } => {
             let text = format!("{}{}", version_text(), version::typst_line(typst));
             console.print(&text);
@@ -139,10 +150,10 @@ fn execute(console: &mut Console<'_>, command: &Command, linked: &Registry) -> i
         Command::Gds(words) => gds::gds(console, words),
         Command::Plugin(p) => plugin::plugin(console, p, linked),
         Command::Publish(p) => publish::publish(console, p, linked),
-        Command::PublishPages(words) => pages::publish_pages(console, words),
-        Command::PagesWorkflow(words) => pages::pages_workflow(console, words),
     }
 }
 
+#[cfg(test)]
+mod extension_tests;
 #[cfg(test)]
 mod tests;

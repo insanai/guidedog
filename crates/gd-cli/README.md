@@ -21,13 +21,14 @@ let status = gd_cli::run_in(&args, &linked, gd_cli::Streams { out, err, input, t
 |---|---|
 | `run`, `run_with(Registry)`, `run_args(&[String], Registry)` -> `ExitCode`; `run_status` -> `i32` | the process's or given words, on the real streams |
 | `run_in(&args, &Registry, Streams)` -> `i32` | any `Write`/`BufRead` streams (tests) |
-| `parse_command` -> `Parsed { output: Output, command: Result<Command, Problem> }` | every command, typed: `ConvertCommand`, `BuildCommand` (holds `gd_conf::LoadOptions` and `gd_env::BuildOptions`), `ServeCommand`, `CleanCommand`, `QuickstartCommand`, `MigrateCommand`, `IntlCommand`, `PluginCommand`, `PublishCommand`, ... |
-| `default_registry()` | the linked `pages` publisher |
-| `discussion_builder(typst)` | `gd_discussion::Builder` with this engine (for `guidedog gds`, `dscc`) |
+| `parse_command`, `parse_command_with(&args, &[Extension])` -> `Parsed { output: Output, command: Result<Command, Problem> }` | every command, typed: `ConvertCommand`, `BuildCommand` (holds `gd_conf::LoadOptions` and `gd_env::BuildOptions`), `ServeCommand`, `CleanCommand`, `QuickstartCommand`, `MigrateCommand`, `IntlCommand`, `PluginCommand`, `PublishCommand`, ... |
+| `extensions(&Registry, machine)` -> `Vec<Extension>` | the commands plugins add (linked, then registered), for `parse_command_with` |
+| `discussion_builder(typst)` | `gd_discussion::Builder` with this engine (for `guidedog gds`, `dsc`) |
 | `version_text()`, `full_version()`, `VERSION`, `VERSION_SUFFIX` | `--version` and the crash report |
 
 Usage problems are `cli.usage` (exit 2), Elm-style through `gd-report`, with "Did you
-mean" for commands, options, builders, intl/plugin/pages subcommands and values.
+mean" for commands (guidedog's and the plugins'), options, builders, intl/plugin
+subcommands and values.
 
 ## Decisions and redesigns (from Odin `lib/cli`)
 
@@ -46,15 +47,16 @@ mean" for commands, options, builders, intl/plugin/pages subcommands and values.
   `--memory=ram`. The budget questions remain: before a build (continue, lower, stop)
   and at the budget (raise, stop), terminal only, scripted in tests (`memory::Ask`).
 - **No arena, guard or `host.memory` report.** Rust aborts on allocation failure.
-- **gd-pages is a dependency** (the plan said never): `guidedog publish pages` (the
-  guided flow) and `guidedog pages workflow` are gd-pages' own command line
-  (`gd_pages::command::run_with`), which the `Publisher` trait cannot express (setup,
-  sign-in, workflow files). gd-pages links no engine, so the cost is small, and it makes
-  `pages` the bundled default publisher: `default_registry()` links it, so `guidedog
-  publish --publisher=pages` works without registering `guidedog-pages`. The guided
-  flow builds with this very program (`--guidedog=<current exe>` unless given).
+- **Plugins add commands; gd-cli knows none by name.** Odin hard-wired `publish pages`
+  and `pages workflow`. Here a plugin declares commands (`gd_plugins::CommandInfo`) and
+  runs them with a `CommandContext` that gd-cli lends (`extension_run.rs`: its console,
+  questions, and builds with this engine). A word guidedog does not know, or a
+  `publish` target, is matched against `extensions()` (linked first, then registered
+  programs, longest name wins, option values skipped); `--help` on one prints help from
+  its declaration. gd-cli depends only on gd-plugins; `cmd/guidedog` links the Pages
+  plugin (the dependency gate checks it). See docs/manual/internals/plugins.rst.
 - **Ctrl+C** is caught by the commands that must settle (convert, build, publish, plugin
-  check, pages), as in Odin, not globally in `main`: `serve` and `gds` stop at once.
+  check, plugin commands), as in Odin, not globally in `main`: `serve` and `gds` stop at once.
 - **Stdin is not locked** for the run (`StdinLines` reads on demand): `convert -` reads
   stdin through the standard library, whose lock is not reentrant.
 - **`--version`** names Guidedog, Guidedoc and its schema, the tree-sitter crates (a
@@ -76,4 +78,4 @@ plugins go into `gd_project::LoadOptions`), `ops::build`, `ops::clean`, `ops::in
 `gd_project::watch_roots` and skipping the build folder; the command implements
 `ops::ServeHost` (prints the "Serving" line, reloads and rebuilds on change). The
 project's conf.toml warnings are reported by the build (they count for `-W`), not again
-by the command. `cmd/dscc` passes `discussion_builder` as its `make_builder`.
+by the command. `cmd/dsc` passes `discussion_builder` as its `make_builder`.

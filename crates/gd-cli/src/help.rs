@@ -1,16 +1,25 @@
-//! The help texts: the overview and each command's options.
+//! The help texts: the overview and each command's options, and the help of the
+//! commands plugins add, made from what they declare.
 
 use gd_report::ansi::{BOLD_CYAN, styled};
+use gd_report::escape_terminal;
 
+use crate::Extension;
 use crate::version::full_version;
 
-/// The help of `topic` (`None` for the overview), styled when `color`.
-pub(crate) fn help_text(topic: Option<&str>, color: bool) -> String {
-    let mut text = format!(
+/// The first lines of every help text, styled when `color`.
+fn banner(color: bool) -> String {
+    format!(
         "\n  {}  {}\n  Thoughtful documentation, from source to publication.\n\n",
         styled("guidedog", BOLD_CYAN, color),
         full_version()
-    );
+    )
+}
+
+/// The help of `topic` (`None` for the overview), styled when `color`. The overview
+/// and `publish` list the commands plugins add (`added`).
+pub(crate) fn help_text(topic: Option<&str>, color: bool, added: &[Extension]) -> String {
+    let mut text = banner(color);
     text.push_str(match topic {
         None => OVERVIEW,
         Some("convert") => CONVERT,
@@ -22,6 +31,71 @@ pub(crate) fn help_text(topic: Option<&str>, color: bool) -> String {
         Some("publish") => PUBLISH,
         Some(_) => BUILD,
     });
+    match topic {
+        None => {
+            text.push_str(&extension_list("PLUGIN COMMANDS", added.iter()));
+            text.push_str(START);
+        }
+        Some("publish") => {
+            let targets = added.iter().filter(|e| e.info.path[0] == "publish");
+            text.push_str(&extension_list("TARGETS ADDED BY PLUGINS", targets));
+        }
+        Some(_) => {}
+    }
+    text.push_str(GLOBAL);
+    text
+}
+
+/// A section listing `extensions`, with each one's plugin; empty when there are none.
+fn extension_list<'a>(title: &str, extensions: impl Iterator<Item = &'a Extension>) -> String {
+    let mut lines = String::new();
+    for e in extensions {
+        let line = format!("    {:<18} {} ({})\n", e.name(), e.info.summary, e.plugin);
+        lines.push_str(&escape_terminal(&line));
+    }
+    if lines.is_empty() {
+        return String::new();
+    }
+    format!("  {title}\n{lines}\n")
+}
+
+/// The help of a command a plugin adds, from its declaration, styled when `color`.
+pub(crate) fn extension_help(e: &Extension, color: bool) -> String {
+    let mut text = banner(color);
+    let origin = if e.linked { "linked into this program" } else { "registered on this machine" };
+    let mut body = format!(
+        "  USAGE\n    guidedog {} [options]\n\n  {}\n  Added by the plugin {} ({origin}).\n\n",
+        e.name(),
+        e.info.summary,
+        e.plugin
+    );
+    if !e.info.help.is_empty() {
+        for line in e.info.help.lines() {
+            body.push_str(&format!("  {line}\n").replace("  \n", "\n"));
+        }
+        body.push('\n');
+    }
+    if !e.info.options.is_empty() {
+        body.push_str("  OPTIONS\n");
+        for o in &e.info.options {
+            let name =
+                if o.takes_value() { format!("{}={}", o.name, o.value) } else { o.name.clone() };
+            body.push_str(&format!("    {name:<28} {}\n", o.summary));
+        }
+        body.push('\n');
+    }
+    text.push_str(&escape_terminal(&body));
+    text.push_str(GLOBAL);
+    text
+}
+
+/// The help of `word`, a word that begins only commands plugins add: their list.
+pub(crate) fn group_help(word: &str, color: bool, added: &[Extension]) -> String {
+    let mut text = banner(color);
+    text.push_str(&format!("  USAGE\n    guidedog {word} COMMAND [options]\n\n"));
+    let group = added.iter().filter(|e| e.info.path[0] == word);
+    text.push_str(&extension_list("COMMANDS", group));
+    text.push_str(&format!("  Run guidedog {word} COMMAND --help for a command's options.\n\n"));
     text.push_str(GLOBAL);
     text
 }
@@ -38,8 +112,7 @@ const OVERVIEW: &str = "  USAGE
     intl        Update translation catalogs, or count what is translated
 
   PUBLISHING
-    publish     Build and publish with a publisher (publish pages: GitHub Pages)
-    pages       pages workflow: a GitHub Actions workflow that deploys the site
+    publish     Build and publish with a publisher, or a target a plugin adds
     plugin      Register, list, inspect, or run plugin programs
 
   FILES
@@ -47,7 +120,9 @@ const OVERVIEW: &str = "  USAGE
     formats     Show readers, renderers, and the Typst backend
     gds         Manage and build Guidedog's own discussions (as dsc does)
 
-  START HERE
+";
+
+const START: &str = "  START HERE
     guidedog quickstart docs
     guidedog build html docs
     guidedog build --help
@@ -208,23 +283,25 @@ const PLUGIN: &str = "  USAGE
   Registered programs are recorded in plugins.toml in Guidedog's configuration
   folder ($GUIDEDOG_CONFIG_DIR moves it). conf.toml's plugins list selects build
   plugins. Only guidedog publish invokes a publisher. --untrusted disables build
-  plugins. Build-plugin registration runs checks before writing the entry: pass
-  --project=DIR and --config=FILE when the plugin needs project settings. Checks
-  exercise declared hooks, repeatability and cleanup in child processes;
-  --timeout=SECONDS defaults to 60. Passing checks is interoperability evidence,
-  not a sandbox or proof of safe native code.
+  plugins. A plugin may add commands to guidedog's command line: guidedog --help
+  lists them, and plugin inspect shows a plugin's. Build-plugin registration
+  runs checks before writing the entry: pass --project=DIR and --config=FILE
+  when the plugin needs project settings. Checks exercise declared hooks,
+  repeatability and cleanup in child processes; --timeout=SECONDS defaults to
+  60. Passing checks is interoperability evidence, not a sandbox or proof of
+  safe native code.
 
 ";
 
 const PUBLISH: &str = "  USAGE
     guidedog publish --publisher=ID --config=FILE [--dry-run] [--wait=SECONDS]
                      [--timeout=SECONDS] [--verbose]
-    guidedog publish pages [options]      (guided GitHub Pages publication)
+    guidedog publish TARGET [options]     (a target a plugin adds)
 
   Builds the project the publisher's configuration names, as HTML, freezes the
   site, and has the publisher plan and publish it. The publisher is looked up
-  among the plugins linked into this program first (pages is), then in the
-  machine's registry. --dry-run builds and plans, and writes nothing to the
+  among the plugins linked into this program first, then in the machine's
+  registry. --dry-run builds and plans, and writes nothing to the
   target. --timeout bounds each whole request to the publisher (default 300
   seconds); use a value longer than --wait. Ctrl+C stops the publisher; recover
   before retrying an unknown write.
@@ -242,11 +319,11 @@ mod tests {
     #[test]
     fn every_topic_has_its_usage_and_the_global_options() {
         for topic in [None, Some("convert"), Some("build"), Some("intl"), Some("plugin")] {
-            let text = help_text(topic, false);
+            let text = help_text(topic, false, &[]);
             assert!(text.contains("USAGE") && text.contains("GLOBAL OPTIONS"), "{text}");
             assert!(!text.contains('\x1b'));
         }
-        assert!(help_text(None, true).contains('\x1b'));
-        assert!(!help_text(Some("build"), false).contains("--memory=disk"));
+        assert!(help_text(None, true, &[]).contains('\x1b'));
+        assert!(!help_text(Some("build"), false, &[]).contains("--memory=disk"));
     }
 }

@@ -1,6 +1,6 @@
 //! `guidedog gds`: the discussion command on Guidedog's own catalog (prefix `gds`,
 //! folder `docs/gds`), and the builder that publishes catalogs with this program's
-//! engine, which `dscc` uses too.
+//! engine, which `dsc` uses too.
 
 use std::fmt::Write;
 use std::path::PathBuf;

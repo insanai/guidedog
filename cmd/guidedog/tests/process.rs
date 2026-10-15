@@ -71,7 +71,7 @@ fn usage_mistakes_exit_with_status_2_and_a_suggestion() {
     let scratch = Scratch::new("usage");
     let out = guidedog(&["biuld"], &scratch.0, "");
     assert_eq!(out.status.code(), Some(2));
-    assert!(text(&out.stderr).contains("Did you mean `build`?"));
+    assert!(text(&out.stderr).contains("`build`?"));
     let out = guidedog(&["build", "--memory=disk"], &scratch.0, "");
     assert_eq!(out.status.code(), Some(2));
     assert!(text(&out.stderr).contains("WORKING MEMORY ON DISK IS NOT AVAILABLE"));
@@ -150,4 +150,47 @@ fn plugin_run_starts_the_registered_program_with_its_arguments() {
     assert!(out.status.code().is_some());
     let out = guidedog(&["plugin", "run", "missing"], &config, "");
     assert_eq!(out.status.code(), Some(2));
+}
+
+#[test]
+fn the_pages_plugin_adds_its_commands() {
+    let scratch = Scratch::new("pages-commands");
+    let config = scratch.join("config");
+    let out = guidedog(&["--help"], &config, "");
+    let help = text(&out.stdout);
+    assert!(help.contains("PLUGIN COMMANDS") && help.contains("publish pages"), "{help}");
+    let out = guidedog(&["publish", "pages", "--help"], &config, "");
+    assert_eq!(out.status.code(), Some(0));
+    let help = text(&out.stdout);
+    assert!(help.contains("Added by the plugin pages") && help.contains("--repository"), "{help}");
+    // Offline the checksum is a placeholder: the workflow is printed, with status 1.
+    let out = guidedog(&["pages", "workflow", "--offline", "--project=manual"], &config, "");
+    assert_eq!(out.status.code(), Some(1), "{}", text(&out.stderr));
+    assert!(text(&out.stdout).contains("GUIDEDOG_SHA256"), "{}", text(&out.stdout));
+    let out = guidedog(&["pages", "workflo"], &config, "");
+    assert_eq!(out.status.code(), Some(2));
+    assert!(text(&out.stderr).contains("`workflow`?"), "{}", text(&out.stderr));
+    let out = guidedog(&["plugin", "inspect", "pages"], &config, "");
+    assert!(text(&out.stdout).contains("guidedog pages workflow"), "{}", text(&out.stdout));
+}
+
+#[test]
+fn registered_programs_add_commands_that_run_on_the_terminal() {
+    let scratch = Scratch::new("program-commands");
+    let config = scratch.join("config");
+    let program = fixture(&scratch);
+    let project = format!("--project={}", scratch.0.display());
+    let out = guidedog(&["plugin", "register", "shout", &program, "--yes", &project], &config, "");
+    assert_eq!(out.status.code(), Some(0), "{}", text(&out.stderr));
+    let out = guidedog(&["shout", "loud", "hello", "there"], &config, "");
+    assert_eq!(out.status.code(), Some(0), "{}", text(&out.stderr));
+    assert_eq!(text(&out.stdout), "HELLO THERE\n");
+    let out = guidedog(&["shout", "loud"], &config, "");
+    assert_eq!(out.status.code(), Some(3));
+    let out = guidedog(&["shuot"], &config, "");
+    assert!(text(&out.stderr).contains("`shout`?"), "{}", text(&out.stderr));
+    let out = guidedog(&["--help"], &config, "");
+    assert!(text(&out.stdout).contains("shout loud"), "{}", text(&out.stdout));
+    let out = guidedog(&["plugin", "inspect", "shout"], &config, "");
+    assert!(text(&out.stdout).contains("guidedog shout loud"), "{}", text(&out.stdout));
 }

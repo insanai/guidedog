@@ -11,6 +11,7 @@ use crate::args::{Word, Words, command_word, no_value, positive, unknown_option,
 use crate::args::{with_suggestion, without};
 use crate::command::Parsed;
 use crate::command::{ColorMode, Command, ConvertCommand, Diagnostics, FormatsCommand, Output};
+use crate::extension::{Extension, first_words, parse_extension};
 
 /// Every command word, for the help text and "Did you mean".
 pub(crate) const COMMANDS: &[&str] = &[
@@ -24,30 +25,16 @@ pub(crate) const COMMANDS: &[&str] = &[
     "formats",
     "gds",
     "publish",
-    "pages",
     "plugin",
 ];
 
 /// The options that may come before the command word and take the next word as value.
-const GLOBAL_VALUES: &[&str] = &["--color", "--diagnostics", "--typst", "--format"];
+pub(crate) const GLOBAL_VALUES: &[&str] = &["--color", "--diagnostics", "--typst", "--format"];
 
-/// The words of `publish` and the guided `publish pages` that take the next word as
-/// value, so that `--publisher pages` is not taken for `publish pages`.
-const PUBLISH_VALUES: &[&str] = &[
-    "--publisher",
-    "--config",
-    "--wait",
-    "--timeout",
-    "--color",
-    "--diagnostics",
-    "--repository",
-    "--project",
-    "--branch",
-    "--profile",
-    "--client-id",
-    "--guidedog",
-    "--credential",
-];
+/// The options of `publish` that take the next word as value, so that `--publisher
+/// pages` is not taken for the target `publish pages` (targets declare their own).
+pub(crate) const PUBLISH_VALUES: &[&str] =
+    &["--publisher", "--config", "--wait", "--timeout", "--color", "--diagnostics"];
 
 /// The largest `--stack-kib` of a conversion: what a thread of the command's stack
 /// (`gd_host::WORKER_STACK_BYTES`, the stack cmd/guidedog runs on) holds; 6144 KiB.
@@ -55,44 +42,69 @@ pub(crate) fn max_stack_kib() -> usize {
     gd_host::stack_budget_limit(gd_host::WORKER_STACK_BYTES) >> 10
 }
 
-/// Reads a command line (without the program name) into the command it asks for. Never
-/// fails: a mistake is returned as the command's problem, beside the reporting options
-/// read so far, so that it is reported as `--diagnostics` asks.
+/// Reads a command line (without the program name) into the command it asks for, with
+/// guidedog's own commands only. Never fails: a mistake is returned as the command's
+/// problem, beside the reporting options read so far, so that it is reported as
+/// `--diagnostics` asks.
 pub fn parse_command(args: &[String]) -> Parsed {
+    parse_command_with(args, &[])
+}
+
+/// [`parse_command`] knowing the commands plugins add ([`crate::extensions`]): a word
+/// guidedog does not know, or a `publish` target, names one of them.
+pub fn parse_command_with(args: &[String], extensions: &[Extension]) -> Parsed {
     let mut output = prescan_output(args);
-    let command = parse_into(args, &mut output);
+    let command = parse_into(args, extensions, &mut output);
     Parsed { output, command }
 }
 
-fn parse_into(args: &[String], output: &mut Output) -> Result<Command, Problem> {
+fn parse_into(
+    args: &[String],
+    extensions: &[Extension],
+    output: &mut Output,
+) -> Result<Command, Problem> {
     let Some((at, word)) = command_word(args, GLOBAL_VALUES) else {
         return parse_global(args, output);
     };
+    if (word == "publish" || !COMMANDS.contains(&word))
+        && let Some(found) = parse_extension(args, word, extensions)
+    {
+        return found;
+    }
     let rest = without(args, at);
     match word {
         "gds" => Ok(Command::Gds(rest)),
         "plugin" => crate::parse_plugin::parse_plugin(&rest, output),
-        "publish" => match command_word(&rest, PUBLISH_VALUES) {
-            Some((at, "pages")) => Ok(Command::PublishPages(without(&rest, at))),
-            _ => crate::parse_plugin::parse_publish(&rest, output),
-        },
-        "pages" => parse_pages(&rest),
+        "publish" => crate::parse_plugin::parse_publish(&rest, output),
         "convert" => parse_convert(&rest, output),
         "formats" => parse_formats(&rest, output),
         "quickstart" | "build" | "serve" | "clean" | "migrate" | "intl" => {
             crate::parse_project::parse_project(word, &rest, output)
         }
-        _ => Err(usage(
-            "UNKNOWN COMMAND",
-            format!("`{word}` is not a guidedog command."),
-            with_suggestion(
-                "Use quickstart, build, serve, clean, migrate, intl, convert, formats, gds, \
-                 publish, pages, or plugin; see guidedog --help.",
-                word,
-                COMMANDS.iter().copied(),
-            ),
-        )),
+        _ => Err(unknown_command(word, extensions)),
     }
+}
+
+/// The problem of a command word neither guidedog nor a plugin knows, with the closest
+/// of both.
+fn unknown_command(word: &str, extensions: &[Extension]) -> Problem {
+    let added = first_words(extensions);
+    let hint = if added.is_empty() {
+        "Use quickstart, build, serve, clean, migrate, intl, convert, formats, gds, publish, \
+         or plugin; see guidedog --help."
+            .to_string()
+    } else {
+        format!(
+            "See guidedog --help for its commands and the ones plugins add ({}).",
+            added.join(", ")
+        )
+    };
+    let candidates = COMMANDS.iter().copied().chain(added.iter().copied());
+    usage(
+        "UNKNOWN COMMAND",
+        format!("`{word}` is not a guidedog command."),
+        with_suggestion(&hint, word, candidates),
+    )
 }
 
 /// `--color` and `--diagnostics` wherever they are, so that a mistake found before them
@@ -208,26 +220,6 @@ fn parse_global(args: &[String], output: &mut Output) -> Result<Command, Problem
     } else {
         Command::Help(None)
     })
-}
-
-/// `pages workflow ...`; `pages` has no other command in guidedog.
-fn parse_pages(rest: &[String]) -> Result<Command, Problem> {
-    match command_word(rest, &[]) {
-        Some((at, "workflow")) => Ok(Command::PagesWorkflow(without(rest, at))),
-        found => {
-            let word = found.map_or("", |(_, w)| w);
-            Err(usage(
-                "UNKNOWN PAGES COMMAND",
-                format!("guidedog pages has no command `{word}`."),
-                with_suggestion(
-                    "Use guidedog pages workflow, or guidedog publish pages; the other \
-                     GitHub Pages commands are guidedog-pages's.",
-                    word,
-                    ["workflow"],
-                ),
-            ))
-        }
-    }
 }
 
 /// `guidedog formats [--format=table|json] [--typst=PATH]`.

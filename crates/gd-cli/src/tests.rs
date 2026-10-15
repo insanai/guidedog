@@ -68,7 +68,6 @@ fn unknown_commands_and_options_suggest_the_closest() {
     assert!(problem(&["build", "htm"]).hint.contains("Did you mean `html`?"));
     assert!(problem(&["intl", "stats"]).hint.contains("Did you mean `stat`?"));
     assert!(problem(&["plugin", "lsit"]).hint.contains("Did you mean `list`?"));
-    assert!(problem(&["pages", "workflo"]).hint.contains("Did you mean `workflow`?"));
     assert!(problem(&["convert", "a.rst", "--to=hmtl", "-o", "x"]).hint.contains("`html`"));
     assert_eq!(problem(&["--color=pink"]).title, "INVALID COLOR MODE");
     assert_eq!(problem(&["formats", "--format=xml"]).title, "INVALID OUTPUT FORMAT");
@@ -497,21 +496,9 @@ fn publish_needs_a_publisher_and_its_configuration() {
         problem(&["publish", "--wait=x", "--publisher=a", "--config=b"]).title,
         "NOT A NUMBER OF SECONDS"
     );
-    // `publish pages` is the guided flow; `--publisher pages` is not.
-    let Ok(Command::PublishPages(rest)) =
-        parse(&["publish", "--config", "p.toml", "pages", "--yes"])
-    else {
-        panic!()
-    };
-    assert_eq!(rest, words(&["--config", "p.toml", "--yes"]));
-    assert!(matches!(
-        parse(&["publish", "--publisher", "pages", "--config=c"]),
-        Ok(Command::Publish(_))
-    ));
-    let Ok(Command::PagesWorkflow(rest)) = parse(&["pages", "workflow", "--check"]) else {
-        panic!()
-    };
-    assert_eq!(rest, words(&["--check"]));
+    // Without a plugin that adds it, `publish pages` is no target.
+    assert_eq!(problem(&["publish", "pages"]).title, "UNKNOWN PUBLISH TARGET");
+    assert_eq!(problem(&["pages", "workflow"]).title, "UNKNOWN COMMAND");
     let Ok(Command::Gds(rest)) = parse(&["--color=never", "gds", "list", "--state=draft"]) else {
         panic!()
     };

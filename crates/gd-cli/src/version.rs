@@ -93,7 +93,6 @@ mod tests {
         assert!(parts.iter().all(|p| !p.is_empty() && p.bytes().all(|b| b.is_ascii_digit())));
         assert!(full_version().starts_with(VERSION));
         assert_eq!(gd_discussion::command::VERSION, VERSION);
-        assert_eq!(gd_pages::VERSION, VERSION);
     }
 
     #[test]

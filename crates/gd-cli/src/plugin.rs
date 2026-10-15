@@ -230,11 +230,12 @@ fn inspect(
     let Some(e) = machine.find(id) else {
         if let Some(plugin) = linked.find(id) {
             let (version, name) = linked_identity(plugin);
-            let text = format!(
+            let mut text = format!(
                 "  Kind          {} plugin, linked into this program\n  ID            {id}\n  \
                  Name          {name}\n  Version       {version}\n",
                 kind(plugin)
             );
+            text.push_str(&commands_text(plugin.commands()));
             console.print(&gd_report::escape_terminal(&text));
             return Ok(0);
         }
@@ -259,10 +260,22 @@ fn inspect(
         capabilities.join(", "),
         e.registered
     ));
+    text.push_str(&commands_text(&e.commands));
     console.print(&gd_report::escape_terminal(&text));
     gd_plugins::verify_entry(e)?;
     console.print("  The program on disk is the one registered.\n");
     Ok(0)
+}
+
+/// The `Commands` lines of an inspection: each command the plugin adds to the command
+/// line, with its summary; nothing when it adds none.
+fn commands_text(commands: &[gd_plugins::CommandInfo]) -> String {
+    let mut text = String::new();
+    for (i, c) in commands.iter().enumerate() {
+        let label = if i == 0 { "Commands" } else { "" };
+        text.push_str(&format!("  {label:<13} guidedog {}: {}\n", c.name(), c.summary));
+    }
+    text
 }
 
 /// The problem of an ID nothing is registered as.

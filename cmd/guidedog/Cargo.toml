@@ -13,10 +13,11 @@ path = "src/main.rs"
 [dependencies]
 gd-cli = { workspace = true }
 gd-host = { workspace = true }
-
-[dev-dependencies]
-# The fixture plugin program the command-line tests register (examples/).
+# The registry of the plugins linked into guidedog.
 gd-plugins = { workspace = true }
+# The GitHub Pages plugin, linked in: the `pages` publisher, `guidedog publish pages`
+# and `guidedog pages workflow`.
+gd-pages = { workspace = true }
 
 [lints]
 workspace = true

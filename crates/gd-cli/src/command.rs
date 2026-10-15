@@ -86,10 +86,21 @@ pub enum Command {
     Plugin(PluginCommand),
     /// `publish --publisher=ID`.
     Publish(PublishCommand),
-    /// `publish pages ...`: the words after `pages`, for the guided GitHub Pages flow.
-    PublishPages(Vec<String>),
-    /// `pages workflow ...`: the words after `workflow`.
-    PagesWorkflow(Vec<String>),
+    /// A command a plugin adds, such as `pages workflow` or `publish pages`.
+    Extension(ExtensionCommand),
+    /// `WORD --help`, where WORD begins only commands plugins add: their list.
+    ExtensionHelp(String),
+}
+
+/// A command a plugin adds, as a command line names it.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ExtensionCommand {
+    /// The command and the plugin that contributes it.
+    pub extension: crate::Extension,
+    /// The command line without the command's words, for the plugin to read.
+    pub args: Vec<String>,
+    /// `--help` or `-h` was given (before `--`): guidedog shows the command's help.
+    pub help: bool,
 }
 
 /// `guidedog formats`.

@@ -382,12 +382,23 @@ Converts one file, or standard input, without a project or configuration:
    guidedog convert guide.md --to pdf --output guide.pdf
    guidedog convert guide.typ --output guide.pdf
    cat document.md | guidedog convert - --from commonmark --to html --output -
+   guidedog convert page.md --from myst --output page.rst
 
 The input format comes from ``--from`` or the input's suffix: ``.rst`` and ``.rest`` are
-reStructuredText, ``.md`` and ``.markdown`` CommonMark, ``.typ`` Typst. A converted
-Markdown file is plain CommonMark 0.31.2; MyST belongs to projects. The output format
-comes from ``--to`` or the output's suffix (``.html``, ``.htm``, ``.pdf``). Only the
-options below apply to ``convert``.
+reStructuredText, ``.md`` and ``.markdown`` CommonMark, ``.typ`` Typst. A Markdown file is
+plain CommonMark 0.31.2 unless ``--from myst`` reads it as MyST with the Sphinx layer, so
+roles such as ``{doc}`` and ``{ref}`` and directives such as ``{note}`` are understood;
+``--from sphinx`` likewise reads reStructuredText with Sphinx's directives, roles, and
+domains. The output format comes from ``--to`` or the output's suffix (``.html``,
+``.htm``, ``.pdf``, ``.rst``, ``.rest``). Only the options below apply to ``convert``.
+
+``--to rst`` writes reStructuredText with Guidedog's own writer (the ``rst`` renderer):
+paragraphs wrapped at 92 columns, one section adornment per level (``=``, ``-``, ``~``,
+``^``, ...), roles, cross-references, and directives kept as Sphinx writes them. It reads
+the input without smart quotes, so quotes and dashes stay as written. What
+reStructuredText cannot express exactly (a hard line break, an image inside text, a link
+title) is written as closely as it allows and reported as a note. Typst input cannot be
+converted to reStructuredText.
 
 .. list-table:: Options of convert
    :header-rows: 1
@@ -397,11 +408,11 @@ options below apply to ``convert``.
      - Meaning
    * - ``-o FILE``, ``--output=FILE``
      - The destination, or ``-`` for standard output. Required.
-   * - ``--from=rst|commonmark|typst``
+   * - ``--from=rst|sphinx|commonmark|myst|typst``
      - The input format (``restructuredtext``, ``md``, ``markdown`` and ``typ`` are
        accepted spellings).
-   * - ``--to=html|pdf``
-     - The output format.
+   * - ``--to=html|pdf|rst``
+     - The output format (``restructuredtext`` is an accepted spelling).
    * - ``--emit-typst=FILE``
      - Also write the generated Typst source (not for Typst input).
    * - ``--force``

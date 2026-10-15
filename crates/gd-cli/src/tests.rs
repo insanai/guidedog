@@ -131,6 +131,22 @@ fn convert_options_are_read_and_formats_resolved() {
 }
 
 #[test]
+fn convert_writes_restructuredtext_from_myst_or_sphinx() {
+    let Ok(Command::Convert(c)) = parse(&["convert", "a.md", "--from=myst", "-o", "a.rst"]) else {
+        panic!("not convert");
+    };
+    assert_eq!((c.from, c.to), (Format::Myst, Target::Rst));
+    let Ok(Command::Convert(c)) =
+        parse(&["convert", "a.rst", "--from", "sphinx", "--to", "rst", "-o", "-"])
+    else {
+        panic!("not convert");
+    };
+    assert_eq!((c.from, c.to), (Format::Sphinx, Target::Rst));
+    let refused = problem(&["convert", "a.typ", "-o", "a.rst"]);
+    assert_eq!(refused.title, "TYPST CANNOT BE WRITTEN AS RESTRUCTUREDTEXT");
+}
+
+#[test]
 fn convert_usage_problems_explain_themselves() {
     assert_eq!(problem(&["convert"]).title, "CONVERT NEEDS ONE INPUT");
     assert_eq!(problem(&["convert", "a", "b", "-o", "x.html"]).title, "CONVERT NEEDS ONE INPUT");

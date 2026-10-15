@@ -24,6 +24,10 @@ pub enum Format {
     Rst,
     /// CommonMark (reader `commonmark`).
     Commonmark,
+    /// MyST Markdown (reader `myst`; the read options carry the Sphinx layer).
+    Myst,
+    /// reStructuredText with the Sphinx layer (reader `sphinx`).
+    Sphinx,
     /// Native Typst, compiled as it is.
     Typst,
 }
@@ -36,6 +40,32 @@ pub enum Target {
     Html,
     /// A PDF document (renderer `typst`, then the Typst compiler).
     Pdf,
+    /// reStructuredText source (renderer `rst`), written as text like HTML.
+    Rst,
+}
+
+impl Format {
+    /// The id of the reader of the format; `None` for native Typst, which is compiled.
+    pub fn reader(self) -> Option<&'static str> {
+        match self {
+            Format::Rst => Some("rst"),
+            Format::Commonmark => Some("commonmark"),
+            Format::Myst => Some("myst"),
+            Format::Sphinx => Some("sphinx"),
+            Format::Typst => None,
+        }
+    }
+}
+
+impl Target {
+    /// The id of the renderer that writes the target (PDF goes through Typst).
+    pub fn renderer(self) -> &'static str {
+        match self {
+            Target::Html => "html",
+            Target::Pdf => "typst",
+            Target::Rst => "rst",
+        }
+    }
 }
 
 /// One conversion of `guidedog convert`. Everything is borrowed for the call; fill it
@@ -133,12 +163,12 @@ struct Input {
     root: PathBuf,
 }
 
-/// Converts one file to a published HTML or PDF artifact: reads the input within
-/// `MAX_SOURCE_BYTES`, converts it with `registry` (readers `rst`/`commonmark`,
-/// renderers `html`/`typst`) and includes confined to the roots, runs Typst for PDF,
-/// and publishes atomically, or returns the bytes for `"-"`. The budget bounds what the
-/// route holds: the source, its includes, and the PDF the embedded compiler returns.
-/// A failure leaves any existing output unchanged.
+/// Converts one file to a published HTML, PDF, or reStructuredText artifact: reads the
+/// input within `MAX_SOURCE_BYTES`, converts it with `registry` (the readers and
+/// renderers `Format::reader` and `Target::renderer` name) and includes confined to the
+/// roots, runs Typst for PDF, and publishes atomically, or returns the bytes for `"-"`.
+/// The budget bounds what the route holds: the source, its includes, and the PDF the
+/// embedded compiler returns. A failure leaves any existing output unchanged.
 pub fn convert_artifact(registry: &Registry, req: &ArtifactRequest<'_>) -> ArtifactResult {
     let budget = Budget::new(if req.budget == 0 { DEFAULT_BUDGET } else { req.budget });
     let ledger = Ledger::new(&budget);
@@ -153,8 +183,8 @@ pub fn convert_artifact(registry: &Registry, req: &ArtifactRequest<'_>) -> Artif
     let files = Files::new(roots).with_ledger(&ledger);
     let request = Request {
         source: Source { name: &input.file.canonical, text: &input.file.text },
-        reader: if req.from == Format::Rst { "rst" } else { "commonmark" },
-        renderer: if req.to == Target::Html { "html" } else { "typst" },
+        reader: req.from.reader().unwrap_or("rst"),
+        renderer: req.to.renderer(),
         read: req.read,
         render: req.render,
         policy: req.policy,
@@ -179,7 +209,7 @@ pub fn convert_artifact(registry: &Registry, req: &ArtifactRequest<'_>) -> Artif
         return ArtifactResult::failed(problem, reports);
     }
     match req.to {
-        Target::Html => deliver(req, generated.into_bytes(), reports),
+        Target::Html | Target::Rst => deliver(req, generated.into_bytes(), reports),
         Target::Pdf => compile_generated(req, &session, &generated, &input.root, &ledger, reports),
     }
 }
@@ -291,6 +321,17 @@ fn compile_generated(
 
 /// Compiles native Typst input to PDF or HTML.
 fn native_typst(req: &ArtifactRequest<'_>, input: &Input, ledger: &Ledger<'_>) -> ArtifactResult {
+    if req.to == Target::Rst {
+        let problem = Problem::new(
+            "host.typst-to-rst",
+            "TYPST CANNOT BE WRITTEN AS RESTRUCTUREDTEXT",
+            req.input,
+            "Native Typst input is compiled by Typst; Guidedog does not read it into a tree.",
+            "Convert Typst input to html or pdf.",
+            2,
+        );
+        return ArtifactResult::failed(problem, Vec::new());
+    }
     let Some(backend) = gd_typst::locate(req.typst_program) else {
         return ArtifactResult::failed(backend_problem(req.typst_program), Vec::new());
     };
@@ -347,7 +388,7 @@ fn typst_options<'a>(
     let o = &req.typst_options;
     gd_typst::Options {
         target: match target {
-            Target::Html => gd_typst::Target::Html,
+            Target::Html | Target::Rst => gd_typst::Target::Html,
             Target::Pdf => gd_typst::Target::Pdf,
         },
         offline: o.offline,

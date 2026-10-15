@@ -215,6 +215,26 @@ fn plugin_list_shows_the_linked_plugins() {
     assert!(out.contains("Linked into this program") && out.contains("folder"), "{out}");
 }
 
+/// An unresolved reference is reported once, as a warning (Sphinx's rule): the build
+/// succeeds and says so with "1 warning(s)", and -W fails it with a non-zero status.
+#[test]
+fn an_unresolved_reference_is_one_warning() {
+    let root = TempDir::new("unresolved");
+    let none = Registry::default();
+    fs::create_dir_all(root.join("docs")).unwrap();
+    fs::write(root.join("docs/conf.toml"), "project = \"T\"\n").unwrap();
+    fs::write(root.join("docs/index.rst"), "Title\n=====\n\nSee missing_ here.\n").unwrap();
+    let docs = root.arg("docs");
+    let (status, out, err) = run(&["build", "html", &docs, "--color=never"], &none);
+    let all = format!("{out}{err}");
+    assert_eq!(status, 0, "{all}");
+    assert_eq!(all.matches("missing_").count(), 2, "one excerpt and its message: {all}");
+    assert!(all.contains("build succeeded, 0 error(s), 1 warning(s)"), "{all}");
+    let (status, out, err) = run(&["build", "html", &docs, "--color=never", "-W"], &none);
+    assert_ne!(status, 0, "{out}{err}");
+    assert!(format!("{out}{err}").contains("build failed"), "{out}{err}");
+}
+
 /// quickstart and migrate run gd-migrate; build, intl and clean run the project builder.
 #[test]
 fn quickstart_migrate_and_the_project_builder() {

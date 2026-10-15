@@ -6,7 +6,8 @@
 use guidedoc::{ReadOptions, Registry, read_extension};
 
 /// The built-in registry: readers `rst`, `sphinx`, `commonmark` (pure CommonMark 0.31.2)
-/// and `myst` (MyST Markdown); renderers `html`, `typst` (Typst source) and `text`.
+/// and `myst` (MyST Markdown); renderers `html`, `typst` (Typst source), `text`, and
+/// `rst` (reStructuredText).
 ///
 /// Building it allocates two small vectors; keep one per program or thread and reuse it.
 pub fn registry() -> Registry {
@@ -21,6 +22,7 @@ pub fn registry() -> Registry {
             guidedoc_html::RENDERER,
             guidedoc_typst::RENDERER,
             guidedoc_text::RENDERER,
+            guidedoc_rst_writer::RENDERER,
         ],
     }
 }
@@ -47,6 +49,55 @@ pub fn myst_options(settings: &guidedoc_commonmark::Settings) -> ReadOptions<'_>
     ReadOptions { extension: Some(read_extension(settings)), ..ReadOptions::default() }
 }
 
+/// The settings of the built-in readers for converting one file, kept together so
+/// read options can borrow them: Docutils' settings for `rst`, Sphinx's for `sphinx`,
+/// and MyST with the Sphinx layer's directives and roles for `myst`.
+#[derive(Debug, Clone)]
+pub struct ReaderSettings {
+    /// The `rst` reader's settings.
+    pub rst: guidedoc_rst::Settings,
+    /// The `sphinx` reader's configuration.
+    pub sphinx: guidedoc_sphinx::Config,
+    /// The `myst` reader's settings, with the Sphinx layer as their extension.
+    pub myst: guidedoc_commonmark::Settings,
+}
+
+impl Default for ReaderSettings {
+    /// The readers' defaults; MyST reads `{doc}`, `{ref}` and directives as Sphinx does.
+    fn default() -> Self {
+        ReaderSettings::with_config(guidedoc_sphinx::Config::default())
+    }
+}
+
+impl ReaderSettings {
+    /// Settings whose Sphinx layer (for `sphinx` and `myst`) uses `config`.
+    pub fn with_config(config: guidedoc_sphinx::Config) -> Self {
+        let myst = guidedoc_sphinx::myst_settings(config.clone(), Default::default());
+        ReaderSettings { rst: guidedoc_rst::default_settings(), sphinx: config, myst }
+    }
+
+    /// Settings for writing source again (the `rst` renderer): no smart quotes, so the
+    /// text keeps the quotes and dashes it was written with.
+    pub fn for_source() -> Self {
+        let mut config = guidedoc_sphinx::Config::default();
+        config.settings.smart_quotes = guidedoc_rst::SmartQuotes::Off;
+        let mut settings = ReaderSettings::with_config(config);
+        settings.rst.smart_quotes = guidedoc_rst::SmartQuotes::Off;
+        settings
+    }
+
+    /// The read options for reader `reader`, borrowing these settings; other readers
+    /// (`commonmark`) get the defaults.
+    pub fn options(&self, reader: &str) -> ReadOptions<'_> {
+        match reader {
+            "rst" => rst_options(&self.rst),
+            "sphinx" => sphinx_options(&self.sphinx),
+            "myst" => myst_options(&self.myst),
+            _ => ReadOptions::default(),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use guidedoc::{Request, Workspace, convert, convert_text, default_request};
@@ -60,7 +111,7 @@ mod tests {
         for id in ["rst", "sphinx", "commonmark", "myst"] {
             assert!(r.find_reader(id).is_some(), "reader {id}");
         }
-        for id in ["html", "typst", "text"] {
+        for id in ["html", "typst", "text", "rst"] {
             assert!(r.find_renderer(id).is_some(), "renderer {id}");
         }
     }
@@ -76,7 +127,7 @@ mod tests {
             ("myst", "# Title\n\nSome *text*.\n"),
         ];
         for (reader, text) in sources {
-            for renderer in ["html", "typst", "text"] {
+            for renderer in ["html", "typst", "text", "rst"] {
                 let out = convert_text(&mut ws, &r, reader, renderer, text);
                 let out = out.unwrap_or_else(|f| panic!("{reader} -> {renderer}: {f:?}"));
                 assert!(out.contains("Title"), "{reader} -> {renderer}: {out}");
@@ -106,6 +157,19 @@ mod tests {
         request.read = rst_options(&settings);
         let html = convert(&mut ws, &r, &request).expect("converts");
         assert!(html.contains("pep-0008"), "{html}");
+    }
+
+    // MyST with the Sphinx layer converts to reStructuredText with its roles kept.
+    #[test]
+    fn myst_converts_to_restructuredtext() {
+        let r = registry();
+        let mut ws = Workspace::new();
+        let settings = ReaderSettings::for_source();
+        let text = "# Title\n\nSee {doc}`intro` and {ref}`x <lbl>`.\n";
+        let mut request = default_request("page.md", text, "myst", "rst");
+        request.read = settings.options("myst");
+        let rst = convert(&mut ws, &r, &request).expect("converts");
+        assert!(rst.contains(":doc:`intro`") && rst.contains(":ref:`x <lbl>`"), "{rst}");
     }
 
     // Settings meant for one reader are refused by every other, never reinterpreted.

@@ -16,4 +16,4 @@ mod highlight;
 mod registry;
 
 pub use highlight::{HtmlHighlighter, TypstHighlighter};
-pub use registry::{myst_options, registry, rst_options, sphinx_options};
+pub use registry::{ReaderSettings, myst_options, registry, rst_options, sphinx_options};

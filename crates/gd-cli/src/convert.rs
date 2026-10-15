@@ -26,6 +26,14 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
     let mut policy = guidedoc::default_policy();
     policy.raw = c.raw;
     policy.strict = c.strict;
+    // Writing source again keeps the quotes and dashes as written (no smart quotes);
+    // MyST is read with the Sphinx layer, so its roles and directives are understood.
+    let settings = if c.to == gd_host::Target::Rst {
+        guidedoc_defaults::ReaderSettings::for_source()
+    } else {
+        guidedoc_defaults::ReaderSettings::default()
+    };
+    let reader = c.from.reader().unwrap_or("rst");
     let request = ArtifactRequest {
         input: &c.input,
         output: &c.output,
@@ -35,7 +43,7 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
         force: c.force,
         policy,
         limits,
-        read: guidedoc::ReadOptions { today: &today, ..guidedoc::default_read_options() },
+        read: guidedoc::ReadOptions { today: &today, ..settings.options(reader) },
         render: guidedoc::RenderOptions {
             title: &c.title,
             language: &c.lang,
@@ -147,6 +155,7 @@ fn formats_table(
     let _ = write!(out, "\n  {}\n\n", console.section("OUTPUT FORMATS"));
     out.push_str("  html         direct renderer; native Typst uses Typst HTML export\n");
     out.push_str("  pdf          generated or native Typst, compiled by the backend\n");
+    out.push_str("  rst          reStructuredText source, written by the rst renderer\n");
     out.push_str("  typst        intermediate source through --emit-typst\n");
     let _ = write!(out, "\n  {}\n\n", console.section("TYPST BACKEND"));
     let Some(backend) = backend else {

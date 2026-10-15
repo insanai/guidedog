@@ -475,6 +475,13 @@ fn finish_convert(a: ConvertArgs) -> Result<ConvertCommand, Problem> {
             "Remove --emit-typst.",
         ));
     }
+    if c.from == Format::Typst && c.to == Target::Rst {
+        return Err(usage(
+            "TYPST CANNOT BE WRITTEN AS RESTRUCTUREDTEXT",
+            "Typst input is compiled by Typst, not read into a document tree.",
+            "Convert Typst input with --to html or --to pdf.",
+        ));
+    }
     c.raw = raw_policy(&a.raw)?;
     Ok(c)
 }
@@ -506,15 +513,17 @@ pub(crate) fn input_format(from: &str, input: &str) -> Result<Format, Problem> {
     };
     match name {
         "rst" | "restructuredtext" => Ok(Format::Rst),
+        "sphinx" => Ok(Format::Sphinx),
         "md" | "markdown" | "commonmark" => Ok(Format::Commonmark),
+        "myst" => Ok(Format::Myst),
         "typ" | "typst" => Ok(Format::Typst),
         _ => Err(usage(
             "UNKNOWN INPUT FORMAT",
             format!("`{name}` is not an input format."),
             with_suggestion(
-                "Use rst, commonmark, or typst.",
+                "Use rst, sphinx, commonmark, myst, or typst.",
                 name,
-                ["rst", "commonmark", "typst"],
+                ["rst", "sphinx", "commonmark", "myst", "typst"],
             ),
         )),
     }
@@ -526,11 +535,12 @@ pub(crate) fn output_target(to: &str, output: &str) -> Result<Target, Problem> {
         match suffix(output).as_str() {
             ".html" | ".htm" => "html",
             ".pdf" => "pdf",
+            ".rst" | ".rest" => "rst",
             _ => {
                 return Err(usage(
                     "CANNOT TELL THE OUTPUT FORMAT",
                     format!("The suffix of `{output}` names no output format."),
-                    "Add --to html or --to pdf. Use --emit-typst to keep generated Typst.",
+                    "Add --to html, pdf, or rst. Use --emit-typst to keep generated Typst.",
                 ));
             }
         }
@@ -540,13 +550,14 @@ pub(crate) fn output_target(to: &str, output: &str) -> Result<Target, Problem> {
     match name {
         "html" => Ok(Target::Html),
         "pdf" => Ok(Target::Pdf),
+        "rst" | "restructuredtext" => Ok(Target::Rst),
         _ => Err(usage(
             "UNKNOWN OUTPUT FORMAT",
             format!("`{name}` is not an output format."),
             with_suggestion(
-                "Use --to html or --to pdf; --emit-typst writes the intermediate Typst.",
+                "Use --to html, pdf, or rst; --emit-typst writes the intermediate Typst.",
                 name,
-                ["html", "pdf"],
+                ["html", "pdf", "rst"],
             ),
         )),
     }

@@ -44,7 +44,7 @@ const OVERVIEW: &str = "  USAGE
     plugin      Register, list, inspect, or run plugin programs
 
   FILES
-    convert     Convert RST, CommonMark, or Typst to HTML or PDF
+    convert     Convert RST, Markdown, or Typst to HTML, PDF, or RST
     formats     Show readers, renderers, and the Typst backend
     gds         Manage and build Guidedog's own discussions (as dsc does)
 
@@ -73,10 +73,12 @@ const CONVERT: &str = "  USAGE
     guidedog convert guide.md --to pdf --output guide.pdf
     guidedog convert guide.typ --output guide.pdf
     guidedog convert - --from commonmark --to html --output -
+    guidedog convert page.md --from myst --output page.rst
 
   OPTIONS
-    --from=rst|commonmark|typst   Input format; the suffix decides by default
-    --to=html|pdf                 Output format; the output suffix decides
+    --from=rst|sphinx|commonmark|myst|typst
+                                  Input format; the suffix decides by default
+    --to=html|pdf|rst             Output format; the output suffix decides
     -o, --output=FILE|-           Destination, or - for standard output
     --emit-typst=FILE             Also write the generated Typst source
     --force                       Replace an existing output file

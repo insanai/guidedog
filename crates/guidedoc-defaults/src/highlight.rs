@@ -6,7 +6,7 @@
 
 use std::cell::RefCell;
 
-use gd_highlight::{find_lexer, resolve_lexer, write_code_html, write_code_typst, Lexer};
+use gd_highlight::{Lexer, find_lexer, resolve_lexer, write_code_html, write_code_typst};
 use guidedoc::{Emitter, Highlighter};
 
 /// Highlights code blocks as the HTML Pygments writes for Sphinx, with its short CSS

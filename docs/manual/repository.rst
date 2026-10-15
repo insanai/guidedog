@@ -55,8 +55,8 @@ Check and install the archive:
    tar -xzf guidedog-linux-amd64.tar.gz
    sudo install guidedog-linux-amd64/guidedog guidedog-linux-amd64/dsc /usr/local/bin/
 
-The release notes describe each platform's requirements and limits. See the `installation
-guide <howto/install.rst>`__ for the details.
+The release notes describe each platform's requirements and limits. See the :doc:`installation
+guide <howto/install>` for the details.
 
 Build from source
 -----------------
@@ -81,7 +81,7 @@ The workspace is split by responsibility: the engine crates (``guidedoc``, the r
 renderers, ``guidedoc-defaults``) use only the standard library; supporting libraries
 (``gd-toml``, ``gd-json``, ``gd-jinja``, ``gd-highlight``, ``gd-gettext``, ``gd-graphdog``,
 ``gd-typst``, ...) never depend on the engine; the project builder and the command line sit
-above both; the programs are under ``cmd/``. See `Internals <internals/index.rst>`__.
+above both; the programs are under ``cmd/``. See :doc:`Internals <internals/index>`.
 
 Translate with Guidedog
 -----------------------
@@ -99,14 +99,14 @@ Translate with Guidedog
 Translate and review ``msgstr`` values in the PO files. Guidedog extracts POT files, merges
 catalogs, reports progress, and builds each edition. It does not invent translations.
 Commands, paths, code, API names, and reference targets stay unchanged. Only the manual and
-repository overview are translated; API and GDS remain English. See the `manual build
-instructions <howto/maintain-docs.rst>`__ for assembling all editions and PDF books.
+repository overview are translated; API and GDS remain English. See the :doc:`manual build
+instructions <howto/maintain-docs>` for assembling all editions and PDF books.
 
 Extend and publish
 ------------------
 
 Write a build plugin or a publisher with the
-{doc}\ ``step-by-step plugin chapter <plugins>``. A plugin implements one Rust trait; the
+:doc:`step-by-step plugin chapter <plugins>`. A plugin implements one Rust trait; the
 same value is linked into a custom ``guidedog`` binary with ``gd_cli::run_with``, or served
 as an installed program with ``gd_plugins::serve_plugin``. The chapter then follows the real
 GitHub Pages publisher through ownership, credentials, conditional updates and recovery.
@@ -134,22 +134,22 @@ A catalog's ``discussion.toml`` sets its lifecycle states, record types, and num
 ``dsc config`` prints it. ``dsc`` comes in the Guidedog archive and builds with the
 installed ``guidedog``. ``dscc`` is ``dsc`` with Guidedog built in, for a machine with
 nothing else installed. ``guidedog gds`` runs the same commands on Guidedog's own
-``docs/gds``. See `Keep a discussion catalog <howto/discussions.rst>`__.
+``docs/gds``. See :doc:`Keep a discussion catalog <howto/discussions>`.
 
 Read and embed
 --------------
 
--  `Manual <index.rst>`__: tutorials, topics, practical tasks, reference, and internals.
--  `API reference <api/index>`__: generated from the Rust source of the main crates and
+-  :doc:`Manual <index>`: tutorials, topics, practical tasks, reference, and internals.
+-  :doc:`API reference <api/index>`: generated from the Rust source of the main crates and
    included in the manual's PDF appendix.
--  {download}\ ``Engine guide <_static/repository/library-README.md>``: the ``guidedoc``
+-  :download:`Engine guide <_static/repository/library-README.md>`: the ``guidedoc``
    crate's workspaces, requests, adapters, and conversion examples.
--  `Templates <templates.rst>`__: customize HTML with Jinja and books with Typst.
--  {download}\ ``GDS <_static/repository/gds-README.md>``: numbered design records and
+-  :doc:`Templates <templates>`: customize HTML with Jinja and books with Typst.
+-  :download:`GDS <_static/repository/gds-README.md>`: numbered design records and
    implementation decisions.
--  {download}\ ``Discussion library <_static/repository/discussion-README.md>``: the
+-  :download:`Discussion library <_static/repository/discussion-README.md>`: the
    catalogs that ``dsc``, ``dscc``, and ``guidedog gds`` keep.
--  {download}\ ``Beta review <_static/repository/beta-review-20261011.md>``: the review of
+-  :download:`Beta review <_static/repository/beta-review-20261011.md>`: the review of
    the Odin implementation's beta: fixes, verification, support scope.
 
 Guidedoc works in a caller-owned, reusable workspace and returns structured diagnostics. The
@@ -169,11 +169,11 @@ Brunsfeld, Graphviz, the Rust project, and Ginger Bill and the Odin community, i
 language Guidedog was first written.
 
 Guidedog is released under the
-{download}\ ``GNU Affero General Public License v3.0 or later <_static/repository/LICENSE>``
+:download:`GNU Affero General Public License v3.0 or later <_static/repository/LICENSE>`
 (AGPL-3.0-or-later). For other licensing terms, contact the authors.
-{download}\ ``NOTICE <_static/repository/NOTICE>`` says how to reach them and lists the
+:download:`NOTICE <_static/repository/NOTICE>` says how to reach them and lists the
 third-party components, such as the bundled fonts and the Rust crates compiled into the
 programs, that keep their own licenses.
 
 An additional permission allows Guidedog to be linked and distributed with Graphviz; see
-{download}\ ``NOTICE <_static/repository/NOTICE>``.
+:download:`NOTICE <_static/repository/NOTICE>`.

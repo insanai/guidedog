@@ -141,6 +141,12 @@ fn signature_source(g: &mut Generator<'_>, p: &mut Props) -> Option<SignatureSou
     let o = &p.obj;
     let function = o.function.filter(|_| o.kind == ObjectKind::Function);
     match p.obj_type {
+        // autofunction on a class documents it as a callable: its constructor's
+        // signature, as inspect.signature gives it.
+        ObjType::Function | ObjType::Decorator if o.kind == ObjectKind::Class => {
+            let c = o.class?;
+            constructor(g, p, c)
+        }
         ObjType::Function | ObjType::Decorator => {
             let bound = o.wrapper == Wrapper::Classmethod && p.parent.kind == ObjectKind::Class;
             Some(SignatureSource::Function { function: function?, bound, given: o.partial_args })
@@ -284,7 +290,7 @@ fn signature_from_object(g: &mut Generator<'_>, p: &mut Props) -> Option<Formatt
         return Some(Formatted::default());
     }
     let show = g.config.autodoc_typehints.in_signature();
-    let returns = !p.obj_type.is_class();
+    let returns = !p.obj_type.is_class() && p.obj.kind != ObjectKind::Class;
     let mut s = stringify_signature(g, p, function, params, show && returns, show, bound);
     if g.config.strip_signature_backslash {
         s.args = s.args.replace('\\', "\\\\");

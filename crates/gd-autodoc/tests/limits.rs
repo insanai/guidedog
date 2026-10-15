@@ -82,3 +82,15 @@ fn unknown_directives_and_missing_modules_are_reported() {
     let out = run_directive(&[("m.py", "X = 1\n")], request("autodata", "nowhere.X", vec![]));
     assert!(out.has_message("autodoc.import") && out.lines.is_empty());
 }
+
+/// Sphinx documents a class named by `autofunction` as a callable: its constructor's
+/// signature and its own docstring (tests/roots/test-ext-viewcode).
+#[test]
+fn autofunction_documents_a_class_as_a_callable() {
+    let source = "class C:\n    \"\"\"A class.\"\"\"\n\n    \
+                  def __init__(self, a, b=1):\n        \"\"\"Init doc.\"\"\"\n";
+    let out = run_directive(&[("m.py", source)], request("autofunction", "m.C", Vec::new()));
+    assert!(out.messages.is_empty(), "{:?}", out.messages);
+    let text = out.lines.join("\n");
+    assert!(text.contains(".. py:function:: C(a, b=1)\n   :module: m\n\n   A class."), "{text}");
+}

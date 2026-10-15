@@ -141,6 +141,15 @@ pub(crate) fn report_outside(g: &mut Generator<'_>, p: &Props, path: &str) {
 fn function_props(g: &mut Generator<'_>, p: &mut Props) -> bool {
     match p.obj.kind {
         ObjectKind::Function => {}
+        // A class is callable: Sphinx documents it as a function, with its constructor's
+        // signature and its own docstring.
+        ObjectKind::Class => {
+            let Some(c) = p.obj.class else { return false };
+            let class = g.project.class(c);
+            (p.obj_name, p.obj_qualname) = (class.name.to_string(), class.qualname.to_string());
+            p.obj_module = g.project.module(c.module).name.clone();
+            return true;
+        }
         ObjectKind::External => {
             let path = p.obj.path.clone();
             report_outside(g, p, &path);

@@ -23,6 +23,7 @@
 //! Failures are `Problem`s (code, title, message, hint, exit status) or engine `Fail`s
 //! described as reports; nothing here prints except `catch_crash`, the last resort.
 
+#[cfg(feature = "artifact")]
 mod artifact;
 mod budget;
 mod confine;
@@ -37,6 +38,7 @@ mod session;
 mod sys;
 mod workers;
 
+#[cfg(feature = "artifact")]
 pub use artifact::{
     ArtifactRequest, ArtifactResult, Delivered, Format, Target, backend_problem, convert_artifact,
 };

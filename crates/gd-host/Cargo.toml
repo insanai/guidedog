@@ -8,7 +8,14 @@ rust-version.workspace = true
 [dependencies]
 guidedoc = { workspace = true }
 gd-report = { workspace = true }
-gd-typst = { workspace = true }
+# Only `convert_artifact` compiles Typst; crates that just need problems, files or
+# interrupts turn the `artifact` feature off and stay free of the compiler.
+gd-typst = { workspace = true, optional = true }
+
+[features]
+default = ["artifact"]
+# `convert_artifact`: the `guidedog convert` route, which needs the Typst backend.
+artifact = ["dep:gd-typst"]
 
 [lints]
 workspace = true

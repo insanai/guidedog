@@ -1,3 +1,4 @@
+#![cfg(feature = "artifact")]
 //! Sessions, described diagnostics, and the `convert_artifact` route, with toy adapters.
 
 mod common;

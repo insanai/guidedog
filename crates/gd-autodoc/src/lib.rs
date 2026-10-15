@@ -25,6 +25,8 @@
 //! println!("{}", output.lines.join("\n"));
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod config;
 mod dataclasses;
 mod docstrings;
@@ -288,8 +290,9 @@ pub fn document(session: &mut Session, config: &Config, request: &Request) -> Ou
             "autodoc.directive",
             "UNKNOWN AUTODOC DIRECTIVE",
             format!("{} is not one of autodoc's directives.", request.directive),
-            "Use automodule, autoclass, autoexception, autofunction, automethod, \
-             autoattribute, autodata, autoproperty, autodecorator, or autotype.",
+            "Use one of the autodoc directives: automodule, autoclass, autoexception, \
+             autofunction, automethod, autoattribute, autodata, autoproperty, autodecorator, \
+             or autotype.",
         );
         return g.out;
     };

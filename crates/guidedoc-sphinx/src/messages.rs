@@ -11,8 +11,8 @@ pub(crate) const INDEX_ENTRY: Message = Message {
     title: "MALFORMED INDEX ENTRY",
     message: "The index entry {0} does not have the parts its type needs.",
     hint: concat!(
-        "A pair and see/seealso entry need two parts separated by \";\", a triple ",
-        "needs three, for example \"pair: loop; statement\".",
+        "Separate the parts with \";\": a pair and a see/seealso entry need two, a ",
+        "triple needs three, for example \"pair: loop; statement\".",
     ),
 };
 

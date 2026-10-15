@@ -186,7 +186,8 @@ pub(crate) fn parse_json(body: &[u8], depth: usize) -> Result<Value, ()> {
 /// The problem of a call that got no answer, or a redirect.
 pub(crate) fn transfer_problem(r: &Response, path: &str, doing: &str) -> Problem {
     let Some(e) = &r.error else {
-        return problem("pages.github", "GitHub had a problem", path, "No error.", "Retry.");
+        let hint = "Run the same guidedog-pages command again.";
+        return problem("pages.github", "GitHub had a problem", path, "No error.", hint);
     };
     match e.kind {
         ErrorKind::Redirect => problem(

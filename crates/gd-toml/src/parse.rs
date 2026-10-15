@@ -6,6 +6,10 @@ use crate::{Data, Error, ErrorKind, Table, Value, datetime, number};
 /// The deepest nesting of arrays and inline tables [`parse`] accepts.
 pub const MAX_DEPTH: usize = 64;
 
+/// The hint of a parser state that cannot happen: a bug to report.
+const LOST_TABLE: &str =
+    "Report this bug with the TOML file and the output of guidedog --version.";
+
 pub(crate) type Result<T> = std::result::Result<T, Error>;
 
 /// One key of a dotted key path, with where it was written.
@@ -52,7 +56,7 @@ pub fn parse(source: &str) -> Result<Table> {
         } else {
             let at = p.at;
             let table = section_table(&mut root, &section)
-                .ok_or_else(|| p.fail(ErrorKind::Syntax, at, at, "Lost the current table.", ""))?;
+                .ok_or_else(|| p.fail(ErrorKind::Syntax, at, at, "Lost the current table.", LOST_TABLE))?;
             p.key_value(table)?;
         }
         p.end_line()?;

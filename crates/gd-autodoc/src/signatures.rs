@@ -449,7 +449,7 @@ fn preserved_defaults(
                     p.full_name(),
                     q.name
                 ),
-                "Sphinx cannot write this expression back either; it shows its repr.",
+                "Nothing to do: Sphinx cannot write this expression back either; it shows its repr.",
             );
             return None;
         }

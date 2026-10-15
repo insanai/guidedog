@@ -74,4 +74,4 @@ Guidedog is released under the GNU Lesser General Public License v3.0 or later (
 
 Created by Vikrant Rathore, with assistance from Ronak Rathore and Kanak Rathore.
 
-Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max Brunsfeld, Graphviz, the Rust project and its community, and Ginger Bill and the Odin community.
+Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max Brunsfeld, Graphviz, and the Rust project and its community.

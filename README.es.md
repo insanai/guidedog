@@ -137,6 +137,6 @@ Cada crate de `crates/` tiene un README breve con su API y sus decisiones de dis
 
 Creado por **Vikrant Rathore**, con la colaboración de **Ronak Rathore** y **Kanak Rathore**. Se agradecen las contribuciones mediante issues y pull requests. Los créditos usan nombres o identificadores, sin direcciones personales de correo; la identidad de Git se gestiona por separado.
 
-Gracias a Sphinx y Georg Brandl, Docutils y David Goodger, Typst, Tree-sitter y Max Brunsfeld, Graphviz, el proyecto Rust y su comunidad, y Ginger Bill y la comunidad Odin.
+Gracias a Sphinx y Georg Brandl, Docutils y David Goodger, Typst, Tree-sitter y Max Brunsfeld, Graphviz y el proyecto Rust y su comunidad.
 
 Guidedog se distribuye bajo la [Licencia Pública General Reducida de GNU v3.0 o posterior](LICENSE) (LGPL-3.0-or-later), que añade permisos a la [Licencia Pública General de GNU v3.0](COPYING). Para otras condiciones de licencia, contacte con los autores. [NOTICE](NOTICE) explica cómo hacerlo y enumera los componentes de terceros que conservan sus propias licencias, como los crates de Rust y las fuentes incluidas. Un permiso adicional autoriza enlazar y distribuir Guidedog junto con Graphviz; consulte [NOTICE](NOTICE).

@@ -137,6 +137,6 @@ guidedog dsc build
 
 **Vikrant Rathore**가 만들고 **Ronak Rathore**와 **Kanak Rathore**가 개발을 도왔습니다. 이슈와 풀 리퀘스트를 통한 기여를 환영합니다. 문서에는 이름이나 계정 이름만 표기하고 개인 이메일 주소는 공개하지 않습니다. Git 작성자 설정은 별도로 관리합니다.
 
-Sphinx와 Georg Brandl, Docutils와 David Goodger, Typst, Tree-sitter와 Max Brunsfeld, Graphviz, Rust 프로젝트와 그 커뮤니티, 그리고 Ginger Bill과 Odin 커뮤니티에 감사드립니다.
+Sphinx와 Georg Brandl, Docutils와 David Goodger, Typst, Tree-sitter와 Max Brunsfeld, Graphviz, Rust 프로젝트와 그 커뮤니티에 감사드립니다.
 
 Guidedog은 [GNU Lesser General Public License v3.0 이상](LICENSE)(LGPL-3.0-or-later)으로 배포합니다. LGPL은 [GNU General Public License v3.0](COPYING)에 추가 허가를 더한 라이선스입니다. 다른 라이선스 조건이 필요하면 저자에게 문의하세요. 연락 방법과, Rust 크레이트와 포함된 글꼴처럼 각자의 라이선스를 따르는 서드파티 구성 요소 목록은 [NOTICE](NOTICE)에 있습니다. 추가 허가에 따라 Guidedog을 Graphviz와 링크하여 배포할 수 있습니다. 자세한 내용은 [NOTICE](NOTICE)를 참고하세요.

@@ -137,6 +137,6 @@ guidedog dsc build
 
 **Vikrant Rathore** ने इसे बनाया, **Ronak Rathore** और **Kanak Rathore** ने सहयोग दिया। इश्यू और पुल रिक्वेस्ट के ज़रिए योगदान का स्वागत है। दस्तावेज़ में नाम या हैंडल दिए जाते हैं, निजी ईमेल पते नहीं। Git की पहचान संबंधी सेटिंग अलग सँभाली जाती हैं।
 
-Sphinx और Georg Brandl, Docutils और David Goodger, Typst, Tree-sitter और Max Brunsfeld, Graphviz, Rust परियोजना और उसके समुदाय, तथा Ginger Bill और Odin समुदाय का धन्यवाद।
+Sphinx और Georg Brandl, Docutils और David Goodger, Typst, Tree-sitter और Max Brunsfeld, Graphviz तथा Rust परियोजना और उसके समुदाय का धन्यवाद।
 
 Guidedog [GNU Lesser General Public License v3.0 या उसके बाद के संस्करण](LICENSE) (LGPL-3.0-or-later) के अंतर्गत जारी किया गया है, जो [GNU General Public License v3.0](COPYING) में अतिरिक्त अनुमतियाँ जोड़ता है। अन्य लाइसेंस शर्तों के लिए लेखकों से संपर्क करें। संपर्क का तरीका [NOTICE](NOTICE) में दिया गया है, साथ ही उन तृतीय-पक्ष घटकों की सूची भी, जिनके अपने लाइसेंस रहते हैं, जैसे Rust crates और शामिल फ़ॉन्ट। एक अतिरिक्त अनुमति Guidedog को Graphviz के साथ लिंक करने और वितरित करने देती है; देखें [NOTICE](NOTICE)।

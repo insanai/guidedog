@@ -137,6 +137,6 @@ Jedes Crate unter `crates/` hat ein kurzes README mit seiner API und seinen Desi
 
 Erstellt von **Vikrant Rathore**, unterstützt von **Ronak Rathore** und **Kanak Rathore**. Beiträge über Issues und Pull Requests sind willkommen. Autorenangaben verwenden Namen oder Handles, keine persönlichen E-Mail-Adressen. Git-Identitätseinstellungen werden separat verwaltet.
 
-Dank an Sphinx und Georg Brandl, Docutils und David Goodger, Typst, Tree-sitter und Max Brunsfeld, Graphviz, das Rust-Projekt und seine Gemeinschaft sowie Ginger Bill und die Odin-Gemeinschaft.
+Dank an Sphinx und Georg Brandl, Docutils und David Goodger, Typst, Tree-sitter und Max Brunsfeld, Graphviz und das Rust-Projekt und seine Gemeinschaft.
 
 Guidedog steht unter der [GNU Lesser General Public License v3.0 oder neuer](LICENSE) (LGPL-3.0-or-later), die die [GNU General Public License v3.0](COPYING) um zusätzliche Erlaubnisse ergänzt. Für andere Lizenzbedingungen wenden Sie sich an die Autoren. [NOTICE](NOTICE) beschreibt, wie man sie erreicht, und nennt die Komponenten Dritter, etwa die Rust-Crates und die mitgelieferten Schriften, die ihre eigenen Lizenzen behalten. Eine zusätzliche Erlaubnis gestattet, Guidedog zusammen mit Graphviz zu linken und weiterzugeben; siehe [NOTICE](NOTICE).

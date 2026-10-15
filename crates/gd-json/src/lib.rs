@@ -17,6 +17,7 @@
 
 #![forbid(unsafe_code)]
 
+pub mod base64;
 mod error;
 mod parse;
 mod write;

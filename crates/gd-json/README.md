@@ -43,6 +43,7 @@ let cfg: MyConfig = gd_json::from_value(v)?;          // any serde Deserialize t
 | `parse(text)`, `parse_with(text, &Limits { max_depth, allow_duplicate_keys })` | refuses duplicates and nesting > `MAX_DEPTH` (127); skips a BOM |
 | `to_string`, `to_string_pretty`, `write_value`, `write_pretty(out, v, level)`, `write_string` | `<`, `>`, `&`, U+2028/9 escaped so output embeds in `<script>` |
 | `from_value::<T>(v)`, `to_value(&t)` | serde conversions; failures are `ErrorKind::Data` without position |
+| `base64::encode(bytes)`, `encode_into(out, bytes)`, `decode(text)`, `decoded_len(text)` | standard padded Base64 (RFC 4648) for bytes in JSON; `decode` gives `None` on bad input |
 | `Error { kind, message, hint, offset, end, line, column }`, `e.report(path, source)` | Elm-style; kinds `Syntax`, `Eof`, `String`, `Number`, `Duplicate`, `Depth`, `Data` |
 
 ## Design notes

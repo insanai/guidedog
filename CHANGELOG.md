@@ -17,11 +17,11 @@ existing projects build as before.
 - **Embedded Typst by default.** The Typst 0.15.1 compiler is a regular dependency of
   `gd-typst` (the `embedded` feature); an installed `typst` program remains the fallback.
   tree-sitter and its Python grammar are ordinary dependencies.
-- **Graphviz from the system.** `gd-graphdog` links the system's `libgvc` and `libcgraph`.
-  Install Graphviz (`libgvc6`, `graphviz`, or Homebrew's `graphviz`) to run the release
-  programs, and its development files to build them. HTTP and HTTPS are built in
-  (`ureq` with `rustls` and Mozilla's root certificates): neither libcurl nor the `curl`
-  program is needed.
+- **Self-contained release programs.** Graphviz 16.1.0 and Expat 2.7.1 are linked
+  statically into `guidedog` and `graphdog` (`cargo xtask graphviz` builds them from
+  pinned sources); a build from source without `GUIDEDOG_GRAPHVIZ_STATIC` links the
+  system's Graphviz instead. HTTP and HTTPS are built in (`ureq` with `rustls` and
+  Mozilla's root certificates): neither libcurl nor the `curl` program is needed.
 - **Reusable crates.** The engine (`guidedoc`), the readers and renderers
   (`guidedoc-rst`, `guidedoc-commonmark`, `guidedoc-sphinx`, `guidedoc-html`,
   `guidedoc-typst`, `guidedoc-text`), and the libraries (`gd-*`) are separate crates with
@@ -46,8 +46,12 @@ existing projects build as before.
   guidedog's own, so nothing else needs to be installed, and there is no `dscc`
   archive. Catalogs, records, locks and journals are unchanged.
 - **`graphdog`** ships in the `guidedog` archive: a `dot`-compatible renderer for DOT to
-  SVG, PNG or laid-out DOT, with Elm-style errors.
+  SVG or laid-out DOT (PNG too when built against a system Graphviz), with Elm-style
+  errors.
 - **Examples** are Cargo examples: `cargo run -p guidedoc-examples --example hello`.
+- **Licence.** Guidedog is now released under the GNU Lesser General Public License
+  v3.0 or later (LGPL-3.0-or-later): `LICENSE` holds its text and `COPYING` the GNU GPL
+  it builds on. NOTICE keeps the additional permission to link Graphviz (EPL-2.0).
 - **Releases** cover Linux (x86-64, ARM64) and macOS (Apple silicon, Intel). Windows
   has no release archive in this version.
 

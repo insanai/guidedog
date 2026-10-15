@@ -7,13 +7,12 @@ beside it.
 
 ## 1.0.0-beta.1 - 2026-10-15
 
-First beta release of the Rust workspace in `insanai/guidedog`.
+First 1.0 beta. Build documentation websites and PDF books from one set of source files.
 
-- Rust 1.99 toolchain, pinned for reproducible release builds.
 - Native Linux and macOS archives for x86-64 and ARM64, and a Windows x86-64 ZIP with the Graphviz runtime bundled.
 - One `guidedog` executable in every platform archive, with linked Pages and discussion plugins and the `gd-graphdog` Graphviz library, with embedded Typst, notices, build metadata, SHA-256 checksums and build provenance.
 - Guidedog builds its own website, multilingual manual, API reference and discussion catalog for GitHub Pages.
-- The official Homebrew tap installs the new Rust release.
+- The official Homebrew tap installs the release and follows new versions automatically after checksum and installation checks.
 - Prerelease tags publish GitHub prereleases and do not replace the latest stable release.
 
 ## 0.7.0 — 2026-10-15

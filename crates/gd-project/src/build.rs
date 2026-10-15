@@ -12,11 +12,12 @@ use gd_env::{
 use gd_host::{Budget, Problem};
 use gd_intl::Intl;
 use gd_outputs::{Generation, GenerationOptions};
-use gd_read::ReadContext;
+use gd_read::{ReadContext, ReadingTime};
 use gd_report::Report;
 use gd_resolve::{BuildView, Dates, Intersphinx, IntersphinxOptions, Tables};
 use guidedoc::{Limits, Policy};
 
+use crate::duration;
 use crate::finish::finish;
 use crate::limits::{build_limits, trusted_policy, untrusted_policy};
 use crate::project::Project;
@@ -156,10 +157,13 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
         store,
         settings,
     };
-    let env = read(s, &parts, log)?;
+    let (env, times) = read(s, &parts, log)?;
+    duration::report_durations(config, &times, &mut log.result, &mut log.reports);
+    log.reports.extend(gd_conf::LinkcodeSite::of(config).branch_report(config));
     let tables = gd_resolve::resolve(config, &env, &parts.intl.ui, &mut log.reports);
     log.result.reached = BuildStage::Writing;
     write(s, &parts, &env, &tables, &mut generation, log)?;
+    duration::write_durations_json(config, &times, &mut generation)?;
     log.result.reached = BuildStage::Written;
     Ok(Written { generation, env, store: parts.store })
 }
@@ -197,8 +201,13 @@ fn read_context<'a>(s: &'a Setup<'_>, parts: &'a Parts<'_>) -> ReadContext<'a> {
 }
 
 /// Reads the documents (only those that changed since the saved environment, unless
-/// `fresh`), counting them; the documents' reports join the build's.
-fn read(s: &Setup<'_>, parts: &Parts<'_>, log: &mut Log) -> Result<Environment, Problem> {
+/// `fresh`), counting them; the documents' reports join the build's. Returns the
+/// environment and how long each document parsed took.
+fn read(
+    s: &Setup<'_>,
+    parts: &Parts<'_>,
+    log: &mut Log,
+) -> Result<(Environment, Vec<ReadingTime>), Problem> {
     let ctx = read_context(s, parts);
     let path = gd_env::environment_path(parts.config);
     let previous = gd_env::load_environment(&path, ctx.settings, s.options.fresh, &s.budget)?;
@@ -215,7 +224,7 @@ fn read(s: &Setup<'_>, parts: &Parts<'_>, log: &mut Log) -> Result<Environment, 
     for doc in &outcome.env.docs {
         log.reports.extend(doc.reports.iter().cloned());
     }
-    Ok(outcome.env)
+    Ok((outcome.env, outcome.reading_times))
 }
 
 /// Reads again, with a warning, each document whose cached object the engine cannot load

@@ -143,6 +143,9 @@ fn report_build(console: &mut Console<'_>, verbose: u32, result: &BuildResult) -
     if let Some(write) = write {
         console.step("write", &write);
     }
+    for (step, text) in &result.steps {
+        console.step(step, text);
+    }
     if notes > 0 {
         console.step("notes", &format!("{notes} not shown; -v shows them"));
     }

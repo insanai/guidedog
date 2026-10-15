@@ -20,6 +20,7 @@
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod build;
+mod duration;
 mod finish;
 mod limits;
 mod project;

@@ -28,6 +28,10 @@ let roots = gd_project::watch_roots(&project.config); // for gd_serve::Watch
 | `build_limits`, `trusted_policy`, `untrusted_policy` | limits and content policy of a build |
 | `BuildOptions`, `BuildResult`, `BuildStage`, `BuilderKind`, `Jobs` | re-exported from gd-env |
 
+With sphinx.ext.duration listed, a build adds the reading times to `BuildResult::steps`,
+warns `duration.limit`, and writes `duration_write_json` into the output
+(`duration.rs`); `linkcode.branch` is checked once per build.
+
 Problems: `core.registry.invalid` (load), `build.stack`, `build.reader`, `build.read`
 (a document could not be read), `build.warnings` (`-W`), `plugins.untrusted`, and
 those of the crates below (`host.budget`, `build.output`, `typst.*`, ...).

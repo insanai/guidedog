@@ -1,0 +1,18 @@
+[package]
+name = "gd-pages"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Publishes Guidedog sites to GitHub Pages from a local machine (GDS 0008)."
+
+[dependencies]
+gd-plugins.workspace = true
+gd-fetch.workspace = true
+gd-git.workspace = true
+gd-toml.workspace = true
+gd-json.workspace = true
+gd-report.workspace = true
+
+[lints]
+workspace = true

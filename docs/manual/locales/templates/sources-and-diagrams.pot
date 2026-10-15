@@ -1,0 +1,441 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-15 09:09+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: Guidedog translation contributors\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../sources-and-diagrams.rst:1
+msgid "Source pages, source links and class diagrams"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:4
+msgid "Five of Sphinx's built-in extensions connect a manual to the code it describes and to the build that makes it. ``viewcode`` writes a highlighted copy of each documented module and links it with the descriptions. ``linkcode`` links each description to its source on the web. ``inheritance_diagram`` draws class graphs. ``duration`` reports which documents are slow to read. ``imgconverter`` makes sure every image reaches the book."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:6
+msgid "We turn them on as in Sphinx, by name:"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:17
+msgid "The first three read Python source with the same scan that autodoc uses (:doc:`autodoc`). Nothing is imported, and no program runs. The scan finds a module below ``autodoc_source_paths``, its classes and functions, their bases, and the lines each one spans. A description written by hand with ``py:class`` or ``py:function`` is found as well as one that autodoc wrote, as long as its module is below those folders."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:21
+msgid "Python source is read by the source scan while documents are read. The scan gives each Python description its file and lines, and each inheritance diagram its classes. When pages are written, the lines become source links and source pages, and the classes become a Graphviz drawing whose nodes link to the descriptions."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:21
+msgid "Reading finds where each object is defined; writing turns that into links, pages and drawings."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:42
+msgid "Every Python file the scan reads is a dependency of the document that needed it. When we edit a module, the documents that describe it are read again, and their links, source pages and diagrams follow the edit."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:44
+msgid "Source pages: viewcode"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:47
+msgid "With ``sphinx.ext.viewcode`` listed, each Python description gets a ``[source]`` link after its signature. The link leads to a page that shows the module's source, highlighted like any code block. On that page each described class and function sits in a block with a ``[docs]`` link back to its description."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:49
+msgid "For this module, ``src/shapes.py``:"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:60
+msgid "the description of ``shapes.Square`` links to ``_modules/shapes.html#Square``, and the source page links back to ``index.html#shapes.Square``. A page for each module lies in ``_modules/<package>/<module>.html``, and ``_modules/index.html`` lists them all, a package's modules nested inside it. The links are relative, so they work under ``dirhtml`` and when we open the files straight from the disk."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:62
+msgid "A class that a package re-exports is linked to the module that defines it. If ``Square`` were defined in ``shapes/square.py`` and imported by ``shapes/__init__.py``, the description of ``shapes.Square`` would link to ``_modules/shapes/square.html#Square``. A block starts at the definition's first decorator and ends at its last line, so a decorated method shows its decorators."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:64
+msgid "The settings have Sphinx's names and defaults:"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:66
+msgid "``viewcode_follow_imported_members``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:67
+msgid "``true`` (default): link a re-exported object to the module that defines it. ``false``: link only objects that the named module defines itself. The old name ``viewcode_import`` is read as this setting."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:69
+msgid "``viewcode_line_numbers``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:70
+msgid "``false`` (default). ``true`` numbers the lines of the source pages."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:72
+msgid "``viewcode_enable_epub``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:73
+msgid "Accepted and unused, since Guidedog has no EPUB builder."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:75
+msgid "Source pages exist in ``html`` and ``dirhtml`` only, as in Sphinx. ``singlehtml``, the PDF and text have neither the links nor the pages: a book does not need a second copy of the code."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:77
+msgid "A description whose module is not below ``autodoc_source_paths`` gets no link. The note ``viewcode.source`` names the module once per document, with the hint to add its folder. A module file larger than 8 MiB, the limit of every source read, gets no page, with the warning ``viewcode.limit``."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:79
+msgid "Source links on the web: linkcode"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:82
+msgid "Sphinx's ``linkcode`` calls a Python function, ``linkcode_resolve``, to make each link. Guidedog never runs Python, so it takes a URL template instead:"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:89
+msgid "In a repository whose checked-out branch is ``main``, the description of ``Square.area`` above then links to ``https://github.com/acme/shapes/blob/main/src/shapes.py#L4-L6``. These placeholders are filled for each object:"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:91
+msgid "Placeholders of ``linkcode_url``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:95
+msgid "Placeholder"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:96
+msgid "Value"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:97
+msgid "``{domain}``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:98
+msgid "The object's domain: ``py``, ``c``, ``cpp``, ``js``, ``rust``, ``odin``."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:99
+msgid "``{module}``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:100
+msgid "The module as the description names it, or the Rust or Odin crate or package path."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:101
+msgid "``{fullname}``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:102
+msgid "The object's name within its module, such as ``Square.area``."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:103
+msgid "``{path}``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:104
+msgid "The object's source file, relative to ``linkcode_root``, with ``/`` between folders."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:105
+msgid "``{line}``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:106
+msgid "The first line of the definition, counted from 1. A decorator's line counts."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:107
+msgid "``{end_line}``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:108
+msgid "The last line of the definition."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:109
+msgid "``{branch}``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:110
+msgid "``linkcode_branch``, or the branch read from the repository."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:111
+msgid "``{{`` and ``}}``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:112
+msgid "A literal brace."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:114
+msgid "``linkcode_root`` names the folder ``{path}`` is relative to, relative to the source folder. Left empty, it is the nearest folder at or above the source folder that holds ``.git``. ``linkcode_branch`` is the text of ``{branch}``. Left empty, it is the branch that the repository has checked out, read from ``.git/HEAD``, or the commit when ``HEAD`` is detached."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:116
+msgid "A link is added only when every placeholder the template uses has a value. A Python object that the scan found has them all. A ``c:`` or ``cpp:`` object, and the objects of the Rust and Odin domains, carry their names but no file. Only a template that uses nothing but ``{domain}``, ``{module}``, ``{fullname}`` and ``{branch}`` links them, for example a template that points at an API search."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:118
+msgid "The links appear in HTML builders, ``singlehtml`` included, after the signature and before the permalink. The PDF and text add nothing. With both ``viewcode`` and ``linkcode`` listed, a description gets both links."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:120
+msgid "Mistakes in the template are found when ``conf.toml`` loads. An unknown placeholder or an unclosed brace is refused, and listing the extension without ``linkcode_url`` is the warning ``config.ext.linkcode``. A build that needs ``{branch}`` but has no branch and no repository warns ``linkcode.branch`` once and adds no links. An object whose file lies outside ``linkcode_root`` gets no link, with the note ``linkcode.outside``."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:122
+msgid "``guidedog migrate`` cannot read a ``linkcode_resolve`` function as data. It reports ``migrate.linkcode`` with a template to write in its place."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:124
+msgid "Class diagrams: inheritance_diagram"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:127
+msgid "The ``inheritance-diagram`` directive draws the classes it names, a module's classes when it names a module, and their bases up to the roots:"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:134
+msgid "The names are found as Sphinx finds them: relative to the current module first (``py:currentmodule``), then as written. The bases are read from the class statements and resolved across the scanned modules. Python's builtins, such as ``object`` and ``Exception``, are not drawn. A base from a package outside the source folders is drawn with its full name and nothing above it."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:136
+msgid "The directive takes Sphinx's options:"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:138
+msgid "``:parts: N``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:139
+msgid "Show only the last ``N`` parts of each dotted name; a negative ``N`` drops the first ``-N`` parts instead. ``0`` (default) shows the full name."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:141
+msgid "``:private-bases:``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:142
+msgid "Draw classes whose names start with ``_`` as well."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:144
+msgid "``:top-classes: a.B, a.C``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:145
+msgid "Stop at these classes: their own bases are not drawn."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:147
+msgid "``:include-subclasses:``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:148
+msgid "Draw the classes that derive from the named ones too. The scan looks for them in the packages of the named classes."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:150
+msgid "``:caption: text``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:151
+msgid "Put the drawing in a figure with this caption."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:153
+msgid "The settings ``inheritance_graph_attrs``, ``inheritance_node_attrs`` and ``inheritance_edge_attrs`` add Graphviz attributes to the graph, its nodes and its edges, and ``inheritance_alias`` shows a full class name as another name:"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:163
+msgid "The graph is written as Sphinx writes it and drawn by the linked Graphviz, like a ``graphviz`` directive, so no ``dot`` program is needed. In HTML the drawing is an SVG with the ``graphviz-adaptive`` colours, and each node links to its class's description when the project has one. A class without a description is drawn without a link. The PDF embeds the same SVG. Text shows the classes as a list, each with its bases."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:165
+msgid "A name that is neither a class nor a module in the scan is reported as ``inheritance.class`` and left out. A diagram may hold at most 1,000 classes; a larger one is ``inheritance.limit`` and is not drawn. Loading ``conf.toml`` refuses an attribute name that is not a Graphviz identifier, and a value that is not a plain word, number or quoted string is quoted, so an attribute cannot change the rest of the graph."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:167
+msgid "Reading times: duration"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:170
+msgid "With ``sphinx.ext.duration`` listed, the build summary shows how long reading took, and which documents took longest:"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:181
+msgid "Each time is measured with a monotonic clock around one document's read. A document taken unchanged from the previous build took no time and is not listed. The output folder also receives ``sphinx-reading-durations.json``, an object from document names to seconds."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:183
+msgid "``duration_print_total``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:184
+msgid "``true`` (default): show the total reading time."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:186
+msgid "``duration_print_slowest``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:187
+msgid "``true`` (default): show the slowest documents."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:189
+msgid "``duration_n_slowest``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:190
+msgid "How many slowest documents to show: ``5`` by default, ``0`` for all."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:192
+msgid "``duration_write_json``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:193
+msgid "The JSON file's name in the output folder; empty writes none. A name that leaves the output folder is refused."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:195
+msgid "``duration_limit``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:196
+msgid "Seconds a document may take; a slower one is the warning ``duration.limit``. Unset, there is no limit."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:198
+msgid "The times are evidence about one build on one machine. They differ from run to run."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:200
+msgid "Images for the book: imgconverter"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:203
+msgid "Sphinx's ``imgconverter`` runs ImageMagick to turn images LaTeX cannot use, such as GIF and SVG, into ones it can. Guidedog's PDF is typeset by Typst, which reads PNG, JPEG, GIF, SVG, WebP and PDF images directly, so there is nothing to convert. The extension is accepted, and no program is ever started. ``image_converter`` and ``image_converter_args`` are accepted and have no effect."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:205
+msgid "An image in a format the book cannot show, such as TIFF or BMP, is reported as ``imgconverter.format``, and the book shows its alternative text in its place. The hint suggests a PNG, JPEG, GIF or SVG version. When we name the image ``picture.*``, each output picks the first version it reads."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:207
+msgid "Diagnostics"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:210
+msgid "Every message has a code, the location, an explanation and a hint. ``suppress_warnings`` silences them by their prefix, such as ``viewcode`` or ``inheritance``."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:212
+msgid "Codes of these extensions"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:216
+msgid "Code"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:217
+msgid "Meaning"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:218
+msgid "``viewcode.source``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:219
+msgid "A documented module is not below ``autodoc_source_paths``; its objects have no ``[source]`` link."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:220
+msgid "``viewcode.limit``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:221
+msgid "A module's file is too large or cannot be read; it has no source page."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:222
+msgid "``config.ext.linkcode``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:223
+msgid "``linkcode`` is listed without ``linkcode_url``."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:224
+msgid "``linkcode.branch``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:225
+msgid "The template uses ``{branch}``, and no branch is set or found."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:226
+msgid "``linkcode.outside``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:227
+msgid "An object's file lies outside ``linkcode_root``."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:228
+msgid "``inheritance.class``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:229
+msgid "A name in an ``inheritance-diagram`` is neither a class nor a module of the scan."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:230
+msgid "``inheritance.limit``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:231
+msgid "A diagram would hold more than 1,000 classes."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:232
+msgid "``duration.limit``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:233
+msgid "A document took longer to read than ``duration_limit``."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:234
+msgid "``imgconverter.format``"
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:235
+msgid "The book cannot show an image's format."
+msgstr ""
+
+#: ../../sources-and-diagrams.rst:237
+msgid "GDS 0011 records the design of these extensions and of the four others that read Python source."
+msgstr ""

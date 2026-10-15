@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 06:56+0000\n"
+"POT-Creation-Date: 2026-10-15 09:09+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -21,37 +21,41 @@ msgstr "Sphinx के साथ संगतता"
 
 #: ../../compatibility.rst:4
 msgid ""
-"Guidedog follows Sphinx where that helps an author move a project. It "
-"measures compatibility feature by feature. It does not execute Python "
-"configuration or arbitrary Python extensions. **A successful build is "
-"evidence of a build, not proof of complete equivalence.**"
+"Guidedog supports all of reStructuredText and all of Sphinx's built-in "
+"extensions. It supports them in its own way: the output serves the same "
+"purpose, but it is not identical to Sphinx's. Guidedog never runs Python, "
+"neither the configuration nor an extension. It measures compatibility "
+"feature by feature. **A successful build is evidence of a build, not "
+"proof of complete equivalence.**"
 msgstr ""
-"प्रोजेक्ट का माइग्रेशन आसान बनाने के लिए Guidedog उपयोगी जगहों पर Sphinx "
-"का अनुसरण करता है। संगतता हर सुविधा के लिए अलग जाँची जाती है। Python "
-"कॉन्फ़िगरेशन या मनमाने Python एक्सटेंशन नहीं चलते। **सफल build, build "
-"होने का प्रमाण है; पूरी समानता का नहीं।**"
+"Guidedog पूरे reStructuredText और Sphinx के सभी बिल्ट-इन एक्सटेंशन को "
+"सपोर्ट करता है। वह इन्हें अपने तरीके से सपोर्ट करता है: आउटपुट का "
+"उद्देश्य वही होता है, पर वह Sphinx के आउटपुट जैसा हूबहू नहीं होता। "
+"Guidedog कभी Python नहीं चलाता, न कॉन्फ़िगरेशन और न कोई एक्सटेंशन। वह "
+"संगतता को एक-एक सुविधा के स्तर पर मापता है। **सफल build सिर्फ़ इस बात का "
+"सबूत है कि build हुई, पूरी समानता का प्रमाण नहीं।**"
 
-#: ../../compatibility.rst:9
+#: ../../compatibility.rst:10
 msgid "Projects and publication"
 msgstr "प्रोजेक्ट और प्रकाशन"
 
-#: ../../compatibility.rst:12
+#: ../../compatibility.rst:13
 msgid "Project operations"
 msgstr "प्रोजेक्ट के काम"
 
-#: ../../compatibility.rst:16
+#: ../../compatibility.rst:17
 msgid "Operation"
 msgstr "काम"
 
-#: ../../compatibility.rst:17
+#: ../../compatibility.rst:18
 msgid "Implemented behavior"
 msgstr "लागू व्यवहार"
 
-#: ../../compatibility.rst:18
+#: ../../compatibility.rst:19
 msgid "Project layout and build flags"
 msgstr "प्रोजेक्ट संरचना और build विकल्प"
 
-#: ../../compatibility.rst:19
+#: ../../compatibility.rst:20
 msgid ""
 "Sphinx-style source and output directories; ``-a -E -W -n -D -t -j -b -M "
 "-c -C``."
@@ -59,11 +63,11 @@ msgstr ""
 "Sphinx जैसे सोर्स और आउटपुट फ़ोल्डर विकल्प: ``-a -E -W -n -D -t -j -b -M "
 "-c -C``\\ ।"
 
-#: ../../compatibility.rst:20
+#: ../../compatibility.rst:21
 msgid "Configuration"
 msgstr "कॉन्फ़िगरेशन"
 
-#: ../../compatibility.rst:21
+#: ../../compatibility.rst:22
 msgid ""
 "TOML data with familiar Sphinx names. Migration converts literals and "
 "reports computed values."
@@ -71,11 +75,11 @@ msgstr ""
 "परिचित Sphinx नामों के साथ TOML डेटा। माइग्रेशन लिटरल बदलता है और गणना "
 "वाले मानों की सूचना देता है।"
 
-#: ../../compatibility.rst:22
+#: ../../compatibility.rst:23
 msgid "HTML builders"
 msgstr "HTML builder"
 
-#: ../../compatibility.rst:23
+#: ../../compatibility.rst:24
 msgid ""
 "``html``, ``dirhtml``, and ``singlehtml``. Single-page anchors include "
 "document names."
@@ -83,11 +87,11 @@ msgstr ""
 "``html``\\ , ``dirhtml`` और ``singlehtml``\\ । एकल पेज के एंकर में "
 "दस्तावेज़ का नाम शामिल होता है।"
 
-#: ../../compatibility.rst:24
+#: ../../compatibility.rst:25
 msgid "Other builders"
 msgstr "अन्य builder"
 
-#: ../../compatibility.rst:25
+#: ../../compatibility.rst:26
 msgid ""
 "``text``, ``gettext``, and ``dummy``. ``pdf`` uses Typst; ``latex`` and "
 "``latexpdf`` select that route."
@@ -95,11 +99,11 @@ msgstr ""
 "``text``\\ , ``gettext`` और ``dummy``\\ । ``pdf`` में Typst इस्तेमाल होता "
 "है; ``latex`` और ``latexpdf`` भी इसी रास्ते को चुनते हैं।"
 
-#: ../../compatibility.rst:26
+#: ../../compatibility.rst:27
 msgid "Templates"
 msgstr "template"
 
-#: ../../compatibility.rst:27
+#: ../../compatibility.rst:28
 msgid ""
 "Guidedog's Jinja implementation, typed ``html_context``, layout "
 "inheritance, and additional pages."
@@ -107,11 +111,11 @@ msgstr ""
 "Guidedog का Jinja कार्यान्वयन, टाइप वाला ``html_context``\\ , लेआउट "
 "इनहेरिटेंस और अतिरिक्त पेज।"
 
-#: ../../compatibility.rst:28
+#: ../../compatibility.rst:29
 msgid "Incremental work"
 msgstr "इन्क्रिमेंटल build"
 
-#: ../../compatibility.rst:29
+#: ../../compatibility.rst:30
 msgid ""
 "Sources, dependencies, templates, configuration, and reference lookups "
 "invalidate affected output."
@@ -119,11 +123,11 @@ msgstr ""
 "सोर्स फ़ाइलें, निर्भरताएँ, template, कॉन्फ़िगरेशन और संदर्भ खोज बदलने पर "
 "संबंधित आउटपुट अमान्य होता है।"
 
-#: ../../compatibility.rst:30
+#: ../../compatibility.rst:31
 msgid "Publication"
 msgstr "प्रकाशन"
 
-#: ../../compatibility.rst:31
+#: ../../compatibility.rst:32
 msgid ""
 "One complete generation. A failed build keeps the previous published "
 "generation."
@@ -131,7 +135,7 @@ msgstr ""
 "एक पूरी आउटपुट पीढ़ी प्रकाशित होती है। build विफल होने पर पिछली प्रकाशित "
 "पीढ़ी बनी रहती है।"
 
-#: ../../compatibility.rst:33
+#: ../../compatibility.rst:34
 msgid ""
 "``-D`` accepts ``true`` and ``false``, or ``1`` and ``0``, for booleans. "
 "A project with ``contents`` and no ``index`` can use ``contents`` as its "
@@ -144,7 +148,7 @@ msgstr ""
 "हैं। अतिरिक्त template पेज साइट के रूट में फ़ाइलों के रूप में आते हैं, "
 "``dirhtml`` में भी। ठीक नियम :doc:`templates` में हैं।"
 
-#: ../../compatibility.rst:38
+#: ../../compatibility.rst:39
 msgid ""
 "An unchanged page reports its diagnostics again. Therefore ``-W`` has the "
 "same meaning on a clean build and an unchanged build. A deleted "
@@ -158,39 +162,39 @@ msgstr ""
 "commit को निपटाती है। इनवेरिएंट और प्लैटफ़ॉर्म सीमा "
 ":doc:`internals/publication` में हैं।"
 
-#: ../../compatibility.rst:43
+#: ../../compatibility.rst:44
 msgid ""
-"The builders ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest``, "
-"``coverage``, and ``changes`` are unavailable. Their names receive a "
-"correction message. The repository's ``tools/linkcheck`` is a separate "
-"verification tool."
+"``coverage`` comes with the ``coverage`` extension, described below. The "
+"builders ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest``, and "
+"``changes`` are unavailable. Their names receive a correction message. "
+"The repository's ``tools/linkcheck`` is a separate verification tool."
 msgstr ""
-"``epub``\\ , ``man``\\ , ``texinfo``\\ , ``linkcheck``\\ , ``doctest``\\ "
-", ``coverage`` और ``changes`` builder उपलब्ध नहीं हैं। इनके नाम देने पर "
-"सुधार का संदेश मिलता है। repository का ``tools/linkcheck`` अलग सत्यापन "
-"टूल है।"
+"``coverage`` builder ``coverage`` एक्सटेंशन के साथ आता है, जिसका वर्णन "
+"नीचे है। ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest`` और "
+"``changes`` builder उपलब्ध नहीं हैं। इनके नाम देने पर सुधार का संदेश "
+"मिलता है। repository का ``tools/linkcheck`` अलग सत्यापन टूल है।"
 
-#: ../../compatibility.rst:47
+#: ../../compatibility.rst:48
 msgid "Source languages"
 msgstr "सोर्स भाषाएँ"
 
-#: ../../compatibility.rst:50
+#: ../../compatibility.rst:51
 msgid "Pinned conformance evidence"
 msgstr "निश्चित संस्करण की अनुरूपता जाँच"
 
-#: ../../compatibility.rst:54
+#: ../../compatibility.rst:55
 msgid "Reader"
 msgstr "रीडर"
 
-#: ../../compatibility.rst:55
+#: ../../compatibility.rst:56
 msgid "Evidence and limits"
 msgstr "प्रमाण और सीमाएँ"
 
-#: ../../compatibility.rst:56
+#: ../../compatibility.rst:57
 msgid "reStructuredText"
 msgstr "reStructuredText"
 
-#: ../../compatibility.rst:57
+#: ../../compatibility.rst:58
 msgid ""
 "98 corpus sources match the compared Docutils trees and identifiers. The "
 "comparison excludes source positions and several bookkeeping attributes."
@@ -199,19 +203,19 @@ msgstr ""
 "मेल खाते हैं। सोर्स में स्थान और कुछ आंतरिक प्रबंधन गुण तुलना में नहीं "
 "आते।"
 
-#: ../../compatibility.rst:58
+#: ../../compatibility.rst:59
 msgid "CommonMark 0.31.2"
 msgstr "CommonMark 0.31.2"
 
-#: ../../compatibility.rst:59
+#: ../../compatibility.rst:60
 msgid "All 652 specification examples pass."
 msgstr "विनिर्देश के सभी 652 उदाहरण पास होते हैं।"
 
-#: ../../compatibility.rst:60
+#: ../../compatibility.rst:61
 msgid "MyST 0.16.1 reference"
 msgstr "MyST 0.16.1 reference"
 
-#: ../../compatibility.rst:61
+#: ../../compatibility.rst:62
 msgid ""
 "215 of 218 reader fixtures and 8 of 10 Sphinx fixture builds match. "
 "Remaining differences are recorded."
@@ -219,7 +223,7 @@ msgstr ""
 "218 रीडर टेस्ट केस में 215 और 10 Sphinx build केस में 8 मेल खाते हैं। "
 "बाकी अंतर दर्ज हैं।"
 
-#: ../../compatibility.rst:63
+#: ../../compatibility.rst:64
 msgid ""
 "These are pinned tests. They do not imply compatibility with every later "
 "release. Run ``guidedog formats`` for the executable's reader and "
@@ -230,7 +234,7 @@ msgstr ""
 "``guidedog formats`` चलाएँ। रीडर डायरेक्टरियों में भी अनुरूपता संबंधी "
 "टिप्पणियाँ हैं।"
 
-#: ../../compatibility.rst:67
+#: ../../compatibility.rst:68
 msgid ""
 "``rst_prolog`` follows leading bibliographic fields. ``rst_epilog`` "
 "follows the source. Neither is inserted into Markdown. ``only`` and "
@@ -245,11 +249,11 @@ msgstr ""
 "स्तर बदले तो उसका स्थान Sphinx से अलग हो सकता है। MyST के ``eval-rst`` "
 "में खंड शीर्षक त्रुटि हैं।"
 
-#: ../../compatibility.rst:73
+#: ../../compatibility.rst:74
 msgid "References and domains"
 msgstr "संदर्भ और डोमेन"
 
-#: ../../compatibility.rst:76
+#: ../../compatibility.rst:77
 msgid ""
 "Guidedog implements toctrees, labels, glossaries, numbered sections and "
 "figures, ``ref``, ``doc``, ``numref``, ``term``, ``download``, ``any``, "
@@ -261,7 +265,7 @@ msgstr ""
 "``keyword``\\ , ``option``\\ , ``envvar`` और ``token`` संदर्भ लागू हैं। "
 "ऑब्जेक्ट विषय-सूची वृक्ष, साइडबार और पेज रूपरेखा में आ सकते हैं।"
 
-#: ../../compatibility.rst:81
+#: ../../compatibility.rst:82
 msgid ""
 "The standard, Python, C, C++, JavaScript, reStructuredText, and math "
 "domains are implemented. The Odin and Rust domains are Guidedog's own "
@@ -274,7 +278,7 @@ msgstr ""
 "crate, घोषणाएँ, सिग्नेचर और बने हुए API पेज दर्शाते हैं। केवल सोर्स से "
 "होने वाली खोज और उसकी सीमाओं के लिए :doc:`odin` और :doc:`rust` देखें।"
 
-#: ../../compatibility.rst:86
+#: ../../compatibility.rst:87
 msgid ""
 "Parameter, return, exception, and variable fields form structured "
 "descriptions. Canonical names become aliases for references and "
@@ -291,7 +295,7 @@ msgstr ""
 "सिंबल इन्वेंटरी प्रकाशित करती हैं। नेस्टिंग की सीमाएँ लागू हैं। नेस्टेड "
 "कोष्ठक रैखिक समय में पार्स होते हैं।"
 
-#: ../../compatibility.rst:93
+#: ../../compatibility.rst:94
 msgid ""
 "``numref`` substitutes one number slot and reports an unnumbered target. "
 "Section numbering follows reading order. A document is numbered once. A "
@@ -303,7 +307,7 @@ msgstr ""
 "एक ही बार क्रमांक मिलता है; दूसरी क्रमांकित toctree टकराव की सूचना देती "
 "है। फ़ॉर्मैट प्रतिस्थापन और पहचानकर्ता के विवरण के लिए संदर्भ टेस्ट देखें।"
 
-#: ../../compatibility.rst:98
+#: ../../compatibility.rst:99
 msgid ""
 "The general index, module index, and search are built in. Search matches "
 "word prefixes. It does not copy Sphinx's English stemming."
@@ -311,7 +315,7 @@ msgstr ""
 "सामान्य इंडेक्स, मॉड्यूल इंडेक्स और खोज बिल्ट-इन हैं। खोज शब्दों की "
 "शुरुआत से मिलान करती है। यह Sphinx की अंग्रेज़ी स्टेमिंग की नकल नहीं करती।"
 
-#: ../../compatibility.rst:101
+#: ../../compatibility.rst:102
 msgid ""
 "Declarative object types replace a useful class of Python extension "
 "registrations. ``object_types``, ``crossref_types``, and "
@@ -325,65 +329,79 @@ msgstr ""
 "प्रोग्राम के घोषणात्मक नियमों में बदलते हैं। माइग्रेशन वह कोड बताता है "
 "जिसे व्यक्त नहीं कर सकता। :doc:`object-types` देखें।"
 
-#: ../../compatibility.rst:106
-msgid "Built-in extension behavior"
-msgstr "बिल्ट-इन एक्सटेंशन का व्यवहार"
+#: ../../compatibility.rst:107 ../../compatibility.rst:112
+msgid "Built-in extensions"
+msgstr "बिल्ट-इन एक्सटेंशन"
 
-#: ../../compatibility.rst:109
-msgid "Extension boundary"
-msgstr "एक्सटेंशन की सीमा"
+#: ../../compatibility.rst:110
+msgid ""
+"Every extension in Sphinx's ``sphinx.ext`` package is built in. A project "
+"lists it by its Sphinx name in ``extensions``, and its directives, roles, "
+"settings and builders are there. The settings keep Sphinx's names and "
+"defaults, so ``guidedog migrate`` carries them over from ``conf.py``. "
+"Where Sphinx imports Python, Guidedog reads the source instead. Where "
+"Sphinx calls a program, Guidedog uses what it has built in. GDS 0011 "
+"records the design of each one."
+msgstr ""
+"Sphinx के ``sphinx.ext`` पैकेज का हर एक्सटेंशन बिल्ट-इन है। प्रोजेक्ट उसे "
+"``extensions`` में उसके Sphinx नाम से जोड़ता है, और उसके निर्देश, रोल, "
+"सेटिंग और builder उपलब्ध हो जाते हैं। सेटिंग के नाम और डिफ़ॉल्ट Sphinx "
+"वाले ही रहते हैं, इसलिए ``guidedog migrate`` उन्हें ``conf.py`` से ले आता "
+"है। जहाँ Sphinx Python import करता है, वहाँ Guidedog सोर्स पढ़ता है। जहाँ "
+"Sphinx कोई प्रोग्राम चलाता है, वहाँ Guidedog अपनी बिल्ट-इन सुविधा "
+"इस्तेमाल करता है। GDS 0011 हर एक्सटेंशन का डिज़ाइन दर्ज करता है।"
 
-#: ../../compatibility.rst:113
-msgid "Behavior"
-msgstr "व्यवहार"
+#: ../../compatibility.rst:116
+msgid "Extension"
+msgstr "एक्सटेंशन"
 
-#: ../../compatibility.rst:114
-msgid "Status"
-msgstr "स्थिति"
+#: ../../compatibility.rst:117
+msgid "Guidedog's way"
+msgstr "Guidedog का तरीका"
 
-#: ../../compatibility.rst:115
+#: ../../compatibility.rst:118
 msgid "``todo``, ``ifconfig``, ``extlinks``, ``autosectionlabel``"
 msgstr "``todo``\\ , ``ifconfig``\\ , ``extlinks``\\ , ``autosectionlabel``"
 
-#: ../../compatibility.rst:116
-msgid "Built in. Hardcoded extlinks can receive a suggested role."
+#: ../../compatibility.rst:119
+msgid "As in Sphinx. Hardcoded extlinks can receive a suggested role."
 msgstr ""
-"बिल्ट-इन हैं। सीधे लिखे extlinks के लिए उपयुक्त रोल सुझाया जा सकता है।"
+"Sphinx की तरह। सीधे लिखे extlinks के लिए उपयुक्त रोल सुझाया जा सकता है।"
 
-#: ../../compatibility.rst:117
+#: ../../compatibility.rst:120
 msgid "``graphviz``"
 msgstr "``graphviz``"
 
-#: ../../compatibility.rst:118
+#: ../../compatibility.rst:121
 msgid ""
 "Linked Graphviz produces static drawings. Resource confinement applies."
 msgstr ""
 "लिंक किया गया Graphviz स्थिर आरेख बनाता है। संसाधन सीमाएँ लागू होती हैं।"
 
-#: ../../compatibility.rst:119
+#: ../../compatibility.rst:122
 msgid "``intersphinx``"
 msgstr "``intersphinx``"
 
-#: ../../compatibility.rst:120
+#: ../../compatibility.rst:123
 msgid ""
 "Local and fetched inventories. Fetching uses the built-in HTTP client."
 msgstr ""
 "स्थानीय और डाउनलोड की गई इन्वेंटरी। डाउनलोड के लिए बिल्ट-इन HTTP क्लाइंट "
 "का उपयोग होता है।"
 
-#: ../../compatibility.rst:121
+#: ../../compatibility.rst:124
 msgid "``githubpages``"
 msgstr "``githubpages``"
 
-#: ../../compatibility.rst:122
+#: ../../compatibility.rst:125
 msgid "Built-in publication files for a static site."
 msgstr "स्थिर साइट के प्रकाशन की फ़ाइलें बिल्ट-इन हैं।"
 
-#: ../../compatibility.rst:123
+#: ../../compatibility.rst:126
 msgid "``mathjax`` and ``imgmath``"
 msgstr "``mathjax`` और ``imgmath``"
 
-#: ../../compatibility.rst:124
+#: ../../compatibility.rst:127
 msgid ""
 "HTML mathematics uses MathJax. PDF translates its supported LaTeX subset "
 "to Typst."
@@ -391,63 +409,168 @@ msgstr ""
 "HTML के गणित में MathJax इस्तेमाल होता है। PDF समर्थित LaTeX उपसमुच्चय को "
 "Typst में बदलता है।"
 
-#: ../../compatibility.rst:125
-msgid "``myst_parser``"
-msgstr "``myst_parser``"
-
-#: ../../compatibility.rst:126
-msgid "The implemented project Markdown layer."
-msgstr "लागू प्रोजेक्ट Markdown परत।"
-
-#: ../../compatibility.rst:127
-msgid "``doctest`` directives"
-msgstr "``doctest`` निर्देश"
-
 #: ../../compatibility.rst:128
-msgid "Displayed. The project builder does not execute their tests."
-msgstr "सामग्री दिखाई जाती है। प्रोजेक्ट builder इनके टेस्ट नहीं चलाता।"
+msgid "``doctest``"
+msgstr "``doctest``"
 
 #: ../../compatibility.rst:129
+msgid ""
+"The tests are shown, highlighted. Guidedog never runs Python, so it never "
+"runs them."
+msgstr ""
+"टेस्ट हाइलाइट करके दिखाए जाते हैं। Guidedog कभी Python नहीं चलाता, इसलिए "
+"वह इन्हें कभी नहीं चलाता।"
+
+#: ../../compatibility.rst:130
 msgid "``autodoc``"
 msgstr "``autodoc``"
 
-#: ../../compatibility.rst:130
+#: ../../compatibility.rst:131
 msgid "Python source is read without importing or executing the package."
 msgstr "पैकेज इम्पोर्ट या चलाए बिना Python सोर्स पढ़ा जाता है।"
 
 #: ../../compatibility.rst:132
+msgid "``napoleon``"
+msgstr "``napoleon``"
+
+#: ../../compatibility.rst:133
 msgid ""
-"Source-based autodoc cannot discover every object created at runtime. "
-"Compiled modules, external decorators, computed values, and extension "
-"event hooks have explicit limits. Python 3.13 and the pinned Sphinx "
-"documenter tests provide the reference behavior. See :doc:`autodoc` for "
-"the full settings and exceptions."
+"Google and NumPy docstring sections become the fields autodoc shows "
+"(:doc:`autodoc`)."
 msgstr ""
-"सोर्स आधारित autodoc रनटाइम पर बने हर ऑब्जेक्ट को नहीं खोज सकता। कम्पाइल "
-"किए मॉड्यूल, बाहरी डेकोरेटर, गणना वाले मान और एक्सटेंशन इवेंट hook की "
-"स्पष्ट सीमाएँ हैं। Python 3.13 और Sphinx के निश्चित डॉक्यूमेंटर टेस्ट "
-"संदर्भ व्यवहार देते हैं। पूरे विकल्प और अपवाद :doc:`autodoc` में हैं।"
+"Google और NumPy docstring के सेक्शन वे फ़ील्ड बन जाते हैं जिन्हें autodoc "
+"दिखाता है (:doc:`autodoc`)।"
+
+#: ../../compatibility.rst:134
+msgid "``autosummary`` and ``apidoc``"
+msgstr "``autosummary`` और ``apidoc``"
+
+#: ../../compatibility.rst:135
+msgid ""
+"Summary tables and API pages are generated from the source, in memory. "
+"Nothing is written into the source folder (:doc:`autodoc`)."
+msgstr ""
+"सारांश टेबल और API पेज सोर्स से, मेमोरी में बनते हैं। सोर्स फ़ोल्डर में "
+"कुछ भी नहीं लिखा जाता (:doc:`autodoc`)।"
+
+#: ../../compatibility.rst:136
+msgid "``viewcode``"
+msgstr "``viewcode``"
 
 #: ../../compatibility.rst:137
 msgid ""
-"``autosummary``, ``napoleon``, ``viewcode``, and arbitrary Python "
-"extensions remain outside this route. An unsupported extension named in "
-"configuration is reported. An unknown directive or role is reported at "
-"its source location. **Its omitted content must be reviewed before "
-"publication.** Other theme names are accepted using Guidedog's theme "
-"implementation."
+"Highlighted source pages under ``_modules/``, linked to the descriptions "
+"and back (:doc:`sources-and-diagrams`)."
 msgstr ""
-"``autosummary``\\ , ``napoleon``\\ , ``viewcode`` और मनमाने Python "
-"एक्सटेंशन इस रास्ते से बाहर हैं। कॉन्फ़िगरेशन में असमर्थित एक्सटेंशन की "
-"सूचना मिलती है। अज्ञात निर्देश या रोल सोर्स में अपने स्थान पर बताया जाता "
-"है। **छोड़ी गई सामग्री प्रकाशन से पहले जाँचना ज़रूरी है।** अन्य theme नाम "
-"स्वीकार होते हैं, लेकिन Guidedog का theme कार्यान्वयन इस्तेमाल होता है।"
+"``_modules/`` के नीचे हाइलाइट किए गए सोर्स पेज, जो विवरणों से लिंक होते "
+"हैं और विवरण उनसे (:doc:`sources-and-diagrams`)।"
+
+#: ../../compatibility.rst:138
+msgid "``linkcode``"
+msgstr "``linkcode``"
+
+#: ../../compatibility.rst:139
+msgid ""
+"A URL template, ``linkcode_url``, replaces the Python function "
+"``linkcode_resolve`` (:doc:`sources-and-diagrams`)."
+msgstr ""
+"Python function ``linkcode_resolve`` की जगह एक URL template, "
+"``linkcode_url``, लेता है (:doc:`sources-and-diagrams`)।"
+
+#: ../../compatibility.rst:140
+msgid "``inheritance_diagram``"
+msgstr "``inheritance_diagram``"
+
+#: ../../compatibility.rst:141
+msgid ""
+"Class graphs from the source, drawn by the linked Graphviz "
+"(:doc:`sources-and-diagrams`)."
+msgstr ""
+"सोर्स से बने क्लास ग्राफ, जिन्हें लिंक किया गया Graphviz बनाता है "
+"(:doc:`sources-and-diagrams`)।"
+
+#: ../../compatibility.rst:142
+msgid "``coverage``"
+msgstr "``coverage``"
 
 #: ../../compatibility.rst:143
+msgid ""
+"``guidedog build coverage`` writes ``python.txt`` from the source and the "
+"documents (:doc:`autodoc`)."
+msgstr ""
+"``guidedog build coverage`` सोर्स और दस्तावेज़ों से ``python.txt`` लिखता "
+"है (:doc:`autodoc`)।"
+
+#: ../../compatibility.rst:144
+msgid "``duration``"
+msgstr "``duration``"
+
+#: ../../compatibility.rst:145
+msgid ""
+"The slowest documents to read, in the build summary and a JSON file "
+"(:doc:`sources-and-diagrams`)."
+msgstr ""
+"पढ़ने में सबसे धीमे दस्तावेज़, build सारांश में और एक JSON फ़ाइल में "
+"(:doc:`sources-and-diagrams`)।"
+
+#: ../../compatibility.rst:146
+msgid "``imgconverter``"
+msgstr "``imgconverter``"
+
+#: ../../compatibility.rst:147
+msgid ""
+"Accepted, and nothing runs: Typst reads SVG, PNG, JPEG and GIF itself. "
+"Other formats are reported (:doc:`sources-and-diagrams`)."
+msgstr ""
+"स्वीकार होता है, पर कुछ नहीं चलता: Typst SVG, PNG, JPEG और GIF खुद पढ़ता "
+"है। दूसरे फ़ॉर्मैट की सूचना दी जाती है (:doc:`sources-and-diagrams`)।"
+
+#: ../../compatibility.rst:148
+msgid "``myst_parser``"
+msgstr "``myst_parser``"
+
+#: ../../compatibility.rst:149
+msgid "The implemented project Markdown layer."
+msgstr "लागू प्रोजेक्ट Markdown परत।"
+
+#: ../../compatibility.rst:151
+msgid ""
+"Reading source has limits that importing does not. Compiled modules, "
+"objects created at run time, external decorators, computed values and "
+"extension event hooks cannot be seen. Python 3.13 and the pinned Sphinx "
+"documenter tests provide the reference behavior. See :doc:`autodoc` for "
+"the full settings and exceptions."
+msgstr ""
+"सोर्स पढ़ने की कुछ सीमाएँ हैं जो import करने में नहीं होतीं। कम्पाइल किए "
+"गए मॉड्यूल, रनटाइम पर बने ऑब्जेक्ट, बाहरी डेकोरेटर, गणना से बने मान और "
+"एक्सटेंशन इवेंट hook दिखाई नहीं देते। Python 3.13 और Sphinx के तय किए गए "
+"डॉक्यूमेंटर टेस्ट संदर्भ व्यवहार देते हैं। पूरी सेटिंग और अपवाद "
+":doc:`autodoc` में हैं।"
+
+#: ../../compatibility.rst:153
+msgid ""
+"A third-party extension, such as ``sphinx_design``, is not built in. "
+"Configuration that names one is refused, and ``guidedog migrate`` leaves "
+"it out with a note. An unknown directive or role is reported at its "
+"source location. **Its omitted content must be reviewed before "
+"publication.** Declared object types (:doc:`object-types`) and build "
+"plugins (:doc:`plugins`) cover many of them. Other theme names are "
+"accepted using Guidedog's theme implementation."
+msgstr ""
+"कोई third-party एक्सटेंशन, जैसे ``sphinx_design``, बिल्ट-इन नहीं है। जो "
+"कॉन्फ़िगरेशन उसका नाम लेता है, वह अस्वीकार हो जाता है, और ``guidedog "
+"migrate`` उसे एक सूचना के साथ छोड़ देता है। अज्ञात निर्देश या रोल सोर्स "
+"में अपने स्थान पर बताया जाता है। **छोड़ी गई सामग्री प्रकाशन से पहले "
+"जाँचना ज़रूरी है।** घोषित ऑब्जेक्ट टाइप (:doc:`object-types`) और build "
+"plugin (:doc:`plugins`) इनमें से कई ज़रूरतें पूरी करते हैं। अन्य theme "
+"नाम स्वीकार होते हैं, लेकिन Guidedog का theme कार्यान्वयन इस्तेमाल होता "
+"है।"
+
+#: ../../compatibility.rst:158
 msgid "Trust and resource limits"
 msgstr "विश्वास और संसाधन सीमाएँ"
 
-#: ../../compatibility.rst:146
+#: ../../compatibility.rst:161
 msgid ""
 "A normal build accepts the project's raw HTML and Typst, templates, and "
 "network inventories. Local reads stay within the source directory and "
@@ -460,7 +583,7 @@ msgstr ""
 "तक सीमित है। प्रतीकात्मक लिंक इस सीमा को नहीं बढ़ाता। template, स्थिर "
 "फ़ाइलें, include, चित्र, फ़ॉन्ट और API सोर्स यही नियम मानते हैं।"
 
-#: ../../compatibility.rst:151
+#: ../../compatibility.rst:166
 msgid ""
 "Graphviz image resources are resolved relative to their document and "
 "confined. Supported image bytes are embedded in the drawing. "
@@ -474,7 +597,7 @@ msgstr ""
 "रूट इस्तेमाल करता है। इससे किताब के template और प्रीऐम्बल घोषित संसाधनों "
 "तक सीमित रहते हैं।"
 
-#: ../../compatibility.rst:156
+#: ../../compatibility.rst:171
 msgid ""
 "``--untrusted`` narrows the read boundary to the source folder. It omits "
 "raw content, unsafe URLs, outside resources, project Typst templates, and "
@@ -488,7 +611,7 @@ msgstr ""
 "संसाधन पढ़ने वाले ग्राफ़ चेतावनी के साथ कोड में दिखते हैं। यह मोड नेटिव "
 "कम्पाइलर की मेमोरी या चलने का समय सीमित नहीं करता।"
 
-#: ../../compatibility.rst:162
+#: ../../compatibility.rst:177
 msgid ""
 "The host budget defaults to 1 GiB. It is coarse: it counts the sources, "
 "included files, and PDF output the host holds, reserved before they are "
@@ -498,9 +621,18 @@ msgid ""
 "a budget that fits. ``GUIDEDOG_AVAILABLE_MIB`` can supply known machine "
 "headroom. Working memory always stays in memory. There is no disk-backed "
 "mode, and ``--memory=disk`` and ``--disk-budget`` are refused."
-msgstr "होस्ट बजट डिफ़ॉल्ट रूप से 1 GiB है। यह मोटा हिसाब है: यह होस्ट के पास रखी सोर्स फ़ाइलें, शामिल फ़ाइलें और PDF आउटपुट गिनता है, और उन्हें पढ़ने से पहले जगह आरक्षित करता है। हर वर्कर एक ही कार्यक्षेत्र बार-बार इस्तेमाल करता है। फिर भी सहेजा गया प्रोजेक्ट ग्राफ़ और कैटलॉग प्रोजेक्ट बढ़ने के साथ मेमोरी लेते हैं। पढ़ने वाले वर्कर प्रवेश का समन्वय करते हैं। अस्वीकृत अनुरोध विफल काम और पर्याप्त बजट बताता है। ``GUIDEDOG_AVAILABLE_MIB`` से मशीन की ज्ञात खाली मेमोरी बताई जा सकती है। कार्यशील मेमोरी हमेशा मेमोरी में ही रहती है। डिस्क पर आधारित कोई मोड नहीं है, और ``--memory=disk`` तथा ``--disk-budget`` अस्वीकार कर दिए जाते हैं।"
+msgstr ""
+"होस्ट बजट डिफ़ॉल्ट रूप से 1 GiB है। यह मोटा हिसाब है: यह होस्ट के पास रखी "
+"सोर्स फ़ाइलें, शामिल फ़ाइलें और PDF आउटपुट गिनता है, और उन्हें पढ़ने से "
+"पहले जगह आरक्षित करता है। हर वर्कर एक ही कार्यक्षेत्र बार-बार इस्तेमाल "
+"करता है। फिर भी सहेजा गया प्रोजेक्ट ग्राफ़ और कैटलॉग प्रोजेक्ट बढ़ने के "
+"साथ मेमोरी लेते हैं। पढ़ने वाले वर्कर प्रवेश का समन्वय करते हैं। अस्वीकृत "
+"अनुरोध विफल काम और पर्याप्त बजट बताता है। ``GUIDEDOG_AVAILABLE_MIB`` से "
+"मशीन की ज्ञात खाली मेमोरी बताई जा सकती है। कार्यशील मेमोरी हमेशा मेमोरी "
+"में ही रहती है। डिस्क पर आधारित कोई मोड नहीं है, और ``--memory=disk`` तथा "
+"``--disk-budget`` अस्वीकार कर दिए जाते हैं।"
 
-#: ../../compatibility.rst:169
+#: ../../compatibility.rst:184
 msgid ""
 "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document "
 "work. Changing a limit invalidates cached reading and output. Depth and "
@@ -516,11 +648,11 @@ msgstr ""
 "ऑपरेटिंग सिस्टम की सीमाएँ इस्तेमाल करते हैं। :doc:`errors` और "
 ":doc:`internals/memory` देखें।"
 
-#: ../../compatibility.rst:175
+#: ../../compatibility.rst:190
 msgid "Verification and real projects"
 msgstr "सत्यापन और वास्तविक प्रोजेक्ट"
 
-#: ../../compatibility.rst:178
+#: ../../compatibility.rst:193
 msgid ""
 "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx "
 "9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, "
@@ -532,18 +664,34 @@ msgid ""
 ":doc:`internals/commonmark-conformance`) keep their expected outputs, and "
 "``cargo xtask verify-docutils`` checks those against a pinned Docutils "
 "0.22.4. All 98 trees match."
-msgstr "``cargo xtask sphinxdiff-roots`` Sphinx के अपने 42 टेस्ट रूटों पर Guidedog की तुलना निश्चित Sphinx 9.1.0 से करता है। यह पेज, पहचानकर्ता, मुख्य टेक्स्ट के लिंक, इन्वेंटरी, क्रमांकन और निदान जाँचता है। सहेजे गए परिणाम हर अंतर समझाते हैं, जैसे सटीक सोर्स स्थान, पढ़ने के क्रम पर आधारित स्थिर क्रमांकन, और छोड़ी गई लक्ष्य-विशिष्ट raw सामग्री की स्पष्ट सूचना (:doc:`internals/sphinx-comparison`)। रीडर के अनुरूपता टेस्ट (:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) अपने अपेक्षित आउटपुट बनाए रखते हैं। ``cargo xtask verify-docutils`` उन्हें निश्चित Docutils 0.22.4 से मिलाकर जाँचता है। सभी 98 ट्री मेल खाते हैं।"
+msgstr ""
+"``cargo xtask sphinxdiff-roots`` Sphinx के अपने 42 टेस्ट रूटों पर "
+"Guidedog की तुलना निश्चित Sphinx 9.1.0 से करता है। यह पेज, पहचानकर्ता, "
+"मुख्य टेक्स्ट के लिंक, इन्वेंटरी, क्रमांकन और निदान जाँचता है। सहेजे गए "
+"परिणाम हर अंतर समझाते हैं, जैसे सटीक सोर्स स्थान, पढ़ने के क्रम पर आधारित "
+"स्थिर क्रमांकन, और छोड़ी गई लक्ष्य-विशिष्ट raw सामग्री की स्पष्ट सूचना "
+"(:doc:`internals/sphinx-comparison`)। रीडर के अनुरूपता टेस्ट "
+"(:doc:`internals/rst-conformance`, "
+":doc:`internals/commonmark-conformance`) अपने अपेक्षित आउटपुट बनाए रखते "
+"हैं। ``cargo xtask verify-docutils`` उन्हें निश्चित Docutils 0.22.4 से "
+"मिलाकर जाँचता है। सभी 98 ट्री मेल खाते हैं।"
 
-#: ../../compatibility.rst:180
+#: ../../compatibility.rst:195
 msgid ""
 "On 15 October 2026 we built the manuals of CPython, Django and Flask as "
 "HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). "
 "Every HTML build succeeded, and the link check found no broken internal "
 "link besides two inert ones in CPython. The Django and Flask books built; "
 "the CPython book needs more memory than the 12 GB machine had."
-msgstr "15 अक्टूबर 2026 को हमने CPython, Django और Flask के मैनुअल HTML और PDF पुस्तक, दोनों रूपों में build किए, बिल्कुल नए सिरे से और बिना किसी बदलाव के (:doc:`evidence/manuals`)। सभी HTML build सफल रहे। लिंक जाँच में CPython के दो हानिरहित लिंक के सिवा कोई टूटा हुआ आंतरिक लिंक नहीं मिला। Django और Flask की पुस्तकें बन गईं; CPython की पुस्तक को 12 GB वाली उस मशीन से ज़्यादा मेमोरी चाहिए।"
+msgstr ""
+"15 अक्टूबर 2026 को हमने CPython, Django और Flask के मैनुअल HTML और PDF "
+"पुस्तक, दोनों रूपों में build किए, बिल्कुल नए सिरे से और बिना किसी बदलाव "
+"के (:doc:`evidence/manuals`)। सभी HTML build सफल रहे। लिंक जाँच में "
+"CPython के दो हानिरहित लिंक के सिवा कोई टूटा हुआ आंतरिक लिंक नहीं मिला। "
+"Django और Flask की पुस्तकें बन गईं; CPython की पुस्तक को 12 GB वाली उस "
+"मशीन से ज़्यादा मेमोरी चाहिए।"
 
-#: ../../compatibility.rst:182
+#: ../../compatibility.rst:197
 msgid ""
 "Those projects contain unsupported Python extension constructs. Their "
 "diagnostics remain part of the evidence. A zero exit status does not mean "
@@ -555,8 +703,10 @@ msgstr ""
 "उनके सभी निजी निर्देश दोहराए गए। जब प्रकाशन के लिए शून्य निदान ज़रूरी "
 "हों, तो हम ``-W`` के साथ चलाते हैं।"
 
-#: ../../compatibility.rst:184
+#: ../../compatibility.rst:199
 msgid ""
 "The measurements describe the recorded workloads on the recorded machine. "
 "They are not universal speed or memory bounds."
-msgstr "ये माप दर्ज की गई मशीन पर दर्ज किए गए वर्कलोड के हैं। ये गति या मेमोरी की सार्वभौमिक सीमाएँ नहीं हैं।"
+msgstr ""
+"ये माप दर्ज की गई मशीन पर दर्ज किए गए वर्कलोड के हैं। ये गति या मेमोरी की "
+"सार्वभौमिक सीमाएँ नहीं हैं।"

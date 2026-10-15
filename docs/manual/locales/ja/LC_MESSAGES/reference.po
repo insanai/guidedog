@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 06:56+0000\n"
+"POT-Creation-Date: 2026-10-15 09:09+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -57,19 +57,19 @@ msgid "Every command accepts these:"
 msgstr "すべてのコマンドで次のオプションを使えます。"
 
 #: ../../reference/cli.rst:35 ../../reference/cli.rst:152
-#: ../../reference/cli.rst:210 ../../reference/cli.rst:337
-#: ../../reference/cli.rst:363 ../../reference/cli.rst:416
-#: ../../reference/cli.rst:498 ../../reference/cli.rst:549
-#: ../../reference/cli.rst:612 ../../reference/cli.rst:781
+#: ../../reference/cli.rst:211 ../../reference/cli.rst:338
+#: ../../reference/cli.rst:364 ../../reference/cli.rst:417
+#: ../../reference/cli.rst:499 ../../reference/cli.rst:550
+#: ../../reference/cli.rst:613 ../../reference/cli.rst:782
 msgid "Option"
 msgstr "オプション"
 
 #: ../../reference/cli.rst:36 ../../reference/cli.rst:153
-#: ../../reference/cli.rst:211 ../../reference/cli.rst:338
-#: ../../reference/cli.rst:364 ../../reference/cli.rst:417
-#: ../../reference/cli.rst:499 ../../reference/cli.rst:550
-#: ../../reference/cli.rst:613 ../../reference/cli.rst:755
-#: ../../reference/cli.rst:782
+#: ../../reference/cli.rst:212 ../../reference/cli.rst:339
+#: ../../reference/cli.rst:365 ../../reference/cli.rst:418
+#: ../../reference/cli.rst:500 ../../reference/cli.rst:551
+#: ../../reference/cli.rst:614 ../../reference/cli.rst:756
+#: ../../reference/cli.rst:783
 msgid "Meaning"
 msgstr "意味"
 
@@ -548,64 +548,73 @@ msgid ""
 "and reference check)."
 msgstr "``dummy``: すべての文書を読んで解決し、何も書き出しません (構文と参照の確認用)。"
 
-#: ../../reference/cli.rst:206
+#: ../../reference/cli.rst:205
+msgid ""
+"``coverage``: reads every document and writes ``python.txt`` and "
+"``c.txt``, the objects the documents do not describe "
+"(sphinx.ext.coverage)."
+msgstr ""
+"``coverage``\\ ：すべての文書を読み、文書が記述していないオブジェクトを ``python.txt`` と ``c.txt`` "
+"に書き出します（sphinx.ext.coverage）。"
+
+#: ../../reference/cli.rst:207
 msgid "Options of build"
 msgstr "build のオプション"
 
-#: ../../reference/cli.rst:212
+#: ../../reference/cli.rst:213
 msgid "``-a``"
 msgstr "``-a``"
 
-#: ../../reference/cli.rst:213
+#: ../../reference/cli.rst:214
 msgid "Write all outputs, not only the changed ones."
 msgstr "変更があった出力だけでなく、すべての出力を書き出します。"
 
-#: ../../reference/cli.rst:214
+#: ../../reference/cli.rst:215
 msgid "``-E``"
 msgstr "``-E``"
 
-#: ../../reference/cli.rst:215
+#: ../../reference/cli.rst:216
 msgid "Fresh build: ignore the saved environment."
 msgstr "クリーンビルド: 保存された環境を無視します。"
 
-#: ../../reference/cli.rst:216
+#: ../../reference/cli.rst:217
 msgid "``-W``"
 msgstr "``-W``"
 
-#: ../../reference/cli.rst:217
+#: ../../reference/cli.rst:218
 msgid "Treat warnings as errors."
 msgstr "警告をエラーとして扱います。"
 
-#: ../../reference/cli.rst:218
+#: ../../reference/cli.rst:219
 msgid "``--keep-going``"
 msgstr "``--keep-going``"
 
-#: ../../reference/cli.rst:219
+#: ../../reference/cli.rst:220
 msgid ""
 "With ``-W``, finish the build to report every problem before failing."
 msgstr "``-W`` と併用すると、失敗する前にビルドを最後まで続けて、すべての問題を報告します。"
 
-#: ../../reference/cli.rst:220
+#: ../../reference/cli.rst:221
 msgid "``-n``"
 msgstr "``-n``"
 
-#: ../../reference/cli.rst:221
+#: ../../reference/cli.rst:222
 msgid "Nitpicky: warn about every unresolved reference."
 msgstr "厳格モード: 解決できない参照をすべて警告します。"
 
-#: ../../reference/cli.rst:222
+#: ../../reference/cli.rst:223
 msgid "``-j N``, ``-j auto``"
 msgstr "``-j N``, ``-j auto``"
 
-#: ../../reference/cli.rst:223
+#: ../../reference/cli.rst:224
 msgid "Read documents on ``N`` threads, or one per core."
 msgstr "文書を ``N`` 個のスレッド、またはコアごとに一つのスレッドで読みます。"
 
-#: ../../reference/cli.rst:224
+#: ../../reference/cli.rst:225
 msgid "``-D name=value``"
 msgstr "``-D name=value``"
 
-#: ../../reference/cli.rst:225
+#: ../../reference/cli.rst:226
 msgid ""
 "Override a ``conf.toml`` setting for this build (``-D language=de``); "
 "repeatable. ``-D table.key=value`` sets one key of a table setting, such "
@@ -615,113 +624,116 @@ msgstr ""
 "table.key=value`` は ``html_context`` "
 "などの表の設定のキーを一つだけ設定し、ほかのキーは残します。sphinx-build と同じ動作です。"
 
-#: ../../reference/cli.rst:228
+#: ../../reference/cli.rst:229
 msgid "``-t TAG``"
 msgstr "``-t TAG``"
 
-#: ../../reference/cli.rst:229
+#: ../../reference/cli.rst:230
 msgid "Define a tag for ``only`` directives; repeatable."
 msgstr "``only`` ディレクティブ用のタグを定義します。繰り返し指定できます。"
 
-#: ../../reference/cli.rst:230
+#: ../../reference/cli.rst:231
 msgid "``-c DIR``"
 msgstr "``-c DIR``"
 
-#: ../../reference/cli.rst:231
+#: ../../reference/cli.rst:232
 msgid "Read ``conf.toml`` from ``DIR`` instead of the source folder."
 msgstr "``conf.toml`` をソースフォルダーではなく ``DIR`` から読みます。"
 
-#: ../../reference/cli.rst:232
+#: ../../reference/cli.rst:233
 msgid "``-C``"
 msgstr "``-C``"
 
-#: ../../reference/cli.rst:233
+#: ../../reference/cli.rst:234
 msgid "Build without any ``conf.toml``."
 msgstr "``conf.toml`` を使わずにビルドします。"
 
-#: ../../reference/cli.rst:234
+#: ../../reference/cli.rst:235
 msgid "``-d DIR``"
 msgstr "``-d DIR``"
 
-#: ../../reference/cli.rst:235
+#: ../../reference/cli.rst:236
 msgid ""
 "Accepted for sphinx-build scripts and ignored: the environment lives in "
 "the build's own cache folder."
 msgstr ""
 "sphinx-build 用のスクリプトとの互換のために受け付けますが、無視されます。環境はビルド自身のキャッシュフォルダーに置かれます。"
 
-#: ../../reference/cli.rst:237
+#: ../../reference/cli.rst:238
 msgid "``-v``"
 msgstr "``-v``"
 
-#: ../../reference/cli.rst:238
+#: ../../reference/cli.rst:239
 msgid "Also show notes (Docutils' info messages); repeatable."
 msgstr "ノート (Docutils の info メッセージ) も表示します。繰り返し指定できます。"
 
-#: ../../reference/cli.rst:239
+#: ../../reference/cli.rst:240
 msgid "``-q``, ``-Q``"
 msgstr "``-q``, ``-Q``"
 
-#: ../../reference/cli.rst:240
+#: ../../reference/cli.rst:241
 msgid ""
 "Show only errors: no progress, summary, warnings or notes (``-W`` still "
 "counts the warnings)."
 msgstr "エラーだけを表示します。進捗、サマリー、警告、ノートは表示しません (``-W`` による警告のカウントは引き続き行われます)。"
 
-#: ../../reference/cli.rst:242
+#: ../../reference/cli.rst:243
 msgid "``--untrusted``"
 msgstr "``--untrusted``"
 
-#: ../../reference/cli.rst:243
+#: ../../reference/cli.rst:244
 msgid ""
 "Leave out raw content, fetch nothing, and run no build plugin. This is a "
 "capability policy, not a process sandbox."
 msgstr ""
 "生のコンテンツを省き、何も取得せず、ビルドプラグインも実行しません。機能を制限するポリシーであり、プロセスのサンドボックスではありません。"
 
-#: ../../reference/cli.rst:245 ../../reference/cli.rst:449
+#: ../../reference/cli.rst:246 ../../reference/cli.rst:450
 msgid "``--budget=MIB``"
 msgstr "``--budget=MIB``"
 
-#: ../../reference/cli.rst:246
+#: ../../reference/cli.rst:247
 msgid ""
 "Memory the build may hold at once, from 1 to 1048576 (default: ``1024``)."
 msgstr "ビルドが一度に保持できるメモリ量です。1 から 1048576 まで指定できます (既定値: ``1024``)。"
 
-#: ../../reference/cli.rst:247
+#: ../../reference/cli.rst:248
 msgid "``--memory=ram``"
 msgstr "``--memory=ram``"
 
-#: ../../reference/cli.rst:248
+#: ../../reference/cli.rst:249
 msgid ""
 "At the budget, stop without asking. Without it, a terminal asks whether "
 "to raise the budget or stop; a build without a terminal stops. "
 "``--memory=disk`` and ``--disk-budget`` (working memory on disk) are "
 "refused with ``cli.memory-disk``. Working memory stays in memory, bounded "
 "by the budget, so we raise ``--budget`` instead."
-msgstr "予算に達したら、確認せずに停止します。このオプションがない場合、端末では予算を引き上げるか停止するかを尋ね、端末のないビルドは停止します。``--memory=disk`` と ``--disk-budget`` (ワーキングメモリをディスクに置くためのもの) は ``cli.memory-disk`` で拒否されます。ワーキングメモリは予算の範囲内で常にメモリ上に保持されるので、代わりに ``--budget`` を引き上げます。"
+msgstr ""
+"予算に達したら、確認せずに停止します。このオプションがない場合、端末では予算を引き上げるか停止するかを尋ね、端末のないビルドは停止します。``--memory=disk`` "
+"と ``--disk-budget`` (ワーキングメモリをディスクに置くためのもの) は ``cli.memory-disk`` "
+"で拒否されます。ワーキングメモリは予算の範囲内で常にメモリ上に保持されるので、代わりに ``--budget`` を引き上げます。"
 
-#: ../../reference/cli.rst:253
+#: ../../reference/cli.rst:254
 msgid "``--max-depth=N``"
 msgstr "``--max-depth=N``"
 
-#: ../../reference/cli.rst:254
+#: ../../reference/cli.rst:255
 msgid "How deep content may nest (default: ``256``)."
 msgstr "コンテンツを入れ子にできる深さです (既定値: ``256``)。"
 
-#: ../../reference/cli.rst:255
+#: ../../reference/cli.rst:256
 msgid "``--max-nodes=N``"
 msgstr "``--max-nodes=N``"
 
-#: ../../reference/cli.rst:256
+#: ../../reference/cli.rst:257
 msgid "Nodes per document (default: ``1000000``)."
 msgstr "1 ドキュメントあたりのノード数です (既定値: ``1000000``)。"
 
-#: ../../reference/cli.rst:257 ../../reference/cli.rst:453
+#: ../../reference/cli.rst:258 ../../reference/cli.rst:454
 msgid "``--stack-kib=N``"
 msgstr "``--stack-kib=N``"
 
-#: ../../reference/cli.rst:258
+#: ../../reference/cli.rst:259
 msgid ""
 "Stack for nested content (default: ``512``; at most what the reading "
 "threads hold, 6144 on Linux and macOS). Raise it together with "
@@ -730,16 +742,16 @@ msgstr ""
 "入れ子のコンテンツに使うスタックです (既定値: ``512``。読み込みスレッドが持つ量が上限で、Linux と macOS では "
 "6144)。``--max-depth`` と合わせて引き上げてください。"
 
-#: ../../reference/cli.rst:260 ../../reference/cli.rst:439
-#: ../../reference/cli.rst:521
+#: ../../reference/cli.rst:261 ../../reference/cli.rst:440
+#: ../../reference/cli.rst:522
 msgid "``--typst=PATH``"
 msgstr "``--typst=PATH``"
 
-#: ../../reference/cli.rst:261
+#: ../../reference/cli.rst:262
 msgid "The Typst program for PDF, overriding ``typst`` in ``conf.toml``."
 msgstr "PDF 用の Typst プログラムです。``conf.toml`` の ``typst`` を上書きします。"
 
-#: ../../reference/cli.rst:263
+#: ../../reference/cli.rst:264
 msgid ""
 "The build prints what it read and wrote, then a verdict: ``build "
 "succeeded`` or ``build failed``, with the number of errors and warnings "
@@ -752,7 +764,7 @@ msgstr ""
 "の警告はビルド自身の警告なので、``-W`` のカウントに含まれます。``suppress_warnings`` は、``-W`` "
 "がカウントする前に警告を抑止します。"
 
-#: ../../reference/cli.rst:268
+#: ../../reference/cli.rst:269
 msgid ""
 "``read`` counts the documents parsed and those unchanged since the last "
 "build (taken from the environment). ``write`` counts the outputs written "
@@ -767,11 +779,11 @@ msgstr ""
 "(HTML ビルダーでは検索インデックスも含む)、``pdf`` では 1 冊の本、``singlehtml`` と ``gettext`` "
 "では唯一の出力を指します。どのビルドもサイトの共有ファイル (テーマ、索引、``objects.inv``) も書き出しますが、これらは数えません。"
 
-#: ../../reference/cli.rst:275
+#: ../../reference/cli.rst:276
 msgid "guidedog serve"
 msgstr "guidedog serve"
 
-#: ../../reference/cli.rst:278
+#: ../../reference/cli.rst:279
 msgid ""
 "Builds the HTML site and serves it on ``http://127.0.0.1:PORT/``. When "
 "sources, templates, static files, or ``conf.toml`` changed, it rebuilds "
@@ -780,7 +792,7 @@ msgstr ""
 "HTML サイトをビルドし、``http://127.0.0.1:PORT/`` "
 "で配信します。ソース、テンプレート、静的ファイル、``conf.toml`` が変更されていれば、リクエストに応答する前に再ビルドします："
 
-#: ../../reference/cli.rst:286
+#: ../../reference/cli.rst:287
 msgid ""
 "``--port PORT`` (``-p`` is quickstart's project name, not the port) "
 "chooses the port, from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, "
@@ -793,7 +805,7 @@ msgstr ""
 "``guidedog build`` のビルドオプションは、すべての再ビルドに適用されます。再ビルドのたびに ``conf.toml`` "
 "を読み直します。再ビルドに失敗した場合は前のサイトを残し、問題を報告します。サーバーは Ctrl+C で停止します。"
 
-#: ../../reference/cli.rst:291
+#: ../../reference/cli.rst:292
 msgid ""
 "It serves ``_build/html``. It watches the source folder, the Odin and "
 "Rust API sources (``odin_autoapi_dirs``, ``odin_collections``, "
@@ -809,21 +821,21 @@ msgstr ""
 "の各フォルダーです。ビルドフォルダーは監視しません。変更はファイル名、サイズ、時刻で検出します。チェックは HTML "
 "ページに応答する前に行われます："
 
-#: ../../reference/cli.rst:308
+#: ../../reference/cli.rst:309
 msgid "guidedog clean"
 msgstr "guidedog clean"
 
-#: ../../reference/cli.rst:311
+#: ../../reference/cli.rst:312
 msgid ""
 "Removes the contents of the project's build folder, the environment cache "
 "included:"
 msgstr "プロジェクトのビルドフォルダーの中身を、環境のキャッシュも含めて削除します："
 
-#: ../../reference/cli.rst:317
+#: ../../reference/cli.rst:318
 msgid "guidedog migrate"
 msgstr "guidedog migrate"
 
-#: ../../reference/cli.rst:320
+#: ../../reference/cli.rst:321
 msgid ""
 "Converts a Sphinx ``conf.py`` (or an old ``guidedog.toml``) to "
 "``conf.toml`` without running Python. Literal settings carry over. "
@@ -834,31 +846,31 @@ msgstr ""
 "``conf.toml`` に変換します。リテラルの設定はそのまま引き継がれます。Python "
 "で計算される部分は報告され、``conf.toml`` にコメントとして残ります："
 
-#: ../../reference/cli.rst:333
+#: ../../reference/cli.rst:334
 msgid "Options of migrate"
 msgstr "migrate のオプション"
 
-#: ../../reference/cli.rst:339
+#: ../../reference/cli.rst:340
 msgid "``-o FILE``, ``--output FILE``"
 msgstr "``-o FILE``, ``--output FILE``"
 
-#: ../../reference/cli.rst:340
+#: ../../reference/cli.rst:341
 msgid "Write here instead of beside ``conf.py``; ``-`` prints it."
 msgstr "``conf.py`` の隣ではなく、ここに書き出します。``-`` を指定すると標準出力に表示します。"
 
-#: ../../reference/cli.rst:341 ../../reference/cli.rst:427
+#: ../../reference/cli.rst:342 ../../reference/cli.rst:428
 msgid "``--force``"
 msgstr "``--force``"
 
-#: ../../reference/cli.rst:342
+#: ../../reference/cli.rst:343
 msgid "Replace an existing ``conf.toml``."
 msgstr "既存の ``conf.toml`` を上書きします。"
 
-#: ../../reference/cli.rst:344
+#: ../../reference/cli.rst:345
 msgid "guidedog intl"
 msgstr "guidedog intl"
 
-#: ../../reference/cli.rst:347
+#: ../../reference/cli.rst:348
 msgid ""
 "Keeps translation catalogs in step with the documents, as ``sphinx-intl`` "
 "does. First we write the message templates with ``guidedog build "
@@ -873,74 +885,74 @@ msgstr ""
 "obsolete になります。カタログを使うには ``-D language=LANG`` を付けてビルドするか、``conf.toml`` で "
 "``language`` を設定します。"
 
-#: ../../reference/cli.rst:359
+#: ../../reference/cli.rst:360
 msgid "Options of intl"
 msgstr "intl のオプション"
 
-#: ../../reference/cli.rst:365
+#: ../../reference/cli.rst:366
 msgid "``-l LANG``, ``--language LANG``"
 msgstr "``-l LANG``, ``--language LANG``"
 
-#: ../../reference/cli.rst:366
+#: ../../reference/cli.rst:367
 msgid "A language; repeat it for several."
 msgstr "言語です。複数指定する場合は繰り返します。"
 
-#: ../../reference/cli.rst:367
+#: ../../reference/cli.rst:368
 msgid "``-p DIR``, ``--pot-dir DIR``"
 msgstr "``-p DIR``, ``--pot-dir DIR``"
 
-#: ../../reference/cli.rst:368
+#: ../../reference/cli.rst:369
 msgid "The templates (default: ``_build/gettext``)."
 msgstr "テンプレートの場所です (既定値: ``_build/gettext``)。"
 
-#: ../../reference/cli.rst:369
+#: ../../reference/cli.rst:370
 msgid "``-d DIR``, ``--locale-dir DIR``"
 msgstr "``-d DIR``, ``--locale-dir DIR``"
 
-#: ../../reference/cli.rst:370
+#: ../../reference/cli.rst:371
 msgid "The catalogs (default: the first of ``locale_dirs``)."
 msgstr "カタログの場所です (既定値: ``locale_dirs`` の最初の項目)。"
 
-#: ../../reference/cli.rst:371
+#: ../../reference/cli.rst:372
 msgid "``-w N``, ``--line-width N``"
 msgstr "``-w N``, ``--line-width N``"
 
-#: ../../reference/cli.rst:372
+#: ../../reference/cli.rst:373
 msgid "Wrap lines at ``N`` characters (default: ``76``)."
 msgstr "``N`` 文字で行を折り返します (既定値: ``76``)。"
 
-#: ../../reference/cli.rst:373
+#: ../../reference/cli.rst:374
 msgid "``--no-obsolete``"
 msgstr "``--no-obsolete``"
 
-#: ../../reference/cli.rst:374
+#: ../../reference/cli.rst:375
 msgid "Drop messages the templates no longer have."
 msgstr "テンプレートにもう存在しないメッセージを削除します。"
 
-#: ../../reference/cli.rst:375
+#: ../../reference/cli.rst:376
 msgid "``-c DIR``, ``-D name=value``"
 msgstr "``-c DIR``, ``-D name=value``"
 
-#: ../../reference/cli.rst:376
+#: ../../reference/cli.rst:377
 msgid "Where ``conf.toml`` is; override a setting."
 msgstr "``conf.toml`` の場所の指定と、設定の上書きです。"
 
-#: ../../reference/cli.rst:378
+#: ../../reference/cli.rst:379
 msgid ""
 "``stat`` prints, for each catalog, how many messages are translated, "
 "fuzzy, and untranslated."
 msgstr "``stat`` は、カタログごとに翻訳済み、fuzzy、未翻訳のメッセージ数を表示します。"
 
-#: ../../reference/cli.rst:381
+#: ../../reference/cli.rst:382
 msgid "guidedog convert"
 msgstr "guidedog convert"
 
-#: ../../reference/cli.rst:384
+#: ../../reference/cli.rst:385
 msgid ""
 "Converts one file, or standard input, without a project or configuration:"
 msgstr "プロジェクトや設定なしで、1 つのファイルまたは標準入力を変換します："
 
-#: ../../reference/cli.rst:394
+#: ../../reference/cli.rst:395
 msgid ""
 "The input format comes from ``--from`` or the input's suffix: ``.rst`` "
 "and ``.rest`` are reStructuredText, ``.md`` and ``.markdown`` CommonMark, "
@@ -961,7 +973,7 @@ msgstr ""
 "(``.html``、``.htm``、``.pdf``、``.rst``、``.rest``) で決まります。``convert`` "
 "に適用されるのは以下のオプションだけです。"
 
-#: ../../reference/cli.rst:402
+#: ../../reference/cli.rst:403
 msgid ""
 "``--to rst`` writes reStructuredText with Guidedog's own writer (the "
 "``rst`` renderer). It keeps the author's lines: each line break inside a "
@@ -984,144 +996,144 @@ msgstr ""
 "では正確に表現できないもの (強制改行、テキスト中の画像、リンクのタイトル) "
 "もあります。その場合、ライターはできるだけ近い形にし、ノートを報告します。Typst の入力は reStructuredText に変換できません。"
 
-#: ../../reference/cli.rst:412
+#: ../../reference/cli.rst:413
 msgid "Options of convert"
 msgstr "convert のオプション"
 
-#: ../../reference/cli.rst:418
+#: ../../reference/cli.rst:419
 msgid "``-o FILE``, ``--output=FILE``"
 msgstr "``-o FILE``, ``--output=FILE``"
 
-#: ../../reference/cli.rst:419
+#: ../../reference/cli.rst:420
 msgid "The destination, or ``-`` for standard output. Required."
 msgstr "出力先です。標準出力にするには ``-`` を指定します。必須です。"
 
-#: ../../reference/cli.rst:420
+#: ../../reference/cli.rst:421
 msgid "``--from=rst|sphinx|commonmark|myst|typst``"
 msgstr "``--from=rst|sphinx|commonmark|myst|typst``"
 
-#: ../../reference/cli.rst:421
+#: ../../reference/cli.rst:422
 msgid ""
 "The input format (``restructuredtext``, ``md``, ``markdown`` and ``typ`` "
 "are accepted spellings)."
 msgstr ""
 "入力形式です (``restructuredtext``、``md``、``markdown``、``typ`` という表記も使えます)。"
 
-#: ../../reference/cli.rst:423
+#: ../../reference/cli.rst:424
 msgid "``--to=html|pdf|rst``"
 msgstr "``--to=html|pdf|rst``"
 
-#: ../../reference/cli.rst:424
+#: ../../reference/cli.rst:425
 msgid "The output format (``restructuredtext`` is an accepted spelling)."
 msgstr "出力形式です (``restructuredtext`` という表記も使えます)。"
 
-#: ../../reference/cli.rst:425
+#: ../../reference/cli.rst:426
 msgid "``--emit-typst=FILE``"
 msgstr "``--emit-typst=FILE``"
 
-#: ../../reference/cli.rst:426
+#: ../../reference/cli.rst:427
 msgid "Also write the generated Typst source (not for Typst input)."
 msgstr "生成した Typst ソースも書き出します (Typst の入力では使えません)。"
 
-#: ../../reference/cli.rst:428
+#: ../../reference/cli.rst:429
 msgid "Replace an existing output file."
 msgstr "既存の出力ファイルを上書きします。"
 
-#: ../../reference/cli.rst:429
+#: ../../reference/cli.rst:430
 msgid "``--raw=refuse|omit|allow``"
 msgstr "``--raw=refuse|omit|allow``"
 
-#: ../../reference/cli.rst:430
+#: ../../reference/cli.rst:431
 msgid "Raw HTML or Typst content: fail (default), leave it out, or keep it."
 msgstr "生の HTML や Typst コンテンツの扱いです。失敗にする (既定)、省く、残す、のいずれかです。"
 
-#: ../../reference/cli.rst:431
+#: ../../reference/cli.rst:432
 msgid "``--strict``"
 msgstr "``--strict``"
 
-#: ../../reference/cli.rst:432
+#: ../../reference/cli.rst:433
 msgid "Treat warnings as failures."
 msgstr "警告を失敗として扱います。"
 
-#: ../../reference/cli.rst:433
+#: ../../reference/cli.rst:434
 msgid "``--title=TEXT``, ``--lang=TAG``"
 msgstr "``--title=TEXT``, ``--lang=TAG``"
 
-#: ../../reference/cli.rst:434
+#: ../../reference/cli.rst:435
 msgid "The document's title and language."
 msgstr "ドキュメントのタイトルと言語です。"
 
-#: ../../reference/cli.rst:435
+#: ../../reference/cli.rst:436
 msgid "``--number-sections``"
 msgstr "``--number-sections``"
 
-#: ../../reference/cli.rst:436
+#: ../../reference/cli.rst:437
 msgid "Number section headings."
 msgstr "セクション見出しに番号を付けます。"
 
-#: ../../reference/cli.rst:437
+#: ../../reference/cli.rst:438
 msgid "``--fragment``"
 msgstr "``--fragment``"
 
-#: ../../reference/cli.rst:438
+#: ../../reference/cli.rst:439
 msgid "Write the body only, not a complete document."
 msgstr "完全なドキュメントではなく、本文だけを書き出します。"
 
-#: ../../reference/cli.rst:440
+#: ../../reference/cli.rst:441
 msgid ""
 "The Typst program (default: the embedded compiler, else ``typst`` on "
 "``PATH``)."
 msgstr "Typst プログラムです (既定値: 組み込みのコンパイラー。なければ ``PATH`` 上の ``typst``)。"
 
-#: ../../reference/cli.rst:441
+#: ../../reference/cli.rst:442
 msgid "``--font-path=DIR``"
 msgstr "``--font-path=DIR``"
 
-#: ../../reference/cli.rst:442
+#: ../../reference/cli.rst:443
 msgid "An extra font folder; repeat it for more."
 msgstr "追加のフォントフォルダーです。複数ある場合は繰り返します。"
 
-#: ../../reference/cli.rst:443
+#: ../../reference/cli.rst:444
 msgid "``--embedded-fonts-only``"
 msgstr "``--embedded-fonts-only``"
 
-#: ../../reference/cli.rst:444
+#: ../../reference/cli.rst:445
 msgid "Ignore system fonts, for reproducible PDFs."
 msgstr "再現可能な PDF のために、システムフォントを無視します。"
 
-#: ../../reference/cli.rst:445
+#: ../../reference/cli.rst:446
 msgid "``--offline``"
 msgstr "``--offline``"
 
-#: ../../reference/cli.rst:446
+#: ../../reference/cli.rst:447
 msgid "Use only Typst packages already on disk."
 msgstr "ディスク上にすでにある Typst パッケージだけを使います。"
 
-#: ../../reference/cli.rst:447
+#: ../../reference/cli.rst:448
 msgid "``--package-cache=DIR``"
 msgstr "``--package-cache=DIR``"
 
-#: ../../reference/cli.rst:448
+#: ../../reference/cli.rst:449
 msgid "The Typst package cache folder."
 msgstr "Typst パッケージのキャッシュフォルダーです。"
 
-#: ../../reference/cli.rst:450
+#: ../../reference/cli.rst:451
 msgid "The memory budget of the conversion (default: ``256``)."
 msgstr "変換のメモリ予算です (既定値: ``256``)。"
 
-#: ../../reference/cli.rst:451
+#: ../../reference/cli.rst:452
 msgid "``--max-depth=N``, ``--max-nodes=N``"
 msgstr "``--max-depth=N``, ``--max-nodes=N``"
 
-#: ../../reference/cli.rst:452
+#: ../../reference/cli.rst:453
 msgid "Nesting and node limits."
 msgstr "入れ子の深さとノード数の上限です。"
 
-#: ../../reference/cli.rst:454
+#: ../../reference/cli.rst:455
 msgid "Stack for nested content (default: ``512``, at most ``6144``)."
 msgstr "入れ子のコンテンツに使うスタックです (既定値: ``512``、上限: ``6144``)。"
 
-#: ../../reference/cli.rst:456
+#: ../../reference/cli.rst:457
 msgid ""
 "The exit status is 0 for success, 1 for invalid or refused content, 2 for "
 "usage, 3 for a limit, 4 for a file or Typst failure, and 5 for an "
@@ -1130,11 +1142,11 @@ msgstr ""
 "終了ステータスは、成功が 0、無効または拒否されたコンテンツが 1、使い方の誤りが 2、上限到達が 3、ファイルまたは Typst の失敗が "
 "4、内部エラーが 5 です。変換に失敗した場合、出力は書き出されません。"
 
-#: ../../reference/cli.rst:460
+#: ../../reference/cli.rst:461
 msgid "guidedog formats"
 msgstr "guidedog formats"
 
-#: ../../reference/cli.rst:463
+#: ../../reference/cli.rst:464
 msgid ""
 "Reports the readers and renderers this executable actually has, with "
 "their versions and conformance (``planned``, ``partial``, "
@@ -1145,11 +1157,11 @@ msgstr ""
 "(``planned``、``partial``、``conformant``) とともに報告します。見つかった Typst バックエンド "
 "(組み込み、またはインストール済みのプログラム) と、それが固定されたバージョンかどうかも報告します。"
 
-#: ../../reference/cli.rst:473
+#: ../../reference/cli.rst:474
 msgid "guidedog dsc"
 msgstr "guidedog dsc"
 
-#: ../../reference/cli.rst:476
+#: ../../reference/cli.rst:477
 msgid ""
 "Keeps a discussion catalog and builds it. The commands come from the "
 "discussion plugin, which every ``guidedog`` links. They work on any "
@@ -1165,7 +1177,7 @@ msgstr ""
 "で指定したカタログを対象にします。Guidedog 自身の設計記録も ``docs/gds`` にある一つのカタログです。作業の流れ全体は "
 ":doc:`../howto/discussions` で説明しています。"
 
-#: ../../reference/cli.rst:492
+#: ../../reference/cli.rst:493
 msgid ""
 "``guidedog dsc build`` builds the catalog as a Guidedog project, as "
 "``guidedog build`` does, with ``pdf_documents`` set to the record books "
@@ -1179,28 +1191,28 @@ msgstr ""
 "``discussion.toml`` の形式で表示します。``guidedog dsc --help`` "
 "でコマンドの一覧を、``guidedog dsc COMMAND --help`` で一つのコマンドのオプションを表示できます。"
 
-#: ../../reference/cli.rst:494
+#: ../../reference/cli.rst:495
 msgid "Options of guidedog dsc"
 msgstr "guidedog dsc のオプション"
 
-#: ../../reference/cli.rst:500
+#: ../../reference/cli.rst:501
 msgid "``--dir=DIR``"
 msgstr "``--dir=DIR``"
 
-#: ../../reference/cli.rst:501
+#: ../../reference/cli.rst:502
 msgid "The catalog. By default, the one the current folder is in."
 msgstr "カタログ。既定では、現在のフォルダーを含むカタログ。"
 
-#: ../../reference/cli.rst:502
+#: ../../reference/cli.rst:503
 msgid "``--prefix=NAME``"
 msgstr "``--prefix=NAME``"
 
-#: ../../reference/cli.rst:503
+#: ../../reference/cli.rst:504
 msgid ""
 "The prefix of a catalog without ``discussion.toml``; ``init`` needs it."
 msgstr "``discussion.toml`` のないカタログのプレフィックス。\\ ``init`` には必須です。"
 
-#: ../../reference/cli.rst:504
+#: ../../reference/cli.rst:505
 msgid ""
 "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
 "``--template=FILE``"
@@ -1208,17 +1220,17 @@ msgstr ""
 "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
 "``--template=FILE``"
 
-#: ../../reference/cli.rst:505
+#: ../../reference/cli.rst:506
 msgid ""
 "The name, settings, process draft, and record template of a new catalog "
 "(``init``)."
 msgstr "新しいカタログの名前、設定、手順の草案、記録テンプレート (``init``)。"
 
-#: ../../reference/cli.rst:507
+#: ../../reference/cli.rst:508
 msgid "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 msgstr "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 
-#: ../../reference/cli.rst:508
+#: ../../reference/cli.rst:509
 msgid ""
 "A new draft's author (default: Git's ``user.name``), labels, and file "
 "name (``new``; ``init`` takes the first two)."
@@ -1226,50 +1238,50 @@ msgstr ""
 "新しい草案の著者 (既定値: Git の ``user.name``)、ラベル、ファイル名です (``new`` 用。``init`` "
 "は最初の二つを使います)。"
 
-#: ../../reference/cli.rst:510
+#: ../../reference/cli.rst:511
 msgid "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 msgstr "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 
-#: ../../reference/cli.rst:511
+#: ../../reference/cli.rst:512
 msgid "``list``: filter by state or label; include inherited records."
 msgstr "``list``: 状態やラベルで絞り込みます。継承した記録も含めます。"
 
-#: ../../reference/cli.rst:512
+#: ../../reference/cli.rst:513
 msgid "``--number=N``, ``--discussion=URL``"
 msgstr "``--number=N``, ``--discussion=URL``"
 
-#: ../../reference/cli.rst:513
+#: ../../reference/cli.rst:514
 msgid ""
 "The number and review link of a promotion; ``--number`` also selects a "
 "record to build."
 msgstr "昇格時の番号とレビューのリンクです。``--number`` はビルドする記録の選択にも使います。"
 
-#: ../../reference/cli.rst:515
+#: ../../reference/cli.rst:516
 msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 msgstr "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 
-#: ../../reference/cli.rst:516
+#: ../../reference/cli.rst:517
 msgid "A state change, why, and for ``committed`` the evidence."
 msgstr "状態の変更、その理由、\\ ``committed`` の場合は根拠。"
 
-#: ../../reference/cli.rst:517
+#: ../../reference/cli.rst:518
 msgid "``--check``, ``--render``"
 msgstr "``--check``, ``--render``"
 
-#: ../../reference/cli.rst:518
+#: ../../reference/cli.rst:519
 msgid ""
 "``index``: check without writing; ``check``: also build the artifacts."
 msgstr "``index``: 書き込まずにチェックします。``check``: 成果物もビルドします。"
 
-#: ../../reference/cli.rst:519
+#: ../../reference/cli.rst:520
 msgid "``--target=html|pdf|both``"
 msgstr "``--target=html|pdf|both``"
 
-#: ../../reference/cli.rst:520
+#: ../../reference/cli.rst:521
 msgid "What ``build`` writes (default: both). A record selects one PDF."
 msgstr "``build`` が書き出すもの (既定: both)。記録を指定すると PDF を一つ選びます。"
 
-#: ../../reference/cli.rst:522
+#: ../../reference/cli.rst:523
 msgid ""
 "``build`` and ``check``: the Typst program for a catalog of older Typst "
 "records (default: the embedded compiler), and for the PDF books."
@@ -1277,7 +1289,7 @@ msgstr ""
 "``build`` と ``check``：古い Typst 記録のカタログと PDF の本に使う Typst "
 "プログラム（既定：組み込みのコンパイラ）。"
 
-#: ../../reference/cli.rst:524
+#: ../../reference/cli.rst:525
 msgid ""
 "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
 "``-q``"
@@ -1285,11 +1297,11 @@ msgstr ""
 "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
 "``-q``"
 
-#: ../../reference/cli.rst:525
+#: ../../reference/cli.rst:526
 msgid "Preview a change; machine-readable output; quiet success."
 msgstr "変更のプレビュー、機械可読な出力、成功時の出力抑制。"
 
-#: ../../reference/cli.rst:527
+#: ../../reference/cli.rst:528
 msgid ""
 "The exit statuses are those of ``guidedog``. Problems about a catalog "
 "have codes in its prefix, such as ``eds.recovery-needed``."
@@ -1297,11 +1309,11 @@ msgstr ""
 "終了ステータスは ``guidedog`` と同じです。カタログに関する問題には、``eds.recovery-needed`` "
 "のように、そのカタログのプレフィックスで始まるコードが付きます。"
 
-#: ../../reference/cli.rst:530
+#: ../../reference/cli.rst:531
 msgid "guidedog publish"
 msgstr "guidedog publish"
 
-#: ../../reference/cli.rst:533
+#: ../../reference/cli.rst:534
 msgid ""
 "Builds the project that a publisher's configuration names, as HTML with "
 "Guidedog's own engine. It freezes the site, and the publisher plans and "
@@ -1310,7 +1322,7 @@ msgstr ""
 "パブリッシャーの設定が指定するプロジェクトを、Guidedog 自身のエンジンで HTML "
 "としてビルドします。サイトを固定したうえで、パブリッシャーが公開の計画を立てて公開します："
 
-#: ../../reference/cli.rst:541
+#: ../../reference/cli.rst:542
 msgid ""
 "The publisher is looked up among the plugins linked into this executable "
 "first, then in the machine's registry (``guidedog plugin register``). A "
@@ -1319,49 +1331,49 @@ msgstr ""
 "パブリッシャーは、まずこの実行ファイルにリンクされたプラグインから探し、次にマシンのレジストリ (``guidedog plugin "
 "register``) から探します。公開できるのはパブリッシャーだけなので、ビルドプラグインは拒否されます。"
 
-#: ../../reference/cli.rst:545
+#: ../../reference/cli.rst:546
 msgid "Options of publish"
 msgstr "publish のオプション"
 
-#: ../../reference/cli.rst:551
+#: ../../reference/cli.rst:552
 msgid "``--publisher=ID``"
 msgstr "``--publisher=ID``"
 
-#: ../../reference/cli.rst:552
+#: ../../reference/cli.rst:553
 msgid "The publisher."
 msgstr "パブリッシャーです。"
 
-#: ../../reference/cli.rst:553 ../../reference/cli.rst:783
+#: ../../reference/cli.rst:554 ../../reference/cli.rst:784
 msgid "``--config=FILE``"
 msgstr "``--config=FILE``"
 
-#: ../../reference/cli.rst:554
+#: ../../reference/cli.rst:555
 msgid "The publisher's configuration, which names the project or site."
 msgstr "パブリッシャーの設定です。プロジェクトまたはサイトを指定します。"
 
-#: ../../reference/cli.rst:555
+#: ../../reference/cli.rst:556
 msgid "``--dry-run``"
 msgstr "``--dry-run``"
 
-#: ../../reference/cli.rst:556
+#: ../../reference/cli.rst:557
 msgid "Build and plan; write nothing to the target."
 msgstr "ビルドして計画を立てますが、公開先には何も書き込みません。"
 
-#: ../../reference/cli.rst:557
+#: ../../reference/cli.rst:558
 msgid "``--wait=SECONDS``"
 msgstr "``--wait=SECONDS``"
 
-#: ../../reference/cli.rst:558
+#: ../../reference/cli.rst:559
 msgid ""
 "How long to wait for the host to confirm the deployment, from 0 (do not "
 "wait) to 86400."
 msgstr "ホストがデプロイを確認するまで待つ時間です。0 (待たない) から 86400 まで指定できます。"
 
-#: ../../reference/cli.rst:560
+#: ../../reference/cli.rst:561
 msgid "``--timeout=SECONDS``"
 msgstr "``--timeout=SECONDS``"
 
-#: ../../reference/cli.rst:561
+#: ../../reference/cli.rst:562
 msgid ""
 "The bound on each whole exchange with the publisher, writing the request "
 "included, from 1 to 86400 (default: 300). Choose a value longer than "
@@ -1370,15 +1382,15 @@ msgstr ""
 "パブリッシャーとの 1 回のやり取り全体 (リクエストの書き込みを含む) にかけられる時間の上限です。1 から 86400 まで指定できます "
 "(既定値: 300)。``--wait`` より長い値を選んでください。"
 
-#: ../../reference/cli.rst:563
+#: ../../reference/cli.rst:564
 msgid "``--verbose``"
 msgstr "``--verbose``"
 
-#: ../../reference/cli.rst:564
+#: ../../reference/cli.rst:565
 msgid "List every change of the plan."
 msgstr "計画に含まれる変更をすべて一覧表示します。"
 
-#: ../../reference/cli.rst:566
+#: ../../reference/cli.rst:567
 msgid ""
 "A timeout or Ctrl+C after a possible write reports an unknown outcome "
 "(exit status 7). We then run the publisher's recovery command before "
@@ -1390,11 +1402,11 @@ msgstr ""
 "7)。その場合は、再試行する前にパブリッシャーの復旧コマンドを実行してください。各呼び出しは専用のプライベートフォルダーでビルドし、終了後にそのフォルダーを削除します。同時に実行した呼び出しが互いのスナップショットを変更することはありません。:doc:`../plugins` "
 "を参照してください。"
 
-#: ../../reference/cli.rst:571
+#: ../../reference/cli.rst:572
 msgid "guidedog publish pages"
 msgstr "guidedog publish pages"
 
-#: ../../reference/cli.rst:574
+#: ../../reference/cli.rst:575
 msgid ""
 "``guidedog publish pages`` is the guided way to GitHub Pages; the GitHub "
 "Pages plugin adds it. It does whatever is still missing and asks only "
@@ -1403,7 +1415,7 @@ msgstr ""
 "``guidedog publish pages`` は、GitHub Pages へのガイド付きの公開手順で、GitHub Pages "
 "プラグインが追加します。まだ足りないものを整え、必要なときだけ質問します。そのうえでビルドして公開します："
 
-#: ../../reference/cli.rst:577
+#: ../../reference/cli.rst:578
 msgid ""
 "``pages.toml``: written once, with the repository taken from the "
 "``origin`` remote and the project from the nearest ``conf.toml`` (or as "
@@ -1412,7 +1424,7 @@ msgstr ""
 "``pages.toml``：一度だけ書き込みます。リポジトリは ``origin`` リモートから、プロジェクトは最も近い "
 "``conf.toml`` から取ります（指定があればそれを使います）。"
 
-#: ../../reference/cli.rst:579
+#: ../../reference/cli.rst:580
 msgid ""
 "A token: GitHub's device sign-in, stored in the system's credential "
 "store, or the GitHub CLI's token for this run only."
@@ -1420,26 +1432,26 @@ msgstr ""
 "トークン：GitHub のデバイスサインインで取得してシステムの資格情報ストアに保存するか、今回の実行に限り GitHub CLI "
 "のトークンを使います。"
 
-#: ../../reference/cli.rst:581
+#: ../../reference/cli.rst:582
 msgid ""
 "The binding: the target is reviewed, and it asks us once to let this "
 "machine publish there."
 msgstr "バインド：公開先を確認し、このマシンからそこへ公開してよいかを一度だけ尋ねます。"
 
-#: ../../reference/cli.rst:583
+#: ../../reference/cli.rst:584
 msgid ""
 "The Pages source: when Pages publishes another branch, or uses Actions, "
 "it asks us once to switch it."
 msgstr ""
 "Pages のソース：Pages が別のブランチを公開している場合や Actions を使っている場合は、切り替えてよいかを一度だけ尋ねます。"
 
-#: ../../reference/cli.rst:585
+#: ../../reference/cli.rst:586
 msgid ""
 "The publication: one push to the site's own branch, then a wait for the "
 "deployment."
 msgstr "公開：サイト専用のブランチに一度プッシュし、デプロイの完了を待ちます。"
 
-#: ../../reference/cli.rst:587
+#: ../../reference/cli.rst:588
 msgid ""
 "On a machine that is already set up, it publishes without a question. "
 "Without a terminal it never asks. A missing step then fails with a hint "
@@ -1460,11 +1472,11 @@ msgstr ""
 "自身のエンジンとリンク済みのプラグインでビルドします。``--guidedog=PATH`` "
 "を指定すると、代わりに別のプログラムでビルドします。:doc:`../howto/github-pages` を参照してください。"
 
-#: ../../reference/cli.rst:595
+#: ../../reference/cli.rst:596
 msgid "guidedog pages workflow"
 msgstr "guidedog pages workflow"
 
-#: ../../reference/cli.rst:598
+#: ../../reference/cli.rst:599
 msgid ""
 "``guidedog pages workflow`` is ``guidedog-pages workflow``, added by the "
 "GitHub Pages plugin. It prints, writes, or checks a GitHub Actions "
@@ -1478,25 +1490,25 @@ msgstr ""
 "Guidedog リリースをインストールしてプロジェクトをビルドし、GitHub の Pages "
 "アクションでデプロイします。ソースブランチへのプッシュのたびにデプロイしたい場合は、自分のマシンから公開する代わりにこれを使います。"
 
-#: ../../reference/cli.rst:608
+#: ../../reference/cli.rst:609
 msgid "Options of pages workflow"
 msgstr "pages workflow のオプション"
 
-#: ../../reference/cli.rst:614
+#: ../../reference/cli.rst:615
 msgid "``--write``, ``--force``"
 msgstr "``--write``, ``--force``"
 
-#: ../../reference/cli.rst:615
+#: ../../reference/cli.rst:616
 msgid ""
 "Write ``.github/workflows/docs-pages.yml`` instead of printing it; "
 "replace an existing one."
 msgstr "``.github/workflows/docs-pages.yml`` を出力せずに書き込みます。既存のファイルは置き換えます。"
 
-#: ../../reference/cli.rst:617
+#: ../../reference/cli.rst:618
 msgid "``--check``"
 msgstr "``--check``"
 
-#: ../../reference/cli.rst:618
+#: ../../reference/cli.rst:619
 msgid ""
 "Check an existing workflow: an older release, a missing checksum, an "
 "unpinned action, ``pull_request_target``, a checkout that keeps its "
@@ -1505,20 +1517,20 @@ msgstr ""
 "既存のワークフローを検査し、古いリリース、チェックサムの欠落、固定されていないアクション、``pull_request_target`` "
 "の使用、資格情報を保持したままのチェックアウトを検出します。"
 
-#: ../../reference/cli.rst:620
+#: ../../reference/cli.rst:621
 msgid "``--project=DIR``, ``--branch=NAME``"
 msgstr "``--project=DIR``, ``--branch=NAME``"
 
-#: ../../reference/cli.rst:621
+#: ../../reference/cli.rst:622
 msgid ""
 "The project (default: ``docs``) and the source branch (default: ``main``)."
 msgstr "プロジェクト（既定: ``docs``）とソースブランチ（既定: ``main``）。"
 
-#: ../../reference/cli.rst:622
+#: ../../reference/cli.rst:623
 msgid "``--version=X``, ``--sha256=HEX``, ``--offline``"
 msgstr "``--version=X``, ``--sha256=HEX``, ``--offline``"
 
-#: ../../reference/cli.rst:623
+#: ../../reference/cli.rst:624
 msgid ""
 "The release to install, its archive's SHA-256 (default: read from the "
 "release's ``SHA256SUMS``), or a marked placeholder without network access."
@@ -1526,15 +1538,15 @@ msgstr ""
 "インストールするリリース、そのアーカイブの SHA-256（既定ではリリースの ``SHA256SUMS`` "
 "から読み取ります）、またはネットワークを使わない場合の目印付きプレースホルダー。"
 
-#: ../../reference/cli.rst:626
+#: ../../reference/cli.rst:627
 msgid "See :doc:`../howto/github-pages`."
 msgstr ":doc:`../howto/github-pages` を参照してください。"
 
-#: ../../reference/cli.rst:628
+#: ../../reference/cli.rst:629
 msgid "guidedog plugin"
 msgstr "guidedog plugin"
 
-#: ../../reference/cli.rst:631
+#: ../../reference/cli.rst:632
 msgid ""
 "Records which plugin programs may run on this machine, in "
 "``plugins.toml`` in Guidedog's configuration folder "
@@ -1543,11 +1555,11 @@ msgstr ""
 "このマシンで実行を許可するプラグインプログラムを、Guidedog 設定フォルダーの ``plugins.toml`` "
 "に記録します（``GUIDEDOG_CONFIG_DIR`` で場所を変えられます）："
 
-#: ../../reference/cli.rst:644
+#: ../../reference/cli.rst:645
 msgid "Subcommands:"
 msgstr "サブコマンド："
 
-#: ../../reference/cli.rst:646
+#: ../../reference/cli.rst:647
 msgid ""
 "``register ID PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS] "
 "[--yes]``: inspects the program after we confirm (``--yes`` skips the "
@@ -1559,7 +1571,7 @@ msgstr ""
 "[--yes]``：確認のうえでプログラムを検査し（``--yes`` で確認を省略）、その SHA-256 を記録します。プログラムは自身が "
 "``ID`` であると名乗る必要があります。ビルドプラグインは、下記の適合検査に合格してから登録されます。"
 
-#: ../../reference/cli.rst:650
+#: ../../reference/cli.rst:651
 msgid ""
 "``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: runs "
 "the qualification checks against a build plugin without changing the "
@@ -1570,13 +1582,13 @@ msgstr ""
 "[--timeout=SECONDS]``：登録簿を変更せずに、ビルドプラグインの適合検査を実行します。パブリッシャーは受け付けません。パブリッシャーは、それ自体のテストと "
 "``guidedog publish --dry-run`` で確かめます。"
 
-#: ../../reference/cli.rst:653
+#: ../../reference/cli.rst:654
 msgid ""
 "``list``: the registered programs, their IDs, paths, and kinds, beside "
 "the plugins linked into this executable."
 msgstr "``list``：登録済みプログラムの ID、パス、種別を、この実行ファイルにリンクされたプラグインと並べて表示します。"
 
-#: ../../reference/cli.rst:655
+#: ../../reference/cli.rst:656
 msgid ""
 "``inspect ID``: an entry's declared build hooks (source, HTML, assets) or "
 "publisher capabilities, the commands it adds, and whether the program on "
@@ -1585,20 +1597,20 @@ msgstr ""
 "``inspect "
 "ID``：項目が宣言しているビルドフック（ソース、HTML、アセット）またはパブリッシャーの機能、追加するコマンド、ディスク上のプログラムが登録時のものと同じかどうかを表示します。"
 
-#: ../../reference/cli.rst:658
+#: ../../reference/cli.rst:659
 msgid ""
 "``run ID -- [ARGS...]``: runs a registered program's own commands, after "
 "checking its SHA-256."
 msgstr "``run ID -- [ARGS...]``：SHA-256 を確認してから、登録済みプログラム自身のコマンドを実行します。"
 
-#: ../../reference/cli.rst:660
+#: ../../reference/cli.rst:661
 msgid ""
 "``unregister ID``: removes the entry from ``plugins.toml``. The program, "
 "and anything it published, stay unchanged."
 msgstr ""
 "``unregister ID``：``plugins.toml`` から項目を削除します。プログラム本体と、それが公開したものはそのまま残ります。"
 
-#: ../../reference/cli.rst:663
+#: ../../reference/cli.rst:664
 msgid ""
 "Build plugins are selected by ``plugins`` in ``conf.toml`` and run during "
 "``guidedog build``. ``guidedog publish`` accepts publishers only. "
@@ -1609,11 +1621,11 @@ msgstr ""
 "の実行中に動きます。``guidedog publish`` はパブリッシャーだけを受け付けます。``--untrusted`` "
 "を指定するとビルドプラグインは無効になります。完全なガイド、例、設定については :doc:`../plugins` を参照してください。"
 
-#: ../../reference/cli.rst:667
+#: ../../reference/cli.rst:668
 msgid "Build-plugin qualification checks"
 msgstr "ビルドプラグインの適合検査"
 
-#: ../../reference/cli.rst:670
+#: ../../reference/cli.rst:671
 msgid ""
 "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises the "
 "declared hooks in child processes: loading, repeated results, and "
@@ -1630,11 +1642,11 @@ msgstr ""
 "秒です。プログラムの SHA-256 "
 "は検査の前後で同じでなければなりません。パブリッシャーの登録では公開処理を呼び出しません。検査に合格しても相互運用性が確認できたというだけで、サンドボックスでも安全性の保証でもありません。"
 
-#: ../../reference/cli.rst:677
+#: ../../reference/cli.rst:678
 msgid "Custom binaries with linked plugins"
 msgstr "プラグインをリンクしたカスタムバイナリ"
 
-#: ../../reference/cli.rst:680
+#: ../../reference/cli.rst:681
 msgid ""
 "The whole command line is the ``gd-cli`` crate. A Rust program can be a "
 "``guidedog`` with plugins linked in, instead of registered as separate "
@@ -1647,7 +1659,7 @@ msgstr ""
 "になれます。そのためには、自分のプラグインを入れた ``gd_plugins::Registry`` を ``gd_cli::run_with`` "
 "に渡します。この関数はプロセスの引数を読み取り、終了ステータスを返します。"
 
-#: ../../reference/cli.rst:699
+#: ../../reference/cli.rst:700
 msgid ""
 "The program accepts every command and option on this page. A selected "
 "plugin ID is looked up among the linked plugins first, then in the "
@@ -1663,11 +1675,11 @@ msgstr ""
 "Pages プラグインを一つリンクしています。このプラグインは、インストール版が ``gd_plugins::serve_plugin`` "
 "で提供するのと同じ ``Plugin`` 値です（:doc:`../plugins` を参照）。"
 
-#: ../../reference/cli.rst:706
+#: ../../reference/cli.rst:707
 msgid "Commands plugins add"
 msgstr "プラグインが追加するコマンド"
 
-#: ../../reference/cli.rst:709
+#: ../../reference/cli.rst:710
 msgid ""
 "A plugin may add commands to guidedog, or targets to ``guidedog "
 "publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
@@ -1678,7 +1690,7 @@ msgstr ""
 "--help`` はそれらを PLUGIN COMMANDS の下に、追加したプラグインの ID とともに一覧表示します。``guidedog "
 "plugin inspect ID`` は、そのプラグインのコマンドを表示します："
 
-#: ../../reference/cli.rst:719
+#: ../../reference/cli.rst:720
 msgid ""
 "guidedog looks for a word it does not know (or a ``publish`` target) "
 "among the commands of the linked plugins first, then among those of the "
@@ -1692,7 +1704,7 @@ msgstr ""
 "``--help`` を付けると、プラグインの宣言から作ったヘルプを表示します。プラグインが guidedog "
 "のコマンドを置き換えることはできず、同じ名前は最初に追加したプラグインのものになります。"
 
-#: ../../reference/cli.rst:721
+#: ../../reference/cli.rst:722
 msgid ""
 "A linked plugin's command runs inside guidedog. A registered program's "
 "command runs as that program, started on our terminal after its SHA-256 "
@@ -1705,11 +1717,11 @@ msgstr ""
 "を検証したうえで、そのプログラムとして同じ端末で起動されます。質問をすることもでき、その終了ステータスがコマンドの終了ステータスになります。どちらの場合も、ビルドを求められたら "
 "guidedog がプロジェクトをビルドします。プログラムのコマンドは登録時に読み込まれるので、新しいバージョンはいつもどおり登録し直します。"
 
-#: ../../reference/cli.rst:723
+#: ../../reference/cli.rst:724
 msgid "guidedog-pages"
 msgstr "guidedog-pages"
 
-#: ../../reference/cli.rst:726
+#: ../../reference/cli.rst:727
 msgid ""
 "Publishes Guidedog sites to GitHub Pages from this machine. It builds "
 "projects with the installed ``guidedog``. ``publish`` does any missing "
@@ -1722,44 +1734,44 @@ msgstr ""
 "と同じく、足りないセットアップ手順を先に行います。個別の手順コマンドは、スクリプトから使うためと各段階を確認するために残しています。:doc:`../howto/github-pages` "
 "を参照してください。"
 
-#: ../../reference/cli.rst:750
+#: ../../reference/cli.rst:751
 msgid "Settings of pages.toml"
 msgstr "pages.toml の設定"
 
-#: ../../reference/cli.rst:754
+#: ../../reference/cli.rst:755
 msgid "Setting"
 msgstr "設定"
 
-#: ../../reference/cli.rst:756
+#: ../../reference/cli.rst:757
 msgid "``schema = 1``"
 msgstr "``schema = 1``"
 
-#: ../../reference/cli.rst:757
+#: ../../reference/cli.rst:758
 msgid "The file's version; required."
 msgstr "ファイルのバージョン。必須です。"
 
-#: ../../reference/cli.rst:758
+#: ../../reference/cli.rst:759
 msgid "``repository = \"OWNER/REPO\"``"
 msgstr "``repository = \"OWNER/REPO\"``"
 
-#: ../../reference/cli.rst:759
+#: ../../reference/cli.rst:760
 msgid "The GitHub.com repository; required."
 msgstr "GitHub.com のリポジトリ。必須です。"
 
-#: ../../reference/cli.rst:760
+#: ../../reference/cli.rst:761
 msgid "``branch = \"gh-pages\"``"
 msgstr "``branch = \"gh-pages\"``"
 
-#: ../../reference/cli.rst:761
+#: ../../reference/cli.rst:762
 msgid ""
 "The branch the site is published to: its own, never the default branch."
 msgstr "サイトを公開するブランチ。専用のブランチで、既定のブランチは使えません。"
 
-#: ../../reference/cli.rst:762
+#: ../../reference/cli.rst:763
 msgid "``project = \"docs\"`` or ``site = \"build/site\"``"
 msgstr "``project = \"docs\"`` または ``site = \"build/site\"``"
 
-#: ../../reference/cli.rst:763
+#: ../../reference/cli.rst:764
 msgid ""
 "The Guidedog project to build, or the folder of a site built already; one "
 "of them, relative to ``pages.toml``."
@@ -1767,19 +1779,19 @@ msgstr ""
 "ビルドする Guidedog プロジェクト、またはビルド済みサイトのフォルダー。どちらか一方を ``pages.toml`` "
 "からの相対パスで指定します。"
 
-#: ../../reference/cli.rst:765
+#: ../../reference/cli.rst:766
 msgid "``profile = \"default\"``"
 msgstr "``profile = \"default\"``"
 
-#: ../../reference/cli.rst:766
+#: ../../reference/cli.rst:767
 msgid "The credential profile whose token publishes."
 msgstr "公開に使うトークンを持つ、認証情報のプロファイル。"
 
-#: ../../reference/cli.rst:767
+#: ../../reference/cli.rst:768
 msgid "``site_url``"
 msgstr "``site_url``"
 
-#: ../../reference/cli.rst:768
+#: ../../reference/cli.rst:769
 msgid ""
 "The address readers open, and ``html_baseurl`` for the build (default: "
 "``https://OWNER.github.io/REPO/``)."
@@ -1787,49 +1799,49 @@ msgstr ""
 "読者が開くアドレス。ビルドの ``html_baseurl`` にもなります (既定: "
 "``https://OWNER.github.io/REPO/``)。"
 
-#: ../../reference/cli.rst:770
+#: ../../reference/cli.rst:771
 msgid "``strict = true``"
 msgstr "``strict = true``"
 
-#: ../../reference/cli.rst:771
+#: ../../reference/cli.rst:772
 msgid "Build with warnings as errors."
 msgstr "警告をエラーとしてビルドします。"
 
-#: ../../reference/cli.rst:772
+#: ../../reference/cli.rst:773
 msgid "``wait_seconds = 300``"
 msgstr "``wait_seconds = 300``"
 
-#: ../../reference/cli.rst:773
+#: ../../reference/cli.rst:774
 msgid "How long ``publish`` waits for the deployment."
 msgstr "``publish`` がデプロイを待つ時間。"
 
-#: ../../reference/cli.rst:774
+#: ../../reference/cli.rst:775
 msgid "``[watch] debounce_ms``, ``max_wait_ms``"
 msgstr "``[watch] debounce_ms``, ``max_wait_ms``"
 
-#: ../../reference/cli.rst:775
+#: ../../reference/cli.rst:776
 msgid ""
 "How long ``watch`` lets sources settle, and the most it waits after a "
 "change."
 msgstr "``watch`` がソースの変化が収まるのを待つ時間と、変更のあとに待つ最大の時間。"
 
-#: ../../reference/cli.rst:777
+#: ../../reference/cli.rst:778
 msgid "Options of guidedog-pages"
 msgstr "guidedog-pages のオプション"
 
-#: ../../reference/cli.rst:784
+#: ../../reference/cli.rst:785
 msgid "The configuration (default: ``pages.toml``)."
 msgstr "設定ファイル (既定: ``pages.toml``)。"
 
-#: ../../reference/cli.rst:785
+#: ../../reference/cli.rst:786
 msgid "``--profile=NAME``"
 msgstr "``--profile=NAME``"
 
-#: ../../reference/cli.rst:786
+#: ../../reference/cli.rst:787
 msgid "The profile ``auth`` and ``init`` use (default: ``default``)."
 msgstr "``auth`` と ``init`` が使うプロファイル (既定: ``default``)。"
 
-#: ../../reference/cli.rst:787
+#: ../../reference/cli.rst:788
 msgid ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
@@ -1837,58 +1849,58 @@ msgstr ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
 
-#: ../../reference/cli.rst:788
+#: ../../reference/cli.rst:789
 msgid "``init``: what the new ``pages.toml`` says."
 msgstr "``init``：新しい ``pages.toml`` に書き込む内容。"
 
-#: ../../reference/cli.rst:789
+#: ../../reference/cli.rst:790
 msgid "``--credential=env``"
 msgstr "``--credential=env``"
 
-#: ../../reference/cli.rst:790
+#: ../../reference/cli.rst:791
 msgid ""
 "Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without "
 "storing it."
 msgstr "このコマンドに限り、\\ ``GUIDEDOG_PAGES_TOKEN`` のトークンを保存せずに使います。"
 
-#: ../../reference/cli.rst:791
+#: ../../reference/cli.rst:792
 msgid "``--guidedog=PATH``"
 msgstr "``--guidedog=PATH``"
 
-#: ../../reference/cli.rst:792
+#: ../../reference/cli.rst:793
 msgid ""
 "The ``guidedog`` that builds (default: ``GUIDEDOG_PAGES_GUIDEDOG``, then "
 "``PATH``)."
 msgstr ""
 "ビルドに使う ``guidedog`` (既定: ``GUIDEDOG_PAGES_GUIDEDOG``\\ 、次に ``PATH``)。"
 
-#: ../../reference/cli.rst:793
+#: ../../reference/cli.rst:794
 msgid "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 msgstr "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 
-#: ../../reference/cli.rst:794
+#: ../../reference/cli.rst:795
 msgid ""
 "``publish``: plan only; how long to wait for the deployment; list every "
 "change."
 msgstr "``publish``: 計画だけを行う、デプロイを待つ時間、すべての変更を一覧表示する。"
 
-#: ../../reference/cli.rst:795
+#: ../../reference/cli.rst:796
 msgid "``--adopt``, ``--yes``"
 msgstr "``--adopt``, ``--yes``"
 
-#: ../../reference/cli.rst:796
+#: ../../reference/cli.rst:797
 msgid ""
 "``bind``: let a branch of other work be replaced; answer yes to the "
 "question."
 msgstr "``bind``: 別の内容を持つブランチの置き換えを許可する、確認に yes と答える。"
 
-#: ../../reference/cli.rst:797
+#: ../../reference/cli.rst:798
 msgid ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 msgstr ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 
-#: ../../reference/cli.rst:798
+#: ../../reference/cli.rst:799
 msgid ""
 "``auth login``: the app; the repositories an OAuth App token may reach; "
 "open the browser; give the profile to another account."
@@ -1896,23 +1908,23 @@ msgstr ""
 "``auth login``: 使うアプリ、OAuth App "
 "のトークンがアクセスできるリポジトリ、ブラウザを開く、プロファイルを別のアカウントに切り替える。"
 
-#: ../../reference/cli.rst:800
+#: ../../reference/cli.rst:801
 msgid "``--operation=COMMIT``"
 msgstr "``--operation=COMMIT``"
 
-#: ../../reference/cli.rst:801
+#: ../../reference/cli.rst:802
 msgid "``status``: the publication to ask about (default: the last one)."
 msgstr "``status``：問い合わせる公開（既定: 直前の公開）。"
 
-#: ../../reference/cli.rst:802
+#: ../../reference/cli.rst:803
 msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
 msgstr "``--diagnostics=text|json``, ``--color=auto|always|never``"
 
-#: ../../reference/cli.rst:803
+#: ../../reference/cli.rst:804
 msgid "How problems and results are written."
 msgstr "問題と結果の出力形式。"
 
-#: ../../reference/cli.rst:805
+#: ../../reference/cli.rst:806
 msgid ""
 "Its exit statuses are those of ``guidedog publish``: 0 live or unchanged, "
 "1 nothing published, 2 a usage or configuration problem, 4 a file, "
@@ -2005,15 +2017,15 @@ msgid ""
 "the line and the expected form. An unknown setting is an error too, with "
 "a \"Did you mean ...?\" hint when the name is close to a known one. A "
 "setting of a Sphinx builder or extension Guidedog does not have "
-"(``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, ``autosummary_*``, "
-"``napoleon_*``, ``linkcheck_*``, ``html_sidebars``, ``needs_*`` and "
-"similar) is accepted with a ``config.ignored`` warning. So the same file "
-"can serve a Sphinx build of the sources."
+"(``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, ``doctest_*``, "
+"``linkcheck_*``, ``html_sidebars``, ``needs_*`` and similar) is accepted "
+"with a ``config.ignored`` warning. So the same file can serve a Sphinx "
+"build of the sources."
 msgstr ""
 "各値は、``conf.toml`` を読み込むときに型に照らして検査されます。誤りがあると ``INVALID CONFIGURATION`` "
 "の問題（終了ステータス 2）となり、該当する行と期待される形式が示されます。未知の設定もエラーになり、既知の名前に近い場合は \"Did you "
-"mean ...?\" というヒントが付きます。Guidedog にない Sphinx "
-"のビルダーや拡張の設定（``latex_*``、``epub_*``、``man_*``、``texinfo_*``、``autosummary_*``、``napoleon_*``、``linkcheck_*``、``html_sidebars``、``needs_*`` "
+"mean ...?\" というヒントが付きます。Guidedog にない Sphinx のビルダーや拡張の設定（\\ "
+"``latex_*``、``epub_*``、``man_*``、``texinfo_*``、``doctest_*``、``linkcheck_*``、``html_sidebars``、``needs_*`` "
 "など）は、``config.ignored`` 警告を出したうえで受け付けます。そのため、同じファイルをこれらのソースの Sphinx "
 "ビルドにも使えます。"
 
@@ -4488,10 +4500,22 @@ msgid "Reads and resolves the project without publishing an artifact."
 msgstr "成果物を公開せずにプロジェクトを読み、参照を解決します。"
 
 #: ../../reference/formats.rst:58
+msgid "``coverage``"
+msgstr "``coverage``"
+
+#: ../../reference/formats.rst:59
+msgid ""
+"Writes ``python.txt`` and ``c.txt``: the Python and C objects the "
+"documents do not describe."
+msgstr ""
+"``python.txt`` と ``c.txt`` を書き出します。どちらも、文書が記述していない Python と C "
+"のオブジェクトの一覧です。"
+
+#: ../../reference/formats.rst:61
 msgid "Coverage is evidence"
 msgstr "対応範囲は検証の証拠"
 
-#: ../../reference/formats.rst:61
+#: ../../reference/formats.rst:64
 msgid ""
 "``guidedog formats`` reports the executable's actual adapters. The "
 "compatibility page records pinned suites and real-project checks. Passing "

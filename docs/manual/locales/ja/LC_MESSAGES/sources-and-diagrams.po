@@ -1,0 +1,690 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-15 09:09+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: Guidedog translation contributors\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../sources-and-diagrams.rst:1
+msgid "Source pages, source links and class diagrams"
+msgstr "ソースページ、ソースへのリンク、クラス図"
+
+#: ../../sources-and-diagrams.rst:4
+msgid ""
+"Five of Sphinx's built-in extensions connect a manual to the code it "
+"describes and to the build that makes it. ``viewcode`` writes a "
+"highlighted copy of each documented module and links it with the "
+"descriptions. ``linkcode`` links each description to its source on the "
+"web. ``inheritance_diagram`` draws class graphs. ``duration`` reports "
+"which documents are slow to read. ``imgconverter`` makes sure every image "
+"reaches the book."
+msgstr ""
+"Sphinx の組み込み拡張のうち 5 つは、マニュアルを、それが記述するコードや、それを作るビルドと結び付けます。``viewcode`` "
+"は、文書化した各モジュールのハイライト済みのコピーを書き出し、記述とリンクします。``linkcode`` は、各記述を Web "
+"上のソースにリンクします。``inheritance_diagram`` はクラスのグラフを描きます。``duration`` "
+"は、読み込みに時間のかかる文書を報告します。``imgconverter`` は、すべての画像が書籍に確実に収まるようにします。"
+
+#: ../../sources-and-diagrams.rst:6
+msgid "We turn them on as in Sphinx, by name:"
+msgstr "Sphinx と同じく、名前を書いて有効にします。"
+
+#: ../../sources-and-diagrams.rst:17
+msgid ""
+"The first three read Python source with the same scan that autodoc uses "
+"(:doc:`autodoc`). Nothing is imported, and no program runs. The scan "
+"finds a module below ``autodoc_source_paths``, its classes and functions, "
+"their bases, and the lines each one spans. A description written by hand "
+"with ``py:class`` or ``py:function`` is found as well as one that autodoc "
+"wrote, as long as its module is below those folders."
+msgstr ""
+"最初の 3 つは、autodoc と同じ走査で Python のソースを読みます（\\ :doc:`autodoc`\\ "
+"）。何もインポートせず、プログラムも実行しません。走査では、``autodoc_source_paths`` "
+"の下にあるモジュールと、そのクラスと関数、それらの基底クラス、それぞれが占める行を見つけます。``py:class`` や "
+"``py:function`` で手書きした記述も、autodoc "
+"が書いた記述と同じように見つかります。ただし、そのモジュールがこれらのフォルダーの下にある場合に限ります。"
+
+#: ../../sources-and-diagrams.rst:21
+msgid ""
+"Python source is read by the source scan while documents are read. The "
+"scan gives each Python description its file and lines, and each "
+"inheritance diagram its classes. When pages are written, the lines become "
+"source links and source pages, and the classes become a Graphviz drawing "
+"whose nodes link to the descriptions."
+msgstr ""
+"Python のソースは、文書を読む間にソースの走査で読み込まれます。走査は、Python "
+"の各記述にファイルと行を、各継承図にクラスを与えます。ページを書き出すとき、行はソースへのリンクとソースページになり、クラスは Graphviz "
+"の図になります。図のノードは記述にリンクしています。"
+
+#: ../../sources-and-diagrams.rst:21
+msgid ""
+"Reading finds where each object is defined; writing turns that into "
+"links, pages and drawings."
+msgstr "読み込みでは各オブジェクトの定義場所を見つけ、書き出しではそれをリンク、ページ、図に変えます。"
+
+#: ../../sources-and-diagrams.rst:42
+msgid ""
+"Every Python file the scan reads is a dependency of the document that "
+"needed it. When we edit a module, the documents that describe it are read "
+"again, and their links, source pages and diagrams follow the edit."
+msgstr ""
+"走査が読んだ Python "
+"ファイルは、それを必要とした文書の依存関係になります。モジュールを編集すると、それを記述している文書が読み直され、リンク、ソースページ、図も編集に追従します。"
+
+#: ../../sources-and-diagrams.rst:44
+msgid "Source pages: viewcode"
+msgstr "ソースページ: viewcode"
+
+#: ../../sources-and-diagrams.rst:47
+msgid ""
+"With ``sphinx.ext.viewcode`` listed, each Python description gets a "
+"``[source]`` link after its signature. The link leads to a page that "
+"shows the module's source, highlighted like any code block. On that page "
+"each described class and function sits in a block with a ``[docs]`` link "
+"back to its description."
+msgstr ""
+"``sphinx.ext.viewcode`` を指定すると、Python の各記述のシグネチャの後ろに ``[source]`` "
+"リンクが付きます。リンク先のページには、モジュールのソースがほかのコードブロックと同じようにハイライトされて表示されます。そのページでは、記述のある各クラスと各関数がブロックに収まり、記述へ戻る "
+"``[docs]`` リンクが付きます。"
+
+#: ../../sources-and-diagrams.rst:49
+msgid "For this module, ``src/shapes.py``:"
+msgstr "たとえば、次のモジュール ``src/shapes.py`` があるとします。"
+
+#: ../../sources-and-diagrams.rst:60
+msgid ""
+"the description of ``shapes.Square`` links to "
+"``_modules/shapes.html#Square``, and the source page links back to "
+"``index.html#shapes.Square``. A page for each module lies in "
+"``_modules/<package>/<module>.html``, and ``_modules/index.html`` lists "
+"them all, a package's modules nested inside it. The links are relative, "
+"so they work under ``dirhtml`` and when we open the files straight from "
+"the disk."
+msgstr ""
+"このとき、``shapes.Square`` の記述は ``_modules/shapes.html#Square`` にリンクし、ソースページは "
+"``index.html#shapes.Square`` にリンクで戻ります。モジュールごとのページは "
+"``_modules/<package>/<module>.html`` に置かれ、``_modules/index.html`` "
+"がそのすべてを一覧にします。パッケージのモジュールはパッケージの下に入れ子で並びます。リンクは相対パスなので、``dirhtml`` "
+"でも、ディスク上のファイルを直接開いたときでも機能します。"
+
+#: ../../sources-and-diagrams.rst:62
+msgid ""
+"A class that a package re-exports is linked to the module that defines "
+"it. If ``Square`` were defined in ``shapes/square.py`` and imported by "
+"``shapes/__init__.py``, the description of ``shapes.Square`` would link "
+"to ``_modules/shapes/square.html#Square``. A block starts at the "
+"definition's first decorator and ends at its last line, so a decorated "
+"method shows its decorators."
+msgstr ""
+"パッケージが再エクスポートしているクラスは、それを定義しているモジュールにリンクします。``Square`` が "
+"``shapes/square.py`` で定義され、``shapes/__init__.py`` "
+"でインポートされているなら、``shapes.Square`` の記述は "
+"``_modules/shapes/square.html#Square`` "
+"にリンクします。ブロックは定義の最初のデコレーターから始まり、定義の最後の行で終わります。そのため、デコレーター付きのメソッドではデコレーターも表示されます。"
+
+#: ../../sources-and-diagrams.rst:64
+msgid "The settings have Sphinx's names and defaults:"
+msgstr "設定の名前と既定値は Sphinx と同じです。"
+
+#: ../../sources-and-diagrams.rst:66
+msgid "``viewcode_follow_imported_members``"
+msgstr "``viewcode_follow_imported_members``"
+
+#: ../../sources-and-diagrams.rst:67
+msgid ""
+"``true`` (default): link a re-exported object to the module that defines "
+"it. ``false``: link only objects that the named module defines itself. "
+"The old name ``viewcode_import`` is read as this setting."
+msgstr ""
+"``true``\\ （既定）：再エクスポートされたオブジェクトを、それを定義しているモジュールにリンクします。``false``\\ "
+"：指定したモジュール自身が定義しているオブジェクトだけをリンクします。古い名前の ``viewcode_import`` "
+"も、この設定として読みます。"
+
+#: ../../sources-and-diagrams.rst:69
+msgid "``viewcode_line_numbers``"
+msgstr "``viewcode_line_numbers``"
+
+#: ../../sources-and-diagrams.rst:70
+msgid "``false`` (default). ``true`` numbers the lines of the source pages."
+msgstr "``false``\\ （既定）。``true`` にすると、ソースページの行に番号を付けます。"
+
+#: ../../sources-and-diagrams.rst:72
+msgid "``viewcode_enable_epub``"
+msgstr "``viewcode_enable_epub``"
+
+#: ../../sources-and-diagrams.rst:73
+msgid "Accepted and unused, since Guidedog has no EPUB builder."
+msgstr "受け付けますが、使いません。Guidedog には EPUB ビルダーがないためです。"
+
+#: ../../sources-and-diagrams.rst:75
+msgid ""
+"Source pages exist in ``html`` and ``dirhtml`` only, as in Sphinx. "
+"``singlehtml``, the PDF and text have neither the links nor the pages: a "
+"book does not need a second copy of the code."
+msgstr ""
+"Sphinx と同じく、ソースページがあるのは ``html`` と ``dirhtml`` "
+"だけです。``singlehtml``、PDF、テキストには、リンクもページもありません。書籍にコードの 2 つ目のコピーは必要ないからです。"
+
+#: ../../sources-and-diagrams.rst:77
+msgid ""
+"A description whose module is not below ``autodoc_source_paths`` gets no "
+"link. The note ``viewcode.source`` names the module once per document, "
+"with the hint to add its folder. A module file larger than 8 MiB, the "
+"limit of every source read, gets no page, with the warning "
+"``viewcode.limit``."
+msgstr ""
+"モジュールが ``autodoc_source_paths`` の下にない記述には、リンクが付きません。``viewcode.source`` "
+"という注記が、文書ごとに 1 回そのモジュールを示し、そのフォルダーを追加するようヒントを出します。8 "
+"MiB（すべてのソース読み込みに共通する上限）を超えるモジュールファイルにはページを作らず、``viewcode.limit`` "
+"という警告を出します。"
+
+#: ../../sources-and-diagrams.rst:79
+msgid "Source links on the web: linkcode"
+msgstr "Web 上のソースへのリンク: linkcode"
+
+#: ../../sources-and-diagrams.rst:82
+msgid ""
+"Sphinx's ``linkcode`` calls a Python function, ``linkcode_resolve``, to "
+"make each link. Guidedog never runs Python, so it takes a URL template "
+"instead:"
+msgstr ""
+"Sphinx の ``linkcode`` は、Python 関数 ``linkcode_resolve`` "
+"を呼び出して各リンクを作ります。Guidedog は Python を実行しないため、代わりに URL テンプレートを使います。"
+
+#: ../../sources-and-diagrams.rst:89
+msgid ""
+"In a repository whose checked-out branch is ``main``, the description of "
+"``Square.area`` above then links to "
+"``https://github.com/acme/shapes/blob/main/src/shapes.py#L4-L6``. These "
+"placeholders are filled for each object:"
+msgstr ""
+"チェックアウトしているブランチが ``main`` のリポジトリでは、上の ``Square.area`` の記述は "
+"``https://github.com/acme/shapes/blob/main/src/shapes.py#L4-L6`` "
+"にリンクします。各オブジェクトについて、次のプレースホルダーが埋められます。"
+
+#: ../../sources-and-diagrams.rst:91
+msgid "Placeholders of ``linkcode_url``"
+msgstr "``linkcode_url`` のプレースホルダー"
+
+#: ../../sources-and-diagrams.rst:95
+msgid "Placeholder"
+msgstr "プレースホルダー"
+
+#: ../../sources-and-diagrams.rst:96
+msgid "Value"
+msgstr "値"
+
+#: ../../sources-and-diagrams.rst:97
+msgid "``{domain}``"
+msgstr "``{domain}``"
+
+#: ../../sources-and-diagrams.rst:98
+msgid ""
+"The object's domain: ``py``, ``c``, ``cpp``, ``js``, ``rust``, ``odin``."
+msgstr "オブジェクトのドメイン：\\ ``py``、``c``、``cpp``、``js``、``rust``、``odin``\\ 。"
+
+#: ../../sources-and-diagrams.rst:99
+msgid "``{module}``"
+msgstr "``{module}``"
+
+#: ../../sources-and-diagrams.rst:100
+msgid ""
+"The module as the description names it, or the Rust or Odin crate or "
+"package path."
+msgstr "記述が示すモジュール名、または Rust のクレートや Odin のパッケージのパス。"
+
+#: ../../sources-and-diagrams.rst:101
+msgid "``{fullname}``"
+msgstr "``{fullname}``"
+
+#: ../../sources-and-diagrams.rst:102
+msgid "The object's name within its module, such as ``Square.area``."
+msgstr "モジュール内でのオブジェクトの名前（\\ ``Square.area`` など）。"
+
+#: ../../sources-and-diagrams.rst:103
+msgid "``{path}``"
+msgstr "``{path}``"
+
+#: ../../sources-and-diagrams.rst:104
+msgid ""
+"The object's source file, relative to ``linkcode_root``, with ``/`` "
+"between folders."
+msgstr "オブジェクトのソースファイルの、``linkcode_root`` からの相対パス。フォルダーの区切りは ``/`` です。"
+
+#: ../../sources-and-diagrams.rst:105
+msgid "``{line}``"
+msgstr "``{line}``"
+
+#: ../../sources-and-diagrams.rst:106
+msgid ""
+"The first line of the definition, counted from 1. A decorator's line "
+"counts."
+msgstr "定義の最初の行（1 から数えます）。デコレーターの行も含みます。"
+
+#: ../../sources-and-diagrams.rst:107
+msgid "``{end_line}``"
+msgstr "``{end_line}``"
+
+#: ../../sources-and-diagrams.rst:108
+msgid "The last line of the definition."
+msgstr "定義の最後の行。"
+
+#: ../../sources-and-diagrams.rst:109
+msgid "``{branch}``"
+msgstr "``{branch}``"
+
+#: ../../sources-and-diagrams.rst:110
+msgid "``linkcode_branch``, or the branch read from the repository."
+msgstr "``linkcode_branch``、またはリポジトリから読み取ったブランチ。"
+
+#: ../../sources-and-diagrams.rst:111
+msgid "``{{`` and ``}}``"
+msgstr "``{{`` と ``}}``"
+
+#: ../../sources-and-diagrams.rst:112
+msgid "A literal brace."
+msgstr "波括弧そのもの。"
+
+#: ../../sources-and-diagrams.rst:114
+msgid ""
+"``linkcode_root`` names the folder ``{path}`` is relative to, relative to "
+"the source folder. Left empty, it is the nearest folder at or above the "
+"source folder that holds ``.git``. ``linkcode_branch`` is the text of "
+"``{branch}``. Left empty, it is the branch that the repository has "
+"checked out, read from ``.git/HEAD``, or the commit when ``HEAD`` is "
+"detached."
+msgstr ""
+"``linkcode_root`` には、``{path}`` "
+"の基準となるフォルダーを、ソースフォルダーからの相対パスで指定します。空のままなら、ソースフォルダーかその上にあるフォルダーのうち、``.git`` "
+"を含む最も近いものになります。``linkcode_branch`` は ``{branch}`` "
+"に入る文字列です。空のままなら、リポジトリでチェックアウトしているブランチを ``.git/HEAD`` から読み取ります。``HEAD`` が "
+"detached の場合はコミットを使います。"
+
+#: ../../sources-and-diagrams.rst:116
+msgid ""
+"A link is added only when every placeholder the template uses has a "
+"value. A Python object that the scan found has them all. A ``c:`` or "
+"``cpp:`` object, and the objects of the Rust and Odin domains, carry "
+"their names but no file. Only a template that uses nothing but "
+"``{domain}``, ``{module}``, ``{fullname}`` and ``{branch}`` links them, "
+"for example a template that points at an API search."
+msgstr ""
+"リンクは、テンプレートが使うすべてのプレースホルダーに値があるときにだけ追加されます。走査で見つかった Python "
+"オブジェクトには、すべての値があります。``c:`` や ``cpp:`` のオブジェクト、Rust と Odin "
+"のドメインのオブジェクトには、名前はあってもファイルはありません。これらをリンクできるのは、``{domain}``、``{module}``、``{fullname}``、``{branch}`` "
+"だけを使うテンプレートです。たとえば API の検索を指すテンプレートがそうです。"
+
+#: ../../sources-and-diagrams.rst:118
+msgid ""
+"The links appear in HTML builders, ``singlehtml`` included, after the "
+"signature and before the permalink. The PDF and text add nothing. With "
+"both ``viewcode`` and ``linkcode`` listed, a description gets both links."
+msgstr ""
+"リンクは、``singlehtml`` を含む HTML ビルダーで、シグネチャの後ろ、パーマリンクの前に表示されます。PDF "
+"とテキストには何も追加しません。``viewcode`` と ``linkcode`` の両方を指定すると、記述には両方のリンクが付きます。"
+
+#: ../../sources-and-diagrams.rst:120
+msgid ""
+"Mistakes in the template are found when ``conf.toml`` loads. An unknown "
+"placeholder or an unclosed brace is refused, and listing the extension "
+"without ``linkcode_url`` is the warning ``config.ext.linkcode``. A build "
+"that needs ``{branch}`` but has no branch and no repository warns "
+"``linkcode.branch`` once and adds no links. An object whose file lies "
+"outside ``linkcode_root`` gets no link, with the note "
+"``linkcode.outside``."
+msgstr ""
+"テンプレートの誤りは、``conf.toml`` "
+"を読み込むときに見つかります。不明なプレースホルダーや閉じていない波括弧はエラーになります。``linkcode_url`` "
+"なしで拡張を指定すると ``config.ext.linkcode`` の警告になります。``{branch}`` "
+"が必要なのにブランチもリポジトリもないビルドでは、``linkcode.branch`` の警告を 1 回出し、リンクを追加しません。ファイルが "
+"``linkcode_root`` の外にあるオブジェクトにはリンクを付けず、``linkcode.outside`` という注記を出します。"
+
+#: ../../sources-and-diagrams.rst:122
+msgid ""
+"``guidedog migrate`` cannot read a ``linkcode_resolve`` function as data. "
+"It reports ``migrate.linkcode`` with a template to write in its place."
+msgstr ""
+"``guidedog migrate`` は、``linkcode_resolve`` "
+"関数をデータとして読むことはできません。代わりに書くべきテンプレートを添えて ``migrate.linkcode`` を報告します。"
+
+#: ../../sources-and-diagrams.rst:124
+msgid "Class diagrams: inheritance_diagram"
+msgstr "クラス図: inheritance_diagram"
+
+#: ../../sources-and-diagrams.rst:127
+msgid ""
+"The ``inheritance-diagram`` directive draws the classes it names, a "
+"module's classes when it names a module, and their bases up to the roots:"
+msgstr ""
+"``inheritance-diagram`` "
+"ディレクティブは、指定したクラス（モジュールを指定した場合はそのモジュールのクラス）と、ルートまでのその基底クラスを描きます。"
+
+#: ../../sources-and-diagrams.rst:134
+msgid ""
+"The names are found as Sphinx finds them: relative to the current module "
+"first (``py:currentmodule``), then as written. The bases are read from "
+"the class statements and resolved across the scanned modules. Python's "
+"builtins, such as ``object`` and ``Exception``, are not drawn. A base "
+"from a package outside the source folders is drawn with its full name and "
+"nothing above it."
+msgstr ""
+"名前は Sphinx と同じ方法で探します。まず現在のモジュール（\\ ``py:currentmodule``\\ "
+"）からの相対名として、次に書かれたとおりの名前として探します。基底クラスはクラス文から読み取り、走査したモジュール全体で解決します。``object`` "
+"や ``Exception`` のような Python "
+"の組み込みは描きません。ソースフォルダーの外にあるパッケージの基底クラスは、完全名で描き、その上には何も描きません。"
+
+#: ../../sources-and-diagrams.rst:136
+msgid "The directive takes Sphinx's options:"
+msgstr "このディレクティブは Sphinx と同じオプションを受け付けます。"
+
+#: ../../sources-and-diagrams.rst:138
+msgid "``:parts: N``"
+msgstr "``:parts: N``"
+
+#: ../../sources-and-diagrams.rst:139
+msgid ""
+"Show only the last ``N`` parts of each dotted name; a negative ``N`` "
+"drops the first ``-N`` parts instead. ``0`` (default) shows the full name."
+msgstr ""
+"ドット区切りの名前のうち、最後の ``N`` 個の部分だけを表示します。``N`` が負の場合は、代わりに最初の ``-N`` "
+"個の部分を省きます。``0``\\ （既定）は完全名を表示します。"
+
+#: ../../sources-and-diagrams.rst:141
+msgid "``:private-bases:``"
+msgstr "``:private-bases:``"
+
+#: ../../sources-and-diagrams.rst:142
+msgid "Draw classes whose names start with ``_`` as well."
+msgstr "名前が ``_`` で始まるクラスも描きます。"
+
+#: ../../sources-and-diagrams.rst:144
+msgid "``:top-classes: a.B, a.C``"
+msgstr "``:top-classes: a.B, a.C``"
+
+#: ../../sources-and-diagrams.rst:145
+msgid "Stop at these classes: their own bases are not drawn."
+msgstr "これらのクラスで止めます。そのクラス自身の基底クラスは描きません。"
+
+#: ../../sources-and-diagrams.rst:147
+msgid "``:include-subclasses:``"
+msgstr "``:include-subclasses:``"
+
+#: ../../sources-and-diagrams.rst:148
+msgid ""
+"Draw the classes that derive from the named ones too. The scan looks for "
+"them in the packages of the named classes."
+msgstr "指定したクラスから派生したクラスも描きます。走査は、指定したクラスのパッケージの中から派生クラスを探します。"
+
+#: ../../sources-and-diagrams.rst:150
+msgid "``:caption: text``"
+msgstr "``:caption: text``"
+
+#: ../../sources-and-diagrams.rst:151
+msgid "Put the drawing in a figure with this caption."
+msgstr "図を figure に入れ、このキャプションを付けます。"
+
+#: ../../sources-and-diagrams.rst:153
+msgid ""
+"The settings ``inheritance_graph_attrs``, ``inheritance_node_attrs`` and "
+"``inheritance_edge_attrs`` add Graphviz attributes to the graph, its "
+"nodes and its edges, and ``inheritance_alias`` shows a full class name as "
+"another name:"
+msgstr ""
+"設定 "
+"``inheritance_graph_attrs``、``inheritance_node_attrs``、``inheritance_edge_attrs`` "
+"は、グラフ、ノード、エッジに Graphviz の属性を追加します。``inheritance_alias`` "
+"は、クラスの完全名を別の名前で表示します。"
+
+#: ../../sources-and-diagrams.rst:163
+msgid ""
+"The graph is written as Sphinx writes it and drawn by the linked "
+"Graphviz, like a ``graphviz`` directive, so no ``dot`` program is needed. "
+"In HTML the drawing is an SVG with the ``graphviz-adaptive`` colours, and "
+"each node links to its class's description when the project has one. A "
+"class without a description is drawn without a link. The PDF embeds the "
+"same SVG. Text shows the classes as a list, each with its bases."
+msgstr ""
+"グラフは Sphinx と同じ形で書き出し、``graphviz`` ディレクティブと同じようにリンクされた Graphviz "
+"で描画します。そのため ``dot`` プログラムは不要です。HTML では、図は ``graphviz-adaptive`` の配色を使った "
+"SVG になり、プロジェクトにクラスの記述があれば各ノードがその記述にリンクします。記述のないクラスはリンクなしで描きます。PDF には同じ "
+"SVG を埋め込みます。テキストでは、クラスをそれぞれの基底クラスとともにリストで示します。"
+
+#: ../../sources-and-diagrams.rst:165
+msgid ""
+"A name that is neither a class nor a module in the scan is reported as "
+"``inheritance.class`` and left out. A diagram may hold at most 1,000 "
+"classes; a larger one is ``inheritance.limit`` and is not drawn. Loading "
+"``conf.toml`` refuses an attribute name that is not a Graphviz "
+"identifier, and a value that is not a plain word, number or quoted string "
+"is quoted, so an attribute cannot change the rest of the graph."
+msgstr ""
+"走査の中でクラスでもモジュールでもない名前は、``inheritance.class`` として報告し、除外します。1 "
+"つの図に含められるクラスは最大 1,000 個です。それより大きい図は ``inheritance.limit`` "
+"となり、描画しません。``conf.toml`` を読み込むとき、Graphviz "
+"の識別子ではない属性名はエラーになります。また、単純な単語、数値、引用符で囲んだ文字列のいずれでもない値は引用符で囲みます。そのため、属性がグラフのほかの部分を変えてしまうことはありません。"
+
+#: ../../sources-and-diagrams.rst:167
+msgid "Reading times: duration"
+msgstr "読み込み時間: duration"
+
+#: ../../sources-and-diagrams.rst:170
+msgid ""
+"With ``sphinx.ext.duration`` listed, the build summary shows how long "
+"reading took, and which documents took longest:"
+msgstr ""
+"``sphinx.ext.duration`` を指定すると、ビルドの要約に、読み込みにかかった時間と、時間のかかった文書が表示されます。"
+
+#: ../../sources-and-diagrams.rst:181
+msgid ""
+"Each time is measured with a monotonic clock around one document's read. "
+"A document taken unchanged from the previous build took no time and is "
+"not listed. The output folder also receives "
+"``sphinx-reading-durations.json``, an object from document names to "
+"seconds."
+msgstr ""
+"各時間は、1 "
+"つの文書の読み込みを単調増加クロックで計測したものです。前回のビルドから変更なく引き継いだ文書は時間がかかっていないため、一覧に載りません。出力フォルダーには、文書名から秒数への対応を表すオブジェクト "
+"``sphinx-reading-durations.json`` も書き出されます。"
+
+#: ../../sources-and-diagrams.rst:183
+msgid "``duration_print_total``"
+msgstr "``duration_print_total``"
+
+#: ../../sources-and-diagrams.rst:184
+msgid "``true`` (default): show the total reading time."
+msgstr "``true``\\ （既定）：読み込み時間の合計を表示します。"
+
+#: ../../sources-and-diagrams.rst:186
+msgid "``duration_print_slowest``"
+msgstr "``duration_print_slowest``"
+
+#: ../../sources-and-diagrams.rst:187
+msgid "``true`` (default): show the slowest documents."
+msgstr "``true``\\ （既定）：最も遅い文書を表示します。"
+
+#: ../../sources-and-diagrams.rst:189
+msgid "``duration_n_slowest``"
+msgstr "``duration_n_slowest``"
+
+#: ../../sources-and-diagrams.rst:190
+msgid "How many slowest documents to show: ``5`` by default, ``0`` for all."
+msgstr "表示する遅い文書の数です。既定は ``5`` で、``0`` ならすべて表示します。"
+
+#: ../../sources-and-diagrams.rst:192
+msgid "``duration_write_json``"
+msgstr "``duration_write_json``"
+
+#: ../../sources-and-diagrams.rst:193
+msgid ""
+"The JSON file's name in the output folder; empty writes none. A name that "
+"leaves the output folder is refused."
+msgstr "出力フォルダー内の JSON ファイルの名前です。空にすると書き出しません。出力フォルダーの外を指す名前はエラーになります。"
+
+#: ../../sources-and-diagrams.rst:195
+msgid "``duration_limit``"
+msgstr "``duration_limit``"
+
+#: ../../sources-and-diagrams.rst:196
+msgid ""
+"Seconds a document may take; a slower one is the warning "
+"``duration.limit``. Unset, there is no limit."
+msgstr ""
+"1 つの文書にかけてよい秒数です。それより遅い文書は ``duration.limit`` の警告になります。設定しなければ上限はありません。"
+
+#: ../../sources-and-diagrams.rst:198
+msgid ""
+"The times are evidence about one build on one machine. They differ from "
+"run to run."
+msgstr "これらの時間は、1 台のマシンでの 1 回のビルドについての記録にすぎません。実行するたびに変わります。"
+
+#: ../../sources-and-diagrams.rst:200
+msgid "Images for the book: imgconverter"
+msgstr "書籍のための画像: imgconverter"
+
+#: ../../sources-and-diagrams.rst:203
+msgid ""
+"Sphinx's ``imgconverter`` runs ImageMagick to turn images LaTeX cannot "
+"use, such as GIF and SVG, into ones it can. Guidedog's PDF is typeset by "
+"Typst, which reads PNG, JPEG, GIF, SVG, WebP and PDF images directly, so "
+"there is nothing to convert. The extension is accepted, and no program is "
+"ever started. ``image_converter`` and ``image_converter_args`` are "
+"accepted and have no effect."
+msgstr ""
+"Sphinx の ``imgconverter`` は ImageMagick を実行し、GIF や SVG のように LaTeX "
+"が扱えない画像を、扱える形式に変換します。Guidedog の PDF は Typst で組版します。Typst は "
+"PNG、JPEG、GIF、SVG、WebP、PDF "
+"の画像を直接読めるため、変換するものはありません。この拡張は受け付けますが、プログラムを起動することはありません。``image_converter`` "
+"と ``image_converter_args`` も受け付けますが、効果はありません。"
+
+#: ../../sources-and-diagrams.rst:205
+msgid ""
+"An image in a format the book cannot show, such as TIFF or BMP, is "
+"reported as ``imgconverter.format``, and the book shows its alternative "
+"text in its place. The hint suggests a PNG, JPEG, GIF or SVG version. "
+"When we name the image ``picture.*``, each output picks the first version "
+"it reads."
+msgstr ""
+"TIFF や BMP のように書籍で表示できない形式の画像は ``imgconverter.format`` "
+"として報告し、書籍ではその場所に代替テキストを表示します。ヒントでは PNG、JPEG、GIF、SVG 版を用意するよう提案します。画像を "
+"``picture.*`` という名前で指定すると、各出力は自分が読める最初の版を選びます。"
+
+#: ../../sources-and-diagrams.rst:207
+msgid "Diagnostics"
+msgstr "診断"
+
+#: ../../sources-and-diagrams.rst:210
+msgid ""
+"Every message has a code, the location, an explanation and a hint. "
+"``suppress_warnings`` silences them by their prefix, such as ``viewcode`` "
+"or ``inheritance``."
+msgstr ""
+"どのメッセージにも、コード、位置、説明、ヒントがあります。``suppress_warnings`` を使うと、``viewcode`` や "
+"``inheritance`` のような接頭辞でメッセージを抑止できます。"
+
+#: ../../sources-and-diagrams.rst:212
+msgid "Codes of these extensions"
+msgstr "これらの拡張のコード"
+
+#: ../../sources-and-diagrams.rst:216
+msgid "Code"
+msgstr "コード"
+
+#: ../../sources-and-diagrams.rst:217
+msgid "Meaning"
+msgstr "意味"
+
+#: ../../sources-and-diagrams.rst:218
+msgid "``viewcode.source``"
+msgstr "``viewcode.source``"
+
+#: ../../sources-and-diagrams.rst:219
+msgid ""
+"A documented module is not below ``autodoc_source_paths``; its objects "
+"have no ``[source]`` link."
+msgstr ""
+"文書化したモジュールが ``autodoc_source_paths`` の下にありません。そのオブジェクトには ``[source]`` "
+"リンクが付きません。"
+
+#: ../../sources-and-diagrams.rst:220
+msgid "``viewcode.limit``"
+msgstr "``viewcode.limit``"
+
+#: ../../sources-and-diagrams.rst:221
+msgid ""
+"A module's file is too large or cannot be read; it has no source page."
+msgstr "モジュールのファイルが大きすぎるか、読み込めません。ソースページは作られません。"
+
+#: ../../sources-and-diagrams.rst:222
+msgid "``config.ext.linkcode``"
+msgstr "``config.ext.linkcode``"
+
+#: ../../sources-and-diagrams.rst:223
+msgid "``linkcode`` is listed without ``linkcode_url``."
+msgstr "``linkcode_url`` なしで ``linkcode`` を指定しています。"
+
+#: ../../sources-and-diagrams.rst:224
+msgid "``linkcode.branch``"
+msgstr "``linkcode.branch``"
+
+#: ../../sources-and-diagrams.rst:225
+msgid "The template uses ``{branch}``, and no branch is set or found."
+msgstr "テンプレートが ``{branch}`` を使っていますが、ブランチが設定されておらず、見つかりもしません。"
+
+#: ../../sources-and-diagrams.rst:226
+msgid "``linkcode.outside``"
+msgstr "``linkcode.outside``"
+
+#: ../../sources-and-diagrams.rst:227
+msgid "An object's file lies outside ``linkcode_root``."
+msgstr "オブジェクトのファイルが ``linkcode_root`` の外にあります。"
+
+#: ../../sources-and-diagrams.rst:228
+msgid "``inheritance.class``"
+msgstr "``inheritance.class``"
+
+#: ../../sources-and-diagrams.rst:229
+msgid ""
+"A name in an ``inheritance-diagram`` is neither a class nor a module of "
+"the scan."
+msgstr "``inheritance-diagram`` に書いた名前が、走査で見つかったクラスでもモジュールでもありません。"
+
+#: ../../sources-and-diagrams.rst:230
+msgid "``inheritance.limit``"
+msgstr "``inheritance.limit``"
+
+#: ../../sources-and-diagrams.rst:231
+msgid "A diagram would hold more than 1,000 classes."
+msgstr "図に含まれるクラスが 1,000 個を超えます。"
+
+#: ../../sources-and-diagrams.rst:232
+msgid "``duration.limit``"
+msgstr "``duration.limit``"
+
+#: ../../sources-and-diagrams.rst:233
+msgid "A document took longer to read than ``duration_limit``."
+msgstr "文書の読み込みに ``duration_limit`` より長い時間がかかりました。"
+
+#: ../../sources-and-diagrams.rst:234
+msgid "``imgconverter.format``"
+msgstr "``imgconverter.format``"
+
+#: ../../sources-and-diagrams.rst:235
+msgid "The book cannot show an image's format."
+msgstr "書籍で画像の形式を表示できません。"
+
+#: ../../sources-and-diagrams.rst:237
+msgid ""
+"GDS 0011 records the design of these extensions and of the four others "
+"that read Python source."
+msgstr "これらの拡張と、Python のソースを読むほかの 4 つの拡張の設計は、GDS 0011 に記録しています。"

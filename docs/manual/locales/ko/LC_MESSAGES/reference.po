@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 06:56+0000\n"
+"POT-Creation-Date: 2026-10-15 09:09+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -55,19 +55,19 @@ msgid "Every command accepts these:"
 msgstr "모든 명령에서 다음 옵션을 쓸 수 있습니다:"
 
 #: ../../reference/cli.rst:35 ../../reference/cli.rst:152
-#: ../../reference/cli.rst:210 ../../reference/cli.rst:337
-#: ../../reference/cli.rst:363 ../../reference/cli.rst:416
-#: ../../reference/cli.rst:498 ../../reference/cli.rst:549
-#: ../../reference/cli.rst:612 ../../reference/cli.rst:781
+#: ../../reference/cli.rst:211 ../../reference/cli.rst:338
+#: ../../reference/cli.rst:364 ../../reference/cli.rst:417
+#: ../../reference/cli.rst:499 ../../reference/cli.rst:550
+#: ../../reference/cli.rst:613 ../../reference/cli.rst:782
 msgid "Option"
 msgstr "옵션"
 
 #: ../../reference/cli.rst:36 ../../reference/cli.rst:153
-#: ../../reference/cli.rst:211 ../../reference/cli.rst:338
-#: ../../reference/cli.rst:364 ../../reference/cli.rst:417
-#: ../../reference/cli.rst:499 ../../reference/cli.rst:550
-#: ../../reference/cli.rst:613 ../../reference/cli.rst:755
-#: ../../reference/cli.rst:782
+#: ../../reference/cli.rst:212 ../../reference/cli.rst:339
+#: ../../reference/cli.rst:365 ../../reference/cli.rst:418
+#: ../../reference/cli.rst:500 ../../reference/cli.rst:551
+#: ../../reference/cli.rst:614 ../../reference/cli.rst:756
+#: ../../reference/cli.rst:783
 msgid "Meaning"
 msgstr "의미"
 
@@ -546,64 +546,73 @@ msgid ""
 "and reference check)."
 msgstr "``dummy``: 모든 문서를 읽고 해석하지만 아무것도 쓰지 않습니다(구문과 참조 검사용)."
 
-#: ../../reference/cli.rst:206
+#: ../../reference/cli.rst:205
+msgid ""
+"``coverage``: reads every document and writes ``python.txt`` and "
+"``c.txt``, the objects the documents do not describe "
+"(sphinx.ext.coverage)."
+msgstr ""
+"``coverage``: 모든 문서를 읽고, 문서가 설명하지 않는 객체를 ``python.txt``\\ 와 ``c.txt``\\ 에 "
+"씁니다(sphinx.ext.coverage)."
+
+#: ../../reference/cli.rst:207
 msgid "Options of build"
 msgstr "build 옵션"
 
-#: ../../reference/cli.rst:212
+#: ../../reference/cli.rst:213
 msgid "``-a``"
 msgstr "``-a``"
 
-#: ../../reference/cli.rst:213
+#: ../../reference/cli.rst:214
 msgid "Write all outputs, not only the changed ones."
 msgstr "바뀐 것만이 아니라 모든 출력을 씁니다."
 
-#: ../../reference/cli.rst:214
+#: ../../reference/cli.rst:215
 msgid "``-E``"
 msgstr "``-E``"
 
-#: ../../reference/cli.rst:215
+#: ../../reference/cli.rst:216
 msgid "Fresh build: ignore the saved environment."
 msgstr "새로 빌드합니다. 저장된 환경을 무시합니다."
 
-#: ../../reference/cli.rst:216
+#: ../../reference/cli.rst:217
 msgid "``-W``"
 msgstr "``-W``"
 
-#: ../../reference/cli.rst:217
+#: ../../reference/cli.rst:218
 msgid "Treat warnings as errors."
 msgstr "경고를 오류로 처리합니다."
 
-#: ../../reference/cli.rst:218
+#: ../../reference/cli.rst:219
 msgid "``--keep-going``"
 msgstr "``--keep-going``"
 
-#: ../../reference/cli.rst:219
+#: ../../reference/cli.rst:220
 msgid ""
 "With ``-W``, finish the build to report every problem before failing."
 msgstr "``-W``\\ 와 함께 쓰면, 실패로 끝내기 전에 빌드를 끝까지 진행해 모든 문제를 보고합니다."
 
-#: ../../reference/cli.rst:220
+#: ../../reference/cli.rst:221
 msgid "``-n``"
 msgstr "``-n``"
 
-#: ../../reference/cli.rst:221
+#: ../../reference/cli.rst:222
 msgid "Nitpicky: warn about every unresolved reference."
 msgstr "엄격 모드: 해석되지 않은 참조마다 경고합니다."
 
-#: ../../reference/cli.rst:222
+#: ../../reference/cli.rst:223
 msgid "``-j N``, ``-j auto``"
 msgstr "``-j N``, ``-j auto``"
 
-#: ../../reference/cli.rst:223
+#: ../../reference/cli.rst:224
 msgid "Read documents on ``N`` threads, or one per core."
 msgstr "``N``\\ 개 스레드에서, 또는 코어마다 하나씩 문서를 읽습니다."
 
-#: ../../reference/cli.rst:224
+#: ../../reference/cli.rst:225
 msgid "``-D name=value``"
 msgstr "``-D name=value``"
 
-#: ../../reference/cli.rst:225
+#: ../../reference/cli.rst:226
 msgid ""
 "Override a ``conf.toml`` setting for this build (``-D language=de``); "
 "repeatable. ``-D table.key=value`` sets one key of a table setting, such "
@@ -613,63 +622,63 @@ msgstr ""
 "``-D table.key=value``\\ 는 ``html_context`` 같은 표 설정의 키 하나만 설정하고 나머지 키는 "
 "그대로 둡니다. sphinx-build와 같습니다."
 
-#: ../../reference/cli.rst:228
+#: ../../reference/cli.rst:229
 msgid "``-t TAG``"
 msgstr "``-t TAG``"
 
-#: ../../reference/cli.rst:229
+#: ../../reference/cli.rst:230
 msgid "Define a tag for ``only`` directives; repeatable."
 msgstr "``only`` 지시문에 쓸 태그를 정의합니다. 여러 번 쓸 수 있습니다."
 
-#: ../../reference/cli.rst:230
+#: ../../reference/cli.rst:231
 msgid "``-c DIR``"
 msgstr "``-c DIR``"
 
-#: ../../reference/cli.rst:231
+#: ../../reference/cli.rst:232
 msgid "Read ``conf.toml`` from ``DIR`` instead of the source folder."
 msgstr "소스 폴더 대신 ``DIR``\\ 에서 ``conf.toml``\\ 을 읽습니다."
 
-#: ../../reference/cli.rst:232
+#: ../../reference/cli.rst:233
 msgid "``-C``"
 msgstr "``-C``"
 
-#: ../../reference/cli.rst:233
+#: ../../reference/cli.rst:234
 msgid "Build without any ``conf.toml``."
 msgstr "``conf.toml`` 없이 빌드합니다."
 
-#: ../../reference/cli.rst:234
+#: ../../reference/cli.rst:235
 msgid "``-d DIR``"
 msgstr "``-d DIR``"
 
-#: ../../reference/cli.rst:235
+#: ../../reference/cli.rst:236
 msgid ""
 "Accepted for sphinx-build scripts and ignored: the environment lives in "
 "the build's own cache folder."
 msgstr "sphinx-build 스크립트와의 호환을 위해 받아들이지만 무시합니다. 환경은 빌드 자체의 캐시 폴더에 저장됩니다."
 
-#: ../../reference/cli.rst:237
+#: ../../reference/cli.rst:238
 msgid "``-v``"
 msgstr "``-v``"
 
-#: ../../reference/cli.rst:238
+#: ../../reference/cli.rst:239
 msgid "Also show notes (Docutils' info messages); repeatable."
 msgstr "알림(Docutils의 info 메시지)도 표시합니다. 여러 번 줄 수 있습니다."
 
-#: ../../reference/cli.rst:239
+#: ../../reference/cli.rst:240
 msgid "``-q``, ``-Q``"
 msgstr "``-q``, ``-Q``"
 
-#: ../../reference/cli.rst:240
+#: ../../reference/cli.rst:241
 msgid ""
 "Show only errors: no progress, summary, warnings or notes (``-W`` still "
 "counts the warnings)."
 msgstr "오류만 표시합니다. 진행 상황, 요약, 경고, 알림은 표시하지 않습니다(그래도 ``-W``\\ 는 경고 수를 셉니다)."
 
-#: ../../reference/cli.rst:242
+#: ../../reference/cli.rst:243
 msgid "``--untrusted``"
 msgstr "``--untrusted``"
 
-#: ../../reference/cli.rst:243
+#: ../../reference/cli.rst:244
 msgid ""
 "Leave out raw content, fetch nothing, and run no build plugin. This is a "
 "capability policy, not a process sandbox."
@@ -677,49 +686,53 @@ msgstr ""
 "원시 콘텐츠를 생략하고, 아무것도 가져오지 않으며, 빌드 플러그인을 실행하지 않습니다. 이는 기능 제한 정책이지 프로세스 샌드박스가 "
 "아닙니다."
 
-#: ../../reference/cli.rst:245 ../../reference/cli.rst:449
+#: ../../reference/cli.rst:246 ../../reference/cli.rst:450
 msgid "``--budget=MIB``"
 msgstr "``--budget=MIB``"
 
-#: ../../reference/cli.rst:246
+#: ../../reference/cli.rst:247
 msgid ""
 "Memory the build may hold at once, from 1 to 1048576 (default: ``1024``)."
 msgstr "빌드가 한 번에 차지할 수 있는 메모리입니다. 1부터 1048576까지 지정합니다(기본값: ``1024``)."
 
-#: ../../reference/cli.rst:247
+#: ../../reference/cli.rst:248
 msgid "``--memory=ram``"
 msgstr "``--memory=ram``"
 
-#: ../../reference/cli.rst:248
+#: ../../reference/cli.rst:249
 msgid ""
 "At the budget, stop without asking. Without it, a terminal asks whether "
 "to raise the budget or stop; a build without a terminal stops. "
 "``--memory=disk`` and ``--disk-budget`` (working memory on disk) are "
 "refused with ``cli.memory-disk``. Working memory stays in memory, bounded "
 "by the budget, so we raise ``--budget`` instead."
-msgstr "예산에 도달하면 묻지 않고 멈춥니다. 이 옵션이 없으면 터미널에서 예산을 늘릴지 멈출지 물어보고, 터미널이 없는 빌드는 멈춥니다. ``--memory=disk``\\ 와 ``--disk-budget``\\ (작업 메모리를 디스크에 두는 옵션)은 ``cli.memory-disk``\\ 로 거부됩니다. 작업 메모리는 예산 안에서 메모리에만 두므로, 대신 ``--budget``\\ 을 늘립니다."
+msgstr ""
+"예산에 도달하면 묻지 않고 멈춥니다. 이 옵션이 없으면 터미널에서 예산을 늘릴지 멈출지 물어보고, 터미널이 없는 빌드는 멈춥니다. "
+"``--memory=disk``\\ 와 ``--disk-budget``\\ (작업 메모리를 디스크에 두는 옵션)은 "
+"``cli.memory-disk``\\ 로 거부됩니다. 작업 메모리는 예산 안에서 메모리에만 두므로, 대신 "
+"``--budget``\\ 을 늘립니다."
 
-#: ../../reference/cli.rst:253
+#: ../../reference/cli.rst:254
 msgid "``--max-depth=N``"
 msgstr "``--max-depth=N``"
 
-#: ../../reference/cli.rst:254
+#: ../../reference/cli.rst:255
 msgid "How deep content may nest (default: ``256``)."
 msgstr "콘텐츠가 중첩될 수 있는 최대 깊이입니다(기본값: ``256``)."
 
-#: ../../reference/cli.rst:255
+#: ../../reference/cli.rst:256
 msgid "``--max-nodes=N``"
 msgstr "``--max-nodes=N``"
 
-#: ../../reference/cli.rst:256
+#: ../../reference/cli.rst:257
 msgid "Nodes per document (default: ``1000000``)."
 msgstr "문서 하나에 허용되는 노드 수입니다(기본값: ``1000000``)."
 
-#: ../../reference/cli.rst:257 ../../reference/cli.rst:453
+#: ../../reference/cli.rst:258 ../../reference/cli.rst:454
 msgid "``--stack-kib=N``"
 msgstr "``--stack-kib=N``"
 
-#: ../../reference/cli.rst:258
+#: ../../reference/cli.rst:259
 msgid ""
 "Stack for nested content (default: ``512``; at most what the reading "
 "threads hold, 6144 on Linux and macOS). Raise it together with "
@@ -728,16 +741,16 @@ msgstr ""
 "중첩 콘텐츠를 처리할 스택 크기입니다(기본값: ``512``. 읽기 스레드의 스택을 넘을 수 없으며, Linux와 macOS에서는 "
 "6144입니다). ``--max-depth``\\ 와 함께 늘리세요."
 
-#: ../../reference/cli.rst:260 ../../reference/cli.rst:439
-#: ../../reference/cli.rst:521
+#: ../../reference/cli.rst:261 ../../reference/cli.rst:440
+#: ../../reference/cli.rst:522
 msgid "``--typst=PATH``"
 msgstr "``--typst=PATH``"
 
-#: ../../reference/cli.rst:261
+#: ../../reference/cli.rst:262
 msgid "The Typst program for PDF, overriding ``typst`` in ``conf.toml``."
 msgstr "PDF에 쓸 Typst 프로그램입니다. ``conf.toml``\\ 의 ``typst``\\ 보다 우선합니다."
 
-#: ../../reference/cli.rst:263
+#: ../../reference/cli.rst:264
 msgid ""
 "The build prints what it read and wrote, then a verdict: ``build "
 "succeeded`` or ``build failed``, with the number of errors and warnings "
@@ -750,7 +763,7 @@ msgstr ""
 "경고는 빌드 자체의 경고이므로 ``-W``\\ 가 셉니다. ``suppress_warnings``\\ 는 ``-W``\\ 가 세기 "
 "전에 경고를 숨깁니다."
 
-#: ../../reference/cli.rst:268
+#: ../../reference/cli.rst:269
 msgid ""
 "``read`` counts the documents parsed and those unchanged since the last "
 "build (taken from the environment). ``write`` counts the outputs written "
@@ -766,11 +779,11 @@ msgstr ""
 "``gettext``\\ 에서는 단일 출력입니다. 모든 빌드는 사이트의 공유 파일(테마, 인덱스, ``objects.inv``)도 "
 "쓰지만, 이 파일들은 세지 않습니다."
 
-#: ../../reference/cli.rst:275
+#: ../../reference/cli.rst:276
 msgid "guidedog serve"
 msgstr "guidedog serve"
 
-#: ../../reference/cli.rst:278
+#: ../../reference/cli.rst:279
 msgid ""
 "Builds the HTML site and serves it on ``http://127.0.0.1:PORT/``. When "
 "sources, templates, static files, or ``conf.toml`` changed, it rebuilds "
@@ -779,7 +792,7 @@ msgstr ""
 "HTML 사이트를 빌드해 ``http://127.0.0.1:PORT/``\\ 에서 제공합니다. 소스, 템플릿, 정적 파일, "
 "``conf.toml``\\ 이 바뀌면 요청에 응답하기 전에 다시 빌드합니다:"
 
-#: ../../reference/cli.rst:286
+#: ../../reference/cli.rst:287
 msgid ""
 "``--port PORT`` (``-p`` is quickstart's project name, not the port) "
 "chooses the port, from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, "
@@ -792,7 +805,7 @@ msgstr ""
 "``guidedog build``\\ 의 빌드 옵션은 모든 재빌드에 적용됩니다. 재빌드할 때마다 ``conf.toml``\\ 을 "
 "다시 읽습니다. 재빌드가 실패하면 이전 사이트를 유지하고 문제를 알립니다. Ctrl+C로 서버를 멈춥니다."
 
-#: ../../reference/cli.rst:291
+#: ../../reference/cli.rst:292
 msgid ""
 "It serves ``_build/html``. It watches the source folder, the Odin and "
 "Rust API sources (``odin_autoapi_dirs``, ``odin_collections``, "
@@ -809,21 +822,21 @@ msgstr ""
 "``locale_dirs`` 폴더를 감시합니다. 빌드 폴더는 감시하지 않습니다. 변경은 파일 이름, 크기, 시간으로 찾아냅니다. 이 "
 "검사는 HTML 페이지에 응답하기 전에 실행됩니다:"
 
-#: ../../reference/cli.rst:308
+#: ../../reference/cli.rst:309
 msgid "guidedog clean"
 msgstr "guidedog clean"
 
-#: ../../reference/cli.rst:311
+#: ../../reference/cli.rst:312
 msgid ""
 "Removes the contents of the project's build folder, the environment cache "
 "included:"
 msgstr "환경 캐시를 포함해 프로젝트 빌드 폴더의 내용을 지웁니다:"
 
-#: ../../reference/cli.rst:317
+#: ../../reference/cli.rst:318
 msgid "guidedog migrate"
 msgstr "guidedog migrate"
 
-#: ../../reference/cli.rst:320
+#: ../../reference/cli.rst:321
 msgid ""
 "Converts a Sphinx ``conf.py`` (or an old ``guidedog.toml``) to "
 "``conf.toml`` without running Python. Literal settings carry over. "
@@ -834,31 +847,31 @@ msgstr ""
 "``conf.toml``\\ 로 변환합니다. 리터럴 설정은 그대로 옮겨집니다. Python이 계산해야 하는 값은 보고하고 "
 "``conf.toml``\\ 에 주석으로 남깁니다:"
 
-#: ../../reference/cli.rst:333
+#: ../../reference/cli.rst:334
 msgid "Options of migrate"
 msgstr "migrate 옵션"
 
-#: ../../reference/cli.rst:339
+#: ../../reference/cli.rst:340
 msgid "``-o FILE``, ``--output FILE``"
 msgstr "``-o FILE``, ``--output FILE``"
 
-#: ../../reference/cli.rst:340
+#: ../../reference/cli.rst:341
 msgid "Write here instead of beside ``conf.py``; ``-`` prints it."
 msgstr "``conf.py`` 옆이 아니라 여기에 씁니다. ``-``\\ 를 주면 화면에 출력합니다."
 
-#: ../../reference/cli.rst:341 ../../reference/cli.rst:427
+#: ../../reference/cli.rst:342 ../../reference/cli.rst:428
 msgid "``--force``"
 msgstr "``--force``"
 
-#: ../../reference/cli.rst:342
+#: ../../reference/cli.rst:343
 msgid "Replace an existing ``conf.toml``."
 msgstr "기존 ``conf.toml``\\ 을 덮어씁니다."
 
-#: ../../reference/cli.rst:344
+#: ../../reference/cli.rst:345
 msgid "guidedog intl"
 msgstr "guidedog intl"
 
-#: ../../reference/cli.rst:347
+#: ../../reference/cli.rst:348
 msgid ""
 "Keeps translation catalogs in step with the documents, as ``sphinx-intl`` "
 "does. First we write the message templates with ``guidedog build "
@@ -873,74 +886,74 @@ msgstr ""
 "obsolete가 됩니다. 카탈로그를 사용하려면 ``-D language=LANG``\\ 으로 빌드하거나 "
 "``conf.toml``\\ 에 ``language``\\ 를 설정합니다."
 
-#: ../../reference/cli.rst:359
+#: ../../reference/cli.rst:360
 msgid "Options of intl"
 msgstr "intl 옵션"
 
-#: ../../reference/cli.rst:365
+#: ../../reference/cli.rst:366
 msgid "``-l LANG``, ``--language LANG``"
 msgstr "``-l LANG``, ``--language LANG``"
 
-#: ../../reference/cli.rst:366
+#: ../../reference/cli.rst:367
 msgid "A language; repeat it for several."
 msgstr "언어입니다. 여러 언어를 지정하려면 반복합니다."
 
-#: ../../reference/cli.rst:367
+#: ../../reference/cli.rst:368
 msgid "``-p DIR``, ``--pot-dir DIR``"
 msgstr "``-p DIR``, ``--pot-dir DIR``"
 
-#: ../../reference/cli.rst:368
+#: ../../reference/cli.rst:369
 msgid "The templates (default: ``_build/gettext``)."
 msgstr "템플릿 위치입니다(기본값: ``_build/gettext``)."
 
-#: ../../reference/cli.rst:369
+#: ../../reference/cli.rst:370
 msgid "``-d DIR``, ``--locale-dir DIR``"
 msgstr "``-d DIR``, ``--locale-dir DIR``"
 
-#: ../../reference/cli.rst:370
+#: ../../reference/cli.rst:371
 msgid "The catalogs (default: the first of ``locale_dirs``)."
 msgstr "카탈로그 위치입니다(기본값: ``locale_dirs``\\ 의 첫 번째 항목)."
 
-#: ../../reference/cli.rst:371
+#: ../../reference/cli.rst:372
 msgid "``-w N``, ``--line-width N``"
 msgstr "``-w N``, ``--line-width N``"
 
-#: ../../reference/cli.rst:372
+#: ../../reference/cli.rst:373
 msgid "Wrap lines at ``N`` characters (default: ``76``)."
 msgstr "``N``\\ 자에서 줄을 바꿉니다(기본값: ``76``)."
 
-#: ../../reference/cli.rst:373
+#: ../../reference/cli.rst:374
 msgid "``--no-obsolete``"
 msgstr "``--no-obsolete``"
 
-#: ../../reference/cli.rst:374
+#: ../../reference/cli.rst:375
 msgid "Drop messages the templates no longer have."
 msgstr "템플릿에 더 이상 없는 메시지를 삭제합니다."
 
-#: ../../reference/cli.rst:375
+#: ../../reference/cli.rst:376
 msgid "``-c DIR``, ``-D name=value``"
 msgstr "``-c DIR``, ``-D name=value``"
 
-#: ../../reference/cli.rst:376
+#: ../../reference/cli.rst:377
 msgid "Where ``conf.toml`` is; override a setting."
 msgstr "``conf.toml``\\ 의 위치를 지정하고, 설정을 덮어씁니다."
 
-#: ../../reference/cli.rst:378
+#: ../../reference/cli.rst:379
 msgid ""
 "``stat`` prints, for each catalog, how many messages are translated, "
 "fuzzy, and untranslated."
 msgstr "``stat``\\ 는 카탈로그마다 번역된 메시지, fuzzy 메시지, 번역되지 않은 메시지가 몇 개인지 출력합니다."
 
-#: ../../reference/cli.rst:381
+#: ../../reference/cli.rst:382
 msgid "guidedog convert"
 msgstr "guidedog convert"
 
-#: ../../reference/cli.rst:384
+#: ../../reference/cli.rst:385
 msgid ""
 "Converts one file, or standard input, without a project or configuration:"
 msgstr "프로젝트나 설정 없이 파일 하나 또는 표준 입력을 변환합니다:"
 
-#: ../../reference/cli.rst:394
+#: ../../reference/cli.rst:395
 msgid ""
 "The input format comes from ``--from`` or the input's suffix: ``.rst`` "
 "and ``.rest`` are reStructuredText, ``.md`` and ``.markdown`` CommonMark, "
@@ -961,7 +974,7 @@ msgstr ""
 "``.htm``, ``.pdf``, ``.rst``, ``.rest``)로 정해집니다. ``convert``\\ 에는 아래 옵션만 "
 "적용됩니다."
 
-#: ../../reference/cli.rst:402
+#: ../../reference/cli.rst:403
 msgid ""
 "``--to rst`` writes reStructuredText with Guidedog's own writer (the "
 "``rst`` renderer). It keeps the author's lines: each line break inside a "
@@ -984,23 +997,23 @@ msgstr ""
 "정확히 표현할 수 없는 것도 있습니다(강제 줄바꿈, 텍스트 안의 이미지, 링크 제목). 이런 경우 작성기는 최대한 가깝게 쓰고 "
 "알림을 남깁니다. Typst 입력은 reStructuredText로 변환할 수 없습니다."
 
-#: ../../reference/cli.rst:412
+#: ../../reference/cli.rst:413
 msgid "Options of convert"
 msgstr "convert 옵션"
 
-#: ../../reference/cli.rst:418
+#: ../../reference/cli.rst:419
 msgid "``-o FILE``, ``--output=FILE``"
 msgstr "``-o FILE``, ``--output=FILE``"
 
-#: ../../reference/cli.rst:419
+#: ../../reference/cli.rst:420
 msgid "The destination, or ``-`` for standard output. Required."
 msgstr "출력 위치이며, ``-``\\ 는 표준 출력을 뜻합니다. 필수입니다."
 
-#: ../../reference/cli.rst:420
+#: ../../reference/cli.rst:421
 msgid "``--from=rst|sphinx|commonmark|myst|typst``"
 msgstr "``--from=rst|sphinx|commonmark|myst|typst``"
 
-#: ../../reference/cli.rst:421
+#: ../../reference/cli.rst:422
 msgid ""
 "The input format (``restructuredtext``, ``md``, ``markdown`` and ``typ`` "
 "are accepted spellings)."
@@ -1008,121 +1021,121 @@ msgstr ""
 "입력 형식입니다(``restructuredtext``, ``md``, ``markdown``, ``typ``\\ 라는 표기도 "
 "받습니다)."
 
-#: ../../reference/cli.rst:423
+#: ../../reference/cli.rst:424
 msgid "``--to=html|pdf|rst``"
 msgstr "``--to=html|pdf|rst``"
 
-#: ../../reference/cli.rst:424
+#: ../../reference/cli.rst:425
 msgid "The output format (``restructuredtext`` is an accepted spelling)."
 msgstr "출력 형식입니다(``restructuredtext``\\ 라는 표기도 받습니다)."
 
-#: ../../reference/cli.rst:425
+#: ../../reference/cli.rst:426
 msgid "``--emit-typst=FILE``"
 msgstr "``--emit-typst=FILE``"
 
-#: ../../reference/cli.rst:426
+#: ../../reference/cli.rst:427
 msgid "Also write the generated Typst source (not for Typst input)."
 msgstr "생성된 Typst 소스도 씁니다(Typst 입력에는 쓸 수 없습니다)."
 
-#: ../../reference/cli.rst:428
+#: ../../reference/cli.rst:429
 msgid "Replace an existing output file."
 msgstr "기존 출력 파일을 덮어씁니다."
 
-#: ../../reference/cli.rst:429
+#: ../../reference/cli.rst:430
 msgid "``--raw=refuse|omit|allow``"
 msgstr "``--raw=refuse|omit|allow``"
 
-#: ../../reference/cli.rst:430
+#: ../../reference/cli.rst:431
 msgid "Raw HTML or Typst content: fail (default), leave it out, or keep it."
 msgstr "원시 HTML이나 Typst 콘텐츠를 실패로 처리하거나(기본값), 생략하거나, 그대로 둡니다."
 
-#: ../../reference/cli.rst:431
+#: ../../reference/cli.rst:432
 msgid "``--strict``"
 msgstr "``--strict``"
 
-#: ../../reference/cli.rst:432
+#: ../../reference/cli.rst:433
 msgid "Treat warnings as failures."
 msgstr "경고를 실패로 처리합니다."
 
-#: ../../reference/cli.rst:433
+#: ../../reference/cli.rst:434
 msgid "``--title=TEXT``, ``--lang=TAG``"
 msgstr "``--title=TEXT``, ``--lang=TAG``"
 
-#: ../../reference/cli.rst:434
+#: ../../reference/cli.rst:435
 msgid "The document's title and language."
 msgstr "문서의 제목과 언어입니다."
 
-#: ../../reference/cli.rst:435
+#: ../../reference/cli.rst:436
 msgid "``--number-sections``"
 msgstr "``--number-sections``"
 
-#: ../../reference/cli.rst:436
+#: ../../reference/cli.rst:437
 msgid "Number section headings."
 msgstr "섹션 제목에 번호를 붙입니다."
 
-#: ../../reference/cli.rst:437
+#: ../../reference/cli.rst:438
 msgid "``--fragment``"
 msgstr "``--fragment``"
 
-#: ../../reference/cli.rst:438
+#: ../../reference/cli.rst:439
 msgid "Write the body only, not a complete document."
 msgstr "완전한 문서가 아니라 본문만 씁니다."
 
-#: ../../reference/cli.rst:440
+#: ../../reference/cli.rst:441
 msgid ""
 "The Typst program (default: the embedded compiler, else ``typst`` on "
 "``PATH``)."
 msgstr "Typst 프로그램입니다(기본값: 내장 컴파일러, 없으면 ``PATH``\\ 의 ``typst``)."
 
-#: ../../reference/cli.rst:441
+#: ../../reference/cli.rst:442
 msgid "``--font-path=DIR``"
 msgstr "``--font-path=DIR``"
 
-#: ../../reference/cli.rst:442
+#: ../../reference/cli.rst:443
 msgid "An extra font folder; repeat it for more."
 msgstr "추가 글꼴 폴더입니다. 더 있으면 반복합니다."
 
-#: ../../reference/cli.rst:443
+#: ../../reference/cli.rst:444
 msgid "``--embedded-fonts-only``"
 msgstr "``--embedded-fonts-only``"
 
-#: ../../reference/cli.rst:444
+#: ../../reference/cli.rst:445
 msgid "Ignore system fonts, for reproducible PDFs."
 msgstr "재현 가능한 PDF를 위해 시스템 글꼴을 무시합니다."
 
-#: ../../reference/cli.rst:445
+#: ../../reference/cli.rst:446
 msgid "``--offline``"
 msgstr "``--offline``"
 
-#: ../../reference/cli.rst:446
+#: ../../reference/cli.rst:447
 msgid "Use only Typst packages already on disk."
 msgstr "디스크에 이미 있는 Typst 패키지만 사용합니다."
 
-#: ../../reference/cli.rst:447
+#: ../../reference/cli.rst:448
 msgid "``--package-cache=DIR``"
 msgstr "``--package-cache=DIR``"
 
-#: ../../reference/cli.rst:448
+#: ../../reference/cli.rst:449
 msgid "The Typst package cache folder."
 msgstr "Typst 패키지 캐시 폴더입니다."
 
-#: ../../reference/cli.rst:450
+#: ../../reference/cli.rst:451
 msgid "The memory budget of the conversion (default: ``256``)."
 msgstr "변환에 쓸 메모리 예산입니다(기본값: ``256``)."
 
-#: ../../reference/cli.rst:451
+#: ../../reference/cli.rst:452
 msgid "``--max-depth=N``, ``--max-nodes=N``"
 msgstr "``--max-depth=N``, ``--max-nodes=N``"
 
-#: ../../reference/cli.rst:452
+#: ../../reference/cli.rst:453
 msgid "Nesting and node limits."
 msgstr "중첩 깊이와 노드 수 제한입니다."
 
-#: ../../reference/cli.rst:454
+#: ../../reference/cli.rst:455
 msgid "Stack for nested content (default: ``512``, at most ``6144``)."
 msgstr "중첩 콘텐츠용 스택입니다(기본값: ``512``, 최대 ``6144``)."
 
-#: ../../reference/cli.rst:456
+#: ../../reference/cli.rst:457
 msgid ""
 "The exit status is 0 for success, 1 for invalid or refused content, 2 for "
 "usage, 3 for a limit, 4 for a file or Typst failure, and 5 for an "
@@ -1131,11 +1144,11 @@ msgstr ""
 "종료 상태는 성공이면 0, 잘못되었거나 거부된 콘텐츠면 1, 사용법 오류면 2, 제한 초과면 3, 파일이나 Typst 실패면 4, "
 "내부 오류면 5입니다. 변환이 실패하면 아무 출력도 쓰지 않습니다."
 
-#: ../../reference/cli.rst:460
+#: ../../reference/cli.rst:461
 msgid "guidedog formats"
 msgstr "guidedog formats"
 
-#: ../../reference/cli.rst:463
+#: ../../reference/cli.rst:464
 msgid ""
 "Reports the readers and renderers this executable actually has, with "
 "their versions and conformance (``planned``, ``partial``, "
@@ -1146,11 +1159,11 @@ msgstr ""
 "``conformant``)과 함께 보고합니다. 찾아낸 Typst 백엔드(내장 또는 설치된 프로그램)와, 그것이 고정된 버전인지도 "
 "알려 줍니다."
 
-#: ../../reference/cli.rst:473
+#: ../../reference/cli.rst:474
 msgid "guidedog dsc"
 msgstr "guidedog dsc"
 
-#: ../../reference/cli.rst:476
+#: ../../reference/cli.rst:477
 msgid ""
 "Keeps a discussion catalog and builds it. The commands come from the "
 "discussion plugin, which every ``guidedog`` links. They work on any "
@@ -1166,7 +1179,7 @@ msgstr ""
 "카탈로그에서 동작합니다. Guidedog 자체의 설계 기록도 ``docs/gds``\\ 에 있는 카탈로그 하나입니다. 전체 작업 "
 "흐름은 :doc:`../howto/discussions`\\ 에 나와 있습니다."
 
-#: ../../reference/cli.rst:492
+#: ../../reference/cli.rst:493
 msgid ""
 "``guidedog dsc build`` builds the catalog as a Guidedog project, as "
 "``guidedog build`` does, with ``pdf_documents`` set to the record books "
@@ -1180,28 +1193,28 @@ msgstr ""
 "dsc --help``\\ 는 명령 목록을, ``guidedog dsc COMMAND --help``\\ 는 명령 하나의 옵션을 "
 "보여 줍니다."
 
-#: ../../reference/cli.rst:494
+#: ../../reference/cli.rst:495
 msgid "Options of guidedog dsc"
 msgstr "guidedog dsc 옵션"
 
-#: ../../reference/cli.rst:500
+#: ../../reference/cli.rst:501
 msgid "``--dir=DIR``"
 msgstr "``--dir=DIR``"
 
-#: ../../reference/cli.rst:501
+#: ../../reference/cli.rst:502
 msgid "The catalog. By default, the one the current folder is in."
 msgstr "카탈로그입니다. 기본값은 현재 폴더가 속한 카탈로그입니다."
 
-#: ../../reference/cli.rst:502
+#: ../../reference/cli.rst:503
 msgid "``--prefix=NAME``"
 msgstr "``--prefix=NAME``"
 
-#: ../../reference/cli.rst:503
+#: ../../reference/cli.rst:504
 msgid ""
 "The prefix of a catalog without ``discussion.toml``; ``init`` needs it."
 msgstr "``discussion.toml``\\ 이 없는 카탈로그의 접두사입니다. ``init``\\ 에는 반드시 필요합니다."
 
-#: ../../reference/cli.rst:504
+#: ../../reference/cli.rst:505
 msgid ""
 "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
 "``--template=FILE``"
@@ -1209,17 +1222,17 @@ msgstr ""
 "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
 "``--template=FILE``"
 
-#: ../../reference/cli.rst:505
+#: ../../reference/cli.rst:506
 msgid ""
 "The name, settings, process draft, and record template of a new catalog "
 "(``init``)."
 msgstr "새 카탈로그의 이름, 설정, 절차 초안, 기록 템플릿입니다(``init``)."
 
-#: ../../reference/cli.rst:507
+#: ../../reference/cli.rst:508
 msgid "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 msgstr "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 
-#: ../../reference/cli.rst:508
+#: ../../reference/cli.rst:509
 msgid ""
 "A new draft's author (default: Git's ``user.name``), labels, and file "
 "name (``new``; ``init`` takes the first two)."
@@ -1227,50 +1240,50 @@ msgstr ""
 "새 초안의 저자(기본값: Git의 ``user.name``), 레이블, 파일 이름입니다(``new``; ``init``\\ 은 앞의 "
 "두 가지만 받습니다)."
 
-#: ../../reference/cli.rst:510
+#: ../../reference/cli.rst:511
 msgid "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 msgstr "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 
-#: ../../reference/cli.rst:511
+#: ../../reference/cli.rst:512
 msgid "``list``: filter by state or label; include inherited records."
 msgstr "``list``: 상태나 레이블로 거릅니다. 상속된 기록도 포함합니다."
 
-#: ../../reference/cli.rst:512
+#: ../../reference/cli.rst:513
 msgid "``--number=N``, ``--discussion=URL``"
 msgstr "``--number=N``, ``--discussion=URL``"
 
-#: ../../reference/cli.rst:513
+#: ../../reference/cli.rst:514
 msgid ""
 "The number and review link of a promotion; ``--number`` also selects a "
 "record to build."
 msgstr "승격할 때의 번호와 검토 링크입니다. ``--number``\\ 는 빌드할 기록을 고를 때도 씁니다."
 
-#: ../../reference/cli.rst:515
+#: ../../reference/cli.rst:516
 msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 msgstr "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 
-#: ../../reference/cli.rst:516
+#: ../../reference/cli.rst:517
 msgid "A state change, why, and for ``committed`` the evidence."
 msgstr "바꿀 상태, 그 이유, 그리고 ``committed``\\ 의 경우 증거입니다."
 
-#: ../../reference/cli.rst:517
+#: ../../reference/cli.rst:518
 msgid "``--check``, ``--render``"
 msgstr "``--check``, ``--render``"
 
-#: ../../reference/cli.rst:518
+#: ../../reference/cli.rst:519
 msgid ""
 "``index``: check without writing; ``check``: also build the artifacts."
 msgstr "``index``: 아무것도 쓰지 않고 검사만 합니다. ``check``: 결과물까지 빌드합니다."
 
-#: ../../reference/cli.rst:519
+#: ../../reference/cli.rst:520
 msgid "``--target=html|pdf|both``"
 msgstr "``--target=html|pdf|both``"
 
-#: ../../reference/cli.rst:520
+#: ../../reference/cli.rst:521
 msgid "What ``build`` writes (default: both). A record selects one PDF."
 msgstr "``build``\\ 가 쓰는 출력입니다(기본값: both). 기록을 지정하면 PDF 하나를 선택합니다."
 
-#: ../../reference/cli.rst:522
+#: ../../reference/cli.rst:523
 msgid ""
 "``build`` and ``check``: the Typst program for a catalog of older Typst "
 "records (default: the embedded compiler), and for the PDF books."
@@ -1278,7 +1291,7 @@ msgstr ""
 "``build``\\ 와 ``check``: 예전 Typst 기록으로 된 카탈로그와 PDF 책에 쓸 Typst 프로그램(기본값: "
 "내장 컴파일러)."
 
-#: ../../reference/cli.rst:524
+#: ../../reference/cli.rst:525
 msgid ""
 "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
 "``-q``"
@@ -1286,11 +1299,11 @@ msgstr ""
 "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
 "``-q``"
 
-#: ../../reference/cli.rst:525
+#: ../../reference/cli.rst:526
 msgid "Preview a change; machine-readable output; quiet success."
 msgstr "변경 미리 보기, 기계가 읽을 수 있는 출력, 성공 시 출력 생략."
 
-#: ../../reference/cli.rst:527
+#: ../../reference/cli.rst:528
 msgid ""
 "The exit statuses are those of ``guidedog``. Problems about a catalog "
 "have codes in its prefix, such as ``eds.recovery-needed``."
@@ -1298,11 +1311,11 @@ msgstr ""
 "종료 상태는 ``guidedog``\\ 과 같습니다. 카탈로그 문제의 코드는 ``eds.recovery-needed``\\ 처럼 그 "
 "카탈로그의 접두사로 시작합니다."
 
-#: ../../reference/cli.rst:530
+#: ../../reference/cli.rst:531
 msgid "guidedog publish"
 msgstr "guidedog publish"
 
-#: ../../reference/cli.rst:533
+#: ../../reference/cli.rst:534
 msgid ""
 "Builds the project that a publisher's configuration names, as HTML with "
 "Guidedog's own engine. It freezes the site, and the publisher plans and "
@@ -1311,7 +1324,7 @@ msgstr ""
 "게시기 설정이 가리키는 프로젝트를 Guidedog 자체 엔진으로 HTML 빌드합니다. 사이트를 고정하면 게시기가 게시 계획을 세우고 "
 "게시합니다:"
 
-#: ../../reference/cli.rst:541
+#: ../../reference/cli.rst:542
 msgid ""
 "The publisher is looked up among the plugins linked into this executable "
 "first, then in the machine's registry (``guidedog plugin register``). A "
@@ -1320,49 +1333,49 @@ msgstr ""
 "게시기는 먼저 이 실행 파일에 링크된 플러그인 중에서 찾고, 없으면 컴퓨터의 레지스트리(``guidedog plugin "
 "register``)에서 찾습니다. 빌드 플러그인은 거부합니다. 게시는 게시기만 할 수 있기 때문입니다."
 
-#: ../../reference/cli.rst:545
+#: ../../reference/cli.rst:546
 msgid "Options of publish"
 msgstr "publish 옵션"
 
-#: ../../reference/cli.rst:551
+#: ../../reference/cli.rst:552
 msgid "``--publisher=ID``"
 msgstr "``--publisher=ID``"
 
-#: ../../reference/cli.rst:552
+#: ../../reference/cli.rst:553
 msgid "The publisher."
 msgstr "게시기입니다."
 
-#: ../../reference/cli.rst:553 ../../reference/cli.rst:783
+#: ../../reference/cli.rst:554 ../../reference/cli.rst:784
 msgid "``--config=FILE``"
 msgstr "``--config=FILE``"
 
-#: ../../reference/cli.rst:554
+#: ../../reference/cli.rst:555
 msgid "The publisher's configuration, which names the project or site."
 msgstr "프로젝트나 사이트를 가리키는 게시기 설정입니다."
 
-#: ../../reference/cli.rst:555
+#: ../../reference/cli.rst:556
 msgid "``--dry-run``"
 msgstr "``--dry-run``"
 
-#: ../../reference/cli.rst:556
+#: ../../reference/cli.rst:557
 msgid "Build and plan; write nothing to the target."
 msgstr "빌드하고 계획만 세웁니다. 대상에는 아무것도 쓰지 않습니다."
 
-#: ../../reference/cli.rst:557
+#: ../../reference/cli.rst:558
 msgid "``--wait=SECONDS``"
 msgstr "``--wait=SECONDS``"
 
-#: ../../reference/cli.rst:558
+#: ../../reference/cli.rst:559
 msgid ""
 "How long to wait for the host to confirm the deployment, from 0 (do not "
 "wait) to 86400."
 msgstr "호스트가 배포를 확인해 줄 때까지 기다리는 시간입니다. 0(기다리지 않음)부터 86400까지 정할 수 있습니다."
 
-#: ../../reference/cli.rst:560
+#: ../../reference/cli.rst:561
 msgid "``--timeout=SECONDS``"
 msgstr "``--timeout=SECONDS``"
 
-#: ../../reference/cli.rst:561
+#: ../../reference/cli.rst:562
 msgid ""
 "The bound on each whole exchange with the publisher, writing the request "
 "included, from 1 to 86400 (default: 300). Choose a value longer than "
@@ -1371,15 +1384,15 @@ msgstr ""
 "요청을 보내는 시간까지 포함해, 게시기와 주고받는 교환 하나하나에 걸리는 전체 시간의 상한입니다. 1부터 86400까지이며 기본값은 "
 "300입니다. ``--wait``\\ 보다 긴 값을 고르세요."
 
-#: ../../reference/cli.rst:563
+#: ../../reference/cli.rst:564
 msgid "``--verbose``"
 msgstr "``--verbose``"
 
-#: ../../reference/cli.rst:564
+#: ../../reference/cli.rst:565
 msgid "List every change of the plan."
 msgstr "계획에 포함된 변경 사항을 모두 나열합니다."
 
-#: ../../reference/cli.rst:566
+#: ../../reference/cli.rst:567
 msgid ""
 "A timeout or Ctrl+C after a possible write reports an unknown outcome "
 "(exit status 7). We then run the publisher's recovery command before "
@@ -1391,11 +1404,11 @@ msgstr ""
 "이때는 다시 시도하기 전에 게시기의 복구 명령을 실행합니다. 실행할 때마다 자기만의 비공개 폴더에 빌드하고, 끝나면 그 폴더를 "
 "지웁니다. 동시에 실행해도 서로의 스냅샷을 바꿀 수 없습니다. :doc:`../plugins`\\ 를 참고하세요."
 
-#: ../../reference/cli.rst:571
+#: ../../reference/cli.rst:572
 msgid "guidedog publish pages"
 msgstr "guidedog publish pages"
 
-#: ../../reference/cli.rst:574
+#: ../../reference/cli.rst:575
 msgid ""
 "``guidedog publish pages`` is the guided way to GitHub Pages; the GitHub "
 "Pages plugin adds it. It does whatever is still missing and asks only "
@@ -1404,7 +1417,7 @@ msgstr ""
 "``guidedog publish pages``\\ 는 GitHub Pages에 게시하는 단계를 안내해 주는 방법이며, GitHub "
 "Pages 플러그인이 추가합니다. 아직 빠진 단계를 모두 처리하고, 꼭 필요할 때만 묻습니다. 그런 다음 빌드하고 게시합니다:"
 
-#: ../../reference/cli.rst:577
+#: ../../reference/cli.rst:578
 msgid ""
 "``pages.toml``: written once, with the repository taken from the "
 "``origin`` remote and the project from the nearest ``conf.toml`` (or as "
@@ -1413,33 +1426,33 @@ msgstr ""
 "``pages.toml``: 한 번만 작성합니다. 저장소는 ``origin`` 원격에서, 프로젝트는 가장 가까운 "
 "``conf.toml``\\ 에서 가져옵니다(직접 지정할 수도 있습니다)."
 
-#: ../../reference/cli.rst:579
+#: ../../reference/cli.rst:580
 msgid ""
 "A token: GitHub's device sign-in, stored in the system's credential "
 "store, or the GitHub CLI's token for this run only."
 msgstr ""
 "토큰: GitHub 기기 로그인으로 받아 시스템 자격 증명 저장소에 보관하거나, 이번 실행에만 GitHub CLI의 토큰을 씁니다."
 
-#: ../../reference/cli.rst:581
+#: ../../reference/cli.rst:582
 msgid ""
 "The binding: the target is reviewed, and it asks us once to let this "
 "machine publish there."
 msgstr "바인딩: 대상을 검토한 뒤, 이 컴퓨터가 그곳에 게시해도 되는지 한 번 묻습니다."
 
-#: ../../reference/cli.rst:583
+#: ../../reference/cli.rst:584
 msgid ""
 "The Pages source: when Pages publishes another branch, or uses Actions, "
 "it asks us once to switch it."
 msgstr ""
 "Pages 소스: Pages가 다른 브랜치를 게시하고 있거나 Actions를 쓰고 있으면, 이쪽으로 바꿀지 한 번 묻습니다."
 
-#: ../../reference/cli.rst:585
+#: ../../reference/cli.rst:586
 msgid ""
 "The publication: one push to the site's own branch, then a wait for the "
 "deployment."
 msgstr "게시: 사이트 전용 브랜치에 한 번 푸시한 뒤 배포가 끝나기를 기다립니다."
 
-#: ../../reference/cli.rst:587
+#: ../../reference/cli.rst:588
 msgid ""
 "On a machine that is already set up, it publishes without a question. "
 "Without a terminal it never asks. A missing step then fails with a hint "
@@ -1461,11 +1474,11 @@ msgstr ""
 "링크된 플러그인으로 프로젝트를 직접 빌드하며, ``--guidedog=PATH``\\ 를 주면 다른 프로그램으로 빌드합니다. "
 ":doc:`../howto/github-pages`\\ 를 참고하세요."
 
-#: ../../reference/cli.rst:595
+#: ../../reference/cli.rst:596
 msgid "guidedog pages workflow"
 msgstr "guidedog pages workflow"
 
-#: ../../reference/cli.rst:598
+#: ../../reference/cli.rst:599
 msgid ""
 "``guidedog pages workflow`` is ``guidedog-pages workflow``, added by the "
 "GitHub Pages plugin. It prints, writes, or checks a GitHub Actions "
@@ -1479,26 +1492,26 @@ msgstr ""
 "쓰거나, 검사합니다. 이 워크플로는 현재 Guidedog 릴리스를 설치하고 프로젝트를 빌드한 뒤, GitHub의 Pages 액션으로 "
 "배포합니다. 소스 브랜치에 푸시할 때마다 배포하고 싶다면, 우리 컴퓨터에서 게시하는 대신 이 워크플로를 씁니다."
 
-#: ../../reference/cli.rst:608
+#: ../../reference/cli.rst:609
 msgid "Options of pages workflow"
 msgstr "pages workflow 옵션"
 
-#: ../../reference/cli.rst:614
+#: ../../reference/cli.rst:615
 msgid "``--write``, ``--force``"
 msgstr "``--write``, ``--force``"
 
-#: ../../reference/cli.rst:615
+#: ../../reference/cli.rst:616
 msgid ""
 "Write ``.github/workflows/docs-pages.yml`` instead of printing it; "
 "replace an existing one."
 msgstr ""
 "출력하는 대신 ``.github/workflows/docs-pages.yml``\\ 을 씁니다. 파일이 이미 있으면 교체합니다."
 
-#: ../../reference/cli.rst:617
+#: ../../reference/cli.rst:618
 msgid "``--check``"
 msgstr "``--check``"
 
-#: ../../reference/cli.rst:618
+#: ../../reference/cli.rst:619
 msgid ""
 "Check an existing workflow: an older release, a missing checksum, an "
 "unpinned action, ``pull_request_target``, a checkout that keeps its "
@@ -1507,20 +1520,20 @@ msgstr ""
 "기존 워크플로를 검사합니다. 오래된 릴리스, 빠진 체크섬, 고정되지 않은 액션, ``pull_request_target``, 자격 "
 "증명을 남겨 두는 checkout을 찾습니다."
 
-#: ../../reference/cli.rst:620
+#: ../../reference/cli.rst:621
 msgid "``--project=DIR``, ``--branch=NAME``"
 msgstr "``--project=DIR``, ``--branch=NAME``"
 
-#: ../../reference/cli.rst:621
+#: ../../reference/cli.rst:622
 msgid ""
 "The project (default: ``docs``) and the source branch (default: ``main``)."
 msgstr "프로젝트(기본값: ``docs``)와 소스 브랜치(기본값: ``main``)입니다."
 
-#: ../../reference/cli.rst:622
+#: ../../reference/cli.rst:623
 msgid "``--version=X``, ``--sha256=HEX``, ``--offline``"
 msgstr "``--version=X``, ``--sha256=HEX``, ``--offline``"
 
-#: ../../reference/cli.rst:623
+#: ../../reference/cli.rst:624
 msgid ""
 "The release to install, its archive's SHA-256 (default: read from the "
 "release's ``SHA256SUMS``), or a marked placeholder without network access."
@@ -1528,15 +1541,15 @@ msgstr ""
 "설치할 릴리스, 그 아카이브의 SHA-256(기본값: 릴리스의 ``SHA256SUMS``\\ 에서 읽음), 또는 네트워크 없이 쓸 "
 "수 있도록 표시해 둔 자리표시자입니다."
 
-#: ../../reference/cli.rst:626
+#: ../../reference/cli.rst:627
 msgid "See :doc:`../howto/github-pages`."
 msgstr ":doc:`../howto/github-pages`\\ 를 참고하세요."
 
-#: ../../reference/cli.rst:628
+#: ../../reference/cli.rst:629
 msgid "guidedog plugin"
 msgstr "guidedog plugin"
 
-#: ../../reference/cli.rst:631
+#: ../../reference/cli.rst:632
 msgid ""
 "Records which plugin programs may run on this machine, in "
 "``plugins.toml`` in Guidedog's configuration folder "
@@ -1545,11 +1558,11 @@ msgstr ""
 "이 컴퓨터에서 실행해도 되는 플러그인 프로그램을 Guidedog 설정 폴더의 ``plugins.toml``\\ 에 "
 "기록합니다(``GUIDEDOG_CONFIG_DIR``\\ 로 위치를 바꿀 수 있습니다):"
 
-#: ../../reference/cli.rst:644
+#: ../../reference/cli.rst:645
 msgid "Subcommands:"
 msgstr "하위 명령:"
 
-#: ../../reference/cli.rst:646
+#: ../../reference/cli.rst:647
 msgid ""
 "``register ID PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS] "
 "[--yes]``: inspects the program after we confirm (``--yes`` skips the "
@@ -1561,7 +1574,7 @@ msgstr ""
 "[--yes]``: 우리가 확인하면 프로그램을 검사하고(``--yes``\\ 는 질문을 건너뜁니다) 그 SHA-256을 기록합니다. "
 "프로그램은 자신이 ``ID``\\ 라고 밝혀야 합니다. 빌드 플러그인은 등록되기 전에 아래의 적격성 검사를 통과해야 합니다."
 
-#: ../../reference/cli.rst:650
+#: ../../reference/cli.rst:651
 msgid ""
 "``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: runs "
 "the qualification checks against a build plugin without changing the "
@@ -1572,13 +1585,13 @@ msgstr ""
 "레지스트리를 바꾸지 않고 빌드 플러그인에 적격성 검사를 실행합니다. 게시기는 거부합니다. 게시기는 자체 테스트와 ``guidedog "
 "publish --dry-run``\\ 으로 테스트합니다."
 
-#: ../../reference/cli.rst:653
+#: ../../reference/cli.rst:654
 msgid ""
 "``list``: the registered programs, their IDs, paths, and kinds, beside "
 "the plugins linked into this executable."
 msgstr "``list``: 등록된 프로그램과 그 ID, 경로, 종류를 이 실행 파일에 링크된 플러그인과 함께 보여 줍니다."
 
-#: ../../reference/cli.rst:655
+#: ../../reference/cli.rst:656
 msgid ""
 "``inspect ID``: an entry's declared build hooks (source, HTML, assets) or "
 "publisher capabilities, the commands it adds, and whether the program on "
@@ -1587,13 +1600,13 @@ msgstr ""
 "``inspect ID``: 항목이 선언한 빌드 훅(소스, HTML, 에셋)이나 게시기 기능, 항목이 추가하는 명령을 보여 주고, "
 "디스크에 있는 프로그램이 등록된 그 프로그램 그대로인지 알려 줍니다."
 
-#: ../../reference/cli.rst:658
+#: ../../reference/cli.rst:659
 msgid ""
 "``run ID -- [ARGS...]``: runs a registered program's own commands, after "
 "checking its SHA-256."
 msgstr "``run ID -- [ARGS...]``: SHA-256을 확인한 뒤 등록된 프로그램 자체의 명령을 실행합니다."
 
-#: ../../reference/cli.rst:660
+#: ../../reference/cli.rst:661
 msgid ""
 "``unregister ID``: removes the entry from ``plugins.toml``. The program, "
 "and anything it published, stay unchanged."
@@ -1601,7 +1614,7 @@ msgstr ""
 "``unregister ID``: ``plugins.toml``\\ 에서 항목을 제거합니다. 프로그램과 그 프로그램이 게시한 내용은 "
 "그대로 남습니다."
 
-#: ../../reference/cli.rst:663
+#: ../../reference/cli.rst:664
 msgid ""
 "Build plugins are selected by ``plugins`` in ``conf.toml`` and run during "
 "``guidedog build``. ``guidedog publish`` accepts publishers only. "
@@ -1612,11 +1625,11 @@ msgstr ""
 "실행됩니다. ``guidedog publish``\\ 는 게시기만 받습니다. ``--untrusted``\\ 는 빌드 플러그인을 "
 "끕니다. 전체 안내서와 예제, 설정은 :doc:`../plugins`\\ 를 참고하세요."
 
-#: ../../reference/cli.rst:667
+#: ../../reference/cli.rst:668
 msgid "Build-plugin qualification checks"
 msgstr "빌드 플러그인 적격성 검사"
 
-#: ../../reference/cli.rst:670
+#: ../../reference/cli.rst:671
 msgid ""
 "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises the "
 "declared hooks in child processes: loading, repeated results, and "
@@ -1633,11 +1646,11 @@ msgstr ""
 "SHA-256은 검사 전후에 같아야 합니다. 게시기 등록은 게시를 실행하지 않습니다. 검사 통과는 상호 운용성의 증거일 뿐, "
 "샌드박스나 안전 인증서가 아닙니다."
 
-#: ../../reference/cli.rst:677
+#: ../../reference/cli.rst:678
 msgid "Custom binaries with linked plugins"
 msgstr "플러그인을 링크한 사용자 정의 바이너리"
 
-#: ../../reference/cli.rst:680
+#: ../../reference/cli.rst:681
 msgid ""
 "The whole command line is the ``gd-cli`` crate. A Rust program can be a "
 "``guidedog`` with plugins linked in, instead of registered as separate "
@@ -1650,7 +1663,7 @@ msgstr ""
 "``gd_plugins::Registry``\\ 를 ``gd_cli::run_with``\\ 에 넘깁니다. 이 함수는 프로세스 "
 "인수를 읽고 종료 상태를 반환합니다."
 
-#: ../../reference/cli.rst:699
+#: ../../reference/cli.rst:700
 msgid ""
 "The program accepts every command and option on this page. A selected "
 "plugin ID is looked up among the linked plugins first, then in the "
@@ -1666,11 +1679,11 @@ msgstr ""
 "Pages 플러그인 하나를 링크합니다. 이 플러그인은 설치형 플러그인이 ``gd_plugins::serve_plugin``\\ 으로 "
 "제공하는 것과 같은 ``Plugin`` 값입니다(:doc:`../plugins` 참고)."
 
-#: ../../reference/cli.rst:706
+#: ../../reference/cli.rst:707
 msgid "Commands plugins add"
 msgstr "플러그인이 추가하는 명령"
 
-#: ../../reference/cli.rst:709
+#: ../../reference/cli.rst:710
 msgid ""
 "A plugin may add commands to guidedog, or targets to ``guidedog "
 "publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
@@ -1681,7 +1694,7 @@ msgstr ""
 "``guidedog --help``\\ 는 이런 명령을 PLUGIN COMMANDS 아래에 각 플러그인 ID와 함께 보여 주고, "
 "``guidedog plugin inspect ID``\\ 는 플러그인 하나의 명령을 보여 줍니다:"
 
-#: ../../reference/cli.rst:719
+#: ../../reference/cli.rst:720
 msgid ""
 "guidedog looks for a word it does not know (or a ``publish`` target) "
 "among the commands of the linked plugins first, then among those of the "
@@ -1694,7 +1707,7 @@ msgstr ""
 "명령에서 찾아 그 명령을 추가한 플러그인을 실행합니다. 이런 명령 뒤에 ``--help``\\ 를 붙이면 플러그인이 선언한 내용으로 "
 "만든 도움말을 출력합니다. 플러그인은 guidedog의 명령을 대체할 수 없으며, 같은 이름은 먼저 추가한 플러그인이 차지합니다."
 
-#: ../../reference/cli.rst:721
+#: ../../reference/cli.rst:722
 msgid ""
 "A linked plugin's command runs inside guidedog. A registered program's "
 "command runs as that program, started on our terminal after its SHA-256 "
@@ -1707,11 +1720,11 @@ msgstr ""
 "프로그램으로 실행됩니다. 이 프로그램은 질문을 할 수 있고, 프로그램의 종료 상태가 곧 명령의 종료 상태입니다. 어느 쪽이든 빌드를 "
 "요청하면 guidedog가 프로젝트를 빌드합니다. 프로그램의 명령은 등록할 때 읽으므로, 새 버전은 언제나처럼 다시 등록합니다."
 
-#: ../../reference/cli.rst:723
+#: ../../reference/cli.rst:724
 msgid "guidedog-pages"
 msgstr "guidedog-pages"
 
-#: ../../reference/cli.rst:726
+#: ../../reference/cli.rst:727
 msgid ""
 "Publishes Guidedog sites to GitHub Pages from this machine. It builds "
 "projects with the installed ``guidedog``. ``publish`` does any missing "
@@ -1724,44 +1737,44 @@ msgstr ""
 "처리합니다. 단계별 명령은 스크립트에서 쓰거나 각 부분을 따로 확인할 수 있도록 남아 있습니다. "
 ":doc:`../howto/github-pages`\\ 를 참고하세요."
 
-#: ../../reference/cli.rst:750
+#: ../../reference/cli.rst:751
 msgid "Settings of pages.toml"
 msgstr "pages.toml 설정"
 
-#: ../../reference/cli.rst:754
+#: ../../reference/cli.rst:755
 msgid "Setting"
 msgstr "설정"
 
-#: ../../reference/cli.rst:756
+#: ../../reference/cli.rst:757
 msgid "``schema = 1``"
 msgstr "``schema = 1``"
 
-#: ../../reference/cli.rst:757
+#: ../../reference/cli.rst:758
 msgid "The file's version; required."
 msgstr "파일의 버전입니다. 필수입니다."
 
-#: ../../reference/cli.rst:758
+#: ../../reference/cli.rst:759
 msgid "``repository = \"OWNER/REPO\"``"
 msgstr "``repository = \"OWNER/REPO\"``"
 
-#: ../../reference/cli.rst:759
+#: ../../reference/cli.rst:760
 msgid "The GitHub.com repository; required."
 msgstr "GitHub.com 저장소입니다. 필수입니다."
 
-#: ../../reference/cli.rst:760
+#: ../../reference/cli.rst:761
 msgid "``branch = \"gh-pages\"``"
 msgstr "``branch = \"gh-pages\"``"
 
-#: ../../reference/cli.rst:761
+#: ../../reference/cli.rst:762
 msgid ""
 "The branch the site is published to: its own, never the default branch."
 msgstr "사이트를 게시할 브랜치입니다. 사이트 전용 브랜치여야 하며, 기본 브랜치는 쓸 수 없습니다."
 
-#: ../../reference/cli.rst:762
+#: ../../reference/cli.rst:763
 msgid "``project = \"docs\"`` or ``site = \"build/site\"``"
 msgstr "``project = \"docs\"`` 또는 ``site = \"build/site\"``"
 
-#: ../../reference/cli.rst:763
+#: ../../reference/cli.rst:764
 msgid ""
 "The Guidedog project to build, or the folder of a site built already; one "
 "of them, relative to ``pages.toml``."
@@ -1769,19 +1782,19 @@ msgstr ""
 "빌드할 Guidedog 프로젝트 또는 이미 빌드한 사이트의 폴더입니다. 둘 중 하나만 지정하며, ``pages.toml``\\ "
 "기준의 상대 경로입니다."
 
-#: ../../reference/cli.rst:765
+#: ../../reference/cli.rst:766
 msgid "``profile = \"default\"``"
 msgstr "``profile = \"default\"``"
 
-#: ../../reference/cli.rst:766
+#: ../../reference/cli.rst:767
 msgid "The credential profile whose token publishes."
 msgstr "게시에 쓸 토큰을 가진 자격 증명 프로필입니다."
 
-#: ../../reference/cli.rst:767
+#: ../../reference/cli.rst:768
 msgid "``site_url``"
 msgstr "``site_url``"
 
-#: ../../reference/cli.rst:768
+#: ../../reference/cli.rst:769
 msgid ""
 "The address readers open, and ``html_baseurl`` for the build (default: "
 "``https://OWNER.github.io/REPO/``)."
@@ -1789,49 +1802,49 @@ msgstr ""
 "독자가 여는 주소이며, 빌드할 때 ``html_baseurl``\\ 로도 쓰입니다(기본값: "
 "``https://OWNER.github.io/REPO/``)."
 
-#: ../../reference/cli.rst:770
+#: ../../reference/cli.rst:771
 msgid "``strict = true``"
 msgstr "``strict = true``"
 
-#: ../../reference/cli.rst:771
+#: ../../reference/cli.rst:772
 msgid "Build with warnings as errors."
 msgstr "경고를 오류로 처리해 빌드합니다."
 
-#: ../../reference/cli.rst:772
+#: ../../reference/cli.rst:773
 msgid "``wait_seconds = 300``"
 msgstr "``wait_seconds = 300``"
 
-#: ../../reference/cli.rst:773
+#: ../../reference/cli.rst:774
 msgid "How long ``publish`` waits for the deployment."
 msgstr "``publish``\\ 가 배포를 기다리는 시간입니다."
 
-#: ../../reference/cli.rst:774
+#: ../../reference/cli.rst:775
 msgid "``[watch] debounce_ms``, ``max_wait_ms``"
 msgstr "``[watch] debounce_ms``, ``max_wait_ms``"
 
-#: ../../reference/cli.rst:775
+#: ../../reference/cli.rst:776
 msgid ""
 "How long ``watch`` lets sources settle, and the most it waits after a "
 "change."
 msgstr "``watch``\\ 가 소스 변경이 잦아들기를 기다리는 시간과, 변경 후 기다리는 최대 시간입니다."
 
-#: ../../reference/cli.rst:777
+#: ../../reference/cli.rst:778
 msgid "Options of guidedog-pages"
 msgstr "guidedog-pages 옵션"
 
-#: ../../reference/cli.rst:784
+#: ../../reference/cli.rst:785
 msgid "The configuration (default: ``pages.toml``)."
 msgstr "설정 파일입니다(기본값: ``pages.toml``)."
 
-#: ../../reference/cli.rst:785
+#: ../../reference/cli.rst:786
 msgid "``--profile=NAME``"
 msgstr "``--profile=NAME``"
 
-#: ../../reference/cli.rst:786
+#: ../../reference/cli.rst:787
 msgid "The profile ``auth`` and ``init`` use (default: ``default``)."
 msgstr "``auth``\\ 와 ``init``\\ 이 사용할 프로필입니다(기본값: ``default``)."
 
-#: ../../reference/cli.rst:787
+#: ../../reference/cli.rst:788
 msgid ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
@@ -1839,58 +1852,58 @@ msgstr ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
 
-#: ../../reference/cli.rst:788
+#: ../../reference/cli.rst:789
 msgid "``init``: what the new ``pages.toml`` says."
 msgstr "``init``: 새 ``pages.toml``\\ 에 들어갈 내용입니다."
 
-#: ../../reference/cli.rst:789
+#: ../../reference/cli.rst:790
 msgid "``--credential=env``"
 msgstr "``--credential=env``"
 
-#: ../../reference/cli.rst:790
+#: ../../reference/cli.rst:791
 msgid ""
 "Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without "
 "storing it."
 msgstr "``GUIDEDOG_PAGES_TOKEN``\\ 의 토큰을 저장하지 않고 이 명령에만 사용합니다."
 
-#: ../../reference/cli.rst:791
+#: ../../reference/cli.rst:792
 msgid "``--guidedog=PATH``"
 msgstr "``--guidedog=PATH``"
 
-#: ../../reference/cli.rst:792
+#: ../../reference/cli.rst:793
 msgid ""
 "The ``guidedog`` that builds (default: ``GUIDEDOG_PAGES_GUIDEDOG``, then "
 "``PATH``)."
 msgstr ""
 "빌드에 쓸 ``guidedog``\\ 입니다(기본값: ``GUIDEDOG_PAGES_GUIDEDOG``, 그다음 ``PATH``)."
 
-#: ../../reference/cli.rst:793
+#: ../../reference/cli.rst:794
 msgid "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 msgstr "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 
-#: ../../reference/cli.rst:794
+#: ../../reference/cli.rst:795
 msgid ""
 "``publish``: plan only; how long to wait for the deployment; list every "
 "change."
 msgstr "``publish``: 계획만 세우기, 배포를 기다릴 시간, 모든 변경 사항 나열."
 
-#: ../../reference/cli.rst:795
+#: ../../reference/cli.rst:796
 msgid "``--adopt``, ``--yes``"
 msgstr "``--adopt``, ``--yes``"
 
-#: ../../reference/cli.rst:796
+#: ../../reference/cli.rst:797
 msgid ""
 "``bind``: let a branch of other work be replaced; answer yes to the "
 "question."
 msgstr "``bind``: 다른 작업이 담긴 브랜치를 교체하도록 허용, 확인 질문에 예라고 답하기."
 
-#: ../../reference/cli.rst:797
+#: ../../reference/cli.rst:798
 msgid ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 msgstr ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 
-#: ../../reference/cli.rst:798
+#: ../../reference/cli.rst:799
 msgid ""
 "``auth login``: the app; the repositories an OAuth App token may reach; "
 "open the browser; give the profile to another account."
@@ -1898,23 +1911,23 @@ msgstr ""
 "``auth login``: 사용할 앱, OAuth App 토큰이 접근할 수 있는 저장소, 브라우저 열기, 프로필을 다른 계정에 "
 "넘기기."
 
-#: ../../reference/cli.rst:800
+#: ../../reference/cli.rst:801
 msgid "``--operation=COMMIT``"
 msgstr "``--operation=COMMIT``"
 
-#: ../../reference/cli.rst:801
+#: ../../reference/cli.rst:802
 msgid "``status``: the publication to ask about (default: the last one)."
 msgstr "``status``: 상태를 확인할 게시입니다(기본값: 마지막 게시)."
 
-#: ../../reference/cli.rst:802
+#: ../../reference/cli.rst:803
 msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
 msgstr "``--diagnostics=text|json``, ``--color=auto|always|never``"
 
-#: ../../reference/cli.rst:803
+#: ../../reference/cli.rst:804
 msgid "How problems and results are written."
 msgstr "문제와 결과를 출력하는 형식입니다."
 
-#: ../../reference/cli.rst:805
+#: ../../reference/cli.rst:806
 msgid ""
 "Its exit statuses are those of ``guidedog publish``: 0 live or unchanged, "
 "1 nothing published, 2 a usage or configuration problem, 4 a file, "
@@ -2005,18 +2018,17 @@ msgid ""
 "the line and the expected form. An unknown setting is an error too, with "
 "a \"Did you mean ...?\" hint when the name is close to a known one. A "
 "setting of a Sphinx builder or extension Guidedog does not have "
-"(``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, ``autosummary_*``, "
-"``napoleon_*``, ``linkcheck_*``, ``html_sidebars``, ``needs_*`` and "
-"similar) is accepted with a ``config.ignored`` warning. So the same file "
-"can serve a Sphinx build of the sources."
+"(``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, ``doctest_*``, "
+"``linkcheck_*``, ``html_sidebars``, ``needs_*`` and similar) is accepted "
+"with a ``config.ignored`` warning. So the same file can serve a Sphinx "
+"build of the sources."
 msgstr ""
 "``conf.toml``\\ 을 읽을 때 각 값이 형식에 맞는지 검사합니다. 잘못된 값은 ``INVALID "
 "CONFIGURATION`` 문제(종료 상태 2)가 되며, 해당 줄과 기대하는 형태를 알려 줍니다. 알 수 없는 설정도 오류이고, "
 "이름이 알려진 설정과 비슷하면 \"Did you mean ...?\" 힌트가 붙습니다. Guidedog에 없는 Sphinx 빌더나 "
-"확장의 설정(``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, "
-"``autosummary_*``, ``napoleon_*``, ``linkcheck_*``, ``html_sidebars``, "
-"``needs_*`` 등)은 ``config.ignored`` 경고와 함께 받아들입니다. 그래서 같은 파일로 소스를 "
-"Sphinx에서도 빌드할 수 있습니다."
+"확장의 설정(``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, ``doctest_*``, "
+"``linkcheck_*``, ``html_sidebars``, ``needs_*`` 등)은 ``config.ignored`` "
+"경고와 함께 받아들입니다. 그래서 같은 파일로 소스를 Sphinx에서도 빌드할 수 있습니다."
 
 #: ../../reference/configuration.rst:57
 msgid "Some values are derived after reading:"
@@ -4505,10 +4517,21 @@ msgid "Reads and resolves the project without publishing an artifact."
 msgstr "결과물을 게시하지 않고 프로젝트를 읽고 참조를 해석합니다."
 
 #: ../../reference/formats.rst:58
+msgid "``coverage``"
+msgstr "``coverage``"
+
+#: ../../reference/formats.rst:59
+msgid ""
+"Writes ``python.txt`` and ``c.txt``: the Python and C objects the "
+"documents do not describe."
+msgstr ""
+"``python.txt``\\ 와 ``c.txt``\\ 를 씁니다. 문서가 설명하지 않는 Python 객체와 C 객체 목록입니다."
+
+#: ../../reference/formats.rst:61
 msgid "Coverage is evidence"
 msgstr "지원 범위는 검증의 근거"
 
-#: ../../reference/formats.rst:61
+#: ../../reference/formats.rst:64
 msgid ""
 "``guidedog formats`` reports the executable's actual adapters. The "
 "compatibility page records pinned suites and real-project checks. Passing "

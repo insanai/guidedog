@@ -1,0 +1,756 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-15 09:09+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: Guidedog translation contributors\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../sources-and-diagrams.rst:1
+msgid "Source pages, source links and class diagrams"
+msgstr "सोर्स पेज, सोर्स लिंक और क्लास डायग्राम"
+
+#: ../../sources-and-diagrams.rst:4
+msgid ""
+"Five of Sphinx's built-in extensions connect a manual to the code it "
+"describes and to the build that makes it. ``viewcode`` writes a "
+"highlighted copy of each documented module and links it with the "
+"descriptions. ``linkcode`` links each description to its source on the "
+"web. ``inheritance_diagram`` draws class graphs. ``duration`` reports "
+"which documents are slow to read. ``imgconverter`` makes sure every image "
+"reaches the book."
+msgstr ""
+"Sphinx के पाँच बिल्ट-इन एक्सटेंशन मैनुअल को उस कोड से जोड़ते हैं जिसका वह "
+"वर्णन करता है, और उस build से भी जो उसे बनाती है। ``viewcode`` हर "
+"दस्तावेज़ किए गए मॉड्यूल की हाइलाइट की हुई कॉपी लिखता है और उसे विवरणों "
+"से लिंक करता है। ``linkcode`` हर विवरण को वेब पर उसके सोर्स से लिंक करता "
+"है। ``inheritance_diagram`` क्लास ग्राफ बनाता है। ``duration`` बताता है "
+"कि कौन-से दस्तावेज़ पढ़ने में धीमे हैं। ``imgconverter`` यह पक्का करता है "
+"कि हर इमेज किताब तक पहुँचे।"
+
+#: ../../sources-and-diagrams.rst:6
+msgid "We turn them on as in Sphinx, by name:"
+msgstr "हम इन्हें Sphinx की तरह, नाम से चालू करते हैं:"
+
+#: ../../sources-and-diagrams.rst:17
+msgid ""
+"The first three read Python source with the same scan that autodoc uses "
+"(:doc:`autodoc`). Nothing is imported, and no program runs. The scan "
+"finds a module below ``autodoc_source_paths``, its classes and functions, "
+"their bases, and the lines each one spans. A description written by hand "
+"with ``py:class`` or ``py:function`` is found as well as one that autodoc "
+"wrote, as long as its module is below those folders."
+msgstr ""
+"पहले तीन एक्सटेंशन Python सोर्स को उसी स्कैन से पढ़ते हैं जिसे autodoc "
+"इस्तेमाल करता है (:doc:`autodoc`)। कुछ भी import नहीं होता, और कोई "
+"प्रोग्राम नहीं चलता। स्कैन ``autodoc_source_paths`` के नीचे का मॉड्यूल "
+"ढूँढता है, साथ ही उसकी क्लास और function, उनकी base क्लास, और वे लाइनें "
+"जिन पर हर एक फैला है। ``py:class`` या ``py:function`` से हाथ से लिखा "
+"विवरण भी उसी तरह मिल जाता है जैसे autodoc का लिखा विवरण, बशर्ते उसका "
+"मॉड्यूल इन फ़ोल्डरों के नीचे हो।"
+
+#: ../../sources-and-diagrams.rst:21
+msgid ""
+"Python source is read by the source scan while documents are read. The "
+"scan gives each Python description its file and lines, and each "
+"inheritance diagram its classes. When pages are written, the lines become "
+"source links and source pages, and the classes become a Graphviz drawing "
+"whose nodes link to the descriptions."
+msgstr ""
+"दस्तावेज़ पढ़ते समय सोर्स स्कैन Python सोर्स पढ़ता है। स्कैन हर Python "
+"विवरण को उसकी फ़ाइल और लाइनें देता है, और हर inheritance डायग्राम को उसकी "
+"क्लास। पेज लिखते समय लाइनें सोर्स लिंक और सोर्स पेज बन जाती हैं, और क्लास "
+"एक Graphviz ड्रॉइंग बन जाती हैं जिसके node विवरणों से लिंक होते हैं।"
+
+#: ../../sources-and-diagrams.rst:21
+msgid ""
+"Reading finds where each object is defined; writing turns that into "
+"links, pages and drawings."
+msgstr ""
+"पढ़ते समय पता चलता है कि हर ऑब्जेक्ट कहाँ परिभाषित है; लिखते समय वह "
+"जानकारी लिंक, पेज और ड्रॉइंग में बदल जाती है।"
+
+#: ../../sources-and-diagrams.rst:42
+msgid ""
+"Every Python file the scan reads is a dependency of the document that "
+"needed it. When we edit a module, the documents that describe it are read "
+"again, and their links, source pages and diagrams follow the edit."
+msgstr ""
+"स्कैन जो भी Python फ़ाइल पढ़ता है, वह उस दस्तावेज़ की निर्भरता होती है "
+"जिसे उसकी ज़रूरत थी। जब हम कोई मॉड्यूल बदलते हैं, तो उसका वर्णन करने वाले "
+"दस्तावेज़ फिर से पढ़े जाते हैं, और उनके लिंक, सोर्स पेज और डायग्राम उस "
+"बदलाव के साथ अपडेट हो जाते हैं।"
+
+#: ../../sources-and-diagrams.rst:44
+msgid "Source pages: viewcode"
+msgstr "सोर्स पेज: viewcode"
+
+#: ../../sources-and-diagrams.rst:47
+msgid ""
+"With ``sphinx.ext.viewcode`` listed, each Python description gets a "
+"``[source]`` link after its signature. The link leads to a page that "
+"shows the module's source, highlighted like any code block. On that page "
+"each described class and function sits in a block with a ``[docs]`` link "
+"back to its description."
+msgstr ""
+"``sphinx.ext.viewcode`` को सूची में जोड़ने पर हर Python विवरण के सिग्नेचर "
+"के बाद एक ``[source]`` लिंक आ जाता है। यह लिंक ऐसे पेज पर ले जाता है जो "
+"मॉड्यूल का सोर्स दिखाता है, किसी भी कोड ब्लॉक की तरह हाइलाइट करके। उस पेज "
+"पर हर वर्णित क्लास और function एक ब्लॉक में होता है, जिसमें उसके विवरण पर "
+"वापस जाने वाला ``[docs]`` लिंक होता है।"
+
+#: ../../sources-and-diagrams.rst:49
+msgid "For this module, ``src/shapes.py``:"
+msgstr "इस मॉड्यूल, ``src/shapes.py``, के लिए:"
+
+#: ../../sources-and-diagrams.rst:60
+msgid ""
+"the description of ``shapes.Square`` links to "
+"``_modules/shapes.html#Square``, and the source page links back to "
+"``index.html#shapes.Square``. A page for each module lies in "
+"``_modules/<package>/<module>.html``, and ``_modules/index.html`` lists "
+"them all, a package's modules nested inside it. The links are relative, "
+"so they work under ``dirhtml`` and when we open the files straight from "
+"the disk."
+msgstr ""
+"``shapes.Square`` का विवरण ``_modules/shapes.html#Square`` से लिंक होता "
+"है, और सोर्स पेज वापस ``index.html#shapes.Square`` से। हर मॉड्यूल का पेज "
+"``_modules/<package>/<module>.html`` में होता है, और "
+"``_modules/index.html`` उन सबकी सूची देता है, जिसमें किसी पैकेज के "
+"मॉड्यूल उसके अंदर नेस्ट होते हैं। लिंक सापेक्ष होते हैं, इसलिए वे "
+"``dirhtml`` में भी काम करते हैं और तब भी जब हम फ़ाइलें सीधे डिस्क से "
+"खोलते हैं।"
+
+#: ../../sources-and-diagrams.rst:62
+msgid ""
+"A class that a package re-exports is linked to the module that defines "
+"it. If ``Square`` were defined in ``shapes/square.py`` and imported by "
+"``shapes/__init__.py``, the description of ``shapes.Square`` would link "
+"to ``_modules/shapes/square.html#Square``. A block starts at the "
+"definition's first decorator and ends at its last line, so a decorated "
+"method shows its decorators."
+msgstr ""
+"जिस क्लास को कोई पैकेज re-export करता है, वह उस मॉड्यूल से लिंक होती है "
+"जो उसे परिभाषित करता है। अगर ``Square`` ``shapes/square.py`` में परिभाषित "
+"होती और ``shapes/__init__.py`` उसे import करता, तो ``shapes.Square`` का "
+"विवरण ``_modules/shapes/square.html#Square`` से लिंक होता। ब्लॉक परिभाषा "
+"के पहले डेकोरेटर से शुरू होकर उसकी आख़िरी लाइन पर ख़त्म होता है, इसलिए "
+"डेकोरेट किया गया मेथड अपने डेकोरेटर भी दिखाता है।"
+
+#: ../../sources-and-diagrams.rst:64
+msgid "The settings have Sphinx's names and defaults:"
+msgstr "सेटिंग के नाम और डिफ़ॉल्ट Sphinx वाले ही हैं:"
+
+#: ../../sources-and-diagrams.rst:66
+msgid "``viewcode_follow_imported_members``"
+msgstr "``viewcode_follow_imported_members``"
+
+#: ../../sources-and-diagrams.rst:67
+msgid ""
+"``true`` (default): link a re-exported object to the module that defines "
+"it. ``false``: link only objects that the named module defines itself. "
+"The old name ``viewcode_import`` is read as this setting."
+msgstr ""
+"``true`` (डिफ़ॉल्ट): re-export किए गए ऑब्जेक्ट को उस मॉड्यूल से लिंक करता "
+"है जो उसे परिभाषित करता है। ``false``: सिर्फ़ वे ऑब्जेक्ट लिंक होते हैं "
+"जिन्हें नामित मॉड्यूल खुद परिभाषित करता है। पुराना नाम "
+"``viewcode_import`` इसी सेटिंग के रूप में पढ़ा जाता है।"
+
+#: ../../sources-and-diagrams.rst:69
+msgid "``viewcode_line_numbers``"
+msgstr "``viewcode_line_numbers``"
+
+#: ../../sources-and-diagrams.rst:70
+msgid "``false`` (default). ``true`` numbers the lines of the source pages."
+msgstr ""
+"``false`` (डिफ़ॉल्ट)। ``true`` सोर्स पेजों की लाइनों पर नंबर लगाता है।"
+
+#: ../../sources-and-diagrams.rst:72
+msgid "``viewcode_enable_epub``"
+msgstr "``viewcode_enable_epub``"
+
+#: ../../sources-and-diagrams.rst:73
+msgid "Accepted and unused, since Guidedog has no EPUB builder."
+msgstr ""
+"स्वीकार होती है पर इस्तेमाल नहीं होती, क्योंकि Guidedog में EPUB builder "
+"नहीं है।"
+
+#: ../../sources-and-diagrams.rst:75
+msgid ""
+"Source pages exist in ``html`` and ``dirhtml`` only, as in Sphinx. "
+"``singlehtml``, the PDF and text have neither the links nor the pages: a "
+"book does not need a second copy of the code."
+msgstr ""
+"Sphinx की तरह सोर्स पेज सिर्फ़ ``html`` और ``dirhtml`` में होते हैं। "
+"``singlehtml``, PDF और टेक्स्ट में न ये लिंक होते हैं न ये पेज: किताब को "
+"कोड की दूसरी कॉपी नहीं चाहिए।"
+
+#: ../../sources-and-diagrams.rst:77
+msgid ""
+"A description whose module is not below ``autodoc_source_paths`` gets no "
+"link. The note ``viewcode.source`` names the module once per document, "
+"with the hint to add its folder. A module file larger than 8 MiB, the "
+"limit of every source read, gets no page, with the warning "
+"``viewcode.limit``."
+msgstr ""
+"जिस विवरण का मॉड्यूल ``autodoc_source_paths`` के नीचे नहीं है, उसे लिंक "
+"नहीं मिलता। ``viewcode.source`` सूचना हर दस्तावेज़ में एक बार उस मॉड्यूल "
+"का नाम बताती है, और उसका फ़ोल्डर जोड़ने का संकेत देती है। 8 MiB से बड़ी "
+"मॉड्यूल फ़ाइल को पेज नहीं मिलता, क्योंकि हर सोर्स पढ़ने की यही सीमा है; "
+"इसके लिए ``viewcode.limit`` चेतावनी मिलती है।"
+
+#: ../../sources-and-diagrams.rst:79
+msgid "Source links on the web: linkcode"
+msgstr "वेब पर सोर्स लिंक: linkcode"
+
+#: ../../sources-and-diagrams.rst:82
+msgid ""
+"Sphinx's ``linkcode`` calls a Python function, ``linkcode_resolve``, to "
+"make each link. Guidedog never runs Python, so it takes a URL template "
+"instead:"
+msgstr ""
+"Sphinx का ``linkcode`` हर लिंक बनाने के लिए एक Python function, "
+"``linkcode_resolve``, कॉल करता है। Guidedog कभी Python नहीं चलाता, इसलिए "
+"वह इसकी जगह एक URL template लेता है:"
+
+#: ../../sources-and-diagrams.rst:89
+msgid ""
+"In a repository whose checked-out branch is ``main``, the description of "
+"``Square.area`` above then links to "
+"``https://github.com/acme/shapes/blob/main/src/shapes.py#L4-L6``. These "
+"placeholders are filled for each object:"
+msgstr ""
+"जिस repository में checkout की गई branch ``main`` है, उसमें ऊपर के "
+"``Square.area`` का विवरण तब "
+"``https://github.com/acme/shapes/blob/main/src/shapes.py#L4-L6`` से लिंक "
+"होता है। हर ऑब्जेक्ट के लिए ये प्लेसहोल्डर भरे जाते हैं:"
+
+#: ../../sources-and-diagrams.rst:91
+msgid "Placeholders of ``linkcode_url``"
+msgstr "``linkcode_url`` के प्लेसहोल्डर"
+
+#: ../../sources-and-diagrams.rst:95
+msgid "Placeholder"
+msgstr "प्लेसहोल्डर"
+
+#: ../../sources-and-diagrams.rst:96
+msgid "Value"
+msgstr "मान"
+
+#: ../../sources-and-diagrams.rst:97
+msgid "``{domain}``"
+msgstr "``{domain}``"
+
+#: ../../sources-and-diagrams.rst:98
+msgid ""
+"The object's domain: ``py``, ``c``, ``cpp``, ``js``, ``rust``, ``odin``."
+msgstr ""
+"ऑब्जेक्ट का domain: ``py``, ``c``, ``cpp``, ``js``, ``rust``, ``odin``।"
+
+#: ../../sources-and-diagrams.rst:99
+msgid "``{module}``"
+msgstr "``{module}``"
+
+#: ../../sources-and-diagrams.rst:100
+msgid ""
+"The module as the description names it, or the Rust or Odin crate or "
+"package path."
+msgstr ""
+"मॉड्यूल, जैसा विवरण उसका नाम देता है, या Rust या Odin का crate या पैकेज "
+"पथ।"
+
+#: ../../sources-and-diagrams.rst:101
+msgid "``{fullname}``"
+msgstr "``{fullname}``"
+
+#: ../../sources-and-diagrams.rst:102
+msgid "The object's name within its module, such as ``Square.area``."
+msgstr "मॉड्यूल के भीतर ऑब्जेक्ट का नाम, जैसे ``Square.area``।"
+
+#: ../../sources-and-diagrams.rst:103
+msgid "``{path}``"
+msgstr "``{path}``"
+
+#: ../../sources-and-diagrams.rst:104
+msgid ""
+"The object's source file, relative to ``linkcode_root``, with ``/`` "
+"between folders."
+msgstr ""
+"ऑब्जेक्ट की सोर्स फ़ाइल, ``linkcode_root`` के सापेक्ष, फ़ोल्डरों के बीच "
+"``/`` के साथ।"
+
+#: ../../sources-and-diagrams.rst:105
+msgid "``{line}``"
+msgstr "``{line}``"
+
+#: ../../sources-and-diagrams.rst:106
+msgid ""
+"The first line of the definition, counted from 1. A decorator's line "
+"counts."
+msgstr ""
+"परिभाषा की पहली लाइन, 1 से गिनी गई। डेकोरेटर की लाइन भी गिनी जाती है।"
+
+#: ../../sources-and-diagrams.rst:107
+msgid "``{end_line}``"
+msgstr "``{end_line}``"
+
+#: ../../sources-and-diagrams.rst:108
+msgid "The last line of the definition."
+msgstr "परिभाषा की आख़िरी लाइन।"
+
+#: ../../sources-and-diagrams.rst:109
+msgid "``{branch}``"
+msgstr "``{branch}``"
+
+#: ../../sources-and-diagrams.rst:110
+msgid "``linkcode_branch``, or the branch read from the repository."
+msgstr "``linkcode_branch``, या repository से पढ़ी गई branch।"
+
+#: ../../sources-and-diagrams.rst:111
+msgid "``{{`` and ``}}``"
+msgstr "``{{`` और ``}}``"
+
+#: ../../sources-and-diagrams.rst:112
+msgid "A literal brace."
+msgstr "एक शाब्दिक ब्रेस।"
+
+#: ../../sources-and-diagrams.rst:114
+msgid ""
+"``linkcode_root`` names the folder ``{path}`` is relative to, relative to "
+"the source folder. Left empty, it is the nearest folder at or above the "
+"source folder that holds ``.git``. ``linkcode_branch`` is the text of "
+"``{branch}``. Left empty, it is the branch that the repository has "
+"checked out, read from ``.git/HEAD``, or the commit when ``HEAD`` is "
+"detached."
+msgstr ""
+"``linkcode_root`` वह फ़ोल्डर बताता है जिसके सापेक्ष ``{path}`` होता है, "
+"और यह खुद सोर्स फ़ोल्डर के सापेक्ष होता है। खाली छोड़ने पर यह सोर्स "
+"फ़ोल्डर या उसके ऊपर का सबसे नज़दीकी फ़ोल्डर होता है जिसमें ``.git`` है। "
+"``linkcode_branch`` ``{branch}`` का टेक्स्ट है। खाली छोड़ने पर यह वह "
+"branch होती है जो repository में checkout है, जिसे ``.git/HEAD`` से पढ़ा "
+"जाता है; ``HEAD`` detached हो, तो commit।"
+
+#: ../../sources-and-diagrams.rst:116
+msgid ""
+"A link is added only when every placeholder the template uses has a "
+"value. A Python object that the scan found has them all. A ``c:`` or "
+"``cpp:`` object, and the objects of the Rust and Odin domains, carry "
+"their names but no file. Only a template that uses nothing but "
+"``{domain}``, ``{module}``, ``{fullname}`` and ``{branch}`` links them, "
+"for example a template that points at an API search."
+msgstr ""
+"लिंक तभी जुड़ता है जब template में इस्तेमाल हर प्लेसहोल्डर का मान मौजूद "
+"हो। स्कैन को मिले Python ऑब्जेक्ट के पास सारे मान होते हैं। ``c:`` या "
+"``cpp:`` ऑब्जेक्ट, और Rust और Odin domain के ऑब्जेक्ट, अपने नाम तो रखते "
+"हैं पर फ़ाइल नहीं। उन्हें सिर्फ़ ऐसा template लिंक करता है जो "
+"``{domain}``, ``{module}``, ``{fullname}`` और ``{branch}`` के अलावा कुछ "
+"इस्तेमाल न करे, जैसे किसी API search की ओर इशारा करने वाला template।"
+
+#: ../../sources-and-diagrams.rst:118
+msgid ""
+"The links appear in HTML builders, ``singlehtml`` included, after the "
+"signature and before the permalink. The PDF and text add nothing. With "
+"both ``viewcode`` and ``linkcode`` listed, a description gets both links."
+msgstr ""
+"लिंक HTML builder में दिखते हैं, ``singlehtml`` में भी, सिग्नेचर के बाद "
+"और permalink से पहले। PDF और टेक्स्ट में कुछ नहीं जुड़ता। ``viewcode`` और "
+"``linkcode`` दोनों सूची में हों, तो विवरण को दोनों लिंक मिलते हैं।"
+
+#: ../../sources-and-diagrams.rst:120
+msgid ""
+"Mistakes in the template are found when ``conf.toml`` loads. An unknown "
+"placeholder or an unclosed brace is refused, and listing the extension "
+"without ``linkcode_url`` is the warning ``config.ext.linkcode``. A build "
+"that needs ``{branch}`` but has no branch and no repository warns "
+"``linkcode.branch`` once and adds no links. An object whose file lies "
+"outside ``linkcode_root`` gets no link, with the note "
+"``linkcode.outside``."
+msgstr ""
+"template की गलतियाँ ``conf.toml`` लोड होते समय ही पकड़ी जाती हैं। अज्ञात "
+"प्लेसहोल्डर या बिना बंद हुआ ब्रेस अस्वीकार होता है, और ``linkcode_url`` "
+"के बिना एक्सटेंशन को सूची में जोड़ने पर ``config.ext.linkcode`` चेतावनी "
+"मिलती है। जिस build को ``{branch}`` चाहिए पर न कोई branch है न "
+"repository, वह एक बार ``linkcode.branch`` चेतावनी देती है और कोई लिंक "
+"नहीं जोड़ती। जिस ऑब्जेक्ट की फ़ाइल ``linkcode_root`` के बाहर है, उसे लिंक "
+"नहीं मिलता, और ``linkcode.outside`` सूचना मिलती है।"
+
+#: ../../sources-and-diagrams.rst:122
+msgid ""
+"``guidedog migrate`` cannot read a ``linkcode_resolve`` function as data. "
+"It reports ``migrate.linkcode`` with a template to write in its place."
+msgstr ""
+"``guidedog migrate`` किसी ``linkcode_resolve`` function को डेटा के रूप "
+"में नहीं पढ़ सकता। वह ``migrate.linkcode`` बताता है, साथ में एक template "
+"भी जिसे उसकी जगह लिखा जा सके।"
+
+#: ../../sources-and-diagrams.rst:124
+msgid "Class diagrams: inheritance_diagram"
+msgstr "क्लास डायग्राम: inheritance_diagram"
+
+#: ../../sources-and-diagrams.rst:127
+msgid ""
+"The ``inheritance-diagram`` directive draws the classes it names, a "
+"module's classes when it names a module, and their bases up to the roots:"
+msgstr ""
+"``inheritance-diagram`` निर्देश उन क्लास को बनाता है जिनके नाम वह लेता "
+"है, मॉड्यूल का नाम लेने पर उस मॉड्यूल की क्लास को, और उनकी base क्लास को "
+"जड़ तक:"
+
+#: ../../sources-and-diagrams.rst:134
+msgid ""
+"The names are found as Sphinx finds them: relative to the current module "
+"first (``py:currentmodule``), then as written. The bases are read from "
+"the class statements and resolved across the scanned modules. Python's "
+"builtins, such as ``object`` and ``Exception``, are not drawn. A base "
+"from a package outside the source folders is drawn with its full name and "
+"nothing above it."
+msgstr ""
+"नाम वैसे ही खोजे जाते हैं जैसे Sphinx खोजता है: पहले मौजूदा मॉड्यूल "
+"(``py:currentmodule``) के सापेक्ष, फिर जैसा लिखा है वैसा। base क्लास "
+"class statement से पढ़ी जाती हैं और स्कैन किए गए मॉड्यूल में resolve की "
+"जाती हैं। Python के builtin, जैसे ``object`` और ``Exception``, नहीं बनाए "
+"जाते। सोर्स फ़ोल्डरों के बाहर के पैकेज की base क्लास अपने पूरे नाम के साथ "
+"बनती है, और उसके ऊपर कुछ नहीं होता।"
+
+#: ../../sources-and-diagrams.rst:136
+msgid "The directive takes Sphinx's options:"
+msgstr "निर्देश Sphinx वाले विकल्प लेता है:"
+
+#: ../../sources-and-diagrams.rst:138
+msgid "``:parts: N``"
+msgstr "``:parts: N``"
+
+#: ../../sources-and-diagrams.rst:139
+msgid ""
+"Show only the last ``N`` parts of each dotted name; a negative ``N`` "
+"drops the first ``-N`` parts instead. ``0`` (default) shows the full name."
+msgstr ""
+"हर बिंदु वाले नाम के सिर्फ़ आख़िरी ``N`` हिस्से दिखाता है; ऋणात्मक ``N`` "
+"इसके बजाय पहले ``-N`` हिस्से हटा देता है। ``0`` (डिफ़ॉल्ट) पूरा नाम "
+"दिखाता है।"
+
+#: ../../sources-and-diagrams.rst:141
+msgid "``:private-bases:``"
+msgstr "``:private-bases:``"
+
+#: ../../sources-and-diagrams.rst:142
+msgid "Draw classes whose names start with ``_`` as well."
+msgstr "``_`` से शुरू होने वाले नाम की क्लास भी बनाता है।"
+
+#: ../../sources-and-diagrams.rst:144
+msgid "``:top-classes: a.B, a.C``"
+msgstr "``:top-classes: a.B, a.C``"
+
+#: ../../sources-and-diagrams.rst:145
+msgid "Stop at these classes: their own bases are not drawn."
+msgstr "इन क्लास पर रुक जाता है: इनकी अपनी base क्लास नहीं बनाई जातीं।"
+
+#: ../../sources-and-diagrams.rst:147
+msgid "``:include-subclasses:``"
+msgstr "``:include-subclasses:``"
+
+#: ../../sources-and-diagrams.rst:148
+msgid ""
+"Draw the classes that derive from the named ones too. The scan looks for "
+"them in the packages of the named classes."
+msgstr ""
+"नामित क्लास से निकली क्लास भी बनाता है। स्कैन इन्हें नामित क्लास के पैकेज "
+"में खोजता है।"
+
+#: ../../sources-and-diagrams.rst:150
+msgid "``:caption: text``"
+msgstr "``:caption: text``"
+
+#: ../../sources-and-diagrams.rst:151
+msgid "Put the drawing in a figure with this caption."
+msgstr "ड्रॉइंग को इस कैप्शन के साथ एक figure में रखता है।"
+
+#: ../../sources-and-diagrams.rst:153
+msgid ""
+"The settings ``inheritance_graph_attrs``, ``inheritance_node_attrs`` and "
+"``inheritance_edge_attrs`` add Graphviz attributes to the graph, its "
+"nodes and its edges, and ``inheritance_alias`` shows a full class name as "
+"another name:"
+msgstr ""
+"``inheritance_graph_attrs``, ``inheritance_node_attrs`` और "
+"``inheritance_edge_attrs`` सेटिंग ग्राफ, उसके node और उसके edge में "
+"Graphviz एट्रिब्यूट जोड़ती हैं, और ``inheritance_alias`` किसी क्लास का "
+"पूरा नाम दूसरे नाम से दिखाती है:"
+
+#: ../../sources-and-diagrams.rst:163
+msgid ""
+"The graph is written as Sphinx writes it and drawn by the linked "
+"Graphviz, like a ``graphviz`` directive, so no ``dot`` program is needed. "
+"In HTML the drawing is an SVG with the ``graphviz-adaptive`` colours, and "
+"each node links to its class's description when the project has one. A "
+"class without a description is drawn without a link. The PDF embeds the "
+"same SVG. Text shows the classes as a list, each with its bases."
+msgstr ""
+"ग्राफ वैसे ही लिखा जाता है जैसे Sphinx लिखता है, और ``graphviz`` निर्देश "
+"की तरह लिंक किया गया Graphviz उसे बनाता है, इसलिए किसी ``dot`` प्रोग्राम "
+"की ज़रूरत नहीं होती। HTML में ड्रॉइंग ``graphviz-adaptive`` रंगों वाली "
+"SVG होती है, और प्रोजेक्ट में क्लास का विवरण हो, तो हर node उससे लिंक "
+"होता है। बिना विवरण वाली क्लास बिना लिंक के बनती है। PDF वही SVG शामिल "
+"करता है। टेक्स्ट क्लास को सूची के रूप में दिखाता है, हर क्लास के साथ उसकी "
+"base क्लास।"
+
+#: ../../sources-and-diagrams.rst:165
+msgid ""
+"A name that is neither a class nor a module in the scan is reported as "
+"``inheritance.class`` and left out. A diagram may hold at most 1,000 "
+"classes; a larger one is ``inheritance.limit`` and is not drawn. Loading "
+"``conf.toml`` refuses an attribute name that is not a Graphviz "
+"identifier, and a value that is not a plain word, number or quoted string "
+"is quoted, so an attribute cannot change the rest of the graph."
+msgstr ""
+"जो नाम स्कैन में न क्लास है न मॉड्यूल, उसे ``inheritance.class`` के रूप "
+"में बताया जाता है और छोड़ दिया जाता है। एक डायग्राम में ज़्यादा से "
+"ज़्यादा 1,000 क्लास हो सकती हैं; इससे बड़ा डायग्राम ``inheritance.limit`` "
+"देता है और बनाया नहीं जाता। ``conf.toml`` लोड करते समय ऐसा एट्रिब्यूट नाम "
+"अस्वीकार होता है जो Graphviz identifier न हो, और जो मान सादा शब्द, संख्या "
+"या कोट वाली स्ट्रिंग न हो, उसे कोट में रखा जाता है, ताकि कोई एट्रिब्यूट "
+"ग्राफ के बाकी हिस्से को न बदल सके।"
+
+#: ../../sources-and-diagrams.rst:167
+msgid "Reading times: duration"
+msgstr "पढ़ने का समय: duration"
+
+#: ../../sources-and-diagrams.rst:170
+msgid ""
+"With ``sphinx.ext.duration`` listed, the build summary shows how long "
+"reading took, and which documents took longest:"
+msgstr ""
+"``sphinx.ext.duration`` को सूची में जोड़ने पर build सारांश दिखाता है कि "
+"पढ़ने में कितना समय लगा, और किन दस्तावेज़ों में सबसे ज़्यादा:"
+
+#: ../../sources-and-diagrams.rst:181
+msgid ""
+"Each time is measured with a monotonic clock around one document's read. "
+"A document taken unchanged from the previous build took no time and is "
+"not listed. The output folder also receives "
+"``sphinx-reading-durations.json``, an object from document names to "
+"seconds."
+msgstr ""
+"हर समय एक दस्तावेज़ के पढ़ने के दौरान monotonic घड़ी से मापा जाता है। "
+"पिछली build से बिना बदलाव लिया गया दस्तावेज़ कोई समय नहीं लेता और सूची "
+"में नहीं आता। आउटपुट फ़ोल्डर में ``sphinx-reading-durations.json`` भी "
+"लिखी जाती है, जो दस्तावेज़ों के नाम से सेकंड तक का एक ऑब्जेक्ट है।"
+
+#: ../../sources-and-diagrams.rst:183
+msgid "``duration_print_total``"
+msgstr "``duration_print_total``"
+
+#: ../../sources-and-diagrams.rst:184
+msgid "``true`` (default): show the total reading time."
+msgstr "``true`` (डिफ़ॉल्ट): पढ़ने का कुल समय दिखाता है।"
+
+#: ../../sources-and-diagrams.rst:186
+msgid "``duration_print_slowest``"
+msgstr "``duration_print_slowest``"
+
+#: ../../sources-and-diagrams.rst:187
+msgid "``true`` (default): show the slowest documents."
+msgstr "``true`` (डिफ़ॉल्ट): सबसे धीमे दस्तावेज़ दिखाता है।"
+
+#: ../../sources-and-diagrams.rst:189
+msgid "``duration_n_slowest``"
+msgstr "``duration_n_slowest``"
+
+#: ../../sources-and-diagrams.rst:190
+msgid "How many slowest documents to show: ``5`` by default, ``0`` for all."
+msgstr ""
+"कितने सबसे धीमे दस्तावेज़ दिखाने हैं: डिफ़ॉल्ट ``5``, सभी के लिए ``0``।"
+
+#: ../../sources-and-diagrams.rst:192
+msgid "``duration_write_json``"
+msgstr "``duration_write_json``"
+
+#: ../../sources-and-diagrams.rst:193
+msgid ""
+"The JSON file's name in the output folder; empty writes none. A name that "
+"leaves the output folder is refused."
+msgstr ""
+"आउटपुट फ़ोल्डर में JSON फ़ाइल का नाम; खाली होने पर कोई फ़ाइल नहीं लिखी "
+"जाती। आउटपुट फ़ोल्डर से बाहर जाने वाला नाम अस्वीकार होता है।"
+
+#: ../../sources-and-diagrams.rst:195
+msgid "``duration_limit``"
+msgstr "``duration_limit``"
+
+#: ../../sources-and-diagrams.rst:196
+msgid ""
+"Seconds a document may take; a slower one is the warning "
+"``duration.limit``. Unset, there is no limit."
+msgstr ""
+"किसी दस्तावेज़ को लगने वाले अधिकतम सेकंड; इससे धीमे दस्तावेज़ पर "
+"``duration.limit`` चेतावनी मिलती है। सेट न हो, तो कोई सीमा नहीं।"
+
+#: ../../sources-and-diagrams.rst:198
+msgid ""
+"The times are evidence about one build on one machine. They differ from "
+"run to run."
+msgstr ""
+"ये समय एक मशीन पर एक build का सबूत हैं। हर बार चलाने पर ये अलग होते हैं।"
+
+#: ../../sources-and-diagrams.rst:200
+msgid "Images for the book: imgconverter"
+msgstr "किताब के लिए इमेज: imgconverter"
+
+#: ../../sources-and-diagrams.rst:203
+msgid ""
+"Sphinx's ``imgconverter`` runs ImageMagick to turn images LaTeX cannot "
+"use, such as GIF and SVG, into ones it can. Guidedog's PDF is typeset by "
+"Typst, which reads PNG, JPEG, GIF, SVG, WebP and PDF images directly, so "
+"there is nothing to convert. The extension is accepted, and no program is "
+"ever started. ``image_converter`` and ``image_converter_args`` are "
+"accepted and have no effect."
+msgstr ""
+"Sphinx का ``imgconverter`` ImageMagick चलाकर वे इमेज, जिन्हें LaTeX "
+"इस्तेमाल नहीं कर सकता, जैसे GIF और SVG, ऐसी इमेज में बदलता है जिन्हें वह "
+"इस्तेमाल कर सके। Guidedog की PDF को Typst टाइपसेट करता है, जो PNG, JPEG, "
+"GIF, SVG, WebP और PDF इमेज सीधे पढ़ता है, इसलिए कुछ बदलने की ज़रूरत नहीं "
+"होती। एक्सटेंशन स्वीकार होता है, और कोई प्रोग्राम कभी शुरू नहीं होता। "
+"``image_converter`` और ``image_converter_args`` स्वीकार होती हैं पर उनका "
+"कोई असर नहीं होता।"
+
+#: ../../sources-and-diagrams.rst:205
+msgid ""
+"An image in a format the book cannot show, such as TIFF or BMP, is "
+"reported as ``imgconverter.format``, and the book shows its alternative "
+"text in its place. The hint suggests a PNG, JPEG, GIF or SVG version. "
+"When we name the image ``picture.*``, each output picks the first version "
+"it reads."
+msgstr ""
+"जिस फ़ॉर्मैट को किताब नहीं दिखा सकती, जैसे TIFF या BMP, उस फ़ॉर्मैट की "
+"इमेज ``imgconverter.format`` के रूप में बताई जाती है, और किताब उसकी जगह "
+"उसका वैकल्पिक टेक्स्ट दिखाती है। संकेत PNG, JPEG, GIF या SVG संस्करण का "
+"सुझाव देता है। जब हम इमेज का नाम ``picture.*`` देते हैं, तो हर आउटपुट वह "
+"पहला संस्करण चुनता है जिसे वह पढ़ सकता है।"
+
+#: ../../sources-and-diagrams.rst:207
+msgid "Diagnostics"
+msgstr "निदान"
+
+#: ../../sources-and-diagrams.rst:210
+msgid ""
+"Every message has a code, the location, an explanation and a hint. "
+"``suppress_warnings`` silences them by their prefix, such as ``viewcode`` "
+"or ``inheritance``."
+msgstr ""
+"हर संदेश में एक कोड, स्थान, व्याख्या और संकेत होता है। "
+"``suppress_warnings`` इन्हें उनके prefix से बंद करता है, जैसे "
+"``viewcode`` या ``inheritance``।"
+
+#: ../../sources-and-diagrams.rst:212
+msgid "Codes of these extensions"
+msgstr "इन एक्सटेंशन के कोड"
+
+#: ../../sources-and-diagrams.rst:216
+msgid "Code"
+msgstr "कोड"
+
+#: ../../sources-and-diagrams.rst:217
+msgid "Meaning"
+msgstr "अर्थ"
+
+#: ../../sources-and-diagrams.rst:218
+msgid "``viewcode.source``"
+msgstr "``viewcode.source``"
+
+#: ../../sources-and-diagrams.rst:219
+msgid ""
+"A documented module is not below ``autodoc_source_paths``; its objects "
+"have no ``[source]`` link."
+msgstr ""
+"दस्तावेज़ किया गया मॉड्यूल ``autodoc_source_paths`` के नीचे नहीं है; उसके "
+"ऑब्जेक्ट को ``[source]`` लिंक नहीं मिलता।"
+
+#: ../../sources-and-diagrams.rst:220
+msgid "``viewcode.limit``"
+msgstr "``viewcode.limit``"
+
+#: ../../sources-and-diagrams.rst:221
+msgid ""
+"A module's file is too large or cannot be read; it has no source page."
+msgstr ""
+"मॉड्यूल की फ़ाइल बहुत बड़ी है या पढ़ी नहीं जा सकती; उसका सोर्स पेज नहीं "
+"बनता।"
+
+#: ../../sources-and-diagrams.rst:222
+msgid "``config.ext.linkcode``"
+msgstr "``config.ext.linkcode``"
+
+#: ../../sources-and-diagrams.rst:223
+msgid "``linkcode`` is listed without ``linkcode_url``."
+msgstr "``linkcode`` सूची में है, पर ``linkcode_url`` नहीं है।"
+
+#: ../../sources-and-diagrams.rst:224
+msgid "``linkcode.branch``"
+msgstr "``linkcode.branch``"
+
+#: ../../sources-and-diagrams.rst:225
+msgid "The template uses ``{branch}``, and no branch is set or found."
+msgstr ""
+"template ``{branch}`` इस्तेमाल करता है, और कोई branch न सेट है न मिली।"
+
+#: ../../sources-and-diagrams.rst:226
+msgid "``linkcode.outside``"
+msgstr "``linkcode.outside``"
+
+#: ../../sources-and-diagrams.rst:227
+msgid "An object's file lies outside ``linkcode_root``."
+msgstr "ऑब्जेक्ट की फ़ाइल ``linkcode_root`` के बाहर है।"
+
+#: ../../sources-and-diagrams.rst:228
+msgid "``inheritance.class``"
+msgstr "``inheritance.class``"
+
+#: ../../sources-and-diagrams.rst:229
+msgid ""
+"A name in an ``inheritance-diagram`` is neither a class nor a module of "
+"the scan."
+msgstr ""
+"``inheritance-diagram`` में दिया गया नाम स्कैन में न क्लास है न मॉड्यूल।"
+
+#: ../../sources-and-diagrams.rst:230
+msgid "``inheritance.limit``"
+msgstr "``inheritance.limit``"
+
+#: ../../sources-and-diagrams.rst:231
+msgid "A diagram would hold more than 1,000 classes."
+msgstr "डायग्राम में 1,000 से ज़्यादा क्लास होतीं।"
+
+#: ../../sources-and-diagrams.rst:232
+msgid "``duration.limit``"
+msgstr "``duration.limit``"
+
+#: ../../sources-and-diagrams.rst:233
+msgid "A document took longer to read than ``duration_limit``."
+msgstr "किसी दस्तावेज़ को पढ़ने में ``duration_limit`` से ज़्यादा समय लगा।"
+
+#: ../../sources-and-diagrams.rst:234
+msgid "``imgconverter.format``"
+msgstr "``imgconverter.format``"
+
+#: ../../sources-and-diagrams.rst:235
+msgid "The book cannot show an image's format."
+msgstr "किताब इमेज का फ़ॉर्मैट नहीं दिखा सकती।"
+
+#: ../../sources-and-diagrams.rst:237
+msgid ""
+"GDS 0011 records the design of these extensions and of the four others "
+"that read Python source."
+msgstr ""
+"GDS 0011 इन एक्सटेंशन का डिज़ाइन दर्ज करता है, और उन चार दूसरे एक्सटेंशन "
+"का भी जो Python सोर्स पढ़ते हैं।"

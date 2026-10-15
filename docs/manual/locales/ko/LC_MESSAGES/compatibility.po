@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 06:56+0000\n"
+"POT-Creation-Date: 2026-10-15 09:09+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -21,57 +21,60 @@ msgstr "Sphinx 호환성"
 
 #: ../../compatibility.rst:4
 msgid ""
-"Guidedog follows Sphinx where that helps an author move a project. It "
-"measures compatibility feature by feature. It does not execute Python "
-"configuration or arbitrary Python extensions. **A successful build is "
-"evidence of a build, not proof of complete equivalence.**"
+"Guidedog supports all of reStructuredText and all of Sphinx's built-in "
+"extensions. It supports them in its own way: the output serves the same "
+"purpose, but it is not identical to Sphinx's. Guidedog never runs Python, "
+"neither the configuration nor an extension. It measures compatibility "
+"feature by feature. **A successful build is evidence of a build, not "
+"proof of complete equivalence.**"
 msgstr ""
-"Guidedog는 프로젝트 이전에 도움이 되는 부분에서 Sphinx를 따르며, 기능별로 호환성을 평가합니다. Python 설정이나 "
-"임의의 Python 확장은 실행하지 않습니다. **빌드 성공은 빌드가 완료되었다는 근거일 뿐, 완전한 동등성을 증명하지는 "
-"않습니다.**"
+"Guidedog은 reStructuredText 전체와 Sphinx의 내장 확장 전체를 지원합니다. 다만 자신만의 방식으로 "
+"지원합니다. 출력은 같은 목적을 달성하지만 Sphinx의 출력과 똑같지는 않습니다. Guidedog은 설정이든 확장이든 "
+"Python을 전혀 실행하지 않습니다. 호환성은 기능별로 측정합니다. **빌드가 성공했다는 것은 빌드가 되었다는 증거일 뿐, 완전히 "
+"동등하다는 증명이 아닙니다.**"
 
-#: ../../compatibility.rst:9
+#: ../../compatibility.rst:10
 msgid "Projects and publication"
 msgstr "프로젝트와 게시"
 
-#: ../../compatibility.rst:12
+#: ../../compatibility.rst:13
 msgid "Project operations"
 msgstr "프로젝트 작업"
 
-#: ../../compatibility.rst:16
+#: ../../compatibility.rst:17
 msgid "Operation"
 msgstr "작업"
 
-#: ../../compatibility.rst:17
+#: ../../compatibility.rst:18
 msgid "Implemented behavior"
 msgstr "구현된 동작"
 
-#: ../../compatibility.rst:18
+#: ../../compatibility.rst:19
 msgid "Project layout and build flags"
 msgstr "프로젝트 구조와 빌드 옵션"
 
-#: ../../compatibility.rst:19
+#: ../../compatibility.rst:20
 msgid ""
 "Sphinx-style source and output directories; ``-a -E -W -n -D -t -j -b -M "
 "-c -C``."
 msgstr "Sphinx 방식의 소스·출력 디렉터리와 옵션: ``-a -E -W -n -D -t -j -b -M -c -C``\\ ."
 
-#: ../../compatibility.rst:20
+#: ../../compatibility.rst:21
 msgid "Configuration"
 msgstr "설정"
 
-#: ../../compatibility.rst:21
+#: ../../compatibility.rst:22
 msgid ""
 "TOML data with familiar Sphinx names. Migration converts literals and "
 "reports computed values."
 msgstr ""
 "익숙한 Sphinx 설정 이름을 TOML 데이터로 작성합니다. 마이그레이션은 리터럴을 변환하고 계산이 필요한 값을 알립니다."
 
-#: ../../compatibility.rst:22
+#: ../../compatibility.rst:23
 msgid "HTML builders"
 msgstr "HTML 빌더"
 
-#: ../../compatibility.rst:23
+#: ../../compatibility.rst:24
 msgid ""
 "``html``, ``dirhtml``, and ``singlehtml``. Single-page anchors include "
 "document names."
@@ -79,11 +82,11 @@ msgstr ""
 "``html``\\ , ``dirhtml``\\ , ``singlehtml``\\ 을 지원합니다. 단일 페이지의 앵커에는 문서 "
 "이름이 포함됩니다."
 
-#: ../../compatibility.rst:24
+#: ../../compatibility.rst:25
 msgid "Other builders"
 msgstr "다른 빌더"
 
-#: ../../compatibility.rst:25
+#: ../../compatibility.rst:26
 msgid ""
 "``text``, ``gettext``, and ``dummy``. ``pdf`` uses Typst; ``latex`` and "
 "``latexpdf`` select that route."
@@ -91,37 +94,37 @@ msgstr ""
 "``text``\\ , ``gettext``\\ , ``dummy``\\ 를 지원합니다. ``pdf``\\ 는 Typst를 "
 "사용하며, ``latex``\\ 와 ``latexpdf``\\ 도 같은 경로를 선택합니다."
 
-#: ../../compatibility.rst:26
+#: ../../compatibility.rst:27
 msgid "Templates"
 msgstr "템플릿"
 
-#: ../../compatibility.rst:27
+#: ../../compatibility.rst:28
 msgid ""
 "Guidedog's Jinja implementation, typed ``html_context``, layout "
 "inheritance, and additional pages."
 msgstr "Guidedog의 Jinja 구현, 타입을 유지하는 ``html_context``\\ , 레이아웃 상속, 추가 페이지."
 
-#: ../../compatibility.rst:28
+#: ../../compatibility.rst:29
 msgid "Incremental work"
 msgstr "증분 빌드"
 
-#: ../../compatibility.rst:29
+#: ../../compatibility.rst:30
 msgid ""
 "Sources, dependencies, templates, configuration, and reference lookups "
 "invalidate affected output."
 msgstr "소스, 의존성, 템플릿, 설정, 참조 조회가 바뀌면 관련 출력이 무효화됩니다."
 
-#: ../../compatibility.rst:30
+#: ../../compatibility.rst:31
 msgid "Publication"
 msgstr "게시"
 
-#: ../../compatibility.rst:31
+#: ../../compatibility.rst:32
 msgid ""
 "One complete generation. A failed build keeps the previous published "
 "generation."
 msgstr "완전한 출력 세대를 게시합니다. 빌드가 실패하면 이전에 게시한 세대를 유지합니다."
 
-#: ../../compatibility.rst:33
+#: ../../compatibility.rst:34
 msgid ""
 "``-D`` accepts ``true`` and ``false``, or ``1`` and ``0``, for booleans. "
 "A project with ``contents`` and no ``index`` can use ``contents`` as its "
@@ -134,7 +137,7 @@ msgstr ""
 "추가 템플릿 페이지는 ``dirhtml``\\ 에서도 사이트 루트에 놓입니다. 정확한 규약은 :doc:`templates`\\ 를 "
 "참고하세요."
 
-#: ../../compatibility.rst:38
+#: ../../compatibility.rst:39
 msgid ""
 "An unchanged page reports its diagnostics again. Therefore ``-W`` has the "
 "same meaning on a clean build and an unchanged build. A deleted "
@@ -146,38 +149,38 @@ msgstr ""
 "문서의 페이지는 제거합니다. 게시는 복구 가능한 저널을 사용하며, 중단된 커밋은 다음 빌드에서 정리합니다. 불변식과 플랫폼 경계는 "
 ":doc:`internals/publication`\\ 을 참고하세요."
 
-#: ../../compatibility.rst:43
+#: ../../compatibility.rst:44
 msgid ""
-"The builders ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest``, "
-"``coverage``, and ``changes`` are unavailable. Their names receive a "
-"correction message. The repository's ``tools/linkcheck`` is a separate "
-"verification tool."
+"``coverage`` comes with the ``coverage`` extension, described below. The "
+"builders ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest``, and "
+"``changes`` are unavailable. Their names receive a correction message. "
+"The repository's ``tools/linkcheck`` is a separate verification tool."
 msgstr ""
-"``epub``\\ , ``man``\\ , ``texinfo``\\ , ``linkcheck``\\ , ``doctest``\\ "
-", ``coverage``\\ , ``changes`` 빌더는 제공하지 않습니다. 사용하면 수정 안내를 표시합니다. 저장소의 "
-"``tools/linkcheck``\\ 는 별도 검증 도구입니다."
+"``coverage``\\ 는 ``coverage`` 확장과 함께 제공되며, 아래에서 설명합니다. ``epub``, ``man``, "
+"``texinfo``, ``linkcheck``, ``doctest``, ``changes`` 빌더는 제공하지 않습니다. 이 이름을 "
+"쓰면 수정 안내를 표시합니다. 저장소의 ``tools/linkcheck``\\ 는 별도 검증 도구입니다."
 
-#: ../../compatibility.rst:47
+#: ../../compatibility.rst:48
 msgid "Source languages"
 msgstr "소스 언어"
 
-#: ../../compatibility.rst:50
+#: ../../compatibility.rst:51
 msgid "Pinned conformance evidence"
 msgstr "고정 버전의 적합성 검증"
 
-#: ../../compatibility.rst:54
+#: ../../compatibility.rst:55
 msgid "Reader"
 msgstr "리더"
 
-#: ../../compatibility.rst:55
+#: ../../compatibility.rst:56
 msgid "Evidence and limits"
 msgstr "검증 결과와 한계"
 
-#: ../../compatibility.rst:56
+#: ../../compatibility.rst:57
 msgid "reStructuredText"
 msgstr "reStructuredText"
 
-#: ../../compatibility.rst:57
+#: ../../compatibility.rst:58
 msgid ""
 "98 corpus sources match the compared Docutils trees and identifiers. The "
 "comparison excludes source positions and several bookkeeping attributes."
@@ -185,26 +188,26 @@ msgstr ""
 "코퍼스 소스 98개에서 비교 대상 Docutils 트리와 식별자가 일치합니다. 비교에서 소스 위치와 일부 내부 관리 속성은 "
 "제외합니다."
 
-#: ../../compatibility.rst:58
+#: ../../compatibility.rst:59
 msgid "CommonMark 0.31.2"
 msgstr "CommonMark 0.31.2"
 
-#: ../../compatibility.rst:59
+#: ../../compatibility.rst:60
 msgid "All 652 specification examples pass."
 msgstr "명세 예제 652개가 모두 통과합니다."
 
-#: ../../compatibility.rst:60
+#: ../../compatibility.rst:61
 msgid "MyST 0.16.1 reference"
 msgstr "MyST 0.16.1 reference"
 
-#: ../../compatibility.rst:61
+#: ../../compatibility.rst:62
 msgid ""
 "215 of 218 reader fixtures and 8 of 10 Sphinx fixture builds match. "
 "Remaining differences are recorded."
 msgstr ""
 "리더 테스트 218개 중 215개, Sphinx 빌드 테스트 10개 중 8개가 일치합니다. 나머지 차이는 기록되어 있습니다."
 
-#: ../../compatibility.rst:63
+#: ../../compatibility.rst:64
 msgid ""
 "These are pinned tests. They do not imply compatibility with every later "
 "release. Run ``guidedog formats`` for the executable's reader and "
@@ -213,7 +216,7 @@ msgstr ""
 "고정 버전의 테스트이며, 이후 모든 버전과의 호환성을 뜻하지 않습니다. ``guidedog formats``\\ 로 실행 파일의 "
 "리더와 렌더러 검증 정보를 확인하세요. 각 리더 디렉터리에도 적합성 설명이 있습니다."
 
-#: ../../compatibility.rst:67
+#: ../../compatibility.rst:68
 msgid ""
 "``rst_prolog`` follows leading bibliographic fields. ``rst_epilog`` "
 "follows the source. Neither is inserted into Markdown. ``only`` and "
@@ -227,11 +230,11 @@ msgstr ""
 "유지합니다. 조건부 절이 주변 절의 수준을 바꾸면 배치가 Sphinx와 다를 수 있습니다. MyST의 ``eval-rst`` 안에 "
 "절 제목이 있으면 오류입니다."
 
-#: ../../compatibility.rst:73
+#: ../../compatibility.rst:74
 msgid "References and domains"
 msgstr "참조와 도메인"
 
-#: ../../compatibility.rst:76
+#: ../../compatibility.rst:77
 msgid ""
 "Guidedog implements toctrees, labels, glossaries, numbered sections and "
 "figures, ``ref``, ``doc``, ``numref``, ``term``, ``download``, ``any``, "
@@ -243,7 +246,7 @@ msgstr ""
 "``option``\\ , ``envvar``\\ , ``token`` 참조를 구현합니다. 객체는 목차 트리, 사이드바, 페이지 "
 "개요에 나타날 수 있습니다."
 
-#: ../../compatibility.rst:81
+#: ../../compatibility.rst:82
 msgid ""
 "The standard, Python, C, C++, JavaScript, reStructuredText, and math "
 "domains are implemented. The Odin and Rust domains are Guidedog's own "
@@ -255,7 +258,7 @@ msgstr ""
 "Rust 도메인은 Guidedog 자체 확장입니다. 패키지나 크레이트, 선언, 시그니처, 생성된 API 페이지를 기술합니다. "
 "소스만으로 하는 탐색과 그 한계는 :doc:`odin`\\ 과 :doc:`rust`\\ 를 참고하세요."
 
-#: ../../compatibility.rst:86
+#: ../../compatibility.rst:87
 msgid ""
 "Parameter, return, exception, and variable fields form structured "
 "descriptions. Canonical names become aliases for references and "
@@ -269,7 +272,7 @@ msgstr ""
 "기본값과 어노테이션은 소스 표기를 유지합니다. Sphinx는 Python의 unparser로 이를 다시 출력할 수 있습니다. C++ "
 "선언은 Sphinx 호환 식별자 버전과 심볼 인벤토리를 게시합니다. 중첩 깊이 제한은 적용되며, 중첩 괄호는 선형 시간에 파싱합니다."
 
-#: ../../compatibility.rst:93
+#: ../../compatibility.rst:94
 msgid ""
 "``numref`` substitutes one number slot and reports an unnumbered target. "
 "Section numbering follows reading order. A document is numbered once. A "
@@ -280,7 +283,7 @@ msgstr ""
 "번호를 한 번만 붙이며, 두 번째로 번호를 매기는 toctree는 충돌로 보고합니다. 서식 치환과 식별자의 세부 사항은 참조 "
 "테스트를 확인하세요."
 
-#: ../../compatibility.rst:98
+#: ../../compatibility.rst:99
 msgid ""
 "The general index, module index, and search are built in. Search matches "
 "word prefixes. It does not copy Sphinx's English stemming."
@@ -288,7 +291,7 @@ msgstr ""
 "일반 색인, 모듈 색인, 검색이 내장되어 있습니다. 검색은 단어 접두부로 일치시킵니다. Sphinx의 영어 어간 추출은 따라 하지 "
 "않습니다."
 
-#: ../../compatibility.rst:101
+#: ../../compatibility.rst:102
 msgid ""
 "Declarative object types replace a useful class of Python extension "
 "registrations. ``object_types``, ``crossref_types``, and "
@@ -301,121 +304,228 @@ msgstr ""
 "Python ``parse_node``\\ 는 이름, 표시, 프로그램의 선언형 규칙으로 바꿉니다. 표현할 수 없는 코드는 "
 "마이그레이션에서 알립니다. :doc:`object-types`\\ 를 참고하세요."
 
-#: ../../compatibility.rst:106
-msgid "Built-in extension behavior"
-msgstr "내장 확장의 동작"
+#: ../../compatibility.rst:107 ../../compatibility.rst:112
+msgid "Built-in extensions"
+msgstr "내장 확장"
 
-#: ../../compatibility.rst:109
-msgid "Extension boundary"
-msgstr "확장의 범위"
+#: ../../compatibility.rst:110
+msgid ""
+"Every extension in Sphinx's ``sphinx.ext`` package is built in. A project "
+"lists it by its Sphinx name in ``extensions``, and its directives, roles, "
+"settings and builders are there. The settings keep Sphinx's names and "
+"defaults, so ``guidedog migrate`` carries them over from ``conf.py``. "
+"Where Sphinx imports Python, Guidedog reads the source instead. Where "
+"Sphinx calls a program, Guidedog uses what it has built in. GDS 0011 "
+"records the design of each one."
+msgstr ""
+"Sphinx의 ``sphinx.ext`` 패키지에 있는 확장은 모두 내장되어 있습니다. 프로젝트는 ``extensions``\\ 에 "
+"Sphinx 이름으로 확장을 나열하기만 하면 되고, 그 확장의 지시문, 역할, 설정, 빌더를 바로 쓸 수 있습니다. 설정은 "
+"Sphinx의 이름과 기본값을 그대로 쓰므로, ``guidedog migrate``\\ 가 ``conf.py``\\ 에서 그대로 "
+"옮겨 옵니다. Sphinx가 Python을 임포트하는 곳에서 Guidedog은 소스를 읽습니다. Sphinx가 외부 프로그램을 "
+"호출하는 곳에서 Guidedog은 내장 기능을 씁니다. 각 확장의 설계는 GDS 0011에 기록되어 있습니다."
 
-#: ../../compatibility.rst:113
-msgid "Behavior"
-msgstr "동작"
+#: ../../compatibility.rst:116
+msgid "Extension"
+msgstr "확장"
 
-#: ../../compatibility.rst:114
-msgid "Status"
-msgstr "상태"
+#: ../../compatibility.rst:117
+msgid "Guidedog's way"
+msgstr "Guidedog의 방식"
 
-#: ../../compatibility.rst:115
+#: ../../compatibility.rst:118
 msgid "``todo``, ``ifconfig``, ``extlinks``, ``autosectionlabel``"
 msgstr "``todo``\\ , ``ifconfig``\\ , ``extlinks``\\ , ``autosectionlabel``"
 
-#: ../../compatibility.rst:116
-msgid "Built in. Hardcoded extlinks can receive a suggested role."
-msgstr "내장되어 있습니다. 하드코딩한 extlinks 링크에는 역할 사용을 제안할 수 있습니다."
+#: ../../compatibility.rst:119
+msgid "As in Sphinx. Hardcoded extlinks can receive a suggested role."
+msgstr "Sphinx와 같습니다. 하드코딩한 extlinks 링크에는 역할 사용을 제안할 수 있습니다."
 
-#: ../../compatibility.rst:117
+#: ../../compatibility.rst:120
 msgid "``graphviz``"
 msgstr "``graphviz``"
 
-#: ../../compatibility.rst:118
+#: ../../compatibility.rst:121
 msgid ""
 "Linked Graphviz produces static drawings. Resource confinement applies."
 msgstr "링크된 Graphviz가 정적 그림을 생성합니다. 자원 접근 경계가 적용됩니다."
 
-#: ../../compatibility.rst:119
+#: ../../compatibility.rst:122
 msgid "``intersphinx``"
 msgstr "``intersphinx``"
 
-#: ../../compatibility.rst:120
+#: ../../compatibility.rst:123
 msgid ""
 "Local and fetched inventories. Fetching uses the built-in HTTP client."
 msgstr "로컬 인벤토리와 원격에서 가져온 인벤토리. 가져오기에는 내장 HTTP 클라이언트를 사용합니다."
 
-#: ../../compatibility.rst:121
+#: ../../compatibility.rst:124
 msgid "``githubpages``"
 msgstr "``githubpages``"
 
-#: ../../compatibility.rst:122
+#: ../../compatibility.rst:125
 msgid "Built-in publication files for a static site."
 msgstr "정적 사이트 게시 파일을 기본 제공으로 생성합니다."
 
-#: ../../compatibility.rst:123
+#: ../../compatibility.rst:126
 msgid "``mathjax`` and ``imgmath``"
 msgstr "``mathjax``\\ 와 ``imgmath``"
 
-#: ../../compatibility.rst:124
+#: ../../compatibility.rst:127
 msgid ""
 "HTML mathematics uses MathJax. PDF translates its supported LaTeX subset "
 "to Typst."
 msgstr "HTML 수식은 MathJax를 사용합니다. PDF는 지원하는 LaTeX 부분집합을 Typst로 변환합니다."
 
-#: ../../compatibility.rst:125
-msgid "``myst_parser``"
-msgstr "``myst_parser``"
-
-#: ../../compatibility.rst:126
-msgid "The implemented project Markdown layer."
-msgstr "구현된 프로젝트용 Markdown 계층입니다."
-
-#: ../../compatibility.rst:127
-msgid "``doctest`` directives"
-msgstr "``doctest`` 지시문"
-
 #: ../../compatibility.rst:128
-msgid "Displayed. The project builder does not execute their tests."
-msgstr "내용을 표시합니다. 프로젝트 빌더는 해당 테스트를 실행하지 않습니다."
+msgid "``doctest``"
+msgstr "``doctest``"
 
 #: ../../compatibility.rst:129
+msgid ""
+"The tests are shown, highlighted. Guidedog never runs Python, so it never "
+"runs them."
+msgstr "테스트를 강조 표시하여 보여 줍니다. Guidedog은 Python을 실행하지 않으므로 테스트도 실행하지 않습니다."
+
+#: ../../compatibility.rst:130
 msgid "``autodoc``"
 msgstr "``autodoc``"
 
-#: ../../compatibility.rst:130
+#: ../../compatibility.rst:131
 msgid "Python source is read without importing or executing the package."
 msgstr "패키지를 임포트하거나 실행하지 않고 Python 소스를 읽습니다."
 
 #: ../../compatibility.rst:132
+msgid "``napoleon``"
+msgstr "``napoleon``"
+
+#: ../../compatibility.rst:133
 msgid ""
-"Source-based autodoc cannot discover every object created at runtime. "
-"Compiled modules, external decorators, computed values, and extension "
-"event hooks have explicit limits. Python 3.13 and the pinned Sphinx "
-"documenter tests provide the reference behavior. See :doc:`autodoc` for "
-"the full settings and exceptions."
+"Google and NumPy docstring sections become the fields autodoc shows "
+"(:doc:`autodoc`)."
 msgstr ""
-"소스 기반 autodoc은 런타임에 생성되는 모든 객체를 찾을 수 없습니다. 컴파일된 모듈, 외부 데코레이터, 계산된 값, 확장 "
-"이벤트 훅에는 명시적인 한계가 있습니다. Python 3.13과 고정 버전의 Sphinx 문서 생성기 테스트를 기준으로 삼습니다. "
-"전체 설정과 예외는 :doc:`autodoc`\\ 을 참고하세요."
+"Google과 NumPy 스타일 docstring 섹션은 autodoc이 보여 주는 필드가 됩니다(:doc:`autodoc`)."
+
+#: ../../compatibility.rst:134
+msgid "``autosummary`` and ``apidoc``"
+msgstr "``autosummary``\\ 와 ``apidoc``"
+
+#: ../../compatibility.rst:135
+msgid ""
+"Summary tables and API pages are generated from the source, in memory. "
+"Nothing is written into the source folder (:doc:`autodoc`)."
+msgstr ""
+"요약 테이블과 API 페이지를 소스에서 메모리 안에 생성합니다. 소스 폴더에는 아무것도 쓰지 않습니다(:doc:`autodoc`)."
+
+#: ../../compatibility.rst:136
+msgid "``viewcode``"
+msgstr "``viewcode``"
 
 #: ../../compatibility.rst:137
 msgid ""
-"``autosummary``, ``napoleon``, ``viewcode``, and arbitrary Python "
-"extensions remain outside this route. An unsupported extension named in "
-"configuration is reported. An unknown directive or role is reported at "
-"its source location. **Its omitted content must be reviewed before "
-"publication.** Other theme names are accepted using Guidedog's theme "
-"implementation."
+"Highlighted source pages under ``_modules/``, linked to the descriptions "
+"and back (:doc:`sources-and-diagrams`)."
 msgstr ""
-"``autosummary``\\ , ``napoleon``\\ , ``viewcode``\\ , 임의의 Python 확장은 이 "
-"경로에서 지원하지 않습니다. 설정에 지원하지 않는 확장이 있으면 알립니다. 알 수 없는 지시문이나 역할은 소스 위치와 함께 "
-"보고합니다. **생략된 내용은 게시 전에 반드시 검토해야 합니다.** 다른 테마 이름도 허용하지만 Guidedog의 테마 구현을 "
-"사용합니다."
+"``_modules/`` 아래에 강조 표시된 소스 페이지를 만들고, 설명과 서로 "
+"링크합니다(:doc:`sources-and-diagrams`)."
+
+#: ../../compatibility.rst:138
+msgid "``linkcode``"
+msgstr "``linkcode``"
+
+#: ../../compatibility.rst:139
+msgid ""
+"A URL template, ``linkcode_url``, replaces the Python function "
+"``linkcode_resolve`` (:doc:`sources-and-diagrams`)."
+msgstr ""
+"Python 함수 ``linkcode_resolve`` 대신 URL 템플릿 ``linkcode_url``\\ 을 "
+"씁니다(:doc:`sources-and-diagrams`)."
+
+#: ../../compatibility.rst:140
+msgid "``inheritance_diagram``"
+msgstr "``inheritance_diagram``"
+
+#: ../../compatibility.rst:141
+msgid ""
+"Class graphs from the source, drawn by the linked Graphviz "
+"(:doc:`sources-and-diagrams`)."
+msgstr "소스에서 클래스 그래프를 만들고, 링크된 Graphviz로 그립니다(:doc:`sources-and-diagrams`)."
+
+#: ../../compatibility.rst:142
+msgid "``coverage``"
+msgstr "``coverage``"
 
 #: ../../compatibility.rst:143
+msgid ""
+"``guidedog build coverage`` writes ``python.txt`` from the source and the "
+"documents (:doc:`autodoc`)."
+msgstr ""
+"``guidedog build coverage``\\ 가 소스와 문서로부터 ``python.txt``\\ 를 "
+"씁니다(:doc:`autodoc`)."
+
+#: ../../compatibility.rst:144
+msgid "``duration``"
+msgstr "``duration``"
+
+#: ../../compatibility.rst:145
+msgid ""
+"The slowest documents to read, in the build summary and a JSON file "
+"(:doc:`sources-and-diagrams`)."
+msgstr ""
+"읽는 데 가장 오래 걸린 문서를 빌드 요약과 JSON 파일로 보여 줍니다(:doc:`sources-and-diagrams`)."
+
+#: ../../compatibility.rst:146
+msgid "``imgconverter``"
+msgstr "``imgconverter``"
+
+#: ../../compatibility.rst:147
+msgid ""
+"Accepted, and nothing runs: Typst reads SVG, PNG, JPEG and GIF itself. "
+"Other formats are reported (:doc:`sources-and-diagrams`)."
+msgstr ""
+"받아들이지만 아무것도 실행하지 않습니다. Typst가 SVG, PNG, JPEG, GIF를 직접 읽습니다. 그 밖의 형식은 "
+"보고합니다(:doc:`sources-and-diagrams`)."
+
+#: ../../compatibility.rst:148
+msgid "``myst_parser``"
+msgstr "``myst_parser``"
+
+#: ../../compatibility.rst:149
+msgid "The implemented project Markdown layer."
+msgstr "구현된 프로젝트용 Markdown 계층입니다."
+
+#: ../../compatibility.rst:151
+msgid ""
+"Reading source has limits that importing does not. Compiled modules, "
+"objects created at run time, external decorators, computed values and "
+"extension event hooks cannot be seen. Python 3.13 and the pinned Sphinx "
+"documenter tests provide the reference behavior. See :doc:`autodoc` for "
+"the full settings and exceptions."
+msgstr ""
+"소스를 읽는 방식에는 임포트하는 방식에는 없는 한계가 있습니다. 컴파일된 모듈, 런타임에 생성되는 객체, 외부 데코레이터, 계산된 "
+"값, 확장 이벤트 훅은 보이지 않습니다. Python 3.13과 고정 버전의 Sphinx 문서 생성기 테스트를 기준 동작으로 "
+"삼습니다. 전체 설정과 예외는 :doc:`autodoc`\\ 을 참고하세요."
+
+#: ../../compatibility.rst:153
+msgid ""
+"A third-party extension, such as ``sphinx_design``, is not built in. "
+"Configuration that names one is refused, and ``guidedog migrate`` leaves "
+"it out with a note. An unknown directive or role is reported at its "
+"source location. **Its omitted content must be reviewed before "
+"publication.** Declared object types (:doc:`object-types`) and build "
+"plugins (:doc:`plugins`) cover many of them. Other theme names are "
+"accepted using Guidedog's theme implementation."
+msgstr ""
+"``sphinx_design`` 같은 서드파티 확장은 내장되어 있지 않습니다. 이런 확장을 지정한 설정은 거부하며, "
+"``guidedog migrate``\\ 는 참고 메시지와 함께 그 확장을 빼고 옮깁니다. 알 수 없는 지시문이나 역할은 소스 "
+"위치와 함께 보고합니다. **생략된 내용은 게시 전에 반드시 검토해야 합니다.** 선언형 객체 "
+"타입(:doc:`object-types`)과 빌드 플러그인(:doc:`plugins`)으로 상당수를 대신할 수 있습니다. 다른 테마 "
+"이름도 허용하지만 Guidedog의 테마 구현을 사용합니다."
+
+#: ../../compatibility.rst:158
 msgid "Trust and resource limits"
 msgstr "신뢰와 자원 제한"
 
-#: ../../compatibility.rst:146
+#: ../../compatibility.rst:161
 msgid ""
 "A normal build accepts the project's raw HTML and Typst, templates, and "
 "network inventories. Local reads stay within the source directory and "
@@ -427,7 +537,7 @@ msgstr ""
 "공유한 루트로 제한합니다. 심볼릭 링크로 이 경계를 넓힐 수 없습니다. 템플릿, 정적 파일, include, 이미지, 글꼴, API "
 "소스에도 같은 규칙이 적용됩니다."
 
-#: ../../compatibility.rst:151
+#: ../../compatibility.rst:166
 msgid ""
 "Graphviz image resources are resolved relative to their document and "
 "confined. Supported image bytes are embedded in the drawing. "
@@ -439,7 +549,7 @@ msgstr ""
 "``imagepath``\\ 와 ``fontpath``\\ 는 경계를 넓히지 않습니다. Typst는 읽기 가능한 디렉터리를 담은 "
 "전용 루트에서 실행되어 책 템플릿과 프리앰블을 선언된 자원으로 제한합니다."
 
-#: ../../compatibility.rst:156
+#: ../../compatibility.rst:171
 msgid ""
 "``--untrusted`` narrows the read boundary to the source folder. It omits "
 "raw content, unsafe URLs, outside resources, project Typst templates, and "
@@ -451,7 +561,7 @@ msgstr ""
 "Typst 템플릿과 프리앰블을 진단과 함께 제외합니다. 인벤토리나 Typst 패키지를 가져오지 않습니다. 자원 읽기를 요청하는 "
 "그래프는 경고와 함께 코드로 표시합니다. 이 모드는 네이티브 컴파일러의 메모리나 실행 시간을 제한하지 않습니다."
 
-#: ../../compatibility.rst:162
+#: ../../compatibility.rst:177
 msgid ""
 "The host budget defaults to 1 GiB. It is coarse: it counts the sources, "
 "included files, and PDF output the host holds, reserved before they are "
@@ -461,9 +571,15 @@ msgid ""
 "a budget that fits. ``GUIDEDOG_AVAILABLE_MIB`` can supply known machine "
 "headroom. Working memory always stays in memory. There is no disk-backed "
 "mode, and ``--memory=disk`` and ``--disk-budget`` are refused."
-msgstr "호스트 예산의 기본값은 1 GiB입니다. 이 예산은 대략적인 기준입니다. 호스트가 보유하는 소스, 포함 파일, PDF 출력을 세며, 읽기 전에 미리 예약합니다. 각 워커는 작업 공간 하나를 재사용합니다. 그래도 유지되는 프로젝트 그래프와 카탈로그는 프로젝트가 커질수록 메모리를 사용합니다. 읽기 워커들이 작업 수락을 조율합니다. 요청이 거부되면 실패한 작업과 충분한 예산을 알려 줍니다. ``GUIDEDOG_AVAILABLE_MIB``\\ 로 이미 알고 있는 머신의 여유 메모리를 지정할 수 있습니다. 작업 메모리는 항상 메모리에 둡니다. 디스크 기반 모드는 없으며, ``--memory=disk``\\ 와 ``--disk-budget``\\ 은 거부됩니다."
+msgstr ""
+"호스트 예산의 기본값은 1 GiB입니다. 이 예산은 대략적인 기준입니다. 호스트가 보유하는 소스, 포함 파일, PDF 출력을 세며, "
+"읽기 전에 미리 예약합니다. 각 워커는 작업 공간 하나를 재사용합니다. 그래도 유지되는 프로젝트 그래프와 카탈로그는 프로젝트가 "
+"커질수록 메모리를 사용합니다. 읽기 워커들이 작업 수락을 조율합니다. 요청이 거부되면 실패한 작업과 충분한 예산을 알려 줍니다. "
+"``GUIDEDOG_AVAILABLE_MIB``\\ 로 이미 알고 있는 머신의 여유 메모리를 지정할 수 있습니다. 작업 메모리는 "
+"항상 메모리에 둡니다. 디스크 기반 모드는 없으며, ``--memory=disk``\\ 와 ``--disk-budget``\\ 은 "
+"거부됩니다."
 
-#: ../../compatibility.rst:169
+#: ../../compatibility.rst:184
 msgid ""
 "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document "
 "work. Changing a limit invalidates cached reading and output. Depth and "
@@ -477,11 +593,11 @@ msgstr ""
 "tree-sitter, Typst의 할당은 호스트 예산에 포함되지 않습니다. 이들에 엄격한 한도가 필요하면 운영체제의 제한을 "
 "사용합니다. :doc:`errors`\\ 와 :doc:`internals/memory`\\ 를 참고하세요."
 
-#: ../../compatibility.rst:175
+#: ../../compatibility.rst:190
 msgid "Verification and real projects"
 msgstr "검증과 실제 프로젝트"
 
-#: ../../compatibility.rst:178
+#: ../../compatibility.rst:193
 msgid ""
 "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx "
 "9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, "
@@ -493,18 +609,29 @@ msgid ""
 ":doc:`internals/commonmark-conformance`) keep their expected outputs, and "
 "``cargo xtask verify-docutils`` checks those against a pinned Docutils "
 "0.22.4. All 98 trees match."
-msgstr "``cargo xtask sphinxdiff-roots``\\ 는 Sphinx 자체의 테스트 루트 42개로 Guidedog을 고정된 Sphinx 9.1.0과 비교합니다. 페이지, 식별자, 본문 링크, 인벤토리, 번호, 진단을 검사합니다. 저장된 결과는 차이 하나하나를 설명합니다. 정확한 소스 위치, 안정적인 읽기 순서 번호, 대상 형식 전용 raw 콘텐츠를 생략할 때의 명시적 보고가 그 예입니다(:doc:`internals/sphinx-comparison`). 리더 적합성 테스트(:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`)는 기대 출력을 유지하며, ``cargo xtask verify-docutils``\\ 가 이를 고정된 Docutils 0.22.4와 대조합니다. 98개 트리가 모두 일치합니다."
+msgstr ""
+"``cargo xtask sphinxdiff-roots``\\ 는 Sphinx 자체의 테스트 루트 42개로 Guidedog을 고정된 "
+"Sphinx 9.1.0과 비교합니다. 페이지, 식별자, 본문 링크, 인벤토리, 번호, 진단을 검사합니다. 저장된 결과는 차이 "
+"하나하나를 설명합니다. 정확한 소스 위치, 안정적인 읽기 순서 번호, 대상 형식 전용 raw 콘텐츠를 생략할 때의 명시적 보고가 그 "
+"예입니다(:doc:`internals/sphinx-comparison`). 리더 적합성 "
+"테스트(:doc:`internals/rst-conformance`, "
+":doc:`internals/commonmark-conformance`)는 기대 출력을 유지하며, ``cargo xtask "
+"verify-docutils``\\ 가 이를 고정된 Docutils 0.22.4와 대조합니다. 98개 트리가 모두 일치합니다."
 
-#: ../../compatibility.rst:180
+#: ../../compatibility.rst:195
 msgid ""
 "On 15 October 2026 we built the manuals of CPython, Django and Flask as "
 "HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). "
 "Every HTML build succeeded, and the link check found no broken internal "
 "link besides two inert ones in CPython. The Django and Flask books built; "
 "the CPython book needs more memory than the 12 GB machine had."
-msgstr "2026년 10월 15일에 우리는 CPython, Django, Flask의 매뉴얼을 수정 없이 처음부터 HTML과 PDF 책으로 빌드했습니다(:doc:`evidence/manuals`). HTML 빌드는 모두 성공했습니다. 링크 검사에서는 CPython의 무해한 링크 두 개 말고는 깨진 내부 링크가 없었습니다. Django와 Flask 책은 빌드되었습니다. CPython 책은 12 GB 머신에 있던 것보다 더 많은 메모리가 필요합니다."
+msgstr ""
+"2026년 10월 15일에 우리는 CPython, Django, Flask의 매뉴얼을 수정 없이 처음부터 HTML과 PDF 책으로 "
+"빌드했습니다(:doc:`evidence/manuals`). HTML 빌드는 모두 성공했습니다. 링크 검사에서는 CPython의 "
+"무해한 링크 두 개 말고는 깨진 내부 링크가 없었습니다. Django와 Flask 책은 빌드되었습니다. CPython 책은 12 "
+"GB 머신에 있던 것보다 더 많은 메모리가 필요합니다."
 
-#: ../../compatibility.rst:182
+#: ../../compatibility.rst:197
 msgid ""
 "Those projects contain unsupported Python extension constructs. Their "
 "diagnostics remain part of the evidence. A zero exit status does not mean "
@@ -514,7 +641,7 @@ msgstr ""
 "이 프로젝트들에는 지원하지 않는 Python 확장 구문이 들어 있습니다. 그 진단도 근거의 일부로 남습니다. 종료 상태가 0이라고 "
 "해서 비공개 지시문이 모두 재현되었다는 뜻은 아닙니다. 게시할 때 진단이 하나도 없어야 한다면 ``-W``\\ 로 실행합니다."
 
-#: ../../compatibility.rst:184
+#: ../../compatibility.rst:199
 msgid ""
 "The measurements describe the recorded workloads on the recorded machine. "
 "They are not universal speed or memory bounds."

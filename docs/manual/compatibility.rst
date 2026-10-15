@@ -130,9 +130,9 @@ Every extension in Sphinx's ``sphinx.ext`` package is built in. A project lists 
    * - ``autodoc``
      - Python source is read without importing or executing the package.
    * - ``napoleon``
-     - Google and NumPy docstring sections become the fields autodoc shows.
+     - Google and NumPy docstring sections become the fields autodoc shows (:doc:`autodoc`).
    * - ``autosummary`` and ``apidoc``
-     - Summary tables and API pages are generated from the source, in memory. Nothing is written into the source folder.
+     - Summary tables and API pages are generated from the source, in memory. Nothing is written into the source folder (:doc:`autodoc`).
    * - ``viewcode``
      - Highlighted source pages under ``_modules/``, linked to the descriptions and back (:doc:`sources-and-diagrams`).
    * - ``linkcode``
@@ -140,7 +140,7 @@ Every extension in Sphinx's ``sphinx.ext`` package is built in. A project lists 
    * - ``inheritance_diagram``
      - Class graphs from the source, drawn by the linked Graphviz (:doc:`sources-and-diagrams`).
    * - ``coverage``
-     - ``guidedog build coverage`` writes ``python.txt`` from the source and the documents.
+     - ``guidedog build coverage`` writes ``python.txt`` from the source and the documents (:doc:`autodoc`).
    * - ``duration``
      - The slowest documents to read, in the build summary and a JSON file (:doc:`sources-and-diagrams`).
    * - ``imgconverter``

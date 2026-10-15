@@ -134,7 +134,7 @@ it is documented with less than Sphinx would show.
 - Docstrings of builtin types are unknown, so a method that has none and would inherit
   one from ``dict`` is left out.
 - Python extensions that handle autodoc's events (``autodoc-process-docstring``,
-  ``autodoc-skip-member``, ...) do not run.
+  ``autodoc-skip-member``, ...) do not run. napoleon is built in, below.
 - A module nested far deeper than real code (Python itself refuses 200 nested brackets;
   Guidedog also refuses a ``+`` chain of a few hundred operands) is not analysed, with
   the warning ``autodoc.too_deep``.
@@ -147,11 +147,117 @@ it is documented with less than Sphinx would show.
 Adding the missing packages' source folders to ``autodoc_source_paths`` closes most of
 these.
 
+Google and NumPy docstrings (napoleon)
+--------------------------------------
+
+Many projects write docstrings in the Google or the NumPy style. We list ``sphinx.ext.napoleon``, and autodoc reads both styles:
+
+.. code-block:: toml
+
+   extensions = ["sphinx.ext.autodoc", "sphinx.ext.napoleon"]
+
+This docstring:
+
+.. code-block:: python
+
+   def area(width, height):
+       """Compute an area.
+
+       Args:
+           width (float): The width.
+           height (float): The height.
+
+       Returns:
+           float: The product.
+       """
+
+reads as if it were written with fields:
+
+.. code-block:: rst
+
+   Compute an area.
+
+   :param width: The width.
+   :type width: float
+   :param height: The height.
+   :type height: float
+   :returns: The product.
+   :rtype: float
+
+The conversion is the one Sphinx's napoleon makes, section for section: parameters, keyword arguments, returns, yields, raises, attributes, methods, examples, notes, references, "See Also", and the admonitions (``Note:``, ``Warning:``, ...). NumPy sections run first, then Google sections, as in Sphinx. Guidedog compares its conversion with every conversion of Sphinx's own napoleon tests.
+
+All sixteen settings keep their names and defaults: ``napoleon_google_docstring`` and ``napoleon_numpy_docstring`` (true), ``napoleon_include_init_with_doc``, ``napoleon_include_private_with_doc`` and ``napoleon_include_special_with_doc`` (false; they document ``__init__``, ``_private`` and ``__special__`` members that have docstrings), ``napoleon_use_admonition_for_examples``, ``napoleon_use_admonition_for_notes``, ``napoleon_use_admonition_for_references`` and ``napoleon_use_ivar`` (false), ``napoleon_use_param``, ``napoleon_use_rtype`` and ``napoleon_use_keyword`` (true), ``napoleon_preprocess_types`` (false: link the names in NumPy type specifications), ``napoleon_type_aliases`` (a table), ``napoleon_custom_sections`` and ``napoleon_attr_annotations`` (true: an attribute without a type takes its annotation). A custom section is a name, or a pair of a name and the section it behaves like:
+
+.. code-block:: toml
+
+   napoleon_custom_sections = ["Side Effects", ["Arguments", "params_style"]]
+
+Where napoleon cannot read a docstring, Guidedog says so. ``napoleon.section`` reports a Google header whose body is not indented below it, ``napoleon.field`` a parameter line without a name it can tell apart (``x the value`` instead of ``x: the value``), and ``napoleon.type`` an unclosed brace or quote in a type that ``napoleon_preprocess_types`` converts. The warning names the docstring and its line. From that line on the docstring is kept as written, so nothing is garbled silently. ``suppress_warnings = ["napoleon"]`` silences these warnings.
+
+Summary tables and stub pages (autosummary)
+-------------------------------------------
+
+``sphinx.ext.autosummary`` makes a table of objects: each name with its shortened signature and the first sentence of its docstring.
+
+.. code-block:: rst
+
+   .. autosummary::
+      :toctree: generated
+      :recursive:
+
+      shop
+
+With ``:toctree:`` each entry gets a stub page in the folder ``generated`` beside the document. The stub of a module lists its attributes, functions, classes and exceptions in tables of their own. With ``:recursive:`` it also lists the package's submodules, and each of them gets a stub page in turn. The stub pages are listed in a hidden table of contents, so they appear in the navigation.
+
+Sphinx writes stub pages as ``.rst`` files into the source folder. Guidedog makes them in memory, as generated documents, and reads them like any other page. The source folder stays clean, and a stub changes as soon as its source does. A page we wrote ourselves at a stub's name wins over the stub, with the note ``autosummary.exists``.
+
+The options are Sphinx's: ``:toctree:``, ``:caption:``, ``:template:``, ``:recursive:``, ``:signatures:`` (``long``, ``short`` or ``none``), ``:nosignatures:`` and ``:class:``. The stubs come from Sphinx's templates ``autosummary/base.rst``, ``module.rst`` and ``class.rst``, rendered with the variables Sphinx gives them (``fullname``, ``name``, ``objtype``, ``members``, ``functions``, ``classes``, ``exceptions``, ``attributes``, ``methods``, ``modules``, ...). A file of the same name under ``templates_path`` replaces a template; ``{% extends "!autosummary/class.rst" %}`` extends the built-in one.
+
+The settings are ``autosummary_generate`` (true; false makes no stubs, a list makes the stubs of those files only), ``autosummary_context`` (more template variables), ``autosummary_filename_map`` (a stub's page name by object name), ``autosummary_imported_members`` (false) and ``autosummary_ignore_module_all`` (true). ``autosummary_mock_imports`` is accepted and does nothing, since nothing is imported; ``autosummary_generate_overwrite`` likewise, since no file is ever written.
+
+``autosummary.import`` names an entry the source scan cannot find, with the folders it searched. ``autosummary.template`` reports a template that fails, ``autosummary.toctree`` a ``:toctree:`` folder outside the source folder, and ``autosummary.limit`` a recursive walk cut short: a build makes at most 10,000 stub pages, nested at most 64 deep.
+
+Pages for whole packages (apidoc)
+---------------------------------
+
+``sphinx.ext.apidoc`` writes a page for every package of a folder, as ``sphinx-apidoc`` does. Each entry of ``apidoc_modules`` names the package folder (relative to ``conf.toml``) and the folder of its pages (relative to the source folder):
+
+.. code-block:: toml
+
+   extensions = ["sphinx.ext.apidoc"]
+
+   [[apidoc_modules]]
+   path = "../src/shop"
+   destination = "api"
+   separate_modules = true
+
+The pages are ``api/shop`` for the package, ``api/shop.cart`` for each module with ``separate_modules``, and ``api/modules``, the table of contents a ``toctree`` can name. Their text is the text ``sphinx-apidoc`` writes, with its ``automodule`` directives. Like stub pages, they are generated documents and never files. The package folder joins the folders autodoc reads, so no ``autodoc_source_paths`` entry is needed for it.
+
+An entry may set ``exclude_patterns``, ``max_depth``, ``follow_links``, ``separate_modules``, ``include_private``, ``no_headings``, ``module_first``, ``implicit_namespaces`` and ``automodule_options``; the settings ``apidoc_exclude_patterns``, ``apidoc_max_depth`` (4), and so on, give the rest. As in ``sphinx-apidoc``, ``automodule_options`` applies to module pages, and a package page uses ``members``, ``show-inheritance`` and ``undoc-members``. ``apidoc.path`` reports a package folder that does not exist, ``apidoc.exists`` a page we wrote ourselves that wins over a generated one, and ``apidoc.limit`` a walk of more than 10,000 modules.
+
+What is not documented (coverage)
+---------------------------------
+
+``sphinx.ext.coverage`` adds a builder. ``guidedog build coverage`` reads the documents and compares the Python objects they describe with the objects the source defines:
+
+.. code-block:: text
+
+   $ guidedog build coverage docs
+     coverage +--------+----------+--------------+
+              | Module | Coverage | Undocumented |
+              +========+==========+==============+
+              | shop   | 75.00%   | 1            |
+              ...
+
+``_build/coverage/python.txt`` lists, per module, the public functions, classes and methods no document describes, then the statistics, in Sphinx's layout. The modules checked are ``coverage_modules`` with their submodules, or, when it is empty, the modules the documents describe. ``coverage_ignore_modules``, ``coverage_ignore_functions`` and ``coverage_ignore_classes`` are patterns that match at the start of a name, ``coverage_ignore_pyobjects`` patterns that match anywhere in a full name. ``coverage_write_headline``, ``coverage_statistics_to_report``, ``coverage_statistics_to_stdout``, ``coverage_skip_undoc_in_source`` and ``coverage_show_missing_items`` (each missing object as the note ``coverage.undocumented``) work as in Sphinx.
+
+C headers are checked when ``coverage_c_path`` names them (relative to the source folder) and ``coverage_c_regexes`` gives, per object type, a pattern whose first group is an item's name. The items no ``c:`` description names go to ``c.txt``; ``coverage_ignore_c_items`` leaves some out. ``coverage.module`` reports a module that is not in the source.
+
 Rebuilding
 ----------
 
 Every Python file an autodoc directive read is a dependency of the page. When we edit it,
-the next build reads the page again. A page whose object was not found is read again
+the next build reads the page again. Stub pages and apidoc pages are made again on every build, from the source as it is then. A page whose object was not found is read again
 on every build, so it picks the object up as soon as the source has it.
 
 Security

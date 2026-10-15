@@ -89,11 +89,13 @@ fn viewcode_writes_source_pages_linked_both_ways() {
     has(&source, "<h1>Source code for shapes.square</h1>");
     has(
         &source,
-        "<div class=\"viewcode-block\" id=\"Square\">\n\
-         <a class=\"viewcode-back\" href=\"../../index.html#shapes.square.Square\">[docs]</a>",
+        "<div class=\"viewcode-block\" id=\"Square\">\
+         <a class=\"viewcode-back\" href=\"../../index.html#shapes.square.Square\">[docs]</a>\
+         <span class=\"k\">class</span>",
     );
     // The block of a decorated method starts at its decorator.
-    has(&source, "[docs]</a>\n    <span class=\"nd\">@functools.cache</span>");
+    has(&source, "[docs]</a>    <span class=\"nd\">@functools.cache</span>");
+    has(&source, "<span class=\"mi\">1</span></div></div>\n\n<div class=\"viewcode-block\"");
     lacks(&source, "class=\"linenos\"");
     let index = root.read("docs/_build/html/_modules/index.html");
     has(&index, "<a href=\"shapes/base.html\">shapes.base</a>");

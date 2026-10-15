@@ -113,7 +113,8 @@ fn module_source(
 }
 
 /// The source page's body: the heading, then the highlighted source with a block per
-/// described object, as Sphinx's `collect_pages` writes it.
+/// described object, as Sphinx's `collect_pages` writes it, but without the line
+/// breaks around the blocks' tags, which a browser shows as empty lines.
 fn source_page_body(
     view: &BuildView<'_>,
     file: &str,
@@ -127,6 +128,9 @@ fn source_page_body(
     gd_highlight::write_code_html_lines(Lexer::Python, code, lines, &mut highlighted);
     let mut lines: Vec<String> = highlighted.split('\n').map(str::to_owned).collect();
     let docs = view.ui.gettext("[docs]");
+    // A line that ends a block ends where the block does: the newline after it would
+    // show as an empty line, since the block itself ends the line.
+    let mut closes = vec![false; lines.len()];
     for (fullname, block) in &module.blocks {
         let (start, end) = (block.line as usize, block.end_line as usize);
         if start == 0 || start > lines.len() {
@@ -134,21 +138,27 @@ fn source_page_body(
         }
         let mut open = String::from("<div class=\"viewcode-block\" id=\"");
         push_escaped(&mut open, fullname);
-        open.push_str("\">\n<a class=\"viewcode-back\" href=\"");
+        open.push_str("\"><a class=\"viewcode-back\" href=\"");
         push_escaped(&mut open, &back_link(view, file, block));
         open.push_str("\">");
         push_escaped(&mut open, &docs);
-        open.push_str("</a>\n");
+        open.push_str("</a>");
         lines[start - 1].insert_str(0, &open);
         let last = end.clamp(start, lines.len());
         lines[last - 1].push_str("</div>");
+        closes[last - 1] = true;
     }
     let heading = view.ui.gettext("<h1>Source code for %s</h1>");
     let mut escaped = String::new();
     push_escaped(&mut escaped, name);
     let mut body = heading.replace("%s", &escaped);
     body.push_str("<div class=\"highlight\"><pre><span></span>");
-    body.push_str(&lines.join("\n"));
+    for (i, line) in lines.iter().enumerate() {
+        body.push_str(line);
+        if i + 1 < lines.len() && !closes[i] {
+            body.push('\n');
+        }
+    }
     body.push_str("</pre></div>");
     body
 }

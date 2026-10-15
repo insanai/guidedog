@@ -185,8 +185,11 @@ Lookups and their answers
 A page notes each lookup once (``gd_env::Trace``); the answer's digest covers:
 
 ``Label``, ``Term``, ``Object``, ``Suffix``
-   The target's docname, anchor, title, label kind, object type, item number and the
-   document's anchor key; or that there is none. A suffix lookup
+   The target's docname, anchor, title, label kind, object type, item number, whether
+   the object is an alias, the section number a section label shows, and the document's
+   anchor key; or that there is none. (The alias flag and section number are new in the
+   Rust port: a page that showed "Section 2.3" must be rewritten when the section is
+   renumbered.) A suffix lookup
    (``prefix\0suffix\0role``) answers with the object that wins now: an object before
    an alias, then the first by name.
 ``Doc``

@@ -653,6 +653,24 @@ version = "0.7.0"
 [[package]]
 name = "gd-cli"
 version = "0.7.0"
+dependencies = [
+ "gd-conf",
+ "gd-discussion",
+ "gd-env",
+ "gd-graphdog",
+ "gd-host",
+ "gd-pages",
+ "gd-plugins",
+ "gd-report",
+ "gd-sha",
+ "gd-typst",
+ "guidedoc",
+ "guidedoc-commonmark",
+ "guidedoc-html",
+ "guidedoc-rst",
+ "guidedoc-text",
+ "guidedoc-typst",
+]
 
 [[package]]
 name = "gd-conf"
@@ -796,6 +814,7 @@ dependencies = [
  "guidedoc",
  "guidedoc-html",
  "guidedoc-text",
+ "guidedoc-typst",
 ]
 
 [[package]]
@@ -1044,6 +1063,7 @@ dependencies = [
 name = "guidedoc-sphinx"
 version = "0.7.0"
 dependencies = [
+ "gd-rustdoc",
  "guidedoc",
  "guidedoc-commonmark",
  "guidedoc-cpp",
@@ -1069,6 +1089,11 @@ dependencies = [
 [[package]]
 name = "guidedog-cmd"
 version = "0.7.0"
+dependencies = [
+ "gd-cli",
+ "gd-host",
+ "gd-plugins",
+]
 
 [[package]]
 name = "guidedog-pages-cmd"

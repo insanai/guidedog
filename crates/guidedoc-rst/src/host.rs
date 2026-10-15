@@ -177,17 +177,20 @@ impl<'p, 'a> Parser<'p, 'a> {
     }
 
     /// Ends an embedded read: runs the dialect's end hook, closes sections, reports
-    /// what was left dangling, and resolves the document as `read` does.
+    /// what was left dangling, and resolves the document as `read` does. The state's
+    /// storage then goes back to the workspace (`ReaderState::end`).
     pub fn embed_end(&mut self) -> Result<(), Fail> {
         if let Some(ext) = self.ext {
             ext.end(self)?;
         }
         self.finish_document()?;
         let options = self.st.inl.options.clone();
-        match self.ext {
+        let result = match self.ext {
             Some(ext) => resolve_with_substitutions(self.ctx, &options, &|n| ext.substitution(n)),
             None => guidedoc_rst_inline::resolve(self.ctx, &options),
-        }
+        };
+        self.st.end(self.ctx);
+        result
     }
 }
 

@@ -13,8 +13,8 @@ use crate::SmartQuotes;
 use crate::languages::{Language, language_of, tag_equal};
 
 /// The state of one element's text stream.
-pub(crate) struct QuoteContext {
-    pub quotes: [String; 4],
+pub(crate) struct QuoteContext<'q> {
+    pub quotes: [&'q str; 4],
     pub english: bool,
     /// The last character before the current text; '\0' at the start.
     pub prev: char,
@@ -85,10 +85,10 @@ impl Resolver<'_, '_> {
     }
 
     fn educate_element(&mut self, e: NodeId, lang: &'static Language) -> Result<(), Fail> {
-        let set =
-            if self.options.smart_quotes == SmartQuotes::Alt { lang.alt } else { lang.quotes };
-        let mut quotes = set.map(str::to_owned);
-        locale_quotes(&self.options.smart_quotes_locales, lang.tag, &mut quotes);
+        let options = self.options;
+        let set = if options.smart_quotes == SmartQuotes::Alt { lang.alt } else { lang.quotes };
+        let mut quotes: [&str; 4] = set;
+        locale_quotes(&options.smart_quotes_locales, lang.tag, &mut quotes);
         let mut qc = QuoteContext { quotes, english: lang.tag == "en", prev: '\0' };
         let end = self.node_end(e);
         let mut i = e.index() + 1;
@@ -120,7 +120,7 @@ impl Resolver<'_, '_> {
 
     /// Passes over Sphinx's literal_strong or literal_emphasis at `i`, whose text stays
     /// as written but gives context; returns its last node.
-    fn skip_literal(&self, i: usize, qc: &mut QuoteContext) -> usize {
+    fn skip_literal(&self, i: usize, qc: &mut QuoteContext<'_>) -> usize {
         let end = self.node_end(NodeId::from_index(i));
         for k in i + 1..end {
             let id = NodeId::from_index(k);
@@ -153,7 +153,7 @@ impl Resolver<'_, '_> {
 }
 
 /// Applies a "tag:“”‘’,tag:..." override for the language, if listed.
-fn locale_quotes(locales: &str, tag: &str, quotes: &mut [String; 4]) {
+fn locale_quotes<'q>(locales: &'q str, tag: &str, quotes: &mut [&'q str; 4]) {
     for item in locales.split(',') {
         let Some((key, marks)) = item.split_once(':') else { continue };
         if !tag_equal(key.trim_matches([' ', '\n', '\t']), tag) {
@@ -166,7 +166,7 @@ fn locale_quotes(locales: &str, tag: &str, quotes: &mut [String; 4]) {
                 return;
             }
             let (_, w) = decode_rune(marks, k);
-            *q = marks[k..k + w].to_owned();
+            *q = &marks[k..k + w];
             k += w;
         }
     }

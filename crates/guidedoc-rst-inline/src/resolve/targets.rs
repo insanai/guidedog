@@ -1,6 +1,6 @@
 //! Collecting targets and following indirect ones.
 
-use guidedoc::{AttributeKey, Fail, LinkKind, NodeId, NodeKind, arg_span};
+use guidedoc::{AttributeKey, Fail, LinkKind, NodeId, NodeKind, arg_span, normalize_label};
 
 use super::{Final, Name, Record, RecordKind, RecordState, Resolver};
 use crate::TARGET_NAME_ATTRIBUTE;
@@ -28,20 +28,26 @@ impl Resolver<'_, '_> {
             match kind {
                 NodeKind::Target => self.collect_target(id),
                 NodeKind::InlineTarget => {
-                    let name = self.text_of(id).to_owned();
+                    let mut name = self.key_buffer();
+                    name.push_str(self.text_of(id));
                     self.add_named(id, RecordKind::InlineTarget, &name, true);
+                    self.key = name;
                 }
                 NodeKind::Link => self.collect_link(id),
                 NodeKind::Reference => self.collect_reference(id),
                 NodeKind::Section => {
-                    let name = self.section_name(id);
+                    let mut name = self.key_buffer();
+                    self.section_name(id, &mut name);
                     self.add_named(id, RecordKind::Section, &name, false);
+                    self.key = name;
                 }
                 NodeKind::Contents => self.contents_name(id),
                 NodeKind::Footnote => self.collect_footnote(id),
                 NodeKind::Citation => {
-                    let name = fold_key(self.text_of(id));
+                    let mut name = self.key_buffer();
+                    normalize_label(&mut name, self.text_of(id));
                     self.add_named(id, RecordKind::Citation, &name, true);
+                    self.key = name;
                 }
                 NodeKind::SubstitutionDefinition => {
                     skip_end = self.node_end(id);
@@ -49,9 +55,12 @@ impl Resolver<'_, '_> {
                 }
                 _ => {}
             }
-            if let Some(name) = self.element_name(id) {
-                self.add_named(id, RecordKind::Named, &fold_key(&name), true);
+            let mut name = self.key_buffer();
+            if let Some(element) = self.element_name(id) {
+                normalize_label(&mut name, element);
+                self.add_named(id, RecordKind::Named, &name, true);
             }
+            self.key = name;
         }
         let pending = std::mem::take(&mut self.pending);
         for &idx in &pending {
@@ -73,21 +82,25 @@ impl Resolver<'_, '_> {
         let idx = self.add_record(id, RecordKind::Link, true);
         self.records[idx as usize].last =
             Final { kind: l.kind, destination: l.destination, node: guidedoc::INVALID_NODE };
-        let name = self.ctx.b.pool_string(l.name).to_owned();
+        let mut name = self.key_buffer();
+        name.push_str(self.ctx.b.pool_string(l.name));
         self.add_name(&name, idx);
+        self.key = name;
     }
 
     fn collect_reference(&mut self, id: NodeId) {
         if self.flags_of(id).has(guidedoc::NodeFlag::Anonymous) {
             self.anon_refs.push(id);
         }
-        if let Some(name) = self.custom_attribute(id, TARGET_NAME_ATTRIBUTE) {
+        let mut name = self.key_buffer();
+        if let Some(alias) = self.custom_attribute(id, TARGET_NAME_ATTRIBUTE) {
             // An embedded alias names an implicit target, as in Docutils.
-            let name = name.to_owned();
+            name.push_str(alias);
             let idx = self.add_record(id, RecordKind::Alias, false);
             self.records[idx as usize].state = RecordState::Unvisited;
             self.add_name(&name, idx);
         }
+        self.key = name;
     }
 
     /// Settles internal targets waiting for the next element: an element takes them;
@@ -161,35 +174,43 @@ impl Resolver<'_, '_> {
         if self.flags_of(id).has(guidedoc::NodeFlag::Anonymous) {
             self.anon_targets.push(idx);
         } else {
-            let name = self.text_of(id).to_owned();
+            let mut name = self.key_buffer();
+            name.push_str(self.text_of(id));
             self.add_name(&name, idx);
+            self.key = name;
         }
     }
 
     fn collect_footnote(&mut self, id: NodeId) {
         let flags = self.flags_of(id);
-        let label = self.text_of(id).to_owned();
         if flags.has(guidedoc::NodeFlag::Symbol) {
             self.symbol_notes.push(id);
             self.add_record(id, RecordKind::Footnote, true);
-        } else if flags.has(guidedoc::NodeFlag::Auto) {
-            self.auto_notes.push(id);
-            let name = label.strip_prefix('#').unwrap_or(&label);
-            self.add_named(id, RecordKind::Footnote, &fold_key(name), true);
-        } else {
-            self.add_named(id, RecordKind::Footnote, &fold_key(&label), true);
+            return;
         }
+        let auto = flags.has(guidedoc::NodeFlag::Auto);
+        if auto {
+            self.auto_notes.push(id);
+        }
+        let mut name = self.key_buffer();
+        let label = self.text_of(id);
+        let label = if auto { label.strip_prefix('#').unwrap_or(label) } else { label };
+        normalize_label(&mut name, label);
+        self.add_named(id, RecordKind::Footnote, &name, true);
+        self.key = name;
     }
 
-    /// The normalized plain text of the section's title.
-    fn section_name(&self, id: NodeId) -> String {
+    /// Writes the normalized plain text of the section's title into `out`.
+    fn section_name(&mut self, id: NodeId, out: &mut String) {
         let h = id + 1;
         if h.index() >= self.used() || self.kind_of(h) != NodeKind::Heading {
-            return String::new();
+            return;
         }
-        let mut plain = String::new();
+        let mut plain = std::mem::take(&mut self.plain);
+        plain.clear();
         self.title_text(h, &mut plain);
-        fold_key(&plain)
+        normalize_label(out, &plain);
+        self.plain = plain;
     }
 
     /// Gives a record a name, settling duplicates as Docutils does
@@ -203,7 +224,7 @@ impl Resolver<'_, '_> {
             return;
         }
         let Some(&existing) = self.names.get(name) else {
-            self.names.insert(name.to_owned(), Name::Record(idx));
+            self.names.insert(name, Name::Record(idx));
             return;
         };
         let new = self.records[idx as usize];
@@ -211,7 +232,7 @@ impl Resolver<'_, '_> {
         let old_idx = match existing {
             Name::Ambiguous => {
                 if new.explicit {
-                    self.names.insert(name.to_owned(), Name::Record(idx));
+                    self.names.insert(name, Name::Record(idx));
                 }
                 return;
             }
@@ -227,7 +248,7 @@ impl Resolver<'_, '_> {
         // An explicit target just before a section names that section: nothing to say.
         if same_element(&old, &new) && old.explicit != new.explicit {
             if new.explicit {
-                self.names.insert(name.to_owned(), Name::Record(idx));
+                self.names.insert(name, Name::Record(idx));
             }
             return;
         }
@@ -236,16 +257,16 @@ impl Resolver<'_, '_> {
             (TARGET_REPEATED, a, a, b)
         } else if new.explicit && old.explicit {
             // Neither name can be used; names from embedded URIs are only noted.
-            self.names.insert(name.to_owned(), Name::AmbiguousExplicit);
+            self.names.insert(name, Name::AmbiguousExplicit);
             let both_links = new.kind == RecordKind::Link && old.kind == RecordKind::Link;
             (if both_links { TARGET_IMPLICIT } else { TARGET_DUPLICATE }, a, a, b)
         } else if new.explicit {
-            self.names.insert(name.to_owned(), Name::Record(idx));
+            self.names.insert(name, Name::Record(idx));
             (TARGET_IMPLICIT, b, b, a)
         } else if old.explicit {
             (TARGET_IMPLICIT, a, a, b)
         } else {
-            self.names.insert(name.to_owned(), Name::Ambiguous);
+            self.names.insert(name, Name::Ambiguous);
             (TARGET_IMPLICIT, a, a, b)
         };
         self.ctx.report(m, at, arg_span(first), arg_span(second));

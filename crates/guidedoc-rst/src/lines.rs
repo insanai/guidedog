@@ -244,6 +244,7 @@ fn unicode_space(r: char) -> bool {
 
 /// Where one line of a split source lives: its stripped source text, and its expanded
 /// copy in the buffer when it needed one.
+#[derive(Debug)]
 struct RawLine {
     start: usize,
     end: usize,
@@ -260,8 +261,29 @@ pub(crate) fn split_lines<'s>(
     tab: usize,
     buf: &'s mut String,
 ) -> Vec<Line<'s>> {
+    let mut lines = Vec::new();
+    split_lines_into(text, base, tab, buf, &mut SplitWork::default(), &mut lines);
+    lines
+}
+
+/// The storage `split_lines_into` reuses: where each line lives.
+#[derive(Debug, Default)]
+pub(crate) struct SplitWork {
+    raws: Vec<RawLine>,
+}
+
+/// `split_lines` into `lines`, which it clears first, reusing `work` and the vector.
+pub(crate) fn split_lines_into<'s>(
+    text: &'s str,
+    base: u32,
+    tab: usize,
+    buf: &'s mut String,
+    work: &mut SplitWork,
+    lines: &mut Vec<Line<'s>>,
+) {
     buf.clear();
-    let mut raws = Vec::new();
+    let raws = &mut work.raws;
+    raws.clear();
     let bytes = text.as_bytes();
     let mut start = 0;
     while start < text.len() {
@@ -279,7 +301,8 @@ pub(crate) fn split_lines<'s>(
         start = next;
     }
     let buf: &'s str = buf;
-    raws.iter().map(|r| make_line(text, buf, r, base)).collect()
+    lines.clear();
+    lines.extend(raws.iter().map(|r| make_line(text, buf, r, base)));
 }
 
 /// Makes lines of a host's views of source text, expanding tabs into `buf` as
@@ -341,13 +364,15 @@ fn expand_into(buf: &mut String, raw: &str, tab: usize) -> Option<(usize, usize)
 /// Collects the lines from `start` that are blank or indented and strips their least
 /// indentation. With `first`, the first line always belongs to the block and is cut at
 /// that column. `until_blank` ends the block at the first blank line; `strip_top` drops
-/// leading blank lines from the result.
+/// leading blank lines from the result. The block's lines go into `out`, cleared first
+/// (a buffer from `Parser::line_buf`).
 pub(crate) fn indented_block<'s>(
     lines: &[Line<'s>],
     start: usize,
     first: Option<usize>,
     until_blank: bool,
     strip_top: bool,
+    mut out: Vec<Line<'s>>,
 ) -> Block<'s> {
     let mut end = start + usize::from(first.is_some());
     let mut least: Option<usize> = None;
@@ -370,7 +395,8 @@ pub(crate) fn indented_block<'s>(
     }
     let end = end.min(lines.len()).max(start.min(lines.len()));
     let least = least.unwrap_or(0);
-    let mut out: Vec<Line<'s>> = Vec::with_capacity(end - start);
+    out.clear();
+    out.reserve(end - start);
     for (k, l) in lines[start..end].iter().enumerate() {
         match first {
             Some(col) if k == 0 => out.push(l.cut(col)),
@@ -391,6 +417,7 @@ pub(crate) fn known_indented_block<'s>(
     lines: &[Line<'s>],
     start: usize,
     indent: usize,
+    mut out: Vec<Line<'s>>,
 ) -> Block<'s> {
     let mut end = start + 1;
     let mut blank_finish = true;
@@ -403,9 +430,11 @@ pub(crate) fn known_indented_block<'s>(
         end += 1;
     }
     let end = end.min(lines.len());
-    let out: Vec<Line<'s>> = lines[start..end].iter().map(|l| l.cut(indent)).collect();
+    out.clear();
+    out.extend(lines[start..end].iter().map(|l| l.cut(indent)));
     let top = out.iter().position(|l| !l.is_blank()).unwrap_or(out.len());
-    Block { lines: out[top..].to_vec(), consumed: end - start, blank_finish }
+    out.drain(..top);
+    Block { lines: out, consumed: end - start, blank_finish }
 }
 
 /// Returns the end of the text block that starts at `start`: the next blank line, or

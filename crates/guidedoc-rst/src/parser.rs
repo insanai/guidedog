@@ -5,17 +5,18 @@ use std::fmt;
 
 use guidedoc::{
     Arg, AttributeKey, Builder, CORE_DEPTH, Fail, LineView, NodeId, NodeKind, ReadContext,
-    SourceId, SourceSpan, StackGuard, Text, arg_int, arg_span, diagnostic, stack_guard,
+    SourceId, SourceSpan, StackGuard, Text, arg_int, arg_span, diagnostic, recycle, stack_guard,
 };
-use guidedoc_rst_inline::{InlineState, parse_inline};
+use guidedoc_rst_inline::{InlineBuffers, InlineState, parse_inline};
 
 use crate::extension::{Extension, ExtensionHook};
 use crate::fields::{field_marker, option_item_valid};
 use crate::host::Host;
-use crate::lines::{Line, trim_blank_end};
+use crate::lines::{Line, SplitWork, trim_blank_end};
 use crate::lists::{Seq, bullet_width, enum_item_valid, parse_enum};
 use crate::settings::{Settings, inline_options};
 use crate::tables::{TableExtra, is_grid_border, is_simple_border};
+use crate::tables_grid::GridWork;
 
 /// Title adornment styles are single printable ASCII characters, underline-only or
 /// over-and-underline, so at most 64 distinct styles and section levels exist.
@@ -47,6 +48,34 @@ pub(crate) struct Pending {
     pub span: SourceSpan,
 }
 
+/// Line buffers lent to nested blocks and inline content (`Parser::line_buf`,
+/// `Parser::view_buf`), kept empty between uses. Lines borrow one read's sources, so
+/// the buffers are kept as `'static` ones and turned back with `guidedoc::recycle`.
+#[derive(Debug, Default)]
+pub(crate) struct LinePool {
+    lines: Vec<Vec<Line<'static>>>,
+    views: Vec<Vec<LineView<'static>>>,
+}
+
+/// The reader's storage, kept in the workspace's scratch between reads.
+#[derive(Debug, Default)]
+struct RstWork {
+    inline: InlineBuffers,
+    styles: Vec<Style>,
+    sections: Vec<SectionEntry>,
+    pool: LinePool,
+    grids: Vec<GridWork>,
+}
+
+/// The main source's lines and the storage that splits them, kept in the workspace's
+/// scratch between reads. Lines borrow the source, so they are kept empty.
+#[derive(Debug, Default)]
+pub(crate) struct MainLines {
+    pub split: SplitWork,
+    pub text: String,
+    pub lines: Vec<Line<'static>>,
+}
+
 /// The reader's state of one document: the current source, tab stops, section levels,
 /// pending classes, the inline state, and nesting depth. `read` keeps one for the call;
 /// a host markup that embeds the reader (`embed_begin`) keeps it between calls and
@@ -75,6 +104,10 @@ pub struct ReaderState {
     pub(crate) hosted: bool,
     /// A table directive's title and options for the table the host emits.
     pub(crate) table_extra: Option<TableExtra>,
+    /// Buffers lent to nested parses.
+    pub(crate) pool: LinePool,
+    /// Grid tables' storage, one per table being read.
+    pub(crate) grids: Vec<GridWork>,
 }
 
 impl fmt::Debug for ReaderState {
@@ -89,8 +122,9 @@ impl fmt::Debug for ReaderState {
 }
 
 impl ReaderState {
-    /// Prepares the state for the main source of `ctx` with `settings`.
-    pub fn new(ctx: &ReadContext<'_>, settings: &Settings) -> ReaderState {
+    /// Prepares the state for the main source of `ctx` with `settings`, with the
+    /// storage an earlier read left in the workspace (`end` gives it back).
+    pub fn new(ctx: &mut ReadContext<'_>, settings: &Settings) -> ReaderState {
         let tab = if settings.tab_width > 0 {
             settings.tab_width
         } else if ctx.options.tab_width > 0 {
@@ -99,7 +133,10 @@ impl ReaderState {
             8
         };
         let text = ctx.source_of(ctx.source);
-        let mut inl = InlineState::new(inline_options(settings, tab));
+        let mut w: RstWork = ctx.take_scratch();
+        w.styles.clear();
+        w.sections.clear();
+        let mut inl = InlineState::with_buffers(inline_options(settings, tab), w.inline);
         inl.source = ctx.source;
         ReaderState {
             inl,
@@ -109,8 +146,8 @@ impl ReaderState {
             tab,
             depth: 0,
             stack: stack_guard(&ctx.limits),
-            styles: Vec::new(),
-            sections: Vec::new(),
+            styles: w.styles,
+            sections: w.sections,
             section_base: 0,
             level_base: 0,
             top_count: 0,
@@ -119,7 +156,23 @@ impl ReaderState {
             pending: None,
             hosted: false,
             table_extra: None,
+            pool: w.pool,
+            grids: w.grids,
         }
+    }
+
+    /// Gives the state's storage back to the workspace for the next read; call it once
+    /// when the read ends (`Parser::embed_end` and `read_inline` do). The state stays
+    /// usable, with empty buffers.
+    pub fn end(&mut self, ctx: &mut ReadContext<'_>) {
+        let w = RstWork {
+            inline: self.inl.take_buffers(),
+            styles: std::mem::take(&mut self.styles),
+            sections: std::mem::take(&mut self.sections),
+            pool: std::mem::take(&mut self.pool),
+            grids: std::mem::take(&mut self.grids),
+        };
+        ctx.put_scratch(w);
     }
 
     /// Views the state as a parser over `ctx`, with a dialect's handlers and a host.
@@ -380,6 +433,27 @@ impl<'p, 'a> Parser<'p, 'a> {
         Ok(())
     }
 
+    /// Lends an empty line buffer from the reader's pool; give it back with
+    /// `give_lines` once its lines are used.
+    pub(crate) fn line_buf<'s>(&mut self) -> Vec<Line<'s>> {
+        recycle(self.st.pool.lines.pop().unwrap_or_default())
+    }
+
+    /// Gives a line buffer back to the pool.
+    pub(crate) fn give_lines(&mut self, lines: Vec<Line<'_>>) {
+        self.st.pool.lines.push(recycle(lines));
+    }
+
+    /// Lends an empty view buffer from the reader's pool (see `line_buf`).
+    pub(crate) fn view_buf<'s>(&mut self) -> Vec<LineView<'s>> {
+        recycle(self.st.pool.views.pop().unwrap_or_default())
+    }
+
+    /// Gives a view buffer back to the pool.
+    pub(crate) fn give_views(&mut self, views: Vec<LineView<'_>>) {
+        self.st.pool.views.push(recycle(views));
+    }
+
     /// Parses `lines` as inline content of the open node, in the markup of the running
     /// directive (see `Host`).
     pub fn inline(&mut self, lines: &[Line<'_>]) -> Result<(), Fail> {
@@ -392,8 +466,11 @@ impl<'p, 'a> Parser<'p, 'a> {
             return host.inline(self, lines);
         }
         let tab = self.st.tab;
-        let views: Vec<LineView<'_>> = lines.iter().map(|l| l.view(tab)).collect();
-        self.inline_views(&views)
+        let mut views = self.view_buf();
+        views.extend(lines.iter().map(|l| l.view(tab)));
+        let result = self.inline_views(&views);
+        self.give_views(views);
+        result
     }
 
     /// Parses source views as reStructuredText inline content of the open node.

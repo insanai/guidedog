@@ -170,7 +170,7 @@ impl Parser<'_, '_> {
         let mut end;
         loop {
             let (name_end, col) = field_marker(lines[j].text).unwrap_or((1, 1));
-            let blk = indented_block(lines, j, Some(col), false, true);
+            let mut blk = indented_block(lines, j, Some(col), false, true, self.line_buf());
             let span = self.lines_span(&lines[j..j + blk.consumed.max(1)]);
             let field = self.ctx.b.begin_node(NodeKind::Field, span)?;
             self.inline_node(NodeKind::FieldName, &[lines[j].part(1, name_end)])?;
@@ -183,6 +183,7 @@ impl Parser<'_, '_> {
             self.parse_body(&blk.lines, false, None)?;
             self.close(body)?;
             self.close(field)?;
+            self.give_lines(std::mem::take(&mut blk.lines));
             end = span.end;
             j += blk.consumed.max(1);
             if j < lines.len() && field_marker(lines[j].text).is_some() {
@@ -206,7 +207,7 @@ impl Parser<'_, '_> {
         loop {
             let l = lines[j];
             let desc = option_marker(l.text).unwrap_or(0);
-            let blk = indented_block(lines, j, Some(desc), false, true);
+            let mut blk = indented_block(lines, j, Some(desc), false, true, self.line_buf());
             let span = self.lines_span(&lines[j..j + blk.consumed.max(1)]);
             let item = self.ctx.b.begin_node(NodeKind::OptionItem, span)?;
             self.option_group(l, desc)?;
@@ -215,6 +216,7 @@ impl Parser<'_, '_> {
             self.parse_body(&blk.lines, false, None)?;
             self.close(d)?;
             self.close(item)?;
+            self.give_lines(std::mem::take(&mut blk.lines));
             end = span.end;
             j += blk.consumed.max(1);
             if j < lines.len() && option_item_valid(lines, j) {

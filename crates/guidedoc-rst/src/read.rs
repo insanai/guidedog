@@ -2,13 +2,13 @@
 
 use guidedoc::Arg;
 use guidedoc::{
-    Conformance, Fail, ReadContext, Reader, SourceId, SourceSpan, arg_span, diagnostic,
+    Conformance, Fail, ReadContext, Reader, SourceId, SourceSpan, arg_span, diagnostic, recycle,
 };
 
 use crate::extension::Extension;
-use crate::lines::{Line, split_lines, strip_bom};
+use crate::lines::{Line, split_lines, split_lines_into, strip_bom};
 use crate::messages::{CLASS_DANGLING, INLINE_SPAN, TRANSITION_END};
-use crate::parser::{Parser, ReaderState};
+use crate::parser::{MainLines, Parser, ReaderState};
 use crate::settings::Settings;
 
 /// The reader's version: the project version.
@@ -55,8 +55,22 @@ pub fn read_with(
     let mut st = ReaderState::new(ctx, settings);
     let text = ctx.source_of(ctx.source);
     let (body, base) = strip_bom(&text);
-    let mut buf = String::new();
-    let lines = split_lines(body, base, st.tab, &mut buf);
+    let MainLines { mut split, text: mut buf, lines } = ctx.take_scratch();
+    let mut lines = recycle(lines);
+    split_lines_into(body, base, st.tab, &mut buf, &mut split, &mut lines);
+    let result = read_lines(ctx, &mut st, ext, &lines);
+    let lines = recycle(lines);
+    ctx.put_scratch(MainLines { split, text: buf, lines });
+    result
+}
+
+/// Reads the main source's `lines` (see `read_with`).
+fn read_lines(
+    ctx: &mut ReadContext<'_>,
+    st: &mut ReaderState,
+    ext: Option<&dyn Extension>,
+    lines: &[Line<'_>],
+) -> Result<(), Fail> {
     let mut p = st.parser(ctx, ext, None);
     p.ctx.b.spend(lines.len() as u64 / 256)?;
     if let Some(e) = ext {
@@ -66,7 +80,7 @@ pub fn read_with(
     // own, as Sphinx inserts rst_prolog into the text; without one the document reads
     // whole.
     let fields =
-        if ext.is_some_and(|e| e.has_prologue()) { leading_field_lines(&lines) } else { 0 };
+        if ext.is_some_and(|e| e.has_prologue()) { leading_field_lines(lines) } else { 0 };
     if fields > 0 {
         p.parse_blocks(&lines[..fields], true, None)?;
     }
@@ -100,6 +114,18 @@ pub fn read_inline_with(
     let mut st = ReaderState::new(ctx, settings);
     let mut buf = String::new();
     let lines = split_lines(part, span.start, st.tab, &mut buf);
+    let result = inline_lines(ctx, &mut st, ext, &lines);
+    st.end(ctx);
+    result
+}
+
+/// Parses `lines` as inline content (see `read_inline_with`).
+fn inline_lines(
+    ctx: &mut ReadContext<'_>,
+    st: &mut ReaderState,
+    ext: Option<&dyn Extension>,
+    lines: &[Line<'_>],
+) -> Result<(), Fail> {
     let mut p = st.parser(ctx, ext, None);
     if let Some(e) = ext {
         e.begin(&mut p)?;

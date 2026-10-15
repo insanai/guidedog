@@ -45,14 +45,27 @@ pub(crate) struct ColMap<'l, 's> {
     cols: Vec<u32>,
 }
 
+/// A column map's storage, kept for the next table (`ColMap::reuse`).
+#[derive(Debug, Default)]
+pub(crate) struct ColStorage {
+    start: Vec<Option<usize>>,
+    width: Vec<usize>,
+    cols: Vec<u32>,
+}
+
 impl<'l, 's> ColMap<'l, 's> {
     pub fn new(lines: &'l [Line<'s>]) -> Self {
-        let mut m = ColMap {
-            lines,
-            start: Vec::with_capacity(lines.len()),
-            width: Vec::new(),
-            cols: Vec::new(),
-        };
+        ColMap::reuse(lines, ColStorage::default())
+    }
+
+    /// Maps `lines` in the storage of an earlier map.
+    pub fn reuse(lines: &'l [Line<'s>], storage: ColStorage) -> Self {
+        let ColStorage { mut start, mut width, mut cols } = storage;
+        start.clear();
+        start.reserve(lines.len());
+        width.clear();
+        cols.clear();
+        let mut m = ColMap { lines, start, width, cols };
         for l in lines {
             if l.text.is_ascii() {
                 m.start.push(None);
@@ -72,6 +85,11 @@ impl<'l, 's> ColMap<'l, 's> {
             m.width.push(w);
         }
         m
+    }
+
+    /// Returns the map's storage, for the next table.
+    pub fn into_storage(self) -> ColStorage {
+        ColStorage { start: self.start, width: self.width, cols: self.cols }
     }
 
     /// The columns of line `r`.
@@ -105,6 +123,23 @@ impl<'l, 's> ColMap<'l, 's> {
     pub fn has_text(&self, r: usize, a: usize, b: usize) -> bool {
         !self.part(r, a, b).text.trim_start_matches(' ').is_empty()
     }
+}
+
+/// Appends the decimal digits of `n` to the text being built, without allocating.
+fn push_decimal(b: &mut guidedoc::Builder<'_>, n: usize) -> Result<(), Fail> {
+    let mut digits = [0u8; 20];
+    let mut at = digits.len();
+    let mut v = n;
+    loop {
+        at -= 1;
+        // A digit is below ten, so the cast keeps it.
+        digits[at] = b'0' + (v % 10) as u8;
+        v /= 10;
+        if v == 0 {
+            break;
+        }
+    }
+    b.text_push_bytes(&digits[at..])
 }
 
 /// Tells whether `t` is a grid table border ("+---+").
@@ -170,7 +205,7 @@ impl Parser<'_, '_> {
         widths: &[usize],
         extra: Option<&mut TableExtra>,
     ) -> Result<(), Fail> {
-        let mut w: Option<Vec<usize>> = Some(widths.to_vec());
+        let mut w: Option<&[usize]> = Some(widths);
         if let Some(e) = extra.as_deref() {
             self.table_attributes(id, e)?;
             match &e.widths {
@@ -178,7 +213,7 @@ impl Parser<'_, '_> {
                     let why = arg_text("the number of widths differs from the number of columns");
                     self.report(TABLE_SHAPE, span, arg_span(span), why);
                 }
-                Some(given) => w = Some(given.clone()),
+                Some(given) => w = Some(given),
                 None => {}
             }
             if e.auto_widths {
@@ -186,8 +221,17 @@ impl Parser<'_, '_> {
             }
         }
         if let Some(w) = w.filter(|w| !w.is_empty()) {
-            let joined: Vec<String> = w.iter().map(usize::to_string).collect();
-            self.ctx.b.add_attribute_string(id, AttributeKey::Widths, &joined.join(" "))?;
+            // Written straight into the text pool: "10 20 30".
+            let text = self.ctx.b.build_text(|t| {
+                for (k, &n) in w.iter().enumerate() {
+                    if k > 0 {
+                        t.text_push_byte(b' ')?;
+                    }
+                    push_decimal(t, n)?;
+                }
+                Ok(())
+            })?;
+            self.ctx.b.add_attribute(id, AttributeKey::Widths, text)?;
         }
         if let Some(e) = extra.filter(|e| !e.title.is_empty()) {
             self.extra_title(e)?;

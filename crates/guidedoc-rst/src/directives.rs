@@ -220,20 +220,34 @@ impl<'p, 'a> Parser<'p, 'a> {
     {
         let t = lines[i].text;
         let (name_end, args_col) = directive_marker(t, col)?;
-        let blk = indented_block(lines, i, Some(args_col), false, false);
+        let blk = indented_block(lines, i, Some(args_col), false, false, self.line_buf());
         let consumed = blk.consumed.max(1);
         let span = self.lines_span(&lines[i..i + consumed]);
         let name_span = self.line_span(&lines[i].part(col, name_end));
         let name = &t[col..name_end];
         let Some(runner) = self.runner_for(name) else {
             self.report(DIRECTIVE_UNKNOWN, name_span, arg_span(name_span), Arg::None);
+            self.give_lines(blk.lines);
             return Some((consumed, None));
         };
         let mut d = Directive::new(name, runner, span, name_span, sections);
-        if !self.directive_block(&mut d, &blk.lines) {
+        d.arg = self.line_buf();
+        d.arg_block = self.line_buf();
+        d.content = self.line_buf();
+        let ok = self.directive_block(&mut d, &blk.lines);
+        self.give_lines(blk.lines);
+        if !ok {
+            self.give_directive(d);
             return Some((consumed, None));
         }
         Some((consumed, Some(d)))
+    }
+
+    /// Gives a directive's line buffers back to the pool once it has run.
+    pub(crate) fn give_directive(&mut self, d: Directive<'_>) {
+        self.give_lines(d.arg);
+        self.give_lines(d.arg_block);
+        self.give_lines(d.content);
     }
 
     /// Splits a directive block into argument, options, and content, as the
@@ -265,13 +279,16 @@ impl<'p, 'a> Parser<'p, 'a> {
             d.options = opts;
             args = &args[..k];
         }
+        d.content.clear();
         if !args.is_empty() && !has_args {
-            let mut joined = args.to_vec();
-            joined.extend_from_slice(rest);
-            d.content = trim_blank_start(&joined).to_vec();
+            // The argument lines and the rest are all content.
+            d.content.extend_from_slice(args);
+            d.content.extend_from_slice(rest);
+            let top = d.content.len() - trim_blank_start(&d.content).len();
+            d.content.drain(..top);
             return self.directive_arguments(d, &[]);
         }
-        d.content = trim_blank_start(content).to_vec();
+        d.content.extend_from_slice(trim_blank_start(content));
         self.directive_arguments(d, args)
     }
 
@@ -294,8 +311,10 @@ impl<'p, 'a> Parser<'p, 'a> {
             return false;
         }
         if words > 0 {
-            d.arg = args.iter().map(|l| l.trim()).collect();
-            d.arg_block = args.to_vec();
+            d.arg.clear();
+            d.arg.extend(args.iter().map(|l| l.trim()));
+            d.arg_block.clear();
+            d.arg_block.extend_from_slice(args);
         }
         if !d.content.is_empty() && content_rule == ContentRule::None {
             let span = self.lines_span(&d.content);
@@ -390,7 +409,11 @@ impl<'p, 'a> Parser<'p, 'a> {
     ) -> Option<Result<usize, Fail>> {
         let (consumed, d) = self.read_directive(lines, i, col, sections)?;
         let run = match d {
-            Some(d) => self.run(&d),
+            Some(d) => {
+                let r = self.run(&d);
+                self.give_directive(d);
+                r
+            }
             None => Ok(()),
         };
         Some(run.map(|()| consumed))

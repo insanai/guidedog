@@ -23,11 +23,17 @@ pub fn bullet_width(t: &str) -> usize {
 /// Reads a list item whose marker ends at column `col` of line `i`. With text on the
 /// marker line, that text's column is the item's indentation; otherwise the least
 /// indentation of the following lines is.
-pub(crate) fn item_body<'s>(lines: &[Line<'s>], i: usize, col: usize) -> Block<'s> {
+/// The block's lines go into `out`, cleared first.
+pub(crate) fn item_body<'s>(
+    lines: &[Line<'s>],
+    i: usize,
+    col: usize,
+    out: Vec<Line<'s>>,
+) -> Block<'s> {
     if col < lines[i].text.len() {
-        return known_indented_block(lines, i, col);
+        return known_indented_block(lines, i, col, out);
     }
-    indented_block(lines, i, Some(col), false, true)
+    indented_block(lines, i, Some(col), false, true, out)
 }
 
 /// An enumeration sequence.
@@ -173,7 +179,43 @@ const ROMAN: [(i64, &str); 13] = [
 ];
 
 /// Appends `n` (1..4999) as an uppercase Roman numeral.
-fn write_roman(out: &mut String, n: i64) {
+/// A short text kept on the stack: an enumerator ("(MMMMDCCCLXXXVIII)" is the longest),
+/// written and compared without allocating. Text past its room is dropped, which only
+/// makes a comparison fail.
+struct Short {
+    bytes: [u8; 24],
+    len: usize,
+}
+
+impl Short {
+    fn new() -> Short {
+        Short { bytes: [0; 24], len: 0 }
+    }
+
+    fn push_str(&mut self, s: &str) {
+        let end = (self.len + s.len()).min(self.bytes.len());
+        let n = end - self.len;
+        self.bytes[self.len..end].copy_from_slice(&s.as_bytes()[..n]);
+        self.len = end;
+    }
+
+    fn push(&mut self, c: char) {
+        self.push_str(c.encode_utf8(&mut [0; 4]));
+    }
+
+    fn as_bytes(&self) -> &[u8] {
+        &self.bytes[..self.len]
+    }
+}
+
+impl std::fmt::Write for Short {
+    fn write_str(&mut self, s: &str) -> std::fmt::Result {
+        self.push_str(s);
+        Ok(())
+    }
+}
+
+fn write_roman(out: &mut Short, n: i64) {
     let mut v = n;
     for (value, digits) in ROMAN {
         while v >= value {
@@ -220,19 +262,21 @@ fn roman_value(text: &str) -> Option<i64> {
     if !(1..=4999).contains(&total) {
         return None;
     }
-    let mut canon = String::new();
+    let mut canon = Short::new();
     write_roman(&mut canon, total);
-    canon.eq_ignore_ascii_case(text).then_some(total)
+    canon.as_bytes().eq_ignore_ascii_case(text.as_bytes()).then_some(total)
 }
 
 /// Appends the enumerator for ordinal `n`; `false` when `n` cannot be written.
-fn format_enum(out: &mut String, n: i64, seq: Seq, format: u8) -> bool {
+fn format_enum(out: &mut Short, n: i64, seq: Seq, format: u8) -> bool {
     if format == b'(' {
         out.push('(');
     }
     match seq {
         Seq::Auto => out.push('#'),
-        Seq::Arabic => out.push_str(&n.max(0).to_string()),
+        Seq::Arabic => {
+            let _ = std::fmt::Write::write_fmt(out, format_args!("{}", n.max(0)));
+        }
         Seq::LowerAlpha | Seq::UpperAlpha => {
             if !(1..=26).contains(&n) {
                 return false;
@@ -244,12 +288,11 @@ fn format_enum(out: &mut String, n: i64, seq: Seq, format: u8) -> bool {
             if !(1..=4999).contains(&n) {
                 return false;
             }
-            let mut r = String::new();
-            write_roman(&mut r, n);
+            let start = out.len;
+            write_roman(out, n);
             if seq == Seq::LowerRoman {
-                r.make_ascii_lowercase();
+                out.bytes[start..out.len].make_ascii_lowercase();
             }
-            out.push_str(&r);
         }
         Seq::None => return false,
     }
@@ -269,13 +312,15 @@ pub(crate) fn enum_item_valid(lines: &[Line<'_>], i: usize, e: &Enumerator) -> b
     if next.is_empty() || next.starts_with(' ') {
         return true;
     }
-    let mut s = String::new();
-    if format_enum(&mut s, ordinal + 1, e.seq, e.format) && next.starts_with(&s) {
+    let mut s = Short::new();
+    if format_enum(&mut s, ordinal + 1, e.seq, e.format)
+        && next.as_bytes().starts_with(s.as_bytes())
+    {
         return true;
     }
-    s.clear();
+    s.len = 0;
     format_enum(&mut s, 1, Seq::Auto, e.format);
-    next.starts_with(&s)
+    next.as_bytes().starts_with(s.as_bytes())
 }
 
 impl Parser<'_, '_> {
@@ -287,13 +332,16 @@ impl Parser<'_, '_> {
         i: usize,
         col: usize,
     ) -> Result<(Block<'s>, bool, SourceSpan), Fail> {
-        let blk = item_body(lines, i, col);
-        let span = self.lines_span(&lines[i..i + blk.consumed.max(1)]);
+        let buf = self.line_buf();
+        let Block { lines: body, consumed, blank_finish } = item_body(lines, i, col, buf);
+        let span = self.lines_span(&lines[i..i + consumed.max(1)]);
         let item = self.ctx.b.begin_node(NodeKind::ListItem, span)?;
-        self.parse_body(&blk.lines, false, None)?;
+        self.parse_body(&body, false, None)?;
         self.close(item)?;
+        self.give_lines(body);
         let simple = self.simple_item(item);
-        Ok((blk, simple, span))
+        // The caller needs only the block's extent.
+        Ok((Block { lines: Vec::new(), consumed, blank_finish }, simple, span))
     }
 
     fn simple_item(&self, id: NodeId) -> bool {

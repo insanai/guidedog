@@ -15,21 +15,24 @@ pub(crate) fn ends_with_literal_marker(t: &str) -> bool {
     slashes % 2 == 0
 }
 
-/// Returns the paragraph lines without the literal marker, reduced as the
-/// specification says, and whether a literal block follows.
-fn strip_literal_marker<'s>(para: &[Line<'s>]) -> (Vec<Line<'s>>, bool) {
+/// Puts the paragraph lines into `body` without the literal marker, reduced as the
+/// specification says, and tells whether a literal block follows.
+fn strip_literal_marker<'s>(para: &[Line<'s>], body: &mut Vec<Line<'s>>) -> bool {
     let last = para[para.len() - 1];
     let t = last.text;
+    body.clear();
     if !ends_with_literal_marker(t) {
-        return (para.to_vec(), false);
+        body.extend_from_slice(para);
+        return false;
     }
     if t == "::" {
-        return (para[..para.len() - 1].to_vec(), true);
+        body.extend_from_slice(&para[..para.len() - 1]);
+        return true;
     }
-    let mut body = para.to_vec();
+    body.extend_from_slice(para);
     let keep = if t.as_bytes()[t.len() - 3] == b' ' { t.len() - 3 } else { t.len() - 1 };
     body[para.len() - 1] = last.head(keep);
-    (body, true)
+    true
 }
 
 impl Parser<'_, '_> {
@@ -39,12 +42,14 @@ impl Parser<'_, '_> {
         let (end, bad_indent) = text_end(lines, i, true);
         let end = end.max(i + 1);
         let para = &lines[i..end];
-        let (body, literal) = strip_literal_marker(para);
+        let mut body = self.line_buf();
+        let literal = strip_literal_marker(para, &mut body);
         if !body.is_empty() {
             let id = self.open(NodeKind::Paragraph, self.lines_span(para))?;
             self.inline(&body)?;
             self.close(id)?;
         }
+        self.give_lines(body);
         if bad_indent {
             let span = self.line_span(&lines[end]);
             self.report_at(INDENT_UNEXPECTED, span);
@@ -63,11 +68,12 @@ impl Parser<'_, '_> {
         j: usize,
         after: &Line<'_>,
     ) -> Result<usize, Fail> {
-        let blk = indented_block(lines, j, None, false, true);
+        let blk = indented_block(lines, j, None, false, true, self.line_buf());
         let body = trim_blank_end(&blk.lines);
         if !body.is_empty() {
             let text = self.code_text(body)?;
             self.leaf(NodeKind::CodeBlock, self.lines_span(body), text)?;
+            self.give_lines(blk.lines);
             let next = j + blk.consumed;
             if !blk.blank_finish && next < lines.len() {
                 self.unindent_warning(&lines[next], "literal block");
@@ -105,7 +111,7 @@ impl Parser<'_, '_> {
         let mut j = i;
         let mut end;
         loop {
-            let blk = indented_block(lines, j + 1, None, false, true);
+            let mut blk = indented_block(lines, j + 1, None, false, true, self.line_buf());
             let span = self.lines_span(&lines[j..j + 1 + blk.consumed]);
             let item = self.ctx.b.begin_node(NodeKind::DefinitionItem, span)?;
             self.term_parts(lines[j])?;
@@ -113,6 +119,7 @@ impl Parser<'_, '_> {
             self.parse_body(&blk.lines, false, None)?;
             self.close(def)?;
             self.close(item)?;
+            self.give_lines(std::mem::take(&mut blk.lines));
             end = span.end;
             j += 1 + blk.consumed;
             if j + 1 < lines.len()

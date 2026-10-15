@@ -171,7 +171,7 @@ impl Parser<'_, '_> {
         i: usize,
         col: usize,
     ) -> Result<usize, Fail> {
-        let blk = indented_block(lines, i, Some(col), false, false);
+        let blk = indented_block(lines, i, Some(col), false, false, Vec::new());
         let consumed = blk.consumed.max(1);
         let span = self.lines_span(&lines[i..i + consumed]);
         let Some((cl, cc)) = substitution_close(lines, i, col, consumed) else {

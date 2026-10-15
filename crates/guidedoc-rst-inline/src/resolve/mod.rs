@@ -15,11 +15,9 @@ mod substitutions;
 mod tabs;
 mod targets;
 
-use std::collections::HashMap;
-
 use guidedoc::{
-    Arg, AttributeKey, Fail, LinkInfo, LinkKind, Message, NodeFlags, NodeId, NodeKind,
-    ReadContext, SourceSpan, Text, arg_span,
+    Arg, AttributeKey, Fail, LinkInfo, LinkKind, Message, NameMap, NodeFlags, NodeId, NodeKind,
+    ReadContext, SourceSpan, Text, arg_span, normalize_label,
 };
 
 use crate::Options;
@@ -109,13 +107,32 @@ pub(crate) struct Edge {
 /// A dialect's default substitutions (see `crate::resolve_with_substitutions`).
 pub(crate) type Substitute<'r> = &'r dyn Fn(&str) -> Option<String>;
 
+/// The resolver's tables, kept in the workspace's scratch between resolutions.
+#[derive(Debug, Default)]
+struct ResolverWork {
+    records: Vec<Record>,
+    names: NameMap<Name>,
+    pending: Vec<u32>,
+    anon_targets: Vec<u32>,
+    anon_refs: Vec<NodeId>,
+    auto_notes: Vec<NodeId>,
+    symbol_notes: Vec<NodeId>,
+    subs: NameMap<NodeId>,
+    subs_folded: NameMap<NodeId>,
+    defs: Vec<Definition>,
+    edges: Vec<Edge>,
+    key: String,
+    plain: String,
+    escaped: Vec<bool>,
+}
+
 /// The state of one resolution.
 pub(crate) struct Resolver<'r, 'a> {
     pub ctx: &'r mut ReadContext<'a>,
     pub options: &'r Options,
     pub substitute: Option<Substitute<'r>>,
     pub records: Vec<Record>,
-    pub names: HashMap<String, Name>,
+    pub names: NameMap<Name>,
     pub pending: Vec<u32>,
     pub anon_targets: Vec<u32>,
     pub anon_refs: Vec<NodeId>,
@@ -126,10 +143,16 @@ pub(crate) struct Resolver<'r, 'a> {
     pub symbol_used: usize,
     pub auto_full: bool,
     pub symbol_full: bool,
-    pub subs: HashMap<String, NodeId>,
-    pub subs_folded: HashMap<String, NodeId>,
+    pub subs: NameMap<NodeId>,
+    pub subs_folded: NameMap<NodeId>,
     pub defs: Vec<Definition>,
     pub edges: Vec<Edge>,
+    /// Room for a folded name, reused (`key_buffer`).
+    pub key: String,
+    /// Room for a name before folding, or a text being rewritten, reused.
+    pub plain: String,
+    /// Which bytes of a text were escaped (smart quotes), reused.
+    pub escaped: Vec<bool>,
 }
 
 /// See `crate::resolve`.
@@ -139,41 +162,107 @@ pub(crate) fn resolve_document(
     substitute: Option<Substitute<'_>>,
 ) -> Result<(), Fail> {
     check(&mut ctx.b)?;
+    let w: ResolverWork = ctx.take_scratch();
     let mut r = Resolver {
         ctx,
         options,
         substitute,
-        records: Vec::new(),
-        names: HashMap::new(),
-        pending: Vec::new(),
-        anon_targets: Vec::new(),
-        anon_refs: Vec::new(),
-        auto_notes: Vec::new(),
-        symbol_notes: Vec::new(),
+        records: w.records,
+        names: w.names,
+        pending: w.pending,
+        anon_targets: w.anon_targets,
+        anon_refs: w.anon_refs,
+        auto_notes: w.auto_notes,
+        symbol_notes: w.symbol_notes,
         auto_cursor: 0,
         symbol_used: 0,
         auto_full: false,
         symbol_full: false,
-        subs: HashMap::new(),
-        subs_folded: HashMap::new(),
-        defs: Vec::new(),
-        edges: Vec::new(),
+        subs: w.subs,
+        subs_folded: w.subs_folded,
+        defs: w.defs,
+        edges: w.edges,
+        key: w.key,
+        plain: w.plain,
+        escaped: w.escaped,
     };
-    r.specialize_roles()?;
-    let used = r.used();
-    r.ctx.b.spend(used as u64)?;
-    r.records.reserve(used / 4);
-    r.names.reserve(used / 4);
-    r.collect()?;
-    r.resolve_targets()?;
-    r.number_footnotes()?;
-    r.resolve_references()?;
-    r.resolve_anonymous()?;
-    r.check_substitutions()?;
-    r.unbreak_code();
-    r.expand_tabs()?;
-    r.restructure()?;
-    check(&mut r.ctx.b)
+    r.clear();
+    let result = r.run();
+    r.finish();
+    result
+}
+
+impl Resolver<'_, '_> {
+    /// Empties the tables taken from the workspace, keeping their storage.
+    fn clear(&mut self) {
+        self.records.clear();
+        self.names.clear();
+        self.pending.clear();
+        self.anon_targets.clear();
+        self.anon_refs.clear();
+        self.auto_notes.clear();
+        self.symbol_notes.clear();
+        self.subs.clear();
+        self.subs_folded.clear();
+        self.defs.clear();
+        self.edges.clear();
+    }
+
+    /// Gives the tables back to the workspace for the next resolution.
+    fn finish(self) {
+        let w = ResolverWork {
+            records: self.records,
+            names: self.names,
+            pending: self.pending,
+            anon_targets: self.anon_targets,
+            anon_refs: self.anon_refs,
+            auto_notes: self.auto_notes,
+            symbol_notes: self.symbol_notes,
+            subs: self.subs,
+            subs_folded: self.subs_folded,
+            defs: self.defs,
+            edges: self.edges,
+            key: self.key,
+            plain: self.plain,
+            escaped: self.escaped,
+        };
+        self.ctx.put_scratch(w);
+    }
+
+    /// Takes the reusable key buffer, cleared; give it back with `self.key = key`.
+    pub fn key_buffer(&mut self) -> String {
+        let mut key = std::mem::take(&mut self.key);
+        key.clear();
+        key
+    }
+
+    /// Finds what `name` refers to once folded as reference names compare.
+    pub fn lookup_folded(&mut self, name: &str) -> Option<Name> {
+        let mut key = self.key_buffer();
+        normalize_label(&mut key, name);
+        let found = self.lookup(&key);
+        self.key = key;
+        found
+    }
+
+    /// Runs the resolution's steps in order.
+    fn run(&mut self) -> Result<(), Fail> {
+        let r = self;
+        r.specialize_roles()?;
+        let used = r.used();
+        r.ctx.b.spend(used as u64)?;
+        r.records.reserve(used / 4);
+        r.collect()?;
+        r.resolve_targets()?;
+        r.number_footnotes()?;
+        r.resolve_references()?;
+        r.resolve_anonymous()?;
+        r.check_substitutions()?;
+        r.unbreak_code();
+        r.expand_tabs()?;
+        r.restructure()?;
+        check(&mut r.ctx.b)
+    }
 }
 
 impl Resolver<'_, '_> {
@@ -251,13 +340,12 @@ impl Resolver<'_, '_> {
 
     /// An element's `:name:` option, which makes it an explicit target. Directive
     /// nodes use Name for the directive name and keep `:name:` as Custom "name".
-    pub fn element_name(&self, id: NodeId) -> Option<String> {
-        let name = if self.kind_of(id) == NodeKind::Directive {
+    pub fn element_name(&self, id: NodeId) -> Option<&str> {
+        if self.kind_of(id) == NodeKind::Directive {
             self.custom_attribute(id, "name")
         } else {
             self.attribute(id, AttributeKey::Name)
-        };
-        name.map(str::to_owned)
+        }
     }
 
     /// Finds what a normalized name refers to; both ambiguities read `Ambiguous`.

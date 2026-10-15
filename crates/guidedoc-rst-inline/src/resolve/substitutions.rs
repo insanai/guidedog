@@ -2,38 +2,46 @@
 //! case-insensitively. A later definition of the same name replaces the earlier one and
 //! is reported.
 
-use guidedoc::{Arg, Fail, LinkKind, NONE, NodeId, NodeKind, Text, arg_int, arg_span};
+use guidedoc::{
+    Arg, Fail, LinkKind, NONE, NodeId, NodeKind, Text, arg_int, arg_span, normalize_label,
+};
 
 use super::{Definition, Resolver};
 use crate::messages::{
     SUBSTITUTION_CYCLE, SUBSTITUTION_DEPTH, SUBSTITUTION_DUPLICATE, SUBSTITUTION_UNDEFINED,
 };
-use crate::roles::fold_key;
 
 impl Resolver<'_, '_> {
     pub fn add_definition(&mut self, id: NodeId) {
         self.defs.push(Definition { node: id, first_edge: 0, edge_count: 0, color: 0 });
-        let name = self.text_of(id).to_owned();
-        if name.is_empty() {
-            return;
+        let mut name = std::mem::take(&mut self.plain);
+        name.clear();
+        name.push_str(self.text_of(id));
+        if !name.is_empty() {
+            let mut folded = self.key_buffer();
+            normalize_label(&mut folded, &name);
+            if let Some(old) = self.subs.insert(&name, id) {
+                let (a, b) = (self.quote_span(id), self.quote_span(old));
+                self.ctx.report(SUBSTITUTION_DUPLICATE, a, arg_span(a), arg_span(b));
+            }
+            self.subs_folded.insert(&folded, id);
+            self.key = folded;
         }
-        let folded = fold_key(&name);
-        if let Some(old) = self.subs.insert(name, id) {
-            let (a, b) = (self.quote_span(id), self.quote_span(old));
-            self.ctx.report(SUBSTITUTION_DUPLICATE, a, arg_span(a), arg_span(b));
-        }
-        self.subs_folded.insert(folded, id);
+        self.plain = name;
     }
 
     /// Links a reference to its definition and returns the definition's index.
     pub fn resolve_substitution(&mut self, id: NodeId) -> Result<Option<usize>, Fail> {
-        let name = self.text_of(id).to_owned();
-        let mut def = self.subs.get(&name).copied();
-        if def.is_none() && self.default_substitution(id, &name)? {
-            return Ok(None);
-        }
+        let mut def = self.subs.get(self.text_of(id)).copied();
         if def.is_none() {
-            def = self.subs_folded.get(&fold_key(&name)).copied();
+            let name = self.text_of(id).to_owned();
+            if self.default_substitution(id, &name)? {
+                return Ok(None);
+            }
+            let mut key = self.key_buffer();
+            normalize_label(&mut key, &name);
+            def = self.subs_folded.get(&key).copied();
+            self.key = key;
         }
         let Some(def) = def else {
             let sp = self.node_span(id);

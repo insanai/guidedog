@@ -1,29 +1,38 @@
 //! Footnote numbering and footnote and citation references.
 
-use guidedoc::{Arg, Fail, LinkKind, NodeFlag, NodeFlags, NodeId, Text, arg_static};
+use guidedoc::{
+    Arg, Fail, LinkKind, NodeFlag, NodeFlags, NodeId, Text, arg_static, normalize_label,
+};
 
 use super::{Name, RecordKind, Resolver};
 use crate::messages::{FOOTNOTE_TOO_MANY, REFERENCE_UNRESOLVED};
-use crate::roles::fold_key;
+use std::fmt::Write as _;
 
 impl Resolver<'_, '_> {
     /// Gives auto-numbered footnotes, in document order, the lowest numbers that no
     /// footnote, target, or section already uses as a name.
     pub fn number_footnotes(&mut self) -> Result<(), Fail> {
         let mut next = 1;
+        let mut number = self.key_buffer();
         for k in 0..self.auto_notes.len() {
             let id = self.auto_notes[k];
-            while self.names.contains_key(&next.to_string()) {
+            loop {
+                number.clear();
+                let _ = write!(number, "{next}");
+                if !self.names.contains_key(&number) {
+                    break;
+                }
                 next += 1;
                 self.ctx.b.spend(1)?;
             }
             self.ctx.b.set_value(id, next);
             if self.text_of(id) == "#" {
                 // An unlabelled footnote is also named by its number, so `3`_ finds it.
-                self.add_named(id, RecordKind::Footnote, &next.to_string(), true);
+                self.add_named(id, RecordKind::Footnote, &number, true);
             }
             next += 1;
         }
+        self.key = number;
         for (i, &id) in self.symbol_notes.iter().enumerate() {
             self.ctx.b.set_value(id, i as i32 + 1);
         }
@@ -45,9 +54,18 @@ impl Resolver<'_, '_> {
     /// Matches `[#]_` and `[*]_` in order, and `[1]_` and `[#label]_` by name, then
     /// copies the footnote's number to the reference.
     pub fn resolve_footnote_reference(&mut self, id: NodeId) -> Result<(), Fail> {
+        let mut label = std::mem::take(&mut self.plain);
+        label.clear();
+        label.push_str(self.text_of(id));
+        let result = self.resolve_footnote_label(id, &label);
+        self.plain = label;
+        result
+    }
+
+    /// `resolve_footnote_reference` for reference `id` whose label is `label`.
+    fn resolve_footnote_label(&mut self, id: NodeId, label: &str) -> Result<(), Fail> {
         let flags = self.flags_of(id);
         let auto = flags.has(NodeFlag::Auto);
-        let label = self.text_of(id).to_owned();
         let target = if flags.has(NodeFlag::Symbol) {
             let Some(&t) = self.symbol_notes.get(self.symbol_used) else {
                 self.too_many(id, "symbol");
@@ -62,7 +80,7 @@ impl Resolver<'_, '_> {
             };
             t
         } else {
-            let name = if auto { label.get(1..).unwrap_or("") } else { label.as_str() };
+            let name = if auto { label.get(1..).unwrap_or("") } else { label };
             match self.footnote_named(name, auto) {
                 Some(t) => t,
                 None if !auto && self.footnote_elsewhere(id, name)? => return Ok(()),
@@ -82,8 +100,8 @@ impl Resolver<'_, '_> {
     }
 
     /// Finds a manually numbered footnote, or a labelled auto-numbered one.
-    fn footnote_named(&self, label: &str, auto: bool) -> Option<NodeId> {
-        let Some(Name::Record(idx)) = self.lookup(&fold_key(label)) else { return None };
+    fn footnote_named(&mut self, label: &str, auto: bool) -> Option<NodeId> {
+        let Some(Name::Record(idx)) = self.lookup_folded(label) else { return None };
         let rec = self.records[idx as usize];
         if rec.kind != RecordKind::Footnote {
             return None;
@@ -109,8 +127,11 @@ impl Resolver<'_, '_> {
     }
 
     pub fn resolve_citation_reference(&mut self, id: NodeId) -> Result<(), Fail> {
-        let key = fold_key(self.text_of(id));
-        let found = match self.lookup(&key) {
+        let mut key = self.key_buffer();
+        normalize_label(&mut key, self.text_of(id));
+        let name = self.lookup(&key);
+        self.key = key;
+        let found = match name {
             Some(Name::Record(idx)) if self.records[idx as usize].kind == RecordKind::Citation => {
                 Some(self.records[idx as usize].node)
             }
@@ -131,7 +152,7 @@ impl Resolver<'_, '_> {
     /// as reference names are shared by all targets; the reference keeps its label as
     /// its number.
     fn footnote_elsewhere(&mut self, id: NodeId, label: &str) -> Result<bool, Fail> {
-        let Some(Name::Record(idx)) = self.lookup(&fold_key(label)) else { return Ok(false) };
+        let Some(Name::Record(idx)) = self.lookup_folded(label) else { return Ok(false) };
         let Some(last) = self.resolve_record(idx)? else { return Ok(false) };
         let n = label
             .bytes()

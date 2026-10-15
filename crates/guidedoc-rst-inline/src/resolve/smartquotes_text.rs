@@ -13,18 +13,23 @@ impl Resolver<'_, '_> {
     pub fn educate_text(
         &mut self,
         id: NodeId,
-        qc: &mut QuoteContext,
+        qc: &mut QuoteContext<'_>,
         next: char,
     ) -> Result<(), Fail> {
-        let text = self.text_of(id).to_owned();
+        let text = self.text_of(id);
         if !text.bytes().any(|c| matches!(c, b'"' | b'\'' | b'-' | b'.')) {
             if let Some(last) = text.chars().next_back() {
                 qc.prev = last;
             }
             return Ok(());
         }
-        let escaped = self.mark_escapes(id, &text);
-        let mut out = String::with_capacity(text.len() + 8);
+        let mut text = std::mem::take(&mut self.plain);
+        text.clear();
+        text.push_str(self.text_of(id));
+        let mut escaped = std::mem::take(&mut self.escaped);
+        self.mark_escapes(id, &text, &mut escaped);
+        let mut out = std::mem::take(&mut self.key);
+        out.clear();
         let mut i = 0;
         while i < text.len() {
             let (_, w) = decode_rune(&text, i);
@@ -36,19 +41,21 @@ impl Resolver<'_, '_> {
             qc.prev = decode_last_rune(&text, i + n).0;
             i += n;
         }
-        let t = self.ctx.b.add_text(&out)?;
-        self.ctx.b.set_text(id, t);
+        let t = self.ctx.b.add_text(&out);
+        (self.plain, self.escaped, self.key) = (text, escaped, out);
+        self.ctx.b.set_text(id, t?);
         Ok(())
     }
 
     /// Finds the characters of a Text node that were escaped in the source: the node's
     /// source span and its text are walked together.
-    fn mark_escapes(&self, id: NodeId, text: &str) -> Vec<bool> {
-        let mut escaped = vec![false; text.len()];
+    fn mark_escapes(&self, id: NodeId, text: &str, escaped: &mut Vec<bool>) {
+        escaped.clear();
+        escaped.resize(text.len(), false);
         let sp = self.node_span(id);
         let source = self.ctx.source_of(sp.source);
         let Some(src) = source.as_bytes().get(sp.start as usize..sp.end as usize) else {
-            return escaped;
+            return;
         };
         let t = text.as_bytes();
         let (mut s, mut k) = (0, 0);
@@ -59,7 +66,7 @@ impl Resolver<'_, '_> {
                     continue;
                 }
                 if src[s + 1] != t[k] {
-                    return escaped;
+                    return;
                 }
                 escaped[k] = true;
                 s += 2;
@@ -67,12 +74,11 @@ impl Resolver<'_, '_> {
                 continue;
             }
             if src[s] != t[k] {
-                return escaped;
+                return;
             }
             s += 1;
             k += 1;
         }
-        escaped
     }
 }
 
@@ -83,7 +89,7 @@ fn educate_at(
     text: &str,
     i: usize,
     escaped: &[bool],
-    qc: &QuoteContext,
+    qc: &QuoteContext<'_>,
     next: char,
 ) -> usize {
     if escaped[i] {
@@ -100,7 +106,7 @@ fn educate_at(
         b'"' => {
             let pair = after == '\'' && is_letter_or_digit(third(text, i, next));
             let open = opens(before) || pair;
-            replace(out, &qc.quotes[if open { 0 } else { 1 }], 1)
+            replace(out, qc.quotes[if open { 0 } else { 1 }], 1)
         }
         b'\'' => {
             let apostrophe = (is_letter_or_digit(before) && is_letter_or_digit(after))
@@ -108,9 +114,9 @@ fn educate_at(
             let mark = if apostrophe {
                 APOSTROPHE
             } else if opens(before) || (before == '"' && is_letter_or_digit(after)) {
-                &qc.quotes[2]
+                qc.quotes[2]
             } else {
-                &qc.quotes[3]
+                qc.quotes[3]
             };
             replace(out, mark, 1)
         }

@@ -156,7 +156,7 @@ impl Parser<'_, '_> {
             }
             bullet = Some(&t[..w]);
             // As in a bullet list: text on the marker line fixes the item's indentation.
-            let blk = item_body(lines, pos, w + indent_of(&t[w..]));
+            let blk = item_body(lines, pos, w + indent_of(&t[w..]), Vec::new());
             let first = pos;
             pos += blk.consumed.max(1);
             out.push(BulletItem { lines: blk.lines, first, end: pos });

@@ -91,10 +91,26 @@ pub struct InlineState {
     pub(crate) buffers: scan::Buffers,
 }
 
+/// The inline parser's reusable storage, which a reader keeps in the workspace's
+/// scratch between reads: `InlineState::take_buffers` when a read ends, and
+/// `InlineState::with_buffers` when the next one starts.
+#[derive(Debug, Default)]
+pub struct InlineBuffers(scan::Buffers);
+
 impl InlineState {
     /// Makes a state for the main source with `options` and no custom roles.
     pub fn new(options: Options) -> InlineState {
         InlineState { options, ..InlineState::default() }
+    }
+
+    /// Makes a state like `new`, reusing the storage of an earlier read's state.
+    pub fn with_buffers(options: Options, buffers: InlineBuffers) -> InlineState {
+        InlineState { options, buffers: buffers.0, ..InlineState::default() }
+    }
+
+    /// Takes the state's storage, for a later read (`with_buffers`).
+    pub fn take_buffers(&mut self) -> InlineBuffers {
+        InlineBuffers(std::mem::take(&mut self.buffers))
     }
 
     /// Returns the index in `roles` of the role the document defined as `name`

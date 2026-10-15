@@ -111,11 +111,12 @@ impl Parser<'_, '_> {
             self.ctx.b.add_leaf(NodeKind::Comment, self.line_span(&lines[i]), Text::default())?;
             return Ok(1);
         }
-        let blk = indented_block(lines, i, Some(col), false, true);
+        let blk = indented_block(lines, i, Some(col), false, true, self.line_buf());
         let body = trim_blank_end(&blk.lines);
         let span = self.lines_span(&lines[i..i + blk.consumed.max(1)]);
         let text = self.pool_lines(body, "\n")?;
         self.ctx.b.add_leaf(NodeKind::Comment, span, text)?;
+        self.give_lines(blk.lines);
         Ok(blk.consumed.max(1))
     }
 
@@ -148,7 +149,7 @@ impl Parser<'_, '_> {
             return Ok(None);
         }
         let body_col = col + close_at + 1 + indent_of(&t[close_at + 1..]);
-        let blk = indented_block(lines, i, Some(body_col), false, true);
+        let blk = indented_block(lines, i, Some(body_col), false, true, self.line_buf());
         let span = self.lines_span(&lines[i..i + blk.consumed.max(1)]);
         let id = self.open(kind, span)?;
         let text = self.ctx.b.add_text(label)?;
@@ -159,6 +160,7 @@ impl Parser<'_, '_> {
         }
         self.parse_body(&blk.lines, false, None)?;
         self.close(id)?;
+        self.give_lines(blk.lines);
         Ok(Some(blk.consumed.max(1)))
     }
 
@@ -170,23 +172,28 @@ impl Parser<'_, '_> {
         i: usize,
         col: usize,
     ) -> Result<usize, Fail> {
-        let blk = indented_block(lines, i, Some(col + 1), true, false);
+        let blk = indented_block(lines, i, Some(col + 1), true, false, self.line_buf());
         let consumed = blk.consumed.max(1);
         let span = self.lines_span(&lines[i..i + consumed]);
         let mut ls = blk.lines;
+        let result = self.target_lines(&mut ls, span);
+        self.give_lines(ls);
+        result.map(|()| consumed)
+    }
+
+    /// Emits the target whose block (from its name on) is `ls`.
+    fn target_lines(&mut self, ls: &mut [Line<'_>], span: SourceSpan) -> Result<(), Fail> {
         let t = ls[0].text;
         if t.starts_with("_:") && (t.len() == 2 || t.as_bytes()[2] == b' ') {
             ls[0] = ls[0].cut(2);
-            self.emit_target("", true, &ls, span)?;
-            return Ok(consumed);
+            return self.emit_target("", true, ls, span);
         }
-        let Some((name, k, after)) = target_name(&ls) else {
+        let Some((name, k, after)) = target_name(ls) else {
             self.report_at(TARGET_MALFORMED, span);
-            return Ok(consumed);
+            return Ok(());
         };
         ls[k] = ls[k].cut(after);
-        self.emit_target(&name, false, &ls[k..], span)?;
-        Ok(consumed)
+        self.emit_target(&name, false, &ls[k..], span)
     }
 
     /// Reads an anonymous target ("__ link") at line `i`.
@@ -197,9 +204,10 @@ impl Parser<'_, '_> {
     ) -> Result<usize, Fail> {
         let t = lines[i].text;
         let col = 2 + indent_of(&t[2..]);
-        let blk = indented_block(lines, i, Some(col), true, true);
+        let blk = indented_block(lines, i, Some(col), true, true, self.line_buf());
         let span = self.lines_span(&lines[i..i + blk.consumed.max(1)]);
         self.emit_target("", true, &blk.lines, span)?;
+        self.give_lines(blk.lines);
         Ok(blk.consumed.max(1))
     }
 

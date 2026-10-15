@@ -82,12 +82,13 @@ impl Parser<'_, '_> {
 
     /// Reads an indented block at line `i` as block quotes.
     pub(crate) fn block_quote(&mut self, lines: &[Line<'_>], i: usize) -> Result<usize, Fail> {
-        let blk = indented_block(lines, i, None, false, true);
+        let blk = indented_block(lines, i, None, false, true, self.line_buf());
         self.emit_quotes(&blk.lines, "")?;
         let next = i + blk.consumed;
         if !blk.blank_finish && next < lines.len() {
             self.unindent_warning(&lines[next], "block quote");
         }
+        self.give_lines(blk.lines);
         Ok(blk.consumed.max(1))
     }
 

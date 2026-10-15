@@ -5,7 +5,7 @@ use guidedoc::{Fail, NodeFlags, NodeKind};
 use crate::lines::{Line, text_end};
 use crate::messages::INDENT_UNEXPECTED;
 use crate::parser::Parser;
-use crate::tables::{ColMap, TableExtra, is_grid_border, is_grid_head_border};
+use crate::tables::{ColMap, ColStorage, TableExtra, is_grid_border, is_grid_head_border};
 
 /// One cell: its corner rows and columns.
 #[derive(Debug, Clone, Copy)]
@@ -14,6 +14,21 @@ struct GridCell {
     left: usize,
     bottom: usize,
     right: usize,
+}
+
+/// A grid table's storage, kept for the next one (the reader's `grids` pool; a table
+/// nested in a cell takes another).
+#[derive(Debug, Default)]
+pub(crate) struct GridWork {
+    cols: ColStorage,
+    done: Vec<isize>,
+    corner: Vec<bool>,
+    cells: Vec<GridCell>,
+    row_marks: Vec<bool>,
+    col_marks: Vec<bool>,
+    row_rank: Vec<isize>,
+    col_rank: Vec<isize>,
+    widths: Vec<usize>,
 }
 
 /// A grid table being read.
@@ -30,50 +45,47 @@ struct Grid<'l, 's> {
     corner: Vec<bool>,
     cells: Vec<GridCell>,
     max_cells: usize,
+    /// The rest of the storage, for emitting.
+    work: GridWork,
 }
 
 /// Why a grid table is malformed.
 type Why = &'static str;
 
 impl<'l, 's> Grid<'l, 's> {
-    fn new(block: &'l [Line<'s>]) -> Result<Self, Why> {
-        let m = ColMap::new(block);
-        let rows = block.len();
-        if rows < 2 {
-            return Err("it has no rows");
-        }
-        let width = m.width(0);
-        let mut head = None;
-        let mut corners = 0;
-        for (r, l) in block.iter().enumerate() {
-            if m.width(r) != width {
-                return Err("the lines differ in width");
+    /// Checks the table's shape and prepares its storage from the pool; a malformed
+    /// table gives the storage back.
+    fn new(block: &'l [Line<'s>], pool: &mut Vec<GridWork>) -> Result<Self, Why> {
+        let mut work = pool.pop().unwrap_or_default();
+        let m = ColMap::reuse(block, std::mem::take(&mut work.cols));
+        match shape(&m) {
+            Ok((width, head, corners)) => {
+                let rows = block.len();
+                let mut done = std::mem::take(&mut work.done);
+                done.clear();
+                done.resize(width, -1);
+                let mut corner = std::mem::take(&mut work.corner);
+                corner.clear();
+                corner.resize(rows * width, false);
+                let mut cells = std::mem::take(&mut work.cells);
+                cells.clear();
+                let max_cells = corners + 1;
+                Ok(Grid { m, rows, width, head, done, corner, cells, max_cells, work })
             }
-            if !l.text.ends_with(['+', '|']) {
-                return Err("a line does not end at the right border");
+            Err(why) => {
+                work.cols = m.into_storage();
+                pool.push(work);
+                Err(why)
             }
-            if is_grid_head_border(l.text) {
-                if head.is_some() {
-                    return Err("it has more than one header separator");
-                }
-                head = Some(r);
-            }
-            corners += l.text.bytes().filter(|&c| c == b'+').count();
         }
-        if head == Some(0) || head == Some(rows - 1) {
-            return Err("the header separator is the first or last line");
-        }
-        let corner = vec![false; rows * width];
-        Ok(Grid {
-            m,
-            rows,
-            width,
-            head,
-            done: vec![-1; width],
-            corner,
-            cells: Vec::new(),
-            max_cells: corners + 1,
-        })
+    }
+
+    /// Returns the table's storage, for the next one.
+    fn into_work(self) -> GridWork {
+        let Grid { m, done, corner, cells, mut work, .. } = self;
+        work.cols = m.into_storage();
+        (work.done, work.corner, work.cells) = (done, corner, cells);
+        work
     }
 
     /// The border character at a line and column; the header separator reads as an
@@ -82,6 +94,38 @@ impl<'l, 's> Grid<'l, 's> {
         let ch = self.m.char_at(r, c);
         if Some(r) == self.head && ch == b'=' { b'-' } else { ch }
     }
+}
+
+/// Checks a grid table's lines: their width, the header separator's row, and the
+/// corners, which bound the cells.
+fn shape(m: &ColMap<'_, '_>) -> Result<(usize, Option<usize>, usize), Why> {
+    let block = m.lines;
+    let rows = block.len();
+    if rows < 2 {
+        return Err("it has no rows");
+    }
+    let width = m.width(0);
+    let mut head = None;
+    let mut corners = 0;
+    for (r, l) in block.iter().enumerate() {
+        if m.width(r) != width {
+            return Err("the lines differ in width");
+        }
+        if !l.text.ends_with(['+', '|']) {
+            return Err("a line does not end at the right border");
+        }
+        if is_grid_head_border(l.text) {
+            if head.is_some() {
+                return Err("it has more than one header separator");
+            }
+            head = Some(r);
+        }
+        corners += l.text.bytes().filter(|&c| c == b'+').count();
+    }
+    if head == Some(0) || head == Some(rows - 1) {
+        return Err("the header separator is the first or last line");
+    }
+    Ok((width, head, corners))
 }
 
 impl Parser<'_, '_> {
@@ -109,19 +153,23 @@ impl Parser<'_, '_> {
             };
             block = &block[..k + 1];
         }
-        let mut g = match Grid::new(block) {
+        let mut g = match Grid::new(block, &mut self.st.grids) {
             Ok(g) => g,
             Err(why) => {
                 self.malformed(block, why);
                 return Ok(block.len());
             }
         };
-        if let Err(why) = self.grid_parse(&mut g)? {
-            self.malformed(block, why);
-            return Ok(block.len());
-        }
-        self.grid_emit(&g, extra)?;
-        Ok(block.len())
+        let result = match self.grid_parse(&mut g) {
+            Ok(Ok(())) => self.grid_emit(&mut g, extra),
+            Ok(Err(why)) => {
+                self.malformed(block, why);
+                Ok(())
+            }
+            Err(fail) => Err(fail),
+        };
+        self.st.grids.push(g.into_work());
+        result.map(|()| block.len())
     }
 
     /// Finds every cell. Corners are visited in row-major order, which is the order in
@@ -217,19 +265,27 @@ impl Parser<'_, '_> {
         Ok(row_ok && g.at(bottom, left) == b'+' && col_ok)
     }
 
-    fn grid_emit(&mut self, g: &Grid<'_, '_>, extra: Option<&mut TableExtra>) -> Result<(), Fail> {
+    fn grid_emit(
+        &mut self,
+        g: &mut Grid<'_, '_>,
+        extra: Option<&mut TableExtra>,
+    ) -> Result<(), Fail> {
         // Row and column boundaries are the cell edges; their ranks give the spans.
-        let mut row_marks = vec![false; g.rows];
-        let mut col_marks = vec![false; g.width];
+        let w = &mut g.work;
+        refill(&mut w.row_marks, false, g.rows);
+        refill(&mut w.col_marks, false, g.width);
         for c in &g.cells {
-            row_marks[c.top] = true;
-            col_marks[c.left] = true;
+            w.row_marks[c.top] = true;
+            w.col_marks[c.left] = true;
         }
-        row_marks[g.rows - 1] = true;
-        col_marks[g.width - 1] = true;
-        let (col_rank, ncols) = rank(&col_marks);
-        let (row_rank, _) = rank(&row_marks);
-        let mut widths = Vec::with_capacity(ncols.saturating_sub(1));
+        w.row_marks[g.rows - 1] = true;
+        w.col_marks[g.width - 1] = true;
+        let ncols = rank(&w.col_marks, &mut w.col_rank);
+        rank(&w.row_marks, &mut w.row_rank);
+        let (row_rank, col_rank) =
+            (std::mem::take(&mut w.row_rank), std::mem::take(&mut w.col_rank));
+        let mut widths = std::mem::take(&mut w.widths);
+        widths.clear();
         let mut prev = 0;
         for c in 1..g.width {
             if col_rank[c] != col_rank[c - 1] {
@@ -238,10 +294,14 @@ impl Parser<'_, '_> {
             }
         }
         widths.truncate(ncols.saturating_sub(1));
-        let id =
-            self.begin_table(self.lines_span(g.m.lines), ncols.saturating_sub(1), &widths, extra)?;
-        self.grid_rows(g, &row_rank, &col_rank)?;
-        self.close(id)
+        let result = self
+            .begin_table(self.lines_span(g.m.lines), ncols.saturating_sub(1), &widths, extra)
+            .and_then(|id| {
+                self.grid_rows(g, &row_rank, &col_rank)?;
+                self.close(id)
+            });
+        (g.work.row_rank, g.work.col_rank, g.work.widths) = (row_rank, col_rank, widths);
+        result
     }
 
     fn grid_rows(
@@ -285,31 +345,35 @@ impl Parser<'_, '_> {
         row_rank: &[isize],
         col_rank: &[isize],
     ) -> Result<(), Fail> {
-        let mut body: Vec<Line<'_>> =
-            (c.top + 1..c.bottom).map(|r| g.m.part(r, c.left + 1, c.right)).collect();
+        let mut body = self.line_buf();
+        body.extend((c.top + 1..c.bottom).map(|r| g.m.part(r, c.left + 1, c.right)));
         let first = g.m.part(c.top, c.left, c.left + 1);
         let last = g.m.part(c.bottom, c.right, c.right + 1);
         let span = self.span_of(&first, &last);
         let rows = (row_rank[c.bottom] - row_rank[c.top]) as usize;
         let cols = (col_rank[c.right] - col_rank[c.left]) as usize;
-        self.cell(span, rows, cols, &mut body, false)
+        let result = self.cell(span, rows, cols, &mut body, false);
+        self.give_lines(body);
+        result
     }
 }
 
-/// Turns boundary marks into ranks: the boundaries before each index, plus one for a
-/// boundary at it, less one. Returns the ranks and the number of boundaries.
-fn rank(marks: &[bool]) -> (Vec<isize>, usize) {
+/// Makes `v` hold `n` copies of `value`, reusing its storage.
+fn refill<T: Clone>(v: &mut Vec<T>, value: T, n: usize) {
+    v.clear();
+    v.resize(n, value);
+}
+
+/// Turns boundary marks into `ranks`: the boundaries before each index, plus one for a
+/// boundary at it, less one. Returns the number of boundaries.
+fn rank(marks: &[bool], ranks: &mut Vec<isize>) -> usize {
     let mut n: isize = 0;
-    let ranks = marks
-        .iter()
-        .map(|&m| {
-            if m {
-                n += 1;
-                n - 1
-            } else {
-                n - 1
-            }
-        })
-        .collect();
-    (ranks, n as usize)
+    ranks.clear();
+    ranks.extend(marks.iter().map(|&m| {
+        if m {
+            n += 1;
+        }
+        n - 1
+    }));
+    n as usize
 }

@@ -11,6 +11,10 @@
 Publish documentation to GitHub Pages
 =====================================
 
+.. note::
+
+   GDS 0012, :doc:`0012-single-executable-release`, updates the executable boundary for 1.0.0-beta.1. The release links this publisher into ``guidedog`` and exposes ``guidedog publish pages`` and ``guidedog pages`` maintenance commands. References below to a separate program describe the earlier design.
+
 Abstract
 --------
 

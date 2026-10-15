@@ -248,7 +248,7 @@ pub fn inspect_entry(path: &str) -> Result<MachineEntry, Problem> {
             "The path is not absolute",
             "A registered program is named by its absolute path.",
         )
-        .hint("Give the program's full path, such as /usr/local/bin/guidedog-pages.")
+        .hint("Give the program's full path, such as /usr/local/bin/folder-publisher.")
         .path(path)
         .exit(2));
     }

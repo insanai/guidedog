@@ -22,7 +22,7 @@ impl TempDir {
         let dir = std::env::temp_dir().join(format!("gd-intl-{name}-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(&dir).unwrap();
-        TempDir(dir)
+        TempDir(dir.canonicalize().unwrap())
     }
 
     fn write(&self, rel: &str, text: &str) -> PathBuf {

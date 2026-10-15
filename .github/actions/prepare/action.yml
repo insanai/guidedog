@@ -76,3 +76,7 @@ runs:
           hashFiles('Cargo.lock', 'rust-toolchain.toml') }}
         restore-keys: |
           cargo-${{ runner.os }}-${{ runner.arch }}-${{ inputs.cache }}-
+
+    - name: Fetch locked dependencies for offline quality gates
+      shell: bash
+      run: cargo fetch --locked

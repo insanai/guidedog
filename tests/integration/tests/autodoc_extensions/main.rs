@@ -193,3 +193,13 @@ fn coverage_lists_what_the_documents_do_not_describe() {
     has(&report, " * Square -- missing methods:\n\n   - scale\n");
     assert!(root.exists("docs/_build/coverage/c.txt"));
 }
+
+#[test]
+fn autolink_refers_to_python_objects() {
+    let conf = "extensions = [\"sphinx.ext.autosummary\"]\nautodoc_source_paths = [\"../src\"]\n";
+    let index =
+        "Shapes\n======\n\nSee :autolink:`shapes.area`.\n\n.. autofunction:: shapes.area\n";
+    let (root, docs) = project("autolink", conf, index);
+    build(&docs, 0, &["html", "-W"]);
+    has(&root.read("docs/_build/html/index.html"), "href=\"#shapes.area\"");
+}

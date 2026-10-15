@@ -13,7 +13,7 @@ use gd_gettext::{
     Error, LoadOptions, MoCatalog, Translator, find_catalog_file, language_candidates, load_po,
     parse_po,
 };
-use guidedoc::{ENGLISH_LABELS, LABEL_COUNT, Label, Labels};
+use guidedoc::{ENGLISH_LABELS, Label, Labels};
 
 /// The text domain of Guidedog's own words.
 pub const UI_DOMAIN: &str = "guidedog";
@@ -31,46 +31,6 @@ const EMBEDDED: [(&str, &str); 7] = [
 
 /// The template of the domain: every msgid Guidedog looks up.
 pub const UI_TEMPLATE: &str = include_str!("../locale/guidedog.pot");
-
-/// Every renderer label, in declaration order (`guidedoc::Label` has no list of its own).
-const ALL_LABELS: [Label; LABEL_COUNT] = [
-    Label::Attention,
-    Label::Caution,
-    Label::Danger,
-    Label::Error,
-    Label::Hint,
-    Label::Important,
-    Label::Note,
-    Label::Tip,
-    Label::Warning,
-    Label::SeeAlso,
-    Label::Todo,
-    Label::Contents,
-    Label::VersionAdded,
-    Label::VersionChanged,
-    Label::VersionDeprecated,
-    Label::VersionRemoved,
-    Label::SectionAuthor,
-    Label::ModuleAuthor,
-    Label::CodeAuthor,
-    Label::LinkHeading,
-    Label::LinkDefinition,
-    Label::LinkImage,
-    Label::LinkTable,
-    Label::LinkCode,
-    Label::LinkEquation,
-    Label::LinkTerm,
-    Label::Parameters,
-    Label::Variables,
-    Label::Raises,
-    Label::Returns,
-    Label::ReturnType,
-    Label::ReturnValues,
-    Label::TemplateParameters,
-    Label::Throws,
-    Label::Arguments,
-    Label::Availability,
-];
 
 /// Returns the built-in catalog text for a language, trying it, then its base language
 /// (pt-BR, pt_BR, then pt); `None` when Guidedog has none. The text is static.
@@ -144,7 +104,7 @@ pub fn ui_text<'a>(tr: Option<&'a Translator>, msgid: &'a str) -> &'a str {
 /// Returns every renderer label translated, for `RenderOptions::labels`.
 pub fn fill_labels(tr: &Translator) -> Labels {
     let mut labels = Labels::default();
-    for label in ALL_LABELS {
+    for label in Label::ALL {
         labels.set(label, ui_text(Some(tr), ENGLISH_LABELS[label as usize]));
     }
     labels
@@ -154,13 +114,6 @@ pub fn fill_labels(tr: &Translator) -> Labels {
 mod tests {
     use super::*;
     use gd_gettext::Lookup;
-
-    #[test]
-    fn labels_are_listed_in_order() {
-        for (i, label) in ALL_LABELS.into_iter().enumerate() {
-            assert_eq!(label as usize, i);
-        }
-    }
 
     // Every built-in catalog parses and translates every msgid of the template.
     #[test]

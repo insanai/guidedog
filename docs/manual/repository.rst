@@ -162,12 +162,12 @@ use names or handles, not personal email addresses. Git identity settings are ma
 separately.
 
 Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max
-Brunsfeld, Graphviz, the Rust project, and Ginger Bill and the Odin community, in whose
-language Guidedog was first written.
+Brunsfeld, Graphviz, and the Rust project.
 
 Guidedog is released under the
-:download:`GNU Affero General Public License v3.0 or later <_static/repository/LICENSE>`
-(AGPL-3.0-or-later). For other licensing terms, contact the authors.
+:download:`GNU Lesser General Public License v3.0 or later <_static/repository/LICENSE>`
+(LGPL-3.0-or-later), which adds permissions to the
+:download:`GNU General Public License v3.0 <_static/repository/COPYING>`. For other licensing terms, contact the authors.
 :download:`NOTICE <_static/repository/NOTICE>` says how to reach them and lists the
 third-party components, such as the bundled fonts and the Rust crates compiled into the
 programs, that keep their own licenses.

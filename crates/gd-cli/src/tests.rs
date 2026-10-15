@@ -528,7 +528,7 @@ fn help_and_versions_are_printed() {
     assert!(out.starts_with(&format!("guidedog {VERSION}")) && out.contains("\ntypst "), "{out}");
     assert!(out.contains("graphviz"), "{out}");
     let (_, out, _) = run_captured(&["--licenses"], "");
-    assert!(out.contains("AGPL-3.0-or-later"), "{out}");
+    assert!(out.contains("LGPL-3.0-or-later"), "{out}");
 }
 
 #[test]

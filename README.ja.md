@@ -142,4 +142,4 @@ Guidedog 0.6 以前は Odin で書かれていました。バージョン 0.7 �
 
 Sphinx と Georg Brandl、Docutils と David Goodger、Typst、Tree-sitter と Max Brunsfeld、Graphviz、Rust プロジェクトとそのコミュニティ、そして Guidedog の最初の実装を支えた言語の作者 Ginger Bill と Odin コミュニティに感謝します。
 
-Guidedog は [GNU Affero General Public License v3.0 以降](LICENSE)（AGPL-3.0-or-later）で公開しています。別のライセンス条件をご希望の場合は、作者にご連絡ください。連絡方法と、Rust クレートや同梱フォントなど独自のライセンスが適用される第三者コンポーネントの一覧は [NOTICE](NOTICE) にあります。追加の許可により、Guidedog を Graphviz とリンクして配布できます。詳しくは [NOTICE](NOTICE) をご覧ください。
+Guidedog は [GNU Lesser General Public License v3.0 以降](LICENSE)（LGPL-3.0-or-later）で公開しています。LGPL は [GNU General Public License v3.0](COPYING) に追加の許可を加えたものです。別のライセンス条件をご希望の場合は、作者にご連絡ください。連絡方法と、Rust クレートや同梱フォントなど独自のライセンスが適用される第三者コンポーネントの一覧は [NOTICE](NOTICE) にあります。追加の許可により、Guidedog を Graphviz とリンクして配布できます。詳しくは [NOTICE](NOTICE) をご覧ください。

@@ -75,7 +75,7 @@ guidedog --version
 
 ## License
 
-Guidedog, `guidedog-pages`, and `graphdog` are released under the GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later), with an additional permission to link and distribute them with Graphviz; see `LICENSE` and `NOTICE`. For other licensing terms, contact the authors.
+Guidedog, `guidedog-pages`, and `graphdog` are released under the GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later), with an additional permission to link and distribute them with Graphviz; see `LICENSE`, `COPYING` and `NOTICE`. For other licensing terms, contact the authors.
 
 ## Credits
 

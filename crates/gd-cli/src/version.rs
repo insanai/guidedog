@@ -70,8 +70,8 @@ pub(crate) fn licenses_text() -> String {
     let third_party = NOTICE.find("Third-party components").map_or(NOTICE, |at| &NOTICE[at..]);
     format!(
         "guidedog {}\nCopyright (C) 2026 Vikrant Rathore, with assistance from Ronak Rathore and \
-         Kanak Rathore.\nReleased under the GNU Affero General Public License v3.0 or later \
-         (AGPL-3.0-or-later),\nwithout any warranty; see LICENSE and NOTICE in the source, at\n\
+         Kanak Rathore.\nReleased under the GNU Lesser General Public License v3.0 or later \
+         (LGPL-3.0-or-later),\nwithout any warranty; see LICENSE, COPYING and NOTICE in the source, at\n\
          https://github.com/insanai/guidedog. For other licensing terms, contact the \
          authors.\n\n{third_party}",
         full_version()
@@ -124,6 +124,6 @@ mod tests {
     #[test]
     fn the_licenses_name_the_components() {
         let text = licenses_text();
-        assert!(text.contains("AGPL-3.0-or-later") && text.contains("Typst"), "{text}");
+        assert!(text.contains("LGPL-3.0-or-later") && text.contains("Typst"), "{text}");
     }
 }

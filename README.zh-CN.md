@@ -142,4 +142,4 @@ Guidedog 0.6 及更早版本使用 Odin 编写。0.7 版本是移植到 Rust 的
 
 感谢 Sphinx 和 Georg Brandl、Docutils 和 David Goodger、Typst、Tree-sitter 和 Max Brunsfeld、Graphviz、Rust 项目及其社区，以及 Ginger Bill 和 Odin 社区——Guidedog 的第一个实现正是用 Odin 语言写成的。
 
-Guidedog 以 [GNU Affero 通用公共许可证 3.0 或更高版本](LICENSE)（AGPL-3.0-or-later）发布。如需其他许可条款，请联系作者。[NOTICE](NOTICE) 说明了联系方式，并列出保留各自许可证的第三方组件，例如 Rust crate 和捆绑字体。附加许可允许将 Guidedog 与 Graphviz 链接并一同分发，详见 [NOTICE](NOTICE)。
+Guidedog 以 [GNU 宽通用公共许可证 3.0 或更高版本](LICENSE)（LGPL-3.0-or-later）发布，该许可证在 [GNU 通用公共许可证 3.0](COPYING) 的基础上增加了额外许可。如需其他许可条款，请联系作者。[NOTICE](NOTICE) 说明了联系方式，并列出保留各自许可证的第三方组件，例如 Rust crate 和捆绑字体。附加许可允许将 Guidedog 与 Graphviz 链接并一同分发，详见 [NOTICE](NOTICE)。

@@ -69,4 +69,4 @@ The English build copies `_editions` into the site (`html_extra_path`), so build
 
 ## License and credits
 
-The manual and its templates are part of Guidedog, released under the **GNU Affero General Public License v3.0 or later** (AGPL-3.0-or-later); see [LICENSE](../../LICENSE) and [NOTICE](../../NOTICE). Created by Vikrant Rathore, with assistance from Ronak Rathore and Kanak Rathore. Bundled fonts are under the SIL Open Font License; see `docs/shared/fonts/` for licenses and provenance.
+The manual and its templates are part of Guidedog, released under the **GNU Lesser General Public License v3.0 or later** (LGPL-3.0-or-later); see [LICENSE](../../LICENSE), [COPYING](../../COPYING) and [NOTICE](../../NOTICE). Created by Vikrant Rathore, with assistance from Ronak Rathore and Kanak Rathore. Bundled fonts are under the SIL Open Font License; see `docs/shared/fonts/` for licenses and provenance.

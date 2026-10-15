@@ -43,7 +43,7 @@ OUT sets the output folder (default: dist). The working tree must be clean.
 const RELEASES: &str = "https://github.com/insanai/guidedog/releases/download";
 
 /// The files every archive carries beside its programs.
-const DOCUMENTS: [&str; 4] = ["README.md", "LICENSE", "NOTICE", "CHANGELOG.md"];
+const DOCUMENTS: [&str; 5] = ["README.md", "LICENSE", "COPYING", "NOTICE", "CHANGELOG.md"];
 
 /// One platform's package: its name, Rust target, and what it needs to run.
 #[derive(Debug, Clone, Copy)]

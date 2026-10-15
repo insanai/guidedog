@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-12 11:50+0800\n"
+"POT-Creation-Date: 2026-10-15 04:59+0000\n"
 "PO-Revision-Date: 2026-10-11 16:00+0800\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -32,12 +32,10 @@ msgstr "Escribe una vez. Explica bien. Publica en la web y en papel."
 #: ../../index.rst:14
 msgid ""
 "Guidedog builds a documentation website and a PDF book from the same "
-"reStructuredText or Markdown files. You write the text once; Guidedog "
+"reStructuredText or Markdown files. We write the text once. Guidedog "
 "keeps the two editions in step."
 msgstr ""
-"Guidedog crea un sitio web de documentación y un libro PDF a partir de "
-"los mismos archivos reStructuredText o Markdown. Escribes el texto una "
-"vez; Guidedog mantiene las dos ediciones al día."
+"Guidedog crea un sitio web de documentación y un libro PDF a partir de los mismos archivos reStructuredText o Markdown. Escribimos el texto una sola vez. Guidedog mantiene las dos ediciones sincronizadas."
 
 #: ../../index.rst:20
 msgid ""
@@ -62,11 +60,9 @@ msgstr "Qué hace"
 #: ../../index.rst:39
 msgid ""
 "**A website.** Pages with navigation, search, highlighted code, and light "
-"and dark themes, from Jinja templates you can change as much as you like."
+"and dark themes, from Jinja templates we can change as much as we like."
 msgstr ""
-"**Un sitio web.** Páginas con navegación, búsqueda, código resaltado y "
-"temas claro y oscuro, a partir de plantillas Jinja que puedes cambiar "
-"tanto como quieras."
+"**Un sitio web.** Páginas con navegación, búsqueda, código resaltado y temas claro y oscuro, a partir de plantillas Jinja que podemos cambiar tanto como queramos."
 
 #: ../../index.rst:41
 msgid ""
@@ -100,11 +96,9 @@ msgstr ""
 #: ../../index.rst:47
 msgid ""
 "**Diagrams, math, and API pages.** Graphviz diagrams, LaTeX equations, "
-"and Odin API reference read from source code."
+"and API reference for Rust, Python, and Odin, read from source code."
 msgstr ""
-"**Diagramas, matemáticas y páginas de API.** Diagramas de Graphviz, "
-"ecuaciones de LaTeX y referencia de la API de Odin leída del código "
-"fuente."
+"**Diagramas, matemáticas y páginas de API.** Diagramas de Graphviz, ecuaciones de LaTeX y referencia de API para Rust, Python y Odin, extraída del código fuente."
 
 #: ../../index.rst:49
 msgid ""
@@ -121,33 +115,27 @@ msgstr "Un solo programa"
 
 #: ../../index.rst:56
 msgid ""
-"Guidedog is a single binary. You do not need a Python environment, a "
-"LaTeX installation, or separate theme and extension packages. "
-"Configuration is a TOML file, and templates are plain files in your "
-"project that you can edit."
+"Guidedog is a single binary. We do not need a Python environment, a LaTeX "
+"installation, or separate theme and extension packages. Configuration is "
+"a TOML file. Templates are plain files in our project, and we can edit "
+"them."
 msgstr ""
-"Guidedog es un único binario. No necesitas un entorno de Python, una "
-"instalación de LaTeX ni paquetes aparte de temas o extensiones. La "
-"configuración es un archivo TOML, y las plantillas son archivos normales "
-"de tu proyecto que puedes editar."
+"Guidedog es un único binario. No necesitamos un entorno de Python, una instalación de LaTeX ni paquetes aparte de temas o extensiones. La configuración es un archivo TOML. Las plantillas son archivos normales de nuestro proyecto, y podemos editarlas."
 
 #: ../../index.rst:60
 msgid ""
-"Some things still come from outside. Guidedog can be built with Typst and "
-"Graphviz inside it; a build without them uses the ``typst`` and Graphviz "
-"programs installed on your system. On Linux and macOS it also uses a few "
-"system libraries, such as libcurl."
+"Some things still come from outside. The Typst compiler is built into "
+"Guidedog. A build without it uses the ``typst`` program installed on the "
+"system. Diagrams use the system's Graphviz library, and fetching remote "
+"inventories uses the ``curl`` program."
 msgstr ""
-"Algunas cosas siguen viniendo de fuera. Guidedog puede compilarse con "
-"Typst y Graphviz dentro; una compilación sin ellos usa los programas "
-"``typst`` y Graphviz instalados en tu sistema. En Linux y macOS también "
-"usa algunas bibliotecas del sistema, como libcurl."
+"Algunas cosas siguen viniendo de fuera. El compilador de Typst va integrado en Guidedog. Una compilación sin él usa el programa ``typst`` instalado en el sistema. Los diagramas usan la biblioteca Graphviz del sistema, y los inventarios remotos se descargan con el programa ``curl``."
 
-#: ../../index.rst:65
+#: ../../index.rst:66
 msgid "Write it, see both"
 msgstr "Escríbelo, mira ambos"
 
-#: ../../index.rst:68
+#: ../../index.rst:69
 msgid ""
 "On the left is reStructuredText. On the right is what Guidedog made of it "
 "on this page. The PDF builder sets the same lines as a book page."
@@ -156,11 +144,11 @@ msgstr ""
 "hizo con él en esta página. El constructor PDF compone las mismas líneas "
 "como una página de libro."
 
-#: ../../index.rst:73
+#: ../../index.rst:74
 msgid ""
 ".. note::\n"
 "\n"
-"   Guidedog reads your text once.\n"
+"   Guidedog reads our text once.\n"
 "\n"
 "The *same* files become a **website**\n"
 "and a **book**:\n"
@@ -177,7 +165,7 @@ msgid ""
 msgstr ""
 ".. note::\n"
 "\n"
-"   Guidedog lee tu texto una sola vez.\n"
+"   Guidedog lee nuestro texto una sola vez.\n"
 "\n"
 "Los *mismos* archivos se convierten en un **sitio web**\n"
 "y en un **libro**:\n"
@@ -192,40 +180,40 @@ msgstr ""
 "   * - ``pdf``\n"
 "     - Un libro PDF"
 
-#: ../../index.rst:96
-msgid "Guidedog reads your text once."
-msgstr "Guidedog lee tu texto una sola vez."
+#: ../../index.rst:97
+msgid "Guidedog reads our text once."
+msgstr "Guidedog lee nuestro texto una sola vez."
 
-#: ../../index.rst:98
+#: ../../index.rst:99
 msgid "The *same* files become a **website** and a **book**:"
 msgstr ""
 "Los *mismos* archivos se convierten en un **sitio web** y en un **libro**:"
 
-#: ../../index.rst:104
+#: ../../index.rst:105
 msgid "Builder"
 msgstr "Constructor"
 
-#: ../../index.rst:105
+#: ../../index.rst:106
 msgid "Result"
 msgstr "Resultado"
 
-#: ../../index.rst:106
-msgid "``html``"
-msgstr ""
-
 #: ../../index.rst:107
+msgid "``html``"
+msgstr "``html``"
+
+#: ../../index.rst:108
 msgid "A website"
 msgstr "Un sitio web"
 
-#: ../../index.rst:108
-msgid "``pdf``"
-msgstr ""
-
 #: ../../index.rst:109
+msgid "``pdf``"
+msgstr "``pdf``"
+
+#: ../../index.rst:110
 msgid "A PDF book"
 msgstr "Un libro PDF"
 
-#: ../../index.rst:113
+#: ../../index.rst:114
 msgid ""
 "The `manual as a PDF book <manual-pdf_>`_ is an example of the result on "
 "paper. It is built from the same files as the manual's website."
@@ -233,60 +221,58 @@ msgstr ""
 "El `manual como libro PDF <manual-pdf_>`_ es un ejemplo del resultado en "
 "papel. Se crea con los mismos archivos que el sitio web del manual."
 
-#: ../../index.rst:117
+#: ../../index.rst:118
 msgid "Get started"
 msgstr "Empezar"
 
-#: ../../index.rst:120
+#: ../../index.rst:121
 msgid ""
-"Download the archive for your system from the `latest release "
-"<download_>`_, put ``guidedog`` on your ``PATH``, and create a project:"
+"Download the archive for our system from the `latest release "
+"<download_>`_, put ``guidedog`` on the ``PATH``, and create a project:"
 msgstr ""
-"Descarga el archivo para tu sistema desde la `última versión "
-"<download_>`_, pon ``guidedog`` en tu ``PATH`` y crea un proyecto:"
+"Descargamos el archivo para nuestro sistema desde la `última versión <download_>`_, ponemos ``guidedog`` en el ``PATH`` y creamos un proyecto:"
 
-#: ../../index.rst:123
+#: ../../index.rst:124
 msgid ""
 "guidedog quickstart docs\n"
 "guidedog build html docs\n"
 "guidedog build pdf docs\n"
 "guidedog serve docs"
 msgstr ""
+"guidedog quickstart docs\n"
+"guidedog build html docs\n"
+"guidedog build pdf docs\n"
+"guidedog serve docs"
 
-#: ../../index.rst:130
+#: ../../index.rst:131
 msgid ""
-"``quickstart`` writes ``conf.toml``, ``index.rst``, and templates you can "
-"edit. ``serve`` rebuilds the site while you write. The `tutorial "
+"``quickstart`` writes ``conf.toml``, ``index.rst``, and templates we can "
+"edit. ``serve`` rebuilds the site while we write. The `tutorial "
 "<manual-tutorial_>`_ walks through a first project. To build Guidedog "
-"from source, install Odin and follow the `instructions in the repository "
+"from source, install Rust and follow the `instructions in the repository "
 "<build_>`_."
 msgstr ""
-"``quickstart`` escribe ``conf.toml``, ``index.rst`` y plantillas que "
-"puedes editar. ``serve`` vuelve a construir el sitio mientras escribes. "
-"El `tutorial <manual-tutorial_>`_ recorre un primer proyecto. Para "
-"compilar Guidedog desde el código fuente, instala Odin y sigue las "
-"`instrucciones del repositorio <build_>`_."
+"``quickstart`` escribe ``conf.toml``, ``index.rst`` y plantillas que podemos editar. ``serve`` reconstruye el sitio mientras escribimos. El `tutorial <manual-tutorial_>`_ recorre paso a paso un primer proyecto. Para compilar Guidedog desde el código fuente, instalamos Rust y seguimos las `instrucciones del repositorio <build_>`_."
 
-#: ../../index.rst:136
+#: ../../index.rst:137
 msgid "Design discussions"
 msgstr "Discusiones de diseño"
 
-#: ../../index.rst:139
+#: ../../index.rst:140
 msgid ""
 "Guidedog's design decisions are written down as numbered discussions: the "
-"problem, the alternatives, the decision, and the evidence. You can read "
+"problem, the alternatives, the decision, and the evidence. We can read "
 "each one on the web or download it as a PDF."
 msgstr ""
-"Las decisiones de diseño de Guidedog están escritas como discusiones "
-"numeradas: el problema, las alternativas, la decisión y las pruebas. "
-"Puedes leer cada una en la web o descargarla en PDF."
+"Las decisiones de diseño de Guidedog están escritas como discusiones numeradas: el problema, las alternativas, la decisión y las pruebas. Podemos leer cada una en la web o descargarla en PDF."
 
-#: ../../index.rst:143
+#: ../../index.rst:144
 msgid ""
-"Your project can keep its own discussions the same way, with ``dsc``, "
-"which comes with Guidedog. The `manual <manual-discussions_>`_ shows how."
-msgstr "Su proyecto puede llevar sus propias discusiones de la misma forma, con ``dsc``, que viene con Guidedog. El `manual <manual-discussions_>`_ explica cómo."
+"Our own project can keep its discussions the same way, with ``dsc``. It "
+"comes with Guidedog. The `manual <manual-discussions_>`_ shows how."
+msgstr ""
+"Nuestro propio proyecto puede llevar sus discusiones de la misma forma, con ``dsc``. Viene con Guidedog. El `manual <manual-discussions_>`_ explica cómo."
 
-#: ../../index.rst:148
+#: ../../index.rst:149
 msgid "`Read the discussions <discussions_>`_"
 msgstr "`Leer las discusiones <discussions_>`_"

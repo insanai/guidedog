@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-12 11:50+0800\n"
+"POT-Creation-Date: 2026-10-15 04:59+0000\n"
 "PO-Revision-Date: 2026-10-11 16:00+0800\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -30,11 +30,10 @@ msgstr "写一次，讲清楚，发布到网页，也印在纸上。"
 #: ../../index.rst:14
 msgid ""
 "Guidedog builds a documentation website and a PDF book from the same "
-"reStructuredText or Markdown files. You write the text once; Guidedog "
+"reStructuredText or Markdown files. We write the text once. Guidedog "
 "keeps the two editions in step."
 msgstr ""
-"Guidedog 用同一组 reStructuredText 或 Markdown 文件生成文档网站和 PDF 图书。文字只需写一次，两个版本由 "
-"Guidedog 保持一致。"
+"Guidedog 用同一组 reStructuredText 或 Markdown 文件生成文档网站和 PDF 图书。文字我们只写一次，两个版本由 Guidedog 保持同步。"
 
 #: ../../index.rst:20
 msgid ""
@@ -55,8 +54,8 @@ msgstr "它做什么"
 #: ../../index.rst:39
 msgid ""
 "**A website.** Pages with navigation, search, highlighted code, and light "
-"and dark themes, from Jinja templates you can change as much as you like."
-msgstr "**网站。** 页面带有导航、搜索、代码高亮以及浅色和深色主题，由可以随意修改的 Jinja 模板生成。"
+"and dark themes, from Jinja templates we can change as much as we like."
+msgstr "**网站。** 页面带有导航、搜索、代码高亮以及浅色和深色主题，由 Jinja 模板生成，这些模板我们可以随意修改。"
 
 #: ../../index.rst:41
 msgid ""
@@ -83,8 +82,9 @@ msgstr "**翻译。** 用 gettext 目录把项目译成其他语言。中文、�
 #: ../../index.rst:47
 msgid ""
 "**Diagrams, math, and API pages.** Graphviz diagrams, LaTeX equations, "
-"and Odin API reference read from source code."
-msgstr "**图表、公式与 API 页面。** Graphviz 图表、LaTeX 公式，以及从源代码读取的 Odin API 参考。"
+"and API reference for Rust, Python, and Odin, read from source code."
+msgstr ""
+"**图表、公式与 API 页面。** Graphviz 图表、LaTeX 公式，以及从源代码读取的 Rust、Python 和 Odin API 参考。"
 
 #: ../../index.rst:49
 msgid ""
@@ -98,39 +98,37 @@ msgstr "一个程序"
 
 #: ../../index.rst:56
 msgid ""
-"Guidedog is a single binary. You do not need a Python environment, a "
-"LaTeX installation, or separate theme and extension packages. "
-"Configuration is a TOML file, and templates are plain files in your "
-"project that you can edit."
+"Guidedog is a single binary. We do not need a Python environment, a LaTeX "
+"installation, or separate theme and extension packages. Configuration is "
+"a TOML file. Templates are plain files in our project, and we can edit "
+"them."
 msgstr ""
-"Guidedog 是一个单独的可执行文件。不需要 Python 环境，不需要安装 LaTeX，也不需要另装主题或扩展包。配置是一个 TOML "
-"文件，模板是项目里可以直接编辑的普通文件。"
+"Guidedog 是一个单独的可执行文件。我们不需要 Python 环境，不需要安装 LaTeX，也不需要另装主题或扩展包。配置是一个 TOML 文件。模板是项目里的普通文件，我们可以直接编辑。"
 
 #: ../../index.rst:60
 msgid ""
-"Some things still come from outside. Guidedog can be built with Typst and "
-"Graphviz inside it; a build without them uses the ``typst`` and Graphviz "
-"programs installed on your system. On Linux and macOS it also uses a few "
-"system libraries, such as libcurl."
+"Some things still come from outside. The Typst compiler is built into "
+"Guidedog. A build without it uses the ``typst`` program installed on the "
+"system. Diagrams use the system's Graphviz library, and fetching remote "
+"inventories uses the ``curl`` program."
 msgstr ""
-"有些东西仍然来自外部。Guidedog 可以在构建时内置 Typst 和 Graphviz；未内置时，它使用系统中安装的 ``typst`` 和 "
-"Graphviz 程序。在 Linux 和 macOS 上，它还会用到几个系统库，例如 libcurl。"
+"有些东西仍然来自外部。Typst 编译器内置在 Guidedog 中；不带它构建的版本会使用系统中安装的 ``typst`` 程序。图表使用系统的 Graphviz 库，获取远程清单则使用 ``curl`` 程序。"
 
-#: ../../index.rst:65
+#: ../../index.rst:66
 msgid "Write it, see both"
 msgstr "写一次，看两种结果"
 
-#: ../../index.rst:68
+#: ../../index.rst:69
 msgid ""
 "On the left is reStructuredText. On the right is what Guidedog made of it "
 "on this page. The PDF builder sets the same lines as a book page."
 msgstr "左边是 reStructuredText，右边是 Guidedog 在本页上用它生成的结果。PDF 构建器会把同样的内容排成书页。"
 
-#: ../../index.rst:73
+#: ../../index.rst:74
 msgid ""
 ".. note::\n"
 "\n"
-"   Guidedog reads your text once.\n"
+"   Guidedog reads our text once.\n"
 "\n"
 "The *same* files become a **website**\n"
 "and a **book**:\n"
@@ -147,7 +145,7 @@ msgid ""
 msgstr ""
 ".. note::\n"
 "\n"
-"   Guidedog 只读一次你的文字。\n"
+"   Guidedog 只读取一次我们写的文字。\n"
 "\n"
 "*同一组* 文件既成为 **网站**\n"
 "也成为 **图书**：\n"
@@ -162,92 +160,95 @@ msgstr ""
 "   * - ``pdf``\n"
 "     - PDF 图书"
 
-#: ../../index.rst:96
-msgid "Guidedog reads your text once."
-msgstr "Guidedog 只读一次你的文字。"
+#: ../../index.rst:97
+msgid "Guidedog reads our text once."
+msgstr "Guidedog 只读取一次我们写的文字。"
 
-#: ../../index.rst:98
+#: ../../index.rst:99
 msgid "The *same* files become a **website** and a **book**:"
 msgstr "*同一组* 文件既成为 **网站** 也成为 **图书**："
 
-#: ../../index.rst:104
+#: ../../index.rst:105
 msgid "Builder"
 msgstr "构建器"
 
-#: ../../index.rst:105
+#: ../../index.rst:106
 msgid "Result"
 msgstr "结果"
 
-#: ../../index.rst:106
-msgid "``html``"
-msgstr ""
-
 #: ../../index.rst:107
+msgid "``html``"
+msgstr "``html``"
+
+#: ../../index.rst:108
 msgid "A website"
 msgstr "网站"
 
-#: ../../index.rst:108
-msgid "``pdf``"
-msgstr ""
-
 #: ../../index.rst:109
+msgid "``pdf``"
+msgstr "``pdf``"
+
+#: ../../index.rst:110
 msgid "A PDF book"
 msgstr "PDF 图书"
 
-#: ../../index.rst:113
+#: ../../index.rst:114
 msgid ""
 "The `manual as a PDF book <manual-pdf_>`_ is an example of the result on "
 "paper. It is built from the same files as the manual's website."
 msgstr "`PDF 版手册 <manual-pdf_>`_ 就是纸面效果的一个例子。它和手册网站来自同一组文件。"
 
-#: ../../index.rst:117
+#: ../../index.rst:118
 msgid "Get started"
 msgstr "开始使用"
 
-#: ../../index.rst:120
+#: ../../index.rst:121
 msgid ""
-"Download the archive for your system from the `latest release "
-"<download_>`_, put ``guidedog`` on your ``PATH``, and create a project:"
+"Download the archive for our system from the `latest release "
+"<download_>`_, put ``guidedog`` on the ``PATH``, and create a project:"
 msgstr ""
-"从 `最新发布版本 <download_>`_ 下载适合你系统的压缩包，把 ``guidedog`` 放到 ``PATH`` 中，然后创建一个项目："
+"从 `最新发布版本 <download_>`_ 下载对应系统的压缩包，把 ``guidedog`` 放到 ``PATH`` 中，然后创建一个项目："
 
-#: ../../index.rst:123
+#: ../../index.rst:124
 msgid ""
 "guidedog quickstart docs\n"
 "guidedog build html docs\n"
 "guidedog build pdf docs\n"
 "guidedog serve docs"
 msgstr ""
+"guidedog quickstart docs\n"
+"guidedog build html docs\n"
+"guidedog build pdf docs\n"
+"guidedog serve docs"
 
-#: ../../index.rst:130
+#: ../../index.rst:131
 msgid ""
-"``quickstart`` writes ``conf.toml``, ``index.rst``, and templates you can "
-"edit. ``serve`` rebuilds the site while you write. The `tutorial "
+"``quickstart`` writes ``conf.toml``, ``index.rst``, and templates we can "
+"edit. ``serve`` rebuilds the site while we write. The `tutorial "
 "<manual-tutorial_>`_ walks through a first project. To build Guidedog "
-"from source, install Odin and follow the `instructions in the repository "
+"from source, install Rust and follow the `instructions in the repository "
 "<build_>`_."
 msgstr ""
-"``quickstart`` 会写出 ``conf.toml``、``index.rst`` 和可以编辑的模板。``serve`` "
-"会在你写作时重新构建网站。 `教程 <manual-tutorial_>`_ 带你完成第一个项目。要从源代码构建 Guidedog，请安装 "
-"Odin，并按照 `仓库中的说明 <build_>`_ 操作。"
+"``quickstart`` 会写出 ``conf.toml``、``index.rst`` 和可以编辑的模板。``serve`` 会在我们写作时重新构建网站。 `教程 <manual-tutorial_>`_ 带我们完成第一个项目。要从源代码构建 Guidedog，请安装 Rust，并按照 `仓库中的说明 <build_>`_ 操作。"
 
-#: ../../index.rst:136
+#: ../../index.rst:137
 msgid "Design discussions"
 msgstr "设计讨论"
 
-#: ../../index.rst:139
+#: ../../index.rst:140
 msgid ""
 "Guidedog's design decisions are written down as numbered discussions: the "
-"problem, the alternatives, the decision, and the evidence. You can read "
+"problem, the alternatives, the decision, and the evidence. We can read "
 "each one on the web or download it as a PDF."
-msgstr "Guidedog 的设计决定都写成了编号的讨论记录：问题、备选方案、决定和依据。每一篇都可以在网页上阅读，也可以下载 PDF。"
+msgstr "Guidedog 的设计决定都写成了编号的讨论记录：问题、备选方案、决定和依据。每一篇我们都可以在网页上阅读，也可以下载 PDF。"
 
-#: ../../index.rst:143
+#: ../../index.rst:144
 msgid ""
-"Your project can keep its own discussions the same way, with ``dsc``, "
-"which comes with Guidedog. The `manual <manual-discussions_>`_ shows how."
-msgstr "你的项目也可以用同样的方式记录自己的讨论，使用随 Guidedog 一起提供的 ``dsc``。 `手册 <manual-discussions_>`_ 介绍了做法。"
+"Our own project can keep its discussions the same way, with ``dsc``. It "
+"comes with Guidedog. The `manual <manual-discussions_>`_ shows how."
+msgstr ""
+"我们自己的项目也可以用同样的方式记录讨论，工具是 ``dsc``。它随 Guidedog 一起提供。 `手册 <manual-discussions_>`_ 介绍了做法。"
 
-#: ../../index.rst:148
+#: ../../index.rst:149
 msgid "`Read the discussions <discussions_>`_"
 msgstr "`阅读设计讨论 <discussions_>`_"

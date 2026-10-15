@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-12 11:50+0800\n"
+"POT-Creation-Date: 2026-10-15 04:59+0000\n"
 "PO-Revision-Date: 2026-10-11 16:00+0800\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -30,11 +30,10 @@ msgstr "한 번 쓰고, 잘 설명하고, 웹과 종이에 펴냅니다."
 #: ../../index.rst:14
 msgid ""
 "Guidedog builds a documentation website and a PDF book from the same "
-"reStructuredText or Markdown files. You write the text once; Guidedog "
+"reStructuredText or Markdown files. We write the text once. Guidedog "
 "keeps the two editions in step."
 msgstr ""
-"Guidedog는 같은 reStructuredText 또는 Markdown 파일로 문서 웹사이트와 PDF 책을 만듭니다. 글은 한 "
-"번만 쓰면 되고, 두 판의 내용은 Guidedog가 맞춰 줍니다."
+"Guidedog는 같은 reStructuredText 또는 Markdown 파일로 문서 웹사이트와 PDF 책을 만듭니다. 글은 한 번만 쓰면 됩니다. 두 판의 내용은 Guidedog가 늘 맞춰 줍니다."
 
 #: ../../index.rst:20
 msgid ""
@@ -55,10 +54,9 @@ msgstr "하는 일"
 #: ../../index.rst:39
 msgid ""
 "**A website.** Pages with navigation, search, highlighted code, and light "
-"and dark themes, from Jinja templates you can change as much as you like."
+"and dark themes, from Jinja templates we can change as much as we like."
 msgstr ""
-"**웹사이트.** 탐색, 검색, 코드 강조, 밝은 테마와 어두운 테마를 갖춘 페이지를, 마음대로 고칠 수 있는 Jinja 템플릿으로 "
-"만듭니다."
+"**웹사이트.** 탐색, 검색, 코드 강조, 밝은 테마와 어두운 테마를 갖춘 페이지를 Jinja 템플릿으로 만듭니다. 템플릿은 원하는 만큼 고칠 수 있습니다."
 
 #: ../../index.rst:41
 msgid ""
@@ -87,8 +85,9 @@ msgstr ""
 #: ../../index.rst:47
 msgid ""
 "**Diagrams, math, and API pages.** Graphviz diagrams, LaTeX equations, "
-"and Odin API reference read from source code."
-msgstr "**도표, 수식, API 페이지.** Graphviz 도표, LaTeX 수식, 소스 코드에서 읽은 Odin API 참조."
+"and API reference for Rust, Python, and Odin, read from source code."
+msgstr ""
+"**도표, 수식, API 페이지.** Graphviz 도표, LaTeX 수식, 소스 코드에서 읽어 낸 Rust, Python, Odin API 참조."
 
 #: ../../index.rst:49
 msgid ""
@@ -104,30 +103,27 @@ msgstr "하나의 프로그램"
 
 #: ../../index.rst:56
 msgid ""
-"Guidedog is a single binary. You do not need a Python environment, a "
-"LaTeX installation, or separate theme and extension packages. "
-"Configuration is a TOML file, and templates are plain files in your "
-"project that you can edit."
+"Guidedog is a single binary. We do not need a Python environment, a LaTeX "
+"installation, or separate theme and extension packages. Configuration is "
+"a TOML file. Templates are plain files in our project, and we can edit "
+"them."
 msgstr ""
-"Guidedog는 실행 파일 하나입니다. Python 환경도, LaTeX 설치도, 따로 설치하는 테마나 확장 패키지도 필요 "
-"없습니다. 설정은 TOML 파일 하나이고, 템플릿은 프로젝트 안에 있는 고칠 수 있는 평범한 파일입니다."
+"Guidedog는 실행 파일 하나입니다. Python 환경도, LaTeX 설치도, 따로 설치하는 테마나 확장 패키지도 필요 없습니다. 설정은 TOML 파일 하나입니다. 템플릿은 프로젝트 안에 있는 평범한 파일이라 바로 고칠 수 있습니다."
 
 #: ../../index.rst:60
 msgid ""
-"Some things still come from outside. Guidedog can be built with Typst and "
-"Graphviz inside it; a build without them uses the ``typst`` and Graphviz "
-"programs installed on your system. On Linux and macOS it also uses a few "
-"system libraries, such as libcurl."
+"Some things still come from outside. The Typst compiler is built into "
+"Guidedog. A build without it uses the ``typst`` program installed on the "
+"system. Diagrams use the system's Graphviz library, and fetching remote "
+"inventories uses the ``curl`` program."
 msgstr ""
-"아직 바깥에서 가져오는 것도 있습니다. Guidedog는 Typst와 Graphviz를 안에 넣어 빌드할 수 있고, 넣지 않은 "
-"빌드는 시스템에 설치된 ``typst`` 와 Graphviz 프로그램을 씁니다. Linux와 macOS에서는 libcurl 같은 "
-"시스템 라이브러리도 몇 가지 씁니다."
+"아직 바깥에서 가져오는 것도 있습니다. Typst 컴파일러는 Guidedog에 들어 있습니다. 컴파일러 없이 빌드한 Guidedog는 시스템에 설치된 ``typst`` 프로그램을 씁니다. 도표는 시스템의 Graphviz 라이브러리를 쓰고, 원격 인벤토리는 ``curl`` 프로그램으로 가져옵니다."
 
-#: ../../index.rst:65
+#: ../../index.rst:66
 msgid "Write it, see both"
 msgstr "한 번 쓰고, 둘 다 보기"
 
-#: ../../index.rst:68
+#: ../../index.rst:69
 msgid ""
 "On the left is reStructuredText. On the right is what Guidedog made of it "
 "on this page. The PDF builder sets the same lines as a book page."
@@ -135,11 +131,11 @@ msgstr ""
 "왼쪽은 reStructuredText이고, 오른쪽은 Guidedog가 그것으로 이 페이지에 만든 결과입니다. PDF 빌더는 같은 "
 "내용을 책 페이지로 조판합니다."
 
-#: ../../index.rst:73
+#: ../../index.rst:74
 msgid ""
 ".. note::\n"
 "\n"
-"   Guidedog reads your text once.\n"
+"   Guidedog reads our text once.\n"
 "\n"
 "The *same* files become a **website**\n"
 "and a **book**:\n"
@@ -171,39 +167,39 @@ msgstr ""
 "   * - ``pdf``\n"
 "     - PDF 책"
 
-#: ../../index.rst:96
-msgid "Guidedog reads your text once."
+#: ../../index.rst:97
+msgid "Guidedog reads our text once."
 msgstr "Guidedog는 글을 한 번만 읽습니다."
 
-#: ../../index.rst:98
+#: ../../index.rst:99
 msgid "The *same* files become a **website** and a **book**:"
 msgstr "*같은* 파일이 **웹사이트** 도 되고 **책** 도 됩니다."
 
-#: ../../index.rst:104
+#: ../../index.rst:105
 msgid "Builder"
 msgstr "빌더"
 
-#: ../../index.rst:105
+#: ../../index.rst:106
 msgid "Result"
 msgstr "결과"
 
-#: ../../index.rst:106
-msgid "``html``"
-msgstr ""
-
 #: ../../index.rst:107
+msgid "``html``"
+msgstr "``html``"
+
+#: ../../index.rst:108
 msgid "A website"
 msgstr "웹사이트"
 
-#: ../../index.rst:108
-msgid "``pdf``"
-msgstr ""
-
 #: ../../index.rst:109
+msgid "``pdf``"
+msgstr "``pdf``"
+
+#: ../../index.rst:110
 msgid "A PDF book"
 msgstr "PDF 책"
 
-#: ../../index.rst:113
+#: ../../index.rst:114
 msgid ""
 "The `manual as a PDF book <manual-pdf_>`_ is an example of the result on "
 "paper. It is built from the same files as the manual's website."
@@ -211,58 +207,58 @@ msgstr ""
 "`PDF 책으로 만든 설명서 <manual-pdf_>`_ 가 종이에서의 결과를 보여 주는 예입니다. 설명서 웹사이트와 같은 파일로 "
 "만들었습니다."
 
-#: ../../index.rst:117
+#: ../../index.rst:118
 msgid "Get started"
 msgstr "시작하기"
 
-#: ../../index.rst:120
+#: ../../index.rst:121
 msgid ""
-"Download the archive for your system from the `latest release "
-"<download_>`_, put ``guidedog`` on your ``PATH``, and create a project:"
+"Download the archive for our system from the `latest release "
+"<download_>`_, put ``guidedog`` on the ``PATH``, and create a project:"
 msgstr ""
-"`최신 릴리스 <download_>`_ 에서 시스템에 맞는 압축 파일을 내려받아 ``guidedog`` 를 ``PATH`` 에 "
-"두고, 프로젝트를 만듭니다."
+"`최신 릴리스 <download_>`_ 에서 사용하는 시스템에 맞는 압축 파일을 내려받아 ``guidedog`` 를 ``PATH`` 에 두고, 프로젝트를 만듭니다."
 
-#: ../../index.rst:123
+#: ../../index.rst:124
 msgid ""
 "guidedog quickstart docs\n"
 "guidedog build html docs\n"
 "guidedog build pdf docs\n"
 "guidedog serve docs"
 msgstr ""
+"guidedog quickstart docs\n"
+"guidedog build html docs\n"
+"guidedog build pdf docs\n"
+"guidedog serve docs"
 
-#: ../../index.rst:130
+#: ../../index.rst:131
 msgid ""
-"``quickstart`` writes ``conf.toml``, ``index.rst``, and templates you can "
-"edit. ``serve`` rebuilds the site while you write. The `tutorial "
+"``quickstart`` writes ``conf.toml``, ``index.rst``, and templates we can "
+"edit. ``serve`` rebuilds the site while we write. The `tutorial "
 "<manual-tutorial_>`_ walks through a first project. To build Guidedog "
-"from source, install Odin and follow the `instructions in the repository "
+"from source, install Rust and follow the `instructions in the repository "
 "<build_>`_."
 msgstr ""
-"``quickstart`` 는 ``conf.toml``, ``index.rst``, 고칠 수 있는 템플릿을 만듭니다. "
-"``serve`` 는 글을 쓰는 동안 사이트를 다시 빌드합니다. `튜토리얼 <manual-tutorial_>`_ 에서 첫 프로젝트를 "
-"차례로 따라 할 수 있습니다. Guidedog를 소스에서 빌드하려면 Odin을 설치하고 `저장소의 안내 <build_>`_ 를 "
-"따르세요."
+"``quickstart`` 는 ``conf.toml``, ``index.rst``, 고칠 수 있는 템플릿을 만듭니다. ``serve`` 는 글을 쓰는 동안 사이트를 다시 빌드합니다. `튜토리얼 <manual-tutorial_>`_ 에서 첫 프로젝트를 차례로 따라 할 수 있습니다. Guidedog를 소스에서 빌드하려면 Rust를 설치하고 `저장소의 안내 <build_>`_ 를 따르세요."
 
-#: ../../index.rst:136
+#: ../../index.rst:137
 msgid "Design discussions"
 msgstr "설계 논의"
 
-#: ../../index.rst:139
+#: ../../index.rst:140
 msgid ""
 "Guidedog's design decisions are written down as numbered discussions: the "
-"problem, the alternatives, the decision, and the evidence. You can read "
+"problem, the alternatives, the decision, and the evidence. We can read "
 "each one on the web or download it as a PDF."
 msgstr ""
-"Guidedog의 설계 결정은 번호가 붙은 논의로 기록합니다. 문제, 대안, 결정, 근거를 담습니다. 각 논의는 웹에서 읽거나 "
-"PDF로 내려받을 수 있습니다."
+"Guidedog의 설계 결정은 번호가 붙은 논의로 기록합니다. 문제, 대안, 결정, 근거를 담습니다. 각 논의는 웹에서 읽거나 PDF로 내려받을 수 있습니다."
 
-#: ../../index.rst:143
+#: ../../index.rst:144
 msgid ""
-"Your project can keep its own discussions the same way, with ``dsc``, "
-"which comes with Guidedog. The `manual <manual-discussions_>`_ shows how."
-msgstr "여러분의 프로젝트도 Guidedog와 함께 제공되는 ``dsc``\\ 로 같은 방식으로 자체 논의를 기록할 수 있습니다. 방법은 `매뉴얼 <manual-discussions_>`_ 에 있습니다."
+"Our own project can keep its discussions the same way, with ``dsc``. It "
+"comes with Guidedog. The `manual <manual-discussions_>`_ shows how."
+msgstr ""
+"우리 프로젝트도 ``dsc``\\ 로 같은 방식으로 논의를 기록할 수 있습니다. ``dsc``\\ 는 Guidedog와 함께 제공됩니다. 방법은 `매뉴얼 <manual-discussions_>`_ 에 있습니다."
 
-#: ../../index.rst:148
+#: ../../index.rst:149
 msgid "`Read the discussions <discussions_>`_"
 msgstr "`논의 읽기 <discussions_>`_"

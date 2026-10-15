@@ -732,6 +732,8 @@ dependencies = [
  "guidedoc-commonmark",
  "guidedoc-html",
  "guidedoc-rst",
+ "guidedoc-text",
+ "guidedoc-typst",
 ]
 
 [[package]]
@@ -986,6 +988,10 @@ version = "0.7.0"
 [[package]]
 name = "guidedog-pages-cmd"
 version = "0.7.0"
+dependencies = [
+ "gd-pages",
+ "gd-plugins",
+]
 
 [[package]]
 name = "guillotiere"

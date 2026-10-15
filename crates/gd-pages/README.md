@@ -67,7 +67,6 @@ unknown (run `recover`), 130 cancelled.
   custom "Try:" layout.
 - **Arenas, `release_*` and memory-refusal checks** are gone with Odin's allocators.
 - **Not ported:** the crash reporter (it lives in `gd-host`, which links the engine and
-  Typst; `guidedog-pages` stays small). Known gap: `gd-fetch` runs `curl` and passes
-  headers as arguments, so while a request runs the token is in curl's command line,
-  which other local users can read unless `/proc` is mounted with `hidepid` (Odin used
-  libcurl in-process). The fix belongs in `gd-fetch` (headers through `curl --config -`).
+  Typst; `guidedog-pages` stays small). Tokens never appear on a command line: `gd-fetch`
+  hands curl its headers in a private file (`--header @file`, mode 0600, removed after
+  the request).

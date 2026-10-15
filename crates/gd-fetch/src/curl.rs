@@ -10,10 +10,10 @@ use std::borrow::Cow;
 use std::ffi::OsString;
 use std::fs::File;
 use std::io::{self, Read, Write};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Stdio};
 use std::sync::Arc;
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::thread;
 use std::time::Duration;
 
@@ -95,14 +95,19 @@ pub(crate) fn send_url(r: &Request, options: &Options) -> Response {
     };
     let mut args = base_args(options);
     args.extend(["--dump-header".into(), "-".into(), "--header".into(), "Expect:".into()]);
-    for h in &r.headers {
-        // "Name:" would remove the header in curl; "Name;" sends it empty.
-        let line = if h.value.is_empty() {
-            format!("{};", h.name)
-        } else {
-            format!("{}: {}", h.name, h.value)
-        };
-        args.extend(["--header".into(), line.into()]);
+    // Headers often carry credentials, and a command line is visible to other local users,
+    // so they travel in a private file instead (stdin already carries the body).
+    let header_file = match HeaderFile::write(&r.headers) {
+        Ok(file) => file,
+        Err(e) => {
+            let detail = format!("The request's headers could not be staged: {e}.");
+            return Response::failure(ErrorKind::Network, &r.url, detail);
+        }
+    };
+    if let Some(file) = &header_file {
+        let mut arg = OsString::from("@");
+        arg.push(file.path.as_os_str());
+        args.extend(["--header".into(), arg]);
     }
     if !r.method.is_bodyless() {
         args.extend(["--data-binary".into(), "@-".into()]);
@@ -118,6 +123,55 @@ pub(crate) fn send_url(r: &Request, options: &Options) -> Response {
         Ok(run) => response_of(run, &r.url, options.max_bytes),
         Err(e) => Response { error: Some(e), ..Response::default() },
     }
+}
+
+/// A file holding a request's header lines, readable only by the current user, removed
+/// when dropped. curl reads it through `--header @path`.
+struct HeaderFile {
+    path: PathBuf,
+}
+
+impl HeaderFile {
+    /// Writes `headers` one per line; `None` when there are none.
+    fn write(headers: &[Header]) -> io::Result<Option<HeaderFile>> {
+        if headers.is_empty() {
+            return Ok(None);
+        }
+        static NEXT: AtomicU64 = AtomicU64::new(0);
+        let n = NEXT.fetch_add(1, Ordering::Relaxed);
+        let name = format!("gd-fetch-{}-{n}.headers", std::process::id());
+        let file = HeaderFile { path: std::env::temp_dir().join(name) };
+        let mut out = private_file(&file.path)?;
+        for h in headers {
+            // "Name:" would remove the header in curl; "Name;" sends it empty.
+            if h.value.is_empty() {
+                writeln!(out, "{};", h.name)?;
+            } else {
+                writeln!(out, "{}: {}", h.name, h.value)?;
+            }
+        }
+        out.flush()?;
+        Ok(Some(file))
+    }
+}
+
+impl Drop for HeaderFile {
+    fn drop(&mut self) {
+        // Nothing useful can be done when removal fails; the name is unique per request.
+        let _ = std::fs::remove_file(&self.path);
+    }
+}
+
+/// Creates a new file that only the current user may read or write.
+fn private_file(path: &Path) -> io::Result<File> {
+    let mut options = std::fs::OpenOptions::new();
+    options.write(true).create_new(true);
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::OpenOptionsExt;
+        options.mode(0o600);
+    }
+    options.open(path)
 }
 
 fn base_args(options: &Options) -> Vec<OsString> {
@@ -386,5 +440,28 @@ mod tests {
     fn curl_messages_lose_their_prefix() {
         assert_eq!(clean("curl: (6) Could not resolve host: x"), "Could not resolve host: x");
         assert_eq!(clean("something else"), "something else");
+    }
+}
+
+#[cfg(test)]
+mod header_file_tests {
+    use super::*;
+
+    #[test]
+    fn header_files_are_private_and_removed() {
+        let headers = [Header::new("Authorization", "token secret"), Header::new("X-Empty", "")];
+        let file = HeaderFile::write(&headers).expect("temp dir is writable").expect("headers");
+        let text = std::fs::read_to_string(&file.path).expect("readable by its owner");
+        assert_eq!(text, "Authorization: token secret\nX-Empty;\n");
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            let mode = std::fs::metadata(&file.path).expect("exists").permissions().mode();
+            assert_eq!(mode & 0o077, 0, "no access for group or others");
+        }
+        let path = file.path.clone();
+        drop(file);
+        assert!(!path.exists(), "dropping the guard removes the file");
+        assert!(HeaderFile::write(&[]).expect("nothing to write").is_none());
     }
 }

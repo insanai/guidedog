@@ -23,3 +23,10 @@ vector, never a shell). Used for remote intersphinx inventories and the Pages pu
 - `testserver::Server::stop` is gone: dropping the server stops it.
 - `Error` renders through `gd-report`, so URLs with control characters cannot reach the
   terminal.
+
+## Credentials
+
+Request headers often carry tokens, and a process's command line is visible to other
+local users, so `send` never puts headers on curl's command line: it writes them to a new
+file readable only by the current user and passes `--header @file`; the file is removed
+when the request ends. The body travels on curl's stdin.

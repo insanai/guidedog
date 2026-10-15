@@ -17,6 +17,7 @@ pub fn api_sources(
     reports: &mut Vec<Report>,
 ) -> Vec<SourceFile> {
     let mut out = Vec::new();
+    crate::autodoc::napoleon_reports(config, reports);
     let odin = crate::odin::odin_api_sources(config);
     keep_unclaimed(odin, taken, "odin", &mut out, reports);
     let rust = crate::rustdoc::rust_api_sources(config, reports);

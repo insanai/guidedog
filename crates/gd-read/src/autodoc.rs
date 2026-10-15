@@ -151,16 +151,75 @@ pub(crate) fn autodoc_config(c: &Config) -> gd_autodoc::Config {
         autodoc_use_type_comments: a.use_type_comments,
         python_display_short_literal_types: a.python_display_short_literal_types,
         strip_signature_backslash: a.strip_signature_backslash,
+        napoleon: c.has_extension("sphinx.ext.napoleon").then(|| napoleon_settings(c)),
         ..defaults
     }
 }
 
+/// The `napoleon_*` settings as gd-autodoc takes them.
+pub(crate) fn napoleon_settings(c: &Config) -> gd_autodoc::Napoleon {
+    let n = &c.ext.napoleon;
+    gd_autodoc::Napoleon {
+        google_docstring: n.google_docstring,
+        numpy_docstring: n.numpy_docstring,
+        include_init_with_doc: n.include_init_with_doc,
+        include_private_with_doc: n.include_private_with_doc,
+        include_special_with_doc: n.include_special_with_doc,
+        use_admonition_for_examples: n.use_admonition_for_examples,
+        use_admonition_for_notes: n.use_admonition_for_notes,
+        use_admonition_for_references: n.use_admonition_for_references,
+        use_ivar: n.use_ivar,
+        use_param: n.use_param,
+        use_rtype: n.use_rtype,
+        use_keyword: n.use_keyword,
+        preprocess_types: n.preprocess_types,
+        type_aliases: n.type_aliases.iter().map(|(k, v)| (k.clone(), v.clone())).collect(),
+        custom_sections: n
+            .custom_sections
+            .iter()
+            .map(|s| gd_autodoc::NapoleonSection { name: s.name.clone(), like: s.like.clone() })
+            .collect(),
+        attr_annotations: n.attr_annotations,
+    }
+}
+
+/// `napoleon.section` for each `napoleon_custom_sections` entry that behaves like a
+/// section napoleon does not know: its docstrings show it as a rubric.
+pub(crate) fn napoleon_reports(c: &Config, reports: &mut Vec<gd_report::Report>) {
+    if !c.has_extension("sphinx.ext.napoleon") {
+        return;
+    }
+    for like in gd_autodoc::unknown_custom_sections(&napoleon_settings(c)) {
+        let message = format!(
+            "napoleon_custom_sections has an entry that behaves like {like:?}, which is not \
+             a section napoleon knows; it is shown as a rubric and its text."
+        );
+        let report =
+            gd_report::Report::warning("napoleon.section", "UNKNOWN NAPOLEON SECTION", &message)
+                .hint(
+                    "Name a section such as \"Parameters\", \"Returns\" or \"Notes\", or \
+                       use \"params_style\" or \"returns_style\".",
+                );
+        let category = "napoleon.section".to_owned();
+        reports.push(gd_report::Report {
+            path: gd_conf::CONFIG_FILE.to_owned(),
+            category,
+            ..report
+        });
+    }
+}
+
 /// Gives autodoc's warnings Sphinx's category, so `suppress_warnings = ["autodoc"]`
-/// silences them as it does in Sphinx.
+/// silences them as it does in Sphinx; the warnings of napoleon and autosummary are
+/// in categories of their own names (`napoleon.section`).
 pub(crate) fn tag_autodoc_reports(reports: &mut [gd_report::Report]) {
-    for r in reports.iter_mut().filter(|r| r.code.starts_with("autodoc.")) {
-        let category =
-            if r.code == "autodoc.import" { "autodoc.import_object" } else { "autodoc" };
-        r.category = category.to_owned();
+    for r in reports.iter_mut() {
+        if r.code.starts_with("autodoc.") {
+            let category =
+                if r.code == "autodoc.import" { "autodoc.import_object" } else { "autodoc" };
+            r.category = category.to_owned();
+        } else if r.code.starts_with("napoleon.") || r.code.starts_with("autosummary.") {
+            r.category.clone_from(&r.code);
+        }
     }
 }

@@ -373,16 +373,13 @@ impl Session {
     }
 }
 
-/// `SOURCE_DATE_EPOCH`, as reproducible builds set it, or the time now.
+/// `SOURCE_DATE_EPOCH`, as reproducible builds set it, or the time now. A commit's time
+/// is never before 1970.
 fn now_seconds() -> i64 {
-    if let Some(n) = std::env::var("SOURCE_DATE_EPOCH").ok().and_then(|v| v.parse::<i64>().ok())
-        && n >= 0
-    {
-        return n;
+    match gd_clock::source_date_epoch() {
+        Some(seconds) if seconds >= 0 => seconds,
+        _ => gd_clock::now().unix.max(0),
     }
-    std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .map_or(0, |d| d.as_secs() as i64)
 }
 
 /// The problem of a publication to a repository without a Pages site: the branch holds

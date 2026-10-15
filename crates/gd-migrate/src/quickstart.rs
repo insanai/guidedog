@@ -127,8 +127,8 @@ fn quickstart_files(
     root: &Path,
     build: &str,
 ) -> Vec<(PathBuf, String)> {
-    let year = o.year.unwrap_or_else(crate::clock::current_year);
-    let date = o.date.clone().unwrap_or_else(crate::clock::today_text);
+    let year = o.year.unwrap_or_else(|| gd_clock::now().utc().date.year);
+    let date = o.date.clone().unwrap_or_else(|| gd_clock::now().utc().date.to_string());
     let title = format!("{} documentation", o.project);
     let values = [
         ("project", toml_text(&o.project)),

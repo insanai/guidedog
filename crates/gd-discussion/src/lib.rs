@@ -30,11 +30,10 @@
 //!
 //! Failure is a [`Problem`] with a hint and an exit status, never a panic.
 
+#![forbid(unsafe_code)]
+
 mod build;
 mod catalog;
-// The C library's localtime_r for the local calendar date: FFI.
-#[allow(unsafe_code)]
-mod clock;
 pub mod command;
 mod config;
 mod definition;
@@ -55,7 +54,6 @@ mod tests;
 
 pub use build::{Book, BuildOptions, BuildRequest, Builder, Target, artifact_name, build};
 pub use catalog::{Catalog, Format, catalog_format, check_sources, load_catalog, resolve};
-pub use clock::today;
 pub use config::{Definition, Numbering, Process, State, read_config, render_config};
 pub use definition::{definition, discover};
 pub use edit::{Decision, NewDraft, new_plan, next_number, promote_plan, state_plan};
@@ -208,4 +206,11 @@ fn exists(path: &Path) -> bool {
 /// Tells whether `values` holds `value`.
 fn contains<S: AsRef<str>>(values: &[S], value: &str) -> bool {
     values.iter().any(|v| v.as_ref() == value)
+}
+
+/// Today's date as `YYYY-MM-DD`, the date a change is stamped with: `SOURCE_DATE_EPOCH`'s
+/// (UTC) when it is a whole number of seconds in the years 1 to 9999, otherwise the local
+/// date (the UTC date where the local time zone cannot be read). See `gd_clock`.
+pub fn today() -> String {
+    gd_clock::build_time().local().date.to_string()
 }

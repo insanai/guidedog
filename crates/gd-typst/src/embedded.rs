@@ -20,7 +20,6 @@ use typst_kit::downloader::SystemDownloader;
 use typst_kit::fonts::FontStore;
 use typst_kit::packages::{FsPackages, SystemPackages, UniversePackages};
 
-use crate::clock::{Civil, compiler_clock};
 use crate::{Compiled, Diagnostic, Error, GENERATED_MAIN, Options, Severity, Target};
 
 const USER_AGENT: &str = concat!("guidedog/", env!("CARGO_PKG_VERSION"));
@@ -175,12 +174,16 @@ fn make_world(
 ) -> Option<EmbeddedWorld> {
     let vpath = VirtualPath::new(main.unwrap_or(GENERATED_MAIN)).ok()?;
     let main_id = FileId::new(RootedPath::new(VirtualRoot::Project, vpath));
-    let clock = compiler_clock();
-    let Civil { year, month, day, .. } = clock.local;
-    let today = Datetime::from_ymd(year, month, day);
-    let utc = clock.utc;
-    let moment =
-        Datetime::from_ymd_hms(utc.year, utc.month, utc.day, utc.hour, utc.minute, utc.second);
+    // One instant for the whole compile. `datetime.today()` uses the local date; an
+    // explicit offset uses the UTC time, whose time of day matters because an offset can
+    // cross midnight. SOURCE_DATE_EPOCH fixes both to UTC, as Typst's CLI does.
+    let clock = gd_clock::build_time();
+    let local = clock.local().date;
+    let today = typst_year(local.year).and_then(|y| Datetime::from_ymd(y, local.month, local.day));
+    let utc = clock.utc();
+    let moment = typst_year(utc.date.year).and_then(|y| {
+        Datetime::from_ymd_hms(y, utc.date.month, utc.date.day, utc.hour, utc.minute, utc.second)
+    });
     Some(EmbeddedWorld {
         fonts: fonts(!options.embedded_fonts_only, &options.font_paths),
         html: options.target == Target::Html,
@@ -197,6 +200,11 @@ fn make_world(
         moment,
         sources: Mutex::new(HashMap::new()),
     })
+}
+
+/// A year as Typst's dates hold it, or `None` when it does not fit.
+fn typst_year(year: i64) -> Option<i32> {
+    i32::try_from(year).ok()
 }
 
 /// A panic while a cache lock is held must not disable every later compile in a

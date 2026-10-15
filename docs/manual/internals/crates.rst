@@ -185,10 +185,12 @@ Internal crates
 Every other package is internal:
 
 - the host and project layers: ``gd-host``, ``gd-conf``, ``gd-env``, ``gd-outputs``, ``gd-serve``, ``gd-i18n``, ``gd-read``, ``gd-resolve``, ``gd-link``, ``gd-site``, ``gd-book``, ``gd-intl``, ``gd-migrate``, ``gd-pages`` and ``gd-project``;
-- the command line and its services: ``gd-cli``, ``gd-theme``, ``gd-discussion``, ``gd-fetch``, ``gd-git`` and ``gd-typst``;
+- the command line and its services: ``gd-cli``, ``gd-theme``, ``gd-discussion``, ``gd-fetch``, ``gd-git``, ``gd-typst`` and ``gd-clock``;
 - the programs under ``cmd/``, the tools under ``tools/``, the examples under ``examples/`` and the end-to-end tests under ``tests/integration``.
 
 ``gd-typst`` embeds the Typst compiler. Keeping it internal keeps Typst's large dependency tree out of every reusable crate: ``guidedoc-typst`` writes Typst source as text, and only the program compiles it.
+
+``gd-clock`` gives the program one answer to "what time is it?". A build stamps its output with ``SOURCE_DATE_EPOCH`` when reproducible builds set it, and with the clock otherwise. The crate turns Unix seconds into civil dates with plain arithmetic and asks the operating system only for the local time zone's offset from UTC. That offset is the crate's one piece of unsafe code (``localtime_r`` on Unix, ``SystemTimeToTzSpecificLocalTime`` on Windows), so the rest of the program needs none for dates. The plugin SDK ``gd-plugins`` is reusable and cannot depend on it; it keeps its own few lines of date arithmetic.
 
 Rules the gate checks
 ---------------------

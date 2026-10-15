@@ -145,7 +145,7 @@ pub enum Error {
         /// The root given.
         root: PathBuf,
     },
-    /// The embedded compiler could not use the request (a path or date it cannot hold).
+    /// The embedded compiler could not use the request (a path it cannot hold).
     InvalidRequest,
     /// The embedded compiler failed internally (it panicked).
     Internal,
@@ -225,10 +225,7 @@ impl Error {
             Error::OutsideRoot { .. } => {
                 "Move the source below the root, or pass a root that contains it."
             }
-            Error::InvalidRequest => {
-                "Use a root and source path in valid UTF-8, and a \
-                SOURCE_DATE_EPOCH within the years Typst supports."
-            }
+            Error::InvalidRequest => "Use a root and source path in valid UTF-8.",
             Error::Internal => {
                 "This is a bug in Typst; report it with the document that \
                 triggers it, and try the installed typst program meanwhile."

@@ -28,7 +28,6 @@
 
 #![forbid(unsafe_code)]
 
-mod clock;
 mod convert;
 mod extensions;
 mod legacy;

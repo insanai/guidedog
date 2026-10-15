@@ -141,7 +141,7 @@ impl Drop for StageDir {
 
 /// Puts the catalog's identity into a built-in text.
 fn fill(text: &str, i: &Init) -> String {
-    let year = crate::clock::now().year;
+    let year = gd_clock::build_time().local().date.year;
     let name_width = i.name.len();
     let pairs = [
         ("@NAME_TOML@", toml_quote(&i.name)),

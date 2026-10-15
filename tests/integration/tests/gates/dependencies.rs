@@ -36,6 +36,7 @@ const LAYERS: &[(&str, u8)] = &[
     ("gd-typst", 0),
     ("gd-plugins", 0),
     ("gd-discussion", 0),
+    ("gd-clock", 0),
     // 1: readers and renderers.
     ("guidedoc-rst-inline", 1),
     ("guidedoc-rst", 1),

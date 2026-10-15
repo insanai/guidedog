@@ -673,6 +673,7 @@ dependencies = [
 name = "gd-cli"
 version = "0.7.0"
 dependencies = [
+ "gd-clock",
  "gd-conf",
  "gd-discussion",
  "gd-env",
@@ -693,6 +694,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "gd-clock"
+version = "0.7.0"
+
+[[package]]
 name = "gd-conf"
 version = "0.7.0"
 dependencies = [
@@ -708,6 +713,7 @@ dependencies = [
 name = "gd-discussion"
 version = "0.7.0"
 dependencies = [
+ "gd-clock",
  "gd-json",
  "gd-report",
  "gd-toml",
@@ -774,6 +780,7 @@ dependencies = [
 name = "gd-i18n"
 version = "0.7.0"
 dependencies = [
+ "gd-clock",
  "gd-gettext",
  "guidedoc",
  "guidedoc-commonmark",
@@ -842,6 +849,7 @@ dependencies = [
 name = "gd-migrate"
 version = "0.7.0"
 dependencies = [
+ "gd-clock",
  "gd-conf",
  "gd-host",
  "gd-report",
@@ -869,6 +877,7 @@ dependencies = [
 name = "gd-pages"
 version = "0.7.0"
 dependencies = [
+ "gd-clock",
  "gd-fetch",
  "gd-git",
  "gd-host",
@@ -1017,6 +1026,7 @@ dependencies = [
 name = "gd-typst"
 version = "0.7.0"
 dependencies = [
+ "gd-clock",
  "gd-report",
  "typst",
  "typst-html",

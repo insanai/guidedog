@@ -13,6 +13,7 @@ embedded = ["dep:typst", "dep:typst-layout", "dep:typst-pdf", "dep:typst-html", 
 
 [dependencies]
 gd-report = { workspace = true }
+gd-clock = { workspace = true }
 # The Typst compiler (allowed by CLAUDE.md): fonts come from extra font directories and the
 # system first, then the embedded set; packages resolve like the typst CLI (data directory,
 # cache, then a Typst Universe download unless the compile is offline).

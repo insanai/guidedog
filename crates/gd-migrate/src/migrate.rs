@@ -171,7 +171,7 @@ pub fn convert_conf_py(text: &str, path: &Path, year: Option<i64>) -> Conversion
 }
 
 fn convert_conf_py_in(text: &str, path: &Path, year: Option<i64>) -> Conversion {
-    let year = year.unwrap_or_else(crate::clock::current_year);
+    let year = year.unwrap_or_else(|| gd_clock::now().utc().date.year);
     let mut m = Migration::new(text, path);
     let c = read_conf_py(&mut m, text, year);
     for b in &c.bindings {

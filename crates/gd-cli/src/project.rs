@@ -66,10 +66,15 @@ fn build_loaded(
 
 /// The moment `SOURCE_DATE_EPOCH` (seconds since 1970, UTC) fixes for `|today|` and the
 /// page dates, as reproducible builds set it; `None` when it is unset or not a whole
-/// number of seconds, and the build uses the clock.
+/// number of seconds in the years 1 to 9999, and the build uses the clock.
 fn source_date_epoch() -> Option<std::time::SystemTime> {
-    let seconds: u64 = std::env::var("SOURCE_DATE_EPOCH").ok()?.trim().parse().ok()?;
-    std::time::UNIX_EPOCH.checked_add(std::time::Duration::from_secs(seconds))
+    let seconds = gd_clock::source_date_epoch()?;
+    let distance = std::time::Duration::from_secs(seconds.unsigned_abs());
+    if seconds >= 0 {
+        std::time::UNIX_EPOCH.checked_add(distance)
+    } else {
+        std::time::UNIX_EPOCH.checked_sub(distance)
+    }
 }
 
 /// Sets the build's budget and what happens at it. A budget larger than the free memory

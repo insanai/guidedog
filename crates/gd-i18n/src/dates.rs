@@ -200,30 +200,15 @@ fn write_offset(out: &mut String, offset_seconds: i32) -> std::fmt::Result {
     write!(out, "{sign}{:02}{:02}", minutes / 60, minutes % 60)
 }
 
-/// Returns the days since 1970-01-01 of a proleptic Gregorian date (Howard Hinnant's
-/// `days_from_civil`).
+/// Returns the days since 1970-01-01 of a proleptic Gregorian date; a month outside 1 to
+/// 12 counts as the nearest valid one.
 fn days_from_civil(year: i64, month: u8, day: u8) -> i64 {
-    let (month, day) = (i64::from(month.clamp(1, 12)), i64::from(day));
-    let year = if month <= 2 { year - 1 } else { year };
-    let era = year.div_euclid(400);
-    let year_of_era = year - era * 400;
-    let day_of_year = (153 * ((month + 9) % 12) + 2) / 5 + day - 1;
-    let day_of_era = year_of_era * 365 + year_of_era / 4 - year_of_era / 100 + day_of_year;
-    era * 146_097 + day_of_era - 719_468
+    gd_clock::Date { year, month, day }.days()
 }
 
-/// Returns the date `days` after 1970-01-01 (Howard Hinnant's `civil_from_days`).
+/// Returns the date `days` after 1970-01-01.
 fn civil_from_days(days: i64) -> (i64, u8, u8) {
-    let z = days + 719_468;
-    let era = z.div_euclid(146_097);
-    let day_of_era = z - era * 146_097;
-    let year_of_era =
-        (day_of_era - day_of_era / 1460 + day_of_era / 36_524 - day_of_era / 146_096) / 365;
-    let day_of_year = day_of_era - (365 * year_of_era + year_of_era / 4 - year_of_era / 100);
-    let mp = (5 * day_of_year + 2) / 153;
-    let day = (day_of_year - (153 * mp + 2) / 5 + 1) as u8;
-    let month = if mp < 10 { mp + 3 } else { mp - 9 } as u8;
-    let year = year_of_era + era * 400 + i64::from(month <= 2);
+    let gd_clock::Date { year, month, day } = gd_clock::Date::from_days(days);
     (year, month, day)
 }
 

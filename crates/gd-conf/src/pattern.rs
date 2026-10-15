@@ -342,8 +342,9 @@ impl Matcher<'_> {
         let more = piece.max.is_none_or(|max| done < max);
         if more {
             let again = &mut |end, m: &mut Matcher<'_>| {
-                // An empty repetition would loop for ever; it adds nothing anyway.
-                end != at && m.piece(piece, done + 1, end, next)
+                // An empty repetition would loop for ever; it adds nothing anyway. One
+                // the minimum needs counts: `^`, `$` and empty groups match nothing.
+                (end != at || done < piece.min) && m.piece(piece, done + 1, end, next)
             };
             if self.atom(&piece.atom, at, again) {
                 return true;
@@ -388,6 +389,7 @@ mod tests {
         assert!(matches(r"\w+\s?\w*", "hello world"));
         assert!(matches(r"x?y*", ""));
         assert!(matches(r"(a*)*b", "aaab"));
+        assert!(matches(r"^a.*b$", "axb") && matches(r"(?:)x", "x") && !matches(r"a$b", "ab"));
     }
 
     #[test]

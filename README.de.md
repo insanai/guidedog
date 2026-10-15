@@ -4,7 +4,7 @@
 
 **Einmal schreiben. Klar erklären. Im Web und auf Papier veröffentlichen.**
 
-Guidedog erzeugt HTML-Dokumentation und PDF-Bücher aus reStructuredText und Markdown. Es ist in Rust geschrieben. Die Konvertierungsengine heißt **Guidedoc**; Typst, im Programm eingebettet, setzt die PDF-Seiten. Python oder LaTeX sind nicht nötig.
+Guidedog erstellt eine Dokumentationswebsite und ein PDF-Buch aus denselben reStructuredText- oder Markdown-Dateien. Wir pflegen die Inhalte einmal und veröffentlichen sie für das Web und auf Papier. Die Veröffentlichung enthält ein ausführbares Programm, `guidedog`, mit PDF-Satz und Diagrammdarstellung.
 
 Sphinx dient als Vorbild für den Schreibablauf. Guidedog ist ein eigenständiges System: deklarative TOML-Konfiguration, statische API-Analyse und keine Ausführung von Python-Konfiguration oder -Erweiterungen. Vollständige Sphinx-Kompatibilität ist kein Ziel.
 

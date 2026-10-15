@@ -4,7 +4,7 @@
 
 **한 번 쓰고, 명확히 설명하고, 웹과 종이로 전하세요.**
 
-Guidedog은 reStructuredText와 Markdown으로 HTML 문서 사이트와 PDF 책을 만듭니다. Rust로 구현되었으며 변환 엔진의 이름은 **Guidedoc**입니다. PDF는 프로그램에 내장된 Typst로 조판합니다. Python 환경이나 LaTeX 설치가 필요하지 않습니다.
+Guidedog은 같은 reStructuredText 또는 Markdown 파일로 문서 사이트와 PDF 책을 만듭니다. 하나의 원고를 관리하고 웹과 종이의 독자에게 전합니다. 배포판은 PDF 조판과 다이어그램 렌더링을 포함한 실행 파일 `guidedog` 하나로 제공됩니다.
 
 작성 흐름은 Sphinx에서 배웠지만 Guidedog은 독립적인 시스템입니다. 설정은 선언형 TOML이며 API는 정적으로 추출합니다. Python 설정이나 확장은 실행하지 않습니다. Sphinx와의 완전한 호환은 목표가 아닙니다.
 

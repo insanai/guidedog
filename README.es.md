@@ -4,7 +4,7 @@
 
 **Escriba una vez. Explique con claridad. Publique en la web y en papel.**
 
-Guidedog genera sitios de documentación HTML y libros PDF a partir de reStructuredText y Markdown. Está escrito en Rust. El motor de conversión se llama **Guidedoc** y Typst, integrado en el programa, compone las páginas PDF. No requiere Python ni LaTeX.
+Guidedog crea un sitio de documentación y un libro PDF a partir de los mismos archivos reStructuredText o Markdown. Mantenemos una sola copia del contenido y la publicamos para la web y el papel. La distribución incluye un único ejecutable, `guidedog`, con composición de PDF y generación de diagramas.
 
 El flujo de escritura se inspira en Sphinx, pero Guidedog es un sistema independiente. Usa TOML declarativo y extracción estática de API. Nunca ejecuta configuración ni extensiones Python. No pretende ser completamente compatible con Sphinx.
 

@@ -3,11 +3,7 @@ Guidedog Manual
 
 **Write once. Explain well. Publish on the web and on paper.**
 
-Guidedog is a documentation generator. It builds HTML websites and PDF books
-from reStructuredText and Markdown sources. It is one self-contained
-program, written in Rust. It needs no Python environment and no LaTeX
-installation. The conversion engine is called **Guidedoc**. The embedded Typst compiler typesets
-the PDF pages, and Guidedog writes the website directly.
+Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one ``guidedog`` executable, with PDF typesetting and diagram rendering included.
 
 A small project needs three things: a source document, a table of contents,
 and ``conf.toml``. Start with :doc:`tutorial/first-project`.

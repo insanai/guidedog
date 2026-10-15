@@ -4,7 +4,7 @@
 
 **写一份源码，讲清楚道理，发布到网页与纸上。**
 
-Guidedog 将 reStructuredText 和 Markdown 构建为 HTML 文档网站和 PDF 图书。它使用 Rust 编写。转换引擎名为 **Guidedoc**，PDF 由内置于程序中的 Typst 排版。无需 Python 环境或 LaTeX 安装。
+Guidedog 从同一组 reStructuredText 或 Markdown 文件生成文档网站和 PDF 图书。我们只需维护一份内容，就能面向网页和纸张上的读者发布。发行版提供一个 `guidedog` 可执行文件，内含 PDF 排版和图表渲染功能。
 
 Sphinx 启发了它的写作流程。Guidedog 是独立系统：配置使用声明式 TOML，API 提取采用静态分析，绝不执行 Python 配置或扩展。完全兼容 Sphinx 不是目标。
 

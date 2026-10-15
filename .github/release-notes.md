@@ -1,22 +1,15 @@
-Guidedog 1.0.0-beta.1 is a self-contained documentation builder in one Cargo workspace.
-Commands, options, `conf.toml` keys, directives, roles and output stay compatible, so
-existing projects build as before.
+Guidedog builds documentation websites and PDF books from the same reStructuredText or Markdown files. We maintain one set of source files and publish it for readers on the web and on paper.
 
-- **One toolchain.** `cargo build --release -p guidedog-cmd` builds Guidedog from source;
-  no other compiler or build script is needed.
-- **Typst and Graphviz embedded.** The Typst 0.15.1 compiler is built in, and Graphviz
-  16.1.0 is linked statically: the programs need nothing installed besides the C library.
-- **Rust API documentation.** The `rust` domain and the `rust_autoapi_*` settings
-  document Rust crates from source with tree-sitter.
-- **Plugins in Rust.** Publisher interface 1.1, build-plugin interface 1.0 and both
-  process protocols 1.0 are kept. Plugins are Rust crates: register them as programs, or
-  link them into your own `guidedog` with `gd_cli::run_with`.
-- **One executable.** `guidedog dsc` manages discussions. The linked Pages plugin adds `guidedog publish pages` and `guidedog pages` maintenance commands. The `gd-graphdog` library encapsulates Graphviz; it is not a separate CLI.
+This first 1.0 beta brings that workflow into one `guidedog` executable for Linux, macOS and Windows.
 
-This remains a beta for trusted documentation projects; installed plugins are separate
-native processes, not an operating-system sandbox.
+- **Websites and books.** Build HTML with navigation, search and highlighted code, or PDF with chapters, cross-references and an index.
+- **One download.** PDF typesetting and diagram rendering are included. No separate documentation toolchain is needed.
+- **Familiar source files.** Use reStructuredText and MyST Markdown, with editable templates and a `conf.toml` configuration file.
+- **API references and translations.** Read API documentation from source and build language editions from gettext catalogs.
+- **Publishing.** `guidedog publish pages` builds and publishes through the linked GitHub Pages plugin. `guidedog pages` handles its setup and maintenance.
+- **Discussions and decisions.** `guidedog dsc` keeps numbered records with the project and publishes them as HTML and PDF.
 
-See the [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.1/CHANGELOG.md).
+This is a beta for trusted documentation projects. Reports from projects that try it will help us find problems before 1.0.0. The [manual](https://insanai.github.io/guidedog/manual/) describes the supported features and current limits; the [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.1/CHANGELOG.md) records the changes.
 
 ## Downloads
 
@@ -57,7 +50,7 @@ brew tap insanai/guidedog
 brew install insanai/guidedog/guidedog
 ```
 
-Or unpack the archive and put the programs on your `PATH`:
+Or unpack the archive and put `guidedog` on our `PATH`:
 
 ```sh
 tar -xzf guidedog-macos-arm64.tar.gz
@@ -67,15 +60,15 @@ guidedog --version
 
 ## Platform notes
 
-- The programs are not code-signed. On macOS, a file downloaded with a browser is quarantined; run `xattr -d com.apple.quarantine guidedog` once for each program, or download with `curl`.
+- The executable is not code-signed. On macOS, a file downloaded with a browser is quarantined; run `xattr -d com.apple.quarantine guidedog` for the executable, or download with `curl`.
 - Graphviz 16.1.0 is linked statically, with the dot and neato layout families and SVG and DOT output (no PNG). Its licence and Expat's are in the archive (`COPYING-graphviz`, `COPYING-expat`), and `SOURCE.txt` names their source tarballs.
 - Linux builds link the system's glibc. HTTP and HTTPS are built in; no system `curl` program is needed. The Pages plugin stores tokens through the Secret Service (`secret-tool` from libsecret-tools) when a desktop session offers one; without one, give a token to a single command with `GUIDEDOG_PAGES_TOKEN` and `--credential=env`.
-- Windows x86-64 bundles the official Graphviz 16.1.0 runtime beside the executables. Keep the whole extracted folder together.
+- Windows x86-64 bundles the official Graphviz 16.1.0 runtime beside `guidedog.exe`. Keep the whole extracted folder together.
 - PDF books use Typst's embedded fonts and the system's fonts. Books in Chinese, Japanese, Korean, or Hindi need fonts for those scripts installed.
 
 ## License
 
-Guidedog is released under the GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later), with an additional permission to link and distribute them with Graphviz; see `LICENSE`, `COPYING` and `NOTICE`. For other licensing terms, contact the authors.
+Guidedog is released under the GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later), with an additional permission to link and distribute it with Graphviz; see `LICENSE`, `COPYING` and `NOTICE`. For other licensing terms, contact the authors.
 
 ## Credits
 

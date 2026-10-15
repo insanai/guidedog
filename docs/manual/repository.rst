@@ -3,9 +3,7 @@ Guidedog
 
 **Write once. Explain well. Publish on the web and on paper.**
 
-Guidedog builds HTML documentation sites and PDF books from reStructuredText and Markdown.
-It is written in Rust. Its conversion engine is **Guidedoc**, and the embedded Typst
-compiler typesets the PDF pages. No Python environment or LaTeX installation is needed.
+Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one ``guidedog`` executable, with PDF typesetting and diagram rendering included.
 
 Sphinx inspires the authoring workflow. Guidedog is an independent system: configuration is
 declarative TOML, API extraction is static, and Python configuration and extensions are

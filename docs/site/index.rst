@@ -53,14 +53,9 @@ What it does
 One program
 -----------
 
-Guidedog is a single binary. We do not need a Python environment, a LaTeX
-installation, or separate theme and extension packages. Configuration is a TOML file.
-Templates are plain files in our project, and we can edit them.
+The release provides one ``guidedog`` executable with PDF typesetting and diagram rendering included. We download the archive for our system, unpack it, and start a project. On Windows we keep the bundled runtime files beside the executable.
 
-Some things still come from outside. The Typst compiler is built into Guidedog. A
-build without it uses the ``typst`` program installed on the system. Diagrams use
-the system's Graphviz library. Fetching remote inventories uses the HTTP client
-built into Guidedog.
+Configuration is a TOML file. Templates are plain files in our project, and we can edit them. The same command also publishes to GitHub Pages and keeps discussion records through its linked plugins.
 
 
 Write it, see both

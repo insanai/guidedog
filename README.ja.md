@@ -4,7 +4,7 @@
 
 **一度書く。明快に伝える。Web と紙に届ける。**
 
-Guidedog は reStructuredText と Markdown から HTML 文書サイトと PDF の本を作ります。Rust で実装され、変換エンジンは **Guidedoc** と呼ばれます。PDF はプログラムに組み込まれた Typst で組版します。Python 環境や LaTeX は不要です。
+Guidedog は、同じ reStructuredText または Markdown ファイルから文書サイトと PDF の本を作ります。ひとつの原稿を管理し、Web と紙の読者に届けます。配布版には PDF の組版と図の描画を組み込んだ、ひとつの実行ファイル `guidedog` が含まれます。
 
 執筆の流れは Sphinx を参考にしています。ただし Guidedog は独立したシステムです。設定は宣言的な TOML、API 抽出は静的解析で行い、Python の設定や拡張を実行しません。Sphinx との完全互換は目標ではありません。
 

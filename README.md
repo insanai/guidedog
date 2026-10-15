@@ -4,7 +4,7 @@
 
 **Write once. Explain well. Publish on the web and on paper.**
 
-Guidedog builds HTML documentation sites and PDF books from reStructuredText and Markdown. It is written in Rust. Its conversion engine is **Guidedoc**, and Typst, embedded in the program, typesets the PDF pages. No Python environment or LaTeX installation is needed.
+Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one `guidedog` executable, with PDF typesetting and diagram rendering included.
 
 Sphinx inspires the authoring workflow. Guidedog is an independent system: configuration is declarative TOML, API extraction is static, and Python configuration and extensions are never executed. Complete Sphinx compatibility is not a goal.
 
@@ -27,7 +27,7 @@ guidedog clean docs
 guidedog migrate conf.py
 ```
 
-API documentation is read from source without running it: Python (`autodoc`), Odin (`odindoc`), and, new in 0.7, Rust crates (the `rust` domain and the `rust_autoapi_*` settings).
+API documentation is read from source without running it: Python (`autodoc`), Odin (`odindoc`), and Rust crates (the `rust` domain and the `rust_autoapi_*` settings).
 
 ## Install
 
@@ -47,7 +47,7 @@ brew install insanai/guidedog/guidedog
 guidedog --version
 ```
 
-The programs are not code-signed: on macOS, remove the quarantine from a browser download with `xattr -d com.apple.quarantine guidedog`. The release notes describe each platform's limits.
+The executable is not code-signed: on macOS, remove the quarantine from a browser download with `xattr -d com.apple.quarantine guidedog`. The release notes describe each platform's limits.
 
 ## Build from source
 
@@ -58,7 +58,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-The programs are in `target/release`. On macOS with Homebrew, point the linker at Graphviz first: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. The Typst compiler is embedded by default (the `embedded` feature of `gd-typst`); without it, Guidedog runs an installed `typst` 0.15.1 for PDF. On Linux, the embedded compiler's package downloader links a vendored OpenSSL, which needs `perl` and `make` to build.
+The executable is in `target/release`. On macOS with Homebrew, point the linker at Graphviz first: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. The Typst compiler is embedded by default (the `embedded` feature of `gd-typst`); without it, Guidedog runs an installed `typst` 0.15.1 for PDF. On Linux, the embedded compiler's package downloader links a vendored OpenSSL, which needs `perl` and `make` to build.
 
 Before sending a change, run what CI runs:
 
@@ -113,7 +113,7 @@ guidedog dsc state 1 --to=accepted --reason="Review converged"
 guidedog dsc build
 ```
 
-A catalog's `discussion.toml` sets its lifecycle states, record types, and numbering, and `guidedog dsc config` prints it. The commands come from the discussion plugin, which every `guidedog` links, so nothing else needs to be installed. The Windows ZIP bundles Graphviz DLLs; we keep the whole extracted folder together. Guidedog's own `docs/gds` is one such catalog: we run `guidedog dsc check` in that folder. See [Keep a discussion catalog](docs/manual/howto/discussions.rst).
+A catalog's `discussion.toml` sets its lifecycle states, record types, and numbering, and `guidedog dsc config` prints it. The commands come from the discussion plugin, which every `guidedog` links, so nothing else needs to be installed. Guidedog's own `docs/gds` is one such catalog: we run `guidedog dsc check` in that folder. See [Keep a discussion catalog](docs/manual/howto/discussions.rst).
 
 `gd-graphdog` is the library that encapsulates Graphviz. Guidedog uses it to render documentation diagrams in process; it is not a separate CLI.
 
@@ -128,7 +128,7 @@ A catalog's `discussion.toml` sets its lifecycle states, record types, and numbe
 - [Plugin library](crates/gd-plugins/README.md): typed build services and the publisher interface used by `guidedog publish` and the linked Pages plugin.
 - [Reusable crates](docs/manual/internals/crates.rst): the engine, libraries, API generators, and plugin SDK that other Rust projects can take from crates.io, and how they depend on each other.
 
-Each crate under `crates/` has a short README with its API and its design decisions. Guidedoc owns its document tables and reuses them between conversions, so a conversion in steady state allocates nothing. It returns structured diagnostics with a hint. The host manages files, budgets, caching, publication, and the embedded compilers. `--untrusted` restricts capabilities; it is not a process sandbox or a limit on all native resource use. The beta scope is trusted documentation projects on macOS and Linux.
+Each crate under `crates/` has a short README with its API and its design decisions. Guidedoc owns its document tables and reuses them between conversions, so a conversion in steady state allocates nothing. It returns structured diagnostics with a hint. The host manages files, budgets, caching, publication, and the embedded compilers. `--untrusted` restricts capabilities; it is not a process sandbox or a limit on all native resource use. The beta scope is trusted documentation projects on Linux, macOS and Windows.
 
 ## Credits and license
 

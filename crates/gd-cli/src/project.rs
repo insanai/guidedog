@@ -151,9 +151,19 @@ fn report_build(console: &mut Console<'_>, verbose: u32, result: &BuildResult) -
         errors += 1;
     }
     if !console.quiet && !console.json {
-        let verdict = console.verdict(result.exit == 0);
+        let ok = result.exit == 0;
+        let verdict = console.verdict(ok);
         let note = output_note(result);
-        let line = format!("{verdict}, {errors} error(s), {warnings} warning(s).{note}\n");
+        // As sphinx-build does, errors in a document's content are reported and the build
+        // still succeeds; say so plainly instead of "succeeded, 1 error(s)".
+        let line = match (ok, errors + warnings) {
+            (true, 0) => format!("{verdict}.{note}\n"),
+            (true, _) => format!(
+                "{verdict} with {errors} error(s) and {warnings} warning(s) in the \
+                 documents.{note}\n"
+            ),
+            (false, _) => format!("{verdict}, {errors} error(s), {warnings} warning(s).{note}\n"),
+        };
         console.print(&line);
     }
     result.exit

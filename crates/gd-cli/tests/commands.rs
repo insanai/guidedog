@@ -183,10 +183,10 @@ fn plugin_list_shows_the_linked_plugins() {
     assert!(out.contains("Linked into this program") && out.contains("folder"), "{out}");
 }
 
-/// An unresolved reference is reported once, as a warning (Sphinx's rule): the build
-/// succeeds and says so with "1 warning(s)", and -W fails it with a non-zero status.
+/// An unresolved reference is reported once, as the error Docutils and Sphinx report
+/// ("Unknown target name"): the build still succeeds and says so, and -W fails it.
 #[test]
-fn an_unresolved_reference_is_one_warning() {
+fn an_unresolved_reference_is_one_error() {
     let root = TempDir::new("unresolved");
     let none = Registry::default();
     fs::create_dir_all(root.join("docs")).unwrap();
@@ -197,10 +197,36 @@ fn an_unresolved_reference_is_one_warning() {
     let all = format!("{out}{err}");
     assert_eq!(status, 0, "{all}");
     assert_eq!(all.matches("missing_").count(), 2, "one excerpt and its message: {all}");
-    assert!(all.contains("build succeeded, 0 error(s), 1 warning(s)"), "{all}");
+    assert!(
+        all.contains("build succeeded with 1 error(s) and 0 warning(s) in the documents"),
+        "{all}"
+    );
     let (status, out, err) = run(&["build", "html", &docs, "--color=never", "-W"], &none);
     assert_ne!(status, 0, "{out}{err}");
     assert!(format!("{out}{err}").contains("build failed"), "{out}{err}");
+}
+
+/// An error in a document's content keeps its severity, as Docutils and Sphinx report
+/// it ("ERROR"), and the build still succeeds; -W fails it.
+#[test]
+fn a_content_error_stays_an_error_and_the_build_succeeds() {
+    let root = TempDir::new("content-error");
+    let none = Registry::default();
+    fs::create_dir_all(root.join("docs")).unwrap();
+    fs::write(root.join("docs/conf.toml"), "project = \"T\"\n").unwrap();
+    let page = "Title\n=====\n\n.. rubric:: Heading\n   :heading-level: 7\n\nText.\n";
+    fs::write(root.join("docs/index.rst"), page).unwrap();
+    let docs = root.arg("docs");
+    let args = ["build", "html", &docs, "--color=never", "--diagnostics=json"];
+    let (status, out, err) = run(&args, &none);
+    let all = format!("{out}{err}");
+    assert_eq!(status, 0, "{all}");
+    assert!(
+        all.contains("\"code\":\"rst.directive.option.invalid\",\"severity\":\"error\""),
+        "{all}"
+    );
+    let (status, out, err) = run(&["build", "html", &docs, "--color=never", "-W"], &none);
+    assert_ne!(status, 0, "{out}{err}");
 }
 
 /// quickstart and migrate run gd-migrate; build, intl and clean run the project builder.

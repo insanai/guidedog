@@ -1,0 +1,118 @@
+# Conformance corpus: one source per line, relative to this directory, followed by the
+# settings it is read with. tools/rstref turns the settings into Docutils options when it
+# stores the expected tree; tests/rst_conformance_test.odin turns them into rst.Settings.
+#
+#   sectsubtitle   promote lone subsection titles to section subtitles
+#   smartquotes    typographic quotes, dashes, and ellipses (smartquotes-alt: the
+#                  alternative quotation marks)
+#   lang=TAG       document language
+#   pep, rfc       implicit PEP and RFC references
+#   trim           remove the space before footnote references
+#   nodocinfo      no bibliographic fields
+#   notitle        no document title
+#   tab=N          tab width
+#   charlevel      inline markup within words
+#   nofile, noraw  no file insertion, no raw content
+#   messages=total compare the number of problems, not their severity (a difference
+#                  documented in lib/readers/rst/CONFORMANCE.md)
+
+docs/header2.rst
+docs/ref/rst/definitions.rst
+docs/ref/rst/directives.rst
+docs/ref/rst/history.rst
+docs/ref/rst/introduction.rst
+docs/ref/rst/mathematics.rst
+docs/ref/rst/restructuredtext.rst
+docs/ref/rst/roles.rst
+docs/user/rst/cheatsheet.rst
+docs/user/rst/demo.rst
+docs/user/rst/quickstart.rst
+test/functional/input/compact_lists.rst
+test/functional/input/cyrillic.rst lang=ru smartquotes
+test/functional/input/dangerous.rst nofile messages=total
+test/functional/input/data/classes_latex.rst
+test/functional/input/data/comprehensive-math-test.rst
+test/functional/input/data/custom_roles.rst
+test/functional/input/data/custom_roles_latex.rst
+test/functional/input/data/embed_images.rst
+test/functional/input/data/errors.rst
+test/functional/input/data/footnote-targets.rst
+test/functional/input/data/header_footer.rst
+test/functional/input/data/html5-features.rst
+test/functional/input/data/html5-text-level-tags.rst
+test/functional/input/data/hyperlinking.rst
+test/functional/input/data/latex-problematic.rst
+test/functional/input/data/latex_encoding.rst
+test/functional/input/data/list_table.rst
+test/functional/input/data/math.rst
+test/functional/input/data/math_experiments.rst
+test/functional/input/data/nonalphanumeric.rst
+test/functional/input/data/option_lists.rst
+test/functional/input/data/section_titles.rst
+test/functional/input/data/standard.rst
+test/functional/input/data/svg_images.rst
+test/functional/input/data/swf_images.rst
+test/functional/input/data/table_colspan.rst
+test/functional/input/data/table_complex.rst
+test/functional/input/data/table_rowspan.rst
+test/functional/input/data/tables_latex.rst
+test/functional/input/data/unicode.rst
+test/functional/input/data/urls.rst
+test/functional/input/data/video.rst
+test/functional/input/field_list.rst nodocinfo
+test/functional/input/footnotes.rst sectsubtitle
+test/functional/input/latex_babel.rst
+test/functional/input/latex_cornercases.rst
+test/functional/input/latex_docinfo.rst
+test/functional/input/latex_leavevmode.rst smartquotes
+test/functional/input/latex_literal_block.rst
+test/functional/input/length_units.rst
+test/functional/input/misc_rst_html4css1.rst
+test/functional/input/misc_rst_html5.rst smartquotes
+test/functional/input/odt_basic.rst
+test/functional/input/odt_classifier.rst
+test/functional/input/odt_contents.rst
+test/functional/input/odt_custom_headfoot.rst
+test/functional/input/odt_footnotes.rst
+test/functional/input/odt_header_footer.rst
+test/functional/input/odt_image.rst
+test/functional/input/odt_literal_block.rst
+test/functional/input/odt_nested_class.rst
+test/functional/input/odt_no_class.rst
+test/functional/input/odt_raw.rst
+test/functional/input/odt_tables1.rst
+test/functional/input/odt_unnested_class.rst
+test/functional/input/pep_html.rst
+test/functional/input/rst_html5_tuftig.rst sectsubtitle smartquotes
+test/functional/input/simple.rst
+test/functional/input/standalone_rst_docutils_xml.rst sectsubtitle
+test/functional/input/standalone_rst_html4css1.rst sectsubtitle
+test/functional/input/standalone_rst_html5.rst sectsubtitle
+test/functional/input/standalone_rst_latex.rst sectsubtitle smartquotes
+test/functional/input/standalone_rst_manpage.rst sectsubtitle
+test/functional/input/standalone_rst_pseudoxml.rst sectsubtitle
+test/functional/input/standalone_rst_s5_html.rst sectsubtitle
+test/functional/input/standalone_rst_xetex.rst sectsubtitle smartquotes
+
+# Guidedoc's own sources for the reader's settings (written for this corpus).
+extra/smartquotes-en.rst smartquotes
+extra/smartquotes-de.rst smartquotes lang=de
+extra/smartquotes-fr.rst smartquotes lang=fr
+extra/smartquotes-ru.rst smartquotes lang=ru
+extra/smartquotes-ja.rst smartquotes lang=ja
+extra/smartquotes-it.rst smartquotes lang=it
+extra/smartquotes-alt.rst smartquotes-alt lang=de
+extra/implicit-references.rst pep rfc trim
+extra/implicit-references-off.rst
+extra/substitution-names.rst
+extra/tabs.rst
+extra/tabs-4.rst tab=4
+extra/docinfo-problems.rst
+extra/docinfo-authors.rst
+extra/docinfo-keywords.rst
+extra/docinfo-after-raw.rst
+extra/section-subtitles.rst sectsubtitle
+extra/section-subtitles-nested.rst sectsubtitle
+extra/target-before-comment.rst
+extra/duplicate-targets.rst
+extra/character-level.rst charlevel

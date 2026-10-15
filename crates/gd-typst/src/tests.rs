@@ -194,6 +194,32 @@ mod embedded {
         let outside = compile_file(&backend(), Path::new("/x.typ"), &dir.0, &output, &offline());
         assert!(matches!(outside, Err(Error::OutsideRoot { .. })));
     }
+
+    #[test]
+    fn read_roots_narrow_what_the_root_lets_through() {
+        let dir = TempDir::new("read-roots");
+        let (allowed, private) = (dir.0.join("allowed"), dir.0.join("private"));
+        std::fs::create_dir_all(&allowed).expect("a folder");
+        std::fs::create_dir_all(&private).expect("a folder");
+        std::fs::write(allowed.join("a.txt"), "open").expect("a file");
+        std::fs::write(private.join("b.txt"), "secret").expect("a file");
+        let output = dir.0.join("out.pdf");
+        let options = Options { read_roots: vec![allowed.clone()], ..offline() };
+        let open =
+            compile_text(&backend(), "#read(\"/allowed/a.txt\")", &dir.0, &output, &options);
+        assert!(open.is_ok(), "{open:?}");
+        let text = "#read(\"/private/b.txt\")";
+        let refused = diagnostics_of(compile_text(&backend(), text, &dir.0, &output, &options));
+        assert!(refused.iter().any(|d| d.message.contains("denied")), "{refused:?}");
+        #[cfg(unix)]
+        {
+            // A link inside an allowed folder may not lead out of it.
+            std::os::unix::fs::symlink(&private, allowed.join("link")).expect("a link");
+            let text = "#read(\"/allowed/link/b.txt\")";
+            let out = compile_text(&backend(), text, &dir.0, &output, &options);
+            assert!(!diagnostics_of(out).is_empty());
+        }
+    }
 }
 
 #[cfg(not(feature = "embedded"))]

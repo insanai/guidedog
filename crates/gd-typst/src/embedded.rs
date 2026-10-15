@@ -140,6 +140,9 @@ fn make_world(
         package_cache: options.package_cache.clone(),
         package_roots: Mutex::new(HashMap::new()),
         root: root.to_path_buf(),
+        // A root that cannot be resolved admits nothing (it is left out), never more.
+        read_roots: (!options.read_roots.is_empty())
+            .then(|| options.read_roots.iter().filter_map(|r| r.canonicalize().ok()).collect()),
         main: main_id,
         main_text: main.is_none().then(|| text.to_string()),
         today,
@@ -217,6 +220,8 @@ struct EmbeddedWorld {
     package_cache: Option<PathBuf>,
     package_roots: Mutex<HashMap<PackageSpec, PathBuf>>,
     root: PathBuf,
+    /// Canonical folders project files must lie in; `None`: anywhere below the root.
+    read_roots: Option<Vec<PathBuf>>,
     main: FileId,
     main_text: Option<String>,
     today: Option<Datetime>,
@@ -244,6 +249,16 @@ impl EmbeddedWorld {
         Ok(dir)
     }
 
+    /// Whether a project file lies in a read root once its links are followed; a file
+    /// that does not exist is let through, so Typst reports it as not found.
+    fn may_read(&self, path: &Path) -> bool {
+        let Some(roots) = &self.read_roots else { return true };
+        match path.canonicalize() {
+            Ok(real) => roots.iter().any(|root| real.starts_with(root)),
+            Err(_) => !path.exists(),
+        }
+    }
+
     fn read(&self, id: FileId) -> FileResult<Vec<u8>> {
         if id == self.main
             && let Some(text) = &self.main_text
@@ -255,6 +270,9 @@ impl EmbeddedWorld {
             VirtualRoot::Project => self.root.clone(),
         };
         let path = id.vpath().realize(&base).map_err(FileError::from)?;
+        if matches!(id.root(), VirtualRoot::Project) && !self.may_read(&path) {
+            return Err(FileError::AccessDenied);
+        }
         std::fs::read(&path).map_err(|err| match err.kind() {
             std::io::ErrorKind::NotFound => FileError::NotFound(path.clone()),
             std::io::ErrorKind::PermissionDenied => FileError::AccessDenied,

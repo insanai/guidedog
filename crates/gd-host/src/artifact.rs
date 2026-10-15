@@ -354,6 +354,7 @@ fn typst_options<'a>(
         package_cache: o.package_cache.clone(),
         embedded_fonts_only: o.embedded_fonts_only,
         font_paths: o.font_paths.clone(),
+        read_roots: o.read_roots.clone(),
         reserve: Some(reserve),
     }
 }

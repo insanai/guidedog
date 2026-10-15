@@ -23,8 +23,9 @@
 //!
 //! Typst is not a sandbox of its own; what it may do is what the caller gives it:
 //! - Files: Typst reads only paths below the root it is given, and refuses a path that
-//!   leaves it; a link below the root is followed. Fonts come from `font_paths` and,
-//!   unless `embedded_fonts_only` is set, from the system.
+//!   leaves it; a link below the root is followed. The embedded backend can narrow this
+//!   to `read_roots`, checked once every link is followed. Fonts come from `font_paths`
+//!   and, unless `embedded_fonts_only` is set, from the system.
 //! - Packages: an `@preview` import downloads the package, unless `offline` is set (the
 //!   embedded backend only; the typst program has no such switch).
 //! - Memory and time: Typst's own, in the process (embedded) or in the typst program; no
@@ -114,6 +115,11 @@ pub struct Options<'a> {
     pub embedded_fonts_only: bool,
     /// Extra font directories, searched first.
     pub font_paths: Vec<PathBuf>,
+    /// When not empty, the only folders project files are read from: a path below the
+    /// root is read only when, every link followed, it lies in one of them (the
+    /// embedded backend only; for the typst program, give a root that holds only these
+    /// folders). Empty: anything below the root.
+    pub read_roots: Vec<PathBuf>,
     /// Asked with the size of the embedded compiler's output before it is written; `false`
     /// refuses the compile. The typst program writes its output itself and is not asked.
     pub reserve: Option<&'a dyn Fn(usize) -> bool>,
@@ -127,6 +133,7 @@ impl fmt::Debug for Options<'_> {
             .field("package_cache", &self.package_cache)
             .field("embedded_fonts_only", &self.embedded_fonts_only)
             .field("font_paths", &self.font_paths)
+            .field("read_roots", &self.read_roots)
             .field("reserve", &self.reserve.is_some())
             .finish()
     }

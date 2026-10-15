@@ -44,6 +44,33 @@ pub trait Publisher: Send {
     }
 }
 
+/// A boxed publisher is a publisher; every operation forwards (forward new ones too).
+impl Publisher for Box<dyn Publisher> {
+    fn info(&self) -> PublisherInfo {
+        (**self).info()
+    }
+
+    fn load(&mut self, options: &LoadOptions) -> Result<Loaded, Problem> {
+        (**self).load(options)
+    }
+
+    fn plan(&mut self, snapshot: &Snapshot, plan: &mut Plan) -> Result<(), Problem> {
+        (**self).plan(snapshot, plan)
+    }
+
+    fn publish(&mut self, snapshot: &Snapshot, plan: &Plan) -> Outcome {
+        (**self).publish(snapshot, plan)
+    }
+
+    fn status(&mut self, operation: &str) -> Outcome {
+        (**self).status(operation)
+    }
+
+    fn recover(&mut self) -> Outcome {
+        (**self).recover()
+    }
+}
+
 /// A publisher's optional operations.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Hash)]
 pub struct Capabilities {
@@ -110,8 +137,10 @@ impl PublisherInfo {
 }
 
 /// A publisher session's settings. The default is a real (not dry) run with the
-/// publisher's own wait and a five-minute request limit for programs.
+/// publisher's own wait and a five-minute request limit for programs. It is
+/// `#[non_exhaustive]`: use [`LoadOptions::new`] or `Default`, then assign fields.
 #[derive(Debug, Clone, Default)]
+#[non_exhaustive]
 pub struct LoadOptions {
     /// The publisher's configuration file, such as `pages.toml`.
     pub config: String,
@@ -124,6 +153,13 @@ pub struct LoadOptions {
     pub cancel: Cancel,
     /// Bounds each whole exchange with a program; zero means five minutes.
     pub request_timeout: Duration,
+}
+
+impl LoadOptions {
+    /// Options for a real run with the configuration file `config`.
+    pub fn new(config: &str) -> LoadOptions {
+        LoadOptions { config: config.to_string(), ..LoadOptions::default() }
+    }
 }
 
 /// What a session publishes: a Guidedog project to build as HTML (with warnings as

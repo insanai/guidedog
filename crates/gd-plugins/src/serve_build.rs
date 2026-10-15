@@ -11,8 +11,8 @@ use crate::problem::{self, Problem};
 use crate::wire::{self, Handshake, object};
 use crate::{
     BUILD_PROTOCOL_NAME, BUILD_PROTOCOL_VERSION, BuildPlugin, HtmlInput, MAX_PATH, MAX_RESPONSE,
-    PLUGIN_API_VERSION, PROTOCOL_FLAG, PluginOptions, PluginSession, SourceFormat, SourceInput,
-    base64,
+    PLUGIN_API_VERSION, PROTOCOL_FLAG, Plugin, PluginOptions, PluginSession, SourceFormat,
+    SourceInput, base64,
 };
 
 /// The whole `main` of a build-plugin program: when started with [`PROTOCOL_FLAG`], it
@@ -38,6 +38,27 @@ pub fn serve<P: BuildPlugin + 'static>(plugin: P) -> ExitCode {
     let input = BufReader::new(std::io::stdin().lock());
     let code = serve_streams(plugin, input, std::io::stdout().lock());
     ExitCode::from(code)
+}
+
+/// The whole `main` of a plugin crate's program, serving the same [`Plugin`] a custom
+/// host links: build hooks as [`serve`] does, a publisher as
+/// [`crate::serve_publisher`] does. One implementation, two deployments:
+///
+/// ```no_run
+/// # mod badge { pub fn plugin() -> gd_plugins::Plugin { unimplemented!() } }
+/// // In the plugin crate's src/main.rs; its lib.rs exposes `pub fn plugin() -> Plugin`.
+/// fn main() -> std::process::ExitCode {
+///     gd_plugins::serve_plugin(&badge::plugin())
+/// }
+/// ```
+pub fn serve_plugin(plugin: &Plugin) -> ExitCode {
+    if let Some(build) = plugin.make_build() {
+        return serve(build);
+    }
+    match plugin.make_publisher() {
+        Some(publisher) => crate::serve_publisher(publisher),
+        None => ExitCode::from(2),
+    }
 }
 
 /// Whether the program was started with exactly [`PROTOCOL_FLAG`].

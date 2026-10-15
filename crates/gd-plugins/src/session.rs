@@ -15,7 +15,7 @@ static SESSIONS: AtomicU64 = AtomicU64::new(1);
 
 /// One publisher, loaded with its configuration and target. Dropping the session
 /// unloads the publisher (and ends its program, for an installed one). One session
-/// runs one operation at a time.
+/// runs one operation at a time; it is `Send`, so a caller-owned worker may hold it.
 pub struct PublisherSession {
     publisher: Box<dyn Publisher>,
     info: PublisherInfo,

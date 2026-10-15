@@ -31,7 +31,10 @@ pub enum SnapshotMode {
 
 /// Bounds and placement of a snapshot. Zero bounds mean the defaults: 100,000 files,
 /// files under 100 MiB, and 1 GiB in all.
+///
+/// It is `#[non_exhaustive]`: use [`SnapshotOptions::new`] or `Default`, then assign.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
+#[non_exhaustive]
 pub struct SnapshotOptions {
     /// How the snapshot holds its files.
     pub mode: SnapshotMode,
@@ -45,6 +48,13 @@ pub struct SnapshotOptions {
     pub max_bytes: u64,
     /// Accept a site without `index.html` at its root.
     pub no_index: bool,
+}
+
+impl SnapshotOptions {
+    /// Default bounds, held as `mode` says.
+    pub fn new(mode: SnapshotMode) -> SnapshotOptions {
+        SnapshotOptions { mode, ..SnapshotOptions::default() }
+    }
 }
 
 /// One file of a snapshot: its path from the root with `/` between folders, its size,

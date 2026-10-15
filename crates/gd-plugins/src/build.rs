@@ -54,6 +54,30 @@ pub trait BuildPlugin: Send {
     }
 }
 
+/// A boxed plugin is a plugin, so registries and servers can hold any kind. Every hook
+/// forwards; a new hook must be forwarded here too.
+impl BuildPlugin for Box<dyn BuildPlugin> {
+    fn info(&self) -> PluginInfo {
+        (**self).info()
+    }
+
+    fn load(&mut self, ctx: &mut LoadContext<'_>) -> Result<(), Problem> {
+        (**self).load(ctx)
+    }
+
+    fn process_source<'a>(&mut self, input: &SourceInput<'a>) -> Result<Cow<'a, str>, Problem> {
+        (**self).process_source(input)
+    }
+
+    fn process_html<'a>(&mut self, input: &HtmlInput<'a>) -> Result<Cow<'a, str>, Problem> {
+        (**self).process_html(input)
+    }
+
+    fn collect_assets(&mut self) -> Result<Vec<Asset>, Problem> {
+        (**self).collect_assets()
+    }
+}
+
 /// Which build hooks a plugin offers.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Hash)]
 pub struct Hooks {
@@ -145,7 +169,11 @@ impl SourceFormat {
 
 /// One complete primary document before parsing, borrowed for the call. Includes are
 /// read by the engine later and do not pass through a source hook.
+///
+/// Hosts make it; it is `#[non_exhaustive]` so later fields are not a breaking change.
+/// Use the constructor, or `Default` and field assignment.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[non_exhaustive]
 pub struct SourceInput<'a> {
     /// The document's file path.
     pub path: &'a str,
@@ -160,7 +188,11 @@ pub struct SourceInput<'a> {
 }
 
 /// One complete rendered HTML page before staging, borrowed for the call.
+///
+/// Hosts make it; it is `#[non_exhaustive]` so later fields are not a breaking change.
+/// Use the constructor, or `Default` and field assignment.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[non_exhaustive]
 pub struct HtmlInput<'a> {
     /// The output page's path.
     pub path: &'a str,
@@ -172,6 +204,32 @@ pub struct HtmlInput<'a> {
     pub text: &'a str,
     /// The URL of this plugin's assets relative to the page, ending in `/`.
     pub assets_url: &'a str,
+}
+
+impl<'a> SourceInput<'a> {
+    /// Describes one primary document.
+    pub fn new(
+        path: &'a str,
+        docname: &'a str,
+        format: SourceFormat,
+        language: &'a str,
+        text: &'a str,
+    ) -> SourceInput<'a> {
+        SourceInput { path, docname, format, language, text }
+    }
+}
+
+impl<'a> HtmlInput<'a> {
+    /// Describes one rendered page; `assets_url` is relative to it and ends in `/`.
+    pub fn new(
+        path: &'a str,
+        docname: &'a str,
+        language: &'a str,
+        text: &'a str,
+        assets_url: &'a str,
+    ) -> HtmlInput<'a> {
+        HtmlInput { path, docname, language, text, assets_url }
+    }
 }
 
 /// One generated file: a relative, portable path such as `css/badge.css`, and bytes.
@@ -192,7 +250,11 @@ impl Asset {
 
 /// A build session's settings. Paths are at most [`MAX_PATH`] bytes; builder and
 /// language names at most 64.
+///
+/// Hosts make it; it is `#[non_exhaustive]` so later fields are not a breaking change.
+/// Use the constructor, or `Default` and field assignment.
 #[derive(Debug, Clone, Default)]
+#[non_exhaustive]
 pub struct PluginOptions {
     /// The plugin's configuration file, from `[plugin_configs]`; may be empty.
     pub config: String,
@@ -207,6 +269,20 @@ pub struct PluginOptions {
     pub request_timeout: Duration,
     /// Stops the build between and during requests.
     pub cancel: Cancel,
+}
+
+impl PluginOptions {
+    /// Options for one build: the plugin's configuration file, the project folder, the
+    /// builder and the language; the default timeout and no cancellation.
+    pub fn new(config: &str, project: &str, builder: &str, language: &str) -> PluginOptions {
+        PluginOptions {
+            config: config.to_string(),
+            project: project.to_string(),
+            builder: builder.to_string(),
+            language: language.to_string(),
+            ..PluginOptions::default()
+        }
+    }
 }
 
 /// What [`BuildPlugin::load`] gets: the session's options, and the dependency files

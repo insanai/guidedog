@@ -6,6 +6,88 @@ and publishers (GDS 0009), linked into an application or run as installed progra
 This page records the Rust design and the wire contract that must stay compatible with
 programs built by the Odin SDK. The crate's ``README.md`` is the API cheat sheet.
 
+Architecture
+------------
+
+One implementation, two deployments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A plugin crate implements ``BuildPlugin`` (or ``Publisher``) once and exposes
+``pub fn plugin() -> Plugin``. The same type then reaches a build in one of two ways:
+
+Linked
+   A custom ``guidedog`` binary compiles the crate in and passes its plugins to the CLI:
+   ``gd_cli::run_with(Registry::new(vec![badge::plugin()])?)``. The planned gd-cli entry
+   is ``pub fn run_with(linked: gd_plugins::Registry) -> std::process::ExitCode``, beside
+   ``run()`` which uses an empty registry. This replaces Odin's
+   ``project.Load_Options.plugins`` procedure tables. Linked code is trusted: a panic or
+   hang in a hook reaches the host.
+
+Served
+   The crate's small binary is ``fn main() -> ExitCode {
+   gd_plugins::serve_plugin(&badge::plugin()) }``. Once registered with
+   ``guidedog plugin register ID PATH`` (pinned by SHA-256), it runs as a child process
+   per build session behind the protocol below; a crash or stall becomes a problem.
+
+``examples/build_plugin/badge.rs`` is the library half and ``main.rs`` the served half;
+a test runs the badge both ways and requires identical outputs.
+
+Selecting plugins in a build
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+These rules come from the Odin ``lib/project/plugins.odin`` and ``lib/cli/plugin.odin``
+and are implemented by ``gd-project`` and ``gd-cli`` on top of this crate:
+
+* ``conf.toml`` selects IDs in ``plugins`` (at most ``MAX_BUILD_PLUGINS`` = 64, valid
+  and unique), their configuration files in ``[plugin_configs]`` (relative to the
+  configuration folder), and ``plugin_timeout`` (1 to 86400 seconds, default 60) per
+  whole program request. Hooks run in the listed order.
+* Lookup order: the linked registry first, then the machine registry, read only when
+  needed; a registered program is verified against its SHA-256 before it starts
+  (``select_build_plugin``). An ID in neither is a configuration error.
+* ``--untrusted`` refuses any selected plugin before starting code
+  (``plugins.untrusted``, exit 2): "Remove plugins from this build, or review the
+  project and build without --untrusted."
+* Assets are collected once, at setup, and only for the HTML builders (``html``,
+  ``dirhtml``, ``singlehtml``); they are staged under ``_static/plugins/ID/`` and may
+  not collide with project files.
+* CLI: ``guidedog plugin check|register|list|inspect|unregister|run`` and
+  ``guidedog publish``; ``check`` and registration of a build program run
+  ``check_plugin`` through ``process_plugin``.
+
+Identity and cache keys
+~~~~~~~~~~~~~~~~~~~~~~~
+
+``Plugin::identity(host_build)`` is what must change for a plugin's outputs to be
+rebuilt. A served plugin's identity is its registered program's SHA-256. A linked
+plugin's is the SHA-256 of its ID, product version and interface version together with
+``host_build``, the host's own build identity (Odin used its executable stamp), because
+its code is part of the host. A build folds, per plugin and in order: the identity,
+ID and version, the session's ``cache_key`` (which ``LoadContext::read_config`` and
+``read_file`` extend with fingerprints of the exact bytes read), the language and
+builder, the digest of the configuration file and of every declared dependency, and,
+for HTML builders, every asset's path and bytes.
+
+Concurrency
+~~~~~~~~~~~
+
+One session per selected plugin per build; sessions are never shared between builds,
+because state, cache key and dependencies belong to one build. Hooks take
+``&mut self``: a host calls them from one thread or holds the sessions in a
+``Mutex`` shared by reading workers (``PluginSession`` is ``Send``; a test drives one
+from several threads). Plugins need no synchronization. ``Plugin`` and ``Registry``
+are ``Send + Sync`` and immutable.
+
+Evolution
+~~~~~~~~~
+
+Host-made inputs (``SourceInput``, ``HtmlInput``, ``PluginOptions``, ``LoadOptions``,
+``SnapshotOptions``, ``Handshake``, ``MachineEntry``) are ``#[non_exhaustive]`` with
+constructors, so a new field is not a breaking change for plugin authors. New hooks
+arrive as trait methods with "absent" defaults plus a ``Hooks`` flag; incompatible
+changes bump ``PLUGIN_API_VERSION`` or ``API_VERSION`` (checked at registration and
+load) and the protocol versions, which are negotiated separately.
+
 Design
 ------
 
@@ -127,6 +209,24 @@ Mutations take ``plugins.toml.lock`` with ``File::try_lock`` (separate opens con
 even within a process), then write ``plugins.toml.next``, sync it, and rename it over
 the registry. ``inspect_entry`` accepts only absolute paths to ELF, Mach-O or PE files
 and runs the program's handshake; ``verify_entry`` re-hashes it before use.
+
+Alternatives considered
+-----------------------
+
+Dynamic libraries (``dlopen``, ``abi_stable``)
+   Rust has no stable ABI: a plugin would have to be built by the same compiler with
+   the same crate versions as the host, every call crosses ``unsafe`` FFI, and a crash
+   takes the host down. ``abi_stable`` narrows this at the cost of a large dependency and
+   FFI-shaped types. Linking at compile time plus processes covers both needs safely.
+
+WebAssembly (``wasmtime``)
+   A strong sandbox and a portable binary, but a very large dependency and toolchain
+   for plugin authors. A possible future deployment for untrusted plugins; the trait and
+   protocol shapes would carry over.
+
+Automatic registration (``inventory``, linker sections)
+   Needs extra crates and hides the wiring; an explicit ``Registry::new(vec![...])``
+   keeps the list of linked code visible in the host's ``main``.
 
 Not ported
 ----------

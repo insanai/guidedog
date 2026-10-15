@@ -59,6 +59,7 @@ mod process_build;
 mod process_publish;
 mod publisher;
 mod registry;
+mod select;
 mod serve_build;
 mod serve_publish;
 mod session;
@@ -88,7 +89,8 @@ pub use publisher::{
     PublisherInfo, Source, State,
 };
 pub use registry::{Plugin, Registry};
-pub use serve_build::{serve, serve_streams};
+pub use select::{MAX_BUILD_PLUGINS, select_build_plugin};
+pub use serve_build::{serve, serve_plugin, serve_streams};
 pub use serve_publish::{serve_publisher, serve_publisher_streams};
 pub use session::{PublisherSession, load_publisher};
 pub use snapshot::{Entry, Snapshot, SnapshotMode, SnapshotOptions, digest_hex, snapshot};

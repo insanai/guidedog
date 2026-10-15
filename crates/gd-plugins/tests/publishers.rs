@@ -35,7 +35,7 @@ fn an_installed_publisher_publishes_through_the_protocol() {
     root.write("site/_static/a.css", "p{}");
     let config = root.write("folder.toml", "site = \"site\"\ntarget = \"www\"\n");
     let plugin = process_publisher(saved).unwrap();
-    let options = LoadOptions { config: config.to_string_lossy().into(), ..Default::default() };
+    let options = LoadOptions::new(&config.to_string_lossy());
     let mut s = PublisherSession::load(&plugin, &options).unwrap();
     assert_eq!(s.source().site, root.join("site").to_string_lossy());
     for round in 0..2 {
@@ -68,11 +68,8 @@ fn a_dry_run_takes_no_lock_and_writes_nothing() {
     let plugin = process_publisher(&inspect_entry(&program).unwrap()).unwrap();
     root.write("site/index.html", "one");
     let config = root.write("folder.toml", "site = \"site\"\ntarget = \"www\"\n");
-    let options = LoadOptions {
-        config: config.to_string_lossy().into(),
-        dry_run: true,
-        ..Default::default()
-    };
+    let mut options = LoadOptions::new(&config.to_string_lossy());
+    options.dry_run = true;
     let mut s = PublisherSession::load(&plugin, &options).unwrap();
     let snap = snapshot(&s.source().site, &SnapshotOptions::default()).unwrap();
     let plan = s.plan(&snap).unwrap();
@@ -92,11 +89,8 @@ fn publisher_process_failures_are_bounded_and_truthful() {
     for mode in ["malformed", "refused", "write", "stall-unload"] {
         let site = root.write(&format!("{mode}/index.html"), "one");
         let site = site.parent().unwrap().to_string_lossy().into_owned();
-        let options = LoadOptions {
-            config: site.clone(),
-            request_timeout: Duration::from_secs(1),
-            ..Default::default()
-        };
+        let mut options = LoadOptions::new(&site);
+        options.request_timeout = Duration::from_secs(1);
         let loaded = PublisherSession::load(&plugin, &options);
         if mode == "malformed" || mode == "refused" {
             assert_eq!(loaded.unwrap_err().code, "plugins.protocol", "{mode}");

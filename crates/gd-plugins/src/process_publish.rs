@@ -42,7 +42,7 @@ pub fn process_publisher(entry: &MachineEntry) -> Result<Plugin, Problem> {
             child: None,
         })
     });
-    Ok(Plugin::from_publisher_maker(info, &entry.path, make))
+    Ok(Plugin::from_publisher_maker(info, &entry.path, make).with_program_sha256(&entry.sha256))
 }
 
 /// Runs the program at `executable` in protocol mode, reads its handshake, and ends

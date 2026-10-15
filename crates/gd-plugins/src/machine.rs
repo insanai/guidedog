@@ -28,8 +28,9 @@ pub const CONFIG_VARIABLE: &str = "GUIDEDOG_CONFIG_DIR";
 
 const MAX_MACHINE_BYTES: u64 = 1024 * 1024;
 
-/// One registered program.
+/// One registered program, as [`inspect_entry`] describes it and the registry keeps it.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[non_exhaustive]
 pub struct MachineEntry {
     /// The plugin's ID.
     pub id: String,

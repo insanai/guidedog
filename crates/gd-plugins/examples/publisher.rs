@@ -18,7 +18,7 @@ use std::process::ExitCode;
 
 use gd_plugins::{
     Capabilities, Change, ChangeKind, LoadOptions, Loaded, Outcome, Plan, Problem, Publisher,
-    PublisherInfo, Snapshot, SnapshotOptions, Source, State,
+    PublisherInfo, Snapshot, SnapshotMode, SnapshotOptions, Source, State,
 };
 
 /// The file in a published folder that names the generation it holds.
@@ -133,11 +133,9 @@ impl Publisher for Folder {
 impl Folder {
     fn replace(&self, snapshot: &Snapshot, generation: &str) -> Result<(), Problem> {
         let parent = self.target.parent().unwrap_or(Path::new("."));
-        let options = SnapshotOptions {
-            temp_dir: Some(parent.to_path_buf()),
-            no_index: true,
-            ..SnapshotOptions::default()
-        };
+        let mut options = SnapshotOptions::new(SnapshotMode::Copy);
+        options.temp_dir = Some(parent.to_path_buf());
+        options.no_index = true;
         // A private copy beside the target, so the final rename stays on one disk.
         let copy = gd_plugins::snapshot(snapshot.root(), &options)?;
         if copy.digest() != snapshot.digest() {

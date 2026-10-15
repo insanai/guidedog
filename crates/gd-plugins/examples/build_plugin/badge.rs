@@ -1,31 +1,30 @@
-//! A build plugin: typed source and HTML hooks, plus a generated CSS asset. It
-//! replaces `{{product}}` in source text, labels HTML pages, and supplies the label's
-//! stylesheet. Build it, register it, and select it in `conf.toml`:
+//! The product badge, a complete build plugin: it replaces `{{product}}` in source
+//! text, labels HTML pages, and supplies the label's stylesheet. Its settings file holds
+//! `product = "Orbit"`.
 //!
-//! ```text
-//! cargo build --release -p gd-plugins --example build_plugin
-//! guidedog plugin register product-badge "$PWD/target/release/examples/build_plugin" \
-//!     --project=docs --config=badge.toml
-//! ```
-//!
-//! `badge.toml` holds `product = "Orbit"`. An application can instead link the plugin
-//! directly with `gd_plugins::Plugin::build(Badge::default())`.
+//! In a plugin crate this file is the library: a custom `guidedog` binary links it with
+//! `Registry::new(vec![badge::plugin()])`, and the crate's own small binary
+//! (`main.rs`) serves the same `Badge` as an installed program.
 
 use std::borrow::Cow;
-use std::process::ExitCode;
 
 use gd_plugins::{
-    Asset, BuildPlugin, Hooks, HtmlInput, LoadContext, MAX_PLUGIN_TEXT, PluginInfo, Problem,
-    SourceInput,
+    Asset, BuildPlugin, Hooks, HtmlInput, LoadContext, MAX_PLUGIN_TEXT, Plugin, PluginInfo,
+    Problem, SourceInput,
 };
 
 const MARKER: &str = "{{product}}";
 const CSS: &str = ".product-badge { border-inline-start: 3px solid #216553; \
                    padding: .5rem 1rem; margin: 1rem; font-weight: 700; }\n";
 
+/// The plugin a host links, or a program serves: one implementation, two deployments.
+pub fn plugin() -> Plugin {
+    Plugin::build(Badge::default())
+}
+
 /// The plugin's state: the product name `load` read. The unloaded prototype is empty.
 #[derive(Debug, Clone, Default)]
-struct Badge {
+pub struct Badge {
     product: String,
 }
 
@@ -112,8 +111,4 @@ impl BuildPlugin for Badge {
 
 fn escape_html(text: &str) -> String {
     text.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;")
-}
-
-fn main() -> ExitCode {
-    gd_plugins::serve(Badge::default())
 }

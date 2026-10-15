@@ -26,6 +26,7 @@ const MAX_NESTING: usize = 16;
 /// is, its capabilities (publishers), the snapshot schemas it reads (publishers), and
 /// its hooks (build plugins).
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[non_exhaustive]
 pub struct Handshake {
     /// [`PROTOCOL_NAME`] or [`BUILD_PROTOCOL_NAME`].
     pub protocol: String,

@@ -35,7 +35,7 @@ pub fn process_plugin(entry: &MachineEntry) -> Result<Plugin, Problem> {
         hooks: entry.hooks.clone(),
         ..Handshake::default()
     };
-    build_plugin_of(&handshake, &entry.path)
+    Ok(build_plugin_of(&handshake, &entry.path)?.with_program_sha256(&entry.sha256))
 }
 
 /// The plugin a build program's handshake describes, running `executable`.

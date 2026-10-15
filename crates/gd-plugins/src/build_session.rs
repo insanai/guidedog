@@ -16,6 +16,18 @@ use crate::{
 /// plugin's state, and the dependency files and cache key that identify what was
 /// loaded. Every hook call checks its input and the plugin's reply. Dropping the
 /// session unloads the plugin (and ends its program, for an installed one).
+///
+/// **Concurrency.** A host opens one session per selected plugin per build; its state,
+/// cache key and dependencies belong to that build. Hooks take `&mut self`, so calls are
+/// serialized: call from one thread, or put the sessions in a `Mutex` shared by the
+/// reading workers (the session is `Send`, so `Mutex<PluginSession>` is `Sync`). A
+/// plugin therefore never needs synchronization of its own.
+///
+/// ```
+/// fn shared_by_workers<T: Send + Sync>() {}
+/// shared_by_workers::<std::sync::Mutex<Vec<gd_plugins::PluginSession>>>();
+/// shared_by_workers::<gd_plugins::Registry>();
+/// ```
 pub struct PluginSession {
     plugin: Box<dyn BuildPlugin>,
     info: PluginInfo,

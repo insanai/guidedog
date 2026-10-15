@@ -125,3 +125,20 @@ fn cancellation_and_limits_stop_hooks() {
     let input = SourceInput { path: &long, format: SourceFormat::Markdown, ..source("x") };
     assert!(s.process_source(&input).is_err());
 }
+
+#[test]
+fn sessions_serve_worker_threads_through_a_mutex() {
+    let plugin = Plugin::build(Fixture::default());
+    let session = PluginSession::load(&plugin, &PluginOptions::default()).unwrap();
+    let shared = std::sync::Mutex::new(session);
+    std::thread::scope(|scope| {
+        for n in 0..4 {
+            let shared = &shared;
+            scope.spawn(move || {
+                let text = n.to_string();
+                let mut s = shared.lock().unwrap();
+                assert_eq!(s.process_source(&source(&text)).unwrap(), format!("loaded:{n}"));
+            });
+        }
+    });
+}

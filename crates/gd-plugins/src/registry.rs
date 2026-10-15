@@ -19,6 +19,7 @@ type PublisherMaker = Arc<dyn Fn() -> Box<dyn Publisher> + Send + Sync>;
 pub struct Plugin {
     kind: Kind,
     executable: String,
+    program_sha256: String,
 }
 
 #[derive(Clone)]
@@ -33,14 +34,22 @@ impl Plugin {
     pub fn build<P: BuildPlugin + Clone + Sync + 'static>(prototype: P) -> Plugin {
         let info = prototype.info();
         let make: BuildMaker = Arc::new(move || Box::new(prototype.clone()));
-        Plugin { kind: Kind::Build { info, make }, executable: String::new() }
+        Plugin {
+            kind: Kind::Build { info, make },
+            executable: String::new(),
+            program_sha256: String::new(),
+        }
     }
 
     /// Offers a publisher. Each session starts from a clone of `prototype`.
     pub fn publisher<P: Publisher + Clone + Sync + 'static>(prototype: P) -> Plugin {
         let info = prototype.info();
         let make: PublisherMaker = Arc::new(move || Box::new(prototype.clone()));
-        Plugin { kind: Kind::Publisher { info, make }, executable: String::new() }
+        Plugin {
+            kind: Kind::Publisher { info, make },
+            executable: String::new(),
+            program_sha256: String::new(),
+        }
     }
 
     pub(crate) fn from_build_maker(
@@ -48,7 +57,11 @@ impl Plugin {
         executable: &str,
         make: BuildMaker,
     ) -> Plugin {
-        Plugin { kind: Kind::Build { info, make }, executable: executable.to_string() }
+        Plugin {
+            kind: Kind::Build { info, make },
+            executable: executable.to_string(),
+            program_sha256: String::new(),
+        }
     }
 
     pub(crate) fn from_publisher_maker(
@@ -56,7 +69,11 @@ impl Plugin {
         executable: &str,
         make: PublisherMaker,
     ) -> Plugin {
-        Plugin { kind: Kind::Publisher { info, make }, executable: executable.to_string() }
+        Plugin {
+            kind: Kind::Publisher { info, make },
+            executable: executable.to_string(),
+            program_sha256: String::new(),
+        }
     }
 
     /// The plugin's ID.
@@ -92,6 +109,31 @@ impl Plugin {
     /// [`crate::process_publisher`]; empty for a linked plugin.
     pub fn executable(&self) -> &str {
         &self.executable
+    }
+
+    /// The plugin's identity for build cache keys: what must change for outputs it
+    /// produced to be rebuilt. For an installed program it is the registered program's
+    /// SHA-256, which pins its exact code. For a linked plugin it is the SHA-256 of its
+    /// ID, product version and interface version together with `host_build`, the host
+    /// program's own build identity (its version and commit, or its executable's
+    /// digest), since the plugin's code is part of the host. Lowercase hexadecimal.
+    pub fn identity(&self, host_build: &str) -> String {
+        if !self.program_sha256.is_empty() {
+            return self.program_sha256.clone();
+        }
+        let (id, version, api) = match &self.kind {
+            Kind::Build { info, .. } => (&info.id, &info.version, info.api),
+            Kind::Publisher { info, .. } => (&info.id, &info.version, info.api),
+        };
+        let kind = if self.is_publisher() { "publisher" } else { "build" };
+        let text = format!("guidedog-linked-plugin\n{kind}\n{id}\n{version}\n{api}\n{host_build}");
+        gd_sha::to_hex(&gd_sha::sha256(text.as_bytes()))
+    }
+
+    /// Records the registered program's SHA-256, which becomes its identity.
+    pub(crate) fn with_program_sha256(mut self, sha256: &str) -> Plugin {
+        self.program_sha256 = sha256.to_string();
+        self
     }
 
     /// Checks the plugin's metadata without running any of its hooks.

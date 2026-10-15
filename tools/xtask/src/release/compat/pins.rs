@@ -11,7 +11,7 @@ use crate::{Result, fail};
 pub(super) const OLD_TAG: &str = "v0.6.0";
 
 /// Where that release's assets are downloaded from.
-const BASE: &str = "https://github.com/insanai/guidedog/releases/download/v0.6.0";
+const BASE: &str = "https://github.com/insanai/guidedog_odin/releases/download/v0.6.0";
 
 /// One release asset and the SHA-256 it must have.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

@@ -3,8 +3,31 @@
 use std::path::Path;
 use std::process::Command;
 
-use crate::fsutil::{copy, copy_tree, sorted_entries};
+use crate::fsutil::{copy, copy_tree};
 use crate::{Result, fail, process};
+
+// The dependency closure of gvc, cgraph, core, dot_layout and neato_layout in the
+// pinned upstream archive. Other renderers and their image/font libraries are omitted.
+const RUNTIME_DLLS: [&str; 18] = [
+    "cdt.dll",
+    "cgraph.dll",
+    "glib-2.0-0.dll",
+    "gts.dll",
+    "gvc.dll",
+    "gvplugin_core.dll",
+    "gvplugin_dot_layout.dll",
+    "gvplugin_neato_layout.dll",
+    "iconv-2.dll",
+    "intl-8.dll",
+    "libexpat.dll",
+    "msvcp140.dll",
+    "pathplan.dll",
+    "pcre2-8.dll",
+    "vcruntime140.dll",
+    "vcruntime140_1.dll",
+    "xdot.dll",
+    "zlib1.dll",
+];
 
 /// Copies the verified Graphviz distribution's runtime and notices into the archive.
 pub(super) fn copy_runtime(folder: &Path) -> Result<()> {
@@ -13,28 +36,19 @@ pub(super) fn copy_runtime(folder: &Path) -> Result<()> {
             "windows-graphviz",
             "NO GRAPHVIZ RUNTIME",
             "GUIDEDOG_GRAPHVIZ_WINDOWS does not name the extracted Graphviz distribution.",
-            "Extract the pinned Windows Graphviz archive and set its installation folder.",
+            "Set GUIDEDOG_GRAPHVIZ_WINDOWS to the extracted Graphviz installation folder.",
         )
     })?;
     let graphviz = Path::new(&graphviz);
-    for file in sorted_entries(&graphviz.join("bin"))? {
-        let name = file.file_name().unwrap_or_default();
-        if file.extension().is_some_and(|ext| ext == "dll") || name == "config8" {
-            copy(&file, &folder.join(name))?;
-        }
+    for name in RUNTIME_DLLS {
+        copy(&graphviz.join("bin").join(name), &folder.join(name))?;
     }
-    // Keep upstream notices and sources together, including the third-party licenses.
-    for directory in ["share", "etc"] {
-        let source = graphviz.join(directory);
-        if source.is_dir() {
-            copy_tree(&source, &folder.join(directory))?;
-        }
-    }
-    for file in sorted_entries(graphviz)? {
-        if file.is_file() {
-            copy(&file, &folder.join(file.file_name().unwrap_or_default()))?;
-        }
-    }
+    let notices = crate::repository_root().join("tools/release/windows-notices");
+    copy_tree(&notices, &folder.join("notices"))?;
+    // Generate a config for the plugins we ship, so no optional system plugins are used.
+    let mut dot = Command::new(graphviz.join("bin/dot.exe"));
+    dot.arg("-c").env("GVBINDIR", folder);
+    process::run(&mut dot)?;
     Ok(())
 }
 

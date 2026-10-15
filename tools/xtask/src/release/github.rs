@@ -271,8 +271,8 @@ mod tests {
     use crate::fsutil::TempDir;
 
     #[test]
-    fn beta_publication_keeps_latest_stable() {
-        let dir = TempDir::new("publish-test").unwrap();
+    fn beta_publication_keeps_latest_stable() -> Result<()> {
+        let dir = TempDir::new("publish-test")?;
         for (version, prerelease, latest) in [
             ("1.0.0-beta.1", "--prerelease", "--latest=false"),
             ("1.0.0", "--prerelease=false", "--latest"),
@@ -285,12 +285,12 @@ mod tests {
                 version,
                 dir.path(),
                 State::Missing,
-            )
-            .unwrap();
-            let edit = commands.last().unwrap();
+            )?;
+            let Some(edit) = commands.last() else { panic!("no publication command") };
             let args: Vec<_> = edit.get_args().map(|arg| arg.to_string_lossy()).collect();
             assert!(args.iter().any(|arg| arg == prerelease));
             assert!(args.iter().any(|arg| arg == latest));
         }
+        Ok(())
     }
 }

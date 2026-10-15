@@ -35,7 +35,7 @@ let doc = read_document(&mut ws, &reader(), &request)?;
 | text | `p.code_text`, `p.pool_lines`, `p.push_lines`, `p.pool_classes`, `p.pool_lower`, `join_lines`, `path_of` |
 | spans | `p.span_of`, `p.line_span`, `p.lines_span`; sources: `p.enter_source`/`p.leave_source` |
 | roles state | `p.find_role`, `p.inline_state()` (default role), `standard_role` |
-| a host markup (MyST) | `impl Host` (`body`, `inline`, `items`); `embed_begin(ctx, &settings, ext) -> ReaderState`; per call `state.parser(ctx, ext, Some(&host))`; `p.run_hosted(&HostDirective)`, `p.directive_shape(name)`, `p.apply_host_role`, `p.host_lines`/`p.host_views`, `p.take_table_extra` + `p.table_decorate`, `p.take_pending_classes`; end with `p.embed_end()` |
+| a host markup (MyST) | `impl Host` (`body`, `inline`, `items`); `embed_begin(ctx, &settings, ext) -> ReaderState`; per call `state.parser(ctx, ext, Some(&host))`; `p.run_hosted(&HostDirective)`, `p.directive_shape(name)`, `p.apply_host_role`, `p.host_lines`/`p.host_views`, `p.take_table_extra` + `p.table_decorate`, `p.take_pending_classes`; end with `p.embed_end()`; `p.lend(\|ctx, st\| ..)` hands a host the context and state for nested content |
 | messages | `guidedoc_rst::messages::*` (every one has a hint) |
 
 ## Redesigns from the Odin reader

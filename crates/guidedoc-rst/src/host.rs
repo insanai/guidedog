@@ -168,6 +168,14 @@ impl<'p, 'a> Parser<'p, 'a> {
         lines.iter().map(|l| l.view(self.st.tab)).collect()
     }
 
+    /// Lends the read context and the reader's state to `f`. A host that parses nested
+    /// content with a reader of its own, whose directives run through this reader again,
+    /// uses it to move the state where those handlers find it (and back) while the
+    /// context is with its reader.
+    pub fn lend<R>(&mut self, f: impl FnOnce(&mut ReadContext<'a>, &mut ReaderState) -> R) -> R {
+        f(self.ctx, self.st)
+    }
+
     /// Ends an embedded read: runs the dialect's end hook, closes sections, reports
     /// what was left dangling, and resolves the document as `read` does.
     pub fn embed_end(&mut self) -> Result<(), Fail> {

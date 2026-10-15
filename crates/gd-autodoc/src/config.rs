@@ -42,6 +42,9 @@ pub struct Config {
     /// default); Sphinx adds them to the parsed field lists instead, so comparisons
     /// with its generated text turn it off.
     pub typehint_fields: bool,
+    /// `sphinx.ext.napoleon`'s settings when the extension is on: docstrings are read
+    /// for Google and NumPy sections.
+    pub napoleon: Option<crate::Napoleon>,
 }
 
 impl Default for Config {
@@ -64,6 +67,7 @@ impl Default for Config {
             strip_signature_backslash: false,
             tab_width: 8,
             typehint_fields: true,
+            napoleon: None,
         }
     }
 }

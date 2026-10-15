@@ -57,7 +57,7 @@ pub(crate) struct Loaded {
 }
 
 /// The attributes every class inherits from `object`.
-const OBJECT_ATTRS: &[&str] = &[
+pub(crate) const OBJECT_ATTRS: &[&str] = &[
     "__class__",
     "__delattr__",
     "__dir__",
@@ -118,7 +118,7 @@ pub(crate) fn gather_members(
     for m in &found {
         let has_attr_doc =
             analyzer.is_some_and(|a| g.project.module(a).info.has_attr_doc(&namespace, &m.name));
-        if !keep_member(g, p, m, want_all, has_attr_doc) {
+        if !keep_member(g, p, m, want_all, has_attr_doc) && !napoleon_keeps_member(g, p, m) {
             continue;
         }
         let is_attr = m.sentinel == Sentinel::InstanceAttr || has_attr_doc;
@@ -222,7 +222,7 @@ fn add_name(names: &mut Vec<String>, name: &str) {
 }
 
 /// `dir(module)`: its runtime names, sorted.
-fn module_names(g: &mut Generator<'_>, id: ModuleId) -> Vec<String> {
+pub(crate) fn module_names(g: &mut Generator<'_>, id: ModuleId) -> Vec<String> {
     let m = Arc::clone(g.project.module(id));
     let mut names = Vec::new();
     let bound =
@@ -284,7 +284,7 @@ fn module_members(
 }
 
 /// The names a class body puts in its `__dict__`.
-fn class_dict_names(g: &Generator<'_>, c: ClassRef) -> Vec<String> {
+pub(crate) fn class_dict_names(g: &Generator<'_>, c: ClassRef) -> Vec<String> {
     let mut names = Vec::new();
     for d in &g.project.class(c).scope.defs {
         if d.runtime && d.kind != DefKind::Annotation {
@@ -531,6 +531,21 @@ fn keep_member(
         return o.private_members.includes(&m.name);
     }
     has_attr_doc || (!filtered && has_doc)
+}
+
+/// Whether napoleon documents a member autodoc skips (`napoleon_include_*_with_doc`).
+fn napoleon_keeps_member(g: &mut Generator<'_>, p: &Props, m: &Member) -> bool {
+    if g.config.napoleon.is_none() {
+        return false;
+    }
+    let doc = match m.obj.kind {
+        ObjectKind::Function | ObjectKind::Class => {
+            let doc = getdoc(g, &m.obj, false, None, &m.name).ok().flatten();
+            doc.is_some_and(|d| !d.is_empty())
+        }
+        _ => false,
+    };
+    crate::process::napoleon_keeps(g, p, &m.name, &m.obj, doc)
 }
 
 /// Reports a method without a docstring in a class with bases outside the roots:

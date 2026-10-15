@@ -1,0 +1,3019 @@
+@@@@ case 1 numpy
+@@@@ what class
+@@@@ name NamedtupleSubclass
+@@@@ input 11
+Sample namedtuple subclass
+
+Attributes
+----------
+attr1 : Arbitrary type
+    Quick description of attr1
+attr2 : Another arbitrary type
+    Quick description of attr2
+attr3 : Type
+
+    Adds a newline after the type
+@@@@ output 20
+Sample namedtuple subclass
+
+.. attribute:: attr1
+
+   Quick description of attr1
+
+   :type: Arbitrary type
+
+.. attribute:: attr2
+
+   Quick description of attr2
+
+   :type: Another arbitrary type
+
+.. attribute:: attr3
+
+   Adds a newline after the type
+
+   :type: Type
+
+@@@@ case 2 google
+@@@@ what attribute
+@@@@ name some_data
+@@@@ input 3
+data member description:
+
+- a: b
+@@@@ output 3
+data member description:
+
+- a: b
+@@@@ case 3 google
+@@@@ what attribute
+@@@@ name some_data
+@@@@ input 1
+CustomType: inline description with ``a : in code``, a :ref:`reference`, a `link <https://foo.bar>`_, a :meta public:, a :meta field: value and an host:port and HH:MM strings.
+@@@@ output 3
+inline description with ``a : in code``, a :ref:`reference`, a `link <https://foo.bar>`_, a :meta public:, a :meta field: value and an host:port and HH:MM strings.
+
+:type: CustomType
+@@@@ case 4 google
+@@@@ what attribute
+@@@@ name some_data
+@@@@ input 1
+inline description with ``a : in code``, a :ref:`reference`, a `link <https://foo.bar>`_, a :meta public:, a :meta field: value and an host:port and HH:MM strings.
+@@@@ output 1
+inline description with ``a : in code``, a :ref:`reference`, a `link <https://foo.bar>`_, a :meta public:, a :meta field: value and an host:port and HH:MM strings.
+@@@@ case 5 google
+@@@@ what attribute
+@@@@ name some_data
+@@@@ input 1
+:py:class:`int`: inline description with ``a : in code``, a :ref:`reference`, a `link <https://foo.bar>`_, a :meta public:, a :meta field: value and an host:port and HH:MM strings.
+@@@@ output 3
+inline description with ``a : in code``, a :ref:`reference`, a `link <https://foo.bar>`_, a :meta public:, a :meta field: value and an host:port and HH:MM strings.
+
+:type: :py:class:`int`
+@@@@ case 6 google
+@@@@ input 2
+Attributes:
+    in_attr(:py:class:`numpy.ndarray`): super-dooper attribute
+@@@@ output 6
+.. attribute:: in_attr
+
+   super-dooper attribute
+
+   :type: :py:class:`numpy.ndarray`
+
+@@@@ case 7 google
+@@@@ input 2
+Attributes:
+    in_attr(numpy.ndarray): super-dooper attribute
+@@@@ output 6
+.. attribute:: in_attr
+
+   super-dooper attribute
+
+   :type: numpy.ndarray
+
+@@@@ case 8 google
+@@@@ set use_ivar = true
+@@@@ what class
+@@@@ input 3
+Attributes:
+    foo (int): blah blah
+    bar (str): blah blah
+@@@@ output 5
+:ivar foo: blah blah
+:vartype foo: int
+:ivar bar: blah blah
+:vartype bar: str
+
+@@@@ case 9 google
+@@@@ input 6
+
+Returns:
+    foobar: foo::
+
+        codecode
+        codecode
+@@@@ output 9
+
+:returns:
+
+          foo::
+
+              codecode
+              codecode
+:rtype: foobar
+
+@@@@ case 10 google
+@@@@ input 5
+Example property.
+
+Returns:
+    :py:class:`~.module.submodule.SomeClass`: an example instance
+    if available, None if not available.
+@@@@ output 6
+Example property.
+
+:returns: an example instance
+          if available, None if not available.
+:rtype: :py:class:`~.module.submodule.SomeClass`
+
+@@@@ case 11 google
+@@@@ set custom_sections = [Really Important Details; (Sooper Warning, warns); (Params Style, params_style); (Returns Style, returns_style)]
+@@@@ input 2
+Really Important Details:
+    You should listen to me!
+@@@@ output 4
+.. rubric:: Really Important Details
+
+You should listen to me!
+
+@@@@ case 12 google
+@@@@ set custom_sections = [Really Important Details; (Sooper Warning, warns); (Params Style, params_style); (Returns Style, returns_style)]
+@@@@ input 2
+Sooper Warning:
+    Stop hitting yourself!
+@@@@ output 2
+:Warns: **Stop hitting yourself!**
+
+@@@@ case 13 google
+@@@@ set custom_sections = [Really Important Details; (Sooper Warning, warns); (Params Style, params_style); (Returns Style, returns_style)]
+@@@@ input 4
+Params Style:
+    arg1 (int): Description of arg1
+    arg2 (str): Description of arg2
+
+@@@@ output 3
+:Params Style: * **arg1** (*int*) -- Description of arg1
+               * **arg2** (*str*) -- Description of arg2
+
+@@@@ case 14 google
+@@@@ set custom_sections = [Really Important Details; (Sooper Warning, warns); (Params Style, params_style); (Returns Style, returns_style)]
+@@@@ input 3
+Returns Style:
+    description of custom section
+
+@@@@ output 2
+:Returns Style: description of custom section
+
+@@@@ case 15 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 1
+Single line summary
+@@@@ output 1
+Single line summary
+@@@@ case 16 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 5
+
+Single line summary
+
+Extended description
+
+@@@@ output 5
+
+Single line summary
+
+Extended description
+
+@@@@ case 17 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 6
+
+Single line summary
+
+Args:
+  arg1(str):Extended
+    description of arg1
+@@@@ output 6
+
+Single line summary
+
+:Parameters: **arg1** (*str*) -- Extended
+             description of arg1
+
+@@@@ case 18 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 14
+
+Single line summary
+
+Args:
+  arg1(str):Extended
+    description of arg1
+  arg2 ( int ) : Extended
+    description of arg2
+
+Keyword Args:
+  kwarg1(str):Extended
+    description of kwarg1
+  kwarg2 ( int ) : Extended
+    description of kwarg2
+@@@@ output 13
+
+Single line summary
+
+:Parameters: * **arg1** (*str*) -- Extended
+               description of arg1
+             * **arg2** (*int*) -- Extended
+               description of arg2
+
+:Keyword Arguments: * **kwarg1** (*str*) -- Extended
+                      description of kwarg1
+                    * **kwarg2** (*int*) -- Extended
+                      description of kwarg2
+
+@@@@ case 19 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 14
+
+Single line summary
+
+Arguments:
+  arg1(str):Extended
+    description of arg1
+  arg2 ( int ) : Extended
+    description of arg2
+
+Keyword Arguments:
+  kwarg1(str):Extended
+    description of kwarg1
+  kwarg2 ( int ) : Extended
+    description of kwarg2
+@@@@ output 13
+
+Single line summary
+
+:Parameters: * **arg1** (*str*) -- Extended
+               description of arg1
+             * **arg2** (*int*) -- Extended
+               description of arg2
+
+:Keyword Arguments: * **kwarg1** (*str*) -- Extended
+                      description of kwarg1
+                    * **kwarg2** (*int*) -- Extended
+                      description of kwarg2
+
+@@@@ case 20 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 6
+
+Single line summary
+
+Return:
+  str:Extended
+  description of return value
+@@@@ output 6
+
+Single line summary
+
+:returns: *str* -- Extended
+          description of return value
+
+@@@@ case 21 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 6
+
+Single line summary
+
+Returns:
+  str:Extended
+  description of return value
+@@@@ output 6
+
+Single line summary
+
+:returns: *str* -- Extended
+          description of return value
+
+@@@@ case 22 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 6
+
+Single line summary
+
+Returns:
+  Extended
+  description of return value
+@@@@ output 6
+
+Single line summary
+
+:returns: Extended
+          description of return value
+
+@@@@ case 23 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 5
+
+Single line summary
+
+Returns:
+  Extended
+@@@@ output 5
+
+Single line summary
+
+:returns: Extended
+
+@@@@ case 24 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 8
+
+Single line summary
+
+Args:
+  arg1(str):Extended
+    description of arg1
+  *args: Variable length argument list.
+  **kwargs: Arbitrary keyword arguments.
+@@@@ output 8
+
+Single line summary
+
+:Parameters: * **arg1** (*str*) -- Extended
+               description of arg1
+             * **\*args** -- Variable length argument list.
+             * **\*\*kwargs** -- Arbitrary keyword arguments.
+
+@@@@ case 25 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 8
+
+Single line summary
+
+Args:
+  arg1 (list(int)): Description
+  arg2 (list[int]): Description
+  arg3 (dict(str, int)): Description
+  arg4 (dict[str, int]): Description
+@@@@ output 8
+
+Single line summary
+
+:Parameters: * **arg1** (*list(int)*) -- Description
+             * **arg2** (*list[int]*) -- Description
+             * **arg3** (*dict(str, int)*) -- Description
+             * **arg4** (*dict[str, int]*) -- Description
+
+@@@@ case 26 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 6
+
+Single line summary
+
+Receive:
+  arg1 (list(int)): Description
+  arg2 (list[int]): Description
+@@@@ output 6
+
+Single line summary
+
+:Receives: * **arg1** (*list(int)*) -- Description
+           * **arg2** (*list[int]*) -- Description
+
+@@@@ case 27 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 6
+
+Single line summary
+
+Receives:
+  arg1 (list(int)): Description
+  arg2 (list[int]): Description
+@@@@ output 6
+
+Single line summary
+
+:Receives: * **arg1** (*list(int)*) -- Description
+           * **arg2** (*list[int]*) -- Description
+
+@@@@ case 28 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 6
+
+Single line summary
+
+Yield:
+  str:Extended
+  description of yielded value
+@@@@ output 6
+
+Single line summary
+
+:Yields: *str* -- Extended
+         description of yielded value
+
+@@@@ case 29 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 6
+
+Single line summary
+
+Yields:
+  Extended
+  description of yielded value
+@@@@ output 6
+
+Single line summary
+
+:Yields: Extended
+         description of yielded value
+
+@@@@ case 30 google
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ input 17
+
+Single line summary
+
+Args:
+
+  arg1 (list of str): Extended
+      description of arg1.
+  arg2 (tuple of int): Extended
+      description of arg2.
+  arg3 (tuple of list of float): Extended
+      description of arg3.
+  arg4 (int, float, or list of bool): Extended
+      description of arg4.
+  arg5 (list of int, float, or bool): Extended
+      description of arg5.
+  arg6 (list of int or float): Extended
+      description of arg6.
+@@@@ output 16
+
+Single line summary
+
+:Parameters: * **arg1** (*list of str*) -- Extended
+               description of arg1.
+             * **arg2** (*tuple of int*) -- Extended
+               description of arg2.
+             * **arg3** (*tuple of list of float*) -- Extended
+               description of arg3.
+             * **arg4** (*int, float, or list of bool*) -- Extended
+               description of arg4.
+             * **arg5** (*list of int, float, or bool*) -- Extended
+               description of arg5.
+             * **arg6** (*list of int or float*) -- Extended
+               description of arg6.
+
+@@@@ case 31 google
+@@@@ input 4
+Do as you please
+
+Keyword Args:
+    gotham_is_yours (None): shall interfere.
+@@@@ output 5
+Do as you please
+
+:keyword gotham_is_yours: shall interfere.
+:kwtype gotham_is_yours: None
+
+@@@@ case 32 google
+@@@@ input 13
+Allows to create attributes binded to this device.
+
+Some other paragraph.
+
+Code sample for usage::
+
+  dev.bind(loopback=Loopback)
+  dev.loopback.configure()
+
+Arguments:
+  **kwargs: name/class pairs that will create resource-managers
+    bound as instance attributes to this instance. See code
+    example above.
+@@@@ output 13
+Allows to create attributes binded to this device.
+
+Some other paragraph.
+
+Code sample for usage::
+
+  dev.bind(loopback=Loopback)
+  dev.loopback.configure()
+
+:param \*\*kwargs: name/class pairs that will create resource-managers
+                   bound as instance attributes to this instance. See code
+                   example above.
+
+@@@@ case 33 google
+@@@@ input 81
+One line summary.
+
+Parameters:
+    no_list (int):
+    one_bullet_empty (int):
+        *
+    one_bullet_single_line (int):
+        - first line
+    one_bullet_two_lines (int):
+        +   first line
+            continued
+    two_bullets_single_line (int):
+        -  first line
+        -  second line
+    two_bullets_two_lines (int):
+        * first line
+          continued
+        * second line
+          continued
+    one_enumeration_single_line (int):
+        1.  first line
+    one_enumeration_two_lines (int):
+        1)   first line
+             continued
+    two_enumerations_one_line (int):
+        (iii) first line
+        (iv) second line
+    two_enumerations_two_lines (int):
+        a. first line
+           continued
+        b. second line
+           continued
+    one_definition_one_line (int):
+        item 1
+            first line
+    one_definition_two_lines (int):
+        item 1
+            first line
+            continued
+    two_definitions_one_line (int):
+        item 1
+            first line
+        item 2
+            second line
+    two_definitions_two_lines (int):
+        item 1
+            first line
+            continued
+        item 2
+            second line
+            continued
+    one_definition_blank_line (int):
+        item 1
+
+            first line
+
+            extra first line
+
+    two_definitions_blank_lines (int):
+        item 1
+
+            first line
+
+            extra first line
+
+        item 2
+
+            second line
+
+            extra second line
+
+    definition_after_inline_text (int): text line
+
+        item 1
+            first line
+
+    definition_after_normal_text (int):
+        text line
+
+        item 1
+            first line
+@@@@ output 95
+One line summary.
+
+:param no_list:
+:type no_list: int
+:param one_bullet_empty:
+                         *
+:type one_bullet_empty: int
+:param one_bullet_single_line:
+                               - first line
+:type one_bullet_single_line: int
+:param one_bullet_two_lines:
+                             +   first line
+                                 continued
+:type one_bullet_two_lines: int
+:param two_bullets_single_line:
+                                -  first line
+                                -  second line
+:type two_bullets_single_line: int
+:param two_bullets_two_lines:
+                              * first line
+                                continued
+                              * second line
+                                continued
+:type two_bullets_two_lines: int
+:param one_enumeration_single_line:
+                                    1.  first line
+:type one_enumeration_single_line: int
+:param one_enumeration_two_lines:
+                                  1)   first line
+                                       continued
+:type one_enumeration_two_lines: int
+:param two_enumerations_one_line:
+                                  (iii) first line
+                                  (iv) second line
+:type two_enumerations_one_line: int
+:param two_enumerations_two_lines:
+                                   a. first line
+                                      continued
+                                   b. second line
+                                      continued
+:type two_enumerations_two_lines: int
+:param one_definition_one_line:
+                                item 1
+                                    first line
+:type one_definition_one_line: int
+:param one_definition_two_lines:
+                                 item 1
+                                     first line
+                                     continued
+:type one_definition_two_lines: int
+:param two_definitions_one_line:
+                                 item 1
+                                     first line
+                                 item 2
+                                     second line
+:type two_definitions_one_line: int
+:param two_definitions_two_lines:
+                                  item 1
+                                      first line
+                                      continued
+                                  item 2
+                                      second line
+                                      continued
+:type two_definitions_two_lines: int
+:param one_definition_blank_line:
+                                  item 1
+
+                                      first line
+
+                                      extra first line
+:type one_definition_blank_line: int
+:param two_definitions_blank_lines:
+                                    item 1
+
+                                        first line
+
+                                        extra first line
+
+                                    item 2
+
+                                        second line
+
+                                        extra second line
+:type two_definitions_blank_lines: int
+:param definition_after_inline_text: text line
+
+                                     item 1
+                                         first line
+:type definition_after_inline_text: int
+:param definition_after_normal_text: text line
+
+                                     item 1
+                                         first line
+:type definition_after_normal_text: int
+
+@@@@ case 34 google
+@@@@ set use_param = false
+@@@@ input 81
+One line summary.
+
+Parameters:
+    no_list (int):
+    one_bullet_empty (int):
+        *
+    one_bullet_single_line (int):
+        - first line
+    one_bullet_two_lines (int):
+        +   first line
+            continued
+    two_bullets_single_line (int):
+        -  first line
+        -  second line
+    two_bullets_two_lines (int):
+        * first line
+          continued
+        * second line
+          continued
+    one_enumeration_single_line (int):
+        1.  first line
+    one_enumeration_two_lines (int):
+        1)   first line
+             continued
+    two_enumerations_one_line (int):
+        (iii) first line
+        (iv) second line
+    two_enumerations_two_lines (int):
+        a. first line
+           continued
+        b. second line
+           continued
+    one_definition_one_line (int):
+        item 1
+            first line
+    one_definition_two_lines (int):
+        item 1
+            first line
+            continued
+    two_definitions_one_line (int):
+        item 1
+            first line
+        item 2
+            second line
+    two_definitions_two_lines (int):
+        item 1
+            first line
+            continued
+        item 2
+            second line
+            continued
+    one_definition_blank_line (int):
+        item 1
+
+            first line
+
+            extra first line
+
+    two_definitions_blank_lines (int):
+        item 1
+
+            first line
+
+            extra first line
+
+        item 2
+
+            second line
+
+            extra second line
+
+    definition_after_inline_text (int): text line
+
+        item 1
+            first line
+
+    definition_after_normal_text (int):
+        text line
+
+        item 1
+            first line
+@@@@ output 92
+One line summary.
+
+:Parameters: * **no_list** (*int*)
+             * **one_bullet_empty** (*int*) --
+
+               *
+             * **one_bullet_single_line** (*int*) --
+
+               - first line
+             * **one_bullet_two_lines** (*int*) --
+
+               +   first line
+                   continued
+             * **two_bullets_single_line** (*int*) --
+
+               -  first line
+               -  second line
+             * **two_bullets_two_lines** (*int*) --
+
+               * first line
+                 continued
+               * second line
+                 continued
+             * **one_enumeration_single_line** (*int*) --
+
+               1.  first line
+             * **one_enumeration_two_lines** (*int*) --
+
+               1)   first line
+                    continued
+             * **two_enumerations_one_line** (*int*) --
+
+               (iii) first line
+               (iv) second line
+             * **two_enumerations_two_lines** (*int*) --
+
+               a. first line
+                  continued
+               b. second line
+                  continued
+             * **one_definition_one_line** (*int*) --
+
+               item 1
+                   first line
+             * **one_definition_two_lines** (*int*) --
+
+               item 1
+                   first line
+                   continued
+             * **two_definitions_one_line** (*int*) --
+
+               item 1
+                   first line
+               item 2
+                   second line
+             * **two_definitions_two_lines** (*int*) --
+
+               item 1
+                   first line
+                   continued
+               item 2
+                   second line
+                   continued
+             * **one_definition_blank_line** (*int*) --
+
+               item 1
+
+                   first line
+
+                   extra first line
+             * **two_definitions_blank_lines** (*int*) --
+
+               item 1
+
+                   first line
+
+                   extra first line
+
+               item 2
+
+                   second line
+
+                   extra second line
+             * **definition_after_inline_text** (*int*) -- text line
+
+               item 1
+                   first line
+             * **definition_after_normal_text** (*int*) -- text line
+
+               item 1
+                   first line
+
+@@@@ case 35 google
+@@@@ what module
+@@@@ no-index
+@@@@ input 8
+
+Attributes:
+    arg
+        description
+
+Methods:
+    func(i, j)
+        description
+@@@@ output 12
+
+.. attribute:: arg
+   :no-index:
+
+   description
+
+.. method:: func(i, j)
+   :no-index:
+
+   
+   description
+
+@@@@ case 36 google
+@@@@ input 14
+Construct a new XBlock.
+
+This class should only be used by runtimes.
+
+Arguments:
+    runtime (:py:class:`~typing.Dict`\[:py:class:`int`,:py:class:`str`\]): Use it to
+        access the environment. It is available in XBlock code
+        as ``self.runtime``.
+
+    field_data (:py:class:`FieldData`): Interface used by the XBlock
+        fields to access their data from wherever it is persisted.
+
+    scope_ids (:py:class:`ScopeIds`): Identifiers needed to resolve scopes.
+
+@@@@ output 14
+Construct a new XBlock.
+
+This class should only be used by runtimes.
+
+:param runtime: Use it to
+                access the environment. It is available in XBlock code
+                as ``self.runtime``.
+:type runtime: :py:class:`~typing.Dict`\[:py:class:`int`,:py:class:`str`\]
+:param field_data: Interface used by the XBlock
+                   fields to access their data from wherever it is persisted.
+:type field_data: :py:class:`FieldData`
+:param scope_ids: Identifiers needed to resolve scopes.
+:type scope_ids: :py:class:`ScopeIds`
+
+@@@@ case 37 google
+@@@@ what class
+@@@@ annotation attr1 = int
+@@@@ annotation attr2 = str
+@@@@ input 5
+Sample class with PEP 526 annotations and google docstring.
+
+Attributes:
+    attr1: Attr1 description.
+    attr2: Attr2 description.
+@@@@ output 14
+Sample class with PEP 526 annotations and google docstring.
+
+.. attribute:: attr1
+
+   Attr1 description.
+
+   :type: int
+
+.. attribute:: attr2
+
+   Attr2 description.
+
+   :type: str
+
+@@@@ case 38 google
+@@@@ input 4
+Do as you please
+
+Yield:
+   str:Extended
+@@@@ output 4
+Do as you please
+
+:Yields: *str* -- Extended
+
+@@@@ case 39 google
+@@@@ set preprocess_types = true
+@@@@ input 4
+Do as you please
+
+Yield:
+   str:Extended
+@@@@ output 4
+Do as you please
+
+:Yields: :py:class:`str` -- Extended
+
+@@@@ case 40 google
+@@@@ input 17
+
+Example Function
+
+Raises:
+    RuntimeError:
+        A setting wasn't specified, or was invalid.
+    ValueError:
+        Something something value error.
+    :py:class:`AttributeError`
+        errors for missing attributes.
+    ~InvalidDimensionsError
+        If the dimensions couldn't be parsed.
+    `InvalidArgumentsError`
+        If the arguments are invalid.
+    :py:exc:`~ValueError`
+        If the arguments are wrong.
+
+@@@@ output 10
+
+Example Function
+
+:raises RuntimeError: A setting wasn't specified, or was invalid.
+:raises ValueError: Something something value error.
+:raises AttributeError: errors for missing attributes.
+:raises ~InvalidDimensionsError: If the dimensions couldn't be parsed.
+:raises InvalidArgumentsError: If the arguments are invalid.
+:raises ~ValueError: If the arguments are wrong.
+
+@@@@ case 41 google
+@@@@ input 6
+
+Example Function
+
+Raises:
+    InvalidDimensionsError
+
+@@@@ output 5
+
+Example Function
+
+:raises InvalidDimensionsError:
+
+@@@@ case 42 google
+@@@@ input 6
+
+Example Function
+
+Raises:
+    Invalid Dimensions Error
+
+@@@@ output 5
+
+Example Function
+
+:raises Invalid Dimensions Error:
+
+@@@@ case 43 google
+@@@@ input 6
+
+Example Function
+
+Raises:
+    Invalid Dimensions Error: With description
+
+@@@@ output 5
+
+Example Function
+
+:raises Invalid Dimensions Error: With description
+
+@@@@ case 44 google
+@@@@ input 6
+
+Example Function
+
+Raises:
+    InvalidDimensionsError: If the dimensions couldn't be parsed.
+
+@@@@ output 5
+
+Example Function
+
+:raises InvalidDimensionsError: If the dimensions couldn't be parsed.
+
+@@@@ case 45 google
+@@@@ input 6
+
+Example Function
+
+Raises:
+    Invalid Dimensions Error: If the dimensions couldn't be parsed.
+
+@@@@ output 5
+
+Example Function
+
+:raises Invalid Dimensions Error: If the dimensions couldn't be parsed.
+
+@@@@ case 46 google
+@@@@ input 6
+
+Example Function
+
+Raises:
+    If the dimensions couldn't be parsed.
+
+@@@@ output 5
+
+Example Function
+
+:raises If the dimensions couldn't be parsed.:
+
+@@@@ case 47 google
+@@@@ input 6
+
+Example Function
+
+Raises:
+    :py:class:`exc.InvalidDimensionsError`
+
+@@@@ output 5
+
+Example Function
+
+:raises exc.InvalidDimensionsError:
+
+@@@@ case 48 google
+@@@@ input 6
+
+Example Function
+
+Raises:
+    :py:class:`exc.InvalidDimensionsError`: If the dimensions couldn't be parsed.
+
+@@@@ output 5
+
+Example Function
+
+:raises exc.InvalidDimensionsError: If the dimensions couldn't be parsed.
+
+@@@@ case 49 google
+@@@@ input 7
+
+Example Function
+
+Raises:
+    :py:class:`exc.InvalidDimensionsError`: If the dimensions couldn't be parsed,
+       then a :py:class:`exc.InvalidDimensionsError` will be raised.
+
+@@@@ output 6
+
+Example Function
+
+:raises exc.InvalidDimensionsError: If the dimensions couldn't be parsed,
+    then a :py:class:`exc.InvalidDimensionsError` will be raised.
+
+@@@@ case 50 google
+@@@@ input 7
+
+Example Function
+
+Raises:
+    :py:class:`exc.InvalidDimensionsError`: If the dimensions couldn't be parsed.
+    :py:class:`exc.InvalidArgumentsError`: If the arguments are invalid.
+
+@@@@ output 6
+
+Example Function
+
+:raises exc.InvalidDimensionsError: If the dimensions couldn't be parsed.
+:raises exc.InvalidArgumentsError: If the arguments are invalid.
+
+@@@@ case 51 google
+@@@@ input 7
+
+Example Function
+
+Raises:
+    :py:class:`exc.InvalidDimensionsError`
+    :py:class:`exc.InvalidArgumentsError`
+
+@@@@ output 6
+
+Example Function
+
+:raises exc.InvalidDimensionsError:
+:raises exc.InvalidArgumentsError:
+
+@@@@ case 52 google
+@@@@ input 7
+
+Summary line
+
+Example:
+    Multiline reStructuredText
+    literal code block
+
+@@@@ output 8
+
+Summary line
+
+.. rubric:: Example
+
+Multiline reStructuredText
+literal code block
+
+@@@@ case 53 google
+@@@@ input 8
+
+Summary line
+
+Example::
+
+    Multiline reStructuredText
+    literal code block
+
+@@@@ output 8
+
+Summary line
+
+Example::
+
+    Multiline reStructuredText
+    literal code block
+
+@@@@ case 54 google
+@@@@ input 8
+
+Summary line
+
+:Example:
+
+    Multiline reStructuredText
+    literal code block
+
+@@@@ output 8
+
+Summary line
+
+:Example:
+
+    Multiline reStructuredText
+    literal code block
+
+@@@@ case 55 google
+@@@@ input 4
+Attention:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. attention::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 56 google
+@@@@ input 2
+Attention:
+    this is a single line
+@@@@ output 2
+.. attention:: this is a single line
+
+@@@@ case 57 google
+@@@@ input 4
+Caution:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. caution::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 58 google
+@@@@ input 2
+Caution:
+    this is a single line
+@@@@ output 2
+.. caution:: this is a single line
+
+@@@@ case 59 google
+@@@@ input 4
+Danger:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. danger::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 60 google
+@@@@ input 2
+Danger:
+    this is a single line
+@@@@ output 2
+.. danger:: this is a single line
+
+@@@@ case 61 google
+@@@@ input 4
+Error:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. error::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 62 google
+@@@@ input 2
+Error:
+    this is a single line
+@@@@ output 2
+.. error:: this is a single line
+
+@@@@ case 63 google
+@@@@ input 4
+Hint:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. hint::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 64 google
+@@@@ input 2
+Hint:
+    this is a single line
+@@@@ output 2
+.. hint:: this is a single line
+
+@@@@ case 65 google
+@@@@ input 4
+Important:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. important::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 66 google
+@@@@ input 2
+Important:
+    this is a single line
+@@@@ output 2
+.. important:: this is a single line
+
+@@@@ case 67 google
+@@@@ input 4
+Note:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. note::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 68 google
+@@@@ input 2
+Note:
+    this is a single line
+@@@@ output 2
+.. note:: this is a single line
+
+@@@@ case 69 google
+@@@@ input 4
+Tip:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. tip::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 70 google
+@@@@ input 2
+Tip:
+    this is a single line
+@@@@ output 2
+.. tip:: this is a single line
+
+@@@@ case 71 google
+@@@@ input 4
+Todo:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. todo::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 72 google
+@@@@ input 2
+Todo:
+    this is a single line
+@@@@ output 2
+.. todo:: this is a single line
+
+@@@@ case 73 google
+@@@@ input 4
+Warning:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. warning::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 74 google
+@@@@ input 2
+Warning:
+    this is a single line
+@@@@ output 2
+.. warning:: this is a single line
+
+@@@@ case 75 google
+@@@@ input 4
+Warnings:
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. warning::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 76 google
+@@@@ input 2
+Warnings:
+    this is a single line
+@@@@ output 2
+.. warning:: this is a single line
+
+@@@@ case 77 google
+@@@@ input 5
+Example Function
+
+Returns:
+    :py:class:`numpy.ndarray`: A :math:`n \times 2` array containing
+    a bunch of math items
+@@@@ output 6
+Example Function
+
+:returns: A :math:`n \times 2` array containing
+          a bunch of math items
+:rtype: :py:class:`numpy.ndarray`
+
+@@@@ case 78 numpy
+@@@@ what method
+@@@@ input 7
+
+Summary
+
+Returns
+-------
+:py:class:`~my_mod.my_class`
+    an instance of :py:class:`~my_mod.my_class`
+@@@@ output 6
+
+Summary
+
+:returns: an instance of :py:class:`~my_mod.my_class`
+:rtype: :py:class:`~my_mod.my_class`
+
+@@@@ case 79 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 1
+Single line summary
+@@@@ output 1
+Single line summary
+@@@@ case 80 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 5
+
+Single line summary
+
+Extended description
+
+@@@@ output 5
+
+Single line summary
+
+Extended description
+
+@@@@ case 81 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 8
+
+Single line summary
+
+Parameters
+----------
+arg1:str
+    Extended
+    description of arg1
+@@@@ output 6
+
+Single line summary
+
+:Parameters: **arg1** (:py:class:`str`) -- Extended
+             description of arg1
+
+@@@@ case 82 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 20
+
+Single line summary
+
+Parameters
+----------
+arg1:str
+    Extended
+    description of arg1
+arg2 : int
+    Extended
+    description of arg2
+
+Keyword Arguments
+-----------------
+  kwarg1:str
+      Extended
+      description of kwarg1
+  kwarg2 : int
+      Extended
+      description of kwarg2
+@@@@ output 13
+
+Single line summary
+
+:Parameters: * **arg1** (:py:class:`str`) -- Extended
+               description of arg1
+             * **arg2** (:py:class:`int`) -- Extended
+               description of arg2
+
+:Keyword Arguments: * **kwarg1** (:py:class:`str`) -- Extended
+                      description of kwarg1
+                    * **kwarg2** (:py:class:`int`) -- Extended
+                      description of kwarg2
+
+@@@@ case 83 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 8
+
+Single line summary
+
+Return
+------
+str
+    Extended
+    description of return value
+@@@@ output 6
+
+Single line summary
+
+:returns: :py:class:`str` -- Extended
+          description of return value
+
+@@@@ case 84 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 8
+
+Single line summary
+
+Returns
+-------
+str
+    Extended
+    description of return value
+@@@@ output 6
+
+Single line summary
+
+:returns: :py:class:`str` -- Extended
+          description of return value
+
+@@@@ case 85 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 11
+
+Single line summary
+
+Parameters
+----------
+arg1:str
+     Extended description of arg1
+*args:
+    Variable length argument list.
+**kwargs:
+    Arbitrary keyword arguments.
+@@@@ output 7
+
+Single line summary
+
+:Parameters: * **arg1** (:py:class:`str`) -- Extended description of arg1
+             * **\*args** -- Variable length argument list.
+             * **\*\*kwargs** -- Arbitrary keyword arguments.
+
+@@@@ case 86 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 9
+
+Single line summary
+
+Parameters
+----------
+arg1:str
+     Extended description of arg1
+*args, **kwargs:
+    Variable length argument list and arbitrary keyword arguments.
+@@@@ output 6
+
+Single line summary
+
+:Parameters: * **arg1** (:py:class:`str`) -- Extended description of arg1
+             * **\*args, \*\*kwargs** -- Variable length argument list and arbitrary keyword arguments.
+
+@@@@ case 87 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 11
+
+Single line summary
+
+Receive
+-------
+arg1:str
+    Extended
+    description of arg1
+arg2 : int
+    Extended
+    description of arg2
+@@@@ output 8
+
+Single line summary
+
+:Receives: * **arg1** (:py:class:`str`) -- Extended
+             description of arg1
+           * **arg2** (:py:class:`int`) -- Extended
+             description of arg2
+
+@@@@ case 88 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 11
+
+Single line summary
+
+Receives
+--------
+arg1:str
+    Extended
+    description of arg1
+arg2 : int
+    Extended
+    description of arg2
+@@@@ output 8
+
+Single line summary
+
+:Receives: * **arg1** (:py:class:`str`) -- Extended
+             description of arg1
+           * **arg2** (:py:class:`int`) -- Extended
+             description of arg2
+
+@@@@ case 89 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 8
+
+Single line summary
+
+Yield
+-----
+str
+    Extended
+    description of yielded value
+@@@@ output 6
+
+Single line summary
+
+:Yields: :py:class:`str` -- Extended
+         description of yielded value
+
+@@@@ case 90 numpy
+@@@@ set use_param = false
+@@@@ set use_rtype = false
+@@@@ set use_keyword = false
+@@@@ set preprocess_types = true
+@@@@ input 8
+
+Single line summary
+
+Yields
+------
+str
+    Extended
+    description of yielded value
+@@@@ output 6
+
+Single line summary
+
+:Yields: :py:class:`str` -- Extended
+         description of yielded value
+
+@@@@ case 91 numpy
+@@@@ input 77
+One line summary.
+
+Parameters
+----------
+no_list : int
+one_bullet_empty : int
+    *
+one_bullet_single_line : int
+    - first line
+one_bullet_two_lines : int
+    +   first line
+        continued
+two_bullets_single_line : int
+    -  first line
+    -  second line
+two_bullets_two_lines : int
+    * first line
+      continued
+    * second line
+      continued
+one_enumeration_single_line : int
+    1.  first line
+one_enumeration_two_lines : int
+    1)   first line
+         continued
+two_enumerations_one_line : int
+    (iii) first line
+    (iv) second line
+two_enumerations_two_lines : int
+    a. first line
+       continued
+    b. second line
+       continued
+one_definition_one_line : int
+    item 1
+        first line
+one_definition_two_lines : int
+    item 1
+        first line
+        continued
+two_definitions_one_line : int
+    item 1
+        first line
+    item 2
+        second line
+two_definitions_two_lines : int
+    item 1
+        first line
+        continued
+    item 2
+        second line
+        continued
+one_definition_blank_line : int
+    item 1
+
+        first line
+
+        extra first line
+
+two_definitions_blank_lines : int
+    item 1
+
+        first line
+
+        extra first line
+
+    item 2
+
+        second line
+
+        extra second line
+
+definition_after_normal_text : int
+    text line
+
+    item 1
+        first line
+@@@@ output 90
+One line summary.
+
+:param no_list:
+:type no_list: int
+:param one_bullet_empty:
+                         *
+:type one_bullet_empty: int
+:param one_bullet_single_line:
+                               - first line
+:type one_bullet_single_line: int
+:param one_bullet_two_lines:
+                             +   first line
+                                 continued
+:type one_bullet_two_lines: int
+:param two_bullets_single_line:
+                                -  first line
+                                -  second line
+:type two_bullets_single_line: int
+:param two_bullets_two_lines:
+                              * first line
+                                continued
+                              * second line
+                                continued
+:type two_bullets_two_lines: int
+:param one_enumeration_single_line:
+                                    1.  first line
+:type one_enumeration_single_line: int
+:param one_enumeration_two_lines:
+                                  1)   first line
+                                       continued
+:type one_enumeration_two_lines: int
+:param two_enumerations_one_line:
+                                  (iii) first line
+                                  (iv) second line
+:type two_enumerations_one_line: int
+:param two_enumerations_two_lines:
+                                   a. first line
+                                      continued
+                                   b. second line
+                                      continued
+:type two_enumerations_two_lines: int
+:param one_definition_one_line:
+                                item 1
+                                    first line
+:type one_definition_one_line: int
+:param one_definition_two_lines:
+                                 item 1
+                                     first line
+                                     continued
+:type one_definition_two_lines: int
+:param two_definitions_one_line:
+                                 item 1
+                                     first line
+                                 item 2
+                                     second line
+:type two_definitions_one_line: int
+:param two_definitions_two_lines:
+                                  item 1
+                                      first line
+                                      continued
+                                  item 2
+                                      second line
+                                      continued
+:type two_definitions_two_lines: int
+:param one_definition_blank_line:
+                                  item 1
+
+                                      first line
+
+                                      extra first line
+:type one_definition_blank_line: int
+:param two_definitions_blank_lines:
+                                    item 1
+
+                                        first line
+
+                                        extra first line
+
+                                    item 2
+
+                                        second line
+
+                                        extra second line
+:type two_definitions_blank_lines: int
+:param definition_after_normal_text: text line
+
+                                     item 1
+                                         first line
+:type definition_after_normal_text: int
+
+@@@@ case 92 numpy
+@@@@ set use_param = false
+@@@@ set preprocess_types = true
+@@@@ input 77
+One line summary.
+
+Parameters
+----------
+no_list : int
+one_bullet_empty : int
+    *
+one_bullet_single_line : int
+    - first line
+one_bullet_two_lines : int
+    +   first line
+        continued
+two_bullets_single_line : int
+    -  first line
+    -  second line
+two_bullets_two_lines : int
+    * first line
+      continued
+    * second line
+      continued
+one_enumeration_single_line : int
+    1.  first line
+one_enumeration_two_lines : int
+    1)   first line
+         continued
+two_enumerations_one_line : int
+    (iii) first line
+    (iv) second line
+two_enumerations_two_lines : int
+    a. first line
+       continued
+    b. second line
+       continued
+one_definition_one_line : int
+    item 1
+        first line
+one_definition_two_lines : int
+    item 1
+        first line
+        continued
+two_definitions_one_line : int
+    item 1
+        first line
+    item 2
+        second line
+two_definitions_two_lines : int
+    item 1
+        first line
+        continued
+    item 2
+        second line
+        continued
+one_definition_blank_line : int
+    item 1
+
+        first line
+
+        extra first line
+
+two_definitions_blank_lines : int
+    item 1
+
+        first line
+
+        extra first line
+
+    item 2
+
+        second line
+
+        extra second line
+
+definition_after_normal_text : int
+    text line
+
+    item 1
+        first line
+@@@@ output 88
+One line summary.
+
+:Parameters: * **no_list** (:py:class:`int`)
+             * **one_bullet_empty** (:py:class:`int`) --
+
+               *
+             * **one_bullet_single_line** (:py:class:`int`) --
+
+               - first line
+             * **one_bullet_two_lines** (:py:class:`int`) --
+
+               +   first line
+                   continued
+             * **two_bullets_single_line** (:py:class:`int`) --
+
+               -  first line
+               -  second line
+             * **two_bullets_two_lines** (:py:class:`int`) --
+
+               * first line
+                 continued
+               * second line
+                 continued
+             * **one_enumeration_single_line** (:py:class:`int`) --
+
+               1.  first line
+             * **one_enumeration_two_lines** (:py:class:`int`) --
+
+               1)   first line
+                    continued
+             * **two_enumerations_one_line** (:py:class:`int`) --
+
+               (iii) first line
+               (iv) second line
+             * **two_enumerations_two_lines** (:py:class:`int`) --
+
+               a. first line
+                  continued
+               b. second line
+                  continued
+             * **one_definition_one_line** (:py:class:`int`) --
+
+               item 1
+                   first line
+             * **one_definition_two_lines** (:py:class:`int`) --
+
+               item 1
+                   first line
+                   continued
+             * **two_definitions_one_line** (:py:class:`int`) --
+
+               item 1
+                   first line
+               item 2
+                   second line
+             * **two_definitions_two_lines** (:py:class:`int`) --
+
+               item 1
+                   first line
+                   continued
+               item 2
+                   second line
+                   continued
+             * **one_definition_blank_line** (:py:class:`int`) --
+
+               item 1
+
+                   first line
+
+                   extra first line
+             * **two_definitions_blank_lines** (:py:class:`int`) --
+
+               item 1
+
+                   first line
+
+                   extra first line
+
+               item 2
+
+                   second line
+
+                   extra second line
+             * **definition_after_normal_text** (:py:class:`int`) -- text line
+
+               item 1
+                   first line
+
+@@@@ case 93 numpy
+@@@@ set use_param = false
+@@@@ input 5
+Parameters
+----------
+x1, x2 : array_like
+    Input arrays, description of ``x1``, ``x2``.
+
+@@@@ output 2
+:Parameters: **x1, x2** (*array_like*) -- Input arrays, description of ``x1``, ``x2``.
+
+@@@@ case 94 numpy
+@@@@ input 5
+Parameters
+----------
+x1, x2 : array_like
+    Input arrays, description of ``x1``, ``x2``.
+
+@@@@ output 5
+:param x1: Input arrays, description of ``x1``, ``x2``.
+:type x1: array_like
+:param x2: Input arrays, description of ``x1``, ``x2``.
+:type x2: array_like
+
+@@@@ case 95 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {dict-like=:term:`dict-like <mapping>`, mapping=:term:`mapping`, hashable=:term:`hashable`}
+@@@@ input 20
+Parameters
+----------
+param1 : DataFrame
+    the data to work on
+param2 : int or float or None, optional
+    a parameter with different types
+param3 : dict-like, optional
+    a optional mapping
+param4 : int or float or None, optional
+    a optional parameter with different types
+param5 : {"F", "C", "N"}, optional
+    a optional parameter with fixed values
+param6 : int, default None
+    different default format
+param7 : mapping of hashable to str, optional
+    a optional mapping
+param8 : ... or Ellipsis
+    ellipsis
+param9 : tuple of list of int
+    a parameter with tuple of list of int
+@@@@ output 19
+:param param1: the data to work on
+:type param1: :py:class:`DataFrame`
+:param param2: a parameter with different types
+:type param2: :py:class:`int` or :py:class:`float` or :py:obj:`None`, *optional*
+:param param3: a optional mapping
+:type param3: :term:`dict-like <mapping>`, *optional*
+:param param4: a optional parameter with different types
+:type param4: :py:class:`int` or :py:class:`float` or :py:obj:`None`, *optional*
+:param param5: a optional parameter with fixed values
+:type param5: ``{"F", "C", "N"}``, *optional*
+:param param6: different default format
+:type param6: :py:class:`int`, *default* :py:obj:`None`
+:param param7: a optional mapping
+:type param7: :term:`mapping` of :term:`hashable` to :py:class:`str`, *optional*
+:param param8: ellipsis
+:type param8: :py:obj:`... <Ellipsis>` or :py:obj:`Ellipsis`
+:param param9: a parameter with tuple of list of int
+:type param9: :py:class:`tuple` of :py:class:`list` of :py:class:`int`
+
+@@@@ case 96 numpy
+@@@@ set use_param = false
+@@@@ input 8
+Parameters
+----------
+param1 : :class:`MyClass <name.space.MyClass>` instance
+
+Other Parameters
+----------------
+param2 : :class:`MyClass <name.space.MyClass>` instance
+
+@@@@ output 4
+:Parameters: **param1** (:class:`MyClass <name.space.MyClass>` instance)
+
+:Other Parameters: **param2** (:class:`MyClass <name.space.MyClass>` instance)
+
+@@@@ case 97 numpy
+@@@@ input 8
+Parameters
+----------
+param1 : :class:`MyClass <name.space.MyClass>` instance
+
+Other Parameters
+----------------
+param2 : :class:`MyClass <name.space.MyClass>` instance
+
+@@@@ output 6
+:param param1:
+:type param1: :class:`MyClass <name.space.MyClass>` instance
+
+:param param2:
+:type param2: :class:`MyClass <name.space.MyClass>` instance
+
+@@@@ case 98 numpy
+@@@@ set use_param = false
+@@@@ input 4
+Parameters
+----------
+param1 : MyClass instance
+
+@@@@ output 2
+:Parameters: **param1** (*MyClass instance*)
+
+@@@@ case 99 numpy
+@@@@ input 4
+Parameters
+----------
+param1 : MyClass instance
+
+@@@@ output 3
+:param param1:
+:type param1: MyClass instance
+
+@@@@ case 100 numpy
+@@@@ what class
+@@@@ annotation attr1 = int
+@@@@ annotation attr2 = str
+@@@@ input 9
+Sample class with PEP 526 annotations and numpy docstring
+
+Attributes
+----------
+attr1:
+    Attr1 description
+
+attr2:
+    Attr2 description
+@@@@ output 14
+Sample class with PEP 526 annotations and numpy docstring
+
+.. attribute:: attr1
+
+   Attr1 description
+
+   :type: int
+
+.. attribute:: attr2
+
+   Attr2 description
+
+   :type: str
+
+@@@@ case 101 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 12
+
+Example Function
+
+Raises
+------
+  RuntimeError
+
+      A setting wasn't specified, or was invalid.
+  ValueError
+
+      Something something value error.
+
+@@@@ output 6
+
+Example Function
+
+:raises RuntimeError: A setting wasn't specified, or was invalid.
+:raises ValueError: Something something value error.
+
+@@@@ case 102 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 7
+
+Example Function
+
+Raises
+------
+InvalidDimensionsError
+
+@@@@ output 5
+
+Example Function
+
+:raises InvalidDimensionsError:
+
+@@@@ case 103 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 7
+
+Example Function
+
+Raises
+------
+Invalid Dimensions Error
+
+@@@@ output 5
+
+Example Function
+
+:raises Invalid Dimensions Error:
+
+@@@@ case 104 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 8
+
+Example Function
+
+Raises
+------
+Invalid Dimensions Error
+    With description
+
+@@@@ output 5
+
+Example Function
+
+:raises Invalid Dimensions Error: With description
+
+@@@@ case 105 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 8
+
+Example Function
+
+Raises
+------
+InvalidDimensionsError
+    If the dimensions couldn't be parsed.
+
+@@@@ output 5
+
+Example Function
+
+:raises InvalidDimensionsError: If the dimensions couldn't be parsed.
+
+@@@@ case 106 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 8
+
+Example Function
+
+Raises
+------
+Invalid Dimensions Error
+    If the dimensions couldn't be parsed.
+
+@@@@ output 5
+
+Example Function
+
+:raises Invalid Dimensions Error: If the dimensions couldn't be parsed.
+
+@@@@ case 107 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 7
+
+Example Function
+
+Raises
+------
+If the dimensions couldn't be parsed.
+
+@@@@ output 5
+
+Example Function
+
+:raises If the dimensions couldn't be parsed.:
+
+@@@@ case 108 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 7
+
+Example Function
+
+Raises
+------
+:class:`exc.InvalidDimensionsError`
+
+@@@@ output 5
+
+Example Function
+
+:raises exc.InvalidDimensionsError:
+
+@@@@ case 109 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 8
+
+Example Function
+
+Raises
+------
+:class:`exc.InvalidDimensionsError`
+    If the dimensions couldn't be parsed.
+
+@@@@ output 5
+
+Example Function
+
+:raises exc.InvalidDimensionsError: If the dimensions couldn't be parsed.
+
+@@@@ case 110 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 9
+
+Example Function
+
+Raises
+------
+:class:`exc.InvalidDimensionsError`
+    If the dimensions couldn't be parsed,
+    then a :class:`exc.InvalidDimensionsError` will be raised.
+
+@@@@ output 6
+
+Example Function
+
+:raises exc.InvalidDimensionsError: If the dimensions couldn't be parsed,
+    then a :class:`exc.InvalidDimensionsError` will be raised.
+
+@@@@ case 111 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 10
+
+Example Function
+
+Raises
+------
+:class:`exc.InvalidDimensionsError`
+    If the dimensions couldn't be parsed.
+:class:`exc.InvalidArgumentsError`
+    If the arguments are invalid.
+
+@@@@ output 6
+
+Example Function
+
+:raises exc.InvalidDimensionsError: If the dimensions couldn't be parsed.
+:raises exc.InvalidArgumentsError: If the arguments are invalid.
+
+@@@@ case 112 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 8
+
+Example Function
+
+Raises
+------
+CustomError
+    If the dimensions couldn't be parsed.
+
+@@@@ output 5
+
+Example Function
+
+:raises package.CustomError: If the dimensions couldn't be parsed.
+
+@@@@ case 113 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 8
+
+Example Function
+
+Raises
+------
+AnotherError
+    If the dimensions couldn't be parsed.
+
+@@@@ output 5
+
+Example Function
+
+:raises ~package.AnotherError: If the dimensions couldn't be parsed.
+
+@@@@ case 114 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {CustomError=package.CustomError, AnotherError=:py:exc:`~package.AnotherError`}
+@@@@ what method
+@@@@ input 8
+
+Example Function
+
+Raises
+------
+:class:`exc.InvalidDimensionsError`
+:class:`exc.InvalidArgumentsError`
+
+@@@@ output 6
+
+Example Function
+
+:raises exc.InvalidDimensionsError:
+:raises exc.InvalidArgumentsError:
+
+@@@@ case 115 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {DataFrame=~pandas.DataFrame}
+@@@@ input 5
+
+Returns
+-------
+DataFrame
+    a dataframe
+@@@@ output 4
+
+:returns: a dataframe
+:rtype: :py:class:`~pandas.DataFrame`
+
+@@@@ case 116 numpy
+@@@@ input 8
+
+Summary line
+
+Example
+-
+Multiline example
+body
+
+@@@@ output 8
+
+Summary line
+
+Example
+-
+Multiline example
+body
+
+@@@@ case 117 numpy
+@@@@ input 8
+
+Summary line
+
+Example
+--
+Multiline example
+body
+
+@@@@ output 8
+
+Summary line
+
+.. rubric:: Example
+
+Multiline example
+body
+
+@@@@ case 118 numpy
+@@@@ input 8
+
+Summary line
+
+Example
+-------
+Multiline example
+body
+
+@@@@ output 8
+
+Summary line
+
+.. rubric:: Example
+
+Multiline example
+body
+
+@@@@ case 119 numpy
+@@@@ input 8
+
+Summary line
+
+Example
+------------
+Multiline example
+body
+
+@@@@ output 8
+
+Summary line
+
+.. rubric:: Example
+
+Multiline example
+body
+
+@@@@ case 120 numpy
+@@@@ input 7
+numpy.multivariate_normal(mean, cov, shape=None, spam=None)
+
+See Also
+--------
+some, other, funcs
+otherfunc : relationship
+
+@@@@ output 9
+numpy.multivariate_normal(mean, cov, shape=None, spam=None)
+
+.. seealso::
+
+   :py:obj:`some`, :py:obj:`other`, :py:obj:`funcs`
+   
+   :py:obj:`otherfunc`
+       relationship
+
+@@@@ case 121 numpy
+@@@@ what method
+@@@@ input 7
+numpy.multivariate_normal(mean, cov, shape=None, spam=None)
+
+See Also
+--------
+some, other, funcs
+otherfunc : relationship
+
+@@@@ output 9
+numpy.multivariate_normal(mean, cov, shape=None, spam=None)
+
+.. seealso::
+
+   :py:obj:`some`, :py:obj:`other`, :py:obj:`funcs`
+   
+   :py:obj:`otherfunc`
+       relationship
+
+@@@@ case 122 numpy
+@@@@ set type_aliases = {other=MyClass.other, otherfunc=:func:`~my_package.otherfunc`}
+@@@@ what method
+@@@@ input 7
+numpy.multivariate_normal(mean, cov, shape=None, spam=None)
+
+See Also
+--------
+some, other, :func:`funcs`
+otherfunc : relationship
+
+@@@@ output 9
+numpy.multivariate_normal(mean, cov, shape=None, spam=None)
+
+.. seealso::
+
+   :py:obj:`some`, :py:obj:`MyClass.other`, :func:`funcs`
+   
+   :func:`~my_package.otherfunc`
+       relationship
+
+@@@@ case 123 numpy
+@@@@ input 5
+Attention
+---------
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. attention::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 124 numpy
+@@@@ input 3
+Attention
+---------
+    this is a single line
+@@@@ output 2
+.. attention:: this is a single line
+
+@@@@ case 125 numpy
+@@@@ input 5
+Caution
+-------
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. caution::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 126 numpy
+@@@@ input 3
+Caution
+-------
+    this is a single line
+@@@@ output 2
+.. caution:: this is a single line
+
+@@@@ case 127 numpy
+@@@@ input 5
+Danger
+------
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. danger::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 128 numpy
+@@@@ input 3
+Danger
+------
+    this is a single line
+@@@@ output 2
+.. danger:: this is a single line
+
+@@@@ case 129 numpy
+@@@@ input 5
+Error
+-----
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. error::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 130 numpy
+@@@@ input 3
+Error
+-----
+    this is a single line
+@@@@ output 2
+.. error:: this is a single line
+
+@@@@ case 131 numpy
+@@@@ input 5
+Hint
+----
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. hint::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 132 numpy
+@@@@ input 3
+Hint
+----
+    this is a single line
+@@@@ output 2
+.. hint:: this is a single line
+
+@@@@ case 133 numpy
+@@@@ input 5
+Important
+---------
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. important::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 134 numpy
+@@@@ input 3
+Important
+---------
+    this is a single line
+@@@@ output 2
+.. important:: this is a single line
+
+@@@@ case 135 numpy
+@@@@ input 5
+Note
+----
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. note::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 136 numpy
+@@@@ input 3
+Note
+----
+    this is a single line
+@@@@ output 2
+.. note:: this is a single line
+
+@@@@ case 137 numpy
+@@@@ input 5
+Tip
+---
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. tip::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 138 numpy
+@@@@ input 3
+Tip
+---
+    this is a single line
+@@@@ output 2
+.. tip:: this is a single line
+
+@@@@ case 139 numpy
+@@@@ input 5
+Todo
+----
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. todo::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 140 numpy
+@@@@ input 3
+Todo
+----
+    this is a single line
+@@@@ output 2
+.. todo:: this is a single line
+
+@@@@ case 141 numpy
+@@@@ input 5
+Warning
+-------
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. warning::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 142 numpy
+@@@@ input 3
+Warning
+-------
+    this is a single line
+@@@@ output 2
+.. warning:: this is a single line
+
+@@@@ case 143 numpy
+@@@@ input 5
+Warnings
+--------
+    this is the first line
+
+    and this is the second line
+@@@@ output 6
+.. warning::
+
+   this is the first line
+   
+   and this is the second line
+
+@@@@ case 144 numpy
+@@@@ input 3
+Warnings
+--------
+    this is a single line
+@@@@ output 2
+.. warning:: this is a single line
+
+@@@@ case 145 numpy
+@@@@ set use_param = false
+@@@@ input 8
+
+Single line summary
+
+Parameters
+----------
+arg1:str
+    Extended
+    description of arg1
+@@@@ output 6
+
+Single line summary
+
+:Parameters: **arg1** (*str*) -- Extended
+             description of arg1
+
+@@@@ case 146 numpy
+@@@@ set use_ivar = true
+@@@@ what class
+@@@@ input 6
+
+Attributes
+----------
+
+arg_ : type
+    some description
+@@@@ output 4
+
+:ivar arg_: some description
+:vartype arg_: type
+
+@@@@ case 147 numpy
+@@@@ set use_ivar = true
+@@@@ set strip_signature_backslash = true
+@@@@ what class
+@@@@ input 6
+
+Attributes
+----------
+
+arg_ : type
+    some description
+@@@@ output 4
+
+:ivar arg\_: some description
+:vartype arg\_: type
+
+@@@@ case 148 numpy
+@@@@ what method
+@@@@ input 8
+
+Example Function
+
+Returns
+-------
+:class:`numpy.ndarray`
+    A :math:`n \times 2` array containing
+    a bunch of math items
+@@@@ output 7
+
+Example Function
+
+:returns: A :math:`n \times 2` array containing
+          a bunch of math items
+:rtype: :class:`numpy.ndarray`
+
+@@@@ case 149 numpy
+@@@@ set preprocess_types = true
+@@@@ set type_aliases = {scalar=:term:`scalar`, array-like=:py:class:`array-like <numpy.ndarray>`}
+@@@@ what method
+@@@@ input 7
+
+Example Function
+
+Yields
+------
+scalar or array-like
+    The result of the computation
+@@@@ output 5
+
+Example Function
+
+:Yields: :term:`scalar` or :py:class:`array-like <numpy.ndarray>` -- The result of the computation
+

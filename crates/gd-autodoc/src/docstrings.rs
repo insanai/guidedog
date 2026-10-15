@@ -357,6 +357,7 @@ pub(crate) fn finish_docstrings(
     }
     let mut out = Vec::new();
     for d in docstrings {
+        let d = crate::process::process_docstring(g, p, d);
         let needs_blank = d.last().is_some_and(|l| !l.is_empty());
         out.extend(d);
         if needs_blank {

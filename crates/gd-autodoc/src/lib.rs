@@ -35,7 +35,9 @@ mod hints;
 mod loader;
 mod members;
 mod names;
+mod napoleon;
 mod options;
+mod process;
 mod props;
 mod signatures;
 mod typehints;
@@ -53,6 +55,10 @@ use gd_pyscan::Project;
 
 pub use config::{ClassContent, ClassSignature, Config, DefaultOption, DescriptionTarget};
 pub use config::{MemberOrder, TypeAlias, Typehints, TypehintsFormat};
+pub use napoleon::{
+    DocstringStyle, Napoleon, NapoleonContext, NapoleonNote, NapoleonOutput, NapoleonSection,
+    convert_docstring, includes_member, napoleon_docstring, unknown_custom_sections,
+};
 pub use options::ALL_OPTIONS;
 
 /// A directive option as written; `value` is `""` for a flag.

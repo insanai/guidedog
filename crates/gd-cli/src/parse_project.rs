@@ -415,7 +415,9 @@ fn unknown_builder(name: &str, more: &str) -> Problem {
         "UNKNOWN BUILDER",
         format!("`{name}` is not a builder."),
         with_suggestion(
-            &format!("Use html, dirhtml, singlehtml, pdf, text, gettext, or dummy{more}."),
+            &format!(
+                "Use html, dirhtml, singlehtml, pdf, text, gettext, dummy, or coverage{more}."
+            ),
             name,
             BuilderKind::ALL.iter().map(|k| k.name()),
         ),

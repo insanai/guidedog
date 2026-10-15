@@ -300,8 +300,15 @@ fn write(
     };
     let ctx = read_context(s, parts);
     let reread = |doc: &DocInfo| reread(&ctx, &parts.sources, doc);
-    let written =
-        write_output(&view, &parts.sources, &parts.intl, &reread, generation, &mut log.reports);
+    let written = write_output(
+        &view,
+        &parts.sources,
+        &parts.intl,
+        &reread,
+        generation,
+        &mut log.reports,
+        &mut log.result.steps,
+    );
     log.result.written = generation.written_count();
     log.result.unchanged = generation.reused_count();
     if log.result.written == 0 && log.result.unchanged == 0 && generation.is_site_written() {

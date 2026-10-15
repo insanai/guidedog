@@ -202,6 +202,7 @@ Builders:
 * ``gettext``: message templates (POT) for translation.
 * ``dummy``: reads and resolves every document and writes nothing (a syntax and
   reference check).
+* ``coverage``: reads every document and writes ``python.txt`` and ``c.txt``, the objects the documents do not describe (sphinx.ext.coverage).
 
 .. list-table:: Options of build
    :header-rows: 1

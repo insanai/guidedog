@@ -241,7 +241,7 @@ const BUILD: &str = "  USAGE
     guidedog clean [PROJECT]     guidedog serve [PROJECT] [--port 8000]
 
   BUILDERS
-    html dirhtml singlehtml pdf text gettext dummy   (default: html)
+    html dirhtml singlehtml pdf text gettext dummy coverage   (default: html)
 
   OPTIONS
     -a                 Write all outputs, not only changed ones

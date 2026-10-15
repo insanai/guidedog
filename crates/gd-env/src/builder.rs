@@ -27,11 +27,13 @@ pub enum BuilderKind {
     Gettext,
     /// Reads and checks, writes nothing.
     Dummy,
+    /// sphinx.ext.coverage: the Python (and C) objects the documents do not describe.
+    Coverage,
 }
 
 impl BuilderKind {
     /// Every builder, in the order `guidedog formats` lists them.
-    pub const ALL: [BuilderKind; 7] = [
+    pub const ALL: [BuilderKind; 8] = [
         BuilderKind::Html,
         BuilderKind::Dirhtml,
         BuilderKind::Singlehtml,
@@ -39,6 +41,7 @@ impl BuilderKind {
         BuilderKind::Text,
         BuilderKind::Gettext,
         BuilderKind::Dummy,
+        BuilderKind::Coverage,
     ];
 
     /// The name the command line gives it, and its output folder's: `"html"`, ...
@@ -51,6 +54,7 @@ impl BuilderKind {
             BuilderKind::Text => "text",
             BuilderKind::Gettext => "gettext",
             BuilderKind::Dummy => "dummy",
+            BuilderKind::Coverage => "coverage",
         }
     }
 
@@ -80,7 +84,10 @@ impl BuilderKind {
                 OutputFormat::Html
             }
             BuilderKind::Pdf => OutputFormat::Pdf,
-            BuilderKind::Text | BuilderKind::Gettext | BuilderKind::Dummy => OutputFormat::Text,
+            BuilderKind::Text
+            | BuilderKind::Gettext
+            | BuilderKind::Dummy
+            | BuilderKind::Coverage => OutputFormat::Text,
         }
     }
 }

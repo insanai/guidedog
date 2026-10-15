@@ -55,6 +55,9 @@ Builders
 ``dummy``
    Reads and resolves the project without publishing an artifact.
 
+``coverage``
+   Writes ``python.txt`` and ``c.txt``: the Python and C objects the documents do not describe.
+
 Coverage is evidence
 --------------------
 

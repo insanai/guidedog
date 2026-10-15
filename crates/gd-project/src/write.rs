@@ -9,9 +9,12 @@ use gd_report::Report;
 use gd_resolve::{BuildView, OutputBuilder};
 use gd_site::SiteBuilder;
 
+use crate::coverage::CoverageBuilder;
+
 /// Writes `view.kind`'s output into `generation` with its builder: gd-site for the
 /// HTML builders, gd-book for pdf, text and dummy, gd-intl for gettext (which reads a
-/// stale document again with `reread`). Fails with the builder's problem.
+/// stale document again with `reread`), the coverage builder for coverage (whose
+/// statistics join `steps`). Fails with the builder's problem.
 pub(crate) fn write_output(
     view: &BuildView<'_>,
     sources: &[SourceFile],
@@ -19,6 +22,7 @@ pub(crate) fn write_output(
     reread: &Reread<'_>,
     generation: &mut Generation,
     reports: &mut Vec<Report>,
+    steps: &mut Vec<(String, String)>,
 ) -> Result<(), Problem> {
     let labels = Some(&intl.labels);
     match view.kind {
@@ -34,5 +38,14 @@ pub(crate) fn write_output(
             GettextBuilder { reread: Some(reread) }.write(view, generation, reports)
         }
         BuilderKind::Dummy => DummyBuilder.write(view, generation, reports),
+        BuilderKind::Coverage => {
+            let builder = CoverageBuilder::default();
+            let written = builder.write(view, generation, reports);
+            let lines = builder.statistics.into_inner().unwrap_or_default();
+            for (i, line) in lines.into_iter().enumerate() {
+                steps.push((if i == 0 { "coverage" } else { "" }.to_owned(), line));
+            }
+            written
+        }
     }
 }

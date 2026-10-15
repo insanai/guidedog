@@ -93,7 +93,7 @@ Publish and recover
 
    guidedog dsc index
    guidedog dsc build --target=both
-   guidedog dsc build guidedoc-odin --target=pdf
+   guidedog dsc build guidedoc-engine --target=pdf
    guidedog dsc recover --rollback
 
 HTML builds the whole discussion site. A selector limits separate PDFs.

@@ -23,7 +23,7 @@ This folder is a discussion catalog like any other, kept with `guidedog dsc`. In
 ../../target/release/guidedog dsc build --target=both
 
 # Build a single record's PDF preview
-../../target/release/guidedog dsc build guidedog-in-rust --target=pdf
+../../target/release/guidedog dsc build guidedoc-engine --target=pdf
 
 # Preview the discussion website locally
 ../../target/release/guidedog serve .
@@ -38,7 +38,7 @@ Proposals advance through a structured lifecycle:
 Records:
   - [GDS 0001: Discussion Process](records/0001-gds-process.rst)
   - [GDS 0002: Guidedog CLI and Toolchain](records/0002-guidedog-cli.rst)
-  - [GDS 0003: Guidedoc Conversion Core](records/0003-guidedoc-odin.rst)
+  - [GDS 0003: Guidedoc Conversion Core](records/0003-guidedoc-engine.rst)
   - [GDS 0004: Memory Budgets and Trust](records/0004-budgets-and-trust.rst)
   - [GDS 0005: Odin Domain and API Documentation](records/0005-odin-domain.rst)
   - [GDS 0006: Projects and Publication](records/0006-sphinx-replacement.rst)
@@ -46,12 +46,6 @@ Records:
   - [GDS 0008: GitHub Pages Publishing](records/0008-github-pages-publishing.rst)
   - [GDS 0009: Native Plugin API and Registry](records/0009-native-plugin-api.rst)
   - [GDS 0010: Typed Build Plugins](records/0010-typed-build-plugins.rst)
-  - [GDS 0011: Guidedog in Rust](records/0011-guidedog-in-rust.rst) (in discussion)
-
-GDS 0001 to 0010 were designed and implemented in Odin. Guidedog has since moved to
-Rust: GDS 0011 records that decision, and each earlier record keeps its decisions,
-evidence and lifecycle events and gains an "Implementation in Rust" section stating how
-the crates realize it. A record's state does not change just because code is ported.
 
 New drafts are created with number `XXXXX` (e.g. `guidedog dsc new "Feature title"`). Permanent numbers are assigned upon promotion into discussion.
 

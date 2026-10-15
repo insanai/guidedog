@@ -19,7 +19,7 @@ Discussion registry
      - :doc:`records/0002-guidedog-cli`
      - published
    * - 0003
-     - :doc:`records/0003-guidedoc-odin`
+     - :doc:`records/0003-guidedoc-engine`
      - committed
    * - 0004
      - :doc:`records/0004-budgets-and-trust`
@@ -42,8 +42,5 @@ Discussion registry
    * - 0010
      - :doc:`records/0010-typed-build-plugins`
      - committed
-   * - 0011
-     - :doc:`records/0011-guidedog-in-rust`
-     - discussion
 
 .. gds-generated-end

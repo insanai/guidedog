@@ -302,7 +302,7 @@ mark { background: var(--gd-mark); color: inherit; border-radius: 2px; padding: 
   margin: 0 0 1.5rem; padding: 0; list-style: none; font-size: .85rem; color: var(--gd-muted);
 }
 .gd-breadcrumbs li { display: flex; align-items: center; gap: .4rem; min-width: 0; }
-.gd-breadcrumbs li + li::before { content: "›"; color: var(--gd-border-strong); font-size: 1.1em; }
+.gd-breadcrumbs li + li::before { content: "\203A"; color: var(--gd-border-strong); font-size: 1.1em; }
 .gd-breadcrumbs a { color: var(--gd-muted); text-decoration: none; }
 .gd-breadcrumbs a:hover { color: var(--gd-link); text-decoration: underline; }
 .gd-breadcrumbs [aria-current] {
@@ -324,9 +324,9 @@ mark { background: var(--gd-mark); color: inherit; border-radius: 2px; padding: 
 .gd-pager a:hover { border-color: var(--gd-link); background: var(--gd-accent-soft); }
 .gd-pager small { color: var(--gd-muted); font-size: .8rem; }
 .gd-pager span { color: var(--gd-link); font-weight: 600; overflow-wrap: anywhere; }
-.gd-pager .gd-prev small::before { content: "← "; }
+.gd-pager .gd-prev small::before { content: "\2190  "; }
 .gd-pager .gd-next { grid-column: 2; text-align: right; }
-.gd-pager .gd-next small::after { content: " →"; }
+.gd-pager .gd-next small::after { content: " \2192"; }
 
 /* Footer. */
 .gd-footer {
@@ -394,7 +394,7 @@ mark { background: var(--gd-mark); color: inherit; border-radius: 2px; padding: 
 .section-number, .caption-number { color: var(--gd-muted); font-weight: inherit; }
 .caption-number { font-weight: 600; }
 
-/* Permalinks: ¶ after headings and definitions, shown on hover and focus. */
+/* Permalinks: a pilcrow after headings and definitions, shown on hover and focus. */
 a.headerlink {
   margin-left: .3em; padding: 0 .2em; border-radius: 4px;
   color: var(--gd-muted); font-weight: 400; text-decoration: none;

@@ -87,7 +87,7 @@ impl<'a> Console<'a> {
             let _ = writeln!(self.out, "{}", gd_json::to_string(&Value::Object(o)));
             return;
         }
-        let mark = styled("✓", GREEN, self.color_out);
+        let mark = styled(gd_report::terminal_symbols().check, GREEN, self.color_out);
         let _ = writeln!(self.out, "  {mark} {}", escape_terminal(message));
     }
 

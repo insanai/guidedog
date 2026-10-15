@@ -64,7 +64,7 @@
     justification-limits: (spacing: (min: 80%, max: 140%),
       tracking: (min: -0.012em, max: 0.018em)))
   set block(spacing: 1.05em)
-  set list(indent: 0.6em, body-indent: 0.6em, marker: ([•], [–], [·]))
+  set list(indent: 0.6em, body-indent: 0.6em, marker: ([\u{2022}], [\u{2013}], [\u{b7}]))
   set enum(indent: 0.4em, body-indent: 0.6em)
   set terms(spacing: 1.05em)
   show math.equation: set text(number-type: "lining")
@@ -212,7 +212,7 @@
       it.body
       if it.attribution != none {
         set par(first-line-indent: 0em)
-        align(end, text(size: 0.95em, fill: quiet)[— #it.attribution])
+        align(end, text(size: 0.95em, fill: quiet)[\u{2014} #it.attribution])
       }
     }))
   set footnote.entry(separator: line(length: 25%, stroke: 0.5pt + rule), clearance: 1em,
@@ -250,7 +250,7 @@
     #v(1fr)
     #text(fill: ink, style: "italic", title)
     #if version != "" [ \ #version-label #version]
-    #if copyright != "" [ \ © #copyright]
+    #if copyright != "" [ \ \u{a9} #copyright]
     #if author != "" and copyright == "" [ \ #author]
     #if date != "" [ \ #date]
   ]

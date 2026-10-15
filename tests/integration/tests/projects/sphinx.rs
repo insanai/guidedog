@@ -30,7 +30,7 @@ fn quickstart_build_rebuild_and_clean() {
     let r = build(&docs, 0, &["html"]);
     has(&r.out, "1 document(s) parsed");
     let page = dir.read("docs/_build/html/index.html");
-    has(&page, "<title>Demo · Demo documentation</title>");
+    has(&page, "<title>Demo - Demo documentation</title>");
     has(&page, "href=\"#details\"");
     assert!(dir.exists("docs/_build/html/_static/guidedog.css"));
     assert!(dir.exists("docs/_build/html/objects.inv"));

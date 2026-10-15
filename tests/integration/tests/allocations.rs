@@ -5,12 +5,13 @@
 //!
 //! This is the Rust form of the Odin suite's allocation tests, which ran each conversion
 //! with no allocator at all. Rust has no per-call allocator to take away, so a counting
-//! global allocator observes the conversions instead. The engine core alone converts
-//! without allocating (`guidedoc`'s `steady_state_conversion_does_not_allocate`); the
-//! readers and renderers still build short-lived scratch vectors per conversion (block
-//! and inline item lists, anchor tables, renderer state). `CEILINGS` records today's
-//! counts as a ratchet: lower an entry when a change removes allocations, and never
-//! raise one without a reason.
+//! global allocator observes the conversions instead. The engine core converts without
+//! allocating (`guidedoc`'s `steady_state_conversion_does_not_allocate`), and the
+//! readers and renderers keep their working storage in the workspace's scratch store
+//! (`guidedoc::Scratch`), so most pairs convert again without a single allocation. The
+//! few that remain are explained in docs/manual/internals/memory.rst. `CEILINGS`
+//! records today's counts as a ratchet: lower an entry when a change removes
+//! allocations, and never raise one without a reason.
 //!
 //! The allocator counts per thread, so the test harness's other threads do not disturb
 //! the count. It is the only global allocator in this test binary, which is why this
@@ -81,22 +82,22 @@ fn sample(reader: &str) -> &'static str {
 /// The most allocations a repeated conversion of the samples may make, per reader and
 /// renderer: a ratchet (see the module documentation).
 const CEILINGS: &[(&str, &str, usize)] = &[
-    ("rst", "html", 128),
-    ("rst", "typst", 126),
-    ("rst", "text", 138),
-    ("rst", "rst", 301),
-    ("sphinx", "html", 244),
-    ("sphinx", "typst", 242),
-    ("sphinx", "text", 254),
-    ("sphinx", "rst", 418),
-    ("commonmark", "html", 50),
-    ("commonmark", "typst", 50),
-    ("commonmark", "text", 56),
-    ("commonmark", "rst", 155),
-    ("myst", "html", 53),
-    ("myst", "typst", 52),
-    ("myst", "text", 58),
-    ("myst", "rst", 157),
+    ("rst", "html", 0),
+    ("rst", "typst", 0),
+    ("rst", "text", 2),
+    ("rst", "rst", 1),
+    ("sphinx", "html", 0),
+    ("sphinx", "typst", 0),
+    ("sphinx", "text", 2),
+    ("sphinx", "rst", 1),
+    ("commonmark", "html", 0),
+    ("commonmark", "typst", 0),
+    ("commonmark", "text", 0),
+    ("commonmark", "rst", 5),
+    ("myst", "html", 0),
+    ("myst", "typst", 0),
+    ("myst", "text", 0),
+    ("myst", "rst", 5),
 ];
 
 /// The allocations `f` makes on this thread.

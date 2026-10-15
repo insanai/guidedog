@@ -257,7 +257,7 @@ fn index_card(page: &mut String, outdir: &Path, catalog: &Catalog, r: &Record) {
     let prefix = catalog.prefix.to_string().to_uppercase();
     let _ = write!(
         page,
-        "<section class=\"discussion-card\"><p class=\"eyebrow\">{} {} · {} <span class=\"chip \
+        "<section class=\"discussion-card\"><p class=\"eyebrow\">{} {} | {} <span class=\"chip \
          state-{}\">{}</span></p><h2>{}</h2><p class=\"labels\">{}</p>",
         escape(&prefix),
         escape(&r.number),
@@ -265,7 +265,7 @@ fn index_card(page: &mut String, outdir: &Path, catalog: &Catalog, r: &Record) {
         escape(&r.state),
         escape(&r.state),
         escape(&r.title),
-        escape(&r.labels.join(" · "))
+        escape(&r.labels.join(", "))
     );
     if r.historical {
         page.push_str("<p>Historical source retained in records; not built.</p>");
@@ -276,7 +276,7 @@ fn index_card(page: &mut String, outdir: &Path, catalog: &Catalog, r: &Record) {
             if outdir.join(&name).exists() {
                 let _ = write!(
                     page,
-                    "<a class=\"artifact-link\" href=\"{}\">{label} ↗</a> ",
+                    "<a class=\"artifact-link\" href=\"{}\">{label}</a> ",
                     escape(&name)
                 );
                 available = true;
@@ -386,7 +386,7 @@ fn theme_html(source: &str, output: &Path) -> Result<String> {
     let pdf = output.with_extension("pdf");
     if pdf.exists() {
         let name = pdf.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
-        let _ = write!(page, "<a href=\"{}\">Download PDF ↗</a>", escape(&name));
+        let _ = write!(page, "<a href=\"{}\">Download PDF</a>", escape(&name));
     }
     let _ = write!(page, "</div></aside></div><script>{JS}</script></body></html>");
     Ok(page)
@@ -400,14 +400,14 @@ const HEADER: &str = "<a class=\"skip\" href=\"#content\">Skip to content</a>
 <div class=\"layout\"><aside class=\"sidebar\" aria-label=\"Document navigation\">
 <a href=\"index.html\">All discussions</a>
 <details open><summary>IN THIS DOCUMENT</summary>
-<input id=\"section-filter\" type=\"search\" placeholder=\"Find a section…\" \
+<input id=\"section-filter\" type=\"search\" placeholder=\"Find a section...\" \
 aria-label=\"Find a section\">
 <nav aria-label=\"Table of contents\">";
 
 const MAIN: &str = "</nav></details></aside><main id=\"content\" tabindex=\"-1\">
 <p class=\"breadcrumb\">GUIDEDOG / ENGINEERING / DISCUSSIONS</p>";
 
-const FOOTER: &str = "<footer><p>Guidedog Discussions · Written to be understood,
+const FOOTER: &str = "<footer><p>Guidedog Discussions. Written to be understood,
     built to be maintained.</p>
 </footer></main><aside class=\"rail\" aria-label=\"About these discussions\"><div \
 class=\"rail-inner\">

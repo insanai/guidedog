@@ -98,7 +98,7 @@ const CONVERT: &str = "  USAGE
                                   at most 6144); raise it with --max-depth
 
   EXIT STATUS
-    0 ok · 1 invalid or refused content · 2 usage · 3 limit · 4 file or Typst
+    0 ok, 1 invalid or refused content, 2 usage, 3 limit, 4 file or Typst,
     5 internal error
 
 ";
@@ -231,8 +231,8 @@ const PUBLISH: &str = "  USAGE
   before retrying an unknown write.
 
   EXIT STATUS
-    0 published or unchanged · 1 failed (nothing published) · 6 published but not
-    confirmed live · 7 unknown (run the publisher's recover)
+    0 published or unchanged, 1 failed (nothing published), 6 published but not
+    confirmed live, 7 unknown (run the publisher's recover)
 
 ";
 

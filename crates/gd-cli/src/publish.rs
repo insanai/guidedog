@@ -231,7 +231,10 @@ fn show_plan(console: &mut Console<'_>, plan: &Plan, verbose: bool) {
     for (i, change) in plan.changes.iter().enumerate() {
         if i == 20 && !verbose {
             let more = plan.changes.len() - 20;
-            out.push_str(&format!("    … and {more} more (--verbose lists them all)\n"));
+            out.push_str(&format!(
+                "    {} and {more} more (--verbose lists them all)\n",
+                gd_report::terminal_symbols().ellipsis
+            ));
             break;
         }
         let verb = match change.kind {

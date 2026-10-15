@@ -18,7 +18,7 @@
 <meta name="color-scheme" content="light dark">
 {{ metatags }}
 {%- block htmltitle %}
-<title>{% if title %}{{ title }} · {% endif %}{{ html_title }}</title>
+<title>{% if title %}{{ title }} - {% endif %}{{ html_title }}</title>
 {%- endblock %}
 {#- The saved theme choice applies before the page is drawn, so it never flashes. #}
 <script>try{var m=localStorage.getItem("guidedog-theme");
@@ -144,7 +144,7 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
     {%- block footer %}
     <footer class="gd-footer">
       <p>
-        {%- if show_copyright and copyright %}<span>© {{ copyright }}.</span>{% endif %}
+        {%- if show_copyright and copyright %}<span>&copy; {{ copyright }}.</span>{% endif %}
         {%- if last_updated %} <span>{{ _('Last updated on %s.')|format(last_updated) }}</span>
         {%- endif %}
         {%- if show_guidedog %} <span>{{ _('Built with Guidedog.') }}</span>{% endif %}

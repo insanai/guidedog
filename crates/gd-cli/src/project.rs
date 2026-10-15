@@ -337,8 +337,8 @@ fn quickstart_done(
     let dir = gd_host::display_path(&q.dir.to_string_lossy());
     console.print(&format!(
         "\nFinished: a documentation project is ready in {dir}.\nWrite your documents next to \
-         index.rst, then build them with\n\n  guidedog build html   → {build}/html\n  \
-         guidedog build pdf    → {build}/pdf\n\n"
+         index.rst, then build them with\n\n  guidedog build html   -> {build}/html\n  \
+         guidedog build pdf    -> {build}/pdf\n\n"
     ));
 }
 

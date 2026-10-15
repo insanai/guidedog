@@ -282,7 +282,7 @@ fn write_postings(out: &mut String, map: &BTreeMap<String, Vec<u32>>) {
 fn excerpt(text: &str) -> String {
     match text.char_indices().nth(SEARCH_EXCERPT) {
         None => text.to_string(),
-        Some((end, _)) => format!("{}…", text[..end].trim()),
+        Some((end, _)) => format!("{}...", text[..end].trim()),
     }
 }
 
@@ -309,8 +309,8 @@ mod tests {
         assert_eq!(excerpt("short"), "short");
         let long = "word ".repeat(100);
         let e = excerpt(&long);
-        assert!(e.ends_with('…'));
-        assert_eq!(e.chars().count(), 180);
+        assert!(e.ends_with("..."));
+        assert_eq!(e.chars().count(), 182);
     }
 
     #[test]

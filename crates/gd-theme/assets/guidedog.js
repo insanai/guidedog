@@ -248,7 +248,7 @@
     }
     const text = document.createElement("span");
     text.className = "gd-result-text";
-    mark(text, d.text.length > size ? d.text.slice(0, size).trimEnd() + "…" : d.text, ws);
+    mark(text, d.text.length > size ? d.text.slice(0, size).trimEnd() + "..." : d.text, ws);
     a.append(text);
     li.append(a);
     return li;

@@ -188,7 +188,7 @@ impl<'a> Console<'a> {
             line.push_str("}\n");
             self.print(&line);
         } else {
-            let tick = Console::styled("✓", GREEN, self.color_out);
+            let tick = Console::styled(gd_report::terminal_symbols().check, GREEN, self.color_out);
             let text = format!("  {tick} {}\n", gd_report::escape_terminal(message));
             self.print(&text);
         }
@@ -196,10 +196,11 @@ impl<'a> Console<'a> {
 
     /// A failure line in the verdict's style, for the build summary.
     pub fn verdict(&self, ok: bool) -> String {
+        let symbols = gd_report::terminal_symbols();
         if ok {
-            Console::styled("✓ build succeeded", GREEN, self.color_out)
+            Console::styled(&format!("{} build succeeded", symbols.check), GREEN, self.color_out)
         } else {
-            Console::styled("✗ build failed", RED, self.color_out)
+            Console::styled(&format!("{} build failed", symbols.cross), RED, self.color_out)
         }
     }
 

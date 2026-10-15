@@ -67,7 +67,7 @@ fn html_writes_pages_with_navigation_and_math() {
     let reports = p.build(BuilderKind::Html).unwrap();
     assert!(problems(&reports).is_empty(), "{reports:?}");
     let intro = p.read(BuilderKind::Html, "intro.html");
-    assert!(intro.contains("<title>Introduction · Demo documentation</title>"), "{intro}");
+    assert!(intro.contains("<title>Introduction - Demo documentation</title>"), "{intro}");
     assert!(intro.contains("Some words about widgets."));
     // The sidebar marks the current page; the caption names the toctree.
     assert!(intro.contains("<span class=\"caption-text\">Contents</span>"));

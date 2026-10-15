@@ -1,0 +1,22 @@
+# Configuration file for Guidedog, written by dsc init.
+#
+# The settings use the names of Sphinx's conf.py, written in TOML:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
+project = @NAME_TOML@
+author = @AUTHOR_TOML@
+copyright = @COPYRIGHT_TOML@
+version = "0.1"
+release = "0.1"
+
+extensions = ["sphinx.ext.graphviz"]
+exclude_patterns = ["_build", "template/**", "README*", "Thumbs.db", ".DS_Store"]
+language = "en"
+source_suffix = [".rst"]
+root_doc = "index"
+
+html_theme = "guidedog"
+html_title = @NAME_TOML@
+numfig = true
+
+pdf_paper_size = "a4"

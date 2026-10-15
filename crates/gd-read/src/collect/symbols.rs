@@ -4,7 +4,7 @@
 
 use gd_env::{
     CppDeclInfo, IndexInfo, LabelInfo, LabelKind, ModuleInfo, ObjectInfo, RefInfo, TermInfo,
-    TocObjectInfo,
+    TocObjectInfo, normalize_name, option_key,
 };
 use guidedoc::{AttributeKey, LinkKind, NodeId, NodeKind};
 
@@ -397,19 +397,4 @@ impl Collector<'_, '_> {
             self.d.meta.push((doc.text(a.name).to_owned(), doc.text(a.value).to_owned()));
         }
     }
-}
-
-/// Lowercases a label or term and collapses its white space, as Sphinx does.
-pub(crate) fn normalize_name(name: &str) -> String {
-    name.to_lowercase().split_whitespace().collect::<Vec<_>>().join(" ")
-}
-
-/// An option's name as Sphinx files it: the program, its words joined by hyphens, then
-/// the option.
-pub(crate) fn option_key(program: &str, option: &str) -> String {
-    if program.is_empty() {
-        return option.to_owned();
-    }
-    let words: Vec<&str> = program.split_whitespace().collect();
-    format!("{} {option}", words.join("-"))
 }

@@ -137,12 +137,7 @@ impl RustCache {
 }
 
 fn entries_from_json(text: &str) -> Option<Vec<(Digest, CratePages)>> {
-    let value = gd_json::parse(text).ok()?;
-    let r = ObjectReader::of(&value)?;
-    if r.number("version")? != VERSION {
-        return None;
-    }
-    r.list("crates", entry_from_json)
+    ObjectReader::read_versioned(text, VERSION, |r| r.list("crates", entry_from_json))
 }
 
 fn entry_to_json(entry: &(Digest, CratePages)) -> Value {

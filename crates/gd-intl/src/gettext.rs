@@ -8,7 +8,7 @@ use std::path::{Component, Path};
 use gd_env::{BuilderKind, CachedFile, DocInfo, glob_match};
 use gd_host::{Ledger, Problem};
 use gd_i18n::{ExtractOptions, PotHeader, Template, domain_for, format_date};
-use gd_outputs::{Generation, SITE_UNIT, UnitRecord};
+use gd_outputs::{Generation, SITE_UNIT, UnitRecord, pages_not_written};
 use gd_report::Report;
 use gd_resolve::{BuildView, OutputBuilder};
 use guidedoc::Workspace;
@@ -53,7 +53,7 @@ impl OutputBuilder for GettextBuilder<'_> {
         let mut unit = generation.unit(SITE_UNIT);
         if failed > 0 {
             unit.fail();
-            return Err(pages_failed(failed, &out_dir));
+            return Err(pages_not_written(failed, &out_dir));
         }
         let c = view.config;
         let now = view.options.now.unwrap_or_else(std::time::SystemTime::now);
@@ -174,21 +174,6 @@ fn missing_object(doc: &DocInfo) -> Problem {
         format!("The document {} has no cached object to extract messages from.", doc.docname),
         "Rebuild with guidedog build -E.",
         5,
-    )
-}
-
-/// The problem of a build some of whose documents could not be written.
-fn pages_failed(failed: usize, out_dir: &Path) -> Problem {
-    Problem::new(
-        "build.output",
-        "PAGES NOT WRITTEN",
-        &out_dir.display().to_string(),
-        format!(
-            "{failed} document(s) could not be written, so this build's output was not \
-             published. The previous output is unchanged."
-        ),
-        "Fix the errors reported above for each page, then run the build again.",
-        1,
     )
 }
 

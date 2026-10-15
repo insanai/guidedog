@@ -177,14 +177,6 @@ pub enum FlagOrName {
 }
 
 impl FlagOrName {
-    /// Whether the setting is on: `true` or any name.
-    pub fn is_on(&self) -> bool {
-        match self {
-            FlagOrName::Flag(on) => *on,
-            FlagOrName::Name(_) => true,
-        }
-    }
-
     /// The name, when one was given.
     pub fn name(&self) -> Option<&str> {
         match self {

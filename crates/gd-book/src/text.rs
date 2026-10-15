@@ -6,12 +6,10 @@ use gd_env::{BuilderKind, Digest, DocId, OutputFormat};
 use gd_host::Problem;
 use gd_outputs::{Generation, UnitRecord};
 use gd_report::Report;
-use gd_resolve::{BuildView, OutputBuilder, lookup_answer};
+use gd_resolve::{BuildView, OutputBuilder, document_settings, lookup_answer, page_inputs};
 use guidedoc::Labels;
 
-use crate::pages::{
-    Job, PageStyle, answers, document_settings, page_inputs, pages_failed, render_pages,
-};
+use crate::pages::{Job, PageStyle, answers, render_pages};
 
 /// The `text` builder: one `<docname>.txt` per document, rendered by the registry's
 /// `text` renderer. `labels` are the translated renderer labels (gd-intl's); `None`
@@ -117,5 +115,5 @@ fn write_documents(
             reports: page.reports,
         });
     }
-    pages_failed(generation.failed_count(), &generation.paths().out_dir)
+    generation.check_written()
 }

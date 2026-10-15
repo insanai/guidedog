@@ -12,6 +12,7 @@ use gd_i18n::{Compact, Progress};
 
 use crate::gettext::relative_path;
 use crate::*;
+use gd_resolve::python_format;
 
 /// A fresh folder for one test, removed when dropped.
 struct TempDir(PathBuf);

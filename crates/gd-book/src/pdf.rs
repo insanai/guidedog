@@ -9,7 +9,7 @@ use gd_conf::PdfDocument;
 use gd_env::{BuilderKind, Digest};
 use gd_host::{Ledger, Problem};
 use gd_link::Worker;
-use gd_outputs::{Generation, UnitRecord};
+use gd_outputs::{Generation, UnitRecord, pages_not_written};
 use gd_report::Report;
 use gd_resolve::{BuildView, OutputBuilder};
 use gd_typst::Backend;
@@ -19,7 +19,6 @@ use crate::compose::{Book, Composer, language_file};
 use crate::failure::{BookSource, compile_failure};
 use crate::fonts::bundled_font_dir;
 use crate::inputs::{TypstSettings, book_inputs};
-use crate::pages::pages_failed;
 use crate::typst_root::{TypstRoot, typst_folders};
 
 /// The `pdf` builder. Each book is `<file>-<language>.pdf` in the output folder, with
@@ -112,7 +111,7 @@ impl PdfBuilder<'_> {
         }
         if composed.failed > 0 {
             generation.unit(&key).fail();
-            return pages_failed(composed.failed, &generation.paths().out_dir);
+            return Err(pages_not_written(composed.failed, &generation.paths().out_dir));
         }
         let c = view.config;
         let Some(backend) = gd_typst::locate(&c.pdf.typst) else {

@@ -1,12 +1,10 @@
-//! What the builders share: the digests of what pages are made from, rendering pages on
-//! worker threads, and the problem of pages that could not be made.
+//! What the builders share: rendering pages on worker threads, and the answers to the
+//! lookups each page made.
 
-use std::path::Path;
 use std::sync::Mutex;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
-use gd_env::{Digest, Digester, DocId, Lookup, OutputFormat, Rendered, Trace};
-use gd_host::Problem;
+use gd_env::{Digest, DocId, Lookup, OutputFormat, Rendered, Trace};
 use gd_link::{PageRequest, Worker, render_options, render_page};
 use gd_resolve::{BuildView, lookup_answer};
 use guidedoc::{Labels, RenderOptions};
@@ -93,52 +91,6 @@ pub(crate) fn render_pages(
     pages
 }
 
-/// What every document's output shares: the output settings, the translations and
-/// reading settings (the environment's digest), the inventories, every document's
-/// docname and title, and in toctree order each document's name, anchor key, parent,
-/// toctree count and sections (title, anchor, number).
-pub(crate) fn document_settings(view: &BuildView<'_>) -> Digest {
-    let mut d = Digester::new();
-    d.digest(&view.settings).digest(&view.env.settings).digest(&view.intersphinx.digest);
-    for doc in &view.env.docs {
-        d.text(&doc.docname).text(&doc.title);
-    }
-    for &id in &view.tables.order {
-        let doc = view.doc(id);
-        let parent = view.tables.parent.get(id.index()).copied().flatten();
-        d.text(&doc.docname).text(view.doc_key(id));
-        d.number(parent.map_or(-1, |p| i64::from(p.0))).number(doc.toctrees.len() as i64);
-        let numbers = view.tables.secnumbers.get(id.index());
-        for (i, section) in doc.sections.iter().enumerate() {
-            let number = numbers.and_then(|n| n.get(i)).map_or("", String::as_str);
-            d.text(&section.title).text(&section.anchor).text(number);
-        }
-    }
-    d.finish()
-}
-
-/// A document page's own inputs on top of `common`: its source and object digests, its
-/// figure numbers, what it included, and for a todolist every document with todos.
-/// What its references find is in its lookups.
-pub(crate) fn page_inputs(view: &BuildView<'_>, id: DocId, common: &Digest) -> Digest {
-    let doc = view.doc(id);
-    let mut d = Digester::new();
-    d.digest(common).digest(&doc.digest);
-    d.digest(&doc.object.as_ref().map_or(Digest::default(), |o| o.digest));
-    if let Some(numbers) = view.tables.fignumbers.get(id.index()) {
-        d.texts(numbers);
-    }
-    for dep in &doc.deps {
-        d.digest(&dep.digest);
-    }
-    if doc.todolist {
-        for other in view.env.docs.iter().filter(|o| !o.todos.is_empty()) {
-            d.digest(&other.digest);
-        }
-    }
-    d.finish()
-}
-
 /// Each lookup a page made, with the digest of its answer now, for the manifest.
 pub(crate) fn answers(view: &BuildView<'_>, docname: &str, trace: Trace) -> Vec<(Lookup, Digest)> {
     trace
@@ -149,23 +101,4 @@ pub(crate) fn answers(view: &BuildView<'_>, docname: &str, trace: Trace) -> Vec<
             (lookup, answer)
         })
         .collect()
-}
-
-/// Fails the build when `failed` outputs could not be made; the reports above say
-/// why, and the previous output stays in place.
-pub(crate) fn pages_failed(failed: usize, out_dir: &Path) -> Result<(), Problem> {
-    if failed == 0 {
-        return Ok(());
-    }
-    Err(Problem::new(
-        "build.output",
-        "PAGES NOT WRITTEN",
-        &out_dir.display().to_string(),
-        format!(
-            "{failed} document(s) could not be written, so this build's output was not \
-             published. The previous output is unchanged."
-        ),
-        "Fix the errors reported above for each page, then run the build again.",
-        1,
-    ))
 }

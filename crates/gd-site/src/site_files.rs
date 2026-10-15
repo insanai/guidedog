@@ -129,7 +129,7 @@ fn write_sources(site: &Site<'_, '_>, unit: &mut Unit<'_>) -> Result<(), Problem
 fn write_plugin_assets(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(), Problem> {
     for (id, asset) in view.plugins.assets() {
         let rel = format!("_static/plugins/{id}/{}", asset.path);
-        if let Some(existing) = unit.files().iter().find(|f| paths_conflict(f, &rel)) {
+        if let Some(existing) = unit.own_path(&rel) {
             return Err(Problem::new(
                 "plugins.config",
                 "BUILD PLUGIN CONFIGURATION",
@@ -142,16 +142,6 @@ fn write_plugin_assets(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(), 
         unit.emit(&rel, &asset.data)?;
     }
     Ok(())
-}
-
-/// Whether two output paths name the same file, ignoring case, or one is a folder of
-/// the other.
-fn paths_conflict(a: &str, b: &str) -> bool {
-    let (a, b) = (a.to_lowercase(), b.to_lowercase());
-    let (shorter, longer) = if a.len() <= b.len() { (&a, &b) } else { (&b, &a) };
-    longer
-        .strip_prefix(shorter.as_str())
-        .is_some_and(|rest| rest.is_empty() || rest.starts_with('/'))
 }
 
 /// The pages made from the whole project (search, module index, general index, the
@@ -311,13 +301,6 @@ mod tests {
         assert_eq!(url_host("https://user@x.org:8080/"), "x.org");
         assert_eq!(url_host("http://[::1]:80/"), "::1");
         assert_eq!(url_host("docs.example.org"), "");
-    }
-
-    #[test]
-    fn plugin_assets_conflict_by_name_or_folder_ignoring_case() {
-        assert!(paths_conflict("_static/plugins/a/X.js", "_static/plugins/a/x.js"));
-        assert!(paths_conflict("_static/plugins/a", "_static/plugins/a/x.js"));
-        assert!(!paths_conflict("_static/plugins/ab", "_static/plugins/a/x.js"));
     }
 
     #[test]

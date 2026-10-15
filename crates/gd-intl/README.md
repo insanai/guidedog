@@ -28,7 +28,7 @@ gd_intl::intl_update(&config, &IntlOptions { languages: vec!["de".into()],
 | `Intl { translate, domains, files, ui, labels, targets, progress, compact, digest }` | the build's translation state; `domain_of`, `catalog_of`, `files_of`, `source_name` |
 | `load_intl(&config, kind, &budget, &mut reports)`, `locale_paths` | loads it; a bad catalog is an `i18n.catalog` warning |
 | `UiTranslator` (`load`, `english`, `labels`, `translator`) | gd-env's `UiText` over the `guidedog` domain |
-| `localize_config`, `python_format`, `build_dates` | the English defaults Sphinx translates; the build's dates |
+| `localize_config`, `build_dates` | the English defaults Sphinx translates; the build's dates |
 | `compact_mode`, `progress_classes`, `additional_targets`, `catalog_report` | intl settings as gd-i18n types; catalog errors as reports |
 | `GettextBuilder { reread }`, `Reread` | gd-resolve's `OutputBuilder` for `gettext` |
 | `intl_update`, `intl_stat`, `IntlOptions`, `IntlFile`, `IntlAction` | sphinx-intl's update and stat |

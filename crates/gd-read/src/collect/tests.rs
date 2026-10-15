@@ -157,7 +157,7 @@ fn todos_meta_and_downloads() {
 
 #[test]
 fn names_are_normalized_as_sphinx_normalizes_them() {
-    use super::symbols::{normalize_name, option_key};
+    use gd_env::{normalize_name, option_key};
     assert_eq!(normalize_name("  Big \n Word "), "big word");
     assert_eq!(option_key("git  commit", "-m"), "git-commit -m");
     assert_eq!(option_key("", "-m"), "-m");

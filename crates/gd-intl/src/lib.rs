@@ -34,7 +34,7 @@ pub use gettext::{GettextBuilder, Reread};
 pub use intl::{Intl, load_intl, locale_paths};
 pub use localize::{
     additional_targets, build_dates, catalog_report, compact_mode, localize_config,
-    progress_classes, python_format,
+    progress_classes,
 };
 pub use ui::UiTranslator;
 pub use update::{IntlAction, IntlFile, IntlOptions, intl_stat, intl_update};

@@ -7,9 +7,9 @@ use gd_env::{Asset, Digest, DocId, Rendered};
 use gd_host::{Ledger, Problem};
 use gd_outputs::{Generation, SITE_UNIT, UnitRecord};
 use gd_report::{Report, Severity};
-use gd_resolve::lookup_answer;
+use gd_resolve::{lookup_answer, page_inputs};
 
-use crate::digests::{html_settings, page_inputs};
+use crate::digests::html_settings;
 use crate::escape::push_escaped;
 use crate::render::render_bodies;
 use crate::search::write_search;
@@ -65,7 +65,7 @@ fn write_documents(
             return Err(gd_host::interrupted_problem());
         }
     }
-    pages_failed(generation)
+    generation.check_written()
 }
 
 /// Writes one rendered document as its unit: the page laid out (unless a page of
@@ -174,7 +174,7 @@ pub(crate) fn write_singlehtml(
         body.push_str(&page.body);
         body.push_str("\n</section>\n");
     }
-    pages_failed(generation)?;
+    generation.check_written()?;
     let Some(root) = view.doc_named(&view.config.root_doc) else { return Ok(()) };
     report_duplicate_ids(&body, reports);
     write_site_unit(site, generation, Some((root, &body)), &assets, reports)?;
@@ -202,26 +202,6 @@ fn report_duplicate_ids(body: &str, reports: &mut Vec<Report>) {
             });
         }
     }
-}
-
-/// Fails the build when a document could not be written; the reports say why, and the
-/// previous output stays in place.
-fn pages_failed(generation: &Generation) -> Result<(), Problem> {
-    let failed = generation.failed_count();
-    if failed == 0 {
-        return Ok(());
-    }
-    Err(Problem::new(
-        "build.output",
-        "PAGES NOT WRITTEN",
-        &generation.paths().out_dir.display().to_string(),
-        format!(
-            "{failed} document(s) could not be written, so this build's output was not \
-             published. The previous output is unchanged."
-        ),
-        "Fix the errors reported above for each page, then run the build again.",
-        1,
-    ))
 }
 
 #[cfg(test)]

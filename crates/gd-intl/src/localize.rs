@@ -8,7 +8,7 @@ use gd_env::UiText;
 use gd_gettext::Error;
 use gd_i18n::{Compact, Moment, Progress, Targets, format_date, parse_target};
 use gd_report::{Excerpt, Report, Severity};
-use gd_resolve::Dates;
+use gd_resolve::{Dates, python_format};
 
 /// The `numfig_format` defaults, which are translated when left as they are.
 const DEFAULT_NUMFIG: [(&str, &str); 4] = [
@@ -43,23 +43,6 @@ pub fn localize_config(config: &mut Config, ui: &dyn UiText) {
     if config.html.short_title_derived {
         config.html.short_title = config.html.title.clone();
     }
-}
-
-/// Replaces each `%s` of `format` with the next of `values`, as Python's `%` does;
-/// a `%s` left without a value stays as it is.
-pub fn python_format(format: &str, values: &[&str]) -> String {
-    let mut out =
-        String::with_capacity(format.len() + values.iter().map(|v| v.len()).sum::<usize>());
-    let mut rest = format;
-    let mut values = values.iter();
-    while let Some(at) = rest.find("%s") {
-        let Some(value) = values.next() else { break };
-        out.push_str(&rest[..at]);
-        out.push_str(value);
-        rest = &rest[at + 2..];
-    }
-    out.push_str(rest);
-    out
 }
 
 /// The build's dates, as Sphinx formats them: `|today|` is conf.toml's `today`, or

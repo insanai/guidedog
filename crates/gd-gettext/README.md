@@ -4,7 +4,7 @@ GNU gettext message catalogs: PO/POT text, compiled MO files (both byte orders),
 Plural-Forms expressions, msgmerge-style updates, and statistics. Standard library only;
 independent of every other workspace crate. Ported from `guidedog_old/lib/gettext`
 (behaviour kept, API redesigned for Rust; see *Redesigns* below). For large catalogs,
-see [DESIGN.md](DESIGN.md): research, design, and measurements.
+see [docs/manual/internals/gettext.rst](../../docs/manual/internals/gettext.rst): research, design, and measurements.
 
 ```rust
 use gd_gettext::{LoadOptions, Lookup, MoCatalog};

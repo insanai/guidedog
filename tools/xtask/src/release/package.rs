@@ -1,12 +1,13 @@
 //! `release package` and `release source`: the release archives of one platform, and
 //! the source archive of the commit.
 //!
-//! The guidedog archive holds one folder, guidedog-<os>-<arch>, with guidedog, dsc,
-//! guidedog-pages and graphdog; the dscc archive holds dscc alone. Each folder also has
+//! The guidedog archive holds one folder, guidedog-<os>-<arch>, with guidedog,
+//! guidedog-pages and graphdog. The folder also has
 //! README.md, LICENSE, NOTICE, CHANGELOG.md, SOURCE.txt (where the exact source is and
 //! how it was built) and NAME.build.json (version, commit, target, toolchain, and the
-//! programs' SHA-256). Graphviz is not in the archives: the programs link the system's
-//! libraries. The working tree must be clean, so the archives match their commit.
+//! programs' SHA-256). Graphviz and Expat are linked statically, so their licences
+//! (COPYING-graphviz, COPYING-expat) come along and SOURCE.txt says where their sources
+//! are. The working tree must be clean, so the archives match their commit.
 
 use std::fmt::Write;
 use std::path::Path;
@@ -18,7 +19,7 @@ use crate::{Result, fail, process, repository_root};
 
 const PACKAGE_HELP: &str = "\
 Packages the programs `cargo xtask release build` put in build/ into the release
-archives of one platform: dist/guidedog-PACKAGE.tar.gz and dist/dscc-PACKAGE.tar.gz.
+archive of one platform: dist/guidedog-PACKAGE.tar.gz.
 
 Usage: cargo xtask release package PACKAGE
 
@@ -30,7 +31,8 @@ OUT sets the output folder (default: dist). The working tree must be clean.
 const SOURCE_HELP: &str = "\
 Writes the source archive of the release, dist/guidedog-VERSION-source.tar.gz: exactly
 the tracked files of the current commit (git archive), in one folder named
-guidedog-VERSION.
+guidedog-VERSION. Beside it go the pinned Graphviz and Expat source tarballs that the
+programs link statically, as their licences and NOTICE's additional permission ask.
 
 Usage: cargo xtask release source
 
@@ -51,10 +53,8 @@ struct Platform {
     requires: &'static str,
 }
 
-const LINUX_REQUIRES: &str = "Linux with glibc 2.35 or later, and the Graphviz libraries\n\
-    (Debian/Ubuntu: apt install libgvc6; Fedora: dnf install graphviz)";
-const MACOS_REQUIRES: &str =
-    "macOS 12 or later, and Graphviz from Homebrew (brew install graphviz)";
+const LINUX_REQUIRES: &str = "Linux with glibc 2.35 or later";
+const MACOS_REQUIRES: &str = "macOS 12 or later";
 
 const PLATFORMS: [Platform; 4] = [
     Platform {
@@ -122,8 +122,7 @@ fn package(platform: Platform) -> Result<()> {
     };
     let out = super::dist_dir(&root);
     create_dir(&out)?;
-    archive(&release, &out, "guidedog", &["guidedog", "dsc", "guidedog-pages", "graphdog"])?;
-    archive(&release, &out, "dscc", &["dscc"])
+    archive(&release, &out, "guidedog", &super::PROGRAMS)
 }
 
 /// Writes `out/NAME-PACKAGE.tar.gz` with the programs.
@@ -141,6 +140,10 @@ fn archive(release: &Release<'_>, out: &Path, name: &str, programs: &[&str]) -> 
     }
     for document in DOCUMENTS {
         copy(&release.root.join(document), &folder.join(document))?;
+    }
+    let graphviz = crate::graphviz::install_dir();
+    for licence in ["COPYING-graphviz", "COPYING-expat"] {
+        copy(&graphviz.join(licence), &folder.join(licence))?;
     }
     fsutil::write(&folder.join("SOURCE.txt"), source_text(release, programs))?;
     let binary_sum = sha256_file(&folder.join(name))?;
@@ -170,13 +173,14 @@ fn build_json(release: &Release<'_>, name: &str, binary_sum: &str, sums: &str) -
          \"commit\": \"{commit}\",\n  \
          \"source\": \"https://github.com/insanai/guidedog/tree/v{version}\",\n  \
          \"package\": \"{}\",\n  \"target\": \"{}\",\n  \"rustc\": {},\n  \"command\": {},\n  \
-         \"typst_embedded\": true,\n  \"graphviz\": \"linked from the system\",\n  \
+         \"typst_embedded\": true,\n  \"graphviz\": \"{}, linked statically\",\n  \
          \"requires\": {},\n  \"binary\": \"{name}\",\n  \"binary_sha256\": \"{binary_sum}\",\n  \
          \"programs\": {{{sums}}}\n}}\n",
         platform.package,
         platform.target,
         quoted(rustc),
         quoted(command),
+        crate::graphviz::GRAPHVIZ_VERSION,
         quoted(&platform.requires.replace('\n', " ")),
     )
 }
@@ -193,12 +197,14 @@ fn source_text(release: &Release<'_>, programs: &[&str]) -> String {
          Source archive: {RELEASES}/v{version}/guidedog-{version}-source.tar.gz\n\n\
          Built with {rustc} and Cargo.lock, by:\n\n    {command}\n\n\
          Programs: {}\n\
-         Typst: embedded Typst 0.15.1. Graphviz: linked from the system.\n\
+         Typst: embedded Typst 0.15.1. Graphviz: linked statically.\n\
+         {}\
          Requires: {}.\n\
-         Licenses and notices: LICENSE and NOTICE.\n",
+         Licenses and notices: LICENSE, NOTICE, COPYING-graphviz and COPYING-expat.\n",
         platform.package,
         platform.target,
         programs.join(" "),
+        crate::graphviz::source_text(),
         platform.requires,
     );
     text
@@ -222,5 +228,8 @@ pub(super) fn source_main(args: &[String]) -> Result<()> {
     gzip.args(["-n", "-9"]);
     process::pipe_to_file(&mut git, &mut gzip, &archive)?;
     println!("{}", archive.display());
+    for tarball in crate::graphviz::fetch_sources(&out)? {
+        println!("{}", tarball.display());
+    }
     Ok(())
 }

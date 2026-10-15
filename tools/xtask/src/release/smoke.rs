@@ -17,23 +17,23 @@ documentation read from Python source without running Python.
 Usage: cargo xtask release smoke [--external-typst] PROGRAM
 
 By default the program runs with an empty PATH, so it must carry everything itself except
-the system libraries it links (libc and Graphviz): the embedded Typst compiler and
-tree-sitter. --external-typst keeps PATH, for builds without the `embedded` feature that
+the system libraries it links (libc): the embedded Typst compiler, tree-sitter and
+Graphviz. --external-typst keeps PATH, for builds without the `embedded` feature that
 run an installed typst program.
 ";
 
 const DISCUSSION_HELP: &str = "\
-Smoke-tests the discussion programs the way a new user runs them: a new catalog, a draft,
-a promotion, a decision, and its HTML site and PDF books.
+Smoke-tests guidedog dsc, the discussion catalogs, the way a new user runs them: a new
+catalog, a draft, a promotion, a decision, and its HTML site and PDF books.
 
-Usage: cargo xtask release smoke-discussion PROGRAM [GUIDEDOG]
+Usage: cargo xtask release smoke-discussion PROGRAM
 
-  dsc builds with the GUIDEDOG it is given; dscc, given alone, with the Guidedog built
-  into it. Each runs with an empty PATH.
+PROGRAM is guidedog. It runs with an empty PATH, so it must link the discussion plugin
+and build with the Typst compiler embedded in it.
 ";
 
 const GRAPHDOG_HELP: &str = "\
-Smoke-tests graphdog with the system's Graphviz: a graph to SVG, and a syntax error
+Smoke-tests graphdog with its built-in Graphviz: a graph to SVG, and a syntax error
 reported with its location.
 
 Usage: cargo xtask release smoke-graphdog PROGRAM
@@ -191,40 +191,35 @@ pub(super) fn discussion_main(args: &[String]) -> Result<()> {
         help: DISCUSSION_HELP,
     };
     let Some(parsed) = args::parse(args, &spec)? else { return Ok(()) };
-    parsed.at_most(2, &spec)?;
-    let program = super::given_path(parsed.positional(0, "the dsc or dscc program", &spec)?);
-    let guidedog = parsed.positionals.get(1).map(|g| super::given_path(g));
-    smoke_discussion(&program, guidedog.as_deref())
+    parsed.at_most(1, &spec)?;
+    let program = super::given_path(parsed.positional(0, "the guidedog program", &spec)?);
+    smoke_discussion(&program)
 }
 
-/// Smoke-tests dsc with `guidedog`, or dscc without one.
-pub(crate) fn smoke_discussion(program: &Path, guidedog: Option<&Path>) -> Result<()> {
+/// Smoke-tests `guidedog dsc`, the discussion plugin linked into guidedog.
+pub(crate) fn smoke_discussion(program: &Path) -> Result<()> {
     let work = TempDir::new("discussion")?;
     let runner = Runner::new(program.to_path_buf(), work.path(), false)?;
-    let version = runner.output(work.path(), &["--version"])?;
-    print!("{version}");
-    let engine = guidedog.map(|g| format!("--guidedog={}", g.display()));
-    if engine.is_none() && !version.contains("Typst: built in") {
+    let help = runner.output(work.path(), &["dsc", "--help"])?;
+    if !help.contains("dsc build") {
         return Err(smoke_failure(
             "discussion",
-            &format!("{} has no Typst built in", program.display()),
+            &format!("{} does not link the discussion plugin", program.display()),
         ));
     }
     runner.run(
         work.path(),
-        &["init", "eds", "--prefix=eds", "--name=Smoke Discussions", "--author=Release"],
+        &["dsc", "init", "eds", "--prefix=eds", "--name=Smoke Discussions", "--author=Release"],
     )?;
     let eds = work.path().join("eds");
-    runner.run(&eds, &["new", "Cache policy", "--labels=architecture"])?;
-    runner.run(&eds, &["promote", "cache-policy"])?;
+    runner.run(&eds, &["dsc", "new", "Cache policy", "--labels=architecture"])?;
+    runner.run(&eds, &["dsc", "promote", "cache-policy"])?;
     runner.run(
         &eds,
-        &["state", "1", "--to=accepted", "--reason=Reviewed in the release smoke test"],
+        &["dsc", "state", "1", "--to=accepted", "--reason=Reviewed in the release smoke test"],
     )?;
-    runner.run(&eds, &["check"])?;
-    let mut build = vec!["build", "--color=never"];
-    build.extend(engine.as_deref());
-    runner.run(&eds, &build)?;
+    runner.run(&eds, &["dsc", "check"])?;
+    runner.run(&eds, &["dsc", "build", "--color=never"])?;
     let html = eds.join("_build/html/records/0001-cache-policy.html");
     let text = read_text(&html)
         .map_err(|_| smoke_failure("discussion", &format!("no {}", html.display())))?;
@@ -235,15 +230,8 @@ pub(crate) fn smoke_discussion(program: &Path, guidedog: Option<&Path>) -> Resul
         ));
     }
     check_pdf(&eds.join("_build/pdf/eds-0001-cache-policy-en.pdf"), "discussion")?;
-    if guidedog.is_some() {
-        let missing = format!("--guidedog={}", work.path().join("no-guidedog").display());
-        let out = process::capture(&mut runner.command(&eds, &["build", &missing]))?;
-        if out.success {
-            return Err(smoke_failure("discussion", "dsc built without a guidedog"));
-        }
-    }
     let name = program.file_name().unwrap_or_default().to_string_lossy();
-    println!("discussion smoke test passed: {name}, an HTML site and PDF books");
+    println!("discussion smoke test passed: {name} dsc, an HTML site and PDF books");
     Ok(())
 }
 

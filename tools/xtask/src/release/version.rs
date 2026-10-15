@@ -16,7 +16,7 @@ Checks that a release names one version everywhere, and prints it.
 Usage: cargo xtask release check-version [PROGRAM]
 
   VERSION, Cargo.toml's [workspace.package] version, and the tag in GITHUB_REF (on a
-  tag build) must agree. With PROGRAM (build/guidedog, build/dsc, ...), its --version
+  tag build) must agree. With PROGRAM (build/guidedog, build/graphdog, ...), its --version
   must also begin with its own name and the version.
 ";
 

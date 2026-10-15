@@ -3,9 +3,9 @@
 //! archives' SOURCE.txt.
 //!
 //! The Typst compiler is embedded (gd-typst's default `embedded` feature) and tree-sitter
-//! is compiled in. Graphviz is linked from the system: its development files must be
-//! installed first (Debian/Ubuntu: libgraphviz-dev; macOS: brew install graphviz). On
-//! macOS the linker is pointed at Homebrew's Graphviz and the build targets macOS 12.
+//! is compiled in. Graphviz is linked statically from the libraries `cargo xtask graphviz`
+//! builds (built first when missing), so the programs need no Graphviz at run time. On
+//! macOS the build targets macOS 12.
 
 use std::path::PathBuf;
 use std::process::Command;
@@ -16,7 +16,7 @@ use crate::fsutil::{copy, create_dir, write};
 use crate::{Result, process, repository_root};
 
 const HELP: &str = "\
-Builds guidedog, dsc, dscc, guidedog-pages and graphdog the way the release workflow
+Builds guidedog, guidedog-pages and graphdog the way the release workflow
 does (cargo build --release --locked) and copies them into build/.
 
 Usage: cargo xtask release build [--target TRIPLE] [--dry-run]
@@ -24,9 +24,9 @@ Usage: cargo xtask release build [--target TRIPLE] [--dry-run]
   --target TRIPLE   build for this Rust target, such as aarch64-apple-darwin
   --dry-run         print the cargo command and change nothing
 
-Graphviz's development files must be installed (Debian/Ubuntu: libgraphviz-dev; macOS:
-brew install graphviz). build/build.command and build/rustc.version record how the
-programs were built, for the archives' SOURCE.txt.
+Graphviz is linked statically: GUIDEDOG_GRAPHVIZ_STATIC names its libraries, or
+`cargo xtask graphviz` builds them into target/graphviz first. build/build.command and
+build/rustc.version record how the programs were built, for the archives' SOURCE.txt.
 ";
 
 /// What `release build` builds.
@@ -66,12 +66,15 @@ pub(crate) fn build(options: &Options) -> Result<()> {
     if let Some(target) = &options.target {
         cargo.args(["--target", target]);
     }
-    let line = process::describe(&cargo);
+    let graphviz = static_graphviz(options.dry_run)?;
+    let shown = graphviz.strip_prefix(&root).unwrap_or(&graphviz).display().to_string();
+    let line = format!("GUIDEDOG_GRAPHVIZ_STATIC={shown} {}", process::describe(&cargo));
     println!("{line}");
     if options.dry_run {
         return Ok(());
     }
-    prepare_macos(&mut cargo)?;
+    cargo.env("GUIDEDOG_GRAPHVIZ_STATIC", &graphviz);
+    prepare_macos(&mut cargo);
     let build = root.join("build");
     create_dir(&build)?;
     write(&build.join("build.command"), format!("{line}\n"))?;
@@ -98,23 +101,19 @@ fn target_dir(root: &std::path::Path) -> PathBuf {
     }
 }
 
-/// On macOS, targets macOS 12 unless MACOSX_DEPLOYMENT_TARGET says otherwise, and points
-/// the linker at Homebrew's Graphviz when brew is installed.
-fn prepare_macos(cargo: &mut Command) -> Result<()> {
-    if !cfg!(target_os = "macos") {
-        return Ok(());
+/// The static Graphviz install folder: GUIDEDOG_GRAPHVIZ_STATIC when set, otherwise the
+/// default one of `cargo xtask graphviz`, built now unless it is there or this is a dry run.
+fn static_graphviz(dry_run: bool) -> Result<PathBuf> {
+    let dir = crate::graphviz::install_dir();
+    if dry_run || std::env::var_os("GUIDEDOG_GRAPHVIZ_STATIC").is_some_and(|d| !d.is_empty()) {
+        return Ok(dir);
     }
-    if std::env::var_os("MACOSX_DEPLOYMENT_TARGET").is_none() {
+    crate::graphviz::ensure_default(4)
+}
+
+/// On macOS, targets macOS 12 unless MACOSX_DEPLOYMENT_TARGET says otherwise.
+fn prepare_macos(cargo: &mut Command) {
+    if cfg!(target_os = "macos") && std::env::var_os("MACOSX_DEPLOYMENT_TARGET").is_none() {
         cargo.env("MACOSX_DEPLOYMENT_TARGET", "12.0");
     }
-    let Ok(prefix) = process::output(Command::new("brew").args(["--prefix", "graphviz"])) else {
-        return Ok(());
-    };
-    let mut library_path = format!("{}/lib", prefix.trim());
-    if let Some(existing) = std::env::var_os("LIBRARY_PATH").filter(|p| !p.is_empty()) {
-        library_path.push(':');
-        library_path.push_str(&existing.to_string_lossy());
-    }
-    cargo.env("LIBRARY_PATH", library_path);
-    Ok(())
 }

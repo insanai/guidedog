@@ -6,8 +6,7 @@ class Guidedog < Formula
   version "@VERSION@"
   license "AGPL-3.0-or-later"
 
-  # The programs link the system's Graphviz libraries (libgvc, libcgraph).
-  depends_on "graphviz"
+  # Graphviz is linked statically into the programs, so there are no dependencies.
 
   on_macos do
     on_arm do
@@ -32,9 +31,9 @@ class Guidedog < Formula
   end
 
   def install
-    # dsc keeps discussion catalogs, and guidedog-pages publishes to GitHub Pages; both build
-    # with this guidedog. graphdog renders Graphviz graphs like dot.
-    bin.install "guidedog", "dsc", "guidedog-pages", "graphdog"
+    # guidedog-pages publishes to GitHub Pages with this guidedog; graphdog renders Graphviz
+    # graphs like dot. Discussion catalogs are guidedog's own: guidedog dsc.
+    bin.install "guidedog", "guidedog-pages", "graphdog"
     doc.install "NOTICE", "CHANGELOG.md", "SOURCE.txt", "guidedog.build.json"
   end
 
@@ -45,11 +44,10 @@ class Guidedog < Formula
     assert_path_exists testpath/"docs/_build/html/index.html"
     system bin/"guidedog", "build", "pdf", "docs", "-W"
     assert_path_exists testpath/"docs/_build/pdf/demo-en.pdf"
-    assert_match "dsc #{version}", shell_output("#{bin}/dsc --version")
-    system bin/"dsc", "init", "eds", "--prefix=eds", "--author=Homebrew"
+    system bin/"guidedog", "dsc", "init", "eds", "--prefix=eds", "--author=Homebrew"
     cd "eds" do
-      system bin/"dsc", "new", "Cache policy", "--labels=architecture"
-      system bin/"dsc", "build", "--target=html", "--guidedog=#{bin}/guidedog"
+      system bin/"guidedog", "dsc", "new", "Cache policy", "--labels=architecture"
+      system bin/"guidedog", "dsc", "build", "--target=html"
       assert_path_exists testpath/"eds/_build/html/index.html"
     end
     assert_match "guidedog-pages #{version}", shell_output("#{bin}/guidedog-pages --version")

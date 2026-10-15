@@ -8,8 +8,8 @@ use crate::fsutil::{read_text, sha256_file, sorted_entries, write};
 use crate::{Result, fail, repository_root};
 
 const CHECKSUMS_HELP: &str = "\
-Writes DIR/SHA256SUMS for every release file in DIR (*.tar.gz, *.zip, *.rb), sorted by
-name, in the format `sha256sum -c` reads.
+Writes DIR/SHA256SUMS for every release file in DIR (*.tar.gz, *.tar.xz, *.zip, *.rb),
+sorted by name, in the format `sha256sum -c` reads.
 
 Usage: cargo xtask release checksums DIR
 ";
@@ -47,7 +47,8 @@ pub(crate) fn write_checksums(dir: &Path) -> Result<String> {
     let mut sums = String::new();
     for path in sorted_entries(dir)? {
         let name = path.file_name().unwrap_or_default().to_string_lossy().into_owned();
-        let release_file = [".tar.gz", ".zip", ".rb"].iter().any(|ext| name.ends_with(ext));
+        let release_file =
+            [".tar.gz", ".tar.xz", ".zip", ".rb"].iter().any(|ext| name.ends_with(ext));
         if path.is_file() && release_file {
             sums.push_str(&format!("{}  {name}\n", sha256_file(&path)?));
         }
@@ -56,7 +57,10 @@ pub(crate) fn write_checksums(dir: &Path) -> Result<String> {
         return Err(fail(
             "release-files",
             "NO RELEASE FILES",
-            &format!("{} holds no release files (*.tar.gz, *.zip, *.rb).", dir.display()),
+            &format!(
+                "{} holds no release files (*.tar.gz, *.tar.xz, *.zip, *.rb).",
+                dir.display()
+            ),
             "Put the archives there with `cargo xtask release package` first.",
         ));
     }

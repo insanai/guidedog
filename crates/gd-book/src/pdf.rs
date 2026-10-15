@@ -169,8 +169,11 @@ impl TypstRun<'_, '_> {
         };
         let source = self.book_source(&shown_as, root.dir());
         let mut worker = Worker::new();
-        let warnings: Vec<Report> =
-            compiled.diagnostics.iter().map(|d| source.report(&mut worker, d)).collect();
+        let warnings: Vec<Report> = compiled
+            .diagnostics
+            .iter()
+            .map(|d| missing_font_as_note(source.report(&mut worker, d)))
+            .collect();
         reports.extend(warnings.iter().cloned());
         // The book built, so a book kept from a failed build is out of date.
         let failed = gd_env::doctrees_dir(c).join("failed");
@@ -217,4 +220,20 @@ fn backend_problem(program: &str) -> Problem {
         "Install Typst 0.15.1, or set typst in conf.toml to the program's path.",
         4,
     )
+}
+
+/// A family of a font list Typst does not find is a note, not a warning: the list's
+/// other families stand in (the built-in template names fallbacks on purpose, and the
+/// bundled Libertinus Sans is always found), so a machine without an optional font
+/// does not fail a `-W` build. `-v` shows it.
+pub(crate) fn missing_font_as_note(mut report: Report) -> Report {
+    if report.code == "typst.warning" && report.message.starts_with("unknown font family") {
+        report.severity = gd_report::Severity::Note;
+        report.hints = vec![
+            "The next family in the font list stands in. Install this font, or add its \
+             folder to pdf_font_paths, to use it."
+                .into(),
+        ];
+    }
+    report
 }

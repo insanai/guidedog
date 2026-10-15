@@ -89,3 +89,19 @@ fn typst_folders_keep_the_outermost() {
     let folders = typst_folders(&outside);
     assert_eq!(folders.len(), 2, "{folders:?}");
 }
+
+/// A font list's missing family is a note (the next family stands in); other Typst
+/// warnings stay warnings.
+#[test]
+fn missing_fonts_are_notes() {
+    use gd_report::{Report, Severity};
+    let warning = |message: &str| Report {
+        severity: Severity::Warning,
+        ..Report::error("typst.warning", "TYPST", message)
+    };
+    let font = crate::pdf::missing_font_as_note(warning("unknown font family: fira sans"));
+    assert_eq!(font.severity, Severity::Note);
+    assert!(font.hints[0].contains("pdf_font_paths"));
+    let other = crate::pdf::missing_font_as_note(warning("unknown variable: x"));
+    assert_eq!(other.severity, Severity::Warning);
+}

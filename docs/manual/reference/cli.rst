@@ -230,17 +230,19 @@ Builders:
    * - ``-v``
      - Also show notes (Docutils' info messages); repeatable.
    * - ``-q``, ``-Q``
-     - Show only warnings and errors.
+     - Show only errors: no progress, summary, warnings or notes (``-W`` still counts
+       the warnings).
    * - ``--untrusted``
      - Leave out raw content, fetch nothing, and run no build plugin. This is a
        capability policy, not a process sandbox.
    * - ``--budget=MIB``
      - Memory the build may hold at once, from 1 to 1048576 (default: ``1024``).
-   * - ``--memory=ram|disk``
-     - At the budget, stop (``ram``) or keep working memory on disk (``disk``, slower).
-       Without either, a terminal asks what to do.
-   * - ``--disk-budget=MIB``
-     - Disk for working memory with ``--memory=disk`` (default: the free space).
+   * - ``--memory=ram``
+     - At the budget, stop without asking. Without it, a terminal asks whether to raise
+       the budget or stop; a build without a terminal stops. ``--memory=disk`` and
+       ``--disk-budget`` (working memory on disk, in the Odin implementation) are
+       refused with ``cli.memory-disk``: this version keeps working memory in memory,
+       bounded by the budget, so raise ``--budget`` instead.
    * - ``--max-depth=N``
      - How deep content may nest (default: ``256``).
    * - ``--max-nodes=N``
@@ -253,7 +255,15 @@ Builders:
 
 The build prints what it read and wrote, then a verdict: ``build succeeded`` or ``build
 failed``, with the number of errors and warnings and where the output is. A failed build
-leaves the previous output as it was.
+leaves the previous output as it was. The warnings of ``conf.toml`` are the build's own,
+so ``-W`` counts them; ``suppress_warnings`` silences warnings before ``-W`` counts.
+
+``read`` counts the documents parsed and those unchanged since the last build (taken
+from the environment); ``write`` counts the outputs written and those kept: a page each
+for ``html``, ``dirhtml`` and ``text`` (and the search index in the HTML builders), a
+book each for ``pdf``, and one output for ``singlehtml`` and ``gettext``. Every build
+also writes the site's shared files (theme, indexes, ``objects.inv``), which are not
+counted.
 
 guidedog serve
 --------------
@@ -267,9 +277,26 @@ answering a request when sources, templates, static files, or ``conf.toml`` chan
    guidedog serve docs --port 9000
 
 ``--port PORT`` (``-p`` is quickstart's project name, not the port) chooses the port,
-from 1 to 65535 (default: ``8000``). ``-D name=value`` and the build options of
-``guidedog build`` apply to every rebuild. A failed rebuild keeps the previous site and
-reports the problem. Ctrl+C stops the server.
+from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, ``-D name=value`` and the build
+options of ``guidedog build`` apply to every rebuild, which reloads ``conf.toml``. A
+failed rebuild keeps the previous site and reports the problem. Ctrl+C stops the server.
+
+It serves ``_build/html`` and watches the source folder; the Odin and Rust API sources
+(``odin_autoapi_dirs``, ``odin_collections``, ``rust_autoapi_crates``); and the
+``html_static_path``, ``html_extra_path``, ``templates_path``, ``include_roots``,
+``autodoc_source_paths`` and ``locale_dirs`` folders outside the source folder. The
+build folder is never watched. Changes are found by file names, sizes and times, checked
+before an HTML page is answered:
+
+.. code-block:: text
+
+   guidedog building html for Demo
+   ...
+     Serving _build/html at http://127.0.0.1:8000/ (Ctrl+C to stop)
+     Sources changed; rebuilding...
+   guidedog building html for Demo
+   ...
+     Rebuilt.
 
 guidedog clean
 --------------
@@ -444,7 +471,9 @@ dsc and dscc
 ------------
 
 ``dsc`` keeps a discussion catalog and builds it with the installed ``guidedog``.
-``dscc`` is ``dsc`` with Guidedog built in. Both take the same commands; see
+``dscc`` is ``dsc`` with Guidedog built in: it builds a catalog as a Guidedog project
+in its own process (``pdf_documents`` set to the books, warnings as errors), and
+``dscc --version`` names the Guidedog inside it. Both take the same commands; see
 :doc:`../howto/discussions`.
 
 .. code-block:: sh

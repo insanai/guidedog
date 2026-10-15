@@ -430,7 +430,10 @@ dependencies = [
 name = "dscc-cmd"
 version = "0.7.0"
 dependencies = [
+ "gd-cli",
  "gd-discussion",
+ "gd-host",
+ "guidedoc",
 ]
 
 [[package]]
@@ -673,20 +676,20 @@ dependencies = [
  "gd-conf",
  "gd-discussion",
  "gd-env",
+ "gd-gettext",
  "gd-graphdog",
  "gd-host",
+ "gd-intl",
  "gd-migrate",
  "gd-pages",
  "gd-plugins",
+ "gd-project",
  "gd-report",
+ "gd-serve",
  "gd-sha",
  "gd-typst",
  "guidedoc",
- "guidedoc-commonmark",
- "guidedoc-html",
- "guidedoc-rst",
- "guidedoc-text",
- "guidedoc-typst",
+ "guidedoc-defaults",
 ]
 
 [[package]]
@@ -889,6 +892,24 @@ dependencies = [
 [[package]]
 name = "gd-project"
 version = "0.7.0"
+dependencies = [
+ "gd-book",
+ "gd-conf",
+ "gd-env",
+ "gd-host",
+ "gd-intl",
+ "gd-outputs",
+ "gd-plugins",
+ "gd-read",
+ "gd-report",
+ "gd-resolve",
+ "gd-site",
+ "guidedoc",
+ "guidedoc-defaults",
+ "guidedoc-html",
+ "guidedoc-rst",
+ "guidedoc-sphinx",
+]
 
 [[package]]
 name = "gd-pyscan"

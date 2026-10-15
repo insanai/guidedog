@@ -28,6 +28,7 @@ conformance evidence.
    commonmark-ledger
    cpp-declarations
    sphinx-ledger
+   rust-domain
 
 .. toctree::
    :maxdepth: 1

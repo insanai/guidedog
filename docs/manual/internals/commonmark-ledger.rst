@@ -72,7 +72,7 @@ Core syntax (on in ``myst``, off with ``commonmark_only``)
        are rubrics
      - done
      - ``headings_make_sections_and_nested_headings_rubrics``
-   * - Directives: ```` ```{name} ````, ``~~~{name}``, ``:::{name}`` (colon_fence);
+   * - Directives: :literal:`\`\`\`{name}`, ``~~~{name}``, ``:::{name}`` (colon_fence);
        argument or first content line by the directive's shape
      - done
      - Sphinx layer; conformance

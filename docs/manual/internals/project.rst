@@ -60,7 +60,9 @@ gd-site, gd-book
 gd-intl, gd-i18n
    Catalogs, the interface translator, the gettext builder; the translation pass.
 gd-project
-   The coordinator and public surface: ``Project``, ``load``, ``build``, ``clean``.
+   The coordinator and public surface: ``Project``, ``LoadOptions``, ``load``,
+   ``build``, ``clean``, ``watch_roots``, ``build_limits`` and the trusted and
+   untrusted policies.
 gd-cli
    The command line, and ``run_with(linked)`` for custom binaries.
 
@@ -135,9 +137,42 @@ S6, S7
 ~~~~~~
 
 gd-read: ``read_documents(&ReadContext, previous: Environment, &[SourceFile]) ->
-ReadOutcome``; the autodoc, odindoc and rustdoc hosts implement guidedoc-sphinx's
-provider trait. gd-site: templates through ``gd_jinja::Environment`` with a custom
+Result<ReadOutcome, Problem>``, which fails only when the registry has no reader for a
+document (``build.reader``); a document that cannot be read is a failed ``DocInfo`` in
+the outcome. ``api_sources`` makes the generated Odin and Rust API pages and
+``reread_document`` reads a document again whose object is stale. The autodoc, odindoc
+and rustdoc hosts implement guidedoc-sphinx's provider trait. gd-site: templates through ``gd_jinja::Environment`` with a custom
 loader (``templates_path``, then the built-in theme).
+
+S8: gd-project
+~~~~~~~~~~~~~~
+
+``load(dir, &LoadOptions { config, plugins, registry }) -> Result<Project, Problem>``
+checks the engine registry (``core.registry.invalid``; ``None`` is
+``guidedoc_defaults::registry()``) and reads ``conf.toml``. ``Project { config,
+warnings, settings, registry, plugins }`` is plain data. ``build(&project, kind,
+&options) -> BuildResult`` never fails outright; it runs, in order:
+
+1. ``confine_untrusted`` on its own copy of the configuration (``--untrusted``);
+   ``output_paths`` and ``Generation::begin``, which settles an interrupted commit
+   first; ``build_limits`` (``build.stack``); ``PluginRun::start``.
+2. ``discover``, ``contents_root``, ``api_sources`` and ``with_generated``: the sources.
+3. ``load_intl`` and, except for gettext, ``localize_config``; ``build_dates``;
+   ``load_intersphinx`` (no network when untrusted). The build stage becomes Reading.
+4. ``build_settings`` (reading settings, translations, trust, limits, plugins);
+   ``load_environment`` and ``read_documents``; the documents' reports join the
+   build's.
+5. ``resolve``; the stage becomes Writing. A ``BuildView`` with
+   ``output_settings``, and one ``match`` on ``BuilderKind``: ``SiteBuilder``
+   (html, dirhtml, singlehtml), ``PdfBuilder``, ``TextBuilder``, ``DummyBuilder``,
+   ``GettextBuilder`` (with ``reread_document`` as its ``Reread``).
+6. ``suppress_warnings``; then a build with an unread document (``build.read``) or,
+   with ``-W``, any warning or error (``build.warnings``) abandons its generation;
+   any other commits it. ``published`` and ``unsettled`` come from the commit.
+
+``BuildResult::written`` and ``unchanged`` are the generation's units written and kept
+besides the site unit (``Generation::written_count``, ``reused_count``); a builder whose
+whole output is the site unit (singlehtml, gettext) counts it as one output.
 
 Ownership
 ---------
@@ -146,6 +181,7 @@ Odin's project and build arenas are gone. ``load`` returns an owned ``Project``;
 takes ``&Project`` and clones the configuration, so the type system enforces that a
 build never changes its project (an ``--untrusted`` build confines only its own copy).
 Only the coarse ``gd_host::Budget`` remains, for the files and sessions a build holds,
-with ``--budget`` hints. Pages render on ``gd_host::run_workers``: each worker owns a
+with ``--budget`` hints; ``BuildOptions::on_budget`` decides at the budget (a terminal
+asks whether to raise it). Pages render on ``gd_host::run_workers``: each worker owns a
 ``guidedoc::Workspace`` and returns a ``Rendered``; the main thread emits units in
 docname order.

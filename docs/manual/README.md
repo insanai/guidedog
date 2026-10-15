@@ -25,7 +25,7 @@ Build Guidedog first (`cargo build --release -p guidedog-cmd` at the repository 
 
 ```sh
 target/release/guidedog build html docs/manual -j auto -W
-target/release/guidedog build pdf docs/manual docs/manual/_build/pdf -W
+target/release/guidedog build pdf docs/manual -W
 target/release/guidedog serve docs/manual
 ```
 
@@ -33,7 +33,7 @@ target/release/guidedog serve docs/manual
 
 The manual is translated into Simplified Chinese (`zh_CN`), Japanese (`ja`), Korean (`ko`), Hindi (`hi`), Spanish (`es`), and German (`de`). PO catalogs are in `locales/<language>/LC_MESSAGES/*.po`; compiled `.mo` files are made during the build and ignored by Git.
 
-The catalogs were copied unchanged from the Odin implementation's manual. Pages rewritten for the Rust port (internals, plugins, about, repository) and the new `rust.rst` have new or changed messages; refresh the catalogs once the Rust CLI's `intl` commands are available:
+The catalogs were copied unchanged from the Odin implementation's manual. Pages rewritten for the Rust port (internals, plugins, about, repository) and the new `rust.rst` have new or changed messages; refresh them with the `intl` commands:
 
 ```sh
 target/release/guidedog build -b gettext docs/manual docs/manual/locales/templates -W

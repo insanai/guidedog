@@ -11,6 +11,10 @@ path = "src/main.rs"
 
 [dependencies]
 gd-discussion.workspace = true
+# The in-process project builder (`gd_cli::discussion_builder`).
+gd-cli.workspace = true
+gd-host.workspace = true
+guidedoc.workspace = true
 
 [lints]
 workspace = true

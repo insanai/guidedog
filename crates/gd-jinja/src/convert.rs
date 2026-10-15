@@ -369,6 +369,7 @@ fn callables_equal(x: &crate::value::Callable, y: &crate::value::Callable, depth
         (CallKind::Native(a), CallKind::Native(b)) => {
             x.name == y.name && std::rc::Rc::ptr_eq(a, b)
         }
+        (CallKind::Local, CallKind::Local) => x.name == y.name && x.render == y.render,
         _ => false,
     }
 }

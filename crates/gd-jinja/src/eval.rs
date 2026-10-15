@@ -19,6 +19,9 @@ pub(crate) fn lookup(s: &State<'_>, scope: ScopeId, name: &str) -> Value {
     if let Some(v) = s.find_var(scope, name) {
         return v;
     }
+    if s.locals.is_some_and(|l| l.function(name).is_some()) {
+        return s.render_callable(Rc::from(name), CallKind::Local);
+    }
     if let Some(v) = s.env.globals.get(name) {
         return v.clone();
     }

@@ -33,7 +33,9 @@ let out = gd_jinja::render_str("Hi {{ name }}", &ctx)?;
 | `env.parse_template(name, source)` | from a string; not cached |
 | `env.add_template(name, source)` | parse and cache, so `extends`/`include` find it |
 | `template.render(&ctx) -> Result<String, Error>` | `ctx` is a dict value, or `Value::default()` |
+| `template.render_with(&ctx, &locals)` | with per-render functions and filters (`Locals`) |
 | `env.render_str(source, &ctx)` | parse and render once, caching nothing |
+| `env.render_str_with(source, &ctx, &locals)` | the same with `Locals` |
 | `env.evaluate("a.b + 1", &ctx) -> Result<Value, Error>` | one expression (`compile_expression`) |
 | `env.clear_cache()` | reload templates on the next `load_template` |
 | `gd_jinja::render_str(source, &ctx)` | the one-call path |
@@ -109,6 +111,24 @@ env.add_global("project", Value::from("Docs"));
 | `autoescaping()` | is autoescape on where the call happens? |
 | `call_filter(name, args, kwargs)`, `call_test(...)` | reuse registered ones |
 | `c.this`, `c.name`, `c.kwargs` | method receiver, called name, keywords |
+
+## Per-render functions that borrow your data
+
+Environment functions are `'static`. For functions that need data living only for one
+render, pass `Locals`: they may borrow, are visible in every template, block, macro and
+call block of that render, and shadow globals and filters of the same name (context
+variables still come first).
+
+```rust
+let pages = vec!["intro".to_string()];
+let mut locals = gd_jinja::Locals::new();
+locals.add_function("page", |c| Ok(Value::from(pages[c.arg_count(0, "i", 0)?].as_str())));
+locals.add_filter("shout", |c| Ok(Value::from(gd_jinja::to_str(&c.args[0]).to_uppercase())));
+let html = env.load_template("page.html")?.render_with(&ctx, &locals)?;
+```
+
+A local function kept past its render (stored in a dict the host keeps) cannot be called
+any more, as a macro.
 
 ## Errors
 

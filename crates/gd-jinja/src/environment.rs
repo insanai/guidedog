@@ -11,6 +11,7 @@ use crate::convert::quoted;
 use crate::error::{Error, ErrorKind};
 use crate::lexer::LexOptions;
 use crate::loader::Loader;
+use crate::locals::Locals;
 use crate::parser::{self, ParseOptions};
 use crate::runtime::State;
 use crate::stack::{
@@ -226,7 +227,20 @@ impl Environment {
     pub fn render_str(&self, source: &str, ctx: &Value) -> Result<String, Error> {
         let _stack = self.begin_stack();
         let t = Rc::new(self.parse("<template>", source)?);
-        self.render_compiled(&t, ctx)
+        self.render_compiled(&t, ctx, None)
+    }
+
+    /// Parses source and renders it once with ctx and the render's own functions and
+    /// filters (`locals`), which may borrow the caller's data; caches nothing.
+    pub fn render_str_with(
+        &self,
+        source: &str,
+        ctx: &Value,
+        locals: &Locals<'_>,
+    ) -> Result<String, Error> {
+        let _stack = self.begin_stack();
+        let t = Rc::new(self.parse("<template>", source)?);
+        self.render_compiled(&t, ctx, Some(locals))
     }
 
     /// Evaluates one expression against ctx (Jinja's `compile_expression`).
@@ -295,8 +309,14 @@ impl Environment {
         Ok(t)
     }
 
-    fn render_compiled(&self, t: &Rc<Compiled>, ctx: &Value) -> Result<String, Error> {
+    fn render_compiled<'r>(
+        &'r self,
+        t: &Rc<Compiled>,
+        ctx: &Value,
+        locals: Option<&'r Locals<'r>>,
+    ) -> Result<String, Error> {
         let mut s = State::new(self, context_dict(ctx, &t.name)?);
+        s.locals = locals;
         s.current = Some(t.clone());
         let root = s.ctx;
         crate::inherit::render_in_context(&mut s, root, t)?;
@@ -328,6 +348,15 @@ impl Template<'_> {
     /// Renders the template with ctx (a dict value, or Undefined for none).
     pub fn render(&self, ctx: &Value) -> Result<String, Error> {
         let _stack = self.env.begin_stack();
-        self.env.render_compiled(&self.compiled, ctx)
+        self.env.render_compiled(&self.compiled, ctx, None)
+    }
+
+    /// Renders the template with ctx and the render's own functions and filters
+    /// (`locals`), which may borrow the caller's data. They are visible in every
+    /// template, block, macro and call block of this render and shadow the environment's
+    /// globals and filters of the same name.
+    pub fn render_with(&self, ctx: &Value, locals: &Locals<'_>) -> Result<String, Error> {
+        let _stack = self.env.begin_stack();
+        self.env.render_compiled(&self.compiled, ctx, Some(locals))
     }
 }

@@ -53,6 +53,25 @@ results passed up through every level of recursion stay a few words wide; the pu
 Elm-style report through ``Display``. Native procedures return ``Result<Value, Error>``;
 ``Call::error`` locates an error at the line being rendered.
 
+Per-render functions
+--------------------
+
+An environment's functions, filters and loader are ``'static`` closures: they live as long
+as the environment and can only own what they use. A host whose functions need data that
+lives only for one render (a build's tables, the page being written) passes them as
+``Locals<'a>`` to ``Template::render_with(&ctx, &locals)`` or
+``Environment::render_str_with(source, &ctx, &locals)``. ``Locals::add_function`` and
+``add_filter`` take ``impl Fn(&mut Call) -> Result<Value, Error> + 'a``, so the closures
+may borrow anything that outlives the call.
+
+The render's ``State`` holds ``Option<&Locals>``; every template, include, extended
+template, block, macro and call block of the render runs in that state, so locals are
+visible everywhere in it. Name lookup is: the scopes and the context dict, then the
+locals, then the environment's globals; filters look in the locals first. A local
+function looked up becomes a ``CallKind::Local`` callable tagged with the render's id: it
+finds its closure again by name when called, and a copy kept past its render is refused as
+a macro kept past its render is. "Did you mean" hints include the locals' names.
+
 Limits and the stack
 --------------------
 

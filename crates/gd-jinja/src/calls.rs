@@ -275,6 +275,14 @@ fn call_callable(
         }
         CallKind::Macro(m) => call_macro(s, &c.name, m, args, kwargs),
         CallKind::Block(r) => crate::inherit::call_block_reference(s, r),
+        CallKind::Local => {
+            // Copied out of the state, so the call may borrow the state mutably.
+            let locals = s.locals;
+            match locals.and_then(|l| l.function(&c.name)) {
+                Some(f) => Ok(f(&mut Call::new(s, c.name.clone(), args, kwargs))?),
+                None => Err(ended_callable(s, &c.name)),
+            }
+        }
     }
 }
 
@@ -448,6 +456,12 @@ pub(crate) fn apply_filter(
         (None, Some(operand)) => eval(s, scope, operand)?,
         (None, None) => Value::default(),
     };
+    let locals = s.locals;
+    if let Some(f) = locals.and_then(|l| l.filter(name)) {
+        let (args, kwargs) = eval_arguments(s, scope, a, Some(input))?;
+        s.line = e.line;
+        return Ok(f(&mut Call::new(s, name.clone(), args, kwargs))?);
+    }
     let env = s.env;
     let f = find_registered(s, &env.filters, "filter", name)?;
     let (args, kwargs) = eval_arguments(s, scope, a, Some(input))?;
@@ -494,6 +508,9 @@ fn find_registered<'e>(
     }
     let err = s.error(ErrorKind::Runtime, format!("No {what} named {}.", quoted(name)));
     let mut known: Vec<&str> = table.keys().map(String::as_str).collect();
+    if let Some(locals) = s.locals.filter(|_| what == "filter") {
+        known.extend(locals.filter_names());
+    }
     known.sort_unstable();
     let near = closest(name, known);
     if near.is_empty() {
@@ -509,6 +526,10 @@ pub(crate) fn call_filter(
     args: Vec<Value>,
     kwargs: Vec<Keyword>,
 ) -> Result<Value> {
+    let locals = s.locals;
+    if let Some(f) = locals.and_then(|l| l.filter(name)) {
+        return Ok(f(&mut Call::new(s, Rc::from(name), args, kwargs))?);
+    }
     let env = s.env;
     let f = find_registered(s, &env.filters, "filter", name)?;
     Ok(f(&mut Call::new(s, Rc::from(name), args, kwargs))?)

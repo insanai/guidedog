@@ -106,6 +106,8 @@ pub(crate) enum CallKind {
     Method(Value),
     Macro(Rc<Macro>),
     Block(Rc<BlockReference>),
+    /// A function of the render's `Locals`, found again by the callable's name.
+    Local,
 }
 
 /// The special `loop` variable of a for loop.

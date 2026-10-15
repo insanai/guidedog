@@ -14,6 +14,7 @@ use crate::environment::{Environment, UndefinedMode};
 use crate::error::{Error, ErrorKind, Hinted, closest, source_line};
 use crate::escape::write_escaped;
 use crate::eval::{eval, lookup};
+use crate::locals::Locals;
 use crate::stack::StackGuard;
 use crate::value::{CallKind, Callable, Dict, DictKind, Undefined, Value};
 
@@ -96,6 +97,8 @@ pub(crate) struct Saved {
 /// One render in progress. Native procedures reach it through [`crate::Call`].
 pub struct State<'env> {
     pub(crate) env: &'env Environment,
+    /// The functions and filters this render adds to the environment's.
+    pub(crate) locals: Option<&'env Locals<'env>>,
     pub(crate) out: String,
     out_id: usize,
     next_out_id: usize,
@@ -132,6 +135,7 @@ impl<'env> State<'env> {
         let seed = env.options.random_seed;
         let mut s = State {
             env,
+            locals: None,
             out: String::new(),
             out_id: 0,
             next_out_id: 0,
@@ -294,6 +298,9 @@ impl<'env> State<'env> {
             at = sc.parent;
         }
         out.extend(self.env.globals.keys().cloned());
+        if let Some(locals) = self.locals {
+            out.extend(locals.function_names().map(String::from));
+        }
         out.sort();
         out
     }

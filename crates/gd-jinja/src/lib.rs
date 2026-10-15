@@ -33,6 +33,7 @@ mod inherit;
 mod lexer;
 mod limits;
 mod loader;
+mod locals;
 mod loops;
 mod methods;
 mod parser;
@@ -49,6 +50,7 @@ pub use environment::{Autoescape, Environment, Options, Template, UndefinedMode}
 pub use error::{Error, ErrorKind};
 pub use escape::{escape, escape_string};
 pub use loader::{LoadFn, Loader};
+pub use locals::{LocalFn, Locals};
 pub use runtime::State;
 pub use stack::{DEFAULT_MAX_NESTING, DEFAULT_MAX_RECURSION, DEFAULT_STACK_BYTES};
 pub use value::{Callable, Cycler, Dict, DictKind, List, Loop, Native, Undefined, Value};

@@ -1,10 +1,7 @@
 gd-jinja: design of the template engine
 =======================================
 
-gd-jinja is the Rust port of the Odin ``lib/jinja`` package. The Odin code is the
-specification of behaviour (output, error messages, limits and tests); the design is
-Rust's. This note records how the crate is built and where it departs from the Odin
-engine.
+gd-jinja is Guidedog's template engine for Jinja templates. This note records how the crate is built and why.
 
 Pipeline
 --------
@@ -40,8 +37,7 @@ live in two vectors owned by the render and are named by ``ScopeId`` and ``Conte
 Scopes are tiny and use linear search. A macro, ``super()`` reference, ``self.name()`` or
 recursive ``loop`` value keeps the ids it was made with. It is stamped with the id of its
 render. Calling it from another render is an error ("made by a render that has
-ended"). That replaces the Odin engine's copying of stored values out of the render's
-arena.
+ended"). So a stored value never has to be copied out of its render.
 
 Errors
 ------
@@ -75,7 +71,7 @@ as a macro kept past its render is. "Did you mean" hints include the locals' nam
 Limits and the stack
 --------------------
 
-Three limits keep hostile templates from overflowing the stack, as in the Odin engine:
+Three limits keep hostile templates from overflowing the stack:
 
 - ``max_nesting`` bounds the depth of syntax the parser builds. Every bracket, nested tag
   and link of an operator, filter, test, attribute or ``elif`` chain is one level.
@@ -96,20 +92,17 @@ fits a 2 MiB spawned thread. Three choices keep frames small:
   five times wider, and debug builds keep a slot for every temporary.
 - The expression parser climbs precedence in one loop (``parse_level``) instead of one
   function per level of Jinja's grammar, so a bracket costs about five frames rather than
-  thirteen. Nesting is still counted per chain link, as before.
+  thirteen. Nesting is still counted per chain link.
 
 Values have no syntax, so repr, equality, ordering and ``tojson`` stop at
 ``MAX_VALUE_DEPTH`` (200) instead. Values whose size is known before they are built (a
 repetition, padding, a join) are sized first: past ``max_output`` they are a ``Limit``
 error, a size that cannot be counted or reserved (``try_reserve``) is a ``Memory`` error.
 
-Not ported
-----------
+Memory
+------
 
-- The arena, allocator guard and ownership-copy machinery (``arena.odin``,
-  ``memory.odin``, ``ownership.odin``) and their tests: Rust ownership replaces them, and
-  Rust's standard allocator aborts rather than refusing small requests.
-- ``render_position``, which let an allocator ask where a render was.
+- Values are owned: no arena or allocator guard is needed, and the standard allocator aborts rather than refusing small requests.
 - Lists that contain themselves leak (an ``Rc`` cycle); Jinja's own behaviour relies on a
   garbage collector.
 
@@ -117,13 +110,13 @@ Why not minijinja
 -----------------
 
 Evaluated on 2026-10-15 against minijinja 3.0.0, the most widely used Rust Jinja engine.
-**Recommendation: keep our own port (gd-jinja). Do not adopt minijinja, and do not build a
+**Recommendation: keep our own engine (gd-jinja). Do not adopt minijinja, and do not build a
 hybrid.**
 
 The decisive reason is bounds and safety. On hostile input, minijinja 3.0.0 overflows the
-stack and aborts the process in cases where gd-jinja and the Odin engine return a ``Limit``
+stack and aborts the process in cases where gd-jinja returns a ``Limit``
 error, and it has no output or memory limit. The second reason is that minijinja behaves
 differently from Jinja2 in scoping and escaping in ways its extension API cannot change. The
-third is that the thin layer needed to restore Odin behaviour is already about 900 lines,
+third is that the thin layer needed to restore gd-jinja's behaviour is already about 900 lines,
 and it would keep growing toward a re-implementation of the builtins anyway. Speed and error
 quality are about equal, so neither changes the decision.

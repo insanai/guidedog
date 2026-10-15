@@ -1,12 +1,7 @@
 The project builder: crates and seams
 =====================================
 
-The Odin ``lib/project`` package built a documentation project in one package: load
-``conf.toml``, discover and read the documents, resolve the project tables, write one
-builder's output, and publish it. The Rust port splits it into crates with one
-responsibility each, so that builders, readers and the command line can be written,
-tested and reviewed apart. This page records the split and the seams between the
-crates; it is kept up to date as the crates land. Each crate's ``README.md`` is its API
+Building a documentation project means: load ``conf.toml``, discover and read the documents, resolve the project tables, write one builder's output, and publish it. The project builder splits this work into crates with one responsibility each, so that builders, readers and the command line can be written, tested and reviewed apart. This page records the split and the seams between the crates. Each crate's ``README.md`` is its API
 cheat sheet.
 
 The crates
@@ -118,7 +113,7 @@ S2: gd-env
 ``DocId(u32)`` indexes ``Environment::docs`` (sorted by docname). ``Digest`` is
 gd-conf's, re-exported. ``SourceFile { docname, path, relative, kind, generated }``;
 a generated page (an API page) carries its text and the files it was made from.
-``DocInfo`` is Odin's ``Doc_Info`` with ``Option`` for every "none" and a
+``DocInfo`` holds what the environment knows of a document, with ``Option`` for every "none" and a
 ``CachedFile { path, digest }`` for the object and the search words.
 ``load_environment(path, settings, fresh, &budget)``, ``ENVIRONMENT_VERSION`` 26.
 ``ObjectStore`` writes ``objects/<docname>.<digest16>.gdo`` and loads it into a
@@ -206,7 +201,7 @@ whole output is the site unit (singlehtml, gettext) counts it as one output.
 Ownership
 ---------
 
-Odin's project and build arenas are gone. ``load`` returns an owned ``Project``; a build
+No arena holds a project or a build. ``load`` returns an owned ``Project``; a build
 takes ``&Project`` and clones the configuration, so the type system enforces that a
 build never changes its project (an ``--untrusted`` build confines only its own copy).
 Only the coarse ``gd_host::Budget`` remains, for the files and sessions a build holds,

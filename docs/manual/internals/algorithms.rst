@@ -66,8 +66,7 @@ produces. The emitter keeps counting after the limit is passed, without storing 
 The failure therefore reports the exact size that would have fitted, and a caller
 that raises the limit to :math:`m` succeeds on the next run. ``check_render`` runs the
 same renderer in check mode and returns :math:`m` and any support problems without
-keeping output. The Odin engine measured first and wrote second. One run with a
-counting emitter gives the same guarantee for half the work.
+keeping output. One run with a counting emitter gives this guarantee: the output is never measured in one pass and written in a second.
 
 A failure returns no valid partial artifact. The builder and the emitter poison
 themselves on the first failure, so every later call returns that failure and ``?``

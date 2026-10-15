@@ -74,8 +74,7 @@ no ``unsafe``:
 -  the header (magic in either byte order, major revision at most 1, a count that fits the file)
    and both tables lie in the file;
 -  every string lies in the file, ends in NUL, and is UTF-8;
--  no two strings share bytes. The old damaged-file refusal is kept: a table pointing every
-   entry at one large string would make a small file cost like a large one;
+-  no two strings share bytes, because a damaged table pointing every entry at one large string would make a small file cost like a large one;
 -  keys are distinct (as C strings), and sorted, or else an order is built (below);
 -  the hash table, if present, must be **sound**: every key is reached from its own hash
    within ``MAX_HASH_PROBES`` (64) probes and before an empty slot. The most probes any key
@@ -135,9 +134,7 @@ Writing: msgfmt's bytes, streamed
 ``write_mo_to(&mut impl Write, ..)`` writes exactly what GNU msgfmt writes: the test
 compiles a fixture and compares it byte for byte with msgfmt 0.23.1. That means sorted keys,
 msgfmt's table size (the first odd prime at or above :math:`4n/3`), and the singular-only hash for plural
-entries. The old writer hashed the full key, so GNU's lookup of a plural message started at
-the wrong slot and could miss it. That is now fixed. Other tools get O(1) lookups from our
-files. The stored keys are gathered once into one buffer and sorted by slice comparison;
+entries. A writer that hashed the full key would make GNU's lookup of a plural message start at the wrong slot and miss it. Other tools get O(1) lookups from our files. The stored keys are gathered once into one buffer and sorted by slice comparison;
 translations are written straight from the catalog without copying. ``write_mo`` reserves
 the exact output size; ``save_mo`` writes through a ``BufWriter``. ``write_po_to`` streams
 PO text one entry at a time through one reused ``String``.
@@ -150,9 +147,9 @@ into a reused buffer, checks it as UTF-8 (with line and column on failure), and 
 entry when it ends. The header comes first and is checked (charset, Plural-Forms) as it
 passes. It holds the current entry, the keys seen so far (for duplicate errors), and its
 buffers. ``Stats::add`` counts a file without building a ``Catalog``.
-``parse_po``/``load_po`` are now just "collect a ``PoReader`` into a ``Catalog``".
+``parse_po``/``load_po`` just "collect a ``PoReader`` into a ``Catalog``".
 
-``merge`` still takes whole catalogs. The old translation must be random-access for exact
+``merge`` takes whole catalogs. The existing translation must be random-access for exact
 and fuzzy matching, and the fuzzy search's work budget is shared among all the template's
 unmatched msgids, so the template is needed whole too.
 

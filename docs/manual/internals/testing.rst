@@ -63,8 +63,7 @@ Which crate tests what
 End-to-end tests
 ----------------
 
-Each test binary of ``tests/integration`` groups one area; the modules inside follow
-the Odin suite's files they were ported from.
+Each test binary of ``tests/integration`` groups one area, and each module inside it covers one feature of that area.
 
 .. list-table::
    :header-rows: 1
@@ -104,9 +103,7 @@ the Odin suite's files they were ported from.
 Quality gates
 -------------
 
-The Odin suite scanned its sources for imports, allocator use and unsafe constructs.
-In Rust most of these rules belong to cargo and the compiler, so the gates ask them, and
-scan the sources only for what the compiler cannot see.
+Most rules about imports, dependencies and unsafe constructs belong to cargo and the compiler, so the gates ask them, and scan the sources only for what the compiler cannot see.
 
 Dependencies (``gates::dependencies``)
    Reads ``cargo metadata``. Every package has a layer (core and supporting libraries,
@@ -133,8 +130,7 @@ Hints (``gates::hints``)
    suggestion, or "Nothing to do:" with the reason. See :doc:`../errors`.
 
 Documentation of the API
-   The workspace lint ``missing_docs`` makes every public item documented, so the
-   Odin suite's contract and cheat-sheet scans are the compiler's job. The README
+   The workspace lint ``missing_docs`` makes every public item documented, so no scan of the sources is needed for it. The README
    cheat sheets stay short fragments for reading, not doctests. The programs a reader
    would copy are the ``guidedoc-examples`` crate's examples and the manual's twins.
 
@@ -146,10 +142,7 @@ Limits
 Allocation
 ----------
 
-The Odin engine ran each conversion on storage the caller sized, and its tests ran
-conversions with no allocator at all and refused allocations one by one. Rust has no
-per-call allocator, and its global allocator aborts when memory runs out. So those
-tests became two counting-allocator tests. ``guidedoc`` proves that the engine core
+Rust has no per-call allocator, and its global allocator aborts when memory runs out, so a test cannot refuse allocations one by one. Two counting-allocator tests check allocation instead. ``guidedoc`` proves that the engine core
 converts in steady state without allocating, and ``allocations`` bounds what the readers
 and renderers add. Their scratch vectors (block and inline item lists, anchor tables,
 renderer state) are still built per conversion. The ceilings record today's counts, to
@@ -176,21 +169,19 @@ Three tasks compare Guidedog with the Python programs it replaces. They run in a
    * - ``cargo xtask sphinxdiff``, ``cargo xtask sphinxdiff-roots``
      - Compare a Sphinx HTML build with a Guidedog build (pages, ids, links, numbers, ``:numref:`` texts, ``objects.inv``, warnings), one project or 42 of Sphinx's test roots. See :doc:`sphinx-comparison`.
 
-What was not ported
--------------------
+What the suite leaves out
+-------------------------
 
-The Odin suite's root tests were ported by intent. These were left out, on purpose:
+Some checks live elsewhere or have no meaning for Guidedog. They are left out on purpose:
 
-- The conformance suites (``rst_conformance_*``, ``myst_conformance_*``) live in the
-  reader crates, and the serve test in ``gd-serve``.
-- ``allocation_failure_test``: refusing the n-th allocation has no meaning with Rust's
-  global allocator. Budgets are tested instead.
-- ``crash_test``'s segmentation fault, bounds and abort probes: safe Rust has no
-  crash-probe build. A panic ending in a crash report is tested in ``gd-host``.
-- ``platforms_test`` (checking every target operating system): that needs each
-  target's standard library installed, and belongs to the release workflow's operating
-  system matrix.
-- ``terminal_test``'s pseudo-terminal: the questions a build asks at a terminal are
-  tested in ``gd-cli`` and ``gd-project`` without one.
-- ``memory_test`` and ``--memory=disk``: Rust Guidedog keeps working memory in RAM. The
-  test checks that the old flags are explained and refused.
+- The conformance suites live in the reader crates, and the serve test in ``gd-serve``.
+- Refusing the n-th allocation has no meaning with Rust's global allocator. Budgets are
+  tested instead.
+- Safe Rust has no crash-probe build for segmentation faults, bounds and aborts. A panic
+  ending in a crash report is tested in ``gd-host``.
+- Checking every target operating system needs each target's standard library
+  installed, and belongs to the release workflow's operating system matrix.
+- The questions a build asks at a terminal are tested in ``gd-cli`` and ``gd-project``
+  without a pseudo-terminal.
+- Guidedog keeps working memory in RAM. A test checks that the ``--memory`` option is
+  refused with an explanation.

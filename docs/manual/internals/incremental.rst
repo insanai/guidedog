@@ -2,10 +2,7 @@ Incremental builds
 ==================
 
 A second build of an unchanged project reads no document and writes no file, and a
-change rebuilds exactly what it can affect. Digests decide this, and this page lists every input of every digest. The list comes from the Odin code (environment.odin, read.odin, build.odin,
-html_builder.odin, builders.odin, search.odin, lookups.odin, plugins.odin, intl.odin,
-intersphinx.odin) and from the Rust crates that now hold it (gd-conf, gd-env, gd-outputs,
-gd-resolve). When a digest gains an input, this page changes with it.
+change rebuilds exactly what it can affect. Digests decide this, and this page lists every input of every digest. The list comes from the crates that compute the digests (gd-conf, gd-env, gd-outputs, gd-resolve). When a digest gains an input, this page changes with it.
 
 The model
 ---------
@@ -228,9 +225,7 @@ A page notes each lookup once (``gd_env::Trace``); the answer's digest covers:
 ``Label``, ``Term``, ``Object``, ``Suffix``
    The target's docname, anchor, title, label kind, object type, item number, whether
    the object is an alias, the section number a section label shows, and the document's
-   anchor key; or that there is none. (The alias flag and section number are new in the
-   Rust port: a page that showed "Section 2.3" must be rewritten when the section is
-   renumbered.) A suffix lookup
+   anchor key; or that there is none. (The section number is part of the answer because a page that showed "Section 2.3" must be rewritten when the section is renumbered.) A suffix lookup
    (``prefix\0suffix\0role``) answers with the object that wins now: an object before
    an alias, then the first by name.
 ``Doc``

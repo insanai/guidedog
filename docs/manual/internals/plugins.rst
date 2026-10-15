@@ -1,10 +1,7 @@
 Plugins: SDK and process protocols
 ==================================
 
-``gd-plugins`` ports the Odin ``lib/plugins`` package: typed build plugins (GDS 0010)
-and publishers (GDS 0009), linked into an application or run as installed programs.
-This page records the Rust design and the wire contract that must stay compatible with
-programs built by the Odin SDK. The crate's ``README.md`` is the API cheat sheet.
+``gd-plugins`` is the plugin SDK: typed build plugins (GDS 0010) and publishers (GDS 0009), linked into an application or run as installed programs. This page records the design and the wire contract that every plugin program speaks. The crate's ``README.md`` is the API cheat sheet.
 
 Architecture
 ------------
@@ -17,10 +14,7 @@ A plugin crate implements ``BuildPlugin`` (or ``Publisher``) once and exposes
 
 Linked
    A custom ``guidedog`` binary compiles the crate in and passes its plugins to the CLI:
-   ``gd_cli::run_with(Registry::new(vec![badge::plugin()])?)``. The planned gd-cli entry
-   is ``pub fn run_with(linked: gd_plugins::Registry) -> std::process::ExitCode``, beside
-   ``run()`` which uses an empty registry. This replaces Odin's
-   ``project.Load_Options.plugins`` procedure tables. Linked code is trusted: a panic or
+   ``gd_cli::run_with(Registry::new(vec![badge::plugin()])?)``. The gd-cli entry is ``pub fn run_with(linked: gd_plugins::Registry) -> std::process::ExitCode``, beside ``run()``, which uses an empty registry. Linked code is trusted: a panic or
    hang in a hook reaches the host.
 
 Served
@@ -35,8 +29,7 @@ A test runs the badge both ways and requires identical outputs.
 Selecting plugins in a build
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These rules come from the Odin ``lib/project/plugins.odin`` and ``lib/cli/plugin.odin``
-and are implemented by ``gd-project`` and ``gd-cli`` on top of this crate:
+``gd-project`` and ``gd-cli`` implement these rules on top of this crate:
 
 * ``conf.toml`` selects IDs in ``plugins`` (at most ``MAX_BUILD_PLUGINS`` = 64, valid
   and unique), their configuration files in ``[plugin_configs]`` (relative to the
@@ -87,7 +80,7 @@ Identity and cache keys
 ``Plugin::identity(host_build)`` is what must change for a plugin's outputs to be
 rebuilt. A served plugin's identity is its registered program's SHA-256. A linked
 plugin's is the SHA-256 of its ID, product version and interface version together with
-``host_build``, the host's own build identity (Odin used its executable stamp), because
+``host_build``, the host's own build identity, because
 its code is part of the host. A build folds, per plugin and in order: the identity,
 ID and version, the session's ``cache_key`` (which ``LoadContext::read_config`` and
 ``read_file`` extend with fingerprints of the exact bytes read), the language and
@@ -124,7 +117,7 @@ invokes a publisher. Both kinds are traits whose value *is* one session's state:
    ``info`` (identity and ``Hooks``), ``load(&mut LoadContext)``, ``process_source``,
    ``process_html`` (both take a borrowed input and return ``Cow<'a, str>``) and
    ``collect_assets``. Default methods mean "service absent": text passes through and
-   no assets are returned. ``Drop`` replaces ``unload``.
+   no assets are returned. A plugin releases what it holds in ``Drop``; there is no ``unload`` hook.
 
 ``Publisher``
    ``info`` (identity and ``Capabilities``), ``load`` (returns ``Loaded``: source and
@@ -179,7 +172,7 @@ Messages nest at most 16 levels and repeat no key. Lines are UTF-8.
 Wire contract
 -------------
 
-Field names and order match the Odin SDK. The child speaks first:
+Field names and order are fixed: a plugin program depends on them. The child speaks first:
 
 .. code-block:: json
 
@@ -283,11 +276,7 @@ Automatic registration (``inventory``, linker sections)
    Needs extra crates and hides the wiring. An explicit ``Registry::new(vec![...])``
    keeps the list of linked code visible in the host's ``main``.
 
-Not ported
-----------
+What the SDK leaves out
+-----------------------
 
-The arena owners and their ``release_*`` procedures, allocation-refusal accounting
-(``memory_refused`` and the tests that refused each allocation in turn), Windows pipe
-and handle-inheritance code (``std::process`` covers it), and the exported
-``try_lock``/``unlock``, line reader and JSON field helpers. The CLI commands
-(``guidedog plugin register``/``check``/``inspect``) belong to ``gd-cli``. Command-line extensions are new in the Rust port; the Odin CLI hard-wired its GitHub Pages commands.
+Owners release what they hold through ``Drop``, so the SDK has no release procedures and no accounting of refused allocations. ``std::process`` covers pipes and handle inheritance on every platform. The CLI commands (``guidedog plugin register``/``check``/``inspect``) belong to ``gd-cli``.

@@ -37,10 +37,14 @@ pub fn load_crate(path: &Path, options: &Options) -> Result<Crate, Error> {
         ..Crate::default()
     };
     krate.add_module(Module { name: located.name.clone(), ..Module::default() });
+    let manifest = path.join("Cargo.toml");
+    if path.is_dir() && manifest.is_file() {
+        krate.inputs.push(manifest);
+    }
     let mut loader = Loader::new(options)?;
     match &located.root_file {
         Some(root) => {
-            let text = loader.read_root(&krate, root)?;
+            let text = loader.read_root(&mut krate, root)?;
             let dir = root.parent().map(Path::to_path_buf).unwrap_or_default();
             loader.read_module(&mut krate, ModuleId(0), root, text, dir);
         }
@@ -48,6 +52,8 @@ pub fn load_crate(path: &Path, options: &Options) -> Result<Crate, Error> {
     }
     loader.read_pending(&mut krate);
     resolve::attach_impls(&mut krate);
+    krate.inputs.sort();
+    krate.inputs.dedup();
     Ok(krate)
 }
 
@@ -95,8 +101,9 @@ impl<'o> Loader<'o> {
     }
 
     /// Reads the crate root; failing here fails the whole load.
-    fn read_root(&mut self, krate: &Crate, path: &Path) -> Result<String, Error> {
+    fn read_root(&mut self, krate: &mut Crate, path: &Path) -> Result<String, Error> {
         self.seen.insert(canonical(path));
+        krate.inputs.push(path.to_path_buf());
         read_source(path, &krate.root_dir, self.options).map_err(|d| Error::from(*d))
     }
 
@@ -162,6 +169,7 @@ impl<'o> Loader<'o> {
         if !self.seen.insert(canonical(&path)) {
             return;
         }
+        krate.inputs.push(path.clone());
         match read_source(&path, &krate.root_dir, self.options) {
             Ok(text) => {
                 let dir = children_dir(&path, mod_rs);
@@ -218,13 +226,16 @@ impl<'o> Loader<'o> {
         let file_dir = base.clone();
         let root_dir = krate.root_dir.clone();
         let max_bytes = self.options.max_file_bytes;
-        let mut include = move |relative: &str| -> Option<String> {
-            read_source(
-                &base.join(relative),
+        let mut included: Vec<PathBuf> = Vec::new();
+        let mut include = |relative: &str| -> Option<String> {
+            let path = base.join(relative);
+            let text = read_source(
+                &path,
                 &root_dir,
                 &Options { max_file_bytes: max_bytes, ..Options::default() },
-            )
-            .ok()
+            );
+            included.push(path);
+            text.ok()
         };
         let mut reader = FileReader {
             krate,
@@ -242,6 +253,7 @@ impl<'o> Loader<'o> {
         for p in pending.iter_mut().filter(|p| p.dir == dir) {
             p.path_base = file_dir.clone();
         }
+        krate.inputs.append(&mut included);
         if truncated && !self.warned_items {
             self.warned_items = true;
             krate.warnings.push(

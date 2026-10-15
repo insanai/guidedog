@@ -51,22 +51,32 @@ plugin codes, every reader and autodoc code (`autodoc.*` with Sphinx's categorie
   file's digest is its bytes' (not the decoded text's), so a file with a byte order mark
   is not read again every build.
 - **Providers are traits.** The Python and Odin hosts implement
-  `guidedoc_sphinx::AutodocProvider`. gd-pyscan and gd-odindoc projects are not `Send`
-  (`Rc` modules, boxed readers), and providers must be, so each directive analyses in a
-  project of its own while the document's files are read from disk once and cached in a
-  shared, confined log (`files.rs`) that becomes its dependencies. A per-document session
-  across directives (Odin) would need the session on one thread; the cost is reparsing
-  per directive, never rereading.
+  `guidedoc_sphinx::AutodocProvider`. Each host keeps one gd-autodoc session (Python) or
+  gd-odindoc project (Odin) per document behind a `Mutex`, made at the first directive:
+  a module is parsed once per document, not once per directive, and the session's merged
+  annotations carry over between directives as in Sphinx. The document's files are read
+  from disk once and recorded in a shared, confined log (`files.rs`) that becomes its
+  dependencies.
 - **Static messages.** The engine reports `&'static` messages; gd-autodoc and gd-odindoc
   messages are reported with their code and title from a table (checked against those
   crates' sources by a test) and their text and hint as arguments, so braces in them are
   never read as a template (Odin's `safe_braces`).
 - **Rust API pages** (new): `rust_autoapi_crates` are read by gd-rustdoc into generated
   pages `<root>/<crate>/<module>` and `<root>/index` (one crate's index, or every crate's
-  under "Rust API reference"); each page depends on every file of its crate (digests of
-  their bytes), so editing the crate reads its pages again. Load and page warnings are
-  reported every build, as the pages are generated every build. The object collector
-  joins a rust signature's module and name with `::`, so targets are full paths.
+  under "Rust API reference"); each page depends on every file its crate was made from
+  (`gd_rustdoc::Crate::inputs`, digests of their bytes), so editing the crate reads its
+  pages again. The crates are documented in parallel, and `<doctrees>/rust-api.json`
+  (`rustcache.rs`) keeps each crate's pages and reports for the next build, reused only
+  when the executable, path, options, file listing below the crate folder (without
+  `target/` and hidden folders) and every input's bytes are unchanged: a no-op build
+  parses no crate. Load and page warnings are reported every build. The object
+  collector joins a rust signature's module and name with `::`, so targets are full
+  paths.
+- **One digest per file per build**: the reading threads share a memo of file digests,
+  seeded with those the generated pages were made with, so a crate file every API page
+  depends on is hashed once, not once per page.
+- **Content errors are warnings** (Sphinx's rule): a reader error in a document that was
+  read anyway is reported as a warning, so the build succeeds and `-W` fails it.
 - **Translation** is gd-i18n's pass on the request (`Request::passes`), with gd-intl's
   catalog and catalog files as dependencies; localized figures check the source folder.
 - **Search words** are written only when a document has some (`DocInfo::search` is

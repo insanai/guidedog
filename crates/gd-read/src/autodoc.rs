@@ -6,6 +6,7 @@
 //! every build, as Sphinx reads it again, in case the source appears.
 
 use std::path::PathBuf;
+use std::sync::{Mutex, PoisonError};
 
 use gd_autodoc::{
     ClassContent, ClassSignature, DefaultOption, DescriptionTarget, DirectiveOption, MemberOrder,
@@ -24,16 +25,19 @@ const MISSING: &str = "<autodoc: an object was not found>";
 
 /// Serves the autodoc directives of one document's read.
 ///
-/// gd-pyscan's analysed modules are shared within a project (`Rc`), so a project cannot
-/// cross threads; providers are shared (`Send + Sync`). Each directive therefore
-/// analyses in a project of its own, while the files it reads are read from the disk
-/// once per document and recorded here.
-#[derive(Debug, Clone)]
+/// The directives of a document share one autodoc session, made at the first: each
+/// module is parsed once per document rather than once per directive, and what autodoc
+/// merges into a module as it documents it (annotations from type comments) holds for
+/// the directives after, as in Sphinx. The files it reads are read from the disk once
+/// per document and recorded here.
+#[derive(Debug)]
 pub(crate) struct PythonHost {
     config: gd_autodoc::Config,
     /// `autodoc_source_paths`, absolute.
     roots: Vec<PathBuf>,
     files: SourceFiles,
+    /// The document's session; `None` until the first directive.
+    session: Mutex<Option<Session>>,
 }
 
 impl PythonHost {
@@ -44,7 +48,7 @@ impl PythonHost {
         }
         let roots = gd_conf::autodoc_roots(c);
         let files = SourceFiles::new(&roots);
-        Some(PythonHost { config: autodoc_config(c), roots, files })
+        Some(PythonHost { config: autodoc_config(c), roots, files, session: Mutex::new(None) })
     }
 
     /// Adds the Python files read to `deps`.
@@ -59,17 +63,21 @@ impl AutodocProvider for PythonHost {
             name: format!("<autodoc {}>", request.argument),
             ..Default::default()
         };
-        let files = self.files.clone();
-        let reader = Box::new(move |path: &std::path::Path| files.read(path));
-        let project = match gd_pyscan::Project::with_reader(&self.roots, reader) {
-            Ok(project) => project,
-            Err(e) => {
-                out.messages.push(static_message(PYTHON_GRAMMAR, Some(&e.to_string())));
-                return out;
+        let mut slot = self.session.lock().unwrap_or_else(PoisonError::into_inner);
+        if slot.is_none() {
+            let files = self.files.clone();
+            let reader = Box::new(move |path: &std::path::Path| files.read(path));
+            match gd_pyscan::Project::with_reader(&self.roots, reader) {
+                Ok(project) => *slot = Some(Session::new(project)),
+                Err(e) => {
+                    out.messages.push(static_message(PYTHON_GRAMMAR, Some(&e.to_string())));
+                    return out;
+                }
             }
-        };
-        let mut session = Session::new(project);
-        let generated = gd_autodoc::document(&mut session, &self.config, &python_request(request));
+        }
+        let Some(session) = slot.as_mut() else { return out };
+        let generated = gd_autodoc::document(session, &self.config, &python_request(request));
+        drop(slot);
         for m in &generated.messages {
             if m.code == "autodoc.import" {
                 self.files.note_missing();

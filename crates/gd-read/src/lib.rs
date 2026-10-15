@@ -22,6 +22,7 @@
 //! Docs: docs/manual/internals/project.rst and incremental.rst ("The reading layer").
 //! Nothing here prints; problems are `gd_host::Problem`s and `gd_report::Report`s.
 
+#![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod api;
@@ -34,6 +35,7 @@ mod messages;
 mod odin;
 mod parse;
 mod read;
+mod rustcache;
 mod rustdoc;
 mod search;
 mod translate;

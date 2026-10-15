@@ -29,7 +29,7 @@ for page in document(&krate, &options) {
 | `document_crate(path) -> Result<Vec<Page>, Error>` | both, with default options |
 | `Options` | `include_private`, `document_hidden`, `crate_name`, `max_items` (100 000), `max_files` (4 096), `max_file_bytes` (4 MiB), `max_depth` (512), `member_order` (`Source`/`Alphabetical`), `noindex` |
 | `Page` | `path` (`index.rst`, `my_crate.rst`, `my_crate/parser.rst`), `module` (`my_crate::parser`), `text`, `warnings` |
-| `Crate` | `name`, `root_dir`, `files`, `modules: Vec<Module>`, `items: Vec<Item>`, `warnings`; ids `ModuleId`, `ItemId`, `FileId` index the vectors |
+| `Crate` | `name`, `root_dir`, `files`, `modules: Vec<Module>`, `items: Vec<Item>`, `warnings`, `inputs` (every file read or tried, sorted: `Cargo.toml`, module files, `include_str!` docs, so a caller can tell whether earlier pages still hold); ids `ModuleId`, `ItemId`, `FileId` index the vectors |
 | `Diagnostic` / `Error` | `code`, `title`, `message`, `hint`, `file`, `position` (line, column, excerpt); `Display` is the Elm layout; `Error` boxes one |
 
 Warning codes: `rust.autodoc.parse` (syntax error, the rest is documented),

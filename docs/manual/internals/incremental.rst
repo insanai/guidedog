@@ -116,8 +116,20 @@ files (``included = true``, so a document included by another is part of that pa
 files it quotes (``literalinclude``, ``csv-table``, graphs), the Python, Odin and Rust
 sources its autodoc, odindoc and rustdoc directives read, and the translation catalog
 it was translated with. A generated API page's dependencies are the files its text was
-made from (``Generated::deps``). A document whose package or object was not found is
+made from (``Generated::deps``; for a Rust page, ``gd_rustdoc::Crate::inputs``: the module
+files, ``Cargo.toml`` and the files ``include_str!`` docs name). A document whose package or object was not found is
 read again every build.
+
+Within one build each dependency is hashed once: the reading threads share a memo of
+file digests, seeded with the digests the generated pages were just made with.
+
+The Rust API pages are not made again when nothing they come from changed:
+``<doctrees>/rust-api.json`` (gd-read, ``rustcache.rs``) keeps each crate's pages and
+reports, keyed by the executable stamp, the crate's path and the options, with the
+digest of the listing of the files below the crate's folder (``target`` and hidden
+folders left out) and the digest of every input. A crate whose listing and inputs are
+unchanged keeps its pages; any other is parsed again. The record is a memo, checked
+before use: a missing or damaged one only costs the parse.
 
 A reused object is checked when it is loaded: its bytes must have the digest
 ``CachedFile::digest`` records. A missing, damaged or foreign object is *stale*: the
@@ -211,6 +223,28 @@ The environment and the manifest are published with the output they describe, in
 commit (:doc:`publication`). A build that fails, including one that ``-W`` fails,
 publishes nothing: the previous output, manifest and environment stay, so the next build
 reads and writes again what this one did and reports the same diagnostics.
+
+Measurements
+------------
+
+The manual (85 documents, 16 documented crates) with ``guidedog build -b html``, release
+build, median of several runs on a 16-thread Linux machine, before and after the
+changes above (the Rust page record, the shared digest memo, the crates documented in
+parallel) and the parallel stale-object check:
+
+=====================  =======  ======
+Build                  Before   After
+=====================  =======  ======
+Cold (no output)       1.00 s   0.52 s
+No-op (nothing read)   0.75 s   0.13 s
+One document changed   0.78 s   0.17 s
+=====================  =======  ======
+
+Before, 82% of a no-op build's instructions (callgrind) went to parsing every crate with
+tree-sitter for the generated Rust pages, and 6% to hashing every crate file again for
+each API page that depends on it. What remains of a no-op build is mostly
+the check of every reused object (hashing 7 MB, on the reading threads), loading and
+saving the environment's JSON, and the site unit (inventory and index).
 
 Possible later work: ``guidedog serve`` keeping the environment, tables and object store
 in memory between rebuilds; a (size, modification time) prefilter before hashing a

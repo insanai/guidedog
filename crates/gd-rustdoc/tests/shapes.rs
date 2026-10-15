@@ -48,6 +48,19 @@ fn loads_name_modules_and_no_warnings() {
 }
 
 #[test]
+fn inputs_name_every_file_the_pages_come_from() {
+    let krate = load(&Options::default());
+    // Included files keep the path the source names (`src/../README.md`).
+    for file in ["Cargo.toml", "README.md", "src/lib.rs", "src/geometry.rs"] {
+        let found = krate.inputs.iter().any(|p| p.ends_with(file));
+        assert!(found, "{file} in {:?}", krate.inputs);
+    }
+    assert!(krate.inputs.is_sorted());
+    let read = krate.files.iter().all(|f| krate.inputs.contains(&f.path));
+    assert!(read, "every file read is an input");
+}
+
+#[test]
 fn pages_follow_public_modules() {
     let pages = default_pages();
     let names: Vec<&str> = pages.iter().map(|p| p.path.as_str()).collect();

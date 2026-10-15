@@ -2,8 +2,9 @@
 //! holds, and otherwise the parse, the object, the symbols and the dependencies.
 
 use std::borrow::Cow;
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::Arc;
+use std::sync::{Arc, Mutex, PoisonError};
 
 use gd_conf::Digest;
 use gd_env::{DocInfo, Environment, SourceFile, SourceKind};
@@ -29,6 +30,45 @@ pub(crate) struct Prepared {
     sphinx: guidedoc_sphinx::Config,
     myst: MystSettings,
     roots: Vec<PathBuf>,
+    digests: FileDigests,
+}
+
+/// The digests of the files documents depend on, each computed once per build: every
+/// page of a crate's API depends on all of the crate's files, and hashing them again
+/// for each page was most of the time spent checking for changes.
+#[derive(Debug)]
+struct FileDigests(Mutex<HashMap<PathBuf, Option<Digest>>>);
+
+impl FileDigests {
+    /// Knows already the digests the generated pages of `sources` were made with: they
+    /// were taken in this build, as the pages were made or their record checked.
+    fn with_generated(sources: &[SourceFile]) -> FileDigests {
+        let generated = sources.iter().filter_map(|f| f.generated.as_ref());
+        let deps = generated.flat_map(|g| &g.deps);
+        let map = deps.map(|dep| (dep.path.clone(), Some(dep.digest))).collect();
+        FileDigests(Mutex::new(map))
+    }
+
+    /// The digest of the bytes of the file at `path` (`gd_env::file_digest`), computed
+    /// at its first use in this build; `None` when it cannot be read.
+    fn digest(&self, path: &Path) -> Option<Digest> {
+        let known = self.0.lock().unwrap_or_else(PoisonError::into_inner).get(path).copied();
+        if let Some(digest) = known {
+            return digest;
+        }
+        // Hashed without the lock, so threads hash different files at once; two that
+        // hash the same file find the same digest.
+        let digest = gd_env::file_digest(path);
+        let mut map = self.0.lock().unwrap_or_else(PoisonError::into_inner);
+        map.insert(path.to_path_buf(), digest);
+        digest
+    }
+
+    /// Whether a file `doc` depended on changed, as `gd_env::dependencies_changed`
+    /// decides it: a file that cannot be read counts as changed.
+    fn changed(&self, doc: &DocInfo) -> bool {
+        doc.deps.iter().any(|dep| self.digest(&dep.path) != Some(dep.digest))
+    }
 }
 
 /// The reader ids a project reads its documents with: reStructuredText with the Sphinx
@@ -56,6 +96,7 @@ impl Prepared {
             sphinx: crate::config::sphinx_config(c, &ctx.intl.labels, ctx.today),
             myst: crate::config::myst_settings(c, ctx.today),
             roots: gd_conf::readable_roots(c),
+            digests: FileDigests::with_generated(sources),
         })
     }
 
@@ -125,7 +166,7 @@ impl<'a> Worker<'a> {
             Err(p) => return Slot::Read(Box::new(failed(d, p.report()))),
         };
         if let Some(i) = previous.id_of(&f.docname)
-            && reusable(self.ctx, &previous.docs[i.index()], &d)
+            && reusable(self.ctx, self.prepared, &previous.docs[i.index()], &d)
         {
             return Slot::Reused(i.index());
         }
@@ -235,6 +276,7 @@ impl<'a> Worker<'a> {
             d.failed = true;
             return;
         };
+        content_warnings(&mut reports);
         let store = self.ctx.store;
         match store.save_object(&d.docname, doc) {
             Ok(object) => d.object = Some(object),
@@ -271,7 +313,10 @@ impl<'a> Worker<'a> {
             let path = Path::new(&entry.name);
             // The digest `gd_env::dependencies_changed` compares: the file's bytes.
             let id = SourceId(u16::try_from(i).unwrap_or(u16::MAX));
-            let digest = gd_env::file_digest(path)
+            let digest = self
+                .prepared
+                .digests
+                .digest(path)
                 .unwrap_or_else(|| Digest::of_parts(&[ws.source_str(id).as_bytes()]));
             let included = entry.usage == SourceUse::Parsed;
             d.deps.push(gd_env::Dependency { path: path.to_path_buf(), digest, included });
@@ -312,7 +357,7 @@ fn utf8_problem(f: &SourceFile, e: std::str::Utf8Error) -> Problem {
 /// Whether the previous build's reading of a document still holds: the same file and
 /// markup, the same source digest, read without failing, no dependency changed, and its
 /// object still in the doctrees folder.
-fn reusable(ctx: &ReadContext<'_>, old: &DocInfo, now: &DocInfo) -> bool {
+fn reusable(ctx: &ReadContext<'_>, prepared: &Prepared, old: &DocInfo, now: &DocInfo) -> bool {
     if old.digest != now.digest
         || old.failed
         || old.kind != now.kind
@@ -320,10 +365,19 @@ fn reusable(ctx: &ReadContext<'_>, old: &DocInfo, now: &DocInfo) -> bool {
     {
         return false;
     }
-    if old.generated != now.generated || gd_env::dependencies_changed(old) {
+    if old.generated != now.generated || prepared.digests.changed(old) {
         return false;
     }
     old.object.as_ref().is_some_and(|object| ctx.store.path_of(object).is_file())
+}
+
+/// Makes the errors a reader found in a document it read anyway warnings, as Sphinx
+/// logs Docutils' ERROR and SEVERE messages: the build succeeds with them, and `-W`
+/// fails it. Only a document that could not be read is an error of the build.
+pub(crate) fn content_warnings(reports: &mut [Report]) {
+    for report in reports.iter_mut().filter(|r| r.severity == Severity::Error) {
+        report.severity = Severity::Warning;
+    }
 }
 
 /// `d` failed with `report`.
@@ -349,7 +403,11 @@ fn not_read(relative: &str, status: Option<guidedoc::Status>) -> Report {
 /// build plugins produced.
 fn mark_expanded(reports: &mut [Report], f: &SourceFile) {
     let path = f.path.display().to_string();
-    for report in reports.iter_mut().filter(|r| r.path == path || r.path == f.relative) {
+    // Session reports name the source as display_path shows it: relative to the working
+    // directory, which is the project's folder only when the build runs from there.
+    let shown = gd_host::display_path(&path);
+    let about_document = |r: &Report| r.path == path || r.path == shown || r.path == f.relative;
+    for report in reports.iter_mut().filter(|r| about_document(r)) {
         report.path = format!("{path} (plugin-expanded input)");
         report
             .message

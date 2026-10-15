@@ -10,6 +10,7 @@
 
 use std::fmt::Write as _;
 use std::path::Path;
+use std::sync::{Mutex, PoisonError};
 
 use gd_conf::Config;
 use gd_env::{Dependency, SourceFile};
@@ -24,21 +25,25 @@ use crate::messages::{NO_ODIN_ROOTS, host_message, static_message};
 /// The dependency that stands for "a package was not found".
 const MISSING: &str = "<odin: a package was not found>";
 
-/// Serves the odin generating directives of one document's read. As with Python, a
-/// gd-odindoc project cannot cross threads, so each directive analyses in a project of
-/// its own; the files are read once per document and recorded here.
-#[derive(Debug, Clone)]
+/// Serves the odin generating directives of one document's read. The directives of a
+/// document share one gd-odindoc project, made at the first, so each package is
+/// analysed once per document rather than once per directive; the files are read once
+/// per document and recorded here.
+#[derive(Debug)]
 pub(crate) struct OdinHost {
     roots: Vec<Root>,
     member_order: MemberOrder,
     files: SourceFiles,
+    /// The document's project; `None` until the first directive.
+    project: Mutex<Option<Project>>,
 }
 
 impl OdinHost {
     /// The host for one document.
     pub(crate) fn new(c: &Config) -> OdinHost {
         let roots = odin_roots(c);
-        OdinHost { files: odin_files(&roots), roots, member_order: member_order(c) }
+        let files = odin_files(&roots);
+        OdinHost { files, roots, member_order: member_order(c), project: Mutex::new(None) }
     }
 
     /// Adds the Odin files read to `deps`.
@@ -55,8 +60,11 @@ impl AutodocProvider for OdinHost {
             out.messages.push(static_message(NO_ODIN_ROOTS, None));
             return out;
         }
-        let reader = Box::new(ConfinedReader { files: self.files.clone() });
-        let mut project = Project::new(self.roots.clone(), reader);
+        let mut slot = self.project.lock().unwrap_or_else(PoisonError::into_inner);
+        let project = slot.get_or_insert_with(|| {
+            let reader = Box::new(ConfinedReader { files: self.files.clone() });
+            Project::new(self.roots.clone(), reader)
+        });
         let config = gd_odindoc::Config { member_order: self.member_order, ..Default::default() };
         let odin_request = Request {
             directive: request.directive.to_owned(),
@@ -68,7 +76,8 @@ impl AutodocProvider for OdinHost {
                 .collect(),
             current: request.module.to_owned(),
         };
-        let generated = gd_odindoc::document(&mut project, &config, &odin_request);
+        let generated = gd_odindoc::document(project, &config, &odin_request);
+        drop(slot);
         for m in &generated.messages {
             let severity = match m.severity {
                 gd_odindoc::Severity::Note => Severity::Note,

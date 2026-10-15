@@ -32,6 +32,12 @@ pub struct Crate {
     pub items: Vec<Item>,
     /// Problems met while loading: missing module files, syntax errors, limits.
     pub warnings: Vec<Diagnostic>,
+    /// Every file the load read or tried to read, sorted: `Cargo.toml`, the module files
+    /// (those left out for their size or a read error too) and the files
+    /// `include_str!` docs name. With which files exist below [`Crate::root_dir`], they
+    /// are everything the crate's pages are made from, so a caller can tell when the
+    /// pages of an earlier load still hold.
+    pub inputs: Vec<PathBuf>,
 }
 
 /// One source file read for the crate.

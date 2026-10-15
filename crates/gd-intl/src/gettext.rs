@@ -17,7 +17,7 @@ use crate::localize::{additional_targets, compact_mode, moment_of};
 
 /// Reads a document again when its cached object is stale (missing, damaged, or
 /// another document's), returning its new object. gd-read provides it.
-pub type Reread = dyn Fn(&DocInfo) -> Result<CachedFile, Problem> + Sync;
+pub type Reread<'a> = dyn Fn(&DocInfo) -> Result<CachedFile, Problem> + Sync + 'a;
 
 /// The `gettext` builder. Every template is one file of the site unit, rewritten only
 /// when more than its creation date changed. A document whose object cannot be loaded
@@ -28,7 +28,7 @@ pub type Reread = dyn Fn(&DocInfo) -> Result<CachedFile, Problem> + Sync;
 #[derive(Clone, Copy, Default)]
 pub struct GettextBuilder<'a> {
     /// Reads a document again when its object is stale.
-    pub reread: Option<&'a Reread>,
+    pub reread: Option<&'a Reread<'a>>,
 }
 
 impl std::fmt::Debug for GettextBuilder<'_> {

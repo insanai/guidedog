@@ -125,9 +125,9 @@ pub(crate) fn fill_draft(template: &str, title: &str, author: &str, labels: &[St
     ];
     let mut source = template.to_string();
     for (key, value) in fields {
-        source = crate::replace_field(&source, prefix, key, value).map_err(|p| {
+        source = crate::replace_field(&source, prefix, key, value).map_err(|mut p| {
             Problem::new(prefix.code("template"), "The record template is incomplete",
-                "template", p.message,
+                "template", std::mem::take(&mut p.message),
                 format!("Add the {prefix}-{key} field to the metadata at the start of the \
                     template."))
             .exit(2)
@@ -290,7 +290,7 @@ fn check_decision(d: &Decision, c: &Catalog, r: &Record, target: &str, needs_rea
     if c.process.state(target).is_some_and(|s| s.evidence) && d.evidence.trim().is_empty() {
         return reason(format!("Moving into {target} needs evidence, including by promotion."),
             "Pass --evidence='path/to/review-notes.rst' naming the review or validation.")
-            .map_err(|p| Problem { title: "Record the evidence".into(), ..p });
+            .map_err(|p| p.with_title("Record the evidence"));
     }
     Ok(())
 }

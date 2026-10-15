@@ -30,10 +30,6 @@
 //!
 //! Failure is a [`Problem`] with a hint and an exit status, never a panic.
 
-// A Problem is plain data with public fields (location, excerpt, suggestion), returned
-// only on the cold path of a command; boxing it would cost every caller ergonomics for
-// no measurable gain.
-#![allow(clippy::result_large_err)]
 
 mod build;
 mod catalog;
@@ -66,7 +62,7 @@ pub use external::{ENGINE_VARIABLE, GuidedogProgram};
 pub use index::{check_index, index_plan};
 pub use init::{Init, init_plan, initialize};
 pub use metadata::{FieldValue, Record, Sections, read_record, replace_field};
-pub use problem::{Problem, Result};
+pub use problem::{Problem, ProblemData, Result};
 pub use transaction::{Change, Lock, Plan, apply, check_recovery, lock_catalog, recover};
 
 use problem::{io_problem, prefix_problem, shown};

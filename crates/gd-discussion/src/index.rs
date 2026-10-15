@@ -37,7 +37,7 @@ pub(crate) fn plan_index(catalog: &Catalog, records: &[&Record]) -> Result<Plan>
             Format::Rst => rst_index_text(catalog, records, name, text),
             Format::Typst => typst_index_text(catalog, records, name, text),
         }
-        .map_err(|p| Problem { path: shown(&path), ..p })?;
+        .map_err(|p| p.with_path(shown(&path)))?;
         if old.as_deref() != Some(next.as_str()) {
             plan.changes.push(Change { path: name.to_string(), before: old, after: Some(next) });
         }

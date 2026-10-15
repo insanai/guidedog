@@ -160,7 +160,7 @@ pub(crate) fn config_problem(
     .exit(2);
     match source {
         Some(source) if line > 0 => p.at_line(source, line),
-        _ => Problem { line, ..p },
+        _ => p.with_line(line),
     }
 }
 

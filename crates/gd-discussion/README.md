@@ -30,7 +30,7 @@ ds::apply(&lock, &plan)?;                            // journaled; ds::recover r
 | `read_record`, `replace_field(src, &prefix, key, FieldValue)` | metadata; one line changed, every other byte kept |
 | `build(&c, &BuildOptions, &dyn Builder)`, `Builder`, `BuildRequest`, `GuidedogProgram` | publication |
 | `command::run(&Program, &args)`, `Program::default()` | the `dsc` command line |
-| `Problem { code, title, path, line, excerpt, message, hint, suggestion, exit }` | `report()` gives a `gd_report::Report` |
+| `Problem` (boxed `ProblemData { code, title, path, line, excerpt, message, hint, suggestion, exit }`, one pointer wide) | `report()` gives a `gd_report::Report`; `with_path`, `with_title`, `with_line`, `exit`, `suggest`, `at_line` chain |
 
 ## Builders
 

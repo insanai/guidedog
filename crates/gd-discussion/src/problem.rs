@@ -9,8 +9,16 @@ use std::path::Path;
 ///
 /// Problems about a catalog have codes in the catalog's prefix (`eds.metadata`); problems
 /// before a catalog is known use `discussion.*`, and command-line mistakes `cli.usage`.
+///
+/// The fields live in a boxed [`ProblemData`], so `Result<T, Problem>` stays one pointer
+/// wide; read and write them through `Deref` (`p.code`, `p.exit = 2`).
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
-pub struct Problem {
+pub struct Problem(Box<ProblemData>);
+
+/// The fields of a [`Problem`]. Build one with struct-update syntax and convert it with
+/// `.into()`, or start from [`Problem::new`].
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct ProblemData {
     /// A stable identifier such as `"gds.transition"`.
     pub code: String,
     /// A short sentence-case title such as `"That lifecycle move is not allowed"`.
@@ -37,6 +45,26 @@ pub struct Problem {
 /// A result whose error is a [`Problem`].
 pub type Result<T, E = Problem> = std::result::Result<T, E>;
 
+impl From<ProblemData> for Problem {
+    fn from(data: ProblemData) -> Problem {
+        Problem(Box::new(data))
+    }
+}
+
+impl std::ops::Deref for Problem {
+    type Target = ProblemData;
+
+    fn deref(&self) -> &ProblemData {
+        &self.0
+    }
+}
+
+impl std::ops::DerefMut for Problem {
+    fn deref_mut(&mut self) -> &mut ProblemData {
+        &mut self.0
+    }
+}
+
 impl Problem {
     /// Makes a problem with exit status 1; change it with [`Problem::exit`].
     pub fn new(
@@ -46,15 +74,33 @@ impl Problem {
         message: impl Into<String>,
         hint: impl Into<String>,
     ) -> Problem {
-        Problem {
+        Problem::from(ProblemData {
             code: code.into(),
             title: title.to_string(),
             path: path.into(),
             message: message.into(),
             hint: hint.into(),
             exit: 1,
-            ..Problem::default()
-        }
+            ..ProblemData::default()
+        })
+    }
+
+    /// Replaces the path and returns the problem, for chaining.
+    pub fn with_path(mut self, path: impl Into<String>) -> Problem {
+        self.path = path.into();
+        self
+    }
+
+    /// Replaces the title and returns the problem, for chaining.
+    pub fn with_title(mut self, title: &str) -> Problem {
+        self.title = title.to_string();
+        self
+    }
+
+    /// Sets the line (with no excerpt) and returns the problem, for chaining.
+    pub fn with_line(mut self, line: usize) -> Problem {
+        self.line = line;
+        self
     }
 
     /// Sets the exit status and returns the problem, for chaining.

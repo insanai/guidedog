@@ -2,8 +2,11 @@
 //! published generation, with what it was made from.
 
 use std::collections::BTreeMap;
+use std::path::{Path, PathBuf};
 
-use gd_env::{Asset, Digest, Lookup};
+use gd_env::{Asset, Digest, Lookup, ObjectBuilder, ObjectReader};
+use gd_host::{Budget, Ledger, Problem};
+use gd_json::{Object, Value};
 use gd_report::Report;
 
 /// The manifest's format version. 2 is the Rust port's first: lookups carry their
@@ -18,7 +21,8 @@ pub const SITE_UNIT: &str = "";
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct OutputRecord {
     /// The digest of the unit's inputs, lookups excluded (docs/manual/internals/
-    /// incremental.rst lists them per builder).
+    /// incremental.rst lists them per builder). The zero digest marks a unit whose
+    /// output is not trusted (an unreadable journal was discarded): it is never reused.
     pub inputs: Digest,
     /// The files it made, below the output folder, with `/` separators.
     pub files: Vec<String>,
@@ -41,13 +45,89 @@ pub struct Manifest {
 impl Manifest {
     /// The manifest as the JSON the commit saves (gd-env's `ObjectBuilder`).
     pub fn to_json(&self) -> String {
-        todo!("wave 1: write the manifest with gd_env::ObjectBuilder")
+        let mut units = Object::new();
+        for (key, unit) in &self.units {
+            units.insert(key.clone(), record_to_json(unit));
+        }
+        let value = ObjectBuilder::default()
+            .number("version", u64::from(MANIFEST_VERSION))
+            .value("units", Value::Object(units))
+            .done();
+        gd_json::to_string(&value)
     }
 
     /// Reads a manifest; `None` for another version or anything that is not one (the
     /// build then writes every unit).
     pub fn from_json(text: &str) -> Option<Manifest> {
-        let _ = text;
-        todo!("wave 1: read the manifest with gd_env::ObjectReader")
+        let value = gd_json::parse(text).ok()?;
+        let r = ObjectReader::of(&value)?;
+        if r.number("version")? != u64::from(MANIFEST_VERSION) {
+            return None;
+        }
+        let mut units = BTreeMap::new();
+        for (key, unit) in r.value("units")?.as_object()? {
+            units.insert(key.clone(), record_from_json(unit)?);
+        }
+        Some(Manifest { units })
     }
+
+    /// The manifest saved at `path`, read within `budget`: empty when there is none, it
+    /// cannot be read, or it is not a manifest of this version. Fails only when the
+    /// budget cannot hold the file (`host.budget`).
+    pub(crate) fn load(path: &Path, budget: &Budget) -> Result<Manifest, Problem> {
+        Ok(load_text(path, budget)?.and_then(|t| Manifest::from_json(&t)).unwrap_or_default())
+    }
+}
+
+/// The text of a record file at `path`, read within `budget`; `None` when it is missing,
+/// unreadable, or not UTF-8. Fails only when the budget cannot hold it.
+pub(crate) fn load_text(path: &Path, budget: &Budget) -> Result<Option<String>, Problem> {
+    let ledger = Ledger::new(budget);
+    match gd_host::read_file(path, Some(&ledger), usize::MAX) {
+        Ok(bytes) => Ok(String::from_utf8(bytes).ok()),
+        Err(p) if p.code == "host.budget" => Err(p),
+        Err(_) => Ok(None),
+    }
+}
+
+fn record_to_json(unit: &OutputRecord) -> Value {
+    ObjectBuilder::default()
+        .digest("inputs", &unit.inputs)
+        .texts("files", &unit.files)
+        .list("assets", &unit.assets, asset_to_json)
+        .list("lookups", &unit.lookups, lookup_to_json)
+        .list("reports", &unit.reports, gd_env::report_to_json)
+        .done()
+}
+
+fn record_from_json(value: &Value) -> Option<OutputRecord> {
+    let r = ObjectReader::of(value)?;
+    Some(OutputRecord {
+        inputs: r.digest("inputs")?,
+        files: r.texts("files")?,
+        assets: r.list("assets", asset_from_json)?,
+        lookups: r.list("lookups", lookup_from_json)?,
+        reports: r.list("reports", gd_env::report_from_json)?,
+    })
+}
+
+fn asset_to_json(asset: &Asset) -> Value {
+    ObjectBuilder::default()
+        .text("source", &asset.source.to_string_lossy())
+        .text("target", &asset.target)
+        .done()
+}
+
+fn asset_from_json(value: &Value) -> Option<Asset> {
+    let r = ObjectReader::of(value)?;
+    Some(Asset { source: PathBuf::from(r.text("source")?), target: r.text("target")? })
+}
+
+fn lookup_to_json(entry: &(Lookup, Digest)) -> Value {
+    ObjectBuilder::default().text("lookup", &entry.0.encode()).digest("answer", &entry.1).done()
+}
+
+fn lookup_from_json(value: &Value) -> Option<(Lookup, Digest)> {
+    let r = ObjectReader::of(value)?;
+    Some((Lookup::decode(&r.text("lookup")?)?, r.digest("answer")?))
 }

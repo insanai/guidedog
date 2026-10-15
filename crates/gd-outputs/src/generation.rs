@@ -16,11 +16,14 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 
 use gd_env::{Asset, Digest, Lookup};
-use gd_host::{Budget, Problem};
+use gd_host::{Budget, Ledger, PathKind, Problem};
 use gd_report::Report;
 
+use crate::commit::abandon_paths;
 use crate::manifest::{Manifest, OutputRecord};
-use crate::paths::OutputPaths;
+use crate::paths::{OutputPaths, unit_path};
+use crate::publish::finish_interrupted_commits;
+use crate::tree::{make_writable, remove_spare};
 
 /// How a generation begins.
 #[derive(Debug, Clone, Copy)]
@@ -36,13 +39,13 @@ pub struct GenerationOptions<'a> {
 /// stays as the spare output the next build completes).
 #[derive(Debug)]
 pub struct Generation {
-    paths: OutputPaths,
+    pub(crate) paths: OutputPaths,
     all: bool,
-    previous: Manifest,
-    current: Manifest,
-    staged: HashSet<String>,
-    failed: usize,
-    unsettled: bool,
+    pub(crate) previous: Manifest,
+    pub(crate) current: Manifest,
+    pub(crate) staged: HashSet<String>,
+    pub(crate) failed: usize,
+    pub(crate) unsettled: bool,
 }
 
 impl Generation {
@@ -60,8 +63,22 @@ impl Generation {
         options: GenerationOptions<'_>,
         reports: &mut Vec<Report>,
     ) -> Result<Generation, Problem> {
-        let _ = (paths, options, reports);
-        todo!("wave 1: port begin_generation and finish_interrupted_commits")
+        finish_interrupted_commits(&paths.doctrees, options.budget, reports)?;
+        abandon_paths(&paths);
+        // Every commit is settled, so no stage file is in use: those a killed build
+        // left in the doctrees folder go. Those in the next folder go when the commit
+        // completes it.
+        gd_host::remove_stages(&paths.doctrees);
+        let previous = Manifest::load(&paths.manifest, options.budget)?;
+        Ok(Generation {
+            paths,
+            all: options.all,
+            previous,
+            current: Manifest::default(),
+            staged: HashSet::new(),
+            failed: 0,
+            unsettled: false,
+        })
     }
 
     /// The paths of this generation.
@@ -81,8 +98,23 @@ impl Generation {
         inputs: Digest,
         answer: impl Fn(&Lookup) -> Digest,
     ) -> Option<&OutputRecord> {
-        let _ = (key, inputs, answer);
-        todo!("wave 1: port reuse_unit with per-lookup answer digests")
+        if self.all {
+            return None;
+        }
+        let old = self.previous.units.get(key)?;
+        // A zero digest marks a unit an unreadable journal left untrusted.
+        if old.inputs != inputs || old.inputs == Digest::default() {
+            return None;
+        }
+        if old.lookups.iter().any(|(lookup, digest)| answer(lookup) != *digest) {
+            return None;
+        }
+        if old.files.iter().any(|f| !self.paths.out_dir.join(f).is_file()) {
+            return None;
+        }
+        let kept = old.clone();
+        self.current.units.insert(key.to_string(), kept);
+        self.current.units.get(key)
     }
 
     /// Starts writing the unit `key`: the files it emits are recorded for it. Finish
@@ -106,9 +138,107 @@ impl Generation {
     /// The files a unit of this generation, or of the previous one, already makes:
     /// the paths a plugin asset must not take (case-insensitively, or as a folder).
     pub fn taken_path(&self, rel: &str) -> Option<&str> {
-        let _ = rel;
-        todo!("wave 1: port plugin_asset_taken")
+        let units = self.current.units.values().chain(self.previous.units.values());
+        let mut files = units.flat_map(|unit| unit.files.iter());
+        files.find(|f| paths_conflict(f, rel)).map(String::as_str)
     }
+
+    /// Writes a file of this build into the next folder. The next folder is the spare
+    /// output, so a file or folder of an earlier output may be in the way, or a folder
+    /// a user made read-only: then the folders on the way are made writable, the way
+    /// is cleared (`clear_way`), and the file written again.
+    fn write_staged(&self, rel: &str, data: &[u8]) -> Result<(), Problem> {
+        let path = self.paths.next.join(rel);
+        if gd_host::write_unsynced(&path, data).is_ok() {
+            return Ok(());
+        }
+        let mut folder = path.parent();
+        while let Some(dir) = folder {
+            if gd_host::path_type(dir).ok().flatten() == Some(PathKind::Folder) {
+                make_writable(dir);
+            }
+            if dir == self.paths.next {
+                break;
+            }
+            folder = dir.parent();
+        }
+        self.clear_way(rel)?;
+        gd_host::write_unsynced(&path, data)
+    }
+
+    /// Makes `rel` in the next folder free for a file of this build: every folder on
+    /// the way is a folder, and nothing is at `rel`. What is removed is stale, from an
+    /// earlier output; only a file or folder this build wrote there is a conflict.
+    fn clear_way(&self, rel: &str) -> Result<PathBuf, Problem> {
+        let next = &self.paths.next;
+        let staged = next.join(rel);
+        for (i, _) in rel.match_indices('/') {
+            let folder = next.join(&rel[..i]);
+            let kind =
+                gd_host::path_type(&folder).map_err(|e| gd_host::io_problem(&folder, &e))?;
+            match kind {
+                None => break,
+                Some(PathKind::Folder) => continue,
+                Some(kind) => {
+                    if self.staged.contains(&rel[..i]) {
+                        return Err(self.written_twice(&rel[..i]));
+                    }
+                    remove_spare(&folder, kind).map_err(|e| gd_host::io_problem(&folder, &e))?;
+                    break;
+                }
+            }
+        }
+        if let Some(parent) = staged.parent() {
+            std::fs::create_dir_all(parent).map_err(|e| gd_host::io_problem(parent, &e))?;
+        }
+        let kind = gd_host::path_type(&staged).map_err(|e| gd_host::io_problem(&staged, &e))?;
+        if let Some(kind) = kind {
+            let below = |other: &String| {
+                other.len() > rel.len()
+                    && other.starts_with(rel)
+                    && other[rel.len()..].starts_with('/')
+            };
+            if kind == PathKind::Folder && self.staged.iter().any(below) {
+                return Err(self.written_twice(rel));
+            }
+            remove_spare(&staged, kind).map_err(|e| gd_host::io_problem(&staged, &e))?;
+        }
+        Ok(staged)
+    }
+
+    fn written_twice(&self, rel: &str) -> Problem {
+        Problem::new(
+            "build.output",
+            "A FILE AND A FOLDER AT THE SAME PATH",
+            &self.paths.out_dir.join(rel).display().to_string(),
+            format!("This build writes a file at {rel} and files below it."),
+            "Rename one of them: a page, and a file or folder copied by html_static_path or \
+             html_extra_path, share the path.",
+            1,
+        )
+    }
+
+    fn outside_problem(&self, rel: &str) -> Problem {
+        Problem::new(
+            "build.output",
+            "OUTPUT OUTSIDE THE OUTPUT FOLDER",
+            rel,
+            format!("A file would be written outside {}.", self.paths.out_dir.display()),
+            "Report this as a Guidedog bug, with the command you ran and the output of \
+             guidedog --version.",
+            5,
+        )
+    }
+}
+
+/// Whether two paths of the output name the same file, ignoring case, or one is a
+/// folder of the other.
+fn paths_conflict(a: &str, b: &str) -> bool {
+    let (a, b) = (a.to_lowercase(), b.to_lowercase());
+    let (shorter, longer) = if a.len() <= b.len() { (&a, &b) } else { (&b, &a) };
+    longer
+        .strip_prefix(shorter.as_str())
+        .is_some_and(|rest| rest.is_empty() || rest.starts_with('/'))
 }
 
 /// The record a finished unit gives: everything but its files, which it emitted.
@@ -140,8 +270,20 @@ impl Unit<'_> {
     /// chunks, never read whole. Others go to the next folder, unflushed (the commit
     /// flushes them).
     pub fn emit(&mut self, rel: &str, data: &[u8]) -> Result<(), Problem> {
-        let _ = (rel, data, &self.generation, &self.key, &mut self.files);
-        todo!("wave 1: port emit and write_staged")
+        let rel = self.file_path(rel)?;
+        let g = &mut *self.generation;
+        let current = if g.staged.contains(&rel) {
+            g.paths.next.join(&rel)
+        } else {
+            g.paths.out_dir.join(&rel)
+        };
+        let unchanged = gd_host::same_contents(&current, data);
+        self.files.push(rel.clone());
+        if unchanged {
+            return Ok(());
+        }
+        g.staged.insert(rel.clone());
+        g.write_staged(&rel, data) // flushed by the commit.
     }
 
     /// Writes a text file of the unit, as [`Unit::emit`].
@@ -151,8 +293,9 @@ impl Unit<'_> {
 
     /// Copies the file `from` into the unit at `rel`, read within `budget`.
     pub fn emit_copy(&mut self, from: &Path, rel: &str, budget: &Budget) -> Result<(), Problem> {
-        let _ = (from, rel, budget);
-        todo!("wave 1: port emit_copy")
+        let ledger = Ledger::new(budget);
+        let data = gd_host::read_file(from, Some(&ledger), usize::MAX)?;
+        self.emit(rel, &data)
     }
 
     /// Copies the folder `from` into the unit at `rel`, leaving out hidden names. A
@@ -167,35 +310,98 @@ impl Unit<'_> {
         budget: &Budget,
         reports: &mut Vec<Report>,
     ) -> Result<(), Problem> {
-        let _ = (from, rel, roots, budget, reports);
-        todo!("wave 1: port emit_tree")
+        if !from.is_dir() {
+            return Ok(());
+        }
+        let why = gd_host::confinement(roots, from);
+        if let Some(w) =
+            gd_conf::unread_warning("build.output", "FOLDER NOT COPIED", from, "folder", why)
+        {
+            reports.push(w);
+            return Ok(());
+        }
+        // A work list of (folder, its path in the unit), depth first in name order.
+        let mut pending = vec![(from.to_path_buf(), rel.to_string())];
+        while let Some((dir, target)) = pending.pop() {
+            let mut entries =
+                gd_host::list_folder(&dir).map_err(|e| gd_host::io_problem(&dir, &e))?;
+            entries.sort_by(|a, b| a.name.cmp(&b.name));
+            let mut folders = Vec::new();
+            for e in entries {
+                let name = e.name.to_string_lossy();
+                if name.starts_with('.') {
+                    continue;
+                }
+                let path = dir.join(&e.name);
+                let is_dir = path.is_dir();
+                let what = if is_dir { "folder" } else { "file" };
+                let why = gd_host::confinement(roots, &path);
+                if let Some(w) =
+                    gd_conf::unread_warning("build.output", "FILE NOT COPIED", &path, what, why)
+                {
+                    reports.push(w);
+                    continue;
+                }
+                let inner =
+                    if target.is_empty() { name.into_owned() } else { format!("{target}/{name}") };
+                if is_dir {
+                    folders.push((path, inner));
+                } else {
+                    self.emit_copy(&path, &inner, budget)?;
+                }
+            }
+            pending.extend(folders.into_iter().rev());
+        }
+        Ok(())
     }
 
     /// Where a producer that writes its own file (Typst) writes the file `rel` of the
     /// unit: a fresh path in the next folder with nothing there, which never reaches a
     /// file the spare output shares with the output.
     pub fn stage_path(&mut self, rel: &str) -> Result<PathBuf, Problem> {
-        let _ = rel;
-        todo!("wave 1: port stage_path and clear_way")
+        let rel = self.file_path(rel)?;
+        let staged = self.generation.clear_way(&rel)?;
+        self.files.push(rel.clone());
+        self.generation.staged.insert(rel);
+        Ok(staged)
     }
 
     /// Records a file of the output that is already as this generation would write it
     /// (a message template that differs only in its creation date).
     pub fn keep_file(&mut self, rel: &str) {
-        self.files.push(rel.to_string());
+        if let Some(rel) = unit_path(rel) {
+            self.files.push(rel);
+        }
+    }
+
+    /// The files this unit, or another of its generation or the previous one, already
+    /// makes that `rel` would conflict with, as [`Generation::taken_path`].
+    pub fn taken_path(&self, rel: &str) -> Option<&str> {
+        let own = self.files.iter().find(|f| paths_conflict(f, rel)).map(String::as_str);
+        own.or_else(|| self.generation.taken_path(rel))
     }
 
     /// Records the unit as written, with its record.
     pub fn finish(mut self, record: UnitRecord) {
-        let _ = record;
         self.done = true;
-        todo!("wave 1: port end_unit")
+        let unit = OutputRecord {
+            inputs: record.inputs,
+            files: std::mem::take(&mut self.files),
+            assets: record.assets,
+            lookups: record.lookups,
+            reports: record.reports,
+        };
+        self.generation.current.units.insert(std::mem::take(&mut self.key), unit);
     }
 
     /// Records the unit as not written: the generation will not be published.
     pub fn fail(mut self) {
         self.done = true;
         self.generation.failed += 1;
+    }
+
+    fn file_path(&self, rel: &str) -> Result<String, Problem> {
+        unit_path(rel).ok_or_else(|| self.generation.outside_problem(rel))
     }
 }
 

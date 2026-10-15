@@ -26,17 +26,24 @@
 //! # }
 //! ```
 //!
-//! Wave 0 of the port: the types and signatures are final; the bodies are ported from
-//! generation.odin, commit.odin, publish.odin and build_paths.odin in wave 1.
+//! Ported from generation.odin, commit.odin, publish.odin, build_paths.odin, remove.odin
+//! and `clean` of build.odin; docs/manual/internals/publication.rst explains the commit.
 
-// Wave 0 holds signatures only; the fields are used once wave 1 ports the bodies.
-#![allow(dead_code)]
+#![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod clean;
 mod commit;
 mod generation;
+mod hook;
+mod journal;
 mod manifest;
+mod next;
 mod paths;
+mod publish;
+mod tree;
+
+#[cfg(test)]
+mod tests;
 
 pub use clean::clean;
 pub use commit::{

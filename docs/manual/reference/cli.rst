@@ -247,9 +247,9 @@ Builders:
    * - ``--memory=ram``
      - At the budget, stop without asking. Without it, a terminal asks whether to raise
        the budget or stop; a build without a terminal stops. ``--memory=disk`` and
-       ``--disk-budget`` (working memory on disk, in the Odin implementation) are
-       refused with ``cli.memory-disk``. This version keeps working memory in memory,
-       bounded by the budget, so we raise ``--budget`` instead.
+       ``--disk-budget`` (working memory on disk) are refused with ``cli.memory-disk``.
+       Working memory stays in memory, bounded by the budget, so we raise ``--budget``
+       instead.
    * - ``--max-depth=N``
      - How deep content may nest (default: ``256``).
    * - ``--max-nodes=N``

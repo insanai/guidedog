@@ -164,9 +164,7 @@ files, and PDF output the host holds, reserved before they are read. Each worker
 reuses one workspace. The retained project graph and catalogs still consume memory
 as the project grows. Reading workers coordinate admission.
 A refused request reports the failing operation and a budget that fits.
-``GUIDEDOG_AVAILABLE_MIB`` can supply known machine headroom. The Odin
-implementation's disk-backed working memory (``--memory=disk``, ``--disk-budget``)
-is not part of the Rust implementation.
+``GUIDEDOG_AVAILABLE_MIB`` can supply known machine headroom. Working memory always stays in memory. There is no disk-backed mode, and ``--memory=disk`` and ``--disk-budget`` are refused.
 
 ``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document work.
 Changing a limit invalidates cached reading and output.

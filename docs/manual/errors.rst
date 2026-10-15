@@ -109,9 +109,7 @@ Reaching a bound is a report, not a crash. There are two kinds:
 
 A document's own size is bounded separately, by ``--max-nodes``, ``--max-depth`` and
 ``--stack-kib``. An oversized document is reported with the limit it reached. See
-:doc:`internals/memory` for how the budget and these limits divide the work. The Odin
-implementation could also keep working memory on disk (``--memory=disk``). The Rust
-implementation bounds a conversion by its limits instead, so there is no disk mode.
+:doc:`internals/memory` for how the budget and these limits divide the work. A conversion is bounded by these limits, so there is no mode that keeps working memory on disk.
 
 Both end with status 3.
 

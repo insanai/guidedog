@@ -149,7 +149,10 @@ fn refuses_unsafe_paths_methods_and_large_requests() {
     assert!(post.contains("Allow: GET, HEAD\r\n"));
     let long = format!("GET / HTTP/1.1\r\nX: {}\r\n\r\n", "a".repeat(4000));
     let large = exchange(server.address, long.as_bytes());
-    assert!(large.is_empty() || large.starts_with("HTTP/1.1 431"), "{large}");
+    // Closing an oversized request with unread bytes can reset TCP before the
+    // complete status line arrives (notably on macOS). Accept its matching prefix.
+    let status = "HTTP/1.1 431";
+    assert!(large.starts_with(status) || status.starts_with(&large), "{large}");
 }
 
 #[cfg(unix)]

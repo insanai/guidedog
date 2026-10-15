@@ -17,7 +17,7 @@ explicit Accepted, Live and Unknown outcomes prevent an uncertain push from bein
 reported as a verified deployment. Device login accepts an explicit registered
 client ID; a maintainer-operated app is a deployment decision, not shipped authority.
 
-GDS 0009 provides an ordinary Odin descriptor, explicit owner lifetimes, frozen
+GDS 0009 provides an ordinary typed descriptor, explicit owner lifetimes, frozen
 snapshots, bounded process requests, pinned machine registrations and discovery
 metadata. The registry is not an installer. Third-party admission, automatic
 installation and a stable dynamic-library ABI remain outside the accepted scope.
@@ -46,10 +46,10 @@ five packaged platforms, native credential-store checks and twelve large-manual
 builds. It links the candidate, release, Homebrew and publication runs. These are
 observed qualification results, not a proof against every possible native fault.
 
-The relevant implementation lives in ``lib/plugins``, ``lib/project/plugins.odin``,
-``lib/pages``, ``lib/git`` and the command entry points. The worked build plugin
-is ``examples/build-plugin``; the publishing examples are ``examples/publisher``
-and ``examples/pages-publisher``. The manual distinguishes the services and their
+The relevant implementation lives in ``crates/gd-plugins``, ``crates/gd-env``,
+``crates/gd-pages``, ``crates/gd-git`` and the command entry points. The worked build
+plugin is ``crates/gd-plugins/examples/build_plugin``; the publishing example is
+``crates/gd-plugins/examples/publisher.rs``. The manual distinguishes the services and their
 ownership, diagnostics and cache contracts.
 
 Record 0002 remains published

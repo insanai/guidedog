@@ -7,7 +7,7 @@ Scope and decision
 The review covers the discussion library, its command layer, both renderers, the
 shared TOML reader, and GDS 0007. The reusable library and renderer boundary are sound.
 The catalog's process governs metadata, transitions, numbering, and validation before
-publication. The implementation stays in Odin and does not execute Python.
+publication. The implementation does not execute Python.
 
 The published 0.2.2 release passed its qualification run. Fresh review still found
 faults outside those tests. The corrections shipped in Guidedog 0.2.3 after full
@@ -51,7 +51,7 @@ Verification
 --------------
 
 Heavy checks ran in an isolated checkout on ``insan@10.175.52.18``. The checkout uses
-the pinned Odin toolchain and the existing static native dependencies. Baseline
+the pinned toolchain and the existing static native dependencies. Baseline
 regression tests failed before the fixes. The deep-nesting baseline ended with status
 139; the fixed parser returns a line-numbered diagnostic instead.
 
@@ -75,7 +75,7 @@ initialization, drafting, promotion, a lifecycle decision, HTML, and PDF.
 Memory measurement
 --------------------
 
-A temporary Odin generator made 2,000 records of about 100 KB, plus the process draft.
+A temporary generator made 2,000 records of about 100 KB, plus the process draft.
 The complete catalog contains about 200 MB of source. GNU ``time -v`` measured the
 published Linux amd64 0.2.2 ``dsc check`` at 8,624 KiB peak RSS and 0.09 seconds elapsed.
 The development binary used 8,640 KiB and 0.16 seconds. Both checked 2,001 records with

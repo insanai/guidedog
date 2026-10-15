@@ -1,4 +1,4 @@
-//! sphinx.ext.autodoc (autodoc.odin). The reader hands each autodoc directive to this
+//! sphinx.ext.autodoc. The reader hands each autodoc directive to this
 //! host, which finds the object in the Python source below `autodoc_source_paths`
 //! (gd-pyscan, never running it) and answers with the reStructuredText autodoc would
 //! generate (gd-autodoc). Every Python file read is a dependency of the document, so

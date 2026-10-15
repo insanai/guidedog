@@ -1,4 +1,4 @@
-//! The symbols of one read document (collect.odin): what other documents can link to,
+//! The symbols of one read document: what other documents can link to,
 //! what it links to, its outline, and its words for the search index. Anchors come from
 //! the table renderers build (`guidedoc::build_anchors`), so an id recorded here is the
 //! id on the published page.

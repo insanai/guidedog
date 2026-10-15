@@ -1,4 +1,4 @@
-//! Rust references (new in the Rust port): `:rust:struct:`, `:rust:fn:`, ... resolve
+//! Rust references: `:rust:struct:`, `:rust:fn:`, ... resolve
 //! objects of the `rust` domain by their full `::` path, as gd-rustdoc writes them
 //! (`my_crate::parser::Parser::new`).
 //!

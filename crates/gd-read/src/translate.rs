@@ -1,4 +1,4 @@
-//! A document's translation while it is read (the `Translating` hook of intl.odin):
+//! A document's translation while it is read:
 //! gd-i18n's pass with the catalog of the document's text domain (gd-intl), and
 //! localized figures (`figure_language_filename`).
 

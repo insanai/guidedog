@@ -1,4 +1,4 @@
-//! Bringing the environment up to date (read.odin): documents that are new, changed, or
+//! Bringing the environment up to date: documents that are new, changed, or
 //! whose dependencies changed are parsed into objects and their symbols collected; the
 //! rest keep what the previous build recorded. Documents that no longer exist drop out.
 //!

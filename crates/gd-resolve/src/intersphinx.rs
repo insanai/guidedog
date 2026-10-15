@@ -1,4 +1,4 @@
-//! `sphinx.ext.intersphinx`: other projects' inventories (intersphinx.odin).
+//! `sphinx.ext.intersphinx`: other projects' inventories.
 //!
 //! Inventories are fetched when a build starts and kept in
 //! `<build>/.doctrees/__intersphinx_cache__/<name>_objects.inv`, reused for

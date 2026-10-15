@@ -1,4 +1,4 @@
-//! Odin references (odin_xref.odin).
+//! References to objects of the `odin` domain.
 
 use crate::lookups::Look;
 use crate::xref::Resolved;

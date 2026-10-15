@@ -1,4 +1,4 @@
-//! The C++ domain's symbol tree (cpp_symbols.odin, cpp_lookup.odin).
+//! The C++ domain's symbol tree.
 //!
 //! Every declaration's path becomes a chain of symbols from the root; template and
 //! function parameters are symbols below it; an enumerator of an unscoped enum is

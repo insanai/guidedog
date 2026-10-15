@@ -1,4 +1,4 @@
-//! Looking C++ names up in the symbol tree, as Sphinx's `Symbol` does (cpp_lookup.odin):
+//! Looking C++ names up in the symbol tree, as Sphinx's `Symbol` does:
 //! candidates are a symbol itself (`match_self`), its children (and those of anonymous
 //! children), and those of the signatures above it in its directive; a name matches by
 //! its identifier, its template parameters (only when asked for, unless shorthand), and

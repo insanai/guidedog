@@ -1,5 +1,5 @@
-//! The Python module index, py-modindex.html, as Sphinx's `PythonModuleIndex` builds it
-//! (the model of modindex.odin); gd-site writes the page.
+//! The Python module index, py-modindex.html, as Sphinx's `PythonModuleIndex` builds it;
+//! gd-site writes the page.
 
 use gd_env::{DocId, ModuleInfo};
 

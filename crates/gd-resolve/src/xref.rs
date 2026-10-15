@@ -1,6 +1,5 @@
-//! Cross-reference resolution without the document tree (the resolution half of
-//! xref.odin, odin_xref.odin, cpp_lookup.odin, intersphinx_resolve.odin, and the new
-//! rust_xref), and the answers that verify a page's trace (lookups.odin).
+//! Cross-reference resolution without the document tree (local, odin_xref, cpp_lookup,
+//! external and rust_xref), and the answers that verify a page's trace.
 //!
 //! gd-link walks a document's tree and asks [`resolve_xref`] for each `pending_xref`;
 //! every table lookup made on the way is noted in the page's `Trace`, and the next

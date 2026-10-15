@@ -1,5 +1,5 @@
 //! The project tables: every document's symbols joined, its toctrees resolved, its
-//! sections and items numbered (resolve.odin, numbering.odin, cpp_symbols.odin).
+//! sections and items numbered.
 
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;

@@ -1,4 +1,4 @@
-//! Section and figure numbers (numbering.odin).
+//! Section and figure numbers.
 //!
 //! Section numbers follow Sphinx's `assign_section_numbers`. Each `:numbered:` toctree
 //! starts a numbering at 1. The documents it lists are numbered in turn, and within a

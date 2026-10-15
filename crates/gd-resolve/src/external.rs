@@ -1,4 +1,4 @@
-//! References resolved through other projects' inventories (intersphinx_resolve.odin),
+//! References resolved through other projects' inventories,
 //! as Sphinx's `intersphinx/_resolve.py`: a reference this project cannot resolve is
 //! looked up in the merged inventory by the object types its role may name, except the
 //! disabled ones; then, if its target is `name:target` and `name` is an inventory, in

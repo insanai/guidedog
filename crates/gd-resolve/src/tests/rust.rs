@@ -1,4 +1,4 @@
-//! Rust references (new): full `::` paths, the current module first, `crate::`,
+//! Rust references: full `::` paths, the current module first, `crate::`,
 //! `self::` and `super::`, suffix search, inventories, and objects.inv priorities.
 
 use gd_env::LookupKind;

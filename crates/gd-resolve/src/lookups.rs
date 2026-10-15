@@ -1,4 +1,4 @@
-//! Table lookups noted in a page's trace, and their answers (lookups.odin).
+//! Table lookups noted in a page's trace, and their answers.
 //!
 //! A page's references look things up in the project's tables and folders: labels,
 //! terms, objects, documents, files and images. Each lookup is noted in the page's
@@ -144,7 +144,7 @@ fn odin_role_takes(role: &str, objtype: &str) -> bool {
     }
 }
 
-/// What every document's output shares (html_builder.odin's `document_settings`): the
+/// What every document's output shares (`document_settings`): the
 /// output settings, the translations and reading settings (`Environment::settings`), the
 /// inventories, every document's name and title (a page may test whether any page
 /// exists), and in toctree order, per document: its name, anchor key, parent, number of

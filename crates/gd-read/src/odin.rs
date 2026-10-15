@@ -1,4 +1,4 @@
-//! The odin domain's generating directives and API pages (odin.odin). The domain is
+//! The odin domain's generating directives and API pages. The domain is
 //! always on; `odin:autopackage` and the other generating directives read Odin source
 //! below `odin_autoapi_dirs` and `odin_collections` (gd-odindoc, which parses without
 //! the compiler) and answer with the reStructuredText the domain reads. Every Odin file

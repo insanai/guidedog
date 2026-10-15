@@ -1,5 +1,4 @@
-//! Toctrees resolved into project documents, generated pages and URLs (the toctree part
-//! of resolve.odin and odin_toctree_entry of odin.odin).
+//! Toctrees resolved into project documents, generated pages and URLs.
 
 use gd_env::{DocId, DocInfo, ToctreeInfo};
 

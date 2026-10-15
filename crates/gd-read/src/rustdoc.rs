@@ -1,4 +1,4 @@
-//! The rust domain's API pages (new in the Rust port): each crate of
+//! The rust domain's API pages: each crate of
 //! `rust_autoapi_crates` is read by gd-rustdoc (tree-sitter, nothing compiled) into a
 //! page per documented module, `<rust_autoapi_root>/<crate>/<module>`, and an index,
 //! `<rust_autoapi_root>/index`. The pages are generated documents whose dependencies

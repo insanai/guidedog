@@ -1,10 +1,9 @@
 # gd-read cheat sheet
 
 Incremental, parallel reading of a Guidedog project's documents, and the hosts of the
-generating directives and API pages. Ported from `guidedog_old/lib/project` (read.odin,
-collect.odin, the search-text half of search.odin, autodoc.odin, odin.odin, the
-`Translating` hook of intl.odin, and the `plugin_sources` call of plugins.odin), plus the
-Rust API pages (new).
+generating directives and API pages: reading and collecting symbols, search text,
+Python autodoc, the odin domain's directives and pages, translation while reading, the
+sources build plugins add, and the Rust API pages.
 
 ```rust
 let mut reports = Vec::new();
@@ -35,22 +34,21 @@ plugin codes, every reader and autodoc code (`autodoc.*` with Sphinx's categorie
 `odin.autodoc.paths`), `rust.autodoc.*` and `odin.autoapi.clash` /
 `rust.autoapi.clash` from `api_sources`, `build.object.stale`.
 
-## Redesign notes
+## Design notes
 
-- **Each source is read once.** Odin read every source for its digest on the main
-  thread, then again on the thread that parsed it. Here the thread that takes a document
-  reads it, digests it, compares with the previous `DocInfo` and parses only when it
-  changed. Results are placed by the source's position, so the environment is the same
-  whatever the scheduling (`threads_do_not_change_the_environment`).
+- **Each source is read once.** The thread that takes a document reads it, digests
+  it, compares with the previous `DocInfo` and parses only when it changed. Results
+  are placed by the source's position, so the environment is the same whatever the
+  scheduling (`threads_do_not_change_the_environment`).
 - **Workers own their workspace** (`gd_host::Session`), taken from `gd_host::run_workers`;
-  each joins the budget while it reads. No arenas, mutex allocators or meters.
+  each joins the budget while it reads.
 - **Reused documents are moved**, not copied, out of the previous environment, with
   `written` cleared (only this build's objects are flushed at commit). Reuse also checks
   that the markup, path and generated flag are unchanged.
 - **Dependencies hash file bytes**, as `gd_env::dependencies_changed` does: an included
   file's digest is its bytes' (not the decoded text's), so a file with a byte order mark
   is not read again every build.
-- **Providers are traits.** The Python and Odin hosts implement
+- **Providers are traits.** The Python and Odin source hosts implement
   `guidedoc_sphinx::AutodocProvider`. Each host keeps one gd-autodoc session (Python) or
   gd-odindoc project (Odin) per document behind a `Mutex`, made at the first directive:
   a module is parsed once per document, not once per directive, and the session's merged
@@ -60,8 +58,8 @@ plugin codes, every reader and autodoc code (`autodoc.*` with Sphinx's categorie
 - **Static messages.** The engine reports `&'static` messages; gd-autodoc and gd-odindoc
   messages are reported with their code and title from a table (checked against those
   crates' sources by a test) and their text and hint as arguments, so braces in them are
-  never read as a template (Odin's `safe_braces`).
-- **Rust API pages** (new): `rust_autoapi_crates` are read by gd-rustdoc into generated
+  never read as a template.
+- **Rust API pages**: `rust_autoapi_crates` are read by gd-rustdoc into generated
   pages `<root>/<crate>/<module>` and `<root>/index` (one crate's index, or every crate's
   under "Rust API reference"); each page depends on every file its crate was made from
   (`gd_rustdoc::Crate::inputs`, digests of their bytes), so editing the crate reads its
@@ -81,5 +79,5 @@ plugin codes, every reader and autodoc code (`autodoc.*` with Sphinx's categorie
   catalog and catalog files as dependencies; localized figures check the source folder.
 - **Search words** are written only when a document has some (`DocInfo::search` is
   `None` otherwise).
-- Not ported: the budget metering of the Odin package listing (packages are listed with
-  owned memory), the collector's anchor-table retries (`build_anchors` cannot fail).
+- Odin packages are listed with owned memory, outside the budget, and the collector
+  builds its anchor table in one call (`build_anchors` cannot fail).

@@ -1,10 +1,8 @@
 # gd-resolve cheat sheet
 
 The project tables and cross-reference resolution of a build, without the document
-tree. Ported from `guidedog_old/lib/project` (resolve.odin, numbering.odin,
-lookups.odin, cpp_symbols.odin, cpp_lookup.odin, odin_xref.odin, intersphinx.odin,
-intersphinx_resolve.odin, inventory.odin, the resolution half of xref.odin, the data
-models of genindex.odin and modindex.odin) plus the new rust domain resolution.
+tree: toctrees, numbering, labels and objects, the C++ symbol tree, intersphinx, the
+index models and the resolution of every domain's references.
 
 ```rust
 let tables = gd_resolve::resolve(&config, &env, &ui, &mut reports);
@@ -33,19 +31,19 @@ Warning codes: `build.toctree.{missing,duplicate,untitled,cycle,orphan,renumbere
 references `build.xref.unresolved`, `build.xref.external`, `build.xref.anchor`,
 `build.numref`, `build.cpp.role`.
 
-## Redesign notes
+## Design notes
 
 - **AST-free**: resolution takes an `XrefQuery` (what gd-link reads off a
-  `pending_xref` node) instead of a `gd.View` and node id, so gd-link owns the tree walk
+  `pending_xref` node) instead of a tree view and node id, so gd-link owns the tree walk
   and gd-resolve the tables.
 - **Ids**: `DocId(u32)` and `CppSymbolId(u32)` newtypes with `Option` for "none"
-  (was `NO_DOC` and `-1`).
+  instead of sentinel values.
 - **Traces**: every table lookup is noted as a typed `gd_env::Lookup`;
   `lookup_answer` returns the answer's `Digest`, stored next to the key in the manifest.
-- **Builders are a trait** (`OutputBuilder`) over a borrowed `BuildView`, replacing the
-  `^Build` every Odin builder procedure took.
-- **The reader's context is data**: what Odin read off node attributes (`js:module`,
-  `c:parent`, `std:program`, `odin:package`, `cpp:name`, ...) arrives as
+- **Builders are a trait** (`OutputBuilder`) over a borrowed `BuildView`, so every
+  builder reads the same tables and none can change them.
+- **The reader's context is data**: the node attributes a reference depends on
+  (`js:module`, `c:parent`, `std:program`, `odin:package`, `cpp:name`, ...) arrive as
   `XrefQuery::context` pairs, so gd-link copies a node's custom attributes and
   gd-resolve never sees the tree. Warnings about references that still resolve
   (numref without a number, heading anchor, C++ role) come back in
@@ -55,21 +53,20 @@ references `build.xref.unresolved`, `build.xref.external`, `build.xref.anchor`,
   documents, terms, objects of the role's types, relative to the current module too).
   Suggestions are computed only when the reference warns. A missing toctree entry's
   hint suggests a docname too.
-- **Answers are digests** of what the reference shows: besides Odin's fields, an
-  object's alias flag and a section label's number (a `:numref:` to a section changes
-  when renumbering does), so `Generation::reuse` misses no change. Suggestions in
-  warnings are not part of any answer: a new near name does not re-link a page.
+- **Answers are digests** of what the reference shows: besides an object's fields, its
+  alias flag and a section label's number (a `:numref:` to a section changes when
+  renumbering does), so `Generation::reuse` misses no change. Suggestions in warnings
+  are not part of any answer: a new near name does not re-link a page.
 - **No recursion on input**: the toctree walk keeps its own stack; section numbering
-  stops nesting at 256 documents deep, figure numbering at 64 (as Odin).
-- **Intersphinx**: inventories are fetched with gd-fetch and cached with a `.base` file
-  as in Odin; `--untrusted` (`network: false`) reads remote inventories only from the
-  cache, at any age, and local ones only inside `readable_roots`. The budget is charged
-  about four times an inventory's bytes while loading (no longer kept charged for the
-  build). `gd_inventory::Item` has no project, so `Intersphinx::origin` finds the
-  inventory an item of the merged one came from, for the "(in Python v3.12)" tooltip.
-- **Images**: `BuildView::image_file` (was link.odin's `image_file`) lives here, as an
-  `Image` lookup's answer needs it.
-- **Rust references (new)**: `:rust:*:` roles resolve full `::` paths, the current
+  stops nesting at 256 documents deep, figure numbering at 64.
+- **Intersphinx**: inventories are fetched with gd-fetch and cached with a `.base` file;
+  `--untrusted` (`network: false`) reads remote inventories only from the cache, at any
+  age, and local ones only inside `readable_roots`. The budget is charged about four
+  times an inventory's bytes while loading and released once it is loaded.
+  `gd_inventory::Item` has no project, so `Intersphinx::origin` finds the inventory an
+  item of the merged one came from, for the "(in Python v3.12)" tooltip.
+- **Images**: `BuildView::image_file` lives here, as an `Image` lookup's answer needs it.
+- **Rust references**: `:rust:*:` roles resolve full `::` paths, the current
   module first; `~` and a leading `.` behave as for Python; `rust:any` falls back to
   intersphinx; inventory priorities are 0 for modules and 1 for other objects.
   Details: the module's enclosing modules are tried outward after the module itself;

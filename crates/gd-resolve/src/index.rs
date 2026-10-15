@@ -1,6 +1,5 @@
-//! The data of the general index and the module index (the models of genindex.odin
-//! and modindex.odin), and objects.inv (inventory.odin). The pages are written by
-//! gd-site; the PDF book's index by gd-book.
+//! The data of the general index and the module index, and objects.inv. The pages are
+//! written by gd-site; the PDF book's index by gd-book.
 
 use std::collections::HashMap;
 

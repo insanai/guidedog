@@ -83,32 +83,30 @@ Directives: `odin:autopackage`, `odin:autoproc`, `odin:autoprocgroup`, `odin:aut
 `odin.autodoc.directive`, `.option`, `.order`, `.package`, `.object`, `.kind`, `.syntax`,
 `.nesting`, `.memory`.
 
-## Design (redesigned from the Odin version)
+## Design
 
-- **Own parser.** The Odin version used Odin's `core:odin/parser`. This crate has a port of
-  Odin's tokenizer and a declaration-level parser that reads every file-scope statement,
-  expression and type as Odin's parser does (same node spans, same comment grouping, so
-  signatures and docs match byte for byte) but skips procedure bodies. Expressions are
-  flat nodes in a `Vec` indexed by `NodeId`, not a pointer tree.
-- **Nesting limit instead of a stack estimate.** The parser counts its recursion and gives
-  a file up past `MAX_NESTING` (160 levels), reporting `odin.autodoc.nesting`. Odin's
-  `PARSE_STACK_BYTES` estimate is gone; long flat chains (`a + b + ...`, `x || y || ...`)
-  and anything inside procedure bodies never count, so files the old estimate refused
-  for deep `else if` chains in bodies are now read. `when` conditions are still followed
-  only `MAX_WHEN_DEPTH` (64) deep.
-- **`"""` strings.** The tokenizer reads multi-line `"""` strings, which Odin's
-  `core:odin` tokenizer predates; files using them (core's `cpp-gen.odin`) are documented
-  instead of refused.
-- **No arenas or allocation budgets.** Owned `String`s and `Vec`s replace the arena and
-  `File_Reader.reserve`; the parse-memory bound is replaced by `Limits::max_file_bytes`
-  (message `odin.autodoc.memory`).
-- **Traits and enums for callbacks and strings.** `FileReader` replaces the procedure
-  struct; `MemberOrder` replaces the `member_order` string (directive options are still
-  parsed from strings); `Targets` implements `!` for "every other supported target".
+- **Own parser.** The crate needs no Odin compiler. It has a port of the tokenizer of
+  Odin's `core:odin` library and a declaration-level parser that reads every file-scope
+  statement, expression and type as `core:odin/parser` does (same node spans, same
+  comment grouping, so signatures and docs match the compiler's view byte for byte) but
+  skips procedure bodies. Expressions are flat nodes in a `Vec` indexed by `NodeId`, not
+  a pointer tree.
+- **Nesting limit, not a stack estimate.** The parser counts its recursion and gives a
+  file up past `MAX_NESTING` (160 levels), reporting `odin.autodoc.nesting`. Long flat
+  chains (`a + b + ...`, `x || y || ...`) and anything inside procedure bodies never
+  count, so deep `else if` chains in bodies are read. `when` conditions are followed only
+  `MAX_WHEN_DEPTH` (64) deep.
+- **`"""` strings.** The tokenizer reads multi-line `"""` strings, which the `core:odin`
+  tokenizer predates; files using them (core's `cpp-gen.odin`) are documented instead of
+  refused.
+- **Owned memory.** Owned `String`s and `Vec`s hold every file and node; the parse-memory
+  bound is `Limits::max_file_bytes` (message `odin.autodoc.memory`).
+- **Traits and enums for callbacks and strings.** `FileReader` reads the source files;
+  `MemberOrder` is the `member_order` setting (directive options are still parsed from
+  strings); `Targets` implements `!` for "every other supported target".
 - **Syntax errors.** Errors inside skipped procedure bodies are not counted, so
   `odin.autodoc.syntax` covers only declarations.
 
-Checked against the Odin version: `cargo run --release -p gd-odindoc --example
-odindoc_dump -- DIR [COLLECTION] OUT` over Guidedog's old `lib`, and Odin's `core`, `base`
-and `vendor` (about 560,000 lines of reST) gives the same output, except the three
-`cpp-gen.odin` files above.
+To compare runs over a large tree: `cargo run --release -p gd-odindoc --example
+odindoc_dump -- DIR [COLLECTION] OUT`. Over Odin's `core`, `base` and `vendor` (about
+560,000 lines of reST) it documents every package.

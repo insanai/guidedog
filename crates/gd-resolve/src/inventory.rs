@@ -1,4 +1,4 @@
-//! objects.inv, the inventory other projects' intersphinx reads (inventory.odin).
+//! objects.inv, the inventory other projects' intersphinx reads.
 
 use gd_env::{DocId, LabelKind, ObjectInfo};
 use gd_inventory::Item;

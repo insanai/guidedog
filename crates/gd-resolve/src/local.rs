@@ -1,6 +1,6 @@
 //! References resolved in this project's tables: documents, labels, numbers, terms,
 //! downloads, options, keywords, tokens, `any`, declared object types, and the domain
-//! objects (the resolution half of xref.odin).
+//! objects.
 
 use gd_env::{Asset, Digest, LabelKind, OutputFormat};
 

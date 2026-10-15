@@ -352,26 +352,3 @@ fn packages_are_listed_by_id() {
     assert!(core.load_package("core:fmt").is_some());
     assert!(core.load_package("fmt").is_none());
 }
-
-/// Guidedog's old Odin libraries, when the old repository is beside this one, document
-/// without messages.
-#[test]
-fn the_odin_libraries_document() {
-    let dir = concat!(env!("CARGO_MANIFEST_DIR"), "/../../../guidedog_old/lib");
-    if !std::path::Path::new(dir).is_dir() {
-        return;
-    }
-    let mut p = Project::from_dirs(vec![Root { dir: dir.into(), ..Root::default() }]);
-    let ids: Vec<String> = p.list_packages().into_iter().map(|r| r.id).collect();
-    assert!(ids.iter().any(|i| i == "core") && ids.iter().any(|i| i == "readers/sphinx"));
-    for id in ["core", "readers/sphinx", "odindoc"] {
-        let pkg = p.load_package(id).expect("loads");
-        assert!(pkg.errors == 0 && pkg.decls.len() > 20, "{id}");
-    }
-    let sphinx = p.load_package("readers/sphinx").expect("loads");
-    assert!(sphinx.imports.contains(&Import { alias: "gd".into(), id: "core".into() }));
-    let options = [("members", ""), ("undoc-members", "")];
-    let r = document(&mut p, &Config::default(), &request("odin:autopackage", "core", &options));
-    assert!(r.messages.is_empty());
-    assert!(r.lines.len() > 500);
-}

@@ -32,12 +32,7 @@ Ownership replaces handles
 A ``Workspace`` owns the node tables, the text pool, the source map, the diagnostics,
 and the output buffer of one conversion at a time. ``clear()`` empties its ``Vec`` and
 ``String`` buffers and keeps their capacity, so a worker that converts many documents
-stops growing them once they fit the largest page. The readers and renderers still
-allocate a bounded number of short-lived scratch vectors per conversion (block and inline
-item lists, anchor tables, renderer state); ``tests/integration/tests/allocations.rs``
-counts them for every reader and renderer pair and fails if a count grows or exceeds
-its recorded ceiling. Each rendering worker
-owns its own workspace; there is no shared mutable engine state and no global pool.
+stops growing them once they fit the largest page. The readers and renderers keep their working storage in the same workspace (see below), so a repeated conversion allocates nothing at all for most reader and renderer pairs. Each rendering worker owns its own workspace; there is no shared mutable engine state and no global pool.
 
 What a conversion returns borrows the workspace: ``Document<'ws>`` and the output
 ``&str`` cannot outlive the next conversion, and a stale or foreign handle is a compile
@@ -49,6 +44,44 @@ The Odin implementation planned slabs, sized arenas before a session, grew them 
 ``Capacity`` result, and paired every owner with a release call. None of that remains:
 ``Drop`` releases, and ``Vec`` growth replaces the plans. The names that were dropped are
 listed in :doc:`engine-api-map`.
+
+Working state between conversions
+---------------------------------
+
+Readers and renderers are stateless descriptors, but parsing and rendering need working storage: line tables, delimiter stacks, inline item lists, anchor tables, table layouts. We keep that storage in the workspace between conversions instead of building it afresh each time. The workspace holds a ``guidedoc::Scratch`` store, a pool of values per Rust type, and the contexts lend it out:
+
+.. code-block:: rust
+   :class: sketch
+
+   #[derive(Default)]
+   struct TextWork {
+       out: String,
+       frames: Vec<Frame>,
+   }
+
+   fn render(ctx: &mut RenderContext<'_>) -> Result<(), Fail> {
+       let mut work: TextWork = ctx.take_scratch(); // what the last render left
+       work.out.clear(); // clear, keep the capacity
+       // ... render with work ...
+       ctx.put_scratch(work); // the next render takes it again
+       Ok(())
+   }
+
+Taking a value moves it out of the store, so it borrows nothing and the adapter keeps using its context freely. A nested parse of the same reader (a directive body, a table cell) takes another value of the same type, and every value given back is kept, so each nesting level finds its own next time. Once a type's pool exists, taking and putting back do not allocate. A value that is not given back (an early return on a failure) is simply dropped; the next conversion makes a new one.
+
+Three small tools make the storage reusable:
+
+- ``Scratch::take`` and ``Scratch::put`` (``ReadContext::take_scratch``, ``RenderContext::take_scratch``) keep one struct per adapter: the HTML renderer's anchor table and walk stack, the Typst renderer's marks, the reStructuredText reader's line pools and grid tables, the resolver's name tables.
+- ``guidedoc::NameMap`` replaces ``HashMap<String, V>`` for names that are rebuilt every conversion (reference targets, link definitions, slugs, substitutions). It copies every key into one shared ``String``, so clearing it keeps the storage; a ``HashMap`` would free each key and allocate it again.
+- ``guidedoc::recycle`` keeps a buffer of borrowed values, such as ``Vec<Line<'s>>`` whose lines borrow one conversion's source, as an empty ``Vec<Line<'static>>`` between conversions. The standard library collects an emptied vector into one of a same-sized type in place, so no allocation happens.
+
+The anchor table follows the same idea: ``build_anchors_into`` rebuilds a table in the storage of the last one, and the table finds ids through an open-addressing index over its own id text rather than a map with ``String`` keys. Sorting uses ``sort_unstable``, which does not allocate, wherever the keys are distinct.
+
+``tests/integration/tests/allocations.rs`` counts the allocations of a repeated conversion for every reader and renderer pair and fails if a count grows or exceeds its recorded ceiling. Most pairs allocate nothing. The few allocations that remain are deliberate:
+
+- A pool warms up over the first conversions. Buffers lent from a pool (the text renderer's layout strings, the reStructuredText writer's inline buffers) are taken in a different order by different uses, so a buffer may still grow once in the second conversion; from the third on it fits.
+- Lossy output owns its text. When the reStructuredText writer meets something reStructuredText cannot express, such as an image inside a Markdown paragraph, it reports a note whose arguments the report owns, and it builds the substitution definition's options as owned strings. These paths are rare and bounded by the document.
+- Output that grows past the largest document seen so far allocates once more, as every ``Vec`` does. So do new sources: an included file read for this conversion is an ``Arc<str>`` that the conversion owns.
 
 Limits bound the work
 ---------------------

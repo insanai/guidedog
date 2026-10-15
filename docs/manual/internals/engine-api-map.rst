@@ -40,7 +40,7 @@ The ten idioms
    * - ``l, _ := gd.link_info(v, id)``
      - ``doc.link_info(id).unwrap_or(LinkInfo::UNRESOLVED)`` (or match the ``Option``)
    * - ``mark := gd.scratch_mark(ctx.scratch)`` ... ``gd.scratch_take(ctx.scratch, T, n)``
-     - a ``Vec<T>`` in our state struct, ``clear()``\ ed and refilled; ``Vec::with_capacity(n)`` when sizing
+     - a ``Vec<T>`` in our state struct, ``clear()``\ ed and refilled; the struct lives in the workspace between conversions (``ctx.take_scratch()`` ... ``ctx.put_scratch(work)``, see :doc:`memory`)
 
 A reader returns ``Result<(), Fail>``: return ``Ok(())`` when done (the engine closes the
 root with ``Builder::finish``), and ``Err(fail)`` (usually by ``?``) on failure. A renderer
@@ -343,7 +343,7 @@ Memory and limits
    * - Odin ``gd.``
      - Rust
    * - ``Scratch``, ``Scratch_Mark``, ``scratch_mark``, ``scratch_release``, ``scratch_take``, ``scratch_buffer``
-     - reusable ``Vec``/``String`` fields in our reader or renderer state (``clear()`` keeps capacity)
+     - reusable ``Vec``/``String`` fields in our reader or renderer state (``clear()`` keeps capacity), kept in the workspace's ``guidedoc::Scratch`` store between conversions; ``NameMap`` for name tables rebuilt each conversion
    * - ``Stack(T)``, ``push``, ``pop``, ``top``, ``stack_slice``
      - ``Vec<T>``: ``push``, ``pop() -> Option``, ``last_mut()``, ``as_slice()`` (bound depth with ``Limits::max_depth``)
    * - ``Buffer``, ``buffer_write``, ``buffer_write_byte``, ``buffer_string``, ``.overflow``

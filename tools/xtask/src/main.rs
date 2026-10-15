@@ -12,6 +12,7 @@
 mod args;
 mod fonts;
 mod fsutil;
+mod graphviz;
 mod process;
 mod release;
 mod site;
@@ -34,6 +35,8 @@ Tasks:
                      build the website: landing page, manual, PDF books, discussions
   fetch-fonts [DIR]  fetch the Noto Serif CJK fonts the CJK PDF books use, checked
                      against their pinned SHA-256
+  graphviz [--out DIR] [--jobs N]
+                     build the static Graphviz libraries release binaries link
   release <STEP>     one step of a release (build, package, checksums, source, formula,
                      publish, check-version, check-run, credential-store, smoke,
                      smoke-discussion, smoke-graphdog, smoke-pages)
@@ -92,10 +95,11 @@ fn run(args: &[String]) -> Result<()> {
         }
         Some("build-site") => site::main(rest),
         Some("fetch-fonts") => fonts::main(rest),
+        Some("graphviz") => graphviz::main(rest),
         Some("release") => release::main(rest),
         Some("tables") => tables::main(rest),
         Some(other) => {
-            let tasks = ["build-site", "fetch-fonts", "release", "tables"];
+            let tasks = ["build-site", "fetch-fonts", "graphviz", "release", "tables"];
             let mut hint = String::from("`cargo xtask --help` lists the tasks.");
             if let Some(near) = gd_report::suggest(other, tasks) {
                 hint.push_str(&format!(" Did you mean `{near}`?"));

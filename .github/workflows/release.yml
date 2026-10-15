@@ -10,7 +10,7 @@ on:
         description: Platform to build as a candidate (a tag always builds all)
         type: choice
         default: all
-        options: [all, linux-amd64, linux-arm64, macos-arm64, macos-amd64]
+        options: [all, linux-amd64, linux-arm64, macos-arm64, macos-amd64, windows-amd64]
 permissions:
   contents: read
 concurrency:
@@ -50,7 +50,7 @@ jobs:
           [ "$GITHUB_REF_TYPE" = tag ] && PLATFORM=all
           matrix=$(echo "$PLATFORMS" |
             jq -c --arg p "$PLATFORM" 'map(select($p == "all" or .package == $p))')
-          [ "$matrix" != "[]" ]
+          if [ "$PLATFORM" = windows-amd64 ]; then matrix='[]'; else [ "$matrix" != "[]" ]; fi
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
 
   qualify:
@@ -84,6 +84,7 @@ jobs:
   build:
     name: build (${{ matrix.package }})
     needs: version
+    if: inputs.platform != 'windows-amd64'
     strategy:
       fail-fast: false
       matrix:
@@ -177,6 +178,66 @@ jobs:
       - name: graphdog with its built-in Graphviz
         run: cargo xtask release smoke-graphdog "$GRAPHDOG"
 
+  windows:
+    name: windows (windows-amd64)
+    needs: version
+    if: github.ref_type == 'tag' || inputs.platform == 'all' || inputs.platform == 'windows-amd64'
+    runs-on: windows-2022
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/prepare
+        with:
+          cache: release
+      - name: Build the three release programs
+        run: cargo xtask release build
+      - name: Test Windows libraries
+        run: cargo test --locked -p gd-graphdog -p gd-clock -p gd-pages
+      - name: Package Windows programs and the Graphviz runtime
+        run: cargo xtask release package windows-amd64
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: guidedog-windows-amd64
+          path: dist/*.zip
+          if-no-files-found: error
+
+  windows-smoke:
+    needs: windows
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: guidedog-windows-amd64
+          path: dist
+      - name: Extract and verify the packaged programs
+        shell: pwsh
+        run: |
+          Expand-Archive dist/guidedog-windows-amd64.zip dist/unpacked
+          $folder = (Resolve-Path dist/unpacked/guidedog-windows-amd64).Path
+          $manifest = Get-Content "$folder/guidedog.build.json" | ConvertFrom-Json
+          foreach ($program in $manifest.programs.PSObject.Properties) {
+            $actual = (Get-FileHash "$folder/$($program.Name)" -Algorithm SHA256).Hash.ToLower()
+            if ($actual -ne $program.Value) { throw 'Program checksum mismatch' }
+            cargo xtask release check-version "$folder/$($program.Name)"
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          }
+          "PROGRAM=$folder/guidedog.exe" >> $env:GITHUB_ENV
+          "PAGES=$folder/guidedog-pages.exe" >> $env:GITHUB_ENV
+          "GRAPHDOG=$folder/graphdog.exe" >> $env:GITHUB_ENV
+      - name: HTML, PDF and discussions with an empty PATH
+        shell: pwsh
+        run: |
+          cargo xtask release smoke "$env:PROGRAM"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo xtask release smoke-discussion "$env:PROGRAM"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo xtask release smoke-pages "$env:PAGES" "$env:PROGRAM"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cargo xtask release smoke-graphdog "$env:GRAPHDOG"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+
   source:
     needs: version
     if: github.ref_type == 'tag' || inputs.platform == 'all'
@@ -225,7 +286,7 @@ jobs:
 
   publish:
     if: github.ref_type == 'tag'
-    needs: [version, qualify, build, smoke, source, homebrew]
+    needs: [version, qualify, build, smoke, windows, windows-smoke, source, homebrew]
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
@@ -249,8 +310,9 @@ jobs:
         with:
           subject-path: |
             dist/*.tar.gz
+            dist/*.zip
             dist/guidedog.rb
-      - name: Draft, upload, then publish as the latest release
+      - name: Draft, upload, then publish (prerelease for beta tags)
         env:
           GH_TOKEN: ${{ github.token }}
         run: cargo xtask release publish "$GITHUB_REF_NAME" dist

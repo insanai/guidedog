@@ -31,7 +31,7 @@ API documentation is read from source without running it: Python (`autodoc`), Od
 
 ## Install
 
-Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64) and macOS (Apple silicon and Intel). The `guidedog` archive holds `guidedog`, `guidedog-pages`, and `graphdog`. The Typst compiler is embedded, tree-sitter is compiled in, and Graphviz is linked statically, so nothing else needs to be installed. Linux needs glibc 2.35 or later; macOS needs version 12 or later. We download the archive for our system and `SHA256SUMS`, then check and install it:
+Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64) and macOS (Apple silicon and Intel), plus a Windows x86-64 ZIP. The `guidedog` archive holds `guidedog`, `guidedog-pages`, and `graphdog`. The Typst compiler is embedded, tree-sitter is compiled in, and Graphviz is linked statically, so nothing else needs to be installed. The Windows ZIP bundles Graphviz DLLs; we keep the whole extracted folder together. Linux needs glibc 2.35 or later; macOS needs version 12 or later. We download the archive for our system and `SHA256SUMS`, then check and install it:
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # on macOS: shasum -a 256 -c --ignore-missing SHA256SUMS
@@ -117,7 +117,7 @@ guidedog dsc state 1 --to=accepted --reason="Review converged"
 guidedog dsc build
 ```
 
-A catalog's `discussion.toml` sets its lifecycle states, record types, and numbering, and `guidedog dsc config` prints it. The commands come from the discussion plugin, which every `guidedog` links, so nothing else needs to be installed. Guidedog's own `docs/gds` is one such catalog: we run `guidedog dsc check` in that folder. See [Keep a discussion catalog](docs/manual/howto/discussions.rst).
+A catalog's `discussion.toml` sets its lifecycle states, record types, and numbering, and `guidedog dsc config` prints it. The commands come from the discussion plugin, which every `guidedog` links, so nothing else needs to be installed. The Windows ZIP bundles Graphviz DLLs; we keep the whole extracted folder together. Guidedog's own `docs/gds` is one such catalog: we run `guidedog dsc check` in that folder. See [Keep a discussion catalog](docs/manual/howto/discussions.rst).
 
 `graphdog` renders Graphviz DOT to SVG, PNG, or laid-out DOT with the same library Guidedog's diagrams use, as a subset of the `dot` command: `echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`.
 

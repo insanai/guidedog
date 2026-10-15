@@ -9,6 +9,7 @@ mod package;
 mod pages;
 mod smoke;
 mod version;
+mod windows;
 
 use std::path::{Path, PathBuf};
 use std::process::Command;
@@ -25,7 +26,7 @@ Steps:
                       build guidedog, guidedog-pages and graphdog the way the
                       release workflow does, into build/
   package PACKAGE     write dist/guidedog-PACKAGE.tar.gz
-                      (linux-amd64, linux-arm64, macos-arm64, macos-amd64)
+                      (linux-amd64, linux-arm64, macos-arm64, macos-amd64, windows-amd64)
   source              write dist/guidedog-VERSION-source.tar.gz from the commit
   checksums DIR       write DIR/SHA256SUMS for the release files in DIR
   formula DIR         render the Homebrew formula DIR/guidedog.rb

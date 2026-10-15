@@ -5,6 +5,16 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
+## 1.0.0-beta.1 - 2026-10-15
+
+First beta release of the Rust workspace in `insanai/guidedog`.
+
+- Native Linux and macOS archives for x86-64 and ARM64, and a Windows x86-64 ZIP with the Graphviz runtime bundled.
+- `guidedog`, `guidedog-pages`, and `graphdog` in every platform archive, with embedded Typst, notices, build metadata, SHA-256 checksums and build provenance.
+- Guidedog builds its own website, multilingual manual, API reference and discussion catalog for GitHub Pages.
+- The official Homebrew tap installs the new Rust release.
+- Prerelease tags publish GitHub prereleases and do not replace the latest stable release.
+
 ## 0.7.0 — 2026-10-15
 
 A self-contained Guidedog in one Cargo workspace. Commands, options, `conf.toml` keys,

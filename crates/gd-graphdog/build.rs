@@ -39,6 +39,10 @@ fn main() {
     println!("cargo:rustc-check-cfg=cfg(graphviz_static)");
     println!("cargo:rerun-if-env-changed=GUIDEDOG_GRAPHVIZ_STATIC");
     println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-env-changed=GUIDEDOG_GRAPHVIZ_WINDOWS");
+    if let Some(install) = env::var_os("GUIDEDOG_GRAPHVIZ_WINDOWS") {
+        println!("cargo:rustc-link-search=native={}", Path::new(&install).join("lib").display());
+    }
     if let Some(install) = static_install() {
         link_static(&install);
     }

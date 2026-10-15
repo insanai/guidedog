@@ -71,6 +71,7 @@ jobs:
         with:
           subject-path: |
             dist/*.tar.gz
+            dist/*.zip
             dist/guidedog.rb
       - name: Draft, upload, then publish as the latest release
         env:

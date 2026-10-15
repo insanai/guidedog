@@ -23,7 +23,7 @@ archive of one platform: dist/guidedog-PACKAGE.tar.gz.
 
 Usage: cargo xtask release package PACKAGE
 
-  PACKAGE   linux-amd64, linux-arm64, macos-arm64 or macos-amd64
+  PACKAGE   linux-amd64, linux-arm64, macos-arm64, macos-amd64 or windows-amd64
 
 OUT sets the output folder (default: dist). The working tree must be clean.
 ";
@@ -56,7 +56,7 @@ struct Platform {
 const LINUX_REQUIRES: &str = "Linux with glibc 2.35 or later";
 const MACOS_REQUIRES: &str = "macOS 12 or later";
 
-const PLATFORMS: [Platform; 4] = [
+const PLATFORMS: [Platform; 5] = [
     Platform {
         package: "linux-amd64",
         target: "x86_64-unknown-linux-gnu",
@@ -69,6 +69,11 @@ const PLATFORMS: [Platform; 4] = [
     },
     Platform { package: "macos-arm64", target: "aarch64-apple-darwin", requires: MACOS_REQUIRES },
     Platform { package: "macos-amd64", target: "x86_64-apple-darwin", requires: MACOS_REQUIRES },
+    Platform {
+        package: "windows-amd64",
+        target: "x86_64-pc-windows-msvc",
+        requires: "Windows x86-64 with the bundled Graphviz DLLs",
+    },
 ];
 
 /// What every archive of one package shares.
@@ -90,7 +95,7 @@ pub(super) fn main(args: &[String]) -> Result<()> {
     let Some(platform) = PLATFORMS.iter().find(|p| p.package == name).copied() else {
         return Err(crate::usage(
             &format!("There is no package named `{name}`."),
-            "Name one of linux-amd64, linux-arm64, macos-arm64 or macos-amd64.",
+            "Name one of linux-amd64, linux-arm64, macos-arm64, macos-amd64 or windows-amd64.",
         ));
     };
     package(platform)
@@ -98,7 +103,10 @@ pub(super) fn main(args: &[String]) -> Result<()> {
 
 fn package(platform: Platform) -> Result<()> {
     let root = repository_root();
-    let mut needed: Vec<String> = super::PROGRAMS.iter().map(|p| format!("build/{p}")).collect();
+    let mut needed: Vec<String> = super::PROGRAMS
+        .iter()
+        .map(|p| format!("build/{p}{}", std::env::consts::EXE_SUFFIX))
+        .collect();
     needed.extend(["build/build.command", "build/rustc.version"].map(String::from));
     needed.extend(DOCUMENTS.map(String::from));
     if let Some(missing) = needed.iter().find(|file| !root.join(file).is_file()) {
@@ -133,29 +141,38 @@ fn archive(release: &Release<'_>, out: &Path, name: &str, programs: &[&str]) -> 
     create_dir(&folder)?;
     let mut sums = Vec::new();
     for program in programs {
-        let file = folder.join(program);
-        copy(&release.root.join("build").join(program), &file)?;
+        let program = format!("{program}{}", std::env::consts::EXE_SUFFIX);
+        let file = folder.join(&program);
+        copy(&release.root.join("build").join(&program), &file)?;
         make_executable(&file)?;
         sums.push(format!("\"{program}\": \"{}\"", sha256_file(&file)?));
     }
     for document in DOCUMENTS {
         copy(&release.root.join(document), &folder.join(document))?;
     }
-    let graphviz = crate::graphviz::install_dir();
-    for licence in ["COPYING-graphviz", "COPYING-expat"] {
-        copy(&graphviz.join(licence), &folder.join(licence))?;
+    if release.platform.package == "windows-amd64" {
+        super::windows::copy_runtime(&folder)?;
+    } else {
+        let graphviz = crate::graphviz::install_dir();
+        for licence in ["COPYING-graphviz", "COPYING-expat"] {
+            copy(&graphviz.join(licence), &folder.join(licence))?;
+        }
     }
     fsutil::write(&folder.join("SOURCE.txt"), source_text(release, programs))?;
-    let binary_sum = sha256_file(&folder.join(name))?;
+    let binary_sum = sha256_file(&folder.join(format!("{name}{}", std::env::consts::EXE_SUFFIX)))?;
     let json = build_json(release, name, &binary_sum, &sums.join(", "));
     fsutil::write(&folder.join(format!("{name}.build.json")), json)?;
-    let target = out.join(super::archive_name(name, release.platform.package));
-    let mut tar = Command::new("tar");
-    tar.current_dir(stage.path()).args(["-cf", "-", &folder_name]);
-    let mut gzip = Command::new("gzip");
-    gzip.args(["-n", "-9"]);
-    process::pipe_to_file(&mut tar, &mut gzip, &target)?;
-    println!("{}", target.display());
+    if release.platform.package == "windows-amd64" {
+        super::windows::zip(stage.path(), &folder_name, out)?;
+    } else {
+        let target = out.join(super::archive_name(name, release.platform.package));
+        let mut tar = Command::new("tar");
+        tar.current_dir(stage.path()).args(["-cf", "-", &folder_name]);
+        let mut gzip = Command::new("gzip");
+        gzip.args(["-n", "-9"]);
+        process::pipe_to_file(&mut tar, &mut gzip, &target)?;
+        println!("{}", target.display());
+    }
     Ok(())
 }
 
@@ -173,14 +190,18 @@ fn build_json(release: &Release<'_>, name: &str, binary_sum: &str, sums: &str) -
          \"commit\": \"{commit}\",\n  \
          \"source\": \"https://github.com/insanai/guidedog/tree/v{version}\",\n  \
          \"package\": \"{}\",\n  \"target\": \"{}\",\n  \"rustc\": {},\n  \"command\": {},\n  \
-         \"typst_embedded\": true,\n  \"graphviz\": \"{}, linked statically\",\n  \
+         \"typst_embedded\": true,\n  \"graphviz\": \"{}\",\n  \
          \"requires\": {},\n  \"binary\": \"{name}\",\n  \"binary_sha256\": \"{binary_sum}\",\n  \
          \"programs\": {{{sums}}}\n}}\n",
         platform.package,
         platform.target,
         quoted(rustc),
         quoted(command),
-        crate::graphviz::GRAPHVIZ_VERSION,
+        if platform.package == "windows-amd64" {
+            "16.1.0, bundled DLLs"
+        } else {
+            "16.1.0, linked statically"
+        },
         quoted(&platform.requires.replace('\n', " ")),
     )
 }
@@ -189,6 +210,9 @@ fn build_json(release: &Release<'_>, name: &str, binary_sum: &str, sums: &str) -
 fn source_text(release: &Release<'_>, programs: &[&str]) -> String {
     let Release { platform, version, commit, rustc, command, .. } = release;
     let mut text = String::new();
+    if platform.package == "windows-amd64" {
+        return super::windows::source_text(version, commit, rustc, command);
+    }
     let _ = write!(
         text,
         "Guidedog {version} for {} ({})\n\n\

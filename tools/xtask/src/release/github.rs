@@ -36,7 +36,8 @@ Needs gh, GH_TOKEN and GITHUB_REPOSITORY.
 ";
 
 /// The jobs a release run must have passed before it may be published.
-const GATES: [&str; 6] = ["version", "qualify", "build", "smoke", "source", "homebrew"];
+const GATES: [&str; 8] =
+    ["version", "qualify", "build", "smoke", "windows", "windows-smoke", "source", "homebrew"];
 
 /// The repository GitHub steps act on, from GITHUB_REPOSITORY.
 fn repository() -> Result<String> {
@@ -164,7 +165,12 @@ fn publish_commands(
     upload.args(files.iter().filter(visible));
     commands.push(upload);
     let mut edit = Command::new("gh");
-    edit.args(["release", "edit", tag, "--repo", repo, "--draft=false", "--latest"]);
+    edit.args(["release", "edit", tag, "--repo", repo, "--draft=false"]);
+    if version.contains('-') {
+        edit.args(["--prerelease", "--latest=false"]);
+    } else {
+        edit.args(["--prerelease=false", "--latest"]);
+    }
     commands.push(edit);
     Ok(commands)
 }
@@ -257,4 +263,34 @@ fn gh_json(path: &str) -> Result<gd_json::Value> {
             "Check GH_TOKEN and retry; `gh api` shows the raw answer.",
         )
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::fsutil::TempDir;
+
+    #[test]
+    fn beta_publication_keeps_latest_stable() {
+        let dir = TempDir::new("publish-test").unwrap();
+        for (version, prerelease, latest) in [
+            ("1.0.0-beta.1", "--prerelease", "--latest=false"),
+            ("1.0.0", "--prerelease=false", "--latest"),
+        ] {
+            let tag = format!("v{version}");
+            let commands = publish_commands(
+                dir.path(),
+                "insanai/guidedog",
+                &tag,
+                version,
+                dir.path(),
+                State::Missing,
+            )
+            .unwrap();
+            let edit = commands.last().unwrap();
+            let args: Vec<_> = edit.get_args().map(|arg| arg.to_string_lossy()).collect();
+            assert!(args.iter().any(|arg| arg == prerelease));
+            assert!(args.iter().any(|arg| arg == latest));
+        }
+    }
 }

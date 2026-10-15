@@ -1,4 +1,4 @@
-Guidedog 0.7.0 is a self-contained documentation builder in one Cargo workspace.
+Guidedog 1.0.0-beta.1 is a self-contained documentation builder in one Cargo workspace.
 Commands, options, `conf.toml` keys, directives, roles and output stay compatible, so
 existing projects build as before.
 
@@ -16,7 +16,7 @@ existing projects build as before.
 This remains a beta for trusted documentation projects; installed plugins are separate
 native processes, not an operating-system sandbox.
 
-See the [changelog](https://github.com/insanai/guidedog/blob/v0.7.0/CHANGELOG.md).
+See the [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.1/CHANGELOG.md).
 
 ## Downloads
 
@@ -26,7 +26,8 @@ See the [changelog](https://github.com/insanai/guidedog/blob/v0.7.0/CHANGELOG.md
 | `guidedog-linux-arm64.tar.gz` | Linux ARM64, with the same requirements |
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
-| `guidedog-0.7.0-source.tar.gz` | The source of this release |
+| `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
+| `guidedog-1.0.0-beta.1-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 
@@ -49,7 +50,7 @@ gh attestation verify guidedog-linux-amd64.tar.gz --repo insanai/guidedog
 
 ## Install
 
-With Homebrew, on macOS or Linux, install from the official tap. It installs Graphviz, `guidedog`, `guidedog-pages`, and `graphdog`:
+With Homebrew, on macOS or Linux, install from the official tap. It installs `guidedog`, `guidedog-pages`, and `graphdog`:
 
 ```sh
 brew tap insanai/guidedog
@@ -69,8 +70,8 @@ guidedog --version
 
 - The programs are not code-signed. On macOS, a file downloaded with a browser is quarantined; run `xattr -d com.apple.quarantine guidedog` once for each program, or download with `curl`.
 - Graphviz 16.1.0 is linked statically, with the dot and neato layout families and SVG and DOT output (no PNG). Its licence and Expat's are in the archive (`COPYING-graphviz`, `COPYING-expat`), and `SOURCE.txt` names their source tarballs.
-- Linux builds link the system's glibc and a static OpenSSL for Typst's package downloader; HTTP requests elsewhere go through the `curl` program. `guidedog-pages` stores tokens through the Secret Service (`secret-tool` from libsecret-tools) when a desktop session offers one; without one, give a token to a single command with `GUIDEDOG_PAGES_TOKEN` and `--credential=env`.
-- Windows has no release archive in this version.
+- Linux builds link the system's glibc. HTTP and HTTPS are built in; no system `curl` program is needed. `guidedog-pages` stores tokens through the Secret Service (`secret-tool` from libsecret-tools) when a desktop session offers one; without one, give a token to a single command with `GUIDEDOG_PAGES_TOKEN` and `--credential=env`.
+- Windows x86-64 bundles the official Graphviz 16.1.0 runtime beside the executables. Keep the whole extracted folder together.
 - PDF books use Typst's embedded fonts and the system's fonts. Books in Chinese, Japanese, Korean, or Hindi need fonts for those scripts installed.
 
 ## License

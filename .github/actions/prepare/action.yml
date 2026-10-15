@@ -41,6 +41,22 @@ runs:
         echo "LIBRARY_PATH=$(brew --prefix graphviz)/lib" >> "$GITHUB_ENV"
         echo "MACOSX_DEPLOYMENT_TARGET=12.0" >> "$GITHUB_ENV"
 
+    - name: Install the pinned Graphviz runtime (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        $url = 'https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/16.1.0/windows_10_cmake_Release_Graphviz-16.1.0-win64.zip'
+        $archive = "$env:RUNNER_TEMP/graphviz.zip"
+        Invoke-WebRequest $url -OutFile $archive
+        $expected = '733e49626c492242eb8dca30ea627b6ead20710e207998c7933b4909d92d6abc'
+        if ((Get-FileHash $archive -Algorithm SHA256).Hash.ToLower() -ne $expected) {
+          throw 'Graphviz checksum mismatch'
+        }
+        Expand-Archive $archive "$env:RUNNER_TEMP/graphviz" -Force
+        $root = "$env:RUNNER_TEMP/graphviz/Graphviz-16.1.0-win64"
+        "GUIDEDOG_GRAPHVIZ_WINDOWS=$root" >> $env:GITHUB_ENV
+        "$root/bin" >> $env:GITHUB_PATH
+
     - name: Install the Rust toolchain
       shell: bash
       run: |

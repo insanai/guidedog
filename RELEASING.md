@@ -39,8 +39,7 @@ uploaded by hand, and a published release is never changed.
     installs `guidedog`, `guidedog-pages`, and `graphdog`, then installs and
     tests it from a local tap.
   - `publish` (tags only): writes `SHA256SUMS`, attests build provenance, creates a draft
-    release with `.github/release-notes.md`, uploads every file, and publishes it as the
-    latest release. It stops if the release is already published.
+    release with `.github/release-notes.md`, uploads every file, and publishes it as a prerelease when the version has a suffix, or as the latest stable release otherwise. It stops if the release is already published.
   - `refresh`: runs the Pages workflow, so the website names the new release.
 - **Recover release publication** (`.github/workflows/release-recover.yml`) publishes the
   artifacts of an earlier tagged run whose only failure was publishing.
@@ -56,11 +55,12 @@ every other crate; release builds use `--locked`.
 | `linux-arm64` | `aarch64-unknown-linux-gnu` | `ubuntu-22.04-arm` |
 | `macos-arm64` | `aarch64-apple-darwin` | `macos-15` |
 | `macos-amd64` | `x86_64-apple-darwin` | `macos-15-intel` |
+| `windows-amd64` | `x86_64-pc-windows-msvc` | `windows-2022` |
 
 Each archive is built natively, with the static Graphviz built on that platform
 (`cargo xtask graphviz`). The archives carry Graphviz's and Expat's licences
 (`COPYING-graphviz`, `COPYING-expat`), and `SOURCE.txt` names their source tarballs with
-their SHA-256. Windows has no release archive yet.
+their SHA-256. Windows ships a ZIP with the official Graphviz 16.1.0 DLLs and configuration beside the three executables. The prepare action verifies the upstream archive SHA-256. A fresh Windows runner extracts the ZIP, checks the programs against the manifest, and runs HTML, PDF, discussion, Pages and graph rendering smoke tests.
 
 ## Build a release locally
 
@@ -107,8 +107,8 @@ It prints a record of versions, pins and results, and exits 1 on any incompatibi
 5. Tag the same commit and push the tag:
 
    ```sh
-   git tag -a v0.7.0 -m "Guidedog 0.7.0"
-   git push origin v0.7.0
+   git tag -a v1.0.0-beta.1 -m "Guidedog 1.0.0-beta.1"
+   git push origin v1.0.0-beta.1
    ```
 
 6. The tagged run publishes the release when every job passes. Check the release page,
@@ -131,7 +131,7 @@ If every job of the tagged run passed except `publish` or `refresh` (a GitHub ou
 permissions problem), publish the files that run already built:
 
 1. Fix the cause, if it is in the repository settings.
-2. Run **Recover release publication** with the tag (`v0.7.0`) and the ID of the tagged
+2. Run **Recover release publication** with the tag (`v1.0.0-beta.1`) and the ID of the tagged
    run (the number in its URL).
 
 It checks with `cargo xtask release check-run` that the run built that tag at the commit the
@@ -157,3 +157,5 @@ tests the candidate on Apple silicon before committing it. The tap also tests
 formula changes on Apple silicon and Intel macOS. The release workflow remains the
 source of the packages and formula; the tap does not rebuild the engine or change
 published assets. No cross-repository write token is needed.
+
+Beta releases use GitHub's prerelease flag. The tap Update workflow accepts an explicit tag (including a beta); its daily run follows stable releases only. We select `v1.0.0-beta.1` explicitly for this release.

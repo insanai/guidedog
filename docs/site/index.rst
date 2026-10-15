@@ -147,6 +147,6 @@ Our own project can keep its discussions the same way, with ``guidedog dsc``. Th
 
    `Read the discussions <discussions_>`_
 
-.. _download: https://github.com/insanai/guidedog/releases/latest
+.. _download: https://github.com/insanai/guidedog/releases
 .. _source: https://github.com/insanai/guidedog
 .. _build: https://github.com/insanai/guidedog#build-from-source

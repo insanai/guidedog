@@ -66,14 +66,20 @@ pub(crate) fn build(options: &Options) -> Result<()> {
     if let Some(target) = &options.target {
         cargo.args(["--target", target]);
     }
-    let graphviz = static_graphviz(options.dry_run)?;
+    let graphviz = if cfg!(windows) { PathBuf::new() } else { static_graphviz(options.dry_run)? };
     let shown = graphviz.strip_prefix(&root).unwrap_or(&graphviz).display().to_string();
-    let line = format!("GUIDEDOG_GRAPHVIZ_STATIC={shown} {}", process::describe(&cargo));
+    let line = if cfg!(windows) {
+        process::describe(&cargo)
+    } else {
+        format!("GUIDEDOG_GRAPHVIZ_STATIC={shown} {}", process::describe(&cargo))
+    };
     println!("{line}");
     if options.dry_run {
         return Ok(());
     }
-    cargo.env("GUIDEDOG_GRAPHVIZ_STATIC", &graphviz);
+    if !cfg!(windows) {
+        cargo.env("GUIDEDOG_GRAPHVIZ_STATIC", &graphviz);
+    }
     prepare_macos(&mut cargo);
     let build = root.join("build");
     create_dir(&build)?;

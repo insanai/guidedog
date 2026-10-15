@@ -35,6 +35,10 @@ pub(crate) fn compile(
 ) -> Result<Compiled, Error> {
     let world = make_world(root, main, text, options).ok_or(Error::InvalidRequest)?;
     let compiled = catch_unwind(AssertUnwindSafe(|| run(&world)));
+    // Typst memoizes layout in a process-wide cache that only grows. A build compiles
+    // each book once, so nothing is lost by emptying it; without this, a project with
+    // many books keeps every earlier book's layout in memory.
+    typst::comemo::evict(0);
     let Exported { artifact, pages, diagnostics } = compiled.map_err(|_| Error::Internal)?;
     let detail = detail_of(&diagnostics);
     let Some(artifact) = artifact else {

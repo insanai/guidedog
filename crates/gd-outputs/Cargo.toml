@@ -1,0 +1,18 @@
+[package]
+name = "gd-outputs"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "A build's output generation: manifest, reuse, commit journal, publication."
+
+[dependencies]
+gd-conf = { workspace = true }
+gd-env = { workspace = true }
+gd-host = { workspace = true }
+gd-json = { workspace = true }
+gd-report = { workspace = true }
+gd-sha = { workspace = true }
+
+[lints]
+workspace = true

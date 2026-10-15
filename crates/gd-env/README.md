@@ -2,9 +2,7 @@
 
 The foundation of a Guidedog build: the vocabulary every builder crate shares, the
 project's documents, the environment reading keeps between builds, the object store,
-lookups and traces, the settings digests, and the build plugins one build runs. Ported
-from `guidedog_old/lib/project` (environment.odin, discover.odin, bookkeeping.odin,
-plugins.odin, and the types of build.odin, link.odin and render_page.odin).
+lookups and traces, the settings digests, and the build plugins one build runs.
 
 ```rust
 let sources = gd_env::discover(&config)?;                 // sorted by docname
@@ -31,20 +29,20 @@ let text = run.process_source(&source, &config.language, &text)?;
 | `PluginRun`, `PluginStart`, `host_problem`, `assets_url` | build plugins |
 | `ObjectBuilder`, `ObjectReader`, `read_record`, `report_to_json`, `report_from_json` | JSON records |
 
-## Redesign notes
+## Design notes
 
-- **Option instead of sentinels**: `parent: Option<u32>` (was -1), `object:
-  Option<CachedFile>` (was two strings, `""` for none), `Option<DocId>` (was `NO_DOC`).
+- **Option instead of sentinels**: `parent: Option<u32>`, `object:
+  Option<CachedFile>`, `Option<DocId>`; no `-1`, `""` or `NO_DOC` stands for none.
 - **Digests are values** (`gd_conf::Digest`, 32 bytes with hex `Display`), not hex
   strings; `CachedFile` pairs a cache path with its digest.
-- **Lookups are typed**: `Lookup { kind, key }` replaces `"L" + key` strings;
-  `encode`/`decode` keep the old letters for the manifest.
+- **Lookups are typed**: `Lookup { kind, key }`, not `"L" + key` strings;
+  `encode`/`decode` write one letter per kind in the manifest.
 - **Explicit JSON**: the environment is written and read field by field with gd-json
   (`ObjectBuilder`/`ObjectReader`); a record missing a field is refused whole.
-  `written` is not saved (Odin's `json:"-"`).
+  `written` is not saved: it describes one build only.
 - **Plugins**: one `Mutex<PluginSession>` per plugin per build, stopped on `Drop`;
   gd-plugins problems become host problems with a known code (`host_problem`).
   `process_source`/`process_html` return `Cow`, borrowing unchanged text.
-- **Dropped**: arenas, scratch allocators and metered JSON parsing (`load_json`,
-  `save_json` with a meter); `BuildOptions.heap`, `arena_block` and `year`.
+- **Ownership, not arenas**: records are owned values; the build budget is checked
+  before work, so JSON is parsed without a meter.
 - `BuildOptions` takes `Option`s for its limits and `Jobs` for `-j`.

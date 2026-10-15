@@ -1,10 +1,8 @@
 # gd-project cheat sheet
 
 The Guidedog project builder: load a project, build it with one builder, clean it.
-Ported from `guidedog_old/lib/project` (the rest of project.odin and build.odin:
-`load`, `build`/`run_build`, `build_config`, `untrusted_policy`, `build_limits`,
-`finish_build`, `publication_problem`, `unsuppressed`, `clean`; the start/stop of
-plugins.odin) and the Odin tests registry_test, trust_test and budget_test.
+It starts and stops the build plugins and applies the trust policy and the build
+limits.
 
 ```rust
 use gd_project::{BuildOptions, BuilderKind, LoadOptions};
@@ -36,30 +34,28 @@ those of the crates below (`host.budget`, `build.output`, `typst.*`, ...).
 
 The pipeline and each step's crate: `docs/manual/internals/project.rst` (S8).
 
-## Redesign notes
+## Design notes
 
 - **No arenas, memory guards or `release`.** A `Project` and a `BuildResult` are
-  owned values; `unload`/`release`/`open_memory`, `Build_Options.heap`/`arena_block`,
-  step allocators and the `host.memory` problem are gone (Rust aborts on allocation
-  failure). Only the coarse `gd_host::Budget` stays, with `BuildOptions::on_budget`
+  owned values, released on drop; there is no `host.memory` problem (Rust aborts on
+  allocation failure). Only the coarse `gd_host::Budget` counts memory, with `BuildOptions::on_budget`
   deciding at the budget.
 - **A build borrows its project.** `build(&Project, ..)` clones the configuration, so
   the type system enforces that a build never changes the project (an untrusted build
-  confines only its copy). Odin's `build_config` copy of two fields is not needed.
+  confines only its copy).
 - **No `Build` god object.** The build is a few stages over small structs (`Setup`,
   `Parts`, `Log`); builders get a borrowed `gd_resolve::BuildView` and are chosen in one
   `match` (`write.rs`).
 - **Counters from the generation.** `OutputBuilder::write` returns nothing, so
   `written`/`unchanged` are the generation's units written and kept besides the site
-  unit (new `Generation::written_count`, `reused_count`, `is_site_written`); the site
+  unit (`Generation::written_count`, `reused_count`, `is_site_written`); the site
   and search units are not pages, singlehtml and gettext count their one output.
 - **The registry is a load option** (`LoadOptions::registry`, default
-  `guidedoc_defaults::registry()`), as Odin's `load` took one; the linked plugins are
-  `LoadOptions::plugins`.
+  `guidedoc_defaults::registry()`), so an embedder chooses the readers and renderers;
+  the linked plugins are `LoadOptions::plugins`.
 - **Stack limit**: documents are read and pages rendered on `gd_host::WORKER_STACK_BYTES`
   threads (the CLI runs on one too), so `build_limits` checks `--stack-kib` against that
   thread size instead of measuring the main thread.
-- **Dropped with their machinery**: `refusal_location` (the template line a budget
-  question named), `memory_problem`, `scratch_refusal`. The budget tests of search
-  words, page layouts and the Odin package listing are not ported: those reads are no
-  longer charged (gd-site, gd-read).
+- **What the budget does not charge**: search words, page layouts and the Odin package
+  listing are small reads that gd-site and gd-read do not charge, so the budget tests
+  cover the saved state, the catalogs and the budget policy.

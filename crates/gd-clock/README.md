@@ -25,8 +25,8 @@ The local offset is the only FFI (`src/offset.rs`): `localtime_r` with `struct t
 for 64-bit Linux, Android, Apple systems and the BSDs (only `tm_gmtoff` is read);
 `SystemTimeToTzSpecificLocalTime` on Windows; UTC elsewhere (32-bit targets, illumos).
 
-Redesign notes: this crate replaces the copies of the date arithmetic and the two
-`localtime_r` bindings that `gd-typst` and `gd-discussion` carried, and the separate
-`SOURCE_DATE_EPOCH` readers of `gd-cli` and `gd-pages`. Every reader now applies one rule:
+Design note: this crate is the one place for the date arithmetic, the `localtime_r`
+binding and the `SOURCE_DATE_EPOCH` reader that `gd-typst`, `gd-discussion`, `gd-cli` and
+`gd-pages` share. Every reader applies one rule:
 a whole number (white space ignored) whose moment falls in the years 1 to 9999; any other
 value falls back to the clock, so a huge value never wraps into a plausible old date.

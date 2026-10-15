@@ -1,4 +1,4 @@
-//! sphinx.ext.todo's todolist (todolist.odin): every todo of the project, copied from
+//! sphinx.ext.todo's todolist: every todo of the project, copied from
 //! its document's object, each followed by a line that links to the original.
 
 use gd_env::{DocId, TodoInfo};

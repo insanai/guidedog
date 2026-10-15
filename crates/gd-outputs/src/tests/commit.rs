@@ -1,4 +1,4 @@
-//! commit_test.odin: a generation is published whole or not at all, a failed step is
+//! The commit: a generation is published whole or not at all, a failed step is
 //! undone, and an interrupted commit is finished by the next build.
 
 use std::collections::BTreeMap;

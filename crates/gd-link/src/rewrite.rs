@@ -1,5 +1,5 @@
 //! The rewriter: copies a document into a pass's builder, asking a [`Rule`] what to do
-//! with each node (rewrite.odin).
+//! with each node.
 //!
 //! Subtrees in which the rule takes no interest are copied whole with
 //! `Builder::copy_subtree`; the rewriter only walks the nodes the rule wants to see, so

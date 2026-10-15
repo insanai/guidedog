@@ -9,8 +9,8 @@ use gd_host::{Budget, Problem};
 use gd_json::{Object, Value};
 use gd_report::Report;
 
-/// The manifest's format version. 2 is the Rust port's first: lookups carry their
-/// answers' digests (the Odin build wrote 1, with the answers folded into one digest).
+/// The manifest's format version. In version 2 lookups carry their answers' digests,
+/// so a changed answer is known exactly; a manifest of another version is not read.
 pub const MANIFEST_VERSION: u32 = 2;
 
 /// The key of the unit of files every page shares: static files, indexes, assets.

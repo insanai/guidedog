@@ -1,4 +1,4 @@
-//! A build writes its output as one generation (generation.odin).
+//! A build writes its output as one generation.
 //!
 //! Every file it changes goes first to the next folder, a sibling of the output folder
 //! (`.<name>.next`); a file whose bytes are already in place is only recorded. Only

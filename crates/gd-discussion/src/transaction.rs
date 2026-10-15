@@ -271,7 +271,8 @@ pub(crate) fn unique_name(lead: &str) -> String {
     format!("{lead}{}-{n}-{nanos}", std::process::id())
 }
 
-/// The journal of `changes`, in the JSON form the Odin version wrote.
+/// The journal of `changes`, in the JSON form every release writes, so a journal left
+/// by an older release can still be recovered.
 fn journal_text(changes: &[Change]) -> String {
     gd_json::to_string(&changes_json(changes))
 }

@@ -1,6 +1,5 @@
-//! robust_test.odin, for the records this crate reads: a manifest or a journal,
-//! mutated, is read or refused, never a crash. (The conf.toml and conf.py halves of the
-//! Odin test belong to gd-conf and gd-migrate.)
+//! Robustness, for the records this crate reads: a manifest or a journal, mutated, is
+//! read or refused, never a crash. (gd-conf and gd-migrate test conf.toml and conf.py.)
 
 use std::collections::BTreeMap;
 use std::path::PathBuf;

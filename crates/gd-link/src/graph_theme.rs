@@ -1,4 +1,4 @@
-//! The adaptive graph theme (graph_theme.odin): a graph with the `graphviz-adaptive`
+//! The adaptive graph theme: a graph with the `graphviz-adaptive`
 //! class gets a fixed stylesheet in its SVG root, so a browser in dark mode recolors
 //! it. The stylesheet is part of the drawing's cache identity; it carries no document
 //! text, script, external URL, or machine path. The book keeps Graphviz's light colors.

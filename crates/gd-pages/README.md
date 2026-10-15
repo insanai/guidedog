@@ -43,8 +43,9 @@ unknown (run `recover`), 130 cancelled.
 
 - Credentials: Linux and other Unix desktops use the Secret Service through the
   `secret-tool` program (libsecret-tools), with the token on its standard input and
-  output, never on a command line; items keep the Odin schema's attributes
-  (`xdg:schema org.guidedog.Pages`, `service`, `profile`), so existing tokens are found.
+  output, never on a command line; items carry fixed attributes
+  (`xdg:schema org.guidedog.Pages`, `service`, `profile`), so tokens stored by earlier
+  releases are found.
   macOS uses the Keychain (Security framework FFI, `credential/keychain.rs`); Windows the
   Credential Manager (`credential/windows.rs`). Elsewhere every store call is
   `pages.store`, and `--credential=env` is the way. There is never a plaintext fallback.
@@ -75,32 +76,31 @@ unknown (run `recover`), 130 cancelled.
   always available: gd-serve uses gd-host without its `artifact` feature, so no Typst
   compiler or engine renderer is linked for it.
 
-## Redesign notes (from Odin `lib/pages` and `lib/pages/command`)
+## Design notes
 
-- **guidedog's Pages commands are the plugin's.** Odin's CLI hard-wired `publish pages`
-  and `pages workflow`; here `Pages` contributes them through gd-plugins' command
+- **guidedog's Pages commands are the plugin's.** `Pages` contributes `publish pages`
+  and `pages workflow` through gd-plugins' command
   interface. Linked into guidedog they ask through its `CommandContext` and build with
   its engine (`HostPrompt`); `--guidedog`/`$GUIDEDOG_PAGES_GUIDEDOG` still name a
   program instead. A site build is a closure (`freeze_site`), so both paths share the
   publication code (`command::publish::{stage, finish}`).
 
-- **No package globals.** Odin's `test_roots`, `credential_override`, `service`,
-  `poll_unit` and the `TEST_BUILD` root variable became plain data: `Settings` (roots,
+- **No package globals.** What tests vary is plain data: `Settings` (roots,
   credential, store, state and cache folders) and `Client::poll_unit`. A release still
   cannot be pointed away from GitHub by the environment; only code chooses `Roots`. The
   protocol tests run `examples/pages_fixture.rs`, which reads a fixture file beside it.
-- **`State` value** replaces the free state procedures; `StateLock` releases its lock on
-  drop (`File::try_lock`), and `Secret` zeroes itself on drop instead of `forget`.
-- **Types instead of sentinels.** `SiteSource` instead of two strings of which one must
-  be empty; `Option` for a missing branch head, adopted commit and observed commit;
+- **`State` value** owns the state; `StateLock` releases its lock on drop
+  (`File::try_lock`), and `Secret` zeroes itself on drop.
+- **Types instead of sentinels.** `SiteSource` names one source, never two strings of
+  which one must be empty; `Option` for a missing branch head, adopted commit and observed commit;
   `BuildState` instead of `found`/`readable` flags; `PushOutcome` carries its problem.
-- **Linux store through `secret-tool`** instead of `dlopen`ing libsecret and GLib:
-  no unsafe code, the same items.
+- **Linux store through `secret-tool`**, not a `dlopen` of libsecret and GLib: no
+  unsafe code, the same items.
 - **Cancellation** is the SDK's `Cancel` probe; a watcher thread joins it to
   `gd-fetch`'s flag for the length of each transfer.
-- **Reports** use `gd-report` (Elm style, `Hint:`), text or JSON lines, instead of the
-  custom "Try:" layout.
-- **Arenas, `release_*` and memory-refusal checks** are gone with Odin's allocators.
+- **Reports** use `gd-report` (Elm style, `Hint:`), text or JSON lines.
+- **Ownership, not arenas**: values are released on drop, and Rust aborts on allocation
+  failure, so there are no memory-refusal checks.
 - **Not wired yet:** `gd-host`'s crash reporter in `guidedog-pages` (gd-host is now
   linked for the preview, so it could be). Tokens never appear on a command line: `gd-fetch`
   sends HTTP in-process.

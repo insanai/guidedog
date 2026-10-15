@@ -1,6 +1,6 @@
 //! The sidebar (the root document's toctrees, as Sphinx's `toctree()` template function
 //! writes them) and the page outline (the "On this page" rail), from gd-link's
-//! navigation pieces (nav.odin's `Toc_Writer`, `sidebar_html`, `outline_html`).
+//! navigation pieces.
 
 use gd_env::{DocId, DocInfo};
 use gd_link::{TocChild, doc_limit, only_shown, toc_order, top_sections, untitled, within};

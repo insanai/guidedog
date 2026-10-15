@@ -19,10 +19,7 @@
 //! # }
 //! ```
 //!
-//! Ported from html_builder.odin, html_site.odin, templates.odin, additional_pages.odin,
-//! the index side of search.odin, mathjax.odin, the singlehtml parts of builders.odin,
-//! the genindex and modindex bodies, nav.odin's sidebar and outline, plugins.odin's
-//! HTML hooks and assets, and intl.odin's template functions. Nothing here prints.
+//! Nothing here prints: problems come back as reports.
 
 #![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]

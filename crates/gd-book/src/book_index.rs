@@ -1,4 +1,4 @@
-//! The book's general index (book_index.odin).
+//! The book's general index.
 
 use std::collections::HashMap;
 use std::fmt::Write as _;

@@ -1,5 +1,4 @@
-//! Typst's diagnostics, placed where they can be fixed (builders.odin's
-//! book_compile_failure and locate_in_book): a problem in a chapter is shown at the
+//! Typst's diagnostics, placed where they can be fixed: a problem in a chapter is shown at the
 //! line of reStructuredText or Markdown it was generated from, one in the template or
 //! preamble at that file or the generated book.
 

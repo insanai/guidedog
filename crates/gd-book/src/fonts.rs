@@ -1,4 +1,4 @@
-//! The fonts Guidedog ships for books (fonts.odin).
+//! The fonts Guidedog ships for books.
 //!
 //! Guidedog ships Libertinus Sans (SIL Open Font License 1.1, assets/fonts/OFL.txt), the
 //! sans companion of the Libertinus Serif Typst embeds, so book headings look the same

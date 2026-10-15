@@ -1,6 +1,6 @@
 //! End-to-end builds of a small project with the html, dirhtml and singlehtml builders:
 //! pages, navigation, the search index, the indexes, static files, templates, and
-//! downloads (download_test.odin).
+//! downloads.
 
 #![allow(clippy::unwrap_used)]
 
@@ -232,7 +232,7 @@ fn static_and_extra_files_are_copied_and_github_pages_get_a_cname() {
     assert_eq!(p.read(kind, "CNAME"), "docs.example.org");
 }
 
-/// download_test.odin: downloads keep their names and suffixes in reStructuredText and
+/// Downloads keep their names and suffixes in reStructuredText and
 /// Markdown, are copied below `_downloads`, and are saved rather than opened.
 #[test]
 fn source_downloads_preserve_extensions_in_rst_and_markdown() {

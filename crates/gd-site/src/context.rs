@@ -1,5 +1,4 @@
-//! What `layout.html` sees for a page (html_site.odin's `page_context` and
-//! `sphinx_template_names`): Sphinx's names where Sphinx has one (pagename, docstitle,
+//! What `layout.html` sees for a page: Sphinx's names where Sphinx has one (pagename, docstitle,
 //! rellinks, parents, metatags, script_files and the `html_context` values),
 //! Guidedog's own for the rest. The functions (pathto, toctree, css_tag, ...) are
 //! registered on the environment (templates.rs).

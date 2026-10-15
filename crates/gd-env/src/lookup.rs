@@ -36,7 +36,7 @@ pub enum LookupKind {
 
 impl LookupKind {
     /// The letter a lookup of this kind is saved with: `L`, `T`, `O`, `S`, `D`, `F`,
-    /// `I`, `M`, `C`, as the Odin build saved them.
+    /// `I`, `M`, `C`. Saved manifests depend on these letters, so they never change.
     pub fn letter(self) -> char {
         match self {
             LookupKind::Label => 'L',

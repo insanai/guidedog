@@ -1,5 +1,5 @@
-//! Tests ported from intl_test.odin, with the catalog loading, the interface words and
-//! the gettext builder besides.
+//! Tests of the translation state, the catalog loading, the interface words and the
+//! gettext builder.
 
 use std::path::{Path, PathBuf};
 use std::time::{Duration, UNIX_EPOCH};
@@ -326,5 +326,4 @@ fn gettext_builder_writes_one_template_per_domain() {
     assert_eq!(std::fs::read_to_string(out.join("index.pot")).unwrap(), index);
 }
 
-// Not ported: books_are_named_after_their_language tests language_file, which moved
-// to gd-book with builders.odin.
+// language_file, which names books after their language, is tested in gd-book.

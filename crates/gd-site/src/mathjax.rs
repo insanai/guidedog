@@ -1,4 +1,4 @@
-//! sphinx.ext.mathjax's scripts (mathjax.odin): math is rendered for MathJax by gd-link
+//! sphinx.ext.mathjax's scripts: math is rendered for MathJax by gd-link
 //! (`MathStyle::Sphinx` with `mathjax_inline` and `mathjax_display`), and a page with
 //! math loads MathJax as Sphinx's `install_mathjax` adds it: `mathjax3_config` and
 //! `mathjax4_config` as `window.MathJax`, the file `mathjax_config_path` names, then
@@ -97,7 +97,7 @@ pub(crate) fn script_tag(entry: &Value, url: &str) -> String {
 mod tests {
     use super::*;
 
-    /// mathjax_path_test.odin: a local path follows the page's depth; a URL and an
+    /// A local path follows the page's depth; a URL and an
     /// absolute path stay as written.
     #[test]
     fn local_mathjax_paths_follow_nested_pages_and_external_urls_stay_absolute() {

@@ -1,4 +1,4 @@
-//! Publishing a generation whole, or none of it (commit.odin, publish.odin).
+//! Publishing a generation whole, or none of it.
 //!
 //! Committing completes the next folder into the whole next output (hard links to the
 //! unchanged files), writes the manifest and the environment beside their

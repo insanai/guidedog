@@ -1,4 +1,4 @@
-//! Navigation (nav.odin): the items of a toctree, as Sphinx renders it in place, and
+//! Navigation: the items of a toctree, as Sphinx renders it in place, and
 //! the order of what stands in a document's sections. gd-site writes the sidebar and
 //! the page outline from the same pieces.
 

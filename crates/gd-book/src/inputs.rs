@@ -1,4 +1,4 @@
-//! What a book is made from (builders.odin's typst_options and book_inputs): Typst
+//! What a book is made from (the Typst options and the book's input files): Typst
 //! runs only when one of these changed.
 
 use std::path::{Path, PathBuf};

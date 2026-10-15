@@ -44,42 +44,34 @@ Exit statuses: 0 ok, 1 invalid input/policy, 2 usage or file type (and an existi
 output), 3 limits, budget and memory, 4 I/O and Typst, 5 internal, 70 crash, 130
 cancelled.
 
-## Design notes (redesigns from the Odin package)
+## Design notes
 
-- **No sizing, no retries.** Odin sessions planned slab sizes, grew the exhausted region
-  and retried on `Capacity` (`plan_session`, `grow_session`, `prepare_session`,
-  `resize_output`, `resize_source_map`, `sizes_for`, `make_storage`, `MAX_RETRIES`). The
-  Rust `Workspace` grows reusable buffers itself, bounded by `Limits` with `try_reserve`,
-  so a `Capacity` result is a configured limit reached, which a retry would reach again.
-  `Session` is now a thin owner of a workspace that adds the Ctrl+C probe and described
-  reports. `read_kept`/`read_owned` are gone: callers own their bytes (`Vec<u8>`).
+- **No sizing, no retries.** The `Workspace` grows reusable buffers itself, bounded by
+  `Limits` with `try_reserve`, so a `Capacity` result is a configured limit reached,
+  which a retry would reach again. `Session` is a thin owner of a workspace that adds
+  the Ctrl+C probe and described reports. Callers own their bytes (`Vec<u8>`).
 - **The budget is coarse.** It counts what the host holds that it can size before
   allocating: sources, included files (`Files` charges its ledger, a refusal is
   `ResourceStatus::Limit`), and the PDF the embedded Typst returns (`Options::reserve`).
   A conversion's own memory is bounded by `Limits`, which `limits_within` lowers to the
-  budget. Kept: units that wait for each other without deadlock (`join` -> `Unit` guard),
-  the raise-or-stop policy, and the `--budget=N` hints. `Ledger` takes `&self` (atomics)
+  budget. Units wait for each other without deadlock (`join` -> `Unit` guard); the
+  policy is raise or stop, and hints name `--budget=N`. `Ledger` takes `&self` (atomics)
   so a shared provider can charge it, and releases its charges on drop.
-- **Dropped allocator machinery.** `Meter`, `Guard`, `Arena`, `Disk` (spilling working
-  memory to mapped files), `meter_prepay`, and the `--memory=disk` advice existed because
-  Odin allocators fail per allocation and its libraries had to survive a refusal; Rust's
-  global allocator aborts instead, and nothing in the Rust port runs behind a per-
-  allocation meter, so there is no concrete need. cgroup scanning is dropped too:
-  `available_memory` reads the override or `/proc/meminfo` only, for hints.
-- **No fixed-buffer file operations.** `rename_path`, `sync_each`, `identity` and friends
-  avoided allocation so a decided publication could not stop for want of memory. Rust
-  aborts rather than fails on allocation, so they are plain `std::fs` calls;
-  `rename_path` is just `std::fs::rename`. `exchange` keeps its foreign call
-  (`renameat2`/`renamex_np`), and `Ctrl+C` uses C's `signal`: both in `src/sys.rs`, the
-  only module with `unsafe`.
-- **RAII stages.** `Stage` replaces `stage_file`/`commit`/`os.remove`: dropping an
-  uncommitted stage removes it; `commit` flushes the file, renames, and flushes the
-  folder. Stage names (`.guidedog-stage-` + ten digits + extension) are unchanged, so
-  `remove_stages` still clears what a killed process left.
+- **No allocator machinery.** Rust's global allocator aborts on failure instead of
+  refusing one allocation, so no library has to survive a refusal and nothing runs
+  behind a per-allocation meter. There are no meters, guards, arenas or disk-backed
+  working memory. `available_memory` reads the override or `/proc/meminfo` only, for
+  hints.
+- **Plain file operations.** Since allocation cannot fail softly, publication uses plain
+  `std::fs` calls (`rename_path` is `std::fs::rename`). `exchange` keeps its foreign
+  call (`renameat2`/`renamex_np`), and `Ctrl+C` uses C's `signal`: both in `src/sys.rs`,
+  the only module with `unsafe`.
+- **RAII stages.** Dropping an uncommitted `Stage` removes it; `commit` flushes the
+  file, renames, and flushes the folder. Stage names (`.guidedog-stage-` + ten digits +
+  extension) are fixed, so `remove_stages` clears what a killed process left.
 - **Threads.** `run_workers` starts scoped threads with an 8 MiB stack, so a conversion's
-  stack budget is known to fit; `run_with_stack` does the same for the main command. The
-  per-thread alternate signal stacks and `main_stack_bytes`/`thread_stack_bytes`
-  (getrlimit) are gone. A worker's panic is re-raised on the caller with its payload.
+  stack budget is known to fit; `run_with_stack` does the same for the main command. A
+  worker's panic is re-raised on the caller with its payload.
 - **Crashes are panics.** A panic hook records the cause; `catch_crash` prints the
   report and returns 70. The hook does not print or exit, so panics a library catches
   itself (the embedded Typst compiler) stay internal. Rust reports stack overflows
@@ -87,10 +79,8 @@ cancelled.
 - **Reports come from `gd-report`.** `Report`, the text and JSON renderers, excerpts and
   `excerpt_at` (`gd_report::set_line_column`) live there; `describe` fills templates with
   the core's `Diagnostic::format_into` (span arguments quoted in backticks, cut at 60
-  characters) and adds a note when the report store overflowed.
+  characters) and adds a note when the report store overflowed. A document dump is
+  `guidedoc::dump_to_string`.
 - **Sources.** `read_source` checks UTF-8 (`host.utf8` with line and column) and drops a
   BOM, so the engine only ever sees `&str`. An included file that is not UTF-8 is
   refused (`ResourceStatus` has no status for it).
-- **Not ported:** `dump` (use `guidedoc::dump_to_string`), `budget_join`/`budget_leave`
-  (now `Budget::join`), `render_problem_*` (`Problem::report` + `gd-report`),
-  `crash_on_assertion`, Windows unhandled-exception filters.

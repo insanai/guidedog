@@ -1,6 +1,6 @@
 //! sphinx.ext.extlinks' ExternalLinksChecker, which `extlinks_detect_hardcoded_links`
 //! turns on: a URL written out in full that an extlink could write warns, with the role
-//! to write instead (link.odin's check_hardcoded_link).
+//! to write instead.
 
 use guidedoc::{AttributeKey, Document, LinkKind, NodeId};
 

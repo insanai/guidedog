@@ -4,8 +4,8 @@
 //! its standard output, never on a command line. A system without `secret-tool` can
 //! still publish with the environment's token.
 //!
-//! Items carry the attributes the Odin publisher's libsecret schema gave them
-//! (`xdg:schema`, `service`, `profile`), so tokens it stored are found.
+//! Items carry fixed attributes (`xdg:schema`, `service`, `profile`), the same in every
+//! release, so tokens stored by an earlier release are found.
 
 use std::io::Write;
 use std::process::{Command, Output, Stdio};

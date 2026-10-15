@@ -15,15 +15,12 @@ publisher. SHA-1 repositories only; no networking (send the request with `gd-fet
 ## Design notes
 
 - SHA-1 comes from `gd-sha` and zlib from `gd-flate` (`zlib_compress_into` at
-  `Level::Default`); the private SHA-1 and fixed-Huffman deflater are gone. Packs are now
-  smaller (dynamic Huffman, lazy matching). Each object is compressed whole, so memory
+  `Level::Default`, with dynamic Huffman codes and lazy matching). Each object is compressed whole, so memory
   holds the largest single file (reserved with `try_reserve`, `TooLarge` on failure),
   never the pack.
 - `PackWriter` has no `abort`: dropping it removes an unfinished pack. A `Pending` guard
   declared after the file closes the file before removing it (Windows).
-- `write_request` takes an `Update { reference, old, new, pack, agent }` instead of six
-  arguments.
-- `Report::unpack_error: Option<String>` and `RefStatus::refusal: Option<String>` replace
-  the `unpacked`/`ok` flags paired with empty-string reasons; `is_unpacked()`/`is_ok()`
-  ask.
+- `write_request` takes one `Update { reference, old, new, pack, agent }`.
+- `Report::unpack_error: Option<String>` and `RefStatus::refusal: Option<String>` hold a
+  reason only when there is one; `is_unpacked()`/`is_ok()` ask.
 - `Error` renders through `gd-report` and carries a stable code (`ErrorKind::code`).

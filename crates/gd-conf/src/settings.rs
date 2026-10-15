@@ -1,8 +1,7 @@
 //! The settings table: every conf.toml key, its kind, and where it is stored.
 //!
-//! The table replaces Odin's `Slot` union and its `field_fits` check: each entry's
-//! [`Store`] is a typed accessor, so a setting can only be stored into a field of the
-//! type its kind reads, and that is checked when the crate compiles.
+//! Each entry's [`Store`] is a typed accessor, so a setting can only be stored into a
+//! field of the type its kind reads, and that is checked when the crate compiles.
 
 use std::collections::BTreeMap;
 

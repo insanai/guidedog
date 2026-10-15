@@ -178,10 +178,10 @@ fn move_to(id: &str, to: &str, reason: &str, evidence: &str) -> Step<'static> {
 #[test]
 fn a_configured_workflow_and_numbering_are_followed() {
     let (_root, dir) = make_catalog("workflow", CUSTOM);
-    for title in ["Use Odin", "Keep TOML", "Split catalogs", "One more"] {
+    for title in ["Use Rust", "Keep TOML", "Split catalogs", "One more"] {
         run(&dir, Step::New(title)).unwrap_or_else(|p| panic!("{p}"));
     }
-    for slug in ["use-odin", "keep-toml", "split-catalogs"] {
+    for slug in ["use-rust", "keep-toml", "split-catalogs"] {
         run(&dir, promote(slug)).unwrap_or_else(|p| panic!("{slug}: {p}"));
     }
     // start 998 and width 3, past the width; limit 1001 refuses a fifth number.

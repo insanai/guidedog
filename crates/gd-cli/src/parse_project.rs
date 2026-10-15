@@ -287,8 +287,8 @@ fn memory_mode(value: &str) -> Result<MemoryMode, Problem> {
     }
 }
 
-/// `--memory=disk` and `--disk-budget`: the Odin builds could keep working memory on
-/// disk; this version cannot, and says what to do instead.
+/// `--memory=disk` and `--disk-budget`: earlier releases could keep working memory on
+/// disk; builds now keep it in memory, so the problem says what to do instead.
 fn no_disk(option: &str) -> Problem {
     Problem::new(
         "cli.memory-disk",

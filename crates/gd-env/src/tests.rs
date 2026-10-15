@@ -1,5 +1,5 @@
-//! Tests ported from lib/project/config_test.odin (patterns) and new ones for
-//! discovery, the environment's JSON and the object store.
+//! Tests of the source patterns, discovery, the environment's JSON and the object
+//! store.
 
 use std::path::{Path, PathBuf};
 

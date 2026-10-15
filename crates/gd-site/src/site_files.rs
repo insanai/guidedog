@@ -1,5 +1,5 @@
-//! The site unit (html_site.odin's `write_site_files` and `index_pages`, plus
-//! additional_pages.odin and plugins.odin's `write_plugin_assets`): everything besides
+//! The site unit (the site files, the index pages, the additional pages and the
+//! plugins' assets): everything besides
 //! the document pages. It is written every build; its files are compared byte for
 //! byte, so only changed ones are staged.
 

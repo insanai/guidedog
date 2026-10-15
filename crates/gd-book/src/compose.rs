@@ -1,7 +1,6 @@
-//! Composing a book's Typst source (builders.odin's compose_book, write_chapter,
-//! book_order and the Typst string helpers): the renderer's preamble, the template,
-//! the cover settings, the project's preamble, every chapter of the root's toctree, and
-//! the general index.
+//! Composing a book's Typst source, with the book order and the Typst string helpers:
+//! the renderer's preamble, the template, the cover settings, the project's preamble,
+//! every chapter of the root's toctree, and the general index.
 
 use std::collections::BTreeSet;
 use std::fmt::Write as _;

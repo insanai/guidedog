@@ -1,4 +1,4 @@
-//! Graphs (graphs.odin): sphinx.ext.graphviz's directives (graphviz, graph, digraph),
+//! Graphs: sphinx.ext.graphviz's directives (graphviz, graph, digraph),
 //! which the reader leaves as DOT code blocks marked `graphviz`, and ```` ```dot ````
 //! fences in Markdown. The link pass lays each out with Graphviz (gd-graphdog, one
 //! context per worker) and shows it as an SVG image in pages and books. A graph that

@@ -1,6 +1,6 @@
 //! End-to-end builds of small projects made by hand: reStructuredText documents read
 //! with guidedoc-rst, saved to an object store, and an environment and tables filled
-//! as gd-read and gd-resolve would (gd-read is not ported yet). The PDF builds run the
+//! as gd-read and gd-resolve would, so the builders are tested alone. The PDF builds run the
 //! embedded Typst compiler; their pages and text are checked on what Typst laid out,
 //! as the builder hands it back.
 

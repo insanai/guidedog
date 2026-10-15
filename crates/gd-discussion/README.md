@@ -1,7 +1,7 @@
 # gd-discussion cheat sheet
 
 Discussion catalogs (GDS 0007): proposals and decisions kept as reStructuredText records
-under a prefix (`gds`, `sds`, `eds`), ported from `guidedog_old/lib/discussion`. Depends
+under a prefix (`gds`, `sds`, `eds`). Depends
 on `gd-report`, `gd-toml`, `gd-json`, `gd-clock`, `gd-plugins` (the plugin interface) and
 `gd-typst` (older Typst catalogs). Design notes:
 `docs/manual/internals/discussion.rst`.
@@ -50,20 +50,20 @@ targets. `Builder::build(&mut self, &BuildRequest) -> Result<PathBuf>` makes one
 host to build the catalog as a Guidedog project (`CommandContext::build_project`),
 strict, with the books as a quoted `pdf_documents` setting. An older Typst catalog
 compiles record by record with gd-typst (`legacy.rs`: the embedded compiler, or the
-program `--typst` names), staged and themed as Odin's `discussion/embedded` did.
+program `--typst` names), staged and themed like the HTML and PDF of a current catalog.
 
-## Redesigns
+## Design notes
 
 - No allocator watch or `discussion.memory`: Rust aborts on allocation failure, so the
-  Odin refusal sweeps became interruption sweeps over `apply`.
+  tests sweep interruptions over `apply` instead of allocation refusals.
 - `apply` and `recover` take the `Lock`, so a change cannot be written unlocked; the lock
   uses `File::try_lock` (flock) and retries for 200 ms (forked children briefly hold
   copies of descriptors).
-- `Change { before: Option, after: Option }` replaces `existed`/`present` (the journal
-  keeps the Odin JSON form); `Catalog` carries its folder; `Record` keeps `Sections`, no
+- `Change { before: Option, after: Option }` says whether a file existed before and
+  after (the journal keeps the JSON form older releases wrote); `Catalog` carries its folder; `Record` keeps `Sections`, no
   text; one `Options` split into `NewDraft`, `Decision`, `BuildOptions`, `Init`.
 - `replace_field` takes a typed `FieldValue`, so invalid literals cannot be passed.
-- The command line is a plugin of guidedog (`guidedog dsc`), not the Odin `dsc` and
-  `guidedog gds` programs: one command for every catalog, builds by the host.
+- The command line is a plugin of guidedog (`guidedog dsc`): one command for every
+  catalog, builds by the host.
 - Problems carry a line, an excerpt with caret (configuration mistakes) and a
   "Did you mean" suggestion (commands, options, states, labels, settings, records).

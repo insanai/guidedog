@@ -1,6 +1,6 @@
-//! The page layout (templates.odin and the template functions of html_site.odin and
-//! intl.odin): `layout.html` in a gd-jinja environment whose loader looks first in
-//! `templates_path`, then among the built-in theme's templates (gd-theme).
+//! The page layout and its template functions: `layout.html` in a gd-jinja environment
+//! whose loader looks first in `templates_path`, then among the built-in theme's
+//! templates (gd-theme).
 //!
 //! Functions that need nothing of the build (`css_tag`, `js_tag`) and Sphinx's fixed
 //! names are the environment's. Those that read the build or the page (`pathto`,

@@ -1,5 +1,4 @@
-//! Completing the next folder into the whole next output (generation.odin's
-//! `complete_next`).
+//! Completing the next folder into the whole next output.
 //!
 //! The next folder is the spare output: after a switch it holds the output the switch
 //! replaced, which shares every unchanged file with the new one (they are hard links to

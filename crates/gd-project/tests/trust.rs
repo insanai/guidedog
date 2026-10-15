@@ -1,4 +1,4 @@
-//! What a build reads and refuses to read (Odin registry_test and trust_test).
+//! What a build reads and refuses to read: the registry and the trust policy.
 
 #![allow(clippy::unwrap_used)]
 

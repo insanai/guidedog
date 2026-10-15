@@ -1,7 +1,6 @@
 //! The bodies of the pages made from the whole project: the search page, the general
-//! index (genindex.odin, as Sphinx's genindex.html, genindex-split.html and
-//! genindex-single.html) and the Python module index (modindex.odin, as Sphinx's
-//! domainindex.html).
+//! index (as Sphinx's genindex.html, genindex-split.html and genindex-single.html) and
+//! the Python module index (as Sphinx's domainindex.html).
 
 use gd_resolve::{BuildView, IndexGroup, IndexLink, IndexTerm, ModindexEntry, ModindexLetter};
 

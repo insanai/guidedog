@@ -1,4 +1,4 @@
-//! The search index (the index side of search.odin). Reading keeps each document's
+//! The search index, the builders' side. Reading keeps each document's
 //! words by section in a file beside its object (`search/<docname>.<digest16>.txt`:
 //! one line per section, `anchor\ttitle\ttext`). The HTML builders join them into an
 //! inverted index, `_static/searchindex.js`, which the theme's script queries without

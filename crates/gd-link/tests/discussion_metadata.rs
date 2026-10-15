@@ -1,4 +1,4 @@
-//! Discussion metadata (ported from discussion_metadata_test.odin): the leading field
+//! Discussion metadata: the leading field
 //! list of a discussion record gets readable labels and its JSON lists plain text, in
 //! every output; ordinary fields and the source keep their names.
 

@@ -1,5 +1,4 @@
-//! Tests ported from lib/project/config_test.odin and trust_test.odin, plus the
-//! rust_autoapi settings.
+//! Tests of loading, checking and trust, and of the rust_autoapi settings.
 
 use std::path::{Path, PathBuf};
 

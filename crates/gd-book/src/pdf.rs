@@ -1,5 +1,5 @@
-//! The pdf builder (builders.odin's write_pdf and write_book): one Typst book per
-//! `pdf_documents` entry, one output unit each (`book:<file>`).
+//! The pdf builder: one Typst book per `pdf_documents` entry, one output unit each
+//! (`book:<file>`).
 
 use std::collections::HashSet;
 use std::path::Path;

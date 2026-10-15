@@ -1,5 +1,4 @@
-//! The text and dummy builders (builders.odin's write_text and write_dummy, over
-//! html_builder.odin's write_documents): one output unit per document, kept when its
+//! The text and dummy builders: one output unit per document, kept when its
 //! inputs and the answers to its lookups are unchanged.
 
 use gd_env::{BuilderKind, Digest, DocId, OutputFormat};

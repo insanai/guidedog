@@ -46,8 +46,8 @@ The API documentation is on [docs.rs](https://docs.rs/gd-plugins). This is one o
 A plugin crate implements `BuildPlugin` (or `Publisher`) once and exposes
 `pub fn plugin() -> Plugin`. The same value is then:
 
-- **linked** into a custom `guidedog` binary (Rust has no stable ABI, so this
-  replaces Odin's linked procedure tables; no dylib loading):
+- **linked** into a custom `guidedog` binary (Rust has no stable ABI, so plugins are
+  linked at build time; no dylib loading):
   `gd_cli::run_with(Registry::new(vec![badge::plugin()])?)` (planned gd-cli entry,
   `fn run_with(linked: Registry) -> ExitCode`);
 - **served** as an installed program by the crate's tiny `main`:
@@ -113,20 +113,18 @@ Examples: `examples/build_plugin/` (the product badge: `badge.rs` library with t
 `badge preview` command, `main.rs` server), `examples/publisher.rs` (a
 local-folder publisher), `examples/protocol_fixture.rs` (faulty programs for tests).
 
-## Redesign notes (from Odin `lib/plugins`)
+## Design notes
 
-- **Command-line extensions (new).** A plugin may add commands to the host's command
+- **Command-line extensions.** A plugin may add commands to the host's command
   line; an installed program announces them in optional handshake fields and runs them
   on the person's terminal when started with `--guidedog-command REQUEST`. Old programs
   and hosts are unaffected. See docs/manual/internals/plugins.rst.
-- **Traits instead of procedure tables.** A plugin value *is* its session state: no
-  `rawptr data`, no `unload` callback (use `Drop`), no context structs carrying
-  allocators. A `Plugin` holds a prototype and clones it per session, so sessions never
+- **Traits.** A plugin value *is* its session state: no untyped user data, no
+  `unload` callback (use `Drop`), no context structs carrying allocators. A `Plugin` holds a prototype and clones it per session, so sessions never
   share state. Hooks declare themselves in `PluginInfo::hooks` / `Capabilities`.
-- **No owners to release.** `Text_Result`, `Assets_Result`, `Result`, `Plan` and
-  `Snapshot` are ordinary values; `release_*`, arenas and allocation-refusal
-  machinery (`memory_refused`, the per-allocation refusal tests) are gone. Hook text is
-  `Cow`, so unchanged text is never copied.
+- **No owners to release.** Hook results, `Plan` and `Snapshot` are ordinary owned
+  values; there are no `release_*` calls, arenas or allocation-refusal checks. Hook text
+  is `Cow`, so unchanged text is never copied.
 - **Types forbid misuse.** `Registry::new` validates, so an invalid registry cannot
   exist; `SourceFormat` is an enum; `Duration` cannot be negative; the SDK keeps the
   session's identity private, so a callback cannot replace it; a plan's generation is
@@ -134,7 +132,8 @@ local-folder publisher), `examples/protocol_fixture.rs` (faulty programs for tes
   to dependencies and the cache key, so helper fingerprints cannot be erased.
 - **Process transport.** A writer and a reader thread own the child's pipes; the host
   waits on channels with one monotonic deadline per exchange and polls the `Cancel`
-  probe (replacing non-blocking pipes and SIGPIPE masking). Wire format unchanged.
+  probe, so no pipe is non-blocking and SIGPIPE needs no masking. The wire format is
+  stable across releases.
 - **Evolution.** Host-made inputs (`SourceInput`, `HtmlInput`, `PluginOptions`,
   `LoadOptions`, `SnapshotOptions`, `Handshake`, `MachineEntry`) are `#[non_exhaustive]`
   with constructors (`::new`, or `Default` plus field assignment), so new fields are not
@@ -142,9 +141,9 @@ local-folder publisher), `examples/protocol_fixture.rs` (faulty programs for tes
   version the traits.
 - **Served plugins load once.** `serve` takes the plugin by value (no `Clone` needed),
   so after a failed `load` the program refuses another load; hosts never retry anyway.
-- **Dropped:** Windows-specific pipe and handle code (std covers it), the exported
-  `try_lock`/`unlock` (use `std::fs::File::try_lock`), and the exported line-reader and
-  JSON field helpers (use gd-json).
+- **Small surface:** std covers pipes and handles on every platform, locking is
+  `std::fs::File::try_lock`, and JSON goes through gd-json, so the crate exports no
+  helpers for them.
 - **`Problem` is one pointer wide:** its fields live in a boxed `ProblemData`, reached
   through `Deref` (`p.code`, `p.exit = 2`), so `Result<T, Problem>` stays small and no
   author needs to allow `clippy::result_large_err`. Build with `Problem::new(..).hint(..)`

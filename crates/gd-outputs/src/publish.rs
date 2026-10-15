@@ -1,4 +1,4 @@
-//! The steps of a decided commit (publish.odin): switch the output folder and the next
+//! The steps of a decided commit: switch the output folder and the next
 //! one, then rename each record over its destination.
 //!
 //! Each step can be repeated, and each can be undone. Where the new output is is told

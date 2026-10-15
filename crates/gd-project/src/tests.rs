@@ -36,7 +36,8 @@ fn suppress_warnings_follows_sphinx() {
         ["Warning:toc.not_readable", "Warning:autodoc", "Warning:", "Error:ref.ref"]
     );
     assert_eq!(kept(&["ref.doc"]).len(), 5);
-    // A warning of the bare type is silenced by any of its subtypes, as in Odin.
+    // A warning of the bare type is silenced by any of its subtypes, so one entry
+    // covers a whole family.
     assert_eq!(kept(&["ref.*", "autodoc.import_object"]).len(), 3);
     assert_eq!(kept(&["toc.not_readable", "autodoc"]).len(), 4);
 }

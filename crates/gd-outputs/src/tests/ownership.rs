@@ -1,4 +1,4 @@
-//! ownership_test.odin, as `Drop` tests: what a build holds is released by dropping
+//! Ownership, as `Drop` tests: what a build holds is released by dropping
 //! it, and dropping never changes the published output.
 
 use gd_env::{BUILD_BUDGET, Digest, Environment, ObjectStore};
@@ -90,8 +90,8 @@ fn an_unsettled_generation_is_left_for_the_next_build() {
     expect_settled(&p);
 }
 
-/// Repeated builds and drops leave no stale files behind (the Odin test counted
-/// allocations; here the file system is what a build can leak).
+/// Repeated builds and drops leave no stale files behind: the file system is what a
+/// build can leak.
 #[test]
 fn builds_leave_nothing_behind() {
     let p = built();

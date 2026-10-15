@@ -1,9 +1,8 @@
 # gd-conf cheat sheet
 
-conf.toml: a Guidedog project's configuration. Ported from `guidedog_old/lib/project`
-(config.odin, config_load.odin, config_fields.odin, object_types.odin, trust.odin, the
-loading half of project.odin, and the `check_*` helpers of mathjax, intersphinx,
-autodoc, odin, plugins and intl).
+conf.toml: a Guidedog project's configuration. Loading, the settings table, object
+types, trust (readable roots), and the checks of the mathjax, intersphinx, autodoc,
+Odin API, Rust API, plugins and intl settings.
 
 ```rust
 let loaded = gd_conf::load_config(Path::new("docs"), &gd_conf::LoadOptions {
@@ -27,27 +26,26 @@ let dropped = gd_conf::confine_untrusted(&mut c.clone()); // --untrusted
 | `Pattern` | `nitpick_ignore_regex`: a small bounded regex, `full_match` |
 | `json_dumps` | a TOML table as Python's `json.dumps` (mathjax3/4_config) |
 
-## Redesign notes
+## Design notes
 
-- **Typed settings table.** Odin's `Slot` union of field pointers and its `field_fits`
-  runtime check became `Store`, an enum of typed accessor functions: a setting can only
-  be stored into a field of its kind's type, checked at compile time.
+- **Typed settings table.** `Store` is an enum of typed accessor functions: a setting
+  can only be stored into a field of its kind's type, checked at compile time.
 - **Grouped struct, flat keys.** conf.toml keys are unchanged; the struct groups them
   (`html_theme` is `config.html.theme`, `plugin_timeout` is `config.plugins.timeout`).
 - **Option and enums instead of sentinels**: `html_last_updated_fmt: Option<String>`,
   `FlagOrName` enum, `Option<PathBuf>` load options, tables as `BTreeMap` (stable order
   for digests, no `sorted_pairs`).
 - **Table settings merge into their defaults** (`numfig_format = {figure = ".."}` keeps
-  the other formats), as in Sphinx; Odin's map store did the same.
+  the other formats), as in Sphinx.
 - **No regex crate**: `Pattern` covers what conf.py patterns use, with a step budget.
 - **Intl checks are local**: `gettext_additional_targets` and `figure_language_filename`
   are validated here (`GETTEXT_TARGETS`, `check_figure_format`) so gd-conf does not
   depend on gd-i18n.
-- **New: the Rust API settings** `rust_autoapi_crates`, `rust_autoapi_root`
+- **The Rust API settings** `rust_autoapi_crates`, `rust_autoapi_root`
   (`rustapi`), `rust_autoapi_options` (`private-members`, `hidden-members`, `noindex`),
   `rust_autoapi_member_order` (`source`, `alphabetical`),
   `rust_autoapi_add_toctree_entry`, `rust_autoapi_generate_api_docs`, checked like the
-  odin ones; crate folders join `readable_roots` and are dropped by `confine_untrusted`
+  `odin_*` ones; crate folders join `readable_roots` and are dropped by `confine_untrusted`
   when outside the source folder.
-- `-C` without a project builds the given folder (Odin left the source folder empty).
-- The TOML parser tests of config_test.odin live in gd-toml.
+- `-C` without a project builds the given folder.
+- The TOML parser's own tests live in gd-toml.

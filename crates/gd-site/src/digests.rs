@@ -1,7 +1,6 @@
-//! The settings digest of the pages the HTML builders write (html_builder.odin's
-//! `html_settings_digest`), on top of gd-resolve's `document_settings` and
-//! `page_inputs`. Every input is listed in docs/manual/internals/incremental.rst; a new
-//! input changes that page too.
+//! The settings digest of the pages the HTML builders write, on top of gd-resolve's
+//! `document_settings` and `page_inputs`. Every input is listed in
+//! docs/manual/internals/incremental.rst; a new input changes that page too.
 
 use gd_env::{Digest, Digester};
 use gd_resolve::{BuildView, document_settings};

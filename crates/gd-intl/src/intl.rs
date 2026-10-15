@@ -1,4 +1,4 @@
-//! A build's translation state, prepared once before reading (intl.odin): the catalogs
+//! A build's translation state, prepared once before reading: the catalogs
 //! documents are translated with, Guidedog's own words, the settings of the translation
 //! pass, and the digest of all of it.
 

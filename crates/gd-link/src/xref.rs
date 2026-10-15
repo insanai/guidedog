@@ -1,4 +1,4 @@
-//! Cross-references in the tree (the AST half of xref.odin): each Xref node becomes an
+//! Cross-references in the tree: each Xref node becomes an
 //! `XrefQuery`, `gd_resolve::resolve_xref` answers it, and the node is replaced by a
 //! link, its title, or its content with a warning.
 

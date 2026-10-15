@@ -1,6 +1,5 @@
-//! Images a page shows (link.odin's replace_image; `BuildView::image_file` finds the
-//! file), and the paths the book reads files by (graphs.odin's book_root and
-//! book_path).
+//! Images a page shows (`BuildView::image_file` finds the file), and the paths the
+//! book reads files by (`book_root` and `book_path`).
 
 use std::path::{Path, PathBuf};
 

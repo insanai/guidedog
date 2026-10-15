@@ -232,7 +232,7 @@ fn lifecycle_moves_need_their_reasons() {
 #[test]
 fn history_wraps_at_spaces_without_breaking_words() {
     let first = "2026-10-11: accepted -> committed. Reviewed ownership and error handling.";
-    let last = "Evidence: tests/typst_test.odin; native PDF and HTML builds.";
+    let last = "Evidence: tests/typst_test.toml; native PDF and HTML builds.";
     assert_eq!(
         rst::history(&format!("{first} {last}  \n")),
         format!("\n.. rubric:: Lifecycle event\n\n::\n\n   {first}\n   {last}\n")

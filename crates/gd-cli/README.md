@@ -29,25 +29,23 @@ Usage problems are `cli.usage` (exit 2), Elm-style through `gd-report`, with "Di
 mean" for commands (guidedog's and the plugins'), options, builders, intl/plugin
 subcommands and values.
 
-## Decisions and redesigns (from Odin `lib/cli`)
+## Design notes
 
-- **Parse, then run.** Odin parsed into one flat `Options`/`Project_Args` and checked
-  meaning while running. Here each command has a typed struct, built while parsing, so
+- **Parse, then run.** Each command has a typed struct, built while parsing, so
   every usage mistake (builder names, the sphinx-build forms, `intl` actions, formats
   from suffixes) is found before anything runs, and tests check meaning without I/O.
-- **Each command takes only its own options.** Odin accepted every project option for
-  every project command (`guidedog clean -W` was silently ignored); now it is
-  `UNKNOWN OPTION` with a suggestion. `intl -w` with a bad number is an error (Odin fell
-  back to 76). `serve` honours `-c`/`-C` like build (Odin passed only `-D`).
+- **Each command takes only its own options.** An option another command owns
+  (`guidedog clean -W`) is `UNKNOWN OPTION` with a suggestion, never silently ignored.
+  `intl -w` with a bad number is an error. `serve` honours `-c`/`-C`/`-D` like build.
 - **Global option values before the command word** (`guidedog --color never build`)
-  are skipped when finding the command (Odin took `never` for the command).
-- **No disk memory mode.** gd-host dropped `Disk`; `--memory=disk` and `--disk-budget`
+  are skipped when finding the command, so `never` is not taken for a command.
+- **No disk memory mode.** gd-host keeps working memory in RAM; `--memory=disk` and `--disk-budget`
   are `cli.memory-disk` errors whose hint says to raise `--budget` or use
   `--memory=ram`. The budget questions remain: before a build (continue, lower, stop)
   and at the budget (raise, stop), terminal only, scripted in tests (`memory::Ask`).
-- **No arena, guard or `host.memory` report.** Rust aborts on allocation failure.
-- **Plugins add commands; gd-cli knows none by name.** Odin hard-wired `publish pages`
-  and `pages workflow`. Here a plugin declares commands (`gd_plugins::CommandInfo`) and
+- **No arena, guard or `host.memory` report.** Rust aborts on allocation failure, so
+  the budget is checked before work, not per allocation.
+- **Plugins add commands; gd-cli knows none by name.** A plugin declares commands (`gd_plugins::CommandInfo`) and
   runs them with a `CommandContext` that gd-cli lends (`extension_run.rs`: its console,
   questions, and builds with this engine). A word guidedog does not know, or a
   `publish` target, is matched against `extensions()` (linked first, then registered
@@ -55,15 +53,15 @@ subcommands and values.
   its declaration. gd-cli depends only on gd-plugins; `cmd/guidedog` links the Pages and discussion
   plugins (the dependency gate checks it). See docs/manual/internals/plugins.rst.
 - **Ctrl+C** is caught by the commands that must settle (convert, build, publish, plugin
-  check, plugin commands), as in Odin, not globally in `main`: `serve` stops at once.
+  check, plugin commands), not globally in `main`: `serve` stops at once.
 - **Stdin is not locked** for the run (`StdinLines` reads on demand): `convert -` reads
   stdin through the standard library, whose lock is not reentrant.
 - **`--version`** names Guidedog, Guidedoc and its schema, the tree-sitter crates (a
-  test keeps them equal to Cargo.lock), the linked Graphviz, and the Typst backend; the
-  Odin `odin` line is gone. `--licenses` prints NOTICE's third-party section.
+  test keeps them equal to Cargo.lock), the linked Graphviz, and the Typst backend.
+  `--licenses` prints NOTICE's third-party section.
 - **`plugin list`/`inspect`** show the linked plugins beside the registered programs.
 - **Discussion catalogs** are not gd-cli's: the discussion plugin (gd-discussion),
-  which `cmd/guidedog` links, adds `guidedog dsc`. The Odin `guidedog gds` is gone.
+  which `cmd/guidedog` links, adds `guidedog dsc`.
 - `convert` and `formats` use `guidedoc_defaults::registry()` (readers rst, sphinx,
   commonmark, myst).
 

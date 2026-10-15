@@ -1,4 +1,4 @@
-//! Rendering a linked page (render_page.odin): a document's cached object is loaded,
+//! Rendering a linked page: a document's cached object is loaded,
 //! linked for an output by the link pass, and rendered with a renderer of the
 //! registry, on a worker that owns its workspaces.
 

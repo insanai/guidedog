@@ -1,4 +1,4 @@
-//! The link pass (link.odin): what one page knows while its document is rewritten for
+//! The link pass: what one page knows while its document is rewritten for
 //! one output, and the rule that decides each node.
 
 use std::cell::OnceCell;

@@ -5,8 +5,8 @@ use std::path::{Component, Path, PathBuf};
 
 use crate::config::Config;
 
-/// Removes `.` components and resolves `..` against the components before it, as
-/// Odin's `filepath.clean` does; it never touches the file system.
+/// Removes `.` components and resolves `..` against the components before it,
+/// lexically: it never touches the file system.
 pub fn clean_path(path: &Path) -> PathBuf {
     let mut out = PathBuf::new();
     for component in path.components() {

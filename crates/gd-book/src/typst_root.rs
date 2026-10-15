@@ -1,4 +1,4 @@
-//! The folders Typst may read while it typesets a book (typst_root.odin).
+//! The folders Typst may read while it typesets a book.
 //!
 //! Typst reads what the book names by paths below its root, and refuses a path that
 //! leaves the root. `gd_link::book_root` is the folder the book's paths are relative

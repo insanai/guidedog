@@ -1,4 +1,4 @@
-//! Discussion metadata (discussion_metadata.odin). A discussion record (GDS and its
+//! Discussion metadata. A discussion record (GDS and its
 //! relatives) starts with a field list such as `:gds-number:`; its leading fields get
 //! readable names ("Authors") and its JSON lists become comma-separated text, in every
 //! output. Ordinary fields, examples and the source keep their names. The metadata is

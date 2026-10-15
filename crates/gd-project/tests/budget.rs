@@ -1,5 +1,5 @@
 //! What a build reads for its own bookkeeping is counted against its budget, as the
-//! documents are (Odin budget_test). Each test makes one such thing larger than the
+//! documents are. Each test makes one such thing larger than the
 //! budget, which the rest of the build fits, and expects the budget's problem.
 
 #![allow(clippy::unwrap_used)]

@@ -1,4 +1,4 @@
-//! clean_test.odin: `guidedog clean` empties the build folder and follows no link.
+//! `guidedog clean` empties the build folder and follows no link.
 
 use gd_conf::Config;
 

@@ -1,5 +1,4 @@
-//! Ported from guidedog_old/lib/project/migrate_test.odin, plus the one-call path and
-//! extension harvesting.
+//! conf.py and guidedog.toml migration, the one-call path, and extension harvesting.
 
 #![allow(clippy::unwrap_used)]
 

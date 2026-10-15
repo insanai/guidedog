@@ -1,4 +1,4 @@
-//! The gettext builder (intl_gettext.odin): Sphinx's message templates, one POT file
+//! The gettext builder: Sphinx's message templates, one POT file
 //! per text domain (`gettext_compact`), with every translatable message of its
 //! documents, in docname order.
 

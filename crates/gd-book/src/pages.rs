@@ -26,7 +26,7 @@ pub(crate) struct PageStyle<'a> {
 }
 
 /// The request for one page, with the renderer settings its output uses: the text
-/// output takes only the labels, as Odin's text builder did; the book adds the
+/// output takes only the labels, since plain text has no colours; the book adds the
 /// highlighter that draws code in Guidedog's colours.
 pub(crate) fn page_request<'a>(
     view: &BuildView<'a>,

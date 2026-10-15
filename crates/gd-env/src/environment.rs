@@ -17,7 +17,7 @@ use crate::discover::SourceKind;
 use crate::records;
 
 /// The environment's format version; an environment of another version is not read.
-/// 26 is the Rust port's first (the Odin build wrote 25).
+/// Raise it whenever the saved form changes, so an older environment is rebuilt.
 pub const ENVIRONMENT_VERSION: u32 = 26;
 
 /// A document's index in the environment, which the project tables are indexed by.

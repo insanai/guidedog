@@ -1,5 +1,4 @@
-//! Ported from guidedog_old/lib/project/quickstart_test.odin: the project quickstart
-//! writes loads with gd-conf, as a build loads it.
+//! The project quickstart writes loads with gd-conf, as a build loads it.
 
 #![allow(clippy::unwrap_used)]
 

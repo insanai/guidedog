@@ -1,4 +1,4 @@
-//! The `only` directive's expressions (link.odin's evaluate_only): tags joined by
+//! The `only` directive's expressions: tags joined by
 //! `and`, `or`, `not` and parentheses.
 
 use gd_env::{BuilderKind, OutputFormat};

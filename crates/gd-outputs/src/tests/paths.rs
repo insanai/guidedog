@@ -1,4 +1,4 @@
-//! build_paths_test.odin: where a generation's output and records go.
+//! Where a generation's output and records go.
 
 use std::path::Path;
 

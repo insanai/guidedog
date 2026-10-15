@@ -1,6 +1,6 @@
 //! Applying plans: whole or not at all, and recoverable when interrupted. Rust aborts
-//! when memory runs out, so the Odin refusal sweeps become interruption sweeps: an apply
-//! stopped after every possible step is rolled back exactly.
+//! when memory runs out, so the tests sweep interruptions, not allocation refusals: an
+//! apply stopped after every possible step is rolled back exactly.
 
 #![allow(clippy::unwrap_used)] // a test failing on unexpected input is the point.
 

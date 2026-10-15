@@ -1,7 +1,6 @@
-//! The html and dirhtml builders (html_builder.odin's `write_html` and
-//! `write_documents`, builders.odin's singlehtml): one unit per document, kept when
-//! its inputs and lookups are unchanged; the rest rendered on worker threads in
-//! batches and written in docname order; then the site unit and the search index.
+//! The html and dirhtml builders: one unit per document, kept when its inputs and
+//! lookups are unchanged; the rest rendered on worker threads in batches and written in
+//! docname order; then the site unit and the search index. Also the singlehtml builder.
 
 use gd_env::{Asset, Digest, DocId, Rendered};
 use gd_host::{Ledger, Problem};

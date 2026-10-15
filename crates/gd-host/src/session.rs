@@ -1,8 +1,7 @@
 //! `Session`: a workspace that converts with the host's conveniences (Ctrl+C
-//! cancellation, reports described for rendering). The Odin session sized storage,
-//! retried on `Capacity`, and charged a budget; the Rust workspace grows its own
+//! cancellation, reports described for rendering). The workspace grows its own
 //! reusable buffers within `Limits`, so a `Capacity` result is a limit reached, which a
-//! retry would only reach again.
+//! retry would only reach again; the session therefore never retries.
 
 use gd_report::Report;
 use guidedoc::{

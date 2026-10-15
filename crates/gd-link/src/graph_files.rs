@@ -1,4 +1,4 @@
-//! Files a graph names (graph_files.odin).
+//! Files a graph names.
 //!
 //! A graph can name files for Graphviz to open: a node's image or shapefile, an `<IMG>`
 //! in an HTML-like label, and the folders imagepath and fontpath. A build reads a file

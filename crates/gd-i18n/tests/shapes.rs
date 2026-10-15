@@ -1,6 +1,6 @@
 //! Extraction and translation of the node shapes the Sphinx layer writes (diagrams,
 //! toctrees, index entries, meta values, info fields, cross-references), built with
-//! guidedoc's Builder, since the Sphinx reader is not ported yet. A toy inline reader
+//! guidedoc's Builder, so the pass is tested without the Sphinx reader. A toy inline reader
 //! parses translations: `@name` is a cross-reference to `name`, the rest is text.
 
 use gd_gettext::parse_po;

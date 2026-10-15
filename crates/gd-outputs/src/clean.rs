@@ -1,4 +1,4 @@
-//! `guidedog clean` (build.odin's clean).
+//! `guidedog clean`.
 
 use gd_conf::Config;
 use gd_host::{PathKind, Problem, io_problem, remove_tree};

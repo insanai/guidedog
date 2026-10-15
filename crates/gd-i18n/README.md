@@ -5,8 +5,7 @@ messages of a document into a POT template (Sphinx's `gettext` builder), and rep
 each message with its translation in a pass (Sphinx's Locale transform). Also
 Guidedog's own words (`guidedog` text domain, catalogs built in), CLDR-named dates,
 and `figure_language_filename`. Depends on `guidedoc` and `gd-gettext` only; the
-reader that parses translations is handed in (`Reader::read_inline`). Ported from
-`guidedog_old/lib/i18n`.
+reader that parses translations is handed in (`Reader::read_inline`).
 
 ```rust
 use gd_i18n::*;
@@ -62,28 +61,27 @@ Sphinx's catalogs, although many msgids are Sphinx's English strings so a projec
 set `Language` and `Plural-Forms`, and add it to `EMBEDDED` in `src/ui.rs`. A project
 can override any word without rebuilding: `locales/<language>/LC_MESSAGES/guidedog.po`.
 
-## Redesigns from the Odin package
+## Design notes
 
 - Translations are parsed in a reader workspace the pass owns and copied into the
   pass's builder, because a `guidedoc` pass cannot add sources or make a
-  `ReadContext` on its own document. New nodes take the original message's span
-  (Odin registered the catalog's pool as a source for exact spans); diagnostics quote
-  the translation as text. Odin's builder marks and rollback became truncating the
-  snapshot's `Vec` tables; reference matching pairs first and adopts only on success.
+  `ReadContext` on its own document. New nodes take the original message's span;
+  diagnostics quote the translation as text. A failed translation rolls back by
+  truncating the snapshot's `Vec` tables; reference matching pairs first and adopts
+  only on success.
 - `Translation` is plain `Copy` data with `Option<&dyn Lookup>` (any `Catalog` or
   `MoCatalog`); counts come back as `TranslationCounts` instead of fields written by
   the pass. `TranslationPass` keeps its buffers in a `RefCell` because passes are `Fn`.
 - `Template` keeps locations and uuids itself and builds a `gd_gettext::Catalog` to
-  write, instead of shuffling uuids in and out of the references; no allocators.
-- Bit sets became structs of `bool`s (`Targets`, `Progress`); `Compact` is an enum with
-  `Single(String)`; `index_parts` is an iterator (no 8-part cap); `Image_Exists`'s
-  procedure+user pair is the `ImageExists` trait (closures implement it).
-- Dates use the crate's own `Moment` (wall-clock fields, UTC offset, zone abbreviation)
-  instead of `core:time/datetime` and a time-zone database: the host converts.
-- `figure_filename` returns `Result<String, FigureFormatError>` (with a hint) instead of
-  `(string, ok, why)`.
+  write, so the references stay untouched.
+- Flags are structs of `bool`s (`Targets`, `Progress`); `Compact` is an enum with
+  `Single(String)`; `index_parts` is an iterator (no part cap); `ImageExists` is a
+  trait that closures implement.
+- Dates use the crate's own `Moment` (wall-clock fields, UTC offset, zone abbreviation),
+  so the crate needs no time-zone database: the host converts.
+- `figure_filename` returns `Result<String, FigureFormatError>` (with a hint).
 - `fill_labels` returns `Labels`; `ui_text` takes `Option<&Translator>`.
-- Not ported: tests that need the Sphinx reader (`:ref:`/`:py:func:` roles, MyST with
-  Sphinx roles, info fields read from source) are in `tests/sphinx.rs`, ignored until
-  `guidedoc-sphinx` exists; `tests/shapes.rs` covers the same shapes with Builder-made
-  documents and a toy inline reader.
+- Tests that need the Sphinx reader (`:ref:`/`:py:func:` roles, MyST with Sphinx
+  roles, info fields read from source) are in `tests/sphinx.rs`; `tests/shapes.rs`
+  covers the same shapes with Builder-made documents and a toy inline reader, so the
+  pass is tested without the Sphinx layer.

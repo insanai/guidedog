@@ -1,4 +1,4 @@
-//! Where a build's output and its records go (build_paths.odin, generation_paths).
+//! Where a build's output and its records go.
 
 use std::ffi::OsString;
 use std::io;

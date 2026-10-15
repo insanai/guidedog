@@ -1,4 +1,4 @@
-//! What a test makes a commit step do (publish.odin's `commit_hook`): go on, stop as
+//! What a test makes a commit step do: go on, stop as
 //! if the process died there, or fail as if the system refused it. Outside this
 //! crate's tests every step goes on.
 

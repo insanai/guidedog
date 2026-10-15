@@ -1,10 +1,9 @@
 # gd-site cheat sheet
 
 Guidedog's html, dirhtml and singlehtml builders: gd-resolve's `OutputBuilder` for the
-website. Ported from `guidedog_old/lib/project` (html_builder.odin, html_site.odin,
-templates.odin, additional_pages.odin, the index side of search.odin, mathjax.odin, the
-singlehtml parts of builders.odin, the genindex/modindex bodies, nav.odin's sidebar and
-outline, plugins.odin's HTML hooks and assets, intl.odin's template functions).
+website: pages, the site files, templates, additional pages, the search index, MathJax,
+the general and module indexes, the sidebar and outline, plugin HTML hooks and assets,
+and the template functions for translation.
 
 ```rust
 use gd_resolve::OutputBuilder;
@@ -41,10 +40,9 @@ Guidedog's `toc`, `outline`, `prev`/`next`, `accent`, `root_url`, `search_url`, 
 
 Codes: `template.error` (the template's file and line), `build.output` (pages not
 written), `build.template.{outside,link}`, `build.additional_page`,
-`build.singlehtml.id`, `build.search` (new: a document's search words could not be
-read), `plugins.config` (a plugin asset takes a project file's path), `build.builder`.
+`build.singlehtml.id`, `build.search` (a document's search words could not be read), `plugins.config` (a plugin asset takes a project file's path), `build.builder`.
 
-## Redesign notes
+## Design notes
 
 - **No `Build` god object or scratch arenas.** `SiteBuilder` borrows a `BuildView`; a
   `Site` holds the view and the layout for one `write`. Pages render on
@@ -58,17 +56,16 @@ read), `plugins.config` (a plugin asset takes a project file's path), `build.bui
   loader is `Loader::custom` (templates_path first, then gd-theme's `layout.html` for
   `layout.html`, `!layout.html`, `basic/...` and known theme names).
 - **Plugins** go through `gd_env::PluginRun` (`process_html` per page, special pages
-  included; `assets()` written in the site unit), not a build-wide mutex.
+  included; `assets()` written in the site unit), so no build-wide mutex is needed.
 - **Additional pages and plugin assets** check the site unit's own files
-  (`gd_outputs::Unit::files`, an additive accessor) instead of the previous
-  generation's, so a page or asset never conflicts with itself on a rebuild.
+  (`gd_outputs::Unit::files`), not the previous generation's, so a page or asset never conflicts with itself on a rebuild.
 - **Theme files**: a project's own `_static/guidedog.css`, `guidedog.js` or
   `pygments.css` (in `html_static_path`) replaces the built-in one instead of being
   written over it; page assets are copied once each, in target order.
-- **Search**: a missing or damaged words file is a `build.search` warning (Odin left the
-  page out silently). Words use guidedoc's Unicode L/Nd tables, as the script's
+- **Search**: a missing or damaged words file is a `build.search` warning, never a page
+  left out silently. Words use guidedoc's Unicode L/Nd tables, as the script's
   `\p{L}\p{Nd}`.
-- **singlehtml** charges the page to the budget as Odin did (a `Ledger` settled on
-  drop); a document that does not fit fails the build with a budget report.
+- **singlehtml** charges the page to the budget (a `Ledger` settled on drop), since it
+  holds every document at once; a document that does not fit fails the build with a budget report.
 - Downloads and their `download=""` attribute come from gd-link/gd-resolve; this crate
   only copies the assets pages list.

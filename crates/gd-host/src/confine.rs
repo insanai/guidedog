@@ -190,7 +190,7 @@ fn passes_link(root: &Path, path: &Path) -> bool {
 }
 
 /// Normalizes `path` lexically: `.` dropped, `..` removing the component before it (or
-/// kept at the start of a relative path), as Go's and Odin's `clean` do.
+/// kept at the start of a relative path), as Go's `filepath.Clean` does.
 pub(crate) fn clean(path: &Path) -> PathBuf {
     let mut out = PathBuf::new();
     for part in path.components() {

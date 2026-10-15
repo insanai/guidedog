@@ -1,0 +1,18 @@
+[package]
+name = "xtask"
+description = "Repository tasks: the website, fonts, releases, smoke tests, and data tables."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+# Elm-style error reports, SHA-256 for downloads and release sums, and JSON for GitHub's
+# API answers and the WHATWG entity list: the workspace's own std-only libraries.
+gd-report = { workspace = true }
+gd-sha = { workspace = true }
+gd-json = { workspace = true }
+
+[lints]
+workspace = true

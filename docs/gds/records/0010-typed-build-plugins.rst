@@ -28,21 +28,25 @@ forced readers to learn deployment before writing their first extension.
 
 Provide a small, useful build interface without exposing mutable syntax-tree
 internals, injecting arbitrary events, or running scripting interpreters. This
-record does not introduce installed directives, roles, custom builders or an Odin
+record does not introduce installed directives, roles, custom builders or a
 dynamic-library ABI. Compiled reader and renderer registries remain available.
 
 Specification
 -------------
 
-``plugins.Plugin`` is a descriptor with identity, product version, interface
-version and typed procedures: optional ``load`` and ``unload``, followed by any
-of ``source``, ``html`` and ``assets``. At least one build service is required.
-A publisher descriptor instead wraps a released ``Publisher`` through
-``publisher_plugin``. Mixing build services with publication is invalid.
+A build plugin implements the ``BuildPlugin`` trait of ``gd-plugins``: ``info`` (identity,
+product version, interface version and the hooks it offers), an optional ``load``, and any
+of ``process_source``, ``process_html`` and ``collect_assets``. A default method means
+"service absent". At least one build service is required, unless the plugin only adds
+commands. ``Plugin::build`` wraps it; a publisher is wrapped by ``Plugin::publisher``
+instead. A ``Plugin`` is build hooks or a publisher, never both.
 
-``Plugin_Registry`` borrows explicit descriptors. Native applications pass this
-registry in ``project.Load_Options.plugins``. Installed programs expose the same
-table through ``serve_plugin`` and the bounded JSON Lines transport. Neither
+``Registry::new`` validates explicit plugins. A program links them into ``guidedog``
+through ``gd_cli::run_with(Registry::new(vec![badge::plugin()])?)``, and the project
+receives them in ``LoadOptions::plugins``. Installed programs serve the same value
+through ``gd_plugins::serve_plugin`` and the bounded JSON Lines transport. A build looks
+up a selected ID in the linked registry first, then in the machine registry
+(``select_build_plugin``). Neither
 route discovers or executes code merely because a descriptor exists.
 
 ``conf.toml`` selects IDs in ``plugins`` and their configuration paths in
@@ -59,14 +63,11 @@ and declares dependencies. The host serializes callback access across reading
 workers. A plugin need not implement synchronization to use this API. A native
 callback is trusted code. A pipe deadline cannot forcibly interrupt it.
 
-``load_plugin`` / ``unload_plugin`` own ``Plugin_Session``. ``process_source`` and
-``process_html`` return ``Text_Result``, freed by ``release_text``.
-``collect_assets`` returns ``Assets_Result``, freed by ``release_assets``.
-Every result owns copied values. Callback inputs are borrowed for that call.
-Callback output storage remains valid until the SDK copies it. Session state
-must not retain hook-result storage or borrowed inputs. Cleanup accepts zero,
-partial and previously released owners. Unload closes resources before arena
-release and tolerates failed load.
+``PluginSession::load`` opens a session, and dropping it ends the session.
+``process_source`` and ``process_html`` return text, and ``collect_assets`` returns
+assets; every result is an owned value. Inputs are borrowed for the call. Session state
+must not retain borrowed inputs. Dropping a session closes its resources, also after a
+failed load.
 
 Primary RST and Markdown sources pass through source hooks before parsing.
 Includes are still read by the document engine. Source transformations affect
@@ -112,22 +113,21 @@ backslashes, control bytes or reserved Git metadata. Reject duplicates,
 case-insensitive aliases and file-as-parent conflicts before copying results.
 Refuse collisions with files supplied by the project instead of overwriting them.
 
-Host allocations use the existing build budget. Child RSS is outside that
-budget. No operating-system sandbox is promised. Plugin authors must preflight
-known amplification, check every allocation and use ``memory_refused`` after
-helpers that hide allocation errors. SDK refusal never becomes partial success.
+What the host reads for a plugin uses the existing build budget. Child RSS is outside
+that budget. No operating-system sandbox is promised. Hook text is ``Cow``, so unchanged
+text is never copied. A hook never turns a failure into partial success.
 
 Every failure carries a title, context, explanation and concrete correction.
 Malformed plugin problems are contract errors. Timeouts before a completed build
 are build failures, not uncertain remote publication outcomes. Failed hooks,
-markup rejected by -W, memory refusal and interrupted builds abandon staging and
+markup rejected by -W, budget refusal and interrupted builds abandon staging and
 preserve the complete previous generation.
 
 Cache identity
 ~~~~~~~~~~~~~~
 
-Each plugin contributes its identity, product version, executable SHA-256 (or
-native host identity), loaded configuration, declared dependency files,
+Each plugin contributes its identity, product version, executable SHA-256 (for a
+linked plugin, the SHA-256 of its ID, versions and the host's build identity), loaded configuration, declared dependency files,
 ``cache_key``, builder, language and asset bytes to the build's cache key.
 
 ``read_plugin_config`` and ``read_plugin_file`` declare files and append the
@@ -164,13 +164,13 @@ advertising a publishing capability.
 Rationale and alternatives
 --------------------------
 
-A typed procedure table keeps inputs, ownership and available services visible.
+A trait keeps inputs, ownership and available services visible.
 The same package can be linked into an application or served by a small executable
 wrapper. There is no reflection, inheritance, global callback registry or event
 bus. Explicit source and output boundaries minimize coupling to parser internals.
 
 An arbitrary mutable AST interface would couple extensions to internal node
-layout, reference resolution and allocator ownership. A dynamic-library ABI would
+layout, reference resolution and ownership. A dynamic-library ABI would
 add compiler and platform compatibility contracts without improving this first
 extension. Neither is justified by the worked example.
 
@@ -184,41 +184,27 @@ and no publication credentials or authority are handed to build contexts.
 Implementation and verification
 -------------------------------
 
-The 0.6.2 implementation is in ``lib/plugins/plugin*.odin`` and
-``lib/project/plugins.odin``. ``examples/build-plugin/badge`` demonstrates bounded
-configuration, source expansion, HTML output and a generated CSS asset. Its
-standalone wrapper contains only protocol dispatch. The manual follows that exact
-source and links to byte-identical copies, checked by a repository test.
+The implementation is the ``BuildPlugin`` trait of ``gd-plugins`` and the plugin run of a
+build in ``gd-env``. ``crates/gd-plugins/examples/build_plugin`` (the badge) demonstrates
+bounded configuration, source expansion, HTML output, a generated CSS asset, and a
+``guidedog badge preview`` command. Its standalone ``main`` contains only protocol
+dispatch. The manual follows that exact source.
 
-SDK tests cover separate service tables, copied result ownership, portable asset
-conflicts and each refused allocation in turn. Integration tests compile the
-example, use a private machine registry, and exercise builders, cache changes,
-nested asset links, untrusted mode and preservation of failed generations.
-Release qualification must exercise the current SDK and Pages plugin, memory checks and
-platform coverage. Build hooks first ship in 0.6.2. Earlier 0.6.x releases contain publishers only.
-
-Implementation in Rust
-----------------------
-
-GDS 0011 moves the implementation to Rust. The ``BuildPlugin`` trait of ``gd-plugins``
-(``info``, ``load``, ``process_source``, ``process_html``, ``collect_assets``; defaults mean
-"service absent") replaces the typed procedure tables. Hook text is ``Cow``, so unchanged
-text is never copied. The limits above stay (text 8 MiB, 256 assets and 16 MiB), with
-configuration files at 1 MiB, 256 dependencies, and build requests timing out after 60 s.
-``memory_refused`` is gone. Plugin authors no longer check each allocation, because Rust
-aborts on allocation failure. A hook still never turns a failure into partial success.
-
-One implementation has two deployments. It is linked into a custom ``guidedog`` binary through
-``gd_cli::run_with(Registry::new(vec![badge::plugin()])?)``, or served as a registered
-program by ``gd_plugins::serve_plugin``. A build looks up the linked registry first, then
-the machine registry (``select_build_plugin``). A linked plugin's identity is the SHA-256
-of its ID, versions and the host's build identity. A served plugin's identity is its program's
-SHA-256. ``LoadContext::read_config`` and ``read_file`` extend the cache key with the
-digests of the bytes read, and only append. Each plugin has one session per build, shared by
+``LoadContext::read_config`` and ``read_file`` extend the cache key with the digests of
+the bytes read, and only append. Each plugin has one session per build, shared by
 reading workers behind a ``Mutex``. ``--untrusted`` refuses any selected plugin before
-code starts. ``examples/build_plugin`` is the badge, run both ways in a test that requires
-identical outputs. The project side (``gd-env``'s plugin run) is being ported with the
-project builder (GDS 0006, GDS 0011).
+code starts. The limits above stay, with configuration files at 1 MiB, 256 dependencies,
+and build requests timing out after 60 s.
+
+SDK tests cover separate services, owned results and portable asset conflicts.
+Integration tests (``tests/integration/tests/tools/plugins.rs``) build the example, use a
+private machine registry, and exercise builders, cache changes, nested asset links,
+untrusted mode and preservation of failed generations. The badge runs linked and served
+in a test that requires identical outputs. Build hooks first ship in 0.6.2. Earlier 0.6.x
+releases contain publishers only.
+
+A plugin of either kind may add commands to ``guidedog``'s command line; GDS 0009
+("Command contributions") describes the interface.
 
 Open questions
 --------------
@@ -233,8 +219,8 @@ References
 
 * :doc:`0009-native-plugin-api` defines the released publisher contract.
 * :doc:`0008-github-pages-publishing` defines the first remote publisher.
-* ``lib/plugins`` contains the typed SDK and transport.
-* ``tests/build_plugins_test.odin`` exercises the complete installed build plugin.
+* ``crates/gd-plugins`` contains the typed SDK and transport.
+* ``tests/integration/tests/tools/plugins.rs`` exercises the complete installed build plugin.
 
 .. rubric:: Lifecycle event
 
@@ -259,13 +245,3 @@ References
    docs/gds/evidence/plugin-acceptance-20261014.rst;
    docs/manual/evidence/plugin-review-20261014.md; successful 0.6.2 release run
    38434657070.
-
-.. rubric:: Implementation revision, 2026-10-15
-
-The implementation moved from Odin to Rust; see GDS 0011 and the section
-"Implementation in Rust". This is an implementation revision. It does not change
-this record's review state or assert new acceptance evidence.
-
-.. rubric:: Implementation revision, 2026-10-15: command contributions
-
-A plugin of either kind may now add commands to guidedog's command line. A build plugin uses it for commands that belong with its service, such as the badge example's ``guidedog badge preview``. The plugin declares them (``commands``: a name of 1 to 4 words, a summary, help and options) and runs them (``run_command`` with a ``CommandContext``: the host's streams, questions that are never asked without a terminal, a project build by the host, the working folder, the plugin's configuration and cancellation). guidedog dispatches an unknown command word, or a ``publish`` target, to the linked plugin that adds it and then to a registered program, which it starts with ``--guidedog-command`` and one JSON request on the person's terminal. Handshakes announce commands in two optional fields under a separate command protocol (1.0); the build and publisher protocols, their versions and every existing program are unchanged. This is an implementation revision with a backward-compatible extension; it does not change this record's review state or assert new acceptance evidence. The design and the wire format are in docs/manual/internals/plugins.rst ("Command-line extensions", "Command protocol").

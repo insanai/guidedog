@@ -15,15 +15,15 @@ Abstract
 --------
 
 Define the plugin foundation before implementing a GitHub Pages plugin. A plugin
-uses ordinary Odin packages, structs, and procedures. Readers and renderers use
+is ordinary Rust: a struct that implements a trait. Readers and renderers use
 Guidedoc's existing typed format registry. A new publisher interface consumes a
 complete, immutable publication. Optional installed publishing executables use a
 small versioned protocol and a machine registry. A public catalog describes
 available and planned plugins; catalog membership never installs or executes code.
 
 The API uses direct operations and visible lifetimes.
-It follows Guidedog's Odin conventions: ``load``, ``unload``, ``plan``, ``publish``,
-``status``, and ``release``. It does not copy C naming, introduce classes, require
+It follows Guidedog's API conventions: ``load``, ``plan``, ``publish``, ``status``, and
+``recover``, with ``Drop`` for cleanup. It does not copy C naming, introduce classes, require
 inheritance, or make a fluent configuration framework. GitHub Pages in GDS 0008
 is the first worked publisher and must qualify against this foundation.
 
@@ -38,7 +38,7 @@ studying a framework. A normal build must remain predictable when plugins exist.
 
 This record covers existing native format extensions, a proposed publisher API,
 explicit local registration, and a public plugin catalog. It does not promise
-Python extensions, an ABI for arbitrary Odin dynamic libraries, runtime AST hooks,
+Python extensions, a dynamic-library ABI, runtime AST hooks,
 template execution hooks, or a sandbox. New builder and document-transform extension
 points require a later design; arbitrary callbacks into the middle of a build
 would obscure memory, cache, and publication contracts.
@@ -48,12 +48,13 @@ hooks. Its development implementation wraps publishers in a general descriptor
 without changing this record's released publisher contract. It does not add
 arbitrary AST callbacks or installed custom builders.
 
-Plugins for Guidedog are implemented in Odin and released as native binaries.
-Users need no Python, Odin, C, or Rust compiler to run a packaged plugin.
+Plugins for Guidedog are written in Rust and either linked into a ``guidedog`` binary or
+released as native programs. Users need no Python, C, or Rust compiler to run a packaged
+plugin.
 Compilers are author/release build tools. Graphviz and the Typst renderer remain
 native integrations through their bindings and existing platform packaging rules.
 Source analysis of Python documentation uses the native tree-sitter grammar.
-Code presentation uses ``lib/highlight``, written in Odin. There is no Python
+Code presentation uses ``gd-highlight``. There is no Python
 plugin loader, interpreter, or Pygments execution in this extension design.
 
 Specification
@@ -70,23 +71,21 @@ Three boundaries
      - API and selection
      - Status
    * - Native reader / renderer
-     - ``gd.Reader``, ``gd.Renderer``, ``gd.Registry``; application supplies the registry
+     - ``guidedoc::Reader``, ``Renderer``, ``Registry``; application supplies the registry
      - Available since 0.2.3
-   * - Embedded publisher
-     - ``plugins.Publisher`` table; application supplies a ``plugins.Registry``
+   * - Linked publisher
+     - ``gd_plugins::Publisher`` trait; application supplies a ``gd_plugins::Registry``
      - Implemented in 0.6.0
    * - Installed publishing executable
      - Machine registration and process protocol; user explicitly selects an ID
      - Implemented in 0.6.0
 
-The existing ``gd.Registry`` is a value with borrowed reader and renderer slices.
-``defaults.registry()`` borrows immutable static tables. ``gd.validate_registry``
-checks unique IDs within each format kind, versions, and required procedures.
-``gd.find_reader`` and ``gd.find_renderer`` return a descriptor and a boolean.
-Applications may compose their own tables and pass the resulting registry to
-``project.load`` or a conversion session. Registered storage and callback code
-must remain valid until the operation using them finishes. Do not mutate the
-built-in tables or erase an extension's concrete types into untyped maps.
+``guidedoc::Registry`` is a value with reader and renderer descriptors.
+``guidedoc_defaults::registry()`` returns the built-in ones. ``validate_registry``
+checks unique IDs within each format kind, versions, and required functions.
+``find_reader`` and ``find_renderer`` return an ``Option``. Applications may compose
+their own registry and pass it to ``gd_project::load`` or a conversion session. Do not
+erase an extension's concrete types into untyped maps.
 
 A document reader is not a publisher. Its memory and resource policy remains the
 conversion context's policy. Registration grants no credential access and no
@@ -96,29 +95,27 @@ Direct API rules
 ~~~~~~~~~~~~~~~~
 
 Use a concrete struct for each long-lived owner and an options struct for optional
-settings. Procedures take that owner explicitly. Zero-initialized options choose
-documented defaults, not dangerous behavior. Cleanup accepts zero and partially
-initialized values. It clears the owner so accidental repeated cleanup is harmless.
-Results carry a problem value, not a panic or a process-wide last-error string.
+settings. Functions take that owner explicitly. ``Default`` options choose documented
+defaults, not dangerous behavior. Cleanup is ``Drop``, so it runs once, also after a
+failure. Results carry a ``Problem``, not a panic or a process-wide last-error string.
 
 Keep the useful operations few and named for the work they do. Avoid a constructor
 hierarchy, registration decorators, builder chains, hidden singletons, runtime
-reflection, or a service locator. A procedure table is appropriate at a boundary
-with interchangeable implementations; it is not an excuse to indirect every
-internal call. Odin's ``context.allocator`` and existing host guard/budget patterns
-supply allocation policy. The caller owns the lifetime of each context and handle.
+reflection, or a service locator. A trait is appropriate at a boundary with
+interchangeable implementations; it is not an excuse to indirect every internal call.
+The caller owns the lifetime of each session and value.
 
-Follow existing lowercase procedure names and ``Type_Name`` type names. A plugin
-must document every public procedure's inputs, output lifetime, thread safety,
+Follow Rust's naming: ``snake_case`` functions and ``CamelCase`` types. A plugin
+must document every public item's inputs, output lifetime, thread safety,
 side effects, failure cleanup, and concrete correction hints. Contract comments
 and an API cheat sheet are required. A list of signatures alone is not an API.
 
 Publisher interface
 ~~~~~~~~~~~~~~~~~~~
 
-The proposed package is ``lib/plugins``. Its public publisher surface is:
+The crate is ``gd-plugins``. Its public publisher surface is:
 
-.. list-table:: Proposed native surface
+.. list-table:: Publisher surface
    :header-rows: 1
    :widths: 26 38 36
 
@@ -126,101 +123,53 @@ The proposed package is ``lib/plugins``. Its public publisher surface is:
      - Operation
      - Ownership / effect
    * - ``Publisher``
-     - Metadata and typed ``plan``, ``publish``, ``status``, ``recover`` procedures
-     - Borrows procedure code and immutable metadata
-   * - ``Registry``
-     - Immutable slice of publisher descriptors
-     - Caller keeps the slice alive
-   * - ``validate_registry``
-     - Check IDs, API version, capabilities, and required procedures
-     - Read-only; no executable starts
-   * - ``find_publisher``
-     - Find exact ID, return descriptor and boolean
+     - A trait: ``info``, ``load``, ``plan``, ``publish``, and the optional ``status`` and ``recover``
+     - The publisher value is its session's state
+   * - ``Plugin``, ``Registry``
+     - ``Plugin::publisher(value)``; ``Registry::new`` validates IDs, API versions and capabilities
+     - An invalid registry cannot exist; no executable starts
+   * - ``Registry::find``
+     - Find an exact ID
      - No default guessing or first-match duplicates
-   * - ``load`` / ``unload``
+   * - ``PublisherSession::load``
      - Validate a selected target and open one publication session
-     - Session owns its settings and adapter state; cleanup safe after failed load
-   * - ``snapshot`` / ``release_snapshot``
+     - The session owns its settings and state; ``Drop`` ends it, also after a failed load
+   * - ``snapshot``
      - Freeze a successful project's complete publication
      - Owns private files and manifest; no remote effects
-   * - ``plan`` / ``release_plan``
+   * - ``PublisherSession::plan``
      - Compare a snapshot with a target and explain changes
-     - Plan owns remote baseline and provider data; reads only
-   * - ``publish`` / ``release_result``
-     - Apply one complete plan and return its verified outcome
-     - Explicit remote writes; result owns reports and problem text
-   * - ``status`` / ``release_result``
+     - The ``Plan`` owns remote baseline and provider data; reads only
+   * - ``PublisherSession::publish``
+     - Apply one complete plan and return its verified ``Outcome``
+     - Explicit remote writes
+   * - ``PublisherSession::status``
      - Inspect the exact operation or generation
      - Reads only; does not rebuild or retry a write
-   * - ``recover`` / ``release_result``
+   * - ``PublisherSession::recover``
      - Reconcile a journal with observed remote state
      - Explicit recovery; no blind rollback or force reset
 
-``Publisher`` uses ordinary, typed Odin procedure values. The common contexts
-contain a borrowed session, cancellation/deadline, diagnostic sink, and the
-operation's allocation policy. A plan context borrows a ``Snapshot``; a publish
-context borrows a complete ``Plan``. Every callback has its own named context and
-result type. A single ``proc(any) -> any`` dispatcher, arbitrary pointer casts,
-and plugin-specific reinterpretation of a core context are not this interface.
+A publisher is a struct that implements the trait. ``Plugin`` holds a prototype and clones it for each session, so sessions never share state. Every hook has typed inputs and a typed result. A single dispatcher over untyped values, and plugin-specific reinterpretation of a host input, are not this interface.
 
-The first draft sketched the interface as follows. The implemented one, in
-``lib/plugins/plugins.odin`` and ``session.odin``, follows it with the context and
-result types spelled out (see "Implementation" below):
+.. code-block:: rust
 
-.. code-block:: odin
-
-   Api_Version :: struct {
-       major, minor: u16,
+   pub trait Publisher: Send {
+       fn info(&self) -> PublisherInfo;
+       fn load(&mut self, options: &LoadOptions) -> Result<Loaded, Problem>;
+       fn plan(&mut self, snapshot: &Snapshot, plan: &mut Plan) -> Result<(), Problem>;
+       fn publish(&mut self, snapshot: &Snapshot, plan: &Plan) -> Outcome;
+       fn status(&mut self, operation: &str) -> Outcome { /* absent: refused */ }
+       fn recover(&mut self) -> Outcome { /* absent: refused */ }
    }
 
-   Plan_Proc :: #type proc(ctx: ^Plan_Context) -> Plan_Result
-   Publish_Proc :: #type proc(ctx: ^Publish_Context) -> Publish_Result
-   Status_Proc :: #type proc(ctx: ^Status_Context) -> Publish_Result
-   Recover_Proc :: #type proc(ctx: ^Recover_Context) -> Publish_Result
+The session wrappers validate inputs, call the selected hook, and enforce the result contract. ``load`` gives a provider its own typed settings, read from its configuration, not by extending an engine struct or relying on a global variable. Host-made inputs are ``#[non_exhaustive]`` with constructors, so new fields are not breaking, and new hooks arrive as default trait methods.
 
-   Publisher :: struct {
-       id, name, version: string,
-       api_version:       Api_Version,
-       capabilities:      bit_set[Capability],
-       plan:              Plan_Proc,
-       publish:           Publish_Proc,
-       status:            Status_Proc,
-       recover:           Recover_Proc,
-   }
+One session runs one operation at a time. No operation starts a hidden watcher. Asynchronous use belongs to a caller-owned worker that holds the session, snapshot, and plan until completion and joins before they are dropped. Cancellation is a request to stop; it cannot pretend to undo an accepted remote write.
 
-   Registry :: struct {
-       publishers: []Publisher,
-   }
+``State`` has ``NotStarted`` as its default, then ``Unchanged``, ``Accepted``, ``Pending``, ``Live``, ``Failed``, and ``Unknown``. The outcome includes a safe operation ID, generation digest, target URL, and problem. ``Accepted`` is not ``Live``; ``Unknown`` means the caller must inspect before repeating a write. The CLI maps these states to documented exit outcomes instead of treating every non-error API response as deployment success.
 
-The operation wrappers validate inputs, call the selected procedure, and enforce
-the result contract. ``load`` owns provider-specific settings in the session.
-A provider gets its own typed settings through its adapter, not by extending an
-engine struct or relying on a global variable. The final implementation must
-publish the complete context/result definitions and compile a minimal provider
-against them before freezing API version 1. This sketch reserves no ABI layout.
-
-One session runs one operation at a time. Distinct sessions may run concurrently
-only when their adapters and allocator are documented thread-safe. No operation
-starts a hidden watcher. Asynchronous use belongs to a caller-owned worker that
-holds the session, snapshot, and plan until completion and joins before cleanup.
-Cancellation is a request to stop; it cannot pretend to undo an accepted remote
-write. A memory failure is checked before invoking the remote publication boundary.
-
-``Publish_State`` has ``Not_Started`` as its zero value, then at least ``Unchanged``, ``Accepted``,
-``Pending``, ``Live``, ``Failed``, and ``Unknown``. The result includes a safe operation
-ID, generation digest, target URL, and problem. ``Accepted`` is not ``Live``;
-``Unknown`` means the caller must inspect before repeating a write. An allocation
-failure while formatting success cannot erase the operation's durable identity.
-The CLI maps these states to documented exit outcomes instead of treating every
-non-error API response as deployment success.
-
-A zero session, snapshot, plan, or result is not usable work. Validation requires
-an initialized owner, complete manifest, generation/target binding, and supported
-schema before a write. Empty or partly constructed plans cannot mean "delete the
-site" or "unchanged". A provider's zero result cannot become exit 0 merely because
-its problem's exit field is also zero. Success requires a verified terminal state
-and its required operation identity. This check belongs in the shared wrappers,
-not only the Pages command.
+A default outcome is not usable work. Validation requires a complete manifest, generation/target binding, and supported schema before a write. Empty or partly constructed plans cannot mean "delete the site" or "unchanged". Success requires a verified terminal state and its required operation identity. This check belongs in the shared session wrappers, not only the Pages command.
 
 Snapshot contract
 ~~~~~~~~~~~~~~~~~
@@ -229,12 +178,11 @@ A ``Snapshot`` represents a complete successful generation, not a pathname that
 might later contain another build. Each publishing invocation builds into a private
 folder. A publisher never assumes an engine output lock exists. The snapshot owns
 its private root, manifest, and generation digest. It outlives every plan that
-borrows it. ``release_snapshot`` removes only its own private data after users of
+borrows it. Dropping a snapshot removes only its own private data after users of
 that data finish. It does not delete the normal project output.
 
 A manifest entry is a validated relative path, regular-file size, content digest,
-and explicit mode. Paths and totals are bounded; all arithmetic and allocations
-are checked. No symlinks, hard links, traversal, case collisions, secret stores,
+and explicit mode. Paths and totals are bounded; all arithmetic is checked. No symlinks, hard links, traversal, case collisions, secret stores,
 build cache, or recovery journal enter a publication. Copying checks file identity
 and content under the snapshot contract; mutating the frozen copy invalidates it.
 A failed freeze returns no usable snapshot. Large files stream within the budget.
@@ -266,7 +214,7 @@ Using it still requires an explicit publishing command. Duplicate IDs and change
 executables fail with a correction direction, not silent replacement.
 
 Registration accepts native executable packages, not interpreter scripts or shell
-wrappers. Official catalog admission requires Odin source and reproducible native
+wrappers. Official catalog admission requires source and reproducible native
 build provenance. Executable format checks alone cannot prove the source language;
 that evidence is part of release review. A manifest cannot request installing an
 interpreter or compiler on the user's machine.
@@ -298,8 +246,8 @@ Process protocol
 Installed publishers use a versioned, bounded JSON Lines protocol over dedicated
 standard input/output. Diagnostic progress goes to standard error. A startup
 handshake declares protocol version, plugin ID/version, and publisher capabilities.
-A mismatch fails before a publishing request. No Odin pointer, allocator, callback,
-or ``typeid`` crosses the process boundary.
+A mismatch fails before a publishing request. No pointer, callback, or native type
+layout crosses the process boundary.
 
 Each request has a unique ID, operation, target settings, safe operation identity,
 and snapshot/plan descriptor when needed. A response echoes the ID and contains a
@@ -328,8 +276,8 @@ Upgrades and compatibility
 
 The plugin boundary must survive engine upgrades. A publisher consumes files,
 manifest entries, target settings, and verified outcomes. It does not receive
-``gd.Node``, ``gd.Workspace``, ``project.Project``, internal arenas, template ASTs,
-cache entries, or compiler-generated layouts. Keep ``lib/plugins`` independent of
+``guidedoc::Node``, ``Workspace``, ``gd_project::Project``, template ASTs, cache entries,
+or compiler-generated layouts. Keep ``gd-plugins`` independent of
 the readers and project coordinator. A separate host adapter creates snapshots
 from project builds. A provider therefore need not import the whole engine merely
 to publish a snapshot.
@@ -338,8 +286,8 @@ There are four distinct contracts: native SDK source API, process protocol,
 snapshot/plan schemas, and on-disk registry/journal schemas. The Guidedog release
 version and a plugin's release version identify products, not interoperability.
 A publisher must not require exact equality with the Guidedog release number.
-The application and a statically linked provider are rebuilt together with a
-qualified Odin compiler. This is source compatibility, not a stable binary ABI.
+The application and a linked provider are rebuilt together with a qualified Rust
+compiler. This is source compatibility, not a stable binary ABI; Rust has none.
 An installed executable remains an independent binary behind the process contract.
 
 Use explicit major/minor pairs for the SDK and protocol. A handshake advertises
@@ -350,11 +298,10 @@ as compatible. No overlap gives an explained error before building a remote plan
 or accessing credentials. The host may build locally without that plugin.
 
 Minor changes add optional fields or operations whose absence preserves prior
-behavior. Every optional operation has a capability bit, a nil-safe check, and a
-documented fallback. Existing required callbacks and their meanings remain fixed.
-New options have zero-value defaults matching old behavior. Public examples use
-named struct fields; positional literals must not become the only supported
-construction pattern. Removing an export, adding a required parameter, changing
+behavior. Every optional operation has a capability flag, a default trait method, and
+a documented fallback. Existing required callbacks and their meanings remain fixed.
+New options have defaults matching old behavior, and host-made inputs are
+``#[non_exhaustive]`` with constructors. Removing an export, adding a required parameter, changing
 ownership, changing a required outcome's meaning, or requiring a new snapshot
 field is a major change. A bug fix may strengthen validation of invalid input;
 it must not silently reinterpret a previously valid plan.
@@ -461,8 +408,8 @@ candidate commit; ``recover`` reconciles its journal after a lost response.
 Credentials remain in the provider's platform adapter. A shared credential broker
 is unnecessary for the first plugin and must not expose tokens to normal readers.
 
-The standalone ``guidedog-pages`` CLI uses the same library coordinator and builds
-with the installed ``guidedog``. It does not link a second document engine. It is not a separate renderer.
+The standalone ``guidedog-pages`` CLI uses the same library and builds with the
+installed ``guidedog``. It does not link a second document engine. It is not a separate renderer.
 Registration exposes it through the process adapter. Both routes must produce the
 same manifest, plan decisions, outcome states, and recovery behavior for fixtures.
 GitHub Actions publication needs no plugin, machine registry, or personal token.
@@ -470,10 +417,10 @@ GitHub Actions publication needs no plugin, machine registry, or personal token.
 Rationale and alternatives
 --------------------------
 
-Typed tables match the existing conversion registry and Odin's procedural style.
-They give an embedder a visible list of operations and an explicit lifetime.
-A process boundary permits optional installation without an unstable Odin dynamic
-ABI. It contains crashes better, but does not limit a native executable's OS
+A trait matches the existing conversion registry's typed descriptors. It gives an
+embedder a visible list of operations, and the session's lifetime is the value's.
+Rust has no stable ABI, so a plugin is either linked at build time or run as a program.
+A process boundary permits optional installation without a dynamic-library ABI. It contains crashes better, but does not limit a native executable's OS
 permissions. No plugin is loaded implicitly from an untrusted project.
 
 A general event bus or hook-every-step API would make ordering, incremental caches,
@@ -495,16 +442,16 @@ another executable or credential. A target edit never silently extends authority
 Host auth headers never enter renderer contexts. Provider auth state remains
 separate from snapshots.
 
-Every allocation is checked, refusal returns no incomplete plan, and cleanup is
-safe after every failure. All budgets account for manifests, JSON expansion,
-process pipes, temporary files, and native dependencies at their real boundaries.
+A failure returns no incomplete plan, and cleanup is safe after every failure. Limits
+bound manifests, JSON lines, process pipes, temporary files, and native dependencies at
+their real boundaries.
 There is no promise that a parent budget automatically limits child RSS. Child
 resource limits are documented and tested by platform before claiming enforcement.
 
 Backwards compatibility
 -----------------------
 
-The existing ``gd.Registry`` and ``project.load`` stay source compatible. No new
+``guidedoc::Registry`` and ``gd_project::load`` keep their signatures. No new
 publisher requirement reaches conversion-only callers. Without explicit publish
 or plugin registration, Guidedog makes no plugin-authentication or registry
 network request. A minimal native extension can use current APIs before this
@@ -513,12 +460,7 @@ proposal is implemented; proposed commands must not appear as available features
 Implementation
 --------------
 
-Guidedog 0.6.0 introduced this record's implementation in ``lib/plugins``, which imports only Odin's
-core library and ``lib/toml``. In 0.6.1 it also uses the small ``lib/fs`` cleanup
-adapter, whose Windows implementation avoids desktop shell extensions.
-``examples/publisher`` is a whole publisher, built and
-run in the tests. The manual teaches the build-plugin example first and supplies
-a complete GitHub Pages wrapper in ``examples/pages-publisher``.
+Guidedog 0.6.0 introduced this record's implementation; ``gd-plugins`` is the crate, and ``docs/manual/internals/plugins.rst`` is its design note and wire contract. ``crates/gd-plugins/examples/publisher.rs`` is a whole publisher, built and run in the tests. The manual teaches the build-plugin example first and supplies a complete GitHub Pages wrapper.
 
 .. list-table:: Implemented names
    :header-rows: 1
@@ -527,78 +469,41 @@ a complete GitHub Pages wrapper in ``examples/pages-publisher``.
    * - Area
      - Names
    * - Publishers
-     - ``Publisher``, ``Registry``, ``validate_registry``, ``find_publisher``, ``valid_id``,
-       ``supported``, ``API_VERSION`` (1.1; accepts 1.0 publishers), ``Version``, ``Capability`` (``.Status``,
-       ``.Recover``)
-   * - Owners
-     - ``Session`` (``load``/``unload``), ``Snapshot`` (``snapshot``/``verify_snapshot``/
-       ``release_snapshot``), ``Plan`` (``plan``/``release_plan``), ``Result``
-       (``publish``, ``status``, ``recover``/``release_result``); each in an arena of its
-       own, taken from ``context.allocator``
-   * - Procedures a publisher provides
-     - ``Load_Proc``, ``Unload_Proc``, ``Plan_Proc``, ``Publish_Proc``, ``Status_Proc``,
-       ``Recover_Proc``, each with a named context (``Load_Context`` ... ``Recover_Context``)
-       that carries its owner's allocator
+     - ``Publisher``, ``PublisherInfo``, ``Capabilities``, ``Plugin::publisher``, ``Registry::new``, ``Registry::find``, ``is_valid_id``, ``API_VERSION``
+   * - Sessions and values
+     - ``load_publisher``, ``PublisherSession`` (``load``, ``plan``, ``publish``, ``status``, ``recover``; ``Drop`` ends it), ``Snapshot`` (``snapshot``, ``verify``; private copies removed on drop), ``Plan``, ``Outcome``
    * - Outcomes
-     - ``State`` (``Not_Started``, ``Unchanged``, ``Accepted``, ``Pending``, ``Live``,
-       ``Failed``, ``Unknown``), ``exit_status``, ``EXIT_ACCEPTED`` (6), ``EXIT_UNKNOWN`` (7)
+     - ``State`` (``NotStarted``, ``Unchanged``, ``Accepted``, ``Pending``, ``Live``, ``Failed``, ``Unknown``), ``Outcome::exit_status``, ``EXIT_ACCEPTED`` (6), ``EXIT_UNKNOWN`` (7)
    * - Process protocol
-     - ``process_publisher``, ``serve``, ``inspect_program``, ``Handshake``,
-       ``PROTOCOL_VERSION`` (1.0), ``PROTOCOL_FLAG`` (``--guidedog-protocol``)
+     - ``process_publisher``, ``serve_publisher``, ``inspect_program``, ``Handshake``, ``select_version``, ``Cancel``, the flag ``--guidedog-protocol``
    * - Machine registry
-     - ``plugins.toml`` in ``config_dir()`` (``GUIDEDOG_CONFIG_DIR`` moves it):
-       ``read_machine``, ``inspect_entry``, ``verify_entry``, ``register``, ``unregister``
+     - ``plugins.toml`` in ``config_dir()`` (``GUIDEDOG_CONFIG_DIR`` moves it): ``read_machine``, ``inspect_entry``, ``verify_entry``, ``register``, ``unregister``
    * - Commands
-     - ``guidedog plugin register|list|inspect|run|unregister``; ``guidedog publish
-       --publisher=ID --config=FILE [--dry-run] [--wait=SECONDS] [--timeout=SECONDS]``
+     - ``guidedog plugin register|list|inspect|run|unregister``; ``guidedog publish --publisher=ID --config=FILE [--dry-run] [--wait=SECONDS] [--timeout=SECONDS]``
+
+``Problem`` is one pointer wide (a boxed ``ProblemData``) and converts to a ``gd_report::Report``.
 
 Decisions the implementation made where the draft left room:
 
-* **Snapshots** have three modes: ``Copy`` (a private copy, removed on release),
-  ``Borrow`` (checked where it is; the caller keeps the folder unchanged), and
-  ``Adopt`` (a private folder, removed on release). The digest is SHA-256 over
-  length-prefixed path, size, and file digest, in byte order of the paths, after the
-  line ``guidedog-snapshot 1``. Schema 1 publishes every file as a regular,
-  non-executable file. The child of a process publisher checks the host's snapshot
-  by reading it itself and comparing digests.
-* **Plans stay in the session that made them.** A process publisher keeps its plan in
-  the child. The host names it by its ID and generation, and the child refuses
-  another. Plans are not persisted, so a plan cannot outlive its session.
-* **One child per session**, answering many requests. ``load`` starts it and checks
-  its handshake against the registration (ID, version, capabilities, snapshot schema).
-  ``unload`` allows one second for a shutdown reply, closes its input, waits one
-  second, then kills and reaps an unresponsive child. A broken child is stopped directly.
-* **The result contract** is enforced in ``publish``, ``status``, and ``recover``:
-  a result without an outcome, an outcome other than ``Failed`` without its operation,
-  a ``publish`` result for another generation, or a verified outcome with a problem
-  becomes ``Unknown`` with ``plugins.contract``. ``publish`` reads the snapshot again
-  before the publisher writes, and refuses a dry-run session and a plan of another
-  session or snapshot.
-* **Registration** reads the program's first bytes (Mach-O, ELF, or PE), pins its
-  SHA-256, runs its handshake once after asking, and refuses an ID registered already.
-  Every ``run`` and ``publish`` checks the pin first.
+* **Linked or served, never loaded.** A publisher is linked into a binary through a ``Registry`` (as ``guidedog`` links ``gd-pages``) or served as a registered program (``serve_publisher``). There is no dynamic-library or WebAssembly loading.
+* **Snapshots** have three modes: ``Copy`` (a private copy, removed on drop), ``Borrow`` (checked where it is; the caller keeps the folder unchanged), and ``Adopt`` (a private folder, removed on drop). The digest is SHA-256 over length-prefixed path, size, and file digest, in byte order of the paths, after the line ``guidedog-snapshot 1``. Schema 1 publishes every file as a regular, non-executable file. The child of a process publisher checks the host's snapshot by reading it itself and comparing digests.
+* **Plans stay in the session that made them.** A process publisher keeps its plan in the child. The host names it by its ID and generation, and the child refuses another. Plans are not persisted, so a plan cannot outlive its session.
+* **One child per session**, answering many requests. ``load`` starts it and checks its handshake against the registration (ID, version, capabilities, snapshot schema). Dropping the session allows one second for a shutdown reply, closes its input, waits one second, then kills and reaps an unresponsive child. A broken child is stopped directly.
+* **The result contract** is enforced in ``publish``, ``status``, and ``recover``: a result without an outcome, an outcome other than ``Failed`` without its operation, a ``publish`` result for another generation, or a verified outcome with a problem becomes ``Unknown`` with ``plugins.contract``. ``publish`` reads the snapshot again before the publisher writes, and refuses a dry-run session and a plan of another session or snapshot.
+* **Registration** reads the program's first bytes (Mach-O, ELF, or PE), pins its SHA-256, runs its handshake once after asking, and refuses an ID registered already. Every ``run`` and ``publish`` checks the pin first.
 
-The 0.6.1 review adds whole-request deadlines, atomic cancellation and a callback
-probe, nonblocking pipe I/O, and request scratch arenas with stable owner arenas.
-A blocked write and a drip-fed reply share the same deadline. The handshake is
-bounded to ten seconds; requests default to five minutes. ``--timeout`` is separate
-from the provider's deployment wait. Failure after a possible write is ``Unknown``;
-inspect or recover before retrying. Invalid replies cannot become successful results.
+**Transport.** A writer and a reader thread own the child's pipes. The host waits on channels with one monotonic deadline per exchange and polls a ``Cancel`` probe, so a blocked write and a drip-fed reply share the same deadline, and no pipe needs to be non-blocking. The handshake is bounded to ten seconds; requests default to five minutes. ``--timeout`` is separate from the provider's deployment wait. Failure after a possible write is ``Unknown``; inspect or recover before retrying. Invalid replies cannot become successful results.
 
-Windows process creation uses an explicit handle list for the three standard streams.
-Parent pipe ends are not inheritable. A native regression keeps the child running
-while an unrelated pipe reaches EOF, then requires the child to exit when its own
-input closes. Ordinary process-wide handle inheritance cannot establish this boundary.
+Windows process creation uses an explicit handle list for the three standard streams. Parent pipe ends are not inheritable. A regression test keeps the child running while an unrelated pipe reaches EOF, then requires the child to exit when its own input closes. Ordinary process-wide handle inheritance cannot establish this boundary.
 
-SDK 1.1 adds options and helpers while retaining SDK 1.0 publishers. Process protocol
-1.0 and snapshot schema 1 keep their required fields and meanings. Optional snapshot
-bounds preserve custom accepted limits; an older program can safely refuse a site
-above its own limits. The old/new fixture matrix checks ordinary sites in both
-directions. Source compatibility is not an Odin binary ABI guarantee.
+SDK 1.1 adds options and helpers while retaining SDK 1.0 publishers. Process protocol 1.0 and snapshot schema 1 keep their required fields and meanings. Optional snapshot bounds preserve custom accepted limits; an older program can safely refuse a site above its own limits. Source compatibility is not a binary ABI guarantee.
 
-Catalog refresh and installation are outside the shipped interface. The public
-catalog is reviewed discovery metadata, not an automatic installer. SDK 1.1 remains
-a beta source interface; protocol 1.0 is qualified across these two product versions.
+Catalog refresh and installation are outside the shipped interface. The public catalog is reviewed discovery metadata, not an automatic installer. SDK 1.1 remains a beta source interface.
+
+Command contributions
+~~~~~~~~~~~~~~~~~~~~~
+
+A plugin of either kind may add commands to ``guidedog``'s command line. The GitHub Pages publisher uses it: ``guidedog publish pages`` and ``guidedog pages workflow`` are its commands, so ``gd-cli`` depends only on ``gd-plugins``, and ``cmd/guidedog`` links the plugin. The plugin declares its commands (``commands``: a name of 1 to 4 words, a summary, help and options) and runs them (``run_command`` with a ``CommandContext``: the host's streams, questions that are never asked without a terminal, a project build by the host, the working folder, the plugin's configuration and cancellation). ``guidedog`` dispatches an unknown command word, or a ``publish`` target, to the linked plugin that adds it and then to a registered program, which it starts with ``--guidedog-command`` and one JSON request on the person's terminal. Handshakes announce commands in two optional fields under a separate command protocol (1.0); the build and publisher protocols and their versions are unchanged. The design and the wire format are in ``docs/manual/internals/plugins.rst`` ("Command-line extensions", "Command protocol").
 
 Acceptance criteria
 -------------------
@@ -611,22 +516,20 @@ Acceptance criteria
      - Status
    * - A standalone publisher compiles against the SDK; names, comments, cheat sheet,
        and manual agree.
-     - Done: ``examples/publisher``, ``lib/plugins/README.md``, the manual's chapter;
-       ``tests/api_docs_test`` holds every public procedure to an ownership contract.
+     - Done: ``crates/gd-plugins/examples/publisher.rs``, ``crates/gd-plugins/README.md``,
+       the manual's chapter; every public item has a doc comment.
    * - Reader/renderer and publisher examples compile and run in CI; registry lifetime
        and malformed registration are tested.
      - Done.
-   * - Zero and failed cleanup, every allocation refused in turn, a frozen site that
-       changes, cancellation, ASan.
+   * - Failed cleanup, a frozen site that changes, cancellation.
      - Done for snapshots, sessions, plans, and publications.
    * - Embedded and process publishers pass the same fixtures; handshake mismatches,
        malformed or truncated lines, and process death never pass for success.
      - Done for the folder example and for GitHub Pages; a dead child after a write is
        ``Unknown``.
    * - Version negotiation.
-     - Unsupported major versions are refused before load. The 0.6.1 old/new
-       fixtures are historical evidence, not a promise to keep earlier beta SDKs
-       compatible. Current source and process examples pass release qualification.
+     - Unsupported major versions are refused before load. Current source and
+       process examples pass release qualification.
    * - Machine registration: no project-chosen program, no duplicate winner, no silent
        digest change; atomic, owner-only state.
      - Done.
@@ -649,47 +552,15 @@ Dynamic libraries, remote
 installation, installed builders and mutable doctree transforms remain outside this
 publisher contract. GDS 0010 defines the separate source, HTML and asset services.
 
-Implementation in Rust
-----------------------
-
-GDS 0011 moves the implementation to Rust. ``gd-plugins`` ports ``lib/plugins``;
-``docs/manual/internals/plugins.rst`` is its design note and wire contract. The process
-protocol 1.0, snapshot schema 1, the machine registry (``plugins.toml``, pinned SHA-256),
-outcomes and exit statuses are unchanged, so programs built with the Odin SDK still
-interoperate.
-
-- **Traits instead of procedure tables.** ``Publisher`` (``info``, ``load``, ``plan``,
-  ``publish``, optional ``status`` and ``recover``). A publisher value *is* its session's
-  state, cloned from a prototype per session. ``Drop`` replaces ``unload``; ``Plan``,
-  ``Snapshot`` and outcomes are ordinary values, so the owner arenas and ``release_*``
-  procedures are gone.
-- **Linked or served, never loaded.** Rust has no stable ABI, so there is no dylib or
-  WebAssembly loading. A publisher is linked into a binary through a ``Registry`` (as
-  ``guidedog-pages`` links ``gd-pages``) or served as a registered program
-  (``serve_publisher``). ``Registry::new`` validates, so an invalid registry cannot exist.
-- **Transport.** A writer and a reader thread own the child's pipes. The host waits on
-  channels with one monotonic deadline per exchange and polls a ``Cancel`` probe. Whole
-  request deadlines, the ten-second handshake and the five-minute default carry over.
-- **Snapshots** keep the three modes (``Copy``, ``Borrow``, ``Adopt``) and the digest
-  above; private copies are removed on drop.
-- **Evolution.** Host-made inputs are ``#[non_exhaustive]`` with constructors; new hooks
-  arrive as default trait methods; ``API_VERSION`` versions the trait.
-- ``Problem`` is one pointer wide (a boxed ``ProblemData``) and converts to a
-  ``gd_report::Report``.
-
-The Odin names in the table above are history; the Rust names are listed in
-``crates/gd-plugins/README.md``.
-
 Review history
 --------------
 
 2026-10-12: the maintainer requested a proper plugin API, registry, and manual
-chapter before the Pages implementation, with raylib-inspired simplicity and
-idiomatic Odin. This foundation became an explicit dependency of GDS 0008.
+chapter before the Pages implementation, with raylib-inspired simplicity. This foundation became an explicit dependency of GDS 0008.
 Promotion opens review; it does not assert that the SDK has shipped.
 
 2026-10-12: the maintainer set 0.6.0 as the release milestone for the completed
-architecture, with Guidedog, dsc, and dscc versioned together.
+architecture, with every Guidedog program versioned together.
 
 2026-10-13: implemented in Guidedog 0.6.0, with GDS 0008's GitHub Pages publisher as
 its first user. The implementation section records the decisions made where this
@@ -697,26 +568,23 @@ record left room, and what is not yet done.
 
 2026-10-13: the 0.6.1 review corrected ownership across process requests, bounded
 read and write waits, made registry mutation exclusive even within one process,
-and added allocation-refusal and hostile-child regressions. The manual uses the
+and added hostile-child regressions. The manual uses the
 complete tested folder publisher and the real Pages publisher.
 
-2026-10-15: the implementation moved from Odin to Rust (GDS 0011). Added
-"Implementation in Rust"; the decisions, evidence and lifecycle above are kept as
-they were recorded.
+2026-10-15: a plugin may add commands to ``guidedog``'s command line (see "Command contributions").
 
 References
 ----------
 
-* :doc:`0003-guidedoc-odin`, the conversion registry and memory contract.
+* :doc:`0003-guidedoc-engine`, the conversion registry and memory contract.
 * :doc:`0004-budgets-and-trust`, allocation and trust.
 * :doc:`0006-sphinx-replacement`, complete project publication.
 * :doc:`0008-github-pages-publishing`, the first proposed publisher.
-* ``lib/core/emit.odin``, existing typed reader and renderer descriptors.
-* ``lib/defaults/registry.odin``, immutable built-in format tables.
-* ``lib/project/README.md``, current native build lifetimes.
+* ``crates/guidedoc/src/adapter.rs``, typed reader and renderer descriptors.
+* ``crates/guidedoc-defaults``, the built-in registry.
+* ``crates/gd-plugins/README.md`` and ``docs/manual/internals/plugins.rst``, the SDK and its wire contract.
 * ``plugins/registry.toml``, the proposed public catalog seed.
 * ``docs/manual/plugins.rst``, the plugin development chapter.
-* `Odin language overview <https://odin-lang.org/docs/overview/>`_.
 * `raylib API reference <https://www.raylib.com/cheatsheet/cheatsheet.html>`_.
 
 .. rubric:: Lifecycle event
@@ -742,13 +610,3 @@ References
    docs/gds/evidence/plugin-acceptance-20261014.rst;
    docs/manual/evidence/plugin-review-20261014.md; successful 0.6.2 release run
    38434657070.
-
-.. rubric:: Implementation revision, 2026-10-15
-
-The implementation moved from Odin to Rust; see GDS 0011 and the section
-"Implementation in Rust". This is an implementation revision. It does not change
-this record's review state or assert new acceptance evidence.
-
-.. rubric:: Implementation revision, 2026-10-15: command contributions
-
-A plugin of either kind may now add commands to guidedog's command line. The GitHub Pages publisher uses it: ``guidedog publish pages`` and ``guidedog pages workflow`` are its commands, no longer written into gd-cli, which now depends only on gd-plugins; cmd/guidedog links the plugin. The plugin declares them (``commands``: a name of 1 to 4 words, a summary, help and options) and runs them (``run_command`` with a ``CommandContext``: the host's streams, questions that are never asked without a terminal, a project build by the host, the working folder, the plugin's configuration and cancellation). guidedog dispatches an unknown command word, or a ``publish`` target, to the linked plugin that adds it and then to a registered program, which it starts with ``--guidedog-command`` and one JSON request on the person's terminal. Handshakes announce commands in two optional fields under a separate command protocol (1.0); the build and publisher protocols, their versions and every existing program are unchanged. This is an implementation revision with a backward-compatible extension; it does not change this record's review state or assert new acceptance evidence. The design and the wire format are in docs/manual/internals/plugins.rst ("Command-line extensions", "Command protocol").

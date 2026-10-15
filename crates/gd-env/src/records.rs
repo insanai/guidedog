@@ -14,8 +14,8 @@ use gd_report::{Excerpt, Report, Severity};
 use crate::discover::SourceKind;
 use crate::environment::{
     CachedFile, CppDeclInfo, Dependency, DocInfo, ENVIRONMENT_VERSION, Environment, IndexInfo,
-    LabelInfo, LabelKind, ModuleInfo, NumberedInfo, ObjectInfo, RefInfo, SectionInfo, TermInfo,
-    TocEntry, TocObjectInfo, ToctreeInfo, TodoInfo,
+    LabelInfo, LabelKind, ModuleInfo, NumberedInfo, ObjectInfo, RefInfo, SectionInfo,
+    SourceLocation, TermInfo, TocEntry, TocObjectInfo, ToctreeInfo, TodoInfo,
 };
 
 /// The text of a record file at `path` (the environment, a manifest, a journal), read
@@ -209,6 +209,7 @@ fn doc_to_json(d: &DocInfo) -> Value {
         .list("meta", &d.meta, pair_to_json)
         .list("modules", &d.modules, module_to_json)
         .list("cpp", &d.cpp, cpp_to_json)
+        .list("locations", &d.locations, location_to_json)
         .value("search", cached_to_json(&d.search))
         .flag("orphan", d.orphan)
         .number("tocdepth", u64::from(d.tocdepth))
@@ -244,6 +245,7 @@ fn doc_from_json(value: &Value) -> Option<DocInfo> {
         meta: r.list("meta", pair_from_json)?,
         modules: r.list("modules", module_from_json)?,
         cpp: r.list("cpp", cpp_from_json)?,
+        locations: r.list("locations", location_from_json)?,
         search: cached_from_json(r.value("search")?)?,
         orphan: r.flag("orphan")?,
         tocdepth: r.small("tocdepth")?,
@@ -513,6 +515,33 @@ fn module_from_json(v: &Value) -> Option<ModuleInfo> {
         synopsis: r.text("synopsis")?,
         platform: r.text("platform")?,
         deprecated: r.flag("deprecated")?,
+    })
+}
+
+fn location_to_json(l: &SourceLocation) -> Value {
+    ObjectBuilder::default()
+        .text("domain", &l.domain)
+        .text("module", &l.module)
+        .text("defined_in", &l.defined_in)
+        .text("fullname", &l.fullname)
+        .text("anchor", &l.anchor)
+        .text("path", &l.path.to_string_lossy())
+        .number("line", u64::from(l.line))
+        .number("end_line", u64::from(l.end_line))
+        .done()
+}
+
+fn location_from_json(v: &Value) -> Option<SourceLocation> {
+    let r = ObjectReader::of(v)?;
+    Some(SourceLocation {
+        domain: r.text("domain")?,
+        module: r.text("module")?,
+        defined_in: r.text("defined_in")?,
+        fullname: r.text("fullname")?,
+        anchor: r.text("anchor")?,
+        path: PathBuf::from(r.text("path")?),
+        line: r.small("line")?,
+        end_line: r.small("end_line")?,
     })
 }
 

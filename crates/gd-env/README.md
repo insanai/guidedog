@@ -20,7 +20,8 @@ let text = run.process_source(&source, &config.language, &text)?;
 |---|---|
 | `BuilderKind` (`name`, `from_name`, `is_html`, `format`), `OutputFormat`, `BuildOptions`, `Jobs`, `BuildResult`, `BuildStage`, `BUILD_BUDGET` | build vocabulary |
 | `SourceFile { docname, path, relative, kind, generated: Option<Generated> }`, `SourceKind`, `discover`, `glob_match`, `is_excluded`, `contents_root`, `with_generated` | discovery |
-| `Environment { settings, docs }`, `DocInfo` and its infos, `DocId(u32)`, `ENVIRONMENT_VERSION` (26), `load_environment`, `dependencies_changed` | the environment |
+| `Environment { settings, docs }`, `DocInfo` and its infos, `DocId(u32)`, `ENVIRONMENT_VERSION` (27), `load_environment`, `dependencies_changed` | the environment |
+| `SourceLocation { domain, module, defined_in, fullname, anchor, path, line, end_line }` (`DocInfo::locations`) | where a described Python object is defined (viewcode, linkcode) |
 | `normalize_name`, `option_key` | the keys labels, terms and options are filed under |
 | `ObjectStore` (`save_object`, `load_object`, `save_search`, `load_bytes`, `sweep`), `CachedFile` | content-addressed cache |
 | `Lookup { kind: LookupKind, key }`, `Trace` | verifying traces |
@@ -46,3 +47,6 @@ let text = run.process_source(&source, &config.language, &text)?;
 - **Ownership, not arenas**: records are owned values; the build budget is checked
   before work, so JSON is parsed without a meter.
 - `BuildOptions` takes `Option`s for its limits and `Jobs` for `-j`.
+- `BuildResult::steps` holds extra summary lines as (step, text), such as
+  sphinx.ext.duration's reading times, so the command line prints them without knowing
+  each extension.

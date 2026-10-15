@@ -18,7 +18,7 @@ use crate::records;
 
 /// The environment's format version; an environment of another version is not read.
 /// Raise it whenever the saved form changes, so an older environment is rebuilt.
-pub const ENVIRONMENT_VERSION: u32 = 26;
+pub const ENVIRONMENT_VERSION: u32 = 27;
 
 /// A document's index in the environment, which the project tables are indexed by.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Default)]
@@ -238,6 +238,30 @@ pub struct CppDeclInfo {
     pub line: u32,
 }
 
+/// Where an object a document describes is defined in source code, as the source scan
+/// found it. Reading records one per described object when sphinx.ext.viewcode or
+/// sphinx.ext.linkcode is listed; they give the `[source]` links and the source pages.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct SourceLocation {
+    /// The object's domain, such as `py`.
+    pub domain: String,
+    /// The module as the description names it, such as `shapes`.
+    pub module: String,
+    /// The module that defines the object: `module`, or the module a re-export comes
+    /// from.
+    pub defined_in: String,
+    /// The object's name within its module, such as `Square.area`.
+    pub fullname: String,
+    /// The id of the object's signature on the page.
+    pub anchor: String,
+    /// The source file, absolute.
+    pub path: PathBuf,
+    /// The first line of the definition (its first decorator), counted from 1.
+    pub line: u32,
+    /// The last line of the definition.
+    pub end_line: u32,
+}
+
 /// A module a domain declared, for the module index.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct ModuleInfo {
@@ -373,6 +397,8 @@ pub struct DocInfo {
     pub modules: Vec<ModuleInfo>,
     /// Its C++ declarations, for the project's symbol tree.
     pub cpp: Vec<CppDeclInfo>,
+    /// Where the objects it describes are defined, for viewcode and linkcode.
+    pub locations: Vec<SourceLocation>,
     /// Its words for the search index; `None` when it has none.
     pub search: Option<CachedFile>,
     /// `:orphan:`: no toctree need reach it.

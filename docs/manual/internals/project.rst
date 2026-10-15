@@ -115,7 +115,7 @@ gd-conf's, re-exported. ``SourceFile { docname, path, relative, kind, generated 
 a generated page (an API page) carries its text and the files it was made from.
 ``DocInfo`` holds what the environment knows of a document, with ``Option`` for every "none" and a
 ``CachedFile { path, digest }`` for the object and the search words.
-``load_environment(path, settings, fresh, &budget)``, ``ENVIRONMENT_VERSION`` 26.
+``load_environment(path, settings, fresh, &budget)``, ``ENVIRONMENT_VERSION`` 27.
 ``ObjectStore`` writes ``objects/<docname>.<digest16>.gdo`` and loads it into a
 ``guidedoc::Workspace``. ``Lookup { kind: LookupKind, key }`` and ``Trace`` (each
 lookup once). ``Rendered { body, assets, trace, reports, failed }``.

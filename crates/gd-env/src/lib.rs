@@ -45,8 +45,9 @@ pub use discover::{
 pub use environment::{
     CachedFile, CppDeclInfo, Dependency, DocId, DocInfo, ENVIRONMENT_VERSION, Environment,
     IndexInfo, LabelInfo, LabelKind, ModuleInfo, NumberedInfo, ObjectInfo, RefInfo, SectionInfo,
-    TermInfo, TocEntry, TocObjectInfo, ToctreeInfo, TodoInfo, dependencies_changed, digest_name,
-    doctrees_dir, environment_path, load_environment, normalize_name, option_key,
+    SourceLocation, TermInfo, TocEntry, TocObjectInfo, ToctreeInfo, TodoInfo,
+    dependencies_changed, digest_name, doctrees_dir, environment_path, load_environment,
+    normalize_name, option_key,
 };
 pub use gd_conf::{Digest, Digester};
 pub use lookup::{Lookup, LookupKind, Trace};

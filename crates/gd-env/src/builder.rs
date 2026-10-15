@@ -233,6 +233,9 @@ pub struct BuildResult {
     pub peak: usize,
     /// The budget at the end, in bytes: its policy may have raised it.
     pub budget: usize,
+    /// More lines for the build's summary, as (step, text), such as the reading times
+    /// sphinx.ext.duration reports.
+    pub steps: Vec<(String, String)>,
 }
 
 #[cfg(test)]

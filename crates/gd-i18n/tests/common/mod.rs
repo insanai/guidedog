@@ -10,7 +10,7 @@ use gd_i18n::{
 };
 use guidedoc::{
     Document, ReadOptions, Reader, Request, Source, Workspace, default_request, dump_to_string,
-    read_document, render_document, trusted_policy,
+    read_document, read_extension, render_document, trusted_policy,
 };
 
 /// Returns the reader with this id.
@@ -18,8 +18,25 @@ pub fn reader(id: &str) -> Reader {
     match id {
         "rst" => guidedoc_rst::reader(),
         "commonmark" => guidedoc_commonmark::READER,
-        "myst" => guidedoc_commonmark::MYST_READER,
+        "myst" | "myst-sphinx" => guidedoc_commonmark::MYST_READER,
+        "sphinx" => guidedoc_sphinx::reader(),
         other => panic!("no reader {other}"),
+    }
+}
+
+/// Runs `f` with the read options reader `id` needs: the Sphinx layer's for "sphinx"
+/// (Sphinx's defaults) and "myst-sphinx" (MyST with the Sphinx layer), the defaults else.
+pub fn with_options<R>(id: &str, f: impl FnOnce(ReadOptions<'_>) -> R) -> R {
+    let config = guidedoc_sphinx::Config::default();
+    let myst = guidedoc_sphinx::myst_settings(config.clone(), Default::default());
+    match id {
+        "sphinx" => {
+            f(ReadOptions { extension: Some(read_extension(&config)), ..Default::default() })
+        }
+        "myst-sphinx" => {
+            f(ReadOptions { extension: Some(read_extension(&myst)), ..Default::default() })
+        }
+        _ => f(ReadOptions::default()),
     }
 }
 
@@ -45,7 +62,7 @@ pub fn read<'w>(
 /// Extracts a document's msgids, in order.
 pub fn messages(id: &str, text: &str, targets: Targets) -> Vec<String> {
     let mut ws = Workspace::new();
-    let doc = read(&mut ws, id, text, ReadOptions::default());
+    let doc = with_options(id, |options| read(&mut ws, id, text, options));
     let mut pot = Template::new("x");
     pot.extract(
         doc,
@@ -76,13 +93,18 @@ pub struct Case<'a> {
 /// Reads a document, translates it with a PO catalog, and renders it as HTML and as a
 /// tree dump; also returns the codes of the diagnostics the translation reported.
 pub fn translate(case: Case<'_>) -> Translated {
+    with_options(case.reader, |options| translate_with(case, options))
+}
+
+fn translate_with(case: Case<'_>, options: ReadOptions<'_>) -> Translated {
     let mut ws = Workspace::new();
-    read(&mut ws, case.reader, case.text, ReadOptions::default());
+    read(&mut ws, case.reader, case.text, options);
     let catalog = parse_po(case.po, "de.po").unwrap_or_else(|e| panic!("catalog: {e}"));
     let before = ws.reports().items().len();
     let translation = Translation {
         catalog: Some(&catalog),
         read_inline: reader(case.reader).read_inline,
+        read: options,
         policy: trusted_policy(),
         targets: case.targets,
         progress: case.progress,

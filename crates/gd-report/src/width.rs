@@ -1,7 +1,7 @@
 //! Terminal display widths of characters.
 //!
-//! The wide table is derived from Unicode 15.1.0 `EastAsianWidth.txt` (Fullwidth and Wide),
-//! as Odin's `core:unicode` ships it.
+//! The wide table is derived from Unicode 15.1.0 `EastAsianWidth.txt` (Fullwidth and Wide).
+//! The version is pinned, so a report's carets line up the same on every build.
 
 use std::borrow::Cow;
 

@@ -1,4 +1,4 @@
-//! Tests, ported from the Odin package's `*_test.odin` files.
+//! Tests, one module per group of lexers or outputs.
 
 mod code;
 mod data;

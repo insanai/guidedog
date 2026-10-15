@@ -1,4 +1,4 @@
-//! Ported from `code_test.odin`.
+//! The programming-language lexers on short programs (C, C++, Rust, Go, Odin, ...).
 
 use super::*;
 use crate::*;

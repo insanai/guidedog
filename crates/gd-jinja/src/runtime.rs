@@ -707,8 +707,8 @@ mod tests {
     use super::*;
 
     /// Assignment targets the parser never builds fail loudly instead of dropping the
-    /// value. (Statements and expressions are separate types, so the other misplaced
-    /// nodes of the Odin engine cannot be built at all.)
+    /// value. (Statements and expressions are separate types, so other misplaced nodes
+    /// cannot be built at all.)
     #[test]
     fn misplaced_assignment_targets_are_errors() {
         let env = Environment::default();

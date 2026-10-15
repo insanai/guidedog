@@ -214,14 +214,13 @@ Python's `str`, `list` and `dict` work as in Jinja.
 - A list that contains itself is kept alive by its own reference (`Rc` cycle) until the
   process ends.
 
-## Changes from the Odin engine
+## Design notes
 
-- Every step returns `Result` instead of setting a sticky failure flag; natives return
-  `Result<Value, Error>` and use `?`.
-- No arenas, allocator guards or ownership copying: values are `Rc`-shared, and values a
-  template stores in our containers simply stay there. `Memory` errors remain for sizes
-  that cannot be counted or reserved (`try_reserve`).
-- `Options` hold real defaults (no 0-means-default), `Autoescape` is an enum, `Loader` an
-  enum with a `Custom` closure, and a `Template` borrows its environment.
+- Every step returns `Result`; natives return `Result<Value, Error>` and use `?`.
+- Values are `Rc`-shared, and values a template stores in our containers simply stay
+  there. `Memory` errors remain for sizes that cannot be counted or reserved
+  (`try_reserve`).
+- `Options` hold real defaults, `Autoescape` is an enum, `Loader` an enum with a
+  `Custom` closure, and a `Template` borrows its environment.
 - The expression parser climbs precedence in one loop instead of one function per
   grammar level, so a bracket costs a few stack frames.

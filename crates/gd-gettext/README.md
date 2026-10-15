@@ -2,9 +2,7 @@
 
 GNU gettext message catalogs: PO/POT text, compiled MO files (both byte orders),
 Plural-Forms expressions, msgmerge-style updates, and statistics. Standard library only;
-independent of every other workspace crate. Ported from `guidedog_old/lib/gettext`
-(behaviour kept, API redesigned for Rust; see *Redesigns* below). For large catalogs,
-see [docs/manual/internals/gettext.rst](../../docs/manual/internals/gettext.rst): research, design, and measurements.
+independent of every other workspace crate. For large catalogs, see [docs/manual/internals/gettext.rst](../../docs/manual/internals/gettext.rst): research, design, and measurements.
 
 ## Use
 
@@ -158,23 +156,18 @@ table is trusted only after every key is found within 64 probes, so lookups stay
 bounded. The fuzzy search is bounded, and wrapping looks only at the next piece.
 `src/tests/cost.rs`, `mo_compat.rs` and `fuzz.rs` check these.
 
-## Redesigns from the Odin package
+## Design notes
 
-- The Odin package had arenas, `destroy*`, `catalog_refused` and `catalog_bytes`. Here
-  values own their data and `Drop` frees them; refused allocations become
+- Values own their data and `Drop` frees them; refused allocations become
   `ErrorKind::Memory` through `try_reserve`.
-- `Option` replaces sentinels and flags: `has_ctx`/`has_plural`/`has_header`/
-  `has_previous`, the `-1` best match, and the plural parser's `-1` node (its rules now
-  return `Result` and use `?`).
-- Lookups are one trait, `Lookup`, instead of procedure groups. `Translator` binds any
+- `Option` marks what may be absent: a context, a plural, a header, previous strings,
+  the best fuzzy match. The plural parser's rules return `Result` and use `?`.
+- Lookups are one trait, `Lookup`. `Translator` binds any
   `Lookup + Send + Sync`, and catalogs are `Sync` (`OnceLock` index).
-- Options structs replace bare `bool`s: `LoadOptions` for loading;
-  `parse_po(text, name)` drops `allow_fuzzy` (set the field instead).
+- Options structs instead of bare `bool`s: `LoadOptions` for loading; fuzzy entries
+  are allowed through a field, not a `parse_po` argument.
 - MO reading is zero-copy (`MoCatalog`) and uses the file's hash table. MO writing
-  hashes the singular msgid as GNU does (the Odin writer hashed the plural too) and
-  matches msgfmt's output byte for byte.
+  hashes the singular msgid as GNU does and matches msgfmt's output byte for byte.
 - PO reading streams (`PoReader`); writers take any `io::Write`.
-- Not ported: the allocator-refusal tests (`memory_test.odin`, `refusal_test.odin`),
-  because Rust aborts on allocation failure where `try_reserve` is not used. Also not
-  ported: MO revision-1 system-dependent strings (glibc-only `<PRIu64>` segments; such
-  entries are ignored, as is a hash table that points at them).
+- Not supported: MO revision-1 system-dependent strings (glibc-only `<PRIu64>`
+  segments; such entries are ignored, as is a hash table that points at them).

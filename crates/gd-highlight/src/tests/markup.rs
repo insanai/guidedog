@@ -1,4 +1,4 @@
-//! Ported from `markup_test.odin`.
+//! The markup lexers: XML, HTML and CSS.
 
 use super::*;
 use crate::*;

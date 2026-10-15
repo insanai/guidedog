@@ -2,8 +2,7 @@
 
 Syntax highlighting with Pygments' token classes (`k`, `nf`, `s2`, `c1`) and stylesheets,
 for 35 languages, with no Python runtime and no dependencies. Guidedog uses it for code
-blocks in HTML sites and PDF books. Port of the Odin `lib/highlight` package (the
-`guidedoc` adapter lives in `guidedoc-defaults`).
+blocks in HTML sites and PDF books (the `guidedoc` adapter lives in `guidedoc-defaults`).
 
 ## Use
 
@@ -93,7 +92,7 @@ crosses a newline, `& < > " '` are escaped. Numbered lines start with
 Typst output is data, never markup: `((("k", "def"), ("w", " "), ), (("", "x"), ), )`;
 control characters become `\u{..}` escapes, and a final newline starts no line. The theme
 is `("background": rgb("#f8f8f8"), "text": (fill: none), "k": (fill: rgb("#008000"),
-weight: "bold"), ...)`; see the Odin README for a `gd-highlight` Typst template function.
+weight: "bold"), ...)`.
 
 ## Tokens and styles
 
@@ -117,22 +116,22 @@ Elm-style report (title, explanation, excerpt with carets, hint); `Problem` also
 `Display` (the report without a location) and `std::error::Error`. It borrows the name and
 code it describes.
 
-## Redesigns from the Odin package
+## Design notes
 
-- `Output{buf, written}` measure-then-write storage became appended `&mut String` sinks;
-  token buffers became `Vec<Token>` (`tokenize_into` reuses one) and a `Scanner` iterator.
-- `-1`/`false` sentinels became `Option` (`find_lexer`, `find_style`, `suggest_lexer`,
-  `check_code`, `kind_parent`, internal searches); `Color{hex, set}` became `Option<Color>`.
-- `Html_Lines.emphasized` (a callback with a user pointer) became a slice of line numbers.
+- Writers append to `&mut String` sinks; tokens go into a `Vec<Token>` (`tokenize_into`
+  reuses one) or come from a `Scanner` iterator.
+- What may be absent is an `Option` (`find_lexer`, `find_style`, `suggest_lexer`,
+  `check_code`, `kind_parent`, internal searches); a style rule's colour is
+  `Option<Color>`.
+- Emphasized lines are a slice of line numbers, not a callback.
 - Input is `&str`, so invalid UTF-8 cannot reach the lexers; token ends are moved forward to
-  character boundaries, so no token splits a character (the Odin tests' invalid bytes are
-  U+FFFD here).
-- Lexer state is still a fixed-size `State` with a 24-frame stack (copied in and out of
+  character boundaries, so no token splits a character.
+- Lexer state is a fixed-size `State` with a 24-frame stack (copied in and out of
   each step); the last significant token of each running lexer lives in the scanner.
 - The token, lexer and style tables are static arrays indexed by the enums, with tests
   holding their order to the enums'.
-- The "never allocates" test is gone (writers append to `String`); scanning still does not
-  allocate, and the linear-work probe counts work in test builds only.
+- Scanning does not allocate; writers append to a `String`. The linear-work probe counts
+  work in test builds only.
 
 ## Why not syntect?
 

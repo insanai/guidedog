@@ -81,10 +81,10 @@ Limits: `MAX_EVAL_STEPS` (10,000 nodes per annotation), `MAX_DESCRIBE_STEPS` (10
 nodes per value), member nesting 24, `MAX_GENERATED` (10,000 directives, then warning
 `autodoc.limit`).
 
-## Redesigned from the Odin package
+## Design notes
 
-- No arenas or `session_init`: `Session` owns the `Project`, `document` returns an owned
-  `Output`; the Odin `Result` is `Output` (no clash with `std::result::Result`).
+- `Session` owns the `Project`, and `document` returns an owned `Output` (named so it
+  does not clash with `std::result::Result`).
 - Settings Sphinx takes as strings (`autodoc_member_order`, `autodoc_typehints`, ...) are
   enums, so unknown values are rejected by the host when it reads `conf.toml`.
 - Evaluated annotations are a `TypeValue` enum with data per variant; the docstring
@@ -93,6 +93,5 @@ nodes per value), member nesting 24, `MAX_GENERATED` (10,000 directives, then wa
   `Fixed`); annotation sources are `Node` or `Text`.
 - Values that were `value` + `has_value` pairs (`value_repr`, `property_type`,
   `type_annotation`, `__all__`, recorded hints, `:annotation:`) are `Option`s.
-- Not ported: the Odin allocation-refusal test (`memory_test.odin`), which needs a
-  failing allocator; Rust aborts on allocation failure instead. `autodoc_type_aliases`
-  and `autodoc_mock_imports` are carried in `Config` but, as in the Odin code, unused.
+- `autodoc_type_aliases` and `autodoc_mock_imports` are carried in `Config` but not yet
+  used.

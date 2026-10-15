@@ -1,4 +1,4 @@
-//! Ported from `growth_test.odin`: scanning work grows linearly with the input.
+//! Scanning work grows linearly with the input.
 //!
 //! The tests count dispatches and cursor inspections rather than elapsed time, which
 //! varies with the machine.

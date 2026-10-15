@@ -1,4 +1,4 @@
-//! Ported from `html_test.odin`. Expected HTML is written by hand from Pygments'
+//! HTML output. Expected HTML is written by hand from Pygments'
 //! HtmlFormatter rules and short class names: a span per token, Text bare, one span for
 //! neighbours of one class, no span across a newline, and `& < > " '` escaped.
 

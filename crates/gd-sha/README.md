@@ -1,7 +1,7 @@
 # gd-sha cheat sheet
 
-SHA-256 (content digests), SHA-1 (Git object ids only) and FNV-1a 64 (cache keys), which
-the Odin code took from `core:crypto` and `core:hash`. Standard library only.
+SHA-256 (content digests), SHA-1 (Git object ids only) and FNV-1a 64 (cache keys).
+Standard library only.
 
 ## Use
 

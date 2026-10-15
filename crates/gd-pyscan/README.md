@@ -70,18 +70,18 @@ Limits: `MAX_SYNTAX_DEPTH` (256; deeper modules are `too_deep`, kind `Native`), 
 lookup `MAX_DEPTH` (48), `MAX_STEPS` (100,000), `LOOKUP_STACK_BYTES` (256 KiB, doubled in
 debug builds), `MAX_MRO_DEPTH` (100). Past a limit a lookup finds nothing; nothing panics.
 
-## Redesigned from the Odin package
+## Design notes
 
-- No arenas: the tree-sitter tree is copied into a flat `Syntax` (one `Vec` of nodes,
-  children contiguous, `NodeId` indices) that owns its source, so analysed data holds ids
-  and tree-sitter's tree is dropped right after parsing; `destroy` is gone (`Drop`).
+- The tree-sitter tree is copied into a flat `Syntax` (one `Vec` of nodes, children
+  contiguous, `NodeId` indices) that owns its source, so analysed data holds ids and
+  tree-sitter's tree is dropped right after parsing.
 - Classes, functions and bindings are `Vec`s in their `Module`, named by `ClassRef`,
-  `FunctionRef`, `DefRef` (module id + index) instead of pointers; lambdas become
+  `FunctionRef`, `DefRef` (module id + index) rather than pointers; lambdas become
   `FunctionKind::Lambda` and are built on demand. Loaded modules are `Arc<Module>`
   (immutable, shared); the MRO cache lives in the project. A `Project` is `Send` (its
   `FileReader` must be too), so a host may keep one behind a `Mutex` and analyse each
   module once for many directives.
-- `Option` replaces null nodes and `Doc{text, ok}`; enums replace string kinds where they
-  were closed sets. Bytes literals hold one `char` per byte (Latin-1), since `String`
+- `Option` marks absent nodes and docstrings; closed sets of kinds are enums. Bytes
+  literals hold one `char` per byte (Latin-1), since `String`
   must be UTF-8.
 - `files()` yields the normalised text of each module read (the host hashes it).

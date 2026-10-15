@@ -1,7 +1,7 @@
 # gd-flate cheat sheet
 
-DEFLATE and zlib, replacing Odin's `core:compress/zlib` (inflate) and `vendor:zlib`
-(deflate for Git packs). Standard library only. Gzip is not provided: nothing used it.
+DEFLATE and zlib: inflate and deflate for Sphinx inventories, deflate for Git packs.
+Standard library only. Gzip is not provided: nothing uses it.
 
 ## Use
 

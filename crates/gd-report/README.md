@@ -1,8 +1,8 @@
 # gd-report cheat sheet
 
 Elm-style diagnostic reports shared by every crate. Standard library only; it renders
-and never prints. New in the Rust port: it gathers what the Odin code spread over
-`lib/host/diagnostics.odin`, `excerpt.odin`, `graphdog/format.odin` and `jinja/errors.odin`.
+and never prints. One crate owns the report shape, so the host, the readers, graphdog and
+the template engine all print errors the same way.
 
 ## Use
 
@@ -52,6 +52,6 @@ println!("{}", gd_report::render_json(&report));     // one JSON object (SCHEMA 
 | `escape_terminal(s) -> Cow<str>` | escapes control characters except `\n`; borrows when clean |
 | `wrap` / `write_wrapped`, `suggest(name, candidates)`, `edit_distance` | prose wrapping and "Did you mean" |
 
-Redesigns: `Excerpt` is an `Option` holding the source line and byte span instead of
-pre-rendered excerpt/marker strings, so the terminal window is computed at render time;
-several hints replace one; the Odin template filling (`{0}`) stays in the engine.
+Design: `Excerpt` is an `Option` holding the source line and byte span rather than
+pre-rendered excerpt and marker strings, so the terminal window is computed at render
+time; a report may carry several hints; template filling (`{0}`) stays in the engine.

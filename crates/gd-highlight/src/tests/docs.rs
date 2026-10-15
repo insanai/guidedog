@@ -1,4 +1,4 @@
-//! Ported from `docs_test.odin`.
+//! The documentation lexers (reStructuredText, Markdown, Typst, LaTeX, diff) and guessing.
 
 use super::*;
 use crate::*;

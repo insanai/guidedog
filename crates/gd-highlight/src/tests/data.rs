@@ -1,4 +1,4 @@
-//! Ported from `data_test.odin`.
+//! The data lexers: JSON, YAML, TOML and INI.
 
 use super::*;
 use crate::*;

@@ -2,7 +2,6 @@
 
 JSON (RFC 8259) for the plugin protocol, caches, search indexes and diagnostics: a thin
 API over `serde_json` with a validating parser, an HTML-safe writer and Elm-style errors.
-New in the Rust port (Odin used `core:encoding/json`).
 
 ## Use
 
@@ -54,8 +53,7 @@ every build (same version, with `preserve_order`), so an in-house parser and wri
 
 - `Value` and `Object` are re-exports, not newtypes: values flow to and from any
   serde-based code (Typst, plugin payloads, `#[derive(Deserialize)]` structs) at no cost.
-  The old `Value::Integer`/`Value::Float` became `Value::Number`; `Value::kind_name()`
-  became the free function `kind_name`.
+  Numbers are one `Value::Number`, and `kind_name` is a free function.
 - `parse_with` drives serde_json with a small `DeserializeSeed` that builds the value
   and checks duplicate keys and depth in the same pass; the error keeps serde_json's
   line and column but carries this crate's kind, message and hint.

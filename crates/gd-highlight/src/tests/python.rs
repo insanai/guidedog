@@ -1,4 +1,4 @@
-//! Ported from `python_test.odin`.
+//! The Python lexers: source, console sessions and tracebacks.
 
 use super::*;
 use crate::*;

@@ -1,8 +1,8 @@
-//! Ported from `robust_test.odin`: every lexer on random input, odd characters and huge
+//! Every lexer on random input, odd characters and huge
 //! lines must end, cover every byte exactly once, and give the same tokens every time.
 //!
-//! Rust strings are always valid UTF-8, so the Odin tests' invalid byte sequences become
-//! U+FFFD here (through `String::from_utf8_lossy`).
+//! Input is a `&str`, so invalid byte sequences arrive as
+//! U+FFFD (through `String::from_utf8_lossy`).
 
 use super::*;
 use crate::*;

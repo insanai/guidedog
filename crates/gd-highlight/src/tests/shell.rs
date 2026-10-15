@@ -1,4 +1,4 @@
-//! Ported from `shell_test.odin`.
+//! The shell lexers: Bash, console sessions, Makefiles and Dockerfiles.
 
 use super::*;
 use crate::*;

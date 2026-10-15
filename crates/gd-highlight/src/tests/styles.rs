@@ -1,4 +1,4 @@
-//! Ported from `styles_test.odin` (stylesheets and Typst output).
+//! Stylesheets and Typst output.
 
 use crate::*;
 
@@ -164,7 +164,7 @@ fn typst_output() {
     );
     assert_eq!(typst(Lexer::Text, "a\n\nb"), "(((\"\", \"a\"), ), (), ((\"\", \"b\"), ), )");
     assert_eq!(typst(Lexer::Text, ""), "()");
-    // Rust strings are valid UTF-8, so the Odin test's invalid byte is U+FFFD here.
+    // Input is a `&str`, so an invalid byte arrives as U+FFFD.
     assert_eq!(
         typst(Lexer::Text, "\t\u{1}\u{fffd}\u{e9}"),
         "(((\"\", \"\\t\\u{1}\u{fffd}é\"), ), )"

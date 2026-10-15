@@ -1,4 +1,4 @@
-//! Unit tests, ported from the Odin package's `*_test.odin` files.
+//! Unit tests, one module per area of the crate.
 
 mod cost;
 mod fuzz;

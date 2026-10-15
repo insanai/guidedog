@@ -201,10 +201,9 @@ Footnotes (`[^1]`) become auto-numbered footnotes (`[#d3-f1]_`) defined at the e
 
 Links into the standard library (primitives `[u8]`, `prim@str`, `[u8::MAX]`, paths starting `std::`, `core::` or `alloc::`, and prelude names such as `[Vec]` or `[Some]` that the crate does not define) become hyperlinks to doc.rust-lang.org. The standard library publishes no inventory a reader could use, so a stable URL is the practical choice: primitives and a table of common items get their exact pages (`struct.Vec.html`, `#method.new`), a disambiguator gives the page kind for the rest (`macro@`, `mod@`, `struct@`), and anything else opens rustdoc's search for the path. The shown text drops a written disambiguator (`[`prim@u8`]` shows `u8`), as rustdoc does.
 
-## Design notes (Rust, not the Odin port)
+## Design notes
 
-- odindoc answers one generating directive at a time from a project of arenas;
-  gd-rustdoc is two plain values: `load_crate` builds an owned `Crate` (flat `Vec`s of
+- gd-rustdoc is two plain values: `load_crate` builds an owned `Crate` (flat `Vec`s of
   modules and items addressed by newtype ids) and `document` borrows it to write owned
   `Page`s. Nothing needs freeing or initialising.
 - Problems are values: `Result<Crate, Error>` only for an unusable root, `Diagnostic`s

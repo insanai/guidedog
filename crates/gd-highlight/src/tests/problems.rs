@@ -1,4 +1,4 @@
-//! Ported from `problems_test.odin`.
+//! Elm-style reports for unknown languages, unknown styles and code that does not lex.
 
 use crate::*;
 

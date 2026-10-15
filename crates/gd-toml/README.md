@@ -1,7 +1,7 @@
 # gd-toml cheat sheet
 
-TOML 1.0 reader and writer, ported from `guidedog_old/lib/toml` (reader) and the writing
-helpers of `lib/project/migrate_toml.odin`. Depends only on `gd-report`.
+TOML 1.0 reader and writer for `conf.toml`, plugin manifests and migrated
+configurations. Depends only on `gd-report`.
 
 ## Use
 
@@ -47,8 +47,7 @@ let text = gd_toml::to_string(&table);          // a document parse reads back e
 | `Error { kind, message, hint, offset, end, line, column }`, `e.report(path, source)` | `ErrorKind::{Syntax, Duplicate, String, Number, Datetime, Depth}` |
 | `to_string(&Table)`, `write_table`, `write_value`, `write_string`, `write_basic_string` (always one line), `write_key` | writer |
 
-Redesigns: a `Value` is an enum-backed struct instead of one struct with a field per kind;
-date-times are parsed and validated rather than kept as text; `inf`/`nan` are real
-infinities and NaN (Odin used `max(f64)` and 0); errors carry byte spans, columns and
-hints; table-extension rules (dotted keys versus headers) follow the TOML 1.0 spec
-strictly, which Odin only approximated. The Odin `\e` escape is still accepted.
+Design: a `Value` is an enum-backed struct; date-times are parsed and validated rather
+than kept as text; `inf`/`nan` are real infinities and NaN; errors carry byte spans,
+columns and hints; table-extension rules (dotted keys versus headers) follow the TOML 1.0
+spec strictly. The `\e` escape (from TOML 1.1) is also accepted.

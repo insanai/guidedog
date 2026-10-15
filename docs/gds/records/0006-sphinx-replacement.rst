@@ -811,8 +811,7 @@ Acceptance criteria and implementation status
 - Fresh and incremental builds produce identical output; editing one document rewrites
   exactly the pages that depend on it.
 
-The supported project surface is implemented. Evidence is retained in
-``docs/manual/evidence/beta-review-20261011.md`` and the reader ledgers.
+The supported project surface is implemented. The reader ledgers record the evidence.
 
 - ``quickstart``, the supported builders, ``clean``, ``serve``, ``migrate``, and
   native gettext catalog commands operate on project folders.
@@ -928,6 +927,5 @@ References
 
    2026-10-11: accepted -> committed. Current supported design implemented; beta
    review fixes and limitations are recorded. Library and integration
-   suites; embedded-backend validation;
-   docs/manual/evidence/beta-review-20261011.md. Deferred features are not
-   claimed as implemented.
+   suites; embedded-backend validation. Deferred features are not claimed as
+   implemented.

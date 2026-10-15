@@ -272,6 +272,5 @@ References
 
    2026-10-11: accepted -> committed. Current supported design implemented; beta
    review fixes and limitations are recorded. Library and integration
-   suites; embedded-backend validation;
-   docs/manual/evidence/beta-review-20261011.md. Deferred features are not
-   claimed as implemented.
+   suites; embedded-backend validation. Deferred features are not claimed as
+   implemented.

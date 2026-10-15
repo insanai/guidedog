@@ -607,6 +607,5 @@ References
 
    2026-10-14: accepted -> committed. Implemented scope reviewed against source
    and published qualification.
-   docs/gds/evidence/plugin-acceptance-20261014.rst;
-   docs/manual/evidence/plugin-review-20261014.md; successful 0.6.2 release run
-   38434657070.
+   docs/gds/evidence/plugin-acceptance-20261014.rst; successful 0.6.2 release
+   run 38434657070.

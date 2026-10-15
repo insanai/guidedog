@@ -39,12 +39,7 @@ The published `Guidedog 0.6.2 release
 <https://github.com/insanai/guidedog/actions/runs/38434657070>`_ completed successfully.
 The GitHub API was checked again on 14 October 2026 before recording this decision.
 
-The detailed repository report is
-``docs/manual/evidence/plugin-review-20261014.md``. It records the 176 integration
-tests, 36 library/tool suites, allocation-refusal and AddressSanitizer checks,
-five packaged platforms, native credential-store checks and twelve large-manual
-builds. It links the candidate, release, Homebrew and publication runs. These are
-observed qualification results, not a proof against every possible native fault.
+These are observed qualification results, not a proof against every possible native fault.
 
 The relevant implementation lives in ``crates/gd-plugins``, ``crates/gd-env``,
 ``crates/gd-pages``, ``crates/gd-git`` and the command entry points. The worked build

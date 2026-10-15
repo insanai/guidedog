@@ -30,6 +30,7 @@ conformance evidence.
    cpp-declarations
    sphinx-ledger
    sphinx-comparison
+   release-readiness
    rust-domain
 
 .. toctree::

@@ -1,0 +1,41 @@
+[package]
+name = "guidedoc-examples"
+description = "Small programs that show how to embed the Guidedoc engine and its libraries."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+# Only workspace crates: the examples show Guidedog's own libraries, nothing else.
+[dependencies]
+guidedoc = { workspace = true }
+guidedoc-rst = { workspace = true }
+guidedoc-commonmark = { workspace = true }
+guidedoc-html = { workspace = true }
+guidedoc-text = { workspace = true }
+guidedoc-typst = { workspace = true }
+gd-graphdog = { workspace = true }
+
+[[example]]
+name = "hello"
+path = "examples/hello.rs"
+
+[[example]]
+name = "reuse_workspace"
+path = "examples/reuse_workspace.rs"
+
+[[example]]
+name = "custom_pass"
+path = "examples/custom_pass.rs"
+
+[[example]]
+name = "plain_text"
+path = "examples/plain_text.rs"
+
+[[example]]
+name = "graphdog"
+path = "examples/graphdog.rs"
+
+[lints]
+workspace = true

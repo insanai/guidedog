@@ -375,8 +375,7 @@ The same command works in both deployments. Linked, it runs inside guidedog. Reg
 The build-plugin interface (``PLUGIN_API_VERSION``) is 1.0 and uses protocol
 ``guidedog-build-plugin`` 1.0. The publisher interface (``API_VERSION``) is 1.1 and
 keeps ``guidedog-publisher`` protocol 1.0. These are separate contracts. The wire
-format is the one that programs built with the Odin SDK speak, so registered programs from
-earlier releases keep working. Product versions are separate from interface versions.
+format is stable, so registered programs from earlier releases keep working. Product versions are separate from interface versions.
 New hooks arrive as trait methods with "absent" defaults, and host-made inputs are
 ``#[non_exhaustive]``, so a new field does not break a plugin. Contributed commands have
 their own command protocol (1.0), announced in optional handshake fields: programs

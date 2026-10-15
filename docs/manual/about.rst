@@ -21,30 +21,14 @@ Typst remains only where a PDF typesetting template is required.
 Implementation
 --------------
 
-Guidedog 0.7 is a port of the original Odin implementation to Rust. The port keeps
-the user-facing behavior: the ``guidedog`` commands and options, ``conf.toml`` keys,
-directives, roles, and output. It redesigns the inside the way a Rust program is
-written: ownership instead of arenas and allocation budgets, traits instead of
-procedure tables, and one crate per responsibility. :doc:`internals/index` describes
-the result. :doc:`internals/engine-api-map` maps the Odin engine's names to the
-Rust ones.
+Guidedog is written in Rust. Each responsibility lives in its own crate: the Guidedoc engine, one crate per reader and renderer, and supporting libraries that know nothing of the engine. The engine borrows a caller-owned workspace, so a document cannot outlive the buffers it points into. Extensions are traits, and limits are explicit values that end work with a result instead of a panic. :doc:`internals/index` describes the design.
 
-The port adds Rust API documentation (:doc:`rust`), plugins linked into a custom
-binary (:doc:`plugins`), and a guided GitHub Pages workflow
-(:doc:`howto/github-pages`). Odin remains a documented language: the Odin domain and
-its API pages are unchanged (:doc:`odin`).
+Besides reStructuredText and Markdown projects, Guidedog documents Rust crates (:doc:`rust`), Python modules (:doc:`autodoc`) and Odin packages (:doc:`odin`) from their source. Plugins can be separate programs or linked into a custom binary (:doc:`plugins`), and a guided workflow publishes a site on GitHub Pages (:doc:`howto/github-pages`).
 
 Build evidence and qualification
 --------------------------------
 
-Release 0.6.3 of the Odin implementation passed its integration and library suites,
-AddressSanitizer checks, five-platform builds and smoke tests, and twelve
-large-manual builds across CPython, Django, and Flask. Diagnostic and link results
-matched their established baselines. Those records are kept in the repository's
-``docs/manual/evidence`` folder as history. The Rust implementation keeps the
-conformance tests and expected outputs (:doc:`internals/rst-conformance`,
-:doc:`internals/commonmark-conformance`). Its own large-manual measurements are
-recorded as new evidence.
+The conformance tests and their expected outputs (:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) run with every test suite. Large-manual measurements are recorded in the repository's ``docs/manual/evidence`` folder.
 
 Qualification checks (via ``guidedog plugin check``) show that plugins work
 across process boundaries. Linked plugins remain trusted code.

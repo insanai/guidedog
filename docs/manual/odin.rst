@@ -222,7 +222,7 @@ into the source folder. Settings:
 
 Types from packages we do not document (``core:io.Writer``) cannot be linked. With
 ``-n``, we silence them with ``nitpick_ignore_regex = [["odin:type", "(core|base):.*"]]``.
-Guidedog's own API reference, ``docs/api``, is now built the same way from Rust source
+Guidedog's own API reference, ``docs/api``, is built the same way from Rust source
 with ``rust_autoapi_crates``. See :doc:`rust`.
 
 Platforms
@@ -261,7 +261,7 @@ Limits
 - A declaration that mentions a private type shows it as text, since private
   declarations have no entries unless ``:private-members:`` is given. The generated
   package lists them in ``:private:``, so ``-n`` has nothing to report.
-- Guidedog reads declarations with its own port of Odin's tokenizer and parser. The parser
+- Guidedog reads declarations with its own tokenizer and parser for Odin. The parser
   skips procedure bodies. A syntax error in a declaration is reported
   (``odin.autodoc.syntax``), and what could be read is still documented.
 - A declaration nested deeper than 160 levels of brackets or types is far deeper than

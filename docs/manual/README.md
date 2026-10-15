@@ -17,8 +17,6 @@ Start at [index.rst](index.rst), or see the other documentation projects:
 - **Internals**: the engine, invariants, publication, memory, and the design notes of the Rust crates.
 - **API appendix**: generated from the crates listed in `rust_autoapi_crates` in `conf.toml`, so PDF books link prose and code together.
 
-`evidence/` keeps historical review and verification records of the Odin implementation; it is not part of the build.
-
 ## Building
 
 Build Guidedog first (`cargo build --release -p guidedog-cmd` at the repository root), then, from the root:
@@ -33,7 +31,7 @@ target/release/guidedog serve docs/manual
 
 The manual is translated into Simplified Chinese (`zh_CN`), Japanese (`ja`), Korean (`ko`), Hindi (`hi`), Spanish (`es`), and German (`de`). PO catalogs are in `locales/<language>/LC_MESSAGES/*.po`; compiled `.mo` files are made during the build and ignored by Git.
 
-The catalogs were copied unchanged from the Odin implementation's manual. Pages rewritten for the Rust port (internals, plugins, about, repository) and the new `rust.rst` have new or changed messages; refresh them with the `intl` commands:
+When pages change, we refresh the catalogs with the `intl` commands:
 
 ```sh
 target/release/guidedog build -b gettext docs/manual docs/manual/locales/templates -W

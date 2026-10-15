@@ -16,6 +16,4 @@ target/release/guidedog serve docs/api
 
 Outputs go to `docs/api/_build/html` and `docs/api/_build/pdf`. The same pages form the appendix of the manual's PDF book (`docs/manual/conf.toml` lists the crates too).
 
-This project replaces the Odin implementation's reference, which `odin_autoapi_dirs` generated from `lib/`. It builds once the `guidedog` CLI of the Rust port is complete.
-
 See the [Rust chapter](../manual/rust.rst) for the domain and the `rust_autoapi_*` settings, and the [manual](../manual/index.rst).

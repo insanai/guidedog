@@ -23,22 +23,22 @@ with signatures written and shown as Odin writes declarations. Roles link to the
 object has an id, an index entry, a table of contents entry, and an ``objects.inv`` entry.
 Generating directives (``odin:autopackage`` and five others) and API pages
 (``odin_autoapi_dirs``, as sphinx-autoapi's ``autoapi_dirs``) write that domain's
-reStructuredText from Odin source, parsed with Odin's own ``core:odin/parser``. The
-compiler never runs. Guidedog's own reference, ``docs/api``, is built this way.
+reStructuredText from Odin source, parsed as Odin's own ``core:odin/parser`` parses it. The
+compiler never runs. The ``rust`` domain and ``gd-rustdoc`` follow the same design for Rust.
 
 
 Motivation and scope
 --------------------
 
 
-Guidedog is written in Odin, and Odin has no documentation tool that produces a
-cross-referenced site and book with prose around the reference. Sphinx has no Odin
+Odin has no documentation tool that produces a cross-referenced site and book with prose
+around the reference. Sphinx has no Odin
 domain. The Python pieces Guidedog already has (the Python domain, ``sphinx.ext.autodoc``
 from static analysis, the project's object tables and inventories) give the design.
 This record applies it to Odin.
 
-In scope: the domain in the Sphinx reader (inside the allocation boundary of GDS 0003),
-``lib/odindoc``, a host library that analyses Odin packages and writes the domain's text, and
+In scope: the domain in the Sphinx reader (``guidedoc-sphinx``),
+``gd-odindoc``, a host library that analyses Odin packages and writes the domain's text, and
 the project's generating directives, API pages, cross-references, inventory, and
 incremental rebuilds. Out of scope: type checking, evaluating constants, and running
 anything.
@@ -90,9 +90,9 @@ Every object takes ``:no-index:``, ``:no-index-entry:``, ``:no-contents-entry:``
 Members nested in a type are named ``Type.member``. Later signature lines of one directive
 are the same object on other targets. They get no id and no entry.
 
-Signatures become ``Desc_*`` nodes: attributes and keywords as ``Desc_Annotation``, the
-package's short name as ``Desc_Addname`` (with ``add_module_names``), the name, parameters
-as a ``Desc_Parameterlist``, and named results as a second one after the text " -> ". Names in
+Signatures become ``Desc*`` nodes: attributes and keywords as ``DescAnnotation``, the
+package's short name as ``DescAddname`` (with ``add_module_names``), the name, parameters
+as a ``DescParameterlist``, and named results as a second one after the text " -> ". Names in
 type positions become ``Xref{odin:type}`` with the context attributes ``odin:package`` and
 ``odin:type``. An alias of ``:imports:`` is followed to its package in the reader. Built-in
 types, keywords, polymorphic names (``$T`` and ``T`` after it, including a nesting type's),
@@ -125,9 +125,12 @@ Generating from source
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
-``lib/odindoc`` is a host library that imports only Odin's ``core:`` and ``base:`` packages. It
-reads every ``.odin`` file of a package folder except ``*_test.odin`` and ``#+ignore`` files
-through the host's confined reader. It parses each with ``core:odin/parser`` and records
+``gd-odindoc`` is a host library that uses only the standard library. It reads every
+``.odin`` file of a package folder except ``*_test.odin`` and ``#+ignore`` files through the
+host's confined reader, plugged in as a ``FileReader``. Its tokenizer and declaration-level
+parser read every file-scope statement, expression and type as Odin's ``core:odin/parser``
+does, with the same spans and the same comment grouping, and skip procedure bodies, which
+declare nothing to document. Expressions are flat nodes indexed by ``NodeId``. It records
 declarations in source order: kind, signature as written (the source span normalized to
 one line, never a procedure's body), attributes, doc comment (the comment group directly
 above, and a field's or enumerator's comment at the end of its line), privacy
@@ -135,7 +138,7 @@ above, and a field's or enumerator's comment at the end of its line), privacy
 
 ``odin:autopackage``, ``odin:autoproc``, ``odin:autoprocgroup``, ``odin:autotype``,
 ``odin:autoconst``, and ``odin:autovar`` hand the request to the host, as autodoc's
-directives do (``Config.odin_autodoc``), and parse the answer where they stand. Options:
+directives do, and parse the answer where they stand. Options:
 ``:members:``, ``:undoc-members:``, ``:private-members:``, ``:exclude-members:``,
 ``:member-order:`` (source, alphabetical, groupwise), ``:no-index:``.
 
@@ -207,7 +210,7 @@ import-style arguments (``core:strings``) and gets no pages. All settings are ch
      - ``false``: directives only
 
 
-Every Odin file read is a dependency of the page that read it (``Doc_Info.deps``), so
+Every Odin file read is a dependency of the page that read it, so
 editing a package reads only its page again. The index's text holds the synopses, so its
 digest changes when one does. A page whose package was not found is read again on every
 build.
@@ -222,8 +225,8 @@ nothing new: the same options, the same info fields, the same ``~`` and ``.``, t
 nesting of members, and the same inventory. Signatures are Odin's own syntax rather than
 a C-like one, since Odin readers read declarations that way.
 
-Parsing with ``core:odin/parser`` keeps the reader of the source the one the language
-ships, so every syntax Odin accepts is read. Running ``odin doc`` would give types checked
+A parser that reads declarations as ``core:odin/parser`` does, with the same spans and
+comment grouping, reads every syntax Odin accepts at file scope. Running ``odin doc`` would give types checked
 by the compiler, but would run a compiler at build time, for one target at a time, and
 could not see the other targets' files. Static analysis documents the whole
 cross-platform API.
@@ -238,9 +241,11 @@ Security and operational considerations
 
 
 Building never compiles or runs Odin code. Source is read only below
-``odin_autoapi_dirs`` and ``odin_collections``, through ``host.confined``, as includes are, and
-within the document size limit. A package that does not parse is reported with a warning,
-and what could be read is documented.
+``odin_autoapi_dirs`` and ``odin_collections``, through ``gd_host::confined``, as includes are, and
+within ``Limits::max_file_bytes`` (``odin.autodoc.memory``). The parser counts how deeply it
+recurses and leaves a file nested past 160 levels out with ``odin.autodoc.nesting``. A
+package that does not parse is reported with a warning, and what could be read is
+documented.
 
 
 Backwards compatibility
@@ -256,50 +261,24 @@ Acceptance criteria and implementation status
 ---------------------------------------------
 
 
-Implemented: the domain (``lib/readers/sphinx/odin.odin``, tests in ``odin_test.odin``,
-allocation-free reading in ``reading_makes_no_allocator_calls``), ``lib/odindoc`` with its
-tests, the project's generating directives, API pages, resolution, inventory, and
-dependencies (``tests/odin_test.odin``), and ``docs/api``, which builds Guidedog's own
-reference with strict HTML and PDF builds. API page counts are build observations,
-not a fixed part of the domain contract. The beta review reruns the package and
-integration suites with allocation leak checks and AddressSanitizer.
+Implemented: the domain (``crates/guidedoc-sphinx/src/domains/odin.rs`` and its tests),
+``gd-odindoc`` with its tests, and the project's generating directives, API pages,
+resolution, inventory, and dependencies (``tests/integration/tests/tools/autodoc.rs`` and
+``incremental.rs``). API page counts are build observations, not a fixed part of the
+domain contract.
 
 
 Open questions
 --------------
 
 
-- Private types that public declarations mention cannot be linked. ``docs/api`` lists them
-  in ``nitpick_ignore``. Should the generator show them without a link, or should ``lib/``
-  make such declarations private?
+- Private types that public declarations mention cannot be linked. A project lists them
+  in ``nitpick_ignore``. Should the generator show them without a link?
 - Whether ``A :: B`` declares a type or a constant is told from the names. The compiler
   would know.
 - ``when`` conditions other than ``ODIN_OS`` and ``ODIN_ARCH`` comparisons are not evaluated.
 - A package module index (``odin-modindex``), as the Python module index, is not written.
 
-
-Implementation in Rust
-----------------------
-
-GDS 0011 moves the implementation to Rust. Odin remains a documented language, so this
-record's domain, directives, options, ids, inventory and API pages are unchanged.
-
-- The domain is ``guidedoc-sphinx`` (``src/domains/odin.rs``).
-- ``gd-odindoc`` replaces ``lib/odindoc``. Rust cannot call ``core:odin/parser``, so the
-  crate carries a port of Odin's tokenizer and a declaration-level parser that reads every
-  file-scope statement, expression and type as Odin's parser does (same spans, same
-  comment grouping). It skips procedure bodies. Expressions are flat nodes indexed by
-  ``NodeId``. A ``FileReader`` trait replaces the procedure struct, so the host's confined
-  reader is plugged in as before.
-- The parse-memory bound becomes a nesting limit (160 levels, ``odin.autodoc.nesting``)
-  and ``Limits::max_file_bytes`` (``odin.autodoc.memory``). Files the stack estimate
-  refused for deep ``else if`` chains inside bodies are now read. Multi-line ``"""``
-  strings are tokenized.
-- Checked against the Odin implementation over Guidedog's old ``lib`` and Odin's ``core``,
-  ``base`` and ``vendor`` (about 560,000 lines of reStructuredText): identical output except
-  three ``cpp-gen.odin`` files that the Odin tokenizer refused.
-
-GDS 0011 adds a sibling ``rust`` domain and ``gd-rustdoc``, shaped after this record.
 
 Review history
 --------------
@@ -308,15 +287,11 @@ Review history
 2026-09-30: drafted with the implementation.
 
 
-2026-10-15: the implementation moved from Odin to Rust (GDS 0011). Added
-"Implementation in Rust". The decisions, evidence and lifecycle above are kept as
-they were recorded.
-
 References
 ----------
 
 
-- GDS 0003, the Guidedoc engine and its allocation boundary.
+- GDS 0003, the Guidedoc engine.
 - GDS 0006, Sphinx-style projects and recoverable publication: domains, autodoc,
   and the native project model.
 - Sphinx 9.1, ``sphinx.domains.python`` and ``sphinx.ext.autodoc``; sphinx-autoapi.
@@ -342,13 +317,7 @@ References
 ::
 
    2026-10-11: accepted -> committed. Current supported design implemented; beta
-   review fixes and limitations are recorded. Native library and integration
-   suites with leak checks; sanitizer and embedded-backend validation;
+   review fixes and limitations are recorded. Library and integration
+   suites; embedded-backend validation;
    docs/manual/evidence/beta-review-20261011.md. Deferred features are not
    claimed as implemented.
-
-.. rubric:: Implementation revision, 2026-10-15
-
-The implementation moved from Odin to Rust. See GDS 0011 and the section
-"Implementation in Rust". This is an implementation revision. It does not change
-this record's review state or assert new acceptance evidence.

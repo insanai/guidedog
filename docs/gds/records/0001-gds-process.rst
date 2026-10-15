@@ -17,7 +17,7 @@ Abstract
 
 
 Guidedog Discussions (GDS) are the project's RFC/RFD-style specification and
-decision records. The subject is Guidedog, a Sphinx-like documentation system built in Odin.
+decision records. The subject is Guidedog, a Sphinx-like documentation system written in Rust.
 This revision adapts ZDS 0001 and keeps
 its lifecycle and numbering process. It adds explicit PEP-inspired guidance for
 rationale, compatibility, review history, and implementation evidence. GDS is a
@@ -201,76 +201,56 @@ Coding and writing rules
 
 
 Every new source file has at most **1,408 physical lines**. A line should remain within
-**99 characters** and must not exceed **108 characters**. Source is Odin and every other
-implementation language shipped with it: CSS, JavaScript, HTML templates, shell, Rust, C,
-and TOML. Documentation (Markdown, reStructuredText, and Typst prose, diagrams, and markup
+**99 characters** and must not exceed **108 characters**. Source is Rust and every other
+implementation language shipped with it: CSS, JavaScript, HTML and Typst templates, shell,
+C, and TOML. Documentation (Markdown, reStructuredText, and Typst prose, diagrams, and markup
 structure, these records included) is written for readers and exempt from every one of
-these limits. Line width, file length, and procedure length apply to code only.
-Every procedure has at most **70 lines of logic**, excluding its signature, blank
+these limits. Line width, file length, and function length apply to code only.
+Every function has at most **70 lines of logic**, excluding its signature, blank
 lines, comments, and ornamental delimiters. Multi-statement lines cannot be used
 to evade the rule. Split work by responsibility, not by arbitrary line count.
 
-``odin run tools/check`` uses tokens to distinguish Odin code from strings and comments.
-It includes procedure literals and multiline expressions. The current checker
-fails both soft-width findings and hard limits. Generated code must be split or redesigned to
-fit. It has no blanket exemption. Inherited Zen records remain an explicitly
-historical archive and are not presented as compliant new source.
+``cargo run -p check`` (``tools/check``) counts a Rust function's logical lines with its own
+lexer, so strings and comments are excluded. It includes closures and multiline
+expressions, and it exempts ``docs`` and vendored ``data``. Hard limits always fail;
+soft-width findings are reported and fail with ``--soft``. ``rustfmt.toml`` sets
+``max_width = 99`` and ``clippy.toml`` sets ``too-many-lines-threshold = 70``.
+Generated code must be split or redesigned to fit. It has no blanket exemption.
+Inherited Zen records remain an explicitly historical archive and are not presented as
+compliant new source.
 
-Prefer small values, distinct IDs, exhaustive tag switches, checked arithmetic,
-explicit limits, and narrow package imports. Avoid unchecked pointer casts,
-disabling bounds checks, recursion driven by input, and thread-shared mutation.
-Errors due to user data return results. Assertions state internal invariants that
-have already been established by validation.
+Prefer small values, distinct newtype IDs, exhaustive ``match``, checked arithmetic,
+explicit limits, and narrow module exports. Avoid recursion driven by input without a
+depth bound, and thread-shared mutation. Errors due to user data return results. Panics
+state internal invariants that have already been established by validation.
 
 
 Memory safety
 ^^^^^^^^^^^^^
 
 
-Guidedog must never crash on its input or on a failed allocation. Odin gives the tools.
-These rules say which ones every change uses. Tests enforce the rules that a scan can
-check (``tests/memory_safety_test.odin``). Review enforces the rest.
+Guidedog must never crash on its input. Rust gives the tools. These rules say which ones
+every change uses. The compiler and ``tools/check`` enforce what they can; review enforces
+the rest.
 
-- **Check every allocation.** ``make``, ``new``, ``clone``, ``aprintf`` and the rest return an
-  ``mem.Allocator_Error`` or an ``ok``. A caller takes the value and the result together
-  (``x, err := make([]T, n)``), stops with ``or_return``, or chooses a fallback with
-  ``or_else``. It never indexes, dereferences, or passes on a value whose allocation
-  failed. Work that cannot check each allocation (a library that goes on with what it
-  has) allocates through a ``host.Guard``. The guard remembers the first refusal and
-  refuses every later allocation, so the work only shrinks. The caller fails the
-  whole step with ``host.memory`` when the work ends. Arenas (``host.Arena``,
-  ``runtime.Arena``, Jinja's own) stay consistent when their backing allocator refuses a
-  block. ``mem.Dynamic_Arena`` does not, so product code does not use it
-  (``tests/memory_safety_test.odin`` checks). Code that cannot survive a refusal, such as
-  Odin's parser, runs on memory the caller's allocator never refuses (odindoc parses in
-  virtual memory of its own) within a bound reserved ahead. Tests refuse every
-  allocation of a run in turn (``tests/allocation_failure_test.odin`` and the libraries'
-  ``memory_test.odin`` and ``refusal_test.odin``).
-- **Bounds checks stay on.** No ``#no_bounds_check`` and no ``-no-bounds-check``, in code,
-  build commands, scripts, or documentation. A loop that needs a check elided slices
-  once before it, so the compiler proves the bound.
-- **No pointer arithmetic or multi-pointers outside C bindings.** ``[^]T``, ``uintptr``
-  arithmetic, and ``transmute`` between unrelated types belong to the bindings of
-  Graphviz, tree-sitter, the Typst bridge, and curl, which pass C's memory to Odin as
-  slices at their boundary. Elsewhere a region is carved by slicing the bytes first
-  (bounds-checked) and then reinterpreting the slice (``slice.reinterpret``). The
-  offset of a slice within its text comes from ``core.offset_in``, which checks that it
-  lies inside. Reading a frame's address to measure the stack, or a native ``#soa``
-  slice's header, is allowed with a comment saying so. Callback user data is the one
-  ``rawptr`` cast allowed: the callee casts back to the type its registrant passed.
-- **No views past their memory.** A string or slice into an arena, a session, or the
-  temporary allocator is used only while that memory lives. What outlives a step is
-  copied into the caller's allocator before the step's arena is freed (as
-  ``scratch_close`` copies reports and problems). Library code never calls
-  ``free_all(context.temp_allocator)``.
-- **Nil-checked pointers.** A procedure that finds something returns ``^T`` and nil, or
-  ``(T, bool)``, or ``Maybe(T)``. Its callers check before dereferencing. Tables that
-  point into a struct use typed pointers (a union of them where kinds differ), never
-  ``rawptr``.
-- **Ownership is explicit.** Each entry point owns an arena of its own, freed by one
-  procedure (``unload``, ``release``, ``destroy_environment``) with ``defer`` at the call site.
-- **AddressSanitizer.** ``tools/sanitize.sh`` runs every suite and the end-to-end tests with
-  ``-sanitize:address`` before a release, and after changes to memory handling.
+- **Bounded growth.** Growth that input drives uses ``try_reserve`` and explicit
+  ``Limits``, and returns a ``Capacity``, ``Limit`` or ``Memory`` result. Other
+  allocations follow Rust's global allocator, which aborts on failure. Publication stays
+  safe even then, because outputs are staged and switched whole.
+- **Bounds checks stay on.** Indexing is always checked; ``get_unchecked`` and similar
+  are not used.
+- **No ``unsafe`` outside foreign-function modules.** ``unsafe`` appears only at the
+  boundaries with C (Graphviz, the platform credential stores, ``renameat2``, ``signal``,
+  ``localtime_r``) and in test-only counting allocators. Every block has a
+  ``// SAFETY:`` comment.
+- **No views past their memory.** The borrow checker enforces it: a ``Document<'w>``
+  borrows its workspace, and output borrows the workspace until the next conversion.
+- **No sentinels.** ``Option`` and ``Result`` at every public API.
+- **Ownership is explicit.** ``Drop`` cleans up stages, locks, sessions and secrets when
+  they go out of scope.
+- **No panics on input.** Library code never calls ``unwrap()`` or ``expect()`` on
+  input-dependent values. Panics are for violated internal invariants. The crash
+  reporter (``gd_host::catch_crash``) turns one into a report and exit status 70.
 
 Write documentation as an explanation addressed to a careful colleague. Define a
 term before relying on it. State an invariant beside the algorithm that needs it.
@@ -279,7 +259,7 @@ choice exists and which observable behavior depends on it. Use plain English and
 precise claims, following the requested spirit of Feynman, Knuth, Lamport, and
 Dijkstra without imitating their prose or inventing quotations.
 
-A public procedure's comment states what it does, required preconditions, ownership,
+A public item's doc comment states what it does, required preconditions, ownership,
 view lifetime, failure behavior, and any complexity bound that has been justified.
 A format record has a mapping table, conformance ledger, target limitations, policy
 refusals, and regression fixtures. "Unsupported" must identify a specific construct.
@@ -296,13 +276,13 @@ The CLI refreshes their managed regions without discarding surrounding prose.
 
 .. code-block:: sh
 
-   guidedog gds index
-   guidedog gds check
-   guidedog gds build --target=both
-   guidedog gds build guidedoc-odin --target=pdf
-   guidedog build html docs/gds -W
+   guidedog dsc index
+   guidedog dsc check
+   guidedog dsc build --target=both
+   guidedog dsc build guidedoc-engine --target=pdf
+   guidedog build -W -b html docs/gds docs/gds/_build/html
 
-RST publication uses ``lib/project`` and Guidedoc, like any other project.
+RST publication uses the project builder (``gd-project``) and Guidedoc, like any other project.
 HTML is a coherent site in ``docs/gds/_build/html``. A selector limits PDFs,
 not the linked HTML graph. PDF builds produce one book per active record in
 ``docs/gds/_build/pdf``. There is no combined design book by default.
@@ -322,8 +302,9 @@ Number assignment and validation
 
 
 Guidedog has its own number sequence. GDS 0001 defines this process; the next
-assignment was 0002 for the CLI. GDS 0003 is the engine record. Records 0004 through 0006
-cover budgets, the Odin domain, and projects. The next available number is 0007.
+assignment was 0002 for the CLI. GDS 0003 is the engine record. Records 0004 through 0010
+cover budgets, the Odin domain, projects, discussion catalogs, GitHub Pages publishing,
+and plugins. The next available number is 0011.
 Inherited zenfmt records do not reserve Guidedog numbers. New drafts retain ``XXXXX`` until a maintainer
 promotes them. Promotion chooses the next number after existing Guidedog records,
 explicit Guidedog reservations, and local ``gds/NNNN`` branches.
@@ -340,26 +321,27 @@ Guidedog CLI management contract
 --------------------------------
 
 
-The implementation reference is ``../docodin/cmd/docodin/dod.odin``, its DOD process,
-and its CLI reference. That implementation provides ``new``, ``list``, ``index``, and
+The reference design is Docodin's DOD process and its CLI reference. Docodin provides ``new``, ``list``, ``index``, and
 ``check``. It assigns permanent numbers at creation and includes an ``ideation`` state.
 Guidedog deliberately retains ZDS 0001's ``XXXXX`` drafts and six states instead;
 ``promote`` and ``state`` add explicit management of that inherited workflow.
+The commands belong to the discussion plugin, which is linked into ``guidedog``
+(GDS 0007), so they run as ``guidedog dsc``.
 
 .. code-block:: text
 
-   guidedog gds new "Incremental project builds" --labels=architecture,build
-   guidedog gds list --state=prediscussion --label=build
-   guidedog gds show incremental-project-builds
-   guidedog gds promote incremental-project-builds --dry-run
-   guidedog gds promote incremental-project-builds
-   guidedog gds state 0002 --to=accepted --reason="Review converged"
-   guidedog gds index
-   guidedog gds check
-   guidedog gds build --record=0002 --target=pdf
+   guidedog dsc new "Incremental project builds" --labels=architecture,build
+   guidedog dsc list --state=prediscussion --label=build
+   guidedog dsc show incremental-project-builds
+   guidedog dsc promote incremental-project-builds --dry-run
+   guidedog dsc promote incremental-project-builds
+   guidedog dsc state 0002 --to=accepted --reason="Review converged"
+   guidedog dsc index
+   guidedog dsc check
+   guidedog dsc build --record=0002 --target=pdf
 
 
-All commands accept ``--dir=DIR``, defaulting to ``docs/gds``, and ``--help``.
+All commands accept ``--dir=DIR``, defaulting to the catalog the current folder is in, and ``--help``.
 Diagnostics use the standard Elm-style text or JSON mode and terminal color policy.
 ``list`` and ``show`` support ``--format=table|json``; JSON contains metadata fields and
 source paths, never terminal decoration. Read-only commands never rewrite files.
@@ -424,7 +406,7 @@ Mutation commands support ``--dry-run`` to show paths and metadata changes. They
 lock the GDS root, reread identities under the lock, stage changes, validate them,
 and commit with a recovery journal. Multiple file renames are not called atomic.
 A failed or interrupted operation must roll back or leave a journal that the next
-command reports with ``guidedog gds recover --rollback``. Recovery verifies recorded
+command reports with ``guidedog dsc recover --rollback``. Recovery verifies recorded
 original and intended contents and refuses to overwrite later edits. A live
 competing lock reports that the directory is busy. Kernel locks release on process
 exit. The persistent lock file is not itself a stale lock and is not removed.
@@ -463,7 +445,7 @@ identify the owner of every resource boundary.
 A record's metadata, examples, and links are reviewed along with its specification.
 Diagram dependencies must be pinned if external packages are used. Current diagrams
 use Graphviz directives. Guidedog renders vector output without a downloaded
-Typst package. ``guidedog gds check --render`` compiles the active records.
+Typst package. ``guidedog dsc check --render`` compiles the active records.
 ``tools/check`` checks implementation sources. Documentation prose is exempt
 from the source width and procedure limits.
 
@@ -477,8 +459,7 @@ numbers and historical meaning. Rename active metadata and paths from ``zds`` to
 Keep original copied Zen artifacts in the archive where needed. GDS 0001 is the
 adaptation of ZDS 0001, not a replacement lifecycle invented for this repository.
 
-The old architecture remains historical. New Odin proposals do not silently amend
-zenfmt's implementation. No chapter directory forms part of the GDS structure.
+New Guidedog proposals do not silently amend zenfmt's implementation. No chapter directory forms part of the GDS structure.
 
 
 Alternatives considered
@@ -500,67 +481,13 @@ The CLI checks metadata and required sections, regenerates the registry and read
 order, and uses locked, recoverable transactions for promotion and state changes.
 Integration tests cover legal and illegal transitions, reserved numbers, dry runs,
 concurrent edits, interrupted journals, and recovery that preserves later edits.
-The actual RST template is exercised by ``tests/manual_test.odin``.
+The actual RST template is exercised by ``tests/integration/tests/discussions/manual.rs``.
 All six active records are built separately as HTML and PDF during this review.
 The external discussion venue remains unassigned; no external approval is claimed.
 GDS 0002 retains the broader CLI obligations not completed for the beta.
 
 
 
-Implementation in Rust
-----------------------
-
-GDS 0011 moves the implementation to Rust. The process, the six states, numbering,
-metadata and the CLI management contract above are unchanged. The coding rules keep
-their limits and change their means.
-
-**Limits.** The limits are exactly as above. A function body has at most 70 logical lines, a file at most 1,408 lines. A line
-has a soft limit of 99 and a hard limit of 108 characters. ``cargo run -p check``
-(``tools/check``) replaces ``odin run tools/check``. It checks Rust, CSS, JavaScript, HTML and
-Typst templates, shell, TOML and C, counts a Rust function's logical lines with its own
-lexer (strings and comments excluded), and exempts ``docs`` and vendored ``data``.
-Soft-width findings are reported, and fail only with ``--soft``. ``rustfmt.toml`` sets
-``max_width = 99`` and ``clippy.toml`` sets ``too-many-lines-threshold = 70``.
-
-**Memory safety.** Each rule of the "Memory safety" list maps to Rust as follows.
-
-.. list-table:: The memory-safety rules in Rust
-   :header-rows: 1
-   :widths: 30 70
-
-   * - Odin rule
-     - Rust realization
-   * - Check every allocation; ``host.Guard``; arenas that survive refusal
-     - Growth that input drives uses ``try_reserve`` and returns a ``Capacity``, ``Limit``
-       or ``Memory`` result. Other allocations follow Rust's global allocator, which aborts
-       on failure. This guarantee is deliberately narrowed (GDS 0011), and the
-       per-allocation refusal sweeps are retired.
-   * - Bounds checks stay on
-     - Indexing is always checked; ``get_unchecked`` and similar are not used.
-   * - No pointer arithmetic outside C bindings
-     - No ``unsafe`` outside foreign-function modules (Graphviz, platform credential stores,
-       ``renameat2``, ``signal``, ``localtime_r``) and test-only counting allocators; every
-       block has a ``// SAFETY:`` comment.
-   * - No views past their memory
-     - The borrow checker: a ``Document<'w>`` borrows its workspace, output borrows the
-       workspace until the next conversion.
-   * - Nil-checked pointers
-     - ``Option`` and ``Result``; no sentinels at public APIs.
-   * - Ownership is explicit (``unload``, ``release``, ``destroy_*``)
-     - ``Drop``: stages, locks, sessions and secrets clean up when they go out of scope.
-   * - AddressSanitizer before a release
-     - Safe Rust needs no sanitizer run; the FFI modules remain the places to review.
-
-Library code never calls ``unwrap()`` or ``expect()`` on input-dependent values. Panics
-are for violated internal invariants. The crash reporter (``gd_host::catch_crash``)
-turns one into a report and exit status 70.
-
-**Tools.** ``guidedog gds`` and ``dsc`` are both ``gd_discussion::command::run`` with a
-different ``Program`` (GDS 0007). The commands, options, transactions and recovery are
-those specified above. The project build behind ``guidedog gds build`` is ``gd-project``
-with the crates GDS 0006 lists. Documentation stays reStructuredText built by Guidedog.
-
-Implementation revision, 2026-10-15: ``guidedog gds`` and the ``dsc`` program are replaced by ``guidedog dsc``, the commands of the discussion plugin linked into ``guidedog`` (GDS 0007). We run them in ``docs/gds``; the commands above keep their words after ``gds``.
 
 Review history
 --------------
@@ -571,25 +498,18 @@ lifecycle; replace unavailable Zig build instructions with actual Typst commands
 incorporate RFC, Oxide RFD, and PEP structural guidance; remove chapter-based drafts.
 
 29 September 2026, tooling review: replace temporary direct-build instructions
-with the Odin CLI. Record HTML catalog and individual PDF behavior, independent
+with the Guidedog CLI. Record HTML catalog and individual PDF behavior, independent
 Guidedog numbering, snapshot-based recovery, and manual review of prose references.
 Keep the existing discussion state; no lifecycle acceptance is inferred from tests.
 
-30 September 2026: add the memory-safety rules to the coding rules: checked
-allocations, ``host.Guard`` for work that does not stop at a failed allocation, bounds
-checks always on, no pointer arithmetic outside C bindings, no views past their memory,
-nil-checked pointers, and AddressSanitizer runs.
+30 September 2026: add the memory-safety rules to the coding rules.
 
-
-2026-10-15: the implementation moved from Odin to Rust (GDS 0011). Added
-"Implementation in Rust". The decisions, evidence and lifecycle above are kept as
-they were recorded.
 
 References
 ----------
 
 
-- Docodin ``cmd/docodin/dod.odin``, ``docs/dod/0001-dod-process.rst``, and CLI reference.
+- Docodin's DOD process (``docs/dod/0001-dod-process.rst``) and CLI reference.
 - Original ZDS 0001, preserved at ``legacy/0001-zds-process.rst`` and in ``../zenfmt``.
 - `RFC 7322: RFC Style Guide <https://www.rfc-editor.org/rfc/rfc7322.html>`_.
 - `RFC 2119 <https://www.rfc-editor.org/rfc/rfc2119.html>`_ and
@@ -617,12 +537,6 @@ It does not change this record's review state or assert acceptance.
 ::
 
    2026-10-11: published -> committed. RST discussion management and recoverable
-   lifecycle transactions implemented. tests/manual_test.odin; workflow,
+   lifecycle transactions implemented. The manual catalog test; workflow,
    concurrency, recovery and date tests; native GDS strict HTML/PDF verification;
    docs/manual/evidence/beta-review-20261011.md.
-
-.. rubric:: Implementation revision, 2026-10-15
-
-The implementation moved from Odin to Rust. See GDS 0011 and the section
-"Implementation in Rust". This is an implementation revision. It does not change
-this record's review state or assert new acceptance evidence.

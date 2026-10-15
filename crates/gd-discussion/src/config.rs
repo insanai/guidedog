@@ -179,7 +179,7 @@ pub fn read_config(path: &str, source: &str) -> Result<Definition> {
             Some(source),
             e.line,
             e.message.clone(),
-            "Correct the TOML at that line; dsc init writes a complete example.",
+            "Correct the TOML at that line; guidedog dsc init writes a complete example.",
         )
     })?;
     let r = Reader { path, source };
@@ -348,7 +348,8 @@ impl Reader<'_> {
             return Err(self.fail(
                 v.line,
                 "[workflow] has no states.",
-                "Add a [workflow.states.NAME] table for each state, as dsc config prints.",
+                "Add a [workflow.states.NAME] table for each state, as guidedog dsc config \
+                 prints.",
             ));
         };
         p.states.clear();
@@ -486,13 +487,13 @@ fn check_workflow(p: &Process, fail: &Fail<'_>) -> Result<()> {
 }
 
 /// Writes `d` as a `discussion.toml`: every setting, with a comment on each, so a
-/// catalog's process can be read and changed in one place. `dsc config` prints it and
+/// catalog's process can be read and changed in one place. `guidedog dsc config` prints it and
 /// `init` writes it; [`read_config`] reads it back as `d`.
 pub fn render_config(d: &Definition) -> String {
     let mut out = String::with_capacity(2048);
     out.push_str(
         "# A discussion catalog: its identity, the process its records follow, and \
-        how\n# they are numbered. dsc reads it from the catalog folder.\n\n",
+        how\n# they are numbered. guidedog dsc reads it from the catalog folder.\n\n",
     );
     let _ = writeln!(
         out,

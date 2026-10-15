@@ -7,7 +7,7 @@ use std::fmt::Write;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use gd_discussion::{Catalog, Problem, Record, Result, Target, artifact_name};
+use crate::{Catalog, Problem, Record, Result, Target, artifact_name};
 
 const CSS: &str = include_str!("../assets/discussions.css");
 const JS: &str = include_str!("../assets/discussions.js");
@@ -454,7 +454,8 @@ mod tests {
         if !gd_typst::EMBEDDED {
             return;
         }
-        let root = std::env::temp_dir().join(format!("gd-cli-legacy-{}", std::process::id()));
+        let root =
+            std::env::temp_dir().join(format!("gd-discussion-legacy-{}", std::process::id()));
         let dir = root.join("docs").join("gds");
         let records = dir.join("records");
         let _ = fs::create_dir_all(&records);
@@ -463,7 +464,7 @@ mod tests {
         let outdir = root.join("docs").join("build");
         let _ = fs::create_dir_all(&outdir);
         let _ = fs::write(outdir.join("gds-0009-gone.pdf"), "old");
-        let prefix = gd_discussion::Prefix::new("gds").unwrap_or_else(|p| panic!("{p}"));
+        let prefix = crate::Prefix::new("gds").unwrap_or_else(|p| panic!("{p}"));
         let r = Record {
             number: "0001".into(),
             title: "Cache".into(),

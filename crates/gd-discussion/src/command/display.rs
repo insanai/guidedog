@@ -3,30 +3,35 @@
 use super::options::Options;
 use crate::{Catalog, Plan, Problem, Record};
 use gd_json::{Object, Value};
+use gd_plugins::CommandContext;
 use gd_report::ansi::{BOLD_CYAN, FAINT, GREEN, styled};
 use gd_report::{Style, escape_terminal};
 use std::io::Write;
 
-/// Where a command writes, and how.
-pub(crate) struct Console<'a> {
-    pub out: &'a mut dyn Write,
-    pub err: &'a mut dyn Write,
-    /// Whether standard output and standard error take colors.
-    pub color_out: bool,
-    pub color_err: bool,
+/// Where a command writes, and how: the host's streams, through its context.
+pub(crate) struct Console<'a, 'h> {
+    /// What the host offers the command: its streams and its build.
+    pub ctx: &'a mut CommandContext<'h>,
+    /// Whether the output takes colors.
+    pub color: bool,
     /// `--diagnostics=json`: problems and confirmations as JSON lines.
     pub json: bool,
     /// `--quiet`: no confirmations.
     pub quiet: bool,
 }
 
-impl std::fmt::Debug for Console<'_> {
+impl std::fmt::Debug for Console<'_, '_> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("Console").field("json", &self.json).finish_non_exhaustive()
     }
 }
 
-impl Console<'_> {
+impl Console<'_, '_> {
+    /// Standard output.
+    fn out(&mut self) -> &mut dyn Write {
+        self.ctx.streams().0
+    }
+
     /// Reports `p` on standard error and returns its exit status.
     pub fn report(&mut self, p: &Problem) -> i32 {
         let report = p.report();
@@ -35,10 +40,10 @@ impl Console<'_> {
             line.push('\n');
             line
         } else {
-            let style = Style { color: self.color_err, ..Style::default() };
+            let style = Style { color: self.color, ..Style::default() };
             format!("\n{}\n", gd_report::render_text(&report, &style))
         };
-        let _ = self.err.write_all(text.as_bytes());
+        self.ctx.eprint(&text);
         p.exit.max(1)
     }
 
@@ -51,10 +56,10 @@ impl Console<'_> {
             let mut o = Object::new();
             o.insert("status".into(), "ok".into());
             o.insert("message".into(), message.into());
-            let _ = writeln!(self.out, "{}", gd_json::to_string(&Value::Object(o)));
+            let _ = writeln!(self.out(), "{}", gd_json::to_string(&Value::Object(o)));
         } else {
-            let mark = styled(gd_report::terminal_symbols().check, GREEN, self.color_out);
-            let _ = writeln!(self.out, "  {mark} {}", escape_terminal(message));
+            let mark = styled(gd_report::terminal_symbols().check, GREEN, self.color);
+            let _ = writeln!(self.out(), "  {mark} {}", escape_terminal(message));
         }
     }
 
@@ -64,19 +69,19 @@ impl Console<'_> {
             let mut o = Object::new();
             o.insert("summary".into(), plan.summary.as_str().into());
             o.insert("changes".into(), crate::transaction::changes_json(&plan.changes));
-            let _ = writeln!(self.out, "{}", gd_json::to_string(&Value::Object(o)));
+            let _ = writeln!(self.out(), "{}", gd_json::to_string(&Value::Object(o)));
             return 0;
         }
         let _ = writeln!(
-            self.out,
+            self.out(),
             "\n  Preview {} {}",
             gd_report::terminal_symbols().dot,
             escape_terminal(&plan.summary)
         );
         for change in &plan.changes {
-            let _ = writeln!(self.out, "    {}", escape_terminal(&change.path));
+            let _ = writeln!(self.out(), "    {}", escape_terminal(&change.path));
         }
-        let _ = writeln!(self.out, "\n  No files changed.\n");
+        let _ = writeln!(self.out(), "\n  No files changed.\n");
         0
     }
 
@@ -93,27 +98,28 @@ impl Console<'_> {
             .collect();
         if o.json_format {
             let items = rows.iter().map(|r| record_json(r)).collect();
-            let _ = writeln!(self.out, "{}", gd_json::to_string(&Value::Array(items)));
+            let _ = writeln!(self.out(), "{}", gd_json::to_string(&Value::Array(items)));
             return;
         }
-        let color = self.color_out;
-        let _ = writeln!(self.out, "\n  {}\n", styled(heading, BOLD_CYAN, color));
-        let _ = writeln!(self.out, "  {:<7} {:<14} TITLE", c.prefix.upper(), "STATE");
+        let color = self.color;
+        let _ = writeln!(self.out(), "\n  {}\n", styled(heading, BOLD_CYAN, color));
+        let _ = writeln!(self.out(), "  {:<7} {:<14} TITLE", c.prefix.upper(), "STATE");
         for r in &rows {
             let _ = writeln!(
-                self.out,
+                self.out(),
                 "  {:<7} {:<14} {}",
                 r.number,
                 r.state,
                 escape_terminal(&r.title)
             );
-            let _ = writeln!(self.out, "  {:<7} {:<14} {}", "", "", styled(&r.slug, FAINT, color));
+            let _ =
+                writeln!(self.out(), "  {:<7} {:<14} {}", "", "", styled(&r.slug, FAINT, color));
         }
         if rows.is_empty() {
-            let _ = writeln!(self.out, "  No discussions match these filters.");
+            let _ = writeln!(self.out(), "  No discussions match these filters.");
         }
         let _ = writeln!(
-            self.out,
+            self.out(),
             "\n  {} discussion(s) {} {}\n",
             rows.len(),
             gd_report::terminal_symbols().dot,
@@ -124,11 +130,11 @@ impl Console<'_> {
     /// Shows one record's metadata.
     pub fn show(&mut self, c: &Catalog, r: &Record, json: bool) {
         if json {
-            let _ = writeln!(self.out, "{}", gd_json::to_string(&record_json(r)));
+            let _ = writeln!(self.out(), "{}", gd_json::to_string(&record_json(r)));
             return;
         }
         let _ = writeln!(
-            self.out,
+            self.out(),
             "\n  {} {} {} {}\n",
             c.prefix.upper(),
             r.number,
@@ -150,14 +156,14 @@ impl Console<'_> {
             ("Discussion", r.discussion.clone()),
         ];
         for (name, value) in fields.iter().filter(|(_, v)| !v.is_empty()) {
-            let _ = writeln!(self.out, "  {name:<12} {}", escape_terminal(value));
+            let _ = writeln!(self.out(), "  {name:<12} {}", escape_terminal(value));
         }
-        let _ = writeln!(self.out);
+        let _ = writeln!(self.out());
     }
 
     /// Writes `text` as it is to standard output.
     pub fn print(&mut self, text: &str) {
-        let _ = self.out.write_all(text.as_bytes());
+        self.ctx.print(text);
     }
 }
 

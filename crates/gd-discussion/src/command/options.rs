@@ -1,6 +1,6 @@
 //! Reading the command line: options, flags, and which command each applies to.
 
-use super::Program;
+use super::{NAME, TOOL};
 use crate::problem::usage;
 use crate::{MAX_NUMBER, Problem, Result, is_valid_prefix};
 use std::path::PathBuf;
@@ -11,7 +11,7 @@ pub(crate) const COMMANDS: [&str; 11] = [
     "config",
 ];
 
-/// Options that take a value, whatever the program.
+/// Options that take a value.
 const VALUE_OPTIONS: [&str; 16] = [
     "dir",
     "author",
@@ -30,7 +30,7 @@ const VALUE_OPTIONS: [&str; 16] = [
     "diagnostics",
     "format",
 ];
-/// Options that start a catalog, which a program fixed to one catalog does not take.
+/// Options that start a catalog (init), or name its prefix.
 const INIT_OPTIONS: [&str; 5] = ["prefix", "name", "process", "template", "config"];
 /// Options that take no value.
 const FLAGS: [&str; 5] = ["dry-run", "check", "include-historical", "render", "rollback"];
@@ -68,7 +68,7 @@ pub(crate) struct Options {
     pub process: String,
     pub template: String,
     pub config: String,
-    /// The builder's program: `--guidedog` or `--typst`.
+    /// The Typst compiler of an older Typst catalog: `--typst`.
     pub tool: Option<PathBuf>,
     pub color: Color,
     pub json_diagnostics: bool,
@@ -79,21 +79,17 @@ pub(crate) struct Options {
     pub render: bool,
     pub rollback: bool,
     pub quiet: bool,
-    pub help: bool,
-    pub version: bool,
     /// The options given, by name, with the argument that gave them.
     pub given: Vec<(String, String)>,
 }
 
-fn is_value_option(program: &Program<'_>, key: &str) -> bool {
-    key == program.tool
-        || VALUE_OPTIONS.contains(&key)
-        || (program.prefix.is_none() && INIT_OPTIONS.contains(&key))
+fn is_value_option(key: &str) -> bool {
+    key == TOOL || VALUE_OPTIONS.contains(&key) || INIT_OPTIONS.contains(&key)
 }
 
 /// Reads `args` (without the program name). An unknown option, a missing or empty
 /// value, a value for a flag, or a third positional argument is a usage problem.
-pub(crate) fn parse(program: &Program<'_>, args: &[String]) -> Result<Options> {
+pub(crate) fn parse(args: &[String]) -> Result<Options> {
     let mut o = Options::default();
     let mut positional: Vec<&str> = Vec::new();
     let mut options_end = false;
@@ -110,17 +106,15 @@ pub(crate) fn parse(program: &Program<'_>, args: &[String]) -> Result<Options> {
             continue;
         }
         match arg {
-            "-h" | "--help" => o.help = true,
             "-q" | "--quiet" => o.quiet = true,
-            "--version" => o.version = true,
             _ => {
                 let body = arg.trim_start_matches('-');
                 let (key, value) = match body.split_once('=') {
                     Some((k, v)) => (k, Some(v)),
                     None => (body, None),
                 };
-                if !is_value_option(program, key) {
-                    set_flag(program, &mut o, arg, key, value)?;
+                if !is_value_option(key) {
+                    set_flag(&mut o, arg, key, value)?;
                 } else {
                     let value = match value {
                         Some(v) => v,
@@ -139,7 +133,7 @@ pub(crate) fn parse(program: &Program<'_>, args: &[String]) -> Result<Options> {
                     if value.is_empty() {
                         return Err(usage("Empty option value", arg, "Supply a non-empty value."));
                     }
-                    set_option(program, &mut o, key, value)?;
+                    set_option(&mut o, key, value)?;
                 }
                 o.given.push((key.to_string(), arg.to_string()));
             }
@@ -162,32 +156,16 @@ fn take_positional(o: &mut Options, positional: &[&str]) -> Result<()> {
     Ok(())
 }
 
-fn set_flag(
-    program: &Program<'_>,
-    o: &mut Options,
-    arg: &str,
-    key: &str,
-    value: Option<&str>,
-) -> Result<()> {
+fn set_flag(o: &mut Options, arg: &str, key: &str, value: Option<&str>) -> Result<()> {
     if !FLAGS.contains(&key) {
-        if key == "typst" && program.tool == "guidedog" {
-            return Err(usage(
-                "Unknown option",
-                arg,
-                "Leave Typst to Guidedog: dsc builds with \
-                the guidedog you have. Pass --guidedog=PATH to choose it.",
-            ));
-        }
         let mut known: Vec<&str> = VALUE_OPTIONS.iter().chain(&FLAGS).copied().collect();
-        known.extend(["help", "quiet", "version", program.tool]);
-        if program.prefix.is_none() {
-            known.extend(INIT_OPTIONS);
-        }
+        known.extend(["quiet", TOOL]);
+        known.extend(INIT_OPTIONS);
         let close = gd_report::suggest(key, known).map(|k| format!("--{k}"));
         return Err(usage(
             "Unknown option",
             arg,
-            format!("Run {} --help to see the options.", program.name),
+            format!("Run {NAME} --help to see the commands, or {NAME} COMMAND --help."),
         )
         .suggest(close.as_deref()));
     }
@@ -208,7 +186,7 @@ fn set_flag(
     Ok(())
 }
 
-fn set_option(program: &Program<'_>, o: &mut Options, key: &str, value: &str) -> Result<()> {
+fn set_option(o: &mut Options, key: &str, value: &str) -> Result<()> {
     let text = value.to_string();
     match key {
         "dir" => o.dir = Some(PathBuf::from(value)),
@@ -232,7 +210,7 @@ fn set_option(program: &Program<'_>, o: &mut Options, key: &str, value: &str) ->
         "color" => o.color = parse_color(value)?,
         "diagnostics" => o.json_diagnostics = parse_choice(value, "text", "--diagnostics")?,
         "format" => o.json_format = parse_choice(value, "table", "--format")?,
-        _ if key == program.tool => o.tool = Some(PathBuf::from(value)),
+        _ if key == TOOL => o.tool = Some(PathBuf::from(value)),
         _ => {}
     }
     Ok(())
@@ -275,8 +253,8 @@ fn parse_choice(value: &str, plain: &str, option: &str) -> Result<bool> {
 
 /// Tells whether the option `key` applies to `command`, so an option another command
 /// would take is refused rather than silently ignored.
-fn option_applies(program: &Program<'_>, command: &str, key: &str) -> bool {
-    if key == program.tool {
+fn option_applies(command: &str, key: &str) -> bool {
+    if key == TOOL {
         return command == "build" || command == "check";
     }
     let one_of = |commands: &[&str]| commands.contains(&command);
@@ -303,13 +281,11 @@ fn option_applies(program: &Program<'_>, command: &str, key: &str) -> bool {
 
 /// Checks that the command exists, has the arguments it needs, and is given only
 /// options that apply to it.
-pub(crate) fn validate(program: &Program<'_>, o: &Options) -> Result<()> {
+pub(crate) fn validate(o: &Options) -> Result<()> {
     let c = o.command.as_str();
-    if !COMMANDS.contains(&c) || (program.prefix.is_some() && c == "init") {
-        let commands = commands_text(program);
-        let names = COMMANDS.iter().copied().filter(|n| program.prefix.is_none() || *n != "init");
-        return Err(usage("Unknown command", c, format!("Use {commands}."))
-            .suggest(gd_report::suggest(c, names)));
+    if !COMMANDS.contains(&c) {
+        return Err(usage("Unknown command", c, format!("Use {}.", commands_text()))
+            .suggest(gd_report::suggest(c, COMMANDS)));
     }
     let needs_id = ["new", "show", "promote", "state"].contains(&c);
     if c != "build" && c != "init" && needs_id == o.identifier.is_empty() {
@@ -324,7 +300,7 @@ pub(crate) fn validate(program: &Program<'_>, o: &Options) -> Result<()> {
         return Err(usage(
             "Recovery needs a direction",
             c,
-            format!("Use {} recover --rollback to restore the original files.", program.name),
+            format!("Use {NAME} recover --rollback to restore the original files."),
         ));
     }
     if !o.prefix.is_empty() && !is_valid_prefix(&o.prefix) {
@@ -334,23 +310,19 @@ pub(crate) fn validate(program: &Program<'_>, o: &Options) -> Result<()> {
             "Pass --prefix with 2 to 16 lowercase letters, such as eds.",
         ));
     }
-    if let Some((_, arg)) = o.given.iter().find(|(key, _)| !option_applies(program, c, key)) {
+    if let Some((_, arg)) = o.given.iter().find(|(key, _)| !option_applies(c, key)) {
         return Err(usage(
             "Option does not apply to this command",
             arg,
-            format!("Run {} --help and use the option with its listed command.", program.name),
+            format!("Run {NAME} {c} --help and use the options it lists."),
         ));
     }
     Ok(())
 }
 
-/// The commands a program runs, as a sentence's list.
-pub(crate) fn commands_text(program: &Program<'_>) -> &'static str {
-    if program.prefix.is_some() {
-        "new, list, show, promote, state, index, check, build, recover, or config"
-    } else {
-        "init, new, list, show, promote, state, index, check, build, recover, or config"
-    }
+/// The commands, as a sentence's list.
+pub(crate) fn commands_text() -> &'static str {
+    "init, new, list, show, promote, state, index, check, build, recover, or config"
 }
 
 /// Splits `--labels=a, b` into trimmed labels.

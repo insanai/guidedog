@@ -1,126 +1,59 @@
-//! The discussion command line, which `dsc` and `dscc` run on any catalog and
-//! `guidedog gds` on Guidedog's own. A [`Program`] says which: its name, version, how it
-//! builds, and, for `guidedog gds`, the prefix and folder it is fixed to.
-//!
-//! ```no_run
-//! use gd_discussion::command::{self, Program};
-//! let args: Vec<String> = std::env::args().skip(1).collect();
-//! let program = Program::default(); // dsc: builds with the installed guidedog
-//! std::process::exit(command::run(&program, &args));
-//! ```
+//! The `guidedog dsc` commands, which the discussion plugin adds to guidedog's command
+//! line: `dsc init`, `dsc new`, `dsc promote`, `dsc state`, and the rest, on the catalog
+//! the working folder is in (or `--dir`). The host lends a [`CommandContext`]: its
+//! streams, and its build of a Guidedog project, which publishes a catalog.
 
+mod declare;
 mod display;
-mod help;
+mod host;
 mod options;
 #[cfg(test)]
 mod tests;
 
+pub(crate) use declare::commands;
+
 use crate::edit::git_author;
 use crate::problem::usage;
 use crate::{BuildOptions, Decision, NewDraft, Target};
-use crate::{Builder, Catalog, Definition, GuidedogProgram, Init, Lock, Prefix, Problem, Result};
+use crate::{Catalog, Definition, Init, Lock, Prefix, Problem, Result};
 use display::Console;
+use gd_plugins::CommandContext;
 use options::{Color, Options, split_labels, usage_problem};
-use std::io::{IsTerminal, Write};
 use std::path::{Path, PathBuf};
 
-/// The version of `dsc` and `dscc`, which is Guidedog's.
-pub const VERSION: &str = env!("CARGO_PKG_VERSION");
+/// The command as people type it, for hints.
+pub(crate) const NAME: &str = "guidedog dsc";
+/// The option naming the Typst compiler of an older Typst catalog, without dashes.
+pub(crate) const TOOL: &str = "typst";
 
-/// What runs the command line: `dsc`, `dscc`, or `guidedog gds`.
-#[derive(Debug, Clone)]
-pub struct Program<'a> {
-    /// The name as the user types it: `"dsc"`, `"dscc"`, `"guidedog gds"`.
-    pub name: &'a str,
-    /// What `--version` prints.
-    pub version: &'a str,
-    /// The option that names the builder's program, without dashes: `"guidedog"` or
-    /// `"typst"`.
-    pub tool: &'a str,
-    /// Makes the builder, given the program that option names.
-    pub make_builder: fn(Option<PathBuf>) -> Box<dyn Builder>,
-    /// The only prefix it manages (`gds`), or `None` for any.
-    pub prefix: Option<Prefix>,
-    /// The catalog when `--dir` is not given, or `None` to find it.
-    pub dir: Option<PathBuf>,
-}
-
-impl Default for Program<'_> {
-    /// `dsc`: any catalog, built with the installed `guidedog`.
-    fn default() -> Self {
-        Program {
-            name: "dsc",
-            version: concat!("dsc ", env!("CARGO_PKG_VERSION"), "\n"),
-            tool: "guidedog",
-            make_builder: external_builder,
-            prefix: None,
-            dir: None,
-        }
-    }
-}
-
-/// The builder `dsc` uses: the installed `guidedog`, or the one `--guidedog` names.
-pub fn external_builder(program: Option<PathBuf>) -> Box<dyn Builder> {
-    Box::new(GuidedogProgram { program })
-}
-
-/// Runs the command line `args` (without the program name) on the terminal and returns
-/// the exit status: 0 on success, and on failure the status the problem names, after
-/// reporting it on standard error.
-pub fn run(program: &Program<'_>, args: &[String]) -> i32 {
-    let (stdout, stderr) = (std::io::stdout(), std::io::stderr());
-    let terminals = (stdout.is_terminal(), stderr.is_terminal());
-    let (mut out, mut err) = (stdout.lock(), stderr.lock());
-    let status = run_with(program, args, &mut out, &mut err, terminals);
-    let _ = out.flush();
-    status
-}
-
-/// Runs the command line, writing to `out` and `err`; `terminals` says whether each is a
-/// terminal, for `--color=auto`.
-pub fn run_with(
-    program: &Program<'_>,
-    args: &[String],
-    out: &mut dyn Write,
-    err: &mut dyn Write,
-    terminals: (bool, bool),
-) -> i32 {
-    let parsed = options::parse(program, args);
+/// Runs `guidedog dsc WORD ARGS` (`word` is `init`, `new`, ...; `args` the words after
+/// it) with what `ctx` offers, and returns the exit status: 0 on success, and on
+/// failure the status the problem names, after reporting it on the error stream.
+pub(crate) fn run(ctx: &mut CommandContext<'_>, word: &str, args: &[String]) -> i32 {
+    let mut words = Vec::with_capacity(args.len() + 1);
+    words.push(word.to_string());
+    words.extend_from_slice(args);
+    let parsed = options::parse(&words);
     let o = parsed.as_ref().ok().cloned().unwrap_or_default();
-    let color = |tty: bool| match o.color {
+    let color = match o.color {
         Color::Always => true,
         Color::Never => false,
-        Color::Auto => gd_report::ansi::terminal_color(tty),
+        Color::Auto => ctx.color,
     };
-    let mut console = Console {
-        out,
-        err,
-        color_out: color(terminals.0),
-        color_err: color(terminals.1),
-        json: o.json_diagnostics,
-        quiet: o.quiet,
-    };
-    match parsed.and_then(|mut o| run_command(program, &mut o, &mut console)) {
+    let (json, quiet) = (o.json_diagnostics || ctx.json, o.quiet || ctx.quiet);
+    let mut console = Console { ctx, color, json, quiet };
+    match parsed.and_then(|mut o| run_command(&mut o, &mut console)) {
         Ok(status) => status,
         Err(p) => console.report(&p),
     }
 }
 
-fn run_command(program: &Program<'_>, o: &mut Options, console: &mut Console<'_>) -> Result<i32> {
-    if o.version {
-        console.print(program.version);
-        return Ok(0);
-    }
-    if o.help || o.command.is_empty() {
-        let text = help::help_text(program, console.color_out);
-        console.print(&text);
-        return Ok(0);
-    }
-    options::validate(program, o)?;
+fn run_command(o: &mut Options, console: &mut Console<'_, '_>) -> Result<i32> {
+    options::validate(o)?;
     if o.command == "init" {
-        return init_catalog(program, o, console);
+        return init_catalog(o, console);
     }
-    let (dir, prefix) = resolve_catalog(program, o)?;
+    let (dir, prefix) = resolve_catalog(o)?;
     let mutating = ["new", "promote", "state", "index", "recover"].contains(&o.command.as_str())
         && !o.dry_run
         && !o.check_only;
@@ -129,14 +62,14 @@ fn run_command(program: &Program<'_>, o: &mut Options, console: &mut Console<'_>
         return recover(&dir, &prefix, lock.as_ref(), console);
     }
     let catalog = crate::load_catalog(&dir, &prefix)?;
-    dispatch(program, o, &catalog, lock.as_ref(), console)
+    dispatch(o, &catalog, lock.as_ref(), console)
 }
 
 fn recover(
     dir: &Path,
     prefix: &Prefix,
     lock: Option<&Lock>,
-    console: &mut Console<'_>,
+    console: &mut Console<'_, '_>,
 ) -> Result<i32> {
     match lock {
         Some(lock) => {
@@ -152,11 +85,10 @@ fn recover(
 }
 
 fn dispatch(
-    program: &Program<'_>,
     o: &Options,
     c: &Catalog,
     lock: Option<&Lock>,
-    console: &mut Console<'_>,
+    console: &mut Console<'_, '_>,
 ) -> Result<i32> {
     let plan = match o.command.as_str() {
         "list" => {
@@ -176,13 +108,13 @@ fn dispatch(
             crate::check_sources(c)?;
             crate::check_index(c)?;
             if o.render {
-                return build_records(program, o, c, console);
+                return build_records(o, c, console);
             }
             let count = c.records.len();
             console.success(&format!("Checked {count} records; active metadata and index agree"));
             return Ok(0);
         }
-        "build" => return build_records(program, o, c, console),
+        "build" => return build_records(o, c, console),
         "new" => crate::new_plan(c, &new_draft(o))?,
         "promote" => crate::promote_plan(c, &decision(o))?,
         "state" => crate::state_plan(c, &decision(o))?,
@@ -223,12 +155,7 @@ fn decision(o: &Options) -> Decision {
     }
 }
 
-fn build_records(
-    program: &Program<'_>,
-    o: &Options,
-    c: &Catalog,
-    console: &mut Console<'_>,
-) -> Result<i32> {
+fn build_records(o: &Options, c: &Catalog, console: &mut Console<'_, '_>) -> Result<i32> {
     let mut record = o.record.clone();
     if !o.identifier.is_empty() {
         if !record.is_empty() || o.number.is_some() {
@@ -266,8 +193,9 @@ fn build_records(
             .suggest(gd_report::suggest(other, ["pdf", "html", "both"])));
         }
     };
-    let builder = (program.make_builder)(o.tool.clone());
-    let outputs = crate::build(c, &BuildOptions { target, record }, builder.as_ref())?;
+    let options = BuildOptions { target, record, typst: o.tool.clone() };
+    let mut builder = host::HostBuilder { ctx: &mut *console.ctx, typst: o.tool.clone() };
+    let outputs = crate::build(c, &options, &mut builder)?;
     let shown: Vec<String> = outputs.iter().map(|p| p.display().to_string()).collect();
     console.success(&format!("Built {}", shown.join(", ")));
     Ok(0)
@@ -317,11 +245,7 @@ fn catalog_definition(c: &Catalog) -> Definition {
 
 /// Settles the catalog's folder and prefix: `--dir`, or the catalog the working folder
 /// is in; `--prefix`, or the catalog's configuration, or its template's fields.
-fn resolve_catalog(program: &Program<'_>, o: &mut Options) -> Result<(PathBuf, Prefix)> {
-    if let Some(prefix) = &program.prefix {
-        let dir = o.dir.clone().or_else(|| program.dir.clone()).unwrap_or_default();
-        return Ok((dir, prefix.clone()));
-    }
+fn resolve_catalog(o: &mut Options) -> Result<(PathBuf, Prefix)> {
     let dir = match &o.dir {
         Some(dir) => dir.clone(),
         None => crate::discover(Path::new("."))?.map_or_else(|| PathBuf::from("."), |(d, _)| d),
@@ -352,9 +276,8 @@ fn resolve_catalog(program: &Program<'_>, o: &mut Options) -> Result<(PathBuf, P
         dir.display().to_string(),
         "This folder has no discussion.toml and no record template to name its prefix.",
         format!(
-            "Run {0} in a catalog, pass --dir=PATH and --prefix=NAME, or create one with \
-            {0} init DIR --prefix=NAME.",
-            program.name
+            "Run {NAME} in a catalog, pass --dir=PATH and --prefix=NAME, or create one with \
+            {NAME} init DIR --prefix=NAME."
         ),
     )
     .exit(2))
@@ -380,7 +303,7 @@ pub(crate) fn template_prefix(dir: &Path) -> String {
     String::new()
 }
 
-fn init_catalog(program: &Program<'_>, o: &Options, console: &mut Console<'_>) -> Result<i32> {
+fn init_catalog(o: &Options, console: &mut Console<'_, '_>) -> Result<i32> {
     let dir = match (&o.dir, o.identifier.is_empty()) {
         (Some(_), false) => {
             return Err(usage_problem(
@@ -393,7 +316,7 @@ fn init_catalog(program: &Program<'_>, o: &Options, console: &mut Console<'_>) -
             return Err(usage(
                 "Name the new catalog's folder",
                 "init",
-                format!("Write {} init DIR --prefix=NAME.", program.name),
+                format!("Write {NAME} init DIR --prefix=NAME."),
             ));
         }
         (Some(dir), true) => dir.clone(),

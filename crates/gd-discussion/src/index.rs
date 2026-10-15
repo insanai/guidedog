@@ -152,7 +152,7 @@ fn rst_index_text(c: &Catalog, records: &[&Record], name: &str, old: &str) -> Re
 fn typst_index_text(c: &Catalog, records: &[&Record], name: &str, old: &str) -> Result<String> {
     let prefix = &c.prefix;
     let mut out = String::new();
-    let mut lead = "// Managed by guidedog gds index.\n".to_string();
+    let mut lead = "// Managed by guidedog dsc index.\n".to_string();
     let records = records.iter().filter(|r| !r.historical);
     if name == "registry.typ" {
         let _ = writeln!(out, "#let {prefix}-documents = (");

@@ -7,7 +7,6 @@
 use super::{catalog_fixture, prefix, write};
 use crate::transaction::apply_changes;
 use crate::*;
-use std::cell::RefCell;
 use std::path::{Path, PathBuf};
 
 /// Every file of the catalog, by name, as one text.
@@ -104,17 +103,13 @@ fn apply_refuses_plans_that_are_not_whole() {
 /// A builder that records what it was asked to make.
 #[derive(Default)]
 struct Recorder {
-    requests: RefCell<Vec<BuildRequest>>,
+    requests: Vec<BuildRequest>,
 }
 
 impl Builder for Recorder {
-    fn name(&self) -> &str {
-        "recorder"
-    }
-
-    fn build(&self, request: &BuildRequest) -> Result<PathBuf> {
-        self.requests.borrow_mut().push(request.clone());
-        Ok(request.dir.join("_build").join(request.target.name()))
+    fn build(&mut self, request: &BuildRequest) -> Result<PathBuf> {
+        self.requests.push(request.clone());
+        Ok(request.output())
     }
 }
 
@@ -122,27 +117,32 @@ impl Builder for Recorder {
 fn building_sends_whole_requests_for_checked_catalogs() {
     let (_root, dir) = catalog_fixture("build");
     let c = load_catalog(&dir, &prefix("eds")).unwrap();
-    let recorder = Recorder::default();
-    let outputs = build(&c, &BuildOptions::default(), &recorder).expect("built");
+    let mut recorder = Recorder::default();
+    let outputs = build(&c, &BuildOptions::default(), &mut recorder).expect("built");
     assert_eq!(outputs, [dir.join("_build/html"), dir.join("_build/pdf")]);
-    let requests = recorder.requests.take();
+    let requests = std::mem::take(&mut recorder.requests);
     assert_eq!(requests.len(), 2);
     let book = &requests[1].books[0];
     assert_eq!(book.root, "records/XXXXX-eds-process");
     assert_eq!(book.file, "eds-XXXXX-eds-process.pdf");
     assert_eq!((book.title.as_str(), book.author.as_str()), ("Enso Discussions Process", "Ada"));
-    let options = BuildOptions { target: Some(Target::Pdf), record: "eds-process".into() };
-    build(&c, &options, &recorder).expect("a preview");
-    let requests = recorder.requests.take();
+    let options = BuildOptions {
+        target: Some(Target::Pdf),
+        record: "eds-process".into(),
+        ..BuildOptions::default()
+    };
+    build(&c, &options, &mut recorder).expect("a preview");
+    let requests = std::mem::take(&mut recorder.requests);
     assert_eq!(requests.len(), 1);
     assert_eq!(requests[0].selection.as_deref(), Some("eds-XXXXX-eds-process"));
+    assert_eq!(requests[0].output(), dir.join("_build/selected/eds-XXXXX-eds-process/pdf"));
     // A stale index is refused before the builder runs.
     write(&dir.join("bundle.rst"), "Order\n=====\n");
     assert_eq!(
-        build(&c, &BuildOptions::default(), &recorder).unwrap_err().code,
+        build(&c, &BuildOptions::default(), &mut recorder).unwrap_err().code,
         "eds.index-drift"
     );
-    assert!(recorder.requests.take().is_empty());
+    assert!(std::mem::take(&mut recorder.requests).is_empty());
 }
 
 #[test]

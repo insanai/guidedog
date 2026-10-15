@@ -5,8 +5,9 @@
 //! loads a catalog ([`load_catalog`]), plans changes to it (a new draft, a promotion, a
 //! lifecycle decision, the generated index) and applies a plan as one recoverable
 //! transaction under the catalog's lock ([`lock_catalog`], [`apply`], [`recover`]).
-//! Publication is a [`Builder`]'s work: [`GuidedogProgram`] runs an installed
-//! `guidedog`; a program with Guidedog linked in supplies its own.
+//! Publication is a [`Builder`]'s work: a catalog is a Guidedog project. [`plugin`]
+//! adds the `guidedog dsc` commands to guidedog, whose builds it asks for; older Typst
+//! catalogs compile with gd-typst.
 //!
 //! ```no_run
 //! use gd_discussion as ds;
@@ -34,14 +35,15 @@
 
 mod build;
 mod catalog;
-pub mod command;
+mod command;
 mod config;
 mod definition;
 mod edit;
-mod external;
 mod index;
 mod init;
+mod legacy;
 mod metadata;
+mod plugin;
 mod problem;
 mod record_plan;
 mod rst;
@@ -57,10 +59,10 @@ pub use catalog::{Catalog, Format, catalog_format, check_sources, load_catalog, 
 pub use config::{Definition, Numbering, Process, State, read_config, render_config};
 pub use definition::{definition, discover};
 pub use edit::{Decision, NewDraft, new_plan, next_number, promote_plan, state_plan};
-pub use external::{ENGINE_VARIABLE, GuidedogProgram};
 pub use index::{check_index, index_plan};
 pub use init::{Init, init_plan, initialize};
 pub use metadata::{FieldValue, Record, Sections, read_record, replace_field};
+pub use plugin::{ID, plugin};
 pub use problem::{Problem, ProblemData, Result};
 pub use transaction::{Change, Lock, Plan, apply, check_recovery, lock_catalog, recover};
 

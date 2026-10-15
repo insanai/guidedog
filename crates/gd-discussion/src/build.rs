@@ -58,36 +58,13 @@ pub struct BuildRequest {
     pub selection: Option<String>,
 }
 
-/// Publishes catalogs. Warnings are errors: a builder fails rather than publish a
-/// catalog with problems, and its problem says what to fix.
-///
-/// [`crate::GuidedogProgram`] runs an installed `guidedog`; a program with Guidedog's
-/// engine linked in (`dscc`) implements it with the in-process project builder.
+/// Publishes reStructuredText catalogs as Guidedog projects. Warnings are errors: a
+/// builder fails rather than publish a catalog with problems, and its problem says what
+/// to fix. The discussion plugin's builder asks its host (`guidedog`) to build; tests
+/// record the requests.
 pub trait Builder {
-    /// A short name for messages, such as `"external"`.
-    fn name(&self) -> &str;
-
     /// Makes one publication and returns the folder it wrote.
-    fn build(&self, request: &BuildRequest) -> Result<PathBuf>;
-
-    /// Builds an older Typst catalog's `selected` records for `targets`, returning what
-    /// it wrote. The default refuses: only a builder with a Typst compiler can.
-    fn build_typst_catalog(
-        &self,
-        catalog: &Catalog,
-        selected: &[&Record],
-        targets: &[Target],
-    ) -> Result<Vec<PathBuf>> {
-        let _ = (selected, targets);
-        Err(Problem::new(
-            catalog.prefix.code("legacy-build"),
-            "This program cannot build a Typst catalog",
-            shown(&catalog.dir),
-            format!("The {} builder builds reStructuredText catalogs only.", self.name()),
-            "Build the Typst catalog with guidedog gds build, or port its records to RST.",
-        )
-        .exit(2))
-    }
+    fn build(&mut self, request: &BuildRequest) -> Result<PathBuf>;
 }
 
 /// What [`build`] publishes.
@@ -98,15 +75,19 @@ pub struct BuildOptions {
     /// The record whose PDF to preview (number, slug, title, or file name); empty for
     /// the whole catalog.
     pub record: String,
+    /// The Typst compiler of an older Typst catalog (`--typst`); `None` for the
+    /// embedded one, or the `typst` program when there is none.
+    pub typst: Option<PathBuf>,
 }
 
 /// Checks `catalog` (sections, and the index unless one record of a Typst catalog is
 /// selected) and publishes it with `builder`: the complete website, and a PDF book per
-/// record or for the record `options.record` names. Returns what it wrote, in order.
+/// record or for the record `options.record` names. An older Typst catalog compiles
+/// record by record with Typst instead. Returns what it wrote, in order.
 pub fn build(
     catalog: &Catalog,
     options: &BuildOptions,
-    builder: &dyn Builder,
+    builder: &mut dyn Builder,
 ) -> Result<Vec<PathBuf>> {
     let prefix = &catalog.prefix;
     let format = catalog_format(&catalog.dir);
@@ -134,7 +115,7 @@ pub fn build(
         None => vec![Target::Html, Target::Pdf],
     };
     if format == Format::Typst {
-        return builder.build_typst_catalog(catalog, &selected, &targets);
+        return crate::legacy::build(catalog, &selected, &targets, options.typst.as_deref());
     }
     if let Some(r) = catalog.records.iter().find(|r| !r.historical && !is_rst(&r.path)) {
         return Err(Problem::new(
@@ -169,6 +150,18 @@ pub fn build(
         outputs.push(builder.build(&request)?);
     }
     Ok(outputs)
+}
+
+impl BuildRequest {
+    /// The folder the publication goes to: `_build/html` or `_build/pdf` in the catalog,
+    /// or `_build/selected/SELECTION/pdf` for a selected record's book.
+    pub fn output(&self) -> PathBuf {
+        let build = self.dir.join("_build");
+        match &self.selection {
+            Some(selection) => build.join("selected").join(selection).join(self.target.name()),
+            None => build.join(self.target.name()),
+        }
+    }
 }
 
 /// The name of a record's book and pages: `gds-0007-cache`.

@@ -2,7 +2,8 @@
 
 Discussion catalogs (GDS 0007): proposals and decisions kept as reStructuredText records
 under a prefix (`gds`, `sds`, `eds`), ported from `guidedog_old/lib/discussion`. Depends
-on `gd-report`, `gd-toml` and `gd-json`. Design notes:
+on `gd-report`, `gd-toml`, `gd-json`, `gd-clock`, `gd-plugins` (the plugin interface) and
+`gd-typst` (older Typst catalogs). Design notes:
 `docs/manual/internals/discussion.rst`.
 
 ```rust
@@ -28,19 +29,28 @@ ds::apply(&lock, &plan)?;                            // journaled; ds::recover r
 | `index_plan(&c)`, `check_index(&c)`, `check_sources(&c)`, `next_number` | the generated index; required sections |
 | `lock_catalog`, `apply(&Lock, &Plan)`, `recover(&Lock)`, `check_recovery` | transactions |
 | `read_record`, `replace_field(src, &prefix, key, FieldValue)` | metadata; one line changed, every other byte kept |
-| `build(&c, &BuildOptions, &dyn Builder)`, `Builder`, `BuildRequest`, `GuidedogProgram` | publication |
-| `command::run(&Program, &args)`, `Program::default()` | the `dsc` command line |
+| `build(&c, &BuildOptions, &mut dyn Builder)`, `Builder`, `BuildRequest` | publication |
+| `plugin()`, `ID` | the `guidedog dsc` commands, as a plugin for guidedog to link |
 | `Problem` (boxed `ProblemData { code, title, path, line, excerpt, message, hint, suggestion, exit }`, one pointer wide) | `report()` gives a `gd_report::Report`; `with_path`, `with_title`, `with_line`, `exit`, `suggest`, `at_line` chain |
+
+## The plugin
+
+`plugin()` is the discussion plugin (ID `dsc`), which guidedog links: it adds
+`guidedog dsc init`, `new`, `list`, `show`, `promote`, `state`, `index`, `check`,
+`build`, `recover` and `config`, run on the catalog the working folder is in (or
+`--dir`) with what the host's `CommandContext` offers. It adds commands only, no build
+hooks. Every catalog is its own: any prefix, its own workflow, numbering and labels in
+`discussion.toml`; Guidedog's `docs/gds` is one of them.
 
 ## Builders
 
-`Builder::build(&self, &BuildRequest) -> Result<PathBuf>` makes one target (HTML site or
-PDF books) of an already checked catalog. `GuidedogProgram` runs the installed
-`guidedog` (`--guidedog`, `$DSC_GUIDEDOG`, `PATH`) with `std::process::Command`, no
-shell, books passed as a quoted `pdf_documents` setting. `dscc` will implement `Builder`
-over gd-project's in-process builder and pass it as `Program::make_builder`; until
-gd-project lands, `dscc` uses `GuidedogProgram` too. `build_typst_catalog` (older Typst
-catalogs) defaults to a `legacy-build` problem.
+`build(&catalog, &BuildOptions, &mut dyn Builder)` checks the catalog and makes its
+targets. `Builder::build(&mut self, &BuildRequest) -> Result<PathBuf>` makes one target
+(HTML site or PDF books) into `BuildRequest::output()`. The plugin's builder asks the
+host to build the catalog as a Guidedog project (`CommandContext::build_project`),
+strict, with the books as a quoted `pdf_documents` setting. An older Typst catalog
+compiles record by record with gd-typst (`legacy.rs`: the embedded compiler, or the
+program `--typst` names), staged and themed as Odin's `discussion/embedded` did.
 
 ## Redesigns
 
@@ -53,5 +63,7 @@ catalogs) defaults to a `legacy-build` problem.
   keeps the Odin JSON form); `Catalog` carries its folder; `Record` keeps `Sections`, no
   text; one `Options` split into `NewDraft`, `Decision`, `BuildOptions`, `Init`.
 - `replace_field` takes a typed `FieldValue`, so invalid literals cannot be passed.
+- The command line is a plugin of guidedog (`guidedog dsc`), not the Odin `dsc` and
+  `guidedog gds` programs: one command for every catalog, builds by the host.
 - Problems carry a line, an excerpt with caret (configuration mistakes) and a
   "Did you mean" suggestion (commands, options, states, labels, settings, records).

@@ -64,7 +64,7 @@ It leaves the complete catalog in ``_build/pdf`` intact.
 
 .. code-block:: sh
 
-   target/release/guidedog dsc build guidedog-in-rust --target=pdf --dir=docs/gds
+   target/release/guidedog dsc build guidedoc-engine --target=pdf --dir=docs/gds
    target/release/guidedog build html docs/gds -W
    target/release/guidedog build pdf docs/gds -W
 

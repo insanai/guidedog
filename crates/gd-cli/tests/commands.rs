@@ -269,3 +269,23 @@ fn quickstart_migrate_and_the_project_builder() {
     assert_eq!(status, 0, "{err}");
     assert!(out.contains("project = \"Old\""), "{out}");
 }
+
+/// A page with hundreds of problems (CPython's os.rst has 272) reports every one: the
+/// summary and -W count them all.
+#[test]
+fn a_page_reports_hundreds_of_problems() {
+    let root = TempDir::new("many-problems");
+    let none = Registry::default();
+    fs::create_dir_all(root.join("docs")).unwrap();
+    fs::write(root.join("docs/conf.toml"), "project = \"T\"\n").unwrap();
+    let mut page = String::from("Title\n=====\n\n");
+    for i in 0..300 {
+        page.push_str(&format!(".. unknown-{i}:: x\n\n"));
+    }
+    fs::write(root.join("docs/index.rst"), page).unwrap();
+    let docs = root.arg("docs");
+    let (status, out, err) = run(&["build", "html", &docs, "--color=never"], &none);
+    let all = format!("{out}{err}");
+    assert_eq!(status, 0, "{all}");
+    assert!(all.contains("with 300 error(s) and 0 warning(s)"), "{all}");
+}

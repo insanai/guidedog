@@ -5,6 +5,9 @@ use gd_env::BuildOptions;
 use gd_host::Problem;
 use guidedoc::{ContentPolicy, Limits, Policy};
 
+/// How many diagnostics a build keeps for one document; more are counted in a note.
+pub const DOCUMENT_REPORTS: usize = 1024;
+
 /// The policy of a build of the user's own project: raw HTML and Typst, any URL and
 /// untranslatable math are used as Sphinx uses them, and, as in Sphinx, a document with
 /// an unknown directive or role is reported and still built.
@@ -35,6 +38,9 @@ pub fn untrusted_policy() -> Policy {
 /// call it before building to refuse the options early.
 pub fn build_limits(options: &BuildOptions) -> Result<Limits, Problem> {
     let mut limits = guidedoc::default_limits();
+    // A page of a real manual can carry hundreds of diagnostics (CPython's os.rst has
+    // 272), and a build counts every one for its summary and for -W.
+    limits.max_reports = DOCUMENT_REPORTS;
     if let Some(depth) = options.max_depth {
         limits.max_depth = depth;
     }

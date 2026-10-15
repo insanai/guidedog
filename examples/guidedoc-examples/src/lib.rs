@@ -9,6 +9,8 @@
 //! assert!(guidedoc::validate_registry(&registry).is_ok());
 //! ```
 
+#![forbid(unsafe_code)]
+
 use guidedoc::Registry;
 
 /// Returns a registry with the reStructuredText, CommonMark, and MyST readers and the

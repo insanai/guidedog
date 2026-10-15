@@ -16,6 +16,8 @@
 //! assert_eq!(title, Some("Guide"));
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod datetime;
 mod error;
 mod number;

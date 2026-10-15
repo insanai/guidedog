@@ -21,6 +21,8 @@
 //! println!("{}", gd_git::object_id(gd_git::Kind::Commit, &commit));
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod error;
 mod pack;
 mod protocol;

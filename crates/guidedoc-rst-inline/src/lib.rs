@@ -27,6 +27,8 @@
 //! bibliographic fields, smart quotes). Problems are reported to the read's reports and
 //! the text is kept; only a builder failure (a limit or capacity) is an `Err`.
 
+#![forbid(unsafe_code)]
+
 mod chars;
 mod emit;
 mod ends;

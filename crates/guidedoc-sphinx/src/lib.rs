@@ -17,6 +17,8 @@
 //! assert!(dump_to_string(doc).contains("desc-signature"));
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod autodoc;
 mod code;
 mod config;

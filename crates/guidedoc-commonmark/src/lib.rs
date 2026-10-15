@@ -18,6 +18,8 @@
 //! assert!(dump_to_string(doc).contains("emphasis"));
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod blocks;
 mod emit;
 mod extension;

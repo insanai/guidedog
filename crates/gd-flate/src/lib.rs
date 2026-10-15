@@ -16,6 +16,8 @@
 //! assert_eq!(unpacked, b"hello hello hello");
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod bits;
 mod deflate;
 mod huffman;

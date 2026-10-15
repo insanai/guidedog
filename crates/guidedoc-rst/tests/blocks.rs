@@ -1,3 +1,5 @@
+//! Body elements: line endings, paragraphs, section titles, lists, literal and quoted blocks.
+
 #![allow(clippy::unwrap_used)]
 
 mod common;

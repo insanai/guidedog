@@ -1,3 +1,6 @@
+//! Reader settings: tab expansion, PEP and RFC references, smart quotes, substitutions and docinfo
+//! fields.
+
 #![allow(clippy::unwrap_used)]
 
 mod common;

@@ -24,6 +24,7 @@
 //! the genindex and modindex bodies, nav.odin's sidebar and outline, plugins.odin's
 //! HTML hooks and assets, and intl.odin's template functions. Nothing here prints.
 
+#![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod context;

@@ -35,6 +35,8 @@ mod interrupt;
 mod problem;
 mod publish;
 mod session;
+// The Ctrl+C handler and the atomic path swap: the crate's only FFI.
+#[allow(unsafe_code)]
 mod sys;
 mod workers;
 

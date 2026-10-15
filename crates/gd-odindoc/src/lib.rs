@@ -30,6 +30,8 @@
 //! }
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod analyse;
 mod ast;
 mod comments;
@@ -51,17 +53,28 @@ pub use project::{
 /// What a package-level declaration declares.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Hash)]
 pub enum Kind {
+    /// A procedure (`name :: proc(...)`).
     #[default]
     Proc,
+    /// A procedure group (`name :: proc{a, b}`).
     ProcGroup,
+    /// A struct type.
     Struct,
+    /// A union type.
     Union,
+    /// An enum type.
     Enum,
+    /// A `bit_set` type.
     BitSet,
+    /// A `bit_field` type.
     BitField,
+    /// Any other type declaration (an alias, a distinct type, a pointer or array type).
     Type,
+    /// A constant (`name :: value`).
     Const,
+    /// A package-level variable (`name: T` or `name := value`).
     Var,
+    /// A `foreign import` of a native library.
     ForeignImport,
 }
 
@@ -87,6 +100,7 @@ impl Kind {
 /// How private a declaration is; the order is from least to most private.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Default, Hash)]
 pub enum Private {
+    /// Visible to importing packages.
     #[default]
     Public,
     /// `@(private)`, or a `#+private` file.
@@ -110,8 +124,11 @@ pub enum MemberKind {
 /// A field or enumerator of a type.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Member {
+    /// Its name as written (the field or enumerator name).
     pub name: String,
+    /// Whether it is a field, an enumerator or a bit field.
     pub kind: MemberKind,
+    /// Its declaration on one line, in the form `kind` describes.
     pub signature: String,
     /// The comment above it and the one after it on its line.
     pub docs: String,
@@ -121,16 +138,23 @@ pub struct Member {
 /// odin domain's directive takes it ("clone :: proc(s: string) -> string").
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Decl {
+    /// The declared name.
     pub name: String,
+    /// What it declares.
     pub kind: Kind,
+    /// The one-line signature the directive takes (see the type's doc).
     pub signature: String,
     /// Attributes as written, in order: "@(require_results)".
     pub attributes: Vec<String>,
+    /// Its doc comment, comment markers stripped; empty when it has none.
     pub docs: String,
+    /// How private it is.
     pub private: Private,
+    /// The fields, enumerators or bit fields of a type; empty otherwise.
     pub members: Vec<Member>,
     /// The library of a foreign block it is declared in.
     pub foreign_lib: String,
+    /// The operating systems and architectures it is built for.
     pub targets: Targets,
     /// Its targets for people, when not all of the package's.
     pub availability: String,
@@ -138,6 +162,7 @@ pub struct Decl {
     pub variant: usize,
     /// The base name of its file.
     pub file: String,
+    /// The 1-based line it starts on in `file`.
     pub line: u32,
     /// Its position in the package: files by name, then position.
     pub order: usize,
@@ -147,7 +172,9 @@ pub struct Decl {
 /// and the id of the package it names.
 #[derive(Debug, Clone, Default, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Import {
+    /// The name the importing source uses for the package.
     pub alias: String,
+    /// The imported package's id ("core:fmt", "readers/sphinx").
     pub id: String,
 }
 
@@ -156,12 +183,19 @@ pub struct Import {
 /// comment's first sentence.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Package {
+    /// Its id: a path below its root, or an import path in a collection.
     pub id: String,
+    /// The name its `package` clauses give.
     pub name: String,
+    /// The folder its files were read from.
     pub dir: String,
+    /// The package comment (see the type's doc).
     pub doc: String,
+    /// The package comment's first sentence.
     pub synopsis: String,
+    /// Its package-level declarations, in source order.
     pub decls: Vec<Decl>,
+    /// The packages its files import.
     pub imports: Vec<Import>,
     /// Every target some file of the package builds for.
     pub targets: Targets,
@@ -183,6 +217,7 @@ pub enum MemberOrder {
     /// As declared: files by name, then position.
     #[default]
     Source,
+    /// By name.
     Alphabetical,
     /// Alphabetical within kinds: types, procedures, groups, constants, variables.
     Groupwise,
@@ -193,13 +228,16 @@ pub enum MemberOrder {
 pub struct Config {
     /// Options a directive gets when it does not give them itself.
     pub default_options: Vec<DirectiveOption>,
+    /// The order `:members:` lists declarations in when a directive does not say.
     pub member_order: MemberOrder,
 }
 
 /// A directive option, `:name: value`.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct DirectiveOption {
+    /// The option's name, without colons ("members").
     pub name: String,
+    /// Its value; empty for a flag.
     pub value: String,
 }
 
@@ -219,8 +257,11 @@ impl DirectiveOption {
 /// "odin:autotype", "odin:autoconst", or "odin:autovar", with its argument and options.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Request {
+    /// The directive's full name ("odin:autopackage").
     pub directive: String,
+    /// Its argument: a package id, or `package.name` for one declaration.
     pub argument: String,
+    /// The options written on the directive, in order.
     pub options: Vec<DirectiveOption>,
     /// The reader's current odin package, or "".
     pub current: String,
@@ -229,9 +270,12 @@ pub struct Request {
 /// How serious a message is.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Default, Hash)]
 pub enum Severity {
+    /// Information; the output is complete.
     #[default]
     Note,
+    /// Something was left out or guessed; the output may be incomplete.
     Warning,
+    /// The directive could not generate what was asked.
     Error,
 }
 
@@ -239,10 +283,15 @@ pub enum Severity {
 /// how to fix it.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Message {
+    /// How serious it is.
     pub severity: Severity,
+    /// Stable identifier ("odin.autodoc.object").
     pub code: String,
+    /// Upper-case title ("ODIN DECLARATION NOT FOUND").
     pub title: String,
+    /// What happened, in a sentence or two.
     pub text: String,
+    /// How to fix it.
     pub hint: String,
 }
 
@@ -257,6 +306,8 @@ impl std::error::Error for Message {}
 /// What a directive generates: reST lines, and messages about what went wrong.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Output {
+    /// The generated reStructuredText, one line per entry.
     pub lines: Vec<String>,
+    /// Problems met while generating, in order.
     pub messages: Vec<Message>,
 }

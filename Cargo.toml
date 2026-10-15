@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/*", "cmd/*", "tools/check", "tools/linkcheck", "examples/*"]
+members = ["crates/*", "cmd/*", "tools/check", "tools/linkcheck", "examples/*", "tests/integration"]
 
 [workspace.package]
 version = "0.7.0"
@@ -19,6 +19,7 @@ guidedoc-cpp = { path = "crates/guidedoc-cpp" }
 guidedoc-html = { path = "crates/guidedoc-html" }
 guidedoc-typst = { path = "crates/guidedoc-typst" }
 guidedoc-text = { path = "crates/guidedoc-text" }
+guidedoc-rst-writer = { path = "crates/guidedoc-rst-writer" }
 guidedoc-defaults = { path = "crates/guidedoc-defaults" }
 gd-report = { path = "crates/gd-report" }
 gd-toml = { path = "crates/gd-toml" }
@@ -78,10 +79,24 @@ serde = "1"
 [workspace.lints.rust]
 unsafe_op_in_unsafe_fn = "deny"
 missing_debug_implementations = "warn"
+missing_docs = "warn"
+# Unsafe code only in FFI modules, each opened with #[allow(unsafe_code)] (see the
+# unsafe_code gate in tests/integration); crates without FFI forbid it outright.
+unsafe_code = "deny"
 
 [workspace.lints.clippy]
 too_many_lines = "warn"
 unwrap_used = "warn"
+undocumented_unsafe_blocks = "warn"
+
+# Debug builds keep line tables (enough for backtraces) and no debug info for
+# dependencies: the Typst stack's full debug info made test binaries take gigabytes of
+# memory to link and tens of gigabytes of disk.
+[profile.dev]
+debug = "line-tables-only"
+
+[profile.dev.package."*"]
+debug = false
 
 [profile.release]
 lto = "thin"

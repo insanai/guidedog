@@ -44,6 +44,7 @@ impl FileReader for FsReader {
 /// read sources some other way.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct MemoryReader {
+    /// File texts by path.
     pub files: std::collections::BTreeMap<String, String>,
 }
 
@@ -85,21 +86,27 @@ impl FileReader for MemoryReader {
 /// one, ids are import paths in that collection ("core:fmt").
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Root {
+    /// The folder.
     pub dir: String,
+    /// The collection it stands for ("core"), or empty for plain paths.
     pub collection: String,
 }
 
 /// A file the analysis read, for a host's dependency tracking.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct FileRead {
+    /// The path as the reader was asked for it.
     pub path: String,
+    /// What it held.
     pub text: String,
 }
 
 /// A package below a root: its id and folder.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct PackageRef {
+    /// The package's id (see `Root`).
     pub id: String,
+    /// Its folder.
     pub dir: String,
 }
 
@@ -119,7 +126,9 @@ impl Default for Limits {
 /// A set of roots and the packages loaded from them. Packages are analysed once, on
 /// first use, and kept. It is `Send`.
 pub struct Project {
+    /// The folders packages are looked up in, in order.
     pub roots: Vec<Root>,
+    /// Bounds on the work one file may cause.
     pub limits: Limits,
     /// Every file read, in order.
     pub files: Vec<FileRead>,

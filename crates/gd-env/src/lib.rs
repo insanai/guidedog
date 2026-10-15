@@ -22,6 +22,7 @@
 //! Docs: docs/manual/internals/project.rst (the crate split) and incremental.rst (every
 //! digest input). Failures are `gd_host::Problem`s; nothing here prints.
 
+#![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod builder;

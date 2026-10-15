@@ -22,6 +22,7 @@
 //! Docs: docs/manual/internals/project.rst. Nothing here prints; problems are reports
 //! in the `Rendered` page.
 
+#![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod discussion;

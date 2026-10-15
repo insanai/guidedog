@@ -23,6 +23,7 @@
 //! Docs: docs/manual/internals/project.rst (the crate split) and incremental.rst (what
 //! each lookup's answer covers). Nothing here prints; warnings are `gd_report::Report`s.
 
+#![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod cpp;

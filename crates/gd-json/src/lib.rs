@@ -15,6 +15,8 @@
 //! assert_eq!(gd_json::to_string(&v), r#"{"name":"guide","pages":[1,2]}"#);
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod error;
 mod parse;
 mod write;

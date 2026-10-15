@@ -17,6 +17,8 @@
 //! characters, combining marks, escaped controls) only affect where carets are drawn.
 //! The crate has no dependencies and never prints.
 
+#![forbid(unsafe_code)]
+
 mod json;
 mod text;
 mod width;

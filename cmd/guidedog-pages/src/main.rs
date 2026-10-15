@@ -2,6 +2,8 @@
 //! pages publisher `guidedog publish` runs. It builds projects with an installed
 //! guidedog and links no document engine.
 
+// signal(2) for Ctrl-C: FFI.
+#[allow(unsafe_code)]
 mod interrupt;
 
 use gd_pages::command::{self, Program};

@@ -21,6 +21,7 @@
 //! Docs: docs/manual/internals/project.rst. Nothing here prints; problems are
 //! `gd_report::Report`s and `gd_host::Problem`s.
 
+#![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod book_index;

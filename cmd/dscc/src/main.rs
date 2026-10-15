@@ -3,6 +3,8 @@
 //! installed. Older Typst catalogs compile with the Typst compiler built in, or the
 //! `typst` program `--typst` names.
 
+#![forbid(unsafe_code)]
+
 use gd_discussion::command::{self, Program};
 
 fn main() {

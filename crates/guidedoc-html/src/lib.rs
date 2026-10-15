@@ -10,6 +10,8 @@
 //! assert!(registry.find_renderer("html").is_some());
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod blocks;
 mod code;
 mod document;

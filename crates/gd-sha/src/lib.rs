@@ -10,6 +10,8 @@
 //! assert!(gd_sha::to_hex(&digest).starts_with("ba7816bf"));
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod sha1;
 mod sha256;
 

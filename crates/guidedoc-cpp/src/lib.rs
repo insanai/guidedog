@@ -16,6 +16,8 @@
 //! `STEPS_PER_BYTE` steps per byte of the definition. Past any of them the parse fails
 //! with an `ErrorKind::Limit`, never a stack overflow.
 
+#![forbid(unsafe_code)]
+
 mod ast;
 mod error;
 mod ids;

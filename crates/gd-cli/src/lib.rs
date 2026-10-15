@@ -16,6 +16,8 @@
 //! configuration, 3 limits and memory, 4 files and programs, 5 internal, 6 and 7 for
 //! publications not confirmed or unknown, 130 cancelled.
 
+#![forbid(unsafe_code)]
+
 mod args;
 mod command;
 mod console;

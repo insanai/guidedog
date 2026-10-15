@@ -15,6 +15,8 @@
 //! ([`check_code`], [`write_problem`]) complete the surface. Nothing here keeps global
 //! state; the same input always gives the same output.
 
+#![forbid(unsafe_code)]
+
 mod code;
 mod code_tables;
 mod data;

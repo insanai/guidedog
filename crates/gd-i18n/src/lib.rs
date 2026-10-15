@@ -22,6 +22,8 @@
 //! assert!(pot.write().contains("Project-Id-Version: Demo"));
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod apply;
 mod date_names;
 mod dates;

@@ -26,6 +26,8 @@
 //! Failures are `gd_host::Problem`s with a hint; notes are `gd_report::Report`s with
 //! source excerpts. Nothing here prints.
 
+#![forbid(unsafe_code)]
+
 mod clock;
 mod convert;
 mod extensions;

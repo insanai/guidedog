@@ -1,3 +1,6 @@
+//! Grid and simple tables: headers, UTF-8 cells, cell paragraphs and malformed tables reported as
+//! errors.
+
 #![allow(clippy::unwrap_used)]
 
 mod common;

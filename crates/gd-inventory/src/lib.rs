@@ -21,6 +21,8 @@
 //! assert_eq!(len.uri, "https://docs.python.org/3/library/functions.html#len");
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod parse;
 
 use gd_report::Report;

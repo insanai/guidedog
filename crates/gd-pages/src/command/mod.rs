@@ -13,7 +13,9 @@ mod target;
 #[cfg(test)]
 mod tests;
 mod watch;
+// Console mode calls on Windows: FFI.
 #[cfg(windows)]
+#[allow(unsafe_code)]
 mod windows_console;
 mod workflow;
 

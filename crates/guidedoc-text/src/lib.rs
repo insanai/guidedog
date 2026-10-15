@@ -10,6 +10,8 @@
 //! assert!(registry.find_renderer("text").is_some());
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod blocks;
 mod frames;
 mod inlines;

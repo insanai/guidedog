@@ -21,6 +21,7 @@
 //! Loading never fails: a catalog that cannot be read is a warning. The commands and
 //! the builder fail with `gd_host::Problem`s that carry a hint. Nothing here prints.
 
+#![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod gettext;

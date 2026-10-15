@@ -14,6 +14,8 @@
 //! assert!(guidedoc_typst::PREAMBLE.contains("#let gd-link"));
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod blocks;
 mod dispatch;
 mod escape;

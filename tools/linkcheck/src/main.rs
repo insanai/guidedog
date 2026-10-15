@@ -10,6 +10,8 @@
 //! `-v`, up to 50 of each kind of broken link are listed first. It exits 1 when a link is
 //! broken and 2 for a usage problem.
 
+#![forbid(unsafe_code)]
+
 use std::collections::{HashMap, HashSet};
 use std::fs;
 use std::path::Path;

@@ -1,5 +1,8 @@
 //! Includes, anchors, and steady-state allocation.
 
+// The counting global allocator below forwards to the system allocator.
+#![allow(unsafe_code)]
+
 mod common;
 
 use std::alloc::{GlobalAlloc, Layout, System};

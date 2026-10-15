@@ -16,6 +16,8 @@
 //! assert_eq!(failure.map_err(|f| f.code()), Err("core.reader.unknown"));
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod adapter;
 mod anchors;
 mod anchors_order;

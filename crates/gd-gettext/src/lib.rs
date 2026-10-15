@@ -19,6 +19,8 @@
 //! bytes is refused as damaged; the fuzzy search is bounded by
 //! [`FUZZY_WORK_PER_BYTE`]; and wrapping a long line looks only at the next piece.
 
+#![forbid(unsafe_code)]
+
 mod catalog;
 mod error;
 mod fuzzy;

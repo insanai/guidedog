@@ -18,6 +18,8 @@
 //! with [`read_with`]; another markup (MyST) runs the directives through [`Host`],
 //! [`embed_begin`], and [`Parser::run_hosted`].
 
+#![forbid(unsafe_code)]
+
 mod blocks;
 mod csv;
 mod directives;

@@ -1,3 +1,6 @@
+//! The reader as a whole: its description, empty input, byte order marks, title promotion and wide
+//! characters.
+
 #![allow(clippy::unwrap_used)]
 
 mod common;

@@ -4,6 +4,9 @@
 //! It counts the bytes allocated (total and peak live) with a counting global
 //! allocator, which is why it lives in its own test binary.
 
+// The counting global allocator below forwards to the system allocator.
+#![allow(unsafe_code)]
+
 use std::alloc::{GlobalAlloc, Layout, System};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::time::{Duration, Instant};

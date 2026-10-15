@@ -1,3 +1,6 @@
+//! Directives: admonitions, images and figures, and the other standard directives with their
+//! options.
+
 #![allow(clippy::unwrap_used)]
 
 mod common;

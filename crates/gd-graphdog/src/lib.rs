@@ -17,6 +17,9 @@
 //! many threads as you like, but renders run one at a time. The `files` and `reserve`
 //! callbacks run inside that lock, so they must not render themselves.
 
+// The crate is the binding to the Graphviz C library: every module calls it.
+#![allow(unsafe_code)]
+
 mod defaults;
 mod errors;
 mod ffi;

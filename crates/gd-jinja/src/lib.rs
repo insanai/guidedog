@@ -16,6 +16,8 @@
 //! Every failure is an [`Error`] whose `Display` is the Elm-style report; nothing panics
 //! on bad templates or data. See the crate README for the cheat sheet.
 
+#![forbid(unsafe_code)]
+
 mod ast;
 mod calls;
 mod convert;

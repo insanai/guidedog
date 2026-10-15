@@ -42,6 +42,7 @@
 //! [`process_plugin`] and [`process_publisher`]. Nothing here discovers, downloads or
 //! starts a program by itself. Failures are [`Problem`]s with hints, never panics.
 
+#![forbid(unsafe_code)]
 // In unit tests, a test failing on unexpected input is the point.
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 

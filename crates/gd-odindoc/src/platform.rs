@@ -18,27 +18,44 @@ use crate::tokenizer::Tk;
 /// An operating system Odin builds for, in Odin's order.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Os {
+    /// Microsoft Windows (`windows`).
     Windows = 1,
+    /// macOS and the other Apple systems (`darwin`).
     Darwin,
+    /// Linux (`linux`).
     Linux,
+    /// FreeBSD (`freebsd`).
     FreeBSD,
+    /// OpenBSD (`openbsd`).
     OpenBSD,
+    /// NetBSD (`netbsd`).
     NetBSD,
+    /// The WebAssembly System Interface (`wasi`).
     Wasi,
+    /// JavaScript hosts for WebAssembly (`js`).
     Js,
+    /// The Orca platform (`orca`).
     Orca,
+    /// No operating system (`freestanding`).
     Freestanding,
 }
 
 /// A processor architecture Odin builds for, in Odin's order.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Arch {
+    /// 64-bit x86 (`amd64`).
     Amd64 = 1,
+    /// 32-bit x86 (`i386`).
     I386,
+    /// 32-bit ARM (`arm32`).
     Arm32,
+    /// 64-bit ARM (`arm64`).
     Arm64,
+    /// 32-bit WebAssembly (`wasm32`).
     Wasm32,
+    /// 64-bit WebAssembly with 32-bit pointers (`wasm64p32`).
     Wasm64p32,
+    /// 64-bit RISC-V (`riscv64`).
     Riscv64,
 }
 

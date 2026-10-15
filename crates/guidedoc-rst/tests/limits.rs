@@ -1,3 +1,6 @@
+//! Limits: repeated reads in one workspace, and depth, stack, work and node limits reported as
+//! results.
+
 #![allow(clippy::unwrap_used)]
 
 mod common;

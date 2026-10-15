@@ -19,6 +19,7 @@
 //! Failures are `gd_host::Problem`s (`config.invalid`, `cli.define`, `project.missing`,
 //! exit 2) with a hint; warnings are `gd_report::Report`s. Nothing here prints.
 
+#![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod check;

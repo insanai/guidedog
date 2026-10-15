@@ -15,6 +15,8 @@
 //! [`document`] ([`Crate`] to [`Page`]s, each with its own warnings). The README holds
 //! the domain vocabulary the Sphinx reader implements.
 
+#![forbid(unsafe_code)]
+
 mod attrs;
 mod diag;
 mod emit;

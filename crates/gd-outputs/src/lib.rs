@@ -29,6 +29,7 @@
 //! Ported from generation.odin, commit.odin, publish.odin, build_paths.odin, remove.odin
 //! and `clean` of build.odin; docs/manual/internals/publication.rst explains the commit.
 
+#![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod clean;

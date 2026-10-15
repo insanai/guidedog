@@ -10,6 +10,8 @@
 //! assert!(html.expect("converts").contains("Hello"));
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod highlight;
 mod registry;
 

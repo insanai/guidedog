@@ -5,6 +5,7 @@
 //! This crate has no dependencies; quickstart (`gd-migrate`), the site builder
 //! (`gd-site`) and the book builder (`gd-book`) all read the same files from here.
 
+#![forbid(unsafe_code)]
 /// `_templates/layout.html`: the Jinja page layout, with Sphinx's block names.
 pub const LAYOUT_HTML: &str = include_str!("../assets/layout.html");
 

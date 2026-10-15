@@ -12,6 +12,8 @@
 //! steps, depth, and stack, and a module nested too deeply is marked `too_deep`, not
 //! walked. A project is `Send`, so a host may share one behind a `Mutex`.
 
+#![forbid(unsafe_code)]
+
 mod analysis;
 mod literal;
 mod mro;

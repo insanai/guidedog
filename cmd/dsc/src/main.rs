@@ -2,6 +2,8 @@
 //! commands need nothing else, and build runs guidedog, named by --guidedog,
 //! $DSC_GUIDEDOG, or PATH. dscc is the same program with Guidedog built in.
 
+#![forbid(unsafe_code)]
+
 use gd_discussion::command::{self, Program};
 use gd_discussion::ENGINE_VARIABLE;
 

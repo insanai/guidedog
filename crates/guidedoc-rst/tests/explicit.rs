@@ -1,3 +1,5 @@
+//! Explicit markup: footnotes, citations, hyperlink targets, substitutions and comments.
+
 #![allow(clippy::unwrap_used)]
 
 mod common;

@@ -16,6 +16,7 @@
 //! project (gd-resolve), writes the output with the builder (gd-site, gd-book or
 //! gd-intl) into a gd-outputs generation, and publishes it whole.
 
+#![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod build;

@@ -5,6 +5,8 @@
 //! echo 'digraph { a -> b }' | graphdog -Tsvg -o g.svg
 //! ```
 
+#![forbid(unsafe_code)]
+
 mod args;
 
 use std::io::{IsTerminal, Read, Write};

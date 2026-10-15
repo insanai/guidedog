@@ -1,3 +1,6 @@
+//! The include directive: in-place parsing, source spans, literal and code inclusion, line and
+//! text ranges.
+
 #![allow(clippy::unwrap_used)]
 
 mod common;

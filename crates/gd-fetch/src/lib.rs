@@ -19,6 +19,8 @@
 //! [`send`] makes one request and never follows a redirect, so headers such as
 //! `Authorization` reach only the URL the caller named.
 
+#![forbid(unsafe_code)]
+
 mod curl;
 mod error;
 pub mod testserver;

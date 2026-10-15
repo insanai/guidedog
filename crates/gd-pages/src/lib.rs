@@ -37,6 +37,8 @@ mod build;
 mod client;
 pub mod command;
 mod config;
+// The system credential stores (Keychain, Windows Credential Manager): FFI.
+#[allow(unsafe_code)]
 mod credential;
 mod device;
 mod files;

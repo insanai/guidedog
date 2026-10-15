@@ -33,6 +33,8 @@
 
 mod build;
 mod catalog;
+// The C library's localtime_r for the local calendar date: FFI.
+#[allow(unsafe_code)]
 mod clock;
 pub mod command;
 mod config;

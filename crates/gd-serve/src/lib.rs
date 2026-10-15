@@ -19,6 +19,8 @@
 //!
 //! Failures are `gd_host::Problem`s; nothing here prints.
 
+#![forbid(unsafe_code)]
+
 mod http;
 mod server;
 mod watch;

@@ -36,6 +36,8 @@
 //! not trust gives a root holding only what that code may read.
 
 mod cli;
+// The C library's localtime_r for the local calendar date: FFI.
+#[allow(unsafe_code)]
 mod clock;
 #[cfg(feature = "embedded")]
 mod embedded;

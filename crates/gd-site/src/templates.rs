@@ -54,6 +54,8 @@ pub(crate) struct Layout {
     env: Environment,
     sources: Rc<TemplateSources>,
     files: Vec<PathBuf>,
+    /// The build's memory budget in bytes, which bounds what one render may build.
+    budget: usize,
     /// How many templates were rendered, for tests that a page renders once.
     #[cfg(test)]
     pub(crate) renders: std::cell::Cell<usize>,
@@ -81,8 +83,12 @@ impl Layout {
             errors: RefCell::default(),
         });
         let loader_sources = Rc::clone(&sources);
+        // A render may build at most the whole budget: a value or page larger is
+        // refused before it is allocated, as the budget's problem.
+        let budget = view.budget.limit();
         let mut env = Environment::new(Options {
             autoescape: Autoescape::Always,
+            max_output: budget,
             loader: Some(Loader::custom(move |name| template_source(&loader_sources, name))),
             ..Options::default()
         });
@@ -91,6 +97,7 @@ impl Layout {
             env,
             sources,
             files,
+            budget,
             #[cfg(test)]
             renders: std::cell::Cell::new(0),
         };
@@ -136,12 +143,28 @@ impl Layout {
         if !e.excerpt.is_empty() {
             message = format!("{message}\n\n    {}", e.excerpt);
         }
+        if e.kind == ErrorKind::Limit && e.hint.contains("Options::max_output") {
+            return self.budget_problem(&location, message);
+        }
         let hint = if e.hint.is_empty() {
             "Fix the template, or delete it to use Guidedog's built-in one.".to_string()
         } else {
             e.hint.clone()
         };
         Problem::new("template.error", template_title(e.kind), &location, message, hint, 1)
+    }
+}
+
+impl Layout {
+    /// A render that would build more than the budget: the budget's problem (exit 3),
+    /// at the template line, with the flag that raises it.
+    fn budget_problem(&self, location: &str, message: String) -> Problem {
+        let hint = format!(
+            "Build a smaller value in the template, or run again with a larger --budget \
+             (this build's is {} MiB).",
+            self.budget >> 20
+        );
+        Problem::new("host.budget", "MEMORY BUDGET REACHED", location, message, hint, 3)
     }
 }
 

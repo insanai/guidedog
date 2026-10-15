@@ -2,6 +2,8 @@
 //! read, resolve, write with the builder, then publish or keep the previous output.
 
 use std::path::PathBuf;
+use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::{Mutex, PoisonError};
 use std::time::SystemTime;
 
 use gd_conf::{Config, Digest};
@@ -93,7 +95,11 @@ pub(crate) struct Written {
 /// What reading and writing share once the build is prepared.
 struct Parts<'c> {
     config: &'c Config,
+    /// The limits the options ask for, which the reading and output settings record.
     limits: Limits,
+    /// What one conversion may use: `limits` with its byte bounds lowered to the budget
+    /// (`gd_host::limits_within`), so a budget bounds what a document and a page hold.
+    run_limits: Limits,
     plugins: PluginRun,
     sources: Vec<SourceFile>,
     intl: Intl,
@@ -139,8 +145,19 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
     let settings =
         gd_env::build_settings(reading, intl.digest, options.untrusted, &limits, plugins.digest());
     let store = ObjectStore::new(gd_env::doctrees_dir(config));
-    let parts =
-        Parts { config, limits, plugins, sources, intl, dates, intersphinx, store, settings };
+    let run_limits = gd_host::limits_within(limits, s.budget.limit());
+    let parts = Parts {
+        config,
+        limits,
+        run_limits,
+        plugins,
+        sources,
+        intl,
+        dates,
+        intersphinx,
+        store,
+        settings,
+    };
     let env = read(s, &parts, log)?;
     let tables = gd_resolve::resolve(config, &env, &parts.intl.ui, &mut log.reports);
     log.result.reached = BuildStage::Writing;
@@ -170,7 +187,7 @@ fn read_context<'a>(s: &'a Setup<'_>, parts: &'a Parts<'_>) -> ReadContext<'a> {
         plugins: &parts.plugins,
         budget: &s.budget,
         policy: s.policy,
-        limits: parts.limits,
+        limits: parts.run_limits,
         settings: parts.settings,
         today: &parts.dates.today,
         date: &parts.dates.date,
@@ -187,17 +204,63 @@ fn read(s: &Setup<'_>, parts: &Parts<'_>, log: &mut Log) -> Result<Environment, 
     let ctx = read_context(s, parts);
     let path = gd_env::environment_path(parts.config);
     let previous = gd_env::load_environment(&path, ctx.settings, s.options.fresh, &s.budget)?;
-    let outcome = gd_read::read_documents(&ctx, previous, &parts.sources)?;
+    let mut outcome = gd_read::read_documents(&ctx, previous, &parts.sources)?;
     log.result.read = outcome.read;
     log.result.reused = outcome.reused;
     log.result.unread = outcome.unread;
     if gd_host::was_interrupted() {
         return Err(gd_host::interrupted_problem());
     }
+    if outcome.reused > 0 {
+        replace_stale_objects(&ctx, &parts.sources, &mut outcome.env, &mut log.reports)?;
+    }
     for doc in &outcome.env.docs {
         log.reports.extend(doc.reports.iter().cloned());
     }
     Ok(outcome.env)
+}
+
+/// Reads again, with a warning, each document whose cached object the engine cannot load
+/// (damaged, or from another format version) although its digest matches, so every
+/// builder renders from objects that load. Other failures (the budget) are left to the
+/// builder, which reports them where it meets them.
+fn replace_stale_objects(
+    ctx: &ReadContext<'_>,
+    sources: &[SourceFile],
+    env: &mut Environment,
+    reports: &mut Vec<Report>,
+) -> Result<(), Problem> {
+    for (i, stale) in stale_objects(ctx, env) {
+        let doc = &mut env.docs[i];
+        let Some(source) = sources.iter().find(|s| s.docname == doc.docname) else { continue };
+        reports.push(gd_read::stale_warning(&stale, doc));
+        *doc = gd_read::reread_document(ctx, source, doc)?;
+    }
+    Ok(())
+}
+
+/// The documents (by position in `env.docs`) whose cached object is stale, each with
+/// why, in order. Checking an object hashes and loads all of it, so the checks share
+/// the reading threads, each with its own workspace.
+fn stale_objects(ctx: &ReadContext<'_>, env: &Environment) -> Vec<(usize, Problem)> {
+    let next = AtomicUsize::new(0);
+    let found: Mutex<Vec<(usize, Problem)>> = Mutex::new(Vec::new());
+    gd_host::run_workers(ctx.thread_count(env.docs.len()), |_| {
+        let mut ws = guidedoc::Workspace::new();
+        loop {
+            let i = next.fetch_add(1, Ordering::Relaxed);
+            let Some(doc) = env.docs.get(i) else { break };
+            let Some(object) = &doc.object else { continue };
+            if let Err(e) = ctx.store.load_object(&mut ws, object, &ctx.limits)
+                && e.stale
+            {
+                found.lock().unwrap_or_else(PoisonError::into_inner).push((i, e.problem));
+            }
+        }
+    });
+    let mut found = found.into_inner().unwrap_or_else(PoisonError::into_inner);
+    found.sort_by_key(|(i, _)| *i);
+    found
 }
 
 /// Writes the output with the builder, counting the units written and kept.
@@ -221,7 +284,7 @@ fn write(
         objects: &parts.store,
         registry: &s.project.registry,
         policy: &s.policy,
-        limits: &parts.limits,
+        limits: &parts.run_limits,
         ui: &parts.intl.ui,
         dates: &parts.dates,
         plugins: &parts.plugins,

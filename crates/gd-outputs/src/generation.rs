@@ -374,6 +374,11 @@ impl Unit<'_> {
         }
     }
 
+    /// The files this unit has emitted or recorded so far, normalized, in order.
+    pub fn files(&self) -> &[String] {
+        &self.files
+    }
+
     /// The files this unit, or another of its generation or the previous one, already
     /// makes that `rel` would conflict with, as [`Generation::taken_path`].
     pub fn taken_path(&self, rel: &str) -> Option<&str> {

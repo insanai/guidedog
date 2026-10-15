@@ -13,6 +13,7 @@ use gd_resolve::relative_url;
 use guidedoc::{AttributeKey, Document, Fail, LinkInfo, LinkKind, NodeId, NodeKind, SourceSpan};
 
 use crate::graph_files::{GraphFiles, may_name_files};
+use crate::graph_links::resolve_graph_links;
 use crate::graph_theme::{GRAPH_ADAPTIVE_CSS, adapt_graph, graph_adaptive};
 use crate::image::{book_path, file_name};
 use crate::page::{Page, Warning, flag};
@@ -34,7 +35,8 @@ pub(crate) fn replace_graph(
     id: NodeId,
 ) -> Result<(), Fail> {
     let doc = rw.doc;
-    let source = doc.node_text(id);
+    let (source, linked) = resolve_graph_links(page, doc.node_text(id));
+    let source = source.as_ref();
     let span = doc.node(id).span;
     let adaptive = graph_adaptive(doc, id);
     let layout = doc.custom_attribute(id, "layout").unwrap_or("");
@@ -63,6 +65,10 @@ pub(crate) fn replace_graph(
         rw.b.add_attribute_string(image, AttributeKey::Align, align)?;
     }
     rw.add_class(image, "graphviz")?;
+    if linked {
+        // Shown so that its links work: an img element's links are not followed.
+        rw.add_custom(image, "interactive", "1")?;
+    }
     if adaptive && caption.is_some() {
         rw.add_class(image, "graphviz-adaptive")?;
     }

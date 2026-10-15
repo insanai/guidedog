@@ -6,7 +6,7 @@ use std::path::{Path, PathBuf};
 use gd_conf::Config;
 use gd_env::{Asset, LookupKind, OutputFormat};
 use gd_resolve::relative_url;
-use guidedoc::{Document, Fail, LinkInfo, NodeId, NodeKind, SourceSpan};
+use guidedoc::{Content, Document, Fail, LinkInfo, NodeId, NodeKind, SourceSpan};
 
 use crate::page::{Page, Warning};
 use crate::rewrite::Rewriter;
@@ -45,6 +45,9 @@ pub(crate) fn replace_image(
     if pdf && !present {
         return Ok(());
     }
+    if pdf && !book_reads(&file.path) {
+        return replace_unreadable(page, rw, id, uri);
+    }
     let url = if pdf {
         let book = book_path(view.config, &file.path);
         page.assets.push(Asset { source: file.path, target: book.clone() });
@@ -75,6 +78,59 @@ fn rewrite_image(
     rw.b.set_link(copy, link)?;
     rw.rewrite_children(page, id)?;
     rw.close(copy)
+}
+
+/// The image formats Typst reads, by file suffix: the book shows these as they are,
+/// so sphinx.ext.imgconverter has nothing to convert.
+const BOOK_IMAGE_FORMATS: [&str; 7] = ["png", "jpg", "jpeg", "gif", "svg", "webp", "pdf"];
+
+/// Whether the book can show the image file at `path`.
+fn book_reads(path: &Path) -> bool {
+    let suffix = path.extension().map(|e| e.to_string_lossy().to_ascii_lowercase());
+    suffix.is_some_and(|s| BOOK_IMAGE_FORMATS.contains(&s.as_str()))
+}
+
+/// Shows an image the book cannot read as its alternative text, with the warning
+/// `imgconverter.format`. In a figure the image is left out, and the caption stays.
+fn replace_unreadable(
+    page: &mut Page<'_>,
+    rw: &mut Rewriter<'_, '_, '_>,
+    id: NodeId,
+    uri: &str,
+) -> Result<(), Fail> {
+    let doc = rw.doc;
+    let span = doc.node(id).span;
+    let format = Path::new(uri).extension().map_or_else(
+        || "an unknown format".to_owned(),
+        |e| format!("the {} format", e.to_string_lossy().to_uppercase()),
+    );
+    let warning = Warning {
+        code: "imgconverter.format",
+        title: "IMAGE FORMAT NOT READ BY THE BOOK",
+        category: "imgconverter",
+        message: format!(
+            "The image \"{uri}\" is in {format}, which the PDF cannot show, so the book \
+             shows its alternative text instead."
+        ),
+        hint: "Provide a PNG, JPEG, GIF or SVG version, and name it picture.* so each \
+               output picks the version it reads.",
+    };
+    page.warn(doc, span, warning);
+    let alt = doc.attribute(id, guidedoc::AttributeKey::Alt).unwrap_or(uri);
+    let parent = doc.parent_of(id).map_or(NodeKind::Document, |p| doc.kind(p));
+    let paragraph = match guidedoc::content_model(parent) {
+        Content::Blocks => Some(rw.open(NodeKind::Paragraph, span)?),
+        Content::Inlines => None,
+        _ => return Ok(()),
+    };
+    let emphasis = rw.open(NodeKind::Emphasis, span)?;
+    rw.moved_to(id, emphasis);
+    rw.add_plain(alt, span)?;
+    rw.close(emphasis)?;
+    match paragraph {
+        Some(p) => rw.close(p),
+        None => Ok(()),
+    }
 }
 
 /// Warns, as Sphinx does, that an image the document shows is absent or refused.

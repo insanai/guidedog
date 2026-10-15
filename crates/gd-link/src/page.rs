@@ -16,7 +16,7 @@ use guidedoc::{
 
 use crate::only::{Tags, evaluate_only};
 use crate::rewrite::{Action, Rewriter, Rule, rewrite_document};
-use crate::{discussion, extlinks, graph, image, nav, todolist, xref};
+use crate::{discussion, extlinks, graph, image, nav, source_links, todolist, xref};
 
 /// What a node of the document being linked is, counted in the order reading counted
 /// them, to find its section, number, or toctree in the environment.
@@ -59,6 +59,10 @@ pub(crate) struct Page<'p> {
     pub trace: Trace,
     /// What linking reported.
     pub reports: Vec<Report>,
+    /// The `[source]` links of the signature being replaced.
+    pub source_links: Vec<String>,
+    /// linkcode's template, root and branch, looked up at the first signature.
+    pub linkcode: Option<gd_conf::LinkcodeSite>,
     index: Vec<Indexed>,
 }
 
@@ -94,6 +98,8 @@ impl<'p> Page<'p> {
             assets: Vec::new(),
             trace: Trace::new(),
             reports: Vec::new(),
+            source_links: Vec::new(),
+            linkcode: None,
             index: Vec::new(),
         }
     }
@@ -246,6 +252,7 @@ impl Rule for Page<'_> {
             }
             NodeKind::Image if format != OutputFormat::Text => Action::Replace,
             NodeKind::Title => self.decide_title(doc, id),
+            NodeKind::DescSignature if source_links::find_links(self, doc, id) => Action::Replace,
             NodeKind::Subtitle if format == OutputFormat::Pdf => Action::Drop,
             NodeKind::Heading if self.is_book_title(doc, id) => Action::Drop,
             NodeKind::Admonition => {
@@ -272,6 +279,7 @@ impl Rule for Page<'_> {
             NodeKind::Title => self.replace_title(rw, id),
             NodeKind::CodeBlock => graph::replace_graph(self, rw, id),
             NodeKind::Directive => todolist::replace_todolist(self, rw, id),
+            NodeKind::DescSignature => source_links::replace_signature(self, rw, id),
             // decide replaces nothing else; keep the node should that change.
             _ => rw.copy_node(self, id),
         }

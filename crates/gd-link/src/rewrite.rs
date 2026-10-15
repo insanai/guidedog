@@ -132,6 +132,17 @@ impl Rewriter<'_, '_, '_> {
     /// Copies one node with its text, attributes and payload, lets the rule decorate
     /// it, then rewrites its children.
     pub fn copy_node(&mut self, rule: &mut dyn Rule, id: NodeId) -> Result<(), Fail> {
+        self.copy_node_and(rule, id, |_| Ok(()))
+    }
+
+    /// Copies one node as [`Rewriter::copy_node`] does, and lets `after` add children
+    /// after the copies of its own.
+    pub fn copy_node_and(
+        &mut self,
+        rule: &mut dyn Rule,
+        id: NodeId,
+        after: impl FnOnce(&mut Self) -> Result<(), Fail>,
+    ) -> Result<(), Fail> {
         let n = *self.doc.node(id);
         let copy = self.b.begin_node(n.kind, n.span)?;
         self.moved[id.index()] = copy;
@@ -143,6 +154,7 @@ impl Rewriter<'_, '_, '_> {
         rule.decorate(self, id, copy)?;
         self.b.copy_payload(self.doc, id, copy)?;
         self.rewrite_children(rule, id)?;
+        after(self)?;
         self.b.end_node(copy)
     }
 

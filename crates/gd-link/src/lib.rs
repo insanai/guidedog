@@ -29,6 +29,7 @@ mod discussion;
 mod extlinks;
 mod graph;
 mod graph_files;
+mod graph_links;
 mod graph_theme;
 mod image;
 mod nav;
@@ -36,6 +37,7 @@ mod only;
 mod page;
 mod render;
 mod rewrite;
+mod source_links;
 mod todolist;
 mod xref;
 
@@ -51,4 +53,5 @@ pub use nav::{
 pub use only::{Tags, evaluate_only};
 pub use render::{PageRequest, Worker, render_options, render_page, source_location};
 pub use rewrite::{Action, Rewriter, Rule, rewrite_document};
+pub use source_links::{MODULES_FOLDER, module_page, viewcode_pages};
 pub use todolist::todo_order;

@@ -23,6 +23,7 @@ let items = gd_link::nav_for_toctree(&view, doc, 0, NavOptions::default());
 | `book_root`, `book_path` | the paths the book reads files by |
 | `todo_order` | the documents a todolist copies from |
 | `adapt_graph`, `graph_adaptive`, `GRAPH_ADAPTIVE_CSS` | the adaptive graph theme |
+| `module_page`, `MODULES_FOLDER`, `viewcode_pages` | sphinx.ext.viewcode's source pages (gd-site writes them) |
 | `discussion_field`, `discussion_prefix` | discussion metadata |
 
 ## Design notes
@@ -52,6 +53,16 @@ let items = gd_link::nav_for_toctree(&view, doc, 0, NavOptions::default());
 - **Reports** are `gd_report::Report`s located with `gd_report::set_span` on the span's own
   source (an included file's path when it came from one); a graph's warning points at
   the graph rather than at its first column.
+- **Source links**: in HTML a signature with a `DocInfo::locations` entry, or one that
+  `linkcode_url` can fill (`gd_conf::LinkcodeSite`, looked up once per page), is
+  copied with `Rewriter::copy_node_and`, which appends `[source]` links after its
+  content (viewcode's to `_modules/...`, linkcode's to the template's URL).
+- **Graph links**: node URLs `gd-xref:py:class:<name>` (inheritance diagrams) are
+  resolved like `:py:class:` references, relative to `_images/`; in HTML such a drawing
+  is an Image with Custom `interactive`, which guidedoc-html writes as an `object`
+  element so its links work. Elsewhere the URLs are emptied.
+- **Images the book cannot read** (any suffix but PNG, JPEG, GIF, SVG, WebP and PDF)
+  are shown as their alternative text with the warning `imgconverter.format`.
 - **Base64** for embedded graph images is written in-house (std only).
 - The sidebar and the page outline (`sidebar_html`, `outline_html`) are gd-site's; the
   numfig template and the image lookup are `BuildView::number_template` and

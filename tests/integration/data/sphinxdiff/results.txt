@@ -1,11 +1,12 @@
 # Guidedog compared with Sphinx over Sphinx's test roots, written by
-# tools/sphinxdiff/roots.sh. One line per root: the root (with -D settings
-# after @), then sphinxdiff's counts as name=compared/differing. See README.md.
-date: 2026-09-30T04:54:32Z
+# cargo xtask sphinxdiff-roots. One line per root: the root (with -D settings
+# after @), then sphinxdiff's counts as name=compared/differing. See
+# docs/manual/internals/sphinx-comparison.rst.
+date: 2026-10-15T06:04:33Z
 host: Linux 7.0.0-28-generic x86_64
 sphinx: sphinx-build 9.1.0
-guidedog revision: 95f6d72336ea8d66a55825faacc59e33a0246a4c
-command: tools/sphinxdiff/roots.sh /home/insan/verify-venv/bin/sphinx-build /home/insan/projects/sphinx-9.1.0/tests/roots /tmp/sd-final
+guidedog revision: 0dd83e6ee11d7887c6444161cee75861b54d4595
+command: cargo xtask sphinxdiff-roots VENV/bin/sphinx-build SPHINX-9.1.0/tests/roots WORK
 test-basic: pages=1/0 ids=2/0 links=2/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=0/0 identical=1
 test-toctree: pages=7/0 ids=18/0 links=28/0 numbers=6/0 numrefs=0/0 inventory=12/0 warnings=2/0 identical=7
 test-toctree-glob: pages=12/0 ids=14/0 links=40/0 numbers=0/0 numrefs=0/0 inventory=16/0 warnings=1/0 identical=12
@@ -30,7 +31,7 @@ test-ext-extlinks-hardcoded-urls: pages=1/0 ids=1/0 links=1/0 numbers=0/0 numref
 test-index_on_title: pages=1/0 ids=3/0 links=2/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=1/0 identical=1
 test-markup-citation: pages=1/0 ids=5/0 links=5/0 numbers=0/0 numrefs=0/0 inventory=7/0 warnings=0/0 identical=1
 test-markup-rubric: pages=1/0 ids=1/0 links=1/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=1/0 identical=1
-test-images: pages=2/0 ids=5/0 links=5/0 numbers=0/0 numrefs=0/0 inventory=6/0 warnings=2/0 identical=2
+test-images: pages=2/0 ids=5/0 links=5/0 numbers=0/0 numrefs=0/0 inventory=6/0 warnings=1/0 identical=2
 test-default_role: pages=2/0 ids=3/0 links=2/0 numbers=0/0 numrefs=0/0 inventory=6/0 warnings=1/0 identical=2
 test-directive-code: pages=12/0 ids=39/0 links=61/0 numbers=4/0 numrefs=2/0 inventory=25/0 warnings=0/0 identical=12
 test-directive-include: sphinx=failed

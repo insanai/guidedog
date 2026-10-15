@@ -26,6 +26,9 @@ The roots folder is ``tests/roots`` of Sphinx's source distribution (``sphinx-9.
 
 The record ``tests/integration/data/sphinxdiff/results.txt`` holds the last run: the date, the host, Sphinx's version, Guidedog's revision, the command, and one line per root.
 
+The run of 15 October 2026 checked the Rust implementation against the same pinned Sphinx 9.1.0. It agrees with the earlier record on every root but one. In ``test-images`` Sphinx 9.1.0 now reports one warning where the record had two, and the two builds still agree. The run also found one regression in the port, which we fixed before recording it: the reader had relabelled errors in a document's content (an invalid directive option, an invalid option block) as warnings, where Docutils and Sphinx report them as errors. Now the severity stays as the reader reports it, the build still succeeds, and ``-W`` fails it, as with Sphinx.
+
+
 One comparison
 --------------
 

@@ -72,8 +72,13 @@ println!("{}", out.lines.join("\n"));                 // ".. py:class:: Parser(.
 | `Output { lines, messages }`, `Output::has_message(code)` | results |
 | `Message { severity, code, title, text, hint }` (`Display`, `Error`) | Elm-style diagnostics |
 | `ALL_OPTIONS` | every option an autodoc directive may take, for a reader's table |
+| `Config::napoleon: Option<Napoleon>` | sphinx.ext.napoleon: docstrings converted before they are emitted |
+| `napoleon_docstring(lines, &Napoleon, &NapoleonContext) -> NapoleonOutput`, `convert_docstring(style, ..)` | the converter alone: `lines`, `origins` (output line to docstring line), `notes` |
+| `summarize(&mut session, &config, &SummaryRequest) -> Summary`, `summary_table(items, classes)` | sphinx.ext.autosummary's table rows and their `list-table` |
+| `stub(&mut session, &config, name, StubOptions) -> Result<Stub, Message>`, `module_docstring` | a stub page's template variables |
+| `module_objects`, `package_modules` | what sphinx.ext.coverage inspects in a module and a package |
 
-Codes: `autodoc.directive`, `.option`, `.signature`, `.module`, `.import`, `.native`,
+Codes: `napoleon.section`, `.field`, `.type`; `autosummary.import`, `.import_cycle`; `autodoc.directive`, `.option`, `.signature`, `.module`, `.import`, `.native`,
 `.too_deep`, `.outside`, `.kind`, `.all`, `.member`, `.members`, `.docstring`, `.value`,
 `.default`, `.decorator`, `.limit`.
 
@@ -95,3 +100,11 @@ nodes per value), member nesting 24, `MAX_GENERATED` (10,000 directives, then wa
   `type_annotation`, `__all__`, recorded hints, `:annotation:`) are `Option`s.
 - `autodoc_type_aliases` and `autodoc_mock_imports` are carried in `Config` but not yet
   used.
+- napoleon is a pure function from docstring lines and settings to lines, with a map
+  from each output line to the docstring line it came from. Where it cannot read a
+  line (`napoleon.*` notes), the lines before are converted and the rest kept as
+  written, rather than garbled. Sphinx's 148 napoleon test conversions are compared
+  line for line (`tests/napoleon.rs`).
+- autosummary's `extract_summary` decides where the first sentence ends without a
+  reStructuredText parser: headings, non-paragraph blocks and inline markup left open
+  are recognised from the text.

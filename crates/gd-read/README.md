@@ -25,14 +25,15 @@ let fresh = gd_read::reread_document(&ctx, source, doc)?;          // new object
 | `ReadContext` (`thread_count`) | what reading borrows from the build: config, registry, object store, `gd_intl::Intl`, `gd_env::PluginRun`, budget, policy, limits, settings digest, dates, `-j` |
 | `read_documents(&ctx, previous, &sources) -> Result<ReadOutcome, Problem>` | the new `Environment`, the counts `read`, `reused`, `unread`, and `reading_times: Vec<ReadingTime { docname, time }>` of the documents parsed |
 | `reread_document`, `stale_warning` | reading a document again when its cached object is stale (gd-intl's `Reread`, the page writers) |
-| `api_sources(&config, &taken, &mut reports)` | the generated Odin (`<odin_autoapi_root>/...`) and Rust (`<rust_autoapi_root>/...`) pages |
+| `api_sources(&config, &taken, &mut reports)` | the generated Odin (`<odin_autoapi_root>/...`) and Rust (`<rust_autoapi_root>/...`) pages, the `apidoc_modules` pages and the autosummary stub pages |
+| `coverage(&config, &Documented) -> Coverage` | sphinx.ext.coverage: `python.txt`, `c.txt`, the statistics lines and reports |
 | `sphinx_config`, `myst_settings` | conf.toml as the `sphinx` and `myst` readers' settings |
 
 Reports: `build.reader` (problem), `build.read`, `build.object`, `host.utf8`, `host.io`,
 plugin codes, every reader and autodoc code (`autodoc.*` with Sphinx's categories
 `autodoc` / `autodoc.import_object`, `odin.autodoc.*`, `autodoc.paths`,
 `odin.autodoc.paths`), `inheritance.class`, `inheritance.limit`, `viewcode.source`,
-`viewcode.limit`, `rust.autodoc.*` and `odin.autoapi.clash` /
+`viewcode.limit`, `napoleon.*`, `autosummary.*`, `apidoc.*`, `coverage.*`, `rust.autodoc.*` and `odin.autoapi.clash` /
 `rust.autoapi.clash` from `api_sources`, `build.object.stale`.
 
 ## Design notes
@@ -92,3 +93,11 @@ plugin codes, every reader and autodoc code (`autodoc.*` with Sphinx's categorie
   `None` otherwise).
 - Odin packages are listed with owned memory, outside the budget, and the collector
   builds its anchor table in one call (`build_anchors` cannot fail).
+- **Generated Python pages.** apidoc pages and autosummary stub pages are generated
+  documents made before reading, from Sphinx's own templates (rendered by gd-jinja; a
+  project's `templates_path` overrides the autosummary ones). Nothing is written into
+  the source folder, so `autosummary_generate_overwrite` has nothing to do. Stub pages
+  are scanned for autosummary directives of their own, so `:recursive:` walks a package.
+- **C coverage patterns** need their first group's text, and gd-conf's `Pattern` only
+  answers whether a name matches; `coverage_c.rs` splits a pattern at its first group
+  and finds the group's span with three whole-string matches.

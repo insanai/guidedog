@@ -15,6 +15,7 @@ use std::time::{Duration, Instant};
 use gd_git::{Commit, Id, Kind, Person};
 use gd_plugins::{EXIT_ACCEPTED, EXIT_UNKNOWN, Outcome, Plan, Problem, State};
 
+use crate::client::sleep_cancellable;
 use crate::config::Config;
 use crate::github::{BuildState, pages_build, pages_site};
 use crate::problem::problem;
@@ -134,7 +135,7 @@ impl Session {
                 problem: Some(no_site(c)),
             };
         }
-        self.deployment(&done, self.wait())
+        self.deployment(&done, self.config.wait_for(self.wait_seconds))
     }
 
     /// GitHub accepted the commit. A local disk failure cannot turn that into a claim
@@ -220,16 +221,6 @@ impl Session {
         .exit(EXIT_UNKNOWN)
     }
 
-    /// How long publish waits for the deployment: the run's choice, or the
-    /// configuration's when the run leaves it 0; below 0, not at all.
-    fn wait(&self) -> u64 {
-        match self.wait_seconds {
-            w if w < 0 => 0,
-            0 => u64::from(self.config.wait_seconds),
-            w => w as u64,
-        }
-    }
-
     /// Waits up to `wait` seconds for GitHub Pages to deploy the commit `j` moved the
     /// branch to: `Live` once it is built, `Failed` if its build failed, and otherwise
     /// `Pending` (a build is under way) or `Accepted` (none is listed, or the token may
@@ -262,7 +253,9 @@ impl Session {
                     _ => r.state = State::Pending,
                 },
             }
-            if Instant::now() >= deadline || !self.pause(pause.min(deadline - Instant::now())) {
+            if Instant::now() >= deadline
+                || !sleep_cancellable(&self.client.cancel, pause.min(deadline - Instant::now()))
+            {
                 break;
             }
             pause = (pause * 2).min(Duration::from_secs(15));
@@ -276,18 +269,6 @@ impl Session {
         )
         .exit(EXIT_ACCEPTED));
         r
-    }
-
-    /// Sleeps for `d` in short steps; `false` when cancelled.
-    fn pause(&self, d: Duration) -> bool {
-        let end = Instant::now() + d;
-        while Instant::now() < end {
-            if self.client.is_cancelled() {
-                return false;
-            }
-            std::thread::sleep((end - Instant::now()).min(Duration::from_millis(100)));
-        }
-        !self.client.is_cancelled()
     }
 
     /// Reads the deployment of the last publication (`operation` empty) or of the commit

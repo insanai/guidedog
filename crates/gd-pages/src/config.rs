@@ -74,6 +74,16 @@ pub struct Config {
 }
 
 impl Config {
+    /// How long publish waits for the deployment, in seconds: `run_wait` (the run's
+    /// choice), or this configuration's when the run leaves it 0; below 0, not at all.
+    pub(crate) fn wait_for(&self, run_wait: i64) -> u64 {
+        match run_wait {
+            w if w < 0 => 0,
+            0 => u64::from(self.wait_seconds),
+            w => w.unsigned_abs(),
+        }
+    }
+
     /// `OWNER/REPO`, as the configuration names the repository.
     pub fn repository(&self) -> String {
         format!("{}/{}", self.owner, self.repo)

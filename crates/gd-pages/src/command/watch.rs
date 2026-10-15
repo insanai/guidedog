@@ -12,6 +12,7 @@ use super::Context;
 use super::display::Console;
 use super::publish::publish_once;
 use crate::build_dir;
+use crate::client::sleep_cancellable;
 use crate::config::SiteSource;
 use crate::config::{Config, read_config};
 
@@ -115,7 +116,7 @@ fn publish_round(ctx: &Context<'_>, console: &mut Console<'_>) -> Round {
         if round == Round::Network && attempt < 5 {
             let pause = Duration::from_secs(2 << attempt);
             console.say(&format!("Trying again in {} seconds...", pause.as_secs()));
-            if !sleep(ctx, pause) {
+            if !sleep_cancellable(ctx.cancel, pause) {
                 return Round::Cancelled;
             }
             continue;
@@ -143,7 +144,7 @@ fn round(ctx: &Context<'_>, console: &mut Console<'_>) -> Round {
 fn wait_for_change(ctx: &Context<'_>, folder: &Path, stamp: u64, c: &Config) -> Option<u64> {
     let mut current = stamp;
     while current == stamp {
-        if !sleep(ctx, Duration::from_millis(500)) {
+        if !sleep_cancellable(ctx.cancel, Duration::from_millis(500)) {
             return None;
         }
         current = source_stamp(folder);
@@ -153,7 +154,7 @@ fn wait_for_change(ctx: &Context<'_>, folder: &Path, stamp: u64, c: &Config) -> 
     let first = Instant::now();
     let mut quiet = Instant::now();
     loop {
-        if !sleep(ctx, debounce.min(Duration::from_millis(250))) {
+        if !sleep_cancellable(ctx.cancel, debounce.min(Duration::from_millis(250))) {
             return None;
         }
         let next = source_stamp(folder);
@@ -165,18 +166,6 @@ fn wait_for_change(ctx: &Context<'_>, folder: &Path, stamp: u64, c: &Config) -> 
             return Some(current);
         }
     }
-}
-
-/// Sleeps for `d` in short steps; `false` when cancelled.
-fn sleep(ctx: &Context<'_>, d: Duration) -> bool {
-    let end = Instant::now() + d;
-    while Instant::now() < end {
-        if ctx.cancel.is_cancelled() {
-            return false;
-        }
-        std::thread::sleep((end - Instant::now()).min(Duration::from_millis(100)));
-    }
-    !ctx.cancel.is_cancelled()
 }
 
 /// Sums what can change in `folder`: every file's path, size, and time, except build

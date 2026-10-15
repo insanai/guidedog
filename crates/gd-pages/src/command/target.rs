@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 use gd_plugins::Problem;
 
-use super::display::{Console, confirm, not_confirmed};
+use super::display::{Console, confirm};
 use super::publish::{guidedog_missing, guidedog_version};
 use super::{Context, usage};
 use crate::config::{
@@ -12,8 +12,12 @@ use crate::config::{
 };
 use crate::credential::Secret;
 use crate::github::Site;
-use crate::problem::problem;
+use crate::problem::{not_confirmed, problem};
 use crate::target::{Review, review_lines, review_target, site_lines};
+
+/// How a question this command asks is confirmed.
+const ANSWER_OR_YES: &str = "Run the command in a terminal and answer y, or add --yes once you \
+                             have checked what it shows.";
 
 /// Writes a `pages.toml`; it changes nothing at GitHub.
 pub(crate) fn init(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
@@ -115,7 +119,7 @@ pub(crate) fn bind(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
         );
     }
     if !confirm(ctx.o, "Let this machine publish there with this account?") {
-        return console.report(&not_confirmed("binding the target"));
+        return console.report(&not_confirmed("binding the target", ANSWER_OR_YES));
     }
     let bound =
         ctx.settings.state().and_then(|s| crate::bind(&s, &c, &c.profile, &r, ctx.o.adopt));
@@ -208,7 +212,7 @@ pub(crate) fn setup(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
         r.repository.full_name, c.branch
     );
     if !confirm(ctx.o, &question) {
-        return console.report(&not_confirmed("changing the Pages source"));
+        return console.report(&not_confirmed("changing the Pages source", ANSWER_OR_YES));
     }
     if let Err(p) = crate::setup(&client, &c, &r.site) {
         return console.report(&p);

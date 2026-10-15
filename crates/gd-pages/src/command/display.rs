@@ -3,11 +3,12 @@
 
 use std::io::{IsTerminal, Write};
 
-use gd_json::{Object, Value};
-use gd_plugins::{ChangeKind, Outcome, Plan, Problem, State};
+use gd_json::Value;
+use gd_plugins::{Outcome, Plan, Problem, State};
 use gd_report::{Style, escape_terminal};
 
 use super::Options;
+use crate::target::short;
 
 const GREEN: &str = "32";
 
@@ -37,9 +38,9 @@ fn styled(text: &str, code: &str, color: bool) -> String {
     if color { format!("\x1b[{code}m{text}\x1b[0m") } else { text.to_string() }
 }
 
-/// The first 12 characters of an ID.
-pub(crate) fn short(id: &str) -> &str {
-    id.get(..12).unwrap_or(id)
+/// A JSON object of `fields`, in their order.
+fn object<const N: usize>(fields: [(&str, Value); N]) -> Value {
+    Value::Object(fields.into_iter().map(|(key, value)| (key.to_string(), value)).collect())
 }
 
 impl<'a> Console<'a> {
@@ -78,13 +79,15 @@ impl<'a> Console<'a> {
         }
     }
 
+    /// Writes `value` as one JSON line on standard output.
+    fn json_line(&mut self, value: Value) {
+        let _ = writeln!(self.out, "{}", gd_json::to_string(&value));
+    }
+
     /// Confirms a finished step on standard output.
     pub(crate) fn success(&mut self, message: &str) {
         if self.json {
-            let mut o = Object::new();
-            o.insert("status".into(), "ok".into());
-            o.insert("message".into(), message.into());
-            let _ = writeln!(self.out, "{}", gd_json::to_string(&Value::Object(o)));
+            self.json_line(object([("status", "ok".into()), ("message", message.into())]));
             return;
         }
         let mark = styled(gd_report::terminal_symbols().check, GREEN, self.color_out);
@@ -103,50 +106,21 @@ impl<'a> Console<'a> {
     pub(crate) fn show_plan(&mut self, plan: &Plan, verbose: bool) {
         if self.json {
             let changes = plan.changes.iter().map(|c| {
-                let mut o = Object::new();
-                o.insert("path".into(), c.path.as_str().into());
-                o.insert("kind".into(), c.kind.name().into());
-                Value::Object(o)
+                object([("path", c.path.as_str().into()), ("kind", c.kind.name().into())])
             });
-            let mut o = Object::new();
-            o.insert("target".into(), plan.target.as_str().into());
-            o.insert("baseline".into(), plan.baseline.as_str().into());
-            o.insert("summary".into(), plan.summary.as_str().into());
-            o.insert("generation".into(), plan.generation_hex().into());
-            o.insert("unchanged".into(), plan.unchanged.into());
-            o.insert("changes".into(), Value::Array(changes.collect()));
-            let _ = writeln!(self.out, "{}", gd_json::to_string(&Value::Object(o)));
+            self.json_line(object([
+                ("target", plan.target.as_str().into()),
+                ("baseline", plan.baseline.as_str().into()),
+                ("summary", plan.summary.as_str().into()),
+                ("generation", plan.generation_hex().into()),
+                ("unchanged", plan.unchanged.into()),
+                ("changes", Value::Array(changes.collect())),
+            ]));
             return;
         }
-        let _ = writeln!(self.out, "\n  {}", escape_terminal(&plan.summary));
-        if plan.unchanged {
-            let _ =
-                writeln!(self.out, "  The branch already holds this site: nothing to publish.\n");
-            return;
-        }
-        let count = |k: ChangeKind| plan.changes.iter().filter(|c| c.kind == k).count();
-        let _ = writeln!(
-            self.out,
-            "  {} added, {} changed, {} removed",
-            count(ChangeKind::Added),
-            count(ChangeKind::Changed),
-            count(ChangeKind::Removed)
-        );
-        for (i, c) in plan.changes.iter().enumerate() {
-            if i == 20 && !verbose {
-                let _ = writeln!(
-                    self.out,
-                    "    ... and {} more (--verbose lists them all)",
-                    plan.changes.len() - 20
-                );
-                break;
-            }
-            let verb = match c.kind {
-                ChangeKind::Added => "add",
-                ChangeKind::Changed => "change",
-                ChangeKind::Removed => "remove",
-            };
-            let _ = writeln!(self.out, "    {verb:<6} {}", escape_terminal(&c.path));
+        let _ = writeln!(self.out);
+        for line in crate::guide::plan_lines(plan, verbose) {
+            let _ = writeln!(self.out, "  {}", escape_terminal(&line));
         }
         let _ = writeln!(self.out);
     }
@@ -155,16 +129,16 @@ impl<'a> Console<'a> {
     pub(crate) fn show_result(&mut self, r: &Outcome) -> i32 {
         let status = r.exit_status();
         if self.json {
-            let mut o = Object::new();
-            o.insert("state".into(), r.state.name().into());
-            o.insert("operation".into(), r.operation.as_str().into());
-            o.insert("generation".into(), r.generation.as_str().into());
-            o.insert("url".into(), r.url.as_str().into());
             let problem = r.problem.as_ref().map_or(Value::Null, |p| {
                 gd_json::parse(&gd_report::render_json(&p.report())).unwrap_or(Value::Null)
             });
-            o.insert("problem".into(), problem);
-            let _ = writeln!(self.out, "{}", gd_json::to_string(&Value::Object(o)));
+            self.json_line(object([
+                ("state", r.state.name().into()),
+                ("operation", r.operation.as_str().into()),
+                ("generation", r.generation.as_str().into()),
+                ("url", r.url.as_str().into()),
+                ("problem", problem),
+            ]));
             return status;
         }
         match r.state {
@@ -212,18 +186,6 @@ pub(crate) fn confirm(o: &Options, question: &str) -> bool {
         return false;
     }
     matches!(answer.trim().to_lowercase().as_str(), "y" | "yes")
-}
-
-/// `pages.unconfirmed`: the user did not confirm `what`.
-pub(crate) fn not_confirmed(what: &str) -> Problem {
-    crate::problem::problem(
-        "pages.unconfirmed",
-        "Not confirmed",
-        what,
-        &format!("Nothing was changed: {what} needs your confirmation."),
-        "Run the command in a terminal and answer y, or add --yes once you have checked what \
-         it shows.",
-    )
 }
 
 /// The guided publish's questions on the terminal; its lines go to standard error.

@@ -51,3 +51,14 @@ pub(crate) fn token_problem() -> Problem {
     )
     .exit(2)
 }
+
+/// `pages.unconfirmed`: the user did not confirm `what`; `hint` says how to.
+pub(crate) fn not_confirmed(what: &str, hint: &str) -> Problem {
+    problem(
+        "pages.unconfirmed",
+        "Not confirmed",
+        what,
+        &format!("Nothing was changed: {what} needs your confirmation."),
+        hint,
+    )
+}

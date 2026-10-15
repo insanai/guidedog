@@ -27,7 +27,7 @@ use crate::credential::{Credential, Secret};
 use crate::device::{CLIENT_ID, start_device, wait_device};
 use crate::github::{Site, pages_site};
 use crate::infer::{find_project, gh_token, origin_url, parse_github_remote};
-use crate::problem::problem;
+use crate::problem::{not_confirmed, problem};
 use crate::push::branch_head;
 use crate::target::{bind, remember_token, review_lines, review_target, setup, short};
 use crate::{Client, Pages, Settings, freeze_site, guidedog_program, render_config};
@@ -140,11 +140,8 @@ impl Guide<'_> {
         if !self.o.interactive {
             return Err(needs_person(step, &format!("{question} (not asked: no terminal)"), hint));
         }
-        Err(problem(
-            "pages.unconfirmed",
-            "Not confirmed",
+        Err(not_confirmed(
             step,
-            &format!("Nothing was changed: {step} needs your confirmation."),
             "Run the command again and answer y once you have checked what it shows.",
         ))
     }
@@ -365,11 +362,7 @@ impl Guide<'_> {
         }
         self.ask(
             "setup",
-            &format!(
-                "Make GitHub Pages publish {} from {}, folder /?",
-                config.repository(),
-                config.branch
-            ),
+            &setup_question(config),
             &format!(
                 "Run guidedog-pages setup --config={} --yes, or pass --yes.",
                 config.shown_path()
@@ -413,22 +406,13 @@ impl Guide<'_> {
         session: &mut PublisherSession,
         accepted: Outcome,
     ) -> Result<Outcome, Problem> {
-        let question = format!(
-            "Make GitHub Pages publish {} from {}, folder /?",
-            config.repository(),
-            config.branch
-        );
-        if !self.may(&question) {
+        if !self.may(&setup_question(config)) {
             return Ok(accepted);
         }
         let client = self.client(config)?;
         setup(&client, config, &Site { readable: true, ..Site::default() })?;
         self.prompt.show(&format!("GitHub Pages now publishes from {}.", config.branch));
-        let wait = match self.o.wait_seconds {
-            w if w < 0 => 0,
-            0 => u64::from(config.wait_seconds),
-            w => w.unsigned_abs(),
-        };
+        let wait = config.wait_for(self.o.wait_seconds);
         Ok(self.wait_live(session, &accepted.operation, Duration::from_secs(wait)))
     }
 
@@ -450,6 +434,11 @@ impl Guide<'_> {
             pause = (pause * 2).min(Duration::from_secs(15));
         }
     }
+}
+
+/// The question before Pages is set up to publish the configured branch.
+fn setup_question(config: &Config) -> String {
+    format!("Make GitHub Pages publish {} from {}, folder /?", config.repository(), config.branch)
 }
 
 /// `path` relative to `base` when it is inside it, as a configuration writes it.

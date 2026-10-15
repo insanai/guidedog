@@ -148,20 +148,19 @@ impl State {
 
     /// Adds `profile`, or replaces the profile of its name.
     pub fn save_profile(&self, profile: &Profile) -> Result<(), Problem> {
-        let _guard = self.metadata_lock("profiles")?;
-        let mut text = header(PROFILES_ABOUT);
-        for p in self.profiles()?.iter().filter(|p| p.name != profile.name) {
-            write_profile(&mut text, p);
-        }
-        write_profile(&mut text, profile);
-        self.write("profiles.toml", &text)
+        self.rewrite_profiles(&profile.name, Some(profile))
     }
 
     /// Removes the profile named `name`; nothing happens when there is none.
     pub fn remove_profile(&self, name: &str) -> Result<(), Problem> {
+        self.rewrite_profiles(name, None)
+    }
+
+    /// Rewrites the profiles without the one named `name`, adding `added` at the end.
+    fn rewrite_profiles(&self, name: &str, added: Option<&Profile>) -> Result<(), Problem> {
         let _guard = self.metadata_lock("profiles")?;
         let mut text = header(PROFILES_ABOUT);
-        for p in self.profiles()?.iter().filter(|p| p.name != name) {
+        for p in self.profiles()?.iter().filter(|p| p.name != name).chain(added) {
             write_profile(&mut text, p);
         }
         self.write("profiles.toml", &text)
@@ -186,34 +185,37 @@ impl State {
 
     /// Adds `binding`, replacing the binding of its repository (by ID or name) and branch.
     pub fn save_binding(&self, binding: &Binding) -> Result<(), Problem> {
-        let _guard = self.metadata_lock("bindings")?;
-        let mut text = header(BINDINGS_ABOUT);
-        for b in self.bindings()? {
+        let replaced = |b: &Binding| {
             let same_id = b.repository_id == binding.repository_id;
             let same_name = b.repository.eq_ignore_ascii_case(&binding.repository);
-            if (same_id || same_name) && b.branch == binding.branch {
-                continue;
-            }
-            write_binding(&mut text, &b);
-        }
-        write_binding(&mut text, binding);
-        self.write("bindings.toml", &text)
+            (same_id || same_name) && b.branch == binding.branch
+        };
+        self.rewrite_bindings(replaced, Some(binding)).map(|_| ())
     }
 
     /// Removes the binding of `repository` and `branch`; `false` when there was none.
     pub fn remove_binding(&self, repository: &str, branch: &str) -> Result<bool, Problem> {
+        let removed =
+            |b: &Binding| b.repository.eq_ignore_ascii_case(repository) && b.branch == branch;
+        self.rewrite_bindings(removed, None)
+    }
+
+    /// Rewrites the bindings without those `dropped` matches, adding `added` at the end;
+    /// `true` when one was dropped.
+    fn rewrite_bindings(
+        &self,
+        dropped: impl Fn(&Binding) -> bool,
+        added: Option<&Binding>,
+    ) -> Result<bool, Problem> {
         let _guard = self.metadata_lock("bindings")?;
         let mut text = header(BINDINGS_ABOUT);
-        let mut removed = false;
-        for b in self.bindings()? {
-            if b.repository.eq_ignore_ascii_case(repository) && b.branch == branch {
-                removed = true;
-                continue;
-            }
-            write_binding(&mut text, &b);
+        let (dropped, kept): (Vec<Binding>, Vec<Binding>) =
+            self.bindings()?.into_iter().partition(|b| dropped(b));
+        for b in kept.iter().chain(added) {
+            write_binding(&mut text, b);
         }
         self.write("bindings.toml", &text)?;
-        Ok(removed)
+        Ok(!dropped.is_empty())
     }
 
     /// The journal of the target `key`, if a publication is unsettled. A journal that
@@ -444,25 +446,7 @@ fn damaged(path: &str, line: usize, message: &str) -> Problem {
 
 /// Today's date, `YYYY-MM-DD`, in UTC.
 pub fn today() -> String {
-    let seconds = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .map_or(0, |d| d.as_secs());
-    let (y, m, d) = civil_date((seconds / 86_400) as i64);
-    format!("{y:04}-{m:02}-{d:02}")
-}
-
-/// The proleptic Gregorian date of `days` since 1970-01-01 (Howard Hinnant's algorithm).
-fn civil_date(days: i64) -> (i64, u32, u32) {
-    let z = days + 719_468;
-    let era = z.div_euclid(146_097);
-    let doe = z.rem_euclid(146_097);
-    let yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365;
-    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
-    let mp = (5 * doy + 2) / 153;
-    let day = (doy - (153 * mp + 2) / 5 + 1) as u32;
-    let month = if mp < 10 { mp + 3 } else { mp - 9 } as u32;
-    let year = yoe + era * 400 + i64::from(month <= 2);
-    (year, month, day)
+    gd_clock::now().utc().date.to_string()
 }
 
 #[cfg(test)]
@@ -471,10 +455,7 @@ mod tests {
     use crate::testdir::TestDir;
 
     #[test]
-    fn dates_are_civil() {
-        assert_eq!(civil_date(0), (1970, 1, 1));
-        assert_eq!(civil_date(19_782), (2024, 2, 29));
-        assert_eq!(civil_date(-1), (1969, 12, 31));
+    fn today_is_a_date() {
         assert_eq!(today().len(), 10);
     }
 

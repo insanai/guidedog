@@ -42,8 +42,6 @@ pub struct Repository {
     pub private: bool,
     /// Whether the token's account may push.
     pub can_push: bool,
-    /// Whether the token's account administers it.
-    pub can_admin: bool,
 }
 
 /// A repository's GitHub Pages settings, as far as the token may read them.
@@ -59,12 +57,8 @@ pub struct Site {
     pub branch: String,
     /// `/` or `/docs`.
     pub path: String,
-    /// Where GitHub serves it.
-    pub html_url: String,
     /// A custom domain; may be empty.
     pub cname: String,
-    /// Whether the site is public.
-    pub public: bool,
 }
 
 impl Site {
@@ -79,8 +73,6 @@ impl Site {
 pub struct Build {
     /// `queued`, `building`, `built`, or `errored`.
     pub status: String,
-    /// The commit built.
-    pub commit: String,
     /// The build's error message; may be empty.
     pub error: String,
 }
@@ -140,7 +132,6 @@ pub fn read_repository(c: &Client, owner: &str, repo: &str) -> Result<Repository
         default_branch: text(&v, "default_branch"),
         private: flag(&v, "private"),
         can_push: flag(&perms, "push"),
-        can_admin: flag(&perms, "admin"),
     };
     if r.id <= 0 || r.full_name.is_empty() {
         return Err(problem(
@@ -173,9 +164,7 @@ pub fn pages_site(c: &Client, owner: &str, repo: &str) -> Result<Site, Problem> 
         build_type: text(&v, "build_type"),
         branch: text(&source, "branch"),
         path: text(&source, "path"),
-        html_url: text(&v, "html_url"),
         cname: text(&v, "cname"),
-        public: flag(&v, "public"),
     })
 }
 
@@ -227,7 +216,7 @@ pub fn pages_build(
         return Ok(BuildState::NotListed);
     };
     let error = b.get("error").map(|e| text(e, "message")).unwrap_or_default();
-    Ok(BuildState::Listed(Build { status: text(b, "status"), commit: commit.to_string(), error }))
+    Ok(BuildState::Listed(Build { status: text(b, "status"), error }))
 }
 
 /// Reads the tree and message of the commit `id`.

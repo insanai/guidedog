@@ -3,7 +3,7 @@
 
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 use gd_fetch::{ErrorKind, Header, Method, Request, Response};
 use gd_json::Value;
@@ -324,6 +324,18 @@ fn wait_text(r: &Response) -> String {
         }
     }
     String::new()
+}
+
+/// Sleeps for `d` in short steps; `false` when `cancel` reports cancellation.
+pub(crate) fn sleep_cancellable(cancel: &Cancel, d: Duration) -> bool {
+    let end = Instant::now() + d;
+    while Instant::now() < end {
+        if cancel.is_cancelled() {
+            return false;
+        }
+        std::thread::sleep((end - Instant::now()).min(Duration::from_millis(100)));
+    }
+    !cancel.is_cancelled()
 }
 
 /// `bytes` in standard base64, with padding.

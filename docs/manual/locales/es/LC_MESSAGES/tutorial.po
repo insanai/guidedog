@@ -35,33 +35,24 @@ msgid "1. Start with a real project"
 msgstr "1. Partir de un proyecto real"
 
 #: ../../tutorial/a-custom-theme.rst:11
-#, fuzzy
-#| msgid ""
-#| "Use Guidedog 0.6.2 or newer. Run this from the directory that will "
-#| "contain ``orbit``:"
 msgid ""
 "Use Guidedog 0.7.0 or newer. Run this from the directory that will "
 "contain ``orbit``:"
 msgstr ""
-"Use Guidedog 0.6.2 o posterior y ejecute esto desde el directorio que "
-"contendrá ``orbit``:"
+"Necesitamos Guidedog 0.7.0 o posterior. Ejecutamos esto desde el "
+"directorio que contendrá ``orbit``:"
 
 #: ../../tutorial/a-custom-theme.rst:17
-#, fuzzy
-#| msgid ""
-#| "Rename the generated ``orbit/_templates/book.typ`` to "
-#| "``base-book.typ`` in the same directory. Keep this file: it supplies "
-#| "the tested page layout, cover, running heads, contents, code styles "
-#| "and optimized paragraph breaking."
 msgid ""
 "Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
 "in the same directory. We keep this file: it supplies the tested page "
 "layout, cover, running heads, contents, code styles and optimized "
 "paragraph breaking."
 msgstr ""
-"Renombre ``orbit/_templates/book.typ`` como ``base-book.typ`` en la misma "
-"carpeta. Consérvelo: aporta el diseño probado, portada, cabeceras, "
-"índice, código y composición optimizada de párrafos."
+"Renombramos el ``orbit/_templates/book.typ`` generado a ``base-book.typ`` "
+"en el mismo directorio. Conservamos este archivo: aporta la maquetación "
+"de página ya probada, la portada, las cabeceras, el índice, los estilos "
+"de código y la división optimizada de párrafos."
 
 #: ../../tutorial/a-custom-theme.rst:21
 msgid ""
@@ -72,12 +63,12 @@ msgid ""
 "in ``orbit`` and the third in ``orbit/chapters``. The finished project "
 "will have these files:"
 msgstr ""
-"Descargue :download:`conf.toml <../_static/repository/theme/conf.toml>`, "
-":download:`index.rst <../_static/repository/theme/index.rst>` y "
-":download:`reading.rst "
-"<../_static/repository/theme/chapters/reading.rst>`. Guarde los dos "
-"primeros en ``orbit`` y el tercero en ``orbit/chapters``. La estructura "
-"final será:"
+"Descargamos :download:`conf.toml "
+"<../_static/repository/theme/conf.toml>`, :download:`index.rst "
+"<../_static/repository/theme/index.rst>` y :download:`reading.rst "
+"<../_static/repository/theme/chapters/reading.rst>`. Guardamos los dos "
+"primeros en ``orbit`` y el tercero en ``orbit/chapters``. El proyecto "
+"terminado tendrá estos archivos:"
 
 #: ../../tutorial/a-custom-theme.rst:45
 msgid "2. Set the contract"
@@ -99,21 +90,16 @@ msgid "orbit/conf.toml"
 msgstr "orbit/conf.toml"
 
 #: ../../tutorial/a-custom-theme.rst:57
-#, fuzzy
-#| msgid ""
-#| "All paths in this tutorial are project files. HTML templates are found "
-#| "through ``templates_path``. The PDF entry point is always "
-#| "``_templates/book.typ`` under the source directory; changing "
-#| "``templates_path`` does not move it."
 msgid ""
 "All paths in this tutorial are project files. HTML templates are found "
 "through ``templates_path``. The PDF entry point is always "
 "``_templates/book.typ`` under the source directory. Changing "
 "``templates_path`` does not move it."
 msgstr ""
-"Todas las rutas son archivos del proyecto. HTML usa ``templates_path``. "
-"La entrada PDF siempre es ``_templates/book.typ`` bajo las fuentes: "
-"cambiar esa opción no la mueve."
+"Todas las rutas de este tutorial son archivos del proyecto. Las "
+"plantillas HTML se buscan mediante ``templates_path``. El punto de "
+"entrada del PDF es siempre ``_templates/book.typ`` dentro del directorio "
+"de fuentes. Cambiar ``templates_path`` no lo mueve."
 
 #: ../../tutorial/a-custom-theme.rst:61
 msgid "3. Extend the HTML layout"
@@ -125,9 +111,10 @@ msgid ""
 "<../_static/repository/theme/_templates/layout.html>` as "
 "``orbit/_templates/layout.html``. Replace the generated file completely:"
 msgstr ""
-"Guarde :download:`layout.html "
+"Guardamos :download:`layout.html "
 "<../_static/repository/theme/_templates/layout.html>` como "
-"``orbit/_templates/layout.html`` y sustituya todo el archivo generado:"
+"``orbit/_templates/layout.html``, sustituyendo por completo el archivo "
+"generado:"
 
 #: ../../tutorial/a-custom-theme.rst:69
 msgid "orbit/_templates/layout.html"
@@ -153,10 +140,10 @@ msgid ""
 "cannot express the required operation. Ordinary layout changes need no "
 "native code."
 msgstr ""
-"El tema cambia la presentación. Un plugin transforma fuentes, HTML "
-"completo o recursos generados. Consulte :doc:`../plugins` cuando la "
-"plantilla no pueda expresar la operación. El diseño habitual no necesita "
-"código nativo."
+"Un tema cambia la presentación. Un plugin de compilación cambia el texto "
+"fuente, el HTML completo o los recursos generados. Recurrimos a "
+":doc:`../plugins` cuando una plantilla no puede expresar la operación "
+"necesaria. Los cambios de diseño habituales no necesitan código nativo."
 
 #: ../../tutorial/a-custom-theme.rst:80
 msgid "4. Give repeated markup one home"
@@ -171,12 +158,12 @@ msgid ""
 "<../_static/repository/theme/_templates/partials/edition.html>` at the "
 "matching paths:"
 msgstr ""
-"Cree ``orbit/_templates/macros`` y ``orbit/_templates/partials``. Guarde "
-":download:`ui.html "
+"Creamos ``orbit/_templates/macros`` y ``orbit/_templates/partials``. "
+"Guardamos :download:`ui.html "
 "<../_static/repository/theme/_templates/macros/ui.html>` y "
 ":download:`edition.html "
-"<../_static/repository/theme/_templates/partials/edition.html>` en sus "
-"rutas:"
+"<../_static/repository/theme/_templates/partials/edition.html>` en las "
+"rutas correspondientes:"
 
 #: ../../tutorial/a-custom-theme.rst:90
 msgid "orbit/_templates/macros/ui.html"
@@ -208,7 +195,7 @@ msgid ""
 "<../_static/repository/theme/_static/theme.css>` as "
 "``orbit/_static/theme.css``:"
 msgstr ""
-"Guarde :download:`theme.css "
+"Guardamos :download:`theme.css "
 "<../_static/repository/theme/_static/theme.css>` como "
 "``orbit/_static/theme.css``:"
 
@@ -224,27 +211,23 @@ msgid ""
 "JavaScript is needed. Avoid a fixed ink color on a background whose theme "
 "can change."
 msgstr ""
-"El modo inicial es claro. El control existente permite claro, oscuro o "
-"sistema y recuerda la elección. Las reglas explícitas y del sistema "
-"comparten variables; tipografía y espaciado también son comunes. No hace "
-"falta más JavaScript. Evite tinta fija sobre un fondo que cambia."
+"El tema empieza en modo claro. El control existente permite elegir claro, "
+"oscuro o sistema, y guarda la elección. Las reglas oscuras explícitas y "
+"la media query del sistema usan los mismos tokens. La tipografía y el "
+"espaciado se comparten. No hace falta JavaScript nuevo. Evitamos un color "
+"de tinta fijo sobre un fondo cuyo tema puede cambiar."
 
 #: ../../tutorial/a-custom-theme.rst:116
-#, fuzzy
-#| msgid ""
-#| "Browser hyphenation follows the page language. It is not Typst's "
-#| "paragraph optimizer. The manual's optional English web optimizer is "
-#| "described separately in :doc:`../topics/typography`; this example uses "
-#| "native browser layout."
 msgid ""
 "Browser hyphenation follows the page language. It is not Typst's "
 "paragraph optimizer. The manual's optional English web optimizer is "
 "described separately in :doc:`../topics/typography`. This example uses "
 "the browser's own layout."
 msgstr ""
-"La división silábica del navegador sigue el idioma, pero no es el "
-"optimizador de Typst. La mejora inglesa opcional del manual se explica en "
-":doc:`../topics/typography`; aquí usamos composición nativa."
+"La división silábica del navegador sigue el idioma de la página. No es el "
+"optimizador de párrafos de Typst. El optimizador web opcional del manual, "
+"para inglés, se describe aparte en :doc:`../topics/typography`. Este "
+"ejemplo usa la composición propia del navegador."
 
 #: ../../tutorial/a-custom-theme.rst:120
 msgid ""
@@ -269,11 +252,11 @@ msgid ""
 "``orbit/_templates``. These are new files; keep ``base-book.typ`` beside "
 "them."
 msgstr ""
-"Guarde :download:`palette.typ "
+"Guardamos :download:`palette.typ "
 "<../_static/repository/theme/_templates/palette.typ>` y "
 ":download:`book.typ <../_static/repository/theme/_templates/book.typ>` en "
-"``orbit/_templates``. Son archivos nuevos; conserve ``base-book.typ`` al "
-"lado."
+"``orbit/_templates``. Son archivos nuevos; ``base-book.typ`` se queda a "
+"su lado."
 
 #: ../../tutorial/a-custom-theme.rst:134
 msgid "orbit/_templates/palette.typ"
@@ -284,13 +267,6 @@ msgid "orbit/_templates/book.typ"
 msgstr "orbit/_templates/book.typ"
 
 #: ../../tutorial/a-custom-theme.rst:140
-#, fuzzy
-#| msgid ""
-#| "The host calls ``book`` with metadata and the chapter content. The "
-#| "wrapper forwards those values to the generated base and supplies our "
-#| "palette. Passing ``body`` into the styled function keeps its rules in "
-#| "scope. The web stylesheet does not affect PDF; the Typst template does "
-#| "not affect HTML."
 msgid ""
 "The host calls ``book`` with metadata and the chapter content. The "
 "wrapper forwards those values to the generated base and supplies our "
@@ -298,9 +274,11 @@ msgid ""
 "scope. The web stylesheet does not affect PDF, and the Typst template "
 "does not affect HTML."
 msgstr ""
-"El host pasa metadatos y capítulos a ``book``. El envoltorio los reenvía "
-"a la base con nuestra paleta. Al pasar ``body`` a la función con estilo, "
-"las reglas abarcan el contenido. El CSS no afecta al PDF ni Typst al HTML."
+"El host llama a ``book`` con los metadatos y el contenido de los "
+"capítulos. El envoltorio reenvía esos valores a la base generada y aporta "
+"nuestra paleta. Al pasar ``body`` a la función con estilo, sus reglas se "
+"aplican al contenido. La hoja de estilos web no afecta al PDF, y la "
+"plantilla de Typst no afecta al HTML."
 
 #: ../../tutorial/a-custom-theme.rst:145
 msgid ""
@@ -320,7 +298,7 @@ msgstr "7. Construir y revisar ambos formatos"
 
 #: ../../tutorial/a-custom-theme.rst:152
 msgid "Run from the same parent directory as step 1:"
-msgstr "Ejecute desde el mismo directorio padre del paso 1:"
+msgstr "Ejecutamos desde el mismo directorio padre que en el paso 1:"
 
 #: ../../tutorial/a-custom-theme.rst:162
 msgid ""
@@ -330,10 +308,12 @@ msgid ""
 "the footer partial, save, then refresh: the preview rebuilds its template "
 "dependencies."
 msgstr ""
-"Abra la URL de ``serve``. Revise el capítulo y la búsqueda, no solo la "
-"portada. Pruebe modos, ventanas estrechas y navegación con teclado. Edite "
-"el parcial del pie, guarde y recargue: el servidor reconstruye sus "
-"dependencias."
+"Abrimos la URL que muestra ``serve``. Revisamos el capítulo y la página "
+"de búsqueda generada, no solo la portada. Probamos los modos claro, "
+"oscuro y sistema. Cambiamos el tamaño de la ventana. Usamos el teclado "
+"para llegar a la navegación y a la búsqueda. Cambiamos el parcial del "
+"pie, guardamos y recargamos: la vista previa recompila las dependencias "
+"de sus plantillas."
 
 #: ../../tutorial/a-custom-theme.rst:167
 msgid ""
@@ -344,12 +324,13 @@ msgid ""
 "are below ``_build/html``, ``_build/dirhtml`` and ``_build/singlehtml``. "
 "Stop the server with ``Ctrl+C``."
 msgstr ""
-"Abra ``orbit/_build/pdf/orbit-notes-en.pdf`` en un lector PDF. Guidedog "
-"añade el sufijo de idioma al nombre configurado. Revise índice, "
-"capítulos, fórmulas, tabla, código y gráfico: sin recortes, huecos "
-"excesivos ni glifos ausentes. Los otros resultados están en "
-"``_build/html``, ``_build/dirhtml`` y ``_build/singlehtml``. Pare el "
-"servidor con ``Ctrl+C``."
+"Abrimos ``orbit/_build/pdf/orbit-notes-en.pdf`` en un lector de PDF. "
+"Guidedog añade el sufijo de idioma al nombre de archivo configurado. "
+"Revisamos el índice, la apertura del capítulo, la ecuación, la tabla, el "
+"código y el diagrama. Buscamos etiquetas cortadas, párrafos con demasiado "
+"espacio y glifos que falten. Las demás salidas están en ``_build/html``, "
+"``_build/dirhtml`` y ``_build/singlehtml``. Detenemos el servidor con "
+"``Ctrl+C``."
 
 #: ../../tutorial/a-custom-theme.rst:174
 msgid "8. Reuse and maintain the theme"
@@ -364,21 +345,14 @@ msgid ""
 "document link to a page that exists in that project. Keep the new "
 "project's metadata and source tree."
 msgstr ""
-"Cree otro proyecto con ``guidedog quickstart`` y copie ``_templates`` y "
-"``_static/theme.css``. Añada ``html_css_files = [\"theme.css\"]``, el "
-"acento y ``edition_label`` a su configuración. Cambie el enlace del pie "
-"por una página existente y conserve los datos y fuentes del proyecto "
-"nuevo."
+"Creamos otro proyecto con ``guidedog quickstart``. Copiamos en él el "
+"directorio ``_templates`` terminado y ``_static/theme.css``. Añadimos a "
+"su configuración ``html_css_files = [\"theme.css\"]``, la opción de "
+"acento y el valor de contexto ``edition_label``. Cambiamos el enlace del "
+"pie a una página que exista en ese proyecto. Conservamos los metadatos y "
+"el árbol de fuentes del proyecto nuevo."
 
 #: ../../tutorial/a-custom-theme.rst:183
-#, fuzzy
-#| msgid ""
-#| "The copied PDF base makes the theme self-contained. When upgrading "
-#| "Guidedog, create a scratch quickstart project and compare its "
-#| "templates with your saved base. Adopt the changes you need, then "
-#| "rebuild every target. The built-in HTML layout can evolve too; small "
-#| "block overrides are easier to maintain than a second complete layout. "
-#| "For every variable and block, see :doc:`../templates`."
 msgid ""
 "The copied PDF base makes the theme self-contained. When we upgrade "
 "Guidedog, we create a scratch quickstart project and compare its "
@@ -387,11 +361,13 @@ msgid ""
 "overrides are easier to maintain than a second complete layout. For every "
 "variable and block, see :doc:`../templates`."
 msgstr ""
-"La base PDF copiada hace el tema autosuficiente. Al actualizar Guidedog, "
-"cree un proyecto de prueba, compare las plantillas, incorpore los cambios "
-"necesarios y reconstruya todos los destinos. El HTML integrado también "
-"evoluciona; mantener pequeños bloques es más sencillo que duplicar el "
-"diseño entero. Véase :doc:`../templates`."
+"La base PDF copiada hace que el tema sea autónomo. Cuando actualizamos "
+"Guidedog, creamos un proyecto de prueba con quickstart y comparamos sus "
+"plantillas con nuestra base guardada. Incorporamos los cambios que "
+"necesitemos y recompilamos todos los formatos. El diseño HTML integrado "
+"también puede cambiar. Unos pocos bloques sobrescritos son más fáciles de "
+"mantener que un segundo diseño completo. Todas las variables y bloques "
+"están en :doc:`../templates`."
 
 #: ../../tutorial/a-custom-theme.rst:189
 msgid ""
@@ -401,44 +377,36 @@ msgid ""
 "``html_css_files``. Read the file, line and correction in the diagnostic "
 "before changing unrelated settings."
 msgstr ""
-"Si falta ``base-book.typ``, complete el renombrado del paso 1. Si falta "
-"la etiqueta, defina ``edition_label`` en ``html_context``. Si falta CSS, "
-"revise ``html_static_path`` y ``html_css_files``. Lea primero el archivo, "
-"la línea y la corrección del diagnóstico."
+"Si la compilación indica que falta ``base-book.typ``, terminamos el "
+"cambio de nombre del paso 1. Si la etiqueta sale vacía, definimos "
+"``edition_label`` en ``html_context``. Si falta el CSS, revisamos tanto "
+"``html_static_path`` como ``html_css_files``. Leemos el archivo, la línea "
+"y la corrección que da el diagnóstico antes de tocar otras opciones."
 
 #: ../../tutorial/a-small-book.rst:1
 msgid "Make a small book"
 msgstr "Crear un libro pequeño"
 
 #: ../../tutorial/a-small-book.rst:4
-#, fuzzy
-#| msgid ""
-#| "A website is an interconnected web of pages that readers explore "
-#| "non-linearly. A book, by contrast, requires a deliberate, sequential "
-#| "reading order with numbered chapters, running headers, and formal "
-#| "front matter."
 msgid ""
 "A website is a web of linked pages. Readers explore it in any order. A "
 "book needs a deliberate reading order, with numbered chapters, running "
 "headers, and front matter."
 msgstr ""
-"En la web se exploran páginas enlazadas. Un libro necesita un orden "
-"deliberado, capítulos numerados, cabeceras y páginas preliminares."
+"Un sitio web es una red de páginas enlazadas. Los lectores lo recorren en "
+"cualquier orden. Un libro necesita un orden de lectura deliberado, con "
+"capítulos numerados, cabeceras y páginas preliminares."
 
 #: ../../tutorial/a-small-book.rst:8
-#, fuzzy
-#| msgid ""
-#| "In Guidedog, the table of contents directive (``toctree``) provides "
-#| "the bridge between both formats. A single ``toctree`` organizes your "
-#| "documents into a hierarchical sidebar tree for the web and a linear "
-#| "chapter progression for the PDF book."
 msgid ""
 "In Guidedog, the table of contents directive (``toctree``) serves both "
 "formats. One ``toctree`` organizes our documents into a sidebar tree for "
 "the web and a sequence of chapters for the PDF book."
 msgstr ""
-"``toctree`` une ambos formatos: organiza la barra lateral y el orden "
-"lineal de los capítulos PDF."
+"En Guidedog, la directiva de tabla de contenidos (``toctree``) sirve para "
+"ambos formatos. Un solo ``toctree`` organiza nuestros documentos como un "
+"árbol en la barra lateral de la web y como una secuencia de capítulos en "
+"el libro PDF."
 
 #: ../../tutorial/a-small-book.rst:14
 msgid ""
@@ -459,42 +427,34 @@ msgid "1. Add a new chapter"
 msgstr "1. Añadir un capítulo"
 
 #: ../../tutorial/a-small-book.rst:38
-#, fuzzy
-#| msgid ""
-#| "In your ``notes`` project, create a new document named "
-#| "``measurement.rst``:"
 msgid ""
 "In our ``notes`` project, we create a new document named "
 "``measurement.rst``:"
-msgstr "Cree ``measurement.rst`` en el proyecto ``notes``:"
+msgstr ""
+"En nuestro proyecto ``notes``, creamos un documento nuevo llamado "
+"``measurement.rst``:"
 
 #: ../../tutorial/a-small-book.rst:41
 msgid "notes/measurement.rst"
 msgstr "notes/measurement.rst"
 
 #: ../../tutorial/a-small-book.rst:64
-#, fuzzy
-#| msgid ""
-#| "Notice the section label ``.. _measurement-units:`` placed directly "
-#| "above the heading. Labels establish cross-reference targets that work "
-#| "identically on the web and in print."
 msgid ""
 "Notice the section label ``.. _measurement-units:`` directly above the "
 "heading. A label makes a cross-reference target. It works the same on the "
 "web and in print."
 msgstr ""
-"La etiqueta ``.. _measurement-units:`` encima del título define un "
-"destino de referencia válido en web y papel."
+"Fijémonos en la etiqueta de sección ``.. _measurement-units:`` justo "
+"encima del título. Una etiqueta crea un destino de referencia cruzada. "
+"Funciona igual en la web y en papel."
 
 #: ../../tutorial/a-small-book.rst:67
 msgid "2. Structure the reading order"
 msgstr "2. Ordenar la lectura"
 
 #: ../../tutorial/a-small-book.rst:70
-#, fuzzy
-#| msgid "Open ``notes/index.rst`` and declare the table of contents:"
 msgid "We open ``notes/index.rst`` and declare the table of contents:"
-msgstr "Abra ``notes/index.rst`` y declare el índice:"
+msgstr "Abrimos ``notes/index.rst`` y declaramos la tabla de contenidos:"
 
 #: ../../tutorial/a-small-book.rst:73
 msgid "notes/index.rst"
@@ -502,29 +462,23 @@ msgstr "notes/index.rst"
 
 #: ../../tutorial/a-small-book.rst:92
 msgid "The toctree options mean this:"
-msgstr ""
+msgstr "Las opciones del toctree significan lo siguiente:"
 
 #: ../../tutorial/a-small-book.rst:94
-#, fuzzy
-#| msgid ""
-#| "``:maxdepth: 2`` sets the depth of nested subheadings displayed in the "
-#| "table of contents."
 msgid ""
 "``:maxdepth: 2`` sets the depth of nested subheadings shown in the table "
 "of contents."
-msgstr "``:maxdepth: 2`` limita la profundidad de títulos del índice."
+msgstr ""
+"``:maxdepth: 2`` fija la profundidad de los subtítulos anidados que "
+"muestra la tabla de contenidos."
 
 #: ../../tutorial/a-small-book.rst:95
-#, fuzzy
-#| msgid ""
-#| "``:numbered:`` activates automatic, hierarchical chapter numbering "
-#| "(for example, \"1. Measurement\" and \"1.1 Units of measurement\")."
 msgid ""
 "``:numbered:`` numbers the chapters and their sections (for example, \"1. "
 "Measurement\" and \"1.1 Units of measurement\")."
 msgstr ""
-"``:numbered:`` activa números jerárquicos como “1. Measurement” y “1.1 "
-"Units of measurement”."
+"``:numbered:`` numera los capítulos y sus secciones (por ejemplo, «1. "
+"Measurement» y «1.1 Units of measurement»)."
 
 #: ../../tutorial/a-small-book.rst:96
 msgid ""
@@ -534,98 +488,74 @@ msgstr "``measurement`` nombra el documento sin ``.rst``."
 
 #: ../../tutorial/a-small-book.rst:98
 msgid "The cross-references work like this:"
-msgstr ""
+msgstr "Las referencias cruzadas funcionan así:"
 
 #: ../../tutorial/a-small-book.rst:100
 msgid "``:doc:`measurement``` links to the chapter by document path."
 msgstr "``:doc:`measurement``` enlaza al capítulo por su ruta."
 
 #: ../../tutorial/a-small-book.rst:101
-#, fuzzy
-#| msgid ""
-#| "``:ref:`measurement-units``` links to the labeled section. PDF uses "
-#| "the section title. A book template can also add the page number "
-#| "through ``page-ref``; see :doc:`a-custom-theme` for a working example."
 msgid ""
 "``:ref:`measurement-units``` links to the labeled section. PDF uses the "
 "section title. A book template can also add the page number through "
 "``page-ref``. See :doc:`a-custom-theme` for a working example."
 msgstr ""
-"``:ref:`measurement-units``` enlaza a la sección etiquetada. PDF muestra "
-"el título; ``page-ref`` puede añadir su página. Véase el ejemplo de "
-":doc:`a-custom-theme`."
+"``:ref:`measurement-units``` enlaza a la sección etiquetada. El PDF usa "
+"el título de la sección. Una plantilla de libro también puede añadir el "
+"número de página mediante ``page-ref``. En :doc:`a-custom-theme` hay un "
+"ejemplo completo."
 
 #: ../../tutorial/a-small-book.rst:105
 msgid "3. Add a diagram with Graphviz"
 msgstr "3. Añadir un gráfico Graphviz"
 
 #: ../../tutorial/a-small-book.rst:108
-#, fuzzy
-#| msgid ""
-#| "Visual diagrams clarify complex relationships. Guidedog embeds the "
-#| "Graphviz engine natively, compiling vector diagrams directly into SVG "
-#| "for web pages and PDF drawings for print without requiring an external "
-#| "browser renderer."
 msgid ""
 "A diagram makes relationships clear. Guidedog links the Graphviz engine "
 "in. It draws vector diagrams as SVG for web pages and as PDF drawings for "
 "print. No external renderer is needed."
 msgstr ""
-"Guidedog integra Graphviz de forma nativa: genera SVG para web y gráficos "
-"vectoriales para papel, sin un navegador externo."
+"Un diagrama deja claras las relaciones. Guidedog lleva enlazado el motor "
+"de Graphviz. Dibuja diagramas vectoriales como SVG para las páginas web y "
+"como dibujos PDF para la impresión. No hace falta ningún renderizador "
+"externo."
 
 #: ../../tutorial/a-small-book.rst:112
-#, fuzzy
-#| msgid "Add a diagram to ``notes/measurement.rst``:"
 msgid "We add a diagram to ``notes/measurement.rst``:"
-msgstr "Añada un gráfico a ``notes/measurement.rst``:"
+msgstr "Añadimos un diagrama a ``notes/measurement.rst``:"
 
 #: ../../tutorial/a-small-book.rst:135
-#, fuzzy
-#| msgid ""
-#| "The ``:caption:`` option supplies a caption. To number figures, add "
-#| "``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option "
-#| "provides alternative text for screen readers."
 msgid ""
 "The ``:caption:`` option supplies a caption. To number figures, we add "
 "``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option provides "
 "alternative text for screen readers."
 msgstr ""
-"``:caption:`` añade un pie. Para numerarlo, ponga ``numfig = true`` en "
-"``notes/conf.toml``. ``:alt:`` aporta texto alternativo para lectores de "
-"pantalla."
+"La opción ``:caption:`` aporta un pie. Para numerar las figuras, añadimos "
+"``numfig = true`` a ``notes/conf.toml``. La opción ``:alt:`` aporta un "
+"texto alternativo para los lectores de pantalla."
 
 #: ../../tutorial/a-small-book.rst:139
 msgid "4. Build the book and inspect results"
 msgstr "4. Construir y revisar el libro"
 
 #: ../../tutorial/a-small-book.rst:142
-#, fuzzy
-#| msgid "Rebuild your project:"
 msgid "We rebuild our project:"
-msgstr "Reconstruya el proyecto:"
+msgstr "Volvemos a compilar el proyecto:"
 
 #: ../../tutorial/a-small-book.rst:149
-#, fuzzy
-#| msgid "Inspect the results in both formats:"
 msgid "We inspect the results in both formats:"
-msgstr "Revise ambos resultados:"
+msgstr "Revisamos el resultado en ambos formatos:"
 
 #: ../../tutorial/a-small-book.rst:151
-#, fuzzy
-#| msgid ""
-#| "**HTML website:** Open ``notes/_build/html/index.html``. The sidebar "
-#| "now shows the numbered chapter hierarchy. Clicking \"1. Measurement\" "
-#| "opens the new page, complete with local breadcrumbs and the rendered "
-#| "SVG diagram."
 msgid ""
 "**HTML website:** Open ``notes/_build/html/index.html``. The sidebar now "
 "shows the numbered chapters. Clicking \"1. Measurement\" opens the new "
 "page, with breadcrumbs and the SVG diagram."
 msgstr ""
-"**HTML:** Abra ``notes/_build/html/index.html``. La barra lateral muestra "
-"capítulos numerados. “1. Measurement” abre la página con ruta de "
-"navegación y SVG."
+"**Sitio web HTML:** abrimos ``notes/_build/html/index.html``. La barra "
+"lateral muestra ahora los capítulos numerados. Al hacer clic en «1. "
+"Measurement» se abre la página nueva, con la ruta de navegación y el "
+"diagrama SVG."
 
 #: ../../tutorial/a-small-book.rst:154
 msgid ""
@@ -646,95 +576,74 @@ msgid ""
 "We now know how one source makes two outputs. The topics section goes "
 "further:"
 msgstr ""
+"Ya sabemos cómo una sola fuente produce dos salidas. La sección de temas "
+"va más allá:"
 
 #: ../../tutorial/a-small-book.rst:163
-#, fuzzy
-#| msgid "Learn rich markup, lists, and tables in :doc:`../topics/writing`."
 msgid "Markup, lists, and tables are in :doc:`../topics/writing`."
-msgstr "Marcado, listas y tablas en :doc:`../topics/writing`."
+msgstr "El marcado, las listas y las tablas están en :doc:`../topics/writing`."
 
 #: ../../tutorial/a-small-book.rst:164
-#, fuzzy
-#| msgid ""
-#| "Learn how to render formulas and equations in "
-#| ":doc:`../topics/mathematics`."
 msgid "Formulas and equations are in :doc:`../topics/mathematics`."
-msgstr "Fórmulas y ecuaciones en :doc:`../topics/mathematics`."
+msgstr "Las fórmulas y ecuaciones están en :doc:`../topics/mathematics`."
 
 #: ../../tutorial/a-small-book.rst:165
-#, fuzzy
-#| msgid ""
-#| "Learn how to configure custom styles and book fonts in "
-#| ":doc:`../topics/typography`."
 msgid "Custom styles and book fonts are in :doc:`../topics/typography`."
-msgstr "Estilos y fuentes del libro en :doc:`../topics/typography`."
+msgstr ""
+"Los estilos personalizados y las fuentes del libro están en "
+":doc:`../topics/typography`."
 
 #: ../../tutorial/first-project.rst:1
-#, fuzzy
-#| msgid "Your first project"
 msgid "Our first project"
-msgstr "Tu primer proyecto"
+msgstr "Nuestro primer proyecto"
 
 #: ../../tutorial/first-project.rst:4
-#, fuzzy
-#| msgid ""
-#| "This tutorial guides you through creating, writing, and building your "
-#| "first documentation project with Guidedog. The goal is modest and "
-#| "clear: start from a clean directory, generate both an HTML website and "
-#| "a printable PDF book from the same source file, and experience the "
-#| "live preview server."
 msgid ""
 "In this tutorial we create, write, and build our first documentation "
 "project with Guidedog. The goal is modest and clear. We start from an "
 "empty directory. We make an HTML website and a printable PDF book from "
 "the same source file. Then we try the live preview server."
 msgstr ""
-"Partiremos de un directorio vacío para crear y escribir un proyecto, "
-"generar HTML y PDF imprimible de una misma fuente y probar el servidor de "
-"vista previa."
+"En este tutorial creamos, escribimos y compilamos nuestro primer proyecto "
+"de documentación con Guidedog. El objetivo es modesto y claro. Partimos "
+"de un directorio vacío. A partir del mismo archivo fuente generamos un "
+"sitio web HTML y un libro PDF imprimible. Después probamos el servidor de "
+"vista previa en vivo."
 
 #: ../../tutorial/first-project.rst:9
-#, fuzzy
-#| msgid ""
-#| "You need a working installation of Guidedog. For PDF output, Guidedog "
-#| "can use its embedded compiler or an installed Typst binary (0.15.1 or "
-#| "newer). See :doc:`../howto/install`."
 msgid ""
 "We need a working installation of Guidedog. For PDF output, Guidedog can "
 "use its embedded compiler or an installed Typst binary (0.15.1 or newer). "
 "See :doc:`../howto/install`."
 msgstr ""
-"Necesita Guidedog instalado. PDF usa el compilador integrado o Typst "
-"0.15.1 o posterior. Véase :doc:`../howto/install`."
+"Necesitamos una instalación de Guidedog que funcione. Para la salida PDF, "
+"Guidedog puede usar su compilador integrado o un binario de Typst "
+"instalado (0.15.1 o posterior). Véase :doc:`../howto/install`."
 
 #: ../../tutorial/first-project.rst:12
-#, fuzzy
-#| msgid "On macOS, you can install the official release using Homebrew:"
 msgid "On macOS, we can install the official release with Homebrew:"
-msgstr "En macOS puede instalar la versión oficial con Homebrew:"
+msgstr "En macOS podemos instalar la versión oficial con Homebrew:"
 
 #: ../../tutorial/first-project.rst:18
 msgid ""
 "Elsewhere, we build it from a source checkout with the Rust toolchain, "
 "and put ``target/release/guidedog`` on our ``PATH``:"
 msgstr ""
+"En otros sistemas, lo compilamos a partir del código fuente con la "
+"toolchain de Rust y añadimos ``target/release/guidedog`` a nuestro "
+"``PATH``:"
 
 #: ../../tutorial/first-project.rst:26
 msgid "Project architecture and build pipeline"
 msgstr "Estructura y flujo de generación"
 
 #: ../../tutorial/first-project.rst:29
-#, fuzzy
-#| msgid ""
-#| "Guidedog takes a single directory of source files and compiles it into "
-#| "two distinct artifacts: a responsive HTML website and a typeset PDF "
-#| "book."
 msgid ""
 "Guidedog takes one directory of source files and compiles it into two "
 "outputs: a responsive HTML website and a typeset PDF book."
 msgstr ""
-"Un directorio de fuentes produce un sitio HTML adaptable y un libro PDF "
-"compuesto."
+"Guidedog toma un directorio de archivos fuente y lo compila en dos "
+"salidas: un sitio web HTML adaptable y un libro PDF maquetado."
 
 #: ../../tutorial/first-project.rst:34
 msgid ""
@@ -751,24 +660,20 @@ msgid "1. Create the project"
 msgstr "1. Crear el proyecto"
 
 #: ../../tutorial/first-project.rst:57
-#, fuzzy
-#| msgid ""
-#| "Run the ``quickstart`` command from a folder where the target "
-#| "directory ``notes`` does not yet exist:"
 msgid ""
 "We run the ``quickstart`` command from a folder where the directory "
 "``notes`` does not yet exist:"
-msgstr "Ejecute ``quickstart`` donde aún no exista el directorio ``notes``:"
+msgstr ""
+"Ejecutamos el comando ``quickstart`` desde una carpeta en la que aún no "
+"exista el directorio ``notes``:"
 
 #: ../../tutorial/first-project.rst:64
-#, fuzzy
-#| msgid "Guidedog creates a complete, self-contained project structure:"
 msgid "Guidedog creates a complete, self-contained project:"
-msgstr "Guidedog crea una estructura completa y autónoma:"
+msgstr "Guidedog crea un proyecto completo y autónomo:"
 
 #: ../../tutorial/first-project.rst:82
 msgid "The files are:"
-msgstr ""
+msgstr "Los archivos son:"
 
 #: ../../tutorial/first-project.rst:84
 msgid ""
@@ -777,14 +682,12 @@ msgid ""
 msgstr "``conf.toml``: título, autor, versión, idioma y generadores."
 
 #: ../../tutorial/first-project.rst:85
-#, fuzzy
-#| msgid ""
-#| "``index.rst``: The root document that defines your front page and "
-#| "table of contents."
 msgid ""
 "``index.rst``: The root document. It defines our front page and table of "
 "contents."
-msgstr "``index.rst``: documento raíz que define portada e índice."
+msgstr ""
+"``index.rst``: el documento raíz. Define nuestra portada y la tabla de "
+"contenidos."
 
 #: ../../tutorial/first-project.rst:86
 msgid "``_templates/layout.html``: The HTML website template (Jinja)."
@@ -802,123 +705,88 @@ msgid "``_static/``: CSS stylesheets and JavaScript enhancements."
 msgstr "``_static/``: CSS y mejoras JavaScript."
 
 #: ../../tutorial/first-project.rst:89
-#, fuzzy
-#| msgid ""
-#| "``assets/``: Dedicated folders for project images, diagrams, audio, "
-#| "and video files."
 msgid ""
 "``assets/``: Folders for project images, diagrams, audio, and video files."
-msgstr "``assets/``: imágenes, diagramas, audio y vídeo."
+msgstr ""
+"``assets/``: carpetas para las imágenes, los diagramas y los archivos de "
+"audio y vídeo del proyecto."
 
 #: ../../tutorial/first-project.rst:91
-#, fuzzy
-#| msgid ""
-#| "Templates in Guidedog are directly visible and editable. They are "
-#| "placed directly inside your project rather than hidden within an "
-#| "external theme or system cache. You can modify them at any time to "
-#| "customize your site and book design. The first build creates "
-#| "``_build`` for generated output."
 msgid ""
 "Templates in Guidedog are ordinary files that we can see and edit. They "
 "live inside our project, not in an external theme or a system cache. We "
 "can change them at any time to adjust the design of our site and book. "
 "The first build creates ``_build`` for generated output."
 msgstr ""
-"Las plantillas están visibles en el proyecto, no ocultas en paquetes ni "
-"cachés. Puede editar el sitio y el libro cuando quiera. El primer build "
-"crea ``_build`` para la salida."
+"En Guidedog, las plantillas son archivos corrientes que podemos ver y "
+"editar. Viven dentro de nuestro proyecto, no en un tema externo ni en una "
+"caché del sistema. Podemos cambiarlas en cualquier momento para ajustar "
+"el diseño del sitio y del libro. La primera compilación crea ``_build`` "
+"para la salida generada."
 
 #: ../../tutorial/first-project.rst:96
 msgid "2. Write the first page"
 msgstr "2. Escribir la primera página"
 
 #: ../../tutorial/first-project.rst:99
-#, fuzzy
-#| msgid ""
-#| "Open ``notes/index.rst`` in your editor and replace its contents with "
-#| "the following:"
 msgid ""
 "We open ``notes/index.rst`` in an editor and replace its contents with "
 "the following:"
-msgstr "Abra ``notes/index.rst`` y sustituya su contenido por:"
+msgstr ""
+"Abrimos ``notes/index.rst`` en un editor y sustituimos su contenido por "
+"lo siguiente:"
 
 #: ../../tutorial/first-project.rst:121
-#, fuzzy
-#| msgid ""
-#| "This page demonstrates headings, mathematical notation, and an "
-#| "admonition note."
 msgid "This page shows headings, mathematical notation, and a note."
-msgstr "La página muestra títulos, notación matemática y una nota."
+msgstr "Esta página muestra títulos, notación matemática y una nota."
 
 #: ../../tutorial/first-project.rst:123
 msgid "3. Build and inspect the outputs"
 msgstr "3. Construir e inspeccionar"
 
 #: ../../tutorial/first-project.rst:126
-#, fuzzy
-#| msgid "Compile your project into both HTML and PDF formats:"
 msgid "We compile our project into both HTML and PDF:"
-msgstr "Genere los dos formatos:"
+msgstr "Compilamos el proyecto a HTML y a PDF:"
 
 #: ../../tutorial/first-project.rst:133
-#, fuzzy
-#| msgid ""
-#| "The ``-W`` flag instructs Guidedog to treat warnings as errors. "
-#| "Keeping this flag enabled in your routine checks ensures that broken "
-#| "references or markup errors are caught early."
 msgid ""
 "The ``-W`` flag tells Guidedog to treat warnings as errors. With this "
 "flag in our routine checks, broken references and markup errors are "
 "caught early."
 msgstr ""
-"``-W`` trata las advertencias como errores. Úselo habitualmente para "
-"detectar referencias y marcado incorrectos a tiempo."
+"La opción ``-W`` le indica a Guidedog que trate las advertencias como "
+"errores. Si la usamos en nuestras comprobaciones habituales, detectamos "
+"pronto las referencias rotas y los errores de marcado."
 
 #: ../../tutorial/first-project.rst:136
-#, fuzzy
-#| msgid "Now inspect the output files:"
 msgid "Now we inspect the output files:"
-msgstr "Compruebe los archivos:"
+msgstr "Ahora revisamos los archivos de salida:"
 
 #: ../../tutorial/first-project.rst:138
-#, fuzzy
-#| msgid ""
-#| "Open ``notes/_build/html/index.html`` in your web browser. You will "
-#| "see a clean, responsive documentation website with a theme switch, "
-#| "search bar, and formatted math."
 msgid ""
 "We open ``notes/_build/html/index.html`` in a web browser. We see a "
 "clean, responsive documentation website with a theme switch, search bar, "
 "and formatted math."
 msgstr ""
-"Abra ``notes/_build/html/index.html`` y revise el cambio de tema, la "
-"búsqueda y las matemáticas."
+"Abrimos ``notes/_build/html/index.html`` en un navegador. Vemos un sitio "
+"de documentación limpio y adaptable, con selector de tema, barra de "
+"búsqueda y fórmulas bien formateadas."
 
 #: ../../tutorial/first-project.rst:140
-#, fuzzy
-#| msgid ""
-#| "Open the PDF file generated in ``notes/_build/pdf/``. You will see a "
-#| "book layout complete with running headers, page numbers, and "
-#| "typographic math."
 msgid ""
 "We open the PDF file in ``notes/_build/pdf/``. We see a book layout with "
 "running headers, page numbers, and typeset math."
 msgstr ""
-"Abra el PDF de ``notes/_build/pdf/`` y revise cabeceras, números y "
-"fórmulas."
+"Abrimos el archivo PDF de ``notes/_build/pdf/``. Vemos una maquetación de "
+"libro con cabeceras, números de página y fórmulas compuestas."
 
 #: ../../tutorial/first-project.rst:143
-#, fuzzy
-#| msgid ""
-#| "Guidedog formats mathematics appropriately for each medium: using "
-#| "client-side MathJax for the browser, and native vector formulas for "
-#| "the Typst PDF engine."
 msgid ""
 "Guidedog formats mathematics for each medium. The browser gets MathJax, "
 "and the PDF gets Typst's own vector formulas."
 msgstr ""
-"La web usa MathJax en el cliente; PDF usa fórmulas vectoriales nativas de "
-"Typst."
+"Guidedog da formato a las matemáticas según el medio. El navegador recibe "
+"MathJax, y el PDF recibe las fórmulas vectoriales propias de Typst."
 
 #: ../../tutorial/first-project.rst:146
 msgid "4. Live preview and incremental rebuilds"
@@ -929,32 +797,25 @@ msgid "Guidedog includes a built-in development web server:"
 msgstr "Guidedog incluye un servidor de desarrollo:"
 
 #: ../../tutorial/first-project.rst:155
-#, fuzzy
-#| msgid ""
-#| "The terminal prints a local URL, such as ``http://localhost:8000``. "
-#| "Open this address in your browser."
 msgid ""
 "The terminal prints a local URL, such as ``http://localhost:8000``. We "
 "open this address in a browser."
-msgstr "Abra la URL local indicada, por ejemplo ``http://localhost:8000``."
+msgstr ""
+"El terminal muestra una URL local, como ``http://localhost:8000``. "
+"Abrimos esa dirección en un navegador."
 
 #: ../../tutorial/first-project.rst:158
-#, fuzzy
-#| msgid "Now test the live editing loop:"
 msgid "Now we test the live editing loop:"
-msgstr "Pruebe el ciclo de edición:"
+msgstr "Ahora probamos el ciclo de edición en vivo:"
 
 #: ../../tutorial/first-project.rst:162
-#, fuzzy
-#| msgid ""
-#| "Editing and saving a file triggers timestamp verification and "
-#| "selective rebuild upon refreshing the browser."
 msgid ""
 "Editing and saving a file triggers an input check and a selective rebuild "
 "upon refreshing the browser."
 msgstr ""
-"Guardar y recargar hace que se comprueben fechas y se reconstruya lo "
-"afectado."
+"Al editar y guardar un archivo, la siguiente recarga del navegador "
+"desencadena una comprobación de las entradas y una recompilación "
+"selectiva."
 
 #: ../../tutorial/first-project.rst:162
 msgid "The live development cycle with guidedog serve."
@@ -962,25 +823,17 @@ msgstr "Ciclo de desarrollo de guidedog serve."
 
 #: ../../tutorial/first-project.rst:181
 msgid "Edit ``notes/index.rst`` to add a new paragraph."
-msgstr "Añada un párrafo a ``notes/index.rst``."
+msgstr "Editamos ``notes/index.rst`` para añadir un párrafo nuevo."
 
 #: ../../tutorial/first-project.rst:182
 msgid "Save the file."
-msgstr "Guarde el archivo."
+msgstr "Guardamos el archivo."
 
 #: ../../tutorial/first-project.rst:183
-#, fuzzy
-#| msgid "Refresh your browser page."
 msgid "Refresh the browser page."
-msgstr "Recargue el navegador."
+msgstr "Recargamos la página en el navegador."
 
 #: ../../tutorial/first-project.rst:185
-#, fuzzy
-#| msgid ""
-#| "Before serving a requested page, Guidedog checks file modification "
-#| "timestamps against its cached build environment. If inputs have "
-#| "changed, it rebuilds only the affected documents before responding to "
-#| "the browser request."
 msgid ""
 "Before serving a requested page, Guidedog checks the project's inputs "
 "(sources, templates, static files and configuration) against its saved "
@@ -988,55 +841,49 @@ msgid ""
 "documents before it answers the browser request. A failed rebuild keeps "
 "the previous site and reports the problem in the terminal."
 msgstr ""
-"Antes de responder, Guidedog compara las fechas de los archivos con la "
-"caché y reconstruye solo los documentos afectados."
+"Antes de servir una página solicitada, Guidedog compara las entradas del "
+"proyecto (fuentes, plantillas, archivos estáticos y configuración) con su "
+"entorno de compilación guardado. Si alguna entrada ha cambiado, recompila "
+"solo los documentos afectados antes de responder al navegador. Si la "
+"recompilación falla, se conserva el sitio anterior y el problema se "
+"muestra en el terminal."
 
 #: ../../tutorial/first-project.rst:191
-#, fuzzy
-#| msgid ""
-#| "When you run a build without modifying any files, Guidedog reuses the "
-#| "cached document trees, avoiding redundant re-parsing."
 msgid ""
 "When we run a build without changing any files, Guidedog reuses the saved "
 "document trees and parses nothing again. See :doc:`../topics/projects` "
 "for how it decides."
 msgstr ""
-"Sin cambios, reutiliza los árboles guardados y evita analizar otra vez."
+"Cuando compilamos sin haber cambiado ningún archivo, Guidedog reutiliza "
+"los árboles de documento guardados y no vuelve a analizar nada. Cómo lo "
+"decide se explica en :doc:`../topics/projects`."
 
 #: ../../tutorial/first-project.rst:194
-#, fuzzy
-#| msgid ""
-#| "Press ``Ctrl+C`` in your terminal to stop the server when you are done."
 msgid ""
 "We press ``Ctrl+C`` in the terminal to stop the server when we are done."
-msgstr "Al terminar, detenga el servidor con ``Ctrl+C``."
+msgstr ""
+"Cuando terminamos, pulsamos ``Ctrl+C`` en el terminal para detener el "
+"servidor."
 
 #: ../../tutorial/first-project.rst:196
-#, fuzzy
-#| msgid ""
-#| "Continue to :doc:`a-small-book` to learn how to organize multiple "
-#| "chapters and cross-references."
 msgid ""
 "Next, :doc:`a-small-book` shows how to organize several chapters and "
 "cross-references."
 msgstr ""
-"Continúe en :doc:`a-small-book` para organizar capítulos y referencias."
+"A continuación, :doc:`a-small-book` muestra cómo organizar varios "
+"capítulos y referencias cruzadas."
 
 #: ../../tutorial/index.rst:1
 msgid "Tutorials"
 msgstr "Tutoriales"
 
 #: ../../tutorial/index.rst:4
-#, fuzzy
-#| msgid ""
-#| "Follow these pages in order. Each step produces a result you can "
-#| "inspect."
 msgid ""
 "We follow these pages in order. Each step produces a result we can "
 "inspect."
 msgstr ""
-"Siga estas páginas en orden. Cada paso produce un resultado que puede "
-"comprobar."
+"Seguimos estas páginas en orden. Cada paso produce un resultado que "
+"podemos revisar."
 
 #~ msgid "Understanding the toctree options:"
 #~ msgstr "Opciones de toctree:"

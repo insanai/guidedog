@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../../rust.rst:1
 msgid "Documenting Rust"
-msgstr ""
+msgstr "Rust dokumentieren"
 
 #: ../../rust.rst:4
 msgid ""
@@ -29,16 +29,24 @@ msgid ""
 "``cargo``, compile the crate, or expand macros. A generated signature "
 "still needs a useful doc comment."
 msgstr ""
+"Die Rust-Domäne gibt Crates, Modulen, Items und Membern benannte Ziele. "
+"Guidedog erzeugt außerdem API-Seiten aus dem Quellcode eines Crates, so "
+"wie rustdoc sie anordnen würde. Den Quellcode liest es mit tree-sitter. "
+"Es führt kein ``cargo`` aus, kompiliert den Crate nicht und expandiert "
+"keine Makros. Auch eine erzeugte Signatur braucht einen hilfreichen "
+"Doc-Kommentar."
 
 #: ../../rust.rst:9
 msgid "Describing objects"
-msgstr ""
+msgstr "Objekte beschreiben"
 
 #: ../../rust.rst:12
 msgid ""
 "A crate or module is the context of what follows it, as a Python module "
 "is:"
 msgstr ""
+"Ein Crate oder Modul ist der Kontext für alles, was darauf folgt, wie ein "
+"Python-Modul:"
 
 #: ../../rust.rst:40
 msgid ""
@@ -48,10 +56,15 @@ msgid ""
 "``trait``, ``type``, ``const``, ``static``, ``macro_rules!``, ``mod``), "
 "or as the first identifier for fields and variants. The directives:"
 msgstr ""
+"Signaturen schreiben wir so, wie Rust die Deklaration schreibt: in einer "
+"Zeile, mit Sichtbarkeit und Qualifizierern. Als Namen nimmt der Reader "
+"den Bezeichner nach dem Schlüsselwort (``fn``, ``struct``, ``enum``, "
+"``union``, ``trait``, ``type``, ``const``, ``static``, ``macro_rules!``, "
+"``mod``), bei Feldern und Varianten den ersten Bezeichner. Die Direktiven:"
 
 #: ../../rust.rst:46
 msgid "``rust:crate`` and ``rust:module``"
-msgstr ""
+msgstr "``rust:crate`` und ``rust:module``"
 
 #: ../../rust.rst:47
 msgid ""
@@ -59,10 +72,13 @@ msgid ""
 "current module for what follows. Option: ``:synopsis:``, one sentence for "
 "the index."
 msgstr ""
+"``my_crate`` oder der vollständige Pfad ``my_crate::parser``. Beide "
+"setzen das aktuelle Modul für das Folgende. Option: ``:synopsis:``, ein "
+"Satz für den Index."
 
 #: ../../rust.rst:50
 msgid "``rust:function`` and ``rust:method``"
-msgstr ""
+msgstr "``rust:function`` und ``rust:method``"
 
 #: ../../rust.rst:51
 msgid ""
@@ -70,10 +86,13 @@ msgid ""
 "Methods sit inside a type or an impl (``pub fn new(x: T) -> Self``, ``fn "
 "draw(&self) -> u8``)."
 msgstr ""
+"``pub const unsafe fn f<T: Copy>(x: &T) -> Option<T> where T: Send``. "
+"Methoden stehen innerhalb eines Typs oder eines Impl (``pub fn new(x: T) "
+"-> Self``, ``fn draw(&self) -> u8``)."
 
 #: ../../rust.rst:54
 msgid "``rust:struct``, ``rust:enum``, ``rust:union``, ``rust:trait``"
-msgstr ""
+msgstr "``rust:struct``, ``rust:enum``, ``rust:union``, ``rust:trait``"
 
 #: ../../rust.rst:55
 msgid ""
@@ -81,10 +100,13 @@ msgid ""
 "enum Kind``, ``pub union Bits``, ``pub trait Draw: Clone + Send``. The "
 "content holds the members."
 msgstr ""
+"``pub struct Point<T = f32>``, ``pub struct Pair(pub i32, _)``, ``pub "
+"enum Kind``, ``pub union Bits``, ``pub trait Draw: Clone + Send``. Der "
+"Inhalt enthält die Member."
 
 #: ../../rust.rst:58
 msgid "``rust:field`` and ``rust:variant``"
-msgstr ""
+msgstr "``rust:field`` und ``rust:variant``"
 
 #: ../../rust.rst:59
 msgid ""
@@ -92,10 +114,13 @@ msgid ""
 "``Polygon(u8)``, ``Rect { width: f32, height: f32 }``, ``Unknown = 9``. "
 "The fields of a variant nest in the ``rust:variant``."
 msgstr ""
+"``pub x: T`` (Tupelfelder heißen ``0``, ``1``, ...); ``Circle``, "
+"``Polygon(u8)``, ``Rect { width: f32, height: f32 }``, ``Unknown = 9``. "
+"Die Felder einer Variante stehen verschachtelt in der ``rust:variant``."
 
 #: ../../rust.rst:63
 msgid "``rust:impl``"
-msgstr ""
+msgstr "``rust:impl``"
 
 #: ../../rust.rst:64
 msgid ""
@@ -103,10 +128,13 @@ msgid ""
 "Never a target. Its members belong to the type it is nested in (to its "
 "``:for:`` type when it stands alone at module level)."
 msgstr ""
+"``impl<T: Copy> Point<T>`` oder ``impl<T> fmt::Display for Point<T>``. "
+"Nie ein Ziel. Seine Member gehören zu dem Typ, in dem es verschachtelt "
+"ist (bzw. zu seinem ``:for:``-Typ, wenn es allein auf Modulebene steht)."
 
 #: ../../rust.rst:68
 msgid "``rust:type``, ``rust:const``, ``rust:static``, ``rust:macro``"
-msgstr ""
+msgstr "``rust:type``, ``rust:const``, ``rust:static``, ``rust:macro``"
 
 #: ../../rust.rst:69
 msgid ""
@@ -114,26 +142,33 @@ msgid ""
 "usize = 4_096``, ``pub static mut COUNT: u64``, ``macro_rules! shape`` "
 "(its arms follow in a ``code-block`` in the content)."
 msgstr ""
+"``pub type Result<T> = std::result::Result<T, Error>``, ``pub const MAX: "
+"usize = 4_096``, ``pub static mut COUNT: u64``, ``macro_rules! shape`` "
+"(seine Arme folgen in einem ``code-block`` im Inhalt)."
 
 #: ../../rust.rst:73
 msgid "``rust:associatedtype`` and ``rust:associatedconst``"
-msgstr ""
+msgstr "``rust:associatedtype`` und ``rust:associatedconst``"
 
 #: ../../rust.rst:74
 msgid ""
 "``type Output: Default``, ``const PASSES: usize = 1``, inside a trait or "
 "impl."
 msgstr ""
+"``type Output: Default``, ``const PASSES: usize = 1``, innerhalb eines "
+"Traits oder Impl."
 
 #: ../../rust.rst:76
 msgid "``rust:use``"
-msgstr ""
+msgstr "``rust:use``"
 
 #: ../../rust.rst:77
 msgid ""
 "``pub use geometry::point::Point``: a re-export line, never a target. It "
 "links to its ``:target:``."
 msgstr ""
+"``pub use geometry::point::Point``: eine Re-Export-Zeile, nie ein Ziel. "
+"Sie verlinkt auf ihr ``:target:``."
 
 #: ../../rust.rst:80
 msgid ""
@@ -146,10 +181,19 @@ msgid ""
 "shown above the signature), ``:deprecated: note``, ``:for:`` and "
 "``:trait:`` (on an impl), ``:target:`` (on a use), and ``:noindex:``."
 msgstr ""
+"Optionen: ``:module: path`` (beschreibt das Objekt in einem anderen als "
+"dem aktuellen Modul), ``:visibility:`` (``pub(crate)``, ``pub(super)``, "
+"``pub(in path)`` oder ``private``), ``:cfg: predicate`` (angezeigt als "
+"\"Available on ``predicate`` only.\"), ``:unsafe:``, ``:async:`` und "
+"``:const:`` (Kennzeichen für Indexeinträge), ``:provided:`` (ein "
+"Trait-Member mit Standardimplementierung), ``:attributes:`` "
+"(``#[non_exhaustive] #[repr(C)]``, über der Signatur angezeigt), "
+"``:deprecated: note``, ``:for:`` und ``:trait:`` (an einem Impl), "
+"``:target:`` (an einem Use) und ``:noindex:``."
 
 #: ../../rust.rst:88
 msgid "Roles and ids"
-msgstr ""
+msgstr "Rollen und IDs"
 
 #: ../../rust.rst:91
 msgid ""
@@ -160,6 +204,12 @@ msgid ""
 "associated constants), ``:rust:static:``, ``:rust:macro:``, and "
 "``:rust:any:`` (any of them) link to objects."
 msgstr ""
+"``:rust:mod:`` (Crates und Module), ``:rust:fn:`` (Funktionen und "
+"Methoden), ``:rust:struct:``, ``:rust:enum:``, ``:rust:union:``, "
+"``:rust:trait:``, ``:rust:variant:``, ``:rust:field:``, ``:rust:type:`` "
+"(Typaliase und assoziierte Typen), ``:rust:const:`` (Konstanten und "
+"assoziierte Konstanten), ``:rust:static:``, ``:rust:macro:`` und "
+"``:rust:any:`` (jedes davon) verlinken auf Objekte."
 
 #: ../../rust.rst:97
 msgid ""
@@ -175,6 +225,18 @@ msgid ""
 "``default-domain:: rust`` (or ``primary_domain = \"rust\"``), the roles "
 "need no ``rust:``."
 msgstr ""
+"Ziele sind vollständige Pfade mit ``::``, beginnend mit dem Namen des "
+"Crates: ``shapes``, ``shapes::parser::Lexer``, "
+"``shapes::parser::Lexer::next_token``, ``shapes::Kind::Rect``, "
+"``shapes::Kind::Rect::width``. Wie in der Python-Domäne zeigt ``~`` nur "
+"den letzten Teil (``:rust:struct:`~shapes::parser::Lexer``` zeigt "
+"``Lexer``), ein führender ``.`` findet den Namen am Ende eines beliebigen "
+"Ziels, und ein relativer Name wird zuerst im aktuellen Modul gesucht. "
+"``:rust:any:`` greift zusätzlich auf Intersphinx-Inventare zurück. Ein "
+"Link auf ``std::vec::Vec`` wird also aufgelöst, wenn das Inventar der "
+"Standardbibliothek eingebunden ist, und erscheint sonst als Code. Mit "
+"``default-domain:: rust`` (oder ``primary_domain = \"rust\"``) brauchen "
+"die Rollen kein ``rust:``."
 
 #: ../../rust.rst:107
 msgid ""
@@ -184,15 +246,22 @@ msgid ""
 "in shapes::parser)\". ``objects.inv`` lists every object with the domain "
 "``rust``, modules first."
 msgstr ""
+"Die ID eines Objekts ist Sphinx' ``make_id`` aus ``rust-`` und seinem "
+"Pfad, wobei ``::`` als ``.`` geschrieben wird: "
+"``rust-shapes.parser.Lexer.next_token``. Die ID eines Moduls ist "
+"``rust-module-`` plus sein Pfad. Indexeinträge lauten \"Lexer (struct in "
+"shapes::parser)\". ``objects.inv`` listet jedes Objekt mit der Domäne "
+"``rust``, Module zuerst."
 
 #: ../../rust.rst:112
 msgid "Generating from source"
-msgstr ""
+msgstr "Aus dem Quellcode erzeugen"
 
 #: ../../rust.rst:115
 msgid ""
 "We tell Guidedog where our crates are, relative to the source folder:"
 msgstr ""
+"Wir teilen Guidedog mit, wo unsere Crates liegen, relativ zum Quellordner:"
 
 #: ../../rust.rst:121
 msgid ""
@@ -207,10 +276,20 @@ msgid ""
 "``singlehtml``, and the PDF book). They are never written into the source "
 "folder. Settings:"
 msgstr ""
+"Jeder Eintrag ist ein Crate-Ordner mit einer ``Cargo.toml`` (Wurzel ist "
+"ihr ``[lib] path``, ``src/lib.rs`` oder ``src/main.rs``), ein Ordner mit "
+"``lib.rs``, ``main.rs`` oder ``mod.rs``, ein Ordner mit losen "
+"``.rs``-Dateien (jede ein öffentliches Modul) oder eine Wurzeldatei "
+"``.rs``. Guidedog folgt dem Modulbaum wie rustc (``mod x;`` findet "
+"``x.rs`` oder ``x/mod.rs``, und ``#[path]`` wird beachtet). Während der "
+"Build die Module liest, schreibt er eine Seite pro dokumentiertem Modul "
+"und einen Index. Die Seiten sind Dokumente des Projekts (im Toctree, in "
+"der Suche, im allgemeinen Index, in ``singlehtml`` und im PDF-Buch). Sie "
+"werden nie in den Quellordner geschrieben. Einstellungen:"
 
 #: ../../rust.rst:130
 msgid "``rust_autoapi_crates``"
-msgstr ""
+msgstr "``rust_autoapi_crates``"
 
 #: ../../rust.rst:131
 msgid ""
@@ -220,10 +299,16 @@ msgid ""
 "roots a ``literalinclude`` may read, so a page can quote the code it "
 "documents."
 msgstr ""
+"Die Crate-Ordner (oder Wurzeldateien), die Seiten bekommen, relativ zum "
+"Quellordner. Gelesen werden nur Dateien unterhalb des jeweiligen "
+"Crate-Ordners. Eine Moduldatei an anderer Stelle wird mit "
+"``rust.autodoc.confined`` abgewiesen. Die Ordner kommen zu den Wurzeln "
+"hinzu, aus denen ``literalinclude`` lesen darf, sodass eine Seite den "
+"Code zitieren kann, den sie dokumentiert."
 
 #: ../../rust.rst:136
 msgid "``rust_autoapi_root``"
-msgstr ""
+msgstr "``rust_autoapi_root``"
 
 #: ../../rust.rst:137
 msgid ""
@@ -231,10 +316,14 @@ msgid ""
 "named by its path: ``rustapi/shapes``, ``rustapi/shapes/parser``. "
 "``rustapi/index`` lists the crates and their modules with their synopses."
 msgstr ""
+"Der Ordner der Seiten, standardmäßig ``\"rustapi\"``. Die Seite eines "
+"Moduls heißt nach seinem Pfad: ``rustapi/shapes``, "
+"``rustapi/shapes/parser``. ``rustapi/index`` listet die Crates und ihre "
+"Module mit ihren Kurzbeschreibungen."
 
 #: ../../rust.rst:141
 msgid "``rust_autoapi_options``"
-msgstr ""
+msgstr "``rust_autoapi_options``"
 
 #: ../../rust.rst:142
 msgid ""
@@ -243,10 +332,14 @@ msgid ""
 "documents ``#[doc(hidden)]`` items. ``noindex`` makes every generated "
 "object ``:noindex:``."
 msgstr ""
+"Standardmäßig leer. ``private-members`` dokumentiert private und "
+"``pub(crate)``-Items (angezeigt mit ``:visibility:``). ``hidden-members`` "
+"dokumentiert ``#[doc(hidden)]``-Items. ``noindex`` macht jedes erzeugte "
+"Objekt zu ``:noindex:``."
 
 #: ../../rust.rst:146
 msgid "``rust_autoapi_member_order``"
-msgstr ""
+msgstr "``rust_autoapi_member_order``"
 
 #: ../../rust.rst:147
 msgid ""
@@ -254,24 +347,31 @@ msgid ""
 "rustdoc's order either way (modules, macros, structs, enums, ..., "
 "functions)."
 msgstr ""
+"``\"source\"`` (Standard) oder ``\"alphabetical\"``. In beiden Fällen "
+"werden die Member in der Reihenfolge von rustdoc gruppiert (Module, "
+"Makros, Structs, Enums, ..., Funktionen)."
 
 #: ../../rust.rst:150
 msgid "``rust_autoapi_add_toctree_entry``"
-msgstr ""
+msgstr "``rust_autoapi_add_toctree_entry``"
 
 #: ../../rust.rst:151
 msgid ""
 "``true`` (default): the API index joins the root document's first toctree."
 msgstr ""
+"``true`` (Standard): Der API-Index wird in den ersten Toctree des "
+"Wurzeldokuments aufgenommen."
 
 #: ../../rust.rst:153
 msgid "``rust_autoapi_generate_api_docs``"
-msgstr ""
+msgstr "``rust_autoapi_generate_api_docs``"
 
 #: ../../rust.rst:154
 msgid ""
 "``true`` (default). ``false`` reads the settings but generates no pages."
 msgstr ""
+"``true`` (Standard). ``false`` liest die Einstellungen, erzeugt aber "
+"keine Seiten."
 
 #: ../../rust.rst:156
 msgid ""
@@ -279,14 +379,17 @@ msgid ""
 "folder, with a warning. Guidedog's own API reference, ``docs/api``, is "
 "built this way."
 msgstr ""
+"``--untrusted`` verwirft ``rust_autoapi_crates``-Ordner außerhalb des "
+"Quellordners mit einer Warnung. Guidedogs eigene API-Referenz, "
+"``docs/api``, wird so gebaut."
 
 #: ../../rust.rst:159
 msgid "What is documented, and where"
-msgstr ""
+msgstr "Was wo dokumentiert wird"
 
 #: ../../rust.rst:162
 msgid "Guidedog follows rustdoc's rules:"
-msgstr ""
+msgstr "Guidedog folgt den Regeln von rustdoc:"
 
 #: ../../rust.rst:164
 msgid ""
@@ -294,6 +397,9 @@ msgid ""
 "on the way is ``pub``. ``#[cfg(test)]`` modules and ``#[test]`` functions "
 "are never documented."
 msgstr ""
+"Ein Item wird in seinem Modul dokumentiert, wenn es ``pub`` ist und jedes "
+"Modul auf dem Weg dorthin ebenfalls ``pub`` ist. ``#[cfg(test)]``-Module "
+"und ``#[test]``-Funktionen werden nie dokumentiert."
 
 #: ../../rust.rst:166
 msgid ""
@@ -304,10 +410,18 @@ msgid ""
 "private::*`` inlines every public item of the module. External re-exports "
 "(``pub use std::...``) are lines."
 msgstr ""
+"Ein ``pub use`` eines Items, das ohnehin dokumentiert wird, ist eine "
+"Re-Export-Zeile. Ein ``pub use`` eines Items, das sonst nicht erreichbar "
+"ist (weil es in einem privaten Modul liegt), dokumentiert das Item an Ort "
+"und Stelle unter dem Namen des Re-Exports. ``#[doc(inline)]`` und "
+"``#[doc(no_inline)]`` erzwingen das eine oder das andere. ``pub use "
+"private::*`` bindet jedes öffentliche Item des Moduls inline ein. Externe "
+"Re-Exports (``pub use std::...``) sind Zeilen."
 
 #: ../../rust.rst:171
 msgid "``#[macro_export]`` macros are documented at the crate root."
 msgstr ""
+"``#[macro_export]``-Makros werden an der Wurzel des Crates dokumentiert."
 
 #: ../../rust.rst:172
 msgid ""
@@ -317,6 +431,11 @@ msgid ""
 "page. Trait-impl members are ``:noindex:``. They are documented on the "
 "trait."
 msgstr ""
+"``impl``-Blöcke hängen an dem Typ, den ihr Self-Typ nennt (über "
+"``use``-Importe): zuerst inhärente Impls, dann Trait-Impls. Ein Impl für "
+"einen Typ außerhalb des Crates erscheint unter \"Implementations\" auf "
+"der Seite seines Moduls. Member von Trait-Impls sind ``:noindex:``, denn "
+"sie werden am Trait dokumentiert."
 
 #: ../../rust.rst:176
 msgid ""
@@ -325,6 +444,10 @@ msgid ""
 "impls in source order), then \"Trait Implementations\" (sorted by trait "
 "name)."
 msgstr ""
+"Die Beschreibung eines Typs gruppiert ihren Inhalt wie rustdoc, jede "
+"Gruppe unter einer Rubrik: \"Fields\" (oder \"Variants\"), "
+"\"Implementations\" (inhärente Impls in Quellcode-Reihenfolge), dann "
+"\"Trait Implementations\" (nach Trait-Namen sortiert)."
 
 #: ../../rust.rst:177
 msgid ""
@@ -333,6 +456,10 @@ msgid ""
 "impl's members stay with the type (or on the module page, for a type of "
 "another crate)."
 msgstr ""
+"Ein Trait endet mit \"Implementors\": dem Kopf jedes Impl dieses Traits "
+"im Crate, sortiert nach dem implementierenden Typ. Jeder Kopf verlinkt "
+"seine Typen. Die Member des Impl bleiben beim Typ (bzw. auf der "
+"Modulseite, wenn der Typ aus einem anderen Crate stammt)."
 
 #: ../../rust.rst:178
 msgid ""
@@ -340,12 +467,18 @@ msgid ""
 "of them has docs. A tuple struct's signature shows private fields as "
 "``_``. With ``include_private``, it shows their types."
 msgstr ""
+"Tupelfelder und die Felder von Enum-Varianten werden nur aufgeführt, wenn "
+"mindestens eines davon dokumentiert ist. Die Signatur eines Tuple-Structs "
+"zeigt private Felder als ``_``. Mit ``include_private`` zeigt sie deren "
+"Typen."
 
 #: ../../rust.rst:180
 msgid ""
 "``#[cfg(...)]`` and ``#[doc(cfg(...))]`` become ``:cfg:``. Several are "
 "joined as ``all(a, b)``."
 msgstr ""
+"``#[cfg(...)]`` und ``#[doc(cfg(...))]`` werden zu ``:cfg:``. Mehrere "
+"werden zu ``all(a, b)`` zusammengefasst."
 
 #: ../../rust.rst:182
 msgid ""
@@ -353,10 +486,14 @@ msgid ""
 "removed, whitespace collapsed, rustfmt's vertical lists folded. Constant "
 "values longer than 48 characters and every static's value are left out."
 msgstr ""
+"Signaturen sind der Quellcode in einer Zeile: ohne Attribute, Kommentare "
+"und Rümpfe, mit zusammengefasstem Leerraum und zusammengeklappten "
+"vertikalen Listen von rustfmt. Konstantenwerte mit mehr als 48 Zeichen "
+"und die Werte aller Statics werden weggelassen."
 
 #: ../../rust.rst:186
 msgid "Doc comments"
-msgstr ""
+msgstr "Doc-Kommentare"
 
 #: ../../rust.rst:189
 msgid ""
@@ -366,6 +503,11 @@ msgid ""
 "They are CommonMark, and become reStructuredText in the directive's "
 "content:"
 msgstr ""
+"``///``, ``//!``, ``/** */``, ``/*! */``, ``#[doc = \"...\"]`` und "
+"``#[doc = include_str!(\"file\")]`` (relativ zur Quelldatei gelesen, nur "
+"innerhalb des Crate-Ordners) werden wie bei rustdoc zusammengefügt und "
+"ausgerückt. Sie sind CommonMark und werden im Inhalt der Direktive zu "
+"reStructuredText:"
 
 #: ../../rust.rst:194
 msgid ""
@@ -373,12 +515,18 @@ msgid ""
 "tables (as ``list-table``), and HTML blocks (as ``raw:: html``) keep "
 "their structure."
 msgstr ""
+"Absätze, Listen (verschachtelt, mit ihren Startnummern), Blockzitate, "
+"Pipe-Tabellen (als ``list-table``) und HTML-Blöcke (als ``raw:: html``) "
+"behalten ihre Struktur."
 
 #: ../../rust.rst:196
 msgid ""
 "Headings (``# Examples``, ``# Panics``, ``# Errors``, ``# Safety``) "
 "become rubrics, since sections cannot sit inside directives."
 msgstr ""
+"Überschriften (``# Examples``, ``# Panics``, ``# Errors``, ``# Safety``) "
+"werden zu Rubriken, weil Abschnitte nicht innerhalb von Direktiven stehen "
+"können."
 
 #: ../../rust.rst:198
 msgid ""
@@ -388,6 +536,11 @@ msgid ""
 "other languages are kept. Hidden ``# `` lines are removed (``##`` shows "
 "``#``)."
 msgstr ""
+"Codeblöcke werden nach den Regeln von rustdoc zu ``code-block:: rust``. "
+"Ohne Info-String sowie mit ``ignore``, ``no_run``, ``should_panic``, "
+"``compile_fail``, ``edition2021`` oder einem Fehlercode gilt Rust. "
+"``text``, ``toml`` und andere Sprachen bleiben erhalten. Versteckte ``# "
+"``-Zeilen werden entfernt (``##`` zeigt ``#``)."
 
 #: ../../rust.rst:202
 msgid ""
@@ -396,6 +549,11 @@ msgid ""
 "are resolved as rustdoc resolves them, relative to the item's module and "
 "``Self``, and become ``rust`` roles. Other links and autolinks stay links."
 msgstr ""
+"Intra-Doc-Links (``[`Foo`]``, ``[Foo]``, ``[text](Foo::bar)``, "
+"``[text][Foo]``, mit Disambiguatoren wie ``struct@`` oder ``foo()``) "
+"werden wie bei rustdoc aufgelöst, relativ zum Modul des Items und zu "
+"``Self``, und werden zu ``rust``-Rollen. Andere Links und Autolinks "
+"bleiben Links."
 
 #: ../../rust.rst:206
 msgid ""
@@ -410,12 +568,25 @@ msgid ""
 "opens rustdoc's search for the path. The shown text drops the "
 "disambiguator: ``[`prim@u8`]`` shows ``u8``."
 msgstr ""
+"Links in die Standardbibliothek werden zu Links auf doc.rust-lang.org. "
+"Das betrifft Primitive (``[u8]``, ``[`prim@str`]``, ``[u8::MAX]``), "
+"Pfade, die mit ``std::``, ``core::`` oder ``alloc::`` beginnen, und "
+"Prelude-Namen, die der Crate nicht selbst definiert (``[Vec]``, "
+"``[Some]``). Die Standardbibliothek veröffentlicht kein Inventar, das wir "
+"lesen könnten, daher ist eine stabile URL die praktische Wahl. Primitive "
+"und gängige Items bekommen ihre genaue Seite (``primitive.u8.html``, "
+"``struct.Vec.html#method.new``). Ein Disambiguator wie ``macro@`` oder "
+"``mod@`` liefert die Seite für andere. Alles Übrige öffnet die "
+"rustdoc-Suche nach dem Pfad. Der angezeigte Text lässt den Disambiguator "
+"weg: ``[`prim@u8`]`` zeigt ``u8``."
 
 #: ../../rust.rst:207
 msgid ""
 "Footnotes (``[^1]``) become auto-numbered footnotes at the end of the "
 "item's docs."
 msgstr ""
+"Fußnoten (``[^1]``) werden zu automatisch nummerierten Fußnoten am Ende "
+"der Dokumentation des Items."
 
 #: ../../rust.rst:208
 msgid ""
@@ -424,22 +595,32 @@ msgid ""
 "becomes a substitution. An image with a relative path keeps only its alt "
 "text, because nothing places the file next to the generated page."
 msgstr ""
+"Ein Bild in einer eigenen Zeile wird zu einem ``image`` mit seinem "
+"Alternativtext, ein verlinktes Bild (ein Badge) bekommt ein ``:target:``. "
+"Ein Bild innerhalb eines Satzes wird zu einer Substitution. Ein Bild mit "
+"relativem Pfad behält nur seinen Alternativtext, weil nichts die Datei "
+"neben die erzeugte Seite legt."
 
 #: ../../rust.rst:209
 msgid ""
 "A paragraph with a hard line break (two trailing spaces, or a backslash "
 "at the end of a line) becomes a line block."
 msgstr ""
+"Ein Absatz mit hartem Zeilenumbruch (zwei Leerzeichen am Zeilenende oder "
+"ein Backslash am Zeilenende) wird zu einem Zeilenblock."
 
 #: ../../rust.rst:210
 msgid ""
 "Everything else reStructuredText would read as markup is escaped, so a "
 "comment reads as written and never warns."
 msgstr ""
+"Alles andere, was reStructuredText als Markup lesen würde, wird maskiert. "
+"So liest sich ein Kommentar genau wie geschrieben und erzeugt nie eine "
+"Warnung."
 
 #: ../../rust.rst:213
 msgid "Rebuilding"
-msgstr ""
+msgstr "Neu bauen"
 
 #: ../../rust.rst:216
 msgid ""
@@ -449,10 +630,17 @@ msgid ""
 "``rust_autoapi_crates`` before serving an HTML page, as it does for "
 "``odin_autoapi_dirs``. We refresh the browser after editing."
 msgstr ""
+"Jede Rust-Datei, die eine Seite gelesen hat, ist eine Abhängigkeit dieser "
+"Seite. Wenn wir den Quellcode eines Moduls bearbeiten, liest der nächste "
+"Build nur die Seiten neu ein, die aus diesem Crate erzeugt wurden. "
+"``guidedog serve`` prüft vor dem Ausliefern einer HTML-Seite die "
+"Änderungszeiten in ``rust_autoapi_crates``, genau wie bei "
+"``odin_autoapi_dirs``. Nach dem Bearbeiten laden wir die Seite im Browser "
+"neu."
 
 #: ../../rust.rst:222
 msgid "Warnings and limits"
-msgstr ""
+msgstr "Warnungen und Grenzen"
 
 #: ../../rust.rst:225
 msgid ""
@@ -461,51 +649,63 @@ msgid ""
 "create are not documented. Problems in one file never stop the rest of "
 "the crate:"
 msgstr ""
+"Der Quellcode wird geparst, aber nie kompiliert, typgeprüft oder "
+"makroexpandiert. Typen erscheinen wie geschrieben, nichts wird inferiert. "
+"Items, die ein Makro erzeugen würde, werden nicht dokumentiert. Probleme "
+"in einer Datei halten den Rest des Crates nie auf:"
 
 #: ../../rust.rst:229
 msgid "``rust.autodoc.parse``"
-msgstr ""
+msgstr "``rust.autodoc.parse``"
 
 #: ../../rust.rst:230
 msgid "A syntax error. The rest of the file is documented."
-msgstr ""
+msgstr "Ein Syntaxfehler. Der Rest der Datei wird dokumentiert."
 
 #: ../../rust.rst:231
 msgid "``rust.autodoc.module``"
-msgstr ""
+msgstr "``rust.autodoc.module``"
 
 #: ../../rust.rst:232
 msgid "No file for ``mod x;``."
-msgstr ""
+msgstr "Keine Datei für ``mod x;``."
 
 #: ../../rust.rst:233
 msgid "``rust.autodoc.link`` and ``rust.autodoc.private-link``"
-msgstr ""
+msgstr "``rust.autodoc.link`` und ``rust.autodoc.private-link``"
 
 #: ../../rust.rst:234
 msgid ""
 "An intra-doc link into the crate that names nothing, or names a private "
 "or hidden item."
 msgstr ""
+"Ein Intra-Doc-Link in den Crate, der auf nichts zeigt oder auf ein "
+"privates oder verstecktes Item."
 
 #: ../../rust.rst:236
 msgid "``rust.autodoc.confined`` and ``rust.autodoc.read``"
-msgstr ""
+msgstr "``rust.autodoc.confined`` und ``rust.autodoc.read``"
 
 #: ../../rust.rst:237
 msgid "A file outside the crate folder, or one that could not be read."
 msgstr ""
+"Eine Datei außerhalb des Crate-Ordners oder eine, die nicht gelesen "
+"werden konnte."
 
 #: ../../rust.rst:238
 msgid ""
 "``rust.autodoc.nesting``, ``rust.autodoc.size`` and ``rust.autodoc.limit``"
 msgstr ""
+"``rust.autodoc.nesting``, ``rust.autodoc.size`` und ``rust.autodoc.limit``"
 
 #: ../../rust.rst:239
 msgid ""
 "A file nested deeper than 512 levels, a file larger than 4 MiB, or a "
 "crate with more than 4,096 files or 100,000 items."
 msgstr ""
+"Eine Datei, die tiefer als 512 Ebenen verschachtelt ist, eine Datei "
+"größer als 4 MiB oder ein Crate mit mehr als 4,096 Dateien oder 100,000 "
+"Items."
 
 #: ../../rust.rst:242
 msgid ""
@@ -513,6 +713,9 @@ msgid ""
 "(``rust.autodoc.crate``, ``rust.autodoc.root``). Every warning has a hint "
 "and, where there is one, the file and line with an excerpt."
 msgstr ""
+"Eine Crate-Wurzel, die nicht gefunden oder gelesen werden kann, ist ein "
+"Fehler (``rust.autodoc.crate``, ``rust.autodoc.root``). Jede Warnung hat "
+"einen Hinweis und, soweit vorhanden, Datei und Zeile mit einem Auszug."
 
 #: ../../rust.rst:246
 msgid ""
@@ -520,3 +723,7 @@ msgid ""
 "resolve only through intersphinx. With ``-n``, we silence the rest with "
 "``nitpick_ignore_regex = [[\"rust:any\", \"(std|core|alloc)::.*\"]]``."
 msgstr ""
+"Links auf Typen außerhalb der dokumentierten Crates "
+"(``std::fmt::Display``) werden nur über Intersphinx aufgelöst. Mit ``-n`` "
+"schalten wir den Rest mit ``nitpick_ignore_regex = [[\"rust:any\", "
+"\"(std|core|alloc)::.*\"]]`` stumm."

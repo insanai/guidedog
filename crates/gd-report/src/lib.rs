@@ -229,15 +229,25 @@ pub fn floor_boundary(text: &str, offset: usize) -> usize {
 
 /// The Levenshtein distance between `a` and `b`, counting Unicode scalars.
 pub fn edit_distance(a: &str, b: &str) -> usize {
+    // Optimal string alignment distance: insertions, deletions, substitutions and swaps of
+    // two neighbouring characters each cost one edit, so the common typo "lsit" is one
+    // edit from "list". Three rows suffice: the swap looks two rows back.
+    let a: Vec<char> = a.chars().collect();
     let b: Vec<char> = b.chars().collect();
+    let mut before: Vec<usize> = vec![0; b.len() + 1];
     let mut prev: Vec<usize> = (0..=b.len()).collect();
     let mut cur = vec![0; b.len() + 1];
-    for (i, ca) in a.chars().enumerate() {
+    for (i, &ca) in a.iter().enumerate() {
         cur[0] = i + 1;
         for (j, &cb) in b.iter().enumerate() {
             let cost = usize::from(ca != cb);
-            cur[j + 1] = (prev[j + 1] + 1).min(cur[j] + 1).min(prev[j] + cost);
+            let mut best = (prev[j + 1] + 1).min(cur[j] + 1).min(prev[j] + cost);
+            if i > 0 && j > 0 && ca == b[j - 1] && a[i - 1] == cb {
+                best = best.min(before[j - 1] + 1);
+            }
+            cur[j + 1] = best;
         }
+        std::mem::swap(&mut before, &mut prev);
         std::mem::swap(&mut prev, &mut cur);
     }
     prev[b.len()]

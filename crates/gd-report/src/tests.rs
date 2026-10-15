@@ -119,3 +119,11 @@ fn warning_and_note_start_like_an_error_with_their_severity() {
     assert_eq!(warning, Report { severity: Severity::Warning, ..Report::error("c", "T", "m") });
     assert_eq!(Report::note("c", "T", "m").severity, Severity::Note);
 }
+
+#[test]
+fn a_swap_of_neighbours_is_one_edit() {
+    assert_eq!(crate::edit_distance("lsit", "list"), 1);
+    assert_eq!(crate::edit_distance("ab", "ba"), 1);
+    assert_eq!(crate::edit_distance("kitten", "sitting"), 3);
+    assert_eq!(crate::suggest("lsit", ["init", "list", "show"]), Some("list"));
+}

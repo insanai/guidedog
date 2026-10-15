@@ -596,7 +596,7 @@ See :doc:`../howto/github-pages`.
 guidedog pages workflow
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-``guidedog pages workflow`` is ``guidedog pages workflow``, added by the GitHub Pages plugin. It prints, writes, or checks
+``guidedog pages workflow`` is added by the linked GitHub Pages plugin. It prints, writes, or checks
 a GitHub Actions workflow. The workflow installs this Guidedog release, builds the project, and
 deploys it with GitHub's Pages actions. We use it instead of publishing from our own machine
 when every push to the source branch should deploy.

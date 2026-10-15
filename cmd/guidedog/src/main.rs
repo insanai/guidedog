@@ -41,7 +41,9 @@ mod tests {
         let registry = super::linked_plugins();
         assert!(registry.find("pages").is_some() && registry.find("dsc").is_some());
         let names: Vec<String> = registry.commands().map(|(_, c)| c.name()).collect();
-        assert_eq!(names[..3], ["publish pages", "pages workflow", "dsc init"]);
+        for expected in ["publish pages", "pages workflow", "pages init", "dsc init"] {
+            assert!(names.iter().any(|name| name == expected), "{names:?}");
+        }
         assert!(names.contains(&"dsc build".to_string()), "{names:?}");
         assert_eq!(gd_pages::VERSION, gd_cli::VERSION);
     }

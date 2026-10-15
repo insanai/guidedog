@@ -183,7 +183,8 @@ fn version_defines(root: &Path) -> Result<Vec<String>> {
         return Ok(Vec::new());
     }
     let release: String = fsutil::read_text(&path)?.split_whitespace().collect();
-    let version = release.rsplit_once('.').map_or(release.as_str(), |(head, _)| head);
+    let core = release.split_once('-').map_or(release.as_str(), |(core, _)| core);
+    let version = core.rsplit_once('.').map_or(core, |(head, _)| head);
     Ok(vec!["-D".into(), format!("release={release}"), "-D".into(), format!("version={version}")])
 }
 
@@ -305,13 +306,25 @@ fn build_discussions(builder: &Builder, folders: &Folders, pdf: bool) -> Result<
         return Ok(());
     }
     builder.step("discussions, PDF");
-    let pdfs = folders.work.join("gds-pdf");
-    builder.build(&["-b", "pdf", "docs/gds", &pdfs.to_string_lossy()])?;
+    let mut command = Command::new(&builder.guidedog);
+    command.current_dir(&builder.root).args([
+        "dsc",
+        "build",
+        "--dir=docs/gds",
+        "--target=pdf",
+        "--color=never",
+    ]);
+    process::run(&mut command)?;
+    let pdfs = builder.root.join("docs/gds/_build/pdf");
+    let index = folders.work.join("gds-index");
+    builder.build(&["-b", "pdf", "docs/gds", &index.to_string_lossy()])?;
     let target = discussions.join("pdf");
     create_dir(&target)?;
-    for file in fsutil::sorted_entries(&pdfs)? {
-        if file.is_file() && file.extension().is_some_and(|e| e == "pdf") {
-            rename(&file, &target.join(file.file_name().unwrap_or_default()))?;
+    for directory in [&pdfs, &index] {
+        for file in fsutil::sorted_entries(directory)? {
+            if file.is_file() && file.extension().is_some_and(|e| e == "pdf") {
+                fsutil::copy(&file, &target.join(file.file_name().unwrap_or_default()))?;
+            }
         }
     }
     Ok(())

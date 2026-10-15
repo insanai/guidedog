@@ -132,14 +132,12 @@ guidedog dsc build
 - [插件库](crates/gd-plugins/README.md)：带类型的构建服务，以及 `guidedog publish` 和 `guidedog-pages` 使用的发布器接口。
 - [可复用的 crate](docs/manual/internals/crates.rst)：其他 Rust 项目可以从 crates.io 使用的引擎、库、API 生成器和插件 SDK，以及它们之间的依赖关系。
 
-`crates/` 下的每个 crate 都有一份简短的 README，说明它的 API 和移植时做出的设计决策。Guidedoc 拥有自己的文档表，并在多次转换之间复用它们，因此稳定状态下的转换不分配内存。它返回带提示的结构化诊断。宿主管理文件、预算、缓存、发布和内置编译器。`--untrusted` 只限制能力，不是进程沙箱，也不限制全部原生资源消耗。Beta 面向 macOS 和 Linux 上的可信文档项目。
-
-Guidedog 0.6 及更早版本使用 Odin 编写。0.7 版本是移植到 Rust 的版本，保留了命令、选项、`conf.toml` 键、指令、角色和输出；[更新日志](CHANGELOG.md)列出了变化。
+`crates/` 下的每个 crate 都有一份简短的 README，说明它的 API 和设计决策。Guidedoc 拥有自己的文档表，并在多次转换之间复用它们，因此稳定状态下的转换不分配内存。它返回带提示的结构化诊断。宿主管理文件、预算、缓存、发布和内置编译器。`--untrusted` 只限制能力，不是进程沙箱，也不限制全部原生资源消耗。Beta 面向 macOS 和 Linux 上的可信文档项目。
 
 ## 致谢与许可
 
 由 **Vikrant Rathore** 创建，**Ronak Rathore** 和 **Kanak Rathore** 协助开发。欢迎通过 issue 和 pull request 参与。文档署名使用姓名或账号名，不公开个人邮箱；Git 身份设置单独管理。
 
-感谢 Sphinx 和 Georg Brandl、Docutils 和 David Goodger、Typst、Tree-sitter 和 Max Brunsfeld、Graphviz、Rust 项目及其社区，以及 Ginger Bill 和 Odin 社区——Guidedog 的第一个实现正是用 Odin 语言写成的。
+感谢 Sphinx 和 Georg Brandl、Docutils 和 David Goodger、Typst、Tree-sitter 和 Max Brunsfeld、Graphviz、Rust 项目及其社区，以及 Ginger Bill 和 Odin 社区。
 
 Guidedog 以 [GNU 宽通用公共许可证 3.0 或更高版本](LICENSE)（LGPL-3.0-or-later）发布，该许可证在 [GNU 通用公共许可证 3.0](COPYING) 的基础上增加了额外许可。如需其他许可条款，请联系作者。[NOTICE](NOTICE) 说明了联系方式，并列出保留各自许可证的第三方组件，例如 Rust crate 和捆绑字体。附加许可允许将 Guidedog 与 Graphviz 链接并一同分发，详见 [NOTICE](NOTICE)。

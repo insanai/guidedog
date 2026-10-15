@@ -132,14 +132,12 @@ El `discussion.toml` de un catálogo fija los estados de su ciclo de vida, sus t
 - [Biblioteca de plugins](crates/gd-plugins/README.md): servicios de compilación con tipos definidos y la interfaz de publicadores que usan `guidedog publish` y `guidedog-pages`.
 - [Crates reutilizables](docs/manual/internals/crates.rst): el motor, las bibliotecas, los generadores de API y el SDK de plugins que otros proyectos Rust pueden tomar de crates.io, y cómo dependen unos de otros.
 
-Cada crate de `crates/` tiene un README breve con su API y las decisiones de diseño tomadas en la migración. Guidedoc posee sus tablas de documento y las reutiliza entre conversiones, de modo que una conversión en régimen estable no reserva memoria. Guidedoc devuelve diagnósticos estructurados con una sugerencia. El gestor se ocupa de archivos, presupuestos, caché, publicación y los compiladores integrados. `--untrusted` limita capacidades; no aísla procesos ni limita todos los recursos nativos. La beta está dirigida a proyectos de confianza en macOS y Linux.
-
-Guidedog 0.6 y anteriores estaban escritos en Odin. La versión 0.7 es una migración a Rust que conserva los comandos, las opciones, las claves de `conf.toml`, las directivas, los roles y la salida; el [registro de cambios](CHANGELOG.md) enumera lo que cambió.
+Cada crate de `crates/` tiene un README breve con su API y sus decisiones de diseño. Guidedoc posee sus tablas de documento y las reutiliza entre conversiones, de modo que una conversión en régimen estable no reserva memoria. Guidedoc devuelve diagnósticos estructurados con una sugerencia. El gestor se ocupa de archivos, presupuestos, caché, publicación y los compiladores integrados. `--untrusted` limita capacidades; no aísla procesos ni limita todos los recursos nativos. La beta está dirigida a proyectos de confianza en macOS y Linux.
 
 ## Créditos y licencia
 
 Creado por **Vikrant Rathore**, con la colaboración de **Ronak Rathore** y **Kanak Rathore**. Se agradecen las contribuciones mediante issues y pull requests. Los créditos usan nombres o identificadores, sin direcciones personales de correo; la identidad de Git se gestiona por separado.
 
-Gracias a Sphinx y Georg Brandl, Docutils y David Goodger, Typst, Tree-sitter y Max Brunsfeld, Graphviz, el proyecto Rust y su comunidad, y Ginger Bill y la comunidad Odin, cuyo lenguaje sostuvo la primera implementación de Guidedog.
+Gracias a Sphinx y Georg Brandl, Docutils y David Goodger, Typst, Tree-sitter y Max Brunsfeld, Graphviz, el proyecto Rust y su comunidad, y Ginger Bill y la comunidad Odin.
 
 Guidedog se distribuye bajo la [Licencia Pública General Reducida de GNU v3.0 o posterior](LICENSE) (LGPL-3.0-or-later), que añade permisos a la [Licencia Pública General de GNU v3.0](COPYING). Para otras condiciones de licencia, contacte con los autores. [NOTICE](NOTICE) explica cómo hacerlo y enumera los componentes de terceros que conservan sus propias licencias, como los crates de Rust y las fuentes incluidas. Un permiso adicional autoriza enlazar y distribuir Guidedog junto con Graphviz; consulte [NOTICE](NOTICE).

@@ -132,14 +132,12 @@ A catalog's `discussion.toml` sets its lifecycle states, record types, and numbe
 - [Plugin library](crates/gd-plugins/README.md): typed build services and the publisher interface used by `guidedog publish` and `guidedog-pages`.
 - [Reusable crates](docs/manual/internals/crates.rst): the engine, libraries, API generators, and plugin SDK that other Rust projects can take from crates.io, and how they depend on each other.
 
-Each crate under `crates/` has a short README with its API and the design decisions made in the port. Guidedoc owns its document tables and reuses them between conversions, so a conversion in steady state allocates nothing. It returns structured diagnostics with a hint. The host manages files, budgets, caching, publication, and the embedded compilers. `--untrusted` restricts capabilities; it is not a process sandbox or a limit on all native resource use. The beta scope is trusted documentation projects on macOS and Linux.
-
-Guidedog 0.6 and earlier were written in Odin. Version 0.7 is a port to Rust that keeps the commands, options, `conf.toml` keys, directives, roles, and output; the [changelog](CHANGELOG.md) lists what changed.
+Each crate under `crates/` has a short README with its API and its design decisions. Guidedoc owns its document tables and reuses them between conversions, so a conversion in steady state allocates nothing. It returns structured diagnostics with a hint. The host manages files, budgets, caching, publication, and the embedded compilers. `--untrusted` restricts capabilities; it is not a process sandbox or a limit on all native resource use. The beta scope is trusted documentation projects on macOS and Linux.
 
 ## Credits and license
 
 Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** and **Kanak Rathore**. Contributions are welcome through issues and pull requests. Documentation credits use names or handles, not personal email addresses; Git identity settings are managed separately.
 
-Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max Brunsfeld, Graphviz, the Rust project and its community, and Ginger Bill and the Odin community, whose language carried Guidedog's first implementation.
+Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max Brunsfeld, Graphviz, the Rust project and its community, and Ginger Bill and the Odin community.
 
 Guidedog is released under the [GNU Lesser General Public License v3.0 or later](LICENSE) (LGPL-3.0-or-later), which adds permissions to the [GNU General Public License v3.0](COPYING). For other licensing terms, contact the authors. [NOTICE](NOTICE) says how to reach them and lists the third-party components, such as the Rust crates and the bundled fonts, that keep their own licenses. An additional permission allows Guidedog to be linked and distributed with Graphviz; see [NOTICE](NOTICE).

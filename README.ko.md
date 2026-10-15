@@ -132,14 +132,12 @@ guidedog dsc build
 - [플러그인 라이브러리](crates/gd-plugins/README.md): 타입이 명확한 빌드 서비스와 `guidedog publish` 및 `guidedog-pages` 가 사용하는 게시기 인터페이스.
 - [재사용 가능한 크레이트](docs/manual/internals/crates.rst): 다른 Rust 프로젝트가 crates.io 에서 가져다 쓸 수 있는 엔진, 라이브러리, API 생성기, 플러그인 SDK 와 그 의존 관계.
 
-`crates/` 아래의 각 크레이트에는 API와 이식 과정의 설계 결정을 담은 짧은 README가 있습니다. Guidedoc은 문서 테이블을 직접 소유하고 변환 사이에 재사용하므로, 안정 상태의 변환은 메모리를 할당하지 않습니다. 또한 힌트가 포함된 구조화된 진단을 반환합니다. 호스트는 파일, 예산, 캐시, 게시, 내장 컴파일러를 관리합니다. `--untrusted` 는 기능을 제한할 뿐 프로세스 샌드박스나 모든 네이티브 자원의 상한은 아닙니다. 베타는 macOS와 Linux의 신뢰할 수 있는 문서 프로젝트를 대상으로 합니다.
-
-Guidedog 0.6 이하는 Odin으로 작성되었습니다. 버전 0.7은 Rust로 이식한 것으로 명령, 옵션, `conf.toml` 키, 지시문, 역할, 출력을 그대로 유지합니다. 바뀐 점은 [변경 기록](CHANGELOG.md)에 있습니다.
+`crates/` 아래의 각 크레이트에는 API와 설계 결정을 담은 짧은 README가 있습니다. Guidedoc은 문서 테이블을 직접 소유하고 변환 사이에 재사용하므로, 안정 상태의 변환은 메모리를 할당하지 않습니다. 또한 힌트가 포함된 구조화된 진단을 반환합니다. 호스트는 파일, 예산, 캐시, 게시, 내장 컴파일러를 관리합니다. `--untrusted` 는 기능을 제한할 뿐 프로세스 샌드박스나 모든 네이티브 자원의 상한은 아닙니다. 베타는 macOS와 Linux의 신뢰할 수 있는 문서 프로젝트를 대상으로 합니다.
 
 ## 기여자와 라이선스
 
 **Vikrant Rathore**가 만들고 **Ronak Rathore**와 **Kanak Rathore**가 개발을 도왔습니다. 이슈와 풀 리퀘스트를 통한 기여를 환영합니다. 문서에는 이름이나 계정 이름만 표기하고 개인 이메일 주소는 공개하지 않습니다. Git 작성자 설정은 별도로 관리합니다.
 
-Sphinx와 Georg Brandl, Docutils와 David Goodger, Typst, Tree-sitter와 Max Brunsfeld, Graphviz, Rust 프로젝트와 그 커뮤니티, 그리고 Guidedog의 첫 구현을 담은 언어를 만든 Ginger Bill과 Odin 커뮤니티에 감사드립니다.
+Sphinx와 Georg Brandl, Docutils와 David Goodger, Typst, Tree-sitter와 Max Brunsfeld, Graphviz, Rust 프로젝트와 그 커뮤니티, 그리고 Ginger Bill과 Odin 커뮤니티에 감사드립니다.
 
 Guidedog은 [GNU Lesser General Public License v3.0 이상](LICENSE)(LGPL-3.0-or-later)으로 배포합니다. LGPL은 [GNU General Public License v3.0](COPYING)에 추가 허가를 더한 라이선스입니다. 다른 라이선스 조건이 필요하면 저자에게 문의하세요. 연락 방법과, Rust 크레이트와 포함된 글꼴처럼 각자의 라이선스를 따르는 서드파티 구성 요소 목록은 [NOTICE](NOTICE)에 있습니다. 추가 허가에 따라 Guidedog을 Graphviz와 링크하여 배포할 수 있습니다. 자세한 내용은 [NOTICE](NOTICE)를 참고하세요.

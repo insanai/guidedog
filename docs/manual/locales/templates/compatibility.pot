@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-15 06:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -301,17 +301,17 @@ msgid "Verification and real projects"
 msgstr ""
 
 #: ../../compatibility.rst:180
-msgid "The Odin implementation's ``tools/sphinxdiff`` compared 42 pinned Sphinx test roots. It checked pages, identifiers, body links, inventories, numbering, and diagnostics. Its stored results explained deliberate differences, for example precise source locations, stable reading-order numbering, and explicit reports for omitted target-specific raw content. The Rust crates keep the reader conformance tests (:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) and their expected outputs."
+msgid "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx 9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, body links, inventories, numbering, and diagnostics. The run of 15 October 2026 checked the Rust implementation and agrees with the Odin implementation's record on every root but one, where Sphinx itself changed (:doc:`internals/sphinx-comparison`). The stored results explain deliberate differences, for example precise source locations, stable reading-order numbering, and explicit reports for omitted target-specific raw content. The reader conformance tests (:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) keep their expected outputs, and ``cargo xtask verify-docutils`` checks those against a pinned Docutils 0.22.4: all 98 trees still match."
 msgstr ""
 
-#: ../../compatibility.rst:188
+#: ../../compatibility.rst:191
 msgid "The remote validation of the Odin implementation on 1 October 2026 ran clean and unchanged HTML and PDF builds for CPython, Django, and Flask. All twelve builds succeeded and retained the baseline diagnostics and link results. It also passed 1,039 Linux tests and 94 targeted AddressSanitizer tests."
 msgstr ""
 
-#: ../../compatibility.rst:193
+#: ../../compatibility.rst:196
 msgid "Those projects contain unsupported Python extension constructs. Their diagnostics remain part of the evidence. A zero exit status does not mean all their private directives were reproduced. We run with ``-W`` when publishing requires zero diagnostics."
 msgstr ""
 
-#: ../../compatibility.rst:198
+#: ../../compatibility.rst:201
 msgid "The historical measurements and source revisions remain in ``docs/manual/evidence/manuals.rst``. They were made with the Odin implementation (release 0.6). User-facing behavior carries over to the Rust implementation, but its timings and memory use must be measured again. These measurements describe the recorded workloads. They are not universal speed or memory bounds."
 msgstr ""

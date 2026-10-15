@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 04:11+0000\n"
+"POT-Creation-Date: 2026-10-15 05:49+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -20,19 +20,33 @@ msgid "Internationalization"
 msgstr "国际化"
 
 #: ../../intl.rst:6
-msgid "We translate the explanation and keep its structure. Guidedog extracts message catalogs, merges translations, and builds for a chosen language. The source text stays the reference. A missing translation falls back rather than inventing text."
-msgstr "我们翻译的是讲解，结构保持不变。Guidedog 提取消息目录、合并译文，并按选定的语言构建。源文本始终是基准。缺少译文时回退到原文，而不是凭空编造。"
+msgid ""
+"We translate the explanation and keep its structure. Guidedog extracts "
+"message catalogs, merges translations, and builds for a chosen language. "
+"The source text stays the reference. A missing translation falls back "
+"rather than inventing text."
+msgstr ""
+"我们翻译的是讲解，结构保持不变。Guidedog "
+"提取消息目录、合并译文，并按选定的语言构建。源文本始终是基准。缺少译文时回退到原文，而不是凭空编造。"
 
 #: ../../intl.rst:10
 msgid "The workflow"
 msgstr "工作流程"
 
 #: ../../intl.rst:15
-msgid "The gettext builder writes POT templates from the sources. guidedog intl update merges them into one PO catalog per language. A translator fills the catalogs, and a build with a language reads them to make that language's site and book."
-msgstr "gettext 构建器从源文件生成 POT 模板。guidedog intl update 把它们合并为每种语言一个 PO 目录。译者填写目录，指定语言的构建读取这些目录，生成该语言的网站和书籍。"
+msgid ""
+"The gettext builder writes POT templates from the sources. guidedog intl "
+"update merges them into one PO catalog per language. A translator fills "
+"the catalogs, and a build with a language reads them to make that "
+"language's site and book."
+msgstr ""
+"gettext 构建器从源文件生成 POT 模板。guidedog intl update 把它们合并为每种语言一个 PO "
+"目录。译者填写目录，指定语言的构建读取这些目录，生成该语言的网站和书籍。"
 
 #: ../../intl.rst:15
-msgid "Sources become templates, templates become catalogs, and catalogs feed each language's build."
+msgid ""
+"Sources become templates, templates become catalogs, and catalogs feed "
+"each language's build."
 msgstr "源文件生成模板，模板生成目录，目录供各语言的构建使用。"
 
 #: ../../intl.rst:37
@@ -40,8 +54,14 @@ msgid "Write the message templates with the ``gettext`` builder:"
 msgstr "使用 ``gettext`` 构建器生成消息模板："
 
 #: ../../intl.rst:43
-msgid "It writes one template (``.pot``) per text domain into ``_build/gettext``. Every paragraph, title, list item, table cell, caption, admonition, term, and field of the documents becomes a message, with the file and line it comes from."
-msgstr "它在 ``_build/gettext`` 中为每个文本域写出一个模板（``.pot``）。文档中的每个段落、标题、列表项、表格单元格、题注、提示框、术语和字段都会成为一条消息，并记录其所在的文件和行号。"
+msgid ""
+"It writes one template (``.pot``) per text domain into "
+"``_build/gettext``. Every paragraph, title, list item, table cell, "
+"caption, admonition, term, and field of the documents becomes a message, "
+"with the file and line it comes from."
+msgstr ""
+"它在 ``_build/gettext`` "
+"中为每个文本域写出一个模板（``.pot``）。文档中的每个段落、标题、列表项、表格单元格、题注、提示框、术语和字段都会成为一条消息，并记录其所在的文件和行号。"
 
 #: ../../intl.rst:47
 msgid ""
@@ -50,11 +70,22 @@ msgid ""
 msgstr "像 ``sphinx-intl update`` 一样，为各语言创建或更新清单："
 
 #: ../../intl.rst:53
-msgid "The catalogs appear in ``locales/de/LC_MESSAGES/*.po``. On later runs the command merges the new templates into them, as ``msgmerge`` does. Translations are kept. A message whose source changed gets the old translation, marked *fuzzy* for review. Messages no longer in the documents are kept at the end as obsolete (``#~``), so a translation can come back."
-msgstr "目录文件位于 ``locales/de/LC_MESSAGES/*.po``。之后再运行时，命令会像 ``msgmerge`` 一样把新模板合并进去。已有译文会保留。源文本有变化的消息沿用旧译文，并标记为 *fuzzy* 等待复核。文档中已不存在的消息作为废弃条目（``#~``）保留在末尾，以便译文日后还能恢复。"
+msgid ""
+"The catalogs appear in ``locales/de/LC_MESSAGES/*.po``. On later runs the "
+"command merges the new templates into them, as ``msgmerge`` does. "
+"Translations are kept. A message whose source changed gets the old "
+"translation, marked *fuzzy* for review. Messages no longer in the "
+"documents are kept at the end as obsolete (``#~``), so a translation can "
+"come back."
+msgstr ""
+"目录文件位于 ``locales/de/LC_MESSAGES/*.po``。之后再运行时，命令会像 ``msgmerge`` "
+"一样把新模板合并进去。已有译文会保留。源文本有变化的消息沿用旧译文，并标记为 *fuzzy* "
+"等待复核。文档中已不存在的消息作为废弃条目（``#~``）保留在末尾，以便译文日后还能恢复。"
 
 #: ../../intl.rst:59
-msgid "Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a message once its translation is right. Fuzzy translations are not used."
+msgid ""
+"Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a "
+"message once its translation is right. Fuzzy translations are not used."
 msgstr "翻译：填写每个 ``msgstr``。译文确认无误后，删除该消息的 ``#, fuzzy`` 行。fuzzy 译文不会被使用。"
 
 #: ../../intl.rst:67
@@ -70,11 +101,24 @@ msgid "or set ``language = \"de\"`` in ``conf.toml``."
 msgstr "也可在 ``conf.toml`` 中设置 ``language = \"de\"``\\ 。"
 
 #: ../../intl.rst:82
-msgid "Each book has a language suffix: ``manual.pdf`` becomes ``manual-de.pdf``. A build publishes one complete generation, so we use separate destinations to keep several editions. For example, we build German with ``guidedog build -b pdf docs build/books/de -D language=de`` and English with ``guidedog build -b pdf docs build/books/en -D language=en``."
-msgstr "每本书都带有语言后缀：``manual.pdf`` 变成 ``manual-de.pdf``。一次构建发布一代完整输出，所以要保留多个语言版本，就使用不同的输出位置。例如，德文版用 ``guidedog build -b pdf docs build/books/de -D language=de`` 构建，英文版用 ``guidedog build -b pdf docs build/books/en -D language=en`` 构建。"
+msgid ""
+"Each book has a language suffix: ``manual.pdf`` becomes "
+"``manual-de.pdf``. A build publishes one complete generation, so we use "
+"separate destinations to keep several editions. For example, we build "
+"German with ``guidedog build -b pdf docs build/books/de -D language=de`` "
+"and English with ``guidedog build -b pdf docs build/books/en -D "
+"language=en``."
+msgstr ""
+"每本书都带有语言后缀：``manual.pdf`` 变成 "
+"``manual-de.pdf``。一次构建发布一代完整输出，所以要保留多个语言版本，就使用不同的输出位置。例如，德文版用 ``guidedog "
+"build -b pdf docs build/books/de -D language=de`` 构建，英文版用 ``guidedog "
+"build -b pdf docs build/books/en -D language=en`` 构建。"
 
 #: ../../intl.rst:88
-msgid "Only the documents whose catalog changed are read again, as with any other input of a document. Adding or removing a catalog reads every document again."
+msgid ""
+"Only the documents whose catalog changed are read again, as with any "
+"other input of a document. Adding or removing a catalog reads every "
+"document again."
 msgstr "和文档的其他输入一样，只有目录发生变化的文档才会重新读取。添加或删除目录会重新读取所有文档。"
 
 #: ../../intl.rst:91
@@ -112,11 +156,22 @@ msgid ""
 msgstr "引用必须保持一致。译文保留消息中的每个引用及其写法，只改动周围文字和显示标题："
 
 #: ../../intl.rst:111
-msgid "When a translation drops a reference, the build warns (``inconsistent references in translated message``, as Sphinx does) and uses the translation. A translation may name a reference the original does not have. That reference could not be resolved, so the build warns and keeps the original text. When the reader refuses a translation's markup, the build also keeps the original, with a warning that quotes the translation."
-msgstr "译文丢失了某个引用时，构建会发出警告（与 Sphinx 相同，``inconsistent references in translated message``），但仍使用译文。译文也可能包含原文没有的引用。这样的引用无法解析，所以构建会警告并保留原文。读取器无法接受译文中的标记时，构建同样保留原文，并在警告中引用该译文。"
+msgid ""
+"When a translation drops a reference, the build warns (``inconsistent "
+"references in translated message``, as Sphinx does) and uses the "
+"translation. A translation may name a reference the original does not "
+"have. That reference could not be resolved, so the build warns and keeps "
+"the original text. When the reader refuses a translation's markup, the "
+"build also keeps the original, with a warning that quotes the translation."
+msgstr ""
+"译文丢失了某个引用时，构建会发出警告（与 Sphinx 相同，``inconsistent references in translated "
+"message``），但仍使用译文。译文也可能包含原文没有的引用。这样的引用无法解析，所以构建会警告并保留原文。读取器无法接受译文中的标记时，构建同样保留原文，并在警告中引用该译文。"
 
 #: ../../intl.rst:117
-msgid "Section anchors do not change with the language. A translated title keeps the anchor of its original, so links into the site, from inside and outside, keep working."
+msgid ""
+"Section anchors do not change with the language. A translated title keeps "
+"the anchor of its original, so links into the site, from inside and "
+"outside, keep working."
 msgstr "章节锚点不随语言变化。翻译后的标题沿用原文的锚点，因此站内和站外指向网站的链接都能继续使用。"
 
 #: ../../intl.rst:120
@@ -311,8 +366,14 @@ msgid ""
 msgstr "Guidedog 内置的清单，支持德语、西班牙语、法语、日语、巴西葡萄牙语、俄语及简体中文。"
 
 #: ../../intl.rst:184
-msgid "The English words are the message identifiers. They are Sphinx's where Sphinx has the same word, so a project's ``sphinx.po`` keeps working. A project can override any word, or add a language, with its own ``guidedog.po``."
-msgstr "消息标识符就是英文原词。凡是 Sphinx 有相同词语的地方，都采用 Sphinx 的标识符，所以项目现有的 ``sphinx.po`` 可以继续使用。项目可以用自己的 ``guidedog.po`` 覆盖任意词语，或添加一种语言。"
+msgid ""
+"The English words are the message identifiers. They are Sphinx's where "
+"Sphinx has the same word, so a project's ``sphinx.po`` keeps working. A "
+"project can override any word, or add a language, with its own "
+"``guidedog.po``."
+msgstr ""
+"消息标识符就是英文原词。凡是 Sphinx 有相同词语的地方，都采用 Sphinx 的标识符，所以项目现有的 ``sphinx.po`` "
+"可以继续使用。项目可以用自己的 ``guidedog.po`` 覆盖任意词语，或添加一种语言。"
 
 #: ../../intl.rst:188
 msgid ""
@@ -333,9 +394,27 @@ msgid "Dates"
 msgstr "日期"
 
 #: ../../intl.rst:202
-msgid "``|today|``, the book's date, and a page's ``last_updated`` are formatted as Sphinx formats them. ``today_fmt`` and ``html_last_updated_fmt`` are ``strftime`` formats. The names of months and days follow ``language``, so ``%b %d, %Y`` is \"Sep 29, 2026\" in English and \"Sept. 29, 2026\" in German. An empty format is ``_('%b %d, %Y')``, which a catalog may translate. The names come from the Unicode CLDR for the languages above. Other languages use English, as Sphinx does for a language Babel does not know."
-msgstr "``|today|``、书籍日期和页面的 ``last_updated`` 都按 Sphinx 的方式格式化。``today_fmt`` 和 ``html_last_updated_fmt`` 是 ``strftime`` 格式。月份和星期的名称跟随 ``language``，所以 ``%b %d, %Y`` 在英文中是“Sep 29, 2026”，在德文中是“Sept. 29, 2026”。空格式即 ``_('%b %d, %Y')``，可以在目录中翻译。上述语言的名称来自 Unicode CLDR。其他语言使用英文，与 Sphinx 处理 Babel 不认识的语言时一样。"
+msgid ""
+"``|today|``, the book's date, and a page's ``last_updated`` are formatted "
+"as Sphinx formats them. ``today_fmt`` and ``html_last_updated_fmt`` are "
+"``strftime`` formats. The names of months and days follow ``language``, "
+"so ``%b %d, %Y`` is \"Sep 29, 2026\" in English and \"Sept. 29, 2026\" in "
+"German. An empty format is ``_('%b %d, %Y')``, which a catalog may "
+"translate. The names come from the Unicode CLDR for the languages above. "
+"Other languages use English, as Sphinx does for a language Babel does not "
+"know."
+msgstr ""
+"``|today|``、书籍日期和页面的 ``last_updated`` 都按 Sphinx 的方式格式化。``today_fmt`` 和 "
+"``html_last_updated_fmt`` 是 ``strftime`` 格式。月份和星期的名称跟随 ``language``，所以 "
+"``%b %d, %Y`` 在英文中是“Sep 29, 2026”，在德文中是“Sept. 29, 2026”。空格式即 ``_('%b %d, "
+"%Y')``，可以在目录中翻译。上述语言的名称来自 Unicode CLDR。其他语言使用英文，与 Sphinx 处理 Babel "
+"不认识的语言时一样。"
 
 #: ../../intl.rst:209
-msgid "The date is the local date, in the local time zone. We set ``SOURCE_DATE_EPOCH`` (seconds since 1970, in UTC) to build reproducibly, with the same dates on every machine."
-msgstr "日期是本地时区的本地日期。设置 ``SOURCE_DATE_EPOCH`` （自 1970 年起的秒数，UTC）即可实现可重现构建，每台机器上的日期都相同。"
+msgid ""
+"The date is the local date, in the local time zone. We set "
+"``SOURCE_DATE_EPOCH`` (seconds since 1970, in UTC) to build reproducibly, "
+"with the same dates on every machine."
+msgstr ""
+"日期是本地时区的本地日期。设置 ``SOURCE_DATE_EPOCH`` （自 1970 "
+"年起的秒数，UTC）即可实现可重现构建，每台机器上的日期都相同。"

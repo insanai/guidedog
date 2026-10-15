@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 04:11+0000\n"
+"POT-Creation-Date: 2026-10-15 05:49+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -20,19 +20,33 @@ msgid "Internationalization"
 msgstr "国際化"
 
 #: ../../intl.rst:6
-msgid "We translate the explanation and keep its structure. Guidedog extracts message catalogs, merges translations, and builds for a chosen language. The source text stays the reference. A missing translation falls back rather than inventing text."
-msgstr "説明文を翻訳し、構造はそのまま保ちます。Guidedog はメッセージカタログを抽出し、翻訳をマージして、指定した言語でビルドします。基準は常に原文です。翻訳がない部分は、文章をでっち上げずに原文にフォールバックします。"
+msgid ""
+"We translate the explanation and keep its structure. Guidedog extracts "
+"message catalogs, merges translations, and builds for a chosen language. "
+"The source text stays the reference. A missing translation falls back "
+"rather than inventing text."
+msgstr ""
+"説明文を翻訳し、構造はそのまま保ちます。Guidedog "
+"はメッセージカタログを抽出し、翻訳をマージして、指定した言語でビルドします。基準は常に原文です。翻訳がない部分は、文章をでっち上げずに原文にフォールバックします。"
 
 #: ../../intl.rst:10
 msgid "The workflow"
 msgstr "作業の流れ"
 
 #: ../../intl.rst:15
-msgid "The gettext builder writes POT templates from the sources. guidedog intl update merges them into one PO catalog per language. A translator fills the catalogs, and a build with a language reads them to make that language's site and book."
-msgstr "gettext ビルダーがソースから POT テンプレートを書き出します。guidedog intl update は、それを言語ごとに一つの PO カタログへマージします。翻訳者がカタログを埋め、言語を指定したビルドがそれを読み込んで、その言語のサイトと本を作ります。"
+msgid ""
+"The gettext builder writes POT templates from the sources. guidedog intl "
+"update merges them into one PO catalog per language. A translator fills "
+"the catalogs, and a build with a language reads them to make that "
+"language's site and book."
+msgstr ""
+"gettext ビルダーがソースから POT テンプレートを書き出します。guidedog intl update は、それを言語ごとに一つの "
+"PO カタログへマージします。翻訳者がカタログを埋め、言語を指定したビルドがそれを読み込んで、その言語のサイトと本を作ります。"
 
 #: ../../intl.rst:15
-msgid "Sources become templates, templates become catalogs, and catalogs feed each language's build."
+msgid ""
+"Sources become templates, templates become catalogs, and catalogs feed "
+"each language's build."
 msgstr "ソースからテンプレートを、テンプレートからカタログを作り、カタログを各言語のビルドに使います。"
 
 #: ../../intl.rst:37
@@ -40,8 +54,14 @@ msgid "Write the message templates with the ``gettext`` builder:"
 msgstr "``gettext`` ビルダーでメッセージテンプレートを作ります。"
 
 #: ../../intl.rst:43
-msgid "It writes one template (``.pot``) per text domain into ``_build/gettext``. Every paragraph, title, list item, table cell, caption, admonition, term, and field of the documents becomes a message, with the file and line it comes from."
-msgstr "テキストドメインごとに一つのテンプレート（``.pot``）を ``_build/gettext`` に書き出します。文書中の段落、見出し、リスト項目、表のセル、キャプション、注意書き、用語、フィールドがすべてメッセージになり、出典のファイルと行番号も記録されます。"
+msgid ""
+"It writes one template (``.pot``) per text domain into "
+"``_build/gettext``. Every paragraph, title, list item, table cell, "
+"caption, admonition, term, and field of the documents becomes a message, "
+"with the file and line it comes from."
+msgstr ""
+"テキストドメインごとに一つのテンプレート（``.pot``）を ``_build/gettext`` "
+"に書き出します。文書中の段落、見出し、リスト項目、表のセル、キャプション、注意書き、用語、フィールドがすべてメッセージになり、出典のファイルと行番号も記録されます。"
 
 #: ../../intl.rst:47
 msgid ""
@@ -50,12 +70,25 @@ msgid ""
 msgstr "``sphinx-intl update`` と同様に、各言語のカタログを作成・更新します。"
 
 #: ../../intl.rst:53
-msgid "The catalogs appear in ``locales/de/LC_MESSAGES/*.po``. On later runs the command merges the new templates into them, as ``msgmerge`` does. Translations are kept. A message whose source changed gets the old translation, marked *fuzzy* for review. Messages no longer in the documents are kept at the end as obsolete (``#~``), so a translation can come back."
-msgstr "カタログは ``locales/de/LC_MESSAGES/*.po`` に作られます。2 回目以降は、``msgmerge`` と同じように新しいテンプレートをカタログにマージします。既存の訳文は残ります。原文が変わったメッセージには古い訳文が入り、確認用に *fuzzy* の印が付きます。文書から消えたメッセージは、廃止項目（``#~``）として末尾に残るので、あとで訳文を復活させられます。"
+msgid ""
+"The catalogs appear in ``locales/de/LC_MESSAGES/*.po``. On later runs the "
+"command merges the new templates into them, as ``msgmerge`` does. "
+"Translations are kept. A message whose source changed gets the old "
+"translation, marked *fuzzy* for review. Messages no longer in the "
+"documents are kept at the end as obsolete (``#~``), so a translation can "
+"come back."
+msgstr ""
+"カタログは ``locales/de/LC_MESSAGES/*.po`` に作られます。2 回目以降は、``msgmerge`` "
+"と同じように新しいテンプレートをカタログにマージします。既存の訳文は残ります。原文が変わったメッセージには古い訳文が入り、確認用に *fuzzy* "
+"の印が付きます。文書から消えたメッセージは、廃止項目（``#~``）として末尾に残るので、あとで訳文を復活させられます。"
 
 #: ../../intl.rst:59
-msgid "Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a message once its translation is right. Fuzzy translations are not used."
-msgstr "翻訳：各 ``msgstr`` を埋めます。訳文が正しくなったら、そのメッセージの ``#, fuzzy`` 行を削除します。fuzzy の訳文は使われません。"
+msgid ""
+"Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a "
+"message once its translation is right. Fuzzy translations are not used."
+msgstr ""
+"翻訳：各 ``msgstr`` を埋めます。訳文が正しくなったら、そのメッセージの ``#, fuzzy`` 行を削除します。fuzzy "
+"の訳文は使われません。"
 
 #: ../../intl.rst:67
 msgid "See how far the translation is, as ``sphinx-intl stat`` does:"
@@ -70,11 +103,24 @@ msgid "or set ``language = \"de\"`` in ``conf.toml``."
 msgstr "または ``conf.toml`` に ``language = \"de\"`` を設定します。"
 
 #: ../../intl.rst:82
-msgid "Each book has a language suffix: ``manual.pdf`` becomes ``manual-de.pdf``. A build publishes one complete generation, so we use separate destinations to keep several editions. For example, we build German with ``guidedog build -b pdf docs build/books/de -D language=de`` and English with ``guidedog build -b pdf docs build/books/en -D language=en``."
-msgstr "本には言語の接尾辞が付きます。``manual.pdf`` は ``manual-de.pdf`` になります。ビルドは一つの完全な世代を公開するので、複数の版を残すには出力先を分けます。たとえば、ドイツ語版は ``guidedog build -b pdf docs build/books/de -D language=de``、英語版は ``guidedog build -b pdf docs build/books/en -D language=en`` でビルドします。"
+msgid ""
+"Each book has a language suffix: ``manual.pdf`` becomes "
+"``manual-de.pdf``. A build publishes one complete generation, so we use "
+"separate destinations to keep several editions. For example, we build "
+"German with ``guidedog build -b pdf docs build/books/de -D language=de`` "
+"and English with ``guidedog build -b pdf docs build/books/en -D "
+"language=en``."
+msgstr ""
+"本には言語の接尾辞が付きます。``manual.pdf`` は ``manual-de.pdf`` "
+"になります。ビルドは一つの完全な世代を公開するので、複数の版を残すには出力先を分けます。たとえば、ドイツ語版は ``guidedog build "
+"-b pdf docs build/books/de -D language=de``、英語版は ``guidedog build -b pdf "
+"docs build/books/en -D language=en`` でビルドします。"
 
 #: ../../intl.rst:88
-msgid "Only the documents whose catalog changed are read again, as with any other input of a document. Adding or removing a catalog reads every document again."
+msgid ""
+"Only the documents whose catalog changed are read again, as with any "
+"other input of a document. Adding or removing a catalog reads every "
+"document again."
 msgstr "文書のほかの入力と同じく、カタログが変わった文書だけを読み直します。カタログを追加または削除すると、すべての文書を読み直します。"
 
 #: ../../intl.rst:91
@@ -112,11 +158,22 @@ msgid ""
 msgstr "参照は同じままにしてください。すべての参照を同じ形で残し、周囲の文章と表示タイトルだけを変えます。"
 
 #: ../../intl.rst:111
-msgid "When a translation drops a reference, the build warns (``inconsistent references in translated message``, as Sphinx does) and uses the translation. A translation may name a reference the original does not have. That reference could not be resolved, so the build warns and keeps the original text. When the reader refuses a translation's markup, the build also keeps the original, with a warning that quotes the translation."
-msgstr "訳文から参照が抜けている場合、ビルドは警告（Sphinx と同じ ``inconsistent references in translated message``）を出し、訳文を使います。訳文に原文にない参照が含まれることもあります。その参照は解決できないため、ビルドは警告を出して原文を使います。リーダーが訳文のマークアップを受け付けない場合も原文を使い、その訳文を引用した警告を出します。"
+msgid ""
+"When a translation drops a reference, the build warns (``inconsistent "
+"references in translated message``, as Sphinx does) and uses the "
+"translation. A translation may name a reference the original does not "
+"have. That reference could not be resolved, so the build warns and keeps "
+"the original text. When the reader refuses a translation's markup, the "
+"build also keeps the original, with a warning that quotes the translation."
+msgstr ""
+"訳文から参照が抜けている場合、ビルドは警告（Sphinx と同じ ``inconsistent references in translated "
+"message``）を出し、訳文を使います。訳文に原文にない参照が含まれることもあります。その参照は解決できないため、ビルドは警告を出して原文を使います。リーダーが訳文のマークアップを受け付けない場合も原文を使い、その訳文を引用した警告を出します。"
 
 #: ../../intl.rst:117
-msgid "Section anchors do not change with the language. A translated title keeps the anchor of its original, so links into the site, from inside and outside, keep working."
+msgid ""
+"Section anchors do not change with the language. A translated title keeps "
+"the anchor of its original, so links into the site, from inside and "
+"outside, keep working."
 msgstr "節のアンカーは言語によって変わりません。翻訳した見出しも原文のアンカーを引き継ぐので、サイト内外からのリンクはそのまま機能します。"
 
 #: ../../intl.rst:120
@@ -314,8 +371,14 @@ msgid ""
 msgstr "組み込みカタログはドイツ語、スペイン語、フランス語、日本語、ブラジルポルトガル語、ロシア語、簡体字中国語に対応します。"
 
 #: ../../intl.rst:184
-msgid "The English words are the message identifiers. They are Sphinx's where Sphinx has the same word, so a project's ``sphinx.po`` keeps working. A project can override any word, or add a language, with its own ``guidedog.po``."
-msgstr "メッセージ ID は英語の語句そのものです。Sphinx に同じ語句があればその ID を使うため、プロジェクトの ``sphinx.po`` はそのまま使えます。プロジェクト独自の ``guidedog.po`` で、任意の語句を上書きしたり、言語を追加したりできます。"
+msgid ""
+"The English words are the message identifiers. They are Sphinx's where "
+"Sphinx has the same word, so a project's ``sphinx.po`` keeps working. A "
+"project can override any word, or add a language, with its own "
+"``guidedog.po``."
+msgstr ""
+"メッセージ ID は英語の語句そのものです。Sphinx に同じ語句があればその ID を使うため、プロジェクトの ``sphinx.po`` "
+"はそのまま使えます。プロジェクト独自の ``guidedog.po`` で、任意の語句を上書きしたり、言語を追加したりできます。"
 
 #: ../../intl.rst:188
 msgid ""
@@ -338,9 +401,27 @@ msgid "Dates"
 msgstr "日付"
 
 #: ../../intl.rst:202
-msgid "``|today|``, the book's date, and a page's ``last_updated`` are formatted as Sphinx formats them. ``today_fmt`` and ``html_last_updated_fmt`` are ``strftime`` formats. The names of months and days follow ``language``, so ``%b %d, %Y`` is \"Sep 29, 2026\" in English and \"Sept. 29, 2026\" in German. An empty format is ``_('%b %d, %Y')``, which a catalog may translate. The names come from the Unicode CLDR for the languages above. Other languages use English, as Sphinx does for a language Babel does not know."
-msgstr "``|today|``、本の日付、ページの ``last_updated`` は、Sphinx と同じ方法で整形します。``today_fmt`` と ``html_last_updated_fmt`` は ``strftime`` 形式です。月と曜日の名前は ``language`` に従うので、``%b %d, %Y`` は英語では「Sep 29, 2026」、ドイツ語では「Sept. 29, 2026」になります。形式が空の場合は ``_('%b %d, %Y')`` で、カタログで翻訳できます。上記の言語の名前は Unicode CLDR から取っています。それ以外の言語では、Babel が知らない言語に対する Sphinx と同じく英語を使います。"
+msgid ""
+"``|today|``, the book's date, and a page's ``last_updated`` are formatted "
+"as Sphinx formats them. ``today_fmt`` and ``html_last_updated_fmt`` are "
+"``strftime`` formats. The names of months and days follow ``language``, "
+"so ``%b %d, %Y`` is \"Sep 29, 2026\" in English and \"Sept. 29, 2026\" in "
+"German. An empty format is ``_('%b %d, %Y')``, which a catalog may "
+"translate. The names come from the Unicode CLDR for the languages above. "
+"Other languages use English, as Sphinx does for a language Babel does not "
+"know."
+msgstr ""
+"``|today|``、本の日付、ページの ``last_updated`` は、Sphinx と同じ方法で整形します。``today_fmt`` "
+"と ``html_last_updated_fmt`` は ``strftime`` 形式です。月と曜日の名前は ``language`` "
+"に従うので、``%b %d, %Y`` は英語では「Sep 29, 2026」、ドイツ語では「Sept. 29, "
+"2026」になります。形式が空の場合は ``_('%b %d, %Y')`` で、カタログで翻訳できます。上記の言語の名前は Unicode "
+"CLDR から取っています。それ以外の言語では、Babel が知らない言語に対する Sphinx と同じく英語を使います。"
 
 #: ../../intl.rst:209
-msgid "The date is the local date, in the local time zone. We set ``SOURCE_DATE_EPOCH`` (seconds since 1970, in UTC) to build reproducibly, with the same dates on every machine."
-msgstr "日付はローカルタイムゾーンでの日付です。``SOURCE_DATE_EPOCH`` （1970 年からの秒数、UTC）を設定すると、どのマシンでも同じ日付になる再現可能なビルドができます。"
+msgid ""
+"The date is the local date, in the local time zone. We set "
+"``SOURCE_DATE_EPOCH`` (seconds since 1970, in UTC) to build reproducibly, "
+"with the same dates on every machine."
+msgstr ""
+"日付はローカルタイムゾーンでの日付です。``SOURCE_DATE_EPOCH`` （1970 "
+"年からの秒数、UTC）を設定すると、どのマシンでも同じ日付になる再現可能なビルドができます。"

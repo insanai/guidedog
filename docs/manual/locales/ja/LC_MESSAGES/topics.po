@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 04:11+0000\n"
+"POT-Creation-Date: 2026-10-15 05:49+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -33,7 +33,9 @@ msgid "A flow chart"
 msgstr "フローチャート"
 
 #: ../../topics/diagrams.rst:13
-msgid "If the request fits the limits, the workspace buffer grows and conversion continues; otherwise the conversion ends with a Limit result."
+msgid ""
+"If the request fits the limits, the workspace buffer grows and conversion "
+"continues; otherwise the conversion ends with a Limit result."
 msgstr "要求が制限内に収まれば、ワークスペースのバッファーが拡張され、変換が続きます。収まらなければ、変換は Limit の結果で終了します。"
 
 #: ../../topics/diagrams.rst:13
@@ -41,8 +43,12 @@ msgid "A conversion checks its limits before a buffer grows."
 msgstr "変換は、バッファーを拡張する前に制限を確認します。"
 
 #: ../../topics/diagrams.rst:33
-msgid "The drawing names the decision at the growth step. It does not suggest that running out of room aborts the program: a bound produces a result the caller can report. This distinction is part of the contract."
-msgstr "図では、拡張の手前にある判断を明示しています。領域が足りなくなるとプログラムが中断する、という意味ではありません。上限に達すると、呼び出し側が報告できる結果が返ります。この違いは契約の一部です。"
+msgid ""
+"The drawing names the decision at the growth step. It does not suggest "
+"that running out of room aborts the program: a bound produces a result "
+"the caller can report. This distinction is part of the contract."
+msgstr ""
+"図では、拡張の手前にある判断を明示しています。領域が足りなくなるとプログラムが中断する、という意味ではありません。上限に達すると、呼び出し側が報告できる結果が返ります。この違いは契約の一部です。"
 
 #: ../../topics/diagrams.rst:38
 msgid "Author a graph"
@@ -141,12 +147,30 @@ msgid "A separate ownership or allocation boundary; violet."
 msgstr "所有権またはメモリ割り当ての独立した境界。紫。"
 
 #: ../../topics/diagrams.rst:93
-msgid "For example, ``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark role. Classes do not choose shapes or add labels. We write those explicitly, so the drawing also works in monochrome. Unclassified steps use green. This palette is opt-in. We do not apply it to artwork whose exact colors carry data."
-msgstr "たとえば ``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` は、ライト表示の見た目とダーク表示での役割を同時に指定します。クラスは形を選んだりラベルを付けたりはしません。形とラベルは明示的に書きます。そうすれば白黒でも図が読めます。分類されていない処理は緑です。この配色は使うと決めた場合にだけ適用されます。正確な色そのものがデータを表す図には使いません。"
+msgid ""
+"For example, ``source [class=\"gd-input\", shape=note, "
+"fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
+"role. Classes do not choose shapes or add labels. We write those "
+"explicitly, so the drawing also works in monochrome. Unclassified steps "
+"use green. This palette is opt-in. We do not apply it to artwork whose "
+"exact colors carry data."
+msgstr ""
+"たとえば ``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` "
+"は、ライト表示の見た目とダーク表示での役割を同時に指定します。クラスは形を選んだりラベルを付けたりはしません。形とラベルは明示的に書きます。そうすれば白黒でも図が読めます。分類されていない処理は緑です。この配色は使うと決めた場合にだけ適用されます。正確な色そのものがデータを表す図には使いません。"
 
 #: ../../topics/diagrams.rst:99
-msgid "The light DOT attributes remain the PDF master. The book receives an SVG without the adaptive stylesheet. Printed HTML selects the light scheme too. Keep both palettes legible and test the actual book. Transparency alone proves neither. The inheritance rule is defined by the `CSS color-scheme specification <https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
-msgstr "PDF の基準は引き続きライトの DOT 属性です。本には、可変スタイルシートを含まない SVG が渡ります。HTML を印刷する場合もライトの配色が選ばれます。両方の配色が読みやすいことを確かめ、実際の本で確認してください。背景が透明というだけでは、どちらの可読性も保証されません。継承の規則は `CSS color-scheme の仕様 <https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ で定められています。"
+msgid ""
+"The light DOT attributes remain the PDF master. The book receives an SVG "
+"without the adaptive stylesheet. Printed HTML selects the light scheme "
+"too. Keep both palettes legible and test the actual book. Transparency "
+"alone proves neither. The inheritance rule is defined by the `CSS "
+"color-scheme specification "
+"<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
+msgstr ""
+"PDF の基準は引き続きライトの DOT 属性です。本には、可変スタイルシートを含まない SVG が渡ります。HTML "
+"を印刷する場合もライトの配色が選ばれます。両方の配色が読みやすいことを確かめ、実際の本で確認してください。背景が透明というだけでは、どちらの可読性も保証されません。継承の規則は "
+"`CSS color-scheme の仕様 "
+"<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ で定められています。"
 
 #: ../../topics/diagrams.rst:105
 msgid "Make the result legible"
@@ -171,19 +195,27 @@ msgstr ""
 ":doc:`../media` を参照。"
 
 #: ../../topics/diagrams.rst:116
-msgid "On narrow screens, captioned diagrams scroll horizontally to keep labels readable. Scroll inside the figure. The page itself keeps its width."
-msgstr "狭い画面では、キャプション付きの図は横スクロールになり、ラベルの読みやすさを保ちます。スクロールは図の中だけで、ページ自体の幅は変わりません。"
+msgid ""
+"On narrow screens, captioned diagrams scroll horizontally to keep labels "
+"readable. Scroll inside the figure. The page itself keeps its width."
+msgstr ""
+"狭い画面では、キャプション付きの図は横スクロールになり、ラベルの読みやすさを保ちます。スクロールは図の中だけで、ページ自体の幅は変わりません。"
 
 #: ../../topics/domains.rst:1
 msgid "Domains"
 msgstr "ドメイン"
 
 #: ../../topics/domains.rst:4
-msgid "A domain is a set of directives and roles. They describe and cross-reference the objects of one programming language or one field of discourse."
-msgstr "ドメインは、ディレクティブとロールの集まりです。一つのプログラミング言語や一つの分野のオブジェクトを記述し、相互参照するために使います。"
+msgid ""
+"A domain is a set of directives and roles. They describe and "
+"cross-reference the objects of one programming language or one field of "
+"discourse."
+msgstr ""
+"ドメインは、ディレクティブとロールの集まりです。一つのプログラミング言語や一つの分野のオブジェクトを記述し、相互参照するために使います。"
 
 #: ../../topics/domains.rst:8
-msgid "Guidedog has built-in implementations of the standard Sphinx domains:"
+msgid ""
+"Guidedog has built-in implementations of the standard Sphinx domains:"
 msgstr "Guidedog は、Sphinx の標準ドメインを組み込みで実装しています。"
 
 #: ../../topics/domains.rst:10
@@ -225,8 +257,12 @@ msgstr ""
 "を参照してください。"
 
 #: ../../topics/domains.rst:16
-msgid "**Rust domain** (``rust``): Rust crates, modules, functions, structs, enums, traits, impls, and macros (see `Rust domain`_ below)."
-msgstr "**Rust ドメイン** （``rust``）: Rust のクレート、モジュール、関数、構造体、列挙型、トレイト、impl、マクロ（下記の `Rust ドメイン <Rust domain_>`_ を参照）。"
+msgid ""
+"**Rust domain** (``rust``): Rust crates, modules, functions, structs, "
+"enums, traits, impls, and macros (see `Rust domain`_ below)."
+msgstr ""
+"**Rust ドメイン** （``rust``）: Rust のクレート、モジュール、関数、構造体、列挙型、トレイト、impl、マクロ（下記の "
+"`Rust ドメイン <Rust domain_>`_ を参照）。"
 
 #: ../../topics/domains.rst:18
 msgid "Setting the primary domain"
@@ -488,16 +524,42 @@ msgid "Rust domain"
 msgstr "Rust ドメイン"
 
 #: ../../topics/domains.rst:223
-msgid "The Rust domain describes crates as rustdoc presents them. Each directive takes the declaration as Rust writes it, on one line, visibility and qualifiers included. Targets are full paths with ``::``, the crate's name first."
-msgstr "Rust ドメインは、rustdoc と同じ形でクレートを記述します。各ディレクティブは、Rust で書くとおりの宣言を可視性や修飾子も含めて一行で受け取ります。ターゲットは ``::`` で区切ったフルパスで、先頭はクレート名です。"
+msgid ""
+"The Rust domain describes crates as rustdoc presents them. Each directive "
+"takes the declaration as Rust writes it, on one line, visibility and "
+"qualifiers included. Targets are full paths with ``::``, the crate's name "
+"first."
+msgstr ""
+"Rust ドメインは、rustdoc と同じ形でクレートを記述します。各ディレクティブは、Rust "
+"で書くとおりの宣言を可視性や修飾子も含めて一行で受け取ります。ターゲットは ``::`` で区切ったフルパスで、先頭はクレート名です。"
 
 #: ../../topics/domains.rst:258
-msgid "Directives include: ``rust:crate``, ``rust:module``, ``rust:function``, ``rust:method``, ``rust:struct``, ``rust:enum``, ``rust:variant``, ``rust:union``, ``rust:trait``, ``rust:impl``, ``rust:type``, ``rust:const``, ``rust:static``, ``rust:macro``, ``rust:field``, ``rust:associatedtype``, ``rust:associatedconst``, and ``rust:use``. Options include ``:visibility:``, ``:cfg:``, ``:unsafe:``, ``:async:``, ``:const:``, ``:provided:``, ``:attributes:``, ``:deprecated:``, ``:for:``, ``:trait:``, ``:target:``, and ``:noindex:``. An ``impl`` is never a target itself. Its members belong to the type."
-msgstr "ディレクティブには ``rust:crate``、``rust:module``、``rust:function``、``rust:method``、``rust:struct``、``rust:enum``、``rust:variant``、``rust:union``、``rust:trait``、``rust:impl``、``rust:type``、``rust:const``、``rust:static``、``rust:macro``、``rust:field``、``rust:associatedtype``、``rust:associatedconst``、``rust:use`` があります。オプションには ``:visibility:``、``:cfg:``、``:unsafe:``、``:async:``、``:const:``、``:provided:``、``:attributes:``、``:deprecated:``、``:for:``、``:trait:``、``:target:``、``:noindex:`` があります。``impl`` 自体がターゲットになることはなく、そのメンバーは対象の型に属します。"
+msgid ""
+"Directives include: ``rust:crate``, ``rust:module``, ``rust:function``, "
+"``rust:method``, ``rust:struct``, ``rust:enum``, ``rust:variant``, "
+"``rust:union``, ``rust:trait``, ``rust:impl``, ``rust:type``, "
+"``rust:const``, ``rust:static``, ``rust:macro``, ``rust:field``, "
+"``rust:associatedtype``, ``rust:associatedconst``, and ``rust:use``. "
+"Options include ``:visibility:``, ``:cfg:``, ``:unsafe:``, ``:async:``, "
+"``:const:``, ``:provided:``, ``:attributes:``, ``:deprecated:``, "
+"``:for:``, ``:trait:``, ``:target:``, and ``:noindex:``. An ``impl`` is "
+"never a target itself. Its members belong to the type."
+msgstr ""
+"ディレクティブには "
+"``rust:crate``、``rust:module``、``rust:function``、``rust:method``、``rust:struct``、``rust:enum``、``rust:variant``、``rust:union``、``rust:trait``、``rust:impl``、``rust:type``、``rust:const``、``rust:static``、``rust:macro``、``rust:field``、``rust:associatedtype``、``rust:associatedconst``、``rust:use`` "
+"があります。オプションには "
+"``:visibility:``、``:cfg:``、``:unsafe:``、``:async:``、``:const:``、``:provided:``、``:attributes:``、``:deprecated:``、``:for:``、``:trait:``、``:target:``、``:noindex:`` "
+"があります。``impl`` 自体がターゲットになることはなく、そのメンバーは対象の型に属します。"
 
 #: ../../topics/domains.rst:266
-msgid "Guidedog can also generate these pages from a crate's source, without compiling it. See :doc:`../howto/document-code` and ``rust_autoapi_crates`` in :doc:`../reference/configuration`."
-msgstr "Guidedog は、クレートのソースからコンパイルせずにこれらのページを生成することもできます。:doc:`../howto/document-code` と、:doc:`../reference/configuration` の ``rust_autoapi_crates`` を参照してください。"
+msgid ""
+"Guidedog can also generate these pages from a crate's source, without "
+"compiling it. See :doc:`../howto/document-code` and "
+"``rust_autoapi_crates`` in :doc:`../reference/configuration`."
+msgstr ""
+"Guidedog "
+"は、クレートのソースからコンパイルせずにこれらのページを生成することもできます。:doc:`../howto/document-code` "
+"と、:doc:`../reference/configuration` の ``rust_autoapi_crates`` を参照してください。"
 
 #: ../../topics/domains.rst:273
 msgid "``:rust:mod:`path```: Links to a crate or module."
@@ -508,20 +570,37 @@ msgid "``:rust:fn:`path```: Links to a function or method."
 msgstr "``:rust:fn:`path```: 関数またはメソッドにリンクします。"
 
 #: ../../topics/domains.rst:275
-msgid "``:rust:struct:`path```, ``:rust:enum:`path```, ``:rust:union:`path```, ``:rust:trait:`path```: Link to those types."
-msgstr "``:rust:struct:`path```、``:rust:enum:`path```、``:rust:union:`path```、``:rust:trait:`path```: それぞれの型にリンクします。"
+msgid ""
+"``:rust:struct:`path```, ``:rust:enum:`path```, ``:rust:union:`path```, "
+"``:rust:trait:`path```: Link to those types."
+msgstr ""
+"``:rust:struct:`path```、``:rust:enum:`path```、``:rust:union:`path```、``:rust:trait:`path```: "
+"それぞれの型にリンクします。"
 
 #: ../../topics/domains.rst:277
-msgid "``:rust:variant:`path```, ``:rust:field:`path```: Link to a variant or a field."
-msgstr "``:rust:variant:`path```、``:rust:field:`path```: バリアントまたはフィールドにリンクします。"
+msgid ""
+"``:rust:variant:`path```, ``:rust:field:`path```: Link to a variant or a "
+"field."
+msgstr ""
+"``:rust:variant:`path```、``:rust:field:`path```: バリアントまたはフィールドにリンクします。"
 
 #: ../../topics/domains.rst:278
-msgid "``:rust:type:`path```, ``:rust:const:`path```, ``:rust:static:`path```, ``:rust:macro:`path```: Link to aliases and associated types, constants, statics, and macros."
-msgstr "``:rust:type:`path```、``:rust:const:`path```、``:rust:static:`path```、``:rust:macro:`path```: 型エイリアスと関連型、定数、static、マクロにリンクします。"
+msgid ""
+"``:rust:type:`path```, ``:rust:const:`path```, ``:rust:static:`path```, "
+"``:rust:macro:`path```: Link to aliases and associated types, constants, "
+"statics, and macros."
+msgstr ""
+"``:rust:type:`path```、``:rust:const:`path```、``:rust:static:`path```、``:rust:macro:`path```: "
+"型エイリアスと関連型、定数、static、マクロにリンクします。"
 
 #: ../../topics/domains.rst:281
-msgid "``:rust:any:`path```: Links to any of them, or through an inventory to another project (``std::vec::Vec``). An unresolved target is shown as code."
-msgstr "``:rust:any:`path```: 上記のいずれか、またはインベントリを通じて他のプロジェクト（``std::vec::Vec``）にリンクします。解決できないターゲットはコードとして表示します。"
+msgid ""
+"``:rust:any:`path```: Links to any of them, or through an inventory to "
+"another project (``std::vec::Vec``). An unresolved target is shown as "
+"code."
+msgstr ""
+"``:rust:any:`path```: "
+"上記のいずれか、またはインベントリを通じて他のプロジェクト（``std::vec::Vec``）にリンクします。解決できないターゲットはコードとして表示します。"
 
 #: ../../topics/domains.rst:284
 msgid "Cross-referencing conventions"
@@ -555,15 +634,22 @@ msgid ""
 msgstr "**完全一致** : ``.`` を付けると、現在のモジュールや包含するオブジェクトから検索します。"
 
 #: ../../topics/domains.rst:293
-msgid "The Rust domain follows the same conventions with ``::`` paths: ``:rust:struct:`~my_crate::geometry::Point``` renders as ``Point``."
-msgstr "Rust ドメインも ``::`` のパスで同じ規則に従います。``:rust:struct:`~my_crate::geometry::Point``` は ``Point`` と表示されます。"
+msgid ""
+"The Rust domain follows the same conventions with ``::`` paths: "
+"``:rust:struct:`~my_crate::geometry::Point``` renders as ``Point``."
+msgstr ""
+"Rust ドメインも ``::`` "
+"のパスで同じ規則に従います。``:rust:struct:`~my_crate::geometry::Point``` は ``Point`` "
+"と表示されます。"
 
 #: ../../topics/index.rst:1
 msgid "Topic guides"
 msgstr "トピックガイド"
 
 #: ../../topics/index.rst:4
-msgid "These chapters explain the model. They give us enough context to make a choice."
+msgid ""
+"These chapters explain the model. They give us enough context to make a "
+"choice."
 msgstr "この各章ではモデルを説明し、判断に必要な背景を示します。"
 
 #: ../../topics/mathematics.rst:1
@@ -645,8 +731,13 @@ msgstr ""
 "。実装は減算形を検査し、整数をあふれさせ得る :math:`U+n` を先に計算しない。証明と演算順序は一致する。"
 
 #: ../../topics/mathematics.rst:59
-msgid "**Boundary.** This accounts for charged host storage. It does not bound the Typst compiler's internal allocations. A proof is only as strong as the boundary it states."
-msgstr "**境界。** 対象は計上したホストの記憶領域で、Typst コンパイラー内部の割り当ては制限しません。証明が成り立つのは、明記した境界の範囲内だけです。"
+msgid ""
+"**Boundary.** This accounts for charged host storage. It does not bound "
+"the Typst compiler's internal allocations. A proof is only as strong as "
+"the boundary it states."
+msgstr ""
+"**境界。** 対象は計上したホストの記憶領域で、Typst "
+"コンパイラー内部の割り当ては制限しません。証明が成り立つのは、明記した境界の範囲内だけです。"
 
 #: ../../topics/mathematics.rst:63
 msgid "HTML setup"
@@ -663,8 +754,12 @@ msgstr ""
 "フォントデータを同梱し、数式のあるページだけで読み込む。ビルド後はオフラインで読め、図のスクリプトや Web フォントサービスは不要。"
 
 #: ../../topics/mathematics.rst:71
-msgid "For our own projects, the default uses MathJax from a CDN. To serve a local copy, we place it in ``_static`` and set:"
-msgstr "自分のプロジェクトでは、既定で CDN の MathJax を使います。ローカルのコピーを配信するには、``_static`` に置いて次のように設定します。"
+msgid ""
+"For our own projects, the default uses MathJax from a CDN. To serve a "
+"local copy, we place it in ``_static`` and set:"
+msgstr ""
+"自分のプロジェクトでは、既定で CDN の MathJax を使います。ローカルのコピーを配信するには、``_static`` "
+"に置いて次のように設定します。"
 
 #: ../../topics/mathematics.rst:79
 msgid ""
@@ -722,8 +817,14 @@ msgid "Separate projects"
 msgstr "独立したプロジェクト"
 
 #: ../../topics/projects.rst:46
-msgid "We keep a manual and design records in separate projects. They have different readers and different reading orders. Each project has its own configuration, templates, cache, and output. The Guidedog repository uses ``docs/manual`` and ``docs/gds`` this way."
-msgstr "マニュアルと設計記録は別々のプロジェクトにします。読者も読む順序も違うからです。プロジェクトごとに設定、テンプレート、キャッシュ、出力を持ちます。Guidedog のリポジトリでは ``docs/manual`` と ``docs/gds`` をこのように分けています。"
+msgid ""
+"We keep a manual and design records in separate projects. They have "
+"different readers and different reading orders. Each project has its own "
+"configuration, templates, cache, and output. The Guidedog repository uses "
+"``docs/manual`` and ``docs/gds`` this way."
+msgstr ""
+"マニュアルと設計記録は別々のプロジェクトにします。読者も読む順序も違うからです。プロジェクトごとに設定、テンプレート、キャッシュ、出力を持ちます。Guidedog "
+"のリポジトリでは ``docs/manual`` と ``docs/gds`` をこのように分けています。"
 
 #: ../../topics/projects.rst:51
 msgid "Incremental work"
@@ -756,8 +857,14 @@ msgstr ""
 "\\text{出力が存在する}"
 
 #: ../../topics/projects.rst:67
-msgid "An explicit timestamp in a template is also an input to the rendered page. A page that prints the current minute can change even when its prose does not. We use ``SOURCE_DATE_EPOCH`` when we need a fixed build time."
-msgstr "テンプレートに明示したタイムスタンプも、描画されるページへの入力です。現在の分を表示するページは、本文が変わらなくても変化することがあります。ビルド時刻を固定したい場合は ``SOURCE_DATE_EPOCH`` を使います。"
+msgid ""
+"An explicit timestamp in a template is also an input to the rendered "
+"page. A page that prints the current minute can change even when its "
+"prose does not. We use ``SOURCE_DATE_EPOCH`` when we need a fixed build "
+"time."
+msgstr ""
+"テンプレートに明示したタイムスタンプも、描画されるページへの入力です。現在の分を表示するページは、本文が変わらなくても変化することがあります。ビルド時刻を固定したい場合は "
+"``SOURCE_DATE_EPOCH`` を使います。"
 
 #: ../../topics/projects.rst:71
 msgid "Publication"
@@ -848,8 +955,17 @@ msgstr ""
 "強調と原文を保ち、本文幅の変更時に再計算する。最適化した一段落内のコピーは見かけの改行やハイフンを含まない原文になる。印刷時は通常段落に戻し、印刷レイアウトで改ページする。"
 
 #: ../../topics/typography.rst:54
-msgid "Links, mathematics, code, interactive content, narrow measures, and other languages use native browser layout. So do paragraphs for which no suitably spaced solution exists. The site remains readable with JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` and ``text-wrap: pretty``. Those CSS properties alone are not a promise of Knuth-Plass optimization."
-msgstr "リンク、数式、コード、インタラクティブな要素、狭い行幅、他の言語には、ブラウザー標準のレイアウトを使います。適切な字間の解が見つからない段落も同様です。JavaScript を無効にしてもサイトは読めます。フォールバックでは、言語に応じた ``hyphens: auto`` と ``text-wrap: pretty`` を使います。ただし、これらの CSS プロパティだけで Knuth-Plass の最適化が保証されるわけではありません。"
+msgid ""
+"Links, mathematics, code, interactive content, narrow measures, and other "
+"languages use native browser layout. So do paragraphs for which no "
+"suitably spaced solution exists. The site remains readable with "
+"JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` "
+"and ``text-wrap: pretty``. Those CSS properties alone are not a promise "
+"of Knuth-Plass optimization."
+msgstr ""
+"リンク、数式、コード、インタラクティブな要素、狭い行幅、他の言語には、ブラウザー標準のレイアウトを使います。適切な字間の解が見つからない段落も同様です。JavaScript "
+"を無効にしてもサイトは読めます。フォールバックでは、言語に応じた ``hyphens: auto`` と ``text-wrap: "
+"pretty`` を使います。ただし、これらの CSS プロパティだけで Knuth-Plass の最適化が保証されるわけではありません。"
 
 #: ../../topics/typography.rst:60
 msgid "The PDF page"
@@ -897,44 +1013,81 @@ msgstr ""
 "、印刷は ``_templates/book.typ`` で編集する。読む順、フォーカス表示、ラベル、十分なコントラストを保つ。"
 
 #: ../../topics/typography.rst:82
-msgid "Build both targets after a change. Inspect a page with code, a table, a diagram, and an equation. An attractive cover is not proof that the rest of the book works. We build our own design in :doc:`../tutorial/a-custom-theme`. The full template contract is in :doc:`../templates`. The Rust API of Guidedog's crates is documented in the separate ``docs/api`` project."
-msgstr "変更後は両方の形式をビルドしてください。コード、表、図、数式を含むページを確認します。表紙が魅力的でも、本の残りが問題ないとは限りません。独自のデザインは :doc:`../tutorial/a-custom-theme` で作ります。テンプレートの契約の全体は :doc:`../templates` にあります。Guidedog の各クレートの Rust API は、別プロジェクトの ``docs/api`` で説明しています。"
+msgid ""
+"Build both targets after a change. Inspect a page with code, a table, a "
+"diagram, and an equation. An attractive cover is not proof that the rest "
+"of the book works. We build our own design in "
+":doc:`../tutorial/a-custom-theme`. The full template contract is in "
+":doc:`../templates`. The Rust API of Guidedog's crates is documented in "
+"the separate ``docs/api`` project."
+msgstr ""
+"変更後は両方の形式をビルドしてください。コード、表、図、数式を含むページを確認します。表紙が魅力的でも、本の残りが問題ないとは限りません。独自のデザインは "
+":doc:`../tutorial/a-custom-theme` で作ります。テンプレートの契約の全体は :doc:`../templates` "
+"にあります。Guidedog の各クレートの Rust API は、別プロジェクトの ``docs/api`` で説明しています。"
 
 #: ../../topics/writing.rst:1
 msgid "Authoring documents"
 msgstr "文書を書く"
 
 #: ../../topics/writing.rst:4
-msgid "Guidedog supports both reStructuredText (``.rst``) and MyST Markdown (``.md``). Both are parsed into the same document tree. The HTML website and the PDF book are made from that tree."
-msgstr "Guidedog は reStructuredText（``.rst``）と MyST Markdown（``.md``）の両方に対応しています。どちらも同じ文書ツリーに解析され、HTML サイトと PDF の本はそのツリーから作られます。"
+msgid ""
+"Guidedog supports both reStructuredText (``.rst``) and MyST Markdown "
+"(``.md``). Both are parsed into the same document tree. The HTML website "
+"and the PDF book are made from that tree."
+msgstr ""
+"Guidedog は reStructuredText（``.rst``）と MyST "
+"Markdown（``.md``）の両方に対応しています。どちらも同じ文書ツリーに解析され、HTML サイトと PDF "
+"の本はそのツリーから作られます。"
 
 #: ../../topics/writing.rst:8
 msgid "Choose a source language"
 msgstr "ソース形式の選択"
 
 #: ../../topics/writing.rst:11
-msgid "We use reStructuredText when we need full access to domains, complex tables, and extensible directives. We use MyST Markdown when we prefer Markdown syntax but still want Sphinx-style directives and roles."
-msgstr "ドメイン、複雑な表、拡張可能なディレクティブをすべて使いたい場合は reStructuredText を使います。Markdown の構文を好みつつ、Sphinx 形式のディレクティブとロールも使いたい場合は MyST Markdown を使います。"
+msgid ""
+"We use reStructuredText when we need full access to domains, complex "
+"tables, and extensible directives. We use MyST Markdown when we prefer "
+"Markdown syntax but still want Sphinx-style directives and roles."
+msgstr ""
+"ドメイン、複雑な表、拡張可能なディレクティブをすべて使いたい場合は reStructuredText を使います。Markdown "
+"の構文を好みつつ、Sphinx 形式のディレクティブとロールも使いたい場合は MyST Markdown を使います。"
 
 #: ../../topics/writing.rst:15
-msgid "In a documentation project, Markdown documents are parsed as MyST. Single-document conversions with ``guidedog convert`` read Markdown as plain CommonMark 0.31.2: MyST's directives, roles, and settings belong to projects."
-msgstr "ドキュメントプロジェクトでは、Markdown の文書は MyST として解析されます。``guidedog convert`` による単一文書の変換では、Markdown をプレーンな CommonMark 0.31.2 として読みます。MyST のディレクティブ、ロール、設定はプロジェクトのための機能です。"
+msgid ""
+"In a documentation project, Markdown documents are parsed as MyST. "
+"Single-document conversions with ``guidedog convert`` read Markdown as "
+"plain CommonMark 0.31.2: MyST's directives, roles, and settings belong to "
+"projects."
+msgstr ""
+"ドキュメントプロジェクトでは、Markdown の文書は MyST として解析されます。``guidedog convert`` "
+"による単一文書の変換では、Markdown をプレーンな CommonMark 0.31.2 として読みます。MyST "
+"のディレクティブ、ロール、設定はプロジェクトのための機能です。"
 
 #: ../../topics/writing.rst:19
 msgid "Headings and structure"
 msgstr "見出しと構造"
 
 #: ../../topics/writing.rst:22
-msgid "A document title identifies the page. Sections and subsections divide the text. In reStructuredText, headings use underline adornments (and optional matching overlines). The underline must be at least as long as the text."
-msgstr "文書のタイトルはページを表し、セクションとサブセクションで本文を区切ります。reStructuredText では、見出しに下線の装飾を使います（同じ上線を付けることもできます）。下線は見出しの文字列以上の長さが必要です。"
+msgid ""
+"A document title identifies the page. Sections and subsections divide the "
+"text. In reStructuredText, headings use underline adornments (and "
+"optional matching overlines). The underline must be at least as long as "
+"the text."
+msgstr ""
+"文書のタイトルはページを表し、セクションとサブセクションで本文を区切ります。reStructuredText "
+"では、見出しに下線の装飾を使います（同じ上線を付けることもできます）。下線は見出しの文字列以上の長さが必要です。"
 
 #: ../../topics/writing.rst:26
 msgid "Recommended adornment styles:"
 msgstr "推奨する見出しの記号:"
 
 #: ../../topics/writing.rst:45
-msgid "We keep heading levels consistent across the project. In MyST Markdown, we use standard hashes (``#``, ``##``, ``###``)."
-msgstr "見出しの階層はプロジェクト全体でそろえます。MyST Markdown では、標準のハッシュ記号（``#``、``##``、``###``）を使います。"
+msgid ""
+"We keep heading levels consistent across the project. In MyST Markdown, "
+"we use standard hashes (``#``, ``##``, ``###``)."
+msgstr ""
+"見出しの階層はプロジェクト全体でそろえます。MyST Markdown "
+"では、標準のハッシュ記号（``#``、``##``、``###``）を使います。"
 
 #: ../../topics/writing.rst:48
 msgid "Text formatting and inline markup"
@@ -1013,8 +1166,11 @@ msgid "``{sup}`text```"
 msgstr "``{sup}`text```"
 
 #: ../../topics/writing.rst:76
-msgid "To write literal asterisks or backticks in text, we escape them with a backslash: ``\\*not italic\\*``."
-msgstr "アスタリスクやバッククォートを文字としてそのまま書くには、``\\*not italic\\*`` のようにバックスラッシュでエスケープします。"
+msgid ""
+"To write literal asterisks or backticks in text, we escape them with a "
+"backslash: ``\\*not italic\\*``."
+msgstr ""
+"アスタリスクやバッククォートを文字としてそのまま書くには、``\\*not italic\\*`` のようにバックスラッシュでエスケープします。"
 
 #: ../../topics/writing.rst:79
 msgid "Lists"
@@ -1037,7 +1193,9 @@ msgid "Definition lists"
 msgstr "定義リスト"
 
 #: ../../topics/writing.rst:107
-msgid "A definition list pairs terms with explanations. The term stands on one line. An indented definition follows it directly:"
+msgid ""
+"A definition list pairs terms with explanations. The term stands on one "
+"line. An indented definition follows it directly:"
 msgstr "定義リストは用語と説明を組にします。用語は一行に書き、そのすぐ後に字下げした定義を続けます。"
 
 #: ../../topics/writing.rst:118
@@ -1053,8 +1211,14 @@ msgid "Code blocks"
 msgstr "コードブロック"
 
 #: ../../topics/writing.rst:132
-msgid "The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted code. Guidedog highlights 35 programming languages, Rust and Odin among them, with Pygments' names and styles and no Python runtime:"
-msgstr "``code-block`` ディレクティブ（または ``sourcecode``）は、構文を強調表示したコードを表示します。Guidedog は Rust や Odin を含む 35 のプログラミング言語を、Pygments の名前とスタイルで強調表示します。Python のランタイムは不要です。"
+msgid ""
+"The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted "
+"code. Guidedog highlights 35 programming languages, Rust and Odin among "
+"them, with Pygments' names and styles and no Python runtime:"
+msgstr ""
+"``code-block`` ディレクティブ（または ``sourcecode``）は、構文を強調表示したコードを表示します。Guidedog は "
+"Rust や Odin を含む 35 のプログラミング言語を、Pygments の名前とスタイルで強調表示します。Python "
+"のランタイムは不要です。"
 
 #: ../../topics/writing.rst:147
 msgid "Options for code blocks:"
@@ -1128,8 +1292,11 @@ msgid "List tables"
 msgstr "リストテーブル"
 
 #: ../../topics/writing.rst:234
-msgid "The ``list-table`` directive creates tables from nested bullet lists. Wide tables stay easy to read and maintain in source control:"
-msgstr "``list-table`` ディレクティブは、入れ子の箇条書きから表を作ります。幅の広い表でも、ソース上で読みやすく管理しやすいままです。"
+msgid ""
+"The ``list-table`` directive creates tables from nested bullet lists. "
+"Wide tables stay easy to read and maintain in source control:"
+msgstr ""
+"``list-table`` ディレクティブは、入れ子の箇条書きから表を作ります。幅の広い表でも、ソース上で読みやすく管理しやすいままです。"
 
 #: ../../topics/writing.rst:253
 msgid "CSV tables"
@@ -1146,11 +1313,15 @@ msgid "Images and figures"
 msgstr "画像と図"
 
 #: ../../topics/writing.rst:270
-msgid "We include illustrations, screenshots, and diagrams with ``image`` and ``figure``:"
+msgid ""
+"We include illustrations, screenshots, and diagrams with ``image`` and "
+"``figure``:"
 msgstr "イラスト、スクリーンショット、図は ``image`` と ``figure`` で挿入します。"
 
 #: ../../topics/writing.rst:286
-msgid "A ``figure`` wraps the image with a caption and an optional reference target."
+msgid ""
+"A ``figure`` wraps the image with a caption and an optional reference "
+"target."
 msgstr "``figure`` は画像にキャプションを付け、参照用のターゲットも指定できます。"
 
 #: ../../topics/writing.rst:288
@@ -1206,7 +1377,8 @@ msgid "Cross-references and links"
 msgstr "相互参照とリンク"
 
 #: ../../topics/writing.rst:317
-msgid "Explicit targets keep links stable, even when document files are renamed."
+msgid ""
+"Explicit targets keep links stable, even when document files are renamed."
 msgstr "明示的なターゲットを使えば、文書ファイルの名前を変えてもリンクは壊れません。"
 
 #: ../../topics/writing.rst:319
@@ -1246,7 +1418,8 @@ msgid "File downloads with ``:download:``"
 msgstr "``:download:`` によるファイル配布"
 
 #: ../../topics/writing.rst:373
-msgid "This copies a file to the output's download directory and links to it:"
+msgid ""
+"This copies a file to the output's download directory and links to it:"
 msgstr "次のように書くと、ファイルを出力先のダウンロード用ディレクトリにコピーし、そこへのリンクを作ります。"
 
 #: ../../topics/writing.rst:379
@@ -1274,7 +1447,9 @@ msgid "MyST Markdown authoring"
 msgstr "MyST Markdown を書く"
 
 #: ../../topics/writing.rst:409
-msgid "MyST Markdown supports the same directives and roles through fenced blocks:"
+msgid ""
+"MyST Markdown supports the same directives and roles through fenced "
+"blocks:"
 msgstr "MyST Markdown では、フェンス付きブロックで同じディレクティブとロールを使えます。"
 
 #~ msgid ""

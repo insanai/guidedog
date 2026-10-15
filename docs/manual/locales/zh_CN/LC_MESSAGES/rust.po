@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 04:11+0000\n"
+"POT-Creation-Date: 2026-10-15 05:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -22,155 +22,305 @@ msgid "Documenting Rust"
 msgstr "为 Rust 编写文档"
 
 #: ../../rust.rst:4
-msgid "The Rust domain gives crates, modules, items, and members named targets. Guidedog also generates API pages from a crate's source, as rustdoc would lay them out. It reads the source with tree-sitter. It does not run ``cargo``, compile the crate, or expand macros. A generated signature still needs a useful doc comment."
-msgstr "Rust 域为 crate、模块、条目和成员提供命名目标。Guidedog 还能从 crate 的源码生成 API 页面，版式与 rustdoc 相同。它用 tree-sitter 读取源码，不运行 ``cargo``，不编译 crate，也不展开宏。生成的签名仍然需要一条有用的文档注释。"
+msgid ""
+"The Rust domain gives crates, modules, items, and members named targets. "
+"Guidedog also generates API pages from a crate's source, as rustdoc would "
+"lay them out. It reads the source with tree-sitter. It does not run "
+"``cargo``, compile the crate, or expand macros. A generated signature "
+"still needs a useful doc comment."
+msgstr ""
+"Rust 域为 crate、模块、条目和成员提供命名目标。Guidedog 还能从 crate 的源码生成 API 页面，版式与 rustdoc "
+"相同。它用 tree-sitter 读取源码，不运行 ``cargo``，不编译 crate，也不展开宏。生成的签名仍然需要一条有用的文档注释。"
 
 #: ../../rust.rst:9
 msgid "Describing objects"
 msgstr "描述对象"
 
 #: ../../rust.rst:12
-msgid "A crate or module is the context of what follows it, as a Python module is:"
+msgid ""
+"A crate or module is the context of what follows it, as a Python module "
+"is:"
 msgstr "crate 或模块是其后内容的上下文，就像 Python 模块一样："
 
 #: ../../rust.rst:40
-msgid "Signatures are written as Rust writes the declaration, on one line, with its visibility and qualifiers. The reader finds the name as the identifier after the keyword (``fn``, ``struct``, ``enum``, ``union``, ``trait``, ``type``, ``const``, ``static``, ``macro_rules!``, ``mod``), or as the first identifier for fields and variants. The directives:"
-msgstr "签名按 Rust 声明的写法写在一行内，包括可见性和限定符。读取器把关键字（``fn``、``struct``、``enum``、``union``、``trait``、``type``、``const``、``static``、``macro_rules!``、``mod``）之后的标识符作为名称；对字段和变体，则取第一个标识符。各指令如下："
+msgid ""
+"Signatures are written as Rust writes the declaration, on one line, with "
+"its visibility and qualifiers. The reader finds the name as the "
+"identifier after the keyword (``fn``, ``struct``, ``enum``, ``union``, "
+"``trait``, ``type``, ``const``, ``static``, ``macro_rules!``, ``mod``), "
+"or as the first identifier for fields and variants. The directives:"
+msgstr ""
+"签名按 Rust "
+"声明的写法写在一行内，包括可见性和限定符。读取器把关键字（``fn``、``struct``、``enum``、``union``、``trait``、``type``、``const``、``static``、``macro_rules!``、``mod``）之后的标识符作为名称；对字段和变体，则取第一个标识符。各指令如下："
 
 #: ../../rust.rst:46
 msgid "``rust:crate`` and ``rust:module``"
 msgstr "``rust:crate`` 和 ``rust:module``"
 
 #: ../../rust.rst:47
-msgid "``my_crate``, or the full path ``my_crate::parser``. Either sets the current module for what follows. Option: ``:synopsis:``, one sentence for the index."
-msgstr "``my_crate``，或完整路径 ``my_crate::parser``。两者都会为其后的内容设定当前模块。选项：``:synopsis:``，用于索引的一句话简介。"
+msgid ""
+"``my_crate``, or the full path ``my_crate::parser``. Either sets the "
+"current module for what follows. Option: ``:synopsis:``, one sentence for "
+"the index."
+msgstr ""
+"``my_crate``，或完整路径 "
+"``my_crate::parser``。两者都会为其后的内容设定当前模块。选项：``:synopsis:``，用于索引的一句话简介。"
 
 #: ../../rust.rst:50
 msgid "``rust:function`` and ``rust:method``"
 msgstr "``rust:function`` 和 ``rust:method``"
 
 #: ../../rust.rst:51
-msgid "``pub const unsafe fn f<T: Copy>(x: &T) -> Option<T> where T: Send``. Methods sit inside a type or an impl (``pub fn new(x: T) -> Self``, ``fn draw(&self) -> u8``)."
-msgstr "``pub const unsafe fn f<T: Copy>(x: &T) -> Option<T> where T: Send``。方法写在类型或 impl 内部（``pub fn new(x: T) -> Self``、``fn draw(&self) -> u8``）。"
+msgid ""
+"``pub const unsafe fn f<T: Copy>(x: &T) -> Option<T> where T: Send``. "
+"Methods sit inside a type or an impl (``pub fn new(x: T) -> Self``, ``fn "
+"draw(&self) -> u8``)."
+msgstr ""
+"``pub const unsafe fn f<T: Copy>(x: &T) -> Option<T> where T: "
+"Send``。方法写在类型或 impl 内部（``pub fn new(x: T) -> Self``、``fn draw(&self) -> "
+"u8``）。"
 
 #: ../../rust.rst:54
 msgid "``rust:struct``, ``rust:enum``, ``rust:union``, ``rust:trait``"
 msgstr "``rust:struct``、``rust:enum``、``rust:union``、``rust:trait``"
 
 #: ../../rust.rst:55
-msgid "``pub struct Point<T = f32>``, ``pub struct Pair(pub i32, _)``, ``pub enum Kind``, ``pub union Bits``, ``pub trait Draw: Clone + Send``. The content holds the members."
-msgstr "``pub struct Point<T = f32>``、``pub struct Pair(pub i32, _)``、``pub enum Kind``、``pub union Bits``、``pub trait Draw: Clone + Send``。内容中包含各成员。"
+msgid ""
+"``pub struct Point<T = f32>``, ``pub struct Pair(pub i32, _)``, ``pub "
+"enum Kind``, ``pub union Bits``, ``pub trait Draw: Clone + Send``. The "
+"content holds the members."
+msgstr ""
+"``pub struct Point<T = f32>``、``pub struct Pair(pub i32, _)``、``pub enum "
+"Kind``、``pub union Bits``、``pub trait Draw: Clone + Send``。内容中包含各成员。"
 
 #: ../../rust.rst:58
 msgid "``rust:field`` and ``rust:variant``"
 msgstr "``rust:field`` 和 ``rust:variant``"
 
 #: ../../rust.rst:59
-msgid "``pub x: T`` (tuple fields are named ``0``, ``1``, ...); ``Circle``, ``Polygon(u8)``, ``Rect { width: f32, height: f32 }``, ``Unknown = 9``. The fields of a variant nest in the ``rust:variant``."
-msgstr "``pub x: T`` （元组字段命名为 ``0``、``1`` ……）；``Circle``、``Polygon(u8)``、``Rect { width: f32, height: f32 }``、``Unknown = 9``。变体的字段嵌套在 ``rust:variant`` 中。"
+msgid ""
+"``pub x: T`` (tuple fields are named ``0``, ``1``, ...); ``Circle``, "
+"``Polygon(u8)``, ``Rect { width: f32, height: f32 }``, ``Unknown = 9``. "
+"The fields of a variant nest in the ``rust:variant``."
+msgstr ""
+"``pub x: T`` （元组字段命名为 ``0``、``1`` ……）；``Circle``、``Polygon(u8)``、``Rect { "
+"width: f32, height: f32 }``、``Unknown = 9``。变体的字段嵌套在 ``rust:variant`` 中。"
 
 #: ../../rust.rst:63
 msgid "``rust:impl``"
 msgstr "``rust:impl``"
 
 #: ../../rust.rst:64
-msgid "``impl<T: Copy> Point<T>`` or ``impl<T> fmt::Display for Point<T>``. Never a target. Its members belong to the type it is nested in (to its ``:for:`` type when it stands alone at module level)."
-msgstr "``impl<T: Copy> Point<T>`` 或 ``impl<T> fmt::Display for Point<T>``。impl 本身从不作为目标。它的成员属于它所嵌套的类型（如果它单独位于模块层级，则属于其 ``:for:`` 类型）。"
+msgid ""
+"``impl<T: Copy> Point<T>`` or ``impl<T> fmt::Display for Point<T>``. "
+"Never a target. Its members belong to the type it is nested in (to its "
+"``:for:`` type when it stands alone at module level)."
+msgstr ""
+"``impl<T: Copy> Point<T>`` 或 ``impl<T> fmt::Display for Point<T>``。impl "
+"本身从不作为目标。它的成员属于它所嵌套的类型（如果它单独位于模块层级，则属于其 ``:for:`` 类型）。"
 
 #: ../../rust.rst:68
 msgid "``rust:type``, ``rust:const``, ``rust:static``, ``rust:macro``"
 msgstr "``rust:type``、``rust:const``、``rust:static``、``rust:macro``"
 
 #: ../../rust.rst:69
-msgid "``pub type Result<T> = std::result::Result<T, Error>``, ``pub const MAX: usize = 4_096``, ``pub static mut COUNT: u64``, ``macro_rules! shape`` (its arms follow in a ``code-block`` in the content)."
-msgstr "``pub type Result<T> = std::result::Result<T, Error>``、``pub const MAX: usize = 4_096``、``pub static mut COUNT: u64``、``macro_rules! shape`` （其各个分支写在内容中的 ``code-block`` 里）。"
+msgid ""
+"``pub type Result<T> = std::result::Result<T, Error>``, ``pub const MAX: "
+"usize = 4_096``, ``pub static mut COUNT: u64``, ``macro_rules! shape`` "
+"(its arms follow in a ``code-block`` in the content)."
+msgstr ""
+"``pub type Result<T> = std::result::Result<T, Error>``、``pub const MAX: "
+"usize = 4_096``、``pub static mut COUNT: u64``、``macro_rules! shape`` "
+"（其各个分支写在内容中的 ``code-block`` 里）。"
 
 #: ../../rust.rst:73
 msgid "``rust:associatedtype`` and ``rust:associatedconst``"
 msgstr "``rust:associatedtype`` 和 ``rust:associatedconst``"
 
 #: ../../rust.rst:74
-msgid "``type Output: Default``, ``const PASSES: usize = 1``, inside a trait or impl."
-msgstr "``type Output: Default``、``const PASSES: usize = 1``，写在 trait 或 impl 内部。"
+msgid ""
+"``type Output: Default``, ``const PASSES: usize = 1``, inside a trait or "
+"impl."
+msgstr ""
+"``type Output: Default``、``const PASSES: usize = 1``，写在 trait 或 impl 内部。"
 
 #: ../../rust.rst:76
 msgid "``rust:use``"
 msgstr "``rust:use``"
 
 #: ../../rust.rst:77
-msgid "``pub use geometry::point::Point``: a re-export line, never a target. It links to its ``:target:``."
-msgstr "``pub use geometry::point::Point``：一行重导出，从不作为目标。它链接到自己的 ``:target:``。"
+msgid ""
+"``pub use geometry::point::Point``: a re-export line, never a target. It "
+"links to its ``:target:``."
+msgstr ""
+"``pub use geometry::point::Point``：一行重导出，从不作为目标。它链接到自己的 ``:target:``。"
 
 #: ../../rust.rst:80
-msgid "Options: ``:module: path`` (describe the object in another module than the current one), ``:visibility:`` (``pub(crate)``, ``pub(super)``, ``pub(in path)`` or ``private``), ``:cfg: predicate`` (shown as \"Available on ``predicate`` only.\"), ``:unsafe:``, ``:async:`` and ``:const:`` (flags for index entries), ``:provided:`` (a trait member with a default), ``:attributes:`` (``#[non_exhaustive] #[repr(C)]``, shown above the signature), ``:deprecated: note``, ``:for:`` and ``:trait:`` (on an impl), ``:target:`` (on a use), and ``:noindex:``."
-msgstr "选项：``:module: path`` （在当前模块之外的另一个模块中描述对象）、``:visibility:`` （``pub(crate)``、``pub(super)``、``pub(in path)`` 或 ``private``）、``:cfg: predicate`` （显示为“Available on ``predicate`` only.”）、``:unsafe:``、``:async:`` 和 ``:const:`` （索引条目的标志）、``:provided:`` （带默认实现的 trait 成员）、``:attributes:`` （``#[non_exhaustive] #[repr(C)]``，显示在签名上方）、``:deprecated: note``、``:for:`` 和 ``:trait:`` （用于 impl）、``:target:`` （用于 use），以及 ``:noindex:``。"
+msgid ""
+"Options: ``:module: path`` (describe the object in another module than "
+"the current one), ``:visibility:`` (``pub(crate)``, ``pub(super)``, "
+"``pub(in path)`` or ``private``), ``:cfg: predicate`` (shown as "
+"\"Available on ``predicate`` only.\"), ``:unsafe:``, ``:async:`` and "
+"``:const:`` (flags for index entries), ``:provided:`` (a trait member "
+"with a default), ``:attributes:`` (``#[non_exhaustive] #[repr(C)]``, "
+"shown above the signature), ``:deprecated: note``, ``:for:`` and "
+"``:trait:`` (on an impl), ``:target:`` (on a use), and ``:noindex:``."
+msgstr ""
+"选项：``:module: path`` （在当前模块之外的另一个模块中描述对象）、``:visibility:`` "
+"（``pub(crate)``、``pub(super)``、``pub(in path)`` 或 ``private``）、``:cfg: "
+"predicate`` （显示为“Available on ``predicate`` "
+"only.”）、``:unsafe:``、``:async:`` 和 ``:const:`` （索引条目的标志）、``:provided:`` "
+"（带默认实现的 trait 成员）、``:attributes:`` （``#[non_exhaustive] "
+"#[repr(C)]``，显示在签名上方）、``:deprecated: note``、``:for:`` 和 ``:trait:`` （用于 "
+"impl）、``:target:`` （用于 use），以及 ``:noindex:``。"
 
 #: ../../rust.rst:88
 msgid "Roles and ids"
 msgstr "角色与 id"
 
 #: ../../rust.rst:91
-msgid "``:rust:mod:`` (crates and modules), ``:rust:fn:`` (functions and methods), ``:rust:struct:``, ``:rust:enum:``, ``:rust:union:``, ``:rust:trait:``, ``:rust:variant:``, ``:rust:field:``, ``:rust:type:`` (type aliases and associated types), ``:rust:const:`` (constants and associated constants), ``:rust:static:``, ``:rust:macro:``, and ``:rust:any:`` (any of them) link to objects."
-msgstr "``:rust:mod:`` （crate 和模块）、``:rust:fn:`` （函数和方法）、``:rust:struct:``、``:rust:enum:``、``:rust:union:``、``:rust:trait:``、``:rust:variant:``、``:rust:field:``、``:rust:type:`` （类型别名和关联类型）、``:rust:const:`` （常量和关联常量）、``:rust:static:``、``:rust:macro:`` 以及 ``:rust:any:`` （以上任意一种）用于链接到对象。"
+msgid ""
+"``:rust:mod:`` (crates and modules), ``:rust:fn:`` (functions and "
+"methods), ``:rust:struct:``, ``:rust:enum:``, ``:rust:union:``, "
+"``:rust:trait:``, ``:rust:variant:``, ``:rust:field:``, ``:rust:type:`` "
+"(type aliases and associated types), ``:rust:const:`` (constants and "
+"associated constants), ``:rust:static:``, ``:rust:macro:``, and "
+"``:rust:any:`` (any of them) link to objects."
+msgstr ""
+"``:rust:mod:`` （crate 和模块）、``:rust:fn:`` "
+"（函数和方法）、``:rust:struct:``、``:rust:enum:``、``:rust:union:``、``:rust:trait:``、``:rust:variant:``、``:rust:field:``、``:rust:type:`` "
+"（类型别名和关联类型）、``:rust:const:`` （常量和关联常量）、``:rust:static:``、``:rust:macro:`` "
+"以及 ``:rust:any:`` （以上任意一种）用于链接到对象。"
 
 #: ../../rust.rst:97
-msgid "Targets are full paths with ``::``, the crate's name first: ``shapes``, ``shapes::parser::Lexer``, ``shapes::parser::Lexer::next_token``, ``shapes::Kind::Rect``, ``shapes::Kind::Rect::width``. As in the Python domain, ``~`` shows only the last part (``:rust:struct:`~shapes::parser::Lexer``` shows ``Lexer``), a leading ``.`` finds the name at the end of any target, and a relative name is looked up in the current module first. ``:rust:any:`` also falls back to intersphinx inventories. So a link to ``std::vec::Vec`` resolves when the standard library's inventory is mapped, and shows as code otherwise. With ``default-domain:: rust`` (or ``primary_domain = \"rust\"``), the roles need no ``rust:``."
-msgstr "目标是以 ``::`` 分隔的完整路径，以 crate 名称开头：``shapes``、``shapes::parser::Lexer``、``shapes::parser::Lexer::next_token``、``shapes::Kind::Rect``、``shapes::Kind::Rect::width``。与 Python 域一样，``~`` 只显示最后一段（``:rust:struct:`~shapes::parser::Lexer``` 显示为 ``Lexer``），开头的 ``.`` 会在任意目标的末尾查找该名称，相对名称则先在当前模块中查找。``:rust:any:`` 还会回退到 intersphinx 清单。因此，映射了标准库的清单时，指向 ``std::vec::Vec`` 的链接能够解析；否则显示为代码。使用 ``default-domain:: rust`` （或 ``primary_domain = \"rust\"``）时，角色无需 ``rust:`` 前缀。"
+msgid ""
+"Targets are full paths with ``::``, the crate's name first: ``shapes``, "
+"``shapes::parser::Lexer``, ``shapes::parser::Lexer::next_token``, "
+"``shapes::Kind::Rect``, ``shapes::Kind::Rect::width``. As in the Python "
+"domain, ``~`` shows only the last part "
+"(``:rust:struct:`~shapes::parser::Lexer``` shows ``Lexer``), a leading "
+"``.`` finds the name at the end of any target, and a relative name is "
+"looked up in the current module first. ``:rust:any:`` also falls back to "
+"intersphinx inventories. So a link to ``std::vec::Vec`` resolves when the "
+"standard library's inventory is mapped, and shows as code otherwise. With "
+"``default-domain:: rust`` (or ``primary_domain = \"rust\"``), the roles "
+"need no ``rust:``."
+msgstr ""
+"目标是以 ``::`` 分隔的完整路径，以 crate "
+"名称开头：``shapes``、``shapes::parser::Lexer``、``shapes::parser::Lexer::next_token``、``shapes::Kind::Rect``、``shapes::Kind::Rect::width``。与 "
+"Python 域一样，``~`` 只显示最后一段（``:rust:struct:`~shapes::parser::Lexer``` 显示为 "
+"``Lexer``），开头的 ``.`` 会在任意目标的末尾查找该名称，相对名称则先在当前模块中查找。``:rust:any:`` 还会回退到 "
+"intersphinx 清单。因此，映射了标准库的清单时，指向 ``std::vec::Vec`` 的链接能够解析；否则显示为代码。使用 "
+"``default-domain:: rust`` （或 ``primary_domain = \"rust\"``）时，角色无需 "
+"``rust:`` 前缀。"
 
 #: ../../rust.rst:107
-msgid "An object's id is Sphinx's ``make_id`` of ``rust-`` and its path, with ``::`` written ``.``: ``rust-shapes.parser.Lexer.next_token``. A module's id is ``rust-module-`` and its path. Index entries read \"Lexer (struct in shapes::parser)\". ``objects.inv`` lists every object with the domain ``rust``, modules first."
-msgstr "对象的 id 是对 ``rust-`` 加上其路径调用 Sphinx 的 ``make_id`` 得到的结果，路径中的 ``::`` 写作 ``.``：``rust-shapes.parser.Lexer.next_token``。模块的 id 是 ``rust-module-`` 加上其路径。索引条目显示为“Lexer (struct in shapes::parser)”。``objects.inv`` 以 ``rust`` 域列出所有对象，模块排在最前。"
+msgid ""
+"An object's id is Sphinx's ``make_id`` of ``rust-`` and its path, with "
+"``::`` written ``.``: ``rust-shapes.parser.Lexer.next_token``. A module's "
+"id is ``rust-module-`` and its path. Index entries read \"Lexer (struct "
+"in shapes::parser)\". ``objects.inv`` lists every object with the domain "
+"``rust``, modules first."
+msgstr ""
+"对象的 id 是对 ``rust-`` 加上其路径调用 Sphinx 的 ``make_id`` 得到的结果，路径中的 ``::`` 写作 "
+"``.``：``rust-shapes.parser.Lexer.next_token``。模块的 id 是 ``rust-module-`` "
+"加上其路径。索引条目显示为“Lexer (struct in shapes::parser)”。``objects.inv`` 以 "
+"``rust`` 域列出所有对象，模块排在最前。"
 
 #: ../../rust.rst:112
 msgid "Generating from source"
 msgstr "从源码生成"
 
 #: ../../rust.rst:115
-msgid "We tell Guidedog where our crates are, relative to the source folder:"
+msgid ""
+"We tell Guidedog where our crates are, relative to the source folder:"
 msgstr "我们告诉 Guidedog 我们的 crate 在哪里，路径相对于源文件夹："
 
 #: ../../rust.rst:121
-msgid "Each entry is a crate folder with a ``Cargo.toml`` (its ``[lib] path``, ``src/lib.rs``, or ``src/main.rs`` is the root), a folder with ``lib.rs``, ``main.rs`` or ``mod.rs``, a folder of loose ``.rs`` files (each a public module), or a root ``.rs`` file. Guidedog follows the module tree the way rustc does (``mod x;`` finds ``x.rs`` or ``x/mod.rs``, and ``#[path]`` is honored). As the build reads the modules, it writes one page per documented module and an index. The pages are documents of the project (in the toctree, search, the general index, ``singlehtml``, and the PDF book). They are never written into the source folder. Settings:"
-msgstr "每个条目可以是带 ``Cargo.toml`` 的 crate 文件夹（以其 ``[lib] path``、``src/lib.rs`` 或 ``src/main.rs`` 为根），含 ``lib.rs``、``main.rs`` 或 ``mod.rs`` 的文件夹，存放零散 ``.rs`` 文件的文件夹（每个文件是一个公开模块），或者一个根 ``.rs`` 文件。Guidedog 按 rustc 的方式遍历模块树（``mod x;`` 会找到 ``x.rs`` 或 ``x/mod.rs``，并遵循 ``#[path]``）。构建读取模块时，为每个有文档的模块写一个页面，另加一个索引。这些页面是项目的文档（出现在 toctree、搜索、总索引、``singlehtml`` 和 PDF 图书中），从不写入源文件夹。设置项："
+msgid ""
+"Each entry is a crate folder with a ``Cargo.toml`` (its ``[lib] path``, "
+"``src/lib.rs``, or ``src/main.rs`` is the root), a folder with "
+"``lib.rs``, ``main.rs`` or ``mod.rs``, a folder of loose ``.rs`` files "
+"(each a public module), or a root ``.rs`` file. Guidedog follows the "
+"module tree the way rustc does (``mod x;`` finds ``x.rs`` or "
+"``x/mod.rs``, and ``#[path]`` is honored). As the build reads the "
+"modules, it writes one page per documented module and an index. The pages "
+"are documents of the project (in the toctree, search, the general index, "
+"``singlehtml``, and the PDF book). They are never written into the source "
+"folder. Settings:"
+msgstr ""
+"每个条目可以是带 ``Cargo.toml`` 的 crate 文件夹（以其 ``[lib] path``、``src/lib.rs`` 或 "
+"``src/main.rs`` 为根），含 ``lib.rs``、``main.rs`` 或 ``mod.rs`` 的文件夹，存放零散 "
+"``.rs`` 文件的文件夹（每个文件是一个公开模块），或者一个根 ``.rs`` 文件。Guidedog 按 rustc "
+"的方式遍历模块树（``mod x;`` 会找到 ``x.rs`` 或 ``x/mod.rs``，并遵循 "
+"``#[path]``）。构建读取模块时，为每个有文档的模块写一个页面，另加一个索引。这些页面是项目的文档（出现在 "
+"toctree、搜索、总索引、``singlehtml`` 和 PDF 图书中），从不写入源文件夹。设置项："
 
 #: ../../rust.rst:130
 msgid "``rust_autoapi_crates``"
 msgstr "``rust_autoapi_crates``"
 
 #: ../../rust.rst:131
-msgid "The crate folders (or root files) that get pages, relative to the source folder. Only files below each crate's folder are read. A module file elsewhere is refused with ``rust.autodoc.confined``. The folders join the roots a ``literalinclude`` may read, so a page can quote the code it documents."
-msgstr "要生成页面的 crate 文件夹（或根文件），相对于源文件夹。只读取各 crate 文件夹下的文件。位于其他位置的模块文件会以 ``rust.autodoc.confined`` 拒绝。这些文件夹也会加入 ``literalinclude`` 可以读取的根目录，因此页面可以引用它所记述的代码。"
+msgid ""
+"The crate folders (or root files) that get pages, relative to the source "
+"folder. Only files below each crate's folder are read. A module file "
+"elsewhere is refused with ``rust.autodoc.confined``. The folders join the "
+"roots a ``literalinclude`` may read, so a page can quote the code it "
+"documents."
+msgstr ""
+"要生成页面的 crate 文件夹（或根文件），相对于源文件夹。只读取各 crate 文件夹下的文件。位于其他位置的模块文件会以 "
+"``rust.autodoc.confined`` 拒绝。这些文件夹也会加入 ``literalinclude`` "
+"可以读取的根目录，因此页面可以引用它所记述的代码。"
 
 #: ../../rust.rst:136
 msgid "``rust_autoapi_root``"
 msgstr "``rust_autoapi_root``"
 
 #: ../../rust.rst:137
-msgid "The folder of the pages, ``\"rustapi\"`` by default. A module's page is named by its path: ``rustapi/shapes``, ``rustapi/shapes/parser``. ``rustapi/index`` lists the crates and their modules with their synopses."
-msgstr "存放页面的文件夹，默认为 ``\"rustapi\"``。模块页面按其路径命名：``rustapi/shapes``、``rustapi/shapes/parser``。``rustapi/index`` 列出各个 crate 及其模块，并附上简介。"
+msgid ""
+"The folder of the pages, ``\"rustapi\"`` by default. A module's page is "
+"named by its path: ``rustapi/shapes``, ``rustapi/shapes/parser``. "
+"``rustapi/index`` lists the crates and their modules with their synopses."
+msgstr ""
+"存放页面的文件夹，默认为 "
+"``\"rustapi\"``。模块页面按其路径命名：``rustapi/shapes``、``rustapi/shapes/parser``。``rustapi/index`` "
+"列出各个 crate 及其模块，并附上简介。"
 
 #: ../../rust.rst:141
 msgid "``rust_autoapi_options``"
 msgstr "``rust_autoapi_options``"
 
 #: ../../rust.rst:142
-msgid "Empty by default. ``private-members`` documents private and ``pub(crate)`` items (shown with ``:visibility:``). ``hidden-members`` documents ``#[doc(hidden)]`` items. ``noindex`` makes every generated object ``:noindex:``."
-msgstr "默认为空。``private-members`` 为私有条目和 ``pub(crate)`` 条目生成文档（带 ``:visibility:`` 显示）。``hidden-members`` 为 ``#[doc(hidden)]`` 条目生成文档。``noindex`` 让每个生成的对象都带上 ``:noindex:``。"
+msgid ""
+"Empty by default. ``private-members`` documents private and "
+"``pub(crate)`` items (shown with ``:visibility:``). ``hidden-members`` "
+"documents ``#[doc(hidden)]`` items. ``noindex`` makes every generated "
+"object ``:noindex:``."
+msgstr ""
+"默认为空。``private-members`` 为私有条目和 ``pub(crate)`` 条目生成文档（带 ``:visibility:`` "
+"显示）。``hidden-members`` 为 ``#[doc(hidden)]`` 条目生成文档。``noindex`` "
+"让每个生成的对象都带上 ``:noindex:``。"
 
 #: ../../rust.rst:146
 msgid "``rust_autoapi_member_order``"
 msgstr "``rust_autoapi_member_order``"
 
 #: ../../rust.rst:147
-msgid "``\"source\"`` (default) or ``\"alphabetical\"``. Members are grouped in rustdoc's order either way (modules, macros, structs, enums, ..., functions)."
-msgstr "``\"source\"`` （默认）或 ``\"alphabetical\"``。无论哪种，成员都按 rustdoc 的顺序分组（模块、宏、结构体、枚举……函数）。"
+msgid ""
+"``\"source\"`` (default) or ``\"alphabetical\"``. Members are grouped in "
+"rustdoc's order either way (modules, macros, structs, enums, ..., "
+"functions)."
+msgstr ""
+"``\"source\"`` （默认）或 ``\"alphabetical\"``。无论哪种，成员都按 rustdoc "
+"的顺序分组（模块、宏、结构体、枚举……函数）。"
 
 #: ../../rust.rst:150
 msgid "``rust_autoapi_add_toctree_entry``"
 msgstr "``rust_autoapi_add_toctree_entry``"
 
 #: ../../rust.rst:151
-msgid "``true`` (default): the API index joins the root document's first toctree."
+msgid ""
+"``true`` (default): the API index joins the root document's first toctree."
 msgstr "``true`` （默认）：API 索引加入根文档的第一个 toctree。"
 
 #: ../../rust.rst:153
@@ -178,12 +328,18 @@ msgid "``rust_autoapi_generate_api_docs``"
 msgstr "``rust_autoapi_generate_api_docs``"
 
 #: ../../rust.rst:154
-msgid "``true`` (default). ``false`` reads the settings but generates no pages."
+msgid ""
+"``true`` (default). ``false`` reads the settings but generates no pages."
 msgstr "``true`` （默认）。设为 ``false`` 时会读取设置，但不生成页面。"
 
 #: ../../rust.rst:156
-msgid "``--untrusted`` drops ``rust_autoapi_crates`` folders outside the source folder, with a warning. Guidedog's own API reference, ``docs/api``, is built this way."
-msgstr "``--untrusted`` 会丢弃位于源文件夹之外的 ``rust_autoapi_crates`` 文件夹，并给出警告。Guidedog 自己的 API 参考 ``docs/api`` 就是这样构建的。"
+msgid ""
+"``--untrusted`` drops ``rust_autoapi_crates`` folders outside the source "
+"folder, with a warning. Guidedog's own API reference, ``docs/api``, is "
+"built this way."
+msgstr ""
+"``--untrusted`` 会丢弃位于源文件夹之外的 ``rust_autoapi_crates`` 文件夹，并给出警告。Guidedog "
+"自己的 API 参考 ``docs/api`` 就是这样构建的。"
 
 #: ../../rust.rst:159
 msgid "What is documented, and where"
@@ -194,83 +350,194 @@ msgid "Guidedog follows rustdoc's rules:"
 msgstr "Guidedog 遵循 rustdoc 的规则："
 
 #: ../../rust.rst:164
-msgid "An item is documented in its module when it is ``pub`` and every module on the way is ``pub``. ``#[cfg(test)]`` modules and ``#[test]`` functions are never documented."
-msgstr "当条目为 ``pub``，且路径上的每个模块都是 ``pub`` 时，它在所在模块中生成文档。``#[cfg(test)]`` 模块和 ``#[test]`` 函数从不生成文档。"
+msgid ""
+"An item is documented in its module when it is ``pub`` and every module "
+"on the way is ``pub``. ``#[cfg(test)]`` modules and ``#[test]`` functions "
+"are never documented."
+msgstr ""
+"当条目为 ``pub``，且路径上的每个模块都是 ``pub`` 时，它在所在模块中生成文档。``#[cfg(test)]`` 模块和 "
+"``#[test]`` 函数从不生成文档。"
 
 #: ../../rust.rst:166
-msgid "``pub use`` of an item documented anyway is a re-export line. A ``pub use`` of an item that is not reachable otherwise (it lives in a private module) documents the item in place, under the re-export's name. ``#[doc(inline)]`` and ``#[doc(no_inline)]`` force either. ``pub use private::*`` inlines every public item of the module. External re-exports (``pub use std::...``) are lines."
-msgstr "如果被 ``pub use`` 的条目本来就有文档，它只生成一行重导出。如果该条目无法通过其他路径访问（位于私有模块中），``pub use`` 会以重导出的名称就地为它生成文档。``#[doc(inline)]`` 和 ``#[doc(no_inline)]`` 可以强制采用其中一种方式。``pub use private::*`` 会内联该模块的所有公开条目。外部重导出（``pub use std::...``）只生成一行。"
+msgid ""
+"``pub use`` of an item documented anyway is a re-export line. A ``pub "
+"use`` of an item that is not reachable otherwise (it lives in a private "
+"module) documents the item in place, under the re-export's name. "
+"``#[doc(inline)]`` and ``#[doc(no_inline)]`` force either. ``pub use "
+"private::*`` inlines every public item of the module. External re-exports "
+"(``pub use std::...``) are lines."
+msgstr ""
+"如果被 ``pub use`` 的条目本来就有文档，它只生成一行重导出。如果该条目无法通过其他路径访问（位于私有模块中），``pub use`` "
+"会以重导出的名称就地为它生成文档。``#[doc(inline)]`` 和 ``#[doc(no_inline)]`` "
+"可以强制采用其中一种方式。``pub use private::*`` 会内联该模块的所有公开条目。外部重导出（``pub use "
+"std::...``）只生成一行。"
 
 #: ../../rust.rst:171
 msgid "``#[macro_export]`` macros are documented at the crate root."
 msgstr "``#[macro_export]`` 宏在 crate 根中生成文档。"
 
 #: ../../rust.rst:172
-msgid "``impl`` blocks attach to the type their self type names (through ``use`` imports): inherent impls first, then trait impls. An impl for a type outside the crate is listed under \"Implementations\" on its module's page. Trait-impl members are ``:noindex:``. They are documented on the trait."
-msgstr "``impl`` 块挂在其 self 类型所指的类型下（会解析 ``use`` 导入）：先是固有 impl，再是 trait impl。为 crate 外部类型编写的 impl 列在其模块页面的“Implementations”下。trait impl 的成员带 ``:noindex:``，它们的文档写在 trait 上。"
+msgid ""
+"``impl`` blocks attach to the type their self type names (through ``use`` "
+"imports): inherent impls first, then trait impls. An impl for a type "
+"outside the crate is listed under \"Implementations\" on its module's "
+"page. Trait-impl members are ``:noindex:``. They are documented on the "
+"trait."
+msgstr ""
+"``impl`` 块挂在其 self 类型所指的类型下（会解析 ``use`` 导入）：先是固有 impl，再是 trait impl。为 "
+"crate 外部类型编写的 impl 列在其模块页面的“Implementations”下。trait impl 的成员带 "
+"``:noindex:``，它们的文档写在 trait 上。"
 
 #: ../../rust.rst:176
-msgid "A type's description groups its content as rustdoc does, each group under a rubric: \"Fields\" (or \"Variants\"), \"Implementations\" (inherent impls in source order), then \"Trait Implementations\" (sorted by trait name)."
-msgstr "类型的描述按 rustdoc 的方式分组，每组都有一个小标题：“Fields”（或“Variants”）、“Implementations”（固有 impl，按源码顺序），然后是“Trait Implementations”（按 trait 名称排序）。"
+msgid ""
+"A type's description groups its content as rustdoc does, each group under "
+"a rubric: \"Fields\" (or \"Variants\"), \"Implementations\" (inherent "
+"impls in source order), then \"Trait Implementations\" (sorted by trait "
+"name)."
+msgstr ""
+"类型的描述按 rustdoc 的方式分组，每组都有一个小标题：“Fields”（或“Variants”）、“Implementations”（固有 "
+"impl，按源码顺序），然后是“Trait Implementations”（按 trait 名称排序）。"
 
 #: ../../rust.rst:177
-msgid "A trait ends with \"Implementors\": the head of every impl of it in the crate, sorted by the implementing type. Each head links its types. The impl's members stay with the type (or on the module page, for a type of another crate)."
-msgstr "trait 的末尾是“Implementors”：crate 中该 trait 每个 impl 的头部，按实现类型排序。每个头部都链接到其中的类型。impl 的成员仍归属于该类型（对于其他 crate 的类型，则在模块页面上）。"
+msgid ""
+"A trait ends with \"Implementors\": the head of every impl of it in the "
+"crate, sorted by the implementing type. Each head links its types. The "
+"impl's members stay with the type (or on the module page, for a type of "
+"another crate)."
+msgstr ""
+"trait 的末尾是“Implementors”：crate 中该 trait 每个 impl "
+"的头部，按实现类型排序。每个头部都链接到其中的类型。impl 的成员仍归属于该类型（对于其他 crate 的类型，则在模块页面上）。"
 
 #: ../../rust.rst:178
-msgid "Tuple fields, and the fields of enum variants, are listed only when one of them has docs. A tuple struct's signature shows private fields as ``_``. With ``include_private``, it shows their types."
-msgstr "元组字段以及枚举变体的字段，只有在其中至少一个有文档时才会列出。元组结构体的签名把私有字段显示为 ``_``。使用 ``include_private`` 时，会显示它们的类型。"
+msgid ""
+"Tuple fields, and the fields of enum variants, are listed only when one "
+"of them has docs. A tuple struct's signature shows private fields as "
+"``_``. With ``include_private``, it shows their types."
+msgstr ""
+"元组字段以及枚举变体的字段，只有在其中至少一个有文档时才会列出。元组结构体的签名把私有字段显示为 ``_``。使用 "
+"``include_private`` 时，会显示它们的类型。"
 
 #: ../../rust.rst:180
-msgid "``#[cfg(...)]`` and ``#[doc(cfg(...))]`` become ``:cfg:``. Several are joined as ``all(a, b)``."
-msgstr "``#[cfg(...)]`` 和 ``#[doc(cfg(...))]`` 会变成 ``:cfg:``。多个条件合并为 ``all(a, b)``。"
+msgid ""
+"``#[cfg(...)]`` and ``#[doc(cfg(...))]`` become ``:cfg:``. Several are "
+"joined as ``all(a, b)``."
+msgstr ""
+"``#[cfg(...)]`` 和 ``#[doc(cfg(...))]`` 会变成 ``:cfg:``。多个条件合并为 ``all(a, "
+"b)``。"
 
 #: ../../rust.rst:182
-msgid "Signatures are the source on one line: attributes, comments and bodies removed, whitespace collapsed, rustfmt's vertical lists folded. Constant values longer than 48 characters and every static's value are left out."
-msgstr "签名就是写在一行内的源码：去掉属性、注释和函数体，合并空白，并折叠 rustfmt 的纵向列表。超过 48 个字符的常量值以及所有 static 的值都会省略。"
+msgid ""
+"Signatures are the source on one line: attributes, comments and bodies "
+"removed, whitespace collapsed, rustfmt's vertical lists folded. Constant "
+"values longer than 48 characters and every static's value are left out."
+msgstr ""
+"签名就是写在一行内的源码：去掉属性、注释和函数体，合并空白，并折叠 rustfmt 的纵向列表。超过 48 个字符的常量值以及所有 static "
+"的值都会省略。"
 
 #: ../../rust.rst:186
 msgid "Doc comments"
 msgstr "文档注释"
 
 #: ../../rust.rst:189
-msgid "``///``, ``//!``, ``/** */``, ``/*! */``, ``#[doc = \"...\"]`` and ``#[doc = include_str!(\"file\")]`` (read relative to the source file, only inside the crate folder) are joined and unindented as rustdoc does. They are CommonMark, and become reStructuredText in the directive's content:"
-msgstr "``///``、``//!``、``/** */``、``/*! */``、``#[doc = \"...\"]`` 和 ``#[doc = include_str!(\"file\")]`` （相对于源文件读取，且只限 crate 文件夹内）会像 rustdoc 那样合并并去除缩进。它们是 CommonMark，并在指令内容中转换为 reStructuredText："
+msgid ""
+"``///``, ``//!``, ``/** */``, ``/*! */``, ``#[doc = \"...\"]`` and "
+"``#[doc = include_str!(\"file\")]`` (read relative to the source file, "
+"only inside the crate folder) are joined and unindented as rustdoc does. "
+"They are CommonMark, and become reStructuredText in the directive's "
+"content:"
+msgstr ""
+"``///``、``//!``、``/** */``、``/*! */``、``#[doc = \"...\"]`` 和 ``#[doc = "
+"include_str!(\"file\")]`` （相对于源文件读取，且只限 crate 文件夹内）会像 rustdoc "
+"那样合并并去除缩进。它们是 CommonMark，并在指令内容中转换为 reStructuredText："
 
 #: ../../rust.rst:194
-msgid "Paragraphs, lists (nested, with their start numbers), block quotes, pipe tables (as ``list-table``), and HTML blocks (as ``raw:: html``) keep their structure."
-msgstr "段落、列表（包括嵌套列表及其起始编号）、块引用、管道表格（转为 ``list-table``）和 HTML 块（转为 ``raw:: html``）都保留原有结构。"
+msgid ""
+"Paragraphs, lists (nested, with their start numbers), block quotes, pipe "
+"tables (as ``list-table``), and HTML blocks (as ``raw:: html``) keep "
+"their structure."
+msgstr ""
+"段落、列表（包括嵌套列表及其起始编号）、块引用、管道表格（转为 ``list-table``）和 HTML 块（转为 ``raw:: "
+"html``）都保留原有结构。"
 
 #: ../../rust.rst:196
-msgid "Headings (``# Examples``, ``# Panics``, ``# Errors``, ``# Safety``) become rubrics, since sections cannot sit inside directives."
-msgstr "标题（``# Examples``、``# Panics``、``# Errors``、``# Safety``）会变成小标题（rubric），因为指令内部不能包含章节。"
+msgid ""
+"Headings (``# Examples``, ``# Panics``, ``# Errors``, ``# Safety``) "
+"become rubrics, since sections cannot sit inside directives."
+msgstr ""
+"标题（``# Examples``、``# Panics``、``# Errors``、``# "
+"Safety``）会变成小标题（rubric），因为指令内部不能包含章节。"
 
 #: ../../rust.rst:198
-msgid "Code blocks become ``code-block:: rust`` under rustdoc's rules. No info string, ``ignore``, ``no_run``, ``should_panic``, ``compile_fail``, ``edition2021``, or an error code means Rust. ``text``, ``toml`` and other languages are kept. Hidden ``# `` lines are removed (``##`` shows ``#``)."
-msgstr "代码块按 rustdoc 的规则转为 ``code-block:: rust``。没有信息字符串，或者写的是 ``ignore``、``no_run``、``should_panic``、``compile_fail``、``edition2021`` 或错误码时，都视为 Rust。``text``、``toml`` 等其他语言保持不变。隐藏的 ``# `` 行会被删除（``##`` 显示为 ``#``）。"
+msgid ""
+"Code blocks become ``code-block:: rust`` under rustdoc's rules. No info "
+"string, ``ignore``, ``no_run``, ``should_panic``, ``compile_fail``, "
+"``edition2021``, or an error code means Rust. ``text``, ``toml`` and "
+"other languages are kept. Hidden ``# `` lines are removed (``##`` shows "
+"``#``)."
+msgstr ""
+"代码块按 rustdoc 的规则转为 ``code-block:: rust``。没有信息字符串，或者写的是 "
+"``ignore``、``no_run``、``should_panic``、``compile_fail``、``edition2021`` "
+"或错误码时，都视为 Rust。``text``、``toml`` 等其他语言保持不变。隐藏的 ``# `` 行会被删除（``##`` 显示为 "
+"``#``）。"
 
 #: ../../rust.rst:202
-msgid "Intra-doc links (``[`Foo`]``, ``[Foo]``, ``[text](Foo::bar)``, ``[text][Foo]``, with disambiguators such as ``struct@`` or ``foo()``) are resolved as rustdoc resolves them, relative to the item's module and ``Self``, and become ``rust`` roles. Other links and autolinks stay links."
-msgstr "文档内链接（``[`Foo`]``、``[Foo]``、``[text](Foo::bar)``、``[text][Foo]``，以及带 ``struct@`` 或 ``foo()`` 等消歧写法的链接）按 rustdoc 的方式解析，相对于条目所在模块和 ``Self``，并转为 ``rust`` 角色。其他链接和自动链接仍是普通链接。"
+msgid ""
+"Intra-doc links (``[`Foo`]``, ``[Foo]``, ``[text](Foo::bar)``, "
+"``[text][Foo]``, with disambiguators such as ``struct@`` or ``foo()``) "
+"are resolved as rustdoc resolves them, relative to the item's module and "
+"``Self``, and become ``rust`` roles. Other links and autolinks stay links."
+msgstr ""
+"文档内链接（``[`Foo`]``、``[Foo]``、``[text](Foo::bar)``、``[text][Foo]``，以及带 "
+"``struct@`` 或 ``foo()`` 等消歧写法的链接）按 rustdoc 的方式解析，相对于条目所在模块和 ``Self``，并转为 "
+"``rust`` 角色。其他链接和自动链接仍是普通链接。"
 
 #: ../../rust.rst:206
-msgid "Links into the standard library become links to doc.rust-lang.org. These are primitives (``[u8]``, ``[`prim@str`]``, ``[u8::MAX]``), paths that start with ``std::``, ``core::`` or ``alloc::``, and prelude names the crate does not define (``[Vec]``, ``[Some]``). The standard library publishes no inventory we could read, so a stable URL is the practical choice. Primitives and common items get their exact page (``primitive.u8.html``, ``struct.Vec.html#method.new``). A disambiguator such as ``macro@`` or ``mod@`` gives the page for others. Anything else opens rustdoc's search for the path. The shown text drops the disambiguator: ``[`prim@u8`]`` shows ``u8``."
-msgstr "指向标准库的链接会变成指向 doc.rust-lang.org 的链接。这包括基本类型（``[u8]``、``[`prim@str`]``、``[u8::MAX]``）、以 ``std::``、``core::`` 或 ``alloc::`` 开头的路径，以及 crate 自身没有定义的 prelude 名称（``[Vec]``、``[Some]``）。标准库没有发布可供我们读取的清单，因此使用稳定的 URL 是最实际的做法。基本类型和常用条目会链接到确切的页面（``primitive.u8.html``、``struct.Vec.html#method.new``）。其他条目可通过 ``macro@`` 或 ``mod@`` 等消歧前缀得到对应页面。除此之外的路径会打开 rustdoc 的搜索。显示的文本会去掉消歧前缀：``[`prim@u8`]`` 显示为 ``u8``。"
+msgid ""
+"Links into the standard library become links to doc.rust-lang.org. These "
+"are primitives (``[u8]``, ``[`prim@str`]``, ``[u8::MAX]``), paths that "
+"start with ``std::``, ``core::`` or ``alloc::``, and prelude names the "
+"crate does not define (``[Vec]``, ``[Some]``). The standard library "
+"publishes no inventory we could read, so a stable URL is the practical "
+"choice. Primitives and common items get their exact page "
+"(``primitive.u8.html``, ``struct.Vec.html#method.new``). A disambiguator "
+"such as ``macro@`` or ``mod@`` gives the page for others. Anything else "
+"opens rustdoc's search for the path. The shown text drops the "
+"disambiguator: ``[`prim@u8`]`` shows ``u8``."
+msgstr ""
+"指向标准库的链接会变成指向 doc.rust-lang.org "
+"的链接。这包括基本类型（``[u8]``、``[`prim@str`]``、``[u8::MAX]``）、以 "
+"``std::``、``core::`` 或 ``alloc::`` 开头的路径，以及 crate 自身没有定义的 prelude "
+"名称（``[Vec]``、``[Some]``）。标准库没有发布可供我们读取的清单，因此使用稳定的 URL "
+"是最实际的做法。基本类型和常用条目会链接到确切的页面（``primitive.u8.html``、``struct.Vec.html#method.new``）。其他条目可通过 "
+"``macro@`` 或 ``mod@`` 等消歧前缀得到对应页面。除此之外的路径会打开 rustdoc "
+"的搜索。显示的文本会去掉消歧前缀：``[`prim@u8`]`` 显示为 ``u8``。"
 
 #: ../../rust.rst:207
-msgid "Footnotes (``[^1]``) become auto-numbered footnotes at the end of the item's docs."
+msgid ""
+"Footnotes (``[^1]``) become auto-numbered footnotes at the end of the "
+"item's docs."
 msgstr "脚注（``[^1]``）会变成自动编号的脚注，放在该条目文档的末尾。"
 
 #: ../../rust.rst:208
-msgid "An image on its own line becomes an ``image`` with its alt text, and a linked image (a badge) gets a ``:target:``. An image inside a sentence becomes a substitution. An image with a relative path keeps only its alt text, because nothing places the file next to the generated page."
-msgstr "单独成行的图片会变成带替代文本的 ``image``，带链接的图片（徽章）还会得到 ``:target:``。句子中的图片会变成替换引用。使用相对路径的图片只保留替代文本，因为没有任何步骤会把该文件放到生成的页面旁边。"
+msgid ""
+"An image on its own line becomes an ``image`` with its alt text, and a "
+"linked image (a badge) gets a ``:target:``. An image inside a sentence "
+"becomes a substitution. An image with a relative path keeps only its alt "
+"text, because nothing places the file next to the generated page."
+msgstr ""
+"单独成行的图片会变成带替代文本的 ``image``，带链接的图片（徽章）还会得到 "
+"``:target:``。句子中的图片会变成替换引用。使用相对路径的图片只保留替代文本，因为没有任何步骤会把该文件放到生成的页面旁边。"
 
 #: ../../rust.rst:209
-msgid "A paragraph with a hard line break (two trailing spaces, or a backslash at the end of a line) becomes a line block."
+msgid ""
+"A paragraph with a hard line break (two trailing spaces, or a backslash "
+"at the end of a line) becomes a line block."
 msgstr "含硬换行（行尾两个空格或一个反斜杠）的段落会变成行块。"
 
 #: ../../rust.rst:210
-msgid "Everything else reStructuredText would read as markup is escaped, so a comment reads as written and never warns."
+msgid ""
+"Everything else reStructuredText would read as markup is escaped, so a "
+"comment reads as written and never warns."
 msgstr "其他所有会被 reStructuredText 当作标记的内容都会转义，因此注释按原样显示，也不会产生警告。"
 
 #: ../../rust.rst:213
@@ -278,16 +545,30 @@ msgid "Rebuilding"
 msgstr "重新构建"
 
 #: ../../rust.rst:216
-msgid "Every Rust file a page read is a dependency of that page. When we edit a module's source, the next build reads again only the pages generated from that crate. ``guidedog serve`` checks modification times in ``rust_autoapi_crates`` before serving an HTML page, as it does for ``odin_autoapi_dirs``. We refresh the browser after editing."
-msgstr "页面读取过的每个 Rust 文件都是该页面的依赖。我们编辑某个模块的源码后，下次构建只会重新读取由该 crate 生成的页面。``guidedog serve`` 在提供 HTML 页面之前会检查 ``rust_autoapi_crates`` 中文件的修改时间，与 ``odin_autoapi_dirs`` 的处理方式相同。编辑后刷新浏览器即可。"
+msgid ""
+"Every Rust file a page read is a dependency of that page. When we edit a "
+"module's source, the next build reads again only the pages generated from "
+"that crate. ``guidedog serve`` checks modification times in "
+"``rust_autoapi_crates`` before serving an HTML page, as it does for "
+"``odin_autoapi_dirs``. We refresh the browser after editing."
+msgstr ""
+"页面读取过的每个 Rust 文件都是该页面的依赖。我们编辑某个模块的源码后，下次构建只会重新读取由该 crate 生成的页面。``guidedog "
+"serve`` 在提供 HTML 页面之前会检查 ``rust_autoapi_crates`` 中文件的修改时间，与 "
+"``odin_autoapi_dirs`` 的处理方式相同。编辑后刷新浏览器即可。"
 
 #: ../../rust.rst:222
 msgid "Warnings and limits"
 msgstr "警告与限制"
 
 #: ../../rust.rst:225
-msgid "The source is parsed, never compiled, type-checked, or macro-expanded. Types are shown as written and nothing is inferred. Items a macro would create are not documented. Problems in one file never stop the rest of the crate:"
-msgstr "源码只会被解析，不会被编译、类型检查或宏展开。类型按原样显示，不做任何推断。由宏生成的条目不会出现在文档中。单个文件中的问题不会影响 crate 其余部分的处理："
+msgid ""
+"The source is parsed, never compiled, type-checked, or macro-expanded. "
+"Types are shown as written and nothing is inferred. Items a macro would "
+"create are not documented. Problems in one file never stop the rest of "
+"the crate:"
+msgstr ""
+"源码只会被解析，不会被编译、类型检查或宏展开。类型按原样显示，不做任何推断。由宏生成的条目不会出现在文档中。单个文件中的问题不会影响 crate "
+"其余部分的处理："
 
 #: ../../rust.rst:229
 msgid "``rust.autodoc.parse``"
@@ -310,7 +591,9 @@ msgid "``rust.autodoc.link`` and ``rust.autodoc.private-link``"
 msgstr "``rust.autodoc.link`` 和 ``rust.autodoc.private-link``"
 
 #: ../../rust.rst:234
-msgid "An intra-doc link into the crate that names nothing, or names a private or hidden item."
+msgid ""
+"An intra-doc link into the crate that names nothing, or names a private "
+"or hidden item."
 msgstr "指向本 crate 的文档内链接没有对应任何条目，或者指向了私有或隐藏的条目。"
 
 #: ../../rust.rst:236
@@ -322,17 +605,32 @@ msgid "A file outside the crate folder, or one that could not be read."
 msgstr "文件位于 crate 目录之外，或者无法读取。"
 
 #: ../../rust.rst:238
-msgid "``rust.autodoc.nesting``, ``rust.autodoc.size`` and ``rust.autodoc.limit``"
-msgstr "``rust.autodoc.nesting``、``rust.autodoc.size`` 和 ``rust.autodoc.limit``"
+msgid ""
+"``rust.autodoc.nesting``, ``rust.autodoc.size`` and ``rust.autodoc.limit``"
+msgstr ""
+"``rust.autodoc.nesting``、``rust.autodoc.size`` 和 ``rust.autodoc.limit``"
 
 #: ../../rust.rst:239
-msgid "A file nested deeper than 512 levels, a file larger than 4 MiB, or a crate with more than 4,096 files or 100,000 items."
+msgid ""
+"A file nested deeper than 512 levels, a file larger than 4 MiB, or a "
+"crate with more than 4,096 files or 100,000 items."
 msgstr "文件嵌套超过 512 层、文件大于 4 MiB，或者 crate 包含超过 4,096 个文件或 100,000 个条目。"
 
 #: ../../rust.rst:242
-msgid "A crate root that cannot be found or read is an error (``rust.autodoc.crate``, ``rust.autodoc.root``). Every warning has a hint and, where there is one, the file and line with an excerpt."
-msgstr "找不到或无法读取 crate 根文件属于错误（``rust.autodoc.crate``、``rust.autodoc.root``）。每条警告都附有提示；如果能定位，还会给出文件、行号和源码摘录。"
+msgid ""
+"A crate root that cannot be found or read is an error "
+"(``rust.autodoc.crate``, ``rust.autodoc.root``). Every warning has a hint "
+"and, where there is one, the file and line with an excerpt."
+msgstr ""
+"找不到或无法读取 crate "
+"根文件属于错误（``rust.autodoc.crate``、``rust.autodoc.root``）。每条警告都附有提示；如果能定位，还会给出文件、行号和源码摘录。"
 
 #: ../../rust.rst:246
-msgid "Links to types outside the documented crates (``std::fmt::Display``) resolve only through intersphinx. With ``-n``, we silence the rest with ``nitpick_ignore_regex = [[\"rust:any\", \"(std|core|alloc)::.*\"]]``."
-msgstr "指向未生成文档的 crate 中类型的链接（``std::fmt::Display``）只能通过 intersphinx 解析。使用 ``-n`` 时，可以用 ``nitpick_ignore_regex = [[\"rust:any\", \"(std|core|alloc)::.*\"]]`` 屏蔽其余警告。"
+msgid ""
+"Links to types outside the documented crates (``std::fmt::Display``) "
+"resolve only through intersphinx. With ``-n``, we silence the rest with "
+"``nitpick_ignore_regex = [[\"rust:any\", \"(std|core|alloc)::.*\"]]``."
+msgstr ""
+"指向未生成文档的 crate 中类型的链接（``std::fmt::Display``）只能通过 intersphinx 解析。使用 ``-n`` "
+"时，可以用 ``nitpick_ignore_regex = [[\"rust:any\", "
+"\"(std|core|alloc)::.*\"]]`` 屏蔽其余警告。"

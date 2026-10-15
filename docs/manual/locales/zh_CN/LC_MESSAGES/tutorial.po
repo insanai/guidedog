@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 04:11+0000\n"
+"POT-Creation-Date: 2026-10-15 05:49+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -34,12 +34,20 @@ msgid "1. Start with a real project"
 msgstr "1. 从真实项目开始"
 
 #: ../../tutorial/a-custom-theme.rst:11
-msgid "Use Guidedog 0.7.0 or newer. Run this from the directory that will contain ``orbit``:"
+msgid ""
+"Use Guidedog 0.7.0 or newer. Run this from the directory that will "
+"contain ``orbit``:"
 msgstr "请使用 Guidedog 0.7.0 或更新版本。在将要包含 ``orbit`` 的目录中运行："
 
 #: ../../tutorial/a-custom-theme.rst:17
-msgid "Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` in the same directory. We keep this file: it supplies the tested page layout, cover, running heads, contents, code styles and optimized paragraph breaking."
-msgstr "将生成的 ``orbit/_templates/book.typ`` 在同一目录中重命名为 ``base-book.typ``。我们保留这个文件：经过测试的页面布局、封面、页眉、目录、代码样式和优化的段落断行都由它提供。"
+msgid ""
+"Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
+"in the same directory. We keep this file: it supplies the tested page "
+"layout, cover, running heads, contents, code styles and optimized "
+"paragraph breaking."
+msgstr ""
+"将生成的 ``orbit/_templates/book.typ`` 在同一目录中重命名为 "
+"``base-book.typ``。我们保留这个文件：经过测试的页面布局、封面、页眉、目录、代码样式和优化的段落断行都由它提供。"
 
 #: ../../tutorial/a-custom-theme.rst:21
 msgid ""
@@ -75,8 +83,14 @@ msgid "orbit/conf.toml"
 msgstr "orbit/conf.toml"
 
 #: ../../tutorial/a-custom-theme.rst:57
-msgid "All paths in this tutorial are project files. HTML templates are found through ``templates_path``. The PDF entry point is always ``_templates/book.typ`` under the source directory. Changing ``templates_path`` does not move it."
-msgstr "本教程中的路径都是项目文件。HTML 模板通过 ``templates_path`` 查找。PDF 入口始终是源目录下的 ``_templates/book.typ``。修改 ``templates_path`` 不会改变它的位置。"
+msgid ""
+"All paths in this tutorial are project files. HTML templates are found "
+"through ``templates_path``. The PDF entry point is always "
+"``_templates/book.typ`` under the source directory. Changing "
+"``templates_path`` does not move it."
+msgstr ""
+"本教程中的路径都是项目文件。HTML 模板通过 ``templates_path`` 查找。PDF 入口始终是源目录下的 "
+"``_templates/book.typ``。修改 ``templates_path`` 不会改变它的位置。"
 
 #: ../../tutorial/a-custom-theme.rst:61
 msgid "3. Extend the HTML layout"
@@ -182,8 +196,14 @@ msgstr ""
 "JavaScript。背景会变时，不要将文字固定为不适应主题的颜色。"
 
 #: ../../tutorial/a-custom-theme.rst:116
-msgid "Browser hyphenation follows the page language. It is not Typst's paragraph optimizer. The manual's optional English web optimizer is described separately in :doc:`../topics/typography`. This example uses the browser's own layout."
-msgstr "浏览器按页面语言进行断词，这不是 Typst 的段落优化器。本手册可选的英文网页优化器另见 :doc:`../topics/typography`。本例使用浏览器自身的排版。"
+msgid ""
+"Browser hyphenation follows the page language. It is not Typst's "
+"paragraph optimizer. The manual's optional English web optimizer is "
+"described separately in :doc:`../topics/typography`. This example uses "
+"the browser's own layout."
+msgstr ""
+"浏览器按页面语言进行断词，这不是 Typst 的段落优化器。本手册可选的英文网页优化器另见 "
+":doc:`../topics/typography`。本例使用浏览器自身的排版。"
 
 #: ../../tutorial/a-custom-theme.rst:120
 msgid ""
@@ -222,8 +242,15 @@ msgid "orbit/_templates/book.typ"
 msgstr "orbit/_templates/book.typ"
 
 #: ../../tutorial/a-custom-theme.rst:140
-msgid "The host calls ``book`` with metadata and the chapter content. The wrapper forwards those values to the generated base and supplies our palette. Passing ``body`` into the styled function keeps its rules in scope. The web stylesheet does not affect PDF, and the Typst template does not affect HTML."
-msgstr "主机调用 ``book``，传入元数据和章节内容。包装函数把这些值转发给生成的基础模板，并提供我们的配色。把 ``body`` 传给应用样式的函数，样式规则才会作用于正文。网页样式表不影响 PDF，Typst 模板也不影响 HTML。"
+msgid ""
+"The host calls ``book`` with metadata and the chapter content. The "
+"wrapper forwards those values to the generated base and supplies our "
+"palette. Passing ``body`` into the styled function keeps its rules in "
+"scope. The web stylesheet does not affect PDF, and the Typst template "
+"does not affect HTML."
+msgstr ""
+"主机调用 ``book``，传入元数据和章节内容。包装函数把这些值转发给生成的基础模板，并提供我们的配色。把 ``body`` "
+"传给应用样式的函数，样式规则才会作用于正文。网页样式表不影响 PDF，Typst 模板也不影响 HTML。"
 
 #: ../../tutorial/a-custom-theme.rst:145
 msgid ""
@@ -286,8 +313,17 @@ msgstr ""
 "上下文值。将页脚文档链接改为新项目中存在的页面，保留新项目自己的元数据和源文件。"
 
 #: ../../tutorial/a-custom-theme.rst:183
-msgid "The copied PDF base makes the theme self-contained. When we upgrade Guidedog, we create a scratch quickstart project and compare its templates with our saved base. We adopt the changes we need, then rebuild every target. The built-in HTML layout can change too. Small block overrides are easier to maintain than a second complete layout. For every variable and block, see :doc:`../templates`."
-msgstr "复制的 PDF 基础模板让主题自成一体。升级 Guidedog 时，我们新建一个临时的 quickstart 项目，把其中的模板与保存的基础模板进行比较，合入需要的改动，然后重新构建所有目标。内置的 HTML 布局也可能变化。少量的块覆盖比另一整套布局更容易维护。所有变量和块的说明见 :doc:`../templates`。"
+msgid ""
+"The copied PDF base makes the theme self-contained. When we upgrade "
+"Guidedog, we create a scratch quickstart project and compare its "
+"templates with our saved base. We adopt the changes we need, then rebuild "
+"every target. The built-in HTML layout can change too. Small block "
+"overrides are easier to maintain than a second complete layout. For every "
+"variable and block, see :doc:`../templates`."
+msgstr ""
+"复制的 PDF 基础模板让主题自成一体。升级 Guidedog 时，我们新建一个临时的 quickstart "
+"项目，把其中的模板与保存的基础模板进行比较，合入需要的改动，然后重新构建所有目标。内置的 HTML "
+"布局也可能变化。少量的块覆盖比另一整套布局更容易维护。所有变量和块的说明见 :doc:`../templates`。"
 
 #: ../../tutorial/a-custom-theme.rst:189
 msgid ""
@@ -306,12 +342,20 @@ msgid "Make a small book"
 msgstr "制作一本小书"
 
 #: ../../tutorial/a-small-book.rst:4
-msgid "A website is a web of linked pages. Readers explore it in any order. A book needs a deliberate reading order, with numbered chapters, running headers, and front matter."
+msgid ""
+"A website is a web of linked pages. Readers explore it in any order. A "
+"book needs a deliberate reading order, with numbered chapters, running "
+"headers, and front matter."
 msgstr "网站是一张由链接相连的页面网，读者可以按任意顺序浏览。书籍则需要精心安排的阅读顺序，并带有编号的章节、页眉和前置页。"
 
 #: ../../tutorial/a-small-book.rst:8
-msgid "In Guidedog, the table of contents directive (``toctree``) serves both formats. One ``toctree`` organizes our documents into a sidebar tree for the web and a sequence of chapters for the PDF book."
-msgstr "在 Guidedog 中，目录指令（``toctree``）同时服务于两种格式。同一个 ``toctree`` 既把文档组织成网页的侧栏树，也排成 PDF 书籍的章节顺序。"
+msgid ""
+"In Guidedog, the table of contents directive (``toctree``) serves both "
+"formats. One ``toctree`` organizes our documents into a sidebar tree for "
+"the web and a sequence of chapters for the PDF book."
+msgstr ""
+"在 Guidedog 中，目录指令（``toctree``）同时服务于两种格式。同一个 ``toctree`` 既把文档组织成网页的侧栏树，也排成 "
+"PDF 书籍的章节顺序。"
 
 #: ../../tutorial/a-small-book.rst:14
 msgid ""
@@ -330,7 +374,9 @@ msgid "1. Add a new chapter"
 msgstr "1. 添加新章节"
 
 #: ../../tutorial/a-small-book.rst:38
-msgid "In our ``notes`` project, we create a new document named ``measurement.rst``:"
+msgid ""
+"In our ``notes`` project, we create a new document named "
+"``measurement.rst``:"
 msgstr "在 ``notes`` 项目中，我们新建一个名为 ``measurement.rst`` 的文档："
 
 #: ../../tutorial/a-small-book.rst:41
@@ -338,7 +384,10 @@ msgid "notes/measurement.rst"
 msgstr "notes/measurement.rst"
 
 #: ../../tutorial/a-small-book.rst:64
-msgid "Notice the section label ``.. _measurement-units:`` directly above the heading. A label makes a cross-reference target. It works the same on the web and in print."
+msgid ""
+"Notice the section label ``.. _measurement-units:`` directly above the "
+"heading. A label makes a cross-reference target. It works the same on the "
+"web and in print."
 msgstr "注意标题正上方的节标签 ``.. _measurement-units:``。标签定义了交叉引用的目标，在网页和印刷版中的效果相同。"
 
 #: ../../tutorial/a-small-book.rst:67
@@ -358,12 +407,17 @@ msgid "The toctree options mean this:"
 msgstr "toctree 选项的含义如下："
 
 #: ../../tutorial/a-small-book.rst:94
-msgid "``:maxdepth: 2`` sets the depth of nested subheadings shown in the table of contents."
+msgid ""
+"``:maxdepth: 2`` sets the depth of nested subheadings shown in the table "
+"of contents."
 msgstr "``:maxdepth: 2`` 设置目录中显示的子标题层级深度。"
 
 #: ../../tutorial/a-small-book.rst:95
-msgid "``:numbered:`` numbers the chapters and their sections (for example, \"1. Measurement\" and \"1.1 Units of measurement\")."
-msgstr "``:numbered:`` 为章及其各节编号（例如“1. Measurement”和“1.1 Units of measurement”）。"
+msgid ""
+"``:numbered:`` numbers the chapters and their sections (for example, \"1. "
+"Measurement\" and \"1.1 Units of measurement\")."
+msgstr ""
+"``:numbered:`` 为章及其各节编号（例如“1. Measurement”和“1.1 Units of measurement”）。"
 
 #: ../../tutorial/a-small-book.rst:96
 msgid ""
@@ -380,24 +434,38 @@ msgid "``:doc:`measurement``` links to the chapter by document path."
 msgstr "``:doc:`measurement``` 按文档路径链接到章节。"
 
 #: ../../tutorial/a-small-book.rst:101
-msgid "``:ref:`measurement-units``` links to the labeled section. PDF uses the section title. A book template can also add the page number through ``page-ref``. See :doc:`a-custom-theme` for a working example."
-msgstr "``:ref:`measurement-units``` 链接到带标签的节。PDF 中显示节标题。书籍模板还可以通过 ``page-ref`` 加上页码。可用的示例见 :doc:`a-custom-theme`。"
+msgid ""
+"``:ref:`measurement-units``` links to the labeled section. PDF uses the "
+"section title. A book template can also add the page number through "
+"``page-ref``. See :doc:`a-custom-theme` for a working example."
+msgstr ""
+"``:ref:`measurement-units``` 链接到带标签的节。PDF 中显示节标题。书籍模板还可以通过 ``page-ref`` "
+"加上页码。可用的示例见 :doc:`a-custom-theme`。"
 
 #: ../../tutorial/a-small-book.rst:105
 msgid "3. Add a diagram with Graphviz"
 msgstr "3. 添加 Graphviz 图示"
 
 #: ../../tutorial/a-small-book.rst:108
-msgid "A diagram makes relationships clear. Guidedog links the Graphviz engine in. It draws vector diagrams as SVG for web pages and as PDF drawings for print. No external renderer is needed."
-msgstr "图示能让关系一目了然。Guidedog 内置了 Graphviz 引擎，为网页绘制 SVG 矢量图，为打印版绘制 PDF 矢量图，无需外部渲染器。"
+msgid ""
+"A diagram makes relationships clear. Guidedog links the Graphviz engine "
+"in. It draws vector diagrams as SVG for web pages and as PDF drawings for "
+"print. No external renderer is needed."
+msgstr ""
+"图示能让关系一目了然。Guidedog 内置了 Graphviz 引擎，为网页绘制 SVG 矢量图，为打印版绘制 PDF 矢量图，无需外部渲染器。"
 
 #: ../../tutorial/a-small-book.rst:112
 msgid "We add a diagram to ``notes/measurement.rst``:"
 msgstr "我们在 ``notes/measurement.rst`` 中添加一张图示："
 
 #: ../../tutorial/a-small-book.rst:135
-msgid "The ``:caption:`` option supplies a caption. To number figures, we add ``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option provides alternative text for screen readers."
-msgstr "``:caption:`` 选项提供图注。要为插图编号，我们在 ``notes/conf.toml`` 中加入 ``numfig = true``。``:alt:`` 选项为屏幕阅读器提供替代文本。"
+msgid ""
+"The ``:caption:`` option supplies a caption. To number figures, we add "
+"``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option provides "
+"alternative text for screen readers."
+msgstr ""
+"``:caption:`` 选项提供图注。要为插图编号，我们在 ``notes/conf.toml`` 中加入 ``numfig = "
+"true``。``:alt:`` 选项为屏幕阅读器提供替代文本。"
 
 #: ../../tutorial/a-small-book.rst:139
 msgid "4. Build the book and inspect results"
@@ -412,8 +480,13 @@ msgid "We inspect the results in both formats:"
 msgstr "我们分别检查两种格式的结果："
 
 #: ../../tutorial/a-small-book.rst:151
-msgid "**HTML website:** Open ``notes/_build/html/index.html``. The sidebar now shows the numbered chapters. Clicking \"1. Measurement\" opens the new page, with breadcrumbs and the SVG diagram."
-msgstr "**HTML 网站：** 打开 ``notes/_build/html/index.html``。侧栏现在显示带编号的章节。点击“1. Measurement”会打开新页面，其中有面包屑导航和 SVG 图示。"
+msgid ""
+"**HTML website:** Open ``notes/_build/html/index.html``. The sidebar now "
+"shows the numbered chapters. Clicking \"1. Measurement\" opens the new "
+"page, with breadcrumbs and the SVG diagram."
+msgstr ""
+"**HTML 网站：** 打开 ``notes/_build/html/index.html``。侧栏现在显示带编号的章节。点击“1. "
+"Measurement”会打开新页面，其中有面包屑导航和 SVG 图示。"
 
 #: ../../tutorial/a-small-book.rst:154
 msgid ""
@@ -429,7 +502,9 @@ msgid "5. Next steps"
 msgstr "5. 下一步"
 
 #: ../../tutorial/a-small-book.rst:161
-msgid "We now know how one source makes two outputs. The topics section goes further:"
+msgid ""
+"We now know how one source makes two outputs. The topics section goes "
+"further:"
 msgstr "现在我们已经了解一份源文件如何生成两种输出。主题部分会进一步展开："
 
 #: ../../tutorial/a-small-book.rst:163
@@ -449,27 +524,43 @@ msgid "Our first project"
 msgstr "我们的第一个项目"
 
 #: ../../tutorial/first-project.rst:4
-msgid "In this tutorial we create, write, and build our first documentation project with Guidedog. The goal is modest and clear. We start from an empty directory. We make an HTML website and a printable PDF book from the same source file. Then we try the live preview server."
-msgstr "在本教程中，我们用 Guidedog 创建、编写并构建第一个文档项目。目标简单明确：从一个空目录开始，用同一份源文件生成 HTML 网站和可打印的 PDF 书籍，然后试用实时预览服务器。"
+msgid ""
+"In this tutorial we create, write, and build our first documentation "
+"project with Guidedog. The goal is modest and clear. We start from an "
+"empty directory. We make an HTML website and a printable PDF book from "
+"the same source file. Then we try the live preview server."
+msgstr ""
+"在本教程中，我们用 Guidedog 创建、编写并构建第一个文档项目。目标简单明确：从一个空目录开始，用同一份源文件生成 HTML 网站和可打印的 "
+"PDF 书籍，然后试用实时预览服务器。"
 
 #: ../../tutorial/first-project.rst:9
-msgid "We need a working installation of Guidedog. For PDF output, Guidedog can use its embedded compiler or an installed Typst binary (0.15.1 or newer). See :doc:`../howto/install`."
-msgstr "我们需要先安装好 Guidedog。生成 PDF 时，Guidedog 可以使用内嵌的编译器，也可以使用已安装的 Typst 程序（0.15.1 或更新版本）。见 :doc:`../howto/install`。"
+msgid ""
+"We need a working installation of Guidedog. For PDF output, Guidedog can "
+"use its embedded compiler or an installed Typst binary (0.15.1 or newer). "
+"See :doc:`../howto/install`."
+msgstr ""
+"我们需要先安装好 Guidedog。生成 PDF 时，Guidedog 可以使用内嵌的编译器，也可以使用已安装的 Typst 程序（0.15.1 "
+"或更新版本）。见 :doc:`../howto/install`。"
 
 #: ../../tutorial/first-project.rst:12
 msgid "On macOS, we can install the official release with Homebrew:"
 msgstr "在 macOS 上，可以用 Homebrew 安装官方发布版："
 
 #: ../../tutorial/first-project.rst:18
-msgid "Elsewhere, we build it from a source checkout with the Rust toolchain, and put ``target/release/guidedog`` on our ``PATH``:"
-msgstr "在其他系统上，我们用 Rust 工具链从源码检出构建，并把 ``target/release/guidedog`` 加入 ``PATH``："
+msgid ""
+"Elsewhere, we build it from a source checkout with the Rust toolchain, "
+"and put ``target/release/guidedog`` on our ``PATH``:"
+msgstr ""
+"在其他系统上，我们用 Rust 工具链从源码检出构建，并把 ``target/release/guidedog`` 加入 ``PATH``："
 
 #: ../../tutorial/first-project.rst:26
 msgid "Project architecture and build pipeline"
 msgstr "项目结构与构建流程"
 
 #: ../../tutorial/first-project.rst:29
-msgid "Guidedog takes one directory of source files and compiles it into two outputs: a responsive HTML website and a typeset PDF book."
+msgid ""
+"Guidedog takes one directory of source files and compiles it into two "
+"outputs: a responsive HTML website and a typeset PDF book."
 msgstr "Guidedog 把一个源文件目录构建成两种输出：响应式 HTML 网站和排版好的 PDF 书籍。"
 
 #: ../../tutorial/first-project.rst:34
@@ -487,7 +578,9 @@ msgid "1. Create the project"
 msgstr "1. 创建项目"
 
 #: ../../tutorial/first-project.rst:57
-msgid "We run the ``quickstart`` command from a folder where the directory ``notes`` does not yet exist:"
+msgid ""
+"We run the ``quickstart`` command from a folder where the directory "
+"``notes`` does not yet exist:"
 msgstr "在尚不存在 ``notes`` 目录的文件夹中运行 ``quickstart`` 命令："
 
 #: ../../tutorial/first-project.rst:64
@@ -505,7 +598,9 @@ msgid ""
 msgstr "``conf.toml``：项目名称、作者、版本、语言和构建器等设置。"
 
 #: ../../tutorial/first-project.rst:85
-msgid "``index.rst``: The root document. It defines our front page and table of contents."
+msgid ""
+"``index.rst``: The root document. It defines our front page and table of "
+"contents."
 msgstr "``index.rst``：根文档，定义首页和目录。"
 
 #: ../../tutorial/first-project.rst:86
@@ -523,19 +618,29 @@ msgid "``_static/``: CSS stylesheets and JavaScript enhancements."
 msgstr "``_static/``：CSS 样式和 JavaScript 增强功能。"
 
 #: ../../tutorial/first-project.rst:89
-msgid "``assets/``: Folders for project images, diagrams, audio, and video files."
+msgid ""
+"``assets/``: Folders for project images, diagrams, audio, and video files."
 msgstr "``assets/``：存放项目图片、图示、音频和视频文件的目录。"
 
 #: ../../tutorial/first-project.rst:91
-msgid "Templates in Guidedog are ordinary files that we can see and edit. They live inside our project, not in an external theme or a system cache. We can change them at any time to adjust the design of our site and book. The first build creates ``_build`` for generated output."
-msgstr "Guidedog 的模板是可以直接查看和编辑的普通文件。它们就在项目中，而不在外部主题或系统缓存里。我们随时可以修改它们，调整网站和书籍的设计。首次构建会创建存放生成输出的 ``_build``。"
+msgid ""
+"Templates in Guidedog are ordinary files that we can see and edit. They "
+"live inside our project, not in an external theme or a system cache. We "
+"can change them at any time to adjust the design of our site and book. "
+"The first build creates ``_build`` for generated output."
+msgstr ""
+"Guidedog "
+"的模板是可以直接查看和编辑的普通文件。它们就在项目中，而不在外部主题或系统缓存里。我们随时可以修改它们，调整网站和书籍的设计。首次构建会创建存放生成输出的 "
+"``_build``。"
 
 #: ../../tutorial/first-project.rst:96
 msgid "2. Write the first page"
 msgstr "2. 编写第一页"
 
 #: ../../tutorial/first-project.rst:99
-msgid "We open ``notes/index.rst`` in an editor and replace its contents with the following:"
+msgid ""
+"We open ``notes/index.rst`` in an editor and replace its contents with "
+"the following:"
 msgstr "我们在编辑器中打开 ``notes/index.rst``，将其内容替换为："
 
 #: ../../tutorial/first-project.rst:121
@@ -551,7 +656,10 @@ msgid "We compile our project into both HTML and PDF:"
 msgstr "我们把项目同时构建为 HTML 和 PDF："
 
 #: ../../tutorial/first-project.rst:133
-msgid "The ``-W`` flag tells Guidedog to treat warnings as errors. With this flag in our routine checks, broken references and markup errors are caught early."
+msgid ""
+"The ``-W`` flag tells Guidedog to treat warnings as errors. With this "
+"flag in our routine checks, broken references and markup errors are "
+"caught early."
 msgstr "``-W`` 选项让 Guidedog 把警告视为错误。在日常检查中加上它，就能及早发现失效的引用和标记错误。"
 
 #: ../../tutorial/first-project.rst:136
@@ -559,15 +667,24 @@ msgid "Now we inspect the output files:"
 msgstr "现在检查输出文件："
 
 #: ../../tutorial/first-project.rst:138
-msgid "We open ``notes/_build/html/index.html`` in a web browser. We see a clean, responsive documentation website with a theme switch, search bar, and formatted math."
-msgstr "我们在浏览器中打开 ``notes/_build/html/index.html``，可以看到一个简洁的响应式文档网站，带有主题切换、搜索框和排版好的数学公式。"
+msgid ""
+"We open ``notes/_build/html/index.html`` in a web browser. We see a "
+"clean, responsive documentation website with a theme switch, search bar, "
+"and formatted math."
+msgstr ""
+"我们在浏览器中打开 "
+"``notes/_build/html/index.html``，可以看到一个简洁的响应式文档网站，带有主题切换、搜索框和排版好的数学公式。"
 
 #: ../../tutorial/first-project.rst:140
-msgid "We open the PDF file in ``notes/_build/pdf/``. We see a book layout with running headers, page numbers, and typeset math."
+msgid ""
+"We open the PDF file in ``notes/_build/pdf/``. We see a book layout with "
+"running headers, page numbers, and typeset math."
 msgstr "我们打开 ``notes/_build/pdf/`` 中的 PDF 文件，可以看到书籍版式，带有页眉、页码和排版好的公式。"
 
 #: ../../tutorial/first-project.rst:143
-msgid "Guidedog formats mathematics for each medium. The browser gets MathJax, and the PDF gets Typst's own vector formulas."
+msgid ""
+"Guidedog formats mathematics for each medium. The browser gets MathJax, "
+"and the PDF gets Typst's own vector formulas."
 msgstr "Guidedog 针对不同媒介排版数学公式：浏览器使用 MathJax，PDF 使用 Typst 自己的矢量公式。"
 
 #: ../../tutorial/first-project.rst:146
@@ -579,7 +696,9 @@ msgid "Guidedog includes a built-in development web server:"
 msgstr "Guidedog 内置开发预览服务器："
 
 #: ../../tutorial/first-project.rst:155
-msgid "The terminal prints a local URL, such as ``http://localhost:8000``. We open this address in a browser."
+msgid ""
+"The terminal prints a local URL, such as ``http://localhost:8000``. We "
+"open this address in a browser."
 msgstr "终端会打印一个本地网址，例如 ``http://localhost:8000``。我们在浏览器中打开这个地址。"
 
 #: ../../tutorial/first-project.rst:158
@@ -587,7 +706,9 @@ msgid "Now we test the live editing loop:"
 msgstr "现在来试试实时编辑循环："
 
 #: ../../tutorial/first-project.rst:162
-msgid "Editing and saving a file triggers an input check and a selective rebuild upon refreshing the browser."
+msgid ""
+"Editing and saving a file triggers an input check and a selective rebuild "
+"upon refreshing the browser."
 msgstr "编辑并保存文件后，刷新浏览器会触发输入检查和按需重建。"
 
 #: ../../tutorial/first-project.rst:162
@@ -607,19 +728,33 @@ msgid "Refresh the browser page."
 msgstr "刷新浏览器页面。"
 
 #: ../../tutorial/first-project.rst:185
-msgid "Before serving a requested page, Guidedog checks the project's inputs (sources, templates, static files and configuration) against its saved build environment. If an input has changed, it rebuilds only the affected documents before it answers the browser request. A failed rebuild keeps the previous site and reports the problem in the terminal."
-msgstr "在返回所请求的页面之前，Guidedog 会将项目的输入（源文件、模板、静态文件和配置）与保存的构建环境进行比较。如果有输入发生变化，它只重建受影响的文档，然后再响应浏览器请求。重建失败时，会保留之前的网站，并在终端中报告问题。"
+msgid ""
+"Before serving a requested page, Guidedog checks the project's inputs "
+"(sources, templates, static files and configuration) against its saved "
+"build environment. If an input has changed, it rebuilds only the affected "
+"documents before it answers the browser request. A failed rebuild keeps "
+"the previous site and reports the problem in the terminal."
+msgstr ""
+"在返回所请求的页面之前，Guidedog "
+"会将项目的输入（源文件、模板、静态文件和配置）与保存的构建环境进行比较。如果有输入发生变化，它只重建受影响的文档，然后再响应浏览器请求。重建失败时，会保留之前的网站，并在终端中报告问题。"
 
 #: ../../tutorial/first-project.rst:191
-msgid "When we run a build without changing any files, Guidedog reuses the saved document trees and parses nothing again. See :doc:`../topics/projects` for how it decides."
-msgstr "如果没有修改任何文件就运行构建，Guidedog 会复用保存的文档树，不再重新解析。判断方式见 :doc:`../topics/projects`。"
+msgid ""
+"When we run a build without changing any files, Guidedog reuses the saved "
+"document trees and parses nothing again. See :doc:`../topics/projects` "
+"for how it decides."
+msgstr ""
+"如果没有修改任何文件就运行构建，Guidedog 会复用保存的文档树，不再重新解析。判断方式见 :doc:`../topics/projects`。"
 
 #: ../../tutorial/first-project.rst:194
-msgid "We press ``Ctrl+C`` in the terminal to stop the server when we are done."
+msgid ""
+"We press ``Ctrl+C`` in the terminal to stop the server when we are done."
 msgstr "完成后，我们在终端中按 ``Ctrl+C`` 停止服务器。"
 
 #: ../../tutorial/first-project.rst:196
-msgid "Next, :doc:`a-small-book` shows how to organize several chapters and cross-references."
+msgid ""
+"Next, :doc:`a-small-book` shows how to organize several chapters and "
+"cross-references."
 msgstr "接下来，:doc:`a-small-book` 介绍如何组织多个章节和交叉引用。"
 
 #: ../../tutorial/index.rst:1
@@ -627,7 +762,9 @@ msgid "Tutorials"
 msgstr "教程"
 
 #: ../../tutorial/index.rst:4
-msgid "We follow these pages in order. Each step produces a result we can inspect."
+msgid ""
+"We follow these pages in order. Each step produces a result we can "
+"inspect."
 msgstr "请按顺序阅读这些页面。每一步都会产生可以检查的结果。"
 
 #~ msgid "Understanding the toctree options:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 04:11+0000\n"
+"POT-Creation-Date: 2026-10-15 05:49+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -106,17 +106,19 @@ msgid ""
 "compiler and the tree-sitter parsers are compiled into ``guidedog``. "
 "Diagrams use the Graphviz library (``libgvc``). Where the system does not "
 "provide it, the archive's notes say how to install it. Fetching remote "
-"intersphinx inventories and publishing to GitHub Pages run the system's "
-"``curl`` program. Check and install the archive:"
+"intersphinx inventories and publishing to GitHub Pages use the HTTP "
+"client built into ``guidedog``, so no ``curl`` program is needed. Check "
+"and install the archive:"
 msgstr ""
 "Jedes `Release <https://github.com/insanai/guidedog/releases>`__ enthält "
 "ein Archiv für Linux, macOS und Windows, mit ``SHA256SUMS``. Der "
 "Typst-Compiler und die tree-sitter-Parser sind in ``guidedog`` "
-"hineinkompiliert. Diagramme verwenden die Graphviz-Bibliothek "
-"(``libgvc``). Wo das System sie nicht mitbringt, erklären die Hinweise im "
-"Archiv, wie wir sie installieren. Das Herunterladen entfernter "
-"Intersphinx-Inventare und das Veröffentlichen auf GitHub Pages nutzen das "
-"Systemprogramm ``curl``. So prüfen und installieren wir das Archiv:"
+"hineinkompiliert. Diagramme verwenden die Graphviz-Bibliothek (``libgvc``). "
+"Wo das System sie nicht bereitstellt, erklären die Hinweise zum Archiv, wie "
+"man sie installiert. Das Herunterladen entfernter Intersphinx-Inventare und "
+"das Veröffentlichen auf GitHub Pages nutzen den in ``guidedog`` eingebauten "
+"HTTP-Client; ein ``curl``-Programm ist also nicht nötig. Archiv prüfen und "
+"installieren:"
 
 #: ../../repository.rst:58
 msgid ""
@@ -233,40 +235,39 @@ msgstr "Diskussionen führen"
 
 #: ../../repository.rst:120
 msgid ""
-"``dsc`` keeps proposals and decisions as reStructuredText records, one "
-"file each. It builds them into a website and PDF books with Guidedog. "
-"Each catalog has a prefix: Guidedog's design records use ``gds``, and "
-"another project might use ``eds``."
+"``guidedog dsc`` keeps proposals and decisions as reStructuredText "
+"records, one file each. It builds them into a website and PDF books. Each "
+"catalog has a prefix: Guidedog's design records use ``gds``, and another "
+"project might use ``eds``."
 msgstr ""
-"``dsc`` verwaltet Vorschläge und Entscheidungen als "
-"reStructuredText-Aufzeichnungen, eine Datei pro Aufzeichnung. Mit "
-"Guidedog baut es daraus eine Website und PDF-Bücher. Jeder Katalog hat "
-"ein Präfix: Die Designaufzeichnungen von Guidedog verwenden ``gds``, ein "
-"anderes Projekt etwa ``eds``."
+"``guidedog dsc`` verwaltet Vorschläge und Entscheidungen als "
+"reStructuredText-Aufzeichnungen, eine Datei pro Aufzeichnung. Es baut "
+"daraus eine Website und PDF-Bücher. Jeder Katalog hat ein Präfix: Die "
+"Designaufzeichnungen von Guidedog verwenden ``gds``, ein anderes Projekt "
+"etwa ``eds``."
 
 #: ../../repository.rst:133
 msgid ""
 "A catalog's ``discussion.toml`` sets its lifecycle states, record types, "
-"and numbering. ``dsc config`` prints it. ``dsc`` comes in the Guidedog "
-"archive and builds with the installed ``guidedog``. ``dscc`` is ``dsc`` "
-"with Guidedog built in, for a machine with nothing else installed. "
-"``guidedog gds`` runs the same commands on Guidedog's own ``docs/gds``. "
-"See :doc:`Keep a discussion catalog <howto/discussions>`."
+"and numbering. ``guidedog dsc config`` prints it. The commands come from "
+"the discussion plugin, which every ``guidedog`` links, so nothing else "
+"needs to be installed. Guidedog's own ``docs/gds`` is one such catalog: "
+"we run ``guidedog dsc check`` in that folder. See :doc:`Keep a discussion "
+"catalog <howto/discussions>`."
 msgstr ""
 "Die ``discussion.toml`` eines Katalogs legt die Zustände seines "
-"Lebenszyklus, die Aufzeichnungstypen und die Nummerierung fest. ``dsc "
-"config`` gibt sie aus. ``dsc`` liegt dem Guidedog-Archiv bei und baut mit "
-"dem installierten ``guidedog``. ``dscc`` ist ``dsc`` mit eingebautem "
-"Guidedog, für einen Rechner, auf dem sonst nichts installiert ist. "
-"``guidedog gds`` führt dieselben Befehle auf Guidedogs eigenem "
-"``docs/gds`` aus. Siehe :doc:`Einen Diskussionskatalog führen "
-"<howto/discussions>`."
+"Lebenszyklus, die Aufzeichnungstypen und die Nummerierung fest. ``guidedog "
+"dsc config`` gibt sie aus. Die Befehle stammen aus dem Diskussions-Plugin, "
+"das jedes ``guidedog`` linkt; es muss also nichts weiter installiert "
+"werden. Guidedogs eigenes ``docs/gds`` ist ein solcher Katalog: Wir führen "
+"``guidedog dsc check`` in diesem Ordner aus. Siehe :doc:`Einen "
+"Diskussionskatalog führen <howto/discussions>`."
 
-#: ../../repository.rst:139
+#: ../../repository.rst:136
 msgid "Read and embed"
 msgstr "Lesen und einbetten"
 
-#: ../../repository.rst:142
+#: ../../repository.rst:139
 msgid ""
 ":doc:`Manual <index>`: tutorials, topics, practical tasks, reference, and "
 "internals."
@@ -274,7 +275,7 @@ msgstr ""
 ":doc:`Handbuch <index>`: Tutorials, Themen, praktische Aufgaben, Referenz "
 "und Interna."
 
-#: ../../repository.rst:143
+#: ../../repository.rst:140
 msgid ""
 ":doc:`API reference <api/index>`: generated from the Rust source of the "
 "main crates and included in the manual's PDF appendix."
@@ -282,7 +283,7 @@ msgstr ""
 ":doc:`API-Referenz <api/index>`: aus dem Rust-Quellcode der wichtigsten "
 "Crates erzeugt und als Anhang im PDF des Handbuchs enthalten."
 
-#: ../../repository.rst:145
+#: ../../repository.rst:142
 msgid ""
 ":download:`Engine guide <_static/repository/library-README.md>`: the "
 "``guidedoc`` crate's workspaces, requests, adapters, and conversion "
@@ -292,14 +293,14 @@ msgstr ""
 "Workspaces, Requests, Adapter und Konvertierungsbeispiele des Crates "
 "``guidedoc``."
 
-#: ../../repository.rst:147
+#: ../../repository.rst:144
 msgid ""
 ":doc:`Templates <templates>`: customize HTML with Jinja and books with "
 "Typst."
 msgstr ""
 ":doc:`Vorlagen <templates>`: HTML mit Jinja und Bücher mit Typst anpassen."
 
-#: ../../repository.rst:148
+#: ../../repository.rst:145
 msgid ""
 ":download:`GDS <_static/repository/gds-README.md>`: numbered design "
 "records and implementation decisions."
@@ -307,16 +308,16 @@ msgstr ""
 ":download:`GDS <_static/repository/gds-README.md>`: nummerierte "
 "Designaufzeichnungen und Implementierungsentscheidungen."
 
-#: ../../repository.rst:150
+#: ../../repository.rst:147
 msgid ""
 ":download:`Discussion library <_static/repository/discussion-README.md>`: "
-"the catalogs that ``dsc``, ``dscc``, and ``guidedog gds`` keep."
+"the catalogs that ``guidedog dsc`` keeps."
 msgstr ""
 ":download:`Diskussionsbibliothek "
-"<_static/repository/discussion-README.md>`: die Kataloge, die ``dsc``, "
-"``dscc`` und ``guidedog gds`` führen."
+"<_static/repository/discussion-README.md>`: die Kataloge, die ``guidedog "
+"dsc`` führt."
 
-#: ../../repository.rst:152
+#: ../../repository.rst:149
 msgid ""
 ":download:`Beta review <_static/repository/beta-review-20261011.md>`: the "
 "review of the Odin implementation's beta: fixes, verification, support "
@@ -326,7 +327,7 @@ msgstr ""
 "Review der Beta der Odin-Implementierung: Korrekturen, Verifikation, "
 "Supportumfang."
 
-#: ../../repository.rst:155
+#: ../../repository.rst:152
 msgid ""
 "Guidedoc works in a caller-owned, reusable workspace and returns "
 "structured diagnostics. The host manages files, budgets, caching, "
@@ -340,11 +341,11 @@ msgstr ""
 "schränkt Fähigkeiten ein. Es ist weder eine Prozess-Sandbox noch eine "
 "Grenze für jede Nutzung nativer Ressourcen."
 
-#: ../../repository.rst:159
+#: ../../repository.rst:156
 msgid "Credits and license"
 msgstr "Danksagung und Lizenz"
 
-#: ../../repository.rst:162
+#: ../../repository.rst:159
 msgid ""
 "Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** "
 "and **Kanak Rathore**. Contributions are welcome through issues and pull "
@@ -357,7 +358,7 @@ msgstr ""
 "Handles, keine persönlichen E-Mail-Adressen. Die Git-Identität wird "
 "separat eingestellt."
 
-#: ../../repository.rst:167
+#: ../../repository.rst:164
 msgid ""
 "Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, "
 "Tree-sitter and Max Brunsfeld, Graphviz, the Rust project, and Ginger "
@@ -368,7 +369,7 @@ msgstr ""
 "Bill und die Odin-Community, in deren Sprache Guidedog ursprünglich "
 "geschrieben wurde."
 
-#: ../../repository.rst:171
+#: ../../repository.rst:168
 msgid ""
 "Guidedog is released under the :download:`GNU Affero General Public "
 "License v3.0 or later <_static/repository/LICENSE>` (AGPL-3.0-or-later). "
@@ -385,7 +386,7 @@ msgstr ""
 "die mitgelieferten Schriften und die in die Programme kompilierten "
 "Rust-Crates."
 
-#: ../../repository.rst:178
+#: ../../repository.rst:175
 msgid ""
 "An additional permission allows Guidedog to be linked and distributed "
 "with Graphviz. See :download:`NOTICE <_static/repository/NOTICE>`."

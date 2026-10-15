@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 04:11+0000\n"
+"POT-Creation-Date: 2026-10-15 05:49+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -32,7 +32,9 @@ msgid "A flow chart"
 msgstr "流程图"
 
 #: ../../topics/diagrams.rst:13
-msgid "If the request fits the limits, the workspace buffer grows and conversion continues; otherwise the conversion ends with a Limit result."
+msgid ""
+"If the request fits the limits, the workspace buffer grows and conversion "
+"continues; otherwise the conversion ends with a Limit result."
 msgstr "如果请求在限制范围内，工作区缓冲区会扩展，转换继续进行；否则转换以 Limit 结果结束。"
 
 #: ../../topics/diagrams.rst:13
@@ -40,7 +42,10 @@ msgid "A conversion checks its limits before a buffer grows."
 msgstr "转换在缓冲区扩展之前检查限制。"
 
 #: ../../topics/diagrams.rst:33
-msgid "The drawing names the decision at the growth step. It does not suggest that running out of room aborts the program: a bound produces a result the caller can report. This distinction is part of the contract."
+msgid ""
+"The drawing names the decision at the growth step. It does not suggest "
+"that running out of room aborts the program: a bound produces a result "
+"the caller can report. This distinction is part of the contract."
 msgstr "图中在扩展这一步标出了判断。它并不暗示空间不足会让程序中止：限制产生的是调用方可以报告的结果。这一区别属于契约的一部分。"
 
 #: ../../topics/diagrams.rst:38
@@ -139,12 +144,29 @@ msgid "A separate ownership or allocation boundary; violet."
 msgstr "独立的所有权或内存分配边界；紫色。"
 
 #: ../../topics/diagrams.rst:93
-msgid "For example, ``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark role. Classes do not choose shapes or add labels. We write those explicitly, so the drawing also works in monochrome. Unclassified steps use green. This palette is opt-in. We do not apply it to artwork whose exact colors carry data."
-msgstr "例如，``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` 同时设定了浅色外观和对应的深色角色。类不会决定形状，也不会添加标签。我们要显式写出这些内容，这样图在黑白下也能看懂。未分类的步骤使用绿色。这套配色需要主动启用。如果图中的颜色本身承载数据，就不要使用它。"
+msgid ""
+"For example, ``source [class=\"gd-input\", shape=note, "
+"fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
+"role. Classes do not choose shapes or add labels. We write those "
+"explicitly, so the drawing also works in monochrome. Unclassified steps "
+"use green. This palette is opt-in. We do not apply it to artwork whose "
+"exact colors carry data."
+msgstr ""
+"例如，``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` "
+"同时设定了浅色外观和对应的深色角色。类不会决定形状，也不会添加标签。我们要显式写出这些内容，这样图在黑白下也能看懂。未分类的步骤使用绿色。这套配色需要主动启用。如果图中的颜色本身承载数据，就不要使用它。"
 
 #: ../../topics/diagrams.rst:99
-msgid "The light DOT attributes remain the PDF master. The book receives an SVG without the adaptive stylesheet. Printed HTML selects the light scheme too. Keep both palettes legible and test the actual book. Transparency alone proves neither. The inheritance rule is defined by the `CSS color-scheme specification <https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
-msgstr "浅色的 DOT 属性仍是 PDF 的基准。书籍得到的是不带自适应样式表的 SVG，打印 HTML 时同样选用浅色方案。请确保两套配色都清晰可读，并检查实际生成的书籍。仅凭透明背景，两者都无法保证。继承规则由 `CSS color-scheme 规范 <https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ 定义。"
+msgid ""
+"The light DOT attributes remain the PDF master. The book receives an SVG "
+"without the adaptive stylesheet. Printed HTML selects the light scheme "
+"too. Keep both palettes legible and test the actual book. Transparency "
+"alone proves neither. The inheritance rule is defined by the `CSS "
+"color-scheme specification "
+"<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
+msgstr ""
+"浅色的 DOT 属性仍是 PDF 的基准。书籍得到的是不带自适应样式表的 SVG，打印 HTML "
+"时同样选用浅色方案。请确保两套配色都清晰可读，并检查实际生成的书籍。仅凭透明背景，两者都无法保证。继承规则由 `CSS color-scheme "
+"规范 <https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ 定义。"
 
 #: ../../topics/diagrams.rst:105
 msgid "Make the result legible"
@@ -167,7 +189,9 @@ msgstr ""
 "提供替代文本和题注。检查窄浏览器窗口和 PDF 页面。若必须用极小字号才能放下，拆成两幅图。图片和插图尺寸见 :doc:`../media`\\ 。"
 
 #: ../../topics/diagrams.rst:116
-msgid "On narrow screens, captioned diagrams scroll horizontally to keep labels readable. Scroll inside the figure. The page itself keeps its width."
+msgid ""
+"On narrow screens, captioned diagrams scroll horizontally to keep labels "
+"readable. Scroll inside the figure. The page itself keeps its width."
 msgstr "在窄屏上，带图注的图会横向滚动，以保证标签清晰可读。在图内滚动即可，页面本身保持原有宽度。"
 
 #: ../../topics/domains.rst:1
@@ -175,11 +199,15 @@ msgid "Domains"
 msgstr "域"
 
 #: ../../topics/domains.rst:4
-msgid "A domain is a set of directives and roles. They describe and cross-reference the objects of one programming language or one field of discourse."
+msgid ""
+"A domain is a set of directives and roles. They describe and "
+"cross-reference the objects of one programming language or one field of "
+"discourse."
 msgstr "域是一组指令和角色，用来描述并交叉引用某种编程语言或某个领域中的对象。"
 
 #: ../../topics/domains.rst:8
-msgid "Guidedog has built-in implementations of the standard Sphinx domains:"
+msgid ""
+"Guidedog has built-in implementations of the standard Sphinx domains:"
 msgstr "Guidedog 内置实现了标准的 Sphinx 域："
 
 #: ../../topics/domains.rst:10
@@ -219,8 +247,12 @@ msgid ""
 msgstr "**Odin 域** （``odin``）：原生 Odin 包、过程、结构体、联合体和枚举，见 :doc:`../odin`。"
 
 #: ../../topics/domains.rst:16
-msgid "**Rust domain** (``rust``): Rust crates, modules, functions, structs, enums, traits, impls, and macros (see `Rust domain`_ below)."
-msgstr "**Rust 域** （``rust``）：Rust 的 crate、模块、函数、结构体、枚举、trait、impl 和宏（见下文 `Rust 域 <Rust domain_>`_）。"
+msgid ""
+"**Rust domain** (``rust``): Rust crates, modules, functions, structs, "
+"enums, traits, impls, and macros (see `Rust domain`_ below)."
+msgstr ""
+"**Rust 域** （``rust``）：Rust 的 crate、模块、函数、结构体、枚举、trait、impl 和宏（见下文 `Rust 域 "
+"<Rust domain_>`_）。"
 
 #: ../../topics/domains.rst:18
 msgid "Setting the primary domain"
@@ -482,16 +514,40 @@ msgid "Rust domain"
 msgstr "Rust 域"
 
 #: ../../topics/domains.rst:223
-msgid "The Rust domain describes crates as rustdoc presents them. Each directive takes the declaration as Rust writes it, on one line, visibility and qualifiers included. Targets are full paths with ``::``, the crate's name first."
-msgstr "Rust 域按照 rustdoc 的呈现方式描述 crate。每个指令都接受 Rust 原样写法的声明，写在一行内，包括可见性和限定符。目标是用 ``::`` 连接的完整路径，以 crate 名开头。"
+msgid ""
+"The Rust domain describes crates as rustdoc presents them. Each directive "
+"takes the declaration as Rust writes it, on one line, visibility and "
+"qualifiers included. Targets are full paths with ``::``, the crate's name "
+"first."
+msgstr ""
+"Rust 域按照 rustdoc 的呈现方式描述 crate。每个指令都接受 Rust 原样写法的声明，写在一行内，包括可见性和限定符。目标是用 "
+"``::`` 连接的完整路径，以 crate 名开头。"
 
 #: ../../topics/domains.rst:258
-msgid "Directives include: ``rust:crate``, ``rust:module``, ``rust:function``, ``rust:method``, ``rust:struct``, ``rust:enum``, ``rust:variant``, ``rust:union``, ``rust:trait``, ``rust:impl``, ``rust:type``, ``rust:const``, ``rust:static``, ``rust:macro``, ``rust:field``, ``rust:associatedtype``, ``rust:associatedconst``, and ``rust:use``. Options include ``:visibility:``, ``:cfg:``, ``:unsafe:``, ``:async:``, ``:const:``, ``:provided:``, ``:attributes:``, ``:deprecated:``, ``:for:``, ``:trait:``, ``:target:``, and ``:noindex:``. An ``impl`` is never a target itself. Its members belong to the type."
-msgstr "指令包括：``rust:crate``、``rust:module``、``rust:function``、``rust:method``、``rust:struct``、``rust:enum``、``rust:variant``、``rust:union``、``rust:trait``、``rust:impl``、``rust:type``、``rust:const``、``rust:static``、``rust:macro``、``rust:field``、``rust:associatedtype``、``rust:associatedconst`` 和 ``rust:use``。选项包括 ``:visibility:``、``:cfg:``、``:unsafe:``、``:async:``、``:const:``、``:provided:``、``:attributes:``、``:deprecated:``、``:for:``、``:trait:``、``:target:`` 和 ``:noindex:``。``impl`` 本身从不是目标，它的成员归属于对应的类型。"
+msgid ""
+"Directives include: ``rust:crate``, ``rust:module``, ``rust:function``, "
+"``rust:method``, ``rust:struct``, ``rust:enum``, ``rust:variant``, "
+"``rust:union``, ``rust:trait``, ``rust:impl``, ``rust:type``, "
+"``rust:const``, ``rust:static``, ``rust:macro``, ``rust:field``, "
+"``rust:associatedtype``, ``rust:associatedconst``, and ``rust:use``. "
+"Options include ``:visibility:``, ``:cfg:``, ``:unsafe:``, ``:async:``, "
+"``:const:``, ``:provided:``, ``:attributes:``, ``:deprecated:``, "
+"``:for:``, ``:trait:``, ``:target:``, and ``:noindex:``. An ``impl`` is "
+"never a target itself. Its members belong to the type."
+msgstr ""
+"指令包括：``rust:crate``、``rust:module``、``rust:function``、``rust:method``、``rust:struct``、``rust:enum``、``rust:variant``、``rust:union``、``rust:trait``、``rust:impl``、``rust:type``、``rust:const``、``rust:static``、``rust:macro``、``rust:field``、``rust:associatedtype``、``rust:associatedconst`` "
+"和 ``rust:use``。选项包括 "
+"``:visibility:``、``:cfg:``、``:unsafe:``、``:async:``、``:const:``、``:provided:``、``:attributes:``、``:deprecated:``、``:for:``、``:trait:``、``:target:`` "
+"和 ``:noindex:``。``impl`` 本身从不是目标，它的成员归属于对应的类型。"
 
 #: ../../topics/domains.rst:266
-msgid "Guidedog can also generate these pages from a crate's source, without compiling it. See :doc:`../howto/document-code` and ``rust_autoapi_crates`` in :doc:`../reference/configuration`."
-msgstr "Guidedog 也可以直接从 crate 的源码生成这些页面，无需编译。参见 :doc:`../howto/document-code`，以及 :doc:`../reference/configuration` 中的 ``rust_autoapi_crates``。"
+msgid ""
+"Guidedog can also generate these pages from a crate's source, without "
+"compiling it. See :doc:`../howto/document-code` and "
+"``rust_autoapi_crates`` in :doc:`../reference/configuration`."
+msgstr ""
+"Guidedog 也可以直接从 crate 的源码生成这些页面，无需编译。参见 :doc:`../howto/document-code`，以及 "
+":doc:`../reference/configuration` 中的 ``rust_autoapi_crates``。"
 
 #: ../../topics/domains.rst:273
 msgid "``:rust:mod:`path```: Links to a crate or module."
@@ -502,20 +558,33 @@ msgid "``:rust:fn:`path```: Links to a function or method."
 msgstr "``:rust:fn:`path```：链接到函数或方法。"
 
 #: ../../topics/domains.rst:275
-msgid "``:rust:struct:`path```, ``:rust:enum:`path```, ``:rust:union:`path```, ``:rust:trait:`path```: Link to those types."
-msgstr "``:rust:struct:`path```、``:rust:enum:`path```、``:rust:union:`path```、``:rust:trait:`path```：链接到相应的类型。"
+msgid ""
+"``:rust:struct:`path```, ``:rust:enum:`path```, ``:rust:union:`path```, "
+"``:rust:trait:`path```: Link to those types."
+msgstr ""
+"``:rust:struct:`path```、``:rust:enum:`path```、``:rust:union:`path```、``:rust:trait:`path```：链接到相应的类型。"
 
 #: ../../topics/domains.rst:277
-msgid "``:rust:variant:`path```, ``:rust:field:`path```: Link to a variant or a field."
+msgid ""
+"``:rust:variant:`path```, ``:rust:field:`path```: Link to a variant or a "
+"field."
 msgstr "``:rust:variant:`path```、``:rust:field:`path```：链接到变体或字段。"
 
 #: ../../topics/domains.rst:278
-msgid "``:rust:type:`path```, ``:rust:const:`path```, ``:rust:static:`path```, ``:rust:macro:`path```: Link to aliases and associated types, constants, statics, and macros."
-msgstr "``:rust:type:`path```、``:rust:const:`path```、``:rust:static:`path```、``:rust:macro:`path```：链接到类型别名和关联类型、常量、静态项以及宏。"
+msgid ""
+"``:rust:type:`path```, ``:rust:const:`path```, ``:rust:static:`path```, "
+"``:rust:macro:`path```: Link to aliases and associated types, constants, "
+"statics, and macros."
+msgstr ""
+"``:rust:type:`path```、``:rust:const:`path```、``:rust:static:`path```、``:rust:macro:`path```：链接到类型别名和关联类型、常量、静态项以及宏。"
 
 #: ../../topics/domains.rst:281
-msgid "``:rust:any:`path```: Links to any of them, or through an inventory to another project (``std::vec::Vec``). An unresolved target is shown as code."
-msgstr "``:rust:any:`path```：链接到以上任意一种，或者通过清单链接到其他项目（``std::vec::Vec``）。无法解析的目标显示为代码。"
+msgid ""
+"``:rust:any:`path```: Links to any of them, or through an inventory to "
+"another project (``std::vec::Vec``). An unresolved target is shown as "
+"code."
+msgstr ""
+"``:rust:any:`path```：链接到以上任意一种，或者通过清单链接到其他项目（``std::vec::Vec``）。无法解析的目标显示为代码。"
 
 #: ../../topics/domains.rst:284
 msgid "Cross-referencing conventions"
@@ -548,15 +617,21 @@ msgid ""
 msgstr "**精确匹配** ：在目标前加 ``.``，从当前模块或所属对象开始查找。"
 
 #: ../../topics/domains.rst:293
-msgid "The Rust domain follows the same conventions with ``::`` paths: ``:rust:struct:`~my_crate::geometry::Point``` renders as ``Point``."
-msgstr "Rust 域使用 ``::`` 路径，遵循同样的约定：``:rust:struct:`~my_crate::geometry::Point``` 显示为 ``Point``。"
+msgid ""
+"The Rust domain follows the same conventions with ``::`` paths: "
+"``:rust:struct:`~my_crate::geometry::Point``` renders as ``Point``."
+msgstr ""
+"Rust 域使用 ``::`` 路径，遵循同样的约定：``:rust:struct:`~my_crate::geometry::Point``` "
+"显示为 ``Point``。"
 
 #: ../../topics/index.rst:1
 msgid "Topic guides"
 msgstr "专题指南"
 
 #: ../../topics/index.rst:4
-msgid "These chapters explain the model. They give us enough context to make a choice."
+msgid ""
+"These chapters explain the model. They give us enough context to make a "
+"choice."
 msgstr "这些章节解释整体模型，为我们做出选择提供足够的背景。"
 
 #: ../../topics/mathematics.rst:1
@@ -636,7 +711,10 @@ msgstr ""
 "。实现检查减法形式，不先计算可能使机器整数溢出的 :math:`U+n`\\ 。证明与运算顺序一致。"
 
 #: ../../topics/mathematics.rst:59
-msgid "**Boundary.** This accounts for charged host storage. It does not bound the Typst compiler's internal allocations. A proof is only as strong as the boundary it states."
+msgid ""
+"**Boundary.** This accounts for charged host storage. It does not bound "
+"the Typst compiler's internal allocations. A proof is only as strong as "
+"the boundary it states."
 msgstr "**边界。** 这里只计入已核算的宿主存储，并不限制 Typst 编译器的内部分配。证明的效力取决于它所声明的边界。"
 
 #: ../../topics/mathematics.rst:63
@@ -653,7 +731,9 @@ msgstr ""
 "这些项目随附 MathJax 3.2.2 及 SVG 字体数据，仅在含数学公式的页面加载。构建后离线也可阅读，无需图示脚本或网络字体服务。"
 
 #: ../../topics/mathematics.rst:71
-msgid "For our own projects, the default uses MathJax from a CDN. To serve a local copy, we place it in ``_static`` and set:"
+msgid ""
+"For our own projects, the default uses MathJax from a CDN. To serve a "
+"local copy, we place it in ``_static`` and set:"
 msgstr "在我们自己的项目中，默认从 CDN 加载 MathJax。要使用本地副本，把它放进 ``_static``，然后设置："
 
 #: ../../topics/mathematics.rst:79
@@ -710,8 +790,14 @@ msgid "Separate projects"
 msgstr "独立的项目"
 
 #: ../../topics/projects.rst:46
-msgid "We keep a manual and design records in separate projects. They have different readers and different reading orders. Each project has its own configuration, templates, cache, and output. The Guidedog repository uses ``docs/manual`` and ``docs/gds`` this way."
-msgstr "我们把手册和设计记录放在不同的项目中，因为它们的读者和阅读顺序都不一样。每个项目都有自己的配置、模板、缓存和输出。Guidedog 仓库中的 ``docs/manual`` 和 ``docs/gds`` 就是这样组织的。"
+msgid ""
+"We keep a manual and design records in separate projects. They have "
+"different readers and different reading orders. Each project has its own "
+"configuration, templates, cache, and output. The Guidedog repository uses "
+"``docs/manual`` and ``docs/gds`` this way."
+msgstr ""
+"我们把手册和设计记录放在不同的项目中，因为它们的读者和阅读顺序都不一样。每个项目都有自己的配置、模板、缓存和输出。Guidedog 仓库中的 "
+"``docs/manual`` 和 ``docs/gds`` 就是这样组织的。"
 
 #: ../../topics/projects.rst:51
 msgid "Incremental work"
@@ -742,8 +828,14 @@ msgstr ""
 "\\text{可复用} = \\text{输入相同} \\land \\text{查找结果相同} \\land \\text{输出存在}"
 
 #: ../../topics/projects.rst:67
-msgid "An explicit timestamp in a template is also an input to the rendered page. A page that prints the current minute can change even when its prose does not. We use ``SOURCE_DATE_EPOCH`` when we need a fixed build time."
-msgstr "模板中显式写入的时间戳也是渲染页面的输入。打印当前分钟的页面，即使正文没变也可能发生变化。需要固定的构建时间时，我们使用 ``SOURCE_DATE_EPOCH``。"
+msgid ""
+"An explicit timestamp in a template is also an input to the rendered "
+"page. A page that prints the current minute can change even when its "
+"prose does not. We use ``SOURCE_DATE_EPOCH`` when we need a fixed build "
+"time."
+msgstr ""
+"模板中显式写入的时间戳也是渲染页面的输入。打印当前分钟的页面，即使正文没变也可能发生变化。需要固定的构建时间时，我们使用 "
+"``SOURCE_DATE_EPOCH``。"
 
 #: ../../topics/projects.rst:71
 msgid "Publication"
@@ -833,8 +925,17 @@ msgstr ""
 "增强排版保留强调和原始文字，正文宽度改变时重新计算。复制一个优化段落内的内容，得到的是源文，不含视觉换行或新增连字符。打印时恢复普通段落，交由打印布局分页。"
 
 #: ../../topics/typography.rst:54
-msgid "Links, mathematics, code, interactive content, narrow measures, and other languages use native browser layout. So do paragraphs for which no suitably spaced solution exists. The site remains readable with JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` and ``text-wrap: pretty``. Those CSS properties alone are not a promise of Knuth-Plass optimization."
-msgstr "链接、公式、代码、交互内容、窄栏以及其他语言使用浏览器原生排版；找不到合适间距方案的段落也是如此。禁用 JavaScript 后网站依然可读。回退方案使用按语言生效的 ``hyphens: auto`` 和 ``text-wrap: pretty``。仅靠这两个 CSS 属性，并不能保证 Knuth-Plass 优化。"
+msgid ""
+"Links, mathematics, code, interactive content, narrow measures, and other "
+"languages use native browser layout. So do paragraphs for which no "
+"suitably spaced solution exists. The site remains readable with "
+"JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` "
+"and ``text-wrap: pretty``. Those CSS properties alone are not a promise "
+"of Knuth-Plass optimization."
+msgstr ""
+"链接、公式、代码、交互内容、窄栏以及其他语言使用浏览器原生排版；找不到合适间距方案的段落也是如此。禁用 JavaScript "
+"后网站依然可读。回退方案使用按语言生效的 ``hyphens: auto`` 和 ``text-wrap: pretty``。仅靠这两个 CSS "
+"属性，并不能保证 Knuth-Plass 优化。"
 
 #: ../../topics/typography.rst:60
 msgid "The PDF page"
@@ -881,43 +982,76 @@ msgstr ""
 "``_templates/book.typ`` 调整印刷布局。保留阅读顺序、焦点指示、标签和足够对比度。"
 
 #: ../../topics/typography.rst:82
-msgid "Build both targets after a change. Inspect a page with code, a table, a diagram, and an equation. An attractive cover is not proof that the rest of the book works. We build our own design in :doc:`../tutorial/a-custom-theme`. The full template contract is in :doc:`../templates`. The Rust API of Guidedog's crates is documented in the separate ``docs/api`` project."
-msgstr "修改后要同时构建两种输出。检查一个包含代码、表格、图示和公式的页面。封面漂亮，并不说明书的其余部分没有问题。我们在 :doc:`../tutorial/a-custom-theme` 中构建自己的设计。完整的模板契约见 :doc:`../templates`。Guidedog 各 crate 的 Rust API 在独立的 ``docs/api`` 项目中提供文档。"
+msgid ""
+"Build both targets after a change. Inspect a page with code, a table, a "
+"diagram, and an equation. An attractive cover is not proof that the rest "
+"of the book works. We build our own design in "
+":doc:`../tutorial/a-custom-theme`. The full template contract is in "
+":doc:`../templates`. The Rust API of Guidedog's crates is documented in "
+"the separate ``docs/api`` project."
+msgstr ""
+"修改后要同时构建两种输出。检查一个包含代码、表格、图示和公式的页面。封面漂亮，并不说明书的其余部分没有问题。我们在 "
+":doc:`../tutorial/a-custom-theme` 中构建自己的设计。完整的模板契约见 "
+":doc:`../templates`。Guidedog 各 crate 的 Rust API 在独立的 ``docs/api`` 项目中提供文档。"
 
 #: ../../topics/writing.rst:1
 msgid "Authoring documents"
 msgstr "编写文档"
 
 #: ../../topics/writing.rst:4
-msgid "Guidedog supports both reStructuredText (``.rst``) and MyST Markdown (``.md``). Both are parsed into the same document tree. The HTML website and the PDF book are made from that tree."
-msgstr "Guidedog 同时支持 reStructuredText（``.rst``）和 MyST Markdown（``.md``）。两者都解析为同一种文档树，HTML 网站和 PDF 书籍都由这棵树生成。"
+msgid ""
+"Guidedog supports both reStructuredText (``.rst``) and MyST Markdown "
+"(``.md``). Both are parsed into the same document tree. The HTML website "
+"and the PDF book are made from that tree."
+msgstr ""
+"Guidedog 同时支持 reStructuredText（``.rst``）和 MyST "
+"Markdown（``.md``）。两者都解析为同一种文档树，HTML 网站和 PDF 书籍都由这棵树生成。"
 
 #: ../../topics/writing.rst:8
 msgid "Choose a source language"
 msgstr "选择源文件语言"
 
 #: ../../topics/writing.rst:11
-msgid "We use reStructuredText when we need full access to domains, complex tables, and extensible directives. We use MyST Markdown when we prefer Markdown syntax but still want Sphinx-style directives and roles."
-msgstr "需要完整使用域、复杂表格和可扩展的指令时，我们使用 reStructuredText。更喜欢 Markdown 语法、同时又想使用 Sphinx 风格的指令和角色时，我们使用 MyST Markdown。"
+msgid ""
+"We use reStructuredText when we need full access to domains, complex "
+"tables, and extensible directives. We use MyST Markdown when we prefer "
+"Markdown syntax but still want Sphinx-style directives and roles."
+msgstr ""
+"需要完整使用域、复杂表格和可扩展的指令时，我们使用 reStructuredText。更喜欢 Markdown 语法、同时又想使用 Sphinx "
+"风格的指令和角色时，我们使用 MyST Markdown。"
 
 #: ../../topics/writing.rst:15
-msgid "In a documentation project, Markdown documents are parsed as MyST. Single-document conversions with ``guidedog convert`` read Markdown as plain CommonMark 0.31.2: MyST's directives, roles, and settings belong to projects."
-msgstr "在文档项目中，Markdown 文档按 MyST 解析。使用 ``guidedog convert`` 转换单个文档时，Markdown 按纯 CommonMark 0.31.2 读取：MyST 的指令、角色和设置只属于项目。"
+msgid ""
+"In a documentation project, Markdown documents are parsed as MyST. "
+"Single-document conversions with ``guidedog convert`` read Markdown as "
+"plain CommonMark 0.31.2: MyST's directives, roles, and settings belong to "
+"projects."
+msgstr ""
+"在文档项目中，Markdown 文档按 MyST 解析。使用 ``guidedog convert`` 转换单个文档时，Markdown 按纯 "
+"CommonMark 0.31.2 读取：MyST 的指令、角色和设置只属于项目。"
 
 #: ../../topics/writing.rst:19
 msgid "Headings and structure"
 msgstr "标题与结构"
 
 #: ../../topics/writing.rst:22
-msgid "A document title identifies the page. Sections and subsections divide the text. In reStructuredText, headings use underline adornments (and optional matching overlines). The underline must be at least as long as the text."
-msgstr "文档标题标识页面，章节和小节划分正文。在 reStructuredText 中，标题使用下划线装饰（也可以加上相同的上划线）。下划线的长度不能短于标题文字。"
+msgid ""
+"A document title identifies the page. Sections and subsections divide the "
+"text. In reStructuredText, headings use underline adornments (and "
+"optional matching overlines). The underline must be at least as long as "
+"the text."
+msgstr ""
+"文档标题标识页面，章节和小节划分正文。在 reStructuredText "
+"中，标题使用下划线装饰（也可以加上相同的上划线）。下划线的长度不能短于标题文字。"
 
 #: ../../topics/writing.rst:26
 msgid "Recommended adornment styles:"
 msgstr "建议的标题符号："
 
 #: ../../topics/writing.rst:45
-msgid "We keep heading levels consistent across the project. In MyST Markdown, we use standard hashes (``#``, ``##``, ``###``)."
+msgid ""
+"We keep heading levels consistent across the project. In MyST Markdown, "
+"we use standard hashes (``#``, ``##``, ``###``)."
 msgstr "我们在整个项目中保持标题层级一致。在 MyST Markdown 中，使用标准的井号（``#``、``##``、``###``）。"
 
 #: ../../topics/writing.rst:48
@@ -997,7 +1131,9 @@ msgid "``{sup}`text```"
 msgstr "``{sup}`text```"
 
 #: ../../topics/writing.rst:76
-msgid "To write literal asterisks or backticks in text, we escape them with a backslash: ``\\*not italic\\*``."
+msgid ""
+"To write literal asterisks or backticks in text, we escape them with a "
+"backslash: ``\\*not italic\\*``."
 msgstr "要在正文中写出字面的星号或反引号，用反斜杠转义：``\\*not italic\\*``。"
 
 #: ../../topics/writing.rst:79
@@ -1021,7 +1157,9 @@ msgid "Definition lists"
 msgstr "定义列表"
 
 #: ../../topics/writing.rst:107
-msgid "A definition list pairs terms with explanations. The term stands on one line. An indented definition follows it directly:"
+msgid ""
+"A definition list pairs terms with explanations. The term stands on one "
+"line. An indented definition follows it directly:"
 msgstr "定义列表把术语和说明配成对。术语单独占一行，缩进的定义紧随其后："
 
 #: ../../topics/writing.rst:118
@@ -1037,8 +1175,13 @@ msgid "Code blocks"
 msgstr "代码块"
 
 #: ../../topics/writing.rst:132
-msgid "The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted code. Guidedog highlights 35 programming languages, Rust and Odin among them, with Pygments' names and styles and no Python runtime:"
-msgstr "``code-block`` 指令（或 ``sourcecode``）显示带语法高亮的代码。Guidedog 能高亮 35 种编程语言，其中包括 Rust 和 Odin，使用 Pygments 的名称和样式，且无需 Python 运行时："
+msgid ""
+"The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted "
+"code. Guidedog highlights 35 programming languages, Rust and Odin among "
+"them, with Pygments' names and styles and no Python runtime:"
+msgstr ""
+"``code-block`` 指令（或 ``sourcecode``）显示带语法高亮的代码。Guidedog 能高亮 35 种编程语言，其中包括 "
+"Rust 和 Odin，使用 Pygments 的名称和样式，且无需 Python 运行时："
 
 #: ../../topics/writing.rst:147
 msgid "Options for code blocks:"
@@ -1112,7 +1255,9 @@ msgid "List tables"
 msgstr "列表表格"
 
 #: ../../topics/writing.rst:234
-msgid "The ``list-table`` directive creates tables from nested bullet lists. Wide tables stay easy to read and maintain in source control:"
+msgid ""
+"The ``list-table`` directive creates tables from nested bullet lists. "
+"Wide tables stay easy to read and maintain in source control:"
 msgstr "``list-table`` 指令用嵌套的无序列表创建表格。即使是较宽的表格，在源码中也便于阅读和维护："
 
 #: ../../topics/writing.rst:253
@@ -1130,11 +1275,15 @@ msgid "Images and figures"
 msgstr "图片与插图"
 
 #: ../../topics/writing.rst:270
-msgid "We include illustrations, screenshots, and diagrams with ``image`` and ``figure``:"
+msgid ""
+"We include illustrations, screenshots, and diagrams with ``image`` and "
+"``figure``:"
 msgstr "我们用 ``image`` 和 ``figure`` 插入插图、截图和图表："
 
 #: ../../topics/writing.rst:286
-msgid "A ``figure`` wraps the image with a caption and an optional reference target."
+msgid ""
+"A ``figure`` wraps the image with a caption and an optional reference "
+"target."
 msgstr "``figure`` 为图片加上图注，还可以指定引用目标。"
 
 #: ../../topics/writing.rst:288
@@ -1190,7 +1339,8 @@ msgid "Cross-references and links"
 msgstr "交叉引用与链接"
 
 #: ../../topics/writing.rst:317
-msgid "Explicit targets keep links stable, even when document files are renamed."
+msgid ""
+"Explicit targets keep links stable, even when document files are renamed."
 msgstr "显式目标让链接保持稳定，即使文档文件改名也不受影响。"
 
 #: ../../topics/writing.rst:319
@@ -1230,7 +1380,8 @@ msgid "File downloads with ``:download:``"
 msgstr "用 ``:download:`` 提供文件下载"
 
 #: ../../topics/writing.rst:373
-msgid "This copies a file to the output's download directory and links to it:"
+msgid ""
+"This copies a file to the output's download directory and links to it:"
 msgstr "下面的写法会把文件复制到输出的下载目录，并生成指向它的链接："
 
 #: ../../topics/writing.rst:379
@@ -1258,7 +1409,9 @@ msgid "MyST Markdown authoring"
 msgstr "编写 MyST Markdown"
 
 #: ../../topics/writing.rst:409
-msgid "MyST Markdown supports the same directives and roles through fenced blocks:"
+msgid ""
+"MyST Markdown supports the same directives and roles through fenced "
+"blocks:"
 msgstr "MyST Markdown 通过围栏块支持相同的指令和角色："
 
 #~ msgid ""

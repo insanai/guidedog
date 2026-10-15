@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 04:11+0000\n"
+"POT-Creation-Date: 2026-10-15 05:49+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -58,20 +58,20 @@ msgstr "Globale Optionen"
 msgid "Every command accepts these:"
 msgstr "Jeder Befehl akzeptiert diese Optionen:"
 
-#: ../../reference/cli.rst:35 ../../reference/cli.rst:144
-#: ../../reference/cli.rst:202 ../../reference/cli.rst:329
-#: ../../reference/cli.rst:355 ../../reference/cli.rst:408
-#: ../../reference/cli.rst:512 ../../reference/cli.rst:566
-#: ../../reference/cli.rst:628 ../../reference/cli.rst:779
+#: ../../reference/cli.rst:35 ../../reference/cli.rst:152
+#: ../../reference/cli.rst:210 ../../reference/cli.rst:337
+#: ../../reference/cli.rst:363 ../../reference/cli.rst:416
+#: ../../reference/cli.rst:498 ../../reference/cli.rst:549
+#: ../../reference/cli.rst:612 ../../reference/cli.rst:781
 msgid "Option"
 msgstr "Option"
 
-#: ../../reference/cli.rst:36 ../../reference/cli.rst:145
-#: ../../reference/cli.rst:203 ../../reference/cli.rst:330
-#: ../../reference/cli.rst:356 ../../reference/cli.rst:409
-#: ../../reference/cli.rst:513 ../../reference/cli.rst:567
-#: ../../reference/cli.rst:629 ../../reference/cli.rst:753
-#: ../../reference/cli.rst:780
+#: ../../reference/cli.rst:36 ../../reference/cli.rst:153
+#: ../../reference/cli.rst:211 ../../reference/cli.rst:338
+#: ../../reference/cli.rst:364 ../../reference/cli.rst:417
+#: ../../reference/cli.rst:499 ../../reference/cli.rst:550
+#: ../../reference/cli.rst:613 ../../reference/cli.rst:755
+#: ../../reference/cli.rst:782
 msgid "Meaning"
 msgstr "Bedeutung"
 
@@ -257,7 +257,7 @@ msgstr "Befehlsübersicht"
 msgid "CLI commands"
 msgstr "CLI-Befehle"
 
-#: ../../reference/cli.rst:89
+#: ../../reference/cli.rst:89 ../../reference/cli.rst:118
 msgid "Command"
 msgstr "Befehl"
 
@@ -330,7 +330,8 @@ msgstr "``convert INPUT``"
 
 #: ../../reference/cli.rst:104
 msgid "Converts one file, or standard input, without a project."
-msgstr "Konvertiert eine einzelne Datei oder die Standardeingabe ohne Projekt."
+msgstr ""
+"Konvertiert eine einzelne Datei oder die Standardeingabe ohne Projekt."
 
 #: ../../reference/cli.rst:105
 msgid "``formats``"
@@ -342,21 +343,10 @@ msgstr ""
 "Listet die eingebauten Reader und Renderer sowie das Typst-Backend auf."
 
 #: ../../reference/cli.rst:107
-msgid "``gds COMMAND``"
-msgstr "``gds COMMAND``"
-
-#: ../../reference/cli.rst:108
-msgid ""
-"Keeps Guidedog's own discussion records in ``docs/gds``, as ``dsc`` does."
-msgstr ""
-"Führt die eigenen Diskussionsaufzeichnungen von Guidedog in ``docs/gds``, "
-"wie ``dsc`` es tut."
-
-#: ../../reference/cli.rst:109
 msgid "``publish --publisher=ID``"
 msgstr "``publish --publisher=ID``"
 
-#: ../../reference/cli.rst:110
+#: ../../reference/cli.rst:108
 msgid ""
 "Builds the project a publisher's configuration names, and publishes the "
 "site."
@@ -364,50 +354,78 @@ msgstr ""
 "Baut das Projekt, das die Konfiguration eines Publishers nennt, und "
 "veröffentlicht die Website."
 
-#: ../../reference/cli.rst:111
-msgid "``publish pages``"
-msgstr "``publish pages``"
-
-#: ../../reference/cli.rst:112
-msgid ""
-"Publishes to GitHub Pages, doing first whatever setup is still missing."
-msgstr ""
-"Veröffentlicht auf GitHub Pages und erledigt vorher die noch fehlende "
-"Einrichtung."
-
-#: ../../reference/cli.rst:113
-msgid "``pages workflow``"
-msgstr "``pages workflow``"
-
-#: ../../reference/cli.rst:114
-msgid "Writes a GitHub Actions workflow that builds and deploys the site."
-msgstr ""
-"Schreibt einen GitHub-Actions-Workflow, der die Website baut und deployt."
-
-#: ../../reference/cli.rst:115
+#: ../../reference/cli.rst:109
 msgid "``plugin COMMAND``"
 msgstr "``plugin COMMAND``"
 
-#: ../../reference/cli.rst:116
+#: ../../reference/cli.rst:110
 msgid ""
 "Registers, checks, lists, inspects, runs, or unregisters plugin programs."
 msgstr ""
 "Registriert, prüft, listet, inspiziert, startet oder entfernt "
 "Plugin-Programme."
 
-#: ../../reference/cli.rst:118
+#: ../../reference/cli.rst:112
 msgid ""
-"A command word that is not one of these is a usage error (exit status 2). "
-"Its hint lists the commands."
+"Plugins add commands of their own (see `Commands plugins add`_). The "
+"GitHub Pages plugin, linked into every ``guidedog``, adds two:"
 msgstr ""
-"Jedes andere Befehlswort ist ein Aufruffehler (Exitstatus 2). Der Hinweis "
-"dazu listet die Befehle auf."
+"Plugins fügen eigene Befehle hinzu (siehe `Befehle aus Plugins <Commands plugins add_>`_). Das "
+"GitHub-Pages-Plugin, das in jedes ``guidedog`` gelinkt ist, fügt zwei hinzu:"
+
+#: ../../reference/cli.rst:114
+msgid "Commands of the linked GitHub Pages plugin"
+msgstr "Befehle des gelinkten GitHub-Pages-Plugins"
+
+#: ../../reference/cli.rst:119
+msgid "What it does"
+msgstr "Funktion"
+
+#: ../../reference/cli.rst:120
+msgid "``publish pages``"
+msgstr "``publish pages``"
 
 #: ../../reference/cli.rst:121
+msgid ""
+"Publishes to GitHub Pages, doing first whatever setup is still missing."
+msgstr ""
+"Veröffentlicht auf GitHub Pages und erledigt vorher die noch fehlende "
+"Einrichtung."
+
+#: ../../reference/cli.rst:122
+msgid "``pages workflow``"
+msgstr "``pages workflow``"
+
+#: ../../reference/cli.rst:123
+msgid "Writes a GitHub Actions workflow that builds and deploys the site."
+msgstr ""
+"Schreibt einen GitHub-Actions-Workflow, der die Website baut und deployt."
+
+#: ../../reference/cli.rst:125
+msgid ""
+"The discussion plugin, also linked into every ``guidedog``, adds ``dsc`` "
+"and its commands: ``guidedog dsc init``, ``new``, ``build``, and the rest "
+"(see `guidedog dsc`_)."
+msgstr ""
+"Das Diskussions-Plugin, ebenfalls in jedes ``guidedog`` gelinkt, fügt "
+"``dsc`` und seine Befehle hinzu: ``guidedog dsc init``, ``new``, ``build`` "
+"und die übrigen (siehe `guidedog dsc`_)."
+
+#: ../../reference/cli.rst:127
+msgid ""
+"A command word that is neither guidedog's nor a plugin's is a usage error "
+"(exit status 2). Its hint lists the commands, and suggests the closest of "
+"both kinds."
+msgstr ""
+"Ein Befehlswort, das weder zu Guidedog noch zu einem Plugin gehört, ist ein "
+"Aufruffehler (Exitstatus 2). Der Hinweis dazu listet die Befehle auf und "
+"schlägt den ähnlichsten beider Arten vor."
+
+#: ../../reference/cli.rst:129
 msgid "guidedog quickstart"
 msgstr "guidedog quickstart"
 
-#: ../../reference/cli.rst:124
+#: ../../reference/cli.rst:132
 msgid ""
 "Creates a project folder, as ``sphinx-quickstart`` does. It holds "
 "``conf.toml``, ``index.rst``, working templates in ``_templates/``, "
@@ -417,7 +435,7 @@ msgstr ""
 "``conf.toml``, ``index.rst``, lauffähige Vorlagen in ``_templates/``, "
 "Stile in ``_static/``, die ``assets/``-Ordner und einen Build-Ordner:"
 
-#: ../../reference/cli.rst:135
+#: ../../reference/cli.rst:143
 msgid ""
 "``DIR`` defaults to the current folder. In a terminal, and without "
 "``-q``, quickstart asks whether to separate source and build folders. It "
@@ -431,63 +449,64 @@ msgstr ""
 "(Standard ``en``). Was die Optionen bereits festlegen, überspringt es. "
 "Projektname und Autor sind Pflicht."
 
-#: ../../reference/cli.rst:140
+#: ../../reference/cli.rst:148
 msgid "Options of quickstart"
 msgstr "Optionen von quickstart"
 
-#: ../../reference/cli.rst:146
+#: ../../reference/cli.rst:154
 msgid "``-q``, ``-Q``, ``--quiet``"
 msgstr "``-q``, ``-Q``, ``--quiet``"
 
-#: ../../reference/cli.rst:147
+#: ../../reference/cli.rst:155
 msgid "Ask nothing; take the answers from the options below."
-msgstr "Fragt nichts, sondern nimmt die Antworten aus den folgenden Optionen."
+msgstr ""
+"Fragt nichts, sondern nimmt die Antworten aus den folgenden Optionen."
 
-#: ../../reference/cli.rst:148
+#: ../../reference/cli.rst:156
 msgid "``-p NAME``, ``--project NAME``"
 msgstr "``-p NAME``, ``--project NAME``"
 
-#: ../../reference/cli.rst:149
+#: ../../reference/cli.rst:157
 msgid "The project name."
 msgstr "Der Projektname."
 
-#: ../../reference/cli.rst:150
+#: ../../reference/cli.rst:158
 msgid "``-a NAME``, ``--author NAME``"
 msgstr "``-a NAME``, ``--author NAME``"
 
-#: ../../reference/cli.rst:151
+#: ../../reference/cli.rst:159
 msgid "The author or organization name(s)."
 msgstr "Name(n) der Autoren oder der Organisation."
 
-#: ../../reference/cli.rst:152
+#: ../../reference/cli.rst:160
 msgid "``-v VERSION``, ``--version-name VERSION``"
 msgstr "``-v VERSION``, ``--version-name VERSION``"
 
-#: ../../reference/cli.rst:153
+#: ../../reference/cli.rst:161
 msgid "The short version (``1.0``). Without it, the release is used."
 msgstr "Die Kurzversion (``1.0``). Ohne Angabe gilt das Release."
 
-#: ../../reference/cli.rst:154
+#: ../../reference/cli.rst:162
 msgid "``-r RELEASE``, ``--release RELEASE``"
 msgstr "``-r RELEASE``, ``--release RELEASE``"
 
-#: ../../reference/cli.rst:155
+#: ../../reference/cli.rst:163
 msgid "The full release (``1.0.0-rc1``)."
 msgstr "Das vollständige Release (``1.0.0-rc1``)."
 
-#: ../../reference/cli.rst:156
+#: ../../reference/cli.rst:164
 msgid "``-l LANGUAGE``, ``--language LANGUAGE``"
 msgstr "``-l LANGUAGE``, ``--language LANGUAGE``"
 
-#: ../../reference/cli.rst:157
+#: ../../reference/cli.rst:165
 msgid "The document language (default: ``en``)."
 msgstr "Die Sprache der Dokumente (Standard: ``en``)."
 
-#: ../../reference/cli.rst:158
+#: ../../reference/cli.rst:166
 msgid "``--sep``, ``--no-sep``"
 msgstr "``--sep``, ``--no-sep``"
 
-#: ../../reference/cli.rst:159
+#: ../../reference/cli.rst:167
 msgid ""
 "Separate ``source/`` and ``build/`` folders, or keep the sources at the "
 "root with ``_build`` beside them (the default)."
@@ -495,19 +514,19 @@ msgstr ""
 "Getrennte Ordner ``source/`` und ``build/`` oder die Quellen im "
 "Wurzelverzeichnis mit ``_build`` daneben (Standard)."
 
-#: ../../reference/cli.rst:161
+#: ../../reference/cli.rst:169
 msgid "``--suffix EXT``"
 msgstr "``--suffix EXT``"
 
-#: ../../reference/cli.rst:162
+#: ../../reference/cli.rst:170
 msgid "The source suffix (default: ``.rst``)."
 msgstr "Die Dateiendung der Quellen (Standard: ``.rst``)."
 
-#: ../../reference/cli.rst:164
+#: ../../reference/cli.rst:172
 msgid "guidedog build"
 msgstr "guidedog build"
 
-#: ../../reference/cli.rst:167
+#: ../../reference/cli.rst:175
 msgid ""
 "Reads the sources and resolves toctrees and cross-references. It "
 "publishes the output as one complete generation:"
@@ -515,7 +534,7 @@ msgstr ""
 "Liest die Quellen und löst Inhaltsbäume und Querverweise auf. Die Ausgabe "
 "veröffentlicht es als eine vollständige Generation:"
 
-#: ../../reference/cli.rst:180
+#: ../../reference/cli.rst:188
 msgid ""
 "``guidedog build [BUILDER] [PROJECT]`` builds ``PROJECT`` with "
 "``BUILDER`` into the project's build folder, ``_build/BUILDER``. "
@@ -534,11 +553,11 @@ msgstr ""
 "BUILDER SOURCEDIR BUILDDIR`` schreibt nach ``BUILDDIR/BUILDER``. Beide "
 "Formen brauchen genau diese zwei Ordner."
 
-#: ../../reference/cli.rst:186
+#: ../../reference/cli.rst:194
 msgid "Builders:"
 msgstr "Builder:"
 
-#: ../../reference/cli.rst:188
+#: ../../reference/cli.rst:196
 msgid ""
 "``html``: a complete HTML site with search, indexes, navigation, and "
 "``objects.inv``."
@@ -546,15 +565,15 @@ msgstr ""
 "``html``: eine vollständige HTML-Website mit Suche, Indizes, Navigation "
 "und ``objects.inv``."
 
-#: ../../reference/cli.rst:189
+#: ../../reference/cli.rst:197
 msgid "``dirhtml``: HTML with directory-style URLs (``dir/index.html``)."
 msgstr "``dirhtml``: HTML mit verzeichnisartigen URLs (``dir/index.html``)."
 
-#: ../../reference/cli.rst:190
+#: ../../reference/cli.rst:198
 msgid "``singlehtml``: all documents in one HTML page."
 msgstr "``singlehtml``: alle Dokumente auf einer HTML-Seite."
 
-#: ../../reference/cli.rst:191
+#: ../../reference/cli.rst:199
 msgid ""
 "``pdf``: PDF books typeset by Typst. Sphinx's ``latex``, ``latexpdf``, "
 "``latexpdfja`` and ``xelatexpdf`` select it too."
@@ -562,15 +581,15 @@ msgstr ""
 "``pdf``: PDF-Bücher, gesetzt mit Typst. Auch die Sphinx-Builder "
 "``latex``, ``latexpdf``, ``latexpdfja`` und ``xelatexpdf`` wählen ihn aus."
 
-#: ../../reference/cli.rst:193
+#: ../../reference/cli.rst:201
 msgid "``text``: a plain text file for each document."
 msgstr "``text``: eine Textdatei pro Dokument."
 
-#: ../../reference/cli.rst:194
+#: ../../reference/cli.rst:202
 msgid "``gettext``: message templates (POT) for translation."
 msgstr "``gettext``: Nachrichtenvorlagen (POT) für die Übersetzung."
 
-#: ../../reference/cli.rst:195
+#: ../../reference/cli.rst:203
 msgid ""
 "``dummy``: reads and resolves every document and writes nothing (a syntax "
 "and reference check)."
@@ -578,66 +597,66 @@ msgstr ""
 "``dummy``: liest jedes Dokument, löst es auf und schreibt nichts (eine "
 "Prüfung von Syntax und Verweisen)."
 
-#: ../../reference/cli.rst:198
+#: ../../reference/cli.rst:206
 msgid "Options of build"
 msgstr "Optionen von build"
 
-#: ../../reference/cli.rst:204
+#: ../../reference/cli.rst:212
 msgid "``-a``"
 msgstr "``-a``"
 
-#: ../../reference/cli.rst:205
+#: ../../reference/cli.rst:213
 msgid "Write all outputs, not only the changed ones."
 msgstr "Schreibt alle Ausgaben, nicht nur die geänderten."
 
-#: ../../reference/cli.rst:206
+#: ../../reference/cli.rst:214
 msgid "``-E``"
 msgstr "``-E``"
 
-#: ../../reference/cli.rst:207
+#: ../../reference/cli.rst:215
 msgid "Fresh build: ignore the saved environment."
 msgstr "Frischer Build: ignoriert die gespeicherte Umgebung."
 
-#: ../../reference/cli.rst:208
+#: ../../reference/cli.rst:216
 msgid "``-W``"
 msgstr "``-W``"
 
-#: ../../reference/cli.rst:209
+#: ../../reference/cli.rst:217
 msgid "Treat warnings as errors."
 msgstr "Behandelt Warnungen als Fehler."
 
-#: ../../reference/cli.rst:210
+#: ../../reference/cli.rst:218
 msgid "``--keep-going``"
 msgstr "``--keep-going``"
 
-#: ../../reference/cli.rst:211
+#: ../../reference/cli.rst:219
 msgid ""
 "With ``-W``, finish the build to report every problem before failing."
 msgstr ""
 "Baut mit ``-W`` zu Ende und meldet jedes Problem, bevor der Build "
 "fehlschlägt."
 
-#: ../../reference/cli.rst:212
+#: ../../reference/cli.rst:220
 msgid "``-n``"
 msgstr "``-n``"
 
-#: ../../reference/cli.rst:213
+#: ../../reference/cli.rst:221
 msgid "Nitpicky: warn about every unresolved reference."
 msgstr "Pedantisch: warnt bei jedem nicht aufgelösten Verweis."
 
-#: ../../reference/cli.rst:214
+#: ../../reference/cli.rst:222
 msgid "``-j N``, ``-j auto``"
 msgstr "``-j N``, ``-j auto``"
 
-#: ../../reference/cli.rst:215
+#: ../../reference/cli.rst:223
 msgid "Read documents on ``N`` threads, or one per core."
 msgstr "Liest Dokumente mit ``N`` Threads oder einem Thread pro Kern."
 
-#: ../../reference/cli.rst:216
+#: ../../reference/cli.rst:224
 msgid "``-D name=value``"
 msgstr "``-D name=value``"
 
-#: ../../reference/cli.rst:217
+#: ../../reference/cli.rst:225
 msgid ""
 "Override a ``conf.toml`` setting for this build (``-D language=de``); "
 "repeatable. ``-D table.key=value`` sets one key of a table setting, such "
@@ -648,35 +667,35 @@ msgstr ""
 "sphinx-build einen einzelnen Schlüssel einer Tabelleneinstellung wie "
 "``html_context`` und behält die übrigen Schlüssel."
 
-#: ../../reference/cli.rst:220
+#: ../../reference/cli.rst:228
 msgid "``-t TAG``"
 msgstr "``-t TAG``"
 
-#: ../../reference/cli.rst:221
+#: ../../reference/cli.rst:229
 msgid "Define a tag for ``only`` directives; repeatable."
 msgstr "Definiert ein Tag für die Direktive ``only``; wiederholbar."
 
-#: ../../reference/cli.rst:222
+#: ../../reference/cli.rst:230
 msgid "``-c DIR``"
 msgstr "``-c DIR``"
 
-#: ../../reference/cli.rst:223
+#: ../../reference/cli.rst:231
 msgid "Read ``conf.toml`` from ``DIR`` instead of the source folder."
 msgstr "Liest ``conf.toml`` aus ``DIR`` statt aus dem Quellordner."
 
-#: ../../reference/cli.rst:224
+#: ../../reference/cli.rst:232
 msgid "``-C``"
 msgstr "``-C``"
 
-#: ../../reference/cli.rst:225
+#: ../../reference/cli.rst:233
 msgid "Build without any ``conf.toml``."
 msgstr "Baut ganz ohne ``conf.toml``."
 
-#: ../../reference/cli.rst:226
+#: ../../reference/cli.rst:234
 msgid "``-d DIR``"
 msgstr "``-d DIR``"
 
-#: ../../reference/cli.rst:227
+#: ../../reference/cli.rst:235
 msgid ""
 "Accepted for sphinx-build scripts and ignored: the environment lives in "
 "the build's own cache folder."
@@ -684,19 +703,20 @@ msgstr ""
 "Wird für sphinx-build-Skripte akzeptiert und ignoriert: Die Umgebung "
 "liegt im eigenen Cache-Ordner des Builds."
 
-#: ../../reference/cli.rst:229
+#: ../../reference/cli.rst:237
 msgid "``-v``"
 msgstr "``-v``"
 
-#: ../../reference/cli.rst:230
+#: ../../reference/cli.rst:238
 msgid "Also show notes (Docutils' info messages); repeatable."
-msgstr "Zeigt auch Hinweise (die Info-Meldungen von Docutils); wiederholbar."
+msgstr ""
+"Zeigt auch Hinweise (die Info-Meldungen von Docutils); wiederholbar."
 
-#: ../../reference/cli.rst:231
+#: ../../reference/cli.rst:239
 msgid "``-q``, ``-Q``"
 msgstr "``-q``, ``-Q``"
 
-#: ../../reference/cli.rst:232
+#: ../../reference/cli.rst:240
 msgid ""
 "Show only errors: no progress, summary, warnings or notes (``-W`` still "
 "counts the warnings)."
@@ -704,11 +724,11 @@ msgstr ""
 "Zeigt nur Fehler: keinen Fortschritt, keine Zusammenfassung, keine "
 "Warnungen und keine Hinweise (``-W`` zählt die Warnungen trotzdem)."
 
-#: ../../reference/cli.rst:234
+#: ../../reference/cli.rst:242
 msgid "``--untrusted``"
 msgstr "``--untrusted``"
 
-#: ../../reference/cli.rst:235
+#: ../../reference/cli.rst:243
 msgid ""
 "Leave out raw content, fetch nothing, and run no build plugin. This is a "
 "capability policy, not a process sandbox."
@@ -717,22 +737,22 @@ msgstr ""
 "Build-Plugin aus. Das ist eine Richtlinie für Fähigkeiten, keine "
 "Prozess-Sandbox."
 
-#: ../../reference/cli.rst:237 ../../reference/cli.rst:441
+#: ../../reference/cli.rst:245 ../../reference/cli.rst:449
 msgid "``--budget=MIB``"
 msgstr "``--budget=MIB``"
 
-#: ../../reference/cli.rst:238
+#: ../../reference/cli.rst:246
 msgid ""
 "Memory the build may hold at once, from 1 to 1048576 (default: ``1024``)."
 msgstr ""
 "Speicher, den der Build gleichzeitig belegen darf, von 1 bis 1048576 "
 "(Standard: ``1024``)."
 
-#: ../../reference/cli.rst:239
+#: ../../reference/cli.rst:247
 msgid "``--memory=ram``"
 msgstr "``--memory=ram``"
 
-#: ../../reference/cli.rst:240
+#: ../../reference/cli.rst:248
 msgid ""
 "At the budget, stop without asking. Without it, a terminal asks whether "
 "to raise the budget or stop; a build without a terminal stops. "
@@ -749,27 +769,27 @@ msgstr ""
 "Version hält den Arbeitsspeicher im Speicher, begrenzt durch das Budget; "
 "wir erhöhen stattdessen ``--budget``."
 
-#: ../../reference/cli.rst:245
+#: ../../reference/cli.rst:253
 msgid "``--max-depth=N``"
 msgstr "``--max-depth=N``"
 
-#: ../../reference/cli.rst:246
+#: ../../reference/cli.rst:254
 msgid "How deep content may nest (default: ``256``)."
 msgstr "Wie tief Inhalte verschachtelt sein dürfen (Standard: ``256``)."
 
-#: ../../reference/cli.rst:247
+#: ../../reference/cli.rst:255
 msgid "``--max-nodes=N``"
 msgstr "``--max-nodes=N``"
 
-#: ../../reference/cli.rst:248
+#: ../../reference/cli.rst:256
 msgid "Nodes per document (default: ``1000000``)."
 msgstr "Knoten pro Dokument (Standard: ``1000000``)."
 
-#: ../../reference/cli.rst:249 ../../reference/cli.rst:445
+#: ../../reference/cli.rst:257 ../../reference/cli.rst:453
 msgid "``--stack-kib=N``"
 msgstr "``--stack-kib=N``"
 
-#: ../../reference/cli.rst:250
+#: ../../reference/cli.rst:258
 msgid ""
 "Stack for nested content (default: ``512``; at most what the reading "
 "threads hold, 6144 on Linux and macOS). Raise it together with "
@@ -779,16 +799,17 @@ msgstr ""
 "wie die lesenden Threads haben, unter Linux und macOS 6144). Wir erhöhen "
 "den Wert zusammen mit ``--max-depth``."
 
-#: ../../reference/cli.rst:252 ../../reference/cli.rst:431
-#: ../../reference/cli.rst:538
+#: ../../reference/cli.rst:260 ../../reference/cli.rst:439
+#: ../../reference/cli.rst:521
 msgid "``--typst=PATH``"
 msgstr "``--typst=PATH``"
 
-#: ../../reference/cli.rst:253
+#: ../../reference/cli.rst:261
 msgid "The Typst program for PDF, overriding ``typst`` in ``conf.toml``."
-msgstr "Das Typst-Programm für PDF; überschreibt ``typst`` in ``conf.toml``."
+msgstr ""
+"Das Typst-Programm für PDF; überschreibt ``typst`` in ``conf.toml``."
 
-#: ../../reference/cli.rst:255
+#: ../../reference/cli.rst:263
 msgid ""
 "The build prints what it read and wrote, then a verdict: ``build "
 "succeeded`` or ``build failed``, with the number of errors and warnings "
@@ -803,7 +824,7 @@ msgstr ""
 "gehören zum Build selbst, ``-W`` zählt sie also mit. "
 "``suppress_warnings`` unterdrückt Warnungen, bevor ``-W`` sie zählt."
 
-#: ../../reference/cli.rst:260
+#: ../../reference/cli.rst:268
 msgid ""
 "``read`` counts the documents parsed and those unchanged since the last "
 "build (taken from the environment). ``write`` counts the outputs written "
@@ -822,11 +843,11 @@ msgstr ""
 "gemeinsamen Dateien der Website (Theme, Indizes, ``objects.inv``). Sie "
 "werden nicht mitgezählt."
 
-#: ../../reference/cli.rst:267
+#: ../../reference/cli.rst:275
 msgid "guidedog serve"
 msgstr "guidedog serve"
 
-#: ../../reference/cli.rst:270
+#: ../../reference/cli.rst:278
 msgid ""
 "Builds the HTML site and serves it on ``http://127.0.0.1:PORT/``. When "
 "sources, templates, static files, or ``conf.toml`` changed, it rebuilds "
@@ -837,7 +858,7 @@ msgstr ""
 "``conf.toml`` geändert, baut der Server neu, bevor er eine Anfrage "
 "beantwortet:"
 
-#: ../../reference/cli.rst:278
+#: ../../reference/cli.rst:286
 msgid ""
 "``--port PORT`` (``-p`` is quickstart's project name, not the port) "
 "chooses the port, from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, "
@@ -852,7 +873,7 @@ msgstr ""
 "Neubau fehl, bleibt die vorherige Website erhalten und das Problem wird "
 "gemeldet. Ctrl+C beendet den Server."
 
-#: ../../reference/cli.rst:283
+#: ../../reference/cli.rst:291
 msgid ""
 "It serves ``_build/html``. It watches the source folder, the Odin and "
 "Rust API sources (``odin_autoapi_dirs``, ``odin_collections``, "
@@ -871,11 +892,11 @@ msgstr ""
 "erkennt der Server an Dateinamen, Größen und Zeitstempeln. Die Prüfung "
 "läuft, bevor eine HTML-Seite ausgeliefert wird:"
 
-#: ../../reference/cli.rst:300
+#: ../../reference/cli.rst:308
 msgid "guidedog clean"
 msgstr "guidedog clean"
 
-#: ../../reference/cli.rst:303
+#: ../../reference/cli.rst:311
 msgid ""
 "Removes the contents of the project's build folder, the environment cache "
 "included:"
@@ -883,11 +904,11 @@ msgstr ""
 "Löscht den Inhalt des Build-Ordners des Projekts, einschließlich des "
 "Umgebungs-Caches:"
 
-#: ../../reference/cli.rst:309
+#: ../../reference/cli.rst:317
 msgid "guidedog migrate"
 msgstr "guidedog migrate"
 
-#: ../../reference/cli.rst:312
+#: ../../reference/cli.rst:320
 msgid ""
 "Converts a Sphinx ``conf.py`` (or an old ``guidedog.toml``) to "
 "``conf.toml`` without running Python. Literal settings carry over. "
@@ -899,31 +920,32 @@ msgstr ""
 "übernommen. Alles, was Python berechnen würde, wird gemeldet und als "
 "Kommentar in ``conf.toml`` aufbewahrt:"
 
-#: ../../reference/cli.rst:325
+#: ../../reference/cli.rst:333
 msgid "Options of migrate"
 msgstr "Optionen von migrate"
 
-#: ../../reference/cli.rst:331
+#: ../../reference/cli.rst:339
 msgid "``-o FILE``, ``--output FILE``"
 msgstr "``-o FILE``, ``--output FILE``"
 
-#: ../../reference/cli.rst:332
+#: ../../reference/cli.rst:340
 msgid "Write here instead of beside ``conf.py``; ``-`` prints it."
-msgstr "Schreibt hierhin statt neben ``conf.py``; ``-`` gibt das Ergebnis aus."
+msgstr ""
+"Schreibt hierhin statt neben ``conf.py``; ``-`` gibt das Ergebnis aus."
 
-#: ../../reference/cli.rst:333 ../../reference/cli.rst:419
+#: ../../reference/cli.rst:341 ../../reference/cli.rst:427
 msgid "``--force``"
 msgstr "``--force``"
 
-#: ../../reference/cli.rst:334
+#: ../../reference/cli.rst:342
 msgid "Replace an existing ``conf.toml``."
 msgstr "Ersetzt eine vorhandene ``conf.toml``."
 
-#: ../../reference/cli.rst:336
+#: ../../reference/cli.rst:344
 msgid "guidedog intl"
 msgstr "guidedog intl"
 
-#: ../../reference/cli.rst:339
+#: ../../reference/cli.rst:347
 msgid ""
 "Keeps translation catalogs in step with the documents, as ``sphinx-intl`` "
 "does. First we write the message templates with ``guidedog build "
@@ -941,59 +963,59 @@ msgstr ""
 "bauen wir mit ``-D language=LANG`` oder setzen ``language`` in "
 "``conf.toml``."
 
-#: ../../reference/cli.rst:351
+#: ../../reference/cli.rst:359
 msgid "Options of intl"
 msgstr "Optionen von intl"
 
-#: ../../reference/cli.rst:357
+#: ../../reference/cli.rst:365
 msgid "``-l LANG``, ``--language LANG``"
 msgstr "``-l LANG``, ``--language LANG``"
 
-#: ../../reference/cli.rst:358
+#: ../../reference/cli.rst:366
 msgid "A language; repeat it for several."
 msgstr "Eine Sprache; für mehrere Sprachen wiederholen."
 
-#: ../../reference/cli.rst:359
+#: ../../reference/cli.rst:367
 msgid "``-p DIR``, ``--pot-dir DIR``"
 msgstr "``-p DIR``, ``--pot-dir DIR``"
 
-#: ../../reference/cli.rst:360
+#: ../../reference/cli.rst:368
 msgid "The templates (default: ``_build/gettext``)."
 msgstr "Die Vorlagen (Standard: ``_build/gettext``)."
 
-#: ../../reference/cli.rst:361
+#: ../../reference/cli.rst:369
 msgid "``-d DIR``, ``--locale-dir DIR``"
 msgstr "``-d DIR``, ``--locale-dir DIR``"
 
-#: ../../reference/cli.rst:362
+#: ../../reference/cli.rst:370
 msgid "The catalogs (default: the first of ``locale_dirs``)."
 msgstr "Die Kataloge (Standard: der erste Eintrag von ``locale_dirs``)."
 
-#: ../../reference/cli.rst:363
+#: ../../reference/cli.rst:371
 msgid "``-w N``, ``--line-width N``"
 msgstr "``-w N``, ``--line-width N``"
 
-#: ../../reference/cli.rst:364
+#: ../../reference/cli.rst:372
 msgid "Wrap lines at ``N`` characters (default: ``76``)."
 msgstr "Bricht Zeilen nach ``N`` Zeichen um (Standard: ``76``)."
 
-#: ../../reference/cli.rst:365
+#: ../../reference/cli.rst:373
 msgid "``--no-obsolete``"
 msgstr "``--no-obsolete``"
 
-#: ../../reference/cli.rst:366
+#: ../../reference/cli.rst:374
 msgid "Drop messages the templates no longer have."
 msgstr "Verwirft Nachrichten, die in den Vorlagen nicht mehr vorkommen."
 
-#: ../../reference/cli.rst:367
+#: ../../reference/cli.rst:375
 msgid "``-c DIR``, ``-D name=value``"
 msgstr "``-c DIR``, ``-D name=value``"
 
-#: ../../reference/cli.rst:368
+#: ../../reference/cli.rst:376
 msgid "Where ``conf.toml`` is; override a setting."
 msgstr "Wo ``conf.toml`` liegt; überschreibt eine Einstellung."
 
-#: ../../reference/cli.rst:370
+#: ../../reference/cli.rst:378
 msgid ""
 "``stat`` prints, for each catalog, how many messages are translated, "
 "fuzzy, and untranslated."
@@ -1001,18 +1023,18 @@ msgstr ""
 "``stat`` gibt für jeden Katalog aus, wie viele Nachrichten übersetzt, "
 "fuzzy und unübersetzt sind."
 
-#: ../../reference/cli.rst:373
+#: ../../reference/cli.rst:381
 msgid "guidedog convert"
 msgstr "guidedog convert"
 
-#: ../../reference/cli.rst:376
+#: ../../reference/cli.rst:384
 msgid ""
 "Converts one file, or standard input, without a project or configuration:"
 msgstr ""
 "Konvertiert eine Datei oder die Standardeingabe, ohne Projekt und ohne "
 "Konfiguration:"
 
-#: ../../reference/cli.rst:386
+#: ../../reference/cli.rst:394
 msgid ""
 "The input format comes from ``--from`` or the input's suffix: ``.rst`` "
 "and ``.rest`` are reStructuredText, ``.md`` and ``.markdown`` CommonMark, "
@@ -1035,7 +1057,7 @@ msgstr ""
 "Ausgabe (``.html``, ``.htm``, ``.pdf``, ``.rst``, ``.rest``). Für "
 "``convert`` gelten nur die Optionen unten."
 
-#: ../../reference/cli.rst:394
+#: ../../reference/cli.rst:402
 msgid ""
 "``--to rst`` writes reStructuredText with Guidedog's own writer (the "
 "``rst`` renderer). It keeps the author's lines: each line break inside a "
@@ -1065,23 +1087,23 @@ msgstr ""
 "Writer kommt dem so nahe wie möglich und meldet einen Hinweis. "
 "Typst-Eingaben lassen sich nicht in reStructuredText umwandeln."
 
-#: ../../reference/cli.rst:404
+#: ../../reference/cli.rst:412
 msgid "Options of convert"
 msgstr "Optionen von convert"
 
-#: ../../reference/cli.rst:410
+#: ../../reference/cli.rst:418
 msgid "``-o FILE``, ``--output=FILE``"
 msgstr "``-o FILE``, ``--output=FILE``"
 
-#: ../../reference/cli.rst:411
+#: ../../reference/cli.rst:419
 msgid "The destination, or ``-`` for standard output. Required."
 msgstr "Das Ziel, oder ``-`` für die Standardausgabe. Pflichtangabe."
 
-#: ../../reference/cli.rst:412
+#: ../../reference/cli.rst:420
 msgid "``--from=rst|sphinx|commonmark|myst|typst``"
 msgstr "``--from=rst|sphinx|commonmark|myst|typst``"
 
-#: ../../reference/cli.rst:413
+#: ../../reference/cli.rst:421
 msgid ""
 "The input format (``restructuredtext``, ``md``, ``markdown`` and ``typ`` "
 "are accepted spellings)."
@@ -1089,73 +1111,73 @@ msgstr ""
 "Das Eingabeformat (``restructuredtext``, ``md``, ``markdown`` und ``typ`` "
 "sind als Schreibweisen ebenfalls erlaubt)."
 
-#: ../../reference/cli.rst:415
+#: ../../reference/cli.rst:423
 msgid "``--to=html|pdf|rst``"
 msgstr "``--to=html|pdf|rst``"
 
-#: ../../reference/cli.rst:416
+#: ../../reference/cli.rst:424
 msgid "The output format (``restructuredtext`` is an accepted spelling)."
 msgstr ""
 "Das Ausgabeformat (``restructuredtext`` ist als Schreibweise ebenfalls "
 "erlaubt)."
 
-#: ../../reference/cli.rst:417
+#: ../../reference/cli.rst:425
 msgid "``--emit-typst=FILE``"
 msgstr "``--emit-typst=FILE``"
 
-#: ../../reference/cli.rst:418
+#: ../../reference/cli.rst:426
 msgid "Also write the generated Typst source (not for Typst input)."
 msgstr ""
 "Schreibt zusätzlich den erzeugten Typst-Quelltext (nicht bei "
 "Typst-Eingabe)."
 
-#: ../../reference/cli.rst:420
+#: ../../reference/cli.rst:428
 msgid "Replace an existing output file."
 msgstr "Ersetzt eine vorhandene Ausgabedatei."
 
-#: ../../reference/cli.rst:421
+#: ../../reference/cli.rst:429
 msgid "``--raw=refuse|omit|allow``"
 msgstr "``--raw=refuse|omit|allow``"
 
-#: ../../reference/cli.rst:422
+#: ../../reference/cli.rst:430
 msgid "Raw HTML or Typst content: fail (default), leave it out, or keep it."
 msgstr ""
 "Roher HTML- oder Typst-Inhalt: Fehler (Standard), weglassen oder "
 "übernehmen."
 
-#: ../../reference/cli.rst:423
+#: ../../reference/cli.rst:431
 msgid "``--strict``"
 msgstr "``--strict``"
 
-#: ../../reference/cli.rst:424
+#: ../../reference/cli.rst:432
 msgid "Treat warnings as failures."
 msgstr "Behandelt Warnungen als Fehler."
 
-#: ../../reference/cli.rst:425
+#: ../../reference/cli.rst:433
 msgid "``--title=TEXT``, ``--lang=TAG``"
 msgstr "``--title=TEXT``, ``--lang=TAG``"
 
-#: ../../reference/cli.rst:426
+#: ../../reference/cli.rst:434
 msgid "The document's title and language."
 msgstr "Titel und Sprache des Dokuments."
 
-#: ../../reference/cli.rst:427
+#: ../../reference/cli.rst:435
 msgid "``--number-sections``"
 msgstr "``--number-sections``"
 
-#: ../../reference/cli.rst:428
+#: ../../reference/cli.rst:436
 msgid "Number section headings."
 msgstr "Nummeriert Abschnittsüberschriften."
 
-#: ../../reference/cli.rst:429
+#: ../../reference/cli.rst:437
 msgid "``--fragment``"
 msgstr "``--fragment``"
 
-#: ../../reference/cli.rst:430
+#: ../../reference/cli.rst:438
 msgid "Write the body only, not a complete document."
 msgstr "Schreibt nur den Rumpf, kein vollständiges Dokument."
 
-#: ../../reference/cli.rst:432
+#: ../../reference/cli.rst:440
 msgid ""
 "The Typst program (default: the embedded compiler, else ``typst`` on "
 "``PATH``)."
@@ -1163,56 +1185,56 @@ msgstr ""
 "Das Typst-Programm (Standard: der eingebettete Compiler, sonst ``typst`` "
 "aus dem ``PATH``)."
 
-#: ../../reference/cli.rst:433
+#: ../../reference/cli.rst:441
 msgid "``--font-path=DIR``"
 msgstr "``--font-path=DIR``"
 
-#: ../../reference/cli.rst:434
+#: ../../reference/cli.rst:442
 msgid "An extra font folder; repeat it for more."
 msgstr "Ein zusätzlicher Schriftordner; für weitere wiederholen."
 
-#: ../../reference/cli.rst:435
+#: ../../reference/cli.rst:443
 msgid "``--embedded-fonts-only``"
 msgstr "``--embedded-fonts-only``"
 
-#: ../../reference/cli.rst:436
+#: ../../reference/cli.rst:444
 msgid "Ignore system fonts, for reproducible PDFs."
 msgstr "Ignoriert Systemschriften, für reproduzierbare PDFs."
 
-#: ../../reference/cli.rst:437
+#: ../../reference/cli.rst:445
 msgid "``--offline``"
 msgstr "``--offline``"
 
-#: ../../reference/cli.rst:438
+#: ../../reference/cli.rst:446
 msgid "Use only Typst packages already on disk."
 msgstr "Verwendet nur Typst-Pakete, die schon auf der Platte liegen."
 
-#: ../../reference/cli.rst:439
+#: ../../reference/cli.rst:447
 msgid "``--package-cache=DIR``"
 msgstr "``--package-cache=DIR``"
 
-#: ../../reference/cli.rst:440
+#: ../../reference/cli.rst:448
 msgid "The Typst package cache folder."
 msgstr "Der Ordner des Typst-Paket-Caches."
 
-#: ../../reference/cli.rst:442
+#: ../../reference/cli.rst:450
 msgid "The memory budget of the conversion (default: ``256``)."
 msgstr "Das Speicherbudget der Konvertierung (Standard: ``256``)."
 
-#: ../../reference/cli.rst:443
+#: ../../reference/cli.rst:451
 msgid "``--max-depth=N``, ``--max-nodes=N``"
 msgstr "``--max-depth=N``, ``--max-nodes=N``"
 
-#: ../../reference/cli.rst:444
+#: ../../reference/cli.rst:452
 msgid "Nesting and node limits."
 msgstr "Grenzen für Verschachtelung und Knotenzahl."
 
-#: ../../reference/cli.rst:446
+#: ../../reference/cli.rst:454
 msgid "Stack for nested content (default: ``512``, at most ``6144``)."
 msgstr ""
 "Stack für verschachtelte Inhalte (Standard: ``512``, höchstens ``6144``)."
 
-#: ../../reference/cli.rst:448
+#: ../../reference/cli.rst:456
 msgid ""
 "The exit status is 0 for success, 1 for invalid or refused content, 2 for "
 "usage, 3 for a limit, 4 for a file or Typst failure, and 5 for an "
@@ -1223,11 +1245,11 @@ msgstr ""
 "einem Datei- oder Typst-Fehler und 5 bei einem internen Fehler. Eine "
 "fehlgeschlagene Konvertierung schreibt keine Ausgabe."
 
-#: ../../reference/cli.rst:452
+#: ../../reference/cli.rst:460
 msgid "guidedog formats"
 msgstr "guidedog formats"
 
-#: ../../reference/cli.rst:455
+#: ../../reference/cli.rst:463
 msgid ""
 "Reports the readers and renderers this executable actually has, with "
 "their versions and conformance (``planned``, ``partial``, "
@@ -1240,71 +1262,67 @@ msgstr ""
 "Typst-Backend (eingebettet oder ein installiertes Programm) und ob es die "
 "festgelegte Version ist."
 
-#: ../../reference/cli.rst:465
-msgid "guidedog gds"
-msgstr "guidedog gds"
+#: ../../reference/cli.rst:473
+msgid "guidedog dsc"
+msgstr "guidedog dsc"
 
-#: ../../reference/cli.rst:468
+#: ../../reference/cli.rst:476
 msgid ""
-"Keeps Guidedog's own discussion records, the GDS, in ``docs/gds``. It "
-"runs the commands of ``dsc`` (below) with the prefix ``gds``. It builds "
-"with this program's engine:"
+"Keeps a discussion catalog and builds it. The commands come from the "
+"discussion plugin, which every ``guidedog`` links. They work on any "
+"catalog: its prefix, lifecycle, record types, and numbering are in its "
+"``discussion.toml``. Each command works on the catalog the current folder "
+"is in, or the one ``--dir`` names. Guidedog's own design records are one "
+"catalog, in ``docs/gds``. :doc:`../howto/discussions` shows the whole "
+"workflow."
 msgstr ""
-"Führt Guidedogs eigene Diskussionsaufzeichnungen, die GDS, in "
-"``docs/gds``. Es führt die Befehle von ``dsc`` (siehe unten) mit dem "
-"Präfix ``gds`` aus und baut mit der Engine dieses Programms:"
+"Verwaltet einen Diskussionskatalog und baut ihn. Die Befehle stammen aus "
+"dem Diskussions-Plugin, das jedes ``guidedog`` linkt. Sie funktionieren mit "
+"jedem Katalog: Präfix, Lebenszyklus, Aufzeichnungstypen und Nummerierung "
+"stehen in seiner ``discussion.toml``. Jeder Befehl arbeitet mit dem "
+"Katalog, in dem der aktuelle Ordner liegt, oder mit dem, den ``--dir`` "
+"nennt. Die Designaufzeichnungen von Guidedog selbst sind ein solcher "
+"Katalog, in ``docs/gds``. :doc:`../howto/discussions` zeigt den ganzen "
+"Ablauf."
 
-#: ../../reference/cli.rst:482
-msgid "dsc and dscc"
-msgstr "dsc und dscc"
-
-#: ../../reference/cli.rst:485
+#: ../../reference/cli.rst:492
 msgid ""
-"``dsc`` keeps a discussion catalog and builds it with the installed "
-"``guidedog``. ``dscc`` is ``dsc`` with Guidedog built in. It builds a "
-"catalog as a Guidedog project in its own process (``pdf_documents`` set "
-"to the books, warnings as errors). ``dscc --version`` names the Guidedog "
-"inside it. Both take the same commands (see :doc:`../howto/discussions`)."
+"``guidedog dsc build`` builds the catalog as a Guidedog project, as "
+"``guidedog build`` does, with ``pdf_documents`` set to the record books "
+"and warnings as errors. ``guidedog dsc config`` prints the catalog's "
+"settings in effect, as ``discussion.toml``. ``guidedog dsc --help`` lists "
+"the commands; ``guidedog dsc COMMAND --help`` shows one command's options."
 msgstr ""
-"``dsc`` führt einen Diskussionskatalog und baut ihn mit dem installierten "
-"``guidedog``. ``dscc`` ist ``dsc`` mit eingebautem Guidedog. Es baut "
-"einen Katalog als Guidedog-Projekt im eigenen Prozess (``pdf_documents`` "
-"auf die Bücher gesetzt, Warnungen als Fehler). ``dscc --version`` nennt "
-"das eingebaute Guidedog. Beide verstehen dieselben Befehle (siehe "
-":doc:`../howto/discussions`)."
+"``guidedog dsc build`` baut den Katalog als Guidedog-Projekt, wie "
+"``guidedog build`` es tut, mit ``pdf_documents`` auf die "
+"Aufzeichnungsbücher gesetzt und Warnungen als Fehler. ``guidedog dsc "
+"config`` gibt die geltenden Einstellungen des Katalogs als "
+"``discussion.toml`` aus. ``guidedog dsc --help`` listet die Befehle auf; "
+"``guidedog dsc COMMAND --help`` zeigt die Optionen eines einzelnen Befehls."
 
-#: ../../reference/cli.rst:505
-msgid ""
-"``dsc config`` prints the catalog's settings in effect, as "
-"``discussion.toml``. :doc:`../howto/discussions` explains each setting."
-msgstr ""
-"``dsc config`` gibt die geltenden Einstellungen des Katalogs als "
-"``discussion.toml`` aus. :doc:`../howto/discussions` erklärt jede "
-"Einstellung."
+#: ../../reference/cli.rst:494
+msgid "Options of guidedog dsc"
+msgstr "Optionen von guidedog dsc"
 
-#: ../../reference/cli.rst:508
-msgid "Options of dsc and dscc"
-msgstr "Optionen von dsc und dscc"
-
-#: ../../reference/cli.rst:514
+#: ../../reference/cli.rst:500
 msgid "``--dir=DIR``"
 msgstr "``--dir=DIR``"
 
-#: ../../reference/cli.rst:515
+#: ../../reference/cli.rst:501
 msgid "The catalog. By default, the one the current folder is in."
 msgstr "Der Katalog. Standardmäßig der, in dem der aktuelle Ordner liegt."
 
-#: ../../reference/cli.rst:516
+#: ../../reference/cli.rst:502
 msgid "``--prefix=NAME``"
 msgstr "``--prefix=NAME``"
 
-#: ../../reference/cli.rst:517
+#: ../../reference/cli.rst:503
 msgid ""
 "The prefix of a catalog without ``discussion.toml``; ``init`` needs it."
 msgstr ""
 "Das Präfix eines Katalogs ohne ``discussion.toml``; ``init`` braucht es."
 
-#: ../../reference/cli.rst:518
+#: ../../reference/cli.rst:504
 msgid ""
 "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
 "``--template=FILE``"
@@ -1312,7 +1330,7 @@ msgstr ""
 "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
 "``--template=FILE``"
 
-#: ../../reference/cli.rst:519
+#: ../../reference/cli.rst:505
 msgid ""
 "The name, settings, process draft, and record template of a new catalog "
 "(``init``)."
@@ -1320,11 +1338,11 @@ msgstr ""
 "Name, Einstellungen, Prozessentwurf und Aufzeichnungsvorlage eines neuen "
 "Katalogs (``init``)."
 
-#: ../../reference/cli.rst:521
+#: ../../reference/cli.rst:507
 msgid "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 msgstr "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 
-#: ../../reference/cli.rst:522
+#: ../../reference/cli.rst:508
 msgid ""
 "A new draft's author (default: Git's ``user.name``), labels, and file "
 "name (``new``; ``init`` takes the first two)."
@@ -1332,21 +1350,21 @@ msgstr ""
 "Autor (Standard: ``user.name`` aus Git), Labels und Dateiname eines neuen "
 "Entwurfs (``new``; ``init`` nimmt die ersten beiden)."
 
-#: ../../reference/cli.rst:524
+#: ../../reference/cli.rst:510
 msgid "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 msgstr "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 
-#: ../../reference/cli.rst:525
+#: ../../reference/cli.rst:511
 msgid "``list``: filter by state or label; include inherited records."
 msgstr ""
 "``list``: nach Zustand oder Label filtern; geerbte Aufzeichnungen "
 "einbeziehen."
 
-#: ../../reference/cli.rst:526
+#: ../../reference/cli.rst:512
 msgid "``--number=N``, ``--discussion=URL``"
 msgstr "``--number=N``, ``--discussion=URL``"
 
-#: ../../reference/cli.rst:527
+#: ../../reference/cli.rst:513
 msgid ""
 "The number and review link of a promotion; ``--number`` also selects a "
 "record to build."
@@ -1354,57 +1372,46 @@ msgstr ""
 "Nummer und Review-Link einer Hochstufung; ``--number`` wählt außerdem "
 "eine Aufzeichnung zum Bauen aus."
 
-#: ../../reference/cli.rst:529
+#: ../../reference/cli.rst:515
 msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 msgstr "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 
-#: ../../reference/cli.rst:530
+#: ../../reference/cli.rst:516
 msgid "A state change, why, and for ``committed`` the evidence."
 msgstr ""
 "Eine Zustandsänderung, ihr Grund und bei ``committed`` der Nachweis."
 
-#: ../../reference/cli.rst:531
+#: ../../reference/cli.rst:517
 msgid "``--check``, ``--render``"
 msgstr "``--check``, ``--render``"
 
-#: ../../reference/cli.rst:532
+#: ../../reference/cli.rst:518
 msgid ""
 "``index``: check without writing; ``check``: also build the artifacts."
 msgstr ""
 "``index``: prüfen, ohne zu schreiben; ``check``: zusätzlich die Artefakte "
 "bauen."
 
-#: ../../reference/cli.rst:533
+#: ../../reference/cli.rst:519
 msgid "``--target=html|pdf|both``"
 msgstr "``--target=html|pdf|both``"
 
-#: ../../reference/cli.rst:534
+#: ../../reference/cli.rst:520
 msgid "What ``build`` writes (default: both). A record selects one PDF."
 msgstr ""
 "Was ``build`` schreibt (Standard: beides). Eine Aufzeichnung wählt ein "
 "PDF aus."
 
-#: ../../reference/cli.rst:535 ../../reference/cli.rst:789
-msgid "``--guidedog=PATH``"
-msgstr "``--guidedog=PATH``"
-
-#: ../../reference/cli.rst:536
+#: ../../reference/cli.rst:522
 msgid ""
-"``dsc`` only: the ``guidedog`` to build with (default: ``DSC_GUIDEDOG``, "
-"then ``PATH``)."
+"``build`` and ``check``: the Typst program for a catalog of older Typst "
+"records (default: the embedded compiler), and for the PDF books."
 msgstr ""
-"Nur ``dsc``: das ``guidedog`` für den Build (Standard: ``DSC_GUIDEDOG``, "
-"dann ``PATH``)."
+"``build`` und ``check``: das Typst-Programm für einen Katalog älterer "
+"Typst-Aufzeichnungen (Standard: der eingebettete Compiler) und für die "
+"PDF-Bücher."
 
-#: ../../reference/cli.rst:539
-msgid ""
-"``dscc`` and ``guidedog gds`` only: a Typst program, for a Guidedog "
-"without one built in."
-msgstr ""
-"Nur ``dscc`` und ``guidedog gds``: ein Typst-Programm, für ein Guidedog "
-"ohne eingebautes Typst."
-
-#: ../../reference/cli.rst:541
+#: ../../reference/cli.rst:524
 msgid ""
 "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
 "``-q``"
@@ -1412,12 +1419,12 @@ msgstr ""
 "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
 "``-q``"
 
-#: ../../reference/cli.rst:542
+#: ../../reference/cli.rst:525
 msgid "Preview a change; machine-readable output; quiet success."
 msgstr ""
 "Eine Änderung vorab ansehen; maschinenlesbare Ausgabe; stiller Erfolg."
 
-#: ../../reference/cli.rst:544
+#: ../../reference/cli.rst:527
 msgid ""
 "The exit statuses are those of ``guidedog``. Problems about a catalog "
 "have codes in its prefix, such as ``eds.recovery-needed``."
@@ -1425,11 +1432,11 @@ msgstr ""
 "Die Exitstatus sind die von ``guidedog``. Probleme eines Katalogs haben "
 "Codes mit seinem Präfix, etwa ``eds.recovery-needed``."
 
-#: ../../reference/cli.rst:547
+#: ../../reference/cli.rst:530
 msgid "guidedog publish"
 msgstr "guidedog publish"
 
-#: ../../reference/cli.rst:550
+#: ../../reference/cli.rst:533
 msgid ""
 "Builds the project that a publisher's configuration names, as HTML with "
 "Guidedog's own engine. It freezes the site, and the publisher plans and "
@@ -1439,7 +1446,7 @@ msgstr ""
 "mit Guidedogs eigener Engine. Es friert die Website ein, und der "
 "Publisher plant und veröffentlicht sie:"
 
-#: ../../reference/cli.rst:558
+#: ../../reference/cli.rst:541
 msgid ""
 "The publisher is looked up among the plugins linked into this executable "
 "first, then in the machine's registry (``guidedog plugin register``). A "
@@ -1450,40 +1457,40 @@ msgstr ""
 "register``). Ein Build-Plugin wird abgelehnt, denn nur Publisher "
 "veröffentlichen."
 
-#: ../../reference/cli.rst:562
+#: ../../reference/cli.rst:545
 msgid "Options of publish"
 msgstr "Optionen von publish"
 
-#: ../../reference/cli.rst:568
+#: ../../reference/cli.rst:551
 msgid "``--publisher=ID``"
 msgstr "``--publisher=ID``"
 
-#: ../../reference/cli.rst:569
+#: ../../reference/cli.rst:552
 msgid "The publisher."
 msgstr "Der Publisher."
 
-#: ../../reference/cli.rst:570 ../../reference/cli.rst:781
+#: ../../reference/cli.rst:553 ../../reference/cli.rst:783
 msgid "``--config=FILE``"
 msgstr "``--config=FILE``"
 
-#: ../../reference/cli.rst:571
+#: ../../reference/cli.rst:554
 msgid "The publisher's configuration, which names the project or site."
 msgstr ""
 "Die Konfiguration des Publishers, die das Projekt oder die Website nennt."
 
-#: ../../reference/cli.rst:572
+#: ../../reference/cli.rst:555
 msgid "``--dry-run``"
 msgstr "``--dry-run``"
 
-#: ../../reference/cli.rst:573
+#: ../../reference/cli.rst:556
 msgid "Build and plan; write nothing to the target."
 msgstr "Baut und plant; schreibt nichts ins Ziel."
 
-#: ../../reference/cli.rst:574
+#: ../../reference/cli.rst:557
 msgid "``--wait=SECONDS``"
 msgstr "``--wait=SECONDS``"
 
-#: ../../reference/cli.rst:575
+#: ../../reference/cli.rst:558
 msgid ""
 "How long to wait for the host to confirm the deployment, from 0 (do not "
 "wait) to 86400."
@@ -1491,11 +1498,11 @@ msgstr ""
 "Wie lange auf die Bestätigung des Deployments durch den Host gewartet "
 "wird, von 0 (nicht warten) bis 86400."
 
-#: ../../reference/cli.rst:577
+#: ../../reference/cli.rst:560
 msgid "``--timeout=SECONDS``"
 msgstr "``--timeout=SECONDS``"
 
-#: ../../reference/cli.rst:578
+#: ../../reference/cli.rst:561
 msgid ""
 "The bound on each whole exchange with the publisher, writing the request "
 "included, from 1 to 86400 (default: 300). Choose a value longer than "
@@ -1505,15 +1512,15 @@ msgstr ""
 "einschließlich des Schreibens der Anfrage, von 1 bis 86400 (Standard: "
 "300). Wir wählen einen Wert, der größer ist als ``--wait``."
 
-#: ../../reference/cli.rst:580
+#: ../../reference/cli.rst:563
 msgid "``--verbose``"
 msgstr "``--verbose``"
 
-#: ../../reference/cli.rst:581
+#: ../../reference/cli.rst:564
 msgid "List every change of the plan."
 msgstr "Listet jede Änderung des Plans auf."
 
-#: ../../reference/cli.rst:583
+#: ../../reference/cli.rst:566
 msgid ""
 "A timeout or Ctrl+C after a possible write reports an unknown outcome "
 "(exit status 7). We then run the publisher's recovery command before "
@@ -1528,21 +1535,21 @@ msgstr ""
 "entfernt wird. Gleichzeitige Aufrufe können ihre Snapshots also nicht "
 "gegenseitig verändern. Siehe :doc:`../plugins`."
 
-#: ../../reference/cli.rst:588
+#: ../../reference/cli.rst:571
 msgid "guidedog publish pages"
 msgstr "guidedog publish pages"
 
-#: ../../reference/cli.rst:591
+#: ../../reference/cli.rst:574
 msgid ""
-"``guidedog publish pages`` is the guided way to GitHub Pages. It does "
-"whatever is still missing and asks only when it must. Then it builds and "
-"publishes:"
+"``guidedog publish pages`` is the guided way to GitHub Pages; the GitHub "
+"Pages plugin adds it. It does whatever is still missing and asks only "
+"when it must. Then it builds and publishes:"
 msgstr ""
-"``guidedog publish pages`` ist der geführte Weg zu GitHub Pages. Es "
-"erledigt, was noch fehlt, und fragt nur, wenn es nötig ist. Dann baut und "
-"veröffentlicht es:"
+"``guidedog publish pages`` ist der geführte Weg zu GitHub Pages; das "
+"GitHub-Pages-Plugin fügt ihn hinzu. Es erledigt, was noch fehlt, und fragt "
+"nur, wenn es nötig ist. Dann baut und veröffentlicht es:"
 
-#: ../../reference/cli.rst:594
+#: ../../reference/cli.rst:577
 msgid ""
 "``pages.toml``: written once, with the repository taken from the "
 "``origin`` remote and the project from the nearest ``conf.toml`` (or as "
@@ -1552,7 +1559,7 @@ msgstr ""
 "Remote ``origin`` und dem Projekt aus der nächstgelegenen ``conf.toml`` "
 "(oder wie angegeben)."
 
-#: ../../reference/cli.rst:596
+#: ../../reference/cli.rst:579
 msgid ""
 "A token: GitHub's device sign-in, stored in the system's credential "
 "store, or the GitHub CLI's token for this run only."
@@ -1561,7 +1568,7 @@ msgstr ""
 "Anmeldedatenspeicher des Systems, oder das Token der GitHub CLI nur für "
 "diesen Lauf."
 
-#: ../../reference/cli.rst:598
+#: ../../reference/cli.rst:581
 msgid ""
 "The binding: the target is reviewed, and it asks us once to let this "
 "machine publish there."
@@ -1569,7 +1576,7 @@ msgstr ""
 "Die Bindung: Das Ziel wird geprüft, und wir werden einmal gefragt, ob "
 "dieser Rechner dorthin veröffentlichen darf."
 
-#: ../../reference/cli.rst:600
+#: ../../reference/cli.rst:583
 msgid ""
 "The Pages source: when Pages publishes another branch, or uses Actions, "
 "it asks us once to switch it."
@@ -1577,7 +1584,7 @@ msgstr ""
 "Die Pages-Quelle: Veröffentlicht Pages einen anderen Branch oder nutzt es "
 "Actions, werden wir einmal gefragt, ob umgestellt werden soll."
 
-#: ../../reference/cli.rst:602
+#: ../../reference/cli.rst:585
 msgid ""
 "The publication: one push to the site's own branch, then a wait for the "
 "deployment."
@@ -1585,7 +1592,7 @@ msgstr ""
 "Die Veröffentlichung: ein Push auf den eigenen Branch der Website, danach "
 "das Warten auf das Deployment."
 
-#: ../../reference/cli.rst:604
+#: ../../reference/cli.rst:587
 msgid ""
 "On a machine that is already set up, it publishes without a question. "
 "Without a terminal it never asks. A missing step then fails with a hint "
@@ -1593,46 +1600,52 @@ msgid ""
 "confirmations. It never signs in or replaces other work on our behalf. "
 "Its options are those of ``guidedog-pages init`` and ``publish`` "
 "(``--config``, ``--repository``, ``--project``, ``--branch``, "
-"``--profile``, ``--wait``, ``--verbose``). See "
-":doc:`../howto/github-pages`."
+"``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); ``guidedog "
+"publish pages --help`` lists them. guidedog builds the project itself, "
+"with its own engine and linked plugins; ``--guidedog=PATH`` builds with "
+"another program instead. See :doc:`../howto/github-pages`."
 msgstr ""
-"Auf einem bereits eingerichteten Rechner veröffentlicht es ohne "
-"Rückfrage. Ohne Terminal fragt es nie. Ein fehlender Schritt schlägt dann "
-"mit einem Hinweis fehl, der den zuständigen Befehl oder die Option nennt. "
-"``--yes`` beantwortet die Bestätigungen. Es meldet sich nie in unserem "
-"Namen an und ersetzt nie andere Arbeit für uns. Die Optionen sind die von "
-"``guidedog-pages init`` und ``publish`` (``--config``, ``--repository``, "
-"``--project``, ``--branch``, ``--profile``, ``--wait``, ``--verbose``). "
-"Siehe :doc:`../howto/github-pages`."
+"Auf einem bereits eingerichteten Rechner veröffentlicht es ohne Rückfrage. "
+"Ohne Terminal fragt es nie. Ein fehlender Schritt schlägt dann mit einem "
+"Hinweis fehl, der den zuständigen Befehl oder die Option nennt. ``--yes`` "
+"beantwortet die Bestätigungen. Es meldet sich nie in unserem Namen an und "
+"ersetzt nie fremde Arbeit. Seine Optionen sind die von ``guidedog-pages "
+"init`` und ``publish`` (``--config``, ``--repository``, ``--project``, "
+"``--branch``, ``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); "
+"``guidedog publish pages --help`` listet sie auf. Guidedog baut das Projekt "
+"selbst, mit seiner eigenen Engine und den gelinkten Plugins; "
+"``--guidedog=PATH`` baut stattdessen mit einem anderen Programm. Siehe "
+":doc:`../howto/github-pages`."
 
-#: ../../reference/cli.rst:611
+#: ../../reference/cli.rst:595
 msgid "guidedog pages workflow"
 msgstr "guidedog pages workflow"
 
-#: ../../reference/cli.rst:614
+#: ../../reference/cli.rst:598
 msgid ""
-"``guidedog pages workflow`` is ``guidedog-pages workflow``. It prints, "
-"writes, or checks a GitHub Actions workflow. The workflow installs this "
-"Guidedog release, builds the project, and deploys it with GitHub's Pages "
-"actions. We use it instead of publishing from our own machine when every "
-"push to the source branch should deploy."
+"``guidedog pages workflow`` is ``guidedog-pages workflow``, added by the "
+"GitHub Pages plugin. It prints, writes, or checks a GitHub Actions "
+"workflow. The workflow installs this Guidedog release, builds the "
+"project, and deploys it with GitHub's Pages actions. We use it instead of "
+"publishing from our own machine when every push to the source branch "
+"should deploy."
 msgstr ""
-"``guidedog pages workflow`` entspricht ``guidedog-pages workflow``. Es "
-"gibt einen GitHub-Actions-Workflow aus, schreibt ihn oder prüft ihn. Der "
-"Workflow installiert dieses Guidedog-Release, baut das Projekt und "
-"deployt es mit den Pages-Actions von GitHub. Wir nutzen ihn statt der "
-"Veröffentlichung vom eigenen Rechner, wenn jeder Push auf den "
-"Quell-Branch deployen soll."
+"``guidedog pages workflow`` entspricht ``guidedog-pages workflow`` und "
+"kommt vom GitHub-Pages-Plugin. Es gibt einen GitHub-Actions-Workflow aus, "
+"schreibt ihn oder prüft ihn. Der Workflow installiert dieses "
+"Guidedog-Release, baut das Projekt und deployt es mit den Pages-Actions von "
+"GitHub. Wir nutzen ihn statt der Veröffentlichung vom eigenen Rechner, wenn "
+"jeder Push auf den Quell-Branch ein Deployment auslösen soll."
 
-#: ../../reference/cli.rst:624
+#: ../../reference/cli.rst:608
 msgid "Options of pages workflow"
 msgstr "Optionen von pages workflow"
 
-#: ../../reference/cli.rst:630
+#: ../../reference/cli.rst:614
 msgid "``--write``, ``--force``"
 msgstr "``--write``, ``--force``"
 
-#: ../../reference/cli.rst:631
+#: ../../reference/cli.rst:615
 msgid ""
 "Write ``.github/workflows/docs-pages.yml`` instead of printing it; "
 "replace an existing one."
@@ -1640,11 +1653,11 @@ msgstr ""
 "Schreibt ``.github/workflows/docs-pages.yml``, statt die Datei "
 "auszugeben; ersetzt eine vorhandene."
 
-#: ../../reference/cli.rst:633
+#: ../../reference/cli.rst:617
 msgid "``--check``"
 msgstr "``--check``"
 
-#: ../../reference/cli.rst:634
+#: ../../reference/cli.rst:618
 msgid ""
 "Check an existing workflow: an older release, a missing checksum, an "
 "unpinned action, ``pull_request_target``, a checkout that keeps its "
@@ -1654,22 +1667,22 @@ msgstr ""
 "Prüfsumme, eine nicht fixierte Action, ``pull_request_target``, ein "
 "Checkout, der seine Anmeldedaten behält."
 
-#: ../../reference/cli.rst:636
+#: ../../reference/cli.rst:620
 msgid "``--project=DIR``, ``--branch=NAME``"
 msgstr "``--project=DIR``, ``--branch=NAME``"
 
-#: ../../reference/cli.rst:637
+#: ../../reference/cli.rst:621
 msgid ""
 "The project (default: ``docs``) and the source branch (default: ``main``)."
 msgstr ""
 "Das Projekt (Standard: ``docs``) und der Quell-Branch (Standard: "
 "``main``)."
 
-#: ../../reference/cli.rst:638
+#: ../../reference/cli.rst:622
 msgid "``--version=X``, ``--sha256=HEX``, ``--offline``"
 msgstr "``--version=X``, ``--sha256=HEX``, ``--offline``"
 
-#: ../../reference/cli.rst:639
+#: ../../reference/cli.rst:623
 msgid ""
 "The release to install, its archive's SHA-256 (default: read from the "
 "release's ``SHA256SUMS``), or a marked placeholder without network access."
@@ -1678,15 +1691,15 @@ msgstr ""
 "``SHA256SUMS`` des Releases gelesen) oder ein markierter Platzhalter ohne "
 "Netzwerkzugriff."
 
-#: ../../reference/cli.rst:642
+#: ../../reference/cli.rst:626
 msgid "See :doc:`../howto/github-pages`."
 msgstr "Siehe :doc:`../howto/github-pages`."
 
-#: ../../reference/cli.rst:644
+#: ../../reference/cli.rst:628
 msgid "guidedog plugin"
 msgstr "guidedog plugin"
 
-#: ../../reference/cli.rst:647
+#: ../../reference/cli.rst:631
 msgid ""
 "Records which plugin programs may run on this machine, in "
 "``plugins.toml`` in Guidedog's configuration folder "
@@ -1696,11 +1709,11 @@ msgstr ""
 "``plugins.toml`` im Konfigurationsordner von Guidedog "
 "(``GUIDEDOG_CONFIG_DIR`` verschiebt ihn):"
 
-#: ../../reference/cli.rst:660
+#: ../../reference/cli.rst:644
 msgid "Subcommands:"
 msgstr "Unterbefehle:"
 
-#: ../../reference/cli.rst:662
+#: ../../reference/cli.rst:646
 msgid ""
 "``register ID PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS] "
 "[--yes]``: inspects the program after we confirm (``--yes`` skips the "
@@ -1714,7 +1727,7 @@ msgstr ""
 "sich als ``ID`` ausweisen. Ein Build-Plugin muss vor der Registrierung "
 "die unten beschriebenen Qualifikationsprüfungen bestehen."
 
-#: ../../reference/cli.rst:666
+#: ../../reference/cli.rst:650
 msgid ""
 "``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: runs "
 "the qualification checks against a build plugin without changing the "
@@ -1726,7 +1739,7 @@ msgstr ""
 "zu ändern. Ein Publisher wird abgelehnt. Einen Publisher testen wir mit "
 "seinen eigenen Tests und ``guidedog publish --dry-run``."
 
-#: ../../reference/cli.rst:669
+#: ../../reference/cli.rst:653
 msgid ""
 "``list``: the registered programs, their IDs, paths, and kinds, beside "
 "the plugins linked into this executable."
@@ -1734,17 +1747,17 @@ msgstr ""
 "``list``: die registrierten Programme mit IDs, Pfaden und Arten, neben "
 "den in dieses Programm gelinkten Plugins."
 
-#: ../../reference/cli.rst:671
+#: ../../reference/cli.rst:655
 msgid ""
 "``inspect ID``: an entry's declared build hooks (source, HTML, assets) or "
-"publisher capabilities, and whether the program on disk is still the one "
-"registered."
+"publisher capabilities, the commands it adds, and whether the program on "
+"disk is still the one registered."
 msgstr ""
-"``inspect ID``: die deklarierten Build-Hooks eines Eintrags (Quelle, "
-"HTML, Assets) oder seine Publisher-Fähigkeiten, und ob das Programm auf "
-"der Platte noch das registrierte ist."
+"``inspect ID``: die deklarierten Build-Hooks eines Eintrags (Quelle, HTML, "
+"Assets) oder seine Publisher-Fähigkeiten, die Befehle, die er hinzufügt, "
+"und ob das Programm auf der Platte noch das registrierte ist."
 
-#: ../../reference/cli.rst:673
+#: ../../reference/cli.rst:658
 msgid ""
 "``run ID -- [ARGS...]``: runs a registered program's own commands, after "
 "checking its SHA-256."
@@ -1752,7 +1765,7 @@ msgstr ""
 "``run ID -- [ARGS...]``: führt die eigenen Befehle eines registrierten "
 "Programms aus, nachdem sein SHA-256 geprüft wurde."
 
-#: ../../reference/cli.rst:675
+#: ../../reference/cli.rst:660
 msgid ""
 "``unregister ID``: removes the entry from ``plugins.toml``. The program, "
 "and anything it published, stay unchanged."
@@ -1760,7 +1773,7 @@ msgstr ""
 "``unregister ID``: entfernt den Eintrag aus ``plugins.toml``. Das "
 "Programm und alles, was es veröffentlicht hat, bleiben unverändert."
 
-#: ../../reference/cli.rst:678
+#: ../../reference/cli.rst:663
 msgid ""
 "Build plugins are selected by ``plugins`` in ``conf.toml`` and run during "
 "``guidedog build``. ``guidedog publish`` accepts publishers only. "
@@ -1773,11 +1786,11 @@ msgstr ""
 "Anleitung, ein Beispiel und die Konfiguration stehen unter "
 ":doc:`../plugins`."
 
-#: ../../reference/cli.rst:682
+#: ../../reference/cli.rst:667
 msgid "Build-plugin qualification checks"
 msgstr "Qualifikationsprüfungen für Build-Plugins"
 
-#: ../../reference/cli.rst:685
+#: ../../reference/cli.rst:670
 msgid ""
 "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises the "
 "declared hooks in child processes: loading, repeated results, and "
@@ -1797,11 +1810,11 @@ msgstr ""
 "Veröffentlichung aus. Bestandene Prüfungen belegen die Interoperabilität; "
 "sie sind weder Sandbox noch Sicherheitszertifikat."
 
-#: ../../reference/cli.rst:692
+#: ../../reference/cli.rst:677
 msgid "Custom binaries with linked plugins"
 msgstr "Eigene Binaries mit gelinkten Plugins"
 
-#: ../../reference/cli.rst:695
+#: ../../reference/cli.rst:680
 msgid ""
 "The whole command line is the ``gd-cli`` crate. A Rust program can be a "
 "``guidedog`` with plugins linked in, instead of registered as separate "
@@ -1815,30 +1828,79 @@ msgstr ""
 "``gd_plugins::Registry`` seiner Plugins an ``gd_cli::run_with``. Diese "
 "Funktion liest die Prozessargumente und gibt den Exitstatus zurück."
 
-#: ../../reference/cli.rst:714
+#: ../../reference/cli.rst:699
 msgid ""
 "The program accepts every command and option on this page. A selected "
 "plugin ID is looked up among the linked plugins first, then in the "
 "machine's registry. Linked plugins need no registration and no SHA-256 "
 "pin, because they are part of the executable. ``gd_cli::run`` is the same "
-"with no linked plugins. ``guidedog`` itself runs it. The plugin is the "
-"same ``Plugin`` value its installed form serves with "
-"``gd_plugins::serve_plugin`` (see :doc:`../plugins`)."
+"with no linked plugins. ``guidedog`` itself links one, the GitHub Pages "
+"plugin. The plugin is the same ``Plugin`` value its installed form serves "
+"with ``gd_plugins::serve_plugin`` (see :doc:`../plugins`)."
 msgstr ""
-"Das Programm akzeptiert jeden Befehl und jede Option auf dieser Seite. "
-"Eine ausgewählte Plugin-ID wird zuerst unter den gelinkten Plugins "
-"gesucht, dann in der Registry des Rechners. Gelinkte Plugins brauchen "
-"weder Registrierung noch SHA-256-Pin, denn sie sind Teil des Programms. "
-"``gd_cli::run`` ist dasselbe ohne gelinkte Plugins; ``guidedog`` selbst "
-"führt es aus. Das Plugin ist derselbe ``Plugin``-Wert, den seine "
+"Das Programm akzeptiert jeden Befehl und jede Option auf dieser Seite. Eine "
+"ausgewählte Plugin-ID wird zuerst unter den gelinkten Plugins gesucht, dann "
+"in der Registry des Rechners. Gelinkte Plugins brauchen weder Registrierung "
+"noch SHA-256-Pin, denn sie sind Teil des Programms. ``gd_cli::run`` ist "
+"dasselbe ohne gelinkte Plugins. ``guidedog`` selbst linkt eines, das "
+"GitHub-Pages-Plugin. Das Plugin ist derselbe ``Plugin``-Wert, den seine "
 "installierte Form mit ``gd_plugins::serve_plugin`` bereitstellt (siehe "
 ":doc:`../plugins`)."
 
+#: ../../reference/cli.rst:706
+msgid "Commands plugins add"
+msgstr "Befehle aus Plugins"
+
+#: ../../reference/cli.rst:709
+msgid ""
+"A plugin may add commands to guidedog, or targets to ``guidedog "
+"publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
+"with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a "
+"plugin's:"
+msgstr ""
+"Ein Plugin kann Guidedog um Befehle ergänzen oder ``guidedog publish`` um "
+"Ziele. ``guidedog --help`` listet sie unter PLUGIN COMMANDS auf, jeweils "
+"mit der ID ihres Plugins, und ``guidedog plugin inspect ID`` zeigt die "
+"eines Plugins:"
+
+#: ../../reference/cli.rst:719
+msgid ""
+"guidedog looks for a word it does not know (or a ``publish`` target) "
+"among the commands of the linked plugins first, then among those of the "
+"registered programs, and runs the plugin that adds it. ``--help`` after "
+"such a command prints its help, made from what the plugin declares. A "
+"plugin cannot replace one of guidedog's commands, and the first plugin to "
+"add a name keeps it."
+msgstr ""
+"Ein Wort, das Guidedog nicht kennt (oder ein ``publish``-Ziel), sucht es "
+"zuerst unter den Befehlen der gelinkten Plugins, dann unter denen der "
+"registrierten Programme, und führt das Plugin aus, das es hinzufügt. "
+"``--help`` nach einem solchen Befehl gibt seine Hilfe aus, erzeugt aus dem, "
+"was das Plugin deklariert. Ein Plugin kann keinen Befehl von Guidedog "
+"ersetzen, und das erste Plugin, das einen Namen hinzufügt, behält ihn."
+
 #: ../../reference/cli.rst:721
+msgid ""
+"A linked plugin's command runs inside guidedog. A registered program's "
+"command runs as that program, started on our terminal after its SHA-256 "
+"is checked: it may ask questions, and its exit status is the command's. "
+"When either asks for a build, guidedog builds the project. The program's "
+"commands are read when it is registered, so a new version is registered "
+"again, as always."
+msgstr ""
+"Der Befehl eines gelinkten Plugins läuft innerhalb von Guidedog. Der Befehl "
+"eines registrierten Programms läuft als dieses Programm, gestartet in "
+"unserem Terminal, nachdem seine SHA-256-Prüfsumme geprüft wurde: Es darf "
+"Fragen stellen, und sein Exitstatus ist der des Befehls. Fordert einer von "
+"beiden einen Build an, baut Guidedog das Projekt. Die Befehle des Programms "
+"werden bei der Registrierung gelesen; eine neue Version registrieren wir "
+"also wie immer erneut."
+
+#: ../../reference/cli.rst:723
 msgid "guidedog-pages"
 msgstr "guidedog-pages"
 
-#: ../../reference/cli.rst:724
+#: ../../reference/cli.rst:726
 msgid ""
 "Publishes Guidedog sites to GitHub Pages from this machine. It builds "
 "projects with the installed ``guidedog``. ``publish`` does any missing "
@@ -1852,46 +1914,46 @@ msgstr ""
 "Befehle für die einzelnen Schritte bleiben für Skripte und zum Prüfen "
 "jedes Teils erhalten. Siehe :doc:`../howto/github-pages`."
 
-#: ../../reference/cli.rst:748
+#: ../../reference/cli.rst:750
 msgid "Settings of pages.toml"
 msgstr "Einstellungen von pages.toml"
 
-#: ../../reference/cli.rst:752
+#: ../../reference/cli.rst:754
 msgid "Setting"
 msgstr "Einstellung"
 
-#: ../../reference/cli.rst:754
+#: ../../reference/cli.rst:756
 msgid "``schema = 1``"
 msgstr "``schema = 1``"
 
-#: ../../reference/cli.rst:755
+#: ../../reference/cli.rst:757
 msgid "The file's version; required."
 msgstr "Die Version der Datei; erforderlich."
 
-#: ../../reference/cli.rst:756
+#: ../../reference/cli.rst:758
 msgid "``repository = \"OWNER/REPO\"``"
 msgstr "``repository = \"OWNER/REPO\"``"
 
-#: ../../reference/cli.rst:757
+#: ../../reference/cli.rst:759
 msgid "The GitHub.com repository; required."
 msgstr "Das Repository auf GitHub.com; erforderlich."
 
-#: ../../reference/cli.rst:758
+#: ../../reference/cli.rst:760
 msgid "``branch = \"gh-pages\"``"
 msgstr "``branch = \"gh-pages\"``"
 
-#: ../../reference/cli.rst:759
+#: ../../reference/cli.rst:761
 msgid ""
 "The branch the site is published to: its own, never the default branch."
 msgstr ""
 "Der Branch, auf den die Website veröffentlicht wird: ein eigener, nie der "
 "Standardbranch."
 
-#: ../../reference/cli.rst:760
+#: ../../reference/cli.rst:762
 msgid "``project = \"docs\"`` or ``site = \"build/site\"``"
 msgstr "``project = \"docs\"`` oder ``site = \"build/site\"``"
 
-#: ../../reference/cli.rst:761
+#: ../../reference/cli.rst:763
 msgid ""
 "The Guidedog project to build, or the folder of a site built already; one "
 "of them, relative to ``pages.toml``."
@@ -1899,19 +1961,19 @@ msgstr ""
 "Das zu bauende Guidedog-Projekt oder der Ordner einer bereits gebauten "
 "Website; eines von beiden, relativ zu ``pages.toml``."
 
-#: ../../reference/cli.rst:763
+#: ../../reference/cli.rst:765
 msgid "``profile = \"default\"``"
 msgstr "``profile = \"default\"``"
 
-#: ../../reference/cli.rst:764
+#: ../../reference/cli.rst:766
 msgid "The credential profile whose token publishes."
 msgstr "Das Zugangsdatenprofil, mit dessen Token veröffentlicht wird."
 
-#: ../../reference/cli.rst:765
+#: ../../reference/cli.rst:767
 msgid "``site_url``"
 msgstr "``site_url``"
 
-#: ../../reference/cli.rst:766
+#: ../../reference/cli.rst:768
 msgid ""
 "The address readers open, and ``html_baseurl`` for the build (default: "
 "``https://OWNER.github.io/REPO/``)."
@@ -1919,27 +1981,27 @@ msgstr ""
 "Die Adresse, die Leser öffnen, und ``html_baseurl`` für den Build "
 "(Standard: ``https://OWNER.github.io/REPO/``)."
 
-#: ../../reference/cli.rst:768
+#: ../../reference/cli.rst:770
 msgid "``strict = true``"
 msgstr "``strict = true``"
 
-#: ../../reference/cli.rst:769
+#: ../../reference/cli.rst:771
 msgid "Build with warnings as errors."
 msgstr "Mit Warnungen als Fehler bauen."
 
-#: ../../reference/cli.rst:770
+#: ../../reference/cli.rst:772
 msgid "``wait_seconds = 300``"
 msgstr "``wait_seconds = 300``"
 
-#: ../../reference/cli.rst:771
+#: ../../reference/cli.rst:773
 msgid "How long ``publish`` waits for the deployment."
 msgstr "Wie lange ``publish`` auf das Deployment wartet."
 
-#: ../../reference/cli.rst:772
+#: ../../reference/cli.rst:774
 msgid "``[watch] debounce_ms``, ``max_wait_ms``"
 msgstr "``[watch] debounce_ms``, ``max_wait_ms``"
 
-#: ../../reference/cli.rst:773
+#: ../../reference/cli.rst:775
 msgid ""
 "How long ``watch`` lets sources settle, and the most it waits after a "
 "change."
@@ -1947,24 +2009,24 @@ msgstr ""
 "Wie lange ``watch`` die Quellen zur Ruhe kommen lässt und wie lange es "
 "nach einer Änderung höchstens wartet."
 
-#: ../../reference/cli.rst:775
+#: ../../reference/cli.rst:777
 msgid "Options of guidedog-pages"
 msgstr "Optionen von guidedog-pages"
 
-#: ../../reference/cli.rst:782
+#: ../../reference/cli.rst:784
 msgid "The configuration (default: ``pages.toml``)."
 msgstr "Die Konfiguration (Standard: ``pages.toml``)."
 
-#: ../../reference/cli.rst:783
+#: ../../reference/cli.rst:785
 msgid "``--profile=NAME``"
 msgstr "``--profile=NAME``"
 
-#: ../../reference/cli.rst:784
+#: ../../reference/cli.rst:786
 msgid "The profile ``auth`` and ``init`` use (default: ``default``)."
 msgstr ""
 "Das Profil, das ``auth`` und ``init`` verwenden (Standard: ``default``)."
 
-#: ../../reference/cli.rst:785
+#: ../../reference/cli.rst:787
 msgid ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
@@ -1972,15 +2034,15 @@ msgstr ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
 
-#: ../../reference/cli.rst:786
+#: ../../reference/cli.rst:788
 msgid "``init``: what the new ``pages.toml`` says."
 msgstr "``init``: was in der neuen ``pages.toml`` steht."
 
-#: ../../reference/cli.rst:787
+#: ../../reference/cli.rst:789
 msgid "``--credential=env``"
 msgstr "``--credential=env``"
 
-#: ../../reference/cli.rst:788
+#: ../../reference/cli.rst:790
 msgid ""
 "Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without "
 "storing it."
@@ -1988,7 +2050,11 @@ msgstr ""
 "Für diesen Befehl den Token aus ``GUIDEDOG_PAGES_TOKEN`` verwenden, ohne "
 "ihn zu speichern."
 
-#: ../../reference/cli.rst:790
+#: ../../reference/cli.rst:791
+msgid "``--guidedog=PATH``"
+msgstr "``--guidedog=PATH``"
+
+#: ../../reference/cli.rst:792
 msgid ""
 "The ``guidedog`` that builds (default: ``GUIDEDOG_PAGES_GUIDEDOG``, then "
 "``PATH``)."
@@ -1996,11 +2062,11 @@ msgstr ""
 "Das ``guidedog``, das baut (Standard: ``GUIDEDOG_PAGES_GUIDEDOG``, dann "
 "``PATH``)."
 
-#: ../../reference/cli.rst:791
+#: ../../reference/cli.rst:793
 msgid "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 msgstr "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 
-#: ../../reference/cli.rst:792
+#: ../../reference/cli.rst:794
 msgid ""
 "``publish``: plan only; how long to wait for the deployment; list every "
 "change."
@@ -2008,11 +2074,11 @@ msgstr ""
 "``publish``: nur planen; wie lange auf das Deployment gewartet wird; jede "
 "Änderung auflisten."
 
-#: ../../reference/cli.rst:793
+#: ../../reference/cli.rst:795
 msgid "``--adopt``, ``--yes``"
 msgstr "``--adopt``, ``--yes``"
 
-#: ../../reference/cli.rst:794
+#: ../../reference/cli.rst:796
 msgid ""
 "``bind``: let a branch of other work be replaced; answer yes to the "
 "question."
@@ -2020,13 +2086,13 @@ msgstr ""
 "``bind``: einen Branch mit fremder Arbeit ersetzen lassen; die Rückfrage "
 "mit Ja beantworten."
 
-#: ../../reference/cli.rst:795
+#: ../../reference/cli.rst:797
 msgid ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 msgstr ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 
-#: ../../reference/cli.rst:796
+#: ../../reference/cli.rst:798
 msgid ""
 "``auth login``: the app; the repositories an OAuth App token may reach; "
 "open the browser; give the profile to another account."
@@ -2034,25 +2100,25 @@ msgstr ""
 "``auth login``: die App; die Repositorys, die ein OAuth-App-Token "
 "erreichen darf; den Browser öffnen; das Profil einem anderen Konto geben."
 
-#: ../../reference/cli.rst:798
+#: ../../reference/cli.rst:800
 msgid "``--operation=COMMIT``"
 msgstr "``--operation=COMMIT``"
 
-#: ../../reference/cli.rst:799
+#: ../../reference/cli.rst:801
 msgid "``status``: the publication to ask about (default: the last one)."
 msgstr ""
 "``status``: die Veröffentlichung, nach der gefragt wird (Standard: die "
 "letzte)."
 
-#: ../../reference/cli.rst:800
+#: ../../reference/cli.rst:802
 msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
 msgstr "``--diagnostics=text|json``, ``--color=auto|always|never``"
 
-#: ../../reference/cli.rst:801
+#: ../../reference/cli.rst:803
 msgid "How problems and results are written."
 msgstr "Wie Probleme und Ergebnisse ausgegeben werden."
 
-#: ../../reference/cli.rst:803
+#: ../../reference/cli.rst:805
 msgid ""
 "Its exit statuses are those of ``guidedog publish``: 0 live or unchanged, "
 "1 nothing published, 2 a usage or configuration problem, 4 a file, "
@@ -2838,7 +2904,8 @@ msgstr "``show_authors``"
 
 #: ../../reference/configuration.rst:209
 msgid "Show the ``sectionauthor`` and ``codeauthor`` directives' content."
-msgstr "Zeigt den Inhalt der Direktiven ``sectionauthor`` und ``codeauthor``."
+msgstr ""
+"Zeigt den Inhalt der Direktiven ``sectionauthor`` und ``codeauthor``."
 
 #: ../../reference/configuration.rst:210
 msgid "``add_function_parentheses``"
@@ -2846,7 +2913,8 @@ msgstr "``add_function_parentheses``"
 
 #: ../../reference/configuration.rst:213
 msgid "Add ``()`` to the text of function and method references."
-msgstr "Hängt ``()`` an den Text von Verweisen auf Funktionen und Methoden an."
+msgstr ""
+"Hängt ``()`` an den Text von Verweisen auf Funktionen und Methoden an."
 
 #: ../../reference/configuration.rst:214
 msgid "``add_module_names``"
@@ -2874,7 +2942,8 @@ msgstr "``\"domain\"``"
 
 #: ../../reference/configuration.rst:225
 msgid "How those entries are named: ``domain``, ``hide``, or ``all``."
-msgstr "Wie diese Einträge benannt werden: ``domain``, ``hide`` oder ``all``."
+msgstr ""
+"Wie diese Einträge benannt werden: ``domain``, ``hide`` oder ``all``."
 
 #: ../../reference/configuration.rst:226
 msgid "``todo_include_todos``"
@@ -2882,7 +2951,8 @@ msgstr "``todo_include_todos``"
 
 #: ../../reference/configuration.rst:229
 msgid "Show ``todo`` and ``todolist`` content (``sphinx.ext.todo``)."
-msgstr "Zeigt den Inhalt von ``todo`` und ``todolist`` (``sphinx.ext.todo``)."
+msgstr ""
+"Zeigt den Inhalt von ``todo`` und ``todolist`` (``sphinx.ext.todo``)."
 
 #: ../../reference/configuration.rst:230
 msgid "``autosectionlabel_prefix_document``"
@@ -3200,7 +3270,8 @@ msgstr "MathJax 4 über jsDelivr"
 
 #: ../../reference/configuration.rst:378
 msgid "The MathJax script: a URL, or a copy in ``html_static_path``."
-msgstr "Das MathJax-Skript: eine URL oder eine Kopie in ``html_static_path``."
+msgstr ""
+"Das MathJax-Skript: eine URL oder eine Kopie in ``html_static_path``."
 
 #: ../../reference/configuration.rst:379
 msgid "``mathjax_options``"
@@ -3232,7 +3303,8 @@ msgstr "``[\"\\\\[\", \"\\\\]\"]``"
 
 #: ../../reference/configuration.rst:390
 msgid "The opening and closing delimiters of displayed math in HTML."
-msgstr "Öffnende und schließende Begrenzer für abgesetzte Mathematik in HTML."
+msgstr ""
+"Öffnende und schließende Begrenzer für abgesetzte Mathematik in HTML."
 
 #: ../../reference/configuration.rst:391
 msgid "``mathjax3_config``"
@@ -3263,7 +3335,8 @@ msgstr "``mathjax_config_path``"
 
 #: ../../reference/configuration.rst:402
 msgid "A ``.js`` file, relative to ``conf.toml``, that configures MathJax."
-msgstr "Eine ``.js``-Datei relativ zu ``conf.toml``, die MathJax konfiguriert."
+msgstr ""
+"Eine ``.js``-Datei relativ zu ``conf.toml``, die MathJax konfiguriert."
 
 #: ../../reference/configuration.rst:404
 msgid "Default ``numfig_format``:"
@@ -3943,7 +4016,8 @@ msgstr "``myst_disable_syntax``"
 
 #: ../../reference/configuration.rst:743
 msgid "Syntax rules not parsed, by markdown-it's names."
-msgstr "Syntaxregeln, die nicht geparst werden, mit den Namen von markdown-it."
+msgstr ""
+"Syntaxregeln, die nicht geparst werden, mit den Namen von markdown-it."
 
 #: ../../reference/configuration.rst:744
 msgid "``myst_words_per_minute``"
@@ -3963,7 +4037,8 @@ msgstr "``myst_dmath_enable``"
 
 #: ../../reference/configuration.rst:751
 msgid "Older spelling of ``dollarmath`` in ``myst_enable_extensions``."
-msgstr "Ältere Schreibweise von ``dollarmath`` in ``myst_enable_extensions``."
+msgstr ""
+"Ältere Schreibweise von ``dollarmath`` in ``myst_enable_extensions``."
 
 #: ../../reference/configuration.rst:752
 msgid "``myst_amsmath_enable``"
@@ -4032,11 +4107,13 @@ msgstr "Ein Mapping-Name, der auf dieses Projekt selbst verweist."
 
 #: ../../reference/configuration.rst:800
 msgid ""
-"Inventories are downloaded with the ``curl`` program. ``--untrusted`` "
-"fetches nothing. See :doc:`../intersphinx`."
+"Inventories are downloaded with the built-in HTTP client, which honours "
+"``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing. See "
+":doc:`../intersphinx`."
 msgstr ""
-"Inventare werden mit dem Programm ``curl`` heruntergeladen. "
-"``--untrusted`` lädt nichts herunter. Siehe :doc:`../intersphinx`."
+"Inventare werden mit dem eingebauten HTTP-Client heruntergeladen, der "
+"``HTTPS_PROXY`` und ``NO_PROXY`` beachtet. ``--untrusted`` lädt nichts "
+"herunter. Siehe :doc:`../intersphinx`."
 
 #: ../../reference/configuration.rst:803
 #: ../../reference/configuration.rst:808
@@ -4248,7 +4325,8 @@ msgstr "``odin_autoapi_dirs``"
 #: ../../reference/configuration.rst:903
 msgid ""
 "Folders whose Odin packages get API pages, relative to the source folder."
-msgstr "Ordner relativ zum Quellordner, deren Odin-Pakete API-Seiten erhalten."
+msgstr ""
+"Ordner relativ zum Quellordner, deren Odin-Pakete API-Seiten erhalten."
 
 #: ../../reference/configuration.rst:904
 msgid "``odin_collections``"
@@ -4773,6 +4851,68 @@ msgstr ""
 "Diese Seiten halten die Verträge fest. Sie sind zum Suchen und "
 "Nachschlagen gedacht. Wenn wir ein erstes Beispiel brauchen, beginnen wir "
 "mit einem Tutorial."
+
+#~ msgid "``gds COMMAND``"
+#~ msgstr "``gds COMMAND``"
+
+#~ msgid ""
+#~ "Keeps Guidedog's own discussion records in ``docs/gds``, as ``dsc`` "
+#~ "does."
+#~ msgstr ""
+#~ "Führt die eigenen Diskussionsaufzeichnungen von Guidedog in "
+#~ "``docs/gds``, wie ``dsc`` es tut."
+
+#~ msgid ""
+#~ "Keeps Guidedog's own discussion records, the GDS, in ``docs/gds``. It "
+#~ "runs the commands of ``dsc`` (below) with the prefix ``gds``. It "
+#~ "builds with this program's engine:"
+#~ msgstr ""
+#~ "Führt Guidedogs eigene Diskussionsaufzeichnungen, die GDS, in "
+#~ "``docs/gds``. Es führt die Befehle von ``dsc`` (siehe unten) mit dem "
+#~ "Präfix ``gds`` aus und baut mit der Engine dieses Programms:"
+
+#~ msgid "dsc and dscc"
+#~ msgstr "dsc und dscc"
+
+#~ msgid ""
+#~ "``dsc`` keeps a discussion catalog and builds it with the installed "
+#~ "``guidedog``. ``dscc`` is ``dsc`` with Guidedog built in. It builds a "
+#~ "catalog as a Guidedog project in its own process (``pdf_documents`` "
+#~ "set to the books, warnings as errors). ``dscc --version`` names the "
+#~ "Guidedog inside it. Both take the same commands (see "
+#~ ":doc:`../howto/discussions`)."
+#~ msgstr ""
+#~ "``dsc`` führt einen Diskussionskatalog und baut ihn mit dem "
+#~ "installierten ``guidedog``. ``dscc`` ist ``dsc`` mit eingebautem "
+#~ "Guidedog. Es baut einen Katalog als Guidedog-Projekt im eigenen "
+#~ "Prozess (``pdf_documents`` auf die Bücher gesetzt, Warnungen als "
+#~ "Fehler). ``dscc --version`` nennt das eingebaute Guidedog. Beide "
+#~ "verstehen dieselben Befehle (siehe :doc:`../howto/discussions`)."
+
+#~ msgid ""
+#~ "``dsc config`` prints the catalog's settings in effect, as "
+#~ "``discussion.toml``. :doc:`../howto/discussions` explains each setting."
+#~ msgstr ""
+#~ "``dsc config`` gibt die geltenden Einstellungen des Katalogs als "
+#~ "``discussion.toml`` aus. :doc:`../howto/discussions` erklärt jede "
+#~ "Einstellung."
+
+#~ msgid "Options of dsc and dscc"
+#~ msgstr "Optionen von dsc und dscc"
+
+#~ msgid ""
+#~ "``dsc`` only: the ``guidedog`` to build with (default: "
+#~ "``DSC_GUIDEDOG``, then ``PATH``)."
+#~ msgstr ""
+#~ "Nur ``dsc``: das ``guidedog`` für den Build (Standard: "
+#~ "``DSC_GUIDEDOG``, dann ``PATH``)."
+
+#~ msgid ""
+#~ "``dscc`` and ``guidedog gds`` only: a Typst program, for a Guidedog "
+#~ "without one built in."
+#~ msgstr ""
+#~ "Nur ``dscc`` und ``guidedog gds``: ein Typst-Programm, für ein "
+#~ "Guidedog ohne eingebautes Typst."
 
 #~ msgid ""
 #~ "The ``guidedog`` executable provides a complete command-line interface "

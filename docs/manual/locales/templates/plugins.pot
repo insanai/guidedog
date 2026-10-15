@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 04:11+0000\n"
+"POT-Creation-Date: 2026-10-15 05:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -233,29 +233,53 @@ msgid "A remote acceptance is not a live deployment. ``Accepted`` and ``Pending`
 msgstr ""
 
 #: ../../plugins.rst:338
-msgid "10. Version and distribute the contract"
+msgid "10. Add a command to guidedog"
 msgstr ""
 
 #: ../../plugins.rst:341
-msgid "The build-plugin interface (``PLUGIN_API_VERSION``) is 1.0 and uses protocol ``guidedog-build-plugin`` 1.0. The publisher interface (``API_VERSION``) is 1.1 and keeps ``guidedog-publisher`` protocol 1.0. These are separate contracts. The wire format is the one that programs built with the Odin SDK speak, so registered programs from earlier releases keep working. Product versions are separate from interface versions. New hooks arrive as trait methods with \"absent\" defaults, and host-made inputs are ``#[non_exhaustive]``, so a new field does not break a plugin."
+msgid "A plugin can also add commands to guidedog's own command line. The badge adds one:"
 msgstr ""
 
-#: ../../plugins.rst:349
-msgid "Register each rebuilt program deliberately, because its checksum changes. ``guidedog plugin inspect ID`` shows its kind and declared hooks. The public catalog describes plugins. It does not download, install or run them. Custom markup readers, renderers, directives and roles are not part of this interface. They use the ``guidedoc::Registry`` API in a program that embeds the engine."
+#: ../../plugins.rst:348
+msgid "The GitHub Pages plugin works the same way: ``guidedog publish pages`` and ``guidedog pages workflow`` are its commands, not guidedog's. We declare a command with ``commands`` and run it with ``run_command``:"
 msgstr ""
 
-#: ../../plugins.rst:355
-msgid "11. Check a plugin before registering it"
+#: ../../plugins.rst:366
+msgid "The words of the name decide where the command appears. ``badge preview`` is a new command; ``publish NAME`` is a target of ``guidedog publish``. A plugin cannot replace a command guidedog has. The summary, help and options we declare become the command's ``--help`` and its line under PLUGIN COMMANDS in ``guidedog --help``, and a mistyped name gets a \"Did you mean\" that knows our command."
 msgstr ""
 
-#: ../../plugins.rst:358
-msgid "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises a build plugin without changing the registry. Registration runs the same checks automatically: two fresh loads, repeated source and HTML results, generated asset validation and cleanup. ``--timeout=SECONDS`` defaults to 60 per process request. Supply a real configuration when the plugin needs one. Relative configuration paths resolve from ``--project``, whose default is the current directory."
-msgstr ""
-
-#: ../../plugins.rst:365
-msgid "Passing checks shows that the plugin works with Guidedog. It is not a proof of safety. Guidedog keeps checking every runtime response and runs installed plugins in separate processes. A crash, bounds failure or stalled process becomes a diagnostic and cannot publish an incomplete generation. Linked plugins remain trusted code."
+#: ../../plugins.rst:368
+msgid "The ``CommandContext`` is everything guidedog lends the command. ``print`` and ``eprint`` write to its output. ``ask`` and ``confirm`` put a question to the person, and answer nothing when nobody can be asked (a script, a CI job), so a command never hangs. ``build_project`` has guidedog build a project, HTML or PDF, into a folder we name, with its engine and its linked plugins. ``dir`` is the folder the command was started in, and ``config`` the plugin's configuration file when the project's ``plugin_configs`` names one. We return the exit status, or a ``Problem`` with a hint, which guidedog reports."
 msgstr ""
 
 #: ../../plugins.rst:370
+msgid "The same command works in both deployments. Linked, it runs inside guidedog. Registered, guidedog starts our program with ``--guidedog-command`` and a request, on the same terminal, so questions and progress reach the person directly; ``serve_plugin`` answers that request without any code of ours. ``guidedog plugin inspect ID`` lists the commands a plugin adds."
+msgstr ""
+
+#: ../../plugins.rst:372
+msgid "11. Version and distribute the contract"
+msgstr ""
+
+#: ../../plugins.rst:375
+msgid "The build-plugin interface (``PLUGIN_API_VERSION``) is 1.0 and uses protocol ``guidedog-build-plugin`` 1.0. The publisher interface (``API_VERSION``) is 1.1 and keeps ``guidedog-publisher`` protocol 1.0. These are separate contracts. The wire format is the one that programs built with the Odin SDK speak, so registered programs from earlier releases keep working. Product versions are separate from interface versions. New hooks arrive as trait methods with \"absent\" defaults, and host-made inputs are ``#[non_exhaustive]``, so a new field does not break a plugin. Contributed commands have their own command protocol (1.0), announced in optional handshake fields: programs without commands are unchanged."
+msgstr ""
+
+#: ../../plugins.rst:385
+msgid "Register each rebuilt program deliberately, because its checksum changes. ``guidedog plugin inspect ID`` shows its kind and declared hooks. The public catalog describes plugins. It does not download, install or run them. Custom markup readers, renderers, directives and roles are not part of this interface. They use the ``guidedoc::Registry`` API in a program that embeds the engine."
+msgstr ""
+
+#: ../../plugins.rst:391
+msgid "12. Check a plugin before registering it"
+msgstr ""
+
+#: ../../plugins.rst:394
+msgid "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises a build plugin without changing the registry. Registration runs the same checks automatically: two fresh loads, repeated source and HTML results, generated asset validation and cleanup. ``--timeout=SECONDS`` defaults to 60 per process request. Supply a real configuration when the plugin needs one. Relative configuration paths resolve from ``--project``, whose default is the current directory."
+msgstr ""
+
+#: ../../plugins.rst:401
+msgid "Passing checks shows that the plugin works with Guidedog. It is not a proof of safety. Guidedog keeps checking every runtime response and runs installed plugins in separate processes. A crash, bounds failure or stalled process becomes a diagnostic and cannot publish an incomplete generation. Linked plugins remain trusted code."
+msgstr ""
+
+#: ../../plugins.rst:406
 msgid "Generic checks never invoke a publisher. Qualify publishers with their own tests and an explicitly configured dry run. The protocol and the SDK's design are recorded in :doc:`internals/plugins`."
 msgstr ""

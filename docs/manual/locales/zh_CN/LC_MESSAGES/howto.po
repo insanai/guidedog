@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 04:11+0000\n"
+"POT-Creation-Date: 2026-10-15 05:49+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -24,67 +24,38 @@ msgid ""
 "A discussion catalog keeps proposals and decisions. Each discussion is "
 "one reStructuredText record. A record gets a number when it opens for "
 "review, and its state says where the decision stands. Guidedog's own "
-"design records, GDS, are one such catalog. This page uses ``dsc``."
+"design records, GDS, are one such catalog."
 msgstr ""
 "讨论目录保存提案和决策。每个讨论是一条 reStructuredText "
-"记录。记录在开放评审时获得编号，它的状态表明决策进展到哪一步。Guidedog 自己的设计记录 GDS 就是这样一个目录。本页使用 "
-"``dsc``\\ 。"
+"记录。记录在开放评审时获得编号，它的状态表明决策进展到哪一步。Guidedog 自己的设计记录 GDS 就是这样一个目录。"
 
 #: ../../howto/discussions.rst:9
-msgid "Choose a program"
-msgstr "选择程序"
+msgid ""
+"The commands are ``guidedog dsc init``, ``new``, ``list``, ``show``, "
+"``promote``, ``state``, ``index``, ``check``, ``build``, ``recover``, and "
+"``config``. They come from the discussion plugin, which every "
+"``guidedog`` links, so there is nothing else to install. Each command "
+"works on the catalog the current folder is in, or the one ``--dir`` "
+"names. ``guidedog dsc --help`` lists the commands, and ``guidedog dsc "
+"build --help`` shows one command's options."
+msgstr ""
+"可用的命令有 ``guidedog dsc "
+"init``、``new``、``list``、``show``、``promote``、``state``、``index``、``check``、``build``、``recover`` "
+"和 ``config``。它们来自讨论插件，每个 ``guidedog`` 都链接了这个插件，所以无需另外安装。每条命令作用于当前文件夹所在的目录，或 "
+"``--dir`` 指定的目录。``guidedog dsc --help`` 列出所有命令，``guidedog dsc build "
+"--help`` 显示单条命令的选项。"
 
-#: ../../howto/discussions.rst:12
-msgid "Three ways to run the same commands"
-msgstr "运行同一组命令的三种方式"
-
-#: ../../howto/discussions.rst:16
-msgid "Program"
-msgstr "程序"
-
-#: ../../howto/discussions.rst:17
-msgid "Use it when"
-msgstr "适用情况"
-
-#: ../../howto/discussions.rst:18
-msgid "``dsc``"
-msgstr "``dsc``"
+#: ../../howto/discussions.rst:11
+msgid ""
+"Guidedog's own catalog is no exception. We run the same commands in "
+"``docs/gds``:"
+msgstr "Guidedog 自己的目录也不例外。我们在 ``docs/gds`` 中运行同样的命令："
 
 #: ../../howto/discussions.rst:19
-msgid ""
-"Guidedog is installed. ``dsc`` keeps the catalog itself, and asks "
-"``guidedog`` to build it. It comes in the Guidedog archive."
-msgstr ""
-"已安装 Guidedog。\\ ``dsc`` 自己维护目录，构建时交给 ``guidedog``\\ 。它随 Guidedog 发行包提供。"
-
-#: ../../howto/discussions.rst:21
-msgid "``dscc``"
-msgstr "``dscc``"
-
-#: ../../howto/discussions.rst:22
-msgid ""
-"Nothing else is installed. ``dscc`` is ``dsc`` with Guidedog built in. "
-"Each release has a ``dscc`` archive for every platform."
-msgstr ""
-"没有安装其他程序。\\ ``dscc`` 是内置 Guidedog 的 ``dsc``\\ 。每个版本都为各平台提供 ``dscc`` 发行包。"
-
-#: ../../howto/discussions.rst:24
-msgid "``guidedog gds``"
-msgstr "``guidedog gds``"
-
-#: ../../howto/discussions.rst:25
-msgid "We work on Guidedog itself. It runs the same commands on ``docs/gds``."
-msgstr "我们开发的是 Guidedog 本身。它对 ``docs/gds`` 运行同样的命令。"
-
-#: ../../howto/discussions.rst:27
-msgid "Graphviz, Typst, and the other tools a build needs belong to Guidedog. ``dsc`` never looks for them. It uses whichever ``guidedog`` we have."
-msgstr "Graphviz、Typst 以及构建所需的其他工具都由 Guidedog 负责。``dsc`` 从不查找它们，只使用我们已有的那个 ``guidedog``。"
-
-#: ../../howto/discussions.rst:30
 msgid "Create a catalog"
 msgstr "创建目录"
 
-#: ../../howto/discussions.rst:37
+#: ../../howto/discussions.rst:26
 msgid ""
 "The prefix names the catalog's fields, such as ``:eds-number:``. It is 2 "
 "to 16 lowercase letters. ``init`` writes a complete catalog into a "
@@ -93,109 +64,167 @@ msgstr ""
 "前缀用于命名目录的字段，例如 ``:eds-number:``\\ 。前缀由 2 到 16 个小写字母组成。\\ ``init`` "
 "在不存在或为空的文件夹中写入完整目录："
 
-#: ../../howto/discussions.rst:40
+#: ../../howto/discussions.rst:29
 msgid ""
 "``discussion.toml``, the catalog's prefix, name, default author, "
 "lifecycle, and numbering;"
 msgstr "``discussion.toml``\\ ：目录的前缀、名称、默认作者、生命周期和编号；"
 
-#: ../../howto/discussions.rst:42
+#: ../../howto/discussions.rst:31
 msgid ""
 "``conf.toml``, ``index.rst``, and ``workflow.rst``, an ordinary Guidedog "
 "project;"
 msgstr ""
 "``conf.toml``\\ 、\\ ``index.rst`` 和 ``workflow.rst``\\ ：一个普通的 Guidedog 项目；"
 
-#: ../../howto/discussions.rst:43
+#: ../../howto/discussions.rst:32
 msgid "``template/rfc-template.rst``, the template of new drafts;"
 msgstr "``template/rfc-template.rst``\\ ：新草稿的模板；"
 
-#: ../../howto/discussions.rst:44
+#: ../../howto/discussions.rst:33
 msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
 msgstr "``registry.rst`` 和 ``bundle.rst``\\ ：生成的索引；"
 
-#: ../../howto/discussions.rst:45
+#: ../../howto/discussions.rst:34
 msgid "``records/XXXXX-eds-process.rst``, a draft of our review process."
 msgstr "``records/XXXXX-eds-process.rst``：我们评审流程的草稿。"
 
-#: ../../howto/discussions.rst:47
-msgid "We edit the process draft to say how our project decides. To start from our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), ``--process=FILE`` (the process text, from its title on), and ``--template=FILE`` (a record template with ``:eds-*:`` fields). ``--labels=a,b`` limits the labels records may carry. ``init`` checks the new catalog before it moves it into place. It never writes into a folder that has files."
-msgstr "我们编辑流程草稿，写明自己的项目如何做决定。若要从自己的文档开始，就传入 ``--config=FILE`` （一个 ``discussion.toml``）、``--process=FILE`` （流程正文，从标题开始）和 ``--template=FILE`` （带 ``:eds-*:`` 字段的记录模板）。``--labels=a,b`` 限定记录可以使用的标签。``init`` 会先检查新目录，再把它移到位。它从不写入已有文件的文件夹。"
+#: ../../howto/discussions.rst:36
+msgid ""
+"We edit the process draft to say how our project decides. To start from "
+"our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), "
+"``--process=FILE`` (the process text, from its title on), and "
+"``--template=FILE`` (a record template with ``:eds-*:`` fields). "
+"``--labels=a,b`` limits the labels records may carry. ``init`` checks the "
+"new catalog before it moves it into place. It never writes into a folder "
+"that has files."
+msgstr ""
+"我们编辑流程草稿，写明自己的项目如何做决定。若要从自己的文档开始，就传入 ``--config=FILE`` （一个 "
+"``discussion.toml``）、``--process=FILE`` （流程正文，从标题开始）和 ``--template=FILE`` "
+"（带 ``:eds-*:`` 字段的记录模板）。``--labels=a,b`` 限定记录可以使用的标签。``init`` "
+"会先检查新目录，再把它移到位。它从不写入已有文件的文件夹。"
 
-#: ../../howto/discussions.rst:54
+#: ../../howto/discussions.rst:43
 msgid "Write and review"
 msgstr "编写与评审"
 
-#: ../../howto/discussions.rst:57
-msgid "We run the commands in the catalog folder, or in any folder inside it."
+#: ../../howto/discussions.rst:46
+msgid ""
+"We run the commands in the catalog folder, or in any folder inside it."
 msgstr "我们在目录文件夹或其中任意子文件夹中运行这些命令。"
 
-#: ../../howto/discussions.rst:68
-msgid "A new draft has the number ``XXXXX``. Promotion gives it the next number and opens it for discussion. A state change needs ``--reason``, and ``committed`` also needs ``--evidence``. ``--dry-run`` shows a change without making it. These are the defaults. The next section changes them."
-msgstr "新草稿的编号是 ``XXXXX``。提升会给它分配下一个编号，并开放讨论。改变状态需要 ``--reason``，改为 ``committed`` 还需要 ``--evidence``。``--dry-run`` 只显示更改而不实际执行。以上是默认设置，下一节介绍如何更改。"
+#: ../../howto/discussions.rst:57
+msgid ""
+"A new draft has the number ``XXXXX``. Promotion gives it the next number "
+"and opens it for discussion. A state change needs ``--reason``, and "
+"``committed`` also needs ``--evidence``. ``--dry-run`` shows a change "
+"without making it. These are the defaults. The next section changes them."
+msgstr ""
+"新草稿的编号是 ``XXXXX``。提升会给它分配下一个编号，并开放讨论。改变状态需要 ``--reason``，改为 ``committed`` "
+"还需要 ``--evidence``。``--dry-run`` 只显示更改而不实际执行。以上是默认设置，下一节介绍如何更改。"
 
-#: ../../howto/discussions.rst:73
+#: ../../howto/discussions.rst:62
 msgid "A record starts with its metadata, one field per line:"
 msgstr "记录以元数据开头，每行一个字段："
 
-#: ../../howto/discussions.rst:87
-msgid "Authors and labels are JSON lists. ``last-updated`` may stand for ``updated``. A record may also carry ``category``, ``status``, and ``summary``. ``dsc`` keeps ``status`` in step with the state. HTML and PDF show the fields as Number, Title, Authors, Updated, Labels, and so on, with the lists as plain text."
-msgstr "作者和标签是 JSON 列表。``last-updated`` 可以代替 ``updated``。记录还可以带有 ``category``、``status`` 和 ``summary``。``dsc`` 会让 ``status`` 与状态保持一致。HTML 和 PDF 将这些字段显示为 Number、Title、Authors、Updated、Labels 等，列表显示为纯文本。"
+#: ../../howto/discussions.rst:76
+msgid ""
+"Authors and labels are JSON lists. ``last-updated`` may stand for "
+"``updated``. A record may also carry ``category``, ``status``, and "
+"``summary``. ``guidedog dsc`` keeps ``status`` in step with the state. "
+"HTML and PDF show the fields as Number, Title, Authors, Updated, Labels, "
+"and so on, with the lists as plain text."
+msgstr ""
+"作者和标签是 JSON 列表。``last-updated`` 可以代替 ``updated``。记录还可以带有 "
+"``category``、``status`` 和 ``summary``。``guidedog dsc`` 会让 ``status`` "
+"与状态保持一致。HTML 和 PDF 将这些字段显示为 Number、Title、Authors、Updated、Labels 等，列表显示为纯文本。"
 
-#: ../../howto/discussions.rst:92
+#: ../../howto/discussions.rst:81
 msgid "Configure the lifecycle and numbering"
 msgstr "配置生命周期和编号"
 
-#: ../../howto/discussions.rst:95
-msgid "``discussion.toml`` holds the catalog's settings. ``init`` writes every one of them, with comments. ``dsc config`` prints the settings in effect. A catalog without the file follows the defaults below. They are the process of Guidedog's own GDS."
-msgstr "``discussion.toml`` 保存目录的设置。``init`` 会写出全部设置并附上注释。``dsc config`` 打印当前生效的设置。没有该文件的目录遵循下面的默认值，也就是 Guidedog 自己的 GDS 所用的流程。"
-
-#: ../../howto/discussions.rst:132
-msgid "``[workflow.states.NAME]`` defines a state. ``next`` lists the states the ``state`` command may move a record to. ``evidence = true`` asks for ``--evidence`` on a move into the state. ``status`` is the text a record's optional ``status`` field takes there. A state with no ``next`` is closed. Promotion is the only way from the draft state to the open state, because promotion gives the number. Without a number, a draft may move only to the states its own ``next`` lists, such as ``abandoned``."
-msgstr "``[workflow.states.NAME]`` 定义一个状态。``next`` 列出 ``state`` 命令可以把记录移到哪些状态。``evidence = true`` 表示移入该状态时需要 ``--evidence``。``status`` 是记录的可选字段 ``status`` 在该状态下取的文字。没有 ``next`` 的状态是关闭状态。从草稿状态进入开放状态只能通过提升，因为编号由提升分配。没有编号的草稿只能移到它自己的 ``next`` 所列的状态，例如 ``abandoned``。"
-
-#: ../../howto/discussions.rst:139
-msgid "Numbers have at least ``width`` digits, padded with zeros. A number that needs more digits gets them, so 10000 follows 9999, and lists sort by value. Promotion numbers from ``start``. ``limit``, when set, is the highest number it gives. Changing ``start`` or ``limit`` later is safe. Changing ``width`` is not, once records are numbered: their numbers would no longer match it."
-msgstr "编号至少有 ``width`` 位，不足时用零补齐。需要更多位数的编号就使用更多位，因此 9999 之后是 10000，列表按数值排序。提升从 ``start`` 开始编号。若设置了 ``limit``，它就是提升能分配的最大编号。以后修改 ``start`` 或 ``limit`` 是安全的。但记录一旦编号，修改 ``width`` 就不安全了：已有的编号将不再与它相符。"
-
-#: ../../howto/discussions.rst:145
+#: ../../howto/discussions.rst:84
 msgid ""
-"``dsc`` checks the file whenever it reads the catalog. A mistake names "
-"the line and what to write instead:"
-msgstr "``dsc`` 每次读取目录时都会检查该文件。出错时，消息会指出所在行以及应改写成什么："
+"``discussion.toml`` holds the catalog's settings. ``init`` writes every "
+"one of them, with comments. ``guidedog dsc config`` prints the settings "
+"in effect. A catalog without the file follows the defaults below. They "
+"are the process of Guidedog's own GDS."
+msgstr ""
+"``discussion.toml`` 保存目录的设置。``init`` 会写出全部设置并附上注释。``guidedog dsc config`` "
+"打印当前生效的设置。没有该文件的目录遵循下面的默认值，也就是 Guidedog 自己的 GDS 所用的流程。"
 
-#: ../../howto/discussions.rst:160
-msgid "The process draft that ``init`` writes describes the lifecycle we configured. It has a table of the states and a diagram of the moves."
+#: ../../howto/discussions.rst:121
+msgid ""
+"``[workflow.states.NAME]`` defines a state. ``next`` lists the states the "
+"``state`` command may move a record to. ``evidence = true`` asks for "
+"``--evidence`` on a move into the state. ``status`` is the text a "
+"record's optional ``status`` field takes there. A state with no ``next`` "
+"is closed. Promotion is the only way from the draft state to the open "
+"state, because promotion gives the number. Without a number, a draft may "
+"move only to the states its own ``next`` lists, such as ``abandoned``."
+msgstr ""
+"``[workflow.states.NAME]`` 定义一个状态。``next`` 列出 ``state`` "
+"命令可以把记录移到哪些状态。``evidence = true`` 表示移入该状态时需要 ``--evidence``。``status`` "
+"是记录的可选字段 ``status`` 在该状态下取的文字。没有 ``next`` "
+"的状态是关闭状态。从草稿状态进入开放状态只能通过提升，因为编号由提升分配。没有编号的草稿只能移到它自己的 ``next`` 所列的状态，例如 "
+"``abandoned``。"
+
+#: ../../howto/discussions.rst:128
+msgid ""
+"Numbers have at least ``width`` digits, padded with zeros. A number that "
+"needs more digits gets them, so 10000 follows 9999, and lists sort by "
+"value. Promotion numbers from ``start``. ``limit``, when set, is the "
+"highest number it gives. Changing ``start`` or ``limit`` later is safe. "
+"Changing ``width`` is not, once records are numbered: their numbers would "
+"no longer match it."
+msgstr ""
+"编号至少有 ``width`` 位，不足时用零补齐。需要更多位数的编号就使用更多位，因此 9999 之后是 10000，列表按数值排序。提升从 "
+"``start`` 开始编号。若设置了 ``limit``，它就是提升能分配的最大编号。以后修改 ``start`` 或 ``limit`` "
+"是安全的。但记录一旦编号，修改 ``width`` 就不安全了：已有的编号将不再与它相符。"
+
+#: ../../howto/discussions.rst:134
+msgid ""
+"``guidedog dsc`` checks the file whenever it reads the catalog. A mistake "
+"names the line and what to write instead:"
+msgstr "``guidedog dsc`` 每次读取目录时都会检查该文件。出错时，消息会指出所在行以及应改写成什么："
+
+#: ../../howto/discussions.rst:149
+msgid ""
+"The process draft that ``init`` writes describes the lifecycle we "
+"configured. It has a table of the states and a diagram of the moves."
 msgstr "``init`` 写出的流程草稿描述我们配置的生命周期，其中有一张状态表和一张状态转移图。"
 
-#: ../../howto/discussions.rst:163
+#: ../../howto/discussions.rst:152
 msgid "Build"
 msgstr "构建"
 
-#: ../../howto/discussions.rst:171
+#: ../../howto/discussions.rst:160
 msgid ""
-"``dsc build`` writes the website to ``_build/html`` and one PDF per "
-"record to ``_build/pdf``. Naming a record writes only its PDF, to "
+"``guidedog dsc build`` writes the website to ``_build/html`` and one PDF "
+"per record to ``_build/pdf``. Naming a record writes only its PDF, to "
 "``_build/selected``, and leaves the complete output alone. Warnings stop "
 "the build."
 msgstr ""
-"``dsc build`` 将网站写入 ``_build/html``\\ ，并为每条记录生成一个 PDF，写入 ``_build/pdf``\\ "
-"。指定一条记录时，只把它的 PDF 写入 ``_build/selected``\\ ，不改动完整输出。出现警告即停止构建。"
+"``guidedog dsc build`` 将网站写入 ``_build/html``，并为每条记录生成一个 PDF，写入 "
+"``_build/pdf``。指定一条记录时，只把它的 PDF 写入 ``_build/selected``，不改动完整输出。出现警告即停止构建。"
 
-#: ../../howto/discussions.rst:175
+#: ../../howto/discussions.rst:164
 msgid ""
-"``dsc`` runs the ``guidedog`` named by ``--guidedog=PATH``, then by "
-"``DSC_GUIDEDOG``, then the one on ``PATH``. ``dscc`` builds with the "
-"Guidedog inside it."
+"The build is guidedog's own: the same build as ``guidedog build``, with "
+"the catalog as the project. Graphviz, Typst, and the other tools it needs "
+"are guidedog's too. An older catalog of Typst records compiles each "
+"record with Typst; ``--typst=PATH`` names a Typst program to use instead "
+"of the embedded compiler."
 msgstr ""
-"``dsc`` 运行的 ``guidedog`` 依次取自 ``--guidedog=PATH``\\ 、\\ ``DSC_GUIDEDOG`` "
-"和 ``PATH``\\ 。\\ ``dscc`` 用内置的 Guidedog 构建。"
+"构建由 guidedog 自己完成：与 ``guidedog build`` 是同一种构建，只是把目录当作项目。所需的 Graphviz、Typst "
+"等工具也都由 guidedog 自带。旧式的 Typst 记录目录会用 Typst 编译每条记录；``--typst=PATH`` 可以指定一个 "
+"Typst 程序来代替内置编译器。"
 
-#: ../../howto/discussions.rst:178
+#: ../../howto/discussions.rst:166
 msgid "When an update is interrupted"
 msgstr "更新中断时"
 
-#: ../../howto/discussions.rst:181
+#: ../../howto/discussions.rst:169
 msgid ""
 "Commands that change records hold the catalog's lock, ``.eds.lock``. An "
 "update of several files first writes a journal, ``.eds-journal.json``. If "
@@ -204,32 +233,56 @@ msgstr ""
 "修改记录的命令会持有目录锁 ``.eds.lock``\\ 。涉及多个文件的更新会先写入日志 ``.eds-journal.json``\\ "
 "。若更新中途停止，下一条命令会提示："
 
-#: ../../howto/discussions.rst:190
-msgid "Recovery puts back the files as they were. It refuses to overwrite a file someone edited since. ``dsc`` also checks each change before it writes anything. It refuses an empty or cut-short record, and an index without its generated region."
-msgstr "恢复会把文件还原为原来的样子。如果文件之后被人编辑过，恢复会拒绝覆盖它。``dsc`` 还会在写入任何内容之前检查每项更改。它会拒绝空的或被截断的记录，以及缺少生成区域的索引。"
+#: ../../howto/discussions.rst:178
+msgid ""
+"Recovery puts back the files as they were. It refuses to overwrite a file "
+"someone edited since. ``guidedog dsc`` also checks each change before it "
+"writes anything. It refuses an empty or cut-short record, and an index "
+"without its generated region."
+msgstr ""
+"恢复会把文件还原为原来的样子。如果文件之后被人编辑过，恢复会拒绝覆盖它。``guidedog dsc`` "
+"还会在写入任何内容之前检查每项更改。它会拒绝空的或被截断的记录，以及缺少生成区域的索引。"
 
-#: ../../howto/discussions.rst:194
-msgid "``dsc`` keeps only each record's metadata in memory. It reads a record whole only to change it. So checking a large catalog stays fast and small."
-msgstr "``dsc`` 在内存中只保存每条记录的元数据，只有修改某条记录时才完整读取它。因此即使目录很大，检查依然快速，占用的内存也很少。"
+#: ../../howto/discussions.rst:182
+msgid ""
+"``guidedog dsc`` keeps only each record's metadata in memory. It reads a "
+"record whole only to change it. So checking a large catalog stays fast "
+"and small."
+msgstr ""
+"``guidedog dsc`` 在内存中只保存每条记录的元数据，只有修改某条记录时才完整读取它。因此即使目录很大，检查依然快速，占用的内存也很少。"
 
-#: ../../howto/discussions.rst:197
+#: ../../howto/discussions.rst:185
 msgid "Use the library"
 msgstr "使用库"
 
-#: ../../howto/discussions.rst:200
-msgid "The three programs share one Rust crate, ``gd-discussion``. Its ``README.md`` shows how to load a catalog, plan a change, and apply it from our own program:"
-msgstr "这三个程序共用一个 Rust crate：``gd-discussion``。它的 ``README.md`` 说明了如何在我们自己的程序中加载目录、规划更改并应用更改："
+#: ../../howto/discussions.rst:188
+msgid ""
+"The commands are one Rust crate, ``gd-discussion``. Its ``README.md`` "
+"shows how to load a catalog, plan a change, and apply it from our own "
+"program:"
+msgstr ""
+"这些命令就是一个 Rust crate：``gd-discussion``。它的 ``README.md`` "
+"说明了如何在我们自己的程序中加载目录、规划更改并应用更改："
 
-#: ../../howto/discussions.rst:218
-msgid "``ds::command::run`` is the whole ``dsc`` command line. It serves a program of our own with another name, prefix, or builder. The design notes are in :doc:`../internals/discussion`."
-msgstr "``ds::command::run`` 就是完整的 ``dsc`` 命令行。我们可以用它构建自己的程序，换用别的名称、前缀或构建器。设计说明见 :doc:`../internals/discussion`。"
+#: ../../howto/discussions.rst:206
+msgid ""
+"``ds::plugin()`` is the whole ``guidedog dsc`` command line, as a plugin. "
+"A ``guidedog`` of our own links it beside its other plugins (see "
+":doc:`../plugins`). The design notes are in "
+":doc:`../internals/discussion`."
+msgstr ""
+"``ds::plugin()`` 就是以插件形式提供的完整 ``guidedog dsc`` 命令行。我们自己构建的 ``guidedog`` "
+"可以把它和其他插件一起链接进来（见 :doc:`../plugins`）。设计说明见 :doc:`../internals/discussion`。"
 
 #: ../../howto/document-code.rst:1
 msgid "Document a codebase"
 msgstr "为代码库生成文档"
 
 #: ../../howto/document-code.rst:4
-msgid "A public name needs a contract. We explain its input, its result, its ownership, and the conditions under which it fails. A signature alone is not a manual."
+msgid ""
+"A public name needs a contract. We explain its input, its result, its "
+"ownership, and the conditions under which it fails. A signature alone is "
+"not a manual."
 msgstr "公开名称需要契约。我们要说明它的输入、结果、所有权，以及它在哪些条件下会失败。只有签名，算不上手册。"
 
 #: ../../howto/document-code.rst:7
@@ -237,8 +290,13 @@ msgid "Static extraction architecture"
 msgstr "静态提取架构"
 
 #: ../../howto/document-code.rst:10
-msgid "Guidedog extracts API documentation by parsing source files into abstract syntax trees. It never runs or imports our code. So there are no side effects, no runtime to install, and no foreign dependencies to resolve:"
-msgstr "Guidedog 把源文件解析为抽象语法树，从中提取 API 文档。它从不运行或导入我们的代码。因此不会产生副作用，不需要安装运行时，也不必处理外部依赖："
+msgid ""
+"Guidedog extracts API documentation by parsing source files into abstract "
+"syntax trees. It never runs or imports our code. So there are no side "
+"effects, no runtime to install, and no foreign dependencies to resolve:"
+msgstr ""
+"Guidedog 把源文件解析为抽象语法树，从中提取 API "
+"文档。它从不运行或导入我们的代码。因此不会产生副作用，不需要安装运行时，也不必处理外部依赖："
 
 #: ../../howto/document-code.rst:16
 msgid ""
@@ -256,52 +314,122 @@ msgid "Rust"
 msgstr "Rust"
 
 #: ../../howto/document-code.rst:74
-msgid "Guidedog reads each crate's source with tree-sitter and follows its module tree the way rustc does: ``Cargo.toml``'s ``[lib] path``, then ``src/lib.rs`` or ``src/main.rs``. It does not compile, run, or expand the documented crate. Items made by macros or build scripts are therefore absent. A ``rust_autoapi_crates`` entry may also be a single root ``.rs`` file or a folder of loose ``.rs`` files."
-msgstr "Guidedog 用 tree-sitter 读取每个 crate 的源码，并按 rustc 的方式遍历其模块树：先看 ``Cargo.toml`` 的 ``[lib] path``，再看 ``src/lib.rs`` 或 ``src/main.rs``。它不编译、不运行，也不展开被记录的 crate，因此由宏或构建脚本生成的项不会出现。``rust_autoapi_crates`` 的条目也可以是单个根 ``.rs`` 文件，或一个存放零散 ``.rs`` 文件的文件夹。"
+msgid ""
+"Guidedog reads each crate's source with tree-sitter and follows its "
+"module tree the way rustc does: ``Cargo.toml``'s ``[lib] path``, then "
+"``src/lib.rs`` or ``src/main.rs``. It does not compile, run, or expand "
+"the documented crate. Items made by macros or build scripts are therefore "
+"absent. A ``rust_autoapi_crates`` entry may also be a single root ``.rs`` "
+"file or a folder of loose ``.rs`` files."
+msgstr ""
+"Guidedog 用 tree-sitter 读取每个 crate 的源码，并按 rustc 的方式遍历其模块树：先看 "
+"``Cargo.toml`` 的 ``[lib] path``，再看 ``src/lib.rs`` 或 "
+"``src/main.rs``。它不编译、不运行，也不展开被记录的 "
+"crate，因此由宏或构建脚本生成的项不会出现。``rust_autoapi_crates`` 的条目也可以是单个根 ``.rs`` "
+"文件，或一个存放零散 ``.rs`` 文件的文件夹。"
 
 #: ../../howto/document-code.rst:80
-msgid "Rustdoc's rules decide what appears. A ``pub`` item reachable through ``pub`` modules is documented in its module. ``pub use`` of an item from a private module documents it under the re-exported name. ``#[doc(hidden)]`` items, ``#[cfg(test)]`` modules and tests are left out. ``rust_autoapi_options`` adds ``private-members`` (everything, with its visibility shown), ``hidden-members``, or ``noindex``."
-msgstr "收录哪些内容由 rustdoc 的规则决定。可以通过 ``pub`` 模块访问到的 ``pub`` 项，记录在它所在的模块中。私有模块中的项若经 ``pub use`` 重新导出，就以重新导出的名称记录。``#[doc(hidden)]`` 项、``#[cfg(test)]`` 模块和测试不予收录。``rust_autoapi_options`` 可以添加 ``private-members`` （收录全部项，并显示其可见性）、``hidden-members`` 或 ``noindex``。"
+msgid ""
+"Rustdoc's rules decide what appears. A ``pub`` item reachable through "
+"``pub`` modules is documented in its module. ``pub use`` of an item from "
+"a private module documents it under the re-exported name. "
+"``#[doc(hidden)]`` items, ``#[cfg(test)]`` modules and tests are left "
+"out. ``rust_autoapi_options`` adds ``private-members`` (everything, with "
+"its visibility shown), ``hidden-members``, or ``noindex``."
+msgstr ""
+"收录哪些内容由 rustdoc 的规则决定。可以通过 ``pub`` 模块访问到的 ``pub`` 项，记录在它所在的模块中。私有模块中的项若经 "
+"``pub use`` 重新导出，就以重新导出的名称记录。``#[doc(hidden)]`` 项、``#[cfg(test)]`` "
+"模块和测试不予收录。``rust_autoapi_options`` 可以添加 ``private-members`` "
+"（收录全部项，并显示其可见性）、``hidden-members`` 或 ``noindex``。"
 
 #: ../../howto/document-code.rst:86
-msgid "Doc comments are CommonMark. Guidedog translates them into the page. ``# Examples`` and the other headings become rubrics. Fenced code follows rustdoc's language rules. Intra-doc links (``[`Parser`]``, ``[Parser::next]``) become ``rust`` domain references. A link into the crate that names nothing is a ``rust.autodoc.link`` warning."
-msgstr "文档注释使用 CommonMark 格式，Guidedog 会把它们转换到页面中。``# Examples`` 等标题会变成小标题（rubric）。围栏代码块遵循 rustdoc 的语言规则。文档内链接（``[`Parser`]``、``[Parser::next]``）会变成 ``rust`` 领域的引用。指向本 crate 却找不到任何对应项的链接会产生 ``rust.autodoc.link`` 警告。"
+msgid ""
+"Doc comments are CommonMark. Guidedog translates them into the page. ``# "
+"Examples`` and the other headings become rubrics. Fenced code follows "
+"rustdoc's language rules. Intra-doc links (``[`Parser`]``, "
+"``[Parser::next]``) become ``rust`` domain references. A link into the "
+"crate that names nothing is a ``rust.autodoc.link`` warning."
+msgstr ""
+"文档注释使用 CommonMark 格式，Guidedog 会把它们转换到页面中。``# Examples`` "
+"等标题会变成小标题（rubric）。围栏代码块遵循 rustdoc "
+"的语言规则。文档内链接（``[`Parser`]``、``[Parser::next]``）会变成 ``rust`` 领域的引用。指向本 "
+"crate 却找不到任何对应项的链接会产生 ``rust.autodoc.link`` 警告。"
 
 #: ../../howto/document-code.rst:91
-msgid "The pages are written under ``rust_autoapi_root``. There is an index page, then one page per documented module (``my_crate.rst``, ``my_crate/parser.rst``). With ``rust_autoapi_add_toctree_entry`` (the default), the index joins the root document's toctree. With ``rust_autoapi_generate_api_docs = false``, Guidedog reads the settings without generating pages. :doc:`../topics/domains` describes the ``rust`` directives and roles. Hand-written pages can use them too."
-msgstr "页面写在 ``rust_autoapi_root`` 下：一个索引页，以及每个被记录的模块各一个页面（``my_crate.rst``、``my_crate/parser.rst``）。启用 ``rust_autoapi_add_toctree_entry`` （默认）时，索引页会加入根文档的目录树。设置 ``rust_autoapi_generate_api_docs = false`` 时，Guidedog 只读取设置而不生成页面。``rust`` 指令和角色见 :doc:`../topics/domains`，手写的页面也可以使用它们。"
+msgid ""
+"The pages are written under ``rust_autoapi_root``. There is an index "
+"page, then one page per documented module (``my_crate.rst``, "
+"``my_crate/parser.rst``). With ``rust_autoapi_add_toctree_entry`` (the "
+"default), the index joins the root document's toctree. With "
+"``rust_autoapi_generate_api_docs = false``, Guidedog reads the settings "
+"without generating pages. :doc:`../topics/domains` describes the ``rust`` "
+"directives and roles. Hand-written pages can use them too."
+msgstr ""
+"页面写在 ``rust_autoapi_root`` "
+"下：一个索引页，以及每个被记录的模块各一个页面（``my_crate.rst``、``my_crate/parser.rst``）。启用 "
+"``rust_autoapi_add_toctree_entry`` （默认）时，索引页会加入根文档的目录树。设置 "
+"``rust_autoapi_generate_api_docs = false`` 时，Guidedog "
+"只读取设置而不生成页面。``rust`` 指令和角色见 :doc:`../topics/domains`，手写的页面也可以使用它们。"
 
 #: ../../howto/document-code.rst:98
 msgid "Odin"
 msgstr "Odin"
 
 #: ../../howto/document-code.rst:107
-msgid "Guidedog reads Odin source by static analysis, across every build target at once. It does not compile or run the documented package. The generated pages join the document graph and object inventory. See :doc:`../odin` for directives, signatures, and options."
-msgstr "Guidedog 通过静态分析读取 Odin 源码，一次覆盖所有构建目标。它不编译或运行被记录的包。生成的页面会加入文档图和对象清单。指令、签名和选项见 :doc:`../odin`。"
+msgid ""
+"Guidedog reads Odin source by static analysis, across every build target "
+"at once. It does not compile or run the documented package. The generated "
+"pages join the document graph and object inventory. See :doc:`../odin` "
+"for directives, signatures, and options."
+msgstr ""
+"Guidedog 通过静态分析读取 Odin "
+"源码，一次覆盖所有构建目标。它不编译或运行被记录的包。生成的页面会加入文档图和对象清单。指令、签名和选项见 :doc:`../odin`。"
 
 #: ../../howto/document-code.rst:112
 msgid "Python"
 msgstr "Python"
 
 #: ../../howto/document-code.rst:120
-msgid "Guidedog parses Python source rather than importing it. This avoids import side effects. It also means runtime-generated objects may be absent. When such objects are part of the public interface, we describe them explicitly. See :doc:`../autodoc` for the exact discovery rules."
-msgstr "Guidedog 解析 Python 源码，而不是导入它。这样可以避免导入带来的副作用，但也意味着运行时生成的对象可能缺失。如果这些对象属于公开接口，我们就显式地描述它们。准确的发现规则见 :doc:`../autodoc`。"
+msgid ""
+"Guidedog parses Python source rather than importing it. This avoids "
+"import side effects. It also means runtime-generated objects may be "
+"absent. When such objects are part of the public interface, we describe "
+"them explicitly. See :doc:`../autodoc` for the exact discovery rules."
+msgstr ""
+"Guidedog 解析 Python "
+"源码，而不是导入它。这样可以避免导入带来的副作用，但也意味着运行时生成的对象可能缺失。如果这些对象属于公开接口，我们就显式地描述它们。准确的发现规则见 "
+":doc:`../autodoc`。"
 
 #: ../../howto/document-code.rst:125
 msgid "Link across projects"
 msgstr "跨项目链接"
 
 #: ../../howto/document-code.rst:128
-msgid "We publish the generated ``objects.inv`` with the site. An intersphinx mapping in another project can then resolve our names. Explicit mappings keep builds reproducible. See :doc:`../intersphinx`."
-msgstr "我们将生成的 ``objects.inv`` 随网站一起发布，其他项目就能通过 intersphinx 映射解析我们的名称。显式映射可以保证构建可重复。见 :doc:`../intersphinx`。"
+msgid ""
+"We publish the generated ``objects.inv`` with the site. An intersphinx "
+"mapping in another project can then resolve our names. Explicit mappings "
+"keep builds reproducible. See :doc:`../intersphinx`."
+msgstr ""
+"我们将生成的 ``objects.inv`` 随网站一起发布，其他项目就能通过 intersphinx "
+"映射解析我们的名称。显式映射可以保证构建可重复。见 :doc:`../intersphinx`。"
 
 #: ../../howto/github-pages.rst:1
 msgid "Publish to GitHub Pages"
 msgstr "发布到 GitHub Pages"
 
 #: ../../howto/github-pages.rst:4
-msgid "We can publish a Guidedog site to GitHub Pages in one of two ways. GitHub Actions can build and deploy it on each push, with released Guidedog and GitHub's official Pages actions, and no personal token. Or ``guidedog-pages`` can publish it from our own machine, whenever we ask or whenever the sources change. We use one route per site, because a repository has one Pages source: GitHub Actions or a branch."
-msgstr "将 Guidedog 网站发布到 GitHub Pages 有两种方式。一种是 GitHub Actions：每次推送时，用已发布的 Guidedog 和 GitHub 官方的 Pages Actions 构建并部署，无需个人令牌。另一种是 ``guidedog-pages``：从我们自己的机器发布，可以随时手动发布，也可以在源文件变化时自动发布。每个网站只用其中一种方式，因为一个仓库只有一个 Pages 来源：GitHub Actions 或某个分支。"
+msgid ""
+"We can publish a Guidedog site to GitHub Pages in one of two ways. GitHub "
+"Actions can build and deploy it on each push, with released Guidedog and "
+"GitHub's official Pages actions, and no personal token. Or "
+"``guidedog-pages`` can publish it from our own machine, whenever we ask "
+"or whenever the sources change. We use one route per site, because a "
+"repository has one Pages source: GitHub Actions or a branch."
+msgstr ""
+"将 Guidedog 网站发布到 GitHub Pages 有两种方式。一种是 GitHub Actions：每次推送时，用已发布的 "
+"Guidedog 和 GitHub 官方的 Pages Actions 构建并部署，无需个人令牌。另一种是 "
+"``guidedog-pages``：从我们自己的机器发布，可以随时手动发布，也可以在源文件变化时自动发布。每个网站只用其中一种方式，因为一个仓库只有一个 "
+"Pages 来源：GitHub Actions 或某个分支。"
 
 #: ../../howto/github-pages.rst:12
 msgid ""
@@ -322,68 +450,165 @@ msgid "From the repository that holds our documentation, we run:"
 msgstr "在存放文档的仓库中运行："
 
 #: ../../howto/github-pages.rst:53
-msgid "On a machine that has never published, it does each missing step once and says what it does. It asks before anything that changes GitHub or this machine's permissions:"
-msgstr "在从未发布过的机器上，它会把缺少的步骤各执行一次，并说明正在做什么。凡是会更改 GitHub 或本机权限的操作，它都会先询问："
+msgid ""
+"(``guidedog publish pages`` does the same; see `Through guidedog "
+"publish`_.) On a machine that has never published, it does each missing "
+"step once and says what it does. It asks before anything that changes "
+"GitHub or this machine's permissions:"
+msgstr ""
+"（``guidedog publish pages`` 的作用相同，见 `通过 guidedog publish 发布 <Through "
+"guidedog publish_>`_。）在从未发布过的机器上，它会把缺少的步骤各执行一次，并说明正在做什么。凡是会更改 GitHub "
+"或本机权限的操作，它都会先询问："
 
 #: ../../howto/github-pages.rst:56
-msgid "**Configuration.** Without ``pages.toml`` it reads the repository from ``git remote get-url origin`` (HTTPS or SSH GitHub URLs) and asks us to confirm it. It finds the nearest project (a folder with ``conf.toml``, here, in ``docs``, or above, up to the repository's root), and writes ``pages.toml``. We can name both ourselves with ``--repository=OWNER/REPO`` and ``--project=DIR``."
-msgstr "**配置。** 没有 ``pages.toml`` 时，它会从 ``git remote get-url origin`` （HTTPS 或 SSH 形式的 GitHub URL）读取仓库，并请我们确认。它会找到最近的项目（含有 ``conf.toml`` 的文件夹，依次查找当前目录、``docs`` 和上级目录，直到仓库根目录），然后写入 ``pages.toml``。我们也可以用 ``--repository=OWNER/REPO`` 和 ``--project=DIR`` 自行指定这两项。"
+msgid ""
+"**Configuration.** Without ``pages.toml`` it reads the repository from "
+"``git remote get-url origin`` (HTTPS or SSH GitHub URLs) and asks us to "
+"confirm it. It finds the nearest project (a folder with ``conf.toml``, "
+"here, in ``docs``, or above, up to the repository's root), and writes "
+"``pages.toml``. We can name both ourselves with "
+"``--repository=OWNER/REPO`` and ``--project=DIR``."
+msgstr ""
+"**配置。** 没有 ``pages.toml`` 时，它会从 ``git remote get-url origin`` （HTTPS 或 "
+"SSH 形式的 GitHub URL）读取仓库，并请我们确认。它会找到最近的项目（含有 ``conf.toml`` "
+"的文件夹，依次查找当前目录、``docs`` 和上级目录，直到仓库根目录），然后写入 ``pages.toml``。我们也可以用 "
+"``--repository=OWNER/REPO`` 和 ``--project=DIR`` 自行指定这两项。"
 
 #: ../../howto/github-pages.rst:61
-msgid "**Token.** Without a stored token it offers to sign in with a code on github.com (GitHub's device flow). The token goes to the macOS Keychain, the Windows Credential Manager, or the Secret Service of a Linux desktop. When the GitHub CLI is signed in, it offers instead to use ``gh auth token`` *for this run only*. The GitHub CLI's token is never stored: it belongs to ``gh``, which refreshes and revokes it."
-msgstr "**令牌。** 没有已保存的令牌时，它会提议在 github.com 上用验证码登录（GitHub 的设备流程）。令牌保存到 macOS 钥匙串、Windows 凭据管理器或 Linux 桌面的 Secret Service。如果 GitHub CLI 已登录，它会改为提议使用 ``gh auth token``，且 *仅限本次运行*。GitHub CLI 的令牌从不保存：它归 ``gh`` 所有，由 ``gh`` 负责刷新和撤销。"
+msgid ""
+"**Token.** Without a stored token it offers to sign in with a code on "
+"github.com (GitHub's device flow). The token goes to the macOS Keychain, "
+"the Windows Credential Manager, or the Secret Service of a Linux desktop. "
+"When the GitHub CLI is signed in, it offers instead to use ``gh auth "
+"token`` *for this run only*. The GitHub CLI's token is never stored: it "
+"belongs to ``gh``, which refreshes and revokes it."
+msgstr ""
+"**令牌。** 没有已保存的令牌时，它会提议在 github.com 上用验证码登录（GitHub 的设备流程）。令牌保存到 macOS "
+"钥匙串、Windows 凭据管理器或 Linux 桌面的 Secret Service。如果 GitHub CLI 已登录，它会改为提议使用 "
+"``gh auth token``，且 *仅限本次运行*。GitHub CLI 的令牌从不保存：它归 ``gh`` 所有，由 ``gh`` "
+"负责刷新和撤销。"
 
 #: ../../howto/github-pages.rst:66
-msgid "**Authorization.** It shows the account, the repository with its GitHub ID, the branch, and the Pages settings, and asks once whether this machine may publish there. A branch that holds work Guidedog did not publish is never replaced without our explicit answer."
-msgstr "**授权。** 它会显示账户、仓库及其 GitHub ID、分支和 Pages 设置，并询问一次本机是否可以发布到那里。如果分支上有并非由 Guidedog 发布的内容，未经我们明确答复，绝不会替换它。"
+msgid ""
+"**Authorization.** It shows the account, the repository with its GitHub "
+"ID, the branch, and the Pages settings, and asks once whether this "
+"machine may publish there. A branch that holds work Guidedog did not "
+"publish is never replaced without our explicit answer."
+msgstr ""
+"**授权。** 它会显示账户、仓库及其 GitHub ID、分支和 Pages 设置，并询问一次本机是否可以发布到那里。如果分支上有并非由 "
+"Guidedog 发布的内容，未经我们明确答复，绝不会替换它。"
 
 #: ../../howto/github-pages.rst:70
-msgid "**Pages source.** If Pages deploys from Actions or another branch, it asks before pointing Pages at the branch. A repository without a Pages site is set up after the first push, which makes the branch."
-msgstr "**Pages 来源。** 如果 Pages 从 Actions 或其他分支部署，它会先询问，再把 Pages 指向该分支。还没有 Pages 网站的仓库，会在首次推送（推送会创建该分支）之后完成设置。"
+msgid ""
+"**Pages source.** If Pages deploys from Actions or another branch, it "
+"asks before pointing Pages at the branch. A repository without a Pages "
+"site is set up after the first push, which makes the branch."
+msgstr ""
+"**Pages 来源。** 如果 Pages 从 Actions 或其他分支部署，它会先询问，再把 Pages 指向该分支。还没有 Pages "
+"网站的仓库，会在首次推送（推送会创建该分支）之后完成设置。"
 
 #: ../../howto/github-pages.rst:73
-msgid "**Publication.** It builds the project and pushes the whole site in one commit. It waits for GitHub Pages to deploy that commit and prints the live URL."
+msgid ""
+"**Publication.** It builds the project and pushes the whole site in one "
+"commit. It waits for GitHub Pages to deploy that commit and prints the "
+"live URL."
 msgstr "**发布。** 它构建项目，并用一次提交推送整个网站。然后等待 GitHub Pages 部署该提交，并打印线上网址。"
 
 #: ../../howto/github-pages.rst:76
-msgid "The next time, every step is done already. ``publish`` then builds and publishes without a question."
+msgid ""
+"The next time, every step is done already. ``publish`` then builds and "
+"publishes without a question."
 msgstr "下一次，所有步骤都已完成，``publish`` 会直接构建并发布，不再询问。"
 
 #: ../../howto/github-pages.rst:79
-msgid "In a script, or with ``--yes``, it never asks. ``--yes`` answers the confirmations (repository, authorization, Pages source) with yes. It still never signs in and never replaces others' work. A step that needs us fails with ``pages.guide`` and a hint that names the flag or the step command, such as ``--repository=octo/manual`` or ``guidedog-pages auth login``."
-msgstr "在脚本中或使用 ``--yes`` 时，它从不询问。``--yes`` 对各项确认（仓库、授权、Pages 来源）一律回答“是”。但它仍然不会代为登录，也不会替换他人的工作。需要我们参与的步骤会以 ``pages.guide`` 失败，提示会指出相应的选项或单步命令，例如 ``--repository=octo/manual`` 或 ``guidedog-pages auth login``。"
+msgid ""
+"In a script, or with ``--yes``, it never asks. ``--yes`` answers the "
+"confirmations (repository, authorization, Pages source) with yes. It "
+"still never signs in and never replaces others' work. A step that needs "
+"us fails with ``pages.guide`` and a hint that names the flag or the step "
+"command, such as ``--repository=octo/manual`` or ``guidedog-pages auth "
+"login``."
+msgstr ""
+"在脚本中或使用 ``--yes`` 时，它从不询问。``--yes`` 对各项确认（仓库、授权、Pages "
+"来源）一律回答“是”。但它仍然不会代为登录，也不会替换他人的工作。需要我们参与的步骤会以 ``pages.guide`` "
+"失败，提示会指出相应的选项或单步命令，例如 ``--repository=octo/manual`` 或 ``guidedog-pages "
+"auth login``。"
 
 #: ../../howto/github-pages.rst:85
 msgid "Publish from this machine, step by step"
 msgstr "逐步从本机发布"
 
 #: ../../howto/github-pages.rst:88
-msgid "The step commands stay for scripts and for checking each part. ``guidedog-pages`` builds the project with the installed ``guidedog``. It pushes the whole site to a branch of its own in one Git commit."
-msgstr "单步命令仍然保留，供脚本使用，也便于逐一检查各个环节。``guidedog-pages`` 用已安装的 ``guidedog`` 构建项目，再用一次 Git 提交把整个网站推送到它专用的分支。"
+msgid ""
+"The step commands stay for scripts and for checking each part. "
+"``guidedog-pages`` builds the project with the installed ``guidedog``. It "
+"pushes the whole site to a branch of its own in one Git commit."
+msgstr ""
+"单步命令仍然保留，供脚本使用，也便于逐一检查各个环节。``guidedog-pages`` 用已安装的 ``guidedog`` "
+"构建项目，再用一次 Git 提交把整个网站推送到它专用的分支。"
 
 #: ../../howto/github-pages.rst:92
-msgid "We write ``pages.toml`` beside our project. It names the repository, the branch, and the credential profile. It holds no secret, so we can commit it:"
+msgid ""
+"We write ``pages.toml`` beside our project. It names the repository, the "
+"branch, and the credential profile. It holds no secret, so we can commit "
+"it:"
 msgstr "我们在项目旁边写一个 ``pages.toml``。它写明仓库、分支和凭据档案。其中不含任何机密，因此可以提交到仓库："
 
 #: ../../howto/github-pages.rst:99
-msgid "Next we store a token for the profile. We make a fine-grained personal access token for the repository with **Contents: read and write**, and **Pages: read** so that publication can confirm the deployment. If we want ``setup`` to configure Pages, it also needs **Pages: write** and **Administration: write**. We paste it when asked. It is not shown, and it never goes to a file:"
-msgstr "接下来为该档案保存令牌。我们为仓库创建一个细粒度个人访问令牌，授予 **Contents: read and write**，以及 **Pages: read**，以便发布时确认部署。如果希望 ``setup`` 配置 Pages，还需要 **Pages: write** 和 **Administration: write**。按提示粘贴令牌。输入的内容不会显示，令牌也绝不会写入文件："
+msgid ""
+"Next we store a token for the profile. We make a fine-grained personal "
+"access token for the repository with **Contents: read and write**, and "
+"**Pages: read** so that publication can confirm the deployment. If we "
+"want ``setup`` to configure Pages, it also needs **Pages: write** and "
+"**Administration: write**. We paste it when asked. It is not shown, and "
+"it never goes to a file:"
+msgstr ""
+"接下来为该档案保存令牌。我们为仓库创建一个细粒度个人访问令牌，授予 **Contents: read and write**，以及 "
+"**Pages: read**，以便发布时确认部署。如果希望 ``setup`` 配置 Pages，还需要 **Pages: write** 和 "
+"**Administration: write**。按提示粘贴令牌。输入的内容不会显示，令牌也绝不会写入文件："
 
 #: ../../howto/github-pages.rst:110
-msgid "``auth login`` signs in with a code instead, for a GitHub App or OAuth App we registered with the device flow enabled: ``guidedog-pages auth login --client-id=YOUR_APP_ID``."
-msgstr "``auth login`` 则改用验证码登录，适用于我们自己注册、启用了设备流程的 GitHub App 或 OAuth App：``guidedog-pages auth login --client-id=YOUR_APP_ID``。"
+msgid ""
+"``auth login`` signs in with a code instead, for a GitHub App or OAuth "
+"App we registered with the device flow enabled: ``guidedog-pages auth "
+"login --client-id=YOUR_APP_ID``."
+msgstr ""
+"``auth login`` 则改用验证码登录，适用于我们自己注册、启用了设备流程的 GitHub App 或 OAuth "
+"App：``guidedog-pages auth login --client-id=YOUR_APP_ID``。"
 
 #: ../../howto/github-pages.rst:114
-msgid "We authorize the target, point Pages at the branch, and check that everything is ready:"
+msgid ""
+"We authorize the target, point Pages at the branch, and check that "
+"everything is ready:"
 msgstr "我们授权发布目标，把 Pages 指向该分支，并检查一切是否就绪："
 
 #: ../../howto/github-pages.rst:122
-msgid "``bind`` refuses a branch that holds work Guidedog did not publish. ``--adopt`` lets the next publication replace it. The branch must not be the repository's default branch. Publication goes only to a bound target. Guidedog refuses, until we bind again, a ``pages.toml`` that names another repository, a repository that was renamed, transferred, or made again, and another account's token."
-msgstr "如果分支上有并非由 Guidedog 发布的内容，``bind`` 会拒绝绑定。``--adopt`` 允许下一次发布替换它。该分支不能是仓库的默认分支。发布只会发往已绑定的目标。在我们重新绑定之前，Guidedog 会拒绝以下情况：``pages.toml`` 指向另一个仓库，仓库被重命名、转移或重新创建，以及使用另一个账户的令牌。"
+msgid ""
+"``bind`` refuses a branch that holds work Guidedog did not publish. "
+"``--adopt`` lets the next publication replace it. The branch must not be "
+"the repository's default branch. Publication goes only to a bound target. "
+"Guidedog refuses, until we bind again, a ``pages.toml`` that names "
+"another repository, a repository that was renamed, transferred, or made "
+"again, and another account's token."
+msgstr ""
+"如果分支上有并非由 Guidedog 发布的内容，``bind`` 会拒绝绑定。``--adopt`` "
+"允许下一次发布替换它。该分支不能是仓库的默认分支。发布只会发往已绑定的目标。在我们重新绑定之前，Guidedog "
+"会拒绝以下情况：``pages.toml`` 指向另一个仓库，仓库被重命名、转移或重新创建，以及使用另一个账户的令牌。"
 
 #: ../../howto/github-pages.rst:133
-msgid "``publish`` builds with warnings as errors (``strict = true``) and ``html_baseurl`` set to ``site_url``. It lists what it adds, changes, and removes. Then it sends one push that holds only the files the branch lacks. GitHub moves the branch only if it still has the commit that was read, so a publication never overwrites a newer one. A ``.nojekyll`` file is added, so that GitHub serves folders such as ``_static``. Then it waits, up to ``wait_seconds``, for GitHub Pages to deploy that commit."
-msgstr "``publish`` 构建时将警告视为错误（``strict = true``），并把 ``html_baseurl`` 设为 ``site_url``。它列出要新增、修改和删除的文件，然后发送一次推送，其中只包含分支缺少的文件。只有当分支仍指向读取时的那个提交，GitHub 才会移动分支，所以一次发布绝不会覆盖更新的发布。发布时会添加 ``.nojekyll`` 文件，让 GitHub 能提供 ``_static`` 这类文件夹。之后它最多等待 ``wait_seconds`` 秒，直到 GitHub Pages 部署该提交。"
+msgid ""
+"``publish`` builds with warnings as errors (``strict = true``) and "
+"``html_baseurl`` set to ``site_url``. It lists what it adds, changes, and "
+"removes. Then it sends one push that holds only the files the branch "
+"lacks. GitHub moves the branch only if it still has the commit that was "
+"read, so a publication never overwrites a newer one. A ``.nojekyll`` file "
+"is added, so that GitHub serves folders such as ``_static``. Then it "
+"waits, up to ``wait_seconds``, for GitHub Pages to deploy that commit."
+msgstr ""
+"``publish`` 构建时将警告视为错误（``strict = true``），并把 ``html_baseurl`` 设为 "
+"``site_url``。它列出要新增、修改和删除的文件，然后发送一次推送，其中只包含分支缺少的文件。只有当分支仍指向读取时的那个提交，GitHub "
+"才会移动分支，所以一次发布绝不会覆盖更新的发布。发布时会添加 ``.nojekyll`` 文件，让 GitHub 能提供 ``_static`` "
+"这类文件夹。之后它最多等待 ``wait_seconds`` 秒，直到 GitHub Pages 部署该提交。"
 
 #: ../../howto/github-pages.rst:140
 msgid "The exit status says what happened:"
@@ -402,7 +627,9 @@ msgid "2: a usage, configuration, or missing step problem."
 msgstr "2：用法错误、配置问题或缺少步骤。"
 
 #: ../../howto/github-pages.rst:145
-msgid "6: GitHub accepted the publication but has not confirmed the deployment yet."
+msgid ""
+"6: GitHub accepted the publication but has not confirmed the deployment "
+"yet."
 msgstr "6：GitHub 已接受发布，但尚未确认部署。"
 
 #: ../../howto/github-pages.rst:146
@@ -410,24 +637,47 @@ msgid "7: it is not known whether the branch moved."
 msgstr "7：无法确定分支是否已移动。"
 
 #: ../../howto/github-pages.rst:148
-msgid "We check later with ``guidedog-pages status``. ``guidedog-pages recover`` settles a publication whose answer was lost, and it never moves the branch back."
-msgstr "我们可以稍后用 ``guidedog-pages status`` 查看。``guidedog-pages recover`` 会了结一次丢失了响应的发布，并且绝不会把分支移回去。"
+msgid ""
+"We check later with ``guidedog-pages status``. ``guidedog-pages recover`` "
+"settles a publication whose answer was lost, and it never moves the "
+"branch back."
+msgstr ""
+"我们可以稍后用 ``guidedog-pages status`` 查看。``guidedog-pages recover`` "
+"会了结一次丢失了响应的发布，并且绝不会把分支移回去。"
 
 #: ../../howto/github-pages.rst:152
-msgid "To publish a site we build ourselves, we write ``site = \"build/site\"`` instead of ``project``. The folder is copied and checked before it is published."
-msgstr "要发布我们自己构建的网站，就写 ``site = \"build/site\"`` 来代替 ``project``。该文件夹会先被复制并检查，然后才发布。"
+msgid ""
+"To publish a site we build ourselves, we write ``site = \"build/site\"`` "
+"instead of ``project``. The folder is copied and checked before it is "
+"published."
+msgstr ""
+"要发布我们自己构建的网站，就写 ``site = \"build/site\"`` 来代替 "
+"``project``。该文件夹会先被复制并检查，然后才发布。"
 
 #: ../../howto/github-pages.rst:155
 msgid "Publish on every change, with a preview"
 msgstr "每次改动后发布，并提供预览"
 
 #: ../../howto/github-pages.rst:158
-msgid "``guidedog-pages watch`` publishes once, then again whenever the sources change and have been quiet for ``debounce_ms`` (at most ``max_wait_ms`` after the first change). A failed build or publication is reported, and the published site stays as it was."
-msgstr "``guidedog-pages watch`` 先发布一次，之后每当源文件变化并静止 ``debounce_ms`` 后再次发布（首次变化后最多等待 ``max_wait_ms``）。构建或发布失败时会报告问题，已发布的网站保持不变。"
+msgid ""
+"``guidedog-pages watch`` publishes once, then again whenever the sources "
+"change and have been quiet for ``debounce_ms`` (at most ``max_wait_ms`` "
+"after the first change). A failed build or publication is reported, and "
+"the published site stays as it was."
+msgstr ""
+"``guidedog-pages watch`` 先发布一次，之后每当源文件变化并静止 ``debounce_ms`` "
+"后再次发布（首次变化后最多等待 ``max_wait_ms``）。构建或发布失败时会报告问题，已发布的网站保持不变。"
 
 #: ../../howto/github-pages.rst:162
-msgid "``guidedog-pages watch --serve`` also serves the built site on this machine, at ``http://127.0.0.1:8000/`` (``--serve=PORT`` for another port). We see each build before GitHub Pages deploys it. One Ctrl+C stops both the watch and the preview."
-msgstr "``guidedog-pages watch --serve`` 还会在本机的 ``http://127.0.0.1:8000/`` 上提供构建好的网站（用 ``--serve=PORT`` 指定其他端口）。这样我们能在 GitHub Pages 部署之前看到每次构建的结果。按一次 Ctrl+C 即可同时停止监视和预览。"
+msgid ""
+"``guidedog-pages watch --serve`` also serves the built site on this "
+"machine, at ``http://127.0.0.1:8000/`` (``--serve=PORT`` for another "
+"port). We see each build before GitHub Pages deploys it. One Ctrl+C stops "
+"both the watch and the preview."
+msgstr ""
+"``guidedog-pages watch --serve`` 还会在本机的 ``http://127.0.0.1:8000/`` "
+"上提供构建好的网站（用 ``--serve=PORT`` 指定其他端口）。这样我们能在 GitHub Pages "
+"部署之前看到每次构建的结果。按一次 Ctrl+C 即可同时停止监视和预览。"
 
 #: ../../howto/github-pages.rst:166
 msgid ""
@@ -438,8 +688,19 @@ msgstr ""
 "``~/Library/LaunchAgents/org.example.docs.plist`` 中的启动代理："
 
 #: ../../howto/github-pages.rst:187
-msgid "On Linux, a systemd user service, ``~/.config/systemd/user/docs-pages.service``, started with ``systemctl --user enable --now docs-pages``. A user service reaches the desktop's Secret Service. On a server without one, we give the token with ``--credential=env`` and an ``Environment=GUIDEDOG_PAGES_TOKEN=...`` drop-in readable only by our own account:"
-msgstr "Linux 上使用 systemd 用户服务 ``~/.config/systemd/user/docs-pages.service``，并用 ``systemctl --user enable --now docs-pages`` 启动。用户服务可以访问桌面的 Secret Service。在没有该服务的服务器上，我们用 ``--credential=env`` 提供令牌，并通过一个只有我们自己的账户可读的附加配置（drop-in）设置 ``Environment=GUIDEDOG_PAGES_TOKEN=...``："
+msgid ""
+"On Linux, a systemd user service, "
+"``~/.config/systemd/user/docs-pages.service``, started with ``systemctl "
+"--user enable --now docs-pages``. A user service reaches the desktop's "
+"Secret Service. On a server without one, we give the token with "
+"``--credential=env`` and an ``Environment=GUIDEDOG_PAGES_TOKEN=...`` "
+"drop-in readable only by our own account:"
+msgstr ""
+"Linux 上使用 systemd 用户服务 ``~/.config/systemd/user/docs-pages.service``，并用 "
+"``systemctl --user enable --now docs-pages`` 启动。用户服务可以访问桌面的 Secret "
+"Service。在没有该服务的服务器上，我们用 ``--credential=env`` "
+"提供令牌，并通过一个只有我们自己的账户可读的附加配置（drop-in）设置 "
+"``Environment=GUIDEDOG_PAGES_TOKEN=...``："
 
 #: ../../howto/github-pages.rst:206
 msgid ""
@@ -456,35 +717,84 @@ msgid "We generate the workflow instead of copying it:"
 msgstr "我们生成工作流，而不是复制它："
 
 #: ../../howto/github-pages.rst:225
-msgid "It writes ``.github/workflows/docs-pages.yml`` for a project in ``docs`` and a source branch ``main`` (``--project=DIR``, ``--branch=NAME``). The workflow installs this Guidedog release (``--version=X``). The archive's SHA-256 is read from the release's ``SHA256SUMS``, or given with ``--sha256``. ``--offline`` writes a clearly marked placeholder. The workflow's checksum test fails on it, and the command exits with status 1 until we give ``--sha256``. Without ``--write`` it prints the workflow."
-msgstr "它为位于 ``docs`` 的项目和源分支 ``main`` 写出 ``.github/workflows/docs-pages.yml`` （可用 ``--project=DIR``、``--branch=NAME`` 更改）。该工作流安装当前这个 Guidedog 发布版本（``--version=X``）。归档文件的 SHA-256 从该版本的 ``SHA256SUMS`` 读取，或用 ``--sha256`` 给出。``--offline`` 会写入一个醒目标记的占位值：工作流的校验和检查会因此失败，命令也会以状态 1 退出，直到我们提供 ``--sha256``。不加 ``--write`` 时，它只打印工作流。"
+msgid ""
+"It writes ``.github/workflows/docs-pages.yml`` for a project in ``docs`` "
+"and a source branch ``main`` (``--project=DIR``, ``--branch=NAME``). The "
+"workflow installs this Guidedog release (``--version=X``). The archive's "
+"SHA-256 is read from the release's ``SHA256SUMS``, or given with "
+"``--sha256``. ``--offline`` writes a clearly marked placeholder. The "
+"workflow's checksum test fails on it, and the command exits with status 1 "
+"until we give ``--sha256``. Without ``--write`` it prints the workflow."
+msgstr ""
+"它为位于 ``docs`` 的项目和源分支 ``main`` 写出 ``.github/workflows/docs-pages.yml`` "
+"（可用 ``--project=DIR``、``--branch=NAME`` 更改）。该工作流安装当前这个 Guidedog "
+"发布版本（``--version=X``）。归档文件的 SHA-256 从该版本的 ``SHA256SUMS`` 读取，或用 "
+"``--sha256`` 给出。``--offline`` 会写入一个醒目标记的占位值：工作流的校验和检查会因此失败，命令也会以状态 1 "
+"退出，直到我们提供 ``--sha256``。不加 ``--write`` 时，它只打印工作流。"
 
 #: ../../howto/github-pages.rst:232
-msgid "In the repository's **Settings -> Pages**, we choose **GitHub Actions** as the publishing source and restrict the ``github-pages`` environment to ``main``."
-msgstr "在仓库的 **Settings -> Pages** 中，我们选择 **GitHub Actions** 作为发布来源，并把 ``github-pages`` 环境限制为 ``main``。"
+msgid ""
+"In the repository's **Settings -> Pages**, we choose **GitHub Actions** "
+"as the publishing source and restrict the ``github-pages`` environment to "
+"``main``."
+msgstr ""
+"在仓库的 **Settings -> Pages** 中，我们选择 **GitHub Actions** 作为发布来源，并把 "
+"``github-pages`` 环境限制为 ``main``。"
 
 #: ../../howto/github-pages.rst:235
 msgid "The workflow it writes is this one (for Guidedog 0.6.3):"
 msgstr "它写出的工作流如下（针对 Guidedog 0.6.3）："
 
 #: ../../howto/github-pages.rst:320
-msgid "The build job can read sources. Only the deploy job receives Pages and OIDC permissions. GitHub supplies its short-lived credentials, so we add no personal token. The checkout keeps no credentials. Pull requests build but never deploy. The workflow stays on ``pull_request``, never ``pull_request_target``. Action commits are pinned by SHA with their versions in comments. The Guidedog archive is checked against its SHA-256 before it is unpacked."
-msgstr "构建作业只能读取源文件，只有部署作业获得 Pages 和 OIDC 权限。GitHub 提供短期凭据，因此我们无需添加个人令牌。检出步骤不保留凭据。拉取请求只构建，从不部署。工作流始终使用 ``pull_request``，绝不使用 ``pull_request_target``。各 Action 的提交按 SHA 固定，版本号写在注释中。Guidedog 归档文件在解压前会先核对 SHA-256。"
+msgid ""
+"The build job can read sources. Only the deploy job receives Pages and "
+"OIDC permissions. GitHub supplies its short-lived credentials, so we add "
+"no personal token. The checkout keeps no credentials. Pull requests build "
+"but never deploy. The workflow stays on ``pull_request``, never "
+"``pull_request_target``. Action commits are pinned by SHA with their "
+"versions in comments. The Guidedog archive is checked against its SHA-256 "
+"before it is unpacked."
+msgstr ""
+"构建作业只能读取源文件，只有部署作业获得 Pages 和 OIDC 权限。GitHub "
+"提供短期凭据，因此我们无需添加个人令牌。检出步骤不保留凭据。拉取请求只构建，从不部署。工作流始终使用 ``pull_request``，绝不使用 "
+"``pull_request_target``。各 Action 的提交按 SHA 固定，版本号写在注释中。Guidedog "
+"归档文件在解压前会先核对 SHA-256。"
 
 #: ../../howto/github-pages.rst:327
 msgid "Check an existing workflow"
 msgstr "检查现有工作流"
 
 #: ../../howto/github-pages.rst:334
-msgid "It reports an older Guidedog release (``pages.workflow-outdated``), a missing or placeholder checksum, an action pinned to a tag or to another commit than the reviewed one (``pages.workflow-unpinned``, ``pages.workflow-pin``), ``pull_request_target``, and a checkout that keeps its credentials, each with its line and the fix. We update with ``guidedog-pages workflow --write --force``. Action updates are a separate review: the pinned commits are listed in ``gd-pages`` and change only with a reviewed release."
-msgstr "它会报告以下问题，并给出所在行和修正方法：Guidedog 发布版本过旧（``pages.workflow-outdated``）、校验和缺失或为占位值、Action 固定到标签或固定到与审核过的不同的提交（``pages.workflow-unpinned``、``pages.workflow-pin``）、使用 ``pull_request_target``，以及检出步骤保留了凭据。我们用 ``guidedog-pages workflow --write --force`` 更新。Action 的更新另行审核：固定的提交列在 ``gd-pages`` 中，只随经过审核的发布版本改变。"
+msgid ""
+"It reports an older Guidedog release (``pages.workflow-outdated``), a "
+"missing or placeholder checksum, an action pinned to a tag or to another "
+"commit than the reviewed one (``pages.workflow-unpinned``, "
+"``pages.workflow-pin``), ``pull_request_target``, and a checkout that "
+"keeps its credentials, each with its line and the fix. We update with "
+"``guidedog-pages workflow --write --force``. Action updates are a "
+"separate review: the pinned commits are listed in ``gd-pages`` and change "
+"only with a reviewed release."
+msgstr ""
+"它会报告以下问题，并给出所在行和修正方法：Guidedog "
+"发布版本过旧（``pages.workflow-outdated``）、校验和缺失或为占位值、Action "
+"固定到标签或固定到与审核过的不同的提交（``pages.workflow-unpinned``、``pages.workflow-pin``）、使用 "
+"``pull_request_target``，以及检出步骤保留了凭据。我们用 ``guidedog-pages workflow --write "
+"--force`` 更新。Action 的更新另行审核：固定的提交列在 ``gd-pages`` 中，只随经过审核的发布版本改变。"
 
 #: ../../howto/github-pages.rst:341
-msgid "If the project selects build plugins, we install and register their trusted executables in the build job before ``guidedog build``. Registrations on our own computer are not copied to a runner. See :doc:`../plugins`."
-msgstr "如果项目选用了构建插件，我们要先在构建作业中安装并注册它们的可信可执行文件，再运行 ``guidedog build``。我们自己电脑上的注册信息不会复制到 runner 上。见 :doc:`../plugins`。"
+msgid ""
+"If the project selects build plugins, we install and register their "
+"trusted executables in the build job before ``guidedog build``. "
+"Registrations on our own computer are not copied to a runner. See "
+":doc:`../plugins`."
+msgstr ""
+"如果项目选用了构建插件，我们要先在构建作业中安装并注册它们的可信可执行文件，再运行 ``guidedog "
+"build``。我们自己电脑上的注册信息不会复制到 runner 上。见 :doc:`../plugins`。"
 
 #: ../../howto/github-pages.rst:347
-msgid "A site built from a private repository is not necessarily private. We check its Pages visibility before publishing confidential material."
+msgid ""
+"A site built from a private repository is not necessarily private. We "
+"check its Pages visibility before publishing confidential material."
 msgstr "私有仓库构建的网站不一定是私有的。发布机密内容前，我们要先确认其 Pages 的可见性。"
 
 #: ../../howto/github-pages.rst:350
@@ -492,121 +802,165 @@ msgid "Tokens and automation"
 msgstr "令牌与自动化"
 
 #: ../../howto/github-pages.rst:353
-msgid "``--credential=env`` takes the token from ``GUIDEDOG_PAGES_TOKEN`` for one command and never stores it. ``GUIDEDOG_PAGES_CREDENTIAL=env`` chooses the same for runs that cannot take the option, such as ``guidedog publish``. A missing or locked credential store is reported. The token is never written to a plain file instead. ``auth logout`` deletes the stored token. We revoke it at GitHub too."
-msgstr "``--credential=env`` 只为当前这一条命令从 ``GUIDEDOG_PAGES_TOKEN`` 读取令牌，从不保存它。对于无法传入该选项的运行（例如 ``guidedog publish``），可以设置 ``GUIDEDOG_PAGES_CREDENTIAL=env`` 达到同样效果。凭据存储缺失或被锁定时会报告错误，令牌绝不会改为写入明文文件。``auth logout`` 删除已保存的令牌，我们还要在 GitHub 上撤销它。"
+msgid ""
+"``--credential=env`` takes the token from ``GUIDEDOG_PAGES_TOKEN`` for "
+"one command and never stores it. ``GUIDEDOG_PAGES_CREDENTIAL=env`` "
+"chooses the same for runs that cannot take the option, such as ``guidedog "
+"publish``. A missing or locked credential store is reported. The token is "
+"never written to a plain file instead. ``auth logout`` deletes the stored "
+"token. We revoke it at GitHub too."
+msgstr ""
+"``--credential=env`` 只为当前这一条命令从 ``GUIDEDOG_PAGES_TOKEN`` "
+"读取令牌，从不保存它。对于无法传入该选项的运行（例如 ``guidedog publish``），可以设置 "
+"``GUIDEDOG_PAGES_CREDENTIAL=env`` "
+"达到同样效果。凭据存储缺失或被锁定时会报告错误，令牌绝不会改为写入明文文件。``auth logout`` 删除已保存的令牌，我们还要在 "
+"GitHub 上撤销它。"
 
 #: ../../howto/github-pages.rst:359
 msgid "Through guidedog publish"
 msgstr "通过 guidedog publish 发布"
 
 #: ../../howto/github-pages.rst:362
-msgid "``guidedog publish pages`` runs the same guided publish with Guidedog's own engine. ``guidedog-pages`` is also a publisher program for ``guidedog publish --publisher=pages`` (see :doc:`../plugins`)."
-msgstr "``guidedog publish pages`` 用 Guidedog 自身的引擎执行同样的引导式发布。``guidedog-pages`` 也是供 ``guidedog publish --publisher=pages`` 使用的发布程序（见 :doc:`../plugins`）。"
+msgid ""
+"The GitHub Pages plugin is linked into ``guidedog``, and it adds two "
+"commands to it:"
+msgstr "GitHub Pages 插件已链接进 ``guidedog``，并为它添加了两条命令："
 
-#: ../../howto/github-pages.rst:366
+#: ../../howto/github-pages.rst:369
+msgid ""
+"``guidedog publish pages`` runs the same guided publish as "
+"``guidedog-pages publish``, with the same options, but guidedog builds "
+"the project itself, with its own engine and linked plugins, instead of "
+"starting an installed ``guidedog``. ``guidedog pages workflow`` is "
+"``guidedog-pages workflow``. ``guidedog publish pages --help`` and "
+"``guidedog pages workflow --help`` list their options."
+msgstr ""
+"``guidedog publish pages`` 执行与 ``guidedog-pages publish`` "
+"相同的引导式发布，选项也相同，但项目由 guidedog 用自己的引擎和链接的插件直接构建，而不是启动一个已安装的 "
+"``guidedog``。``guidedog pages workflow`` 就是 ``guidedog-pages "
+"workflow``。``guidedog publish pages --help`` 和 ``guidedog pages workflow "
+"--help`` 会列出各自的选项。"
+
+#: ../../howto/github-pages.rst:371
+msgid ""
+"A custom ``guidedog`` built without the plugin can still have both "
+"commands: we register the ``guidedog-pages`` program (``guidedog plugin "
+"register pages /usr/local/bin/guidedog-pages``), and guidedog runs it for "
+"them on our terminal. ``guidedog-pages`` is also the publisher program "
+"for ``guidedog publish --publisher=pages`` (see :doc:`../plugins`)."
+msgstr ""
+"即使自行构建的 ``guidedog`` 没有链接这个插件，也照样可以使用这两条命令：我们注册 ``guidedog-pages`` "
+"程序（``guidedog plugin register pages "
+"/usr/local/bin/guidedog-pages``），guidedog "
+"就会在我们的终端上运行它来执行这两条命令。``guidedog-pages`` 也是供 ``guidedog publish "
+"--publisher=pages`` 使用的发布程序（见 :doc:`../plugins`）。"
+
+#: ../../howto/github-pages.rst:373
 msgid "Troubleshooting"
 msgstr "故障排除"
 
-#: ../../howto/github-pages.rst:369
+#: ../../howto/github-pages.rst:376
 msgid "Every problem names its code and what to do. The common ones:"
 msgstr "每个问题都会给出代码和处理方法。常见问题如下："
 
-#: ../../howto/github-pages.rst:375
+#: ../../howto/github-pages.rst:382
 msgid "Code"
 msgstr "代码"
 
-#: ../../howto/github-pages.rst:376
+#: ../../howto/github-pages.rst:383
 msgid "What to do"
 msgstr "处理方法"
 
-#: ../../howto/github-pages.rst:377
+#: ../../howto/github-pages.rst:384
 msgid "``pages.unbound``"
 msgstr "``pages.unbound``"
 
-#: ../../howto/github-pages.rst:378
+#: ../../howto/github-pages.rst:385
 msgid ""
 "Run ``guidedog-pages bind``: this machine has not been allowed to publish "
 "there."
 msgstr "运行 ``guidedog-pages bind``\\ ：本机尚未获准向该目标发布。"
 
-#: ../../howto/github-pages.rst:379
+#: ../../howto/github-pages.rst:386
 msgid "``pages.no-token``, ``pages.credential``"
 msgstr "``pages.no-token``, ``pages.credential``"
 
-#: ../../howto/github-pages.rst:380
+#: ../../howto/github-pages.rst:387
 msgid ""
 "Store a token with ``auth import`` or ``auth login``; GitHub refused or "
 "expired it."
 msgstr "用 ``auth import`` 或 ``auth login`` 保存令牌；GitHub 拒绝了令牌，或令牌已过期。"
 
-#: ../../howto/github-pages.rst:381
+#: ../../howto/github-pages.rst:388
 msgid "``pages.permission``"
 msgstr "``pages.permission``"
 
-#: ../../howto/github-pages.rst:382
+#: ../../howto/github-pages.rst:389
 msgid ""
 "Give the token Contents: read and write for the repository, or approve it "
 "for the organization's single sign-on."
 msgstr "为令牌授予该仓库的 Contents: read and write 权限，或为组织的单点登录批准该令牌。"
 
-#: ../../howto/github-pages.rst:384
+#: ../../howto/github-pages.rst:391
 msgid "``pages.source``, ``pages.no-site``"
 msgstr "``pages.source``, ``pages.no-site``"
 
-#: ../../howto/github-pages.rst:385
+#: ../../howto/github-pages.rst:392
 msgid ""
 "Run ``guidedog-pages setup``, or change the Pages source in the settings."
 msgstr "运行 ``guidedog-pages setup``\\ ，或在设置中更改 Pages 发布来源。"
 
-#: ../../howto/github-pages.rst:386
+#: ../../howto/github-pages.rst:393
 msgid "``pages.conflict``"
 msgstr "``pages.conflict``"
 
-#: ../../howto/github-pages.rst:387
+#: ../../howto/github-pages.rst:394
 msgid "Another publication moved the branch first; run the command again."
 msgstr "另一次发布先移动了分支；再运行一次命令即可。"
 
-#: ../../howto/github-pages.rst:388
+#: ../../howto/github-pages.rst:395
 msgid "``pages.ruleset``"
 msgstr "``pages.ruleset``"
 
-#: ../../howto/github-pages.rst:389
+#: ../../howto/github-pages.rst:396
 msgid ""
 "A ruleset or branch protection refused the push; allow the account to "
 "push."
 msgstr "规则集或分支保护拒绝了推送；请允许该账户推送。"
 
-#: ../../howto/github-pages.rst:390
+#: ../../howto/github-pages.rst:397
 msgid "``pages.guide``"
 msgstr "``pages.guide``"
 
-#: ../../howto/github-pages.rst:391
-msgid "A step needs our answer and the run may not ask; run it in a terminal, or do the step the hint names."
+#: ../../howto/github-pages.rst:398
+msgid ""
+"A step needs our answer and the run may not ask; run it in a terminal, or "
+"do the step the hint names."
 msgstr "某个步骤需要我们答复，而本次运行不能询问；请在终端中运行，或完成提示中指出的步骤。"
 
-#: ../../howto/github-pages.rst:393
+#: ../../howto/github-pages.rst:400
 msgid "``pages.unsettled``"
 msgstr "``pages.unsettled``"
 
-#: ../../howto/github-pages.rst:394
+#: ../../howto/github-pages.rst:401
 msgid "Run ``guidedog-pages recover``."
 msgstr "运行 ``guidedog-pages recover``\\ 。"
 
-#: ../../howto/github-pages.rst:395
+#: ../../howto/github-pages.rst:402
 msgid "``pages.deployment``"
 msgstr "``pages.deployment``"
 
-#: ../../howto/github-pages.rst:396
+#: ../../howto/github-pages.rst:403
 msgid ""
 "The branch holds the site, but the Pages build failed; see the "
 "repository's Actions tab."
 msgstr "分支中已有网站，但 Pages 构建失败；请查看仓库的 Actions 标签页。"
 
-#: ../../howto/github-pages.rst:399
+#: ../../howto/github-pages.rst:406
 msgid "References"
 msgstr "参考资料"
 
-#: ../../howto/github-pages.rst:402
+#: ../../howto/github-pages.rst:409
 msgid ""
 "`GitHub's custom Pages workflows "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
@@ -614,7 +968,7 @@ msgstr ""
 "`GitHub 自定义 Pages 工作流 "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
 
-#: ../../howto/github-pages.rst:403
+#: ../../howto/github-pages.rst:410
 msgid ""
 "`Configure a Pages source "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
@@ -622,7 +976,7 @@ msgstr ""
 "`配置 Pages 发布来源 "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
 
-#: ../../howto/github-pages.rst:404
+#: ../../howto/github-pages.rst:411
 msgid ""
 "`The configure-pages v6.0.0 release "
 "<https://github.com/actions/configure-pages/releases/tag/v6.0.0>`_."
@@ -656,165 +1010,357 @@ msgstr ""
 "在 Apple 芯片或 Intel 芯片的 Mac 上，使用官方 tap ``insanai/homebrew-guidedog`` 安装："
 
 #: ../../howto/install.rst:15
-msgid "Homebrew selects the release archive for our processor and checks its SHA-256. The executable has the Typst compiler built in and links Graphviz, which Homebrew installs with it. We do not need a Rust toolchain, a Python environment, or a separate Typst installation to build HTML and PDF. The release requires macOS 12 or later."
-msgstr "Homebrew 会为我们的处理器选择对应的发行包，并校验其 SHA-256。可执行文件内置了 Typst 编译器，并链接 Graphviz（Homebrew 会一并安装）。构建 HTML 和 PDF 不需要 Rust 工具链、Python 环境，也不需要单独安装 Typst。此版本要求 macOS 12 或更高版本。"
+msgid ""
+"Homebrew selects the release archive for our processor and checks its "
+"SHA-256. The executable has the Typst compiler and Graphviz built in, so "
+"it needs nothing else at run time. We do not need a Rust toolchain, a "
+"Python environment, or a separate Typst installation to build HTML and "
+"PDF. The release requires macOS 12 or later."
+msgstr ""
+"Homebrew 会为我们的处理器选择对应的发行包，并校验其 SHA-256。可执行文件内置了 Typst 编译器和 "
+"Graphviz，运行时不再需要其他任何东西。构建 HTML 和 PDF 不需要 Rust 工具链、Python 环境，也不需要单独安装 "
+"Typst。此版本要求 macOS 12 或更高版本。"
 
-#: ../../howto/install.rst:20
-msgid "The package also installs two more programs. ``dsc`` keeps discussion catalogs and builds them with this ``guidedog`` (see :doc:`discussions`). ``guidedog-pages`` publishes sites to GitHub Pages (see :doc:`github-pages`)."
-msgstr "安装包还附带两个程序。``dsc`` 维护讨论目录，并用这个 ``guidedog`` 构建它们（见 :doc:`discussions`）。``guidedog-pages`` 把网站发布到 GitHub Pages（见 :doc:`github-pages`）。"
+#: ../../howto/install.rst:19
+msgid ""
+"The package also installs ``guidedog-pages``, which publishes sites to "
+"GitHub Pages (see :doc:`github-pages`), and ``graphdog``. Discussion "
+"catalogs need no program of their own: ``guidedog dsc`` keeps them (see "
+":doc:`discussions`)."
+msgstr ""
+"这个包还会安装 ``guidedog-pages``\\ （用于把网站发布到 GitHub Pages，见 :doc:`github-pages`）和 "
+"``graphdog``。讨论目录不需要单独的程序：由 ``guidedog dsc`` 维护（见 :doc:`discussions`）。"
 
-#: ../../howto/install.rst:24
-msgid "We create our first project in :doc:`../tutorial/first-project`. To update an installed release:"
+#: ../../howto/install.rst:21
+msgid ""
+"We create our first project in :doc:`../tutorial/first-project`. To "
+"update an installed release:"
 msgstr "我们在 :doc:`../tutorial/first-project` 中创建第一个项目。更新已安装的版本："
 
-#: ../../howto/install.rst:32
+#: ../../howto/install.rst:29
 msgid ""
 "Run ``brew test insanai/guidedog/guidedog`` to check the installed "
 "package by creating a project and building HTML and PDF."
 msgstr ""
 "运行 ``brew test insanai/guidedog/guidedog`` 检查已安装的包。测试会创建项目并生成 HTML 和 PDF。"
 
-#: ../../howto/install.rst:35
+#: ../../howto/install.rst:32
 msgid "Build from source"
 msgstr "从源码构建"
 
-#: ../../howto/install.rst:38
+#: ../../howto/install.rst:35
 msgid "Guidedog is a Cargo workspace. We need:"
 msgstr "Guidedog 是一个 Cargo workspace。我们需要："
 
+#: ../../howto/install.rst:37
+msgid ""
+"a Rust toolchain at the version ``rust-version`` names in the root "
+"``Cargo.toml`` (Rust 1.90 or newer; edition 2024), installed with "
+"``rustup``;"
+msgstr ""
+"Rust 工具链，版本不低于根目录 ``Cargo.toml`` 中 ``rust-version`` 指定的版本（Rust 1.90 "
+"或更新，edition 2024），用 ``rustup`` 安装；"
+
+#: ../../howto/install.rst:39
+msgid ""
+"the Graphviz library, because Guidedog links it (``libgvc`` and "
+"``libcgraph``) to draw graphs in process. Either install the system's "
+"development files (``libgraphviz-dev`` on Debian and Ubuntu, "
+"``graphviz-devel`` on Fedora, ``graphviz`` from Homebrew on macOS), or "
+"build static libraries with ``cargo xtask graphviz`` (see below);"
+msgstr ""
+"Graphviz 库，因为 Guidedog 链接它（``libgvc`` 和 "
+"``libcgraph``），在进程内绘制图形。可以安装系统的开发文件（Debian 和 Ubuntu 上是 "
+"``libgraphviz-dev``，Fedora 上是 ``graphviz-devel``，macOS 上是 Homebrew 的 "
+"``graphviz``），也可以用 ``cargo xtask graphviz`` 构建静态库（见下文）；"
+
 #: ../../howto/install.rst:40
-msgid "a Rust toolchain at the version ``rust-version`` names in the root ``Cargo.toml`` (Rust 1.90 or newer; edition 2024), installed with ``rustup``;"
-msgstr "Rust 工具链，版本不低于根目录 ``Cargo.toml`` 中 ``rust-version`` 指定的版本（Rust 1.90 或更新，edition 2024），用 ``rustup`` 安装；"
+msgid ""
+"a C compiler (``cc``, Xcode's command-line tools, or MSVC), which Cargo "
+"uses to build the tree-sitter grammars and the cryptography in the "
+"``ring`` crate (TLS for HTTPS)."
+msgstr ""
+"C 编译器（``cc``、Xcode 命令行工具或 MSVC），Cargo 用它构建 tree-sitter 语法以及 ``ring`` crate "
+"中的密码学代码（HTTPS 所用的 TLS）。"
 
 #: ../../howto/install.rst:42
-msgid "Graphviz's development files, because Guidedog links the Graphviz library (``libgvc`` and ``libcgraph``) to draw graphs in process: ``libgraphviz-dev`` on Debian and Ubuntu, ``graphviz-devel`` on Fedora, ``graphviz`` from Homebrew on macOS;"
-msgstr "Graphviz 的开发文件，因为 Guidedog 链接 Graphviz 库（``libgvc`` 和 ``libcgraph``），在进程内绘制图形：Debian 和 Ubuntu 上是 ``libgraphviz-dev``，Fedora 上是 ``graphviz-devel``，macOS 上是 Homebrew 的 ``graphviz``；"
+msgid ""
+"Nothing else is built by hand. The Typst compiler (0.15.1), the "
+"tree-sitter grammars for Python and Rust, and the HTTP client (``ureq`` "
+"with ``rustls``) are ordinary Cargo dependencies, compiled with the "
+"workspace. HTTPS needs no ``curl`` program, OpenSSL or system certificate "
+"store: the root certificates are built in. There are no native build "
+"scripts to run first."
+msgstr ""
+"其他都不需要手动构建。Typst 编译器（0.15.1）、Python 和 Rust 的 tree-sitter 语法，以及 HTTP "
+"客户端（``ureq`` 加 ``rustls``）都是普通的 Cargo 依赖，随 workspace 一起编译。HTTPS 不需要 "
+"``curl`` 程序、OpenSSL 或系统证书库：根证书已经内置。没有需要预先运行的原生构建脚本。"
 
-#: ../../howto/install.rst:45
-msgid "``curl`` on the ``PATH`` for intersphinx inventories and the GitHub Pages publisher, which run the ``curl`` program instead of linking an HTTP library."
-msgstr "``PATH`` 中的 ``curl``，intersphinx 清单和 GitHub Pages 发布工具会调用 ``curl`` 程序，而不是链接 HTTP 库。"
-
-#: ../../howto/install.rst:48
-msgid "Nothing else is built by hand. The Typst compiler (0.15.1) and the tree-sitter grammars for Python and Rust are ordinary Cargo dependencies, compiled with the workspace. There are no native build scripts to run first."
-msgstr "其他都不需要手动构建。Typst 编译器（0.15.1）以及 Python 和 Rust 的 tree-sitter 语法都是普通的 Cargo 依赖，随 workspace 一起编译。没有需要预先运行的原生构建脚本。"
-
-#: ../../howto/install.rst:52
+#: ../../howto/install.rst:46
 msgid "Release build"
 msgstr "发布版构建"
 
-#: ../../howto/install.rst:55
+#: ../../howto/install.rst:49
 msgid "From the repository root:"
 msgstr "在仓库根目录运行："
 
-#: ../../howto/install.rst:63
-msgid "The executable is ``target/release/guidedog`` (``guidedog.exe`` on Windows). To run ``guidedog`` without its path, we put it on our ``PATH`` or install it into Cargo's binary folder:"
-msgstr "可执行文件是 ``target/release/guidedog`` （Windows 上为 ``guidedog.exe``）。要不带路径直接运行 ``guidedog``，可以把它加入 ``PATH``，或安装到 Cargo 的二进制目录："
+#: ../../howto/install.rst:57
+msgid ""
+"This links the system's shared Graphviz libraries, so the program needs "
+"them at run time."
+msgstr "这样会链接系统的 Graphviz 共享库，因此程序运行时需要这些库。"
 
-#: ../../howto/install.rst:71
-msgid "``guidedog formats`` lists the readers and renderers built in, and the Typst backend it found."
-msgstr "``guidedog formats`` 列出内置的读取器和渲染器，以及找到的 Typst 后端。"
+#: ../../howto/install.rst:59
+msgid "Static Graphviz"
+msgstr "静态链接 Graphviz"
+
+#: ../../howto/install.rst:62
+msgid ""
+"The release archives link Graphviz statically, so they need no Graphviz "
+"on the machine that runs them. We build the same way:"
+msgstr "发行归档包以静态方式链接 Graphviz，因此运行它们的机器上不需要安装 Graphviz。我们也可以用同样的方式构建："
+
+#: ../../howto/install.rst:70
+msgid ""
+"``cargo xtask graphviz`` downloads Graphviz 16.1.0 and Expat 2.7.1, "
+"checks each against its pinned SHA-256, and builds static libraries into "
+"``target/graphviz/16.1.0``, the folder it prints. It needs a C and C++ "
+"compiler, ``make``, ``curl``, ``tar`` and ``xz``, and takes a few "
+"minutes. The build has only what Guidedog uses: the dot and neato layout "
+"plugins (dot, neato, fdp, sfdp, circo, twopi, osage, patchwork) and the "
+"core renderers (SVG and DOT), with no X11, cairo, gd, ltdl or zlib. So a "
+"static build renders SVG and laid-out DOT, but not PNG."
+msgstr ""
+"``cargo xtask graphviz`` 会下载 Graphviz 16.1.0 和 Expat 2.7.1，按固定的 SHA-256 "
+"逐一校验，然后把静态库构建到 ``target/graphviz/16.1.0``，并打印这个文件夹。它需要 C 和 C++ "
+"编译器、``make``、``curl``、``tar`` 和 ``xz``，耗时几分钟。构建结果只包含 Guidedog 用到的部分：dot 和 "
+"neato 布局插件（dot、neato、fdp、sfdp、circo、twopi、osage、patchwork）以及核心渲染器（SVG 和 "
+"DOT），不含 X11、cairo、gd、ltdl 和 zlib。因此静态构建可以渲染 SVG 和布局后的 DOT，但不能渲染 PNG。"
+
+#: ../../howto/install.rst:72
+msgid ""
+"``GUIDEDOG_GRAPHVIZ_STATIC`` tells ``gd-graphdog``'s build script where "
+"the libraries are; the ``static-graphviz`` feature of ``gd-graphdog`` "
+"uses the default folder. ``guidedog --version`` then reports ``graphviz "
+"16.1.0 (static)``."
+msgstr ""
+"``GUIDEDOG_GRAPHVIZ_STATIC`` 告诉 ``gd-graphdog`` 的构建脚本这些库在哪里；``gd-graphdog`` "
+"的 ``static-graphviz`` feature 使用默认文件夹。之后 ``guidedog --version`` 会报告 "
+"``graphviz 16.1.0 (static)``。"
 
 #: ../../howto/install.rst:74
+msgid ""
+"The executable is ``target/release/guidedog`` (``guidedog.exe`` on "
+"Windows). To run ``guidedog`` without its path, we put it on our ``PATH`` "
+"or install it into Cargo's binary folder:"
+msgstr ""
+"可执行文件是 ``target/release/guidedog`` （Windows 上为 "
+"``guidedog.exe``）。要不带路径直接运行 ``guidedog``，可以把它加入 ``PATH``，或安装到 Cargo "
+"的二进制目录："
+
+#: ../../howto/install.rst:82
+msgid ""
+"``guidedog formats`` lists the readers and renderers built in, and the "
+"Typst backend it found."
+msgstr "``guidedog formats`` 列出内置的读取器和渲染器，以及找到的 Typst 后端。"
+
+#: ../../howto/install.rst:85
 msgid "Typst: embedded or installed"
 msgstr "Typst：内嵌还是外部安装"
 
-#: ../../howto/install.rst:77
-msgid "By default the Typst compiler is linked into ``guidedog`` (the ``embedded`` feature of the ``gd-typst`` crate). PDF then needs no other program. A build of ``gd-typst`` without that feature runs an installed ``typst`` program (0.15.1) instead. Either way, ``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) selects a program explicitly, and ``guidedog --version`` names the backend in use."
-msgstr "默认情况下，Typst 编译器链接在 ``guidedog`` 中（``gd-typst`` crate 的 ``embedded`` feature）。这样生成 PDF 不需要其他程序。不带该 feature 构建的 ``gd-typst`` 会改为调用已安装的 ``typst`` 程序（0.15.1）。无论哪种方式，都可以用 ``--typst=/absolute/path/to/typst`` （或 ``conf.toml`` 中的 ``typst``）显式指定程序，``guidedog --version`` 会显示当前使用的后端。"
+#: ../../howto/install.rst:88
+msgid ""
+"By default the Typst compiler is linked into ``guidedog`` (the "
+"``embedded`` feature of the ``gd-typst`` crate). PDF then needs no other "
+"program. A build of ``gd-typst`` without that feature runs an installed "
+"``typst`` program (0.15.1) instead. Either way, "
+"``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) "
+"selects a program explicitly, and ``guidedog --version`` names the "
+"backend in use."
+msgstr ""
+"默认情况下，Typst 编译器链接在 ``guidedog`` 中（``gd-typst`` crate 的 ``embedded`` "
+"feature）。这样生成 PDF 不需要其他程序。不带该 feature 构建的 ``gd-typst`` 会改为调用已安装的 "
+"``typst`` 程序（0.15.1）。无论哪种方式，都可以用 ``--typst=/absolute/path/to/typst`` （或 "
+"``conf.toml`` 中的 ``typst``）显式指定程序，``guidedog --version`` 会显示当前使用的后端。"
 
-#: ../../howto/install.rst:83
-msgid "The embedded compiler removes the need to start a separate process. It does not remove the compiler's own memory costs. ``--budget`` bounds what Guidedog itself holds."
-msgstr "内嵌编译器省去了启动独立进程的开销，但编译器本身的内存开销依然存在。``--budget`` 限制的是 Guidedog 自身占用的内存。"
+#: ../../howto/install.rst:94
+msgid ""
+"The embedded compiler removes the need to start a separate process. It "
+"does not remove the compiler's own memory costs. ``--budget`` bounds what "
+"Guidedog itself holds."
+msgstr ""
+"内嵌编译器省去了启动独立进程的开销，但编译器本身的内存开销依然存在。``--budget`` 限制的是 Guidedog 自身占用的内存。"
 
-#: ../../howto/install.rst:86
+#: ../../howto/install.rst:97
 msgid "Development checks"
 msgstr "开发检查"
 
-#: ../../howto/install.rst:89
-msgid "Before we propose a change, we run the same checks as the project's continuous integration:"
+#: ../../howto/install.rst:100
+msgid ""
+"Before we propose a change, we run the same checks as the project's "
+"continuous integration:"
 msgstr "提交修改之前，我们运行与项目持续集成相同的检查："
 
-#: ../../howto/install.rst:98
-msgid "``cargo run -p check`` is the source-limit checker in ``tools/check``: function and file lengths and line widths."
-msgstr "``cargo run -p check`` 是 ``tools/check`` 中的源码限制检查工具，检查函数长度、文件长度和行宽。"
+#: ../../howto/install.rst:110
+msgid ""
+"``cargo run -p check`` is the source-limit checker in ``tools/check``: "
+"function and file lengths and line widths. ``cargo xtask tables --check`` "
+"checks that the generated data tables match the upstream data in "
+"``tools/data``. ``cargo xtask --help`` lists the other repository tasks: "
+"the website, the fonts, and the release steps."
+msgstr ""
+"``cargo run -p check`` 是 ``tools/check`` 中的源码限制检查器，检查函数和文件长度以及行宽。``cargo "
+"xtask tables --check`` 检查生成的数据表是否与 ``tools/data`` 中的上游数据一致。``cargo xtask "
+"--help`` 列出仓库的其他任务：网站、字体和发布步骤。"
 
-#: ../../howto/install.rst:101
-msgid "Discussion programs"
-msgstr "讨论程序"
-
-#: ../../howto/install.rst:104
-msgid "``dsc`` and ``dscc`` build the same way:"
-msgstr "``dsc`` 和 ``dscc`` 的构建方式相同："
-
-#: ../../howto/install.rst:111
-msgid "``dsc`` is small: it keeps the catalog and runs an installed ``guidedog`` to build it. ``dscc`` links Guidedog, so it needs what ``guidedog`` needs (Graphviz's library). Each release also has a ``dscc`` archive for every platform, for a machine with nothing else installed."
-msgstr "``dsc`` 很小：它维护目录，并调用已安装的 ``guidedog`` 来构建。``dscc`` 链接了 Guidedog，所以需要 ``guidedog`` 所需的一切（Graphviz 库）。每个版本还为各平台提供 ``dscc`` 发行包，供没有安装其他程序的机器使用。"
+#: ../../howto/install.rst:113
+msgid "Other programs"
+msgstr "其他程序"
 
 #: ../../howto/install.rst:116
-msgid "The GitHub Pages publisher builds the same way. It does not link the engine:"
-msgstr "GitHub Pages 发布工具的构建方式相同。它不链接引擎："
+msgid ""
+"``guidedog dsc``, the discussion catalogs, is part of ``guidedog``: the "
+"discussion plugin is linked in, so there is nothing more to build. The "
+"GitHub Pages publisher builds the same way as ``guidedog``. It does not "
+"link the engine:"
+msgstr ""
+"讨论目录工具 ``guidedog dsc`` 是 ``guidedog`` 的一部分：讨论插件已链接在内，所以不需要再构建别的东西。GitHub "
+"Pages 发布程序的构建方式与 ``guidedog`` 相同，它不链接引擎："
 
 #: ../../howto/install.rst:122
-msgid "It keeps tokens in the system's credential store: the Keychain on macOS, the Credential Manager on Windows, and on Linux the Secret Service through the ``secret-tool`` program (``libsecret-tools``). It needs that program only when it first stores or reads a token."
-msgstr "它把令牌保存在系统的凭据存储中：macOS 上是钥匙串（Keychain），Windows 上是凭据管理器，Linux 上通过 ``secret-tool`` 程序（``libsecret-tools``）使用 Secret Service。只有第一次保存或读取令牌时才需要该程序。"
+msgid ""
+"It keeps tokens in the system's credential store: the Keychain on macOS, "
+"the Credential Manager on Windows, and on Linux the Secret Service "
+"through the ``secret-tool`` program (``libsecret-tools``). It needs that "
+"program only when it first stores or reads a token."
+msgstr ""
+"它把令牌保存在系统的凭据存储中：macOS 上是钥匙串（Keychain），Windows 上是凭据管理器，Linux 上通过 "
+"``secret-tool`` 程序（``libsecret-tools``）使用 Secret "
+"Service。只有第一次保存或读取令牌时才需要该程序。"
 
 #: ../../howto/install.rst:126
 msgid "Embed the engine"
 msgstr "嵌入引擎"
 
 #: ../../howto/install.rst:129
-msgid "The conversion engine is a library. A Rust program can convert text without the ``guidedog`` command, through the ``guidedoc`` crate and the reader and renderer crates it needs:"
-msgstr "转换引擎是一个库。Rust 程序无需 ``guidedog`` 命令即可转换文本，只要依赖 ``guidedoc`` crate 及所需的读取器和渲染器 crate："
+msgid ""
+"The conversion engine is a library. A Rust program can convert text "
+"without the ``guidedog`` command, through the ``guidedoc`` crate and the "
+"reader and renderer crates it needs:"
+msgstr ""
+"转换引擎是一个库。Rust 程序无需 ``guidedog`` 命令即可转换文本，只要依赖 ``guidedoc`` crate "
+"及所需的读取器和渲染器 crate："
 
 #: ../../howto/install.rst:156
-msgid "``guidedoc_rst::reader()``, ``guidedoc_commonmark::MYST_READER``, ``guidedoc_typst::renderer()`` and ``guidedoc_text::renderer()`` join the registry the same way. For code highlighting, the ``guidedoc-defaults`` crate joins the highlighter to the renderers. We pass a ``guidedoc_defaults::HtmlHighlighter`` (or ``TypstHighlighter``) as ``highlighter`` in the request's ``RenderOptions``. The staged calls (``read_document``, ``transform_document``, ``check_render``, ``render_document``), the request fields, and the limits are in the crate's ``README.md``."
-msgstr "``guidedoc_rst::reader()``、``guidedoc_commonmark::MYST_READER``、``guidedoc_typst::renderer()`` 和 ``guidedoc_text::renderer()`` 以同样的方式加入注册表。代码高亮由 ``guidedoc-defaults`` crate 把高亮器接入渲染器。我们在请求的 ``RenderOptions`` 中把 ``guidedoc_defaults::HtmlHighlighter`` （或 ``TypstHighlighter``）作为 ``highlighter`` 传入。分阶段调用（``read_document``、``transform_document``、``check_render``、``render_document``）、请求字段和各项限制见该 crate 的 ``README.md``。"
+msgid ""
+"``guidedoc_rst::reader()``, ``guidedoc_commonmark::MYST_READER``, "
+"``guidedoc_typst::renderer()`` and ``guidedoc_text::renderer()`` join the "
+"registry the same way. For code highlighting, the ``guidedoc-defaults`` "
+"crate joins the highlighter to the renderers. We pass a "
+"``guidedoc_defaults::HtmlHighlighter`` (or ``TypstHighlighter``) as "
+"``highlighter`` in the request's ``RenderOptions``. The staged calls "
+"(``read_document``, ``transform_document``, ``check_render``, "
+"``render_document``), the request fields, and the limits are in the "
+"crate's ``README.md``."
+msgstr ""
+"``guidedoc_rst::reader()``、``guidedoc_commonmark::MYST_READER``、``guidedoc_typst::renderer()`` "
+"和 ``guidedoc_text::renderer()`` 以同样的方式加入注册表。代码高亮由 ``guidedoc-defaults`` "
+"crate 把高亮器接入渲染器。我们在请求的 ``RenderOptions`` 中把 "
+"``guidedoc_defaults::HtmlHighlighter`` （或 ``TypstHighlighter``）作为 "
+"``highlighter`` "
+"传入。分阶段调用（``read_document``、``transform_document``、``check_render``、``render_document``）、请求字段和各项限制见该 "
+"crate 的 ``README.md``。"
 
 #: ../../howto/maintain-docs.rst:1
 msgid "Maintain this documentation"
 msgstr "维护本项目的文档"
 
 #: ../../howto/maintain-docs.rst:4
-msgid "Guidedog documents itself with Guidedog. The repository has four projects: ``docs/manual`` (this manual), ``docs/api`` (the Rust API reference of the crates), ``docs/gds`` (the design records), and ``docs/site`` (the front page). The manual and GDS began with ``guidedog quickstart``. We edit their generated templates in place. Design records stay out of the manual's table of contents."
-msgstr "Guidedog 用 Guidedog 编写自己的文档。仓库中有四个项目：``docs/manual`` （本手册）、``docs/api`` （各 crate 的 Rust API 参考）、``docs/gds`` （设计记录）和 ``docs/site`` （首页）。手册和 GDS 最初由 ``guidedog quickstart`` 创建，我们直接修改生成的模板。设计记录不放进手册的目录树。"
+msgid ""
+"Guidedog documents itself with Guidedog. The repository has four "
+"projects: ``docs/manual`` (this manual), ``docs/api`` (the Rust API "
+"reference of the crates), ``docs/gds`` (the design records), and "
+"``docs/site`` (the front page). The manual and GDS began with ``guidedog "
+"quickstart``. We edit their generated templates in place. Design records "
+"stay out of the manual's table of contents."
+msgstr ""
+"Guidedog 用 Guidedog 编写自己的文档。仓库中有四个项目：``docs/manual`` （本手册）、``docs/api`` "
+"（各 crate 的 Rust API 参考）、``docs/gds`` （设计记录）和 ``docs/site`` （首页）。手册和 GDS "
+"最初由 ``guidedog quickstart`` 创建，我们直接修改生成的模板。设计记录不放进手册的目录树。"
 
 #: ../../howto/maintain-docs.rst:10
-msgid "All documentation is reStructuredText under ``docs/``. The only Markdown files are each crate's ``README.md``, a short cheat sheet, and the files GitHub needs at the root. Design notes, internals, ledgers and conformance tables are pages under ``docs/manual/internals``."
-msgstr "所有文档都是 ``docs/`` 下的 reStructuredText。仅有的 Markdown 文件是每个 crate 的 ``README.md`` （一份简短的速查表），以及 GitHub 需要放在根目录的文件。设计说明、内部实现、台账和一致性表格都是 ``docs/manual/internals`` 下的页面。"
+msgid ""
+"All documentation is reStructuredText under ``docs/``. The only Markdown "
+"files are each crate's ``README.md``, a short cheat sheet, and the files "
+"GitHub needs at the root. Design notes, internals, ledgers and "
+"conformance tables are pages under ``docs/manual/internals``."
+msgstr ""
+"所有文档都是 ``docs/`` 下的 reStructuredText。仅有的 Markdown 文件是每个 crate 的 "
+"``README.md`` （一份简短的速查表），以及 GitHub 需要放在根目录的文件。设计说明、内部实现、台账和一致性表格都是 "
+"``docs/manual/internals`` 下的页面。"
 
 #: ../../howto/maintain-docs.rst:15
 msgid "Build the manual"
 msgstr "构建手册"
 
 #: ../../howto/maintain-docs.rst:18
-msgid "We build ``guidedog`` first (see :doc:`install`). Then, from the repository root:"
+msgid ""
+"We build ``guidedog`` first (see :doc:`install`). Then, from the "
+"repository root:"
 msgstr "先构建 ``guidedog`` （见 :doc:`install`），然后在仓库根目录运行："
 
 #: ../../howto/maintain-docs.rst:27
-msgid "The PDF command creates one book, with links between its chapters. ``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` builds and runs in one step."
-msgstr "PDF 命令生成一本书，各章之间互相链接。``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` 可以一步完成编译和运行。"
+msgid ""
+"The PDF command creates one book, with links between its chapters. "
+"``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` "
+"builds and runs in one step."
+msgstr ""
+"PDF 命令生成一本书，各章之间互相链接。``cargo run --release -p guidedog-cmd -- build html "
+"docs/manual -W`` 可以一步完成编译和运行。"
 
 #: ../../howto/maintain-docs.rst:31
 msgid "The API reference"
 msgstr "API 参考"
 
 #: ../../howto/maintain-docs.rst:34
-msgid "``docs/api`` generates its pages from the crates' source with ``rust_autoapi_crates`` (see :doc:`document-code`). The reference is the doc comments themselves (``///`` on every public item). There is no copied API manuscript to keep in sync. We fix a mistake in the crate, then rebuild:"
-msgstr "``docs/api`` 通过 ``rust_autoapi_crates`` 从各 crate 的源码生成页面（见 :doc:`document-code`）。参考内容就是文档注释本身（每个公开项上的 ``///``），没有需要同步维护的 API 文稿副本。发现错误时，我们修改 crate，然后重新构建："
+msgid ""
+"``docs/api`` generates its pages from the crates' source with "
+"``rust_autoapi_crates`` (see :doc:`document-code`). The reference is the "
+"doc comments themselves (``///`` on every public item). There is no "
+"copied API manuscript to keep in sync. We fix a mistake in the crate, "
+"then rebuild:"
+msgstr ""
+"``docs/api`` 通过 ``rust_autoapi_crates`` 从各 crate 的源码生成页面（见 "
+":doc:`document-code`）。参考内容就是文档注释本身（每个公开项上的 ``///``），没有需要同步维护的 API "
+"文稿副本。发现错误时，我们修改 crate，然后重新构建："
 
 #: ../../howto/maintain-docs.rst:44
-msgid "A warning such as ``rust.autodoc.link`` names the doc comment and the link that does not resolve."
+msgid ""
+"A warning such as ``rust.autodoc.link`` names the doc comment and the "
+"link that does not resolve."
 msgstr "``rust.autodoc.link`` 之类的警告会指出是哪条文档注释、哪个链接无法解析。"
 
 #: ../../howto/maintain-docs.rst:47
 msgid "Build and check discussions"
 msgstr "构建并检查讨论文档"
 
-#: ../../howto/maintain-docs.rst:56
-msgid "``guidedog gds`` runs the commands of ``dsc`` on this catalog (see :doc:`discussions`). It manages metadata, numbers, state, and recovery. Its RST publication path calls the project engine in process. It produces a complete HTML site and a separate PDF for each record. A selector limits the PDFs. HTML remains a coherent site with a complete catalog. A selected PDF preview uses ``_build/selected/<artifact>/pdf``. It leaves the complete catalog in ``_build/pdf`` intact."
-msgstr "``guidedog gds`` 在这个目录上运行 ``dsc`` 的命令（见 :doc:`discussions`）。它管理元数据、编号、状态和恢复。RST 发布流程在进程内调用项目引擎，生成完整的 HTML 网站，并为每条记录单独生成 PDF。选择器只限制 PDF 的范围，HTML 始终是带有完整目录的完整网站。选定 PDF 的预览使用 ``_build/selected/<artifact>/pdf``，不会影响 ``_build/pdf`` 中的完整目录。"
+#: ../../howto/maintain-docs.rst:57
+msgid ""
+"``docs/gds`` is a discussion catalog like any other, so ``guidedog dsc`` "
+"runs in it (see :doc:`discussions`). It manages metadata, numbers, state, "
+"and recovery. Its RST publication path calls the project engine in "
+"process. It produces a complete HTML site and a separate PDF for each "
+"record. A selector limits the PDFs. HTML remains a coherent site with a "
+"complete catalog. A selected PDF preview uses "
+"``_build/selected/<artifact>/pdf``. It leaves the complete catalog in "
+"``_build/pdf`` intact."
+msgstr ""
+"``docs/gds`` 和其他讨论目录一样，因此可以在其中运行 ``guidedog dsc``\\ （见 "
+":doc:`discussions`）。它管理元数据、编号、状态和恢复。它的 RST 发布流程在进程内调用项目引擎，生成完整的 HTML "
+"网站，并为每条记录单独生成 PDF。选择器只限制 PDF 的范围，HTML 始终是带有完整目录的完整网站。选定 PDF 的预览使用 "
+"``_build/selected/<artifact>/pdf``，不会影响 ``_build/pdf`` 中的完整目录。"
 
-#: ../../howto/maintain-docs.rst:70
+#: ../../howto/maintain-docs.rst:71
 msgid ""
 "The ordinary project commands work too. The GDS project uses its own "
 "``conf.toml`` and its own ``_build`` directory. Read "
@@ -823,40 +1369,64 @@ msgstr ""
 "普通项目命令也适用。GDS 项目使用自己的 ``conf.toml`` 和 ``_build`` 目录。编写流程见 "
 "``docs/gds/workflow.rst``\\ 。"
 
-#: ../../howto/maintain-docs.rst:74
+#: ../../howto/maintain-docs.rst:75
 msgid "Translations"
 msgstr "翻译"
 
-#: ../../howto/maintain-docs.rst:77
-msgid "The manual's catalogs are in ``docs/manual/locales``. After we change English text, we refresh them:"
+#: ../../howto/maintain-docs.rst:78
+msgid ""
+"The manual's catalogs are in ``docs/manual/locales``. After we change "
+"English text, we refresh them:"
 msgstr "手册的翻译目录位于 ``docs/manual/locales``。修改英文文本后，我们这样更新它们："
 
-#: ../../howto/maintain-docs.rst:85
+#: ../../howto/maintain-docs.rst:86
 msgid "See :doc:`../intl` for the translation workflow."
 msgstr "翻译流程见 :doc:`../intl`。"
 
-#: ../../howto/maintain-docs.rst:87
+#: ../../howto/maintain-docs.rst:88
 msgid "Before publishing"
 msgstr "发布之前"
 
-#: ../../howto/maintain-docs.rst:90
-msgid "Check links and diagnostics. Inspect wide tables and code blocks. Render the PDF pages after changing typography. Test the HTML at desktop and phone widths, in light and dark modes. Make sure the mathematics and diagrams work without a network connection. For engine changes, run ``cargo test --workspace``, ``cargo clippy --workspace --all-targets`` and ``cargo run -p check``."
-msgstr "检查链接和诊断信息。检查宽表格和代码块。修改排版后，渲染 PDF 页面查看效果。在桌面和手机宽度、浅色和深色模式下测试 HTML。确认数学公式和图表在离线时也能正常显示。修改引擎时，运行 ``cargo test --workspace``、``cargo clippy --workspace --all-targets`` 和 ``cargo run -p check``。"
+#: ../../howto/maintain-docs.rst:91
+msgid ""
+"Check links and diagnostics. Inspect wide tables and code blocks. Render "
+"the PDF pages after changing typography. Test the HTML at desktop and "
+"phone widths, in light and dark modes. Make sure the mathematics and "
+"diagrams work without a network connection. For engine changes, run "
+"``cargo test --workspace``, ``cargo clippy --workspace --all-targets`` "
+"and ``cargo run -p check``."
+msgstr ""
+"检查链接和诊断信息。检查宽表格和代码块。修改排版后，渲染 PDF 页面查看效果。在桌面和手机宽度、浅色和深色模式下测试 "
+"HTML。确认数学公式和图表在离线时也能正常显示。修改引擎时，运行 ``cargo test --workspace``、``cargo "
+"clippy --workspace --all-targets`` 和 ``cargo run -p check``。"
 
 #: ../../howto/migrate.rst:1
 msgid "Move a Sphinx project to Guidedog"
 msgstr "将 Sphinx 项目迁移到 Guidedog"
 
 #: ../../howto/migrate.rst:4
-msgid "Guidedog follows Sphinx closely. It uses the same directory structure and understands standard reStructuredText and MyST Markdown markup. It recognizes the same configuration setting names and provides Sphinx's Jinja template variables."
-msgstr "Guidedog 紧跟 Sphinx 的做法。它使用相同的目录结构，能读取标准的 reStructuredText 和 MyST Markdown 标记，识别相同的配置项名称，并提供 Sphinx 的 Jinja 模板变量。"
+msgid ""
+"Guidedog follows Sphinx closely. It uses the same directory structure and "
+"understands standard reStructuredText and MyST Markdown markup. It "
+"recognizes the same configuration setting names and provides Sphinx's "
+"Jinja template variables."
+msgstr ""
+"Guidedog 紧跟 Sphinx 的做法。它使用相同的目录结构，能读取标准的 reStructuredText 和 MyST Markdown "
+"标记，识别相同的配置项名称，并提供 Sphinx 的 Jinja 模板变量。"
 
 #: ../../howto/migrate.rst:8
-msgid "One difference shapes the whole move. Sphinx runs arbitrary Python code in ``conf.py`` and needs a Python virtual environment with external packages. Guidedog is a single compiled program that reads plain data from ``conf.toml``. It does not run Python."
-msgstr "有一个区别决定了整个迁移过程。Sphinx 会执行 ``conf.py`` 中的任意 Python 代码，需要一个装有外部包的 Python 虚拟环境。Guidedog 是一个编译好的独立程序，只从 ``conf.toml`` 读取纯数据，不执行 Python。"
+msgid ""
+"One difference shapes the whole move. Sphinx runs arbitrary Python code "
+"in ``conf.py`` and needs a Python virtual environment with external "
+"packages. Guidedog is a single compiled program that reads plain data "
+"from ``conf.toml``. It does not run Python."
+msgstr ""
+"有一个区别决定了整个迁移过程。Sphinx 会执行 ``conf.py`` 中的任意 Python 代码，需要一个装有外部包的 Python "
+"虚拟环境。Guidedog 是一个编译好的独立程序，只从 ``conf.toml`` 读取纯数据，不执行 Python。"
 
 #: ../../howto/migrate.rst:13
-msgid "So moving a project means separating configuration data from Python code."
+msgid ""
+"So moving a project means separating configuration data from Python code."
 msgstr "所以，迁移项目就是把配置数据和 Python 代码分开。"
 
 #: ../../howto/migrate.rst:16
@@ -898,15 +1468,30 @@ msgid ""
 msgstr "提取字符串、数字、布尔值、列表和表等字面值，在 ``conf.toml`` 中写成标准 TOML。"
 
 #: ../../howto/migrate.rst:55
-msgid "It detects standard Sphinx settings (such as ``project``, ``author``, ``extensions``, ``templates_path``, ``html_theme``, ``intersphinx_mapping``, and ``html_context``) and maps them."
-msgstr "它会识别并映射标准的 Sphinx 设置（如 ``project``、``author``、``extensions``、``templates_path``、``html_theme``、``intersphinx_mapping`` 和 ``html_context``）。"
+msgid ""
+"It detects standard Sphinx settings (such as ``project``, ``author``, "
+"``extensions``, ``templates_path``, ``html_theme``, "
+"``intersphinx_mapping``, and ``html_context``) and maps them."
+msgstr ""
+"它会识别并映射标准的 Sphinx 设置（如 "
+"``project``、``author``、``extensions``、``templates_path``、``html_theme``、``intersphinx_mapping`` "
+"和 ``html_context``）。"
 
 #: ../../howto/migrate.rst:58
-msgid "It finds computed expressions (such as Python calls like ``version = get_version()`` or ``git_revision = subprocess.check_output(...)``). Guidedog does not run Python, so its migration report flags these values. We then give fixed values for them in ``conf.toml``."
-msgstr "它会找出计算得出的表达式（例如 ``version = get_version()`` 或 ``git_revision = subprocess.check_output(...)`` 这样的 Python 调用）。Guidedog 不执行 Python，所以迁移报告会标出这些值，我们再在 ``conf.toml`` 中为它们填写固定值。"
+msgid ""
+"It finds computed expressions (such as Python calls like ``version = "
+"get_version()`` or ``git_revision = subprocess.check_output(...)``). "
+"Guidedog does not run Python, so its migration report flags these values. "
+"We then give fixed values for them in ``conf.toml``."
+msgstr ""
+"它会找出计算得出的表达式（例如 ``version = get_version()`` 或 ``git_revision = "
+"subprocess.check_output(...)`` 这样的 Python 调用）。Guidedog 不执行 "
+"Python，所以迁移报告会标出这些值，我们再在 ``conf.toml`` 中为它们填写固定值。"
 
 #: ../../howto/migrate.rst:63
-msgid "We review the generated ``conf.toml`` and replace each flagged expression with a fixed value."
+msgid ""
+"We review the generated ``conf.toml`` and replace each flagged expression "
+"with a fixed value."
 msgstr "检查生成的 ``conf.toml``，把每个被标出的表达式替换为固定值。"
 
 #: ../../howto/migrate.rst:65
@@ -914,7 +1499,8 @@ msgid "Step 2: The three-pass verification strategy"
 msgstr "第二步：分三轮验证"
 
 #: ../../howto/migrate.rst:68
-msgid "Once ``conf.toml`` exists, we work through the migration in three passes:"
+msgid ""
+"Once ``conf.toml`` exists, we work through the migration in three passes:"
 msgstr "有了 ``conf.toml`` 之后，我们分三轮完成迁移："
 
 #: ../../howto/migrate.rst:70
@@ -922,19 +1508,27 @@ msgid "Pass 1: Verify the document graph"
 msgstr "第一轮：检查文档图"
 
 #: ../../howto/migrate.rst:73
-msgid "We check that Guidedog finds all documents and builds the expected hierarchy:"
+msgid ""
+"We check that Guidedog finds all documents and builds the expected "
+"hierarchy:"
 msgstr "确认 Guidedog 找到了所有文档，并建立了预期的层级结构："
 
 #: ../../howto/migrate.rst:75
-msgid "Verify that ``root_doc`` names our main entry point (usually ``index`` or ``contents``)."
+msgid ""
+"Verify that ``root_doc`` names our main entry point (usually ``index`` or "
+"``contents``)."
 msgstr "确认 ``root_doc`` 指向主入口（通常是 ``index`` 或 ``contents``）。"
 
 #: ../../howto/migrate.rst:76
-msgid "Confirm that ``source_suffix`` lists every extension we use (for example, ``[\".rst\", \".md\"]``)."
+msgid ""
+"Confirm that ``source_suffix`` lists every extension we use (for example, "
+"``[\".rst\", \".md\"]``)."
 msgstr "确认 ``source_suffix`` 列出了用到的所有扩展名（例如 ``[\".rst\", \".md\"]``）。"
 
 #: ../../howto/migrate.rst:77
-msgid "Check that ``exclude_patterns`` excludes build folders, virtual environments, and temporary files."
+msgid ""
+"Check that ``exclude_patterns`` excludes build folders, virtual "
+"environments, and temporary files."
 msgstr "检查 ``exclude_patterns`` 是否排除了构建目录、虚拟环境和临时文件。"
 
 #: ../../howto/migrate.rst:78
@@ -942,7 +1536,10 @@ msgid "Run a quick semantic check using the dummy builder:"
 msgstr "用 dummy 构建器快速检查语义："
 
 #: ../../howto/migrate.rst:84
-msgid "The dummy builder checks every document and link without writing HTML files. We fix each warning about a missing document or a malformed include."
+msgid ""
+"The dummy builder checks every document and link without writing HTML "
+"files. We fix each warning about a missing document or a malformed "
+"include."
 msgstr "dummy 构建器会检查每个文档和链接，但不写出 HTML 文件。逐一修复关于文档缺失或 include 写法错误的警告。"
 
 #: ../../howto/migrate.rst:87
@@ -954,16 +1551,37 @@ msgid "Next, we verify that cross-references and domain directives resolve:"
 msgstr "接下来，确认交叉引用和各个域的指令都能解析："
 
 #: ../../howto/migrate.rst:92
-msgid "**Standard domains:** Guidedog supports the standard Python, C, C++, and JavaScript domains, with their roles such as ``:py:func:``, ``:c:type:``, and ``:cpp:class:``. It adds ``odin`` and ``rust`` domains of its own (see :doc:`../topics/domains`)."
-msgstr "**标准域：** Guidedog 支持标准的 Python、C、C++ 和 JavaScript 域，以及 ``:py:func:``、``:c:type:``、``:cpp:class:`` 等相应角色。它还自带 ``odin`` 和 ``rust`` 域（见 :doc:`../topics/domains`）。"
+msgid ""
+"**Standard domains:** Guidedog supports the standard Python, C, C++, and "
+"JavaScript domains, with their roles such as ``:py:func:``, ``:c:type:``, "
+"and ``:cpp:class:``. It adds ``odin`` and ``rust`` domains of its own "
+"(see :doc:`../topics/domains`)."
+msgstr ""
+"**标准域：** Guidedog 支持标准的 Python、C、C++ 和 JavaScript 域，以及 "
+"``:py:func:``、``:c:type:``、``:cpp:class:`` 等相应角色。它还自带 ``odin`` 和 ``rust`` "
+"域（见 :doc:`../topics/domains`）。"
 
 #: ../../howto/migrate.rst:95
-msgid "**Intersphinx links:** If our Sphinx project linked to external documentation through Intersphinx, we keep our ``[intersphinx_mapping]`` in ``conf.toml``. Guidedog fetches and parses standard ``objects.inv`` files itself."
-msgstr "**Intersphinx 链接：** 如果原来的 Sphinx 项目通过 Intersphinx 链接外部文档，就在 ``conf.toml`` 中保留 ``[intersphinx_mapping]``。Guidedog 会自行获取并解析标准的 ``objects.inv`` 文件。"
+msgid ""
+"**Intersphinx links:** If our Sphinx project linked to external "
+"documentation through Intersphinx, we keep our ``[intersphinx_mapping]`` "
+"in ``conf.toml``. Guidedog fetches and parses standard ``objects.inv`` "
+"files itself."
+msgstr ""
+"**Intersphinx 链接：** 如果原来的 Sphinx 项目通过 Intersphinx 链接外部文档，就在 ``conf.toml`` "
+"中保留 ``[intersphinx_mapping]``。Guidedog 会自行获取并解析标准的 ``objects.inv`` 文件。"
 
 #: ../../howto/migrate.rst:98
-msgid "**Declarative custom object types:** In Sphinx, projects often wrote small Python extensions that call ``app.add_object_type()`` to create custom directives and roles (such as ``.. confval::`` or ``.. setting::``). In Guidedog, we declare these in ``conf.toml`` under ``[[object_types]]``, without code. See :doc:`../object-types`."
-msgstr "**声明式自定义对象类型：** 在 Sphinx 中，项目常常写一个调用 ``app.add_object_type()`` 的小型 Python 扩展，来创建自定义指令和角色（如 ``.. confval::`` 或 ``.. setting::``）。在 Guidedog 中，只需在 ``conf.toml`` 的 ``[[object_types]]`` 下声明，无需写代码。见 :doc:`../object-types`。"
+msgid ""
+"**Declarative custom object types:** In Sphinx, projects often wrote "
+"small Python extensions that call ``app.add_object_type()`` to create "
+"custom directives and roles (such as ``.. confval::`` or ``.. "
+"setting::``). In Guidedog, we declare these in ``conf.toml`` under "
+"``[[object_types]]``, without code. See :doc:`../object-types`."
+msgstr ""
+"**声明式自定义对象类型：** 在 Sphinx 中，项目常常写一个调用 ``app.add_object_type()`` 的小型 Python "
+"扩展，来创建自定义指令和角色（如 ``.. confval::`` 或 ``.. setting::``）。在 Guidedog 中，只需在 "
+"``conf.toml`` 的 ``[[object_types]]`` 下声明，无需写代码。见 :doc:`../object-types`。"
 
 #: ../../howto/migrate.rst:103
 msgid "Pass 3: Verify presentation and templates"
@@ -986,15 +1604,23 @@ msgid ""
 msgstr "**Jinja 模板：** Guidedog 的原生 Jinja 引擎支持块继承："
 
 #: ../../howto/migrate.rst:118
-msgid "**PDF books:** Build a PDF book with ``guidedog build pdf path/to/docs -W``. Guidedog typesets the book with Typst and ``_templates/book.typ``. It gives vector math, proper hyphenation, and running headers without a LaTeX installation."
-msgstr "**PDF 书籍：** 用 ``guidedog build pdf path/to/docs -W`` 构建 PDF 书籍。Guidedog 使用 Typst 和 ``_templates/book.typ`` 排版，无需安装 LaTeX 即可得到矢量公式、正确的断词和页眉。"
+msgid ""
+"**PDF books:** Build a PDF book with ``guidedog build pdf path/to/docs "
+"-W``. Guidedog typesets the book with Typst and ``_templates/book.typ``. "
+"It gives vector math, proper hyphenation, and running headers without a "
+"LaTeX installation."
+msgstr ""
+"**PDF 书籍：** 用 ``guidedog build pdf path/to/docs -W`` 构建 PDF 书籍。Guidedog "
+"使用 Typst 和 ``_templates/book.typ`` 排版，无需安装 LaTeX 即可得到矢量公式、正确的断词和页眉。"
 
 #: ../../howto/migrate.rst:122
 msgid "Configuration settings mapping"
 msgstr "配置项对照"
 
 #: ../../howto/migrate.rst:125
-msgid "Common Sphinx ``conf.py`` variables correspond to Guidedog's ``conf.toml`` like this:"
+msgid ""
+"Common Sphinx ``conf.py`` variables correspond to Guidedog's "
+"``conf.toml`` like this:"
 msgstr "常用的 Sphinx ``conf.py`` 变量与 Guidedog ``conf.toml`` 的对应关系如下："
 
 #: ../../howto/migrate.rst:127
@@ -1110,23 +1736,49 @@ msgid "Handling custom Python extensions"
 msgstr "处理自定义 Python 扩展"
 
 #: ../../howto/migrate.rst:162
-msgid "Some Sphinx projects rely on large Python extensions that inspect Python ASTs or modify Sphinx's internal classes. For those, we have three options:"
-msgstr "有些 Sphinx 项目依赖大型 Python 扩展，这些扩展会分析 Python AST 或修改 Sphinx 的内部类。对此有三种做法："
+msgid ""
+"Some Sphinx projects rely on large Python extensions that inspect Python "
+"ASTs or modify Sphinx's internal classes. For those, we have three "
+"options:"
+msgstr ""
+"有些 Sphinx 项目依赖大型 Python 扩展，这些扩展会分析 Python AST 或修改 Sphinx 的内部类。对此有三种做法："
 
 #: ../../howto/migrate.rst:165
-msgid "**Declarative object types:** If the extension only created custom directives or roles, we replace it with ``[[object_types]]`` in ``conf.toml``."
-msgstr "**声明式对象类型：** 如果扩展只是创建自定义指令或角色，就改用 ``conf.toml`` 中的 ``[[object_types]]``。"
+msgid ""
+"**Declarative object types:** If the extension only created custom "
+"directives or roles, we replace it with ``[[object_types]]`` in "
+"``conf.toml``."
+msgstr ""
+"**声明式对象类型：** 如果扩展只是创建自定义指令或角色，就改用 ``conf.toml`` 中的 ``[[object_types]]``。"
 
 #: ../../howto/migrate.rst:167
-msgid "**Build plugins:** If the extension transformed source text, added custom HTML wrappers, or generated static assets, we write a build plugin in Rust with the ``gd-plugins`` crate's typed interface described in :doc:`../plugins`. The same plugin runs as an installed program (``guidedog plugin register``) or linked into our own ``guidedog`` binary through ``gd_cli::run_with``."
-msgstr "**构建插件：** 如果扩展会转换源文本、添加自定义 HTML 包装或生成静态资源，就用 Rust 编写构建插件，使用 :doc:`../plugins` 中介绍的 ``gd-plugins`` crate 的类型化接口。同一个插件既可以作为已安装的程序运行（``guidedog plugin register``），也可以通过 ``gd_cli::run_with`` 链接进我们自己的 ``guidedog`` 二进制文件。"
+msgid ""
+"**Build plugins:** If the extension transformed source text, added custom "
+"HTML wrappers, or generated static assets, we write a build plugin in "
+"Rust with the ``gd-plugins`` crate's typed interface described in "
+":doc:`../plugins`. The same plugin runs as an installed program "
+"(``guidedog plugin register``) or linked into our own ``guidedog`` binary "
+"through ``gd_cli::run_with``."
+msgstr ""
+"**构建插件：** 如果扩展会转换源文本、添加自定义 HTML 包装或生成静态资源，就用 Rust 编写构建插件，使用 "
+":doc:`../plugins` 中介绍的 ``gd-plugins`` crate "
+"的类型化接口。同一个插件既可以作为已安装的程序运行（``guidedog plugin register``），也可以通过 "
+"``gd_cli::run_with`` 链接进我们自己的 ``guidedog`` 二进制文件。"
 
 #: ../../howto/migrate.rst:172
-msgid "**Static API extraction:** Guidedog already reads Python docstrings, Odin declarations, and Rust doc comments without running the documented code. Use :doc:`document-code`. Runtime-generated objects may need explicit RST descriptions."
-msgstr "**静态 API 提取：** Guidedog 已经能读取 Python docstring、Odin 声明和 Rust 文档注释，无需运行被记录的代码。见 :doc:`document-code`。运行时生成的对象可能需要用 RST 显式描述。"
+msgid ""
+"**Static API extraction:** Guidedog already reads Python docstrings, Odin "
+"declarations, and Rust doc comments without running the documented code. "
+"Use :doc:`document-code`. Runtime-generated objects may need explicit RST "
+"descriptions."
+msgstr ""
+"**静态 API 提取：** Guidedog 已经能读取 Python docstring、Odin 声明和 Rust "
+"文档注释，无需运行被记录的代码。见 :doc:`document-code`。运行时生成的对象可能需要用 RST 显式描述。"
 
 #: ../../howto/migrate.rst:176
-msgid ":doc:`../compatibility` gives the evidence for Sphinx compatibility and the limits that remain."
+msgid ""
+":doc:`../compatibility` gives the evidence for Sphinx compatibility and "
+"the limits that remain."
 msgstr ":doc:`../compatibility` 列出了 Sphinx 兼容性的依据和仍然存在的限制。"
 
 #: ../../howto/publish.rst:1
@@ -1134,7 +1786,9 @@ msgid "Build and publish documentation"
 msgstr "构建并发布文档"
 
 #: ../../howto/publish.rst:4
-msgid "To publish documentation, we turn reStructuredText and Markdown sources into static files, check them, and deploy them to a host."
+msgid ""
+"To publish documentation, we turn reStructuredText and Markdown sources "
+"into static files, check them, and deploy them to a host."
 msgstr "发布文档，就是把 reStructuredText 和 Markdown 源文件转换为静态文件，检查无误后部署到托管环境。"
 
 #: ../../howto/publish.rst:7
@@ -1142,23 +1796,39 @@ msgid "Guidedog keeps building a site separate from deploying it:"
 msgstr "Guidedog 把构建网站和部署网站分开："
 
 #: ../../howto/publish.rst:9
-msgid "**Building:** Guidedog reads our sources, compiles templates, and resolves cross-references. It writes a complete, checked folder of static HTML files or a typeset PDF book."
-msgstr "**构建：** Guidedog 读取源文件、编译模板并解析交叉引用，写出一个完整且经过检查的静态 HTML 目录，或一本排好版的 PDF 书籍。"
+msgid ""
+"**Building:** Guidedog reads our sources, compiles templates, and "
+"resolves cross-references. It writes a complete, checked folder of static "
+"HTML files or a typeset PDF book."
+msgstr ""
+"**构建：** Guidedog 读取源文件、编译模板并解析交叉引用，写出一个完整且经过检查的静态 HTML 目录，或一本排好版的 PDF 书籍。"
 
 #: ../../howto/publish.rst:11
-msgid "**Publishing:** Our web server serves the static files, or we deploy them to a host such as GitHub Pages, an S3 bucket, or an internal file server."
-msgstr "**发布：** 由我们自己的 Web 服务器提供这些静态文件，或者把它们部署到 GitHub Pages、S3 存储桶、内部文件服务器等托管环境。"
+msgid ""
+"**Publishing:** Our web server serves the static files, or we deploy them "
+"to a host such as GitHub Pages, an S3 bucket, or an internal file server."
+msgstr ""
+"**发布：** 由我们自己的 Web 服务器提供这些静态文件，或者把它们部署到 GitHub Pages、S3 存储桶、内部文件服务器等托管环境。"
 
 #: ../../howto/publish.rst:14
-msgid "The output is plain static files (HTML, CSS, JavaScript, and SVG). Any static web server (such as Nginx, Apache, or Caddy) can serve it. Production needs no Guidedog, no Python interpreter, and no running server process."
-msgstr "输出是纯静态文件（HTML、CSS、JavaScript 和 SVG），任何静态 Web 服务器（如 Nginx、Apache 或 Caddy）都能提供访问。生产环境不需要 Guidedog，不需要 Python 解释器，也不需要常驻的服务进程。"
+msgid ""
+"The output is plain static files (HTML, CSS, JavaScript, and SVG). Any "
+"static web server (such as Nginx, Apache, or Caddy) can serve it. "
+"Production needs no Guidedog, no Python interpreter, and no running "
+"server process."
+msgstr ""
+"输出是纯静态文件（HTML、CSS、JavaScript 和 SVG），任何静态 Web 服务器（如 Nginx、Apache 或 "
+"Caddy）都能提供访问。生产环境不需要 Guidedog，不需要 Python 解释器，也不需要常驻的服务进程。"
 
 #: ../../howto/publish.rst:18
 msgid "Atomic publication architecture"
 msgstr "原子发布架构"
 
 #: ../../howto/publish.rst:21
-msgid "Guidedog publishes only complete output generations. The host finishes preparation before it decides a journaled commit. A failed preparation leaves the previous site intact."
+msgid ""
+"Guidedog publishes only complete output generations. The host finishes "
+"preparation before it decides a journaled commit. A failed preparation "
+"leaves the previous site intact."
 msgstr "Guidedog 只发布完整的一代输出。主机先完成准备工作，再决定提交日志事务。准备失败时，上一版网站保持不变。"
 
 #: ../../howto/publish.rst:25
@@ -1184,66 +1854,84 @@ msgstr "原子提交如何保护网站："
 #: ../../howto/publish.rst:49
 msgid ""
 "**Staging:** All newly rendered pages are written to a hidden staging "
-"folder beside the destination (``.<target>.next``)."
-msgstr "**暂存：** 新页面写入目标旁的隐藏暂存目录 ``.<target>.next``。"
+"folder (``.<target>.next``). For the default builders it sits in the "
+"build folder. For an output we name with ``-o``, it sits inside the "
+"output's one cache folder beside it (``.<target>.guidedog``), so the "
+"output gains a single hidden neighbour."
+msgstr ""
+"**暂存：** 所有新渲染的页面都先写入一个隐藏的暂存文件夹（``.<target>.next``）。对于默认构建器，它位于构建文件夹中。对于我们用 "
+"``-o`` 指定的输出，它位于输出旁边唯一的缓存文件夹（``.<target>.guidedog``）中，因此输出旁边只会多出一个隐藏的文件夹。"
 
-#: ../../howto/publish.rst:51
-msgid "**Isolation:** The live output folder stays untouched while pages compile."
+#: ../../howto/publish.rst:53
+msgid ""
+"**Isolation:** The live output folder stays untouched while pages compile."
 msgstr "**隔离：** 编译页面期间，线上输出目录保持不动。"
 
-#: ../../howto/publish.rst:52
-msgid "**Failure safety:** If any page fails to render, or a warning becomes an error under ``-W``, the build abandons the staging folder. The live site stays unchanged."
+#: ../../howto/publish.rst:54
+msgid ""
+"**Failure safety:** If any page fails to render, or a warning becomes an "
+"error under ``-W``, the build abandons the staging folder. The live site "
+"stays unchanged."
 msgstr "**失败保护：** 只要有页面渲染失败，或在 ``-W`` 下有警告变成错误，构建就会放弃暂存目录，线上网站保持不变。"
 
-#: ../../howto/publish.rst:54
-msgid "**Atomic swap:** Once all files are flushed, Guidedog switches the staging folder into place. Where the filesystem supports it, this is a single directory exchange."
+#: ../../howto/publish.rst:56
+msgid ""
+"**Atomic swap:** Once all files are flushed, Guidedog switches the "
+"staging folder into place. Where the filesystem supports it, this is a "
+"single directory exchange."
 msgstr "**原子交换：** 所有文件写入磁盘后，Guidedog 把暂存目录切换到位。在支持的文件系统上，这是一次目录交换操作。"
 
-#: ../../howto/publish.rst:56
-msgid "**Interrupted recovery:** If a crash interrupts the swap, the next build reads the durable journal. It settles the interrupted commit instead of guessing."
+#: ../../howto/publish.rst:58
+msgid ""
+"**Interrupted recovery:** If a crash interrupts the swap, the next build "
+"reads the durable journal. It settles the interrupted commit instead of "
+"guessing."
 msgstr "**中断恢复：** 如果切换过程中发生崩溃，下次构建会读取持久化日志，明确地完成被中断的提交，而不是靠猜测。"
 
-#: ../../howto/publish.rst:59
+#: ../../howto/publish.rst:61
 msgid "Standard build workflow"
 msgstr "常规构建流程"
 
-#: ../../howto/publish.rst:62
+#: ../../howto/publish.rst:64
 msgid ""
 "To build both HTML and PDF outputs into the default project output "
 "directory:"
 msgstr "将 HTML 和 PDF 构建到项目默认的输出目录："
 
-#: ../../howto/publish.rst:69
+#: ../../howto/publish.rst:71
 msgid "Output locations:"
 msgstr "输出位置："
 
-#: ../../howto/publish.rst:71
+#: ../../howto/publish.rst:73
 msgid "The HTML website is written to ``docs/manual/_build/html/``."
 msgstr "HTML 网站写入 ``docs/manual/_build/html/``。"
 
-#: ../../howto/publish.rst:72
+#: ../../howto/publish.rst:74
 msgid "The PDF book is written to ``docs/manual/_build/pdf/``."
 msgstr "PDF 书籍写入 ``docs/manual/_build/pdf/``。"
 
-#: ../../howto/publish.rst:74
+#: ../../howto/publish.rst:76
 msgid ""
 "The ``-j auto`` flag parallelizes document parsing across all available "
 "CPU cores."
 msgstr "``-j auto`` 使用所有可用 CPU 核心并行解析文档。"
 
-#: ../../howto/publish.rst:76
+#: ../../howto/publish.rst:78
 msgid "Custom output directories"
 msgstr "自定义输出目录"
 
-#: ../../howto/publish.rst:79
-msgid "To write the site to a folder of our choice (for example, in a CI/CD pipeline or a deployment script), we use the Sphinx-compatible command form:"
+#: ../../howto/publish.rst:81
+msgid ""
+"To write the site to a folder of our choice (for example, in a CI/CD "
+"pipeline or a deployment script), we use the Sphinx-compatible command "
+"form:"
 msgstr "要把网站写到自己指定的目录（例如在 CI/CD 流水线或部署脚本中），使用与 Sphinx 兼容的命令形式："
 
-#: ../../howto/publish.rst:86
+#: ../../howto/publish.rst:88
 msgid "Guidedog enforces safety constraints on output paths:"
 msgstr "Guidedog 对输出路径有以下约束："
 
-#: ../../howto/publish.rst:88
+#: ../../howto/publish.rst:90
 msgid ""
 "Choose a dedicated output folder, such as ``_build/html`` inside the "
 "project or ``build/site`` beside it. The output must not be the source "
@@ -1253,98 +1941,238 @@ msgstr ""
 "选择专用输出目录，例如项目内的 ``_build/html``，或项目旁的 "
 "``build/site``。输出不能是源目录本身或其上级目录，否则代际切换会替换整个源项目。"
 
-#: ../../howto/publish.rst:91
-msgid "For a custom destination such as ``build/site``, Guidedog keeps its internal caches in a sibling folder (such as ``build/.site.guidedog/.doctrees``). The published folder then holds only the static files we deploy."
-msgstr "输出到 ``build/site`` 这样的自定义位置时，Guidedog 把内部缓存放在同级目录中（如 ``build/.site.guidedog/.doctrees``）。这样，发布目录中只有我们要部署的静态文件。"
+#: ../../howto/publish.rst:93
+msgid ""
+"For a custom destination such as ``build/site``, Guidedog keeps its "
+"internal caches in a sibling folder (such as "
+"``build/.site.guidedog/.doctrees``). The published folder then holds only "
+"the static files we deploy."
+msgstr ""
+"输出到 ``build/site`` 这样的自定义位置时，Guidedog 把内部缓存放在同级目录中（如 "
+"``build/.site.guidedog/.doctrees``）。这样，发布目录中只有我们要部署的静态文件。"
 
-#: ../../howto/publish.rst:95
+#: ../../howto/publish.rst:97
 msgid "Semantic checks and pre-flight validation"
 msgstr "语义检查与构建前验证"
 
-#: ../../howto/publish.rst:98
-msgid "To check a project without writing HTML files to disk, we use the ``dummy`` builder:"
+#: ../../howto/publish.rst:100
+msgid ""
+"To check a project without writing HTML files to disk, we use the "
+"``dummy`` builder:"
 msgstr "要检查项目但不把 HTML 文件写入磁盘，使用 ``dummy`` 构建器："
 
-#: ../../howto/publish.rst:105
+#: ../../howto/publish.rst:107
 msgid "The dummy builder:"
 msgstr "dummy 构建器会："
 
-#: ../../howto/publish.rst:107
+#: ../../howto/publish.rst:109
 msgid "Reads and parses all documents."
 msgstr "读取并解析所有文档。"
 
-#: ../../howto/publish.rst:108
+#: ../../howto/publish.rst:110
 msgid ""
 "Resolves all toctrees, headings, cross-references, and domain objects."
 msgstr "解析目录树、标题、交叉引用和域对象。"
 
-#: ../../howto/publish.rst:109
+#: ../../howto/publish.rst:111
 msgid ""
 "Checks document references and domain objects (``-n`` enables nitpicky "
 "cross-reference checking). It does not make HTTP requests to test "
 "external URLs."
 msgstr "检查文档引用和域对象，``-n`` 开启严格的交叉引用检查。它不会发送 HTTP 请求来测试外部网址。"
 
-#: ../../howto/publish.rst:111
+#: ../../howto/publish.rst:113
 msgid "Exits with status 1 if any broken link or warning is found (``-W``)."
 msgstr "若有未解析的链接或警告，``-W`` 使其以状态码 1 退出。"
 
-#: ../../howto/publish.rst:113
-msgid "In continuous integration, the dummy builder is a fast check to run before the full site build."
+#: ../../howto/publish.rst:115
+msgid ""
+"In continuous integration, the dummy builder is a fast check to run "
+"before the full site build."
 msgstr "在持续集成中，可以先用 dummy 构建器做一次快速检查，再构建完整网站。"
 
-#: ../../howto/publish.rst:116
+#: ../../howto/publish.rst:118
 msgid "Reproducible build timestamps"
 msgstr "可复现的构建时间"
 
-#: ../../howto/publish.rst:119
-msgid "Documentation builds often embed timestamps (for example, in \"Last updated\" footer notices). When an automated deployment must give the same bytes on every run, we pin the clock with the standard ``SOURCE_DATE_EPOCH`` environment variable:"
-msgstr "文档构建经常嵌入时间戳（例如页脚的“最后更新”提示）。如果自动部署要求每次运行生成完全相同的字节，就用标准环境变量 ``SOURCE_DATE_EPOCH`` 固定时钟："
+#: ../../howto/publish.rst:121
+msgid ""
+"Documentation builds often embed timestamps (for example, in \"Last "
+"updated\" footer notices). When an automated deployment must give the "
+"same bytes on every run, we pin the clock with the standard "
+"``SOURCE_DATE_EPOCH`` environment variable:"
+msgstr ""
+"文档构建经常嵌入时间戳（例如页脚的“最后更新”提示）。如果自动部署要求每次运行生成完全相同的字节，就用标准环境变量 "
+"``SOURCE_DATE_EPOCH`` 固定时钟："
 
-#: ../../howto/publish.rst:127
+#: ../../howto/publish.rst:129
 msgid ""
 "When this variable is set, Guidedog uses the specified Unix epoch "
 "timestamp instead of the current system clock for all date formatting and "
 "template variables."
 msgstr "设置后，日期格式化和模板变量均使用指定的 Unix 时间戳，而非当前系统时间。"
 
-#: ../../howto/publish.rst:130
+#: ../../howto/publish.rst:132
 msgid "Deployment options"
 msgstr "部署方式"
 
-#: ../../howto/publish.rst:133
+#: ../../howto/publish.rst:135
 msgid "Once the build succeeds, we deploy the static files to our host:"
 msgstr "构建成功后，把静态文件部署到托管环境："
 
-#: ../../howto/publish.rst:135
+#: ../../howto/publish.rst:137
 msgid ""
 "**Static web servers (Nginx / Caddy / Apache):** Point the server's root "
 "directive directly to the built HTML directory."
 msgstr "**静态 Web 服务器（Nginx / Caddy / Apache）：** 将服务器根目录指向生成的 HTML 目录。"
 
-#: ../../howto/publish.rst:137
-msgid "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud Storage):** Sync the contents of ``_build/html`` to our bucket with the cloud provider's CLI tool."
-msgstr "**云存储桶（AWS S3 / Cloudflare R2 / Google Cloud Storage）：** 用云服务商的命令行工具把 ``_build/html`` 的内容同步到存储桶。"
-
 #: ../../howto/publish.rst:139
+msgid ""
+"**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud "
+"Storage):** Sync the contents of ``_build/html`` to our bucket with the "
+"cloud provider's CLI tool."
+msgstr ""
+"**云存储桶（AWS S3 / Cloudflare R2 / Google Cloud Storage）：** 用云服务商的命令行工具把 "
+"``_build/html`` 的内容同步到存储桶。"
+
+#: ../../howto/publish.rst:141
 msgid "**GitHub Pages:**"
 msgstr "**GitHub Pages：**"
 
-#: ../../howto/publish.rst:141
-msgid "To deploy directly from our own machine, we run ``guidedog publish pages``. It asks for what is still missing (the repository, a token, the Pages settings), then builds and publishes in one push. ``guidedog-pages`` offers the same steps one by one. See :doc:`github-pages`."
-msgstr "要直接从本机部署，运行 ``guidedog publish pages``。它会询问还缺少的信息（仓库、令牌、Pages 设置），然后一次完成构建和推送发布。``guidedog-pages`` 提供逐步执行的相同步骤。见 :doc:`github-pages`。"
-
-#: ../../howto/publish.rst:145
-msgid "For automated deployments with GitHub Actions, ``guidedog pages workflow`` writes a workflow that builds and deploys the site. See :doc:`github-pages`."
-msgstr "如果用 GitHub Actions 自动部署，``guidedog pages workflow`` 会生成一个构建并部署网站的工作流。见 :doc:`github-pages`。"
+#: ../../howto/publish.rst:143
+msgid ""
+"To deploy directly from our own machine, we run ``guidedog publish "
+"pages``. It asks for what is still missing (the repository, a token, the "
+"Pages settings), then builds and publishes in one push. "
+"``guidedog-pages`` offers the same steps one by one. See "
+":doc:`github-pages`."
+msgstr ""
+"要直接从本机部署，运行 ``guidedog publish pages``。它会询问还缺少的信息（仓库、令牌、Pages "
+"设置），然后一次完成构建和推送发布。``guidedog-pages`` 提供逐步执行的相同步骤。见 :doc:`github-pages`。"
 
 #: ../../howto/publish.rst:147
-msgid "For any other destination, we write a publisher plugin as described in :doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
-msgstr "部署到其他目标时，按 :doc:`../plugins` 的说明编写发布插件，并用 ``guidedog publish --publisher=ID`` 运行。"
+msgid ""
+"For automated deployments with GitHub Actions, ``guidedog pages "
+"workflow`` writes a workflow that builds and deploys the site. See "
+":doc:`github-pages`."
+msgstr ""
+"如果用 GitHub Actions 自动部署，``guidedog pages workflow`` 会生成一个构建并部署网站的工作流。见 "
+":doc:`github-pages`。"
 
-#: ../../howto/publish.rst:150
-msgid "On filesystems with directory exchange, the output path switches in one operation. The fallback uses two renames and can briefly leave that path absent. It still never exposes a partly assembled tree. Journal recovery finishes or restores an interrupted switch. A client making several requests can span two generations. The build does not promise one snapshot for a whole browsing session."
-msgstr "在支持目录交换的文件系统上，输出路径一步完成切换。回退方案使用两次重命名，期间该路径可能短暂不存在，但绝不会暴露拼装到一半的目录树。日志恢复会完成或还原被中断的切换。客户端的多次请求可能跨越两代输出；构建并不保证整个浏览会话看到同一个快照。"
+#: ../../howto/publish.rst:149
+msgid ""
+"For any other destination, we write a publisher plugin as described in "
+":doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
+msgstr ""
+"部署到其他目标时，按 :doc:`../plugins` 的说明编写发布插件，并用 ``guidedog publish "
+"--publisher=ID`` 运行。"
+
+#: ../../howto/publish.rst:152
+msgid ""
+"On filesystems with directory exchange, the output path switches in one "
+"operation. The fallback uses two renames and can briefly leave that path "
+"absent. It still never exposes a partly assembled tree. Journal recovery "
+"finishes or restores an interrupted switch. A client making several "
+"requests can span two generations. The build does not promise one "
+"snapshot for a whole browsing session."
+msgstr ""
+"在支持目录交换的文件系统上，输出路径一步完成切换。回退方案使用两次重命名，期间该路径可能短暂不存在，但绝不会暴露拼装到一半的目录树。日志恢复会完成或还原被中断的切换。客户端的多次请求可能跨越两代输出；构建并不保证整个浏览会话看到同一个快照。"
+
+#~ msgid "Three ways to run the same commands"
+#~ msgstr "运行同一组命令的三种方式"
+
+#~ msgid "Program"
+#~ msgstr "程序"
+
+#~ msgid "Use it when"
+#~ msgstr "适用情况"
+
+#~ msgid "``dsc``"
+#~ msgstr "``dsc``"
+
+#~ msgid ""
+#~ "Guidedog is installed. ``dsc`` keeps the catalog itself, and asks "
+#~ "``guidedog`` to build it. It comes in the Guidedog archive."
+#~ msgstr ""
+#~ "已安装 Guidedog。\\ ``dsc`` 自己维护目录，构建时交给 ``guidedog``\\ 。它随 Guidedog 发行包提供。"
+
+#~ msgid "``dscc``"
+#~ msgstr "``dscc``"
+
+#~ msgid ""
+#~ "Nothing else is installed. ``dscc`` is ``dsc`` with Guidedog built in. "
+#~ "Each release has a ``dscc`` archive for every platform."
+#~ msgstr ""
+#~ "没有安装其他程序。\\ ``dscc`` 是内置 Guidedog 的 ``dsc``\\ 。每个版本都为各平台提供 ``dscc`` "
+#~ "发行包。"
+
+#~ msgid "``guidedog gds``"
+#~ msgstr "``guidedog gds``"
+
+#~ msgid ""
+#~ "Graphviz, Typst, and the other tools a build needs belong to Guidedog. "
+#~ "``dsc`` never looks for them. It uses whichever ``guidedog`` we have."
+#~ msgstr ""
+#~ "Graphviz、Typst 以及构建所需的其他工具都由 Guidedog 负责。``dsc`` 从不查找它们，只使用我们已有的那个 "
+#~ "``guidedog``。"
+
+#~ msgid ""
+#~ "``dsc`` runs the ``guidedog`` named by ``--guidedog=PATH``, then by "
+#~ "``DSC_GUIDEDOG``, then the one on ``PATH``. ``dscc`` builds with the "
+#~ "Guidedog inside it."
+#~ msgstr ""
+#~ "``dsc`` 运行的 ``guidedog`` 依次取自 ``--guidedog=PATH``\\ 、\\ "
+#~ "``DSC_GUIDEDOG`` 和 ``PATH``\\ 。\\ ``dscc`` 用内置的 Guidedog 构建。"
+
+#~ msgid ""
+#~ "The package also installs two more programs. ``dsc`` keeps discussion "
+#~ "catalogs and builds them with this ``guidedog`` (see "
+#~ ":doc:`discussions`). ``guidedog-pages`` publishes sites to GitHub "
+#~ "Pages (see :doc:`github-pages`)."
+#~ msgstr ""
+#~ "安装包还附带两个程序。``dsc`` 维护讨论目录，并用这个 ``guidedog`` 构建它们（见 "
+#~ ":doc:`discussions`）。``guidedog-pages`` 把网站发布到 GitHub Pages（见 "
+#~ ":doc:`github-pages`）。"
+
+#~ msgid ""
+#~ "``curl`` on the ``PATH`` for intersphinx inventories and the GitHub "
+#~ "Pages publisher, which run the ``curl`` program instead of linking an "
+#~ "HTTP library."
+#~ msgstr ""
+#~ "``PATH`` 中的 ``curl``，intersphinx 清单和 GitHub Pages 发布工具会调用 ``curl`` "
+#~ "程序，而不是链接 HTTP 库。"
+
+#~ msgid ""
+#~ "``cargo run -p check`` is the source-limit checker in ``tools/check``: "
+#~ "function and file lengths and line widths."
+#~ msgstr ""
+#~ "``cargo run -p check`` 是 ``tools/check`` 中的源码限制检查工具，检查函数长度、文件长度和行宽。"
+
+#~ msgid "Discussion programs"
+#~ msgstr "讨论程序"
+
+#~ msgid "``dsc`` and ``dscc`` build the same way:"
+#~ msgstr "``dsc`` 和 ``dscc`` 的构建方式相同："
+
+#~ msgid ""
+#~ "``dsc`` is small: it keeps the catalog and runs an installed "
+#~ "``guidedog`` to build it. ``dscc`` links Guidedog, so it needs what "
+#~ "``guidedog`` needs (Graphviz's library). Each release also has a "
+#~ "``dscc`` archive for every platform, for a machine with nothing else "
+#~ "installed."
+#~ msgstr ""
+#~ "``dsc`` 很小：它维护目录，并调用已安装的 ``guidedog`` 来构建。``dscc`` 链接了 Guidedog，所以需要 "
+#~ "``guidedog`` 所需的一切（Graphviz 库）。每个版本还为各平台提供 ``dscc`` 发行包，供没有安装其他程序的机器使用。"
+
+#~ msgid ""
+#~ "The GitHub Pages publisher builds the same way. It does not link the "
+#~ "engine:"
+#~ msgstr "GitHub Pages 发布工具的构建方式相同。它不链接引擎："
+
+#~ msgid ""
+#~ "**Staging:** All newly rendered pages are written to a hidden staging "
+#~ "folder beside the destination (``.<target>.next``)."
+#~ msgstr "**暂存：** 新页面写入目标旁的隐藏暂存目录 ``.<target>.next``。"
 
 #~ msgid "Prepare the project"
 #~ msgstr "准备项目"

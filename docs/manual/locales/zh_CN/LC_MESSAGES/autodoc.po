@@ -34,36 +34,12 @@ msgid "Setting it up"
 msgstr "配置方法"
 
 #: ../../autodoc.rst:11
-#, fuzzy
-#| msgid ""
-#| "List the extension and tell Guidedog where your packages are, relative "
-#| "to the source folder, as ``sys.path`` tells Python:"
-msgid ""
-"We list the extension and tell Guidedog where our packages are, relative "
-"to the source folder, as ``sys.path`` tells Python:"
-msgstr "列出扩展，并告诉 Guidedog 软件包相对于源目录的位置，就像 ``sys.path`` 告诉 Python 那样："
+msgid "We list the extension and tell Guidedog where our packages are, relative to the source folder, as ``sys.path`` tells Python:"
+msgstr "我们列出该扩展，并告诉 Guidedog 软件包相对于源目录的位置，就像 ``sys.path`` 告诉 Python 那样："
 
 #: ../../autodoc.rst:19
-#, fuzzy
-#| msgid ""
-#| "``guidedog migrate`` writes ``autodoc_source_paths`` for you from the "
-#| "lines that ``conf.py`` files use to reach their package, such as "
-#| "``sys.path.insert(0, os.path.abspath('..'))``. A package installed "
-#| "from elsewhere is found only if you add the folder that holds it, for "
-#| "example a source checkout of a dependency; Guidedog never looks in "
-#| "Python's own ``site-packages``."
-msgid ""
-"``guidedog migrate`` writes ``autodoc_source_paths`` for us. It reads the "
-"lines that ``conf.py`` files use to reach their package, such as "
-"``sys.path.insert(0, os.path.abspath('..'))``. A package installed from "
-"elsewhere is found only if we add the folder that holds it, for example a "
-"source checkout of a dependency. Guidedog never looks in Python's own "
-"``site-packages``."
-msgstr ""
-"``guidedog migrate`` 会读取 ``conf.py`` 中用于定位软件包的语句，例如 ``sys.path.insert(0, "
-"os.path.abspath('..'))``\\ ，并为你生成 ``autodoc_source_paths``\\ "
-"。对于安装在其他位置的软件包，必须添加其所在目录，例如依赖项的源代码检出目录；Guidedog 不会搜索 Python 自己的 "
-"``site-packages``\\ 。"
+msgid "``guidedog migrate`` writes ``autodoc_source_paths`` for us. It reads the lines that ``conf.py`` files use to reach their package, such as ``sys.path.insert(0, os.path.abspath('..'))``. A package installed from elsewhere is found only if we add the folder that holds it, for example a source checkout of a dependency. Guidedog never looks in Python's own ``site-packages``."
+msgstr "``guidedog migrate`` 会替我们写好 ``autodoc_source_paths``。它读取 ``conf.py`` 中用来定位软件包的语句，例如 ``sys.path.insert(0, os.path.abspath('..'))``。安装在其他位置的软件包，只有在我们添加其所在的文件夹后才能找到，例如某个依赖项的源码检出目录。Guidedog 从不搜索 Python 自己的 ``site-packages``。"
 
 #: ../../autodoc.rst:25
 msgid "The directives then work as in Sphinx:"
@@ -181,14 +157,8 @@ msgid "``autodoc_preserve_defaults``"
 msgstr "``autodoc_preserve_defaults``"
 
 #: ../../autodoc.rst:76
-#, fuzzy
-#| msgid ""
-#| "``false`` (default): defaults are shown as ``repr()`` would write "
-#| "them; ``true`` shows them as written."
-msgid ""
-"``false`` (default): defaults are shown as ``repr()`` would write them. "
-"``true`` shows them as written."
-msgstr "``false``\\ （默认）：按 ``repr()`` 的表示方式显示默认值；\\ ``true`` 则保留源码中的写法。"
+msgid "``false`` (default): defaults are shown as ``repr()`` would write them. ``true`` shows them as written."
+msgstr "``false`` （默认）：按 ``repr()`` 的写法显示默认值。``true`` 则按源码中的写法显示。"
 
 #: ../../autodoc.rst:79
 msgid "``autodoc_typehints``"
@@ -245,92 +215,28 @@ msgstr ""
 "``autodoc_warningiserror``"
 
 #: ../../autodoc.rst:96
-#, fuzzy
-#| msgid ""
-#| "Accepted. Nothing is imported, so nothing needs mocking; type aliases "
-#| "are not applied."
-msgid ""
-"Accepted. Nothing is imported, so nothing needs mocking. Type aliases are "
-"not applied."
-msgstr "接受这些设置。由于不会导入模块，因此无需模拟导入；不应用类型别名。"
+msgid "Accepted. Nothing is imported, so nothing needs mocking. Type aliases are not applied."
+msgstr "接受。由于不导入任何模块，也就无需模拟。不应用类型别名。"
 
 #: ../../autodoc.rst:99
 msgid "How Guidedog knows what Python would do"
 msgstr "Guidedog 如何推断 Python 的行为"
 
 #: ../../autodoc.rst:102
-#, fuzzy
-#| msgid ""
-#| "Names are followed as Python binds them: ``from .app import Flask`` in "
-#| "a package's ``__init__.py`` makes ``flask.Flask`` the class defined in "
-#| "``flask/app.py``, which autodoc then shows with ``:canonical: "
-#| "flask.app.Flask``. Base classes are resolved the same way, their "
-#| "method resolution order is computed as Python computes it, and "
-#| "inherited members come from the bases' source. Names imported only "
-#| "under ``if TYPE_CHECKING:`` do not exist when the module runs, so "
-#| "annotations naming them stay as written, as they do in Sphinx."
-msgid ""
-"Names are followed as Python binds them. ``from .app import Flask`` in a "
-"package's ``__init__.py`` makes ``flask.Flask`` the class defined in "
-"``flask/app.py``. Autodoc then shows it with ``:canonical: "
-"flask.app.Flask``. Base classes are resolved the same way. Their method "
-"resolution order is computed as Python computes it, and inherited members "
-"come from the bases' source. Names imported only under ``if "
-"TYPE_CHECKING:`` do not exist when the module runs, so annotations naming "
-"them stay as written, as they do in Sphinx."
-msgstr ""
-"名称按照 Python 的绑定规则解析。例如，在包的 ``__init__.py`` 中写入 ``from .app import "
-"Flask``\\ ，\\ ``flask.Flask`` 就指向 ``flask/app.py`` 中定义的类，autodoc 会标注 "
-"``:canonical: flask.app.Flask``\\ 。基类也按相同方式解析；方法解析顺序按 Python "
-"的规则计算，继承的成员从基类源码中读取。仅在 ``if TYPE_CHECKING:`` "
-"下导入的名称在运行时不存在，因此引用这些名称的注解会保留原样，与 Sphinx 一致。"
+msgid "Names are followed as Python binds them. ``from .app import Flask`` in a package's ``__init__.py`` makes ``flask.Flask`` the class defined in ``flask/app.py``. Autodoc then shows it with ``:canonical: flask.app.Flask``. Base classes are resolved the same way. Their method resolution order is computed as Python computes it, and inherited members come from the bases' source. Names imported only under ``if TYPE_CHECKING:`` do not exist when the module runs, so annotations naming them stay as written, as they do in Sphinx."
+msgstr "名称按 Python 的绑定方式解析。在包的 ``__init__.py`` 中写 ``from .app import Flask``，``flask.Flask`` 就指向 ``flask/app.py`` 中定义的类，autodoc 随后会用 ``:canonical: flask.app.Flask`` 标注它。基类也按同样的方式解析：方法解析顺序按 Python 的算法计算，继承的成员取自基类的源码。仅在 ``if TYPE_CHECKING:`` 下导入的名称在模块运行时并不存在，因此引用这些名称的注解保留原样，与 Sphinx 一致。"
 
 #: ../../autodoc.rst:110
-#, fuzzy
-#| msgid ""
-#| "Docstrings are the strings Python would store: escapes processed and "
-#| "indentation removed as Python 3.13's compiler removes it. Attribute "
-#| "documentation comes from the places Sphinx's analyser reads: a ``#:`` "
-#| "comment after the assignment or on the lines above it, and a string "
-#| "literal after it. Signatures come from the ``def``; a class's from its "
-#| "metaclass ``__call__``, ``__new__``, or ``__init__``, as Python finds "
-#| "it; a dataclass's or ``NamedTuple``'s from its fields; ``@overload`` "
-#| "variants replace the implementation's signature."
-msgid ""
-"Docstrings are the strings Python would store: escapes processed and "
-"indentation removed as Python 3.13's compiler removes it. Attribute "
-"documentation comes from the places Sphinx's analyser reads: a ``#:`` "
-"comment after the assignment or on the lines above it, and a string "
-"literal after it. A function's signature comes from its ``def``. A "
-"class's signature comes from its metaclass ``__call__``, ``__new__``, or "
-"``__init__``, as Python finds it. A dataclass's or ``NamedTuple``'s "
-"signature comes from its fields. ``@overload`` variants replace the "
-"implementation's signature."
-msgstr ""
-"文档字符串与 Python 实际存储的内容一致：处理转义，并按 Python 3.13 编译器的规则去除缩进。属性文档来自 Sphinx "
-"分析器读取的位置：赋值行末尾或上方的 ``#:`` 注释，以及赋值后紧接的字符串字面量。函数签名来自 ``def``\\ 。类的签名按照 "
-"Python 的查找规则来自元类的 ``__call__``\\ 、\\ ``__new__`` 或 ``__init__``\\ "
-"；dataclass 或 ``NamedTuple`` 的签名来自字段。\\ ``@overload`` 变体会替代实现本身的签名。"
+msgid "Docstrings are the strings Python would store: escapes processed and indentation removed as Python 3.13's compiler removes it. Attribute documentation comes from the places Sphinx's analyser reads: a ``#:`` comment after the assignment or on the lines above it, and a string literal after it. A function's signature comes from its ``def``. A class's signature comes from its metaclass ``__call__``, ``__new__``, or ``__init__``, as Python finds it. A dataclass's or ``NamedTuple``'s signature comes from its fields. ``@overload`` variants replace the implementation's signature."
+msgstr "文档字符串就是 Python 会存储的字符串：转义已经处理，缩进按 Python 3.13 编译器的方式去除。属性文档来自 Sphinx 分析器读取的位置：赋值之后或其上方各行的 ``#:`` 注释，以及赋值之后的字符串字面量。函数签名来自它的 ``def``。类的签名按 Python 的查找方式，来自元类的 ``__call__``、``__new__`` 或 ``__init__``。dataclass 或 ``NamedTuple`` 的签名来自其字段。``@overload`` 变体会取代实现本身的签名。"
 
 #: ../../autodoc.rst:118
 msgid "What cannot be known without running Python"
 msgstr "不运行 Python 就无法获知的内容"
 
 #: ../../autodoc.rst:121
-#, fuzzy
-#| msgid ""
-#| "Guidedog says so, naming the object, whenever the source cannot tell "
-#| "it what Python would: a warning when something cannot be documented, a "
-#| "note (shown with ``-v``) when it is documented with less than Sphinx "
-#| "would show."
-msgid ""
-"Guidedog says so, naming the object, whenever the source cannot tell it "
-"what Python would. It gives a warning when something cannot be "
-"documented. It gives a note (shown with ``-v``) when it is documented "
-"with less than Sphinx would show."
-msgstr ""
-"如果源码无法揭示 Python 的实际行为，Guidedog 会明确指出涉及的对象。无法生成文档时给出警告；能生成文档但信息少于 Sphinx "
-"时给出说明，使用 ``-v`` 可查看。"
+msgid "Guidedog says so, naming the object, whenever the source cannot tell it what Python would. It gives a warning when something cannot be documented. It gives a note (shown with ``-v``) when it is documented with less than Sphinx would show."
+msgstr "每当源码无法告诉 Guidedog 运行时 Python 会得到什么，它都会明确指出，并说明涉及的对象。无法生成文档时给出警告；能生成文档但内容少于 Sphinx 时给出说明（使用 ``-v`` 显示）。"
 
 #: ../../autodoc.rst:125
 msgid ""
@@ -354,19 +260,8 @@ msgid ""
 msgstr "由源码搜索路径之外的装饰器（\\ ``@click.command()``\\ ）生成的函数，按被装饰的原函数生成文档。"
 
 #: ../../autodoc.rst:131
-#, fuzzy
-#| msgid ""
-#| "A class from a package outside the source paths is named by the path "
-#| "it was imported from, which may differ from the module that defines "
-#| "it; its members, its constructor's signature, and the docstrings it "
-#| "would pass on are unknown."
-msgid ""
-"A class from a package outside the source paths is named by the path it "
-"was imported from, which may differ from the module that defines it. Its "
-"members, its constructor's signature, and the docstrings it would pass on "
-"are unknown."
-msgstr ""
-"源码搜索路径之外的包中的类，使用导入时的路径命名；该路径可能与定义类的模块不同。它的成员、构造函数签名以及可继承的文档字符串都无法确定。"
+msgid "A class from a package outside the source paths is named by the path it was imported from, which may differ from the module that defines it. Its members, its constructor's signature, and the docstrings it would pass on are unknown."
+msgstr "来自源码路径之外的包的类，以导入它时的路径命名，该路径可能与定义它的模块不同。它的成员、构造函数签名以及它会传给子类的文档字符串都无从得知。"
 
 #: ../../autodoc.rst:134
 msgid ""
@@ -392,26 +287,8 @@ msgstr ""
 "层嵌套括号；Guidedog 也拒绝含数百个操作数的 ``+`` 链。"
 
 #: ../../autodoc.rst:141
-#, fuzzy
-#| msgid ""
-#| "Work that multiplies is bounded: a name followed through imports and "
-#| "aliases stops after 48 steps along one path and 100,000 in all; a type "
-#| "alias or constant is expanded for 10,000 steps and is otherwise shown "
-#| "as written; a class's MRO is followed 100 classes deep; and one "
-#| "directive generates at most 10,000 directives (the warning "
-#| "``autodoc.limit``), which only a class that contains itself under its "
-#| "own name reaches."
-msgid ""
-"Work that multiplies is bounded. A name followed through imports and "
-"aliases stops after 48 steps along one path and 100,000 in all. A type "
-"alias or constant is expanded for 10,000 steps and is otherwise shown as "
-"written. A class's MRO is followed 100 classes deep. One directive "
-"generates at most 10,000 directives (the warning ``autodoc.limit``); only "
-"a class that contains itself under its own name reaches this."
-msgstr ""
-"会产生倍增的工作量都有上限。沿导入和别名查找名称时，单条路径最多 48 步，总计最多 100,000 步。类型别名或常量展开最多 10,000 "
-"步，超过后保留源码写法。类的 MRO 最多追踪 100 层；单条指令最多生成 10,000 条指令，超过时给出 ``autodoc.limit`` "
-"警告。只有以自身名称包含自身的类才会达到最后这一上限。"
+msgid "Work that multiplies is bounded. A name followed through imports and aliases stops after 48 steps along one path and 100,000 in all. A type alias or constant is expanded for 10,000 steps and is otherwise shown as written. A class's MRO is followed 100 classes deep. One directive generates at most 10,000 directives (the warning ``autodoc.limit``); only a class that contains itself under its own name reaches this."
+msgstr "会成倍增长的工作量都有上限。沿导入和别名追踪名称时，单条路径最多 48 步，总计最多 100,000 步。类型别名或常量最多展开 10,000 步，超出则按源码写法显示。类的 MRO 最多追踪 100 层。一条指令最多生成 10,000 条指令（警告 ``autodoc.limit``）；只有以自身名称包含自身的类才会达到这一上限。"
 
 #: ../../autodoc.rst:147
 msgid ""
@@ -424,20 +301,8 @@ msgid "Rebuilding"
 msgstr "重新构建"
 
 #: ../../autodoc.rst:153
-#, fuzzy
-#| msgid ""
-#| "Every Python file an autodoc directive read is a dependency of the "
-#| "page: editing it reads the page again on the next build. A page whose "
-#| "object was not found is read again on every build, so it picks the "
-#| "object up as soon as the source has it."
-msgid ""
-"Every Python file an autodoc directive read is a dependency of the page. "
-"When we edit it, the next build reads the page again. A page whose object "
-"was not found is read again on every build, so it picks the object up as "
-"soon as the source has it."
-msgstr ""
-"autodoc 指令读取的每个 Python "
-"文件都是该页面的依赖项。修改文件后，下次构建会重新读取页面。未找到对象的页面会在每次构建时重读，因此源码中出现该对象后即可识别。"
+msgid "Every Python file an autodoc directive read is a dependency of the page. When we edit it, the next build reads the page again. A page whose object was not found is read again on every build, so it picks the object up as soon as the source has it."
+msgstr "autodoc 指令读取过的每个 Python 文件都是该页面的依赖。我们修改这些文件后，下次构建会重新读取该页面。未找到对象的页面在每次构建时都会重新读取，因此源码中一出现该对象，页面就能找到它。"
 
 #: ../../autodoc.rst:157
 msgid "Security"

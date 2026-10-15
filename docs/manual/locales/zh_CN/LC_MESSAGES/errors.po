@@ -38,20 +38,8 @@ msgid "A report has four parts, always in this order:"
 msgstr "报告始终按以下顺序分为四部分："
 
 #: ../../errors.rst:27
-#, fuzzy
-#| msgid ""
-#| "**The title bar.** The title names the kind of problem in capitals; "
-#| "warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right "
-#| "of the bar is the report's code, such as "
-#| "``rst.substitution.undefined``: a stable name you can search for."
-msgid ""
-"**The title bar.** The title names the kind of problem in capitals. "
-"Warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right of "
-"the bar is the report's code, such as ``rst.substitution.undefined``: a "
-"stable name we can search for."
-msgstr ""
-"**标题栏。**\\ 标题用大写字母说明问题类型；警告和说明分别以 ``WARNING:`` 和 ``NOTE:`` 开头。右侧显示报告代码，如 "
-"``rst.substitution.undefined``\\ ，这是可用于搜索的稳定名称。"
+msgid "**The title bar.** The title names the kind of problem in capitals. Warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right of the bar is the report's code, such as ``rst.substitution.undefined``: a stable name we can search for."
+msgstr "**标题栏。** 标题用大写字母说明问题类型。警告和说明分别以 ``WARNING:`` 和 ``NOTE:`` 开头。标题栏右侧是报告代码，例如 ``rst.substitution.undefined``：这是一个稳定的名称，可以拿来搜索。"
 
 #: ../../errors.rst:30
 msgid ""
@@ -75,64 +63,20 @@ msgid ""
 msgstr "**如何处理。**\\ 支持彩色的终端用绿色显示具体建议。如果有多种修复方式，会依次列出，最可能适用的放在前面。"
 
 #: ../../errors.rst:39
-#, fuzzy
-#| msgid ""
-#| "Colors only underline what the words already say; ``--color=never`` "
-#| "turns them off and ``--color=always`` keeps them when the output is "
-#| "not a terminal."
-msgid ""
-"Colors only underline what the words already say. ``--color=never`` turns "
-"them off. ``--color=always`` keeps them when the output is not a terminal."
-msgstr ""
-"颜色只强调文字已表达的含义。\\ ``--color=never`` 关闭颜色；\\ ``--color=always`` "
-"则在输出不是终端时也保留颜色。"
+msgid "Colors only underline what the words already say. ``--color=never`` turns them off. ``--color=always`` keeps them when the output is not a terminal."
+msgstr "颜色只是强调文字已经表达的内容。``--color=never`` 关闭颜色。``--color=always`` 在输出不是终端时也保留颜色。"
 
 #: ../../errors.rst:42
 msgid "Every hint gives directions"
 msgstr "每条提示都指明下一步"
 
 #: ../../errors.rst:45
-#, fuzzy
-#| msgid ""
-#| "Guidedog holds its own messages to this: a hint starts with what to do "
-#| "(\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\") and names what to do "
-#| "it to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the "
-#| "directive's option. A test (``tests/hints_test.odin``) reads every "
-#| "message Guidedog can emit and fails when a hint is empty, repeats the "
-#| "message, or says only \"report this\" without saying what to report "
-#| "with. Two forms are allowed because they name the fix themselves: a "
-#| "suggestion (\"Did you mean numfig?\") and, for a note that needs no "
-#| "action, \"Nothing to do:\" with the reason."
-msgid ""
-"Guidedog holds its own messages to this rule. A hint starts with what to "
-"do (\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\"). It names what to do "
-"it to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the "
-"directive's option. Tests check the messages Guidedog emits. They fail "
-"when a hint is empty, repeats the message, or says only \"report this\" "
-"without saying what to report with. Two other forms are allowed, because "
-"they name the fix themselves. One is a suggestion (\"Did you mean "
-"numfig?\"). The other, for a note that needs no action, is \"Nothing to "
-"do:\" with the reason."
-msgstr ""
-"Guidedog 对自身消息也遵守这一要求：提示先给出动作（“Add”“Pass”“Set”“Rename”“Run”），再说明对象，如 "
-"``--budget=MIB``\\ 、\\ ``conf.toml`` 中的 ``root_doc`` 或指令选项。\\ "
-"``tests/hints_test.odin`` 检查每条可发出的消息；提示为空、重复错误内容，或只说“report "
-"this”而不说明报告材料，测试都会失败。另允许两种已指出修正方法的形式：建议（“Did you mean "
-"numfig?”），以及无需操作时的“Nothing to do:”和原因。"
+msgid "Guidedog holds its own messages to this rule. A hint starts with what to do (\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\"). It names what to do it to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the directive's option. Tests check the messages Guidedog emits. They fail when a hint is empty, repeats the message, or says only \"report this\" without saying what to report with. Two other forms are allowed, because they name the fix themselves. One is a suggestion (\"Did you mean numfig?\"). The other, for a note that needs no action, is \"Nothing to do:\" with the reason."
+msgstr "Guidedog 自己的消息也遵守这条规则。提示以要做的动作开头（“Add”“Pass”“Set”“Rename”“Run”），并指明动作的对象，例如 ``--budget=MIB``、``conf.toml`` 中的 ``root_doc``，或指令的选项。测试会检查 Guidedog 发出的消息：提示为空、重复消息内容，或只说“report this”而不说明报告时要附上什么，测试都会失败。另外允许两种形式，因为它们本身就指明了修正方法。一种是建议（“Did you mean numfig?”）。另一种用于无需操作的说明，即“Nothing to do:”加上原因。"
 
 #: ../../errors.rst:52
-#, fuzzy
-#| msgid ""
-#| "When the problem is Guidedog's own fault, the hint says so and asks "
-#| "you to report it with the command you ran, the input that caused it, "
-#| "and the output of ``guidedog --version``."
-msgid ""
-"When the problem is Guidedog's own fault, the hint says so. It asks us to "
-"report it with the command we ran, the input that caused it, and the "
-"output of ``guidedog --version``."
-msgstr ""
-"若问题是 Guidedog 自身的错误，提示会明确说明，并请你提交所运行的命令、导致问题的输入，以及 ``guidedog --version`` "
-"的输出。"
+msgid "When the problem is Guidedog's own fault, the hint says so. It asks us to report it with the command we ran, the input that caused it, and the output of ``guidedog --version``."
+msgstr "如果问题出在 Guidedog 自身，提示会明确说明，并请我们附上所运行的命令、导致问题的输入以及 ``guidedog --version`` 的输出来报告。"
 
 #: ../../errors.rst:56
 msgid "Reports for programs"
@@ -145,130 +89,44 @@ msgid ""
 msgstr "``--diagnostics=json`` 将每条报告作为一个 JSON 对象写入标准错误，每行一个，便于编辑器和持续集成读取："
 
 #: ../../errors.rst:70
-#, fuzzy
-#| msgid ""
-#| "(shown wrapped here; each object is on one line). ``schema`` is the "
-#| "version of this format, which changes only when a field does; check it "
-#| "before reading the rest. Columns count Unicode scalars, not bytes or "
-#| "terminal cells, from 1. ``source`` is the complete original source "
-#| "line; the terminal shows a bounded window around the error and aligns "
-#| "its caret after escaping controls and measuring wide characters. "
-#| "``category`` is the warning's category, as ``suppress_warnings`` names "
-#| "it, or empty."
-msgid ""
-"(shown wrapped here; each object is on one line). ``schema`` is the "
-"version of this format. It changes only when a field does, so a program "
-"checks it before reading the rest. Columns count Unicode scalars, not "
-"bytes or terminal cells, from 1. ``source`` is the complete original "
-"source line. The terminal shows a bounded window around the error. It "
-"aligns its caret after escaping controls and measuring wide characters. "
-"``category`` is the warning's category, as ``suppress_warnings`` names "
-"it, or empty."
-msgstr ""
-"此处为便于阅读而折行；实际每个对象占一行。\\ ``schema`` 是格式版本，仅字段变化时更新，读取其余内容前应先检查。列号从 1 开始，按 "
-"Unicode 标量计数，而非字节或终端格数。\\ ``source`` "
-"是完整原始行。终端仅显示错误附近的有限窗口，转义控制字符、测量宽字符后对齐指示符。\\ ``category`` 是 "
-"``suppress_warnings`` 使用的警告类别，也可为空。"
+msgid "(shown wrapped here; each object is on one line). ``schema`` is the version of this format. It changes only when a field does, so a program checks it before reading the rest. Columns count Unicode scalars, not bytes or terminal cells, from 1. ``source`` is the complete original source line. The terminal shows a bounded window around the error. It aligns its caret after escaping controls and measuring wide characters. ``category`` is the warning's category, as ``suppress_warnings`` names it, or empty."
+msgstr "（此处折行显示；实际每个对象占一行）。``schema`` 是此格式的版本，只在字段变化时才改变，因此程序应先检查它，再读取其余内容。列号从 1 开始，按 Unicode 标量值计数，而不是按字节或终端单元格。``source`` 是完整的原始源码行。终端只显示错误附近有限的一段，并在转义控制字符、计算宽字符的宽度之后对齐插入符。``category`` 是警告的类别，即 ``suppress_warnings`` 中使用的名称，也可能为空。"
 
 #: ../../errors.rst:77
 msgid "When memory runs out"
 msgstr "内存不足时"
 
 #: ../../errors.rst:80
-#, fuzzy
-#| msgid ""
-#| "Running out of memory is a report too, never a crash. There are two "
-#| "kinds:"
 msgid "Reaching a bound is a report, not a crash. There are two kinds:"
-msgstr "内存不足也会生成诊断，不会导致崩溃。分为两种情况："
+msgstr "触及上限时会生成报告，而不是崩溃。分为两种情况："
 
 #: ../../errors.rst:82
 msgid "``host.budget`` (MEMORY BUDGET REACHED)"
 msgstr "``host.budget``\\ （达到内存预算）"
 
 #: ../../errors.rst:83
-#, fuzzy
-#| msgid ""
-#| "The build reached the memory it may hold, its budget "
-#| "(``--budget=MIB``, 1 GiB by default). The report names the step and, "
-#| "for a template, the line that asked for the memory. At a terminal the "
-#| "build asks once what to do: raise the budget to one the step fits, go "
-#| "on with the working memory on disk, or stop; elsewhere it stops, and "
-#| "``--budget`` or ``--memory=disk`` chooses ahead. The hint names that "
-#| "same budget as a number, for example:"
-msgid ""
-"The build reached the memory it may hold, its budget (``--budget=MIB``, 1 "
-"GiB by default). The budget counts what Guidedog reads and keeps: "
-"sources, included files, and the PDF the embedded Typst compiler returns. "
-"The report names the step and the file that needed the memory. The hint "
-"names a budget that fits, as a number. For example:"
-msgstr ""
-"构建达到允许持有的内存预算（\\ ``--budget=MIB``\\ ，默认 1 "
-"GiB）。报告指出步骤；若是模板，还指出申请内存的行。终端中会询问一次：提高预算、改用磁盘工作内存，或停止。其他环境直接停止；可提前用 "
-"``--budget`` 或 ``--memory=disk`` 选择。提示也会用数字给出预算，例如："
+msgid "The build reached the memory it may hold, its budget (``--budget=MIB``, 1 GiB by default). The budget counts what Guidedog reads and keeps: sources, included files, and the PDF the embedded Typst compiler returns. The report names the step and the file that needed the memory. The hint names a budget that fits, as a number. For example:"
+msgstr "构建达到了允许持有的内存，即预算（``--budget=MIB``，默认 1 GiB）。预算统计 Guidedog 读取并保留的内容：源文件、被包含的文件，以及内嵌 Typst 编译器返回的 PDF。报告会指出需要这些内存的步骤和文件。提示会以数字给出一个够用的预算。例如："
 
 #: ../../errors.rst:91
-#, fuzzy
-#| msgid ""
-#| "The number holds what the build held and the refused step four times "
-#| "over (the step also holds its output and the copy it writes), or twice "
-#| "the old budget, whichever is larger, rounded up to 64 MiB, and no more "
-#| "than the memory the machine has free when the step fits there. When it "
-#| "does not, the hint says so, and names ``--memory=disk`` first:"
-msgid ""
-"The number is the larger of two figures. One is what the build held plus "
-"four times the refused step (the step also holds its output and the copy "
-"it writes). The other is twice the old budget. The number is rounded up "
-"to 64 MiB. It is no more than the memory the machine has free, when the "
-"step fits there. When it does not, the hint says so:"
-msgstr ""
-"建议值取“当前持有量加上被拒步骤所需内存的四倍”（该步骤还需保存输出及写入副本）与“旧预算的两倍”中的较大值，向上取整到 64 "
-"MiB。当步骤能装入可用内存时，不超过机器当时的可用量；否则提示会明确说明，并先建议 ``--memory=disk``\\ ："
+msgid "The number is the larger of two figures. One is what the build held plus four times the refused step (the step also holds its output and the copy it writes). The other is twice the old budget. The number is rounded up to 64 MiB. It is no more than the memory the machine has free, when the step fits there. When it does not, the hint says so:"
+msgstr "这个数字取两个值中的较大者：一个是构建已持有的内存加上被拒步骤所需内存的四倍（该步骤还要持有它的输出和它写入的副本），另一个是旧预算的两倍。结果向上取整到 64 MiB。如果该步骤放得进机器的空闲内存，这个数字就不超过空闲内存量。放不下时，提示会明确说明："
 
 #: ../../errors.rst:99
-msgid ""
-"``GUIDEDOG_AVAILABLE_MIB`` states the machine's free memory when the "
-"system's own figure misleads, for example inside a container."
-msgstr ""
+msgid "``GUIDEDOG_AVAILABLE_MIB`` states the machine's free memory when the system's own figure misleads, for example inside a container."
+msgstr "当系统自己给出的数字有误导性时（例如在容器内），可以用 ``GUIDEDOG_AVAILABLE_MIB`` 指明机器的空闲内存。"
 
 #: ../../errors.rst:102
 msgid "``host.memory`` (OUT OF MEMORY)"
 msgstr "``host.memory``\\ （内存不足）"
 
 #: ../../errors.rst:103
-#, fuzzy
-#| msgid ""
-#| "The system refused memory the budget allowed. The command stops "
-#| "without using what it was refused: a build publishes nothing, a GDS "
-#| "change is applied whole or not at all, and ``convert`` writes a whole "
-#| "page or none. Free memory, or build with fewer threads (``-j 1``), and "
-#| "run the command again. Once a build has decided to publish, switching "
-#| "its output into place needs no memory, so a refusal cannot stop a "
-#| "publication halfway; if the build instead finds an earlier build's "
-#| "publication to finish and has no memory to plan it, it leaves that "
-#| "publication as it was, for the next build."
-msgid ""
-"The system could not provide a buffer the budget allowed. The command "
-"stops without using it. A build publishes nothing, a GDS change is "
-"applied whole or not at all, and ``convert`` writes a whole page or none. "
-"Free memory, or build with fewer threads (``-j 1``), and run the command "
-"again. Once a build has decided to publish, switching its output into "
-"place needs no further planning. So a refusal cannot stop a publication "
-"halfway. The next build finishes an interrupted publication."
-msgstr ""
-"系统拒绝了预算允许的内存申请。命令停止，不使用被拒的存储：构建不发布内容，GDS 修改要么全部应用、要么不应用，\\ ``convert`` "
-"要么写出整页、要么不写。释放内存或减少线程（\\ ``-j 1``\\ "
-"）后重试。发布决定一旦做出，切换输出无需再申请内存，因此拒绝申请不会造成半发布。若构建发现先前未完成的发布，却没有内存规划恢复，就保留现场，交给下次构建。"
+msgid "The system could not provide a buffer the budget allowed. The command stops without using it. A build publishes nothing, a GDS change is applied whole or not at all, and ``convert`` writes a whole page or none. Free memory, or build with fewer threads (``-j 1``), and run the command again. Once a build has decided to publish, switching its output into place needs no further planning. So a refusal cannot stop a publication halfway. The next build finishes an interrupted publication."
+msgstr "系统无法提供预算所允许的缓冲区。命令停止，不会使用它：构建不发布任何内容，GDS 修改要么整体应用、要么完全不应用，``convert`` 要么写出整页、要么什么都不写。释放内存，或用更少的线程构建（``-j 1``），然后重新运行命令。构建一旦决定发布，把输出切换到位就不再需要额外规划，因此拒绝不会让发布半途而止。被中断的发布会由下一次构建完成。"
 
 #: ../../errors.rst:110
-msgid ""
-"A document's own size is bounded separately, by ``--max-nodes``, "
-"``--max-depth`` and ``--stack-kib``. An oversized document is reported "
-"with the limit it reached. See :doc:`internals/memory` for how the budget "
-"and these limits divide the work. The Odin implementation could also keep "
-"working memory on disk (``--memory=disk``). The Rust implementation "
-"bounds a conversion by its limits instead, so there is no disk mode."
-msgstr ""
+msgid "A document's own size is bounded separately, by ``--max-nodes``, ``--max-depth`` and ``--stack-kib``. An oversized document is reported with the limit it reached. See :doc:`internals/memory` for how the budget and these limits divide the work. The Odin implementation could also keep working memory on disk (``--memory=disk``). The Rust implementation bounds a conversion by its limits instead, so there is no disk mode."
+msgstr "文档本身的规模另由 ``--max-nodes``、``--max-depth`` 和 ``--stack-kib`` 限制。超出规模的文档会报告它触及的限制。预算与这些限制如何分工，见 :doc:`internals/memory`。Odin 实现还可以把工作内存放在磁盘上（``--memory=disk``）。Rust 实现则用这些限制约束每次转换，因此没有磁盘模式。"
 
 #: ../../errors.rst:116
 msgid "Both end with status 3."
@@ -353,56 +211,25 @@ msgid "5"
 msgstr "5"
 
 #: ../../errors.rst:138
-#, fuzzy
-#| msgid "Guidedog failed internally, and the report asks you to report it."
 msgid "Guidedog failed internally, and the report asks us to report it."
-msgstr "Guidedog 内部发生错误，报告会请你提交问题。"
+msgstr "Guidedog 内部出错，报告会请我们提交问题。"
 
 #: ../../errors.rst:139
 msgid "70"
 msgstr "70"
 
 #: ../../errors.rst:139
-#, fuzzy
-#| msgid ""
-#| "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
-#| "the command that ran, the fault, and what ``guidedog --version`` "
-#| "prints, and says where to report it: the issue tracker your build "
-#| "names, or else whoever provided your build. Because builds publish "
-#| "only at the end, a crash leaves the previous output in place."
-msgid ""
-"Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
-"the command that ran, the fault, and what ``guidedog --version`` prints, "
-"and says where to report it: the issue tracker our build names, or else "
-"whoever provided our build. Because builds publish only at the end, a "
-"crash leaves the previous output in place."
-msgstr ""
-"Guidedog 崩溃时，会打印 ``GUIDEDOG CRASHED (internal error)``\\ ，以及执行的命令、故障和 "
-"``guidedog --version`` "
-"的输出，并给出报告地址：构建指定的问题跟踪器，或提供该构建的人。构建仅在最后发布，因此崩溃会保留之前的输出。"
+msgid "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with the command that ran, the fault, and what ``guidedog --version`` prints, and says where to report it: the issue tracker our build names, or else whoever provided our build. Because builds publish only at the end, a crash leaves the previous output in place."
+msgstr "Guidedog 崩溃了。它会打印 ``GUIDEDOG CRASHED (internal error)``，以及所运行的命令、故障和 ``guidedog --version`` 的输出，并说明到哪里报告：我们所用构建版本指定的问题跟踪器，没有的话就是提供该构建版本的人。由于构建只在最后发布，崩溃时之前的输出保持不变。"
 
 #: ../../errors.rst:144
 msgid "130"
 msgstr "130"
 
 #: ../../errors.rst:144
-#, fuzzy
-#| msgid ""
-#| "The command was interrupted with Ctrl+C; published files were left "
-#| "unchanged."
-msgid ""
-"The command was interrupted with Ctrl+C. Published files were left "
-"unchanged."
-msgstr "命令被 Ctrl+C 中断，已发布文件保持不变。"
+msgid "The command was interrupted with Ctrl+C. Published files were left unchanged."
+msgstr "命令被 Ctrl+C 中断。已发布的文件保持不变。"
 
 #: ../../errors.rst:147
-#, fuzzy
-#| msgid ""
-#| "A build that fails for any reason leaves the previous output, and the "
-#| "records of what it built, as they were: fix the problem and build "
-#| "again."
-msgid ""
-"A build that fails for any reason leaves the previous output, and the "
-"records of what it built, as they were. We fix the problem and build "
-"again."
-msgstr "无论构建因何失败，上一代输出及构建记录均保持不变。修复问题后重新构建即可。"
+msgid "A build that fails for any reason leaves the previous output, and the records of what it built, as they were. We fix the problem and build again."
+msgstr "无论因何失败，构建都会让之前的输出及其构建记录保持原样。我们修复问题后重新构建即可。"

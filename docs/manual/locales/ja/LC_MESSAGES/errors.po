@@ -38,20 +38,8 @@ msgid "A report has four parts, always in this order:"
 msgstr "診断は常に次の順序で、4 つの部分からなります。"
 
 #: ../../errors.rst:27
-#, fuzzy
-#| msgid ""
-#| "**The title bar.** The title names the kind of problem in capitals; "
-#| "warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right "
-#| "of the bar is the report's code, such as "
-#| "``rst.substitution.undefined``: a stable name you can search for."
-msgid ""
-"**The title bar.** The title names the kind of problem in capitals. "
-"Warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right of "
-"the bar is the report's code, such as ``rst.substitution.undefined``: a "
-"stable name we can search for."
-msgstr ""
-"**タイトル行。**\\ 問題の種類を大文字で示します。警告と注記は ``WARNING:`` と ``NOTE:`` で始まります。右端の "
-"``rst.substitution.undefined`` などは、検索に使える安定した診断コードです。"
+msgid "**The title bar.** The title names the kind of problem in capitals. Warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right of the bar is the report's code, such as ``rst.substitution.undefined``: a stable name we can search for."
+msgstr "**タイトル行。** 問題の種類を大文字で示します。警告と注記は ``WARNING:`` と ``NOTE:`` で始まります。行の右端には ``rst.substitution.undefined`` のような診断コードがあります。検索に使える、変わらない名前です。"
 
 #: ../../errors.rst:30
 msgid ""
@@ -76,65 +64,20 @@ msgid ""
 msgstr "**何をすべきか。**\\ カラー端末では緑で示す、具体的な修正方法です。複数ある場合は、最も可能性の高い方法から列挙します。"
 
 #: ../../errors.rst:39
-#, fuzzy
-#| msgid ""
-#| "Colors only underline what the words already say; ``--color=never`` "
-#| "turns them off and ``--color=always`` keeps them when the output is "
-#| "not a terminal."
-msgid ""
-"Colors only underline what the words already say. ``--color=never`` turns "
-"them off. ``--color=always`` keeps them when the output is not a terminal."
-msgstr ""
-"色は文章で伝えた内容を強調するだけです。\\ ``--color=never`` で色を無効にし、\\ ``--color=always`` "
-"で端末以外の出力にも色を残せます。"
+msgid "Colors only underline what the words already say. ``--color=never`` turns them off. ``--color=always`` keeps them when the output is not a terminal."
+msgstr "色は、文章がすでに伝えている内容を強調するだけです。``--color=never`` で色を無効にします。``--color=always`` を指定すると、出力先が端末でなくても色を残します。"
 
 #: ../../errors.rst:42
 msgid "Every hint gives directions"
 msgstr "次の操作を示すヒント"
 
 #: ../../errors.rst:45
-#, fuzzy
-#| msgid ""
-#| "Guidedog holds its own messages to this: a hint starts with what to do "
-#| "(\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\") and names what to do "
-#| "it to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the "
-#| "directive's option. A test (``tests/hints_test.odin``) reads every "
-#| "message Guidedog can emit and fails when a hint is empty, repeats the "
-#| "message, or says only \"report this\" without saying what to report "
-#| "with. Two forms are allowed because they name the fix themselves: a "
-#| "suggestion (\"Did you mean numfig?\") and, for a note that needs no "
-#| "action, \"Nothing to do:\" with the reason."
-msgid ""
-"Guidedog holds its own messages to this rule. A hint starts with what to "
-"do (\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\"). It names what to do "
-"it to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the "
-"directive's option. Tests check the messages Guidedog emits. They fail "
-"when a hint is empty, repeats the message, or says only \"report this\" "
-"without saying what to report with. Two other forms are allowed, because "
-"they name the fix themselves. One is a suggestion (\"Did you mean "
-"numfig?\"). The other, for a note that needs no action, is \"Nothing to "
-"do:\" with the reason."
-msgstr ""
-"Guidedog "
-"自身のメッセージにもこの規則を課す。ヒントは操作（「Add」「Pass」「Set」「Rename」「Run」）と、その対象を示す。例えば "
-"``--budget=MIB``\\ 、\\ ``conf.toml`` の ``root_doc``\\ 、ディレクティブのオプションだ。\\ "
-"``tests/hints_test.odin`` は全メッセージを読み、空のヒント、本文の繰り返し、報告内容を示さない「report "
-"this」を拒否する。修正を直接示す提案（「Did you mean numfig?」）と、操作不要の注記「Nothing to "
-"do:」に理由を添える形式も認める。"
+msgid "Guidedog holds its own messages to this rule. A hint starts with what to do (\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\"). It names what to do it to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the directive's option. Tests check the messages Guidedog emits. They fail when a hint is empty, repeats the message, or says only \"report this\" without saying what to report with. Two other forms are allowed, because they name the fix themselves. One is a suggestion (\"Did you mean numfig?\"). The other, for a note that needs no action, is \"Nothing to do:\" with the reason."
+msgstr "Guidedog は自身のメッセージにもこの規則を課しています。ヒントは、何をするか（「Add」「Pass」「Set」「Rename」「Run」）から始めます。そして、``--budget=MIB``、``conf.toml`` の ``root_doc``、ディレクティブのオプションなど、操作の対象を示します。Guidedog が出すメッセージはテストで検査します。ヒントが空のとき、本文を繰り返しているとき、何を添えて報告するかを示さずに「report this」とだけ言うときは、テストが失敗します。ほかに 2 つの形式を認めています。どちらも修正方法をそれ自体で示すからです。1 つは提案（「Did you mean numfig?」）です。もう 1 つは操作が不要な注記のための形式で、「Nothing to do:」に理由を続けます。"
 
 #: ../../errors.rst:52
-#, fuzzy
-#| msgid ""
-#| "When the problem is Guidedog's own fault, the hint says so and asks "
-#| "you to report it with the command you ran, the input that caused it, "
-#| "and the output of ``guidedog --version``."
-msgid ""
-"When the problem is Guidedog's own fault, the hint says so. It asks us to "
-"report it with the command we ran, the input that caused it, and the "
-"output of ``guidedog --version``."
-msgstr ""
-"Guidedog 自身の不具合なら、そのことを明示します。実行したコマンド、原因となった入力、\\ ``guidedog --version`` "
-"の出力を添えて報告するよう案内します。"
+msgid "When the problem is Guidedog's own fault, the hint says so. It asks us to report it with the command we ran, the input that caused it, and the output of ``guidedog --version``."
+msgstr "問題が Guidedog 自身の不具合である場合は、ヒントがそのことを伝えます。実行したコマンド、原因となった入力、``guidedog --version`` の出力を添えて報告するよう求めます。"
 
 #: ../../errors.rst:56
 msgid "Reports for programs"
@@ -149,132 +92,44 @@ msgstr ""
 "オブジェクトとして報告を書く。エディターや継続的インテグレーションから読める。"
 
 #: ../../errors.rst:70
-#, fuzzy
-#| msgid ""
-#| "(shown wrapped here; each object is on one line). ``schema`` is the "
-#| "version of this format, which changes only when a field does; check it "
-#| "before reading the rest. Columns count Unicode scalars, not bytes or "
-#| "terminal cells, from 1. ``source`` is the complete original source "
-#| "line; the terminal shows a bounded window around the error and aligns "
-#| "its caret after escaping controls and measuring wide characters. "
-#| "``category`` is the warning's category, as ``suppress_warnings`` names "
-#| "it, or empty."
-msgid ""
-"(shown wrapped here; each object is on one line). ``schema`` is the "
-"version of this format. It changes only when a field does, so a program "
-"checks it before reading the rest. Columns count Unicode scalars, not "
-"bytes or terminal cells, from 1. ``source`` is the complete original "
-"source line. The terminal shows a bounded window around the error. It "
-"aligns its caret after escaping controls and measuring wide characters. "
-"``category`` is the warning's category, as ``suppress_warnings`` names "
-"it, or empty."
-msgstr ""
-"ここでは折り返して示すが、実際は一オブジェクト一行。\\ ``schema`` "
-"はフィールドが変わったときだけ更新する形式の版で、他を読む前に確認する。列は1から始まる Unicode "
-"スカラー数で、バイト数や端末の桁数ではない。\\ ``source`` "
-"は元の行全体。端末はエラー周辺だけを表示し、制御文字のエスケープと全角文字の幅を考慮して印を合わせる。\\ ``category`` は "
-"``suppress_warnings`` で使う警告分類、または空。"
+msgid "(shown wrapped here; each object is on one line). ``schema`` is the version of this format. It changes only when a field does, so a program checks it before reading the rest. Columns count Unicode scalars, not bytes or terminal cells, from 1. ``source`` is the complete original source line. The terminal shows a bounded window around the error. It aligns its caret after escaping controls and measuring wide characters. ``category`` is the warning's category, as ``suppress_warnings`` names it, or empty."
+msgstr "（ここでは折り返して表示しています。実際には各オブジェクトが 1 行です。） ``schema`` はこの形式のバージョンです。フィールドが変わったときにだけ変わるので、プログラムは残りを読む前にこれを確認します。列は 1 から数え、バイト数や端末のセル数ではなく Unicode スカラー値の数を数えます。``source`` は元のソース行全体です。端末にはエラー周辺の限られた範囲だけを表示し、制御文字をエスケープして全角文字の幅を測ったうえでキャレットの位置を合わせます。``category`` は警告のカテゴリーで、``suppress_warnings`` で使う名前、または空です。"
 
 #: ../../errors.rst:77
 msgid "When memory runs out"
 msgstr "メモリが足りないとき"
 
 #: ../../errors.rst:80
-#, fuzzy
-#| msgid ""
-#| "Running out of memory is a report too, never a crash. There are two "
-#| "kinds:"
 msgid "Reaching a bound is a report, not a crash. There are two kinds:"
-msgstr "メモリ不足も診断として報告し、クラッシュしません。2 種類あります。"
+msgstr "上限に達しても、クラッシュせずに診断として報告します。上限には 2 種類あります："
 
 #: ../../errors.rst:82
 msgid "``host.budget`` (MEMORY BUDGET REACHED)"
 msgstr "``host.budget``\\ （メモリ予算の上限）"
 
 #: ../../errors.rst:83
-#, fuzzy
-#| msgid ""
-#| "The build reached the memory it may hold, its budget "
-#| "(``--budget=MIB``, 1 GiB by default). The report names the step and, "
-#| "for a template, the line that asked for the memory. At a terminal the "
-#| "build asks once what to do: raise the budget to one the step fits, go "
-#| "on with the working memory on disk, or stop; elsewhere it stops, and "
-#| "``--budget`` or ``--memory=disk`` chooses ahead. The hint names that "
-#| "same budget as a number, for example:"
-msgid ""
-"The build reached the memory it may hold, its budget (``--budget=MIB``, 1 "
-"GiB by default). The budget counts what Guidedog reads and keeps: "
-"sources, included files, and the PDF the embedded Typst compiler returns. "
-"The report names the step and the file that needed the memory. The hint "
-"names a budget that fits, as a number. For example:"
-msgstr ""
-"ビルドが保持可能なメモリ予算（\\ ``--budget=MIB``\\ 、既定 1 "
-"GiB）に達した。報告は該当の工程を、テンプレートなら要求元の行も示す。端末では一度だけ、予算を増やすか、作業メモリをディスクに置いて続けるか、停止するかを尋ねる。端末以外では停止する。\\ "
-"``--budget`` または ``--memory=disk`` で事前に選べる。ヒントも予算を数値で示す。"
+msgid "The build reached the memory it may hold, its budget (``--budget=MIB``, 1 GiB by default). The budget counts what Guidedog reads and keeps: sources, included files, and the PDF the embedded Typst compiler returns. The report names the step and the file that needed the memory. The hint names a budget that fits, as a number. For example:"
+msgstr "ビルドが保持できるメモリ、つまり予算（``--budget=MIB``、既定は 1 GiB）に達しました。予算は、Guidedog が読み込んで保持するもの、つまりソース、インクルードしたファイル、組み込みの Typst コンパイラが返す PDF を数えます。報告には、メモリを必要とした工程とファイルが示されます。ヒントは、収まる予算を数値で示します。次に例を示します："
 
 #: ../../errors.rst:91
-#, fuzzy
-#| msgid ""
-#| "The number holds what the build held and the refused step four times "
-#| "over (the step also holds its output and the copy it writes), or twice "
-#| "the old budget, whichever is larger, rounded up to 64 MiB, and no more "
-#| "than the memory the machine has free when the step fits there. When it "
-#| "does not, the hint says so, and names ``--memory=disk`` first:"
-msgid ""
-"The number is the larger of two figures. One is what the build held plus "
-"four times the refused step (the step also holds its output and the copy "
-"it writes). The other is twice the old budget. The number is rounded up "
-"to 64 MiB. It is no more than the memory the machine has free, when the "
-"step fits there. When it does not, the hint says so:"
-msgstr ""
-"提案値は、現在の保持量に拒否された工程の要求量を4倍して加えた量（工程は出力と書き込み用コピーも保持する）と旧予算の2倍の大きい方を、64 MiB "
-"単位で切り上げる。工程が空きメモリに収まる場合はその空き量を超えない。収まらない場合はその旨を示し、まず ``--memory=disk`` "
-"を提案する。"
+msgid "The number is the larger of two figures. One is what the build held plus four times the refused step (the step also holds its output and the copy it writes). The other is twice the old budget. The number is rounded up to 64 MiB. It is no more than the memory the machine has free, when the step fits there. When it does not, the hint says so:"
+msgstr "この数値は、2 つの値のうち大きい方です。1 つは、ビルドが保持していた量に、拒否された工程の要求量の 4 倍を加えた値です（工程は自身の出力と、書き込むコピーも保持するためです）。もう 1 つは、元の予算の 2 倍です。数値は 64 MiB 単位で切り上げます。工程がマシンの空きメモリに収まる場合、数値はその空きメモリを超えません。収まらない場合は、ヒントがそのことを示します："
 
 #: ../../errors.rst:99
-msgid ""
-"``GUIDEDOG_AVAILABLE_MIB`` states the machine's free memory when the "
-"system's own figure misleads, for example inside a container."
-msgstr ""
+msgid "``GUIDEDOG_AVAILABLE_MIB`` states the machine's free memory when the system's own figure misleads, for example inside a container."
+msgstr "コンテナ内など、システム自身が示す値が実態と合わない場合は、``GUIDEDOG_AVAILABLE_MIB`` でマシンの空きメモリを指定します。"
 
 #: ../../errors.rst:102
 msgid "``host.memory`` (OUT OF MEMORY)"
 msgstr "``host.memory``\\ （メモリ不足）"
 
 #: ../../errors.rst:103
-#, fuzzy
-#| msgid ""
-#| "The system refused memory the budget allowed. The command stops "
-#| "without using what it was refused: a build publishes nothing, a GDS "
-#| "change is applied whole or not at all, and ``convert`` writes a whole "
-#| "page or none. Free memory, or build with fewer threads (``-j 1``), and "
-#| "run the command again. Once a build has decided to publish, switching "
-#| "its output into place needs no memory, so a refusal cannot stop a "
-#| "publication halfway; if the build instead finds an earlier build's "
-#| "publication to finish and has no memory to plan it, it leaves that "
-#| "publication as it was, for the next build."
-msgid ""
-"The system could not provide a buffer the budget allowed. The command "
-"stops without using it. A build publishes nothing, a GDS change is "
-"applied whole or not at all, and ``convert`` writes a whole page or none. "
-"Free memory, or build with fewer threads (``-j 1``), and run the command "
-"again. Once a build has decided to publish, switching its output into "
-"place needs no further planning. So a refusal cannot stop a publication "
-"halfway. The next build finishes an interrupted publication."
-msgstr ""
-"予算内の要求をシステムが拒否した。命令はそのメモリを使わず停止する。ビルドは公開せず、GDS の変更は全部か無変更、\\ ``convert`` "
-"は一ページ全部か無出力となる。メモリを解放するかスレッドを減らして（\\ ``-j 1``\\ "
-"）再実行する。公開を決定した後の切り替えはメモリを必要とせず、拒否で半公開にはならない。以前の未完了の公開を見つけても復旧計画のメモリがなければ、そのまま次のビルドに残す。"
+msgid "The system could not provide a buffer the budget allowed. The command stops without using it. A build publishes nothing, a GDS change is applied whole or not at all, and ``convert`` writes a whole page or none. Free memory, or build with fewer threads (``-j 1``), and run the command again. Once a build has decided to publish, switching its output into place needs no further planning. So a refusal cannot stop a publication halfway. The next build finishes an interrupted publication."
+msgstr "予算内のバッファを、システムが用意できませんでした。コマンドはそのバッファを使わずに停止します。ビルドは何も公開せず、GDS の変更はすべて適用されるか一切適用されないかのどちらかで、``convert`` はページ全体を書き出すか何も書き出しません。メモリを空けるか、スレッドを減らして（``-j 1``）ビルドし、コマンドを再実行してください。ビルドが公開を決めた後は、出力を所定の場所に切り替えるのに追加の準備は要りません。そのため、拒否によって公開が途中で止まることはありません。中断された公開は、次のビルドが完了させます。"
 
 #: ../../errors.rst:110
-msgid ""
-"A document's own size is bounded separately, by ``--max-nodes``, "
-"``--max-depth`` and ``--stack-kib``. An oversized document is reported "
-"with the limit it reached. See :doc:`internals/memory` for how the budget "
-"and these limits divide the work. The Odin implementation could also keep "
-"working memory on disk (``--memory=disk``). The Rust implementation "
-"bounds a conversion by its limits instead, so there is no disk mode."
-msgstr ""
+msgid "A document's own size is bounded separately, by ``--max-nodes``, ``--max-depth`` and ``--stack-kib``. An oversized document is reported with the limit it reached. See :doc:`internals/memory` for how the budget and these limits divide the work. The Odin implementation could also keep working memory on disk (``--memory=disk``). The Rust implementation bounds a conversion by its limits instead, so there is no disk mode."
+msgstr "文書自体の大きさは、``--max-nodes``、``--max-depth``、``--stack-kib`` で別に制限します。大きすぎる文書は、達した制限とともに報告します。予算とこれらの制限が処理をどう分担するかは :doc:`internals/memory` を参照してください。Odin 実装は作業メモリをディスクに置くこともできました（``--memory=disk``）。Rust 実装は代わりに制限で変換の規模を抑えるため、ディスクモードはありません。"
 
 #: ../../errors.rst:116
 msgid "Both end with status 3."
@@ -361,56 +216,25 @@ msgid "5"
 msgstr "5"
 
 #: ../../errors.rst:138
-#, fuzzy
-#| msgid "Guidedog failed internally, and the report asks you to report it."
 msgid "Guidedog failed internally, and the report asks us to report it."
-msgstr "Guidedog 内部の失敗です。診断は不具合の報告を依頼します。"
+msgstr "Guidedog が内部で失敗しました。診断は不具合の報告を求めます。"
 
 #: ../../errors.rst:139
 msgid "70"
 msgstr "70"
 
 #: ../../errors.rst:139
-#, fuzzy
-#| msgid ""
-#| "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
-#| "the command that ran, the fault, and what ``guidedog --version`` "
-#| "prints, and says where to report it: the issue tracker your build "
-#| "names, or else whoever provided your build. Because builds publish "
-#| "only at the end, a crash leaves the previous output in place."
-msgid ""
-"Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
-"the command that ran, the fault, and what ``guidedog --version`` prints, "
-"and says where to report it: the issue tracker our build names, or else "
-"whoever provided our build. Because builds publish only at the end, a "
-"crash leaves the previous output in place."
-msgstr ""
-"Guidedog がクラッシュすると、\\ ``GUIDEDOG CRASHED (internal error)`` と実行した命令、障害、\\ "
-"``guidedog --version`` "
-"の結果を表示する。報告先はビルドが指定する課題管理、なければ提供者。ビルドは最後に公開するので、以前の出力は残る。"
+msgid "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with the command that ran, the fault, and what ``guidedog --version`` prints, and says where to report it: the issue tracker our build names, or else whoever provided our build. Because builds publish only at the end, a crash leaves the previous output in place."
+msgstr "Guidedog がクラッシュしました。``GUIDEDOG CRASHED (internal error)`` と、実行したコマンド、障害の内容、``guidedog --version`` の出力を表示し、報告先を示します。報告先は、使っているビルドが指定する課題管理システム、指定がなければそのビルドの提供元です。ビルドは最後にだけ公開するため、クラッシュしても以前の出力はそのまま残ります。"
 
 #: ../../errors.rst:144
 msgid "130"
 msgstr "130"
 
 #: ../../errors.rst:144
-#, fuzzy
-#| msgid ""
-#| "The command was interrupted with Ctrl+C; published files were left "
-#| "unchanged."
-msgid ""
-"The command was interrupted with Ctrl+C. Published files were left "
-"unchanged."
-msgstr "Ctrl+C で中断されました。公開済みのファイルは変わりません。"
+msgid "The command was interrupted with Ctrl+C. Published files were left unchanged."
+msgstr "Ctrl+C でコマンドが中断されました。公開済みのファイルは変更されていません。"
 
 #: ../../errors.rst:147
-#, fuzzy
-#| msgid ""
-#| "A build that fails for any reason leaves the previous output, and the "
-#| "records of what it built, as they were: fix the problem and build "
-#| "again."
-msgid ""
-"A build that fails for any reason leaves the previous output, and the "
-"records of what it built, as they were. We fix the problem and build "
-"again."
-msgstr "理由にかかわらずビルドが失敗すると、前の出力とビルド記録はそのまま残ります。問題を修正して再ビルドしてください。"
+msgid "A build that fails for any reason leaves the previous output, and the records of what it built, as they were. We fix the problem and build again."
+msgstr "どのような理由でビルドが失敗しても、以前の出力とビルド内容の記録は元のまま残ります。問題を修正して、もう一度ビルドしてください。"

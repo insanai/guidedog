@@ -19,504 +19,320 @@ msgstr ""
 
 #: ../../rust.rst:1
 msgid "Documenting Rust"
-msgstr ""
+msgstr "Rust の文書化"
 
 #: ../../rust.rst:4
-msgid ""
-"The Rust domain gives crates, modules, items, and members named targets. "
-"Guidedog also generates API pages from a crate's source, as rustdoc would "
-"lay them out. It reads the source with tree-sitter. It does not run "
-"``cargo``, compile the crate, or expand macros. A generated signature "
-"still needs a useful doc comment."
-msgstr ""
+msgid "The Rust domain gives crates, modules, items, and members named targets. Guidedog also generates API pages from a crate's source, as rustdoc would lay them out. It reads the source with tree-sitter. It does not run ``cargo``, compile the crate, or expand macros. A generated signature still needs a useful doc comment."
+msgstr "Rust ドメインは、クレート、モジュール、アイテム、メンバーに名前付きのターゲットを与えます。Guidedog はクレートのソースから、rustdoc と同じレイアウトの API ページも生成します。ソースは tree-sitter で読み込みます。``cargo`` の実行、クレートのコンパイル、マクロの展開は行いません。生成されたシグネチャにも、役に立つドキュメントコメントは必要です。"
 
 #: ../../rust.rst:9
 msgid "Describing objects"
-msgstr ""
+msgstr "オブジェクトの記述"
 
 #: ../../rust.rst:12
-msgid ""
-"A crate or module is the context of what follows it, as a Python module "
-"is:"
-msgstr ""
+msgid "A crate or module is the context of what follows it, as a Python module is:"
+msgstr "クレートやモジュールは、Python のモジュールと同じく、その後に続く内容のコンテキストになります。"
 
 #: ../../rust.rst:40
-msgid ""
-"Signatures are written as Rust writes the declaration, on one line, with "
-"its visibility and qualifiers. The reader finds the name as the "
-"identifier after the keyword (``fn``, ``struct``, ``enum``, ``union``, "
-"``trait``, ``type``, ``const``, ``static``, ``macro_rules!``, ``mod``), "
-"or as the first identifier for fields and variants. The directives:"
-msgstr ""
+msgid "Signatures are written as Rust writes the declaration, on one line, with its visibility and qualifiers. The reader finds the name as the identifier after the keyword (``fn``, ``struct``, ``enum``, ``union``, ``trait``, ``type``, ``const``, ``static``, ``macro_rules!``, ``mod``), or as the first identifier for fields and variants. The directives:"
+msgstr "シグネチャは、Rust での宣言のとおりに、可視性や修飾子も含めて 1 行で書きます。リーダーはキーワード（``fn``、``struct``、``enum``、``union``、``trait``、``type``、``const``、``static``、``macro_rules!``、``mod``）の後にある識別子を名前とみなします。フィールドとバリアントでは、最初の識別子が名前です。ディレクティブは次のとおりです。"
 
 #: ../../rust.rst:46
 msgid "``rust:crate`` and ``rust:module``"
-msgstr ""
+msgstr "``rust:crate`` と ``rust:module``"
 
 #: ../../rust.rst:47
-msgid ""
-"``my_crate``, or the full path ``my_crate::parser``. Either sets the "
-"current module for what follows. Option: ``:synopsis:``, one sentence for "
-"the index."
-msgstr ""
+msgid "``my_crate``, or the full path ``my_crate::parser``. Either sets the current module for what follows. Option: ``:synopsis:``, one sentence for the index."
+msgstr "``my_crate``、またはフルパスの ``my_crate::parser``。どちらも、その後に続く内容のカレントモジュールを設定します。オプション：``:synopsis:`` （索引用の 1 文の概要）。"
 
 #: ../../rust.rst:50
 msgid "``rust:function`` and ``rust:method``"
-msgstr ""
+msgstr "``rust:function`` と ``rust:method``"
 
 #: ../../rust.rst:51
-msgid ""
-"``pub const unsafe fn f<T: Copy>(x: &T) -> Option<T> where T: Send``. "
-"Methods sit inside a type or an impl (``pub fn new(x: T) -> Self``, ``fn "
-"draw(&self) -> u8``)."
-msgstr ""
+msgid "``pub const unsafe fn f<T: Copy>(x: &T) -> Option<T> where T: Send``. Methods sit inside a type or an impl (``pub fn new(x: T) -> Self``, ``fn draw(&self) -> u8``)."
+msgstr "``pub const unsafe fn f<T: Copy>(x: &T) -> Option<T> where T: Send``。メソッドは型または impl の中に置きます（``pub fn new(x: T) -> Self``、``fn draw(&self) -> u8``）。"
 
 #: ../../rust.rst:54
 msgid "``rust:struct``, ``rust:enum``, ``rust:union``, ``rust:trait``"
-msgstr ""
+msgstr "``rust:struct``、``rust:enum``、``rust:union``、``rust:trait``"
 
 #: ../../rust.rst:55
-msgid ""
-"``pub struct Point<T = f32>``, ``pub struct Pair(pub i32, _)``, ``pub "
-"enum Kind``, ``pub union Bits``, ``pub trait Draw: Clone + Send``. The "
-"content holds the members."
-msgstr ""
+msgid "``pub struct Point<T = f32>``, ``pub struct Pair(pub i32, _)``, ``pub enum Kind``, ``pub union Bits``, ``pub trait Draw: Clone + Send``. The content holds the members."
+msgstr "``pub struct Point<T = f32>``、``pub struct Pair(pub i32, _)``、``pub enum Kind``、``pub union Bits``、``pub trait Draw: Clone + Send``。メンバーは内容に書きます。"
 
 #: ../../rust.rst:58
 msgid "``rust:field`` and ``rust:variant``"
-msgstr ""
+msgstr "``rust:field`` と ``rust:variant``"
 
 #: ../../rust.rst:59
-msgid ""
-"``pub x: T`` (tuple fields are named ``0``, ``1``, ...); ``Circle``, "
-"``Polygon(u8)``, ``Rect { width: f32, height: f32 }``, ``Unknown = 9``. "
-"The fields of a variant nest in the ``rust:variant``."
-msgstr ""
+msgid "``pub x: T`` (tuple fields are named ``0``, ``1``, ...); ``Circle``, ``Polygon(u8)``, ``Rect { width: f32, height: f32 }``, ``Unknown = 9``. The fields of a variant nest in the ``rust:variant``."
+msgstr "``pub x: T`` （タプルのフィールドは ``0``、``1``、… という名前になります）。``Circle``、``Polygon(u8)``、``Rect { width: f32, height: f32 }``、``Unknown = 9``。バリアントのフィールドは ``rust:variant`` の中に入れ子にします。"
 
 #: ../../rust.rst:63
 msgid "``rust:impl``"
-msgstr ""
+msgstr "``rust:impl``"
 
 #: ../../rust.rst:64
-msgid ""
-"``impl<T: Copy> Point<T>`` or ``impl<T> fmt::Display for Point<T>``. "
-"Never a target. Its members belong to the type it is nested in (to its "
-"``:for:`` type when it stands alone at module level)."
-msgstr ""
+msgid "``impl<T: Copy> Point<T>`` or ``impl<T> fmt::Display for Point<T>``. Never a target. Its members belong to the type it is nested in (to its ``:for:`` type when it stands alone at module level)."
+msgstr "``impl<T: Copy> Point<T>`` または ``impl<T> fmt::Display for Point<T>``。impl 自体はターゲットになりません。そのメンバーは、impl を入れ子にしている型に属します（モジュールレベルに単独で置いた場合は、``:for:`` の型に属します）。"
 
 #: ../../rust.rst:68
 msgid "``rust:type``, ``rust:const``, ``rust:static``, ``rust:macro``"
-msgstr ""
+msgstr "``rust:type``、``rust:const``、``rust:static``、``rust:macro``"
 
 #: ../../rust.rst:69
-msgid ""
-"``pub type Result<T> = std::result::Result<T, Error>``, ``pub const MAX: "
-"usize = 4_096``, ``pub static mut COUNT: u64``, ``macro_rules! shape`` "
-"(its arms follow in a ``code-block`` in the content)."
-msgstr ""
+msgid "``pub type Result<T> = std::result::Result<T, Error>``, ``pub const MAX: usize = 4_096``, ``pub static mut COUNT: u64``, ``macro_rules! shape`` (its arms follow in a ``code-block`` in the content)."
+msgstr "``pub type Result<T> = std::result::Result<T, Error>``、``pub const MAX: usize = 4_096``、``pub static mut COUNT: u64``、``macro_rules! shape`` （マクロのアームは内容の ``code-block`` に続けて書きます）。"
 
 #: ../../rust.rst:73
 msgid "``rust:associatedtype`` and ``rust:associatedconst``"
-msgstr ""
+msgstr "``rust:associatedtype`` と ``rust:associatedconst``"
 
 #: ../../rust.rst:74
-msgid ""
-"``type Output: Default``, ``const PASSES: usize = 1``, inside a trait or "
-"impl."
-msgstr ""
+msgid "``type Output: Default``, ``const PASSES: usize = 1``, inside a trait or impl."
+msgstr "``type Output: Default``、``const PASSES: usize = 1``。トレイトまたは impl の中に置きます。"
 
 #: ../../rust.rst:76
 msgid "``rust:use``"
-msgstr ""
+msgstr "``rust:use``"
 
 #: ../../rust.rst:77
-msgid ""
-"``pub use geometry::point::Point``: a re-export line, never a target. It "
-"links to its ``:target:``."
-msgstr ""
+msgid "``pub use geometry::point::Point``: a re-export line, never a target. It links to its ``:target:``."
+msgstr "``pub use geometry::point::Point``：再エクスポートの行で、ターゲットにはなりません。``:target:`` にリンクします。"
 
 #: ../../rust.rst:80
-msgid ""
-"Options: ``:module: path`` (describe the object in another module than "
-"the current one), ``:visibility:`` (``pub(crate)``, ``pub(super)``, "
-"``pub(in path)`` or ``private``), ``:cfg: predicate`` (shown as "
-"\"Available on ``predicate`` only.\"), ``:unsafe:``, ``:async:`` and "
-"``:const:`` (flags for index entries), ``:provided:`` (a trait member "
-"with a default), ``:attributes:`` (``#[non_exhaustive] #[repr(C)]``, "
-"shown above the signature), ``:deprecated: note``, ``:for:`` and "
-"``:trait:`` (on an impl), ``:target:`` (on a use), and ``:noindex:``."
-msgstr ""
+msgid "Options: ``:module: path`` (describe the object in another module than the current one), ``:visibility:`` (``pub(crate)``, ``pub(super)``, ``pub(in path)`` or ``private``), ``:cfg: predicate`` (shown as \"Available on ``predicate`` only.\"), ``:unsafe:``, ``:async:`` and ``:const:`` (flags for index entries), ``:provided:`` (a trait member with a default), ``:attributes:`` (``#[non_exhaustive] #[repr(C)]``, shown above the signature), ``:deprecated: note``, ``:for:`` and ``:trait:`` (on an impl), ``:target:`` (on a use), and ``:noindex:``."
+msgstr "オプション：``:module: path`` （カレントモジュール以外のモジュールでオブジェクトを記述）、``:visibility:`` （``pub(crate)``、``pub(super)``、``pub(in path)``、``private`` のいずれか）、``:cfg: predicate`` （「Available on ``predicate`` only.」と表示）、``:unsafe:``、``:async:``、``:const:`` （索引エントリー用のフラグ）、``:provided:`` （デフォルト実装を持つトレイトメンバー）、``:attributes:`` （``#[non_exhaustive] #[repr(C)]``。シグネチャの上に表示）、``:deprecated: note``、``:for:`` と ``:trait:`` （impl 用）、``:target:`` （use 用）、``:noindex:``。"
 
 #: ../../rust.rst:88
 msgid "Roles and ids"
-msgstr ""
+msgstr "ロールと ID"
 
 #: ../../rust.rst:91
-msgid ""
-"``:rust:mod:`` (crates and modules), ``:rust:fn:`` (functions and "
-"methods), ``:rust:struct:``, ``:rust:enum:``, ``:rust:union:``, "
-"``:rust:trait:``, ``:rust:variant:``, ``:rust:field:``, ``:rust:type:`` "
-"(type aliases and associated types), ``:rust:const:`` (constants and "
-"associated constants), ``:rust:static:``, ``:rust:macro:``, and "
-"``:rust:any:`` (any of them) link to objects."
-msgstr ""
+msgid "``:rust:mod:`` (crates and modules), ``:rust:fn:`` (functions and methods), ``:rust:struct:``, ``:rust:enum:``, ``:rust:union:``, ``:rust:trait:``, ``:rust:variant:``, ``:rust:field:``, ``:rust:type:`` (type aliases and associated types), ``:rust:const:`` (constants and associated constants), ``:rust:static:``, ``:rust:macro:``, and ``:rust:any:`` (any of them) link to objects."
+msgstr "``:rust:mod:`` （クレートとモジュール）、``:rust:fn:`` （関数とメソッド）、``:rust:struct:``、``:rust:enum:``、``:rust:union:``、``:rust:trait:``、``:rust:variant:``、``:rust:field:``、``:rust:type:`` （型エイリアスと関連型）、``:rust:const:`` （定数と関連定数）、``:rust:static:``、``:rust:macro:``、``:rust:any:`` （これらのいずれか）でオブジェクトにリンクします。"
 
 #: ../../rust.rst:97
-msgid ""
-"Targets are full paths with ``::``, the crate's name first: ``shapes``, "
-"``shapes::parser::Lexer``, ``shapes::parser::Lexer::next_token``, "
-"``shapes::Kind::Rect``, ``shapes::Kind::Rect::width``. As in the Python "
-"domain, ``~`` shows only the last part "
-"(``:rust:struct:`~shapes::parser::Lexer``` shows ``Lexer``), a leading "
-"``.`` finds the name at the end of any target, and a relative name is "
-"looked up in the current module first. ``:rust:any:`` also falls back to "
-"intersphinx inventories. So a link to ``std::vec::Vec`` resolves when the "
-"standard library's inventory is mapped, and shows as code otherwise. With "
-"``default-domain:: rust`` (or ``primary_domain = \"rust\"``), the roles "
-"need no ``rust:``."
-msgstr ""
+msgid "Targets are full paths with ``::``, the crate's name first: ``shapes``, ``shapes::parser::Lexer``, ``shapes::parser::Lexer::next_token``, ``shapes::Kind::Rect``, ``shapes::Kind::Rect::width``. As in the Python domain, ``~`` shows only the last part (``:rust:struct:`~shapes::parser::Lexer``` shows ``Lexer``), a leading ``.`` finds the name at the end of any target, and a relative name is looked up in the current module first. ``:rust:any:`` also falls back to intersphinx inventories. So a link to ``std::vec::Vec`` resolves when the standard library's inventory is mapped, and shows as code otherwise. With ``default-domain:: rust`` (or ``primary_domain = \"rust\"``), the roles need no ``rust:``."
+msgstr "ターゲットは ``::`` で区切ったフルパスで、先頭はクレート名です：``shapes``、``shapes::parser::Lexer``、``shapes::parser::Lexer::next_token``、``shapes::Kind::Rect``、``shapes::Kind::Rect::width``。Python ドメインと同じく、``~`` を付けると最後の部分だけを表示し（``:rust:struct:`~shapes::parser::Lexer``` は ``Lexer`` と表示）、先頭の ``.`` は任意のターゲットの末尾から名前を探します。相対名はまずカレントモジュールで探します。``:rust:any:`` は intersphinx インベントリにもフォールバックします。そのため、標準ライブラリのインベントリをマッピングしていれば ``std::vec::Vec`` へのリンクは解決され、そうでなければコードとして表示されます。``default-domain:: rust`` （または ``primary_domain = \"rust\"``）を指定すると、ロールに ``rust:`` を付ける必要はありません。"
 
 #: ../../rust.rst:107
-msgid ""
-"An object's id is Sphinx's ``make_id`` of ``rust-`` and its path, with "
-"``::`` written ``.``: ``rust-shapes.parser.Lexer.next_token``. A module's "
-"id is ``rust-module-`` and its path. Index entries read \"Lexer (struct "
-"in shapes::parser)\". ``objects.inv`` lists every object with the domain "
-"``rust``, modules first."
-msgstr ""
+msgid "An object's id is Sphinx's ``make_id`` of ``rust-`` and its path, with ``::`` written ``.``: ``rust-shapes.parser.Lexer.next_token``. A module's id is ``rust-module-`` and its path. Index entries read \"Lexer (struct in shapes::parser)\". ``objects.inv`` lists every object with the domain ``rust``, modules first."
+msgstr "オブジェクトの ID は、``rust-`` とそのパスに Sphinx の ``make_id`` を適用したもので、``::`` は ``.`` に置き換えます：``rust-shapes.parser.Lexer.next_token``。モジュールの ID は ``rust-module-`` とそのパスです。索引エントリーは「Lexer (struct in shapes::parser)」となります。``objects.inv`` はすべてのオブジェクトをドメイン ``rust`` で、モジュールを先にして一覧にします。"
 
 #: ../../rust.rst:112
 msgid "Generating from source"
-msgstr ""
+msgstr "ソースからの生成"
 
 #: ../../rust.rst:115
-msgid ""
-"We tell Guidedog where our crates are, relative to the source folder:"
-msgstr ""
+msgid "We tell Guidedog where our crates are, relative to the source folder:"
+msgstr "ソースフォルダーからの相対パスで、クレートの場所を Guidedog に指定します。"
 
 #: ../../rust.rst:121
-msgid ""
-"Each entry is a crate folder with a ``Cargo.toml`` (its ``[lib] path``, "
-"``src/lib.rs``, or ``src/main.rs`` is the root), a folder with "
-"``lib.rs``, ``main.rs`` or ``mod.rs``, a folder of loose ``.rs`` files "
-"(each a public module), or a root ``.rs`` file. Guidedog follows the "
-"module tree the way rustc does (``mod x;`` finds ``x.rs`` or "
-"``x/mod.rs``, and ``#[path]`` is honored). As the build reads the "
-"modules, it writes one page per documented module and an index. The pages "
-"are documents of the project (in the toctree, search, the general index, "
-"``singlehtml``, and the PDF book). They are never written into the source "
-"folder. Settings:"
-msgstr ""
+msgid "Each entry is a crate folder with a ``Cargo.toml`` (its ``[lib] path``, ``src/lib.rs``, or ``src/main.rs`` is the root), a folder with ``lib.rs``, ``main.rs`` or ``mod.rs``, a folder of loose ``.rs`` files (each a public module), or a root ``.rs`` file. Guidedog follows the module tree the way rustc does (``mod x;`` finds ``x.rs`` or ``x/mod.rs``, and ``#[path]`` is honored). As the build reads the modules, it writes one page per documented module and an index. The pages are documents of the project (in the toctree, search, the general index, ``singlehtml``, and the PDF book). They are never written into the source folder. Settings:"
+msgstr "各エントリーには、``Cargo.toml`` のあるクレートフォルダー（``[lib] path``、``src/lib.rs``、``src/main.rs`` のいずれかがルート）、``lib.rs``、``main.rs``、``mod.rs`` のいずれかを含むフォルダー、個別の ``.rs`` ファイルを置いたフォルダー（各ファイルが公開モジュール）、またはルートの ``.rs`` ファイルを指定します。Guidedog は rustc と同じようにモジュールツリーをたどります（``mod x;`` は ``x.rs`` または ``x/mod.rs`` を探し、``#[path]`` にも従います）。ビルドはモジュールを読み込みながら、ドキュメント化されたモジュールごとに 1 ページと索引ページを書き出します。これらのページはプロジェクトのドキュメントとして扱われ、toctree、検索、総合索引、``singlehtml``、PDF の本に含まれます。ソースフォルダーに書き込まれることはありません。設定は次のとおりです。"
 
 #: ../../rust.rst:130
 msgid "``rust_autoapi_crates``"
-msgstr ""
+msgstr "``rust_autoapi_crates``"
 
 #: ../../rust.rst:131
-msgid ""
-"The crate folders (or root files) that get pages, relative to the source "
-"folder. Only files below each crate's folder are read. A module file "
-"elsewhere is refused with ``rust.autodoc.confined``. The folders join the "
-"roots a ``literalinclude`` may read, so a page can quote the code it "
-"documents."
-msgstr ""
+msgid "The crate folders (or root files) that get pages, relative to the source folder. Only files below each crate's folder are read. A module file elsewhere is refused with ``rust.autodoc.confined``. The folders join the roots a ``literalinclude`` may read, so a page can quote the code it documents."
+msgstr "ページを生成するクレートフォルダー（またはルートファイル）。ソースフォルダーからの相対パスで指定します。読み込むのは各クレートフォルダー配下のファイルだけです。それ以外の場所にあるモジュールファイルは ``rust.autodoc.confined`` で拒否されます。これらのフォルダーは ``literalinclude`` が読み込めるルートにも加わるため、ページから説明対象のコードを引用できます。"
 
 #: ../../rust.rst:136
 msgid "``rust_autoapi_root``"
-msgstr ""
+msgstr "``rust_autoapi_root``"
 
 #: ../../rust.rst:137
-msgid ""
-"The folder of the pages, ``\"rustapi\"`` by default. A module's page is "
-"named by its path: ``rustapi/shapes``, ``rustapi/shapes/parser``. "
-"``rustapi/index`` lists the crates and their modules with their synopses."
-msgstr ""
+msgid "The folder of the pages, ``\"rustapi\"`` by default. A module's page is named by its path: ``rustapi/shapes``, ``rustapi/shapes/parser``. ``rustapi/index`` lists the crates and their modules with their synopses."
+msgstr "ページを置くフォルダー。既定値は ``\"rustapi\"`` です。モジュールのページはそのパスで名前が付きます：``rustapi/shapes``、``rustapi/shapes/parser``。``rustapi/index`` はクレートとそのモジュールを概要付きで一覧にします。"
 
 #: ../../rust.rst:141
 msgid "``rust_autoapi_options``"
-msgstr ""
+msgstr "``rust_autoapi_options``"
 
 #: ../../rust.rst:142
-msgid ""
-"Empty by default. ``private-members`` documents private and "
-"``pub(crate)`` items (shown with ``:visibility:``). ``hidden-members`` "
-"documents ``#[doc(hidden)]`` items. ``noindex`` makes every generated "
-"object ``:noindex:``."
-msgstr ""
+msgid "Empty by default. ``private-members`` documents private and ``pub(crate)`` items (shown with ``:visibility:``). ``hidden-members`` documents ``#[doc(hidden)]`` items. ``noindex`` makes every generated object ``:noindex:``."
+msgstr "既定値は空です。``private-members`` を指定すると、非公開のアイテムと ``pub(crate)`` のアイテムもドキュメント化します（``:visibility:`` 付きで表示）。``hidden-members`` は ``#[doc(hidden)]`` のアイテムをドキュメント化します。``noindex`` は生成されるすべてのオブジェクトを ``:noindex:`` にします。"
 
 #: ../../rust.rst:146
 msgid "``rust_autoapi_member_order``"
-msgstr ""
+msgstr "``rust_autoapi_member_order``"
 
 #: ../../rust.rst:147
-msgid ""
-"``\"source\"`` (default) or ``\"alphabetical\"``. Members are grouped in "
-"rustdoc's order either way (modules, macros, structs, enums, ..., "
-"functions)."
-msgstr ""
+msgid "``\"source\"`` (default) or ``\"alphabetical\"``. Members are grouped in rustdoc's order either way (modules, macros, structs, enums, ..., functions)."
+msgstr "``\"source\"`` （既定値）または ``\"alphabetical\"``。どちらの場合も、メンバーは rustdoc の順序（モジュール、マクロ、構造体、列挙型、…、関数）でグループ化されます。"
 
 #: ../../rust.rst:150
 msgid "``rust_autoapi_add_toctree_entry``"
-msgstr ""
+msgstr "``rust_autoapi_add_toctree_entry``"
 
 #: ../../rust.rst:151
-msgid ""
-"``true`` (default): the API index joins the root document's first toctree."
-msgstr ""
+msgid "``true`` (default): the API index joins the root document's first toctree."
+msgstr "``true`` （既定値）：API の索引をルートドキュメントの最初の toctree に加えます。"
 
 #: ../../rust.rst:153
 msgid "``rust_autoapi_generate_api_docs``"
-msgstr ""
+msgstr "``rust_autoapi_generate_api_docs``"
 
 #: ../../rust.rst:154
-msgid ""
-"``true`` (default). ``false`` reads the settings but generates no pages."
-msgstr ""
+msgid "``true`` (default). ``false`` reads the settings but generates no pages."
+msgstr "``true`` （既定値）。``false`` にすると、設定は読み込みますがページは生成しません。"
 
 #: ../../rust.rst:156
-msgid ""
-"``--untrusted`` drops ``rust_autoapi_crates`` folders outside the source "
-"folder, with a warning. Guidedog's own API reference, ``docs/api``, is "
-"built this way."
-msgstr ""
+msgid "``--untrusted`` drops ``rust_autoapi_crates`` folders outside the source folder, with a warning. Guidedog's own API reference, ``docs/api``, is built this way."
+msgstr "``--untrusted`` を指定すると、ソースフォルダーの外にある ``rust_autoapi_crates`` のフォルダーは警告とともに除外されます。Guidedog 自身の API リファレンス ``docs/api`` もこの方法でビルドしています。"
 
 #: ../../rust.rst:159
 msgid "What is documented, and where"
-msgstr ""
+msgstr "何がどこにドキュメント化されるか"
 
 #: ../../rust.rst:162
 msgid "Guidedog follows rustdoc's rules:"
-msgstr ""
+msgstr "Guidedog は rustdoc の規則に従います。"
 
 #: ../../rust.rst:164
-msgid ""
-"An item is documented in its module when it is ``pub`` and every module "
-"on the way is ``pub``. ``#[cfg(test)]`` modules and ``#[test]`` functions "
-"are never documented."
-msgstr ""
+msgid "An item is documented in its module when it is ``pub`` and every module on the way is ``pub``. ``#[cfg(test)]`` modules and ``#[test]`` functions are never documented."
+msgstr "アイテムが ``pub`` で、そこに至るすべてのモジュールも ``pub`` であれば、アイテムはそのモジュールでドキュメント化されます。``#[cfg(test)]`` のモジュールと ``#[test]`` の関数はドキュメント化されません。"
 
 #: ../../rust.rst:166
-msgid ""
-"``pub use`` of an item documented anyway is a re-export line. A ``pub "
-"use`` of an item that is not reachable otherwise (it lives in a private "
-"module) documents the item in place, under the re-export's name. "
-"``#[doc(inline)]`` and ``#[doc(no_inline)]`` force either. ``pub use "
-"private::*`` inlines every public item of the module. External re-exports "
-"(``pub use std::...``) are lines."
-msgstr ""
+msgid "``pub use`` of an item documented anyway is a re-export line. A ``pub use`` of an item that is not reachable otherwise (it lives in a private module) documents the item in place, under the re-export's name. ``#[doc(inline)]`` and ``#[doc(no_inline)]`` force either. ``pub use private::*`` inlines every public item of the module. External re-exports (``pub use std::...``) are lines."
+msgstr "もともとドキュメント化されるアイテムの ``pub use`` は、再エクスポートの行になります。ほかの経路では到達できない（非公開モジュールにある）アイテムの ``pub use`` は、再エクスポートの名前でその場にアイテムをドキュメント化します。``#[doc(inline)]`` と ``#[doc(no_inline)]`` で、どちらかを強制できます。``pub use private::*`` はそのモジュールの公開アイテムをすべてインライン化します。外部の再エクスポート（``pub use std::...``）は行になります。"
 
 #: ../../rust.rst:171
 msgid "``#[macro_export]`` macros are documented at the crate root."
-msgstr ""
+msgstr "``#[macro_export]`` のマクロはクレートのルートでドキュメント化されます。"
 
 #: ../../rust.rst:172
-msgid ""
-"``impl`` blocks attach to the type their self type names (through ``use`` "
-"imports): inherent impls first, then trait impls. An impl for a type "
-"outside the crate is listed under \"Implementations\" on its module's "
-"page. Trait-impl members are ``:noindex:``. They are documented on the "
-"trait."
-msgstr ""
+msgid "``impl`` blocks attach to the type their self type names (through ``use`` imports): inherent impls first, then trait impls. An impl for a type outside the crate is listed under \"Implementations\" on its module's page. Trait-impl members are ``:noindex:``. They are documented on the trait."
+msgstr "``impl`` ブロックは、self 型が指す型（``use`` によるインポートも解決）に付きます。固有の impl が先で、トレイトの impl が後です。クレート外の型に対する impl は、そのモジュールのページの「Implementations」に一覧表示されます。トレイト impl のメンバーは ``:noindex:`` で、トレイト側でドキュメント化されます。"
 
 #: ../../rust.rst:176
-msgid ""
-"A type's description groups its content as rustdoc does, each group under "
-"a rubric: \"Fields\" (or \"Variants\"), \"Implementations\" (inherent "
-"impls in source order), then \"Trait Implementations\" (sorted by trait "
-"name)."
-msgstr ""
+msgid "A type's description groups its content as rustdoc does, each group under a rubric: \"Fields\" (or \"Variants\"), \"Implementations\" (inherent impls in source order), then \"Trait Implementations\" (sorted by trait name)."
+msgstr "型の説明は rustdoc と同じように内容をグループ化し、各グループに小見出しを付けます：「Fields」（または「Variants」）、「Implementations」（固有の impl をソース順に）、続いて「Trait Implementations」（トレイト名順）。"
 
 #: ../../rust.rst:177
-msgid ""
-"A trait ends with \"Implementors\": the head of every impl of it in the "
-"crate, sorted by the implementing type. Each head links its types. The "
-"impl's members stay with the type (or on the module page, for a type of "
-"another crate)."
-msgstr ""
+msgid "A trait ends with \"Implementors\": the head of every impl of it in the crate, sorted by the implementing type. Each head links its types. The impl's members stay with the type (or on the module page, for a type of another crate)."
+msgstr "トレイトの最後には「Implementors」が置かれます。クレート内にあるそのトレイトの impl すべての先頭行を、実装する型の順に並べたものです。各先頭行はそこに現れる型にリンクします。impl のメンバーは型の側に残ります（別のクレートの型であれば、モジュールのページに残ります）。"
 
 #: ../../rust.rst:178
-msgid ""
-"Tuple fields, and the fields of enum variants, are listed only when one "
-"of them has docs. A tuple struct's signature shows private fields as "
-"``_``. With ``include_private``, it shows their types."
-msgstr ""
+msgid "Tuple fields, and the fields of enum variants, are listed only when one of them has docs. A tuple struct's signature shows private fields as ``_``. With ``include_private``, it shows their types."
+msgstr "タプルのフィールドと列挙型バリアントのフィールドは、いずれかにドキュメントがある場合にだけ一覧表示されます。タプル構造体のシグネチャでは、非公開のフィールドを ``_`` と表示します。``include_private`` を指定すると、その型を表示します。"
 
 #: ../../rust.rst:180
-msgid ""
-"``#[cfg(...)]`` and ``#[doc(cfg(...))]`` become ``:cfg:``. Several are "
-"joined as ``all(a, b)``."
-msgstr ""
+msgid "``#[cfg(...)]`` and ``#[doc(cfg(...))]`` become ``:cfg:``. Several are joined as ``all(a, b)``."
+msgstr "``#[cfg(...)]`` と ``#[doc(cfg(...))]`` は ``:cfg:`` になります。複数ある場合は ``all(a, b)`` のようにまとめます。"
 
 #: ../../rust.rst:182
-msgid ""
-"Signatures are the source on one line: attributes, comments and bodies "
-"removed, whitespace collapsed, rustfmt's vertical lists folded. Constant "
-"values longer than 48 characters and every static's value are left out."
-msgstr ""
+msgid "Signatures are the source on one line: attributes, comments and bodies removed, whitespace collapsed, rustfmt's vertical lists folded. Constant values longer than 48 characters and every static's value are left out."
+msgstr "シグネチャはソースを 1 行にしたものです。属性、コメント、本体を取り除き、空白をまとめ、rustfmt による縦方向のリストを折りたたみます。48 文字を超える定数の値と、すべての static の値は省略します。"
 
 #: ../../rust.rst:186
 msgid "Doc comments"
-msgstr ""
+msgstr "ドキュメントコメント"
 
 #: ../../rust.rst:189
-msgid ""
-"``///``, ``//!``, ``/** */``, ``/*! */``, ``#[doc = \"...\"]`` and "
-"``#[doc = include_str!(\"file\")]`` (read relative to the source file, "
-"only inside the crate folder) are joined and unindented as rustdoc does. "
-"They are CommonMark, and become reStructuredText in the directive's "
-"content:"
-msgstr ""
+msgid "``///``, ``//!``, ``/** */``, ``/*! */``, ``#[doc = \"...\"]`` and ``#[doc = include_str!(\"file\")]`` (read relative to the source file, only inside the crate folder) are joined and unindented as rustdoc does. They are CommonMark, and become reStructuredText in the directive's content:"
+msgstr "``///``、``//!``、``/** */``、``/*! */``、``#[doc = \"...\"]``、``#[doc = include_str!(\"file\")]`` （ソースファイルからの相対パスで、クレートフォルダー内に限って読み込み）は、rustdoc と同じように連結され、インデントが除去されます。これらは CommonMark で、ディレクティブの内容として reStructuredText に変換されます。"
 
 #: ../../rust.rst:194
-msgid ""
-"Paragraphs, lists (nested, with their start numbers), block quotes, pipe "
-"tables (as ``list-table``), and HTML blocks (as ``raw:: html``) keep "
-"their structure."
-msgstr ""
+msgid "Paragraphs, lists (nested, with their start numbers), block quotes, pipe tables (as ``list-table``), and HTML blocks (as ``raw:: html``) keep their structure."
+msgstr "段落、リスト（入れ子や開始番号も含む）、引用ブロック、パイプテーブル（``list-table`` として）、HTML ブロック（``raw:: html`` として）は構造を保ちます。"
 
 #: ../../rust.rst:196
-msgid ""
-"Headings (``# Examples``, ``# Panics``, ``# Errors``, ``# Safety``) "
-"become rubrics, since sections cannot sit inside directives."
-msgstr ""
+msgid "Headings (``# Examples``, ``# Panics``, ``# Errors``, ``# Safety``) become rubrics, since sections cannot sit inside directives."
+msgstr "見出し（``# Examples``、``# Panics``、``# Errors``、``# Safety``）は rubric（小見出し）になります。ディレクティブの中にはセクションを置けないためです。"
 
 #: ../../rust.rst:198
-msgid ""
-"Code blocks become ``code-block:: rust`` under rustdoc's rules. No info "
-"string, ``ignore``, ``no_run``, ``should_panic``, ``compile_fail``, "
-"``edition2021``, or an error code means Rust. ``text``, ``toml`` and "
-"other languages are kept. Hidden ``# `` lines are removed (``##`` shows "
-"``#``)."
-msgstr ""
+msgid "Code blocks become ``code-block:: rust`` under rustdoc's rules. No info string, ``ignore``, ``no_run``, ``should_panic``, ``compile_fail``, ``edition2021``, or an error code means Rust. ``text``, ``toml`` and other languages are kept. Hidden ``# `` lines are removed (``##`` shows ``#``)."
+msgstr "コードブロックは rustdoc の規則に従って ``code-block:: rust`` になります。info string がない場合や、``ignore``、``no_run``、``should_panic``、``compile_fail``、``edition2021``、エラーコードの場合は Rust とみなします。``text`` や ``toml`` などの他の言語はそのまま残します。隠し行の ``# `` は削除します（``##`` は ``#`` と表示されます）。"
 
 #: ../../rust.rst:202
-msgid ""
-"Intra-doc links (``[`Foo`]``, ``[Foo]``, ``[text](Foo::bar)``, "
-"``[text][Foo]``, with disambiguators such as ``struct@`` or ``foo()``) "
-"are resolved as rustdoc resolves them, relative to the item's module and "
-"``Self``, and become ``rust`` roles. Other links and autolinks stay links."
-msgstr ""
+msgid "Intra-doc links (``[`Foo`]``, ``[Foo]``, ``[text](Foo::bar)``, ``[text][Foo]``, with disambiguators such as ``struct@`` or ``foo()``) are resolved as rustdoc resolves them, relative to the item's module and ``Self``, and become ``rust`` roles. Other links and autolinks stay links."
+msgstr "ドキュメント内リンク（``[`Foo`]``、``[Foo]``、``[text](Foo::bar)``、``[text][Foo]``。``struct@`` や ``foo()`` などの曖昧さ回避を含むものも）は、rustdoc と同じく項目のモジュールと ``Self`` を基準に解決し、``rust`` ロールになります。その他のリンクや自動リンクは通常のリンクのままです。"
 
 #: ../../rust.rst:206
-msgid ""
-"Links into the standard library become links to doc.rust-lang.org. These "
-"are primitives (``[u8]``, ``[`prim@str`]``, ``[u8::MAX]``), paths that "
-"start with ``std::``, ``core::`` or ``alloc::``, and prelude names the "
-"crate does not define (``[Vec]``, ``[Some]``). The standard library "
-"publishes no inventory we could read, so a stable URL is the practical "
-"choice. Primitives and common items get their exact page "
-"(``primitive.u8.html``, ``struct.Vec.html#method.new``). A disambiguator "
-"such as ``macro@`` or ``mod@`` gives the page for others. Anything else "
-"opens rustdoc's search for the path. The shown text drops the "
-"disambiguator: ``[`prim@u8`]`` shows ``u8``."
-msgstr ""
+msgid "Links into the standard library become links to doc.rust-lang.org. These are primitives (``[u8]``, ``[`prim@str`]``, ``[u8::MAX]``), paths that start with ``std::``, ``core::`` or ``alloc::``, and prelude names the crate does not define (``[Vec]``, ``[Some]``). The standard library publishes no inventory we could read, so a stable URL is the practical choice. Primitives and common items get their exact page (``primitive.u8.html``, ``struct.Vec.html#method.new``). A disambiguator such as ``macro@`` or ``mod@`` gives the page for others. Anything else opens rustdoc's search for the path. The shown text drops the disambiguator: ``[`prim@u8`]`` shows ``u8``."
+msgstr "標準ライブラリへのリンクは doc.rust-lang.org へのリンクになります。対象はプリミティブ型（``[u8]``、``[`prim@str`]``、``[u8::MAX]``）、``std::``、``core::``、``alloc::`` で始まるパス、そしてクレートが定義していない prelude の名前（``[Vec]``、``[Some]``）です。標準ライブラリは読み取れるインベントリを公開していないため、安定した URL を使うのが現実的です。プリミティブ型とよく使う項目は該当ページに直接リンクします（``primitive.u8.html``、``struct.Vec.html#method.new``）。それ以外は ``macro@`` や ``mod@`` などの曖昧さ回避を付ければページが決まります。どれにも当てはまらない場合は、そのパスで rustdoc の検索を開きます。表示テキストからは曖昧さ回避の部分を除きます。たとえば ``[`prim@u8`]`` は ``u8`` と表示されます。"
 
 #: ../../rust.rst:207
-msgid ""
-"Footnotes (``[^1]``) become auto-numbered footnotes at the end of the "
-"item's docs."
-msgstr ""
+msgid "Footnotes (``[^1]``) become auto-numbered footnotes at the end of the item's docs."
+msgstr "脚注（``[^1]``）は、項目のドキュメント末尾に置かれる自動番号付きの脚注になります。"
 
 #: ../../rust.rst:208
-msgid ""
-"An image on its own line becomes an ``image`` with its alt text, and a "
-"linked image (a badge) gets a ``:target:``. An image inside a sentence "
-"becomes a substitution. An image with a relative path keeps only its alt "
-"text, because nothing places the file next to the generated page."
-msgstr ""
+msgid "An image on its own line becomes an ``image`` with its alt text, and a linked image (a badge) gets a ``:target:``. An image inside a sentence becomes a substitution. An image with a relative path keeps only its alt text, because nothing places the file next to the generated page."
+msgstr "単独の行にある画像は代替テキスト付きの ``image`` になり、リンク付きの画像（バッジ）には ``:target:`` が付きます。文中の画像は置換（substitution）になります。相対パスの画像は代替テキストだけを残します。生成されたページの隣にファイルを配置する仕組みがないためです。"
 
 #: ../../rust.rst:209
-msgid ""
-"A paragraph with a hard line break (two trailing spaces, or a backslash "
-"at the end of a line) becomes a line block."
-msgstr ""
+msgid "A paragraph with a hard line break (two trailing spaces, or a backslash at the end of a line) becomes a line block."
+msgstr "強制改行（行末の二つの空白、または行末のバックスラッシュ）を含む段落はラインブロックになります。"
 
 #: ../../rust.rst:210
-msgid ""
-"Everything else reStructuredText would read as markup is escaped, so a "
-"comment reads as written and never warns."
-msgstr ""
+msgid "Everything else reStructuredText would read as markup is escaped, so a comment reads as written and never warns."
+msgstr "その他、reStructuredText がマークアップとして解釈しうるものはすべてエスケープします。そのため、コメントは書いたとおりに表示され、警告も出ません。"
 
 #: ../../rust.rst:213
 msgid "Rebuilding"
-msgstr ""
+msgstr "再ビルド"
 
 #: ../../rust.rst:216
-msgid ""
-"Every Rust file a page read is a dependency of that page. When we edit a "
-"module's source, the next build reads again only the pages generated from "
-"that crate. ``guidedog serve`` checks modification times in "
-"``rust_autoapi_crates`` before serving an HTML page, as it does for "
-"``odin_autoapi_dirs``. We refresh the browser after editing."
-msgstr ""
+msgid "Every Rust file a page read is a dependency of that page. When we edit a module's source, the next build reads again only the pages generated from that crate. ``guidedog serve`` checks modification times in ``rust_autoapi_crates`` before serving an HTML page, as it does for ``odin_autoapi_dirs``. We refresh the browser after editing."
+msgstr "ページが読み込んだ Rust ファイルはすべて、そのページの依存ファイルです。モジュールのソースを編集すると、次のビルドではそのクレートから生成したページだけを読み直します。``guidedog serve`` は HTML ページを返す前に ``rust_autoapi_crates`` の更新時刻を確認します。``odin_autoapi_dirs`` と同じ仕組みです。編集後はブラウザーを更新してください。"
 
 #: ../../rust.rst:222
 msgid "Warnings and limits"
-msgstr ""
+msgstr "警告と制限"
 
 #: ../../rust.rst:225
-msgid ""
-"The source is parsed, never compiled, type-checked, or macro-expanded. "
-"Types are shown as written and nothing is inferred. Items a macro would "
-"create are not documented. Problems in one file never stop the rest of "
-"the crate:"
-msgstr ""
+msgid "The source is parsed, never compiled, type-checked, or macro-expanded. Types are shown as written and nothing is inferred. Items a macro would create are not documented. Problems in one file never stop the rest of the crate:"
+msgstr "ソースは構文解析するだけで、コンパイルも型検査もマクロ展開もしません。型は書かれたとおりに表示し、推論はしません。マクロが生成する項目はドキュメント化されません。あるファイルで問題が起きても、クレートの他の部分の処理は止まりません。"
 
 #: ../../rust.rst:229
 msgid "``rust.autodoc.parse``"
-msgstr ""
+msgstr "``rust.autodoc.parse``"
 
 #: ../../rust.rst:230
 msgid "A syntax error. The rest of the file is documented."
-msgstr ""
+msgstr "構文エラーです。ファイルの残りの部分はドキュメント化されます。"
 
 #: ../../rust.rst:231
 msgid "``rust.autodoc.module``"
-msgstr ""
+msgstr "``rust.autodoc.module``"
 
 #: ../../rust.rst:232
 msgid "No file for ``mod x;``."
-msgstr ""
+msgstr "``mod x;`` に対応するファイルがありません。"
 
 #: ../../rust.rst:233
 msgid "``rust.autodoc.link`` and ``rust.autodoc.private-link``"
-msgstr ""
+msgstr "``rust.autodoc.link`` と ``rust.autodoc.private-link``"
 
 #: ../../rust.rst:234
-msgid ""
-"An intra-doc link into the crate that names nothing, or names a private "
-"or hidden item."
-msgstr ""
+msgid "An intra-doc link into the crate that names nothing, or names a private or hidden item."
+msgstr "クレート内へのドキュメント内リンクが何も指していないか、非公開または隠された項目を指しています。"
 
 #: ../../rust.rst:236
 msgid "``rust.autodoc.confined`` and ``rust.autodoc.read``"
-msgstr ""
+msgstr "``rust.autodoc.confined`` と ``rust.autodoc.read``"
 
 #: ../../rust.rst:237
 msgid "A file outside the crate folder, or one that could not be read."
-msgstr ""
+msgstr "クレートのフォルダー外にあるファイル、または読み込めなかったファイルです。"
 
 #: ../../rust.rst:238
-msgid ""
-"``rust.autodoc.nesting``, ``rust.autodoc.size`` and ``rust.autodoc.limit``"
-msgstr ""
+msgid "``rust.autodoc.nesting``, ``rust.autodoc.size`` and ``rust.autodoc.limit``"
+msgstr "``rust.autodoc.nesting``、``rust.autodoc.size``、``rust.autodoc.limit``"
 
 #: ../../rust.rst:239
-msgid ""
-"A file nested deeper than 512 levels, a file larger than 4 MiB, or a "
-"crate with more than 4,096 files or 100,000 items."
-msgstr ""
+msgid "A file nested deeper than 512 levels, a file larger than 4 MiB, or a crate with more than 4,096 files or 100,000 items."
+msgstr "ネストが 512 段を超えるファイル、4 MiB を超えるファイル、またはファイルが 4,096 個か項目が 100,000 個を超えるクレートです。"
 
 #: ../../rust.rst:242
-msgid ""
-"A crate root that cannot be found or read is an error "
-"(``rust.autodoc.crate``, ``rust.autodoc.root``). Every warning has a hint "
-"and, where there is one, the file and line with an excerpt."
-msgstr ""
+msgid "A crate root that cannot be found or read is an error (``rust.autodoc.crate``, ``rust.autodoc.root``). Every warning has a hint and, where there is one, the file and line with an excerpt."
+msgstr "クレートのルートが見つからない、または読み込めない場合はエラーになります（``rust.autodoc.crate``、``rust.autodoc.root``）。どの警告にもヒントが付き、該当箇所がある場合はファイルと行、ソースの抜粋も示します。"
 
 #: ../../rust.rst:246
-msgid ""
-"Links to types outside the documented crates (``std::fmt::Display``) "
-"resolve only through intersphinx. With ``-n``, we silence the rest with "
-"``nitpick_ignore_regex = [[\"rust:any\", \"(std|core|alloc)::.*\"]]``."
-msgstr ""
+msgid "Links to types outside the documented crates (``std::fmt::Display``) resolve only through intersphinx. With ``-n``, we silence the rest with ``nitpick_ignore_regex = [[\"rust:any\", \"(std|core|alloc)::.*\"]]``."
+msgstr "ドキュメント化していないクレートの型（``std::fmt::Display``）へのリンクは、intersphinx 経由でのみ解決します。``-n`` を使う場合、残りの警告は ``nitpick_ignore_regex = [[\"rust:any\", \"(std|core|alloc)::.*\"]]`` で抑制できます。"

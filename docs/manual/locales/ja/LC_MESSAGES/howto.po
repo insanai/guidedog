@@ -75,23 +75,12 @@ msgid "``guidedog gds``"
 msgstr "``guidedog gds``"
 
 #: ../../howto/discussions.rst:25
-#, fuzzy
-#| msgid "You work on Guidedog. It runs the same commands on ``docs/gds``."
-msgid ""
-"We work on Guidedog itself. It runs the same commands on ``docs/gds``."
-msgstr "Guidedog 自体を開発する。\\ ``docs/gds`` に対して同じコマンドを実行する。"
+msgid "We work on Guidedog itself. It runs the same commands on ``docs/gds``."
+msgstr "Guidedog 自体を開発する。``docs/gds`` に対して同じコマンドを実行する。"
 
 #: ../../howto/discussions.rst:27
-#, fuzzy
-#| msgid ""
-#| "Graphviz, Typst, and the other tools a build needs belong to Guidedog. "
-#| "``dsc`` never looks for them: it uses whichever ``guidedog`` you have."
-msgid ""
-"Graphviz, Typst, and the other tools a build needs belong to Guidedog. "
-"``dsc`` never looks for them. It uses whichever ``guidedog`` we have."
-msgstr ""
-"Graphviz、Typst など、ビルドに必要なツールは Guidedog の担当。\\ ``dsc`` はそれらを探さず、手元にある "
-"``guidedog`` を使う。"
+msgid "Graphviz, Typst, and the other tools a build needs belong to Guidedog. ``dsc`` never looks for them. It uses whichever ``guidedog`` we have."
+msgstr "Graphviz、Typst など、ビルドに必要なツールは Guidedog が扱います。``dsc`` がそれらを探すことはありません。手元にある ``guidedog`` をそのまま使います。"
 
 #: ../../howto/discussions.rst:30
 msgid "Create a catalog"
@@ -129,158 +118,48 @@ msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
 msgstr "``registry.rst`` と ``bundle.rst``: 生成された索引。"
 
 #: ../../howto/discussions.rst:45
-#, fuzzy
-#| msgid ""
-#| "``records/XXXXX-eds-process.rst``, a draft of your review process."
 msgid "``records/XXXXX-eds-process.rst``, a draft of our review process."
-msgstr "``records/XXXXX-eds-process.rst``: レビュー手順の草案。"
+msgstr "``records/XXXXX-eds-process.rst``：レビュー手順の草案。"
 
 #: ../../howto/discussions.rst:47
-#, fuzzy
-#| msgid ""
-#| "Edit the process draft to say how your project decides. To start from "
-#| "your own documents, pass ``--config=FILE`` (a ``discussion.toml``), "
-#| "``--process=FILE`` (the process text, from its title on), and "
-#| "``--template=FILE`` (a record template with ``:eds-*:`` fields). "
-#| "``--labels=a,b`` limits the labels records may carry. ``init`` checks "
-#| "the new catalog before it moves it into place, and never writes into a "
-#| "folder that has files."
-msgid ""
-"We edit the process draft to say how our project decides. To start from "
-"our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), "
-"``--process=FILE`` (the process text, from its title on), and "
-"``--template=FILE`` (a record template with ``:eds-*:`` fields). "
-"``--labels=a,b`` limits the labels records may carry. ``init`` checks the "
-"new catalog before it moves it into place. It never writes into a folder "
-"that has files."
-msgstr ""
-"手順の草案を編集し、プロジェクトでの決め方を書く。自分の文書から始めるには、\\ ``--config=FILE``\\ （\\ "
-"``discussion.toml``\\ ）、\\ ``--process=FILE``\\ （手順の本文。タイトルから）、\\ "
-"``--template=FILE``\\ （\\ ``:eds-*:`` フィールドを持つ記録テンプレート）を渡す。\\ "
-"``--labels=a,b`` は記録に付けられるラベルを制限する。\\ ``init`` "
-"は新しいカタログを検査してから所定の場所に移す。ファイルのあるフォルダーには決して書き込まない。"
+msgid "We edit the process draft to say how our project decides. To start from our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), ``--process=FILE`` (the process text, from its title on), and ``--template=FILE`` (a record template with ``:eds-*:`` fields). ``--labels=a,b`` limits the labels records may carry. ``init`` checks the new catalog before it moves it into place. It never writes into a folder that has files."
+msgstr "手順の草案を編集し、プロジェクトでの決め方を書きます。自分の文書から始める場合は、``--config=FILE`` （``discussion.toml``）、``--process=FILE`` （手順の本文。タイトルから始まるもの）、``--template=FILE`` （``:eds-*:`` フィールドを持つ記録テンプレート）を渡します。``--labels=a,b`` で、記録に付けられるラベルを制限できます。``init`` は新しいカタログを検査してから所定の場所に移します。ファイルのあるフォルダーに書き込むことはありません。"
 
 #: ../../howto/discussions.rst:54
 msgid "Write and review"
 msgstr "執筆とレビュー"
 
 #: ../../howto/discussions.rst:57
-#, fuzzy
-#| msgid ""
-#| "Run the commands in the catalog folder, or in any folder inside it."
-msgid ""
-"We run the commands in the catalog folder, or in any folder inside it."
-msgstr "コマンドは、カタログのフォルダーかその中の任意のフォルダーで実行する。"
+msgid "We run the commands in the catalog folder, or in any folder inside it."
+msgstr "コマンドは、カタログのフォルダーか、その中の任意のフォルダーで実行します。"
 
 #: ../../howto/discussions.rst:68
-#, fuzzy
-#| msgid ""
-#| "A new draft has the number ``XXXXX``. Promotion gives it the next "
-#| "number and opens it for discussion. A state change needs ``--reason``; "
-#| "``committed`` also needs ``--evidence``. Add ``--dry-run`` to see a "
-#| "change without making it. These are the defaults; the next section "
-#| "changes them."
-msgid ""
-"A new draft has the number ``XXXXX``. Promotion gives it the next number "
-"and opens it for discussion. A state change needs ``--reason``, and "
-"``committed`` also needs ``--evidence``. ``--dry-run`` shows a change "
-"without making it. These are the defaults. The next section changes them."
-msgstr ""
-"新しい草案の番号は ``XXXXX``\\ 。昇格すると次の番号が付き、議論が始まる。状態の変更には ``--reason`` が必要で、\\ "
-"``committed`` には ``--evidence`` も必要。\\ ``--dry-run`` "
-"を付けると、変更せずに内容を確認できる。これらは既定の動作で、次の節で変えられる。"
+msgid "A new draft has the number ``XXXXX``. Promotion gives it the next number and opens it for discussion. A state change needs ``--reason``, and ``committed`` also needs ``--evidence``. ``--dry-run`` shows a change without making it. These are the defaults. The next section changes them."
+msgstr "新しい草案の番号は ``XXXXX`` です。昇格すると次の番号が付き、議論が始まります。状態の変更には ``--reason`` が必要で、``committed`` にはさらに ``--evidence`` も必要です。``--dry-run`` を付けると、変更を加えずに内容を確認できます。これらは既定の動作で、次の節で変更できます。"
 
 #: ../../howto/discussions.rst:73
 msgid "A record starts with its metadata, one field per line:"
 msgstr "記録はメタデータで始まる。1 行に 1 フィールドを書く。"
 
 #: ../../howto/discussions.rst:87
-#, fuzzy
-#| msgid ""
-#| "Authors and labels are JSON lists. ``last-updated`` may stand for "
-#| "``updated``. A record may also carry ``category``, ``status``, and "
-#| "``summary``; ``dsc`` keeps ``status`` in step with the state. HTML and "
-#| "PDF show the fields as Number, Title, Authors, Updated, Labels, and so "
-#| "on, with the lists as plain text."
-msgid ""
-"Authors and labels are JSON lists. ``last-updated`` may stand for "
-"``updated``. A record may also carry ``category``, ``status``, and "
-"``summary``. ``dsc`` keeps ``status`` in step with the state. HTML and "
-"PDF show the fields as Number, Title, Authors, Updated, Labels, and so "
-"on, with the lists as plain text."
-msgstr ""
-"著者とラベルは JSON のリスト。\\ ``updated`` の代わりに ``last-updated`` も使える。記録には "
-"``category``\\ 、\\ ``status``\\ 、\\ ``summary`` も書ける。\\ ``dsc`` は "
-"``status`` を状態に合わせて保つ。HTML と PDF ではフィールドを "
-"Number、Title、Authors、Updated、Labels などとして表示し、リストはプレーンテキストになる。"
+msgid "Authors and labels are JSON lists. ``last-updated`` may stand for ``updated``. A record may also carry ``category``, ``status``, and ``summary``. ``dsc`` keeps ``status`` in step with the state. HTML and PDF show the fields as Number, Title, Authors, Updated, Labels, and so on, with the lists as plain text."
+msgstr "著者とラベルは JSON のリストです。``updated`` の代わりに ``last-updated`` も使えます。記録には ``category``、``status``、``summary`` も書けます。``dsc`` は ``status`` を状態に合わせて更新します。HTML と PDF では、フィールドを Number、Title、Authors、Updated、Labels などとして表示し、リストはプレーンテキストになります。"
 
 #: ../../howto/discussions.rst:92
 msgid "Configure the lifecycle and numbering"
 msgstr "ライフサイクルと番号付けの設定"
 
 #: ../../howto/discussions.rst:95
-#, fuzzy
-#| msgid ""
-#| "``discussion.toml`` holds the catalog's settings. ``init`` writes "
-#| "every one of them, with comments, and ``dsc config`` prints the "
-#| "settings in effect. A catalog without the file follows the defaults "
-#| "below, which are the process of Guidedog's own GDS."
-msgid ""
-"``discussion.toml`` holds the catalog's settings. ``init`` writes every "
-"one of them, with comments. ``dsc config`` prints the settings in effect. "
-"A catalog without the file follows the defaults below. They are the "
-"process of Guidedog's own GDS."
-msgstr ""
-"``discussion.toml`` はカタログの設定を保持する。\\ ``init`` はすべての設定をコメント付きで書き出し、\\ "
-"``dsc config`` は有効な設定を表示する。このファイルのないカタログは以下の既定値に従う。これは Guidedog 自身の GDS "
-"の手順と同じ。"
+msgid "``discussion.toml`` holds the catalog's settings. ``init`` writes every one of them, with comments. ``dsc config`` prints the settings in effect. A catalog without the file follows the defaults below. They are the process of Guidedog's own GDS."
+msgstr "``discussion.toml`` はカタログの設定を保持します。``init`` はすべての設定をコメント付きで書き出します。``dsc config`` は有効な設定を表示します。このファイルがないカタログは、以下の既定値に従います。これは Guidedog 自身の GDS の手順です。"
 
 #: ../../howto/discussions.rst:132
-#, fuzzy
-#| msgid ""
-#| "``[workflow.states.NAME]`` defines a state: ``next`` lists the states "
-#| "the ``state`` command may move a record to, ``evidence = true`` asks "
-#| "for ``--evidence`` on a move into it, and ``status`` is the text a "
-#| "record's optional ``status`` field takes there. A state with no "
-#| "``next`` is closed. Promotion is the only way from the draft state to "
-#| "the open state, because it gives the number; a draft may move without "
-#| "one only to the states its own ``next`` lists, such as ``abandoned``."
-msgid ""
-"``[workflow.states.NAME]`` defines a state. ``next`` lists the states the "
-"``state`` command may move a record to. ``evidence = true`` asks for "
-"``--evidence`` on a move into the state. ``status`` is the text a "
-"record's optional ``status`` field takes there. A state with no ``next`` "
-"is closed. Promotion is the only way from the draft state to the open "
-"state, because promotion gives the number. Without a number, a draft may "
-"move only to the states its own ``next`` lists, such as ``abandoned``."
-msgstr ""
-"``[workflow.states.NAME]`` は状態を定義する。\\ ``next`` は ``state`` "
-"コマンドで記録を移せる状態の一覧。\\ ``evidence = true`` はその状態へ移すときに ``--evidence`` "
-"を求める。\\ ``status`` は、記録の任意の ``status`` フィールドがその状態で取る文字列。\\ ``next`` "
-"のない状態は閉じた状態になる。草案の状態から議論の状態へは、番号を付ける昇格でしか移れない。昇格せずに草案が移れるのは、自身の ``next`` "
-"にある ``abandoned`` などの状態だけ。"
+msgid "``[workflow.states.NAME]`` defines a state. ``next`` lists the states the ``state`` command may move a record to. ``evidence = true`` asks for ``--evidence`` on a move into the state. ``status`` is the text a record's optional ``status`` field takes there. A state with no ``next`` is closed. Promotion is the only way from the draft state to the open state, because promotion gives the number. Without a number, a draft may move only to the states its own ``next`` lists, such as ``abandoned``."
+msgstr "``[workflow.states.NAME]`` は状態を定義します。``next`` には、``state`` コマンドで記録を移せる状態を並べます。``evidence = true`` を指定すると、その状態への移動に ``--evidence`` が必要になります。``status`` は、その状態で記録の任意フィールド ``status`` が取る文字列です。``next`` のない状態は閉じた状態です。草案の状態から議論中の状態へは、昇格でしか移れません。番号を付けるのは昇格だからです。番号のない草案が移れるのは、``abandoned`` など、自身の ``next`` に挙げた状態だけです。"
 
 #: ../../howto/discussions.rst:139
-#, fuzzy
-#| msgid ""
-#| "Numbers have at least ``width`` digits, padded with zeros. A number "
-#| "that needs more digits gets them, so 10000 follows 9999, and lists "
-#| "sort by value. Promotion numbers from ``start``; ``limit``, when set, "
-#| "is the highest number it gives. Changing ``start`` or ``limit`` later "
-#| "is safe. Changing ``width`` is not, once records are numbered: their "
-#| "numbers would no longer match it."
-msgid ""
-"Numbers have at least ``width`` digits, padded with zeros. A number that "
-"needs more digits gets them, so 10000 follows 9999, and lists sort by "
-"value. Promotion numbers from ``start``. ``limit``, when set, is the "
-"highest number it gives. Changing ``start`` or ``limit`` later is safe. "
-"Changing ``width`` is not, once records are numbered: their numbers would "
-"no longer match it."
-msgstr ""
-"番号は少なくとも ``width`` 桁で、足りない桁はゼロで埋める。もっと桁が必要な番号にはその桁数を使うので、9999 の次は 10000 "
-"になり、一覧は値の順に並ぶ。昇格は ``start`` から番号を付け、\\ ``limit`` "
-"を設定した場合はそれが付ける番号の上限になる。\\ ``start`` や ``limit`` は後から変えても安全。記録に番号が付いた後で "
-"``width`` を変えるのは安全ではない。既存の番号がその桁数に合わなくなる。"
+msgid "Numbers have at least ``width`` digits, padded with zeros. A number that needs more digits gets them, so 10000 follows 9999, and lists sort by value. Promotion numbers from ``start``. ``limit``, when set, is the highest number it gives. Changing ``start`` or ``limit`` later is safe. Changing ``width`` is not, once records are numbered: their numbers would no longer match it."
+msgstr "番号は少なくとも ``width`` 桁で、足りない桁はゼロで埋めます。それより多くの桁が必要な番号はその桁数になるので、9999 の次は 10000 になり、一覧は値の順に並びます。昇格は ``start`` から番号を付けます。``limit`` を設定した場合は、それが付ける番号の上限です。``start`` や ``limit`` は後から変えても問題ありません。記録に番号が付いた後で ``width`` を変えるのは安全ではありません。既存の番号が桁数と合わなくなるためです。"
 
 #: ../../howto/discussions.rst:145
 msgid ""
@@ -289,14 +168,8 @@ msgid ""
 msgstr "``dsc`` はカタログを読むたびにこのファイルを検査する。誤りがあれば、その行と、代わりに書くべき内容を示す。"
 
 #: ../../howto/discussions.rst:160
-#, fuzzy
-#| msgid ""
-#| "The process draft that ``init`` writes describes the lifecycle you "
-#| "configured, with a table of the states and a diagram of the moves."
-msgid ""
-"The process draft that ``init`` writes describes the lifecycle we "
-"configured. It has a table of the states and a diagram of the moves."
-msgstr "``init`` が書き出す手順の草案は、設定したライフサイクルを、状態の表と移動の図で説明する。"
+msgid "The process draft that ``init`` writes describes the lifecycle we configured. It has a table of the states and a diagram of the moves."
+msgstr "``init`` が書き出す手順の草案は、設定したライフサイクルを説明します。状態の表と、状態間の移動を示す図が含まれます。"
 
 #: ../../howto/discussions.rst:163
 msgid "Build"
@@ -337,99 +210,40 @@ msgstr ""
 "``.eds-journal.json`` を書く。途中で止まった場合は、次のコマンドがそれを知らせる。"
 
 #: ../../howto/discussions.rst:190
-#, fuzzy
-#| msgid ""
-#| "Recovery puts back the files as they were. It refuses to overwrite a "
-#| "file someone edited since. ``dsc`` also checks each change before it "
-#| "writes anything: an empty or cut-short record, or an index without its "
-#| "generated region, is refused. When memory runs out, the command stops "
-#| "with exit status 3 and changes nothing it had not prepared whole."
-msgid ""
-"Recovery puts back the files as they were. It refuses to overwrite a file "
-"someone edited since. ``dsc`` also checks each change before it writes "
-"anything. It refuses an empty or cut-short record, and an index without "
-"its generated region."
-msgstr ""
-"復旧はファイルを元の状態に戻す。その後に誰かが編集したファイルは上書きしない。\\ ``dsc`` "
-"は書き込む前に各変更も検査する。空の記録や途中で切れた記録、生成領域のない索引は拒否する。メモリが尽きると、コマンドは終了ステータス 3 "
-"で止まり、完全に準備できていない変更は何も行わない。"
+msgid "Recovery puts back the files as they were. It refuses to overwrite a file someone edited since. ``dsc`` also checks each change before it writes anything. It refuses an empty or cut-short record, and an index without its generated region."
+msgstr "復旧では、ファイルを元の状態に戻します。その後に誰かが編集したファイルは上書きしません。``dsc`` は、何かを書き込む前に各変更も検査します。空の記録や途中で切れた記録、生成領域のない索引は拒否します。"
 
 #: ../../howto/discussions.rst:194
-#, fuzzy
-#| msgid ""
-#| "``dsc`` keeps only each record's metadata in memory, about a kilobyte "
-#| "a record, and reads a record whole only to change it. A catalog of "
-#| "2,000 records of 100 KB each, 200 MB in all, is checked in a tenth of "
-#| "a second with less than 20 MB of memory."
-msgid ""
-"``dsc`` keeps only each record's metadata in memory. It reads a record "
-"whole only to change it. So checking a large catalog stays fast and small."
-msgstr ""
-"``dsc`` がメモリに保持するのは各記録のメタデータだけで、1 件あたり約 1 KB。記録全体を読むのは、それを変更するときだけ。1 件 "
-"100 KB の記録 2,000 件、合計 200 MB のカタログを、20 MB 未満のメモリで 0.1 秒で検査できる。"
+msgid "``dsc`` keeps only each record's metadata in memory. It reads a record whole only to change it. So checking a large catalog stays fast and small."
+msgstr "``dsc`` がメモリに保持するのは、各記録のメタデータだけです。記録全体を読むのは、その記録を変更するときだけです。そのため、大きなカタログでも検査は速く、メモリもわずかしか使いません。"
 
 #: ../../howto/discussions.rst:197
 msgid "Use the library"
 msgstr "ライブラリの利用"
 
 #: ../../howto/discussions.rst:200
-#, fuzzy
-#| msgid ""
-#| "The three programs share one Odin package, ``lib/discussion``. Its "
-#| "`cheat sheet "
-#| "<https://github.com/insanai/guidedog/blob/main/lib/discussion/README.md>`_ "
-#| "shows how to load a catalog, plan a change, and apply it from your own "
-#| "program."
-msgid ""
-"The three programs share one Rust crate, ``gd-discussion``. Its "
-"``README.md`` shows how to load a catalog, plan a change, and apply it "
-"from our own program:"
-msgstr ""
-"三つのプログラムは一つの Odin パッケージ ``lib/discussion`` を共有する。その `チートシート "
-"<https://github.com/insanai/guidedog/blob/main/lib/discussion/README.md>`_ "
-"に、自分のプログラムからカタログを読み込み、変更を計画し、適用する方法がある。"
+msgid "The three programs share one Rust crate, ``gd-discussion``. Its ``README.md`` shows how to load a catalog, plan a change, and apply it from our own program:"
+msgstr "3 つのプログラムは、1 つの Rust クレート ``gd-discussion`` を共有しています。その ``README.md`` に、自分のプログラムからカタログを読み込み、変更を計画して適用する方法を示しています："
 
 #: ../../howto/discussions.rst:218
-msgid ""
-"``ds::command::run`` is the whole ``dsc`` command line. It serves a "
-"program of our own with another name, prefix, or builder. The design "
-"notes are in :doc:`../internals/discussion`."
-msgstr ""
+msgid "``ds::command::run`` is the whole ``dsc`` command line. It serves a program of our own with another name, prefix, or builder. The design notes are in :doc:`../internals/discussion`."
+msgstr "``ds::command::run`` は ``dsc`` のコマンドライン全体です。別の名前、プレフィックス、ビルダーを使う独自のプログラムからも利用できます。設計メモは :doc:`../internals/discussion` にあります。"
 
 #: ../../howto/document-code.rst:1
 msgid "Document a codebase"
 msgstr "コードベースの文書化"
 
 #: ../../howto/document-code.rst:4
-#, fuzzy
-#| msgid ""
-#| "A public name needs a contract. Explain its input, its result, its "
-#| "ownership, and the conditions under which it fails. A signature alone "
-#| "is not a manual."
-msgid ""
-"A public name needs a contract. We explain its input, its result, its "
-"ownership, and the conditions under which it fails. A signature alone is "
-"not a manual."
-msgstr "公開する名前には契約が必要だ。入力、結果、所有権、失敗する条件を説明する。シグネチャだけではマニュアルにならない。"
+msgid "A public name needs a contract. We explain its input, its result, its ownership, and the conditions under which it fails. A signature alone is not a manual."
+msgstr "公開する名前には契約が必要です。入力、結果、所有権、失敗する条件を説明します。シグネチャだけではマニュアルになりません。"
 
 #: ../../howto/document-code.rst:7
 msgid "Static extraction architecture"
 msgstr "静的抽出の構成"
 
 #: ../../howto/document-code.rst:10
-#, fuzzy
-#| msgid ""
-#| "Guidedog extracts API documentation by parsing source files directly "
-#| "into abstract syntax trees. It never executes or imports user code, "
-#| "eliminating unintended side effects, external execution requirements, "
-#| "and foreign dependency issues:"
-msgid ""
-"Guidedog extracts API documentation by parsing source files into abstract "
-"syntax trees. It never runs or imports our code. So there are no side "
-"effects, no runtime to install, and no foreign dependencies to resolve:"
-msgstr ""
-"Guidedog はソースファイルを直接構文木に解析し、API "
-"文書を抽出します。抽出時にユーザーコードを実行・インポートしないため、意図しない副作用や、対象コードの実行環境・依存パッケージを必要としません。"
+msgid "Guidedog extracts API documentation by parsing source files into abstract syntax trees. It never runs or imports our code. So there are no side effects, no runtime to install, and no foreign dependencies to resolve:"
+msgstr "Guidedog は、ソースファイルを抽象構文木に解析して API 文書を抽出します。コードを実行したりインポートしたりすることはありません。そのため副作用がなく、ランタイムのインストールも、外部の依存関係の解決も不要です："
 
 #: ../../howto/document-code.rst:16
 msgid ""
@@ -444,134 +258,55 @@ msgstr "Guidedog の静的コード文書生成。"
 
 #: ../../howto/document-code.rst:65
 msgid "Rust"
-msgstr ""
+msgstr "Rust"
 
 #: ../../howto/document-code.rst:74
-msgid ""
-"Guidedog reads each crate's source with tree-sitter and follows its "
-"module tree the way rustc does: ``Cargo.toml``'s ``[lib] path``, then "
-"``src/lib.rs`` or ``src/main.rs``. It does not compile, run, or expand "
-"the documented crate. Items made by macros or build scripts are therefore "
-"absent. A ``rust_autoapi_crates`` entry may also be a single root ``.rs`` "
-"file or a folder of loose ``.rs`` files."
-msgstr ""
+msgid "Guidedog reads each crate's source with tree-sitter and follows its module tree the way rustc does: ``Cargo.toml``'s ``[lib] path``, then ``src/lib.rs`` or ``src/main.rs``. It does not compile, run, or expand the documented crate. Items made by macros or build scripts are therefore absent. A ``rust_autoapi_crates`` entry may also be a single root ``.rs`` file or a folder of loose ``.rs`` files."
+msgstr "Guidedog は tree-sitter で各クレートのソースを読み、rustc と同じ方法でモジュールツリーをたどります。``Cargo.toml`` の ``[lib] path``、次に ``src/lib.rs`` または ``src/main.rs`` の順です。対象のクレートをコンパイル、実行、マクロ展開することはありません。そのため、マクロやビルドスクリプトが生成するアイテムは含まれません。``rust_autoapi_crates`` のエントリには、ルートとなる単一の ``.rs`` ファイルや、個別の ``.rs`` ファイルを置いたフォルダーも指定できます。"
 
 #: ../../howto/document-code.rst:80
-msgid ""
-"Rustdoc's rules decide what appears. A ``pub`` item reachable through "
-"``pub`` modules is documented in its module. ``pub use`` of an item from "
-"a private module documents it under the re-exported name. "
-"``#[doc(hidden)]`` items, ``#[cfg(test)]`` modules and tests are left "
-"out. ``rust_autoapi_options`` adds ``private-members`` (everything, with "
-"its visibility shown), ``hidden-members``, or ``noindex``."
-msgstr ""
+msgid "Rustdoc's rules decide what appears. A ``pub`` item reachable through ``pub`` modules is documented in its module. ``pub use`` of an item from a private module documents it under the re-exported name. ``#[doc(hidden)]`` items, ``#[cfg(test)]`` modules and tests are left out. ``rust_autoapi_options`` adds ``private-members`` (everything, with its visibility shown), ``hidden-members``, or ``noindex``."
+msgstr "何を表示するかは rustdoc の規則で決まります。``pub`` モジュールを通じて到達できる ``pub`` アイテムは、そのモジュールで文書化します。非公開モジュールのアイテムを ``pub use`` した場合は、再エクスポートした名前で文書化します。``#[doc(hidden)]`` のアイテム、``#[cfg(test)]`` のモジュール、テストは除外します。``rust_autoapi_options`` には ``private-members`` （可視性を示してすべてを表示）、``hidden-members``、``noindex`` を追加できます。"
 
 #: ../../howto/document-code.rst:86
-msgid ""
-"Doc comments are CommonMark. Guidedog translates them into the page. ``# "
-"Examples`` and the other headings become rubrics. Fenced code follows "
-"rustdoc's language rules. Intra-doc links (``[`Parser`]``, "
-"``[Parser::next]``) become ``rust`` domain references. A link into the "
-"crate that names nothing is a ``rust.autodoc.link`` warning."
-msgstr ""
+msgid "Doc comments are CommonMark. Guidedog translates them into the page. ``# Examples`` and the other headings become rubrics. Fenced code follows rustdoc's language rules. Intra-doc links (``[`Parser`]``, ``[Parser::next]``) become ``rust`` domain references. A link into the crate that names nothing is a ``rust.autodoc.link`` warning."
+msgstr "ドキュメントコメントは CommonMark です。Guidedog はこれをページに変換します。``# Examples`` などの見出しは小見出し（rubric）になります。フェンスで囲んだコードは rustdoc の言語規則に従います。ドキュメント内リンク（``[`Parser`]``、``[Parser::next]``）は ``rust`` ドメインの参照になります。クレート内を指すリンクが何も指していない場合は、``rust.autodoc.link`` の警告になります。"
 
 #: ../../howto/document-code.rst:91
-msgid ""
-"The pages are written under ``rust_autoapi_root``. There is an index "
-"page, then one page per documented module (``my_crate.rst``, "
-"``my_crate/parser.rst``). With ``rust_autoapi_add_toctree_entry`` (the "
-"default), the index joins the root document's toctree. With "
-"``rust_autoapi_generate_api_docs = false``, Guidedog reads the settings "
-"without generating pages. :doc:`../topics/domains` describes the ``rust`` "
-"directives and roles. Hand-written pages can use them too."
-msgstr ""
+msgid "The pages are written under ``rust_autoapi_root``. There is an index page, then one page per documented module (``my_crate.rst``, ``my_crate/parser.rst``). With ``rust_autoapi_add_toctree_entry`` (the default), the index joins the root document's toctree. With ``rust_autoapi_generate_api_docs = false``, Guidedog reads the settings without generating pages. :doc:`../topics/domains` describes the ``rust`` directives and roles. Hand-written pages can use them too."
+msgstr "ページは ``rust_autoapi_root`` の下に書き出します。索引ページが 1 つあり、文書化した各モジュールに 1 ページずつ作ります（``my_crate.rst``、``my_crate/parser.rst``）。``rust_autoapi_add_toctree_entry`` （既定）を有効にすると、索引ページがルート文書の toctree に加わります。``rust_autoapi_generate_api_docs = false`` の場合、Guidedog は設定を読むだけでページを生成しません。``rust`` のディレクティブとロールは :doc:`../topics/domains` で説明しています。手書きのページでも使えます。"
 
 #: ../../howto/document-code.rst:98
 msgid "Odin"
 msgstr "Odin"
 
 #: ../../howto/document-code.rst:107
-#, fuzzy
-#| msgid ""
-#| "Guidedog reads Odin source through Odin's parser. It does not compile "
-#| "or run the documented package. The generated pages join the document "
-#| "graph and object inventory. The repository's separate API project is "
-#| "``docs/api``. See :doc:`../odin` for directives, signatures, and "
-#| "options."
-msgid ""
-"Guidedog reads Odin source by static analysis, across every build target "
-"at once. It does not compile or run the documented package. The generated "
-"pages join the document graph and object inventory. See :doc:`../odin` "
-"for directives, signatures, and options."
-msgstr ""
-"Guidedog は Odin "
-"のパーサーでソースを読む。対象パッケージをコンパイルしたり実行したりしない。生成ページは文書グラフとオブジェクト一覧に加わる。このリポジトリの独立した "
-"API プロジェクトは ``docs/api``\\ 。ディレクティブ、シグネチャ、オプションは :doc:`../odin` を参照。"
+msgid "Guidedog reads Odin source by static analysis, across every build target at once. It does not compile or run the documented package. The generated pages join the document graph and object inventory. See :doc:`../odin` for directives, signatures, and options."
+msgstr "Guidedog は Odin のソースを静的解析で読み、すべてのビルドターゲットを一度に扱います。対象のパッケージをコンパイルしたり実行したりはしません。生成したページは文書グラフとオブジェクトインベントリに加わります。ディレクティブ、シグネチャ、オプションは :doc:`../odin` を参照してください。"
 
 #: ../../howto/document-code.rst:112
 msgid "Python"
 msgstr "Python"
 
 #: ../../howto/document-code.rst:120
-#, fuzzy
-#| msgid ""
-#| "Guidedog parses Python source rather than importing it. This avoids "
-#| "import side effects. It also means runtime-generated objects may be "
-#| "absent. Describe those objects explicitly when they are part of the "
-#| "public interface. See :doc:`../autodoc` for the exact discovery rules."
-msgid ""
-"Guidedog parses Python source rather than importing it. This avoids "
-"import side effects. It also means runtime-generated objects may be "
-"absent. When such objects are part of the public interface, we describe "
-"them explicitly. See :doc:`../autodoc` for the exact discovery rules."
-msgstr ""
-"Guidedog は Python "
-"ソースを解析し、インポートしない。これでインポートの副作用を避けるが、実行時に生成されるオブジェクトは見つからないことがある。公開インターフェースの一部なら明示的に説明する。探索規則の詳細は "
-":doc:`../autodoc` を参照。"
+msgid "Guidedog parses Python source rather than importing it. This avoids import side effects. It also means runtime-generated objects may be absent. When such objects are part of the public interface, we describe them explicitly. See :doc:`../autodoc` for the exact discovery rules."
+msgstr "Guidedog は Python のソースをインポートせずに解析します。これでインポート時の副作用を避けられますが、実行時に生成されるオブジェクトは見つからない場合があります。そのようなオブジェクトが公開インターフェースの一部である場合は、明示的に記述します。探索規則の詳細は :doc:`../autodoc` を参照してください。"
 
 #: ../../howto/document-code.rst:125
 msgid "Link across projects"
 msgstr "プロジェクト間のリンク"
 
 #: ../../howto/document-code.rst:128
-#, fuzzy
-#| msgid ""
-#| "Publish the generated ``objects.inv`` with the site. An intersphinx "
-#| "mapping can then resolve names from another project. Use explicit "
-#| "mappings for reproducible builds. See :doc:`../intersphinx`."
-msgid ""
-"We publish the generated ``objects.inv`` with the site. An intersphinx "
-"mapping in another project can then resolve our names. Explicit mappings "
-"keep builds reproducible. See :doc:`../intersphinx`."
-msgstr ""
-"生成した ``objects.inv`` をサイトと一緒に公開する。他のプロジェクトから intersphinx "
-"のマッピングで名前を解決できる。再現可能なビルドには明示的なマッピングを使う。\\ :doc:`../intersphinx` を参照。"
+msgid "We publish the generated ``objects.inv`` with the site. An intersphinx mapping in another project can then resolve our names. Explicit mappings keep builds reproducible. See :doc:`../intersphinx`."
+msgstr "生成した ``objects.inv`` をサイトと一緒に公開します。これにより、他のプロジェクトが intersphinx のマッピングで名前を解決できます。明示的なマッピングを使うと、ビルドの再現性を保てます。:doc:`../intersphinx` を参照してください。"
 
 #: ../../howto/github-pages.rst:1
 msgid "Publish to GitHub Pages"
 msgstr "GitHub Pages に公開する"
 
 #: ../../howto/github-pages.rst:4
-#, fuzzy
-#| msgid ""
-#| "Publish a Guidedog site to GitHub Pages in one of two ways. GitHub "
-#| "Actions can build and deploy it on each push, with released Guidedog "
-#| "and GitHub's official Pages actions, and no personal token. Or "
-#| "``guidedog-pages`` can publish it from your own machine, whenever you "
-#| "ask or whenever the sources change. Neither needs Python or an Odin "
-#| "compiler."
-msgid ""
-"We can publish a Guidedog site to GitHub Pages in one of two ways. GitHub "
-"Actions can build and deploy it on each push, with released Guidedog and "
-"GitHub's official Pages actions, and no personal token. Or "
-"``guidedog-pages`` can publish it from our own machine, whenever we ask "
-"or whenever the sources change. We use one route per site, because a "
-"repository has one Pages source: GitHub Actions or a branch."
-msgstr ""
-"Guidedog のサイトを GitHub Pages に公開する方法は二つあります。一つは GitHub Actions で、リリース版の "
-"Guidedog と GitHub 公式の Pages 用 Action "
-"を使い、プッシュのたびにビルドしてデプロイします。個人用トークンは要りません。もう一つは ``guidedog-pages`` "
-"で、自分のマシンから、指示したときやソースが変わったときに公開します。どちらの方法でも Python や Odin コンパイラは不要です。"
+msgid "We can publish a Guidedog site to GitHub Pages in one of two ways. GitHub Actions can build and deploy it on each push, with released Guidedog and GitHub's official Pages actions, and no personal token. Or ``guidedog-pages`` can publish it from our own machine, whenever we ask or whenever the sources change. We use one route per site, because a repository has one Pages source: GitHub Actions or a branch."
+msgstr "Guidedog のサイトを GitHub Pages に公開する方法は 2 つあります。1 つは GitHub Actions で、リリース版の Guidedog と GitHub 公式の Pages 用 Action を使い、プッシュのたびにビルドしてデプロイします。個人用トークンは不要です。もう 1 つは ``guidedog-pages`` で、自分のマシンから、指示したときやソースが変わったときに公開します。リポジトリの Pages の公開元は GitHub Actions かブランチのどちらか 1 つなので、1 つのサイトにはどちらか一方の方法を使います。"
 
 #: ../../howto/github-pages.rst:12
 msgid ""
@@ -585,277 +320,120 @@ msgid "The two routes for publishing documentation to GitHub Pages."
 msgstr "GitHub Pages に文書を公開する 2 つの経路。"
 
 #: ../../howto/github-pages.rst:44
-#, fuzzy
-#| msgid "Publish from this machine"
 msgid "Publish from this machine in one command"
-msgstr "このマシンから公開する"
+msgstr "このマシンから 1 コマンドで公開する"
 
 #: ../../howto/github-pages.rst:47
 msgid "From the repository that holds our documentation, we run:"
-msgstr ""
+msgstr "ドキュメントのあるリポジトリで、次のコマンドを実行します："
 
 #: ../../howto/github-pages.rst:53
-msgid ""
-"On a machine that has never published, it does each missing step once and "
-"says what it does. It asks before anything that changes GitHub or this "
-"machine's permissions:"
-msgstr ""
+msgid "On a machine that has never published, it does each missing step once and says what it does. It asks before anything that changes GitHub or this machine's permissions:"
+msgstr "まだ公開したことのないマシンでは、足りない手順をそれぞれ一度だけ実行し、何をしているかを表示します。GitHub やこのマシンの権限を変更する操作の前には、確認を求めます："
 
 #: ../../howto/github-pages.rst:56
-msgid ""
-"**Configuration.** Without ``pages.toml`` it reads the repository from "
-"``git remote get-url origin`` (HTTPS or SSH GitHub URLs) and asks us to "
-"confirm it. It finds the nearest project (a folder with ``conf.toml``, "
-"here, in ``docs``, or above, up to the repository's root), and writes "
-"``pages.toml``. We can name both ourselves with "
-"``--repository=OWNER/REPO`` and ``--project=DIR``."
-msgstr ""
+msgid "**Configuration.** Without ``pages.toml`` it reads the repository from ``git remote get-url origin`` (HTTPS or SSH GitHub URLs) and asks us to confirm it. It finds the nearest project (a folder with ``conf.toml``, here, in ``docs``, or above, up to the repository's root), and writes ``pages.toml``. We can name both ourselves with ``--repository=OWNER/REPO`` and ``--project=DIR``."
+msgstr "**設定。** ``pages.toml`` がない場合は、``git remote get-url origin`` （HTTPS または SSH の GitHub URL）からリポジトリを読み取り、確認を求めます。最も近いプロジェクト（``conf.toml`` のあるフォルダー。現在の場所、``docs``、またはその上位をリポジトリのルートまで探します）を見つけ、``pages.toml`` を書き出します。``--repository=OWNER/REPO`` と ``--project=DIR`` で、どちらも自分で指定できます。"
 
 #: ../../howto/github-pages.rst:61
-msgid ""
-"**Token.** Without a stored token it offers to sign in with a code on "
-"github.com (GitHub's device flow). The token goes to the macOS Keychain, "
-"the Windows Credential Manager, or the Secret Service of a Linux desktop. "
-"When the GitHub CLI is signed in, it offers instead to use ``gh auth "
-"token`` *for this run only*. The GitHub CLI's token is never stored: it "
-"belongs to ``gh``, which refreshes and revokes it."
-msgstr ""
+msgid "**Token.** Without a stored token it offers to sign in with a code on github.com (GitHub's device flow). The token goes to the macOS Keychain, the Windows Credential Manager, or the Secret Service of a Linux desktop. When the GitHub CLI is signed in, it offers instead to use ``gh auth token`` *for this run only*. The GitHub CLI's token is never stored: it belongs to ``gh``, which refreshes and revokes it."
+msgstr "**トークン。** 保存済みのトークンがない場合は、github.com でコードを使ってサインインするよう案内します（GitHub のデバイスフロー）。トークンは macOS のキーチェーン、Windows の資格情報マネージャー、Linux デスクトップの Secret Service のいずれかに保存します。GitHub CLI がサインイン済みなら、代わりに ``gh auth token`` を *今回の実行に限って* 使うことを提案します。GitHub CLI のトークンは保存しません。そのトークンは ``gh`` が所有し、更新や失効もそちらで行います。"
 
 #: ../../howto/github-pages.rst:66
-msgid ""
-"**Authorization.** It shows the account, the repository with its GitHub "
-"ID, the branch, and the Pages settings, and asks once whether this "
-"machine may publish there. A branch that holds work Guidedog did not "
-"publish is never replaced without our explicit answer."
-msgstr ""
+msgid "**Authorization.** It shows the account, the repository with its GitHub ID, the branch, and the Pages settings, and asks once whether this machine may publish there. A branch that holds work Guidedog did not publish is never replaced without our explicit answer."
+msgstr "**承認。** アカウント、GitHub ID 付きのリポジトリ、ブランチ、Pages の設定を表示し、このマシンからそこへ公開してよいかを一度だけ確認します。Guidedog が公開したものではない内容を含むブランチは、明示的に答えない限り置き換えません。"
 
 #: ../../howto/github-pages.rst:70
-msgid ""
-"**Pages source.** If Pages deploys from Actions or another branch, it "
-"asks before pointing Pages at the branch. A repository without a Pages "
-"site is set up after the first push, which makes the branch."
-msgstr ""
+msgid "**Pages source.** If Pages deploys from Actions or another branch, it asks before pointing Pages at the branch. A repository without a Pages site is set up after the first push, which makes the branch."
+msgstr "**Pages の公開元。** Pages が Actions または別のブランチからデプロイしている場合は、Pages の公開元をこのブランチに変更する前に確認します。Pages サイトのないリポジトリは、最初のプッシュでブランチを作成した後に設定します。"
 
 #: ../../howto/github-pages.rst:73
-msgid ""
-"**Publication.** It builds the project and pushes the whole site in one "
-"commit. It waits for GitHub Pages to deploy that commit and prints the "
-"live URL."
-msgstr ""
+msgid "**Publication.** It builds the project and pushes the whole site in one commit. It waits for GitHub Pages to deploy that commit and prints the live URL."
+msgstr "**公開。** プロジェクトをビルドし、サイト全体を 1 つのコミットでプッシュします。GitHub Pages がそのコミットをデプロイするのを待ち、公開された URL を表示します。"
 
 #: ../../howto/github-pages.rst:76
-msgid ""
-"The next time, every step is done already. ``publish`` then builds and "
-"publishes without a question."
-msgstr ""
+msgid "The next time, every step is done already. ``publish`` then builds and publishes without a question."
+msgstr "次回からは、すべての手順が済んでいます。``publish`` は何も尋ねずにビルドして公開します。"
 
 #: ../../howto/github-pages.rst:79
-msgid ""
-"In a script, or with ``--yes``, it never asks. ``--yes`` answers the "
-"confirmations (repository, authorization, Pages source) with yes. It "
-"still never signs in and never replaces others' work. A step that needs "
-"us fails with ``pages.guide`` and a hint that names the flag or the step "
-"command, such as ``--repository=octo/manual`` or ``guidedog-pages auth "
-"login``."
-msgstr ""
+msgid "In a script, or with ``--yes``, it never asks. ``--yes`` answers the confirmations (repository, authorization, Pages source) with yes. It still never signs in and never replaces others' work. A step that needs us fails with ``pages.guide`` and a hint that names the flag or the step command, such as ``--repository=octo/manual`` or ``guidedog-pages auth login``."
+msgstr "スクリプトの中や ``--yes`` を付けた場合は、何も尋ねません。``--yes`` は確認（リポジトリ、承認、Pages の公開元）にすべて yes と答えます。それでもサインインはせず、他の人の作業を置き換えることもありません。利用者の操作が必要な手順では ``pages.guide`` で失敗し、``--repository=octo/manual`` や ``guidedog-pages auth login`` など、指定すべきフラグか手順のコマンドを示すヒントを出します。"
 
 #: ../../howto/github-pages.rst:85
-#, fuzzy
-#| msgid "Publish from this machine"
 msgid "Publish from this machine, step by step"
-msgstr "このマシンから公開する"
+msgstr "このマシンから手順ごとに公開する"
 
 #: ../../howto/github-pages.rst:88
-msgid ""
-"The step commands stay for scripts and for checking each part. "
-"``guidedog-pages`` builds the project with the installed ``guidedog``. It "
-"pushes the whole site to a branch of its own in one Git commit."
-msgstr ""
+msgid "The step commands stay for scripts and for checking each part. ``guidedog-pages`` builds the project with the installed ``guidedog``. It pushes the whole site to a branch of its own in one Git commit."
+msgstr "個別の手順コマンドは、スクリプトや各部分の確認のために残しています。``guidedog-pages`` は、インストール済みの ``guidedog`` でプロジェクトをビルドします。そしてサイト全体を、専用のブランチに 1 つの Git コミットでプッシュします。"
 
 #: ../../howto/github-pages.rst:92
-#, fuzzy
-#| msgid ""
-#| "Write ``pages.toml`` beside your project. It names the repository, the "
-#| "branch, and the credential profile; it holds no secret, so you can "
-#| "commit it:"
-msgid ""
-"We write ``pages.toml`` beside our project. It names the repository, the "
-"branch, and the credential profile. It holds no secret, so we can commit "
-"it:"
-msgstr ""
-"プロジェクトの隣に ``pages.toml`` "
-"を作成します。リポジトリ、ブランチ、認証情報のプロファイルを指定するファイルです。秘密情報は含まないので、コミットしてかまいません。"
+msgid "We write ``pages.toml`` beside our project. It names the repository, the branch, and the credential profile. It holds no secret, so we can commit it:"
+msgstr "プロジェクトの隣に ``pages.toml`` を作成します。リポジトリ、ブランチ、認証情報のプロファイルを指定するファイルです。秘密情報は含まないので、コミットしてかまいません："
 
 #: ../../howto/github-pages.rst:99
-#, fuzzy
-#| msgid ""
-#| "Store a token for the profile. Make a fine-grained personal access "
-#| "token for the repository with **Contents: read and write**, and "
-#| "**Pages: read** so that publication can confirm the deployment "
-#| "(**Pages: write** and **Administration: write** too if you want "
-#| "``setup`` to configure Pages). Paste it when asked; it is not shown, "
-#| "and it goes to the macOS Keychain, the Windows Credential Manager, or "
-#| "the Secret Service of a Linux desktop, never to a file:"
-msgid ""
-"Next we store a token for the profile. We make a fine-grained personal "
-"access token for the repository with **Contents: read and write**, and "
-"**Pages: read** so that publication can confirm the deployment. If we "
-"want ``setup`` to configure Pages, it also needs **Pages: write** and "
-"**Administration: write**. We paste it when asked. It is not shown, and "
-"it never goes to a file:"
-msgstr ""
-"プロファイルにトークンを保存します。リポジトリに対して、\\ **Contents: read and write** "
-"と、公開時にデプロイを確認するための **Pages: read** を持つ fine-grained personal access token "
-"を作成します (``setup`` で Pages を設定させる場合は **Pages: write** と **Administration: "
-"write** も必要です)。求められたら貼り付けてください。入力した内容は表示されません。トークンは macOS のキーチェーン、Windows "
-"の資格情報マネージャー、Linux デスクトップの Secret Service のいずれかに保存され、ファイルに書き込まれることはありません。"
+msgid "Next we store a token for the profile. We make a fine-grained personal access token for the repository with **Contents: read and write**, and **Pages: read** so that publication can confirm the deployment. If we want ``setup`` to configure Pages, it also needs **Pages: write** and **Administration: write**. We paste it when asked. It is not shown, and it never goes to a file:"
+msgstr "次に、プロファイル用のトークンを保存します。リポジトリに対して、**Contents: read and write** と、公開時にデプロイを確認するための **Pages: read** を持つ fine-grained personal access token を作成します。``setup`` で Pages を設定させる場合は、**Pages: write** と **Administration: write** も必要です。求められたら貼り付けてください。入力した内容は表示されず、ファイルに書き込まれることもありません："
 
 #: ../../howto/github-pages.rst:110
-#, fuzzy
-#| msgid ""
-#| "``auth login`` signs in with a code instead (GitHub's device flow), "
-#| "for a GitHub App or OAuth App you registered with the device flow "
-#| "enabled: ``guidedog-pages auth login --client-id=YOUR_APP_ID``. "
-#| "Guidedog ships without an app of its own."
-msgid ""
-"``auth login`` signs in with a code instead, for a GitHub App or OAuth "
-"App we registered with the device flow enabled: ``guidedog-pages auth "
-"login --client-id=YOUR_APP_ID``."
-msgstr ""
-"``auth login`` ではコードを使ってログインできます（GitHub のデバイスフロー）。デバイスフローを有効にした GitHub "
-"App または OAuth App を登録し、``guidedog-pages auth login "
-"--client-id=YOUR_APP_ID`` を実行してください。Guidedog 独自のアプリは付属していません。"
+msgid "``auth login`` signs in with a code instead, for a GitHub App or OAuth App we registered with the device flow enabled: ``guidedog-pages auth login --client-id=YOUR_APP_ID``."
+msgstr "``auth login`` は、代わりにコードを使ってサインインします。デバイスフローを有効にして登録した GitHub App または OAuth App を使います：``guidedog-pages auth login --client-id=YOUR_APP_ID``。"
 
 #: ../../howto/github-pages.rst:114
-#, fuzzy
-#| msgid ""
-#| "Authorize the target on this machine, and check that everything is "
-#| "ready:"
-msgid ""
-"We authorize the target, point Pages at the branch, and check that "
-"everything is ready:"
-msgstr "このマシンで公開先を承認し、すべての準備が整っていることを確認します。"
+msgid "We authorize the target, point Pages at the branch, and check that everything is ready:"
+msgstr "公開先を承認し、Pages の公開元をブランチに向け、すべての準備が整っていることを確認します："
 
 #: ../../howto/github-pages.rst:122
-msgid ""
-"``bind`` refuses a branch that holds work Guidedog did not publish. "
-"``--adopt`` lets the next publication replace it. The branch must not be "
-"the repository's default branch. Publication goes only to a bound target. "
-"Guidedog refuses, until we bind again, a ``pages.toml`` that names "
-"another repository, a repository that was renamed, transferred, or made "
-"again, and another account's token."
-msgstr ""
+msgid "``bind`` refuses a branch that holds work Guidedog did not publish. ``--adopt`` lets the next publication replace it. The branch must not be the repository's default branch. Publication goes only to a bound target. Guidedog refuses, until we bind again, a ``pages.toml`` that names another repository, a repository that was renamed, transferred, or made again, and another account's token."
+msgstr "``bind`` は、Guidedog が公開したものではない内容を含むブランチを拒否します。``--adopt`` を指定すると、次の公開でそのブランチを置き換えられます。ブランチはリポジトリのデフォルトブランチであってはいけません。公開できるのは、バインドした公開先だけです。別のリポジトリを指す ``pages.toml``、名前の変更・移管・作り直しが行われたリポジトリ、別のアカウントのトークンは、もう一度バインドするまで拒否します。"
 
 #: ../../howto/github-pages.rst:133
-#, fuzzy
-#| msgid ""
-#| "``publish`` builds the project with warnings as errors (``strict = "
-#| "true``), and sets ``html_baseurl`` to ``site_url``. It reads the "
-#| "branch, lists what will be added, changed, and removed, and sends one "
-#| "push that holds only the files the branch lacks. GitHub moves the "
-#| "branch only if it still has the commit that was read, so a publication "
-#| "never overwrites a newer one; if another publication got there first, "
-#| "run the command again. A ``.nojekyll`` file is added, so folders such "
-#| "as ``_static`` are served. Then it waits, up to ``wait_seconds``, for "
-#| "GitHub Pages to deploy that commit."
-msgid ""
-"``publish`` builds with warnings as errors (``strict = true``) and "
-"``html_baseurl`` set to ``site_url``. It lists what it adds, changes, and "
-"removes. Then it sends one push that holds only the files the branch "
-"lacks. GitHub moves the branch only if it still has the commit that was "
-"read, so a publication never overwrites a newer one. A ``.nojekyll`` file "
-"is added, so that GitHub serves folders such as ``_static``. Then it "
-"waits, up to ``wait_seconds``, for GitHub Pages to deploy that commit."
-msgstr ""
-"``publish`` は警告をエラーとして扱って (``strict = true``) プロジェクトをビルドし、\\ "
-"``html_baseurl`` を ``site_url`` "
-"に設定します。ブランチを読み取り、追加、変更、削除されるファイルを一覧表示してから、ブランチにないファイルだけを含むプッシュを一回送ります。GitHub "
-"は、読み取ったときのコミットをブランチがまだ指している場合にだけブランチを進めます。そのため、公開がそれより新しい公開を上書きすることはありません。別の公開が先に行われた場合は、コマンドをもう一度実行してください。\\ "
-"``.nojekyll`` ファイルを追加するので、\\ ``_static`` のようなフォルダーも配信されます。そのあと、GitHub "
-"Pages がそのコミットをデプロイするまで、最大 ``wait_seconds`` 秒待ちます。"
+msgid "``publish`` builds with warnings as errors (``strict = true``) and ``html_baseurl`` set to ``site_url``. It lists what it adds, changes, and removes. Then it sends one push that holds only the files the branch lacks. GitHub moves the branch only if it still has the commit that was read, so a publication never overwrites a newer one. A ``.nojekyll`` file is added, so that GitHub serves folders such as ``_static``. Then it waits, up to ``wait_seconds``, for GitHub Pages to deploy that commit."
+msgstr "``publish`` は、警告をエラーとして扱い（``strict = true``）、``html_baseurl`` を ``site_url`` に設定してビルドします。追加、変更、削除するファイルを一覧表示します。続いて、ブランチにないファイルだけを含むプッシュを 1 回送ります。GitHub は、読み取ったときのコミットをブランチがまだ指している場合にだけブランチを進めるため、公開がより新しい公開を上書きすることはありません。``.nojekyll`` ファイルを追加するので、GitHub は ``_static`` のようなフォルダーも配信します。その後、GitHub Pages がそのコミットをデプロイするまで、最大 ``wait_seconds`` 秒待ちます。"
 
 #: ../../howto/github-pages.rst:140
 msgid "The exit status says what happened:"
-msgstr ""
+msgstr "終了ステータスで結果が分かります："
 
 #: ../../howto/github-pages.rst:142
 msgid "0: the site is live or was already published."
-msgstr ""
+msgstr "0：サイトが公開されたか、すでに公開済みです。"
 
 #: ../../howto/github-pages.rst:143
 msgid "1: nothing was published."
-msgstr ""
+msgstr "1：何も公開されませんでした。"
 
 #: ../../howto/github-pages.rst:144
 msgid "2: a usage, configuration, or missing step problem."
-msgstr ""
+msgstr "2：使い方、設定、または未完了の手順に問題があります。"
 
 #: ../../howto/github-pages.rst:145
-msgid ""
-"6: GitHub accepted the publication but has not confirmed the deployment "
-"yet."
-msgstr ""
+msgid "6: GitHub accepted the publication but has not confirmed the deployment yet."
+msgstr "6：GitHub は公開を受け付けましたが、デプロイはまだ確認されていません。"
 
 #: ../../howto/github-pages.rst:146
 msgid "7: it is not known whether the branch moved."
-msgstr ""
+msgstr "7：ブランチが進んだかどうか分かりません。"
 
 #: ../../howto/github-pages.rst:148
-msgid ""
-"We check later with ``guidedog-pages status``. ``guidedog-pages recover`` "
-"settles a publication whose answer was lost, and it never moves the "
-"branch back."
-msgstr ""
+msgid "We check later with ``guidedog-pages status``. ``guidedog-pages recover`` settles a publication whose answer was lost, and it never moves the branch back."
+msgstr "後で ``guidedog-pages status`` で確認します。``guidedog-pages recover`` は、応答が失われた公開の状態を確定させます。ブランチを巻き戻すことはありません。"
 
 #: ../../howto/github-pages.rst:152
-#, fuzzy
-#| msgid ""
-#| "To publish a site you build yourself, such as a site with several "
-#| "languages and PDF books assembled by a script, write ``site = "
-#| "\"build/site\"`` instead of ``project``; the folder is copied and "
-#| "checked before it is published."
-msgid ""
-"To publish a site we build ourselves, we write ``site = \"build/site\"`` "
-"instead of ``project``. The folder is copied and checked before it is "
-"published."
-msgstr ""
-"複数の言語版や PDF の本をスクリプトでまとめたサイトのように、自分でビルドしたサイトを公開するには、\\ ``project`` の代わりに "
-"``site = \"build/site\"`` と書きます。フォルダーはコピーされ、検査されてから公開されます。"
+msgid "To publish a site we build ourselves, we write ``site = \"build/site\"`` instead of ``project``. The folder is copied and checked before it is published."
+msgstr "自分でビルドしたサイトを公開するには、``project`` の代わりに ``site = \"build/site\"`` と書きます。フォルダーはコピーされ、検査されてから公開されます。"
 
 #: ../../howto/github-pages.rst:155
-#, fuzzy
-#| msgid "Publish on every change"
 msgid "Publish on every change, with a preview"
-msgstr "変更のたびに公開する"
+msgstr "変更のたびに公開し、プレビューする"
 
 #: ../../howto/github-pages.rst:158
-#, fuzzy
-#| msgid ""
-#| "``guidedog-pages watch`` publishes once, then again whenever the "
-#| "sources change and have been quiet for ``debounce_ms`` (at most "
-#| "``max_wait_ms`` after the first change). A failed build or publication "
-#| "is reported, and the published site stays as it was. Ctrl+C stops it. "
-#| "It watches files on this machine; to publish after a push to GitHub, "
-#| "use the Actions route above."
-msgid ""
-"``guidedog-pages watch`` publishes once, then again whenever the sources "
-"change and have been quiet for ``debounce_ms`` (at most ``max_wait_ms`` "
-"after the first change). A failed build or publication is reported, and "
-"the published site stays as it was."
-msgstr ""
-"``guidedog-pages watch`` はまず一度公開し、その後はソースが変更されて ``debounce_ms`` "
-"の間変化がなくなるたびに (最初の変更から最大 ``max_wait_ms`` 後に) "
-"再び公開します。ビルドや公開が失敗すると報告され、公開済みのサイトはそのまま残ります。Ctrl+C "
-"で停止します。監視するのはこのマシンのファイルです。GitHub へのプッシュをきっかけに公開するには、前述の Actions "
-"による方法を使ってください。"
+msgid "``guidedog-pages watch`` publishes once, then again whenever the sources change and have been quiet for ``debounce_ms`` (at most ``max_wait_ms`` after the first change). A failed build or publication is reported, and the published site stays as it was."
+msgstr "``guidedog-pages watch`` はまず一度公開し、その後はソースが変更されて ``debounce_ms`` の間変化がなくなるたびに（最初の変更から最大 ``max_wait_ms`` 後に）再び公開します。ビルドや公開に失敗すると報告され、公開済みのサイトはそのまま残ります。"
 
 #: ../../howto/github-pages.rst:162
-msgid ""
-"``guidedog-pages watch --serve`` also serves the built site on this "
-"machine, at ``http://127.0.0.1:8000/`` (``--serve=PORT`` for another "
-"port). We see each build before GitHub Pages deploys it. One Ctrl+C stops "
-"both the watch and the preview."
-msgstr ""
+msgid "``guidedog-pages watch --serve`` also serves the built site on this machine, at ``http://127.0.0.1:8000/`` (``--serve=PORT`` for another port). We see each build before GitHub Pages deploys it. One Ctrl+C stops both the watch and the preview."
+msgstr "``guidedog-pages watch --serve`` は、ビルドしたサイトをこのマシンの ``http://127.0.0.1:8000/`` でも配信します（別のポートを使うには ``--serve=PORT``）。GitHub Pages がデプロイする前に、各ビルドを確認できます。Ctrl+C を 1 回押すと、監視とプレビューの両方が止まります。"
 
 #: ../../howto/github-pages.rst:166
 msgid ""
@@ -866,26 +444,8 @@ msgstr ""
 "``~/Library/LaunchAgents/org.example.docs.plist`` に launch agent を置きます。"
 
 #: ../../howto/github-pages.rst:187
-#, fuzzy
-#| msgid ""
-#| "On Linux, a systemd user service, "
-#| "``~/.config/systemd/user/docs-pages.service``, started with "
-#| "``systemctl --user enable --now docs-pages``. A user service reaches "
-#| "the desktop's Secret Service; on a server without one, give the token "
-#| "with ``--credential=env`` and an "
-#| "``Environment=GUIDEDOG_PAGES_TOKEN=...`` drop-in readable only by you:"
-msgid ""
-"On Linux, a systemd user service, "
-"``~/.config/systemd/user/docs-pages.service``, started with ``systemctl "
-"--user enable --now docs-pages``. A user service reaches the desktop's "
-"Secret Service. On a server without one, we give the token with "
-"``--credential=env`` and an ``Environment=GUIDEDOG_PAGES_TOKEN=...`` "
-"drop-in readable only by our own account:"
-msgstr ""
-"Linux では ``~/.config/systemd/user/docs-pages.service`` を作り、``systemctl "
-"--user enable --now docs-pages`` で開始します。ユーザーサービスならデスクトップの Secret Service "
-"を使えます。それがないサーバーでは ``--credential=env`` を使い、自分だけが読める drop-in に "
-"``Environment=GUIDEDOG_PAGES_TOKEN=...`` を設定します。"
+msgid "On Linux, a systemd user service, ``~/.config/systemd/user/docs-pages.service``, started with ``systemctl --user enable --now docs-pages``. A user service reaches the desktop's Secret Service. On a server without one, we give the token with ``--credential=env`` and an ``Environment=GUIDEDOG_PAGES_TOKEN=...`` drop-in readable only by our own account:"
+msgstr "Linux では、systemd のユーザーサービス ``~/.config/systemd/user/docs-pages.service`` を作り、``systemctl --user enable --now docs-pages`` で開始します。ユーザーサービスからはデスクトップの Secret Service を使えます。それがないサーバーでは、``--credential=env`` でトークンを渡し、自分のアカウントだけが読める drop-in に ``Environment=GUIDEDOG_PAGES_TOKEN=...`` を書きます："
 
 #: ../../howto/github-pages.rst:206
 msgid ""
@@ -899,98 +459,38 @@ msgstr "GitHub Actions でビルドしてデプロイする"
 
 #: ../../howto/github-pages.rst:218
 msgid "We generate the workflow instead of copying it:"
-msgstr ""
+msgstr "ワークフローはコピーせず、生成します："
 
 #: ../../howto/github-pages.rst:225
-msgid ""
-"It writes ``.github/workflows/docs-pages.yml`` for a project in ``docs`` "
-"and a source branch ``main`` (``--project=DIR``, ``--branch=NAME``). The "
-"workflow installs this Guidedog release (``--version=X``). The archive's "
-"SHA-256 is read from the release's ``SHA256SUMS``, or given with "
-"``--sha256``. ``--offline`` writes a clearly marked placeholder. The "
-"workflow's checksum test fails on it, and the command exits with status 1 "
-"until we give ``--sha256``. Without ``--write`` it prints the workflow."
-msgstr ""
+msgid "It writes ``.github/workflows/docs-pages.yml`` for a project in ``docs`` and a source branch ``main`` (``--project=DIR``, ``--branch=NAME``). The workflow installs this Guidedog release (``--version=X``). The archive's SHA-256 is read from the release's ``SHA256SUMS``, or given with ``--sha256``. ``--offline`` writes a clearly marked placeholder. The workflow's checksum test fails on it, and the command exits with status 1 until we give ``--sha256``. Without ``--write`` it prints the workflow."
+msgstr "``docs`` にあるプロジェクトと、ソースブランチ ``main`` 用の ``.github/workflows/docs-pages.yml`` を書き出します（``--project=DIR``、``--branch=NAME``）。ワークフローは、この Guidedog のリリース（``--version=X``）をインストールします。アーカイブの SHA-256 は、リリースの ``SHA256SUMS`` から読むか、``--sha256`` で指定します。``--offline`` を指定すると、はっきり分かるプレースホルダーを書き込みます。ワークフローのチェックサム検査はこれで失敗し、``--sha256`` を指定するまでコマンドは終了ステータス 1 で終わります。``--write`` を付けない場合は、ワークフローを表示します。"
 
 #: ../../howto/github-pages.rst:232
-msgid ""
-"In the repository's **Settings -> Pages**, we choose **GitHub Actions** "
-"as the publishing source and restrict the ``github-pages`` environment to "
-"``main``."
-msgstr ""
+msgid "In the repository's **Settings -> Pages**, we choose **GitHub Actions** as the publishing source and restrict the ``github-pages`` environment to ``main``."
+msgstr "リポジトリの **Settings -> Pages** で、公開元に **GitHub Actions** を選び、``github-pages`` 環境を ``main`` に制限します。"
 
 #: ../../howto/github-pages.rst:235
 msgid "The workflow it writes is this one (for Guidedog 0.6.3):"
-msgstr ""
+msgstr "書き出されるワークフローは次のとおりです（Guidedog 0.6.3 の場合）："
 
 #: ../../howto/github-pages.rst:320
-#, fuzzy
-#| msgid ""
-#| "The build job can read sources. Only the deploy job receives Pages and "
-#| "OIDC permissions. GitHub supplies its short-lived credentials; do not "
-#| "add a personal token. A failed build prevents deployment. Pull-request "
-#| "content never enters the deploy job. Keep this workflow on "
-#| "``pull_request``, not ``pull_request_target``."
-msgid ""
-"The build job can read sources. Only the deploy job receives Pages and "
-"OIDC permissions. GitHub supplies its short-lived credentials, so we add "
-"no personal token. The checkout keeps no credentials. Pull requests build "
-"but never deploy. The workflow stays on ``pull_request``, never "
-"``pull_request_target``. Action commits are pinned by SHA with their "
-"versions in comments. The Guidedog archive is checked against its SHA-256 "
-"before it is unpacked."
-msgstr ""
-"ビルドジョブはソースの読み取りのみ可能です。Pages と OIDC の権限はデプロイジョブだけに与えます。短期間有効な認証情報は GitHub "
-"が提供するため、個人用トークンを追加する必要はありません。ビルドに失敗するとデプロイしません。プルリクエストの内容がデプロイジョブに渡ることもありません。トリガーは "
-"``pull_request`` のままにし、``pull_request_target`` に変更しないでください。"
+msgid "The build job can read sources. Only the deploy job receives Pages and OIDC permissions. GitHub supplies its short-lived credentials, so we add no personal token. The checkout keeps no credentials. Pull requests build but never deploy. The workflow stays on ``pull_request``, never ``pull_request_target``. Action commits are pinned by SHA with their versions in comments. The Guidedog archive is checked against its SHA-256 before it is unpacked."
+msgstr "ビルドジョブはソースを読み取れます。Pages と OIDC の権限を受け取るのはデプロイジョブだけです。短期間だけ有効な認証情報は GitHub が提供するため、個人用トークンを追加する必要はありません。チェックアウトは認証情報を残しません。プルリクエストではビルドしますが、デプロイはしません。トリガーは ``pull_request`` のままにし、``pull_request_target`` は使いません。Action のコミットは SHA で固定し、バージョンをコメントに記します。Guidedog のアーカイブは、展開する前に SHA-256 で検証します。"
 
 #: ../../howto/github-pages.rst:327
 msgid "Check an existing workflow"
-msgstr ""
+msgstr "既存のワークフローを検査する"
 
 #: ../../howto/github-pages.rst:334
-msgid ""
-"It reports an older Guidedog release (``pages.workflow-outdated``), a "
-"missing or placeholder checksum, an action pinned to a tag or to another "
-"commit than the reviewed one (``pages.workflow-unpinned``, "
-"``pages.workflow-pin``), ``pull_request_target``, and a checkout that "
-"keeps its credentials, each with its line and the fix. We update with "
-"``guidedog-pages workflow --write --force``. Action updates are a "
-"separate review: the pinned commits are listed in ``gd-pages`` and change "
-"only with a reviewed release."
-msgstr ""
+msgid "It reports an older Guidedog release (``pages.workflow-outdated``), a missing or placeholder checksum, an action pinned to a tag or to another commit than the reviewed one (``pages.workflow-unpinned``, ``pages.workflow-pin``), ``pull_request_target``, and a checkout that keeps its credentials, each with its line and the fix. We update with ``guidedog-pages workflow --write --force``. Action updates are a separate review: the pinned commits are listed in ``gd-pages`` and change only with a reviewed release."
+msgstr "古い Guidedog リリース（``pages.workflow-outdated``）、チェックサムの欠落やプレースホルダー、タグや確認済みのものとは別のコミットに固定された Action（``pages.workflow-unpinned``、``pages.workflow-pin``）、``pull_request_target``、認証情報を残すチェックアウトを、それぞれ行番号と修正方法を付けて報告します。更新には ``guidedog-pages workflow --write --force`` を使います。Action の更新は別のレビューで扱います。固定したコミットは ``gd-pages`` に一覧があり、レビュー済みのリリースでのみ変わります。"
 
 #: ../../howto/github-pages.rst:341
-#, fuzzy
-#| msgid ""
-#| "If the project selects build plugins, install and register their "
-#| "trusted executables in the build job before running ``guidedog "
-#| "build``. Registrations on your computer are not copied to an Actions "
-#| "runner. Supply each plugin's project and configuration when "
-#| "registering it; qualification runs there too. Packaged plugins need no "
-#| "Odin compiler. See :doc:`../plugins` for the complete example. The "
-#| "deploy job uses GitHub's Pages action; it does not invoke a publishing "
-#| "plugin."
-msgid ""
-"If the project selects build plugins, we install and register their "
-"trusted executables in the build job before ``guidedog build``. "
-"Registrations on our own computer are not copied to a runner. See "
-":doc:`../plugins`."
-msgstr ""
-"プロジェクトでビルドプラグインを使う場合は、``guidedog build`` "
-"の前に、信頼できる実行ファイルをビルドジョブでインストールして登録します。手元の登録情報は Actions "
-"ランナーには引き継がれません。登録時に各プラグインのプロジェクトと設定を指定してください。ランナーでも互換性チェックを行います。配布済みプラグインの利用に "
-"Odin コンパイラは不要です。完全な例は :doc:`../plugins` を参照してください。デプロイジョブは GitHub の Pages "
-"アクションを使い、パブリッシャープラグインは呼び出しません。"
+msgid "If the project selects build plugins, we install and register their trusted executables in the build job before ``guidedog build``. Registrations on our own computer are not copied to a runner. See :doc:`../plugins`."
+msgstr "プロジェクトでビルドプラグインを使う場合は、``guidedog build`` の前に、信頼できる実行ファイルをビルドジョブでインストールして登録します。自分のコンピューターでの登録はランナーには引き継がれません。:doc:`../plugins` を参照してください。"
 
 #: ../../howto/github-pages.rst:347
-#, fuzzy
-#| msgid ""
-#| "A site built from a private repository is not necessarily private. "
-#| "Check its Pages visibility before publishing confidential material."
-msgid ""
-"A site built from a private repository is not necessarily private. We "
-"check its Pages visibility before publishing confidential material."
+msgid "A site built from a private repository is not necessarily private. We check its Pages visibility before publishing confidential material."
 msgstr "非公開リポジトリから作ったサイトが非公開になるとは限りません。機密情報を公開する前に、Pages の公開範囲を確認してください。"
 
 #: ../../howto/github-pages.rst:350
@@ -998,41 +498,16 @@ msgid "Tokens and automation"
 msgstr "トークンと自動化"
 
 #: ../../howto/github-pages.rst:353
-#, fuzzy
-#| msgid ""
-#| "``--credential=env`` takes the token from ``GUIDEDOG_PAGES_TOKEN`` for "
-#| "one command, and never stores it; ``GUIDEDOG_PAGES_CREDENTIAL=env`` "
-#| "chooses the same for runs that cannot take the option, such as "
-#| "``guidedog publish``. Without either, the variable is ignored. A "
-#| "missing or locked credential store is reported; the token is never "
-#| "written to a plain file instead. ``auth logout`` deletes the stored "
-#| "token; revoke it at GitHub too, under **Settings -> Developer "
-#| "settings**."
-msgid ""
-"``--credential=env`` takes the token from ``GUIDEDOG_PAGES_TOKEN`` for "
-"one command and never stores it. ``GUIDEDOG_PAGES_CREDENTIAL=env`` "
-"chooses the same for runs that cannot take the option, such as ``guidedog "
-"publish``. A missing or locked credential store is reported. The token is "
-"never written to a plain file instead. ``auth logout`` deletes the stored "
-"token. We revoke it at GitHub too."
-msgstr ""
-"``--credential=env`` は、そのコマンドだけで ``GUIDEDOG_PAGES_TOKEN`` "
-"を読み、保存しません。``guidedog publish`` のようにオプションを渡せない場合は "
-"``GUIDEDOG_PAGES_CREDENTIAL=env`` "
-"で選択します。どちらもなければ変数は無視されます。資格情報ストアがないかロック中なら診断を出し、平文ファイルへ代替保存することはありません。``auth "
-"logout`` で保存済みトークンを削除し、GitHub の **Settings -> Developer settings** "
-"でも取り消してください。"
+msgid "``--credential=env`` takes the token from ``GUIDEDOG_PAGES_TOKEN`` for one command and never stores it. ``GUIDEDOG_PAGES_CREDENTIAL=env`` chooses the same for runs that cannot take the option, such as ``guidedog publish``. A missing or locked credential store is reported. The token is never written to a plain file instead. ``auth logout`` deletes the stored token. We revoke it at GitHub too."
+msgstr "``--credential=env`` は、そのコマンドに限って ``GUIDEDOG_PAGES_TOKEN`` からトークンを読み、保存しません。``guidedog publish`` のようにオプションを渡せない実行では、``GUIDEDOG_PAGES_CREDENTIAL=env`` で同じ動作を選べます。資格情報ストアがないかロックされている場合は報告し、代わりに平文ファイルへトークンを書き込むことはありません。``auth logout`` は保存済みのトークンを削除します。GitHub 側でもトークンを取り消してください。"
 
 #: ../../howto/github-pages.rst:359
 msgid "Through guidedog publish"
 msgstr "guidedog publish から使う"
 
 #: ../../howto/github-pages.rst:362
-msgid ""
-"``guidedog publish pages`` runs the same guided publish with Guidedog's "
-"own engine. ``guidedog-pages`` is also a publisher program for ``guidedog "
-"publish --publisher=pages`` (see :doc:`../plugins`)."
-msgstr ""
+msgid "``guidedog publish pages`` runs the same guided publish with Guidedog's own engine. ``guidedog-pages`` is also a publisher program for ``guidedog publish --publisher=pages`` (see :doc:`../plugins`)."
+msgstr "``guidedog publish pages`` は、Guidedog 本体のエンジンで同じ手順付きの公開を実行します。``guidedog-pages`` は、``guidedog publish --publisher=pages`` 用のパブリッシャープログラムでもあります（:doc:`../plugins` を参照）。"
 
 #: ../../howto/github-pages.rst:366
 msgid "Troubleshooting"
@@ -1112,16 +587,12 @@ msgid ""
 msgstr "ルールセットまたはブランチ保護がプッシュを拒否しました。そのアカウントにプッシュを許可してください。"
 
 #: ../../howto/github-pages.rst:390
-#, fuzzy
-#| msgid "``pages.unbound``"
 msgid "``pages.guide``"
-msgstr "``pages.unbound``"
+msgstr "``pages.guide``"
 
 #: ../../howto/github-pages.rst:391
-msgid ""
-"A step needs our answer and the run may not ask; run it in a terminal, or "
-"do the step the hint names."
-msgstr ""
+msgid "A step needs our answer and the run may not ask; run it in a terminal, or do the step the hint names."
+msgstr "手順に応答が必要ですが、この実行では確認できません。端末で実行するか、ヒントが示す手順を行ってください。"
 
 #: ../../howto/github-pages.rst:393
 msgid "``pages.unsettled``"
@@ -1195,52 +666,16 @@ msgstr ""
 "Apple シリコンまたは Intel 搭載の Mac では、公式 tap ``insanai/homebrew-guidedog`` を使います。"
 
 #: ../../howto/install.rst:15
-#, fuzzy
-#| msgid ""
-#| "Homebrew selects the release archive for your processor and checks its "
-#| "SHA-256. The package includes Typst, Graphviz, and tree-sitter. You do "
-#| "not need an Odin compiler, a Python environment, or a separate Typst "
-#| "installation to build HTML and PDF. The release requires macOS 12 or "
-#| "later."
-msgid ""
-"Homebrew selects the release archive for our processor and checks its "
-"SHA-256. The executable has the Typst compiler built in and links "
-"Graphviz, which Homebrew installs with it. We do not need a Rust "
-"toolchain, a Python environment, or a separate Typst installation to "
-"build HTML and PDF. The release requires macOS 12 or later."
-msgstr ""
-"Homebrew はプロセッサに合ったリリースアーカイブを選び、SHA-256 を検証します。パッケージには "
-"Typst、Graphviz、tree-sitter が含まれています。HTML と PDF の生成に Odin コンパイラ、Python "
-"環境、別途の Typst インストールは不要です。対応する OS は macOS 12 以降です。"
+msgid "Homebrew selects the release archive for our processor and checks its SHA-256. The executable has the Typst compiler built in and links Graphviz, which Homebrew installs with it. We do not need a Rust toolchain, a Python environment, or a separate Typst installation to build HTML and PDF. The release requires macOS 12 or later."
+msgstr "Homebrew はプロセッサに合ったリリースアーカイブを選び、SHA-256 を検証します。実行ファイルには Typst コンパイラが組み込まれており、Graphviz をリンクします（Graphviz は Homebrew が一緒にインストールします）。HTML と PDF のビルドに Rust ツールチェーン、Python 環境、Typst の別途インストールは不要です。macOS 12 以降が必要です。"
 
 #: ../../howto/install.rst:20
-#, fuzzy
-#| msgid ""
-#| "The package also installs ``dsc``, which keeps discussion catalogs and "
-#| "builds them with this ``guidedog`` (see :doc:`discussions`), and "
-#| "``guidedog-pages``, which publishes sites to GitHub Pages (see "
-#| ":doc:`github-pages`)."
-msgid ""
-"The package also installs two more programs. ``dsc`` keeps discussion "
-"catalogs and builds them with this ``guidedog`` (see :doc:`discussions`). "
-"``guidedog-pages`` publishes sites to GitHub Pages (see "
-":doc:`github-pages`)."
-msgstr ""
-"パッケージは ``dsc`` と ``guidedog-pages`` もインストールします。\\ ``dsc`` は議論カタログを管理し、この "
-"``guidedog`` でビルドします (:doc:`discussions` を参照)。\\ ``guidedog-pages`` はサイトを "
-"GitHub Pages に公開します (:doc:`github-pages` を参照)。"
+msgid "The package also installs two more programs. ``dsc`` keeps discussion catalogs and builds them with this ``guidedog`` (see :doc:`discussions`). ``guidedog-pages`` publishes sites to GitHub Pages (see :doc:`github-pages`)."
+msgstr "パッケージはほかに二つのプログラムもインストールします。``dsc`` は議論カタログを管理し、この ``guidedog`` でビルドします（:doc:`discussions` を参照）。``guidedog-pages`` はサイトを GitHub Pages に公開します（:doc:`github-pages` を参照）。"
 
 #: ../../howto/install.rst:24
-#, fuzzy
-#| msgid ""
-#| "Create your first project with :doc:`../tutorial/first-project`. To "
-#| "update an installed release:"
-msgid ""
-"We create our first project in :doc:`../tutorial/first-project`. To "
-"update an installed release:"
-msgstr ""
-":doc:`../tutorial/first-project` "
-"に沿って最初のプロジェクトを作成してください。インストール済みのバージョンを更新するには、次を実行します。"
+msgid "We create our first project in :doc:`../tutorial/first-project`. To update an installed release:"
+msgstr "最初のプロジェクトは :doc:`../tutorial/first-project` で作成します。インストール済みのリリースを更新するには、次を実行します。"
 
 #: ../../howto/install.rst:32
 msgid ""
@@ -1256,100 +691,63 @@ msgstr "ソースからビルドする"
 
 #: ../../howto/install.rst:38
 msgid "Guidedog is a Cargo workspace. We need:"
-msgstr ""
+msgstr "Guidedog は Cargo ワークスペースです。必要なものは次のとおりです。"
 
 #: ../../howto/install.rst:40
-msgid ""
-"a Rust toolchain at the version ``rust-version`` names in the root "
-"``Cargo.toml`` (Rust 1.90 or newer; edition 2024), installed with "
-"``rustup``;"
-msgstr ""
+msgid "a Rust toolchain at the version ``rust-version`` names in the root ``Cargo.toml`` (Rust 1.90 or newer; edition 2024), installed with ``rustup``;"
+msgstr "ルートの ``Cargo.toml`` の ``rust-version`` が示すバージョン（Rust 1.90 以降、edition 2024）の Rust ツールチェーン。``rustup`` でインストールします。"
 
 #: ../../howto/install.rst:42
-msgid ""
-"Graphviz's development files, because Guidedog links the Graphviz library "
-"(``libgvc`` and ``libcgraph``) to draw graphs in process: "
-"``libgraphviz-dev`` on Debian and Ubuntu, ``graphviz-devel`` on Fedora, "
-"``graphviz`` from Homebrew on macOS;"
-msgstr ""
+msgid "Graphviz's development files, because Guidedog links the Graphviz library (``libgvc`` and ``libcgraph``) to draw graphs in process: ``libgraphviz-dev`` on Debian and Ubuntu, ``graphviz-devel`` on Fedora, ``graphviz`` from Homebrew on macOS;"
+msgstr "Graphviz の開発用ファイル。Guidedog は Graphviz ライブラリ（``libgvc`` と ``libcgraph``）をリンクし、プロセス内でグラフを描画するためです。Debian と Ubuntu では ``libgraphviz-dev``、Fedora では ``graphviz-devel``、macOS では Homebrew の ``graphviz`` です。"
 
 #: ../../howto/install.rst:45
-msgid ""
-"``curl`` on the ``PATH`` for intersphinx inventories and the GitHub Pages "
-"publisher, which run the ``curl`` program instead of linking an HTTP "
-"library."
-msgstr ""
+msgid "``curl`` on the ``PATH`` for intersphinx inventories and the GitHub Pages publisher, which run the ``curl`` program instead of linking an HTTP library."
+msgstr "``PATH`` 上の ``curl``。intersphinx のインベントリと GitHub Pages への公開ツールは、HTTP ライブラリをリンクせずに ``curl`` プログラムを実行します。"
 
 #: ../../howto/install.rst:48
-msgid ""
-"Nothing else is built by hand. The Typst compiler (0.15.1) and the "
-"tree-sitter grammars for Python and Rust are ordinary Cargo dependencies, "
-"compiled with the workspace. There are no native build scripts to run "
-"first."
-msgstr ""
+msgid "Nothing else is built by hand. The Typst compiler (0.15.1) and the tree-sitter grammars for Python and Rust are ordinary Cargo dependencies, compiled with the workspace. There are no native build scripts to run first."
+msgstr "ほかに手作業でビルドするものはありません。Typst コンパイラ（0.15.1）と Python・Rust 用の tree-sitter 文法は通常の Cargo 依存関係で、ワークスペースと一緒にコンパイルされます。事前に実行するネイティブのビルドスクリプトもありません。"
 
 #: ../../howto/install.rst:52
-#, fuzzy
-#| msgid "Development build"
 msgid "Release build"
-msgstr "開発用ビルド"
+msgstr "リリースビルド"
 
 #: ../../howto/install.rst:55
 msgid "From the repository root:"
 msgstr "リポジトリのルートで実行します。"
 
 #: ../../howto/install.rst:63
-msgid ""
-"The executable is ``target/release/guidedog`` (``guidedog.exe`` on "
-"Windows). To run ``guidedog`` without its path, we put it on our ``PATH`` "
-"or install it into Cargo's binary folder:"
-msgstr ""
+msgid "The executable is ``target/release/guidedog`` (``guidedog.exe`` on Windows). To run ``guidedog`` without its path, we put it on our ``PATH`` or install it into Cargo's binary folder:"
+msgstr "実行ファイルは ``target/release/guidedog`` です（Windows では ``guidedog.exe``）。パスを指定せずに ``guidedog`` を実行するには、``PATH`` に追加するか、Cargo のバイナリフォルダーにインストールします。"
 
 #: ../../howto/install.rst:71
-msgid ""
-"``guidedog formats`` lists the readers and renderers built in, and the "
-"Typst backend it found."
-msgstr ""
+msgid "``guidedog formats`` lists the readers and renderers built in, and the Typst backend it found."
+msgstr "``guidedog formats`` は、組み込まれたリーダーとレンダラー、および検出した Typst バックエンドを一覧表示します。"
 
 #: ../../howto/install.rst:74
 msgid "Typst: embedded or installed"
-msgstr ""
+msgstr "Typst：組み込みかインストール済みか"
 
 #: ../../howto/install.rst:77
-msgid ""
-"By default the Typst compiler is linked into ``guidedog`` (the "
-"``embedded`` feature of the ``gd-typst`` crate). PDF then needs no other "
-"program. A build of ``gd-typst`` without that feature runs an installed "
-"``typst`` program (0.15.1) instead. Either way, "
-"``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) "
-"selects a program explicitly, and ``guidedog --version`` names the "
-"backend in use."
-msgstr ""
+msgid "By default the Typst compiler is linked into ``guidedog`` (the ``embedded`` feature of the ``gd-typst`` crate). PDF then needs no other program. A build of ``gd-typst`` without that feature runs an installed ``typst`` program (0.15.1) instead. Either way, ``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) selects a program explicitly, and ``guidedog --version`` names the backend in use."
+msgstr "デフォルトでは、Typst コンパイラは ``guidedog`` にリンクされています（``gd-typst`` クレートの ``embedded`` フィーチャー）。そのため PDF の生成にほかのプログラムは要りません。このフィーチャーなしでビルドした ``gd-typst`` は、代わりにインストール済みの ``typst`` プログラム（0.15.1）を実行します。どちらの場合も、``--typst=/absolute/path/to/typst`` （または ``conf.toml`` の ``typst``）でプログラムを明示的に指定でき、``guidedog --version`` で使用中のバックエンドを確認できます。"
 
 #: ../../howto/install.rst:83
-msgid ""
-"The embedded compiler removes the need to start a separate process. It "
-"does not remove the compiler's own memory costs. ``--budget`` bounds what "
-"Guidedog itself holds."
-msgstr ""
+msgid "The embedded compiler removes the need to start a separate process. It does not remove the compiler's own memory costs. ``--budget`` bounds what Guidedog itself holds."
+msgstr "組み込みコンパイラなら別プロセスを起動する必要はありません。ただし、コンパイラ自体のメモリコストはなくなりません。``--budget`` が制限するのは Guidedog 自身が保持するメモリです。"
 
 #: ../../howto/install.rst:86
-#, fuzzy
-#| msgid "Development build"
 msgid "Development checks"
-msgstr "開発用ビルド"
+msgstr "開発時のチェック"
 
 #: ../../howto/install.rst:89
-msgid ""
-"Before we propose a change, we run the same checks as the project's "
-"continuous integration:"
-msgstr ""
+msgid "Before we propose a change, we run the same checks as the project's continuous integration:"
+msgstr "変更を提案する前に、プロジェクトの継続的インテグレーションと同じチェックを実行します。"
 
 #: ../../howto/install.rst:98
-msgid ""
-"``cargo run -p check`` is the source-limit checker in ``tools/check``: "
-"function and file lengths and line widths."
-msgstr ""
+msgid "``cargo run -p check`` is the source-limit checker in ``tools/check``: function and file lengths and line widths."
+msgstr "``cargo run -p check`` は ``tools/check`` にあるソース制限チェッカーで、関数やファイルの長さ、行幅を検査します。"
 
 #: ../../howto/install.rst:101
 msgid "Discussion programs"
@@ -1360,153 +758,72 @@ msgid "``dsc`` and ``dscc`` build the same way:"
 msgstr "``dsc`` と ``dscc`` は同じ方法でビルドします。"
 
 #: ../../howto/install.rst:111
-#, fuzzy
-#| msgid ""
-#| "``dsc`` needs only Odin. ``dscc`` links Guidedog, so it needs what an "
-#| "embedded ``guidedog`` needs. Each release also has a ``dscc`` archive "
-#| "for every platform, for a machine with nothing else installed."
-msgid ""
-"``dsc`` is small: it keeps the catalog and runs an installed ``guidedog`` "
-"to build it. ``dscc`` links Guidedog, so it needs what ``guidedog`` needs "
-"(Graphviz's library). Each release also has a ``dscc`` archive for every "
-"platform, for a machine with nothing else installed."
-msgstr ""
-"``dsc`` に必要なのは Odin だけ。\\ ``dscc`` は Guidedog をリンクするので、組み込み版の "
-"``guidedog`` と同じものが必要。各リリースには、ほかに何もインストールされていないマシン向けに、全プラットフォームの ``dscc`` "
-"アーカイブもある。"
+msgid "``dsc`` is small: it keeps the catalog and runs an installed ``guidedog`` to build it. ``dscc`` links Guidedog, so it needs what ``guidedog`` needs (Graphviz's library). Each release also has a ``dscc`` archive for every platform, for a machine with nothing else installed."
+msgstr "``dsc`` は小さなプログラムです。カタログを管理し、インストール済みの ``guidedog`` を実行してビルドします。``dscc`` は Guidedog をリンクするので、``guidedog`` と同じもの（Graphviz ライブラリ）が必要です。各リリースには、ほかに何もインストールされていないマシン向けに、全プラットフォーム用の ``dscc`` アーカイブも用意しています。"
 
 #: ../../howto/install.rst:116
-msgid ""
-"The GitHub Pages publisher builds the same way. It does not link the "
-"engine:"
-msgstr ""
+msgid "The GitHub Pages publisher builds the same way. It does not link the engine:"
+msgstr "GitHub Pages への公開ツールも同じ方法でビルドします。エンジンはリンクしません。"
 
 #: ../../howto/install.rst:122
-msgid ""
-"It keeps tokens in the system's credential store: the Keychain on macOS, "
-"the Credential Manager on Windows, and on Linux the Secret Service "
-"through the ``secret-tool`` program (``libsecret-tools``). It needs that "
-"program only when it first stores or reads a token."
-msgstr ""
+msgid "It keeps tokens in the system's credential store: the Keychain on macOS, the Credential Manager on Windows, and on Linux the Secret Service through the ``secret-tool`` program (``libsecret-tools``). It needs that program only when it first stores or reads a token."
+msgstr "トークンはシステムの資格情報ストアに保存します。macOS ではキーチェーン、Windows では資格情報マネージャー、Linux では ``secret-tool`` プログラム（``libsecret-tools``）経由の Secret Service です。このプログラムが必要になるのは、トークンを初めて保存または読み込むときだけです。"
 
 #: ../../howto/install.rst:126
 msgid "Embed the engine"
-msgstr ""
+msgstr "エンジンを組み込む"
 
 #: ../../howto/install.rst:129
-msgid ""
-"The conversion engine is a library. A Rust program can convert text "
-"without the ``guidedog`` command, through the ``guidedoc`` crate and the "
-"reader and renderer crates it needs:"
-msgstr ""
+msgid "The conversion engine is a library. A Rust program can convert text without the ``guidedog`` command, through the ``guidedoc`` crate and the reader and renderer crates it needs:"
+msgstr "変換エンジンはライブラリです。Rust プログラムは ``guidedog`` コマンドを使わずに、``guidedoc`` クレートと必要なリーダー・レンダラーのクレートを通じてテキストを変換できます。"
 
 #: ../../howto/install.rst:156
-msgid ""
-"``guidedoc_rst::reader()``, ``guidedoc_commonmark::MYST_READER``, "
-"``guidedoc_typst::renderer()`` and ``guidedoc_text::renderer()`` join the "
-"registry the same way. For code highlighting, the ``guidedoc-defaults`` "
-"crate joins the highlighter to the renderers. We pass a "
-"``guidedoc_defaults::HtmlHighlighter`` (or ``TypstHighlighter``) as "
-"``highlighter`` in the request's ``RenderOptions``. The staged calls "
-"(``read_document``, ``transform_document``, ``check_render``, "
-"``render_document``), the request fields, and the limits are in the "
-"crate's ``README.md``."
-msgstr ""
+msgid "``guidedoc_rst::reader()``, ``guidedoc_commonmark::MYST_READER``, ``guidedoc_typst::renderer()`` and ``guidedoc_text::renderer()`` join the registry the same way. For code highlighting, the ``guidedoc-defaults`` crate joins the highlighter to the renderers. We pass a ``guidedoc_defaults::HtmlHighlighter`` (or ``TypstHighlighter``) as ``highlighter`` in the request's ``RenderOptions``. The staged calls (``read_document``, ``transform_document``, ``check_render``, ``render_document``), the request fields, and the limits are in the crate's ``README.md``."
+msgstr "``guidedoc_rst::reader()``、``guidedoc_commonmark::MYST_READER``、``guidedoc_typst::renderer()``、``guidedoc_text::renderer()`` も同じ方法でレジストリに追加します。コードのハイライトは、``guidedoc-defaults`` クレートがハイライターをレンダラーにつなぎます。リクエストの ``RenderOptions`` の ``highlighter`` に ``guidedoc_defaults::HtmlHighlighter`` （または ``TypstHighlighter``）を渡します。段階的な呼び出し（``read_document``、``transform_document``、``check_render``、``render_document``）、リクエストのフィールド、各種制限はクレートの ``README.md`` にまとめています。"
 
 #: ../../howto/maintain-docs.rst:1
 msgid "Maintain this documentation"
 msgstr "この文書の保守"
 
 #: ../../howto/maintain-docs.rst:4
-#, fuzzy
-#| msgid ""
-#| "There are three Guidedog projects: ``docs/manual``, ``docs/api``, and "
-#| "``docs/gds``. The manual and GDS began with ``guidedog quickstart``. "
-#| "Edit their generated templates in place. Do not place design records "
-#| "in the manual's table of contents."
-msgid ""
-"Guidedog documents itself with Guidedog. The repository has four "
-"projects: ``docs/manual`` (this manual), ``docs/api`` (the Rust API "
-"reference of the crates), ``docs/gds`` (the design records), and "
-"``docs/site`` (the front page). The manual and GDS began with ``guidedog "
-"quickstart``. We edit their generated templates in place. Design records "
-"stay out of the manual's table of contents."
-msgstr ""
-"Guidedog のプロジェクトは ``docs/manual``\\ 、\\ ``docs/api``\\ 、\\ ``docs/gds`` "
-"の三つ。マニュアルと GDS は ``guidedog quickstart`` "
-"で作った。生成されたテンプレートを直接編集する。設計記録はマニュアルの目次に入れない。"
+msgid "Guidedog documents itself with Guidedog. The repository has four projects: ``docs/manual`` (this manual), ``docs/api`` (the Rust API reference of the crates), ``docs/gds`` (the design records), and ``docs/site`` (the front page). The manual and GDS began with ``guidedog quickstart``. We edit their generated templates in place. Design records stay out of the manual's table of contents."
+msgstr "Guidedog のドキュメントは Guidedog 自身で作っています。リポジトリには四つのプロジェクトがあります。``docs/manual`` （このマニュアル）、``docs/api`` （各クレートの Rust API リファレンス）、``docs/gds`` （設計記録）、``docs/site`` （トップページ）です。マニュアルと GDS は ``guidedog quickstart`` から始め、生成されたテンプレートを直接編集しています。設計記録はマニュアルの目次に入れません。"
 
 #: ../../howto/maintain-docs.rst:10
-msgid ""
-"All documentation is reStructuredText under ``docs/``. The only Markdown "
-"files are each crate's ``README.md``, a short cheat sheet, and the files "
-"GitHub needs at the root. Design notes, internals, ledgers and "
-"conformance tables are pages under ``docs/manual/internals``."
-msgstr ""
+msgid "All documentation is reStructuredText under ``docs/``. The only Markdown files are each crate's ``README.md``, a short cheat sheet, and the files GitHub needs at the root. Design notes, internals, ledgers and conformance tables are pages under ``docs/manual/internals``."
+msgstr "ドキュメントはすべて ``docs/`` 以下の reStructuredText です。Markdown ファイルは、各クレートの ``README.md`` （短いチートシート）と、GitHub がルートに必要とするファイルだけです。設計メモ、内部構造、台帳、適合性の表は ``docs/manual/internals`` 以下のページにします。"
 
 #: ../../howto/maintain-docs.rst:15
 msgid "Build the manual"
 msgstr "マニュアルのビルド"
 
 #: ../../howto/maintain-docs.rst:18
-msgid ""
-"We build ``guidedog`` first (see :doc:`install`). Then, from the "
-"repository root:"
-msgstr ""
+msgid "We build ``guidedog`` first (see :doc:`install`). Then, from the repository root:"
+msgstr "まず ``guidedog`` をビルドします（:doc:`install` を参照）。次に、リポジトリのルートで実行します。"
 
 #: ../../howto/maintain-docs.rst:27
-msgid ""
-"The PDF command creates one book, with links between its chapters. "
-"``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` "
-"builds and runs in one step."
-msgstr ""
+msgid "The PDF command creates one book, with links between its chapters. ``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` builds and runs in one step."
+msgstr "PDF のコマンドは、章同士がリンクした一冊の本を作ります。``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` ならビルドと実行を一度に行えます。"
 
 #: ../../howto/maintain-docs.rst:31
 msgid "The API reference"
-msgstr ""
+msgstr "API リファレンス"
 
 #: ../../howto/maintain-docs.rst:34
-msgid ""
-"``docs/api`` generates its pages from the crates' source with "
-"``rust_autoapi_crates`` (see :doc:`document-code`). The reference is the "
-"doc comments themselves (``///`` on every public item). There is no "
-"copied API manuscript to keep in sync. We fix a mistake in the crate, "
-"then rebuild:"
-msgstr ""
+msgid "``docs/api`` generates its pages from the crates' source with ``rust_autoapi_crates`` (see :doc:`document-code`). The reference is the doc comments themselves (``///`` on every public item). There is no copied API manuscript to keep in sync. We fix a mistake in the crate, then rebuild:"
+msgstr "``docs/api`` は ``rust_autoapi_crates`` を使い、クレートのソースからページを生成します（:doc:`document-code` を参照）。リファレンスの中身はドキュメントコメントそのもの（すべての公開アイテムに付ける ``///``）です。同期を保つべき API 原稿のコピーはありません。間違いはクレート側で直し、再ビルドします。"
 
 #: ../../howto/maintain-docs.rst:44
-msgid ""
-"A warning such as ``rust.autodoc.link`` names the doc comment and the "
-"link that does not resolve."
-msgstr ""
+msgid "A warning such as ``rust.autodoc.link`` names the doc comment and the link that does not resolve."
+msgstr "``rust.autodoc.link`` などの警告は、解決できないリンクとそのドキュメントコメントを示します。"
 
 #: ../../howto/maintain-docs.rst:47
 msgid "Build and check discussions"
 msgstr "議論文書のビルドと検査"
 
 #: ../../howto/maintain-docs.rst:56
-#, fuzzy
-#| msgid ""
-#| "``guidedog gds`` runs the commands of ``dsc`` on this catalog; see "
-#| ":doc:`discussions`. It manages metadata, numbers, state, and recovery. "
-#| "Its RST publication path calls the project engine. It produces a "
-#| "complete HTML site and a separate PDF for each record. A selector "
-#| "limits the PDFs. HTML remains a coherent site with a complete catalog. "
-#| "A selected PDF preview uses ``_build/selected/<artifact>/pdf``. It "
-#| "leaves the complete catalog in ``_build/pdf`` intact."
-msgid ""
-"``guidedog gds`` runs the commands of ``dsc`` on this catalog (see "
-":doc:`discussions`). It manages metadata, numbers, state, and recovery. "
-"Its RST publication path calls the project engine in process. It produces "
-"a complete HTML site and a separate PDF for each record. A selector "
-"limits the PDFs. HTML remains a coherent site with a complete catalog. A "
-"selected PDF preview uses ``_build/selected/<artifact>/pdf``. It leaves "
-"the complete catalog in ``_build/pdf`` intact."
-msgstr ""
-"``guidedog gds`` はこのカタログで ``dsc`` のコマンドを実行する。詳しくは :doc:`discussions` "
-"を参照。メタデータ、番号、状態、復旧を管理する。RST の公開処理はプロジェクトエンジンを呼び、完全な HTML サイトと記録ごとの PDF "
-"を作る。セレクターが制限するのは PDF だけで、HTML は完全なカタログを持つ一貫したサイトのまま。選択した PDF のプレビューは "
-"``_build/selected/<artifact>/pdf`` を使い、\\ ``_build/pdf`` の全体カタログを保つ。"
+msgid "``guidedog gds`` runs the commands of ``dsc`` on this catalog (see :doc:`discussions`). It manages metadata, numbers, state, and recovery. Its RST publication path calls the project engine in process. It produces a complete HTML site and a separate PDF for each record. A selector limits the PDFs. HTML remains a coherent site with a complete catalog. A selected PDF preview uses ``_build/selected/<artifact>/pdf``. It leaves the complete catalog in ``_build/pdf`` intact."
+msgstr "``guidedog gds`` はこのカタログに対して ``dsc`` のコマンドを実行します（:doc:`discussions` を参照）。メタデータ、番号、状態、復旧を管理します。RST の公開処理はプロジェクトのエンジンをプロセス内で呼び出し、完全な HTML サイトと記録ごとの PDF を生成します。セレクターで絞り込めるのは PDF だけで、HTML は完全なカタログを備えた一貫したサイトのままです。選択した PDF のプレビューには ``_build/selected/<artifact>/pdf`` を使い、``_build/pdf`` の完全なカタログには手を触れません。"
 
 #: ../../howto/maintain-docs.rst:70
 msgid ""
@@ -1519,87 +836,39 @@ msgstr ""
 
 #: ../../howto/maintain-docs.rst:74
 msgid "Translations"
-msgstr ""
+msgstr "翻訳"
 
 #: ../../howto/maintain-docs.rst:77
-msgid ""
-"The manual's catalogs are in ``docs/manual/locales``. After we change "
-"English text, we refresh them:"
-msgstr ""
+msgid "The manual's catalogs are in ``docs/manual/locales``. After we change English text, we refresh them:"
+msgstr "マニュアルのカタログは ``docs/manual/locales`` にあります。英語のテキストを変更したら、カタログを更新します。"
 
 #: ../../howto/maintain-docs.rst:85
 msgid "See :doc:`../intl` for the translation workflow."
-msgstr ""
+msgstr "翻訳のワークフローは :doc:`../intl` を参照してください。"
 
 #: ../../howto/maintain-docs.rst:87
 msgid "Before publishing"
 msgstr "公開する前に"
 
 #: ../../howto/maintain-docs.rst:90
-#, fuzzy
-#| msgid ""
-#| "Check links and diagnostics. Inspect wide tables and code blocks. "
-#| "Render the PDF pages after changing typography. Test the HTML at "
-#| "desktop and phone widths, in light and dark modes. Make sure the "
-#| "mathematics and diagrams work without a network connection. For engine "
-#| "changes, run the relevant library and integration tests."
-msgid ""
-"Check links and diagnostics. Inspect wide tables and code blocks. Render "
-"the PDF pages after changing typography. Test the HTML at desktop and "
-"phone widths, in light and dark modes. Make sure the mathematics and "
-"diagrams work without a network connection. For engine changes, run "
-"``cargo test --workspace``, ``cargo clippy --workspace --all-targets`` "
-"and ``cargo run -p check``."
-msgstr ""
-"リンクと診断を確認し、幅広い表やコードブロックを調べる。組版を変更したら PDF を画像化して確認する。HTML "
-"はデスクトップとスマートフォンの幅、ライトとダークの両方で試す。数式と図がネット接続なしでも動くことを確かめる。エンジンの変更には関連するライブラリーと統合テストを実行する。"
+msgid "Check links and diagnostics. Inspect wide tables and code blocks. Render the PDF pages after changing typography. Test the HTML at desktop and phone widths, in light and dark modes. Make sure the mathematics and diagrams work without a network connection. For engine changes, run ``cargo test --workspace``, ``cargo clippy --workspace --all-targets`` and ``cargo run -p check``."
+msgstr "リンクと診断メッセージを確認します。幅の広い表やコードブロックを点検します。組版を変えたら PDF のページをレンダリングして確かめます。HTML はデスクトップとスマートフォンの幅で、ライトモードとダークモードの両方でテストします。数式と図がネットワーク接続なしで表示されることを確認します。エンジンを変更したときは ``cargo test --workspace``、``cargo clippy --workspace --all-targets``、``cargo run -p check`` を実行します。"
 
 #: ../../howto/migrate.rst:1
 msgid "Move a Sphinx project to Guidedog"
 msgstr "Sphinx プロジェクトを移行する"
 
 #: ../../howto/migrate.rst:4
-#, fuzzy
-#| msgid ""
-#| "Guidedog is designed with Sphinx compatibility in mind. It uses the "
-#| "familiar directory structure, understands standard reStructuredText "
-#| "and MyST Markdown markup, recognizes the same configuration setting "
-#| "names, and implements Sphinx's Jinja template variables."
-msgid ""
-"Guidedog follows Sphinx closely. It uses the same directory structure and "
-"understands standard reStructuredText and MyST Markdown markup. It "
-"recognizes the same configuration setting names and provides Sphinx's "
-"Jinja template variables."
-msgstr ""
-"Guidedog は Sphinx の使い方を参考にしています。なじみのあるディレクトリ構成を使い、標準的な reStructuredText と "
-"MyST Markdown、同じ設定名、Sphinx 形式の Jinja 変数を扱います。"
+msgid "Guidedog follows Sphinx closely. It uses the same directory structure and understands standard reStructuredText and MyST Markdown markup. It recognizes the same configuration setting names and provides Sphinx's Jinja template variables."
+msgstr "Guidedog は Sphinx にかなり忠実です。同じディレクトリ構成を使い、標準的な reStructuredText と MyST Markdown のマークアップを解釈します。同じ設定名を認識し、Sphinx の Jinja テンプレート変数も提供します。"
 
 #: ../../howto/migrate.rst:8
-#, fuzzy
-#| msgid ""
-#| "However, there is an essential architectural difference: Sphinx "
-#| "executes arbitrary Python code in ``conf.py`` and relies on a Python "
-#| "virtual environment with external packages. Guidedog, by contrast, "
-#| "operates as a standalone compiled executable that reads pure data from "
-#| "``conf.toml``. It does not execute Python scripts."
-msgid ""
-"One difference shapes the whole move. Sphinx runs arbitrary Python code "
-"in ``conf.py`` and needs a Python virtual environment with external "
-"packages. Guidedog is a single compiled program that reads plain data "
-"from ``conf.toml``. It does not run Python."
-msgstr ""
-"構成には大きな違いがあります。Sphinx は ``conf.py`` の Python "
-"コードを実行し、外部パッケージを入れた仮想環境を使います。Guidedog は ``conf.toml`` "
-"のデータを読む単体の実行ファイルで、Python スクリプトは実行しません。"
+msgid "One difference shapes the whole move. Sphinx runs arbitrary Python code in ``conf.py`` and needs a Python virtual environment with external packages. Guidedog is a single compiled program that reads plain data from ``conf.toml``. It does not run Python."
+msgstr "移行全体を左右する違いが一つあります。Sphinx は ``conf.py`` の任意の Python コードを実行するため、外部パッケージを入れた Python の仮想環境が必要です。Guidedog はコンパイル済みの単一プログラムで、``conf.toml`` からただのデータを読み込みます。Python は実行しません。"
 
 #: ../../howto/migrate.rst:13
-#, fuzzy
-#| msgid ""
-#| "Migrating a project therefore centers on separating declarative "
-#| "configuration data from executable Python logic."
-msgid ""
-"So moving a project means separating configuration data from Python code."
-msgstr "移行の要点は、宣言的な設定と、実行が必要な Python の処理を分けることです。"
+msgid "So moving a project means separating configuration data from Python code."
+msgstr "つまり、プロジェクトの移行とは、設定データと Python コードを切り分けることです。"
 
 #: ../../howto/migrate.rst:16
 msgid "Migration workflow"
@@ -1607,7 +876,7 @@ msgstr "移行の流れ"
 
 #: ../../howto/migrate.rst:19
 msgid "The move goes through these steps:"
-msgstr ""
+msgstr "移行は次の手順で進めます。"
 
 #: ../../howto/migrate.rst:23
 msgid ""
@@ -1627,12 +896,8 @@ msgid "Step 1: Automated configuration migration"
 msgstr "手順 1：設定を自動変換する"
 
 #: ../../howto/migrate.rst:45
-#, fuzzy
-#| msgid ""
-#| "Guidedog provides an automated migration tool that parses your "
-#| "existing ``conf.py``:"
 msgid "Guidedog has a migration tool that parses our existing ``conf.py``:"
-msgstr "移行ツールは既存の ``conf.py`` を解析します。"
+msgstr "Guidedog には、既存の ``conf.py`` を解析する移行ツールがあります。"
 
 #: ../../howto/migrate.rst:51
 msgid "What ``guidedog migrate`` does:"
@@ -1646,181 +911,72 @@ msgid ""
 msgstr "文字列、数値、真偽値、リスト、テーブルのリテラルを取り出し、``conf.toml`` に標準 TOML 形式で書きます。"
 
 #: ../../howto/migrate.rst:55
-#, fuzzy
-#| msgid ""
-#| "It detects standard Sphinx settings (such as ``project``, ``author``, "
-#| "``extensions``, ``templates_path``, ``html_theme``, "
-#| "``intersphinx_mapping``, and ``html_context``) and maps them cleanly."
-msgid ""
-"It detects standard Sphinx settings (such as ``project``, ``author``, "
-"``extensions``, ``templates_path``, ``html_theme``, "
-"``intersphinx_mapping``, and ``html_context``) and maps them."
-msgstr ""
-"``project``、``author``、``extensions``、``templates_path``、``html_theme``、``intersphinx_mapping``、``html_context`` "
-"などを認識して対応付けます。"
+msgid "It detects standard Sphinx settings (such as ``project``, ``author``, ``extensions``, ``templates_path``, ``html_theme``, ``intersphinx_mapping``, and ``html_context``) and maps them."
+msgstr "標準的な Sphinx の設定（``project``、``author``、``extensions``、``templates_path``、``html_theme``、``intersphinx_mapping``、``html_context`` など）を検出して対応付けます。"
 
 #: ../../howto/migrate.rst:58
-#, fuzzy
-#| msgid ""
-#| "It identifies dynamically computed expressions (such as Python calls "
-#| "like ``version = get_version()`` or ``git_revision = "
-#| "subprocess.check_output(...)``). Because Guidedog does not execute "
-#| "Python, it flags these computed values in its migration report so you "
-#| "can provide explicit, static values in ``conf.toml``."
-msgid ""
-"It finds computed expressions (such as Python calls like ``version = "
-"get_version()`` or ``git_revision = subprocess.check_output(...)``). "
-"Guidedog does not run Python, so its migration report flags these values. "
-"We then give fixed values for them in ``conf.toml``."
-msgstr ""
-"``version = get_version()`` や ``git_revision = "
-"subprocess.check_output(...)`` など、動的に計算する式を見つけます。Python "
-"は実行せず、移行レポートで指摘するので、``conf.toml`` に明示的な値を設定してください。"
+msgid "It finds computed expressions (such as Python calls like ``version = get_version()`` or ``git_revision = subprocess.check_output(...)``). Guidedog does not run Python, so its migration report flags these values. We then give fixed values for them in ``conf.toml``."
+msgstr "計算で求める式（``version = get_version()`` や ``git_revision = subprocess.check_output(...)`` のような Python の呼び出し）を見つけます。Guidedog は Python を実行しないため、移行レポートでこれらの値を指摘します。指摘された値には ``conf.toml`` で固定値を指定します。"
 
 #: ../../howto/migrate.rst:63
-#, fuzzy
-#| msgid ""
-#| "Review the generated ``conf.toml`` and replace any flagged expressions "
-#| "with static values."
-msgid ""
-"We review the generated ``conf.toml`` and replace each flagged expression "
-"with a fixed value."
-msgstr "生成された ``conf.toml`` を確認し、指摘された式を固定値に置き換えます。"
+msgid "We review the generated ``conf.toml`` and replace each flagged expression with a fixed value."
+msgstr "生成された ``conf.toml`` を確認し、指摘された式をそれぞれ固定値に置き換えます。"
 
 #: ../../howto/migrate.rst:65
 msgid "Step 2: The three-pass verification strategy"
 msgstr "手順 2：3 回に分けて検証する"
 
 #: ../../howto/migrate.rst:68
-#, fuzzy
-#| msgid ""
-#| "Once ``conf.toml`` is created, work through the migration in three "
-#| "focused passes:"
-msgid ""
-"Once ``conf.toml`` exists, we work through the migration in three passes:"
-msgstr "``conf.toml`` ができたら、確認対象を絞って 3 回検証します。"
+msgid "Once ``conf.toml`` exists, we work through the migration in three passes:"
+msgstr "``conf.toml`` ができたら、移行を 3 段階に分けて進めます。"
 
 #: ../../howto/migrate.rst:70
 msgid "Pass 1: Verify the document graph"
 msgstr "第 1 段階：文書グラフ"
 
 #: ../../howto/migrate.rst:73
-#, fuzzy
-#| msgid ""
-#| "Check that Guidedog discovers all documents and builds the expected "
-#| "hierarchy:"
-msgid ""
-"We check that Guidedog finds all documents and builds the expected "
-"hierarchy:"
-msgstr "すべての文書を見つけ、想定した階層になるかを確認します。"
+msgid "We check that Guidedog finds all documents and builds the expected hierarchy:"
+msgstr "Guidedog がすべての文書を見つけ、想定どおりの階層を組み立てているかを確認します。"
 
 #: ../../howto/migrate.rst:75
-#, fuzzy
-#| msgid ""
-#| "Verify that ``root_doc`` points to your primary entry point (usually "
-#| "``index`` or ``contents``)."
-msgid ""
-"Verify that ``root_doc`` names our main entry point (usually ``index`` or "
-"``contents``)."
-msgstr "``root_doc`` が入口の文書（通常は ``index`` または ``contents``）を指すか確認します。"
+msgid "Verify that ``root_doc`` names our main entry point (usually ``index`` or ``contents``)."
+msgstr "``root_doc`` がメインの入口（通常は ``index`` か ``contents``）を指しているか確認します。"
 
 #: ../../howto/migrate.rst:76
-#, fuzzy
-#| msgid ""
-#| "Confirm that ``source_suffix`` lists all extensions you use (for "
-#| "example, ``[\".rst\", \".md\"]``)."
-msgid ""
-"Confirm that ``source_suffix`` lists every extension we use (for example, "
-"``[\".rst\", \".md\"]``)."
-msgstr "``source_suffix`` に使用中の拡張子がそろっているか確認します。例：``[\".rst\", \".md\"]``。"
+msgid "Confirm that ``source_suffix`` lists every extension we use (for example, ``[\".rst\", \".md\"]``)."
+msgstr "``source_suffix`` に使っている拡張子がすべて入っているか確認します（例：``[\".rst\", \".md\"]``）。"
 
 #: ../../howto/migrate.rst:77
-#, fuzzy
-#| msgid ""
-#| "Check ``exclude_patterns`` to ensure build folders, virtual "
-#| "environments, and temporary files are excluded."
-msgid ""
-"Check that ``exclude_patterns`` excludes build folders, virtual "
-"environments, and temporary files."
-msgstr "``exclude_patterns`` でビルド先、仮想環境、一時ファイルを除外します。"
+msgid "Check that ``exclude_patterns`` excludes build folders, virtual environments, and temporary files."
+msgstr "``exclude_patterns`` でビルドフォルダー、仮想環境、一時ファイルを除外しているか確認します。"
 
 #: ../../howto/migrate.rst:78
 msgid "Run a quick semantic check using the dummy builder:"
 msgstr "dummy ビルダーで意味を手早く検証します。"
 
 #: ../../howto/migrate.rst:84
-#, fuzzy
-#| msgid ""
-#| "The dummy builder checks every document and link without writing HTML "
-#| "files. Address any warnings about missing documents or malformed file "
-#| "includes."
-msgid ""
-"The dummy builder checks every document and link without writing HTML "
-"files. We fix each warning about a missing document or a malformed "
-"include."
-msgstr ""
-"dummy ビルダーは HTML を書かずに文書と参照を検証します。文書の欠落や include の指定ミスなどの警告を解消してください。"
+msgid "The dummy builder checks every document and link without writing HTML files. We fix each warning about a missing document or a malformed include."
+msgstr "dummy ビルダーは HTML ファイルを書き出さずに、すべての文書とリンクを検査します。文書の欠落や include の書き方の誤りに関する警告を一つずつ修正します。"
 
 #: ../../howto/migrate.rst:87
 msgid "Pass 2: Verify references, domains, and custom objects"
 msgstr "第 2 段階：参照、ドメイン、独自オブジェクト"
 
 #: ../../howto/migrate.rst:90
-#, fuzzy
-#| msgid "Next, verify that cross-references and domain directives resolve:"
 msgid "Next, we verify that cross-references and domain directives resolve:"
-msgstr "相互参照とドメインのディレクティブを解決できるか確認します。"
+msgstr "次に、相互参照とドメインのディレクティブが解決できるかを確認します。"
 
 #: ../../howto/migrate.rst:92
-#, fuzzy
-#| msgid ""
-#| "**Standard domains:** Guidedog natively supports the standard Python, "
-#| "C, C++, and JavaScript domains, along with standard role syntax like "
-#| "``:py:func:``, ``:c:type:``, and ``:cpp:class:``."
-msgid ""
-"**Standard domains:** Guidedog supports the standard Python, C, C++, and "
-"JavaScript domains, with their roles such as ``:py:func:``, ``:c:type:``, "
-"and ``:cpp:class:``. It adds ``odin`` and ``rust`` domains of its own "
-"(see :doc:`../topics/domains`)."
-msgstr ""
-"**標準ドメイン：** Python、C、C++、JavaScript "
-"のドメインと、``:py:func:``、``:c:type:``、``:cpp:class:`` などのロールをネイティブに扱います。"
+msgid "**Standard domains:** Guidedog supports the standard Python, C, C++, and JavaScript domains, with their roles such as ``:py:func:``, ``:c:type:``, and ``:cpp:class:``. It adds ``odin`` and ``rust`` domains of its own (see :doc:`../topics/domains`)."
+msgstr "**標準ドメイン：** Guidedog は Python、C、C++、JavaScript の標準ドメインと、``:py:func:``、``:c:type:``、``:cpp:class:`` などのロールに対応しています。独自の ``odin`` ドメインと ``rust`` ドメインもあります（:doc:`../topics/domains` を参照）。"
 
 #: ../../howto/migrate.rst:95
-#, fuzzy
-#| msgid ""
-#| "**Intersphinx links:** If your Sphinx project linked to external "
-#| "documentation via Intersphinx, keep your ``[intersphinx_mapping]`` in "
-#| "``conf.toml``. Guidedog fetches and parses standard ``objects.inv`` "
-#| "files natively."
-msgid ""
-"**Intersphinx links:** If our Sphinx project linked to external "
-"documentation through Intersphinx, we keep our ``[intersphinx_mapping]`` "
-"in ``conf.toml``. Guidedog fetches and parses standard ``objects.inv`` "
-"files itself."
-msgstr ""
-"**Intersphinx：** 外部文書へリンクしていた場合は ``conf.toml`` の "
-"``[intersphinx_mapping]`` を残します。Guidedog が標準の ``objects.inv`` を取得して解析します。"
+msgid "**Intersphinx links:** If our Sphinx project linked to external documentation through Intersphinx, we keep our ``[intersphinx_mapping]`` in ``conf.toml``. Guidedog fetches and parses standard ``objects.inv`` files itself."
+msgstr "**Intersphinx リンク：** Sphinx プロジェクトで Intersphinx を使って外部ドキュメントにリンクしていた場合は、``conf.toml`` の ``[intersphinx_mapping]`` をそのまま残します。標準の ``objects.inv`` ファイルは Guidedog が自分で取得して解析します。"
 
 #: ../../howto/migrate.rst:98
-#, fuzzy
-#| msgid ""
-#| "**Declarative custom object types:** In Sphinx, projects often wrote "
-#| "small Python extensions calling ``app.add_object_type()`` to create "
-#| "custom directives and roles (such as ``.. confval::`` or ``.. "
-#| "setting::``). In Guidedog, you define these declaratively in "
-#| "``conf.toml`` under ``[[object_types]]`` without writing any code. See "
-#| ":doc:`../object-types`."
-msgid ""
-"**Declarative custom object types:** In Sphinx, projects often wrote "
-"small Python extensions that call ``app.add_object_type()`` to create "
-"custom directives and roles (such as ``.. confval::`` or ``.. "
-"setting::``). In Guidedog, we declare these in ``conf.toml`` under "
-"``[[object_types]]``, without code. See :doc:`../object-types`."
-msgstr ""
-"**宣言的な独自型：** Sphinx で ``app.add_object_type()`` を呼び、``.. confval::`` や "
-"``.. setting::`` を作っていた拡張は、``conf.toml`` の ``[[object_types]]`` "
-"で宣言できます。コードは不要です。:doc:`../object-types` を参照してください。"
+msgid "**Declarative custom object types:** In Sphinx, projects often wrote small Python extensions that call ``app.add_object_type()`` to create custom directives and roles (such as ``.. confval::`` or ``.. setting::``). In Guidedog, we declare these in ``conf.toml`` under ``[[object_types]]``, without code. See :doc:`../object-types`."
+msgstr "**宣言的な独自オブジェクト型：** Sphinx では、``app.add_object_type()`` を呼ぶ小さな Python 拡張を書いて、独自のディレクティブやロール（``.. confval::`` や ``.. setting::`` など）を作ることがよくありました。Guidedog では、これらを ``conf.toml`` の ``[[object_types]]`` に宣言するだけで、コードは要りません。:doc:`../object-types` を参照してください。"
 
 #: ../../howto/migrate.rst:103
 msgid "Pass 3: Verify presentation and templates"
@@ -1828,7 +984,7 @@ msgstr "第 3 段階：表示とテンプレート"
 
 #: ../../howto/migrate.rst:106
 msgid "Finally, we check how the output looks:"
-msgstr ""
+msgstr "最後に、出力の見た目を確認します。"
 
 #: ../../howto/migrate.rst:108
 msgid ""
@@ -1843,35 +999,16 @@ msgid ""
 msgstr "**Jinja：** ネイティブの Jinja エンジンはブロック継承を扱えます。"
 
 #: ../../howto/migrate.rst:118
-#, fuzzy
-#| msgid ""
-#| "**PDF books:** Build a PDF book with ``guidedog build pdf path/to/docs "
-#| "-W``. Guidedog typesets the book using Typst and "
-#| "``_templates/book.typ``, providing instant vector math, proper "
-#| "hyphenation, and running headers without requiring a LaTeX "
-#| "installation."
-msgid ""
-"**PDF books:** Build a PDF book with ``guidedog build pdf path/to/docs "
-"-W``. Guidedog typesets the book with Typst and ``_templates/book.typ``. "
-"It gives vector math, proper hyphenation, and running headers without a "
-"LaTeX installation."
-msgstr ""
-"**PDF：** ``guidedog build pdf path/to/docs -W`` で書籍を作ります。Typst と "
-"``_templates/book.typ`` が数式、ハイフネーション、柱を組みます。LaTeX は不要です。"
+msgid "**PDF books:** Build a PDF book with ``guidedog build pdf path/to/docs -W``. Guidedog typesets the book with Typst and ``_templates/book.typ``. It gives vector math, proper hyphenation, and running headers without a LaTeX installation."
+msgstr "**PDF 書籍：** ``guidedog build pdf path/to/docs -W`` で PDF の本をビルドします。Guidedog は Typst と ``_templates/book.typ`` で組版します。LaTeX をインストールしなくても、ベクターの数式、正しいハイフネーション、柱が得られます。"
 
 #: ../../howto/migrate.rst:122
 msgid "Configuration settings mapping"
 msgstr "設定の対応表"
 
 #: ../../howto/migrate.rst:125
-#, fuzzy
-#| msgid ""
-#| "Here is how common Sphinx ``conf.py`` variables correspond to "
-#| "Guidedog's ``conf.toml``:"
-msgid ""
-"Common Sphinx ``conf.py`` variables correspond to Guidedog's "
-"``conf.toml`` like this:"
-msgstr "Sphinx の ``conf.py`` と Guidedog の ``conf.toml`` の主な対応です。"
+msgid "Common Sphinx ``conf.py`` variables correspond to Guidedog's ``conf.toml`` like this:"
+msgstr "Sphinx の ``conf.py`` でよく使う変数は、Guidedog の ``conf.toml`` では次のように対応します。"
 
 #: ../../howto/migrate.rst:127
 msgid "Common configuration mapping"
@@ -1986,155 +1123,56 @@ msgid "Handling custom Python extensions"
 msgstr "独自の Python 拡張を扱う"
 
 #: ../../howto/migrate.rst:162
-#, fuzzy
-#| msgid ""
-#| "If your Sphinx documentation relies on extensive Python extensions "
-#| "that inspect Python ASTs or modify Sphinx internal classes, evaluate "
-#| "your options:"
-msgid ""
-"Some Sphinx projects rely on large Python extensions that inspect Python "
-"ASTs or modify Sphinx's internal classes. For those, we have three "
-"options:"
-msgstr "Python の構文木を調べたり Sphinx 内部のクラスを変えたりする拡張を使っている場合は、次の方法を検討します。"
+msgid "Some Sphinx projects rely on large Python extensions that inspect Python ASTs or modify Sphinx's internal classes. For those, we have three options:"
+msgstr "Sphinx プロジェクトの中には、Python の AST を解析したり Sphinx の内部クラスを書き換えたりする大きな Python 拡張に依存しているものがあります。その場合の選択肢は三つです。"
 
 #: ../../howto/migrate.rst:165
-#, fuzzy
-#| msgid ""
-#| "**Declarative object types:** If the extension simply created custom "
-#| "directives or roles, replace it with ``[[object_types]]`` in "
-#| "``conf.toml``."
-msgid ""
-"**Declarative object types:** If the extension only created custom "
-"directives or roles, we replace it with ``[[object_types]]`` in "
-"``conf.toml``."
-msgstr ""
-"**宣言的な型：** 独自のディレクティブやロールを作るだけなら、``conf.toml`` の ``[[object_types]]`` "
-"に置き換えます。"
+msgid "**Declarative object types:** If the extension only created custom directives or roles, we replace it with ``[[object_types]]`` in ``conf.toml``."
+msgstr "**宣言的なオブジェクト型：** 拡張が独自のディレクティブやロールを作るだけなら、``conf.toml`` の ``[[object_types]]`` に置き換えます。"
 
 #: ../../howto/migrate.rst:167
-#, fuzzy
-#| msgid ""
-#| "**Build plugins (Guidedog 0.6.2):** If your extension transformed "
-#| "source text, injected custom HTML wrappers, or generated static "
-#| "assets, implement a native build plugin in Odin using the typed plugin "
-#| "interface described in :doc:`../plugins`."
-msgid ""
-"**Build plugins:** If the extension transformed source text, added custom "
-"HTML wrappers, or generated static assets, we write a build plugin in "
-"Rust with the ``gd-plugins`` crate's typed interface described in "
-":doc:`../plugins`. The same plugin runs as an installed program "
-"(``guidedog plugin register``) or linked into our own ``guidedog`` binary "
-"through ``gd_cli::run_with``."
-msgstr ""
-"**ビルドプラグイン（0.6.2）：** ソース変換、HTML の追加、アセット生成には、型付きインターフェースを使う Odin "
-"のプラグインを作れます。:doc:`../plugins` を参照してください。"
+msgid "**Build plugins:** If the extension transformed source text, added custom HTML wrappers, or generated static assets, we write a build plugin in Rust with the ``gd-plugins`` crate's typed interface described in :doc:`../plugins`. The same plugin runs as an installed program (``guidedog plugin register``) or linked into our own ``guidedog`` binary through ``gd_cli::run_with``."
+msgstr "**ビルドプラグイン：** 拡張がソーステキストを変換したり、独自の HTML ラッパーを追加したり、静的アセットを生成したりしていたなら、:doc:`../plugins` で説明する ``gd-plugins`` クレートの型付きインターフェースを使って、Rust でビルドプラグインを書きます。同じプラグインを、インストール済みのプログラムとして実行することも（``guidedog plugin register``）、``gd_cli::run_with`` で自前の ``guidedog`` バイナリにリンクすることもできます。"
 
 #: ../../howto/migrate.rst:172
-#, fuzzy
-#| msgid ""
-#| "**Static API extraction:** Guidedog already reads Python docstrings "
-#| "and Odin declarations without running the documented code. Use "
-#| ":doc:`document-code`. Runtime-generated objects may need explicit RST "
-#| "descriptions."
-msgid ""
-"**Static API extraction:** Guidedog already reads Python docstrings, Odin "
-"declarations, and Rust doc comments without running the documented code. "
-"Use :doc:`document-code`. Runtime-generated objects may need explicit RST "
-"descriptions."
-msgstr ""
-"**静的 API 抽出：** Python の docstring と Odin "
-"の宣言は、対象コードを実行せずに読めます。:doc:`document-code` を参照してください。実行時に生成するオブジェクトは、RST "
-"に明示的な説明が必要な場合があります。"
+msgid "**Static API extraction:** Guidedog already reads Python docstrings, Odin declarations, and Rust doc comments without running the documented code. Use :doc:`document-code`. Runtime-generated objects may need explicit RST descriptions."
+msgstr "**静的な API 抽出：** Guidedog は、対象のコードを実行せずに Python の docstring、Odin の宣言、Rust のドキュメントコメントを読み取れます。:doc:`document-code` を使ってください。実行時に生成されるオブジェクトは、RST で明示的に説明する必要がある場合があります。"
 
 #: ../../howto/migrate.rst:176
-#, fuzzy
-#| msgid ""
-#| "See :doc:`../compatibility` for a detailed breakdown of Sphinx "
-#| "compatibility evidence and retained limitations."
-msgid ""
-":doc:`../compatibility` gives the evidence for Sphinx compatibility and "
-"the limits that remain."
-msgstr "互換性の検証記録と制限は :doc:`../compatibility` を参照してください。"
+msgid ":doc:`../compatibility` gives the evidence for Sphinx compatibility and the limits that remain."
+msgstr "Sphinx 互換性の根拠と残っている制限は :doc:`../compatibility` にまとめています。"
 
 #: ../../howto/publish.rst:1
 msgid "Build and publish documentation"
 msgstr "文書のビルドと公開"
 
 #: ../../howto/publish.rst:4
-#, fuzzy
-#| msgid ""
-#| "Publishing documentation involves turning raw reStructuredText and "
-#| "Markdown sources into static artifacts, verifying their integrity, and "
-#| "deploying them to a hosting environment."
-msgid ""
-"To publish documentation, we turn reStructuredText and Markdown sources "
-"into static files, check them, and deploy them to a host."
-msgstr ""
-"文書の公開では、reStructuredText や Markdown を静的な成果物に変換し、完全性を確認してから配信先に配置します。"
+msgid "To publish documentation, we turn reStructuredText and Markdown sources into static files, check them, and deploy them to a host."
+msgstr "ドキュメントを公開するには、reStructuredText と Markdown のソースを静的ファイルに変換し、確認したうえでホストにデプロイします。"
 
 #: ../../howto/publish.rst:7
-#, fuzzy
-#| msgid ""
-#| "Guidedog separates the process of building a site from the process of "
-#| "deploying it:"
 msgid "Guidedog keeps building a site separate from deploying it:"
-msgstr "Guidedog はビルドとデプロイを分けます。"
+msgstr "Guidedog は、サイトのビルドとデプロイを分けて扱います。"
 
 #: ../../howto/publish.rst:9
-#, fuzzy
-#| msgid ""
-#| "**Building:** Guidedog reads your sources, compiles templates, "
-#| "resolves cross-references, and outputs a complete, verified directory "
-#| "of static HTML files or a typeset PDF book."
-msgid ""
-"**Building:** Guidedog reads our sources, compiles templates, and "
-"resolves cross-references. It writes a complete, checked folder of static "
-"HTML files or a typeset PDF book."
-msgstr "**ビルド：** ソースを読み、テンプレートと相互参照を処理し、検証済みの HTML ディレクトリまたは PDF 書籍を作ります。"
+msgid "**Building:** Guidedog reads our sources, compiles templates, and resolves cross-references. It writes a complete, checked folder of static HTML files or a typeset PDF book."
+msgstr "**ビルド：** Guidedog はソースを読み込み、テンプレートをコンパイルし、相互参照を解決します。そして、検証済みの静的 HTML ファイル一式のフォルダー、または組版済みの PDF 書籍を書き出します。"
 
 #: ../../howto/publish.rst:11
-#, fuzzy
-#| msgid ""
-#| "**Publishing:** The resulting static files are served by your web "
-#| "server or deployed to a hosting destination, such as GitHub Pages, an "
-#| "S3 bucket, or an internal file server."
-msgid ""
-"**Publishing:** Our web server serves the static files, or we deploy them "
-"to a host such as GitHub Pages, an S3 bucket, or an internal file server."
-msgstr "**デプロイ：** 静的ファイルを Web サーバーで配信するか、GitHub Pages、S3、社内サーバーなどに配置します。"
+msgid "**Publishing:** Our web server serves the static files, or we deploy them to a host such as GitHub Pages, an S3 bucket, or an internal file server."
+msgstr "**公開：** 静的ファイルを自分の Web サーバーで配信するか、GitHub Pages、S3 バケット、社内のファイルサーバーなどのホストにデプロイします。"
 
 #: ../../howto/publish.rst:14
-#, fuzzy
-#| msgid ""
-#| "Because the output consists entirely of standard static files (HTML, "
-#| "CSS, JavaScript, and SVG), it can be served by any static web server "
-#| "(such as Nginx, Apache, or Caddy) without requiring an Odin runtime, "
-#| "Python interpreter, or active server process in production."
-msgid ""
-"The output is plain static files (HTML, CSS, JavaScript, and SVG). Any "
-"static web server (such as Nginx, Apache, or Caddy) can serve it. "
-"Production needs no Guidedog, no Python interpreter, and no running "
-"server process."
-msgstr ""
-"生成物は標準の HTML、CSS、JavaScript、SVG です。Nginx、Apache、Caddy などで配信でき、本番環境に Odin "
-"ランタイムや Python、常駐する文書生成プロセスは要りません。"
+msgid "The output is plain static files (HTML, CSS, JavaScript, and SVG). Any static web server (such as Nginx, Apache, or Caddy) can serve it. Production needs no Guidedog, no Python interpreter, and no running server process."
+msgstr "出力はただの静的ファイル（HTML、CSS、JavaScript、SVG）です。どの静的 Web サーバー（Nginx、Apache、Caddy など）でも配信できます。本番環境に Guidedog も Python インタープリターも常駐するサーバープロセスも要りません。"
 
 #: ../../howto/publish.rst:18
 msgid "Atomic publication architecture"
 msgstr "アトミックな公開の構成"
 
 #: ../../howto/publish.rst:21
-#, fuzzy
-#| msgid ""
-#| "A critical design requirement is to publish complete output "
-#| "generations. The host finishes preparation before deciding a journaled "
-#| "commit. A failed preparation leaves the previous site intact."
-msgid ""
-"Guidedog publishes only complete output generations. The host finishes "
-"preparation before it decides a journaled commit. A failed preparation "
-"leaves the previous site intact."
-msgstr ""
-"設計上の要点は、完全な世代を公開することです。準備を終えてからジャーナル付きのコミットを決定するので、準備に失敗しても以前のサイトは変わりません。"
+msgid "Guidedog publishes only complete output generations. The host finishes preparation before it decides a journaled commit. A failed preparation leaves the previous site intact."
+msgstr "Guidedog が公開するのは、完全にそろった出力世代だけです。ホストは準備を終えてから、ジャーナル付きのコミットを確定するかどうかを決めます。準備に失敗しても、以前のサイトはそのまま残ります。"
 
 #: ../../howto/publish.rst:25
 msgid ""
@@ -2153,10 +1191,8 @@ msgid "The atomic staging and generation switch process."
 msgstr "ステージングと世代の切り替え。"
 
 #: ../../howto/publish.rst:47
-#, fuzzy
-#| msgid "How atomic commits protect your site:"
 msgid "How atomic commits protect our site:"
-msgstr "コミットがサイトを守る仕組み："
+msgstr "アトミックなコミットがサイトを守る仕組み："
 
 #: ../../howto/publish.rst:49
 msgid ""
@@ -2165,50 +1201,20 @@ msgid ""
 msgstr "**ステージング：** 新しいページは出力先の隣の隠しディレクトリ ``.<target>.next`` に書きます。"
 
 #: ../../howto/publish.rst:51
-#, fuzzy
-#| msgid ""
-#| "**Isolation:** The existing live output directory is untouched while "
-#| "pages are being compiled."
-msgid ""
-"**Isolation:** The live output folder stays untouched while pages compile."
-msgstr "**分離：** コンパイル中は既存の公開ディレクトリに触れません。"
+msgid "**Isolation:** The live output folder stays untouched while pages compile."
+msgstr "**分離：** ページのコンパイル中、公開中の出力フォルダーには一切手を触れません。"
 
 #: ../../howto/publish.rst:52
-#, fuzzy
-#| msgid ""
-#| "**Failure safety:** If any page fails to render or if "
-#| "warnings-as-errors (``-W``) is triggered, the staging folder is "
-#| "abandoned. The existing live site remains completely unchanged."
-msgid ""
-"**Failure safety:** If any page fails to render, or a warning becomes an "
-"error under ``-W``, the build abandons the staging folder. The live site "
-"stays unchanged."
-msgstr ""
-"**失敗時：** レンダリング失敗や ``-W`` による警告のエラー化が起きたら、ステージングを放棄します。公開中のサイトは変わりません。"
+msgid "**Failure safety:** If any page fails to render, or a warning becomes an error under ``-W``, the build abandons the staging folder. The live site stays unchanged."
+msgstr "**失敗時の安全性：** どれか一つでもページのレンダリングに失敗するか、``-W`` によって警告がエラーになると、ビルドはステージングフォルダーを破棄します。公開中のサイトは変わりません。"
 
 #: ../../howto/publish.rst:54
-#, fuzzy
-#| msgid ""
-#| "**Atomic swap:** Once all files are flushed, Guidedog switches the "
-#| "staging directory into place. On supported filesystems, this is an "
-#| "instantaneous directory exchange."
-msgid ""
-"**Atomic swap:** Once all files are flushed, Guidedog switches the "
-"staging folder into place. Where the filesystem supports it, this is a "
-"single directory exchange."
-msgstr "**交換：** 全ファイルをフラッシュしてから切り替えます。対応するファイルシステムでは、ディレクトリ交換を一度に行います。"
+msgid "**Atomic swap:** Once all files are flushed, Guidedog switches the staging folder into place. Where the filesystem supports it, this is a single directory exchange."
+msgstr "**アトミックな入れ替え：** すべてのファイルをフラッシュしたら、Guidedog はステージングフォルダーを所定の位置に切り替えます。ファイルシステムが対応していれば、これは一度のディレクトリ交換で済みます。"
 
 #: ../../howto/publish.rst:56
-#, fuzzy
-#| msgid ""
-#| "**Interrupted recovery:** If a crash occurs during the swap, the "
-#| "durable journal ensures that the subsequent build settles the "
-#| "interrupted commit rather than guessing."
-msgid ""
-"**Interrupted recovery:** If a crash interrupts the swap, the next build "
-"reads the durable journal. It settles the interrupted commit instead of "
-"guessing."
-msgstr "**中断からの復旧：** 切り替え中に停止しても、永続ジャーナルに従って次のビルドが処理を確定します。推測では復旧しません。"
+msgid "**Interrupted recovery:** If a crash interrupts the swap, the next build reads the durable journal. It settles the interrupted commit instead of guessing."
+msgstr "**中断からの復旧：** 入れ替え中にクラッシュしても、次のビルドが永続ジャーナルを読み、中断したコミットを推測に頼らず確定させます。"
 
 #: ../../howto/publish.rst:59
 msgid "Standard build workflow"
@@ -2243,16 +1249,8 @@ msgid "Custom output directories"
 msgstr "出力先を指定する"
 
 #: ../../howto/publish.rst:79
-#, fuzzy
-#| msgid ""
-#| "To direct the compiled website to an explicit target folder (for "
-#| "example, in a CI/CD pipeline or deployment script), use the "
-#| "Sphinx-compatible command form:"
-msgid ""
-"To write the site to a folder of our choice (for example, in a CI/CD "
-"pipeline or a deployment script), we use the Sphinx-compatible command "
-"form:"
-msgstr "CI/CD などで出力先を指定するには、sphinx-build 互換の書式を使います。"
+msgid "To write the site to a folder of our choice (for example, in a CI/CD pipeline or a deployment script), we use the Sphinx-compatible command form:"
+msgstr "サイトを任意のフォルダーに書き出すには（CI/CD パイプラインやデプロイスクリプトなど）、Sphinx 互換のコマンド形式を使います。"
 
 #: ../../howto/publish.rst:86
 msgid "Guidedog enforces safety constraints on output paths:"
@@ -2269,34 +1267,16 @@ msgstr ""
 "など、専用の出力先を選びます。ソースのルートやその親は指定できません。世代切り替えがソース全体を置き換えてしまうためです。"
 
 #: ../../howto/publish.rst:91
-#, fuzzy
-#| msgid ""
-#| "When targeting a custom destination such as ``build/site``, Guidedog "
-#| "places internal caches in a sibling directory (such as "
-#| "``build/.site.guidedog/.doctrees``), ensuring that the published "
-#| "folder contains only clean, deployable static assets."
-msgid ""
-"For a custom destination such as ``build/site``, Guidedog keeps its "
-"internal caches in a sibling folder (such as "
-"``build/.site.guidedog/.doctrees``). The published folder then holds only "
-"the static files we deploy."
-msgstr ""
-"``build/site`` のような指定先では、``build/.site.guidedog/.doctrees`` "
-"など隣のディレクトリにキャッシュを置きます。公開先には配信する静的ファイルだけが残ります。"
+msgid "For a custom destination such as ``build/site``, Guidedog keeps its internal caches in a sibling folder (such as ``build/.site.guidedog/.doctrees``). The published folder then holds only the static files we deploy."
+msgstr "``build/site`` のような独自の出力先では、Guidedog は内部キャッシュを隣のフォルダー（``build/.site.guidedog/.doctrees`` など）に置きます。そのため、公開フォルダーにはデプロイする静的ファイルだけが残ります。"
 
 #: ../../howto/publish.rst:95
 msgid "Semantic checks and pre-flight validation"
 msgstr "意味の検証と事前確認"
 
 #: ../../howto/publish.rst:98
-#, fuzzy
-#| msgid ""
-#| "To verify the semantic validity of a project without writing HTML "
-#| "files to disk, use the ``dummy`` builder:"
-msgid ""
-"To check a project without writing HTML files to disk, we use the "
-"``dummy`` builder:"
-msgstr "HTML を書かずに意味を検証するには ``dummy`` ビルダーを使います。"
+msgid "To check a project without writing HTML files to disk, we use the ``dummy`` builder:"
+msgstr "HTML ファイルをディスクに書き出さずにプロジェクトを検査するには、``dummy`` ビルダーを使います。"
 
 #: ../../howto/publish.rst:105
 msgid "The dummy builder:"
@@ -2304,7 +1284,7 @@ msgstr "dummy ビルダーの処理："
 
 #: ../../howto/publish.rst:107
 msgid "Reads and parses all documents."
-msgstr ""
+msgstr "すべての文書を読み込んで解析します。"
 
 #: ../../howto/publish.rst:108
 msgid ""
@@ -2324,30 +1304,16 @@ msgid "Exits with status 1 if any broken link or warning is found (``-W``)."
 msgstr "``-W`` 指定時に未解決のリンクや警告があれば、終了値 1 を返します。"
 
 #: ../../howto/publish.rst:113
-msgid ""
-"In continuous integration, the dummy builder is a fast check to run "
-"before the full site build."
-msgstr ""
+msgid "In continuous integration, the dummy builder is a fast check to run before the full site build."
+msgstr "継続的インテグレーションでは、サイト全体をビルドする前の手早いチェックとして dummy ビルダーを使えます。"
 
 #: ../../howto/publish.rst:116
 msgid "Reproducible build timestamps"
 msgstr "ビルド時刻を固定する"
 
 #: ../../howto/publish.rst:119
-#, fuzzy
-#| msgid ""
-#| "Documentation builds often embed timestamps (for example, in \"Last "
-#| "updated\" footer notices). For automated deployments where you want "
-#| "byte-for-byte reproducible outputs across multiple runs, pin the clock "
-#| "using the standard ``SOURCE_DATE_EPOCH`` environment variable:"
-msgid ""
-"Documentation builds often embed timestamps (for example, in \"Last "
-"updated\" footer notices). When an automated deployment must give the "
-"same bytes on every run, we pin the clock with the standard "
-"``SOURCE_DATE_EPOCH`` environment variable:"
-msgstr ""
-"文書のフッターなどには更新日時が入ります。繰り返しビルドのバイト列を一致させたい場合は、標準の ``SOURCE_DATE_EPOCH`` "
-"環境変数で時刻を固定します。"
+msgid "Documentation builds often embed timestamps (for example, in \"Last updated\" footer notices). When an automated deployment must give the same bytes on every run, we pin the clock with the standard ``SOURCE_DATE_EPOCH`` environment variable:"
+msgstr "ドキュメントのビルドには、タイムスタンプがよく埋め込まれます（フッターの「最終更新」表示など）。自動デプロイで毎回同じバイト列を出力する必要がある場合は、標準の ``SOURCE_DATE_EPOCH`` 環境変数で時刻を固定します。"
 
 #: ../../howto/publish.rst:127
 msgid ""
@@ -2361,12 +1327,8 @@ msgid "Deployment options"
 msgstr "デプロイ先"
 
 #: ../../howto/publish.rst:133
-#, fuzzy
-#| msgid ""
-#| "Once the build succeeds, deploy the static files to your hosting "
-#| "infrastructure:"
 msgid "Once the build succeeds, we deploy the static files to our host:"
-msgstr "ビルド成功後、静的ファイルを配信先に配置します。"
+msgstr "ビルドが成功したら、静的ファイルをホストにデプロイします。"
 
 #: ../../howto/publish.rst:135
 msgid ""
@@ -2375,64 +1337,28 @@ msgid ""
 msgstr "**Web サーバー（Nginx / Caddy / Apache）：** 生成した HTML ディレクトリを配信ルートに指定します。"
 
 #: ../../howto/publish.rst:137
-#, fuzzy
-#| msgid ""
-#| "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud "
-#| "Storage):** Sync the contents of ``_build/html`` to your bucket using "
-#| "your cloud provider's CLI tool."
-msgid ""
-"**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud "
-"Storage):** Sync the contents of ``_build/html`` to our bucket with the "
-"cloud provider's CLI tool."
-msgstr ""
-"**クラウドストレージ（AWS S3 / Cloudflare R2 / Google Cloud Storage）：** 各サービスの CLI "
-"で ``_build/html`` の内容を同期します。"
+msgid "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud Storage):** Sync the contents of ``_build/html`` to our bucket with the cloud provider's CLI tool."
+msgstr "**クラウドストレージのバケット（AWS S3 / Cloudflare R2 / Google Cloud Storage）：** クラウドプロバイダーの CLI ツールで、``_build/html`` の中身をバケットに同期します。"
 
 #: ../../howto/publish.rst:139
 msgid "**GitHub Pages:**"
 msgstr "**GitHub Pages：**"
 
 #: ../../howto/publish.rst:141
-msgid ""
-"To deploy directly from our own machine, we run ``guidedog publish "
-"pages``. It asks for what is still missing (the repository, a token, the "
-"Pages settings), then builds and publishes in one push. "
-"``guidedog-pages`` offers the same steps one by one. See "
-":doc:`github-pages`."
-msgstr ""
+msgid "To deploy directly from our own machine, we run ``guidedog publish pages``. It asks for what is still missing (the repository, a token, the Pages settings), then builds and publishes in one push. ``guidedog-pages`` offers the same steps one by one. See :doc:`github-pages`."
+msgstr "自分のマシンから直接デプロイするには、``guidedog publish pages`` を実行します。足りない情報（リポジトリ、トークン、Pages の設定）を尋ねたあと、ビルドと公開を一度のプッシュで行います。``guidedog-pages`` を使えば同じ手順を一つずつ実行できます。:doc:`github-pages` を参照してください。"
 
 #: ../../howto/publish.rst:145
-msgid ""
-"For automated deployments with GitHub Actions, ``guidedog pages "
-"workflow`` writes a workflow that builds and deploys the site. See "
-":doc:`github-pages`."
-msgstr ""
+msgid "For automated deployments with GitHub Actions, ``guidedog pages workflow`` writes a workflow that builds and deploys the site. See :doc:`github-pages`."
+msgstr "GitHub Actions で自動デプロイする場合は、``guidedog pages workflow`` がサイトをビルドしてデプロイするワークフローを書き出します。:doc:`github-pages` を参照してください。"
 
 #: ../../howto/publish.rst:147
-msgid ""
-"For any other destination, we write a publisher plugin as described in "
-":doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
-msgstr ""
+msgid "For any other destination, we write a publisher plugin as described in :doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
+msgstr "それ以外の公開先には、:doc:`../plugins` の説明に沿ってパブリッシャープラグインを書き、``guidedog publish --publisher=ID`` で実行します。"
 
 #: ../../howto/publish.rst:150
-#, fuzzy
-#| msgid ""
-#| "On filesystems with directory exchange, the output path switches in "
-#| "one operation. The fallback uses two renames and can briefly leave "
-#| "that path absent. It still never exposes a partly assembled tree. "
-#| "Journal recovery finishes or restores an interrupted switch. A client "
-#| "making several requests can span two generations; the build does not "
-#| "promise a snapshot for an entire browsing session."
-msgid ""
-"On filesystems with directory exchange, the output path switches in one "
-"operation. The fallback uses two renames and can briefly leave that path "
-"absent. It still never exposes a partly assembled tree. Journal recovery "
-"finishes or restores an interrupted switch. A client making several "
-"requests can span two generations. The build does not promise one "
-"snapshot for a whole browsing session."
-msgstr ""
-"ディレクトリ交換が可能なら一度に切り替わります。代替方式は 2 "
-"回の名前変更を使い、その間だけパスが存在しない場合がありますが、未完成のツリーは公開しません。中断した切り替えはジャーナルから完了または取り消します。複数のリクエストが世代をまたぐことはあり、閲覧セッション全体のスナップショットは保証しません。"
+msgid "On filesystems with directory exchange, the output path switches in one operation. The fallback uses two renames and can briefly leave that path absent. It still never exposes a partly assembled tree. Journal recovery finishes or restores an interrupted switch. A client making several requests can span two generations. The build does not promise one snapshot for a whole browsing session."
+msgstr "ディレクトリ交換に対応したファイルシステムでは、出力パスは一度の操作で切り替わります。フォールバックでは名前変更を 2 回行うため、そのパスが一瞬存在しないことがあります。それでも、組み立て途中のツリーが見えることはありません。中断した切り替えは、ジャーナルからの復旧で完了するか元に戻します。複数のリクエストを送るクライアントは、二つの世代にまたがることがあります。閲覧セッション全体で一つのスナップショットを保証するものではありません。"
 
 #~ msgid "Prepare the project"
 #~ msgstr "プロジェクトを準備する"

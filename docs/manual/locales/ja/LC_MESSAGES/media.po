@@ -20,39 +20,16 @@ msgid "Images, video, audio, and downloads"
 msgstr "画像、動画、音声、ダウンロード"
 
 #: ../../media.rst:6
-#, fuzzy
-#| msgid ""
-#| "Keep a resource near the document that explains it. Name it with a "
-#| "relative path, or start the path with ``/`` to refer to the source "
-#| "root. Guidedog copies resources used by the documents. A video remains "
-#| "a video on the web; a PDF names the recording."
-msgid ""
-"We keep a resource near the document that explains it. We name it with a "
-"relative path, or start the path with ``/`` to refer to the source root. "
-"Guidedog copies the resources that the documents use. A video remains a "
-"video on the web. A PDF names the recording."
-msgstr ""
-"リソースは説明する文書の近くに置きます。相対パス、または ``/`` "
-"で始まるソースルートからのパスで指定します。文書が使うリソースをコピーします。動画はウェブで再生でき、PDF では録画の情報を示します。"
+msgid "We keep a resource near the document that explains it. We name it with a relative path, or start the path with ``/`` to refer to the source root. Guidedog copies the resources that the documents use. A video remains a video on the web. A PDF names the recording."
+msgstr "リソースは、それを説明する文書の近くに置き、相対パスで指定します。パスを ``/`` で始めると、ソースのルートからのパスになります。Guidedog は文書が使うリソースをコピーします。Web では動画は動画のまま表示されます。PDF では録画の名前を示します。"
 
 #: ../../media.rst:10
 msgid "Images"
 msgstr "画像"
 
 #: ../../media.rst:23
-#, fuzzy
-#| msgid ""
-#| "Pages copy images into ``_images``; the book embeds them. PNG, JPEG, "
-#| "GIF, SVG, and WebP work in both. A missing image is a warning: the "
-#| "page keeps the image's alternative text, and the book leaves the image "
-#| "out."
-msgid ""
-"Pages copy images into ``_images``. The book embeds them. PNG, JPEG, GIF, "
-"SVG, and WebP work in both. A missing image is a warning: the page keeps "
-"the image's alternative text, and the book leaves the image out."
-msgstr ""
-"ページは画像を ``_images`` にコピーし、本は埋め込みます。PNG、JPEG、GIF、SVG、WebP "
-"は両方で使えます。画像がない場合は警告し、ページは代替テキストを残し、本は画像を省きます。"
+msgid "Pages copy images into ``_images``. The book embeds them. PNG, JPEG, GIF, SVG, and WebP work in both. A missing image is a warning: the page keeps the image's alternative text, and the book leaves the image out."
+msgstr "ページは画像を ``_images`` にコピーし、本は画像を埋め込みます。PNG、JPEG、GIF、SVG、WebP はどちらでも使えます。画像が見つからない場合は警告になります。ページには画像の代替テキストが残り、本では画像が省かれます。"
 
 #: ../../media.rst:27
 msgid "Video and audio"
@@ -71,20 +48,8 @@ msgstr ""
 "、\\ ``.aac``\\ ）を指す場合は再生します。動画に対する Docutils と同じ動作です。"
 
 #: ../../media.rst:44
-#, fuzzy
-#| msgid ""
-#| "Pages show the browser's player, with a link to the file for browsers "
-#| "that cannot play it. A book cannot play media, so it names the "
-#| "recording in a box where the player would be; text output writes "
-#| "``[video: ...]`` or ``[audio: ...]``."
-msgid ""
-"Pages show the browser's player, with a link to the file for browsers "
-"that cannot play it. A book cannot play media, so it names the recording "
-"in a box where the player would be. Text output writes ``[video: ...]`` "
-"or ``[audio: ...]``."
-msgstr ""
-"ページではブラウザのプレーヤーと、再生できない場合のファイルリンクを表示します。本は再生できないため、その位置の枠内に録音・録画を示します。テキスト出力は "
-"``[video: ...]`` または ``[audio: ...]`` を書きます。"
+msgid "Pages show the browser's player, with a link to the file for browsers that cannot play it. A book cannot play media, so it names the recording in a box where the player would be. Text output writes ``[video: ...]`` or ``[audio: ...]``."
+msgstr "ページにはブラウザーのプレーヤーを表示し、再生できないブラウザーのためにファイルへのリンクも添えます。本はメディアを再生できないので、プレーヤーの位置に枠を置いて録音・録画の名前を示します。テキスト出力では ``[video: ...]`` または ``[audio: ...]`` と書き出します。"
 
 #: ../../media.rst:48
 msgid "Downloads"
@@ -97,25 +62,8 @@ msgid ""
 msgstr "HTML では ``download`` ロールがファイルを ``_downloads`` にコピーし、保存用リンクを作ります。"
 
 #: ../../media.rst:58
-#, fuzzy
-#| msgid ""
-#| "For portable PDF download links, set ``html_baseurl`` to the published "
-#| "HTML site's absolute HTTP or HTTPS address. The book then links to "
-#| "that site's copied files. Without it, the link remains "
-#| "source-relative; the PDF does not embed attachments. This setting does "
-#| "not upload files. Publish the HTML site before sharing the book. This "
-#| "behavior is available in Guidedog 0.6.3 and later."
-msgid ""
-"For portable PDF download links, set ``html_baseurl`` to the published "
-"HTML site's absolute HTTP or HTTPS address. The book then links to that "
-"site's copied files. Without it, the link remains source-relative. The "
-"PDF does not embed attachments. This setting does not upload files. "
-"Publish the HTML site before sharing the book. This behavior is available "
-"in Guidedog 0.6.3 and later."
-msgstr ""
-"PDF 単体で使えるリンクには、``html_baseurl`` を公開済み HTML サイトの絶対 HTTP または HTTPS "
-"アドレスに設定します。書籍はサイト上のコピーを参照します。未設定ならソース相対のリンクとなり、添付ファイルは埋め込まれません。この設定はアップロードしないため、書籍を配る前に "
-"HTML サイトを公開してください。 この動作は Guidedog 0.6.3 以降で使えます。"
+msgid "For portable PDF download links, set ``html_baseurl`` to the published HTML site's absolute HTTP or HTTPS address. The book then links to that site's copied files. Without it, the link remains source-relative. The PDF does not embed attachments. This setting does not upload files. Publish the HTML site before sharing the book. This behavior is available in Guidedog 0.6.3 and later."
+msgstr "PDF のダウンロードリンクをどこでも使えるようにするには、``html_baseurl`` に公開済み HTML サイトの HTTP または HTTPS の絶対アドレスを設定します。すると本は、そのサイトにコピーされたファイルにリンクします。設定しない場合、リンクはソースからの相対パスのままです。PDF には添付ファイルを埋め込みません。この設定でファイルがアップロードされるわけではないので、本を共有する前に HTML サイトを公開してください。この動作は Guidedog 0.6.3 以降で利用できます。"
 
 #: ../../media.rst:64
 msgid "Theme files"

@@ -76,7 +76,7 @@ jobs:
       - name: Clippy
         run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - name: Every test suite
-        run: cargo test --locked --workspace
+        run: cargo test --locked --workspace --no-fail-fast
       - name: Linux Secret Service with a real keyring
         if: runner.os == 'Linux'
         run: cargo xtask release credential-store
@@ -117,7 +117,7 @@ jobs:
       - name: Build the process fixtures used by integration tests
         run: cargo build --locked --release --workspace --examples
       - name: Integration tests against the release build
-        run: cargo test --locked --release --workspace --test '*'
+        run: cargo test --locked --release --workspace --no-fail-fast --test '*'
       - name: Package Guidedog with notices and a manifest
         run: cargo xtask release package ${{ matrix.package }}
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

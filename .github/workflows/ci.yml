@@ -58,7 +58,7 @@ jobs:
       - name: Clippy
         run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - name: Tests
-        run: cargo test --locked --workspace
+        run: cargo test --locked --workspace --no-fail-fast
       - name: Linux Secret Service with a real keyring
         if: runner.os == 'Linux'
         run: cargo xtask release credential-store

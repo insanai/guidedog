@@ -165,13 +165,27 @@ fn report_missing_image(
     page.warn(doc, span, warning);
 }
 
+/// Resolves existing ancestors too, so a graph cache not created yet uses the same
+/// Windows drive prefix as the source files and the generation's resolved build path.
+fn resolved_path(path: &Path) -> PathBuf {
+    for ancestor in path.ancestors() {
+        if let Ok(root) = ancestor.canonicalize()
+            && let Ok(suffix) = path.strip_prefix(ancestor)
+        {
+            return root.join(suffix);
+        }
+    }
+    path.to_path_buf()
+}
+
 /// The folder the book's paths are relative to: the source folder, or the nearest
 /// folder that holds it, every include root, and the graphs folder (where graphs are
 /// drawn). Typst runs in a folder that holds only those (gd-book's typst root).
 pub fn book_root(config: &Config) -> PathBuf {
     let graphs = gd_env::doctrees_dir(config).join("graphs");
-    let roots = gd_conf::readable_roots(config);
-    let mut root = config.source_dir.clone();
+    let graphs = resolved_path(&graphs);
+    let roots: Vec<_> = gd_conf::readable_roots(config).iter().map(|p| resolved_path(p)).collect();
+    let mut root = resolved_path(&config.source_dir);
     while !graphs.starts_with(&root) || !roots.iter().all(|r| r.starts_with(&root)) {
         match root.parent() {
             Some(parent) => root = parent.to_path_buf(),
@@ -183,5 +197,31 @@ pub fn book_root(config: &Config) -> PathBuf {
 
 /// Names a file for the book: absolute below [`book_root`], as Typst reads it.
 pub fn book_path(config: &Config, path: &Path) -> String {
-    format!("/{}", gd_env::relative_to(&book_root(config), path))
+    // Windows canonical paths use a verbatim drive prefix. Both sides must use the
+    // same form, or strip_prefix would leave an absolute OS path in Typst source.
+    let resolved = resolved_path(path);
+    format!("/{}", gd_env::relative_to(&book_root(config), &resolved))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn canonical_graph_cache_paths_are_relative_to_the_book_root() {
+        let dir = std::env::temp_dir().join(format!("gd-link-book-path-{}", std::process::id()));
+        let source = dir.join("docs");
+        let build = source.join("_build");
+        let graphs = build.join(".doctrees/graphs");
+        std::fs::create_dir_all(&graphs).expect("graph folder");
+        let path = graphs.join("g.svg");
+        std::fs::write(&path, "<svg/>").expect("graph");
+        let config = Config::new(source.clone(), build.canonicalize().expect("canonical build"));
+        assert_eq!(book_path(&config, &path), "/_build/.doctrees/graphs/g.svg");
+        let image = source.join("image.svg");
+        std::fs::write(&image, "<svg/>").expect("image");
+        let unbuilt = Config::new(source.clone(), source.join("not-created"));
+        assert_eq!(book_path(&unbuilt, &image), "/image.svg");
+        std::fs::remove_dir_all(dir).expect("remove test folder");
+    }
 }

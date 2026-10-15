@@ -68,6 +68,9 @@ pub(crate) fn typst_folders(config: &Config) -> Vec<PathBuf> {
     if graphs.is_dir() {
         all.push(graphs);
     }
+    // Keep canonical drive prefixes and temporary-directory aliases consistent with
+    // book_root, including when the cache directory was resolved by the generation.
+    let mut all = gd_host::canonical_roots(&all);
     // An outer folder is shorter than the folders inside it, so it comes first.
     all.sort_by_key(|f| f.as_os_str().len());
     let mut out: Vec<PathBuf> = Vec::with_capacity(all.len());

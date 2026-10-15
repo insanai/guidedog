@@ -112,17 +112,35 @@ pub(crate) struct Skeleton<'s> {
     pub main: bool,
 }
 
+/// A skeleton's buffers, kept in the workspace's scratch between parses.
+#[derive(Debug, Default)]
+pub(crate) struct SkeletonParts {
+    blocks: Vec<Block>,
+    arena: String,
+    segs: Vec<Seg>,
+}
+
 impl<'s> Skeleton<'s> {
-    pub(crate) fn new(source: SourceId, src: &'s str, sections: bool, main: bool) -> Self {
-        Skeleton {
-            source,
-            src,
-            blocks: Vec::new(),
-            arena: String::new(),
-            segs: Vec::new(),
-            sections,
-            main,
-        }
+    /// Makes an empty skeleton over `src`, with the buffers an earlier parse gave back
+    /// to `h`'s scratch (`give_back`).
+    pub(crate) fn new(
+        h: &mut Host<'_, '_>,
+        source: SourceId,
+        src: &'s str,
+        sections: bool,
+        main: bool,
+    ) -> Self {
+        let SkeletonParts { mut blocks, mut arena, mut segs } = h.ctx.take_scratch();
+        blocks.clear();
+        arena.clear();
+        segs.clear();
+        Skeleton { source, src, blocks, arena, segs, sections, main }
+    }
+
+    /// Gives the skeleton's buffers back to `h`'s scratch for the next parse.
+    pub(crate) fn give_back(self, h: &mut Host<'_, '_>) {
+        let Skeleton { blocks, arena, segs, .. } = self;
+        h.ctx.put_scratch(SkeletonParts { blocks, arena, segs });
     }
 
     /// The span of `[start, end)`, clamped to the source.
@@ -297,7 +315,9 @@ pub(crate) fn parse_lines(
     }
     let text = h.ctx.source_of(source);
     let sk = parse_skeleton(h, lines, source, &text, sections, main)?;
-    emit_document(h, &sk)
+    let result = emit_document(h, &sk);
+    sk.give_back(h);
+    result
 }
 
 /// Runs the block phase over `lines` and returns the finished skeleton.
@@ -309,7 +329,8 @@ pub(crate) fn parse_skeleton<'s>(
     sections: bool,
     main: bool,
 ) -> Result<Skeleton<'s>, Fail> {
-    let mut p = BlockParser::new(h, Skeleton::new(source, src, sections, main));
+    let sk = Skeleton::new(h, source, src, sections, main);
+    let mut p = BlockParser::new(h, sk);
     p.parse_blocks(lines)?;
     Ok(p.sk)
 }
@@ -317,12 +338,20 @@ pub(crate) fn parse_skeleton<'s>(
 /// Splits `text`, which starts at source offset `base`, at "\n", "\r\n", and "\r"; a
 /// final break starts no line. A byte order mark is skipped.
 pub(crate) fn split_source(text: &str, base: u32) -> Vec<Line<'_>> {
+    let mut lines = Vec::new();
+    split_source_into(text, base, &mut lines);
+    lines
+}
+
+/// `split_source` into `lines`, which it clears first, reusing its storage.
+pub(crate) fn split_source_into<'t>(text: &'t str, base: u32, lines: &mut Vec<Line<'t>>) {
     let (t, at) = match text.strip_prefix('\u{feff}') {
         Some(rest) => (rest, base + 3),
         None => (text, base),
     };
     let bytes = t.as_bytes();
-    let mut lines = Vec::with_capacity(bytes.iter().filter(|&&c| c == b'\n').count() + 1);
+    lines.clear();
+    lines.reserve(bytes.iter().filter(|&&c| c == b'\n').count() + 1);
     let mut start = 0;
     while start < bytes.len() {
         let mut end = start;
@@ -335,7 +364,6 @@ pub(crate) fn split_source(text: &str, base: u32) -> Vec<Line<'_>> {
             start += 1;
         }
     }
-    lines
 }
 
 pub(crate) fn is_space_or_tab(c: u8) -> bool {

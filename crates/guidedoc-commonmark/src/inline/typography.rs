@@ -33,9 +33,11 @@ impl Inline<'_, '_, '_, '_> {
             self.linkify_items();
         }
         if self.h.has(SyntaxExtension::Replacements) {
-            for id in self.text_items(0, false) {
+            let found = self.text_items(0, false);
+            for &id in &found {
                 self.replace_text(id);
             }
+            self.found = found;
         }
         if self.h.has(SyntaxExtension::Smartquotes) {
             self.smart_quote_items();
@@ -45,10 +47,12 @@ impl Inline<'_, '_, '_, '_> {
 
     /// Applies markdown-it's typographic replacements to one text item.
     fn replace_text(&mut self, id: usize) {
-        let t = self.str(self.items[id].text).to_owned();
-        if !t.bytes().any(|c| b"(+.?!,-".contains(&c)) {
+        if !self.str(self.items[id].text).bytes().any(|c| b"(+.?!,-".contains(&c)) {
             return;
         }
+        let mut t = std::mem::take(&mut self.spare);
+        t.clear();
+        t.push_str(self.str(self.items[id].text));
         let b = t.as_bytes();
         let start = self.text.len();
         let mut i = 0;
@@ -61,6 +65,7 @@ impl Inline<'_, '_, '_, '_> {
             i += used;
         }
         self.items[id].text = Txt { start, len: self.text.len() - start };
+        self.spare = t;
     }
 
     /// Turns straight quotation marks into typographic ones, pairing them as
@@ -72,6 +77,7 @@ impl Inline<'_, '_, '_, '_> {
         for k in 0..texts.len() {
             self.quote_item(&texts, k, &mut stack, &mut fixes);
         }
+        self.found = texts;
         if fixes.is_empty() {
             return;
         }

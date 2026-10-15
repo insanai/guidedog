@@ -18,9 +18,7 @@ mod subs;
 mod table;
 pub(crate) mod yaml;
 
-use std::collections::HashMap;
-
-use guidedoc::{Arg, Fail, NodeId, NodeKind, ROOT, SourceSpan, Text, arg_int, arg_text};
+use guidedoc::{Arg, Fail, NameMap, NodeId, NodeKind, ROOT, SourceSpan, Text, arg_int, arg_text};
 
 use crate::blocks::{Skeleton, parse_lines};
 use crate::emit::open_block;
@@ -110,15 +108,15 @@ pub(crate) struct MystState {
     pub headings: usize,
     pub notes: Vec<Note>,
     /// Normalized label to index in `notes`.
-    pub note_names: HashMap<String, usize>,
+    pub note_names: NameMap<usize>,
     pub note_text: String,
     /// Referenced notes in reference order.
     pub ordered: Vec<usize>,
     pub slugs: Vec<Slug>,
     /// Slug to index in `slugs`.
-    pub slug_index: HashMap<String, usize>,
+    pub slug_index: NameMap<usize>,
     /// Base slug to the next suffix to try.
-    pub slug_bases: HashMap<String, usize>,
+    pub slug_bases: NameMap<usize>,
     /// The first slug no section has taken yet; slugs are in order.
     pub slug_next: usize,
     /// Links to heading anchors: link row and slug index.
@@ -134,6 +132,31 @@ pub(crate) struct MystState {
     /// The task state of the item being emitted (`task_state`).
     pub task: u8,
     pub subs: subs::Substitutions,
+}
+
+impl MystState {
+    /// Forgets the last read, keeping the storage for the next one.
+    pub(crate) fn clear(&mut self) {
+        self.each = None;
+        self.pending = None;
+        self.open.clear();
+        self.headings = 0;
+        self.notes.clear();
+        self.note_names.clear();
+        self.note_text.clear();
+        self.ordered.clear();
+        self.slugs.clear();
+        self.slug_index.clear();
+        self.slug_bases.clear();
+        self.slug_next = 0;
+        self.anchors.clear();
+        self.equations = 0;
+        self.words = 0;
+        self.sub_refs.clear();
+        self.counting = false;
+        self.task = 0;
+        self.subs.clear();
+    }
 }
 
 /// Reads the main source: front matter, the body with sections, then the footnotes,

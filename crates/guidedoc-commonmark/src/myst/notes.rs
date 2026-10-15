@@ -40,7 +40,7 @@ impl BlockParser<'_, '_, '_, '_> {
             return None;
         }
         let index = ms.notes.len();
-        ms.note_names.insert(key, index);
+        ms.note_names.insert(&key, index);
         ms.notes.push(Note {
             label: label.to_owned(),
             source: self.sk.source,

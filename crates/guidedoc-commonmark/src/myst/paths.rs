@@ -2,31 +2,38 @@
 //! that starts with the relative-docs prefix, is made relative to the main source again
 //! by prefixing the included source's directory relative to the main source's.
 
+use std::borrow::Cow;
+
 use guidedoc::SourceId;
 
 use super::inline::url_scheme;
 use crate::host::Host;
 
 /// Returns `path`, written in `source`, as seen from the main source when the include
-/// options ask for it; otherwise `path` itself.
-pub(crate) fn relocate(h: &Host<'_, '_>, source: SourceId, path: &str, image: bool) -> String {
+/// options ask for it; otherwise `path` itself, borrowed.
+pub(crate) fn relocate<'p>(
+    h: &Host<'_, '_>,
+    source: SourceId,
+    path: &'p str,
+    image: bool,
+) -> Cow<'p, str> {
     if source == h.ctx.source || path.is_empty() {
-        return path.to_owned();
+        return Cow::Borrowed(path);
     }
     let wanted =
         if image { h.rel_images } else { !h.rel_docs.is_empty() && path.starts_with(&h.rel_docs) };
     if !wanted || path.starts_with('/') || !url_scheme(path).is_empty() {
-        return path.to_owned();
+        return Cow::Borrowed(path);
     }
     let name_of = |id| h.ctx.source_entry(id).map_or("", |e| e.name.as_str());
     let main = dir_of(name_of(h.ctx.source));
     let here = dir_of(name_of(source));
-    let Some(rel) = here.strip_prefix(main) else { return path.to_owned() };
+    let Some(rel) = here.strip_prefix(main) else { return Cow::Borrowed(path) };
     let rel = rel.trim_start_matches('/');
     if rel.is_empty() {
-        return path.to_owned();
+        return Cow::Borrowed(path);
     }
-    normal_path(&format!("{rel}/{path}"))
+    Cow::Owned(normal_path(&format!("{rel}/{path}")))
 }
 
 fn dir_of(path: &str) -> &str {

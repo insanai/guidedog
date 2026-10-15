@@ -220,7 +220,7 @@ pub(crate) fn prescan_headings(h: &mut Host<'_, '_>, sk: &Skeleton<'_>) -> Resul
         leaf_text(h, sk, id, &mut title)?;
         let title = trim_space(&title).to_owned();
         let slug = unique_slug(h, &title);
-        h.ms.slug_index.insert(slug.clone(), h.ms.slugs.len());
+        h.ms.slug_index.insert(&slug, h.ms.slugs.len());
         h.ms.slugs.push(Slug { slug, title, ordinal, node: None });
     }
     Ok(())
@@ -247,7 +247,7 @@ fn unique_slug(h: &mut Host<'_, '_>, title: &str) -> String {
         n += 1;
         slug = format!("{base}-{n}");
     }
-    h.ms.slug_bases.insert(base, n);
+    h.ms.slug_bases.insert(&base, n);
     slug
 }
 

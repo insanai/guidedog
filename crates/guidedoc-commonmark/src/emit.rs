@@ -174,7 +174,8 @@ fn emit_code(h: &mut Host<'_, '_>, sk: &Skeleton<'_>, id: Bid) -> Result<(), Fai
     let blk = sk.blocks[id];
     let node = open_block(h, NodeKind::CodeBlock, sk.block_span(id))?;
     if blk.fenced && blk.info_end > blk.info_start {
-        let mut info = String::new();
+        let mut info = std::mem::take(&mut h.text_tmp);
+        info.clear();
         push_unescaped(&mut info, sk.arena_str(blk.info_start, blk.info_end));
         let word = info.find(|c: char| c.is_ascii_whitespace()).unwrap_or(info.len());
         let b = h.b();
@@ -187,6 +188,7 @@ fn emit_code(h: &mut Host<'_, '_>, sk: &Skeleton<'_>, id: Bid) -> Result<(), Fai
             let name = b.add_text("info")?;
             b.add_attribute_named(node, AttributeKey::Custom, text, name)?;
         }
+        h.text_tmp = info;
     } else if h.myst && h.settings.extension.is_some() {
         // As Sphinx does for MyST: fences use the highlighting default, indented code none.
         let language = if blk.fenced { "default" } else { "none" };

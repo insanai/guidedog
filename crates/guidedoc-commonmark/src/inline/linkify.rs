@@ -25,9 +25,11 @@ struct Found {
 impl Inline<'_, '_, '_, '_> {
     /// Links the URLs in every text item outside links.
     pub(super) fn linkify_items(&mut self) {
-        for id in self.text_items(0, false) {
+        let found = self.text_items(0, false);
+        for &id in &found {
             self.linkify_text(id);
         }
+        self.found = found;
     }
 
     /// Splits a text item around each URL it holds.
@@ -43,12 +45,13 @@ impl Inline<'_, '_, '_, '_> {
             let link = self.new_item(NodeKind::Link, span_a, span_z);
             let text = self.new_item(NodeKind::Text, span_a, span_z);
             // E-mail links keep the bare address, as e-mail autolinks do.
-            let mut dest = String::new();
+            let start = self.text.len();
             if !f.email {
-                dest.push_str(f.prefix);
+                self.text.push_str(f.prefix);
             }
-            dest.push_str(&self.str(whole)[f.a..f.z]);
-            let dest = self.push_text(&dest);
+            let piece = whole.start + f.a..whole.start + f.z;
+            self.text.extend_from_within(piece);
+            let dest = Txt { start, len: self.text.len() - start };
             let l = &mut self.items[link];
             l.dest = dest;
             l.link_kind = if f.email { LinkKind::Email } else { LinkKind::External };

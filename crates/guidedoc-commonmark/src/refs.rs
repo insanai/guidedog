@@ -150,7 +150,7 @@ fn at_line_end(s: &[u8], pos: usize) -> Option<usize> {
 }
 
 /// Finds a definition by its label as written, without brackets.
-pub(crate) fn lookup_ref<'h>(h: &'h mut Host<'_, '_>, label: &str) -> Option<&'h Ref> {
+pub(crate) fn lookup_ref(h: &mut Host<'_, '_>, label: &str) -> Option<Ref> {
     if h.refs.is_empty() || label.len() > MAX_LABEL_BYTES {
         return None;
     }
@@ -159,7 +159,7 @@ pub(crate) fn lookup_ref<'h>(h: &'h mut Host<'_, '_>, label: &str) -> Option<&'h
     if h.label_tmp.is_empty() {
         return None;
     }
-    h.refs.get(h.label_tmp.as_str())
+    h.refs.get(h.label_tmp.as_str()).cloned()
 }
 
 impl BlockParser<'_, '_, '_, '_> {
@@ -225,48 +225,47 @@ impl BlockParser<'_, '_, '_, '_> {
             end = at_line_end(s, before_title);
         }
         let Some(end) = end else { return Ok(0) };
-        let text = &self.sk.arena[a..z];
-        let label = &text[1..n - 1];
-        let dest_text = &text[dest.start..dest.end];
-        let title_text = title.map(|t| &text[t.start..t.end]);
-        let (label, dest_text) = (label.to_owned(), dest_text.to_owned());
-        let title_text = title_text.map(str::to_owned);
-        if !self.store_reference(a + 1, &label, &dest_text, title_text.as_deref()) {
+        let label = a + 1..a + n - 1;
+        let dest = a + dest.start..a + dest.end;
+        let title = title.map(|t| a + t.start..a + t.end);
+        if !self.store_reference(label, dest, title) {
             return Ok(0);
         }
         Ok(end)
     }
 
     /// Keeps the first definition of each normalized label, its destination and title
-    /// decoded. `at` is the label's arena offset, for the duplicate warning.
+    /// decoded. The label, destination, and title are arena ranges.
     fn store_reference(
         &mut self,
-        at: usize,
-        label: &str,
-        dest: &str,
-        title: Option<&str>,
+        label: std::ops::Range<usize>,
+        dest: std::ops::Range<usize>,
+        title: Option<std::ops::Range<usize>>,
     ) -> bool {
-        let mut key = String::with_capacity(label.len());
-        normalize_label(&mut key, label);
-        if key.is_empty() {
+        let arena = &self.sk.arena;
+        let h = &mut *self.h;
+        h.label_tmp.clear();
+        normalize_label(&mut h.label_tmp, &arena[label.clone()]);
+        if h.label_tmp.is_empty() {
             return false;
         }
-        if self.h.refs.contains_key(&key) {
-            if self.h.myst {
-                let at = self.sk.arena_source(&self.sk.arena[at..at + label.len()]);
+        if h.refs.contains_key(&h.label_tmp) {
+            if h.myst {
+                let at = self.sk.arena_source(&arena[label.clone()]);
                 let sp = self.sk.span(at.saturating_sub(1), at + label.len() + 1);
-                self.h.report_span(DUPLICATE_REFERENCE, sp);
+                h.report_span(DUPLICATE_REFERENCE, sp);
             }
             return true;
         }
-        let mut r = Ref { dest: String::new(), title: None };
-        push_unescaped(&mut r.dest, dest);
+        let start = h.ref_text.len();
+        push_unescaped(&mut h.ref_text, &arena[dest]);
+        let mut r = Ref { dest: start..h.ref_text.len(), title: None };
         if let Some(t) = title {
-            let mut s = String::new();
-            push_unescaped(&mut s, t);
-            r.title = Some(s);
+            let start = h.ref_text.len();
+            push_unescaped(&mut h.ref_text, &arena[t]);
+            r.title = Some(start..h.ref_text.len());
         }
-        self.h.refs.insert(key, r);
+        h.refs.insert(&h.label_tmp, r);
         true
     }
 }

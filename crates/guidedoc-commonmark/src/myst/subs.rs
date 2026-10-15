@@ -33,6 +33,12 @@ pub(crate) struct Substitutions {
 }
 
 impl Substitutions {
+    /// Forgets every substitution, keeping the storage.
+    pub(crate) fn clear(&mut self) {
+        self.items.clear();
+        self.active.clear();
+    }
+
     pub(crate) fn add(&mut self, name: &str, value: &str, source: Option<SourceId>, offset: u32) {
         self.items.push(SubEntry {
             name: name.to_owned(),

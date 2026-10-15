@@ -77,6 +77,23 @@ impl Item {
     }
 }
 
+/// The inline parser's buffers, kept in the workspace's scratch between leaves and
+/// reads (`build_items` takes them, dropping the parse gives them back).
+#[derive(Debug, Default)]
+pub(crate) struct InlineParts {
+    items: Vec<Item>,
+    text: String,
+    delims: Vec<Delim>,
+    brackets: Vec<Bracket>,
+    ticks: Vec<usize>,
+    /// The tree walks' stack of next siblings.
+    walk: Vec<Option<usize>>,
+    /// The items `text_items` found.
+    found: Vec<usize>,
+    /// Room for a text being rewritten.
+    spare: String,
+}
+
 /// The inline parse of one leaf of a skeleton.
 pub(crate) struct Inline<'p, 'h, 'a, 'k> {
     pub h: &'p mut Host<'h, 'a>,
@@ -102,6 +119,29 @@ pub(crate) struct Inline<'p, 'h, 'a, 'k> {
     /// run length.
     pub no_sub_end: usize,
     pub no_role_end: [usize; 8],
+    /// The tree walks' stack of next siblings.
+    walk: Vec<Option<usize>>,
+    /// The items `text_items` found, lent to its caller.
+    pub found: Vec<usize>,
+    /// Room for a text being rewritten.
+    pub spare: String,
+}
+
+impl Drop for Inline<'_, '_, '_, '_> {
+    /// Gives the buffers back to the workspace for the next parse.
+    fn drop(&mut self) {
+        let parts = InlineParts {
+            items: std::mem::take(&mut self.items),
+            text: std::mem::take(&mut self.text),
+            delims: std::mem::take(&mut self.delims),
+            brackets: std::mem::take(&mut self.brackets),
+            ticks: std::mem::take(&mut self.ticks),
+            walk: std::mem::take(&mut self.walk),
+            found: std::mem::take(&mut self.found),
+            spare: std::mem::take(&mut self.spare),
+        };
+        self.h.ctx.put_scratch(parts);
+    }
 }
 
 fn is_special(c: u8) -> bool {
@@ -142,7 +182,7 @@ pub(crate) fn leaf_text(
     out: &mut String,
 ) -> Result<(), Fail> {
     let b = &sk.blocks[id];
-    if let Some(ip) = build_items(h, sk, id, b.content_start, b.content_end)? {
+    if let Some(mut ip) = build_items(h, sk, id, b.content_start, b.content_end)? {
         ip.items_text(0, out);
     }
     Ok(())
@@ -184,6 +224,13 @@ fn build_items<'p, 'h, 'a, 'k>(
         return Ok(None);
     }
     let subject = sk.arena_str(s, e);
+    let mut parts: InlineParts = h.ctx.take_scratch();
+    parts.items.clear();
+    parts.text.clear();
+    parts.text.reserve(subject.len());
+    parts.delims.clear();
+    parts.brackets.clear();
+    parts.ticks.clear();
     let mut ip = Inline {
         h,
         sk,
@@ -191,17 +238,20 @@ fn build_items<'p, 'h, 'a, 'k>(
         subject,
         base: s,
         pos: 0,
-        items: Vec::with_capacity(16),
-        text: String::with_capacity(subject.len()),
-        delims: Vec::new(),
+        items: parts.items,
+        text: parts.text,
+        delims: parts.delims,
         top_delim: None,
-        brackets: Vec::new(),
+        brackets: parts.brackets,
         top_bracket: None,
-        ticks: Vec::new(),
+        ticks: parts.ticks,
         ticks_scanned: false,
         memo: HtmlMemo::default(),
         no_sub_end: usize::MAX,
         no_role_end: [usize::MAX; 8],
+        walk: parts.walk,
+        found: parts.found,
+        spare: parts.spare,
     };
     ip.items.push(Item::new(NodeKind::Paragraph, 0, 0));
     while ip.pos < subject.len() {
@@ -432,13 +482,17 @@ impl<'p, 'h, 'a, 'k> Inline<'p, 'h, 'a, 'k> {
 
     fn add_code_span(&mut self, start: usize, content: usize, close: usize, end: usize) {
         let id = self.add_item(NodeKind::Code, start, end);
-        let code: String = self.subject[content..close]
-            .chars()
-            .map(|c| if c == '\n' { ' ' } else { c })
-            .collect();
-        let b = code.as_bytes();
+        // Line endings become spaces.
+        let at = self.text.len();
+        for (k, piece) in self.subject[content..close].split('\n').enumerate() {
+            if k > 0 {
+                self.text.push(' ');
+            }
+            self.text.push_str(piece);
+        }
+        let mut t = Txt { start: at, len: self.text.len() - at };
+        let b = &self.text.as_bytes()[at..];
         let only_spaces = b.iter().all(|&c| c == b' ');
-        let mut t = self.push_text(&code);
         if b.len() >= 2 && !only_spaces && b[0] == b' ' && b[b.len() - 1] == b' ' {
             t = Txt { start: t.start + 1, len: t.len - 2 };
         }
@@ -486,9 +540,11 @@ impl<'p, 'h, 'a, 'k> Inline<'p, 'h, 'a, 'k> {
         let Some((decoded, used)) = match_entity(&self.subject.as_bytes()[self.pos..]) else {
             return false;
         };
-        let mut s = String::new();
+        let mut s = std::mem::take(&mut self.spare);
+        s.clear();
         decoded.push_to(&mut s);
         self.add_literal_item(&s, self.pos, self.pos + used);
+        self.spare = s;
         self.pos += used;
         true
     }
@@ -604,16 +660,17 @@ impl<'p, 'h, 'a, 'k> Inline<'p, 'h, 'a, 'k> {
         if it.kind != NodeKind::Link && it.kind != NodeKind::Image {
             return self.h.b().begin_node(it.kind, span);
         }
-        let mut dest = self.str(it.dest).to_owned();
-        if it.kind == NodeKind::Image && self.h.myst && self.h.rel_images {
-            dest = crate::myst::relocate(self.h, self.sk.source, &dest, true);
+        let Inline { h, text, sk, .. } = self;
+        let piece = |t: Txt| text.get(t.start..t.start + t.len).unwrap_or("");
+        let mut dest = std::borrow::Cow::Borrowed(piece(it.dest));
+        if it.kind == NodeKind::Image && h.myst && h.rel_images {
+            dest = crate::myst::relocate(h, sk.source, piece(it.dest), true);
         }
-        let title = it.title.map(|t| self.str(t).to_owned());
-        let b = self.h.b();
+        let b = h.b();
         let node = b.begin_node(it.kind, span)?;
         let destination = b.add_text(&dest)?;
-        let title = match title {
-            Some(t) => b.add_text(&t)?,
+        let title = match it.title {
+            Some(t) => b.add_text(piece(t))?,
             None => Text::default(),
         };
         let info = guidedoc::LinkInfo {
@@ -627,8 +684,10 @@ impl<'p, 'h, 'a, 'k> Inline<'p, 'h, 'a, 'k> {
     }
 
     /// Writes the text items below item `id` into `out`, as a heading's slug needs.
-    pub fn items_text(&self, id: usize, out: &mut String) {
-        let mut stack = vec![self.items[id].first];
+    pub fn items_text(&mut self, id: usize, out: &mut String) {
+        let mut stack = std::mem::take(&mut self.walk);
+        stack.clear();
+        stack.push(self.items[id].first);
         while let Some(top) = stack.last_mut() {
             let Some(c) = *top else {
                 stack.pop();
@@ -643,13 +702,18 @@ impl<'p, 'h, 'a, 'k> Inline<'p, 'h, 'a, 'k> {
                 _ => {}
             }
         }
+        self.walk = stack;
     }
 
-    /// The items below `parent` of a kind in `kinds`, in preorder, descending into
-    /// emphasis and strong (and links when `links` is set).
-    pub fn text_items(&self, parent: usize, links: bool) -> Vec<usize> {
-        let mut out = Vec::new();
-        let mut stack = vec![self.items[parent].first];
+    /// The text items below `parent`, in preorder, descending into emphasis and strong
+    /// (and links when `links` is set). The list is lent from the parser's buffers:
+    /// give it back to `self.found` when done.
+    pub fn text_items(&mut self, parent: usize, links: bool) -> Vec<usize> {
+        let mut out = std::mem::take(&mut self.found);
+        out.clear();
+        let mut stack = std::mem::take(&mut self.walk);
+        stack.clear();
+        stack.push(self.items[parent].first);
         while let Some(top) = stack.last_mut() {
             let Some(c) = *top else {
                 stack.pop();
@@ -663,6 +727,7 @@ impl<'p, 'h, 'a, 'k> Inline<'p, 'h, 'a, 'k> {
                 _ => {}
             }
         }
+        self.walk = stack;
         out
     }
 }

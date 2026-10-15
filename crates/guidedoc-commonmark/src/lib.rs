@@ -31,7 +31,7 @@ mod refs;
 mod settings;
 mod starts;
 
-use guidedoc::{Conformance, Fail, ReadContext, Reader, SourceSpan, Status};
+use guidedoc::{Conformance, Fail, ReadContext, Reader, SourceSpan, Status, recycle};
 
 pub use extension::{
     Directive, DirectiveOption, DirectiveResult, DirectiveShape, Extension, Line, ListItems, Role,
@@ -41,7 +41,7 @@ pub use settings::{
     DEFAULT_URL_SCHEMES, Meta, Rule, Settings, Substitution, SyntaxExtension, SyntaxExtensions,
 };
 
-use blocks::{parse_lines, split_source};
+use blocks::{parse_lines, split_source, split_source_into};
 
 /// The CommonMark version the "commonmark" reader implements.
 pub const VERSION: &str = "0.31.2";
@@ -78,10 +78,19 @@ pub fn read(ctx: &mut ReadContext<'_>) -> Result<(), Fail> {
     ctx.no_reader_settings()?;
     let mut h = Host::new(ctx, host::default_settings(), false);
     let text = h.ctx.source_of(h.ctx.source);
-    let lines = split_source(&text, 0);
+    let mut lines = recycle(h.ctx.take_scratch::<LineBuffer>().0);
+    split_source_into(&text, 0, &mut lines);
     let source = h.ctx.source;
-    parse_lines(&mut h, &lines, source, false, false)
+    let result = parse_lines(&mut h, &lines, source, false, false);
+    h.ctx.put_scratch(LineBuffer(recycle(lines)));
+    h.finish();
+    result
 }
+
+/// The main source's lines, kept in the workspace's scratch between reads. Lines
+/// borrow the source, so the buffer is kept empty (`guidedoc::recycle`).
+#[derive(Default)]
+struct LineBuffer(Vec<Line<'static>>);
 
 /// Reads `ctx.source` as MyST Markdown with the `Settings` of the read options. Settings
 /// of another type are refused with `InvalidInput`.
@@ -89,8 +98,12 @@ pub fn read_myst(ctx: &mut ReadContext<'_>) -> Result<(), Fail> {
     let settings = ctx.reader_settings::<Settings>()?.unwrap_or(host::default_settings());
     let mut h = Host::new(ctx, settings, true);
     let text = h.ctx.source_of(h.ctx.source);
-    let lines = split_source(&text, 0);
-    myst::myst_document(&mut h, &lines)
+    let mut lines = recycle(h.ctx.take_scratch::<LineBuffer>().0);
+    split_source_into(&text, 0, &mut lines);
+    let result = myst::myst_document(&mut h, &lines);
+    h.ctx.put_scratch(LineBuffer(recycle(lines)));
+    h.finish();
+    result
 }
 
 /// Parses `span` of `ctx.source` as CommonMark inline content of the builder's open
@@ -99,7 +112,9 @@ pub fn read_myst(ctx: &mut ReadContext<'_>) -> Result<(), Fail> {
 pub fn read_inline(ctx: &mut ReadContext<'_>, span: SourceSpan) -> Result<(), Fail> {
     ctx.no_reader_settings()?;
     let mut h = Host::new(ctx, host::default_settings(), false);
-    inline_source(&mut h, span)
+    let result = inline_source(&mut h, span);
+    h.finish();
+    result
 }
 
 /// `read_inline` for MyST, with the settings of the read options (roles included).
@@ -107,10 +122,12 @@ pub fn read_myst_inline(ctx: &mut ReadContext<'_>, span: SourceSpan) -> Result<(
     let settings = ctx.reader_settings::<Settings>()?.unwrap_or(host::default_settings());
     let mut h = Host::new(ctx, settings, true);
     myst::prepare(&mut h);
-    if let Some(ext) = h.ext() {
-        ext.begin(&mut h)?;
-    }
-    inline_source(&mut h, span)
+    let result = match h.ext() {
+        Some(ext) => ext.begin(&mut h).and_then(|()| inline_source(&mut h, span)),
+        None => inline_source(&mut h, span),
+    };
+    h.finish();
+    result
 }
 
 fn inline_source(h: &mut Host<'_, '_>, span: SourceSpan) -> Result<(), Fail> {

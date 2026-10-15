@@ -156,10 +156,16 @@ impl Inline<'_, '_, '_, '_> {
         }
         let Some(label) = label else { return Ok(None) };
         let Some(r) = lookup_ref(self.h, label) else { return Ok(None) };
-        let (dest, title) = (r.dest.clone(), r.title.clone());
-        let dest = self.push_text(&dest);
-        let title = title.map(|t| self.push_text(&t));
+        let dest = self.push_ref_text(r.dest);
+        let title = r.title.map(|t| self.push_ref_text(t));
         Ok(Some(Target { dest, title }))
+    }
+
+    /// Copies a range of the definitions' text into the buffer and returns its range.
+    fn push_ref_text(&mut self, range: std::ops::Range<usize>) -> Txt {
+        let start = self.text.len();
+        self.text.push_str(self.h.ref_str(range));
+        Txt { start, len: self.text.len() - start }
     }
 
     fn make_link(&mut self, opener: usize, target: Target) -> Result<(), Fail> {

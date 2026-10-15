@@ -2,21 +2,36 @@
 //! of nested content (directive bodies, footnotes, substitutions).
 
 use std::any::Any;
-use std::collections::HashMap;
+use std::ops::Range;
 use std::sync::OnceLock;
 
-use guidedoc::{Arg, Builder, Fail, Message, ReadContext, SourceSpan, Text, normalize_label};
+use guidedoc::{
+    Arg, Builder, Fail, Message, NameMap, ReadContext, SourceSpan, Text, normalize_label,
+};
 
 use crate::extension::Extension;
 use crate::messages::SYNTAX_RULE_UNKNOWN;
 use crate::myst::MystState;
 use crate::settings::{MYST_RULES, Rule, Rules, Settings, SyntaxExtension, SyntaxExtensions};
 
-/// A link reference definition, its destination and title decoded.
+/// A link reference definition: its destination and title, decoded, as byte ranges
+/// of `Host::ref_text`.
 #[derive(Debug, Clone, Default)]
 pub(crate) struct Ref {
-    pub dest: String,
-    pub title: Option<String>,
+    pub dest: Range<usize>,
+    pub title: Option<Range<usize>>,
+}
+
+/// The host's storage, kept in the workspace's scratch between reads (`Host::new`
+/// takes it, `Host::finish` gives it back).
+#[derive(Debug, Default)]
+struct HostWork {
+    refs: NameMap<Ref>,
+    ref_text: String,
+    label_tmp: String,
+    text_tmp: String,
+    rel_docs: String,
+    ms: MystState,
 }
 
 /// The reader's state for one read. Directive and role handlers receive it and use its
@@ -31,9 +46,13 @@ pub struct Host<'h, 'a> {
     /// myst_enable_extensions in force.
     pub(crate) syntax: SyntaxExtensions,
     /// Link reference definitions by normalized label, over the whole document.
-    pub(crate) refs: HashMap<String, Ref>,
+    pub(crate) refs: NameMap<Ref>,
+    /// The definitions' decoded destinations and titles.
+    pub(crate) ref_text: String,
     /// Reused buffer for normalizing labels.
     pub(crate) label_tmp: String,
+    /// Reused buffer for a decoded text.
+    pub(crate) text_tmp: String,
     html_format: Option<Text>,
     /// MyST include options in force: rewrite image paths, and link paths starting with
     /// `rel_docs`, of included sources relative to the main source.
@@ -62,25 +81,51 @@ pub(crate) fn default_settings() -> &'static Settings {
 impl<'h, 'a> Host<'h, 'a> {
     /// Prepares the state of one read with `settings`: pure CommonMark when `myst` is
     /// false (the settings are then the defaults and unused), MyST otherwise.
+    /// The storage comes from the workspace's scratch: call `finish` when the read ends.
     pub(crate) fn new(ctx: &'h mut ReadContext<'a>, settings: &'h Settings, myst: bool) -> Self {
+        let mut w: HostWork = ctx.take_scratch();
+        w.refs.clear();
+        w.ref_text.clear();
+        w.rel_docs.clear();
+        w.ms.clear();
         let mut h = Host {
             ctx,
             settings,
             myst,
             disabled: Rules::default(),
             syntax: SyntaxExtensions::NONE,
-            refs: HashMap::new(),
-            label_tmp: String::new(),
+            refs: w.refs,
+            ref_text: w.ref_text,
+            label_tmp: w.label_tmp,
+            text_tmp: w.text_tmp,
             html_format: None,
             rel_images: false,
-            rel_docs: String::new(),
-            ms: MystState::default(),
+            rel_docs: w.rel_docs,
+            ms: w.ms,
             ext_state: None,
         };
         if myst {
             h.configure();
         }
         h
+    }
+
+    /// Ends the read, giving the host's storage back to the workspace for the next one.
+    pub(crate) fn finish(self) {
+        let w = HostWork {
+            refs: self.refs,
+            ref_text: self.ref_text,
+            label_tmp: self.label_tmp,
+            text_tmp: self.text_tmp,
+            rel_docs: self.rel_docs,
+            ms: self.ms,
+        };
+        self.ctx.put_scratch(w);
+    }
+
+    /// Returns a range of the definitions' text (`Ref`).
+    pub(crate) fn ref_str(&self, range: Range<usize>) -> &str {
+        self.ref_text.get(range).unwrap_or("")
     }
 
     /// Applies the syntax settings: commonmark_only, enable_extensions, disable_syntax.
@@ -164,8 +209,10 @@ pub struct Detached<'h> {
     myst: bool,
     disabled: Rules,
     syntax: SyntaxExtensions,
-    refs: HashMap<String, Ref>,
+    refs: NameMap<Ref>,
+    ref_text: String,
     label_tmp: String,
+    text_tmp: String,
     html_format: Option<Text>,
     rel_images: bool,
     rel_docs: String,
@@ -192,7 +239,9 @@ impl<'h, 'a> Host<'h, 'a> {
             disabled: self.disabled,
             syntax: self.syntax,
             refs: std::mem::take(&mut self.refs),
+            ref_text: std::mem::take(&mut self.ref_text),
             label_tmp: std::mem::take(&mut self.label_tmp),
+            text_tmp: std::mem::take(&mut self.text_tmp),
             html_format: self.html_format.take(),
             rel_images: self.rel_images,
             rel_docs: std::mem::take(&mut self.rel_docs),
@@ -201,7 +250,9 @@ impl<'h, 'a> Host<'h, 'a> {
         };
         let r = f(self.ctx, &mut d);
         self.refs = d.refs;
+        self.ref_text = d.ref_text;
         self.label_tmp = d.label_tmp;
+        self.text_tmp = d.text_tmp;
         self.html_format = d.html_format;
         self.rel_images = d.rel_images;
         self.rel_docs = d.rel_docs;
@@ -226,7 +277,9 @@ impl<'h> Detached<'h> {
             disabled: self.disabled,
             syntax: self.syntax,
             refs: std::mem::take(&mut self.refs),
+            ref_text: std::mem::take(&mut self.ref_text),
             label_tmp: std::mem::take(&mut self.label_tmp),
+            text_tmp: std::mem::take(&mut self.text_tmp),
             html_format: self.html_format.take(),
             rel_images: self.rel_images,
             rel_docs: std::mem::take(&mut self.rel_docs),
@@ -235,7 +288,9 @@ impl<'h> Detached<'h> {
         };
         let r = f(&mut h);
         self.refs = h.refs;
+        self.ref_text = h.ref_text;
         self.label_tmp = h.label_tmp;
+        self.text_tmp = h.text_tmp;
         self.html_format = h.html_format;
         self.rel_images = h.rel_images;
         self.rel_docs = h.rel_docs;

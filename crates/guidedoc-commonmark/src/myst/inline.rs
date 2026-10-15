@@ -248,23 +248,24 @@ impl<'k> Inline<'_, '_, '_, 'k> {
     pub(crate) fn open_myst_link(&mut self, id: usize) -> Result<NodeId, Fail> {
         let it = self.items[id];
         let span = self.item_span(it.start, it.end);
-        let raw = self.str(it.dest).to_owned();
-        let scheme = url_scheme(&raw);
-        if !scheme.is_empty() && scheme_allowed(self.h, scheme) {
+        let Inline { h, text, sk, .. } = self;
+        let raw = text.get(it.dest.start..it.dest.start + it.dest.len).unwrap_or("");
+        let scheme = url_scheme(raw);
+        if !scheme.is_empty() && scheme_allowed(h, scheme) {
             return self.plain_link(it, span);
         }
-        let dest = relocate(self.h, self.sk.source, &raw, false);
+        let dest = relocate(h, sk.source, raw, false);
         let (mut path, mut anchor) = match dest.split_once('#') {
             Some((p, a)) => (p, a),
-            None => (dest.as_str(), ""),
+            None => (&*dest, ""),
         };
         while let Some(rest) = path.strip_prefix("./") {
             path = rest;
         }
         if path.is_empty()
             && !dest.is_empty()
-            && self.h.settings.heading_anchors > 0
-            && let Some(node) = self.anchor_link(it, anchor, span)?
+            && h.settings.heading_anchors > 0
+            && let Some(node) = anchor_link(h, it, anchor, span)?
         {
             return Ok(node);
         }
@@ -275,10 +276,10 @@ impl<'k> Inline<'_, '_, '_, 'k> {
             Some(doc) => ("doc", doc),
             None => {
                 anchor = "";
-                ("any", dest.as_str())
+                ("any", &*dest)
             }
         };
-        let b = self.h.b();
+        let b = h.b();
         let node = b.begin_node(NodeKind::Xref, span)?;
         b.add_custom_attribute(node, "reftype", reftype)?;
         if it.first.is_some() {
@@ -293,13 +294,13 @@ impl<'k> Inline<'_, '_, '_, 'k> {
     }
 
     fn plain_link(&mut self, it: Item, span: SourceSpan) -> Result<NodeId, Fail> {
-        let dest = self.str(it.dest).to_owned();
-        let title = it.title.map(|t: Txt| self.str(t).to_owned());
-        let b = self.h.b();
+        let Inline { h, text, .. } = self;
+        let piece = |t: Txt| text.get(t.start..t.start + t.len).unwrap_or("");
+        let b = h.b();
         let node = b.begin_node(NodeKind::Link, span)?;
-        let destination = b.add_text(&dest)?;
-        let title = match title {
-            Some(t) => b.add_text(&t)?,
+        let destination = b.add_text(piece(it.dest))?;
+        let title = match it.title {
+            Some(t) => b.add_text(piece(t))?,
             None => guidedoc::Text::default(),
         };
         b.set_link(
@@ -308,27 +309,26 @@ impl<'k> Inline<'_, '_, '_, 'k> {
         )?;
         Ok(node)
     }
+}
 
-    /// Links to a heading anchor of this document; without text, the link shows the
-    /// heading.
-    fn anchor_link(
-        &mut self,
-        it: Item,
-        anchor: &str,
-        span: SourceSpan,
-    ) -> Result<Option<NodeId>, Fail> {
-        let Some(&index) = self.h.ms.slug_index.get(anchor) else { return Ok(None) };
-        let title = self.h.ms.slugs[index].title.clone();
-        let b = self.h.b();
-        let node = b.begin_node(NodeKind::Link, span)?;
-        let row =
-            b.set_link(node, LinkInfo { kind: LinkKind::Internal, ..LinkInfo::UNRESOLVED })?;
-        if it.first.is_none() {
-            b.add_text_leaf(NodeKind::Text, span, &title)?;
-        }
-        self.h.ms.anchors.push((row, index));
-        Ok(Some(node))
+/// Links to a heading anchor of this document; without text, the link shows the
+/// heading.
+fn anchor_link(
+    h: &mut Host<'_, '_>,
+    it: Item,
+    anchor: &str,
+    span: SourceSpan,
+) -> Result<Option<NodeId>, Fail> {
+    let Some(&index) = h.ms.slug_index.get(anchor) else { return Ok(None) };
+    let Host { ctx, ms, .. } = h;
+    let b = &mut ctx.b;
+    let node = b.begin_node(NodeKind::Link, span)?;
+    let row = b.set_link(node, LinkInfo { kind: LinkKind::Internal, ..LinkInfo::UNRESOLVED })?;
+    if it.first.is_none() {
+        b.add_text_leaf(NodeKind::Text, span, &ms.slugs[index].title)?;
     }
+    ms.anchors.push((row, index));
+    Ok(Some(node))
 }
 
 /// The scheme of a URL ("https" of https://...), or "".
@@ -371,7 +371,7 @@ pub(crate) fn inline_lines(
 ) -> Result<(), Fail> {
     let (Some(first), Some(last)) = (lines.first(), lines.last()) else { return Ok(()) };
     let text = h.ctx.source_of(source);
-    let mut sk = Skeleton::new(source, &text, false, false);
+    let mut sk = Skeleton::new(h, source, &text, false, false);
     let mut blk = Block {
         kind: BlockKind::Paragraph,
         start: first.offset,
@@ -380,11 +380,18 @@ pub(crate) fn inline_lines(
     };
     for l in lines {
         sk.segs.push(Seg { content: sk.arena.len(), source: l.offset });
-        sk.arena.push_str(&l.text.replace('\0', "\u{fffd}"));
+        for (k, piece) in l.text.split('\0').enumerate() {
+            if k > 0 {
+                sk.arena.push('\u{fffd}');
+            }
+            sk.arena.push_str(piece);
+        }
         sk.arena.push('\n');
     }
     blk.seg_end = sk.segs.len();
     blk.content_end = sk.arena.len();
     sk.blocks.push(blk);
-    parse_leaf_range(h, &sk, 0, 0, blk.content_end)
+    let result = parse_leaf_range(h, &sk, 0, 0, blk.content_end);
+    sk.give_back(h);
+    result
 }

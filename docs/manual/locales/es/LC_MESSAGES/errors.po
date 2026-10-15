@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"POT-Creation-Date: 2026-10-15 04:11+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -40,11 +40,17 @@ msgid "A report has four parts, always in this order:"
 msgstr "Un diagnóstico tiene cuatro partes, siempre en este orden:"
 
 #: ../../errors.rst:27
+#, fuzzy
+#| msgid ""
+#| "**The title bar.** The title names the kind of problem in capitals; "
+#| "warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right "
+#| "of the bar is the report's code, such as "
+#| "``rst.substitution.undefined``: a stable name you can search for."
 msgid ""
-"**The title bar.** The title names the kind of problem in capitals; "
-"warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right of "
+"**The title bar.** The title names the kind of problem in capitals. "
+"Warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right of "
 "the bar is the report's code, such as ``rst.substitution.undefined``: a "
-"stable name you can search for."
+"stable name we can search for."
 msgstr ""
 "**La barra de título.** Nombra el tipo de problema en mayúsculas; "
 "advertencias y notas empiezan por ``WARNING:`` y ``NOTE:``\\ . A la "
@@ -80,10 +86,14 @@ msgstr ""
 "la más probable."
 
 #: ../../errors.rst:39
+#, fuzzy
+#| msgid ""
+#| "Colors only underline what the words already say; ``--color=never`` "
+#| "turns them off and ``--color=always`` keeps them when the output is "
+#| "not a terminal."
 msgid ""
-"Colors only underline what the words already say; ``--color=never`` turns "
-"them off and ``--color=always`` keeps them when the output is not a "
-"terminal."
+"Colors only underline what the words already say. ``--color=never`` turns "
+"them off. ``--color=always`` keeps them when the output is not a terminal."
 msgstr ""
 "Los colores solo resaltan lo que ya dicen las palabras. ``--color=never`` "
 "los desactiva y ``--color=always`` los conserva aunque la salida no sea "
@@ -94,16 +104,27 @@ msgid "Every hint gives directions"
 msgstr "Cada sugerencia indica qué hacer"
 
 #: ../../errors.rst:45
+#, fuzzy
+#| msgid ""
+#| "Guidedog holds its own messages to this: a hint starts with what to do "
+#| "(\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\") and names what to do "
+#| "it to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the "
+#| "directive's option. A test (``tests/hints_test.odin``) reads every "
+#| "message Guidedog can emit and fails when a hint is empty, repeats the "
+#| "message, or says only \"report this\" without saying what to report "
+#| "with. Two forms are allowed because they name the fix themselves: a "
+#| "suggestion (\"Did you mean numfig?\") and, for a note that needs no "
+#| "action, \"Nothing to do:\" with the reason."
 msgid ""
-"Guidedog holds its own messages to this: a hint starts with what to do "
-"(\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\") and names what to do it "
-"to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the "
-"directive's option. A test (``tests/hints_test.odin``) reads every "
-"message Guidedog can emit and fails when a hint is empty, repeats the "
-"message, or says only \"report this\" without saying what to report with. "
-"Two forms are allowed because they name the fix themselves: a suggestion "
-"(\"Did you mean numfig?\") and, for a note that needs no action, "
-"\"Nothing to do:\" with the reason."
+"Guidedog holds its own messages to this rule. A hint starts with what to "
+"do (\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\"). It names what to do "
+"it to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the "
+"directive's option. Tests check the messages Guidedog emits. They fail "
+"when a hint is empty, repeats the message, or says only \"report this\" "
+"without saying what to report with. Two other forms are allowed, because "
+"they name the fix themselves. One is a suggestion (\"Did you mean "
+"numfig?\"). The other, for a note that needs no action, is \"Nothing to "
+"do:\" with the reason."
 msgstr ""
 "Guidedog aplica esta regla a sus mensajes: la ayuda empieza con una "
 "acción («Add», «Pass», «Set», «Rename», «Run») y su objeto, como "
@@ -113,21 +134,26 @@ msgstr ""
 "aportar. También admite sugerencias que ya expresan la corrección («Did "
 "you mean numfig?») y notas sin acción con «Nothing to do:» y el motivo."
 
-#: ../../errors.rst:53
+#: ../../errors.rst:52
+#, fuzzy
+#| msgid ""
+#| "When the problem is Guidedog's own fault, the hint says so and asks "
+#| "you to report it with the command you ran, the input that caused it, "
+#| "and the output of ``guidedog --version``."
 msgid ""
-"When the problem is Guidedog's own fault, the hint says so and asks you "
-"to report it with the command you ran, the input that caused it, and the "
+"When the problem is Guidedog's own fault, the hint says so. It asks us to "
+"report it with the command we ran, the input that caused it, and the "
 "output of ``guidedog --version``."
 msgstr ""
 "Si el fallo es de Guidedog, la sugerencia lo dice y pide comunicarlo con "
 "el comando ejecutado, la entrada que lo provocó y la salida de ``guidedog "
 "--version``\\ ."
 
-#: ../../errors.rst:57
+#: ../../errors.rst:56
 msgid "Reports for programs"
 msgstr "Diagnósticos para programas"
 
-#: ../../errors.rst:60
+#: ../../errors.rst:59
 msgid ""
 "``--diagnostics=json`` writes each report as one JSON object per line on "
 "standard error, for editors and continuous integration:"
@@ -135,15 +161,26 @@ msgstr ""
 "``--diagnostics=json`` escribe cada informe como un objeto JSON por línea "
 "en la salida de error, para editores e integración continua:"
 
-#: ../../errors.rst:71
+#: ../../errors.rst:70
+#, fuzzy
+#| msgid ""
+#| "(shown wrapped here; each object is on one line). ``schema`` is the "
+#| "version of this format, which changes only when a field does; check it "
+#| "before reading the rest. Columns count Unicode scalars, not bytes or "
+#| "terminal cells, from 1. ``source`` is the complete original source "
+#| "line; the terminal shows a bounded window around the error and aligns "
+#| "its caret after escaping controls and measuring wide characters. "
+#| "``category`` is the warning's category, as ``suppress_warnings`` names "
+#| "it, or empty."
 msgid ""
 "(shown wrapped here; each object is on one line). ``schema`` is the "
-"version of this format, which changes only when a field does; check it "
-"before reading the rest. Columns count Unicode scalars, not bytes or "
-"terminal cells, from 1. ``source`` is the complete original source line; "
-"the terminal shows a bounded window around the error and aligns its caret "
-"after escaping controls and measuring wide characters. ``category`` is "
-"the warning's category, as ``suppress_warnings`` names it, or empty."
+"version of this format. It changes only when a field does, so a program "
+"checks it before reading the rest. Columns count Unicode scalars, not "
+"bytes or terminal cells, from 1. ``source`` is the complete original "
+"source line. The terminal shows a bounded window around the error. It "
+"aligns its caret after escaping controls and measuring wide characters. "
+"``category`` is the warning's category, as ``suppress_warnings`` names "
+"it, or empty."
 msgstr ""
 "Aquí se muestra dividido; cada objeto ocupa una sola línea. ``schema`` es "
 "la versión del formato y cambia solo al cambiar un campo: compruébala "
@@ -153,29 +190,40 @@ msgstr ""
 "controles y medir caracteres anchos. ``category`` es la categoría usada "
 "por ``suppress_warnings`` o está vacía."
 
-#: ../../errors.rst:78
+#: ../../errors.rst:77
 msgid "When memory runs out"
 msgstr "Cuando se agota la memoria"
 
-#: ../../errors.rst:81
-msgid ""
-"Running out of memory is a report too, never a crash. There are two kinds:"
+#: ../../errors.rst:80
+#, fuzzy
+#| msgid ""
+#| "Running out of memory is a report too, never a crash. There are two "
+#| "kinds:"
+msgid "Reaching a bound is a report, not a crash. There are two kinds:"
 msgstr ""
 "Agotar la memoria también produce un diagnóstico, nunca un cierre "
 "inesperado. Hay dos casos:"
 
-#: ../../errors.rst:83
+#: ../../errors.rst:82
 msgid "``host.budget`` (MEMORY BUDGET REACHED)"
 msgstr "``host.budget`` (LÍMITE DE MEMORIA ALCANZADO)"
 
-#: ../../errors.rst:84
+#: ../../errors.rst:83
+#, fuzzy
+#| msgid ""
+#| "The build reached the memory it may hold, its budget "
+#| "(``--budget=MIB``, 1 GiB by default). The report names the step and, "
+#| "for a template, the line that asked for the memory. At a terminal the "
+#| "build asks once what to do: raise the budget to one the step fits, go "
+#| "on with the working memory on disk, or stop; elsewhere it stops, and "
+#| "``--budget`` or ``--memory=disk`` chooses ahead. The hint names that "
+#| "same budget as a number, for example:"
 msgid ""
 "The build reached the memory it may hold, its budget (``--budget=MIB``, 1 "
-"GiB by default). The report names the step and, for a template, the line "
-"that asked for the memory. At a terminal the build asks once what to do: "
-"raise the budget to one the step fits, go on with the working memory on "
-"disk, or stop; elsewhere it stops, and ``--budget`` or ``--memory=disk`` "
-"chooses ahead. The hint names that same budget as a number, for example:"
+"GiB by default). The budget counts what Guidedog reads and keeps: "
+"sources, included files, and the PDF the embedded Typst compiler returns. "
+"The report names the step and the file that needed the memory. The hint "
+"names a budget that fits, as a number. For example:"
 msgstr ""
 "La construcción alcanzó su presupuesto de memoria (\\ ``--budget=MIB``\\ "
 ", 1 GiB por defecto). El informe identifica el paso y, en una plantilla, "
@@ -184,13 +232,20 @@ msgstr ""
 "terminal se detiene; ``--budget`` o ``--memory=disk`` permiten elegir de "
 "antemano. La ayuda da ese presupuesto como número, por ejemplo:"
 
-#: ../../errors.rst:94
+#: ../../errors.rst:91
+#, fuzzy
+#| msgid ""
+#| "The number holds what the build held and the refused step four times "
+#| "over (the step also holds its output and the copy it writes), or twice "
+#| "the old budget, whichever is larger, rounded up to 64 MiB, and no more "
+#| "than the memory the machine has free when the step fits there. When it "
+#| "does not, the hint says so, and names ``--memory=disk`` first:"
 msgid ""
-"The number holds what the build held and the refused step four times over "
-"(the step also holds its output and the copy it writes), or twice the old "
-"budget, whichever is larger, rounded up to 64 MiB, and no more than the "
-"memory the machine has free when the step fits there. When it does not, "
-"the hint says so, and names ``--memory=disk`` first:"
+"The number is the larger of two figures. One is what the build held plus "
+"four times the refused step (the step also holds its output and the copy "
+"it writes). The other is twice the old budget. The number is rounded up "
+"to 64 MiB. It is no more than the memory the machine has free, when the "
+"step fits there. When it does not, the hint says so:"
 msgstr ""
 "La cifra cubre lo ya retenido más cuatro veces el paso rechazado (que "
 "también guarda su salida y la copia escrita), o el doble del presupuesto "
@@ -198,21 +253,36 @@ msgstr ""
 "cabe en la memoria libre, no supera esa cantidad. Si no cabe, la ayuda lo "
 "indica y propone primero ``--memory=disk``\\ :"
 
-#: ../../errors.rst:104
+#: ../../errors.rst:99
+msgid ""
+"``GUIDEDOG_AVAILABLE_MIB`` states the machine's free memory when the "
+"system's own figure misleads, for example inside a container."
+msgstr ""
+
+#: ../../errors.rst:102
 msgid "``host.memory`` (OUT OF MEMORY)"
 msgstr "``host.memory`` (MEMORIA INSUFICIENTE)"
 
-#: ../../errors.rst:105
+#: ../../errors.rst:103
+#, fuzzy
+#| msgid ""
+#| "The system refused memory the budget allowed. The command stops "
+#| "without using what it was refused: a build publishes nothing, a GDS "
+#| "change is applied whole or not at all, and ``convert`` writes a whole "
+#| "page or none. Free memory, or build with fewer threads (``-j 1``), and "
+#| "run the command again. Once a build has decided to publish, switching "
+#| "its output into place needs no memory, so a refusal cannot stop a "
+#| "publication halfway; if the build instead finds an earlier build's "
+#| "publication to finish and has no memory to plan it, it leaves that "
+#| "publication as it was, for the next build."
 msgid ""
-"The system refused memory the budget allowed. The command stops without "
-"using what it was refused: a build publishes nothing, a GDS change is "
+"The system could not provide a buffer the budget allowed. The command "
+"stops without using it. A build publishes nothing, a GDS change is "
 "applied whole or not at all, and ``convert`` writes a whole page or none. "
 "Free memory, or build with fewer threads (``-j 1``), and run the command "
 "again. Once a build has decided to publish, switching its output into "
-"place needs no memory, so a refusal cannot stop a publication halfway; if "
-"the build instead finds an earlier build's publication to finish and has "
-"no memory to plan it, it leaves that publication as it was, for the next "
-"build."
+"place needs no further planning. So a refusal cannot stop a publication "
+"halfway. The next build finishes an interrupted publication."
 msgstr ""
 "El sistema rechazó memoria permitida por el presupuesto. El comando para "
 "sin usarla: la construcción no publica, el cambio GDS se aplica entero o "
@@ -223,15 +293,25 @@ msgstr ""
 "planificarla por falta de memoria, la deja intacta para la próxima "
 "construcción."
 
-#: ../../errors.rst:113
+#: ../../errors.rst:110
+msgid ""
+"A document's own size is bounded separately, by ``--max-nodes``, "
+"``--max-depth`` and ``--stack-kib``. An oversized document is reported "
+"with the limit it reached. See :doc:`internals/memory` for how the budget "
+"and these limits divide the work. The Odin implementation could also keep "
+"working memory on disk (``--memory=disk``). The Rust implementation "
+"bounds a conversion by its limits instead, so there is no disk mode."
+msgstr ""
+
+#: ../../errors.rst:116
 msgid "Both end with status 3."
 msgstr "Ambos terminan con estado 3."
 
-#: ../../errors.rst:115
+#: ../../errors.rst:118
 msgid "Exit status"
 msgstr "Estado de salida"
 
-#: ../../errors.rst:118
+#: ../../errors.rst:121
 msgid ""
 "Every command ends with one of these statuses, so scripts can tell kinds "
 "of failure apart:"
@@ -239,27 +319,27 @@ msgstr ""
 "Cada comando termina con uno de estos estados, para que los scripts "
 "distingan los tipos de fallo:"
 
-#: ../../errors.rst:122
+#: ../../errors.rst:125
 msgid "Status"
 msgstr "Estado"
 
-#: ../../errors.rst:122
+#: ../../errors.rst:125
 msgid "Meaning"
 msgstr "Significado"
 
-#: ../../errors.rst:124
+#: ../../errors.rst:127
 msgid "0"
 msgstr "0"
 
-#: ../../errors.rst:124
+#: ../../errors.rst:127
 msgid "Success. The output was written (and, for a build, published)."
 msgstr "Éxito. La salida se escribió y, en un build, se publicó."
 
-#: ../../errors.rst:125
+#: ../../errors.rst:128
 msgid "1"
 msgstr "1"
 
-#: ../../errors.rst:125
+#: ../../errors.rst:128
 msgid ""
 "The input has a problem: an error in a document, a policy refusal (raw "
 "content without ``--raw``), a document that could not be read, or a "
@@ -269,11 +349,11 @@ msgstr ""
 "(contenido sin procesar sin ``--raw``\\ ), documento ilegible o "
 "advertencia tratada como error por ``-W`` o ``--strict``\\ ."
 
-#: ../../errors.rst:128
+#: ../../errors.rst:131
 msgid "2"
 msgstr "2"
 
-#: ../../errors.rst:128
+#: ../../errors.rst:131
 msgid ""
 "The command was used wrongly: an unknown flag or command, a missing or "
 "invalid value, or an invalid setting in ``conf.toml`` or ``-D``."
@@ -281,11 +361,11 @@ msgstr ""
 "Uso incorrecto del comando: opción o comando desconocido, valor ausente o "
 "inválido, o configuración inválida en ``conf.toml`` o ``-D``\\ ."
 
-#: ../../errors.rst:130
+#: ../../errors.rst:133
 msgid "3"
 msgstr "3"
 
-#: ../../errors.rst:130
+#: ../../errors.rst:133
 msgid ""
 "A limit was reached: the memory budget (``--budget``), the nesting depth "
 "(``--max-depth``), the node count (``--max-nodes``), the stack "
@@ -297,11 +377,11 @@ msgstr ""
 "(\\ ``--stack-kib``\\ ), fuente demasiado grande o memoria que el sistema "
 "no pudo proporcionar."
 
-#: ../../errors.rst:133
+#: ../../errors.rst:136
 msgid "4"
 msgstr "4"
 
-#: ../../errors.rst:133
+#: ../../errors.rst:136
 msgid ""
 "A file or an outside program failed: a path that cannot be read or "
 "written, a file that changed while it was read, or Typst not starting or "
@@ -311,24 +391,33 @@ msgstr ""
 "escribir, archivo modificado durante la lectura, o Typst que no pudo "
 "iniciarse o terminar."
 
-#: ../../errors.rst:135
+#: ../../errors.rst:138
 msgid "5"
 msgstr "5"
 
-#: ../../errors.rst:135
-msgid "Guidedog failed internally, and the report asks you to report it."
+#: ../../errors.rst:138
+#, fuzzy
+#| msgid "Guidedog failed internally, and the report asks you to report it."
+msgid "Guidedog failed internally, and the report asks us to report it."
 msgstr "Guidedog falló internamente y el diagnóstico pide comunicarlo."
 
-#: ../../errors.rst:136
+#: ../../errors.rst:139
 msgid "70"
 msgstr "70"
 
-#: ../../errors.rst:136
+#: ../../errors.rst:139
+#, fuzzy
+#| msgid ""
+#| "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
+#| "the command that ran, the fault, and what ``guidedog --version`` "
+#| "prints, and says where to report it: the issue tracker your build "
+#| "names, or else whoever provided your build. Because builds publish "
+#| "only at the end, a crash leaves the previous output in place."
 msgid ""
 "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
 "the command that ran, the fault, and what ``guidedog --version`` prints, "
-"and says where to report it: the issue tracker your build names, or else "
-"whoever provided your build. Because builds publish only at the end, a "
+"and says where to report it: the issue tracker our build names, or else "
+"whoever provided our build. Because builds publish only at the end, a "
 "crash leaves the previous output in place."
 msgstr ""
 "Al fallar, Guidedog muestra ``GUIDEDOG CRASHED (internal error)``\\ , el "
@@ -336,22 +425,32 @@ msgstr ""
 "gestor de incidencias del build o, en su defecto, su proveedor. Como "
 "publica solo al final, el fallo conserva la salida anterior."
 
-#: ../../errors.rst:141
+#: ../../errors.rst:144
 msgid "130"
 msgstr "130"
 
-#: ../../errors.rst:141
+#: ../../errors.rst:144
+#, fuzzy
+#| msgid ""
+#| "The command was interrupted with Ctrl+C; published files were left "
+#| "unchanged."
 msgid ""
-"The command was interrupted with Ctrl+C; published files were left "
+"The command was interrupted with Ctrl+C. Published files were left "
 "unchanged."
 msgstr ""
 "El comando se interrumpió con Ctrl+C; los archivos publicados no "
 "cambiaron."
 
-#: ../../errors.rst:144
+#: ../../errors.rst:147
+#, fuzzy
+#| msgid ""
+#| "A build that fails for any reason leaves the previous output, and the "
+#| "records of what it built, as they were: fix the problem and build "
+#| "again."
 msgid ""
 "A build that fails for any reason leaves the previous output, and the "
-"records of what it built, as they were: fix the problem and build again."
+"records of what it built, as they were. We fix the problem and build "
+"again."
 msgstr ""
 "Si una compilación falla por cualquier motivo, conserva la salida "
 "anterior y sus registros. Corrija el problema y vuelva a compilar."

@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"POT-Creation-Date: 2026-10-15 04:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -61,11 +61,11 @@ msgid "``guidedog gds``"
 msgstr ""
 
 #: ../../howto/discussions.rst:25
-msgid "You work on Guidedog. It runs the same commands on ``docs/gds``."
+msgid "We work on Guidedog itself. It runs the same commands on ``docs/gds``."
 msgstr ""
 
 #: ../../howto/discussions.rst:27
-msgid "Graphviz, Typst, and the other tools a build needs belong to Guidedog. ``dsc`` never looks for them: it uses whichever ``guidedog`` you have."
+msgid "Graphviz, Typst, and the other tools a build needs belong to Guidedog. ``dsc`` never looks for them. It uses whichever ``guidedog`` we have."
 msgstr ""
 
 #: ../../howto/discussions.rst:30
@@ -93,11 +93,11 @@ msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
 msgstr ""
 
 #: ../../howto/discussions.rst:45
-msgid "``records/XXXXX-eds-process.rst``, a draft of your review process."
+msgid "``records/XXXXX-eds-process.rst``, a draft of our review process."
 msgstr ""
 
 #: ../../howto/discussions.rst:47
-msgid "Edit the process draft to say how your project decides. To start from your own documents, pass ``--config=FILE`` (a ``discussion.toml``), ``--process=FILE`` (the process text, from its title on), and ``--template=FILE`` (a record template with ``:eds-*:`` fields). ``--labels=a,b`` limits the labels records may carry. ``init`` checks the new catalog before it moves it into place, and never writes into a folder that has files."
+msgid "We edit the process draft to say how our project decides. To start from our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), ``--process=FILE`` (the process text, from its title on), and ``--template=FILE`` (a record template with ``:eds-*:`` fields). ``--labels=a,b`` limits the labels records may carry. ``init`` checks the new catalog before it moves it into place. It never writes into a folder that has files."
 msgstr ""
 
 #: ../../howto/discussions.rst:54
@@ -105,11 +105,11 @@ msgid "Write and review"
 msgstr ""
 
 #: ../../howto/discussions.rst:57
-msgid "Run the commands in the catalog folder, or in any folder inside it."
+msgid "We run the commands in the catalog folder, or in any folder inside it."
 msgstr ""
 
 #: ../../howto/discussions.rst:68
-msgid "A new draft has the number ``XXXXX``. Promotion gives it the next number and opens it for discussion. A state change needs ``--reason``; ``committed`` also needs ``--evidence``. Add ``--dry-run`` to see a change without making it. These are the defaults; the next section changes them."
+msgid "A new draft has the number ``XXXXX``. Promotion gives it the next number and opens it for discussion. A state change needs ``--reason``, and ``committed`` also needs ``--evidence``. ``--dry-run`` shows a change without making it. These are the defaults. The next section changes them."
 msgstr ""
 
 #: ../../howto/discussions.rst:73
@@ -117,7 +117,7 @@ msgid "A record starts with its metadata, one field per line:"
 msgstr ""
 
 #: ../../howto/discussions.rst:87
-msgid "Authors and labels are JSON lists. ``last-updated`` may stand for ``updated``. A record may also carry ``category``, ``status``, and ``summary``; ``dsc`` keeps ``status`` in step with the state. HTML and PDF show the fields as Number, Title, Authors, Updated, Labels, and so on, with the lists as plain text."
+msgid "Authors and labels are JSON lists. ``last-updated`` may stand for ``updated``. A record may also carry ``category``, ``status``, and ``summary``. ``dsc`` keeps ``status`` in step with the state. HTML and PDF show the fields as Number, Title, Authors, Updated, Labels, and so on, with the lists as plain text."
 msgstr ""
 
 #: ../../howto/discussions.rst:92
@@ -125,59 +125,63 @@ msgid "Configure the lifecycle and numbering"
 msgstr ""
 
 #: ../../howto/discussions.rst:95
-msgid "``discussion.toml`` holds the catalog's settings. ``init`` writes every one of them, with comments, and ``dsc config`` prints the settings in effect. A catalog without the file follows the defaults below, which are the process of Guidedog's own GDS."
+msgid "``discussion.toml`` holds the catalog's settings. ``init`` writes every one of them, with comments. ``dsc config`` prints the settings in effect. A catalog without the file follows the defaults below. They are the process of Guidedog's own GDS."
 msgstr ""
 
 #: ../../howto/discussions.rst:132
-msgid "``[workflow.states.NAME]`` defines a state: ``next`` lists the states the ``state`` command may move a record to, ``evidence = true`` asks for ``--evidence`` on a move into it, and ``status`` is the text a record's optional ``status`` field takes there. A state with no ``next`` is closed. Promotion is the only way from the draft state to the open state, because it gives the number; a draft may move without one only to the states its own ``next`` lists, such as ``abandoned``."
+msgid "``[workflow.states.NAME]`` defines a state. ``next`` lists the states the ``state`` command may move a record to. ``evidence = true`` asks for ``--evidence`` on a move into the state. ``status`` is the text a record's optional ``status`` field takes there. A state with no ``next`` is closed. Promotion is the only way from the draft state to the open state, because promotion gives the number. Without a number, a draft may move only to the states its own ``next`` lists, such as ``abandoned``."
 msgstr ""
 
 #: ../../howto/discussions.rst:139
-msgid "Numbers have at least ``width`` digits, padded with zeros. A number that needs more digits gets them, so 10000 follows 9999, and lists sort by value. Promotion numbers from ``start``; ``limit``, when set, is the highest number it gives. Changing ``start`` or ``limit`` later is safe. Changing ``width`` is not, once records are numbered: their numbers would no longer match it."
+msgid "Numbers have at least ``width`` digits, padded with zeros. A number that needs more digits gets them, so 10000 follows 9999, and lists sort by value. Promotion numbers from ``start``. ``limit``, when set, is the highest number it gives. Changing ``start`` or ``limit`` later is safe. Changing ``width`` is not, once records are numbered: their numbers would no longer match it."
 msgstr ""
 
 #: ../../howto/discussions.rst:145
 msgid "``dsc`` checks the file whenever it reads the catalog. A mistake names the line and what to write instead:"
 msgstr ""
 
-#: ../../howto/discussions.rst:157
-msgid "The process draft that ``init`` writes describes the lifecycle you configured, with a table of the states and a diagram of the moves."
+#: ../../howto/discussions.rst:160
+msgid "The process draft that ``init`` writes describes the lifecycle we configured. It has a table of the states and a diagram of the moves."
 msgstr ""
 
-#: ../../howto/discussions.rst:160
+#: ../../howto/discussions.rst:163
 msgid "Build"
 msgstr ""
 
-#: ../../howto/discussions.rst:168
+#: ../../howto/discussions.rst:171
 msgid "``dsc build`` writes the website to ``_build/html`` and one PDF per record to ``_build/pdf``. Naming a record writes only its PDF, to ``_build/selected``, and leaves the complete output alone. Warnings stop the build."
 msgstr ""
 
-#: ../../howto/discussions.rst:172
+#: ../../howto/discussions.rst:175
 msgid "``dsc`` runs the ``guidedog`` named by ``--guidedog=PATH``, then by ``DSC_GUIDEDOG``, then the one on ``PATH``. ``dscc`` builds with the Guidedog inside it."
 msgstr ""
 
-#: ../../howto/discussions.rst:175
+#: ../../howto/discussions.rst:178
 msgid "When an update is interrupted"
 msgstr ""
 
-#: ../../howto/discussions.rst:178
+#: ../../howto/discussions.rst:181
 msgid "Commands that change records hold the catalog's lock, ``.eds.lock``. An update of several files first writes a journal, ``.eds-journal.json``. If it stops part way, the next command says so:"
 msgstr ""
 
-#: ../../howto/discussions.rst:187
-msgid "Recovery puts back the files as they were. It refuses to overwrite a file someone edited since. ``dsc`` also checks each change before it writes anything: an empty or cut-short record, or an index without its generated region, is refused. When memory runs out, the command stops with exit status 3 and changes nothing it had not prepared whole."
+#: ../../howto/discussions.rst:190
+msgid "Recovery puts back the files as they were. It refuses to overwrite a file someone edited since. ``dsc`` also checks each change before it writes anything. It refuses an empty or cut-short record, and an index without its generated region."
 msgstr ""
 
-#: ../../howto/discussions.rst:192
-msgid "``dsc`` keeps only each record's metadata in memory, about a kilobyte a record, and reads a record whole only to change it. A catalog of 2,000 records of 100 KB each, 200 MB in all, is checked in a tenth of a second with less than 20 MB of memory."
+#: ../../howto/discussions.rst:194
+msgid "``dsc`` keeps only each record's metadata in memory. It reads a record whole only to change it. So checking a large catalog stays fast and small."
 msgstr ""
 
-#: ../../howto/discussions.rst:196
+#: ../../howto/discussions.rst:197
 msgid "Use the library"
 msgstr ""
 
-#: ../../howto/discussions.rst:199
-msgid "The three programs share one Odin package, ``lib/discussion``. Its `cheat sheet <https://github.com/insanai/guidedog/blob/main/lib/discussion/README.md>`_ shows how to load a catalog, plan a change, and apply it from your own program."
+#: ../../howto/discussions.rst:200
+msgid "The three programs share one Rust crate, ``gd-discussion``. Its ``README.md`` shows how to load a catalog, plan a change, and apply it from our own program:"
+msgstr ""
+
+#: ../../howto/discussions.rst:218
+msgid "``ds::command::run`` is the whole ``dsc`` command line. It serves a program of our own with another name, prefix, or builder. The design notes are in :doc:`../internals/discussion`."
 msgstr ""
 
 #: ../../howto/document-code.rst:1
@@ -185,7 +189,7 @@ msgid "Document a codebase"
 msgstr ""
 
 #: ../../howto/document-code.rst:4
-msgid "A public name needs a contract. Explain its input, its result, its ownership, and the conditions under which it fails. A signature alone is not a manual."
+msgid "A public name needs a contract. We explain its input, its result, its ownership, and the conditions under which it fails. A signature alone is not a manual."
 msgstr ""
 
 #: ../../howto/document-code.rst:7
@@ -193,7 +197,7 @@ msgid "Static extraction architecture"
 msgstr ""
 
 #: ../../howto/document-code.rst:10
-msgid "Guidedog extracts API documentation by parsing source files directly into abstract syntax trees. It never executes or imports user code, eliminating unintended side effects, external execution requirements, and foreign dependency issues:"
+msgid "Guidedog extracts API documentation by parsing source files into abstract syntax trees. It never runs or imports our code. So there are no side effects, no runtime to install, and no foreign dependencies to resolve:"
 msgstr ""
 
 #: ../../howto/document-code.rst:16
@@ -204,28 +208,48 @@ msgstr ""
 msgid "Guidedog static code documentation architecture."
 msgstr ""
 
-#: ../../howto/document-code.rst:61
+#: ../../howto/document-code.rst:65
+msgid "Rust"
+msgstr ""
+
+#: ../../howto/document-code.rst:74
+msgid "Guidedog reads each crate's source with tree-sitter and follows its module tree the way rustc does: ``Cargo.toml``'s ``[lib] path``, then ``src/lib.rs`` or ``src/main.rs``. It does not compile, run, or expand the documented crate. Items made by macros or build scripts are therefore absent. A ``rust_autoapi_crates`` entry may also be a single root ``.rs`` file or a folder of loose ``.rs`` files."
+msgstr ""
+
+#: ../../howto/document-code.rst:80
+msgid "Rustdoc's rules decide what appears. A ``pub`` item reachable through ``pub`` modules is documented in its module. ``pub use`` of an item from a private module documents it under the re-exported name. ``#[doc(hidden)]`` items, ``#[cfg(test)]`` modules and tests are left out. ``rust_autoapi_options`` adds ``private-members`` (everything, with its visibility shown), ``hidden-members``, or ``noindex``."
+msgstr ""
+
+#: ../../howto/document-code.rst:86
+msgid "Doc comments are CommonMark. Guidedog translates them into the page. ``# Examples`` and the other headings become rubrics. Fenced code follows rustdoc's language rules. Intra-doc links (``[`Parser`]``, ``[Parser::next]``) become ``rust`` domain references. A link into the crate that names nothing is a ``rust.autodoc.link`` warning."
+msgstr ""
+
+#: ../../howto/document-code.rst:91
+msgid "The pages are written under ``rust_autoapi_root``. There is an index page, then one page per documented module (``my_crate.rst``, ``my_crate/parser.rst``). With ``rust_autoapi_add_toctree_entry`` (the default), the index joins the root document's toctree. With ``rust_autoapi_generate_api_docs = false``, Guidedog reads the settings without generating pages. :doc:`../topics/domains` describes the ``rust`` directives and roles. Hand-written pages can use them too."
+msgstr ""
+
+#: ../../howto/document-code.rst:98
 msgid "Odin"
 msgstr ""
 
-#: ../../howto/document-code.rst:70
-msgid "Guidedog reads Odin source through Odin's parser. It does not compile or run the documented package. The generated pages join the document graph and object inventory. The repository's separate API project is ``docs/api``. See :doc:`../odin` for directives, signatures, and options."
+#: ../../howto/document-code.rst:107
+msgid "Guidedog reads Odin source by static analysis, across every build target at once. It does not compile or run the documented package. The generated pages join the document graph and object inventory. See :doc:`../odin` for directives, signatures, and options."
 msgstr ""
 
-#: ../../howto/document-code.rst:76
+#: ../../howto/document-code.rst:112
 msgid "Python"
 msgstr ""
 
-#: ../../howto/document-code.rst:84
-msgid "Guidedog parses Python source rather than importing it. This avoids import side effects. It also means runtime-generated objects may be absent. Describe those objects explicitly when they are part of the public interface. See :doc:`../autodoc` for the exact discovery rules."
+#: ../../howto/document-code.rst:120
+msgid "Guidedog parses Python source rather than importing it. This avoids import side effects. It also means runtime-generated objects may be absent. When such objects are part of the public interface, we describe them explicitly. See :doc:`../autodoc` for the exact discovery rules."
 msgstr ""
 
-#: ../../howto/document-code.rst:89
+#: ../../howto/document-code.rst:125
 msgid "Link across projects"
 msgstr ""
 
-#: ../../howto/document-code.rst:92
-msgid "Publish the generated ``objects.inv`` with the site. An intersphinx mapping can then resolve names from another project. Use explicit mappings for reproducible builds. See :doc:`../intersphinx`."
+#: ../../howto/document-code.rst:128
+msgid "We publish the generated ``objects.inv`` with the site. An intersphinx mapping in another project can then resolve our names. Explicit mappings keep builds reproducible. See :doc:`../intersphinx`."
 msgstr ""
 
 #: ../../howto/github-pages.rst:1
@@ -233,7 +257,7 @@ msgid "Publish to GitHub Pages"
 msgstr ""
 
 #: ../../howto/github-pages.rst:4
-msgid "Publish a Guidedog site to GitHub Pages in one of two ways. GitHub Actions can build and deploy it on each push, with released Guidedog and GitHub's official Pages actions, and no personal token. Or ``guidedog-pages`` can publish it from your own machine, whenever you ask or whenever the sources change. Neither needs Python or an Odin compiler."
+msgid "We can publish a Guidedog site to GitHub Pages in one of two ways. GitHub Actions can build and deploy it on each push, with released Guidedog and GitHub's official Pages actions, and no personal token. Or ``guidedog-pages`` can publish it from our own machine, whenever we ask or whenever the sources change. We use one route per site, because a repository has one Pages source: GitHub Actions or a branch."
 msgstr ""
 
 #: ../../howto/github-pages.rst:12
@@ -245,250 +269,290 @@ msgid "The two routes for publishing documentation to GitHub Pages."
 msgstr ""
 
 #: ../../howto/github-pages.rst:44
-msgid "Build and deploy with GitHub Actions"
+msgid "Publish from this machine in one command"
 msgstr ""
 
 #: ../../howto/github-pages.rst:47
-msgid "Prepare the project"
+msgid "From the repository that holds our documentation, we run:"
 msgstr ""
 
-#: ../../howto/github-pages.rst:50
-msgid "Create a project if you do not have one:"
+#: ../../howto/github-pages.rst:53
+msgid "On a machine that has never published, it does each missing step once and says what it does. It asks before anything that changes GitHub or this machine's permissions:"
 msgstr ""
 
-#: ../../howto/github-pages.rst:58
-msgid "Commit the sources, configuration, templates, and static files. Keep generated output out of Git. In the repository's **Settings -> Pages**, choose **GitHub Actions** as the publishing source. Restrict the ``github-pages`` environment to ``main``; add approval rules if your team needs them. GitHub plan and organization policies may limit Pages availability."
+#: ../../howto/github-pages.rst:56
+msgid "**Configuration.** Without ``pages.toml`` it reads the repository from ``git remote get-url origin`` (HTTPS or SSH GitHub URLs) and asks us to confirm it. It finds the nearest project (a folder with ``conf.toml``, here, in ``docs``, or above, up to the repository's root), and writes ``pages.toml``. We can name both ourselves with ``--repository=OWNER/REPO`` and ``--project=DIR``."
 msgstr ""
 
-#: ../../howto/github-pages.rst:64
-msgid "Add the workflow"
+#: ../../howto/github-pages.rst:61
+msgid "**Token.** Without a stored token it offers to sign in with a code on github.com (GitHub's device flow). The token goes to the macOS Keychain, the Windows Credential Manager, or the Secret Service of a Linux desktop. When the GitHub CLI is signed in, it offers instead to use ``gh auth token`` *for this run only*. The GitHub CLI's token is never stored: it belongs to ``gh``, which refreshes and revokes it."
 msgstr ""
 
-#: ../../howto/github-pages.rst:67
-msgid "Save this as ``.github/workflows/docs-pages.yml``. It assumes a project in ``docs`` and a source branch named ``main``. Change those two names for your project. The build runs for pull requests too; only ``main`` can deploy."
+#: ../../howto/github-pages.rst:66
+msgid "**Authorization.** It shows the account, the repository with its GitHub ID, the branch, and the Pages settings, and asks once whether this machine may publish there. A branch that holds work Guidedog did not publish is never replaced without our explicit answer."
 msgstr ""
 
-#: ../../howto/github-pages.rst:154
-msgid "The action commits are pinned. ``configure-pages`` uses the latest release checked for this guide, **v6.0.0**. When upgrading Guidedog, update both the version and the Linux amd64 archive's verified SHA-256. Review action updates separately."
+#: ../../howto/github-pages.rst:70
+msgid "**Pages source.** If Pages deploys from Actions or another branch, it asks before pointing Pages at the branch. A repository without a Pages site is set up after the first push, which makes the branch."
+msgstr ""
+
+#: ../../howto/github-pages.rst:73
+msgid "**Publication.** It builds the project and pushes the whole site in one commit. It waits for GitHub Pages to deploy that commit and prints the live URL."
+msgstr ""
+
+#: ../../howto/github-pages.rst:76
+msgid "The next time, every step is done already. ``publish`` then builds and publishes without a question."
+msgstr ""
+
+#: ../../howto/github-pages.rst:79
+msgid "In a script, or with ``--yes``, it never asks. ``--yes`` answers the confirmations (repository, authorization, Pages source) with yes. It still never signs in and never replaces others' work. A step that needs us fails with ``pages.guide`` and a hint that names the flag or the step command, such as ``--repository=octo/manual`` or ``guidedog-pages auth login``."
+msgstr ""
+
+#: ../../howto/github-pages.rst:85
+msgid "Publish from this machine, step by step"
+msgstr ""
+
+#: ../../howto/github-pages.rst:88
+msgid "The step commands stay for scripts and for checking each part. ``guidedog-pages`` builds the project with the installed ``guidedog``. It pushes the whole site to a branch of its own in one Git commit."
+msgstr ""
+
+#: ../../howto/github-pages.rst:92
+msgid "We write ``pages.toml`` beside our project. It names the repository, the branch, and the credential profile. It holds no secret, so we can commit it:"
+msgstr ""
+
+#: ../../howto/github-pages.rst:99
+msgid "Next we store a token for the profile. We make a fine-grained personal access token for the repository with **Contents: read and write**, and **Pages: read** so that publication can confirm the deployment. If we want ``setup`` to configure Pages, it also needs **Pages: write** and **Administration: write**. We paste it when asked. It is not shown, and it never goes to a file:"
+msgstr ""
+
+#: ../../howto/github-pages.rst:110
+msgid "``auth login`` signs in with a code instead, for a GitHub App or OAuth App we registered with the device flow enabled: ``guidedog-pages auth login --client-id=YOUR_APP_ID``."
+msgstr ""
+
+#: ../../howto/github-pages.rst:114
+msgid "We authorize the target, point Pages at the branch, and check that everything is ready:"
+msgstr ""
+
+#: ../../howto/github-pages.rst:122
+msgid "``bind`` refuses a branch that holds work Guidedog did not publish. ``--adopt`` lets the next publication replace it. The branch must not be the repository's default branch. Publication goes only to a bound target. Guidedog refuses, until we bind again, a ``pages.toml`` that names another repository, a repository that was renamed, transferred, or made again, and another account's token."
+msgstr ""
+
+#: ../../howto/github-pages.rst:133
+msgid "``publish`` builds with warnings as errors (``strict = true``) and ``html_baseurl`` set to ``site_url``. It lists what it adds, changes, and removes. Then it sends one push that holds only the files the branch lacks. GitHub moves the branch only if it still has the commit that was read, so a publication never overwrites a newer one. A ``.nojekyll`` file is added, so that GitHub serves folders such as ``_static``. Then it waits, up to ``wait_seconds``, for GitHub Pages to deploy that commit."
+msgstr ""
+
+#: ../../howto/github-pages.rst:140
+msgid "The exit status says what happened:"
+msgstr ""
+
+#: ../../howto/github-pages.rst:142
+msgid "0: the site is live or was already published."
+msgstr ""
+
+#: ../../howto/github-pages.rst:143
+msgid "1: nothing was published."
+msgstr ""
+
+#: ../../howto/github-pages.rst:144
+msgid "2: a usage, configuration, or missing step problem."
+msgstr ""
+
+#: ../../howto/github-pages.rst:145
+msgid "6: GitHub accepted the publication but has not confirmed the deployment yet."
+msgstr ""
+
+#: ../../howto/github-pages.rst:146
+msgid "7: it is not known whether the branch moved."
+msgstr ""
+
+#: ../../howto/github-pages.rst:148
+msgid "We check later with ``guidedog-pages status``. ``guidedog-pages recover`` settles a publication whose answer was lost, and it never moves the branch back."
+msgstr ""
+
+#: ../../howto/github-pages.rst:152
+msgid "To publish a site we build ourselves, we write ``site = \"build/site\"`` instead of ``project``. The folder is copied and checked before it is published."
+msgstr ""
+
+#: ../../howto/github-pages.rst:155
+msgid "Publish on every change, with a preview"
 msgstr ""
 
 #: ../../howto/github-pages.rst:158
-msgid "If the project selects build plugins, install and register their trusted executables in the build job before running ``guidedog build``. Registrations on your computer are not copied to an Actions runner. Supply each plugin's project and configuration when registering it; qualification runs there too. Packaged plugins need no Odin compiler. See :doc:`../plugins` for the complete example. The deploy job uses GitHub's Pages action; it does not invoke a publishing plugin."
+msgid "``guidedog-pages watch`` publishes once, then again whenever the sources change and have been quiet for ``debounce_ms`` (at most ``max_wait_ms`` after the first change). A failed build or publication is reported, and the published site stays as it was."
 msgstr ""
 
-#: ../../howto/github-pages.rst:165
-msgid "The build job can read sources. Only the deploy job receives Pages and OIDC permissions. GitHub supplies its short-lived credentials; do not add a personal token. A failed build prevents deployment. Pull-request content never enters the deploy job. Keep this workflow on ``pull_request``, not ``pull_request_target``."
+#: ../../howto/github-pages.rst:162
+msgid "``guidedog-pages watch --serve`` also serves the built site on this machine, at ``http://127.0.0.1:8000/`` (``--serve=PORT`` for another port). We see each build before GitHub Pages deploys it. One Ctrl+C stops both the watch and the preview."
 msgstr ""
 
-#: ../../howto/github-pages.rst:170
-msgid "Check the published site"
-msgstr ""
-
-#: ../../howto/github-pages.rst:173
-msgid "Open the deployment URL shown by the completed workflow. For a project repository, it normally includes ``/REPOSITORY/``. Check navigation, search, images, language links, and fonts at that address. ``html_baseurl`` sets canonical metadata; it does not rewrite root-relative URLs in custom templates. Prefer relative asset links."
-msgstr ""
-
-#: ../../howto/github-pages.rst:178
-msgid "For PDF downloads, build the book first and copy the PDF into ``build/site`` before the upload step. Assemble all language editions there too. Upload only the finished publication, never the repository root or a build cache. See :doc:`publish` for output paths and :doc:`../intl` for translation catalogs."
-msgstr ""
-
-#: ../../howto/github-pages.rst:183
-msgid "If deployment is refused, check the Pages source, the environment's allowed branches and approvals, and the deploy job's permissions. A successful upload is not a successful deployment. The official action reports the deployment result."
-msgstr ""
-
-#: ../../howto/github-pages.rst:189
-msgid "A site built from a private repository is not necessarily private. Check its Pages visibility before publishing confidential material."
-msgstr ""
-
-#: ../../howto/github-pages.rst:192
-msgid "Publish from this machine"
-msgstr ""
-
-#: ../../howto/github-pages.rst:195
-msgid "``guidedog-pages`` publishes from your own computer instead: it builds the project with the installed ``guidedog``, and pushes the whole site to a branch of its own in one Git commit. GitHub Pages then deploys that branch. It comes with Guidedog in the release archives and the Homebrew formula, and needs no Git, Python, or Odin."
-msgstr ""
-
-#: ../../howto/github-pages.rst:200
-msgid "Use one route per site. A repository has one Pages source: GitHub Actions or a branch. ``guidedog-pages`` refuses to publish while Pages deploys from Actions or from another branch, and switching is a deliberate ``setup`` step."
-msgstr ""
-
-#: ../../howto/github-pages.rst:204
-msgid "Set it up once"
-msgstr ""
-
-#: ../../howto/github-pages.rst:207
-msgid "Write ``pages.toml`` beside your project. It names the repository, the branch, and the credential profile; it holds no secret, so you can commit it:"
-msgstr ""
-
-#: ../../howto/github-pages.rst:214
-msgid "Store a token for the profile. Make a fine-grained personal access token for the repository with **Contents: read and write**, and **Pages: read** so that publication can confirm the deployment (**Pages: write** and **Administration: write** too if you want ``setup`` to configure Pages). Paste it when asked; it is not shown, and it goes to the macOS Keychain, the Windows Credential Manager, or the Secret Service of a Linux desktop, never to a file:"
-msgstr ""
-
-#: ../../howto/github-pages.rst:226
-msgid "``auth login`` signs in with a code instead (GitHub's device flow), for a GitHub App or OAuth App you registered with the device flow enabled: ``guidedog-pages auth login --client-id=YOUR_APP_ID``. Guidedog ships without an app of its own."
-msgstr ""
-
-#: ../../howto/github-pages.rst:231
-msgid "Authorize the target on this machine, and check that everything is ready:"
-msgstr ""
-
-#: ../../howto/github-pages.rst:238
-msgid "``bind`` shows the account, the repository with its GitHub ID, the branch, and the Pages settings, and asks before it records them. Publication goes only to a bound target: a ``pages.toml`` that names another repository, a repository that was renamed, transferred, or made again, or another account's token is refused until you bind again. ``bind`` refuses a branch that holds work Guidedog did not publish; ``--adopt`` lets the next publication replace it, after you have checked. The branch must not be the repository's default branch. ``doctor`` checks everything and changes nothing."
-msgstr ""
-
-#: ../../howto/github-pages.rst:247
-msgid "Publish"
-msgstr ""
-
-#: ../../howto/github-pages.rst:255
-msgid "``publish`` builds the project with warnings as errors (``strict = true``), and sets ``html_baseurl`` to ``site_url``. It reads the branch, lists what will be added, changed, and removed, and sends one push that holds only the files the branch lacks. GitHub moves the branch only if it still has the commit that was read, so a publication never overwrites a newer one; if another publication got there first, run the command again. A ``.nojekyll`` file is added, so folders such as ``_static`` are served. Then it waits, up to ``wait_seconds``, for GitHub Pages to deploy that commit."
-msgstr ""
-
-#: ../../howto/github-pages.rst:264
-msgid "The first publication makes the branch. GitHub usually starts deploying a new ``gh-pages`` branch by itself; otherwise ``publish`` ends with ``pages.no-site``. Then run ``guidedog-pages setup``, which asks before it points GitHub Pages at the branch, or choose **Deploy from a branch**, your branch, **/ (root)** in **Settings -> Pages**."
-msgstr ""
-
-#: ../../howto/github-pages.rst:269
-msgid "The exit status says what happened: 0 when the site is live or was already published, 1 when nothing was published, 6 when GitHub accepted the publication but has not confirmed the deployment yet, and 7 when it is not known whether the branch moved. Check later with ``guidedog-pages status``. If a publication lost its answer from GitHub, ``guidedog-pages recover`` reads the branch and settles it; it never moves the branch back."
-msgstr ""
-
-#: ../../howto/github-pages.rst:276
-msgid "To publish a site you build yourself, such as a site with several languages and PDF books assembled by a script, write ``site = \"build/site\"`` instead of ``project``; the folder is copied and checked before it is published."
-msgstr ""
-
-#: ../../howto/github-pages.rst:280
-msgid "Publish on every change"
-msgstr ""
-
-#: ../../howto/github-pages.rst:283
-msgid "``guidedog-pages watch`` publishes once, then again whenever the sources change and have been quiet for ``debounce_ms`` (at most ``max_wait_ms`` after the first change). A failed build or publication is reported, and the published site stays as it was. Ctrl+C stops it. It watches files on this machine; to publish after a push to GitHub, use the Actions route above."
-msgstr ""
-
-#: ../../howto/github-pages.rst:289
+#: ../../howto/github-pages.rst:166
 msgid "A scheduler can keep it running. On macOS, a launch agent in ``~/Library/LaunchAgents/org.example.docs.plist``:"
 msgstr ""
 
-#: ../../howto/github-pages.rst:310
-msgid "On Linux, a systemd user service, ``~/.config/systemd/user/docs-pages.service``, started with ``systemctl --user enable --now docs-pages``. A user service reaches the desktop's Secret Service; on a server without one, give the token with ``--credential=env`` and an ``Environment=GUIDEDOG_PAGES_TOKEN=...`` drop-in readable only by you:"
+#: ../../howto/github-pages.rst:187
+msgid "On Linux, a systemd user service, ``~/.config/systemd/user/docs-pages.service``, started with ``systemctl --user enable --now docs-pages``. A user service reaches the desktop's Secret Service. On a server without one, we give the token with ``--credential=env`` and an ``Environment=GUIDEDOG_PAGES_TOKEN=...`` drop-in readable only by our own account:"
 msgstr ""
 
-#: ../../howto/github-pages.rst:329
+#: ../../howto/github-pages.rst:206
 msgid "On Windows, a scheduled task at logon, so that the Credential Manager is available:"
 msgstr ""
 
-#: ../../howto/github-pages.rst:338
-msgid "Tokens and automation"
+#: ../../howto/github-pages.rst:215
+msgid "Build and deploy with GitHub Actions"
+msgstr ""
+
+#: ../../howto/github-pages.rst:218
+msgid "We generate the workflow instead of copying it:"
+msgstr ""
+
+#: ../../howto/github-pages.rst:225
+msgid "It writes ``.github/workflows/docs-pages.yml`` for a project in ``docs`` and a source branch ``main`` (``--project=DIR``, ``--branch=NAME``). The workflow installs this Guidedog release (``--version=X``). The archive's SHA-256 is read from the release's ``SHA256SUMS``, or given with ``--sha256``. ``--offline`` writes a clearly marked placeholder. The workflow's checksum test fails on it, and the command exits with status 1 until we give ``--sha256``. Without ``--write`` it prints the workflow."
+msgstr ""
+
+#: ../../howto/github-pages.rst:232
+msgid "In the repository's **Settings -> Pages**, we choose **GitHub Actions** as the publishing source and restrict the ``github-pages`` environment to ``main``."
+msgstr ""
+
+#: ../../howto/github-pages.rst:235
+msgid "The workflow it writes is this one (for Guidedog 0.6.3):"
+msgstr ""
+
+#: ../../howto/github-pages.rst:320
+msgid "The build job can read sources. Only the deploy job receives Pages and OIDC permissions. GitHub supplies its short-lived credentials, so we add no personal token. The checkout keeps no credentials. Pull requests build but never deploy. The workflow stays on ``pull_request``, never ``pull_request_target``. Action commits are pinned by SHA with their versions in comments. The Guidedog archive is checked against its SHA-256 before it is unpacked."
+msgstr ""
+
+#: ../../howto/github-pages.rst:327
+msgid "Check an existing workflow"
+msgstr ""
+
+#: ../../howto/github-pages.rst:334
+msgid "It reports an older Guidedog release (``pages.workflow-outdated``), a missing or placeholder checksum, an action pinned to a tag or to another commit than the reviewed one (``pages.workflow-unpinned``, ``pages.workflow-pin``), ``pull_request_target``, and a checkout that keeps its credentials, each with its line and the fix. We update with ``guidedog-pages workflow --write --force``. Action updates are a separate review: the pinned commits are listed in ``gd-pages`` and change only with a reviewed release."
 msgstr ""
 
 #: ../../howto/github-pages.rst:341
-msgid "``--credential=env`` takes the token from ``GUIDEDOG_PAGES_TOKEN`` for one command, and never stores it; ``GUIDEDOG_PAGES_CREDENTIAL=env`` chooses the same for runs that cannot take the option, such as ``guidedog publish``. Without either, the variable is ignored. A missing or locked credential store is reported; the token is never written to a plain file instead. ``auth logout`` deletes the stored token; revoke it at GitHub too, under **Settings -> Developer settings**."
+msgid "If the project selects build plugins, we install and register their trusted executables in the build job before ``guidedog build``. Registrations on our own computer are not copied to a runner. See :doc:`../plugins`."
 msgstr ""
 
-#: ../../howto/github-pages.rst:348
-msgid "Through guidedog publish"
+#: ../../howto/github-pages.rst:347
+msgid "A site built from a private repository is not necessarily private. We check its Pages visibility before publishing confidential material."
 msgstr ""
 
-#: ../../howto/github-pages.rst:351
-msgid "``guidedog-pages`` is also a publisher for ``guidedog publish``, which builds the project with Guidedog's own engine and hands the frozen site to it:"
+#: ../../howto/github-pages.rst:350
+msgid "Tokens and automation"
+msgstr ""
+
+#: ../../howto/github-pages.rst:353
+msgid "``--credential=env`` takes the token from ``GUIDEDOG_PAGES_TOKEN`` for one command and never stores it. ``GUIDEDOG_PAGES_CREDENTIAL=env`` chooses the same for runs that cannot take the option, such as ``guidedog publish``. A missing or locked credential store is reported. The token is never written to a plain file instead. ``auth logout`` deletes the stored token. We revoke it at GitHub too."
 msgstr ""
 
 #: ../../howto/github-pages.rst:359
-msgid "Sign in, bind, and set up with ``guidedog-pages`` itself, or through ``guidedog plugin run pages -- auth import``. See :doc:`../plugins`."
+msgid "Through guidedog publish"
 msgstr ""
 
 #: ../../howto/github-pages.rst:362
+msgid "``guidedog publish pages`` runs the same guided publish with Guidedog's own engine. ``guidedog-pages`` is also a publisher program for ``guidedog publish --publisher=pages`` (see :doc:`../plugins`)."
+msgstr ""
+
+#: ../../howto/github-pages.rst:366
 msgid "Troubleshooting"
 msgstr ""
 
-#: ../../howto/github-pages.rst:365
+#: ../../howto/github-pages.rst:369
 msgid "Every problem names its code and what to do. The common ones:"
 msgstr ""
 
-#: ../../howto/github-pages.rst:371
+#: ../../howto/github-pages.rst:375
 msgid "Code"
 msgstr ""
 
-#: ../../howto/github-pages.rst:372
+#: ../../howto/github-pages.rst:376
 msgid "What to do"
 msgstr ""
 
-#: ../../howto/github-pages.rst:373
+#: ../../howto/github-pages.rst:377
 msgid "``pages.unbound``"
 msgstr ""
 
-#: ../../howto/github-pages.rst:374
+#: ../../howto/github-pages.rst:378
 msgid "Run ``guidedog-pages bind``: this machine has not been allowed to publish there."
 msgstr ""
 
-#: ../../howto/github-pages.rst:375
+#: ../../howto/github-pages.rst:379
 msgid "``pages.no-token``, ``pages.credential``"
 msgstr ""
 
-#: ../../howto/github-pages.rst:376
+#: ../../howto/github-pages.rst:380
 msgid "Store a token with ``auth import`` or ``auth login``; GitHub refused or expired it."
 msgstr ""
 
-#: ../../howto/github-pages.rst:377
+#: ../../howto/github-pages.rst:381
 msgid "``pages.permission``"
 msgstr ""
 
-#: ../../howto/github-pages.rst:378
+#: ../../howto/github-pages.rst:382
 msgid "Give the token Contents: read and write for the repository, or approve it for the organization's single sign-on."
 msgstr ""
 
-#: ../../howto/github-pages.rst:380
+#: ../../howto/github-pages.rst:384
 msgid "``pages.source``, ``pages.no-site``"
 msgstr ""
 
-#: ../../howto/github-pages.rst:381
+#: ../../howto/github-pages.rst:385
 msgid "Run ``guidedog-pages setup``, or change the Pages source in the settings."
 msgstr ""
 
-#: ../../howto/github-pages.rst:382
+#: ../../howto/github-pages.rst:386
 msgid "``pages.conflict``"
 msgstr ""
 
-#: ../../howto/github-pages.rst:383
+#: ../../howto/github-pages.rst:387
 msgid "Another publication moved the branch first; run the command again."
 msgstr ""
 
-#: ../../howto/github-pages.rst:384
+#: ../../howto/github-pages.rst:388
 msgid "``pages.ruleset``"
 msgstr ""
 
-#: ../../howto/github-pages.rst:385
+#: ../../howto/github-pages.rst:389
 msgid "A ruleset or branch protection refused the push; allow the account to push."
 msgstr ""
 
-#: ../../howto/github-pages.rst:386
+#: ../../howto/github-pages.rst:390
+msgid "``pages.guide``"
+msgstr ""
+
+#: ../../howto/github-pages.rst:391
+msgid "A step needs our answer and the run may not ask; run it in a terminal, or do the step the hint names."
+msgstr ""
+
+#: ../../howto/github-pages.rst:393
 msgid "``pages.unsettled``"
 msgstr ""
 
-#: ../../howto/github-pages.rst:387
+#: ../../howto/github-pages.rst:394
 msgid "Run ``guidedog-pages recover``."
 msgstr ""
 
-#: ../../howto/github-pages.rst:388
+#: ../../howto/github-pages.rst:395
 msgid "``pages.deployment``"
 msgstr ""
 
-#: ../../howto/github-pages.rst:389
+#: ../../howto/github-pages.rst:396
 msgid "The branch holds the site, but the Pages build failed; see the repository's Actions tab."
 msgstr ""
 
-#: ../../howto/github-pages.rst:392
+#: ../../howto/github-pages.rst:399
 msgid "References"
 msgstr ""
 
-#: ../../howto/github-pages.rst:395
+#: ../../howto/github-pages.rst:402
 msgid "`GitHub's custom Pages workflows <https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
 msgstr ""
 
-#: ../../howto/github-pages.rst:396
+#: ../../howto/github-pages.rst:403
 msgid "`Configure a Pages source <https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
 msgstr ""
 
-#: ../../howto/github-pages.rst:397
+#: ../../howto/github-pages.rst:404
 msgid "`The configure-pages v6.0.0 release <https://github.com/actions/configure-pages/releases/tag/v6.0.0>`_."
 msgstr ""
 
@@ -513,15 +577,15 @@ msgid "Use the official ``insanai/homebrew-guidedog`` tap on Apple silicon or In
 msgstr ""
 
 #: ../../howto/install.rst:15
-msgid "Homebrew selects the release archive for your processor and checks its SHA-256. The package includes Typst, Graphviz, and tree-sitter. You do not need an Odin compiler, a Python environment, or a separate Typst installation to build HTML and PDF. The release requires macOS 12 or later."
+msgid "Homebrew selects the release archive for our processor and checks its SHA-256. The executable has the Typst compiler built in and links Graphviz, which Homebrew installs with it. We do not need a Rust toolchain, a Python environment, or a separate Typst installation to build HTML and PDF. The release requires macOS 12 or later."
 msgstr ""
 
 #: ../../howto/install.rst:20
-msgid "The package also installs ``dsc``, which keeps discussion catalogs and builds them with this ``guidedog`` (see :doc:`discussions`), and ``guidedog-pages``, which publishes sites to GitHub Pages (see :doc:`github-pages`)."
+msgid "The package also installs two more programs. ``dsc`` keeps discussion catalogs and builds them with this ``guidedog`` (see :doc:`discussions`). ``guidedog-pages`` publishes sites to GitHub Pages (see :doc:`github-pages`)."
 msgstr ""
 
 #: ../../howto/install.rst:24
-msgid "Create your first project with :doc:`../tutorial/first-project`. To update an installed release:"
+msgid "We create our first project in :doc:`../tutorial/first-project`. To update an installed release:"
 msgstr ""
 
 #: ../../howto/install.rst:32
@@ -533,52 +597,95 @@ msgid "Build from source"
 msgstr ""
 
 #: ../../howto/install.rst:38
-msgid "Use the Odin toolchain pinned in ``tools/odin-release.txt``. The release uses Odin ``dev-2026-10`` and Typst 0.15.1. Graphviz development libraries are needed for the shared-library build."
+msgid "Guidedog is a Cargo workspace. We need:"
+msgstr ""
+
+#: ../../howto/install.rst:40
+msgid "a Rust toolchain at the version ``rust-version`` names in the root ``Cargo.toml`` (Rust 1.90 or newer; edition 2024), installed with ``rustup``;"
 msgstr ""
 
 #: ../../howto/install.rst:42
-msgid "Development build"
+msgid "Graphviz's development files, because Guidedog links the Graphviz library (``libgvc`` and ``libcgraph``) to draw graphs in process: ``libgraphviz-dev`` on Debian and Ubuntu, ``graphviz-devel`` on Fedora, ``graphviz`` from Homebrew on macOS;"
 msgstr ""
 
 #: ../../howto/install.rst:45
-#: ../../howto/maintain-docs.rst:11
-msgid "From the repository root:"
+msgid "``curl`` on the ``PATH`` for intersphinx inventories and the GitHub Pages publisher, which run the ``curl`` program instead of linking an HTTP library."
+msgstr ""
+
+#: ../../howto/install.rst:48
+msgid "Nothing else is built by hand. The Typst compiler (0.15.1) and the tree-sitter grammars for Python and Rust are ordinary Cargo dependencies, compiled with the workspace. There are no native build scripts to run first."
+msgstr ""
+
+#: ../../howto/install.rst:52
+msgid "Release build"
 msgstr ""
 
 #: ../../howto/install.rst:55
-msgid "The tree-sitter build supplies the pinned Python grammar for source-based autodoc. Install Graphviz's development files through your system package manager. A build without the Typst bridge uses an installed ``typst`` program for PDF. Use ``--typst=/absolute/path/to/typst`` to select it explicitly."
-msgstr ""
-
-#: ../../howto/install.rst:60
-msgid "Embedded compiler"
+msgid "From the repository root:"
 msgstr ""
 
 #: ../../howto/install.rst:63
-msgid "Build the native dependencies once, then link them into the Odin executable:"
+msgid "The executable is ``target/release/guidedog`` (``guidedog.exe`` on Windows). To run ``guidedog`` without its path, we put it on our ``PATH`` or install it into Cargo's binary folder:"
 msgstr ""
 
-#: ../../howto/install.rst:72
-msgid "The Typst bridge is Rust code outside Guidedoc's allocation-free boundary. An embedded build removes the need to launch a separate Typst executable. It does not remove the compiler's own memory costs."
+#: ../../howto/install.rst:71
+msgid "``guidedog formats`` lists the readers and renderers built in, and the Typst backend it found."
 msgstr ""
 
-#: ../../howto/install.rst:76
-msgid "On Windows, name the output ``build/guidedog.exe``. Put the executable on your ``PATH`` if you want to use ``guidedog`` without its path."
+#: ../../howto/install.rst:74
+msgid "Typst: embedded or installed"
 msgstr ""
 
-#: ../../howto/install.rst:79
-msgid "Discussion programs"
+#: ../../howto/install.rst:77
+msgid "By default the Typst compiler is linked into ``guidedog`` (the ``embedded`` feature of the ``gd-typst`` crate). PDF then needs no other program. A build of ``gd-typst`` without that feature runs an installed ``typst`` program (0.15.1) instead. Either way, ``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) selects a program explicitly, and ``guidedog --version`` names the backend in use."
 msgstr ""
 
-#: ../../howto/install.rst:82
-msgid "``dsc`` and ``dscc`` build the same way:"
+#: ../../howto/install.rst:83
+msgid "The embedded compiler removes the need to start a separate process. It does not remove the compiler's own memory costs. ``--budget`` bounds what Guidedog itself holds."
+msgstr ""
+
+#: ../../howto/install.rst:86
+msgid "Development checks"
 msgstr ""
 
 #: ../../howto/install.rst:89
-msgid "``dsc`` needs only Odin. ``dscc`` links Guidedog, so it needs what an embedded ``guidedog`` needs. Each release also has a ``dscc`` archive for every platform, for a machine with nothing else installed."
+msgid "Before we propose a change, we run the same checks as the project's continuous integration:"
 msgstr ""
 
-#: ../../howto/install.rst:93
-msgid "The GitHub Pages publisher builds the same way, and needs only Odin and, on Linux, libcurl's and zlib's development files. It loads libsecret when it first needs the desktop's credential store, so it runs where libsecret is not installed:"
+#: ../../howto/install.rst:98
+msgid "``cargo run -p check`` is the source-limit checker in ``tools/check``: function and file lengths and line widths."
+msgstr ""
+
+#: ../../howto/install.rst:101
+msgid "Discussion programs"
+msgstr ""
+
+#: ../../howto/install.rst:104
+msgid "``dsc`` and ``dscc`` build the same way:"
+msgstr ""
+
+#: ../../howto/install.rst:111
+msgid "``dsc`` is small: it keeps the catalog and runs an installed ``guidedog`` to build it. ``dscc`` links Guidedog, so it needs what ``guidedog`` needs (Graphviz's library). Each release also has a ``dscc`` archive for every platform, for a machine with nothing else installed."
+msgstr ""
+
+#: ../../howto/install.rst:116
+msgid "The GitHub Pages publisher builds the same way. It does not link the engine:"
+msgstr ""
+
+#: ../../howto/install.rst:122
+msgid "It keeps tokens in the system's credential store: the Keychain on macOS, the Credential Manager on Windows, and on Linux the Secret Service through the ``secret-tool`` program (``libsecret-tools``). It needs that program only when it first stores or reads a token."
+msgstr ""
+
+#: ../../howto/install.rst:126
+msgid "Embed the engine"
+msgstr ""
+
+#: ../../howto/install.rst:129
+msgid "The conversion engine is a library. A Rust program can convert text without the ``guidedog`` command, through the ``guidedoc`` crate and the reader and renderer crates it needs:"
+msgstr ""
+
+#: ../../howto/install.rst:156
+msgid "``guidedoc_rst::reader()``, ``guidedoc_commonmark::MYST_READER``, ``guidedoc_typst::renderer()`` and ``guidedoc_text::renderer()`` join the registry the same way. For code highlighting, the ``guidedoc-defaults`` crate joins the highlighter to the renderers. We pass a ``guidedoc_defaults::HtmlHighlighter`` (or ``TypstHighlighter``) as ``highlighter`` in the request's ``RenderOptions``. The staged calls (``read_document``, ``transform_document``, ``check_render``, ``render_document``), the request fields, and the limits are in the crate's ``README.md``."
 msgstr ""
 
 #: ../../howto/maintain-docs.rst:1
@@ -586,39 +693,67 @@ msgid "Maintain this documentation"
 msgstr ""
 
 #: ../../howto/maintain-docs.rst:4
-msgid "There are three Guidedog projects: ``docs/manual``, ``docs/api``, and ``docs/gds``. The manual and GDS began with ``guidedog quickstart``. Edit their generated templates in place. Do not place design records in the manual's table of contents."
+msgid "Guidedog documents itself with Guidedog. The repository has four projects: ``docs/manual`` (this manual), ``docs/api`` (the Rust API reference of the crates), ``docs/gds`` (the design records), and ``docs/site`` (the front page). The manual and GDS began with ``guidedog quickstart``. We edit their generated templates in place. Design records stay out of the manual's table of contents."
 msgstr ""
 
-#: ../../howto/maintain-docs.rst:8
+#: ../../howto/maintain-docs.rst:10
+msgid "All documentation is reStructuredText under ``docs/``. The only Markdown files are each crate's ``README.md``, a short cheat sheet, and the files GitHub needs at the root. Design notes, internals, ledgers and conformance tables are pages under ``docs/manual/internals``."
+msgstr ""
+
+#: ../../howto/maintain-docs.rst:15
 msgid "Build the manual"
 msgstr ""
 
-#: ../../howto/maintain-docs.rst:19
-msgid "The manual includes the complete Odin API reference in its table of contents. The PDF command creates one book, with links between explanations and declarations. Both the manual and the separate API project generate their reference from ``lib/``. There is no copied API manuscript to keep in sync."
+#: ../../howto/maintain-docs.rst:18
+msgid "We build ``guidedog`` first (see :doc:`install`). Then, from the repository root:"
 msgstr ""
 
-#: ../../howto/maintain-docs.rst:24
-msgid "To build the API project on its own:"
+#: ../../howto/maintain-docs.rst:27
+msgid "The PDF command creates one book, with links between its chapters. ``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` builds and runs in one step."
 msgstr ""
 
 #: ../../howto/maintain-docs.rst:31
+msgid "The API reference"
+msgstr ""
+
+#: ../../howto/maintain-docs.rst:34
+msgid "``docs/api`` generates its pages from the crates' source with ``rust_autoapi_crates`` (see :doc:`document-code`). The reference is the doc comments themselves (``///`` on every public item). There is no copied API manuscript to keep in sync. We fix a mistake in the crate, then rebuild:"
+msgstr ""
+
+#: ../../howto/maintain-docs.rst:44
+msgid "A warning such as ``rust.autodoc.link`` names the doc comment and the link that does not resolve."
+msgstr ""
+
+#: ../../howto/maintain-docs.rst:47
 msgid "Build and check discussions"
 msgstr ""
 
-#: ../../howto/maintain-docs.rst:40
-msgid "``guidedog gds`` runs the commands of ``dsc`` on this catalog; see :doc:`discussions`. It manages metadata, numbers, state, and recovery. Its RST publication path calls the project engine. It produces a complete HTML site and a separate PDF for each record. A selector limits the PDFs. HTML remains a coherent site with a complete catalog. A selected PDF preview uses ``_build/selected/<artifact>/pdf``. It leaves the complete catalog in ``_build/pdf`` intact."
+#: ../../howto/maintain-docs.rst:56
+msgid "``guidedog gds`` runs the commands of ``dsc`` on this catalog (see :doc:`discussions`). It manages metadata, numbers, state, and recovery. Its RST publication path calls the project engine in process. It produces a complete HTML site and a separate PDF for each record. A selector limits the PDFs. HTML remains a coherent site with a complete catalog. A selected PDF preview uses ``_build/selected/<artifact>/pdf``. It leaves the complete catalog in ``_build/pdf`` intact."
 msgstr ""
 
-#: ../../howto/maintain-docs.rst:54
+#: ../../howto/maintain-docs.rst:70
 msgid "The ordinary project commands work too. The GDS project uses its own ``conf.toml`` and its own ``_build`` directory. Read ``docs/gds/workflow.rst`` for the authoring workflow."
 msgstr ""
 
-#: ../../howto/maintain-docs.rst:58
+#: ../../howto/maintain-docs.rst:74
+msgid "Translations"
+msgstr ""
+
+#: ../../howto/maintain-docs.rst:77
+msgid "The manual's catalogs are in ``docs/manual/locales``. After we change English text, we refresh them:"
+msgstr ""
+
+#: ../../howto/maintain-docs.rst:85
+msgid "See :doc:`../intl` for the translation workflow."
+msgstr ""
+
+#: ../../howto/maintain-docs.rst:87
 msgid "Before publishing"
 msgstr ""
 
-#: ../../howto/maintain-docs.rst:61
-msgid "Check links and diagnostics. Inspect wide tables and code blocks. Render the PDF pages after changing typography. Test the HTML at desktop and phone widths, in light and dark modes. Make sure the mathematics and diagrams work without a network connection. For engine changes, run the relevant library and integration tests."
+#: ../../howto/maintain-docs.rst:90
+msgid "Check links and diagnostics. Inspect wide tables and code blocks. Render the PDF pages after changing typography. Test the HTML at desktop and phone widths, in light and dark modes. Make sure the mathematics and diagrams work without a network connection. For engine changes, run ``cargo test --workspace``, ``cargo clippy --workspace --all-targets`` and ``cargo run -p check``."
 msgstr ""
 
 #: ../../howto/migrate.rst:1
@@ -626,15 +761,15 @@ msgid "Move a Sphinx project to Guidedog"
 msgstr ""
 
 #: ../../howto/migrate.rst:4
-msgid "Guidedog is designed with Sphinx compatibility in mind. It uses the familiar directory structure, understands standard reStructuredText and MyST Markdown markup, recognizes the same configuration setting names, and implements Sphinx's Jinja template variables."
+msgid "Guidedog follows Sphinx closely. It uses the same directory structure and understands standard reStructuredText and MyST Markdown markup. It recognizes the same configuration setting names and provides Sphinx's Jinja template variables."
 msgstr ""
 
 #: ../../howto/migrate.rst:8
-msgid "However, there is an essential architectural difference: Sphinx executes arbitrary Python code in ``conf.py`` and relies on a Python virtual environment with external packages. Guidedog, by contrast, operates as a standalone compiled executable that reads pure data from ``conf.toml``. It does not execute Python scripts."
+msgid "One difference shapes the whole move. Sphinx runs arbitrary Python code in ``conf.py`` and needs a Python virtual environment with external packages. Guidedog is a single compiled program that reads plain data from ``conf.toml``. It does not run Python."
 msgstr ""
 
 #: ../../howto/migrate.rst:13
-msgid "Migrating a project therefore centers on separating declarative configuration data from executable Python logic."
+msgid "So moving a project means separating configuration data from Python code."
 msgstr ""
 
 #: ../../howto/migrate.rst:16
@@ -642,7 +777,7 @@ msgid "Migration workflow"
 msgstr ""
 
 #: ../../howto/migrate.rst:19
-msgid "The migration process follows a structured sequence:"
+msgid "The move goes through these steps:"
 msgstr ""
 
 #: ../../howto/migrate.rst:23
@@ -658,7 +793,7 @@ msgid "Step 1: Automated configuration migration"
 msgstr ""
 
 #: ../../howto/migrate.rst:45
-msgid "Guidedog provides an automated migration tool that parses your existing ``conf.py``:"
+msgid "Guidedog has a migration tool that parses our existing ``conf.py``:"
 msgstr ""
 
 #: ../../howto/migrate.rst:51
@@ -670,15 +805,15 @@ msgid "It extracts literal configuration values (strings, numbers, booleans, lis
 msgstr ""
 
 #: ../../howto/migrate.rst:55
-msgid "It detects standard Sphinx settings (such as ``project``, ``author``, ``extensions``, ``templates_path``, ``html_theme``, ``intersphinx_mapping``, and ``html_context``) and maps them cleanly."
+msgid "It detects standard Sphinx settings (such as ``project``, ``author``, ``extensions``, ``templates_path``, ``html_theme``, ``intersphinx_mapping``, and ``html_context``) and maps them."
 msgstr ""
 
 #: ../../howto/migrate.rst:58
-msgid "It identifies dynamically computed expressions (such as Python calls like ``version = get_version()`` or ``git_revision = subprocess.check_output(...)``). Because Guidedog does not execute Python, it flags these computed values in its migration report so you can provide explicit, static values in ``conf.toml``."
+msgid "It finds computed expressions (such as Python calls like ``version = get_version()`` or ``git_revision = subprocess.check_output(...)``). Guidedog does not run Python, so its migration report flags these values. We then give fixed values for them in ``conf.toml``."
 msgstr ""
 
 #: ../../howto/migrate.rst:63
-msgid "Review the generated ``conf.toml`` and replace any flagged expressions with static values."
+msgid "We review the generated ``conf.toml`` and replace each flagged expression with a fixed value."
 msgstr ""
 
 #: ../../howto/migrate.rst:65
@@ -686,7 +821,7 @@ msgid "Step 2: The three-pass verification strategy"
 msgstr ""
 
 #: ../../howto/migrate.rst:68
-msgid "Once ``conf.toml`` is created, work through the migration in three focused passes:"
+msgid "Once ``conf.toml`` exists, we work through the migration in three passes:"
 msgstr ""
 
 #: ../../howto/migrate.rst:70
@@ -694,47 +829,47 @@ msgid "Pass 1: Verify the document graph"
 msgstr ""
 
 #: ../../howto/migrate.rst:73
-msgid "Check that Guidedog discovers all documents and builds the expected hierarchy:"
+msgid "We check that Guidedog finds all documents and builds the expected hierarchy:"
 msgstr ""
 
 #: ../../howto/migrate.rst:75
-msgid "Verify that ``root_doc`` points to your primary entry point (usually ``index`` or ``contents``)."
+msgid "Verify that ``root_doc`` names our main entry point (usually ``index`` or ``contents``)."
 msgstr ""
 
 #: ../../howto/migrate.rst:76
-msgid "Confirm that ``source_suffix`` lists all extensions you use (for example, ``[\".rst\", \".md\"]``)."
+msgid "Confirm that ``source_suffix`` lists every extension we use (for example, ``[\".rst\", \".md\"]``)."
 msgstr ""
 
 #: ../../howto/migrate.rst:77
-msgid "Check ``exclude_patterns`` to ensure build folders, virtual environments, and temporary files are excluded."
+msgid "Check that ``exclude_patterns`` excludes build folders, virtual environments, and temporary files."
 msgstr ""
 
-#: ../../howto/migrate.rst:79
+#: ../../howto/migrate.rst:78
 msgid "Run a quick semantic check using the dummy builder:"
 msgstr ""
 
-#: ../../howto/migrate.rst:85
-msgid "The dummy builder checks every document and link without writing HTML files. Address any warnings about missing documents or malformed file includes."
+#: ../../howto/migrate.rst:84
+msgid "The dummy builder checks every document and link without writing HTML files. We fix each warning about a missing document or a malformed include."
 msgstr ""
 
-#: ../../howto/migrate.rst:88
+#: ../../howto/migrate.rst:87
 msgid "Pass 2: Verify references, domains, and custom objects"
 msgstr ""
 
-#: ../../howto/migrate.rst:91
-msgid "Next, verify that cross-references and domain directives resolve:"
+#: ../../howto/migrate.rst:90
+msgid "Next, we verify that cross-references and domain directives resolve:"
 msgstr ""
 
-#: ../../howto/migrate.rst:93
-msgid "**Standard domains:** Guidedog natively supports the standard Python, C, C++, and JavaScript domains, along with standard role syntax like ``:py:func:``, ``:c:type:``, and ``:cpp:class:``."
+#: ../../howto/migrate.rst:92
+msgid "**Standard domains:** Guidedog supports the standard Python, C, C++, and JavaScript domains, with their roles such as ``:py:func:``, ``:c:type:``, and ``:cpp:class:``. It adds ``odin`` and ``rust`` domains of its own (see :doc:`../topics/domains`)."
 msgstr ""
 
 #: ../../howto/migrate.rst:95
-msgid "**Intersphinx links:** If your Sphinx project linked to external documentation via Intersphinx, keep your ``[intersphinx_mapping]`` in ``conf.toml``. Guidedog fetches and parses standard ``objects.inv`` files natively."
+msgid "**Intersphinx links:** If our Sphinx project linked to external documentation through Intersphinx, we keep our ``[intersphinx_mapping]`` in ``conf.toml``. Guidedog fetches and parses standard ``objects.inv`` files itself."
 msgstr ""
 
 #: ../../howto/migrate.rst:98
-msgid "**Declarative custom object types:** In Sphinx, projects often wrote small Python extensions calling ``app.add_object_type()`` to create custom directives and roles (such as ``.. confval::`` or ``.. setting::``). In Guidedog, you define these declaratively in ``conf.toml`` under ``[[object_types]]`` without writing any code. See :doc:`../object-types`."
+msgid "**Declarative custom object types:** In Sphinx, projects often wrote small Python extensions that call ``app.add_object_type()`` to create custom directives and roles (such as ``.. confval::`` or ``.. setting::``). In Guidedog, we declare these in ``conf.toml`` under ``[[object_types]]``, without code. See :doc:`../object-types`."
 msgstr ""
 
 #: ../../howto/migrate.rst:103
@@ -742,7 +877,7 @@ msgid "Pass 3: Verify presentation and templates"
 msgstr ""
 
 #: ../../howto/migrate.rst:106
-msgid "Finally, verify the rendered visual appearance:"
+msgid "Finally, we check how the output looks:"
 msgstr ""
 
 #: ../../howto/migrate.rst:108
@@ -754,7 +889,7 @@ msgid "**Jinja templates:** Guidedog's native Jinja engine supports block inheri
 msgstr ""
 
 #: ../../howto/migrate.rst:118
-msgid "**PDF books:** Build a PDF book with ``guidedog build pdf path/to/docs -W``. Guidedog typesets the book using Typst and ``_templates/book.typ``, providing instant vector math, proper hyphenation, and running headers without requiring a LaTeX installation."
+msgid "**PDF books:** Build a PDF book with ``guidedog build pdf path/to/docs -W``. Guidedog typesets the book with Typst and ``_templates/book.typ``. It gives vector math, proper hyphenation, and running headers without a LaTeX installation."
 msgstr ""
 
 #: ../../howto/migrate.rst:122
@@ -762,7 +897,7 @@ msgid "Configuration settings mapping"
 msgstr ""
 
 #: ../../howto/migrate.rst:125
-msgid "Here is how common Sphinx ``conf.py`` variables correspond to Guidedog's ``conf.toml``:"
+msgid "Common Sphinx ``conf.py`` variables correspond to Guidedog's ``conf.toml`` like this:"
 msgstr ""
 
 #: ../../howto/migrate.rst:127
@@ -879,23 +1014,23 @@ msgid "Handling custom Python extensions"
 msgstr ""
 
 #: ../../howto/migrate.rst:162
-msgid "If your Sphinx documentation relies on extensive Python extensions that inspect Python ASTs or modify Sphinx internal classes, evaluate your options:"
+msgid "Some Sphinx projects rely on large Python extensions that inspect Python ASTs or modify Sphinx's internal classes. For those, we have three options:"
 msgstr ""
 
 #: ../../howto/migrate.rst:165
-msgid "**Declarative object types:** If the extension simply created custom directives or roles, replace it with ``[[object_types]]`` in ``conf.toml``."
+msgid "**Declarative object types:** If the extension only created custom directives or roles, we replace it with ``[[object_types]]`` in ``conf.toml``."
 msgstr ""
 
 #: ../../howto/migrate.rst:167
-msgid "**Build plugins (Guidedog 0.6.2):** If your extension transformed source text, injected custom HTML wrappers, or generated static assets, implement a native build plugin in Odin using the typed plugin interface described in :doc:`../plugins`."
+msgid "**Build plugins:** If the extension transformed source text, added custom HTML wrappers, or generated static assets, we write a build plugin in Rust with the ``gd-plugins`` crate's typed interface described in :doc:`../plugins`. The same plugin runs as an installed program (``guidedog plugin register``) or linked into our own ``guidedog`` binary through ``gd_cli::run_with``."
 msgstr ""
 
-#: ../../howto/migrate.rst:170
-msgid "**Static API extraction:** Guidedog already reads Python docstrings and Odin declarations without running the documented code. Use :doc:`document-code`. Runtime-generated objects may need explicit RST descriptions."
+#: ../../howto/migrate.rst:172
+msgid "**Static API extraction:** Guidedog already reads Python docstrings, Odin declarations, and Rust doc comments without running the documented code. Use :doc:`document-code`. Runtime-generated objects may need explicit RST descriptions."
 msgstr ""
 
-#: ../../howto/migrate.rst:174
-msgid "See :doc:`../compatibility` for a detailed breakdown of Sphinx compatibility evidence and retained limitations."
+#: ../../howto/migrate.rst:176
+msgid ":doc:`../compatibility` gives the evidence for Sphinx compatibility and the limits that remain."
 msgstr ""
 
 #: ../../howto/publish.rst:1
@@ -903,185 +1038,189 @@ msgid "Build and publish documentation"
 msgstr ""
 
 #: ../../howto/publish.rst:4
-msgid "Publishing documentation involves turning raw reStructuredText and Markdown sources into static artifacts, verifying their integrity, and deploying them to a hosting environment."
+msgid "To publish documentation, we turn reStructuredText and Markdown sources into static files, check them, and deploy them to a host."
 msgstr ""
 
-#: ../../howto/publish.rst:8
-msgid "Guidedog separates the process of building a site from the process of deploying it:"
+#: ../../howto/publish.rst:7
+msgid "Guidedog keeps building a site separate from deploying it:"
 msgstr ""
 
-#: ../../howto/publish.rst:10
-msgid "**Building:** Guidedog reads your sources, compiles templates, resolves cross-references, and outputs a complete, verified directory of static HTML files or a typeset PDF book."
+#: ../../howto/publish.rst:9
+msgid "**Building:** Guidedog reads our sources, compiles templates, and resolves cross-references. It writes a complete, checked folder of static HTML files or a typeset PDF book."
 msgstr ""
 
-#: ../../howto/publish.rst:12
-msgid "**Publishing:** The resulting static files are served by your web server or deployed to a hosting destination, such as GitHub Pages, an S3 bucket, or an internal file server."
+#: ../../howto/publish.rst:11
+msgid "**Publishing:** Our web server serves the static files, or we deploy them to a host such as GitHub Pages, an S3 bucket, or an internal file server."
 msgstr ""
 
-#: ../../howto/publish.rst:15
-msgid "Because the output consists entirely of standard static files (HTML, CSS, JavaScript, and SVG), it can be served by any static web server (such as Nginx, Apache, or Caddy) without requiring an Odin runtime, Python interpreter, or active server process in production."
+#: ../../howto/publish.rst:14
+msgid "The output is plain static files (HTML, CSS, JavaScript, and SVG). Any static web server (such as Nginx, Apache, or Caddy) can serve it. Production needs no Guidedog, no Python interpreter, and no running server process."
 msgstr ""
 
-#: ../../howto/publish.rst:19
+#: ../../howto/publish.rst:18
 msgid "Atomic publication architecture"
 msgstr ""
 
-#: ../../howto/publish.rst:22
-msgid "A critical design requirement is to publish complete output generations. The host finishes preparation before deciding a journaled commit. A failed preparation leaves the previous site intact."
+#: ../../howto/publish.rst:21
+msgid "Guidedog publishes only complete output generations. The host finishes preparation before it decides a journaled commit. A failed preparation leaves the previous site intact."
 msgstr ""
 
-#: ../../howto/publish.rst:26
+#: ../../howto/publish.rst:25
 msgid "Guidedog prepares a complete generation before deciding a journaled commit:"
 msgstr ""
 
-#: ../../howto/publish.rst:30
+#: ../../howto/publish.rst:29
 msgid "A complete staged generation is journaled and switched into place. Recovery finishes or restores an interrupted commit."
 msgstr ""
 
-#: ../../howto/publish.rst:30
+#: ../../howto/publish.rst:29
 msgid "The atomic staging and generation switch process."
 msgstr ""
 
-#: ../../howto/publish.rst:48
-msgid "How atomic commits protect your site:"
+#: ../../howto/publish.rst:47
+msgid "How atomic commits protect our site:"
 msgstr ""
 
-#: ../../howto/publish.rst:50
+#: ../../howto/publish.rst:49
 msgid "**Staging:** All newly rendered pages are written to a hidden staging folder beside the destination (``.<target>.next``)."
 msgstr ""
 
+#: ../../howto/publish.rst:51
+msgid "**Isolation:** The live output folder stays untouched while pages compile."
+msgstr ""
+
 #: ../../howto/publish.rst:52
-msgid "**Isolation:** The existing live output directory is untouched while pages are being compiled."
+msgid "**Failure safety:** If any page fails to render, or a warning becomes an error under ``-W``, the build abandons the staging folder. The live site stays unchanged."
 msgstr ""
 
-#: ../../howto/publish.rst:53
-msgid "**Failure safety:** If any page fails to render or if warnings-as-errors (``-W``) is triggered, the staging folder is abandoned. The existing live site remains completely unchanged."
+#: ../../howto/publish.rst:54
+msgid "**Atomic swap:** Once all files are flushed, Guidedog switches the staging folder into place. Where the filesystem supports it, this is a single directory exchange."
 msgstr ""
 
-#: ../../howto/publish.rst:55
-msgid "**Atomic swap:** Once all files are flushed, Guidedog switches the staging directory into place. On supported filesystems, this is an instantaneous directory exchange."
+#: ../../howto/publish.rst:56
+msgid "**Interrupted recovery:** If a crash interrupts the swap, the next build reads the durable journal. It settles the interrupted commit instead of guessing."
 msgstr ""
 
-#: ../../howto/publish.rst:57
-msgid "**Interrupted recovery:** If a crash occurs during the swap, the durable journal ensures that the subsequent build settles the interrupted commit rather than guessing."
-msgstr ""
-
-#: ../../howto/publish.rst:60
+#: ../../howto/publish.rst:59
 msgid "Standard build workflow"
 msgstr ""
 
-#: ../../howto/publish.rst:63
+#: ../../howto/publish.rst:62
 msgid "To build both HTML and PDF outputs into the default project output directory:"
 msgstr ""
 
-#: ../../howto/publish.rst:70
+#: ../../howto/publish.rst:69
 msgid "Output locations:"
 msgstr ""
 
-#: ../../howto/publish.rst:72
+#: ../../howto/publish.rst:71
 msgid "The HTML website is written to ``docs/manual/_build/html/``."
 msgstr ""
 
-#: ../../howto/publish.rst:73
+#: ../../howto/publish.rst:72
 msgid "The PDF book is written to ``docs/manual/_build/pdf/``."
 msgstr ""
 
-#: ../../howto/publish.rst:75
+#: ../../howto/publish.rst:74
 msgid "The ``-j auto`` flag parallelizes document parsing across all available CPU cores."
 msgstr ""
 
-#: ../../howto/publish.rst:77
+#: ../../howto/publish.rst:76
 msgid "Custom output directories"
 msgstr ""
 
-#: ../../howto/publish.rst:80
-msgid "To direct the compiled website to an explicit target folder (for example, in a CI/CD pipeline or deployment script), use the Sphinx-compatible command form:"
+#: ../../howto/publish.rst:79
+msgid "To write the site to a folder of our choice (for example, in a CI/CD pipeline or a deployment script), we use the Sphinx-compatible command form:"
 msgstr ""
 
-#: ../../howto/publish.rst:87
+#: ../../howto/publish.rst:86
 msgid "Guidedog enforces safety constraints on output paths:"
 msgstr ""
 
-#: ../../howto/publish.rst:89
+#: ../../howto/publish.rst:88
 msgid "Choose a dedicated output folder, such as ``_build/html`` inside the project or ``build/site`` beside it. The output must not be the source root or one of its ancestors, because switching it would replace the source project."
 msgstr ""
 
-#: ../../howto/publish.rst:92
-msgid "When targeting a custom destination such as ``build/site``, Guidedog places internal caches in a sibling directory (such as ``build/.site.guidedog/.doctrees``), ensuring that the published folder contains only clean, deployable static assets."
+#: ../../howto/publish.rst:91
+msgid "For a custom destination such as ``build/site``, Guidedog keeps its internal caches in a sibling folder (such as ``build/.site.guidedog/.doctrees``). The published folder then holds only the static files we deploy."
 msgstr ""
 
-#: ../../howto/publish.rst:96
+#: ../../howto/publish.rst:95
 msgid "Semantic checks and pre-flight validation"
 msgstr ""
 
-#: ../../howto/publish.rst:99
-msgid "To verify the semantic validity of a project without writing HTML files to disk, use the ``dummy`` builder:"
+#: ../../howto/publish.rst:98
+msgid "To check a project without writing HTML files to disk, we use the ``dummy`` builder:"
 msgstr ""
 
-#: ../../howto/publish.rst:106
+#: ../../howto/publish.rst:105
 msgid "The dummy builder:"
 msgstr ""
 
-#: ../../howto/publish.rst:108
-msgid "Reads all documents and executes all syntax parsers."
+#: ../../howto/publish.rst:107
+msgid "Reads and parses all documents."
 msgstr ""
 
-#: ../../howto/publish.rst:109
+#: ../../howto/publish.rst:108
 msgid "Resolves all toctrees, headings, cross-references, and domain objects."
 msgstr ""
 
-#: ../../howto/publish.rst:110
+#: ../../howto/publish.rst:109
 msgid "Checks document references and domain objects (``-n`` enables nitpicky cross-reference checking). It does not make HTTP requests to test external URLs."
 msgstr ""
 
-#: ../../howto/publish.rst:112
+#: ../../howto/publish.rst:111
 msgid "Exits with status 1 if any broken link or warning is found (``-W``)."
 msgstr ""
 
-#: ../../howto/publish.rst:114
-msgid "Use the dummy builder in continuous integration pipelines for fast validation before running the full site rendering."
+#: ../../howto/publish.rst:113
+msgid "In continuous integration, the dummy builder is a fast check to run before the full site build."
 msgstr ""
 
-#: ../../howto/publish.rst:117
+#: ../../howto/publish.rst:116
 msgid "Reproducible build timestamps"
 msgstr ""
 
-#: ../../howto/publish.rst:120
-msgid "Documentation builds often embed timestamps (for example, in \"Last updated\" footer notices). For automated deployments where you want byte-for-byte reproducible outputs across multiple runs, pin the clock using the standard ``SOURCE_DATE_EPOCH`` environment variable:"
+#: ../../howto/publish.rst:119
+msgid "Documentation builds often embed timestamps (for example, in \"Last updated\" footer notices). When an automated deployment must give the same bytes on every run, we pin the clock with the standard ``SOURCE_DATE_EPOCH`` environment variable:"
 msgstr ""
 
-#: ../../howto/publish.rst:128
+#: ../../howto/publish.rst:127
 msgid "When this variable is set, Guidedog uses the specified Unix epoch timestamp instead of the current system clock for all date formatting and template variables."
 msgstr ""
 
-#: ../../howto/publish.rst:131
+#: ../../howto/publish.rst:130
 msgid "Deployment options"
 msgstr ""
 
-#: ../../howto/publish.rst:134
-msgid "Once the build succeeds, deploy the static files to your hosting infrastructure:"
+#: ../../howto/publish.rst:133
+msgid "Once the build succeeds, we deploy the static files to our host:"
 msgstr ""
 
-#: ../../howto/publish.rst:136
+#: ../../howto/publish.rst:135
 msgid "**Static web servers (Nginx / Caddy / Apache):** Point the server's root directive directly to the built HTML directory."
 msgstr ""
 
-#: ../../howto/publish.rst:138
-msgid "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud Storage):** Sync the contents of ``_build/html`` to your bucket using your cloud provider's CLI tool."
+#: ../../howto/publish.rst:137
+msgid "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud Storage):** Sync the contents of ``_build/html`` to our bucket with the cloud provider's CLI tool."
 msgstr ""
 
-#: ../../howto/publish.rst:140
+#: ../../howto/publish.rst:139
 msgid "**GitHub Pages:**"
 msgstr ""
 
-#: ../../howto/publish.rst:142
-msgid "For automated CI/CD deployments using GitHub Actions, see :doc:`github-pages`."
+#: ../../howto/publish.rst:141
+msgid "To deploy directly from our own machine, we run ``guidedog publish pages``. It asks for what is still missing (the repository, a token, the Pages settings), then builds and publishes in one push. ``guidedog-pages`` offers the same steps one by one. See :doc:`github-pages`."
 msgstr ""
 
-#: ../../howto/publish.rst:143
-msgid "For direct deployments from your local machine, use ``guidedog-pages`` or a custom publisher plugin as described in :doc:`../plugins`."
+#: ../../howto/publish.rst:145
+msgid "For automated deployments with GitHub Actions, ``guidedog pages workflow`` writes a workflow that builds and deploys the site. See :doc:`github-pages`."
 msgstr ""
 
-#: ../../howto/publish.rst:146
-msgid "On filesystems with directory exchange, the output path switches in one operation. The fallback uses two renames and can briefly leave that path absent. It still never exposes a partly assembled tree. Journal recovery finishes or restores an interrupted switch. A client making several requests can span two generations; the build does not promise a snapshot for an entire browsing session."
+#: ../../howto/publish.rst:147
+msgid "For any other destination, we write a publisher plugin as described in :doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
+msgstr ""
+
+#: ../../howto/publish.rst:150
+msgid "On filesystems with directory exchange, the output path switches in one operation. The fallback uses two renames and can briefly leave that path absent. It still never exposes a partly assembled tree. Journal recovery finishes or restores an interrupted switch. A client making several requests can span two generations. The build does not promise one snapshot for a whole browsing session."
 msgstr ""

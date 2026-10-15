@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"POT-Creation-Date: 2026-10-15 04:11+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -20,8 +20,14 @@ msgid "Internationalization"
 msgstr "국제화"
 
 #: ../../intl.rst:6
+#, fuzzy
+#| msgid ""
+#| "Translate the explanation while keeping its structure. Guidedog "
+#| "extracts message catalogs, merges translations, and builds for a "
+#| "chosen language. The source text stays the reference. A missing "
+#| "translation falls back rather than inventing text."
 msgid ""
-"Translate the explanation while keeping its structure. Guidedog extracts "
+"We translate the explanation and keep its structure. Guidedog extracts "
 "message catalogs, merges translations, and builds for a chosen language. "
 "The source text stays the reference. A missing translation falls back "
 "rather than inventing text."
@@ -33,32 +39,60 @@ msgstr ""
 msgid "The workflow"
 msgstr "작업 흐름"
 
-#: ../../intl.rst:13
+#: ../../intl.rst:15
+msgid ""
+"The gettext builder writes POT templates from the sources. guidedog intl "
+"update merges them into one PO catalog per language. A translator fills "
+"the catalogs, and a build with a language reads them to make that "
+"language's site and book."
+msgstr ""
+
+#: ../../intl.rst:15
+msgid ""
+"Sources become templates, templates become catalogs, and catalogs feed "
+"each language's build."
+msgstr ""
+
+#: ../../intl.rst:37
 msgid "Write the message templates with the ``gettext`` builder:"
 msgstr "``gettext`` 빌더로 메시지 템플릿을 만드세요."
 
-#: ../../intl.rst:19
+#: ../../intl.rst:43
+#, fuzzy
+#| msgid ""
+#| "It writes one template (``.pot``) per text domain into "
+#| "``_build/gettext``: every paragraph, title, list item, table cell, "
+#| "caption, admonition, term, and field of the documents becomes a "
+#| "message, with the file and line it comes from."
 msgid ""
 "It writes one template (``.pot``) per text domain into "
-"``_build/gettext``: every paragraph, title, list item, table cell, "
+"``_build/gettext``. Every paragraph, title, list item, table cell, "
 "caption, admonition, term, and field of the documents becomes a message, "
 "with the file and line it comes from."
 msgstr ""
 "``_build/gettext``\\ 에 텍스트 도메인별 템플릿(\\ ``.pot``\\ )을 만든다. 문서의 모든 문단, 제목, "
 "목록 항목, 표 셀, 캡션, 알림, 용어, 필드가 메시지가 된다. 원본 파일과 줄 번호도 함께 기록된다."
 
-#: ../../intl.rst:23
+#: ../../intl.rst:47
 msgid ""
 "Create or update the catalogs of each language, as ``sphinx-intl update`` "
 "does:"
 msgstr "``sphinx-intl update``\\ 처럼 언어별 카탈로그를 만들거나 갱신하세요."
 
-#: ../../intl.rst:29
+#: ../../intl.rst:53
+#, fuzzy
+#| msgid ""
+#| "The catalogs appear in ``locales/de/LC_MESSAGES/*.po``. On later runs "
+#| "the command merges the new templates into them, as ``msgmerge`` does: "
+#| "translations are kept, a message whose source changed gets the old "
+#| "translation marked *fuzzy* for review, and messages no longer in the "
+#| "documents are kept at the end as obsolete (``#~``), so a translation "
+#| "can come back."
 msgid ""
 "The catalogs appear in ``locales/de/LC_MESSAGES/*.po``. On later runs the "
-"command merges the new templates into them, as ``msgmerge`` does: "
-"translations are kept, a message whose source changed gets the old "
-"translation marked *fuzzy* for review, and messages no longer in the "
+"command merges the new templates into them, as ``msgmerge`` does. "
+"Translations are kept. A message whose source changed gets the old "
+"translation, marked *fuzzy* for review. Messages no longer in the "
 "documents are kept at the end as obsolete (``#~``), so a translation can "
 "come back."
 msgstr ""
@@ -66,47 +100,65 @@ msgstr ""
 "새 템플릿을 병합한다. 기존 번역은 유지하고, 원문이 바뀐 번역은 검토하도록 *fuzzy*\\ 로 표시한다. 문서에서 사라진 "
 "메시지는 끝에 사용 중단 항목(\\ ``#~``\\ )으로 남겨 두어 나중에 번역을 복원할 수 있다."
 
-#: ../../intl.rst:35
+#: ../../intl.rst:59
+#, fuzzy
+#| msgid ""
+#| "Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a "
+#| "message once its translation is right; fuzzy translations are not used."
 msgid ""
 "Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a "
-"message once its translation is right; fuzzy translations are not used."
+"message once its translation is right. Fuzzy translations are not used."
 msgstr ""
 "각 ``msgstr``\\ 에 번역을 넣으세요. 번역이 맞는지 확인한 뒤 ``#, fuzzy`` 줄을 지우세요. fuzzy 번역은 "
 "사용하지 않습니다."
 
-#: ../../intl.rst:43
+#: ../../intl.rst:67
 msgid "See how far the translation is, as ``sphinx-intl stat`` does:"
 msgstr "``sphinx-intl stat``\\ 처럼 번역 진행 상황을 확인하세요."
 
-#: ../../intl.rst:49
+#: ../../intl.rst:73
 msgid "Build in the language:"
 msgstr "해당 언어로 빌드하세요."
 
-#: ../../intl.rst:56
+#: ../../intl.rst:80
 msgid "or set ``language = \"de\"`` in ``conf.toml``."
 msgstr "또는 ``conf.toml``\\ 에서 ``language = \"de\"``\\ 를 설정하세요."
 
-#: ../../intl.rst:58
+#: ../../intl.rst:82
+#, fuzzy
+#| msgid ""
+#| "Each book has a language suffix: ``manual.pdf`` becomes "
+#| "``manual-de.pdf``. A build publishes one complete generation, so use "
+#| "separate destinations to keep several editions. For example, build "
+#| "German with ``guidedog build -b pdf docs build/books/de -D "
+#| "language=de`` and English with ``guidedog build -b pdf docs "
+#| "build/books/en -D language=en``."
 msgid ""
 "Each book has a language suffix: ``manual.pdf`` becomes "
-"``manual-de.pdf``. A build publishes one complete generation, so use "
-"separate destinations to keep several editions. For example, build German "
-"with ``guidedog build -b pdf docs build/books/de -D language=de`` and "
-"English with ``guidedog build -b pdf docs build/books/en -D language=en``."
+"``manual-de.pdf``. A build publishes one complete generation, so we use "
+"separate destinations to keep several editions. For example, we build "
+"German with ``guidedog build -b pdf docs build/books/de -D language=de`` "
+"and English with ``guidedog build -b pdf docs build/books/en -D "
+"language=en``."
 msgstr ""
 "책 파일 이름에는 언어 접미사가 붙는다. ``manual.pdf``\\ 는 ``manual-de.pdf``\\ 가 된다. 빌드마다 "
 "완전한 출력 세대를 게시하므로 여러 판을 보관할 때는 대상 폴더를 따로 쓴다. 예를 들어 독일어는 ``guidedog build "
 "-b pdf docs build/books/de -D language=de``\\ , 영어는 ``guidedog build -b "
 "pdf docs build/books/en -D language=en``\\ 으로 만든다."
 
-#: ../../intl.rst:64
+#: ../../intl.rst:88
+#, fuzzy
+#| msgid ""
+#| "Only the documents whose catalog changed are read again, as with any "
+#| "other input of a document; adding or removing a catalog reads every "
+#| "document again."
 msgid ""
 "Only the documents whose catalog changed are read again, as with any "
-"other input of a document; adding or removing a catalog reads every "
+"other input of a document. Adding or removing a catalog reads every "
 "document again."
 msgstr "다른 입력과 마찬가지로 카탈로그가 바뀐 문서만 다시 읽습니다. 카탈로그를 추가하거나 지우면 모든 문서를 다시 읽습니다."
 
-#: ../../intl.rst:67
+#: ../../intl.rst:91
 msgid ""
 "``guidedog intl`` takes sphinx-intl's options: ``-p DIR`` for the "
 "templates (default ``_build/gettext``), ``-l LANG``, repeatable (default: "
@@ -119,11 +171,11 @@ msgstr ""
 "DIR``\\ 은 카탈로그 위치(기본 ``locale_dirs``\\ 의 첫 항목), ``-w N``\\ 은 줄 너비(기본 "
 "76)이다. ``--no-obsolete``\\ 도 지원한다."
 
-#: ../../intl.rst:72
+#: ../../intl.rst:96
 msgid "Writing translations"
 msgstr "번역 작성"
 
-#: ../../intl.rst:75
+#: ../../intl.rst:99
 msgid ""
 "A message is the source text of a paragraph, title, or other element, "
 "with its markup: reStructuredText in ``.rst`` documents, Markdown in "
@@ -133,38 +185,51 @@ msgstr ""
 "메시지는 마크업을 포함한 단락, 제목, 기타 요소의 원문입니다. ``.rst``\\ 는 reStructuredText, "
 "``.md``\\ 는 Markdown입니다. 번역도 같은 문법으로 읽으므로 원문처럼 강조, 링크, 참조를 쓸 수 있습니다."
 
-#: ../../intl.rst:79
+#: ../../intl.rst:103
 msgid ""
 "References must stay the same. A translation keeps every reference of its "
 "message, written the same way, and may only change the text around them "
 "and their titles:"
 msgstr "참조는 그대로 유지해야 합니다. 모든 참조의 표기를 보존하고, 주변 텍스트와 표시 제목만 바꿀 수 있습니다."
 
-#: ../../intl.rst:87
+#: ../../intl.rst:111
+#, fuzzy
+#| msgid ""
+#| "When a translation drops a reference, the build warns (``inconsistent "
+#| "references in translated message``, as Sphinx does) and uses the "
+#| "translation. When it names a reference the original does not have, it "
+#| "could not be resolved, so the build warns and keeps the original text. "
+#| "A translation whose markup the reader refuses is also kept in the "
+#| "original, with a warning that quotes it."
 msgid ""
 "When a translation drops a reference, the build warns (``inconsistent "
 "references in translated message``, as Sphinx does) and uses the "
-"translation. When it names a reference the original does not have, it "
-"could not be resolved, so the build warns and keeps the original text. A "
-"translation whose markup the reader refuses is also kept in the original, "
-"with a warning that quotes it."
+"translation. A translation may name a reference the original does not "
+"have. That reference could not be resolved, so the build warns and keeps "
+"the original text. When the reader refuses a translation's markup, the "
+"build also keeps the original, with a warning that quotes the translation."
 msgstr ""
 "번역에서 참조가 빠지면 Sphinx처럼 경고(\\ ``inconsistent references in translated "
 "message``\\ )를 내고 번역을 사용한다. 원문에 없는 참조를 추가하면 이를 해결할 수 없어 경고와 함께 원문을 유지한다. "
 "리더가 번역의 마크업을 거부할 때도 원문을 유지하고 경고에 해당 번역을 표시한다."
 
-#: ../../intl.rst:93
+#: ../../intl.rst:117
+#, fuzzy
+#| msgid ""
+#| "Section anchors do not change with the language: a translated title "
+#| "keeps the anchor of its original, so links into the site, from inside "
+#| "and outside, keep working."
 msgid ""
-"Section anchors do not change with the language: a translated title keeps "
+"Section anchors do not change with the language. A translated title keeps "
 "the anchor of its original, so links into the site, from inside and "
 "outside, keep working."
 msgstr "절의 앵커는 언어에 따라 바뀌지 않습니다. 번역된 제목도 원문의 앵커를 유지하므로 내부·외부 링크가 계속 동작합니다."
 
-#: ../../intl.rst:96
+#: ../../intl.rst:120
 msgid "Settings"
 msgstr "설정"
 
-#: ../../intl.rst:99
+#: ../../intl.rst:123
 msgid ""
 "The standard settings have Sphinx's names and defaults. Guidedog also "
 "provides an extraction-only exclusion setting for untranslated reference "
@@ -173,27 +238,27 @@ msgstr ""
 "표준 설정은 Sphinx의 이름과 기본값을 따릅니다. Guidedog는 번역하지 않을 참조 부록을 위한 추출 전용 제외 설정도 "
 "제공합니다."
 
-#: ../../intl.rst:106
+#: ../../intl.rst:130
 msgid "Setting"
 msgstr "설정"
 
-#: ../../intl.rst:107
+#: ../../intl.rst:131
 msgid "Meaning"
 msgstr "의미"
 
-#: ../../intl.rst:108
+#: ../../intl.rst:132
 msgid "``language``"
 msgstr "``language``"
 
-#: ../../intl.rst:109
+#: ../../intl.rst:133
 msgid "The language to build in, such as ``\"de\"`` or ``\"pt_BR\"``."
 msgstr "빌드할 언어입니다. 예: ``\"de\"``\\ , ``\"pt_BR\"``\\ ."
 
-#: ../../intl.rst:110
+#: ../../intl.rst:134
 msgid "``locale_dirs``"
 msgstr "``locale_dirs``"
 
-#: ../../intl.rst:111
+#: ../../intl.rst:135
 msgid ""
 "Where the catalogs are, relative to the source folder: each holds "
 "``LANGUAGE/LC_MESSAGES/DOMAIN.po`` (or a compiled ``.mo``). Default "
@@ -203,11 +268,11 @@ msgstr ""
 "``.mo``\\ )를 둔다. 기본값은 ``[\"locales\"]``\\ 이다. 여러 위치가 있으면 해당 메시지를 번역하는 첫 "
 "카탈로그를 사용한다."
 
-#: ../../intl.rst:114
+#: ../../intl.rst:138
 msgid "``gettext_compact``"
 msgstr "``gettext_compact``"
 
-#: ../../intl.rst:115
+#: ../../intl.rst:139
 msgid ""
 "Which catalog a document's messages go to. ``true`` (the default): a "
 "document at the top level has its own, and the documents of a folder "
@@ -219,33 +284,33 @@ msgstr ""
 "공유한다(\\ ``guide/usage.rst``\\ 는 ``guide.po``\\ ). ``false``\\ 이면 문서마다 하나를 "
 "만든다. 이름을 지정하면 모든 문서가 그 이름의 카탈로그를 쓴다."
 
-#: ../../intl.rst:119
+#: ../../intl.rst:143
 msgid "``gettext_location``"
 msgstr "``gettext_location``"
 
-#: ../../intl.rst:120
+#: ../../intl.rst:144
 msgid ""
 "Write each message's locations (``#: ../../index.rst:12``). Default "
 "``true``."
 msgstr ""
 "메시지 위치(\\ ``#: ../../index.rst:12``\\ )를 기록합니다. 기본값은 ``true``\\ 입니다."
 
-#: ../../intl.rst:121
+#: ../../intl.rst:145
 msgid "``gettext_uuid``"
 msgstr "``gettext_uuid``"
 
-#: ../../intl.rst:122
+#: ../../intl.rst:146
 msgid ""
 "Write an identifier per occurrence of a message. Guidedog makes them from "
 "the document, the message, and its occurrence, so they are the same in "
 "every build."
 msgstr "메시지가 나타나는 곳마다 식별자를 기록합니다. 문서, 메시지, 출현 위치로 만들므로 빌드마다 같습니다."
 
-#: ../../intl.rst:124
+#: ../../intl.rst:148
 msgid "``gettext_auto_build``"
 msgstr "``gettext_auto_build``"
 
-#: ../../intl.rst:125
+#: ../../intl.rst:149
 msgid ""
 "Compile each ``.po`` into an ``.mo`` beside it, for other tools. Default "
 "``true``. Guidedog itself reads the ``.po``."
@@ -253,11 +318,11 @@ msgstr ""
 "각 ``.po``\\ 를 옆의 ``.mo``\\ 로 컴파일하여 다른 도구에서 쓰게 합니다. 기본값은 ``true``\\ 입니다. "
 "Guidedog는 ``.po``\\ 를 직접 읽습니다."
 
-#: ../../intl.rst:127
+#: ../../intl.rst:151
 msgid "``gettext_additional_targets``"
 msgstr "``gettext_additional_targets``"
 
-#: ../../intl.rst:128
+#: ../../intl.rst:152
 msgid ""
 "More content to translate: ``index`` (index entries), ``literal-block``, "
 "``doctest-block``, ``raw``, and ``image`` (alternative text)."
@@ -265,19 +330,19 @@ msgstr ""
 "추가 번역 대상: ``index``\\ (색인 항목), ``literal-block``\\ , ``doctest-block``\\ "
 ", ``raw``\\ , ``image``\\ (대체 텍스트)."
 
-#: ../../intl.rst:130
+#: ../../intl.rst:154
 msgid "``gettext_allow_fuzzy_translations``"
 msgstr "``gettext_allow_fuzzy_translations``"
 
-#: ../../intl.rst:131
+#: ../../intl.rst:155
 msgid "Use fuzzy translations too. Default ``false``."
 msgstr "fuzzy 번역도 사용합니다. 기본값은 ``false``\\ 입니다."
 
-#: ../../intl.rst:132
+#: ../../intl.rst:156
 msgid "``gettext_exclude_patterns``"
 msgstr "``gettext_exclude_patterns``"
 
-#: ../../intl.rst:133
+#: ../../intl.rst:157
 msgid ""
 "Document-path patterns omitted from POT extraction only, such as "
 "``[\"api/**\"]``. Default ``[]``. The documents remain in HTML and PDF."
@@ -285,19 +350,19 @@ msgstr ""
 "POT 추출에서만 제외하는 문서 경로 패턴입니다. 예: ``[\"api/**\"]``\\ . 기본값은 ``[]``\\ 이며, 문서는 "
 "HTML과 PDF에 남습니다."
 
-#: ../../intl.rst:135
+#: ../../intl.rst:159
 msgid "``gettext_last_translator``, ``gettext_language_team``"
 msgstr "``gettext_last_translator``\\ , ``gettext_language_team``"
 
-#: ../../intl.rst:136
+#: ../../intl.rst:160
 msgid "The template header's ``Last-Translator`` and ``Language-Team``."
 msgstr "템플릿 헤더의 ``Last-Translator``\\ 와 ``Language-Team``\\ ."
 
-#: ../../intl.rst:137
+#: ../../intl.rst:161
 msgid "``figure_language_filename``"
 msgstr "``figure_language_filename``"
 
-#: ../../intl.rst:138
+#: ../../intl.rst:162
 msgid ""
 "The file of an image in the build's language. Default "
 "``\"{root}.{language}{ext}\"``: with ``language = \"de\"``, "
@@ -310,11 +375,11 @@ msgstr ""
 "필드는 ``{root}``\\ , ``{path}``\\ , ``{basename}``\\ , ``{ext}``\\ , "
 "``{docpath}``\\ , ``{language}``\\ 이다."
 
-#: ../../intl.rst:142
+#: ../../intl.rst:166
 msgid "``translation_progress_classes``"
 msgstr "``translation_progress_classes``"
 
-#: ../../intl.rst:143
+#: ../../intl.rst:167
 msgid ""
 "Give translated elements the class ``translated`` and the others "
 "``untranslated`` (``true``), or only one of them (``\"translated\"``, "
@@ -324,11 +389,11 @@ msgstr ""
 "). 둘 중 하나만 붙일 수도 있다(\\ ``\"translated\"`` 또는 ``\"untranslated\"``\\ ). "
 "스타일시트로 남은 부분을 표시할 수 있다."
 
-#: ../../intl.rst:147
+#: ../../intl.rst:171
 msgid "Guidedog's own words"
 msgstr "Guidedog의 인터페이스 문구"
 
-#: ../../intl.rst:150
+#: ../../intl.rst:174
 msgid ""
 "Guidedog writes some words itself: admonition titles, \"Added in version "
 "2.1\", \"Fig. 1\", \"Contents\", the page layout's \"Previous\", "
@@ -340,41 +405,47 @@ msgstr ""
 "레이아웃의 \"Previous\", \"Next\", \"Navigation\", \"Search\", 검색·색인 페이지, 책의 "
 "\"Version\" 같은 문구를 만든다. 이 문구는 ``guidedog`` 텍스트 도메인에서 다음 순서로 찾는다."
 
-#: ../../intl.rst:155
+#: ../../intl.rst:179
 msgid "``locales/LANGUAGE/LC_MESSAGES/guidedog.po`` of the project,"
 msgstr "프로젝트의 ``locales/LANGUAGE/LC_MESSAGES/guidedog.po``\\ ."
 
-#: ../../intl.rst:156
+#: ../../intl.rst:180
 msgid ""
 "``locales/LANGUAGE/LC_MESSAGES/sphinx.po`` of the project, as Sphinx "
 "reads it,"
 msgstr "Sphinx처럼 프로젝트의 ``locales/LANGUAGE/LC_MESSAGES/sphinx.po``\\ ."
 
-#: ../../intl.rst:157
+#: ../../intl.rst:181
 msgid ""
 "the catalog built into Guidedog, for German, Spanish, French, Japanese, "
 "Brazilian Portuguese, Russian, and Simplified Chinese."
 msgstr ""
 "Guidedog 내장 카탈로그는 독일어, 스페인어, 프랑스어, 일본어, 브라질 포르투갈어, 러시아어, 중국어 간체를 지원합니다."
 
-#: ../../intl.rst:160
+#: ../../intl.rst:184
+#, fuzzy
+#| msgid ""
+#| "The English words are the message identifiers, and they are Sphinx's "
+#| "where Sphinx has the same word, so a project's ``sphinx.po`` keeps "
+#| "working. A project can override any word, or add a language, with its "
+#| "own ``guidedog.po``."
 msgid ""
-"The English words are the message identifiers, and they are Sphinx's "
-"where Sphinx has the same word, so a project's ``sphinx.po`` keeps "
-"working. A project can override any word, or add a language, with its own "
+"The English words are the message identifiers. They are Sphinx's where "
+"Sphinx has the same word, so a project's ``sphinx.po`` keeps working. A "
+"project can override any word, or add a language, with its own "
 "``guidedog.po``."
 msgstr ""
 "메시지 식별자는 영어다. Sphinx에 같은 문구가 있으면 식별자도 같으므로 프로젝트의 ``sphinx.po``\\ 를 계속 쓸 수 "
 "있다. 자체 ``guidedog.po``\\ 로 문구를 바꾸거나 언어를 추가할 수 있다."
 
-#: ../../intl.rst:164
+#: ../../intl.rst:188
 msgid ""
 "Templates translate with ``_()``, ``gettext()``, and ``ngettext()``, as "
 "Sphinx's templates do:"
 msgstr ""
 "템플릿은 Sphinx처럼 ``_()``\\ , ``gettext()``\\ , ``ngettext()``\\ 로 번역합니다."
 
-#: ../../intl.rst:172
+#: ../../intl.rst:196
 msgid ""
 "``numfig_format``, ``html_title``, and ``html_short_title`` follow the "
 "language unless ``conf.toml`` sets them."
@@ -382,20 +453,30 @@ msgstr ""
 "``conf.toml``\\ 에서 지정하지 않으면 ``numfig_format``\\ , ``html_title``\\ , "
 "``html_short_title``\\ 는 언어를 따릅니다."
 
-#: ../../intl.rst:175
+#: ../../intl.rst:199
 msgid "Dates"
 msgstr "날짜"
 
-#: ../../intl.rst:178
+#: ../../intl.rst:202
+#, fuzzy
+#| msgid ""
+#| "``|today|``, the book's date, and a page's ``last_updated`` are "
+#| "formatted as Sphinx formats them: ``today_fmt`` and "
+#| "``html_last_updated_fmt`` are ``strftime`` formats, and the names of "
+#| "months and days follow ``language``, so ``%b %d, %Y`` is \"Sep 29, "
+#| "2026\" in English and \"Sept. 29, 2026\" in German. An empty format is "
+#| "``_('%b %d, %Y')``, which a catalog may translate. The names come from "
+#| "the Unicode CLDR for the languages above; other languages use English, "
+#| "as Sphinx does for a language Babel does not know."
 msgid ""
 "``|today|``, the book's date, and a page's ``last_updated`` are formatted "
-"as Sphinx formats them: ``today_fmt`` and ``html_last_updated_fmt`` are "
-"``strftime`` formats, and the names of months and days follow "
-"``language``, so ``%b %d, %Y`` is \"Sep 29, 2026\" in English and \"Sept. "
-"29, 2026\" in German. An empty format is ``_('%b %d, %Y')``, which a "
-"catalog may translate. The names come from the Unicode CLDR for the "
-"languages above; other languages use English, as Sphinx does for a "
-"language Babel does not know."
+"as Sphinx formats them. ``today_fmt`` and ``html_last_updated_fmt`` are "
+"``strftime`` formats. The names of months and days follow ``language``, "
+"so ``%b %d, %Y`` is \"Sep 29, 2026\" in English and \"Sept. 29, 2026\" in "
+"German. An empty format is ``_('%b %d, %Y')``, which a catalog may "
+"translate. The names come from the Unicode CLDR for the languages above. "
+"Other languages use English, as Sphinx does for a language Babel does not "
+"know."
 msgstr ""
 "``|today|``\\ , 책의 날짜, 페이지의 ``last_updated``\\ 는 Sphinx와 같은 규칙을 쓴다. "
 "``today_fmt``\\ 와 ``html_last_updated_fmt``\\ 는 ``strftime`` 형식이고 월·요일 "
@@ -404,9 +485,14 @@ msgstr ""
 "나열한 언어의 이름은 Unicode CLDR에서 가져온다. 다른 언어는 Babel이 모르는 언어에 대한 Sphinx처럼 영어를 "
 "사용한다."
 
-#: ../../intl.rst:185
+#: ../../intl.rst:209
+#, fuzzy
+#| msgid ""
+#| "The date is the local date, in the local time zone. Set "
+#| "``SOURCE_DATE_EPOCH`` (seconds since 1970, in UTC) to build "
+#| "reproducibly, with the same dates on every machine."
 msgid ""
-"The date is the local date, in the local time zone. Set "
+"The date is the local date, in the local time zone. We set "
 "``SOURCE_DATE_EPOCH`` (seconds since 1970, in UTC) to build reproducibly, "
 "with the same dates on every machine."
 msgstr ""

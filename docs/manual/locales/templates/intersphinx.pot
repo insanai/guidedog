@@ -1,13 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2026, Vikrant Rathore
 # This file is distributed under the same license as the Guidedog Manual package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"POT-Creation-Date: 2026-10-15 04:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -20,11 +21,11 @@ msgid "Linking to other projects"
 msgstr ""
 
 #: ../../intersphinx.rst:4
-msgid "With ``sphinx.ext.intersphinx``, references this project cannot resolve are looked up in other projects' inventories, the ``objects.inv`` every Sphinx or Guidedog site publishes. Name the projects in ``conf.toml``:"
+msgid "With ``sphinx.ext.intersphinx``, references this project cannot resolve are looked up in other projects' inventories. An inventory is the ``objects.inv`` file that every Sphinx or Guidedog site publishes. We name the projects in ``conf.toml``:"
 msgstr ""
 
 #: ../../intersphinx.rst:16
-msgid "Each entry is the address of the other project's pages and where its inventory is: a URL, a file relative to the source folder, or ``\"\"`` for the ``objects.inv`` at the address. A list is tried in order. This is Sphinx's ``intersphinx_mapping``, with ``\"\"`` for Python's ``None``; ``guidedog migrate`` converts it."
+msgid "Each entry is the address of the other project's pages and where its inventory is: a URL, a file relative to the source folder, or ``\"\"`` for the ``objects.inv`` at the address. A list is tried in order. This is Sphinx's ``intersphinx_mapping``, with ``\"\"`` for Python's ``None``. ``guidedog migrate`` converts it."
 msgstr ""
 
 #: ../../intersphinx.rst:21
@@ -36,7 +37,7 @@ msgid "Links show the other project's titles for labels and documents, and carry
 msgstr ""
 
 #: ../../intersphinx.rst:34
-msgid "Inventories are fetched when a build starts and kept in ``_build/.doctrees/__intersphinx_cache__`` for ``intersphinx_cache_limit`` days (5; a negative number keeps them); local files are read on every build. As in Sphinx, an inventory that has moved (its URL redirects, as ``https://werkzeug.palletsprojects.com/objects.inv`` redirects to ``/en/stable/``) makes its new folder the base of the links, and the cache remembers that base, so a build from the cache links exactly as the build that fetched it did. ``intersphinx_timeout`` limits each download in seconds. A project that cannot be reached is a warning, and its references stay unresolved."
+msgid "Inventories are fetched when a build starts and kept in ``_build/.doctrees/__intersphinx_cache__`` for ``intersphinx_cache_limit`` days (5; a negative number keeps them). Local files are read on every build. As in Sphinx, an inventory may have moved: its URL redirects, as ``https://werkzeug.palletsprojects.com/objects.inv`` redirects to ``/en/stable/``. Then its new folder becomes the base of the links. The cache remembers that base, so a build from the cache links exactly as the build that fetched it did. ``intersphinx_timeout`` limits each download in seconds. A project that cannot be reached is a warning, and its references stay unresolved."
 msgstr ""
 
 #: ../../intersphinx.rst:44

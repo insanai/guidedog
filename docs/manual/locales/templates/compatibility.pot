@@ -1,13 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2026, Vikrant Rathore
 # This file is distributed under the same license as the Guidedog Manual package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"POT-Creation-Date: 2026-10-15 04:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -164,7 +165,7 @@ msgid "Guidedog implements toctrees, labels, glossaries, numbered sections and f
 msgstr ""
 
 #: ../../compatibility.rst:81
-msgid "The standard, Python, C, C++, JavaScript, reStructuredText, and math domains are implemented. The Odin domain is Guidedog's own extension. It describes packages, declarations, signatures, and generated API pages. See :doc:`odin` for its source-only discovery and limits."
+msgid "The standard, Python, C, C++, JavaScript, reStructuredText, and math domains are implemented. The Odin and Rust domains are Guidedog's own extensions. They describe packages or crates, declarations, signatures, and generated API pages. See :doc:`odin` and :doc:`rust` for their source-only discovery and limits."
 msgstr ""
 
 #: ../../compatibility.rst:86
@@ -172,11 +173,11 @@ msgid "Parameter, return, exception, and variable fields form structured descrip
 msgstr ""
 
 #: ../../compatibility.rst:93
-msgid "``numref`` substitutes one number slot and reports an unnumbered target. Section numbering follows reading order. A document is numbered once; a second numbered toctree reports the conflict. See the reference tests for format substitution and identifier details."
+msgid "``numref`` substitutes one number slot and reports an unnumbered target. Section numbering follows reading order. A document is numbered once. A second numbered toctree reports the conflict. See the reference tests for format substitution and identifier details."
 msgstr ""
 
 #: ../../compatibility.rst:98
-msgid "The general index, module index, and search are built in. Search matches word prefixes; it does not copy Sphinx's English stemming."
+msgid "The general index, module index, and search are built in. Search matches word prefixes. It does not copy Sphinx's English stemming."
 msgstr ""
 
 #: ../../compatibility.rst:101
@@ -220,7 +221,7 @@ msgid "``intersphinx``"
 msgstr ""
 
 #: ../../compatibility.rst:120
-msgid "Local and fetched inventories. Windows currently supports local files only."
+msgid "Local and fetched inventories. Fetching runs the system's ``curl`` program."
 msgstr ""
 
 #: ../../compatibility.rst:121
@@ -288,33 +289,29 @@ msgid "``--untrusted`` narrows the read boundary to the source folder. It omits 
 msgstr ""
 
 #: ../../compatibility.rst:162
-msgid "The host budget defaults to 1 GiB. Storage is reserved before allocation. Page workspaces are freed after use; the retained project graph and catalogs still consume memory as the project grows. Reading workers coordinate admission. A refused request reports the failing operation and the correction options."
+msgid "The host budget defaults to 1 GiB. It is coarse: it counts the sources, included files, and PDF output the host holds, reserved before they are read. Each worker reuses one workspace. The retained project graph and catalogs still consume memory as the project grows. Reading workers coordinate admission. A refused request reports the failing operation and a budget that fits. ``GUIDEDOG_AVAILABLE_MIB`` can supply known machine headroom. The Odin implementation's disk-backed working memory (``--memory=disk``, ``--disk-budget``) is not part of the Rust implementation."
 msgstr ""
 
-#: ../../compatibility.rst:167
-msgid "``--memory=ram`` stops at the managed budget. ``--memory=disk`` permits managed working storage to use memory-mapped temporary files. Retained host storage still counts against the RAM budget. ``--disk-budget`` bounds the mapped storage; the policy also leaves a disk reserve. A noninteractive command never waits for an answer. ``GUIDEDOG_AVAILABLE_MIB`` can supply known machine headroom."
+#: ../../compatibility.rst:171
+msgid "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document work. Changing a limit invalidates cached reading and output. Depth and stack capacity must agree. Native Graphviz, tree-sitter, and Typst allocations are outside the host budget. We use operating-system limits when those need a hard bound. See :doc:`errors` and :doc:`internals/memory`."
 msgstr ""
 
-#: ../../compatibility.rst:173
-msgid "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document work. Changing a limit invalidates cached reading and output. Depth and stack capacity must agree. Native Graphviz, tree-sitter, and Typst allocations are outside the host budget. Use operating-system limits when those need a hard bound. See :doc:`errors` and :doc:`internals/memory`."
-msgstr ""
-
-#: ../../compatibility.rst:179
+#: ../../compatibility.rst:177
 msgid "Verification and real projects"
 msgstr ""
 
-#: ../../compatibility.rst:182
-msgid "``tools/sphinxdiff`` compares 42 pinned Sphinx test roots. It checks pages, identifiers, body links, inventories, numbering, and diagnostics. The stored results and their README explain deliberate differences. Precise source locations, stable reading-order numbering, and explicit reports for omitted target-specific raw content are examples."
+#: ../../compatibility.rst:180
+msgid "The Odin implementation's ``tools/sphinxdiff`` compared 42 pinned Sphinx test roots. It checked pages, identifiers, body links, inventories, numbering, and diagnostics. Its stored results explained deliberate differences, for example precise source locations, stable reading-order numbering, and explicit reports for omitted target-specific raw content. The Rust crates keep the reader conformance tests (:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) and their expected outputs."
 msgstr ""
 
 #: ../../compatibility.rst:188
-msgid "The remote validation on 1 October 2026 ran clean and unchanged HTML and PDF builds for CPython, Django, and Flask. All twelve builds succeeded and retained the baseline diagnostics and link results. It also passed 1,039 Linux tests and 94 targeted AddressSanitizer tests."
+msgid "The remote validation of the Odin implementation on 1 October 2026 ran clean and unchanged HTML and PDF builds for CPython, Django, and Flask. All twelve builds succeeded and retained the baseline diagnostics and link results. It also passed 1,039 Linux tests and 94 targeted AddressSanitizer tests."
 msgstr ""
 
 #: ../../compatibility.rst:193
-msgid "Those projects contain unsupported Python extension constructs. Their diagnostics remain part of the evidence. A zero exit status does not mean all their private directives were reproduced. Run with ``-W`` when publishing requires zero diagnostics."
+msgid "Those projects contain unsupported Python extension constructs. Their diagnostics remain part of the evidence. A zero exit status does not mean all their private directives were reproduced. We run with ``-W`` when publishing requires zero diagnostics."
 msgstr ""
 
 #: ../../compatibility.rst:198
-msgid "The historical measurements and source revisions remain in ``docs/manual/evidence/manuals.md``. The latest remote review report is ``build/review-remote-20261001/report.txt``. These measurements describe the recorded workloads. They are not universal speed or memory bounds."
+msgid "The historical measurements and source revisions remain in ``docs/manual/evidence/manuals.rst``. They were made with the Odin implementation (release 0.6). User-facing behavior carries over to the Rust implementation, but its timings and memory use must be measured again. These measurements describe the recorded workloads. They are not universal speed or memory bounds."
 msgstr ""

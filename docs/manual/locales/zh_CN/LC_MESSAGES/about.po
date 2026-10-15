@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 02:53+0000\n"
+"POT-Creation-Date: 2026-10-15 04:11+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -54,44 +54,89 @@ msgstr ""
 "Graphviz，公式使用 LaTeX 数学记法。只有 PDF 排版模板仍使用 Typst。"
 
 #: ../../about.rst:21
-msgid "Build evidence and qualification"
-msgstr "构建与验证记录"
+msgid "Implementation"
+msgstr ""
 
 #: ../../about.rst:24
 msgid ""
-"Guidedog release 0.6.2 introduces typed Odin plugins for source, HTML, "
-"and assets, while keeping Pages as an independent publishing service. The "
-"release passed 176 integration tests, all 36 library and tool suites, "
-"AddressSanitizer checks, five-platform builds and smoke tests, and twelve "
-"large-manual builds across CPython, Django, and Flask. Diagnostic and "
-"link results matched their established baselines."
+"Guidedog 0.7 is a port of the original Odin implementation to Rust. The "
+"port keeps the user-facing behavior: the ``guidedog`` commands and "
+"options, ``conf.toml`` keys, directives, roles, and output. It redesigns "
+"the inside the way a Rust program is written: ownership instead of arenas "
+"and allocation budgets, traits instead of procedure tables, and one crate "
+"per responsibility. :doc:`internals/index` describes the result. "
+":doc:`internals/engine-api-map` maps the Odin engine's names to the Rust "
+"ones."
 msgstr ""
-"Guidedog 0.6.2 为源文本、HTML 和静态资源引入了类型明确的 Odin 插件，Pages 仍是独立的发布服务。该版本通过了 176 "
-"项集成测试、全部 36 组库与工具测试、AddressSanitizer 检查、五个平台的构建和冒烟测试，以及 "
-"CPython、Django、Flask 大型手册的十二次构建。诊断和链接检查结果均与既定基线一致。"
 
-#: ../../about.rst:30
+#: ../../about.rst:32
 msgid ""
-"Earlier publisher compatibility is no longer a release requirement. "
-"Qualification checks (via ``guidedog plugin check``) demonstrate "
-"interoperability across process boundaries; directly linked native "
-"callbacks remain trusted code."
+"The port adds Rust API documentation (:doc:`rust`), plugins linked into a "
+"custom binary (:doc:`plugins`), and a guided GitHub Pages workflow "
+"(:doc:`howto/github-pages`). Odin remains a documented language: the Odin "
+"domain and its API pages are unchanged (:doc:`odin`)."
+msgstr ""
+
+#: ../../about.rst:37
+msgid "Build evidence and qualification"
+msgstr "构建与验证记录"
+
+#: ../../about.rst:40
+msgid ""
+"Release 0.6.3 of the Odin implementation passed its integration and "
+"library suites, AddressSanitizer checks, five-platform builds and smoke "
+"tests, and twelve large-manual builds across CPython, Django, and Flask. "
+"Diagnostic and link results matched their established baselines. Those "
+"records are kept in the repository's ``docs/manual/evidence`` folder as "
+"history. The Rust implementation keeps the conformance tests and expected "
+"outputs (:doc:`internals/rst-conformance`, "
+":doc:`internals/commonmark-conformance`). Its own large-manual "
+"measurements are recorded as new evidence."
+msgstr ""
+
+#: ../../about.rst:49
+#, fuzzy
+#| msgid ""
+#| "Earlier publisher compatibility is no longer a release requirement. "
+#| "Qualification checks (via ``guidedog plugin check``) demonstrate "
+#| "interoperability across process boundaries; directly linked native "
+#| "callbacks remain trusted code."
+msgid ""
+"Qualification checks (via ``guidedog plugin check``) show that plugins "
+"work across process boundaries. Linked plugins remain trusted code."
 msgstr ""
 "兼容旧版发布插件已不再是发布要求。``guidedog plugin check`` 验证跨进程互操作性；直接链接的原生回调仍属于受信任代码。"
 
-#: ../../about.rst:34
+#: ../../about.rst:52
+#, fuzzy
+#| msgid ""
+#| "That evidence supports the released tool and its documented surface. "
+#| "It is not a claim of universal Sphinx equivalence or unbounded memory "
+#| "safety. See :doc:`compatibility` for the retained limits."
 msgid ""
 "That evidence supports the released tool and its documented surface. It "
-"is not a claim of universal Sphinx equivalence or unbounded memory "
-"safety. See :doc:`compatibility` for the retained limits."
+"is not a claim of universal Sphinx equivalence. See :doc:`compatibility` "
+"for the retained limits."
 msgstr ""
 "这些记录验证的是已发布工具及其文档所述功能，并不意味着完全等同于 Sphinx，也不保证任意条件下的内存安全。保留的限制见 "
 ":doc:`compatibility`。"
 
-#: ../../about.rst:38
+#: ../../about.rst:55
 msgid ""
 "Documentation maintenance commands are in :doc:`howto/maintain-docs`."
 msgstr "文档维护命令见 :doc:`howto/maintain-docs`\\ 。"
+
+#~ msgid ""
+#~ "Guidedog release 0.6.2 introduces typed Odin plugins for source, HTML, "
+#~ "and assets, while keeping Pages as an independent publishing service. "
+#~ "The release passed 176 integration tests, all 36 library and tool "
+#~ "suites, AddressSanitizer checks, five-platform builds and smoke tests, "
+#~ "and twelve large-manual builds across CPython, Django, and Flask. "
+#~ "Diagnostic and link results matched their established baselines."
+#~ msgstr ""
+#~ "Guidedog 0.6.2 为源文本、HTML 和静态资源引入了类型明确的 Odin 插件，Pages 仍是独立的发布服务。该版本通过了 "
+#~ "176 项集成测试、全部 36 组库与工具测试、AddressSanitizer 检查、五个平台的构建和冒烟测试，以及 "
+#~ "CPython、Django、Flask 大型手册的十二次构建。诊断和链接检查结果均与既定基线一致。"
 
 #~ msgid ""
 #~ "The remote validation on 2026-10-01 ran clean and incremental HTML and "

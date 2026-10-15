@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"POT-Creation-Date: 2026-10-15 04:11+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -34,15 +34,25 @@ msgid "1. Start with a real project"
 msgstr "1. 실제 프로젝트에서 시작하기"
 
 #: ../../tutorial/a-custom-theme.rst:11
+#, fuzzy
+#| msgid ""
+#| "Use Guidedog 0.6.2 or newer. Run this from the directory that will "
+#| "contain ``orbit``:"
 msgid ""
-"Use Guidedog 0.6.2 or newer. Run this from the directory that will "
+"Use Guidedog 0.7.0 or newer. Run this from the directory that will "
 "contain ``orbit``:"
 msgstr "Guidedog 0.6.2 이상을 사용하고, ``orbit`` 디렉터리를 만들 부모 폴더에서 실행하세요."
 
 #: ../../tutorial/a-custom-theme.rst:17
+#, fuzzy
+#| msgid ""
+#| "Rename the generated ``orbit/_templates/book.typ`` to "
+#| "``base-book.typ`` in the same directory. Keep this file: it supplies "
+#| "the tested page layout, cover, running heads, contents, code styles "
+#| "and optimized paragraph breaking."
 msgid ""
 "Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
-"in the same directory. Keep this file: it supplies the tested page "
+"in the same directory. We keep this file: it supplies the tested page "
 "layout, cover, running heads, contents, code styles and optimized "
 "paragraph breaking."
 msgstr ""
@@ -83,10 +93,16 @@ msgid "orbit/conf.toml"
 msgstr "orbit/conf.toml"
 
 #: ../../tutorial/a-custom-theme.rst:57
+#, fuzzy
+#| msgid ""
+#| "All paths in this tutorial are project files. HTML templates are found "
+#| "through ``templates_path``. The PDF entry point is always "
+#| "``_templates/book.typ`` under the source directory; changing "
+#| "``templates_path`` does not move it."
 msgid ""
 "All paths in this tutorial are project files. HTML templates are found "
 "through ``templates_path``. The PDF entry point is always "
-"``_templates/book.typ`` under the source directory; changing "
+"``_templates/book.typ`` under the source directory. Changing "
 "``templates_path`` does not move it."
 msgstr ""
 "이 튜토리얼의 경로는 모두 프로젝트 파일입니다. HTML 템플릿은 ``templates_path`` 설정으로 찾습니다. PDF "
@@ -201,11 +217,17 @@ msgstr ""
 "글자색만 쓰지 마세요."
 
 #: ../../tutorial/a-custom-theme.rst:116
+#, fuzzy
+#| msgid ""
+#| "Browser hyphenation follows the page language. It is not Typst's "
+#| "paragraph optimizer. The manual's optional English web optimizer is "
+#| "described separately in :doc:`../topics/typography`; this example uses "
+#| "native browser layout."
 msgid ""
 "Browser hyphenation follows the page language. It is not Typst's "
 "paragraph optimizer. The manual's optional English web optimizer is "
-"described separately in :doc:`../topics/typography`; this example uses "
-"native browser layout."
+"described separately in :doc:`../topics/typography`. This example uses "
+"the browser's own layout."
 msgstr ""
 "브라우저 하이픈 처리는 페이지 언어를 따르지만 Typst의 문단 최적화와 같지는 않습니다. 매뉴얼의 선택적 영문 웹 최적화는 "
 ":doc:`../topics/typography` 문서를 참고하세요. 이 예제는 브라우저 기본 조판을 씁니다."
@@ -247,12 +269,19 @@ msgid "orbit/_templates/book.typ"
 msgstr "orbit/_templates/book.typ"
 
 #: ../../tutorial/a-custom-theme.rst:140
+#, fuzzy
+#| msgid ""
+#| "The host calls ``book`` with metadata and the chapter content. The "
+#| "wrapper forwards those values to the generated base and supplies our "
+#| "palette. Passing ``body`` into the styled function keeps its rules in "
+#| "scope. The web stylesheet does not affect PDF; the Typst template does "
+#| "not affect HTML."
 msgid ""
 "The host calls ``book`` with metadata and the chapter content. The "
 "wrapper forwards those values to the generated base and supplies our "
 "palette. Passing ``body`` into the styled function keeps its rules in "
-"scope. The web stylesheet does not affect PDF; the Typst template does "
-"not affect HTML."
+"scope. The web stylesheet does not affect PDF, and the Typst template "
+"does not affect HTML."
 msgstr ""
 "호스트는 ``book`` 함수에 메타데이터와 장의 내용을 전달합니다. 래퍼는 이를 생성한 기본 템플릿에 넘기고 팔레트를 지정합니다. "
 "``body`` 내용을 스타일 함수에 전달해야 규칙이 본문에 적용됩니다. 웹 CSS는 PDF에, Typst 템플릿은 HTML에 "
@@ -320,13 +349,21 @@ msgstr ""
 "바꾸고, 새 프로젝트의 메타데이터와 소스는 유지합니다."
 
 #: ../../tutorial/a-custom-theme.rst:183
+#, fuzzy
+#| msgid ""
+#| "The copied PDF base makes the theme self-contained. When upgrading "
+#| "Guidedog, create a scratch quickstart project and compare its "
+#| "templates with your saved base. Adopt the changes you need, then "
+#| "rebuild every target. The built-in HTML layout can evolve too; small "
+#| "block overrides are easier to maintain than a second complete layout. "
+#| "For every variable and block, see :doc:`../templates`."
 msgid ""
-"The copied PDF base makes the theme self-contained. When upgrading "
-"Guidedog, create a scratch quickstart project and compare its templates "
-"with your saved base. Adopt the changes you need, then rebuild every "
-"target. The built-in HTML layout can evolve too; small block overrides "
-"are easier to maintain than a second complete layout. For every variable "
-"and block, see :doc:`../templates`."
+"The copied PDF base makes the theme self-contained. When we upgrade "
+"Guidedog, we create a scratch quickstart project and compare its "
+"templates with our saved base. We adopt the changes we need, then rebuild "
+"every target. The built-in HTML layout can change too. Small block "
+"overrides are easier to maintain than a second complete layout. For every "
+"variable and block, see :doc:`../templates`."
 msgstr ""
 "PDF 기본 템플릿도 복사하므로 테마는 독립적으로 동작합니다. 업그레이드할 때 임시 quickstart 프로젝트를 만들어 저장해 둔 "
 "기본 템플릿과 비교하세요. 필요한 변경을 반영하고 모든 형식을 다시 빌드합니다. 내장 HTML도 바뀔 수 있으므로 전체 복사본보다 "
@@ -349,19 +386,29 @@ msgid "Make a small book"
 msgstr "작은 책 만들기"
 
 #: ../../tutorial/a-small-book.rst:4
+#, fuzzy
+#| msgid ""
+#| "A website is an interconnected web of pages that readers explore "
+#| "non-linearly. A book, by contrast, requires a deliberate, sequential "
+#| "reading order with numbered chapters, running headers, and formal "
+#| "front matter."
 msgid ""
-"A website is an interconnected web of pages that readers explore "
-"non-linearly. A book, by contrast, requires a deliberate, sequential "
-"reading order with numbered chapters, running headers, and formal front "
-"matter."
+"A website is a web of linked pages. Readers explore it in any order. A "
+"book needs a deliberate reading order, with numbered chapters, running "
+"headers, and front matter."
 msgstr "웹에서는 링크를 따라 자유롭게 읽지만, 책에는 분명한 순서와 장 번호, 머리말, 앞부분 구성이 필요합니다."
 
 #: ../../tutorial/a-small-book.rst:8
+#, fuzzy
+#| msgid ""
+#| "In Guidedog, the table of contents directive (``toctree``) provides "
+#| "the bridge between both formats. A single ``toctree`` organizes your "
+#| "documents into a hierarchical sidebar tree for the web and a linear "
+#| "chapter progression for the PDF book."
 msgid ""
-"In Guidedog, the table of contents directive (``toctree``) provides the "
-"bridge between both formats. A single ``toctree`` organizes your "
-"documents into a hierarchical sidebar tree for the web and a linear "
-"chapter progression for the PDF book."
+"In Guidedog, the table of contents directive (``toctree``) serves both "
+"formats. One ``toctree`` organizes our documents into a sidebar tree for "
+"the web and a sequence of chapters for the PDF book."
 msgstr "``toctree`` 지시문은 두 형식을 연결합니다. 같은 트리가 웹의 계층 탐색과 PDF의 장 순서를 정합니다."
 
 #: ../../tutorial/a-small-book.rst:14
@@ -381,8 +428,12 @@ msgid "1. Add a new chapter"
 msgstr "1. 장 추가하기"
 
 #: ../../tutorial/a-small-book.rst:38
+#, fuzzy
+#| msgid ""
+#| "In your ``notes`` project, create a new document named "
+#| "``measurement.rst``:"
 msgid ""
-"In your ``notes`` project, create a new document named "
+"In our ``notes`` project, we create a new document named "
 "``measurement.rst``:"
 msgstr "``notes`` 프로젝트에 ``measurement.rst`` 파일을 만듭니다."
 
@@ -391,10 +442,15 @@ msgid "notes/measurement.rst"
 msgstr "notes/measurement.rst"
 
 #: ../../tutorial/a-small-book.rst:64
+#, fuzzy
+#| msgid ""
+#| "Notice the section label ``.. _measurement-units:`` placed directly "
+#| "above the heading. Labels establish cross-reference targets that work "
+#| "identically on the web and in print."
 msgid ""
-"Notice the section label ``.. _measurement-units:`` placed directly above "
-"the heading. Labels establish cross-reference targets that work "
-"identically on the web and in print."
+"Notice the section label ``.. _measurement-units:`` directly above the "
+"heading. A label makes a cross-reference target. It works the same on the "
+"web and in print."
 msgstr ""
 "제목 바로 위의 ``.. _measurement-units:`` 라벨은 웹과 인쇄 모두에서 쓰는 상호 참조 대상을 정의합니다."
 
@@ -403,7 +459,9 @@ msgid "2. Structure the reading order"
 msgstr "2. 읽는 순서 정하기"
 
 #: ../../tutorial/a-small-book.rst:70
-msgid "Open ``notes/index.rst`` and declare the table of contents:"
+#, fuzzy
+#| msgid "Open ``notes/index.rst`` and declare the table of contents:"
+msgid "We open ``notes/index.rst`` and declare the table of contents:"
 msgstr "``notes/index.rst`` 파일을 열어 목차를 선언합니다."
 
 #: ../../tutorial/a-small-book.rst:73
@@ -411,19 +469,27 @@ msgid "notes/index.rst"
 msgstr "notes/index.rst"
 
 #: ../../tutorial/a-small-book.rst:92
-msgid "Understanding the toctree options:"
-msgstr "toctree 옵션 설명:"
+msgid "The toctree options mean this:"
+msgstr ""
 
 #: ../../tutorial/a-small-book.rst:94
+#, fuzzy
+#| msgid ""
+#| "``:maxdepth: 2`` sets the depth of nested subheadings displayed in the "
+#| "table of contents."
 msgid ""
-"``:maxdepth: 2`` sets the depth of nested subheadings displayed in the "
-"table of contents."
+"``:maxdepth: 2`` sets the depth of nested subheadings shown in the table "
+"of contents."
 msgstr "``:maxdepth: 2`` 옵션은 목차에 표시할 하위 제목 깊이입니다."
 
 #: ../../tutorial/a-small-book.rst:95
+#, fuzzy
+#| msgid ""
+#| "``:numbered:`` activates automatic, hierarchical chapter numbering "
+#| "(for example, \"1. Measurement\" and \"1.1 Units of measurement\")."
 msgid ""
-"``:numbered:`` activates automatic, hierarchical chapter numbering (for "
-"example, \"1. Measurement\" and \"1.1 Units of measurement\")."
+"``:numbered:`` numbers the chapters and their sections (for example, \"1. "
+"Measurement\" and \"1.1 Units of measurement\")."
 msgstr ""
 "``:numbered:`` 옵션은 “1. Measurement”, “1.1 Units of measurement” 같은 계층 번호를 "
 "붙입니다."
@@ -435,18 +501,23 @@ msgid ""
 msgstr "``measurement`` 항목은 확장자 ``.rst`` 를 뺀 문서 이름입니다."
 
 #: ../../tutorial/a-small-book.rst:98
-msgid "Cross-referencing syntax:"
-msgstr "상호 참조 문법:"
+msgid "The cross-references work like this:"
+msgstr ""
 
 #: ../../tutorial/a-small-book.rst:100
 msgid "``:doc:`measurement``` links to the chapter by document path."
 msgstr "``:doc:`measurement``` 역할은 문서 경로로 장에 연결합니다."
 
 #: ../../tutorial/a-small-book.rst:101
+#, fuzzy
+#| msgid ""
+#| "``:ref:`measurement-units``` links to the labeled section. PDF uses "
+#| "the section title. A book template can also add the page number "
+#| "through ``page-ref``; see :doc:`a-custom-theme` for a working example."
 msgid ""
 "``:ref:`measurement-units``` links to the labeled section. PDF uses the "
 "section title. A book template can also add the page number through "
-"``page-ref``; see :doc:`a-custom-theme` for a working example."
+"``page-ref``. See :doc:`a-custom-theme` for a working example."
 msgstr ""
 "``:ref:`measurement-units``` 역할은 라벨이 있는 절에 연결합니다. PDF에는 절 제목을 쓰고, 책 템플릿의 "
 "``page-ref`` 설정으로 페이지도 추가할 수 있습니다. 예제는 :doc:`a-custom-theme` 문서를 참고하세요."
@@ -456,22 +527,34 @@ msgid "3. Add a diagram with Graphviz"
 msgstr "3. Graphviz 그림 추가하기"
 
 #: ../../tutorial/a-small-book.rst:108
+#, fuzzy
+#| msgid ""
+#| "Visual diagrams clarify complex relationships. Guidedog embeds the "
+#| "Graphviz engine natively, compiling vector diagrams directly into SVG "
+#| "for web pages and PDF drawings for print without requiring an external "
+#| "browser renderer."
 msgid ""
-"Visual diagrams clarify complex relationships. Guidedog embeds the "
-"Graphviz engine natively, compiling vector diagrams directly into SVG for "
-"web pages and PDF drawings for print without requiring an external "
-"browser renderer."
+"A diagram makes relationships clear. Guidedog links the Graphviz engine "
+"in. It draws vector diagrams as SVG for web pages and as PDF drawings for "
+"print. No external renderer is needed."
 msgstr ""
 "Guidedog는 Graphviz를 네이티브로 통합하여 웹용 SVG와 인쇄용 벡터 그림을 만듭니다. 외부 브라우저 렌더러는 필요 "
 "없습니다."
 
 #: ../../tutorial/a-small-book.rst:112
-msgid "Add a diagram to ``notes/measurement.rst``:"
+#, fuzzy
+#| msgid "Add a diagram to ``notes/measurement.rst``:"
+msgid "We add a diagram to ``notes/measurement.rst``:"
 msgstr "``notes/measurement.rst`` 문서에 그림을 더합니다."
 
 #: ../../tutorial/a-small-book.rst:135
+#, fuzzy
+#| msgid ""
+#| "The ``:caption:`` option supplies a caption. To number figures, add "
+#| "``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option "
+#| "provides alternative text for screen readers."
 msgid ""
-"The ``:caption:`` option supplies a caption. To number figures, add "
+"The ``:caption:`` option supplies a caption. To number figures, we add "
 "``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option provides "
 "alternative text for screen readers."
 msgstr ""
@@ -483,19 +566,28 @@ msgid "4. Build the book and inspect results"
 msgstr "4. 책을 빌드하고 검사하기"
 
 #: ../../tutorial/a-small-book.rst:142
-msgid "Rebuild your project:"
+#, fuzzy
+#| msgid "Rebuild your project:"
+msgid "We rebuild our project:"
 msgstr "프로젝트를 다시 빌드합니다."
 
 #: ../../tutorial/a-small-book.rst:149
-msgid "Inspect the results in both formats:"
+#, fuzzy
+#| msgid "Inspect the results in both formats:"
+msgid "We inspect the results in both formats:"
 msgstr "두 출력 모두 살펴봅니다."
 
 #: ../../tutorial/a-small-book.rst:151
+#, fuzzy
+#| msgid ""
+#| "**HTML website:** Open ``notes/_build/html/index.html``. The sidebar "
+#| "now shows the numbered chapter hierarchy. Clicking \"1. Measurement\" "
+#| "opens the new page, complete with local breadcrumbs and the rendered "
+#| "SVG diagram."
 msgid ""
 "**HTML website:** Open ``notes/_build/html/index.html``. The sidebar now "
-"shows the numbered chapter hierarchy. Clicking \"1. Measurement\" opens "
-"the new page, complete with local breadcrumbs and the rendered SVG "
-"diagram."
+"shows the numbered chapters. Clicking \"1. Measurement\" opens the new "
+"page, with breadcrumbs and the SVG diagram."
 msgstr ""
 "**HTML:** ``notes/_build/html/index.html`` 페이지를 열어 번호 있는 장 계층을 확인합니다. “1. "
 "Measurement”를 누르면 탐색 경로와 SVG 그림이 있는 장이 열립니다."
@@ -515,44 +607,63 @@ msgstr "5. 다음 단계"
 
 #: ../../tutorial/a-small-book.rst:161
 msgid ""
-"Now that you understand the dual output model, explore the topics section "
-"to learn more:"
-msgstr "두 출력의 원리를 알았으니 다음 주제로 진행하세요."
+"We now know how one source makes two outputs. The topics section goes "
+"further:"
+msgstr ""
 
 #: ../../tutorial/a-small-book.rst:163
-msgid "Learn rich markup, lists, and tables in :doc:`../topics/writing`."
+#, fuzzy
+#| msgid "Learn rich markup, lists, and tables in :doc:`../topics/writing`."
+msgid "Markup, lists, and tables are in :doc:`../topics/writing`."
 msgstr "마크업, 목록, 표는 :doc:`../topics/writing` 문서에서 배웁니다."
 
 #: ../../tutorial/a-small-book.rst:164
-msgid ""
-"Learn how to render formulas and equations in "
-":doc:`../topics/mathematics`."
+#, fuzzy
+#| msgid ""
+#| "Learn how to render formulas and equations in "
+#| ":doc:`../topics/mathematics`."
+msgid "Formulas and equations are in :doc:`../topics/mathematics`."
 msgstr "수식과 방정식은 :doc:`../topics/mathematics` 문서에서 배웁니다."
 
 #: ../../tutorial/a-small-book.rst:165
-msgid ""
-"Learn how to configure custom styles and book fonts in "
-":doc:`../topics/typography`."
+#, fuzzy
+#| msgid ""
+#| "Learn how to configure custom styles and book fonts in "
+#| ":doc:`../topics/typography`."
+msgid "Custom styles and book fonts are in :doc:`../topics/typography`."
 msgstr "스타일과 책 폰트 설정은 :doc:`../topics/typography` 문서에서 배웁니다."
 
 #: ../../tutorial/first-project.rst:1
-msgid "Your first project"
+#, fuzzy
+#| msgid "Your first project"
+msgid "Our first project"
 msgstr "첫 프로젝트"
 
 #: ../../tutorial/first-project.rst:4
+#, fuzzy
+#| msgid ""
+#| "This tutorial guides you through creating, writing, and building your "
+#| "first documentation project with Guidedog. The goal is modest and "
+#| "clear: start from a clean directory, generate both an HTML website and "
+#| "a printable PDF book from the same source file, and experience the "
+#| "live preview server."
 msgid ""
-"This tutorial guides you through creating, writing, and building your "
-"first documentation project with Guidedog. The goal is modest and clear: "
-"start from a clean directory, generate both an HTML website and a "
-"printable PDF book from the same source file, and experience the live "
-"preview server."
+"In this tutorial we create, write, and build our first documentation "
+"project with Guidedog. The goal is modest and clear. We start from an "
+"empty directory. We make an HTML website and a printable PDF book from "
+"the same source file. Then we try the live preview server."
 msgstr ""
 "빈 디렉터리에서 Guidedog 프로젝트를 만들어 문서를 쓰고, 같은 소스로 HTML과 인쇄용 PDF를 생성하며 실시간 미리 보기를 "
 "시험합니다."
 
 #: ../../tutorial/first-project.rst:9
+#, fuzzy
+#| msgid ""
+#| "You need a working installation of Guidedog. For PDF output, Guidedog "
+#| "can use its embedded compiler or an installed Typst binary (0.15.1 or "
+#| "newer). See :doc:`../howto/install`."
 msgid ""
-"You need a working installation of Guidedog. For PDF output, Guidedog can "
+"We need a working installation of Guidedog. For PDF output, Guidedog can "
 "use its embedded compiler or an installed Typst binary (0.15.1 or newer). "
 "See :doc:`../howto/install`."
 msgstr ""
@@ -560,208 +671,301 @@ msgstr ""
 ":doc:`../howto/install` 문서를 참고하세요."
 
 #: ../../tutorial/first-project.rst:12
-msgid "On macOS, you can install the official release using Homebrew:"
+#, fuzzy
+#| msgid "On macOS, you can install the official release using Homebrew:"
+msgid "On macOS, we can install the official release with Homebrew:"
 msgstr "macOS에서는 공식 버전을 Homebrew로 설치할 수 있습니다."
 
 #: ../../tutorial/first-project.rst:18
+msgid ""
+"Elsewhere, we build it from a source checkout with the Rust toolchain, "
+"and put ``target/release/guidedog`` on our ``PATH``:"
+msgstr ""
+
+#: ../../tutorial/first-project.rst:26
 msgid "Project architecture and build pipeline"
 msgstr "프로젝트 구조와 빌드 흐름"
 
-#: ../../tutorial/first-project.rst:21
+#: ../../tutorial/first-project.rst:29
+#, fuzzy
+#| msgid ""
+#| "Guidedog takes a single directory of source files and compiles it into "
+#| "two distinct artifacts: a responsive HTML website and a typeset PDF "
+#| "book."
 msgid ""
-"Guidedog takes a single directory of source files and compiles it into "
-"two distinct artifacts: a responsive HTML website and a typeset PDF book."
+"Guidedog takes one directory of source files and compiles it into two "
+"outputs: a responsive HTML website and a typeset PDF book."
 msgstr "하나의 소스 디렉터리를 반응형 HTML 사이트와 조판된 PDF 책으로 만듭니다."
 
-#: ../../tutorial/first-project.rst:26
+#: ../../tutorial/first-project.rst:34
 msgid ""
 "Project sources and templates pass through the Guidedog compiler to "
 "produce HTML and PDF artifacts."
 msgstr "프로젝트 소스와 템플릿이 Guidedog를 거쳐 HTML과 PDF가 됩니다."
 
-#: ../../tutorial/first-project.rst:26
+#: ../../tutorial/first-project.rst:34
 msgid "How Guidedog compiles a project into an HTML website and a PDF book."
 msgstr "프로젝트에서 HTML 사이트와 PDF 책을 만드는 과정."
 
-#: ../../tutorial/first-project.rst:46
+#: ../../tutorial/first-project.rst:54
 msgid "1. Create the project"
 msgstr "1. 프로젝트 만들기"
 
-#: ../../tutorial/first-project.rst:49
+#: ../../tutorial/first-project.rst:57
+#, fuzzy
+#| msgid ""
+#| "Run the ``quickstart`` command from a folder where the target "
+#| "directory ``notes`` does not yet exist:"
 msgid ""
-"Run the ``quickstart`` command from a folder where the target directory "
+"We run the ``quickstart`` command from a folder where the directory "
 "``notes`` does not yet exist:"
 msgstr "``notes`` 폴더가 아직 없는 부모 디렉터리에서 ``quickstart`` 명령을 실행합니다."
 
-#: ../../tutorial/first-project.rst:56
-msgid "Guidedog creates a complete, self-contained project structure:"
+#: ../../tutorial/first-project.rst:64
+#, fuzzy
+#| msgid "Guidedog creates a complete, self-contained project structure:"
+msgid "Guidedog creates a complete, self-contained project:"
 msgstr "Guidedog가 독립적으로 쓸 수 있는 프로젝트 구조를 만듭니다."
 
-#: ../../tutorial/first-project.rst:74
-msgid "Understanding the files:"
-msgstr "파일의 역할:"
+#: ../../tutorial/first-project.rst:82
+msgid "The files are:"
+msgstr ""
 
-#: ../../tutorial/first-project.rst:76
+#: ../../tutorial/first-project.rst:84
 msgid ""
 "``conf.toml``: Project settings (title, author, version, language, "
 "builders)."
 msgstr "``conf.toml``: 제목, 작성자, 버전, 언어, 빌더 설정."
 
-#: ../../tutorial/first-project.rst:77
+#: ../../tutorial/first-project.rst:85
+#, fuzzy
+#| msgid ""
+#| "``index.rst``: The root document that defines your front page and "
+#| "table of contents."
 msgid ""
-"``index.rst``: The root document that defines your front page and table "
-"of contents."
+"``index.rst``: The root document. It defines our front page and table of "
+"contents."
 msgstr "``index.rst``: 첫 화면과 목차를 정의하는 루트 문서."
 
-#: ../../tutorial/first-project.rst:78
+#: ../../tutorial/first-project.rst:86
 msgid "``_templates/layout.html``: The HTML website template (Jinja)."
 msgstr "``_templates/layout.html``: HTML 사이트 구조를 정하는 Jinja 템플릿."
 
-#: ../../tutorial/first-project.rst:79
+#: ../../tutorial/first-project.rst:87
 msgid ""
 "``_templates/book.typ``: The PDF book layout and typography template "
 "(Typst)."
 msgstr "``_templates/book.typ``: PDF의 레이아웃, 글자 구성, 표지를 정하는 Typst 템플릿."
 
-#: ../../tutorial/first-project.rst:80
+#: ../../tutorial/first-project.rst:88
 msgid "``_static/``: CSS stylesheets and JavaScript enhancements."
 msgstr "``_static/``: CSS와 JavaScript 보조 기능."
 
-#: ../../tutorial/first-project.rst:81
+#: ../../tutorial/first-project.rst:89
+#, fuzzy
+#| msgid ""
+#| "``assets/``: Dedicated folders for project images, diagrams, audio, "
+#| "and video files."
 msgid ""
-"``assets/``: Dedicated folders for project images, diagrams, audio, and "
-"video files."
+"``assets/``: Folders for project images, diagrams, audio, and video files."
 msgstr "``assets/``: 이미지, 그림, 오디오, 비디오 디렉터리."
 
-#: ../../tutorial/first-project.rst:83
+#: ../../tutorial/first-project.rst:91
+#, fuzzy
+#| msgid ""
+#| "Templates in Guidedog are directly visible and editable. They are "
+#| "placed directly inside your project rather than hidden within an "
+#| "external theme or system cache. You can modify them at any time to "
+#| "customize your site and book design. The first build creates "
+#| "``_build`` for generated output."
 msgid ""
-"Templates in Guidedog are directly visible and editable. They are placed "
-"directly inside your project rather than hidden within an external theme "
-"or system cache. You can modify them at any time to customize your site "
-"and book design. The first build creates ``_build`` for generated output."
+"Templates in Guidedog are ordinary files that we can see and edit. They "
+"live inside our project, not in an external theme or a system cache. We "
+"can change them at any time to adjust the design of our site and book. "
+"The first build creates ``_build`` for generated output."
 msgstr ""
 "템플릿은 외부 테마나 시스템 캐시에 숨기지 않고 프로젝트에서 직접 편집합니다. 사이트와 책을 언제든 조정할 수 있으며, 첫 빌드가 "
 "출력용 ``_build`` 디렉터리를 만듭니다."
 
-#: ../../tutorial/first-project.rst:88
+#: ../../tutorial/first-project.rst:96
 msgid "2. Write the first page"
 msgstr "2. 첫 페이지 쓰기"
 
-#: ../../tutorial/first-project.rst:91
+#: ../../tutorial/first-project.rst:99
+#, fuzzy
+#| msgid ""
+#| "Open ``notes/index.rst`` in your editor and replace its contents with "
+#| "the following:"
 msgid ""
-"Open ``notes/index.rst`` in your editor and replace its contents with the "
-"following:"
+"We open ``notes/index.rst`` in an editor and replace its contents with "
+"the following:"
 msgstr "편집기에서 ``notes/index.rst`` 파일을 열어 다음 내용으로 바꿉니다."
 
-#: ../../tutorial/first-project.rst:113
-msgid ""
-"This page demonstrates headings, mathematical notation, and an admonition "
-"note."
+#: ../../tutorial/first-project.rst:121
+#, fuzzy
+#| msgid ""
+#| "This page demonstrates headings, mathematical notation, and an "
+#| "admonition note."
+msgid "This page shows headings, mathematical notation, and a note."
 msgstr "제목, 수학 표기, 주의 블록을 보여 주는 페이지입니다."
 
-#: ../../tutorial/first-project.rst:115
+#: ../../tutorial/first-project.rst:123
 msgid "3. Build and inspect the outputs"
 msgstr "3. 출력 빌드하고 확인하기"
 
-#: ../../tutorial/first-project.rst:118
-msgid "Compile your project into both HTML and PDF formats:"
+#: ../../tutorial/first-project.rst:126
+#, fuzzy
+#| msgid "Compile your project into both HTML and PDF formats:"
+msgid "We compile our project into both HTML and PDF:"
 msgstr "프로젝트를 HTML과 PDF로 빌드합니다."
 
-#: ../../tutorial/first-project.rst:125
+#: ../../tutorial/first-project.rst:133
+#, fuzzy
+#| msgid ""
+#| "The ``-W`` flag instructs Guidedog to treat warnings as errors. "
+#| "Keeping this flag enabled in your routine checks ensures that broken "
+#| "references or markup errors are caught early."
 msgid ""
-"The ``-W`` flag instructs Guidedog to treat warnings as errors. Keeping "
-"this flag enabled in your routine checks ensures that broken references "
-"or markup errors are caught early."
+"The ``-W`` flag tells Guidedog to treat warnings as errors. With this "
+"flag in our routine checks, broken references and markup errors are "
+"caught early."
 msgstr "``-W`` 옵션은 경고를 오류로 처리합니다. 평소에 켜 두면 참조나 마크업 오류를 일찍 찾을 수 있습니다."
 
-#: ../../tutorial/first-project.rst:128
-msgid "Now inspect the output files:"
+#: ../../tutorial/first-project.rst:136
+#, fuzzy
+#| msgid "Now inspect the output files:"
+msgid "Now we inspect the output files:"
 msgstr "생성된 파일을 확인합니다."
 
-#: ../../tutorial/first-project.rst:130
+#: ../../tutorial/first-project.rst:138
+#, fuzzy
+#| msgid ""
+#| "Open ``notes/_build/html/index.html`` in your web browser. You will "
+#| "see a clean, responsive documentation website with a theme switch, "
+#| "search bar, and formatted math."
 msgid ""
-"Open ``notes/_build/html/index.html`` in your web browser. You will see a "
+"We open ``notes/_build/html/index.html`` in a web browser. We see a "
 "clean, responsive documentation website with a theme switch, search bar, "
 "and formatted math."
 msgstr ""
 "브라우저에서 ``notes/_build/html/index.html`` 페이지를 열어 테마 전환, 검색, 수학 표기를 확인합니다."
 
-#: ../../tutorial/first-project.rst:132
+#: ../../tutorial/first-project.rst:140
+#, fuzzy
+#| msgid ""
+#| "Open the PDF file generated in ``notes/_build/pdf/``. You will see a "
+#| "book layout complete with running headers, page numbers, and "
+#| "typographic math."
 msgid ""
-"Open the PDF file generated in ``notes/_build/pdf/``. You will see a book "
-"layout complete with running headers, page numbers, and typographic math."
+"We open the PDF file in ``notes/_build/pdf/``. We see a book layout with "
+"running headers, page numbers, and typeset math."
 msgstr "``notes/_build/pdf/`` 디렉터리의 PDF를 열어 머리말, 페이지 번호, 수식을 확인합니다."
 
-#: ../../tutorial/first-project.rst:135
+#: ../../tutorial/first-project.rst:143
+#, fuzzy
+#| msgid ""
+#| "Guidedog formats mathematics appropriately for each medium: using "
+#| "client-side MathJax for the browser, and native vector formulas for "
+#| "the Typst PDF engine."
 msgid ""
-"Guidedog formats mathematics appropriately for each medium: using "
-"client-side MathJax for the browser, and native vector formulas for the "
-"Typst PDF engine."
+"Guidedog formats mathematics for each medium. The browser gets MathJax, "
+"and the PDF gets Typst's own vector formulas."
 msgstr "브라우저는 MathJax를, Typst PDF 엔진은 네이티브 벡터 수식을 사용합니다."
 
-#: ../../tutorial/first-project.rst:138
+#: ../../tutorial/first-project.rst:146
 msgid "4. Live preview and incremental rebuilds"
 msgstr "4. 실시간 미리 보기와 증분 빌드"
 
-#: ../../tutorial/first-project.rst:141
+#: ../../tutorial/first-project.rst:149
 msgid "Guidedog includes a built-in development web server:"
 msgstr "Guidedog에는 개발용 서버가 내장되어 있습니다."
 
-#: ../../tutorial/first-project.rst:147
+#: ../../tutorial/first-project.rst:155
+#, fuzzy
+#| msgid ""
+#| "The terminal prints a local URL, such as ``http://localhost:8000``. "
+#| "Open this address in your browser."
 msgid ""
-"The terminal prints a local URL, such as ``http://localhost:8000``. Open "
-"this address in your browser."
+"The terminal prints a local URL, such as ``http://localhost:8000``. We "
+"open this address in a browser."
 msgstr "터미널의 주소(예: ``http://localhost:8000``)를 브라우저에서 엽니다."
 
-#: ../../tutorial/first-project.rst:150
-msgid "Now test the live editing loop:"
+#: ../../tutorial/first-project.rst:158
+#, fuzzy
+#| msgid "Now test the live editing loop:"
+msgid "Now we test the live editing loop:"
 msgstr "편집과 미리 보기 흐름을 시험합니다."
 
-#: ../../tutorial/first-project.rst:154
+#: ../../tutorial/first-project.rst:162
+#, fuzzy
+#| msgid ""
+#| "Editing and saving a file triggers timestamp verification and "
+#| "selective rebuild upon refreshing the browser."
 msgid ""
-"Editing and saving a file triggers timestamp verification and selective "
-"rebuild upon refreshing the browser."
+"Editing and saving a file triggers an input check and a selective rebuild "
+"upon refreshing the browser."
 msgstr "편집 후 저장하고 브라우저를 새로 고치면 시각 확인과 필요한 재빌드가 이루어집니다."
 
-#: ../../tutorial/first-project.rst:154
+#: ../../tutorial/first-project.rst:162
 msgid "The live development cycle with guidedog serve."
 msgstr "guidedog serve의 실시간 개발 흐름."
 
-#: ../../tutorial/first-project.rst:173
+#: ../../tutorial/first-project.rst:181
 msgid "Edit ``notes/index.rst`` to add a new paragraph."
 msgstr "``notes/index.rst`` 문서에 단락을 추가합니다."
 
-#: ../../tutorial/first-project.rst:174
+#: ../../tutorial/first-project.rst:182
 msgid "Save the file."
 msgstr "파일을 저장합니다."
 
-#: ../../tutorial/first-project.rst:175
-msgid "Refresh your browser page."
+#: ../../tutorial/first-project.rst:183
+#, fuzzy
+#| msgid "Refresh your browser page."
+msgid "Refresh the browser page."
 msgstr "브라우저를 새로 고칩니다."
 
-#: ../../tutorial/first-project.rst:177
+#: ../../tutorial/first-project.rst:185
+#, fuzzy
+#| msgid ""
+#| "Before serving a requested page, Guidedog checks file modification "
+#| "timestamps against its cached build environment. If inputs have "
+#| "changed, it rebuilds only the affected documents before responding to "
+#| "the browser request."
 msgid ""
-"Before serving a requested page, Guidedog checks file modification "
-"timestamps against its cached build environment. If inputs have changed, "
-"it rebuilds only the affected documents before responding to the browser "
-"request."
+"Before serving a requested page, Guidedog checks the project's inputs "
+"(sources, templates, static files and configuration) against its saved "
+"build environment. If an input has changed, it rebuilds only the affected "
+"documents before it answers the browser request. A failed rebuild keeps "
+"the previous site and reports the problem in the terminal."
 msgstr "페이지를 제공하기 전 입력 파일의 수정 시각을 캐시와 비교합니다. 바뀌었다면 영향받은 문서를 먼저 빌드한 후 응답합니다."
 
-#: ../../tutorial/first-project.rst:181
+#: ../../tutorial/first-project.rst:191
+#, fuzzy
+#| msgid ""
+#| "When you run a build without modifying any files, Guidedog reuses the "
+#| "cached document trees, avoiding redundant re-parsing."
 msgid ""
-"When you run a build without modifying any files, Guidedog reuses the "
-"cached document trees, avoiding redundant re-parsing."
+"When we run a build without changing any files, Guidedog reuses the saved "
+"document trees and parses nothing again. See :doc:`../topics/projects` "
+"for how it decides."
 msgstr "파일이 그대로라면 캐시의 문서 트리를 재사용하여 다시 분석하지 않습니다."
 
-#: ../../tutorial/first-project.rst:184
+#: ../../tutorial/first-project.rst:194
+#, fuzzy
+#| msgid ""
+#| "Press ``Ctrl+C`` in your terminal to stop the server when you are done."
 msgid ""
-"Press ``Ctrl+C`` in your terminal to stop the server when you are done."
+"We press ``Ctrl+C`` in the terminal to stop the server when we are done."
 msgstr "마치면 터미널에서 ``Ctrl+C`` 를 눌러 서버를 멈춥니다."
 
-#: ../../tutorial/first-project.rst:186
+#: ../../tutorial/first-project.rst:196
+#, fuzzy
+#| msgid ""
+#| "Continue to :doc:`a-small-book` to learn how to organize multiple "
+#| "chapters and cross-references."
 msgid ""
-"Continue to :doc:`a-small-book` to learn how to organize multiple "
-"chapters and cross-references."
+"Next, :doc:`a-small-book` shows how to organize several chapters and "
+"cross-references."
 msgstr "장 구성과 상호 참조는 :doc:`a-small-book` 문서로 이어집니다."
 
 #: ../../tutorial/index.rst:1
@@ -769,9 +973,28 @@ msgid "Tutorials"
 msgstr "따라 하기"
 
 #: ../../tutorial/index.rst:4
+#, fuzzy
+#| msgid ""
+#| "Follow these pages in order. Each step produces a result you can "
+#| "inspect."
 msgid ""
-"Follow these pages in order. Each step produces a result you can inspect."
+"We follow these pages in order. Each step produces a result we can "
+"inspect."
 msgstr "순서대로 따라 하세요. 각 단계에서 확인할 수 있는 결과가 나옵니다."
+
+#~ msgid "Understanding the toctree options:"
+#~ msgstr "toctree 옵션 설명:"
+
+#~ msgid "Cross-referencing syntax:"
+#~ msgstr "상호 참조 문법:"
+
+#~ msgid ""
+#~ "Now that you understand the dual output model, explore the topics "
+#~ "section to learn more:"
+#~ msgstr "두 출력의 원리를 알았으니 다음 주제로 진행하세요."
+
+#~ msgid "Understanding the files:"
+#~ msgstr "파일의 역할:"
 
 #~ msgid ""
 #~ "A site is a graph of documents. A book needs a reading order. A "

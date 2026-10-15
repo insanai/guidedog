@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 04:29+0000\n"
+"POT-Creation-Date: 2026-10-15 04:11+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -35,25 +35,31 @@ msgstr "순서도"
 
 #: ../../topics/diagrams.rst:13
 msgid ""
-"If capacity fits, run conversion; otherwise the host prepares storage and "
-"retries."
-msgstr "용량이 충분하면 변환한다. 부족하면 호스트가 저장 공간을 준비하고 다시 시도한다."
+"If the request fits the limits, the workspace buffer grows and conversion "
+"continues; otherwise the conversion ends with a Limit result."
+msgstr ""
 
 #: ../../topics/diagrams.rst:13
-msgid "Capacity is checked before storage is borrowed or grown."
-msgstr "저장 공간을 빌리거나 늘리기 전에 용량을 확인한다."
+msgid "A conversion checks its limits before a buffer grows."
+msgstr ""
 
 #: ../../topics/diagrams.rst:33
+#, fuzzy
+#| msgid ""
+#| "The drawing names the owner at the growth step. It does not suggest "
+#| "that the conversion core allocates. This distinction is part of the "
+#| "contract."
 msgid ""
-"The drawing names the owner at the growth step. It does not suggest that "
-"the conversion core allocates. This distinction is part of the contract."
+"The drawing names the decision at the growth step. It does not suggest "
+"that running out of room aborts the program: a bound produces a result "
+"the caller can report. This distinction is part of the contract."
 msgstr "그림은 확장 단계의 소유자를 밝힌다. 변환 코어가 할당한다고 암시하지 않는다. 이 구분은 계약의 일부다."
 
-#: ../../topics/diagrams.rst:37
+#: ../../topics/diagrams.rst:38
 msgid "Author a graph"
 msgstr "그래프 작성"
 
-#: ../../topics/diagrams.rst:55
+#: ../../topics/diagrams.rst:56
 msgid ""
 "``graphviz``, ``graph``, and ``digraph`` are built in. Guidedog renders "
 "them through Graphviz. HTML receives an SVG asset. PDF embeds the "
@@ -62,11 +68,11 @@ msgstr ""
 "``graphviz``\\ , ``graph``\\ , ``digraph``\\ 는 내장되어 있다. Guidedog이 "
 "Graphviz로 렌더링해 HTML에는 SVG를, PDF에는 그림을 넣는다. 그래프 소스는 같다."
 
-#: ../../topics/diagrams.rst:59
+#: ../../topics/diagrams.rst:60
 msgid "Light, dark and print"
 msgstr "밝은 모드, 어두운 모드, 인쇄"
 
-#: ../../topics/diagrams.rst:62
+#: ../../topics/diagrams.rst:63
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
@@ -75,7 +81,7 @@ msgstr ""
 "배경을 투명하게 해도 글자색은 변하지 않습니다. 어두운 페이지에서 어두운 글자가 사라지지 않도록 일반 그래프는 원래 색을 보존하고 "
 "기본 다크 테마에서 밝은 패널을 사용합니다."
 
-#: ../../topics/diagrams.rst:66
+#: ../../topics/diagrams.rst:67
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
 "the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
@@ -88,7 +94,7 @@ msgstr ""
 "지원합니다. SVG 내부의 고정 CSS가 명시적 테마 선택을 포함한 부모 페이지의 ``color-scheme`` 값을 따릅니다. "
 "스크립트, 외부 CSS, 인라인 페이지 SVG는 필요 없습니다."
 
-#: ../../topics/diagrams.rst:72
+#: ../../topics/diagrams.rst:73
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
@@ -96,76 +102,94 @@ msgstr ""
 "라벨은 짧게 씁니다. 단계는 둥근 상자, 입력은 메모, 영속 저장소는 원통으로 그리고, 노드 클래스로 다크 팔레트의 역할을 "
 "구분합니다."
 
-#: ../../topics/diagrams.rst:75
+#: ../../topics/diagrams.rst:76
 msgid "Semantic node classes"
 msgstr "의미를 나타내는 노드 클래스"
 
-#: ../../topics/diagrams.rst:79
+#: ../../topics/diagrams.rst:80
 msgid "DOT class"
 msgstr "DOT 클래스"
 
-#: ../../topics/diagrams.rst:80
+#: ../../topics/diagrams.rst:81
 msgid "Role"
 msgstr "역할"
 
-#: ../../topics/diagrams.rst:81
+#: ../../topics/diagrams.rst:82
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:82
+#: ../../topics/diagrams.rst:83
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "소스, 설정, 참고 자료. 따뜻한 중성색."
 
-#: ../../topics/diagrams.rst:83
+#: ../../topics/diagrams.rst:84
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:84
+#: ../../topics/diagrams.rst:85
 msgid "A produced artifact; blue."
 msgstr "생성 결과물. 파란색."
 
-#: ../../topics/diagrams.rst:85
+#: ../../topics/diagrams.rst:86
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:86
+#: ../../topics/diagrams.rst:87
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "선택적 확장 지점. 황색 계열과 점선 테두리."
 
-#: ../../topics/diagrams.rst:87
+#: ../../topics/diagrams.rst:88
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:88
+#: ../../topics/diagrams.rst:89
 msgid "A decision; amber, with a diamond shape."
 msgstr "판단. 황색 계열과 마름모."
 
-#: ../../topics/diagrams.rst:89
+#: ../../topics/diagrams.rst:90
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:90
-msgid "A separate native allocation boundary; violet."
+#: ../../topics/diagrams.rst:91
+#, fuzzy
+#| msgid "A separate native allocation boundary; violet."
+msgid "A separate ownership or allocation boundary; violet."
 msgstr "별도의 네이티브 할당 경계. 보라색."
 
-#: ../../topics/diagrams.rst:92
+#: ../../topics/diagrams.rst:93
+#, fuzzy
+#| msgid ""
+#| "For example, ``source [class=\"gd-input\", shape=note, "
+#| "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
+#| "role. Classes do not choose shapes or add labels: write those "
+#| "explicitly so the drawing also works in monochrome. Unclassified steps "
+#| "use green. This palette is opt-in; do not apply it to artwork whose "
+#| "exact colors carry data."
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
-"role. Classes do not choose shapes or add labels: write those explicitly "
-"so the drawing also works in monochrome. Unclassified steps use green. "
-"This palette is opt-in; do not apply it to artwork whose exact colors "
-"carry data."
+"role. Classes do not choose shapes or add labels. We write those "
+"explicitly, so the drawing also works in monochrome. Unclassified steps "
+"use green. This palette is opt-in. We do not apply it to artwork whose "
+"exact colors carry data."
 msgstr ""
 "예를 들어 ``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` "
 "설정은 밝은 표현과 어두운 역할을 함께 지정합니다. 클래스는 모양이나 라벨을 넣지 않으므로 흑백에서도 읽히도록 직접 지정하세요. "
 "분류하지 않은 단계는 녹색입니다. 정확한 색이 데이터를 나타내는 그림에는 이 선택적 팔레트를 적용하지 마세요."
 
-#: ../../topics/diagrams.rst:98
+#: ../../topics/diagrams.rst:99
+#, fuzzy
+#| msgid ""
+#| "The light DOT attributes remain the PDF master. The book receives an "
+#| "SVG without the adaptive stylesheet. Printed HTML selects the light "
+#| "scheme too. Keep both palettes legible and test the actual book; "
+#| "transparency alone proves neither. The inheritance rule is defined by "
+#| "the `CSS color-scheme specification "
+#| "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
-"too. Keep both palettes legible and test the actual book; transparency "
+"too. Keep both palettes legible and test the actual book. Transparency "
 "alone proves neither. The inheritance rule is defined by the `CSS "
 "color-scheme specification "
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
@@ -174,11 +198,11 @@ msgstr ""
 "팔레트와 실제 책을 검사하세요. 투명 배경만으로 가독성을 보장할 수는 없습니다. 상속 규칙은 `CSS color-scheme 명세 "
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ 를 따릅니다."
 
-#: ../../topics/diagrams.rst:104
+#: ../../topics/diagrams.rst:105
 msgid "Make the result legible"
 msgstr "읽기 쉽게 다듬기"
 
-#: ../../topics/diagrams.rst:107
+#: ../../topics/diagrams.rst:108
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -188,7 +212,7 @@ msgstr ""
 "노드 레이블은 짧게 하고 긴 규칙은 아래에 설명한다. 주 경로는 한 방향으로 두고 돌아오는 간선에 조건을 쓴다. 색 외에 형태와 "
 "텍스트도 쓴다. 인쇄물에는 색이 없을 수 있다."
 
-#: ../../topics/diagrams.rst:111
+#: ../../topics/diagrams.rst:112
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -197,10 +221,15 @@ msgstr ""
 "대체 텍스트와 캡션을 제공하고 좁은 브라우저와 PDF에서 확인한다. 작은 글씨여야 들어가는 그림은 둘로 나눈다. 이미지 크기는 "
 ":doc:`../media`\\ 를 참고한다."
 
-#: ../../topics/diagrams.rst:115
+#: ../../topics/diagrams.rst:116
+#, fuzzy
+#| msgid ""
+#| "On narrow screens, captioned diagrams scroll horizontally to keep "
+#| "labels readable. Scroll inside the figure; the page itself keeps its "
+#| "width."
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
-"readable. Scroll inside the figure; the page itself keeps its width."
+"readable. Scroll inside the figure. The page itself keeps its width."
 msgstr ""
 "좁은 화면에서는 설명이 있는 그림 안을 가로로 스크롤할 수 있습니다. 라벨은 읽을 크기를 유지하고 페이지 전체는 넓어지지 않습니다."
 
@@ -209,16 +238,24 @@ msgid "Domains"
 msgstr "도메인"
 
 #: ../../topics/domains.rst:4
+#, fuzzy
+#| msgid ""
+#| "A domain is a collection of markup constructs (directives and roles) "
+#| "for describing and cross-referencing program objects belonging to a "
+#| "specific programming language or domain of discourse."
 msgid ""
-"A domain is a collection of markup constructs (directives and roles) for "
-"describing and cross-referencing program objects belonging to a specific "
-"programming language or domain of discourse."
+"A domain is a set of directives and roles. They describe and "
+"cross-reference the objects of one programming language or one field of "
+"discourse."
 msgstr "도메인은 특정 프로그래밍 언어나 분야의 객체를 설명하고 상호 참조하는 지시문과 역할의 모음입니다."
 
 #: ../../topics/domains.rst:8
+#, fuzzy
+#| msgid ""
+#| "Guidedog provides native, built-in implementations of the standard "
+#| "Sphinx domains:"
 msgid ""
-"Guidedog provides native, built-in implementations of the standard Sphinx "
-"domains:"
+"Guidedog has built-in implementations of the standard Sphinx domains:"
 msgstr "Guidedog에는 다음 Sphinx 도메인이 기본 구현되어 있습니다."
 
 #: ../../topics/domains.rst:10
@@ -259,11 +296,21 @@ msgstr ""
 "**Odin 도메인** (``odin``): Odin 패키지, 프로시저, 구조체, 공용체, 열거형입니다. :doc:`../odin` "
 "을 참고하세요."
 
-#: ../../topics/domains.rst:17
+#: ../../topics/domains.rst:16
+#, fuzzy
+#| msgid ""
+#| "**C domain** (``c``): C functions, types, structs, unions, enums, "
+#| "enumerators, variables, and macros."
+msgid ""
+"**Rust domain** (``rust``): Rust crates, modules, functions, structs, "
+"enums, traits, impls, and macros (see `Rust domain`_ below)."
+msgstr "**C 도메인** (``c``): 함수, 타입, 구조체, 공용체, 열거형, 열거자, 변수, 매크로입니다."
+
+#: ../../topics/domains.rst:18
 msgid "Setting the primary domain"
 msgstr "기본 도메인 설정"
 
-#: ../../topics/domains.rst:20
+#: ../../topics/domains.rst:21
 msgid ""
 "The default domain is set with ``primary_domain`` in ``conf.toml`` "
 "(default: ``\"py\"``). When a primary domain is active, its directives "
@@ -275,98 +322,100 @@ msgstr ""
 "설정하면 접두사를 생략할 수 있습니다. 예를 들어 ``.. py:function::`` 대신 ``.. function::`` 을, "
 "``:py:func:`name``` 대신 ``:func:`name``` 을 쓸 수 있습니다."
 
-#: ../../topics/domains.rst:25
-msgid "To change the active domain locally within a document:"
+#: ../../topics/domains.rst:26
+#, fuzzy
+#| msgid "To change the active domain locally within a document:"
+msgid "To change the active domain within one document:"
 msgstr "문서 안에서 현재 도메인을 바꾸려면 다음과 같이 작성합니다."
 
-#: ../../topics/domains.rst:31
+#: ../../topics/domains.rst:32
 msgid "Standard domain"
 msgstr "표준 도메인"
 
-#: ../../topics/domains.rst:34
+#: ../../topics/domains.rst:35
 msgid ""
 "The standard domain describes command-line tools, environment variables, "
 "and document cross-references."
 msgstr "표준 도메인은 명령줄 도구, 환경 변수, 문서 상호 참조를 설명합니다."
 
-#: ../../topics/domains.rst:37 ../../topics/domains.rst:73
-#: ../../topics/domains.rst:118 ../../topics/domains.rst:160
-#: ../../topics/domains.rst:194
+#: ../../topics/domains.rst:38 ../../topics/domains.rst:74
+#: ../../topics/domains.rst:119 ../../topics/domains.rst:161
+#: ../../topics/domains.rst:195 ../../topics/domains.rst:227
 msgid "Directives"
 msgstr "지시문"
 
-#: ../../topics/domains.rst:52 ../../topics/domains.rst:102
-#: ../../topics/domains.rst:143 ../../topics/domains.rst:179
-#: ../../topics/domains.rst:209
+#: ../../topics/domains.rst:53 ../../topics/domains.rst:103
+#: ../../topics/domains.rst:144 ../../topics/domains.rst:180
+#: ../../topics/domains.rst:210 ../../topics/domains.rst:270
 msgid "Roles"
 msgstr "역할"
 
-#: ../../topics/domains.rst:55
+#: ../../topics/domains.rst:56
 msgid "``:doc:`path```: Links to a project document by relative path."
 msgstr "``:doc:`path```: 상대 경로로 프로젝트 문서에 연결합니다."
 
-#: ../../topics/domains.rst:56
+#: ../../topics/domains.rst:57
 msgid ""
 "``:ref:`label```: Links to an explicit target label (``.. _label:``)."
 msgstr "``:ref:`label```: 명시적 대상 레이블 ``.. _label:`` 에 연결합니다."
 
-#: ../../topics/domains.rst:57
+#: ../../topics/domains.rst:58
 msgid ""
 "``:term:`term```: Links to a term defined in a ``glossary`` directive."
 msgstr "``:term:`term```: ``glossary`` 에 정의한 용어에 연결합니다."
 
-#: ../../topics/domains.rst:58
+#: ../../topics/domains.rst:59
 msgid ""
 "``:option:`--config```: Links to a command-line option described by "
 "``option``."
 msgstr "``:option:`--config```: ``option`` 에 설명한 명령줄 옵션에 연결합니다."
 
-#: ../../topics/domains.rst:59
+#: ../../topics/domains.rst:60
 msgid ""
 "``:envvar:`VARIABLE```: Links to an environment variable described by "
 "``envvar``."
 msgstr "``:envvar:`VARIABLE```: ``envvar`` 에 설명한 환경 변수에 연결합니다."
 
-#: ../../topics/domains.rst:60
+#: ../../topics/domains.rst:61
 msgid "``:command:`name```: Marks a system command name."
 msgstr "``:command:`name```: 시스템 명령 이름을 표시합니다."
 
-#: ../../topics/domains.rst:61
+#: ../../topics/domains.rst:62
 msgid ""
 "``:file:`path```: Marks a file or directory path, supporting "
 "``{variable}`` placeholders."
 msgstr "``:file:`path```: 파일이나 디렉터리 경로를 표시합니다. ``{variable}`` 자리표시자도 지원합니다."
 
-#: ../../topics/domains.rst:62
+#: ../../topics/domains.rst:63
 msgid "``:kbd:`Ctrl+C```: Marks keyboard keystrokes."
 msgstr "``:kbd:`Ctrl+C```: 키보드 입력을 표시합니다."
 
-#: ../../topics/domains.rst:63
+#: ../../topics/domains.rst:64
 msgid ""
 "``:menuselection:`File --> Save As```: Formats a software menu sequence."
 msgstr "``:menuselection:`File --> Save As```: 메뉴 선택 순서를 표시합니다."
 
-#: ../../topics/domains.rst:64
+#: ../../topics/domains.rst:65
 msgid "``:guilabel:`Submit```: Formats a button or user interface element."
 msgstr "``:guilabel:`Submit```: 버튼이나 UI 요소를 표시합니다."
 
-#: ../../topics/domains.rst:65
+#: ../../topics/domains.rst:66
 msgid "``:pep:`8```: Links to a Python Enhancement Proposal."
 msgstr "``:pep:`8```: Python 개선 제안에 연결합니다."
 
-#: ../../topics/domains.rst:66
+#: ../../topics/domains.rst:67
 msgid "``:rfc:`7231```: Links to an IETF Request for Comments."
 msgstr "``:rfc:`7231```: IETF RFC 문서에 연결합니다."
 
-#: ../../topics/domains.rst:68
+#: ../../topics/domains.rst:69
 msgid "Python domain"
 msgstr "Python 도메인"
 
-#: ../../topics/domains.rst:71
+#: ../../topics/domains.rst:72
 msgid "The Python domain describes Python interfaces and signatures."
 msgstr "Python 도메인은 Python 인터페이스와 시그니처를 설명합니다."
 
-#: ../../topics/domains.rst:98
+#: ../../topics/domains.rst:99
 msgid ""
 "Directives include: ``py:module``, ``py:currentmodule``, ``py:function``, "
 "``py:data``, ``py:class``, ``py:method``, ``py:staticmethod``, "
@@ -378,153 +427,227 @@ msgstr ""
 "``py:classmethod``, ``py:attribute``, ``py:property``, ``py:exception``, "
 "``py:decorator``, ``py:type`` 입니다."
 
-#: ../../topics/domains.rst:105
+#: ../../topics/domains.rst:106
 msgid "``:py:func:`name```: Links to a Python function."
 msgstr "``:py:func:`name```: Python 함수에 연결합니다."
 
-#: ../../topics/domains.rst:106
+#: ../../topics/domains.rst:107
 msgid "``:py:class:`name```: Links to a Python class."
 msgstr "``:py:class:`name```: Python 클래스에 연결합니다."
 
-#: ../../topics/domains.rst:107
+#: ../../topics/domains.rst:108
 msgid "``:py:meth:`name```: Links to a Python class or instance method."
 msgstr "``:py:meth:`name```: Python 클래스 메서드 또는 인스턴스 메서드에 연결합니다."
 
-#: ../../topics/domains.rst:108
+#: ../../topics/domains.rst:109
 msgid "``:py:attr:`name```: Links to a Python attribute."
 msgstr "``:py:attr:`name```: Python 속성에 연결합니다."
 
-#: ../../topics/domains.rst:109
+#: ../../topics/domains.rst:110
 msgid "``:py:data:`name```: Links to Python module-level data."
 msgstr "``:py:data:`name```: Python 모듈 수준 데이터에 연결합니다."
 
-#: ../../topics/domains.rst:110
+#: ../../topics/domains.rst:111
 msgid "``:py:exc:`name```: Links to a Python exception class."
 msgstr "``:py:exc:`name```: Python 예외 클래스에 연결합니다."
 
-#: ../../topics/domains.rst:111
+#: ../../topics/domains.rst:112
 msgid "``:py:mod:`name```: Links to a Python module."
 msgstr "``:py:mod:`name```: Python 모듈에 연결합니다."
 
-#: ../../topics/domains.rst:113
+#: ../../topics/domains.rst:114
 msgid "C domain"
 msgstr "C 도메인"
 
-#: ../../topics/domains.rst:116
+#: ../../topics/domains.rst:117
 msgid "The C domain describes C language libraries and headers."
 msgstr "C 도메인은 C 라이브러리와 헤더 파일을 설명합니다."
 
-#: ../../topics/domains.rst:146
+#: ../../topics/domains.rst:147
 msgid "``:c:func:`name```: Links to a C function."
 msgstr "``:c:func:`name```: C 함수에 연결합니다."
 
-#: ../../topics/domains.rst:147
+#: ../../topics/domains.rst:148
 msgid "``:c:member:`name```: Links to a C struct or union member."
 msgstr "``:c:member:`name```: C 구조체 또는 공용체 멤버에 연결합니다."
 
-#: ../../topics/domains.rst:148
+#: ../../topics/domains.rst:149
 msgid "``:c:data:`name``` / ``:c:var:`name```: Links to a C variable."
 msgstr "``:c:data:`name``` / ``:c:var:`name```: C 변수에 연결합니다."
 
-#: ../../topics/domains.rst:149
+#: ../../topics/domains.rst:150
 msgid "``:c:type:`name```: Links to a C typedef or type."
 msgstr "``:c:type:`name```: C typedef 또는 타입에 연결합니다."
 
-#: ../../topics/domains.rst:150
+#: ../../topics/domains.rst:151
 msgid "``:c:struct:`name```: Links to a C struct."
 msgstr "``:c:struct:`name```: C 구조체에 연결합니다."
 
-#: ../../topics/domains.rst:151
+#: ../../topics/domains.rst:152
 msgid "``:c:union:`name```: Links to a C union."
 msgstr "``:c:union:`name```: C 공용체에 연결합니다."
 
-#: ../../topics/domains.rst:152
+#: ../../topics/domains.rst:153
 msgid "``:c:enum:`name```: Links to a C enum."
 msgstr "``:c:enum:`name```: C 열거형에 연결합니다."
 
-#: ../../topics/domains.rst:153
+#: ../../topics/domains.rst:154
 msgid "``:c:macro:`name```: Links to a C preprocessor macro."
 msgstr "``:c:macro:`name```: C 전처리기 매크로에 연결합니다."
 
-#: ../../topics/domains.rst:155
+#: ../../topics/domains.rst:156
 msgid "C++ domain"
 msgstr "C++ 도메인"
 
-#: ../../topics/domains.rst:158
+#: ../../topics/domains.rst:159
 msgid ""
 "The C++ domain supports modern C++ constructs, concepts, namespaces, and "
 "scopes."
 msgstr "C++ 도메인은 현대 C++ 구문, 콘셉트, 네임스페이스, 범위를 지원합니다."
 
-#: ../../topics/domains.rst:182
+#: ../../topics/domains.rst:183
 msgid "``:cpp:class:`name```: Links to a C++ class or struct."
 msgstr "``:cpp:class:`name```: C++ 클래스 또는 구조체에 연결합니다."
 
-#: ../../topics/domains.rst:183
+#: ../../topics/domains.rst:184
 msgid "``:cpp:func:`name```: Links to a C++ function or method."
 msgstr "``:cpp:func:`name```: C++ 함수 또는 메서드에 연결합니다."
 
-#: ../../topics/domains.rst:184
+#: ../../topics/domains.rst:185
 msgid ""
 "``:cpp:member:`name``` / ``:cpp:var:`name```: Links to a member or "
 "variable."
 msgstr "``:cpp:member:`name``` / ``:cpp:var:`name```: 멤버 또는 변수에 연결합니다."
 
-#: ../../topics/domains.rst:185
+#: ../../topics/domains.rst:186
 msgid "``:cpp:type:`name```: Links to a C++ type alias or typedef."
 msgstr "``:cpp:type:`name```: C++ 타입 별칭 또는 typedef에 연결합니다."
 
-#: ../../topics/domains.rst:186
+#: ../../topics/domains.rst:187
 msgid "``:cpp:concept:`name```: Links to a C++20 concept."
 msgstr "``:cpp:concept:`name```: C++20 콘셉트에 연결합니다."
 
-#: ../../topics/domains.rst:187
+#: ../../topics/domains.rst:188
 msgid "``:cpp:enum:`name```: Links to a C++ enum."
 msgstr "``:cpp:enum:`name```: C++ 열거형에 연결합니다."
 
-#: ../../topics/domains.rst:189
+#: ../../topics/domains.rst:190
 msgid "JavaScript domain"
 msgstr "JavaScript 도메인"
 
-#: ../../topics/domains.rst:192
+#: ../../topics/domains.rst:193
 msgid ""
 "The JavaScript domain describes client-side scripts, libraries, and "
 "Node.js modules."
 msgstr "JavaScript 도메인은 브라우저 스크립트, 라이브러리, Node.js 모듈을 설명합니다."
 
-#: ../../topics/domains.rst:212
+#: ../../topics/domains.rst:213
 msgid "``:js:func:`name```: Links to a JavaScript function."
 msgstr "``:js:func:`name```: JavaScript 함수에 연결합니다."
 
-#: ../../topics/domains.rst:213
+#: ../../topics/domains.rst:214
 msgid "``:js:meth:`name```: Links to a JavaScript method."
 msgstr "``:js:meth:`name```: JavaScript 메서드에 연결합니다."
 
-#: ../../topics/domains.rst:214
+#: ../../topics/domains.rst:215
 msgid "``:js:class:`name```: Links to a JavaScript class."
 msgstr "``:js:class:`name```: JavaScript 클래스에 연결합니다."
 
-#: ../../topics/domains.rst:215
+#: ../../topics/domains.rst:216
 msgid "``:js:data:`name```: Links to a JavaScript variable."
 msgstr "``:js:data:`name```: JavaScript 변수에 연결합니다."
 
-#: ../../topics/domains.rst:216
+#: ../../topics/domains.rst:217
 msgid "``:js:attr:`name```: Links to a JavaScript object attribute."
 msgstr "``:js:attr:`name```: JavaScript 객체 속성에 연결합니다."
 
-#: ../../topics/domains.rst:217
+#: ../../topics/domains.rst:218
 msgid "``:js:mod:`name```: Links to a JavaScript module."
 msgstr "``:js:mod:`name```: JavaScript 모듈에 연결합니다."
 
-#: ../../topics/domains.rst:219
+#: ../../topics/domains.rst:220
+#, fuzzy
+#| msgid "C domain"
+msgid "Rust domain"
+msgstr "C 도메인"
+
+#: ../../topics/domains.rst:223
+msgid ""
+"The Rust domain describes crates as rustdoc presents them. Each directive "
+"takes the declaration as Rust writes it, on one line, visibility and "
+"qualifiers included. Targets are full paths with ``::``, the crate's name "
+"first."
+msgstr ""
+
+#: ../../topics/domains.rst:258
+msgid ""
+"Directives include: ``rust:crate``, ``rust:module``, ``rust:function``, "
+"``rust:method``, ``rust:struct``, ``rust:enum``, ``rust:variant``, "
+"``rust:union``, ``rust:trait``, ``rust:impl``, ``rust:type``, "
+"``rust:const``, ``rust:static``, ``rust:macro``, ``rust:field``, "
+"``rust:associatedtype``, ``rust:associatedconst``, and ``rust:use``. "
+"Options include ``:visibility:``, ``:cfg:``, ``:unsafe:``, ``:async:``, "
+"``:const:``, ``:provided:``, ``:attributes:``, ``:deprecated:``, "
+"``:for:``, ``:trait:``, ``:target:``, and ``:noindex:``. An ``impl`` is "
+"never a target itself. Its members belong to the type."
+msgstr ""
+
+#: ../../topics/domains.rst:266
+msgid ""
+"Guidedog can also generate these pages from a crate's source, without "
+"compiling it. See :doc:`../howto/document-code` and "
+"``rust_autoapi_crates`` in :doc:`../reference/configuration`."
+msgstr ""
+
+#: ../../topics/domains.rst:273
+#, fuzzy
+#| msgid "``:js:mod:`name```: Links to a JavaScript module."
+msgid "``:rust:mod:`path```: Links to a crate or module."
+msgstr "``:js:mod:`name```: JavaScript 모듈에 연결합니다."
+
+#: ../../topics/domains.rst:274
+#, fuzzy
+#| msgid "``:cpp:func:`name```: Links to a C++ function or method."
+msgid "``:rust:fn:`path```: Links to a function or method."
+msgstr "``:cpp:func:`name```: C++ 함수 또는 메서드에 연결합니다."
+
+#: ../../topics/domains.rst:275
+msgid ""
+"``:rust:struct:`path```, ``:rust:enum:`path```, ``:rust:union:`path```, "
+"``:rust:trait:`path```: Link to those types."
+msgstr ""
+
+#: ../../topics/domains.rst:277
+msgid ""
+"``:rust:variant:`path```, ``:rust:field:`path```: Link to a variant or a "
+"field."
+msgstr ""
+
+#: ../../topics/domains.rst:278
+msgid ""
+"``:rust:type:`path```, ``:rust:const:`path```, ``:rust:static:`path```, "
+"``:rust:macro:`path```: Link to aliases and associated types, constants, "
+"statics, and macros."
+msgstr ""
+
+#: ../../topics/domains.rst:281
+msgid ""
+"``:rust:any:`path```: Links to any of them, or through an inventory to "
+"another project (``std::vec::Vec``). An unresolved target is shown as "
+"code."
+msgstr ""
+
+#: ../../topics/domains.rst:284
 msgid "Cross-referencing conventions"
 msgstr "상호 참조 규칙"
 
-#: ../../topics/domains.rst:222
-msgid "Cross-references in domains support several helpful modifiers:"
+#: ../../topics/domains.rst:287
+#, fuzzy
+#| msgid "Cross-references in domains support several helpful modifiers:"
+msgid "Cross-references in domains support several modifiers:"
 msgstr "도메인 상호 참조는 다음과 같은 수식 방법을 지원합니다."
 
-#: ../../topics/domains.rst:224
+#: ../../topics/domains.rst:289
 msgid ""
 "**Hide prefix**: Prefixing the target with a tilde (``~``) displays only "
 "the final component of the target name. For example, "
@@ -535,25 +658,35 @@ msgstr ""
 "``:py:func:`~pipeline.reader.DocumentReader.parse``` 는 ``parse()`` 로 "
 "표시됩니다."
 
-#: ../../topics/domains.rst:225
+#: ../../topics/domains.rst:290
 msgid ""
 "**Current scope resolution**: Relative references look up names within "
 "the active module or namespace before falling back to global lookup."
 msgstr "**현재 범위에서 검색**: 상대 참조는 현재 모듈이나 네임스페이스를 먼저 찾고, 없으면 전체 범위에서 검색합니다."
 
-#: ../../topics/domains.rst:226
+#: ../../topics/domains.rst:291
 msgid ""
 "**Exact match**: Prefixing with a dot (``.``) searches from the current "
 "module or enclosing object."
 msgstr "**정확한 일치**: 대상 앞에 ``.`` 을 붙이면 현재 모듈이나 포함 객체부터 검색합니다."
+
+#: ../../topics/domains.rst:293
+msgid ""
+"The Rust domain follows the same conventions with ``::`` paths: "
+"``:rust:struct:`~my_crate::geometry::Point``` renders as ``Point``."
+msgstr ""
 
 #: ../../topics/index.rst:1
 msgid "Topic guides"
 msgstr "주제별 안내"
 
 #: ../../topics/index.rst:4
+#, fuzzy
+#| msgid ""
+#| "These chapters explain the model. They give you enough context to make "
+#| "a choice."
 msgid ""
-"These chapters explain the model. They give you enough context to make a "
+"These chapters explain the model. They give us enough context to make a "
 "choice."
 msgstr "이 장들은 모델을 설명하고 선택에 필요한 배경을 제공한다."
 
@@ -639,10 +772,15 @@ msgstr ""
 "일치한다."
 
 #: ../../topics/mathematics.rst:59
+#, fuzzy
+#| msgid ""
+#| "**Boundary.** This accounts for charged host storage. It does not "
+#| "bound the separate Typst compiler's internal allocations. A proof is "
+#| "only as strong as the boundary it states."
 msgid ""
 "**Boundary.** This accounts for charged host storage. It does not bound "
-"the separate Typst compiler's internal allocations. A proof is only as "
-"strong as the boundary it states."
+"the Typst compiler's internal allocations. A proof is only as strong as "
+"the boundary it states."
 msgstr ""
 "**경계.** 이는 계상된 호스트 공간을 다룬다. 별도 Typst 컴파일러의 내부 할당을 제한하지 않는다. 증명은 밝힌 경계 "
 "안에서만 유효하다."
@@ -662,9 +800,13 @@ msgstr ""
 "읽을 수 있고 그림 스크립트나 웹 글꼴 서비스가 필요 없다."
 
 #: ../../topics/mathematics.rst:71
+#, fuzzy
+#| msgid ""
+#| "For your own project, the default uses MathJax from a CDN. To serve a "
+#| "local copy, place it in ``_static`` and set:"
 msgid ""
-"For your own project, the default uses MathJax from a CDN. To serve a "
-"local copy, place it in ``_static`` and set:"
+"For our own projects, the default uses MathJax from a CDN. To serve a "
+"local copy, we place it in ``_static`` and set:"
 msgstr ""
 "사용자 프로젝트는 기본적으로 CDN의 MathJax를 사용한다. 로컬 사본을 제공하려면 ``_static``\\ 에 넣고 다음을 "
 "설정한다."
@@ -726,8 +868,14 @@ msgid "Separate projects"
 msgstr "독립된 프로젝트"
 
 #: ../../topics/projects.rst:46
+#, fuzzy
+#| msgid ""
+#| "Keep a manual and design records in separate projects. They have "
+#| "different readers and different reading orders. Each project has its "
+#| "own configuration, templates, cache, and output. The Guidedog "
+#| "repository uses ``docs/manual`` and ``docs/gds`` this way."
 msgid ""
-"Keep a manual and design records in separate projects. They have "
+"We keep a manual and design records in separate projects. They have "
 "different readers and different reading orders. Each project has its own "
 "configuration, templates, cache, and output. The Guidedog repository uses "
 "``docs/manual`` and ``docs/gds`` this way."
@@ -766,10 +914,16 @@ msgstr ""
 "\\text{재사용} = \\text{같은 입력} \\land \\text{같은 조회 결과} \\land \\text{출력 존재}"
 
 #: ../../topics/projects.rst:67
+#, fuzzy
+#| msgid ""
+#| "An explicit timestamp in a template is also an input to the rendered "
+#| "page. A page that prints the current minute can change even when its "
+#| "prose does not. Use ``SOURCE_DATE_EPOCH`` when you need a fixed build "
+#| "time."
 msgid ""
 "An explicit timestamp in a template is also an input to the rendered "
 "page. A page that prints the current minute can change even when its "
-"prose does not. Use ``SOURCE_DATE_EPOCH`` when you need a fixed build "
+"prose does not. We use ``SOURCE_DATE_EPOCH`` when we need a fixed build "
 "time."
 msgstr ""
 "템플릿의 타임스탬프도 입력이다. 현재 분을 표시하는 페이지는 글이 그대로여도 바뀔 수 있다. 고정 시간이 필요하면 "
@@ -867,12 +1021,20 @@ msgstr ""
 "원문을 얻는다. 인쇄 시 일반 문단으로 복원해 인쇄 레이아웃이 페이지를 나눈다."
 
 #: ../../topics/typography.rst:54
+#, fuzzy
+#| msgid ""
+#| "Links, mathematics, code, interactive content, narrow measures, and "
+#| "other languages use native browser layout. So do paragraphs for which "
+#| "no suitably spaced solution exists. The site remains readable with "
+#| "JavaScript disabled. The fallback uses language-aware ``hyphens: "
+#| "auto`` and ``text-wrap: pretty``; those CSS properties alone are not a "
+#| "promise of Knuth-Plass optimization."
 msgid ""
 "Links, mathematics, code, interactive content, narrow measures, and other "
 "languages use native browser layout. So do paragraphs for which no "
 "suitably spaced solution exists. The site remains readable with "
 "JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` "
-"and ``text-wrap: pretty``; those CSS properties alone are not a promise "
+"and ``text-wrap: pretty``. Those CSS properties alone are not a promise "
 "of Knuth-Plass optimization."
 msgstr ""
 "링크, 수식, 코드, 상호작용 요소, 좁은 영역, 다른 언어, 적절한 간격을 얻지 못한 문단은 브라우저 기본 조판을 사용합니다. "
@@ -924,13 +1086,21 @@ msgstr ""
 "인쇄는 ``_templates/book.typ``\\ 를 편집한다. 읽기 순서, 초점 표시, 레이블, 충분한 대비를 유지한다."
 
 #: ../../topics/typography.rst:82
+#, fuzzy
+#| msgid ""
+#| "Build both targets after a change. Inspect a page with code, a table, "
+#| "a diagram, and an equation. An attractive cover is not proof that the "
+#| "rest of the book works. Build your own design in "
+#| ":doc:`../tutorial/a-custom-theme`. The full template contract is in "
+#| ":doc:`../templates`. The complete API is in :doc:`../api/index` and in "
+#| "the same PDF book."
 msgid ""
 "Build both targets after a change. Inspect a page with code, a table, a "
 "diagram, and an equation. An attractive cover is not proof that the rest "
-"of the book works. Build your own design in "
+"of the book works. We build our own design in "
 ":doc:`../tutorial/a-custom-theme`. The full template contract is in "
-":doc:`../templates`. The complete API is in :doc:`../api/index` and in "
-"the same PDF book."
+":doc:`../templates`. The Rust API of Guidedog's crates is documented in "
+"the separate ``docs/api`` project."
 msgstr ""
 "바꾼 뒤 두 형식 모두 빌드하고 코드·표·그림·수식이 있는 페이지를 확인하세요. 멋진 표지만으로 책 전체를 검증할 수는 없습니다. "
 "테마 제작은 :doc:`../tutorial/a-custom-theme`, 계약은 :doc:`../templates` 문서를 "
@@ -941,10 +1111,15 @@ msgid "Authoring documents"
 msgstr "문서 작성"
 
 #: ../../topics/writing.rst:4
+#, fuzzy
+#| msgid ""
+#| "Guidedog supports both reStructuredText (``.rst``) and MyST Markdown "
+#| "(``.md``). Documents are parsed into a shared semantic document tree, "
+#| "which is then used to generate both HTML websites and PDF books."
 msgid ""
 "Guidedog supports both reStructuredText (``.rst``) and MyST Markdown "
-"(``.md``). Documents are parsed into a shared semantic document tree, "
-"which is then used to generate both HTML websites and PDF books."
+"(``.md``). Both are parsed into the same document tree. The HTML website "
+"and the PDF book are made from that tree."
 msgstr ""
 "Guidedog은 reStructuredText (``.rst``)와 MyST Markdown (``.md``)을 지원합니다. 두 "
 "형식을 공통 문서 트리로 파싱해 HTML 사이트와 PDF 책을 생성합니다."
@@ -954,20 +1129,31 @@ msgid "Choose a source language"
 msgstr "소스 언어 선택"
 
 #: ../../topics/writing.rst:11
+#, fuzzy
+#| msgid ""
+#| "Use reStructuredText when you need full access to domains, complex "
+#| "tables, and extensible directives. Use MyST Markdown when you prefer "
+#| "Markdown syntax while retaining Sphinx-style directives and roles."
 msgid ""
-"Use reStructuredText when you need full access to domains, complex "
-"tables, and extensible directives. Use MyST Markdown when you prefer "
-"Markdown syntax while retaining Sphinx-style directives and roles."
+"We use reStructuredText when we need full access to domains, complex "
+"tables, and extensible directives. We use MyST Markdown when we prefer "
+"Markdown syntax but still want Sphinx-style directives and roles."
 msgstr ""
 "도메인, 복잡한 표, 확장 가능한 지시문이 필요하면 reStructuredText를 사용하세요. Markdown 구문과 Sphinx "
 "스타일의 지시문 및 역할을 함께 쓰려면 MyST Markdown을 선택하세요."
 
 #: ../../topics/writing.rst:15
+#, fuzzy
+#| msgid ""
+#| "In a documentation project, Markdown documents are parsed using the "
+#| "MyST dialect. Single-document conversions with ``guidedog convert`` "
+#| "use standard CommonMark by default, unless the MyST reader is "
+#| "explicitly selected."
 msgid ""
-"In a documentation project, Markdown documents are parsed using the MyST "
-"dialect. Single-document conversions with ``guidedog convert`` use "
-"standard CommonMark by default, unless the MyST reader is explicitly "
-"selected."
+"In a documentation project, Markdown documents are parsed as MyST. "
+"Single-document conversions with ``guidedog convert`` read Markdown as "
+"plain CommonMark 0.31.2: MyST's directives, roles, and settings belong to "
+"projects."
 msgstr ""
 "프로젝트의 Markdown 문서는 MyST로 파싱합니다. 단일 파일을 변환하는 ``guidedog convert`` 는 MyST를 "
 "명시하지 않으면 CommonMark를 사용합니다."
@@ -977,11 +1163,17 @@ msgid "Headings and structure"
 msgstr "제목과 구조"
 
 #: ../../topics/writing.rst:22
+#, fuzzy
+#| msgid ""
+#| "A document title identifies the page. Sections and subsections divide "
+#| "the text logically. In reStructuredText, headings use underline "
+#| "adornments (and optional matching overlines). The underline must be at "
+#| "least as long as the text."
 msgid ""
 "A document title identifies the page. Sections and subsections divide the "
-"text logically. In reStructuredText, headings use underline adornments "
-"(and optional matching overlines). The underline must be at least as long "
-"as the text."
+"text. In reStructuredText, headings use underline adornments (and "
+"optional matching overlines). The underline must be at least as long as "
+"the text."
 msgstr ""
 "문서 제목은 페이지를 식별하고 절과 하위 절은 내용을 나눕니다. RST 제목에는 밑줄을 쓰며 같은 윗줄도 추가할 수 있습니다. 줄 "
 "길이는 제목보다 짧으면 안 됩니다."
@@ -991,9 +1183,13 @@ msgid "Recommended adornment styles:"
 msgstr "권장하는 제목 기호:"
 
 #: ../../topics/writing.rst:45
+#, fuzzy
+#| msgid ""
+#| "Keep heading levels consistent across your project. In MyST Markdown, "
+#| "use standard hashes (``#``, ``##``, ``###``)."
 msgid ""
-"Keep heading levels consistent across your project. In MyST Markdown, use "
-"standard hashes (``#``, ``##``, ``###``)."
+"We keep heading levels consistent across the project. In MyST Markdown, "
+"we use standard hashes (``#``, ``##``, ``###``)."
 msgstr ""
 "프로젝트 전체에서 제목 수준을 일관되게 유지하세요. MyST Markdown에서는 ``#``, ``##``, ``###`` 를 "
 "사용합니다."
@@ -1003,7 +1199,9 @@ msgid "Text formatting and inline markup"
 msgstr "텍스트 형식과 인라인 마크업"
 
 #: ../../topics/writing.rst:51
-msgid "Use inline markup to communicate meaning rather than decoration:"
+#, fuzzy
+#| msgid "Use inline markup to communicate meaning rather than decoration:"
+msgid "Inline markup carries meaning, not decoration:"
 msgstr "인라인 마크업은 장식보다 의미를 전달하는 데 사용하세요."
 
 #: ../../topics/writing.rst:53
@@ -1075,8 +1273,12 @@ msgid "``{sup}`text```"
 msgstr "``{sup}`text```"
 
 #: ../../topics/writing.rst:76
+#, fuzzy
+#| msgid ""
+#| "To include literal asterisks or backticks within text, escape them "
+#| "with a backslash: ``\\*not italic\\*``."
 msgid ""
-"To include literal asterisks or backticks within text, escape them with a "
+"To write literal asterisks or backticks in text, we escape them with a "
 "backslash: ``\\*not italic\\*``."
 msgstr "별표나 백틱을 문자 그대로 쓰려면 ``\\*not italic\\*`` 처럼 백슬래시로 이스케이프하세요."
 
@@ -1101,9 +1303,14 @@ msgid "Definition lists"
 msgstr "정의 목록"
 
 #: ../../topics/writing.rst:107
+#, fuzzy
+#| msgid ""
+#| "A definition list pairs terms with explanatory blocks. The term "
+#| "appears on a single line, followed immediately by an indented "
+#| "definition:"
 msgid ""
-"A definition list pairs terms with explanatory blocks. The term appears "
-"on a single line, followed immediately by an indented definition:"
+"A definition list pairs terms with explanations. The term stands on one "
+"line. An indented definition follows it directly:"
 msgstr "정의 목록은 용어와 설명을 짝으로 묶습니다. 용어를 한 줄에 쓰고 바로 다음 줄부터 들여쓴 정의를 적습니다."
 
 #: ../../topics/writing.rst:118
@@ -1119,49 +1326,56 @@ msgid "Code blocks"
 msgstr "코드 블록"
 
 #: ../../topics/writing.rst:132
+#, fuzzy
+#| msgid ""
+#| "Use the ``code-block`` directive (or ``sourcecode``) to display "
+#| "syntax-highlighted code. Guidedog provides syntax highlighting for "
+#| "over 35 programming languages:"
 msgid ""
-"Use the ``code-block`` directive (or ``sourcecode``) to display "
-"syntax-highlighted code. Guidedog provides syntax highlighting for over "
-"35 programming languages:"
+"The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted "
+"code. Guidedog highlights 35 programming languages, Rust and Odin among "
+"them, with Pygments' names and styles and no Python runtime:"
 msgstr ""
 "``code-block`` 또는 ``sourcecode`` 로 구문을 강조한 코드를 표시하세요. Guidedog은 35개 이상의 "
 "프로그래밍 언어를 지원합니다."
 
-#: ../../topics/writing.rst:146
+#: ../../topics/writing.rst:147
 msgid "Options for code blocks:"
 msgstr "코드 블록 옵션:"
 
-#: ../../topics/writing.rst:148
+#: ../../topics/writing.rst:149
 msgid "``:linenos:``: Displays line numbers beside the code."
 msgstr "``:linenos:``: 코드 옆에 줄 번호를 표시합니다."
 
-#: ../../topics/writing.rst:149
+#: ../../topics/writing.rst:150
 msgid "``:caption: Title``: Adds a caption above or below the code block."
 msgstr "``:caption: Title``: 코드 위나 아래에 캡션을 붙입니다."
 
-#: ../../topics/writing.rst:150
+#: ../../topics/writing.rst:151
 msgid "``:emphasize-lines: 1, 3-5``: Highlights specific lines."
 msgstr "``:emphasize-lines: 1, 3-5``: 지정한 줄을 강조합니다."
 
-#: ../../topics/writing.rst:151
+#: ../../topics/writing.rst:152
 msgid "``:name: label``: Assigns a reference target to the code block."
 msgstr "``:name: label``: 코드 블록에 참조 대상을 지정합니다."
 
-#: ../../topics/writing.rst:153
-msgid ""
-"To include external source code directly from a file, use "
-"``literalinclude``:"
+#: ../../topics/writing.rst:154
+#, fuzzy
+#| msgid ""
+#| "To include external source code directly from a file, use "
+#| "``literalinclude``:"
+msgid "To include source code from a file, we use ``literalinclude``:"
 msgstr "외부 소스 파일을 직접 포함하려면 ``literalinclude`` 를 사용하세요."
 
-#: ../../topics/writing.rst:162
+#: ../../topics/writing.rst:163
 msgid "Admonitions"
 msgstr "안내 상자"
 
-#: ../../topics/writing.rst:165
+#: ../../topics/writing.rst:166
 msgid "Admonitions highlight notes, warnings, and supplementary advice:"
 msgstr "안내 상자는 주의 사항, 경고, 보충 설명을 강조합니다."
 
-#: ../../topics/writing.rst:187
+#: ../../topics/writing.rst:188
 msgid ""
 "Guidedog also supports ``danger``, ``error``, ``hint``, and "
 "``attention``. A generic admonition with a custom title uses the "
@@ -1170,195 +1384,243 @@ msgstr ""
 "Guidedog은 ``danger``, ``error``, ``hint``, ``attention`` 도 지원합니다. 제목을 직접 "
 "지정하려면 ``admonition`` 을 사용하세요."
 
-#: ../../topics/writing.rst:196
+#: ../../topics/writing.rst:197
 msgid "Tables"
 msgstr "표"
 
-#: ../../topics/writing.rst:199
+#: ../../topics/writing.rst:200
 msgid ""
 "Guidedog supports simple tables, grid tables, and directive-based tables."
 msgstr "Guidedog은 단순 표, 격자 표, 지시문 기반 표를 지원합니다."
 
-#: ../../topics/writing.rst:201
+#: ../../topics/writing.rst:202
 msgid "Simple tables"
 msgstr "단순 표"
 
-#: ../../topics/writing.rst:204
+#: ../../topics/writing.rst:205
 msgid "Simple tables use horizontal dashes to define column spans:"
 msgstr "단순 표는 가로선으로 열의 범위를 표시합니다."
 
-#: ../../topics/writing.rst:216
+#: ../../topics/writing.rst:217
 msgid "Grid tables"
 msgstr "격자 표"
 
-#: ../../topics/writing.rst:219
+#: ../../topics/writing.rst:220
 msgid ""
 "Grid tables allow complex multi-line cells and arbitrary column/row spans:"
 msgstr "격자 표는 여러 줄의 셀과 행·열 병합을 지원합니다."
 
-#: ../../topics/writing.rst:230
+#: ../../topics/writing.rst:231
 msgid "List tables"
 msgstr "목록 표"
 
-#: ../../topics/writing.rst:233
+#: ../../topics/writing.rst:234
+#, fuzzy
+#| msgid ""
+#| "The ``list-table`` directive creates tables from nested bullet lists, "
+#| "making wide tables easy to read and maintain in source control:"
 msgid ""
-"The ``list-table`` directive creates tables from nested bullet lists, "
-"making wide tables easy to read and maintain in source control:"
+"The ``list-table`` directive creates tables from nested bullet lists. "
+"Wide tables stay easy to read and maintain in source control:"
 msgstr "``list-table`` 은 중첩 글머리 기호 목록으로 표를 만듭니다. 넓은 표도 소스에서 읽고 관리하기 쉽습니다."
 
-#: ../../topics/writing.rst:252
+#: ../../topics/writing.rst:253
 msgid "CSV tables"
 msgstr "CSV 표"
 
-#: ../../topics/writing.rst:255
+#: ../../topics/writing.rst:256
 msgid ""
 "The ``csv-table`` directive constructs a table from comma-separated "
 "values:"
 msgstr "``csv-table`` 은 쉼표로 구분한 값으로 표를 만듭니다."
 
-#: ../../topics/writing.rst:266
+#: ../../topics/writing.rst:267
 msgid "Images and figures"
 msgstr "이미지와 그림"
 
-#: ../../topics/writing.rst:269
+#: ../../topics/writing.rst:270
+#, fuzzy
+#| msgid ""
+#| "Include illustrations, screenshots, and diagrams with ``image`` and "
+#| "``figure``:"
 msgid ""
-"Include illustrations, screenshots, and diagrams with ``image`` and "
+"We include illustrations, screenshots, and diagrams with ``image`` and "
 "``figure``:"
 msgstr "``image`` 와 ``figure`` 로 이미지, 스크린샷, 도표를 넣습니다."
 
-#: ../../topics/writing.rst:285
+#: ../../topics/writing.rst:286
+#, fuzzy
+#| msgid ""
+#| "A ``figure`` wraps the image with an explanatory caption and an "
+#| "optional reference target."
 msgid ""
-"A ``figure`` wraps the image with an explanatory caption and an optional "
-"reference target."
+"A ``figure`` wraps the image with a caption and an optional reference "
+"target."
 msgstr "``figure`` 는 이미지에 캡션을 붙이며 참조 대상도 지정할 수 있습니다."
 
-#: ../../topics/writing.rst:287
+#: ../../topics/writing.rst:288
 msgid "Document structure with toctrees"
 msgstr "목차 트리로 문서 구성"
 
-#: ../../topics/writing.rst:290
+#: ../../topics/writing.rst:291
 msgid ""
 "The ``toctree`` directive creates the document hierarchy, navigation "
 "menus, and reading order for both the HTML site and the PDF book:"
 msgstr "``toctree`` 는 문서 계층, 탐색 메뉴, HTML과 PDF의 읽는 순서를 정의합니다."
 
-#: ../../topics/writing.rst:304
+#: ../../topics/writing.rst:305
 msgid "Common options for ``toctree``:"
 msgstr "``toctree`` 의 주요 옵션:"
 
-#: ../../topics/writing.rst:306
+#: ../../topics/writing.rst:307
 msgid ""
 "``:maxdepth: N``: Depth of heading levels to include in the table of "
 "contents."
 msgstr "``:maxdepth: N``: 목차에 포함할 제목 깊이입니다."
 
-#: ../../topics/writing.rst:307
+#: ../../topics/writing.rst:308
 msgid ""
 "``:caption: Title``: Category title displayed above the navigation "
 "entries."
 msgstr "``:caption: Title``: 탐색 항목 위에 표시할 범주 제목입니다."
 
-#: ../../topics/writing.rst:308
+#: ../../topics/writing.rst:309
 msgid "``:numbered:``: Adds section numbers to chapters and headings."
 msgstr "``:numbered:``: 장과 제목에 번호를 붙입니다."
 
-#: ../../topics/writing.rst:309
+#: ../../topics/writing.rst:310
 msgid ""
 "``:titlesonly:``: Lists only the top-level document titles, ignoring "
 "inner sections."
 msgstr "``:titlesonly:``: 문서 제목만 표시하고 내부 절은 생략합니다."
 
-#: ../../topics/writing.rst:310
+#: ../../topics/writing.rst:311
 msgid ""
 "``:hidden:``: Records the documents in the reading order without "
 "rendering an inline list."
 msgstr "``:hidden:``: 본문에 목록을 표시하지 않고 문서의 읽는 순서만 기록합니다."
 
-#: ../../topics/writing.rst:311
+#: ../../topics/writing.rst:312
 msgid ""
 "``:glob:``: Allows wildcard patterns to match documents (e.g. "
 "``tutorials/*``)."
 msgstr "``:glob:``: ``tutorials/*`` 같은 와일드카드로 문서를 선택할 수 있습니다."
 
-#: ../../topics/writing.rst:313
+#: ../../topics/writing.rst:314
 msgid "Cross-references and links"
 msgstr "상호 참조와 링크"
 
-#: ../../topics/writing.rst:316
+#: ../../topics/writing.rst:317
+#, fuzzy
+#| msgid ""
+#| "Explicit targets ensure links remain stable even when document files "
+#| "are renamed:"
 msgid ""
-"Explicit targets ensure links remain stable even when document files are "
-"renamed:"
+"Explicit targets keep links stable, even when document files are renamed."
 msgstr "명시적 대상 레이블은 문서 파일 이름과 별개로 안정적인 참조를 제공합니다."
 
-#: ../../topics/writing.rst:318
+#: ../../topics/writing.rst:319
 msgid "Target labels and ``:ref:``"
 msgstr "대상 레이블과 ``:ref:``"
 
-#: ../../topics/writing.rst:321
-msgid "Place a target label immediately before a heading, table, or figure:"
+#: ../../topics/writing.rst:322
+#, fuzzy
+#| msgid ""
+#| "Place a target label immediately before a heading, table, or figure:"
+msgid "We place a target label directly before a heading, table, or figure:"
 msgstr "제목, 표, 그림 바로 앞에 대상 레이블을 놓습니다."
 
-#: ../../topics/writing.rst:332
-msgid "Refer to this target from any document across the project:"
-msgstr "프로젝트의 어느 문서에서든 이 대상을 참조할 수 있습니다."
+#: ../../topics/writing.rst:333
+msgid "Any document in the project can refer to this target:"
+msgstr ""
 
-#: ../../topics/writing.rst:339
+#: ../../topics/writing.rst:340
 msgid "Document references with ``:doc:``"
 msgstr "``:doc:`` 문서 참조"
 
-#: ../../topics/writing.rst:342
-msgid "Link to another document by path (omitting the file extension):"
+#: ../../topics/writing.rst:343
+#, fuzzy
+#| msgid "Link to another document by path (omitting the file extension):"
+msgid "We link to another document by its path, without the file extension:"
 msgstr "확장자를 생략한 경로로 다른 문서에 연결합니다."
 
-#: ../../topics/writing.rst:348
+#: ../../topics/writing.rst:349
 msgid "Glossary terms with ``:term:``"
 msgstr "``:term:`` 용어 참조"
 
-#: ../../topics/writing.rst:351
-msgid "Define terms using the ``glossary`` directive:"
+#: ../../topics/writing.rst:352
+#, fuzzy
+#| msgid "Define terms using the ``glossary`` directive:"
+msgid "We define terms with the ``glossary`` directive:"
 msgstr "``glossary`` 로 용어를 정의합니다."
 
-#: ../../topics/writing.rst:363
-msgid "Link to a glossary term using the ``:term:`` role:"
+#: ../../topics/writing.rst:364
+#, fuzzy
+#| msgid "Link to a glossary term using the ``:term:`` role:"
+msgid "We link to a glossary term with the ``:term:`` role:"
 msgstr "``:term:`` 역할로 용어에 연결합니다."
 
-#: ../../topics/writing.rst:369
+#: ../../topics/writing.rst:370
 msgid "File downloads with ``:download:``"
 msgstr "``:download:`` 파일 다운로드"
 
-#: ../../topics/writing.rst:372
-msgid "Copy a file to the output's download directory and create a link:"
+#: ../../topics/writing.rst:373
+#, fuzzy
+#| msgid "Copy a file to the output's download directory and create a link:"
+msgid ""
+"This copies a file to the output's download directory and links to it:"
 msgstr "파일을 다운로드 디렉터리로 복사하고 링크를 만듭니다."
 
-#: ../../topics/writing.rst:378
+#: ../../topics/writing.rst:379
 msgid "External links"
 msgstr "외부 링크"
 
-#: ../../topics/writing.rst:381
-msgid "Link to external web addresses:"
+#: ../../topics/writing.rst:382
+#, fuzzy
+#| msgid "Link to external web addresses:"
+msgid "We link to external web addresses like this:"
 msgstr "외부 웹 주소에 연결합니다."
 
-#: ../../topics/writing.rst:387
+#: ../../topics/writing.rst:388
 msgid "Substitutions and includes"
 msgstr "치환과 포함"
 
-#: ../../topics/writing.rst:390
-msgid "Define reusable phrases, symbols, or images:"
+#: ../../topics/writing.rst:391
+#, fuzzy
+#| msgid "Define reusable phrases, symbols, or images:"
+msgid "We define reusable phrases, symbols, or images:"
 msgstr "재사용할 문구, 기호, 이미지를 정의합니다."
 
-#: ../../topics/writing.rst:399
-msgid "To reuse common reStructuredText content across multiple files:"
+#: ../../topics/writing.rst:400
+#, fuzzy
+#| msgid "To reuse common reStructuredText content across multiple files:"
+msgid "To reuse reStructuredText content in several files:"
 msgstr "여러 파일에서 reStructuredText 내용을 공유하려면 다음과 같이 작성합니다."
 
-#: ../../topics/writing.rst:405
+#: ../../topics/writing.rst:406
 msgid "MyST Markdown authoring"
 msgstr "MyST Markdown 작성"
 
-#: ../../topics/writing.rst:408
+#: ../../topics/writing.rst:409
+#, fuzzy
+#| msgid ""
+#| "MyST Markdown supports the same semantic directives and roles through "
+#| "fenced blocks:"
 msgid ""
-"MyST Markdown supports the same semantic directives and roles through "
-"fenced blocks:"
+"MyST Markdown supports the same directives and roles through fenced "
+"blocks:"
 msgstr "MyST Markdown은 펜스 블록으로 같은 지시문과 역할의 의미를 표현합니다."
+
+#~ msgid ""
+#~ "If capacity fits, run conversion; otherwise the host prepares storage "
+#~ "and retries."
+#~ msgstr "용량이 충분하면 변환한다. 부족하면 호스트가 저장 공간을 준비하고 다시 시도한다."
+
+#~ msgid "Capacity is checked before storage is borrowed or grown."
+#~ msgstr "저장 공간을 빌리거나 늘리기 전에 용량을 확인한다."
+
+#~ msgid "Refer to this target from any document across the project:"
+#~ msgstr "프로젝트의 어느 문서에서든 이 대상을 참조할 수 있습니다."
 
 #~ msgid ""
 #~ "Discover sources, read documents, resolve references, render "

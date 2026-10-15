@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"POT-Creation-Date: 2026-10-15 04:11+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -16,21 +16,31 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../../plugins.rst:1
-msgid "Write a native plugin"
+#, fuzzy
+#| msgid "Write a native plugin"
+msgid "Write a plugin"
 msgstr "ネイティブプラグインを書く"
 
 #: ../../plugins.rst:4
+#, fuzzy
+#| msgid ""
+#| "A plugin adds a service to Guidedog. A build plugin can transform "
+#| "source text, transform a rendered HTML page, or supply static files. A "
+#| "publisher sends a finished site to a destination. These services use "
+#| "ordinary Odin procedure tables."
 msgid ""
 "A plugin adds a service to Guidedog. A build plugin can transform source "
 "text, transform a rendered HTML page, or supply static files. A publisher "
-"sends a finished site to a destination. These services use ordinary Odin "
-"procedure tables."
+"sends a finished site to a destination. Both are ordinary Rust traits "
+"from the ``gd-plugins`` crate. We implement one once. The same value can "
+"be linked into a custom ``guidedog`` binary or served as a separate "
+"program."
 msgstr ""
 "プラグインは Guidedog にサービスを追加します。ビルドプラグインはソーステキストや描画済み HTML "
 "ページを変換し、静的ファイルを提供できます。パブリッシャーは完成したサイトを公開先へ送ります。いずれも通常の Odin "
 "の手続きテーブルで実装します。"
 
-#: ../../plugins.rst:8
+#: ../../plugins.rst:10
 msgid ""
 "This chapter builds a product badge. It replaces ``{{product}}`` in "
 "source text, adds a label to HTML pages, and supplies the label's CSS. "
@@ -41,40 +51,39 @@ msgstr ""
 "を提供します。続いて GitHub Pages を例に、同じ基盤で外部に作用するサービスを作る方法を説明します。"
 
 #: ../../plugins.rst:14
-msgid ""
-"Build hooks are available from Guidedog 0.6.2. Earlier 0.6.x releases "
-"support publishers only. Use a 0.6.2 host or build it from this checkout "
-"before following the badge tutorial."
-msgstr ""
-"ビルドフックは Guidedog 0.6.2 から使えます。それ以前の 0.6.x はパブリッシャーだけに対応します。0.6.2 "
-"のホストを使うか、このソースからビルドしてからチュートリアルを進めてください。"
-
-#: ../../plugins.rst:18
 msgid "1. Understand the boundary"
 msgstr "1. インターフェースの境界を理解する"
 
-#: ../../plugins.rst:21
+#: ../../plugins.rst:17
 msgid ""
-"``plugins.Plugin`` describes the plugin. Its ``source``, ``html`` and "
-"``assets`` procedures are optional. A nil procedure means that service is "
-"absent. ``load`` prepares private state; ``unload`` closes resources. The "
-"host owns the build."
+"A build plugin implements ``gd_plugins::BuildPlugin``. Its "
+"``process_source``, ``process_html`` and ``collect_assets`` methods are "
+"optional. The default methods mean the service is absent (text passes "
+"through, no assets). ``load`` reads the plugin's configuration into the "
+"value itself. Dropping the value releases what it holds. The host owns "
+"the build."
 msgstr ""
-"``plugins.Plugin`` がプラグインを記述します。``source``、``html``、``assets`` "
-"は省略できます。手続きが nil なら、そのサービスはありません。``load`` は専用の状態を準備し、``unload`` "
-"はリソースを閉じます。ビルドの管理はホストが担います。"
 
-#: ../../plugins.rst:27
+#: ../../plugins.rst:25
 msgid ""
 "Source hooks precede parsing. HTML hooks and generated assets enter "
 "staging. Publication follows a successful build."
 msgstr "ソースフックは解析の前に動きます。HTML フックと生成アセットはステージングに入ります。公開はビルドの成功後です。"
 
-#: ../../plugins.rst:27
+#: ../../plugins.rst:25
 msgid "Build services precede publication."
 msgstr "ビルドサービスは公開より前に動きます。"
 
-#: ../../plugins.rst:54
+#: ../../plugins.rst:52
+#, fuzzy
+#| msgid ""
+#| "Source hooks run before parsing each primary RST or Markdown document. "
+#| "They apply to PDF and text builds too. Includes remain the engine's "
+#| "responsibility. HTML hooks receive complete pages, including generated "
+#| "indexes and additional pages. Generated assets belong to HTML builders "
+#| "and live below ``_static/plugins/ID/``. The host collects them once "
+#| "during plugin setup, before reading documents. They are fixed for that "
+#| "build; source and HTML hooks cannot add later assets."
 msgid ""
 "Source hooks run before parsing each primary RST or Markdown document. "
 "They apply to PDF and text builds too. Includes remain the engine's "
@@ -82,70 +91,101 @@ msgid ""
 "indexes and additional pages. Generated assets belong to HTML builders "
 "and live below ``_static/plugins/ID/``. The host collects them once "
 "during plugin setup, before reading documents. They are fixed for that "
-"build; source and HTML hooks cannot add later assets."
+"build. Source and HTML hooks cannot add later assets."
 msgstr ""
 "ソースフックは主 RST・Markdown 文書の解析前に動き、PDF とテキストにも適用します。include はエンジンが読みます。HTML "
 "フックは索引や追加ページを含む完全なページを受け取ります。アセットは HTML 専用で ``_static/plugins/ID/`` "
 "に置きます。ホストは文書を読む前の準備中に一度だけ収集します。そのビルドでは固定され、後のソース・HTML フックから追加できません。"
 
-#: ../../plugins.rst:61
+#: ../../plugins.rst:59
+#, fuzzy
+#| msgid ""
+#| "A plugin table contains build hooks or a publisher, never both. Normal "
+#| "builds cannot invoke a publishing service. Installed plugins are "
+#| "trusted native programs; registration is explicit and pins the "
+#| "executable's SHA-256. It is not a sandbox."
 msgid ""
-"A plugin table contains build hooks or a publisher, never both. Normal "
-"builds cannot invoke a publishing service. Installed plugins are trusted "
-"native programs; registration is explicit and pins the executable's "
-"SHA-256. It is not a sandbox."
+"A ``Plugin`` is build hooks or a publisher, never both. Normal builds "
+"cannot invoke a publishing service. A plugin reaches a build in one of "
+"two ways:"
 msgstr ""
 "プラグインのテーブルにはビルドフックかパブリッシャーのどちらかを指定します。両方は指定できません。通常のビルドは公開サービスを呼び出せません。インストールしたプラグインは信頼するネイティブプログラムです。明示的な登録で実行ファイルの "
 "SHA-256 を固定します。これはサンドボックスではありません。"
 
-#: ../../plugins.rst:65
-msgid "2. Compile the working example"
-msgstr "2. 動くサンプルをコンパイルする"
+#: ../../plugins.rst:62
+msgid "Linked"
+msgstr ""
+
+#: ../../plugins.rst:63
+msgid ""
+"A custom ``guidedog`` binary compiles the plugin crate in and passes its "
+"plugins to the command line with ``gd_cli::run_with``. Rust has no stable "
+"ABI, so there is no loading of dynamic libraries. Linked code is trusted "
+"like the rest of the binary."
+msgstr ""
+
+#: ../../plugins.rst:67
+msgid "Served"
+msgstr ""
 
 #: ../../plugins.rst:68
 msgid ""
-"Start at the checkout root. Build Guidedog using the repository's build "
-"instructions, then use that host for this tutorial. The example package "
-"is ``examples/build-plugin/badge``; its executable entry point is one "
-"directory above."
+"The plugin crate's small binary calls ``gd_plugins::serve_plugin``. We "
+"register it with ``guidedog plugin register``, which pins its SHA-256. "
+"Then it runs as a child process per build, behind a bounded JSON Lines "
+"protocol. A crash or stall becomes a diagnostic. Registration is "
+"explicit, and it is not a sandbox: an installed plugin is a trusted "
+"program."
 msgstr ""
-"チェックアウトのルートから始めます。リポジトリの手順に従って Guidedog をビルドし、このホストを使ってください。サンプルのパッケージは "
-"``examples/build-plugin/badge``、実行ファイルのエントリーポイントはその一つ上のディレクトリです。"
 
-#: ../../plugins.rst:72 ../../plugins.rst:140
-msgid "On macOS or Linux, run:"
-msgstr "macOS または Linux では次を実行します。"
+#: ../../plugins.rst:74
+msgid "2. Compile the working example"
+msgstr "2. 動くサンプルをコンパイルする"
 
-#: ../../plugins.rst:79
+#: ../../plugins.rst:77
+msgid ""
+"The product badge lives in the Guidedog repository at "
+"``crates/gd-plugins/examples/build_plugin``. ``badge.rs`` is the plugin, "
+"and ``main.rs`` is the program that serves it. We start at the checkout "
+"root, with a Rust toolchain installed. On macOS or Linux, run:"
+msgstr ""
+
+#: ../../plugins.rst:88
 msgid "On Windows, run these commands in PowerShell:"
 msgstr "Windows では PowerShell で次のコマンドを実行します。"
 
-#: ../../plugins.rst:86
+#: ../../plugins.rst:96
+#, fuzzy
+#| msgid ""
+#| "The compiler creates the executable in the first command. The second "
+#| "creates the documentation project. Registration follows after "
+#| "configuration. Users of a packaged plugin need no Odin compiler."
 msgid ""
-"The compiler creates the executable in the first command. The second "
-"creates the documentation project. Registration follows after "
-"configuration. Users of a packaged plugin need no Odin compiler."
+"The first two commands build Guidedog and the plugin program, "
+"``target/release/examples/build_plugin``. The third creates the "
+"documentation project. Registration follows after configuration. Users of "
+"a packaged plugin need no Rust toolchain."
 msgstr ""
 "最初のコマンドで実行ファイルを生成し、次のコマンドで文書プロジェクトを作ります。設定後にプラグインを登録します。配布済みプラグインの利用者に "
 "Odin コンパイラーは不要です。"
 
-#: ../../plugins.rst:90
+#: ../../plugins.rst:101
 msgid "3. Select it for a project"
 msgstr "3. プロジェクトでプラグインを選ぶ"
 
-#: ../../plugins.rst:93
+#: ../../plugins.rst:104
 msgid "Replace ``build/plugin-tutorial/conf.toml`` with:"
 msgstr "``build/plugin-tutorial/conf.toml`` を次の内容に置き換えます。"
 
-#: ../../plugins.rst:104
+#: ../../plugins.rst:115
 msgid "Create ``build/plugin-tutorial/badge.toml``:"
 msgstr "``build/plugin-tutorial/badge.toml`` を作成します。"
 
-#: ../../plugins.rst:110
+#: ../../plugins.rst:121
 msgid "Replace ``build/plugin-tutorial/index.rst`` with:"
 msgstr "``build/plugin-tutorial/index.rst`` を次の内容に置き換えます。"
 
-#: ../../plugins.rst:119
+#: ../../plugins.rst:130
 msgid ""
 "Configuration paths are relative to the project configuration directory. "
 "Plugins run in the order listed in ``plugins``. Merely registering a "
@@ -154,7 +194,7 @@ msgstr ""
 "設定パスの基準はプロジェクトの設定ディレクトリです。プラグインは ``plugins`` "
 "の順に動きます。プログラムを登録しただけでは実行されません。"
 
-#: ../../plugins.rst:122
+#: ../../plugins.rst:133
 msgid ""
 "Register after writing the configuration. Registration checks the build "
 "plugin in child processes before recording its checksum. On macOS or "
@@ -163,19 +203,23 @@ msgstr ""
 "設定を書いてから登録します。登録処理はチェックサムを保存する前に、子プロセスでビルドプラグインを検査します。macOS または Linux "
 "では次を実行します。"
 
-#: ../../plugins.rst:130
+#: ../../plugins.rst:142
 msgid "On Windows, use one PowerShell command:"
 msgstr "Windows では PowerShell の一つのコマンドで実行します。"
 
-#: ../../plugins.rst:137
+#: ../../plugins.rst:148
 msgid "4. Build and observe"
 msgstr "4. ビルドして結果を見る"
 
-#: ../../plugins.rst:147
+#: ../../plugins.rst:151
+msgid "On macOS or Linux, run:"
+msgstr "macOS または Linux では次を実行します。"
+
+#: ../../plugins.rst:158
 msgid "On Windows, run:"
 msgstr "Windows では次を実行します。"
 
-#: ../../plugins.rst:154
+#: ../../plugins.rst:165
 msgid ""
 "Open the address printed by the server. The page says \"Hello Orbit.\" "
 "and has an Orbit badge. Its stylesheet is "
@@ -187,36 +231,62 @@ msgstr ""
 "``_static/plugins/product-badge/banner.css`` です。設定名を ``Comet`` "
 "に変えて再ビルドすると、本文とバッジが変わります。そのままもう一度ビルドしても出力は書き直しません。"
 
-#: ../../plugins.rst:159
+#: ../../plugins.rst:170
 msgid "5. Read the implementation"
 msgstr "5. 実装を読む"
 
-#: ../../plugins.rst:162
+#: ../../plugins.rst:173
+#, fuzzy
+#| msgid ""
+#| "The complete package below is the source compiled in step 2. Download "
+#| ":download:`badge.odin <_static/repository/build-plugin.odin>` and "
+#| ":download:`main.odin <_static/repository/build-plugin-main.odin>` to "
+#| "keep a local copy. Keep their directory structure, or adjust the "
+#| "relative imports in your own project."
 msgid ""
-"The complete package below is the source compiled in step 2. Download "
-":download:`badge.odin <_static/repository/build-plugin.odin>` and "
-":download:`main.odin <_static/repository/build-plugin-main.odin>` to keep "
-"a local copy. Keep their directory structure, or adjust the relative "
-"imports in your own project."
+"The complete plugin below is the source compiled in step 2. Download "
+":download:`badge.rs <_static/repository/build-plugin-badge.rs>` and "
+":download:`main.rs <_static/repository/build-plugin-main.rs>` to keep a "
+"local copy. In our own crate, ``badge.rs`` becomes the library "
+"(``src/lib.rs``) and ``main.rs`` the binary, with ``gd-plugins`` and "
+"``gd-toml`` as dependencies."
 msgstr ""
 "以下は手順 2 でコンパイルしたパッケージの全ソースです。:download:`badge.odin "
 "<_static/repository/build-plugin.odin>` と :download:`main.odin "
 "<_static/repository/build-plugin-main.odin>` "
 "をダウンロードして手元に保存できます。ディレクトリ構造を保つか、自分のプロジェクトに合わせて相対インポートを直してください。"
 
-#: ../../plugins.rst:170
+#: ../../plugins.rst:182
 msgid ""
-"``plugin()`` is the public descriptor. ``load`` reads bounded UTF-8 "
-"configuration, checks its type and size, and allocates ``Settings`` in "
-"the session. The source hook checks expansion size before allocating. It "
-"replaces every marker, including markers inside code blocks; this is a "
-"text transformation, not a markup parser."
+"``plugin()`` is the public descriptor. ``Plugin::build`` keeps the "
+"unloaded ``Badge`` as a prototype and clones it for every session, so "
+"sessions never share state. ``info`` names the plugin and declares its "
+"hooks. ``load`` reads the configuration through "
+"``LoadContext::read_config``. That call bounds its size, declares the "
+"file as a dependency and fingerprints the bytes. ``load`` then checks the "
+"setting and keeps it in the value."
+msgstr ""
+
+#: ../../plugins.rst:188
+#, fuzzy
+#| msgid ""
+#| "``plugin()`` is the public descriptor. ``load`` reads bounded UTF-8 "
+#| "configuration, checks its type and size, and allocates ``Settings`` in "
+#| "the session. The source hook checks expansion size before allocating. "
+#| "It replaces every marker, including markers inside code blocks; this "
+#| "is a text transformation, not a markup parser."
+msgid ""
+"The source hook returns ``Cow::Borrowed`` when the text has no marker, so "
+"unchanged text is never copied. It checks the expanded size against "
+"``MAX_PLUGIN_TEXT`` before allocating. It replaces every marker, "
+"including markers inside code blocks. This is a text transformation, not "
+"a markup parser."
 msgstr ""
 "``plugin()`` は公開ディスクリプターです。``load`` はサイズ制限付きで UTF-8 "
 "設定を読み、型と長さを確認してセッション内に ``Settings`` "
 "を確保します。ソースフックは展開後のサイズを確認してからメモリーを確保します。コードブロック内を含むすべてのマーカーを置き換えます。マークアップの解析ではなく、テキストの変換です。"
 
-#: ../../plugins.rst:175
+#: ../../plugins.rst:193
 msgid ""
 "The HTML hook escapes the label and inserts it before the last closing "
 "body tag. It uses ``assets_url`` supplied by the host, so nested pages "
@@ -228,298 +298,497 @@ msgstr ""
 "を使うので、階層の深いページも正しい CSS にリンクします。この小さな例は、小文字の head と body "
 "の終了タグがそのまま存在することを前提にします。任意の HTML を書き換えるプラグインは適切なパーサーを使い、契約を明記すべきです。"
 
-#: ../../plugins.rst:180
-msgid ""
-"The assets hook allocates its result array with ``ctx.allocator``. The "
-"CSS bytes are static. The SDK copies both paths and bytes into an owned "
-"result. Never return a slice pointing at a callback's local array. "
-"Session state must not retain hook inputs or hook-result allocations."
-msgstr ""
-"アセットフックは ``ctx.allocator`` で結果の配列を確保します。CSS のバイト列は静的です。SDK "
-"はパスとバイト列を、結果が所有するメモリーへコピーします。コールバックのローカル配列を指すスライスを返してはいけません。セッションの状態にフックの入力や結果用メモリーを残さないでください。"
-
-#: ../../plugins.rst:185
-msgid ""
-"The executable wrapper exposes the same descriptor over standard streams:"
-msgstr "実行ファイルのラッパーは同じディスクリプターを標準ストリームで公開します。"
-
-#: ../../plugins.rst:190
-msgid ""
-"``serve_plugin`` handles negotiation and dispatch. Keep protocol output "
-"on stdout; write human logs to stderr. Return to ``main`` before "
-"``os.exit`` so deferred cleanup runs. An embedded host instead passes the "
-"descriptor in ``project.Load_Options.plugins`` and selects its ID in the "
-"project's configuration."
-msgstr ""
-"``serve_plugin`` がバージョンの合意と呼び出しの振り分けを処理します。プロトコル出力は stdout、人向けのログは stderr "
-"に書きます。``os.exit`` の前に ``main`` へ戻り、defer による後始末を実行します。組み込みホストでは、ディスクリプターを "
-"``project.Load_Options.plugins`` に渡し、プロジェクト設定でその ID を選びます。"
-
-#: ../../plugins.rst:195
-msgid "6. Keep ownership and caching explicit"
-msgstr "6. 所有権とキャッシュを明確にする"
-
 #: ../../plugins.rst:198
-msgid "Build-plugin owners"
-msgstr "ビルドプラグインの所有者"
+msgid ""
+"The assets hook returns ordinary owned values. There is nothing to "
+"release. Hook results are plain ``Cow``, ``String`` and ``Vec`` values "
+"that the host takes over."
+msgstr ""
 
 #: ../../plugins.rst:201
-msgid "Owner"
-msgstr "所有者"
-
-#: ../../plugins.rst:202
-msgid "Create"
-msgstr "生成"
-
-#: ../../plugins.rst:203
-msgid "Release"
-msgstr "解放"
-
-#: ../../plugins.rst:204
-msgid "``Plugin_Session``"
-msgstr "``Plugin_Session``"
-
-#: ../../plugins.rst:205
-msgid "``load_plugin``"
-msgstr "``load_plugin``"
+#, fuzzy
+#| msgid ""
+#| "The executable wrapper exposes the same descriptor over standard "
+#| "streams:"
+msgid ""
+"The program that serves the same plugin over standard streams is three "
+"lines:"
+msgstr "実行ファイルのラッパーは同じディスクリプターを標準ストリームで公開します。"
 
 #: ../../plugins.rst:206
-msgid "``unload_plugin``"
-msgstr "``unload_plugin``"
-
-#: ../../plugins.rst:207
-msgid "``Text_Result``"
-msgstr "``Text_Result``"
-
-#: ../../plugins.rst:208
-msgid "``process_source`` or ``process_html``"
-msgstr "``process_source`` または ``process_html``"
+msgid ""
+"``serve_plugin`` handles negotiation and dispatch and returns the exit "
+"code. Keep protocol output on stdout, and write human logs to stderr."
+msgstr ""
 
 #: ../../plugins.rst:209
-msgid "``release_text``"
-msgstr "``release_text``"
-
-#: ../../plugins.rst:210
-msgid "``Assets_Result``"
-msgstr "``Assets_Result``"
-
-#: ../../plugins.rst:211
-msgid "``collect_assets``"
-msgstr "``collect_assets``"
+msgid "6. Link it into our own guidedog"
+msgstr ""
 
 #: ../../plugins.rst:212
-msgid "``release_assets``"
-msgstr "``release_assets``"
-
-#: ../../plugins.rst:214
 msgid ""
-"Cleanup accepts zero, failed and already released owners. Allocate "
-"returned data with the callback allocator. Check allocation errors; after "
-"helpers that hide those errors, check "
-"``plugins.memory_refused(ctx.allocator)``. Return ``plugins.memory()`` "
-"when refused. Unload must tolerate a partially loaded session."
+"A plugin used by every build on a machine, or shipped with a team's "
+"tools, can be compiled into a custom ``guidedog`` binary instead of being "
+"registered. We create a binary crate that depends on ``gd-cli``, "
+"``gd-plugins`` and our plugin crate (``badge`` here), and give it this "
+"``main``:"
 msgstr ""
-"後始末はゼロ値、失敗した値、解放済みの所有者でも安全です。戻すデータはコールバックのアロケーターで確保します。確保エラーを確認し、エラーを隠す補助関数の後では "
-"``plugins.memory_refused(ctx.allocator)`` を調べます。拒否されたら "
-"``plugins.memory()`` を返します。Unload は一部だけ読み込まれたセッションにも対応してください。"
 
-#: ../../plugins.rst:219
+#: ../../plugins.rst:236
 msgid ""
-"Use ``read_plugin_config`` and ``read_plugin_file`` during load. They "
+"The binary accepts every ``guidedog`` command and option. A build looks "
+"up each ID in ``plugins`` among the linked plugins first, then in the "
+"machine registry. So the project's ``conf.toml`` is the same for both "
+"deployments and needs no registration step. ``guidedog plugin list`` "
+"shows linked plugins beside registered ones."
+msgstr ""
+
+#: ../../plugins.rst:241
+msgid ""
+"A linked plugin's identity in the cache is its ID, its version and the "
+"host binary's own build identity, because its code is part of the host. "
+"Rebuilding the binary rebuilds the affected output. Linked code runs in "
+"the host process, so a panic or a hang in a hook reaches the build. We "
+"serve a plugin as a program when it should be isolated."
+msgstr ""
+
+#: ../../plugins.rst:247
+#, fuzzy
+#| msgid "6. Keep ownership and caching explicit"
+msgid "7. Keep state and caching explicit"
+msgstr "6. 所有権とキャッシュを明確にする"
+
+#: ../../plugins.rst:250
+msgid ""
+"A plugin value *is* one build's session. The host creates a fresh session "
+"per selected plugin per build, from the prototype. It drops the session "
+"when the build ends, whether it succeeded or failed. ``Drop`` replaces an "
+"unload callback: we close files or connections there."
+msgstr ""
+
+#: ../../plugins.rst:255
+#, fuzzy
+#| msgid ""
+#| "Use ``read_plugin_config`` and ``read_plugin_file`` during load. They "
+#| "fingerprint the bytes actually read and declare dependencies. Keep "
+#| "loaded state unchanged throughout the build. If you read other files "
+#| "yourself, declare their paths in ``session.dependencies`` and append a "
+#| "fingerprint of the loaded values to ``session.cache_key``. Append "
+#| "selected environment values there too. Do not erase the fingerprints "
+#| "recorded by the SDK helpers or depend on undeclared changing data."
+msgid ""
+"Use ``LoadContext::read_config`` and ``read_file`` during load. They "
 "fingerprint the bytes actually read and declare dependencies. Keep loaded "
-"state unchanged throughout the build. If you read other files yourself, "
-"declare their paths in ``session.dependencies`` and append a fingerprint "
-"of the loaded values to ``session.cache_key``. Append selected "
-"environment values there too. Do not erase the fingerprints recorded by "
-"the SDK helpers or depend on undeclared changing data."
+"state unchanged throughout the build. If we read other files ourselves, "
+"we declare their paths with ``declare_dependency`` and add a fingerprint "
+"of the loaded values with ``add_cache_key``. Selected environment values "
+"go there too. The context only appends, so the fingerprints the helpers "
+"recorded cannot be erased. A plugin must not depend on undeclared "
+"changing data."
 msgstr ""
 "ロード時は ``read_plugin_config`` と ``read_plugin_file`` "
 "を使います。実際に読んだバイト列の指紋を記録し、依存ファイルを宣言します。読み込んだ状態はビルド中に変えません。別のファイルを自分で読む場合は、パスを "
 "``session.dependencies`` に宣言し、読み込んだ値の指紋を ``session.cache_key`` "
 "に追記します。使用する環境変数の値も追記します。SDK が記録した指紋を消したり、未宣言の変動データに依存したりしないでください。"
 
-#: ../../plugins.rst:226
+#: ../../plugins.rst:263
+#, fuzzy
+#| msgid ""
+#| "The host includes identity, configuration, dependencies, cache key, "
+#| "builder, language and generated assets in cache invalidation. Each "
+#| "build gets private sessions. Reading workers serialize callback "
+#| "access; callbacks need not be thread safe. Native callbacks cannot be "
+#| "interrupted by a process deadline. Installed programs have a deadline "
+#| "per whole request, including pipe writes."
 msgid ""
 "The host includes identity, configuration, dependencies, cache key, "
-"builder, language and generated assets in cache invalidation. Each build "
-"gets private sessions. Reading workers serialize callback access; "
-"callbacks need not be thread safe. Native callbacks cannot be interrupted "
-"by a process deadline. Installed programs have a deadline per whole "
-"request, including pipe writes."
+"builder, language and generated assets in cache invalidation. Hooks take "
+"``&mut self``. When reading workers share a session, the host serializes "
+"calls through a ``Mutex``, so plugins need no synchronization. Installed "
+"programs have a deadline per whole request, including pipe writes."
 msgstr ""
 "ホストは識別情報、設定、依存関係、キャッシュキー、ビルダー、言語、生成アセットを使ってキャッシュの無効化を判断します。各ビルドに専用セッションがあります。読み取りスレッドはコールバックを順番に呼ぶため、コールバック自体のスレッド安全性は不要です。ネイティブコールバックはプロセスの期限では中断できません。インストールしたプログラムには、パイプへの書き込みを含む要求全体の期限があります。"
 
-#: ../../plugins.rst:234
+#: ../../plugins.rst:271
+#, fuzzy
+#| msgid ""
+#| "Guidedog loads a plugin and collects HTML assets before reading "
+#| "sources. Hooks run during reading and rendering. Cleanup follows "
+#| "success or failure."
 msgid ""
 "Guidedog loads a plugin and collects HTML assets before reading sources. "
-"Hooks run during reading and rendering. Cleanup follows success or "
-"failure."
+"Hooks run during reading and rendering. The session is dropped after "
+"success or failure."
 msgstr ""
 "プラグインを読み込み、HTML "
 "アセットを収集してから文書を読みます。読み取りとレンダリング中にフックを実行し、成功・失敗にかかわらず後片付けします。"
 
-#: ../../plugins.rst:234
-msgid "Installed build-plugin lifecycle. Asset collection belongs to setup."
+#: ../../plugins.rst:271
+#, fuzzy
+#| msgid ""
+#| "Installed build-plugin lifecycle. Asset collection belongs to setup."
+msgid "Build-plugin lifecycle. Asset collection belongs to setup."
 msgstr "インストール型ビルドプラグインのライフサイクル。アセット収集は準備段階です。"
 
-#: ../../plugins.rst:254
+#: ../../plugins.rst:291
+#, fuzzy
+#| msgid ""
+#| "Text is limited to 8 MiB per hook. Each plugin may supply at most 256 "
+#| "assets and 16 MiB of asset bytes. Paths must be portable and relative. "
+#| "Duplicate names, case-only collisions, traversal and conflicts with "
+#| "project files are refused. ``--untrusted`` disables build plugins. "
+#| "Child-process memory is outside the host's build budget; native plugin "
+#| "code must still check allocations and its own limits."
 msgid ""
-"Text is limited to 8 MiB per hook. Each plugin may supply at most 256 "
-"assets and 16 MiB of asset bytes. Paths must be portable and relative. "
-"Duplicate names, case-only collisions, traversal and conflicts with "
-"project files are refused. ``--untrusted`` disables build plugins. "
-"Child-process memory is outside the host's build budget; native plugin "
-"code must still check allocations and its own limits."
+"Text is limited to 8 MiB per hook and configuration to 1 MiB. Each plugin "
+"may supply at most 256 assets and 16 MiB of asset bytes, and declare at "
+"most 256 dependencies. Paths must be portable and relative. Duplicate "
+"names, case-only collisions, traversal and conflicts with project files "
+"are refused. ``--untrusted`` refuses any build that selects plugins. A "
+"child process's memory is outside the host's build budget."
 msgstr ""
 "各フックのテキスト上限は 8 MiB です。一つのプラグインは最大 256 個、合計 16 MiB "
 "のアセットを返せます。パスは移植可能な相対パスにします。同名、大文字小文字だけの衝突、ディレクトリ外への移動、プロジェクトファイルとの衝突は拒否されます。``--untrusted`` "
 "はビルドプラグインを無効にします。子プロセスのメモリーはホストのビルド予算に含まれません。ネイティブプラグインも確保結果と自身の制限を確認する必要があります。"
 
-#: ../../plugins.rst:260
-msgid "7. Explain failures and test them"
+#: ../../plugins.rst:297
+#, fuzzy
+#| msgid "7. Explain failures and test them"
+msgid "8. Explain failures and test them"
 msgstr "7. 失敗を説明してテストする"
 
-#: ../../plugins.rst:263
+#: ../../plugins.rst:300
+#, fuzzy
+#| msgid ""
+#| "Return a ``Problem`` with a code, title, affected path, explanation, "
+#| "concrete correction and nonzero exit status. For example, ``product = "
+#| "42`` is invalid; the badge explains that a string is required and "
+#| "suggests ``product = \"Orbit\"``. Markup diagnostics after expansion "
+#| "identify plugin-expanded input and show its actual excerpt. They do "
+#| "not pretend expanded line numbers belong to the original."
 msgid ""
 "Return a ``Problem`` with a code, title, affected path, explanation, "
-"concrete correction and nonzero exit status. For example, ``product = "
-"42`` is invalid; the badge explains that a string is required and "
-"suggests ``product = \"Orbit\"``. Markup diagnostics after expansion "
-"identify plugin-expanded input and show its actual excerpt. They do not "
-"pretend expanded line numbers belong to the original."
+"concrete correction and nonzero exit status: ``Problem::new(code, title, "
+"message)`` with ``.hint(...)``, ``.path(...)`` and ``.exit(...)``. For "
+"example, ``product = 42`` is invalid. The badge explains that a string is "
+"required and suggests ``product = \"Orbit\"``. The host adds which plugin "
+"stopped and in which stage. Markup diagnostics after expansion identify "
+"plugin-expanded input and show its actual excerpt. They do not pretend "
+"expanded line numbers belong to the original."
 msgstr ""
 "``Problem`` にはコード、タイトル、対象パス、説明、具体的な修正方法、ゼロ以外の終了ステータスを含めます。例えば ``product = "
 "42`` は無効です。バッジは文字列が必要だと説明し、``product = \"Orbit\"`` "
 "を提案します。展開後のマークアップ診断は、プラグインで展開した入力であることを示し、実際の抜粋を表示します。展開後の行番号を元ファイルの行番号として扱いません。"
 
-#: ../../plugins.rst:269
+#: ../../plugins.rst:308
+#, fuzzy
+#| msgid ""
+#| "Test the package directly and through its executable. Cover changed "
+#| "settings, unchanged rebuilds, nested links, invalid markup, asset "
+#| "collisions, cancellation, timeouts and allocation refusal. A failed "
+#| "build must preserve the previous site. The repository's build-plugin "
+#| "integration test compiles this exact example and checks HTML, "
+#| "directory HTML, single-page HTML, text and failed generations."
 msgid ""
-"Test the package directly and through its executable. Cover changed "
+"Test the plugin value directly with ``PluginSession::load`` and its hook "
+"methods, and through its program with ``process_plugin``. Cover changed "
 "settings, unchanged rebuilds, nested links, invalid markup, asset "
-"collisions, cancellation, timeouts and allocation refusal. A failed build "
-"must preserve the previous site. The repository's build-plugin "
-"integration test compiles this exact example and checks HTML, directory "
-"HTML, single-page HTML, text and failed generations."
+"collisions, cancellation and timeouts. A failed build must preserve the "
+"previous site. The crate's own tests run the badge both linked and served "
+"and require identical outputs."
 msgstr ""
 "パッケージを直接テストし、実行ファイル経由でもテストします。設定変更、変更のない再ビルド、階層のあるリンク、不正なマークアップ、アセット衝突、キャンセル、タイムアウト、メモリー確保の拒否を確認します。ビルド失敗時は以前のサイトを残す必要があります。リポジトリの統合テストはこのサンプルをそのままコンパイルし、HTML、ディレクトリ "
 "HTML、単一ページ HTML、テキスト、失敗した世代を確認します。"
 
-#: ../../plugins.rst:275
-msgid "8. Add a publishing service"
+#: ../../plugins.rst:314
+#, fuzzy
+#| msgid "8. Add a publishing service"
+msgid "9. Add a publishing service"
 msgstr "8. 公開サービスを加える"
 
-#: ../../plugins.rst:278
-msgid "GitHub Pages uses the same explicit descriptor foundation:"
-msgstr "GitHub Pages も同じ明示的ディスクリプターの基盤を使います。"
-
-#: ../../plugins.rst:293
+#: ../../plugins.rst:317
+#, fuzzy
+#| msgid ""
+#| "Its ``Publisher`` supplies ``load``, ``plan``, ``publish``, ``status`` "
+#| "and ``recover``. A session owns configuration and credentials. A "
+#| "snapshot owns checked site files. A plan compares that snapshot with a "
+#| "target baseline. A result reports the verified outcome. Release each "
+#| "owner with its matching SDK procedure."
 msgid ""
-"Its ``Publisher`` supplies ``load``, ``plan``, ``publish``, ``status`` "
-"and ``recover``. A session owns configuration and credentials. A snapshot "
-"owns checked site files. A plan compares that snapshot with a target "
-"baseline. A result reports the verified outcome. Release each owner with "
-"its matching SDK procedure."
+"A publisher implements ``gd_plugins::Publisher`` and is wrapped with "
+"``Plugin::publisher``. Its methods are ``info``, ``load``, ``plan``, "
+"``publish``, and optional ``status`` and ``recover``. A session holds "
+"configuration and credentials. A ``Snapshot`` freezes the checked site "
+"files. A ``Plan`` compares that snapshot with a target baseline. An "
+"``Outcome`` reports the verified result. These are ordinary values, and "
+"there is nothing to release."
 msgstr ""
 "その ``Publisher`` は ``load``、``plan``、``publish``、``status``、``recover`` "
 "を提供します。セッションは設定と資格情報を所有し、スナップショットは確認済みサイトファイルを所有します。計画はスナップショットと公開先の基準状態を比較します。結果は確認済みの成否を報告します。各所有者は対応する "
 "SDK 手続きで解放します。"
 
-#: ../../plugins.rst:298
+#: ../../plugins.rst:324
+#, fuzzy
+#| msgid ""
+#| "Follow ``examples/pages-publisher/main.odin`` into ``lib/pages``: "
+#| "configuration and machine binding establish authority; planning reads "
+#| "the target; publishing writes a durable journal before one conditional "
+#| "Git push; status and recovery settle the outcome. Nothing in a source "
+#| "or HTML callback grants publication authority."
 msgid ""
-"Follow ``examples/pages-publisher/main.odin`` into ``lib/pages``: "
-"configuration and machine binding establish authority; planning reads the "
-"target; publishing writes a durable journal before one conditional Git "
-"push; status and recovery settle the outcome. Nothing in a source or HTML "
-"callback grants publication authority."
+"Start with :download:`publisher.rs <_static/repository/publisher.rs>` "
+"(``crates/gd-plugins/examples/publisher.rs``), a working publisher that "
+"replaces a local folder whole. Then follow the GitHub Pages publisher in "
+"``crates/gd-pages``. Configuration and machine binding establish "
+"authority. Planning reads the target. Publishing writes a durable journal "
+"before one conditional Git push. Status and recovery settle the outcome. "
+"Nothing in a source or HTML hook grants publication authority. ``guidedog "
+"publish --publisher=ID --config=FILE`` builds the project and runs a "
+"publisher. ``--dry-run`` stops after the plan."
 msgstr ""
 "``examples/pages-publisher/main.odin`` から ``lib/pages`` "
 "へ実装を追います。設定とマシンへのバインドが権限を確立し、計画が公開先を読みます。公開処理は永続ジャーナルを書いてから、条件付き Git push "
 "を一度行います。状態確認と復旧が結果を確定します。ソースや HTML のコールバックに公開権限が与えられることはありません。"
 
-#: ../../plugins.rst:303
+#: ../../plugins.rst:333
+#, fuzzy
+#| msgid ""
+#| "A remote acceptance is not a live deployment. ``Accepted`` and "
+#| "``Pending`` return 6; an uncertain write returns ``Unknown`` and 7, "
+#| "with status or recovery directions. Never retry an uncertain write "
+#| "blindly. See :doc:`howto/github-pages` for the complete user workflow, "
+#| "and the API reference for :odin:type:`~plugins.Publisher`."
 msgid ""
 "A remote acceptance is not a live deployment. ``Accepted`` and "
-"``Pending`` return 6; an uncertain write returns ``Unknown`` and 7, with "
+"``Pending`` return 6. An uncertain write returns ``Unknown`` and 7, with "
 "status or recovery directions. Never retry an uncertain write blindly. "
-"See :doc:`howto/github-pages` for the complete user workflow, and the API "
-"reference for :odin:type:`~plugins.Publisher`."
+"See :doc:`howto/github-pages` for the complete user workflow."
 msgstr ""
 "リモートが受け付けても、まだ公開済みとは限りません。``Accepted`` と ``Pending`` は 6 を返します。不確かな書き込みは "
 "``Unknown`` と 7 を返し、状態確認や復旧の方法を示します。不確かな書き込みを無条件に再試行しないでください。操作全体は "
 ":doc:`howto/github-pages`、API は :odin:type:`~plugins.Publisher` を参照してください。"
 
-#: ../../plugins.rst:308
-msgid "9. Version and distribute the contract"
+#: ../../plugins.rst:338
+#, fuzzy
+#| msgid "9. Version and distribute the contract"
+msgid "10. Version and distribute the contract"
 msgstr "9. 契約をバージョン管理して配布する"
 
-#: ../../plugins.rst:311
+#: ../../plugins.rst:341
 msgid ""
-"Build-plugin API 1.0 uses protocol ``guidedog-build-plugin`` 1.0. "
-"Publisher SDK 1.1 keeps ``guidedog-publisher`` protocol 1.0 and accepts "
-"SDK 1.0 publishers. These are separate contracts; older hosts reject "
-"build plugins rather than treating them as publishers. Product versions "
-"are separate from interface versions."
+"The build-plugin interface (``PLUGIN_API_VERSION``) is 1.0 and uses "
+"protocol ``guidedog-build-plugin`` 1.0. The publisher interface "
+"(``API_VERSION``) is 1.1 and keeps ``guidedog-publisher`` protocol 1.0. "
+"These are separate contracts. The wire format is the one that programs "
+"built with the Odin SDK speak, so registered programs from earlier "
+"releases keep working. Product versions are separate from interface "
+"versions. New hooks arrive as trait methods with \"absent\" defaults, and "
+"host-made inputs are ``#[non_exhaustive]``, so a new field does not break "
+"a plugin."
 msgstr ""
-"ビルドプラグイン API 1.0 は ``guidedog-build-plugin`` 1.0 プロトコルを使います。パブリッシャー SDK "
-"1.1 は ``guidedog-publisher`` 1.0 を維持し、SDK 1.0 "
-"のパブリッシャーを受け入れます。契約は別々です。古いホストはビルドプラグインをパブリッシャーと誤認せずに拒否します。製品とインターフェースのバージョンも別です。"
 
-#: ../../plugins.rst:316
+#: ../../plugins.rst:349
+#, fuzzy
+#| msgid ""
+#| "Register each rebuilt executable deliberately. ``guidedog plugin "
+#| "inspect ID`` shows its kind and declared hooks. The public catalog "
+#| "describes plugins; it does not download, install or run them. Custom "
+#| "markup readers and renderers still use the compiled ``core.Registry`` "
+#| "API. Installed custom directives, roles and builders are not part of "
+#| "this build-hook interface."
 msgid ""
-"Register each rebuilt executable deliberately. ``guidedog plugin inspect "
-"ID`` shows its kind and declared hooks. The public catalog describes "
-"plugins; it does not download, install or run them. Custom markup readers "
-"and renderers still use the compiled ``core.Registry`` API. Installed "
-"custom directives, roles and builders are not part of this build-hook "
-"interface."
+"Register each rebuilt program deliberately, because its checksum changes. "
+"``guidedog plugin inspect ID`` shows its kind and declared hooks. The "
+"public catalog describes plugins. It does not download, install or run "
+"them. Custom markup readers, renderers, directives and roles are not part "
+"of this interface. They use the ``guidedoc::Registry`` API in a program "
+"that embeds the engine."
 msgstr ""
 "再ビルドした実行ファイルは、その都度意図を持って登録します。``guidedog plugin inspect ID`` "
 "で種類と宣言済みフックを確認できます。公開カタログは説明を提供するだけで、ダウンロード、インストール、実行はしません。独自のマークアップリーダーとレンダラーは引き続きコンパイル済みの "
 "``core.Registry`` API を使います。インストールで追加する独自ディレクティブ、ロール、ビルダーはこのフック API "
 "に含まれません。"
 
-#: ../../plugins.rst:322
-msgid "10. Check a plugin before registering it"
+#: ../../plugins.rst:355
+#, fuzzy
+#| msgid "10. Check a plugin before registering it"
+msgid "11. Check a plugin before registering it"
 msgstr "10. 登録前にプラグインを検査する"
 
-#: ../../plugins.rst:325
+#: ../../plugins.rst:358
+#, fuzzy
+#| msgid ""
+#| "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises a "
+#| "build plugin without changing the registry. Registration runs the same "
+#| "checks automatically: two fresh loads, repeated source and HTML "
+#| "results, generated asset validation and cleanup. ``--timeout=SECONDS`` "
+#| "defaults to 60 per process request. Supply a real configuration when "
+#| "the plugin needs one. Relative configuration paths resolve from "
+#| "``--project``; its default is the current directory."
 msgid ""
 "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises a "
 "build plugin without changing the registry. Registration runs the same "
 "checks automatically: two fresh loads, repeated source and HTML results, "
 "generated asset validation and cleanup. ``--timeout=SECONDS`` defaults to "
 "60 per process request. Supply a real configuration when the plugin needs "
-"one. Relative configuration paths resolve from ``--project``; its default "
-"is the current directory."
+"one. Relative configuration paths resolve from ``--project``, whose "
+"default is the current directory."
 msgstr ""
 "``guidedog plugin check PATH --project=DIR --config=FILE`` "
 "は登録情報を変えずにビルドプラグインを検査します。登録時も同じ検査を行います。新規ロードを二回行い、ソースと HTML "
 "の結果の再現性、生成アセット、後始末を調べます。``--timeout=SECONDS`` は要求ごとに既定で 60 "
 "秒です。必要なら実際の設定を渡してください。設定の相対パスは ``--project`` が基準で、既定は現在のディレクトリです。"
 
-#: ../../plugins.rst:332
+#: ../../plugins.rst:365
+#, fuzzy
+#| msgid ""
+#| "Passing checks demonstrates interoperability, not a proof of safety. "
+#| "Guidedog keeps checking every runtime response and runs installed "
+#| "plugins in separate processes. A crash, bounds failure or stalled "
+#| "process becomes a diagnostic and cannot publish an incomplete "
+#| "generation. Earlier publisher compatibility is no longer a release "
+#| "requirement; qualification checks demonstrate interoperability across "
+#| "process boundaries, while directly linked native callbacks remain "
+#| "trusted code."
 msgid ""
-"Passing checks demonstrates interoperability, not a proof of safety. "
-"Guidedog keeps checking every runtime response and runs installed plugins "
-"in separate processes. A crash, bounds failure or stalled process becomes "
-"a diagnostic and cannot publish an incomplete generation. Earlier "
-"publisher compatibility is no longer a release requirement; qualification "
-"checks demonstrate interoperability across process boundaries, while "
-"directly linked native callbacks remain trusted code."
+"Passing checks shows that the plugin works with Guidedog. It is not a "
+"proof of safety. Guidedog keeps checking every runtime response and runs "
+"installed plugins in separate processes. A crash, bounds failure or "
+"stalled process becomes a diagnostic and cannot publish an incomplete "
+"generation. Linked plugins remain trusted code."
 msgstr ""
 "検証成功は相互運用の記録で、安全性の証明ではありません。ホストは実行時の応答も検証し、インストールしたプラグインを別プロセスで動かします。クラッシュ、境界違反、停止は診断となり、不完全な世代を公開しません。旧版公開プラグインとの互換性は要件ではありません。直接リンクするコールバックは引き続き信頼するコードです。"
 
-#: ../../plugins.rst:339
+#: ../../plugins.rst:370
+#, fuzzy
+#| msgid ""
+#| "Generic checks never invoke a publisher. Qualify publishers with their "
+#| "own Odin tests and an explicitly configured dry run. A plugin that "
+#| "changes the parser, node model or builder itself belongs in a separate "
+#| "design; the modular libraries and source remain available for an "
+#| "application or a fork."
 msgid ""
 "Generic checks never invoke a publisher. Qualify publishers with their "
-"own Odin tests and an explicitly configured dry run. A plugin that "
-"changes the parser, node model or builder itself belongs in a separate "
-"design; the modular libraries and source remain available for an "
-"application or a fork."
+"own tests and an explicitly configured dry run. The protocol and the "
+"SDK's design are recorded in :doc:`internals/plugins`."
 msgstr ""
 "汎用検査はパブリッシャーを呼びません。パブリッシャーは専用の Odin "
 "テストと、明示的に設定したドライランで検証します。パーサー、ノードモデル、ビルダー自体の変更には別の設計が必要です。モジュール化されたライブラリーとソースは、アプリケーションや "
 "fork でも利用できます。"
+
+#~ msgid ""
+#~ "Build hooks are available from Guidedog 0.6.2. Earlier 0.6.x releases "
+#~ "support publishers only. Use a 0.6.2 host or build it from this "
+#~ "checkout before following the badge tutorial."
+#~ msgstr ""
+#~ "ビルドフックは Guidedog 0.6.2 から使えます。それ以前の 0.6.x はパブリッシャーだけに対応します。0.6.2 "
+#~ "のホストを使うか、このソースからビルドしてからチュートリアルを進めてください。"
+
+#~ msgid ""
+#~ "``plugins.Plugin`` describes the plugin. Its ``source``, ``html`` and "
+#~ "``assets`` procedures are optional. A nil procedure means that service "
+#~ "is absent. ``load`` prepares private state; ``unload`` closes "
+#~ "resources. The host owns the build."
+#~ msgstr ""
+#~ "``plugins.Plugin`` がプラグインを記述します。``source``、``html``、``assets`` "
+#~ "は省略できます。手続きが nil なら、そのサービスはありません。``load`` は専用の状態を準備し、``unload`` "
+#~ "はリソースを閉じます。ビルドの管理はホストが担います。"
+
+#~ msgid ""
+#~ "Start at the checkout root. Build Guidedog using the repository's "
+#~ "build instructions, then use that host for this tutorial. The example "
+#~ "package is ``examples/build-plugin/badge``; its executable entry point "
+#~ "is one directory above."
+#~ msgstr ""
+#~ "チェックアウトのルートから始めます。リポジトリの手順に従って Guidedog "
+#~ "をビルドし、このホストを使ってください。サンプルのパッケージは "
+#~ "``examples/build-plugin/badge``、実行ファイルのエントリーポイントはその一つ上のディレクトリです。"
+
+#~ msgid ""
+#~ "The assets hook allocates its result array with ``ctx.allocator``. The "
+#~ "CSS bytes are static. The SDK copies both paths and bytes into an "
+#~ "owned result. Never return a slice pointing at a callback's local "
+#~ "array. Session state must not retain hook inputs or hook-result "
+#~ "allocations."
+#~ msgstr ""
+#~ "アセットフックは ``ctx.allocator`` で結果の配列を確保します。CSS のバイト列は静的です。SDK "
+#~ "はパスとバイト列を、結果が所有するメモリーへコピーします。コールバックのローカル配列を指すスライスを返してはいけません。セッションの状態にフックの入力や結果用メモリーを残さないでください。"
+
+#~ msgid ""
+#~ "``serve_plugin`` handles negotiation and dispatch. Keep protocol "
+#~ "output on stdout; write human logs to stderr. Return to ``main`` "
+#~ "before ``os.exit`` so deferred cleanup runs. An embedded host instead "
+#~ "passes the descriptor in ``project.Load_Options.plugins`` and selects "
+#~ "its ID in the project's configuration."
+#~ msgstr ""
+#~ "``serve_plugin`` がバージョンの合意と呼び出しの振り分けを処理します。プロトコル出力は stdout、人向けのログは "
+#~ "stderr に書きます。``os.exit`` の前に ``main`` へ戻り、defer "
+#~ "による後始末を実行します。組み込みホストでは、ディスクリプターを ``project.Load_Options.plugins`` "
+#~ "に渡し、プロジェクト設定でその ID を選びます。"
+
+#~ msgid "Build-plugin owners"
+#~ msgstr "ビルドプラグインの所有者"
+
+#~ msgid "Owner"
+#~ msgstr "所有者"
+
+#~ msgid "Create"
+#~ msgstr "生成"
+
+#~ msgid "Release"
+#~ msgstr "解放"
+
+#~ msgid "``Plugin_Session``"
+#~ msgstr "``Plugin_Session``"
+
+#~ msgid "``load_plugin``"
+#~ msgstr "``load_plugin``"
+
+#~ msgid "``unload_plugin``"
+#~ msgstr "``unload_plugin``"
+
+#~ msgid "``Text_Result``"
+#~ msgstr "``Text_Result``"
+
+#~ msgid "``process_source`` or ``process_html``"
+#~ msgstr "``process_source`` または ``process_html``"
+
+#~ msgid "``release_text``"
+#~ msgstr "``release_text``"
+
+#~ msgid "``Assets_Result``"
+#~ msgstr "``Assets_Result``"
+
+#~ msgid "``collect_assets``"
+#~ msgstr "``collect_assets``"
+
+#~ msgid "``release_assets``"
+#~ msgstr "``release_assets``"
+
+#~ msgid ""
+#~ "Cleanup accepts zero, failed and already released owners. Allocate "
+#~ "returned data with the callback allocator. Check allocation errors; "
+#~ "after helpers that hide those errors, check "
+#~ "``plugins.memory_refused(ctx.allocator)``. Return ``plugins.memory()`` "
+#~ "when refused. Unload must tolerate a partially loaded session."
+#~ msgstr ""
+#~ "後始末はゼロ値、失敗した値、解放済みの所有者でも安全です。戻すデータはコールバックのアロケーターで確保します。確保エラーを確認し、エラーを隠す補助関数の後では "
+#~ "``plugins.memory_refused(ctx.allocator)`` を調べます。拒否されたら "
+#~ "``plugins.memory()`` を返します。Unload は一部だけ読み込まれたセッションにも対応してください。"
+
+#~ msgid "GitHub Pages uses the same explicit descriptor foundation:"
+#~ msgstr "GitHub Pages も同じ明示的ディスクリプターの基盤を使います。"
+
+#~ msgid ""
+#~ "Build-plugin API 1.0 uses protocol ``guidedog-build-plugin`` 1.0. "
+#~ "Publisher SDK 1.1 keeps ``guidedog-publisher`` protocol 1.0 and "
+#~ "accepts SDK 1.0 publishers. These are separate contracts; older hosts "
+#~ "reject build plugins rather than treating them as publishers. Product "
+#~ "versions are separate from interface versions."
+#~ msgstr ""
+#~ "ビルドプラグイン API 1.0 は ``guidedog-build-plugin`` 1.0 プロトコルを使います。パブリッシャー "
+#~ "SDK 1.1 は ``guidedog-publisher`` 1.0 を維持し、SDK 1.0 "
+#~ "のパブリッシャーを受け入れます。契約は別々です。古いホストはビルドプラグインをパブリッシャーと誤認せずに拒否します。製品とインターフェースのバージョンも別です。"
 
 #~ msgid ""
 #~ "A publisher connects a finished site to a host. It does not parse "

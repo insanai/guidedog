@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 04:29+0000\n"
+"POT-Creation-Date: 2026-10-15 04:11+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -36,32 +36,34 @@ msgstr "Ein Flussdiagramm"
 
 #: ../../topics/diagrams.rst:13
 msgid ""
-"If capacity fits, run conversion; otherwise the host prepares storage and "
-"retries."
+"If the request fits the limits, the workspace buffer grows and conversion "
+"continues; otherwise the conversion ends with a Limit result."
 msgstr ""
-"Bei ausreichender Kapazität konvertieren; sonst bereitet der Host "
-"Speicher vor und versucht es erneut."
 
 #: ../../topics/diagrams.rst:13
-msgid "Capacity is checked before storage is borrowed or grown."
+msgid "A conversion checks its limits before a buffer grows."
 msgstr ""
-"Die Kapazität wird geprüft, bevor Speicher ausgeliehen oder vergrößert "
-"wird."
 
 #: ../../topics/diagrams.rst:33
+#, fuzzy
+#| msgid ""
+#| "The drawing names the owner at the growth step. It does not suggest "
+#| "that the conversion core allocates. This distinction is part of the "
+#| "contract."
 msgid ""
-"The drawing names the owner at the growth step. It does not suggest that "
-"the conversion core allocates. This distinction is part of the contract."
+"The drawing names the decision at the growth step. It does not suggest "
+"that running out of room aborts the program: a bound produces a result "
+"the caller can report. This distinction is part of the contract."
 msgstr ""
 "Die Zeichnung nennt beim Wachstumsschritt den Eigentümer. Sie deutet "
 "keine Allokation durch den Konvertierungskern an. Dieser Unterschied "
 "gehört zum Vertrag."
 
-#: ../../topics/diagrams.rst:37
+#: ../../topics/diagrams.rst:38
 msgid "Author a graph"
 msgstr "Einen Graphen erstellen"
 
-#: ../../topics/diagrams.rst:55
+#: ../../topics/diagrams.rst:56
 msgid ""
 "``graphviz``, ``graph``, and ``digraph`` are built in. Guidedog renders "
 "them through Graphviz. HTML receives an SVG asset. PDF embeds the "
@@ -71,11 +73,11 @@ msgstr ""
 "rendert mit Graphviz. HTML erhält SVG, PDF die gerenderte Zeichnung. "
 "Beide nutzen denselben Graphquelltext."
 
-#: ../../topics/diagrams.rst:59
+#: ../../topics/diagrams.rst:60
 msgid "Light, dark and print"
 msgstr "Hell, dunkel und Druck"
 
-#: ../../topics/diagrams.rst:62
+#: ../../topics/diagrams.rst:63
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
@@ -85,7 +87,7 @@ msgstr ""
 "Text lesbar bleibt, behalten gewöhnliche Grafiken ihre Farben und "
 "bekommen im dunklen Standardthema eine helle Fläche."
 
-#: ../../topics/diagrams.rst:66
+#: ../../topics/diagrams.rst:67
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
 "the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
@@ -99,7 +101,7 @@ msgstr ""
 "``color-scheme`` der Seite, auch der ausdrücklichen Themenwahl. Skripte, "
 "externe Stylesheets oder Inline-SVG sind unnötig."
 
-#: ../../topics/diagrams.rst:72
+#: ../../topics/diagrams.rst:73
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
@@ -108,66 +110,76 @@ msgstr ""
 "Eingaben, Zylinder für dauerhafte Speicher. Klassen kennzeichnen die "
 "Rollen der dunklen Palette:"
 
-#: ../../topics/diagrams.rst:75
+#: ../../topics/diagrams.rst:76
 msgid "Semantic node classes"
 msgstr "Semantische Knotenklassen"
 
-#: ../../topics/diagrams.rst:79
+#: ../../topics/diagrams.rst:80
 msgid "DOT class"
 msgstr "DOT-Klasse"
 
-#: ../../topics/diagrams.rst:80
+#: ../../topics/diagrams.rst:81
 msgid "Role"
 msgstr "Rolle"
 
-#: ../../topics/diagrams.rst:81
+#: ../../topics/diagrams.rst:82
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:82
+#: ../../topics/diagrams.rst:83
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "Quelle, Konfiguration oder Hilfsmaterial; warmer Neutralton."
 
-#: ../../topics/diagrams.rst:83
+#: ../../topics/diagrams.rst:84
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:84
+#: ../../topics/diagrams.rst:85
 msgid "A produced artifact; blue."
 msgstr "Erzeugtes Artefakt; blau."
 
-#: ../../topics/diagrams.rst:85
+#: ../../topics/diagrams.rst:86
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:86
+#: ../../topics/diagrams.rst:87
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "Optionaler Erweiterungspunkt; bernsteinfarben und gestrichelt."
 
-#: ../../topics/diagrams.rst:87
+#: ../../topics/diagrams.rst:88
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:88
+#: ../../topics/diagrams.rst:89
 msgid "A decision; amber, with a diamond shape."
 msgstr "Entscheidung; bernsteinfarbene Raute."
 
-#: ../../topics/diagrams.rst:89
+#: ../../topics/diagrams.rst:90
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:90
-msgid "A separate native allocation boundary; violet."
+#: ../../topics/diagrams.rst:91
+#, fuzzy
+#| msgid "A separate native allocation boundary; violet."
+msgid "A separate ownership or allocation boundary; violet."
 msgstr "Eigene native Speichergrenze; violett."
 
-#: ../../topics/diagrams.rst:92
+#: ../../topics/diagrams.rst:93
+#, fuzzy
+#| msgid ""
+#| "For example, ``source [class=\"gd-input\", shape=note, "
+#| "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
+#| "role. Classes do not choose shapes or add labels: write those "
+#| "explicitly so the drawing also works in monochrome. Unclassified steps "
+#| "use green. This palette is opt-in; do not apply it to artwork whose "
+#| "exact colors carry data."
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
-"role. Classes do not choose shapes or add labels: write those explicitly "
-"so the drawing also works in monochrome. Unclassified steps use green. "
-"This palette is opt-in; do not apply it to artwork whose exact colors "
-"carry data."
+"role. Classes do not choose shapes or add labels. We write those "
+"explicitly, so the drawing also works in monochrome. Unclassified steps "
+"use green. This palette is opt-in. We do not apply it to artwork whose "
+"exact colors carry data."
 msgstr ""
 "``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` legt "
 "helle Gestaltung und dunkle Rolle fest. Form und Text entstehen nicht "
@@ -175,11 +187,19 @@ msgstr ""
 "Unklassifizierte Schritte sind grün. Wenden Sie die optionale Palette "
 "nicht an, wenn exakte Farben Daten ausdrücken."
 
-#: ../../topics/diagrams.rst:98
+#: ../../topics/diagrams.rst:99
+#, fuzzy
+#| msgid ""
+#| "The light DOT attributes remain the PDF master. The book receives an "
+#| "SVG without the adaptive stylesheet. Printed HTML selects the light "
+#| "scheme too. Keep both palettes legible and test the actual book; "
+#| "transparency alone proves neither. The inheritance rule is defined by "
+#| "the `CSS color-scheme specification "
+#| "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
-"too. Keep both palettes legible and test the actual book; transparency "
+"too. Keep both palettes legible and test the actual book. Transparency "
 "alone proves neither. The inheritance rule is defined by the `CSS "
 "color-scheme specification "
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
@@ -190,11 +210,11 @@ msgstr ""
 "Vererbung steht in der `CSS-Spezifikation zu color-scheme "
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
 
-#: ../../topics/diagrams.rst:104
+#: ../../topics/diagrams.rst:105
 msgid "Make the result legible"
 msgstr "Das Ergebnis lesbar gestalten"
 
-#: ../../topics/diagrams.rst:107
+#: ../../topics/diagrams.rst:108
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -206,7 +226,7 @@ msgstr ""
 "Rückkanten mit Bedingungen. Nutzen Sie Form und Text neben Farbe; "
 "Druckleser haben womöglich keine Farbe."
 
-#: ../../topics/diagrams.rst:111
+#: ../../topics/diagrams.rst:112
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -216,10 +236,15 @@ msgstr ""
 "Browserfenster und PDF-Seiten. Braucht das Diagramm winzige Schrift, "
 "teilen Sie es. Größen beschreibt :doc:`../media`\\ ."
 
-#: ../../topics/diagrams.rst:115
+#: ../../topics/diagrams.rst:116
+#, fuzzy
+#| msgid ""
+#| "On narrow screens, captioned diagrams scroll horizontally to keep "
+#| "labels readable. Scroll inside the figure; the page itself keeps its "
+#| "width."
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
-"readable. Scroll inside the figure; the page itself keeps its width."
+"readable. Scroll inside the figure. The page itself keeps its width."
 msgstr ""
 "Auf schmalen Bildschirmen scrollen beschriftete Grafiken horizontal in "
 "ihrem eigenen Bereich. Die Schrift bleibt lesbar, die Seite behält ihre "
@@ -230,18 +255,26 @@ msgid "Domains"
 msgstr "Domänen"
 
 #: ../../topics/domains.rst:4
+#, fuzzy
+#| msgid ""
+#| "A domain is a collection of markup constructs (directives and roles) "
+#| "for describing and cross-referencing program objects belonging to a "
+#| "specific programming language or domain of discourse."
 msgid ""
-"A domain is a collection of markup constructs (directives and roles) for "
-"describing and cross-referencing program objects belonging to a specific "
-"programming language or domain of discourse."
+"A domain is a set of directives and roles. They describe and "
+"cross-reference the objects of one programming language or one field of "
+"discourse."
 msgstr ""
 "Eine Domäne bündelt Direktiven und Rollen zum Beschreiben und Verknüpfen "
 "von Objekten einer Sprache oder eines Fachgebiets."
 
 #: ../../topics/domains.rst:8
+#, fuzzy
+#| msgid ""
+#| "Guidedog provides native, built-in implementations of the standard "
+#| "Sphinx domains:"
 msgid ""
-"Guidedog provides native, built-in implementations of the standard Sphinx "
-"domains:"
+"Guidedog has built-in implementations of the standard Sphinx domains:"
 msgstr "Guidedog bietet native Implementierungen dieser Sphinx-Domänen:"
 
 #: ../../topics/domains.rst:10
@@ -292,11 +325,23 @@ msgstr ""
 "**Odin-Domäne** (``odin``): Odin-Pakete, Prozeduren, Strukturen, Unions "
 "und Aufzählungen; siehe :doc:`../odin`."
 
-#: ../../topics/domains.rst:17
+#: ../../topics/domains.rst:16
+#, fuzzy
+#| msgid ""
+#| "**C domain** (``c``): C functions, types, structs, unions, enums, "
+#| "enumerators, variables, and macros."
+msgid ""
+"**Rust domain** (``rust``): Rust crates, modules, functions, structs, "
+"enums, traits, impls, and macros (see `Rust domain`_ below)."
+msgstr ""
+"**C-Domäne** (``c``): Funktionen, Typen, Strukturen, Unions, "
+"Aufzählungen, Aufzählungswerte, Variablen und Makros."
+
+#: ../../topics/domains.rst:18
 msgid "Setting the primary domain"
 msgstr "Primärdomäne festlegen"
 
-#: ../../topics/domains.rst:20
+#: ../../topics/domains.rst:21
 msgid ""
 "The default domain is set with ``primary_domain`` in ``conf.toml`` "
 "(default: ``\"py\"``). When a primary domain is active, its directives "
@@ -308,15 +353,17 @@ msgstr ""
 "ist ``\"py\"``. Danach kann das Präfix entfallen: ``.. function::`` statt "
 "``.. py:function::`` und ``:func:`name``` statt ``:py:func:`name```."
 
-#: ../../topics/domains.rst:25
-msgid "To change the active domain locally within a document:"
+#: ../../topics/domains.rst:26
+#, fuzzy
+#| msgid "To change the active domain locally within a document:"
+msgid "To change the active domain within one document:"
 msgstr "So wechseln Sie die Domäne lokal im Dokument:"
 
-#: ../../topics/domains.rst:31
+#: ../../topics/domains.rst:32
 msgid "Standard domain"
 msgstr "Standarddomäne"
 
-#: ../../topics/domains.rst:34
+#: ../../topics/domains.rst:35
 msgid ""
 "The standard domain describes command-line tools, environment variables, "
 "and document cross-references."
@@ -324,37 +371,37 @@ msgstr ""
 "Die Standarddomäne beschreibt Kommandozeilenwerkzeuge, Umgebungsvariablen "
 "und Dokumentverweise."
 
-#: ../../topics/domains.rst:37 ../../topics/domains.rst:73
-#: ../../topics/domains.rst:118 ../../topics/domains.rst:160
-#: ../../topics/domains.rst:194
+#: ../../topics/domains.rst:38 ../../topics/domains.rst:74
+#: ../../topics/domains.rst:119 ../../topics/domains.rst:161
+#: ../../topics/domains.rst:195 ../../topics/domains.rst:227
 msgid "Directives"
 msgstr "Direktiven"
 
-#: ../../topics/domains.rst:52 ../../topics/domains.rst:102
-#: ../../topics/domains.rst:143 ../../topics/domains.rst:179
-#: ../../topics/domains.rst:209
+#: ../../topics/domains.rst:53 ../../topics/domains.rst:103
+#: ../../topics/domains.rst:144 ../../topics/domains.rst:180
+#: ../../topics/domains.rst:210 ../../topics/domains.rst:270
 msgid "Roles"
 msgstr "Rollen"
 
-#: ../../topics/domains.rst:55
+#: ../../topics/domains.rst:56
 msgid "``:doc:`path```: Links to a project document by relative path."
 msgstr ""
 "``:doc:`path```: Verweist über einen relativen Pfad auf ein "
 "Projektdokument."
 
-#: ../../topics/domains.rst:56
+#: ../../topics/domains.rst:57
 msgid ""
 "``:ref:`label```: Links to an explicit target label (``.. _label:``)."
 msgstr ""
 "``:ref:`label```: Verweist auf eine explizite Zielmarke ``.. _label:``."
 
-#: ../../topics/domains.rst:57
+#: ../../topics/domains.rst:58
 msgid ""
 "``:term:`term```: Links to a term defined in a ``glossary`` directive."
 msgstr ""
 "``:term:`term```: Verweist auf einen in ``glossary`` definierten Begriff."
 
-#: ../../topics/domains.rst:58
+#: ../../topics/domains.rst:59
 msgid ""
 "``:option:`--config```: Links to a command-line option described by "
 "``option``."
@@ -362,7 +409,7 @@ msgstr ""
 "``:option:`--config```: Verweist auf eine mit ``option`` beschriebene "
 "Kommandozeilenoption."
 
-#: ../../topics/domains.rst:59
+#: ../../topics/domains.rst:60
 msgid ""
 "``:envvar:`VARIABLE```: Links to an environment variable described by "
 "``envvar``."
@@ -370,11 +417,11 @@ msgstr ""
 "``:envvar:`VARIABLE```: Verweist auf eine mit ``envvar`` beschriebene "
 "Umgebungsvariable."
 
-#: ../../topics/domains.rst:60
+#: ../../topics/domains.rst:61
 msgid "``:command:`name```: Marks a system command name."
 msgstr "``:command:`name```: Kennzeichnet einen Systembefehlsnamen."
 
-#: ../../topics/domains.rst:61
+#: ../../topics/domains.rst:62
 msgid ""
 "``:file:`path```: Marks a file or directory path, supporting "
 "``{variable}`` placeholders."
@@ -382,37 +429,37 @@ msgstr ""
 "``:file:`path```: Kennzeichnet Datei- und Ordnerpfade mit möglichen "
 "``{variable}``-Platzhaltern."
 
-#: ../../topics/domains.rst:62
+#: ../../topics/domains.rst:63
 msgid "``:kbd:`Ctrl+C```: Marks keyboard keystrokes."
 msgstr "``:kbd:`Ctrl+C```: Kennzeichnet Tasteneingaben."
 
-#: ../../topics/domains.rst:63
+#: ../../topics/domains.rst:64
 msgid ""
 "``:menuselection:`File --> Save As```: Formats a software menu sequence."
 msgstr "``:menuselection:`File --> Save As```: Formatiert eine Menüfolge."
 
-#: ../../topics/domains.rst:64
+#: ../../topics/domains.rst:65
 msgid "``:guilabel:`Submit```: Formats a button or user interface element."
 msgstr ""
 "``:guilabel:`Submit```: Formatiert ein Bedienelement oder einen Button."
 
-#: ../../topics/domains.rst:65
+#: ../../topics/domains.rst:66
 msgid "``:pep:`8```: Links to a Python Enhancement Proposal."
 msgstr "``:pep:`8```: Verweist auf einen Python Enhancement Proposal."
 
-#: ../../topics/domains.rst:66
+#: ../../topics/domains.rst:67
 msgid "``:rfc:`7231```: Links to an IETF Request for Comments."
 msgstr "``:rfc:`7231```: Verweist auf einen RFC der IETF."
 
-#: ../../topics/domains.rst:68
+#: ../../topics/domains.rst:69
 msgid "Python domain"
 msgstr "Python-Domäne"
 
-#: ../../topics/domains.rst:71
+#: ../../topics/domains.rst:72
 msgid "The Python domain describes Python interfaces and signatures."
 msgstr "Die Python-Domäne beschreibt Python-Schnittstellen und Signaturen."
 
-#: ../../topics/domains.rst:98
+#: ../../topics/domains.rst:99
 msgid ""
 "Directives include: ``py:module``, ``py:currentmodule``, ``py:function``, "
 "``py:data``, ``py:class``, ``py:method``, ``py:staticmethod``, "
@@ -424,83 +471,83 @@ msgstr ""
 "``py:classmethod``, ``py:attribute``, ``py:property``, ``py:exception``, "
 "``py:decorator`` und ``py:type``."
 
-#: ../../topics/domains.rst:105
+#: ../../topics/domains.rst:106
 msgid "``:py:func:`name```: Links to a Python function."
 msgstr "``:py:func:`name```: Verweist auf eine Python-Funktion."
 
-#: ../../topics/domains.rst:106
+#: ../../topics/domains.rst:107
 msgid "``:py:class:`name```: Links to a Python class."
 msgstr "``:py:class:`name```: Verweist auf eine Python-Klasse."
 
-#: ../../topics/domains.rst:107
+#: ../../topics/domains.rst:108
 msgid "``:py:meth:`name```: Links to a Python class or instance method."
 msgstr ""
 "``:py:meth:`name```: Verweist auf eine Python-Klassen- oder "
 "Instanzmethode."
 
-#: ../../topics/domains.rst:108
+#: ../../topics/domains.rst:109
 msgid "``:py:attr:`name```: Links to a Python attribute."
 msgstr "``:py:attr:`name```: Verweist auf ein Python-Attribut."
 
-#: ../../topics/domains.rst:109
+#: ../../topics/domains.rst:110
 msgid "``:py:data:`name```: Links to Python module-level data."
 msgstr "``:py:data:`name```: Verweist auf Python-Daten auf Modulebene."
 
-#: ../../topics/domains.rst:110
+#: ../../topics/domains.rst:111
 msgid "``:py:exc:`name```: Links to a Python exception class."
 msgstr "``:py:exc:`name```: Verweist auf eine Python-Ausnahmeklasse."
 
-#: ../../topics/domains.rst:111
+#: ../../topics/domains.rst:112
 msgid "``:py:mod:`name```: Links to a Python module."
 msgstr "``:py:mod:`name```: Verweist auf ein Python-Modul."
 
-#: ../../topics/domains.rst:113
+#: ../../topics/domains.rst:114
 msgid "C domain"
 msgstr "C-Domäne"
 
-#: ../../topics/domains.rst:116
+#: ../../topics/domains.rst:117
 msgid "The C domain describes C language libraries and headers."
 msgstr "Die C-Domäne beschreibt C-Bibliotheken und Header."
 
-#: ../../topics/domains.rst:146
+#: ../../topics/domains.rst:147
 msgid "``:c:func:`name```: Links to a C function."
 msgstr "``:c:func:`name```: Verweist auf eine C-Funktion."
 
-#: ../../topics/domains.rst:147
+#: ../../topics/domains.rst:148
 msgid "``:c:member:`name```: Links to a C struct or union member."
 msgstr ""
 "``:c:member:`name```: Verweist auf ein C-Struktur- oder Unionmitglied."
 
-#: ../../topics/domains.rst:148
+#: ../../topics/domains.rst:149
 msgid "``:c:data:`name``` / ``:c:var:`name```: Links to a C variable."
 msgstr ""
 "``:c:data:`name``` / ``:c:var:`name```: Verweist auf eine C-Variable."
 
-#: ../../topics/domains.rst:149
+#: ../../topics/domains.rst:150
 msgid "``:c:type:`name```: Links to a C typedef or type."
 msgstr "``:c:type:`name```: Verweist auf einen C-Typedef oder Typ."
 
-#: ../../topics/domains.rst:150
+#: ../../topics/domains.rst:151
 msgid "``:c:struct:`name```: Links to a C struct."
 msgstr "``:c:struct:`name```: Verweist auf eine C-Struktur."
 
-#: ../../topics/domains.rst:151
+#: ../../topics/domains.rst:152
 msgid "``:c:union:`name```: Links to a C union."
 msgstr "``:c:union:`name```: Verweist auf eine C-Union."
 
-#: ../../topics/domains.rst:152
+#: ../../topics/domains.rst:153
 msgid "``:c:enum:`name```: Links to a C enum."
 msgstr "``:c:enum:`name```: Verweist auf eine C-Aufzählung."
 
-#: ../../topics/domains.rst:153
+#: ../../topics/domains.rst:154
 msgid "``:c:macro:`name```: Links to a C preprocessor macro."
 msgstr "``:c:macro:`name```: Verweist auf ein C-Präprozessormakro."
 
-#: ../../topics/domains.rst:155
+#: ../../topics/domains.rst:156
 msgid "C++ domain"
 msgstr "C++-Domäne"
 
-#: ../../topics/domains.rst:158
+#: ../../topics/domains.rst:159
 msgid ""
 "The C++ domain supports modern C++ constructs, concepts, namespaces, and "
 "scopes."
@@ -508,15 +555,15 @@ msgstr ""
 "Die C++-Domäne unterstützt moderne Konstrukte, Konzepte, Namensräume und "
 "Gültigkeitsbereiche."
 
-#: ../../topics/domains.rst:182
+#: ../../topics/domains.rst:183
 msgid "``:cpp:class:`name```: Links to a C++ class or struct."
 msgstr "``:cpp:class:`name```: Verweist auf eine C++-Klasse oder Struktur."
 
-#: ../../topics/domains.rst:183
+#: ../../topics/domains.rst:184
 msgid "``:cpp:func:`name```: Links to a C++ function or method."
 msgstr "``:cpp:func:`name```: Verweist auf eine C++-Funktion oder Methode."
 
-#: ../../topics/domains.rst:184
+#: ../../topics/domains.rst:185
 msgid ""
 "``:cpp:member:`name``` / ``:cpp:var:`name```: Links to a member or "
 "variable."
@@ -524,23 +571,23 @@ msgstr ""
 "``:cpp:member:`name``` / ``:cpp:var:`name```: Verweist auf ein Mitglied "
 "oder eine Variable."
 
-#: ../../topics/domains.rst:185
+#: ../../topics/domains.rst:186
 msgid "``:cpp:type:`name```: Links to a C++ type alias or typedef."
 msgstr "``:cpp:type:`name```: Verweist auf einen C++-Typalias oder Typedef."
 
-#: ../../topics/domains.rst:186
+#: ../../topics/domains.rst:187
 msgid "``:cpp:concept:`name```: Links to a C++20 concept."
 msgstr "``:cpp:concept:`name```: Verweist auf ein C++20-Konzept."
 
-#: ../../topics/domains.rst:187
+#: ../../topics/domains.rst:188
 msgid "``:cpp:enum:`name```: Links to a C++ enum."
 msgstr "``:cpp:enum:`name```: Verweist auf eine C++-Aufzählung."
 
-#: ../../topics/domains.rst:189
+#: ../../topics/domains.rst:190
 msgid "JavaScript domain"
 msgstr "JavaScript-Domäne"
 
-#: ../../topics/domains.rst:192
+#: ../../topics/domains.rst:193
 msgid ""
 "The JavaScript domain describes client-side scripts, libraries, and "
 "Node.js modules."
@@ -548,40 +595,114 @@ msgstr ""
 "Die JavaScript-Domäne beschreibt Browserskripte, Bibliotheken und "
 "Node.js-Module."
 
-#: ../../topics/domains.rst:212
+#: ../../topics/domains.rst:213
 msgid "``:js:func:`name```: Links to a JavaScript function."
 msgstr "``:js:func:`name```: Verweist auf eine JavaScript-Funktion."
 
-#: ../../topics/domains.rst:213
+#: ../../topics/domains.rst:214
 msgid "``:js:meth:`name```: Links to a JavaScript method."
 msgstr "``:js:meth:`name```: Verweist auf eine JavaScript-Methode."
 
-#: ../../topics/domains.rst:214
+#: ../../topics/domains.rst:215
 msgid "``:js:class:`name```: Links to a JavaScript class."
 msgstr "``:js:class:`name```: Verweist auf eine JavaScript-Klasse."
 
-#: ../../topics/domains.rst:215
+#: ../../topics/domains.rst:216
 msgid "``:js:data:`name```: Links to a JavaScript variable."
 msgstr "``:js:data:`name```: Verweist auf eine JavaScript-Variable."
 
-#: ../../topics/domains.rst:216
+#: ../../topics/domains.rst:217
 msgid "``:js:attr:`name```: Links to a JavaScript object attribute."
 msgstr ""
 "``:js:attr:`name```: Verweist auf eine JavaScript-Objekteigenschaft."
 
-#: ../../topics/domains.rst:217
+#: ../../topics/domains.rst:218
 msgid "``:js:mod:`name```: Links to a JavaScript module."
 msgstr "``:js:mod:`name```: Verweist auf ein JavaScript-Modul."
 
-#: ../../topics/domains.rst:219
+#: ../../topics/domains.rst:220
+#, fuzzy
+#| msgid "C domain"
+msgid "Rust domain"
+msgstr "C-Domäne"
+
+#: ../../topics/domains.rst:223
+msgid ""
+"The Rust domain describes crates as rustdoc presents them. Each directive "
+"takes the declaration as Rust writes it, on one line, visibility and "
+"qualifiers included. Targets are full paths with ``::``, the crate's name "
+"first."
+msgstr ""
+
+#: ../../topics/domains.rst:258
+msgid ""
+"Directives include: ``rust:crate``, ``rust:module``, ``rust:function``, "
+"``rust:method``, ``rust:struct``, ``rust:enum``, ``rust:variant``, "
+"``rust:union``, ``rust:trait``, ``rust:impl``, ``rust:type``, "
+"``rust:const``, ``rust:static``, ``rust:macro``, ``rust:field``, "
+"``rust:associatedtype``, ``rust:associatedconst``, and ``rust:use``. "
+"Options include ``:visibility:``, ``:cfg:``, ``:unsafe:``, ``:async:``, "
+"``:const:``, ``:provided:``, ``:attributes:``, ``:deprecated:``, "
+"``:for:``, ``:trait:``, ``:target:``, and ``:noindex:``. An ``impl`` is "
+"never a target itself. Its members belong to the type."
+msgstr ""
+
+#: ../../topics/domains.rst:266
+msgid ""
+"Guidedog can also generate these pages from a crate's source, without "
+"compiling it. See :doc:`../howto/document-code` and "
+"``rust_autoapi_crates`` in :doc:`../reference/configuration`."
+msgstr ""
+
+#: ../../topics/domains.rst:273
+#, fuzzy
+#| msgid "``:js:mod:`name```: Links to a JavaScript module."
+msgid "``:rust:mod:`path```: Links to a crate or module."
+msgstr "``:js:mod:`name```: Verweist auf ein JavaScript-Modul."
+
+#: ../../topics/domains.rst:274
+#, fuzzy
+#| msgid "``:cpp:func:`name```: Links to a C++ function or method."
+msgid "``:rust:fn:`path```: Links to a function or method."
+msgstr "``:cpp:func:`name```: Verweist auf eine C++-Funktion oder Methode."
+
+#: ../../topics/domains.rst:275
+msgid ""
+"``:rust:struct:`path```, ``:rust:enum:`path```, ``:rust:union:`path```, "
+"``:rust:trait:`path```: Link to those types."
+msgstr ""
+
+#: ../../topics/domains.rst:277
+msgid ""
+"``:rust:variant:`path```, ``:rust:field:`path```: Link to a variant or a "
+"field."
+msgstr ""
+
+#: ../../topics/domains.rst:278
+msgid ""
+"``:rust:type:`path```, ``:rust:const:`path```, ``:rust:static:`path```, "
+"``:rust:macro:`path```: Link to aliases and associated types, constants, "
+"statics, and macros."
+msgstr ""
+
+#: ../../topics/domains.rst:281
+msgid ""
+"``:rust:any:`path```: Links to any of them, or through an inventory to "
+"another project (``std::vec::Vec``). An unresolved target is shown as "
+"code."
+msgstr ""
+
+#: ../../topics/domains.rst:284
 msgid "Cross-referencing conventions"
 msgstr "Konventionen für Querverweise"
 
-#: ../../topics/domains.rst:222
-msgid "Cross-references in domains support several helpful modifiers:"
+#: ../../topics/domains.rst:287
+#, fuzzy
+#| msgid "Cross-references in domains support several helpful modifiers:"
+msgid "Cross-references in domains support several modifiers:"
 msgstr "Domänenverweise unterstützen folgende Modifikatoren:"
 
-#: ../../topics/domains.rst:224
+#: ../../topics/domains.rst:289
 msgid ""
 "**Hide prefix**: Prefixing the target with a tilde (``~``) displays only "
 "the final component of the target name. For example, "
@@ -592,7 +713,7 @@ msgstr ""
 "Namensteil. ``:py:func:`~pipeline.reader.DocumentReader.parse``` "
 "erscheint als ``parse()``."
 
-#: ../../topics/domains.rst:225
+#: ../../topics/domains.rst:290
 msgid ""
 "**Current scope resolution**: Relative references look up names within "
 "the active module or namespace before falling back to global lookup."
@@ -600,7 +721,7 @@ msgstr ""
 "**Aktueller Gültigkeitsbereich**: Relative Verweise suchen zuerst im "
 "aktiven Modul oder Namensraum, danach global."
 
-#: ../../topics/domains.rst:226
+#: ../../topics/domains.rst:291
 msgid ""
 "**Exact match**: Prefixing with a dot (``.``) searches from the current "
 "module or enclosing object."
@@ -608,13 +729,23 @@ msgstr ""
 "**Exakte Übereinstimmung**: Ein vorangestelltes ``.`` sucht vom aktuellen "
 "Modul oder umschließenden Objekt aus."
 
+#: ../../topics/domains.rst:293
+msgid ""
+"The Rust domain follows the same conventions with ``::`` paths: "
+"``:rust:struct:`~my_crate::geometry::Point``` renders as ``Point``."
+msgstr ""
+
 #: ../../topics/index.rst:1
 msgid "Topic guides"
 msgstr "Themenleitfäden"
 
 #: ../../topics/index.rst:4
+#, fuzzy
+#| msgid ""
+#| "These chapters explain the model. They give you enough context to make "
+#| "a choice."
 msgid ""
-"These chapters explain the model. They give you enough context to make a "
+"These chapters explain the model. They give us enough context to make a "
 "choice."
 msgstr ""
 "Diese Kapitel erklären das Modell und geben genügend Hintergrund für eine "
@@ -710,10 +841,15 @@ msgstr ""
 ":math:`U+n` zu berechnen. Beweis und Rechenfolge stimmen überein."
 
 #: ../../topics/mathematics.rst:59
+#, fuzzy
+#| msgid ""
+#| "**Boundary.** This accounts for charged host storage. It does not "
+#| "bound the separate Typst compiler's internal allocations. A proof is "
+#| "only as strong as the boundary it states."
 msgid ""
 "**Boundary.** This accounts for charged host storage. It does not bound "
-"the separate Typst compiler's internal allocations. A proof is only as "
-"strong as the boundary it states."
+"the Typst compiler's internal allocations. A proof is only as strong as "
+"the boundary it states."
 msgstr ""
 "**Grenze.** Dies erfasst belasteten Hostspeicher, nicht die internen "
 "Allokationen des separaten Typst-Compilers. Ein Beweis gilt nur innerhalb "
@@ -735,9 +871,13 @@ msgstr ""
 "Diagrammskripte oder Webschriftendienste sind nicht erforderlich."
 
 #: ../../topics/mathematics.rst:71
+#, fuzzy
+#| msgid ""
+#| "For your own project, the default uses MathJax from a CDN. To serve a "
+#| "local copy, place it in ``_static`` and set:"
 msgid ""
-"For your own project, the default uses MathJax from a CDN. To serve a "
-"local copy, place it in ``_static`` and set:"
+"For our own projects, the default uses MathJax from a CDN. To serve a "
+"local copy, we place it in ``_static`` and set:"
 msgstr ""
 "Eigene Projekte laden MathJax standardmäßig von einem CDN. Für eine "
 "lokale Kopie legen Sie es in ``_static`` ab und setzen:"
@@ -804,8 +944,14 @@ msgid "Separate projects"
 msgstr "Getrennte Projekte"
 
 #: ../../topics/projects.rst:46
+#, fuzzy
+#| msgid ""
+#| "Keep a manual and design records in separate projects. They have "
+#| "different readers and different reading orders. Each project has its "
+#| "own configuration, templates, cache, and output. The Guidedog "
+#| "repository uses ``docs/manual`` and ``docs/gds`` this way."
 msgid ""
-"Keep a manual and design records in separate projects. They have "
+"We keep a manual and design records in separate projects. They have "
 "different readers and different reading orders. Each project has its own "
 "configuration, templates, cache, and output. The Guidedog repository uses "
 "``docs/manual`` and ``docs/gds`` this way."
@@ -850,10 +996,16 @@ msgstr ""
 "Nachschlageergebnisse} \\land \\text{Ausgabe vorhanden}"
 
 #: ../../topics/projects.rst:67
+#, fuzzy
+#| msgid ""
+#| "An explicit timestamp in a template is also an input to the rendered "
+#| "page. A page that prints the current minute can change even when its "
+#| "prose does not. Use ``SOURCE_DATE_EPOCH`` when you need a fixed build "
+#| "time."
 msgid ""
 "An explicit timestamp in a template is also an input to the rendered "
 "page. A page that prints the current minute can change even when its "
-"prose does not. Use ``SOURCE_DATE_EPOCH`` when you need a fixed build "
+"prose does not. We use ``SOURCE_DATE_EPOCH`` when we need a fixed build "
 "time."
 msgstr ""
 "Ein expliziter Vorlagenzeitstempel ist ebenfalls Eingabe. Eine Seite mit "
@@ -969,12 +1121,20 @@ msgstr ""
 "wiederhergestellt."
 
 #: ../../topics/typography.rst:54
+#, fuzzy
+#| msgid ""
+#| "Links, mathematics, code, interactive content, narrow measures, and "
+#| "other languages use native browser layout. So do paragraphs for which "
+#| "no suitably spaced solution exists. The site remains readable with "
+#| "JavaScript disabled. The fallback uses language-aware ``hyphens: "
+#| "auto`` and ``text-wrap: pretty``; those CSS properties alone are not a "
+#| "promise of Knuth-Plass optimization."
 msgid ""
 "Links, mathematics, code, interactive content, narrow measures, and other "
 "languages use native browser layout. So do paragraphs for which no "
 "suitably spaced solution exists. The site remains readable with "
 "JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` "
-"and ``text-wrap: pretty``; those CSS properties alone are not a promise "
+"and ``text-wrap: pretty``. Those CSS properties alone are not a promise "
 "of Knuth-Plass optimization."
 msgstr ""
 "Links, Formeln, Code, interaktive Inhalte, schmale Spalten, andere "
@@ -1035,13 +1195,21 @@ msgstr ""
 "ausreichenden Kontrast."
 
 #: ../../topics/typography.rst:82
+#, fuzzy
+#| msgid ""
+#| "Build both targets after a change. Inspect a page with code, a table, "
+#| "a diagram, and an equation. An attractive cover is not proof that the "
+#| "rest of the book works. Build your own design in "
+#| ":doc:`../tutorial/a-custom-theme`. The full template contract is in "
+#| ":doc:`../templates`. The complete API is in :doc:`../api/index` and in "
+#| "the same PDF book."
 msgid ""
 "Build both targets after a change. Inspect a page with code, a table, a "
 "diagram, and an equation. An attractive cover is not proof that the rest "
-"of the book works. Build your own design in "
+"of the book works. We build our own design in "
 ":doc:`../tutorial/a-custom-theme`. The full template contract is in "
-":doc:`../templates`. The complete API is in :doc:`../api/index` and in "
-"the same PDF book."
+":doc:`../templates`. The Rust API of Guidedog's crates is documented in "
+"the separate ``docs/api`` project."
 msgstr ""
 "Bauen Sie nach Änderungen beide Ziele und prüfen Sie Code, Tabelle, "
 "Grafik und Formel. Ein schöner Umschlag beweist kein gutes Buch. Ein "
@@ -1054,10 +1222,15 @@ msgid "Authoring documents"
 msgstr "Dokumente verfassen"
 
 #: ../../topics/writing.rst:4
+#, fuzzy
+#| msgid ""
+#| "Guidedog supports both reStructuredText (``.rst``) and MyST Markdown "
+#| "(``.md``). Documents are parsed into a shared semantic document tree, "
+#| "which is then used to generate both HTML websites and PDF books."
 msgid ""
 "Guidedog supports both reStructuredText (``.rst``) and MyST Markdown "
-"(``.md``). Documents are parsed into a shared semantic document tree, "
-"which is then used to generate both HTML websites and PDF books."
+"(``.md``). Both are parsed into the same document tree. The HTML website "
+"and the PDF book are made from that tree."
 msgstr ""
 "Guidedog unterstützt reStructuredText (``.rst``) und MyST Markdown "
 "(``.md``). Beide werden in einen gemeinsamen semantischen Dokumentbaum "
@@ -1068,21 +1241,32 @@ msgid "Choose a source language"
 msgstr "Das Quellformat wählen"
 
 #: ../../topics/writing.rst:11
+#, fuzzy
+#| msgid ""
+#| "Use reStructuredText when you need full access to domains, complex "
+#| "tables, and extensible directives. Use MyST Markdown when you prefer "
+#| "Markdown syntax while retaining Sphinx-style directives and roles."
 msgid ""
-"Use reStructuredText when you need full access to domains, complex "
-"tables, and extensible directives. Use MyST Markdown when you prefer "
-"Markdown syntax while retaining Sphinx-style directives and roles."
+"We use reStructuredText when we need full access to domains, complex "
+"tables, and extensible directives. We use MyST Markdown when we prefer "
+"Markdown syntax but still want Sphinx-style directives and roles."
 msgstr ""
 "Verwenden Sie reStructuredText für Domänen, komplexe Tabellen und "
 "erweiterbare Direktiven. MyST Markdown verbindet Markdown-Syntax mit "
 "Direktiven und Rollen nach Sphinx-Art."
 
 #: ../../topics/writing.rst:15
+#, fuzzy
+#| msgid ""
+#| "In a documentation project, Markdown documents are parsed using the "
+#| "MyST dialect. Single-document conversions with ``guidedog convert`` "
+#| "use standard CommonMark by default, unless the MyST reader is "
+#| "explicitly selected."
 msgid ""
-"In a documentation project, Markdown documents are parsed using the MyST "
-"dialect. Single-document conversions with ``guidedog convert`` use "
-"standard CommonMark by default, unless the MyST reader is explicitly "
-"selected."
+"In a documentation project, Markdown documents are parsed as MyST. "
+"Single-document conversions with ``guidedog convert`` read Markdown as "
+"plain CommonMark 0.31.2: MyST's directives, roles, and settings belong to "
+"projects."
 msgstr ""
 "Im Projekt wird Markdown als MyST gelesen. ``guidedog convert`` verwendet "
 "standardmäßig CommonMark, sofern MyST nicht ausdrücklich gewählt wird."
@@ -1092,11 +1276,17 @@ msgid "Headings and structure"
 msgstr "Überschriften und Struktur"
 
 #: ../../topics/writing.rst:22
+#, fuzzy
+#| msgid ""
+#| "A document title identifies the page. Sections and subsections divide "
+#| "the text logically. In reStructuredText, headings use underline "
+#| "adornments (and optional matching overlines). The underline must be at "
+#| "least as long as the text."
 msgid ""
 "A document title identifies the page. Sections and subsections divide the "
-"text logically. In reStructuredText, headings use underline adornments "
-"(and optional matching overlines). The underline must be at least as long "
-"as the text."
+"text. In reStructuredText, headings use underline adornments (and "
+"optional matching overlines). The underline must be at least as long as "
+"the text."
 msgstr ""
 "Der Dokumenttitel bezeichnet die Seite; Abschnitte gliedern den Text. "
 "RST-Überschriften erhalten eine Unterstreichung, optional auch dieselbe "
@@ -1107,9 +1297,13 @@ msgid "Recommended adornment styles:"
 msgstr "Empfohlene Überschriftszeichen:"
 
 #: ../../topics/writing.rst:45
+#, fuzzy
+#| msgid ""
+#| "Keep heading levels consistent across your project. In MyST Markdown, "
+#| "use standard hashes (``#``, ``##``, ``###``)."
 msgid ""
-"Keep heading levels consistent across your project. In MyST Markdown, use "
-"standard hashes (``#``, ``##``, ``###``)."
+"We keep heading levels consistent across the project. In MyST Markdown, "
+"we use standard hashes (``#``, ``##``, ``###``)."
 msgstr ""
 "Halten Sie Überschriftsebenen im Projekt einheitlich. MyST Markdown "
 "verwendet ``#``, ``##`` und ``###``."
@@ -1119,7 +1313,9 @@ msgid "Text formatting and inline markup"
 msgstr "Textformatierung und Inline-Markup"
 
 #: ../../topics/writing.rst:51
-msgid "Use inline markup to communicate meaning rather than decoration:"
+#, fuzzy
+#| msgid "Use inline markup to communicate meaning rather than decoration:"
+msgid "Inline markup carries meaning, not decoration:"
 msgstr "Inline-Markup soll Bedeutung vermitteln, nicht bloß verzieren:"
 
 #: ../../topics/writing.rst:53
@@ -1191,8 +1387,12 @@ msgid "``{sup}`text```"
 msgstr "``{sup}`text```"
 
 #: ../../topics/writing.rst:76
+#, fuzzy
+#| msgid ""
+#| "To include literal asterisks or backticks within text, escape them "
+#| "with a backslash: ``\\*not italic\\*``."
 msgid ""
-"To include literal asterisks or backticks within text, escape them with a "
+"To write literal asterisks or backticks in text, we escape them with a "
 "backslash: ``\\*not italic\\*``."
 msgstr ""
 "Literale Sternchen und Backticks werden mit einem Rückstrich maskiert: "
@@ -1219,9 +1419,14 @@ msgid "Definition lists"
 msgstr "Definitionslisten"
 
 #: ../../topics/writing.rst:107
+#, fuzzy
+#| msgid ""
+#| "A definition list pairs terms with explanatory blocks. The term "
+#| "appears on a single line, followed immediately by an indented "
+#| "definition:"
 msgid ""
-"A definition list pairs terms with explanatory blocks. The term appears "
-"on a single line, followed immediately by an indented definition:"
+"A definition list pairs terms with explanations. The term stands on one "
+"line. An indented definition follows it directly:"
 msgstr ""
 "Eine Definitionsliste verbindet Begriffe mit Erklärungen. Der Begriff "
 "steht auf einer Zeile, die eingerückte Definition folgt direkt:"
@@ -1240,53 +1445,60 @@ msgid "Code blocks"
 msgstr "Codeblöcke"
 
 #: ../../topics/writing.rst:132
+#, fuzzy
+#| msgid ""
+#| "Use the ``code-block`` directive (or ``sourcecode``) to display "
+#| "syntax-highlighted code. Guidedog provides syntax highlighting for "
+#| "over 35 programming languages:"
 msgid ""
-"Use the ``code-block`` directive (or ``sourcecode``) to display "
-"syntax-highlighted code. Guidedog provides syntax highlighting for over "
-"35 programming languages:"
+"The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted "
+"code. Guidedog highlights 35 programming languages, Rust and Odin among "
+"them, with Pygments' names and styles and no Python runtime:"
 msgstr ""
 "``code-block`` oder ``sourcecode`` zeigt Code mit Syntaxhervorhebung. "
 "Guidedog unterstützt über 35 Programmiersprachen:"
 
-#: ../../topics/writing.rst:146
+#: ../../topics/writing.rst:147
 msgid "Options for code blocks:"
 msgstr "Codeblockoptionen:"
 
-#: ../../topics/writing.rst:148
+#: ../../topics/writing.rst:149
 msgid "``:linenos:``: Displays line numbers beside the code."
 msgstr "``:linenos:``: Zeigt Zeilennummern neben dem Code."
 
-#: ../../topics/writing.rst:149
+#: ../../topics/writing.rst:150
 msgid "``:caption: Title``: Adds a caption above or below the code block."
 msgstr ""
 "``:caption: Title``: Fügt eine Beschriftung über oder unter dem Codeblock "
 "ein."
 
-#: ../../topics/writing.rst:150
+#: ../../topics/writing.rst:151
 msgid "``:emphasize-lines: 1, 3-5``: Highlights specific lines."
 msgstr "``:emphasize-lines: 1, 3-5``: Hebt die angegebenen Zeilen hervor."
 
-#: ../../topics/writing.rst:151
+#: ../../topics/writing.rst:152
 msgid "``:name: label``: Assigns a reference target to the code block."
 msgstr "``:name: label``: Weist dem Codeblock ein Verweisziel zu."
 
-#: ../../topics/writing.rst:153
-msgid ""
-"To include external source code directly from a file, use "
-"``literalinclude``:"
+#: ../../topics/writing.rst:154
+#, fuzzy
+#| msgid ""
+#| "To include external source code directly from a file, use "
+#| "``literalinclude``:"
+msgid "To include source code from a file, we use ``literalinclude``:"
 msgstr "Mit ``literalinclude`` binden Sie externe Quelldateien direkt ein:"
 
-#: ../../topics/writing.rst:162
+#: ../../topics/writing.rst:163
 msgid "Admonitions"
 msgstr "Hinweisblöcke"
 
-#: ../../topics/writing.rst:165
+#: ../../topics/writing.rst:166
 msgid "Admonitions highlight notes, warnings, and supplementary advice:"
 msgstr ""
 "Hinweisblöcke heben Anmerkungen, Warnungen und zusätzliche Ratschläge "
 "hervor:"
 
-#: ../../topics/writing.rst:187
+#: ../../topics/writing.rst:188
 msgid ""
 "Guidedog also supports ``danger``, ``error``, ``hint``, and "
 "``attention``. A generic admonition with a custom title uses the "
@@ -1295,83 +1507,95 @@ msgstr ""
 "Guidedog unterstützt auch ``danger``, ``error``, ``hint`` und "
 "``attention``. Für einen eigenen Titel verwenden Sie ``admonition``:"
 
-#: ../../topics/writing.rst:196
+#: ../../topics/writing.rst:197
 msgid "Tables"
 msgstr "Tabellen"
 
-#: ../../topics/writing.rst:199
+#: ../../topics/writing.rst:200
 msgid ""
 "Guidedog supports simple tables, grid tables, and directive-based tables."
 msgstr ""
 "Guidedog unterstützt einfache Tabellen, Gittertabellen und "
 "direktivenbasierte Tabellen."
 
-#: ../../topics/writing.rst:201
+#: ../../topics/writing.rst:202
 msgid "Simple tables"
 msgstr "Einfache Tabellen"
 
-#: ../../topics/writing.rst:204
+#: ../../topics/writing.rst:205
 msgid "Simple tables use horizontal dashes to define column spans:"
 msgstr "Einfache Tabellen begrenzen Spalten durch waagerechte Linien:"
 
-#: ../../topics/writing.rst:216
+#: ../../topics/writing.rst:217
 msgid "Grid tables"
 msgstr "Gittertabellen"
 
-#: ../../topics/writing.rst:219
+#: ../../topics/writing.rst:220
 msgid ""
 "Grid tables allow complex multi-line cells and arbitrary column/row spans:"
 msgstr ""
 "Gittertabellen erlauben mehrzeilige Zellen und verbundene Zeilen oder "
 "Spalten:"
 
-#: ../../topics/writing.rst:230
+#: ../../topics/writing.rst:231
 msgid "List tables"
 msgstr "Listentabellen"
 
-#: ../../topics/writing.rst:233
+#: ../../topics/writing.rst:234
+#, fuzzy
+#| msgid ""
+#| "The ``list-table`` directive creates tables from nested bullet lists, "
+#| "making wide tables easy to read and maintain in source control:"
 msgid ""
-"The ``list-table`` directive creates tables from nested bullet lists, "
-"making wide tables easy to read and maintain in source control:"
+"The ``list-table`` directive creates tables from nested bullet lists. "
+"Wide tables stay easy to read and maintain in source control:"
 msgstr ""
 "``list-table`` erzeugt Tabellen aus verschachtelten Listen. Breite "
 "Tabellen bleiben dadurch im Quelltext gut lesbar und wartbar:"
 
-#: ../../topics/writing.rst:252
+#: ../../topics/writing.rst:253
 msgid "CSV tables"
 msgstr "CSV-Tabellen"
 
-#: ../../topics/writing.rst:255
+#: ../../topics/writing.rst:256
 msgid ""
 "The ``csv-table`` directive constructs a table from comma-separated "
 "values:"
 msgstr "``csv-table`` erzeugt eine Tabelle aus kommaseparierten Werten:"
 
-#: ../../topics/writing.rst:266
+#: ../../topics/writing.rst:267
 msgid "Images and figures"
 msgstr "Bilder und Abbildungen"
 
-#: ../../topics/writing.rst:269
+#: ../../topics/writing.rst:270
+#, fuzzy
+#| msgid ""
+#| "Include illustrations, screenshots, and diagrams with ``image`` and "
+#| "``figure``:"
 msgid ""
-"Include illustrations, screenshots, and diagrams with ``image`` and "
+"We include illustrations, screenshots, and diagrams with ``image`` and "
 "``figure``:"
 msgstr ""
 "Mit ``image`` und ``figure`` fügen Sie Bilder, Screenshots und Diagramme "
 "ein:"
 
-#: ../../topics/writing.rst:285
+#: ../../topics/writing.rst:286
+#, fuzzy
+#| msgid ""
+#| "A ``figure`` wraps the image with an explanatory caption and an "
+#| "optional reference target."
 msgid ""
-"A ``figure`` wraps the image with an explanatory caption and an optional "
-"reference target."
+"A ``figure`` wraps the image with a caption and an optional reference "
+"target."
 msgstr ""
 "``figure`` ergänzt das Bild um eine Beschriftung und ein optionales "
 "Verweisziel."
 
-#: ../../topics/writing.rst:287
+#: ../../topics/writing.rst:288
 msgid "Document structure with toctrees"
 msgstr "Dokumentstruktur mit Inhaltsbäumen"
 
-#: ../../topics/writing.rst:290
+#: ../../topics/writing.rst:291
 msgid ""
 "The ``toctree`` directive creates the document hierarchy, navigation "
 "menus, and reading order for both the HTML site and the PDF book:"
@@ -1379,34 +1603,34 @@ msgstr ""
 "``toctree`` definiert Hierarchie, Navigation und Lesereihenfolge für HTML "
 "und PDF:"
 
-#: ../../topics/writing.rst:304
+#: ../../topics/writing.rst:305
 msgid "Common options for ``toctree``:"
 msgstr "Häufige Optionen von ``toctree``:"
 
-#: ../../topics/writing.rst:306
+#: ../../topics/writing.rst:307
 msgid ""
 "``:maxdepth: N``: Depth of heading levels to include in the table of "
 "contents."
 msgstr "``:maxdepth: N``: Gliederungstiefe im Inhaltsverzeichnis."
 
-#: ../../topics/writing.rst:307
+#: ../../topics/writing.rst:308
 msgid ""
 "``:caption: Title``: Category title displayed above the navigation "
 "entries."
 msgstr "``:caption: Title``: Gruppentitel über den Navigationseinträgen."
 
-#: ../../topics/writing.rst:308
+#: ../../topics/writing.rst:309
 msgid "``:numbered:``: Adds section numbers to chapters and headings."
 msgstr "``:numbered:``: Nummeriert Kapitel und Überschriften."
 
-#: ../../topics/writing.rst:309
+#: ../../topics/writing.rst:310
 msgid ""
 "``:titlesonly:``: Lists only the top-level document titles, ignoring "
 "inner sections."
 msgstr ""
 "``:titlesonly:``: Zeigt nur Dokumenttitel, keine inneren Abschnitte."
 
-#: ../../topics/writing.rst:310
+#: ../../topics/writing.rst:311
 msgid ""
 "``:hidden:``: Records the documents in the reading order without "
 "rendering an inline list."
@@ -1414,97 +1638,137 @@ msgstr ""
 "``:hidden:``: Erfasst die Lesereihenfolge, ohne eine Liste im Text "
 "auszugeben."
 
-#: ../../topics/writing.rst:311
+#: ../../topics/writing.rst:312
 msgid ""
 "``:glob:``: Allows wildcard patterns to match documents (e.g. "
 "``tutorials/*``)."
 msgstr "``:glob:``: Erlaubt Dokumentmuster wie ``tutorials/*``."
 
-#: ../../topics/writing.rst:313
+#: ../../topics/writing.rst:314
 msgid "Cross-references and links"
 msgstr "Querverweise und Links"
 
-#: ../../topics/writing.rst:316
+#: ../../topics/writing.rst:317
+#, fuzzy
+#| msgid ""
+#| "Explicit targets ensure links remain stable even when document files "
+#| "are renamed:"
 msgid ""
-"Explicit targets ensure links remain stable even when document files are "
-"renamed:"
+"Explicit targets keep links stable, even when document files are renamed."
 msgstr ""
 "Explizite Zielmarken halten Verweise unabhängig vom Dateinamen stabil."
 
-#: ../../topics/writing.rst:318
+#: ../../topics/writing.rst:319
 msgid "Target labels and ``:ref:``"
 msgstr "Zielmarken und ``:ref:``"
 
-#: ../../topics/writing.rst:321
-msgid "Place a target label immediately before a heading, table, or figure:"
+#: ../../topics/writing.rst:322
+#, fuzzy
+#| msgid ""
+#| "Place a target label immediately before a heading, table, or figure:"
+msgid "We place a target label directly before a heading, table, or figure:"
 msgstr ""
 "Setzen Sie die Zielmarke direkt vor eine Überschrift, Tabelle oder "
 "Abbildung:"
 
-#: ../../topics/writing.rst:332
-msgid "Refer to this target from any document across the project:"
-msgstr "Jedes Projektdokument kann auf dieses Ziel verweisen:"
+#: ../../topics/writing.rst:333
+msgid "Any document in the project can refer to this target:"
+msgstr ""
 
-#: ../../topics/writing.rst:339
+#: ../../topics/writing.rst:340
 msgid "Document references with ``:doc:``"
 msgstr "Dokumentverweise mit ``:doc:``"
 
-#: ../../topics/writing.rst:342
-msgid "Link to another document by path (omitting the file extension):"
+#: ../../topics/writing.rst:343
+#, fuzzy
+#| msgid "Link to another document by path (omitting the file extension):"
+msgid "We link to another document by its path, without the file extension:"
 msgstr ""
 "Verweisen Sie über den Pfad ohne Dateiendung auf ein anderes Dokument:"
 
-#: ../../topics/writing.rst:348
+#: ../../topics/writing.rst:349
 msgid "Glossary terms with ``:term:``"
 msgstr "Glossarbegriffe mit ``:term:``"
 
-#: ../../topics/writing.rst:351
-msgid "Define terms using the ``glossary`` directive:"
+#: ../../topics/writing.rst:352
+#, fuzzy
+#| msgid "Define terms using the ``glossary`` directive:"
+msgid "We define terms with the ``glossary`` directive:"
 msgstr "Definieren Sie Begriffe mit ``glossary``:"
 
-#: ../../topics/writing.rst:363
-msgid "Link to a glossary term using the ``:term:`` role:"
+#: ../../topics/writing.rst:364
+#, fuzzy
+#| msgid "Link to a glossary term using the ``:term:`` role:"
+msgid "We link to a glossary term with the ``:term:`` role:"
 msgstr "Verweisen Sie mit der Rolle ``:term:`` auf einen Begriff:"
 
-#: ../../topics/writing.rst:369
+#: ../../topics/writing.rst:370
 msgid "File downloads with ``:download:``"
 msgstr "Dateidownloads mit ``:download:``"
 
-#: ../../topics/writing.rst:372
-msgid "Copy a file to the output's download directory and create a link:"
+#: ../../topics/writing.rst:373
+#, fuzzy
+#| msgid "Copy a file to the output's download directory and create a link:"
+msgid ""
+"This copies a file to the output's download directory and links to it:"
 msgstr "Kopiert die Datei in den Downloadordner und erzeugt einen Link:"
 
-#: ../../topics/writing.rst:378
+#: ../../topics/writing.rst:379
 msgid "External links"
 msgstr "Externe Links"
 
-#: ../../topics/writing.rst:381
-msgid "Link to external web addresses:"
+#: ../../topics/writing.rst:382
+#, fuzzy
+#| msgid "Link to external web addresses:"
+msgid "We link to external web addresses like this:"
 msgstr "Verweisen Sie auf externe Webadressen:"
 
-#: ../../topics/writing.rst:387
+#: ../../topics/writing.rst:388
 msgid "Substitutions and includes"
 msgstr "Ersetzungen und Einbindungen"
 
-#: ../../topics/writing.rst:390
-msgid "Define reusable phrases, symbols, or images:"
+#: ../../topics/writing.rst:391
+#, fuzzy
+#| msgid "Define reusable phrases, symbols, or images:"
+msgid "We define reusable phrases, symbols, or images:"
 msgstr "Definieren Sie wiederverwendbare Texte, Symbole oder Bilder:"
 
-#: ../../topics/writing.rst:399
-msgid "To reuse common reStructuredText content across multiple files:"
+#: ../../topics/writing.rst:400
+#, fuzzy
+#| msgid "To reuse common reStructuredText content across multiple files:"
+msgid "To reuse reStructuredText content in several files:"
 msgstr "So verwenden Sie reStructuredText-Inhalt in mehreren Dateien:"
 
-#: ../../topics/writing.rst:405
+#: ../../topics/writing.rst:406
 msgid "MyST Markdown authoring"
 msgstr "MyST Markdown verfassen"
 
-#: ../../topics/writing.rst:408
+#: ../../topics/writing.rst:409
+#, fuzzy
+#| msgid ""
+#| "MyST Markdown supports the same semantic directives and roles through "
+#| "fenced blocks:"
 msgid ""
-"MyST Markdown supports the same semantic directives and roles through "
-"fenced blocks:"
+"MyST Markdown supports the same directives and roles through fenced "
+"blocks:"
 msgstr ""
 "MyST Markdown verwendet umzäunte Blöcke für dieselben semantischen "
 "Direktiven und Rollen:"
+
+#~ msgid ""
+#~ "If capacity fits, run conversion; otherwise the host prepares storage "
+#~ "and retries."
+#~ msgstr ""
+#~ "Bei ausreichender Kapazität konvertieren; sonst bereitet der Host "
+#~ "Speicher vor und versucht es erneut."
+
+#~ msgid "Capacity is checked before storage is borrowed or grown."
+#~ msgstr ""
+#~ "Die Kapazität wird geprüft, bevor Speicher ausgeliehen oder vergrößert "
+#~ "wird."
+
+#~ msgid "Refer to this target from any document across the project:"
+#~ msgstr "Jedes Projektdokument kann auf dieses Ziel verweisen:"
 
 #~ msgid ""
 #~ "Discover sources, read documents, resolve references, render "

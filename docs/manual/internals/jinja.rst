@@ -93,3 +93,18 @@ Not ported
 - ``render_position``, which let an allocator ask where a render was.
 - Lists that contain themselves leak (an ``Rc`` cycle); Jinja's own behaviour relies on a
   garbage collector.
+
+Why not minijinja
+-----------------
+
+Evaluated on 2026-10-15 against minijinja 3.0.0, the most widely used Rust Jinja engine.
+**Recommendation: keep our own port (gd-jinja). Do not adopt minijinja, and do not build a
+hybrid.**
+
+The decisive reason is bounds and safety. On hostile input, minijinja 3.0.0 overflows the
+stack and aborts the process in cases where gd-jinja and the Odin engine return a ``Limit``
+error, and it has no output or memory limit. The second reason is that minijinja behaves
+differently from Jinja2 in scoping and escaping in ways its extension API cannot change. The
+third is that the thin layer needed to restore Odin behaviour is already about 900 lines,
+and it would keep growing toward a re-implementation of the builtins anyway. Speed and error
+quality are about equal, so neither changes the decision.

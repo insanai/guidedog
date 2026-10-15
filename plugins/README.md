@@ -4,16 +4,7 @@
 it describes plugins, and does not install, authorize, or run them. Guidedog reads
 nothing from it to decide what runs.
 
-The `pages` entry is the GitHub Pages publisher of
-[GDS 0008](../docs/gds/records/0008-github-pages-publishing.rst). It ships as
-`guidedog-pages` in the `guidedog` release archives and the Homebrew formula from
-Guidedog 0.6.0 onward. From 0.7.0 it is built from the Rust crate
-[gd-pages](../crates/gd-pages) (the program is `cmd/guidedog-pages`). Register it on a
-machine to use it with `guidedog publish`:
-
-```sh
-guidedog plugin register pages "$(command -v guidedog-pages)"
-```
+The `pages` entry is the GitHub Pages publisher of [GDS 0008](../docs/gds/records/0008-github-pages-publishing.rst). It is linked into the single `guidedog` executable from [gd-pages](../crates/gd-pages). It adds `guidedog publish pages` and `guidedog pages` maintenance commands. No separate publisher binary or registration is needed.
 
 Each entry names its ID, source, license, public maintainer names, description,
 service kind, status, the interface and protocol versions it speaks, and its design

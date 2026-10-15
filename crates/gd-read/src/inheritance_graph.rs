@@ -359,7 +359,10 @@ mod tests {
                           class Leaf(Child):\n    pass\n";
 
     fn project() -> (std::path::PathBuf, Project) {
-        let dir = std::env::temp_dir().join(format!("gd-read-inherit-{}", std::process::id()));
+        use std::sync::atomic::{AtomicU32, Ordering};
+        static NEXT: AtomicU32 = AtomicU32::new(0);
+        let n = NEXT.fetch_add(1, Ordering::Relaxed);
+        let dir = std::env::temp_dir().join(format!("gd-read-inherit-{}-{n}", std::process::id()));
         std::fs::create_dir_all(dir.join("pkg")).unwrap();
         std::fs::write(dir.join("pkg/__init__.py"), "").unwrap();
         std::fs::write(dir.join("pkg/tree.py"), SOURCE).unwrap();

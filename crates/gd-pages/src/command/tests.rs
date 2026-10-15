@@ -52,10 +52,10 @@ fn problems_are_reported_as_asked() {
     assert!(err.contains("UNKNOWN COMMAND") && err.contains("Hint:"), "{err}");
     let (status, out, _) = run_text(&["--version"]);
     assert_eq!(status, 0);
-    assert!(out.starts_with("guidedog-pages "));
+    assert!(out.starts_with("guidedog pages "));
     let (status, out, _) = run_text(&[]);
     assert_eq!(status, 0);
-    assert!(out.contains("Usage: guidedog-pages COMMAND"));
+    assert!(out.contains("Usage: guidedog pages COMMAND"));
 }
 
 #[test]
@@ -104,7 +104,10 @@ fn guidedog_runs_the_contributed_commands() {
     let plugin = crate::plugin();
     let registry = gd_plugins::Registry::new(vec![plugin.clone()]).unwrap();
     let names: Vec<String> = registry.commands().map(|(_, c)| c.name()).collect();
-    assert_eq!(names, ["publish pages", "pages workflow"]);
+    assert!(names.contains(&"publish pages".into()));
+    assert!(names.contains(&"pages workflow".into()));
+    assert!(names.contains(&"pages init".into()));
+    assert!(names.contains(&"pages recover".into()));
     let dir = TestDir::new("extension");
     let mut host = Captured::default();
     let mut ctx = gd_plugins::CommandContext::new(&mut host);

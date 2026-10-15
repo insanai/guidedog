@@ -27,7 +27,7 @@ use gd_plugins::files::{create_private_dir, write_atomically};
 const MAX_STATE_BYTES: u64 = 1024 * 1024;
 const PROFILES_ABOUT: &str = "Credential profiles: each names a token in the credential store.";
 const BINDINGS_ABOUT: &str =
-    "Targets authorized on this machine. Change them with guidedog-pages bind and unbind.";
+    "Targets authorized on this machine. Change them with guidedog pages bind and unbind.";
 
 /// A stored token's account.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -281,7 +281,7 @@ impl State {
                 "pages.busy",
                 "Another publication of this target is running",
                 &shown,
-                "guidedog-pages is publishing to the same repository and branch in another \
+                "guidedog pages is publishing to the same repository and branch in another \
                  process.",
                 "Wait for it to finish, or stop it, then run the command again.",
             )),

@@ -199,7 +199,7 @@ pub fn run_with(
     }
     if o.version {
         console.print(&format!(
-            "guidedog-pages {VERSION}\npublishes to GitHub Pages with an \
+            "guidedog pages {VERSION}\npublishes to GitHub Pages with an \
             installed guidedog (--guidedog, ${}, or PATH)\n",
             crate::GUIDEDOG_VARIABLE
         ));
@@ -326,7 +326,7 @@ fn parse_into(o: &mut Options, args: &[String]) -> Result<(), Problem> {
             return Err(usage(
                 "Unknown option",
                 arg,
-                "See guidedog-pages --help for the options of each command.",
+                "See guidedog pages --help for the options of each command.",
             ));
         }
         if is_flag && !optional && value.is_some() {
@@ -378,7 +378,7 @@ fn check_words(o: &mut Options, words: &[&str]) -> Result<(), Problem> {
         return Err(usage(
             "Unexpected word",
             word,
-            "Give options as --name=value; see guidedog-pages --help.",
+            "Give options as --name=value; see guidedog pages --help.",
         ));
     }
     if !o.command.is_empty() && !COMMANDS.contains(&o.command.as_str()) {

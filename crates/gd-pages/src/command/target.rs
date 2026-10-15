@@ -79,7 +79,7 @@ pub(crate) fn init(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
     }
     console.success(&format!("Wrote {}", o.config));
     console.say(&format!(
-        "Next: guidedog-pages auth login --profile={}, then guidedog-pages \
+        "Next: guidedog pages auth login --profile={}, then guidedog pages \
         bind --config={}.",
         o.profile, o.config
     ));
@@ -132,7 +132,7 @@ pub(crate) fn bind(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
     ));
     if !r.site.publishes(&c.branch) {
         console.say(&format!(
-            "Next: guidedog-pages setup --config={} points GitHub Pages at the \
+            "Next: guidedog pages setup --config={} points GitHub Pages at the \
             branch.",
             ctx.o.config
         ));
@@ -193,7 +193,7 @@ pub(crate) fn setup(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
                 "GitHub sets Pages up only for a branch that exists.",
                 &format!(
                     "Run \
-            guidedog-pages publish --config={} first; it makes the branch. Then run setup \
+            guidedog pages publish --config={} first; it makes the branch. Then run setup \
             again.",
                     ctx.o.config
                 ),
@@ -278,7 +278,7 @@ fn diagnose(ctx: &Context<'_>, console: &mut Console<'_>) -> Result<(), Problem>
             "This target is not authorized",
             &r.repository.full_name,
             "No binding on this machine lets it publish there.",
-            &format!("Run guidedog-pages bind --config={}.", ctx.o.config),
+            &format!("Run guidedog pages bind --config={}.", ctx.o.config),
         )
         .exit(2));
     };
@@ -297,7 +297,7 @@ fn diagnose(ctx: &Context<'_>, console: &mut Console<'_>) -> Result<(), Problem>
             "GitHub Pages does not publish this branch",
             &r.repository.full_name,
             "Pages is not set up to publish the branch from its root.",
-            &format!("Run guidedog-pages setup --config={}.", ctx.o.config),
+            &format!("Run guidedog pages setup --config={}.", ctx.o.config),
         )
         .exit(2));
     }

@@ -14,7 +14,8 @@ kind = "publisher"
 name = "GitHub Pages publisher"
 description = "Publish complete Guidedog sites to GitHub Pages from a local machine."
 status = "released"
-program = "guidedog-pages"
+program = "guidedog"
+linked = true
 source = "https://github.com/insanai/guidedog/tree/main/crates/gd-pages"
 license = "LGPL-3.0-or-later"
 maintainers = ["Vikrant Rathore"]
@@ -22,13 +23,9 @@ designs = ["GDS 0009", "GDS 0008"]
 api_version = "1.1"
 protocol = "guidedog-publisher"
 protocol_version = "1.0"
-# The program ships in the guidedog archives of each release; SHA256SUMS lists them.
-# From 0.7.0 it is built from the crate gd-pages (cmd/guidedog-pages).
+# The publisher is linked into the single Guidedog release executable.
 releases = [
-    { version = "0.6.3", archives = "https://github.com/insanai/guidedog/releases/tag/v0.6.3" },
-    { version = "0.6.2", archives = "https://github.com/insanai/guidedog/releases/tag/v0.6.2" },
-    { version = "0.6.1", archives = "https://github.com/insanai/guidedog/releases/tag/v0.6.1" },
-    { version = "0.6.0", archives = "https://github.com/insanai/guidedog/releases/tag/v0.6.0" },
+    { version = "1.0.0-beta.1", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.1" },
 ]
 
 [[plugins]]

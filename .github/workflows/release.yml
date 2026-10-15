@@ -90,7 +90,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.version.outputs.matrix) }}
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 60
+    timeout-minutes: 120
     env:
       # gd-graphdog links the static Graphviz in this folder (see crates/gd-graphdog/build.rs).
       GUIDEDOG_GRAPHVIZ_STATIC: ${{ github.workspace }}/target/graphviz/16.1.0
@@ -107,16 +107,18 @@ jobs:
       - name: Build the static Graphviz
         if: steps.graphviz.outputs.cache-hit != 'true'
         run: cargo xtask graphviz --jobs 4
-      - name: Build guidedog (with the embedded Typst compiler), guidedog-pages and graphdog
+      - name: Build Guidedog with embedded Typst, Graphviz and plugins
         run: cargo xtask release build
       - name: The programs report VERSION
         run: |
-          for program in guidedog guidedog-pages graphdog; do
+          for program in guidedog; do
             cargo xtask release check-version "build/$program"
           done
+      - name: Build the process fixtures used by integration tests
+        run: cargo build --locked --release --workspace --examples
       - name: Integration tests against the release build
         run: cargo test --locked --release --workspace --test '*'
-      - name: Package guidedog with guidedog-pages and graphdog, with notices and a manifest
+      - name: Package Guidedog with notices and a manifest
         run: cargo xtask release package ${{ matrix.package }}
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
@@ -161,22 +163,18 @@ jobs:
           done
           {
             echo "PROGRAM=$PWD/guidedog-$PACKAGE/guidedog"
-            echo "PAGES=$PWD/guidedog-$PACKAGE/guidedog-pages"
-            echo "GRAPHDOG=$PWD/guidedog-$PACKAGE/graphdog"
           } >> "$GITHUB_ENV"
       - name: The packaged programs report VERSION
         run: |
-          for program in "$PROGRAM" "$PAGES" "$GRAPHDOG"; do
+          for program in "$PROGRAM"; do
             cargo xtask release check-version "$program"
           done
       - name: Quickstart, HTML and PDF with nothing but the system libraries
         run: cargo xtask release smoke "$PROGRAM"
       - name: Discussion catalogs with guidedog dsc
         run: cargo xtask release smoke-discussion "$PROGRAM"
-      - name: guidedog-pages registered with the packaged guidedog, offline
-        run: cargo xtask release smoke-pages "$PAGES" "$PROGRAM"
-      - name: graphdog with its built-in Graphviz
-        run: cargo xtask release smoke-graphdog "$GRAPHDOG"
+      - name: Linked Pages plugin, offline
+        run: cargo xtask release smoke-pages "$PROGRAM"
 
   windows:
     name: windows (windows-amd64)
@@ -189,7 +187,7 @@ jobs:
       - uses: ./.github/actions/prepare
         with:
           cache: release
-      - name: Build the three release programs
+      - name: Build Guidedog and its linked plugins
         run: cargo xtask release build
       - name: Test Windows libraries
         run: cargo test --locked -p gd-graphdog -p gd-clock -p gd-pages
@@ -224,8 +222,6 @@ jobs:
             if ($LASTEXITCODE) { exit $LASTEXITCODE }
           }
           "PROGRAM=$folder/guidedog.exe" >> $env:GITHUB_ENV
-          "PAGES=$folder/guidedog-pages.exe" >> $env:GITHUB_ENV
-          "GRAPHDOG=$folder/graphdog.exe" >> $env:GITHUB_ENV
       - name: HTML, PDF and discussions with an empty PATH
         shell: pwsh
         run: |
@@ -233,9 +229,7 @@ jobs:
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           cargo xtask release smoke-discussion "$env:PROGRAM"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          cargo xtask release smoke-pages "$env:PAGES" "$env:PROGRAM"
-          if ($LASTEXITCODE) { exit $LASTEXITCODE }
-          cargo xtask release smoke-graphdog "$env:GRAPHDOG"
+          cargo xtask release smoke-pages "$env:PROGRAM"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
   source:

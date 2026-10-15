@@ -31,13 +31,13 @@ API ドキュメントはソースを実行せずに読み取ります。対象�
 
 ## インストール
 
-各[リリース](https://github.com/insanai/guidedog/releases)には Linux（x86-64 と ARM64）と macOS（Apple シリコンと Intel）向けのアーカイブがあります。`guidedog` アーカイブには `guidedog`、`guidedog-pages`、`graphdog` が入っています。Typst コンパイラーは組み込まれ、tree-sitter もプログラムにコンパイルされています。Graphviz はシステムのものをリンクするので、先にそのライブラリーをインストールしてください。Debian と Ubuntu では `sudo apt install libgvc6`（または `graphviz` パッケージ）、Fedora では `sudo dnf install graphviz`、macOS では `brew install graphviz` です。Linux には glibc 2.35 以降、macOS にはバージョン 12 以降が必要です。対象のシステム向けのアーカイブと `SHA256SUMS` をダウンロードし、確認してからインストールします。
+リリースに含まれる実行ファイルは `guidedog` 一つです。組み込みプラグインが `guidedog dsc`、`guidedog publish pages`、`guidedog pages` を追加します。`gd-graphdog` は Graphviz を包むライブラリです。Linux と macOS は x86-64 と ARM64、Windows は x86-64 に対応します。Windows ZIP は DLL を含むフォルダー全体を保持します。
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS では: shasum -a 256 -c --ignore-missing SHA256SUMS
 tar -xzf guidedog-linux-amd64.tar.gz
 sudo install guidedog-linux-amd64/guidedog \
-    guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
+    /usr/local/bin/
 ```
 
 macOS では、公式の [Guidedog Homebrew tap](https://github.com/insanai/homebrew-guidedog) からインストールします。Homebrew が Apple シリコンまたは Intel 用のアーカイブを選び、Graphviz も一緒にインストールします。この tap は Linux にも対応しています。
@@ -55,7 +55,7 @@ guidedog --version
 Rust 1.99 以降（[rustup](https://rustup.rs) で入手）、C コンパイラー（tree-sitter の文法は C で書かれています）、Graphviz の開発ファイルを用意します。Debian と Ubuntu では `libgraphviz-dev`、Fedora では `graphviz-devel`、macOS では Homebrew の `graphviz` です。そのうえでワークスペースをビルドします。
 
 ```sh
-cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd
+cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
@@ -89,15 +89,15 @@ GitHub では上のリンクから README の言語を選びます。言語の�
 
 ## GitHub Pages に公開する
 
-`guidedog-pages` は、手元のマシンからサイトを公開します。インストール済みの `guidedog` でプロジェクトをビルドし、サイト全体を 1 回の Git プッシュで専用のブランチに送ります。GitHub がこのプッシュを反映するのは、読み取ったときのコミットをブランチがまだ指している場合だけです。そのあと、GitHub Pages がそのコミットをデプロイするまで待ちます。トークンはシステムの認証情報ストアに保管され、プロファイルがどこに公開できるかは、マシン上の紐付け（bind）で決まります。
+`guidedog publish pages` は、手元のマシンからサイトを公開します。インストール済みの `guidedog` でプロジェクトをビルドし、サイト全体を 1 回の Git プッシュで専用のブランチに送ります。GitHub がこのプッシュを反映するのは、読み取ったときのコミットをブランチがまだ指している場合だけです。そのあと、GitHub Pages がそのコミットをデプロイするまで待ちます。トークンはシステムの認証情報ストアに保管され、プロファイルがどこに公開できるかは、マシン上の紐付け（bind）で決まります。
 
 ```sh
-guidedog-pages init --repository=octo/manual --project=docs
-guidedog-pages auth import          # fine-grained トークン。入力は表示されない
-guidedog-pages bind                 # 公開先を確認し、このマシンに許可する
-guidedog-pages publish
-guidedog-pages setup                # ブランチから GitHub Pages をデプロイする
-guidedog-pages watch                # ソースが変わるたびに公開し直す
+guidedog pages init --repository=octo/manual --project=docs
+guidedog pages auth import          # fine-grained トークン。入力は表示されない
+guidedog pages bind                 # 公開先を確認し、このマシンに許可する
+guidedog publish pages
+guidedog pages setup                # ブランチから GitHub Pages をデプロイする
+guidedog pages watch                # ソースが変わるたびに公開し直す
 ```
 
 もう一つの方法は GitHub Actions で、プッシュのたびに公開できます。`guidedog publish --publisher=pages` は Guidedog 自身のエンジンでビルドし、同じパブリッシャーを実行します。[GitHub Pages に公開する](docs/manual/howto/github-pages.rst)と[プラグインを書く](docs/manual/plugins.rst)を参照してください。
@@ -119,7 +119,6 @@ guidedog dsc build
 
 カタログの `discussion.toml` は、ライフサイクルの状態、記録の種類、番号付けを設定し、`guidedog dsc config` はその内容を表示します。これらのコマンドは、すべての `guidedog` にリンクされている議論プラグインが提供するため、ほかに何もインストールする必要はありません。Guidedog 自身の `docs/gds` もそうしたカタログの一つで、そのフォルダーで `guidedog dsc check` を実行しています。[議論カタログの管理](docs/manual/howto/discussions.rst)を参照してください。
 
-`graphdog` は、Guidedog の図と同じライブラリーで Graphviz DOT を SVG、PNG、またはレイアウト済みの DOT に描画します。`dot` コマンドのサブセットとして動きます: `echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`。
 
 ## 読む・組み込む
 
@@ -129,7 +128,7 @@ guidedog dsc build
 - [テンプレート](docs/manual/templates.rst): Jinja で HTML、Typst で本を調整します。
 - [GDS](docs/gds/README.md): 番号付きの設計記録と実装上の判断。
 - [議論ライブラリ](crates/gd-discussion/README.md): `guidedog dsc` が管理するカタログ。
-- [プラグインライブラリ](crates/gd-plugins/README.md): 型付きのビルドサービスと、`guidedog publish` と `guidedog-pages` が使うパブリッシャーインターフェース。
+- [プラグインライブラリ](crates/gd-plugins/README.md): 型付きのビルドサービスと、`guidedog publish` と `guidedog publish pages` が使うパブリッシャーインターフェース。
 - [再利用できるクレート](docs/manual/internals/crates.rst): 他の Rust プロジェクトが crates.io から使えるエンジン、ライブラリ、API ジェネレーター、プラグイン SDK と、それらの依存関係。
 
 `crates/` の各クレートには、API と設計判断をまとめた短い README があります。Guidedoc は文書のテーブルを自分で所有し、変換の間で再利用するので、定常状態の変換はメモリを確保しません。また、ヒント付きの構造化された診断を返します。ホストがファイル、予算、キャッシュ、公開、組み込みコンパイラーを管理します。`--untrusted` は機能を制限しますが、プロセスのサンドボックスでも、すべてのネイティブ資源の上限でもありません。ベータ版の対象は macOS と Linux の信頼できる文書プロジェクトです。

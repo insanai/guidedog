@@ -45,5 +45,8 @@ Discussion registry
    * - 0011
      - :doc:`records/0011-sphinx-builtin-extensions`
      - committed
+   * - 0012
+     - :doc:`records/0012-single-executable-release`
+     - accepted
 
 .. gds-generated-end

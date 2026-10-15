@@ -83,8 +83,7 @@ mod tests {
     use super::*;
 
     /// Release tooling reads the version from the file VERSION and checks a release tag
-    /// against it, so the command must report the same version; graphdog and
-    /// guidedog-pages are released under it too.
+    /// against it, so the command must report the same version as the workspace.
     #[test]
     fn the_version_matches_the_repository_version_file() {
         let file = include_str!("../../../VERSION").trim();

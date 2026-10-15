@@ -31,13 +31,13 @@ La documentación de API se lee del código fuente sin ejecutarlo: Python (`auto
 
 ## Instalar
 
-Cada [versión](https://github.com/insanai/guidedog/releases) incluye un archivo comprimido para Linux (x86-64 y ARM64) y macOS (Apple silicon e Intel). El archivo `guidedog` contiene `guidedog`, `guidedog-pages` y `graphdog`. El compilador de Typst va integrado y tree-sitter está compilado dentro. Graphviz se enlaza desde el sistema, así que instale antes sus bibliotecas: en Debian y Ubuntu `sudo apt install libgvc6` (o el paquete `graphviz`), en Fedora `sudo dnf install graphviz`, en macOS `brew install graphviz`. Linux necesita glibc 2.35 o posterior; macOS, la versión 12 o posterior. Descargamos el archivo para nuestro sistema y `SHA256SUMS`, lo comprobamos y lo instalamos:
+Los archivos de la versión contienen un solo ejecutable: `guidedog`. Sus plugins añaden `guidedog dsc`, `guidedog publish pages` y `guidedog pages`. `gd-graphdog` encapsula Graphviz como biblioteca. Linux y macOS admiten x86-64 y ARM64; Windows admite x86-64. Conservamos toda la carpeta del ZIP de Windows, incluidas sus DLL.
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # en macOS: shasum -a 256 -c --ignore-missing SHA256SUMS
 tar -xzf guidedog-linux-amd64.tar.gz
 sudo install guidedog-linux-amd64/guidedog \
-    guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
+    /usr/local/bin/
 ```
 
 En macOS, instale desde el [tap oficial de Guidedog para Homebrew](https://github.com/insanai/homebrew-guidedog). Homebrew elige el archivo para Apple silicon o Intel e instala Graphviz con él. El tap también admite Linux:
@@ -55,7 +55,7 @@ Los programas no están firmados: en macOS, quite la cuarentena de una descarga 
 Instale Rust 1.99 o posterior (con [rustup](https://rustup.rs)), un compilador de C (las gramáticas de tree-sitter están escritas en C) y los archivos de desarrollo de Graphviz: `libgraphviz-dev` en Debian y Ubuntu, `graphviz-devel` en Fedora, `graphviz` de Homebrew en macOS. Después compile el espacio de trabajo:
 
 ```sh
-cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd
+cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
@@ -89,15 +89,15 @@ En GitHub, los lectores eligen el idioma del README con los enlaces de arriba. L
 
 ## Publicar en GitHub Pages
 
-`guidedog-pages` publica un sitio desde nuestra propia máquina. Compila el proyecto con el `guidedog` instalado y envía el sitio completo a una rama propia en un solo push de Git. GitHub aplica el push solo si la rama conserva el commit que se leyó. Después espera hasta que GitHub Pages haya desplegado ese commit. Los tokens se quedan en el almacén de credenciales del sistema, y una vinculación en nuestra máquina decide dónde puede publicar un perfil.
+`guidedog publish pages` publica un sitio desde nuestra propia máquina. Compila el proyecto con el `guidedog` instalado y envía el sitio completo a una rama propia en un solo push de Git. GitHub aplica el push solo si la rama conserva el commit que se leyó. Después espera hasta que GitHub Pages haya desplegado ese commit. Los tokens se quedan en el almacén de credenciales del sistema, y una vinculación en nuestra máquina decide dónde puede publicar un perfil.
 
 ```sh
-guidedog-pages init --repository=octo/manual --project=docs
-guidedog-pages auth import          # un token de permisos detallados, leído sin mostrarlo
-guidedog-pages bind                 # revise el destino y autorice esta máquina
-guidedog-pages publish
-guidedog-pages setup                # desplegar GitHub Pages desde la rama
-guidedog-pages watch                # volver a publicar cada vez que cambien las fuentes
+guidedog pages init --repository=octo/manual --project=docs
+guidedog pages auth import          # un token de permisos detallados, leído sin mostrarlo
+guidedog pages bind                 # revise el destino y autorice esta máquina
+guidedog publish pages
+guidedog pages setup                # desplegar GitHub Pages desde la rama
+guidedog pages watch                # volver a publicar cada vez que cambien las fuentes
 ```
 
 GitHub Actions es la otra vía, para publicar después de cada push. `guidedog publish --publisher=pages` compila con el motor propio de Guidedog y ejecuta el mismo publicador. Consulte [Publicar en GitHub Pages](docs/manual/howto/github-pages.rst) y [Escribir un plugin](docs/manual/plugins.rst).
@@ -119,7 +119,6 @@ guidedog dsc build
 
 El `discussion.toml` de un catálogo fija los estados de su ciclo de vida, sus tipos de registro y su numeración, y `guidedog dsc config` lo muestra. Los comandos vienen del plugin de discusiones, que todo `guidedog` lleva enlazado, así que no hace falta instalar nada más. El propio `docs/gds` de Guidedog es uno de esos catálogos: ejecutamos `guidedog dsc check` en esa carpeta. Consulte [Mantener un catálogo de discusiones](docs/manual/howto/discussions.rst).
 
-`graphdog` convierte DOT de Graphviz en SVG, PNG o DOT con disposición calculada, con la misma biblioteca que usan los diagramas de Guidedog, como un subconjunto del comando `dot`: `echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`.
 
 ## Leer e integrar
 
@@ -129,7 +128,7 @@ El `discussion.toml` de un catálogo fija los estados de su ciclo de vida, sus t
 - [Plantillas](docs/manual/templates.rst): personalizar HTML con Jinja y libros con Typst.
 - [GDS](docs/gds/README.md): registros numerados de diseño y decisiones de implementación.
 - [Biblioteca de discusiones](crates/gd-discussion/README.md): los catálogos que mantiene `guidedog dsc`.
-- [Biblioteca de plugins](crates/gd-plugins/README.md): servicios de compilación con tipos definidos y la interfaz de publicadores que usan `guidedog publish` y `guidedog-pages`.
+- [Biblioteca de plugins](crates/gd-plugins/README.md): servicios de compilación con tipos definidos y la interfaz de publicadores que usan `guidedog publish` y `guidedog publish pages`.
 - [Crates reutilizables](docs/manual/internals/crates.rst): el motor, las bibliotecas, los generadores de API y el SDK de plugins que otros proyectos Rust pueden tomar de crates.io, y cómo dependen unos de otros.
 
 Cada crate de `crates/` tiene un README breve con su API y sus decisiones de diseño. Guidedoc posee sus tablas de documento y las reutiliza entre conversiones, de modo que una conversión en régimen estable no reserva memoria. Guidedoc devuelve diagnósticos estructurados con una sugerencia. El gestor se ocupa de archivos, presupuestos, caché, publicación y los compiladores integrados. `--untrusted` limita capacidades; no aísla procesos ni limita todos los recursos nativos. La beta está dirigida a proyectos de confianza en macOS y Linux.

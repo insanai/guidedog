@@ -72,5 +72,4 @@ jobs:
           bin=target/debug
           cargo xtask release smoke --external-typst "$bin/guidedog"
           cargo xtask release smoke-discussion "$bin/guidedog"
-          cargo xtask release smoke-pages "$bin/guidedog-pages" "$bin/guidedog"
-          cargo xtask release smoke-graphdog "$bin/graphdog"
+          cargo xtask release smoke-pages "$bin/guidedog"

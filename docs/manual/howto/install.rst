@@ -16,7 +16,7 @@ Homebrew selects the release archive for our processor and checks its SHA-256.
 The executable has the Typst compiler and Graphviz built in, so it needs nothing else at run time. We do not need a Rust toolchain, a Python environment, or a separate
 Typst installation to build HTML and PDF. The release requires macOS 12 or later.
 
-The package also installs ``guidedog-pages``, which publishes sites to GitHub Pages (see :doc:`github-pages`), and ``graphdog``. Discussion catalogs need no program of their own: ``guidedog dsc`` keeps them (see :doc:`discussions`).
+The package installs one executable, ``guidedog``. Its built-in plugins add GitHub Pages publishing (``guidedog publish pages`` and ``guidedog pages``; see :doc:`github-pages`) and discussion catalogs (``guidedog dsc``; see :doc:`discussions`). The ``gd-graphdog`` library encapsulates Graphviz inside Guidedog.
 
 We create our first project in :doc:`../tutorial/first-project`.
 To update an installed release:
@@ -110,14 +110,10 @@ Before we propose a change, we run the same checks as the project's continuous i
 ``cargo run -p check`` is the source-limit checker in ``tools/check``: function and file
 lengths and line widths. ``cargo xtask tables --check`` checks that the generated data tables match the upstream data in ``tools/data``. ``cargo xtask --help`` lists the other repository tasks: the website, the fonts, and the release steps.
 
-Other programs
---------------
+Built-in plugins
+================
 
-``guidedog dsc``, the discussion catalogs, is part of ``guidedog``: the discussion plugin is linked in, so there is nothing more to build. The GitHub Pages publisher builds the same way as ``guidedog``. It does not link the engine:
-
-.. code-block:: sh
-
-   cargo build --release -p guidedog-pages-cmd
+The release has one executable. The discussion plugin adds ``guidedog dsc``. The Pages plugin adds ``guidedog publish pages`` and ``guidedog pages`` maintenance commands. Both are linked into ``guidedog`` and use its services; no additional program or registration is needed.
 
 It keeps tokens in the system's credential store: the Keychain on macOS, the Credential
 Manager on Windows, and on Linux the Secret Service through the ``secret-tool`` program

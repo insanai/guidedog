@@ -41,7 +41,7 @@ pub(crate) fn guidedog_missing(program: &str) -> Problem {
         "pages.guidedog",
         "Guidedog was not found",
         program,
-        "guidedog-pages builds projects with an installed guidedog, and none could be run.",
+        "guidedog pages builds projects with an installed guidedog, and none could be run.",
         &format!(
             "Install Guidedog and put guidedog on PATH, pass --guidedog=PATH, or set \
              {GUIDEDOG_VARIABLE}. To publish a site you built, set site in pages.toml."

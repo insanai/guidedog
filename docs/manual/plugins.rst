@@ -39,7 +39,7 @@ host owns the build.
      assets [class="gd-plugin", label=<<B>collect_assets</B><BR/><FONT POINT-SIZE="11">Custom files to _static/plugins/ID/</FONT>>, style="rounded,dashed,filled", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e"];
      stage [label=<<B>Stage and verify complete output</B><BR/><FONT POINT-SIZE="11">Write the next generation</FONT>>, fillcolor="#edf5f2"];
      commit [label=<<B>Publish local generation</B><BR/><FONT POINT-SIZE="11">Journaled generation switch</FONT>>, shape=cylinder, fillcolor="#e0eee9"];
-     publish [class="gd-input", label=<<B>Optional publisher service</B><BR/><FONT POINT-SIZE="11">(guidedog publish, guidedog-pages)</FONT>>, style="rounded,dashed,filled", fillcolor="#fbfaf3"];
+     publish [class="gd-input", label=<<B>Optional publisher service</B><BR/><FONT POINT-SIZE="11">(guidedog publish, guidedog pages)</FONT>>, style="rounded,dashed,filled", fillcolor="#fbfaf3"];
 
      assets -> read [style=dashed, label="setup first"];
      read -> source -> parse -> render;

@@ -1,8 +1,8 @@
 //! `release package` and `release source`: the release archives of one platform, and
 //! the source archive of the commit.
 //!
-//! The guidedog archive holds one folder, guidedog-<os>-<arch>, with guidedog,
-//! guidedog-pages and graphdog. The folder also has
+//! The archive holds one folder, guidedog-<os>-<arch>, with the guidedog executable.
+//! The folder also has
 //! README.md, LICENSE, NOTICE, CHANGELOG.md, SOURCE.txt (where the exact source is and
 //! how it was built) and NAME.build.json (version, commit, target, toolchain, and the
 //! programs' SHA-256). Graphviz and Expat are linked statically, so their licences

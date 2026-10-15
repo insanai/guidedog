@@ -160,7 +160,7 @@ pub(crate) fn unbound(c: &Config) -> Problem {
         &repository,
         &format!("No binding lets this machine publish to {repository}, branch {}.", c.branch),
         &format!(
-            "Run guidedog-pages bind --config={} to review and authorize it.",
+            "Run guidedog pages bind --config={} to review and authorize it.",
             c.shown_path()
         ),
     )
@@ -186,7 +186,7 @@ impl Session {
                     config.branch, binding.profile, config.profile
                 ),
                 "Set profile in pages.toml to the bound profile, or bind this profile with \
-                 guidedog-pages bind.",
+                 guidedog pages bind.",
             )
             .exit(2));
         }
@@ -271,7 +271,7 @@ impl Session {
             &self.binding.repository,
             "A publication of this target lost its answer from GitHub, so whether it moved \
              the branch is not known yet.",
-            &format!("Run guidedog-pages recover --config={} first.", self.config.shown_path()),
+            &format!("Run guidedog pages recover --config={} first.", self.config.shown_path()),
         )
         .exit(7))
     }
@@ -290,7 +290,7 @@ fn check_identity(c: &Config, binding: &Binding, r: &Repository) -> Result<(), P
                 made again, or another took its name.",
                 r.full_name, r.id, binding.repository_id
             ),
-            "Check the repository on GitHub; if it is right, run guidedog-pages bind to \
+            "Check the repository on GitHub; if it is right, run guidedog pages bind to \
              authorize it again.",
         )
         .exit(2));
@@ -301,7 +301,7 @@ fn check_identity(c: &Config, binding: &Binding, r: &Repository) -> Result<(), P
             "The repository was renamed or moved",
             &r.full_name,
             &format!("The bound repository {} is now {}.", binding.repository, r.full_name),
-            "Update repository in pages.toml and run guidedog-pages bind to authorize the new \
+            "Update repository in pages.toml and run guidedog pages bind to authorize the new \
              name.",
         )
         .exit(2));
@@ -323,7 +323,7 @@ fn foreign(c: &Config, r: &Repository, head: &str) -> Problem {
             c.branch,
             short(head)
         ),
-        "Publish to a branch of its own, or run guidedog-pages bind --adopt after checking \
+        "Publish to a branch of its own, or run guidedog pages bind --adopt after checking \
          that the branch may be replaced.",
     )
     .exit(2)
@@ -347,7 +347,7 @@ fn check_source(c: &Config, site: &Site) -> Result<(), Problem> {
             "The site is deployed by a workflow; a branch publication would not be seen, and \
              two publishers would compete.",
             &format!(
-                "Keep using the workflow, or run guidedog-pages setup --config={config} to \
+                "Keep using the workflow, or run guidedog pages setup --config={config} to \
                 publish from the branch {} instead.",
                 c.branch
             ),
@@ -363,7 +363,7 @@ fn check_source(c: &Config, site: &Site) -> Result<(), Problem> {
                 "The site is deployed from {}, folder {}, not from {}, folder /.",
                 site.branch, site.path, c.branch
             ),
-            &format!("Run guidedog-pages setup --config={config} to publish from {}.", c.branch),
+            &format!("Run guidedog pages setup --config={config} to publish from {}.", c.branch),
         )
         .exit(2));
     }

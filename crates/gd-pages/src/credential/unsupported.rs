@@ -14,7 +14,7 @@ fn unsupported() -> Problem {
         "pages.store",
         "The credential store cannot be used",
         STORE_NAME,
-        "This system has no credential store guidedog-pages can use.",
+        "This system has no credential store guidedog pages can use.",
         "Give a token to one command with GUIDEDOG_PAGES_TOKEN and --credential=env.",
     )
     .exit(4)

@@ -43,7 +43,7 @@ fn the_commands_take_a_target_from_bind_to_live() {
     let (status, out, err) = with(&["bind", "--yes"]);
     assert_eq!(status, 0, "{err}");
     assert!(out.contains("Repository  octo/site (public, GitHub ID 7)"), "{out}");
-    assert!(err.contains("guidedog-pages setup"), "{err}");
+    assert!(err.contains("guidedog pages setup"), "{err}");
     let (status, _, err) = with(&["setup", "--yes"]);
     assert_eq!(status, 2, "{err}");
     assert!(err.contains("pages.no-branch"), "{err}");
@@ -73,7 +73,7 @@ fn the_commands_take_a_target_from_bind_to_live() {
     // Unbound again: publish would bind, which needs an answer this run cannot give.
     let (status, _, err) = with(&["publish"]);
     assert_eq!(status, 2);
-    assert!(err.contains("pages.guide") && err.contains("guidedog-pages bind"), "{err}");
+    assert!(err.contains("pages.guide") && err.contains("guidedog pages bind"), "{err}");
 }
 
 /// The folder cargo builds examples into: `target/<profile>/examples`.

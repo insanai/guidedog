@@ -31,13 +31,13 @@ API दस्तावेज़ स्रोत कोड को चलाए �
 
 ## स्थापित करें
 
-हर [रिलीज़](https://github.com/insanai/guidedog/releases) में Linux (x86-64 और ARM64) और macOS (Apple silicon और Intel) के लिए एक आर्काइव है। `guidedog` आर्काइव में `guidedog`, `guidedog-pages` और `graphdog` हैं। Typst कंपाइलर अंतर्निहित है और tree-sitter प्रोग्राम में ही कंपाइल है। Graphviz सिस्टम से लिंक होता है, इसलिए पहले उसकी लाइब्रेरी स्थापित करें: Debian और Ubuntu पर `sudo apt install libgvc6` (या `graphviz` पैकेज), Fedora पर `sudo dnf install graphviz`, macOS पर `brew install graphviz`। Linux को glibc 2.35 या नया चाहिए; macOS को संस्करण 12 या नया। हम अपने सिस्टम का आर्काइव और `SHA256SUMS` डाउनलोड करते हैं, फिर जाँचकर स्थापित करते हैं:
+रिलीज़ में केवल एक प्रोग्राम है: `guidedog`। इसके प्लगइन `guidedog dsc`, `guidedog publish pages` और `guidedog pages` कमांड जोड़ते हैं। `gd-graphdog` Graphviz को एक लाइब्रेरी में समेटता है। Linux और macOS पर x86-64 और ARM64 उपलब्ध हैं; Windows पर x86-64। Windows ZIP की DLL फ़ाइलें उसी फ़ोल्डर में रखें।
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS पर: shasum -a 256 -c --ignore-missing SHA256SUMS
 tar -xzf guidedog-linux-amd64.tar.gz
 sudo install guidedog-linux-amd64/guidedog \
-    guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
+    /usr/local/bin/
 ```
 
 macOS पर आधिकारिक [Guidedog Homebrew tap](https://github.com/insanai/homebrew-guidedog) से स्थापित करें। Homebrew हमारे Apple silicon या Intel प्रोसेसर के लिए सही पैकेज चुनता है और उसके साथ Graphviz भी स्थापित करता है। यह tap Linux पर भी काम करता है:
@@ -55,7 +55,7 @@ guidedog --version
 Rust 1.99 या नया ([rustup](https://rustup.rs) से), एक C कंपाइलर (tree-sitter के व्याकरण C में हैं), और Graphviz की डेवलपमेंट फ़ाइलें स्थापित करें: Debian और Ubuntu पर `libgraphviz-dev`, Fedora पर `graphviz-devel`, macOS पर Homebrew से `graphviz`। फिर workspace बिल्ड करें:
 
 ```sh
-cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd
+cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
@@ -89,15 +89,15 @@ GitHub पर पाठक ऊपर के लिंक से README की �
 
 ## GitHub Pages पर प्रकाशित करें
 
-`guidedog-pages` हमारी अपनी मशीन से साइट प्रकाशित करता है। यह स्थापित `guidedog` से परियोजना बिल्ड करता है और पूरी साइट को एक Git push में अपनी अलग ब्रांच पर भेजता है। GitHub यह push तभी लागू करता है जब ब्रांच पर अब भी वही कमिट हो जो पढ़ा गया था। फिर यह तब तक रुकता है जब तक GitHub Pages उस कमिट को डिप्लॉय न कर दे। टोकन सिस्टम के क्रेडेंशियल स्टोर में रहते हैं, और हमारी मशीन पर दर्ज बाइंडिंग तय करती है कि कोई प्रोफ़ाइल कहाँ प्रकाशित कर सकती है।
+`guidedog publish pages` हमारी अपनी मशीन से साइट प्रकाशित करता है। यह स्थापित `guidedog` से परियोजना बिल्ड करता है और पूरी साइट को एक Git push में अपनी अलग ब्रांच पर भेजता है। GitHub यह push तभी लागू करता है जब ब्रांच पर अब भी वही कमिट हो जो पढ़ा गया था। फिर यह तब तक रुकता है जब तक GitHub Pages उस कमिट को डिप्लॉय न कर दे। टोकन सिस्टम के क्रेडेंशियल स्टोर में रहते हैं, और हमारी मशीन पर दर्ज बाइंडिंग तय करती है कि कोई प्रोफ़ाइल कहाँ प्रकाशित कर सकती है।
 
 ```sh
-guidedog-pages init --repository=octo/manual --project=docs
-guidedog-pages auth import          # fine-grained टोकन, जो टाइप करते समय दिखता नहीं
-guidedog-pages bind                 # लक्ष्य जाँचें, फिर इस मशीन को अनुमति दें
-guidedog-pages publish
-guidedog-pages setup                # GitHub Pages को इस ब्रांच से डिप्लॉय कराएँ
-guidedog-pages watch                # स्रोत बदलने पर हर बार फिर प्रकाशित करें
+guidedog pages init --repository=octo/manual --project=docs
+guidedog pages auth import          # fine-grained टोकन, जो टाइप करते समय दिखता नहीं
+guidedog pages bind                 # लक्ष्य जाँचें, फिर इस मशीन को अनुमति दें
+guidedog publish pages
+guidedog pages setup                # GitHub Pages को इस ब्रांच से डिप्लॉय कराएँ
+guidedog pages watch                # स्रोत बदलने पर हर बार फिर प्रकाशित करें
 ```
 
 दूसरा रास्ता GitHub Actions है, जो हर push के बाद प्रकाशित करता है। `guidedog publish --publisher=pages` Guidedog के अपने इंजन से बिल्ड करता है और यही प्रकाशक (publisher) चलाता है। [GitHub Pages पर प्रकाशित करें](docs/manual/howto/github-pages.rst) और [Plugin लिखें](docs/manual/plugins.rst) देखें।
@@ -119,7 +119,6 @@ guidedog dsc build
 
 कैटलॉग की `discussion.toml` फ़ाइल उसकी जीवनचक्र स्थितियाँ, रिकॉर्ड प्रकार और क्रमांकन तय करती है, और `guidedog dsc config` उसे प्रिंट करता है। ये कमांड चर्चा प्लगइन से आते हैं, जो हर `guidedog` में लिंक है, इसलिए और कुछ स्थापित करने की ज़रूरत नहीं है। Guidedog का अपना `docs/gds` भी ऐसा ही एक कैटलॉग है: हम उस फ़ोल्डर में `guidedog dsc check` चलाते हैं। [चर्चा कैटलॉग रखना](docs/manual/howto/discussions.rst) देखें।
 
-`graphdog` Graphviz DOT को SVG, PNG या लेआउट किए गए DOT में बदलता है, उसी लाइब्रेरी से जिसे Guidedog के आरेख इस्तेमाल करते हैं, `dot` कमांड के एक उपसमुच्चय के रूप में: `echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`।
 
 ## पढ़ें और एम्बेड करें
 
@@ -129,7 +128,7 @@ guidedog dsc build
 - [टेम्पलेट](docs/manual/templates.rst): Jinja से HTML और Typst से पुस्तक का रूप बदलें।
 - [GDS](docs/gds/README.md): क्रमांकित डिज़ाइन अभिलेख और कार्यान्वयन के निर्णय।
 - [चर्चा लाइब्रेरी](crates/gd-discussion/README.md): वे कैटलॉग जिन्हें `guidedog dsc` सँभालता है।
-- [प्लगइन लाइब्रेरी](crates/gd-plugins/README.md): typed build services और `guidedog publish` तथा `guidedog-pages` में इस्तेमाल होने वाला publisher इंटरफ़ेस।
+- [प्लगइन लाइब्रेरी](crates/gd-plugins/README.md): typed build services और `guidedog publish` तथा `guidedog publish pages` में इस्तेमाल होने वाला publisher इंटरफ़ेस।
 - [पुन: उपयोग योग्य crates](docs/manual/internals/crates.rst): engine, libraries, API generators और plugin SDK, जिन्हें दूसरे Rust प्रोजेक्ट crates.io से ले सकते हैं, और उनकी आपसी निर्भरताएँ।
 
 `crates/` के हर crate में एक छोटा README है, जिसमें उसका API और उसके डिज़ाइन निर्णय हैं। Guidedoc अपनी दस्तावेज़ तालिकाओं का स्वामी है और उन्हें रूपांतरणों के बीच दोबारा इस्तेमाल करता है, इसलिए स्थिर अवस्था में कोई रूपांतरण नई मेमोरी नहीं माँगता। यह सुझाव (hint) सहित संरचित निदान लौटाता है। होस्ट फ़ाइल, बजट, कैश, प्रकाशन और अंतर्निहित कंपाइलर सँभालता है। `--untrusted` क्षमताएँ सीमित करता है; यह प्रक्रिया का सैंडबॉक्स या सभी मूल संसाधनों की सीमा नहीं है। बीटा macOS और Linux पर भरोसेमंद दस्तावेज़ परियोजनाओं के लिए है।

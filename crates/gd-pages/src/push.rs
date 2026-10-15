@@ -113,7 +113,7 @@ pub fn push(
 
 fn read_report(body: &[u8], url: &str, branch: &str) -> PushOutcome {
     let lost = |title: &str, message: &str| {
-        let hint = "Run guidedog-pages recover to learn whether the branch moved.";
+        let hint = "Run guidedog pages recover to learn whether the branch moved.";
         problem("pages.github", title, url, message, hint).exit(7)
     };
     let report = match gd_git::parse_report(body) {

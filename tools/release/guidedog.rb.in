@@ -31,15 +31,17 @@ class Guidedog < Formula
   end
 
   def install
-    # guidedog-pages publishes to GitHub Pages with this guidedog; graphdog renders Graphviz
-    # graphs like dot. Discussion catalogs are guidedog's own: guidedog dsc.
-    bin.install "guidedog", "guidedog-pages", "graphdog"
+    # Publishing, discussions and Graphviz rendering are built into Guidedog.
+    bin.install "guidedog"
     doc.install "NOTICE", "CHANGELOG.md", "SOURCE.txt", "guidedog.build.json"
   end
 
   test do
     assert_match "guidedog #{version}", shell_output("#{bin}/guidedog --version")
     system bin/"guidedog", "quickstart", "docs", "-q", "-p", "Demo", "-a", "Homebrew"
+    (testpath/"docs/index.rst").open("a") do |file|
+      file.write "\n.. digraph:: smoke\n\n   source -> html\n"
+    end
     system bin/"guidedog", "build", "html", "docs", "-W"
     assert_path_exists testpath/"docs/_build/html/index.html"
     system bin/"guidedog", "build", "pdf", "docs", "-W"
@@ -50,11 +52,7 @@ class Guidedog < Formula
       system bin/"guidedog", "dsc", "build", "--target=html"
       assert_path_exists testpath/"eds/_build/html/index.html"
     end
-    assert_match "guidedog-pages #{version}", shell_output("#{bin}/guidedog-pages --version")
-    system bin/"guidedog-pages", "init", "--repository=octo/manual", "--project=docs"
+    system bin/"guidedog", "pages", "init", "--repository=octo/manual", "--project=docs"
     assert_path_exists testpath/"pages.toml"
-    assert_match "graphdog #{version}", shell_output("#{bin}/graphdog --version")
-    (testpath/"g.dot").write "digraph { a -> b }"
-    assert_match "<svg", shell_output("#{bin}/graphdog -Tsvg g.dot")
   end
 end

@@ -1,4 +1,4 @@
-//! `release smoke-pages` and `release credential-store`: guidedog-pages run offline the
+//! `release smoke-pages` and `release credential-store`: the linked Pages plugin run offline the
 //! way a new user starts, and gd-pages' native credential adapter tested against a real,
 //! private Linux Secret Service.
 
@@ -10,11 +10,11 @@ use crate::fsutil::{TempDir, create_dir, read_text};
 use crate::{Failure, Result, fail, process, repository_root};
 
 const SMOKE_HELP: &str = "\
-Smoke-tests guidedog-pages and guidedog publish the way a new user starts, offline: a
-pages.toml, the program registered with guidedog, and publications that stop before
+Smoke-tests the linked Pages plugin and guidedog publish the way a new user starts, offline: a
+pages.toml, plugin commands, and publications that stop before
 reaching GitHub because the target is not yet authorized on this machine.
 
-Usage: cargo xtask release smoke-pages PAGES-PROGRAM GUIDEDOG
+Usage: cargo xtask release smoke-pages GUIDEDOG
 
 Machine state goes to a temporary folder (GUIDEDOG_CONFIG_DIR, GUIDEDOG_CACHE_DIR), so
 the user's registry, bindings and tokens are never touched.
@@ -43,7 +43,7 @@ fn pages_failure(what: &str) -> Failure {
     )
 }
 
-/// Runs guidedog and guidedog-pages with machine state in a temporary folder.
+/// Runs guidedog with machine state in a temporary folder.
 struct Pages<'a> {
     work: &'a Path,
 }
@@ -78,51 +78,38 @@ impl Pages<'_> {
 pub(super) fn smoke_main(args: &[String]) -> Result<()> {
     let spec = Spec { command: "release smoke-pages", flags: &[], options: &[], help: SMOKE_HELP };
     let Some(parsed) = args::parse(args, &spec)? else { return Ok(()) };
-    parsed.at_most(2, &spec)?;
-    let program = super::given_path(parsed.positional(0, "the guidedog-pages program", &spec)?);
-    let guidedog = super::given_path(parsed.positional(1, "the guidedog program", &spec)?);
-    smoke_pages(&program, &guidedog)
+    parsed.at_most(1, &spec)?;
+    let guidedog = super::given_path(parsed.positional(0, "the guidedog program", &spec)?);
+    smoke_pages(&guidedog)
 }
 
-/// Smoke-tests guidedog-pages with guidedog.
-pub(crate) fn smoke_pages(program: &Path, guidedog: &Path) -> Result<()> {
+/// Smoke-tests the built-in Pages plugin without network access or credentials.
+pub(crate) fn smoke_pages(guidedog: &Path) -> Result<()> {
     let temp = TempDir::new("pages")?;
     let pages = Pages { work: temp.path() };
-    let version = process::output(&mut pages.command(program, &["--version"]))?;
-    let first = version.lines().next().unwrap_or_default();
-    if !first.starts_with("guidedog-pages ") {
-        return Err(pages_failure(&format!("{} reports \"{first}\"", program.display())));
-    }
-    let quickstart = &["quickstart", "docs", "-q", "-p", "Demo", "-a", "Release"];
-    process::output(&mut pages.command(guidedog, quickstart))?;
-    let init = &["init", "--repository=octo/manual", "--project=docs", "--color=never"];
-    process::run(&mut pages.command(program, init))?;
+    process::run(
+        &mut pages.command(guidedog, &["quickstart", "docs", "-q", "-p", "Demo", "-a", "Release"]),
+    )?;
+    process::run(
+        &mut pages
+            .command(guidedog, &["pages", "init", "--repository=octo/manual", "--project=docs"]),
+    )?;
     if !read_text(&temp.path().join("pages.toml"))?.contains("repository = \"octo/manual\"") {
         return Err(pages_failure("init wrote no repository"));
     }
-    pages.expect("pages.usage", program, &["publish", "--no-such-option"])?;
-    let engine = format!("--guidedog={}", guidedog.display());
-    pages.expect("pages.unbound", program, &["publish", "--dry-run", &engine])?;
-    let registered = program.to_string_lossy().into_owned();
-    process::run(
-        &mut pages.command(guidedog, &["plugin", "register", "pages", &registered, "--yes"]),
+    pages.expect("pages.usage", guidedog, &["publish", "pages", "--no-such-option"])?;
+    pages.expect("pages.unbound", guidedog, &["publish", "pages", "--dry-run"])?;
+    pages.expect(
+        "pages.unbound",
+        guidedog,
+        &["publish", "--publisher=pages", "--config=pages.toml"],
     )?;
-    let inspect = process::output(&mut pages.command(guidedog, &["plugin", "inspect", "pages"]))?;
-    if !inspect.contains("is the one registered") {
-        return Err(pages_failure("inspect failed"));
-    }
-    let publish = &["publish", "--publisher=pages", "--config=pages.toml"];
-    pages.expect("pages.unbound", guidedog, &[publish.as_slice(), &["--dry-run"]].concat())?;
-    process::run(&mut pages.command(guidedog, &["plugin", "unregister", "pages"]))?;
-    // guidedog links the Pages publisher in (gd_cli's default registry), so after the
-    // registered program is gone `--publisher=pages` still finds the linked one, which
-    // stops safely at the same authorization check. A plugin that is neither linked
-    // nor registered is reported as missing.
-    pages.expect("pages.unbound", guidedog, publish)?;
-    let missing = &["publish", "--publisher=no-such-publisher", "--config=pages.toml"];
-    pages.expect("cli.plugin-missing", guidedog, missing)?;
-    let name = program.file_name().unwrap_or_default().to_string_lossy();
-    println!("pages smoke test passed: {name} registered; each publication stopped safely");
+    pages.expect(
+        "cli.plugin-missing",
+        guidedog,
+        &["publish", "--publisher=no-such-publisher", "--config=pages.toml"],
+    )?;
+    println!("pages smoke test passed: linked plugin; publications stopped safely");
     Ok(())
 }
 

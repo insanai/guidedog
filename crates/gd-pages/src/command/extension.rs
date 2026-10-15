@@ -1,8 +1,5 @@
-//! The commands Pages adds to guidedog's command line: `guidedog publish pages`, the
-//! guided publication, and `guidedog pages workflow`. They are the `guidedog-pages`
-//! commands of the same names, run with what the host offers: its streams, its
-//! questions, and its own build of the project (unless `--guidedog` or
-//! `$GUIDEDOG_PAGES_GUIDEDOG` names a program to build with).
+//! The Pages plugin's publishing and maintenance commands, run through the host's
+//! streams, state, cancellation and project builder.
 
 use gd_plugins::{BuildRequest, CommandContext, CommandInfo, CommandOption, Problem};
 use gd_report::escape_terminal;
@@ -28,7 +25,7 @@ that needs an answer fails with a hint naming the flag or the guidedog-pages
 command that does it.
 
 Exit status: 0 published or unchanged, 1 failed (nothing published), 2 usage,
-6 published but not confirmed live, 7 unknown (run guidedog-pages recover).";
+6 published but not confirmed live, 7 unknown (run guidedog pages recover).";
 
 const WORKFLOW_HELP: &str = "\
 Prints, writes (--write), or checks (--check) .github/workflows/docs-pages.yml,
@@ -77,7 +74,62 @@ pub(crate) fn commands() -> Vec<CommandInfo> {
     )
     .with_help(WORKFLOW_HELP);
     workflow_info.options = workflow.into();
-    vec![publish_info, workflow_info]
+    let mut commands = vec![publish_info, workflow_info];
+    for word in super::COMMANDS {
+        if matches!(*word, "publish" | "workflow") {
+            continue;
+        }
+        if *word == "auth" {
+            for sub in ["login", "import", "status", "logout"] {
+                commands.push(maintenance(word, sub));
+            }
+        } else {
+            commands.push(maintenance(word, ""));
+        }
+    }
+    commands
+}
+
+/// Describes a maintenance command using the same options its parser validates.
+fn maintenance(word: &str, sub: &str) -> CommandInfo {
+    let tail = if sub.is_empty() { word.to_string() } else { format!("{word} {sub}") };
+    let mut info = CommandInfo::new(&format!("pages {tail}"), &format!("GitHub Pages: {tail}"));
+    for key in super::allowed(word, sub) {
+        let name = format!("--{key}");
+        let summary = key.replace('-', " ");
+        let option = if super::FLAGS.contains(key) {
+            CommandOption::switch(&name, &summary)
+        } else {
+            CommandOption::with_value(&name, "VALUE", &summary)
+        };
+        info.options.push(option);
+    }
+    info
+}
+
+/// Runs maintenance through the host's streams, state and cancellation probe.
+fn run_maintenance(
+    settings: &Settings,
+    host: &mut CommandContext<'_>,
+    tail: &str,
+    args: &[String],
+) -> i32 {
+    let mut words: Vec<String> = tail.split_whitespace().map(String::from).collect();
+    words.extend_from_slice(args);
+    if tail == "watch"
+        && !args.iter().any(|arg| arg == "--guidedog" || arg.starts_with("--guidedog="))
+        && std::env::var_os(GUIDEDOG_VARIABLE).is_none()
+        && let Ok(program) = std::env::current_exe()
+    {
+        words.push(format!("--guidedog={}", program.display()));
+    }
+    let program = super::Program {
+        settings: settings.clone(),
+        cancel: host.cancel.clone(),
+        dir: Some(host.dir.clone()),
+    };
+    let (out, err) = host.streams();
+    super::run_with(&program, &words, out, err)
 }
 
 /// Runs the contributed command `name` with `args` and `settings`, through `host`.
@@ -90,7 +142,12 @@ pub(crate) fn run(
     let word = match name {
         PUBLISH_PAGES => "publish",
         PAGES_WORKFLOW => "workflow",
-        _ => return Err(super::usage("Unknown command", name, "Run guidedog --help.")),
+        _ => {
+            if let Some(tail) = name.strip_prefix("pages ") {
+                return Ok(run_maintenance(settings, host, tail, args));
+            }
+            return Err(super::usage("Unknown command", name, "Run guidedog --help."));
+        }
     };
     let mut words = Vec::with_capacity(args.len() + 1);
     words.push(word.to_string());

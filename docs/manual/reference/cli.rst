@@ -109,7 +109,7 @@ Commands overview
    * - ``plugin COMMAND``
      - Registers, checks, lists, inspects, runs, or unregisters plugin programs.
 
-Plugins add commands of their own (see `Commands plugins add`_). The GitHub Pages plugin, linked into every ``guidedog``, adds two:
+Plugins add commands of their own (see `Commands plugins add`_). The GitHub Pages plugin, linked into every ``guidedog``, adds publishing and maintenance commands:
 
 .. list-table:: Commands of the linked GitHub Pages plugin
    :header-rows: 1
@@ -588,7 +588,7 @@ missing and asks only when it must. Then it builds and publishes:
 On a machine that is already set up, it publishes without a question. Without a terminal
 it never asks. A missing step then fails with a hint naming the command or option that does
 it. ``--yes`` answers the confirmations. It never signs in or replaces other work on
-our behalf. Its options are those of ``guidedog-pages init`` and ``publish`` (``--config``,
+our behalf. Its options are those of ``guidedog pages init`` and ``publish`` (``--config``,
 ``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, ``--verbose``,
 ``--dry-run``); ``guidedog publish pages --help`` lists them. guidedog builds the project itself, with its own engine and linked plugins; ``--guidedog=PATH`` builds with another program instead.
 See :doc:`../howto/github-pages`.
@@ -596,7 +596,7 @@ See :doc:`../howto/github-pages`.
 guidedog pages workflow
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-``guidedog pages workflow`` is ``guidedog-pages workflow``, added by the GitHub Pages plugin. It prints, writes, or checks
+``guidedog pages workflow`` is ``guidedog pages workflow``, added by the GitHub Pages plugin. It prints, writes, or checks
 a GitHub Actions workflow. The workflow installs this Guidedog release, builds the project, and
 deploys it with GitHub's Pages actions. We use it instead of publishing from our own machine
 when every push to the source branch should deploy.
@@ -721,32 +721,30 @@ guidedog looks for a word it does not know (or a ``publish`` target) among the c
 
 A linked plugin's command runs inside guidedog. A registered program's command runs as that program, started on our terminal after its SHA-256 is checked: it may ask questions, and its exit status is the command's. When either asks for a build, guidedog builds the project. The program's commands are read when it is registered, so a new version is registered again, as always.
 
-guidedog-pages
+guidedog pages
 --------------
 
-Publishes Guidedog sites to GitHub Pages from this machine. It builds projects with
-the installed ``guidedog``. ``publish`` does any missing setup step first, as
-``guidedog publish pages`` does. The step commands stay for scripts and for checking
+The linked Pages plugin publishes through ``guidedog publish pages`` and exposes maintenance through ``guidedog pages``. Guidedog builds the project with its own engine. The step commands stay for scripts and for checking
 each part. See :doc:`../howto/github-pages`.
 
 .. code-block:: sh
 
-   guidedog-pages publish
-   guidedog-pages init --repository=OWNER/REPO --project=docs
-   guidedog-pages auth import --profile=default
-   guidedog-pages auth login --client-id=APP_ID --scope=public
-   guidedog-pages auth status
-   guidedog-pages bind --adopt
-   guidedog-pages setup
-   guidedog-pages doctor
-   guidedog-pages publish --dry-run
-   guidedog-pages publish --wait=600
-   guidedog-pages watch
-   guidedog-pages status --operation=COMMIT
-   guidedog-pages recover
-   guidedog-pages unbind
-   guidedog-pages auth logout
-   guidedog-pages workflow --write
+   guidedog publish pages
+   guidedog pages init --repository=OWNER/REPO --project=docs
+   guidedog pages auth import --profile=default
+   guidedog pages auth login --client-id=APP_ID --scope=public
+   guidedog pages auth status
+   guidedog pages bind --adopt
+   guidedog pages setup
+   guidedog pages doctor
+   guidedog publish pages --dry-run
+   guidedog publish pages --wait=600
+   guidedog pages watch
+   guidedog pages status --operation=COMMIT
+   guidedog pages recover
+   guidedog pages unbind
+   guidedog pages auth logout
+   guidedog pages workflow --write
 
 .. list-table:: Settings of pages.toml
    :header-rows: 1
@@ -775,7 +773,7 @@ each part. See :doc:`../howto/github-pages`.
    * - ``[watch] debounce_ms``, ``max_wait_ms``
      - How long ``watch`` lets sources settle, and the most it waits after a change.
 
-.. list-table:: Options of guidedog-pages
+.. list-table:: Options of guidedog pages
    :header-rows: 1
    :widths: 35 65
 

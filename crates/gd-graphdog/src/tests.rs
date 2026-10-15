@@ -131,12 +131,12 @@ fn defaults_apply_to_svg() {
 #[test]
 fn one_context_renders_twice() {
     let ctx = context();
-    let first = render(&ctx, "digraph { x -> y }", Options::default()).expect("first");
-    let second = render(&ctx, "digraph { x -> y }", Options::default()).expect("second");
+    let first = render(&ctx, "digraph stable { x -> y }", Options::default()).expect("first");
+    let second = render(&ctx, "digraph stable { x -> y }", Options::default()).expect("second");
     assert_eq!(first, second);
     // A failure in between must not poison later renders.
-    assert!(render(&ctx, "digraph { x -> }", Options::default()).is_err());
-    let third = render(&ctx, "digraph { x -> y }", Options::default()).expect("third");
+    assert!(render(&ctx, "digraph stable { x -> }", Options::default()).is_err());
+    let third = render(&ctx, "digraph stable { x -> y }", Options::default()).expect("third");
     assert_eq!(third, first);
 }
 

@@ -186,7 +186,7 @@ pub(crate) fn parse_json(body: &[u8], depth: usize) -> Result<Value, ()> {
 /// The problem of a call that got no answer, or a redirect.
 pub(crate) fn transfer_problem(r: &Response, path: &str, doing: &str) -> Problem {
     let Some(e) = &r.error else {
-        let hint = "Run the same guidedog-pages command again.";
+        let hint = "Run the same guidedog pages command again.";
         return problem("pages.github", "GitHub had a problem", path, "No error.", hint);
     };
     match e.kind {
@@ -199,7 +199,7 @@ pub(crate) fn transfer_problem(r: &Response, path: &str, doing: &str) -> Problem
                  transferred.",
                 r.header("location").unwrap_or("another address")
             ),
-            "Check the repository on GitHub, update pages.toml, and run guidedog-pages bind \
+            "Check the repository on GitHub, update pages.toml, and run guidedog pages bind \
              to authorize the new target.",
         )
         .exit(2),
@@ -246,7 +246,7 @@ pub(crate) fn status_problem(r: &Response, value: Option<&Value>, x: &Call<'_>) 
                 "The token was refused when trying to {doing}: it expired, was revoked, or \
                  is not a token.{detail}"
             ),
-            "Run guidedog-pages auth login (or auth import) for this profile again.",
+            "Run guidedog pages auth login (or auth import) for this profile again.",
         )
         .exit(2),
         429 => rate_limited(r, x),

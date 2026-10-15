@@ -31,13 +31,12 @@ API documentation is read from source without running it: Python (`autodoc`), Od
 
 ## Install
 
-Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64) and macOS (Apple silicon and Intel), plus a Windows x86-64 ZIP. The `guidedog` archive holds `guidedog`, `guidedog-pages`, and `graphdog`. The Typst compiler is embedded, tree-sitter is compiled in, and Graphviz is linked statically, so nothing else needs to be installed. The Windows ZIP bundles Graphviz DLLs; we keep the whole extracted folder together. Linux needs glibc 2.35 or later; macOS needs version 12 or later. We download the archive for our system and `SHA256SUMS`, then check and install it:
+Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64) and macOS (Apple silicon and Intel), plus a Windows x86-64 ZIP. Each archive contains the `guidedog` executable and its notices. Publishing and discussions are linked plugins; `gd-graphdog` encapsulates Graphviz as a library. The Typst compiler is embedded, tree-sitter is compiled in, and Graphviz is linked statically, so nothing else needs to be installed. The Windows ZIP bundles Graphviz DLLs; we keep the whole extracted folder together. Linux needs glibc 2.35 or later; macOS needs version 12 or later. We download the archive for our system and `SHA256SUMS`, then check and install it:
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # on macOS: shasum -a 256 -c --ignore-missing SHA256SUMS
 tar -xzf guidedog-linux-amd64.tar.gz
-sudo install guidedog-linux-amd64/guidedog \
-    guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
+sudo install guidedog-linux-amd64/guidedog /usr/local/bin/
 ```
 
 On macOS, install from the official [Guidedog Homebrew tap](https://github.com/insanai/homebrew-guidedog). Homebrew selects the Apple silicon or Intel archive. The tap also supports Linux:
@@ -55,7 +54,7 @@ The programs are not code-signed: on macOS, remove the quarantine from a browser
 Install Rust 1.99 or later (with [rustup](https://rustup.rs)), a C compiler (tree-sitter's grammars are C), and the Graphviz development files: `libgraphviz-dev` on Debian and Ubuntu, `graphviz-devel` on Fedora, `graphviz` from Homebrew on macOS. (Or build Graphviz statically, as the releases do: `cargo xtask graphviz`, then build with `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0`; the programs then need no Graphviz at run time.) Then build the workspace:
 
 ```sh
-cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd
+cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
@@ -89,18 +88,15 @@ GitHub readers choose a README language using the links above. Automatic languag
 
 ## Publish to GitHub Pages
 
-`guidedog-pages` publishes a site from our own machine. It builds the project with the installed `guidedog` and sends the whole site to a branch of its own in one Git push. GitHub applies the push only if the branch still has the commit that was read. Then `guidedog-pages` waits until GitHub Pages has deployed that commit. Tokens stay in the system's credential store, and a binding on our machine decides where a profile may publish.
+`guidedog publish pages` publishes through the built-in GitHub Pages plugin. It builds with Guidedog's own engine, guides us through missing setup, and publishes one complete site generation. `guidedog pages` exposes configuration, credentials, recovery and workflow generation. We install no separate publisher executable.
 
 ```sh
-guidedog-pages init --repository=octo/manual --project=docs
-guidedog-pages auth import          # a fine-grained token, read without echo
-guidedog-pages bind                 # review the target, then allow this machine
-guidedog-pages publish
-guidedog-pages setup                # deploy GitHub Pages from the branch
-guidedog-pages watch                # publish again whenever the sources change
+guidedog publish pages --repository=octo/manual --project=docs
+guidedog pages status
+guidedog pages workflow --write
 ```
 
-The same guided flow is part of `guidedog` itself: the GitHub Pages plugin is linked in and adds `guidedog publish pages` (built with Guidedog's own engine) and `guidedog pages workflow`. GitHub Actions is the other route, for publishing after every push. `guidedog publish --publisher=pages` runs the same publisher. See [Publish to GitHub Pages](docs/manual/howto/github-pages.rst) and [Write a plugin](docs/manual/plugins.rst).
+For scripted setup we use `guidedog pages init`, `auth import`, `bind`, and `setup`. GitHub Actions can build and deploy after every push using the generated workflow. See [Publish to GitHub Pages](docs/manual/howto/github-pages.rst).
 
 Build plugins transform source text, complete HTML pages, and static assets through a typed, versioned contract. A plugin is an ordinary Rust crate. We link it into our own `guidedog` with `gd_cli::run_with`, or we run it as a separate program that `guidedog plugin register` pins by SHA-256. A plugin can also add commands to `guidedog` itself, listed by `guidedog --help`. `guidedog publish --timeout=SECONDS` bounds each complete exchange with a publisher (default: 300 seconds); choose a value longer than `--wait`. After an unknown outcome, recover before publishing again.
 
@@ -119,7 +115,7 @@ guidedog dsc build
 
 A catalog's `discussion.toml` sets its lifecycle states, record types, and numbering, and `guidedog dsc config` prints it. The commands come from the discussion plugin, which every `guidedog` links, so nothing else needs to be installed. The Windows ZIP bundles Graphviz DLLs; we keep the whole extracted folder together. Guidedog's own `docs/gds` is one such catalog: we run `guidedog dsc check` in that folder. See [Keep a discussion catalog](docs/manual/howto/discussions.rst).
 
-`graphdog` renders Graphviz DOT to SVG, PNG, or laid-out DOT with the same library Guidedog's diagrams use, as a subset of the `dot` command: `echo 'digraph { a -> b }' | graphdog -Tsvg -o graph.svg`.
+`gd-graphdog` is the library that encapsulates Graphviz. Guidedog uses it to render documentation diagrams in process; it is not a separate CLI.
 
 ## Read and embed
 
@@ -129,7 +125,7 @@ A catalog's `discussion.toml` sets its lifecycle states, record types, and numbe
 - [Templates](docs/manual/templates.rst): customize HTML with Jinja and books with Typst.
 - [GDS](docs/gds/README.md): numbered design records and implementation decisions.
 - [Discussion library](crates/gd-discussion/README.md): the catalogs that `guidedog dsc` keeps.
-- [Plugin library](crates/gd-plugins/README.md): typed build services and the publisher interface used by `guidedog publish` and `guidedog-pages`.
+- [Plugin library](crates/gd-plugins/README.md): typed build services and the publisher interface used by `guidedog publish` and the linked Pages plugin.
 - [Reusable crates](docs/manual/internals/crates.rst): the engine, libraries, API generators, and plugin SDK that other Rust projects can take from crates.io, and how they depend on each other.
 
 Each crate under `crates/` has a short README with its API and its design decisions. Guidedoc owns its document tables and reuses them between conversions, so a conversion in steady state allocates nothing. It returns structured diagnostics with a hint. The host manages files, budgets, caching, publication, and the embedded compilers. `--untrusted` restricts capabilities; it is not a process sandbox or a limit on all native resource use. The beta scope is trusted documentation projects on macOS and Linux.

@@ -17,5 +17,6 @@ Discussion reading order
    records/0009-native-plugin-api
    records/0010-typed-build-plugins
    records/0011-sphinx-builtin-extensions
+   records/0012-single-executable-release
 
 .. gds-generated-end

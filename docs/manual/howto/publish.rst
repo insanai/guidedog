@@ -142,7 +142,7 @@ Once the build succeeds, we deploy the static files to our host:
 
    * To deploy directly from our own machine, we run ``guidedog publish pages``. It
      asks for what is still missing (the repository, a token, the Pages settings), then
-     builds and publishes in one push. ``guidedog-pages`` offers the same steps one by
+     builds and publishes in one push. ``guidedog pages`` offers the same steps one by
      one. See :doc:`github-pages`.
    * For automated deployments with GitHub Actions, ``guidedog pages workflow`` writes a
      workflow that builds and deploys the site. See :doc:`github-pages`.

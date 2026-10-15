@@ -3,14 +3,14 @@ Publish to GitHub Pages
 
 We can publish a Guidedog site to GitHub Pages in one of two ways. GitHub Actions can build
 and deploy it on each push, with released Guidedog and GitHub's official Pages
-actions, and no personal token. Or ``guidedog-pages`` can publish it from our own
+actions, and no personal token. Or ``guidedog publish pages`` can publish it from our own
 machine, whenever we ask or whenever the sources change. We use one route per site, because a
 repository has one Pages source: GitHub Actions or a branch.
 
 .. graphviz::
    :class: graphviz-adaptive
    :caption: The two routes for publishing documentation to GitHub Pages.
-   :alt: Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog-pages publisher with a durable journal.
+   :alt: Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog publish pageser with a durable journal.
 
    digraph pages_routes {
      graph [rankdir=TB, bgcolor="transparent", pad="0.22", nodesep="0.3", ranksep="0.35"];
@@ -48,9 +48,9 @@ From the repository that holds our documentation, we run:
 
 .. code-block:: sh
 
-   guidedog-pages publish
+   guidedog publish pages
 
-(``guidedog publish pages`` does the same; see `Through guidedog publish`_.) On a machine that has never published, it does each missing step once and says what it
+On a machine that has never published, it does each missing step once and says what it
 does. It asks before anything that changes GitHub or this machine's permissions:
 
 1. **Configuration.** Without ``pages.toml`` it reads the repository from
@@ -80,13 +80,12 @@ In a script, or with ``--yes``, it never asks. ``--yes`` answers the confirmatio
 (repository, authorization, Pages source) with yes. It still never signs in and never
 replaces others' work. A step that needs us fails with ``pages.guide`` and a hint that
 names the flag or the step command, such as ``--repository=octo/manual`` or
-``guidedog-pages auth login``.
+``guidedog pages auth login``.
 
 Publish from this machine, step by step
 ---------------------------------------
 
-The step commands stay for scripts and for checking each part. ``guidedog-pages``
-builds the project with the installed ``guidedog``. It pushes the whole site to a
+The step commands stay for scripts and for checking each part. The linked Pages plugin builds the project with Guidedog. It pushes the whole site to a
 branch of its own in one Git commit.
 
 We write ``pages.toml`` beside our project. It names the repository, the branch, and the
@@ -94,7 +93,7 @@ credential profile. It holds no secret, so we can commit it:
 
 .. code-block:: sh
 
-   guidedog-pages init --repository=octo/manual --project=docs
+   guidedog pages init --repository=octo/manual --project=docs
 
 Next we store a token for the profile. We make a fine-grained personal access token for the
 repository with **Contents: read and write**, and **Pages: read** so that publication
@@ -104,20 +103,20 @@ goes to a file:
 
 .. code-block:: sh
 
-   guidedog-pages auth import --profile=default
-   guidedog-pages auth status
+   guidedog pages auth import --profile=default
+   guidedog pages auth status
 
 ``auth login`` signs in with a code instead, for a GitHub App or OAuth App we
 registered with the device flow enabled:
-``guidedog-pages auth login --client-id=YOUR_APP_ID``.
+``guidedog pages auth login --client-id=YOUR_APP_ID``.
 
 We authorize the target, point Pages at the branch, and check that everything is ready:
 
 .. code-block:: sh
 
-   guidedog-pages bind
-   guidedog-pages setup
-   guidedog-pages doctor
+   guidedog pages bind
+   guidedog pages setup
+   guidedog pages doctor
 
 ``bind`` refuses a branch that holds work Guidedog did not publish. ``--adopt`` lets the
 next publication replace it. The branch must not be the repository's default branch.
@@ -127,8 +126,8 @@ account's token.
 
 .. code-block:: sh
 
-   guidedog-pages publish --dry-run
-   guidedog-pages publish
+   guidedog publish pages --dry-run
+   guidedog publish pages
 
 ``publish`` builds with warnings as errors (``strict = true``) and ``html_baseurl`` set to
 ``site_url``. It lists what it adds, changes, and removes. Then it sends one push that holds
@@ -146,7 +145,7 @@ The exit status says what happened:
 * 7: it is not known whether the branch moved.
 
 We check later with
-``guidedog-pages status``. ``guidedog-pages recover`` settles a publication whose answer
+``guidedog pages status``. ``guidedog pages recover`` settles a publication whose answer
 was lost, and it never moves the branch back.
 
 To publish a site we build ourselves, we write ``site = "build/site"`` instead of
@@ -155,11 +154,11 @@ To publish a site we build ourselves, we write ``site = "build/site"`` instead o
 Publish on every change, with a preview
 ---------------------------------------
 
-``guidedog-pages watch`` publishes once, then again whenever the sources change and
+``guidedog pages watch`` publishes once, then again whenever the sources change and
 have been quiet for ``debounce_ms`` (at most ``max_wait_ms`` after the first change). A
 failed build or publication is reported, and the published site stays as it was.
 
-``guidedog-pages watch --serve`` also serves the built site on this machine, at
+``guidedog pages watch --serve`` also serves the built site on this machine, at
 ``http://127.0.0.1:8000/`` (``--serve=PORT`` for another port). We see each build
 before GitHub Pages deploys it. One Ctrl+C stops both the watch and the preview.
 
@@ -175,7 +174,8 @@ A scheduler can keep it running. On macOS, a launch agent in
      <key>Label</key><string>org.example.docs</string>
      <key>ProgramArguments</key>
      <array>
-       <string>/opt/homebrew/bin/guidedog-pages</string>
+       <string>/opt/homebrew/bin/guidedog</string>
+       <string>pages</string>
        <string>watch</string>
      </array>
      <key>WorkingDirectory</key><string>/Users/me/src/manual</string>
@@ -197,7 +197,7 @@ only by our own account:
 
    [Service]
    WorkingDirectory=%h/src/manual
-   ExecStart=/usr/local/bin/guidedog-pages watch
+   ExecStart=/usr/local/bin/guidedog pages watch
    Restart=on-failure
 
    [Install]
@@ -207,7 +207,7 @@ On Windows, a scheduled task at logon, so that the Credential Manager is availab
 
 .. code-block:: powershell
 
-   $action = New-ScheduledTaskAction -Execute "guidedog-pages.exe" -Argument "watch" `
+   $action = New-ScheduledTaskAction -Execute "guidedog.exe" -Argument "pages watch" `
        -WorkingDirectory "C:\src\manual"
    Register-ScheduledTask -TaskName "Publish manual" -Action $action `
        -Trigger (New-ScheduledTaskTrigger -AtLogOn)
@@ -219,7 +219,7 @@ We generate the workflow instead of copying it:
 
 .. code-block:: sh
 
-   guidedog-pages workflow --write
+   guidedog pages workflow --write
    git add .github/workflows/docs-pages.yml
 
 It writes ``.github/workflows/docs-pages.yml`` for a project in ``docs`` and a source
@@ -329,13 +329,13 @@ Check an existing workflow
 
 .. code-block:: sh
 
-   guidedog-pages workflow --check
+   guidedog pages workflow --check
 
 It reports an older Guidedog release (``pages.workflow-outdated``), a missing or
 placeholder checksum, an action pinned to a tag or to another commit than the reviewed
 one (``pages.workflow-unpinned``, ``pages.workflow-pin``), ``pull_request_target``, and a
 checkout that keeps its credentials, each with its line and the fix. We update with
-``guidedog-pages workflow --write --force``. Action updates are a separate review: the
+``guidedog pages workflow --write --force``. Action updates are a separate review: the
 pinned commits are listed in ``gd-pages`` and change only with a reviewed release.
 
 If the project selects build plugins, we install and register their trusted executables
@@ -359,16 +359,14 @@ the stored token. We revoke it at GitHub too.
 Through guidedog publish
 ------------------------
 
-The GitHub Pages plugin is linked into ``guidedog``, and it adds two commands to it:
+The Pages plugin is linked into ``guidedog``. ``guidedog publish pages`` guides the publication and builds the project with the host's own engine. ``guidedog pages init``, ``auth``, ``bind``, ``setup``, ``doctor``, ``watch``, ``status``, ``recover`` and ``workflow`` expose individual steps for scripts and maintenance.
 
 .. code-block:: sh
 
-   guidedog publish pages            # the guided publish above
-   guidedog pages workflow --write   # the workflow of the GitHub Actions route
+   guidedog publish pages --help
+   guidedog pages workflow --help
 
-``guidedog publish pages`` runs the same guided publish as ``guidedog-pages publish``, with the same options, but guidedog builds the project itself, with its own engine and linked plugins, instead of starting an installed ``guidedog``. ``guidedog pages workflow`` is ``guidedog-pages workflow``. ``guidedog publish pages --help`` and ``guidedog pages workflow --help`` list their options.
-
-A custom ``guidedog`` built without the plugin can still have both commands: we register the ``guidedog-pages`` program (``guidedog plugin register pages /usr/local/bin/guidedog-pages``), and guidedog runs it for them on our terminal. ``guidedog-pages`` is also the publisher program for ``guidedog publish --publisher=pages`` (see :doc:`../plugins`).
+No separate publisher program or registration step is needed.
 
 Troubleshooting
 ---------------
@@ -382,14 +380,14 @@ Every problem names its code and what to do. The common ones:
    * - Code
      - What to do
    * - ``pages.unbound``
-     - Run ``guidedog-pages bind``: this machine has not been allowed to publish there.
+     - Run ``guidedog pages bind``: this machine has not been allowed to publish there.
    * - ``pages.no-token``, ``pages.credential``
      - Store a token with ``auth import`` or ``auth login``; GitHub refused or expired it.
    * - ``pages.permission``
      - Give the token Contents: read and write for the repository, or approve it for
        the organization's single sign-on.
    * - ``pages.source``, ``pages.no-site``
-     - Run ``guidedog-pages setup``, or change the Pages source in the settings.
+     - Run ``guidedog pages setup``, or change the Pages source in the settings.
    * - ``pages.conflict``
      - Another publication moved the branch first; run the command again.
    * - ``pages.ruleset``
@@ -398,7 +396,7 @@ Every problem names its code and what to do. The common ones:
      - A step needs our answer and the run may not ask; run it in a terminal, or do
        the step the hint names.
    * - ``pages.unsettled``
-     - Run ``guidedog-pages recover``.
+     - Run ``guidedog pages recover``.
    * - ``pages.deployment``
      - The branch holds the site, but the Pages build failed; see the repository's
        Actions tab.

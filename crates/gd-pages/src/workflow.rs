@@ -197,7 +197,7 @@ pub fn check_workflow(path: &str, text: &str, o: &WorkflowOptions) -> Vec<Proble
                     &at(line_no),
                     "GUIDEDOG_SHA256 is not a SHA-256, so the build cannot \
                     install Guidedog.",
-                    "Run guidedog-pages workflow --write --force, or \
+                    "Run guidedog pages workflow --write --force, or \
                     pass --sha256 with the checksum from the release's SHA256SUMS.",
                 ));
             }
@@ -238,7 +238,7 @@ fn check_version(path: &str, version: Option<(usize, String)>, current: &str) ->
             "No Guidedog version",
             path,
             "The workflow sets no GUIDEDOG_VERSION, so it does not install a pinned Guidedog.",
-            "Generate it again with guidedog-pages workflow --write --force.",
+            "Generate it again with guidedog pages workflow --write --force.",
         )];
     };
     if version_key(&version) >= version_key(current) {
@@ -253,7 +253,7 @@ fn check_version(path: &str, version: Option<(usize, String)>, current: &str) ->
         {current}."
         ),
         &format!(
-            "Run guidedog-pages workflow --write --force to update it to \
+            "Run guidedog pages workflow --write --force to update it to \
         {current} with its verified checksum."
         ),
     )]
@@ -289,7 +289,7 @@ fn check_pin(at: &str, uses: &str) -> Option<Problem> {
         "An action is pinned to another commit",
         at,
         &format!(
-            "{action} is pinned to {commit} ({}); this guidedog-pages was reviewed with \
+            "{action} is pinned to {commit} ({}); this guidedog pages was reviewed with \
         {} ({}).",
             comment.trim(),
             pin.commit,
@@ -297,7 +297,7 @@ fn check_pin(at: &str, uses: &str) -> Option<Problem> {
         ),
         &format!(
             "Review the change, \
-        then pin it{}, or regenerate with guidedog-pages workflow --write --force.",
+        then pin it{}, or regenerate with guidedog pages workflow --write --force.",
             known_pin(action)
         ),
     ))

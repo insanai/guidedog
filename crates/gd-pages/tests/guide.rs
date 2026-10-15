@@ -162,7 +162,7 @@ fn runs_that_may_not_ask_name_the_missing_step() {
     let o = GuideOptions { repository: "octo/site".into(), ..o };
     let p = publish_guided(&o, &mut Silent).unwrap_err();
     assert_eq!((p.code.as_str(), p.path.as_str()), ("pages.guide", "bind"));
-    assert!(p.hint.contains("guidedog-pages bind") && p.hint.contains("--yes"), "{}", p.hint);
+    assert!(p.hint.contains("guidedog pages bind") && p.hint.contains("--yes"), "{}", p.hint);
     let stored = gd_pages::Settings {
         credential: Credential::Stored,
         store: CredentialStore { service: "guidedog-pages-guide-test".into() },

@@ -157,7 +157,7 @@ impl Session {
                         j.candidate, p.message
                     ),
                     &format!(
-                        "Check free disk space and permissions, then run guidedog-pages \
+                        "Check free disk space and permissions, then run guidedog pages \
                         recover --config={}. Do not publish it again first.",
                         self.config.shown_path()
                     ),
@@ -214,7 +214,7 @@ impl Session {
             &self.config.branch,
             &format!("{} GitHub could not be asked again.", lost.message),
             &format!(
-                "Run guidedog-pages recover --config={} once GitHub can be reached.",
+                "Run guidedog pages recover --config={} once GitHub can be reached.",
                 self.config.shown_path()
             ),
         )
@@ -265,7 +265,7 @@ impl Session {
             "The deployment is not confirmed yet",
             &c.site_url,
             "GitHub accepted the publication; GitHub Pages has not reported its deployment yet.",
-            &format!("Run guidedog-pages status --config={} later.", c.shown_path()),
+            &format!("Run guidedog pages status --config={} later.", c.shown_path()),
         )
         .exit(EXIT_ACCEPTED));
         r
@@ -375,7 +375,7 @@ fn no_site(c: &Config) -> Problem {
             c.branch
         ),
         &format!(
-            "Run guidedog-pages setup --config={}, or choose Deploy from a branch, {}, / \
+            "Run guidedog pages setup --config={}, or choose Deploy from a branch, {}, / \
             (root) in the repository's Settings, Pages.",
             c.shown_path(),
             c.branch

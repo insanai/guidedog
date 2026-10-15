@@ -183,7 +183,7 @@ impl Guide<'_> {
                 needs_person(
                     "project",
                     "No Guidedog project (a folder with conf.toml) was found here or above.",
-                    "Pass --project=DIR, or write pages.toml with guidedog-pages init \
+                    "Pass --project=DIR, or write pages.toml with guidedog pages init \
                      --site=DIR to publish a site you build yourself.",
                 )
             })?,
@@ -255,7 +255,7 @@ impl Guide<'_> {
                     you."
                 ),
                 &format!(
-                    "Run guidedog-pages auth login --profile={profile} (or auth import), or \
+                    "Run guidedog pages auth login --profile={profile} (or auth import), or \
                     give a token with GUIDEDOG_PAGES_TOKEN and --credential=env."
                 ),
             ));
@@ -271,7 +271,7 @@ impl Guide<'_> {
             choices.push("Use the GitHub CLI's token for this run only (nothing is stored)");
         }
         let choice = (!choices.is_empty())
-            .then(|| self.prompt.choose("How should guidedog-pages reach GitHub?", &choices))
+            .then(|| self.prompt.choose("How should guidedog pages reach GitHub?", &choices))
             .flatten();
         match (choice.map(|i| choices[i]), gh) {
             (Some(c), Some(token)) if c.starts_with("Use the GitHub CLI") => {
@@ -284,7 +284,7 @@ impl Guide<'_> {
                 "sign in",
                 &format!("No token is stored for the profile {profile}."),
                 &format!(
-                    "Store one with guidedog-pages auth import --profile={profile}, or \
+                    "Store one with guidedog pages auth import --profile={profile}, or \
                     auth login --client-id=ID with a GitHub App you registered."
                 ),
             )),
@@ -334,7 +334,7 @@ impl Guide<'_> {
             "bind",
             "Let this machine publish there with this account?",
             &format!(
-                "Run guidedog-pages bind --config={shown} --yes after checking the target, \
+                "Run guidedog pages bind --config={shown} --yes after checking the target, \
                 or pass --yes."
             ),
         )?;
@@ -374,7 +374,7 @@ impl Guide<'_> {
             "setup",
             &setup_question(config),
             &format!(
-                "Run guidedog-pages setup --config={} --yes, or pass --yes.",
+                "Run guidedog pages setup --config={} --yes, or pass --yes.",
                 config.shown_path()
             ),
         )?;

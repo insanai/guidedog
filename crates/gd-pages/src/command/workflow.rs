@@ -114,7 +114,7 @@ fn write(ctx: &Context<'_>, path: &Path, text: &str) -> Result<(), Problem> {
             "The workflow exists",
             &shown,
             "A different workflow is there already.",
-            "Check it with guidedog-pages workflow \
+            "Check it with guidedog pages workflow \
             --check, or add --force to replace it.",
         )
         .exit(2));
@@ -131,7 +131,7 @@ fn check(console: &mut Console<'_>, path: &Path, options: &WorkflowOptions) -> i
         Ok(text) => text,
         Err(e) => {
             let mut p = io_problem(&shown, &e);
-            p.hint = "Write one with guidedog-pages workflow --write.".to_string();
+            p.hint = "Write one with guidedog pages workflow --write.".to_string();
             return console.report(&p);
         }
     };

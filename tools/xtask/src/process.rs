@@ -2,7 +2,7 @@
 //! output, and turning a failure into a report that says what to do.
 
 use std::fs::File;
-use std::io::{self, Write};
+use std::io;
 use std::path::Path;
 use std::process::{Command, ExitStatus, Stdio};
 
@@ -55,24 +55,6 @@ pub(crate) struct Captured {
 /// cannot start.
 pub(crate) fn capture(command: &mut Command) -> Result<Captured> {
     let out = command.output().map_err(|err| spawn_failure(command, &err))?;
-    Ok(Captured {
-        success: out.status.success(),
-        stdout: String::from_utf8_lossy(&out.stdout).into_owned(),
-        stderr: String::from_utf8_lossy(&out.stderr).into_owned(),
-    })
-}
-
-/// Runs a command with `input` as its standard input and returns its standard output,
-/// whatever its exit status, with whether it succeeded.
-pub(crate) fn feed(command: &mut Command, input: &[u8]) -> Result<Captured> {
-    command.stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::piped());
-    let mut child = command.spawn().map_err(|err| spawn_failure(command, &err))?;
-    if let Some(mut stdin) = child.stdin.take() {
-        // A program that exits without reading its input closes the pipe; its status
-        // tells what happened, so a failed write is not an error of its own.
-        let _ = stdin.write_all(input);
-    }
-    let out = child.wait_with_output().map_err(|err| spawn_failure(command, &err))?;
     Ok(Captured {
         success: out.status.success(),
         stdout: String::from_utf8_lossy(&out.stdout).into_owned(),

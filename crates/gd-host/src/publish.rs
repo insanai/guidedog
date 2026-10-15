@@ -172,7 +172,11 @@ pub(crate) fn sync_path(path: &Path) -> io::Result<()> {
     if info.file_type().is_symlink() || (cfg!(windows) && info.is_dir()) {
         return Ok(());
     }
-    File::open(path)?.sync_all()
+    #[cfg(windows)]
+    let file = OpenOptions::new().read(true).write(true).open(path)?;
+    #[cfg(not(windows))]
+    let file = File::open(path)?;
+    file.sync_all()
 }
 
 /// Whether an error says nothing is at a path: it does not exist, or a folder on the way

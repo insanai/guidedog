@@ -210,7 +210,7 @@ pub(crate) fn missing_token(profile: &str) -> Problem {
         profile,
         &format!("The profile {profile} has no token in {STORE_NAME}."),
         &format!(
-            "Run guidedog-pages auth login --profile={profile}, or guidedog-pages auth import \
+            "Run guidedog pages auth login --profile={profile}, or guidedog pages auth import \
              --profile={profile} to store one."
         ),
     )

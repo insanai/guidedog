@@ -19,7 +19,7 @@ Running the tests
    cargo test -p guidedog-tests --test projects  # one end-to-end group
 
 The end-to-end tests run the programs cargo built into ``target/<profile>/``
-(``guidedog``, ``graphdog``, ``guidedog-pages``, and the plugin examples). ``cargo test --workspace``
+(``guidedog`` and the plugin examples). ``cargo test --workspace``
 builds them. To run only ``guidedog-tests``, run ``cargo build --workspace`` first. A
 test that finds a program missing says so instead of failing obscurely. Every test
 works in a private temporary folder and sets ``GUIDEDOG_CONFIG_DIR`` and ``NO_COLOR``,

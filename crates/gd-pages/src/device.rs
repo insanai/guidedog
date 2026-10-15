@@ -48,7 +48,7 @@ pub fn start_device(c: &Client, client_id: &str, scope: &str) -> Result<DeviceCo
             "Device login needs the client ID of a GitHub App or OAuth App with the device \
              flow enabled, and this build was made without one.",
             "Pass --client-id=ID of an app you registered, or store a token with \
-             guidedog-pages auth import.",
+             guidedog pages auth import.",
         )
         .exit(2));
     }

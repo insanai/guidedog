@@ -1,4 +1,4 @@
-//! `guidedog-pages --help`.
+//! `guidedog pages --help`.
 
 use super::VERSION;
 use crate::GUIDEDOG_VARIABLE;
@@ -7,9 +7,9 @@ use crate::credential::TOKEN_VARIABLE;
 /// The help text.
 pub(crate) fn text() -> String {
     format!(
-        "guidedog-pages {VERSION} - publish Guidedog sites to GitHub Pages from this machine
+        "guidedog pages {VERSION} - publish Guidedog sites to GitHub Pages from this machine
 
-Usage: guidedog-pages COMMAND [options]
+Usage: guidedog pages COMMAND [options]
 
 Publishing
   publish                                     do whatever is missing, then publish: writes

@@ -16,7 +16,7 @@ use crate::fsutil::{copy, create_dir, write};
 use crate::{Result, process, repository_root};
 
 const HELP: &str = "\
-Builds guidedog, guidedog-pages and graphdog the way the release workflow
+Builds Guidedog with its linked libraries and plugins the way the release workflow
 does (cargo build --release --locked) and copies them into build/.
 
 Usage: cargo xtask release build [--target TRIPLE] [--dry-run]

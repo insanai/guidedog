@@ -11,7 +11,7 @@ existing projects build as before.
 - **Plugins in Rust.** Publisher interface 1.1, build-plugin interface 1.0 and both
   process protocols 1.0 are kept. Plugins are Rust crates: register them as programs, or
   link them into your own `guidedog` with `gd_cli::run_with`.
-- **`graphdog`** joins the archive: a `dot`-compatible DOT renderer with clear errors.
+- **One executable.** `guidedog dsc` manages discussions. The linked Pages plugin adds `guidedog publish pages` and `guidedog pages` maintenance commands. The `gd-graphdog` library encapsulates Graphviz; it is not a separate CLI.
 
 This remains a beta for trusted documentation projects; installed plugins are separate
 native processes, not an operating-system sandbox.
@@ -31,7 +31,7 @@ See the [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.1/CHANG
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 
-Each `guidedog` archive holds one folder with `guidedog`, `guidedog-pages`, and `graphdog`, `README.md`, `LICENSE`, `NOTICE`, `CHANGELOG.md`, `SOURCE.txt` (the commit, the Rust toolchain, and the exact build command), and `guidedog.build.json` (the version, target, toolchain, and the programs' checksums).
+Each `guidedog` archive holds one folder with `guidedog`, `README.md`, `LICENSE`, `NOTICE`, `CHANGELOG.md`, `SOURCE.txt` (the commit, the Rust toolchain, and the exact build command), and `guidedog.build.json` (the version, target, toolchain, and the programs' checksums).
 
 ## Verify
 
@@ -50,7 +50,7 @@ gh attestation verify guidedog-linux-amd64.tar.gz --repo insanai/guidedog
 
 ## Install
 
-With Homebrew, on macOS or Linux, install from the official tap. It installs `guidedog`, `guidedog-pages`, and `graphdog`:
+With Homebrew, on macOS or Linux, install from the official tap. It installs `guidedog`:
 
 ```sh
 brew tap insanai/guidedog
@@ -61,8 +61,7 @@ Or unpack the archive and put the programs on your `PATH`:
 
 ```sh
 tar -xzf guidedog-macos-arm64.tar.gz
-sudo install guidedog-macos-arm64/guidedog \
-    guidedog-macos-arm64/guidedog-pages guidedog-macos-arm64/graphdog /usr/local/bin/
+sudo install guidedog-macos-arm64/guidedog /usr/local/bin/
 guidedog --version
 ```
 
@@ -70,13 +69,13 @@ guidedog --version
 
 - The programs are not code-signed. On macOS, a file downloaded with a browser is quarantined; run `xattr -d com.apple.quarantine guidedog` once for each program, or download with `curl`.
 - Graphviz 16.1.0 is linked statically, with the dot and neato layout families and SVG and DOT output (no PNG). Its licence and Expat's are in the archive (`COPYING-graphviz`, `COPYING-expat`), and `SOURCE.txt` names their source tarballs.
-- Linux builds link the system's glibc. HTTP and HTTPS are built in; no system `curl` program is needed. `guidedog-pages` stores tokens through the Secret Service (`secret-tool` from libsecret-tools) when a desktop session offers one; without one, give a token to a single command with `GUIDEDOG_PAGES_TOKEN` and `--credential=env`.
+- Linux builds link the system's glibc. HTTP and HTTPS are built in; no system `curl` program is needed. The Pages plugin stores tokens through the Secret Service (`secret-tool` from libsecret-tools) when a desktop session offers one; without one, give a token to a single command with `GUIDEDOG_PAGES_TOKEN` and `--credential=env`.
 - Windows x86-64 bundles the official Graphviz 16.1.0 runtime beside the executables. Keep the whole extracted folder together.
 - PDF books use Typst's embedded fonts and the system's fonts. Books in Chinese, Japanese, Korean, or Hindi need fonts for those scripts installed.
 
 ## License
 
-Guidedog, `guidedog-pages`, and `graphdog` are released under the GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later), with an additional permission to link and distribute them with Graphviz; see `LICENSE`, `COPYING` and `NOTICE`. For other licensing terms, contact the authors.
+Guidedog is released under the GNU Lesser General Public License v3.0 or later (LGPL-3.0-or-later), with an additional permission to link and distribute them with Graphviz; see `LICENSE`, `COPYING` and `NOTICE`. For other licensing terms, contact the authors.
 
 ## Credits
 

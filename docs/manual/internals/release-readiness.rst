@@ -1,7 +1,7 @@
 Readiness for 1.0.0 beta
 ========================
 
-This page records what we checked before calling Guidedog a 1.0.0 beta, what we measured, and what is still open. It describes the state of 15 October 2026, at version 0.7.0.
+This page records what we checked before calling Guidedog a 1.0.0 beta, what we measured, and what is still open. It describes the state of 15 October 2026, at version 1.0.0-beta.1.
 
 What a beta promises
 --------------------
@@ -36,7 +36,7 @@ What we verified
    * - Real projects
      - We built the manuals of CPython, Django and Flask as HTML and PDF (:doc:`../evidence/manuals`). The runs found one defect, which we fixed: a build kept only 256 diagnostics of one document, and CPython's ``os.rst`` has 272.
    * - Release programs
-     - ``cargo xtask release smoke``, ``smoke-discussion``, ``smoke-graphdog`` and ``smoke-pages`` passed with a minimal environment.
+     - ``cargo xtask release smoke``, ``smoke-discussion`` and ``smoke-pages`` passed with a minimal environment.
    * - Documentation
      - The manual, the GDS catalog, the site and the Rust API build with ``-W`` and no warnings. ``cargo xtask build-site`` builds the site in 7 languages with its PDF books.
    * - Packages
@@ -65,7 +65,7 @@ Work not yet done
 #. **Large books.** The CPython book did not fit a machine with 12 GB of memory: Typst lays out the whole book in one compilation. CPython splits its PDF into about 40 books, which ``conf.py`` computes; declared as ``pdf_documents``, each is much smaller. Guidedog now empties Typst's cache after every book.
 #. **Unchanged builds.** An unchanged build of CPython's manual takes 0.92 s and 170 MB, close to the 1.24 s of a clean build. Most of that time is checking and loading what the last build stored. We should profile it.
 #. **Other platforms.** We checked that Windows and macOS compile. We did not run the tests or the release programs there.
-#. **Credential store.** The store of ``guidedog-pages`` was not tried against a real keyring. ``cargo xtask release credential-store`` runs it against a private Secret Service, which this machine lacks.
+#. **Credential store.** The store of ``guidedog pages`` was not tried against a real keyring. ``cargo xtask release credential-store`` runs it against a private Secret Service, which this machine lacks.
 #. **Translations.** The six translations were made by machine with a glossary. A native speaker of each language should read them before we call them final.
 
 Known limits

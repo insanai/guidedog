@@ -3,7 +3,7 @@
 Publishes a complete Guidedog site to GitHub Pages from a local machine (GDS 0008): one
 Git push to a branch of its own, conditioned on the branch still holding the commit that
 was read, then a wait until Pages deployed exactly that commit. It is the `pages`
-publisher of `gd-plugins` and powers `guidedog-pages` (`cmd/guidedog-pages`). It links
+publisher of `gd-plugins` and adds `guidedog publish pages` and `guidedog pages` to the host. It links
 the publisher SDK, Git objects (`gd-git`) and HTTP (`gd-fetch`), never the engine.
 Guide: `docs/manual/howto/github-pages.rst`.
 
@@ -32,7 +32,7 @@ let plugin = gd_pages::plugin_with(settings);
 | Guided publish | `publish_guided(&GuideOptions, &mut dyn Prompt)`, `Prompt` (`show`, `confirm`, `choose`), `GuideOptions`, `plan_lines`; inference: `parse_github_remote`, `origin_url`, `find_project`, `gh_token` |
 | Actions workflow | `render_workflow(&WorkflowOptions)`, `check_workflow`, `release_sha256`, `is_safe_workflow_name`, `ACTION_PINS` (reviewed commits), `WORKFLOW_PATH`, `SHA256_PLACEHOLDER` |
 | Building | `freeze_site(settings, config, dry_run, &mut build)`, `build_with_guidedog`, `guidedog_program`, `guidedog_version`, `GUIDEDOG_VARIABLE`; `Prompt::build` (default: start `guidedog`) |
-| guidedog commands | `Pages` adds `publish pages` and `pages workflow` to guidedog (`commands`, `run_command`; `command/extension.rs`), linked into `guidedog` or served by `guidedog-pages --guidedog-command` |
+| guidedog commands | `Pages` adds `publish pages` and `pages workflow` to guidedog (`commands`, `run_command`; `command/extension.rs`), linked into `guidedog` through the host command context |
 | Command line | `command::{run, run_with, Program}` (`publish` is guided; `watch --serve[=PORT]` previews with `gd-serve`; `workflow [--write] [--check]`) |
 
 Exit statuses: 0 live or unchanged, 1 failed (nothing published), 2 usage or
@@ -101,6 +101,4 @@ unknown (run `recover`), 130 cancelled.
 - **Reports** use `gd-report` (Elm style, `Hint:`), text or JSON lines.
 - **Ownership, not arenas**: values are released on drop, and Rust aborts on allocation
   failure, so there are no memory-refusal checks.
-- **Not wired yet:** `gd-host`'s crash reporter in `guidedog-pages` (gd-host is now
-  linked for the preview, so it could be). Tokens never appear on a command line: `gd-fetch`
-  sends HTTP in-process.
+- **Host integration:** the linked plugin uses Guidedog's command context and crash reporter. Tokens never appear on a command line; `gd-fetch` sends HTTP in process.

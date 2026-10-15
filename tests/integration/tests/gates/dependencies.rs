@@ -69,8 +69,6 @@ const LAYERS: &[(&str, u8)] = &[
     ("gd-cli", 5),
     // 6: programs, examples, tools and tests.
     ("guidedog-cmd", 6),
-    ("graphdog-cmd", 6),
-    ("guidedog-pages-cmd", 6),
     ("guidedoc-examples", 6),
     ("guidedog-tests", 6),
     ("check", 6),

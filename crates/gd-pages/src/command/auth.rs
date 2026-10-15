@@ -94,7 +94,7 @@ fn status(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
                     "No such profile",
                     profile,
                     &format!("The profile {profile} has no token on this machine."),
-                    &format!("Run guidedog-pages auth login --profile={profile}."),
+                    &format!("Run guidedog pages auth login --profile={profile}."),
                 )
                 .exit(2),
             );

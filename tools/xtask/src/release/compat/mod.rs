@@ -103,20 +103,39 @@ pub(super) fn main(args: &[String]) -> Result<()> {
     verdict(&record)
 }
 
-/// Builds guidedog, guidedog-pages and the gd-plugins examples (debug), and finds them.
+/// Builds guidedog and the protocol compatibility examples (debug), and finds them.
 fn build_new_programs() -> Result<NewPrograms> {
     let root = repository_root();
     let mut cargo = Command::new("cargo");
     cargo.current_dir(&root).args(["build", "--locked", "-p", "guidedog-cmd"]);
-    cargo.args(["-p", "guidedog-pages-cmd", "-p", "gd-plugins"]);
-    cargo.args(["--example", "publisher", "--example", "build_plugin"]);
-    println!("{}", process::describe(&cargo));
     process::run(&mut cargo)?;
+    let mut examples = Command::new("cargo");
+    examples.current_dir(&root).args([
+        "build",
+        "--locked",
+        "-p",
+        "gd-plugins",
+        "--example",
+        "publisher",
+        "--example",
+        "build_plugin",
+    ]);
+    process::run(&mut examples)?;
+    let mut pages = Command::new("cargo");
+    pages.current_dir(&root).args([
+        "build",
+        "--locked",
+        "-p",
+        "gd-pages",
+        "--example",
+        "pages_compat",
+    ]);
+    process::run(&mut pages)?;
     let out = super::build::target_dir(&root).join("debug");
     let exe = std::env::consts::EXE_SUFFIX;
     Ok(NewPrograms {
         host: out.join(format!("guidedog{exe}")),
-        pages: out.join(format!("guidedog-pages{exe}")),
+        pages: out.join(format!("examples/pages_compat{exe}")),
         publisher: out.join(format!("examples/publisher{exe}")),
         build_plugin: out.join(format!("examples/build_plugin{exe}")),
     })

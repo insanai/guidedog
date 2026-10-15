@@ -106,12 +106,12 @@ pub fn read_config(path: &Path) -> Result<Config, Problem> {
             "Cannot read the configuration",
             &path.display().to_string(),
             &e.to_string(),
-            "Write one with guidedog-pages init, or name it with --config.",
+            "Write one with guidedog pages init, or name it with --config.",
         )
         .exit(2)
     })?;
     if text.len() > MAX_CONFIG_BYTES {
-        let hint = "Keep pages.toml to the settings guidedog-pages init writes.";
+        let hint = "Keep pages.toml to the settings guidedog pages init writes.";
         return Err(config_problem(&shown, 0, "The file is over 64 KiB.", hint));
     }
     let root = gd_toml::parse(&text).map_err(|e| {
@@ -282,7 +282,7 @@ pub fn render_config(
     profile: &str,
 ) -> String {
     let mut out = String::from(
-        "# Where guidedog-pages publishes this documentation. It holds no secret: profile\n\
+        "# Where guidedog pages publishes this documentation. It holds no secret: profile\n\
          # names a token in this machine's credential store.\nschema = 1\n",
     );
     out.push_str(&format!("repository = {}\n", quoted(&format!("{owner}/{repo}"))));
@@ -301,7 +301,7 @@ pub fn render_config(
     out.push_str(&format!(
         "profile = {}\n# The address readers open; canonical links use it.\nsite_url = {}\n\
          # How long publish waits for GitHub Pages to deploy, in seconds.\nwait_seconds = 300\n\
-         \n# guidedog-pages watch publishes once sources are quiet for debounce_ms,\n\
+         \n# guidedog pages watch publishes once sources are quiet for debounce_ms,\n\
          # and at most max_wait_ms after the first change.\n[watch]\ndebounce_ms = 1000\n\
          max_wait_ms = 10000\n",
         quoted(profile),

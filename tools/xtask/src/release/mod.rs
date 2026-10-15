@@ -23,7 +23,7 @@ Usage: cargo xtask release <STEP> [ARGS]
 
 Steps:
   build [--target TRIPLE] [--dry-run]
-                      build guidedog, guidedog-pages and graphdog the way the
+                      build guidedog with its linked plugins the way the
                       release workflow does, into build/
   package PACKAGE     write dist/guidedog-PACKAGE.tar.gz
                       (linux-amd64, linux-arm64, macos-arm64, macos-amd64, windows-amd64)
@@ -40,10 +40,8 @@ Steps:
                       smoke-test guidedog: an HTML site and a PDF book
   smoke-discussion PROGRAM
                       smoke-test guidedog dsc: a discussion catalog, HTML and PDF
-  smoke-graphdog PROGRAM
-                      smoke-test graphdog with its built-in Graphviz
-  smoke-pages PAGES GUIDEDOG
-                      smoke-test guidedog-pages and guidedog publish, offline
+  smoke-pages GUIDEDOG
+                      smoke-test the linked GitHub Pages plugin, offline
   plugin-compatibility [--work DIR]
                       qualify plugin protocol 1.0 against the 0.6.0 release, both ways
 
@@ -52,10 +50,10 @@ GH_TOKEN and GITHUB_REPOSITORY. `cargo xtask release <STEP> --help` explains a s
 ";
 
 /// The programs a release builds, in the order the archives list them.
-pub(crate) const PROGRAMS: [&str; 3] = ["guidedog", "guidedog-pages", "graphdog"];
+pub(crate) const PROGRAMS: [&str; 1] = ["guidedog"];
 
 /// The steps, for "Did you mean" hints.
-const STEPS: [&str; 14] = [
+const STEPS: [&str; 13] = [
     "build",
     "package",
     "source",
@@ -67,7 +65,6 @@ const STEPS: [&str; 14] = [
     "credential-store",
     "smoke",
     "smoke-discussion",
-    "smoke-graphdog",
     "smoke-pages",
     "plugin-compatibility",
 ];
@@ -91,7 +88,6 @@ pub(crate) fn main(args: &[String]) -> Result<()> {
         Some("credential-store") => pages::credential_store_main(rest),
         Some("smoke") => smoke::main(rest),
         Some("smoke-discussion") => smoke::discussion_main(rest),
-        Some("smoke-graphdog") => smoke::graphdog_main(rest),
         Some("smoke-pages") => pages::smoke_main(rest),
         Some("plugin-compatibility") => compat::main(rest),
         Some(other) => {

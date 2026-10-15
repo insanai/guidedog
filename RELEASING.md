@@ -21,22 +21,18 @@ uploaded by hand, and a published release is never changed.
     suite, and the Linux Secret Service check. macOS tests use the Keychain and fail if
     it cannot be reached.
   - `build`: per platform, natively on that platform, `cargo xtask release build` runs
-    `cargo build --release --locked` for `guidedog` (with the embedded Typst compiler),
-    `guidedog-pages`, and `graphdog`. Graphviz 16.1.0 is linked
+    `cargo build --release --locked` for `guidedog`, with the embedded Typst compiler and linked Pages and discussion plugins. Graphviz 16.1.0 is linked
     statically: `cargo xtask graphviz` builds it (cached between runs) and the build
     sets `GUIDEDOG_GRAPHVIZ_STATIC`. The integration tests run again against the release
-    build. `cargo xtask release package` packages `guidedog`, `guidedog-pages`, and
-    `graphdog` together, with their notices, `SOURCE.txt`, and a build manifest
+    build. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices, `SOURCE.txt`, and a build manifest
     (`guidedog.build.json`).
   - `smoke`: each archive, unpacked on a fresh machine of its platform with nothing
     installed, runs quickstart and builds HTML and PDF with an empty
     `PATH`; `guidedog dsc` keeps and builds a discussion catalog
-    (`cargo xtask release smoke-discussion`); `guidedog-pages`
-    registers and stops safely offline (`smoke-pages`); `graphdog` renders a graph
-    (`smoke-graphdog`).
+    (`cargo xtask release smoke-discussion`); the linked Pages plugin initializes and stops safely offline (`smoke-pages`). Graphviz is exercised by the HTML and PDF diagram builds.
   - `source`: the source archive (`git archive` of the tagged commit).
   - `homebrew`: renders `guidedog.rb`, which has no dependencies and
-    installs `guidedog`, `guidedog-pages`, and `graphdog`, then installs and
+    installs `guidedog`, then installs and
     tests it from a local tap.
   - `publish` (tags only): writes `SHA256SUMS`, attests build provenance, creates a draft
     release with `.github/release-notes.md`, uploads every file, and publishes it as a prerelease when the version has a suffix, or as the latest stable release otherwise. It stops if the release is already published.
@@ -65,7 +61,7 @@ their SHA-256. Windows ships a ZIP with the official Graphviz 16.1.0 DLLs and co
 ## Build a release locally
 
 ```sh
-cargo xtask release build                   # build/guidedog, guidedog-pages, graphdog
+cargo xtask release build                   # build/guidedog with libraries and plugins
 cargo xtask release check-version build/guidedog
 cargo xtask release smoke build/guidedog
 cargo xtask release package linux-amd64    # dist/guidedog-linux-amd64.tar.gz
@@ -85,9 +81,8 @@ cargo xtask release plugin-compatibility [--work DIR]
 ```
 
 It downloads the 0.6.0 Linux x86-64 (or Apple silicon) archive and source archive,
-checks each against its pinned SHA-256, and builds this checkout's `guidedog`,
-`guidedog-pages` and the `gd-plugins` publisher and build-plugin examples. The 0.6.0
-`guidedog` then registers, inspects and dry-runs the new `guidedog-pages` and publishes
+checks each against its pinned SHA-256, and builds this checkout's `guidedog`, a test-only Pages process adapter and the `gd-plugins` publisher and build-plugin examples. The 0.6.0
+`guidedog` then registers, inspects and dry-runs the new Pages process adapter and publishes
 with the new folder publisher (dry run, first, unchanged and changed publication); it must
 refuse the build-plugin example cleanly. The new `guidedog` does the same with the 0.6.0
 `guidedog-pages` and the 0.6.0 folder publisher example (built from its source archive when

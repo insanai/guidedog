@@ -1,6 +1,6 @@
 //! A test fixture, not a tool: the pages publisher program pointed at a fake GitHub.
 //!
-//! A released `guidedog-pages` cannot be pointed away from GitHub (its token goes nowhere
+//! The linked Pages plugin cannot be pointed away from GitHub (its token goes nowhere
 //! else), so the process-protocol tests run this program instead. It reads its settings
 //! from the file beside it named like it with `.fixture` appended, which a test writes:
 //! one `key = value` per line for `root` (the fake server), `state`, `cache` (folders),

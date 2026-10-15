@@ -1,4 +1,4 @@
-//! `release smoke`, `release smoke-discussion` and `release smoke-graphdog`: each program
+//! `release smoke`, `release smoke-discussion`: each program
 //! run the way a new user runs it, in a temporary folder, with an empty PATH where the
 //! program must carry what it needs.
 
@@ -30,13 +30,6 @@ Usage: cargo xtask release smoke-discussion PROGRAM
 
 PROGRAM is guidedog. It runs with an empty PATH, so it must link the discussion plugin
 and build with the Typst compiler embedded in it.
-";
-
-const GRAPHDOG_HELP: &str = "\
-Smoke-tests graphdog with its built-in Graphviz: a graph to SVG, and a syntax error
-reported with its location.
-
-Usage: cargo xtask release smoke-graphdog PROGRAM
 ";
 
 /// The variables a program keeps when it runs with an otherwise empty environment, where
@@ -232,35 +225,5 @@ pub(crate) fn smoke_discussion(program: &Path) -> Result<()> {
     check_pdf(&eds.join("_build/pdf/eds-0001-cache-policy-en.pdf"), "discussion")?;
     let name = program.file_name().unwrap_or_default().to_string_lossy();
     println!("discussion smoke test passed: {name} dsc, an HTML site and PDF books");
-    Ok(())
-}
-
-/// Runs `release smoke-graphdog`.
-pub(super) fn graphdog_main(args: &[String]) -> Result<()> {
-    let spec =
-        Spec { command: "release smoke-graphdog", flags: &[], options: &[], help: GRAPHDOG_HELP };
-    let Some(parsed) = args::parse(args, &spec)? else { return Ok(()) };
-    parsed.at_most(1, &spec)?;
-    let program = super::given_path(parsed.positional(0, "the graphdog program", &spec)?);
-    smoke_graphdog(&program)
-}
-
-/// Smoke-tests graphdog: a valid graph renders, a broken one fails.
-pub(crate) fn smoke_graphdog(program: &Path) -> Result<()> {
-    process::run(Command::new(program).arg("--version"))?;
-    let valid = process::feed(
-        Command::new(program).arg("-Tsvg"),
-        b"digraph { source -> html; source -> pdf }\n",
-    )?;
-    if !valid.success || !valid.stdout.contains("<svg") {
-        eprint!("{}", valid.stderr);
-        return Err(smoke_failure("graphdog", "no SVG from a valid graph"));
-    }
-    let broken =
-        process::feed(Command::new(program).arg("-Tsvg"), b"digraph {\n    a -> -> b\n}\n")?;
-    if broken.success {
-        return Err(smoke_failure("graphdog", "a broken graph rendered"));
-    }
-    println!("graphdog smoke test passed");
     Ok(())
 }

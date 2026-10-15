@@ -132,7 +132,7 @@ fn run_renderer(
     mode: RenderMode,
 ) -> Result<usize, Fail> {
     current_document(ws)?;
-    let Workspace { banks, active, main, sources, reports, output, source_map, .. } = ws;
+    let Workspace { banks, active, main, sources, reports, output, source_map, scratch, .. } = ws;
     output.clear();
     source_map.clear();
     let doc = Document::new(&banks[*active], main, sources);
@@ -151,6 +151,7 @@ fn run_renderer(
         policy: request.policy,
         limits: request.limits,
         reports,
+        scratch: Some(scratch),
     };
     let result = (renderer.render)(&mut ctx);
     let written = ctx.out.written();

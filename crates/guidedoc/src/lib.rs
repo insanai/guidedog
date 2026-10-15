@@ -28,10 +28,12 @@ mod dump;
 mod emit;
 mod kinds;
 mod media;
+mod name_map;
 mod nfd;
 mod object;
 mod options;
 mod report;
+mod scratch;
 mod snapshot;
 mod sources;
 mod stack;
@@ -46,7 +48,9 @@ pub use adapter::{
     Conformance, ReadContext, ReadFn, ReadInlineFn, Reader, Registry, RenderContext, RenderFn,
     Renderer, SourceText, validate_registry,
 };
-pub use anchors::{AnchorExtra, AnchorIds, Anchors, build_anchors, id_fold, make_id, write_id};
+pub use anchors::{
+    AnchorExtra, AnchorIds, Anchors, build_anchors, build_anchors_into, id_fold, make_id, write_id,
+};
 pub use anchors_order::contents_scope;
 pub use builder::{BUILDER_OPEN, Builder};
 pub use convert::{
@@ -57,6 +61,7 @@ pub use dump::{dump_to_string, dump_tree};
 pub use emit::{EmitMode, Emitter};
 pub use kinds::{admonition_name, child_allowed, content_model, kind_name};
 pub use media::{MediaKind, media_kind};
+pub use name_map::NameMap;
 pub use nfd::{nfd_first, normalize_nfd, normalize_nfd_into};
 pub use object::{load_object, write_object};
 pub use options::{
@@ -71,6 +76,7 @@ pub use report::{
     CORE_WORK, Diagnostic, Fail, Message, Reports, Severity, arg_int, arg_span, arg_static,
     arg_text, content_error, diagnostic, kept_message,
 };
+pub use scratch::{Scratch, recycle};
 pub use snapshot::{Snapshot, SourceEntry, SourceUse};
 pub use sources::INCLUDE_MISSING;
 pub use stack::{

@@ -19,9 +19,10 @@
 //! A node may have several ids: `anchor_of` returns the primary one, and `anchor_ids`
 //! iterates all of them for renderers that emit the others as aliases.
 
-use std::collections::HashMap;
 use std::fmt::Write as _;
+use std::hash::{BuildHasher, RandomState};
 
+use crate::anchors_order::OrderWork;
 use crate::document::Document;
 use crate::options::{Label, RenderOptions, label};
 use crate::tables::idfold::ID_FOLDS;
@@ -49,7 +50,8 @@ pub struct AnchorExtra {
     pub number: i32,
 }
 
-/// The anchor table of one document. Build it with `build_anchors`.
+/// The anchor table of one document. Build it with `build_anchors`, or rebuild one with
+/// `build_anchors_into` to reuse its storage.
 #[derive(Debug, Clone, Default)]
 pub struct Anchors {
     /// Per node: its first id row, or NONE.
@@ -63,13 +65,22 @@ pub struct Anchors {
     prefix: String,
     /// The bytes the prefix takes before an id.
     pub(crate) prefix_length: usize,
-    /// Every id given: the node that carries it, or NONE.
-    names: HashMap<String, u32>,
+    /// Per id row: the node that carries it, or NONE.
+    carriers: Vec<u32>,
+    /// Every id row, found by its text's hash: an open-addressing table (NONE marks a
+    /// free slot) whose length is a power of two. Unlike a map with `String` keys, it
+    /// keeps its storage when the table is rebuilt.
+    slots: Vec<u32>,
+    hasher: RandomState,
     counter: u64,
     /// Per node: the first id labels give it, until they follow its own.
     pub(crate) labels: Vec<u32>,
     /// Sorted by owner, then in the order the ids were given.
     pub(crate) extras: Vec<AnchorExtra>,
+    /// The ordering's working storage, kept for the next build.
+    pub(crate) work: OrderWork,
+    /// Room for an id being moved.
+    key: String,
 }
 
 /// Who carries a new id: the node itself, the node a label names (after the node's own
@@ -84,16 +95,28 @@ pub(crate) enum Chain {
 /// Builds the anchor table of `doc` with the options' anchor prefix. `headings` gives
 /// ids to headings outside sections (every profile but CommonMark's reference one).
 pub fn build_anchors(doc: Document<'_>, options: &RenderOptions<'_>, headings: bool) -> Anchors {
+    let mut a = Anchors::default();
+    build_anchors_into(&mut a, doc, options, headings);
+    a
+}
+
+/// Rebuilds `a` as the anchor table of `doc`, as `build_anchors` builds one, reusing the
+/// table's storage: a renderer that keeps its table between conversions does not
+/// allocate once the table fits the largest document.
+pub fn build_anchors_into(
+    a: &mut Anchors,
+    doc: Document<'_>,
+    options: &RenderOptions<'_>,
+    headings: bool,
+) {
     let n = doc.node_count();
-    let mut a = Anchors {
-        index: vec![NONE; n],
-        labels: vec![NONE; n],
-        prefix: options.anchor_prefix.to_owned(),
-        ..Anchors::default()
-    };
+    a.clear();
+    a.index.resize(n, NONE);
+    a.labels.resize(n, NONE);
+    a.prefix.push_str(options.anchor_prefix);
     let sphinx = n > 0 && doc.node(ROOT).value == DocumentReading::Sphinx as i32;
     let contents = label(options, Label::Contents);
-    let mut order = crate::anchors_order::Order::new(&mut a, doc, sphinx, headings, contents);
+    let mut order = crate::anchors_order::Order::new(a, doc, sphinx, headings, contents);
     order.parse_order();
     order.transform_order();
     for i in 0..n {
@@ -102,12 +125,27 @@ pub fn build_anchors(doc: Document<'_>, options: &RenderOptions<'_>, headings: b
     if sphinx {
         a.sort_section_ids(doc);
     }
-    // Stable, so each owner's extras keep the order their ids were given in.
-    a.extras.sort_by_key(|e| e.owner);
-    a
+    // Each owner's extras keep the order their ids were given in, which their rows
+    // follow; unstable sorting does not allocate.
+    a.extras.sort_unstable_by_key(|e| (e.owner, e.span));
 }
 
 impl Anchors {
+    /// Empties the table, keeping its storage.
+    fn clear(&mut self) {
+        self.index.clear();
+        self.spans.clear();
+        self.next.clear();
+        self.bytes.clear();
+        self.prefix.clear();
+        self.prefix_length = 0;
+        self.carriers.clear();
+        self.slots.fill(NONE);
+        self.counter = 0;
+        self.labels.clear();
+        self.extras.clear();
+    }
+
     /// Returns the primary id of node `id`, borrowed from the table.
     pub fn anchor_of(&self, id: NodeId) -> Option<&str> {
         match self.index.get(id.index()) {
@@ -143,9 +181,10 @@ impl Anchors {
     /// Returns the node that carries the id `anchor` (with the anchor prefix, as
     /// `anchor_ids` gives it); `None` when no node carries it.
     pub fn node_with_anchor(&self, anchor: &str) -> Option<NodeId> {
-        match self.names.get(anchor) {
-            Some(&node) if node != NONE => Some(NodeId(node)),
-            _ => None,
+        let row = self.find_slot(anchor).1?;
+        match self.carriers[row as usize] {
+            NONE => None,
+            node => Some(NodeId(node)),
         }
     }
 
@@ -218,8 +257,12 @@ impl Anchors {
         if self.register(node, start, Chain::Own).is_some() {
             return;
         }
-        let key = self.bytes.split_off(start);
+        let mut key = std::mem::take(&mut self.key);
+        key.clear();
+        key.push_str(&self.bytes[start..]);
+        self.bytes.truncate(start);
         self.take_label(node, &key);
+        self.key = key;
     }
 
     /// Moves the label id `key` of `node` from its label chain to its own ids.
@@ -258,16 +301,16 @@ impl Anchors {
 
     /// Records the id written from `start`; `None` when it is used already.
     fn register(&mut self, node: NodeId, start: usize, chain: Chain) -> Option<u32> {
-        let key = &self.bytes[start..];
-        if self.names.contains_key(key) {
+        if self.find_slot(&self.bytes[start..]).1.is_some() {
             return None;
         }
         let value = if chain == Chain::Hidden { NONE } else { node.0 };
-        self.names.insert(key.to_owned(), value);
         let span = u32::try_from(self.spans.len()).unwrap_or(NONE);
         let len = u32::try_from(self.bytes.len() - start).unwrap_or(0);
         self.spans.push((u32::try_from(start).unwrap_or(0), len));
         self.next.push(NONE);
+        self.carriers.push(value);
+        self.insert_row(span);
         match chain {
             Chain::Own => {
                 self.index[node.index()] = self.append_span(self.index[node.index()], span)
@@ -278,6 +321,43 @@ impl Anchors {
             Chain::Hidden => {}
         }
         Some(span)
+    }
+
+    /// Finds the slot of the id `key`: the slot and the row there, or the free slot it
+    /// would take and `None`. An empty table has no slot (`usize::MAX`).
+    fn find_slot(&self, key: &str) -> (usize, Option<u32>) {
+        if self.slots.is_empty() {
+            return (usize::MAX, None);
+        }
+        let mask = self.slots.len() - 1;
+        // Truncating the hash is fine: only its low bits pick the slot.
+        let mut at = self.hasher.hash_one(key) as usize & mask;
+        loop {
+            match self.slots[at] {
+                NONE => return (at, None),
+                row if self.span_text(row) == key => return (at, Some(row)),
+                _ => at = (at + 1) & mask,
+            }
+        }
+    }
+
+    /// Adds id row `row` to the slots, growing them to keep at most half used.
+    fn insert_row(&mut self, row: u32) {
+        if self.spans.len() * 2 > self.slots.len() {
+            let size = (self.slots.len() * 2).max(64);
+            self.slots.clear();
+            self.slots.resize(size, NONE);
+            for r in 0..row {
+                self.place_row(r);
+            }
+        }
+        self.place_row(row);
+    }
+
+    /// Puts `row` in the free slot its text hashes to.
+    fn place_row(&mut self, row: u32) {
+        let (at, _) = self.find_slot(self.span_text(row));
+        self.slots[at] = row;
     }
 
     /// Appends `span` to the chain starting at `head` and returns the chain's head.

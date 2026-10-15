@@ -106,6 +106,25 @@ A renderer's `render: fn(&mut RenderContext) -> Result<(), Fail>` walks `ctx.doc
 that copies what it keeps (`b.copy_subtree(doc, id)`) and returns `Rebuilt`, or returns
 `Unchanged` at no cost.
 
+Adapters keep their working storage in the workspace between conversions, so a repeated conversion does not allocate. We take a struct of our own out of the workspace's `Scratch` store, clear what we use (keeping the capacity), and give it back:
+
+```rust
+#[derive(Default)]
+struct MyWork { stack: Vec<NodeId>, names: NameMap<NodeId> }
+
+let mut work: MyWork = ctx.take_scratch(); // what the last conversion left, or default
+work.stack.clear();
+// ... read or render with work ...
+ctx.put_scratch(work);
+```
+
+| Tool | Use |
+|---|---|
+| `ctx.take_scratch::<T>()`, `ctx.put_scratch(value)` | per-type pools in the workspace; nested parses take their own value |
+| `NameMap<V>` | a name table that keeps its key storage when cleared (a `HashMap<String, V>` frees every key) |
+| `recycle(vec)` | keeps a `Vec<Line<'s>>` of borrowed values as an empty `Vec<Line<'static>>` between conversions |
+| `build_anchors_into(&mut anchors, doc, options, headings)` | rebuilds an anchor table in the storage of the last one |
+
 ## Redesigns from the Odin engine
 
 The Odin core is the specification of behaviour; these are the deliberate differences.
@@ -144,6 +163,7 @@ The Odin core is the specification of behaviour; these are the deliberate differ
   bound; `insert` returns `Result<(), SymbolClash>`.
 - **Objects** keep the field-by-field little-endian format, now version 2 (adds a
   source's usage); Odin caches are rebuilt.
-- **Not ported**, because Rust makes them unnecessary: `Scratch`, `Stack(T)`, `Buffer`,
+- **Working storage in the workspace.** Odin readers and renderers took their temporary tables from the workspace's scratch region and released them with a mark. Here each adapter keeps a struct of reusable `Vec`s and `String`s in the workspace's `Scratch` store, a pool per type, so its buffers survive between conversions instead of being freed and allocated again (see docs/manual/internals/memory.rst).
+- **Not ported**, because Rust makes them unnecessary: Odin's `Scratch` region and marks, `Stack(T)`, `Buffer`,
   `merge_sort` (std's stable sort), the region-overlap check, `init_workspace*`,
   `workspace_size`, `slab_plan`, `Second_Bank`, `document_valid`, `view`.

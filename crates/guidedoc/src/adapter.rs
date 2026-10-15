@@ -13,6 +13,7 @@ use crate::report::{
     Arg, CORE_SETTINGS_NONE, CORE_SETTINGS_TYPE, Diagnostic, Fail, Message, REGISTRY_INVALID,
     Reports, arg_static, arg_text, diagnostic,
 };
+use crate::scratch::Scratch;
 use crate::snapshot::{SourceEntry, entry_text};
 use crate::types::{SourceId, SourceSpan, Status};
 
@@ -171,6 +172,7 @@ pub struct ReadContext<'a> {
     pub(crate) sources: &'a mut Vec<SourceEntry>,
     /// Bytes of included sources, charged against `Limits::max_included_bytes`.
     pub(crate) included: usize,
+    pub(crate) scratch: &'a mut Scratch,
 }
 
 impl fmt::Debug for ReadContext<'_> {
@@ -187,6 +189,18 @@ impl<'a> ReadContext<'a> {
     /// Returns the reports of the read.
     pub fn reports(&mut self) -> &mut Reports {
         self.b.reports()
+    }
+
+    /// Takes the reader's working state of type `T` out of the workspace (see
+    /// `Scratch::take`): what an earlier read left, or `T::default()`. Clear what you
+    /// use and give it back with `put_scratch`, so the next read reuses its storage.
+    pub fn take_scratch<T: Default + Send + 'static>(&mut self) -> T {
+        self.scratch.take()
+    }
+
+    /// Gives working state taken with `take_scratch` back to the workspace.
+    pub fn put_scratch<T: Send + 'static>(&mut self, value: T) {
+        self.scratch.put(value);
     }
 
     /// Reports message `m` at `span` (Odin `report_message(ctx.reports, ...)`).
@@ -276,6 +290,8 @@ pub struct RenderContext<'a> {
     /// The bounds.
     pub limits: Limits,
     pub(crate) reports: &'a mut Reports,
+    /// The workspace's working state; `None` for a context made with `new`.
+    pub(crate) scratch: Option<&'a mut Scratch>,
 }
 
 impl fmt::Debug for RenderContext<'_> {
@@ -300,6 +316,31 @@ impl<'a> RenderContext<'a> {
             policy: Policy::default(),
             limits: Limits::default(),
             reports,
+            scratch: None,
+        }
+    }
+
+    /// Lets the context keep working state in `scratch` between renders (the engine
+    /// passes the workspace's); a context made with `new` alone keeps none.
+    pub fn with_scratch(self, scratch: &'a mut Scratch) -> Self {
+        RenderContext { scratch: Some(scratch), ..self }
+    }
+
+    /// Takes the renderer's working state of type `T` (see `Scratch::take`): what an
+    /// earlier render left, or `T::default()`. Clear what you use and give it back with
+    /// `put_scratch`, so the next render reuses its storage.
+    pub fn take_scratch<T: Default + Send + 'static>(&mut self) -> T {
+        match &mut self.scratch {
+            Some(scratch) => scratch.take(),
+            None => T::default(),
+        }
+    }
+
+    /// Gives working state taken with `take_scratch` back; a context without a store
+    /// drops it.
+    pub fn put_scratch<T: Send + 'static>(&mut self, value: T) {
+        if let Some(scratch) = &mut self.scratch {
+            scratch.put(value);
         }
     }
 

@@ -10,6 +10,7 @@ use crate::builder::Builder;
 use crate::document::Document;
 use crate::options::{Limits, MapEntry, Policy, Request, default_limits};
 use crate::report::{Arg, CORE_SOURCE_SIZE, CORE_STRICT, Diagnostic, Fail, Reports, arg_int};
+use crate::scratch::Scratch;
 use crate::snapshot::{Snapshot, SourceEntry, entry_text};
 use crate::types::{CapacityNeed, NodeId, Region, SourceId, SourceSpan, Status};
 use crate::validate::validate_with;
@@ -32,6 +33,8 @@ pub struct Workspace {
     /// The main source's name buffer, kept between conversions.
     spare_name: String,
     source_lengths: Vec<usize>,
+    /// The readers' and renderers' working state, kept between conversions.
+    pub(crate) scratch: Scratch,
 }
 
 impl fmt::Debug for Workspace {
@@ -101,6 +104,11 @@ impl Workspace {
         let mut out = String::new();
         d.format_into(d.message, &|span| self.source_text(span).to_owned(), &mut out);
         out
+    }
+
+    /// Returns the working state readers and renderers keep between conversions.
+    pub fn scratch(&mut self) -> &mut Scratch {
+        &mut self.scratch
     }
 
     /// Forgets the document, sources, reports, and output, keeping their storage.
@@ -174,7 +182,7 @@ impl Workspace {
         name.clear();
         name.push_str(request.source.name);
         self.sources.push(SourceEntry { name, ..SourceEntry::default() });
-        let Workspace { banks, main, sources, reports, open, .. } = self;
+        let Workspace { banks, main, sources, reports, open, scratch, .. } = self;
         let root = SourceSpan::new(SourceId::MAIN, 0, length);
         let mut b = Builder::new(&mut banks[0], reports, open, request.limits, root);
         b.set_cancel(request.cancel);
@@ -188,6 +196,7 @@ impl Workspace {
             main,
             sources,
             included: 0,
+            scratch,
         })
     }
 

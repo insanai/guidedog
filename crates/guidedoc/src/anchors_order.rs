@@ -40,7 +40,17 @@ pub(crate) struct Order<'a, 'd> {
     headings: bool,
     /// The implicit name of an untitled table of contents.
     contents: &'d str,
-    /// Room for a node's own name, reused.
+}
+
+/// The working storage of `Order`, kept in the anchor table so a rebuilt table reuses
+/// it.
+#[derive(Debug, Clone, Default)]
+pub(crate) struct OrderWork {
+    positions: Positions,
+    events: Vec<ParseEvent>,
+    /// The ends of the sections enclosing a node, innermost last.
+    ends: Vec<u32>,
+    /// Room for a node's own name.
     own: String,
 }
 
@@ -58,6 +68,7 @@ struct ParseEvent {
 
 /// Maps a node's source position into the text Docutils reads: every source with its
 /// included sources in place.
+#[derive(Debug, Clone, Default)]
 struct Positions {
     /// Per source: where its text starts.
     base: Vec<u64>,
@@ -75,7 +86,7 @@ impl<'a, 'd> Order<'a, 'd> {
         headings: bool,
         contents: &'d str,
     ) -> Self {
-        Order { a, doc, sphinx, headings, contents, own: String::new() }
+        Order { a, doc, sphinx, headings, contents }
     }
 
     fn give(&mut self, id: NodeId, name: &str, chain: Chain) {
@@ -85,8 +96,10 @@ impl<'a, 'd> Order<'a, 'd> {
     /// Names elements in the order Docutils' parser names them.
     pub(crate) fn parse_order(&mut self) {
         let doc = self.doc;
-        let mut p = Positions::new(doc);
-        let mut events = Vec::new();
+        let mut p = std::mem::take(&mut self.a.work.positions);
+        p.measure(doc);
+        let mut events = std::mem::take(&mut self.a.work.events);
+        events.clear();
         for i in 0..doc.node_count() {
             let id = NodeId::from_index(i);
             let start = p.position(doc, id, false);
@@ -106,15 +119,21 @@ impl<'a, 'd> Order<'a, 'd> {
                 });
             }
         }
-        // Stable; inner elements are named first at one position.
-        events.sort_by(|x, y| x.at.cmp(&y.at).then(x.tie.cmp(&y.tie)).then(y.node.cmp(&x.node)));
-        for e in events {
+        // Inner elements are named first at one position. No two events compare equal
+        // (a node's two ties differ in parity), so unstable sorting, which does not
+        // allocate, gives the same order.
+        events.sort_unstable_by(|x, y| {
+            x.at.cmp(&y.at).then(x.tie.cmp(&y.tie)).then(y.node.cmp(&x.node))
+        });
+        for e in &events {
             if e.later {
                 self.name_later(e.node);
             } else {
                 self.name_start(e.node);
             }
         }
+        self.a.work.positions = p;
+        self.a.work.events = events;
     }
 
     /// Gives the ids the parser gives a node where it meets it.
@@ -147,11 +166,11 @@ impl<'a, 'd> Order<'a, 'd> {
 
     /// Gives a node an id from its own name.
     fn name_own(&mut self, id: NodeId) {
-        let mut own = std::mem::take(&mut self.own);
+        let mut own = std::mem::take(&mut self.a.work.own);
         own.clear();
         own_name(self.doc, id, &mut own);
         self.give(id, &own, Chain::Own);
-        self.own = own;
+        self.a.work.own = own;
     }
 
     /// Gives the ids the parser gives where it meets the node.
@@ -349,7 +368,8 @@ impl<'a, 'd> Order<'a, 'd> {
         let doc = self.doc;
         let (first, end, base) = contents_scope(doc, contents);
         let limit = doc.node(contents).value;
-        let mut ends: Vec<u32> = Vec::new();
+        let mut ends = std::mem::take(&mut self.a.work.ends);
+        ends.clear();
         for i in 1..doc.node_count() {
             let id = NodeId::from_index(i);
             while ends.last().is_some_and(|&e| e <= id.0) {
@@ -368,6 +388,7 @@ impl<'a, 'd> Order<'a, 'd> {
             }
             self.a.add_extra(AnchorExtra { owner: contents, item: id, ..AnchorExtra::default() });
         }
+        self.a.work.ends = ends;
     }
 
     /// Gives ids to the footnotes a target-notes directive makes, one per external URI a
@@ -468,12 +489,17 @@ impl Anchors {
 }
 
 impl Positions {
-    /// Measures every source with its includes, and where each starts. Sources come
-    /// after the source including them.
-    fn new(doc: Document<'_>) -> Positions {
+    /// Measures every source of `doc` with its includes, and where each starts, reusing
+    /// the tables. Sources come after the source including them.
+    fn measure(&mut self, doc: Document<'_>) {
         let sources = doc.sources();
         let count = sources.len();
-        let mut p = Positions { base: vec![0; count], expanded: vec![0; count], last: 0 };
+        let p = self;
+        p.base.clear();
+        p.base.resize(count, 0);
+        p.expanded.clear();
+        p.expanded.resize(count, 0);
+        p.last = 0;
         for i in (0..count).rev() {
             p.expanded[i] = doc.source_str(source_id(i)).len() as u64;
             for c in i + 1..count {
@@ -488,7 +514,6 @@ impl Positions {
                 p.base[i] = p.place(doc, parent, source.included_at.start);
             }
         }
-        p
     }
 
     /// Where an offset of a source lies in the text read with includes in place: the

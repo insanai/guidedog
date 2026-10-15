@@ -120,6 +120,45 @@ fn the_engine_example_runs() {
     // end manual
 }
 
+#[rustfmt::skip] // a twin keeps the manual's exact text
+mod crates_toml {
+    // manual: docs/manual/internals/crates.rst#1
+    fn main() {
+        let text = "[site]\ntitle = \"Guide\"\n";
+        match gd_toml::parse(text) {
+            Ok(table) => {
+                let title = table.path(&["site", "title"]).and_then(|v| v.as_str());
+                println!("{title:?}");
+            }
+            Err(err) => eprintln!("{err}"),
+        }
+    }
+    // end manual
+
+    #[test]
+    fn the_toml_example_runs() {
+        main();
+    }
+}
+
+#[rustfmt::skip] // a twin keeps the manual's exact text
+mod crates_engine {
+    // manual: docs/manual/internals/crates.rst#2
+    fn main() -> Result<(), guidedoc::Fail> {
+        let registry = guidedoc_defaults::registry();
+        let mut ws = guidedoc::Workspace::new();
+        let html = guidedoc::convert_text(&mut ws, &registry, "myst", "html", "# Hello\n")?;
+        println!("{html}");
+        Ok(())
+    }
+    // end manual
+
+    #[test]
+    fn the_engine_dependency_example_runs() {
+        main().expect("the example converts");
+    }
+}
+
 /// The twins in this file: (`file#n`, code without the common indentation).
 fn twins() -> Vec<(String, String)> {
     let source = include_str!("manual_code.rs");
@@ -201,7 +240,8 @@ fn every_rust_block_of_the_manual_is_compiled_here() {
         }
     }
     assert!(seen >= 5, "found only {seen} Rust blocks in the manual: is the scan broken?");
+    // The named problems first: they say which block to fix, the count only that one is off.
+    assert!(problems.is_empty(), "{}", problems.join("\n\n"));
     let documented = twins.len();
     assert_eq!(documented, seen, "twins without a block in the manual (renumbered?)");
-    assert!(problems.is_empty(), "{}", problems.join("\n\n"));
 }

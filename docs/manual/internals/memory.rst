@@ -32,7 +32,11 @@ Ownership replaces handles
 A ``Workspace`` owns the node tables, the text pool, the source map, the diagnostics,
 and the output buffer of one conversion at a time. ``clear()`` empties its ``Vec`` and
 ``String`` buffers and keeps their capacity, so a worker that converts many documents
-stops allocating once its buffers have grown to the largest page. Each rendering worker
+stops growing them once they fit the largest page. The readers and renderers still
+allocate a bounded number of short-lived scratch vectors per conversion (block and inline
+item lists, anchor tables, renderer state); ``tests/integration/tests/allocations.rs``
+counts them for every reader and renderer pair and fails if a count grows or exceeds
+its recorded ceiling. Each rendering worker
 owns its own workspace; there is no shared mutable engine state and no global pool.
 
 What a conversion returns borrows the workspace: ``Document<'ws>`` and the output

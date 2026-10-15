@@ -930,6 +930,7 @@ dependencies = [
  "gd-host",
  "gd-i18n",
  "gd-intl",
+ "gd-json",
  "gd-odindoc",
  "gd-pyscan",
  "gd-report",
@@ -1142,6 +1143,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "guidedoc-rst-writer"
+version = "0.7.0"
+dependencies = [
+ "guidedoc",
+ "guidedoc-commonmark",
+ "guidedoc-rst",
+ "guidedoc-sphinx",
+]
+
+[[package]]
 name = "guidedoc-sphinx"
 version = "0.7.0"
 dependencies = [
@@ -1183,6 +1194,29 @@ version = "0.7.0"
 dependencies = [
  "gd-pages",
  "gd-plugins",
+]
+
+[[package]]
+name = "guidedog-tests"
+version = "0.7.0"
+dependencies = [
+ "gd-cli",
+ "gd-discussion",
+ "gd-fetch",
+ "gd-inventory",
+ "gd-json",
+ "gd-plugins",
+ "gd-report",
+ "gd-sha",
+ "gd-toml",
+ "guidedoc",
+ "guidedoc-commonmark",
+ "guidedoc-defaults",
+ "guidedoc-html",
+ "guidedoc-rst",
+ "guidedoc-sphinx",
+ "guidedoc-text",
+ "guidedoc-typst",
 ]
 
 [[package]]

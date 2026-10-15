@@ -108,8 +108,10 @@ The boundary
 ------------
 
 The workspace owns its tables as ``Vec`` and ``String`` values and clears them between
-conversions, keeping their capacity, so a conversion in steady state allocates nothing;
-a test with a counting allocator checks it. Growth driven by the input uses
+conversions, keeping their capacity, so the engine's own work in steady state allocates
+nothing; a test with a counting allocator checks it. Readers and renderers still build
+small scratch vectors per conversion; a second counting-allocator test bounds them per
+reader and renderer and checks that they do not grow (see :doc:`testing`). Growth driven by the input uses
 ``try_reserve`` and stays within ``Limits`` (nodes, text bytes, output bytes, reports,
 depth, work, stack, includes), so running out is a ``Capacity`` or ``Limit`` result,
 never a panic. A third-party compiler has its own allocation rules; the guarantee names

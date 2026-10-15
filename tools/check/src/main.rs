@@ -5,8 +5,10 @@
 //! lines. Rust functions keep at most 70 logical lines. Documentation (anything under a
 //! `docs` directory) and third-party data (`data` directories) are exempt.
 //!
-//! Usage: `cargo run -p check [PATH...]`. Without paths it checks `crates`, `cmd`, `tools`
-//! and `examples`. `--soft` also fails on soft-width violations.
+//! Usage: `cargo run -p check [PATH...]`. Without paths it checks `crates`, `cmd`, `tools`,
+//! `examples` and `tests`. `--soft` also fails on soft-width violations.
+
+#![forbid(unsafe_code)]
 
 mod rust;
 
@@ -39,7 +41,7 @@ fn main() -> ExitCode {
         }
     }
     if roots.is_empty() {
-        roots = ["crates", "cmd", "tools", "examples"]
+        roots = ["crates", "cmd", "tools", "examples", "tests"]
             .iter()
             .map(PathBuf::from)
             .filter(|p| p.exists())

@@ -1,0 +1,33 @@
+[package]
+name = "guidedog-tests"
+description = "Guidedog's end-to-end tests and repository-wide quality gates."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+# The library is the shared test support (scratch folders, running the built programs);
+# the tests live under tests/. Only workspace crates: the gates and end-to-end tests
+# drive Guidedog's own libraries and programs.
+[dev-dependencies]
+gd-cli = { workspace = true }
+gd-discussion = { workspace = true }
+gd-json = { workspace = true }
+guidedoc = { workspace = true }
+guidedoc-rst = { workspace = true }
+guidedoc-commonmark = { workspace = true }
+guidedoc-sphinx = { workspace = true }
+guidedoc-html = { workspace = true }
+guidedoc-typst = { workspace = true }
+guidedoc-text = { workspace = true }
+guidedoc-defaults = { workspace = true }
+gd-plugins = { workspace = true }
+gd-report = { workspace = true }
+gd-toml = { workspace = true }
+gd-fetch = { workspace = true }
+gd-sha = { workspace = true }
+gd-inventory = { workspace = true }
+
+[lints]
+workspace = true

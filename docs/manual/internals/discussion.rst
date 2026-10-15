@@ -54,6 +54,7 @@ Building
 ``build`` checks the catalog and hands each target to a ``Builder``:
 
 .. code-block:: rust
+   :class: sketch
 
    pub trait Builder {
        fn name(&self) -> &str;
@@ -62,9 +63,9 @@ Building
            targets: &[Target]) -> Result<Vec<PathBuf>>; // default: legacy-build problem
    }
 
-``GuidedogProgram`` runs the installed ``guidedog`` without a shell. ``dscc`` will
-implement the trait over gd-project's in-process builder (and Typst for older catalogs);
-until gd-project is ported it uses ``GuidedogProgram``. The builder's own program
+``GuidedogProgram`` runs the installed ``guidedog`` without a shell. ``dscc`` and
+``guidedog gds`` implement the trait over gd-project's in-process builder
+(``gd_cli::discussion_builder``), with the Typst compiler for older catalogs. The builder's own program
 (``--guidedog`` or ``--typst``) is given to ``Program::make_builder`` rather than carried
 in every request.
 

@@ -15,6 +15,7 @@ conformance evidence.
    algorithms
    publication
    memory
+   testing
    ast
 
 .. toctree::

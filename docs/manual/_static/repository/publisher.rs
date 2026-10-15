@@ -203,7 +203,7 @@ fn lock_target(target: &Path) -> Result<fs::File, Problem> {
             "Another publisher holds the folder",
             "A publication to this folder is already running.",
         )
-        .hint("Wait for it to finish, then publish again.")
+        .hint("Wait for the other publication to finish, then run guidedog publish again.")
         .path(&target.to_string_lossy())
         .exit(4));
     }

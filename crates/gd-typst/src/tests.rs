@@ -91,6 +91,9 @@ fn compile_both_ways(backend: &Backend, name: &str) {
     let output = dir.0.join("out.pdf");
     let ok = compile_text(backend, "= Hello\n", &dir.0, &output, &offline());
     assert!(ok.is_ok(), "{ok:?}");
+    // Only the embedded compiler hands back the laid-out pages.
+    let pages = ok.ok().and_then(|c| c.pages);
+    assert_eq!(pages.is_some(), backend.is_embedded(), "{pages:?}");
     let data = std::fs::read(&output).expect("the PDF was written");
     assert!(data.starts_with(b"%PDF-"));
     let bad = compile_text(backend, "#nope\n", &dir.0, &output, &offline());
@@ -160,6 +163,18 @@ mod embedded {
     }
 
     #[test]
+    fn the_embedded_compiler_reports_each_pages_text() {
+        let dir = TempDir::new("pages");
+        let output = dir.0.join("out.pdf");
+        let text = "= Hello\nFirst page.\n#pagebreak()\nSecond page, `let x = 1;`\n";
+        let compiled = compile_text(&backend(), text, &dir.0, &output, &offline());
+        let pages = compiled.expect("the document compiles").pages.expect("the pages");
+        assert_eq!(pages.len(), 2, "{pages:?}");
+        assert!(pages[0].contains("Hello") && pages[0].contains("First page."), "{pages:?}");
+        assert!(pages[1].contains("Second page, let x = 1;"), "{pages:?}");
+    }
+
+    #[test]
     fn embedded_diagnostics_carry_spans_and_html_compiles() {
         let dir = TempDir::new("spans");
         let output = dir.0.join("out.html");
@@ -171,7 +186,7 @@ mod embedded {
         assert_eq!(d.span.clone().map(|s| &text[s]), Some("nope"));
         assert!(d.render(Some(text)).contains("2| #nope\n    ^^^^"), "{}", d.render(Some(text)));
         let good = compile_text(&backend(), "= Hi\n", &dir.0, &output, &html());
-        assert!(good.is_ok(), "{good:?}");
+        assert!(good.as_ref().is_ok_and(|c| c.pages.is_none()), "{good:?}");
         let html = std::fs::read_to_string(&output).expect("the HTML was written");
         assert!(html.contains("<h2>Hi</h2>") || html.contains("Hi</h"), "{html}");
     }

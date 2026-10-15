@@ -70,7 +70,8 @@ pub(crate) fn run(
         let exit_code = result.status.code();
         return Err(Error::Compile { exit_code, diagnostics, detail });
     }
-    Ok(Compiled { diagnostics, detail })
+    // The typst program hands back only the file it wrote, not the laid-out pages.
+    Ok(Compiled { diagnostics, detail, pages: None })
 }
 
 fn bounded(mut text: String) -> String {

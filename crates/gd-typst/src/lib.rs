@@ -148,6 +148,10 @@ pub struct Compiled {
     pub diagnostics: Vec<Diagnostic>,
     /// The compiler's output (or the diagnostics as lines), bounded.
     pub detail: String,
+    /// The text of each page Typst laid out, in order (one line per line of text), so
+    /// callers and tests can check a PDF without reading it back. `None` for an HTML
+    /// target and for the typst program, which reports only the file it wrote.
+    pub pages: Option<Vec<String>>,
 }
 
 /// Looks `name` up on PATH, handling Windows' `;` and `.exe`; a name holding a path

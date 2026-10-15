@@ -36,7 +36,7 @@ pub(crate) fn compile(
 ) -> Result<Compiled, Error> {
     let world = make_world(root, main, text, options).ok_or(Error::InvalidRequest)?;
     let compiled = catch_unwind(AssertUnwindSafe(|| run(&world)));
-    let (artifact, diagnostics) = compiled.map_err(|_| Error::Internal)?;
+    let Exported { artifact, pages, diagnostics } = compiled.map_err(|_| Error::Internal)?;
     let detail = detail_of(&diagnostics);
     let Some(artifact) = artifact else {
         return Err(Error::Compile { exit_code: None, diagnostics, detail });
@@ -46,7 +46,7 @@ pub(crate) fn compile(
     }
     std::fs::write(output, &artifact)
         .map_err(|err| Error::Io { path: output.to_path_buf(), message: err.to_string() })?;
-    Ok(Compiled { diagnostics, detail })
+    Ok(Compiled { diagnostics, detail, pages })
 }
 
 fn detail_of(diagnostics: &[Diagnostic]) -> String {
@@ -65,10 +65,20 @@ fn detail_of(diagnostics: &[Diagnostic]) -> String {
     detail
 }
 
-/// Compiles and exports the world's main file: the artifact when it succeeded, and every
-/// warning and error in the order Typst reported them.
-fn run(world: &EmbeddedWorld) -> (Option<Vec<u8>>, Vec<Diagnostic>) {
+/// What one compile and export produced.
+struct Exported {
+    /// The artifact, when the compile and export succeeded.
+    artifact: Option<Vec<u8>>,
+    /// Each page's text, for a paged document that compiled.
+    pages: Option<Vec<String>>,
+    /// Every warning and error, in the order Typst reported them.
+    diagnostics: Vec<Diagnostic>,
+}
+
+/// Compiles and exports the world's main file.
+fn run(world: &EmbeddedWorld) -> Exported {
     let mut found = Vec::new();
+    let mut pages = None;
     let output = if world.html {
         let warned = typst::compile::<typst_html::HtmlDocument>(world);
         record(world, &warned.warnings, &mut found);
@@ -78,14 +88,52 @@ fn run(world: &EmbeddedWorld) -> (Option<Vec<u8>>, Vec<Diagnostic>) {
     } else {
         let warned = typst::compile::<typst_layout::PagedDocument>(world);
         record(world, &warned.warnings, &mut found);
-        warned.output.and_then(|doc| typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default()))
+        warned.output.and_then(|doc| {
+            pages = Some(doc.pages().iter().map(|page| page_text(&page.frame)).collect());
+            typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default())
+        })
     };
     match output {
-        Ok(bytes) => (Some(bytes), found),
+        Ok(bytes) => Exported { artifact: Some(bytes), pages, diagnostics: found },
         Err(errors) => {
             record(world, &errors, &mut found);
-            (None, found)
+            Exported { artifact: None, pages: None, diagnostics: found }
         }
+    }
+}
+
+/// The text of a laid-out page: its text runs in layout order, a new line wherever a
+/// run starts below or above the one before it, or in another group.
+fn page_text(frame: &typst::layout::Frame) -> String {
+    let mut text = String::new();
+    collect_text(frame, &mut text);
+    text
+}
+
+fn collect_text(frame: &typst::layout::Frame, text: &mut String) {
+    let mut line = None;
+    for (point, item) in frame.items() {
+        match item {
+            typst::layout::FrameItem::Group(group) => {
+                end_line(text);
+                collect_text(&group.frame, text);
+                line = None;
+            }
+            typst::layout::FrameItem::Text(run) => {
+                if line.is_some_and(|y| y != point.y) {
+                    end_line(text);
+                }
+                line = Some(point.y);
+                text.push_str(&run.text);
+            }
+            _ => {}
+        }
+    }
+}
+
+fn end_line(text: &mut String) {
+    if !text.is_empty() && !text.ends_with('\n') {
+        text.push('\n');
     }
 }
 

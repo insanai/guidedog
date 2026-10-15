@@ -18,7 +18,9 @@ an installed, pinned `typst` program.
 - `compile_*` return `Result<Compiled, Error>` instead of an `Outcome` with `ok`, an
   error option and exit codes 0–5 that the embedded backend invented: a source with
   errors is `Error::Compile { exit_code, diagnostics, detail }` (`exit_code` is `None`
-  for the embedded compiler); `Compiled` carries the warnings.
+  for the embedded compiler); `Compiled` carries the warnings and, from the embedded
+  compiler, each page's text (`pages`) taken from Typst's laid-out document, so tests
+  check PDFs without external tools; the typst program reports `None`.
 - `Backend` is an enum; the `"embedded"` program name, the `""` version and the
   `embedded` flag are gone, and `is_pinned` is a method.
 - The target moved into `Options` (`target: Target`, PDF by default), so the compile

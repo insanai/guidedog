@@ -66,7 +66,8 @@ pub struct DirectiveAlias {
 }
 
 /// The autodoc provider of one domain: what generates the text its auto directives
-/// stand for ("py" for automodule and the others, "odin" for odin:autopackage, ...).
+/// stand for ("py" for automodule and the others, "odin" for odin:autopackage, ...), or
+/// of a directive generated from source ([`crate::INHERITANCE_DIAGRAM`]).
 #[derive(Clone)]
 pub struct Autodoc {
     /// The domain the provider serves.

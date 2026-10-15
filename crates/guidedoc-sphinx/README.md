@@ -59,6 +59,7 @@ let doc = read_document(&mut ws, &reader(), &request)?;
 | configuration | `Config` (`Default` = Sphinx's defaults) via `ReadOptions::extension` |
 | MyST with Sphinx | `myst_settings(config, myst)` -> `guidedoc_commonmark::Settings` for `MYST_READER` (id `myst`) |
 | autodoc | `impl AutodocProvider` (`generate(&AutodocRequest) -> AutodocResult`), `Config::autodoc: Vec<Autodoc { domain, provider }>` |
+| inheritance diagrams | a provider registered as `INHERITANCE_DIAGRAM` answers `inheritance-diagram` (asked as a `py` directive, with `:parts:`, `:private-bases:`, `:caption:`, `:top-classes:`, `:include-subclasses:`); without one the directive is unknown |
 | supported extensions | `EXTENSIONS`, `extension_supported(name)` |
 
 ## Domain API for domain authors

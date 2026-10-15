@@ -118,6 +118,11 @@ pub(crate) const AUTODOC_OPTIONS: &[OptSpec] = &[
 /// How deeply generated text may generate more.
 const MAX_AUTODOC_NESTING: usize = 8;
 
+/// The name the provider of sphinx.ext.inheritance_diagram's `inheritance-diagram`
+/// directive is registered under in `Config::autodoc`. It is given the directive as an
+/// autodoc directive of the `py` domain and answers with a graph.
+pub const INHERITANCE_DIAGRAM: &str = "inheritance-diagram";
+
 /// Runs an autodoc directive of `domain` through its provider.
 pub(crate) fn autodoc_directive(
     sx: &Sphinx<'_>,
@@ -125,7 +130,19 @@ pub(crate) fn autodoc_directive(
     d: &Directive<'_>,
     domain: &str,
 ) -> Result<(), Fail> {
-    let Some(provider) = sx.config.autodoc_for(domain) else {
+    provided_directive(sx, p, d, domain, domain)
+}
+
+/// Runs a directive through the provider registered as `provider`, in the context
+/// (current module and class) of `domain`.
+pub(crate) fn provided_directive(
+    sx: &Sphinx<'_>,
+    p: &mut Parser<'_, '_>,
+    d: &Directive<'_>,
+    provider: &str,
+    domain: &str,
+) -> Result<(), Fail> {
+    let Some(provider) = sx.config.autodoc_for(provider) else {
         let m = guidedoc_rst::messages::DIRECTIVE_UNKNOWN;
         p.report(m, d.name_span, arg_span(d.name_span), Arg::None);
         return Ok(());

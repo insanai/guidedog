@@ -6,7 +6,9 @@ mod body;
 use guidedoc::{AttributeKey, Fail, Message, NodeId};
 use guidedoc_rst::{ArgRule, ContentRule, Directive, OptSpec, OptType, Parser, choice, opt};
 
-use crate::autodoc::{AUTODOC_OPTIONS, autodoc_directive};
+use crate::autodoc::{
+    AUTODOC_OPTIONS, INHERITANCE_DIAGRAM, autodoc_directive, provided_directive,
+};
 use crate::extension::Sphinx;
 use crate::messages::INDEX_ENTRY;
 use crate::text::{equal_fold, parse_int, trim_space};
@@ -37,6 +39,7 @@ pub(crate) enum Core {
     Graphviz,
     Doctest,
     Autodoc,
+    Inheritance,
 }
 
 /// One core directive and its rules.
@@ -128,6 +131,14 @@ const OPTS_LITERALINCLUDE: &[OptSpec] = &[
     opt("name", OptType::Text),
     opt("diff", OptType::TextRequired),
 ];
+/// sphinx.ext.inheritance_diagram's options; the provider checks their values.
+const OPTS_INHERITANCE: &[OptSpec] = &[
+    opt("parts", OptType::Int),
+    opt("private-bases", OptType::Flag),
+    opt("caption", OptType::Text),
+    opt("top-classes", OptType::TextRequired),
+    opt("include-subclasses", OptType::Flag),
+];
 const OPTS_MATH: &[OptSpec] = &[
     opt("label", OptType::Text),
     opt("name", OptType::Text),
@@ -188,6 +199,7 @@ static CORE: &[CoreDirective] = &[
     core("autoattribute", Core::Autodoc, (A::Required, true, C::Optional), AUTODOC_OPTIONS),
     core("autodata", Core::Autodoc, (A::Required, true, C::Optional), AUTODOC_OPTIONS),
     core("autotype", Core::Autodoc, (A::Required, true, C::Optional), AUTODOC_OPTIONS),
+    core("inheritance-diagram", Core::Inheritance, (A::Required, true, C::None), OPTS_INHERITANCE),
 ];
 
 /// Finds a core directive by name, case-insensitively.
@@ -229,6 +241,7 @@ pub(crate) fn run_core(
         Core::Graphviz => graphviz::graphviz_directive(p, d, c.name),
         Core::Doctest => doctest::doctest_directive(sx, p, d, c.name),
         Core::Autodoc => autodoc_directive(sx, p, d, "py"),
+        Core::Inheritance => provided_directive(sx, p, d, INHERITANCE_DIAGRAM, "py"),
     }
 }
 

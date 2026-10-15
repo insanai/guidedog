@@ -47,7 +47,10 @@ mod tests;
 
 use guidedoc::{Conformance, Fail, ReadContext, Reader, SourceSpan};
 
-pub use autodoc::{AutodocMessage, AutodocOption, AutodocProvider, AutodocRequest, AutodocResult};
+pub use autodoc::{
+    AutodocMessage, AutodocOption, AutodocProvider, AutodocRequest, AutodocResult,
+    INHERITANCE_DIAGRAM,
+};
 pub use config::{Autodoc, Config, DirectiveAlias, Extlink, ObjectType, TocParents};
 pub use graphviz::{EXTENSIONS, extension_supported};
 pub use markdown::{MystExtension, myst_settings};

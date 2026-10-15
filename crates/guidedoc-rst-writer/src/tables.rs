@@ -5,6 +5,7 @@ use guidedoc::{AttributeKey, NodeId, NodeKind};
 
 use crate::blocks::Opt;
 use crate::escape::width;
+use crate::inline::Lines;
 use crate::state::Writer;
 
 /// One cell placed in the table's grid.
@@ -15,6 +16,33 @@ struct Placed {
     col: usize,
     rows: usize,
     cols: usize,
+}
+
+/// A table's working storage, kept for the next table; a table in a cell takes
+/// another from the writer's pool.
+#[derive(Debug, Default)]
+pub(crate) struct TableWork {
+    layout: Layout,
+    /// Per row: which columns cells cover.
+    taken: Vec<Vec<bool>>,
+    /// The table's widths attribute.
+    widths: Vec<usize>,
+    grid: GridWork,
+}
+
+/// What drawing a grid table reuses.
+#[derive(Debug, Default)]
+pub(crate) struct GridWork {
+    columns: Vec<usize>,
+    least: Vec<usize>,
+    /// Per cell: its lines at its width.
+    contents: Vec<Lines>,
+    heights: Vec<usize>,
+    xs: Vec<usize>,
+    ys: Vec<usize>,
+    canvas: Vec<char>,
+    text: String,
+    lines: Lines,
 }
 
 /// A table's rows and cells in grid positions.
@@ -31,10 +59,14 @@ struct Layout {
 const NARROWEST: usize = 3;
 
 impl Writer<'_, '_> {
-    /// Places the cells of a table, as a grid table reader would see them.
-    fn layout(&self, id: NodeId) -> Layout {
-        let mut l = Layout::default();
-        let mut taken: Vec<Vec<bool>> = Vec::new();
+    /// Places the cells of a table into `work.layout`, as a grid table reader would
+    /// see them.
+    fn layout_into(&self, id: NodeId, work: &mut TableWork) {
+        let TableWork { layout: l, taken, .. } = work;
+        l.cells.clear();
+        (l.rows, l.cols, l.head_rows, l.title) = (0, 0, 0, None);
+        // Rows past `used` hold stale marks from an earlier table.
+        let mut used = 0;
         for part in self.doc.children(id) {
             let head = match self.kind(part) {
                 NodeKind::Title => {
@@ -53,19 +85,13 @@ impl Writer<'_, '_> {
                 let mut col = 0;
                 for cell in self.doc.children(row) {
                     let info = self.doc.cell_info(cell);
-                    while taken.get(r).is_some_and(|t| t.get(col).copied().unwrap_or(false)) {
+                    while r < used && taken[r].get(col).copied().unwrap_or(false) {
                         col += 1;
                     }
                     let (rows, cols) =
                         (usize::from(info.row_span.max(1)), usize::from(info.col_span.max(1)));
                     for rr in r..r + rows {
-                        if taken.len() <= rr {
-                            taken.resize(rr + 1, Vec::new());
-                        }
-                        if taken[rr].len() < col + cols {
-                            taken[rr].resize(col + cols, false);
-                        }
-                        taken[rr][col..col + cols].fill(true);
+                        mark_taken(taken, &mut used, rr, col, cols);
                     }
                     l.cells.push(Placed { id: cell, row: r, col, rows, cols });
                     col += cols;
@@ -73,39 +99,48 @@ impl Writer<'_, '_> {
                 }
             }
         }
-        l.rows = l.rows.max(taken.len());
-        l
+        l.rows = l.rows.max(used);
     }
 
     /// Writes a table as a grid table or a list table.
     pub fn table(&mut self, id: NodeId) {
-        let layout = self.layout(id);
+        let mut work = self.tables.pop().unwrap_or_default();
+        self.layout_into(id, &mut work);
+        let TableWork { layout, widths, grid, .. } = &mut work;
+        widths.clear();
+        if let Some(w) = self.attr(id, AttributeKey::Widths) {
+            widths.extend(w.split_whitespace().filter_map(|n| n.parse::<usize>().ok()));
+        }
+        self.table_with(id, layout, widths, grid);
+        self.tables.push(work);
+    }
+
+    /// Writes the table `layout` places, whose widths attribute holds `widths`.
+    fn table_with(&mut self, id: NodeId, layout: &Layout, widths: &[usize], g: &mut GridWork) {
         let spans = layout.cells.iter().any(|c| c.rows > 1 || c.cols > 1);
-        let widths: Vec<usize> = self
-            .attr(id, AttributeKey::Widths)
-            .map(|w| w.split_whitespace().filter_map(|n| n.parse().ok()).collect())
-            .unwrap_or_default();
         let given = self.doc.has_class(id, "colwidths-given");
         let from_list = !widths.is_empty() && widths.iter().all(|&w| w == 1);
         let from_grid = widths.len() == layout.cols && !from_list && !given;
         let simple = layout.cells.iter().all(|c| self.is_simple_cell(c.id));
-        if self.stub_columns(&layout) > 0 && !spans {
-            return self.list_table(id, &layout, &widths, given);
+        if self.stub_columns(layout) > 0 && !spans {
+            return self.list_table(id, layout, widths, given);
         }
         if layout.cols == 0 || layout.rows == layout.head_rows {
             self.lossy(id, "a table without body rows", "a list table");
-            return self.list_table(id, &layout, &widths, given);
+            return self.list_table(id, layout, widths, given);
         }
-        let mut fits = || {
-            // A table whose words cannot fit the line width as a grid is a list table.
-            let columns = self.natural_widths(&layout);
-            columns.iter().sum::<usize>() + layout.cols < self.available()
-        };
-        if spans || from_grid || (simple && !from_list && !given && fits()) {
-            self.grid_table(id, &layout, if from_grid { &widths } else { &[] }, given);
+        if spans || from_grid || (simple && !from_list && !given && self.grid_fits(layout, g)) {
+            self.grid_table(id, layout, if from_grid { widths } else { &[] }, given, g);
         } else {
-            self.list_table(id, &layout, &widths, given);
+            self.list_table(id, layout, widths, given);
         }
+    }
+
+    /// Tells whether a table's words fit the line width as a grid; otherwise it is
+    /// written as a list table.
+    fn grid_fits(&mut self, layout: &Layout, g: &mut GridWork) -> bool {
+        self.natural_widths(layout, g);
+        g.columns.iter().sum::<usize>() + layout.cols < self.available()
     }
 
     /// A simple table with exactly `widths`, when every cell is one line of text that
@@ -154,14 +189,13 @@ impl Writer<'_, '_> {
 
     /// The leading columns whose body cells are all header cells.
     fn stub_columns(&self, layout: &Layout) -> usize {
-        let body: Vec<&Placed> =
-            layout.cells.iter().filter(|c| c.row >= layout.head_rows).collect();
-        if body.is_empty() {
+        let body = || layout.cells.iter().filter(|c| c.row >= layout.head_rows);
+        if body().next().is_none() {
             return 0;
         }
         (0..layout.cols)
             .take_while(|&col| {
-                body.iter()
+                body()
                     .filter(|c| c.col == col)
                     .all(|c| self.doc.node(c.id).flags.has(guidedoc::NodeFlag::Header))
             })
@@ -236,23 +270,34 @@ impl Writer<'_, '_> {
     }
 
     /// A grid table, in `.. table::` when it has a title or options.
-    fn grid_table(&mut self, id: NodeId, layout: &Layout, widths: &[usize], given: bool) {
+    fn grid_table(
+        &mut self,
+        id: NodeId,
+        layout: &Layout,
+        widths: &[usize],
+        given: bool,
+        g: &mut GridWork,
+    ) {
         let options = self.table_options(id, widths, given);
         let wrapped = layout.title.is_some() || !options.is_empty();
         if wrapped {
             let title = layout.title.map(|t| self.inline_line(t)).unwrap_or_default();
             self.directive_head("table", &title, &options);
+            self.recycle(title);
             self.push_frame(3, "");
         } else {
             self.class_prefix(id, &["colwidths-given", "colwidths-auto"]);
         }
-        let (columns, contents) = self.fit_columns(layout, widths);
-        let grew = !widths.is_empty() && columns != widths;
+        self.fit_columns(layout, widths, g);
+        let grew = !widths.is_empty() && g.columns != widths;
         let simple = if grew { self.simple_table_lines(layout, widths) } else { None };
-        let lines = simple.unwrap_or_else(|| draw_grid(layout, &columns, &contents));
         self.block_start();
-        for line in &lines {
-            self.line(line);
+        match simple {
+            Some(lines) => lines.iter().for_each(|line| self.line(line)),
+            None => {
+                g.draw(layout);
+                g.lines.iter().for_each(|line| self.line(line));
+            }
         }
         self.block_end();
         if wrapped {
@@ -261,35 +306,30 @@ impl Writer<'_, '_> {
         }
     }
 
-    /// Chooses the column widths (inside the borders, padding included) and renders
-    /// each cell at its width. Widths read from a grid are kept unless a cell's
-    /// content does not fit them.
-    fn fit_columns(
-        &mut self,
-        layout: &Layout,
-        widths: &[usize],
-    ) -> (Vec<usize>, Vec<Vec<String>>) {
-        let mut columns: Vec<usize> = if widths.len() == layout.cols {
-            widths.iter().map(|&w| w.max(3)).collect()
+    /// Chooses the column widths (inside the borders, padding included) into
+    /// `g.columns` and renders each cell at its width into `g.contents`. Widths read
+    /// from a grid are kept unless a cell's content does not fit them.
+    fn fit_columns(&mut self, layout: &Layout, widths: &[usize], g: &mut GridWork) {
+        if widths.len() == layout.cols {
+            g.columns.clear();
+            g.columns.extend(widths.iter().map(|&w| w.max(3)));
         } else {
-            self.natural_widths(layout)
-        };
-        let mut contents = Vec::new();
+            self.natural_widths(layout, g);
+        }
+        if g.contents.len() < layout.cells.len() {
+            g.contents.resize_with(layout.cells.len(), Lines::default);
+        }
         for _ in 0..4 {
-            contents = layout
-                .cells
-                .iter()
-                .map(|c| {
-                    let w = span_width(&columns, c.col, c.cols).saturating_sub(2);
-                    self.cell_lines(c.id, w)
-                })
-                .collect();
+            for (c, lines) in layout.cells.iter().zip(&mut g.contents) {
+                let w = span_width(&g.columns, c.col, c.cols).saturating_sub(2);
+                self.cell_lines(c.id, w, lines);
+            }
             let mut grew = false;
-            for (c, lines) in layout.cells.iter().zip(&contents) {
+            for (c, lines) in layout.cells.iter().zip(&g.contents) {
                 let need = lines.iter().map(|l| width(l)).max().unwrap_or(0) + 2;
-                let have = span_width(&columns, c.col, c.cols);
+                let have = span_width(&g.columns, c.col, c.cols);
                 if need > have {
-                    columns[c.col + c.cols - 1] += need - have;
+                    g.columns[c.col + c.cols - 1] += need - have;
                     grew = true;
                 }
             }
@@ -297,23 +337,26 @@ impl Writer<'_, '_> {
                 break;
             }
         }
-        (columns, contents)
     }
 
-    /// Column widths from the cells' content, shrunk to fit the line width.
-    fn natural_widths(&mut self, layout: &Layout) -> Vec<usize> {
-        let mut columns = vec![NARROWEST + 2; layout.cols];
-        let mut least = vec![NARROWEST + 2; layout.cols];
+    /// Column widths from the cells' content, shrunk to fit the line width, into
+    /// `g.columns`.
+    fn natural_widths(&mut self, layout: &Layout, g: &mut GridWork) {
+        refill(&mut g.columns, NARROWEST + 2, layout.cols);
+        refill(&mut g.least, NARROWEST + 2, layout.cols);
+        let mut lines = self.take_lines();
         for c in layout.cells.iter().filter(|c| c.cols == 1) {
-            let lines = self.cell_lines(c.id, usize::MAX / 4);
+            self.cell_lines(c.id, usize::MAX / 4, &mut lines);
             let need = lines.iter().map(|l| width(l)).max().unwrap_or(0) + 2;
-            columns[c.col] = columns[c.col].max(need);
+            g.columns[c.col] = g.columns[c.col].max(need);
             let word = lines.iter().flat_map(|l| l.split(' ')).map(width).max().unwrap_or(0);
-            least[c.col] = least[c.col].max((word + 2).min(need));
+            g.least[c.col] = g.least[c.col].max((word + 2).min(need));
         }
+        self.give_lines(lines);
         // Too wide: narrow the widest column that can still give, one column at a time,
         // so short columns keep their width and words stay whole where they can.
         let room = self.available().saturating_sub(layout.cols + 1);
+        let (columns, least) = (&mut g.columns, &g.least);
         while columns.iter().sum::<usize>() > room {
             let widest =
                 (0..layout.cols).filter(|&i| columns[i] > least[i]).max_by_key(|&i| columns[i]);
@@ -322,17 +365,46 @@ impl Writer<'_, '_> {
                 None => break,
             }
         }
-        columns
     }
 
-    /// Renders a cell's blocks at `width` columns.
-    fn cell_lines(&mut self, cell: NodeId, width: usize) -> Vec<String> {
+    /// Renders a cell's blocks at `width` columns into `out`, without leading empty
+    /// lines.
+    fn cell_lines(&mut self, cell: NodeId, width: usize, out: &mut Lines) {
         let text = self.capture(width.max(NARROWEST), |w| w.blocks(cell));
-        let lines: Vec<String> =
-            text.trim_end_matches('\n').split('\n').map(str::to_owned).collect();
-        let lead = lines.iter().take_while(|l| l.is_empty()).count();
-        lines[lead..].to_vec()
+        out.clear();
+        let mut lead = true;
+        for line in text.trim_end_matches('\n').split('\n') {
+            if lead && line.is_empty() {
+                continue;
+            }
+            lead = false;
+            out.push(line);
+        }
+        self.recycle(text);
     }
+}
+
+/// Marks columns `col..col + cols` of row `r` taken; rows from `used` on are cleared
+/// before their first use.
+fn mark_taken(taken: &mut Vec<Vec<bool>>, used: &mut usize, r: usize, col: usize, cols: usize) {
+    while *used <= r {
+        if taken.len() == *used {
+            taken.push(Vec::new());
+        }
+        taken[*used].clear();
+        *used += 1;
+    }
+    let row = &mut taken[r];
+    if row.len() < col + cols {
+        row.resize(col + cols, false);
+    }
+    row[col..col + cols].fill(true);
+}
+
+/// Makes `v` hold `n` copies of `value`, reusing its storage.
+fn refill<T: Clone>(v: &mut Vec<T>, value: T, n: usize) {
+    v.clear();
+    v.resize(n, value);
 }
 
 /// The width of columns `col..col + cols` of a simple table, with the gaps between.
@@ -393,67 +465,97 @@ fn span_width(columns: &[usize], col: usize, cols: usize) -> usize {
     columns[col..col + cols].iter().sum::<usize>() + cols - 1
 }
 
-/// Draws the grid: a character canvas holding every cell's box and content. A wide
-/// character takes two canvas columns, the second left as a NUL that is dropped.
-fn draw_grid(layout: &Layout, columns: &[usize], contents: &[Vec<String>]) -> Vec<String> {
-    let mut heights = vec![1usize; layout.rows];
-    for (c, lines) in layout.cells.iter().zip(contents).filter(|(c, _)| c.rows == 1) {
-        heights[c.row] = heights[c.row].max(lines.len());
-    }
-    for (c, lines) in layout.cells.iter().zip(contents).filter(|(c, _)| c.rows > 1) {
-        let have: usize = heights[c.row..c.row + c.rows].iter().sum::<usize>() + c.rows - 1;
-        if lines.len() > have {
-            heights[c.row + c.rows - 1] += lines.len() - have;
+impl GridWork {
+    /// Draws the grid into `lines`: a character canvas holding every cell's box and
+    /// content (`contents`, at `columns`). A wide character takes two canvas columns,
+    /// the second left as a NUL that is dropped.
+    fn draw(&mut self, layout: &Layout) {
+        let contents = &self.contents[..layout.cells.len()];
+        let heights = &mut self.heights;
+        refill(heights, 1, layout.rows);
+        for (c, lines) in layout.cells.iter().zip(contents).filter(|(c, _)| c.rows == 1) {
+            heights[c.row] = heights[c.row].max(lines.len());
         }
-    }
-    let mut ys = vec![0usize];
-    for h in &heights {
-        ys.push(ys.last().copied().unwrap_or(0) + h + 1);
-    }
-    let mut xs = vec![0usize];
-    for w in columns {
-        xs.push(xs.last().copied().unwrap_or(0) + w + 1);
-    }
-    let (height, wide) = (ys[layout.rows] + 1, xs[layout.cols] + 1);
-    let mut canvas = vec![vec![' '; wide]; height];
-    for (c, lines) in layout.cells.iter().zip(contents) {
-        let (y0, y1) = (ys[c.row], ys[c.row + c.rows]);
-        let (x0, x1) = (xs[c.col], xs[c.col + c.cols]);
-        let rule =
-            |y: usize| if y == ys[layout.head_rows] && layout.head_rows > 0 { '=' } else { '-' };
-        for y in [y0, y1] {
-            let ch = rule(y);
-            for (x, cell) in canvas[y].iter_mut().enumerate().take(x1 + 1).skip(x0) {
-                if x == x0 || x == x1 {
-                    *cell = '+';
-                } else if *cell != '+' {
-                    *cell = ch;
-                }
+        for (c, lines) in layout.cells.iter().zip(contents).filter(|(c, _)| c.rows > 1) {
+            let have: usize = heights[c.row..c.row + c.rows].iter().sum::<usize>() + c.rows - 1;
+            if lines.len() > have {
+                heights[c.row + c.rows - 1] += lines.len() - have;
             }
         }
-        for row in canvas.iter_mut().take(y1).skip(y0 + 1) {
-            for x in [x0, x1] {
-                if row[x] != '+' {
-                    row[x] = '|';
-                }
-            }
-        }
-        for (i, line) in lines.iter().enumerate() {
-            let mut x = x0 + 2;
-            for ch in line.chars() {
-                canvas[y0 + 1 + i][x] = ch;
-                x += 1;
-                if width(ch.encode_utf8(&mut [0; 4])) == 2 {
-                    canvas[y0 + 1 + i][x] = '\0';
+        offsets(&mut self.ys, heights);
+        offsets(&mut self.xs, &self.columns);
+        let (ys, xs) = (&self.ys, &self.xs);
+        let (height, wide) = (ys[layout.rows] + 1, xs[layout.cols] + 1);
+        let canvas = &mut self.canvas;
+        refill(canvas, ' ', height * wide);
+        for (c, lines) in layout.cells.iter().zip(contents) {
+            let (y0, y1) = (ys[c.row], ys[c.row + c.rows]);
+            let (x0, x1) = (xs[c.col], xs[c.col + c.cols]);
+            let header_rule = |y: usize| layout.head_rows > 0 && y == ys[layout.head_rows];
+            draw_box(canvas, wide, (y0, y1), (x0, x1), header_rule);
+            for (i, line) in lines.iter().enumerate() {
+                let row = &mut canvas[(y0 + 1 + i) * wide..(y0 + 2 + i) * wide];
+                let mut x = x0 + 2;
+                for ch in line.chars() {
+                    row[x] = ch;
                     x += 1;
+                    if width(ch.encode_utf8(&mut [0; 4])) == 2 {
+                        row[x] = '\0';
+                        x += 1;
+                    }
                 }
             }
         }
+        self.lines.clear();
+        let mut text = std::mem::take(&mut self.text);
+        for row in canvas.chunks(wide) {
+            text.clear();
+            text.extend(row.iter().filter(|&&c| c != '\0'));
+            self.lines.push(text.trim_end());
+        }
+        self.text = text;
     }
-    canvas
-        .into_iter()
-        .map(|row| {
-            row.into_iter().filter(|&c| c != '\0').collect::<String>().trim_end().to_owned()
-        })
-        .collect()
+}
+
+/// Fills `out` with the running offsets of `sizes`, each followed by a border: 0, then
+/// one past each size.
+fn offsets(out: &mut Vec<usize>, sizes: &[usize]) {
+    out.clear();
+    out.push(0);
+    for s in sizes {
+        out.push(out.last().copied().unwrap_or(0) + s + 1);
+    }
+}
+
+/// Draws a cell's box on the canvas, `wide` columns per row: rows `y0` and `y1`,
+/// columns `x0` and `x1`. `header_rule(y)` tells whether the rule at `y` is the
+/// header separator ("=").
+fn draw_box(
+    canvas: &mut [char],
+    wide: usize,
+    (y0, y1): (usize, usize),
+    (x0, x1): (usize, usize),
+    header_rule: impl Fn(usize) -> bool,
+) {
+    for y in [y0, y1] {
+        let ch = if header_rule(y) { '=' } else { '-' };
+        for (x, cell) in canvas[y * wide..(y + 1) * wide].iter_mut().enumerate() {
+            if x < x0 || x > x1 {
+                continue;
+            }
+            if x == x0 || x == x1 {
+                *cell = '+';
+            } else if *cell != '+' {
+                *cell = ch;
+            }
+        }
+    }
+    for y in y0 + 1..y1 {
+        for x in [x0, x1] {
+            let cell = &mut canvas[y * wide + x];
+            if *cell != '+' {
+                *cell = '|';
+            }
+        }
+    }
 }

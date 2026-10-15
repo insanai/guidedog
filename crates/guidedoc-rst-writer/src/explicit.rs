@@ -1,6 +1,8 @@
 //! Explicit markup that is not a directive: comments, footnotes and citations,
 //! hyperlink targets, and substitution definitions.
 
+use std::fmt::Write as _;
+
 use guidedoc::{AttributeKey, LinkKind, NodeFlag, NodeId, NodeKind};
 
 use crate::escape::is_simple_name;
@@ -46,10 +48,12 @@ impl Writer<'_, '_> {
         let label = self.doc.node_text(id);
         self.class_prefix(id, &[]);
         self.block_start();
-        let marker = format!(".. [{label}] ");
+        let mut marker = self.buffer();
+        let _ = write!(marker, ".. [{label}] ");
         let first = self.doc.first_child(id);
         let same_line = first.is_some_and(|f| self.kind(f) == NodeKind::Paragraph);
         self.push_frame(3, &marker);
+        self.recycle(marker);
         if !same_line {
             self.detach_marker();
         }
@@ -100,7 +104,7 @@ impl Writer<'_, '_> {
             self.lossy(id, "a target without a name", "an anonymous target");
         }
         self.block_start();
-        self.line(&format!(".. {head}:{body}"));
+        self.line_fmt(format_args!(".. {head}:{body}"));
         self.block_end();
     }
 
@@ -130,6 +134,7 @@ impl Writer<'_, '_> {
         for line in &lines {
             self.line(line);
         }
+        self.give_lines(lines);
         self.pop_frame();
         self.block_end();
     }
@@ -167,10 +172,17 @@ impl Writer<'_, '_> {
 
     /// Writes the substitution definitions inline images of the last block needed.
     pub fn flush_substitutions(&mut self) {
-        let pending = std::mem::take(&mut self.pending_images);
-        for (name, image, wrapper) in pending {
-            self.image_directive(&format!("|{name}| image"), image, wrapper);
+        let mut pending = std::mem::take(&mut self.pending_images);
+        let mut head = self.buffer();
+        for (name, image, wrapper) in pending.drain(..) {
+            head.clear();
+            let _ = write!(head, "|{name}| image");
+            self.image_directive(&head, image, wrapper);
+            self.recycle(name);
         }
+        self.recycle(head);
+        // Kept for the next block's images.
+        self.pending_images = pending;
     }
 
     /// The `:alt:`-like attribute values of an image.

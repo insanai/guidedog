@@ -40,7 +40,7 @@ mod tests;
 
 use guidedoc::{Conformance, Fail, Message, ROOT, RenderContext, Renderer, Severity, Status};
 
-use state::Writer;
+use state::{Writer, WriterWork};
 
 /// The writer's version: the project version every crate inherits.
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -89,7 +89,8 @@ pub fn render(ctx: &mut RenderContext<'_>) -> Result<(), Fail> {
 }
 
 /// Writes `ctx.doc` as reStructuredText through `ctx.out`, laid out by `settings`. It
-/// borrows the context for the call and keeps nothing. What cannot be written exactly
+/// borrows the context for the call and keeps only its working storage, in the
+/// context's scratch store. What cannot be written exactly
 /// is reported as a Note ([`LOSSY`]) and written as closely as reStructuredText allows;
 /// the render fails only when content nests past the limits (`Limit`).
 pub fn render_with(ctx: &mut RenderContext<'_>, settings: Settings) -> Result<(), Fail> {
@@ -97,21 +98,25 @@ pub fn render_with(ctx: &mut RenderContext<'_>, settings: Settings) -> Result<()
         return Ok(());
     }
     let settings = Settings { width: settings.width.max(20) };
-    let mut w = Writer::new(ctx, settings);
+    let mut work: WriterWork = ctx.take_scratch();
+    let mut text = std::mem::take(&mut work.text);
+    let mut w = Writer::new(ctx, settings, work);
     w.scan_titles();
     w.blocks(ROOT);
     w.flush_substitutions();
-    let mut text = String::with_capacity(w.out.len() + 256);
+    text.clear();
+    text.reserve(w.out.len() + 256);
     w.roles.write(&mut text);
     text.push_str(&w.out);
     let status = w.status;
-    drop(w);
     let end = text.trim_end_matches('\n').len();
     text.truncate(end);
     if !text.is_empty() {
         text.push('\n');
     }
-    ctx.out.emit(&text);
+    let work = w.finish(text);
+    ctx.out.emit(&work.text);
+    ctx.put_scratch(work);
     match status {
         Status::Ok => Ok(()),
         status => Err(Fail::new(status)),

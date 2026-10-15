@@ -4,6 +4,7 @@
 
 use guidedoc::{AttributeKey, NodeId, NodeKind};
 
+use crate::inline::Lines;
 use crate::state::Writer;
 
 /// Classes the Markdown reader adds to mirror myst-parser's HTML, which a
@@ -29,32 +30,38 @@ impl Writer<'_, '_> {
         id: NodeId,
         preserve: bool,
         finish: impl FnOnce(&mut crate::inline::Inline),
-    ) -> Vec<String> {
-        let saved = std::mem::take(&mut self.inline);
+    ) -> Lines {
+        let saved = self.begin_inline(preserve);
         let saved_mode = self.in_inline;
-        self.inline.clear(preserve);
         self.in_inline = true;
         self.inline_children(id);
         self.in_inline = saved_mode;
         finish(&mut self.inline);
         let first = self.settings.width.saturating_sub(self.first_indentation());
         let first = first.max(self.settings.width / 3);
-        let lines = self.inline.wrap(first, self.available(), self.tight_wrap);
-        self.inline = saved;
+        let mut lines = self.take_lines();
+        let (rest, tight) = (self.available(), self.tight_wrap);
+        self.inline.wrap(first, rest, tight, &mut lines);
+        let used = self.end_inline(saved);
+        self.give_inline(used);
         lines
     }
 
     /// Collects the inline children of `id` as one line (for titles, directive
-    /// arguments, and terms).
+    /// arguments, and terms). Give the line back with `recycle` when done.
     pub fn inline_line(&mut self, id: NodeId) -> String {
-        let saved = std::mem::take(&mut self.inline);
+        let saved = self.begin_inline(false);
         let saved_mode = self.in_inline;
-        self.inline.clear(false);
         self.in_inline = true;
         self.inline_children(id);
         self.in_inline = saved_mode;
-        let line = std::mem::replace(&mut self.inline, saved).buf;
-        line.trim_end().to_owned()
+        let mut used = self.end_inline(saved);
+        let spare = self.buffer();
+        let mut line = std::mem::replace(&mut used.buf, spare);
+        self.give_inline(used);
+        let end = line.trim_end().len();
+        line.truncate(end);
+        line
     }
 
     /// Writes lines as one block.
@@ -99,7 +106,7 @@ impl Writer<'_, '_> {
         }
         let name = if self.sphinx { "rst-class" } else { "class" };
         self.block_start();
-        self.line(&format!(".. {name}:: {classes}"));
+        self.line_fmt(format_args!(".. {name}:: {classes}"));
         self.block_end();
     }
 
@@ -108,16 +115,17 @@ impl Writer<'_, '_> {
         self.separate(None);
         self.block_start();
         if argument.is_empty() {
-            self.line(&format!(".. {name}::"));
+            self.line_fmt(format_args!(".. {name}::"));
         } else {
-            self.line(&format!(".. {name}:: {argument}"));
+            self.line_fmt(format_args!(".. {name}:: {argument}"));
         }
         self.push_frame(3, "");
         for (key, value) in options {
             if value.is_empty() {
-                self.line(&format!(":{key}:"));
+                self.line_fmt(format_args!(":{key}:"));
             } else {
-                self.line(&format!(":{key}: {}", value.replace('\n', " ")));
+                let value = OneLine(value);
+                self.line_fmt(format_args!(":{key}: {value}"));
             }
         }
         self.pop_frame();
@@ -192,6 +200,7 @@ impl Writer<'_, '_> {
         if self.sphinx && classes == "centered" {
             let text = self.inline_line(id);
             self.directive_head("centered", &text, &[]);
+            self.recycle(text);
             return;
         }
         if let Some(only) = self.lone_image(id) {
@@ -215,10 +224,11 @@ impl Writer<'_, '_> {
         if lines.iter().all(String::is_empty) {
             // An escaped space is a paragraph with no text.
             self.write_block_lines(&["\\ ".to_owned()]);
-            return;
+        } else {
+            self.write_block_lines(&lines);
+            self.flush_substitutions();
         }
-        self.write_block_lines(&lines);
-        self.flush_substitutions();
+        self.give_lines(lines);
     }
 
     /// Returns the image a paragraph holds alone (perhaps inside a link), which is
@@ -237,6 +247,7 @@ impl Writer<'_, '_> {
     pub fn plain_block(&mut self, id: NodeId) {
         let lines = self.collect(id, false, |inline| inline.guard_literal_marker());
         self.write_block_lines(&lines);
+        self.give_lines(lines);
     }
 
     /// `.. rubric:: text`.
@@ -245,6 +256,7 @@ impl Writer<'_, '_> {
         let mut options = Vec::new();
         self.common_options(id, &[], &mut options);
         self.directive_head("rubric", &text, &options);
+        self.recycle(text);
     }
 
     /// `.. parsed-literal::` with its inline content, white space kept.
@@ -253,12 +265,13 @@ impl Writer<'_, '_> {
         self.common_options(id, &[], &mut options);
         self.directive_head("parsed-literal", "", &options);
         self.push_frame(3, "");
-        let lines = self.collect(id, true, |_| {});
-        let lines = trim_blank_ends(lines);
+        let collected = self.collect(id, true, |_| {});
+        let lines = trim_blank_ends(&collected);
         if lines.iter().all(|l| l.is_empty() || l.starts_with(' ')) {
             self.lossy(id, "a parsed literal whose every line is indented", "its lines dedented");
         }
-        self.write_block_lines(&lines);
+        self.write_block_lines(lines);
+        self.give_lines(collected);
         self.pop_frame();
         self.block_end();
     }
@@ -305,6 +318,7 @@ impl Writer<'_, '_> {
                 for line in &lines {
                     self.line(line);
                 }
+                self.give_lines(lines);
                 self.pop_frame();
                 self.block_end();
             } else {
@@ -333,11 +347,23 @@ impl Writer<'_, '_> {
 }
 
 /// Drops empty lines at both ends.
-pub(crate) fn trim_blank_ends(mut lines: Vec<String>) -> Vec<String> {
-    while lines.last().is_some_and(|l| l.trim().is_empty()) {
-        lines.pop();
+pub(crate) fn trim_blank_ends(lines: &[String]) -> &[String] {
+    let end = lines.iter().rposition(|l| !l.trim().is_empty()).map_or(0, |i| i + 1);
+    let lead = lines[..end].iter().take_while(|l| l.trim().is_empty()).count();
+    &lines[lead..end]
+}
+
+/// Text written on one line: its line breaks become spaces as it is formatted.
+struct OneLine<'s>(&'s str);
+
+impl std::fmt::Display for OneLine<'_> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for (k, piece) in self.0.split('\n').enumerate() {
+            if k > 0 {
+                f.write_str(" ")?;
+            }
+            f.write_str(piece)?;
+        }
+        Ok(())
     }
-    let lead = lines.iter().take_while(|l| l.trim().is_empty()).count();
-    lines.drain(..lead);
-    lines
 }

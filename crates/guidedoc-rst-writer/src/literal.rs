@@ -56,13 +56,13 @@ impl Writer<'_, '_> {
             self.code_lines(id);
             return;
         }
-        let language = self.attr(id, AttributeKey::Language).unwrap_or("").to_owned();
+        let language = self.attr(id, AttributeKey::Language).unwrap_or("");
         let options = self.code_options(id);
         let name = if self.sphinx { "code-block" } else { "code" };
         if self.custom(id, "info").is_some() {
             self.lossy(id, "the words after a fence's language", "the language alone");
         }
-        self.directive_head(name, &language, &options);
+        self.directive_head(name, language, &options);
         self.code_lines(id);
     }
 

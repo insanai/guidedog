@@ -2,6 +2,8 @@
 //! containers, compounds, tables of contents, images and figures, and the directives
 //! the tree keeps as Directive nodes.
 
+use std::fmt::Write as _;
+
 use guidedoc::{
     AdmonitionKind, AttributeKey, LinkInfo, LinkKind, NodeFlag, NodeId, NodeKind, admonition_name,
     make_id,
@@ -177,15 +179,28 @@ impl Writer<'_, '_> {
     /// follows the block; `wrapper` is a link around it.
     pub fn inline_image(&mut self, id: NodeId, wrapper: Option<NodeId>) {
         self.lossy(id, "an image inside text", "a substitution reference to an image");
-        let alt = self.image_alt(id).unwrap_or_default();
-        let mut name = alt.split_whitespace().collect::<Vec<_>>().join(" ");
+        let mut alt = self.buffer();
+        match self.attr(id, AttributeKey::Alt) {
+            Some(text) => alt.push_str(text),
+            None => self.doc.plain_text(id, &mut alt),
+        }
+        // The alt text's words, one space apart.
+        let mut name = self.buffer();
+        for (k, word) in alt.split_whitespace().enumerate() {
+            if k > 0 {
+                name.push(' ');
+            }
+            name.push_str(word);
+        }
+        self.recycle(alt);
         if name.is_empty() || name.contains(['|', '`', '*', '\\']) {
-            name = format!("image-{}", self.pending_images.len() + 1);
+            name.clear();
+            let _ = write!(name, "image-{}", self.pending_images.len() + 1);
         }
         while self.pending_images.iter().any(|(n, _, _)| *n == name) {
             name.push('-');
         }
-        self.inline.markup(&format!("|{name}|"));
+        self.inline.markup_fmt(format_args!("|{name}|"));
         self.pending_images.push((name, id, wrapper));
     }
 
@@ -198,7 +213,7 @@ impl Writer<'_, '_> {
     /// it, which becomes `:target:`.
     pub fn image_directive(&mut self, head: &str, id: NodeId, wrapper: Option<NodeId>) {
         let link = self.doc.link_info(id).unwrap_or(LinkInfo::UNRESOLVED);
-        let uri = self.doc.text(link.destination).to_owned();
+        let uri = self.doc.text(link.destination);
         let mut options = self.image_options(id);
         if let Some(w) = wrapper {
             options.push(("target", self.link_target(w)));
@@ -206,7 +221,7 @@ impl Writer<'_, '_> {
         if !self.doc.text(link.title).is_empty() {
             self.lossy(id, "an image title", "the image without it");
         }
-        self.directive_head(head, &uri, &options);
+        self.directive_head(head, uri, &options);
     }
 
     fn image_options(&self, id: NodeId) -> Vec<Opt> {

@@ -73,18 +73,28 @@ impl Writer<'_, '_> {
     fn write_title(&mut self, text: &str, index: usize) {
         let c = ADORNMENTS[index % ADORNMENTS.len()];
         let overline = index >= ADORNMENTS.len();
-        let mut text = text.replace('\n', " ");
-        if starts_construct(&text) {
-            text.insert(0, '\\');
+        let mut title = self.buffer();
+        // Line breaks become spaces.
+        for (k, piece) in text.split('\n').enumerate() {
+            if k > 0 {
+                title.push(' ');
+            }
+            title.push_str(piece);
         }
-        let rule: String = std::iter::repeat_n(c, width(&text).max(4)).collect();
+        if starts_construct(&title) {
+            title.insert(0, '\\');
+        }
+        let mut rule = self.buffer();
+        rule.extend(std::iter::repeat_n(c, width(&title).max(4)));
         self.block_start();
         if overline {
             self.line(&rule);
         }
-        self.line(&text);
+        self.line(&title);
         self.line(&rule);
         self.block_end();
+        self.recycle(title);
+        self.recycle(rule);
     }
 
     /// The promoted document title.
@@ -93,6 +103,7 @@ impl Writer<'_, '_> {
         self.targets_naming(id);
         let text = self.inline_line(id);
         self.write_title(&text, 0);
+        self.recycle(text);
         if self.adornment_base < 2 {
             self.write_moved(None);
         }
@@ -104,6 +115,7 @@ impl Writer<'_, '_> {
         self.targets_naming(id);
         let text = self.inline_line(id);
         self.write_title(&text, 1);
+        self.recycle(text);
         self.write_moved(None);
     }
 
@@ -129,6 +141,7 @@ impl Writer<'_, '_> {
         if let Some(h) = heading {
             let text = self.inline_line(h);
             self.write_title(&text, self.adornment_base + level - 1);
+            self.recycle(text);
         } else {
             self.lossy(id, "a section without a heading", "its body alone");
         }
@@ -149,5 +162,6 @@ impl Writer<'_, '_> {
         let level = usize::try_from(self.doc.node(id).value.max(1)).unwrap_or(1);
         let text = self.inline_line(id);
         self.write_title(&text, self.adornment_base + level - 1);
+        self.recycle(text);
     }
 }

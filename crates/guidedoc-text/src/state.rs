@@ -6,7 +6,10 @@ use guidedoc::{
     stack_guard,
 };
 
+use std::fmt::Write as _;
+
 use crate::DEPTH_LIMIT;
+use crate::tables::Table;
 
 /// Sphinx's text builder MAXWIDTH.
 pub(crate) const WIDTH: usize = 70;
@@ -49,7 +52,7 @@ impl Numbers<'_> {
             if i > 0 {
                 out.push('.');
             }
-            out.push_str(&c.to_string());
+            let _ = write!(out, "{c}");
         }
         out.push_str(self.suffix);
         out.push(' ');
@@ -90,6 +93,15 @@ pub(crate) enum Fill {
     NoteLabel,
 }
 
+/// The renderer's storage, kept in the workspace's scratch between renders.
+#[derive(Debug, Default)]
+pub(crate) struct TextWork {
+    out: String,
+    spare: Vec<String>,
+    frames: Vec<Frame>,
+    tables: Vec<Table>,
+}
+
 pub(crate) struct State<'c, 'a> {
     ctx: &'c mut RenderContext<'a>,
     pub doc: Document<'a>,
@@ -101,6 +113,8 @@ pub(crate) struct State<'c, 'a> {
     /// Buffers for layouts, kept for reuse.
     spare: Vec<String>,
     frames: Vec<Frame>,
+    /// Table layouts, kept for reuse (nested tables take one each).
+    pub tables: Vec<Table>,
     /// Frames in use.
     depth: usize,
     /// The first frame of the current margin (a table cell starts its own).
@@ -127,17 +141,21 @@ pub(crate) struct State<'c, 'a> {
 }
 
 impl<'c, 'a> State<'c, 'a> {
-    pub fn new(ctx: &'c mut RenderContext<'a>) -> Self {
+    /// Starts a render with the storage in `work`; `finish` gives it back.
+    pub fn new(ctx: &'c mut RenderContext<'a>, work: TextWork) -> Self {
         let (doc, options, policy, limits) = (ctx.doc, ctx.options, ctx.policy, ctx.limits);
+        let TextWork { mut out, spare, frames, tables } = work;
+        out.clear();
         State {
             ctx,
             doc,
             options,
             policy,
             limits,
-            out: String::new(),
-            spare: Vec::new(),
-            frames: Vec::new(),
+            out,
+            spare,
+            frames,
+            tables,
             depth: 0,
             base: 0,
             width: WIDTH,
@@ -154,6 +172,20 @@ impl<'c, 'a> State<'c, 'a> {
             numbers: Numbers::default(),
             status: Status::Ok,
         }
+    }
+
+    /// Ends the render: writes the text to the context's output and returns the
+    /// render's status and the storage, for the next render.
+    pub fn finish(self) -> (Status, TextWork) {
+        let State { ctx, status, out, spare, frames, tables, .. } = self;
+        ctx.out.emit(&out);
+        (status, TextWork { out, spare, frames, tables })
+    }
+
+    /// Returns an empty string buffer, reused from earlier layouts; give it back with
+    /// `recycle`.
+    pub fn buffer(&mut self) -> String {
+        self.spare.pop().unwrap_or_default()
     }
 
     /// Finds a promoted title and sectnum settings.

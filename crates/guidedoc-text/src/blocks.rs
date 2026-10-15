@@ -1,6 +1,8 @@
 //! The dispatch over node kinds, and the plain blocks: titles, sections, paragraphs,
 //! lists, definition, field, and option lists, and line blocks.
 
+use std::fmt::Write as _;
+
 use guidedoc::{
     Arg, CORE_UNHANDLED_KIND, Label, ListInfo, ListStyle, NodeFlag, NodeId, NodeKind, arg_static,
     kind_name, label, split_label,
@@ -144,12 +146,13 @@ impl State<'_, '_> {
     /// Writes a paragraph; the first paragraph of a version note starts with "Added in
     /// version X: ".
     fn render_paragraph(&mut self, id: NodeId) {
-        let mut lead = String::new();
+        let mut lead = self.buffer();
         let before = id - 1;
         if id.0 > 0 && self.doc.kind(before) == NodeKind::VersionModified {
             self.version_label(before, &mut lead, true);
         }
         self.paragraph(id, &lead, Fill::Inlines);
+        self.recycle(lead);
     }
 
     fn version_label(&self, id: NodeId, out: &mut String, explained: bool) {
@@ -166,11 +169,12 @@ impl State<'_, '_> {
         let explained =
             self.doc.first_child(id).is_some_and(|f| self.doc.kind(f) == NodeKind::Paragraph);
         if !explained {
-            let mut lead = String::new();
+            let mut lead = self.buffer();
             self.version_label(id, &mut lead, false);
             self.block_start();
             self.write_wrapped(&lead);
             self.block_end();
+            self.recycle(lead);
         }
         self.render_blocks(id);
     }
@@ -180,11 +184,16 @@ impl State<'_, '_> {
         let text = self.lay_out(id, lead, Fill::Inlines);
         self.block_start();
         self.line_begin();
-        let line = text.replace('\n', " ");
-        self.put(&line);
+        // Line breaks become spaces.
+        for (k, piece) in text.split('\n').enumerate() {
+            if k > 0 {
+                self.put_char(' ');
+            }
+            self.put(piece);
+        }
         self.line_end();
         self.line_begin();
-        self.put_repeat(c, line.chars().count().max(1));
+        self.put_repeat(c, text.chars().count().max(1));
         self.line_end();
         self.block_end();
         self.recycle(text);
@@ -206,7 +215,7 @@ impl State<'_, '_> {
             self.title_line(id, c, "");
             return;
         };
-        let mut lead = String::new();
+        let mut lead = self.buffer();
         let secnumber = self.custom(section, "secnumber");
         if !secnumber.is_empty() {
             lead.push_str(secnumber);
@@ -216,6 +225,7 @@ impl State<'_, '_> {
             self.numbers.write(&mut lead, &self.numbers.counters[..self.sections]);
         }
         self.title_line(id, c, &lead);
+        self.recycle(lead);
     }
 
     /// Writes a block quote's blocks three spaces in.
@@ -230,7 +240,7 @@ impl State<'_, '_> {
     fn render_list(&mut self, id: NodeId) {
         let info = self.doc.list_info(id);
         let tight = self.doc.node(id).flags.has(NodeFlag::Tight);
-        let mut marker = String::new();
+        let mut marker = self.buffer();
         for (number, item) in (i64::from(info.start)..).zip(self.doc.children(id)) {
             marker.clear();
             write_marker(&mut marker, info, number);
@@ -241,6 +251,7 @@ impl State<'_, '_> {
                 self.blank = false;
             }
         }
+        self.recycle(marker);
         self.block_end();
     }
 
@@ -350,7 +361,9 @@ fn write_marker(out: &mut String, info: ListInfo, number: i64) {
     }
     match info.style {
         ListStyle::Bullet => {}
-        ListStyle::Arabic => out.push_str(&number.to_string()),
+        ListStyle::Arabic => {
+            let _ = write!(out, "{number}");
+        }
         ListStyle::LowerAlpha | ListStyle::UpperAlpha => {
             let base = if info.style == ListStyle::LowerAlpha { b'a' } else { b'A' };
             let offset = u8::try_from((number - 1).max(0) % 26).unwrap_or(0);

@@ -1,6 +1,8 @@
 //! Inline content as Sphinx's text builder writes it: emphasis as `*x*`, strong as
 //! `**x**`, literals in double quotes, a hard break as a line break, links as their text.
 
+use std::fmt::Write as _;
+
 use guidedoc::{
     Arg, AttributeKey, LinkKind, MediaKind, NodeFlag, NodeId, NodeKind, arg_int, arg_span,
     media_kind,
@@ -162,7 +164,7 @@ impl State<'_, '_> {
                 self.put(SYMBOLS[index % SYMBOLS.len()]);
             }
         } else if node.value > 0 && !citation {
-            self.put(&node.value.to_string());
+            let _ = write!(self.out, "{}", node.value);
         } else {
             self.put(self.doc.text(node.text));
         }

@@ -5,7 +5,7 @@
 use guidedoc::{
     Anchors, Arg, AttributeKey, Diagnostic, Document, Fail, Message, NodeId, NodeKind, ROOT,
     Region, RenderContext, RenderOptions, Severity, SourceSpan, StackGuard, arg_int,
-    build_anchors, diagnostic, kept_message,
+    build_anchors_into, diagnostic, kept_message,
 };
 
 use crate::messages::DEPTH_LIMIT;
@@ -68,26 +68,42 @@ pub(crate) struct State<'r, 'a> {
     pub notes: Vec<NodeId>,
 }
 
+/// The renderer's storage, kept in the workspace's scratch between renders.
+#[derive(Debug, Default)]
+pub(crate) struct TypstWork {
+    anchors: Anchors,
+    marks: Vec<u8>,
+    math: String,
+    key: String,
+    notes: Vec<NodeId>,
+}
+
 impl<'r, 'a> State<'r, 'a> {
-    /// Starts a render: builds the anchor table and the per-node marks.
-    pub fn new(ctx: &'r mut RenderContext<'a>, stack: StackGuard) -> Result<Self, Fail> {
+    /// Starts a render with the storage in `work`: builds the anchor table and the
+    /// per-node marks. `finish` gives the storage back.
+    pub fn new(
+        ctx: &'r mut RenderContext<'a>,
+        stack: StackGuard,
+        work: TypstWork,
+    ) -> Result<Self, Fail> {
         let doc = ctx.doc;
         let options = ctx.options;
-        let anchors = build_anchors(doc, options, true);
-        let mut marks = Vec::new();
+        let TypstWork { mut anchors, mut marks, mut math, mut key, mut notes } = work;
+        build_anchors_into(&mut anchors, doc, options, true);
+        marks.clear();
         if marks.try_reserve_exact(doc.node_count()).is_err() {
             return Err(Fail::capacity(Region::Scratch, doc.node_count() as u64, true));
         }
         marks.resize(doc.node_count(), 0);
-        let notes = (0..doc.node_count())
-            .map(NodeId::from_index)
-            .filter(|&i| {
-                matches!(
-                    doc.kind(i),
-                    NodeKind::Footnote | NodeKind::Citation | NodeKind::SubstitutionDefinition
-                )
-            })
-            .collect();
+        math.clear();
+        key.clear();
+        notes.clear();
+        notes.extend((0..doc.node_count()).map(NodeId::from_index).filter(|&i| {
+            matches!(
+                doc.kind(i),
+                NodeKind::Footnote | NodeKind::Citation | NodeKind::SubstitutionDefinition
+            )
+        }));
         let max_depth = ctx.limits.max_depth.max(32) + 64;
         Ok(State {
             ctx,
@@ -103,18 +119,21 @@ impl<'r, 'a> State<'r, 'a> {
             pre: false,
             column: 0,
             failure: None,
-            math: String::new(),
-            key: String::new(),
+            math,
+            key,
             notes,
         })
     }
 
-    /// Ends the render: the first error fails it.
-    pub fn finish(self) -> Result<(), Fail> {
-        match self.failure {
+    /// Ends the render: the first error fails it. Returns the result and the storage,
+    /// for the next render.
+    pub fn finish(self) -> (Result<(), Fail>, TypstWork) {
+        let result = match self.failure {
             Some(d) => Err(Fail::from_diagnostic(d)),
             None => Ok(()),
-        }
+        };
+        let State { anchors, marks, math, key, notes, .. } = self;
+        (result, TypstWork { anchors, marks, math, key, notes })
     }
 
     /// Records a diagnostic; under `keep_documents_with_errors` content errors become

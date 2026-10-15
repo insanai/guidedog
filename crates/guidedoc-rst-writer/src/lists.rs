@@ -1,45 +1,58 @@
 //! Bullet and enumerated lists, definition lists, field lists, option lists, and line
 //! blocks.
 
+use std::fmt::Write as _;
+
 use guidedoc::{ListInfo, ListStyle, NodeFlag, NodeId, NodeKind};
 
 use crate::state::Writer;
 
 /// Returns the marker of item `n` (from 0) of a list: "- " or "3. ".
+#[cfg(test)]
 pub(crate) fn marker(info: ListInfo, n: usize) -> String {
+    let mut out = String::new();
+    write_marker(&mut out, info, n);
+    out
+}
+
+/// Appends the marker of item `n` (from 0) of a list to `out`: "- " or "3. ".
+pub(crate) fn write_marker(out: &mut String, info: ListInfo, n: usize) {
     if info.style == ListStyle::Bullet {
         let bullet = match info.delimiter {
             b'*' | b'+' | b'-' => char::from(info.delimiter),
             _ => '•',
         };
-        return format!("{bullet} ");
+        out.push(bullet);
+        out.push(' ');
+        return;
     }
     let number = i64::from(info.start) + i64::try_from(n).unwrap_or(0);
-    let label = enumerator(info.style, number);
-    match info.delimiter {
-        b')' => format!("{label}) "),
-        b'(' => format!("({label}) "),
-        _ => format!("{label}. "),
+    if info.delimiter == b'(' {
+        out.push('(');
     }
+    write_enumerator(out, info.style, number);
+    out.push_str(if matches!(info.delimiter, b')' | b'(') { ") " } else { ". " });
 }
 
-/// The enumerator of `n` in a style.
-fn enumerator(style: ListStyle, n: i64) -> String {
+/// Appends the enumerator of `n` in a style.
+fn write_enumerator(out: &mut String, style: ListStyle, n: i64) {
+    let start = out.len();
     match style {
-        ListStyle::Bullet | ListStyle::Arabic => n.to_string(),
-        ListStyle::LowerAlpha => alpha(n).to_ascii_lowercase(),
-        ListStyle::UpperAlpha => alpha(n),
-        ListStyle::LowerRoman => roman(n).to_ascii_lowercase(),
-        ListStyle::UpperRoman => roman(n),
+        ListStyle::Bullet | ListStyle::Arabic => {
+            let _ = write!(out, "{n}");
+        }
+        ListStyle::LowerAlpha | ListStyle::UpperAlpha => {
+            let n = u8::try_from(n.clamp(1, 26)).unwrap_or(1);
+            out.push(char::from(b'A' + n - 1));
+        }
+        ListStyle::LowerRoman | ListStyle::UpperRoman => write_roman(out, n),
+    }
+    if matches!(style, ListStyle::LowerAlpha | ListStyle::LowerRoman) {
+        out[start..].make_ascii_lowercase();
     }
 }
 
-fn alpha(n: i64) -> String {
-    let n = u8::try_from(n.clamp(1, 26)).unwrap_or(1);
-    char::from(b'A' + n - 1).to_string()
-}
-
-fn roman(n: i64) -> String {
+fn write_roman(out: &mut String, n: i64) {
     const NUMERALS: [(i64, &str); 13] = [
         (1000, "M"),
         (900, "CM"),
@@ -56,14 +69,12 @@ fn roman(n: i64) -> String {
         (1, "I"),
     ];
     let mut n = n.clamp(1, 4999);
-    let mut out = String::new();
     for (value, numeral) in NUMERALS {
         while n >= value {
             out.push_str(numeral);
             n -= value;
         }
     }
-    out
 }
 
 impl Writer<'_, '_> {
@@ -103,8 +114,10 @@ impl Writer<'_, '_> {
                 self.blank = !(tight && previous_simple);
                 self.block_start();
             }
-            let marker = marker(info, n);
+            let mut marker = self.buffer();
+            write_marker(&mut marker, info, n);
             self.push_frame(marker.chars().count(), &marker);
+            self.recycle(marker);
             self.blocks(item);
             self.pop_frame();
             previous_simple = self.is_simple_item(item);
@@ -128,7 +141,7 @@ impl Writer<'_, '_> {
 
     /// One item; a glossary writes several terms of one item on consecutive lines.
     pub fn definition_item(&mut self, item: NodeId, glossary: bool) {
-        let mut term_line = String::new();
+        let mut term_line = self.buffer();
         let mut definitions = 0;
         self.block_start();
         for part in self.doc.children(item) {
@@ -137,15 +150,21 @@ impl Writer<'_, '_> {
                     if !term_line.is_empty() {
                         self.term_line(&term_line, item, glossary);
                     }
-                    term_line = guard_classifier(&self.inline_line(part));
+                    term_line.clear();
+                    let term = self.inline_line(part);
+                    push_guarded(&mut term_line, &term);
+                    self.recycle(term);
                 }
                 NodeKind::Classifier => {
                     term_line.push_str(" : ");
-                    term_line.push_str(&self.inline_line(part));
+                    let classifier = self.inline_line(part);
+                    term_line.push_str(&classifier);
+                    self.recycle(classifier);
                 }
                 _ => {
                     if !term_line.is_empty() {
-                        self.line(&std::mem::take(&mut term_line));
+                        self.line(&term_line);
+                        term_line.clear();
                     }
                     definitions += 1;
                     if definitions > 1 {
@@ -164,6 +183,7 @@ impl Writer<'_, '_> {
                 self.lossy(item, "a term without a definition", "the term alone");
             }
         }
+        self.recycle(term_line);
         self.block_end();
     }
 
@@ -261,9 +281,11 @@ impl Writer<'_, '_> {
             // The address field keeps its line breaks, written as they are.
             self.block_start();
             self.push_frame(3, &format!(":{name}: "));
-            for line in self.collect(lines, true, |_| {}) {
-                self.line(&line);
+            let lines = self.collect(lines, true, |_| {});
+            for line in lines.iter() {
+                self.line(line);
             }
+            self.give_lines(lines);
             self.pop_frame();
             self.block_end();
             return;
@@ -356,6 +378,7 @@ impl Writer<'_, '_> {
             for line in &lines {
                 self.line(line);
             }
+            self.give_lines(lines);
             self.pop_frame();
         }
     }
@@ -363,22 +386,32 @@ impl Writer<'_, '_> {
 
 impl Writer<'_, '_> {
     /// A field name's inline content on one line, its colons escaped.
+    /// Give the line back with `recycle` when done.
     fn field_name_line(&mut self, id: NodeId) -> String {
-        let saved = std::mem::take(&mut self.inline);
+        let saved = self.begin_inline(false);
         let saved_mode = self.in_inline;
-        self.inline.clear(false);
         self.inline.colons = true;
         self.in_inline = true;
         self.inline_children(id);
         self.in_inline = saved_mode;
-        let line = std::mem::replace(&mut self.inline, saved).buf;
-        line.trim_end().to_owned()
+        let mut used = self.end_inline(saved);
+        let spare = self.buffer();
+        let mut line = std::mem::replace(&mut used.buf, spare);
+        self.give_inline(used);
+        let end = line.trim_end().len();
+        line.truncate(end);
+        line
     }
 }
 
-/// Escapes " : " in a term, which would start a classifier.
-fn guard_classifier(term: &str) -> String {
-    term.replace(" : ", " \\: ")
+/// Appends a term to `out`, escaping " : ", which would start a classifier.
+fn push_guarded(out: &mut String, term: &str) {
+    for (k, piece) in term.split(" : ").enumerate() {
+        if k > 0 {
+            out.push_str(" \\: ");
+        }
+        out.push_str(piece);
+    }
 }
 
 #[cfg(test)]

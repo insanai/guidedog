@@ -11,8 +11,17 @@ use crate::walk::{Close, Visit};
 /// and backlinks use the ids of the anchor table, as Docutils numbers them.
 #[derive(Debug, Default)]
 pub(crate) struct Notes {
-    /// Per note: its references, in document order; empty when nothing refers to notes.
-    references: Vec<Vec<NodeId>>,
+    /// Every (note, reference) pair, sorted: a note's references are a run in document
+    /// order.
+    references: Vec<(NodeId, NodeId)>,
+}
+
+impl Notes {
+    /// Returns the references of `note`, in document order.
+    fn references_of(&self, note: NodeId) -> impl Iterator<Item = NodeId> + '_ {
+        let start = self.references.partition_point(|&(n, _)| n < note);
+        self.references[start..].iter().take_while(move |&&(n, _)| n == note).map(|&(_, r)| r)
+    }
 }
 
 /// The footnote symbols of Docutils, in order.
@@ -30,7 +39,8 @@ impl Html<'_, '_> {
     pub fn build_notes(&mut self) {
         let doc = self.doc;
         let n = doc.node_count();
-        let mut references: Vec<Vec<NodeId>> = Vec::new();
+        let references = &mut self.notes.references;
+        references.clear();
         for i in 0..n {
             let id = NodeId::from_index(i);
             if !is_note_reference(doc.kind(id)) {
@@ -42,12 +52,10 @@ impl Html<'_, '_> {
             if l.kind != LinkKind::Internal || l.resolved.index() >= n {
                 continue;
             }
-            if references.is_empty() {
-                references.resize_with(n, Vec::new);
-            }
-            references[l.resolved.index()].push(id);
+            references.push((l.resolved, id));
         }
-        self.notes = Notes { references };
+        // Unstable sorting does not allocate; the pairs are distinct.
+        references.sort_unstable();
     }
 
     /// Writes a note's or reference's number, symbol, or label.
@@ -89,9 +97,8 @@ impl Html<'_, '_> {
         self.w.put("<p class=\"label\"><span class=\"label-text\">[");
         self.write_note_label(id);
         self.w.put("]</span>");
-        let references = self.notes.references.get(id.index()).map_or(&[][..], Vec::as_slice);
-        let count = references.len();
-        for (k, &r) in references.iter().enumerate() {
+        let count = self.notes.references_of(id).count();
+        for (k, r) in self.notes.references_of(id).enumerate() {
             let target = if self.w.reference { None } else { self.anchors.anchor_of(r) };
             write_backref(&mut self.w, target.unwrap_or(""), if count > 1 { k + 1 } else { 0 });
         }

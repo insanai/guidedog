@@ -33,7 +33,7 @@ struct TableCell {
 }
 
 #[derive(Debug, Default)]
-struct Table {
+pub(crate) struct Table {
     cells: Vec<TableCell>,
     /// rows * columns: the index of the cell covering each place.
     grid: Vec<Option<usize>>,
@@ -61,14 +61,18 @@ impl State<'_, '_> {
     pub fn render_table(&mut self, id: NodeId) {
         let doc = self.doc;
         if let Some(title) = doc.first_child(id).filter(|&t| doc.kind(t) == NodeKind::Title) {
-            let mut lead = self.custom(id, "number-label").to_owned();
+            let mut lead = self.buffer();
+            lead.push_str(self.custom(id, "number-label"));
             if !lead.is_empty() {
                 lead.push(' ');
             }
             self.paragraph(title, &lead, Fill::Inlines);
+            self.recycle(lead);
         }
-        let mut t = self.table_shape(id);
+        let mut t = self.tables.pop().unwrap_or_default();
+        self.table_shape(id, &mut t);
         if t.rows == 0 {
+            self.tables.push(t);
             return;
         }
         self.place_cells(id, &mut t);
@@ -80,7 +84,8 @@ impl State<'_, '_> {
         self.choose_widths(&mut t);
         for i in 0..t.cells.len() {
             let width = t.span_width(&t.cells[i]);
-            t.cells[i].text = self.cell_layout(t.cells[i].id, width, false);
+            let text = self.cell_layout(t.cells[i].id, width, false);
+            t.cells[i].text = text;
         }
         choose_heights(&mut t);
         self.block_start();
@@ -92,15 +97,17 @@ impl State<'_, '_> {
         }
         self.draw_border(&t, t.rows);
         self.block_end();
-        for cell in t.cells {
+        for cell in t.cells.drain(..) {
             self.recycle(cell.text);
         }
+        self.tables.push(t);
     }
 
     /// Counts rows and columns and finds the header rows.
-    fn table_shape(&self, id: NodeId) -> Table {
+    fn table_shape(&self, id: NodeId, t: &mut Table) {
         let doc = self.doc;
-        let mut t = Table::default();
+        t.cells.clear();
+        (t.rows, t.columns, t.head) = (0, 0, 0);
         let mut first_width = 0;
         for part in doc.children(id) {
             let kind = doc.kind(part);
@@ -125,11 +132,10 @@ impl State<'_, '_> {
         if t.head == t.rows {
             t.head = 0;
         }
-        t.grid = vec![None; t.rows * t.columns];
-        t.widths = vec![1; t.columns];
-        t.least = vec![1; t.columns];
-        t.heights = vec![0; t.rows];
-        t
+        refill(&mut t.grid, None, t.rows * t.columns);
+        refill(&mut t.widths, 1, t.columns);
+        refill(&mut t.least, 1, t.columns);
+        refill(&mut t.heights, 0, t.rows);
     }
 
     /// Puts each cell in the first free column of its row, as grid tables do.
@@ -252,6 +258,12 @@ impl State<'_, '_> {
         }
         self.line_end();
     }
+}
+
+/// Makes `v` hold `n` copies of `value`, reusing its storage.
+fn refill<T: Clone>(v: &mut Vec<T>, value: T, n: usize) {
+    v.clear();
+    v.resize(n, value);
 }
 
 /// Makes each row as tall as its tallest cell; a cell spanning rows that needs more

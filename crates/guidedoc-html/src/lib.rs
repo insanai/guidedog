@@ -26,10 +26,11 @@ mod tables;
 mod walk;
 
 use guidedoc::{
-    Conformance, Fail, Message, ROOT, RenderContext, Renderer, Severity, Status, build_anchors,
+    Conformance, Fail, Message, ROOT, RenderContext, Renderer, Severity, Status,
+    build_anchors_into,
 };
 
-use state::Html;
+use state::{Html, HtmlWork};
 
 /// The renderer's version: the project version every crate inherits.
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -56,16 +57,26 @@ pub fn renderer() -> Renderer {
 /// Writes `ctx.doc` as HTML through `ctx.out`: a whole page when
 /// `ctx.options.standalone`, else a fragment, and the CommonMark reference renderer's
 /// bytes when `ctx.options.reference_profile`. It borrows the context for the call and
-/// keeps nothing. Problems go to the context's reports; the render fails with the
-/// status of the first error: raw content or a URL the policy refuses (`Policy`), an
-/// unresolved reference (`InvalidInput`), or nesting past the limits (`Limit`).
+/// keeps only its working storage, in the context's scratch store. Problems go to the
+/// context's reports; the render fails with the status of the first error: raw content
+/// or a URL the policy refuses (`Policy`), an unresolved reference (`InvalidInput`), or
+/// nesting past the limits (`Limit`).
 pub fn render(ctx: &mut RenderContext<'_>) -> Result<(), Fail> {
     if ctx.doc.node_count() == 0 {
         return Ok(());
     }
     let reference = ctx.options.reference_profile;
-    let anchors = build_anchors(ctx.doc, ctx.options, !reference);
-    let mut h = Html::new(ctx, anchors);
+    let mut work = ctx.take_scratch::<HtmlWork>();
+    build_anchors_into(&mut work.anchors, ctx.doc, ctx.options, !reference);
+    let mut h = Html::new(ctx, &mut work);
+    let result = render_with(&mut h);
+    h.finish(&mut work);
+    ctx.put_scratch(work);
+    result
+}
+
+/// Renders the document with the renderer's state.
+fn render_with(h: &mut Html<'_, '_>) -> Result<(), Fail> {
     h.build_notes();
     h.scan_document();
     let standalone = h.options.standalone;

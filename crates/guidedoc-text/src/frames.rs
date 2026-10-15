@@ -19,10 +19,12 @@ impl State<'_, '_> {
         let mut name = if kind == AdmonitionKind::Generic {
             match title {
                 Some(t) => self.lay_out(t, "", Fill::Inlines),
-                None => String::new(),
+                None => self.buffer(),
             }
         } else {
-            admonition_label(self.options, kind).to_owned()
+            let mut name = self.buffer();
+            name.push_str(admonition_label(self.options, kind));
+            name
         };
         if name.is_empty() {
             name.push_str("Admonition");
@@ -34,6 +36,7 @@ impl State<'_, '_> {
             self.push_frame(name.chars().count(), &name);
             self.render_node(last, crate::blocks::Context::Block);
             self.pop_frame();
+            self.recycle(name);
             return;
         }
         self.block_start();
@@ -41,6 +44,7 @@ impl State<'_, '_> {
         self.put(name.trim_end_matches(' '));
         self.line_end();
         self.block_end();
+        self.recycle(name);
         self.push_frame(INDENT, "");
         self.render_blocks(id);
         self.pop_frame();
@@ -76,7 +80,8 @@ impl State<'_, '_> {
     /// Writes the image, the caption with its number, and the legend.
     pub fn render_figure(&mut self, id: NodeId) {
         let doc = self.doc;
-        let mut lead = self.custom(id, "number-label").to_owned();
+        let mut lead = self.buffer();
+        lead.push_str(self.custom(id, "number-label"));
         if !lead.is_empty() {
             lead.push(' ');
         }
@@ -94,6 +99,7 @@ impl State<'_, '_> {
                 self.render_blocks(part);
             }
         }
+        self.recycle(lead);
     }
 
     /// Writes a footnote or citation as "[label] text" with a hanging indent.
@@ -235,12 +241,19 @@ impl State<'_, '_> {
             self.put(number);
             self.put(". ");
         } else if self.numbers.numbered(counters.len()) {
-            let mut lead = String::new();
+            let mut lead = self.buffer();
             self.numbers.write(&mut lead, counters);
             self.put(&lead);
+            self.recycle(lead);
         }
         let text = self.lay_out(section + 1, "", Fill::Inlines);
-        self.put(&text.replace('\n', " "));
+        // Line breaks become spaces.
+        for (k, piece) in text.split('\n').enumerate() {
+            if k > 0 {
+                self.put_char(' ');
+            }
+            self.put(piece);
+        }
         self.line_end();
         self.recycle(text);
     }

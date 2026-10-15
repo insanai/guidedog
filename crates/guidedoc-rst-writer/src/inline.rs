@@ -1,6 +1,9 @@
 //! Inline content: the buffer a block collects its inline markup in, with the places
 //! where a line may break, and the wrapping that writes it as lines.
 
+use std::fmt;
+use std::ops::{Deref, DerefMut};
+
 use crate::escape::{
     is_adornment, may_follow_markup, may_precede_markup, push_text, starts_construct, width,
 };
@@ -22,6 +25,63 @@ pub(crate) struct Inline {
     pub preserve: bool,
     /// Escape colons in text (a field name, which a colon would end).
     pub colons: bool,
+    /// Room for escaped text and formatted markup, reused.
+    escaped: String,
+    piece: String,
+    /// The break points `wrap` uses, reused.
+    points: Vec<usize>,
+    /// Lines `wrap` splits again at line breaks, reused.
+    split: Lines,
+}
+
+/// Lines of output that keep their strings when cleared, so wrapping paragraph after
+/// paragraph reuses them. It dereferences to the lines in use.
+#[derive(Debug, Default)]
+pub(crate) struct Lines {
+    rows: Vec<String>,
+    len: usize,
+}
+
+impl Lines {
+    /// Forgets every line, keeping the strings for the next ones.
+    pub fn clear(&mut self) {
+        self.len = 0;
+    }
+
+    /// Appends a line holding `s`.
+    pub fn push(&mut self, s: &str) {
+        match self.rows.get_mut(self.len) {
+            Some(row) => {
+                row.clear();
+                row.push_str(s);
+            }
+            None => self.rows.push(s.to_owned()),
+        }
+        self.len += 1;
+    }
+}
+
+impl Deref for Lines {
+    type Target = [String];
+
+    fn deref(&self) -> &[String] {
+        &self.rows[..self.len]
+    }
+}
+
+impl<'l> IntoIterator for &'l Lines {
+    type Item = &'l String;
+    type IntoIter = std::slice::Iter<'l, String>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
+}
+
+impl DerefMut for Lines {
+    fn deref_mut(&mut self) -> &mut [String] {
+        &mut self.rows[..self.len]
+    }
 }
 
 impl Inline {
@@ -40,11 +100,23 @@ impl Inline {
         if s.is_empty() {
             return;
         }
-        let mut escaped = String::with_capacity(s.len() + 4);
-        push_text(&mut escaped, s, None);
+        let mut escaped = std::mem::take(&mut self.escaped);
+        escaped.clear();
         if self.colons {
-            escaped = escape_colons(&escaped);
+            let mut plain = std::mem::take(&mut self.piece);
+            plain.clear();
+            push_text(&mut plain, s, None);
+            push_colons_escaped(&mut escaped, &plain);
+            self.piece = plain;
+        } else {
+            push_text(&mut escaped, s, None);
         }
+        self.push_escaped(&escaped);
+        self.escaped = escaped;
+    }
+
+    /// Appends escaped text, recording its break opportunities.
+    fn push_escaped(&mut self, escaped: &str) {
         if self.markup_end {
             let first = escaped.chars().next().unwrap_or(' ');
             if !(first == '\\' || may_follow_markup(first)) {
@@ -53,7 +125,7 @@ impl Inline {
         }
         self.markup_end = false;
         if self.preserve {
-            self.buf.push_str(&escaped);
+            self.buf.push_str(escaped);
             return;
         }
         let bytes = escaped.as_bytes();
@@ -107,6 +179,15 @@ impl Inline {
         self.markup_end = true;
     }
 
+    /// Appends a whole piece of markup formatted from `args` (see `markup`).
+    pub fn markup_fmt(&mut self, args: fmt::Arguments<'_>) {
+        let mut piece = std::mem::take(&mut self.piece);
+        piece.clear();
+        let _ = fmt::write(&mut piece, args);
+        self.markup(&piece);
+        self.piece = piece;
+    }
+
     /// Appends text that is neither markup nor to be escaped (already escaped).
     pub fn raw(&mut self, s: &str) {
         self.buf.push_str(s);
@@ -120,18 +201,21 @@ impl Inline {
         }
     }
 
-    /// Breaks the buffer into lines: the first at most `first` columns wide, the
-    /// others `rest`. Lines that would start another construct are escaped.
-    pub fn wrap(&self, first: usize, rest: usize, tight: bool) -> Vec<String> {
+    /// Breaks the buffer into `out`'s lines: the first at most `first` columns wide,
+    /// the others `rest`. Lines that would start another construct are escaped.
+    pub fn wrap(&mut self, first: usize, rest: usize, tight: bool, out: &mut Lines) {
+        out.clear();
         if self.preserve {
-            return self.buf.split('\n').map(str::to_owned).collect();
+            self.buf.split('\n').for_each(|line| out.push(line));
+            return;
         }
-        let mut points = self.breaks.clone();
+        let mut points = std::mem::take(&mut self.points);
+        points.clear();
+        points.extend_from_slice(&self.breaks);
         if tight {
             points.extend_from_slice(&self.inner);
             points.sort_unstable();
         }
-        let mut lines = Vec::new();
         let mut start = 0;
         let mut last_break: Option<usize> = None;
         let mut limit = first;
@@ -140,25 +224,28 @@ impl Inline {
             if width(candidate) > limit
                 && let Some(lb) = last_break
             {
-                lines.push(self.buf[start..lb].to_owned());
+                out.push(&self.buf[start..lb]);
                 start = lb + 1;
                 limit = rest;
             }
             last_break = (b < self.buf.len()).then_some(b);
         }
-        lines.push(self.buf[start..].to_owned());
-        guard_lines(&mut lines);
-        if lines.iter().any(|l| l.contains('\n')) {
+        self.points = points;
+        out.push(&self.buf[start..]);
+        guard_lines(out);
+        if out.iter().any(|l| l.contains('\n')) {
             // Markup holding a line break (math) continues on the next line.
-            lines = lines.iter().flat_map(|l| l.split('\n')).map(str::to_owned).collect();
+            let mut split = std::mem::take(&mut self.split);
+            split.clear();
+            out.iter().flat_map(|l| l.split('\n')).for_each(|line| split.push(line));
+            std::mem::swap(out, &mut split);
+            self.split = split;
         }
-        lines
     }
 }
 
-/// Escapes the colons of escaped text that are not escaped yet.
-fn escape_colons(s: &str) -> String {
-    let mut out = String::with_capacity(s.len() + 2);
+/// Appends escaped text to `out`, escaping the colons that are not escaped yet.
+fn push_colons_escaped(out: &mut String, s: &str) {
     let mut escaping = false;
     for c in s.chars() {
         if c == ':' && !escaping {
@@ -167,7 +254,6 @@ fn escape_colons(s: &str) -> String {
         escaping = c == '\\' && !escaping;
         out.push(c);
     }
-    out
 }
 
 /// Escapes the first character of lines that a reader would take for something else:
@@ -207,15 +293,19 @@ mod tests {
         i.text("aaa bbb  ccc ddd");
         i.space();
         i.markup("`x y`_");
-        let lines = i.wrap(8, 8, false);
-        assert_eq!(lines, ["aaa", "bbb  ccc", "ddd", "`x y`_"]);
-        assert_eq!(i.wrap(4, 4, true).last().map(String::as_str), Some("y`_"));
+        let mut lines = Lines::default();
+        i.wrap(8, 8, false, &mut lines);
+        assert_eq!(*lines, ["aaa", "bbb  ccc", "ddd", "`x y`_"]);
+        i.wrap(4, 4, true, &mut lines);
+        assert_eq!(lines.last().map(String::as_str), Some("y`_"));
     }
 
     #[test]
     fn risky_line_starts_are_escaped() {
         let mut i = Inline::default();
         i.text("1. first ------");
-        assert_eq!(i.wrap(8, 8, false), ["\\1. first", "\\------"]);
+        let mut lines = Lines::default();
+        i.wrap(8, 8, false, &mut lines);
+        assert_eq!(*lines, ["\\1. first", "\\------"]);
     }
 }

@@ -226,14 +226,17 @@ impl Writer<'_, '_> {
         if let Some(p) = para {
             let lines = if has_content {
                 self.collect_skipping(p, content_starts)
-            } else if argument_field {
-                Vec::new()
             } else {
-                vec![head.trim().to_owned()]
+                let mut lines = self.take_lines();
+                if !argument_field {
+                    lines.push(head.trim());
+                }
+                lines
             };
             for line in &lines {
                 self.line(line);
             }
+            self.give_lines(lines);
             self.blank = true;
         }
         let rest = usize::from(para.is_some());
@@ -245,22 +248,21 @@ impl Writer<'_, '_> {
     }
 
     /// Collects a paragraph's inline children after the first `skip`.
-    fn collect_skipping(&mut self, p: NodeId, skip: usize) -> Vec<String> {
-        let saved = std::mem::take(&mut self.inline);
+    fn collect_skipping(&mut self, p: NodeId, skip: usize) -> crate::inline::Lines {
+        let saved = self.begin_inline(false);
         let saved_mode = self.in_inline;
-        self.inline.clear(false);
         self.in_inline = true;
         for child in self.doc.children(p).skip(skip) {
             self.node(child);
         }
         self.in_inline = saved_mode;
         let first = self.settings.width.saturating_sub(self.first_indentation());
-        let lines = self.inline.wrap(
-            first.max(self.settings.width / 3),
-            self.available(),
-            self.tight_wrap,
-        );
-        self.inline = saved;
+        let first = first.max(self.settings.width / 3);
+        let (rest, tight) = (self.available(), self.tight_wrap);
+        let mut lines = self.take_lines();
+        self.inline.wrap(first, rest, tight, &mut lines);
+        let used = self.end_inline(saved);
+        self.give_inline(used);
         lines
     }
 }

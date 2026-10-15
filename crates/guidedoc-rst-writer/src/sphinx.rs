@@ -102,8 +102,10 @@ impl Writer<'_, '_> {
                     self.blank = false;
                     self.block_start();
                 }
-                let marker = crate::lists::marker(info, n);
+                let mut marker = self.buffer();
+                crate::lists::write_marker(&mut marker, info, n);
                 self.push_frame(marker.chars().count(), &marker);
+                self.recycle(marker);
                 self.blocks(item);
                 self.pop_frame();
             }
@@ -183,11 +185,11 @@ impl Writer<'_, '_> {
         if let (Some(term), Some(text)) = (term, follows)
             && text.starts_with(term)
         {
-            self.inline.markup(&format!(":index:`{}`", term.replace('`', "\\`")));
+            self.inline.markup_fmt(format_args!(":index:`{}`", term.replace('`', "\\`")));
             self.skip_text = term.len();
             return;
         }
         self.lossy(id, "an index entry inside text", "an index directive's entry as a role");
-        self.inline.markup(&format!(":index:`<{}>`", entries.replace('\n', "; ")));
+        self.inline.markup_fmt(format_args!(":index:`<{}>`", entries.replace('\n', "; ")));
     }
 }

@@ -146,9 +146,19 @@ pub(crate) struct Html<'c, 'a> {
     pub outer: Option<NodeId>,
 }
 
+/// The renderer's working storage, kept in the workspace between renders: the anchor
+/// table, the notes' references, and the walk's stack.
+#[derive(Debug, Default)]
+pub(crate) struct HtmlWork {
+    pub anchors: Anchors,
+    notes: Notes,
+    stack: Vec<(NodeId, Close)>,
+}
+
 impl<'c, 'a> Html<'c, 'a> {
-    /// Makes the renderer for one render of `ctx`.
-    pub fn new(ctx: &'c mut RenderContext<'a>, anchors: Anchors) -> Self {
+    /// Makes the renderer for one render of `ctx`, with the storage in `work` (its
+    /// anchor table built for this document); `finish` gives the storage back.
+    pub fn new(ctx: &'c mut RenderContext<'a>, work: &mut HtmlWork) -> Self {
         let doc = ctx.doc;
         let options = ctx.options;
         let policy = ctx.policy;
@@ -160,18 +170,26 @@ impl<'c, 'a> Html<'c, 'a> {
             options,
             policy,
             limits,
-            anchors,
-            notes: Notes::default(),
+            anchors: std::mem::take(&mut work.anchors),
+            notes: std::mem::take(&mut work.notes),
             numbers: SectionNumbers::default(),
             has_title: false,
             expansion: 0,
             productions: 0,
             contents: None,
             guard: stack_guard(&limits),
-            stack: Vec::new(),
+            stack: std::mem::take(&mut work.stack),
             base: 0,
             outer: None,
         }
+    }
+
+    /// Ends the render, giving the storage back to `work` for the next render.
+    pub fn finish(self, work: &mut HtmlWork) {
+        work.anchors = self.anchors;
+        work.notes = self.notes;
+        work.stack = self.stack;
+        work.stack.clear();
     }
 
     /// Finds document-wide settings: a promoted title, sectnum, and where tables of

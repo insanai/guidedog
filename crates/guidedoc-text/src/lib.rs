@@ -48,19 +48,20 @@ pub fn renderer() -> Renderer {
 }
 
 /// Writes `ctx.doc` as plain text through `ctx.out`. It borrows the context for the
-/// call and keeps nothing. Problems go to the context's reports; the render fails with
-/// the status of the first error: raw content the policy refuses (`Policy`), an
-/// unresolved reference (`InvalidInput`), or nesting past the limits (`Limit`).
+/// call and keeps only its working storage, in the context's scratch store. Problems go
+/// to the context's reports; the render fails with the status of the first error: raw
+/// content the policy refuses (`Policy`), an unresolved reference (`InvalidInput`), or
+/// nesting past the limits (`Limit`).
 pub fn render(ctx: &mut RenderContext<'_>) -> Result<(), Fail> {
     if ctx.doc.node_count() == 0 {
         return Ok(());
     }
-    let mut s = State::new(ctx);
+    let work = ctx.take_scratch();
+    let mut s = State::new(ctx, work);
     s.scan_document();
     s.render_blocks(ROOT);
-    let status = s.status;
-    let text = std::mem::take(&mut s.out);
-    ctx.out.emit(&text);
+    let (status, work) = s.finish();
+    ctx.put_scratch(work);
     match status {
         Status::Ok => Ok(()),
         status => Err(Fail::new(status)),

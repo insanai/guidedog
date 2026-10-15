@@ -82,7 +82,8 @@ pub fn emit_preamble(out: &mut Emitter<'_>) {
 /// per-node marks cannot be allocated.
 pub fn render(ctx: &mut RenderContext<'_>) -> Result<(), Fail> {
     let stack = stack_guard(&ctx.limits);
-    let mut s = State::new(ctx, stack)?;
+    let work = ctx.take_scratch();
+    let mut s = State::new(ctx, stack, work)?;
     let scan = s.scan_document();
     if s.options.standalone {
         emit_preamble(&mut s.ctx.out);
@@ -90,5 +91,7 @@ pub fn render(ctx: &mut RenderContext<'_>) -> Result<(), Fail> {
     }
     s.render_blocks(ROOT);
     s.flush_footnotes();
-    s.finish()
+    let (result, work) = s.finish();
+    ctx.put_scratch(work);
+    result
 }

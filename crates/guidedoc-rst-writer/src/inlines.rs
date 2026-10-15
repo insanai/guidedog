@@ -1,6 +1,9 @@
 //! Inline markup: emphasis, literals, references and links, notes, substitutions,
 //! targets, math, raw text, and roles, each appended to the inline buffer whole.
 
+use std::borrow::Cow;
+use std::fmt::{self, Write as _};
+
 use guidedoc::{AttributeKey, LinkInfo, LinkKind, NodeFlag, NodeId, NodeKind, normalize_label};
 
 use crate::escape::{is_simple_name, push_markup_text};
@@ -20,6 +23,40 @@ fn unsmarten(s: &str) -> String {
     s.replace(['’', '‘'], "'").replace(['“', '”'], "\"")
 }
 
+/// Text escaped for the inside of interpreted text or a phrase, written as it is
+/// formatted (`push_markup_text` without a buffer).
+struct Escaped<'s>(&'s str, bool);
+
+impl fmt::Display for Escaped<'_> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        for c in self.0.chars() {
+            if c == '\\' || c == '`' || c == '*' || (self.1 && c == '<') {
+                f.write_char('\\')?;
+            }
+            f.write_char(c)?;
+        }
+        Ok(())
+    }
+}
+
+/// A URI as an embedded target writes it: backslashes doubled, spaces and backquotes
+/// percent-encoded.
+struct EmbeddedUri<'s>(&'s str);
+
+impl fmt::Display for EmbeddedUri<'_> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        for c in self.0.chars() {
+            match c {
+                '\\' => f.write_str("\\\\")?,
+                ' ' => f.write_str("%20")?,
+                '`' => f.write_str("%60")?,
+                _ => f.write_char(c)?,
+            }
+        }
+        Ok(())
+    }
+}
+
 /// Escapes text for the inside of interpreted text or a phrase.
 fn escaped(s: &str, angle: bool) -> String {
     let mut out = String::with_capacity(s.len() + 2);
@@ -37,8 +74,9 @@ impl Writer<'_, '_> {
 
     /// The text of an inline node whose content markup cannot nest: its Text
     /// children; other markup inside is reported and written as its text.
+    /// Give the text back with `recycle` when done.
     pub fn markup_text(&mut self, id: NodeId) -> String {
-        let mut out = String::new();
+        let mut out = self.buffer();
         let mut nested = false;
         for child in self.doc.children(id) {
             match self.kind(child) {
@@ -73,18 +111,18 @@ impl Writer<'_, '_> {
             return;
         }
         if inner.len() == content.len() {
-            return self.inline.markup(&format!("{open}{content}{close}"));
+            return self.inline.markup_fmt(format_args!("{open}{content}{close}"));
         }
         if escapes {
             let lead = if content.starts_with(char::is_whitespace) { "\\ " } else { "" };
             let trail = if content.ends_with(char::is_whitespace) { "\\ " } else { "" };
-            return self.inline.markup(&format!("{open}{lead}{content}{trail}{close}"));
+            return self.inline.markup_fmt(format_args!("{open}{lead}{content}{trail}{close}"));
         }
         self.lossy(id, "white space at the ends of inline markup", "it outside the markup");
         let lead = &content[..content.len() - content.trim_start().len()];
         let trail = &content[content.trim_end().len()..];
         self.inline.text(lead);
-        self.inline.markup(&format!("{open}{inner}{close}"));
+        self.inline.markup_fmt(format_args!("{open}{inner}{close}"));
         self.inline.text(trail);
     }
 
@@ -93,40 +131,54 @@ impl Writer<'_, '_> {
         let text = self.markup_text(id);
         let classes = self.classes(id, &[]);
         if classes.is_empty() {
-            let content = escaped(&text, false);
+            let mut content = self.buffer();
+            push_markup_text(&mut content, &text, false);
             self.wrapped_markup(id, delimiter, &content, delimiter);
+            self.recycle(content);
         } else {
             let role = self.roles.role(&classes, base, &[("class", &classes)]);
             self.interpreted(id, &role, &escaped(&text, false));
         }
+        self.recycle(text);
     }
 
     /// `:role:`content``, the content already escaped.
     fn interpreted(&mut self, id: NodeId, role: &str, content: &str) {
-        self.wrapped_markup(id, &format!(":{role}:`"), content, "`");
+        let mut open = self.buffer();
+        let _ = write!(open, ":{role}:`");
+        self.wrapped_markup(id, &open, content, "`");
+        self.recycle(open);
+    }
+
+    /// Tells whether `text` normalizes to the reference name `name`.
+    fn normalizes_to(&mut self, text: &str, name: &str) -> bool {
+        let mut normal = self.buffer();
+        normalize_label(&mut normal, text);
+        let same = normal == name;
+        self.recycle(normal);
+        same
     }
 
     /// An inline literal: ``` ``text`` ```, `:literal:` when the text cannot stand
     /// between double backquotes, or a code role for a language.
     pub fn code(&mut self, id: NodeId) {
-        let text = self.doc.node_text(id).to_owned();
-        let language = self.attr(id, AttributeKey::Language).map(str::to_owned);
-        if let Some(lang) = language {
-            let classes = self.classes(id, &["code", &lang]);
-            let mut options = vec![("language", lang.as_str())];
+        let text = self.doc.node_text(id);
+        if let Some(lang) = self.attr(id, AttributeKey::Language) {
+            let classes = self.classes(id, &["code", lang]);
+            let mut options = vec![("language", lang)];
             if !classes.is_empty() {
                 options.push(("class", &classes));
             }
-            let role = self.roles.role(&lang, "code", &options);
-            return self.interpreted(id, &role, &escaped(&text, false));
+            let role = self.roles.role(lang, "code", &options);
+            return self.interpreted(id, &role, &escaped(text, false));
         }
         let classes = self.classes(id, &[]);
         if classes == "code" {
-            return self.interpreted(id, "code", &escaped(&text, false));
+            return self.interpreted(id, "code", &escaped(text, false));
         }
         if !classes.is_empty() {
             let role = self.roles.role(&classes, "literal", &[("class", &classes)]);
-            return self.interpreted(id, &role, &escaped(&text, false));
+            return self.interpreted(id, &role, &escaped(text, false));
         }
         let plain = !text.contains("``")
             && !text.starts_with(char::is_whitespace)
@@ -134,9 +186,9 @@ impl Writer<'_, '_> {
             && !text.ends_with('`')
             && !text.starts_with('`');
         if plain && !text.is_empty() {
-            self.inline.markup(&format!("``{text}``"));
+            self.inline.markup_fmt(format_args!("``{text}``"));
         } else {
-            self.interpreted(id, "literal", &escaped(&text, false));
+            self.interpreted(id, "literal", &escaped(text, false));
         }
     }
 
@@ -149,6 +201,7 @@ impl Writer<'_, '_> {
                     self.lossy(id, "a link outside text", "a paragraph holding it");
                     let lines = self.collect(self.doc.parent_of(id).unwrap_or(id), false, |_| {});
                     self.write_block_lines(&lines);
+                    self.give_lines(lines);
                 }
             }
             return;
@@ -163,7 +216,7 @@ impl Writer<'_, '_> {
                     let anon = self.doc.node(id).flags.has(NodeFlag::Anonymous);
                     let tail = if anon { "__" } else { "_" };
                     let text = self.doc.node_text(c);
-                    return self.inline.markup(&format!("|{text}|{tail}"));
+                    return self.inline.markup_fmt(format_args!("|{text}|{tail}"));
                 }
                 _ => {}
             }
@@ -174,54 +227,58 @@ impl Writer<'_, '_> {
         } else {
             self.hyperlink(id, &text, link);
         }
+        self.recycle(text);
     }
 
     fn reference(&mut self, id: NodeId, text: &str, link: LinkInfo) {
         let anonymous = self.doc.node(id).flags.has(NodeFlag::Anonymous);
-        let name = self.doc.text(link.name).to_owned();
+        let name = self.doc.text(link.name);
         let tail = if anonymous { "__" } else { "_" };
-        if let Some(alias) = self.custom(id, "target-name").map(str::to_owned) {
-            let _ = alias;
-            let target = escaped(&name, false);
-            return self.inline.markup(&format!("`{} <{target}_>`_", escaped(text, true)));
+        let (text_e, target) = (Escaped(text, true), Escaped(name, false));
+        if self.custom(id, "target-name").is_some() {
+            return self.inline.markup_fmt(format_args!("`{text_e} <{target}_>`_"));
         }
-        if anonymous || name.is_empty() || normalized(text) == name {
+        if anonymous || name.is_empty() || self.normalizes_to(text, name) {
             if is_simple_name(text) {
-                return self.inline.markup(&format!("{text}{tail}"));
+                return self.inline.markup_fmt(format_args!("{text}{tail}"));
             }
-            return self.inline.markup(&format!("`{}`{tail}", escaped(text, true)));
+            return self.inline.markup_fmt(format_args!("`{text_e}`{tail}"));
         }
-        let target = escaped(&name, false);
-        self.inline.markup(&format!("`{} <{target}_>`__", escaped(text, true)));
+        self.inline.markup_fmt(format_args!("`{text_e} <{target}_>`__"));
     }
 
     fn hyperlink(&mut self, id: NodeId, text: &str, link: LinkInfo) {
-        let destination = self.doc.text(link.destination).to_owned();
-        let name = self.doc.text(link.name).to_owned();
+        let destination = self.doc.text(link.destination);
+        let name = self.doc.text(link.name);
         if !self.doc.text(link.title).is_empty() {
             self.lossy(id, "a link title", "the link without it");
         }
         let uri = match link.kind {
             LinkKind::Email if text == destination => {
-                return self.inline.markup(&destination);
+                return self.inline.markup(destination);
             }
-            LinkKind::Email => format!("mailto:{destination}"),
+            LinkKind::Email => Cow::Owned(format!("mailto:{destination}")),
             LinkKind::Internal => return self.internal_link(id, text, link),
-            LinkKind::External | LinkKind::Project | LinkKind::Unresolved => destination,
+            LinkKind::External | LinkKind::Project | LinkKind::Unresolved => {
+                Cow::Borrowed(destination)
+            }
         };
         if text == uri && self.bare_uri_fits(id, &uri) {
             return self.inline.markup(&uri);
         }
-        let mut text = text.to_owned();
-        if !name.is_empty() && name != normalized(&text) && name == normalized(&unsmarten(&text)) {
+        let mut text = Cow::Borrowed(text);
+        if !name.is_empty()
+            && text.contains(['’', '‘', '“', '”'])
+            && !self.normalizes_to(&text, name)
+            && name == normalized(&unsmarten(&text))
+        {
             // Smart quotes changed the text after its name was taken; write it as it
             // was, and the reader changes it again.
-            text = unsmarten(&text);
+            text = Cow::Owned(unsmarten(&text));
         }
-        let tail = if !name.is_empty() && name == normalized(&text) { "_" } else { "__" };
-        let text = text.as_str();
-        let uri = uri.replace('\\', "\\\\").replace(' ', "%20").replace('`', "%60");
-        self.inline.markup(&format!("`{} <{uri}>`{tail}", escaped(text, true)));
+        let tail = if !name.is_empty() && self.normalizes_to(&text, name) { "_" } else { "__" };
+        let (text, uri) = (Escaped(&text, true), EmbeddedUri(&uri));
+        self.inline.markup_fmt(format_args!("`{text} <{uri}>`{tail}"));
     }
 
     /// Tells whether a URI written bare would be read back whole: it has a scheme and
@@ -276,25 +333,26 @@ impl Writer<'_, '_> {
         }
         self.lossy(id, "a link to a heading anchor", "a reference to the section title");
         let target = escaped(&normalized(&title), false);
-        self.inline.markup(&format!("`{} <{target}_>`__", escaped(text, true)));
+        self.inline.markup_fmt(format_args!("`{} <{target}_>`__", escaped(text, true)));
     }
 
     /// `[label]_`.
     pub fn note_reference(&mut self, id: NodeId) {
         let label = self.doc.node_text(id);
-        self.inline.markup(&format!("[{label}]_"));
+        self.inline.markup_fmt(format_args!("[{label}]_"));
     }
 
     /// `|name|`.
     pub fn substitution_reference(&mut self, id: NodeId) {
         let name = self.doc.node_text(id);
-        self.inline.markup(&format!("|{name}|"));
+        self.inline.markup_fmt(format_args!("|{name}|"));
     }
 
     /// ``_`text` ``.
     pub fn inline_target(&mut self, id: NodeId) {
         let text = self.markup_text(id);
         self.wrapped_markup(id, "_`", &escaped(&text, false), "`");
+        self.recycle(text);
     }
 
     /// `:math:`latex``.
@@ -336,6 +394,7 @@ impl Writer<'_, '_> {
             self.roles.role(&classes, role, &[("class", &classes)])
         };
         self.interpreted(id, &role, &escaped(&text, false));
+        self.recycle(text);
     }
 
     /// `` `title` `` with the default role.
@@ -348,11 +407,14 @@ impl Writer<'_, '_> {
             let role = self.roles.role(&classes, "title-reference", &[("class", &classes)]);
             self.interpreted(id, &role, &escaped(&text, false));
         }
+        self.recycle(text);
     }
 
     /// `:abbr:`LIFO (last in, first out)`` (Sphinx) or `:abbreviation:`.
     pub fn abbreviation(&mut self, id: NodeId) {
-        let text = escaped(&self.markup_text(id), false);
+        let plain = self.markup_text(id);
+        let text = escaped(&plain, false);
+        self.recycle(plain);
         match self.attr(id, AttributeKey::Title) {
             Some(title) => {
                 let content = format!("{text} ({})", escaped(title, false));

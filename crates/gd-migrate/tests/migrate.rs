@@ -25,7 +25,7 @@ master_doc = 'contents'
 extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.autodoc',
-    'sphinx.ext.napoleon',  # needs Python
+    'sphinxcontrib.mermaid',  # not built in
     "sphinx.ext.graphviz",
 ]
 extensions.append('sphinx.ext.ifconfig')
@@ -94,7 +94,7 @@ fn conf_py_becomes_loadable_conf_toml() {
     expect_line(toml, r#"root = "contents""#);
     expect_line(toml, "rst_prolog = '''\n\n.. |product| replace:: Widget\\n\n'''");
     expect_line(toml, "# html_last_updated_fmt = os.environ.get('FMT', '%b %d')");
-    assert!(!toml.contains(r#""sphinx.ext.napoleon""#), "napoleon is left out");
+    assert!(!toml.contains("sphinxcontrib.mermaid"), "a third-party extension is left out");
     expect_line(toml, r#""sphinx.ext.autodoc""#);
     expect_line(toml, r#"autodoc_source_paths = [".."]"#);
     assert!(!toml.contains("_helper"), "private helpers are left out");
@@ -104,6 +104,85 @@ fn conf_py_becomes_loadable_conf_toml() {
     assert_eq!(codes.get("migrate.code"), Some(&1));
     assert_eq!(codes.get("migrate.setup"), Some(&1));
     assert_eq!(codes.get("migrate.path"), Some(&1));
+}
+
+const EXTENSIONS_CONF_PY: &str = r#"extensions = [
+    'sphinx.ext.napoleon',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.linkcode',
+    'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.apidoc',
+    'sphinx.ext.coverage',
+    'sphinx.ext.duration',
+    'sphinx.ext.imgconverter',
+]
+napoleon_use_ivar = True
+napoleon_custom_sections = ['Side Effects', ('Arguments', 'params_style')]
+napoleon_type_aliases = None
+autosummary_generate = ['api.rst']
+apidoc_modules = [{'path': '../src/shapes', 'destination': 'api',
+                   'automodule_options': {'members', 'undoc-members'}}]
+viewcode_import = False
+inheritance_graph_attrs = dict(rankdir="LR", fontsize=14)
+coverage_ignore_c_items = {'function': ['PyObject_.*']}
+coverage_ignore_classes = ['(?=lookahead)']
+duration_write_json = None
+duration_limit = 2.5
+image_converter_args = ['convert']
+
+def linkcode_resolve(domain, info):
+    return None
+"#;
+
+#[test]
+fn built_in_extensions_and_their_settings_migrate() {
+    let c = convert_conf_py(EXTENSIONS_CONF_PY, Path::new("conf.py"), Some(2026));
+    let toml = &c.toml;
+    check_conf_toml(toml).unwrap();
+    for name in ["napoleon", "autosummary", "viewcode", "linkcode", "apidoc", "imgconverter"] {
+        expect_line(toml, &format!("\"sphinx.ext.{name}\""));
+    }
+    expect_line(toml, "napoleon_use_ivar = true");
+    expect_line(
+        toml,
+        r#"napoleon_custom_sections = ["Side Effects", ["Arguments", "params_style"]]"#,
+    );
+    assert!(!toml.contains("napoleon_type_aliases"), "None is the default");
+    expect_line(toml, r#"autosummary_generate = ["api.rst"]"#);
+    expect_line(toml, r#"destination = "api""#);
+    expect_line(toml, "viewcode_follow_imported_members = false");
+    expect_line(toml, "[inheritance_graph_attrs]\nrankdir = \"LR\"\nfontsize = 14");
+    expect_line(toml, "[coverage_ignore_c_items]\nfunction = [\"PyObject_.*\"]");
+    expect_line(toml, "duration_write_json = \"\"");
+    expect_line(toml, "duration_limit = 2.5");
+    expect_line(toml, "# coverage_ignore_classes = ['(?=lookahead)']");
+    let codes = codes(&c.notes);
+    assert_eq!(codes.get("migrate.extension"), None, "every extension is built in");
+    assert_eq!(codes.get("migrate.linkcode"), Some(&1));
+    assert_eq!(codes.get("migrate.value"), Some(&1), "the pattern Guidedog cannot compile");
+    let linkcode = c.notes.iter().find(|n| n.code == "migrate.linkcode").unwrap();
+    assert_eq!(linkcode.line, 26);
+    assert!(linkcode.hints[0].contains("linkcode_url"));
+}
+
+#[test]
+fn a_third_party_extension_is_reported_plainly() {
+    let c = convert_conf_py("extensions = ['sphinx_design']\n", Path::new("conf.py"), None);
+    let note = c.notes.iter().find(|n| n.code == "migrate.extension").unwrap();
+    assert_eq!(
+        note.hints[0],
+        "A build reports the directives and roles it adds as unknown. Replace them with \
+         built-in ones, or remove them."
+    );
+}
+
+#[test]
+fn a_computed_linkcode_resolve_is_reported() {
+    let text = "linkcode_resolve = make_resolver('o/r')\n";
+    let c = convert_conf_py(text, Path::new("conf.py"), None);
+    assert_eq!(codes(&c.notes).get("migrate.linkcode"), Some(&1));
+    assert_eq!(codes(&c.notes).get("migrate.unknown"), None);
 }
 
 #[test]

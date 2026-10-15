@@ -30,7 +30,8 @@ let created = gd_migrate::quickstart(&gd_migrate::QuickstartOptions {
 
 Notes are `gd_report::Report`s (codes `migrate.setup`, `migrate.code`,
 `migrate.computed`, `migrate.path`, `migrate.extension`, `migrate.extension.read`,
-`migrate.form`, `migrate.unknown` with a "Did you mean" hint from gd-conf's settings
+`migrate.form`, `migrate.value` (a value gd-conf refuses, kept as a comment),
+`migrate.linkcode` (a `linkcode_resolve` function; use `linkcode_url`), `migrate.unknown` with a "Did you mean" hint from gd-conf's settings
 table, `migrate.theme`, `migrate.sphinx-only`, ...) with the conf.py line as excerpt.
 
 ## Design notes

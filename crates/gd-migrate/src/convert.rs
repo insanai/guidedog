@@ -22,6 +22,10 @@ pub(crate) fn is_setting_name(name: &str) -> bool {
 
 /// Writes one conf.py assignment into conf.toml, or explains why not.
 pub(crate) fn convert_binding(m: &mut Migration<'_>, scope: &Scope, b: &Binding<'_>) {
+    if b.name == "linkcode_resolve" {
+        report_linkcode_resolve(m, b.line);
+        return;
+    }
     if !is_setting_name(&b.name) {
         let private = b.name.starts_with('_');
         if !scope.used.contains(&b.name) && !private && b.failure.is_none() {
@@ -56,30 +60,59 @@ pub(crate) fn convert_binding(m: &mut Migration<'_>, scope: &Scope, b: &Binding<
         "latex_logo" => "pdf_logo",
         "latex_toplevel_sectioning" => "pdf_toplevel_sectioning",
         "latex_show_urls" => "pdf_show_urls",
+        "viewcode_import" => "viewcode_follow_imported_members",
         other => other,
     };
     if *v == Value::None {
+        if name == "duration_write_json" {
+            // None turns the file off, and conf.toml says that with "".
+            write_setting(m, name, &Value::Str(String::new()));
+            m.converted += 1;
+        }
         return; // Sphinx's default, which conf.toml leaves out.
     }
+    convert_value(m, b, name, v.clone());
+}
+
+/// Writes the value of a known setting `name`, once adapted, checked for its form and
+/// loaded alone; otherwise keeps the line as a comment and says why.
+fn convert_value(m: &mut Migration<'_>, b: &Binding<'_>, name: &str, v: Value) {
     let Some(setting) = find_setting(name) else {
         m.sphinx_only.push(name.to_string());
         keep_comment(m, b.source);
         return;
     };
-    let v = adapt(m, b, name, v.clone());
-    if !fits(setting.kind, &v) {
-        m.warn(
-            b.line,
-            "migrate.form",
-            "SETTING HAS AN UNUSABLE FORM",
-            format!("{name} holds a kind of value Guidedog's {name} setting does not take."),
-            "Adjust the commented copy in conf.toml by hand.",
-        );
+    let v = adapt(m, b, name, v);
+    let refused = if !fits(setting.kind, &v) {
+        let message =
+            format!("{name} holds a kind of value Guidedog's {name} setting does not take.");
+        Some(("migrate.form", "SETTING HAS AN UNUSABLE FORM", message))
+    } else {
+        loads_alone(m, name, &v).err().map(|why| {
+            ("migrate.value", "SETTING VALUE REFUSED", format!("{name} is not converted: {why}"))
+        })
+    };
+    if let Some((code, title, message)) = refused {
+        m.warn(b.line, code, title, message, "Adjust the commented copy in conf.toml by hand.");
         keep_comment(m, b.source);
         return;
     }
     write_setting(m, name, &v);
     m.converted += 1;
+}
+
+/// Loads `name = v` alone, as a build would, so a value Guidedog checks and refuses (a
+/// pattern it cannot compile, a folder outside the project) is reported and kept as a
+/// comment instead of making the whole conf.toml fail to load. Fails with the reason.
+fn loads_alone(m: &Migration<'_>, name: &str, v: &Value) -> Result<(), String> {
+    let mut scratch = Migration::new("", &m.path);
+    write_setting(&mut scratch, name, v);
+    scratch.plain.push_str(&scratch.tables);
+    let table = gd_toml::parse(&scratch.plain).map_err(|e| e.message)?;
+    let mut config = Config::new(Path::new(""), Path::new(""));
+    let mut warnings = Vec::new();
+    gd_conf::apply_table(&mut config, &table, CONFIG_FILE, &mut warnings, true)
+        .map_err(|p| p.message)
 }
 
 /// Rewrites values whose Sphinx form Guidedog reads differently.
@@ -139,14 +172,29 @@ fn keep_native(m: &mut Migration<'_>, b: &Binding<'_>, items: Vec<Value>) -> Vec
                 "migrate.extension",
                 "EXTENSION NOT BUILT IN",
                 format!("{name} is not built into Guidedog, so it is left out."),
-                "Replace the directives and roles it adds with built-in ones; until \
-                 Guidedog can load it, a build reports them as unknown.",
+                "A build reports the directives and roles it adds as unknown. Replace them \
+                 with built-in ones, or remove them.",
             );
             continue;
         }
         kept.push(item);
     }
     kept
+}
+
+/// Reports a `linkcode_resolve` function: Python that Guidedog does not run, whose work
+/// a `linkcode_url` template does.
+pub(crate) fn report_linkcode_resolve(m: &mut Migration<'_>, line: usize) {
+    m.warn(
+        line,
+        "migrate.linkcode",
+        "LINKCODE_RESOLVE NOT RUN",
+        "linkcode_resolve is a Python function, which Guidedog does not run, so the source \
+         links it makes are not added."
+            .into(),
+        "Set linkcode_url to a URL template instead, such as \
+         linkcode_url = \"https://github.com/o/r/blob/{branch}/{path}#L{line}-L{end_line}\".",
+    );
 }
 
 /// Writes `intersphinx_mapping`'s None locations as `""`, which conf.toml reads as None:
@@ -203,6 +251,20 @@ fn fits(kind: SettingKind, v: &Value) -> bool {
                 && entries.iter().all(|(_, i)| matches!(i, Value::Str(_) | Value::Bool(_)))
         }
         (SettingKind::Json | SettingKind::Values, Value::Dict(_)) => true,
+        (SettingKind::FlagOrList, Value::Bool(_)) => true,
+        (SettingKind::FlagOrList, v) => v.is_string_list(),
+        (SettingKind::StringLists, Value::Dict(entries)) => {
+            string_keys(entries)
+                && entries.iter().all(|(_, i)| matches!(i, Value::Str(_)) || i.is_string_list())
+        }
+        (SettingKind::Number, Value::Int(_) | Value::Float(_)) => true,
+        (SettingKind::NapoleonSections, Value::List(items)) => items.iter().all(|i| {
+            matches!(i, Value::Str(_))
+                || matches!(i, Value::List(p) if p.len() == 2 && i.is_string_list())
+        }),
+        (SettingKind::ApidocModules, Value::List(items)) => {
+            items.iter().all(|i| matches!(i, Value::Dict(e) if string_keys(e)))
+        }
         (SettingKind::Intersphinx, Value::Dict(entries)) => {
             string_keys(entries) && entries.iter().all(|(_, i)| intersphinx_entry(i))
         }

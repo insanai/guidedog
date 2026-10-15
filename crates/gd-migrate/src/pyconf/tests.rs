@@ -67,3 +67,18 @@ fn deep_nesting_is_refused_without_overflow() {
     let src = format!("{}1{}", "[".repeat(10_000), "]".repeat(10_000));
     assert!(eval(&src, &mut scope).is_err());
 }
+
+#[test]
+fn dict_calls_with_keywords_are_literals() {
+    let mut scope = scope();
+    let got = eval("dict(rankdir=\"LR\", size='\"6.0, 8.0\"',\n fontsize=14, )", &mut scope);
+    let want = Value::Dict(vec![
+        (Value::Str("rankdir".into()), Value::Str("LR".into())),
+        (Value::Str("size".into()), Value::Str("\"6.0, 8.0\"".into())),
+        (Value::Str("fontsize".into()), Value::Int(14)),
+    ]);
+    assert_eq!(got, Ok(want));
+    assert_eq!(eval("dict()", &mut scope), Ok(Value::Dict(Vec::new())));
+    assert!(eval("dict(other)", &mut scope).is_err());
+    assert!(eval("dict(**base)", &mut scope).is_err());
+}

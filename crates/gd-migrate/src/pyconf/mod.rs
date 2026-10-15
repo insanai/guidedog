@@ -306,6 +306,7 @@ impl Evaluator<'_, '_> {
                     _ => Err("This str() call is computed by Python.".into()),
                 };
             }
+            "dict" if self.cur.take("(") => return self.keyword_dict(),
             _ => {}
         }
         if let Some(v) = self.scope.values.get(word) {
@@ -314,6 +315,29 @@ impl Evaluator<'_, '_> {
             return Ok(v);
         }
         self.opaque(start)
+    }
+
+    /// Reads the keyword arguments of a `dict(...)` call, such as
+    /// `dict(rankdir="LR", fontsize=14)`, as a dictionary with string keys.
+    fn keyword_dict(&mut self) -> Eval {
+        let mut entries = Vec::new();
+        loop {
+            self.cur.space();
+            if self.cur.take(")") {
+                return Ok(Value::Dict(entries));
+            }
+            let key = self.cur.word();
+            self.cur.space();
+            if key.is_empty() || !self.cur.take("=") || self.cur.peek("=") {
+                return Err("This dict() call is computed by Python.".into());
+            }
+            let key = Value::Str(key.to_string());
+            entries.push((key, self.expression()?));
+            self.cur.space();
+            if !self.cur.take(",") && !self.cur.peek(")") {
+                return Err(format!("Expected a comma or ) before \"{}\".", self.cur.rest()));
+            }
+        }
     }
 
     /// Reads a chain of attributes and calls on a name conf.py did not bind, such as

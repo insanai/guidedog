@@ -92,7 +92,11 @@ fn read_statement<'a>(m: &mut Migration<'_>, c: &mut ConfPy<'a>, s: &'a str, lin
         "elif" | "else" | "except" | "finally" => return true,
         "def" | "class" => {
             cur.space();
-            if word == "def" && cur.word() == "setup" {
+            let name = cur.word();
+            if word == "def" && name == "linkcode_resolve" {
+                crate::convert::report_linkcode_resolve(m, line);
+            }
+            if word == "def" && name == "setup" {
                 m.warn(
                     line,
                     "migrate.setup",

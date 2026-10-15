@@ -254,24 +254,49 @@ pub(crate) fn type_path(written: &str) -> &str {
 }
 
 /// Attaches every impl block to the crate type it implements, when that type is found:
-/// the block then shows on the type's description. Others stay in their module.
+/// the block then shows on the type's description. Others stay in their module. A
+/// trait impl is also listed on the crate trait it implements, when that is found.
 pub(crate) fn attach_impls(krate: &mut Crate) {
     let mut attached = Vec::new();
+    let mut implemented = Vec::new();
     for (index, item) in krate.items.iter().enumerate() {
         if item.kind != ItemKind::Impl {
             continue;
         }
-        let path = type_path(&item.impl_type);
-        if path.is_empty() {
-            continue;
+        let block = ItemId(index as u32);
+        if let Some(owner) = impl_target(krate, item.module, &item.impl_type, Namespace::Type) {
+            attached.push((owner, block));
         }
-        let found = resolve_path(krate, item.module, None, path, Namespace::Type);
-        if let Some(Target::Item(owner)) = found {
-            attached.push((owner, ItemId(index as u32)));
+        let trait_path = item.impl_trait.as_deref().map(|t| t.trim_start_matches('!'));
+        let trait_kind = Namespace::Kind(ItemKind::Trait);
+        if let Some(found) =
+            trait_path.and_then(|t| impl_target(krate, item.module, t, trait_kind))
+        {
+            implemented.push((found, block));
         }
     }
     for (owner, block) in attached {
         krate.items[owner.0 as usize].impls.push(block);
+    }
+    for (trait_id, block) in implemented {
+        krate.items[trait_id.0 as usize].implementors.push(block);
+    }
+}
+
+/// The crate item a type or trait written in an impl header names, from `module`.
+fn impl_target(
+    krate: &Crate,
+    module: ModuleId,
+    written: &str,
+    namespace: Namespace,
+) -> Option<ItemId> {
+    let path = type_path(written);
+    if path.is_empty() {
+        return None;
+    }
+    match resolve_path(krate, module, None, path, namespace) {
+        Some(Target::Item(id)) => Some(id),
+        _ => None,
     }
 }
 

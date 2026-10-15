@@ -28,6 +28,7 @@ mod parse;
 mod plan;
 mod resolve;
 mod sig;
+mod std_links;
 
 pub use diag::{Diagnostic, Error, Position, Severity};
 pub use load::load_crate;

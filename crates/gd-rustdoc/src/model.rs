@@ -261,6 +261,9 @@ pub struct Item {
     pub impl_trait: Option<String>,
     /// For a type: the impl blocks attached to it.
     pub impls: Vec<ItemId>,
+    /// For a trait: the impl blocks anywhere in the crate that implement it (rustdoc's
+    /// "Implementors").
+    pub implementors: Vec<ItemId>,
     /// For a macro: its arms' patterns, `($x:expr)`.
     pub arms: Vec<String>,
     /// For a `mod` item: the module it declares.

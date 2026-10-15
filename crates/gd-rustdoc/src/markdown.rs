@@ -5,12 +5,14 @@
 //! cannot sit inside a directive), fenced and indented code (as `code-block`, Rust by
 //! default with rustdoc's hidden `# ` lines removed), bullet and ordered lists, block
 //! quotes, pipe tables (as `list-table`), HTML blocks (as `raw:: html`), thematic breaks
-//! (dropped) and link reference definitions (used for links, then dropped).
+//! (dropped), link reference definitions (used for links, then dropped), footnotes (as
+//! auto-numbered footnotes at the end), images (as `image` directives or substitutions)
+//! and hard line breaks (a paragraph with one becomes a line block).
 //!
 //! Lists and quotes nest by recursion bounded by [`MAX_NESTING`]; deeper content is
 //! written as plain paragraphs.
 
-use crate::inline::{Inline, LinkResolver, escape_plain, strip_markup};
+use crate::inline::{Image, Inline, LinkResolver, escape_plain, strip_markup};
 use std::collections::HashMap;
 
 /// How deeply lists and block quotes may nest before their content is flattened.
@@ -20,17 +22,38 @@ pub(crate) const MAX_NESTING: usize = 12;
 const BODY: &str = "   ";
 
 /// Writes `markdown` as reST lines indented by `indent` into `out`. Links are resolved
-/// through `links`. Writes nothing for blank docs.
+/// through `links`. Footnote and image names start with `names`, which must differ
+/// between the doc comments of one page. Writes nothing for blank docs.
 pub(crate) fn write_rst(
     markdown: &str,
     indent: &str,
+    names: &str,
     links: &mut dyn LinkResolver,
     out: &mut String,
 ) {
-    let (lines, refs) = take_reference_definitions(markdown);
-    let mut converter = Converter { inline: Inline { links, refs: &refs } };
+    let definitions = take_definitions(markdown);
+    let footnote_names: HashMap<String, String> = definitions
+        .footnotes
+        .iter()
+        .enumerate()
+        .map(|(i, (label, _))| (label.to_lowercase(), format!("{names}-f{}", i + 1)))
+        .collect();
+    let inline = Inline {
+        links,
+        refs: &definitions.refs,
+        footnotes: &footnote_names,
+        names,
+        images: vec![],
+    };
+    let mut converter = Converter { inline };
     let mut body = String::new();
-    converter.blocks(&lines, 0, &mut body);
+    converter.blocks(&definitions.lines, 0, &mut body);
+    for (i, (_, lines)) in definitions.footnotes.iter().enumerate() {
+        converter.footnote(&format!("{names}-f{}", i + 1), lines, &mut body);
+    }
+    for image in &converter.inline.images {
+        write_substitution(image, &mut body);
+    }
     for line in body.lines() {
         if !line.is_empty() {
             out.push_str(indent);
@@ -63,36 +86,95 @@ fn first_sentence(text: &str) -> &str {
     text
 }
 
-/// Splits link reference definitions (`[label]: destination`) off the text, outside code
-/// fences. Returns the remaining lines and the definitions by lower-cased label.
-fn take_reference_definitions(markdown: &str) -> (Vec<&str>, HashMap<String, String>) {
-    let mut lines = Vec::new();
-    let mut refs = HashMap::new();
+/// A doc comment with its definitions taken out.
+struct Definitions<'t> {
+    /// The lines left to convert.
+    lines: Vec<&'t str>,
+    /// Link reference definitions by lower-cased label.
+    refs: HashMap<String, String>,
+    /// Footnote definitions in source order: the label and the content's lines.
+    footnotes: Vec<(String, Vec<&'t str>)>,
+}
+
+/// Splits link reference definitions (`[label]: destination`) and footnote definitions
+/// (`[^label]: text`, with indented continuation lines) off the text, outside code
+/// fences.
+fn take_definitions(markdown: &str) -> Definitions<'_> {
+    let all: Vec<&str> = markdown.lines().collect();
+    let mut taken = Definitions { lines: Vec::new(), refs: HashMap::new(), footnotes: Vec::new() };
     let mut fence: Option<String> = None;
-    for line in markdown.lines() {
+    let mut i = 0;
+    while i < all.len() {
+        let line = all[i];
         let trimmed = line.trim_start();
+        i += 1;
         if let Some(open) = &fence {
             if trimmed.starts_with(open.as_str()) {
                 fence = None;
             }
-            lines.push(line);
+            taken.lines.push(line);
             continue;
         }
         if let Some((marker, _)) = fence_marker(line) {
             fence = Some(marker);
-            lines.push(line);
+            taken.lines.push(line);
             continue;
         }
-        match reference_definition(trimmed) {
-            Some((label, destination)) if indent_of(line) < 4 => {
-                refs.insert(label.to_lowercase(), destination);
-            }
-            _ => lines.push(line),
+        if indent_of(line) >= 4 {
+            taken.lines.push(line);
+        } else if let Some((label, first)) = footnote_definition(trimmed) {
+            let (content, next) = footnote_content(&all, i, first);
+            taken.footnotes.push((label, content));
+            i = next;
+        } else if let Some((label, destination)) = reference_definition(trimmed) {
+            taken.refs.insert(label.to_lowercase(), destination);
+        } else {
+            taken.lines.push(line);
         }
     }
-    (lines, refs)
+    taken
 }
 
+/// `[^label]: text` gives the label and the text.
+fn footnote_definition(line: &str) -> Option<(String, &str)> {
+    let rest = line.strip_prefix("[^")?;
+    let (label, text) = rest.split_once("]:")?;
+    let label = label.trim();
+    let valid = !label.is_empty() && !label.contains(char::is_whitespace);
+    valid.then(|| (label.to_string(), text.trim_start()))
+}
+
+/// The lines of a footnote whose first line is `first`: following lines indented by
+/// four (blank lines between them included) or lazily continuing its paragraph. Returns
+/// them dedented and the index after them.
+fn footnote_content<'t>(lines: &[&'t str], start: usize, first: &'t str) -> (Vec<&'t str>, usize) {
+    let mut content = vec![first];
+    let mut i = start;
+    while i < lines.len() {
+        let line = lines[i];
+        if line.trim().is_empty() {
+            let next = lines[i + 1..].iter().find(|l| !l.trim().is_empty());
+            if next.is_none_or(|l| indent_of(l) < 4) {
+                break;
+            }
+            content.push("");
+        } else if indent_of(line) >= 4 {
+            content.push(dedent(line, 4));
+        } else if content.last().is_some_and(|l| !l.trim().is_empty())
+            && !interrupts_paragraph(line)
+            && footnote_definition(line.trim_start()).is_none()
+            && reference_definition(line.trim_start()).is_none()
+        {
+            content.push(line.trim_start()); // A lazy continuation line.
+        } else {
+            break;
+        }
+        i += 1;
+    }
+    (content, i)
+}
+
+/// `[label]: destination` gives the label and the destination.
 fn reference_definition(line: &str) -> Option<(String, String)> {
     let rest = line.strip_prefix('[')?;
     let (label, after) = rest.split_once("]:")?;
@@ -370,11 +452,68 @@ impl Converter<'_> {
             }
             end += 1;
         }
-        let text: Vec<&str> = lines[start..end].iter().map(|l| l.trim()).collect();
-        let converted = self.inline.convert(&text.join(" "));
-        out.push_str(&safe_paragraph(&converted));
-        out.push('\n');
+        let segments = hard_break_segments(&lines[start..end]);
+        if segments.len() > 1 {
+            self.line_block(&segments, out);
+            return end;
+        }
+        let converted = self.inline.convert(&segments.concat());
+        if !self.standalone_image(&converted, out) {
+            out.push_str(&safe_paragraph(&converted));
+            out.push('\n');
+        }
         end
+    }
+
+    /// A paragraph with hard line breaks: a line block, one line per segment.
+    fn line_block(&mut self, segments: &[String], out: &mut String) {
+        for segment in segments {
+            let converted = self.inline.convert(segment);
+            out.push('|');
+            if !converted.is_empty() {
+                out.push(' ');
+                out.push_str(&converted);
+            }
+            out.push('\n');
+        }
+    }
+
+    /// A paragraph that is one image (`|d3-img1|`) is written as an `image` directive
+    /// instead of a substitution. Returns whether it was.
+    fn standalone_image(&mut self, converted: &str, out: &mut String) -> bool {
+        let images = &mut self.inline.images;
+        let is_last_image = images.last().is_some_and(|i| converted == format!("|{}|", i.name));
+        let Some(image) = images.pop_if(|_| is_last_image) else {
+            return false;
+        };
+        out.push_str(".. image:: ");
+        out.push_str(&image.src);
+        out.push('\n');
+        write_image_options(&image, out);
+        true
+    }
+
+    /// Writes a footnote definition: `.. [#name]` and its content as blocks.
+    fn footnote(&mut self, name: &str, lines: &[&str], out: &mut String) {
+        let mut body = String::new();
+        self.blocks(lines, 0, &mut body);
+        if !out.is_empty() && !out.ends_with("\n\n") {
+            out.push('\n');
+        }
+        out.push_str(&format!(".. [#{name}]"));
+        let mut body_lines = body.lines();
+        if let Some(first) = body_lines.next().filter(|l| !l.is_empty()) {
+            out.push(' ');
+            out.push_str(first);
+        }
+        out.push('\n');
+        for line in body_lines {
+            if !line.is_empty() {
+                out.push_str(BODY);
+                out.push_str(line);
+            }
+            out.push('\n');
+        }
     }
 
     fn quote(&mut self, lines: &[&str], start: usize, depth: usize, out: &mut String) -> usize {
@@ -461,6 +600,57 @@ impl Converter<'_> {
             }
         }
         end
+    }
+}
+
+/// The text of a paragraph's lines, split at hard line breaks: a line ending in two
+/// spaces or a backslash (not the last line, where they mean nothing). Lines are
+/// trimmed and joined with spaces.
+fn hard_break_segments(lines: &[&str]) -> Vec<String> {
+    let mut segments = Vec::new();
+    let mut current = String::new();
+    for (i, line) in lines.iter().enumerate() {
+        let last = i + 1 == lines.len();
+        let trimmed = line.trim();
+        let backslashes = trimmed.chars().rev().take_while(|&c| c == '\\').count();
+        let (text, breaks) = if last {
+            (trimmed, false)
+        } else if line.ends_with("  ") {
+            (trimmed, true)
+        } else if backslashes % 2 == 1 {
+            (trimmed[..trimmed.len() - 1].trim_end(), true)
+        } else {
+            (trimmed, false)
+        };
+        if !current.is_empty() && !text.is_empty() {
+            current.push(' ');
+        }
+        current.push_str(text);
+        if breaks {
+            segments.push(std::mem::take(&mut current));
+        }
+    }
+    segments.push(current);
+    segments
+}
+
+/// Writes the definition of an image used in running text.
+fn write_substitution(image: &Image, out: &mut String) {
+    if !out.is_empty() && !out.ends_with("\n\n") {
+        out.push('\n');
+    }
+    out.push_str(&format!(".. |{}| image:: {}\n", image.name, image.src));
+    write_image_options(image, out);
+}
+
+/// The `:alt:` and `:target:` options of an image directive.
+fn write_image_options(image: &Image, out: &mut String) {
+    let alt = image.alt.split_whitespace().collect::<Vec<_>>().join(" ");
+    if !alt.is_empty() {
+        out.push_str(&format!("{BODY}:alt: {alt}\n"));
+    }
+    if let Some(target) = &image.target {
+        out.push_str(&format!("{BODY}:target: {target}\n"));
     }
 }
 

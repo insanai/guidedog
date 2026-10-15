@@ -16,8 +16,11 @@ pub(crate) enum Link {
     /// without a link, as rustdoc does.
     Plain,
     /// Not a documented item of this crate; the path with any disambiguator removed,
-    /// left to the reader's `:rust:any:` resolution (another crate, the standard library).
+    /// left to the reader's `:rust:any:` resolution (another crate).
     Unresolved { path: String },
+    /// A page of the standard library's documentation (a primitive, a `std::` path):
+    /// written as a hyperlink to `url`.
+    External { url: String },
 }
 
 /// Resolves intra-doc link destinations (`Foo`, `crate::a::b`, `struct@Foo`, `foo()`).
@@ -29,10 +32,29 @@ pub(crate) trait LinkResolver {
 }
 
 /// Converts Markdown inline text. Link reference definitions are looked up in `refs`
-/// (keys lower-cased).
+/// and footnote labels in `footnotes` (keys lower-cased).
 pub(crate) struct Inline<'r> {
     pub links: &'r mut dyn LinkResolver,
     pub refs: &'r HashMap<String, String>,
+    /// Footnote labels and the reST names their footnotes are written under.
+    pub footnotes: &'r HashMap<String, String>,
+    /// What this doc comment's names start with (`d3`), so the names of its images
+    /// differ from those of other doc comments on the page.
+    pub names: &'r str,
+    /// The images met so far: each is written as a substitution reference, whose
+    /// definition the caller writes after the doc comment.
+    pub images: Vec<Image>,
+}
+
+/// An image in running text: `![alt](src)`, or `[![alt](src)](target)` for a linked
+/// one (a badge).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) struct Image {
+    /// The substitution name it is referenced by (`d3-img1`).
+    pub name: String,
+    pub src: String,
+    pub alt: String,
+    pub target: Option<String>,
 }
 
 /// Characters reST accepts right before inline markup starts.
@@ -253,7 +275,7 @@ impl Inline<'_> {
             }
             '`' => code_span(chars, i, out),
             '[' => self.link(chars, i, out),
-            '!' if next == Some('[') => image(chars, i, out),
+            '!' if next == Some('[') => self.image(chars, i, None, out),
             '<' => autolink(chars, i, out),
             '*' | '_' => emphasis(chars, i, out),
             '~' if next == Some('~') => strikethrough(chars, i, out),
@@ -265,6 +287,9 @@ impl Inline<'_> {
     }
 
     fn link(&mut self, chars: &[char], i: usize, out: &mut Out) -> usize {
+        if chars.get(i + 1) == Some(&'^') {
+            return self.footnote_reference(chars, i, out);
+        }
         let Some(link) = self.parse_link(chars, i) else {
             out.plain('[', None, None);
             return i + 1;
@@ -272,7 +297,13 @@ impl Inline<'_> {
         let destination = link.destination.clone().unwrap_or_else(|| link.text.clone());
         let destination = destination.trim().trim_matches('`').to_string();
         if link.destination.is_some() && is_url(&destination) {
-            write_hyperlink(&strip_markup(&link.text), &destination, out);
+            let text: Vec<char> = link.text.trim().chars().collect();
+            let whole_image = parse_image(&text, 0).is_some_and(|image| image.2 == text.len());
+            if whole_image {
+                self.image(&text, 0, Some(&destination), out);
+            } else {
+                write_hyperlink(&strip_markup(&link.text), &destination, out);
+            }
             return link.end;
         }
         let backquoted = link.text.trim().starts_with('`') && link.text.trim().ends_with('`');
@@ -282,9 +313,16 @@ impl Inline<'_> {
         } else {
             None
         };
-        let shown = strip_markup(&link.text);
+        let mut shown = strip_markup(&link.text);
+        if link.destination.is_none() {
+            // Rustdoc shows `[`struct@Foo`]` as `Foo`.
+            shown = without_disambiguator(&shown).to_string();
+        }
         match resolved {
             Some(Link::Found { role, path }) => write_role(role, &shown, &path, out),
+            // The standard library is linked whether or not the text was backquoted,
+            // as rustdoc links `[u8]` and `[Vec]`.
+            Some(Link::External { url }) => write_hyperlink(&shown, &url, out),
             Some(Link::Unresolved { path }) if explicit => write_role("any", &shown, &path, out),
             Some(Link::Plain) => write_literal(&shown, out),
             _ => {
@@ -294,6 +332,46 @@ impl Inline<'_> {
             }
         }
         link.end
+    }
+
+    /// `[^label]`: a reference to the footnote defined for `label`, written as a
+    /// reST auto-numbered footnote reference (`[#d3-f1]_`). An undefined label is text.
+    fn footnote_reference(&mut self, chars: &[char], i: usize, out: &mut Out) -> usize {
+        let close = matching(chars, i, '[', ']');
+        let label: Option<String> = close.map(|c| chars[i + 2..c].iter().collect());
+        let name = label.and_then(|l| self.footnotes.get(&l.trim().to_lowercase()));
+        let (Some(close), Some(name)) = (close, name) else {
+            out.plain('[', None, None);
+            return i + 1;
+        };
+        out.begin_markup();
+        out.raw(&format!("[#{name}]_"));
+        out.end_markup();
+        close + 1
+    }
+
+    /// `![alt](src)` at `i`, linked to `target` when given. An image with a URL becomes
+    /// a substitution reference; one with a relative path (which has no stable place
+    /// next to the generated page) shows its alternative text, linked if it was.
+    fn image(&mut self, chars: &[char], i: usize, target: Option<&str>, out: &mut Out) -> usize {
+        let Some((alt, src, end)) = parse_image(chars, i) else {
+            out.plain('!', None, None);
+            return i + 1;
+        };
+        let alt = strip_markup(&alt);
+        if !is_embeddable(&src) {
+            match target {
+                Some(target) => write_hyperlink(&alt, target, out),
+                None => out.raw(&escape_plain(&alt)),
+            }
+            return end;
+        }
+        let name = format!("{}-img{}", self.names, self.images.len() + 1);
+        out.begin_markup();
+        out.raw(&format!("|{name}|"));
+        out.end_markup();
+        self.images.push(Image { name, src, alt, target: target.map(str::to_string) });
+        end
     }
 
     fn parse_link(&self, chars: &[char], i: usize) -> Option<LinkSyntax> {
@@ -328,6 +406,14 @@ impl Inline<'_> {
         let destination = self.refs.get(&text.trim().to_lowercase()).cloned();
         let explicit = destination.is_some();
         Some(LinkSyntax { text, destination, explicit, end: after })
+    }
+}
+
+/// The text of a link written as its own destination, without a `kind@` prefix.
+fn without_disambiguator(text: &str) -> &str {
+    match text.split_once('@') {
+        Some((prefix, rest)) if prefix.chars().all(|c| c.is_ascii_lowercase()) => rest,
+        _ => text,
     }
 }
 
@@ -378,20 +464,27 @@ fn code_span(chars: &[char], i: usize, out: &mut Out) -> usize {
     end
 }
 
-/// `![alt](src)` shows its alternative text; images are not carried into the API page.
-fn image(chars: &[char], i: usize, out: &mut Out) -> usize {
-    let Some(close) = matching(chars, i + 1, '[', ']') else {
-        out.plain('!', None, None);
-        return i + 1;
-    };
-    let alt: String = chars[i + 2..close].iter().collect();
-    out.raw(&escape_plain(&strip_markup(&alt)));
-    if chars.get(close + 1) == Some(&'(')
-        && let Some(end) = matching(chars, close + 1, '(', ')')
-    {
-        return end + 1;
+/// Parses `![alt](src "title")` at `i`: the alternative text, the source and the index
+/// after it. `None` when it is not an image with a source.
+fn parse_image(chars: &[char], i: usize) -> Option<(String, String, usize)> {
+    if chars.get(i) != Some(&'!') || chars.get(i + 1) != Some(&'[') {
+        return None;
     }
-    close + 1
+    let close = matching(chars, i + 1, '[', ']')?;
+    if chars.get(close + 1) != Some(&'(') {
+        return None;
+    }
+    let end = matching(chars, close + 1, '(', ')')?;
+    let alt: String = chars[i + 2..close].iter().collect();
+    let inside: String = chars[close + 2..end].iter().collect();
+    let src = inside.split_whitespace().next().unwrap_or("").trim_matches(['<', '>']);
+    (!src.is_empty()).then(|| (alt, src.to_string(), end + 1))
+}
+
+/// Whether an image source can be embedded: a URL, which means the same thing from
+/// every page.
+fn is_embeddable(src: &str) -> bool {
+    src.contains("://") || src.starts_with("data:")
 }
 
 /// `<https://example.com>` and `<someone@example.com>`.
@@ -496,7 +589,15 @@ mod tests {
 
     fn convert(text: &str) -> String {
         let refs = HashMap::from([("bar".to_string(), "Foo::new".to_string())]);
-        Inline { links: &mut Fixed, refs: &refs }.convert(text)
+        let footnotes = HashMap::from([("1".to_string(), "d1-f1".to_string())]);
+        let mut inline = Inline {
+            links: &mut Fixed,
+            refs: &refs,
+            footnotes: &footnotes,
+            names: "d1",
+            images: Vec::new(),
+        };
+        inline.convert(text)
     }
 
     #[test]
@@ -512,6 +613,19 @@ mod tests {
         assert_eq!(convert("[the ctor][bar]"), ":rust:fn:`the ctor <k::Foo::new>`");
         assert_eq!(convert("[`std::vec::Vec`]"), ":rust:any:`std::vec::Vec`");
         assert_eq!(convert("[0, 1)"), "[0, 1)");
+    }
+
+    #[test]
+    fn footnote_references_name_their_footnotes() {
+        assert_eq!(convert("Text[^1] and [^2]."), "Text\\ [#d1-f1]_ and [^2].");
+    }
+
+    #[test]
+    fn images_become_substitutions_or_alt_text() {
+        assert_eq!(convert("A ![dot](https://x.org/d.png \"t\")."), "A |d1-img1|.");
+        assert_eq!(convert("![local](img/d.png)"), "local");
+        assert_eq!(convert("[![ci](https://x.org/b.svg)](https://x.org)"), "|d1-img1|");
+        assert_eq!(convert("[![ci](b.svg)](https://x.org)"), "`ci <https://x.org>`__");
     }
 
     #[test]

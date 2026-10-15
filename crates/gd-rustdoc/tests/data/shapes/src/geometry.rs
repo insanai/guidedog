@@ -28,3 +28,18 @@ pub fn area(w: f32, h: f32) -> f32 {
 pub fn links() {}
 
 fn helper() {}
+
+/// Notes on units[^units], with a picture and links to the standard library.
+///
+/// ![A unit square](https://example.org/square.svg)
+///
+/// Sides are [`f32`] or [`prim@u8`], and names are [`str`]; see [`u8::MAX`],
+/// [`Vec`], [`std::collections::HashMap`] and [`std::mem::swap`].
+///
+/// First line,  
+/// second line.\
+/// Third line.
+///
+/// [^units]: Points are pixels
+///     at one to one.
+pub fn notes() {}

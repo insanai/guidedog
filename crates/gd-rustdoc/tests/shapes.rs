@@ -264,6 +264,72 @@ fn private_items_on_request() {
     assert!(root.contains(".. rust:function:: pub fn hidden_helper()\n"));
     let point = &page(&pages, "fake_shapes/geometry/point.rst").text;
     assert!(point.contains(".. rust:method:: fn private(&mut self)\n"), "{point}");
+    assert!(point.contains(".. rust:struct:: pub struct Pair(pub i32, i32)\n"), "{point}");
+}
+
+#[test]
+fn traits_list_their_implementors() {
+    let pages = default_pages();
+    let root = &page(&pages, "fake_shapes.rst").text;
+    let draw = &root[root.find(".. rust:trait:: pub trait Draw").unwrap_or(0)..];
+    let expected = "   .. rubric:: Implementors\n\n   \
+        .. rust:impl:: impl crate::Draw for Canvas\n      :noindex:\n      \
+        :module: fake_shapes::storage\n      :for: Canvas\n      :trait: crate::Draw\n\n   \
+        .. rust:impl:: impl crate::Draw for Point<f32>\n      :noindex:\n      \
+        :module: fake_shapes::geometry::point\n      :for: Point<f32>\n      \
+        :trait: crate::Draw\n\n";
+    assert!(draw.contains(expected), "{draw}");
+}
+
+#[test]
+fn types_group_inherent_then_sorted_trait_impls() {
+    let pages = default_pages();
+    let root = &page(&pages, "fake_shapes.rst").text;
+    let canvas = &root[root.find(".. rust:struct:: pub struct Canvas").unwrap_or(0)..];
+    let order = [
+        "   .. rubric:: Implementations\n",
+        "   .. rust:impl:: impl Canvas\n",
+        "   .. rubric:: Trait Implementations\n",
+        "   .. rust:impl:: impl Clone for Canvas\n",
+        "   .. rust:impl:: impl crate::Draw for Canvas\n",
+    ];
+    let at: Vec<usize> = order.iter().map(|o| canvas.find(o).unwrap_or(usize::MAX)).collect();
+    assert!(at.is_sorted() && at[4] != usize::MAX, "{at:?}\n{canvas}");
+    let point = &page(&pages, "fake_shapes/geometry/point.rst").text;
+    assert!(point.contains("   .. rubric:: Fields\n\n   .. rust:field:: pub x: T\n"), "{point}");
+    assert!(root.contains("   .. rubric:: Variants\n\n   .. rust:variant:: Circle\n"), "{root}");
+}
+
+#[test]
+fn standard_library_links_go_to_doc_rust_lang_org() {
+    let pages = default_pages();
+    let text = &page(&pages, "fake_shapes/geometry.rst").text;
+    for link in [
+        "`f32 <https://doc.rust-lang.org/std/primitive.f32.html>`__",
+        "`u8 <https://doc.rust-lang.org/std/primitive.u8.html>`__",
+        "`str <https://doc.rust-lang.org/std/primitive.str.html>`__",
+        "`u8::MAX <https://doc.rust-lang.org/std/primitive.u8.html#associatedconstant.MAX>`__",
+        "`Vec <https://doc.rust-lang.org/std/vec/struct.Vec.html>`__",
+        "`std::collections::HashMap \
+        <https://doc.rust-lang.org/std/collections/struct.HashMap.html>`__",
+        "`std::mem::swap <https://doc.rust-lang.org/std/index.html?search=std::mem::swap>`__",
+    ] {
+        assert!(text.contains(link), "{link} in\n{text}");
+    }
+}
+
+#[test]
+fn footnotes_images_and_line_breaks_are_translated() {
+    let pages = default_pages();
+    let text = &page(&pages, "fake_shapes/geometry.rst").text;
+    for fragment in [
+        "   Notes on units\\ [#d",
+        "   .. image:: https://example.org/square.svg\n      :alt: A unit square\n",
+        "   | First line,\n   | second line.\n   | Third line.\n",
+        "-f1] Points are pixels at one to one.\n",
+    ] {
+        assert!(text.contains(fragment), "{fragment} in\n{text}");
+    }
 }
 
 #[test]

@@ -21,3 +21,17 @@ impl Canvas {
         self.width
     }
 }
+
+impl crate::Draw for Canvas {
+    type Output = usize;
+
+    fn draw(&self, _canvas: &mut Canvas) -> Result<usize, String> {
+        Ok(self.width)
+    }
+}
+
+impl Clone for Canvas {
+    fn clone(&self) -> Self {
+        Canvas { width: self.width, pixels: self.pixels.clone() }
+    }
+}

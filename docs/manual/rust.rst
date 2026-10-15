@@ -173,8 +173,10 @@ Guidedog follows rustdoc's rules:
   inherent impls first, then trait impls. An impl for a type outside the crate is listed
   under "Implementations" on its module's page. Trait-impl members are ``:noindex:``.
   They are documented on the trait.
+- A type's description groups its content as rustdoc does, each group under a rubric: "Fields" (or "Variants"), "Implementations" (inherent impls in source order), then "Trait Implementations" (sorted by trait name).
+- A trait ends with "Implementors": the head of every impl of it in the crate, sorted by the implementing type. Each head links its types. The impl's members stay with the type (or on the module page, for a type of another crate).
 - Tuple fields, and the fields of enum variants, are listed only when one of them has
-  docs. A tuple struct's signature shows private fields as ``_``.
+  docs. A tuple struct's signature shows private fields as ``_``. With ``include_private``, it shows their types.
 - ``#[cfg(...)]`` and ``#[doc(cfg(...))]`` become ``:cfg:``. Several are joined as
   ``all(a, b)``.
 - Signatures are the source on one line: attributes, comments and bodies removed,
@@ -201,9 +203,12 @@ reStructuredText in the directive's content:
   disambiguators such as ``struct@`` or ``foo()``) are resolved as rustdoc resolves them,
   relative to the item's module and ``Self``, and become ``rust`` roles. Other links and
   autolinks stay links.
+- Links into the standard library become links to doc.rust-lang.org. These are primitives (``[u8]``, ``[`prim@str`]``, ``[u8::MAX]``), paths that start with ``std::``, ``core::`` or ``alloc::``, and prelude names the crate does not define (``[Vec]``, ``[Some]``). The standard library publishes no inventory we could read, so a stable URL is the practical choice. Primitives and common items get their exact page (``primitive.u8.html``, ``struct.Vec.html#method.new``). A disambiguator such as ``macro@`` or ``mod@`` gives the page for others. Anything else opens rustdoc's search for the path. The shown text drops the disambiguator: ``[`prim@u8`]`` shows ``u8``.
+- Footnotes (``[^1]``) become auto-numbered footnotes at the end of the item's docs.
+- An image on its own line becomes an ``image`` with its alt text, and a linked image (a badge) gets a ``:target:``. An image inside a sentence becomes a substitution. An image with a relative path keeps only its alt text, because nothing places the file next to the generated page.
+- A paragraph with a hard line break (two trailing spaces, or a backslash at the end of a line) becomes a line block.
 - Everything else reStructuredText would read as markup is escaped, so a comment reads
-  as written and never warns. Footnotes, images (their alt text is kept), and hard line
-  breaks are not translated.
+  as written and never warns.
 
 Rebuilding
 ----------

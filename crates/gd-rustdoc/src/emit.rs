@@ -10,7 +10,8 @@ use crate::inline::{Link, LinkResolver};
 use crate::markdown::{plain_paragraph, summary, write_rst};
 use crate::model::{Crate, FileId, Item, ItemId, ItemKind, ModuleId, Visibility};
 use crate::plan::{Entry, Plan, PlanPage, is_shown};
-use crate::resolve::{Namespace, Target, resolve_path};
+use crate::resolve::{Namespace, Target, resolve_path, type_path};
+use crate::std_links::{primitive_url, std_url};
 use crate::{MemberOrder, Options, Page};
 
 /// The indentation of directive content.
@@ -21,7 +22,14 @@ pub(crate) fn pages(krate: &Crate, plan: &Plan, options: &Options) -> Vec<Page> 
     let mut pages = Vec::with_capacity(plan.pages.len() + 1);
     pages.push(index_page(krate, plan));
     for page in &plan.pages {
-        let mut writer = Writer { krate, plan, options, out: String::new(), warnings: Vec::new() };
+        let mut writer = Writer {
+            krate,
+            plan,
+            options,
+            out: String::new(),
+            warnings: Vec::new(),
+            docs_blocks: 0,
+        };
         writer.module_page(page);
         pages.push(Page {
             path: page_path(&page.path),
@@ -95,6 +103,9 @@ struct Writer<'k> {
     options: &'k Options,
     out: String,
     warnings: Vec<Diagnostic>,
+    /// How many doc comments the page has so far; numbers each one's footnote and
+    /// image names apart from the others'.
+    docs_blocks: usize,
 }
 
 impl Writer<'_> {
@@ -233,9 +244,11 @@ impl Writer<'_> {
         if markdown.trim().is_empty() {
             return;
         }
+        self.docs_blocks += 1;
         let mut links =
             ScopeLinks { krate: self.krate, plan: self.plan, scope, warnings: &mut self.warnings };
-        write_rst(markdown, indent, &mut links, &mut self.out);
+        let names = format!("d{}", self.docs_blocks);
+        write_rst(markdown, indent, &names, &mut links, &mut self.out);
         if !self.out.ends_with("\n\n") {
             self.out.push('\n');
         }
@@ -246,6 +259,7 @@ impl Writer<'_> {
     fn item(&mut self, id: ItemId, name: &str, indent: &str, self_type: Option<ItemId>) {
         let item = self.krate.item(id);
         let signature = renamed(&item.signature, &item.name, name);
+        let signature = with_shown_tuple(self.krate, item, signature, self.options);
         let mut options = common_options(self.krate, item, self.options);
         if item.kind == ItemKind::Impl {
             options.extend(impl_options(item));
@@ -261,13 +275,16 @@ impl Writer<'_> {
         self.docs(&item.docs, &body, scope);
         match item.kind {
             ItemKind::Struct | ItemKind::Union | ItemKind::Variant => self.fields(item, &body),
-            ItemKind::Enum => self.members(item, &body, owner, |_| true),
-            ItemKind::Trait => self.members(item, &body, owner, |_| true),
-            ItemKind::Impl => self.impl_members(item, &body, owner),
+            ItemKind::Enum => self.members(item, &body, owner, Some("Variants")),
+            ItemKind::Trait => self.members(item, &body, owner, None),
+            ItemKind::Impl => self.members(item, &body, owner, None),
             _ => {}
         }
         if item.kind.is_type() {
             self.impls(item, &body, Some(id));
+        }
+        if item.kind == ItemKind::Trait {
+            self.implementors(item, &body);
         }
     }
 
@@ -292,56 +309,119 @@ impl Writer<'_> {
         if (is_tuple || in_variant) && !has_docs {
             return;
         }
-        self.members(item, body, None, |_| true);
+        // A variant's fields need no title: they sit in the variant's own description.
+        let title = (!in_variant).then_some("Fields");
+        self.members(item, body, None, title);
     }
 
-    /// Writes the children of `item` that are shown and pass `keep`.
+    /// Writes the children of `item` that are shown, under the rubric `title` when
+    /// there is one and some child is shown.
     fn members(
         &mut self,
         item: &Item,
         body: &str,
         self_type: Option<ItemId>,
-        keep: impl Fn(&Item) -> bool,
+        title: Option<&str>,
     ) {
-        for &child in &item.children {
-            let member = self.krate.item(child);
-            if is_shown(member, self.options) && keep(member) {
-                let name = member.name.clone();
-                self.item(child, &name, body, self_type);
-            }
-        }
-    }
-
-    fn impl_members(&mut self, item: &Item, body: &str, self_type: Option<ItemId>) {
-        self.members(item, body, self_type, |_| true);
-    }
-
-    /// The impl blocks attached to a type: inherent ones first, then trait impls.
-    fn impls(&mut self, item: &Item, body: &str, self_type: Option<ItemId>) {
-        let mut blocks: Vec<ItemId> = item
-            .impls
+        let shown: Vec<ItemId> = item
+            .children
             .iter()
             .copied()
-            .filter(|&b| {
-                let block = self.krate.item(b);
-                !block.is_test && (!block.is_hidden || self.options.document_hidden)
-            })
+            .filter(|&c| is_shown(self.krate.item(c), self.options))
             .collect();
-        blocks.sort_by_key(|&b| self.krate.item(b).impl_trait.is_some());
-        for block in blocks {
-            let inherent = self.krate.item(block).impl_trait.is_none();
-            let shown_members = self
-                .krate
-                .item(block)
-                .children
-                .iter()
-                .any(|&c| is_shown(self.krate.item(c), self.options));
-            if inherent && !shown_members {
-                continue;
-            }
-            self.item(block, "", body, self_type);
+        if let Some(title) = title.filter(|_| !shown.is_empty()) {
+            self.inner_rubric(body, title);
+        }
+        for child in shown {
+            let name = self.krate.item(child).name.clone();
+            self.item(child, &name, body, self_type);
         }
     }
+
+    /// A rubric inside a directive's content.
+    fn inner_rubric(&mut self, body: &str, title: &str) {
+        self.out.push_str(body);
+        self.rubric(title);
+    }
+
+    /// Whether an impl block is documented at all: never a test's, and a hidden one
+    /// only with `document_hidden`.
+    fn is_documented_impl(&self, block: ItemId) -> bool {
+        let block = self.krate.item(block);
+        !block.is_test && (!block.is_hidden || self.options.document_hidden)
+    }
+
+    /// The impl blocks attached to a type, as rustdoc orders them: inherent ones
+    /// ("Implementations") in source order, then trait impls ("Trait Implementations")
+    /// sorted by trait path. An inherent impl with nothing shown is left out.
+    fn impls(&mut self, item: &Item, body: &str, self_type: Option<ItemId>) {
+        let (mut inherent, mut traits) = (Vec::new(), Vec::new());
+        for &block in &item.impls {
+            if !self.is_documented_impl(block) {
+                continue;
+            }
+            let impl_item = self.krate.item(block);
+            match &impl_item.impl_trait {
+                Some(name) => traits.push((trait_sort_key(name), block)),
+                None => {
+                    let children = &impl_item.children;
+                    if children.iter().any(|&c| is_shown(self.krate.item(c), self.options)) {
+                        inherent.push(block);
+                    }
+                }
+            }
+        }
+        traits.sort_by(|a, b| a.0.cmp(&b.0));
+        let groups = [
+            ("Implementations", inherent),
+            ("Trait Implementations", traits.into_iter().map(|t| t.1).collect()),
+        ];
+        for (title, blocks) in groups {
+            if blocks.is_empty() {
+                continue;
+            }
+            self.inner_rubric(body, title);
+            for block in blocks {
+                self.item(block, "", body, self_type);
+            }
+        }
+    }
+
+    /// A trait's "Implementors": the head of every impl of it in the crate, sorted by
+    /// the type implementing it. Their members are documented with the types (or on
+    /// the module page, for a type of another crate), so only the heads are written,
+    /// each read in its own module so the paths it writes resolve.
+    fn implementors(&mut self, item: &Item, body: &str) {
+        let mut blocks: Vec<ItemId> =
+            item.implementors.iter().copied().filter(|&b| self.is_documented_impl(b)).collect();
+        if blocks.is_empty() {
+            return;
+        }
+        blocks.sort_by(|&a, &b| {
+            let (a, b) = (self.krate.item(a), self.krate.item(b));
+            type_path(&a.impl_type)
+                .cmp(type_path(&b.impl_type))
+                .then(a.impl_type.cmp(&b.impl_type))
+        });
+        self.inner_rubric(body, "Implementors");
+        for block in blocks {
+            let block = self.krate.item(block);
+            let mut options = vec![("noindex", String::new())];
+            if block.module != item.module {
+                options.push(("module", self.krate.module_path(block.module)));
+            }
+            options.extend(impl_options(block));
+            self.directive(body, "impl", &block.signature, &options);
+        }
+    }
+}
+
+/// How trait impls are ordered: by the trait's name as rustdoc shows it (`Display`
+/// for `!fmt::Display`), then by the path as written.
+fn trait_sort_key(written: &str) -> (String, String) {
+    let path = type_path(written.trim_start_matches('!'));
+    let name = path.rsplit("::").next().unwrap_or(path);
+    (name.to_string(), written.to_string())
 }
 
 fn in_group(kind: ItemKind, kinds: &[ItemKind]) -> bool {
@@ -420,6 +500,38 @@ fn renamed(signature: &str, old: &str, new: &str) -> String {
     signature.to_string()
 }
 
+/// The signature of a tuple struct with the fields shown on this page: the parser
+/// writes `_` for every field that is not `pub`, as rustdoc does; with
+/// `include_private` those are shown too, as `pub(crate) u8` or `u8`.
+fn with_shown_tuple(krate: &Crate, item: &Item, signature: String, options: &Options) -> String {
+    let fields: Vec<&Item> = item.children.iter().map(|&c| krate.item(c)).collect();
+    let is_tuple = fields.first().is_some_and(|f| f.name == "0");
+    if !matches!(item.kind, ItemKind::Struct | ItemKind::Union) || !is_tuple {
+        return signature;
+    }
+    let field_type = |field: &Item| -> String {
+        // A tuple field's signature is `[visibility ]index: type`.
+        let ty = field.signature.split_once(": ").map_or("", |(_, ty)| ty);
+        match field.visibility.as_str() {
+            "" => ty.to_string(),
+            shown => format!("{shown} {ty}"),
+        }
+    };
+    let public: Vec<String> = fields
+        .iter()
+        .map(|f| if f.visibility == Visibility::Public { field_type(f) } else { "_".into() })
+        .collect();
+    let shown: Vec<String> = fields
+        .iter()
+        .map(|f| if is_shown(f, options) { field_type(f) } else { "_".into() })
+        .collect();
+    let (public, shown) = (format!("({})", public.join(", ")), format!("({})", shown.join(", ")));
+    if public == shown {
+        return signature;
+    }
+    signature.replacen(&public, &shown, 1)
+}
+
 /// Where an item is written: its file and byte offset.
 fn location(krate: &Crate, id: ItemId) -> (FileId, usize) {
     let item = krate.item(id);
@@ -493,9 +605,15 @@ impl ScopeLinks<'_> {
 
 impl LinkResolver for ScopeLinks<'_> {
     fn resolve(&mut self, destination: &str, explicit: bool) -> Option<Link> {
+        if let Some(url) = primitive_destination(destination) {
+            return Some(Link::External { url });
+        }
         let (path, namespace) = parse_destination(destination)?;
         let target = self.documented_target(&path, namespace);
         let Some(target) = target else {
+            if let Some(url) = std_url(&path, namespace) {
+                return Some(Link::External { url });
+            }
             if explicit && self.is_local(&path) {
                 self.warn(
                     "rust.autodoc.link",
@@ -536,6 +654,13 @@ fn role_of(krate: &Crate, target: Target) -> &'static str {
         Target::Module(_) => "mod",
         Target::Item(id) => krate.item(id).kind.role(),
     }
+}
+
+/// The doc.rust-lang.org page a `prim@u8` or `primitive@str` destination names.
+fn primitive_destination(destination: &str) -> Option<String> {
+    let text = destination.trim().trim_matches('`').trim();
+    let (prefix, name) = text.split_once('@')?;
+    matches!(prefix, "prim" | "primitive").then(|| primitive_url(name)).flatten()
 }
 
 /// Splits an intra-doc link destination into a path and the namespace its
@@ -600,6 +725,11 @@ mod tests {
         assert_eq!(parsed("`foo!`"), ("foo".to_string(), Namespace::Macro));
         assert_eq!(parsed("Vec<T>::new()").0, "Vec::new");
         assert!(parse_destination("prim@u8").is_none());
+        assert_eq!(
+            primitive_destination("`prim@u8`").as_deref(),
+            Some("https://doc.rust-lang.org/std/primitive.u8.html")
+        );
+        assert!(primitive_destination("struct@u8").is_none());
     }
 
     #[test]

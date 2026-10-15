@@ -79,8 +79,8 @@ codes: `rust.autodoc.crate`, `rust.autodoc.root`, `rust.autodoc.read`,
   imports): inherent impls first, then trait impls. An impl whose type is not in the
   crate (`impl From<X> for String`) is listed under "Implementations" on its module page.
   Trait-impl members are written `:noindex:` (they are documented on the trait).
-- Tuple fields, and the fields of enum variants, are listed only when one of them has
-  docs (rustdoc's rule); a tuple struct's signature shows private fields as `_`.
+- A type's content is grouped as rustdoc groups it, each group under a rubric: "Fields" (or "Variants"), "Implementations" (inherent impls, in source order) and "Trait Implementations" (sorted by trait name). A trait ends with "Implementors": the head of every impl of it found anywhere in the crate, sorted by the implementing type, each with `:module:` set to the impl's module so the paths it writes resolve.
+- Tuple fields, and the fields of enum variants, are listed only when one of them has docs (rustdoc's rule); a tuple struct's signature shows fields that are not documented on the page as `_` (with `include_private`, private ones show their types).
 - `#[cfg(...)]` and `#[doc(cfg(...))]` become `:cfg:`; several are joined as `all(a, b)`.
 - `#[doc = "..."]`, `#[doc = include_str!("file")]` (read relative to the source file,
   only inside the crate folder), `///`, `//!`, `/** */` and `/*! */` docs are joined and
@@ -196,8 +196,10 @@ weighed:
 
 The first is more faithful: every construct rustdoc renders gets a deliberate reST form,
 and the reader's existing reST machinery (rubrics, code blocks, roles) does the rest.
-Not translated: footnotes, images (their alt text is kept), nested emphasis inside
-strong (reST cannot nest; the inner text is kept), and hard line breaks.
+
+Footnotes (`[^1]`) become auto-numbered footnotes (`[#d3-f1]_`) defined at the end of the item's docs; `d3` numbers the doc comments of a page, so labels never clash. An image paragraph becomes `.. image::` with `:alt:` (and `:target:` for a linked badge), an image in running text a substitution defined after the docs; images with a relative path keep only their alt text, since nothing places them next to the generated page. A paragraph with a hard line break (two trailing spaces or a backslash) becomes a line block. Not translated: nested emphasis inside strong (reST cannot nest; the inner text is kept).
+
+Links into the standard library (primitives `[u8]`, `prim@str`, `[u8::MAX]`, paths starting `std::`, `core::` or `alloc::`, and prelude names such as `[Vec]` or `[Some]` that the crate does not define) become hyperlinks to doc.rust-lang.org. The standard library publishes no inventory a reader could use, so a stable URL is the practical choice: primitives and a table of common items get their exact pages (`struct.Vec.html`, `#method.new`), a disambiguator gives the page kind for the rest (`macro@`, `mod@`, `struct@`), and anything else opens rustdoc's search for the path. The shown text drops a written disambiguator (`[`prim@u8`]` shows `u8`), as rustdoc does.
 
 ## Design notes (Rust, not the Odin port)
 
@@ -217,4 +219,4 @@ strong (reST cannot nest; the inner text is kept), and hard line breaks.
 Source map: `load.rs` (finding files), `parse.rs` (syntax to items), `attrs.rs` (docs
 and attributes), `sig.rs` (signatures), `resolve.rs` (paths, impl attachment),
 `plan.rs` (what is documented where), `emit.rs` (pages), `markdown.rs` and `inline.rs`
-(doc comments to reST), `diag.rs` (diagnostics), `model.rs` (the model).
+(doc comments to reST), `std_links.rs` (doc.rust-lang.org URLs), `diag.rs` (diagnostics), `model.rs` (the model).

@@ -270,7 +270,7 @@ fn strip_stars(text: &str) -> String {
 }
 
 /// Removes the indentation every non-blank line shares, as rustdoc does to the leading
-/// space of `/// text`.
+/// space of `/// text`. Trailing spaces stay: two of them are a hard line break.
 pub(crate) fn unindent(text: &str) -> String {
     let indent = text
         .lines()
@@ -284,7 +284,7 @@ pub(crate) fn unindent(text: &str) -> String {
             out.push('\n');
         }
         if line.len() >= indent && line.is_char_boundary(indent) {
-            out.push_str(line[indent..].trim_end());
+            out.push_str(line[indent..].trim_end_matches('\r'));
         } else {
             out.push_str(line.trim());
         }

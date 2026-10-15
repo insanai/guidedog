@@ -34,3 +34,11 @@ impl<T: fmt::Display> fmt::Display for Point<T> {
 
 /// A tuple point.
 pub struct Pair(pub i32, i32);
+
+impl crate::Draw for Point<f32> {
+    type Output = ();
+
+    fn draw(&self, _canvas: &mut crate::Canvas) -> Result<(), String> {
+        Ok(())
+    }
+}

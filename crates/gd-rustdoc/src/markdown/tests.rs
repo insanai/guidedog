@@ -12,7 +12,7 @@ impl LinkResolver for NoLinks {
 
 fn rst(markdown: &str) -> String {
     let mut out = String::new();
-    write_rst(markdown, "", &mut NoLinks, &mut out);
+    write_rst(markdown, "", "d1", &mut NoLinks, &mut out);
     out
 }
 
@@ -88,4 +88,45 @@ fn deep_nesting_is_flattened() {
 #[test]
 fn summaries_are_plain() {
     assert_eq!(summary("Makes a [`Foo`](Foo) *now*.\nMore.\n\nRest."), "Makes a Foo now.");
+}
+
+#[test]
+fn footnotes_become_auto_numbered_footnotes() {
+    let text = "Fact[^1] and more[^note].\n\n[^1]: The source.\n\
+        [^note]: A note\n    in two lines.\n\nAfter.";
+    assert_eq!(
+        rst(text),
+        "Fact\\ [#d1-f1]_ and more\\ [#d1-f2]_.\n\nAfter.\n\n\
+        .. [#d1-f1] The source.\n\n.. [#d1-f2] A note in two lines.\n"
+    );
+}
+
+#[test]
+fn footnote_definitions_in_code_are_code() {
+    let text = "```text\n[^1]: not a footnote\n```";
+    assert_eq!(rst(text), ".. code-block:: text\n\n   [^1]: not a footnote\n");
+}
+
+#[test]
+fn images_become_image_directives_or_substitutions() {
+    let alone = "![A diagram](https://x.org/d.svg)";
+    assert_eq!(rst(alone), ".. image:: https://x.org/d.svg\n   :alt: A diagram\n");
+    let badge = "[![CI](https://x.org/ci.svg)](https://x.org/ci)";
+    assert_eq!(
+        rst(badge),
+        ".. image:: https://x.org/ci.svg\n   :alt: CI\n   :target: https://x.org/ci\n"
+    );
+    let inline = "See ![dot](https://x.org/dot.png) here.";
+    assert_eq!(
+        rst(inline),
+        "See |d1-img1| here.\n\n.. |d1-img1| image:: https://x.org/dot.png\n   :alt: dot\n"
+    );
+    assert_eq!(rst("![a local file](img/d.png)"), "a local file\n");
+}
+
+#[test]
+fn hard_line_breaks_become_line_blocks() {
+    let text = "Roses are red,  \nviolets blue,\\\nsoft\nwrap.\n\nPlain  \nlast  ";
+    assert_eq!(rst(text), "| Roses are red,\n| violets blue,\n| soft wrap.\n\n| Plain\n| last\n");
+    assert_eq!(rst("Not a break\\"), "Not a break\\\\\n");
 }

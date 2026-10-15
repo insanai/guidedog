@@ -1,0 +1,16 @@
+[package]
+name = "guidedoc-commonmark"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+guidedoc = { workspace = true }
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+# The spec examples compare HTML in the reference profile.
+guidedoc-html = { workspace = true }

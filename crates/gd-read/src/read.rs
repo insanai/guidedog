@@ -7,9 +7,6 @@
 //! in turn, each with its own workspace; results are placed by the source's position,
 //! so the environment is the same however the threads were scheduled.
 
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::{Mutex, PoisonError};
-
 use gd_env::{DocInfo, Environment, SourceFile};
 use gd_host::Problem;
 use gd_report::{Report, Severity};
@@ -70,24 +67,16 @@ fn read_all(
     previous: &Environment,
     sources: &[SourceFile],
 ) -> Vec<Slot> {
-    let next = AtomicUsize::new(0);
-    let done: Mutex<Vec<(usize, Slot)>> = Mutex::new(Vec::with_capacity(sources.len()));
-    gd_host::run_workers(ctx.thread_count(sources.len()), |_| {
+    let threads = ctx.thread_count(sources.len());
+    let init = || {
         // The thread waits for memory the other reading threads hold rather than exceed
-        // the budget (gd_host::Budget).
-        let _member = ctx.budget.join();
-        let mut worker = Worker::new(ctx, prepared);
-        let mut mine = Vec::new();
-        loop {
-            let i = next.fetch_add(1, Ordering::Relaxed);
-            let Some(source) = sources.get(i) else { break };
-            mine.push((i, worker.read(source, previous)));
-        }
-        done.lock().unwrap_or_else(PoisonError::into_inner).extend(mine);
-    });
-    let mut done = done.into_inner().unwrap_or_else(PoisonError::into_inner);
-    done.sort_by_key(|(i, _)| *i);
-    done.into_iter().map(|(_, slot)| slot).collect()
+        // the budget (gd_host::Budget). The worker is dropped before the membership.
+        let member = ctx.budget.join();
+        (Worker::new(ctx, prepared), member)
+    };
+    gd_host::map_ordered(threads, sources, init, |(worker, _), source| {
+        worker.read(source, previous)
+    })
 }
 
 /// Reads a document again from `source` because its cached object is stale (missing,
@@ -134,19 +123,13 @@ pub fn reread_document(
 /// The warning that a document's cached object was unusable (`stale`, from
 /// `gd_env::ObjectStore::load_object`) and the document is read again.
 pub fn stale_warning(stale: &Problem, doc: &DocInfo) -> Report {
-    let mut report = Report {
-        code: "build.object.stale".into(),
-        severity: Severity::Warning,
-        title: "CACHED DOCUMENT READ AGAIN".into(),
-        message: format!(
-            "{}: {} The document was read again from {}, and its cache rewritten.",
-            stale.title, stale.message, doc.relative
-        ),
-        hints: vec![
-            "Nothing to do. If it happens again, check the disk the build folder is on.".into(),
-        ],
-        ..Report::default()
-    };
-    report.path.clone_from(&stale.path);
-    report
+    let message = format!(
+        "{}: {} The document was read again from {}, and its cache rewritten.",
+        stale.title, stale.message, doc.relative
+    );
+    Report {
+        path: stale.path.clone(),
+        ..Report::warning("build.object.stale", "CACHED DOCUMENT READ AGAIN", &message)
+            .hint("Nothing to do. If it happens again, check the disk the build folder is on.")
+    }
 }

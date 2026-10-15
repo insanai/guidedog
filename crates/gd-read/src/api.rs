@@ -3,7 +3,7 @@
 
 use gd_conf::Config;
 use gd_env::{Dependency, Generated, SourceFile, SourceKind};
-use gd_report::{Report, Severity};
+use gd_report::Report;
 
 /// The API pages the configuration asks for (`odin_autoapi_*`, `rust_autoapi_*`), as
 /// generated documents, sorted by docname. A page whose name a document of `taken`
@@ -40,20 +40,17 @@ fn keep_unclaimed(
             out.push(page);
             continue;
         }
+        let message = format!(
+            "The source folder has a document named {}, the name of a generated API page; \
+             the document is kept.",
+            page.docname
+        );
+        let hint =
+            format!("Rename the document, or set {language}_autoapi_root to another folder.");
+        let code = format!("{language}.autoapi.clash");
         reports.push(Report {
-            code: format!("{language}.autoapi.clash"),
-            severity: Severity::Warning,
-            title: "API PAGE NOT GENERATED".into(),
-            message: format!(
-                "The source folder has a document named {}, the name of a generated API \
-                 page; the document is kept.",
-                page.docname
-            ),
-            hints: vec![format!(
-                "Rename the document, or set {language}_autoapi_root to another folder."
-            )],
             path: page.relative,
-            ..Report::default()
+            ..Report::warning(&code, "API PAGE NOT GENERATED", &message).hint(&hint)
         });
     }
 }

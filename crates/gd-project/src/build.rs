@@ -2,8 +2,6 @@
 //! read, resolve, write with the builder, then publish or keep the previous output.
 
 use std::path::PathBuf;
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::{Mutex, PoisonError};
 use std::time::SystemTime;
 
 use gd_conf::{Config, Digest};
@@ -243,24 +241,15 @@ fn replace_stale_objects(
 /// why, in order. Checking an object hashes and loads all of it, so the checks share
 /// the reading threads, each with its own workspace.
 fn stale_objects(ctx: &ReadContext<'_>, env: &Environment) -> Vec<(usize, Problem)> {
-    let next = AtomicUsize::new(0);
-    let found: Mutex<Vec<(usize, Problem)>> = Mutex::new(Vec::new());
-    gd_host::run_workers(ctx.thread_count(env.docs.len()), |_| {
-        let mut ws = guidedoc::Workspace::new();
-        loop {
-            let i = next.fetch_add(1, Ordering::Relaxed);
-            let Some(doc) = env.docs.get(i) else { break };
-            let Some(object) = &doc.object else { continue };
-            if let Err(e) = ctx.store.load_object(&mut ws, object, &ctx.limits)
-                && e.stale
-            {
-                found.lock().unwrap_or_else(PoisonError::into_inner).push((i, e.problem));
-            }
+    let threads = ctx.thread_count(env.docs.len());
+    let checked = gd_host::map_ordered(threads, &env.docs, guidedoc::Workspace::new, |ws, doc| {
+        let object = doc.object.as_ref()?;
+        match ctx.store.load_object(ws, object, &ctx.limits) {
+            Err(e) if e.stale => Some(e.problem),
+            _ => None,
         }
     });
-    let mut found = found.into_inner().unwrap_or_else(PoisonError::into_inner);
-    found.sort_by_key(|(i, _)| *i);
-    found
+    checked.into_iter().enumerate().filter_map(|(i, p)| Some((i, p?))).collect()
 }
 
 /// Writes the output with the builder, counting the units written and kept.

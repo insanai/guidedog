@@ -7,11 +7,10 @@ use std::fs::{self, File, OpenOptions};
 use std::hash::{BuildHasher, Hasher};
 use std::io::{self, Write};
 use std::path::{Path, PathBuf};
-use std::sync::Mutex;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
 use crate::problem::{Problem, io_problem};
-use crate::workers::run_workers;
+use crate::workers::map_ordered;
 
 /// Begins the name of every staging file: then ten digits, then the destination's
 /// extension (`.guidedog-stage-0123456789.html`).
@@ -148,22 +147,9 @@ pub fn write_unsynced(path: &Path, data: &[u8]) -> Result<(), Problem> {
 /// failed. A folder is flushed so the names in it are durable (skipped on Windows,
 /// which keeps them durable itself); a path that is gone or a link has nothing to flush.
 pub fn sync_all(paths: &[PathBuf]) -> Result<(), Problem> {
-    let next = AtomicUsize::new(0);
-    let failed: Mutex<Option<(usize, io::Error)>> = Mutex::new(None);
-    run_workers(SYNC_WORKERS.min(paths.len()), |_| {
-        loop {
-            let i = next.fetch_add(1, Ordering::Relaxed);
-            let Some(path) = paths.get(i) else { return };
-            if let Err(e) = sync_path(path) {
-                let mut first = failed.lock().unwrap_or_else(|p| p.into_inner());
-                if first.as_ref().is_none_or(|(j, _)| i < *j) {
-                    *first = Some((i, e));
-                }
-            }
-        }
-    });
-    match failed.into_inner().unwrap_or_else(|p| p.into_inner()) {
-        Some((i, e)) => Err(io_problem(&paths[i], &e)),
+    let results = map_ordered(SYNC_WORKERS.min(paths.len()), paths, || (), |_, p| sync_path(p));
+    match paths.iter().zip(results).find_map(|(path, r)| r.err().map(|e| (path, e))) {
+        Some((path, e)) => Err(io_problem(path, &e)),
         None => Ok(()),
     }
 }

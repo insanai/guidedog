@@ -1,9 +1,6 @@
 //! What the builders share: rendering pages on worker threads, and the answers to the
 //! lookups each page made.
 
-use std::sync::Mutex;
-use std::sync::atomic::{AtomicUsize, Ordering};
-
 use gd_env::{Digest, DocId, Lookup, OutputFormat, Rendered, Trace};
 use gd_link::{PageRequest, Worker, render_options, render_page};
 use gd_resolve::{BuildView, lookup_answer};
@@ -64,31 +61,16 @@ pub(crate) fn render_pages(
     jobs: &[Job],
     style: PageStyle<'_>,
 ) -> Vec<Rendered> {
-    let next = AtomicUsize::new(0);
-    let done: Mutex<Vec<(usize, Rendered)>> = Mutex::new(Vec::with_capacity(jobs.len()));
     let threads = view.options.jobs.threads(jobs.len());
-    gd_host::run_workers(threads, |_| {
-        let mut worker = Worker::new();
-        let highlighter = TypstHighlighter::new();
-        let mut mine = Vec::new();
-        loop {
-            let i = next.fetch_add(1, Ordering::Relaxed);
-            let Some(&job) = jobs.get(i) else { break };
-            if gd_host::was_interrupted() {
-                break;
-            }
-            let request = page_request(view, job, style, &highlighter);
-            mine.push((i, render_page(view, &mut worker, &request)));
+    let init = || (Worker::new(), TypstHighlighter::new());
+    gd_host::map_ordered(threads, jobs, init, |(worker, highlighter), &job| {
+        // A job left when the build is interrupted comes back failed.
+        if gd_host::was_interrupted() {
+            return Rendered { failed: true, ..Rendered::default() };
         }
-        done.lock().unwrap_or_else(std::sync::PoisonError::into_inner).extend(mine);
-    });
-    let done = done.into_inner().unwrap_or_else(std::sync::PoisonError::into_inner);
-    let mut pages: Vec<Rendered> =
-        (0..jobs.len()).map(|_| Rendered { failed: true, ..Rendered::default() }).collect();
-    for (i, page) in done {
-        pages[i] = page;
-    }
-    pages
+        let request = page_request(view, job, style, highlighter);
+        render_page(view, worker, &request)
+    })
 }
 
 /// Each lookup a page made, with the digest of its answer now, for the manifest.

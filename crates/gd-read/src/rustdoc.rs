@@ -5,9 +5,7 @@
 //! are the crate's files, so editing a crate reads its pages again; gd-resolve adds the
 //! index to the root document's first toctree (`rust_autoapi_add_toctree_entry`).
 
-use std::collections::VecDeque;
 use std::path::{Path, PathBuf};
-use std::sync::{Mutex, PoisonError};
 
 use gd_conf::{Config, Digest};
 use gd_env::{Dependency, SourceFile};
@@ -97,19 +95,7 @@ struct CrateDone {
 fn document_crates(jobs: Vec<CrateJob>, options: &Options) -> Vec<CrateDone> {
     let threads = std::thread::available_parallelism().map_or(1, usize::from);
     let threads = threads.min(jobs.len()).max(1);
-    let queue = Mutex::new(jobs.into_iter().enumerate().collect::<VecDeque<_>>());
-    let done: Mutex<Vec<(usize, CrateDone)>> = Mutex::new(Vec::new());
-    gd_host::run_workers(threads, |_| {
-        loop {
-            let job = queue.lock().unwrap_or_else(PoisonError::into_inner).pop_front();
-            let Some((i, job)) = job else { break };
-            let result = document_crate(job, options);
-            done.lock().unwrap_or_else(PoisonError::into_inner).push((i, result));
-        }
-    });
-    let mut done = done.into_inner().unwrap_or_else(PoisonError::into_inner);
-    done.sort_by_key(|(i, _)| *i);
-    done.into_iter().map(|(_, d)| d).collect()
+    gd_host::map_ordered(threads, jobs, || (), |_, job| document_crate(job, options))
 }
 
 /// The pages of one crate: its record's when they still hold, else made now.
@@ -203,18 +189,15 @@ fn index_page(crates: &[CratePages]) -> String {
 }
 
 fn clash(path: &Path, name: &str) -> Report {
+    let message = format!(
+        "rust_autoapi_crates names {}, whose crate {name} an earlier entry already \
+         documents; it is left out.",
+        path.display()
+    );
     Report {
-        code: "rust.autoapi.clash".into(),
-        severity: Severity::Warning,
-        title: "CRATE DOCUMENTED TWICE".into(),
-        message: format!(
-            "rust_autoapi_crates names {}, whose crate {name} an earlier entry already \
-             documents; it is left out.",
-            path.display()
-        ),
-        hints: vec!["List each crate once in rust_autoapi_crates.".into()],
         path: path.display().to_string(),
-        ..Report::default()
+        ..Report::warning("rust.autoapi.clash", "CRATE DOCUMENTED TWICE", &message)
+            .hint("List each crate once in rust_autoapi_crates.")
     }
 }
 

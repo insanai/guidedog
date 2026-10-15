@@ -101,14 +101,12 @@ pub fn describe_all(ws: &Workspace) -> Vec<Report> {
 }
 
 fn suppressed_note(count: usize) -> Report {
-    let mut note = Report::error(
+    Report::note(
         "host.reports.suppressed",
         "MORE DIAGNOSTICS",
         &format!("{count} more diagnostics were reported but not kept."),
     )
-    .hint("Fix the problems above and convert again, or raise limits.max_reports.");
-    note.severity = gd_report::Severity::Note;
-    note
+    .hint("Fix the problems above and convert again, or raise limits.max_reports.")
 }
 
 fn severity(s: Severity) -> gd_report::Severity {

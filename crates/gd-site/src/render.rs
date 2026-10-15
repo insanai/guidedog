@@ -1,10 +1,7 @@
 //! Rendering document bodies on worker threads: each worker owns a gd-link `Worker`
-//! (its workspaces and Graphviz context) and an HTML highlighter, takes the next
-//! document, and leaves the result in that document's slot, so the caller lays the
-//! pages out in docname order however the threads interleave.
-
-use std::sync::Mutex;
-use std::sync::atomic::{AtomicUsize, Ordering};
+//! (its workspaces and Graphviz context) and an HTML highlighter and takes the next
+//! document; `gd_host::map_ordered` returns the results in docname order however the
+//! threads interleave.
 
 use gd_env::{DocId, OutputFormat, Rendered};
 use gd_link::{PageRequest, Worker, render_options, render_page};
@@ -19,31 +16,17 @@ pub(crate) fn render_bodies(
     labels: Option<&Labels>,
     docs: &[DocId],
 ) -> Vec<Option<Rendered>> {
-    let slots: Vec<Mutex<Option<Rendered>>> = docs.iter().map(|_| Mutex::new(None)).collect();
-    let next = AtomicUsize::new(0);
     let threads = view.options.jobs.threads(docs.len());
-    gd_host::run_workers(threads, |_| {
-        let mut worker = Worker::new();
-        let highlighter = HtmlHighlighter::new();
-        loop {
-            let i = next.fetch_add(1, Ordering::Relaxed);
-            let Some(&doc) = docs.get(i) else { break };
-            if gd_host::was_interrupted() {
-                break;
-            }
-            let mut options = render_options(view, doc, OutputFormat::Html);
-            options.highlighter = Some(&highlighter);
-            options.labels = labels;
-            let request = PageRequest {
-                doc,
-                format: OutputFormat::Html,
-                renderer: "html",
-                options,
-                depth: 0,
-            };
-            let rendered = render_page(view, &mut worker, &request);
-            *slots[i].lock().unwrap_or_else(|p| p.into_inner()) = Some(rendered);
+    let init = || (Worker::new(), HtmlHighlighter::new());
+    gd_host::map_ordered(threads, docs, init, |(worker, highlighter), &doc| {
+        if gd_host::was_interrupted() {
+            return None;
         }
-    });
-    slots.into_iter().map(|s| s.into_inner().unwrap_or_else(|p| p.into_inner())).collect()
+        let mut options = render_options(view, doc, OutputFormat::Html);
+        options.highlighter = Some(&*highlighter);
+        options.labels = labels;
+        let request =
+            PageRequest { doc, format: OutputFormat::Html, renderer: "html", options, depth: 0 };
+        Some(render_page(view, worker, &request))
+    })
 }

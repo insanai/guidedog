@@ -20,7 +20,7 @@ use std::collections::{BTreeMap, HashMap};
 use gd_env::{Digest, Digester, DocId, DocInfo};
 use gd_host::Problem;
 use gd_outputs::{Generation, UnitRecord};
-use gd_report::{Report, Severity};
+use gd_report::Report;
 use gd_resolve::BuildView;
 
 use crate::escape::push_js_string;
@@ -172,9 +172,8 @@ fn document_words(view: &BuildView<'_>, d: &DocInfo, reports: &mut Vec<Report>) 
         Ok(bytes) => String::from_utf8_lossy(&bytes).into_owned(),
         Err(e) => {
             reports.push(Report {
-                severity: Severity::Warning,
                 path: d.relative.clone(),
-                ..Report::error(
+                ..Report::warning(
                     "build.search",
                     "SEARCH WORDS MISSING",
                     &format!(

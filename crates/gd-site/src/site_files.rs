@@ -9,7 +9,7 @@ use std::path::PathBuf;
 use gd_env::Asset;
 use gd_host::Problem;
 use gd_outputs::Unit;
-use gd_report::{Report, Severity};
+use gd_report::Report;
 use gd_resolve::{BuildView, create_index, has_module_index, module_index, write_inventory};
 
 use crate::context::base_name;
@@ -224,9 +224,8 @@ fn write_additional_pages(
         let file = format!("{name}{}", c.html.file_suffix);
         if let Some(reason) = additional_page_refusal(unit, name, &file) {
             reports.push(Report {
-                severity: Severity::Warning,
                 path: c.config_path().display().to_string(),
-                ..Report::error(
+                ..Report::warning(
                     "build.additional_page",
                     "ADDITIONAL PAGE NOT WRITTEN",
                     &format!("html_additional_pages.{name} is not written: {reason}."),

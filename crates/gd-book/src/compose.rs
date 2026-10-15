@@ -85,17 +85,13 @@ impl Composer<'_, '_> {
             return None;
         }
         if self.view.options.untrusted {
+            let message = "An --untrusted build runs no Typst the project wrote, so the book \
+                           uses Guidedog's template.";
             reports.push(Report {
-                code: "build.untrusted".into(),
-                severity: Severity::Warning,
-                title: "BOOK TEMPLATE NOT USED".into(),
-                message: "An --untrusted build runs no Typst the project wrote, so the book \
-                          uses Guidedog's template."
-                    .into(),
-                hints: vec!["Build without --untrusted if you trust this project.".into()],
                 path: gd_host::display_path(&path.display().to_string()),
                 category: "build.untrusted".into(),
-                ..Report::default()
+                ..Report::warning("build.untrusted", "BOOK TEMPLATE NOT USED", message)
+                    .hint("Build without --untrusted if you trust this project.")
             });
             return None;
         }

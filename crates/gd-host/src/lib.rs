@@ -69,7 +69,8 @@ pub use publish::{
 };
 pub use session::Session;
 pub use workers::{
-    WORKER_STACK_BYTES, default_stack_budget, run_with_stack, run_workers, stack_budget_limit,
+    WORKER_STACK_BYTES, default_stack_budget, map_ordered, run_with_stack, run_workers,
+    stack_budget_limit,
 };
 
 #[cfg(test)]

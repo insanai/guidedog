@@ -6,7 +6,7 @@
 use gd_env::{Asset, Digest, DocId, Rendered};
 use gd_host::{Ledger, Problem};
 use gd_outputs::{Generation, SITE_UNIT, UnitRecord};
-use gd_report::{Report, Severity};
+use gd_report::Report;
 use gd_resolve::{lookup_answer, page_inputs};
 
 use crate::digests::html_settings;
@@ -191,15 +191,14 @@ fn report_duplicate_ids(body: &str, reports: &mut Vec<Report>) {
         let Some(end) = rest.find('"') else { break };
         let id = &rest[..end];
         if !seen.insert(id) {
-            reports.push(Report {
-                severity: Severity::Warning,
-                ..Report::error(
+            reports.push(
+                Report::warning(
                     "build.singlehtml.id",
                     "DUPLICATE ID",
                     &format!("Two elements of the single page have the id {id}."),
                 )
-                .hint("Rename one of the labels or documents whose names make this id.")
-            });
+                .hint("Rename one of the labels or documents whose names make this id."),
+            );
         }
     }
 }

@@ -4,7 +4,7 @@
 //! work the main thread would otherwise run on a stack the system chose.
 
 use std::panic::{self, AssertUnwindSafe};
-use std::sync::Mutex;
+use std::sync::{Mutex, PoisonError};
 use std::thread;
 
 /// The stack of every thread `run_workers` and `run_with_stack` start (8 MiB, the main
@@ -61,6 +61,41 @@ where
     if started == 0 && count > 0 {
         work(0);
     }
+}
+
+/// Runs `work` on every item of `items` on `threads` workers (through `run_workers`)
+/// and returns the results in the order of `items`, however the threads interleave.
+/// Each worker first makes its own state with `init` (a workspace, a highlighter) and
+/// passes it to `work` for every item it takes; the state is dropped when the worker
+/// ends. A panic in `init` or `work` is raised again on the caller, as `run_workers`
+/// does.
+pub fn map_ordered<I, S, R>(
+    threads: usize,
+    items: I,
+    init: impl Fn() -> S + Sync,
+    work: impl Fn(&mut S, I::Item) -> R + Sync,
+) -> Vec<R>
+where
+    I: IntoIterator,
+    I::IntoIter: Send,
+    R: Send,
+{
+    let queue = Mutex::new(items.into_iter().enumerate());
+    let done: Mutex<Vec<(usize, R)>> = Mutex::new(Vec::new());
+    run_workers(threads, |_| {
+        let mut state = init();
+        let mut mine = Vec::new();
+        loop {
+            // The lock is released before the work starts.
+            let next = queue.lock().unwrap_or_else(PoisonError::into_inner).next();
+            let Some((i, item)) = next else { break };
+            mine.push((i, work(&mut state, item)));
+        }
+        done.lock().unwrap_or_else(PoisonError::into_inner).extend(mine);
+    });
+    let mut done = done.into_inner().unwrap_or_else(PoisonError::into_inner);
+    done.sort_unstable_by_key(|&(i, _)| i);
+    done.into_iter().map(|(_, result)| result).collect()
 }
 
 fn worker(i: usize) -> thread::Builder {

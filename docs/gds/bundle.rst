@@ -16,5 +16,6 @@ Discussion reading order
    records/0008-github-pages-publishing
    records/0009-native-plugin-api
    records/0010-typed-build-plugins
+   records/0011-sphinx-builtin-extensions
 
 .. gds-generated-end

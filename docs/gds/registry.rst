@@ -42,5 +42,8 @@ Discussion registry
    * - 0010
      - :doc:`records/0010-typed-build-plugins`
      - committed
+   * - 0011
+     - :doc:`records/0011-sphinx-builtin-extensions`
+     - accepted
 
 .. gds-generated-end

@@ -106,7 +106,7 @@ Body elements
    * - Line blocks with continuation lines, empty lines, nesting
      - done
      - ``line_blocks_nest_by_indentation``
-   * - Block quotes, attribution ``--``, ``---``, ``—``, several quotes in one block
+   * - Block quotes, attribution ``--``, ``---``, an em dash (U+2014), several quotes in one block
      - done
      - ``block_quote_with_attribution``, ``block_quotes_nest``, ``attribution_dash_forms``
    * - Doctest blocks

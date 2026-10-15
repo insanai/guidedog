@@ -52,7 +52,7 @@ guidedog --version
 
 ## स्रोत से बिल्ड करें
 
-Rust 1.90 या नया ([rustup](https://rustup.rs) से), एक C कंपाइलर (tree-sitter के व्याकरण C में हैं), और Graphviz की डेवलपमेंट फ़ाइलें स्थापित करें: Debian और Ubuntu पर `libgraphviz-dev`, Fedora पर `graphviz-devel`, macOS पर Homebrew से `graphviz`। फिर workspace बिल्ड करें:
+Rust 1.99 या नया ([rustup](https://rustup.rs) से), एक C कंपाइलर (tree-sitter के व्याकरण C में हैं), और Graphviz की डेवलपमेंट फ़ाइलें स्थापित करें: Debian और Ubuntu पर `libgraphviz-dev`, Fedora पर `graphviz-devel`, macOS पर Homebrew से `graphviz`। फिर workspace बिल्ड करें:
 
 ```sh
 cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd

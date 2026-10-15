@@ -52,7 +52,7 @@ Los programas no están firmados: en macOS, quite la cuarentena de una descarga 
 
 ## Compilar desde las fuentes
 
-Instale Rust 1.90 o posterior (con [rustup](https://rustup.rs)), un compilador de C (las gramáticas de tree-sitter están escritas en C) y los archivos de desarrollo de Graphviz: `libgraphviz-dev` en Debian y Ubuntu, `graphviz-devel` en Fedora, `graphviz` de Homebrew en macOS. Después compile el espacio de trabajo:
+Instale Rust 1.99 o posterior (con [rustup](https://rustup.rs)), un compilador de C (las gramáticas de tree-sitter están escritas en C) y los archivos de desarrollo de Graphviz: `libgraphviz-dev` en Debian y Ubuntu, `graphviz-devel` en Fedora, `graphviz` de Homebrew en macOS. Después compile el espacio de trabajo:
 
 ```sh
 cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd

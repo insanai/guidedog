@@ -256,7 +256,7 @@ impl<'b> Ledger<'b> {
     pub fn discharge(&self, bytes: usize) {
         let Some(budget) = self.budget else { return };
         let mut taken = 0;
-        let _ = self.held.fetch_update(Ordering::Relaxed, Ordering::Relaxed, |held| {
+        let _ = self.held.try_update(Ordering::Relaxed, Ordering::Relaxed, |held| {
             taken = bytes.min(held);
             Some(held - taken)
         });

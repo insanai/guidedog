@@ -45,7 +45,7 @@ uploaded by hand, and a published release is never changed.
   artifacts of an earlier tagged run whose only failure was publishing.
 
 The steps the workflows run are `cargo xtask release <step>` (tools/xtask, Rust with no
-shell scripts) and run locally too; `cargo xtask release --help` lists them. The Typst
+shell scripts) and run locally too; `cargo xtask release --help` lists them. The Rust compiler is pinned in `rust-toolchain.toml` (1.99.0). The Typst
 compiler is pinned in the root `Cargo.toml` (`typst = "=0.15.1"`), and `Cargo.lock` pins
 every other crate; release builds use `--locked`.
 

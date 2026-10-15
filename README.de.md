@@ -52,7 +52,7 @@ Die Programme sind nicht codesigniert: Unter macOS entfernen wir die Quarantäne
 
 ## Aus dem Quellcode bauen
 
-Installieren Sie Rust 1.90 oder neuer (mit [rustup](https://rustup.rs)), einen C-Compiler (die Grammatiken von tree-sitter sind in C geschrieben) und die Entwicklungsdateien von Graphviz: `libgraphviz-dev` unter Debian und Ubuntu, `graphviz-devel` unter Fedora, `graphviz` aus Homebrew unter macOS. Bauen Sie dann den Workspace:
+Installieren Sie Rust 1.99 oder neuer (mit [rustup](https://rustup.rs)), einen C-Compiler (die Grammatiken von tree-sitter sind in C geschrieben) und die Entwicklungsdateien von Graphviz: `libgraphviz-dev` unter Debian und Ubuntu, `graphviz-devel` unter Fedora, `graphviz` aus Homebrew unter macOS. Bauen Sie dann den Workspace:
 
 ```sh
 cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd

@@ -52,7 +52,7 @@ guidedog --version
 
 ## 从源码构建
 
-安装 Rust 1.90 或更新版本（使用 [rustup](https://rustup.rs)）、C 编译器（tree-sitter 的语法以 C 编写），以及 Graphviz 开发文件：Debian 和 Ubuntu 上为 `libgraphviz-dev`，Fedora 上为 `graphviz-devel`，macOS 上为 Homebrew 的 `graphviz`。然后构建工作区：
+安装 Rust 1.99 或更新版本（使用 [rustup](https://rustup.rs)）、C 编译器（tree-sitter 的语法以 C 编写），以及 Graphviz 开发文件：Debian 和 Ubuntu 上为 `libgraphviz-dev`，Fedora 上为 `graphviz-devel`，macOS 上为 Homebrew 的 `graphviz`。然后构建工作区：
 
 ```sh
 cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd

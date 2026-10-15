@@ -52,7 +52,7 @@ guidedog --version
 
 ## ソースからビルドする
 
-Rust 1.90 以降（[rustup](https://rustup.rs) で入手）、C コンパイラー（tree-sitter の文法は C で書かれています）、Graphviz の開発ファイルを用意します。Debian と Ubuntu では `libgraphviz-dev`、Fedora では `graphviz-devel`、macOS では Homebrew の `graphviz` です。そのうえでワークスペースをビルドします。
+Rust 1.99 以降（[rustup](https://rustup.rs) で入手）、C コンパイラー（tree-sitter の文法は C で書かれています）、Graphviz の開発ファイルを用意します。Debian と Ubuntu では `libgraphviz-dev`、Fedora では `graphviz-devel`、macOS では Homebrew の `graphviz` です。そのうえでワークスペースをビルドします。
 
 ```sh
 cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd

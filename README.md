@@ -52,7 +52,7 @@ The programs are not code-signed: on macOS, remove the quarantine from a browser
 
 ## Build from source
 
-Install Rust 1.90 or later (with [rustup](https://rustup.rs)), a C compiler (tree-sitter's grammars are C), and the Graphviz development files: `libgraphviz-dev` on Debian and Ubuntu, `graphviz-devel` on Fedora, `graphviz` from Homebrew on macOS. (Or build Graphviz statically, as the releases do: `cargo xtask graphviz`, then build with `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0`; the programs then need no Graphviz at run time.) Then build the workspace:
+Install Rust 1.99 or later (with [rustup](https://rustup.rs)), a C compiler (tree-sitter's grammars are C), and the Graphviz development files: `libgraphviz-dev` on Debian and Ubuntu, `graphviz-devel` on Fedora, `graphviz` from Homebrew on macOS. (Or build Graphviz statically, as the releases do: `cargo xtask graphviz`, then build with `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0`; the programs then need no Graphviz at run time.) Then build the workspace:
 
 ```sh
 cargo build --release -p guidedog-cmd -p guidedog-pages-cmd -p graphdog-cmd

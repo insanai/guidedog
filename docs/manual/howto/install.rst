@@ -35,7 +35,7 @@ Build from source
 Guidedog is a Cargo workspace. We need:
 
 * a Rust toolchain at the version ``rust-version`` names in the root ``Cargo.toml``
-  (Rust 1.90 or newer; edition 2024), installed with ``rustup``;
+  (Rust 1.99 or newer; edition 2024), installed with ``rustup``;
 * the Graphviz library, because Guidedog links it (``libgvc`` and ``libcgraph``) to draw graphs in process. Either install the system's development files (``libgraphviz-dev`` on Debian and Ubuntu, ``graphviz-devel`` on Fedora, ``graphviz`` from Homebrew on macOS), or build static libraries with ``cargo xtask graphviz`` (see below);
 * a C compiler (``cc``, Xcode's command-line tools, or MSVC), which Cargo uses to build the tree-sitter grammars and the cryptography in the ``ring`` crate (TLS for HTTPS).
 

@@ -1,0 +1,62 @@
+# Homebrew formula for the Guidedog release binaries, rendered by tools/release/formula.sh
+# and attached to each GitHub release as guidedog.rb.
+class Guidedog < Formula
+  desc "Builds HTML documentation sites and PDF books from reStructuredText and Markdown"
+  homepage "https://github.com/insanai/guidedog"
+  version "@VERSION@"
+  license "AGPL-3.0-or-later"
+
+  # The programs link the system's Graphviz libraries (libgvc, libcgraph).
+  depends_on "graphviz"
+
+  on_macos do
+    on_arm do
+      url "https://github.com/insanai/guidedog/releases/download/v@VERSION@/guidedog-macos-arm64.tar.gz"
+      sha256 "@MACOS_ARM64@"
+    end
+    on_intel do
+      url "https://github.com/insanai/guidedog/releases/download/v@VERSION@/guidedog-macos-amd64.tar.gz"
+      sha256 "@MACOS_AMD64@"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "https://github.com/insanai/guidedog/releases/download/v@VERSION@/guidedog-linux-arm64.tar.gz"
+      sha256 "@LINUX_ARM64@"
+    end
+    on_intel do
+      url "https://github.com/insanai/guidedog/releases/download/v@VERSION@/guidedog-linux-amd64.tar.gz"
+      sha256 "@LINUX_AMD64@"
+    end
+  end
+
+  def install
+    # dsc keeps discussion catalogs, and guidedog-pages publishes to GitHub Pages; both build
+    # with this guidedog. graphdog renders Graphviz graphs like dot.
+    bin.install "guidedog", "dsc", "guidedog-pages", "graphdog"
+    doc.install "NOTICE", "CHANGELOG.md", "SOURCE.txt", "guidedog.build.json"
+  end
+
+  test do
+    assert_match "guidedog #{version}", shell_output("#{bin}/guidedog --version")
+    system bin/"guidedog", "quickstart", "docs", "-q", "-p", "Demo", "-a", "Homebrew"
+    system bin/"guidedog", "build", "html", "docs", "-W"
+    assert_path_exists testpath/"docs/_build/html/index.html"
+    system bin/"guidedog", "build", "pdf", "docs", "-W"
+    assert_path_exists testpath/"docs/_build/pdf/demo-en.pdf"
+    assert_match "dsc #{version}", shell_output("#{bin}/dsc --version")
+    system bin/"dsc", "init", "eds", "--prefix=eds", "--author=Homebrew"
+    cd "eds" do
+      system bin/"dsc", "new", "Cache policy", "--labels=architecture"
+      system bin/"dsc", "build", "--target=html", "--guidedog=#{bin}/guidedog"
+      assert_path_exists testpath/"eds/_build/html/index.html"
+    end
+    assert_match "guidedog-pages #{version}", shell_output("#{bin}/guidedog-pages --version")
+    system bin/"guidedog-pages", "init", "--repository=octo/manual", "--project=docs"
+    assert_path_exists testpath/"pages.toml"
+    assert_match "graphdog #{version}", shell_output("#{bin}/graphdog --version")
+    (testpath/"g.dot").write "digraph { a -> b }"
+    assert_match "<svg", shell_output("#{bin}/graphdog -Tsvg g.dot")
+  end
+end

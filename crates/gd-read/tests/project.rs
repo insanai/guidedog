@@ -221,8 +221,11 @@ fn reading_again_parses_only_what_changed() {
 #[test]
 fn threads_do_not_change_the_environment() {
     let p = Project::new("threads");
-    let one = p.read(Environment::default(), 1);
-    let many = p.read(Environment::default(), 8);
+    let mut one = p.read(Environment::default(), 1);
+    let mut many = p.read(Environment::default(), 8);
+    // Reading times are measured, so they differ from run to run.
+    one.reading_times.clear();
+    many.reading_times.clear();
     assert_eq!(one, many);
 }
 

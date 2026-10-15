@@ -38,7 +38,7 @@ for line in &output.lines {
 | `project.limits.max_file_bytes` | files above it are left out (`Package::too_large`) |
 | `project.files` | every file read (`FileRead { path, text }`), for a host's dependencies |
 
-Types: `Project`, `Root`, `FileReader` (trait), `FsReader`, `MemoryReader`, `FileRead`,
+Types: `Project` (`Send`), `Root`, `FileReader` (trait, `Send`), `FsReader`, `MemoryReader`, `FileRead`,
 `Limits`, `PackageRef`, `Package`, `Import`, `Decl`, `Member`, `Kind`, `MemberKind`,
 `Private`, `Targets` (`Os`, `Arch`), `Config`, `MemberOrder`, `DirectiveOption`,
 `Request`, `Output`, `Message` (Elm style: code, title, text, hint), `Severity`.

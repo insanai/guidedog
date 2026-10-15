@@ -4,7 +4,7 @@
 //! `autodoc_preserve_defaults`, and annotations evaluated as `get_type_hints` evaluates
 //! them.
 
-use std::rc::Rc;
+use std::sync::Arc;
 
 use gd_pyscan::{ClassRef, DefKind, FunctionId, FunctionRef, Module, ModuleId, NodeId};
 use gd_pyscan::{ObjectKind, Param, ParamKind, UnparseMode, Wrapper, prepare_docstring};
@@ -192,7 +192,7 @@ fn constructor(g: &mut Generator<'_>, p: &mut Props, c: ClassRef) -> Option<Sign
 
 /// A metaclass's `__call__`, when the source defines one.
 fn metaclass_call(g: &mut Generator<'_>, p: &mut Props, c: ClassRef) -> Option<SignatureSource> {
-    let m = Rc::clone(g.project.module(c.module));
+    let m = Arc::clone(g.project.module(c.module));
     let class = m.class(c.class);
     let outer = class.outer.map(|class| ClassRef { module: c.module, class });
     for kw in class.keywords.iter().filter(|k| &*k.name == "metaclass") {
@@ -277,7 +277,7 @@ fn signature_from_object(g: &mut Generator<'_>, p: &mut Props) -> Option<Formatt
         SignatureSource::Fixed(args) => return Some(Formatted { args, retann: String::new() }),
         SignatureSource::Function { function, bound, given } => (function, bound, given),
     };
-    let m = Rc::clone(g.project.module(function.module));
+    let m = Arc::clone(g.project.module(function.module));
     let f = m.function(function.kind);
     let params = visible_params(&f.params, bound, given);
     if p.obj_type == ObjType::Decorator && params.len() == 1 {
@@ -387,7 +387,7 @@ fn default_texts(
     f: FunctionRef,
     params: &[Param],
 ) -> Vec<Option<String>> {
-    let m = Rc::clone(g.project.module(f.module));
+    let m = Arc::clone(g.project.module(f.module));
     if g.config.autodoc_preserve_defaults
         && let Some(texts) = preserved_defaults(g, p, &m, params)
     {
@@ -467,7 +467,7 @@ fn record_hints(g: &mut Generator<'_>, p: &mut Props) {
         return;
     };
     let hints = function_hints(g, function, signature_mode(g), bound);
-    let m = Rc::clone(g.project.module(function.module));
+    let m = Arc::clone(g.project.module(function.module));
     let f = m.function(function.kind);
     let visible = visible_params(&f.params, bound, given);
     let drops_self = p.obj_type.is_class()
@@ -486,7 +486,7 @@ fn overloaded_signatures(g: &mut Generator<'_>, p: &Props, sigs: &mut Vec<Format
     match p.obj_type {
         ObjType::Function | ObjType::Decorator | ObjType::Method => {
             let Some(id) = g.project.load_module(p.canonical_module_name()) else { return };
-            let m = Rc::clone(g.project.module(id));
+            let m = Arc::clone(g.project.module(id));
             let Some(overloads) = m.info.overloads.get(&p.dotted_parts()) else { return };
             let drop_self = p.obj_type == ObjType::Method && !p.is_staticmethod;
             *sigs =
@@ -507,7 +507,7 @@ fn overloaded_signatures(g: &mut Generator<'_>, p: &Props, sigs: &mut Vec<Format
 fn class_overloads(g: &mut Generator<'_>, p: &Props, from: ClassRef, sigs: &mut Vec<Formatted>) {
     let (order, _) = g.project.mro(from);
     for class in order.iter().filter_map(|e| e.class) {
-        let m = Rc::clone(g.project.module(class.module));
+        let m = Arc::clone(g.project.module(class.module));
         let key = format!("{}.{}", m.class(class.class).qualname, p.signature_method);
         if let Some(overloads) = m.info.overloads.get(&key) {
             *sigs = overloads
@@ -535,7 +535,7 @@ fn overload_signature(
     f: FunctionId,
     drop_first: bool,
 ) -> Formatted {
-    let m = Rc::clone(g.project.module(module));
+    let m = Arc::clone(g.project.module(module));
     let overload = &m.functions[f.0 as usize];
     let params = if drop_first && !overload.params.is_empty() {
         &overload.params[1..]
@@ -577,7 +577,7 @@ fn overload_default(
     if written != "..." {
         return written;
     }
-    let im = Rc::clone(g.project.module(implementation.module));
+    let im = Arc::clone(g.project.module(implementation.module));
     let f = im.function(implementation.kind);
     let Some(i) = f.params.iter().position(|q| *q.name == *name && q.default.is_some()) else {
         return written;
@@ -591,16 +591,16 @@ fn overload_default(
 /// imported, which a decorator's wrapper function takes from the decorator's module.
 fn overload_annotation(
     g: &mut Generator<'_>,
-    m: &Rc<Module>,
+    m: &Arc<Module>,
     n: NodeId,
     mode: TypeMode,
     p: &Props,
 ) -> String {
     let text = unparse(m.node(n), UnparseMode::SphinxRepr);
     let mut e = Eval::default();
-    let mut globals = Rc::clone(m);
+    let mut globals = Arc::clone(m);
     if let Some(implementation) = p.obj.function.filter(|_| p.obj.kind == ObjectKind::Function) {
-        globals = Rc::clone(g.project.module(implementation.module));
+        globals = Arc::clone(g.project.module(implementation.module));
         if let Some(found) = decorator_globals(g, implementation, &mut e) {
             globals = found;
         }
@@ -617,8 +617,8 @@ fn decorator_globals(
     g: &mut Generator<'_>,
     implementation: FunctionRef,
     e: &mut Eval,
-) -> Option<Rc<Module>> {
-    let im = Rc::clone(g.project.module(implementation.module));
+) -> Option<Arc<Module>> {
+    let im = Arc::clone(g.project.module(implementation.module));
     let f = im.function(implementation.kind);
     let first = im.node(*f.decorators.first()?);
     let target = if first.kind() == "call" { first.field("function") } else { first };
@@ -627,7 +627,7 @@ fn decorator_globals(
     match reference.kind {
         ObjectKind::Function => {
             let found: FunctionRef = reference.function?;
-            Some(Rc::clone(g.project.module(found.module)))
+            Some(Arc::clone(g.project.module(found.module)))
         }
         ObjectKind::External | ObjectKind::Builtin => {
             e.builtins_only = reference.path != "builtins.staticmethod"

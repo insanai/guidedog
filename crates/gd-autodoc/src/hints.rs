@@ -1,7 +1,7 @@
 //! Annotations as `typing.get_type_hints` gives them to autodoc: of functions, modules,
 //! and classes along their MRO, evaluated, or kept as written when one fails.
 
-use std::rc::Rc;
+use std::sync::Arc;
 
 use gd_pyscan::{ClassRef, DefKind, FunctionRef, Module, ModuleId, NodeId, Scope, UnparseMode};
 use gd_pyscan::{str_value, unparse};
@@ -195,7 +195,7 @@ fn annotated_defs(scope: &Scope) -> impl Iterator<Item = (&str, NodeId)> {
 /// `get_type_hints(module)`: the module's annotations evaluated, or as written when one
 /// fails.
 pub(crate) fn module_hints(g: &mut Generator<'_>, id: ModuleId, mode: TypeMode) -> Vec<Annotated> {
-    let m = Rc::clone(g.project.module(id));
+    let m = Arc::clone(g.project.module(id));
     let mut list: Vec<ClassAnnotation> = annotated_defs(&m.scope)
         .map(|(name, n)| ClassAnnotation::new(name, id, AnnotationSource::Node(n)))
         .collect();
@@ -282,7 +282,7 @@ fn eval_class_annotation(
     e: &mut Eval,
     a: &ClassAnnotation,
 ) -> Option<crate::types::TypeValue> {
-    let m = Rc::clone(g.project.module(a.module));
+    let m = Arc::clone(g.project.module(a.module));
     match &a.source {
         AnnotationSource::Node(n) => eval_type(g, e, &m, Some(*n)),
         AnnotationSource::Text(text) => eval_string(g, e, &m, text),
@@ -292,7 +292,7 @@ fn eval_class_annotation(
 fn raw_class_annotation(g: &mut Generator<'_>, a: &ClassAnnotation, mode: TypeMode) -> String {
     match &a.source {
         AnnotationSource::Node(n) => {
-            let m = Rc::clone(g.project.module(a.module));
+            let m = Arc::clone(g.project.module(a.module));
             raw_annotation(g, &m, *n, mode)
         }
         AnnotationSource::Text(text) => text.clone(),

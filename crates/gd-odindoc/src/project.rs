@@ -6,8 +6,9 @@ use std::collections::HashMap;
 use crate::Package;
 
 /// Reads the files the analysis needs. A host confines both methods to its readable
-/// roots; `FsReader` reads the file system.
-pub trait FileReader {
+/// roots; `FsReader` reads the file system. It is `Send` so a `Project` is, and a host
+/// may share one project behind a `Mutex`.
+pub trait FileReader: Send {
     /// The text of the file at `path`, or `None` when it cannot be read.
     fn read(&mut self, path: &str) -> Option<String>;
     /// The entries of the folder at `dir`, sorted, folders ending with "/"; `None` when
@@ -116,7 +117,7 @@ impl Default for Limits {
 }
 
 /// A set of roots and the packages loaded from them. Packages are analysed once, on
-/// first use, and kept.
+/// first use, and kept. It is `Send`.
 pub struct Project {
     pub roots: Vec<Root>,
     pub limits: Limits,
@@ -367,5 +368,12 @@ mod tests {
         assert_eq!(relative("/src", "/src/geo"), "geo");
         assert_eq!(base("/src"), "src");
         assert!(under("/src", "/src/a") && !under("/src", "/srcx"));
+    }
+
+    // A host may keep one project behind a Mutex for many directives.
+    #[test]
+    fn projects_are_send() {
+        fn assert_send<T: Send>() {}
+        assert_send::<Project>();
     }
 }

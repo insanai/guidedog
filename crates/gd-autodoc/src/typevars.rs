@@ -2,7 +2,7 @@
 //! documentation): no signature, no bases, and `alias of TypeVar('T', bound=...)` or
 //! `alias of <supertype>` after the documentation.
 
-use std::rc::Rc;
+use std::sync::Arc;
 
 use gd_pyscan::{Module, Node, Object, ObjectKind, repr_str, str_value};
 
@@ -26,7 +26,7 @@ pub(crate) fn alias_kind(g: &mut Generator<'_>, o: &Object) -> AliasKind {
     let (ObjectKind::Value, false, Some(m)) = (o.kind, o.tuple, o.module) else {
         return AliasKind::None;
     };
-    let m = Rc::clone(g.project.module(m));
+    let m = Arc::clone(g.project.module(m));
     let value = m.node(o.value);
     let Some(function) = value.field("function").id().filter(|_| value.kind() == "call") else {
         return AliasKind::None;
@@ -59,7 +59,7 @@ pub(crate) fn call_arguments(call: Node<'_>) -> (Vec<Node<'_>>, Vec<Node<'_>>) {
 /// Fills a TypeVar's or NewType's properties: its name, its module, and the alias line.
 pub(crate) fn typevar_props(g: &mut Generator<'_>, p: &mut Props, kind: AliasKind) {
     let Some(m) = p.obj.module else { return };
-    let m = Rc::clone(g.project.module(m));
+    let m = Arc::clone(g.project.module(m));
     let (positional, keywords) = call_arguments(m.node(p.obj.value));
     if let Some(first) = positional.first() {
         p.obj_name = str_value(*first).map(|s| s.into_owned()).unwrap_or_default();

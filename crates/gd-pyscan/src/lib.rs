@@ -5,12 +5,12 @@
 //! Names resolve across the modules of the configured source roots, so a class
 //! re-exported by a package is found where it is defined. Nothing is executed.
 //!
-//! A [`Project`] owns every module it loads ([`Module`], shared as `Rc` because a loaded
+//! A [`Project`] owns every module it loads ([`Module`], shared as `Arc` because a loaded
 //! module never changes); classes, functions, definitions, and syntax nodes are plain
 //! indices into their module ([`ClassId`], [`FunctionId`], [`NodeId`]), and objects
 //! name them with [`ClassRef`], [`FunctionRef`], and [`DefRef`]. Lookups are bounded in
 //! steps, depth, and stack, and a module nested too deeply is marked `too_deep`, not
-//! walked.
+//! walked. A project is `Send`, so a host may share one behind a `Mutex`.
 
 mod analysis;
 mod literal;
@@ -27,7 +27,7 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 use std::fmt;
 use std::path::{Path, PathBuf};
-use std::rc::Rc;
+use std::sync::Arc;
 
 pub use analysis::{Analysis, AttrKey};
 pub use literal::{StringKind, prepare_docstring, repr_bytes, repr_str, split_lines};
@@ -45,8 +45,8 @@ pub use unparse::{UnparseMode, number_repr, try_unparse, unparse, write_argument
 pub const MAX_SYNTAX_DEPTH: usize = 256;
 
 /// Reads a file for the analyser; `None` for a file that is missing or refused. A host
-/// confines reads to what it may read.
-pub type FileReader = Box<dyn FnMut(&Path) -> Option<String>>;
+/// confines reads to what it may read. It is `Send` so the project is.
+pub type FileReader = Box<dyn FnMut(&Path) -> Option<String> + Send>;
 
 /// The index of a module in its [`Project`].
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Default)]
@@ -416,7 +416,7 @@ pub struct Project {
     reader: Option<FileReader>,
     parser: tree_sitter::Parser,
     names: HashMap<String, Option<ModuleId>>,
-    modules: Vec<Rc<Module>>,
+    modules: Vec<Arc<Module>>,
     files: Vec<ModuleId>,
     pub(crate) bounds: resolve::Bounds,
     pub(crate) mro_cache: HashMap<ClassRef, mro::MroState>,
@@ -487,7 +487,7 @@ impl Project {
     }
 
     /// A module the project loaded.
-    pub fn module(&self, id: ModuleId) -> &Rc<Module> {
+    pub fn module(&self, id: ModuleId) -> &Arc<Module> {
         &self.modules[id.0 as usize]
     }
 
@@ -513,7 +513,7 @@ impl Project {
         if kind == ModuleKind::Source || kind == ModuleKind::Package {
             self.parse_module(&mut m);
         }
-        self.modules.push(Rc::new(m));
+        self.modules.push(Arc::new(m));
         Some(id)
     }
 

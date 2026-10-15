@@ -120,6 +120,13 @@ fn package() -> (Project, TempRoot) {
     ])
 }
 
+// A host may keep one project behind a Mutex for many directives.
+#[test]
+fn projects_are_send() {
+    fn assert_send<T: Send>() {}
+    assert_send::<Project>();
+}
+
 #[test]
 fn modules_docstrings_and_all() {
     let (mut p, _root) = package();
@@ -176,7 +183,7 @@ fn kind_name(k: ParamKind) -> &'static str {
 fn functions_and_decorators() {
     let (mut p, _root) = package();
     let core_id = p.load_module("pkg.core").expect("core");
-    let core = std::rc::Rc::clone(p.module(core_id));
+    let core = std::sync::Arc::clone(p.module(core_id));
     let thing = p.module_attr(core_id, "Thing");
     let init = p.get_attr(&thing, "__init__").function.expect("__init__");
     let init = core.function(init.kind);
@@ -272,7 +279,7 @@ fn deeply_nested_source_is_not_analysed() {
         assert!(m.is_some_and(|m| m.too_deep && m.kind == ModuleKind::Native), "{name} analysed");
     }
     let shallow = p.load_module("shallow").expect("shallow");
-    let m = std::rc::Rc::clone(p.module(shallow));
+    let m = std::sync::Arc::clone(p.module(shallow));
     assert!(!m.too_deep && m.kind == ModuleKind::Source);
     assert_eq!(p.module_attr(shallow, "X").kind, ObjectKind::Value);
     // String annotations are parsed on demand, and refused the same way.

@@ -1,7 +1,7 @@
 //! Method resolution orders, class attributes along them, and `__slots__`.
 
 use std::collections::VecDeque;
-use std::rc::Rc;
+use std::sync::Arc;
 
 use crate::literal::str_value;
 use crate::resolve::{Object, ObjectKind, is_builtin_exception};
@@ -41,7 +41,7 @@ impl MroEntry {
 /// A class's MRO as computed (or being computed), cached by the project.
 #[derive(Debug, Clone)]
 pub(crate) struct MroState {
-    order: Rc<[MroEntry]>,
+    order: Arc<[MroEntry]>,
     complete: bool,
 }
 
@@ -58,22 +58,22 @@ impl Project {
     /// The class's method resolution order, by C3 linearisation, ending with `object`.
     /// The flag is false when a base could not be resolved or lies outside the roots (it
     /// then appears by path, and what it defines is unknown).
-    pub fn mro(&mut self, c: ClassRef) -> (Rc<[MroEntry]>, bool) {
+    pub fn mro(&mut self, c: ClassRef) -> (Arc<[MroEntry]>, bool) {
         if let Some(state) = self.mro_cache.get(&c) {
-            return (Rc::clone(&state.order), state.complete);
+            return (Arc::clone(&state.order), state.complete);
         }
         // Recorded first: a class among its own bases ends the recursion.
-        let empty = MroState { order: Rc::from(Vec::new()), complete: true };
+        let empty = MroState { order: Arc::from(Vec::new()), complete: true };
         self.mro_cache.insert(c, empty);
         // A base's MRO comes first, so the computations nest as deep as the chain of
         // bases; MAX_MRO_DEPTH cuts it.
         self.bounds.mro_depth += 1;
         let mut complete = true;
         let depth = self.bounds.mro_depth;
-        let order: Rc<[MroEntry]> =
+        let order: Arc<[MroEntry]> =
             self.linearise(MroEntry::of_class(c), &mut complete, depth).into();
         self.bounds.mro_depth -= 1;
-        self.mro_cache.insert(c, MroState { order: Rc::clone(&order), complete });
+        self.mro_cache.insert(c, MroState { order: Arc::clone(&order), complete });
         (order, complete)
     }
 
@@ -136,7 +136,7 @@ impl Project {
     /// Resolves the bases a class statement lists; subscripted generics give their
     /// origin.
     pub fn base_objects(&mut self, c: ClassRef) -> Vec<Object> {
-        let module = Rc::clone(self.module(c.module));
+        let module = Arc::clone(self.module(c.module));
         let class = module.class(c.class);
         let outer = class.outer.map(|class| ClassRef { module: c.module, class });
         class.bases.iter().map(|&b| self.reference(&module, outer, b)).collect()

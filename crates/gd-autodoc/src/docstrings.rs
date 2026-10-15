@@ -2,7 +2,7 @@
 //! `prepare_docstring`. A value's docstring is its class's: known for instances of
 //! classes in the roots, reported otherwise.
 
-use std::rc::Rc;
+use std::sync::Arc;
 
 use gd_pyscan::{ClassRef, DefKind, DefRef, FunctionRef, ModuleKind, Object, ObjectKind};
 use gd_pyscan::{Wrapper, prepare_docstring, str_value};
@@ -59,13 +59,13 @@ pub(crate) fn instance_doc(g: &mut Generator<'_>, o: &Object) -> Option<Option<S
     let c = call_of_class(g, o)?;
     let init = g.project.class_attr(c, "__init__");
     let f = init.function.filter(|_| init.kind == ObjectKind::Function)?;
-    let fm = Rc::clone(g.project.module(f.module));
+    let fm = Arc::clone(g.project.module(f.module));
     let function = fm.function(f.kind);
     let param = doc_parameter(&fm, &function)?;
     // The argument's position, after self.
     let index =
         function.params.iter().rposition(|q| *q.name == *param).and_then(|i| i.checked_sub(1));
-    let om = Rc::clone(g.project.module(o.module?));
+    let om = Arc::clone(g.project.module(o.module?));
     let mut positional = 0;
     for a in om.node(o.value).field("arguments").named_children() {
         match a.kind() {

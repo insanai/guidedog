@@ -3,7 +3,7 @@
 //! `_should_keep_member` decides; documented as the object type of highest priority;
 //! and ordered alphabetically, by group, or by source.
 
-use std::rc::Rc;
+use std::sync::Arc;
 
 use gd_pyscan::{ClassRef, DefKind, ModuleId, ModuleKind, MroEntry, Object, ObjectKind};
 use gd_pyscan::{Wrapper, prepare_docstring, split_lines};
@@ -223,7 +223,7 @@ fn add_name(names: &mut Vec<String>, name: &str) {
 
 /// `dir(module)`: its runtime names, sorted.
 fn module_names(g: &mut Generator<'_>, id: ModuleId) -> Vec<String> {
-    let m = Rc::clone(g.project.module(id));
+    let m = Arc::clone(g.project.module(id));
     let mut names = Vec::new();
     let bound =
         |d: &&gd_pyscan::Def| d.runtime && d.kind != DefKind::Annotation && &*d.name != "*";
@@ -237,7 +237,7 @@ fn module_names(g: &mut Generator<'_>, id: ModuleId) -> Vec<String> {
         .filter(|d| d.runtime && d.kind == DefKind::ImportFrom && &*d.member == "*");
     for d in wildcards {
         let Some(source) = g.project.load_module(&d.target) else { continue };
-        let source_module = Rc::clone(g.project.module(source));
+        let source_module = Arc::clone(g.project.module(source));
         for e in source_module.scope.defs.iter().filter(bound) {
             if g.project.exported(source, &e.name) {
                 add_name(&mut names, &e.name);
@@ -261,7 +261,7 @@ fn module_members(
     want_all: bool,
     found: &mut Vec<Member>,
 ) {
-    let m = Rc::clone(g.project.module(id));
+    let m = Arc::clone(g.project.module(id));
     let module_doc = |name: &str| m.info.attr_doc("", name).map(<[String]>::to_vec);
     for name in module_names(g, id) {
         if !wanted(g, p, want_all, &name) {
@@ -425,7 +425,7 @@ fn analyser_members(
     want_all: bool,
     found: &mut Vec<Member>,
 ) {
-    let m = Rc::clone(g.project.module(class.module));
+    let m = Arc::clone(g.project.module(class.module));
     let qualname = &m.class(class.class).qualname;
     for key in m.info.attr_order.iter().filter(|k| *k.scope == **qualname) {
         let doc = &m.info.attr_docs[key];

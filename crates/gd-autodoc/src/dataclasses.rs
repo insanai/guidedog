@@ -3,7 +3,7 @@
 //! with their defaults. That generated signature is what autodoc shows; here it is made
 //! from the field declarations.
 
-use std::rc::Rc;
+use std::sync::Arc;
 
 use gd_pyscan::{ClassRef, DefKind, Module, ModuleId, NodeId, ObjectKind};
 
@@ -23,7 +23,7 @@ pub(crate) enum Generated {
 
 /// The constructor Python generates for a class, if it does.
 pub(crate) fn generated_constructor(g: &mut Generator<'_>, c: ClassRef) -> Option<Generated> {
-    let m = Rc::clone(g.project.module(c.module));
+    let m = Arc::clone(g.project.module(c.module));
     let class = m.class(c.class);
     let outer = class.outer.map(|class| ClassRef { module: c.module, class });
     for &dec in &class.decorators {
@@ -81,7 +81,7 @@ pub(crate) fn fields(g: &mut Generator<'_>, c: ClassRef, kind: Generated) -> Vec
     };
     let mut out: Vec<Field> = Vec::new();
     for k in classes {
-        let m = Rc::clone(g.project.module(k.module));
+        let m = Arc::clone(g.project.module(k.module));
         for d in &m.class(k.class).scope.defs {
             let Some(annotation) = d.annotation else { continue };
             let declared = matches!(d.kind, DefKind::Assign | DefKind::Annotation);
@@ -154,7 +154,7 @@ pub(crate) fn generated_signature(
             if f.factory {
                 b.push_str("<factory>");
             } else {
-                let m = Rc::clone(g.project.module(f.module));
+                let m = Arc::clone(g.project.module(f.module));
                 let (text, exact) = describe(g, &m, Some(c), f.default);
                 if !exact {
                     note_default(g, p, &f.name, &text);
@@ -178,7 +178,7 @@ fn field_types(g: &mut Generator<'_>, list: &[Field]) -> Vec<String> {
             types.push(String::new());
             continue;
         };
-        let m = Rc::clone(g.project.module(f.module));
+        let m = Arc::clone(g.project.module(f.module));
         match eval_type(g, &mut e, &m, Some(annotation)) {
             Some(v) => types.push(stringify(&v, mode)),
             None => return raw_types(g, list),
@@ -192,7 +192,7 @@ fn raw_types(g: &mut Generator<'_>, list: &[Field]) -> Vec<String> {
     list.iter()
         .map(|f| match f.annotation {
             Some(annotation) => {
-                let m = Rc::clone(g.project.module(f.module));
+                let m = Arc::clone(g.project.module(f.module));
                 raw_annotation(g, &m, annotation, mode)
             }
             None => String::new(),

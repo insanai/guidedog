@@ -1,6 +1,6 @@
 //! `_make_props_from_imported_object`: the properties each kind of object has.
 
-use std::rc::Rc;
+use std::sync::Arc;
 
 use gd_pyscan::{ClassRef, Object, ObjectKind, UnparseMode, Wrapper, unparse};
 
@@ -40,7 +40,7 @@ pub(crate) fn make_props(g: &mut Generator<'_>, im: Imported, t: ObjType) -> Opt
 
 fn module_props(g: &mut Generator<'_>, p: &mut Props) -> bool {
     let (ObjectKind::Module, Some(id)) = (p.obj.kind, p.obj.module) else { return false };
-    let m = Rc::clone(g.project.module(id));
+    let m = Arc::clone(g.project.module(id));
     p.module = Some(id);
     p.obj_module = m.name.clone();
     if m.all.defined && m.all.known {
@@ -94,7 +94,7 @@ fn class_props(g: &mut Generator<'_>, p: &mut Props) -> bool {
         }
     }
     let Some(c) = p.obj.class else { return false };
-    let m = Rc::clone(g.project.module(c.module));
+    let m = Arc::clone(g.project.module(c.module));
     let class = m.class(c.class);
     p.obj_module = m.name.clone();
     p.obj_name = class.name.to_string();
@@ -150,7 +150,7 @@ fn function_props(g: &mut Generator<'_>, p: &mut Props) -> bool {
             // A function made at run time, such as by a decorator factory: documented
             // without the signature only running it would give.
             let Some(m) = p.obj.module else { return false };
-            let m = Rc::clone(g.project.module(m));
+            let m = Arc::clone(g.project.module(m));
             let made = unparse(m.node(p.obj.value), UnparseMode::Python);
             g.report(
                 Severity::Note,
@@ -178,7 +178,7 @@ fn function_props(g: &mut Generator<'_>, p: &mut Props) -> bool {
         }
     }
     let Some(f) = p.obj.function else { return false };
-    let m = Rc::clone(g.project.module(f.module));
+    let m = Arc::clone(g.project.module(f.module));
     let function = m.function(f.kind);
     p.obj_module = m.name.clone();
     p.obj_name = function.name.to_string();
@@ -279,7 +279,7 @@ fn value_props(g: &mut Generator<'_>, p: &mut Props, o: &Object) {
         return; // an attribute descriptor shows no value.
     }
     let Some(m) = o.module else { return };
-    let m = Rc::clone(g.project.module(m));
+    let m = Arc::clone(g.project.module(m));
     let (text, exact) = describe(g, &m, o.owner, o.value);
     if exact {
         p.value_repr = Some(text);
@@ -343,7 +343,7 @@ fn note_value(g: &mut Generator<'_>, p: &Props, what: &str) {
 /// documented as "alias of".
 fn generic_alias(g: &mut Generator<'_>, p: &mut Props, o: &Object) -> bool {
     let Some(m) = o.module else { return false };
-    let m = Rc::clone(g.project.module(m));
+    let m = Arc::clone(g.project.module(m));
     if !matches!(m.node(o.value).kind(), "subscript" | "generic_type") {
         return false;
     }

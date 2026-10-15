@@ -4,7 +4,7 @@
 //! in a function or class body falls back to the module and then to builtins. Objects
 //! from modules outside the source roots are `External`, known only by their path.
 
-use std::rc::Rc;
+use std::sync::Arc;
 
 use crate::literal::str_value;
 use crate::{ClassRef, DefKind, DefRef, FunctionKind, FunctionRef, Module, ModuleId};
@@ -195,7 +195,7 @@ impl Project {
 
     fn module_attr_at(&mut self, m: ModuleId, name: &str, depth: usize) -> Object {
         self.bounded(depth, |p| {
-            let module = Rc::clone(p.module(m));
+            let module = Arc::clone(p.module(m));
             if let Some(i) = module.scope.find_def_index(name) {
                 let d = DefRef { module: m, class: None, index: i as u32 };
                 return p.def_object_at(d, depth + 1);
@@ -214,7 +214,7 @@ impl Project {
 
     /// Finds a name that a `from x import *` brought in.
     fn wildcard_import_attr(&mut self, m: ModuleId, name: &str, depth: usize) -> Object {
-        let module = Rc::clone(self.module(m));
+        let module = Arc::clone(self.module(m));
         let wildcards = module
             .scope
             .defs
@@ -251,7 +251,7 @@ impl Project {
 
     pub(crate) fn def_object_at(&mut self, dref: DefRef, depth: usize) -> Object {
         self.bounded(depth, |p| {
-            let module = Rc::clone(p.module(dref.module));
+            let module = Arc::clone(p.module(dref.module));
             let d = &module.scope(dref.class).defs[dref.index as usize];
             let owner = dref.class.map(|class| ClassRef { module: dref.module, class });
             let mut o = match d.kind {
@@ -287,7 +287,7 @@ impl Project {
     /// lambda, or else the value itself.
     fn value_object(
         &mut self,
-        m: &Rc<Module>,
+        m: &Arc<Module>,
         owner: Option<ClassRef>,
         d: &crate::Def,
         depth: usize,
@@ -426,7 +426,7 @@ impl Project {
 
     /// Applies what a function's decorators make of it.
     fn wrap(&mut self, o: &mut Object, f: FunctionRef, depth: usize) {
-        let module = Rc::clone(self.module(f.module));
+        let module = Arc::clone(self.module(f.module));
         let function = module.function(f.kind);
         let owner = function.class.map(|class| ClassRef { module: f.module, class });
         for &dec in &function.decorators {
@@ -501,7 +501,7 @@ impl Project {
     /// the function they wrap.
     fn wrapper_call(
         &mut self,
-        m: &Rc<Module>,
+        m: &Arc<Module>,
         owner: Option<ClassRef>,
         n: NodeId,
         depth: usize,
@@ -550,7 +550,7 @@ impl Project {
     /// its leading parameters given; keyword arguments are left as they are.
     fn partial_call(
         &mut self,
-        m: &Rc<Module>,
+        m: &Arc<Module>,
         owner: Option<ClassRef>,
         n: NodeId,
         path: &str,

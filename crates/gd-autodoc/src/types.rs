@@ -4,7 +4,7 @@
 //! checkers) fails the evaluation, as Python's `NameError` does; the caller then keeps
 //! the annotations as written, as Sphinx does.
 
-use std::rc::Rc;
+use std::sync::Arc;
 
 use gd_pyscan::{Module, NodeId, Object, ObjectKind, UnparseMode, str_value, unparse};
 
@@ -220,7 +220,7 @@ pub(crate) fn external_type(e: &mut Eval, path: &str) -> TypeValue {
 /// Evaluates what an assignment in the roots binds: a type alias, a TypeVar, or a
 /// NewType.
 fn alias_type(g: &mut Generator<'_>, e: &mut Eval, o: &Object) -> Option<TypeValue> {
-    let m = Rc::clone(g.project.module(o.module?));
+    let m = Arc::clone(g.project.module(o.module?));
     let value = o.value.filter(|_| !o.tuple);
     let Some(value) = value else {
         e.approximate = true;

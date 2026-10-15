@@ -2,7 +2,7 @@
 //! from the source: literals and containers of them, references to constants, classes,
 //! functions, and enum members, and instances of classes that keep object's repr.
 
-use std::rc::Rc;
+use std::sync::Arc;
 
 use gd_pyscan::{ClassRef, Module, Node, NodeId, Object, ObjectKind, StringKind, UnparseMode};
 use gd_pyscan::{number_repr, repr_bytes, repr_str, string_value, unparse};
@@ -143,7 +143,7 @@ impl Describer<'_, '_> {
                 else {
                     return None;
                 };
-                let module = Rc::clone(self.g.project.module(owner_module));
+                let module = Arc::clone(self.g.project.module(owner_module));
                 let value = module.node(o.value);
                 self.integer_value(&module, o.owner, value, depth + 1)
             }
@@ -228,7 +228,7 @@ impl Describer<'_, '_> {
             }
             ObjectKind::Value if !o.tuple => {
                 let Some(owner_module) = o.module else { return as_written(n) };
-                let module = Rc::clone(self.g.project.module(owner_module));
+                let module = Arc::clone(self.g.project.module(owner_module));
                 self.describe(&module, o.owner, o.value, depth + 1)
             }
             _ => as_written(n),
@@ -391,7 +391,7 @@ pub(crate) fn call_of_class(g: &mut Generator<'_>, o: &Object) -> Option<ClassRe
     if o.kind != ObjectKind::Value {
         return None;
     }
-    let m = Rc::clone(g.project.module(o.module?));
+    let m = Arc::clone(g.project.module(o.module?));
     let value = m.node(o.value);
     if value.kind() != "call" {
         return None;

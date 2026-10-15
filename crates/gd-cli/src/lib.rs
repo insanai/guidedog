@@ -44,7 +44,6 @@ pub use command::{FormatsCommand, IntlAction, IntlCommand, MemoryMode, MigrateCo
 pub use command::{MigrateOutput, Output, Parsed, PluginAction, PluginCommand, PublishCommand};
 pub use command::{QuickstartCommand, ServeCommand};
 pub use console::{Streams, Terminals};
-pub use convert::engine_registry;
 pub use gds::discussion_builder;
 pub use parse::parse_command;
 pub use version::{VERSION, VERSION_SUFFIX, full_version, version_text};

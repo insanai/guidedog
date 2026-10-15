@@ -8,13 +8,8 @@ description = "The guidedog command line as a library: parse, run, and report."
 
 [dependencies]
 guidedoc = { workspace = true }
-# The engine registry `convert` and `formats` use, until guidedoc-defaults offers the
-# complete one (wave 2 of the project-builder port).
-guidedoc-rst = { workspace = true }
-guidedoc-commonmark = { workspace = true }
-guidedoc-html = { workspace = true }
-guidedoc-typst = { workspace = true }
-guidedoc-text = { workspace = true }
+# The engine registry `convert` and `formats` use.
+guidedoc-defaults = { workspace = true }
 # `artifact`: `guidedog convert` runs gd_host::convert_artifact.
 gd-host = { workspace = true, features = ["artifact"] }
 gd-report = { workspace = true }
@@ -26,6 +21,12 @@ gd-discussion = { workspace = true }
 gd-pages = { workspace = true }
 gd-conf = { workspace = true }
 gd-env = { workspace = true }
+# build, clean, serve, intl, and the in-process build of publish and gds.
+gd-project = { workspace = true }
+gd-serve = { workspace = true }
+gd-intl = { workspace = true }
+# `intl stat` formats its counts as sphinx-intl does.
+gd-gettext = { workspace = true }
 # `quickstart` and `migrate`.
 gd-migrate = { workspace = true }
 # `guidedog --version` names the Graphviz library linked in.

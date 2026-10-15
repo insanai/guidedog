@@ -8,26 +8,6 @@ use guidedoc::{Conformance, Registry};
 use crate::command::{ConvertCommand, FormatsCommand};
 use crate::console::Console;
 
-/// The readers and renderers built in: reStructuredText, CommonMark and MyST; HTML,
-/// Typst and plain text.
-///
-/// The complete registry (the Sphinx layer included) moves to `guidedoc-defaults` in
-/// wave 2 of the project-builder port; this one has what `convert` and `formats` need.
-pub fn engine_registry() -> Registry {
-    Registry {
-        readers: vec![
-            guidedoc_rst::reader(),
-            guidedoc_commonmark::READER,
-            guidedoc_commonmark::MYST_READER,
-        ],
-        renderers: vec![
-            guidedoc_html::renderer(),
-            guidedoc_typst::renderer(),
-            guidedoc_text::renderer(),
-        ],
-    }
-}
-
 /// Converts one file as `c` says, reports what happened, and returns the exit status.
 pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
     gd_host::catch_interrupts();
@@ -74,7 +54,7 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
         budget: c.budget_mib.map_or(256 << 20, |mib| mib << 20),
         ..ArtifactRequest::default()
     };
-    let result = gd_host::convert_artifact(&engine_registry(), &request);
+    let result = gd_host::convert_artifact(&guidedoc_defaults::registry(), &request);
     let consequence = if result.exit != 0 { "No output was written." } else { "" };
     for report in &result.reports {
         let error = report.severity == gd_report::Severity::Error;
@@ -106,7 +86,7 @@ fn conformance(c: Conformance) -> &'static str {
 
 /// Lists the adapters this program actually has and the Typst backend it finds.
 pub(crate) fn formats(console: &mut Console<'_>, f: &FormatsCommand) -> i32 {
-    let registry = engine_registry();
+    let registry = guidedoc_defaults::registry();
     let backend = gd_typst::locate(&f.typst);
     let text = if f.json {
         formats_json(&registry, backend.as_ref())
@@ -197,8 +177,8 @@ mod tests {
     use super::*;
 
     #[test]
-    fn the_engine_registry_is_valid_and_has_what_convert_names() {
-        let registry = engine_registry();
+    fn the_default_registry_is_valid_and_has_what_convert_names() {
+        let registry = guidedoc_defaults::registry();
         assert!(registry.validate().is_ok());
         for id in ["rst", "commonmark"] {
             assert!(registry.find_reader(id).is_some(), "{id}");
@@ -210,7 +190,7 @@ mod tests {
 
     #[test]
     fn formats_json_lists_the_adapters() {
-        let json = formats_json(&engine_registry(), None);
+        let json = formats_json(&guidedoc_defaults::registry(), None);
         assert!(json.starts_with("{\"readers\":[{\"id\":\"rst\""), "{json}");
         assert!(json.contains("\"typst_pinned\":false"), "{json}");
     }

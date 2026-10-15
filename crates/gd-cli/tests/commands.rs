@@ -130,10 +130,10 @@ fn gds_keeps_guidedog_s_catalog() {
     let (status, _, err) = run(&["gds", "lsit", &dir], &none);
     assert_eq!(status, 2);
     assert!(err.contains("Did you mean `list`?"), "{err}");
-    // Building goes through this program's project builder.
+    // Building goes through this program's project builder, in this process.
     let (status, _, err) = run(&["gds", "build", &dir, "--target=html"], &none);
-    assert_ne!(status, 0);
-    assert!(err.contains("cli.not-available") || err.contains("NOT AVAILABLE"), "{err}");
+    assert_eq!(status, 0, "{err}");
+    assert!(root.join("docs/gds/_build/html/index.html").is_file());
 }
 
 /// Publishes a built site to a local folder, as the gd-plugins example does.
@@ -215,20 +215,38 @@ fn plugin_list_shows_the_linked_plugins() {
     assert!(out.contains("Linked into this program") && out.contains("folder"), "{out}");
 }
 
-/// quickstart and migrate run gd-migrate; building reads and checks the project, then
-/// stops at the seam to the project builder until it is ported.
+/// quickstart and migrate run gd-migrate; build, intl and clean run the project builder.
 #[test]
-fn quickstart_migrate_and_the_project_builder_seam() {
+fn quickstart_migrate_and_the_project_builder() {
     let root = TempDir::new("project");
     let none = Registry::default();
     let docs = root.arg("docs");
     let (status, _, err) = run(&["quickstart", &docs, "-q", "-p", "Demo", "-a", "Ada"], &none);
     assert_eq!(status, 0, "{err}");
     assert!(root.join("docs/conf.toml").is_file() && root.join("docs/index.rst").is_file());
-    let (status, out, err) = run(&["build", "html", &docs, "--color=never"], &none);
-    assert_eq!(status, 2, "{err}");
-    assert!(out.contains("building html for Demo") && out.contains("build failed"), "{out}");
-    assert!(err.contains("cli.not-available"), "{err}");
+    let (status, out, err) = run(&["build", "html", &docs, "--color=never", "-W"], &none);
+    assert_eq!(status, 0, "{err}");
+    assert!(out.contains("building html for Demo") && out.contains("build succeeded"), "{out}");
+    assert!(root.join("docs/_build/html/index.html").is_file());
+    let (status, out, _) = run(&["build", "html", &docs, "--color=never"], &none);
+    assert_eq!(status, 0);
+    assert!(out.contains("0 document(s) parsed, 1 unchanged"), "{out}");
+    // The sphinx-build form writes to the folder given.
+    let site = root.arg("site");
+    let (status, _, err) = run(&["build", "-b", "text", &docs, &site], &none);
+    assert_eq!(status, 0, "{err}");
+    assert!(root.join("site/index.txt").is_file());
+    let (status, _, err) = run(&["build", "gettext", &docs], &none);
+    assert_eq!(status, 0, "{err}");
+    let (status, out, err) = run(&["intl", "update", "-l", "de", &docs], &none);
+    assert_eq!(status, 0, "{err}");
+    assert!(out.contains("create") && out.contains("index.po"), "{out}");
+    let (status, out, _) = run(&["intl", "stat", "-l", "de", &docs], &none);
+    assert_eq!(status, 0);
+    assert!(out.contains("0 translated"), "{out}");
+    let (status, _, err) = run(&["clean", &docs], &none);
+    assert_eq!(status, 0, "{err}");
+    assert!(!root.join("docs/_build/html").exists());
     let (status, _, err) = run(&["build", "html", &root.arg("nowhere/x")], &none);
     assert_eq!(status, 2);
     assert!(err.contains("UNKNOWN BUILDER") || err.contains("project.missing"), "{err}");

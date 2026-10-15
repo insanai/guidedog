@@ -26,7 +26,7 @@ pub(crate) fn build(console: &mut Console<'_>, command: &BuildCommand, linked: &
     }
 }
 
-/// Loads the project `command` names, reporting its warnings, with `--typst` applied.
+/// Loads the project `command` names, with `--typst` applied.
 /// A failure is reported, and its status returned.
 fn load(
     console: &mut Console<'_>,
@@ -37,9 +37,7 @@ fn load(
         Ok(project) => project,
         Err(problem) => return Err(console.problem(&problem)),
     };
-    for warning in &project.warnings {
-        console.report(warning, "");
-    }
+    // The build reports the project's warnings with its own (they count for -W).
     if let Some(typst) = &command.typst {
         project.config.pdf.typst = typst.clone();
     }
@@ -156,14 +154,38 @@ pub(crate) fn serve(console: &mut Console<'_>, command: &ServeCommand, linked: &
     if status != 0 {
         return status;
     }
-    // A failed load or build keeps the previous site; the server keeps serving it.
-    let mut rebuild = || match load(console, &command.build, linked) {
-        Ok(next) => build_loaded(console, &next, &command.build, &memory) == 0,
-        Err(_) => false,
-    };
-    match ops::serve(&project, command.port, &mut rebuild) {
+    let mut host = Preview { console, command, linked, memory: &memory };
+    match ops::serve(&project, command.port, &mut host) {
         Ok(()) => 0,
-        Err(problem) => console.problem(&problem),
+        Err(problem) => host.console.problem(&problem),
+    }
+}
+
+/// The preview's side of `serve`: says where the site is, and rebuilds it. A failed
+/// load or build keeps the previous site; the server keeps serving it.
+struct Preview<'c, 'o> {
+    console: &'c mut Console<'o>,
+    command: &'c ServeCommand,
+    linked: &'c Registry,
+    memory: &'c Memory,
+}
+
+impl ops::ServeHost for Preview<'_, '_> {
+    fn serving(&mut self, site: &std::path::Path, url: &str) {
+        let site = gd_host::display_path(&site.to_string_lossy());
+        self.console.print(&format!("  Serving {site} at {url} (Ctrl+C to stop)\n"));
+        let _ = self.console.out.flush();
+    }
+
+    fn rebuild(&mut self) -> Option<Project> {
+        self.console.print("  Sources changed; rebuilding...\n");
+        let next = load(self.console, &self.command.build, self.linked).ok()?;
+        let built = build_loaded(self.console, &next, &self.command.build, self.memory) == 0;
+        if built {
+            self.console.print("  Rebuilt.\n");
+        }
+        let _ = self.console.out.flush();
+        built.then_some(next)
     }
 }
 

@@ -23,7 +23,6 @@ let status = gd_cli::run_in(&args, &linked, gd_cli::Streams { out, err, input, t
 | `run_in(&args, &Registry, Streams)` → `i32` | any `Write`/`BufRead` streams (tests) |
 | `parse_command` → `Parsed { output: Output, command: Result<Command, Problem> }` | every command, typed: `ConvertCommand`, `BuildCommand` (holds `gd_conf::LoadOptions` and `gd_env::BuildOptions`), `ServeCommand`, `CleanCommand`, `QuickstartCommand`, `MigrateCommand`, `IntlCommand`, `PluginCommand`, `PublishCommand`, ... |
 | `default_registry()` | the linked `pages` publisher |
-| `engine_registry()` | readers rst/commonmark/myst, renderers html/typst/text |
 | `discussion_builder(typst)` | `gd_discussion::Builder` with this engine (for `guidedog gds`, `dscc`) |
 | `version_text()`, `full_version()`, `VERSION`, `VERSION_SUFFIX` | `--version` and the crash report |
 
@@ -64,23 +63,17 @@ mean" for commands, options, builders, intl/plugin/pages subcommands and values.
 - **`plugin list`/`inspect`** show the linked plugins beside the registered programs.
 - **Older Typst discussion catalogs** (`legacy.rs`) compile with `gd_typst`, staged
   and themed as Odin's `discussion/embedded` did.
-- `engine_registry()` stands in for `guidedoc_defaults::registry()` until wave 2.
+- `convert` and `formats` use `guidedoc_defaults::registry()` (readers rst, sphinx,
+  commonmark, myst).
 
-## The project-builder seam (`src/ops.rs`) — wave 4 fills in
+## The project builder (`src/ops.rs`)
 
-Everything above the seam is complete: options, prompts, budget questions, reports,
-summaries (`summary.rs`), verdicts. `ops::load` already reads conf.toml with gd-conf.
-Wave 4 (gd-project) replaces these bodies, keeping their signatures where it can:
-
-| Function | Today | Wave 4 |
-|---|---|---|
-| `ops::Project`, `ops::load(dir, &LoadOptions, &Registry)` | `gd_conf::load_config` | `gd_project::load` (owns the linked registry) |
-| `ops::build(&Project, BuilderKind, &BuildOptions) -> BuildResult` | `cli.not-available` | `gd_project::build` |
-| `ops::clean(&Project)` | `cli.not-available` | `gd_project::clean` |
-| `ops::serve(&Project, port, &mut dyn FnMut() -> bool)` | `cli.not-available` | gd-serve with the project's watch set; `rebuild` reloads and builds |
-| `ops::intl(&Project, &IntlCommand) -> (Vec<IntlFile>, Option<Problem>)` | `cli.not-available` | gd-intl update/stat (remove the `expect(dead_code)` on `IntlOutcome`) |
-
-Through them, `build`, `serve`, `clean`, `intl`, the project build of `publish`, and
-`discussion_builder` (RST catalogs) start working; `cmd/dscc` can then pass
-`gd_cli::discussion_builder` as `make_builder` with `tool: "typst"`. `quickstart` and
-`migrate` already run gd-migrate.
+`build`, `serve`, `clean`, `intl`, the project build of `publish`, and
+`discussion_builder` reach gd-project only through `ops`: `ops::load` (the linked
+plugins go into `gd_project::LoadOptions`), `ops::build`, `ops::clean`, `ops::intl`
+(gd-intl's `intl_update`/`intl_stat`, counts formatted by gd-gettext), and
+`ops::serve`, which serves `<build_dir>/html` with gd-serve, watching
+`gd_project::watch_roots` and skipping the build folder; the command implements
+`ops::ServeHost` (prints the "Serving" line, reloads and rebuilds on change). The
+project's conf.toml warnings are reported by the build (they count for `-W`), not again
+by the command. `cmd/dscc` passes `discussion_builder` as its `make_builder`.

@@ -2,7 +2,7 @@
 //! requests (this crate, and the clients built on it).
 //!
 //! It answers one request per connection, one connection at a time, with what a handler
-//! returns. It is a test fixture: it speaks enough HTTP for curl, and nothing more.
+//! returns. It is a test fixture: it speaks enough HTTP for gd-fetch's client, and nothing more.
 //!
 //! ```no_run
 //! use gd_fetch::testserver::{self, Reply};

@@ -103,8 +103,7 @@ pub fn push(
         None => {}
         // GitHub refused the request before it changed anything.
         Some(ErrorKind::Status) => return PushOutcome::Refused(status_problem(&r, None, &x)),
-        Some(ErrorKind::Redirect | ErrorKind::Unsupported | ErrorKind::Missing)
-        | Some(ErrorKind::CurlMissing) => {
+        Some(ErrorKind::Redirect | ErrorKind::Unsupported | ErrorKind::Missing) => {
             return PushOutcome::Refused(transfer_problem(&r, &url, x.doing));
         }
         Some(_) => return PushOutcome::Unknown(transfer_problem(&r, &url, x.doing)),

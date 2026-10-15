@@ -8,6 +8,9 @@ publish = false
 
 [dependencies]
 gd-report = { workspace = true }
+# HTTP and HTTPS in-process (rustls TLS, built-in root certificates), so Guidedog needs
+# no curl program, OpenSSL or system CA store. See the root Cargo.toml for the reason.
+ureq = { workspace = true }
 
 [lints]
 workspace = true

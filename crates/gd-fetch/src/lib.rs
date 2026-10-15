@@ -1,7 +1,8 @@
 //! Fetch reads remote and local resources and sends HTTP requests.
 //!
-//! HTTP and HTTPS go through the `curl` executable (run directly, never through a shell);
-//! `file://` URLs and plain paths are read from the disk. Guidedog uses [`get`] for
+//! HTTP and HTTPS go through the `ureq` client with `rustls` for TLS and Mozilla's root
+//! certificates built in, so no system program or library is needed; `file://` URLs and
+//! plain paths are read from the disk. Guidedog uses [`get`] for
 //! remote intersphinx inventories, and the Pages publisher uses [`send`] for GitHub's API
 //! and Git's smart HTTP.
 //!
@@ -14,15 +15,18 @@
 //! ```
 //!
 //! [`get`] follows redirects, only to http and https, and limits the body to
-//! [`Options::max_bytes`]. Bodies are asked for as they are, without transfer
-//! compression, so a server's malformed `Content-Encoding` does not stop the transfer.
+//! [`Options::max_bytes`]. Bodies are asked for as they are (`Accept-Encoding:
+//! identity`), so a server's compression cannot stop the transfer.
 //! [`send`] makes one request and never follows a redirect, so headers such as
-//! `Authorization` reach only the URL the caller named.
+//! `Authorization` reach only the URL the caller named. Both honour the proxy variables
+//! curl reads: `https_proxy`/`HTTPS_PROXY`, `http_proxy`, `all_proxy`/`ALL_PROXY` and
+//! `no_proxy`/`NO_PROXY`.
 
 #![forbid(unsafe_code)]
 
-mod curl;
 mod error;
+mod http;
+mod proxy;
 pub mod testserver;
 
 #[cfg(test)]
@@ -62,8 +66,6 @@ pub struct Options {
     pub user_agent: Cow<'static, str>,
     /// When set, the transfer stops (with [`ErrorKind::Cancelled`]) once it becomes true.
     pub cancel: Option<Arc<AtomicBool>>,
-    /// The curl executable to run; `None` looks `curl` up on `PATH`.
-    pub curl: Option<PathBuf>,
 }
 
 impl Default for Options {
@@ -73,7 +75,6 @@ impl Default for Options {
             max_bytes: DEFAULT_MAX_BYTES,
             user_agent: Cow::Borrowed(DEFAULT_USER_AGENT),
             cancel: None,
-            curl: None,
         }
     }
 }
@@ -207,7 +208,7 @@ impl Response {
 /// answers with a status other than 2xx, or grows beyond [`Options::max_bytes`].
 pub fn get(location: &str, options: &Options) -> Result<Fetched, Error> {
     if location.starts_with("http://") || location.starts_with("https://") {
-        return curl::get_url(location, options);
+        return http::get_url(location, options);
     }
     let path = location.strip_prefix("file://").unwrap_or(location);
     if path.contains("://") {
@@ -230,7 +231,7 @@ pub fn send(request: &Request, options: &Options) -> Response {
     if let Err(detail) = check_request(request) {
         return Response::failure(ErrorKind::Unsupported, &request.url, detail);
     }
-    curl::send_url(request, options)
+    http::send_url(request, options)
 }
 
 fn check_request(r: &Request) -> Result<(), &'static str> {

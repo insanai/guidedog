@@ -143,7 +143,6 @@ impl Client {
             max_bytes,
             user_agent: Client::agent().into(),
             cancel: Some(flag.clone()),
-            curl: None,
         };
         let done = AtomicBool::new(false);
         let response = std::thread::scope(|s| {
@@ -220,14 +219,6 @@ pub(crate) fn transfer_problem(r: &Response, path: &str, doing: &str) -> Problem
             "Publish a smaller site, or report this to Guidedog's authors.",
         ),
         ErrorKind::Memory => Problem::memory(),
-        ErrorKind::CurlMissing => problem(
-            "pages.curl",
-            "curl was not found",
-            "curl",
-            "guidedog-pages reaches GitHub through the curl program, and none could be run.",
-            "Install curl and put it on PATH, then run the command again.",
-        )
-        .exit(4),
         _ => problem(
             "pages.network",
             "GitHub cannot be reached",

@@ -24,8 +24,6 @@ pub enum ErrorKind {
     Cancelled,
     /// Memory for a complete result could not be reserved.
     Memory,
-    /// The `curl` executable could not be run.
-    CurlMissing,
 }
 
 /// A fetch failure, with what a report needs. `Display` renders an Elm-style report with a
@@ -38,7 +36,7 @@ pub struct Error {
     pub location: String,
     /// The HTTP status; `None` when none was received.
     pub status: Option<u16>,
-    /// What went wrong, in a sentence (curl's own message for network failures).
+    /// What went wrong, in a sentence (the HTTP client's own message for network failures).
     pub detail: Cow<'static, str>,
 }
 
@@ -61,7 +59,6 @@ impl Error {
             ErrorKind::Redirect => "fetch.redirect",
             ErrorKind::Cancelled => "fetch.cancelled",
             ErrorKind::Memory => "fetch.memory",
-            ErrorKind::CurlMissing => "fetch.curl-missing",
         }
     }
 
@@ -89,7 +86,6 @@ impl Error {
             ErrorKind::Redirect => "UNEXPECTED REDIRECT",
             ErrorKind::Cancelled => "TRANSFER CANCELLED",
             ErrorKind::Memory => "OUT OF MEMORY",
-            ErrorKind::CurlMissing => "CURL NOT FOUND",
         }
     }
 
@@ -111,10 +107,6 @@ impl Error {
             ErrorKind::Redirect => "Send the request to the URL in the location header.",
             ErrorKind::Cancelled => "The transfer was cancelled on request; run it again.",
             ErrorKind::Memory => "Free memory, or lower the size limit.",
-            ErrorKind::CurlMissing => {
-                "Install curl (for example `apt install curl` or `brew install curl`) and \
-                 put it on PATH."
-            }
         }
     }
 

@@ -156,21 +156,12 @@ fn timeouts_and_cancellation_stop_a_transfer() {
 }
 
 #[test]
-fn a_missing_curl_has_an_install_hint() {
-    let o = Options { curl: Some("/nonexistent/curl-gd".into()), ..Options::default() };
-    let e = get("http://127.0.0.1:1/", &o).expect_err("no curl");
-    assert_eq!(e.kind, ErrorKind::CurlMissing);
-    let report = e.to_string();
-    assert!(report.starts_with("-- CURL NOT FOUND [fetch.curl-missing] ---"), "{report}");
-    assert!(report.contains("Hint: Install curl"), "{report}");
-}
-
-#[test]
-fn network_failures_carry_curls_message() {
+fn network_failures_carry_the_clients_message() {
     // Port 1 on the loopback interface refuses connections.
     let e = get("http://127.0.0.1:1/", &Options::default()).expect_err("refused");
     assert_eq!(e.kind, ErrorKind::Network);
-    assert!(!e.detail.is_empty() && !e.detail.starts_with("curl:"), "{}", e.detail);
+    assert!(e.detail.contains("Connection"), "{}", e.detail);
+    assert!(e.to_string().contains("Hint: Check the network"), "{e}");
 }
 
 #[test]
@@ -180,4 +171,16 @@ fn tokens_and_lines_are_checked() {
     let report = Error { status: Some(404), ..Error::new(ErrorKind::Status, "https://x/y", "") };
     let text = report.to_string();
     assert!(text.contains("HTTP status 404") && text.contains("Hint: Check the URL"), "{text}");
+}
+
+/// A real HTTPS read: rustls with the built-in root certificates. It needs the network,
+/// so it runs only on request: `cargo test -p gd-fetch -- --ignored`.
+#[test]
+#[ignore = "reaches docs.python.org over the network"]
+fn https_reads_a_real_inventory() {
+    let r =
+        get("https://docs.python.org/3/objects.inv", &Options::default()).expect("the inventory");
+    assert_eq!(r.status, Some(200));
+    assert!(r.data.starts_with(b"# Sphinx inventory version 2"), "{:?}", &r.data[..32]);
+    println!("{} bytes from {}", r.data.len(), r.url);
 }

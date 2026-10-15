@@ -1,0 +1,16 @@
+[package]
+name = "dscc-cmd"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "dscc"
+path = "src/main.rs"
+
+[dependencies]
+gd-discussion.workspace = true
+
+[lints]
+workspace = true

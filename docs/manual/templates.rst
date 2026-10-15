@@ -8,16 +8,16 @@ Guidedog uses Jinja for HTML and Typst for PDF.
 For a complete worked project, follow :doc:`tutorial/a-custom-theme`.
 This chapter is the reference for its settings, blocks and parameters.
 
-Templates in Guidedog are standard project files that are directly visible and editable.
-When you initialize a project with ``guidedog quickstart``, it writes the actual working
-templates directly into your project:
+Templates in Guidedog are ordinary project files. We can see them and edit them.
+When we start a project with ``guidedog quickstart``, it writes the working
+templates into our project:
 
-* ``_templates/layout.html`` defines your HTML website structure (Jinja).
-* ``_templates/book.typ`` defines your PDF book layout, typography, and cover page (Typst).
+* ``_templates/layout.html`` defines the HTML website structure (Jinja).
+* ``_templates/book.typ`` defines the PDF book layout, typography, and cover page (Typst).
 * ``_static/guidedog.css`` and ``_static/guidedog.js`` supply default styles and client behaviors.
 
-Templates are part of your project directory rather than hidden within an external
-package or binary cache. You can edit them directly, rebuild with ``guidedog build``,
+Templates live in the project directory. They are not hidden in an external
+package or binary cache. We edit them directly, rebuild with ``guidedog build``,
 and preview changes with ``guidedog serve``.
 
 HTML templates
@@ -104,9 +104,9 @@ Jinja macros can also be defined in separate files and imported wherever needed:
 Theme inheritance with ``!layout.html``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you only want to customize select sections of the default theme rather than rewriting
-the full page structure from scratch, you can inherit directly from Guidedog's built-in
-theme layout using Sphinx's exclamation mark syntax:
+Sometimes we want to change only some sections of the default theme, not write
+the whole page structure from scratch. Then we inherit from Guidedog's built-in
+theme layout with Sphinx's exclamation mark syntax:
 
 .. code-block:: html+jinja
    :caption: _templates/layout.html
@@ -125,12 +125,12 @@ theme layout using Sphinx's exclamation mark syntax:
      {% include "partials/footer.html" %}
    {% endblock %}
 
-Using ``{% extends "!layout.html" %}`` (or ``{% extends "basic/layout.html" %}``) directs
-the loader to fetch the theme's underlying template instead of recursively loading the project's
-own ``_templates/layout.html``.
+``{% extends "!layout.html" %}`` (or ``{% extends "basic/layout.html" %}``) tells
+the loader to fetch the theme's underlying template. Without the mark, it would load the project's
+own ``_templates/layout.html`` again, recursively.
 
-Inside any overridden block, calling ``{{ super() }}`` renders the parent block's default
-markup, allowing you to prepend or append markup without duplicating existing code.
+Inside any overridden block, ``{{ super() }}`` renders the parent block's default
+markup. So we can add markup before or after it without copying existing code.
 
 Layout blocks
 ~~~~~~~~~~~~~
@@ -185,11 +185,11 @@ Finding templates
 
 Guidedog searches each directory listed in ``conf.toml`` under ``templates_path`` in order,
 followed by its built-in templates. Template names are relative to the directories in
-``templates_path`` and cannot escape outside of them using parent directory traversal (``..``).
+``templates_path``. They cannot escape those directories with parent directory traversal (``..``).
 
-Every file and subdirectory in ``templates_path`` is registered as an input dependency of the
-build. Whenever any template or partial file is added, edited, or removed, ``guidedog build``
-and the live server ``guidedog serve`` automatically detect the change and re-render the site.
+Every file and subdirectory in ``templates_path`` is an input dependency of the
+build. When a template or partial file is added, edited, or removed, ``guidedog build``
+and the live server ``guidedog serve`` detect the change and render the site again.
 
 
 Page variables
@@ -252,7 +252,7 @@ carry over.
      - Its value, with its type, as Sphinx passes a Python value: ``false`` is false
        in ``{% if %}``, numbers are numbers, arrays are lists, and tables are dicts
        whose keys keep the order ``conf.toml`` gives them. ``guidedog migrate``
-       carries the literal entries of ``conf.py``'s ``html_context``; a value
+       carries the literal entries of ``conf.py``'s ``html_context``. A value
        ``conf.py`` computes is left undefined, which a template reads as false.
 
 ``pathto`` is Sphinx's template function. ``pathto("usage/install")`` is the URL of a
@@ -295,17 +295,17 @@ The template sees the variables of a page that is no document's: ``pagename`` is
 page's name (``index``), ``title`` and ``body`` are empty, and ``pathto``, ``toc``,
 ``toctree()``, and the values of ``html_context`` work as on any page. The page is
 written at the site's root as ``<name>.html`` (``html_file_suffix``) by ``html``,
-``dirhtml``, and ``singlehtml``, and written again on every build; a change to its
+``dirhtml``, and ``singlehtml``, and written again on every build. A change to its
 template, as to any file in ``templates_path``, rebuilds every page.
 
 Where the page goes, and where it differs from Sphinx:
 
 - A page named as a document takes that document's place, as in Sphinx, where it is
-  written last: ``index = "landing.html"`` makes the landing page ``index.html`` while
+  written last. ``index = "landing.html"`` makes the landing page ``index.html``, while
   ``index.rst`` still gives the table of contents its entries. With ``singlehtml`` the
   single page keeps its place and the template page is not written, with a warning.
 - ``dirhtml`` writes the page as ``download.html``, beside ``genindex.html`` and
-  ``search.html``, where Sphinx writes ``download/index.html``; ``pathto("download")``
+  ``search.html``, where Sphinx writes ``download/index.html``. ``pathto("download")``
   gives that file.
 - A name must be a file name at the site's root: ``"sub/page"`` is refused with a
   warning (``build.additional_page``), since the page's links are made from the root.
@@ -329,9 +329,9 @@ itself, and a suggestion::
 
 A variable that is not defined renders as nothing, as in Jinja.
 
-Runaway templates stop with an error too, never a crash: syntax nested more than 100
+Runaway templates stop with an error too, never a crash. The limits are: syntax nested more than 100
 levels deep (brackets, tags, and each link of a long chain of operators, filters or
-``elif`` branches), macros, includes and recursive loops more than 200 deep, or any
+``elif`` branches); macros, includes and recursive loops more than 200 deep; and any
 recursion needing more than 512 KiB of stack. A list that contains itself prints as
 ``[...]``, as in Python.
 
@@ -340,7 +340,7 @@ PDF templates
 -------------
 
 The PDF book is typeset by Typst. ``_templates/book.typ`` is an ordinary Typst file
-that defines a ``book`` function; Guidedog writes the book's source as
+that defines a ``book`` function. Guidedog writes the book's source as
 
 .. code-block:: typst
 
@@ -378,21 +378,21 @@ Parameters
    * - ``logo``
      - The path of ``pdf_logo``; absent when it is unset.
    * - ``copyright``
-     - ``copyright``, for the colophon; passed only to a template that takes it.
+     - ``copyright``, for the colophon. It is passed only to a template that takes it.
    * - ``body``
      - The chapters.
 
-A template may add parameters with defaults of its own. The template quickstart
+A template may add parameters with defaults of its own. The template that quickstart
 writes has ``accent``, the fonts ``serif``, ``sans``, and ``mono``, the text ``size``,
-and ``page-ref``, which follows cross-references to other pages with their page
-number when set to a function such as ``n => [p. #n]``.
+and ``page-ref``. When ``page-ref`` is set to a function such as ``n => [p. #n]``,
+cross-references to other pages are followed by their page number.
 
 Modular Typst templates
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Like HTML templates, Typst templates are not restricted to a single file. You can break
-book styling, macros, and custom covers into multiple modular ``.typ`` files under
-``_templates/`` and compose them using standard Typst ``#import`` and ``#include`` statements:
+Like HTML templates, Typst templates are not restricted to a single file. We can split
+book styling, macros, and custom covers into several ``.typ`` files under
+``_templates/``. Standard Typst ``#import`` and ``#include`` statements put them together:
 
 .. code-block:: typst
    :caption: _templates/book.typ
@@ -435,11 +435,11 @@ Fonts
 
 A preamble
    ``pdf_preamble`` names a Typst file whose content follows the ``#show: book``
-   line, which suits a few ``set`` and ``show`` rules without a template of your own.
+   line. It suits a few ``set`` and ``show`` rules without a template of our own.
 
 Typst in a document
-   Documents are reStructuredText and Markdown; Typst files are not documents. To put
-   Typst markup into the book, write it in a raw block, which web pages leave out:
+   Documents are reStructuredText and Markdown. Typst files are not documents. To put
+   Typst markup into the book, we write it in a raw block, which web pages leave out:
 
    .. code-block:: rst
 
@@ -449,7 +449,7 @@ Typst in a document
 
    ``.. only:: pdf`` keeps ordinary content to the book in the same way.
 
-When Typst reports an error, the build names the file and line, whether it is in your
+When Typst reports an error, the build names the file and line, whether it is in our
 template or in the generated book. Each PDF has its own generated source at
 ``_build/pdf/sources/<pdf-filename>.typ``. For example, ``reference-en.pdf`` has
 ``sources/reference-en.pdf.typ``. A single-book build also keeps the familiar
@@ -461,7 +461,7 @@ at the path named by the error. Several books keep distinct failure sources.
 Writing a new template
 ----------------------
 
-Start from the copies quickstart wrote, which show every part in use:
+We start from the copies quickstart wrote. They show every part in use:
 
 1. Keep the ``layout.html`` markup that the default style sheet expects, or replace
    ``_static/guidedog.css`` along with it.
@@ -470,5 +470,5 @@ Start from the copies quickstart wrote, which show every part in use:
 3. For the book, change the ``book`` function's rules, or write a new function with
    the same parameters and keep its name ``book``.
 
-Preview with ``guidedog serve`` while editing. Save the source and refresh the browser;
-the server rebuilds changed inputs before serving the page.
+Preview with ``guidedog serve`` while editing. Save the source and refresh the browser.
+The server rebuilds changed inputs before serving the page.

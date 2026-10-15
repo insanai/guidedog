@@ -4,7 +4,7 @@ Write a plugin
 A plugin adds a service to Guidedog. A build plugin can transform source text,
 transform a rendered HTML page, or supply static files. A publisher sends a
 finished site to a destination. Both are ordinary Rust traits from the
-``gd-plugins`` crate: you implement one once, and the same value can be linked into
+``gd-plugins`` crate. We implement one once. The same value can be linked into
 a custom ``guidedog`` binary or served as a separate program.
 
 This chapter builds a product badge. It replaces ``{{product}}`` in source text,
@@ -15,9 +15,9 @@ how the same plugin foundation supports a service with external effects.
 --------------------------
 
 A build plugin implements ``gd_plugins::BuildPlugin``. Its ``process_source``,
-``process_html`` and ``collect_assets`` methods are optional: the default methods mean
+``process_html`` and ``collect_assets`` methods are optional. The default methods mean
 the service is absent (text passes through, no assets). ``load`` reads the plugin's
-configuration into the value itself; dropping the value releases what it holds. The
+configuration into the value itself. Dropping the value releases what it holds. The
 host owns the build.
 
 .. graphviz::
@@ -54,7 +54,7 @@ to PDF and text builds too. Includes remain the engine's responsibility. HTML
 hooks receive complete pages, including generated indexes and additional pages.
 Generated assets belong to HTML builders and live below ``_static/plugins/ID/``.
 The host collects them once during plugin setup, before reading documents.
-They are fixed for that build; source and HTML hooks cannot add later assets.
+They are fixed for that build. Source and HTML hooks cannot add later assets.
 
 A ``Plugin`` is build hooks or a publisher, never both. Normal builds cannot invoke
 a publishing service. A plugin reaches a build in one of two ways:
@@ -62,21 +62,21 @@ a publishing service. A plugin reaches a build in one of two ways:
 Linked
    A custom ``guidedog`` binary compiles the plugin crate in and passes its plugins to
    the command line with ``gd_cli::run_with``. Rust has no stable ABI, so there is no
-   loading of dynamic libraries; linked code is trusted like the rest of the binary.
+   loading of dynamic libraries. Linked code is trusted like the rest of the binary.
 
 Served
-   The plugin crate's small binary calls ``gd_plugins::serve_plugin``. Once registered
-   with ``guidedog plugin register``, which pins its SHA-256, it runs as a child process
-   per build behind a bounded JSON Lines protocol. A crash or stall becomes a
-   diagnostic. Registration is explicit and it is not a sandbox: an installed plugin is
+   The plugin crate's small binary calls ``gd_plugins::serve_plugin``. We register it
+   with ``guidedog plugin register``, which pins its SHA-256. Then it runs as a child process
+   per build, behind a bounded JSON Lines protocol. A crash or stall becomes a
+   diagnostic. Registration is explicit, and it is not a sandbox: an installed plugin is
    a trusted program.
 
 2. Compile the working example
 ------------------------------
 
 The product badge lives in the Guidedog repository at
-``crates/gd-plugins/examples/build_plugin``: ``badge.rs`` is the plugin, ``main.rs``
-the program that serves it. Start at the checkout root, with a Rust toolchain
+``crates/gd-plugins/examples/build_plugin``. ``badge.rs`` is the plugin, and ``main.rs`` is
+the program that serves it. We start at the checkout root, with a Rust toolchain
 installed. On macOS or Linux, run:
 
 .. code-block:: sh
@@ -173,21 +173,21 @@ change. A further unchanged build writes no output files.
 The complete plugin below is the source compiled in step 2. Download
 :download:`badge.rs <_static/repository/build-plugin-badge.rs>` and
 :download:`main.rs <_static/repository/build-plugin-main.rs>` to keep a local copy.
-In your own crate, ``badge.rs`` becomes the library (``src/lib.rs``) and ``main.rs``
+In our own crate, ``badge.rs`` becomes the library (``src/lib.rs``) and ``main.rs``
 the binary, with ``gd-plugins`` and ``gd-toml`` as dependencies.
 
 .. literalinclude:: _static/repository/build-plugin-badge.rs
    :language: rust
 
-``plugin()`` is the public descriptor: ``Plugin::build`` keeps the unloaded ``Badge``
+``plugin()`` is the public descriptor. ``Plugin::build`` keeps the unloaded ``Badge``
 as a prototype and clones it for every session, so sessions never share state. ``info``
 names the plugin and declares its hooks. ``load`` reads the configuration through
-``LoadContext::read_config``, which bounds its size, declares the file as a dependency
-and fingerprints the bytes; it then checks the setting and keeps it in the value.
+``LoadContext::read_config``. That call bounds its size, declares the file as a dependency
+and fingerprints the bytes. ``load`` then checks the setting and keeps it in the value.
 
 The source hook returns ``Cow::Borrowed`` when the text has no marker, so unchanged
-text is never copied, and checks the expanded size against ``MAX_PLUGIN_TEXT`` before
-allocating. It replaces every marker, including markers inside code blocks; this is a
+text is never copied. It checks the expanded size against ``MAX_PLUGIN_TEXT`` before
+allocating. It replaces every marker, including markers inside code blocks. This is a
 text transformation, not a markup parser.
 
 The HTML hook escapes the label and inserts it before the last closing body tag.
@@ -195,7 +195,7 @@ It uses ``assets_url`` supplied by the host, so nested pages link to the right C
 This small example expects literal lowercase closing head and body tags. A plugin
 that rewrites arbitrary HTML should use a suitable parser and state its contract.
 
-The assets hook returns ordinary owned values. There is nothing to release: hook
+The assets hook returns ordinary owned values. There is nothing to release. Hook
 results are plain ``Cow``, ``String`` and ``Vec`` values that the host takes over.
 
 The program that serves the same plugin over standard streams is three lines:
@@ -204,14 +204,14 @@ The program that serves the same plugin over standard streams is three lines:
    :language: rust
 
 ``serve_plugin`` handles negotiation and dispatch and returns the exit code. Keep
-protocol output on stdout; write human logs to stderr.
+protocol output on stdout, and write human logs to stderr.
 
-6. Link it into your own guidedog
----------------------------------
+6. Link it into our own guidedog
+--------------------------------
 
 A plugin used by every build on a machine, or shipped with a team's tools, can be
-compiled into a custom ``guidedog`` binary instead of being registered. Create a binary
-crate that depends on ``gd-cli``, ``gd-plugins`` and your plugin crate (``badge`` here),
+compiled into a custom ``guidedog`` binary instead of being registered. We create a binary
+crate that depends on ``gd-cli``, ``gd-plugins`` and our plugin crate (``badge`` here),
 and give it this ``main``:
 
 .. code-block:: rust
@@ -234,35 +234,35 @@ and give it this ``main``:
    }
 
 The binary accepts every ``guidedog`` command and option. A build looks up each ID in
-``plugins`` among the linked plugins first, then in the machine registry, so the
+``plugins`` among the linked plugins first, then in the machine registry. So the
 project's ``conf.toml`` is the same for both deployments and needs no registration
 step. ``guidedog plugin list`` shows linked plugins beside registered ones.
 
 A linked plugin's identity in the cache is its ID, its version and the host binary's
-own build identity, because its code is part of the host: rebuilding the binary
+own build identity, because its code is part of the host. Rebuilding the binary
 rebuilds the affected output. Linked code runs in the host process, so a panic or a
-hang in a hook reaches the build; serve a plugin as a program when it should be
+hang in a hook reaches the build. We serve a plugin as a program when it should be
 isolated.
 
 7. Keep state and caching explicit
 ----------------------------------
 
 A plugin value *is* one build's session. The host creates a fresh session per
-selected plugin per build, from the prototype, and drops it when the build ends,
-whether it succeeded or failed. ``Drop`` replaces an unload callback: close files or
+selected plugin per build, from the prototype. It drops the session when the build ends,
+whether it succeeded or failed. ``Drop`` replaces an unload callback: we close files or
 connections there.
 
 Use ``LoadContext::read_config`` and ``read_file`` during load. They fingerprint the
 bytes actually read and declare dependencies. Keep loaded state unchanged throughout
-the build. If you read other files yourself, declare their paths with
+the build. If we read other files ourselves, we declare their paths with
 ``declare_dependency`` and add a fingerprint of the loaded values with
-``add_cache_key``. Add selected environment values there too. The context only appends,
-so the fingerprints the helpers recorded cannot be erased; do not depend on undeclared
+``add_cache_key``. Selected environment values go there too. The context only appends,
+so the fingerprints the helpers recorded cannot be erased. A plugin must not depend on undeclared
 changing data.
 
 The host includes identity, configuration, dependencies, cache key, builder, language
-and generated assets in cache invalidation. Hooks take ``&mut self``; when reading
-workers share a session the host serializes calls through a ``Mutex``, so plugins need
+and generated assets in cache invalidation. Hooks take ``&mut self``. When reading
+workers share a session, the host serializes calls through a ``Mutex``, so plugins need
 no synchronization. Installed programs have a deadline per whole request, including
 pipe writes.
 
@@ -300,7 +300,7 @@ selects plugins. A child process's memory is outside the host's build budget.
 Return a ``Problem`` with a code, title, affected path, explanation, concrete
 correction and nonzero exit status: ``Problem::new(code, title, message)`` with
 ``.hint(...)``, ``.path(...)`` and ``.exit(...)``. For example, ``product = 42`` is
-invalid; the badge explains that a string is required and suggests
+invalid. The badge explains that a string is required and suggests
 ``product = "Orbit"``. The host adds which plugin stopped and in which stage. Markup
 diagnostics after expansion identify plugin-expanded input and show its actual
 excerpt. They do not pretend expanded line numbers belong to the original.
@@ -318,20 +318,20 @@ A publisher implements ``gd_plugins::Publisher`` and is wrapped with
 ``Plugin::publisher``. Its methods are ``info``, ``load``, ``plan``, ``publish``, and
 optional ``status`` and ``recover``. A session holds configuration and credentials. A
 ``Snapshot`` freezes the checked site files. A ``Plan`` compares that snapshot with a
-target baseline. An ``Outcome`` reports the verified result. These are ordinary values;
-there is nothing to release.
+target baseline. An ``Outcome`` reports the verified result. These are ordinary values,
+and there is nothing to release.
 
 Start with :download:`publisher.rs <_static/repository/publisher.rs>`
 (``crates/gd-plugins/examples/publisher.rs``), a working publisher that replaces a local
-folder whole. Then follow the GitHub Pages publisher in ``crates/gd-pages``:
-configuration and machine binding establish authority; planning reads the target;
-publishing writes a durable journal before one conditional Git push; status and
+folder whole. Then follow the GitHub Pages publisher in ``crates/gd-pages``.
+Configuration and machine binding establish authority. Planning reads the target.
+Publishing writes a durable journal before one conditional Git push. Status and
 recovery settle the outcome. Nothing in a source or HTML hook grants publication
 authority. ``guidedog publish --publisher=ID --config=FILE`` builds the project and
-runs a publisher; ``--dry-run`` stops after the plan.
+runs a publisher. ``--dry-run`` stops after the plan.
 
 A remote acceptance is not a live deployment. ``Accepted`` and ``Pending`` return
-6; an uncertain write returns ``Unknown`` and 7, with status or recovery directions.
+6. An uncertain write returns ``Unknown`` and 7, with status or recovery directions.
 Never retry an uncertain write blindly. See :doc:`howto/github-pages` for the
 complete user workflow.
 
@@ -340,16 +340,16 @@ complete user workflow.
 
 The build-plugin interface (``PLUGIN_API_VERSION``) is 1.0 and uses protocol
 ``guidedog-build-plugin`` 1.0. The publisher interface (``API_VERSION``) is 1.1 and
-keeps ``guidedog-publisher`` protocol 1.0. These are separate contracts, and the wire
-format is the one programs built with the Odin SDK speak, so registered programs from
+keeps ``guidedog-publisher`` protocol 1.0. These are separate contracts. The wire
+format is the one that programs built with the Odin SDK speak, so registered programs from
 earlier releases keep working. Product versions are separate from interface versions.
 New hooks arrive as trait methods with "absent" defaults, and host-made inputs are
 ``#[non_exhaustive]``, so a new field does not break a plugin.
 
-Register each rebuilt program deliberately; its checksum changes. ``guidedog plugin
-inspect ID`` shows its kind and declared hooks. The public catalog describes plugins;
-it does not download, install or run them. Custom markup readers, renderers,
-directives and roles are not part of this interface: they use the
+Register each rebuilt program deliberately, because its checksum changes. ``guidedog plugin
+inspect ID`` shows its kind and declared hooks. The public catalog describes plugins.
+It does not download, install or run them. Custom markup readers, renderers,
+directives and roles are not part of this interface. They use the
 ``guidedoc::Registry`` API in a program that embeds the engine.
 
 11. Check a plugin before registering it
@@ -360,9 +360,9 @@ without changing the registry. Registration runs the same checks automatically:
 two fresh loads, repeated source and HTML results, generated asset validation and
 cleanup. ``--timeout=SECONDS`` defaults to 60 per process request. Supply a real
 configuration when the plugin needs one. Relative configuration paths resolve
-from ``--project``; its default is the current directory.
+from ``--project``, whose default is the current directory.
 
-Passing checks demonstrates interoperability, not a proof of safety. Guidedog
+Passing checks shows that the plugin works with Guidedog. It is not a proof of safety. Guidedog
 keeps checking every runtime response and runs installed plugins in separate
 processes. A crash, bounds failure or stalled process becomes a diagnostic and
 cannot publish an incomplete generation. Linked plugins remain trusted code.

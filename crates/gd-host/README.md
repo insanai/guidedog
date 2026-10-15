@@ -30,15 +30,15 @@ fn main() {
 |---|---|
 | Sessions | `Session` (`new`, `run`, `read`, `document`, `reports`, `workspace`, `workspace_mut`) |
 | Diagnostics | `describe(&ws, &d)`, `describe_all(&ws)`, `exit_code`, `display_path`, `Problem` (`report()`), `io_problem`, `interrupted_problem`; render with `gd_report::render_text`/`render_json` |
-| Files | `read_source` (path or `"-"`; UTF-8 checked, BOM dropped) → `SourceFile`, `read_file` (charged), `read_stream`, `same_contents`, `each_chunk`, `MAX_SOURCE_BYTES` |
-| Confinement | `Files` (`new`, `with_ledger`, `with_project`; a `guidedoc::ResourceProvider`), `canonical_roots`, `confined`, `confinement` → `Confinement`, `containing_root` |
+| Files | `read_source` (path or `"-"`; UTF-8 checked, BOM dropped) -> `SourceFile`, `read_file` (charged), `read_stream`, `same_contents`, `each_chunk`, `MAX_SOURCE_BYTES` |
+| Confinement | `Files` (`new`, `with_ledger`, `with_project`; a `guidedoc::ResourceProvider`), `canonical_roots`, `confined`, `confinement` -> `Confinement`, `containing_root` |
 | Publication | `publish`, `Stage` (`beside`, `path`, `commit`; removed on drop), `write_unsynced`, `sync_all`, `sync_each`, `folders_of`, `remove_stages`, `is_stage_name`, `STAGE_PREFIX` |
-| Folders | `exchange`, `link_file`, `identity` → `Identity`, `path_type` → `PathKind`, `list_folder` → `FolderEntry`, `remove_path` |
-| Budget | `Budget` (`new`, `with_policy`, `join` → `Unit`, `limit`, `set_limit`, `used`, `peak`, `last_refusal`), `Ledger` (`charge`, `discharge`, `settle`; settles on drop), `Refusal`, `RefusalChoice`, `OnRefusal`, `budget_problem`, `budget_hint`, `budget_advice`, `suggest_budget`, `fitting_budget`, `available_memory`, `AVAILABLE_OVERRIDE`, `limits_within`, `DEFAULT_BUDGET` |
+| Folders | `exchange`, `link_file`, `identity` -> `Identity`, `path_type` -> `PathKind`, `list_folder` -> `FolderEntry`, `remove_path` |
+| Budget | `Budget` (`new`, `with_policy`, `join` -> `Unit`, `limit`, `set_limit`, `used`, `peak`, `last_refusal`), `Ledger` (`charge`, `discharge`, `settle`; settles on drop), `Refusal`, `RefusalChoice`, `OnRefusal`, `budget_problem`, `budget_hint`, `budget_advice`, `suggest_budget`, `fitting_budget`, `available_memory`, `AVAILABLE_OVERRIDE`, `limits_within`, `DEFAULT_BUDGET` |
 | Interrupts | `catch_interrupts`, `was_interrupted`, `cancel_probe`, `request_interrupt`, `clear_interrupt` |
 | Threads | `run_workers(count, \|i\| ..)`, `run_with_stack(bytes, \|\| ..)`, `WORKER_STACK_BYTES`, `stack_budget_limit`, `default_stack_budget` |
 | Crashes | `install_crash_reporter`, `catch_crash`, `crash_report`, `CRASH_EXIT` (70), `ISSUE_TRACKER` (`GUIDEDOG_ISSUE_TRACKER` at build time) |
-| Artifacts | `convert_artifact(&registry, &ArtifactRequest)` → `ArtifactResult { exit, reports, problem, delivered: Delivered }`, `Format`, `Target`, `backend_problem` |
+| Artifacts | `convert_artifact(&registry, &ArtifactRequest)` -> `ArtifactResult { exit, reports, problem, delivered: Delivered }`, `Format`, `Target`, `backend_problem` |
 
 Exit statuses: 0 ok, 1 invalid input/policy, 2 usage or file type (and an existing
 output), 3 limits, budget and memory, 4 I/O and Typst, 5 internal, 70 crash, 130
@@ -57,7 +57,7 @@ cancelled.
   allocating: sources, included files (`Files` charges its ledger, a refusal is
   `ResourceStatus::Limit`), and the PDF the embedded Typst returns (`Options::reserve`).
   A conversion's own memory is bounded by `Limits`, which `limits_within` lowers to the
-  budget. Kept: units that wait for each other without deadlock (`join` → `Unit` guard),
+  budget. Kept: units that wait for each other without deadlock (`join` -> `Unit` guard),
   the raise-or-stop policy, and the `--budget=N` hints. `Ledger` takes `&self` (atomics)
   so a shared provider can charge it, and releases its charges on drop.
 - **Dropped allocator machinery.** `Meter`, `Guard`, `Arena`, `Disk` (spilling working

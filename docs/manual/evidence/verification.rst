@@ -1,6 +1,6 @@
 .. _documentation-verification--1-october-2026:
 
-Documentation verification — 1 October 2026
+Documentation verification, 1 October 2026
 ===========================================
 
 This is the historical documentation build record. The :doc:`11 October beta
@@ -82,7 +82,7 @@ Features exercised
 |                                  | correctly; PDF diagrams were inspected.              |
 +----------------------------------+------------------------------------------------------+
 | Themes and responsive navigation | Chrome checks cover light, dark, and system modes,   |
-|                                  | persistence after navigation, a 390 × 844 viewport,  |
+|                                  | persistence after navigation, a 390 x 844 viewport,  |
 |                                  | the navigation drawer, and absence of page-wide      |
 |                                  | overflow.                                            |
 +----------------------------------+------------------------------------------------------+
@@ -125,7 +125,7 @@ The live previews use **Guidedog's built-in server**, not a Python server:
 The mathematics bundle is MathJax 3.2.2, stored under ``docs/shared/_static/data``. Its
 license and provenance are retained. Only pages that need mathematics load it. The theme
 script supplies theme choice; the engine's search script supplies search. A template-only
-script supplies Knuth–Plass layout for eligible English prose. It uses measured local fonts,
+script supplies Knuth-Plass layout for eligible English prose. It uses measured local fonts,
 Liang patterns, and a paragraph-wide break search. The bundled Typeset, Hypher, and TeX
 patterns retain their licenses and provenance. Link-bearing paragraphs, code, mathematics,
 and measures narrower than 400 pixels keep native layout. In Chrome, the typography page has

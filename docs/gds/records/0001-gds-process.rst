@@ -18,8 +18,8 @@ Abstract
 
 Guidedog Discussions (GDS) are the project's RFC/RFD-style specification and
 decision records. The subject is Guidedog, a Sphinx-like documentation system built in Odin.
-This revision adapts the lifecycle from ZDS 0001 and preserves
-its lifecycle and numbering process, and adds explicit PEP-inspired guidance for
+This revision adapts ZDS 0001 and keeps
+its lifecycle and numbering process. It adds explicit PEP-inspired guidance for
 rationale, compatibility, review history, and implementation evidence. GDS is a
 collection of standalone discussions, not a book divided into chapters.
 
@@ -41,8 +41,8 @@ records; each record has its own PDF. There is no PDF index or combined PDF buil
 
 The process retains ZDS 0001's local placeholder drafts, maintainer-assigned
 numbers, state transitions, registry, standalone reStructuredText records, and format-record
-obligations. RFCs inform memo structure and considerations; Oxide RFDs inform
-repository-based discussion; PEPs inform focused proposals, rationale, alternatives,
+obligations. RFCs inform memo structure and considerations. Oxide RFDs inform
+repository-based discussion. PEPs inform focused proposals, rationale, alternatives,
 and the distinction between editorial readiness and technical acceptance.
 We adopt these practices without claiming the governance or authority of those projects.
 
@@ -66,7 +66,7 @@ or out of scope. Sphinx compatibility is not inferred from RST support alone.
 
 Bug fixes preserving specified behavior, routine refactors, and additional tests
 usually amend an existing record or need no new record. The future user manual
-explains how to use Guidedog; release notes state what shipped; GDS explains what
+explains how to use Guidedog. Release notes state what shipped. GDS explains what
 was decided and why. Do not move normative design decisions into manual chapters.
 
 
@@ -74,8 +74,8 @@ Terminology
 -----------
 
 
-A **placeholder draft** has number ``XXXXX`` and state ``prediscussion``. An *assigned
-GDS** has a permanent four-digit number. The **author** maintains the proposal and
+A **placeholder draft** has number ``XXXXX`` and state ``prediscussion``. An
+**assigned GDS** has a permanent four-digit number. The **author** maintains the proposal and
 records feedback. A **maintainer** assigns numbers and records project decisions.
 The **registry** describes available discussions and historical references. A
 **format record** specifies parsing, mappings, policy refusals, and fidelity.
@@ -119,18 +119,18 @@ A number is an identifier, not evidence of approval. It is never reused.
 
    * - **Transition**
      - **Meaning and responsible actor**
-   * - ``prediscussion`` → ``discussion``
+   * - ``prediscussion`` to ``discussion``
      - Maintainer assigns the number and registers the record.
-   * - ``discussion`` → ``accepted``
+   * - ``discussion`` to ``accepted``
      - Maintainers agree on the proposed direction.
-   * - ``discussion`` → ``published``
+   * - ``discussion`` to ``published``
      - Maintainers adopt a document whose text is the deliverable.
-   * - ``accepted`` → ``published``
+   * - ``accepted`` to ``published``
      - Maintainers adopt the design record while implementation
        continues.
-   * - ``accepted`` / ``published`` → ``committed``
+   * - ``accepted`` / ``published`` to ``committed``
      - Maintainers verify implementation evidence.
-   * - Any pre-committed state → ``abandoned``
+   * - Any pre-committed state to ``abandoned``
      - Maintainers record why the proposal was closed.
 
 
@@ -176,7 +176,7 @@ One discussion lives in one reStructuredText source file. Shared templates are a
 Normative prose stays in the record. Graphviz diagrams and math directives are ordinary
 source content, so the project engine can check and render them. Split an
 oversized proposal into focused discussions with explicit dependencies. The template
-is a starting point rather than a demand for a particular narrative order.
+is a starting point, not a demand for a particular narrative order.
 
 
 Format records
@@ -193,7 +193,7 @@ policy refusal, intentional omission, and unfinished work.
 Full RST requires a coverage ledger for the specification, standard directives, and
 roles. CommonMark names the pinned specification and suite. Typst behavior names
 the pinned toolchain. Every mapping change updates its fixtures and record. Changes
-to shared AST semantics require a dedicated GDS; localized mapping corrections may
+to shared AST semantics require a dedicated GDS. Localized mapping corrections may
 amend the existing format record.
 
 Coding and writing rules
@@ -205,7 +205,7 @@ Every new source file has at most **1,408 physical lines**. A line should remain
 implementation language shipped with it: CSS, JavaScript, HTML templates, shell, Rust, C,
 and TOML. Documentation (Markdown, reStructuredText, and Typst prose, diagrams, and markup
 structure, these records included) is written for readers and exempt from every one of
-these limits: line width, file length, and procedure length apply to code only.
+these limits. Line width, file length, and procedure length apply to code only.
 Every procedure has at most **70 lines of logic**, excluding its signature, blank
 lines, comments, and ornamental delimiters. Multi-statement lines cannot be used
 to evade the rule. Split work by responsibility, not by arbitrary line count.
@@ -213,7 +213,7 @@ to evade the rule. Split work by responsibility, not by arbitrary line count.
 ``odin run tools/check`` uses tokens to distinguish Odin code from strings and comments.
 It includes procedure literals and multiline expressions. The current checker
 fails both soft-width findings and hard limits. Generated code must be split or redesigned to
-fit; it has no blanket exemption. Inherited Zen records remain an explicitly
+fit. It has no blanket exemption. Inherited Zen records remain an explicitly
 historical archive and are not presented as compliant new source.
 
 Prefer small values, distinct IDs, exhaustive tag switches, checked arithmetic,
@@ -227,20 +227,20 @@ Memory safety
 ^^^^^^^^^^^^^
 
 
-Guidedog must never crash on its input or on a failed allocation. Odin gives the tools;
-these rules say which ones every change uses. Tests enforce the rules that a scan can
-check (``tests/memory_safety_test.odin``); review enforces the rest.
+Guidedog must never crash on its input or on a failed allocation. Odin gives the tools.
+These rules say which ones every change uses. Tests enforce the rules that a scan can
+check (``tests/memory_safety_test.odin``). Review enforces the rest.
 
 - **Check every allocation.** ``make``, ``new``, ``clone``, ``aprintf`` and the rest return an
   ``mem.Allocator_Error`` or an ``ok``. A caller takes the value and the result together
   (``x, err := make([]T, n)``), stops with ``or_return``, or chooses a fallback with
-  ``or_else``, and never indexes, dereferences, or passes on a value whose allocation
+  ``or_else``. It never indexes, dereferences, or passes on a value whose allocation
   failed. Work that cannot check each allocation (a library that goes on with what it
-  has) allocates through a ``host.Guard``: the guard remembers the first refusal and
-  refuses every later allocation, so the work only shrinks, and the caller fails the
+  has) allocates through a ``host.Guard``. The guard remembers the first refusal and
+  refuses every later allocation, so the work only shrinks. The caller fails the
   whole step with ``host.memory`` when the work ends. Arenas (``host.Arena``,
   ``runtime.Arena``, Jinja's own) stay consistent when their backing allocator refuses a
-  block; ``mem.Dynamic_Arena`` does not, and is not used in product code
+  block. ``mem.Dynamic_Arena`` does not, so product code does not use it
   (``tests/memory_safety_test.odin`` checks). Code that cannot survive a refusal, such as
   Odin's parser, runs on memory the caller's allocator never refuses (odindoc parses in
   virtual memory of its own) within a bound reserved ahead. Tests refuse every
@@ -253,18 +253,18 @@ check (``tests/memory_safety_test.odin``); review enforces the rest.
   arithmetic, and ``transmute`` between unrelated types belong to the bindings of
   Graphviz, tree-sitter, the Typst bridge, and curl, which pass C's memory to Odin as
   slices at their boundary. Elsewhere a region is carved by slicing the bytes first
-  (bounds-checked) and then reinterpreting the slice (``slice.reinterpret``); the
+  (bounds-checked) and then reinterpreting the slice (``slice.reinterpret``). The
   offset of a slice within its text comes from ``core.offset_in``, which checks that it
   lies inside. Reading a frame's address to measure the stack, or a native ``#soa``
   slice's header, is allowed with a comment saying so. Callback user data is the one
   ``rawptr`` cast allowed: the callee casts back to the type its registrant passed.
 - **No views past their memory.** A string or slice into an arena, a session, or the
-  temporary allocator is used only while that memory lives; what outlives a step is
+  temporary allocator is used only while that memory lives. What outlives a step is
   copied into the caller's allocator before the step's arena is freed (as
   ``scratch_close`` copies reports and problems). Library code never calls
   ``free_all(context.temp_allocator)``.
 - **Nil-checked pointers.** A procedure that finds something returns ``^T`` and nil, or
-  ``(T, bool)``, or ``Maybe(T)``; its callers check before dereferencing. Tables that
+  ``(T, bool)``, or ``Maybe(T)``. Its callers check before dereferencing. Tables that
   point into a struct use typed pointers (a union of them where kinds differ), never
   ``rawptr``.
 - **Ownership is explicit.** Each entry point owns an arena of its own, freed by one
@@ -282,7 +282,7 @@ Dijkstra without imitating their prose or inventing quotations.
 A public procedure's comment states what it does, required preconditions, ownership,
 view lifetime, failure behavior, and any complexity bound that has been justified.
 A format record has a mapping table, conformance ledger, target limitations, policy
-refusals, and regression fixtures. “Unsupported” must identify a specific construct.
+refusals, and regression fixtures. "Unsupported" must identify a specific construct.
 
 
 RST project and build workflow
@@ -399,10 +399,10 @@ source paths, never terminal decoration. Read-only commands never rewrite files.
      - With ``--rollback``, restore journaled originals unless later edits conflict.
 
 
-``new`` accepts ``--author``, ``--slug``, and ``--labels``. If author is absent, use configured
-Git identity; if absent, request ``--author`` with a
+``new`` accepts ``--author``, ``--slug``, and ``--labels``. If the author is absent, use the configured
+Git identity. If that is absent too, request ``--author`` with a
 concrete diagnostic. Do not invent an identity or change Git configuration. Slugs
-are normalized safe basenames; reject empty names, separators, and path traversal.
+are normalized safe basenames. Reject empty names, separators, and path traversal.
 Labels come from an explicit project catalog: architecture, parser, renderer, cli,
 build, theme, typst, library, documentation, process, security, compatibility,
 performance, and release. Performance labels do not authorize premature optimization.
@@ -411,10 +411,10 @@ performance, and release. Performance labels do not authorize premature optimiza
 unreserved in Guidedog records, explicit reservations, and local ``gds/NNNN`` branches when
 Git metadata is available. It never fetches remotely. Refuse numbers outside
 0001 through 9999, duplicates, and previously assigned GDS numbers. ``--discussion=URL`` records a
-real discussion URL when supplied; otherwise leave its absence explicit. Number
+real discussion URL when supplied. Otherwise its absence stays explicit. Number
 assignment is not design acceptance and does not automatically open a pull request.
 
-``state`` requires ``--reason``; moving to ``committed`` also requires ``--evidence`` naming
+``state`` requires ``--reason``. Moving to ``committed`` also requires ``--evidence`` naming
 implementation and validation artifacts. This records a maintainer's decision,
 not an inference by the program that code is correct. No ``--force`` bypass of the
 state graph is provided. Supersession of a committed record uses a successor
@@ -427,17 +427,17 @@ A failed or interrupted operation must roll back or leave a journal that the nex
 command reports with ``guidedog gds recover --rollback``. Recovery verifies recorded
 original and intended contents and refuses to overwrite later edits. A live
 competing lock reports that the directory is busy. Kernel locks release on process
-exit; the persistent lock file is not itself a stale lock and is not removed.
+exit. The persistent lock file is not itself a stale lock and is not removed.
 
-The metadata parser recognizes a declarative RST field-list preamble;
-it must not execute arbitrary Typst to list or promote records. Unsupported dynamic
+The metadata parser recognizes a declarative RST field-list preamble.
+It must not execute arbitrary Typst to list or promote records. Unsupported dynamic
 metadata receives a direction to use literal fields. Rewrites touch that preamble
 and managed registry/bundle regions, preserving the record's prose. Escape strings
 as Typst literals. Mutating commands never overwrite an existing draft or output
 unless that operation's contract explicitly allows regeneration.
 
-``check`` is read-only. An optional ``--render`` additionally compiles active records;
-metadata checks must work without a Typst backend. Exit codes follow the general
+``check`` is read-only. An optional ``--render`` also compiles active records.
+Metadata checks must work without a Typst backend. Exit codes follow the general
 CLI contract: 0 success, 1 invalid records or drift, 2 usage, 3 resource limits,
 4 host/backend failures, 5 internal errors, and 130 cancellation. ``list`` with no
 matches succeeds with an empty result. Diagnostics always identify the record,
@@ -447,8 +447,8 @@ Acceptance tests cover new-record defaults, slug collisions, concurrent promotio
 reserved numbers, legal and illegal transitions, idempotent indexing, malformed
 metadata, JSON output, dry-run with no writes, interrupted updates, and recovery
 that preserves later edits. Run them in temporary directories, never against the
-repository's actual discussion history. CLI management may use host allocations;
-that does not weaken Guidedoc's zero-allocation conversion boundary.
+repository's actual discussion history. CLI management may use host allocations.
+That does not weaken Guidedoc's zero-allocation conversion boundary.
 
 
 Security and operational considerations
@@ -463,7 +463,7 @@ identify the owner of every resource boundary.
 A record's metadata, examples, and links are reviewed along with its specification.
 Diagram dependencies must be pinned if external packages are used. Current diagrams
 use Graphviz directives. Guidedog renders vector output without a downloaded
-Typst package. ``guidedog gds check --render`` compiles the active records;
+Typst package. ``guidedog gds check --render`` compiles the active records.
 ``tools/check`` checks implementation sources. Documentation prose is exempt
 from the source width and procedure limits.
 
@@ -511,12 +511,12 @@ Implementation in Rust
 ----------------------
 
 GDS 0011 moves the implementation to Rust. The process, the six states, numbering,
-metadata and the CLI management contract above are unchanged; the coding rules keep
+metadata and the CLI management contract above are unchanged. The coding rules keep
 their limits and change their means.
 
-**Limits.** A function body has at most 70 logical lines, a file at most 1,408 lines, a line
-a soft limit of 99 and a hard limit of 108 characters, exactly as above. ``cargo run -p check``
-(``tools/check``) replaces ``odin run tools/check``: it checks Rust, CSS, JavaScript, HTML and
+**Limits.** The limits are exactly as above. A function body has at most 70 logical lines, a file at most 1,408 lines. A line
+has a soft limit of 99 and a hard limit of 108 characters. ``cargo run -p check``
+(``tools/check``) replaces ``odin run tools/check``. It checks Rust, CSS, JavaScript, HTML and
 Typst templates, shell, TOML and C, counts a Rust function's logical lines with its own
 lexer (strings and comments excluded), and exempts ``docs`` and vendored ``data``.
 Soft-width findings are reported, and fail only with ``--soft``. ``rustfmt.toml`` sets
@@ -533,7 +533,7 @@ Soft-width findings are reported, and fail only with ``--soft``. ``rustfmt.toml`
    * - Check every allocation; ``host.Guard``; arenas that survive refusal
      - Growth that input drives uses ``try_reserve`` and returns a ``Capacity``, ``Limit``
        or ``Memory`` result. Other allocations follow Rust's global allocator, which aborts
-       on failure; this guarantee is deliberately narrowed (GDS 0011) and the
+       on failure. This guarantee is deliberately narrowed (GDS 0011), and the
        per-allocation refusal sweeps are retired.
    * - Bounds checks stay on
      - Indexing is always checked; ``get_unchecked`` and similar are not used.
@@ -551,12 +551,12 @@ Soft-width findings are reported, and fail only with ``--soft``. ``rustfmt.toml`
    * - AddressSanitizer before a release
      - Safe Rust needs no sanitizer run; the FFI modules remain the places to review.
 
-Library code never calls ``unwrap()`` or ``expect()`` on input-dependent values; panics
-are for violated internal invariants, and the crash reporter (``gd_host::catch_crash``)
+Library code never calls ``unwrap()`` or ``expect()`` on input-dependent values. Panics
+are for violated internal invariants. The crash reporter (``gd_host::catch_crash``)
 turns one into a report and exit status 70.
 
 **Tools.** ``guidedog gds`` and ``dsc`` are both ``gd_discussion::command::run`` with a
-different ``Program`` (GDS 0007); the commands, options, transactions and recovery are
+different ``Program`` (GDS 0007). The commands, options, transactions and recovery are
 those specified above. The project build behind ``guidedog gds build`` is ``gd-project``
 with the crates GDS 0006 lists. Documentation stays reStructuredText built by Guidedog.
 
@@ -580,7 +580,7 @@ nil-checked pointers, and AddressSanitizer runs.
 
 
 2026-10-15: the implementation moved from Odin to Rust (GDS 0011). Added
-"Implementation in Rust"; the decisions, evidence and lifecycle above are kept as
+"Implementation in Rust". The decisions, evidence and lifecycle above are kept as
 they were recorded.
 
 References
@@ -596,12 +596,12 @@ References
 - `PEP 1: PEP Purpose and Guidelines <https://peps.python.org/pep-0001/>`_.
 - `PEP 12: Sample PEP Template <https://peps.python.org/pep-0012/>`_.
 
-.. rubric:: Source-format revision — 2026-10-01
+.. rubric:: Source-format revision, 2026-10-01
 
 The authored records, catalog, and creation template are now RST.
 The CLI retains the six-state lifecycle and recoverable metadata transactions.
-Publication uses the project engine. This is an editorial and toolchain revision;
-it does not change this record's review state or assert acceptance.
+Publication uses the project engine. This is an editorial and toolchain revision.
+It does not change this record's review state or assert acceptance.
 
 .. rubric:: Lifecycle event
 
@@ -619,8 +619,8 @@ it does not change this record's review state or assert acceptance.
    concurrency, recovery and date tests; native GDS strict HTML/PDF verification;
    docs/manual/evidence/beta-review-20261011.md.
 
-.. rubric:: Implementation revision — 2026-10-15
+.. rubric:: Implementation revision, 2026-10-15
 
-The implementation moved from Odin to Rust; see GDS 0011 and the section
+The implementation moved from Odin to Rust. See GDS 0011 and the section
 "Implementation in Rust". This is an implementation revision. It does not change
 this record's review state or assert new acceptance evidence.

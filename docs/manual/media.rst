@@ -3,9 +3,9 @@
 Images, video, audio, and downloads
 ===================================
 
-Keep a resource near the document that explains it. Name it with a relative path,
-or start the path with ``/`` to refer to the source root. Guidedog copies resources
-used by the documents. A video remains a video on the web; a PDF names the recording.
+We keep a resource near the document that explains it. We name it with a relative path,
+or start the path with ``/`` to refer to the source root. Guidedog copies the resources
+that the documents use. A video remains a video on the web. A PDF names the recording.
 
 Images
 ------
@@ -20,7 +20,7 @@ Images
 
       Searching the site.
 
-Pages copy images into ``_images``; the book embeds them. PNG, JPEG, GIF, SVG, and WebP
+Pages copy images into ``_images``. The book embeds them. PNG, JPEG, GIF, SVG, and WebP
 work in both. A missing image is a warning: the page keeps the image's alternative
 text, and the book leaves the image out.
 
@@ -43,7 +43,7 @@ An image or figure that names a video (``.mp4``, ``.webm``, ``.ogv``, ``.mov``,
 
 Pages show the browser's player, with a link to the file for browsers that cannot play
 it. A book cannot play media, so it names the recording in a box where the player would
-be; text output writes ``[video: ...]`` or ``[audio: ...]``.
+be. Text output writes ``[video: ...]`` or ``[audio: ...]``.
 
 Downloads
 ---------
@@ -57,7 +57,7 @@ for saving:
 
 For portable PDF download links, set ``html_baseurl`` to the published HTML site's
 absolute HTTP or HTTPS address. The book then links to that site's copied files.
-Without it, the link remains source-relative; the PDF does not embed attachments.
+Without it, the link remains source-relative. The PDF does not embed attachments.
 This setting does not upload files. Publish the HTML site before sharing the book.
 This behavior is available in Guidedog 0.6.3 and later.
 

@@ -35,7 +35,7 @@ lifecycle and records
 ---------------------
 
 Proposals advance through a structured lifecycle:
-`prediscussion` → `discussion` → `accepted` → `published` → `committed` (or `abandoned`).
+`prediscussion` -> `discussion` -> `accepted` -> `published` -> `committed` (or `abandoned`).
 
 Records:
   - [GDS 0001: Discussion Process](records/0001-gds-process.rst)
@@ -48,7 +48,7 @@ Records:
   - [GDS 0008: GitHub Pages Publishing](records/0008-github-pages-publishing.rst)
   - [GDS 0009: Native Plugin API and Registry](records/0009-native-plugin-api.rst)
   - [GDS 0010: Typed Build Plugins](records/0010-typed-build-plugins.rst)
-  - [GDS 0011: Guidedog in Rust](records/0011-guidedog-in-rust.rst) — in discussion
+  - [GDS 0011: Guidedog in Rust](records/0011-guidedog-in-rust.rst) (in discussion)
 
 GDS 0001 to 0010 were designed and implemented in Odin. Guidedog has since moved to
 Rust: GDS 0011 records that decision, and each earlier record keeps its decisions,

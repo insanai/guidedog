@@ -16,7 +16,7 @@ an installed, pinned `typst` program.
 ## Design notes
 
 - `compile_*` return `Result<Compiled, Error>` instead of an `Outcome` with `ok`, an
-  error option and exit codes 0–5 that the embedded backend invented: a source with
+  error option and exit codes 0-5 that the embedded backend invented: a source with
   errors is `Error::Compile { exit_code, diagnostics, detail }` (`exit_code` is `None`
   for the embedded compiler); `Compiled` carries the warnings and, from the embedded
   compiler, each page's text (`pages`) taken from Typst's laid-out document, so tests

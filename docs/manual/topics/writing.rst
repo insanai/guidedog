@@ -2,25 +2,25 @@ Authoring documents
 ===================
 
 Guidedog supports both reStructuredText (``.rst``) and MyST Markdown (``.md``).
-Documents are parsed into a shared semantic document tree, which is then used to
-generate both HTML websites and PDF books.
+Both are parsed into the same document tree. The HTML website and the PDF book
+are made from that tree.
 
 Choose a source language
 ------------------------
 
-Use reStructuredText when you need full access to domains, complex tables, and
-extensible directives. Use MyST Markdown when you prefer Markdown syntax while
-retaining Sphinx-style directives and roles.
+We use reStructuredText when we need full access to domains, complex tables, and
+extensible directives. We use MyST Markdown when we prefer Markdown syntax but
+still want Sphinx-style directives and roles.
 
-In a documentation project, Markdown documents are parsed using the MyST dialect.
+In a documentation project, Markdown documents are parsed as MyST.
 Single-document conversions with ``guidedog convert`` read Markdown as plain
 CommonMark 0.31.2: MyST's directives, roles, and settings belong to projects.
 
 Headings and structure
 ----------------------
 
-A document title identifies the page. Sections and subsections divide the text
-logically. In reStructuredText, headings use underline adornments (and optional
+A document title identifies the page. Sections and subsections divide the text.
+In reStructuredText, headings use underline adornments (and optional
 matching overlines). The underline must be at least as long as the text.
 
 Recommended adornment styles:
@@ -42,13 +42,13 @@ Recommended adornment styles:
    Paragraph Heading
    """""""""""""""""
 
-Keep heading levels consistent across your project. In MyST Markdown, use standard
+We keep heading levels consistent across the project. In MyST Markdown, we use standard
 hashes (``#``, ``##``, ``###``).
 
 Text formatting and inline markup
 ---------------------------------
 
-Use inline markup to communicate meaning rather than decoration:
+Inline markup carries meaning, not decoration:
 
 .. list-table:: Inline markup
    :header-rows: 1
@@ -73,7 +73,7 @@ Use inline markup to communicate meaning rather than decoration:
      - ``:sup:`text```
      - ``{sup}`text```
 
-To include literal asterisks or backticks within text, escape them with a backslash:
+To write literal asterisks or backticks in text, we escape them with a backslash:
 ``\*not italic\*``.
 
 Lists
@@ -104,8 +104,8 @@ Enumerated lists
 Definition lists
 ~~~~~~~~~~~~~~~~
 
-A definition list pairs terms with explanatory blocks. The term appears on a single
-line, followed immediately by an indented definition:
+A definition list pairs terms with explanations. The term stands on one
+line. An indented definition follows it directly:
 
 .. code-block:: rst
 
@@ -129,7 +129,7 @@ Field lists provide structured metadata and parameter descriptions:
 Code blocks
 -----------
 
-Use the ``code-block`` directive (or ``sourcecode``) to display syntax-highlighted
+The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted
 code. Guidedog highlights 35 programming languages, Rust and Odin among them, with
 Pygments' names and styles and no Python runtime:
 
@@ -151,7 +151,7 @@ Options for code blocks:
 * ``:emphasize-lines: 1, 3-5``: Highlights specific lines.
 * ``:name: label``: Assigns a reference target to the code block.
 
-To include external source code directly from a file, use ``literalinclude``:
+To include source code from a file, we use ``literalinclude``:
 
 .. code-block:: rst
 
@@ -231,8 +231,8 @@ Grid tables allow complex multi-line cells and arbitrary column/row spans:
 List tables
 ~~~~~~~~~~~
 
-The ``list-table`` directive creates tables from nested bullet lists, making wide
-tables easy to read and maintain in source control:
+The ``list-table`` directive creates tables from nested bullet lists. Wide
+tables stay easy to read and maintain in source control:
 
 .. code-block:: rst
 
@@ -267,7 +267,7 @@ The ``csv-table`` directive constructs a table from comma-separated values:
 Images and figures
 ------------------
 
-Include illustrations, screenshots, and diagrams with ``image`` and ``figure``:
+We include illustrations, screenshots, and diagrams with ``image`` and ``figure``:
 
 .. code-block:: rst
 
@@ -283,7 +283,7 @@ Include illustrations, screenshots, and diagrams with ``image`` and ``figure``:
 
       Data flows sequentially through reader, resolver, and renderer.
 
-A ``figure`` wraps the image with an explanatory caption and an optional reference target.
+A ``figure`` wraps the image with a caption and an optional reference target.
 
 Document structure with toctrees
 --------------------------------
@@ -314,12 +314,12 @@ Common options for ``toctree``:
 Cross-references and links
 --------------------------
 
-Explicit targets ensure links remain stable even when document files are renamed:
+Explicit targets keep links stable, even when document files are renamed.
 
 Target labels and ``:ref:``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Place a target label immediately before a heading, table, or figure:
+We place a target label directly before a heading, table, or figure:
 
 .. code-block:: rst
 
@@ -330,7 +330,7 @@ Place a target label immediately before a heading, table, or figure:
 
    Every conversion runs within explicit limits.
 
-Refer to this target from any document across the project:
+Any document in the project can refer to this target:
 
 .. code-block:: rst
 
@@ -340,7 +340,7 @@ Refer to this target from any document across the project:
 Document references with ``:doc:``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Link to another document by path (omitting the file extension):
+We link to another document by its path, without the file extension:
 
 .. code-block:: rst
 
@@ -349,7 +349,7 @@ Link to another document by path (omitting the file extension):
 Glossary terms with ``:term:``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Define terms using the ``glossary`` directive:
+We define terms with the ``glossary`` directive:
 
 .. code-block:: rst
 
@@ -361,7 +361,7 @@ Define terms using the ``glossary`` directive:
       Pass
          An in-memory transformation step operating on the document AST.
 
-Link to a glossary term using the ``:term:`` role:
+We link to a glossary term with the ``:term:`` role:
 
 .. code-block:: rst
 
@@ -370,7 +370,7 @@ Link to a glossary term using the ``:term:`` role:
 File downloads with ``:download:``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Copy a file to the output's download directory and create a link:
+This copies a file to the output's download directory and links to it:
 
 .. code-block:: rst
 
@@ -379,7 +379,7 @@ Copy a file to the output's download directory and create a link:
 External links
 ~~~~~~~~~~~~~~
 
-Link to external web addresses:
+We link to external web addresses like this:
 
 .. code-block:: rst
 
@@ -388,7 +388,7 @@ Link to external web addresses:
 Substitutions and includes
 --------------------------
 
-Define reusable phrases, symbols, or images:
+We define reusable phrases, symbols, or images:
 
 .. code-block:: rst
 
@@ -397,7 +397,7 @@ Define reusable phrases, symbols, or images:
 
    Welcome to |brand| version |version|.
 
-To reuse common reStructuredText content across multiple files:
+To reuse reStructuredText content in several files:
 
 .. code-block:: rst
 
@@ -406,7 +406,7 @@ To reuse common reStructuredText content across multiple files:
 MyST Markdown authoring
 -----------------------
 
-MyST Markdown supports the same semantic directives and roles through fenced blocks:
+MyST Markdown supports the same directives and roles through fenced blocks:
 
 .. code-block:: markdown
 

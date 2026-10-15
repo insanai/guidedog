@@ -24,9 +24,9 @@ Reading a report
 
 A report has four parts, always in this order:
 
-1. **The title bar.** The title names the kind of problem in capitals; warnings and notes
+1. **The title bar.** The title names the kind of problem in capitals. Warnings and notes
    start with ``WARNING:`` and ``NOTE:``. At the right of the bar is the report's code,
-   such as ``rst.substitution.undefined``: a stable name you can search for.
+   such as ``rst.substitution.undefined``: a stable name we can search for.
 2. **Where.** The file and line, the source line itself, and a marker under the text the
    problem is about. A problem that is not about one line (a missing folder, a flag)
    shows only the path, or nothing.
@@ -36,21 +36,21 @@ A report has four parts, always in this order:
    there are several ways to fix the problem, the hint names them, the most likely
    first.
 
-Colors only underline what the words already say; ``--color=never`` turns them off and
+Colors only underline what the words already say. ``--color=never`` turns them off.
 ``--color=always`` keeps them when the output is not a terminal.
 
 Every hint gives directions
 ---------------------------
 
-Guidedog holds its own messages to this: a hint starts with what to do ("Add", "Pass",
-"Set", "Rename", "Run") and names what to do it to, such as ``--budget=MIB``,
+Guidedog holds its own messages to this rule. A hint starts with what to do ("Add", "Pass",
+"Set", "Rename", "Run"). It names what to do it to, such as ``--budget=MIB``,
 ``root_doc`` in ``conf.toml``, or the directive's option. Tests check
-the messages Guidedog emits and fail when a hint is empty, repeats the message, or says
-only "report this" without saying what to report with. Two forms are allowed because they name the fix themselves: a suggestion ("Did you
-mean numfig?") and, for a note that needs no action, "Nothing to do:" with the reason.
+the messages Guidedog emits. They fail when a hint is empty, repeats the message, or says
+only "report this" without saying what to report with. Two other forms are allowed, because they name the fix themselves. One is a suggestion ("Did you
+mean numfig?"). The other, for a note that needs no action, is "Nothing to do:" with the reason.
 
-When the problem is Guidedog's own fault, the hint says so and asks you to report it
-with the command you ran, the input that caused it, and the output of
+When the problem is Guidedog's own fault, the hint says so. It asks us to report it
+with the command we ran, the input that caused it, and the output of
 ``guidedog --version``.
 
 Reports for programs
@@ -68,9 +68,9 @@ for editors and continuous integration:
     "category":""}
 
 (shown wrapped here; each object is on one line). ``schema`` is the version of this
-format, which changes only when a field does; check it before reading the rest. Columns
+format. It changes only when a field does, so a program checks it before reading the rest. Columns
 count Unicode scalars, not bytes or terminal cells, from 1. ``source`` is the complete
-original source line; the terminal shows a bounded window around the error and aligns
+original source line. The terminal shows a bounded window around the error. It aligns
 its caret after escaping controls and measuring wide characters. ``category`` is the warning's category, as
 ``suppress_warnings`` names it, or empty.
 
@@ -83,14 +83,14 @@ Reaching a bound is a report, not a crash. There are two kinds:
    The build reached the memory it may hold, its budget (``--budget=MIB``, 1 GiB by
    default). The budget counts what Guidedog reads and keeps: sources, included files,
    and the PDF the embedded Typst compiler returns. The report names the step and the
-   file that needed the memory, and the hint names a budget that fits as a number, for
+   file that needed the memory. The hint names a budget that fits, as a number. For
    example::
 
       Run again with --budget=256, or split the work into smaller files.
 
-   The number holds what the build held and the refused step four times over (the step
-   also holds its output and the copy it writes), or twice the old budget, whichever is
-   larger, rounded up to 64 MiB, and no more than the memory the machine has free when
+   The number is the larger of two figures. One is what the build held plus four times the refused step (the step
+   also holds its output and the copy it writes). The other is twice the old budget.
+   The number is rounded up to 64 MiB. It is no more than the memory the machine has free, when
    the step fits there. When it does not, the hint says so::
 
       Free memory and run again with --budget=1408: the step needs about 1408 MiB,
@@ -101,16 +101,16 @@ Reaching a bound is a report, not a crash. There are two kinds:
 
 ``host.memory`` (OUT OF MEMORY)
    The system could not provide a buffer the budget allowed. The command stops without
-   using it: a build publishes nothing, a GDS change is applied whole or not at all, and
+   using it. A build publishes nothing, a GDS change is applied whole or not at all, and
    ``convert`` writes a whole page or none. Free memory, or build with fewer threads
    (``-j 1``), and run the command again. Once a build has decided to publish, switching
-   its output into place needs no further planning, so a refusal cannot stop a
-   publication halfway; an interrupted publication is finished by the next build.
+   its output into place needs no further planning. So a refusal cannot stop a
+   publication halfway. The next build finishes an interrupted publication.
 
 A document's own size is bounded separately, by ``--max-nodes``, ``--max-depth`` and
-``--stack-kib``: an oversized document is reported with the limit it reached. See
+``--stack-kib``. An oversized document is reported with the limit it reached. See
 :doc:`internals/memory` for how the budget and these limits divide the work. The Odin
-implementation could also keep working memory on disk (``--memory=disk``); the Rust
+implementation could also keep working memory on disk (``--memory=disk``). The Rust
 implementation bounds a conversion by its limits instead, so there is no disk mode.
 
 Both end with status 3.
@@ -135,14 +135,14 @@ Status  Meaning
         a source too large, or memory the system could not provide.
 4       A file or an outside program failed: a path that cannot be read or written, a
         file that changed while it was read, or Typst not starting or not finishing.
-5       Guidedog failed internally, and the report asks you to report it.
+5       Guidedog failed internally, and the report asks us to report it.
 70      Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with the command
         that ran, the fault, and what ``guidedog --version`` prints, and says where to
-        report it: the issue tracker your build names, or else whoever provided your
+        report it: the issue tracker our build names, or else whoever provided our
         build. Because builds publish only at the end, a crash leaves the previous output
         in place.
-130     The command was interrupted with Ctrl+C; published files were left unchanged.
+130     The command was interrupted with Ctrl+C. Published files were left unchanged.
 ======  ==============================================================================
 
 A build that fails for any reason leaves the previous output, and the records of what it
-built, as they were: fix the problem and build again.
+built, as they were. We fix the problem and build again.

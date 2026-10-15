@@ -1,6 +1,6 @@
 # Guidedog
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [हिन्दी](README.hi.md) · [Español](README.es.md) · [Deutsch](README.de.md)
+[English](README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [हिन्दी](README.hi.md) | [Español](README.es.md) | [Deutsch](README.de.md)
 
 **写一份源码，讲清楚道理，发布到网页与纸上。**
 
@@ -17,7 +17,7 @@ guidedog build pdf docs
 guidedog serve docs
 ```
 
-项目包含 `conf.toml`、`index.rst`、`_templates/layout.html`、`_templates/book.typ` 和 `_static/`。模板是普通文件，可直接编辑。HTML 提供导航、搜索、代码高亮、图表和公式。PDF 提供章节、交叉引用、插图、索引及按语言优化的排版。
+项目包含 `conf.toml`、`index.rst`、`_templates/layout.html`、`_templates/book.typ` 和 `_static/`。模板是普通文件，我们可以直接编辑。HTML 提供导航、搜索、代码高亮、图表和公式。PDF 提供章节、交叉引用、插图、索引及按语言优化的排版。
 
 默认采用浅色主题，也可选择深色或跟随系统。手册首页和仓库概览会按浏览器语言选择版本。已保存的选择优先；直接进入某个语言版本或章节时，会保留该链接的选择。
 
@@ -31,7 +31,7 @@ API 文档直接从源码读取，不运行源码：Python（`autodoc`）、Odin
 
 ## 安装
 
-每个[版本](https://github.com/insanai/guidedog/releases)都提供 Linux（x86-64 和 ARM64）和 macOS（Apple 芯片和 Intel）的压缩包。`guidedog` 压缩包包含 `guidedog`、`dsc`、`guidedog-pages` 和 `graphdog`；`dscc` 压缩包只包含 `dscc`。Typst 编译器已内置，tree-sitter 已编译进程序。Graphviz 从系统链接，因此请先安装它的库：Debian 和 Ubuntu 上运行 `sudo apt install libgvc6`（或安装 `graphviz` 包），Fedora 上运行 `sudo dnf install graphviz`，macOS 上运行 `brew install graphviz`。Linux 需要 glibc 2.35 或更新版本；macOS 需要 12 或更新版本。下载与系统对应的压缩包和 `SHA256SUMS`，校验后安装：
+每个[版本](https://github.com/insanai/guidedog/releases)都提供 Linux（x86-64 和 ARM64）和 macOS（Apple 芯片和 Intel）的压缩包。`guidedog` 压缩包包含 `guidedog`、`dsc`、`guidedog-pages` 和 `graphdog`；`dscc` 压缩包只包含 `dscc`。Typst 编译器已内置，tree-sitter 已编译进程序。Graphviz 从系统链接，因此请先安装它的库：Debian 和 Ubuntu 上运行 `sudo apt install libgvc6`（或安装 `graphviz` 包），Fedora 上运行 `sudo dnf install graphviz`，macOS 上运行 `brew install graphviz`。Linux 需要 glibc 2.35 或更新版本；macOS 需要 12 或更新版本。我们下载与系统对应的压缩包和 `SHA256SUMS`，校验后安装：
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS 上：shasum -a 256 -c --ignore-missing SHA256SUMS
@@ -89,7 +89,7 @@ GitHub 上的读者用上方链接选择 README 语言。自动语言选择由�
 
 ## 发布到 GitHub Pages
 
-`guidedog-pages` 从你自己的机器发布网站。它用已安装的 `guidedog` 构建项目，以一次 Git 推送把整个网站发送到专用分支；只有当分支仍是读取时的那个提交，GitHub 才会接受这次推送。之后它一直等到 GitHub Pages 部署完该提交。令牌保存在系统的凭据存储中，本机上的绑定决定一个凭据档案可以发布到哪里。
+`guidedog-pages` 从我们自己的机器发布网站。它用已安装的 `guidedog` 构建项目，以一次 Git 推送把整个网站发送到专用分支。只有当分支仍是读取时的那个提交，GitHub 才会接受这次推送。之后它一直等到 GitHub Pages 部署完该提交。令牌保存在系统的凭据存储中，本机上的绑定决定一个凭据档案可以发布到哪里。
 
 ```sh
 guidedog-pages init --repository=octo/manual --project=docs
@@ -102,7 +102,7 @@ guidedog-pages watch                # 源文件每次变化后重新发布
 
 另一种方式是 GitHub Actions，适合在每次推送后发布。`guidedog publish --publisher=pages` 用 Guidedog 自己的引擎构建，并运行同一个发布器。见[发布到 GitHub Pages](docs/manual/howto/github-pages.rst)和[编写插件](docs/manual/plugins.rst)。
 
-构建插件通过有明确类型、带版本的契约转换源文本、完整 HTML 页面和静态资源。插件是普通的 Rust crate：可以用 `gd_cli::run_with` 把它链接进你自己的 `guidedog`，也可以作为独立程序运行，由 `guidedog plugin register` 按 SHA-256 固定。`guidedog publish --timeout=SECONDS` 限制与发布器的每次完整交互，默认 300 秒，应大于 `--wait`。结果不明时，先恢复，再重新发布。
+构建插件通过有明确类型、带版本的契约转换源文本、完整 HTML 页面和静态资源。插件是普通的 Rust crate。我们可以用 `gd_cli::run_with` 把它链接进我们自己的 `guidedog`，也可以把它作为独立程序运行，由 `guidedog plugin register` 按 SHA-256 固定。`guidedog publish --timeout=SECONDS` 限制与发布器的每次完整交互，默认 300 秒，应大于 `--wait`。结果不明时，先恢复，再重新发布。
 
 ## 维护讨论
 
@@ -125,14 +125,14 @@ dsc build
 
 - [手册](docs/manual/index.rst)：教程、专题、操作指南、参考和内部原理。
 - [API 参考](docs/api/index.rst)：由 Guidedog 自己从 Rust 源码生成，并作为附录收入手册 PDF。`cargo doc --workspace --no-deps` 也可以构建 rustdoc 页面。
-- [引擎指南](crates/guidedoc/README.md)：工作区、请求、适配器和处理步骤（pass）；[示例](examples/README.md)是可以用 `cargo run` 运行的小程序。
+- [引擎指南](crates/guidedoc/README.md)：工作区、请求、适配器和处理步骤（pass）；[示例](examples/README.md)是我们可以用 `cargo run` 运行的小程序。
 - [模板](docs/manual/templates.rst)：用 Jinja 自定义 HTML，用 Typst 自定义图书。
 - [GDS](docs/gds/README.md)：编号的设计记录和实现决策。
 - [讨论库](crates/gd-discussion/README.md)：`dsc`、`dscc` 和 `guidedog gds` 维护的目录。
 - [插件库](crates/gd-plugins/README.md)：带类型的构建服务，以及 `guidedog publish` 和 `guidedog-pages` 使用的发布器接口。
 - [可复用的 crate](docs/manual/internals/crates.rst)：其他 Rust 项目可以从 crates.io 使用的引擎、库、API 生成器和插件 SDK，以及它们之间的依赖关系。
 
-`crates/` 下的每个 crate 都有一份简短的 README，说明它的 API 和移植时做出的设计决策。Guidedoc 拥有自己的文档表，并在多次转换之间复用它们，因此稳定状态下的转换不分配内存；它返回带提示的结构化诊断。宿主管理文件、预算、缓存、发布和内置编译器。`--untrusted` 只限制能力，不是进程沙箱，也不限制全部原生资源消耗。Beta 面向 macOS 和 Linux 上的可信文档项目。
+`crates/` 下的每个 crate 都有一份简短的 README，说明它的 API 和移植时做出的设计决策。Guidedoc 拥有自己的文档表，并在多次转换之间复用它们，因此稳定状态下的转换不分配内存。它返回带提示的结构化诊断。宿主管理文件、预算、缓存、发布和内置编译器。`--untrusted` 只限制能力，不是进程沙箱，也不限制全部原生资源消耗。Beta 面向 macOS 和 Linux 上的可信文档项目。
 
 Guidedog 0.6 及更早版本使用 Odin 编写。0.7 版本是移植到 Rust 的版本，保留了命令、选项、`conf.toml` 键、指令、角色和输出；[更新日志](CHANGELOG.md)列出了变化。
 

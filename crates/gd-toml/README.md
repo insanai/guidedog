@@ -39,7 +39,7 @@ let text = gd_toml::to_string(&table);          // a document parse reads back e
 
 | Item | Does |
 |---|---|
-| `parse(&str) -> Result<Table, Error>`, `"..".parse::<Table>()` | the full TOML 1.0 grammar, nesting ≤ `MAX_DEPTH` (64) |
+| `parse(&str) -> Result<Table, Error>`, `"..".parse::<Table>()` | the full TOML 1.0 grammar, nesting at most `MAX_DEPTH` (64) deep |
 | `Value { data: Data, line, offset }` | `Data::{String, Integer, Float, Boolean, Datetime, Array, Table}`; equality ignores position |
 | `v.as_str/as_integer/as_float/as_bool/as_datetime/as_array/as_table/get/kind_name` | typed access |
 | `Table::{new, get, get_mut, path, insert, remove, iter, keys, len, contains_key}` | ordered; hashed above 16 keys |

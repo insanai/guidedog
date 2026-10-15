@@ -3,12 +3,36 @@
 Internationalization
 ====================
 
-Translate the explanation while keeping its structure. Guidedog extracts message
+We translate the explanation and keep its structure. Guidedog extracts message
 catalogs, merges translations, and builds for a chosen language. The source text
 stays the reference. A missing translation falls back rather than inventing text.
 
 The workflow
 ------------
+
+.. graphviz::
+   :class: graphviz-adaptive
+   :caption: Sources become templates, templates become catalogs, and catalogs feed each language's build.
+   :alt: The gettext builder writes POT templates from the sources. guidedog intl update merges them into one PO catalog per language. A translator fills the catalogs, and a build with a language reads them to make that language's site and book.
+
+   digraph intl_workflow {
+     graph [rankdir=TB, bgcolor="transparent", pad="0.22", nodesep="0.3", ranksep="0.35"];
+     node [shape=box, style="rounded,filled", fillcolor="#edf5f2", color="#216553",
+           fontname="Helvetica", fontcolor="#16382f", fontsize=12, margin="0.18,0.1"];
+     edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=10, arrowsize=0.7];
+     sources [class="gd-input", shape=note, fillcolor="#fbfaf3",
+              label=<<B>Source documents</B><BR/><FONT POINT-SIZE="11">RST / Markdown</FONT>>];
+     pot [label=<<B>Templates (.pot)</B><BR/><FONT POINT-SIZE="11">_build/gettext</FONT>>];
+     po [class="gd-input", shape=note, fillcolor="#fbfaf3",
+         label=<<B>Catalogs (.po)</B><BR/><FONT POINT-SIZE="11">locales/LANG/LC_MESSAGES</FONT>>];
+     out [class="gd-output", fillcolor="#eef4fa",
+          label=<<B>Site and book</B><BR/><FONT POINT-SIZE="11">in that language</FONT>>];
+     sources -> pot [label="build gettext"];
+     pot -> po [label="intl update"];
+     po -> po [label="translate"];
+     po -> out [label="build -D language"];
+     sources -> out [style=dashed];
+   }
 
 1. Write the message templates with the ``gettext`` builder:
 
@@ -16,7 +40,7 @@ The workflow
 
       guidedog build gettext
 
-   It writes one template (``.pot``) per text domain into ``_build/gettext``: every
+   It writes one template (``.pot``) per text domain into ``_build/gettext``. Every
    paragraph, title, list item, table cell, caption, admonition, term, and field of the
    documents becomes a message, with the file and line it comes from.
 
@@ -27,13 +51,13 @@ The workflow
       guidedog intl update -l de -l fr
 
    The catalogs appear in ``locales/de/LC_MESSAGES/*.po``. On later runs the command
-   merges the new templates into them, as ``msgmerge`` does: translations are kept, a
-   message whose source changed gets the old translation marked *fuzzy* for review, and
-   messages no longer in the documents are kept at the end as obsolete (``#~``), so a
+   merges the new templates into them, as ``msgmerge`` does. Translations are kept. A
+   message whose source changed gets the old translation, marked *fuzzy* for review.
+   Messages no longer in the documents are kept at the end as obsolete (``#~``), so a
    translation can come back.
 
 3. Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a message once
-   its translation is right; fuzzy translations are not used.
+   its translation is right. Fuzzy translations are not used.
 
    .. code-block:: po
 
@@ -56,13 +80,13 @@ The workflow
    or set ``language = "de"`` in ``conf.toml``.
 
    Each book has a language suffix: ``manual.pdf`` becomes ``manual-de.pdf``.
-   A build publishes one complete generation, so use separate destinations to keep
-   several editions. For example, build German with
+   A build publishes one complete generation, so we use separate destinations to keep
+   several editions. For example, we build German with
    ``guidedog build -b pdf docs build/books/de -D language=de`` and English with
    ``guidedog build -b pdf docs build/books/en -D language=en``.
 
 Only the documents whose catalog changed are read again, as with any other input of a
-document; adding or removing a catalog reads every document again.
+document. Adding or removing a catalog reads every document again.
 
 ``guidedog intl`` takes sphinx-intl's options: ``-p DIR`` for the templates (default
 ``_build/gettext``), ``-l LANG``, repeatable (default: the project's language), ``-d
@@ -85,12 +109,12 @@ written the same way, and may only change the text around them and their titles:
    msgstr "Siehe :ref:`Installation <install>` und die site_."
 
 When a translation drops a reference, the build warns (``inconsistent references in
-translated message``, as Sphinx does) and uses the translation. When it names a
-reference the original does not have, it could not be resolved, so the build warns and
-keeps the original text. A translation whose markup the reader refuses is also kept in
-the original, with a warning that quotes it.
+translated message``, as Sphinx does) and uses the translation. A translation may name a
+reference the original does not have. That reference could not be resolved, so the build warns and
+keeps the original text. When the reader refuses a translation's markup, the build also keeps
+the original, with a warning that quotes the translation.
 
-Section anchors do not change with the language: a translated title keeps the anchor of
+Section anchors do not change with the language. A translated title keeps the anchor of
 its original, so links into the site, from inside and outside, keep working.
 
 Settings
@@ -157,7 +181,7 @@ looked up in this order:
 3. the catalog built into Guidedog, for German, Spanish, French, Japanese, Brazilian
    Portuguese, Russian, and Simplified Chinese.
 
-The English words are the message identifiers, and they are Sphinx's where Sphinx has
+The English words are the message identifiers. They are Sphinx's where Sphinx has
 the same word, so a project's ``sphinx.po`` keeps working. A project can override any
 word, or add a language, with its own ``guidedog.po``.
 
@@ -176,11 +200,11 @@ Dates
 -----
 
 ``|today|``, the book's date, and a page's ``last_updated`` are formatted as Sphinx
-formats them: ``today_fmt`` and ``html_last_updated_fmt`` are ``strftime`` formats, and
-the names of months and days follow ``language``, so ``%b %d, %Y`` is "Sep 29, 2026" in
+formats them. ``today_fmt`` and ``html_last_updated_fmt`` are ``strftime`` formats.
+The names of months and days follow ``language``, so ``%b %d, %Y`` is "Sep 29, 2026" in
 English and "Sept. 29, 2026" in German. An empty format is ``_('%b %d, %Y')``, which a
-catalog may translate. The names come from the Unicode CLDR for the languages above;
-other languages use English, as Sphinx does for a language Babel does not know.
+catalog may translate. The names come from the Unicode CLDR for the languages above.
+Other languages use English, as Sphinx does for a language Babel does not know.
 
-The date is the local date, in the local time zone. Set ``SOURCE_DATE_EPOCH`` (seconds
+The date is the local date, in the local time zone. We set ``SOURCE_DATE_EPOCH`` (seconds
 since 1970, in UTC) to build reproducibly, with the same dates on every machine.

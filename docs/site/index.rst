@@ -12,7 +12,7 @@ Write once. Explain well. Publish on the web and on paper.
 .. rst-class:: gd-lead
 
 Guidedog builds a documentation website and a PDF book from the same
-reStructuredText or Markdown files. You write the text once; Guidedog keeps the two
+reStructuredText or Markdown files. We write the text once. Guidedog keeps the two
 editions in step.
 
 .. container:: gd-actions
@@ -37,7 +37,7 @@ What it does
 .. rst-class:: gd-features
 
 * **A website.** Pages with navigation, search, highlighted code, and light and dark
-  themes, from Jinja templates you can change as much as you like.
+  themes, from Jinja templates we can change as much as we like.
 * **A PDF book.** Chapters, cross-references, figures, tables, footnotes, and an index,
   set by Typst with hyphenation for each language.
 * **reStructuredText and Markdown.** Directives, roles, toctrees, and cross-references
@@ -53,12 +53,12 @@ What it does
 One program
 -----------
 
-Guidedog is a single binary. You do not need a Python environment, a LaTeX
-installation, or separate theme and extension packages. Configuration is a TOML file,
-and templates are plain files in your project that you can edit.
+Guidedog is a single binary. We do not need a Python environment, a LaTeX
+installation, or separate theme and extension packages. Configuration is a TOML file.
+Templates are plain files in our project, and we can edit them.
 
-Some things still come from outside. The Typst compiler is built into Guidedog; a
-build without it uses the ``typst`` program installed on your system. Diagrams use
+Some things still come from outside. The Typst compiler is built into Guidedog. A
+build without it uses the ``typst`` program installed on the system. Diagrams use
 the system's Graphviz library, and fetching remote inventories uses the ``curl``
 program.
 
@@ -75,7 +75,7 @@ The PDF builder sets the same lines as a book page.
 
       .. note::
 
-         Guidedog reads your text once.
+         Guidedog reads our text once.
 
       The *same* files become a **website**
       and a **book**:
@@ -94,7 +94,7 @@ The PDF builder sets the same lines as a book page.
 
       .. note::
 
-         Guidedog reads your text once.
+         Guidedog reads our text once.
 
       The *same* files become a **website**
       and a **book**:
@@ -118,8 +118,8 @@ built from the same files as the manual's website.
 Get started
 -----------
 
-Download the archive for your system from the `latest release <download_>`_, put
-``guidedog`` on your ``PATH``, and create a project:
+Download the archive for our system from the `latest release <download_>`_, put
+``guidedog`` on the ``PATH``, and create a project:
 
 .. code-block:: sh
 
@@ -128,8 +128,8 @@ Download the archive for your system from the `latest release <download_>`_, put
    guidedog build pdf docs
    guidedog serve docs
 
-``quickstart`` writes ``conf.toml``, ``index.rst``, and templates you can edit.
-``serve`` rebuilds the site while you write. The `tutorial <manual-tutorial_>`_ walks through
+``quickstart`` writes ``conf.toml``, ``index.rst``, and templates we can edit.
+``serve`` rebuilds the site while we write. The `tutorial <manual-tutorial_>`_ walks through
 a first project. To build Guidedog from source, install Rust and follow the
 `instructions in the repository <build_>`_.
 
@@ -138,10 +138,10 @@ Design discussions
 ------------------
 
 Guidedog's design decisions are written down as numbered discussions: the problem, the
-alternatives, the decision, and the evidence. You can read each one on the web or
+alternatives, the decision, and the evidence. We can read each one on the web or
 download it as a PDF.
 
-Your project can keep its own discussions the same way, with ``dsc``, which comes with
+Our own project can keep its discussions the same way, with ``dsc``. It comes with
 Guidedog. The `manual <manual-discussions_>`_ shows how.
 
 .. container:: gd-actions gd-actions-quiet

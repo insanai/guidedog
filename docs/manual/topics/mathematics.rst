@@ -68,8 +68,8 @@ The bundle is loaded only on pages containing mathematics.
 It makes these pages readable offline after a build.
 No diagram script or web font service is required.
 
-For your own project, the default uses MathJax from a CDN.
-To serve a local copy, place it in ``_static`` and set:
+For our own projects, the default uses MathJax from a CDN.
+To serve a local copy, we place it in ``_static`` and set:
 
 .. code-block:: toml
 

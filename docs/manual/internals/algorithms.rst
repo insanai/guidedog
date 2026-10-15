@@ -66,10 +66,10 @@ produces. The emitter keeps counting after the limit is passed, without storing 
 The failure therefore reports the exact size that would have fitted, and a caller
 that raises the limit to :math:`m` succeeds on the next run. ``check_render`` runs the
 same renderer in check mode and returns :math:`m` and any support problems without
-keeping output. The Odin engine measured first and wrote second; one run with a
+keeping output. The Odin engine measured first and wrote second. One run with a
 counting emitter gives the same guarantee for half the work.
 
-A failure returns no valid partial artifact: the builder and the emitter poison
+A failure returns no valid partial artifact. The builder and the emitter poison
 themselves on the first failure, so every later call returns that failure and ``?``
 carries it out. The host owns publication, so incomplete bytes cannot replace a
 previous output.
@@ -85,11 +85,11 @@ A missing output invalidates reuse even when its key matches.
 
 Guidedog records, for every output unit, the digests of what it read and the answers
 to the lookups it made (a verifying trace with dynamic dependencies). A rebuild
-recomputes each answer and stops early where the answers agree; one place, the
+recomputes each answer and stops early where the answers agree. One place, the
 generation's reuse check, decides whether a unit is written again. :doc:`incremental` lists
 every digest input.
 
-Tests cover the bounds rather than counting on them: a counting allocator checks that
-a conversion in steady state allocates nothing, and limit tests check that oversized
+Tests cover the bounds rather than counting on them. A counting allocator checks that
+a conversion in steady state allocates nothing. Limit tests check that oversized
 input becomes a ``Capacity`` or ``Limit`` result, never a panic or a silently shortened
 document.

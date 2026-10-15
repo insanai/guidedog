@@ -313,7 +313,7 @@ Resolution
    * - explicit external target
      - done
      - ``external_and_internal_targets``
-   * - internal target → next element (skips targets, comments, substitution definitions; ascends)
+   * - internal target points at the next element (skips targets, comments, substitution definitions; ascends)
      - done
      - ``external_and_internal_targets``
    * - chained internal targets share the element
@@ -346,7 +346,7 @@ Resolution
    * - ``:name:`` option (Name attribute; Custom "name" on Directive nodes)
      - done
      - ``names_and_inline_targets``
-   * - section titles are implicit targets → Section
+   * - section titles are implicit targets for their Section
      - done
      - ``sections_are_implicit_targets``
    * - explicit names win over section titles (note ``rst.target.implicit``)
@@ -367,13 +367,13 @@ Resolution
    * - auto-numbered footnotes get the lowest numbers not used as names, in order
      - done
      - ``footnotes_are_numbered_and_referenced``
-   * - ``[#label]_`` → labelled auto footnote; ``[#]_`` → unlabelled ones in order
+   * - ``[#label]_`` refers to a labelled auto footnote; ``[#]_`` to unlabelled ones in order
      - done
      - ``footnotes_are_numbered_and_referenced``
-   * - ``[*]_`` → symbol footnotes in order; value = 1-based symbol ordinal
+   * - ``[*]_`` refers to symbol footnotes in order; value = 1-based symbol ordinal
      - done
      - ``footnotes_are_numbered_and_referenced``, ``footnote_symbols_repeat``
-   * - manual ``[1]_`` → footnote labelled 1
+   * - manual ``[1]_`` refers to the footnote labelled 1
      - done
      - ``footnotes_are_numbered_and_referenced``
    * - too many ``[#]_`` / ``[*]_``: error ``rst.footnote.references``; unknown labels unresolved

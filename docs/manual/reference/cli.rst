@@ -1,10 +1,10 @@
 Command-line reference
 ======================
 
-The ``guidedog`` executable provides a complete command-line interface for managing,
-building, previewing, translating, converting, and publishing documentation projects.
+The ``guidedog`` executable creates, builds, previews, translates, converts, and publishes
+documentation projects.
 Its commands and options follow ``sphinx-quickstart``, ``sphinx-build`` and
-``sphinx-intl`` where those have an equivalent, so existing habits and scripts carry
+``sphinx-intl`` where those have an equivalent. Existing habits and scripts carry
 over.
 
 General syntax
@@ -115,15 +115,14 @@ Commands overview
    * - ``plugin COMMAND``
      - Registers, checks, lists, inspects, runs, or unregisters plugin programs.
 
-A command word that is not one of these is a usage error (exit status 2) whose hint
+A command word that is not one of these is a usage error (exit status 2). Its hint
 lists the commands.
 
 guidedog quickstart
 -------------------
 
-Creates a project directory containing ``conf.toml``, ``index.rst``, working templates
-in ``_templates/``, styles in ``_static/``, ``assets/`` folders, and a build folder, as
-``sphinx-quickstart`` does:
+Creates a project folder, as ``sphinx-quickstart`` does. It holds ``conf.toml``, ``index.rst``, working templates
+in ``_templates/``, styles in ``_static/``, ``assets/`` folders, and a build folder:
 
 .. code-block:: sh
 
@@ -134,8 +133,8 @@ in ``_templates/``, styles in ``_static/``, ``assets/`` folders, and a build fol
    guidedog quickstart docs -q -p "My Project" -a "Author Name" -v 1.0 -l en
 
 ``DIR`` defaults to the current folder. In a terminal, and without ``-q``, quickstart
-asks whether to separate source and build folders, and for the project name, the
-authors, the release, and the language (default ``en``), skipping what the options
+asks whether to separate source and build folders. It also asks for the project name, the
+authors, the release, and the language (default ``en``). It skips what the options
 already gave. The project name and author are required.
 
 .. list-table:: Options of quickstart
@@ -165,7 +164,7 @@ already gave. The project name and author are required.
 guidedog build
 --------------
 
-Reads the sources, resolves toctrees and cross-references, and publishes the output as
+Reads the sources and resolves toctrees and cross-references. It publishes the output as
 one complete generation:
 
 .. code-block:: sh
@@ -178,11 +177,11 @@ one complete generation:
    guidedog build -b html docs _build/html
    guidedog build -M html docs _build
 
-``guidedog build [BUILDER] [PROJECT]`` builds ``PROJECT`` (default: the current folder;
-Guidedog looks for ``conf.toml`` there, in ``PROJECT/source``, then in the nearest parent)
-with ``BUILDER`` (default: ``html``) into the project's build folder, ``_build/BUILDER``.
-``-b BUILDER SOURCEDIR OUTPUTDIR`` writes to ``OUTPUTDIR`` itself; ``-M BUILDER SOURCEDIR
-BUILDDIR`` writes to ``BUILDDIR/BUILDER``. Both forms need exactly the two folders.
+``guidedog build [BUILDER] [PROJECT]`` builds ``PROJECT`` with ``BUILDER`` into the project's build folder, ``_build/BUILDER``.
+``PROJECT`` defaults to the current folder. Guidedog looks for ``conf.toml`` there, in ``PROJECT/source``, then in the nearest parent.
+``BUILDER`` defaults to ``html``.
+``-b BUILDER SOURCEDIR OUTPUTDIR`` writes to ``OUTPUTDIR`` itself.
+``-M BUILDER SOURCEDIR BUILDDIR`` writes to ``BUILDDIR/BUILDER``. Both forms need exactly the two folders.
 
 Builders:
 
@@ -241,8 +240,8 @@ Builders:
      - At the budget, stop without asking. Without it, a terminal asks whether to raise
        the budget or stop; a build without a terminal stops. ``--memory=disk`` and
        ``--disk-budget`` (working memory on disk, in the Odin implementation) are
-       refused with ``cli.memory-disk``: this version keeps working memory in memory,
-       bounded by the budget, so raise ``--budget`` instead.
+       refused with ``cli.memory-disk``. This version keeps working memory in memory,
+       bounded by the budget, so we raise ``--budget`` instead.
    * - ``--max-depth=N``
      - How deep content may nest (default: ``256``).
    * - ``--max-nodes=N``
@@ -253,23 +252,23 @@ Builders:
    * - ``--typst=PATH``
      - The Typst program for PDF, overriding ``typst`` in ``conf.toml``.
 
-The build prints what it read and wrote, then a verdict: ``build succeeded`` or ``build
-failed``, with the number of errors and warnings and where the output is. A failed build
+The build prints what it read and wrote, then a verdict: ``build succeeded`` or
+``build failed``, with the number of errors and warnings and where the output is. A failed build
 leaves the previous output as it was. The warnings of ``conf.toml`` are the build's own,
-so ``-W`` counts them; ``suppress_warnings`` silences warnings before ``-W`` counts.
+so ``-W`` counts them. ``suppress_warnings`` silences warnings before ``-W`` counts.
 
 ``read`` counts the documents parsed and those unchanged since the last build (taken
-from the environment); ``write`` counts the outputs written and those kept: a page each
+from the environment). ``write`` counts the outputs written and those kept. An output is a page
 for ``html``, ``dirhtml`` and ``text`` (and the search index in the HTML builders), a
-book each for ``pdf``, and one output for ``singlehtml`` and ``gettext``. Every build
-also writes the site's shared files (theme, indexes, ``objects.inv``), which are not
+book for ``pdf``, and the single output of ``singlehtml`` and ``gettext``. Every build
+also writes the site's shared files (theme, indexes, ``objects.inv``). They are not
 counted.
 
 guidedog serve
 --------------
 
-Builds the HTML site, serves it on ``http://127.0.0.1:PORT/``, and rebuilds before
-answering a request when sources, templates, static files, or ``conf.toml`` changed:
+Builds the HTML site and serves it on ``http://127.0.0.1:PORT/``. When sources, templates, static files, or ``conf.toml`` changed,
+it rebuilds before answering a request:
 
 .. code-block:: sh
 
@@ -278,14 +277,14 @@ answering a request when sources, templates, static files, or ``conf.toml`` chan
 
 ``--port PORT`` (``-p`` is quickstart's project name, not the port) chooses the port,
 from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, ``-D name=value`` and the build
-options of ``guidedog build`` apply to every rebuild, which reloads ``conf.toml``. A
+options of ``guidedog build`` apply to every rebuild. Each rebuild reloads ``conf.toml``. A
 failed rebuild keeps the previous site and reports the problem. Ctrl+C stops the server.
 
-It serves ``_build/html`` and watches the source folder; the Odin and Rust API sources
-(``odin_autoapi_dirs``, ``odin_collections``, ``rust_autoapi_crates``); and the
+It serves ``_build/html``. It watches the source folder, the Odin and Rust API sources
+(``odin_autoapi_dirs``, ``odin_collections``, ``rust_autoapi_crates``), and the
 ``html_static_path``, ``html_extra_path``, ``templates_path``, ``include_roots``,
 ``autodoc_source_paths`` and ``locale_dirs`` folders outside the source folder. The
-build folder is never watched. Changes are found by file names, sizes and times, checked
+build folder is never watched. Changes are found by file names, sizes and times. The check runs
 before an HTML page is answered:
 
 .. code-block:: text
@@ -311,7 +310,7 @@ guidedog migrate
 ----------------
 
 Converts a Sphinx ``conf.py`` (or an old ``guidedog.toml``) to ``conf.toml`` without
-running Python. Literal settings carry over; anything Python would compute is reported,
+running Python. Literal settings carry over. Anything Python would compute is reported
 and kept in ``conf.toml`` as a comment:
 
 .. code-block:: sh
@@ -338,10 +337,10 @@ guidedog intl
 -------------
 
 Keeps translation catalogs in step with the documents, as ``sphinx-intl`` does. First
-write the message templates with ``guidedog build gettext``; ``update`` then creates
-``locales/LANG/LC_MESSAGES/*.po``, or merges new templates into them: translations stay,
-changed messages turn fuzzy, removed ones become obsolete. Build with
-``-D language=LANG``, or ``language`` in ``conf.toml``, to use them.
+we write the message templates with ``guidedog build gettext``. ``update`` then creates
+``locales/LANG/LC_MESSAGES/*.po``, or merges new templates into them. Translations stay,
+changed messages turn fuzzy, and removed ones become obsolete. To use the catalogs, we build with
+``-D language=LANG``, or set ``language`` in ``conf.toml``.
 
 .. code-block:: sh
 
@@ -386,18 +385,18 @@ Converts one file, or standard input, without a project or configuration:
 
 The input format comes from ``--from`` or the input's suffix: ``.rst`` and ``.rest`` are
 reStructuredText, ``.md`` and ``.markdown`` CommonMark, ``.typ`` Typst. A Markdown file is
-plain CommonMark 0.31.2 unless ``--from myst`` reads it as MyST with the Sphinx layer, so
-roles such as ``{doc}`` and ``{ref}`` and directives such as ``{note}`` are understood;
+plain CommonMark 0.31.2. ``--from myst`` reads it as MyST with the Sphinx layer instead, so
+roles such as ``{doc}`` and ``{ref}`` and directives such as ``{note}`` are understood.
 ``--from sphinx`` likewise reads reStructuredText with Sphinx's directives, roles, and
 domains. The output format comes from ``--to`` or the output's suffix (``.html``,
 ``.htm``, ``.pdf``, ``.rst``, ``.rest``). Only the options below apply to ``convert``.
 
-``--to rst`` writes reStructuredText with Guidedog's own writer (the ``rst`` renderer):
-paragraphs wrapped at 92 columns, one section adornment per level (``=``, ``-``, ``~``,
-``^``, ...), roles, cross-references, and directives kept as Sphinx writes them. It reads
-the input without smart quotes, so quotes and dashes stay as written. What
+``--to rst`` writes reStructuredText with Guidedog's own writer (the ``rst`` renderer).
+It wraps paragraphs at 92 columns and uses one section adornment per level (``=``, ``-``, ``~``,
+``^``, ...). It keeps roles, cross-references, and directives as Sphinx writes them. It reads
+the input without smart quotes, so quotes and dashes stay as written. Some things
 reStructuredText cannot express exactly (a hard line break, an image inside text, a link
-title) is written as closely as it allows and reported as a note. Typst input cannot be
+title). The writer comes as close as it can and reports a note. Typst input cannot be
 converted to reStructuredText.
 
 .. list-table:: Options of convert
@@ -452,8 +451,8 @@ guidedog formats
 ----------------
 
 Reports the readers and renderers this executable actually has, with their versions and
-conformance (``planned``, ``partial``, ``conformant``), and the Typst backend it found:
-embedded, or an installed program, and whether it is the pinned version.
+conformance (``planned``, ``partial``, ``conformant``). It also reports the Typst backend it found
+(embedded, or an installed program) and whether it is the pinned version.
 
 .. code-block:: sh
 
@@ -465,7 +464,7 @@ guidedog gds
 ------------
 
 Keeps Guidedog's own discussion records, the GDS, in ``docs/gds``. It runs the commands
-of ``dsc``, below, with the prefix ``gds``, and builds with this program's engine:
+of ``dsc`` (below) with the prefix ``gds``. It builds with this program's engine:
 
 .. code-block:: sh
 
@@ -482,10 +481,10 @@ dsc and dscc
 ------------
 
 ``dsc`` keeps a discussion catalog and builds it with the installed ``guidedog``.
-``dscc`` is ``dsc`` with Guidedog built in: it builds a catalog as a Guidedog project
-in its own process (``pdf_documents`` set to the books, warnings as errors), and
-``dscc --version`` names the Guidedog inside it. Both take the same commands; see
-:doc:`../howto/discussions`.
+``dscc`` is ``dsc`` with Guidedog built in. It builds a catalog as a Guidedog project
+in its own process (``pdf_documents`` set to the books, warnings as errors).
+``dscc --version`` names the Guidedog inside it. Both take the same commands (see
+:doc:`../howto/discussions`).
 
 .. code-block:: sh
 
@@ -501,8 +500,8 @@ in its own process (``pdf_documents`` set to the books, warnings as errors), and
    dsc recover --rollback
    dsc config > discussion.toml
 
-``dsc config`` prints the catalog's settings in effect, as ``discussion.toml``; see
-:doc:`../howto/discussions` for each setting.
+``dsc config`` prints the catalog's settings in effect, as ``discussion.toml``.
+:doc:`../howto/discussions` explains each setting.
 
 .. list-table:: Options of dsc and dscc
    :header-rows: 1
@@ -547,7 +546,7 @@ guidedog publish
 ----------------
 
 Builds the project that a publisher's configuration names, as HTML with Guidedog's own
-engine, freezes the site, and has the publisher plan and publish it:
+engine. It freezes the site, and the publisher plans and publishes it:
 
 .. code-block:: sh
 
@@ -555,7 +554,7 @@ engine, freezes the site, and has the publisher plan and publish it:
    guidedog publish --publisher=pages --config=pages.toml --wait=600 --timeout=900
 
 The publisher is looked up among the plugins linked into this executable first, then in
-the machine's registry (``guidedog plugin register``). A build plugin is refused: only
+the machine's registry (``guidedog plugin register``). A build plugin is refused, because only
 publishers publish.
 
 .. list-table:: Options of publish
@@ -579,40 +578,40 @@ publishers publish.
    * - ``--verbose``
      - List every change of the plan.
 
-A timeout or Ctrl+C after a possible write reports an unknown outcome (exit status 7):
-run the publisher's recovery command before retrying. Each invocation builds into its
-own private folder, which is removed afterwards; concurrent invocations cannot change
+A timeout or Ctrl+C after a possible write reports an unknown outcome (exit status 7).
+We then run the publisher's recovery command before retrying. Each invocation builds into its
+own private folder, which is removed afterwards. Concurrent invocations cannot change
 each other's snapshots. See :doc:`../plugins`.
 
 guidedog publish pages
 ~~~~~~~~~~~~~~~~~~~~~~
 
 ``guidedog publish pages`` is the guided way to GitHub Pages. It does whatever is still
-missing, asks only when it must, then builds and publishes:
+missing and asks only when it must. Then it builds and publishes:
 
 #. ``pages.toml``: written once, with the repository taken from the ``origin`` remote and
    the project from the nearest ``conf.toml`` (or as given).
 #. A token: GitHub's device sign-in, stored in the system's credential store, or the
    GitHub CLI's token for this run only.
-#. The binding: the target is reviewed, and you are asked once to let this machine
+#. The binding: the target is reviewed, and it asks us once to let this machine
    publish there.
-#. The Pages source: when Pages publishes another branch, or uses Actions, you are
-   asked once to switch it.
+#. The Pages source: when Pages publishes another branch, or uses Actions, it
+   asks us once to switch it.
 #. The publication: one push to the site's own branch, then a wait for the deployment.
 
 On a machine that is already set up, it publishes without a question. Without a terminal
-it never asks: a missing step fails with a hint naming the command or option that does
-it. ``--yes`` answers the confirmations, but never signs in or replaces other work for
-you. Its options are those of ``guidedog-pages init`` and ``publish`` (``--config``,
-``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, ``--verbose``);
-see :doc:`../howto/github-pages`.
+it never asks. A missing step then fails with a hint naming the command or option that does
+it. ``--yes`` answers the confirmations. It never signs in or replaces other work on
+our behalf. Its options are those of ``guidedog-pages init`` and ``publish`` (``--config``,
+``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, ``--verbose``).
+See :doc:`../howto/github-pages`.
 
 guidedog pages workflow
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-``guidedog pages workflow`` is ``guidedog-pages workflow``: it prints, writes, or checks
-a GitHub Actions workflow that installs this Guidedog release, builds the project, and
-deploys it with GitHub's Pages actions. Use it instead of publishing from your machine
+``guidedog pages workflow`` is ``guidedog-pages workflow``. It prints, writes, or checks
+a GitHub Actions workflow. The workflow installs this Guidedog release, builds the project, and
+deploys it with GitHub's Pages actions. We use it instead of publishing from our own machine
 when every push to the source branch should deploy.
 
 .. code-block:: sh
@@ -659,23 +658,23 @@ Guidedog's configuration folder (``GUIDEDOG_CONFIG_DIR`` moves it):
 Subcommands:
 
 * ``register ID PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS] [--yes]``:
-  inspects the program after your confirmation (``--yes`` skips the question) and records
+  inspects the program after we confirm (``--yes`` skips the question) and records
   its SHA-256. The program must say it is ``ID``. A build plugin passes the qualification
   checks below before it is registered.
 * ``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: runs the
   qualification checks against a build plugin without changing the registry. A publisher
-  is refused: test it with its own tests and ``guidedog publish --dry-run``.
+  is refused. We test a publisher with its own tests and ``guidedog publish --dry-run``.
 * ``list``: the registered programs, their IDs, paths, and kinds, beside the plugins
   linked into this executable.
 * ``inspect ID``: an entry's declared build hooks (source, HTML, assets) or publisher
   capabilities, and whether the program on disk is still the one registered.
 * ``run ID -- [ARGS...]``: runs a registered program's own commands, after checking its
   SHA-256.
-* ``unregister ID``: removes the entry from ``plugins.toml``; the program, and anything
-  it published, are unchanged.
+* ``unregister ID``: removes the entry from ``plugins.toml``. The program, and anything
+  it published, stay unchanged.
 
-Build plugins are selected by ``plugins`` in ``conf.toml`` and run during ``guidedog
-build``; ``guidedog publish`` accepts publishers only. ``--untrusted`` disables build
+Build plugins are selected by ``plugins`` in ``conf.toml`` and run during
+``guidedog build``. ``guidedog publish`` accepts publishers only. ``--untrusted`` disables build
 plugins. See :doc:`../plugins` for the complete guide, an example, and configuration.
 
 Build-plugin qualification checks
@@ -683,7 +682,7 @@ Build-plugin qualification checks
 
 ``guidedog plugin check PATH --project=DIR --config=FILE`` exercises the declared hooks
 in child processes: loading, repeated results, and cleanup. ``--project`` defaults to the
-current folder; a relative ``--config`` is relative to it. The request timeout defaults
+current folder. A relative ``--config`` is relative to it. The request timeout defaults
 to 60 seconds. The program's SHA-256 must be the same before and after the checks.
 Publisher registration does not invoke publication. Passing checks is interoperability
 evidence, not a sandbox or a safety certificate.
@@ -692,8 +691,8 @@ Custom binaries with linked plugins
 -----------------------------------
 
 The whole command line is the ``gd-cli`` crate. A Rust program can be a ``guidedog`` with
-plugins linked in, instead of registered as separate programs: it passes a
-``gd_plugins::Registry`` of its plugins to ``gd_cli::run_with``, which reads the process
+plugins linked in, instead of registered as separate programs. It passes a
+``gd_plugins::Registry`` of its plugins to ``gd_cli::run_with``. That function reads the process
 arguments and returns the exit status.
 
 .. code-block:: rust
@@ -711,18 +710,18 @@ arguments and returns the exit status.
    }
 
 The program accepts every command and option on this page. A selected plugin ID is
-looked up among the linked plugins first, then in the machine's registry; linked plugins
+looked up among the linked plugins first, then in the machine's registry. Linked plugins
 need no registration and no SHA-256 pin, because they are part of the executable.
-``gd_cli::run`` is the same with no linked plugins, which is what ``guidedog`` itself
-runs. The plugin is the same ``Plugin`` value its installed form serves with
-``gd_plugins::serve_plugin``; see :doc:`../plugins`.
+``gd_cli::run`` is the same with no linked plugins. ``guidedog`` itself
+runs it. The plugin is the same ``Plugin`` value its installed form serves with
+``gd_plugins::serve_plugin`` (see :doc:`../plugins`).
 
 guidedog-pages
 --------------
 
-Publishes Guidedog sites to GitHub Pages from this machine, building projects with
+Publishes Guidedog sites to GitHub Pages from this machine. It builds projects with
 the installed ``guidedog``. ``publish`` does any missing setup step first, as
-``guidedog publish pages`` does; the step commands stay for scripts and for checking
+``guidedog publish pages`` does. The step commands stay for scripts and for checking
 each part. See :doc:`../howto/github-pages`.
 
 .. code-block:: sh

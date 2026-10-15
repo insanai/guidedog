@@ -1,22 +1,22 @@
-Your first project
-==================
+Our first project
+=================
 
-This tutorial guides you through creating, writing, and building your first
-documentation project with Guidedog. The goal is modest and clear: start from a clean
-directory, generate both an HTML website and a printable PDF book from the same source
-file, and experience the live preview server.
+In this tutorial we create, write, and build our first
+documentation project with Guidedog. The goal is modest and clear. We start from an empty
+directory. We make an HTML website and a printable PDF book from the same source
+file. Then we try the live preview server.
 
-You need a working installation of Guidedog. For PDF output, Guidedog can use its
+We need a working installation of Guidedog. For PDF output, Guidedog can use its
 embedded compiler or an installed Typst binary (0.15.1 or newer). See :doc:`../howto/install`.
 
-On macOS, you can install the official release using Homebrew:
+On macOS, we can install the official release with Homebrew:
 
 .. code-block:: sh
 
    brew install insanai/guidedog/guidedog
 
-Elsewhere, build it from a source checkout with the Rust toolchain, and put
-``target/release/guidedog`` on your ``PATH``:
+Elsewhere, we build it from a source checkout with the Rust toolchain, and put
+``target/release/guidedog`` on our ``PATH``:
 
 .. code-block:: sh
 
@@ -26,8 +26,8 @@ Elsewhere, build it from a source checkout with the Rust toolchain, and put
 Project architecture and build pipeline
 ---------------------------------------
 
-Guidedog takes a single directory of source files and compiles it into two distinct
-artifacts: a responsive HTML website and a typeset PDF book.
+Guidedog takes one directory of source files and compiles it into two
+outputs: a responsive HTML website and a typeset PDF book.
 
 .. graphviz::
    :class: graphviz-adaptive
@@ -54,14 +54,14 @@ artifacts: a responsive HTML website and a typeset PDF book.
 1. Create the project
 ---------------------
 
-Run the ``quickstart`` command from a folder where the target directory ``notes`` does
+We run the ``quickstart`` command from a folder where the directory ``notes`` does
 not yet exist:
 
 .. code-block:: sh
 
    guidedog quickstart notes -q -p "Field Notes" -a "Your name" -v 1.0
 
-Guidedog creates a complete, self-contained project structure:
+Guidedog creates a complete, self-contained project:
 
 .. code-block:: text
 
@@ -79,24 +79,24 @@ Guidedog creates a complete, self-contained project structure:
        audio/
        video/
 
-Understanding the files:
+The files are:
 
 * ``conf.toml``: Project settings (title, author, version, language, builders).
-* ``index.rst``: The root document that defines your front page and table of contents.
+* ``index.rst``: The root document. It defines our front page and table of contents.
 * ``_templates/layout.html``: The HTML website template (Jinja).
 * ``_templates/book.typ``: The PDF book layout and typography template (Typst).
 * ``_static/``: CSS stylesheets and JavaScript enhancements.
-* ``assets/``: Dedicated folders for project images, diagrams, audio, and video files.
+* ``assets/``: Folders for project images, diagrams, audio, and video files.
 
-Templates in Guidedog are directly visible and editable. They are placed directly inside
-your project rather than hidden within an external theme or system cache. You can modify
-them at any time to customize your site and book design.
+Templates in Guidedog are ordinary files that we can see and edit. They live inside
+our project, not in an external theme or a system cache. We can change
+them at any time to adjust the design of our site and book.
 The first build creates ``_build`` for generated output.
 
 2. Write the first page
 -----------------------
 
-Open ``notes/index.rst`` in your editor and replace its contents with the following:
+We open ``notes/index.rst`` in an editor and replace its contents with the following:
 
 .. code-block:: rst
 
@@ -118,30 +118,30 @@ Open ``notes/index.rst`` in your editor and replace its contents with the follow
 
       State the measurement units before comparing calculations.
 
-This page demonstrates headings, mathematical notation, and an admonition note.
+This page shows headings, mathematical notation, and a note.
 
 3. Build and inspect the outputs
 --------------------------------
 
-Compile your project into both HTML and PDF formats:
+We compile our project into both HTML and PDF:
 
 .. code-block:: sh
 
    guidedog build html notes -W
    guidedog build pdf notes -W
 
-The ``-W`` flag instructs Guidedog to treat warnings as errors. Keeping this flag enabled
-in your routine checks ensures that broken references or markup errors are caught early.
+The ``-W`` flag tells Guidedog to treat warnings as errors. With this flag in
+our routine checks, broken references and markup errors are caught early.
 
-Now inspect the output files:
+Now we inspect the output files:
 
-* Open ``notes/_build/html/index.html`` in your web browser. You will see a clean, responsive
+* We open ``notes/_build/html/index.html`` in a web browser. We see a clean, responsive
   documentation website with a theme switch, search bar, and formatted math.
-* Open the PDF file generated in ``notes/_build/pdf/``. You will see a book layout
-  complete with running headers, page numbers, and typographic math.
+* We open the PDF file in ``notes/_build/pdf/``. We see a book layout
+  with running headers, page numbers, and typeset math.
 
-Guidedog formats mathematics appropriately for each medium: using client-side MathJax for
-the browser, and native vector formulas for the Typst PDF engine.
+Guidedog formats mathematics for each medium. The browser gets MathJax, and
+the PDF gets Typst's own vector formulas.
 
 4. Live preview and incremental rebuilds
 ----------------------------------------
@@ -152,10 +152,10 @@ Guidedog includes a built-in development web server:
 
    guidedog serve notes
 
-The terminal prints a local URL, such as ``http://localhost:8000``. Open this address in
-your browser.
+The terminal prints a local URL, such as ``http://localhost:8000``. We open this address in
+a browser.
 
-Now test the live editing loop:
+Now we test the live editing loop:
 
 .. graphviz::
    :class: graphviz-adaptive
@@ -180,17 +180,17 @@ Now test the live editing loop:
 
 1. Edit ``notes/index.rst`` to add a new paragraph.
 2. Save the file.
-3. Refresh your browser page.
+3. Refresh the browser page.
 
 Before serving a requested page, Guidedog checks the project's inputs (sources,
 templates, static files and configuration) against its saved build environment. If an
-input has changed, it rebuilds only the affected documents before responding to the
+input has changed, it rebuilds only the affected documents before it answers the
 browser request. A failed rebuild keeps the previous site and reports the problem in the
 terminal.
 
-When you run a build without modifying any files, Guidedog reuses the saved document
-trees, avoiding redundant re-parsing. See :doc:`../topics/projects` for how it decides.
+When we run a build without changing any files, Guidedog reuses the saved document
+trees and parses nothing again. See :doc:`../topics/projects` for how it decides.
 
-Press ``Ctrl+C`` in your terminal to stop the server when you are done.
+We press ``Ctrl+C`` in the terminal to stop the server when we are done.
 
-Continue to :doc:`a-small-book` to learn how to organize multiple chapters and cross-references.
+Next, :doc:`a-small-book` shows how to organize several chapters and cross-references.

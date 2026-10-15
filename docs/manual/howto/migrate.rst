@@ -1,22 +1,22 @@
 Move a Sphinx project to Guidedog
 =================================
 
-Guidedog is designed with Sphinx compatibility in mind. It uses the familiar directory
-structure, understands standard reStructuredText and MyST Markdown markup, recognizes
-the same configuration setting names, and implements Sphinx's Jinja template variables.
+Guidedog follows Sphinx closely. It uses the same directory
+structure and understands standard reStructuredText and MyST Markdown markup. It recognizes
+the same configuration setting names and provides Sphinx's Jinja template variables.
 
-However, there is an essential architectural difference: Sphinx executes arbitrary
-Python code in ``conf.py`` and relies on a Python virtual environment with external packages.
-Guidedog, by contrast, operates as a standalone compiled executable that reads pure data
-from ``conf.toml``. It does not execute Python scripts.
+One difference shapes the whole move. Sphinx runs arbitrary
+Python code in ``conf.py`` and needs a Python virtual environment with external packages.
+Guidedog is a single compiled program that reads plain data
+from ``conf.toml``. It does not run Python.
 
-Migrating a project therefore centers on separating declarative configuration data from
-executable Python logic.
+So moving a project means separating configuration data from
+Python code.
 
 Migration workflow
 ------------------
 
-The migration process follows a structured sequence:
+The move goes through these steps:
 
 .. graphviz::
    :class: graphviz-adaptive
@@ -42,7 +42,7 @@ The migration process follows a structured sequence:
 Step 1: Automated configuration migration
 -----------------------------------------
 
-Guidedog provides an automated migration tool that parses your existing ``conf.py``:
+Guidedog has a migration tool that parses our existing ``conf.py``:
 
 .. code-block:: sh
 
@@ -54,57 +54,56 @@ What ``guidedog migrate`` does:
    and converts them to standard TOML syntax in ``conf.toml``.
 2. It detects standard Sphinx settings (such as ``project``, ``author``, ``extensions``,
    ``templates_path``, ``html_theme``, ``intersphinx_mapping``, and ``html_context``) and
-   maps them cleanly.
-3. It identifies dynamically computed expressions (such as Python calls like
-   ``version = get_version()`` or ``git_revision = subprocess.check_output(...)``). Because
-   Guidedog does not execute Python, it flags these computed values in its migration report
-   so you can provide explicit, static values in ``conf.toml``.
+   maps them.
+3. It finds computed expressions (such as Python calls like
+   ``version = get_version()`` or ``git_revision = subprocess.check_output(...)``).
+   Guidedog does not run Python, so its migration report flags these values.
+   We then give fixed values for them in ``conf.toml``.
 
-Review the generated ``conf.toml`` and replace any flagged expressions with static values.
+We review the generated ``conf.toml`` and replace each flagged expression with a fixed value.
 
 Step 2: The three-pass verification strategy
 --------------------------------------------
 
-Once ``conf.toml`` is created, work through the migration in three focused passes:
+Once ``conf.toml`` exists, we work through the migration in three passes:
 
 Pass 1: Verify the document graph
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Check that Guidedog discovers all documents and builds the expected hierarchy:
+We check that Guidedog finds all documents and builds the expected hierarchy:
 
-* Verify that ``root_doc`` points to your primary entry point (usually ``index`` or ``contents``).
-* Confirm that ``source_suffix`` lists all extensions you use (for example, ``[".rst", ".md"]``).
-* Check ``exclude_patterns`` to ensure build folders, virtual environments, and temporary files
-  are excluded.
+* Verify that ``root_doc`` names our main entry point (usually ``index`` or ``contents``).
+* Confirm that ``source_suffix`` lists every extension we use (for example, ``[".rst", ".md"]``).
+* Check that ``exclude_patterns`` excludes build folders, virtual environments, and temporary files.
 * Run a quick semantic check using the dummy builder:
 
   .. code-block:: sh
 
      guidedog build dummy path/to/docs -n -W
 
-  The dummy builder checks every document and link without writing HTML files. Address any
-  warnings about missing documents or malformed file includes.
+  The dummy builder checks every document and link without writing HTML files. We fix each
+  warning about a missing document or a malformed include.
 
 Pass 2: Verify references, domains, and custom objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Next, verify that cross-references and domain directives resolve:
+Next, we verify that cross-references and domain directives resolve:
 
-* **Standard domains:** Guidedog natively supports the standard Python, C, C++, and JavaScript
-  domains, along with standard role syntax like ``:py:func:``, ``:c:type:``, and ``:cpp:class:``.
+* **Standard domains:** Guidedog supports the standard Python, C, C++, and JavaScript
+  domains, with their roles such as ``:py:func:``, ``:c:type:``, and ``:cpp:class:``.
   It adds ``odin`` and ``rust`` domains of its own (see :doc:`../topics/domains`).
-* **Intersphinx links:** If your Sphinx project linked to external documentation via Intersphinx,
-  keep your ``[intersphinx_mapping]`` in ``conf.toml``. Guidedog fetches and parses standard
-  ``objects.inv`` files natively.
+* **Intersphinx links:** If our Sphinx project linked to external documentation through Intersphinx,
+  we keep our ``[intersphinx_mapping]`` in ``conf.toml``. Guidedog fetches and parses standard
+  ``objects.inv`` files itself.
 * **Declarative custom object types:** In Sphinx, projects often wrote small Python extensions
-  calling ``app.add_object_type()`` to create custom directives and roles (such as
-  ``.. confval::`` or ``.. setting::``). In Guidedog, you define these declaratively in
-  ``conf.toml`` under ``[[object_types]]`` without writing any code. See :doc:`../object-types`.
+  that call ``app.add_object_type()`` to create custom directives and roles (such as
+  ``.. confval::`` or ``.. setting::``). In Guidedog, we declare these in
+  ``conf.toml`` under ``[[object_types]]``, without code. See :doc:`../object-types`.
 
 Pass 3: Verify presentation and templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Finally, verify the rendered visual appearance:
+Finally, we check how the output looks:
 
 * **HTML website:** Run ``guidedog build html path/to/docs -W`` and inspect the generated pages.
 * **Jinja templates:** Guidedog's native Jinja engine supports block inheritance:
@@ -117,13 +116,13 @@ Finally, verify the rendered visual appearance:
      {% endblock %}
 
 * **PDF books:** Build a PDF book with ``guidedog build pdf path/to/docs -W``. Guidedog typesets
-  the book using Typst and ``_templates/book.typ``, providing instant vector math, proper
-  hyphenation, and running headers without requiring a LaTeX installation.
+  the book with Typst and ``_templates/book.typ``. It gives vector math, proper
+  hyphenation, and running headers without a LaTeX installation.
 
 Configuration settings mapping
 ------------------------------
 
-Here is how common Sphinx ``conf.py`` variables correspond to Guidedog's ``conf.toml``:
+Common Sphinx ``conf.py`` variables correspond to Guidedog's ``conf.toml`` like this:
 
 .. list-table:: Common configuration mapping
    :header-rows: 1
@@ -160,19 +159,19 @@ Here is how common Sphinx ``conf.py`` variables correspond to Guidedog's ``conf.
 Handling custom Python extensions
 ---------------------------------
 
-If your Sphinx documentation relies on extensive Python extensions that inspect Python ASTs
-or modify Sphinx internal classes, evaluate your options:
+Some Sphinx projects rely on large Python extensions that inspect Python ASTs
+or modify Sphinx's internal classes. For those, we have three options:
 
-1. **Declarative object types:** If the extension simply created custom directives or roles,
-   replace it with ``[[object_types]]`` in ``conf.toml``.
-2. **Build plugins:** If your extension transformed source text, injected custom HTML
-   wrappers, or generated static assets, implement a build plugin in Rust with the
+1. **Declarative object types:** If the extension only created custom directives or roles,
+   we replace it with ``[[object_types]]`` in ``conf.toml``.
+2. **Build plugins:** If the extension transformed source text, added custom HTML
+   wrappers, or generated static assets, we write a build plugin in Rust with the
    ``gd-plugins`` crate's typed interface described in :doc:`../plugins`. The same plugin
-   runs as an installed program (``guidedog plugin register``) or linked into your own
+   runs as an installed program (``guidedog plugin register``) or linked into our own
    ``guidedog`` binary through ``gd_cli::run_with``.
 3. **Static API extraction:** Guidedog already reads Python docstrings, Odin declarations,
    and Rust doc comments without running the documented code. Use :doc:`document-code`.
    Runtime-generated objects may need explicit RST descriptions.
 
-See :doc:`../compatibility` for a detailed breakdown of Sphinx compatibility evidence and
-retained limitations.
+:doc:`../compatibility` gives the evidence for Sphinx compatibility and
+the limits that remain.

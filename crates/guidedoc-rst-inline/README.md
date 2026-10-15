@@ -57,7 +57,7 @@ against. It is stable: later changes are additive only. Odin names on the left.
 
 | Odin `rst_inline.` | Rust `guidedoc_rst_inline::` |
 |---|---|
-| `Line` (`gd.Line_View`) | `Line<'s>` = `guidedoc::LineView<'s>` (`text`, `offset`) — pass source text with tabs **unexpanded** (Odin `inline_view`) |
+| `Line` (`gd.Line_View`) | `Line<'s>` = `guidedoc::LineView<'s>` (`text`, `offset`); pass source text with tabs **unexpanded** (Odin `inline_view`) |
 | `Inline_State{ctx, source, roles, roles_used, default_role, hook, options}` | `InlineState { source, roles: Vec<Role>, default_role: String, options: Options }` (+ private reusable buffers). No `ctx` and no `hook` inside: both are call arguments. `InlineState::new(options)`, `find_role(name) -> Option<usize>`, `define_role(role) -> usize` (replaces same name) |
 | `Role`, `Role_Base` | `Role { name, base, classes, format, language }` (owned `String`s, `Default`), `RoleBase::{Emphasis, Strong, Literal, Code, Math, Subscript, Superscript, TitleReference, PepReference, RfcReference, Abbreviation, Acronym, Raw, Custom}` |
 | `standard_role(name)` (private in inline; the block reader had its own) | `standard_role(name) -> Option<RoleBase>` (case-insensitive, aliases included) |

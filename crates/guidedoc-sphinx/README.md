@@ -57,7 +57,7 @@ let doc = read_document(&mut ws, &reader(), &request)?;
 |---|---|
 | register the reader | `guidedoc_sphinx::READER` / `reader()` (id `sphinx`) |
 | configuration | `Config` (`Default` = Sphinx's defaults) via `ReadOptions::extension` |
-| MyST with Sphinx | `myst_settings(config, myst)` → `guidedoc_commonmark::Settings` for `MYST_READER` (id `myst`) |
+| MyST with Sphinx | `myst_settings(config, myst)` -> `guidedoc_commonmark::Settings` for `MYST_READER` (id `myst`) |
 | autodoc | `impl AutodocProvider` (`generate(&AutodocRequest) -> AutodocResult`), `Config::autodoc: Vec<Autodoc { domain, provider }>` |
 | supported extensions | `EXTENSIONS`, `extension_supported(name)` |
 
@@ -77,10 +77,10 @@ a per-document state struct (`OdinState`, `RustState`, `Default`) that `State` h
 - `DomainDirective::object(name, options)`: an object description, run by the shared
   machinery (`domains::object`): Desc{domain, objtype} > Desc_Signature per signature
   line (backslash continuations joined), Index{entries, targets}, Desc_Content.
-- `DomainDirective::run(name, tag, (ArgRule, final_ws, ContentRule), options)`: your
+- `DomainDirective::run(name, tag, (ArgRule, final_ws, ContentRule), options)`: our
   own directive, run by `Domain::run(sx, p, d, tag)`.
 - `DomainDirective::autodoc(name, options)`: a generating directive; the host's
-  provider for your domain (`Config::autodoc_for(name())`) writes reST that is parsed in
+  provider for our domain (`Config::autodoc_for(name())`) writes reST that is parsed in
   place; `Domain::autodoc_context(st) -> (module, class)` fills the request.
 - Options: `guidedoc_rst::{opt, choice, OptType}`; `object::OPTS_OBJECT` is the common
   set; `object::join_opts(a, b)` joins tables at compile time.
@@ -106,8 +106,8 @@ a per-document state struct (`OdinState`, `RustState`, `Default`) that `State` h
 | `autodoc_context(st)` | autodoc request | `odin_package`, top type |
 
 **Contexts.** `Cx { p: &mut Parser, st: &mut State, config: &Config }` holds the state
-borrowed: inside a `Cx` hook never parse nested content (`p.parse_body`, `p.inline`) —
-roles borrow the state too. `run` gets `sx: &Sphinx` instead: borrow with
+borrowed: inside a `Cx` hook never parse nested content (`p.parse_body`, `p.inline`),
+because roles borrow the state too. `run` gets `sx: &Sphinx` instead: borrow with
 `sx.state()` / `sx.with_cx(p, |cx| ..)` only between nested parses.
 
 **Helpers.** `Cx`: `b()`, `report(msg, span)`, `leaf_in(kind, span, text)`,
@@ -118,13 +118,13 @@ signature's first child), `xref(span, reftype, domain, &XrefParts{title, target,
 explicit, specific}, code)`, `node_count()` + `generated(first)`; `cx.config.label(
 Label::Availability)`. `Object`: `d`, `domain`, `objtype`, `noindex`, `noentry`,
 `fullname`, `prefix`, `signatures` (increment when a signature gives a name), `extra`
-(free text for your before_content, e.g. polymorphic names), `entry(kind, &[parts])` /
+(free text for our before_content, e.g. polymorphic names), `entry(kind, &[parts])` /
 `entry_begin` + `entry_add`, `flag(name)`, `option(name)`. `State`: `NameStack`
 (`push -> bool` at most 32 deep, `pop`, `top`, `items`), `make_object_id`, `id_taken`,
 `note_id`, `index_id`. Free functions: `domains::{leaf_in, text_leaf, generated,
 emit_xref}`, `python::{module_target, pseudo_arglist, dotted_toc_name,
 annotation_xrefs}`, `text::{trim_space, has_at, last_part, is_identifier_byte, ...}`.
-Messages: `messages::SIGNATURE`, `NESTING`, ... (add your own `Message` consts in your
+Messages: `messages::SIGNATURE`, `NESTING`, ... (we add our own `Message` consts in our
 module; every message has a hint).
 
 ## Redesigns from the Odin package

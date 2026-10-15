@@ -1,4 +1,4 @@
-# Beta release review — 11 October 2026
+# Beta release review, 11 October 2026
 
 Guidedog is ready for a **scoped beta for trusted documentation projects on macOS and Linux**. Its core architecture, project workflow, diagnostics, memory accounting, and recoverable publication now have substantial repeatable evidence. This is not a claim of complete Sphinx compatibility, a security sandbox for arbitrary native inputs, or tested Windows runtime support.
 
@@ -14,12 +14,12 @@ Rendered headers use reader-facing labels such as Number, Title, State, Authors,
 
 | Record | State | Meaning |
 | --- | --- | --- |
-| 0001 — GDS process | committed | The RST workflow and recoverable metadata transactions are implemented. |
-| 0002 — CLI and toolchain | published | The implemented CLI is usable. Broader worker, native Typst chapter, packaging, and Windows obligations remain explicit. |
-| 0003 — Guidedoc core | committed | The supported conversion contract is implemented. RST conformance remains conservatively described as partial. |
-| 0004 — Memory budgets and trust | committed | The Guidedog allocation budget and declared file-access boundary are implemented. Native libraries' internal allocations remain outside that budget. |
-| 0005 — Odin domain | committed | Static Odin API extraction, references, and inventory support are implemented, with stated extraction limits. |
-| 0006 — Projects and publication | committed | The supported Sphinx-style project workflow and recoverable generation publication are implemented. Python extension execution and future plugins remain deferred. |
+| 0001 - GDS process | committed | The RST workflow and recoverable metadata transactions are implemented. |
+| 0002 - CLI and toolchain | published | The implemented CLI is usable. Broader worker, native Typst chapter, packaging, and Windows obligations remain explicit. |
+| 0003 - Guidedoc core | committed | The supported conversion contract is implemented. RST conformance remains conservatively described as partial. |
+| 0004 - Memory budgets and trust | committed | The Guidedog allocation budget and declared file-access boundary are implemented. Native libraries' internal allocations remain outside that budget. |
+| 0005 - Odin domain | committed | Static Odin API extraction, references, and inventory support are implemented, with stated extraction limits. |
+| 0006 - Projects and publication | committed | The supported Sphinx-style project workflow and recoverable generation publication are implemented. Python extension execution and future plugins remain deferred. |
 
 `XXXXX` remains correct in the draft template, workflow examples, and tests of new proposals. No active numbered record retains a draft number. A committed record describes its supported contract; it does not turn its future-work section into an implemented feature.
 
@@ -41,7 +41,7 @@ Root preparation now returns a checked problem and stops compilation. It does no
 
 ### Cleanup differed by platform and could follow the wrong root
 
-On macOS, `guidedog clean docs/gds` failed on `.DS_Store` with “Not a directory.” Core `remove_all` had different behavior for ordinary files and top-level links. Its recursive path construction was also a poor boundary for allocation refusal and deep directory trees.
+On macOS, `guidedog clean docs/gds` failed on `.DS_Store` with "Not a directory." Core `remove_all` had different behavior for ordinary files and top-level links. Its recursive path construction was also a poor boundary for allocation refusal and deep directory trees.
 
 All project-generation cleanup now uses one checked, iterative postorder work list. Files and links are unlinked directly. Directories are removed after their children. The configured clean root is checked without following a link; a symlink root is refused. Every work-list growth and joined child path is checked. Regression tests cover files, nested directories, outside-directory symlinks, root links, and refusal of each allocation used by cleanup. Outside files survive every case.
 
@@ -122,7 +122,7 @@ One intermediate sanitizer retry lacked the required Odin/Typst `PATH` and is ex
 
 A build exiting zero does not mean an imported Sphinx project has no diagnostics. The permissive build mode deliberately retains unsupported source and reports it. Strict `-n -W` builds of Guidedog's GDS and API projects have no errors or warnings. The CPython fixture still contains unsupported project-specific extension directives. Django and Flask also retain their recorded source diagnostics. Their exact severity/code counts are compared with the existing TSV baselines.
 
-The earlier “29 killed publications,” “101 of 101 builds,” and all-platform sanitizer statements are historical results. This review does not claim to have repeated those exact stress experiments. It runs the retained regression suites, fresh large builds, unchanged rebuilds, targeted failure reproducers, and the final candidate checks listed above. Neither this review nor AddressSanitizer proves that no crash can ever occur.
+The earlier "29 killed publications," "101 of 101 builds," and all-platform sanitizer statements are historical results. This review does not claim to have repeated those exact stress experiments. It runs the retained regression suites, fresh large builds, unchanged rebuilds, targeted failure reproducers, and the final candidate checks listed above. Neither this review nor AddressSanitizer proves that no crash can ever occur.
 
 ## Release scope and remaining gates
 
@@ -134,4 +134,4 @@ Do not advertise `--untrusted` as a general sandbox for arbitrary native input. 
 
 GDS 0002's broader worker and native-Typst chapter obligations remain open. An actual issue-tracker URL should be supplied through `GUIDEDOG_ISSUE_TRACKER` for distributed builds; this checkout has no configured remote from which to derive one. The reviewer did not invent a URL, tag a release, or publish an artifact.
 
-Within this scope, the beta is justified. An unqualified “everything is finished and production-safe on every platform” statement is not justified by the implementation or evidence.
+Within this scope, the beta is justified. An unqualified "everything is finished and production-safe on every platform" statement is not justified by the implementation or evidence.

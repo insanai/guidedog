@@ -2,10 +2,9 @@ Incremental builds
 ==================
 
 A second build of an unchanged project reads no document and writes no file, and a
-change rebuilds exactly what it can affect. This page lists every input of every digest
-that decides this, from the Odin code (environment.odin, read.odin, build.odin,
+change rebuilds exactly what it can affect. Digests decide this, and this page lists every input of every digest. The list comes from the Odin code (environment.odin, read.odin, build.odin,
 html_builder.odin, builders.odin, search.odin, lookups.odin, plugins.odin, intl.odin,
-intersphinx.odin) and the Rust crates that now hold it (gd-conf, gd-env, gd-outputs,
+intersphinx.odin) and from the Rust crates that now hold it (gd-conf, gd-env, gd-outputs,
 gd-resolve). When a digest gains an input, this page changes with it.
 
 The model
@@ -13,7 +12,7 @@ The model
 
 Guidedog's incremental build is a *verifying trace* store with *dynamic dependencies*
 and *early cutoff*, in the terms of "Build Systems à la Carte" (Mokhov, Mitchell,
-Peyton Jones): the same idea as rustc's red-green query system and salsa, at the
+Peyton Jones). It is the same idea as rustc's red-green query system and salsa, at the
 granularity of documents and output units.
 
 * Each task (reading a document, writing an output unit) records the digests of the
@@ -23,13 +22,43 @@ granularity of documents and output units.
   files a page's references look up. They are recorded as the task discovers them
   (*dynamic* dependencies) in a ``gd_env::Trace``, with the digest of each answer.
 * A task whose inputs changed but whose result did not stops the change there (*early
-  cutoff*): a document read again into the same object bytes has the same object
-  digest, so no page that used it is written again; a label that moved within its page
+  cutoff*). A document read again into the same object bytes has the same object
+  digest, so no page that used it is written again. A label that moved within its page
   keeps its answer, so the pages that refer to it are kept.
 
-There are two layers. The reading layer decides which documents are parsed again; the
+There are two layers. The reading layer decides which documents are parsed again. The
 writing layer decides which output units are written again. ``Generation::reuse``
 (gd-outputs) is the single cutoff point of the writing layer.
+
+.. graphviz::
+   :class: graphviz-adaptive
+   :caption: Two layers, each with its own cutoff. Where the digests match, the work stops.
+   :alt: A source document goes to the reading layer. If its digests match, the saved object is reused; otherwise the document is read again. The object then goes to the writing layer. If the unit's inputs and lookup answers match, the unit is kept; otherwise it is written again.
+
+   digraph incremental {
+     graph [rankdir=LR, bgcolor="transparent", pad="0.3", nodesep="0.35", ranksep="0.4"];
+     node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
+           color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=12, margin="0.15,0.1"];
+     edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=10];
+
+     source [class="gd-input", shape=note, fillcolor="#fbfaf3", label="Source and\ndependencies"];
+     same_read [class="gd-choice", shape=diamond, fillcolor="#fff4e6", color="#ca8a04", fontcolor="#854d0e", label="Digests\nmatch?"];
+     reuse [label="Reuse the object"];
+     reread [label="Read again"];
+     object [label="Object digest"];
+     same_unit [class="gd-choice", shape=diamond, fillcolor="#fff4e6", color="#ca8a04", fontcolor="#854d0e", label="Inputs and\nanswers match?"];
+     keep [class="gd-output", fillcolor="#eef4fa", label="Keep the unit"];
+     write [class="gd-output", fillcolor="#eef4fa", label="Write the unit"];
+
+     source -> same_read;
+     same_read -> reuse [label="yes"];
+     same_read -> reread [label="no"];
+     reuse -> object;
+     reread -> object;
+     object -> same_unit;
+     same_unit -> keep [label="yes"];
+     same_unit -> write [label="no"];
+   }
 
 Digests
 -------
@@ -123,9 +152,9 @@ read again every build.
 Within one build each dependency is hashed once: the reading threads share a memo of
 file digests, seeded with the digests the generated pages were just made with.
 
-The Rust API pages are not made again when nothing they come from changed:
+The Rust API pages are not made again when nothing they come from changed.
 ``<doctrees>/rust-api.json`` (gd-read, ``rustcache.rs``) keeps each crate's pages and
-reports, keyed by the executable stamp, the crate's path and the options, with the
+reports. They are keyed by the executable stamp, the crate's path and the options, with the
 digest of the listing of the files below the crate's folder (``target`` and hidden
 folders left out) and the digest of every input. A crate whose listing and inputs are
 unchanged keeps its pages; any other is parsed again. The record is a memo, checked
@@ -134,9 +163,9 @@ before use: a missing or damaged one only costs the parse.
 A reused object is checked when it is loaded: its bytes must have the digest
 ``CachedFile::digest`` records. A missing, damaged or foreign object is *stale*: the
 document is read again from its source, with a ``build.object.stale`` warning, and its
-new object used. Objects and search words are content-addressed
-(``objects/<docname>.<digest16>.gdo``, ``search/<docname>.<digest16>.txt``): once
-written they never change, and those the published environment no longer names are
+new object is used. Objects and search words are content-addressed
+(``objects/<docname>.<digest16>.gdo``, ``search/<docname>.<digest16>.txt``). Once
+written, they never change. Those the published environment no longer names are
 swept after the commit.
 
 The writing layer
@@ -221,8 +250,8 @@ Publication
 
 The environment and the manifest are published with the output they describe, in one
 commit (:doc:`publication`). A build that fails, including one that ``-W`` fails,
-publishes nothing: the previous output, manifest and environment stay, so the next build
-reads and writes again what this one did and reports the same diagnostics.
+publishes nothing. The previous output, manifest and environment stay. So the next build
+reads and writes again what this one did, and reports the same diagnostics.
 
 Measurements
 ------------
@@ -241,7 +270,7 @@ One document changed   0.78 s   0.17 s
 =====================  =======  ======
 
 Before, 82% of a no-op build's instructions (callgrind) went to parsing every crate with
-tree-sitter for the generated Rust pages, and 6% to hashing every crate file again for
+tree-sitter for the generated Rust pages. Another 6% went to hashing every crate file again for
 each API page that depends on it. What remains of a no-op build is mostly
 the check of every reused object (hashing 7 MB, on the reading threads), loading and
 saving the environment's JSON, and the site unit (inventory and index).

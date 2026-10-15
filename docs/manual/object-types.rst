@@ -1,7 +1,7 @@
 Declaring object types
 ======================
 
-A project may need names that the standard domains do not know. Declare those
+A project may need names that the standard domains do not know. We declare those
 object types in TOML. Guidedog can then create targets, index entries, and roles
 without loading a Python extension. The declaration states a syntax, not executable behavior.
 
@@ -35,7 +35,7 @@ Descriptions: ``add_object_type``
 
 ``.. django-admin:: migrate [app_label]`` then describes the command like any object:
 a signature, content, an id (``django-admin-migrate``), and an index entry. In Sphinx a
-``parse_node`` function may read the signature; its usual work is set by fields
+``parse_node`` function may read the signature. Here, fields set its usual work
 instead:
 
 ``name``
@@ -67,8 +67,8 @@ target such as ``py:function`` names its domain.
 Migrating
 ---------
 
-``guidedog migrate`` finds each extension ``conf.py`` lists that is a module of the
-project, reads its ``add_crossref_type``, ``add_object_type``, and ``add_directive``
+``guidedog migrate`` finds each extension listed in ``conf.py`` that is a module of the
+project. It reads its ``add_crossref_type``, ``add_object_type``, and ``add_directive``
 calls without running them, and writes these tables. It reports what it cannot
 declare: a ``parse_node`` function (set ``name``, ``display``, and ``program`` to match
 it) and directives, roles, and event handlers written in Python.

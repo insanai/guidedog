@@ -2,12 +2,12 @@ Configuration reference
 =======================
 
 Every Guidedog documentation project is configured with ``conf.toml``. Guidedog reads it
-as declarative TOML data and does not execute code. Setting names are those of Sphinx's
-``conf.py``, so ``guidedog migrate conf.py`` can translate an existing project, and the
+as TOML data and runs no code. Setting names are those of Sphinx's
+``conf.py``. So ``guidedog migrate conf.py`` can translate an existing project, and the
 Sphinx documentation describes the settings Guidedog shares with it.
 
 This page lists every setting Guidedog reads. The settings are flat top-level keys, as in
-``conf.py``; a table setting is written as a TOML table (``[html_context]``) or an
+``conf.py``. A table setting is written as a TOML table (``[html_context]``) or an
 inline table.
 
 Where conf.toml is
@@ -15,20 +15,20 @@ Where conf.toml is
 
 Guidedog looks for ``conf.toml`` in the project folder, then in ``PROJECT/source`` (the
 separated layout of ``quickstart --sep``, with ``build/`` beside ``source/``), then in the
-nearest parent folder that has one. The folder holding ``conf.toml`` is the source folder,
-and the build folder is ``_build`` beside it, or ``build`` in the separated layout.
-``guidedog build -c DIR`` reads ``conf.toml`` from another folder, and ``-C`` builds
+nearest parent folder that has one. The folder holding ``conf.toml`` is the source folder.
+The build folder is ``_build`` beside it, or ``build`` in the separated layout.
+``guidedog build -c DIR`` reads ``conf.toml`` from another folder. ``-C`` builds
 without one, with the defaults below.
 
 ``-D name=value`` overrides one setting for one build. The value is TOML
-(``-D numfig=true``, ``-D 'exclude_patterns=["drafts/**"]'``); a bare word is read as a
+(``-D numfig=true``, ``-D 'exclude_patterns=["drafts/**"]'``). A bare word is read as a
 string (``-D language=de``). ``-D html_context.key=value`` sets one key of a table setting
 and keeps the others, as sphinx-build does.
 
 Minimal configuration
 ---------------------
 
-A project requires only basic metadata. Default values are applied for omitted keys:
+A project needs only basic metadata. Omitted keys take their defaults:
 
 .. code-block:: toml
 
@@ -46,22 +46,22 @@ A project requires only basic metadata. Default values are applied for omitted k
 How settings are checked
 ------------------------
 
-Each value is checked against its type when ``conf.toml`` is read; a mistake is an
+Each value is checked against its type when ``conf.toml`` is read. A mistake is an
 ``INVALID CONFIGURATION`` problem (exit status 2) naming the line and the expected form.
 An unknown setting is an error too, with a "Did you mean ...?" hint when the name is
 close to a known one. A setting of a Sphinx builder or extension Guidedog does not have
 (``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, ``autosummary_*``, ``napoleon_*``,
 ``linkcheck_*``, ``html_sidebars``, ``needs_*`` and similar) is accepted with a
-``config.ignored`` warning, so the same file can serve a Sphinx build of the sources.
+``config.ignored`` warning. So the same file can serve a Sphinx build of the sources.
 
 Some values are derived after reading:
 
 * ``release`` defaults to ``version``.
 * ``html_title`` defaults to ``"<project> <release> documentation"`` (or
-  ``"<project> documentation"`` without a release); ``html_short_title`` defaults to
+  ``"<project> documentation"`` without a release). ``html_short_title`` defaults to
   ``html_title``.
-* Without ``pdf_documents``, the project has one book: from ``root_doc``, titled with
-  ``project``, by ``author``, in a file named after the project.
+* Without ``pdf_documents``, the project has one book. It starts from ``root_doc``, is titled with
+  ``project``, is by ``author``, and is in a file named after the project.
 * ``extensions = ["myst_parser"]`` adds ``.md`` to ``source_suffix``, as the Sphinx
   extension does.
 
@@ -797,13 +797,13 @@ Intersphinx
    python = ["https://docs.python.org/3/", ""]
    click = ["https://click.palletsprojects.com/", ["click.inv", ""]]
 
-Inventories are downloaded with the ``curl`` program; ``--untrusted`` fetches nothing.
+Inventories are downloaded with the ``curl`` program. ``--untrusted`` fetches nothing.
 See :doc:`../intersphinx`.
 
 Python autodoc
 --------------
 
-Guidedog reads Python source without importing it; see :doc:`../autodoc`.
+Guidedog reads Python source without importing it (see :doc:`../autodoc`).
 
 .. list-table:: Python autodoc
    :header-rows: 1
@@ -933,8 +933,8 @@ See :doc:`../odin`.
 Rust API documentation
 ----------------------
 
-New in the Rust release of Guidedog. Crates are read with tree-sitter, never compiled;
-see :doc:`../howto/document-code` and the ``rust`` domain in :doc:`../topics/domains`.
+New in the Rust release of Guidedog. Crates are read with tree-sitter, never compiled.
+See :doc:`../howto/document-code` and the ``rust`` domain in :doc:`../topics/domains`.
 
 .. list-table:: Rust API pages
    :header-rows: 1
@@ -983,7 +983,7 @@ With ``--untrusted``, crate folders outside the source folder are not read.
 Internationalization
 --------------------
 
-The names are Sphinx's; see :doc:`../intl`.
+The names are Sphinx's. See :doc:`../intl`.
 
 .. list-table:: Internationalization
    :header-rows: 1
@@ -1049,12 +1049,12 @@ The names are Sphinx's; see :doc:`../intl`.
 Trust
 -----
 
-``guidedog build --untrusted`` builds a project whose sources you did not write: raw
+``guidedog build --untrusted`` builds a project whose sources we did not write. Raw
 content is left out, nothing is fetched, and no build plugin runs. The project cannot
-widen what the build reads: ``include_roots`` and ``pdf_preamble`` are not used, files
+widen what the build reads. ``include_roots`` and ``pdf_preamble`` are not used. Files
 and folders that lead outside the source folder (``html_logo``, ``html_favicon``,
 ``pdf_logo``, ``mathjax_config_path``, ``html_static_path``, ``html_extra_path``,
 ``templates_path``, ``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``,
-``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out, and no Typst package is
+``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. No Typst package is
 downloaded. Each dropped setting is a ``build.untrusted`` warning. This is a capability
 policy, not a process sandbox. See :doc:`cli`.

@@ -57,13 +57,13 @@ Lifecycle and ownership
 Each build has private sessions. Load copies options, establishes private state,
 and declares dependencies. The host serializes callback access across reading
 workers. A plugin need not implement synchronization to use this API. A native
-callback is trusted code; it cannot be forcibly interrupted by a pipe deadline.
+callback is trusted code. A pipe deadline cannot forcibly interrupt it.
 
 ``load_plugin`` / ``unload_plugin`` own ``Plugin_Session``. ``process_source`` and
 ``process_html`` return ``Text_Result``, freed by ``release_text``.
 ``collect_assets`` returns ``Assets_Result``, freed by ``release_assets``.
-Every result owns copied values. Callback inputs are borrowed for that call;
-callback output storage remains valid until the SDK copies it. Session state
+Every result owns copied values. Callback inputs are borrowed for that call.
+Callback output storage remains valid until the SDK copies it. Session state
 must not retain hook-result storage or borrowed inputs. Cleanup accepts zero,
 partial and previously released owners. Unload closes resources before arena
 release and tolerates failed load.
@@ -71,8 +71,8 @@ release and tolerates failed load.
 Primary RST and Markdown sources pass through source hooks before parsing.
 Includes are still read by the document engine. Source transformations affect
 all builders. When the source changes, root-document markup diagnostics identify
-plugin-expanded input and retain its real excerpt; original source coordinates
-are not claimed. A future origin-map interface would require a separate design.
+plugin-expanded input and retain its real excerpt. They do not claim original source
+coordinates. A future origin-map interface would require a separate design.
 
 HTML hooks receive complete rendered document, index and additional pages.
 Their asset URL is relative to the actual output page. They execute before
@@ -80,6 +80,27 @@ staging. Assets are generated once per HTML build and placed under
 ``_static/plugins/ID/``. PDF does not promise a plugin-generated resource service.
 The transformed source may use ordinary project resources already supported by
 the PDF engine.
+
+.. graphviz::
+   :class: graphviz-adaptive
+   :caption: Build hooks sit at the edges of a build; publication comes after it.
+   :alt: Plugin sessions load first. Source hooks change each primary source before parsing. The engine parses and renders. HTML hooks change each complete page, and asset files are collected once. Everything is staged, and the generation is published only when the whole build succeeded.
+
+   digraph hooks {
+     graph [rankdir=TB, bgcolor="transparent", pad="0.3", nodesep="0.35", ranksep="0.35"];
+     node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
+           color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=12];
+     edge [color="#216553"];
+     load [class="gd-plugin", label="Load plugin sessions", style="rounded,dashed,filled", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e"];
+     source [class="gd-plugin", label="Source hooks\nprimary RST and Markdown text", style="rounded,dashed,filled", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e"];
+     engine [label="Parse, resolve, render"];
+     html [class="gd-plugin", label="HTML hooks\ncomplete pages", style="rounded,dashed,filled", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e"];
+     assets [class="gd-plugin", label="Assets, once per HTML build\n_static/plugins/ID/", style="rounded,dashed,filled", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e"];
+     stage [label="Staging"];
+     publish [class="gd-output", label="New generation\nonly if the whole build succeeded", fillcolor="#eef4fa"];
+     load -> source -> engine -> html -> stage -> publish;
+     load -> assets -> stage;
+   }
 
 Limits and failure semantics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -92,7 +113,7 @@ case-insensitive aliases and file-as-parent conflicts before copying results.
 Refuse collisions with files supplied by the project instead of overwriting them.
 
 Host allocations use the existing build budget. Child RSS is outside that
-budget; no operating-system sandbox is promised. Plugin authors must preflight
+budget. No operating-system sandbox is promised. Plugin authors must preflight
 known amplification, check every allocation and use ``memory_refused`` after
 helpers that hide allocation errors. SDK refusal never becomes partial success.
 
@@ -111,7 +132,7 @@ native host identity), loaded configuration, declared dependency files,
 
 ``read_plugin_config`` and ``read_plugin_file`` declare files and append the
 fingerprint of the exact loaded bytes to ``cache_key``. This separates loaded
-state from a later file change: hashing only the on-disk file after load could
+state from a later file change. Hashing only the on-disk file after load could
 incorrectly pair old state with new content. A callback that reads files itself
 must declare their paths and append fingerprints of the values actually loaded.
 Other inputs, including selected environment variables, also belong in
@@ -123,21 +144,21 @@ Version negotiation
 Build-plugin API 1.0 and process protocol ``guidedog-build-plugin`` 1.0 are new
 contracts. The handshake declares exactly the offered source/html/assets hooks.
 The host checks identity, hook set and compatible versions when starting a pinned
-program. JSON requests have strictly increasing IDs. Session load precedes hooks;
-unload is bounded and terminates the process.
+program. JSON requests have strictly increasing IDs. Session load precedes hooks.
+Unload is bounded and terminates the process.
 
 ``check_plugin`` exercises two fresh sessions, repeated source/HTML values and
 asset validation. The CLI's ``plugin check PATH`` adapts only an isolated process
 and does not alter the registry. Build-plugin registration runs these checks
 before pinning a checksum, with project/configuration supplied explicitly.
-Passing is interoperability evidence, not certification: every runtime response
+Passing is interoperability evidence, not certification. Every runtime response
 is still checked. Publisher qualification uses provider tests and dry runs rather
 than generic remote operations.
 
 Publisher SDK 1.1, ``guidedog-publisher`` 1.0 and snapshot schema 1 retain their
 released contracts. Machine registry schema 1 adds optional protocol-name and
 hook fields only for build programs. Legacy publisher entries remain readable.
-Old hosts reject the distinct build protocol; compatibility is not simulated by
+Old hosts reject the distinct build protocol. Compatibility is not simulated by
 advertising a publishing capability.
 
 Rationale and alternatives
@@ -156,8 +177,8 @@ extension. Neither is justified by the worked example.
 Security and operational considerations
 ---------------------------------------
 
-Build hooks execute trusted native code. Checksums detect changed programs; they
-do not prove their safety. Selection is deliberate, untrusted mode disables them,
+Build hooks execute trusted native code. Checksums detect changed programs. They
+do not prove the programs safe. Selection is deliberate, untrusted mode disables them,
 and no publication credentials or authority are handed to build contexts.
 
 Implementation and verification
@@ -174,7 +195,7 @@ conflicts and each refused allocation in turn. Integration tests compile the
 example, use a private machine registry, and exercise builders, cache changes,
 nested asset links, untrusted mode and preservation of failed generations.
 Release qualification must exercise the current SDK and Pages plugin, memory checks and
-platform coverage. Build hooks first ship in 0.6.2; earlier 0.6.x releases contain publishers only.
+platform coverage. Build hooks first ship in 0.6.2. Earlier 0.6.x releases contain publishers only.
 
 Implementation in Rust
 ----------------------
@@ -184,16 +205,16 @@ GDS 0011 moves the implementation to Rust. The ``BuildPlugin`` trait of ``gd-plu
 "service absent") replaces the typed procedure tables. Hook text is ``Cow``, so unchanged
 text is never copied. The limits above stay (text 8 MiB, 256 assets and 16 MiB), with
 configuration files at 1 MiB, 256 dependencies, and build requests timing out after 60 s.
-``memory_refused`` is gone: plugin authors no longer check each allocation, because Rust
-aborts on allocation failure; a hook still never turns a failure into partial success.
+``memory_refused`` is gone. Plugin authors no longer check each allocation, because Rust
+aborts on allocation failure. A hook still never turns a failure into partial success.
 
-One implementation has two deployments: linked into a custom ``guidedog`` binary through
+One implementation has two deployments. It is linked into a custom ``guidedog`` binary through
 ``gd_cli::run_with(Registry::new(vec![badge::plugin()])?)``, or served as a registered
 program by ``gd_plugins::serve_plugin``. A build looks up the linked registry first, then
 the machine registry (``select_build_plugin``). A linked plugin's identity is the SHA-256
-of its ID, versions and the host's build identity; a served plugin's is its program's
+of its ID, versions and the host's build identity. A served plugin's identity is its program's
 SHA-256. ``LoadContext::read_config`` and ``read_file`` extend the cache key with the
-digests of the bytes read, and only append. One session per plugin per build, shared by
+digests of the bytes read, and only append. Each plugin has one session per build, shared by
 reading workers behind a ``Mutex``. ``--untrusted`` refuses any selected plugin before
 code starts. ``examples/build_plugin`` is the badge, run both ways in a test that requires
 identical outputs. The project side (``gd-env``'s plugin run) is being ported with the
@@ -239,7 +260,7 @@ References
    docs/manual/evidence/plugin-review-20261014.md; successful 0.6.2 release run
    38434657070.
 
-.. rubric:: Implementation revision — 2026-10-15
+.. rubric:: Implementation revision, 2026-10-15
 
 The implementation moved from Odin to Rust; see GDS 0011 and the section
 "Implementation in Rust". This is an implementation revision. It does not change

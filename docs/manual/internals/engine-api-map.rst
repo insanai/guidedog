@@ -10,7 +10,7 @@ the crate root: ``use guidedoc::{...}`` or ``use guidedoc as gd;`` and write
 
 The Odin code is the specification of behaviour, not a template: keep its output and
 diagnostics, but use the Rust forms on the right (``Option`` for absent values, ``Result``
-and ``?`` for failures, iterators for traversals, owned ``Vec``/``String`` buffers that you
+and ``?`` for failures, iterators for traversals, owned ``Vec``/``String`` buffers that we
 ``clear()`` and reuse instead of scratch).
 
 The ten idioms
@@ -21,14 +21,14 @@ The ten idioms
 
    * - Odin
      - Rust
-   * - ``p := gd.begin_node(b, .Paragraph, span)``… ``gd.end_node(b, p)``
-     - ``let p = b.begin_node(NodeKind::Paragraph, span)?;`` … ``b.end_node(p)?;`` or ``b.with_node(NodeKind::Paragraph, span, |b, p| { ...; Ok(()) })?``
+   * - ``p := gd.begin_node(b, .Paragraph, span)``... ``gd.end_node(b, p)``
+     - ``let p = b.begin_node(NodeKind::Paragraph, span)?;`` ... ``b.end_node(p)?;`` or ``b.with_node(NodeKind::Paragraph, span, |b, p| { ...; Ok(()) })?``
    * - ``gd.add_leaf(b, .Text, span, gd.add_text(b, s))``
      - ``b.add_text_leaf(NodeKind::Text, span, s)?`` (two ``&mut`` calls cannot nest)
-   * - ``start := gd.text_open(b); gd.text_push(b, x); …; t := gd.text_close(b, start)``
+   * - ``start := gd.text_open(b); gd.text_push(b, x); ...; t := gd.text_close(b, start)``
      - same calls with ``?`` on pushes, or ``let t = b.build_text(|b| { b.text_push(x)?; Ok(()) })?;``
    * - ``if b.status != .Ok do return b.status`` / ``alive(p)``
-     - ``?`` on every fallible builder call; ``b.is_ok()`` where you only test
+     - ``?`` on every fallible builder call; ``b.is_ok()`` where we only test
    * - ``gd.report_message(ctx.reports, M, span, gd.arg_span(s), gd.arg_static("x"))``
      - ``ctx.report(M, span, arg_span(s), arg_static("x"))`` (``Arg::None`` for a missing argument)
    * - ``for child in gd.next_child(v, &it)`` after ``it := gd.children(v, id)``
@@ -39,8 +39,8 @@ The ten idioms
      - ``if let Some(x) = doc.first_child(id)``
    * - ``l, _ := gd.link_info(v, id)``
      - ``doc.link_info(id).unwrap_or(LinkInfo::UNRESOLVED)`` (or match the ``Option``)
-   * - ``mark := gd.scratch_mark(ctx.scratch)`` … ``gd.scratch_take(ctx.scratch, T, n)``
-     - a ``Vec<T>`` in your state struct, ``clear()``\ ed and refilled; ``Vec::with_capacity(n)`` when sizing
+   * - ``mark := gd.scratch_mark(ctx.scratch)`` ... ``gd.scratch_take(ctx.scratch, T, n)``
+     - a ``Vec<T>`` in our state struct, ``clear()``\ ed and refilled; ``Vec::with_capacity(n)`` when sizing
 
 A reader returns ``Result<(), Fail>``: return ``Ok(())`` when done (the engine closes the
 root with ``Builder::finish``), and ``Err(fail)`` (usually by ``?``) on failure. A renderer
@@ -83,7 +83,7 @@ Conversion: workspace, requests, running
    * - ``Math_Style``
      - ``MathStyle``
    * - ``Label``, ``Labels``, ``ENGLISH_LABELS``
-     - ``Label`` (CamelCase variants: ``See_Also`` → ``SeeAlso``), ``Labels`` (``set``/``get``), ``ENGLISH_LABELS[l as usize]``
+     - ``Label`` (CamelCase variants: ``See_Also`` becomes ``SeeAlso``), ``Labels`` (``set``/``get``), ``ENGLISH_LABELS[l as usize]``
    * - ``label(o, l)``, ``admonition_label(o, k)``, ``split_label(s)``
      - ``label(&o, l)``, ``admonition_label(&o, k)``, ``split_label(s) -> (&str, &str)``
    * - ``Highlighter{procedure, user}``
@@ -155,8 +155,8 @@ Results and diagnostics
      - ``Severity``
    * - ``Reports``, ``report(r, d)``, ``report_message(r, m, span, a, b)``
      - ``Reports``; ``r.report(d)``, ``r.message(m, span, a, b)``; from adapters ``ctx.report(...)`` / ``ctx.reports()`` / ``b.report(...)``
-   * - ``reports.muted = true`` … restore
-     - ``let was = ctx.reports().set_muted(true);`` … ``ctx.reports().set_muted(was);``
+   * - ``reports.muted = true`` ... restore
+     - ``let was = ctx.reports().set_muted(true);`` ... ``ctx.reports().set_muted(was);``
    * - ``reports.errors``, ``.warnings``, ``.primary``, ``.items[:used]``
      - ``error_count()``, ``warning_count()``, ``primary() -> Option<&Diagnostic>``, ``items()``
    * - ``first_problem(r)``
@@ -168,8 +168,8 @@ Results and diagnostics
 
 .. _reading-a-document-view--document:
 
-Reading a document (``View`` → ``Document``)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Reading a document (``View`` to ``Document``)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. list-table::
    :header-rows: 1
@@ -240,7 +240,7 @@ The tree
    * - ``Node_Flag``, ``Node_Flags``, ``{.Tight}``, ``.Tight in f``, ``f += {.Auto}``
      - ``NodeFlag``, ``NodeFlags``; ``NodeFlags::TIGHT``, ``f.has(NodeFlag::Tight)``, ``f.insert(NodeFlags::AUTO)`` or ``|``
    * - ``Document_Reading``, ``Admonition_Kind``, ``List_Style``, ``List_Info``, ``Link_Kind``, ``Link_Info``, ``Align``, ``Cell_Info``, ``Attribute_Key``, ``Attribute``, ``Content``
-     - ``DocumentReading``, ``AdmonitionKind`` (``from_value``), ``ListStyle``, ``ListInfo``, ``LinkKind``, ``LinkInfo`` (``UNRESOLVED``), ``Align``, ``CellInfo`` (``Default`` 1×1), ``AttributeKey``, ``Attribute``, ``Content``
+     - ``DocumentReading``, ``AdmonitionKind`` (``from_value``), ``ListStyle``, ``ListInfo``, ``LinkKind``, ``LinkInfo`` (``UNRESOLVED``), ``Align``, ``CellInfo`` (``Default`` 1x1), ``AttributeKey``, ``Attribute``, ``Content``
    * - ``Line_View{text, offset}``
      - ``LineView<'s> { text, offset }``
    * - ``offset_in(outer, inner) -> (int, bool)``
@@ -313,9 +313,9 @@ Building
      - ``b.text_used()``
    * - ``set_text``, ``set_value``, ``add_flags``, ``set_span_end``, ``set_kind``
      - ``b.set_text(id, t)``, ``b.set_value(id, v)``, ``b.add_flags(id, NodeFlags::X)``, ``b.set_span_end(id, end)``, ``b.set_kind(id, k)``
-   * - ``add_attribute(b, id, key, value)`` / ``(…, value, name)``
+   * - ``add_attribute(b, id, key, value)`` / ``(..., value, name)``
      - ``b.add_attribute(id, key, value)?`` / ``b.add_attribute_named(id, key, value, name)?``
-   * - ``add_attribute_string(b, id, key, s)`` / ``(…, .Custom, value, name)``
+   * - ``add_attribute_string(b, id, key, s)`` / ``(..., .Custom, value, name)``
      - ``b.add_attribute_string(id, key, s)?`` / ``b.add_custom_attribute(id, name, value)?``
    * - ``set_list``, ``set_link -> row``, ``set_cell``
      - ``b.set_list(id, info)?``, ``b.set_link(id, info)? -> u32``, ``b.set_cell(id, info)?``
@@ -343,7 +343,7 @@ Memory and limits
    * - Odin ``gd.``
      - Rust
    * - ``Scratch``, ``Scratch_Mark``, ``scratch_mark``, ``scratch_release``, ``scratch_take``, ``scratch_buffer``
-     - reusable ``Vec``/``String`` fields in your reader or renderer state (``clear()`` keeps capacity)
+     - reusable ``Vec``/``String`` fields in our reader or renderer state (``clear()`` keeps capacity)
    * - ``Stack(T)``, ``push``, ``pop``, ``top``, ``stack_slice``
      - ``Vec<T>``: ``push``, ``pop() -> Option``, ``last_mut()``, ``as_slice()`` (bound depth with ``Limits::max_depth``)
    * - ``Buffer``, ``buffer_write``, ``buffer_write_byte``, ``buffer_string``, ``.overflow``

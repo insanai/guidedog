@@ -1,6 +1,6 @@
 # Guidedog
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [हिन्दी](README.hi.md) · [Español](README.es.md) · [Deutsch](README.de.md)
+[English](README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [हिन्दी](README.hi.md) | [Español](README.es.md) | [Deutsch](README.de.md)
 
 **一度書く。明快に伝える。Web と紙に届ける。**
 
@@ -17,7 +17,7 @@ guidedog build pdf docs
 guidedog serve docs
 ```
 
-プロジェクトには `conf.toml`、`index.rst`、`_templates/layout.html`、`_templates/book.typ`、`_static/` があります。テンプレートは普通の編集可能なファイルです。HTML にはナビゲーション、検索、コードの強調、図、数式があり、PDF には章、相互参照、図、索引、言語に応じた組版があります。
+プロジェクトには `conf.toml`、`index.rst`、`_templates/layout.html`、`_templates/book.typ`、`_static/` があります。テンプレートは、手元で編集できる普通のファイルです。HTML にはナビゲーション、検索、コードの強調、図、数式があり、PDF には章、相互参照、図、索引、言語に応じた組版があります。
 
 既定は明るいテーマで、暗いテーマやシステム設定も選べます。マニュアルの入口とリポジトリ概要ではブラウザーの言語に合わせます。保存した選択が優先され、特定の版や章への直接リンクは尊重されます。
 
@@ -31,7 +31,7 @@ API ドキュメントはソースを実行せずに読み取ります。対象�
 
 ## インストール
 
-各[リリース](https://github.com/insanai/guidedog/releases)には Linux（x86-64 と ARM64）と macOS（Apple シリコンと Intel）向けのアーカイブがあります。`guidedog` アーカイブには `guidedog`、`dsc`、`guidedog-pages`、`graphdog` が、`dscc` アーカイブには `dscc` だけが入っています。Typst コンパイラーは組み込まれ、tree-sitter もプログラムにコンパイルされています。Graphviz はシステムのものをリンクするので、先にそのライブラリーをインストールしてください。Debian と Ubuntu では `sudo apt install libgvc6`（または `graphviz` パッケージ）、Fedora では `sudo dnf install graphviz`、macOS では `brew install graphviz` です。Linux には glibc 2.35 以降、macOS にはバージョン 12 以降が必要です。お使いのシステム向けのアーカイブと `SHA256SUMS` をダウンロードし、確認してからインストールします。
+各[リリース](https://github.com/insanai/guidedog/releases)には Linux（x86-64 と ARM64）と macOS（Apple シリコンと Intel）向けのアーカイブがあります。`guidedog` アーカイブには `guidedog`、`dsc`、`guidedog-pages`、`graphdog` が、`dscc` アーカイブには `dscc` だけが入っています。Typst コンパイラーは組み込まれ、tree-sitter もプログラムにコンパイルされています。Graphviz はシステムのものをリンクするので、先にそのライブラリーをインストールしてください。Debian と Ubuntu では `sudo apt install libgvc6`（または `graphviz` パッケージ）、Fedora では `sudo dnf install graphviz`、macOS では `brew install graphviz` です。Linux には glibc 2.35 以降、macOS にはバージョン 12 以降が必要です。対象のシステム向けのアーカイブと `SHA256SUMS` をダウンロードし、確認してからインストールします。
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS では: shasum -a 256 -c --ignore-missing SHA256SUMS
@@ -89,7 +89,7 @@ GitHub では上のリンクから README の言語を選びます。言語の�
 
 ## GitHub Pages に公開する
 
-`guidedog-pages` は、自分のマシンからサイトを公開します。インストール済みの `guidedog` でプロジェクトをビルドし、サイト全体を 1 回の Git プッシュで専用のブランチに送ります。GitHub がこのプッシュを反映するのは、読み取ったときのコミットをブランチがまだ指している場合だけです。そのあと、GitHub Pages がそのコミットをデプロイするまで待ちます。トークンはシステムの認証情報ストアに保管され、プロファイルがどこに公開できるかは、マシン上の紐付け（bind）で決まります。
+`guidedog-pages` は、手元のマシンからサイトを公開します。インストール済みの `guidedog` でプロジェクトをビルドし、サイト全体を 1 回の Git プッシュで専用のブランチに送ります。GitHub がこのプッシュを反映するのは、読み取ったときのコミットをブランチがまだ指している場合だけです。そのあと、GitHub Pages がそのコミットをデプロイするまで待ちます。トークンはシステムの認証情報ストアに保管され、プロファイルがどこに公開できるかは、マシン上の紐付け（bind）で決まります。
 
 ```sh
 guidedog-pages init --repository=octo/manual --project=docs
@@ -102,7 +102,7 @@ guidedog-pages watch                # ソースが変わるたびに公開し直
 
 もう一つの方法は GitHub Actions で、プッシュのたびに公開できます。`guidedog publish --publisher=pages` は Guidedog 自身のエンジンでビルドし、同じパブリッシャーを実行します。[GitHub Pages に公開する](docs/manual/howto/github-pages.rst)と[プラグインを書く](docs/manual/plugins.rst)を参照してください。
 
-ビルドプラグインは、型付きでバージョン管理された契約を通じて、ソース、HTML ページ全体、静的アセットを変換します。プラグインは普通の Rust クレートです。`gd_cli::run_with` で自分の `guidedog` にリンクすることも、`guidedog plugin register` が SHA-256 で固定する別プログラムとして実行することもできます。`guidedog publish --timeout=SECONDS` はパブリッシャーとのやり取り全体の期限です。既定は 300 秒で、`--wait` より長くします。結果が不明なら再公開の前に復旧してください。
+ビルドプラグインは、型付きでバージョン管理された契約を通じて、ソース、HTML ページ全体、静的アセットを変換します。プラグインは普通の Rust クレートです。`gd_cli::run_with` で独自の `guidedog` にリンクすることも、`guidedog plugin register` が SHA-256 で固定する別プログラムとして実行することもできます。`guidedog publish --timeout=SECONDS` はパブリッシャーとのやり取り全体の期限です。既定は 300 秒で、`--wait` より長くします。結果が不明なら再公開の前に復旧してください。
 
 ## 議論を管理する
 

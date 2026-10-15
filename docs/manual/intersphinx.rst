@@ -2,8 +2,8 @@ Linking to other projects
 =========================
 
 With ``sphinx.ext.intersphinx``, references this project cannot resolve are looked up
-in other projects' inventories, the ``objects.inv`` every Sphinx or Guidedog site
-publishes. Name the projects in ``conf.toml``:
+in other projects' inventories. An inventory is the ``objects.inv`` file that every Sphinx or Guidedog site
+publishes. We name the projects in ``conf.toml``:
 
 .. code-block:: toml
 
@@ -16,7 +16,7 @@ publishes. Name the projects in ``conf.toml``:
 Each entry is the address of the other project's pages and where its inventory is: a
 URL, a file relative to the source folder, or ``""`` for the ``objects.inv`` at the
 address. A list is tried in order. This is Sphinx's ``intersphinx_mapping``, with ``""``
-for Python's ``None``; ``guidedog migrate`` converts it.
+for Python's ``None``. ``guidedog migrate`` converts it.
 
 Then references need nothing new:
 
@@ -33,10 +33,10 @@ name (``:doc:`python:tutorial/index```), because ``intersphinx_disabled_reftypes
 
 Inventories are fetched when a build starts and kept in
 ``_build/.doctrees/__intersphinx_cache__`` for ``intersphinx_cache_limit`` days (5; a
-negative number keeps them); local files are read on every build. As in Sphinx, an
-inventory that has moved (its URL redirects, as
-``https://werkzeug.palletsprojects.com/objects.inv`` redirects to ``/en/stable/``) makes
-its new folder the base of the links, and the cache remembers that base, so a build
+negative number keeps them). Local files are read on every build. As in Sphinx, an
+inventory may have moved: its URL redirects, as
+``https://werkzeug.palletsprojects.com/objects.inv`` redirects to ``/en/stable/``. Then its new folder
+becomes the base of the links. The cache remembers that base, so a build
 from the cache links exactly as the build that fetched it did.
 ``intersphinx_timeout`` limits each download in seconds. A project that cannot be
 reached is a warning, and its references stay unresolved.

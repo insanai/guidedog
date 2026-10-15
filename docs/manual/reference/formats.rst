@@ -25,10 +25,10 @@ These are different responsibilities.
      - Native Typst adapter
      - Typst compilation outside Guidedoc's semantic tree.
 
-Each reader and renderer is its own crate, registered by ``guidedoc-defaults``:
-``guidedoc-rst`` (reStructuredText), ``guidedoc-commonmark`` (CommonMark 0.31.2 and
-MyST), and ``guidedoc-sphinx`` (the Sphinx directives, roles and domains on both) read;
-``guidedoc-html``, ``guidedoc-typst``, and ``guidedoc-text`` render. A program can
+Each reader and renderer is its own crate, and ``guidedoc-defaults`` registers them.
+Three crates read: ``guidedoc-rst`` (reStructuredText), ``guidedoc-commonmark`` (CommonMark 0.31.2 and
+MyST), and ``guidedoc-sphinx`` (the Sphinx directives, roles and domains on both).
+Three crates render: ``guidedoc-html``, ``guidedoc-typst``, and ``guidedoc-text``. A program can
 register only the ones it needs; see :doc:`../howto/install`.
 
 Builders

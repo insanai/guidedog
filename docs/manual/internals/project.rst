@@ -12,16 +12,45 @@ cheat sheet.
 The crates
 ----------
 
-Dependencies point one way, from the configuration up to the command line::
+Dependencies point one way, from the configuration up to the command line.
 
-   gd-conf ──► gd-migrate
-      │
-      ▼
-   gd-env ──► gd-intl ──► gd-read
-      │
-      ▼
-   gd-outputs ──► gd-resolve ──► gd-link ──► gd-site, gd-book
-                                     all ──► gd-project ──► gd-cli ──► cmd/guidedog
+.. graphviz::
+   :class: graphviz-adaptive
+   :caption: The project crates. Each arrow points from a crate to one that builds on it.
+   :alt: gd-conf feeds gd-migrate and gd-env. gd-env feeds gd-intl, which feeds gd-read, and gd-outputs. gd-outputs feeds gd-resolve, then gd-link, then gd-site and gd-book. All of them feed gd-project, then gd-cli, then cmd/guidedog.
+
+   digraph project_crates {
+     graph [rankdir=TB, bgcolor="transparent", pad="0.3", nodesep="0.3", ranksep="0.35"];
+     node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
+           color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=12, margin="0.15,0.08"];
+     edge [color="#216553"];
+
+     conf [class="gd-input", label="gd-conf", fillcolor="#fbfaf3"];
+     migrate [label="gd-migrate"];
+     env [label="gd-env"];
+     intl [label="gd-intl"];
+     read [label="gd-read"];
+     outputs [label="gd-outputs"];
+     resolve [label="gd-resolve"];
+     link [label="gd-link"];
+     site [label="gd-site"];
+     book [label="gd-book"];
+     project [label="gd-project"];
+     cli [label="gd-cli"];
+     cmd [class="gd-output", label="cmd/guidedog", fillcolor="#eef4fa"];
+
+     conf -> migrate;
+     conf -> env;
+     env -> intl -> read;
+     env -> outputs -> resolve -> link;
+     link -> site;
+     link -> book;
+     read -> project;
+     site -> project;
+     book -> project;
+     migrate -> project;
+     project -> cli -> cmd;
+   }
 
 ``gd-serve`` (the preview server) needs only the standard library and gd-host;
 ``gd-i18n`` (translating documents) only the engine and gd-gettext.

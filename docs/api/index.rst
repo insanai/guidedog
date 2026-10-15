@@ -1,10 +1,10 @@
 Guidedog API reference
 ======================
 
-This is the reference of Guidedog's Rust crates, generated from their source by the
-``rust`` domain's API pages: each public module has a page with its structs, enums,
-traits, functions, constants, and macros, and their doc comments, laid out as rustdoc
-lays them out. The :doc:`/api/index` lists the crates and their modules.
+This is the reference of Guidedog's Rust crates. The ``rust`` domain's API pages generate it from their source.
+Each public module has a page with its structs, enums,
+traits, functions, constants, and macros, and their doc comments. The page is laid out as rustdoc
+lays it out. The :doc:`/api/index` lists the crates and their modules.
 
 The crates are grouped by responsibility:
 
@@ -24,8 +24,8 @@ Project and command line
    ``gd-project`` (load and build a project) and ``gd-cli`` (the ``guidedog``
    commands, and ``run_with`` for a binary with linked plugins).
 
-Each crate's ``README.md`` in the repository is a short cheat sheet; the manual's
-internals chapters describe the designs, and its ``rust`` chapter describes how these
+Each crate's ``README.md`` in the repository is a short cheat sheet. The manual's
+internals chapters describe the designs. Its ``rust`` chapter describes how these
 pages are generated.
 
 .. toctree::

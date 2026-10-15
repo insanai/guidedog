@@ -28,9 +28,9 @@ Motivation and scope
 
 A prototype in Sanin, ``discussion-cli``, copied ``lib/gds`` to keep its own catalog.
 Copies drift: a fix to recovery in one does not
-reach the others, and each must be qualified again. Issue 1 asks for one reusable
-package, one command line with a build that needs Guidedog installed and one that does
-not, readable metadata for every prefix, and explicit failures where the prototype could
+reach the others, and each must be qualified again. Issue 1 asks for four things. One reusable
+package. One command line, with a build that needs Guidedog installed and one that does
+not. Readable metadata for every prefix. Explicit failures where the prototype could
 report success with an incomplete plan or an empty record.
 
 This record covers catalog management, the two programs, the metadata presentation,
@@ -96,7 +96,7 @@ Configuration
 ~~~~~~~~~~~~~
 
 A catalog's ``discussion.toml`` holds its prefix, name, default author, labels, record
-types, numbering, and workflow; ``init`` writes every setting with a comment, and
+types, numbering, and workflow. ``init`` writes every setting with a comment, and
 ``dsc config`` prints the settings in effect. It replaces 0.2.1's ``.discussion.json``,
 which is still read. The defaults are GDS 0001's process, so a catalog without the file,
 such as a Sanin catalog, behaves as before.
@@ -106,13 +106,13 @@ state lists the states the ``state`` command may move a record to (``next``), wh
 a move into it needs evidence, and the text of a record's optional ``status`` there.
 The evidence requirement also applies when promotion enters the open state.
 Promotion is the only move from the draft state to the open state, because it gives the
-number; a draft may otherwise move only to states its own ``next`` lists, and a record
+number. Otherwise a draft may move only to states its own ``next`` lists, and a record
 without a number may be only in those states. Every state change needs a reason.
 
 Numbers have at least ``width`` digits (default 4), and grow past it: 10000 follows
 9999, up to nine digits, and records sort by value, not by text. Promotion numbers from
 ``start``, up to ``limit`` when one is set. Both govern new numbers only, so changing
-them never invalidates a record; changing ``width`` would, and the check names the
+them never invalidates a record. Changing ``width`` would, and the check names the
 record and the setting. A mistake in the file is reported with its line and the fix,
 and unknown settings are refused rather than ignored.
 
@@ -122,8 +122,8 @@ the states and a diagram of the moves, so it is never out of step with the catal
 Memory
 ~~~~~~
 
-``load`` reads each record a chunk at a time and keeps only its metadata, at most
-64 KiB, and which of the required sections it has; it stops reading once it knows both.
+``load`` reads each record a chunk at a time. It keeps only the metadata, at most
+64 KiB, and which of the required sections the record has. It stops reading once it knows both.
 The record a command changes is read whole, up to 16 MiB. A catalog costs about a
 kilobyte a record, may hold 100,000 records, and its metadata may total 256 MiB. A
 catalog of 2,000 records of 100 KB is checked with 17 MB of memory, where 0.2.1 needed
@@ -235,7 +235,7 @@ commands and exit statuses are unchanged; this catalog is checked by the Rust ``
 - Memory: the bounds above stay (64 KiB of metadata per record, 4 KiB lines, 256 MiB per
   catalog, reading stops once both required sections were seen). The allocator watch and
   ``discussion.memory`` are gone, because Rust aborts on allocation failure; the refusal
-  sweeps became interruption sweeps that stop ``apply`` after every file and check that
+  sweeps became interruption sweeps. They stop ``apply`` after every file and check that
   ``recover`` restores the catalog byte for byte.
 - Problems carry a line, an excerpt with a caret and a "Did you mean" suggestion, rendered
   by ``gd-report``.
@@ -298,7 +298,7 @@ References
    https://github.com/insanai/guidedog/actions/runs/38234710527; published dsc
    and dscc HTML/PDF smoke tests.
 
-.. rubric:: Implementation revision — 2026-10-15
+.. rubric:: Implementation revision, 2026-10-15
 
 The implementation moved from Odin to Rust; see GDS 0011 and the section
 "Implementation in Rust". This is an implementation revision. It does not change

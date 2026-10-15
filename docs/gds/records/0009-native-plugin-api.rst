@@ -163,7 +163,7 @@ context borrows a complete ``Plan``. Every callback has its own named context an
 result type. A single ``proc(any) -> any`` dispatcher, arbitrary pointer casts,
 and plugin-specific reinterpretation of a core context are not this interface.
 
-The first draft sketched the interface as follows; the implemented one, in
+The first draft sketched the interface as follows. The implemented one, in
 ``lib/plugins/plugins.odin`` and ``session.odin``, follows it with the context and
 result types spelled out (see "Implementation" below):
 
@@ -193,8 +193,8 @@ result types spelled out (see "Implementation" below):
    }
 
 The operation wrappers validate inputs, call the selected procedure, and enforce
-the result contract. ``load`` owns provider-specific settings in the session;
-a provider gets its own typed settings through its adapter, not by extending an
+the result contract. ``load`` owns provider-specific settings in the session.
+A provider gets its own typed settings through its adapter, not by extending an
 engine struct or relying on a global variable. The final implementation must
 publish the complete context/result definitions and compile a minimal provider
 against them before freezing API version 1. This sketch reserves no ABI layout.
@@ -245,7 +245,8 @@ Machine plugin registry
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 A machine registry records trusted installation choices. It is stored outside
-projects, with owner-only access, a schema version, and locked atomic replacement of its\nsingle file. A registry mutation needs no multi-file recovery journal.
+projects, with owner-only access, a schema version, and locked atomic replacement of its
+single file. A registry mutation needs no multi-file recovery journal.
 Its initial commands are proposed as:
 
 .. code-block:: sh
@@ -258,7 +259,7 @@ Its initial commands are proposed as:
 
 Registration validates ID, absolute executable path, digest, protocol/API version,
 platform, and declared role before writing an entry. Executing a handshake is
-already running trusted native code; registration explains that fact before it
+already running trusted native code. Registration explains that fact before it
 runs. A project cannot register an executable, change its path, upgrade its digest,
 or authorize credential access. A project may name a previously registered publisher ID.
 Using it still requires an explicit publishing command. Duplicate IDs and changed
@@ -274,8 +275,8 @@ Registration pins the executable digest, not its pathname alone. Each run checks
 that pin. Updating an installed binary requires explicit re-registration with a
 reviewed version. For a bundled executable with sidecar native libraries, the
 installation manifest pins those files as well. The runtime cannot claim safety
-against an administrator changing a binary between verification and execution;
-platform file-handle execution or immutable installation directories reduce that
+against an administrator changing a binary between verification and execution.
+Platform file-handle execution or immutable installation directories reduce that
 race. Runtime checks are integrity controls, not a sandbox or trust proof.
 
 ``unregister`` removes an entry, never the user's executable, generated site,
@@ -304,8 +305,8 @@ Each request has a unique ID, operation, target settings, safe operation identit
 and snapshot/plan descriptor when needed. A response echoes the ID and contains a
 validated result or structured problem. Types and enum strings are explicit.
 A plan's provider data is versioned, bounded JSON, never an executable expression
-or serialized native pointer. The host owns its stored plan and signs or hashes
-the local binding between target, snapshot digest, and baseline; the plugin checks
+or serialized native pointer. The host owns its stored plan. It signs or hashes
+the local binding between target, snapshot digest, and baseline, and the plugin checks
 that binding before writing. Secrets are not protocol fields.
 
 The implementation sets byte limits before reading, maximum nesting, checked
@@ -338,7 +339,7 @@ snapshot/plan schemas, and on-disk registry/journal schemas. The Guidedog releas
 version and a plugin's release version identify products, not interoperability.
 A publisher must not require exact equality with the Guidedog release number.
 The application and a statically linked provider are rebuilt together with a
-qualified Odin compiler; this is source compatibility, not a stable binary ABI.
+qualified Odin compiler. This is source compatibility, not a stable binary ABI.
 An installed executable remains an independent binary behind the process contract.
 
 Use explicit major/minor pairs for the SDK and protocol. A handshake advertises
@@ -391,10 +392,10 @@ verified, and do not authorize new capabilities or replace executable pins.
 A downgrade refuses newer unsupported state without modifying it.
 
 Support and deprecation are published policies. During the beta, label any unstable
-surface explicitly; do not advertise API version 1 as stable before its acceptance
+surface explicitly. Do not advertise API version 1 as stable before its acceptance
 tests pass. Once stable, keep a major until its documented support window ends.
 Breaking releases ship a migration guide and overlap where feasible. Security fixes
-may require blocking an unsafe plugin version; such a block is explicit, names
+may require blocking an unsafe plugin version. Such a block is explicit, names
 the reason and replacement, and never silently installs code.
 
 Release CI must exercise current host/current plugin, current host/oldest supported
@@ -415,7 +416,7 @@ when a plugin ships. It contains no emails or credentials. Planned entries have
 no installable artifact and are shown as planned, never as released plugins.
 
 The local machine registry and this public catalog serve different purposes.
-The catalog helps a reader find a plugin; the machine registry records what that
+The catalog helps a reader find a plugin. The machine registry records what that
 reader explicitly chose to run. Refreshing the catalog cannot install, authorize,
 upgrade, or execute anything. The first implementation may ship a catalog snapshot
 and support an explicit refresh from a pinned official HTTPS origin. It must not
@@ -453,7 +454,7 @@ Worked example: GitHub Pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 GDS 0008 implements the ``pages`` publisher once this interface is qualified.
-The host builds and freezes; the Pages provider compares the target branch with
+The host builds and freezes. The Pages provider compares the target branch with
 the snapshot and returns a plan. It creates complete Git objects, moves one ref
 without force, and confirms the deployment separately. ``status`` inspects the
 candidate commit; ``recover`` reconciles its journal after a lost response.
@@ -479,7 +480,7 @@ A general event bus or hook-every-step API would make ordering, incremental cach
 and resource accounting hard to explain. Specializing the first new surface to
 complete publication keeps the contract testable. Reusing the existing format
 registry avoids a second reader/renderer API. A global auto-populated registry
-would turn a local installation into a change in all builds; explicit selection
+would turn a local installation into a change in all builds. Explicit selection
 preserves reproducibility.
 
 Security and operational considerations
@@ -536,7 +537,7 @@ a complete GitHub Pages wrapper in ``examples/pages-publisher``.
        own, taken from ``context.allocator``
    * - Procedures a publisher provides
      - ``Load_Proc``, ``Unload_Proc``, ``Plan_Proc``, ``Publish_Proc``, ``Status_Proc``,
-       ``Recover_Proc``, each with a named context (``Load_Context`` … ``Recover_Context``)
+       ``Recover_Proc``, each with a named context (``Load_Context`` ... ``Recover_Context``)
        that carries its owner's allocator
    * - Outcomes
      - ``State`` (``Not_Started``, ``Unchanged``, ``Accepted``, ``Pending``, ``Live``,
@@ -561,10 +562,10 @@ Decisions the implementation made where the draft left room:
   non-executable file. The child of a process publisher checks the host's snapshot
   by reading it itself and comparing digests.
 * **Plans stay in the session that made them.** A process publisher keeps its plan in
-  the child; the host names it by its ID and generation, and the child refuses
+  the child. The host names it by its ID and generation, and the child refuses
   another. Plans are not persisted, so a plan cannot outlive its session.
-* **One child per session**, answering many requests: ``load`` starts it and checks
-  its handshake against the registration (ID, version, capabilities, snapshot schema);
+* **One child per session**, answering many requests. ``load`` starts it and checks
+  its handshake against the registration (ID, version, capabilities, snapshot schema).
   ``unload`` allows one second for a shutdown reply, closes its input, waits one
   second, then kills and reaps an unresponsive child. A broken child is stopped directly.
 * **The result contract** is enforced in ``publish``, ``status``, and ``recover``:
@@ -658,7 +659,7 @@ outcomes and exit statuses are unchanged, so programs built with the Odin SDK st
 interoperate.
 
 - **Traits instead of procedure tables.** ``Publisher`` (``info``, ``load``, ``plan``,
-  ``publish``, optional ``status`` and ``recover``); a publisher value *is* its session's
+  ``publish``, optional ``status`` and ``recover``). A publisher value *is* its session's
   state, cloned from a prototype per session. ``Drop`` replaces ``unload``; ``Plan``,
   ``Snapshot`` and outcomes are ordinary values, so the owner arenas and ``release_*``
   procedures are gone.
@@ -666,7 +667,7 @@ interoperate.
   WebAssembly loading. A publisher is linked into a binary through a ``Registry`` (as
   ``guidedog-pages`` links ``gd-pages``) or served as a registered program
   (``serve_publisher``). ``Registry::new`` validates, so an invalid registry cannot exist.
-- **Transport.** A writer and a reader thread own the child's pipes; the host waits on
+- **Transport.** A writer and a reader thread own the child's pipes. The host waits on
   channels with one monotonic deadline per exchange and polls a ``Cancel`` probe. Whole
   request deadlines, the ten-second handshake and the five-minute default carry over.
 - **Snapshots** keep the three modes (``Copy``, ``Borrow``, ``Adopt``) and the digest
@@ -742,7 +743,7 @@ References
    docs/manual/evidence/plugin-review-20261014.md; successful 0.6.2 release run
    38434657070.
 
-.. rubric:: Implementation revision — 2026-10-15
+.. rubric:: Implementation revision, 2026-10-15
 
 The implementation moved from Odin to Rust; see GDS 0011 and the section
 "Implementation in Rust". This is an implementation revision. It does not change

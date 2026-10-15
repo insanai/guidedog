@@ -60,7 +60,7 @@ if let Some(c) = thing.class {
 | `exported(m, name)` | whether `from m import *` binds a name |
 | `mro(c)`, `base_objects(c)`, `slots(c)`, `is_exception(c)` | MRO (C3), bases, `__slots__` |
 | `parse_expression(m, text)` | a string annotation parsed in `m`'s namespace |
-| `Module::node(id)` → `Node` | `kind`, `text`, `field`, `named_children`, `children`, ... |
+| `Module::node(id)` -> `Node` | `kind`, `text`, `field`, `named_children`, `children`, ... |
 | `unparse`, `try_unparse`, `write_arguments`, `number_repr` | expressions written back (Sphinx or Python style) |
 | `string_value`, `str_value`, `repr_str`, `repr_bytes` | literals as Python evaluates and `repr`s them |
 | `prepare_docstring`, `split_lines` | docstring lines as Sphinx prepares them |

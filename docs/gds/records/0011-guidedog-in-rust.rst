@@ -21,10 +21,10 @@ template for the code. Each Odin package is redesigned the way a Rust programmer
 write it and lands as a crate of one Cargo workspace.
 
 A user observes the same ``guidedog`` command, the same projects, and the same HTML and
-PDF. What changes is underneath: the Odin slabs, arenas, allocator guards, and generation
-checks give way to ownership, reused buffers, lifetimes, and explicit ``Limits``; the Typst
-compiler is a Rust library linked directly instead of through a C ABI bridge; Graphviz is
-the system library; HTTP goes through the ``curl`` program. The port also adds Rust API
+PDF. What changes is underneath. The Odin slabs, arenas, allocator guards, and generation
+checks give way to ownership, reused buffers, lifetimes, and explicit ``Limits``. The Typst
+compiler is a Rust library linked directly instead of through a C ABI bridge. Graphviz is
+the system library. HTTP goes through the ``curl`` program. The port also adds Rust API
 documentation (``gd-rustdoc`` and a ``rust`` domain), linked plugins in custom binaries,
 and a guided GitHub Pages setup. This record states those decisions, what each earlier
 record keeps, and what the port deliberately gives up.
@@ -61,9 +61,9 @@ Behaviour is the contract
 
 The Odin code and its tests are the specification. Where the Odin documentation and the
 Odin code disagree, the code wins. A crate keeps its Odin package's behaviour and test
-expectations unless a change is a deliberate improvement, and every deliberate change is
+expectations unless a change is a deliberate improvement. Every deliberate change is
 listed in the crate's ``README.md`` ("Redesigns") or in an internals page under
-``docs/manual/internals/``. Persistent formats move with explicit versions: Guidedoc's
+``docs/manual/internals/``. Persistent formats move with explicit versions. Guidedoc's
 object format is version 2, and the project environment and manifest versions are
 bumped, so Odin caches are rebuilt rather than misread. Wire formats that other programs
 speak (the plugin process protocols, the discussion journal, gettext MO files, Sphinx
@@ -72,7 +72,7 @@ inventories) do not change.
 The crate split and dependency direction
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-One Cargo workspace; every crate inherits the single workspace version
+There is one Cargo workspace. Every crate inherits the single workspace version
 (``version.workspace = true``), edition, licence, ``rust-version`` and lints.
 
 .. list-table:: Crates and their responsibilities
@@ -115,10 +115,9 @@ One Cargo workspace; every crate inherits the single workspace version
    * - ``tools/check``
      - The source-limit checker.
 
-Dependencies point one way: core ← readers and renderers ← defaults ← host ← project ←
-cli ← cmd. The project builder is itself layered: ``gd-conf`` ← ``gd-env`` ←
-``gd-outputs`` ← ``gd-resolve`` ← ``gd-link`` ← ``gd-site``, ``gd-book``; ``gd-env`` ←
-``gd-intl`` ← ``gd-read``; all of them ← ``gd-project`` ← ``gd-cli``. ``gd-cli`` never
+Dependencies point one way. ``cmd`` depends on the CLI, the CLI on the project, the project on the host, the host on the defaults, the defaults on the readers and renderers, and those on the core. The project builder is itself layered.
+``gd-env`` depends on ``gd-conf``; ``gd-outputs`` on ``gd-env``; ``gd-resolve`` on ``gd-outputs``; ``gd-link`` on ``gd-resolve``; ``gd-site`` and ``gd-book`` on ``gd-link``.
+``gd-intl`` depends on ``gd-env``, and ``gd-read`` on ``gd-intl``. ``gd-project`` depends on all of them, and ``gd-cli`` on ``gd-project``. ``gd-cli`` never
 depends on ``gd-pages``: publishers reach it through ``gd-plugins``.
 
 .. graphviz::
@@ -159,8 +158,8 @@ refused block, and an option to spill working memory to disk. In Rust:
   regions, or retries.
 - Growth that input drives uses ``try_reserve``, so a refused reservation is a
   ``Capacity`` or ``Memory`` result, not an abort. Everything else follows Rust's global
-  allocator, which aborts on failure: the per-allocation refusal guarantee of GDS 0001 and
-  GDS 0004 is **given up** for ordinary small allocations, deliberately, and the refusal
+  allocator, which aborts on failure. So the per-allocation refusal guarantee of GDS 0001 and
+  GDS 0004 is deliberately **given up** for ordinary small allocations. The refusal
   sweeps that tested it are dropped.
 - Lifetimes replace the generation and revision checks. A ``Document<'w>`` borrows its
   workspace, so a stale or foreign document handle does not compile.
@@ -171,9 +170,9 @@ refused block, and an option to spill working memory to disk. In Rust:
   only for genuinely shared values (included sources as ``Arc<str>``, Jinja's shared
   containers).
 - The budget of GDS 0004 stays, coarser: ``gd_host::Budget`` counts what the host can size
-  before allocating (sources, included files, the PDF the embedded compiler returns), and
+  before allocating (sources, included files, the PDF the embedded compiler returns).
   ``limits_within`` lowers a conversion's ``Limits`` to it. Units that wait for each other
-  without deadlock, the raise-or-stop policy and ``--budget=N`` hints are kept; ``Meter``,
+  without deadlock, the raise-or-stop policy and ``--budget=N`` hints are kept. ``Meter``,
   ``Guard``, ``Arena`` and ``Disk`` (working memory on disk) are dropped.
 
 The details are in ``crates/guidedoc/README.md``, ``crates/gd-host/README.md`` and
@@ -185,13 +184,13 @@ Bounded work and stack guards
 Bounded work is unchanged in intent. ``guidedoc::Limits`` holds ``max_depth``,
 ``max_nodes``, ``max_work``, ``max_include_depth``, ``max_included_bytes``,
 ``max_expansion``, ``stack_bytes``, ``max_text_bytes``, ``max_reports`` and
-``max_output_bytes``; reaching one is a ``Limit`` or ``Capacity`` result, never a panic or
+``max_output_bytes``. Reaching one is a ``Limit`` or ``Capacity`` result, never a panic or
 a stack overflow. Recursive readers and renderers measure the machine stack with a
 ``StackGuard`` (``stack_guard``, ``stack_exhausted``) against ``stack_bytes``, as GDS 0003
 specified. ``gd_host::run_workers`` and ``run_with_stack`` start threads with a known
-8 MiB stack, so the stack budget is known to fit. The same rule holds in the libraries:
-gd-jinja bounds nesting, recursion and stack bytes; gd-odindoc counts parser nesting
-(160 levels) instead of estimating stack; gd-rustdoc bounds depth, files and items;
+8 MiB stack, so the stack budget is known to fit. The same rule holds in the libraries.
+gd-jinja bounds nesting, recursion and stack bytes. gd-odindoc counts parser nesting
+(160 levels) instead of estimating stack. gd-rustdoc bounds depth, files and items.
 gd-json refuses nesting past 127. Values nested deeply are dropped iteratively.
 
 Dependencies
@@ -200,7 +199,7 @@ Dependencies
 Standard library first. Small things are written in-house: TOML, JSON's API, Jinja,
 gettext, hashing (``gd-sha``), inflate (``gd-flate``), argument parsing, the loopback HTTP
 test server. An external crate is admitted only when it is mature, self-contained and
-solves a genuinely large problem, and its reason is written beside it in ``Cargo.toml``:
+solves a genuinely large problem. Its reason is written beside it in ``Cargo.toml``:
 
 .. list-table:: External dependencies
    :header-rows: 1
@@ -227,8 +226,8 @@ solves a genuinely large problem, and its reason is written beside it in ``Cargo
        the Pages publisher. Headers travel in a private file, never on the command line.
        No libcurl is linked.
 
-There are no ``native/`` build scripts: Graphviz and tree-sitter are no longer built from
-C sources by the project. ``unsafe`` appears only at foreign-function boundaries (Graphviz;
+There are no ``native/`` build scripts. The project no longer builds Graphviz and tree-sitter from
+C sources. ``unsafe`` appears only at foreign-function boundaries (Graphviz;
 the Keychain and Credential Manager in ``gd-pages``; ``renameat2`` and ``signal`` in
 ``gd-host``; the C library's ``localtime_r`` for local dates) and in test-only counting
 allocators, each block with a ``// SAFETY:`` comment.
@@ -274,32 +273,32 @@ crates.
 Plugins
 ~~~~~~~
 
-GDS 0009 and 0010 stay the contract; ``gd-plugins`` realizes them with traits
+GDS 0009 and 0010 stay the contract. ``gd-plugins`` realizes them with traits
 (``BuildPlugin``, ``Publisher``). One implementation has two deployments: **linked** into a
 custom ``guidedog`` binary (``gd_cli::run_with(Registry::new(vec![badge::plugin()])?)``),
 or **served** as an installed program behind the unchanged JSON Lines protocol
 (``gd_plugins::serve_plugin``). Rust has no stable ABI, so there is no dylib loading and no
-WebAssembly runtime; a build looks up the linked registry first, then the machine registry.
+WebAssembly runtime. A build looks up the linked registry first, then the machine registry.
 Programs built with the Odin SDK still speak the same protocol. See
 ``docs/manual/internals/plugins.rst``.
 
 Templates: Jinja kept in-house
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``gd-jinja`` ports the Odin engine rather than adopting minijinja. Evaluated on 2026-10-15
-against minijinja 3.0.0: on hostile templates minijinja overflows the stack and aborts
-where gd-jinja returns a ``Limit`` error, and it has no output or memory limit; it differs
-from Jinja2 in scoping and escaping in ways its extension API cannot change; and the layer
+``gd-jinja`` ports the Odin engine rather than adopting minijinja. We evaluated minijinja 3.0.0
+on 2026-10-15. On hostile templates minijinja overflows the stack and aborts
+where gd-jinja returns a ``Limit`` error, and it has no output or memory limit. It differs
+from Jinja2 in scoping and escaping in ways its extension API cannot change. The layer
 needed to restore the Odin behaviour was already about 900 lines. Speed and error quality
 were about equal. See ``docs/manual/internals/jinja.rst``.
 
 Translations: large gettext catalogs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``gd-gettext`` serves compiled catalogs from one buffer checked once at load: ``MoCatalog``
-validates the header, tables, strings and hash table up front, then keeps the strings as one
+``gd-gettext`` serves compiled catalogs from one buffer checked once at load. ``MoCatalog``
+validates the header, tables, strings and hash table up front. It then keeps the strings as one
 UTF-8 text pool, so lookups need no checks and no ``unsafe``. A sound GNU hash table gives
-O(1) lookups (bounded at 64 probes even for a hostile table), otherwise a binary search. The
+:math:`O(1)` lookups (bounded at 64 probes even for a hostile table); otherwise lookups use a binary search. The
 writer produces the bytes GNU msgfmt writes, and ``PoReader`` streams PO files. Loading a
 61.6 MB catalog went from 155-200 ms and about 240 MB held to 66-82 ms and about the file's
 size. See ``docs/manual/internals/gettext.rst``.
@@ -307,23 +306,23 @@ size. See ``docs/manual/internals/gettext.rst``.
 Rust API documentation
 ~~~~~~~~~~~~~~~~~~~~~~
 
-New in the port, by analogy with GDS 0005: ``gd-rustdoc`` reads a crate's source with
-tree-sitter (nothing is compiled or run), follows its module tree as rustc does, applies
+This is new in the port, by analogy with GDS 0005. ``gd-rustdoc`` reads a crate's source with
+tree-sitter (nothing is compiled or run). It follows the module tree as rustc does, applies
 rustdoc's visibility and inlining rules, and writes reStructuredText of a new ``rust``
 domain in ``guidedoc-sphinx``: one page per documented module plus an index. Roles link by
 full ``::`` path, with the Python domain's ``~`` and leading ``.``. Projects select crates
 with the ``rust_autoapi_*`` keys (``rust_autoapi_crates``, ``rust_autoapi_root``,
 ``rust_autoapi_options``, ``rust_autoapi_member_order``, ``rust_autoapi_add_toctree_entry``,
-``rust_autoapi_generate_api_docs``); ``--untrusted`` drops the crate folders from the
+``rust_autoapi_generate_api_docs``). ``--untrusted`` drops the crate folders from the
 readable roots.
 
 Source limits
 ~~~~~~~~~~~~~
 
-GDS 0001's limits carry over to Rust: a function body has at most 70 logical lines, a file
-at most 1,408 lines, lines a soft limit of 99 and a hard limit of 108 characters.
+GDS 0001's limits carry over to Rust. A function body has at most 70 logical lines. A file has
+at most 1,408 lines. Lines have a soft limit of 99 and a hard limit of 108 characters.
 ``cargo run -p check`` (``tools/check``) checks Rust, CSS, JavaScript, HTML and Typst
-templates, shell, TOML and C; documentation under ``docs`` and vendored ``data`` are exempt.
+templates, shell, TOML and C. Documentation under ``docs`` and vendored ``data`` are exempt.
 ``rustfmt.toml`` sets ``max_width = 99`` and ``clippy.toml`` sets
 ``too-many-lines-threshold = 70``. A change is done when ``cargo build --workspace``,
 ``cargo test --workspace``, ``cargo clippy --workspace --all-targets`` and the checker pass.
@@ -331,7 +330,7 @@ templates, shell, TOML and C; documentation under ``docs`` and vendored ``data``
 Rationale and alternatives
 --------------------------
 
-**Keep Odin.** The Odin implementation is complete and committed, but the recurring costs
+**Keep Odin.** The Odin implementation is complete and committed. But the recurring costs
 above would stay, and the Typst bridge would remain a hand-maintained C ABI across two
 runtimes. Not adopted.
 
@@ -341,8 +340,8 @@ procedure-plus-``rawptr`` callback style. Not adopted: the records are the speci
 the code is not a template.
 
 **Adopt existing crates for the supporting libraries** (minijinja, a gettext crate, toml,
-a Pygments port). Each was judged on its own merits: minijinja fails the bounds
-requirement; the gettext crates copy every string or bind libintl's global state; the
+a Pygments port). Each was judged on its own merits. minijinja fails the bounds
+requirement. The gettext crates copy every string or bind libintl's global state. The
 others are small enough to own. Only problems that are genuinely large (a typesetting
 compiler, parsers for whole languages, a mature JSON implementation) take a dependency.
 
@@ -357,11 +356,11 @@ The trust boundaries of GDS 0004 are unchanged: confinement of includes and link
 ``--untrusted``, a Typst root that holds only what the build may read, plugins refused
 under ``--untrusted``, pinned SHA-256 registrations. Two things change. First, an
 allocation failure outside a ``try_reserve`` path aborts the process instead of returning a
-memory problem; publication stays safe because outputs are staged and switched whole, so
+memory problem. Publication stays safe: outputs are staged and switched whole, so
 an abort leaves the previous generation in place. Second, unsafe code shrinks to FFI
 modules, and the C ABI bridge to Typst disappears, so a Typst panic is caught inside
 ``gd-typst`` instead of at a hand-written boundary. A panic elsewhere is a crash: the crash
-reporter prints the cause and exits 70. Credentials never reach a command line: the Linux
+reporter prints the cause and exits 70. Credentials never reach a command line. The Linux
 Secret Service is reached through ``secret-tool`` on standard input and output, and HTTP
 headers are passed to ``curl`` in a private file.
 
@@ -370,8 +369,8 @@ Backwards compatibility
 
 Projects, ``conf.toml`` files, discussion catalogs, plugin programs and published sites are
 unaffected: the commands, options, keys, directives, roles and outputs are the same. Caches
-written by the Odin build (``.gdo`` objects, environment, manifest) are not read; the first
-Rust build rebuilds them. Odin embedders of ``lib/*`` must move to the crates; there is no
+written by the Odin build (``.gdo`` objects, environment, manifest) are not read. The first
+Rust build rebuilds them. Odin embedders of ``lib/*`` must move to the crates. There is no
 compatibility layer. Removed options are those that existed only for Odin's allocators
 (working memory on disk). The Odin domain and odindoc remain, because Odin is still a
 documented language.

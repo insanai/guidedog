@@ -25,13 +25,13 @@ Start a project
    guidedog serve docs
 
 The project contains ``conf.toml``, ``index.rst``, ``_templates/layout.html``,
-``_templates/book.typ``, and ``_static/``. Templates are ordinary files you can edit. HTML
+``_templates/book.typ``, and ``_static/``. Templates are ordinary files we can edit. HTML
 provides navigation, search, code highlighting, diagrams, and equations. PDF books provide
 chapters, cross-references, figures, indexes, and language-aware typesetting.
 
 The default theme is light. Readers can choose dark or the system theme. The manual detects
 the browser language on its landing page and repository overview. A saved choice takes
-precedence; direct links to an edition or chapter remain explicit requests.
+precedence. Direct links to an edition or chapter remain explicit requests.
 
 .. code:: sh
 
@@ -44,8 +44,8 @@ Install
 
 Each `release <https://github.com/insanai/guidedog/releases>`__ has an archive for Linux,
 macOS, and Windows, with ``SHA256SUMS``. The Typst compiler and the tree-sitter parsers are
-compiled into ``guidedog``. Diagrams use the Graphviz library (``libgvc``), which the
-archive's notes say how to install where the system does not provide it. Fetching remote
+compiled into ``guidedog``. Diagrams use the Graphviz library (``libgvc``). Where the system does not provide it,
+the archive's notes say how to install it. Fetching remote
 intersphinx inventories and publishing to GitHub Pages run the system's ``curl`` program.
 Check and install the archive:
 
@@ -72,16 +72,16 @@ Ubuntu, or ``brew install graphviz``). Then, at the checkout root:
    cargo clippy --workspace --all-targets
    cargo run -p check                        # source limits
 
-The ``typst`` crates are a default feature of ``gd-typst``; without them Guidedog runs an
+The ``typst`` crates are a default feature of ``gd-typst``. Without them, Guidedog runs an
 installed, pinned ``typst`` program for PDF output.
 `RELEASING.md <https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ describes the
 release workflow.
 
-The workspace is split by responsibility: the engine crates (``guidedoc``, the readers and
-renderers, ``guidedoc-defaults``) use only the standard library; supporting libraries
+The workspace is split by responsibility. The engine crates (``guidedoc``, the readers and
+renderers, ``guidedoc-defaults``) use only the standard library. Supporting libraries
 (``gd-toml``, ``gd-json``, ``gd-jinja``, ``gd-highlight``, ``gd-gettext``, ``gd-graphdog``,
-``gd-typst``, ...) never depend on the engine; the project builder and the command line sit
-above both; the programs are under ``cmd/``. See :doc:`Internals <internals/index>`.
+``gd-typst``, ...) never depend on the engine. The project builder and the command line sit
+above both. The programs are under ``cmd/``. See :doc:`Internals <internals/index>`.
 
 Translate with Guidedog
 -----------------------
@@ -99,25 +99,25 @@ Translate with Guidedog
 Translate and review ``msgstr`` values in the PO files. Guidedog extracts POT files, merges
 catalogs, reports progress, and builds each edition. It does not invent translations.
 Commands, paths, code, API names, and reference targets stay unchanged. Only the manual and
-repository overview are translated; API and GDS remain English. See the :doc:`manual build
+repository overview are translated. API and GDS remain English. See the :doc:`manual build
 instructions <howto/maintain-docs>` for assembling all editions and PDF books.
 
 Extend and publish
 ------------------
 
 Write a build plugin or a publisher with the
-:doc:`step-by-step plugin chapter <plugins>`. A plugin implements one Rust trait; the
+:doc:`step-by-step plugin chapter <plugins>`. A plugin implements one Rust trait. The
 same value is linked into a custom ``guidedog`` binary with ``gd_cli::run_with``, or served
 as an installed program with ``gd_plugins::serve_plugin``. The chapter then follows the real
 GitHub Pages publisher through ownership, credentials, conditional updates and recovery.
-``guidedog publish --timeout=SECONDS`` bounds each complete exchange (default: 300 seconds);
-choose a value longer than ``--wait``. After an unknown outcome, recover before publishing
+``guidedog publish --timeout=SECONDS`` bounds each complete exchange (default: 300 seconds).
+We choose a value longer than ``--wait``. After an unknown outcome, we recover before publishing
 again.
 
 Keep discussions
 ----------------
 
-``dsc`` keeps proposals and decisions as reStructuredText records, one file each, and builds
+``dsc`` keeps proposals and decisions as reStructuredText records, one file each. It builds
 them into a website and PDF books with Guidedog. Each catalog has a prefix: Guidedog's
 design records use ``gds``, and another project might use ``eds``.
 
@@ -130,7 +130,7 @@ design records use ``gds``, and another project might use ``eds``.
    dsc state 1 --to=accepted --reason="Review converged"
    dsc build
 
-A catalog's ``discussion.toml`` sets its lifecycle states, record types, and numbering, and
+A catalog's ``discussion.toml`` sets its lifecycle states, record types, and numbering.
 ``dsc config`` prints it. ``dsc`` comes in the Guidedog archive and builds with the
 installed ``guidedog``. ``dscc`` is ``dsc`` with Guidedog built in, for a machine with
 nothing else installed. ``guidedog gds`` runs the same commands on Guidedog's own
@@ -154,14 +154,14 @@ Read and embed
 
 Guidedoc works in a caller-owned, reusable workspace and returns structured diagnostics. The
 host manages files, budgets, caching, publication, and native compilers. ``--untrusted``
-restricts capabilities; it is not a process sandbox or a limit on all native resource use.
+restricts capabilities. It is not a process sandbox or a limit on all native resource use.
 
 Credits and license
 -------------------
 
 Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** and **Kanak
 Rathore**. Contributions are welcome through issues and pull requests. Documentation credits
-use names or handles, not personal email addresses; Git identity settings are managed
+use names or handles, not personal email addresses. Git identity settings are managed
 separately.
 
 Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max
@@ -175,5 +175,5 @@ Guidedog is released under the
 third-party components, such as the bundled fonts and the Rust crates compiled into the
 programs, that keep their own licenses.
 
-An additional permission allows Guidedog to be linked and distributed with Graphviz; see
+An additional permission allows Guidedog to be linked and distributed with Graphviz. See
 :download:`NOTICE <_static/repository/NOTICE>`.

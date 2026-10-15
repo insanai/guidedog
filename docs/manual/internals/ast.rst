@@ -20,8 +20,8 @@ General rules
 -  Spans are byte ranges in the node's source (``SourceSpan::source`` is the source table
    index; included files have their own index).
 -  ``Node.value`` is a small per-kind scalar documented below; otherwise zero.
--  ``Node.payload`` is ``NONE`` unless the kind uses a payload row (List → lists, Cell →
-   cells, link-like kinds → links).
+-  ``Node.payload`` is ``NONE`` unless the kind uses a payload row (List uses lists, Cell
+   uses cells, link-like kinds use links).
 -  ``LinkInfo.resolved`` is meaningful only when ``kind == LinkKind::Internal``.
 -  Adjacent Text nodes are allowed but readers should merge runs they produce together.
 
@@ -390,7 +390,7 @@ Directives:
 +--------------------------------------------+--------------------------------------------+
 
 Every directive option from the Docutils specification is parsed; options that affect
-rendering become attributes (``:class:`` → Class, ``:name:`` → Name and a target).
+rendering become attributes (``:class:`` gives Class, ``:name:`` gives Name and a target).
 
 Inline markup:
 
@@ -401,15 +401,15 @@ Inline markup:
 +--------------------------------------------+--------------------------------------------+
 | :literal:`\`\`literal\`\``                 | Code                                       |
 +--------------------------------------------+--------------------------------------------+
-| interpreted text                           | per role: emphasis, strong, literal →      |
-|                                            | Code, code → Code{Language}, math → Math,  |
-|                                            | sub/subscript, sup/superscript,            |
-|                                            | title-reference/title/t → TitleReference,  |
-|                                            | pep-reference/PEP → Link{External},        |
-|                                            | rfc-reference/RFC → Link{External},        |
-|                                            | abbreviation/ab and acronym/ac →           |
-|                                            | Abbreviation, raw-derived roles →          |
-|                                            | RawInline{Format}, other custom roles →    |
+| interpreted text                           | per role: emphasis, strong and literal     |
+|                                            | give Code; code gives Code{Language}; math |
+|                                            | gives Math; sub/subscript,                 |
+|                                            | sup/superscript; title-reference/title/t   |
+|                                            | give TitleReference; pep-reference/PEP and |
+|                                            | rfc-reference/RFC give Link{External};     |
+|                                            | abbreviation/ab and acronym/ac give        |
+|                                            | Abbreviation; raw-derived roles give       |
+|                                            | RawInline{Format}; other custom roles give |
 |                                            | Role{text = role name; Class}              |
 +--------------------------------------------+--------------------------------------------+
 | :literal:`\`text <uri>\`_`                 | Link{External, destination = uri, name =   |
@@ -434,7 +434,7 @@ Inline markup:
 | ``[CIT]_``                                 | CitationReference{text = label}            |
 +--------------------------------------------+--------------------------------------------+
 | ``|name|``, ``|name|_``                    | SubstitutionReference{text = normalized    |
-|                                            | name; resolved → definition}; with ``_``   |
+|                                            | name; resolved = definition}; with ``_``   |
 |                                            | wrapped in Reference                       |
 +--------------------------------------------+--------------------------------------------+
 | standalone URI / email                     | Link{External or Email} > Text             |
@@ -670,7 +670,7 @@ Other Sphinx constructs use existing kinds:
    ``value`` = first line number when numbered, ``linenos`` = "1", ``emphasize-lines`` =
    "1,3-5" (after ``dedent`` and line selection), ``caption`` = the caption as written
    (literalinclude's file name for an empty one), whose inline markup a Caption child holds
-   parsed, as Sphinx's container_wrapper parses it (in Markdown, as Markdown); ``:name:`` →
+   parsed, as Sphinx's container_wrapper parses it (in Markdown, as Markdown); ``:name:`` gives
    Custom ``name``. The graphviz directives give their DOT CodeBlock{``graphviz`` = "1"} the
    same ``caption`` and Caption. Renderers show the Caption's content, or the attribute's
    text when there is no Caption.
@@ -678,7 +678,7 @@ Other Sphinx constructs use existing kinds:
    ``sectionauthor``, ``moduleauthor``, ``codeauthor``: Directive{Name} with ``author``;
    ``centered``: Paragraph with class ``centered``; ``tabularcolumns``, ``highlight``,
    ``default-domain``, ``currentmodule``: reader state only.
--  ``math`` with ``:label:``: MathBlock with Id ``equation-<label>``; ``:nowrap:`` →
+-  ``math`` with ``:label:``: MathBlock with Id ``equation-<label>``; ``:nowrap:`` gives
    ``nowrap``.
 -  Info fields: a FieldList directly in a DescContent is rebuilt as Sphinx's
    DocFieldTransformer does for the object's domain and type. It keeps its attributes; a

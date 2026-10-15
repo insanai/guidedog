@@ -1,6 +1,6 @@
 .. _beta-release-review--11-october-2026:
 
-Beta release review — 11 October 2026
+Beta release review, 11 October 2026
 =====================================
 
 Guidedog is ready for a **scoped beta for trusted documentation projects on macOS and
@@ -38,31 +38,31 @@ allocation refusal.
 +---------------------------------+-----------+--------------------------------------+
 | Record                          | State     | Meaning                              |
 +=================================+===========+======================================+
-| 0001 — GDS process              | committed | The RST workflow and recoverable     |
+| 0001 - GDS process              | committed | The RST workflow and recoverable     |
 |                                 |           | metadata transactions are            |
 |                                 |           | implemented.                         |
 +---------------------------------+-----------+--------------------------------------+
-| 0002 — CLI and toolchain        | published | The implemented CLI is usable.       |
+| 0002 - CLI and toolchain        | published | The implemented CLI is usable.       |
 |                                 |           | Broader worker, native Typst         |
 |                                 |           | chapter, packaging, and Windows      |
 |                                 |           | obligations remain explicit.         |
 +---------------------------------+-----------+--------------------------------------+
-| 0003 — Guidedoc core            | committed | The supported conversion contract is |
+| 0003 - Guidedoc core            | committed | The supported conversion contract is |
 |                                 |           | implemented. RST conformance remains |
 |                                 |           | conservatively described as partial. |
 +---------------------------------+-----------+--------------------------------------+
-| 0004 — Memory budgets and trust | committed | The Guidedog allocation budget and   |
+| 0004 - Memory budgets and trust | committed | The Guidedog allocation budget and   |
 |                                 |           | declared file-access boundary are    |
 |                                 |           | implemented. Native libraries'       |
 |                                 |           | internal allocations remain outside  |
 |                                 |           | that budget.                         |
 +---------------------------------+-----------+--------------------------------------+
-| 0005 — Odin domain              | committed | Static Odin API extraction,          |
+| 0005 - Odin domain              | committed | Static Odin API extraction,          |
 |                                 |           | references, and inventory support    |
 |                                 |           | are implemented, with stated         |
 |                                 |           | extraction limits.                   |
 +---------------------------------+-----------+--------------------------------------+
-| 0006 — Projects and publication | committed | The supported Sphinx-style project   |
+| 0006 - Projects and publication | committed | The supported Sphinx-style project   |
 |                                 |           | workflow and recoverable generation  |
 |                                 |           | publication are implemented. Python  |
 |                                 |           | extension execution and future       |
@@ -112,7 +112,7 @@ limit on native Typst itself.
 Cleanup differed by platform and could follow the wrong root
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On macOS, ``guidedog clean docs/gds`` failed on ``.DS_Store`` with “Not a directory.” Core
+On macOS, ``guidedog clean docs/gds`` failed on ``.DS_Store`` with "Not a directory." Core
 ``remove_all`` had different behavior for ordinary files and top-level links. Its recursive
 path construction was also a poor boundary for allocation refusal and deep directory trees.
 
@@ -326,7 +326,7 @@ fixture still contains unsupported project-specific extension directives. Django
 also retain their recorded source diagnostics. Their exact severity/code counts are compared
 with the existing TSV baselines.
 
-The earlier “29 killed publications,” “101 of 101 builds,” and all-platform sanitizer
+The earlier "29 killed publications," "101 of 101 builds," and all-platform sanitizer
 statements are historical results. This review does not claim to have repeated those exact
 stress experiments. It runs the retained regression suites, fresh large builds, unchanged
 rebuilds, targeted failure reproducers, and the final candidate checks listed above. Neither
@@ -357,6 +357,6 @@ issue-tracker URL should be supplied through ``GUIDEDOG_ISSUE_TRACKER`` for dist
 builds; this checkout has no configured remote from which to derive one. The reviewer did
 not invent a URL, tag a release, or publish an artifact.
 
-Within this scope, the beta is justified. An unqualified “everything is finished and
-production-safe on every platform” statement is not justified by the implementation or
+Within this scope, the beta is justified. An unqualified "everything is finished and
+production-safe on every platform" statement is not justified by the implementation or
 evidence.

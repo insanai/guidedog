@@ -92,13 +92,13 @@ durable stores. Node classes distinguish roles in the dark palette:
 
 For example, ``source [class="gd-input", shape=note, fillcolor="#fbfaf3"]``
 sets both the light presentation and its dark role. Classes do not choose shapes
-or add labels: write those explicitly so the drawing also works in monochrome.
-Unclassified steps use green. This palette is opt-in; do not apply it to artwork
+or add labels. We write those explicitly, so the drawing also works in monochrome.
+Unclassified steps use green. This palette is opt-in. We do not apply it to artwork
 whose exact colors carry data.
 
 The light DOT attributes remain the PDF master. The book receives an SVG without
 the adaptive stylesheet. Printed HTML selects the light scheme too. Keep both
-palettes legible and test the actual book; transparency alone proves neither.
+palettes legible and test the actual book. Transparency alone proves neither.
 The inheritance rule is defined by the
 `CSS color-scheme specification <https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_.
 
@@ -114,4 +114,4 @@ If a diagram needs tiny type to fit, split it into two drawings.
 See :doc:`../media` for image and figure sizing.
 
 On narrow screens, captioned diagrams scroll horizontally to keep labels readable.
-Scroll inside the figure; the page itself keeps its width.
+Scroll inside the figure. The page itself keeps its width.

@@ -19,9 +19,9 @@ let status = gd_cli::run_in(&args, &linked, gd_cli::Streams { out, err, input, t
 
 | Item | Does |
 |---|---|
-| `run`, `run_with(Registry)`, `run_args(&[String], Registry)` → `ExitCode`; `run_status` → `i32` | the process's or given words, on the real streams |
-| `run_in(&args, &Registry, Streams)` → `i32` | any `Write`/`BufRead` streams (tests) |
-| `parse_command` → `Parsed { output: Output, command: Result<Command, Problem> }` | every command, typed: `ConvertCommand`, `BuildCommand` (holds `gd_conf::LoadOptions` and `gd_env::BuildOptions`), `ServeCommand`, `CleanCommand`, `QuickstartCommand`, `MigrateCommand`, `IntlCommand`, `PluginCommand`, `PublishCommand`, ... |
+| `run`, `run_with(Registry)`, `run_args(&[String], Registry)` -> `ExitCode`; `run_status` -> `i32` | the process's or given words, on the real streams |
+| `run_in(&args, &Registry, Streams)` -> `i32` | any `Write`/`BufRead` streams (tests) |
+| `parse_command` -> `Parsed { output: Output, command: Result<Command, Problem> }` | every command, typed: `ConvertCommand`, `BuildCommand` (holds `gd_conf::LoadOptions` and `gd_env::BuildOptions`), `ServeCommand`, `CleanCommand`, `QuickstartCommand`, `MigrateCommand`, `IntlCommand`, `PluginCommand`, `PublishCommand`, ... |
 | `default_registry()` | the linked `pages` publisher |
 | `discussion_builder(typst)` | `gd_discussion::Builder` with this engine (for `guidedog gds`, `dscc`) |
 | `version_text()`, `full_version()`, `VERSION`, `VERSION_SUFFIX` | `--version` and the crash report |

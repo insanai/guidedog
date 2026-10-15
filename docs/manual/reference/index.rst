@@ -2,7 +2,7 @@ Reference
 =========
 
 These pages state the contracts. They are meant to be searched and consulted.
-Start with a tutorial when you need a first example.
+When we need a first example, we start with a tutorial.
 
 .. toctree::
    :maxdepth: 1

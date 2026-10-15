@@ -57,8 +57,8 @@ the code alone. A reader that skips a construct and a reader that has not yet
 implemented that construct look identical in a diff. Only a record distinguishes
 them.
 
-This is why a mapping decision — even a small one, such as rendering a
-single-cell table as a paragraph — belongs in a numbered document with the
+This is why a mapping decision, even a small one such as rendering a
+single-cell table as a paragraph, belongs in a numbered document with the
 alternatives that lost.
 
 
@@ -147,8 +147,8 @@ without adoption. The filled dot is the moment a contributor copies the
 template.
 
 .. graphviz::
-   :caption: The lifecycle states as a chain with the transition that leads to each: prediscussion (a local draft with a placeholder number) becomes discussion once a number is assigned, then accepted once the direction is agreed, then published as the current design record, then committed once implemented and descriptive of the system. From any state before committed a record may instead become abandoned — dropped, rejected, or superseded.
-   :alt: The lifecycle states as a chain with the transition that leads to each: prediscussion (a local draft with a placeholder number) becomes discussion once a number is assigned, then accepted once the direction is agreed, then published as the current design record, then committed once implemented and descriptive of the system. From any state before committed a record may instead become abandoned — dropped, rejected, or superseded.
+   :caption: The lifecycle states as a chain with the transition that leads to each: prediscussion (a local draft with a placeholder number) becomes discussion once a number is assigned, then accepted once the direction is agreed, then published as the current design record, then committed once implemented and descriptive of the system. From any state before committed a record may instead become abandoned: dropped, rejected, or superseded.
+   :alt: The lifecycle states as a chain with the transition that leads to each: prediscussion (a local draft with a placeholder number) becomes discussion once a number is assigned, then accepted once the direction is agreed, then published as the current design record, then committed once implemented and descriptive of the system. From any state before committed a record may instead become abandoned: dropped, rejected, or superseded.
 
    digraph history {
      graph [rankdir=TB, bgcolor="transparent"];
@@ -186,32 +186,32 @@ Transition Detail
    * - **Transition**
      - **Actor**
      - **What happens**
-   * - start → ``prediscussion``
+   * - start to ``prediscussion``
      - contributor
      - Copy ``template/rfc-template.typ`` to ``records/XXXXX-<slug>.typ`` and iterate
            locally under the placeholder number.
-   * - ``prediscussion`` → ``discussion``
+   * - ``prediscussion`` to ``discussion``
      - maintainer
      - Run ``zig build zds-promote -- <slug>``: it assigns the next four-digit
            number, renames the file to ``NNNN-<slug>.typ``, rewrites the metadata for
            discussion, and appends the ``registry.typ`` and ``bundle.typ`` entries.
-   * - ``discussion`` → ``accepted``
+   * - ``discussion`` to ``accepted``
      - maintainers
      - Review converges on the proposed direction; implementation has not landed
            yet. The registry state changes, nothing is renamed.
-   * - ``discussion`` → ``published``
+   * - ``discussion`` to ``published``
      - maintainers
      - The document itself is the deliverable (process memos, assessments,
            records) and is adopted as the current design record.
-   * - ``accepted`` → ``published``
+   * - ``accepted`` to ``published``
      - maintainers
      - The accepted direction is written up as the repository's current design
            record while implementation continues.
-   * - ``accepted`` / ``published`` → ``committed``
+   * - ``accepted`` / ``published`` to ``committed``
      - maintainers
      - The described system is fully implemented; the ZDS is now descriptive of
            the current system rather than a proposal.
-   * - any pre-committed state → ``abandoned``
+   * - any pre-committed state to ``abandoned``
      - maintainers
      - The discussion is deliberately closed without adoption: dropped while
            drafting, rejected in review, or superseded by a later ZDS. The number is
@@ -319,7 +319,7 @@ Lifecycle management is owned by ``tools/zds.zig``:
   warns when a record file and the registry disagree.
 - ``zig build zds-new -- <slug>`` creates ``records/XXXXX-<slug>.typ`` from the
   template with today's date.
-- ``zig build zds-promote -- <slug>`` performs the ``prediscussion`` →
+- ``zig build zds-promote -- <slug>`` performs the ``prediscussion`` to
   ``discussion`` transition described above.
 
 Direct Typst commands are useful while editing:
@@ -348,7 +348,7 @@ the build as ``zds-list``, ``zds-new``, and ``zds-promote``, automates it:
   ``docs/zds/bundle.typ``
 
 The tool performs ordinary file edits reviewed in the same change as the
-discussion — there is no hidden state, and every step can still be done by
+discussion. There is no hidden state. Every step can still be done by
 hand. The generated registry summary and area come from the draft's
 ``zds-discussion`` and first ``zds-labels`` entry; review both before committing.
 

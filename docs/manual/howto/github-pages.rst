@@ -1,11 +1,11 @@
 Publish to GitHub Pages
 =======================
 
-Publish a Guidedog site to GitHub Pages in one of two ways. GitHub Actions can build
+We can publish a Guidedog site to GitHub Pages in one of two ways. GitHub Actions can build
 and deploy it on each push, with released Guidedog and GitHub's official Pages
-actions, and no personal token. Or ``guidedog-pages`` can publish it from your own
-machine, whenever you ask or whenever the sources change. Use one route per site: a
-repository has one Pages source, GitHub Actions or a branch.
+actions, and no personal token. Or ``guidedog-pages`` can publish it from our own
+machine, whenever we ask or whenever the sources change. We use one route per site, because a
+repository has one Pages source: GitHub Actions or a branch.
 
 .. graphviz::
    :class: graphviz-adaptive
@@ -44,41 +44,41 @@ repository has one Pages source, GitHub Actions or a branch.
 Publish from this machine in one command
 ----------------------------------------
 
-From the repository that holds your documentation, run:
+From the repository that holds our documentation, we run:
 
 .. code-block:: sh
 
    guidedog-pages publish
 
-On a machine that has never published, it does each missing step once, says what it
-does, and asks before anything that changes GitHub or this machine's permissions:
+On a machine that has never published, it does each missing step once and says what it
+does. It asks before anything that changes GitHub or this machine's permissions:
 
 1. **Configuration.** Without ``pages.toml`` it reads the repository from
-   ``git remote get-url origin`` (HTTPS or SSH GitHub URLs) and asks you to confirm
-   it, finds the nearest project (a folder with ``conf.toml``, here, in ``docs``, or
-   above, up to the repository's root), and writes ``pages.toml``. Name them yourself
+   ``git remote get-url origin`` (HTTPS or SSH GitHub URLs) and asks us to confirm
+   it. It finds the nearest project (a folder with ``conf.toml``, here, in ``docs``, or
+   above, up to the repository's root), and writes ``pages.toml``. We can name both ourselves
    with ``--repository=OWNER/REPO`` and ``--project=DIR``.
 2. **Token.** Without a stored token it offers to sign in with a code on github.com
-   (GitHub's device flow; the token goes to the macOS Keychain, the Windows Credential
-   Manager, or the Secret Service of a Linux desktop), or, when the GitHub CLI is
-   signed in, to use ``gh auth token`` *for this run only*. The GitHub CLI's token is
+   (GitHub's device flow). The token goes to the macOS Keychain, the Windows Credential
+   Manager, or the Secret Service of a Linux desktop. When the GitHub CLI is
+   signed in, it offers instead to use ``gh auth token`` *for this run only*. The GitHub CLI's token is
    never stored: it belongs to ``gh``, which refreshes and revokes it.
 3. **Authorization.** It shows the account, the repository with its GitHub ID, the
    branch, and the Pages settings, and asks once whether this machine may publish
    there. A branch that holds work Guidedog did not publish is never replaced without
-   your explicit answer.
+   our explicit answer.
 4. **Pages source.** If Pages deploys from Actions or another branch, it asks before
    pointing Pages at the branch. A repository without a Pages site is set up after the
    first push, which makes the branch.
-5. **Publication.** It builds the project, pushes the whole site in one commit, waits
-   for GitHub Pages to deploy that commit, and prints the live URL.
+5. **Publication.** It builds the project and pushes the whole site in one commit. It waits
+   for GitHub Pages to deploy that commit and prints the live URL.
 
-The next time every step is done already, and ``publish`` builds and publishes
+The next time, every step is done already. ``publish`` then builds and publishes
 without a question.
 
 In a script, or with ``--yes``, it never asks. ``--yes`` answers the confirmations
-(repository, authorization, Pages source) with yes, but it never signs in and never
-replaces others' work. A step that needs you fails with ``pages.guide`` and a hint that
+(repository, authorization, Pages source) with yes. It still never signs in and never
+replaces others' work. A step that needs us fails with ``pages.guide`` and a hint that
 names the flag or the step command, such as ``--repository=octo/manual`` or
 ``guidedog-pages auth login``.
 
@@ -86,20 +86,20 @@ Publish from this machine, step by step
 ---------------------------------------
 
 The step commands stay for scripts and for checking each part. ``guidedog-pages``
-builds the project with the installed ``guidedog``, and pushes the whole site to a
+builds the project with the installed ``guidedog``. It pushes the whole site to a
 branch of its own in one Git commit.
 
-Write ``pages.toml`` beside your project. It names the repository, the branch, and the
-credential profile; it holds no secret, so you can commit it:
+We write ``pages.toml`` beside our project. It names the repository, the branch, and the
+credential profile. It holds no secret, so we can commit it:
 
 .. code-block:: sh
 
    guidedog-pages init --repository=octo/manual --project=docs
 
-Store a token for the profile. Make a fine-grained personal access token for the
+Next we store a token for the profile. We make a fine-grained personal access token for the
 repository with **Contents: read and write**, and **Pages: read** so that publication
-can confirm the deployment (**Pages: write** and **Administration: write** too if you
-want ``setup`` to configure Pages). Paste it when asked; it is not shown, and it never
+can confirm the deployment. If we want ``setup`` to configure Pages, it also needs
+**Pages: write** and **Administration: write**. We paste it when asked. It is not shown, and it never
 goes to a file:
 
 .. code-block:: sh
@@ -107,11 +107,11 @@ goes to a file:
    guidedog-pages auth import --profile=default
    guidedog-pages auth status
 
-``auth login`` signs in with a code instead, for a GitHub App or OAuth App you
-registered with the device flow enabled: ``guidedog-pages auth login
---client-id=YOUR_APP_ID``.
+``auth login`` signs in with a code instead, for a GitHub App or OAuth App we
+registered with the device flow enabled:
+``guidedog-pages auth login --client-id=YOUR_APP_ID``.
 
-Authorize the target, point Pages at the branch, and check that everything is ready:
+We authorize the target, point Pages at the branch, and check that everything is ready:
 
 .. code-block:: sh
 
@@ -119,11 +119,11 @@ Authorize the target, point Pages at the branch, and check that everything is re
    guidedog-pages setup
    guidedog-pages doctor
 
-``bind`` refuses a branch that holds work Guidedog did not publish; ``--adopt`` lets the
+``bind`` refuses a branch that holds work Guidedog did not publish. ``--adopt`` lets the
 next publication replace it. The branch must not be the repository's default branch.
-Publication goes only to a bound target: a ``pages.toml`` that names another
-repository, a repository that was renamed, transferred, or made again, or another
-account's token is refused until you bind again.
+Publication goes only to a bound target. Guidedog refuses, until we bind again, a ``pages.toml`` that names another
+repository, a repository that was renamed, transferred, or made again, and another
+account's token.
 
 .. code-block:: sh
 
@@ -131,21 +131,26 @@ account's token is refused until you bind again.
    guidedog-pages publish
 
 ``publish`` builds with warnings as errors (``strict = true``) and ``html_baseurl`` set to
-``site_url``, lists what it adds, changes, and removes, and sends one push that holds
+``site_url``. It lists what it adds, changes, and removes. Then it sends one push that holds
 only the files the branch lacks. GitHub moves the branch only if it still has the
 commit that was read, so a publication never overwrites a newer one. A ``.nojekyll``
-file is added, so folders such as ``_static`` are served. Then it waits, up to
+file is added, so that GitHub serves folders such as ``_static``. Then it waits, up to
 ``wait_seconds``, for GitHub Pages to deploy that commit.
 
-The exit status says what happened: 0 when the site is live or was already
-published, 1 when nothing was published, 2 for a usage, configuration, or missing
-step, 6 when GitHub accepted the publication but has not confirmed the deployment yet,
-and 7 when it is not known whether the branch moved. Check later with
-``guidedog-pages status``; ``guidedog-pages recover`` settles a publication whose answer
-was lost, and never moves the branch back.
+The exit status says what happened:
 
-To publish a site you build yourself, write ``site = "build/site"`` instead of
-``project``; the folder is copied and checked before it is published.
+* 0: the site is live or was already published.
+* 1: nothing was published.
+* 2: a usage, configuration, or missing step problem.
+* 6: GitHub accepted the publication but has not confirmed the deployment yet.
+* 7: it is not known whether the branch moved.
+
+We check later with
+``guidedog-pages status``. ``guidedog-pages recover`` settles a publication whose answer
+was lost, and it never moves the branch back.
+
+To publish a site we build ourselves, we write ``site = "build/site"`` instead of
+``project``. The folder is copied and checked before it is published.
 
 Publish on every change, with a preview
 ---------------------------------------
@@ -155,7 +160,7 @@ have been quiet for ``debounce_ms`` (at most ``max_wait_ms`` after the first cha
 failed build or publication is reported, and the published site stays as it was.
 
 ``guidedog-pages watch --serve`` also serves the built site on this machine, at
-``http://127.0.0.1:8000/`` (``--serve=PORT`` for another port), so you see each build
+``http://127.0.0.1:8000/`` (``--serve=PORT`` for another port). We see each build
 before GitHub Pages deploys it. One Ctrl+C stops both the watch and the preview.
 
 A scheduler can keep it running. On macOS, a launch agent in
@@ -181,9 +186,9 @@ A scheduler can keep it running. On macOS, a launch agent in
 
 On Linux, a systemd user service, ``~/.config/systemd/user/docs-pages.service``,
 started with ``systemctl --user enable --now docs-pages``. A user service reaches
-the desktop's Secret Service; on a server without one, give the token with
+the desktop's Secret Service. On a server without one, we give the token with
 ``--credential=env`` and an ``Environment=GUIDEDOG_PAGES_TOKEN=...`` drop-in readable
-only by you:
+only by our own account:
 
 .. code-block:: ini
 
@@ -210,7 +215,7 @@ On Windows, a scheduled task at logon, so that the Credential Manager is availab
 Build and deploy with GitHub Actions
 ------------------------------------
 
-Generate the workflow instead of copying it:
+We generate the workflow instead of copying it:
 
 .. code-block:: sh
 
@@ -218,14 +223,14 @@ Generate the workflow instead of copying it:
    git add .github/workflows/docs-pages.yml
 
 It writes ``.github/workflows/docs-pages.yml`` for a project in ``docs`` and a source
-branch ``main`` (``--project=DIR``, ``--branch=NAME``), installing this Guidedog release
+branch ``main`` (``--project=DIR``, ``--branch=NAME``). The workflow installs this Guidedog release
 (``--version=X``). The archive's SHA-256 is read from the release's ``SHA256SUMS``, or
-given with ``--sha256``. ``--offline`` writes a clearly marked placeholder, on which the
-workflow's checksum test fails, and the command exits with status 1 until you give
+given with ``--sha256``. ``--offline`` writes a clearly marked placeholder. The
+workflow's checksum test fails on it, and the command exits with status 1 until we give
 ``--sha256``. Without ``--write`` it prints the workflow.
 
-In the repository's **Settings -> Pages**, choose **GitHub Actions** as the publishing
-source, and restrict the ``github-pages`` environment to ``main``.
+In the repository's **Settings -> Pages**, we choose **GitHub Actions** as the publishing
+source and restrict the ``github-pages`` environment to ``main``.
 
 The workflow it writes is this one (for Guidedog 0.6.3):
 
@@ -313,10 +318,10 @@ The workflow it writes is this one (for Guidedog 0.6.3):
            uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
 The build job can read sources. Only the deploy job receives Pages and OIDC
-permissions; GitHub supplies its short-lived credentials, so add no personal token.
-The checkout keeps no credentials, pull requests build but never deploy, and the
+permissions. GitHub supplies its short-lived credentials, so we add no personal token.
+The checkout keeps no credentials. Pull requests build but never deploy. The
 workflow stays on ``pull_request``, never ``pull_request_target``. Action commits are
-pinned by SHA with their versions in comments, and the Guidedog archive is checked
+pinned by SHA with their versions in comments. The Guidedog archive is checked
 against its SHA-256 before it is unpacked.
 
 Check an existing workflow
@@ -329,32 +334,32 @@ Check an existing workflow
 It reports an older Guidedog release (``pages.workflow-outdated``), a missing or
 placeholder checksum, an action pinned to a tag or to another commit than the reviewed
 one (``pages.workflow-unpinned``, ``pages.workflow-pin``), ``pull_request_target``, and a
-checkout that keeps its credentials, each with its line and the fix. Update with
+checkout that keeps its credentials, each with its line and the fix. We update with
 ``guidedog-pages workflow --write --force``. Action updates are a separate review: the
 pinned commits are listed in ``gd-pages`` and change only with a reviewed release.
 
-If the project selects build plugins, install and register their trusted executables
-in the build job before ``guidedog build``; registrations on your computer are not
+If the project selects build plugins, we install and register their trusted executables
+in the build job before ``guidedog build``. Registrations on our own computer are not
 copied to a runner. See :doc:`../plugins`.
 
 .. note::
 
-   A site built from a private repository is not necessarily private. Check its
+   A site built from a private repository is not necessarily private. We check its
    Pages visibility before publishing confidential material.
 
 Tokens and automation
 ---------------------
 
-``--credential=env`` takes the token from ``GUIDEDOG_PAGES_TOKEN`` for one command, and
-never stores it; ``GUIDEDOG_PAGES_CREDENTIAL=env`` chooses the same for runs that cannot
+``--credential=env`` takes the token from ``GUIDEDOG_PAGES_TOKEN`` for one command and
+never stores it. ``GUIDEDOG_PAGES_CREDENTIAL=env`` chooses the same for runs that cannot
 take the option, such as ``guidedog publish``. A missing or locked credential store is
-reported; the token is never written to a plain file instead. ``auth logout`` deletes
-the stored token; revoke it at GitHub too.
+reported. The token is never written to a plain file instead. ``auth logout`` deletes
+the stored token. We revoke it at GitHub too.
 
 Through guidedog publish
 ------------------------
 
-``guidedog publish pages`` runs the same guided publish with Guidedog's own engine, and
+``guidedog publish pages`` runs the same guided publish with Guidedog's own engine.
 ``guidedog-pages`` is also a publisher program for ``guidedog publish --publisher=pages``
 (see :doc:`../plugins`).
 
@@ -383,7 +388,7 @@ Every problem names its code and what to do. The common ones:
    * - ``pages.ruleset``
      - A ruleset or branch protection refused the push; allow the account to push.
    * - ``pages.guide``
-     - A step needs your answer and the run may not ask; run it in a terminal, or do
+     - A step needs our answer and the run may not ask; run it in a terminal, or do
        the step the hint names.
    * - ``pages.unsettled``
      - Run ``guidedog-pages recover``.

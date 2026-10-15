@@ -1,6 +1,6 @@
 # Guidedog
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [हिन्दी](README.hi.md) · [Español](README.es.md) · [Deutsch](README.de.md)
+[English](README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [हिन्दी](README.hi.md) | [Español](README.es.md) | [Deutsch](README.de.md)
 
 **Write once. Explain well. Publish on the web and on paper.**
 
@@ -17,7 +17,7 @@ guidedog build pdf docs
 guidedog serve docs
 ```
 
-The project contains `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ`, and `_static/`. Templates are ordinary files you can edit. HTML provides navigation, search, code highlighting, diagrams, and equations. PDF books provide chapters, cross-references, figures, indexes, and language-aware typesetting.
+The project contains `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ`, and `_static/`. Templates are ordinary files that we can edit. HTML provides navigation, search, code highlighting, diagrams, and equations. PDF books provide chapters, cross-references, figures, indexes, and language-aware typesetting.
 
 The default theme is light. Readers can choose dark or the system theme. The manual detects the browser language on its landing page and repository overview. A saved choice takes precedence; direct links to an edition or chapter remain explicit requests.
 
@@ -31,7 +31,7 @@ API documentation is read from source without running it: Python (`autodoc`), Od
 
 ## Install
 
-Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64) and macOS (Apple silicon and Intel). The `guidedog` archive holds `guidedog`, `dsc`, `guidedog-pages`, and `graphdog`; the `dscc` archive holds `dscc` alone. The Typst compiler is embedded and tree-sitter is compiled in. Graphviz is linked from the system, so install its libraries first: on Debian and Ubuntu `sudo apt install libgvc6` (or the `graphviz` package), on Fedora `sudo dnf install graphviz`, on macOS `brew install graphviz`. Linux needs glibc 2.35 or later; macOS needs version 12 or later. Download the archive for your system and `SHA256SUMS`, then check and install it:
+Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64) and macOS (Apple silicon and Intel). The `guidedog` archive holds `guidedog`, `dsc`, `guidedog-pages`, and `graphdog`; the `dscc` archive holds `dscc` alone. The Typst compiler is embedded and tree-sitter is compiled in. Graphviz is linked from the system, so install its libraries first: on Debian and Ubuntu `sudo apt install libgvc6` (or the `graphviz` package), on Fedora `sudo dnf install graphviz`, on macOS `brew install graphviz`. Linux needs glibc 2.35 or later; macOS needs version 12 or later. We download the archive for our system and `SHA256SUMS`, then check and install it:
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # on macOS: shasum -a 256 -c --ignore-missing SHA256SUMS
@@ -89,7 +89,7 @@ GitHub readers choose a README language using the links above. Automatic languag
 
 ## Publish to GitHub Pages
 
-`guidedog-pages` publishes a site from your own machine. It builds the project with the installed `guidedog` and sends the whole site to a branch of its own in one Git push, which GitHub applies only if the branch still has the commit that was read. Then it waits until GitHub Pages has deployed that commit. Tokens stay in the system's credential store, and a binding on your machine decides where a profile may publish.
+`guidedog-pages` publishes a site from our own machine. It builds the project with the installed `guidedog` and sends the whole site to a branch of its own in one Git push. GitHub applies the push only if the branch still has the commit that was read. Then `guidedog-pages` waits until GitHub Pages has deployed that commit. Tokens stay in the system's credential store, and a binding on our machine decides where a profile may publish.
 
 ```sh
 guidedog-pages init --repository=octo/manual --project=docs
@@ -102,7 +102,7 @@ guidedog-pages watch                # publish again whenever the sources change
 
 GitHub Actions is the other route, for publishing after every push. `guidedog publish --publisher=pages` builds with Guidedog's own engine and runs the same publisher. See [Publish to GitHub Pages](docs/manual/howto/github-pages.rst) and [Write a plugin](docs/manual/plugins.rst).
 
-Build plugins transform source text, complete HTML pages, and static assets through a typed, versioned contract. A plugin is an ordinary Rust crate: link it into your own `guidedog` with `gd_cli::run_with`, or run it as a separate program that `guidedog plugin register` pins by SHA-256. `guidedog publish --timeout=SECONDS` bounds each complete exchange with a publisher (default: 300 seconds); choose a value longer than `--wait`. After an unknown outcome, recover before publishing again.
+Build plugins transform source text, complete HTML pages, and static assets through a typed, versioned contract. A plugin is an ordinary Rust crate. We link it into our own `guidedog` with `gd_cli::run_with`, or we run it as a separate program that `guidedog plugin register` pins by SHA-256. `guidedog publish --timeout=SECONDS` bounds each complete exchange with a publisher (default: 300 seconds); choose a value longer than `--wait`. After an unknown outcome, recover before publishing again.
 
 ## Keep discussions
 
@@ -125,14 +125,14 @@ A catalog's `discussion.toml` sets its lifecycle states, record types, and numbe
 
 - [Manual](docs/manual/index.rst): tutorials, topics, practical tasks, reference, and internals.
 - [API reference](docs/api/index.rst): generated from the Rust sources by Guidedog itself and included in the manual's PDF appendix. `cargo doc --workspace --no-deps` builds the rustdoc pages too.
-- [Engine guide](crates/guidedoc/README.md): workspaces, requests, adapters, and passes; [examples](examples/README.md) are small programs you can run with `cargo run`.
+- [Engine guide](crates/guidedoc/README.md): workspaces, requests, adapters, and passes; [examples](examples/README.md) are small programs we can run with `cargo run`.
 - [Templates](docs/manual/templates.rst): customize HTML with Jinja and books with Typst.
 - [GDS](docs/gds/README.md): numbered design records and implementation decisions.
 - [Discussion library](crates/gd-discussion/README.md): the catalogs that `dsc`, `dscc`, and `guidedog gds` keep.
 - [Plugin library](crates/gd-plugins/README.md): typed build services and the publisher interface used by `guidedog publish` and `guidedog-pages`.
 - [Reusable crates](docs/manual/internals/crates.rst): the engine, libraries, API generators, and plugin SDK that other Rust projects can take from crates.io, and how they depend on each other.
 
-Each crate under `crates/` has a short README with its API and the design decisions made in the port. Guidedoc owns its document tables and reuses them between conversions, so a conversion in steady state allocates nothing, and returns structured diagnostics with a hint. The host manages files, budgets, caching, publication, and the embedded compilers. `--untrusted` restricts capabilities; it is not a process sandbox or a limit on all native resource use. The beta scope is trusted documentation projects on macOS and Linux.
+Each crate under `crates/` has a short README with its API and the design decisions made in the port. Guidedoc owns its document tables and reuses them between conversions, so a conversion in steady state allocates nothing. It returns structured diagnostics with a hint. The host manages files, budgets, caching, publication, and the embedded compilers. `--untrusted` restricts capabilities; it is not a process sandbox or a limit on all native resource use. The beta scope is trusted documentation projects on macOS and Linux.
 
 Guidedog 0.6 and earlier were written in Odin. Version 0.7 is a port to Rust that keeps the commands, options, `conf.toml` keys, directives, roles, and output; the [changelog](CHANGELOG.md) lists what changed.
 

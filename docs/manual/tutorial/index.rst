@@ -1,7 +1,7 @@
 Tutorials
 =========
 
-Follow these pages in order. Each step produces a result you can inspect.
+We follow these pages in order. Each step produces a result we can inspect.
 
 .. toctree::
    :maxdepth: 1

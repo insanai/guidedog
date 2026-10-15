@@ -218,7 +218,7 @@ Directives
      - ``csv_table_with_options``, ``csv_table_multiline_quoted_cell``, ``csv_table_delimiter_and_quote``, ``csv_table_escape_character``, ``csv_table_tab_delimiter``, ``csv_table_unclosed_quote_is_error``, ``csv_table_header_rows_exceed_data``, ``csv_table_and_raw_read_files``
    * - csv-table ``:url:``
      - done (refused)
-     - ``csv_table_url_is_refused`` — the reader never fetches URLs (policy error)
+     - ``csv_table_url_is_refused``: the reader never fetches URLs (policy error)
    * - list-table (header-rows, stub-columns, widths, width, align, class, name)
      - done
      - ``list_table_with_header_and_stub``, ``list_table_uneven_rows_is_error``, ``list_table_needs_nested_lists``
@@ -272,7 +272,7 @@ Directives
      - ``a_dialect_adds_directives_roles_hooks_and_substitutions``, ``unknown_options_of_a_handler_are_reported``
    * - restructuredtext-test-directive
      - done (unknown)
-     - ``test_directive_is_unknown`` — treated as an unknown directive
+     - ``test_directive_is_unknown``: treated as an unknown directive
    * - unknown directives (error with extension-layer hint)
      - done
      - ``unknown_directive_is_error``
@@ -414,7 +414,7 @@ Shape notes for renderers
   is Custom ``figwidth`` = ``image``.
 - Directive nodes keep attribute Name for the directive name; ``:name:`` becomes Custom
   ``name`` (the resolver reads it there).
-- csv-table and list-table without ``:widths:`` get equal relative widths (``1 1 …``).
+- csv-table and list-table without ``:widths:`` get equal relative widths (``1 1 ...``).
 - Unicode ``:ltrim:``/``:rtrim:`` (and ``:trim:``) become Custom attributes ``ltrim``/``rtrim``
   with value ``1`` on the SubstitutionDefinition.
 

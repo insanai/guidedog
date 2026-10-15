@@ -31,7 +31,7 @@ Motivation and scope
 Users need one command that makes output predictably and explains failures in
 terms they can act on. The CLI should share engine semantics with embedded callers,
 while owning terminal behavior, files, resources, Typst, and publication. This
-record separates what is implemented from what remains open; an implemented command
+record separates what is implemented from what remains open. An implemented command
 does not by itself establish that every acceptance gate below is met.
 
 
@@ -79,23 +79,23 @@ Closing the lock handle releases the lock. A leftover lock filename is not a bus
            color="#216553", fontname="Helvetica", fontcolor="#16382f"];
      edge [color="#216553"];
      catalog [label="Load and validate catalog"];
-     edit [label="Edit path\nlock · plan · journal · replace"];
-     build [label="Publication path\nproject engine · staged generation"];
+     edit [label="Edit path\nlock, plan, journal, replace"];
+     build [label="Publication path\nproject engine, staged generation"];
      catalog -> edit; catalog -> build;
    }
 
 HTML builds publish a complete site in the discussion project's ``_build/html``.
 The catalog, search, labels, and cross-document links use the normal project graph.
 A selected build still refreshes that coherent site.
-Selected PDFs use a separate generation in ``_build/selected/<artifact>/pdf``;
-they do not replace the complete catalog in ``_build/pdf``.
+Selected PDFs use a separate generation in ``_build/selected/<artifact>/pdf``.
+They do not replace the complete catalog in ``_build/pdf``.
 PDF builds create one book per selected active record in ``_build/pdf``.
 No selector means all active records. There is no combined PDF by default.
 A normal ``guidedog build html docs/gds`` or ``build pdf`` works too.
 
 The project engine owns cache validity and generation publication.
 Compiler or renderer failure preserves the previous target generation.
-Each HTML or PDF target commits independently; ``both`` is not a transaction
+Each HTML or PDF target commits independently. ``both`` is not a transaction
 covering both target directories.
 
 Source and metadata limits remain distinct from compiler costs.
@@ -112,10 +112,10 @@ Specification: conversion command-line behavior
 -----------------------------------------------
 
 
-The first executable is named ``guidedog``; ``convert`` exposes Guidedoc before the
+The first executable is named ``guidedog``. ``convert`` exposes Guidedoc before the
 project builder exists. This avoids shipping a second CLI name that later needs
-renaming. ``convert`` reports each reader's conformance through ``formats``: CommonMark passes
-all 652 examples of 0.31.2; the reStructuredText reader is partial, with its gaps listed in
+renaming. ``convert`` reports each reader's conformance through ``formats``. CommonMark passes
+all 652 examples of 0.31.2. The reStructuredText reader is partial, with its gaps listed in
 the readers' coverage ledgers.
 
 .. code-block:: text
@@ -130,10 +130,10 @@ the readers' coverage ledgers.
 
 
 ``.md`` selects CommonMark. ``.rst`` selects reStructuredText. ``.typ`` selects native
-Typst. An explicit ``--from`` overrides suffix selection; ambiguous or missing
+Typst. An explicit ``--from`` overrides suffix selection. An ambiguous or missing
 selection produces a direction to specify it. No heuristic claims that arbitrary
 plain text is reliably distinguishable as RST or Markdown. ``--to`` accepts only
-``html`` or ``pdf``; if omitted, the output suffix may select the target. Intermediate
+``html`` or ``pdf``. If it is omitted, the output suffix may select the target. Intermediate
 Typst is available through ``--emit-typst path``, not as a third product target.
 
 ``formats`` reports actual adapter availability, conformance status, and toolchain
@@ -199,7 +199,7 @@ Elm-style diagnostics are structured data
 
 Every warning and error answers four questions: what happened, where, what this
 means for the result, and what to do next. Prefer a specific edit or an exact flag
-to advice such as “check your input.” The library returns facts; renderers choose
+to advice such as "check your input." The library returns facts. Renderers choose
 prose layout, color, and machine-readable encoding.
 
 A ``Diagnostic`` holds stable namespaced code, severity, source ID and byte span,
@@ -234,7 +234,7 @@ consequence, and directions as the text view.
 When report storage fills, retain the first failure in ``primary``, count suppressed
 reports, and set an explicit truncation flag. In strict reporting mode, truncation
 fails the conversion. A bounded excerpt avoids copying a huge source line into the
-report. The host renderer may use ordinary allocations; a bounded-buffer renderer
+report. The host renderer may use ordinary allocations. A bounded-buffer renderer
 must remain available for allocation-free embedders.
 
 
@@ -242,14 +242,14 @@ CLI resource policy
 ~~~~~~~~~~~~~~~~~~~
 
 
-*Superseded in part* by the draft "Memory budgets and what a build may read": how a
+*Superseded in part* by the draft "Memory budgets and what a build may read". That draft decides how a
 build's budget is reserved and shared (one budget per build, ``--budget``), what it counts
 and what it names as outside it, and which files a build, a graph, and Typst may read,
 trusted and under ``--untrusted``. The limits below stand.
 
 Initial defaults are proposed, not measured performance claims: 32 MiB per source,
 256 MiB total prepared Odin storage, 256 nesting levels, 1,024 stored reports,
-1,000,000 AST nodes, and 128 MiB output. Core receives limits explicitly; the CLI
+1,000,000 AST nodes, and 128 MiB output. Core receives limits explicitly. The CLI
 selects them. A separate project budget bounds aggregate files and resources.
 Each exhausted limit names the corresponding flag or API field and a concrete
 next value when computable. Byte and node capacities are checked independently.
@@ -267,11 +267,11 @@ Guidedog: the project builder
 .. note::
 
    The draft record "Guidedog: everything Sphinx does, the Odin way"
-   (``0006-sphinx-replacement.rst``) replaces this section's project builder: the
-   ``guidedog.toml`` layout, ``init``, and ``build --target``. That record is the current statement
+   (``0006-sphinx-replacement.rst``) replaces this section's project builder (the
+   ``guidedog.toml`` layout, ``init``, and ``build --target``). That record is the current statement
    of the project layout, ``conf.toml``, builders, incremental builds, and publication. What
    this section says about the build cache, publication, confinement, and the themes still
-   holds and is kept for its history; where the two differ, the draft governs.
+   holds and is kept for its history. Where the two differ, the draft governs.
 
 
 The full application adds project discovery, document ordering, cross-references,
@@ -286,7 +286,7 @@ for RST and CommonMark and the Typst adapter for native Typst content.
    guidedog serve docs --port 8000
 
 
-These commands are implemented in ``lib/project`` and ``lib/cli/project.odin``; the
+These commands are implemented in ``lib/project`` and ``lib/cli/project.odin``. The
 superseded ``guidedog init manual --template atlas`` and ``guidedog build --target html``
 forms no longer exist.
 
@@ -310,7 +310,7 @@ For RST and CommonMark, the project host supplies read-only symbol and resource
 views. Conversion does not open neighboring files. Mixed-source books generate
 Typst chapter modules for RST and CommonMark and import native Typst chapter modules
 through a documented content-export convention. An arbitrary standalone ``.typ``
-file can always be built alone; joining it into a book may require adapting page
+file can always be built alone. Joining it into a book may require adapting page
 rules and exports. Never promise automatic merging of unrelated Typst programs.
 
 Native Typst chapters declare navigation and exported cross-reference labels in a
@@ -325,10 +325,10 @@ through Typst's HTML export and book chapters through ``#include``. The native T
 metadata contract above is not implemented.
 
 A build-cache key includes source and transitive dependency digests, reader version,
-configuration, renderer version, template, fonts, and Typst version; the implementation
+configuration, renderer version, template, fonts, and Typst version. The implementation
 also includes the executable's size and modification time, so a rebuilt ``guidedog`` never
-reuses an older conversion. A page's key also covers what its references resolved to:
-the link pass records every lookup it makes, and the next build repeats them. Diagnostics
+reuses an older conversion. A page's key also covers what its references resolved to.
+The link pass records every lookup it makes, and the next build repeats them. Diagnostics
 are cached with the output they came from and reported again when it is kept. Development
 caches are host-owned and may allocate. A clean build and a cached build must emit
 the same artifacts for the same inputs, excluding explicitly requested timestamps.
@@ -346,19 +346,19 @@ at 320 CSS pixels. Wide tables and code scroll within their containers.
 
 Require semantic landmarks, skip links, keyboard navigation, visible focus, proper
 heading order, image alternatives, high contrast, and reduced-motion support.
-The page remains readable without JavaScript. Search uses a generated local index;
-no remote service is required. CSS, fonts, and icons ship with the binary, with
+The page remains readable without JavaScript. Search uses a generated local index.
+No remote service is required. CSS, fonts, and icons ship with the binary, with
 license notices. Native Typst HTML is integrated through its supported export and
-template mechanisms; do not concatenate entire HTML documents into a page shell.
+template mechanisms. Do not concatenate entire HTML documents into a page shell.
 
-The PDF theme, proposed name **Folio**, is a Typst book template: title page, contents,
+The PDF theme, proposed name **Folio**, is a Typst book template. It has a title page, contents,
 numbered chapters, running headings, readable body type, restrained code styling,
 figures, tables, notes, citations, and useful page breaks. Test A4 and Letter,
 long URLs, wide tables, multilingual text, and embedded fonts. User content is
 passed as content and data, with a small documented theme-token surface.
 
 Atlas and Folio are implemented and embedded. Desktop and phone-width pages and PDF
-pages were reviewed as rendered images; a formal accessibility audit remains open.
+pages were reviewed as rendered images. A formal accessibility audit remains open.
 A project ``pdf.preamble`` file adds package imports and show rules to the book.
 
 
@@ -374,23 +374,23 @@ This is an integration decision to validate, not an existing upstream C API.
 
 The ABI accepts pointer-and-length source and resource records, explicit target,
 limits, and diagnostic callbacks. Rust owns its compiler state and output until
-an explicit release call; no Rust object layout crosses the ABI. Copying into
+an explicit release call. No Rust object layout crosses the ABI. Copying into
 caller buffers is explicit. Convert panics into failures at the boundary where
-supported; never unwind through Odin frames. Allocation failure and hard process
+supported. Never unwind through Odin frames. Allocation failure and hard process
 termination cannot be promised recoverable merely by catching panics.
 
 The adapter implements Typst's resource environment. Project files are read only
 under the Typst root. **Typst packages are supported**, because publication-quality PDF
-depends on them and Guidedog writes Typst rather than LaTeX: ``@preview`` and ``@local``
-imports resolve like the typst CLI, from the package data directory, then the cache,
+depends on them and Guidedog writes Typst rather than LaTeX. ``@preview`` and ``@local``
+imports resolve like the typst CLI: from the package data directory, then the cache,
 then a Typst Universe download into the cache. A package reads only inside its own
-directory and has no shell or network access of its own; that is Typst's sandbox, and
+directory and has no shell or network access of its own. That is Typst's sandbox, and
 it makes a package no riskier than a LaTeX package. Versions are pinned by the import
 itself (``@preview/name:1.2.3``). ``--offline`` (or ``pdf.packages = "offline"``) restricts
 builds to packages already on disk, for CI and air-gapped machines.
 
 **Fonts** also follow the typst CLI: extra ``--font-path`` directories first, then system
-fonts, then the fonts embedded in the executable as a fallback, so a book can use the
+fonts, then the fonts embedded in the executable as a fallback. So a book can use the
 fonts installed on the machine. ``--embedded-fonts-only`` (or ``pdf.fonts = "embedded"``)
 ignores system fonts for byte-reproducible output across machines. Trusted templates
 are embedded. No other filesystem or network access is delegated to document content.
@@ -399,12 +399,12 @@ internal worker and apply OS limits. This worker mode is not implemented.
 Per-platform containment and cancellation must be verified before hostile native
 Typst is advertised as safely isolated. An in-process compiler is not a sandbox.
 
-The bridge exists in ``native/typst_bridge``: ABI version 3, one request carrying root,
+The bridge exists in ``native/typst_bridge``. It has ABI version 3 and one request carrying root,
 main file or generated text, target, date, package mode, cache, font mode, and font
-paths; one owned result released by ``gd_typst_free``; panics become an internal-failure
-status. It builds offline from the cached crates on macOS; Linux vendors OpenSSL
+paths. One owned result is released by ``gd_typst_free``. Panics become an internal-failure
+status. It builds offline from the cached crates on macOS. Linux vendors OpenSSL
 statically for the Typst bridge. The complete Unix CLI still links system libcurl. Release builds pass
-``-define:GUIDEDOG_TYPST_BRIDGE=true``; the default build keeps the development backend.
+``-define:GUIDEDOG_TYPST_BRIDGE=true``. The default build keeps the development backend.
 
 A development adapter may invoke an installed, pinned Typst CLI with an argv array.
 It is labeled a development backend and does not satisfy the single-binary release
@@ -421,12 +421,12 @@ export fidelity, and worker containment are explicit early technical checkpoints
      node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
            color="#216553", fontcolor="#16382f", fontname="Helvetica", fontsize=11];
      edge [color="#216553", arrowsize=0.7];
-     n0 [label="Guidedog → Guidedoc\n1. RST / CommonMark + resources"];
-     n1 [label="Guidedoc → Guidedog\n2. Generated Typst + source map"];
-     n2 [label="Guidedog → Typst worker\n3. Compile Typst to PDF"];
-     n3 [label="Typst worker → Guidedog\n4. PDF or mapped diagnostics"];
-     n4 [label="Guidedog → Publisher\n5. Stage validated artifacts"];
-     n5 [label="Publisher → Guidedog\n6. Commit or report failure"];
+     n0 [label="Guidedog -> Guidedoc\n1. RST / CommonMark + resources"];
+     n1 [label="Guidedoc -> Guidedog\n2. Generated Typst + source map"];
+     n2 [label="Guidedog -> Typst worker\n3. Compile Typst to PDF"];
+     n3 [label="Typst worker -> Guidedog\n4. PDF or mapped diagnostics"];
+     n4 [label="Guidedog -> Publisher\n5. Stage validated artifacts"];
+     n5 [label="Publisher -> Guidedog\n6. Commit or report failure"];
      n0 -> n1;
      n1 -> n2;
      n2 -> n3;
@@ -441,30 +441,30 @@ Publication is a host transaction
 
 Conversion to a path writes a sibling temporary file, flushes and closes it, then
 replaces the destination using the platform's supported rename operation. Refuse
-existing output unless ``--force`` is explicit. stdout output cannot be rolled back;
+existing output unless ``--force`` is explicit. stdout output cannot be rolled back, so
 finish conversion into staging memory before emitting it.
 
 A website or book with resources is a set of files, so two individual renames do
 not form an atomic transaction. Stage an entire versioned build directory and
 switch an application-owned current-version pointer where supported. On platforms
 without an atomic switch, preserve the previous build and document recovery.
-An optional provenance manifest records versions, digests, diagnostics, and resources;
-it belongs to the same staged set. Crash durability requires directory sync behavior
+An optional provenance manifest records versions, digests, diagnostics, and resources.
+It belongs to the same staged set. Crash durability requires directory sync behavior
 where available and is tested separately from logical all-or-nothing publication.
 
 **Superseded for project builds** by the Publication section of
-``0006-sphinx-replacement``, which builds the whole next output folder beside the live
-one and switches the two (in one step where the system can), journals the switch so a
-failure is undone and a crash finished by the next build, publishes the environment
-with the output, and decides ``-W`` before publishing. The decision below, whose
-file-by-file moves could not survive a file that becomes a folder, is kept as history.
+``0006-sphinx-replacement``. That section builds the whole next output folder beside the live
+one and switches the two (in one step where the system can). It journals the switch, so a
+failure is undone and a crash is finished by the next build. It publishes the environment
+with the output and decides ``-W`` before publishing. The decision below is kept as history:
+its file-by-file moves could not survive a file that becomes a folder.
 
 **Implemented decision.** A project build stages each file it writes in a folder beside
 the output folder, and a file whose bytes are already published is only recorded. When
 every unit of the build succeeded, the staged files are renamed into place, the files
 only the previous generation made are removed, and the manifest is saved last. A failed
-or interrupted build removes the staging folder; the published output is untouched. The
-switch is file by file rather than one pointer: the output folder stays the path users
+or interrupted build removes the staging folder. The published output is untouched. The
+switch is file by file rather than one pointer. The output folder stays the path users
 serve and preview, and unchanged files keep their times. A crash while files are being
 moved leaves the old manifest, so the next build rewrites exactly the pages that differ.
 
@@ -481,12 +481,12 @@ Delivery phases
      node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
            color="#216553", fontcolor="#16382f", fontname="Helvetica", fontsize=11];
      edge [color="#216553", arrowsize=0.7];
-     n0 [label="0 · Specification\nReview contracts and resolve integration\nquestions"];
-     n1 [label="1 · Odin CLI\nOdin skeleton, ANSI reports, help, version,\nGDS management"];
-     n2 [label="2 · Core vertical slice\nFixed SoA AST; CommonMark → HTML and Typst →\nPDF"];
-     n3 [label="3 · Full language coverage\nComplete CommonMark and full RST; native\nTypst routes"];
-     n4 [label="4 · Guidedog project\nReferences, dependency graph, responsive\nHTML, book theme"];
-     n5 [label="5 · Release qualification\nOne binary, failure recovery, conformance and\nresource audits"];
+     n0 [label="0. Specification\nReview contracts and resolve integration\nquestions"];
+     n1 [label="1. Odin CLI\nOdin skeleton, ANSI reports, help, version,\nGDS management"];
+     n2 [label="2. Core vertical slice\nFixed SoA AST; CommonMark -> HTML and Typst ->\nPDF"];
+     n3 [label="3. Full language coverage\nComplete CommonMark and full RST; native\nTypst routes"];
+     n4 [label="4. Guidedog project\nReferences, dependency graph, responsive\nHTML, book theme"];
+     n5 [label="5. Release qualification\nOne binary, failure recovery, conformance and\nresource audits"];
      n0 -> n1;
      n1 -> n2;
      n2 -> n3;
@@ -506,7 +506,7 @@ evidence, not an earlier calendar milestone.
 Status on 29 September 2026: phases 1 and 2 are complete. Phase 3 is complete for
 CommonMark and native Typst and partial for RST, as its ledgers record. Phase 4 is
 implemented except the native Typst chapter contract.
-Phase 5's single binary works on macOS and Linux; Windows runtime, worker isolation, and
+Phase 5's single binary works on macOS and Linux. Windows runtime, worker isolation, and
 font-license review remain.
 
 
@@ -526,7 +526,7 @@ Backwards compatibility
 
 
 The CLI, conversion, and project commands described above are available in this checkout.
-The diagnostics JSON schema is version 1; changes to it require a new schema version.
+The diagnostics JSON schema is version 1. Changes to it require a new schema version.
 The project does not emulate every Sphinx extension or configuration
 script. Full RST support and Sphinx-specific extension support are separate claims.
 Existing source files must receive useful diagnostics when policy prevents a feature.
@@ -575,7 +575,7 @@ The reference implementation is ``cmd/guidedog`` with ``lib/cli``, ``lib/discuss
 ``lib/typst``, ``lib/project``, ``lib/defaults``, the Guidedoc packages of GDS 0003, and
 ``native/typst_bridge``. On 29 September 2026:
 
-- ``tests/`` holds 137 end-to-end tests (30 September 2026), among them: discussion workflows, recovery, dates,
+- ``tests/`` holds 137 end-to-end tests (30 September 2026). Among them are discussion workflows, recovery, dates,
   Typst builds;
   conversion to HTML and PDF from RST, CommonMark, and Typst; overwrite refusal; JSON and
   text diagnostics; include confinement; offline package resolution from a private cache;
@@ -599,10 +599,10 @@ The reference implementation is ``cmd/guidedog`` with ``lib/cli``, ``lib/discuss
 - ``tools/check`` passes every source file. A 460 KB, 4,000-section Markdown file converts to
   HTML in 0.07 s at 33 MB peak memory. Each document and page is converted in its own
   arena, so a 1,500-document site builds at 15 MB peak. These are observations, not
-  performance claims; every page carries the full navigation, so site size grows with the
+  performance claims. Every page carries the full navigation, so site size grows with the
   square of the page count.
 - An independent review of the host packages found eleven defects, from anchor sizing to
-  memory growth, output validation, and terminal escaping; all are fixed with tests.
+  memory growth, output validation, and terminal escaping. All are fixed with tests.
 
 .. code-block:: text
 
@@ -614,7 +614,7 @@ The reference implementation is ``cmd/guidedog`` with ``lib/cli``, ``lib/discuss
 
 
 This record is retained as ``published``, with incomplete obligations below.
-GDS 0004 specifies the implemented resource policy; GDS 0006 supersedes the
+GDS 0004 specifies the implemented resource policy. GDS 0006 supersedes the
 original project surface and publication design. The remaining obligations
 prevent marking this broader record ``committed``.
 
@@ -625,14 +625,14 @@ Decisions still requiring implementation evidence
 
 Hard time and memory isolation for hostile native Typst still needs a worker
 mode and per-platform verification. The native Typst chapter metadata contract
-is not implemented; Typst is supported by standalone conversion and PDF templates.
-Windows runtime and clean-machine package checks passed for 0.6.2 on native runners;
-see :doc:`../evidence/plugin-acceptance-20261014`. Embedded font licenses are
-recorded with the fonts; they are no longer an open documentation item.
+is not implemented. Typst is supported by standalone conversion and PDF templates.
+Windows runtime and clean-machine package checks passed for 0.6.2 on native runners
+(see :doc:`../evidence/plugin-acceptance-20261014`). Embedded font licenses are
+recorded with the fonts. They are no longer an open documentation item.
 Packaging must account for actual runtime dependencies: embedding Typst and
 static Graphviz does not remove the system ``libcurl`` link on Unix. A clean
 machine distribution check remains a separate release gate. The RST ledgers
-no longer have the previously listed syntax gaps; their pinned tests and
+no longer have the previously listed syntax gaps. Their pinned tests and
 conservative reader descriptor state the evidence accurately.
 
 These limits do not prevent a beta for trusted documentation projects on
@@ -654,7 +654,7 @@ and Typst, 5 internal, 70 crash, 130 cancelled) are unchanged.
   linked plugins (GDS 0009, 0010). It is being ported with the project builder.
 - **Diagnostics.** Elm-style reports are ``gd_report::Report`` values rendered by
   ``render_text`` (ANSI decided at the terminal boundary, text escaped with
-  ``escape_terminal``) or ``render_json``; libraries return structured errors and never
+  ``escape_terminal``) or ``render_json``. Libraries return structured errors and never
   print.
 - **Typst.** The C ABI bridge (``native/typst_bridge``, ABI version 3) is gone. ``gd-typst``
   links the Typst 0.15.1 crates directly (feature ``embedded``, on by default) and falls
@@ -666,7 +666,7 @@ and Typst, 5 internal, 70 crash, 130 cancelled) are unchanged.
   argument vector. Graphviz is linked from the system (``libgvc``, ``libcgraph``). There
   are no ``native/`` build scripts and no OpenSSL vendoring for the bridge.
 - **Publication.** ``gd_host::Stage`` (removed on drop unless committed), ``exchange``
-  (``renameat2``/``renamex_np``) and ``sync_*`` implement the host transaction above;
+  (``renameat2``/``renamex_np``) and ``sync_*`` implement the host transaction above.
   ``gd-outputs`` switches whole generations (GDS 0006).
 
 The commands of the evidence section become:
@@ -689,12 +689,12 @@ Review history
 
 
 29 September 2026: separates terminal and host policy from the allocation-free
-engine; specifies full source-language scope, Typst PDF routes, and later project
+engine. Specifies full source-language scope, Typst PDF routes, and later project
 features. The initial revision preceded the implementation.
 
 29 September 2026, implementation review: record the working GDS CLI, HTML catalog,
 individual PDFs, journal recovery, local dates, and portable host boundaries.
-Correct the inherited assignment from 0017 to Guidedog's 0002; zenfmt numbering
+Correct the inherited assignment from 0017 to Guidedog's 0002. zenfmt numbering
 does not reserve GDS numbers. Record the 18-test evidence and unresolved acceptance
 gates. Preserve discussion status because the full record is not yet implemented.
 
@@ -710,7 +710,7 @@ the current test evidence. The cross-file symbol index is implemented.
 
 
 2026-10-15: the implementation moved from Odin to Rust (GDS 0011). Added
-"Implementation in Rust"; the decisions, evidence and lifecycle above are kept as
+"Implementation in Rust". The decisions, evidence and lifecycle above are kept as
 they were recorded.
 
 References
@@ -729,7 +729,7 @@ References
 
 2026-09-29: prediscussion → discussion. Assigned a permanent number and opened for discussion.
 
-.. rubric:: Source-format revision — 2026-10-01
+.. rubric:: Source-format revision, 2026-10-01
 
 RST discussions now use the normal project engine. The design record remains
 in discussion. See GDS 0001 for the revised authoring contract.
@@ -742,8 +742,8 @@ in discussion. See GDS 0001 for the revised authoring contract.
    explicit unfinished worker, native Typst chapter, Windows and packaging
    obligations.
 
-.. rubric:: Implementation revision — 2026-10-15
+.. rubric:: Implementation revision, 2026-10-15
 
-The implementation moved from Odin to Rust; see GDS 0011 and the section
+The implementation moved from Odin to Rust. See GDS 0011 and the section
 "Implementation in Rust". This is an implementation revision. It does not change
 this record's review state or assert new acceptance evidence.

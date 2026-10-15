@@ -4,8 +4,8 @@ The rust and odin domains (guidedoc-sphinx)
 ``crates/guidedoc-sphinx/src/domains/rust.rs`` and ``.../odin.rs`` implement the
 Sphinx layer's two domains for compiled languages. The odin domain is a port of
 ``lib/readers/sphinx/odin.odin`` (GDS 0005 remains its specification, and its tests are
-ported unchanged in ``tests/odin_domain.rs``); the rust domain is new, designed after
-it, and reads the vocabulary ``gd-rustdoc`` writes (see :doc:`../rust` for the user's
+ported unchanged in ``tests/odin_domain.rs``). The rust domain is new, designed after
+it. It reads the vocabulary ``gd-rustdoc`` writes (see :doc:`../rust` for the user's
 view). This page records the node shapes the rust domain produces and how both are
 built.
 
@@ -31,7 +31,7 @@ the module itself
    Tables, hooks, the module or package directives, ids and index entries.
 
 The Odin version kept its context as space-separated pool strings and a fixed array of
-polymorphic names; the port keeps the import aliases as ``Vec<(alias, package)>``, the
+polymorphic names. The port keeps the import aliases as ``Vec<(alias, package)>``, the
 private names as a ``Vec<String>``, and a signature's polymorphic names as borrowed
 ``&str`` slices of the signature (``SigCx``). Nothing else changed in behaviour.
 
@@ -74,7 +74,7 @@ Paths in type positions become ``Xref{reftype "rust:any"}`` with the context
 generic parameters (the signature's own and those of the types and impls it is nested
 in), lifetimes, numbers, array lengths, and names being declared (``x:`` in a field
 list, ``Item =`` in an associated type binding) stay text. ``crate::``, ``self::``,
-``super::`` and ``Self::`` paths are resolved against the module and type; every other
+``super::`` and ``Self::`` paths are resolved against the module and type. Every other
 path is left as written for the project's resolver (the current module first, then
 inventories; an unresolved link shows as code).
 
@@ -93,17 +93,17 @@ Nesting and targets
 ``Scope::member``. An impl's scope is the type it is nested in, else its ``:for:``
 type, else the self type of its signature, without generic arguments.
 
-Impls and uses are never targets: the domain marks their Desc ``noindex`` and gives
+Impls and uses are never targets. The domain marks their Desc ``noindex`` and gives
 their signatures no ``fullname``. The members of a trait impl (an impl with
 ``:trait:``, or ``for`` in its signature) are marked ``noindex`` too, whatever the
 directive says, as they are documented on the trait. Only an object's first signature
 gets an id and an index entry. Entries read ``Point::new (method in
-my_crate::geometry)``; functions, methods and traits name their qualifiers
+my_crate::geometry)``. Functions, methods and traits name their qualifiers
 (``draw_all (unsafe function in my_crate)``).
 
 ``:cfg:`` and ``:deprecated:`` start the content with a paragraph, "Available on
 Code(predicate) only." and Strong("Deprecated") ": note.", their added words marked
-Generated; on a crate or module the paragraphs follow the Index.
+Generated. On a crate or module the paragraphs follow the Index.
 
 Roles
 -----
@@ -117,17 +117,17 @@ Code with the Python domain's processing (``fn`` adds ``()`` with
 Open points
 -----------
 
-- The shared ``~`` processing (``DOTTED``) shortens a title at its last ``.``; for Rust
+- The shared ``~`` processing (``DOTTED``) shortens a title at its last ``.``. For Rust
   it should also cut at ``::`` (``~a::b::Lexer`` shows ``Lexer``). Until the shared role
-  code does, such a title shows the whole path; the target is right.
-- The project's object collector joins ``module`` and ``fullname`` with ``.``; for the
+  code does, such a title shows the whole path. The target is right.
+- The project's object collector joins ``module`` and ``fullname`` with ``.``. For the
   rust domain it must join them with ``::`` to give the targets above.
 
 Tests
 -----
 
 ``tests/rust_domain.rs`` documents ``gd-rustdoc``'s ``shapes`` fixture (with default
-options and with private items) and reads every page with no report, then checks the
+options and with private items) and reads every page with no report. Then it checks the
 node shapes of representative items (a generic struct with an inherent and a trait
 impl, variants with fields, a union, a trait with associated items, an unsafe generic
 function with a where clause, a deprecated async function, re-exports, a cfg-gated

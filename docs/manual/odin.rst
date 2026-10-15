@@ -56,12 +56,12 @@ The directives, and the signatures they take:
 ``odin:package`` and ``odin:currentpackage``
    ``core:fmt``, or a path below a project's roots, such as ``readers/sphinx``. The
    package's import path names its objects: ``core:fmt.println``.
-   ``odin:currentpackage`` changes the context without a target; ``None`` clears it.
-   Options: ``:synopsis:``, ``:platform:``, ``:deprecated:``, ``:no-index:``, and
-   ``:imports:``, the import aliases the package's signatures use, as
+   ``odin:currentpackage`` changes the context without a target. ``None`` clears it.
+   Options: ``:synopsis:``, ``:platform:``, ``:deprecated:``, ``:no-index:``,
+   ``:imports:``, and ``:private:``. ``:imports:`` lists the import aliases the package's signatures use, as
    ``alias=package`` pairs (``gd=core rst=readers/rst``), so ``gd.Node_Id`` links to
-   ``core.Node_Id``; and ``:private:``, the package's private types and the private members of its
-   procedure groups (``State Rules catalog_text``), which its signatures show as text,
+   ``core.Node_Id``. ``:private:`` lists the package's private types and the private members of its
+   procedure groups (``State Rules catalog_text``). Its signatures show them as text,
    since they have no descriptions to link to. The generated pages list them
    automatically.
 
@@ -92,16 +92,16 @@ The directives, and the signatures they take:
    ``name: Type = value``; ``libc "system:c"`` for a foreign import.
 
 Every object takes the options objects take in Sphinx's domains: ``:no-index:``,
-``:no-index-entry:``, ``:no-contents-entry:``, and ``:no-typesetting:``; and these of
+``:no-index-entry:``, ``:no-contents-entry:``, and ``:no-typesetting:``. It also takes these of
 its own: ``:package:`` (describe it in another package), ``:private:`` and
 ``:deprecated: message`` (shown as ``@(private)`` and ``@(deprecated="message")``
 unless the signature has them), ``:availability: Windows, Linux`` (a first line of the
 content saying where it exists), and ``:foreign: libc`` (a procedure of a foreign
 block). A directive with several signature lines describes one object whose signature
-differs between targets: only the first line gets the id and the index entry.
+differs between targets. Only the first line gets the id and the index entry.
 
-Names in type positions link to the types they name, in the package and type the
-signature is written in first, then as written. Built-in types (``int``, ``string``,
+Names in type positions link to the types they name. They are looked up first in the package and type the
+signature is written in, then as written. Built-in types (``int``, ``string``,
 ``rawptr``, ``typeid``, ``any``, ...), keywords, polymorphic names (``$T``, and ``T``
 after it, in the signature or in the type the object is nested in), array lengths,
 default values, constants, tags, and ``where`` clauses are shown as written, never as
@@ -116,7 +116,7 @@ fields, and other types), ``:odin:const:``, ``:odin:var:``, ``:odin:field:``,
 Python domain, ``~`` shows only the last part (``:odin:proc:`~core:fmt.println``` shows
 ``println``), and a leading ``.`` finds the name at the end of any object's name. A name
 is looked up in the reference's type and package first, then as written, then after a
-package path's ``:`` or ``/``, so ``fmt.println`` finds ``core:fmt.println`` and
+package path's ``:`` or ``/``. So ``fmt.println`` finds ``core:fmt.println``, and
 ``sphinx.Config`` finds ``readers/sphinx.Config``, as Odin code names a package by its
 last segment. An import alias the current package declares with ``:imports:`` is
 followed first. With ``default-domain:: odin`` (or ``primary_domain = "odin"``), the
@@ -124,10 +124,10 @@ roles need no ``odin:``.
 
 An object's id is Sphinx's ``make_id`` of ``odin-`` and its full name:
 ``odin-core-fmt.println``, ``odin-readers-sphinx.Config.docname``. Case and dots are
-kept, as Sphinx keeps them for Python ids; the ``:`` and ``/`` of the import path become
-hyphens. Ids are therefore readable in URLs, the same in every build, and apart for two
+kept, as Sphinx keeps them for Python ids. The ``:`` and ``/`` of the import path become
+hyphens. Ids are therefore readable in URLs, the same in every build, and distinct for two
 packages with the same last name. A package's id is ``odin-package-`` and its path.
-Index entries read "println (procedure in core:fmt)", and ``objects.inv`` lists every
+Index entries read "println (procedure in core:fmt)". ``objects.inv`` lists every
 object with the domain ``odin`` and its type (``odin:procedure``, ``odin:struct``,
 ``odin:field``, ...), packages first, as Sphinx lists modules.
 
@@ -137,7 +137,7 @@ Info fields in the content are grouped as in the other domains: ``:param name:``
 Generating from source
 ----------------------
 
-Tell Guidedog where your packages are, relative to the source folder:
+We tell Guidedog where our packages are, relative to the source folder:
 
 .. code-block:: toml
 
@@ -145,7 +145,7 @@ Tell Guidedog where your packages are, relative to the source folder:
    odin_collections = {core = "/usr/local/lib/odin/core"}  # optional
 
 A package below ``odin_autoapi_dirs`` is named by its path there (``src/shapes/round``
-is ``shapes/round``); one in a collection is named as Odin imports it
+is ``shapes/round``). A package in a collection is named as Odin imports it
 (``core:strings``). The generating directives then work as autodoc's do:
 
 .. code-block:: rst
@@ -163,16 +163,17 @@ declarations (all of them, or those listed). ``odin:autoproc``, ``odin:autoprocg
 ``odin:autotype``, ``odin:autoconst``, and ``odin:autovar`` write one declaration,
 named in the current package or as ``package.name``. Options: ``:members:``,
 ``:undoc-members:``, ``:private-members:`` (``@(private)`` declarations, which are left
-out otherwise), ``:exclude-members:``, ``:member-order:`` (``source``, the default, by
-file name and then position; ``alphabetical``; or ``groupwise``, which heads the
+out otherwise), ``:exclude-members:``, ``:member-order:``, and ``:no-index:``.
+``:member-order:`` is ``source`` (the default, by
+file name and then position), ``alphabetical``, or ``groupwise``. ``groupwise`` heads the
 groups "Types", "Procedures", "Procedure groups", "Constants", "Variables", and
-"Foreign imports"), and ``:no-index:``.
+"Foreign imports".
 
 Doc comments are the ``//`` lines directly above a declaration, or a ``/* */`` block
 there, and a field's or enumerator's comment at the end of its line. They are plain
 text, and become reStructuredText as follows:
 
-- Paragraphs stay paragraphs; a list of ``- item`` lines stays a list.
+- Paragraphs stay paragraphs. A list of ``- item`` lines stays a list.
 - An indented block (a tab or spaces) after a blank line, or after a line ending in a
   colon (``Example:``), is a ``code-block:: odin``, or ``text`` after ``Output:``. A
   line indented more than the text directly after a paragraph line continues it.
@@ -188,10 +189,10 @@ API pages
 ---------
 
 With ``odin_autoapi_dirs`` set, every package below those folders also gets a page of
-its own, generated as the build reads it, like sphinx-autoapi's: ``api/shapes`` holds
-``odin:autopackage:: shapes`` with ``odin_autoapi_options``, and ``api/index`` lists every
+its own. The build generates it as it reads it, like sphinx-autoapi does. ``api/shapes`` holds
+``odin:autopackage:: shapes`` with ``odin_autoapi_options``. ``api/index`` lists every
 package with its synopsis. The pages are documents of the project (in the toctree,
-search, the general index, ``singlehtml``, and the PDF book), but they are never written
+search, the general index, ``singlehtml``, and the PDF book). They are never written
 into the source folder. Settings:
 
 ``odin_autoapi_dirs``
@@ -201,14 +202,14 @@ into the source folder. Settings:
 
 ``odin_collections``
    A table of collection names and folders, for directive arguments such as
-   ``core:strings``; these packages get no pages.
+   ``core:strings``. These packages get no pages.
 
 ``odin_autoapi_root``
    The folder of the pages, ``"api"`` by default. A document of the source folder with a
    page's name keeps its name, with a warning.
 
 ``odin_autoapi_options``
-   ``["members", "undoc-members"]`` by default; ``private-members`` may be added.
+   ``["members", "undoc-members"]`` by default. ``private-members`` may be added.
 
 ``odin_autoapi_member_order``
    ``"source"`` (default), ``"alphabetical"``, or ``"groupwise"``.
@@ -217,24 +218,24 @@ into the source folder. Settings:
    ``true`` (default): ``api/index`` joins the root document's first toctree.
 
 ``odin_autoapi_generate_api_docs``
-   ``true`` (default); ``false`` reads the folders for the directives only.
+   ``true`` (default). ``false`` reads the folders for the directives only.
 
-Types from packages you do not document (``core:io.Writer``) cannot be linked; with
-``-n``, silence them with ``nitpick_ignore_regex = [["odin:type", "(core|base):.*"]]``.
+Types from packages we do not document (``core:io.Writer``) cannot be linked. With
+``-n``, we silence them with ``nitpick_ignore_regex = [["odin:type", "(core|base):.*"]]``.
 Guidedog's own API reference, ``docs/api``, is now built the same way from Rust source
-with ``rust_autoapi_crates``; see :doc:`rust`.
+with ``rust_autoapi_crates``. See :doc:`rust`.
 
 Platforms
 ---------
 
 A package is documented once for every target Odin builds, as Odin itself sees its
-files: a file named ``*_windows.odin``, ``*_linux_arm64.odin``, or ``*_amd64.odin``
-builds only for those targets, ``#+build linux, darwin`` and ``#+build !windows`` tags
-(and the older ``//+build``) narrow it, and a file-scope ``when ODIN_OS == .Windows``
+files. A file named ``*_windows.odin``, ``*_linux_arm64.odin``, or ``*_amd64.odin``
+builds only for those targets. ``#+build linux, darwin`` and ``#+build !windows`` tags
+(and the older ``//+build``) narrow it. A file-scope ``when ODIN_OS == .Windows``
 block counts for its targets (and its ``else`` for the others) when its condition only
 compares ``ODIN_OS`` and ``ODIN_ARCH``. Files named ``*_test.odin``, and files tagged
 ``#+ignore``, are left out. A declaration made for every target the package builds for
-is shown once. One made for some targets says which, "Availability: Windows"; one whose
+is shown once. One made for some targets says which, "Availability: Windows". One whose
 signature differs between targets is shown once per signature, each with its targets,
 the first with the id. A package that builds only for some targets says so with its
 ``:platform:``.
@@ -242,30 +243,30 @@ the first with the id. A package that builds only for some targets says so with 
 Rebuilding
 ----------
 
-Every Odin file a page read is a dependency of that page: editing a package's source
-reads only the pages that document it again on the next build. The package index is
+Every Odin file a page read is a dependency of that page. When we edit a package's source,
+the next build reads again only the pages that document it. The package index is
 read again when a package appears, disappears, or changes its synopsis. ``guidedog
 serve`` checks modification times in ``odin_autoapi_dirs`` and ``odin_collections``
-before serving an HTML page. Refresh the browser after editing.
+before serving an HTML page. We refresh the browser after editing.
 
 Limits
 ------
 
-- The source is parsed, never compiled or type-checked: types are shown as written, a
+- The source is parsed, never compiled or type-checked. Types are shown as written, a
   constant's value as written (and left out beyond 100 characters), and nothing is
   inferred. Whether ``A :: B`` declares a type or a constant is told from the names: a
   capitalized name not in capitals throughout, or a built-in type, is a type.
 - Conditions of ``when`` blocks other than comparisons of ``ODIN_OS`` and
   ``ODIN_ARCH`` are not evaluated: both branches are documented.
 - A declaration that mentions a private type shows it as text, since private
-  declarations have no entries unless ``:private-members:`` is given; the generated
+  declarations have no entries unless ``:private-members:`` is given. The generated
   package lists them in ``:private:``, so ``-n`` has nothing to report.
-- Guidedog reads declarations with its own port of Odin's tokenizer and parser, which
+- Guidedog reads declarations with its own port of Odin's tokenizer and parser. The parser
   skips procedure bodies. A syntax error in a declaration is reported
   (``odin.autodoc.syntax``), and what could be read is still documented.
 - A declaration nested deeper than 160 levels of brackets or types is far deeper than
-  real code; its file is left out with the warning ``odin.autodoc.nesting``, and the
+  real code. Its file is left out with the warning ``odin.autodoc.nesting``, and the
   rest of its package is documented. Long flat chains (``a + b + ...``) and anything
   inside procedure bodies do not count. A ``when`` condition is evaluated to 64 levels
-  of ``&&``, ``||`` and ``!``; a longer one counts as not evaluated.
+  of ``&&``, ``||`` and ``!``. A longer one counts as not evaluated.
 - A file larger than the per-file limit is left out with ``odin.autodoc.memory``.

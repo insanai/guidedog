@@ -54,8 +54,8 @@ Printing restores the ordinary paragraph so the print layout can paginate it.
 Links, mathematics, code, interactive content, narrow measures, and other languages use
 native browser layout. So do paragraphs for which no suitably spaced solution exists.
 The site remains readable with JavaScript disabled.
-The fallback uses language-aware ``hyphens: auto`` and ``text-wrap: pretty``;
-those CSS properties alone are not a promise of Knuth-Plass optimization.
+The fallback uses language-aware ``hyphens: auto`` and ``text-wrap: pretty``.
+Those CSS properties alone are not a promise of Knuth-Plass optimization.
 
 The PDF page
 ------------
@@ -81,6 +81,6 @@ Keep reading order, focus indicators, labels, and sufficient contrast intact.
 
 Build both targets after a change. Inspect a page with code, a table,
 a diagram, and an equation. An attractive cover is not proof that the rest of the book works.
-Build your own design in :doc:`../tutorial/a-custom-theme`.
+We build our own design in :doc:`../tutorial/a-custom-theme`.
 The full template contract is in :doc:`../templates`.
 The Rust API of Guidedog's crates is documented in the separate ``docs/api`` project.

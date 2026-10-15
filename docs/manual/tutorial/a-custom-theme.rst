@@ -15,7 +15,7 @@ Use Guidedog 0.7.0 or newer. Run this from the directory that will contain ``orb
    guidedog quickstart orbit -q -p "Orbit Field Notes" -a "Orbit contributors" -v 1.0
 
 Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` in the
-same directory. Keep this file: it supplies the tested page layout, cover,
+same directory. We keep this file: it supplies the tested page layout, cover,
 running heads, contents, code styles and optimized paragraph breaking.
 
 Download :download:`conf.toml <../_static/repository/theme/conf.toml>`,
@@ -56,7 +56,7 @@ makes the output easy to find.
 
 All paths in this tutorial are project files. HTML templates are found through
 ``templates_path``. The PDF entry point is always ``_templates/book.typ`` under
-the source directory; changing ``templates_path`` does not move it.
+the source directory. Changing ``templates_path`` does not move it.
 
 3. Extend the HTML layout
 -------------------------
@@ -115,7 +115,7 @@ needed. Avoid a fixed ink color on a background whose theme can change.
 
 Browser hyphenation follows the page language. It is not Typst's paragraph
 optimizer. The manual's optional English web optimizer is described separately
-in :doc:`../topics/typography`; this example uses native browser layout.
+in :doc:`../topics/typography`. This example uses the browser's own layout.
 
 Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in current
 Guidedog builds. Ordinary graphs retain their own colors. Older hosts render
@@ -140,7 +140,7 @@ and :download:`book.typ <../_static/repository/theme/_templates/book.typ>` in
 The host calls ``book`` with metadata and the chapter content. The wrapper
 forwards those values to the generated base and supplies our palette. Passing
 ``body`` into the styled function keeps its rules in scope. The web stylesheet
-does not affect PDF; the Typst template does not affect HTML.
+does not affect PDF, and the Typst template does not affect HTML.
 
 The base handles language-aware hyphenation and optimized line breaking. The
 wrapper keeps those rules, uses the matching blue accent and adds page numbers
@@ -180,10 +180,10 @@ Create another project with ``guidedog quickstart``. Copy the finished
 context value to its configuration. Change the footer's document link to a page
 that exists in that project. Keep the new project's metadata and source tree.
 
-The copied PDF base makes the theme self-contained. When upgrading Guidedog,
-create a scratch quickstart project and compare its templates with your saved
-base. Adopt the changes you need, then rebuild every target. The built-in HTML
-layout can evolve too; small block overrides are easier to maintain than a
+The copied PDF base makes the theme self-contained. When we upgrade Guidedog,
+we create a scratch quickstart project and compare its templates with our saved
+base. We adopt the changes we need, then rebuild every target. The built-in HTML
+layout can change too. Small block overrides are easier to maintain than a
 second complete layout. For every variable and block, see :doc:`../templates`.
 
 If the build reports a missing ``base-book.typ``, finish the rename in step 1.

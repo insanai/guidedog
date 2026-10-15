@@ -1,11 +1,11 @@
 Domains
 =======
 
-A domain is a collection of markup constructs (directives and roles) for describing
-and cross-referencing program objects belonging to a specific programming language
-or domain of discourse.
+A domain is a set of directives and roles. They describe
+and cross-reference the objects of one programming language
+or one field of discourse.
 
-Guidedog provides native, built-in implementations of the standard Sphinx domains:
+Guidedog has built-in implementations of the standard Sphinx domains:
 
 * **Standard domain** (``std``): General documentation objects such as command-line options, environment variables, terms, and UI labels.
 * **Python domain** (``py``): Python modules, classes, functions, methods, attributes, properties, and exceptions.
@@ -23,7 +23,7 @@ When a primary domain is active, its directives and roles can be written without
 domain prefix (for example, ``.. function::`` instead of ``.. py:function::``, and
 ``:func:`name``` instead of ``:py:func:`name```).
 
-To change the active domain locally within a document:
+To change the active domain within one document:
 
 .. code-block:: rst
 
@@ -261,10 +261,10 @@ Directives include: ``rust:crate``, ``rust:module``, ``rust:function``, ``rust:m
 ``rust:field``, ``rust:associatedtype``, ``rust:associatedconst``, and ``rust:use``.
 Options include ``:visibility:``, ``:cfg:``, ``:unsafe:``, ``:async:``, ``:const:``,
 ``:provided:``, ``:attributes:``, ``:deprecated:``, ``:for:``, ``:trait:``, ``:target:``,
-and ``:noindex:``. An ``impl`` is never a target itself; its members belong to the type.
+and ``:noindex:``. An ``impl`` is never a target itself. Its members belong to the type.
 
-Guidedog can also generate these pages from a crate's source, without compiling it;
-see :doc:`../howto/document-code` and ``rust_autoapi_crates`` in
+Guidedog can also generate these pages from a crate's source, without compiling it.
+See :doc:`../howto/document-code` and ``rust_autoapi_crates`` in
 :doc:`../reference/configuration`.
 
 Roles
@@ -279,12 +279,12 @@ Roles
   ``:rust:macro:`path```: Link to aliases and associated types, constants, statics, and
   macros.
 * ``:rust:any:`path```: Links to any of them, or through an inventory to another
-  project (``std::vec::Vec``); an unresolved target is shown as code.
+  project (``std::vec::Vec``). An unresolved target is shown as code.
 
 Cross-referencing conventions
 -----------------------------
 
-Cross-references in domains support several helpful modifiers:
+Cross-references in domains support several modifiers:
 
 * **Hide prefix**: Prefixing the target with a tilde (``~``) displays only the final component of the target name. For example, ``:py:func:`~pipeline.reader.DocumentReader.parse``` renders as ``parse()``.
 * **Current scope resolution**: Relative references look up names within the active module or namespace before falling back to global lookup.

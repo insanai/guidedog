@@ -27,10 +27,10 @@ Served
    The crate's small binary is ``fn main() -> ExitCode {
    gd_plugins::serve_plugin(&badge::plugin()) }``. Once registered with
    ``guidedog plugin register ID PATH`` (pinned by SHA-256), it runs as a child process
-   per build session behind the protocol below; a crash or stall becomes a problem.
+   per build session behind the protocol below. A crash or stall becomes a problem.
 
-``examples/build_plugin/badge.rs`` is the library half and ``main.rs`` the served half;
-a test runs the badge both ways and requires identical outputs.
+``examples/build_plugin/badge.rs`` is the library half and ``main.rs`` the served half.
+A test runs the badge both ways and requires identical outputs.
 
 Selecting plugins in a build
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -71,9 +71,9 @@ for HTML builders, every asset's path and bytes.
 Concurrency
 ~~~~~~~~~~~
 
-One session per selected plugin per build; sessions are never shared between builds,
+There is one session per selected plugin per build. Sessions are never shared between builds,
 because state, cache key and dependencies belong to one build. Hooks take
-``&mut self``: a host calls them from one thread or holds the sessions in a
+``&mut self``. A host calls them from one thread or holds the sessions in a
 ``Mutex`` shared by reading workers (``PluginSession`` is ``Send``; a test drives one
 from several threads). Plugins need no synchronization. ``Plugin`` and ``Registry``
 are ``Send + Sync`` and immutable.
@@ -84,14 +84,14 @@ Evolution
 Host-made inputs (``SourceInput``, ``HtmlInput``, ``PluginOptions``, ``LoadOptions``,
 ``SnapshotOptions``, ``Handshake``, ``MachineEntry``) are ``#[non_exhaustive]`` with
 constructors, so a new field is not a breaking change for plugin authors. New hooks
-arrive as trait methods with "absent" defaults plus a ``Hooks`` flag; incompatible
+arrive as trait methods with "absent" defaults plus a ``Hooks`` flag. Incompatible
 changes bump ``PLUGIN_API_VERSION`` or ``API_VERSION`` (checked at registration and
 load) and the protocol versions, which are negotiated separately.
 
 Design
 ------
 
-A ``Plugin`` is either build hooks or a publisher, never both; a normal build never
+A ``Plugin`` is either build hooks or a publisher, never both. A normal build never
 invokes a publisher. Both kinds are traits whose value *is* one session's state:
 
 ``BuildPlugin``
@@ -134,11 +134,11 @@ folder is removed on ``Drop``.
 Process transport
 -----------------
 
-A host starts a program with ``--guidedog-protocol``; the two exchange one JSON object
-per line over the child's standard input and output, and standard error is the
+A host starts a program with ``--guidedog-protocol``. The two exchange one JSON object
+per line over the child's standard input and output. Standard error is the
 child's log for people. Two helper threads own the pipes: a writer sending request
 lines and a reader framing response lines (at most 64 MiB). The host waits on their
-channels with one monotonic deadline for the whole exchange (write and response) and
+channels with one monotonic deadline for the whole exchange (write and response). It
 polls the ``Cancel`` probe every 5 ms, so a child can neither block a write nor keep a
 request alive by trickling bytes. Any failure other than a refusal with a problem marks
 the child broken: nothing more is sent, and stopping kills it. Stopping closes its
@@ -146,7 +146,7 @@ input and waits one second before killing it. Unload is sent with a one-second l
 and no cancellation.
 
 Timeouts: handshake 10 s, publisher requests 5 min, build requests 60 s by default.
-Messages nest at most 16 levels and repeat no key; lines are UTF-8.
+Messages nest at most 16 levels and repeat no key. Lines are UTF-8.
 
 Wire contract
 -------------
@@ -214,18 +214,18 @@ Alternatives considered
 -----------------------
 
 Dynamic libraries (``dlopen``, ``abi_stable``)
-   Rust has no stable ABI: a plugin would have to be built by the same compiler with
-   the same crate versions as the host, every call crosses ``unsafe`` FFI, and a crash
-   takes the host down. ``abi_stable`` narrows this at the cost of a large dependency and
+   Rust has no stable ABI. A plugin would have to be built by the same compiler with
+   the same crate versions as the host. Every call would cross ``unsafe`` FFI, and a crash
+   would take the host down. ``abi_stable`` narrows this at the cost of a large dependency and
    FFI-shaped types. Linking at compile time plus processes covers both needs safely.
 
 WebAssembly (``wasmtime``)
    A strong sandbox and a portable binary, but a very large dependency and toolchain
-   for plugin authors. A possible future deployment for untrusted plugins; the trait and
+   for plugin authors. It is a possible future deployment for untrusted plugins. The trait and
    protocol shapes would carry over.
 
 Automatic registration (``inventory``, linker sections)
-   Needs extra crates and hides the wiring; an explicit ``Registry::new(vec![...])``
+   Needs extra crates and hides the wiring. An explicit ``Registry::new(vec![...])``
    keeps the list of linked code visible in the host's ``main``.
 
 Not ported

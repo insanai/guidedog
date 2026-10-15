@@ -43,7 +43,7 @@ An include must remain within the source directory or the configured ``include_r
 Separate projects
 -----------------
 
-Keep a manual and design records in separate projects.
+We keep a manual and design records in separate projects.
 They have different readers and different reading orders.
 Each project has its own configuration, templates, cache, and output.
 The Guidedog repository uses ``docs/manual`` and ``docs/gds`` this way.
@@ -66,7 +66,7 @@ The cache is evidence about a previous build. It is not the source of truth.
 
 An explicit timestamp in a template is also an input to the rendered page.
 A page that prints the current minute can change even when its prose does not.
-Use ``SOURCE_DATE_EPOCH`` when you need a fixed build time.
+We use ``SOURCE_DATE_EPOCH`` when we need a fixed build time.
 
 Publication
 -----------

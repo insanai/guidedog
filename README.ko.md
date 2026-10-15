@@ -1,6 +1,6 @@
 # Guidedog
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [हिन्दी](README.hi.md) · [Español](README.es.md) · [Deutsch](README.de.md)
+[English](README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [हिन्दी](README.hi.md) | [Español](README.es.md) | [Deutsch](README.de.md)
 
 **한 번 쓰고, 명확히 설명하고, 웹과 종이로 전하세요.**
 
@@ -17,7 +17,7 @@ guidedog build pdf docs
 guidedog serve docs
 ```
 
-프로젝트에는 `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ`, `_static/` 이 있습니다. 템플릿은 직접 편집할 수 있는 일반 파일입니다. HTML은 탐색, 검색, 코드 강조, 도표, 수식을 제공합니다. PDF는 장, 상호 참조, 그림, 색인, 언어별 조판을 제공합니다.
+프로젝트에는 `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ`, `_static/` 이 있습니다. 템플릿은 우리가 직접 편집할 수 있는 일반 파일입니다. HTML은 탐색, 검색, 코드 강조, 도표, 수식을 제공합니다. PDF는 장, 상호 참조, 그림, 색인, 언어별 조판을 제공합니다.
 
 기본 테마는 밝게이며 어둡게 또는 시스템 설정을 선택할 수 있습니다. 매뉴얼 첫 페이지와 저장소 개요는 브라우저 언어에 맞는 판을 선택합니다. 저장한 선택이 우선하며 특정 언어판이나 장으로 직접 들어가는 링크는 그대로 따릅니다.
 
@@ -31,7 +31,7 @@ API 문서는 소스를 실행하지 않고 읽습니다. Python(`autodoc`), Odi
 
 ## 설치
 
-각 [릴리스](https://github.com/insanai/guidedog/releases)에는 Linux(x86-64, ARM64)와 macOS(Apple 실리콘, Intel)용 압축 파일이 있습니다. `guidedog` 압축 파일에는 `guidedog`, `dsc`, `guidedog-pages`, `graphdog` 가 들어 있고, `dscc` 압축 파일에는 `dscc` 만 들어 있습니다. Typst 컴파일러는 내장되어 있고 tree-sitter도 프로그램에 컴파일되어 있습니다. Graphviz는 시스템의 것을 링크하므로 먼저 그 라이브러리를 설치하세요. Debian과 Ubuntu에서는 `sudo apt install libgvc6`(또는 `graphviz` 패키지), Fedora에서는 `sudo dnf install graphviz`, macOS에서는 `brew install graphviz` 입니다. Linux에는 glibc 2.35 이상이, macOS에는 버전 12 이상이 필요합니다. 사용하는 시스템에 맞는 압축 파일과 `SHA256SUMS` 를 내려받아 확인한 뒤 설치하세요.
+각 [릴리스](https://github.com/insanai/guidedog/releases)에는 Linux(x86-64, ARM64)와 macOS(Apple 실리콘, Intel)용 압축 파일이 있습니다. `guidedog` 압축 파일에는 `guidedog`, `dsc`, `guidedog-pages`, `graphdog` 가 들어 있고, `dscc` 압축 파일에는 `dscc` 만 들어 있습니다. Typst 컴파일러는 내장되어 있고 tree-sitter도 프로그램에 컴파일되어 있습니다. Graphviz는 시스템의 것을 링크하므로 먼저 그 라이브러리를 설치하세요. Debian과 Ubuntu에서는 `sudo apt install libgvc6`(또는 `graphviz` 패키지), Fedora에서는 `sudo dnf install graphviz`, macOS에서는 `brew install graphviz` 입니다. Linux에는 glibc 2.35 이상이, macOS에는 버전 12 이상이 필요합니다. 우리 시스템에 맞는 압축 파일과 `SHA256SUMS` 를 내려받아 확인한 뒤 설치합니다.
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS에서는: shasum -a 256 -c --ignore-missing SHA256SUMS
@@ -89,7 +89,7 @@ GitHub에서는 위 링크로 README 언어를 선택합니다. 자동 언어 �
 
 ## GitHub Pages에 게시
 
-`guidedog-pages` 는 자신의 컴퓨터에서 사이트를 게시합니다. 설치된 `guidedog` 으로 프로젝트를 빌드하고, 사이트 전체를 Git 푸시 한 번으로 사이트 전용 브랜치에 보냅니다. GitHub는 브랜치가 읽었던 커밋을 그대로 가리키고 있을 때만 이 푸시를 반영합니다. 그런 다음 GitHub Pages가 그 커밋을 배포할 때까지 기다립니다. 토큰은 시스템의 자격 증명 저장소에 보관하며, 프로필이 어디에 게시할 수 있는지는 컴퓨터에 기록한 연결(binding)이 정합니다.
+`guidedog-pages` 는 우리 컴퓨터에서 사이트를 게시합니다. 설치된 `guidedog` 으로 프로젝트를 빌드하고, 사이트 전체를 Git 푸시 한 번으로 사이트 전용 브랜치에 보냅니다. GitHub는 브랜치가 읽었던 커밋을 그대로 가리키고 있을 때만 이 푸시를 반영합니다. 그런 다음 GitHub Pages가 그 커밋을 배포할 때까지 기다립니다. 토큰은 시스템의 자격 증명 저장소에 보관하며, 프로필이 어디에 게시할 수 있는지는 컴퓨터에 기록한 연결(binding)이 정합니다.
 
 ```sh
 guidedog-pages init --repository=octo/manual --project=docs
@@ -102,7 +102,7 @@ guidedog-pages watch                # 소스가 바뀔 때마다 다시 게시�
 
 푸시할 때마다 게시하려면 다른 방법인 GitHub Actions를 사용하세요. `guidedog publish --publisher=pages` 는 Guidedog 자체 엔진으로 빌드하고 같은 게시기를 실행합니다. [GitHub Pages에 게시하기](docs/manual/howto/github-pages.rst)와 [플러그인 작성하기](docs/manual/plugins.rst)를 참고하세요.
 
-빌드 플러그인은 타입이 명확하고 버전이 매겨진 계약을 통해 원문, 전체 HTML 페이지, 정적 리소스를 변환합니다. 플러그인은 일반 Rust 크레이트입니다. `gd_cli::run_with` 로 자신의 `guidedog` 에 링크하거나, `guidedog plugin register` 가 SHA-256으로 고정하는 별도 프로그램으로 실행할 수 있습니다. `guidedog publish --timeout=SECONDS` 는 게시기와의 교환 전체의 기한입니다. 기본값은 300초이며 `--wait` 보다 길게 잡으세요. 결과가 불확실하면 다시 게시하기 전에 복구하세요.
+빌드 플러그인은 타입이 명확하고 버전이 매겨진 계약을 통해 원문, 전체 HTML 페이지, 정적 리소스를 변환합니다. 플러그인은 일반 Rust 크레이트입니다. 우리는 `gd_cli::run_with` 로 우리의 `guidedog` 에 링크하거나, `guidedog plugin register` 가 SHA-256으로 고정하는 별도 프로그램으로 실행할 수 있습니다. `guidedog publish --timeout=SECONDS` 는 게시기와의 교환 전체의 기한입니다. 기본값은 300초이며 `--wait` 보다 길게 잡으세요. 결과가 불확실하면 다시 게시하기 전에 복구하세요.
 
 ## 논의 기록 관리
 
@@ -125,14 +125,14 @@ dsc build
 
 - [매뉴얼](docs/manual/index.rst): 튜토리얼, 주제 설명, 작업 안내, 참조, 내부 구조.
 - [API 참조](docs/api/index.rst): Guidedog이 직접 Rust 소스에서 생성하며 매뉴얼 PDF의 부록에도 포함합니다. `cargo doc --workspace --no-deps` 로 rustdoc 페이지도 빌드할 수 있습니다.
-- [엔진 안내](crates/guidedoc/README.md): 작업 공간, 요청, 어댑터, 패스. [예제](examples/README.md)는 `cargo run` 으로 실행할 수 있는 작은 프로그램입니다.
+- [엔진 안내](crates/guidedoc/README.md): 작업 공간, 요청, 어댑터, 패스. [예제](examples/README.md)는 우리가 `cargo run` 으로 실행할 수 있는 작은 프로그램입니다.
 - [템플릿](docs/manual/templates.rst): Jinja로 HTML을, Typst로 책을 사용자화합니다.
 - [GDS](docs/gds/README.md): 번호가 지정된 설계 기록과 구현 결정.
 - [논의 라이브러리](crates/gd-discussion/README.md): `dsc`, `dscc`, `guidedog gds` 가 관리하는 카탈로그.
 - [플러그인 라이브러리](crates/gd-plugins/README.md): 타입이 명확한 빌드 서비스와 `guidedog publish` 및 `guidedog-pages` 가 사용하는 게시기 인터페이스.
 - [재사용 가능한 크레이트](docs/manual/internals/crates.rst): 다른 Rust 프로젝트가 crates.io 에서 가져다 쓸 수 있는 엔진, 라이브러리, API 생성기, 플러그인 SDK 와 그 의존 관계.
 
-`crates/` 아래의 각 크레이트에는 API와 이식 과정의 설계 결정을 담은 짧은 README가 있습니다. Guidedoc은 문서 테이블을 직접 소유하고 변환 사이에 재사용하므로, 안정 상태의 변환은 메모리를 할당하지 않으며 힌트가 포함된 구조화된 진단을 반환합니다. 호스트는 파일, 예산, 캐시, 게시, 내장 컴파일러를 관리합니다. `--untrusted` 는 기능을 제한할 뿐 프로세스 샌드박스나 모든 네이티브 자원의 상한은 아닙니다. 베타는 macOS와 Linux의 신뢰할 수 있는 문서 프로젝트를 대상으로 합니다.
+`crates/` 아래의 각 크레이트에는 API와 이식 과정의 설계 결정을 담은 짧은 README가 있습니다. Guidedoc은 문서 테이블을 직접 소유하고 변환 사이에 재사용하므로, 안정 상태의 변환은 메모리를 할당하지 않습니다. 또한 힌트가 포함된 구조화된 진단을 반환합니다. 호스트는 파일, 예산, 캐시, 게시, 내장 컴파일러를 관리합니다. `--untrusted` 는 기능을 제한할 뿐 프로세스 샌드박스나 모든 네이티브 자원의 상한은 아닙니다. 베타는 macOS와 Linux의 신뢰할 수 있는 문서 프로젝트를 대상으로 합니다.
 
 Guidedog 0.6 이하는 Odin으로 작성되었습니다. 버전 0.7은 Rust로 이식한 것으로 명령, 옵션, `conf.toml` 키, 지시문, 역할, 출력을 그대로 유지합니다. 바뀐 점은 [변경 기록](CHANGELOG.md)에 있습니다.
 

@@ -40,7 +40,7 @@ println!("{}", mo.with_context("menu", "Open"));           // pgettext
 ```
 
 Ownership: a `Catalog` owns its strings; a `MoCatalog` owns one buffer (the file) and
-serves `&str` borrowed from it. Lookups return borrowed strings (or the `id` you
+serves `&str` borrowed from it. Lookups return borrowed strings (or the `id` we
 passed). Parsers borrow their input and copy only what an editable catalog keeps.
 
 ## Which catalog
@@ -54,7 +54,7 @@ passed). Parsers borrow their input and copy only what an editable catalog keeps
 `LoadOptions { max_bytes: 1 GiB, allow_fuzzy: false }` is the default; a larger file is
 an `ErrorKind::TooLarge` error. `Catalog::from(&mo)` copies a `MoCatalog`.
 
-## Lookups: the `Lookup` trait (`Catalog`, `MoCatalog`, your own)
+## Lookups: the `Lookup` trait (`Catalog`, `MoCatalog`, our own)
 
 | Method | C | Returns |
 |---|---|---|
@@ -126,7 +126,7 @@ C's subset: `n`, numbers, `( )`, `!`, `* / %`, `+ -`, `< > <= >=`, `== !=`, `&&`
 |---|---|
 | `merge(&def, &template, &MergeOptions) -> Catalog` | msgmerge / sphinx-intl update |
 | `merge_counted(..) -> (Catalog, MergeStats)` | also what the fuzzy search did |
-| `similarity(a, b) -> f64` | 2·LCS / total length, the fuzzy measure |
+| `similarity(a, b) -> f64` | 2 * LCS / total length, the fuzzy measure |
 | `stats(&cat)`, `Stats::add(&message)`, `format_stats(&s)` | sphinx-intl stat (streamable) |
 | `sort_by_reference(&mut cat)` | by first location (file, then line number) |
 

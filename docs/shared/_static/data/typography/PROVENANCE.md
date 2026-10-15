@@ -1,6 +1,6 @@
 # Local web typography
 
-Typeset: Knuth–Plass boxes, glue, penalties and fitness classes.
+Typeset: Knuth-Plass boxes, glue, penalties and fitness classes.
 https://github.com/bramstein/typeset/tree/48ebb5547de116db57e14454e19767e4ff9b2266
 The linked list and line breaker are unmodified. See TYPESET-LICENSE.txt.
 

@@ -21,7 +21,7 @@ Findings and corrections
    live storage. Tests cover budget refusal, failed allocation, malformed output and
    unchanged geometry. Class scanning uses a borrowed string iterator rather than allocating
    a list.
--  Several drawings were 700–1,100 points wide. They would shrink to unreadable text in the
+-  Several drawings were 700-1,100 points wide. They would shrink to unreadable text in the
    book's roughly 363-point measure. The revised diagrams are at most about 431 points wide.
    They use short bold titles, quieter descriptions and one question per drawing. Memory
    accounting and process isolation are separate diagrams. Narrow HTML figures scroll

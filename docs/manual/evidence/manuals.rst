@@ -343,7 +343,7 @@ Flask   PDF (6.4 MB)   8.44 s, 696 MB           0.20 s, 208 MB               12
    678 pages and 245,481 links, and Flask has 79 pages and 8,539 links, all arriving.
 
 -  Flushing. Under ``strace -f -c -e trace=fsync,fdatasync``, the clean CPython HTML build
-   makes 1,817 ``fsync`` calls, 0.12 to 0.27 s in total (68 to 149 µs each). ``9bdcd20``
+   makes 1,817 ``fsync`` calls, 0.12 to 0.27 s in total (68 to 149 microseconds each). ``9bdcd20``
    made 1,742, one per file. The 75 extra are the output folders, which ``host.sync_all``
    now flushes so the new names in them are durable (``_build`` has 50 folders). To compare
    on the same day, the ``9bdcd20`` binary was rebuilt on the host. Its build takes 1,742

@@ -4,8 +4,8 @@ Maintain this documentation
 Guidedog documents itself with Guidedog. The repository has four projects:
 ``docs/manual`` (this manual), ``docs/api`` (the Rust API reference of the crates),
 ``docs/gds`` (the design records), and ``docs/site`` (the front page).
-The manual and GDS began with ``guidedog quickstart``. Edit their generated templates in
-place. Do not place design records in the manual's table of contents.
+The manual and GDS began with ``guidedog quickstart``. We edit their generated templates in
+place. Design records stay out of the manual's table of contents.
 
 All documentation is reStructuredText under ``docs/``. The only Markdown files are each
 crate's ``README.md``, a short cheat sheet, and the files GitHub needs at the root.
@@ -15,7 +15,7 @@ Design notes, internals, ledgers and conformance tables are pages under
 Build the manual
 ----------------
 
-Build ``guidedog`` first (see :doc:`install`), then, from the repository root:
+We build ``guidedog`` first (see :doc:`install`). Then, from the repository root:
 
 .. code-block:: sh
 
@@ -31,9 +31,9 @@ one step.
 The API reference
 -----------------
 
-``docs/api`` generates its pages from the crates' source with ``rust_autoapi_crates``;
-see :doc:`document-code`. The reference is the doc comments themselves (``///`` on every
-public item), so there is no copied API manuscript to keep in sync. Fix a mistake in the
+``docs/api`` generates its pages from the crates' source with ``rust_autoapi_crates``
+(see :doc:`document-code`). The reference is the doc comments themselves (``///`` on every
+public item). There is no copied API manuscript to keep in sync. We fix a mistake in the
 crate, then rebuild:
 
 .. code-block:: sh
@@ -53,7 +53,7 @@ Build and check discussions
    target/release/guidedog gds check
    target/release/guidedog gds build --target=both
 
-``guidedog gds`` runs the commands of ``dsc`` on this catalog; see :doc:`discussions`.
+``guidedog gds`` runs the commands of ``dsc`` on this catalog (see :doc:`discussions`).
 It manages metadata, numbers, state, and recovery.
 Its RST publication path calls the project engine in process.
 It produces a complete HTML site and a separate PDF for each record.
@@ -74,8 +74,8 @@ Read ``docs/gds/workflow.rst`` for the authoring workflow.
 Translations
 ------------
 
-The manual's catalogs are in ``docs/manual/locales``. After changing English text,
-refresh them:
+The manual's catalogs are in ``docs/manual/locales``. After we change English text,
+we refresh them:
 
 .. code-block:: sh
 
@@ -91,5 +91,5 @@ Check links and diagnostics. Inspect wide tables and code blocks.
 Render the PDF pages after changing typography.
 Test the HTML at desktop and phone widths, in light and dark modes.
 Make sure the mathematics and diagrams work without a network connection.
-For engine changes, run ``cargo test --workspace``, ``cargo clippy --workspace
---all-targets`` and ``cargo run -p check``.
+For engine changes, run ``cargo test --workspace``,
+``cargo clippy --workspace --all-targets`` and ``cargo run -p check``.

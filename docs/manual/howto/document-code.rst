@@ -1,15 +1,15 @@
 Document a codebase
 ===================
 
-A public name needs a contract. Explain its input, its result, its ownership,
+A public name needs a contract. We explain its input, its result, its ownership,
 and the conditions under which it fails. A signature alone is not a manual.
 
 Static extraction architecture
 ------------------------------
 
-Guidedog extracts API documentation by parsing source files directly into abstract
-syntax trees. It never executes or imports user code, eliminating unintended side effects,
-external execution requirements, and foreign dependency issues:
+Guidedog extracts API documentation by parsing source files into abstract
+syntax trees. It never runs or imports our code. So there are no side effects,
+no runtime to install, and no foreign dependencies to resolve:
 
 .. graphviz::
    :class: graphviz-adaptive
@@ -73,27 +73,27 @@ Rust
 
 Guidedog reads each crate's source with tree-sitter and follows its module tree the way
 rustc does: ``Cargo.toml``'s ``[lib] path``, then ``src/lib.rs`` or ``src/main.rs``.
-It does not compile, run, or expand the documented crate, so items made by macros or
-build scripts are absent. A ``rust_autoapi_crates`` entry may also be a single root
+It does not compile, run, or expand the documented crate. Items made by macros or
+build scripts are therefore absent. A ``rust_autoapi_crates`` entry may also be a single root
 ``.rs`` file or a folder of loose ``.rs`` files.
 
-Rustdoc's rules decide what appears: a ``pub`` item reachable through ``pub`` modules is
-documented in its module; ``pub use`` of an item from a private module documents it
-under the re-exported name; ``#[doc(hidden)]`` items, ``#[cfg(test)]`` modules and
+Rustdoc's rules decide what appears. A ``pub`` item reachable through ``pub`` modules is
+documented in its module. ``pub use`` of an item from a private module documents it
+under the re-exported name. ``#[doc(hidden)]`` items, ``#[cfg(test)]`` modules and
 tests are left out. ``rust_autoapi_options`` adds ``private-members`` (everything, with
 its visibility shown), ``hidden-members``, or ``noindex``.
 
-Doc comments are CommonMark. Guidedog translates them into the page: ``# Examples`` and
-the other headings become rubrics, fenced code follows rustdoc's language rules, and
-intra-doc links (``[`Parser`]``, ``[Parser::next]``) become ``rust`` domain references.
+Doc comments are CommonMark. Guidedog translates them into the page. ``# Examples`` and
+the other headings become rubrics. Fenced code follows rustdoc's language rules.
+Intra-doc links (``[`Parser`]``, ``[Parser::next]``) become ``rust`` domain references.
 A link into the crate that names nothing is a ``rust.autodoc.link`` warning.
 
-The pages are written under ``rust_autoapi_root``: an index page, then one page per
+The pages are written under ``rust_autoapi_root``. There is an index page, then one page per
 documented module (``my_crate.rst``, ``my_crate/parser.rst``). With ``rust_autoapi_add_toctree_entry``
-(the default), the index joins the root document's toctree. Set
-``rust_autoapi_generate_api_docs = false`` to read the settings without generating pages.
-See :doc:`../topics/domains` for the ``rust`` directives and roles, which hand-written
-pages can use too.
+(the default), the index joins the root document's toctree. With
+``rust_autoapi_generate_api_docs = false``, Guidedog reads the settings without generating pages.
+:doc:`../topics/domains` describes the ``rust`` directives and roles. Hand-written
+pages can use them too.
 
 Odin
 ----
@@ -119,13 +119,13 @@ Python
 
 Guidedog parses Python source rather than importing it.
 This avoids import side effects. It also means runtime-generated objects may be absent.
-Describe those objects explicitly when they are part of the public interface.
+When such objects are part of the public interface, we describe them explicitly.
 See :doc:`../autodoc` for the exact discovery rules.
 
 Link across projects
 --------------------
 
-Publish the generated ``objects.inv`` with the site.
-An intersphinx mapping can then resolve names from another project.
-Use explicit mappings for reproducible builds.
+We publish the generated ``objects.inv`` with the site.
+An intersphinx mapping in another project can then resolve our names.
+Explicit mappings keep builds reproducible.
 See :doc:`../intersphinx`.

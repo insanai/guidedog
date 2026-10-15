@@ -1,6 +1,6 @@
 .. _native-publisher-review--13-october-2026:
 
-Native publisher review — 13 October 2026
+Native publisher review, 13 October 2026
 =========================================
 
 This review compares the released 0.6.0 implementation with GDS 0008 and 0009. The 0.6.1

@@ -22,10 +22,10 @@ Choose a program
      - Nothing else is installed. ``dscc`` is ``dsc`` with Guidedog built in. Each
        release has a ``dscc`` archive for every platform.
    * - ``guidedog gds``
-     - You work on Guidedog. It runs the same commands on ``docs/gds``.
+     - We work on Guidedog itself. It runs the same commands on ``docs/gds``.
 
 Graphviz, Typst, and the other tools a build needs belong to Guidedog. ``dsc`` never
-looks for them: it uses whichever ``guidedog`` you have.
+looks for them. It uses whichever ``guidedog`` we have.
 
 Create a catalog
 ----------------
@@ -42,19 +42,19 @@ letters. ``init`` writes a complete catalog into a missing or empty folder:
 * ``conf.toml``, ``index.rst``, and ``workflow.rst``, an ordinary Guidedog project;
 * ``template/rfc-template.rst``, the template of new drafts;
 * ``registry.rst`` and ``bundle.rst``, the generated index;
-* ``records/XXXXX-eds-process.rst``, a draft of your review process.
+* ``records/XXXXX-eds-process.rst``, a draft of our review process.
 
-Edit the process draft to say how your project decides. To start from your own
-documents, pass ``--config=FILE`` (a ``discussion.toml``), ``--process=FILE`` (the
+We edit the process draft to say how our project decides. To start from our own
+documents, we pass ``--config=FILE`` (a ``discussion.toml``), ``--process=FILE`` (the
 process text, from its title on), and ``--template=FILE`` (a record template with
 ``:eds-*:`` fields). ``--labels=a,b`` limits
 the labels records may carry. ``init`` checks the new catalog before it moves it into
-place, and never writes into a folder that has files.
+place. It never writes into a folder that has files.
 
 Write and review
 ----------------
 
-Run the commands in the catalog folder, or in any folder inside it.
+We run the commands in the catalog folder, or in any folder inside it.
 
 .. code-block:: sh
 
@@ -66,9 +66,9 @@ Run the commands in the catalog folder, or in any folder inside it.
    dsc state 1 --to=committed --reason="Shipped" --evidence="Tests and review"
 
 A new draft has the number ``XXXXX``. Promotion gives it the next number and opens it
-for discussion. A state change needs ``--reason``; ``committed`` also needs
-``--evidence``. Add ``--dry-run`` to see a change without making it. These are the
-defaults; the next section changes them.
+for discussion. A state change needs ``--reason``, and ``committed`` also needs
+``--evidence``. ``--dry-run`` shows a change without making it. These are the
+defaults. The next section changes them.
 
 A record starts with its metadata, one field per line:
 
@@ -85,7 +85,7 @@ A record starts with its metadata, one field per line:
    :eds-labels: ["architecture"]
 
 Authors and labels are JSON lists. ``last-updated`` may stand for ``updated``. A record
-may also carry ``category``, ``status``, and ``summary``; ``dsc`` keeps ``status`` in step
+may also carry ``category``, ``status``, and ``summary``. ``dsc`` keeps ``status`` in step
 with the state. HTML and PDF show the fields as Number, Title, Authors, Updated, Labels,
 and so on, with the lists as plain text.
 
@@ -93,8 +93,8 @@ Configure the lifecycle and numbering
 -------------------------------------
 
 ``discussion.toml`` holds the catalog's settings. ``init`` writes every one of them,
-with comments, and ``dsc config`` prints the settings in effect. A catalog without the
-file follows the defaults below, which are the process of Guidedog's own GDS.
+with comments. ``dsc config`` prints the settings in effect. A catalog without the
+file follows the defaults below. They are the process of Guidedog's own GDS.
 
 .. code-block:: sh
 
@@ -129,16 +129,16 @@ file follows the defaults below, which are the process of Guidedog's own GDS.
    evidence = true
    status = "Implemented design"
 
-``[workflow.states.NAME]`` defines a state: ``next`` lists the states the ``state``
-command may move a record to, ``evidence = true`` asks for ``--evidence`` on a move into
-it, and ``status`` is the text a record's optional ``status`` field takes there. A state
+``[workflow.states.NAME]`` defines a state. ``next`` lists the states the ``state``
+command may move a record to. ``evidence = true`` asks for ``--evidence`` on a move into
+the state. ``status`` is the text a record's optional ``status`` field takes there. A state
 with no ``next`` is closed. Promotion is the only way from the draft state to the open
-state, because it gives the number; a draft may move without one only to the states
+state, because promotion gives the number. Without a number, a draft may move only to the states
 its own ``next`` lists, such as ``abandoned``.
 
 Numbers have at least ``width`` digits, padded with zeros. A number that needs more
 digits gets them, so 10000 follows 9999, and lists sort by value. Promotion numbers from
-``start``; ``limit``, when set, is the highest number it gives. Changing ``start`` or
+``start``. ``limit``, when set, is the highest number it gives. Changing ``start`` or
 ``limit`` later is safe. Changing ``width`` is not, once records are numbered: their
 numbers would no longer match it.
 
@@ -157,7 +157,7 @@ to write instead:
 
    Hint: Use one of: width, start, limit.
 
-The process draft that ``init`` writes describes the lifecycle you configured, with a
+The process draft that ``init`` writes describes the lifecycle we configured. It has a
 table of the states and a diagram of the moves.
 
 Build
@@ -188,17 +188,17 @@ command says so:
    dsc recover --rollback
 
 Recovery puts back the files as they were. It refuses to overwrite a file someone edited
-since. ``dsc`` also checks each change before it writes anything: an empty or cut-short
-record, or an index without its generated region, is refused.
+since. ``dsc`` also checks each change before it writes anything. It refuses an empty or cut-short
+record, and an index without its generated region.
 
-``dsc`` keeps only each record's metadata in memory, and reads a record whole only to
-change it, so checking a large catalog stays fast and small.
+``dsc`` keeps only each record's metadata in memory. It reads a record whole only to
+change it. So checking a large catalog stays fast and small.
 
 Use the library
 ---------------
 
 The three programs share one Rust crate, ``gd-discussion``. Its ``README.md`` shows how
-to load a catalog, plan a change, and apply it from your own program:
+to load a catalog, plan a change, and apply it from our own program:
 
 .. code-block:: rust
 
@@ -215,6 +215,6 @@ to load a catalog, plan a change, and apply it from your own program:
    })?;                                            // changes nothing yet
    ds::apply(&lock, &plan)?;                       // journaled; ds::recover rolls back
 
-``ds::command::run`` is the whole ``dsc`` command line, for a program of your own with
+``ds::command::run`` is the whole ``dsc`` command line. It serves a program of our own with
 another name, prefix, or builder. The design notes are in
 :doc:`../internals/discussion`.

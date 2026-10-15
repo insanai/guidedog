@@ -52,7 +52,7 @@ Reader, configuration, interface
      - ``todo_follows_todo_include_todos``, ``authors_follow_show_authors``
    * - ``numfig``
      - done (carried for the host; reading does not depend on it)
-     - —
+     - none
    * - ``smartquotes``, PEP/RFC base URLs, trimmed footnote space
      - done (in ``rst.Settings``)
      - base reader tests
@@ -84,7 +84,7 @@ Directives
      - done
      - ``toctree_entries_and_options``, ``toctree_without_options``
    * - only, ifconfig (content optional); sections inside
-     - —
+     - none
      - done
      - ``only_and_ifconfig``, ``sections_in_only``; ``integration_tests.sections_in_only_follow_their_expression``
    * - index
@@ -108,15 +108,15 @@ Directives
      - done (base)
      - ``seealso_and_rst_class``
    * - rst-class
-     - —
+     - none
      - done
      - ``seealso_and_rst_class``
    * - versionadded, versionchanged, deprecated, versionremoved
-     - —
+     - none
      - done
      - ``version_directives``
    * - sectionauthor, moduleauthor, codeauthor
-     - —
+     - none
      - done
      - ``authors_follow_show_authors``
    * - tabularcolumns, highlight (linenothreshold, force), default-domain, program, py:currentmodule
@@ -124,7 +124,7 @@ Directives
      - done
      - ``state_directives_emit_nothing``, ``code_block_language_follows_highlight``
    * - default-role
-     - —
+     - none
      - done
      - ``default_role_accepts_sphinx_roles``
    * - code-block, sourcecode, code (content optional for code-block and sourcecode, as in Sphinx); the caption parsed as inline markup (a Caption child), as for literalinclude and graphviz

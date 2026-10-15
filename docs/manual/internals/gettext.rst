@@ -71,7 +71,7 @@ Design
 linear time** (n log n for the overlap check), so every later lookup is infallible and needs
 no ``unsafe``:
 
--  the header (magic in either byte order, major revision ≤ 1, a count that fits the file)
+-  the header (magic in either byte order, major revision at most 1, a count that fits the file)
    and both tables lie in the file;
 -  every string lies in the file, ends in NUL, and is UTF-8;
 -  no two strings share bytes. The old damaged-file refusal is kept: a table pointing every
@@ -107,7 +107,7 @@ first string to the last NUL is UTF-8 as a whole. ``Vec::truncate`` and
 ``String::from_utf8`` validates it in one linear pass, with no second buffer. The raw header
 and tables are gone, and the pool is a ``Box<str>`` (the shrink is a ``realloc`` that the
 allocator does in place). If the region holds a gap that is not UTF-8, which no compiler
-writes, the strings are copied one by one into a new pool instead (2× for a moment). Every
+writes, the strings are copied one by one into a new pool instead (twice the memory for a moment). Every
 span lies on a character boundary: each string was valid UTF-8 on its own and is followed by
 a NUL. So a lookup slices ``&pool[start..end]`` (through ``str::get``, which checks only the
 range) with no UTF-8 check and no ``unsafe``.
@@ -134,9 +134,9 @@ Writing: msgfmt's bytes, streamed
 
 ``write_mo_to(&mut impl Write, ..)`` writes exactly what GNU msgfmt writes: the test
 compiles a fixture and compares it byte for byte with msgfmt 0.23.1. That means sorted keys,
-msgfmt's table size (the next odd prime ≥ 4n/3), and the singular-only hash for plural
+msgfmt's table size (the first odd prime at or above :math:`4n/3`), and the singular-only hash for plural
 entries. The old writer hashed the full key, so GNU's lookup of a plural message started at
-the wrong slot and could miss it; that is now fixed. Other tools get O(1) lookups from our
+the wrong slot and could miss it. That is now fixed. Other tools get O(1) lookups from our
 files. The stored keys are gathered once into one buffer and sorted by slice comparison;
 translations are written straight from the catalog without copying. ``write_mo`` reserves
 the exact output size; ``save_mo`` writes through a ``BufWriter``. ``write_po_to`` streams
@@ -172,7 +172,7 @@ Measured
 ``cargo test --release -p gd-gettext --test large -- --ignored --nocapture``, run on this
 machine. The test generates 200,000 messages (1 in 7 with a msgctxt, about 250-byte
 translations): a 61.6 MB MO file and a 63.6 MB PO file. "Allocated" is every byte requested
-from the allocator during the step; "peak" is the most held at once above the start, counted
+from the allocator during the step. "Peak" is the most held at once above the start. Both are counted
 by a counting global allocator in that test binary only. That allocator needs
 ``unsafe impl GlobalAlloc`` with ``SAFETY`` comments, and it is test-only.
 
@@ -180,37 +180,37 @@ The counting allocator forwards ``realloc``, so in-place grows and shrinks stay 
 they would without it. That makes the first rows below lower than in the previous version of
 this note.
 
-=========================================================== =============== ========= ======
-Step                                                        Time            Allocated Peak
-=========================================================== =============== ========= ======
-before: ``parse_mo`` into a ``Catalog`` (copies)            125–144 ms      188 MB    179 MB
-before: its first lookup builds the index                   30–55 ms        60 MB     60 MB
-after: ``MoCatalog::from_bytes`` (incl. a 61.6 MB clone)    66–67 ms        71 MB     66 MB
-after: ``MoCatalog::load`` from a file                      77–82 ms        71 MB     66 MB
-``write_mo`` (61.6 MB): iterator-compared sort → key buffer 372 → 94–102 ms 96 MB     87 MB
-``parse_po`` into a ``Catalog``                             290 ms          176 MB    167 MB
-``PoReader`` + ``Stats::add`` (no catalog)                  235 ms          102 MB    18 MB
-=========================================================== =============== ========= ======
+=============================================================== =================== ========= ======
+Step                                                            Time                Allocated Peak
+=============================================================== =================== ========= ======
+before: ``parse_mo`` into a ``Catalog`` (copies)                125-144 ms          188 MB    179 MB
+before: its first lookup builds the index                       30-55 ms            60 MB     60 MB
+after: ``MoCatalog::from_bytes`` (incl. a 61.6 MB clone)        66-67 ms            71 MB     66 MB
+after: ``MoCatalog::load`` from a file                          77-82 ms            71 MB     66 MB
+``write_mo`` (61.6 MB): iterator-compared sort, then key buffer 372, then 94-102 ms 96 MB     87 MB
+``parse_po`` into a ``Catalog``                                 290 ms              176 MB    167 MB
+``PoReader`` + ``Stats::add`` (no catalog)                      235 ms              102 MB    18 MB
+=============================================================== =================== ========= ======
 
 The 66 MB peak of ``MoCatalog::from_bytes`` is the 61.6 MB buffer (which becomes the pool),
-3.2 MB of spans, and 1.1 MB of hash slots. Steady state is about 1× the file.
+3.2 MB of spans, and 1.1 MB of hash slots. Steady state is about the size of the file.
 
 Lookups, 1M each, over 1000 present keys (hits) or 1000 absent ones (misses):
 
 ======================================================================= ========= =========
 Catalog                                                                 Hits/s    Misses/s
 ======================================================================= ========= =========
-``Catalog`` (owned strings, FNV index, ≤ ½ full)                        6.3–7.5 M 21–24 M
+``Catalog`` (owned strings, FNV index, at most half full)               6.3-7.5 M 21-24 M
 ``MoCatalog``, raw buffer + ``from_utf8`` per lookup (previous version) 4.6 M     4.0 M
-``MoCatalog``, text pool + length-first key check                       5.4–5.5 M 8.9–9.4 M
+``MoCatalog``, text pool + length-first key check                       5.4-5.5 M 8.9-9.4 M
 ======================================================================= ========= =========
 
-Loading a large compiled catalog went from 155–200 ms and about 240 MB held (copied strings
-plus index) to 66–82 ms and about the file's size. Moving to the pool removed the per-lookup
+Loading a large compiled catalog went from 155-200 ms and about 240 MB held (copied strings
+plus index) to 66-82 ms and about the file's size. Moving to the pool removed the per-lookup
 UTF-8 check, but that check turned out to be small. The larger gain, on misses, came from
 comparing key lengths before bytes. What remains of the gap to the FNV index is the GNU
-table itself: msgfmt fills it to ¾ (so a miss probes about four slots, against about two at
-½), and hashpjw is a little slower than FNV. Both are fixed by the file format; changing
+table itself: msgfmt fills it to three quarters (so a miss probes about four slots, against about two at
+half full), and hashpjw is a little slower than FNV. Both are fixed by the file format; changing
 them would lose GNU compatibility. An editable ``Catalog`` stays the faster choice when
 memory is plentiful and lookups dominate; ``MoCatalog`` is the choice when catalogs are
 large, many, or loaded often. Streaming PO statistics need a tenth of the peak memory of a

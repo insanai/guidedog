@@ -17,7 +17,7 @@ Pipeline
    Expressions and statements are separate enums of boxed trees. Definitions that a
    render refers back to later (macros, blocks, for loops) live in side tables of the
    ``Compiled`` template and are named by newtype ids (``MacroId``, ``BlockId``,
-   ``LoopId``); template text is a byte range of the template's source.
+   ``LoopId``). Template text is a byte range of the template's source.
 3. ``runtime`` / ``eval`` / ``calls`` / ``loops`` / ``inherit``: a ``State`` renders a
    ``Compiled`` template. Statements return ``Result<Flow>`` and expressions
    ``Result<Value>``.
@@ -25,7 +25,7 @@ Pipeline
 Values
 ------
 
-``Value`` is an enum. Strings are ``Rc<str>``; lists and dicts are ``Rc`` with interior
+``Value`` is an enum. Strings are ``Rc<str>``. Lists and dicts are ``Rc`` with interior
 mutability, because Jinja's semantics need shared mutable containers: ``{% set b = a %}``
 aliases, ``a is sameas b``, ``items.append(x)`` through any alias, and templates storing
 values in the host's containers. Dicts keep insertion order (keys and values in vectors,
@@ -38,8 +38,8 @@ Scopes and contexts
 Scopes (variables) and contexts (one per template render: its root scope and block chain)
 live in two vectors owned by the render and are named by ``ScopeId`` and ``ContextId``.
 Scopes are tiny and use linear search. A macro, ``super()`` reference, ``self.name()`` or
-recursive ``loop`` value keeps the ids it was made with; it is stamped with the id of its
-render, and calling it from another render is an error ("made by a render that has
+recursive ``loop`` value keeps the ids it was made with. It is stamped with the id of its
+render. Calling it from another render is an error ("made by a render that has
 ended"). That replaces the Odin engine's copying of stored values out of the render's
 arena.
 
@@ -48,7 +48,7 @@ Errors
 
 The first error ends a render: every step returns ``Result`` and ``?`` carries the error
 up. Inside the renderer the error is boxed (``Result<T, Box<Error>>``) so that the
-results passed up through every level of recursion stay a few words wide; the public
+results passed up through every level of recursion stay a few words wide. The public
 ``Error`` has plain fields (kind, template, line, message, excerpt, hint) and renders the
 Elm-style report through ``Display``. Native procedures return ``Result<Value, Error>``;
 ``Call::error`` locates an error at the line being rendered.
@@ -64,13 +64,13 @@ lives only for one render (a build's tables, the page being written) passes them
 ``add_filter`` take ``impl Fn(&mut Call) -> Result<Value, Error> + 'a``, so the closures
 may borrow anything that outlives the call.
 
-The render's ``State`` holds ``Option<&Locals>``; every template, include, extended
+The render's ``State`` holds ``Option<&Locals>``. Every template, include, extended
 template, block, macro and call block of the render runs in that state, so locals are
 visible everywhere in it. Name lookup is: the scopes and the context dict, then the
 locals, then the environment's globals; filters look in the locals first. A local
-function looked up becomes a ``CallKind::Local`` callable tagged with the render's id: it
-finds its closure again by name when called, and a copy kept past its render is refused as
-a macro kept past its render is. "Did you mean" hints include the locals' names.
+function looked up becomes a ``CallKind::Local`` callable tagged with the render's id. It
+finds its closure again by name when called. A copy kept past its render is refused, just
+as a macro kept past its render is. "Did you mean" hints include the locals' names.
 
 Limits and the stack
 --------------------

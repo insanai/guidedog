@@ -1,26 +1,25 @@
 Build and publish documentation
 ===============================
 
-Publishing documentation involves turning raw reStructuredText and Markdown sources
-into static artifacts, verifying their integrity, and deploying them to a hosting
-environment.
+To publish documentation, we turn reStructuredText and Markdown sources
+into static files, check them, and deploy them to a host.
 
-Guidedog separates the process of building a site from the process of deploying it:
+Guidedog keeps building a site separate from deploying it:
 
-1. **Building:** Guidedog reads your sources, compiles templates, resolves cross-references,
-   and outputs a complete, verified directory of static HTML files or a typeset PDF book.
-2. **Publishing:** The resulting static files are served by your web server or deployed
-   to a hosting destination, such as GitHub Pages, an S3 bucket, or an internal file server.
+1. **Building:** Guidedog reads our sources, compiles templates, and resolves cross-references.
+   It writes a complete, checked folder of static HTML files or a typeset PDF book.
+2. **Publishing:** Our web server serves the static files, or we deploy them
+   to a host such as GitHub Pages, an S3 bucket, or an internal file server.
 
-Because the output consists entirely of standard static files (HTML, CSS, JavaScript, and SVG),
-it can be served by any static web server (such as Nginx, Apache, or Caddy) without requiring
-Guidedog, a Python interpreter, or an active server process in production.
+The output is plain static files (HTML, CSS, JavaScript, and SVG).
+Any static web server (such as Nginx, Apache, or Caddy) can serve it. Production needs
+no Guidedog, no Python interpreter, and no running server process.
 
 Atomic publication architecture
 -------------------------------
 
-A critical design requirement is to publish complete output generations.
-The host finishes preparation before deciding a journaled commit. A failed
+Guidedog publishes only complete output generations.
+The host finishes preparation before it decides a journaled commit. A failed
 preparation leaves the previous site intact.
 
 Guidedog prepares a complete generation before deciding a journaled commit:
@@ -45,17 +44,17 @@ Guidedog prepares a complete generation before deciding a journaled commit:
      step1 -> step2 -> step3 -> step4 -> step5;
    }
 
-How atomic commits protect your site:
+How atomic commits protect our site:
 
 * **Staging:** All newly rendered pages are written to a hidden staging folder beside
   the destination (``.<target>.next``).
-* **Isolation:** The existing live output directory is untouched while pages are being compiled.
-* **Failure safety:** If any page fails to render or if warnings-as-errors (``-W``) is
-  triggered, the staging folder is abandoned. The existing live site remains completely unchanged.
-* **Atomic swap:** Once all files are flushed, Guidedog switches the staging directory into
-  place. On supported filesystems, this is an instantaneous directory exchange.
-* **Interrupted recovery:** If a crash occurs during the swap, the durable journal ensures
-  that the subsequent build settles the interrupted commit rather than guessing.
+* **Isolation:** The live output folder stays untouched while pages compile.
+* **Failure safety:** If any page fails to render, or a warning becomes an error under ``-W``,
+  the build abandons the staging folder. The live site stays unchanged.
+* **Atomic swap:** Once all files are flushed, Guidedog switches the staging folder into
+  place. Where the filesystem supports it, this is a single directory exchange.
+* **Interrupted recovery:** If a crash interrupts the swap, the next build reads the durable journal.
+  It settles the interrupted commit instead of guessing.
 
 Standard build workflow
 -----------------------
@@ -77,8 +76,8 @@ The ``-j auto`` flag parallelizes document parsing across all available CPU core
 Custom output directories
 -------------------------
 
-To direct the compiled website to an explicit target folder (for example, in a CI/CD
-pipeline or deployment script), use the Sphinx-compatible command form:
+To write the site to a folder of our choice (for example, in a CI/CD
+pipeline or a deployment script), we use the Sphinx-compatible command form:
 
 .. code-block:: sh
 
@@ -89,14 +88,14 @@ Guidedog enforces safety constraints on output paths:
 * Choose a dedicated output folder, such as ``_build/html`` inside the project or
   ``build/site`` beside it. The output must not be the source root or one of its
   ancestors, because switching it would replace the source project.
-* When targeting a custom destination such as ``build/site``, Guidedog places internal
-  caches in a sibling directory (such as ``build/.site.guidedog/.doctrees``), ensuring
-  that the published folder contains only clean, deployable static assets.
+* For a custom destination such as ``build/site``, Guidedog keeps its internal
+  caches in a sibling folder (such as ``build/.site.guidedog/.doctrees``). The
+  published folder then holds only the static files we deploy.
 
 Semantic checks and pre-flight validation
 -----------------------------------------
 
-To verify the semantic validity of a project without writing HTML files to disk, use the
+To check a project without writing HTML files to disk, we use the
 ``dummy`` builder:
 
 .. code-block:: sh
@@ -105,21 +104,21 @@ To verify the semantic validity of a project without writing HTML files to disk,
 
 The dummy builder:
 
-* Reads all documents and executes all syntax parsers.
+* Reads and parses all documents.
 * Resolves all toctrees, headings, cross-references, and domain objects.
 * Checks document references and domain objects (``-n`` enables nitpicky
   cross-reference checking). It does not make HTTP requests to test external URLs.
 * Exits with status 1 if any broken link or warning is found (``-W``).
 
-Use the dummy builder in continuous integration pipelines for fast validation before running
-the full site rendering.
+In continuous integration, the dummy builder is a fast check to run before
+the full site build.
 
 Reproducible build timestamps
 -----------------------------
 
 Documentation builds often embed timestamps (for example, in "Last updated" footer notices).
-For automated deployments where you want byte-for-byte reproducible outputs across multiple runs,
-pin the clock using the standard ``SOURCE_DATE_EPOCH`` environment variable:
+When an automated deployment must give the same bytes on every run,
+we pin the clock with the standard ``SOURCE_DATE_EPOCH`` environment variable:
 
 .. code-block:: sh
 
@@ -131,25 +130,25 @@ the current system clock for all date formatting and template variables.
 Deployment options
 ------------------
 
-Once the build succeeds, deploy the static files to your hosting infrastructure:
+Once the build succeeds, we deploy the static files to our host:
 
 1. **Static web servers (Nginx / Caddy / Apache):** Point the server's root directive
    directly to the built HTML directory.
 2. **Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud Storage):** Sync the
-   contents of ``_build/html`` to your bucket using your cloud provider's CLI tool.
+   contents of ``_build/html`` to our bucket with the cloud provider's CLI tool.
 3. **GitHub Pages:**
 
-   * For direct deployments from your local machine, run ``guidedog publish pages``: it
+   * To deploy directly from our own machine, we run ``guidedog publish pages``. It
      asks for what is still missing (the repository, a token, the Pages settings), then
      builds and publishes in one push. ``guidedog-pages`` offers the same steps one by
      one. See :doc:`github-pages`.
    * For automated deployments with GitHub Actions, ``guidedog pages workflow`` writes a
-     workflow that builds and deploys the site; see :doc:`github-pages`.
-   * For any other destination, write a publisher plugin as described in
-     :doc:`../plugins`, and run it with ``guidedog publish --publisher=ID``.
+     workflow that builds and deploys the site. See :doc:`github-pages`.
+   * For any other destination, we write a publisher plugin as described in
+     :doc:`../plugins` and run it with ``guidedog publish --publisher=ID``.
 
 On filesystems with directory exchange, the output path switches in one operation.
 The fallback uses two renames and can briefly leave that path absent. It still
 never exposes a partly assembled tree. Journal recovery finishes or restores an
-interrupted switch. A client making several requests can span two generations;
-the build does not promise a snapshot for an entire browsing session.
+interrupted switch. A client making several requests can span two generations.
+The build does not promise one snapshot for a whole browsing session.

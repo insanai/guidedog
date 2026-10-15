@@ -52,13 +52,13 @@ The algorithm accounts for both before removing the journal.
 Platforms differ in how directories are exchanged.
 The recovery protocol is designed around those differences.
 
-The implementation is split along that line. ``gd-outputs`` owns the generation: a
+The implementation is split along that line. ``gd-outputs`` owns the generation. A
 ``Generation`` value stages the next tree, records each output unit in the manifest,
 writes the commit journal, and recovers an interrupted journal when the next build
-begins; dropping an uncommitted generation abandons it. ``gd-host`` owns the file
-operations: ``Stage`` writes a file beside its target and removes it when dropped
-uncommitted, ``exchange`` switches two folders in one call where the system offers it
-(``renameat2`` on Linux, ``renamex_np`` on macOS), and ``sync_all`` and ``sync_each``
+begins. Dropping an uncommitted generation abandons it. ``gd-host`` owns the file
+operations. ``Stage`` writes a file beside its target and removes it when dropped
+uncommitted. ``exchange`` switches two folders in one call where the system offers it
+(``renameat2`` on Linux, ``renamex_np`` on macOS). ``sync_all`` and ``sync_each``
 flush file contents and folder entries. Stage names keep one prefix
 (``.guidedog-stage-``), so a later build removes what a killed process left.
 

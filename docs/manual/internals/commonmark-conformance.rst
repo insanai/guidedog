@@ -20,7 +20,7 @@ project reads ``.md`` documents, and compares the document trees. ``MYST_ONLY=<f
 
 Most fixtures use directives and roles, which the Sphinx layer provides through the
 ``Extension`` interface. The reader crate cannot depend on the Sphinx layer, so its copy
-of the harness reads without handlers and only reports; the Sphinx layer runs the same
+of the harness reads without handlers and only reports. The Sphinx layer runs the same
 harness with its extension, where every difference must be documented below.
 
 .. list-table::

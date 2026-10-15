@@ -59,7 +59,7 @@ The English build copies `_editions` into the site (`html_extra_path`), so build
 
 1. Create a project: `guidedog quickstart mydocs`.
 2. Copy `_templates` and `_static` from `docs/manual/`.
-3. Copy the shared assets from `docs/shared/_static` into your static folder.
+3. Copy the shared assets from `docs/shared/_static` into our static folder.
 4. For multilingual PDF books, copy `docs/shared/fonts` and set `pdf_font_paths`.
 5. Set `templates_path`, `html_static_path`, and the stylesheets in `conf.toml`.
 

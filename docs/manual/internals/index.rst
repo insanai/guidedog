@@ -2,8 +2,8 @@ Internals
 =========
 
 These chapters explain the reasoning behind the implementation. They describe the
-current contracts of the Rust crates; GDS records keep the decisions and review states
-in a separate project. Each crate's ``README.md`` is the short API cheat sheet; the
+current contracts of the Rust crates. GDS records keep the decisions and review states
+in a separate project. Each crate's ``README.md`` is the short API cheat sheet. The
 pages here hold what does not fit there: invariants, designs, wire formats, and
 conformance evidence.
 
@@ -54,6 +54,6 @@ conformance evidence.
 
    engine-api-map
 
-:doc:`engine-api-map` is kept from the port of Guidedog from Odin to Rust: it maps every
+:doc:`engine-api-map` is kept from the port of Guidedog from Odin to Rust. It maps every
 name of the Odin engine to its Rust form, for readers of the GDS records and of code
 written against the Odin API.

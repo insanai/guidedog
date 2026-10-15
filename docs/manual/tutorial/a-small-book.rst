@@ -1,13 +1,13 @@
 Make a small book
 =================
 
-A website is an interconnected web of pages that readers explore non-linearly. A book,
-by contrast, requires a deliberate, sequential reading order with numbered chapters,
-running headers, and formal front matter.
+A website is a web of linked pages. Readers explore it in any order. A book
+needs a deliberate reading order, with numbered chapters,
+running headers, and front matter.
 
-In Guidedog, the table of contents directive (``toctree``) provides the bridge between
-both formats. A single ``toctree`` organizes your documents into a hierarchical sidebar
-tree for the web and a linear chapter progression for the PDF book.
+In Guidedog, the table of contents directive (``toctree``) serves
+both formats. One ``toctree`` organizes our documents into a sidebar
+tree for the web and a sequence of chapters for the PDF book.
 
 .. graphviz::
    :class: graphviz-adaptive
@@ -35,7 +35,7 @@ tree for the web and a linear chapter progression for the PDF book.
 1. Add a new chapter
 --------------------
 
-In your ``notes`` project, create a new document named ``measurement.rst``:
+In our ``notes`` project, we create a new document named ``measurement.rst``:
 
 .. code-block:: rst
    :caption: notes/measurement.rst
@@ -61,13 +61,13 @@ In your ``notes`` project, create a new document named ``measurement.rst``:
 
    Prefixes scale units by powers of ten, simplifying very large or small values.
 
-Notice the section label ``.. _measurement-units:`` placed directly above the heading.
-Labels establish cross-reference targets that work identically on the web and in print.
+Notice the section label ``.. _measurement-units:`` directly above the heading.
+A label makes a cross-reference target. It works the same on the web and in print.
 
 2. Structure the reading order
 ------------------------------
 
-Open ``notes/index.rst`` and declare the table of contents:
+We open ``notes/index.rst`` and declare the table of contents:
 
 .. code-block:: rst
    :caption: notes/index.rst
@@ -89,27 +89,27 @@ Open ``notes/index.rst`` and declare the table of contents:
    * Begin with :doc:`measurement`.
    * Review the standard unit conventions in :ref:`measurement-units`.
 
-Understanding the toctree options:
+The toctree options mean this:
 
-* ``:maxdepth: 2`` sets the depth of nested subheadings displayed in the table of contents.
-* ``:numbered:`` activates automatic, hierarchical chapter numbering (for example, "1. Measurement" and "1.1 Units of measurement").
+* ``:maxdepth: 2`` sets the depth of nested subheadings shown in the table of contents.
+* ``:numbered:`` numbers the chapters and their sections (for example, "1. Measurement" and "1.1 Units of measurement").
 * ``measurement`` references the document file name without the ``.rst`` extension.
 
-Cross-referencing syntax:
+The cross-references work like this:
 
 * ``:doc:`measurement``` links to the chapter by document path.
 * ``:ref:`measurement-units``` links to the labeled section. PDF uses the section
-  title. A book template can also add the page number through ``page-ref``; see
+  title. A book template can also add the page number through ``page-ref``. See
   :doc:`a-custom-theme` for a working example.
 
 3. Add a diagram with Graphviz
 ------------------------------
 
-Visual diagrams clarify complex relationships. Guidedog embeds the Graphviz engine
-natively, compiling vector diagrams directly into SVG for web pages and PDF drawings for
-print without requiring an external browser renderer.
+A diagram makes relationships clear. Guidedog links the Graphviz engine
+in. It draws vector diagrams as SVG for web pages and as PDF drawings for
+print. No external renderer is needed.
 
-Add a diagram to ``notes/measurement.rst``:
+We add a diagram to ``notes/measurement.rst``:
 
 .. code-block:: rst
 
@@ -132,25 +132,25 @@ Add a diagram to ``notes/measurement.rst``:
         "Raw values" -> "Unit conversion" -> "Common unit" -> "Comparison";
       }
 
-The ``:caption:`` option supplies a caption. To number figures, add
+The ``:caption:`` option supplies a caption. To number figures, we add
 ``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option provides alternative
 text for screen readers.
 
 4. Build the book and inspect results
 -------------------------------------
 
-Rebuild your project:
+We rebuild our project:
 
 .. code-block:: sh
 
    guidedog build html notes -W
    guidedog build pdf notes -W
 
-Inspect the results in both formats:
+We inspect the results in both formats:
 
 * **HTML website:** Open ``notes/_build/html/index.html``. The sidebar now shows the
-  numbered chapter hierarchy. Clicking "1. Measurement" opens the new page, complete
-  with local breadcrumbs and the rendered SVG diagram.
+  numbered chapters. Clicking "1. Measurement" opens the new page,
+  with breadcrumbs and the SVG diagram.
 * **PDF book:** Open ``notes/_build/pdf/field-notes-en.pdf``. The contents lists the
   chapters and their pages. The diagram remains vector artwork, and document
   cross-references link to their targets.
@@ -158,8 +158,8 @@ Inspect the results in both formats:
 5. Next steps
 -------------
 
-Now that you understand the dual output model, explore the topics section to learn more:
+We now know how one source makes two outputs. The topics section goes further:
 
-* Learn rich markup, lists, and tables in :doc:`../topics/writing`.
-* Learn how to render formulas and equations in :doc:`../topics/mathematics`.
-* Learn how to configure custom styles and book fonts in :doc:`../topics/typography`.
+* Markup, lists, and tables are in :doc:`../topics/writing`.
+* Formulas and equations are in :doc:`../topics/mathematics`.
+* Custom styles and book fonts are in :doc:`../topics/typography`.

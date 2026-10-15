@@ -16,10 +16,10 @@ Abstract
 
 ``guidedog-pages`` publishes a Guidedog site to GitHub Pages from a local machine. It
 builds the project with the installed ``guidedog``, freezes the result, and sends the
-whole site to a branch of its own in one Git push, which GitHub applies only if the
-branch still holds the commit the publisher read. It then waits for GitHub Pages to
+whole site to a branch of its own in one Git push. GitHub applies the push only if the
+branch still holds the commit the publisher read. The publisher then waits for GitHub Pages to
 deploy that commit, and calls the site live only when GitHub says so. Tokens stay in
-the system's credential store; a machine-owned binding decides which repository and
+the system's credential store. A machine-owned binding decides which repository and
 branch a profile may publish to. ``guidedog-pages watch`` publishes again when the
 sources change. The same program is the ``pages`` publisher of GDS 0009, which
 ``guidedog publish`` runs through the process protocol.
@@ -106,7 +106,7 @@ Two publication routes
 ~~~~~~~~~~~~~~~~~~~~~~
 
 GitHub's Pages deployment endpoint requires an Actions-issued ``oidc_token`` and an
-artifact of the repository; a local token supplies neither. The local route therefore
+artifact of the repository. A local token supplies neither. The local route therefore
 publishes a branch, and Pages deploys the branch.
 
 .. list-table:: Publication routes
@@ -145,10 +145,10 @@ asking. The publisher never silently replaces an Actions configuration.
      node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
            color="#216553", fontname="Helvetica", fontcolor="#16382f"];
      edge [color="#216553"];
-     sources [label="RST / Markdown\nconfiguration · templates · translations"];
+     sources [label="RST / Markdown\nconfiguration, templates, translations"];
      local [label="Installed guidedog\nprivate build folder, frozen"];
      ci [label="Actions + Guidedog release\nchecked generation"];
-     branch [label="One receive-pack push\npack + update old → new"];
+     branch [label="One receive-pack push\npack + update old -> new"];
      artifact [label="Pages artifact\njob token + OIDC"];
      pages [label="GitHub Pages\nbuild of that commit confirmed"];
      sources -> local -> branch -> pages;
@@ -213,9 +213,9 @@ token; the profile ``env`` is never accepted here (see credentials).
 
 A *binding*, kept in the machine's state folder (``plugins.config_dir()/pages``,
 readable only by the user), authorizes a profile for one repository, by its GitHub
-ID, and one branch, for one account ID. ``bind`` creates it after showing the account,
+ID, and one branch, for one account ID. ``bind`` creates it after asking. Before it asks, it shows the account,
 the repository and its ID, its visibility, the branch's state, and the Pages
-settings, and asking. Publication refuses, before it moves anything: a target with no
+settings. Publication refuses the following, before it moves anything: a target with no
 binding; a profile other than the bound one; a token of another account; a repository
 whose ID is not the bound one (deleted and made again, or another took its name); a
 renamed or transferred repository, including an API redirect; and the repository's
@@ -245,10 +245,10 @@ Commands
    guidedog-pages auth logout
 
 ``init`` writes configuration and changes nothing at GitHub. ``setup`` points Pages at
-the branch's root, creating the Pages site when there is none; it needs the Pages and
-Administration permissions, and manual setup in the repository's settings works too.
-GitHub configures Pages only for a branch that exists, so a target without a Pages site
-is published to, and the publication ends ``Accepted`` with ``pages.no-site``: run
+the branch's root, creating the Pages site when there is none. It needs the Pages and
+Administration permissions; manual setup in the repository's settings works too.
+GitHub configures Pages only for a branch that exists. So a target without a Pages site
+is still published to, and the publication ends ``Accepted`` with ``pages.no-site``. Run
 ``setup`` then. (GitHub turns Pages on by itself when a ``gh-pages`` branch first
 arrives; the qualification below saw it do so.) ``setup`` refuses a branch that does not
 exist yet, and says to publish first.
@@ -268,7 +268,7 @@ each profile's account login, ID, method, and date, never the token. A missing o
 locked store is a problem naming the store; there is no plaintext fallback.
 
 ``auth import`` reads a token from a hidden terminal prompt or from standard input,
-never from an argument; ``auth login`` runs the device flow: it shows GitHub's
+never from an argument. ``auth login`` runs the device flow. It shows GitHub's
 verification address (only an address on github.com is shown) and code, opens a
 browser only with ``--open``, polls at the interval GitHub asks for, slows down on
 ``slow_down``, and stops on expiry, denial, or Ctrl+C. Both check the token with
@@ -327,14 +327,14 @@ swap.
    ``ID+login@users.noreply.github.com`` address, at ``SOURCE_DATE_EPOCH`` or now, with
    the trailer ``Guidedog-Publication: GENERATION``.
 #. Write a pack of the blobs the branch lacks (re-reading and checking each file),
-   every tree, and ``C``, then the request ``H → C`` for ``refs/heads/BRANCH``, to the
+   every tree, and ``C``, then the request ``H -> C`` for ``refs/heads/BRANCH``, to the
    target's cache folder.
 #. Write the journal (repository and ID, branch, ``H``, ``C``, generation; no secret).
-#. Send the request. A report of ``ok`` is acceptance; ``ng`` is refusal, and the
+#. Send the request. A report of ``ok`` is acceptance. ``ng`` is refusal, and the
    journal is dropped: a refusal changes nothing. If the branch no longer has ``H``,
    the problem is a conflict: another publication came first. A lost answer is
    settled by reading the branch again: ``C`` is acceptance, ``H`` means nothing was
-   published, anything else is a conflict; when the branch cannot be read, the
+   published, anything else is a conflict. When the branch cannot be read, the
    outcome is ``Unknown`` and the journal stays for ``recover``.
 #. On acceptance, record ``C`` as the target's last publication and drop the journal.
    Poll the Pages builds for ``C`` until ``wait_seconds``: ``built`` is ``Live``,
@@ -358,8 +358,8 @@ This does not claim that every CDN edge changes at once.
      build [label="Strict build + freeze"];
      plan [label="Branch commit H + its files\nnew tree; unchanged?"];
      pack [label="Pack: missing blobs, trees, commit C"];
-     journal [label="Journal H → C"];
-     push [label="receive-pack: H → C\nonly if the branch has H"];
+     journal [label="Journal H -> C"];
+     push [label="receive-pack: H -> C\nonly if the branch has H"];
      wait [label="Pages build of C\nLive / Pending / Failed"];
      refused [label="Refused: nothing changed\nconflict if the branch moved", fillcolor="#fff3e5"];
      lost [label="Answer lost: read the branch\nC, H, or another", fillcolor="#fff3e5"];
@@ -377,7 +377,7 @@ published, or the deployment failed); 2 for a usage or configuration problem; 3 
 memory ran out; 4 for files or the network; 6 for ``Accepted`` and ``Pending`` (the
 branch moved, deployment not confirmed: run ``status`` later); and 7 for ``Unknown``
 (run ``recover``). Problems name their code (``pages.conflict``, ``pages.ruleset``,
-``pages.credential``, ``pages.unsettled``, …) and the next step. JSON diagnostics
+``pages.credential``, ``pages.unsettled``, ...) and the next step. JSON diagnostics
 carry no response body, header, or credential.
 
 Watching and recovery
@@ -388,15 +388,15 @@ source folder (paths, sizes, and times of its files, without build output, cache
 and hidden folders such as ``.git``) every half second, and publishes once the
 sources have been quiet for ``debounce_ms``, or ``max_wait_ms`` after the first
 change. Each round has an arena of its own, so a long watch does not grow. A failed
-build or publication is reported and the site stays as it was; a refused or missing
-token pauses publication without opening a browser; network failures are retried
+build or publication is reported, and the site stays as it was. A refused or missing
+token pauses publication without opening a browser. Network failures are retried
 after 2, 4, 8, 16, and 32 seconds. Ctrl+C stops it between steps; a push already sent
-is settled as above. It watches this machine's files; publication after a push to
-GitHub is the Actions route's. The manual gives launchd, systemd, and Task Scheduler
+is settled as above. It watches this machine's files. Publication after a push to
+GitHub belongs to the Actions route. The manual gives launchd, systemd, and Task Scheduler
 examples.
 
-``recover`` reads the journal and the branch, and settles as a lost answer is settled;
-it never moves the branch back. Without a journal it reports the last publication's
+``recover`` reads the journal and the branch, and settles as a lost answer is settled.
+It never moves the branch back. Without a journal it reports the last publication's
 deployment. A damaged journal is a problem with directions, not a reason to touch the
 branch. A future rollback would publish an older tree as a new commit.
 
@@ -528,7 +528,7 @@ Open questions
 
 Who registers and owns the device-flow app, and whether it is a GitHub App (repository
 selection, fine-grained permissions) or an OAuth App (simpler, broader scopes). The Pages builds API reported the branch deployment
-in the qualification; whether it does on every plan, or the deployments API is needed
+in the qualification. Whether it does on every plan, or the deployments API is needed
 as a second source, is still to be seen. Enterprise Server, custom domains, and forward
 rollback each need their own qualification.
 
@@ -557,7 +557,7 @@ commands, outcomes and exit statuses (0, 1, 2, 4, 6, 7, 130) are unchanged.
 
 Credentials: on Linux and other Unix desktops the Secret Service is reached through the
 ``secret-tool`` program with the token on standard input and output, keeping the Odin
-schema's attributes so existing tokens are found; macOS uses the Keychain and Windows the
+schema's attributes so existing tokens are found. macOS uses the Keychain and Windows the
 Credential Manager through small FFI modules. There is never a plaintext fallback, and
 ``Secret`` zeroes itself on drop. Package globals became plain data (``Settings``,
 ``Roots``), so only code, never the environment, can point a release away from GitHub.
@@ -627,7 +627,7 @@ References
    docs/manual/evidence/plugin-review-20261014.md; successful 0.6.2 release run
    38434657070.
 
-.. rubric:: Implementation revision — 2026-10-15
+.. rubric:: Implementation revision, 2026-10-15
 
 The implementation moved from Odin to Rust; see GDS 0011 and the section
 "Implementation in Rust". This is an implementation revision. It does not change

@@ -12,16 +12,16 @@ Use the official ``insanai/homebrew-guidedog`` tap on Apple silicon or Intel Mac
    brew install insanai/guidedog/guidedog
    guidedog --version
 
-Homebrew selects the release archive for your processor and checks its SHA-256.
+Homebrew selects the release archive for our processor and checks its SHA-256.
 The executable has the Typst compiler built in and links Graphviz, which Homebrew
-installs with it. You do not need a Rust toolchain, a Python environment, or a separate
+installs with it. We do not need a Rust toolchain, a Python environment, or a separate
 Typst installation to build HTML and PDF. The release requires macOS 12 or later.
 
-The package also installs ``dsc``, which keeps discussion catalogs and builds them with
-this ``guidedog`` (see :doc:`discussions`), and ``guidedog-pages``, which publishes sites
+The package also installs two more programs. ``dsc`` keeps discussion catalogs and builds them with
+this ``guidedog`` (see :doc:`discussions`). ``guidedog-pages`` publishes sites
 to GitHub Pages (see :doc:`github-pages`).
 
-Create your first project with :doc:`../tutorial/first-project`.
+We create our first project in :doc:`../tutorial/first-project`.
 To update an installed release:
 
 .. code-block:: sh
@@ -35,7 +35,7 @@ creating a project and building HTML and PDF.
 Build from source
 -----------------
 
-Guidedog is a Cargo workspace. You need:
+Guidedog is a Cargo workspace. We need:
 
 * a Rust toolchain at the version ``rust-version`` names in the root ``Cargo.toml``
   (Rust 1.90 or newer; edition 2024), installed with ``rustup``;
@@ -60,8 +60,8 @@ From the repository root:
    target/release/guidedog --version
    target/release/guidedog formats
 
-The executable is ``target/release/guidedog`` (``guidedog.exe`` on Windows). Put it on
-your ``PATH`` if you want to use ``guidedog`` without its path, or install it into
+The executable is ``target/release/guidedog`` (``guidedog.exe`` on Windows). To run
+``guidedog`` without its path, we put it on our ``PATH`` or install it into
 Cargo's binary folder:
 
 .. code-block:: sh
@@ -75,19 +75,18 @@ Typst: embedded or installed
 ----------------------------
 
 By default the Typst compiler is linked into ``guidedog`` (the ``embedded`` feature of
-the ``gd-typst`` crate), so PDF needs no other program. A build of ``gd-typst`` without
+the ``gd-typst`` crate). PDF then needs no other program. A build of ``gd-typst`` without
 that feature runs an installed ``typst`` program (0.15.1) instead. Either way,
 ``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) selects a program
 explicitly, and ``guidedog --version`` names the backend in use.
 
 The embedded compiler removes the need to start a separate process. It does not remove
-the compiler's own memory costs; ``--budget`` bounds what Guidedog itself holds.
+the compiler's own memory costs. ``--budget`` bounds what Guidedog itself holds.
 
 Development checks
 ------------------
 
-Before proposing a change, run the same checks the project's continuous integration
-runs:
+Before we propose a change, we run the same checks as the project's continuous integration:
 
 .. code-block:: sh
 
@@ -122,7 +121,7 @@ The GitHub Pages publisher builds the same way. It does not link the engine:
 
 It keeps tokens in the system's credential store: the Keychain on macOS, the Credential
 Manager on Windows, and on Linux the Secret Service through the ``secret-tool`` program
-(``libsecret-tools``), which it needs only when it first stores or reads a token.
+(``libsecret-tools``). It needs that program only when it first stores or reads a token.
 
 Embed the engine
 ----------------
@@ -157,7 +156,7 @@ it needs:
 ``guidedoc_rst::reader()``, ``guidedoc_commonmark::MYST_READER``,
 ``guidedoc_typst::renderer()`` and ``guidedoc_text::renderer()`` join the registry the
 same way. For code highlighting, the ``guidedoc-defaults`` crate joins the highlighter to
-the renderers: pass a ``guidedoc_defaults::HtmlHighlighter`` (or ``TypstHighlighter``) as
+the renderers. We pass a ``guidedoc_defaults::HtmlHighlighter`` (or ``TypstHighlighter``) as
 ``highlighter`` in the request's ``RenderOptions``. The staged calls
 (``read_document``, ``transform_document``, ``check_render``, ``render_document``), the
 request fields, and the limits are in the crate's ``README.md``.

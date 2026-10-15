@@ -1,9 +1,9 @@
 Testing
 =======
 
-Guidedog is tested at three levels: each crate tests its own behaviour, the
+Guidedog is tested at three levels. Each crate tests its own behaviour. The
 ``guidedog-tests`` crate (``tests/integration``) drives the built programs end to end
-and holds the repository-wide quality gates, and the compiler, Clippy and
+and holds the repository-wide quality gates. The compiler, Clippy and
 ``tools/check`` enforce the rules that can be stated as lints and limits.
 
 Running the tests
@@ -19,7 +19,7 @@ Running the tests
 
 The end-to-end tests run the programs cargo built into ``target/<profile>/``
 (``guidedog``, ``dsc``, ``dscc``, and the plugin examples). ``cargo test --workspace``
-builds them; to run only ``guidedog-tests``, run ``cargo build --workspace`` first. A
+builds them. To run only ``guidedog-tests``, run ``cargo build --workspace`` first. A
 test that finds a program missing says so instead of failing obscurely. Every test
 works in a private temporary folder and sets ``GUIDEDOG_CONFIG_DIR`` and ``NO_COLOR``,
 so tests run in parallel and never touch the machine's plugin registry.
@@ -111,18 +111,18 @@ Dependencies (``gates::dependencies``)
    Reads ``cargo metadata``. Every package has a layer (core and supporting libraries,
    readers and renderers, defaults, host, project, command line, programs), and depends
    only on its own layer or lower ones. The engine crates (``guidedoc*``) need nothing
-   outside the workspace; the supporting libraries never depend on the engine; external
+   outside the workspace. The supporting libraries never depend on the engine. External
    crates are the chosen few (Typst only in ``gd-typst``, tree-sitter in ``gd-pyscan``
    and ``gd-rustdoc``, ``serde_json`` in ``gd-json``). A new crate or dependency fails
    the gate until it is placed in its table, with the reason in ``Cargo.toml``.
 
 Unsafe code (``gates::unsafe_code``)
-   The workspace denies ``unsafe_code``; every crate without FFI also forbids it with
-   ``#![forbid(unsafe_code)]``, and the FFI modules (the Graphviz binding, the operating
+   The workspace denies ``unsafe_code``. Every crate without FFI also forbids it with
+   ``#![forbid(unsafe_code)]``. The FFI modules (the Graphviz binding, the operating
    system calls in ``gd-host``, the credential stores, ``localtime_r``, two counting
    allocators in tests) open themselves with ``#[allow(unsafe_code)]``. The gate keeps
    that list explicit and checks that every unsafe block and impl has a ``// SAFETY:``
-   comment above it; Clippy's ``undocumented_unsafe_blocks`` says the same while
+   comment above it. Clippy's ``undocumented_unsafe_blocks`` says the same while
    editing.
 
 Hints (``gates::hints``)
@@ -134,7 +134,7 @@ Hints (``gates::hints``)
 Documentation of the API
    The workspace lint ``missing_docs`` makes every public item documented, so the
    Odin suite's contract and cheat-sheet scans are the compiler's job. The README
-   cheat sheets stay short fragments for reading, not doctests; the programs a reader
+   cheat sheets stay short fragments for reading, not doctests. The programs a reader
    would copy are the ``guidedoc-examples`` crate's examples and the manual's twins.
 
 Limits
@@ -147,14 +147,14 @@ Allocation
 
 The Odin engine ran each conversion on storage the caller sized, and its tests ran
 conversions with no allocator at all and refused allocations one by one. Rust has no
-per-call allocator, and its global allocator aborts when memory runs out, so those
-tests became two counting-allocator tests: ``guidedoc`` proves that the engine core
+per-call allocator, and its global allocator aborts when memory runs out. So those
+tests became two counting-allocator tests. ``guidedoc`` proves that the engine core
 converts in steady state without allocating, and ``allocations`` bounds what the readers
 and renderers add. Their scratch vectors (block and inline item lists, anchor tables,
-renderer state) are still built per conversion; the ceilings record today's counts, to
+renderer state) are still built per conversion. The ceilings record today's counts, to
 be lowered as that scratch moves into the workspace. Work driven by the input is
 bounded by ``Limits`` and the host budget, which return ``Capacity`` or ``Limit``
-results; the ``projects`` capacity tests check them through the real readers and
+results. The ``projects`` capacity tests check them through the real readers and
 renderers.
 
 What was not ported
@@ -165,7 +165,7 @@ The Odin suite's root tests were ported by intent. These were left out, on purpo
 - The conformance suites (``rst_conformance_*``, ``myst_conformance_*``) live in the
   reader crates, and the serve test in ``gd-serve``.
 - ``allocation_failure_test``: refusing the n-th allocation has no meaning with Rust's
-  global allocator; budgets are tested instead.
+  global allocator. Budgets are tested instead.
 - ``crash_test``'s segmentation fault, bounds and abort probes: safe Rust has no
   crash-probe build. A panic ending in a crash report is tested in ``gd-host``.
 - ``platforms_test`` (checking every target operating system): that needs each
@@ -173,5 +173,5 @@ The Odin suite's root tests were ported by intent. These were left out, on purpo
   system matrix.
 - ``terminal_test``'s pseudo-terminal: the questions a build asks at a terminal are
   tested in ``gd-cli`` and ``gd-project`` without one.
-- ``memory_test`` and ``--memory=disk``: Rust Guidedog keeps working memory in RAM; the
+- ``memory_test`` and ``--memory=disk``: Rust Guidedog keeps working memory in RAM. The
   test checks that the old flags are explained and refused.

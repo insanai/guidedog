@@ -91,7 +91,7 @@ per thread.
 |---|---|
 | `Loader::memory([(name, source), ...])` | templates held in memory |
 | `Loader::filesystem([dir1, dir2])` | the first directory holding the name; `..` is refused |
-| `Loader::custom(\|name\| -> Option<String>)` | your own |
+| `Loader::custom(\|name\| -> Option<String>)` | our own |
 
 ## Values
 
@@ -111,7 +111,7 @@ Python.
 
 Integers are 64-bit: overflow is an error, not a wrap.
 
-## Your own filters, tests and globals
+## Our own filters, tests and globals
 
 Every native has one signature, `Fn(&mut Call) -> Result<Value, Error>`; for filters and
 tests `call.args[0]` is the value being filtered or tested.
@@ -138,7 +138,7 @@ env.add_global("project", Value::from("Docs"));
 | `call_filter(name, args, kwargs)`, `call_test(...)` | reuse registered ones |
 | `c.this`, `c.name`, `c.kwargs` | method receiver, called name, keywords |
 
-## Per-render functions that borrow your data
+## Per-render functions that borrow our data
 
 Environment functions are `'static`. For functions that need data living only for one
 render, pass `Locals`: they may borrow, are visible in every template, block, macro and
@@ -184,7 +184,7 @@ Tags: `if/elif/else`, `for` (with `else`, `if` filter, `recursive`, unpacking, `
 `macro` (defaults, `varargs`, `kwargs`, `caller`), `call`, `extends`, `block` (`super()`,
 `scoped`, `required`, `self.name()`), `include` (lists, `ignore missing`, with/without
 context), `import`, `from ... import ... as`, `raw`, `autoescape`, `do`, `trans` /
-`pluralize` (pass-through `gettext`; register your own globals to translate). Whitespace
+`pluralize` (pass-through `gettext`; register our own globals to translate). Whitespace
 control with `-` and `+`, comments, `trim_blocks`, `lstrip_blocks`.
 
 Filters: `abs attr batch capitalize center count d default dictsort e escape
@@ -209,7 +209,7 @@ Python's `str`, `list` and `dict` work as in Jinja.
   numeric and common named entities only.
 - `random` and `lipsum` use their own seeded generator; `pprint` is `repr` without
   wrapping; `urlize` follows Jinja 3.1's rules, not its exact regular expressions.
-- A macro, `joiner` or block reference stored in your containers belongs to the render
+- A macro, `joiner` or block reference stored in our containers belongs to the render
   that made it: calling it from a later render is an error (import macros to share them).
 - A list that contains itself is kept alive by its own reference (`Rc` cycle) until the
   process ends.
@@ -219,7 +219,7 @@ Python's `str`, `list` and `dict` work as in Jinja.
 - Every step returns `Result` instead of setting a sticky failure flag; natives return
   `Result<Value, Error>` and use `?`.
 - No arenas, allocator guards or ownership copying: values are `Rc`-shared, and values a
-  template stores in your containers simply stay there. `Memory` errors remain for sizes
+  template stores in our containers simply stay there. `Memory` errors remain for sizes
   that cannot be counted or reserved (`try_reserve`).
 - `Options` hold real defaults (no 0-means-default), `Autoescape` is an enum, `Loader` an
   enum with a `Custom` closure, and a `Template` borrows its environment.

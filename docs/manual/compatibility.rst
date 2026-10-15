@@ -91,12 +91,12 @@ C++ declarations publish Sphinx-compatible identifier versions and symbol invent
 Nesting limits still apply. Nested parentheses are parsed in linear time.
 
 ``numref`` substitutes one number slot and reports an unnumbered target.
-Section numbering follows reading order. A document is numbered once;
-a second numbered toctree reports the conflict. See the reference tests for
+Section numbering follows reading order. A document is numbered once.
+A second numbered toctree reports the conflict. See the reference tests for
 format substitution and identifier details.
 
 The general index, module index, and search are built in.
-Search matches word prefixes; it does not copy Sphinx's English stemming.
+Search matches word prefixes. It does not copy Sphinx's English stemming.
 
 Declarative object types replace a useful class of Python extension registrations.
 ``object_types``, ``crossref_types``, and ``directive_aliases`` describe their data.
@@ -161,7 +161,7 @@ This mode does not bound the native compiler's memory or execution time.
 
 The host budget defaults to 1 GiB. It is coarse: it counts the sources, included
 files, and PDF output the host holds, reserved before they are read. Each worker
-reuses one workspace; the retained project graph and catalogs still consume memory
+reuses one workspace. The retained project graph and catalogs still consume memory
 as the project grows. Reading workers coordinate admission.
 A refused request reports the failing operation and a budget that fits.
 ``GUIDEDOG_AVAILABLE_MIB`` can supply known machine headroom. The Odin
@@ -171,17 +171,17 @@ is not part of the Rust implementation.
 ``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document work.
 Changing a limit invalidates cached reading and output.
 Depth and stack capacity must agree. Native Graphviz, tree-sitter, and Typst
-allocations are outside the host budget. Use operating-system limits when those
+allocations are outside the host budget. We use operating-system limits when those
 need a hard bound. See :doc:`errors` and :doc:`internals/memory`.
 
 Verification and real projects
 ------------------------------
 
 The Odin implementation's ``tools/sphinxdiff`` compared 42 pinned Sphinx test roots.
-It checked pages, identifiers, body links, inventories, numbering, and diagnostics,
-and its stored results explained deliberate differences: precise source locations,
+It checked pages, identifiers, body links, inventories, numbering, and diagnostics.
+Its stored results explained deliberate differences, for example precise source locations,
 stable reading-order numbering, and explicit reports for omitted target-specific raw
-content, for example. The Rust crates keep the reader conformance tests
+content. The Rust crates keep the reader conformance tests
 (:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) and their
 expected outputs.
 
@@ -192,11 +192,11 @@ and 94 targeted AddressSanitizer tests.
 
 Those projects contain unsupported Python extension constructs.
 Their diagnostics remain part of the evidence. A zero exit status does not mean
-all their private directives were reproduced. Run with ``-W`` when publishing
+all their private directives were reproduced. We run with ``-W`` when publishing
 requires zero diagnostics.
 
 The historical measurements and source revisions remain in
 ``docs/manual/evidence/manuals.rst``. They were made with the Odin implementation
-(release 0.6); user-facing behavior carries over to the Rust implementation, but its
+(release 0.6). User-facing behavior carries over to the Rust implementation, but its
 timings and memory use must be measured again. These measurements describe the
 recorded workloads. They are not universal speed or memory bounds.

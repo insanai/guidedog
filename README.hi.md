@@ -1,6 +1,6 @@
 # Guidedog
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [हिन्दी](README.hi.md) · [Español](README.es.md) · [Deutsch](README.de.md)
+[English](README.md) | [简体中文](README.zh-CN.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [हिन्दी](README.hi.md) | [Español](README.es.md) | [Deutsch](README.de.md)
 
 **एक बार लिखें। साफ़ समझाएँ। वेब और कागज़ पर प्रकाशित करें।**
 
@@ -17,7 +17,7 @@ guidedog build pdf docs
 guidedog serve docs
 ```
 
-परियोजना में `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ` और `_static/` होते हैं। टेम्पलेट सामान्य फ़ाइलें हैं जिन्हें सीधे बदल सकते हैं। HTML में नेविगेशन, खोज, कोड हाइलाइटिंग, आरेख और समीकरण मिलते हैं। PDF में अध्याय, पार-संदर्भ, चित्र, इंडेक्स और भाषा के अनुसार टाइपसेटिंग मिलती है।
+परियोजना में `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ` और `_static/` होते हैं। टेम्पलेट सामान्य फ़ाइलें हैं जिन्हें हम सीधे बदल सकते हैं। HTML में नेविगेशन, खोज, कोड हाइलाइटिंग, आरेख और समीकरण मिलते हैं। PDF में अध्याय, पार-संदर्भ, चित्र, इंडेक्स और भाषा के अनुसार टाइपसेटिंग मिलती है।
 
 डिफ़ॉल्ट थीम हल्की है; गहरी या सिस्टम थीम भी चुन सकते हैं। मैनुअल के मुख्य पृष्ठ और रिपॉज़िटरी परिचय पर ब्राउज़र की भाषा चुनी जाती है। सहेजी गई पसंद पहले लागू होती है। किसी भाषा या अध्याय के सीधे लिंक की पसंद नहीं बदली जाती।
 
@@ -31,7 +31,7 @@ API दस्तावेज़ स्रोत कोड को चलाए �
 
 ## स्थापित करें
 
-हर [रिलीज़](https://github.com/insanai/guidedog/releases) में Linux (x86-64 और ARM64) और macOS (Apple silicon और Intel) के लिए एक आर्काइव है। `guidedog` आर्काइव में `guidedog`, `dsc`, `guidedog-pages` और `graphdog` हैं; `dscc` आर्काइव में केवल `dscc` है। Typst कंपाइलर अंतर्निहित है और tree-sitter प्रोग्राम में ही कंपाइल है। Graphviz सिस्टम से लिंक होता है, इसलिए पहले उसकी लाइब्रेरी स्थापित करें: Debian और Ubuntu पर `sudo apt install libgvc6` (या `graphviz` पैकेज), Fedora पर `sudo dnf install graphviz`, macOS पर `brew install graphviz`। Linux को glibc 2.35 या नया चाहिए; macOS को संस्करण 12 या नया। अपने सिस्टम का आर्काइव और `SHA256SUMS` डाउनलोड करें, फिर जाँचकर स्थापित करें:
+हर [रिलीज़](https://github.com/insanai/guidedog/releases) में Linux (x86-64 और ARM64) और macOS (Apple silicon और Intel) के लिए एक आर्काइव है। `guidedog` आर्काइव में `guidedog`, `dsc`, `guidedog-pages` और `graphdog` हैं; `dscc` आर्काइव में केवल `dscc` है। Typst कंपाइलर अंतर्निहित है और tree-sitter प्रोग्राम में ही कंपाइल है। Graphviz सिस्टम से लिंक होता है, इसलिए पहले उसकी लाइब्रेरी स्थापित करें: Debian और Ubuntu पर `sudo apt install libgvc6` (या `graphviz` पैकेज), Fedora पर `sudo dnf install graphviz`, macOS पर `brew install graphviz`। Linux को glibc 2.35 या नया चाहिए; macOS को संस्करण 12 या नया। हम अपने सिस्टम का आर्काइव और `SHA256SUMS` डाउनलोड करते हैं, फिर जाँचकर स्थापित करते हैं:
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS पर: shasum -a 256 -c --ignore-missing SHA256SUMS
@@ -40,7 +40,7 @@ sudo install guidedog-linux-amd64/guidedog guidedog-linux-amd64/dsc \
     guidedog-linux-amd64/guidedog-pages guidedog-linux-amd64/graphdog /usr/local/bin/
 ```
 
-macOS पर आधिकारिक [Guidedog Homebrew tap](https://github.com/insanai/homebrew-guidedog) से स्थापित करें। Homebrew आपके Apple silicon या Intel प्रोसेसर के लिए सही पैकेज चुनता है और उसके साथ Graphviz भी स्थापित करता है। यह tap Linux पर भी काम करता है:
+macOS पर आधिकारिक [Guidedog Homebrew tap](https://github.com/insanai/homebrew-guidedog) से स्थापित करें। Homebrew हमारे Apple silicon या Intel प्रोसेसर के लिए सही पैकेज चुनता है और उसके साथ Graphviz भी स्थापित करता है। यह tap Linux पर भी काम करता है:
 
 ```sh
 brew tap insanai/guidedog
@@ -85,11 +85,11 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
 
 PO फ़ाइलों में `msgstr` का अनुवाद लिखें और जाँचें। Guidedog POT निकालता है, कैटलॉग मिलाता है, प्रगति बताता है और हर भाषा का संस्करण बनाता है; अनुवाद खुद नहीं लिखता। कमांड, पथ, कोड, API नाम और संदर्भ लक्ष्य न बदलें। केवल मैनुअल और रिपॉज़िटरी परिचय का अनुवाद होता है; API और GDS अंग्रेज़ी में रहते हैं। `tools/build-site.sh` सारे संस्करण, उनकी PDF पुस्तकें और चर्चाएँ जोड़कर वेबसाइट बनाता है।
 
-GitHub पर ऊपर के लिंक से README की भाषा चुनें। भाषा का स्वतः चयन बनी हुई दस्तावेज़ वेबसाइट पर होता है।
+GitHub पर पाठक ऊपर के लिंक से README की भाषा चुनते हैं। भाषा का स्वतः चयन बनी हुई दस्तावेज़ वेबसाइट पर होता है।
 
 ## GitHub Pages पर प्रकाशित करें
 
-`guidedog-pages` आपकी अपनी मशीन से साइट प्रकाशित करता है। यह स्थापित `guidedog` से परियोजना बिल्ड करता है और पूरी साइट को एक Git push में अपनी अलग ब्रांच पर भेजता है। GitHub यह push तभी लागू करता है जब ब्रांच पर अब भी वही कमिट हो जो पढ़ा गया था। फिर यह तब तक रुकता है जब तक GitHub Pages उस कमिट को डिप्लॉय न कर दे। टोकन सिस्टम के क्रेडेंशियल स्टोर में रहते हैं, और आपकी मशीन पर दर्ज बाइंडिंग तय करती है कि कोई प्रोफ़ाइल कहाँ प्रकाशित कर सकती है।
+`guidedog-pages` हमारी अपनी मशीन से साइट प्रकाशित करता है। यह स्थापित `guidedog` से परियोजना बिल्ड करता है और पूरी साइट को एक Git push में अपनी अलग ब्रांच पर भेजता है। GitHub यह push तभी लागू करता है जब ब्रांच पर अब भी वही कमिट हो जो पढ़ा गया था। फिर यह तब तक रुकता है जब तक GitHub Pages उस कमिट को डिप्लॉय न कर दे। टोकन सिस्टम के क्रेडेंशियल स्टोर में रहते हैं, और हमारी मशीन पर दर्ज बाइंडिंग तय करती है कि कोई प्रोफ़ाइल कहाँ प्रकाशित कर सकती है।
 
 ```sh
 guidedog-pages init --repository=octo/manual --project=docs
@@ -102,7 +102,7 @@ guidedog-pages watch                # स्रोत बदलने पर ह
 
 दूसरा रास्ता GitHub Actions है, जो हर push के बाद प्रकाशित करता है। `guidedog publish --publisher=pages` Guidedog के अपने इंजन से बिल्ड करता है और यही प्रकाशक (publisher) चलाता है। [GitHub Pages पर प्रकाशित करें](docs/manual/howto/github-pages.rst) और [Plugin लिखें](docs/manual/plugins.rst) देखें।
 
-Build plugins एक typed, versioned अनुबंध के ज़रिए मूल पाठ, पूरे HTML पेज और स्थिर assets बदलते हैं। Plugin एक सामान्य Rust crate है: इसे `gd_cli::run_with` से अपने `guidedog` में लिंक करें, या अलग प्रोग्राम के रूप में चलाएँ जिसे `guidedog plugin register` उसके SHA-256 से बाँधता है। `guidedog publish --timeout=SECONDS` किसी publisher के साथ हर पूरे आदान-प्रदान की सीमा है (default: 300 सेकंड); इसे `--wait` से अधिक रखें। परिणाम अनिश्चित हो तो दोबारा publish करने से पहले recovery चलाएँ।
+Build plugins एक typed, versioned अनुबंध के ज़रिए मूल पाठ, पूरे HTML पेज और स्थिर assets बदलते हैं। Plugin एक सामान्य Rust crate है। हम इसे `gd_cli::run_with` से अपने `guidedog` में लिंक करते हैं, या अलग प्रोग्राम के रूप में चलाते हैं जिसे `guidedog plugin register` उसके SHA-256 से बाँधता है। `guidedog publish --timeout=SECONDS` किसी publisher के साथ हर पूरे आदान-प्रदान की सीमा है (default: 300 सेकंड); इसे `--wait` से अधिक रखें। परिणाम अनिश्चित हो तो दोबारा publish करने से पहले recovery चलाएँ।
 
 ## चर्चाएँ सँभालें
 
@@ -125,14 +125,14 @@ dsc build
 
 - [मैनुअल](docs/manual/index.rst): ट्यूटोरियल, विषय, व्यावहारिक काम, संदर्भ और आंतरिक संरचना।
 - [API संदर्भ](docs/api/index.rst): Guidedog खुद इसे Rust स्रोत से बनाता है, और यह मैनुअल PDF के परिशिष्ट में भी रहता है। `cargo doc --workspace --no-deps` rustdoc पृष्ठ भी बनाता है।
-- [इंजन गाइड](crates/guidedoc/README.md): कार्यक्षेत्र (workspace), अनुरोध, एडेप्टर और पास; [उदाहरण](examples/README.md) छोटे प्रोग्राम हैं जिन्हें `cargo run` से चला सकते हैं।
+- [इंजन गाइड](crates/guidedoc/README.md): कार्यक्षेत्र (workspace), अनुरोध, एडेप्टर और पास; [उदाहरण](examples/README.md) छोटे प्रोग्राम हैं जिन्हें हम `cargo run` से चला सकते हैं।
 - [टेम्पलेट](docs/manual/templates.rst): Jinja से HTML और Typst से पुस्तक का रूप बदलें।
 - [GDS](docs/gds/README.md): क्रमांकित डिज़ाइन अभिलेख और कार्यान्वयन के निर्णय।
 - [चर्चा लाइब्रेरी](crates/gd-discussion/README.md): वे कैटलॉग जिन्हें `dsc`, `dscc` और `guidedog gds` सँभालते हैं।
 - [प्लगइन लाइब्रेरी](crates/gd-plugins/README.md): typed build services और `guidedog publish` तथा `guidedog-pages` में इस्तेमाल होने वाला publisher इंटरफ़ेस।
 - [पुन: उपयोग योग्य crates](docs/manual/internals/crates.rst): engine, libraries, API generators और plugin SDK, जिन्हें दूसरे Rust प्रोजेक्ट crates.io से ले सकते हैं, और उनकी आपसी निर्भरताएँ।
 
-`crates/` के हर crate में एक छोटा README है, जिसमें उसका API और पोर्ट में लिए गए डिज़ाइन निर्णय हैं। Guidedoc अपनी दस्तावेज़ तालिकाओं का स्वामी है और उन्हें रूपांतरणों के बीच दोबारा इस्तेमाल करता है, इसलिए स्थिर अवस्था में कोई रूपांतरण नई मेमोरी नहीं माँगता; यह सुझाव (hint) सहित संरचित निदान लौटाता है। होस्ट फ़ाइल, बजट, कैश, प्रकाशन और अंतर्निहित कंपाइलर सँभालता है। `--untrusted` क्षमताएँ सीमित करता है; यह प्रक्रिया का सैंडबॉक्स या सभी मूल संसाधनों की सीमा नहीं है। बीटा macOS और Linux पर भरोसेमंद दस्तावेज़ परियोजनाओं के लिए है।
+`crates/` के हर crate में एक छोटा README है, जिसमें उसका API और पोर्ट में लिए गए डिज़ाइन निर्णय हैं। Guidedoc अपनी दस्तावेज़ तालिकाओं का स्वामी है और उन्हें रूपांतरणों के बीच दोबारा इस्तेमाल करता है, इसलिए स्थिर अवस्था में कोई रूपांतरण नई मेमोरी नहीं माँगता। यह सुझाव (hint) सहित संरचित निदान लौटाता है। होस्ट फ़ाइल, बजट, कैश, प्रकाशन और अंतर्निहित कंपाइलर सँभालता है। `--untrusted` क्षमताएँ सीमित करता है; यह प्रक्रिया का सैंडबॉक्स या सभी मूल संसाधनों की सीमा नहीं है। बीटा macOS और Linux पर भरोसेमंद दस्तावेज़ परियोजनाओं के लिए है।
 
 Guidedog 0.6 और उससे पहले के संस्करण Odin में लिखे गए थे। संस्करण 0.7 Rust में किया गया पोर्ट है, जो कमांड, विकल्प, `conf.toml` कुंजियाँ, डायरेक्टिव, रोल और आउटपुट वैसे ही रखता है; क्या बदला, यह [चेंजलॉग](CHANGELOG.md) में है।
 

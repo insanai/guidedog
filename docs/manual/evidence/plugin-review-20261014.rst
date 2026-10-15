@@ -1,6 +1,6 @@
 .. _plugin-review--14-october-2026:
 
-Plugin review — 14 October 2026
+Plugin review, 14 October 2026
 ===============================
 
 Guidedog 0.6.2 introduces build services alongside publishing services. A plugin can

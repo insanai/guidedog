@@ -19,10 +19,10 @@ Abstract
 Guidedog is a documentation system for reStructuredText and Markdown that makes websites
 and PDF books. It follows Sphinx's authoring workflow within a documented support boundary.
 It aims for clear operation, predictable output, and useful diagnostics. Sphinx is its inspiration, not its
-specification. Guidedog keeps what Sphinx's users rely on (the project layout
+specification. Guidedog keeps what Sphinx's users rely on: the project layout
 ``guidedog quickstart`` creates, ``guidedog build html`` and ``guidedog build pdf`` in the
 project folder, ``toctree``, cross-references, domains, the index, glossaries, numbered
-figures, conditional content, and stable link anchors) and designs the rest idiomatically
+figures, conditional content, and stable link anchors. It designs the rest idiomatically
 in Odin: declarative ``conf.toml`` in place of executed ``conf.py``, declared object types in
 place of Python extensions, static analysis of source code in place of importing it,
 typed data and explicit state in place of runtime hooks. Where Sphinx's way is worse,
@@ -42,7 +42,7 @@ relative links instead of ``toctree``, no cross-document labels, no domains, no 
 search pages, and no Sphinx builders. RST support was accepted as ``partial``. That missed
 the intent. Guidedog should offer a clear migration path for supported authoring features,
 and a new project should feel familiar to anyone who knows Sphinx. Its own native workflow
-is the design target. It need not be a drop-in replacement: copying behaviour that exists only
+is the design target. It need not be a drop-in replacement. Copying behaviour that exists only
 because Sphinx is a Python program that runs its configuration and extensions would
 import Sphinx's weaknesses along with its strengths.
 
@@ -66,8 +66,8 @@ Principles
   final goal. Where Odin's idioms conflict with Sphinx's Python runtime (executed
   ``conf.py``, extensions' ``setup()``, event hooks, imported code), Guidedog does not
   emulate the runtime: it has a migration path instead. ``guidedog migrate`` converts
-  literal settings and declared object types today; later, a Guidedoc migration plugin
-  will help transfer supported Sphinx authoring features, and a project that cannot be
+  literal settings and declared object types today. Later, a Guidedoc migration plugin
+  will help transfer supported Sphinx authoring features. A project that cannot be
   migrated is told exactly what needs converting by hand.
 - **Honest.** Every difference from Sphinx is documented, with its reason, in the manual's
   support matrix; a comparison harness against pinned Sphinx measures the rest.
@@ -104,7 +104,7 @@ working; the same numbering of sections, figures, tables, code blocks, and equat
 and diagnostics for the same problems, explained in Guidedog's way. HTML markup and
 appearance come from Guidedog's theme, not Sphinx's; they are not byte-compatible and
 need not be. Where matching Sphinx would mean copying a runtime quirk or a weaker design,
-Guidedog does the better thing and the support matrix records the difference and why.
+Guidedog does the better thing. The support matrix records the difference and why.
 
 
 Command line
@@ -313,18 +313,18 @@ page whose inputs changed.
 
 A document is outdated when its source or any dependency changed, when it is new, or
 after ``-E``. Its tree is kept as an object below ``.doctrees/objects``, in the folders of its
-docname and named by the start of the digest of its bytes (``objects/usage/install.<digest>.gdo``),
-and checked against the full digest recorded when it was written before it is used. A
-document's search words are kept the same way below ``.doctrees/search``. Because a file of
-that name never changes, the environment that names it can use it whatever a later build
-that failed read; files no environment names are removed when a build commits.
+docname. The object is named by the start of the digest of its bytes (``objects/usage/install.<digest>.gdo``).
+Before it is used, it is checked against the full digest recorded when it was written. A
+document's search words are kept the same way below ``.doctrees/search``. A file of
+that name never changes, so the environment that names it can use it whatever a later failed build
+read. Files no environment names are removed when a build commits.
 
-An object is only a cache of its source. When one a page needs is missing, differs from
-the digest recorded for it (damaged on disk, or another document's), or cannot be loaded,
-the build does not fail: it reads that document again from its source, writes its object
-again, and uses the new one, with a warning naming what was wrong with the cache
+An object is only a cache of its source. Suppose an object a page needs is missing, differs from
+the digest recorded for it (damaged on disk, or another document's), or cannot be loaded.
+The build does not fail. It reads that document again from its source, writes its object
+again, and uses the new one. A warning names what was wrong with the cache
 (``build.object.stale``, "CACHED DOCUMENT READ AGAIN"). What the document declares was
-resolved from the first read, so the source must still be the one read then; only a
+resolved from the first read, so the source must still be the one read then. Only a
 document whose source changed during the build, or that cannot be read again, fails it.
 No ``-E`` is needed to recover. (Earlier, any such object failed every build until ``-E``.)
 
@@ -333,7 +333,7 @@ index, a book. A unit is kept when the digest of its inputs is unchanged: its so
 included files, the whole of ``conf.toml`` and ``-D``, the builder, the ``-t`` tags, ``-n``,
 the navigation, the templates (every file below ``templates_path``), translations,
 inventories, and the executable. What a page's references resolve to is not guessed
-from the tables: the link pass records each lookup it makes (a label, a term, an object
+from the tables. The link pass records each lookup it makes (a label, a term, an object
 by name or by the end of its name, a document, a file, an image) and the next build
 looks each one up again. A kept unit reports the diagnostics it gave when it was written,
 so ``-W`` fails or passes the same way whether or not anything was rewritten. ``-a`` writes
@@ -352,21 +352,21 @@ each unit's digest, files, assets, lookups, and diagnostics), and the environmen
 (``.doctrees/environment.json``) together, or none of them, whatever fails and wherever
 the process stops. It publishes only when it did all its work and ``-W`` does not fail
 it: ``-W`` is decided before anything is published. A failed build, for any reason, leaves
-the previous output, manifest, and environment exactly as they were, so the next build
+the previous output, manifest, and environment exactly as they were. The next build
 reads and writes that work again and reports the same diagnostics. Sphinx writes each
-page as it finishes it, so a ``-W`` failure there leaves a site part old and part new;
+page as it finishes it, so a ``-W`` failure there leaves a site part old and part new.
 Guidedog deliberately does not.
 
 **The problem with moving files.** An earlier design (implemented until 2026-09-30) staged
 the changed files in a folder beside the output and, once decided, moved them into the
 output one by one and removed the obsolete files after. The second external review
-showed that this cannot be made whole-output atomic: when a file becomes a folder
-(``html_extra_path`` holding ``extras/z``, then ``extras/z/nested``), the move of ``z/nested``
-fails because the old ``z`` is still there; the changed page had already been moved, the
-environment was still old, the summary said the previous output was unchanged, and every
+showed that this cannot be made whole-output atomic. Suppose a file becomes a folder
+(``html_extra_path`` holding ``extras/z``, then ``extras/z/nested``). The move of ``z/nested``
+fails because the old ``z`` is still there. The changed page had already been moved, the
+environment was still old, and the summary said the previous output was unchanged. Every
 later build failed again replaying the journal. Any failure in the middle of the moves
 (permissions, a full disk, a file a program holds open) had the same effect. The fix is
-not a better order of moves, but not moving files into the live output at all.
+not a better order of moves. The fix is not to move files into the live output at all.
 
 **Decision: generation folders with a switch.** The build writes the next output as a
 whole folder beside the live one (``_build/.html.next``), and publishing it is switching
@@ -402,9 +402,9 @@ the two folders.
   output. Then each record is renamed over its destination, the renamed folders are
   flushed, and the journal is removed. The ``.previous`` links go last.
 
-**Recovery.** Each step can be repeated and each can be undone. Where the new output is
-is told by the identity recorded in the journal, not by names, so a switch stopped
-anywhere, even between an exchange and the step after it, is recognised; without
+**Recovery.** Each step can be repeated and each can be undone. The identity recorded in the journal,
+not a name, tells where the new output is. So a switch stopped
+anywhere, even between an exchange and the step after it, is recognised. Without
 identities (where the system gives no inode) there is no exchange, and the names tell.
 No step guesses: a path whose state cannot be read (for want of memory, or a
 permission) is a failed step, never "not there".
@@ -448,26 +448,26 @@ removing the replaced tree afterwards, costs two system calls per file for every
 publishing build. On an 1,800-document project (3,692 entries; Linux, ZFS, 32 cores),
 this made a one-page rebuild 0.62 s instead of 0.43 s, then 0.55 s with folder listings
 that open no entry (``host.list_folder``, from ``readdir``'s names, types and inodes). So the
-replaced output is not removed: after an exchange it is already in the next folder, and
+replaced output is not removed. After an exchange it is already in the next folder;
 after two renames it is moved there once the journal is gone. It is the spare output the
-next build writes into and completes, and it shares every unchanged file with the live
+next build writes into and completes. It shares every unchanged file with the live
 output (they are hard links to the same files). Completing it compares the two trees
-folder by folder, by name, type, and inode from the listings: a name that is the same
-file as the live one is kept, one that differs is replaced by a link, one the live
+folder by folder, by name, type, and inode from the listings. A name that is the same
+file as the live one is kept; one that differs is replaced by a link; one the live
 output does not have (and this build did not write) is removed. Nothing in the spare
 output is trusted: a stray file, a folder where a file goes, a file where a folder
 goes, or a file under a kept name that is not the live file is replaced or removed
 (``the_spare_output_never_leaks_into_the_published_one``). A producer that writes its own
 file (Typst) is given a path with nothing at it, so it can never write through a link
-into a published file; a folder a user made read-only in the output, once it is the
-spare output, is made writable again, since the spare is Guidedog's own. With the spare
+into a published file. A folder a user made read-only in the output is made writable again once it is the
+spare output, since the spare is Guidedog's own. With the spare
 output, the same one-page rebuild is 0.43 s, as before the change (five runs: 0.43 s
-each after the first two, which fill the spare output once); a clean build and an
+each after the first two, which fill the spare output once). A clean build and an
 unchanged build are unchanged (2.6 to 3.1 s and 0.33 s). The cost of a publication is
 listing the folders plus a link per changed file.
 
 **Durability, efficiently.** A file is durable only once flushed (``fsync``), and a flush
-waits for storage: flushing each output as it was written made a clean build of
+waits for storage. Flushing each output as it was written made a clean build of
 CPython's documentation spend about 91% of its time in 1,742 flushes on ZFS. The
 journal needs only that what it names is durable before it is saved, and that its
 renames are durable before it is removed. So files are written without flushing
@@ -482,9 +482,9 @@ records' folder are flushed, then the journal is removed. Windows flushes no fol
 keeps names durable itself). A crash before the journal is durable leaves the previous
 output; after, the next build finishes the commit from files that are all on storage.
 A build that changes nothing (no file written, none obsolete, both records as they
-would be written) saves no journal and switches nothing, so an unchanged rebuild leaves
+would be written) saves no journal and switches nothing. So an unchanged rebuild leaves
 the output folder, ``environment.json``, and ``<builder>.outputs.json`` as they were, times
-and inodes included (``an_unchanged_build_rewrites_no_records``); a build that changes
+and inodes included (``an_unchanged_build_rewrites_no_records``). A build that changes
 only records leaves the output folder in place.
 
 **Memory.** Every allocation a commit makes before it is decided is checked; one the
@@ -701,7 +701,7 @@ the book looks, ``pdf_preamble`` adds rules and package imports, and ``.. raw:: 
 (or a ``{raw} typst`` fence in Markdown) puts Typst markup into the book alone. Listing ``.typ`` in
 ``source_suffix`` is an error that says so.
 
-The book is set with Typst's optimized (Knuth–Plass) line breaking, justified, with
+The book is set with Typst's optimized (Knuth-Plass) line breaking, justified, with
 hyphenation in the document language and costs against widows, orphans, and runts.
 Guidedog ships Libertinus Sans (SIL Open Font License) beside the Libertinus Serif Typst
 embeds, so the book looks the same on every machine.
@@ -729,7 +729,7 @@ Rationale and alternatives
 --------------------------
 
 
-Executing ``conf.py`` would require Python and would make builds depend on arbitrary code;
+Executing ``conf.py`` would require Python and would make builds depend on arbitrary code.
 TOML with the same names keeps the familiarity without the dependency, and ``migrate``
 covers the literal settings real projects use. A Makefile adds nothing a command line
 cannot do and does not run natively on Windows. Reproducing Sphinx's HTML byte for byte
@@ -754,8 +754,8 @@ trusts its project by default; ``--untrusted`` leaves out raw content and unsafe
 warning and fetches nothing. A failed build publishes nothing: see the build environment
 above.
 
-``sphinx.ext.autodoc`` reads Python source and never executes it: Sphinx imports the
-project's package, which runs its code during the build; Guidedog parses the files with
+``sphinx.ext.autodoc`` reads Python source and never executes it. Sphinx imports the
+project's package, which runs its code during the build. Guidedog parses the files with
 tree-sitter (native/tree-sitter builds pinned, checksummed releases) and emulates what the
 import would have produced. Python files are read only below ``autodoc_source_paths``, with
 the same link and confinement rules as includes, and each one read is a dependency of the
@@ -964,7 +964,7 @@ References
    docs/manual/evidence/beta-review-20261011.md. Deferred features are not
    claimed as implemented.
 
-.. rubric:: Implementation revision — 2026-10-15
+.. rubric:: Implementation revision, 2026-10-15
 
 The implementation moved from Odin to Rust; see GDS 0011 and the section
 "Implementation in Rust". This is an implementation revision. It does not change

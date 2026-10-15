@@ -92,7 +92,7 @@ annotations and module prefixes (written as `:module:` or the package directive)
 `tests/roundtrip.rs` reads a source, writes it, reads the output, and compares the two
 `dump_tree` outlines with soft breaks as spaces. It also counts the round trips that keep every soft break where the source had it (the same lines):
 
-- docs/manual (Sphinx reader): 71/71, 58 with the same lines.
+- docs/manual (Sphinx reader): 65/65, 57 with the same lines.
 - guidedoc-rst conformance sources (Docutils settings per corpus.txt): 77/98, 65 with the same lines.
 - myst-parser fixtures (MyST with the Sphinx layer, read back as Sphinx RST, normalized for MyST-only attributes): 185/202, 185 with the same lines.
 

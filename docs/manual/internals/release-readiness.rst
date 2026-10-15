@@ -69,7 +69,7 @@ Work not yet done
 Known limits
 ~~~~~~~~~~~~
 
-#. The reStructuredText writer does not round-trip every document: 69 of 71 manual pages, 77 of 98 corpus sources and 185 of 202 MyST sources come back the same.
+#. The reStructuredText writer does not round-trip every document: all 65 manual pages come back the same, but only 77 of 98 corpus sources and 185 of 202 MyST sources do.
 #. With static Graphviz, PNG output is unavailable, and ``sfdp`` lays out without its triangulation library.
 #. An incremental build does not notice a new Rust module file under ``target/`` or a hidden folder. A clean build does.
 #. The memory budget is coarse. It counts what the host holds, not what Typst, Graphviz or tree-sitter allocate.

@@ -332,8 +332,10 @@ fn manual_pages_round_trip() {
     tally.report("docs/manual");
     // Raise this when the writer improves; the README lists what still differs.
     assert!(only().is_empty() || tally.passed > 0);
-    assert!(!only().is_empty() || tally.passed >= 69, "fewer round trips than before");
-    assert!(!only().is_empty() || tally.same_lines >= 56, "fewer kept lines than before");
+    // Counted against the pages there are, so adding or removing a page keeps the bar.
+    assert!(!only().is_empty() || tally.passed == tally.total, "a page no longer round-trips");
+    let changed_lines = tally.total - tally.same_lines;
+    assert!(!only().is_empty() || changed_lines <= 8, "fewer kept lines than before");
 }
 
 fn collect_pages(dir: &Path, out: &mut Vec<PathBuf>) {

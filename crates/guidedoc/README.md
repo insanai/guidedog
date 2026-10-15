@@ -6,8 +6,8 @@ validation, diagnostics, the adapter registry, and the pipeline; readers and ren
 live in their own crates (`guidedoc-rst`, `guidedoc-html`, ...) and `guidedoc-defaults`
 registers them.
 
-- Node shapes: [AST.md](AST.md) (normative)
-- Every Odin `gd.` name and its Rust form: [PORTING.md](PORTING.md)
+- Node shapes: [docs/manual/internals/ast.rst](../../docs/manual/internals/ast.rst) (normative)
+- Every Odin `gd.` name and its Rust form: [docs/manual/internals/engine-api-map.rst](../../docs/manual/internals/engine-api-map.rst)
 - Design specification: `../guidedog_old/docs/gds/records/0003-guidedoc-odin.rst`
 
 ```rust
@@ -95,7 +95,7 @@ The Odin core is the specification of behaviour; these are the deliberate differ
 - **Option, not sentinels**, at the API: `first_child`, `code_caption`, `parent_of`,
   `Builder::current`, `link_info`, `attribute`, `anchor_of`, `include_source`. The tables
   keep `NONE`/`INVALID_NODE` inside (`Node::payload`, `LinkInfo::resolved`) so the AST
-  stays 1:1 with AST.md.
+  stays 1:1 with docs/manual/internals/ast.rst.
 - **Iterators** replace `children`/`next_child`, `attributes`/`next_attribute`, and
   `anchor_ids`/`next_anchor_id`.
 - **Single-pass rendering.** Renderers run once into an emitter with a byte limit that

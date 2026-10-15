@@ -1,5 +1,5 @@
 //! The document model's plain data: ids, spans, statuses, node kinds and payload rows.
-//! AST.md is the normative mapping from source constructs to these types.
+//! docs/manual/internals/ast.rst is the normative mapping from source constructs to these types.
 
 use std::ops::{BitOr, BitOrAssign, Index, IndexMut};
 
@@ -239,10 +239,10 @@ pub struct CapacityNeed {
     pub exact: bool,
 }
 
-/// Every kind of node. AST.md documents each kind's children and fields.
+/// Every kind of node. docs/manual/internals/ast.rst documents each kind's children and fields.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(u8)]
-#[allow(missing_docs)] // AST.md documents every kind.
+#[allow(missing_docs)] // docs/manual/internals/ast.rst documents every kind.
 pub enum NodeKind {
     /// The root.
     #[default]
@@ -597,7 +597,7 @@ pub struct Node {
     pub flags: NodeFlags,
     /// The id after its last descendant.
     pub subtree_end: u32,
-    /// A small per-kind scalar (AST.md), otherwise zero.
+    /// A small per-kind scalar (see docs/manual/internals/ast.rst), otherwise zero.
     pub value: i32,
     /// Its text in the pool.
     pub text: Text,
@@ -867,7 +867,8 @@ impl Default for CellInfo {
 /// An attribute's key; `Custom` keys carry their name as text.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 #[repr(u8)]
-#[allow(missing_docs)] // The names say what each key holds; AST.md documents their use.
+// The names say what each key holds; docs/manual/internals/ast.rst documents their use.
+#[allow(missing_docs)]
 pub enum AttributeKey {
     /// A key named by the attribute's `name` text.
     #[default]

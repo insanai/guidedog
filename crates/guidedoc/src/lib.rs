@@ -4,7 +4,8 @@
 //!
 //! The engine imports no reader, renderer, operating system, or Typst crate. Every name
 //! is exported at the crate root, so ported code reads `guidedoc::begin_node`-style
-//! names directly; PORTING.md maps every Odin `gd.` name to its Rust form, and AST.md is
+//! names directly; docs/manual/internals/engine-api-map.rst maps every Odin `gd.` name to
+//! its Rust form, and docs/manual/internals/ast.rst is
 //! the normative node mapping.
 //!
 //! ```

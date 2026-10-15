@@ -6,6 +6,37 @@ written, `# type:` comments); and the attribute documentation Sphinx's `ModuleAn
 finds (`#:` comments, docstrings after assignments). Names resolve across the modules of
 the source roots. Nothing is executed. `gd-autodoc` builds Sphinx autodoc output on it.
 
+## Use
+
+```toml
+[dependencies]
+gd-pyscan = "0.7"
+```
+
+We analyse a module without running it:
+
+```rust
+use gd_pyscan::{Object, Project};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let root = std::env::temp_dir().join("gd-pyscan-example");
+    std::fs::create_dir_all(&root)?;
+    let source = "\"\"\"Shapes.\"\"\"\n\nclass Square:\n    \"\"\"A square.\"\"\"\n";
+    std::fs::write(root.join("shapes.py"), source)?;
+
+    let mut project = Project::new(&[&root])?;
+    let id = project.load_module("shapes").ok_or("no module named shapes")?;
+    assert_eq!(project.module(id).doc.as_deref(), Some("Shapes."));
+    let square = project.get_attr(&Object::of_module(id), "Square");
+    assert!(square.class.is_some());
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-pyscan). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 use gd_pyscan::{Object, Project};
 

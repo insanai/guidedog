@@ -3,6 +3,38 @@
 Sphinx object inventories (`objects.inv`, versions 1 and 2), ported from
 `guidedog_old/lib/inventory` onto `gd-flate`.
 
+## Use
+
+```toml
+[dependencies]
+gd-inventory = "0.7"
+```
+
+We write an inventory and read it back:
+
+```rust
+use gd_inventory::{Item, load_inventory, write_inventory};
+
+fn main() -> Result<(), gd_inventory::Error> {
+    let items = [Item {
+        name: "len".into(),
+        kind: "py:function".into(),
+        priority: 1,
+        uri: "library/functions.html#len".into(),
+        display: "-".into(),
+    }];
+    let data = write_inventory("Python", "3.15", &items);
+    let inventory = load_inventory(&data, "https://docs.python.org/3/")?;
+    let len = inventory.find("py:function", "len").map(|item| item.uri.as_str());
+    assert_eq!(len, Some("https://docs.python.org/3/library/functions.html#len"));
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-inventory). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 let inv = gd_inventory::load_inventory(&bytes, "https://docs.python.org/3/")?;
 let len = inv.find("py:function", "len");            // Option<&Item>

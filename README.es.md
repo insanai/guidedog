@@ -130,6 +130,7 @@ El `discussion.toml` de un catálogo fija los estados de su ciclo de vida, sus t
 - [GDS](docs/gds/README.md): registros numerados de diseño y decisiones de implementación.
 - [Biblioteca de discusiones](crates/gd-discussion/README.md): los catálogos que mantienen `dsc`, `dscc` y `guidedog gds`.
 - [Biblioteca de plugins](crates/gd-plugins/README.md): servicios de compilación con tipos definidos y la interfaz de publicadores que usan `guidedog publish` y `guidedog-pages`.
+- [Crates reutilizables](docs/manual/internals/crates.rst): el motor, las bibliotecas, los generadores de API y el SDK de plugins que otros proyectos Rust pueden tomar de crates.io, y cómo dependen unos de otros.
 
 Cada crate de `crates/` tiene un README breve con su API y las decisiones de diseño tomadas en la migración. Guidedoc posee sus tablas de documento y las reutiliza entre conversiones, de modo que una conversión en régimen estable no reserva memoria, y devuelve diagnósticos estructurados con una sugerencia. El gestor se ocupa de archivos, presupuestos, caché, publicación y los compiladores integrados. `--untrusted` limita capacidades; no aísla procesos ni limita todos los recursos nativos. La beta está dirigida a proyectos de confianza en macOS y Linux.
 

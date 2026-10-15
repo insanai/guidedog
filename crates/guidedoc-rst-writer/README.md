@@ -6,6 +6,36 @@ the same tree, so Guidedog converts MyST/Markdown and reStructuredText to
 reStructuredText itself (`guidedog convert page.md --from myst --to rst -o page.rst`).
 Std-only; it has no Odin counterpart (the Odin project used pandoc).
 
+## Use
+
+```toml
+[dependencies]
+guidedoc-rst-writer = "0.7"
+guidedoc = "0.7"
+guidedoc-commonmark = "0.7"
+```
+
+We render CommonMark as reStructuredText:
+
+```rust
+use guidedoc::{Registry, Workspace, convert_text};
+
+fn main() -> Result<(), guidedoc::Fail> {
+    let registry = Registry {
+        readers: vec![guidedoc_commonmark::READER],
+        renderers: vec![guidedoc_rst_writer::RENDERER],
+    };
+    let mut ws = Workspace::new();
+    let out = convert_text(&mut ws, &registry, "commonmark", "rst", "# Hi *there*\n")?;
+    println!("{out}");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/guidedoc-rst-writer). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 use guidedoc_rst_writer::{RENDERER, Settings, render_with};
 

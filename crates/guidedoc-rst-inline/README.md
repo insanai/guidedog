@@ -6,6 +6,40 @@ inline context, and calls `resolve` once when the document is parsed. Sphinx
 (`guidedoc-sphinx`) adds roles through a `RoleHook` and default substitutions through
 `resolve_with_substitutions`.
 
+## Use
+
+```toml
+[dependencies]
+guidedoc-rst-inline = "0.7"
+guidedoc = "0.7"
+```
+
+A reader parses the inline markup of a paragraph it has opened, then resolves references once per document:
+
+```rust
+use guidedoc::{LineView, NodeKind, SourceSpan, Workspace, default_request};
+use guidedoc_rst_inline::{InlineState, NoRoleHook, Options, parse_inline, resolve};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let text = "See *this* and `that <https://example.org>`_.";
+    let mut ws = Workspace::new();
+    let request = default_request("x.rst", text, "rst", "html");
+    let mut ctx = ws.begin_read(&request)?;
+    let mut state = InlineState::new(Options::default());
+    let span = SourceSpan::new(ctx.source, 0, text.len() as u32);
+    let paragraph = ctx.b.begin_node(NodeKind::Paragraph, span)?;
+    let lines = [LineView { text, offset: 0 }];
+    parse_inline(&mut ctx, &mut state, &lines, &mut NoRoleHook)?;
+    ctx.b.end_node(paragraph)?;
+    resolve(&mut ctx, &state.options)?;
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/guidedoc-rst-inline). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 - Recognition follows the Docutils "Inline markup recognition rules" (contexts from the
   Unicode punctuation categories, quoted start-strings, backslash escapes), with
   standalone URIs and email addresses, implicit PEP/RFC references, and every standard

@@ -6,6 +6,29 @@ its module tree the way rustc does, and writes reStructuredText of the `rust` do
 one page per documented module plus an index page. Guidedog's Sphinx reader renders the
 domain.
 
+## Use
+
+```toml
+[dependencies]
+gd-rustdoc = "0.7"
+```
+
+We write the reStructuredText pages for the crate in the current folder:
+
+```rust
+fn main() -> Result<(), gd_rustdoc::Error> {
+    let pages = gd_rustdoc::document_crate(std::path::Path::new("."))?;
+    for page in &pages {
+        println!("{}: {} bytes", page.path, page.text.len());
+    }
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-rustdoc). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 use gd_rustdoc::{Options, document, document_crate, load_crate};
 use std::path::Path;

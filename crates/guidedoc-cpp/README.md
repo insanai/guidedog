@@ -6,6 +6,34 @@ symbol paths, cross-reference targets, and `:cpp:expr:` texts. Std-only; it know
 nothing of documents. `guidedoc-sphinx` turns its plain data into nodes (signatures,
 `Desc_Name`/`Desc_Addname`, `cpp:identifier` xrefs).
 
+## Use
+
+```toml
+[dependencies]
+guidedoc-cpp = "0.7"
+```
+
+We parse a `cpp:function` signature and read its Sphinx id:
+
+```rust
+use guidedoc_cpp::{CppError, Directive, Limits, namespace_path, parse_declaration};
+
+fn main() -> Result<(), CppError> {
+    let limits = Limits::default();
+    let scope = namespace_path("", "ns", &limits)?; // cpp:namespace:: ns
+    let signature = "template<typename T> void apply(T t)";
+    let decl = parse_declaration(signature, Directive::Function, &limits)?;
+    let symbol = decl.symbol(&scope)?;
+    assert_eq!(symbol.newest_id(), "_CPPv4I0EN2ns5applyEv1T");
+    assert_eq!(symbol.full_name, "ns::apply");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/guidedoc-cpp). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Overview
+
 - Design, bounds, and conformance: `docs/manual/internals/cpp-declarations.rst`
 - Conformance with the Odin implementation (702 of 702 corpus lines match):
   `tests/oracle.rs`, `tests/data/oracle.tsv`

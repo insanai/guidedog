@@ -6,6 +6,35 @@ js, rst, std, math, odin, rust) on top of the reStructuredText reader
 `guidedoc-commonmark` "myst" reader's `Extension`). Cross-document work (toctrees,
 cross-references, numbering) is left to the project host.
 
+## Use
+
+```toml
+[dependencies]
+guidedoc-sphinx = "0.7"
+guidedoc = "0.7"
+```
+
+We read a page with a Sphinx directive and print its tree:
+
+```rust
+use guidedoc::{Workspace, default_request, dump_to_string, read_document, read_extension};
+use guidedoc_sphinx::{Config, reader};
+
+fn main() -> Result<(), guidedoc::Fail> {
+    let config = Config { primary_domain: "py".into(), ..Config::default() };
+    let mut request = default_request("api.rst", ".. py:function:: f(x)\n", "sphinx", "html");
+    request.read.extension = Some(read_extension(&config));
+    let mut ws = Workspace::new();
+    let doc = read_document(&mut ws, &reader(), &request)?;
+    print!("{}", dump_to_string(doc));
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/guidedoc-sphinx). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Overview
+
 - Coverage ledger: `docs/manual/internals/sphinx-ledger.rst`
 - MyST conformance with the Sphinx handlers (`tests/myst_conformance/`): fixtures 215 of
   218 match myst-parser 0.16.1 (3 documented differences); Sphinx builds 8 of 10 (2

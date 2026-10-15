@@ -4,6 +4,36 @@
 file: a fixed, trusted preamble of `gd-` helpers, then the body. It writes text only and
 depends on nothing but `guidedoc`; `gd-typst` compiles the result to PDF or HTML.
 
+## Use
+
+```toml
+[dependencies]
+guidedoc-typst = "0.7"
+guidedoc = "0.7"
+guidedoc-commonmark = "0.7"
+```
+
+We render CommonMark as Typst source, which Typst compiles to PDF:
+
+```rust
+use guidedoc::{Registry, Workspace, convert_text};
+
+fn main() -> Result<(), guidedoc::Fail> {
+    let registry = Registry {
+        readers: vec![guidedoc_commonmark::READER],
+        renderers: vec![guidedoc_typst::RENDERER],
+    };
+    let mut ws = Workspace::new();
+    let out = convert_text(&mut ws, &registry, "commonmark", "typst", "# Hi *there*\n")?;
+    println!("{out}");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/guidedoc-typst). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 use guidedoc::{Registry, Workspace, convert_text};
 

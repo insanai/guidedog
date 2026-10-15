@@ -130,6 +130,7 @@ A catalog's `discussion.toml` sets its lifecycle states, record types, and numbe
 - [GDS](docs/gds/README.md): numbered design records and implementation decisions.
 - [Discussion library](crates/gd-discussion/README.md): the catalogs that `dsc`, `dscc`, and `guidedog gds` keep.
 - [Plugin library](crates/gd-plugins/README.md): typed build services and the publisher interface used by `guidedog publish` and `guidedog-pages`.
+- [Reusable crates](docs/manual/internals/crates.rst): the engine, libraries, API generators, and plugin SDK that other Rust projects can take from crates.io, and how they depend on each other.
 
 Each crate under `crates/` has a short README with its API and the design decisions made in the port. Guidedoc owns its document tables and reuses them between conversions, so a conversion in steady state allocates nothing, and returns structured diagnostics with a hint. The host manages files, budgets, caching, publication, and the embedded compilers. `--untrusted` restricts capabilities; it is not a process sandbox or a limit on all native resource use. The beta scope is trusted documentation projects on macOS and Linux.
 

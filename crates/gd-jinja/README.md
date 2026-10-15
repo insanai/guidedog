@@ -4,6 +4,32 @@ A standalone Jinja 3.x template engine: tags, filters, tests, globals, template
 inheritance, macros, autoescaping and Elm-style error reports, without Python. Standard
 library only. Design notes: `docs/manual/internals/jinja.rst`.
 
+## Use
+
+```toml
+[dependencies]
+gd-jinja = "0.7"
+```
+
+We render a template with autoescaping:
+
+```rust
+use gd_jinja::{Autoescape, Environment, Options, Value};
+
+fn main() -> Result<(), gd_jinja::Error> {
+    let env = Environment::new(Options { autoescape: Autoescape::Always, ..Options::default() });
+    let ctx = Value::dict();
+    ctx.set("name", Value::from("<World>"));
+    let out = env.render_str("Hello {{ name }}!", &ctx)?;
+    assert_eq!(out, "Hello &lt;World&gt;!");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-jinja). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 use gd_jinja::{Autoescape, Environment, Loader, Options, Value};
 

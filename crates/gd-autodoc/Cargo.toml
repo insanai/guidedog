@@ -5,6 +5,13 @@ edition.workspace = true
 license.workspace = true
 rust-version.workspace = true
 description = "Sphinx autodoc's reStructuredText, generated from static analysis of Python source."
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+keywords = ["autodoc", "sphinx", "python", "restructuredtext", "documentation"]
+categories = ["development-tools"]
+include = ["src/**", "README.md"]
 
 [dependencies]
 gd-pyscan = { workspace = true }

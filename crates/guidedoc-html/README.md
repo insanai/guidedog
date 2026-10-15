@@ -3,6 +3,36 @@
 The HTML renderer of Guidedoc: semantic HTML in Docutils' and Sphinx's element
 structure, or the CommonMark reference renderer's bytes for conformance tests.
 
+## Use
+
+```toml
+[dependencies]
+guidedoc-html = "0.7"
+guidedoc = "0.7"
+guidedoc-commonmark = "0.7"
+```
+
+We render CommonMark as HTML:
+
+```rust
+use guidedoc::{Registry, Workspace, convert_text};
+
+fn main() -> Result<(), guidedoc::Fail> {
+    let registry = Registry {
+        readers: vec![guidedoc_commonmark::READER],
+        renderers: vec![guidedoc_html::RENDERER],
+    };
+    let mut ws = Workspace::new();
+    let out = convert_text(&mut ws, &registry, "commonmark", "html", "# Hi *there*\n")?;
+    println!("{out}");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/guidedoc-html). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 let registry = guidedoc::Registry {
     readers: vec![/* a reader */],

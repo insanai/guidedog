@@ -42,6 +42,7 @@ conformance evidence.
    :maxdepth: 1
    :caption: Supporting libraries
 
+   crates
    jinja
    gettext
    plugins

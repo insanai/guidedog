@@ -4,6 +4,37 @@
 every standard Docutils directive, include, and the interfaces the Sphinx layer and the
 MyST reader build on. Inline markup and resolution are `guidedoc-rst-inline`.
 
+## Use
+
+```toml
+[dependencies]
+guidedoc-rst = "0.7"
+guidedoc = "0.7"
+guidedoc-html = "0.7"
+```
+
+We convert reStructuredText to HTML:
+
+```rust
+use guidedoc::{Registry, Workspace, convert_text};
+
+fn main() -> Result<(), guidedoc::Fail> {
+    let registry = Registry {
+        readers: vec![guidedoc_rst::reader()],
+        renderers: vec![guidedoc_html::RENDERER],
+    };
+    let mut ws = Workspace::new();
+    let source = "Title\n=====\n\nHello *world*.\n";
+    let html = convert_text(&mut ws, &registry, "rst", "html", source)?;
+    println!("{html}");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/guidedoc-rst). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Overview
+
 - Coverage ledger: `docs/manual/internals/rst-ledger.rst`
 - Conformance with Docutils 0.22 (98 of 98 corpus sources match):
   `docs/manual/internals/rst-conformance.rst`, `tests/conformance.rs`

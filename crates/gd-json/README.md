@@ -4,6 +4,28 @@ JSON (RFC 8259) for the plugin protocol, caches, search indexes and diagnostics:
 API over `serde_json` with a validating parser, an HTML-safe writer and Elm-style errors.
 New in the Rust port (Odin used `core:encoding/json`).
 
+## Use
+
+```toml
+[dependencies]
+gd-json = "0.7"
+```
+
+We parse JSON, read a field and write it back:
+
+```rust
+fn main() -> Result<(), gd_json::Error> {
+    let value = gd_json::parse(r#"{"name": "guide", "pages": [1, 2]}"#)?;
+    assert_eq!(value.get("name").and_then(|n| n.as_str()), Some("guide"));
+    println!("{}", gd_json::to_string(&value));
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-json). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 let v = gd_json::parse(line)?;                       // duplicate keys refused
 let id = v.get("id").and_then(|n| n.as_i64());

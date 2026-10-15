@@ -6,6 +6,40 @@ application or run as installed programs behind a bounded JSON Lines protocol. A
 `Plugin` is build hooks **or** a publisher, never both. Protocol and design details:
 [docs/manual/internals/plugins.rst](../../docs/manual/internals/plugins.rst).
 
+## Use
+
+```toml
+[dependencies]
+gd-plugins = "0.7"
+```
+
+We write a build plugin that runs as its own program and upper-cases every source:
+
+```rust
+use std::borrow::Cow;
+
+use gd_plugins::{BuildPlugin, Hooks, PluginInfo, Problem, SourceInput};
+
+#[derive(Clone, Default)]
+struct Shout;
+
+impl BuildPlugin for Shout {
+    fn info(&self) -> PluginInfo {
+        PluginInfo::new("shout", "Shout", "1.0.0", Hooks { source: true, ..Hooks::NONE })
+    }
+
+    fn process_source<'a>(&mut self, input: &SourceInput<'a>) -> Result<Cow<'a, str>, Problem> {
+        Ok(Cow::Owned(input.text.to_uppercase()))
+    }
+}
+
+fn main() -> std::process::ExitCode {
+    gd_plugins::serve(Shout)
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-plugins). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
 ## One implementation, two deployments
 
 A plugin crate implements `BuildPlugin` (or `Publisher`) once and exposes

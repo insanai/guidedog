@@ -6,6 +6,36 @@ validation, diagnostics, the adapter registry, and the pipeline; readers and ren
 live in their own crates (`guidedoc-rst`, `guidedoc-html`, ...) and `guidedoc-defaults`
 registers them.
 
+## Use
+
+```toml
+[dependencies]
+guidedoc = "0.7"
+guidedoc-commonmark = "0.7"
+guidedoc-html = "0.7"
+```
+
+The engine converts with the readers and renderers we register; `guidedoc-defaults` registers them all. With only CommonMark and HTML:
+
+```rust
+use guidedoc::{Registry, Workspace, convert_text};
+
+fn main() -> Result<(), guidedoc::Fail> {
+    let registry = Registry {
+        readers: vec![guidedoc_commonmark::READER],
+        renderers: vec![guidedoc_html::RENDERER],
+    };
+    let mut ws = Workspace::new(); // reuse it: later conversions reuse its tables
+    let html = convert_text(&mut ws, &registry, "commonmark", "html", "# Hi *there*\n")?;
+    println!("{html}");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/guidedoc). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 - Node shapes: [docs/manual/internals/ast.rst](../../docs/manual/internals/ast.rst) (normative)
 - Every Odin `gd.` name and its Rust form: [docs/manual/internals/engine-api-map.rst](../../docs/manual/internals/engine-api-map.rst)
 - Design specification: `../guidedog_old/docs/gds/records/0003-guidedoc-odin.rst`

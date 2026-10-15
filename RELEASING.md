@@ -72,10 +72,7 @@ matches its commit.
 
 ## Cut a release
 
-1. Update `VERSION` and the `version` in `[workspace.package]` of the root `Cargo.toml`
-   together (every crate and program inherits it), run `cargo build` so `Cargo.lock`
-   follows, and update the release setting in each documentation project's `conf.toml`.
-   `tools/release/check-version.sh` checks that they agree.
+1. Update `VERSION` and the `version` in `[workspace.package]` of the root `Cargo.toml` together (every crate and program inherits it), and the `version` of each reusable crate's entry in `[workspace.dependencies]` (the dependency gate in `tests/integration` checks them). Run `cargo build` so `Cargo.lock` follows, and update the release setting in each documentation project's `conf.toml`. `tools/release/check-version.sh` checks that they agree.
 2. Add the release to `CHANGELOG.md`, and write `.github/release-notes.md`: what changed,
    the downloads, how to verify and install, and the platform notes.
 3. Push to `main` and wait for Verify to pass.

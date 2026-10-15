@@ -5,6 +5,40 @@ and writes the reStructuredText of Guidedog's `odin` domain for them, as
 `sphinx.ext.autodoc` does for Python. It never runs the compiler. Guidedog's `odin:auto*`
 directives run through it; the spec is `docs/gds/records/0005-odin-domain.rst`.
 
+## Use
+
+```toml
+[dependencies]
+gd-odindoc = "0.7"
+```
+
+We document an Odin package found under `lib/`:
+
+```rust
+use gd_odindoc::{Config, DirectiveOption, Project, Request, Root, document};
+
+fn main() {
+    let mut project = Project::from_dirs(vec![Root { dir: "lib".into(), ..Root::default() }]);
+    let request = Request {
+        directive: "odin:autopackage".into(),
+        argument: "gettext".into(),
+        options: vec![DirectiveOption::flag("members")],
+        ..Request::default()
+    };
+    let output = document(&mut project, &Config::default(), &request);
+    for message in &output.messages {
+        eprintln!("{message}");
+    }
+    for line in &output.lines {
+        println!("{line}");
+    }
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-odindoc). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 use gd_odindoc::{Config, DirectiveOption, MemberOrder, Project, Request, Root, document};
 

@@ -1,9 +1,10 @@
 //! Dependency rules, read from `cargo metadata`: the engine stays std-only and
 //! embeddable, the supporting libraries stay independent of the engine, Typst stays
-//! inside `gd-typst`, external crates are the few the project chose, and dependencies
-//! point one way (core <- readers/renderers <- defaults <- host <- project <- cli <-
-//! programs). This replaces the Odin suite's import scans (independence and boundary
-//! tests): cargo already knows every crate's dependencies, so the gate asks it.
+//! inside `gd-typst`, external crates are the few the project chose, dependencies point
+//! one way (core <- readers/renderers <- defaults <- host <- project <- cli <- programs),
+//! and the reusable crates are published and need only each other. This replaces the
+//! Odin suite's import scans (independence and boundary tests): cargo already knows
+//! every crate's dependencies, so the gate asks it.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::process::Command;
@@ -78,6 +79,42 @@ const LAYERS: &[(&str, u8)] = &[
     ("linkcheck", 6),
 ];
 
+/// The crates other projects may use (docs/manual/internals/crates.rst): published to
+/// crates.io, so they may depend only on each other. Every other package is internal and
+/// sets `publish = false`.
+const REUSABLE: &[&str] = &[
+    // The engine.
+    "guidedoc",
+    "guidedoc-rst",
+    "guidedoc-rst-inline",
+    "guidedoc-commonmark",
+    "guidedoc-sphinx",
+    "guidedoc-cpp",
+    "guidedoc-html",
+    "guidedoc-typst",
+    "guidedoc-text",
+    "guidedoc-rst-writer",
+    "guidedoc-defaults",
+    // Libraries.
+    "gd-report",
+    "gd-toml",
+    "gd-json",
+    "gd-sha",
+    "gd-flate",
+    "gd-jinja",
+    "gd-highlight",
+    "gd-gettext",
+    "gd-graphdog",
+    "gd-inventory",
+    // API generators.
+    "gd-pyscan",
+    "gd-autodoc",
+    "gd-odindoc",
+    "gd-rustdoc",
+    // The plugin SDK.
+    "gd-plugins",
+];
+
 /// The external crates a workspace package may depend on directly, and which packages
 /// may. Anything else needs a reason in the package's Cargo.toml and an entry here.
 const EXTERNAL: &[(&str, &[&str])] = &[
@@ -101,6 +138,18 @@ struct Graph {
     members: BTreeSet<String>,
     /// Package id -> ids of its normal and build dependencies.
     deps: BTreeMap<String, Vec<String>>,
+    /// Package ids whose manifest allows publishing (no `publish = false`).
+    publishable: BTreeSet<String>,
+    /// Every dependency of a workspace package on another one, by path.
+    path_deps: Vec<PathDep>,
+}
+
+/// A dependency on a workspace package by path, with the version it asks for.
+struct PathDep {
+    package: String,
+    version: String,
+    dependency: String,
+    requirement: String,
 }
 
 impl Graph {
@@ -122,8 +171,25 @@ impl Graph {
         let list = |v: &Value, key: &str| v.get(key).and_then(Value::as_array).cloned();
         let text = |v: &Value, key: &str| v.get(key).and_then(Value::as_str).map(str::to_owned);
         let mut names = BTreeMap::new();
+        let mut publishable = BTreeSet::new();
+        let mut path_deps = Vec::new();
         for p in list(m, "packages").unwrap_or_default() {
-            names.insert(text(&p, "id").unwrap_or_default(), text(&p, "name").unwrap_or_default());
+            let id = text(&p, "id").unwrap_or_default();
+            // `publish` is null when the manifest does not restrict it.
+            if p.get("publish").is_none_or(Value::is_null) {
+                publishable.insert(id.clone());
+            }
+            for d in list(&p, "dependencies").unwrap_or_default() {
+                if d.get("path").is_some_and(|path| !path.is_null()) {
+                    path_deps.push(PathDep {
+                        package: text(&p, "name").unwrap_or_default(),
+                        version: text(&p, "version").unwrap_or_default(),
+                        dependency: text(&d, "name").unwrap_or_default(),
+                        requirement: text(&d, "req").unwrap_or_default(),
+                    });
+                }
+            }
+            names.insert(id, text(&p, "name").unwrap_or_default());
         }
         let members = list(m, "workspace_members")
             .unwrap_or_default()
@@ -141,7 +207,7 @@ impl Graph {
                 .collect();
             deps.insert(text(&node, "id").unwrap_or_default(), compiled);
         }
-        Graph { names, members, deps }
+        Graph { names, members, deps, publishable, path_deps }
     }
 
     fn name<'a>(&'a self, id: &'a str) -> &'a str {
@@ -258,14 +324,51 @@ fn external_problems(graph: &Graph) -> Vec<String> {
     problems
 }
 
+/// Internal packages that could be published, and reusable ones that cannot be or that
+/// need an internal package or a path dependency without the workspace version.
+fn publication_problems(graph: &Graph) -> Vec<String> {
+    let mut problems = Vec::new();
+    for (id, name) in graph.member_names() {
+        let reusable = REUSABLE.contains(&name);
+        match (reusable, graph.publishable.contains(id)) {
+            (true, false) => problems.push(format!("{name} is reusable but not published")),
+            (false, true) => problems.push(format!(
+                "{name} is internal: set `publish = false` in its Cargo.toml, or add it to \
+                 REUSABLE in this gate and docs/manual/internals/crates.rst"
+            )),
+            _ => {}
+        }
+        if !reusable {
+            continue;
+        }
+        for dep in graph.deps.get(id).into_iter().flatten().filter(|d| graph.members.contains(*d))
+        {
+            let dep_name = graph.name(dep);
+            if !REUSABLE.contains(&dep_name) {
+                problems.push(format!("{name} is reusable but needs the internal {dep_name}"));
+            }
+        }
+    }
+    for dep in graph.path_deps.iter().filter(|d| REUSABLE.contains(&d.package.as_str())) {
+        if dep.requirement != format!("^{}", dep.version) {
+            problems.push(format!(
+                "{} asks for {} {}, not ^{}: set `version` in [workspace.dependencies]",
+                dep.package, dep.dependency, dep.requirement, dep.version
+            ));
+        }
+    }
+    problems
+}
+
 #[test]
 fn the_workspace_follows_the_dependency_rules() {
     let graph = Graph::load();
-    let checks: [(&str, Check); 4] = [
+    let checks: [(&str, Check); 5] = [
         ("dependencies point one way", direction_problems),
         ("the engine stays std-only", engine_problems),
         ("supporting libraries never use the engine", support_problems),
         ("external crates are the chosen few, in their own crates", external_problems),
+        ("reusable crates are published and need only each other", publication_problems),
     ];
     let mut report = String::new();
     for (rule, check) in checks {
@@ -336,4 +439,9 @@ fn the_rules_find_what_they_forbid() {
     let external = external_problems(&graph);
     assert!(external.iter().any(|p| p.contains("guidedoc depends on regex, which is not")));
     assert!(external.iter().any(|p| p.contains("gd-cli depends on typst, which only gd-typst")));
+    let publication = publication_problems(&graph);
+    assert!(publication.iter().any(|p| p.starts_with("gd-cli is internal")), "{publication:?}");
+    assert!(
+        publication.iter().any(|p| p == "guidedoc-html is reusable but needs the internal gd-cli")
+    );
 }

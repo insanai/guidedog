@@ -15,6 +15,19 @@
 //! `Limits::stack_bytes` (a stack guard measures it), and backtracking by
 //! `STEPS_PER_BYTE` steps per byte of the definition. Past any of them the parse fails
 //! with an `ErrorKind::Limit`, never a stack overflow.
+//!
+//! ```
+//! use guidedoc_cpp::{Directive, Limits, namespace_path, parse_declaration};
+//!
+//! let limits = Limits::default();
+//! let scope = namespace_path("", "ns", &limits)?; // cpp:namespace:: ns
+//! let signature = "template<typename T> void apply(T t)";
+//! let decl = parse_declaration(signature, Directive::Function, &limits)?;
+//! let symbol = decl.symbol(&scope)?;
+//! assert_eq!(symbol.newest_id(), "_CPPv4I0EN2ns5applyEv1T");
+//! assert_eq!(symbol.full_name, "ns::apply");
+//! # Ok::<(), guidedoc_cpp::CppError>(())
+//! ```
 
 #![forbid(unsafe_code)]
 

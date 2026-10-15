@@ -2,6 +2,30 @@
 
 The built-in pieces Guidedog assembles around the engine.
 
+## Use
+
+```toml
+[dependencies]
+guidedoc-defaults = "0.7"
+guidedoc = "0.7"
+```
+
+Every reader and renderer is in one registry, so one call converts:
+
+```rust
+fn main() -> Result<(), guidedoc::Fail> {
+    let registry = guidedoc_defaults::registry();
+    let mut ws = guidedoc::Workspace::new();
+    let html = guidedoc::convert_text(&mut ws, &registry, "myst", "html", "# Hello\n")?;
+    println!("{html}");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/guidedoc-defaults). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 let registry = guidedoc_defaults::registry();
 let mut ws = guidedoc::Workspace::new();

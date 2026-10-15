@@ -5,6 +5,27 @@ for 35 languages, with no Python runtime and no dependencies. Guidedog uses it f
 blocks in HTML sites and PDF books. Port of the Odin `lib/highlight` package (the
 `guidedoc` adapter lives in `guidedoc-defaults`).
 
+## Use
+
+```toml
+[dependencies]
+gd-highlight = "0.7"
+```
+
+We highlight code as HTML spans with Pygments' classes:
+
+```rust
+fn main() {
+    let html = gd_highlight::highlight_html("def f(x):\n    return x\n", "python");
+    assert!(html.starts_with("<span class=\"k\">def</span>"));
+    println!("{html}");
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-highlight). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 use gd_highlight::*;
 

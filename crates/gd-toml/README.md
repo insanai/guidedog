@@ -3,6 +3,33 @@
 TOML 1.0 reader and writer, ported from `guidedog_old/lib/toml` (reader) and the writing
 helpers of `lib/project/migrate_toml.odin`. Depends only on `gd-report`.
 
+## Use
+
+```toml
+[dependencies]
+gd-toml = "0.7"
+```
+
+We read a setting and write the table back:
+
+```rust
+fn main() {
+    let text = "[site]\ntitle = \"Guide\"\n";
+    match gd_toml::parse(text) {
+        Ok(table) => {
+            let title = table.path(&["site", "title"]).and_then(|v| v.as_str());
+            assert_eq!(title, Some("Guide"));
+            print!("{}", gd_toml::to_string(&table));
+        }
+        Err(err) => eprintln!("{err}"),
+    }
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-toml). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 let table = gd_toml::parse(&text).map_err(|e| e.report("conf.toml", &text))?;
 let title = table.path(&["project", "title"]).and_then(|v| v.as_str());

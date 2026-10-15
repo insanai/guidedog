@@ -11,6 +11,21 @@
 //! name them with [`ClassRef`], [`FunctionRef`], and [`DefRef`]. Lookups are bounded in
 //! steps, depth, and stack, and a module nested too deeply is marked `too_deep`, not
 //! walked. A project is `Send`, so a host may share one behind a `Mutex`.
+//!
+//! ```
+//! use gd_pyscan::{Object, Project};
+//!
+//! let root = std::env::temp_dir().join("gd-pyscan-doctest");
+//! std::fs::create_dir_all(&root)?;
+//! std::fs::write(root.join("shapes.py"), "\"\"\"Shapes.\"\"\"\n\nclass Square:\n    pass\n")?;
+//!
+//! let mut project = Project::new(&[&root])?;
+//! let id = project.load_module("shapes").ok_or("no module named shapes")?;
+//! assert_eq!(project.module(id).doc.as_deref(), Some("Shapes."));
+//! let square = project.get_attr(&Object::of_module(id), "Square");
+//! assert!(square.class.is_some());
+//! # Ok::<(), Box<dyn std::error::Error>>(())
+//! ```
 
 #![forbid(unsafe_code)]
 

@@ -2,8 +2,38 @@
 
 **Markdown for Guidedoc: pure CommonMark 0.31.2 (`READER`, id `commonmark`, 652/652 spec
 examples) and the MyST Markdown Sphinx projects write (`MYST_READER`, id `myst`,
-myst-parser 0.16.1).** Node shapes: `crates/guidedoc/AST.md`; coverage and conformance:
+myst-parser 0.16.1).** Node shapes: `docs/manual/internals/ast.rst`; coverage and conformance:
 `docs/manual/internals/commonmark-ledger.rst` and `commonmark-conformance.rst`.
+
+## Use
+
+```toml
+[dependencies]
+guidedoc-commonmark = "0.7"
+guidedoc = "0.7"
+guidedoc-html = "0.7"
+```
+
+We convert CommonMark to HTML (MyST works the same way with the reader id `myst`):
+
+```rust
+use guidedoc::{Registry, Workspace, convert_text};
+
+fn main() -> Result<(), guidedoc::Fail> {
+    let registry = Registry {
+        readers: vec![guidedoc_commonmark::READER, guidedoc_commonmark::MYST_READER],
+        renderers: vec![guidedoc_html::RENDERER],
+    };
+    let mut ws = Workspace::new();
+    let html = convert_text(&mut ws, &registry, "commonmark", "html", "# Hi *there*\n")?;
+    println!("{html}");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/guidedoc-commonmark). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
 
 ```rust
 use guidedoc::{Registry, Workspace, convert, default_request, read_extension};

@@ -6,6 +6,30 @@ independent of every other workspace crate. Ported from `guidedog_old/lib/gettex
 (behaviour kept, API redesigned for Rust; see *Redesigns* below). For large catalogs,
 see [docs/manual/internals/gettext.rst](../../docs/manual/internals/gettext.rst): research, design, and measurements.
 
+## Use
+
+```toml
+[dependencies]
+gd-gettext = "0.7"
+```
+
+We look up translations in a catalog:
+
+```rust
+use gd_gettext::Lookup;
+
+fn main() -> Result<(), gd_gettext::Error> {
+    let catalog = gd_gettext::parse_po("msgid \"Hello\"\nmsgstr \"Hallo\"\n", "de.po")?;
+    assert_eq!(catalog.text("Hello"), "Hallo");
+    assert_eq!(catalog.plural("%d file", "%d files", 3), "%d files");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-gettext). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 use gd_gettext::{LoadOptions, Lookup, MoCatalog};
 let mo = MoCatalog::load("locales/de/LC_MESSAGES/index.mo", &LoadOptions::default())?;

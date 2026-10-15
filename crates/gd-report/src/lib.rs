@@ -16,6 +16,19 @@
 //! Columns count Unicode scalars, as editors do; terminal cell widths (wide East Asian
 //! characters, combining marks, escaped controls) only affect where carets are drawn.
 //! The crate has no dependencies and never prints.
+//!
+//! ```
+//! use gd_report::{Report, Style, render_text};
+//!
+//! let source = "[site]\ntitle = 1\n";
+//! let start = source.find('1').unwrap();
+//! let report = Report::error("conf.type", "WRONG TYPE", "`title` must be a string.")
+//!     .hint("Quote the value: `title = \"1\"`.")
+//!     .at("conf.toml", source, start, start + 1);
+//! let text = render_text(&report, &Style { color: false, width: 80 });
+//! assert!(text.contains("conf.toml:2:9"));
+//! assert!(text.contains("Hint: Quote the value"));
+//! ```
 
 #![forbid(unsafe_code)]
 

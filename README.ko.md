@@ -130,6 +130,7 @@ dsc build
 - [GDS](docs/gds/README.md): 번호가 지정된 설계 기록과 구현 결정.
 - [논의 라이브러리](crates/gd-discussion/README.md): `dsc`, `dscc`, `guidedog gds` 가 관리하는 카탈로그.
 - [플러그인 라이브러리](crates/gd-plugins/README.md): 타입이 명확한 빌드 서비스와 `guidedog publish` 및 `guidedog-pages` 가 사용하는 게시기 인터페이스.
+- [재사용 가능한 크레이트](docs/manual/internals/crates.rst): 다른 Rust 프로젝트가 crates.io 에서 가져다 쓸 수 있는 엔진, 라이브러리, API 생성기, 플러그인 SDK 와 그 의존 관계.
 
 `crates/` 아래의 각 크레이트에는 API와 이식 과정의 설계 결정을 담은 짧은 README가 있습니다. Guidedoc은 문서 테이블을 직접 소유하고 변환 사이에 재사용하므로, 안정 상태의 변환은 메모리를 할당하지 않으며 힌트가 포함된 구조화된 진단을 반환합니다. 호스트는 파일, 예산, 캐시, 게시, 내장 컴파일러를 관리합니다. `--untrusted` 는 기능을 제한할 뿐 프로세스 샌드박스나 모든 네이티브 자원의 상한은 아닙니다. 베타는 macOS와 Linux의 신뢰할 수 있는 문서 프로젝트를 대상으로 합니다.
 

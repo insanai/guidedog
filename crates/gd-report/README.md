@@ -4,6 +4,34 @@ Elm-style diagnostic reports shared by every crate. Standard library only; it re
 and never prints. New in the Rust port: it gathers what the Odin code spread over
 `lib/host/diagnostics.odin`, `excerpt.odin`, `graphdog/format.odin` and `jinja/errors.odin`.
 
+## Use
+
+```toml
+[dependencies]
+gd-report = "0.7"
+```
+
+We build a report and render it for a terminal:
+
+```rust
+use gd_report::{Report, Style, render_text};
+
+fn main() {
+    let source = "[site]\ntitle = 1\n";
+    let start = source.find('1').unwrap_or(0);
+    let report = Report::error("conf.type", "WRONG TYPE", "`title` must be a string.")
+        .hint("Quote the value: `title = \"1\"`.")
+        .at("conf.toml", source, start, start + 1);
+    let text = render_text(&report, &Style { color: false, width: 80 });
+    assert!(text.contains("Hint: Quote the value"));
+    print!("{text}");
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-report). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 let report = gd_report::Report::error("toml.duplicate", "DUPLICATE KEY", "`a` is set twice.")
     .hint("Remove one of them.")

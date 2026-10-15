@@ -7,41 +7,46 @@ version = "0.7.0"
 edition = "2024"
 license = "AGPL-3.0-or-later"
 rust-version = "1.90"
+authors = ["Vikrant Rathore"]
+repository = "https://github.com/insanai/guidedog"
+homepage = "https://insanai.github.io/guidedog/"
 
 [workspace.dependencies]
-# Internal crates.
-guidedoc = { path = "crates/guidedoc" }
-guidedoc-rst = { path = "crates/guidedoc-rst" }
-guidedoc-rst-inline = { path = "crates/guidedoc-rst-inline" }
-guidedoc-commonmark = { path = "crates/guidedoc-commonmark" }
-guidedoc-sphinx = { path = "crates/guidedoc-sphinx" }
-guidedoc-cpp = { path = "crates/guidedoc-cpp" }
-guidedoc-html = { path = "crates/guidedoc-html" }
-guidedoc-typst = { path = "crates/guidedoc-typst" }
-guidedoc-text = { path = "crates/guidedoc-text" }
-guidedoc-rst-writer = { path = "crates/guidedoc-rst-writer" }
-guidedoc-defaults = { path = "crates/guidedoc-defaults" }
-gd-report = { path = "crates/gd-report" }
-gd-toml = { path = "crates/gd-toml" }
-gd-json = { path = "crates/gd-json" }
-gd-flate = { path = "crates/gd-flate" }
-gd-sha = { path = "crates/gd-sha" }
-gd-jinja = { path = "crates/gd-jinja" }
-gd-highlight = { path = "crates/gd-highlight" }
-gd-gettext = { path = "crates/gd-gettext" }
-gd-graphdog = { path = "crates/gd-graphdog" }
+# Workspace crates. The reusable ones (see docs/manual/internals/crates.rst) are published
+# to crates.io, so their entries carry the version too: bump it with
+# [workspace.package] version (the dependency gate in tests/integration checks they agree).
+guidedoc = { version = "0.7.0", path = "crates/guidedoc" }
+guidedoc-rst = { version = "0.7.0", path = "crates/guidedoc-rst" }
+guidedoc-rst-inline = { version = "0.7.0", path = "crates/guidedoc-rst-inline" }
+guidedoc-commonmark = { version = "0.7.0", path = "crates/guidedoc-commonmark" }
+guidedoc-sphinx = { version = "0.7.0", path = "crates/guidedoc-sphinx" }
+guidedoc-cpp = { version = "0.7.0", path = "crates/guidedoc-cpp" }
+guidedoc-html = { version = "0.7.0", path = "crates/guidedoc-html" }
+guidedoc-typst = { version = "0.7.0", path = "crates/guidedoc-typst" }
+guidedoc-text = { version = "0.7.0", path = "crates/guidedoc-text" }
+guidedoc-rst-writer = { version = "0.7.0", path = "crates/guidedoc-rst-writer" }
+guidedoc-defaults = { version = "0.7.0", path = "crates/guidedoc-defaults" }
+gd-report = { version = "0.7.0", path = "crates/gd-report" }
+gd-toml = { version = "0.7.0", path = "crates/gd-toml" }
+gd-json = { version = "0.7.0", path = "crates/gd-json" }
+gd-flate = { version = "0.7.0", path = "crates/gd-flate" }
+gd-sha = { version = "0.7.0", path = "crates/gd-sha" }
+gd-jinja = { version = "0.7.0", path = "crates/gd-jinja" }
+gd-highlight = { version = "0.7.0", path = "crates/gd-highlight" }
+gd-gettext = { version = "0.7.0", path = "crates/gd-gettext" }
+gd-graphdog = { version = "0.7.0", path = "crates/gd-graphdog" }
 gd-fetch = { path = "crates/gd-fetch" }
 gd-git = { path = "crates/gd-git" }
-gd-pyscan = { path = "crates/gd-pyscan" }
-gd-autodoc = { path = "crates/gd-autodoc" }
-gd-odindoc = { path = "crates/gd-odindoc" }
-gd-inventory = { path = "crates/gd-inventory" }
+gd-pyscan = { version = "0.7.0", path = "crates/gd-pyscan" }
+gd-autodoc = { version = "0.7.0", path = "crates/gd-autodoc" }
+gd-odindoc = { version = "0.7.0", path = "crates/gd-odindoc" }
+gd-inventory = { version = "0.7.0", path = "crates/gd-inventory" }
 gd-i18n = { path = "crates/gd-i18n" }
 gd-typst = { path = "crates/gd-typst" }
 gd-host = { path = "crates/gd-host", default-features = false }
 gd-project = { path = "crates/gd-project" }
 gd-discussion = { path = "crates/gd-discussion" }
-gd-plugins = { path = "crates/gd-plugins" }
+gd-plugins = { version = "0.7.0", path = "crates/gd-plugins" }
 gd-pages = { path = "crates/gd-pages" }
 gd-cli = { path = "crates/gd-cli" }
 gd-theme = { path = "crates/gd-theme" }
@@ -56,7 +61,7 @@ gd-outputs = { path = "crates/gd-outputs" }
 gd-env = { path = "crates/gd-env" }
 gd-migrate = { path = "crates/gd-migrate" }
 gd-conf = { path = "crates/gd-conf" }
-gd-rustdoc = { path = "crates/gd-rustdoc" }
+gd-rustdoc = { version = "0.7.0", path = "crates/gd-rustdoc" }
 
 # External crates: only mature, self-contained ones that solve a genuinely large problem.
 # The Typst compiler, pinned to the toolchain version GDS 0002 names.

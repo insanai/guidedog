@@ -4,6 +4,14 @@ version.workspace = true
 edition.workspace = true
 license.workspace = true
 rust-version.workspace = true
+description = "Sphinx directives, roles and domains for the Guidedoc engine."
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+keywords = ["sphinx", "restructuredtext", "myst", "documentation", "domains"]
+categories = ["text-processing", "development-tools"]
+include = ["src/**", "README.md"]
 
 [dependencies]
 guidedoc = { workspace = true }

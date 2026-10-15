@@ -3,6 +3,28 @@
 DEFLATE and zlib, replacing Odin's `core:compress/zlib` (inflate) and `vendor:zlib`
 (deflate for Git packs). Standard library only. Gzip is not provided: nothing used it.
 
+## Use
+
+```toml
+[dependencies]
+gd-flate = "0.7"
+```
+
+We compress, then decompress with a limit on the output, so a hostile input cannot exhaust memory:
+
+```rust
+fn main() -> Result<(), gd_flate::Error> {
+    let packed = gd_flate::zlib_compress(b"hello hello hello", gd_flate::Level::Default);
+    let unpacked = gd_flate::zlib_decompress(&packed, 1 << 20)?;
+    assert_eq!(unpacked, b"hello hello hello");
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-flate). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 | Item | Does |
 |---|---|
 | `zlib_decompress(data, limit)`, `zlib_decompress_into(&mut out, data, limit) -> used` | header, Adler-32 check; `used` lets consecutive streams be read |

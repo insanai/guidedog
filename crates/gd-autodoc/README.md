@@ -6,6 +6,46 @@ docstrings prepared as Sphinx prepares them, members chosen, filtered and ordere
 options say. What static analysis cannot know (compiled modules, objects made at run
 time, members of classes outside the source roots) is a `Message` naming the object.
 
+## Use
+
+```toml
+[dependencies]
+gd-autodoc = "0.7"
+gd-pyscan = "0.7"
+```
+
+We generate the `autoclass` output for a class:
+
+```rust
+use gd_autodoc::{Config, DirectiveOption, Request, Session, document};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let root = std::env::temp_dir().join("gd-autodoc-example");
+    std::fs::create_dir_all(&root)?;
+    let source = "class Square:\n    \"\"\"A square.\"\"\"\n\n    \
+                  def area(self):\n        \"\"\"The area.\"\"\"\n";
+    std::fs::write(root.join("shapes.py"), source)?;
+
+    let mut session = Session::new(gd_pyscan::Project::new(&[&root])?);
+    let request = Request {
+        directive: "autoclass".into(),
+        argument: "shapes.Square".into(),
+        options: vec![DirectiveOption::flag("members")],
+        ..Request::default()
+    };
+    let output = document(&mut session, &Config::default(), &request);
+    for message in &output.messages {
+        eprintln!("{message}");
+    }
+    println!("{}", output.lines.join("\n"));
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-autodoc). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 ```rust
 use gd_autodoc::{Config, DirectiveOption, MemberOrder, Request, Session, document};
 

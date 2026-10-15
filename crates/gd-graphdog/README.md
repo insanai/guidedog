@@ -3,6 +3,31 @@
 Graphviz DOT to SVG, PNG or laid-out DOT with the Graphviz C library in process (bound by
 hand in `src/ffi.rs`; links `-lgvc -lcgraph`).
 
+## Use
+
+```toml
+[dependencies]
+gd-graphdog = "0.7"
+```
+
+We render DOT to SVG. The Graphviz libraries `libgvc` and `libcgraph` must be installed (on Debian and Ubuntu, `sudo apt install libgraphviz-dev`):
+
+```rust
+fn main() -> Result<(), gd_graphdog::Error> {
+    let ctx = gd_graphdog::Context::new()?;
+    let source = "digraph { a -> b }";
+    match ctx.render(source, gd_graphdog::Options::default()) {
+        Ok(rendered) => println!("{} bytes of SVG", rendered.output.len()),
+        Err(err) => eprint!("{}", gd_graphdog::format_error(&err, source, "g.dot")),
+    }
+    Ok(())
+}
+```
+
+The API documentation is on [docs.rs](https://docs.rs/gd-graphdog). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+
+## Cheat sheet
+
 | Item | Does |
 |---|---|
 | `Context::new()`, `ctx.version()` | loads plugins once; freed on drop |

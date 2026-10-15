@@ -5,6 +5,13 @@ edition.workspace = true
 license.workspace = true
 rust-version.workspace = true
 description = "Static analysis of Python source for autodoc: nothing is executed."
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+keywords = ["python", "autodoc", "static-analysis", "tree-sitter", "documentation"]
+categories = ["development-tools", "parser-implementations"]
+include = ["src/**", "README.md"]
 
 # tree-sitter and its Python grammar parse Python; writing a Python parser is the
 # genuinely large problem CLAUDE.md allows these two crates for.

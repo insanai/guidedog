@@ -130,6 +130,7 @@ dsc build
 - [GDS](docs/gds/README.md)：编号的设计记录和实现决策。
 - [讨论库](crates/gd-discussion/README.md)：`dsc`、`dscc` 和 `guidedog gds` 维护的目录。
 - [插件库](crates/gd-plugins/README.md)：带类型的构建服务，以及 `guidedog publish` 和 `guidedog-pages` 使用的发布器接口。
+- [可复用的 crate](docs/manual/internals/crates.rst)：其他 Rust 项目可以从 crates.io 使用的引擎、库、API 生成器和插件 SDK，以及它们之间的依赖关系。
 
 `crates/` 下的每个 crate 都有一份简短的 README，说明它的 API 和移植时做出的设计决策。Guidedoc 拥有自己的文档表，并在多次转换之间复用它们，因此稳定状态下的转换不分配内存；它返回带提示的结构化诊断。宿主管理文件、预算、缓存、发布和内置编译器。`--untrusted` 只限制能力，不是进程沙箱，也不限制全部原生资源消耗。Beta 面向 macOS 和 Linux 上的可信文档项目。
 

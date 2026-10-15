@@ -11,6 +11,10 @@
 Native plugin API and registry
 ==============================
 
+.. note::
+
+   GDS 0012, :doc:`0012-single-executable-release`, updates the executable boundary for 1.0.0-beta.1. Pages is linked into ``guidedog`` and needs no registration. References below to ``guidedog-pages`` describe the earlier process adapter; the process protocol remains available for external plugins.
+
 Abstract
 --------
 

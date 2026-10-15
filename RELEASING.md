@@ -16,14 +16,11 @@ uploaded by hand, and a published release is never changed.
   candidate. Its jobs:
   - `version`: the tag, `VERSION`, the `[workspace.package]` version in `Cargo.toml`,
     and later each program's `--version` agree (`cargo xtask release check-version`).
-  - `qualify`: on linux-amd64 and macos-arm64, the source limits, the data tables
-    (`cargo xtask tables --check`), clippy, every test
-    suite, and the Linux Secret Service check. macOS tests use the Keychain and fail if
-    it cannot be reached.
+  - `qualify`: requires a successful Verify run for the exact commit being released. Verify already ran the full suite on Linux and macOS, the source limits, data tables, Clippy, examples and credential-store checks. We reuse that result rather than compiling and running the full suite again. If it is missing, we run Verify for that commit and rerun Release after it passes.
   - `build`: per platform, natively on that platform, `cargo xtask release build` runs
     `cargo build --release --locked` for `guidedog`, with the embedded Typst compiler and linked Pages and discussion plugins. Graphviz 16.1.0 is linked
     statically: `cargo xtask graphviz` builds it (cached between runs) and the build
-    sets `GUIDEDOG_GRAPHVIZ_STATIC`. Full workspace tests run once per qualification OS in `qualify`; archive jobs do not recompile the suite with release optimization. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices, `SOURCE.txt`, and a build manifest
+    sets `GUIDEDOG_GRAPHVIZ_STATIC`. Full workspace tests run once on Linux and once on macOS in Verify; archive jobs do not recompile the suite with release optimization. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices, `SOURCE.txt`, and a build manifest
     (`guidedog.build.json`).
   - `smoke`: each archive, unpacked on a fresh machine of its platform with nothing
     installed, runs quickstart and builds HTML and PDF with an empty

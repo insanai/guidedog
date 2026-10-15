@@ -6,10 +6,11 @@
 //! msgctxt `\x04` msgid, followed for a plural message by NUL and msgid_plural; plural
 //! translations are joined by NUL. Both byte orders are read.
 //!
-//! A [`MoCatalog`] owns the file's bytes in one buffer and checks them once, in linear
-//! time (n log n for the overlap check), when it is made. After that every lookup is
-//! infallible: it hashes the key (GNU's hashpjw and double hashing) or binary-searches
-//! the sorted table, compares bytes, and returns a `&str` borrowed from the buffer.
+//! A [`MoCatalog`] checks the file once, in linear time (n log n for the overlap
+//! check), when it is made, and keeps its strings in one text pool (the file's own
+//! buffer, see [`crate::mo_raw::into_pool`]). After that every lookup is infallible: it
+//! hashes the key (GNU's hashpjw and double hashing) or binary-searches the sorted
+//! table, compares bytes, and returns a `&str` sliced from the pool, with no UTF-8 check.
 
 use std::cmp::Ordering;
 use std::path::Path;
@@ -18,10 +19,10 @@ use crate::catalog::{charset_in, header_field_in, is_utf8_charset};
 use crate::error::{Error, ErrorKind, memory_error};
 use crate::load::{LoadOptions, read_file};
 use crate::lookup::{Forms, Lookup};
+use crate::mo_raw::{RawMo, Span, into_pool};
 use crate::plural::{PluralRule, parse_plural_forms};
 
 pub(crate) const MO_MAGIC: u32 = 0x9504_12de;
-const MO_MAGIC_SWAPPED: u32 = 0xde12_0495;
 pub(crate) const HEADER_BYTES: usize = 28;
 
 /// A hash table whose keys take more probes than this is not used: binary search is
@@ -36,8 +37,6 @@ pub enum MoSearch {
     Hash {
         /// The table's size (a prime).
         size: u32,
-        /// The table's byte offset in the file.
-        offset: usize,
         /// The most probes a key of the file takes.
         probes: u32,
     },
@@ -68,19 +67,21 @@ impl<'a> MoEntry<'a> {
     }
 }
 
-/// A compiled catalog served straight from its file's bytes.
+/// A compiled catalog served from one text pool: the file's strings.
 ///
-/// It owns one buffer; lookups ([`Lookup`]) borrow from it and allocate nothing. Make one
+/// It owns the pool (the file's buffer, reused), a span per string, and a copy of the
+/// hash table; lookups ([`Lookup`]) borrow from the pool and allocate nothing. Make one
 /// with [`MoCatalog::load`] or [`MoCatalog::from_bytes`]; for an editable catalog, use
 /// [`crate::parse_mo`] instead.
 #[derive(Debug, Clone)]
 pub struct MoCatalog {
     name: String,
-    data: Box<[u8]>,
-    swapped: bool,
+    pool: Box<str>,
+    /// The original strings' spans, then the translations' (`2 * count`).
+    spans: Box<[Span]>,
     count: usize,
-    originals: usize,
-    translations: usize,
+    /// The file's hash table, when it is used (see [`MoSearch::Hash`]).
+    hash_slots: Box<[u32]>,
     search: MoSearch,
     plural: PluralRule,
 }
@@ -100,22 +101,24 @@ impl MoCatalog {
     /// truncated or out of bounds, when strings share bytes or keys repeat (no compiler
     /// writes either), or when a string is not UTF-8; with [`ErrorKind::Charset`] for a
     /// header naming another charset, and [`ErrorKind::Plural`] for a bad Plural-Forms.
-    pub fn from_bytes(data: impl Into<Box<[u8]>>, name: &str) -> Result<MoCatalog, Error> {
+    pub fn from_bytes(data: impl Into<Vec<u8>>, name: &str) -> Result<MoCatalog, Error> {
         let data = data.into();
-        let header = read_header(&data, name)?;
+        let raw = RawMo::new(&data, name)?;
+        raw.check_strings()?;
+        raw.check_apart()?;
+        let mut spans = raw.spans()?;
+        let hash_slots = raw.hash_slots();
+        let pool = into_pool(data, &mut spans, name)?;
         let mut cat = MoCatalog {
             name: name.to_string(),
-            data,
-            swapped: header.swapped,
-            count: header.count,
-            originals: header.originals,
-            translations: header.translations,
+            pool,
+            count: spans.len() / 2,
+            spans: spans.into_boxed_slice(),
+            hash_slots: Box::default(),
             search: MoSearch::Sorted,
             plural: PluralRule::default(),
         };
-        cat.check_strings()?;
-        crate::mo_check::check_apart(&cat, name)?;
-        cat.search = cat.choose_search(header.hash)?;
+        cat.choose_search(hash_slots)?;
         cat.read_header_entry()?;
         Ok(cat)
     }
@@ -153,7 +156,7 @@ impl MoCatalog {
     /// Returns entry `i` (`i < count`), split into its parts.
     fn entry(&self, i: usize) -> MoEntry<'_> {
         // Split off the plural first: lookups see the key up to its first NUL.
-        let key = self.text(self.originals, i);
+        let key = self.text(ORIGINALS, i);
         let (singular, id_plural) = match key.split_once('\0') {
             Some((singular, plural)) => (singular, Some(plural)),
             None => (key, None),
@@ -162,101 +165,33 @@ impl MoCatalog {
             Some((ctx, id)) => (Some(ctx), id),
             None => (None, singular),
         };
-        MoEntry { ctx, id, id_plural, translation: self.text(self.translations, i) }
+        MoEntry { ctx, id, id_plural, translation: self.text(TRANSLATIONS, i) }
     }
 
-    /// Returns the word at byte `at` in the file's byte order; 0 past the end, which
-    /// the checks at load rule out for every word a lookup reads.
-    pub(crate) fn word(&self, at: usize) -> u32 {
-        word_in(&self.data, self.swapped, at).unwrap_or(0)
-    }
-
-    /// Returns the (length, offset) of entry `i` of a table.
-    pub(crate) fn span(&self, table: usize, i: usize) -> (usize, usize) {
-        let at = table + 8 * i;
-        (self.word(at) as usize, self.word(at + 4) as usize)
-    }
-
-    /// Returns the bytes of entry `i` of a table, without its NUL.
-    pub(crate) fn bytes(&self, table: usize, i: usize) -> &[u8] {
-        let (length, offset) = self.span(table, i);
-        self.data.get(offset..offset + length).unwrap_or_default()
-    }
-
-    /// Returns entry `i` of a table as text; checked as UTF-8 at load, so the
-    /// conversion here cannot fail (an empty string would stand in if it did).
-    fn text(&self, table: usize, i: usize) -> &str {
-        std::str::from_utf8(self.bytes(table, i)).unwrap_or_default()
+    /// Returns string `i` of table `t` (0 originals, 1 translations), sliced from the
+    /// pool. Spans lie on character boundaries (checked at load), so this checks
+    /// nothing but the range; an empty string would stand in for a bad one.
+    fn text(&self, t: usize, i: usize) -> &str {
+        let span = self.spans[t * self.count + i];
+        let start = span.start as usize;
+        self.pool.get(start..start + span.len as usize).unwrap_or_default()
     }
 
     /// Returns the key of entry `i` as lookups compare it: up to its first NUL, so a
     /// plural message is found by its singular msgid, as GNU's `strcmp` finds it.
     pub(crate) fn key(&self, i: usize) -> &[u8] {
-        let bytes = self.bytes(self.originals, i);
+        let bytes = self.text(ORIGINALS, i).as_bytes();
         let end = bytes.iter().position(|&c| c == 0).unwrap_or(bytes.len());
         &bytes[..end]
-    }
-
-    pub(crate) fn originals(&self) -> usize {
-        self.originals
-    }
-
-    pub(crate) fn translations(&self) -> usize {
-        self.translations
     }
 
     pub(crate) fn count(&self) -> usize {
         self.count
     }
-
-    pub(crate) fn data_len(&self) -> usize {
-        self.data.len()
-    }
 }
 
-/// What the header words say.
-struct MoHeader {
-    swapped: bool,
-    count: usize,
-    originals: usize,
-    translations: usize,
-    hash: Option<(u32, usize)>, // (size, offset), when the file has a table.
-}
-
-fn read_header(data: &[u8], name: &str) -> Result<MoHeader, Error> {
-    let swapped = match word_in(data, false, 0) {
-        Some(MO_MAGIC) => false,
-        Some(MO_MAGIC_SWAPPED) => true,
-        _ => return Err(mo_error(name, "The file does not start with the MO magic number.")),
-    };
-    let words: Vec<u32> = (1..7).filter_map(|k| word_in(data, swapped, 4 * k)).collect();
-    let &[revision, count, originals, translations, hash_size, hash_offset] = &words[..] else {
-        return Err(mo_error(name, "The MO header is truncated."));
-    };
-    if revision >> 16 > 1 {
-        let message =
-            format!("The MO file has revision {}, which no reader knows.", revision >> 16);
-        return Err(mo_error(name, &message));
-    }
-    let count = count as usize;
-    if count.saturating_mul(16) > data.len() {
-        return Err(mo_error(name, "The MO file claims more messages than it can hold."));
-    }
-    let hash = (hash_size > 2).then_some((hash_size, hash_offset as usize));
-    Ok(MoHeader {
-        swapped,
-        count,
-        originals: originals as usize,
-        translations: translations as usize,
-        hash,
-    })
-}
-
-/// Reads a word of `data` at byte `at`, or `None` past the end.
-pub(crate) fn word_in(data: &[u8], swapped: bool, at: usize) -> Option<u32> {
-    let bytes: [u8; 4] = data.get(at..at.checked_add(4)?)?.try_into().ok()?;
-    Some(if swapped { u32::from_be_bytes(bytes) } else { u32::from_le_bytes(bytes) })
-}
+const ORIGINALS: usize = 0;
+const TRANSLATIONS: usize = 1;
 
 pub(crate) fn mo_error(name: &str, message: &str) -> Error {
     let hint = "Recompile the catalog from its .po file (msgfmt), or point Guidedog at the .po.";
@@ -264,41 +199,22 @@ pub(crate) fn mo_error(name: &str, message: &str) -> Error {
 }
 
 impl MoCatalog {
-    /// Checks that every table entry lies in the file, ends in NUL, and is UTF-8.
-    fn check_strings(&self) -> Result<(), Error> {
-        for table in [self.originals, self.translations] {
-            let table_end = self.count.checked_mul(8).and_then(|n| n.checked_add(table));
-            if table_end.is_none_or(|end| end > self.data.len()) {
-                return Err(mo_error(&self.name, "A string table lies outside the file."));
-            }
-            for i in 0..self.count {
-                let (length, offset) = self.span(table, i);
-                let nul = offset.checked_add(length).and_then(|end| self.data.get(end));
-                if nul != Some(&0) {
-                    let message = format!("String {i} points outside the file or lacks its NUL.");
-                    return Err(mo_error(&self.name, &message));
-                }
-                if std::str::from_utf8(self.bytes(table, i)).is_err() {
-                    return Err(mo_error(&self.name, &format!("String {i} is not valid UTF-8.")));
-                }
-            }
-        }
-        Ok(())
-    }
-
     /// Picks how lookups find keys: the hash table when it is sound, else binary search
     /// on the table (or on an order built here when the table is not sorted).
-    fn choose_search(&self, hash: Option<(u32, usize)>) -> Result<MoSearch, Error> {
+    fn choose_search(&mut self, hash_slots: Option<Box<[u32]>>) -> Result<(), Error> {
         let order = crate::mo_check::sorted_order(self)?;
-        if let Some((size, offset)) = hash
-            && let Some(probes) = crate::mo_check::hash_probes(self, size, offset)
+        if let Some(slots) = hash_slots
+            && let Some(probes) = crate::mo_check::hash_probes(self, &slots)
         {
-            return Ok(MoSearch::Hash { size, offset, probes });
+            self.search = MoSearch::Hash { size: slots.len() as u32, probes };
+            self.hash_slots = slots;
+            return Ok(());
         }
-        Ok(match order {
+        self.search = match order {
             None => MoSearch::Sorted,
             Some(order) => MoSearch::Permuted(order),
-        })
+        };
+        Ok(())
     }
 
     /// Applies the header entry: its charset must be UTF-8, and a Plural-Forms field
@@ -324,31 +240,26 @@ impl MoCatalog {
     /// Finds the entry whose key is `ctx \x04 id` (or `id`).
     pub(crate) fn find_entry(&self, id: &str, ctx: Option<&str>) -> Option<usize> {
         match &self.search {
-            MoSearch::Hash { size, offset, probes } => {
-                self.find_by_hash(*size, *offset, *probes, id, ctx)
-            }
+            MoSearch::Hash { probes, .. } => self.find_by_hash(*probes, id, ctx),
             MoSearch::Sorted => self.find_sorted(id, ctx, |i| i),
             MoSearch::Permuted(order) => self.find_sorted(id, ctx, |i| order[i] as usize),
         }
     }
 
     /// Probes the hash table as GNU gettext does, at most `probes` times.
-    pub(crate) fn find_by_hash(
-        &self,
-        size: u32,
-        offset: usize,
-        probes: u32,
-        id: &str,
-        ctx: Option<&str>,
-    ) -> Option<usize> {
+    pub(crate) fn find_by_hash(&self, probes: u32, id: &str, ctx: Option<&str>) -> Option<usize> {
+        let size = self.hash_slots.len() as u32;
+        if size < 3 {
+            return None;
+        }
         let h = hash_query(id, ctx);
         let (mut slot, step) = (h % size, 1 + h % (size - 2));
         for _ in 0..probes {
-            let entry = self.word(offset + 4 * slot as usize) as usize;
+            let entry = self.hash_slots[slot as usize] as usize;
             if entry == 0 {
                 return None;
             }
-            if entry <= self.count && compare_key(self.key(entry - 1), id, ctx).is_eq() {
+            if entry <= self.count && is_key(self.text(ORIGINALS, entry - 1), id, ctx) {
                 return Some(entry - 1);
             }
             slot = (slot + step) % size;
@@ -379,7 +290,7 @@ impl MoCatalog {
 impl Lookup for MoCatalog {
     fn find(&self, id: &str, ctx: Option<&str>) -> Option<Forms<'_>> {
         let i = self.find_entry(id, ctx)?;
-        Some(Forms::from_joined(self.text(self.translations, i)))
+        Some(Forms::from_joined(self.text(TRANSLATIONS, i)))
     }
 
     fn plural_rule(&self) -> &PluralRule {
@@ -402,6 +313,25 @@ pub(crate) fn compare_key(key: &[u8], id: &str, ctx: Option<&str>) -> Ordering {
         }
         unequal => unequal,
     }
+}
+
+/// Tells whether a stored key (with its plural part, if any) is the key a lookup asks
+/// for: the lookup key, then the end or a NUL. The lengths are compared first, so most
+/// other keys a probe meets are turned away without reading them.
+fn is_key(stored: &str, id: &str, ctx: Option<&str>) -> bool {
+    let stored = stored.as_bytes();
+    let ctx_len = ctx.map_or(0, |c| c.len() + 1);
+    let len = ctx_len + id.len();
+    let ends_there = stored.len() == len || stored.get(len) == Some(&0);
+    if !ends_there {
+        return false;
+    }
+    let matches_ctx = match ctx {
+        Some(c) => stored.starts_with(c.as_bytes()) && stored[c.len()] == 4,
+        None => true,
+    };
+    // A stored key has no NUL before its plural part, so neither may the msgid.
+    matches_ctx && &stored[ctx_len..len] == id.as_bytes() && !id.contains('\0')
 }
 
 /// hashpjw of the lookup key `ctx \x04 id`, hashed slice by slice.

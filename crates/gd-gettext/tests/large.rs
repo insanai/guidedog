@@ -32,6 +32,20 @@ unsafe impl GlobalAlloc for Counting {
         unsafe { System.alloc(layout) }
     }
 
+    unsafe fn realloc(&self, ptr: *mut u8, layout: Layout, new_size: usize) -> *mut u8 {
+        // Forwarded, so an in-place grow or shrink stays in place, as without counting.
+        let old = layout.size();
+        if new_size > old {
+            let live = LIVE.fetch_add(new_size - old, Ordering::Relaxed) + new_size - old;
+            PEAK.fetch_max(live, Ordering::Relaxed);
+            TOTAL.fetch_add(new_size - old, Ordering::Relaxed);
+        } else {
+            LIVE.fetch_sub(old - new_size, Ordering::Relaxed);
+        }
+        // SAFETY: `ptr` came from `System` with `layout`, as `GlobalAlloc::realloc` requires.
+        unsafe { System.realloc(ptr, layout, new_size) }
+    }
+
     unsafe fn dealloc(&self, ptr: *mut u8, layout: Layout) {
         LIVE.fetch_sub(layout.size(), Ordering::Relaxed);
         // SAFETY: `ptr` was allocated by `System` with this layout, in `alloc` above.
@@ -93,22 +107,21 @@ fn large_catalog() -> Catalog {
     cat
 }
 
-/// Times `rounds` lookups of present and missing keys; returns lookups per second.
-fn lookups_per_second(cat: &dyn Lookup, rounds: usize) -> f64 {
+/// Times `rounds` lookups of 1000 keys, present (`hits`) or missing; returns lookups
+/// per second.
+fn lookups_per_second(cat: &dyn Lookup, rounds: usize, hits: bool) -> f64 {
+    let suffix = if hits { "" } else { "!" };
     let keys: Vec<String> = (0..1000)
-        .map(|k| format!("Message number {:07} of the large catalog", (k * 7919 + 1) % MESSAGES))
+        .map(|k| (k * 7919 + 1) % MESSAGES)
+        .map(|n| format!("Message number {n:07} of the large catalog{suffix}"))
         .collect();
     let start = Instant::now();
     let mut found = 0;
     for r in 0..rounds {
-        let key = &keys[r % keys.len()];
-        if cat.translation(key, None).is_some() {
-            found += 1;
-        }
-        found += usize::from(cat.translation("Missing key", None).is_some());
+        found += usize::from(cat.translation(&keys[r % keys.len()], None).is_some());
     }
-    assert!(found > 0);
-    (2 * rounds) as f64 / start.elapsed().as_secs_f64()
+    assert_eq!(found > 0, hits);
+    rounds as f64 / start.elapsed().as_secs_f64()
 }
 
 #[test]
@@ -137,8 +150,11 @@ fn large_catalogs() {
     let _ = std::fs::remove_file(&file);
 
     let rounds = 1_000_000;
-    println!("lookups/s, Catalog index:   {:>12.0}", lookups_per_second(&copied, rounds));
-    println!("lookups/s, MoCatalog:       {:>12.0}", lookups_per_second(&mo, rounds));
+    for (what, cat) in [("Catalog index", &copied as &dyn Lookup), ("MoCatalog", &mo)] {
+        let hits = lookups_per_second(cat, rounds, true);
+        let misses = lookups_per_second(cat, rounds, false);
+        println!("lookups/s, {what:<14} hits {hits:>12.0}   misses {misses:>12.0}");
+    }
     drop(copied);
 
     let (parsed, cost) = measure(|| parse_po(&text, "large.po").expect("parses"));

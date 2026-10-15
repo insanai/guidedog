@@ -77,11 +77,11 @@ fn mo_includes_fuzzy_on_request() {
 fn mo_hash_table_finds_every_key() {
     let bytes = write_mo(&russian(), false).expect("RU compiles");
     let mo = MoCatalog::from_bytes(bytes, "ru.mo").expect("the MO file reads");
-    let MoSearch::Hash { size, offset, probes } = *mo.search() else {
+    let MoSearch::Hash { probes, .. } = *mo.search() else {
         panic!("our own file's hash table is not used: {:?}", mo.search());
     };
     for (i, e) in mo.entries().enumerate() {
-        assert_eq!(mo.find_by_hash(size, offset, probes, e.id, e.ctx), Some(i), "{e:?}");
+        assert_eq!(mo.find_by_hash(probes, e.id, e.ctx), Some(i), "{e:?}");
     }
 }
 

@@ -27,6 +27,7 @@ mod load;
 mod lookup;
 mod merge;
 mod mo_check;
+mod mo_raw;
 mod mo_read;
 mod mo_write;
 mod plural;

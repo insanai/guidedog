@@ -113,7 +113,7 @@ fn every_search_agrees() {
         let cat = random_catalog(&mut rng, n);
         let bytes = write_mo(&cat, false).expect("compiles");
         let mo = MoCatalog::from_bytes(bytes.clone(), "r.mo").expect("reads");
-        let MoSearch::Hash { size, offset, probes } = *mo.search() else {
+        let MoSearch::Hash { probes, .. } = *mo.search() else {
             panic!("n={n}: {:?}", mo.search());
         };
         let unsorted = MoCatalog::from_bytes(swap_entries(&bytes, 1, 2), "u.mo");
@@ -122,7 +122,7 @@ fn every_search_agrees() {
         queries.extend((0..50).map(|i| (None, format!("missing {i}"))));
         for (ctx, id) in &queries {
             let ctx = ctx.as_deref();
-            let by_hash = mo.find_by_hash(size, offset, probes, id, ctx);
+            let by_hash = mo.find_by_hash(probes, id, ctx);
             let by_sort = mo.find_sorted(id, ctx, |i| i);
             assert_eq!(by_hash, by_sort, "n={n} {ctx:?} {id:?}");
             let want: Vec<&str> =
@@ -247,4 +247,23 @@ fn parse_mo_copies_every_entry() {
     assert_eq!(cat.messages.len(), 5);
     assert_eq!(cat.with_context("noun", "Open"), "Открытое");
     assert_eq!(cat.plural("%d file", "%d files", 5), "%d файлов");
+}
+
+/// A file whose string region holds bytes that are not UTF-8 between strings still
+/// reads: the strings are then copied into a new pool instead of reusing the buffer.
+#[test]
+fn a_gap_that_is_not_utf8_is_copied_around() {
+    let mut bytes = MSGFMT_MO.to_vec();
+    let word = |b: &[u8], at: usize| u32::from_le_bytes(b[at..at + 4].try_into().expect("w"));
+    let translations = word(&bytes, 16) as usize;
+    let last = translations + 8 * (word(&bytes, 8) as usize - 1);
+    let (len, off) = (word(&bytes, last) as usize, word(&bytes, last + 4) as usize);
+    let moved = bytes[off..off + len].to_vec();
+    bytes.extend_from_slice(b"\xff\xfe");
+    let new_off = bytes.len() as u32;
+    bytes.extend_from_slice(&moved);
+    bytes.push(0);
+    bytes[last + 4..last + 8].copy_from_slice(&new_off.to_le_bytes());
+    let mo = MoCatalog::from_bytes(bytes, "gap.mo").expect("a file with a gap reads");
+    check_russian(&mo);
 }

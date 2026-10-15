@@ -1,41 +1,11 @@
-//! The checks a [`MoCatalog`] makes once at load, so its lookups can trust the file,
-//! and the copy into an editable [`Catalog`].
+//! The checks a [`MoCatalog`] makes on its keys once at load, so its lookups can trust
+//! the table order and the hash table, and the copy into an editable [`Catalog`].
 
 use std::cmp::Ordering;
 
 use crate::catalog::{Catalog, Message};
 use crate::error::{Error, memory_error};
 use crate::mo_read::{MAX_HASH_PROBES, MoCatalog, hashpjw, mo_error};
-
-/// Refuses a file whose strings share bytes. msgfmt and every other compiler write each
-/// string once, apart from the others; a file whose table points many entries at the
-/// same bytes would make each entry check and copy them again, so a small file could
-/// cost as much as a large one. Empty strings hold no bytes and may point anywhere.
-/// Sorting the spans makes the check n log n; afterwards reading costs the file's size.
-pub(crate) fn check_apart(mo: &MoCatalog, name: &str) -> Result<(), Error> {
-    // (offset, length, entry), as u32: the file's own word size keeps this list small.
-    let mut spans: Vec<(u32, u32, u32)> = Vec::new();
-    spans.try_reserve(2 * mo.count()).map_err(|_| memory_error(name))?;
-    for table in [mo.originals(), mo.translations()] {
-        for i in 0..mo.count() {
-            let (length, offset) = mo.span(table, i);
-            if length > 0 {
-                spans.push((offset as u32, length as u32, i as u32));
-            }
-        }
-    }
-    spans.sort_unstable();
-    for pair in spans.windows(2) {
-        let ((a_offset, a_length, a), (b_offset, _, b)) = (pair[0], pair[1]);
-        if u64::from(b_offset) < u64::from(a_offset) + u64::from(a_length) {
-            let message = format!(
-                "Strings {a} and {b} share bytes; a compiled catalog keeps each string apart."
-            );
-            return Err(mo_error(name, &message));
-        }
-    }
-    Ok(())
-}
 
 /// Checks the keys are sorted and distinct, as binary search needs. Returns `None` for
 /// a sorted table, or the sorted order of an unsorted one. Fails when two entries have
@@ -63,18 +33,15 @@ pub(crate) fn sorted_order(mo: &MoCatalog) -> Result<Option<Box<[u32]>>, Error> 
 /// checking costs at most that many probes per key). Returns
 /// the most probes any key took, or `None` when the table cannot be trusted (it is
 /// then ignored; binary search serves instead).
-pub(crate) fn hash_probes(mo: &MoCatalog, size: u32, offset: usize) -> Option<u32> {
-    let end = (size as usize).checked_mul(4)?.checked_add(offset)?;
-    if end > mo.data_len() {
-        return None;
-    }
+pub(crate) fn hash_probes(mo: &MoCatalog, slots: &[u32]) -> Option<u32> {
+    let size = u32::try_from(slots.len()).ok().filter(|&size| size > 2)?;
     let mut most = 0;
     for i in 0..mo.count() {
         let h = hashpjw(mo.key(i));
         let (mut slot, step) = (h % size, 1 + h % (size - 2));
         let mut probes = 1;
         loop {
-            match mo.word(offset + 4 * slot as usize) as usize {
+            match slots[slot as usize] as usize {
                 0 => return None,
                 entry if entry == i + 1 => break,
                 _ if probes >= MAX_HASH_PROBES.min(size) => return None,

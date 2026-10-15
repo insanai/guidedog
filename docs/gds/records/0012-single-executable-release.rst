@@ -1,6 +1,6 @@
 :gds-number: 0012
 :gds-title: Single executable release
-:gds-state: accepted
+:gds-state: committed
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-10-15
@@ -86,3 +86,13 @@ References
 
    2026-10-15: discussion -> accepted. Pages and discussions extend guidedog;
    Graphdog encapsulates Graphviz as a library
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-10-15: accepted -> committed. Published one executable with linked Pages
+   and discussion plugins; Graphdog remains a Graphviz library.
+   https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.1 ;
+   https://github.com/insanai/guidedog/actions/runs/38732558360 ;
+   https://github.com/insanai/homebrew-guidedog/actions/runs/38737499042

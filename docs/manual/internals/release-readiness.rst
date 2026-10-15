@@ -47,7 +47,7 @@ What we verified
 What we measured
 ----------------
 
-The release program ``guidedog`` is one file of 88.9 MB. It embeds Typst, links Graphviz statically and speaks HTTPS through rustls. On Linux it needs only the C library, ``libm`` and ``libgcc_s``.
+The Linux x86-64 release program ``guidedog`` is one file of 90.2 MB. It embeds Typst, links Graphviz statically and speaks HTTPS through rustls. On Linux it needs only the C library, ``libm`` and ``libgcc_s``.
 
 The manual (85 documents) builds in 0.52 s from a cold start and in 0.13 s when nothing changed. CPython's manual (589 pages) builds as HTML in 1.24 s with a peak of 219 MB, Django's (678 pages) in 2.66 s with 127 MB. Of the 16 pairs of reader and renderer, 10 allocate nothing when they convert the same text again, and the others allocate one to five times.
 
@@ -64,8 +64,6 @@ Work not yet done
 
 #. **Large books.** The CPython book did not fit a machine with 12 GB of memory: Typst lays out the whole book in one compilation. CPython splits its PDF into about 40 books, which ``conf.py`` computes; declared as ``pdf_documents``, each is much smaller. Guidedog now empties Typst's cache after every book.
 #. **Unchanged builds.** An unchanged build of CPython's manual takes 0.92 s and 170 MB, close to the 1.24 s of a clean build. Most of that time is checking and loading what the last build stored. We should profile it.
-#. **Other platforms.** We checked that Windows and macOS compile. We did not run the tests or the release programs there.
-#. **Credential store.** The store of ``guidedog pages`` was not tried against a real keyring. ``cargo xtask release credential-store`` runs it against a private Secret Service, which this machine lacks.
 #. **Translations.** The six translations were made by machine with a glossary. A native speaker of each language should read them before we call them final.
 
 Known limits
@@ -79,4 +77,4 @@ Known limits
 Recommendation
 --------------
 
-We recommend tagging ``1.0.0-beta.1``. The work not yet done can follow in later betas.
+We published ``v1.0.0-beta.1`` after source qualification, platform archive smoke tests and Homebrew checks. :doc:`../evidence/release-1.0.0-beta.1` records the release, download checksums and automatic tap update. The work not yet done can follow in later betas.

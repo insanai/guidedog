@@ -47,6 +47,6 @@ Discussion registry
      - committed
    * - 0012
      - :doc:`records/0012-single-executable-release`
-     - accepted
+     - committed
 
 .. gds-generated-end

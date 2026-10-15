@@ -1,0 +1,872 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../tutorial/a-custom-theme.rst:1
+msgid "Build a project theme"
+msgstr "プロジェクトのテーマを作る"
+
+#: ../../tutorial/a-custom-theme.rst:4
+msgid ""
+"A theme gives the same content two reading forms: a website and a book. "
+"This tutorial builds an Orbit theme with a shared visual identity, an "
+"HTML partial and macro, and a modular PDF template. It needs no plugin or "
+"compiler."
+msgstr ""
+"テーマは同じ内容を Web と書籍の 2 つの形で読みやすくします。ここでは Orbit の統一デザインを、HTML "
+"の部分テンプレートとマクロ、分割した PDF テンプレートで作ります。プラグインもコンパイラーも不要です。"
+
+#: ../../tutorial/a-custom-theme.rst:8
+msgid "1. Start with a real project"
+msgstr "1. 実際のプロジェクトから始める"
+
+#: ../../tutorial/a-custom-theme.rst:11
+msgid ""
+"Use Guidedog 0.6.2 or newer. Run this from the directory that will "
+"contain ``orbit``:"
+msgstr "Guidedog 0.6.2 以降を使い、``orbit`` を作る親ディレクトリで実行します。"
+
+#: ../../tutorial/a-custom-theme.rst:17
+msgid ""
+"Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
+"in the same directory. Keep this file: it supplies the tested page "
+"layout, cover, running heads, contents, code styles and optimized "
+"paragraph breaking."
+msgstr ""
+"生成された ``orbit/_templates/book.typ`` を、同じ場所で ``base-book.typ`` "
+"に改名します。ページ構成、表紙、柱、目次、コード、最適化された段落組版を提供するので残してください。"
+
+#: ../../tutorial/a-custom-theme.rst:21
+msgid ""
+"Download :download:`conf.toml <../_static/repository/theme/conf.toml>`, "
+":download:`index.rst <../_static/repository/theme/index.rst>` and "
+":download:`reading.rst "
+"<../_static/repository/theme/chapters/reading.rst>`. Save the first two "
+"in ``orbit`` and the third in ``orbit/chapters``. The finished project "
+"will have these files:"
+msgstr ""
+":download:`conf.toml "
+"<../_static/repository/theme/conf.toml>`、:download:`index.rst "
+"<../_static/repository/theme/index.rst>`、:download:`reading.rst "
+"<../_static/repository/theme/chapters/reading.rst>` をダウンロードします。最初の 2 つは "
+"``orbit``、3 つ目は ``orbit/chapters`` に保存します。完成時の構成は次のとおりです。"
+
+#: ../../tutorial/a-custom-theme.rst:45
+msgid "2. Set the contract"
+msgstr "2. 設定を定める"
+
+#: ../../tutorial/a-custom-theme.rst:48
+msgid ""
+"The downloaded configuration selects the local template and static "
+"directories. ``html_css_files`` adds our stylesheet after the default "
+"stylesheet. ``html_context`` supplies a project value to Jinja. The "
+"explicit PDF filename makes the output easy to find."
+msgstr ""
+"設定はローカルのテンプレートと静的ファイルを指定します。``html_css_files`` は既定 CSS "
+"の後に追加され、``html_context`` は値を Jinja に渡します。PDF のファイル名も明示します。"
+
+#: ../../tutorial/a-custom-theme.rst:55
+msgid "orbit/conf.toml"
+msgstr "orbit/conf.toml"
+
+#: ../../tutorial/a-custom-theme.rst:57
+msgid ""
+"All paths in this tutorial are project files. HTML templates are found "
+"through ``templates_path``. The PDF entry point is always "
+"``_templates/book.typ`` under the source directory; changing "
+"``templates_path`` does not move it."
+msgstr ""
+"ここで扱うのはすべてプロジェクトのファイルです。HTML は ``templates_path`` から探します。PDF の入口はソース配下の "
+"``_templates/book.typ`` で固定され、``templates_path`` を変えても移動しません。"
+
+#: ../../tutorial/a-custom-theme.rst:61
+msgid "3. Extend the HTML layout"
+msgstr "3. HTML レイアウトを拡張する"
+
+#: ../../tutorial/a-custom-theme.rst:64
+msgid ""
+"Save :download:`layout.html "
+"<../_static/repository/theme/_templates/layout.html>` as "
+"``orbit/_templates/layout.html``. Replace the generated file completely:"
+msgstr ""
+":download:`layout.html "
+"<../_static/repository/theme/_templates/layout.html>` を "
+"``orbit/_templates/layout.html`` に保存し、生成済みの内容をすべて置き換えます。"
+
+#: ../../tutorial/a-custom-theme.rst:69
+msgid "orbit/_templates/layout.html"
+msgstr "orbit/_templates/layout.html"
+
+#: ../../tutorial/a-custom-theme.rst:71
+msgid ""
+"``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a "
+"template named ``layout.html`` would try to extend itself. ``super()`` "
+"keeps the parent's block content. Navigation, search, theme controls and "
+"accessible landmarks remain in the base layout. Our blocks add a label, "
+"metadata and an edition footer."
+msgstr ""
+"``!layout.html`` は組み込みレイアウトを選びます。``!`` がなければ自分自身を継承してしまいます。``super()`` "
+"は親ブロックを残します。案内、検索、テーマ操作、アクセシブルなランドマークは基底に任せ、ラベル、メタデータ、版のフッターだけを加えます。"
+
+#: ../../tutorial/a-custom-theme.rst:76
+msgid ""
+"A theme changes presentation. A build plugin changes source text, "
+"complete HTML or generated assets. Use :doc:`../plugins` when a template "
+"cannot express the required operation. Ordinary layout changes need no "
+"native code."
+msgstr ""
+"テーマは見た目を、ビルドプラグインはソース・完全な HTML・生成アセットを変えます。テンプレートでは表せない処理には "
+":doc:`../plugins` を参照してください。通常のレイアウト変更にネイティブコードは要りません。"
+
+#: ../../tutorial/a-custom-theme.rst:80
+msgid "4. Give repeated markup one home"
+msgstr "4. 共通のマークアップをまとめる"
+
+#: ../../tutorial/a-custom-theme.rst:83
+msgid ""
+"Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. "
+"Save :download:`ui.html "
+"<../_static/repository/theme/_templates/macros/ui.html>` and "
+":download:`edition.html "
+"<../_static/repository/theme/_templates/partials/edition.html>` at the "
+"matching paths:"
+msgstr ""
+"``orbit/_templates/macros`` と ``orbit/_templates/partials`` "
+"を作り、:download:`ui.html "
+"<../_static/repository/theme/_templates/macros/ui.html>` と "
+":download:`edition.html "
+"<../_static/repository/theme/_templates/partials/edition.html>` "
+"をそれぞれ保存します。"
+
+#: ../../tutorial/a-custom-theme.rst:90
+msgid "orbit/_templates/macros/ui.html"
+msgstr "orbit/_templates/macros/ui.html"
+
+#: ../../tutorial/a-custom-theme.rst:94
+msgid "orbit/_templates/partials/edition.html"
+msgstr "orbit/_templates/partials/edition.html"
+
+#: ../../tutorial/a-custom-theme.rst:96
+msgid ""
+"A macro takes explicit inputs. An included partial uses the current "
+"page's context. Escape plain project values with ``|e``. Use ``pathto`` "
+"for document links: a hard-coded ``chapters/reading.html`` would break on "
+"a nested page or with another HTML builder."
+msgstr ""
+"マクロは引数を明示し、部分テンプレートは現在のページの文脈を使います。通常の値は ``|e`` でエスケープします。文書リンクは "
+"``pathto`` で作ります。``chapters/reading.html`` と固定すると、深いページや別ビルダーで壊れます。"
+
+#: ../../tutorial/a-custom-theme.rst:101
+msgid "5. Design for the reader's theme"
+msgstr "5. 読者のテーマ選択に合わせる"
+
+#: ../../tutorial/a-custom-theme.rst:104
+msgid ""
+"Save :download:`theme.css "
+"<../_static/repository/theme/_static/theme.css>` as "
+"``orbit/_static/theme.css``:"
+msgstr ""
+":download:`theme.css <../_static/repository/theme/_static/theme.css>` を "
+"``orbit/_static/theme.css`` に保存します。"
+
+#: ../../tutorial/a-custom-theme.rst:109
+msgid "orbit/_static/theme.css"
+msgstr "orbit/_static/theme.css"
+
+#: ../../tutorial/a-custom-theme.rst:111
+msgid ""
+"The theme begins in light mode. The existing control selects light, dark "
+"or system and saves the choice. Explicit dark rules and the system media "
+"query use the same tokens. Typography and spacing stay shared. No new "
+"JavaScript is needed. Avoid a fixed ink color on a background whose theme "
+"can change."
+msgstr ""
+"初期状態はライトです。既存の操作部がライト・ダーク・システムを選び、選択を保存します。明示的なダーク指定とシステム用クエリーで同じ変数を使い、組版と余白は共有します。JavaScript "
+"の追加は不要です。背景が変わる場所で文字色だけを固定しないでください。"
+
+#: ../../tutorial/a-custom-theme.rst:116
+msgid ""
+"Browser hyphenation follows the page language. It is not Typst's "
+"paragraph optimizer. The manual's optional English web optimizer is "
+"described separately in :doc:`../topics/typography`; this example uses "
+"native browser layout."
+msgstr ""
+"ブラウザーの分綴はページの言語に従いますが、Typst の段落最適化と同じではありません。本書の任意の英文 Web 最適化は "
+":doc:`../topics/typography` を参照してください。この例は標準のブラウザー組版を使います。"
+
+#: ../../tutorial/a-custom-theme.rst:120
+msgid ""
+"Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in "
+"current Guidedog builds. Ordinary graphs retain their own colors. Older "
+"hosts render the same DOT in its light palette. See "
+":doc:`../topics/diagrams` for semantic node classes and print behavior."
+msgstr ""
+"現在のビルドでは ``:class: graphviz-adaptive`` "
+"の図が選択した配色に従います。通常の図は元の色を保ち、旧ホストでも同じ DOT を明るい配色で描けます。ノードの役割と印刷は "
+":doc:`../topics/diagrams` を参照してください。"
+
+#: ../../tutorial/a-custom-theme.rst:125
+msgid "6. Wrap the PDF book"
+msgstr "6. PDF の書籍を包む"
+
+#: ../../tutorial/a-custom-theme.rst:128
+msgid ""
+"Save :download:`palette.typ "
+"<../_static/repository/theme/_templates/palette.typ>` and "
+":download:`book.typ <../_static/repository/theme/_templates/book.typ>` in "
+"``orbit/_templates``. These are new files; keep ``base-book.typ`` beside "
+"them."
+msgstr ""
+":download:`palette.typ "
+"<../_static/repository/theme/_templates/palette.typ>` と "
+":download:`book.typ <../_static/repository/theme/_templates/book.typ>` を "
+"``orbit/_templates`` に保存します。新規ファイルです。隣の ``base-book.typ`` は残します。"
+
+#: ../../tutorial/a-custom-theme.rst:134
+msgid "orbit/_templates/palette.typ"
+msgstr "orbit/_templates/palette.typ"
+
+#: ../../tutorial/a-custom-theme.rst:138
+msgid "orbit/_templates/book.typ"
+msgstr "orbit/_templates/book.typ"
+
+#: ../../tutorial/a-custom-theme.rst:140
+msgid ""
+"The host calls ``book`` with metadata and the chapter content. The "
+"wrapper forwards those values to the generated base and supplies our "
+"palette. Passing ``body`` into the styled function keeps its rules in "
+"scope. The web stylesheet does not affect PDF; the Typst template does "
+"not affect HTML."
+msgstr ""
+"ホストは ``book`` にメタデータと章の内容を渡します。ラッパーはそれらと配色を基底へ転送します。``body`` "
+"をスタイル付き関数に渡すと規則が本文まで届きます。Web の CSS は PDF に、Typst は HTML に影響しません。"
+
+#: ../../tutorial/a-custom-theme.rst:145
+msgid ""
+"The base handles language-aware hyphenation and optimized line breaking. "
+"The wrapper keeps those rules, uses the matching blue accent and adds "
+"page numbers to document cross-references. PDF always uses the light, "
+"print palette."
+msgstr ""
+"基底は言語別の分綴と改行最適化を担当します。ラッパーはこれを残し、Web と同じ青のアクセントと文書参照のページ番号を加えます。PDF "
+"は常に印刷用の明るい配色です。"
+
+#: ../../tutorial/a-custom-theme.rst:149
+msgid "7. Build and inspect both forms"
+msgstr "7. 両形式を確認する"
+
+#: ../../tutorial/a-custom-theme.rst:152
+msgid "Run from the same parent directory as step 1:"
+msgstr "手順 1 と同じ親ディレクトリで実行します。"
+
+#: ../../tutorial/a-custom-theme.rst:162
+msgid ""
+"Open the URL printed by ``serve``. Check the chapter and generated search "
+"page, not only the front page. Try light, dark and system modes. Resize "
+"the window. Use the keyboard to reach the navigation and search. Change "
+"the footer partial, save, then refresh: the preview rebuilds its template "
+"dependencies."
+msgstr ""
+"``serve`` の URL "
+"を開き、トップだけでなく章と検索ページも確認します。ライト・ダーク・システム、狭い画面、キーボードでの案内と検索を試します。フッターを保存して再読み込みすると、依存するページが再構築されます。"
+
+#: ../../tutorial/a-custom-theme.rst:167
+msgid ""
+"Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog "
+"adds the language suffix to the configured filename. Inspect the "
+"contents, chapter opening, equation, table, code and diagram. Look for "
+"clipped labels, loose paragraphs and missing glyphs. The other outputs "
+"are below ``_build/html``, ``_build/dirhtml`` and ``_build/singlehtml``. "
+"Stop the server with ``Ctrl+C``."
+msgstr ""
+"PDF リーダーで ``orbit/_build/pdf/orbit-notes-en.pdf`` "
+"を開きます。設定名には言語の接尾辞が付きます。目次、章の開始、数式、表、コード、図を見て、欠けたラベル、空きすぎる行、欠字がないか確認します。他の出力は "
+"``_build/html``、``_build/dirhtml``、``_build/singlehtml`` です。停止は "
+"``Ctrl+C`` です。"
+
+#: ../../tutorial/a-custom-theme.rst:174
+msgid "8. Reuse and maintain the theme"
+msgstr "8. 再利用して保守する"
+
+#: ../../tutorial/a-custom-theme.rst:177
+msgid ""
+"Create another project with ``guidedog quickstart``. Copy the finished "
+"``_templates`` directory and ``_static/theme.css`` into it. Add "
+"``html_css_files = [\"theme.css\"]``, the accent option and the "
+"``edition_label`` context value to its configuration. Change the footer's "
+"document link to a page that exists in that project. Keep the new "
+"project's metadata and source tree."
+msgstr ""
+"``guidedog quickstart`` で別のプロジェクトを作り、完成した ``_templates`` と "
+"``_static/theme.css`` をコピーします。設定に ``html_css_files = "
+"[\"theme.css\"]``、アクセント色、``edition_label`` "
+"を加えます。フッターのリンクは実在する文書へ変え、移行先のメタデータとソースは保ちます。"
+
+#: ../../tutorial/a-custom-theme.rst:183
+msgid ""
+"The copied PDF base makes the theme self-contained. When upgrading "
+"Guidedog, create a scratch quickstart project and compare its templates "
+"with your saved base. Adopt the changes you need, then rebuild every "
+"target. The built-in HTML layout can evolve too; small block overrides "
+"are easier to maintain than a second complete layout. For every variable "
+"and block, see :doc:`../templates`."
+msgstr ""
+"PDF の基底も保存するのでテーマは自己完結します。更新時は試しの quickstart "
+"を作り、保存済みの基底と比べ、必要な変更を取り込んで全形式を再ビルドします。組み込み HTML "
+"も変化するため、全体を複製するより小さなブロック上書きの方が保守しやすくなります。契約は :doc:`../templates` "
+"を参照してください。"
+
+#: ../../tutorial/a-custom-theme.rst:189
+msgid ""
+"If the build reports a missing ``base-book.typ``, finish the rename in "
+"step 1. If the label is blank, set ``edition_label`` in ``html_context``. "
+"If CSS is missing, check both ``html_static_path`` and "
+"``html_css_files``. Read the file, line and correction in the diagnostic "
+"before changing unrelated settings."
+msgstr ""
+"``base-book.typ`` がないという診断なら手順 1 の改名を確認します。ラベルが空なら ``html_context`` の "
+"``edition_label``、CSS がなければ ``html_static_path`` と ``html_css_files`` "
+"を確認します。無関係な設定を変える前に、診断のファイル、行、修正案を読んでください。"
+
+#: ../../tutorial/a-small-book.rst:1
+msgid "Make a small book"
+msgstr "小さな本を作る"
+
+#: ../../tutorial/a-small-book.rst:4
+msgid ""
+"A website is an interconnected web of pages that readers explore "
+"non-linearly. A book, by contrast, requires a deliberate, sequential "
+"reading order with numbered chapters, running headers, and formal front "
+"matter."
+msgstr "Web はリンクをたどって読むものです。書籍には順序、章番号、柱、前付けが必要です。"
+
+#: ../../tutorial/a-small-book.rst:8
+msgid ""
+"In Guidedog, the table of contents directive (``toctree``) provides the "
+"bridge between both formats. A single ``toctree`` organizes your "
+"documents into a hierarchical sidebar tree for the web and a linear "
+"chapter progression for the PDF book."
+msgstr "``toctree`` が両者をつなぎます。同じ目次が Web の階層案内と PDF の章順を定めます。"
+
+#: ../../tutorial/a-small-book.rst:14
+msgid ""
+"The root document toctree maps into an interactive sidebar and "
+"breadcrumbs on the web, and numbered chapters in print."
+msgstr "ルートの toctree は Web のサイドバーとパンくず、印刷の番号付き章に反映されます。"
+
+#: ../../tutorial/a-small-book.rst:14
+msgid ""
+"How a single toctree shapes both web navigation and sequential book "
+"chapters."
+msgstr "1 つの toctree から Web の案内と書籍の章順を作ります。"
+
+#: ../../tutorial/a-small-book.rst:35
+msgid "1. Add a new chapter"
+msgstr "1. 章を追加する"
+
+#: ../../tutorial/a-small-book.rst:38
+msgid ""
+"In your ``notes`` project, create a new document named "
+"``measurement.rst``:"
+msgstr "``notes`` に ``measurement.rst`` を作ります。"
+
+#: ../../tutorial/a-small-book.rst:41
+msgid "notes/measurement.rst"
+msgstr "notes/measurement.rst"
+
+#: ../../tutorial/a-small-book.rst:64
+msgid ""
+"Notice the section label ``.. _measurement-units:`` placed directly above "
+"the heading. Labels establish cross-reference targets that work "
+"identically on the web and in print."
+msgstr "見出しの直前の ``.. _measurement-units:`` が参照先を定義します。Web と書籍のどちらでも使えます。"
+
+#: ../../tutorial/a-small-book.rst:67
+msgid "2. Structure the reading order"
+msgstr "2. 読む順序を決める"
+
+#: ../../tutorial/a-small-book.rst:70
+msgid "Open ``notes/index.rst`` and declare the table of contents:"
+msgstr "``notes/index.rst`` を開き、目次を書きます。"
+
+#: ../../tutorial/a-small-book.rst:73
+msgid "notes/index.rst"
+msgstr "notes/index.rst"
+
+#: ../../tutorial/a-small-book.rst:92
+msgid "Understanding the toctree options:"
+msgstr "toctree のオプション："
+
+#: ../../tutorial/a-small-book.rst:94
+msgid ""
+"``:maxdepth: 2`` sets the depth of nested subheadings displayed in the "
+"table of contents."
+msgstr "``:maxdepth: 2`` は目次に載せる下位見出しの深さです。"
+
+#: ../../tutorial/a-small-book.rst:95
+msgid ""
+"``:numbered:`` activates automatic, hierarchical chapter numbering (for "
+"example, \"1. Measurement\" and \"1.1 Units of measurement\")."
+msgstr ""
+"``:numbered:`` は「1. Measurement」「1.1 Units of measurement」のような階層番号を付けます。"
+
+#: ../../tutorial/a-small-book.rst:96
+msgid ""
+"``measurement`` references the document file name without the ``.rst`` "
+"extension."
+msgstr "``measurement`` は拡張子 ``.rst`` を省いた文書名です。"
+
+#: ../../tutorial/a-small-book.rst:98
+msgid "Cross-referencing syntax:"
+msgstr "相互参照の書き方："
+
+#: ../../tutorial/a-small-book.rst:100
+msgid "``:doc:`measurement``` links to the chapter by document path."
+msgstr "``:doc:`measurement``` はパスで章へリンクします。"
+
+#: ../../tutorial/a-small-book.rst:101
+msgid ""
+"``:ref:`measurement-units``` links to the labeled section. PDF uses the "
+"section title. A book template can also add the page number through "
+"``page-ref``; see :doc:`a-custom-theme` for a working example."
+msgstr ""
+"``:ref:`measurement-units``` はラベルへリンクします。PDF は節名を使い、テンプレートの ``page-ref`` "
+"でページ番号も加えられます。動作例は :doc:`a-custom-theme` を参照してください。"
+
+#: ../../tutorial/a-small-book.rst:105
+msgid "3. Add a diagram with Graphviz"
+msgstr "3. Graphviz の図を加える"
+
+#: ../../tutorial/a-small-book.rst:108
+msgid ""
+"Visual diagrams clarify complex relationships. Guidedog embeds the "
+"Graphviz engine natively, compiling vector diagrams directly into SVG for "
+"web pages and PDF drawings for print without requiring an external "
+"browser renderer."
+msgstr ""
+"Guidedog は Graphviz をネイティブに組み込み、Web 用 SVG "
+"と印刷用のベクター図を作ります。別のブラウザーレンダラーは要りません。"
+
+#: ../../tutorial/a-small-book.rst:112
+msgid "Add a diagram to ``notes/measurement.rst``:"
+msgstr "``notes/measurement.rst`` に追加します。"
+
+#: ../../tutorial/a-small-book.rst:135
+msgid ""
+"The ``:caption:`` option supplies a caption. To number figures, add "
+"``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option provides "
+"alternative text for screen readers."
+msgstr ""
+"``:caption:`` は図の説明です。番号は ``notes/conf.toml`` の ``numfig = true`` "
+"で有効にします。``:alt:`` はスクリーンリーダー用の代替テキストです。"
+
+#: ../../tutorial/a-small-book.rst:139
+msgid "4. Build the book and inspect results"
+msgstr "4. 書籍をビルドして調べる"
+
+#: ../../tutorial/a-small-book.rst:142
+msgid "Rebuild your project:"
+msgstr "再ビルドします。"
+
+#: ../../tutorial/a-small-book.rst:149
+msgid "Inspect the results in both formats:"
+msgstr "両方の結果を確認します。"
+
+#: ../../tutorial/a-small-book.rst:151
+msgid ""
+"**HTML website:** Open ``notes/_build/html/index.html``. The sidebar now "
+"shows the numbered chapter hierarchy. Clicking \"1. Measurement\" opens "
+"the new page, complete with local breadcrumbs and the rendered SVG "
+"diagram."
+msgstr ""
+"**HTML：** ``notes/_build/html/index.html`` を開くと番号付きの章階層があります。「1. "
+"Measurement」を選び、パンくずと SVG を確認します。"
+
+#: ../../tutorial/a-small-book.rst:154
+msgid ""
+"**PDF book:** Open ``notes/_build/pdf/field-notes-en.pdf``. The contents "
+"lists the chapters and their pages. The diagram remains vector artwork, "
+"and document cross-references link to their targets."
+msgstr ""
+"**PDF：** ``notes/_build/pdf/field-notes-en.pdf`` "
+"を開きます。目次は章とページを示し、図はベクターのまま、文書参照は対象へリンクします。"
+
+#: ../../tutorial/a-small-book.rst:158
+msgid "5. Next steps"
+msgstr "5. 次に進む"
+
+#: ../../tutorial/a-small-book.rst:161
+msgid ""
+"Now that you understand the dual output model, explore the topics section "
+"to learn more:"
+msgstr "両形式の仕組みが分かったら、次の話題へ進みましょう。"
+
+#: ../../tutorial/a-small-book.rst:163
+msgid "Learn rich markup, lists, and tables in :doc:`../topics/writing`."
+msgstr "マークアップ、リスト、表は :doc:`../topics/writing` で学べます。"
+
+#: ../../tutorial/a-small-book.rst:164
+msgid ""
+"Learn how to render formulas and equations in "
+":doc:`../topics/mathematics`."
+msgstr "数式は :doc:`../topics/mathematics` で学べます。"
+
+#: ../../tutorial/a-small-book.rst:165
+msgid ""
+"Learn how to configure custom styles and book fonts in "
+":doc:`../topics/typography`."
+msgstr "独自のスタイルと書籍フォントは :doc:`../topics/typography` で学べます。"
+
+#: ../../tutorial/first-project.rst:1
+msgid "Your first project"
+msgstr "はじめてのプロジェクト"
+
+#: ../../tutorial/first-project.rst:4
+msgid ""
+"This tutorial guides you through creating, writing, and building your "
+"first documentation project with Guidedog. The goal is modest and clear: "
+"start from a clean directory, generate both an HTML website and a "
+"printable PDF book from the same source file, and experience the live "
+"preview server."
+msgstr "空のディレクトリから文書を作り、同じソースで HTML と印刷できる PDF を生成して、プレビューも試す手順です。"
+
+#: ../../tutorial/first-project.rst:9
+msgid ""
+"You need a working installation of Guidedog. For PDF output, Guidedog can "
+"use its embedded compiler or an installed Typst binary (0.15.1 or newer). "
+"See :doc:`../howto/install`."
+msgstr ""
+"Guidedog をインストールしてください。PDF は組み込みコンパイラーか Typst 0.15.1 "
+"以降を使います。:doc:`../howto/install` を参照してください。"
+
+#: ../../tutorial/first-project.rst:12
+msgid "On macOS, you can install the official release using Homebrew:"
+msgstr "macOS の公式版は Homebrew で導入できます。"
+
+#: ../../tutorial/first-project.rst:18
+msgid "Project architecture and build pipeline"
+msgstr "プロジェクト構成とビルドの流れ"
+
+#: ../../tutorial/first-project.rst:21
+msgid ""
+"Guidedog takes a single directory of source files and compiles it into "
+"two distinct artifacts: a responsive HTML website and a typeset PDF book."
+msgstr "1 つのソースディレクトリから、レスポンシブな HTML サイトと組版済み PDF を作ります。"
+
+#: ../../tutorial/first-project.rst:26
+msgid ""
+"Project sources and templates pass through the Guidedog compiler to "
+"produce HTML and PDF artifacts."
+msgstr "プロジェクトのソースとテンプレートから HTML と PDF を生成します。"
+
+#: ../../tutorial/first-project.rst:26
+msgid "How Guidedog compiles a project into an HTML website and a PDF book."
+msgstr "HTML サイトと PDF 書籍を作る仕組み。"
+
+#: ../../tutorial/first-project.rst:46
+msgid "1. Create the project"
+msgstr "1. プロジェクトを作る"
+
+#: ../../tutorial/first-project.rst:49
+msgid ""
+"Run the ``quickstart`` command from a folder where the target directory "
+"``notes`` does not yet exist:"
+msgstr "まだ ``notes`` がない親ディレクトリで ``quickstart`` を実行します。"
+
+#: ../../tutorial/first-project.rst:56
+msgid "Guidedog creates a complete, self-contained project structure:"
+msgstr "自己完結する構成が作られます。"
+
+#: ../../tutorial/first-project.rst:74
+msgid "Understanding the files:"
+msgstr "ファイルの役割："
+
+#: ../../tutorial/first-project.rst:76
+msgid ""
+"``conf.toml``: Project settings (title, author, version, language, "
+"builders)."
+msgstr "``conf.toml``：題名、著者、版、言語、ビルダーの設定。"
+
+#: ../../tutorial/first-project.rst:77
+msgid ""
+"``index.rst``: The root document that defines your front page and table "
+"of contents."
+msgstr "``index.rst``：トップページと目次を定めるルート文書。"
+
+#: ../../tutorial/first-project.rst:78
+msgid "``_templates/layout.html``: The HTML website template (Jinja)."
+msgstr "``_templates/layout.html``：HTML の構造を決める Jinja テンプレート。"
+
+#: ../../tutorial/first-project.rst:79
+msgid ""
+"``_templates/book.typ``: The PDF book layout and typography template "
+"(Typst)."
+msgstr "``_templates/book.typ``：PDF の組版、文字、表紙を決める Typst テンプレート。"
+
+#: ../../tutorial/first-project.rst:80
+msgid "``_static/``: CSS stylesheets and JavaScript enhancements."
+msgstr "``_static/``：CSS と JavaScript の補助機能。"
+
+#: ../../tutorial/first-project.rst:81
+msgid ""
+"``assets/``: Dedicated folders for project images, diagrams, audio, and "
+"video files."
+msgstr "``assets/``：図、画像、音声、動画のディレクトリ。"
+
+#: ../../tutorial/first-project.rst:83
+msgid ""
+"Templates in Guidedog are directly visible and editable. They are placed "
+"directly inside your project rather than hidden within an external theme "
+"or system cache. You can modify them at any time to customize your site "
+"and book design. The first build creates ``_build`` for generated output."
+msgstr ""
+"テンプレートはプロジェクトで直接読んで編集できます。外部テーマやキャッシュには隠されません。サイトと書籍をいつでも調整でき、初回ビルドで出力用の "
+"``_build`` が作られます。"
+
+#: ../../tutorial/first-project.rst:88
+msgid "2. Write the first page"
+msgstr "2. 最初のページを書く"
+
+#: ../../tutorial/first-project.rst:91
+msgid ""
+"Open ``notes/index.rst`` in your editor and replace its contents with the "
+"following:"
+msgstr "``notes/index.rst`` を開き、次の内容に置き換えます。"
+
+#: ../../tutorial/first-project.rst:113
+msgid ""
+"This page demonstrates headings, mathematical notation, and an admonition "
+"note."
+msgstr "見出し、数式、注記を示すページです。"
+
+#: ../../tutorial/first-project.rst:115
+msgid "3. Build and inspect the outputs"
+msgstr "3. 出力を調べる"
+
+#: ../../tutorial/first-project.rst:118
+msgid "Compile your project into both HTML and PDF formats:"
+msgstr "HTML と PDF をビルドします。"
+
+#: ../../tutorial/first-project.rst:125
+msgid ""
+"The ``-W`` flag instructs Guidedog to treat warnings as errors. Keeping "
+"this flag enabled in your routine checks ensures that broken references "
+"or markup errors are caught early."
+msgstr "``-W`` は警告をエラーにします。普段から付けておけば、参照やマークアップの誤りを早く見つけられます。"
+
+#: ../../tutorial/first-project.rst:128
+msgid "Now inspect the output files:"
+msgstr "生成したファイルを確認します。"
+
+#: ../../tutorial/first-project.rst:130
+msgid ""
+"Open ``notes/_build/html/index.html`` in your web browser. You will see a "
+"clean, responsive documentation website with a theme switch, search bar, "
+"and formatted math."
+msgstr "ブラウザーで ``notes/_build/html/index.html`` を開き、テーマ切り替え、検索、数式を確認します。"
+
+#: ../../tutorial/first-project.rst:132
+msgid ""
+"Open the PDF file generated in ``notes/_build/pdf/``. You will see a book "
+"layout complete with running headers, page numbers, and typographic math."
+msgstr "``notes/_build/pdf/`` の PDF を開き、柱、ページ番号、数式を確認します。"
+
+#: ../../tutorial/first-project.rst:135
+msgid ""
+"Guidedog formats mathematics appropriately for each medium: using "
+"client-side MathJax for the browser, and native vector formulas for the "
+"Typst PDF engine."
+msgstr "ブラウザーは MathJax、PDF は Typst のネイティブなベクター数式を使います。"
+
+#: ../../tutorial/first-project.rst:138
+msgid "4. Live preview and incremental rebuilds"
+msgstr "4. プレビューと差分ビルド"
+
+#: ../../tutorial/first-project.rst:141
+msgid "Guidedog includes a built-in development web server:"
+msgstr "Guidedog には開発用サーバーが組み込まれています。"
+
+#: ../../tutorial/first-project.rst:147
+msgid ""
+"The terminal prints a local URL, such as ``http://localhost:8000``. Open "
+"this address in your browser."
+msgstr "表示された URL（例：``http://localhost:8000``）をブラウザーで開きます。"
+
+#: ../../tutorial/first-project.rst:150
+msgid "Now test the live editing loop:"
+msgstr "編集と表示の流れを試します。"
+
+#: ../../tutorial/first-project.rst:154
+msgid ""
+"Editing and saving a file triggers timestamp verification and selective "
+"rebuild upon refreshing the browser."
+msgstr "編集して保存し、ブラウザーを再読み込みすると、更新時刻の確認と必要な再ビルドが行われます。"
+
+#: ../../tutorial/first-project.rst:154
+msgid "The live development cycle with guidedog serve."
+msgstr "guidedog serve のプレビューの流れ。"
+
+#: ../../tutorial/first-project.rst:173
+msgid "Edit ``notes/index.rst`` to add a new paragraph."
+msgstr "``notes/index.rst`` に段落を加えます。"
+
+#: ../../tutorial/first-project.rst:174
+msgid "Save the file."
+msgstr "保存します。"
+
+#: ../../tutorial/first-project.rst:175
+msgid "Refresh your browser page."
+msgstr "ブラウザーを再読み込みします。"
+
+#: ../../tutorial/first-project.rst:177
+msgid ""
+"Before serving a requested page, Guidedog checks file modification "
+"timestamps against its cached build environment. If inputs have changed, "
+"it rebuilds only the affected documents before responding to the browser "
+"request."
+msgstr "要求されたページを返す前に入力の更新時刻をキャッシュと比較し、変化があれば影響する文書だけを再ビルドします。"
+
+#: ../../tutorial/first-project.rst:181
+msgid ""
+"When you run a build without modifying any files, Guidedog reuses the "
+"cached document trees, avoiding redundant re-parsing."
+msgstr "ファイルが変わらなければ、保存した文書ツリーを使い、再解析を省きます。"
+
+#: ../../tutorial/first-project.rst:184
+msgid ""
+"Press ``Ctrl+C`` in your terminal to stop the server when you are done."
+msgstr "終わったら端末で ``Ctrl+C`` を押して停止します。"
+
+#: ../../tutorial/first-project.rst:186
+msgid ""
+"Continue to :doc:`a-small-book` to learn how to organize multiple "
+"chapters and cross-references."
+msgstr "章の整理と相互参照は :doc:`a-small-book` に進んでください。"
+
+#: ../../tutorial/index.rst:1
+msgid "Tutorials"
+msgstr "チュートリアル"
+
+#: ../../tutorial/index.rst:4
+msgid ""
+"Follow these pages in order. Each step produces a result you can inspect."
+msgstr "順番に進めてください。各ステップで確認できる結果が得られます。"
+
+#~ msgid ""
+#~ "A site is a graph of documents. A book needs a reading order. A "
+#~ "``toctree`` supplies both."
+#~ msgstr "サイトは文書のグラフです。本には読む順序が必要です。\\ ``toctree`` がその両方を与えます。"
+
+#~ msgid "Replace the contents of ``notes/index.rst`` with:"
+#~ msgstr "``notes/index.rst`` の内容を次に置き換えます。"
+
+#~ msgid ""
+#~ "The document name omits ``.rst``. The label names an idea within a "
+#~ "document. Use a document link for a chapter. Use a label for a "
+#~ "particular argument."
+#~ msgstr ""
+#~ "文書名には ``.rst`` を付けません。ラベルは文書内の考えに名前を付けます。章には文書リンク、特定の議論にはラベルを使います。"
+
+#~ msgid "Put this in ``measurement.rst``:"
+#~ msgstr "``measurement.rst`` に次を追加します。"
+
+#~ msgid ""
+#~ "Guidedog uses its linked Graphviz library. The result is an SVG in "
+#~ "HTML and an image in the PDF. No browser diagram interpreter is "
+#~ "needed. A caption explains the conclusion. Alternative text explains "
+#~ "the drawing."
+#~ msgstr ""
+#~ "Guidedog はリンクした Graphviz ライブラリを使います。HTML には SVG、PDF "
+#~ "には画像を出力し、ブラウザの図解インタプリタは不要です。キャプションは結論、代替テキストは図の内容を説明します。"
+
+#~ msgid "Build the book"
+#~ msgstr "本のビルド"
+
+#~ msgid ""
+#~ "The chapter is in the sidebar and in the book's contents. Follow the "
+#~ "section link in the browser. Inspect its destination in the PDF."
+#~ msgstr "章がサイドバーと本の目次に表示されます。ブラウザで節のリンクをたどり、PDF でも移動先を確認してください。"
+
+#~ msgid ""
+#~ "The next useful step is :doc:`../topics/writing`. Keep chapters small "
+#~ "enough to explain one subject."
+#~ msgstr "次は :doc:`../topics/writing` が役立ちます。1 章で 1 つの主題を説明できる長さにしてください。"
+
+#~ msgid ""
+#~ "On macOS, install the release with ``brew install "
+#~ "insanai/guidedog/guidedog``. This adds the official tap and includes "
+#~ "the PDF compiler."
+#~ msgstr ""
+#~ "macOS では、``brew install insanai/guidedog/guidedog`` でリリースをインストールします。公式 "
+#~ "tap が追加され、PDF コンパイラも含まれます。"
+
+#~ msgid ""
+#~ "Guidedog writes the configuration, the first RST document, and "
+#~ "editable templates. It also creates folders for images, audio, and "
+#~ "video. It refuses to overwrite an existing project."
+#~ msgstr ""
+#~ "Guidedog は設定、最初の RST "
+#~ "文書、編集できるテンプレートを書きます。画像・音声・動画のディレクトリも作成します。既存のプロジェクトは上書きしません。"
+
+#~ msgid ""
+#~ "The RST files hold your content. The templates hold your presentation. "
+#~ "The base templates (``_templates/layout.html`` and "
+#~ "``_templates/book.typ``) are placed directly in your project by "
+#~ "``quickstart`` rather than being stored in an external theme or "
+#~ "package cache. You can inspect and customize them at any time."
+#~ msgstr ""
+#~ "RST ファイルは内容を、テンプレートは表示を持ちます。``quickstart`` は "
+#~ "``_templates/layout.html`` と ``_templates/book.typ`` "
+#~ "をプロジェクトに直接配置します。外部のテーマやキャッシュには隠されず、いつでも確認して編集できます。"
+
+#~ msgid ""
+#~ "Open ``notes/_build/html/index.html`` and the PDF in "
+#~ "``notes/_build/pdf``. ``-W`` makes warnings fail the build. Keep it in "
+#~ "your documentation checks. The HTML page contains the navigation and "
+#~ "the text. The PDF adds book furniture. Math is formatted for each "
+#~ "target. :doc:`../topics/mathematics` explains the setup."
+#~ msgstr ""
+#~ "``notes/_build/html/index.html`` と ``notes/_build/pdf`` 内の PDF "
+#~ "を開きます。\\ ``-W`` は警告でビルドを失敗させるため、文書の検査に残してください。HTML はナビゲーションと本文を、PDF "
+#~ "は本の柱やページ番号も含みます。数式は形式ごとに組版します。設定は :doc:`../topics/mathematics` "
+#~ "を参照してください。"
+
+#~ msgid "Make a change"
+#~ msgstr "変更してみる"
+
+#~ msgid ""
+#~ "Open the address printed by the command. Edit the source and save it. "
+#~ "Refresh the browser page. Before serving HTML, Guidedog checks source "
+#~ "modification times and rebuilds when they have advanced. It does not "
+#~ "push a browser reload. Stop the server with Ctrl+C."
+#~ msgstr ""
+#~ "表示されたアドレスを開き、ソースを編集して保存し、ブラウザを更新します。Guidedog は HTML "
+#~ "を返す前にソースの更新時刻を調べ、進んでいれば再ビルドします。ブラウザの再読み込みは自動送信しません。Ctrl+C で停止します。"
+
+#~ msgid ""
+#~ "Build again without editing anything. Unchanged documents are reused. "
+#~ "The build need not reread every page to prove that its output is "
+#~ "current. Continue with :doc:`a-small-book`."
+#~ msgstr ""
+#~ "何も編集せずに再ビルドします。変更のない文書は再利用し、出力が最新であることを確かめるために全ページを読み直す必要はありません。次は "
+#~ ":doc:`a-small-book` です。"
+
+#~ msgid ""
+#~ "The RST files hold the explanation. The templates hold the "
+#~ "presentation. ``book.typ`` is a typesetting template, not a second "
+#~ "copy of the prose."
+#~ msgstr ""
+#~ "RST ファイルに説明を書き、テンプレートで表示を決めます。\\ ``book.typ`` は組版用であり、本文の複製ではありません。"

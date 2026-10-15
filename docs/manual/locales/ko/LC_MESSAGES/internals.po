@@ -1,0 +1,470 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 03:59+0000\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../internals/algorithms.rst:1
+msgid "Invariants before algorithms"
+msgstr "알고리즘에 앞서는 불변식"
+
+#: ../../internals/algorithms.rst:4
+msgid ""
+"A useful invariant says what stays true while the algorithm runs. It also "
+"says what the caller may rely on when the algorithm stops. Write it "
+"before writing the loop."
+msgstr "유용한 불변식은 알고리즘 실행 중 유지되는 사실과 종료 후 호출자가 의존할 사실을 밝힌다. 반복문보다 먼저 작성한다."
+
+#: ../../internals/algorithms.rst:8
+msgid "Preorder subtree intervals"
+msgstr "전위 순회에서의 서브트리 구간"
+
+#: ../../internals/algorithms.rst:11
+msgid ""
+"Assume a tree is emitted in preorder. Every node is emitted before its "
+"children. Assume each subtree is contiguous. Let :math:`e_i` be the first "
+"index after node :math:`i` and all its descendants."
+msgstr ""
+"트리를 전위 순회로 출력한다고 가정한다. 노드는 자식보다 먼저 출력되고 각 부분 트리는 연속한다. :math:`e_i`\\ 를 노드 "
+":math:`i`\\ 와 모든 자손 직후의 첫 인덱스라 하자."
+
+#: ../../internals/algorithms.rst:15
+msgid "\\operatorname{subtree}(i) = [i,e_i), \\qquad i < e_i \\le N."
+msgstr "\\operatorname{subtree}(i) = [i,e_i), \\qquad i < e_i \\le N."
+
+#: ../../internals/algorithms.rst:20
+msgid ""
+"**Claim.** A traversal can skip the subtree by advancing to :math:`e_i`."
+msgstr "**명제.** 인덱스를 :math:`e_i`\\ 로 옮기면 부분 트리를 건너뛸 수 있다."
+
+#: ../../internals/algorithms.rst:22
+msgid ""
+"**Proof.** Contiguity puts every descendant before :math:`e_i`. The "
+"exclusive-end definition puts every later node at or after :math:`e_i`. "
+"Advancing there therefore skips exactly the subtree. The validator checks "
+"the assumptions before a renderer relies on them."
+msgstr ""
+"**증명.** 연속성에 따라 모든 자손은 :math:`e_i` 앞에 있다. 배타적 끝의 정의에 따라 이후 노드는 "
+":math:`e_i` 이상에 있다. 따라서 그곳으로 이동하면 정확히 부분 트리만 건너뛴다. 렌더러가 가정에 의존하기 전에 검증기가 "
+"확인한다."
+
+#: ../../internals/algorithms.rst:29
+msgid ""
+"Document zero contains heading and paragraph subtrees, each with a text "
+"leaf. Five preorder nodes occupy nested half-open intervals."
+msgstr ""
+"문서 노드 0은 제목과 단락 부분 트리를 포함하고, 각각 텍스트 잎 노드를 갖습니다. 전위 순서의 다섯 노드가 중첩된 반열린 구간을 "
+"이룹니다."
+
+#: ../../internals/algorithms.rst:29
+msgid "A parent's interval encloses its children's intervals."
+msgstr "부모의 구간은 자식의 구간을 포함합니다。"
+
+#: ../../internals/algorithms.rst:50
+msgid ""
+"A complete scan visits each node once. Its traversal cost is "
+":math:`O(N)`. Skipping a subtree takes one index update. Payload work "
+"still costs what it uses. Do not confuse a constant-time skip with "
+"constant-time rendering."
+msgstr ""
+"전체 스캔은 각 노드를 한 번 방문하므로 순회 비용은 :math:`O(N)`\\ 이다. 부분 트리 건너뛰기는 인덱스 갱신 한 번이면 "
+"된다. 페이로드 작업의 비용은 여전히 발생한다. 상수 시간 건너뛰기와 상수 시간 렌더링을 혼동하지 않는다."
+
+#: ../../internals/algorithms.rst:54
+msgid "Measure before emit"
+msgstr "출력 전에 측정하기"
+
+#: ../../internals/algorithms.rst:57
+msgid ""
+"The renderer first measures the byte count :math:`m`. Let the caller's "
+"output capacity be :math:`c`."
+msgstr "렌더러는 먼저 바이트 수 :math:`m`\\ 을 측정한다. 호출자의 출력 용량을 :math:`c`\\ 라 하자."
+
+#: ../../internals/algorithms.rst:60
+msgid "m \\le c \\quad \\Longrightarrow \\quad \\text{emission may begin}."
+msgstr "m \\le c \\quad \\Longrightarrow \\quad \\text{출력을 시작할 수 있다}."
+
+#: ../../internals/algorithms.rst:64
+msgid ""
+"The measured and emitted traversals use the same rules. A successful "
+"emission must write exactly :math:`m` bytes. A failure returns no valid "
+"partial artifact. The host owns publication, so incomplete bytes cannot "
+"replace a previous output."
+msgstr ""
+"측정과 출력 순회는 같은 규칙을 쓴다. 성공하면 정확히 :math:`m`\\ 바이트를 써야 한다. 실패 시 유효한 부분 산출물을 "
+"반환하지 않는다. 게시를 호스트가 맡으므로 불완전한 바이트가 이전 출력을 대체할 수 없다."
+
+#: ../../internals/algorithms.rst:69
+msgid "Cache validity"
+msgstr "캐시 유효성"
+
+#: ../../internals/algorithms.rst:72
+msgid ""
+"A cache key must cover the data that can change a result. Sources alone "
+"are insufficient. Includes, templates, configuration, reference lookups, "
+"resources, and adapter versions can affect the output. Reuse is allowed "
+"only when the recorded dependencies still agree. A missing output "
+"invalidates reuse even when its key matches."
+msgstr ""
+"캐시 키는 결과를 바꿀 수 있는 모든 데이터를 포함해야 한다. 소스만으로는 부족하다. 포함 파일, 템플릿, 설정, 참조 조회, "
+"리소스, 어댑터 버전도 출력에 영향을 준다. 기록된 의존성이 일치할 때만 재사용한다. 키가 같아도 출력이 없으면 재사용할 수 없다."
+
+#: ../../internals/algorithms.rst:78
+msgid ""
+"Tests install failing allocators at the core boundary and compare emitted "
+"content. They also audit imports. Counting allocations without checking "
+"the result could miss a refusal that silently discarded part of the "
+"document."
+msgstr ""
+"테스트는 코어 경계에 실패하는 할당자를 설치하고 출력 내용을 비교한다. import도 감사한다. 결과 확인 없이 할당 수만 세면 "
+"거부 때문에 문서 일부가 조용히 사라지는 문제를 놓칠 수 있다."
+
+#: ../../internals/engine.rst:1
+msgid "The Guidedoc engine"
+msgstr "Guidedoc 엔진"
+
+#: ../../internals/engine.rst:4
+msgid ""
+"Guidedoc is the conversion core. It borrows storage from its caller. It "
+"reads a source, builds a semantic tree, runs passes, measures the output, "
+"and emits bytes. It does not open files or publish artifacts."
+msgstr ""
+"Guidedoc은 변환 코어이며 호출자의 저장 공간을 빌린다. 소스를 읽고 의미 트리를 만든 뒤 패스를 실행하고 출력 크기를 "
+"측정하여 바이트를 내보낸다. 파일을 열거나 산출물을 게시하지 않는다."
+
+#: ../../internals/engine.rst:10
+msgid ""
+"The CLI calls the project host, which supplies fixed storage to the "
+"conversion core."
+msgstr "CLI는 프로젝트 호스트를 호출하고 호스트는 변환 코어에 고정 저장 공간을 제공한다."
+
+#: ../../internals/engine.rst:10
+msgid "Effects belong to the host; document semantics belong to Guidedoc."
+msgstr "외부 작업은 호스트가 맡고 문서의 의미는 Guidedoc이 맡는다."
+
+#: ../../internals/engine.rst:29
+msgid "Conversion data flow"
+msgstr "변환 데이터 흐름"
+
+#: ../../internals/engine.rst:32
+msgid ""
+"A document passes through distinct phases within the Guidedoc conversion "
+"core. Each stage borrows memory from the caller's pre-allocated workspace "
+"buffers:"
+msgstr "Guidedoc의 변환은 단계별로 진행됩니다. 각 단계는 호출자가 미리 준비한 작업 공간 버퍼를 빌립니다."
+
+#: ../../internals/engine.rst:37
+msgid ""
+"Borrowed source becomes a flat tree. Passes transform it. A measurement "
+"determines the output capacity before emission."
+msgstr "빌린 소스로 평탄한 트리를 만들고 변환 패스를 적용합니다. 출력 용량을 측정한 뒤 결과를 기록합니다."
+
+#: ../../internals/engine.rst:37
+msgid "Conversion data flow within the Guidedoc core."
+msgstr "Guidedoc 코어의 변환 데이터 흐름."
+
+#: ../../internals/engine.rst:57
+msgid "The boundary"
+msgstr "경계"
+
+#: ../../internals/engine.rst:60
+msgid ""
+"Core conversion performs no allocation. The caller supplies node columns, "
+"text storage, diagnostics, and output capacity. A host may allocate while "
+"preparing those buffers. A third-party compiler has its own allocation "
+"rules. The guarantee names the conversion boundary, not the whole process."
+msgstr ""
+"코어 변환은 할당하지 않는다. 호출자가 노드 열, 텍스트 저장 공간, 진단, 출력 용량을 제공한다. 호스트는 버퍼 준비 중 할당할 "
+"수 있다. 외부 컴파일러는 자체 규칙을 따른다. 보장의 범위는 변환 경계이며 프로세스 전체가 아니다."
+
+#: ../../internals/engine.rst:66
+msgid "The tree"
+msgstr "트리"
+
+#: ../../internals/engine.rst:69
+msgid ""
+"Nodes have typed IDs. Hot columns hold the kind and subtree range. Cold "
+"tables hold payloads needed by particular node kinds. A flat preorder "
+"representation lets a traversal skip a whole subtree without following a "
+"chain of heap pointers."
+msgstr ""
+"노드는 타입이 있는 ID를 쓴다. 자주 접근하는 열에는 종류와 부분 트리 범위를, 나머지 표에는 노드별 페이로드를 저장한다. 평탄한 "
+"전위 표현으로 힙 포인터 사슬을 따라가지 않고 부분 트리 전체를 건너뛸 수 있다."
+
+#: ../../internals/engine.rst:74
+msgid ""
+"For node :math:`i`, let :math:`e_i` be its exclusive subtree end. The "
+"subtree occupies :math:`[i,e_i)`. A leaf has :math:`e_i=i+1`. A parent "
+"closes after its descendants. See :doc:`algorithms` for the interval "
+"proof."
+msgstr ""
+"노드 :math:`i`\\ 의 배타적 부분 트리 끝을 :math:`e_i`\\ 라 하자. 부분 트리는 "
+":math:`[i,e_i)`\\ 를 차지한다. 리프는 :math:`e_i=i+1`\\ 이며 부모는 자손 뒤에서 끝난다. 구간 증명은 "
+":doc:`algorithms`\\ 를 참고한다."
+
+#: ../../internals/engine.rst:79
+msgid "The API"
+msgstr "API"
+
+#: ../../internals/engine.rst:82
+msgid ""
+"The core API is explicit: initialize storage, convert, inspect the "
+"result, reset. Registries are values containing reader, pass, and "
+"renderer descriptors. There is no runtime plugin discovery or global "
+"registration side effect. The small set of verbs is meant to remain easy "
+"to use from another Odin program."
+msgstr ""
+"코어 API는 명시적이다. 저장 공간 초기화, 변환, 결과 확인, 초기화를 수행한다. 레지스트리는 리더·패스·렌더러 설명자를 담은 "
+"값이다. 실행 중 플러그인 탐색이나 전역 등록 부작용은 없다. 적은 수의 동작으로 다른 Odin 프로그램에서 쉽게 사용하게 한다."
+
+#: ../../internals/engine.rst:87
+msgid ""
+"Ownership is the key rule. Views into a workspace expire on reset or "
+"reuse. A result held by the host must own any text that outlives the "
+"session. Use :doc:`../api/core` for exact signatures. It is generated "
+"from the same Odin source as the separate ``docs/api`` project. The "
+"manual's PDF includes that reference in the same book, with internal "
+"links. The design record is GDS 0003 in ``docs/gds``."
+msgstr ""
+"소유권이 핵심 규칙이다. 작업 공간의 뷰는 초기화나 재사용 시 만료된다. 호스트가 보관하는 결과는 세션보다 오래 살아야 하는 "
+"텍스트를 소유해야 한다. 정확한 시그니처는 :doc:`../api/core`\\ 에 있으며 별도 ``docs/api``\\ 와 같은 "
+"Odin 소스에서 생성한다. 설명서 PDF에는 내부 링크로 같은 책에 포함된다. 설계 기록은 ``docs/gds``\\ 의 GDS "
+"0003이다."
+
+#: ../../internals/index.rst:1
+msgid "Internals"
+msgstr "내부 구조"
+
+#: ../../internals/index.rst:4
+msgid ""
+"These chapters explain the reasoning behind the implementation. They "
+"describe current contracts. GDS records retain decisions and review "
+"states in a separate project."
+msgstr "이 장들은 구현의 근거와 현재 계약을 설명한다. GDS 기록은 별도 프로젝트에 결정과 검토 상태를 보존한다."
+
+#: ../../internals/memory.rst:1
+msgid "Memory and ownership"
+msgstr "메모리와 소유권"
+
+#: ../../internals/memory.rst:4
+msgid ""
+"A budget is an accounting contract. It has meaning only when the lifetime "
+"of a charge matches the lifetime of the storage it pays for."
+msgstr "예산은 회계 계약이다. 계상된 비용의 수명이 그 비용이 담당하는 저장 공간의 수명과 같아야 의미가 있다."
+
+#: ../../internals/memory.rst:9
+msgid ""
+"A managed budget accounts for arenas and conversion buffers, backed by "
+"RAM or memory-mapped disk."
+msgstr "관리 예산은 아레나와 변환 버퍼를 계산하며, RAM이나 메모리 매핑 디스크를 저장 공간으로 씁니다."
+
+#: ../../internals/memory.rst:9
+msgid "The host reserves working storage before allocating it."
+msgstr "호스트는 작업 저장 공간을 할당하기 전에 예약합니다."
+
+#: ../../internals/memory.rst:27
+msgid ""
+"Managed host storage shares a process with native libraries. Installed "
+"plugins and the development Typst backend use child processes."
+msgstr ""
+"관리 저장 공간은 네이티브 라이브러리와 호스트 프로세스를 공유합니다. 설치한 플러그인과 개발용 Typst 백엔드는 자식 "
+"프로세스입니다."
+
+#: ../../internals/memory.rst:27
+msgid ""
+"Allocation accounting and process isolation are different boundaries."
+msgstr "할당 집계와 프로세스 격리는 서로 다른 경계입니다."
+
+#: ../../internals/memory.rst:43
+msgid "A charge follows storage"
+msgstr "사용량은 저장 공간을 따라간다"
+
+#: ../../internals/memory.rst:46
+msgid ""
+"Reserve bytes before allocating. Release the charge after freeing the "
+"storage. When replacing a buffer, the old and new buffers can coexist. "
+"Charge the full new allocation during that overlap. Charging only the "
+"increase would understate the peak."
+msgstr ""
+"할당 전에 바이트를 예약하고 해제 뒤에 비용을 반환한다. 버퍼 교체 중에는 새 버퍼와 기존 버퍼가 공존할 수 있으므로 새 할당 "
+"전체를 계상한다. 증가분만 계산하면 최대 사용량을 과소평가한다."
+
+#: ../../internals/memory.rst:51
+msgid ""
+"\\text{replacement peak} = \\text{other live storage}\n"
+"  + \\text{old buffer} + \\text{new buffer}."
+msgstr ""
+"\\text{교체 시 최대 사용량} = \\text{그 밖의 사용 중 저장 공간} + \\text{기존 버퍼} + \\text{새 "
+"버퍼}."
+
+#: ../../internals/memory.rst:56
+msgid ""
+"Session-owned input is reclaimed by the session. Caller-owned input "
+"remains the caller's responsibility. The names ``read_owned`` and "
+"``read_kept`` make that distinction explicit. A shorter read does not "
+"shrink the allocation already made for it."
+msgstr ""
+"세션 소유 입력은 세션이 회수한다. 호출자 소유 입력은 계속 호출자가 책임진다. ``read_owned``\\ 와 "
+"``read_kept``\\ 가 이를 명시한다. 더 짧게 읽어도 이미 할당한 공간은 줄지 않는다."
+
+#: ../../internals/memory.rst:61
+msgid "Known zero is not unknown"
+msgstr "알려진 0은 미상과 다르다"
+
+#: ../../internals/memory.rst:64
+msgid ""
+"A memory probe can know that no headroom remains. It can also fail to "
+"discover headroom. Those are different states. The policy carries a "
+"separate knowledge flag rather than using zero for both. On Linux, "
+"readable cgroup limits apply through the visible ancestor hierarchy. A "
+"container's host-wide free-memory number alone can be misleading."
+msgstr ""
+"메모리 탐색은 여유가 없음을 확인하거나 여유를 알아내지 못할 수 있다. 둘은 다른 상태다. 정책은 모두 0으로 나타내지 않고 별도의 "
+"확인 여부 플래그를 둔다. Linux에서는 보이는 상위 계층의 읽을 수 있는 cgroup 제한도 적용한다. 호스트 전체의 "
+"가용량만으로 컨테이너 메모리를 판단하면 잘못될 수 있다."
+
+#: ../../internals/memory.rst:70
+msgid "Reports outlive workspaces"
+msgstr "진단은 작업 공간보다 오래 남는다"
+
+#: ../../internals/memory.rst:73
+msgid ""
+"A report shown after a session ends must own its title, source, and "
+"repair text. It must not borrow a buffer that the session has freed. "
+"Source spans use byte offsets internally. User-facing columns count "
+"Unicode scalars. Terminal markers account for display width separately."
+msgstr ""
+"세션 뒤에 표시하는 보고서는 제목, 소스, 수정 문구를 소유해야 하며 해제된 버퍼를 빌려서는 안 된다. 내부 소스 범위는 바이트 "
+"오프셋, 사용자 열은 Unicode 스칼라 수를 쓴다. 터미널 표시는 화면 너비를 별도로 고려한다."
+
+#: ../../internals/memory.rst:78
+msgid "The remaining boundary"
+msgstr "남아 있는 경계"
+
+#: ../../internals/memory.rst:81
+msgid ""
+"Guidedog meters its managed working storage. The Typst compiler and "
+"native dependencies manage their own allocations. Graphviz and "
+"tree-sitter run native code in the host process. The release's embedded "
+"Typst compiler does too; the development backend can use a subprocess. An "
+"installed plugin runs in a separate process. These are different "
+"isolation boundaries, even though their native allocations fall outside "
+"the host ledger. Large PDF books can consume much more memory than the "
+"host budget. The remote CPython validation measured about 14.5 GiB peak "
+"RSS including Typst. Treat that measurement as workload evidence, not a "
+"universal upper bound. See :doc:`../errors` for the user's choices when a "
+"managed budget is reached."
+msgstr ""
+"Guidedog는 관리하는 작업 공간을 측정합니다. Typst와 네이티브 의존성은 자체 할당을 합니다. Graphviz, "
+"tree-sitter, 릴리스의 내장 Typst는 호스트 프로세스에서 실행됩니다. 개발용 Typst 백엔드는 자식 프로세스를 쓸 수 "
+"있고 설치한 플러그인도 별도 프로세스입니다. 격리 경계는 다르지만 이러한 할당은 호스트 예산 밖입니다. 큰 PDF는 예산보다 훨씬 "
+"많은 메모리를 쓸 수 있습니다. 원격 CPython 검증의 최대 RSS는 Typst 포함 약 14.5 GiB였습니다. 측정한 작업의 "
+"기록이지 보편적인 상한은 아닙니다. 예산 도달 시 선택지는 :doc:`../errors` 문서를 참고하세요."
+
+#: ../../internals/publication.rst:1
+msgid "Publish one complete generation"
+msgstr "완전한 출력 세대 게시"
+
+#: ../../internals/publication.rst:4
+msgid ""
+"A reader should never see half an updated site. This is a publication "
+"property. It is separate from parsing and rendering."
+msgstr "독자는 절반만 갱신된 사이트를 보면 안 된다. 이는 게시 속성이며 파싱과 렌더링과는 별개다."
+
+#: ../../internals/publication.rst:7
+msgid "The invariant"
+msgstr "불변식"
+
+#: ../../internals/publication.rst:10
+msgid ""
+"Let :math:`P` be the published output tree. During preparation, :math:`P` "
+"remains unchanged. The next tree :math:`Q` is complete before the commit "
+"is decided. The commit journal names the output and the records that "
+"belong with it."
+msgstr ""
+"게시된 출력 트리를 :math:`P`\\ 라 하자. 준비 중 :math:`P`\\ 는 변하지 않는다. 다음 트리 "
+":math:`Q`\\ 는 커밋 결정 전에 완성된다. 커밋 저널은 출력과 관련 기록을 지정한다."
+
+#: ../../internals/publication.rst:14
+msgid ""
+"**Preparation can fail.** The host abandons the unfinished generation. "
+"**A decided commit can be interrupted.** The next build finishes or "
+"restores it from the journal. It does not guess from a staging "
+"directory's name."
+msgstr ""
+"**준비는 실패할 수 있다.** 호스트는 미완성 세대를 버린다. **확정된 커밋은 중단될 수 있다.** 다음 빌드가 저널에 따라 "
+"완료하거나 복원한다. 임시 폴더 이름으로 추측하지 않는다."
+
+#: ../../internals/publication.rst:20
+msgid ""
+"Prepare and flush, save journal, switch output, replace records, then "
+"remove journal."
+msgstr "준비와 동기화, 저널 저장, 출력 교체, 기록 교체, 저널 삭제 순서다."
+
+#: ../../internals/publication.rst:20
+msgid "The durable journal separates preparation from a decided commit."
+msgstr "영속 저널은 준비 단계와 확정된 커밋을 구분한다."
+
+#: ../../internals/publication.rst:38
+msgid "Why the cache is outside the output"
+msgstr "캐시가 출력 밖에 있는 이유"
+
+#: ../../internals/publication.rst:41
+msgid ""
+"A directory exchange moves everything inside the publication directory. A "
+"journal placed inside it would move during the very operation it "
+"describes. Its location would cease to be stable when recovery needed it "
+"most. Guidedog keeps records in a stable directory outside the "
+"publication tree. A custom output uses a sibling cache for this reason."
+msgstr ""
+"폴더 교환은 게시 폴더 안의 모든 것을 옮긴다. 내부 저널도 자신이 설명하는 작업 중 이동하여 복구 시 위치가 불안정해진다. "
+"Guidedog은 게시 트리 밖의 안정적인 폴더에 기록을 둔다. 사용자 지정 출력에 형제 캐시를 쓰는 이유다."
+
+#: ../../internals/publication.rst:47
+msgid "Durability and visibility"
+msgstr "지속성과 가시성"
+
+#: ../../internals/publication.rst:50
+msgid ""
+"Flushing file contents is not the same as flushing directory names. The "
+"algorithm accounts for both before removing the journal. Platforms differ "
+"in how directories are exchanged. The recovery protocol is designed "
+"around those differences. See ``lib/project/commit.odin`` and "
+"``lib/project/publish.odin`` for the implementation."
+msgstr ""
+"파일 내용 동기화와 디렉터리 이름 동기화는 다르다. 알고리즘은 저널을 지우기 전에 둘 다 처리한다. 플랫폼마다 폴더 교환 방식이 "
+"다르며 복구 프로토콜은 이를 고려한다. 구현은 ``lib/project/commit.odin``\\ 과 "
+"``lib/project/publish.odin``\\ 에 있다."
+
+#: ../../internals/publication.rst:56
+msgid ""
+"This protects the project publication. It is not a distributed "
+"transaction with an external hosting provider. Copying a successful build "
+"to a server is another operation, owned by the deployment tool."
+msgstr ""
+"이는 프로젝트 게시를 보호한다. 외부 호스팅 서비스와의 분산 트랜잭션은 아니다. 성공한 빌드를 서버로 복사하는 작업은 배포 도구가 "
+"맡는다."
+
+#: ../../internals/publication.rst:60
+msgid ""
+"On filesystems with directory exchange, the output path switches in one "
+"operation. The fallback uses two renames and can briefly leave that path "
+"absent. It still never exposes a partly assembled tree. Journal recovery "
+"finishes or restores an interrupted switch. A client making several "
+"requests can span two generations; the build does not promise a snapshot "
+"for an entire browsing session."
+msgstr ""
+"디렉터리 교환을 지원하면 출력 경로가 한 번에 바뀝니다. 대체 방식은 두 번 이름을 바꾸므로 경로가 잠시 없을 수 있지만, 미완성 "
+"트리를 노출하지는 않습니다. 저널 복구는 중단된 전환을 완료하거나 되돌립니다. 여러 요청은 서로 다른 세대에 걸칠 수 있으며, 전체 "
+"탐색 세션의 스냅샷을 보장하지 않습니다."

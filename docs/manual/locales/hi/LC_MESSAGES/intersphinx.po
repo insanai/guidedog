@@ -1,0 +1,89 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../intersphinx.rst:1
+msgid "Linking to other projects"
+msgstr "अन्य परियोजनाओं से लिंक"
+
+#: ../../intersphinx.rst:4
+msgid ""
+"With ``sphinx.ext.intersphinx``, references this project cannot resolve "
+"are looked up in other projects' inventories, the ``objects.inv`` every "
+"Sphinx or Guidedog site publishes. Name the projects in ``conf.toml``:"
+msgstr ""
+"``sphinx.ext.intersphinx`` से यहाँ न सुलझे संदर्भ दूसरे प्रोजेक्ट की "
+"इन्वेंटरी में खोजे जाते हैं। यह हर Sphinx या Guidedog साइट की "
+"``objects.inv`` है। परियोजनाएँ ``conf.toml`` में दें:"
+
+#: ../../intersphinx.rst:16
+msgid ""
+"Each entry is the address of the other project's pages and where its "
+"inventory is: a URL, a file relative to the source folder, or ``\"\"`` "
+"for the ``objects.inv`` at the address. A list is tried in order. This is "
+"Sphinx's ``intersphinx_mapping``, with ``\"\"`` for Python's ``None``; "
+"``guidedog migrate`` converts it."
+msgstr ""
+"हर प्रविष्टि दूसरे प्रोजेक्ट के पृष्ठों का पता और इन्वेंटरी की जगह देती "
+"है। यह URL, स्रोत फ़ोल्डर से सापेक्ष फ़ाइल या उस पते की ``objects.inv`` "
+"के लिए ``\"\"`` है। सूची क्रम से आज़माई जाती है। यह Sphinx का "
+"``intersphinx_mapping`` है, Python के ``None`` की जगह ``\"\"`` के साथ। "
+"``guidedog migrate`` इसे बदलता है।"
+
+#: ../../intersphinx.rst:21
+msgid "Then references need nothing new:"
+msgstr "फिर संदर्भों में नया कुछ नहीं चाहिए:"
+
+#: ../../intersphinx.rst:29
+msgid ""
+"Links show the other project's titles for labels and documents, and carry "
+"a tooltip such as \"(in Python v3.14)\". As in Sphinx, ``:doc:`` "
+"references need the project's name (``:doc:`python:tutorial/index```), "
+"because ``intersphinx_disabled_reftypes`` is ``[\"std:doc\"]`` by default."
+msgstr "लिंक दूसरे प्रोजेक्ट के लेबल और दस्तावेज़ के शीर्षक दिखाते हैं और “(in Python v3.14)” जैसा टूलटिप रखते हैं। Sphinx की तरह ``:doc:`` संदर्भ को परियोजना का नाम (\\ ``:doc:`python:tutorial/index```\\ ) चाहिए, क्योंकि ``intersphinx_disabled_reftypes`` का डिफ़ॉल्ट ``[\"std:doc\"]`` है।"
+
+#: ../../intersphinx.rst:34
+msgid ""
+"Inventories are fetched when a build starts and kept in "
+"``_build/.doctrees/__intersphinx_cache__`` for "
+"``intersphinx_cache_limit`` days (5; a negative number keeps them); local "
+"files are read on every build. As in Sphinx, an inventory that has moved "
+"(its URL redirects, as "
+"``https://werkzeug.palletsprojects.com/objects.inv`` redirects to "
+"``/en/stable/``) makes its new folder the base of the links, and the "
+"cache remembers that base, so a build from the cache links exactly as the "
+"build that fetched it did. ``intersphinx_timeout`` limits each download "
+"in seconds. A project that cannot be reached is a warning, and its "
+"references stay unresolved."
+msgstr ""
+"बिल्ड शुरू होने पर इन्वेंटरी लाकर "
+"``_build/.doctrees/__intersphinx_cache__`` में "
+"``intersphinx_cache_limit`` दिनों तक रखी जाती है: डिफ़ॉल्ट 5, ऋणात्मक मान "
+"पर बनी रहती है। स्थानीय फ़ाइल हर बिल्ड में पढ़ती है। Sphinx की तरह "
+"रीडायरेक्ट के बाद नई निर्देशिका लिंक का आधार बनती है और कैश उसे याद रखता "
+"है, ताकि कैश से वही लिंक बने। जैसे "
+"``https://werkzeug.palletsprojects.com/objects.inv`` का रीडायरेक्ट "
+"``/en/stable/`` पर है। ``intersphinx_timeout`` हर डाउनलोड का समय सेकंड "
+"में सीमित करता है। न पहुँच सकने वाला प्रोजेक्ट चेतावनी देता है और उसके "
+"संदर्भ अनसुलझे रहते हैं।"
+
+#: ../../intersphinx.rst:44
+msgid ""
+"Guidedog writes its own ``objects.inv`` with every page, label, term, and "
+"object, so other projects can link here the same way."
+msgstr ""
+"Guidedog सभी पृष्ठ, लेबल, शब्द और ऑब्जेक्ट सहित अपनी ``objects.inv`` "
+"लिखता है, जिससे अन्य प्रोजेक्ट भी इसी तरह यहाँ लिंक कर सकते हैं।"

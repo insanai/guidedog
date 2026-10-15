@@ -1,0 +1,86 @@
+/* Language editions share the reading grid, but use script-appropriate spacing. */
+.gd-language { position: relative; flex-shrink: 0; font-family: var(--gd-sans); }
+.gd-language summary {
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  width: 2.25rem; height: 2.25rem; border-radius: var(--gd-radius); list-style: none;
+}
+.gd-language summary::-webkit-details-marker { display: none; }
+.gd-language summary:hover, .gd-language[open] summary { background: var(--gd-bg-soft); }
+.gd-language ul {
+  position: absolute; z-index: 30; right: 0; top: 2.7rem; min-width: 11rem;
+  margin: 0; padding: .5rem; list-style: none; background: var(--gd-bg);
+  border: 1px solid var(--gd-border); border-radius: var(--gd-radius);
+  box-shadow: 0 8px 24px #0002;
+}
+.gd-language a { display: block; padding: .5rem .75rem; white-space: nowrap; }
+.gd-language a:hover, .gd-language a[aria-current] { background: var(--gd-bg-soft); }
+.gd-language a[aria-current] { font-weight: 700; }
+html:lang(zh) .gd-article, html:lang(ja) .gd-article, html:lang(ko) .gd-article,
+html:lang(hi) .gd-article { line-height: 1.8; }
+html:lang(zh) .gd-article p, html:lang(ja) .gd-article p, html:lang(ko) .gd-article p,
+html:lang(hi) .gd-article p { line-height: 1.8; }
+html:lang(zh) .gd-article, html:lang(ja) .gd-article { line-break: strict; }
+html:lang(ko) .gd-article { word-break: keep-all; }
+html:lang(zh) .gd-article :is(h1,h2), html:lang(ja) .gd-article :is(h1,h2),
+html:lang(ko) .gd-article :is(h1,h2), html:lang(hi) .gd-article :is(h1,h2) {
+  letter-spacing: normal; line-height: 1.3;
+}
+@media (max-width: 560px) {
+  .gd-language { margin-left: .15rem; }
+  .gd-header { gap: .25rem; }
+  .gd-search { min-width: 0; }
+  .gd-edition { display: none; }
+}
+
+
+
+/* Bundled script fonts. Web CJK faces are subsets of this manual; missing
+   glyphs fall back to the reader's fonts. PDF uses the complete original faces. */
+@font-face {
+  font-family: "Guidedog Script zh"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("data/fonts/Noto-zh-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Guidedog Script zh"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("data/fonts/Noto-zh-Bold.woff2") format("woff2");
+}
+html:lang(zh) {
+  --gd-serif: "Guidedog Serif", "Guidedog Script zh", serif;
+  --gd-sans: "Guidedog Sans", "Guidedog Script zh", system-ui, sans-serif;
+}
+@font-face {
+  font-family: "Guidedog Script ja"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("data/fonts/Noto-ja-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Guidedog Script ja"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("data/fonts/Noto-ja-Bold.woff2") format("woff2");
+}
+html:lang(ja) {
+  --gd-serif: "Guidedog Serif", "Guidedog Script ja", serif;
+  --gd-sans: "Guidedog Sans", "Guidedog Script ja", system-ui, sans-serif;
+}
+@font-face {
+  font-family: "Guidedog Script ko"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("data/fonts/Noto-ko-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Guidedog Script ko"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("data/fonts/Noto-ko-Bold.woff2") format("woff2");
+}
+html:lang(ko) {
+  --gd-serif: "Guidedog Serif", "Guidedog Script ko", serif;
+  --gd-sans: "Guidedog Sans", "Guidedog Script ko", system-ui, sans-serif;
+}
+@font-face {
+  font-family: "Guidedog Script hi"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("data/fonts/Noto-hi-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Guidedog Script hi"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("data/fonts/Noto-hi-Bold.woff2") format("woff2");
+}
+html:lang(hi) {
+  --gd-serif: "Guidedog Serif", "Guidedog Script hi", serif;
+  --gd-sans: "Guidedog Sans", "Guidedog Script hi", system-ui, sans-serif;
+}

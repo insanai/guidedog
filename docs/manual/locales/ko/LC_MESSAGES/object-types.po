@@ -1,0 +1,127 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../object-types.rst:1
+msgid "Declaring object types"
+msgstr "객체 타입 선언"
+
+#: ../../object-types.rst:4
+msgid ""
+"A project may need names that the standard domains do not know. Declare "
+"those object types in TOML. Guidedog can then create targets, index "
+"entries, and roles without loading a Python extension. The declaration "
+"states a syntax, not executable behavior."
+msgstr ""
+"표준 도메인에 없는 이름이 필요할 수 있습니다. TOML에서 객체 타입을 선언하면 Guidedog가 Python 확장 없이 참조 "
+"대상, 색인 항목, 역할을 만듭니다. 선언은 문법을 나타내며 실행 동작은 아닙니다."
+
+#: ../../object-types.rst:8
+msgid "Targets: ``add_crossref_type``"
+msgstr "참조 대상: ``add_crossref_type``"
+
+#: ../../object-types.rst:18
+msgid ""
+"``.. setting:: DEBUG`` then makes a target with the id ``setting-DEBUG`` "
+"and an index entry, and ``:setting:`DEBUG``` links to it, as in Sphinx. "
+"``index`` is Sphinx's ``indextemplate``: its type (``single``, ``pair``, "
+"``triple``, ``see``, ``seealso``) before the first colon, and the entry "
+"after it, with ``%s`` the name."
+msgstr "이후 ``.. setting:: DEBUG``\\ 는 ID가 ``setting-DEBUG``\\ 인 대상과 색인 항목을 만들고, ``:setting:`DEBUG```\\ 는 Sphinx처럼 이를 연결합니다. ``index``\\ 는 Sphinx의 ``indextemplate``\\ 에 해당합니다. 첫 콜론 앞에는 종류(\\ ``single``\\ , ``pair``\\ , ``triple``\\ , ``see``\\ , ``seealso``\\ ), 뒤에는 항목을 적으며 ``%s``\\ 는 이름입니다."
+
+#: ../../object-types.rst:23
+msgid "Descriptions: ``add_object_type``"
+msgstr "설명: ``add_object_type``"
+
+#: ../../object-types.rst:36
+msgid ""
+"``.. django-admin:: migrate [app_label]`` then describes the command like "
+"any object: a signature, content, an id (``django-admin-migrate``), and "
+"an index entry. In Sphinx a ``parse_node`` function may read the "
+"signature; its usual work is set by fields instead:"
+msgstr ""
+"``.. django-admin:: migrate [app_label]``\\ 는 일반 객체처럼 시그니처, 본문, ID(\\ "
+"``django-admin-migrate``\\ ), 색인 항목으로 명령을 설명합니다. Sphinx는 ``parse_node`` "
+"함수로 시그니처를 읽을 수 있지만, 일반적인 처리는 다음 필드로 지정합니다."
+
+#: ../../object-types.rst:41
+msgid "``name``"
+msgstr "``name``"
+
+#: ../../object-types.rst:42
+msgid ""
+"``\"whole\"`` (the default): the object's name is its whole signature. "
+"``\"first-word\"``: the name is the signature up to its first space "
+"(``pdb``'s ``b(reak) [lineno]`` is named ``b(reak)``)."
+msgstr ""
+"``\"whole\"``\\ (기본값)은 전체 시그니처를 객체 이름으로 씁니다. ``\"first-word\"``\\ 는 첫 공백 "
+"앞까지를 씁니다. 예를 들어 ``pdb``\\ 의 ``b(reak) [lineno]``\\ 는 ``b(reak)``\\ 라는 이름을 "
+"갖습니다."
+
+#: ../../object-types.rst:46
+msgid "``display``"
+msgstr "``display``"
+
+#: ../../object-types.rst:47
+msgid ""
+"How the signature is shown, ``%s`` standing for it. By default, as "
+"written."
+msgstr "시그니처의 표시 방식이며 ``%s``\\ 가 시그니처입니다. 기본값은 원문 그대로입니다."
+
+#: ../../object-types.rst:49
+msgid "``program``"
+msgstr "``program``"
+
+#: ../../object-types.rst:50
+msgid ""
+"``true``: the name becomes the program that options described after it "
+"belong to, as ``.. program::`` makes it."
+msgstr "``true``\\ 이면 이름이 이후 옵션이 속할 프로그램이 됩니다. ``.. program::``\\ 와 같습니다."
+
+#: ../../object-types.rst:53
+msgid "Other names for directives"
+msgstr "지시문의 다른 이름"
+
+#: ../../object-types.rst:56
+msgid ""
+"An extension may register one of Sphinx's own directives under another "
+"name:"
+msgstr "확장은 Sphinx의 지시문을 다른 이름으로 등록할 수 있습니다."
+
+#: ../../object-types.rst:64
+msgid ""
+"A target without a domain is a standard directive, or one of the default "
+"domain's; a target such as ``py:function`` names its domain."
+msgstr ""
+"도메인이 없는 대상은 표준 지시문이나 기본 도메인의 지시문입니다. ``py:function`` 같은 대상은 도메인을 명시합니다."
+
+#: ../../object-types.rst:67
+msgid "Migrating"
+msgstr "마이그레이션"
+
+#: ../../object-types.rst:70
+msgid ""
+"``guidedog migrate`` finds each extension ``conf.py`` lists that is a "
+"module of the project, reads its ``add_crossref_type``, "
+"``add_object_type``, and ``add_directive`` calls without running them, "
+"and writes these tables. It reports what it cannot declare: a "
+"``parse_node`` function (set ``name``, ``display``, and ``program`` to "
+"match it) and directives, roles, and event handlers written in Python."
+msgstr ""
+"``guidedog migrate``\\ 는 ``conf.py``\\ 에 나열된 프로젝트 내부 확장 모듈을 찾습니다. "
+"``add_crossref_type``\\ , ``add_object_type``\\ , ``add_directive`` 호출을 "
+"실행하지 않고 읽어 표를 작성합니다. 선언할 수 없는 ``parse_node`` 함수(\\ ``name``\\ , "
+"``display``\\ , ``program``\\ 으로 맞추어야 함)와 Python 지시문, 역할, 이벤트 처리기는 보고합니다."

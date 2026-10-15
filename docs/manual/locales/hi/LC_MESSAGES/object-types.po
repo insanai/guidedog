@@ -1,0 +1,136 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../object-types.rst:1
+msgid "Declaring object types"
+msgstr "ऑब्जेक्ट टाइप घोषित करना"
+
+#: ../../object-types.rst:4
+msgid ""
+"A project may need names that the standard domains do not know. Declare "
+"those object types in TOML. Guidedog can then create targets, index "
+"entries, and roles without loading a Python extension. The declaration "
+"states a syntax, not executable behavior."
+msgstr ""
+"परियोजना को ऐसे नाम चाहिए हो सकते हैं जिन्हें मानक डोमेन नहीं जानते। TOML "
+"में उनके ऑब्जेक्ट टाइप घोषित करें। Guidedog Python एक्सटेंशन लोड किए बिना "
+"लक्ष्य, इंडेक्स प्रविष्टि और रोल बना सकता है। घोषणा सिंटैक्स बताती है, "
+"चलने वाला व्यवहार नहीं।"
+
+#: ../../object-types.rst:8
+msgid "Targets: ``add_crossref_type``"
+msgstr "लक्ष्य: ``add_crossref_type``"
+
+#: ../../object-types.rst:18
+msgid ""
+"``.. setting:: DEBUG`` then makes a target with the id ``setting-DEBUG`` "
+"and an index entry, and ``:setting:`DEBUG``` links to it, as in Sphinx. "
+"``index`` is Sphinx's ``indextemplate``: its type (``single``, ``pair``, "
+"``triple``, ``see``, ``seealso``) before the first colon, and the entry "
+"after it, with ``%s`` the name."
+msgstr "तब ``.. setting:: DEBUG`` ``setting-DEBUG`` ID वाला लक्ष्य और इंडेक्स प्रविष्टि बनाता है। ``:setting:`DEBUG``` उसे लिंक करता है, Sphinx की तरह। ``index`` Sphinx का ``indextemplate`` है: पहले कोलन से पहले प्रकार (\\ ``single``\\ , ``pair``\\ , ``triple``\\ , ``see``\\ , ``seealso``\\ ), बाद में प्रविष्टि, और ``%s`` नाम है।"
+
+#: ../../object-types.rst:23
+msgid "Descriptions: ``add_object_type``"
+msgstr "विवरण: ``add_object_type``"
+
+#: ../../object-types.rst:36
+msgid ""
+"``.. django-admin:: migrate [app_label]`` then describes the command like "
+"any object: a signature, content, an id (``django-admin-migrate``), and "
+"an index entry. In Sphinx a ``parse_node`` function may read the "
+"signature; its usual work is set by fields instead:"
+msgstr ""
+"``.. django-admin:: migrate [app_label]`` कमांड को ऑब्जेक्ट की तरह "
+"सिग्नेचर, सामग्री, ID (\\ ``django-admin-migrate``\\ ) और इंडेक्स "
+"प्रविष्टि के साथ बताता है। Sphinx में ``parse_node`` फ़ंक्शन सिग्नेचर पढ़ "
+"सकता है; उसका सामान्य काम यहाँ फ़ील्ड से तय होता है:"
+
+#: ../../object-types.rst:41
+msgid "``name``"
+msgstr "``name``"
+
+#: ../../object-types.rst:42
+msgid ""
+"``\"whole\"`` (the default): the object's name is its whole signature. "
+"``\"first-word\"``: the name is the signature up to its first space "
+"(``pdb``'s ``b(reak) [lineno]`` is named ``b(reak)``)."
+msgstr ""
+"``\"whole\"`` (डिफ़ॉल्ट): पूरा सिग्नेचर ऑब्जेक्ट का नाम है। "
+"``\"first-word\"``\\ : पहले खाली स्थान तक का भाग नाम है। जैसे ``pdb`` का "
+"``b(reak) [lineno]`` नाम ``b(reak)`` रखता है।"
+
+#: ../../object-types.rst:46
+msgid "``display``"
+msgstr "``display``"
+
+#: ../../object-types.rst:47
+msgid ""
+"How the signature is shown, ``%s`` standing for it. By default, as "
+"written."
+msgstr ""
+"सिग्नेचर कैसे दिखे; ``%s`` उसका स्थान लेता है। डिफ़ॉल्ट में लिखा हुआ रूप।"
+
+#: ../../object-types.rst:49
+msgid "``program``"
+msgstr "``program``"
+
+#: ../../object-types.rst:50
+msgid ""
+"``true``: the name becomes the program that options described after it "
+"belong to, as ``.. program::`` makes it."
+msgstr ""
+"``true``\\ : नाम आगे बताए विकल्पों का प्रोग्राम बनता है, जैसा ``.. "
+"program::`` करता है।"
+
+#: ../../object-types.rst:53
+msgid "Other names for directives"
+msgstr "निर्देश के अन्य नाम"
+
+#: ../../object-types.rst:56
+msgid ""
+"An extension may register one of Sphinx's own directives under another "
+"name:"
+msgstr "एक्सटेंशन Sphinx के निर्देश को दूसरे नाम से पंजीकृत कर सकता है:"
+
+#: ../../object-types.rst:64
+msgid ""
+"A target without a domain is a standard directive, or one of the default "
+"domain's; a target such as ``py:function`` names its domain."
+msgstr ""
+"डोमेन के बिना लक्ष्य मानक या डिफ़ॉल्ट डोमेन का निर्देश है। "
+"``py:function`` जैसा लक्ष्य अपना डोमेन बताता है।"
+
+#: ../../object-types.rst:67
+msgid "Migrating"
+msgstr "माइग्रेशन"
+
+#: ../../object-types.rst:70
+msgid ""
+"``guidedog migrate`` finds each extension ``conf.py`` lists that is a "
+"module of the project, reads its ``add_crossref_type``, "
+"``add_object_type``, and ``add_directive`` calls without running them, "
+"and writes these tables. It reports what it cannot declare: a "
+"``parse_node`` function (set ``name``, ``display``, and ``program`` to "
+"match it) and directives, roles, and event handlers written in Python."
+msgstr ""
+"``guidedog migrate`` ``conf.py`` में सूचीबद्ध परियोजना के एक्सटेंशन "
+"मॉड्यूल ढूँढता है। उनके ``add_crossref_type``\\ , ``add_object_type`` और "
+"``add_directive`` कॉल पढ़कर, बिना चलाए, ये तालिकाएँ लिखता है। जो घोषित "
+"नहीं कर सकता वह बताता है: ``parse_node`` फ़ंक्शन (\\ ``name``\\ , "
+"``display``\\ , ``program`` से मिलाएँ), और Python के निर्देश, रोल तथा "
+"इवेंट हैंडलर।"

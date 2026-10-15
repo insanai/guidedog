@@ -1,0 +1,125 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../object-types.rst:1
+msgid "Declaring object types"
+msgstr "声明对象类型"
+
+#: ../../object-types.rst:4
+msgid ""
+"A project may need names that the standard domains do not know. Declare "
+"those object types in TOML. Guidedog can then create targets, index "
+"entries, and roles without loading a Python extension. The declaration "
+"states a syntax, not executable behavior."
+msgstr ""
+"项目可能需要标准领域不认识的名称。在 TOML 中声明对象类型后，Guidedog 无需加载 Python "
+"扩展即可创建目标、索引项和角色。声明描述语法，不是可执行行为。"
+
+#: ../../object-types.rst:8
+msgid "Targets: ``add_crossref_type``"
+msgstr "目标：\\ ``add_crossref_type``"
+
+#: ../../object-types.rst:18
+msgid ""
+"``.. setting:: DEBUG`` then makes a target with the id ``setting-DEBUG`` "
+"and an index entry, and ``:setting:`DEBUG``` links to it, as in Sphinx. "
+"``index`` is Sphinx's ``indextemplate``: its type (``single``, ``pair``, "
+"``triple``, ``see``, ``seealso``) before the first colon, and the entry "
+"after it, with ``%s`` the name."
+msgstr "随后，\\ ``.. setting:: DEBUG`` 创建标识符为 ``setting-DEBUG`` 的目标及索引项，\\ ``:setting:`DEBUG``` 则链接至该目标，与 Sphinx 一致。\\ ``index`` 对应 Sphinx 的 ``indextemplate``\\ ：首个冒号前是类型（\\ ``single``\\ 、\\ ``pair``\\ 、\\ ``triple``\\ 、\\ ``see``\\ 、\\ ``seealso``\\ ），其后是索引项，\\ ``%s`` 代表名称。"
+
+#: ../../object-types.rst:23
+msgid "Descriptions: ``add_object_type``"
+msgstr "描述：\\ ``add_object_type``"
+
+#: ../../object-types.rst:36
+msgid ""
+"``.. django-admin:: migrate [app_label]`` then describes the command like "
+"any object: a signature, content, an id (``django-admin-migrate``), and "
+"an index entry. In Sphinx a ``parse_node`` function may read the "
+"signature; its usual work is set by fields instead:"
+msgstr ""
+"随后，\\ ``.. django-admin:: migrate [app_label]`` "
+"像普通对象一样描述命令，包含签名、内容、标识符（\\ ``django-admin-migrate``\\ ）及索引项。Sphinx 可用 "
+"``parse_node`` 函数解析签名，这里改用字段表达常见处理规则："
+
+#: ../../object-types.rst:41
+msgid "``name``"
+msgstr "``name``"
+
+#: ../../object-types.rst:42
+msgid ""
+"``\"whole\"`` (the default): the object's name is its whole signature. "
+"``\"first-word\"``: the name is the signature up to its first space "
+"(``pdb``'s ``b(reak) [lineno]`` is named ``b(reak)``)."
+msgstr ""
+"``\"whole\"``\\ （默认）：对象名是完整签名。\\ ``\"first-word\"``\\ ：对象名为首个空格之前的内容。例如 "
+"``pdb`` 的 ``b(reak) [lineno]`` 命名为 ``b(reak)``\\ 。"
+
+#: ../../object-types.rst:46
+msgid "``display``"
+msgstr "``display``"
+
+#: ../../object-types.rst:47
+msgid ""
+"How the signature is shown, ``%s`` standing for it. By default, as "
+"written."
+msgstr "签名的显示方式，\\ ``%s`` 代表签名。默认保留原样。"
+
+#: ../../object-types.rst:49
+msgid "``program``"
+msgstr "``program``"
+
+#: ../../object-types.rst:50
+msgid ""
+"``true``: the name becomes the program that options described after it "
+"belong to, as ``.. program::`` makes it."
+msgstr "``true``\\ ：名称成为后续选项所属的程序，与 ``.. program::`` 相同。"
+
+#: ../../object-types.rst:53
+msgid "Other names for directives"
+msgstr "指令的其他名称"
+
+#: ../../object-types.rst:56
+msgid ""
+"An extension may register one of Sphinx's own directives under another "
+"name:"
+msgstr "扩展可以用另一个名称注册 Sphinx 自有的指令："
+
+#: ../../object-types.rst:64
+msgid ""
+"A target without a domain is a standard directive, or one of the default "
+"domain's; a target such as ``py:function`` names its domain."
+msgstr "未指定领域的目标是标准指令，或默认领域的指令；\\ ``py:function`` 这样的目标则明确指定领域。"
+
+#: ../../object-types.rst:67
+msgid "Migrating"
+msgstr "迁移"
+
+#: ../../object-types.rst:70
+msgid ""
+"``guidedog migrate`` finds each extension ``conf.py`` lists that is a "
+"module of the project, reads its ``add_crossref_type``, "
+"``add_object_type``, and ``add_directive`` calls without running them, "
+"and writes these tables. It reports what it cannot declare: a "
+"``parse_node`` function (set ``name``, ``display``, and ``program`` to "
+"match it) and directives, roles, and event handlers written in Python."
+msgstr ""
+"``guidedog migrate`` 找出 ``conf.py`` 所列、属于项目自身模块的扩展。它只读取 "
+"``add_crossref_type``\\ 、\\ ``add_object_type`` 和 ``add_directive`` "
+"调用，不执行代码，并写入相应表。无法声明的内容会报告：\\ ``parse_node`` 函数（需设置 ``name``\\ 、\\ "
+"``display``\\ 、\\ ``program`` 以匹配），以及用 Python 编写的指令、角色和事件处理器。"

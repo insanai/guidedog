@@ -1,0 +1,170 @@
+.. _documentation-privacy-and-language-review--11-october-2026:
+
+Documentation privacy and language review — 11 October 2026
+===========================================================
+
+This review covers the published manual, API, GDS, and repository README. The translated
+content is the manual and repository overview. The API and GDS remain English. Library
+READMEs remain English, as requested.
+
+Author privacy
+--------------
+
+No author email address was found in the documentation sources, translation catalogs,
+project metadata, repository READMEs, generated HTML, or extracted PDF text. The scan also
+checks numeric HTML escapes for ``@``. Author credits use names or handles; translation
+headers use the contributor group. The review leaves Git identity settings and commit
+metadata alone.
+
+The API describes ``mailto:`` behavior and uses ``sr@latin`` as a gettext locale example.
+Broad keyword scans report these technical examples. They are not author contact addresses
+and remain in the API documentation.
+
+The generated site includes downloadable source files, so those copies are checked too. The
+new repository overview states the credit policy. This policy concerns our published
+documentation; it does not remove email-link support from the engine or alter third-party
+attribution.
+
+Language coverage
+-----------------
+
+The six editions are Simplified Chinese (``zh_CN``), Japanese (``ja``), Korean (``ko``),
+Hindi (``hi``), Spanish (``es``), and German (``de``), alongside English. Before the review,
+every edition had untranslated and fuzzy entries in newer CLI, configuration, authoring, and
+template chapters. The landing-page introduction also fell back to English.
+
+Those entries were written and reviewed directly. No translation-service output was
+imported. Technical commands, option names, paths, code examples, API names, and reference
+targets remain unchanged. Natural phrasing and common technical terms are used in the prose.
+The catalogs preserve the RST or Markdown structure rather than imposing implementation
+source-line rules on it.
+
+Guidedog's native workflow extracts POT files, merges PO catalogs, reports progress, and
+builds each edition:
+
+.. code:: sh
+
+   mkdir -p docs/manual/_editions
+   build/guidedog build -b gettext docs/manual docs/manual/locales/templates -W
+   build/guidedog intl update -p docs/manual/locales/templates \
+       -l zh_CN -l ja -l ko -l hi -l es -l de docs/manual
+   build/guidedog intl stat -l zh_CN -l ja -l ko -l hi -l es -l de docs/manual
+
+The final statistics cover 108 catalogs and 7,730 active entries: zero fuzzy and zero
+untranslated entries. Identifiers and proper names can intentionally equal the English
+source. Catalog completeness is a mechanical check, not independent native-speaker
+certification.
+
+Repository README and browser selection
+---------------------------------------
+
+The repository now has ``README.md`` and six translated READMEs. Each contains the same
+commands, dependencies, support limits, credits, and language links. The manual's
+``repository.rst`` is the website version, translated through its own PO/POT domain. The
+existing manual project builds it; there is no fourth documentation project.
+
+The website chooses a language on the English manual landing page and repository overview. A
+saved choice takes priority over browser preferences. Regional variants such as ``es-MX``
+and ``de-AT`` select the corresponding edition. Direct links to translated editions and
+ordinary chapters are respected. Language changes keep the page, query, and anchor. The menu
+remains usable without JavaScript. Traditional Chinese preferences are not silently
+described as a Traditional edition; only Simplified Chinese is supplied.
+
+GitHub does not execute the website's language-selection script. Its READMEs offer explicit
+language links. The generated website supplies automatic selection.
+
+Defects found while verifying
+-----------------------------
+
+The CLI reference omitted exit codes 3, 5, and 70, and described ``--untrusted`` as a
+sandbox. It now describes resource limits, internal failures, and crashes, and identifies
+``--untrusted`` as a capability policy. The translations carry the same correction.
+
+A Korean particle immediately following bold text required an RST boundary escape. The
+escape preserves the natural joined word without displaying an artificial space. Strict
+builds caught the problem before publication.
+
+README source downloads exposed a native engine defect. Download paths used a document-name
+helper that stripped ``.md`` and ``.rst``. File paths now preserve their extensions;
+document references first try an existing identifier before interpreting a source filename.
+The same file-path helper is used for localized-image existence checks. This prevents a
+document named ``references.md``, read from ``references.md.rst``, from being shortened
+twice. A regression test builds RST and MyST pages, checks their links, and compares both
+downloaded source files byte for byte. Missing-target lookups remain recorded for
+incremental invalidation.
+
+The project excludes standalone evidence Markdown from source discovery. Static README
+downloads use the native download role, and the build instructions create the editions
+directory before assembling the site.
+
+Verification
+------------
+
+Heavy builds and tests ran in the isolated checkout on ``insan@10.175.52.18``. The
+documentation was built with Guidedog, including its gettext and intl commands. No Python
+script or translation service is part of this documentation workflow. Browser checks used
+Guidedog's own server on port 8777.
+
++-----------------------------+-----------------------------------------------------------+
+| Check                       | Result                                                    |
++=============================+===========================================================+
+| Project tests               | 58 pass in normal, embedded-Typst, and AddressSanitizer   |
+|                             | builds                                                    |
++-----------------------------+-----------------------------------------------------------+
+| Integration tests           | 166 pass in normal, embedded-Typst, and AddressSanitizer  |
+|                             | builds                                                    |
++-----------------------------+-----------------------------------------------------------+
+| Source rules                | 654 source files, zero violations                         |
++-----------------------------+-----------------------------------------------------------+
+| Translation catalogs        | 108 catalogs, 7,730 active entries, zero fuzzy or         |
+|                             | untranslated entries                                      |
++-----------------------------+-----------------------------------------------------------+
+| Strict documentation builds | Seven HTML editions and seven PDF editions succeed with   |
+|                             | ``-n -W``                                                 |
++-----------------------------+-----------------------------------------------------------+
+| Assembled HTML links        | 462 pages, 155,127 internal links, zero missing files or  |
+|                             | anchors                                                   |
++-----------------------------+-----------------------------------------------------------+
+| PDF fonts and text bounds   | All seven editions have embedded fonts; zero text boxes   |
+|                             | outside page bounds                                       |
++-----------------------------+-----------------------------------------------------------+
+| Privacy                     | No author email addresses in sources, downloads, HTML, or |
+|                             | extracted PDF text                                        |
++-----------------------------+-----------------------------------------------------------+
+
+Chrome checks covered ``zh-Hans-CN``, ``ja-JP``, ``ko-KR``, ``hi-IN``, ``es-AR``, and
+``de-DE``, plus Spanish and German regional variants. A Traditional Chinese preference
+followed by English selects English. A saved language overrides browser preferences.
+Automatic selection works on the repository overview as well as the manual landing page. A
+direct chapter link stays in its requested edition; a menu selection preserves the query and
+section anchor and saves the choice. Detection also works when browser storage is
+unavailable.
+
+The seven landing pages have no horizontal overflow. Chinese, Korean, and Hindi pages were
+also inspected at a 390-pixel mobile viewport. The checked navigations produced no console
+warnings or errors. The HTML language menu retains ordinary links for use without
+JavaScript.
+
+PDF page counts are English 385, Simplified Chinese 377, Japanese 385, Korean 385, Hindi
+381, Spanish 383, and German 385. Cover, contents, and chapter samples were rendered with
+Poppler; covers and chapter samples were visually inspected across all editions. Code,
+identifiers, and literal diagram source labels stay in English. Captions and explanatory
+prose are localized.
+
+The previously reviewed API and GDS remain English. This focused verification repeats the
+changed project suite and the complete integration suite; it does not claim a new run of the
+unchanged large third-party manuals or Windows runtime checks. Native-speaker editorial
+review would provide additional assurance beyond catalog completeness and the language
+review performed here.
+
+Candidate SHA-256 values:
+
+.. code:: text
+
+   fd9034f2f8f9205f24cf963bc96bb1e8eed122874af61a11d6ba5aab4675672b  guidedog
+   77f4beaa76dff9fa5a973fcfa246f7f9b57771f79a9e124e341cbdab4d8c2ce7  guidedog-embedded
+
+Build and test logs are in ``build/review-i18n-20261011/logs/``. PDF metadata, font
+listings, extracted text, bounding-box results, and rendered samples are in
+``build/review-i18n-20261011/qa/``. These are local verification artifacts, not additional
+documentation projects.

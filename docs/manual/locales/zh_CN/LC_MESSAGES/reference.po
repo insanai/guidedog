@@ -1,0 +1,2527 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 02:53+0000\n"
+"PO-Revision-Date: 2026-10-13 04:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../reference/cli.rst:1
+msgid "Command-line reference"
+msgstr "命令行参考"
+
+#: ../../reference/cli.rst:4
+msgid ""
+"The ``guidedog`` executable provides a complete command-line interface "
+"for managing, building, previewing, translating, and converting "
+"documentation projects."
+msgstr "``guidedog`` 提供命令行工具，用于管理、构建、预览、翻译和转换文档项目。"
+
+#: ../../reference/cli.rst:7
+msgid "General syntax"
+msgstr "基本语法"
+
+#: ../../reference/cli.rst:16
+msgid "Exit codes"
+msgstr "退出码"
+
+#: ../../reference/cli.rst:19
+msgid "Exit statuses"
+msgstr "退出状态"
+
+#: ../../reference/cli.rst:23
+msgid "Exit code"
+msgstr "退出码"
+
+#: ../../reference/cli.rst:24
+msgid "Condition"
+msgstr "条件"
+
+#: ../../reference/cli.rst:25 ../../reference/configuration.rst:386
+msgid "``0``"
+msgstr "``0``"
+
+#: ../../reference/cli.rst:26
+msgid "Success: all operations completed with no unhandled errors."
+msgstr "成功：所有操作均已完成，没有未处理的错误。"
+
+#: ../../reference/cli.rst:27 ../../reference/configuration.rst:177
+msgid "``1``"
+msgstr "``1``"
+
+#: ../../reference/cli.rst:28
+msgid ""
+"Build or conversion error (or warnings treated as errors via ``-W``)."
+msgstr "构建或转换失败，或 ``-W`` 将警告视为错误。"
+
+#: ../../reference/cli.rst:29
+msgid "``2``"
+msgstr "``2``"
+
+#: ../../reference/cli.rst:30
+msgid "Command-line syntax error, invalid flag, or unrecognized option."
+msgstr "命令行语法、参数或选项有误。"
+
+#: ../../reference/cli.rst:31
+msgid "``3``"
+msgstr "``3``"
+
+#: ../../reference/cli.rst:32
+msgid "A configured resource limit was reached, or memory was unavailable."
+msgstr "达到配置的资源上限，或无法提供内存。"
+
+#: ../../reference/cli.rst:33
+msgid "``4``"
+msgstr "``4``"
+
+#: ../../reference/cli.rst:34
+msgid "A file operation or external compiler failed."
+msgstr "文件操作或外部编译器失败。"
+
+#: ../../reference/cli.rst:35
+msgid "``5``"
+msgstr "``5``"
+
+#: ../../reference/cli.rst:36
+msgid "An internal error; the diagnostic explains how to report it."
+msgstr "内部错误；诊断信息说明如何报告。"
+
+#: ../../reference/cli.rst:37
+msgid "``6``"
+msgstr "``6``"
+
+#: ../../reference/cli.rst:38
+msgid ""
+"``publish`` only: the host accepted the publication, but has not "
+"confirmed it live."
+msgstr "仅 ``publish``\\ ：托管平台已接受发布，但尚未确认已上线。"
+
+#: ../../reference/cli.rst:39
+msgid "``7``"
+msgstr "``7``"
+
+#: ../../reference/cli.rst:40
+msgid ""
+"``publish`` only: whether the publication was applied is not known; run "
+"the publisher's ``recover``."
+msgstr "仅 ``publish``\\ ：无法确定发布是否已生效；请运行发布器的 ``recover``\\ 。"
+
+#: ../../reference/cli.rst:42
+msgid "``70``"
+msgstr "``70``"
+
+#: ../../reference/cli.rst:43
+msgid "A crash; the previous published output remains available."
+msgstr "发生崩溃；此前发布的输出仍然可用。"
+
+#: ../../reference/cli.rst:45
+msgid "Commands overview"
+msgstr "命令概览"
+
+#: ../../reference/cli.rst:48
+msgid "CLI commands"
+msgstr "CLI 命令"
+
+#: ../../reference/cli.rst:52
+msgid "Command"
+msgstr "命令"
+
+#: ../../reference/cli.rst:53
+msgid "Purpose"
+msgstr "用途"
+
+#: ../../reference/cli.rst:54
+msgid "``quickstart [DIR]``"
+msgstr "``quickstart [DIR]``"
+
+#: ../../reference/cli.rst:55
+msgid ""
+"Initializes a new documentation project with visible templates and "
+"configuration."
+msgstr "创建文档项目，并生成可直接编辑的模板和配置。"
+
+#: ../../reference/cli.rst:56
+msgid "``build [BUILDER] [DIR]``"
+msgstr "``build [BUILDER] [DIR]``"
+
+#: ../../reference/cli.rst:57
+msgid "Builds the documentation project into the requested output target."
+msgstr "按指定的输出格式构建文档项目。"
+
+#: ../../reference/cli.rst:58
+msgid "``serve [DIR]``"
+msgstr "``serve [DIR]``"
+
+#: ../../reference/cli.rst:59
+msgid ""
+"Starts a local HTTP preview server that rebuilds automatically on file "
+"edits."
+msgstr "启动本地 HTTP 预览服务器，并在文件修改后自动重建。"
+
+#: ../../reference/cli.rst:60
+msgid "``clean [DIR]``"
+msgstr "``clean [DIR]``"
+
+#: ../../reference/cli.rst:61
+msgid "Deletes generated build artifacts and caches."
+msgstr "删除生成的构建产物和缓存。"
+
+#: ../../reference/cli.rst:62
+msgid "``convert INPUT``"
+msgstr "``convert INPUT``"
+
+#: ../../reference/cli.rst:63
+msgid "Converts a single document file or standard input stream directly."
+msgstr "直接转换单个文件或标准输入。"
+
+#: ../../reference/cli.rst:64
+msgid "``migrate [conf.py]``"
+msgstr "``migrate [conf.py]``"
+
+#: ../../reference/cli.rst:65
+msgid ""
+"Translates an existing Sphinx ``conf.py`` into declarative ``conf.toml``."
+msgstr "将 Sphinx 的 ``conf.py`` 转换为声明式 ``conf.toml``。"
+
+#: ../../reference/cli.rst:66
+msgid "``intl <update|stat>``"
+msgstr "``intl <update|stat>``"
+
+#: ../../reference/cli.rst:67
+msgid ""
+"Updates translation catalogs (PO) or reports translation completion "
+"statistics."
+msgstr "更新 PO 翻译目录，或报告翻译完成情况。"
+
+#: ../../reference/cli.rst:68
+msgid "``formats``"
+msgstr "``formats``"
+
+#: ../../reference/cli.rst:69
+msgid ""
+"Lists all compiled readers, renderers, and format conformance "
+"specifications."
+msgstr "列出内置的读取器、渲染器及格式符合性说明。"
+
+#: ../../reference/cli.rst:70
+msgid "``gds <COMMAND>``"
+msgstr "``gds <COMMAND>``"
+
+#: ../../reference/cli.rst:71
+msgid ""
+"Keeps Guidedog's own discussion records in ``docs/gds``, as ``dsc`` does."
+msgstr "像 ``dsc`` 一样，维护 ``docs/gds`` 中 Guidedog 自己的讨论记录。"
+
+#: ../../reference/cli.rst:72
+msgid "``publish --publisher=ID``"
+msgstr "``publish --publisher=ID``"
+
+#: ../../reference/cli.rst:73
+msgid ""
+"Builds the project a publisher's configuration names, and publishes the "
+"site."
+msgstr "构建发布器配置中指定的项目，并发布网站。"
+
+#: ../../reference/cli.rst:74
+msgid "``plugin <COMMAND>``"
+msgstr "``plugin <COMMAND>``"
+
+#: ../../reference/cli.rst:75
+msgid ""
+"Registers, lists, inspects, runs, or unregisters native plugin programs."
+msgstr "注册、列出、检查、运行原生插件程序，或移除其注册信息。"
+
+#: ../../reference/cli.rst:77
+msgid "guidedog quickstart"
+msgstr "guidedog quickstart"
+
+#: ../../reference/cli.rst:80
+msgid ""
+"Creates a project directory containing ``conf.toml``, ``index.rst``, "
+"working templates in ``_templates/``, and styles in ``_static/``:"
+msgstr ""
+"创建项目目录，其中包含 ``conf.toml``、``index.rst``、``_templates/`` 中的模板和 "
+"``_static/`` 中的样式："
+
+#: ../../reference/cli.rst:91 ../../reference/cli.rst:163
+#: ../../reference/cli.rst:194 ../../reference/cli.rst:217
+msgid "Options:"
+msgstr "选项："
+
+#: ../../reference/cli.rst:93
+msgid ""
+"``-q``: Quiet mode; skips interactive prompts and relies on provided "
+"command-line flags."
+msgstr "``-q``: 静默模式；跳过交互提问，使用命令行提供的值。"
+
+#: ../../reference/cli.rst:94
+msgid "``-p, --project NAME``: Sets the project display name."
+msgstr "``-p, --project NAME``: 设置项目显示名称。"
+
+#: ../../reference/cli.rst:95
+msgid "``-a, --author NAME``: Sets the author or organization name."
+msgstr "``-a, --author NAME``: 设置作者或组织名称。"
+
+#: ../../reference/cli.rst:96
+msgid "``-v VERSION``: Sets the short version string (e.g. ``1.0``)."
+msgstr "``-v VERSION``: 设置简短版本号，例如 ``1.0``。"
+
+#: ../../reference/cli.rst:97
+msgid ""
+"``-r RELEASE``: Sets the full release identifier (e.g. ``1.0.0-rc1``)."
+msgstr "``-r RELEASE``: 设置完整发布标识，例如 ``1.0.0-rc1``。"
+
+#: ../../reference/cli.rst:98
+msgid ""
+"``-l LANGUAGE``: Sets the default project language (default: ``en``)."
+msgstr "``-l LANGUAGE``: 设置项目默认语言，默认为 ``en``。"
+
+#: ../../reference/cli.rst:99
+msgid ""
+"``--sep``: Creates separate ``source/`` and ``build/`` directories "
+"instead of storing sources at the root."
+msgstr "``--sep``: 分别创建 ``source/`` 和 ``build/`` 目录，而不是将源文件放在根目录。"
+
+#: ../../reference/cli.rst:100
+msgid ""
+"``--suffix EXT``: Default source document extension (default: ``.rst``)."
+msgstr "``--suffix EXT``: 设置源文档的默认扩展名，默认为 ``.rst``。"
+
+#: ../../reference/cli.rst:102
+msgid "guidedog build"
+msgstr "guidedog build"
+
+#: ../../reference/cli.rst:105
+msgid ""
+"Coordinates the reading of sources, resolution of toctrees and "
+"cross-references, and publication of final output artifacts:"
+msgstr "协调读取源文件、解析目录树和交叉引用，以及发布最终产物："
+
+#: ../../reference/cli.rst:118
+msgid "Supported builders:"
+msgstr "支持的构建器："
+
+#: ../../reference/cli.rst:120
+msgid "``html``: Generates a complete HTML site with search and navigation."
+msgstr "``html``: 生成带搜索和导航的完整 HTML 网站。"
+
+#: ../../reference/cli.rst:121
+msgid ""
+"``dirhtml``: Generates directory-style HTML URLs (``dir/index.html``)."
+msgstr "``dirhtml``: 生成目录式 HTML 地址，例如 ``dir/index.html``。"
+
+#: ../../reference/cli.rst:122
+msgid ""
+"``singlehtml``: Compiles all documents into a single contiguous HTML page."
+msgstr "``singlehtml``: 将所有文档合并为一个 HTML 页面。"
+
+#: ../../reference/cli.rst:123
+msgid ""
+"``pdf``: Typesets PDF books using Typst (aliases: ``latex``, "
+"``latexpdf``)."
+msgstr "``pdf``: 用 Typst 排版 PDF 图书；别名为 ``latex`` 和 ``latexpdf``。"
+
+#: ../../reference/cli.rst:124
+msgid "``text``: Generates plain text files for each document."
+msgstr "``text``: 为每个文档生成纯文本文件。"
+
+#: ../../reference/cli.rst:125
+msgid ""
+"``gettext``: Extracts translatable strings into GNU gettext POT templates."
+msgstr "``gettext``: 将可翻译的文本提取为 GNU gettext POT 模板。"
+
+#: ../../reference/cli.rst:126
+msgid ""
+"``dummy``: Parses and resolves document trees without writing final files "
+"(syntax check)."
+msgstr "``dummy``: 解析并检查文档树，不写入最终文件；用于语法检查。"
+
+#: ../../reference/cli.rst:128
+msgid "Build options:"
+msgstr "构建选项："
+
+#: ../../reference/cli.rst:130
+msgid "``-a``: Writes all output files, ignoring modification timestamps."
+msgstr "``-a``: 写入所有输出文件，不考虑修改时间。"
+
+#: ../../reference/cli.rst:131
+msgid ""
+"``-E``: Rebuilds the environment from scratch, ignoring cached state."
+msgstr "``-E``: 忽略缓存，从头重建环境。"
+
+#: ../../reference/cli.rst:132
+msgid "``-W``: Treats all warnings as build failures."
+msgstr "``-W``: 将所有警告视为构建失败。"
+
+#: ../../reference/cli.rst:133
+msgid ""
+"``--keep-going``: With ``-W``, continues compiling remaining documents to "
+"report all errors before exiting."
+msgstr "``--keep-going``: 配合 ``-W`` 使用时，继续处理剩余文档，退出前报告全部错误。"
+
+#: ../../reference/cli.rst:134
+msgid ""
+"``-n``: Nitpicky mode; generates warnings for all unresolved "
+"cross-reference targets."
+msgstr "``-n``: 严格引用检查；对所有未解析的交叉引用给出警告。"
+
+#: ../../reference/cli.rst:135
+msgid ""
+"``-j N`` / ``-j auto``: Parallel worker count for document parsing "
+"(``auto`` matches CPU cores)."
+msgstr "``-j N`` / ``-j auto``: 设置并行解析线程数；``auto`` 使用与 CPU 核心数相同的线程数。"
+
+#: ../../reference/cli.rst:136
+msgid ""
+"``-D name=value``: Overrides a ``conf.toml`` setting for this invocation "
+"(e.g. ``-D language=de``)."
+msgstr ""
+"``-D name=value``: 仅为本次运行覆盖 ``conf.toml`` 中的设置，例如 ``-D language=de``。"
+
+#: ../../reference/cli.rst:137
+msgid ""
+"``-D table.key=value``: Sets one key of a table setting, such as "
+"``html_context``, and keeps its other keys, as sphinx-build does."
+msgstr ""
+"``-D table.key=value``：只设置表类型设置（例如 ``html_context``）中的一个键，并保留其他键，与 "
+"sphinx-build 相同。"
+
+#: ../../reference/cli.rst:138
+msgid ""
+"``-t TAG``: Defines a tag for conditional inclusion in ``only`` "
+"directives."
+msgstr "``-t TAG``: 定义供 ``only`` 指令使用的条件标签。"
+
+#: ../../reference/cli.rst:139
+msgid "``-c DIR``: Specifies a custom directory containing ``conf.toml``."
+msgstr "``-c DIR``: 指定 ``conf.toml`` 所在的目录。"
+
+#: ../../reference/cli.rst:140
+msgid "``-C``: Runs the build without loading any ``conf.toml`` file."
+msgstr "``-C``: 不读取任何 ``conf.toml`` 文件。"
+
+#: ../../reference/cli.rst:141
+msgid ""
+"``-v``: Verbose mode; displays informational notes and timing statistics."
+msgstr "``-v``: 详细模式；显示提示信息和耗时统计。"
+
+#: ../../reference/cli.rst:142
+msgid "``-q``: Quiet mode; shows only warnings and errors."
+msgstr "``-q``: 静默模式；只显示警告和错误。"
+
+#: ../../reference/cli.rst:143
+msgid "``--color=always|never|auto``: Controls ANSI terminal color output."
+msgstr "``--color=always|never|auto``: 控制终端的 ANSI 颜色输出。"
+
+#: ../../reference/cli.rst:144
+msgid ""
+"``--diagnostics=json``: Emits machine-readable JSON diagnostic reports to "
+"standard error."
+msgstr "``--diagnostics=json``: 向标准错误输出写入可供程序读取的 JSON 诊断信息。"
+
+#: ../../reference/cli.rst:145
+msgid ""
+"``--budget=MIB``: Maximum memory budget held by the project host "
+"(default: ``1024`` MiB)."
+msgstr "``--budget=MIB``: 设置项目宿主持有的内存预算上限，默认为 ``1024`` MiB。"
+
+#: ../../reference/cli.rst:146
+msgid "``--memory=ram|disk``: Strategy when memory budget is exceeded."
+msgstr "``--memory=ram|disk``: 指定内存预算耗尽后的处理方式。"
+
+#: ../../reference/cli.rst:147
+msgid ""
+"``--untrusted``: Omits raw embedded markup and disables network fetching. "
+"This is a capability policy, not a process sandbox."
+msgstr "``--untrusted``: 省略原始嵌入标记，并禁用网络获取。这是能力限制策略，不是进程沙箱。"
+
+#: ../../reference/cli.rst:149
+msgid "guidedog serve"
+msgstr "guidedog serve"
+
+#: ../../reference/cli.rst:152
+msgid ""
+"Starts a local HTTP web server and file watcher that automatically "
+"rebuilds and reloads the browser whenever source documents, templates, or "
+"assets change:"
+msgstr "启动本地 HTTP 服务器和文件监视器；源文档、模板或资源修改后，自动重建并刷新浏览器："
+
+#: ../../reference/cli.rst:165
+msgid ""
+"``-p, --port PORT``: Local TCP port number to listen on (default: "
+"``8000``)."
+msgstr "``-p, --port PORT``: 本地监听端口，默认为 ``8000``。"
+
+#: ../../reference/cli.rst:166
+msgid "``--host HOST``: IP address to bind to (default: ``127.0.0.1``)."
+msgstr "``--host HOST``: 绑定的 IP 地址，默认为 ``127.0.0.1``。"
+
+#: ../../reference/cli.rst:168
+msgid "guidedog clean"
+msgstr "guidedog clean"
+
+#: ../../reference/cli.rst:171
+msgid "Deletes the build directory and all cached environment state:"
+msgstr "删除构建目录及缓存的环境状态："
+
+#: ../../reference/cli.rst:177
+msgid "guidedog convert"
+msgstr "guidedog convert"
+
+#: ../../reference/cli.rst:180
+msgid ""
+"Converts a standalone file or standard input stream directly, without "
+"requiring a project directory or configuration:"
+msgstr "直接转换文件或标准输入，无需项目目录或配置："
+
+#: ../../reference/cli.rst:196
+msgid ""
+"``-o, --output FILE``: Output file path, or ``-`` for standard output."
+msgstr "``-o, --output FILE``: 输出文件路径；``-`` 表示标准输出。"
+
+#: ../../reference/cli.rst:197
+msgid ""
+"``--to FORMAT``: Target format (``html``, ``pdf``, ``text``; inferred "
+"from output filename)."
+msgstr "``--to FORMAT``: 目标格式：``html``、``pdf`` 或 ``text``；也可根据输出文件名推断。"
+
+#: ../../reference/cli.rst:198
+msgid ""
+"``--from FORMAT``: Source reader (``rst``, ``commonmark``, ``myst``, "
+"``typst``; inferred from input suffix)."
+msgstr ""
+"``--from FORMAT``: 源读取器：``rst``、``commonmark``、``myst`` 或 "
+"``typst``；也可根据输入扩展名推断。"
+
+#: ../../reference/cli.rst:199
+msgid "``--force``: Overwrites an existing output file without prompting."
+msgstr "``--force``: 覆盖已有输出文件，不再询问。"
+
+#: ../../reference/cli.rst:200
+msgid "``--strict``: Fails if any warnings are emitted."
+msgstr "``--strict``: 出现任何警告即失败。"
+
+#: ../../reference/cli.rst:201
+msgid ""
+"``--raw=allow|omit``: Security policy for raw embedded code (default: "
+"``omit``)."
+msgstr "``--raw=allow|omit``: 控制原始嵌入代码的处理策略，默认为 ``omit``。"
+
+#: ../../reference/cli.rst:202
+msgid ""
+"``--emit-typst FILE``: Writes the generated intermediate Typst markup to "
+"a separate file."
+msgstr "``--emit-typst FILE``: 另存生成的中间 Typst 源码。"
+
+#: ../../reference/cli.rst:204
+msgid "guidedog migrate"
+msgstr "guidedog migrate"
+
+#: ../../reference/cli.rst:207
+msgid ""
+"Converts a Python Sphinx ``conf.py`` file into declarative ``conf.toml``:"
+msgstr "将 Sphinx 的 Python 配置文件 ``conf.py`` 转换为声明式 ``conf.toml``："
+
+#: ../../reference/cli.rst:219
+msgid ""
+"``-o FILE``: Writes output to the specified file path (or ``-`` for "
+"standard output)."
+msgstr "``-o FILE``: 写入指定路径，或用 ``-`` 写入标准输出。"
+
+#: ../../reference/cli.rst:220
+msgid "``--force``: Overwrites existing ``conf.toml`` files."
+msgstr "``--force``: 覆盖已有的 ``conf.toml``。"
+
+#: ../../reference/cli.rst:222
+msgid "guidedog intl"
+msgstr "guidedog intl"
+
+#: ../../reference/cli.rst:225
+msgid "Manages multi-lingual document translation catalogs:"
+msgstr "管理多语言文档的翻译目录："
+
+#: ../../reference/cli.rst:238
+msgid "Options for ``intl update``:"
+msgstr "``intl update`` 的选项："
+
+#: ../../reference/cli.rst:240
+msgid ""
+"``-l, --language LANG``: Target language code (may be repeated for "
+"multiple languages)."
+msgstr "``-l, --language LANG``: 目标语言代码；可重复指定多种语言。"
+
+#: ../../reference/cli.rst:241
+msgid ""
+"``-p, --pot-dir DIR``: Custom path to extracted POT message templates."
+msgstr "``-p, --pot-dir DIR``: 指定已提取的 POT 消息模板所在路径。"
+
+#: ../../reference/cli.rst:243
+msgid "guidedog formats"
+msgstr "guidedog formats"
+
+#: ../../reference/cli.rst:246
+msgid ""
+"Prints a detailed report of all compiled readers, renderers, syntax "
+"highlighting lexers, and specification test suite conformance results:"
+msgstr "显示已编译的读取器、渲染器、语法高亮器，以及规范测试的符合性结果："
+
+#: ../../reference/cli.rst:253
+msgid "guidedog gds"
+msgstr "guidedog gds"
+
+#: ../../reference/cli.rst:256
+msgid ""
+"Keeps Guidedog's own discussion records, the GDS, in ``docs/gds``. It "
+"runs the commands of ``dsc``, below, with the prefix ``gds``:"
+msgstr ""
+"维护 ``docs/gds`` 中 Guidedog 自己的讨论记录，即 GDS。它以前缀 ``gds`` 运行下文 ``dsc`` 的命令："
+
+#: ../../reference/cli.rst:270
+msgid "dsc and dscc"
+msgstr "dsc 和 dscc"
+
+#: ../../reference/cli.rst:273
+msgid ""
+"``dsc`` keeps a discussion catalog and builds it with the installed "
+"``guidedog``. ``dscc`` is ``dsc`` with Guidedog built in. Both take the "
+"same commands; see :doc:`../howto/discussions`."
+msgstr ""
+"``dsc`` 维护讨论目录，并用已安装的 ``guidedog`` 构建。\\ ``dscc`` 是内置 Guidedog 的 "
+"``dsc``\\ 。两者接受相同的命令，见 :doc:`../howto/discussions`\\ 。"
+
+#: ../../reference/cli.rst:291
+msgid ""
+"``dsc config`` prints the catalog's settings in effect, as "
+"``discussion.toml``; see :doc:`../howto/discussions` for each setting."
+msgstr ""
+"``dsc config`` 以 ``discussion.toml`` 的形式打印目录当前生效的设置；各项设置见 "
+":doc:`../howto/discussions`\\ 。"
+
+#: ../../reference/cli.rst:294
+msgid "Options of dsc and dscc"
+msgstr "dsc 和 dscc 的选项"
+
+#: ../../reference/cli.rst:298 ../../reference/cli.rst:433
+msgid "Option"
+msgstr "选项"
+
+#: ../../reference/cli.rst:299 ../../reference/cli.rst:407
+#: ../../reference/cli.rst:434
+msgid "Meaning"
+msgstr "含义"
+
+#: ../../reference/cli.rst:300
+msgid "``--dir=DIR``"
+msgstr "``--dir=DIR``"
+
+#: ../../reference/cli.rst:301
+msgid "The catalog. By default, the one the current folder is in."
+msgstr "目录。默认为当前文件夹所在的目录。"
+
+#: ../../reference/cli.rst:302
+msgid "``--prefix=NAME``"
+msgstr "``--prefix=NAME``"
+
+#: ../../reference/cli.rst:303
+msgid ""
+"The prefix of a catalog without ``discussion.toml``; ``init`` needs it."
+msgstr "没有 ``discussion.toml`` 的目录的前缀；\\ ``init`` 需要它。"
+
+#: ../../reference/cli.rst:304
+msgid ""
+"``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
+"``--template=FILE``"
+msgstr ""
+"``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
+"``--template=FILE``"
+
+#: ../../reference/cli.rst:305
+msgid ""
+"The name, settings, process draft, and record template of a new catalog "
+"(``init``)."
+msgstr "新目录的名称、设置、流程草稿和记录模板（\\ ``init``\\ ）。"
+
+#: ../../reference/cli.rst:307
+msgid "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
+msgstr "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
+
+#: ../../reference/cli.rst:308
+msgid ""
+"A new draft's author, labels, and file name (``new``; ``init`` takes the "
+"first two)."
+msgstr "新草稿的作者、标签和文件名（\\ ``new``\\ ；\\ ``init`` 接受前两项）。"
+
+#: ../../reference/cli.rst:309
+msgid "``--number=N``, ``--discussion=URL``"
+msgstr "``--number=N``, ``--discussion=URL``"
+
+#: ../../reference/cli.rst:310
+msgid "The number and review link of a promotion."
+msgstr "提升时使用的编号和评审链接。"
+
+#: ../../reference/cli.rst:311
+msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
+msgstr "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
+
+#: ../../reference/cli.rst:312
+msgid "A state change, why, and for ``committed`` the evidence."
+msgstr "状态变更、原因，以及 ``committed`` 所需的证据。"
+
+#: ../../reference/cli.rst:313
+msgid "``--target=html|pdf|both``"
+msgstr "``--target=html|pdf|both``"
+
+#: ../../reference/cli.rst:314
+msgid "What ``build`` writes (default: both). A record selects one PDF."
+msgstr "``build`` 写出的内容（默认：两者）。指定一条记录时只选择它的 PDF。"
+
+#: ../../reference/cli.rst:315 ../../reference/cli.rst:441
+msgid "``--guidedog=PATH``"
+msgstr "``--guidedog=PATH``"
+
+#: ../../reference/cli.rst:316
+msgid ""
+"``dsc`` only: the ``guidedog`` to build with (default: ``DSC_GUIDEDOG``, "
+"then ``PATH``)."
+msgstr ""
+"仅 ``dsc``\\ ：用于构建的 ``guidedog``\\ （默认：\\ ``DSC_GUIDEDOG``\\ ，然后是 "
+"``PATH``\\ ）。"
+
+#: ../../reference/cli.rst:318
+msgid "``--typst=PATH``"
+msgstr "``--typst=PATH``"
+
+#: ../../reference/cli.rst:319
+msgid ""
+"``dscc`` and ``guidedog gds`` only: a Typst program, for a Guidedog "
+"without one built in."
+msgstr "仅 ``dscc`` 和 ``guidedog gds``\\ ：Typst 程序，供未内置 Typst 的 Guidedog 使用。"
+
+#: ../../reference/cli.rst:321
+msgid ""
+"``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
+"``-q``"
+msgstr ""
+"``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
+"``-q``"
+
+#: ../../reference/cli.rst:322
+msgid "Preview a change; machine-readable output; quiet success."
+msgstr "预览更改；机器可读的输出；成功时不输出。"
+
+#: ../../reference/cli.rst:324
+msgid ""
+"The exit statuses are those of ``guidedog``. Problems about a catalog "
+"have codes in its prefix, such as ``eds.recovery-needed``; running out of "
+"memory is ``discussion.memory``."
+msgstr ""
+"退出状态与 ``guidedog`` 相同。目录相关问题的代码以该目录的前缀开头，例如 ``eds.recovery-needed``\\ "
+"；内存耗尽为 ``discussion.memory``\\ 。"
+
+#: ../../reference/cli.rst:327
+msgid "guidedog publish"
+msgstr "guidedog publish"
+
+#: ../../reference/cli.rst:330
+msgid ""
+"Builds the project that a registered publisher's configuration names, as "
+"HTML with Guidedog's own engine, freezes the site, and has the publisher "
+"plan and publish it:"
+msgstr "构建已注册发布器的配置所指定的项目：用 Guidedog 自己的引擎生成 HTML，冻结网站，再由发布器规划并发布："
+
+#: ../../reference/cli.rst:338
+msgid ""
+"``--dry-run`` builds and plans, and writes nothing to the target. "
+"``--wait=SECONDS`` is how long to wait for the host to confirm the "
+"deployment (``0``: do not wait). ``--timeout=SECONDS`` bounds each whole "
+"exchange with the publisher, including writing the request (default: 300 "
+"seconds). Choose a value longer than ``--wait``. A timeout or Ctrl+C "
+"after a possible write reports an unknown outcome: run the publisher's "
+"recovery command before retrying. ``--verbose`` lists every change. Each "
+"invocation builds into its own private folder, which is removed on "
+"release; concurrent invocations cannot change each other's snapshots. See "
+":doc:`../plugins`."
+msgstr ""
+"``--dry-run`` 只构建和生成计划，不写入发布目标。``--wait=SECONDS`` 设置等待托管服务确认部署的时间（``0`` "
+"表示不等待）。``--timeout=SECONDS`` 限制与发布器的每次完整交互，包括写入请求，默认 300 秒。这个值应大于 "
+"``--wait``。如果可能已发生写入，超时或按 Ctrl+C 会报告结果未知：重试前先运行发布器的恢复命令。``--verbose`` "
+"列出所有变更。每次调用都在独立的临时目录中构建，并在释放资源时删除该目录；并发调用不会改动彼此的快照。参见 :doc:`../plugins`。"
+
+#: ../../reference/cli.rst:347
+msgid "guidedog plugin"
+msgstr "guidedog plugin"
+
+#: ../../reference/cli.rst:350
+msgid ""
+"Records which native plugin programs may run on this machine, in "
+"``plugins.toml`` in Guidedog's configuration folder "
+"(``GUIDEDOG_CONFIG_DIR`` moves it):"
+msgstr ""
+"在 Guidedog 配置目录的 ``plugins.toml`` "
+"中记录本机允许运行的原生插件程序；``GUIDEDOG_CONFIG_DIR`` 可更改该目录："
+
+#: ../../reference/cli.rst:362
+msgid "Subcommands:"
+msgstr "子命令："
+
+#: ../../reference/cli.rst:364
+msgid ""
+"``register ID PATH [--project=DIR] [--config=FILE] [--yes]``: Inspects "
+"the program after user confirmation (``--yes`` bypasses confirmation) and "
+"records its SHA-256 hash. Build plugins pass qualification checks before "
+"registration."
+msgstr ""
+"``register ID PATH [--project=DIR] [--config=FILE] [--yes]``：确认后检查程序并记录 "
+"SHA-256；``--yes`` 跳过确认。构建插件须先通过资格检查。"
+
+#: ../../reference/cli.rst:367
+msgid ""
+"``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: Runs "
+"the full suite of qualification checks against a build plugin executable "
+"without writing to the machine registry."
+msgstr ""
+"``check PATH [--project=DIR] [--config=FILE] "
+"[--timeout=SECONDS]``：对构建插件程序运行完整的资格检查，不改动本机注册表。"
+
+#: ../../reference/cli.rst:369
+msgid ""
+"``list``: Lists all registered plugins, their IDs, paths, and interface "
+"kinds."
+msgstr "``list``：列出所有已注册插件的 ID、路径和接口类别。"
+
+#: ../../reference/cli.rst:370
+msgid ""
+"``inspect ID``: Displays declared build hooks (source, HTML, assets) or "
+"publisher capabilities."
+msgstr "``inspect ID``：显示声明的构建钩子（源文本、HTML、资源）或发布能力。"
+
+#: ../../reference/cli.rst:371
+msgid ""
+"``run ID -- [ARGS...]``: Runs a registered plugin program directly, "
+"verifying its SHA-256 pin first."
+msgstr "``run ID -- [ARGS...]``：先核对固定的 SHA-256，再直接运行插件程序。"
+
+#: ../../reference/cli.rst:372
+msgid ""
+"``unregister ID``: Removes the specified plugin entry from "
+"``plugins.toml``."
+msgstr "``unregister ID``：从 ``plugins.toml`` 删除指定插件。"
+
+#: ../../reference/cli.rst:374
+msgid ""
+"In Guidedog 0.6.2, build plugins are selected by ``plugins`` in "
+"``conf.toml``. Inspection displays their declared source, HTML, and asset "
+"hooks. Build plugins run during ``guidedog build``, while ``guidedog "
+"publish`` accepts publishers only. See :doc:`../plugins` for the complete "
+"guide, compiled example, and configuration."
+msgstr ""
+"Guidedog 0.6.2 在 ``conf.toml`` 的 ``plugins`` 中选择构建插件。检查命令会显示其源文本、HTML "
+"和资源钩子。构建插件随 ``guidedog build`` 执行；``guidedog publish`` "
+"只接受发布器。完整教程、可编译示例和配置见 :doc:`../plugins`。"
+
+#: ../../reference/cli.rst:379
+msgid "guidedog-pages"
+msgstr "guidedog-pages"
+
+#: ../../reference/cli.rst:382
+msgid ""
+"Publishes Guidedog sites to GitHub Pages from this machine, building "
+"projects with the installed ``guidedog``; see "
+":doc:`../howto/github-pages`."
+msgstr ""
+"从本机将 Guidedog 网站发布到 GitHub Pages，使用已安装的 ``guidedog`` 构建项目；参见 "
+":doc:`../howto/github-pages`\\ 。"
+
+#: ../../reference/cli.rst:402
+msgid "Settings of pages.toml"
+msgstr "pages.toml 的设置"
+
+#: ../../reference/cli.rst:406
+msgid "Setting"
+msgstr "设置项"
+
+#: ../../reference/cli.rst:408
+msgid "``schema = 1``"
+msgstr "``schema = 1``"
+
+#: ../../reference/cli.rst:409
+msgid "The file's version; required."
+msgstr "文件格式的版本；必填。"
+
+#: ../../reference/cli.rst:410
+msgid "``repository = \"OWNER/REPO\"``"
+msgstr "``repository = \"OWNER/REPO\"``"
+
+#: ../../reference/cli.rst:411
+msgid "The GitHub.com repository; required."
+msgstr "GitHub.com 上的仓库；必填。"
+
+#: ../../reference/cli.rst:412
+msgid "``branch = \"gh-pages\"``"
+msgstr "``branch = \"gh-pages\"``"
+
+#: ../../reference/cli.rst:413
+msgid ""
+"The branch the site is published to: its own, never the default branch."
+msgstr "网站发布到的分支：专用分支，绝不能是默认分支。"
+
+#: ../../reference/cli.rst:414
+msgid "``project = \"docs\"`` or ``site = \"build/site\"``"
+msgstr "``project = \"docs\"`` 或 ``site = \"build/site\"``"
+
+#: ../../reference/cli.rst:415
+msgid ""
+"The Guidedog project to build, or the folder of a site built already; one "
+"of them, relative to ``pages.toml``."
+msgstr "要构建的 Guidedog 项目，或已构建好的网站所在的文件夹；二者选其一，路径相对于 ``pages.toml``\\ 。"
+
+#: ../../reference/cli.rst:417
+msgid "``profile = \"default\"``"
+msgstr "``profile = \"default\"``"
+
+#: ../../reference/cli.rst:418
+msgid "The credential profile whose token publishes."
+msgstr "用其令牌进行发布的凭据档案。"
+
+#: ../../reference/cli.rst:419
+msgid "``site_url``"
+msgstr "``site_url``"
+
+#: ../../reference/cli.rst:420
+msgid ""
+"The address readers open, and ``html_baseurl`` for the build (default: "
+"``https://OWNER.github.io/REPO/``)."
+msgstr ""
+"读者访问的地址，也是构建时的 ``html_baseurl``\\ （默认：\\ "
+"``https://OWNER.github.io/REPO/``\\ ）。"
+
+#: ../../reference/cli.rst:422
+msgid "``strict = true``"
+msgstr "``strict = true``"
+
+#: ../../reference/cli.rst:423
+msgid "Build with warnings as errors."
+msgstr "将警告视为错误进行构建。"
+
+#: ../../reference/cli.rst:424
+msgid "``wait_seconds = 300``"
+msgstr "``wait_seconds = 300``"
+
+#: ../../reference/cli.rst:425
+msgid "How long ``publish`` waits for the deployment."
+msgstr "``publish`` 等待部署的时长。"
+
+#: ../../reference/cli.rst:426
+msgid "``[watch] debounce_ms``, ``max_wait_ms``"
+msgstr "``[watch] debounce_ms``, ``max_wait_ms``"
+
+#: ../../reference/cli.rst:427
+msgid ""
+"How long ``watch`` lets sources settle, and the most it waits after a "
+"change."
+msgstr "``watch`` 等待源文件静止的时长，以及首次变化后最长的等待时间。"
+
+#: ../../reference/cli.rst:429
+msgid "Options of guidedog-pages"
+msgstr "guidedog-pages 的选项"
+
+#: ../../reference/cli.rst:435
+msgid "``--config=FILE``"
+msgstr "``--config=FILE``"
+
+#: ../../reference/cli.rst:436
+msgid "The configuration (default: ``pages.toml``)."
+msgstr "配置文件（默认：\\ ``pages.toml``\\ ）。"
+
+#: ../../reference/cli.rst:437
+msgid "``--profile=NAME``"
+msgstr "``--profile=NAME``"
+
+#: ../../reference/cli.rst:438
+msgid "The profile ``auth`` and ``init`` use (default: ``default``)."
+msgstr "``auth`` 和 ``init`` 使用的档案（默认：\\ ``default``\\ ）。"
+
+#: ../../reference/cli.rst:439
+msgid "``--credential=env``"
+msgstr "``--credential=env``"
+
+#: ../../reference/cli.rst:440
+msgid ""
+"Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without "
+"storing it."
+msgstr "本次命令使用 ``GUIDEDOG_PAGES_TOKEN`` 中的令牌，且不保存它。"
+
+#: ../../reference/cli.rst:442
+msgid ""
+"The ``guidedog`` that builds (default: ``GUIDEDOG_PAGES_GUIDEDOG``, then "
+"``PATH``)."
+msgstr ""
+"构建所用的 ``guidedog``\\ （默认：\\ ``GUIDEDOG_PAGES_GUIDEDOG``\\ ，然后是 ``PATH``\\ "
+"）。"
+
+#: ../../reference/cli.rst:443
+msgid "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
+msgstr "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
+
+#: ../../reference/cli.rst:444
+msgid ""
+"``publish``: plan only; how long to wait for the deployment; list every "
+"change."
+msgstr "``publish``\\ ：只做规划；等待部署的时长；列出每一项变更。"
+
+#: ../../reference/cli.rst:445
+msgid "``--adopt``, ``--yes``"
+msgstr "``--adopt``, ``--yes``"
+
+#: ../../reference/cli.rst:446
+msgid ""
+"``bind``: let a branch of other work be replaced; answer yes to the "
+"question."
+msgstr "``bind``\\ ：允许替换包含其他内容的分支；对询问回答“是”。"
+
+#: ../../reference/cli.rst:447
+msgid ""
+"``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
+msgstr ""
+"``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
+
+#: ../../reference/cli.rst:448
+msgid ""
+"``auth login``: the app; the repositories an OAuth App token may reach; "
+"open the browser; give the profile to another account."
+msgstr "``auth login``\\ ：所用的应用；OAuth App 令牌可以访问的仓库；打开浏览器；把档案交给另一个账户。"
+
+#: ../../reference/cli.rst:450
+msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
+msgstr "``--diagnostics=text|json``, ``--color=auto|always|never``"
+
+#: ../../reference/cli.rst:451
+msgid "How problems and results are written."
+msgstr "问题和结果的输出方式。"
+
+#: ../../reference/cli.rst:453
+msgid ""
+"Its exit statuses are those of ``guidedog publish``: 0 live or unchanged, "
+"1 nothing published, 2 a usage or configuration problem, 6 accepted but "
+"not confirmed, and 7 unknown until ``recover``."
+msgstr ""
+"它的退出状态与 ``guidedog publish`` 相同：0 表示已上线或没有变化，1 表示没有发布任何内容，2 表示用法或配置有误，6 "
+"表示已接受但尚未确认，7 表示在运行 ``recover`` 之前结果未知。"
+
+#: ../../reference/cli.rst:457
+msgid "Build-plugin registration checks"
+msgstr "构建插件的注册检查"
+
+#: ../../reference/cli.rst:460
+msgid ""
+"``guidedog plugin check PATH --project=DIR --config=FILE`` tests declared "
+"build hooks without writing a registry entry. Build-plugin registration "
+"runs the same checks before pinning the executable. Its request timeout "
+"defaults to 60 seconds; ``--timeout=SECONDS`` sets it. Publisher "
+"registration remains compatible and does not invoke publication. Passing "
+"checks is not a sandbox or a safety certificate."
+msgstr ""
+"``guidedog plugin check PATH --project=DIR --config=FILE`` "
+"测试声明的构建钩子，不写入注册信息。构建插件注册前也执行相同检查，再固定可执行文件。请求时限默认 60 秒，可用 "
+"``--timeout=SECONDS`` 设置。发布器注册保持兼容，不会执行发布。通过检查既不等于沙箱，也不是安全证书。"
+
+#: ../../reference/configuration.rst:1
+msgid "Configuration reference"
+msgstr "配置参考"
+
+#: ../../reference/configuration.rst:4
+msgid ""
+"Every Guidedog documentation project is configured using ``conf.toml``, "
+"located at the project root directory. Guidedog reads configuration as "
+"declarative TOML data and does not execute arbitrary code."
+msgstr "每个 Guidedog 项目都使用根目录下的 ``conf.toml``。配置是声明式 TOML 数据，不会执行任意代码。"
+
+#: ../../reference/configuration.rst:8
+msgid ""
+"Many configuration keys correspond directly to Sphinx's ``conf.py`` "
+"variables, allowing straightforward migration with ``guidedog migrate "
+"conf.py``."
+msgstr ""
+"许多配置键与 Sphinx 的 ``conf.py`` 变量对应，因此可用 ``guidedog migrate conf.py`` 辅助迁移。"
+
+#: ../../reference/configuration.rst:11
+msgid "Minimal configuration"
+msgstr "最小配置"
+
+#: ../../reference/configuration.rst:14
+msgid ""
+"A project requires only basic metadata. Default values are applied for "
+"omitted keys:"
+msgstr "项目只需基本信息。省略的设置使用默认值："
+
+#: ../../reference/configuration.rst:29
+msgid "Project metadata"
+msgstr "项目元数据"
+
+#: ../../reference/configuration.rst:32
+msgid "Metadata options"
+msgstr "元数据选项"
+
+#: ../../reference/configuration.rst:36
+#: ../../reference/configuration.rst:103
+#: ../../reference/configuration.rst:167
+#: ../../reference/configuration.rst:213
+#: ../../reference/configuration.rst:241
+#: ../../reference/configuration.rst:313
+#: ../../reference/configuration.rst:376
+#: ../../reference/configuration.rst:423
+#: ../../reference/configuration.rst:457
+#: ../../reference/configuration.rst:487
+msgid "Key"
+msgstr "键"
+
+#: ../../reference/configuration.rst:37
+#: ../../reference/configuration.rst:104
+#: ../../reference/configuration.rst:168
+#: ../../reference/configuration.rst:214
+#: ../../reference/configuration.rst:242
+#: ../../reference/configuration.rst:314
+#: ../../reference/configuration.rst:377
+#: ../../reference/configuration.rst:424
+#: ../../reference/configuration.rst:458
+#: ../../reference/configuration.rst:488
+msgid "Type"
+msgstr "类型"
+
+#: ../../reference/configuration.rst:38
+#: ../../reference/configuration.rst:105
+#: ../../reference/configuration.rst:169
+#: ../../reference/configuration.rst:215
+#: ../../reference/configuration.rst:243
+#: ../../reference/configuration.rst:315
+#: ../../reference/configuration.rst:378
+#: ../../reference/configuration.rst:425
+#: ../../reference/configuration.rst:459
+#: ../../reference/configuration.rst:489
+msgid "Default"
+msgstr "默认值"
+
+#: ../../reference/configuration.rst:39
+#: ../../reference/configuration.rst:106
+#: ../../reference/configuration.rst:170
+#: ../../reference/configuration.rst:216
+#: ../../reference/configuration.rst:244
+#: ../../reference/configuration.rst:316
+#: ../../reference/configuration.rst:379
+#: ../../reference/configuration.rst:426
+#: ../../reference/configuration.rst:460
+#: ../../reference/configuration.rst:490
+msgid "Description"
+msgstr "说明"
+
+#: ../../reference/configuration.rst:40
+msgid "``project``"
+msgstr "``project``"
+
+#: ../../reference/configuration.rst:41 ../../reference/configuration.rst:45
+#: ../../reference/configuration.rst:49 ../../reference/configuration.rst:53
+#: ../../reference/configuration.rst:57 ../../reference/configuration.rst:61
+#: ../../reference/configuration.rst:65 ../../reference/configuration.rst:69
+#: ../../reference/configuration.rst:108
+#: ../../reference/configuration.rst:132
+#: ../../reference/configuration.rst:136
+#: ../../reference/configuration.rst:140
+#: ../../reference/configuration.rst:144
+#: ../../reference/configuration.rst:152
+#: ../../reference/configuration.rst:156
+#: ../../reference/configuration.rst:188
+#: ../../reference/configuration.rst:192
+#: ../../reference/configuration.rst:246
+#: ../../reference/configuration.rst:254
+#: ../../reference/configuration.rst:258
+#: ../../reference/configuration.rst:262
+#: ../../reference/configuration.rst:266
+#: ../../reference/configuration.rst:290
+#: ../../reference/configuration.rst:294
+#: ../../reference/configuration.rst:318
+#: ../../reference/configuration.rst:322
+#: ../../reference/configuration.rst:326
+#: ../../reference/configuration.rst:330
+#: ../../reference/configuration.rst:334
+#: ../../reference/configuration.rst:342
+#: ../../reference/configuration.rst:346
+#: ../../reference/configuration.rst:432
+#: ../../reference/configuration.rst:436
+#: ../../reference/configuration.rst:440
+#: ../../reference/configuration.rst:466
+#: ../../reference/configuration.rst:474
+#: ../../reference/configuration.rst:508
+msgid "string"
+msgstr "字符串"
+
+#: ../../reference/configuration.rst:42
+msgid "``\"Python\"``"
+msgstr "``\"Python\"``"
+
+#: ../../reference/configuration.rst:43
+msgid "The human-readable name of the project."
+msgstr "供读者识别的项目名称。"
+
+#: ../../reference/configuration.rst:44
+msgid "``author``"
+msgstr "``author``"
+
+#: ../../reference/configuration.rst:46 ../../reference/configuration.rst:50
+#: ../../reference/configuration.rst:54 ../../reference/configuration.rst:58
+#: ../../reference/configuration.rst:66 ../../reference/configuration.rst:70
+#: ../../reference/configuration.rst:141
+#: ../../reference/configuration.rst:145
+#: ../../reference/configuration.rst:153
+#: ../../reference/configuration.rst:157
+#: ../../reference/configuration.rst:263
+#: ../../reference/configuration.rst:267
+#: ../../reference/configuration.rst:295
+#: ../../reference/configuration.rst:323
+#: ../../reference/configuration.rst:335
+msgid "``\"\"``"
+msgstr "``\"\"``"
+
+#: ../../reference/configuration.rst:47
+msgid "Author or organization name."
+msgstr "作者或组织名称。"
+
+#: ../../reference/configuration.rst:48
+msgid "``copyright``"
+msgstr "``copyright``"
+
+#: ../../reference/configuration.rst:51
+msgid "Copyright notice displayed in page footers."
+msgstr "显示在页脚的版权声明。"
+
+#: ../../reference/configuration.rst:52
+msgid "``version``"
+msgstr "``version``"
+
+#: ../../reference/configuration.rst:55
+msgid "The short project version (e.g. ``\"1.0\"``)."
+msgstr "简短版本号，例如 ``\"1.0\"``。"
+
+#: ../../reference/configuration.rst:56
+msgid "``release``"
+msgstr "``release``"
+
+#: ../../reference/configuration.rst:59
+msgid ""
+"The full version string, including alpha/beta identifiers (e.g. "
+"``\"1.0.0b1\"``)."
+msgstr "完整版本号，可包含 alpha 或 beta 标识，例如 ``\"1.0.0b1\"``。"
+
+#: ../../reference/configuration.rst:60
+msgid "``language``"
+msgstr "``language``"
+
+#: ../../reference/configuration.rst:62
+msgid "``\"en\"``"
+msgstr "``\"en\"``"
+
+#: ../../reference/configuration.rst:63
+msgid ""
+"ISO language code (e.g. ``\"de\"``, ``\"zh_CN\"``) for typography, "
+"hyphenation, and translations."
+msgstr "用于排版、断词和翻译的 ISO 语言代码，例如 ``\"de\"`` 或 ``\"zh_CN\"``。"
+
+#: ../../reference/configuration.rst:64
+msgid "``today``"
+msgstr "``today``"
+
+#: ../../reference/configuration.rst:67
+msgid ""
+"Custom date text; if omitted, current time is formatted with "
+"``today_fmt``."
+msgstr "自定义日期文字；省略时用 ``today_fmt`` 格式化当前日期。"
+
+#: ../../reference/configuration.rst:68
+msgid "``today_fmt``"
+msgstr "``today_fmt``"
+
+#: ../../reference/configuration.rst:71
+msgid "Format string for document dates."
+msgstr "文档日期的格式字符串。"
+
+#: ../../reference/configuration.rst:73
+msgid "General options"
+msgstr "常规选项"
+
+#: ../../reference/configuration.rst:76
+msgid "Build plugins"
+msgstr "构建插件"
+
+#: ../../reference/configuration.rst:79
+msgid ""
+"``plugins`` is an ordered list of explicitly selected native build-plugin "
+"IDs. Register installed programs with ``guidedog plugin register ID "
+"PATH`` first. ``plugin_timeout`` defaults to 60 seconds per complete "
+"process request; valid values are 1 through 86400. ``[plugin_configs]`` "
+"maps IDs to configuration paths, relative to the project configuration "
+"directory. A normal build invokes no publisher. ``--untrusted`` disables "
+"native build plugins. In Guidedog 0.6.2, build plugins provide source "
+"transformations, HTML post-processing, and generated assets. See "
+":doc:`../plugins` for the complete tutorial and architecture."
+msgstr ""
+"``plugins`` 是按顺序显式选择的原生构建插件 ID 列表。先用 ``guidedog plugin register ID PATH`` "
+"注册已安装程序。``plugin_timeout`` 限制每次完整的进程请求，默认 60 秒，可取 1 至 "
+"86400。``[plugin_configs]`` 将 ID "
+"映射到相对项目配置目录的配置路径。普通构建不调用发布器；``--untrusted`` 禁用原生构建插件。0.6.2 提供源文本转换、HTML "
+"后处理和资源生成，完整教程及架构见 :doc:`../plugins`。"
+
+#: ../../reference/configuration.rst:96
+msgid "Discovery and parsing"
+msgstr "文件发现与解析"
+
+#: ../../reference/configuration.rst:99
+msgid "Discovery and parsing options"
+msgstr "发现与解析选项"
+
+#: ../../reference/configuration.rst:107
+msgid "``root_doc``"
+msgstr "``root_doc``"
+
+#: ../../reference/configuration.rst:109
+msgid "``\"index\"``"
+msgstr "``\"index\"``"
+
+#: ../../reference/configuration.rst:110
+msgid "The document that serves as the root table of contents."
+msgstr "作为根目录的文档。"
+
+#: ../../reference/configuration.rst:111
+msgid "``source_suffix``"
+msgstr "``source_suffix``"
+
+#: ../../reference/configuration.rst:112
+#: ../../reference/configuration.rst:116
+#: ../../reference/configuration.rst:120
+#: ../../reference/configuration.rst:124
+#: ../../reference/configuration.rst:128
+#: ../../reference/configuration.rst:222
+#: ../../reference/configuration.rst:226
+#: ../../reference/configuration.rst:270
+#: ../../reference/configuration.rst:274
+#: ../../reference/configuration.rst:278
+#: ../../reference/configuration.rst:282
+#: ../../reference/configuration.rst:338
+#: ../../reference/configuration.rst:381
+#: ../../reference/configuration.rst:393
+#: ../../reference/configuration.rst:428
+#: ../../reference/configuration.rst:462
+#: ../../reference/configuration.rst:470
+#: ../../reference/configuration.rst:492
+msgid "array"
+msgstr "数组"
+
+#: ../../reference/configuration.rst:113
+msgid "``[\".rst\"]``"
+msgstr "``[\".rst\"]``"
+
+#: ../../reference/configuration.rst:114
+msgid "File extensions recognized as documentation source files."
+msgstr "可作为文档源文件读取的扩展名。"
+
+#: ../../reference/configuration.rst:115
+msgid "``exclude_patterns``"
+msgstr "``exclude_patterns``"
+
+#: ../../reference/configuration.rst:117
+#: ../../reference/configuration.rst:121
+#: ../../reference/configuration.rst:125
+#: ../../reference/configuration.rst:129
+#: ../../reference/configuration.rst:223
+#: ../../reference/configuration.rst:227
+#: ../../reference/configuration.rst:271
+#: ../../reference/configuration.rst:275
+#: ../../reference/configuration.rst:279
+#: ../../reference/configuration.rst:283
+#: ../../reference/configuration.rst:339
+#: ../../reference/configuration.rst:429
+#: ../../reference/configuration.rst:463
+msgid "``[]``"
+msgstr "``[]``"
+
+#: ../../reference/configuration.rst:118
+msgid "Directory and file glob patterns excluded from source discovery."
+msgstr "发现源文件时排除的目录和文件通配符模式。"
+
+#: ../../reference/configuration.rst:119
+msgid "``include_roots``"
+msgstr "``include_roots``"
+
+#: ../../reference/configuration.rst:122
+msgid "External directory roots allowed for source inclusion."
+msgstr "允许包含源文件的外部目录。"
+
+#: ../../reference/configuration.rst:123
+msgid "``templates_path``"
+msgstr "``templates_path``"
+
+#: ../../reference/configuration.rst:126
+msgid ""
+"Directories containing HTML and PDF templates, searched before built-ins."
+msgstr "HTML 和 PDF 模板目录；优先于内置模板。"
+
+#: ../../reference/configuration.rst:127
+msgid "``extensions``"
+msgstr "``extensions``"
+
+#: ../../reference/configuration.rst:130
+msgid ""
+"Supported built-in Sphinx extensions to enable (e.g. "
+"``\"sphinx.ext.autodoc\"``)."
+msgstr "启用受支持的内置 Sphinx 扩展，例如 ``\"sphinx.ext.autodoc\"``。"
+
+#: ../../reference/configuration.rst:131
+msgid "``primary_domain``"
+msgstr "``primary_domain``"
+
+#: ../../reference/configuration.rst:133
+msgid "``\"py\"``"
+msgstr "``\"py\"``"
+
+#: ../../reference/configuration.rst:134
+msgid ""
+"The default domain used for unqualified directives and roles (e.g. "
+"``\"py\"``, ``\"c\"``, ``\"odin\"``)."
+msgstr "未写前缀的指令和角色所用的默认域，例如 ``\"py\"``、``\"c\"`` 或 ``\"odin\"``。"
+
+#: ../../reference/configuration.rst:135
+msgid "``highlight_language``"
+msgstr "``highlight_language``"
+
+#: ../../reference/configuration.rst:137
+msgid "``\"default\"``"
+msgstr "``\"default\"``"
+
+#: ../../reference/configuration.rst:138
+msgid "Default language for code blocks when unspecified."
+msgstr "代码块未指定语言时使用的默认语言。"
+
+#: ../../reference/configuration.rst:139
+msgid "``pygments_style``"
+msgstr "``pygments_style``"
+
+#: ../../reference/configuration.rst:142
+msgid "Pygments syntax highlighting style for light themes."
+msgstr "浅色主题使用的 Pygments 高亮样式。"
+
+#: ../../reference/configuration.rst:143
+msgid "``pygments_dark_style``"
+msgstr "``pygments_dark_style``"
+
+#: ../../reference/configuration.rst:146
+msgid "Syntax highlighting style used when dark mode is active."
+msgstr "深色主题使用的语法高亮样式。"
+
+#: ../../reference/configuration.rst:147
+msgid "``smartquotes``"
+msgstr "``smartquotes``"
+
+#: ../../reference/configuration.rst:148
+#: ../../reference/configuration.rst:172
+#: ../../reference/configuration.rst:184
+#: ../../reference/configuration.rst:218
+#: ../../reference/configuration.rst:230
+#: ../../reference/configuration.rst:286
+#: ../../reference/configuration.rst:397
+#: ../../reference/configuration.rst:496
+#: ../../reference/configuration.rst:500
+#: ../../reference/configuration.rst:504
+msgid "boolean"
+msgstr "布尔值"
+
+#: ../../reference/configuration.rst:149
+#: ../../reference/configuration.rst:287
+#: ../../reference/configuration.rst:497
+#: ../../reference/configuration.rst:505
+msgid "``true``"
+msgstr "``true``"
+
+#: ../../reference/configuration.rst:150
+msgid ""
+"Automatically transforms straight quotes and dashes into typographer's "
+"punctuation."
+msgstr "将直引号和连字符转换为排版用标点。"
+
+#: ../../reference/configuration.rst:151
+msgid "``rst_prolog``"
+msgstr "``rst_prolog``"
+
+#: ../../reference/configuration.rst:154
+msgid "ReStructuredText snippet prepended to every parsed document."
+msgstr "添加到每个文档开头的 reStructuredText 片段。"
+
+#: ../../reference/configuration.rst:155
+msgid "``rst_epilog``"
+msgstr "``rst_epilog``"
+
+#: ../../reference/configuration.rst:158
+msgid "ReStructuredText snippet appended to every parsed document."
+msgstr "添加到每个文档末尾的 reStructuredText 片段。"
+
+#: ../../reference/configuration.rst:160
+msgid "Numbering and mathematics"
+msgstr "编号与数学"
+
+#: ../../reference/configuration.rst:163
+msgid "Numbering options"
+msgstr "编号选项"
+
+#: ../../reference/configuration.rst:171
+msgid "``numfig``"
+msgstr "``numfig``"
+
+#: ../../reference/configuration.rst:173
+#: ../../reference/configuration.rst:185
+#: ../../reference/configuration.rst:219
+#: ../../reference/configuration.rst:231
+#: ../../reference/configuration.rst:398
+#: ../../reference/configuration.rst:501
+msgid "``false``"
+msgstr "``false``"
+
+#: ../../reference/configuration.rst:174
+msgid "When true, automatically numbers figures, tables, and code listings."
+msgstr "启用后自动为图、表和代码块编号。"
+
+#: ../../reference/configuration.rst:175
+msgid "``numfig_secnum_depth``"
+msgstr "``numfig_secnum_depth``"
+
+#: ../../reference/configuration.rst:176
+#: ../../reference/configuration.rst:385
+msgid "integer"
+msgstr "整数"
+
+#: ../../reference/configuration.rst:178
+msgid ""
+"Heading depth included in figure numbers (e.g. ``1`` produces ``Fig. "
+"2.1``)."
+msgstr "图编号包含的章节层级；例如 ``1`` 可生成 ``Fig. 2.1``。"
+
+#: ../../reference/configuration.rst:179
+msgid "``numfig_format``"
+msgstr "``numfig_format``"
+
+#: ../../reference/configuration.rst:180
+#: ../../reference/configuration.rst:250
+#: ../../reference/configuration.rst:298
+#: ../../reference/configuration.rst:302
+#: ../../reference/configuration.rst:389
+#: ../../reference/configuration.rst:444
+msgid "table"
+msgstr "表"
+
+#: ../../reference/configuration.rst:181
+msgid "see below"
+msgstr "见下文"
+
+#: ../../reference/configuration.rst:182
+msgid ""
+"Numbering prefix formats for ``\"figure\"``, ``\"table\"``, and "
+"``\"code-block\"``."
+msgstr "``\"figure\"``、``\"table\"`` 和 ``\"code-block\"`` 的编号前缀格式。"
+
+#: ../../reference/configuration.rst:183
+msgid "``math_number_all``"
+msgstr "``math_number_all``"
+
+#: ../../reference/configuration.rst:186
+msgid "When true, numbers every display equation automatically."
+msgstr "启用后自动为所有独立公式编号。"
+
+#: ../../reference/configuration.rst:187
+msgid "``math_eqref_format``"
+msgstr "``math_eqref_format``"
+
+#: ../../reference/configuration.rst:189
+msgid "``\"({number})\"``"
+msgstr "``\"({number})\"``"
+
+#: ../../reference/configuration.rst:190
+msgid "Format string for equation references made with ``:eq:``."
+msgstr "``:eq:`` 公式引用的格式字符串。"
+
+#: ../../reference/configuration.rst:191
+msgid "``mathjax_path``"
+msgstr "``mathjax_path``"
+
+#: ../../reference/configuration.rst:193
+msgid "URL"
+msgstr "URL"
+
+#: ../../reference/configuration.rst:194
+msgid "CDN or local path to MathJax JavaScript bundle."
+msgstr "MathJax JavaScript 文件的 CDN 地址或本地路径。"
+
+#: ../../reference/configuration.rst:196
+msgid "Default ``numfig_format`` values:"
+msgstr "``numfig_format`` 的默认值："
+
+#: ../../reference/configuration.rst:206
+msgid "Diagnostics and strictness"
+msgstr "诊断与严格检查"
+
+#: ../../reference/configuration.rst:209
+msgid "Diagnostic options"
+msgstr "诊断选项"
+
+#: ../../reference/configuration.rst:217
+msgid "``nitpicky``"
+msgstr "``nitpicky``"
+
+#: ../../reference/configuration.rst:220
+msgid "Warns on all unresolved cross-references and broken targets."
+msgstr "对未解析的交叉引用和失效目标发出警告。"
+
+#: ../../reference/configuration.rst:221
+msgid "``nitpick_ignore``"
+msgstr "``nitpick_ignore``"
+
+#: ../../reference/configuration.rst:224
+msgid "Array of ``[type, target]`` pairs exempted from nitpicky warnings."
+msgstr "免于严格引用警告的 ``[type, target]`` 配对数组。"
+
+#: ../../reference/configuration.rst:225
+msgid "``suppress_warnings``"
+msgstr "``suppress_warnings``"
+
+#: ../../reference/configuration.rst:228
+msgid "Warning category codes that should not be reported."
+msgstr "不应报告的警告类别代码。"
+
+#: ../../reference/configuration.rst:229
+msgid "``keep_warnings``"
+msgstr "``keep_warnings``"
+
+#: ../../reference/configuration.rst:232
+msgid "Includes warnings directly in published document output."
+msgstr "在发布的文档中保留警告。"
+
+#: ../../reference/configuration.rst:234
+msgid "HTML output options"
+msgstr "HTML 输出选项"
+
+#: ../../reference/configuration.rst:237
+msgid "HTML options"
+msgstr "HTML 选项"
+
+#: ../../reference/configuration.rst:245
+msgid "``html_theme``"
+msgstr "``html_theme``"
+
+#: ../../reference/configuration.rst:247
+msgid "``\"guidedog\"``"
+msgstr "``\"guidedog\"``"
+
+#: ../../reference/configuration.rst:248
+msgid "Theme used for HTML generation."
+msgstr "生成 HTML 时使用的主题。"
+
+#: ../../reference/configuration.rst:249
+msgid "``html_theme_options``"
+msgstr "``html_theme_options``"
+
+#: ../../reference/configuration.rst:251
+#: ../../reference/configuration.rst:299
+#: ../../reference/configuration.rst:303
+#: ../../reference/configuration.rst:390
+#: ../../reference/configuration.rst:445
+msgid "``{}``"
+msgstr "``{}``"
+
+#: ../../reference/configuration.rst:252
+msgid "Key-value options passed to the HTML theme."
+msgstr "传递给 HTML 主题的键值选项。"
+
+#: ../../reference/configuration.rst:253
+msgid "``html_title``"
+msgstr "``html_title``"
+
+#: ../../reference/configuration.rst:255
+#: ../../reference/configuration.rst:259
+msgid "derived"
+msgstr "自动推导"
+
+#: ../../reference/configuration.rst:256
+msgid "Page title displayed in browser window tabs."
+msgstr "浏览器标签页显示的标题。"
+
+#: ../../reference/configuration.rst:257
+msgid "``html_short_title``"
+msgstr "``html_short_title``"
+
+#: ../../reference/configuration.rst:260
+msgid "Shorter title used in navigation breadcrumbs."
+msgstr "导航路径中使用的简短标题。"
+
+#: ../../reference/configuration.rst:261
+msgid "``html_logo``"
+msgstr "``html_logo``"
+
+#: ../../reference/configuration.rst:264
+msgid "Path to project logo image relative to source directory."
+msgstr "相对于源目录的项目标志图片路径。"
+
+#: ../../reference/configuration.rst:265
+msgid "``html_favicon``"
+msgstr "``html_favicon``"
+
+#: ../../reference/configuration.rst:268
+msgid "Path to favicon file."
+msgstr "网站图标文件路径。"
+
+#: ../../reference/configuration.rst:269
+msgid "``html_static_path``"
+msgstr "``html_static_path``"
+
+#: ../../reference/configuration.rst:272
+msgid "Directories copied to the output's ``_static/`` directory."
+msgstr "复制到输出 ``_static/`` 目录的文件夹。"
+
+#: ../../reference/configuration.rst:273
+msgid "``html_extra_path``"
+msgstr "``html_extra_path``"
+
+#: ../../reference/configuration.rst:276
+msgid ""
+"Directories copied directly to the output root without transformation."
+msgstr "原样复制到输出根目录的文件夹。"
+
+#: ../../reference/configuration.rst:277
+msgid "``html_css_files``"
+msgstr "``html_css_files``"
+
+#: ../../reference/configuration.rst:280
+msgid "Custom CSS filenames loaded by HTML pages."
+msgstr "HTML 页面加载的自定义 CSS 文件名。"
+
+#: ../../reference/configuration.rst:281
+msgid "``html_js_files``"
+msgstr "``html_js_files``"
+
+#: ../../reference/configuration.rst:284
+msgid "Custom JavaScript filenames loaded by HTML pages."
+msgstr "HTML 页面加载的自定义 JavaScript 文件名。"
+
+#: ../../reference/configuration.rst:285
+msgid "``html_permalinks``"
+msgstr "``html_permalinks``"
+
+#: ../../reference/configuration.rst:288
+msgid "Adds paragraph and section anchor permalinks."
+msgstr "为段落和章节添加固定链接。"
+
+#: ../../reference/configuration.rst:289
+msgid "``html_permalinks_icon``"
+msgstr "``html_permalinks_icon``"
+
+#: ../../reference/configuration.rst:291
+msgid "Pilcrow (``\\u00b6``)"
+msgstr "段落标记（``\\u00b6``）"
+
+#: ../../reference/configuration.rst:292
+msgid "Glyph or text used for permalink anchors."
+msgstr "固定链接使用的符号或文字。"
+
+#: ../../reference/configuration.rst:293
+msgid "``html_baseurl``"
+msgstr "``html_baseurl``"
+
+#: ../../reference/configuration.rst:296
+msgid "Canonical base URL used for sitemaps and metadata."
+msgstr "站点地图和元数据使用的规范基础 URL。"
+
+#: ../../reference/configuration.rst:297
+msgid "``html_context``"
+msgstr "``html_context``"
+
+#: ../../reference/configuration.rst:300
+msgid "Custom dictionary of variables exposed to Jinja templates."
+msgstr "供 Jinja 模板使用的自定义变量字典。"
+
+#: ../../reference/configuration.rst:301
+msgid "``html_additional_pages``"
+msgstr "``html_additional_pages``"
+
+#: ../../reference/configuration.rst:304
+msgid "Custom pages to render: ``{ \"page_name\" = \"template.html\" }``."
+msgstr "自定义页面：``{ \"page_name\" = \"template.html\" }``。"
+
+#: ../../reference/configuration.rst:306
+msgid "PDF and Typst options"
+msgstr "PDF 与 Typst 选项"
+
+#: ../../reference/configuration.rst:309
+msgid "PDF options"
+msgstr "PDF 选项"
+
+#: ../../reference/configuration.rst:317
+msgid "``pdf_paper_size``"
+msgstr "``pdf_paper_size``"
+
+#: ../../reference/configuration.rst:319
+msgid "``\"a4\"``"
+msgstr "``\"a4\"``"
+
+#: ../../reference/configuration.rst:320
+msgid "Paper format: ``\"a4\"`` or ``\"us-letter\"``."
+msgstr "纸张格式：``\"a4\"`` 或 ``\"us-letter\"``。"
+
+#: ../../reference/configuration.rst:321
+msgid "``pdf_logo``"
+msgstr "``pdf_logo``"
+
+#: ../../reference/configuration.rst:324
+msgid "Logo image path for book cover pages."
+msgstr "图书封面的标志图片路径。"
+
+#: ../../reference/configuration.rst:325
+msgid "``pdf_toplevel_sectioning``"
+msgstr "``pdf_toplevel_sectioning``"
+
+#: ../../reference/configuration.rst:327
+msgid "``\"chapter\"``"
+msgstr "``\"chapter\"``"
+
+#: ../../reference/configuration.rst:328
+msgid ""
+"Section level mapped to book divisions: ``\"chapter\"`` or ``\"part\"``."
+msgstr "对应图书分层的章节级别：``\"chapter\"`` 或 ``\"part\"``。"
+
+#: ../../reference/configuration.rst:329
+msgid "``pdf_show_urls``"
+msgstr "``pdf_show_urls``"
+
+#: ../../reference/configuration.rst:331
+msgid "``\"no\"``"
+msgstr "``\"no\"``"
+
+#: ../../reference/configuration.rst:332
+msgid ""
+"URL display policy in print: ``\"no\"``, ``\"inline\"``, or "
+"``\"footnote\"``."
+msgstr "打印版的网址显示方式：``\"no\"``、``\"inline\"`` 或 ``\"footnote\"``。"
+
+#: ../../reference/configuration.rst:333
+msgid "``pdf_preamble``"
+msgstr "``pdf_preamble``"
+
+#: ../../reference/configuration.rst:336
+msgid "Raw Typst source injected into generated document headers."
+msgstr "插入生成文档头部的原始 Typst 源码。"
+
+#: ../../reference/configuration.rst:337
+msgid "``pdf_font_paths``"
+msgstr "``pdf_font_paths``"
+
+#: ../../reference/configuration.rst:340
+msgid "Additional directory paths searched for custom OTF/TTF fonts."
+msgstr "查找自定义 OTF/TTF 字体的附加目录。"
+
+#: ../../reference/configuration.rst:341
+msgid "``pdf_packages``"
+msgstr "``pdf_packages``"
+
+#: ../../reference/configuration.rst:343
+msgid "``\"download\"``"
+msgstr "``\"download\"``"
+
+#: ../../reference/configuration.rst:344
+msgid "Package resolution strategy: ``\"download\"`` or ``\"offline\"``."
+msgstr "包解析策略：``\"download\"`` 或 ``\"offline\"``。"
+
+#: ../../reference/configuration.rst:345
+msgid "``typst``"
+msgstr "``typst``"
+
+#: ../../reference/configuration.rst:347
+msgid "``\"typst\"``"
+msgstr "``\"typst\"``"
+
+#: ../../reference/configuration.rst:348
+msgid "System binary name or absolute path to Typst CLI."
+msgstr "系统 Typst CLI 的程序名或绝对路径。"
+
+#: ../../reference/configuration.rst:350
+msgid "Defining PDF books"
+msgstr "定义 PDF 图书"
+
+#: ../../reference/configuration.rst:353
+msgid ""
+"The ``[[pdf_documents]]`` table defines one or more books built from the "
+"project:"
+msgstr "``[[pdf_documents]]`` 表定义项目要生成的一本或多本图书："
+
+#: ../../reference/configuration.rst:369
+#: ../../reference/configuration.rst:372
+msgid "MyST Markdown options"
+msgstr "MyST Markdown 选项"
+
+#: ../../reference/configuration.rst:380
+msgid "``myst_enable_extensions``"
+msgstr "``myst_enable_extensions``"
+
+#: ../../reference/configuration.rst:382
+msgid "``[\"dollarmath\"]``"
+msgstr "``[\"dollarmath\"]``"
+
+#: ../../reference/configuration.rst:383
+msgid ""
+"Syntax extensions: ``\"colon_fence\"``, ``\"deflist\"``, "
+"``\"dollarmath\"``, ``\"fieldlist\"``, ``\"tasklist\"``, "
+"``\"substitution\"``."
+msgstr ""
+"语法扩展：``\"colon_fence\"``、``\"deflist\"``、``\"dollarmath\"``、``\"fieldlist\"``、``\"tasklist\"``、``\"substitution\"``。"
+
+#: ../../reference/configuration.rst:384
+msgid "``myst_heading_anchors``"
+msgstr "``myst_heading_anchors``"
+
+#: ../../reference/configuration.rst:387
+msgid ""
+"Heading level depth that automatically generates slug anchor targets "
+"(``0`` disables)."
+msgstr "自动生成标题锚点的层级深度；``0`` 表示禁用。"
+
+#: ../../reference/configuration.rst:388
+msgid "``myst_substitutions``"
+msgstr "``myst_substitutions``"
+
+#: ../../reference/configuration.rst:391
+msgid ""
+"Variable substitutions available in Markdown documents: ``{key = "
+"\"value\"}``."
+msgstr "Markdown 文档可使用的变量替换，例如 ``{key = \"value\"}``。"
+
+#: ../../reference/configuration.rst:392
+msgid "``myst_url_schemes``"
+msgstr "``myst_url_schemes``"
+
+#: ../../reference/configuration.rst:394
+msgid "``[\"http\", ...]``"
+msgstr "``[\"http\", ...]``"
+
+#: ../../reference/configuration.rst:395
+msgid "Recognized URI schemes treated as external links."
+msgstr "识别为外部链接的 URI 协议。"
+
+#: ../../reference/configuration.rst:396
+msgid "``myst_commonmark_only``"
+msgstr "``myst_commonmark_only``"
+
+#: ../../reference/configuration.rst:399
+msgid ""
+"Restricts parser strictly to CommonMark syntax without MyST extensions."
+msgstr "仅使用 CommonMark 语法，不启用 MyST 扩展。"
+
+#: ../../reference/configuration.rst:401
+msgid "Intersphinx options"
+msgstr "Intersphinx 选项"
+
+#: ../../reference/configuration.rst:414
+msgid "See :doc:`../intersphinx` for full workflow instructions."
+msgstr "完整流程见 :doc:`../intersphinx`。"
+
+#: ../../reference/configuration.rst:416
+msgid "Python autodoc options"
+msgstr "Python autodoc 选项"
+
+#: ../../reference/configuration.rst:419
+msgid "Autodoc options"
+msgstr "Autodoc 选项"
+
+#: ../../reference/configuration.rst:427
+msgid "``autodoc_source_paths``"
+msgstr "``autodoc_source_paths``"
+
+#: ../../reference/configuration.rst:430
+msgid "Directories added to Python module search path for static analysis."
+msgstr "供静态分析查找 Python 模块的目录。"
+
+#: ../../reference/configuration.rst:431
+msgid "``autoclass_content``"
+msgstr "``autoclass_content``"
+
+#: ../../reference/configuration.rst:433
+msgid "``\"class\"``"
+msgstr "``\"class\"``"
+
+#: ../../reference/configuration.rst:434
+msgid ""
+"Docstring source for classes: ``\"class\"``, ``\"init\"``, or "
+"``\"both\"``."
+msgstr "类文档字符串的来源：``\"class\"``、``\"init\"`` 或 ``\"both\"``。"
+
+#: ../../reference/configuration.rst:435
+msgid "``autodoc_member_order``"
+msgstr "``autodoc_member_order``"
+
+#: ../../reference/configuration.rst:437
+msgid "``\"alphabetical\"``"
+msgstr "``\"alphabetical\"``"
+
+#: ../../reference/configuration.rst:438
+msgid ""
+"Member ordering: ``\"alphabetical\"``, ``\"bysource\"``, or "
+"``\"groupwise\"``."
+msgstr "成员排序方式：``\"alphabetical\"``、``\"bysource\"`` 或 ``\"groupwise\"``。"
+
+#: ../../reference/configuration.rst:439
+msgid "``autodoc_typehints``"
+msgstr "``autodoc_typehints``"
+
+#: ../../reference/configuration.rst:441
+msgid "``\"signature\"``"
+msgstr "``\"signature\"``"
+
+#: ../../reference/configuration.rst:442
+msgid ""
+"Type hint placement: ``\"signature\"``, ``\"description\"``, or "
+"``\"none\"``."
+msgstr "类型提示的位置：``\"signature\"``、``\"description\"`` 或 ``\"none\"``。"
+
+#: ../../reference/configuration.rst:443
+msgid "``autodoc_default_options``"
+msgstr "``autodoc_default_options``"
+
+#: ../../reference/configuration.rst:446
+msgid "Default directive options applied to all ``auto*`` directives."
+msgstr "所有 ``auto*`` 指令使用的默认选项。"
+
+#: ../../reference/configuration.rst:448
+msgid "See :doc:`../autodoc` for complete discovery rules."
+msgstr "完整发现规则见 :doc:`../autodoc`。"
+
+#: ../../reference/configuration.rst:450
+msgid "Odin API documentation options"
+msgstr "Odin API 文档选项"
+
+#: ../../reference/configuration.rst:453
+msgid "Odin domain options"
+msgstr "Odin 域选项"
+
+#: ../../reference/configuration.rst:461
+msgid "``odin_autoapi_dirs``"
+msgstr "``odin_autoapi_dirs``"
+
+#: ../../reference/configuration.rst:464
+msgid "Source directories scanned for Odin packages."
+msgstr "扫描 Odin 包的源目录。"
+
+#: ../../reference/configuration.rst:465
+msgid "``odin_autoapi_root``"
+msgstr "``odin_autoapi_root``"
+
+#: ../../reference/configuration.rst:467
+msgid "``\"api\"``"
+msgstr "``\"api\"``"
+
+#: ../../reference/configuration.rst:468
+msgid "Destination subfolder for generated Odin API documentation."
+msgstr "生成 Odin API 文档的目标子目录。"
+
+#: ../../reference/configuration.rst:469
+msgid "``odin_autoapi_options``"
+msgstr "``odin_autoapi_options``"
+
+#: ../../reference/configuration.rst:471
+msgid "``[\"members\", \"undoc-members\"]``"
+msgstr "``[\"members\", \"undoc-members\"]``"
+
+#: ../../reference/configuration.rst:472
+msgid "Member inclusion filters."
+msgstr "筛选要包含的成员。"
+
+#: ../../reference/configuration.rst:473
+msgid "``odin_autoapi_member_order``"
+msgstr "``odin_autoapi_member_order``"
+
+#: ../../reference/configuration.rst:475
+msgid "``\"source\"``"
+msgstr "``\"source\"``"
+
+#: ../../reference/configuration.rst:476
+msgid "Member ordering: ``\"source\"`` or ``\"alphabetical\"``."
+msgstr "成员排序方式：``\"source\"`` 或 ``\"alphabetical\"``。"
+
+#: ../../reference/configuration.rst:478
+msgid "See :doc:`../odin` for complete Odin domain usage."
+msgstr "Odin 域的完整用法见 :doc:`../odin`。"
+
+#: ../../reference/configuration.rst:480
+msgid "Internationalization options"
+msgstr "国际化选项"
+
+#: ../../reference/configuration.rst:483
+msgid "i18n options"
+msgstr "i18n 选项"
+
+#: ../../reference/configuration.rst:491
+msgid "``locale_dirs``"
+msgstr "``locale_dirs``"
+
+#: ../../reference/configuration.rst:493
+msgid "``[\"locales\"]``"
+msgstr "``[\"locales\"]``"
+
+#: ../../reference/configuration.rst:494
+msgid "Directories searched for gettext message catalogs."
+msgstr "查找 gettext 翻译目录的文件夹。"
+
+#: ../../reference/configuration.rst:495
+msgid "``gettext_compact``"
+msgstr "``gettext_compact``"
+
+#: ../../reference/configuration.rst:498
+msgid "Consolidates subdocument messages into one catalog per directory."
+msgstr "将同一目录内文档的消息合并到一个翻译目录。"
+
+#: ../../reference/configuration.rst:499
+msgid "``gettext_uuid``"
+msgstr "``gettext_uuid``"
+
+#: ../../reference/configuration.rst:502
+msgid "Emits stable UUIDs in POT message headers."
+msgstr "在 POT 消息中写入稳定的 UUID。"
+
+#: ../../reference/configuration.rst:503
+msgid "``gettext_auto_build``"
+msgstr "``gettext_auto_build``"
+
+#: ../../reference/configuration.rst:506
+msgid ""
+"Compiles ``.po`` files into binary ``.mo`` catalogs during the build."
+msgstr "构建时将 ``.po`` 编译为二进制 ``.mo`` 目录。"
+
+#: ../../reference/configuration.rst:507
+msgid "``figure_language_filename``"
+msgstr "``figure_language_filename``"
+
+#: ../../reference/configuration.rst:509
+msgid "``\"{root}.{language}{ext}\"``"
+msgstr "``\"{root}.{language}{ext}\"``"
+
+#: ../../reference/configuration.rst:510
+msgid "Filename template for localized image selection."
+msgstr "选择本地化图片的文件名模板。"
+
+#: ../../reference/configuration.rst:512
+msgid "See :doc:`../intl` for translation instructions."
+msgstr "翻译流程见 :doc:`../intl`。"
+
+#: ../../reference/formats.rst:1
+msgid "Readers, renderers, and builders"
+msgstr "读取器、渲染器与构建器"
+
+#: ../../reference/formats.rst:4
+msgid ""
+"A reader understands a source language. A renderer writes one document "
+"tree. A builder coordinates a project and publishes its output. These are "
+"different responsibilities."
+msgstr "读取器理解源语言；渲染器输出一棵文档树；构建器协调项目并发布输出。这是不同职责。"
+
+#: ../../reference/formats.rst:8
+msgid "Source routes"
+msgstr "源文件处理路线"
+
+#: ../../reference/formats.rst:12
+msgid "Input"
+msgstr "输入"
+
+#: ../../reference/formats.rst:13
+msgid "Reader"
+msgstr "读取器"
+
+#: ../../reference/formats.rst:14
+msgid "Route"
+msgstr "路线"
+
+#: ../../reference/formats.rst:15
+msgid "RST in a project"
+msgstr "项目中的 RST"
+
+#: ../../reference/formats.rst:16
+msgid "RST plus the built-in Sphinx layer"
+msgstr "RST 与内置的 Sphinx 层"
+
+#: ../../reference/formats.rst:17
+msgid "Project graph to HTML, Typst/PDF, text, or catalogs."
+msgstr "将项目图生成 HTML、Typst/PDF、文本或翻译清单。"
+
+#: ../../reference/formats.rst:18
+msgid "Markdown in a project"
+msgstr "项目中的 Markdown"
+
+#: ../../reference/formats.rst:19
+msgid "MyST-compatible Markdown layer"
+msgstr "兼容 MyST 的 Markdown 层"
+
+#: ../../reference/formats.rst:20
+msgid "The same project graph and builders."
+msgstr "使用同一项目图和构建器。"
+
+#: ../../reference/formats.rst:21
+msgid "``convert file.md``"
+msgstr "``convert file.md``"
+
+#: ../../reference/formats.rst:22
+msgid "CommonMark by default"
+msgstr "默认使用 CommonMark"
+
+#: ../../reference/formats.rst:23
+msgid "One document to HTML or Typst/PDF."
+msgstr "将一份文档生成 HTML 或 Typst/PDF。"
+
+#: ../../reference/formats.rst:24
+msgid "``convert file.typ``"
+msgstr "``convert file.typ``"
+
+#: ../../reference/formats.rst:25
+msgid "Native Typst adapter"
+msgstr "原生 Typst 适配器"
+
+#: ../../reference/formats.rst:26
+msgid "Typst compilation outside Guidedoc's semantic tree."
+msgstr "在 Guidedoc 语义树之外编译 Typst。"
+
+#: ../../reference/formats.rst:28
+msgid "Builders"
+msgstr "构建器"
+
+#: ../../reference/formats.rst:31
+msgid "``html``"
+msgstr "``html``"
+
+#: ../../reference/formats.rst:32
+msgid ""
+"One HTML file for each document, with indexes, search, and an inventory."
+msgstr "每份文档一个 HTML 文件，附带索引、搜索和清单。"
+
+#: ../../reference/formats.rst:34
+msgid "``dirhtml``"
+msgstr "``dirhtml``"
+
+#: ../../reference/formats.rst:35
+msgid "Directory-style document URLs."
+msgstr "目录式文档 URL。"
+
+#: ../../reference/formats.rst:37
+msgid "``singlehtml``"
+msgstr "``singlehtml``"
+
+#: ../../reference/formats.rst:38
+msgid "One main HTML page with document sections and local references."
+msgstr "一个主 HTML 页面，包含各文档章节和本地引用。"
+
+#: ../../reference/formats.rst:40
+msgid "``pdf``"
+msgstr "``pdf``"
+
+#: ../../reference/formats.rst:41
+msgid ""
+"Typst books defined by the project. LaTeX builder aliases select this "
+"route."
+msgstr "构建项目定义的 Typst 图书；LaTeX 构建器别名也选择这条路线。"
+
+#: ../../reference/formats.rst:43
+msgid "``text``"
+msgstr "``text``"
+
+#: ../../reference/formats.rst:44
+msgid "Plain text files for documents."
+msgstr "每份文档一个纯文本文件。"
+
+#: ../../reference/formats.rst:46
+msgid "``gettext``"
+msgstr "``gettext``"
+
+#: ../../reference/formats.rst:47
+msgid "Message templates for translation."
+msgstr "用于翻译的消息模板。"
+
+#: ../../reference/formats.rst:49
+msgid "``dummy``"
+msgstr "``dummy``"
+
+#: ../../reference/formats.rst:50
+msgid "Reads and resolves the project without publishing an artifact."
+msgstr "读取并解析项目，不发布输出文件。"
+
+#: ../../reference/formats.rst:52
+msgid "Coverage is evidence"
+msgstr "覆盖率是一种证据"
+
+#: ../../reference/formats.rst:55
+msgid ""
+"``guidedog formats`` reports the executable's actual adapters. The "
+"compatibility page records pinned suites and real-project checks. Passing "
+"a CommonMark suite does not establish complete MyST coverage. Reading RST "
+"does not establish every Python extension's behavior. See "
+":doc:`../compatibility`."
+msgstr ""
+"``guidedog formats`` 列出可执行文件实际包含的适配器。兼容性页面记录固定测试集和真实项目检查。通过 CommonMark "
+"测试不代表完整支持 MyST；能读取 RST 也不代表复现所有 Python 扩展。见 :doc:`../compatibility`\\ 。"
+
+#: ../../reference/index.rst:1
+msgid "Reference"
+msgstr "参考"
+
+#: ../../reference/index.rst:4
+msgid ""
+"These pages state the contracts. They are meant to be searched and "
+"consulted. Start with a tutorial when you need a first example."
+msgstr "这些页面说明各项约定，便于搜索和查阅。需要第一个示例时，请从教程开始。"
+
+#~| msgid ""
+#~| "``register ID PATH`` runs the program once, after asking (``--yes`` "
+#~| "answers), to read what it is, and pins its SHA-256. ``run`` and "
+#~| "``publish`` check the pin before they start the program; a changed "
+#~| "program must be registered again. ``unregister`` removes only the "
+#~| "entry."
+#~ msgid ""
+#~ "``register ID PATH`` inspects the program after asking (``--yes`` "
+#~ "answers), then pins its SHA-256. Build plugins also pass qualification "
+#~ "before the entry is written; supply ``--project=DIR`` and "
+#~ "``--config=FILE`` when their checks need configuration. ``run`` and "
+#~ "``publish`` check the pin before starting the program; a changed "
+#~ "program must be registered again. ``unregister`` removes only the "
+#~ "entry."
+#~ msgstr ""
+#~ "``register ID PATH`` 先请求确认（``--yes`` 可直接确认），再检查程序并记录其 SHA-256 "
+#~ "校验值。构建插件还须通过接口检查，才会保存注册项；检查需要配置时，请提供 ``--project=DIR`` 和 "
+#~ "``--config=FILE``。``run`` 和 ``publish`` "
+#~ "在启动程序前核对校验值；程序更改后必须重新注册。``unregister`` 只删除注册项。"
+
+#~ msgid "``\"¶\"``"
+#~ msgstr "``\"¶\"``"
+
+#~ msgid ""
+#~ "Manages Guidedog Discussions architectural RFC records and lifecycles."
+#~ msgstr "管理 Guidedog Discussions 的设计记录及其生命周期。"
+
+#~ msgid ""
+#~ "Manages Guidedog Discussions architectural design proposals (RFCs):"
+#~ msgstr "管理 Guidedog Discussions 的架构设计提案（RFC）："
+
+#~ msgid ""
+#~ "Required external backend not found (e.g. system Typst executable "
+#~ "missing)."
+#~ msgstr "找不到所需的外部后端，例如系统中缺少 Typst 可执行文件。"
+
+#~ msgid ""
+#~ "Use ``guidedog COMMAND --help`` for the options accepted by the "
+#~ "current executable. The reference below describes the main operations."
+#~ msgstr "运行 ``guidedog COMMAND --help`` 可查看当前可执行程序接受的选项。下表介绍主要操作。"
+
+#~ msgid "Builds and serves a local preview, rebuilding on edits."
+#~ msgstr "构建并提供本地预览，编辑后自动重建。"
+
+#~ msgid "Removes the project's generated build output."
+#~ msgstr "删除项目生成的构建输出。"
+
+#~ msgid "Converts literal Sphinx configuration to TOML."
+#~ msgstr "将 Sphinx 配置中的字面量转换为 TOML。"
+
+#~ msgid "Manages the separate discussion project."
+#~ msgstr "管理独立的讨论项目。"
+
+#~ msgid "``-j N`` / ``-j auto``"
+#~ msgstr "``-j N`` / ``-j auto``"
+
+#~ msgid "Sets the reading worker count."
+#~ msgstr "设置读取工作线程数。"
+
+#~ msgid "Writes all output units."
+#~ msgstr "写入所有输出单元。"
+
+#~ msgid "``-E``"
+#~ msgstr "``-E``"
+
+#~ msgid "Ignores the saved environment."
+#~ msgstr "忽略已保存的环境。"
+
+#~ msgid "``-W``"
+#~ msgstr "``-W``"
+
+#~ msgid "Enables nitpicky reference checks."
+#~ msgstr "启用严格的引用检查。"
+
+#~ msgid "``-D name=value``"
+#~ msgstr "``-D name=value``"
+
+#~ msgid "Overrides a configuration value for the invocation."
+#~ msgstr "为本次调用覆盖一个配置值。"
+
+#~ msgid "``-t TAG``"
+#~ msgstr "``-t TAG``"
+
+#~ msgid "Adds a tag used by conditional content."
+#~ msgstr "添加供条件内容使用的标签。"
+
+#~ msgid "``--budget=MIB``"
+#~ msgstr "``--budget=MIB``"
+
+#~ msgid "Sets the host's working-memory budget."
+#~ msgstr "设置主机的工作内存预算。"
+
+#~ msgid "``--memory=disk``"
+#~ msgstr "``--memory=disk``"
+
+#~ msgid "Uses disk-backed working storage when the policy selects it."
+#~ msgstr "策略选择时使用磁盘支持的工作存储。"
+
+#~ msgid "``--diagnostics=json``"
+#~ msgstr "``--diagnostics=json``"
+
+#~ msgid "Emits structured reports without terminal color."
+#~ msgstr "输出结构化报告，不带终端颜色。"
+
+#~ msgid "Single-document conversion"
+#~ msgstr "单文档转换"
+
+#~ msgid ""
+#~ "A source suffix can select the reader. ``--from`` makes the choice "
+#~ "explicit. Existing outputs require ``--force``. ``--strict`` makes "
+#~ "warnings fail conversion. Raw input is a separate policy: "
+#~ "``--raw=omit`` or ``--raw=allow`` is explicit. ``--emit-typst`` keeps "
+#~ "the generated intermediate source for inspection."
+#~ msgstr ""
+#~ "文件后缀可选择读取器，\\ ``--from`` 可显式指定。覆盖现有输出需 ``--force``\\ 。\\ ``--strict`` "
+#~ "使警告导致转换失败。原始内容另由策略控制，显式使用 ``--raw=omit`` 或 ``--raw=allow``\\ 。\\ "
+#~ "``--emit-typst`` 保留生成的中间源码供检查。"
+
+#~ msgid "GDS management"
+#~ msgstr "GDS 管理"
+
+#~ msgid ""
+#~ "Use ``--dir`` for another discussion project. A committed state needs "
+#~ "both a reason and implementation evidence. No management command "
+#~ "performs a Git commit. For failure statuses, see :doc:`../errors`."
+#~ msgstr ""
+#~ "用 ``--dir`` 指定其他讨论项目。已提交状态同时需要理由和实现证据。管理命令不会执行 Git 提交。失败状态见 "
+#~ ":doc:`../errors`\\ 。"
+
+#~ msgid ""
+#~ "``conf.toml`` contains data. Guidedog does not evaluate it as a "
+#~ "program. Many keys use the names of Sphinx's settings. Unknown keys "
+#~ "and values receive a location and a correction direction."
+#~ msgstr ""
+#~ "``conf.toml`` 是数据，Guidedog 不将其作为程序执行。许多键沿用 Sphinx "
+#~ "设置名称。遇到未知键或值，会指出位置并给出修正方向。"
+
+#~ msgid "A minimal project"
+#~ msgstr "最小项目"
+
+#~ msgid "Project and sources"
+#~ msgstr "项目与源文件"
+
+#~ msgid "``project``, ``author``, ``copyright``, ``version``, ``release``"
+#~ msgstr ""
+#~ "``project``\\ , ``author``\\ , ``copyright``\\ , ``version``\\ , "
+#~ "``release``"
+
+#~ msgid ""
+#~ "Supply publication metadata. Version is the short name; release is the "
+#~ "full name."
+#~ msgstr "提供发布元数据。version 是简短版本名，release 是完整版本名。"
+
+#~ msgid "``language``, ``today``, ``today_fmt``"
+#~ msgstr "``language``\\ , ``today``\\ , ``today_fmt``"
+
+#~ msgid ""
+#~ "Select the document language and date text. Language also guides "
+#~ "hyphenation."
+#~ msgstr "选择文档语言和日期文字。语言也影响断词。"
+
+#~ msgid "``root_doc``, ``source_suffix``, ``exclude_patterns``"
+#~ msgstr "``root_doc``\\ , ``source_suffix``\\ , ``exclude_patterns``"
+
+#~ msgid "Define discovery and the root of the reading order."
+#~ msgstr "定义文档发现规则及阅读顺序的根节点。"
+
+#~ msgid ""
+#~ "Adds readable resource directories outside the source root. It is a "
+#~ "trust boundary, not a way to publish the whole repository."
+#~ msgstr "添加源目录之外可读取的资源目录。这是信任边界，不是发布整个仓库的方法。"
+
+#~ msgid ""
+#~ "Declares supported built-in Sphinx extension behavior. It does not "
+#~ "import arbitrary Python extension modules."
+#~ msgstr "声明支持的内置 Sphinx 扩展行为，不导入任意 Python 扩展模块。"
+
+#~ msgid "HTML"
+#~ msgstr "HTML"
+
+#~ msgid ""
+#~ "Searches project template directories before the built-in fallback."
+#~ msgstr "优先查找项目模板目录，再使用内置模板。"
+
+#~ msgid "``html_static_path``, ``html_css_files``, ``html_js_files``"
+#~ msgstr ""
+#~ "``html_static_path``\\ , ``html_css_files``\\ , ``html_js_files``"
+
+#~ msgid "Copies theme resources and lists additional styles and scripts."
+#~ msgstr "复制主题资源，并列出附加样式与脚本。"
+
+#~ msgid ""
+#~ "``html_title``, ``html_short_title``, ``html_logo``, ``html_favicon``"
+#~ msgstr ""
+#~ "``html_title``\\ , ``html_short_title``\\ , ``html_logo``\\ , "
+#~ "``html_favicon``"
+
+#~ msgid "Defines the site's title and identity."
+#~ msgstr "定义站点标题与标识。"
+
+#~ msgid "Supplies typed template values and theme-specific options."
+#~ msgstr "提供保留类型的模板值及主题专用选项。"
+
+#~ msgid "``mathjax_path``, ``mathjax_config_path``"
+#~ msgstr "``mathjax_path``\\ , ``mathjax_config_path``"
+
+#~ msgid "Selects the browser math component and its local configuration."
+#~ msgstr "选择浏览器数学组件及其本地配置。"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "Selects A4 or letter paper."
+#~ msgstr "选择 A4 或 letter 纸张。"
+
+#~ msgid "Defines separate books by root, filename, title, and author."
+#~ msgstr "按根文档、文件名、标题和作者定义独立的书籍。"
+
+#~ msgid "Supplies target-specific typesetting rules and a cover image."
+#~ msgstr "提供输出格式专用的排版规则及封面图片。"
+
+#~ msgid "``pdf_font_paths``, ``pdf_fonts``, ``pdf_packages``"
+#~ msgstr "``pdf_font_paths``\\ , ``pdf_fonts``\\ , ``pdf_packages``"
+
+#~ msgid ""
+#~ "Selects font directories, embedded fonts, and package download policy."
+#~ msgstr "选择字体目录、内嵌字体及包下载策略。"
+
+#~ msgid "Feature settings"
+#~ msgstr "功能设置"
+
+#~ msgid ""
+#~ "See :doc:`../intl` for translation settings, :doc:`../intersphinx` for "
+#~ "inventory mappings, :doc:`../object-types` for declarative domains, "
+#~ ":doc:`../autodoc` for Python discovery, and :doc:`../odin` for Odin "
+#~ "API settings. :doc:`../templates` gives the complete page and book "
+#~ "template contracts."
+#~ msgstr ""
+#~ "翻译设置见 :doc:`../intl`\\ ，清单映射见 :doc:`../intersphinx`\\ ，声明式域见 "
+#~ ":doc:`../object-types`\\ ，Python 发现规则见 :doc:`../autodoc`\\ ，Odin API "
+#~ "设置见 :doc:`../odin`\\ 。完整页面和书籍模板契约见 :doc:`../templates`\\ 。"

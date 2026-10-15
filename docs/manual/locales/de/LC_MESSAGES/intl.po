@@ -1,0 +1,458 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../intl.rst:3
+msgid "Internationalization"
+msgstr "Internationalisierung"
+
+#: ../../intl.rst:6
+msgid ""
+"Translate the explanation while keeping its structure. Guidedog extracts "
+"message catalogs, merges translations, and builds for a chosen language. "
+"The source text stays the reference. A missing translation falls back "
+"rather than inventing text."
+msgstr ""
+"Übersetzen Sie die Erklärung und bewahren Sie ihre Struktur. Guidedog "
+"extrahiert Kataloge, führt Übersetzungen zusammen und baut in der "
+"gewählten Sprache. Der Quelltext bleibt die Referenz. Fehlende "
+"Übersetzungen fallen auf ihn zurück, statt Text zu erfinden."
+
+#: ../../intl.rst:10
+msgid "The workflow"
+msgstr "Arbeitsablauf"
+
+#: ../../intl.rst:13
+msgid "Write the message templates with the ``gettext`` builder:"
+msgstr "Erzeugen Sie Nachrichtenvorlagen mit dem Builder ``gettext``\\ :"
+
+#: ../../intl.rst:19
+msgid ""
+"It writes one template (``.pot``) per text domain into "
+"``_build/gettext``: every paragraph, title, list item, table cell, "
+"caption, admonition, term, and field of the documents becomes a message, "
+"with the file and line it comes from."
+msgstr ""
+"Für jede Textdomäne entsteht eine Vorlage (\\ ``.pot``\\ ) in "
+"``_build/gettext``\\ . Jeder Absatz, Titel, Listeneintrag, jede "
+"Tabellenzelle, Bildunterschrift, Hinweisbox, jeder Begriff und jedes Feld "
+"wird zu einer Nachricht mit Quelldatei und Zeilennummer."
+
+#: ../../intl.rst:23
+msgid ""
+"Create or update the catalogs of each language, as ``sphinx-intl update`` "
+"does:"
+msgstr ""
+"Erstellen oder aktualisieren Sie die Kataloge jeder Sprache wie mit "
+"``sphinx-intl update``\\ :"
+
+#: ../../intl.rst:29
+msgid ""
+"The catalogs appear in ``locales/de/LC_MESSAGES/*.po``. On later runs the "
+"command merges the new templates into them, as ``msgmerge`` does: "
+"translations are kept, a message whose source changed gets the old "
+"translation marked *fuzzy* for review, and messages no longer in the "
+"documents are kept at the end as obsolete (``#~``), so a translation can "
+"come back."
+msgstr ""
+"Die Kataloge entstehen in ``locales/de/LC_MESSAGES/*.po``\\ . Spätere "
+"Aufrufe führen die neuen Vorlagen wie ``msgmerge`` zusammen. "
+"Übersetzungen bleiben erhalten. Bei geändertem Ausgangstext wird die alte "
+"Übersetzung zur Prüfung als *fuzzy* markiert. Entfernte Nachrichten "
+"bleiben am Ende als veraltet (\\ ``#~``\\ ) erhalten, damit ihre "
+"Übersetzung später wieder verfügbar ist."
+
+#: ../../intl.rst:35
+msgid ""
+"Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a "
+"message once its translation is right; fuzzy translations are not used."
+msgstr ""
+"Füllen Sie jedes ``msgstr``\\ . Entfernen Sie nach Prüfung die Zeile ``#, "
+"fuzzy``\\ . Als fuzzy markierte Übersetzungen werden nicht verwendet."
+
+#: ../../intl.rst:43
+msgid "See how far the translation is, as ``sphinx-intl stat`` does:"
+msgstr "Prüfen Sie den Stand wie mit ``sphinx-intl stat``\\ :"
+
+#: ../../intl.rst:49
+msgid "Build in the language:"
+msgstr "Bauen Sie in dieser Sprache:"
+
+#: ../../intl.rst:56
+msgid "or set ``language = \"de\"`` in ``conf.toml``."
+msgstr "Oder setzen Sie ``language = \"de\"`` in ``conf.toml``\\ ."
+
+#: ../../intl.rst:58
+msgid ""
+"Each book has a language suffix: ``manual.pdf`` becomes "
+"``manual-de.pdf``. A build publishes one complete generation, so use "
+"separate destinations to keep several editions. For example, build German "
+"with ``guidedog build -b pdf docs build/books/de -D language=de`` and "
+"English with ``guidedog build -b pdf docs build/books/en -D language=en``."
+msgstr ""
+"Jedes Buch erhält ein Sprachsuffix: Aus ``manual.pdf`` wird "
+"``manual-de.pdf``\\ . Ein Build veröffentlicht eine vollständige "
+"Generation. Verwenden Sie getrennte Ziele, um mehrere Ausgaben zu "
+"behalten: etwa ``guidedog build -b pdf docs build/books/de -D "
+"language=de`` für Deutsch und ``guidedog build -b pdf docs build/books/en "
+"-D language=en`` für Englisch."
+
+#: ../../intl.rst:64
+msgid ""
+"Only the documents whose catalog changed are read again, as with any "
+"other input of a document; adding or removing a catalog reads every "
+"document again."
+msgstr ""
+"Wie bei anderen Eingaben werden nur Dokumente mit geändertem Katalog neu "
+"gelesen. Hinzufügen oder Entfernen eines Katalogs liest alle Dokumente "
+"erneut."
+
+#: ../../intl.rst:67
+msgid ""
+"``guidedog intl`` takes sphinx-intl's options: ``-p DIR`` for the "
+"templates (default ``_build/gettext``), ``-l LANG``, repeatable (default: "
+"the project's language), ``-d DIR`` for the catalogs (default: the first "
+"of ``locale_dirs``), ``-w N`` for the line width (default 76), and "
+"``--no-obsolete``."
+msgstr ""
+"``guidedog intl`` unterstützt die Optionen von sphinx-intl: ``-p DIR`` "
+"für Vorlagen (Standard ``_build/gettext``\\ ), das wiederholbare ``-l "
+"LANG`` für Sprachen (Standard: Projektsprache), ``-d DIR`` für Kataloge "
+"(Standard: erster Eintrag in ``locale_dirs``\\ ), ``-w N`` für die "
+"Zeilenbreite (Standard 76) sowie ``--no-obsolete``\\ ."
+
+#: ../../intl.rst:72
+msgid "Writing translations"
+msgstr "Übersetzungen schreiben"
+
+#: ../../intl.rst:75
+msgid ""
+"A message is the source text of a paragraph, title, or other element, "
+"with its markup: reStructuredText in ``.rst`` documents, Markdown in "
+"``.md`` ones. A translation is read in the same markup, so it may "
+"emphasize, link, and refer as the original does."
+msgstr ""
+"Eine Nachricht ist der Quelltext eines Absatzes, Titels oder anderen "
+"Elements samt Markup: reStructuredText in ``.rst``\\ , Markdown in "
+"``.md``\\ . Übersetzungen werden im selben Format gelesen und können "
+"Hervorhebungen, Links und Verweise enthalten."
+
+#: ../../intl.rst:79
+msgid ""
+"References must stay the same. A translation keeps every reference of its "
+"message, written the same way, and may only change the text around them "
+"and their titles:"
+msgstr ""
+"Verweise müssen gleich bleiben. Bewahren Sie jeden Verweis in derselben "
+"Schreibweise und ändern Sie nur den umgebenden Text und seinen Titel:"
+
+#: ../../intl.rst:87
+msgid ""
+"When a translation drops a reference, the build warns (``inconsistent "
+"references in translated message``, as Sphinx does) and uses the "
+"translation. When it names a reference the original does not have, it "
+"could not be resolved, so the build warns and keeps the original text. A "
+"translation whose markup the reader refuses is also kept in the original, "
+"with a warning that quotes it."
+msgstr ""
+"Lässt eine Übersetzung eine Referenz weg, warnt der Build wie Sphinx mit "
+"``inconsistent references in translated message`` und verwendet die "
+"Übersetzung. Fügt sie eine Referenz hinzu, die im Original fehlt, lässt "
+"sich diese nicht auflösen: Der Build warnt und behält den Originaltext. "
+"Das gilt auch für vom Reader abgelehntes Markup; die Warnung zitiert dann "
+"die Übersetzung."
+
+#: ../../intl.rst:93
+msgid ""
+"Section anchors do not change with the language: a translated title keeps "
+"the anchor of its original, so links into the site, from inside and "
+"outside, keep working."
+msgstr ""
+"Abschnittsanker ändern sich nicht mit der Sprache. Übersetzte Titel "
+"behalten den Originalanker; interne und externe Links bleiben gültig."
+
+#: ../../intl.rst:96
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: ../../intl.rst:99
+msgid ""
+"The standard settings have Sphinx's names and defaults. Guidedog also "
+"provides an extraction-only exclusion setting for untranslated reference "
+"appendices."
+msgstr ""
+"Die Standardeinstellungen haben Sphinx' Namen und Vorgaben. Guidedog "
+"bietet zusätzlich einen nur für die Extraktion geltenden Ausschluss "
+"unübersetzter Referenzanhänge."
+
+#: ../../intl.rst:106
+msgid "Setting"
+msgstr "Einstellung"
+
+#: ../../intl.rst:107
+msgid "Meaning"
+msgstr "Bedeutung"
+
+#: ../../intl.rst:108
+msgid "``language``"
+msgstr "``language``"
+
+#: ../../intl.rst:109
+msgid "The language to build in, such as ``\"de\"`` or ``\"pt_BR\"``."
+msgstr "Die Build-Sprache, etwa ``\"de\"`` oder ``\"pt_BR\"``\\ ."
+
+#: ../../intl.rst:110
+msgid "``locale_dirs``"
+msgstr "``locale_dirs``"
+
+#: ../../intl.rst:111
+msgid ""
+"Where the catalogs are, relative to the source folder: each holds "
+"``LANGUAGE/LC_MESSAGES/DOMAIN.po`` (or a compiled ``.mo``). Default "
+"``[\"locales\"]``. With several, the first that translates a message wins."
+msgstr ""
+"Katalogverzeichnisse relativ zum Quellordner. Jedes enthält "
+"``LANGUAGE/LC_MESSAGES/DOMAIN.po`` oder eine kompilierte ``.mo``\\ "
+"-Datei. Standard ist ``[\"locales\"]``\\ . Bei mehreren Verzeichnissen "
+"gewinnt das erste mit einer Übersetzung für die Nachricht."
+
+#: ../../intl.rst:114
+msgid "``gettext_compact``"
+msgstr "``gettext_compact``"
+
+#: ../../intl.rst:115
+msgid ""
+"Which catalog a document's messages go to. ``true`` (the default): a "
+"document at the top level has its own, and the documents of a folder "
+"share the folder's (``guide/usage.rst`` is in ``guide.po``). ``false``: "
+"one catalog per document. A name: one catalog of that name for every "
+"document."
+msgstr ""
+"Bestimmt den Katalog für die Nachrichten eines Dokuments. Bei ``true`` "
+"(Standard) haben Dokumente auf oberster Ebene eigene Kataloge; Dokumente "
+"eines Ordners teilen dessen Katalog (\\ ``guide/usage.rst`` nutzt "
+"``guide.po``\\ ). Bei ``false`` erhält jedes Dokument einen eigenen. Ein "
+"Name legt einen gemeinsamen Katalog für alle Dokumente fest."
+
+#: ../../intl.rst:119
+msgid "``gettext_location``"
+msgstr "``gettext_location``"
+
+#: ../../intl.rst:120
+msgid ""
+"Write each message's locations (``#: ../../index.rst:12``). Default "
+"``true``."
+msgstr ""
+"Schreibt die Fundstellen jeder Nachricht (\\ ``#: ../../index.rst:12``\\ "
+"). Vorgabe: ``true``\\ ."
+
+#: ../../intl.rst:121
+msgid "``gettext_uuid``"
+msgstr "``gettext_uuid``"
+
+#: ../../intl.rst:122
+msgid ""
+"Write an identifier per occurrence of a message. Guidedog makes them from "
+"the document, the message, and its occurrence, so they are the same in "
+"every build."
+msgstr ""
+"Schreibt eine Kennung je Vorkommen, abgeleitet aus Dokument, Nachricht "
+"und Vorkommen. Sie bleibt zwischen Builds gleich."
+
+#: ../../intl.rst:124
+msgid "``gettext_auto_build``"
+msgstr "``gettext_auto_build``"
+
+#: ../../intl.rst:125
+msgid ""
+"Compile each ``.po`` into an ``.mo`` beside it, for other tools. Default "
+"``true``. Guidedog itself reads the ``.po``."
+msgstr ""
+"Kompiliert jedes ``.po`` für andere Werkzeuge in ein danebenliegendes "
+"``.mo``\\ . Vorgabe: ``true``\\ . Guidedog selbst liest ``.po``\\ ."
+
+#: ../../intl.rst:127
+msgid "``gettext_additional_targets``"
+msgstr "``gettext_additional_targets``"
+
+#: ../../intl.rst:128
+msgid ""
+"More content to translate: ``index`` (index entries), ``literal-block``, "
+"``doctest-block``, ``raw``, and ``image`` (alternative text)."
+msgstr ""
+"Weitere Inhalte: ``index`` (Indexeinträge), ``literal-block``\\ , "
+"``doctest-block``\\ , ``raw`` und ``image`` (Alternativtext)."
+
+#: ../../intl.rst:130
+msgid "``gettext_allow_fuzzy_translations``"
+msgstr "``gettext_allow_fuzzy_translations``"
+
+#: ../../intl.rst:131
+msgid "Use fuzzy translations too. Default ``false``."
+msgstr "Verwendet auch fuzzy-Übersetzungen. Vorgabe: ``false``\\ ."
+
+#: ../../intl.rst:132
+msgid "``gettext_exclude_patterns``"
+msgstr "``gettext_exclude_patterns``"
+
+#: ../../intl.rst:133
+msgid ""
+"Document-path patterns omitted from POT extraction only, such as "
+"``[\"api/**\"]``. Default ``[]``. The documents remain in HTML and PDF."
+msgstr ""
+"Nur von der POT-Extraktion ausgeschlossene Dokumentpfadmuster, etwa "
+"``[\"api/**\"]``\\ . Vorgabe: ``[]``\\ . Die Dokumente bleiben in HTML "
+"und PDF."
+
+#: ../../intl.rst:135
+msgid "``gettext_last_translator``, ``gettext_language_team``"
+msgstr "``gettext_last_translator``\\ , ``gettext_language_team``"
+
+#: ../../intl.rst:136
+msgid "The template header's ``Last-Translator`` and ``Language-Team``."
+msgstr "``Last-Translator`` und ``Language-Team`` im Vorlagenkopf."
+
+#: ../../intl.rst:137
+msgid "``figure_language_filename``"
+msgstr "``figure_language_filename``"
+
+#: ../../intl.rst:138
+msgid ""
+"The file of an image in the build's language. Default "
+"``\"{root}.{language}{ext}\"``: with ``language = \"de\"``, "
+"``img/logo.png`` becomes ``img/logo.de.png`` when that file exists. The "
+"fields are ``{root}``, ``{path}``, ``{basename}``, ``{ext}``, "
+"``{docpath}``, and ``{language}``."
+msgstr ""
+"Bilddatei in der Build-Sprache. Standard: "
+"``\"{root}.{language}{ext}\"``\\ . Bei ``language = \"de\"`` wird "
+"``img/logo.png`` durch ``img/logo.de.png`` ersetzt, sofern vorhanden. "
+"Felder: ``{root}``\\ , ``{path}``\\ , ``{basename}``\\ , ``{ext}``\\ , "
+"``{docpath}`` und ``{language}``\\ ."
+
+#: ../../intl.rst:142
+msgid "``translation_progress_classes``"
+msgstr "``translation_progress_classes``"
+
+#: ../../intl.rst:143
+msgid ""
+"Give translated elements the class ``translated`` and the others "
+"``untranslated`` (``true``), or only one of them (``\"translated\"``, "
+"``\"untranslated\"``), so a stylesheet can show what is left."
+msgstr ""
+"Vergibt die Klasse ``translated`` an übersetzte und ``untranslated`` an "
+"übrige Elemente (\\ ``true``\\ ). Wahlweise wird nur eine vergeben (\\ "
+"``\"translated\"`` oder ``\"untranslated\"``\\ ), damit ein Stylesheet "
+"den verbleibenden Stand anzeigen kann."
+
+#: ../../intl.rst:147
+msgid "Guidedog's own words"
+msgstr "Die Oberflächentexte von Guidedog"
+
+#: ../../intl.rst:150
+msgid ""
+"Guidedog writes some words itself: admonition titles, \"Added in version "
+"2.1\", \"Fig. 1\", \"Contents\", the page layout's \"Previous\", "
+"\"Next\", \"Navigation\", and \"Search\", the search and index pages, and "
+"the book's \"Version\". They come from the text domain ``guidedog``, "
+"looked up in this order:"
+msgstr ""
+"Guidedog erzeugt einige Texte selbst: Hinweisüberschriften, „Added in "
+"version 2.1“, „Fig. 1“, „Contents“, die Layouttexte „Previous“, „Next“, "
+"„Navigation“, „Search“, Such- und Indexseiten sowie „Version“ im Buch. "
+"Sie stammen aus der Textdomäne ``guidedog`` und werden in dieser "
+"Reihenfolge gesucht:"
+
+#: ../../intl.rst:155
+msgid "``locales/LANGUAGE/LC_MESSAGES/guidedog.po`` of the project,"
+msgstr "``locales/LANGUAGE/LC_MESSAGES/guidedog.po`` des Projekts."
+
+#: ../../intl.rst:156
+msgid ""
+"``locales/LANGUAGE/LC_MESSAGES/sphinx.po`` of the project, as Sphinx "
+"reads it,"
+msgstr ""
+"``locales/LANGUAGE/LC_MESSAGES/sphinx.po`` des Projekts, wie bei Sphinx."
+
+#: ../../intl.rst:157
+msgid ""
+"the catalog built into Guidedog, for German, Spanish, French, Japanese, "
+"Brazilian Portuguese, Russian, and Simplified Chinese."
+msgstr ""
+"Der eingebaute Katalog für Deutsch, Spanisch, Französisch, Japanisch, "
+"brasilianisches Portugiesisch, Russisch und vereinfachtes Chinesisch."
+
+#: ../../intl.rst:160
+msgid ""
+"The English words are the message identifiers, and they are Sphinx's "
+"where Sphinx has the same word, so a project's ``sphinx.po`` keeps "
+"working. A project can override any word, or add a language, with its own "
+"``guidedog.po``."
+msgstr ""
+"Die englischen Texte dienen als Nachrichtenkennungen. Wo Sphinx dieselben "
+"Texte hat, stimmen die Kennungen überein; ein vorhandenes ``sphinx.po`` "
+"funktioniert daher weiter. Mit einem eigenen ``guidedog.po`` kann ein "
+"Projekt jeden Text ersetzen oder eine Sprache hinzufügen."
+
+#: ../../intl.rst:164
+msgid ""
+"Templates translate with ``_()``, ``gettext()``, and ``ngettext()``, as "
+"Sphinx's templates do:"
+msgstr ""
+"Vorlagen übersetzen wie bei Sphinx mit ``_()``\\ , ``gettext()`` und "
+"``ngettext()``\\ :"
+
+#: ../../intl.rst:172
+msgid ""
+"``numfig_format``, ``html_title``, and ``html_short_title`` follow the "
+"language unless ``conf.toml`` sets them."
+msgstr ""
+"``numfig_format``\\ , ``html_title`` und ``html_short_title`` folgen der "
+"Sprache, sofern sie nicht in ``conf.toml`` gesetzt sind."
+
+#: ../../intl.rst:175
+msgid "Dates"
+msgstr "Datumsangaben"
+
+#: ../../intl.rst:178
+msgid ""
+"``|today|``, the book's date, and a page's ``last_updated`` are formatted "
+"as Sphinx formats them: ``today_fmt`` and ``html_last_updated_fmt`` are "
+"``strftime`` formats, and the names of months and days follow "
+"``language``, so ``%b %d, %Y`` is \"Sep 29, 2026\" in English and \"Sept. "
+"29, 2026\" in German. An empty format is ``_('%b %d, %Y')``, which a "
+"catalog may translate. The names come from the Unicode CLDR for the "
+"languages above; other languages use English, as Sphinx does for a "
+"language Babel does not know."
+msgstr ""
+"``|today|``\\ , das Buchdatum und ``last_updated`` folgen den "
+"Formatregeln von Sphinx. ``today_fmt`` und ``html_last_updated_fmt`` "
+"verwenden ``strftime``\\ ; Monats- und Wochentagsnamen richten sich nach "
+"``language``\\ . So ergibt ``%b %d, %Y`` auf Englisch „Sep 29, 2026“ und "
+"auf Deutsch „Sept. 29, 2026“. Bei leerem Format gilt ``_('%b %d, %Y')``\\ "
+", das der Katalog übersetzen kann. Die Namen für die obigen Sprachen "
+"stammen aus Unicode CLDR. Andere Sprachen nutzen Englisch, wie Sphinx bei "
+"einer Babel unbekannten Sprache."
+
+#: ../../intl.rst:185
+msgid ""
+"The date is the local date, in the local time zone. Set "
+"``SOURCE_DATE_EPOCH`` (seconds since 1970, in UTC) to build reproducibly, "
+"with the same dates on every machine."
+msgstr ""
+"Es gilt das lokale Datum in der lokalen Zeitzone. Setzen Sie "
+"``SOURCE_DATE_EPOCH`` (Sekunden seit 1970, UTC), um reproduzierbare "
+"Builds mit denselben Daten auf allen Rechnern zu erhalten."

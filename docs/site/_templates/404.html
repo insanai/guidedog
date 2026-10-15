@@ -1,0 +1,19 @@
+{#- The page GitHub Pages shows for a missing address, at any depth: layout.html gives it
+    a <base> element, so its relative links start at the site's root. -#}
+{%- extends "layout.html" %}
+{%- block htmltitle %}<title>{{ _('Page not found') }} · Guidedog</title>{% endblock %}
+{%- block document %}
+  <article class="gd-article gd-landing gd-missing">
+    <section>
+      <h1>{{ _('Page not found') }}</h1>
+      <p class="gd-lead">{{ _('There is no page at this address. Check it, or start ' ~
+        'from one of these pages.') }}</p>
+      <div class="gd-actions"><p>
+        <a href="index.html">{{ _('Guidedog home') }}</a>
+        <a href="manual/index.html">{{ _('Manual') }}</a>
+        <a href="manual/search.html">{{ _('Search the manual') }}</a>
+        <a href="discussions/index.html">{{ _('Discussions') }}</a>
+      </p></div>
+    </section>
+  </article>
+{%- endblock %}

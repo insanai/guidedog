@@ -1,0 +1,130 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 04:29+0000\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../media.rst:3
+msgid "Images, video, audio, and downloads"
+msgstr "Bilder, Video, Audio und Downloads"
+
+#: ../../media.rst:6
+msgid ""
+"Keep a resource near the document that explains it. Name it with a "
+"relative path, or start the path with ``/`` to refer to the source root. "
+"Guidedog copies resources used by the documents. A video remains a video "
+"on the web; a PDF names the recording."
+msgstr ""
+"Legen Sie Ressourcen nahe beim erklärenden Dokument ab. Verwenden Sie "
+"relative Pfade oder ``/`` für die Quellwurzel. Guidedog kopiert "
+"verwendete Ressourcen. Videos bleiben im Web abspielbar; das PDF benennt "
+"die Aufnahme."
+
+#: ../../media.rst:10
+msgid "Images"
+msgstr "Bilder"
+
+#: ../../media.rst:23
+msgid ""
+"Pages copy images into ``_images``; the book embeds them. PNG, JPEG, GIF, "
+"SVG, and WebP work in both. A missing image is a warning: the page keeps "
+"the image's alternative text, and the book leaves the image out."
+msgstr ""
+"Seiten kopieren Bilder nach ``_images``\\ , Bücher betten sie ein. PNG, "
+"JPEG, GIF, SVG und WebP funktionieren in beiden. Ein fehlendes Bild "
+"erzeugt eine Warnung: die Seite behält den Alternativtext, das Buch lässt "
+"das Bild aus."
+
+#: ../../media.rst:27
+msgid "Video and audio"
+msgstr "Video und Audio"
+
+#: ../../media.rst:30
+msgid ""
+"An image or figure that names a video (``.mp4``, ``.webm``, ``.ogv``, "
+"``.mov``, ``.m4v``) or an audio file (``.mp3``, ``.ogg``, ``.oga``, "
+"``.m4a``, ``.opus``, ``.wav``, ``.flac``, ``.aac``) plays it, as Docutils "
+"does for video:"
+msgstr ""
+"Ein image oder figure mit Video (\\ ``.mp4``\\ , ``.webm``\\ , ``.ogv``\\ "
+", ``.mov``\\ , ``.m4v``\\ ) oder Audio (\\ ``.mp3``\\ , ``.ogg``\\ , "
+"``.oga``\\ , ``.m4a``\\ , ``.opus``\\ , ``.wav``\\ , ``.flac``\\ , "
+"``.aac``\\ ) spielt die Datei ab, wie Docutils bei Videos:"
+
+#: ../../media.rst:44
+msgid ""
+"Pages show the browser's player, with a link to the file for browsers "
+"that cannot play it. A book cannot play media, so it names the recording "
+"in a box where the player would be; text output writes ``[video: ...]`` "
+"or ``[audio: ...]``."
+msgstr ""
+"Seiten zeigen den Browserplayer und einen Dateilink für Browser ohne "
+"Wiedergabe. Ein Buch kann Medien nicht abspielen und benennt die Aufnahme "
+"in einem Kasten anstelle des Players. Textausgabe schreibt ``[video: "
+"...]`` oder ``[audio: ...]``\\ ."
+
+#: ../../media.rst:48
+msgid "Downloads"
+msgstr "Downloads"
+
+#: ../../media.rst:51
+msgid ""
+"In HTML, the ``download`` role copies a file into ``_downloads`` and "
+"offers it for saving:"
+msgstr ""
+"In HTML kopiert die Rolle ``download`` eine Datei nach ``_downloads`` und "
+"bietet sie zum Speichern an:"
+
+#: ../../media.rst:58
+msgid ""
+"For portable PDF download links, set ``html_baseurl`` to the published "
+"HTML site's absolute HTTP or HTTPS address. The book then links to that "
+"site's copied files. Without it, the link remains source-relative; the "
+"PDF does not embed attachments. This setting does not upload files. "
+"Publish the HTML site before sharing the book. This behavior is available "
+"in Guidedog 0.6.3 and later."
+msgstr ""
+"Für portable PDF-Downloadlinks setzen Sie ``html_baseurl`` auf die "
+"absolute HTTP- oder HTTPS-Adresse der veröffentlichten Website. Das Buch "
+"verlinkt deren Dateikopien. Ohne die Einstellung bleiben die Links "
+"quellrelativ; das PDF bettet keine Anhänge ein. Die Einstellung lädt "
+"nichts hoch. Veröffentlichen Sie die HTML-Seiten, bevor Sie das Buch "
+"verteilen. Dieses Verhalten steht ab Guidedog 0.6.3 bereit."
+
+#: ../../media.rst:64
+msgid "Theme files"
+msgstr "Dateien des Themes"
+
+#: ../../media.rst:67
+msgid ""
+"``_static`` holds the files the theme uses (style sheets, scripts, fonts, "
+"a logo), copied as they are into ``_static`` in the site. "
+"``html_static_path`` lists it, and ``html_css_files``, ``html_js_files``, "
+"``html_logo``, and ``html_favicon`` name files in it. Content media "
+"belongs with the documents instead, so that moving a document with its "
+"media keeps its links working."
+msgstr ""
+"``_static`` enthält Stylesheets, Skripte, Schriften und Logos des Themes "
+"und wird unverändert nach ``_static`` der Site kopiert. "
+"``html_static_path`` nennt den Ordner; ``html_css_files``\\ , "
+"``html_js_files``\\ , ``html_logo`` und ``html_favicon`` seine Dateien. "
+"Inhaltsmedien gehören zu den Dokumenten, damit gemeinsames Verschieben "
+"die Links erhält."
+
+#~ msgid ""
+#~ "The ``download`` role links to any file and copies it into "
+#~ "``_downloads``:"
+#~ msgstr ""
+#~ "Die Rolle ``download`` verlinkt beliebige Dateien und kopiert sie nach "
+#~ "``_downloads``\\ :"

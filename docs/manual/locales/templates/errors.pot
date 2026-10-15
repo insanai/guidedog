@@ -1,0 +1,192 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: Guidedog translation contributors\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../errors.rst:3
+msgid "Error messages"
+msgstr ""
+
+#: ../../errors.rst:6
+msgid "A report should name the problem, show its location, and give a useful next step. Guidedog keeps that evidence as structured data. The terminal adds color and a source marker. JSON keeps the data without terminal decoration."
+msgstr ""
+
+#: ../../errors.rst:10
+msgid "Reading a report"
+msgstr ""
+
+#: ../../errors.rst:25
+msgid "A report has four parts, always in this order:"
+msgstr ""
+
+#: ../../errors.rst:27
+msgid "**The title bar.** The title names the kind of problem in capitals; warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right of the bar is the report's code, such as ``rst.substitution.undefined``: a stable name you can search for."
+msgstr ""
+
+#: ../../errors.rst:30
+msgid "**Where.** The file and line, the source line itself, and a marker under the text the problem is about. A problem that is not about one line (a missing folder, a flag) shows only the path, or nothing."
+msgstr ""
+
+#: ../../errors.rst:33
+msgid "**What happened.** The explanation, followed, when it matters, by what the problem means for the output: here, that nothing was written."
+msgstr ""
+
+#: ../../errors.rst:35
+msgid "**What to do.** The hint, in green on a color terminal: a concrete direction. Where there are several ways to fix the problem, the hint names them, the most likely first."
+msgstr ""
+
+#: ../../errors.rst:39
+msgid "Colors only underline what the words already say; ``--color=never`` turns them off and ``--color=always`` keeps them when the output is not a terminal."
+msgstr ""
+
+#: ../../errors.rst:42
+msgid "Every hint gives directions"
+msgstr ""
+
+#: ../../errors.rst:45
+msgid "Guidedog holds its own messages to this: a hint starts with what to do (\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\") and names what to do it to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the directive's option. A test (``tests/hints_test.odin``) reads every message Guidedog can emit and fails when a hint is empty, repeats the message, or says only \"report this\" without saying what to report with. Two forms are allowed because they name the fix themselves: a suggestion (\"Did you mean numfig?\") and, for a note that needs no action, \"Nothing to do:\" with the reason."
+msgstr ""
+
+#: ../../errors.rst:53
+msgid "When the problem is Guidedog's own fault, the hint says so and asks you to report it with the command you ran, the input that caused it, and the output of ``guidedog --version``."
+msgstr ""
+
+#: ../../errors.rst:57
+msgid "Reports for programs"
+msgstr ""
+
+#: ../../errors.rst:60
+msgid "``--diagnostics=json`` writes each report as one JSON object per line on standard error, for editors and continuous integration:"
+msgstr ""
+
+#: ../../errors.rst:71
+msgid "(shown wrapped here; each object is on one line). ``schema`` is the version of this format, which changes only when a field does; check it before reading the rest. Columns count Unicode scalars, not bytes or terminal cells, from 1. ``source`` is the complete original source line; the terminal shows a bounded window around the error and aligns its caret after escaping controls and measuring wide characters. ``category`` is the warning's category, as ``suppress_warnings`` names it, or empty."
+msgstr ""
+
+#: ../../errors.rst:78
+msgid "When memory runs out"
+msgstr ""
+
+#: ../../errors.rst:81
+msgid "Running out of memory is a report too, never a crash. There are two kinds:"
+msgstr ""
+
+#: ../../errors.rst:83
+msgid "``host.budget`` (MEMORY BUDGET REACHED)"
+msgstr ""
+
+#: ../../errors.rst:84
+msgid "The build reached the memory it may hold, its budget (``--budget=MIB``, 1 GiB by default). The report names the step and, for a template, the line that asked for the memory. At a terminal the build asks once what to do: raise the budget to one the step fits, go on with the working memory on disk, or stop; elsewhere it stops, and ``--budget`` or ``--memory=disk`` chooses ahead. The hint names that same budget as a number, for example:"
+msgstr ""
+
+#: ../../errors.rst:94
+msgid "The number holds what the build held and the refused step four times over (the step also holds its output and the copy it writes), or twice the old budget, whichever is larger, rounded up to 64 MiB, and no more than the memory the machine has free when the step fits there. When it does not, the hint says so, and names ``--memory=disk`` first:"
+msgstr ""
+
+#: ../../errors.rst:104
+msgid "``host.memory`` (OUT OF MEMORY)"
+msgstr ""
+
+#: ../../errors.rst:105
+msgid "The system refused memory the budget allowed. The command stops without using what it was refused: a build publishes nothing, a GDS change is applied whole or not at all, and ``convert`` writes a whole page or none. Free memory, or build with fewer threads (``-j 1``), and run the command again. Once a build has decided to publish, switching its output into place needs no memory, so a refusal cannot stop a publication halfway; if the build instead finds an earlier build's publication to finish and has no memory to plan it, it leaves that publication as it was, for the next build."
+msgstr ""
+
+#: ../../errors.rst:113
+msgid "Both end with status 3."
+msgstr ""
+
+#: ../../errors.rst:115
+msgid "Exit status"
+msgstr ""
+
+#: ../../errors.rst:118
+msgid "Every command ends with one of these statuses, so scripts can tell kinds of failure apart:"
+msgstr ""
+
+#: ../../errors.rst:122
+msgid "Status"
+msgstr ""
+
+#: ../../errors.rst:122
+msgid "Meaning"
+msgstr ""
+
+#: ../../errors.rst:124
+msgid "0"
+msgstr ""
+
+#: ../../errors.rst:124
+msgid "Success. The output was written (and, for a build, published)."
+msgstr ""
+
+#: ../../errors.rst:125
+msgid "1"
+msgstr ""
+
+#: ../../errors.rst:125
+msgid "The input has a problem: an error in a document, a policy refusal (raw content without ``--raw``), a document that could not be read, or a warning when ``-W`` or ``--strict`` treats warnings as errors."
+msgstr ""
+
+#: ../../errors.rst:128
+msgid "2"
+msgstr ""
+
+#: ../../errors.rst:128
+msgid "The command was used wrongly: an unknown flag or command, a missing or invalid value, or an invalid setting in ``conf.toml`` or ``-D``."
+msgstr ""
+
+#: ../../errors.rst:130
+msgid "3"
+msgstr ""
+
+#: ../../errors.rst:130
+msgid "A limit was reached: the memory budget (``--budget``), the nesting depth (``--max-depth``), the node count (``--max-nodes``), the stack (``--stack-kib``), a source too large, or memory the system could not provide."
+msgstr ""
+
+#: ../../errors.rst:133
+msgid "4"
+msgstr ""
+
+#: ../../errors.rst:133
+msgid "A file or an outside program failed: a path that cannot be read or written, a file that changed while it was read, or Typst not starting or not finishing."
+msgstr ""
+
+#: ../../errors.rst:135
+msgid "5"
+msgstr ""
+
+#: ../../errors.rst:135
+msgid "Guidedog failed internally, and the report asks you to report it."
+msgstr ""
+
+#: ../../errors.rst:136
+msgid "70"
+msgstr ""
+
+#: ../../errors.rst:136
+msgid "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with the command that ran, the fault, and what ``guidedog --version`` prints, and says where to report it: the issue tracker your build names, or else whoever provided your build. Because builds publish only at the end, a crash leaves the previous output in place."
+msgstr ""
+
+#: ../../errors.rst:141
+msgid "130"
+msgstr ""
+
+#: ../../errors.rst:141
+msgid "The command was interrupted with Ctrl+C; published files were left unchanged."
+msgstr ""
+
+#: ../../errors.rst:144
+msgid "A build that fails for any reason leaves the previous output, and the records of what it built, as they were: fix the problem and build again."
+msgstr ""

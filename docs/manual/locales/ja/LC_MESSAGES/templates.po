@@ -1,0 +1,991 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../templates.rst:3
+msgid "Templates"
+msgstr "テンプレート"
+
+#: ../../templates.rst:6
+msgid ""
+"A template controls presentation. It does not duplicate the source prose. "
+"Guidedog uses Jinja for HTML and Typst for PDF. For a complete worked "
+"project, follow :doc:`tutorial/a-custom-theme`. This chapter is the "
+"reference for its settings, blocks and parameters."
+msgstr ""
+"テンプレートは本文を複製せず、表示を決めます。HTML は Jinja、PDF は Typst です。実際に作る手順は "
+":doc:`tutorial/a-custom-theme`、設定・ブロック・引数の契約は本章を参照してください。"
+
+#: ../../templates.rst:11
+msgid ""
+"Templates in Guidedog are standard project files that are directly "
+"visible and editable. When you initialize a project with ``guidedog "
+"quickstart``, it writes the actual working templates directly into your "
+"project:"
+msgstr ""
+"Guidedog のテンプレートは普通のプロジェクトファイルです。自由に開いて編集できます。``guidedog quickstart`` "
+"は実際に使うテンプレートをプロジェクトに配置します。"
+
+#: ../../templates.rst:15
+msgid ""
+"``_templates/layout.html`` defines your HTML website structure (Jinja)."
+msgstr "``_templates/layout.html`` は Jinja で HTML サイトの構造を定義します。"
+
+#: ../../templates.rst:16
+msgid ""
+"``_templates/book.typ`` defines your PDF book layout, typography, and "
+"cover page (Typst)."
+msgstr "``_templates/book.typ`` は Typst で PDF のレイアウト、文字組み、表紙を定義します。"
+
+#: ../../templates.rst:17
+msgid ""
+"``_static/guidedog.css`` and ``_static/guidedog.js`` supply default "
+"styles and client behaviors."
+msgstr ""
+"``_static/guidedog.css`` と ``_static/guidedog.js`` "
+"は既定のスタイルとブラウザーの動作を提供します。"
+
+#: ../../templates.rst:19
+msgid ""
+"Templates are part of your project directory rather than hidden within an "
+"external package or binary cache. You can edit them directly, rebuild "
+"with ``guidedog build``, and preview changes with ``guidedog serve``."
+msgstr ""
+"テンプレートは外部パッケージやバイナリのキャッシュではなく、プロジェクト内にあります。編集後、``guidedog build`` "
+"で再ビルドし、``guidedog serve`` で確認できます。"
+
+#: ../../templates.rst:23
+msgid "HTML templates"
+msgstr "HTML テンプレート"
+
+#: ../../templates.rst:26
+msgid ""
+"Guidedog renders ``layout.html`` as the root page template using a "
+"built-in Jinja engine. Split a layout into partials and macro libraries. "
+"Inherit shared blocks from a base layout. Each file then has one job."
+msgstr ""
+"組み込み Jinja が ``layout.html`` "
+"をページとして処理します。部分テンプレートとマクロに分け、共通ブロックを継承すれば、各ファイルの役割が明確になります。"
+
+#: ../../templates.rst:32
+msgid ""
+"Built-in theme layout is extended by project templates with block "
+"overrides and partial includes."
+msgstr "組み込みレイアウトを継承し、プロジェクトがブロックと部分テンプレートを組み合わせます。"
+
+#: ../../templates.rst:32
+msgid "Template inheritance and block composition in Guidedog."
+msgstr "Guidedog のテンプレート継承と合成。"
+
+#: ../../templates.rst:51
+msgid "Modular template structure"
+msgstr "テンプレートの分割"
+
+#: ../../templates.rst:54
+msgid ""
+"A project can organize templates across any number of files and "
+"subdirectories under the directories listed in ``templates_path`` (by "
+"default, ``[\"_templates\"]``):"
+msgstr ""
+"``templates_path`` のディレクトリ内で、テンプレートを複数のファイルやサブディレクトリに分けられます。初期値は "
+"``[\"_templates\"]`` です。"
+
+#: ../../templates.rst:73
+msgid ""
+"Guidedog scans all files and subdirectories within ``templates_path``. "
+"Any file or partial can be included or imported using paths relative to "
+"``templates_path``:"
+msgstr ""
+"Guidedog は ``templates_path`` "
+"のファイルとサブディレクトリを走査します。取り込みやインポートには、そのディレクトリからの相対パスを使います。"
+
+#: ../../templates.rst:77 ../../templates.rst:112
+msgid "_templates/layout.html"
+msgstr "_templates/layout.html"
+
+#: ../../templates.rst:89
+msgid ""
+"Jinja macros can also be defined in separate files and imported wherever "
+"needed:"
+msgstr "Jinja マクロも別ファイルに定義し、必要な場所でインポートできます。"
+
+#: ../../templates.rst:92
+msgid "_templates/macros/components.html"
+msgstr "_templates/macros/components.html"
+
+#: ../../templates.rst:99
+msgid "Using macros in any template"
+msgstr "テンプレートでマクロを使う"
+
+#: ../../templates.rst:104
+msgid "Theme inheritance with ``!layout.html``"
+msgstr "``!layout.html`` によるテーマの継承"
+
+#: ../../templates.rst:107
+msgid ""
+"If you only want to customize select sections of the default theme rather "
+"than rewriting the full page structure from scratch, you can inherit "
+"directly from Guidedog's built-in theme layout using Sphinx's exclamation "
+"mark syntax:"
+msgstr ""
+"既定のテーマの一部分だけを変えるなら、ページ全体を書き直す必要はありません。Sphinx と同じ感嘆符の構文で、組み込みのレイアウトを継承できます。"
+
+#: ../../templates.rst:128
+msgid ""
+"Using ``{% extends \"!layout.html\" %}`` (or ``{% extends "
+"\"basic/layout.html\" %}``) directs the loader to fetch the theme's "
+"underlying template instead of recursively loading the project's own "
+"``_templates/layout.html``."
+msgstr ""
+"``{% extends \"!layout.html\" %}`` または ``{% extends \"basic/layout.html\" "
+"%}`` は、プロジェクトの ``_templates/layout.html`` を再帰的に読む代わりに、テーマ本来のテンプレートを読み込みます。"
+
+#: ../../templates.rst:132
+msgid ""
+"Inside any overridden block, calling ``{{ super() }}`` renders the parent "
+"block's default markup, allowing you to prepend or append markup without "
+"duplicating existing code."
+msgstr "上書きしたブロックで ``{{ super() }}`` を呼べば、親の内容を残したまま前後に要素を追加できます。"
+
+#: ../../templates.rst:135
+msgid "Layout blocks"
+msgstr "レイアウトのブロック"
+
+#: ../../templates.rst:138
+msgid ""
+"Guidedog's built-in ``layout.html`` defines blocks matching Sphinx's "
+"conventions:"
+msgstr "組み込みの ``layout.html`` は Sphinx の慣例に対応するブロックを定義します。"
+
+#: ../../templates.rst:144
+msgid "Block"
+msgstr "ブロック"
+
+#: ../../templates.rst:145
+msgid "Purpose"
+msgstr "用途"
+
+#: ../../templates.rst:146
+msgid "``doctype``"
+msgstr "``doctype``"
+
+#: ../../templates.rst:147
+msgid "Document type declaration (default: ``<!DOCTYPE html>``)."
+msgstr "文書型宣言。初期値は ``<!DOCTYPE html>`` です。"
+
+#: ../../templates.rst:148
+msgid "``htmltitle``"
+msgstr "``htmltitle``"
+
+#: ../../templates.rst:149
+msgid "The ``<title>`` element inside ``<head>``."
+msgstr "``<head>`` 内の ``<title>`` 要素。"
+
+#: ../../templates.rst:150
+msgid "``linktags``"
+msgstr "``linktags``"
+
+#: ../../templates.rst:151
+msgid ""
+"Navigation and meta link tags (``favicon``, ``index``, ``search``, "
+"``prev``, ``next``)."
+msgstr ""
+"ナビゲーションとメタ情報のリンク: ``favicon``、``index``、``search``、``prev``、``next``。"
+
+#: ../../templates.rst:152
+msgid "``css``"
+msgstr "``css``"
+
+#: ../../templates.rst:153
+msgid "Stylesheet link tags and inline CSS root variables."
+msgstr "スタイルシートのリンクとインライン CSS のルート変数。"
+
+#: ../../templates.rst:154
+msgid "``scripts``"
+msgstr "``scripts``"
+
+#: ../../templates.rst:155
+msgid "JavaScript tags, including search indexing and interactive features."
+msgstr "検索インデックスや対話機能の JavaScript タグ。"
+
+#: ../../templates.rst:156
+msgid "``extrahead``"
+msgstr "``extrahead``"
+
+#: ../../templates.rst:157
+msgid ""
+"Empty insertion point at the end of ``<head>`` for analytics, fonts, or "
+"custom meta tags."
+msgstr "フォント、解析ツール、追加メタタグ用の ``<head>`` 末尾の挿入位置。"
+
+#: ../../templates.rst:158
+msgid "``header``"
+msgstr "``header``"
+
+#: ../../templates.rst:159
+msgid "Header slot rendered immediately before the main navigation bar."
+msgstr "メインナビゲーションの直前に置くヘッダー。"
+
+#: ../../templates.rst:160
+msgid "``relbar1``"
+msgstr "``relbar1``"
+
+#: ../../templates.rst:161
+msgid ""
+"Top navigation bar containing branding, version badge, search box, and "
+"theme toggle."
+msgstr "名称、バージョン、検索、テーマ切替を含む上部ナビゲーション。"
+
+#: ../../templates.rst:162
+msgid "``rootrellink``"
+msgstr "``rootrellink``"
+
+#: ../../templates.rst:163
+msgid "Insertion point in navigation bar before related links."
+msgstr "関連リンクの前にあるナビゲーションの挿入位置。"
+
+#: ../../templates.rst:164
+msgid "``relbaritems``"
+msgstr "``relbaritems``"
+
+#: ../../templates.rst:165
+msgid "Custom items inserted into the navigation bar."
+msgstr "ナビゲーションバーの追加項目。"
+
+#: ../../templates.rst:166
+msgid "``sidebar1``"
+msgstr "``sidebar1``"
+
+#: ../../templates.rst:167
+msgid "Left-hand navigation sidebar container."
+msgstr "左のナビゲーションサイドバー。"
+
+#: ../../templates.rst:168
+msgid "``sidebartoc``"
+msgstr "``sidebartoc``"
+
+#: ../../templates.rst:169
+msgid "Table of contents navigation tree rendered inside ``sidebar1``."
+msgstr "``sidebar1`` 内の目次ツリー。"
+
+#: ../../templates.rst:170
+msgid "``breadcrumbs``"
+msgstr "``breadcrumbs``"
+
+#: ../../templates.rst:171
+msgid "Hierarchical breadcrumb navigation path above the article content."
+msgstr "本文上部のパンくずナビゲーション。"
+
+#: ../../templates.rst:172
+msgid "``document``"
+msgstr "``document``"
+
+#: ../../templates.rst:173
+msgid "Article wrapper enclosing the page body."
+msgstr "本文を囲むコンテナ。"
+
+#: ../../templates.rst:174 ../../templates.rst:207 ../../templates.rst:382
+msgid "``body``"
+msgstr "``body``"
+
+#: ../../templates.rst:175
+msgid "Rendered HTML content of the current document (``{{ body }}``)."
+msgstr "現在の文書の HTML 本文（``{{ body }}``）。"
+
+#: ../../templates.rst:176
+msgid "``relbar2``"
+msgstr "``relbar2``"
+
+#: ../../templates.rst:177
+msgid "Bottom pagination controls offering previous and next chapter links."
+msgstr "前後の章へ移動する下部ナビゲーション。"
+
+#: ../../templates.rst:178
+msgid "``footer``"
+msgstr "``footer``"
+
+#: ../../templates.rst:179
+msgid ""
+"Page footer containing copyright notice, last updated timestamp, and "
+"source links."
+msgstr "著作権、更新日時、ソースへのリンクを含むフッター。"
+
+#: ../../templates.rst:180
+msgid "``sidebar2``"
+msgstr "``sidebar2``"
+
+#: ../../templates.rst:181
+msgid ""
+"Right-hand secondary rail containing the local page outline (\"On this "
+"page\")."
+msgstr "右側の補助欄。ページ内の見出し一覧を表示します。"
+
+#: ../../templates.rst:183
+msgid "Finding templates"
+msgstr "テンプレートの検索"
+
+#: ../../templates.rst:186
+msgid ""
+"Guidedog searches each directory listed in ``conf.toml`` under "
+"``templates_path`` in order, followed by its built-in templates. Template "
+"names are relative to the directories in ``templates_path`` and cannot "
+"escape outside of them using parent directory traversal (``..``)."
+msgstr ""
+"Guidedog は ``conf.toml`` の ``templates_path`` "
+"を順に検索し、最後に組み込みテンプレートを調べます。名前は各ディレクトリからの相対パスで、``..`` による外部への移動はできません。"
+
+#: ../../templates.rst:190
+msgid ""
+"Every file and subdirectory in ``templates_path`` is registered as an "
+"input dependency of the build. Whenever any template or partial file is "
+"added, edited, or removed, ``guidedog build`` and the live server "
+"``guidedog serve`` automatically detect the change and re-render the site."
+msgstr ""
+"``templates_path`` のファイルとサブディレクトリはすべてビルドの依存入力です。追加、編集、削除を ``guidedog "
+"build`` と ``guidedog serve`` が検出し、サイトを再描画します。"
+
+#: ../../templates.rst:195
+msgid "Page variables"
+msgstr "ページ変数"
+
+#: ../../templates.rst:198
+msgid ""
+"Where Sphinx has a name for a variable, Guidedog uses it, so parts of "
+"Sphinx themes carry over."
+msgstr "Sphinx に変数名がある場合は同じ名前を使うため、Sphinx テーマの一部を移行できます。"
+
+#: ../../templates.rst:205
+msgid "Variable"
+msgstr "変数"
+
+#: ../../templates.rst:206 ../../templates.rst:363
+msgid "Value"
+msgstr "値"
+
+#: ../../templates.rst:208
+msgid "The document, as HTML."
+msgstr "HTML 形式の文書。"
+
+#: ../../templates.rst:209 ../../templates.rst:364
+msgid "``title``"
+msgstr "``title``"
+
+#: ../../templates.rst:210
+msgid "The document's title."
+msgstr "文書のタイトル。"
+
+#: ../../templates.rst:211
+msgid "``pagename``, ``docname``"
+msgstr "``pagename``\\ , ``docname``"
+
+#: ../../templates.rst:212
+msgid ""
+"The document's name, such as ``usage/install``. On a page that is no "
+"document's, ``docname`` is empty and ``pagename`` is the page's name, as "
+"in Sphinx: ``genindex``, ``py-modindex``, ``search``, or the name of a "
+"page made from a template."
+msgstr ""
+"文書名。例は ``usage/install``\\ 。文書でないページでは ``docname`` は空、\\ ``pagename`` は "
+"Sphinx 同様に ``genindex``\\ 、\\ ``py-modindex``\\ 、\\ ``search``\\ "
+"、テンプレート生成ページの名前となる。"
+
+#: ../../templates.rst:216
+msgid "``toc``"
+msgstr "``toc``"
+
+#: ../../templates.rst:217
+msgid "The navigation built from the toctrees, as HTML."
+msgstr "目次ツリーから作る HTML のナビゲーション。"
+
+#: ../../templates.rst:218
+msgid "``outline``"
+msgstr "``outline``"
+
+#: ../../templates.rst:219
+msgid "The document's own sections, as HTML; empty when it has none."
+msgstr "文書内の節を HTML で示します。節がなければ空です。"
+
+#: ../../templates.rst:220
+msgid "``prev``, ``next``"
+msgstr "``prev``\\ , ``next``"
+
+#: ../../templates.rst:221
+msgid ""
+"The neighbouring pages in reading order, with ``url`` (also ``link``) and "
+"``title``; none at either end."
+msgstr ""
+"読む順で前後にあるページです。\\ ``url``\\ （\\ ``link`` も可）と ``title`` を持ち、端では存在しません。"
+
+#: ../../templates.rst:223
+msgid "``project``, ``version``, ``release``, ``copyright``, ``language``"
+msgstr ""
+"``project``\\ , ``version``\\ , ``release``\\ , ``copyright``\\ , "
+"``language``"
+
+#: ../../templates.rst:224
+msgid "The settings of the same names."
+msgstr "同名の設定値。"
+
+#: ../../templates.rst:225
+msgid "``html_title``, ``docstitle``"
+msgstr "``html_title``\\ , ``docstitle``"
+
+#: ../../templates.rst:226
+msgid "``html_title``, by default \"<project> <release> documentation\"."
+msgstr "``html_title``\\ 。既定値は「<project> <release> documentation」です。"
+
+#: ../../templates.rst:227
+msgid "``html_short_title``, ``shorttitle``"
+msgstr "``html_short_title``\\ , ``shorttitle``"
+
+#: ../../templates.rst:228
+msgid "``html_short_title``."
+msgstr "``html_short_title``\\ ."
+
+#: ../../templates.rst:229
+msgid "``root_doc``, ``master_doc``"
+msgstr "``root_doc``\\ , ``master_doc``"
+
+#: ../../templates.rst:230
+msgid "The root document's name."
+msgstr "ルート文書の名前。"
+
+#: ../../templates.rst:231
+msgid "``pathto_root``"
+msgstr "``pathto_root``"
+
+#: ../../templates.rst:232
+msgid "The path from the page to the site's root, such as ``../``."
+msgstr "ページからサイトのルートへのパスです。例は ``../``\\ 。"
+
+#: ../../templates.rst:233
+msgid "``root_url``, ``search_url``, ``genindex_url``"
+msgstr "``root_url``\\ , ``search_url``\\ , ``genindex_url``"
+
+#: ../../templates.rst:234
+msgid "Links to the root page, the search page, and the general index."
+msgstr "ルートページ、検索ページ、総合索引へのリンク。"
+
+#: ../../templates.rst:235
+msgid "``css_files``, ``js_files``"
+msgstr "``css_files``\\ , ``js_files``"
+
+#: ../../templates.rst:236
+msgid ""
+"Lists of files with a ``url``: Guidedog's own, then ``html_css_files`` "
+"and ``html_js_files``."
+msgstr ""
+"``url`` を持つファイルのリストです。Guidedog のファイルの後に ``html_css_files`` と "
+"``html_js_files`` を並べます。"
+
+#: ../../templates.rst:238
+msgid "``logo_url``, ``favicon_url``"
+msgstr "``logo_url``\\ , ``favicon_url``"
+
+#: ../../templates.rst:239
+msgid ""
+"``html_logo`` and ``html_favicon`` below ``_static``; empty when unset."
+msgstr "``_static`` 内の ``html_logo`` と ``html_favicon`` です。未設定なら空です。"
+
+#: ../../templates.rst:240
+msgid "``accent``"
+msgstr "``accent``"
+
+#: ../../templates.rst:241
+msgid "``html_theme_options.accent``, the theme's colour."
+msgstr "テーマの色 ``html_theme_options.accent``\\ 。"
+
+#: ../../templates.rst:242
+msgid "``sourcelink_url``"
+msgstr "``sourcelink_url``"
+
+#: ../../templates.rst:243
+msgid ""
+"The document's source below ``_sources``, when it is shown; otherwise "
+"empty."
+msgstr "ソース表示が有効なら ``_sources`` 内の文書ソース、それ以外は空です。"
+
+#: ../../templates.rst:244
+msgid "``last_updated``"
+msgstr "``last_updated``"
+
+#: ../../templates.rst:245
+msgid ""
+"The build date in ``html_last_updated_fmt`` when it is set; otherwise "
+"empty."
+msgstr "``html_last_updated_fmt`` があれば、その書式のビルド日付です。なければ空です。"
+
+#: ../../templates.rst:246
+msgid ""
+"``show_copyright``, ``show_sphinx``, ``show_guidedog``, ``has_source``, "
+"``show_source``"
+msgstr ""
+"``show_copyright``\\ , ``show_sphinx``\\ , ``show_guidedog``\\ , "
+"``has_source``\\ , ``show_source``"
+
+#: ../../templates.rst:248
+msgid "The ``html_show_*`` and ``html_copy_source`` settings."
+msgstr "``html_show_*`` と ``html_copy_source`` の設定。"
+
+#: ../../templates.rst:249
+msgid "``builder``, ``file_suffix``"
+msgstr "``builder``\\ , ``file_suffix``"
+
+#: ../../templates.rst:250
+msgid "The builder's name, such as ``html``, and the page suffix."
+msgstr "``html`` などのビルダー名とページの拡張子。"
+
+#: ../../templates.rst:251
+msgid "every key of ``html_context``"
+msgstr "``html_context`` の各キー"
+
+#: ../../templates.rst:252
+msgid ""
+"Its value, with its type, as Sphinx passes a Python value: ``false`` is "
+"false in ``{% if %}``, numbers are numbers, arrays are lists, and tables "
+"are dicts whose keys keep the order ``conf.toml`` gives them. ``guidedog "
+"migrate`` carries the literal entries of ``conf.py``'s ``html_context``; "
+"a value ``conf.py`` computes is left undefined, which a template reads as "
+"false."
+msgstr ""
+"型を保った値を、Sphinx が Python 値を渡すように渡す。\\ ``false`` は ``{% if %}`` "
+"で偽、数値は数値、配列はリスト、テーブルは ``conf.toml`` のキー順を保つ辞書となる。\\ ``guidedog migrate`` "
+"は ``conf.py`` の ``html_context`` のリテラルを引き継ぐ。計算値は未定義となり、テンプレートは偽と扱う。"
+
+#: ../../templates.rst:258
+msgid ""
+"``pathto`` is Sphinx's template function. ``pathto(\"usage/install\")`` "
+"is the URL of a document's page, and ``pathto(\"_static/logo.svg\", 1)`` "
+"the URL of a file below the site's root, both relative to the current "
+"page. With the singlehtml builder, as with Sphinx's, a document is its "
+"section of the single page: ``pathto(\"usage/install\")`` is "
+"``#document-usage-install`` on that page and "
+"``index.html#document-usage-install`` on the index and search pages. A "
+"name that is no document's, such as ``genindex`` or a page made from a "
+"template (below), is a page at the site's root with every builder."
+msgstr ""
+"``pathto`` は Sphinx のテンプレート関数。\\ ``pathto(\"usage/install\")`` は文書ページ、\\ "
+"``pathto(\"_static/logo.svg\", 1)`` はサイト配下のファイルの URL "
+"を現在のページからの相対で返す。singlehtml では Sphinx 同様、文書は一ページの節となる。前者はそのページでは "
+"``#document-usage-install``\\ 、索引や検索では "
+"``index.html#document-usage-install``\\ 。\\ ``genindex`` "
+"やテンプレートページなど文書以外の名前は、どのビルダーでもサイト直下のページを指す。"
+
+#: ../../templates.rst:266
+msgid "Pages made from templates"
+msgstr "テンプレートから作るページ"
+
+#: ../../templates.rst:269
+msgid ""
+"``html_additional_pages`` makes pages from a template alone, as in "
+"Sphinx. Each key is a page's name and each value a template in "
+"``templates_path``:"
+msgstr ""
+"``html_additional_pages`` は Sphinx 同様、テンプレートだけでページを作る。キーはページ名、値は "
+"``templates_path`` 内のテンプレート。"
+
+#: ../../templates.rst:273
+msgid "conf.toml"
+msgstr "conf.toml"
+
+#: ../../templates.rst:281
+msgid ""
+"A page's template usually extends ``layout.html`` and fills its blocks, "
+"so the page looks like every other one:"
+msgstr "通常は ``layout.html`` を継承してブロックを埋め、他のページと見た目を揃える。"
+
+#: ../../templates.rst:285
+msgid "_templates/indexcontent.html"
+msgstr "_templates/indexcontent.html"
+
+#: ../../templates.rst:294
+msgid ""
+"The template sees the variables of a page that is no document's: "
+"``pagename`` is the page's name (``index``), ``title`` and ``body`` are "
+"empty, and ``pathto``, ``toc``, ``toctree()``, and the values of "
+"``html_context`` work as on any page. The page is written at the site's "
+"root as ``<name>.html`` (``html_file_suffix``) by ``html``, ``dirhtml``, "
+"and ``singlehtml``, and written again on every build; a change to its "
+"template, as to any file in ``templates_path``, rebuilds every page."
+msgstr ""
+"文書でないページの変数が渡る。\\ ``pagename`` はページ名（\\ ``index``\\ ）、\\ ``title`` と "
+"``body`` は空。\\ ``pathto``\\ 、\\ ``toc``\\ 、\\ ``toctree()``\\ 、\\ "
+"``html_context`` は通常通り使える。\\ ``html``\\ 、\\ ``dirhtml``\\ 、\\ "
+"``singlehtml`` は全てサイト直下に ``<name>.html``\\ （\\ ``html_file_suffix``\\ "
+"）として毎回書く。テンプレート、または ``templates_path`` のどのファイルの変更も全ページを再構築する。"
+
+#: ../../templates.rst:301
+msgid "Where the page goes, and where it differs from Sphinx:"
+msgstr "ページの配置と Sphinx との差分は次のとおりです。"
+
+#: ../../templates.rst:303
+msgid ""
+"A page named as a document takes that document's place, as in Sphinx, "
+"where it is written last: ``index = \"landing.html\"`` makes the landing "
+"page ``index.html`` while ``index.rst`` still gives the table of contents "
+"its entries. With ``singlehtml`` the single page keeps its place and the "
+"template page is not written, with a warning."
+msgstr ""
+"同名の文書ページを置き換える。Sphinx で最後に書くのと同じだ。\\ ``index = \"landing.html\"`` は "
+"``index.html`` をランディングページにし、目次は引き続き ``index.rst`` から作る。singlehtml "
+"では単一ページを残し、テンプレートページを警告付きで省く。"
+
+#: ../../templates.rst:307
+msgid ""
+"``dirhtml`` writes the page as ``download.html``, beside "
+"``genindex.html`` and ``search.html``, where Sphinx writes "
+"``download/index.html``; ``pathto(\"download\")`` gives that file."
+msgstr ""
+"``dirhtml`` は ``genindex.html`` や ``search.html`` と並ぶ ``download.html`` "
+"に書く。Sphinx の ``download/index.html`` とは異なる。\\ ``pathto(\"download\")`` "
+"はそのファイルを返す。"
+
+#: ../../templates.rst:310
+msgid ""
+"A name must be a file name at the site's root: ``\"sub/page\"`` is "
+"refused with a warning (``build.additional_page``), since the page's "
+"links are made from the root. So is a name whose file the site already "
+"has, such as ``genindex``, where Sphinx would write one of the two over "
+"the other."
+msgstr ""
+"名前はサイト直下のファイル名に限る。リンクがルート基準なので ``\"sub/page\"`` は警告（\\ "
+"``build.additional_page``\\ ）で拒否する。\\ ``genindex`` など既存ファイル名も拒否する。Sphinx "
+"では一方を上書きする場合だ。"
+
+#: ../../templates.rst:314
+msgid ""
+"``guidedog migrate`` carries ``html_additional_pages`` over from "
+"``conf.py``."
+msgstr ""
+"``guidedog migrate`` は ``conf.py`` の ``html_additional_pages`` を移します。"
+
+#: ../../templates.rst:316
+msgid "Errors"
+msgstr "エラー"
+
+#: ../../templates.rst:319
+msgid ""
+"A mistake in a template stops the build with the template's file and "
+"line, the line itself, and a suggestion:"
+msgstr "テンプレートの誤りはビルドを止め、ファイル、行番号、該当行、修正案を示します。"
+
+#: ../../templates.rst:330
+msgid "A variable that is not defined renders as nothing, as in Jinja."
+msgstr "未定義の変数は Jinja と同様に何も表示しません。"
+
+#: ../../templates.rst:332
+msgid ""
+"Runaway templates stop with an error too, never a crash: syntax nested "
+"more than 100 levels deep (brackets, tags, and each link of a long chain "
+"of operators, filters or ``elif`` branches), macros, includes and "
+"recursive loops more than 200 deep, or any recursion needing more than "
+"512 KiB of stack. A list that contains itself prints as ``[...]``, as in "
+"Python."
+msgstr ""
+"暴走するテンプレートもクラッシュせずエラーで停止する。構文（括弧、タグ、演算子・フィルター・\\ ``elif`` "
+"の連鎖）が100段、マクロ・インクルード・再帰ループが200段を超える場合、または再帰が512 "
+"KiB以上のスタックを要する場合だ。自身を含むリストは Python 同様 ``[...]`` と表示する。"
+
+#: ../../templates.rst:339
+msgid "PDF templates"
+msgstr "PDF テンプレート"
+
+#: ../../templates.rst:342
+msgid ""
+"The PDF book is typeset by Typst. ``_templates/book.typ`` is an ordinary "
+"Typst file that defines a ``book`` function; Guidedog writes the book's "
+"source as"
+msgstr ""
+"PDF は Typst で組版する。\\ ``_templates/book.typ`` は ``book`` 関数を定義する通常の Typst "
+"ファイル。Guidedog は次の形でソースを書く。"
+
+#: ../../templates.rst:352
+msgid ""
+"so everything that decides how the book looks is in that file: fonts, "
+"page size and margins, headings, the title page, running heads, and the "
+"table of contents."
+msgstr "本の見た目を決める要素はすべてそのファイルにあります。フォント、用紙と余白、見出し、扉、柱、目次です。"
+
+#: ../../templates.rst:355
+msgid "Parameters"
+msgstr "パラメータ"
+
+#: ../../templates.rst:362
+msgid "Parameter"
+msgstr "パラメータ"
+
+#: ../../templates.rst:365
+msgid "The book's ``title`` in ``pdf_documents``, otherwise ``project``."
+msgstr "``pdf_documents`` の本の ``title``\\ 、なければ ``project``\\ 。"
+
+#: ../../templates.rst:366
+msgid "``author``"
+msgstr "``author``"
+
+#: ../../templates.rst:367
+msgid "The book's ``author``, otherwise ``author``."
+msgstr "本の ``author``\\ 、なければ設定の ``author``\\ 。"
+
+#: ../../templates.rst:368
+msgid "``version``"
+msgstr "``version``"
+
+#: ../../templates.rst:369
+msgid "``release``."
+msgstr "``release``\\ ."
+
+#: ../../templates.rst:370
+msgid "``date``"
+msgstr "``date``"
+
+#: ../../templates.rst:371
+msgid ""
+"``|today|``: ``today`` when it is set, otherwise the build date in "
+"``today_fmt``."
+msgstr "``|today|`` は ``today`` の設定値、なければ ``today_fmt`` 形式のビルド日付です。"
+
+#: ../../templates.rst:372
+msgid "``lang``"
+msgstr "``lang``"
+
+#: ../../templates.rst:373
+msgid "``language``."
+msgstr "``language``\\ ."
+
+#: ../../templates.rst:374
+msgid "``paper``"
+msgstr "``paper``"
+
+#: ../../templates.rst:375
+msgid ""
+"``\"a4\"``, or ``\"us-letter\"`` when ``pdf_paper_size`` is ``letter``."
+msgstr ""
+"``\"a4\"``\\ 、または ``pdf_paper_size`` が ``letter`` なら ``\"us-letter\"``\\ 。"
+
+#: ../../templates.rst:376
+msgid "``numbering``"
+msgstr "``numbering``"
+
+#: ../../templates.rst:377
+msgid "``true`` when a toctree has the ``numbered`` option."
+msgstr "toctree に ``numbered`` があれば ``true``\\ 。"
+
+#: ../../templates.rst:378
+msgid "``logo``"
+msgstr "``logo``"
+
+#: ../../templates.rst:379
+msgid "The path of ``pdf_logo``; absent when it is unset."
+msgstr "``pdf_logo`` のパス。未設定なら省きます。"
+
+#: ../../templates.rst:380
+msgid "``copyright``"
+msgstr "``copyright``"
+
+#: ../../templates.rst:381
+msgid ""
+"``copyright``, for the colophon; passed only to a template that takes it."
+msgstr "奥付用の ``copyright`` です。この引数を受け取るテンプレートにだけ渡します。"
+
+#: ../../templates.rst:383
+msgid "The chapters."
+msgstr "各章の内容。"
+
+#: ../../templates.rst:385
+msgid ""
+"A template may add parameters with defaults of its own. The template "
+"quickstart writes has ``accent``, the fonts ``serif``, ``sans``, and "
+"``mono``, the text ``size``, and ``page-ref``, which follows "
+"cross-references to other pages with their page number when set to a "
+"function such as ``n => [p. #n]``."
+msgstr ""
+"テンプレートは既定値付きの引数を追加できる。quickstart のものには ``accent``\\ 、フォント ``serif``\\ ・\\ "
+"``sans``\\ ・\\ ``mono``\\ 、文字の ``size``\\ 、\\ ``page-ref`` がある。最後を ``n => "
+"[p. #n]`` などの関数にすると、他のページへの参照にページ番号が付く。"
+
+#: ../../templates.rst:390
+msgid "Modular Typst templates"
+msgstr "Typst テンプレートの分割"
+
+#: ../../templates.rst:393
+msgid ""
+"Like HTML templates, Typst templates are not restricted to a single file. "
+"You can break book styling, macros, and custom covers into multiple "
+"modular ``.typ`` files under ``_templates/`` and compose them using "
+"standard Typst ``#import`` and ``#include`` statements:"
+msgstr ""
+"Typst も一つのファイルにまとめる必要はありません。スタイル、マクロ、表紙を ``_templates/`` の ``.typ`` "
+"ファイルに分け、``#import`` と ``#include`` で組み合わせられます。"
+
+#: ../../templates.rst:398
+msgid "_templates/book.typ"
+msgstr "_templates/book.typ"
+
+#: ../../templates.rst:420
+msgid ""
+"Here ``apply-styles(body)`` must apply its rules around the content it "
+"receives. A helper that sets text and returns nothing cannot change its "
+"caller's later body. The complete tutorial shows a working wrapper around "
+"the generated book template."
+msgstr ""
+"``apply-styles(body)`` "
+"は受け取った内容を規則の内側に置く必要があります。文字設定だけをして何も返さない関数では、呼び出し元の後続本文は変わりません。完全な手順では、生成した書籍を包む動作する例を示します。"
+
+#: ../../templates.rst:424
+msgid "What a template can use"
+msgstr "テンプレートで使えるもの"
+
+#: ../../templates.rst:427
+msgid "Typst packages"
+msgstr "Typst パッケージ"
+
+#: ../../templates.rst:428
+msgid ""
+"``#import \"@preview/cetz:0.4.2\"`` and other packages work, downloaded "
+"on first use. Set ``pdf_packages = \"offline\"`` to build only with "
+"packages already on disk."
+msgstr ""
+"``#import \"@preview/cetz:0.4.2\"`` などのパッケージは初回にダウンロードして使える。\\ "
+"``pdf_packages = \"offline\"`` ならディスク上のものだけでビルドする。"
+
+#: ../../templates.rst:431
+msgid "Fonts"
+msgstr "フォント"
+
+#: ../../templates.rst:432
+msgid ""
+"The system's fonts are available, as with the ``typst`` command. Add "
+"folders with ``pdf_font_paths``, or set ``pdf_fonts = \"embedded\"`` to "
+"use only the fonts built into Typst, for byte-for-byte reproducible books."
+msgstr ""
+"``typst`` と同様にシステムフォントを使える。\\ ``pdf_font_paths`` でフォルダーを追加する。\\ "
+"``pdf_fonts = \"embedded\"`` なら Typst 内蔵だけを使い、バイト単位で再現可能な本を作れる。"
+
+#: ../../templates.rst:436
+msgid "A preamble"
+msgstr "プリアンブル"
+
+#: ../../templates.rst:437
+msgid ""
+"``pdf_preamble`` names a Typst file whose content follows the ``#show: "
+"book`` line, which suits a few ``set`` and ``show`` rules without a "
+"template of your own."
+msgstr ""
+"``pdf_preamble`` は ``#show: book`` の後に挿入する Typst ファイルです。独自テンプレートを作らずに、少数の "
+"``set``\\ ・\\ ``show`` 規則を追加できます。"
+
+#: ../../templates.rst:440
+msgid "Typst in a document"
+msgstr "文書内の Typst"
+
+#: ../../templates.rst:441
+msgid ""
+"Documents are reStructuredText and Markdown; Typst files are not "
+"documents. To put Typst markup into the book, write it in a raw block, "
+"which web pages leave out:"
+msgstr ""
+"文書は reStructuredText と Markdown で、Typst ファイルは文書ではない。書籍に Typst 記法を入れるには "
+"raw ブロックを使う。Web ページでは省かれる。"
+
+#: ../../templates.rst:450
+msgid ""
+"``.. only:: pdf`` keeps ordinary content to the book in the same way."
+msgstr "``.. only:: pdf`` も通常の内容を本だけに限定します。"
+
+#: ../../templates.rst:452
+msgid ""
+"When Typst reports an error, the build names the file and line, whether "
+"it is in your template or in the generated book. Each PDF has its own "
+"generated source at ``_build/pdf/sources/<pdf-filename>.typ``. For "
+"example, ``reference-en.pdf`` has ``sources/reference-en.pdf.typ``. A "
+"single-book build also keeps the familiar "
+"``_build/pdf/book-<language>.typ`` inspection copy. A failed build "
+"publishes nothing. Its source remains in ``_build/.doctrees/failed`` at "
+"the path named by the error. Several books keep distinct failure sources."
+msgstr ""
+"Typst のエラーは、テンプレートでも生成ソースでもファイルと行を示す。各 PDF のソースは "
+"``_build/pdf/sources/<pdf-filename>.typ``\\ 。\\ ``reference-en.pdf`` なら "
+"``sources/reference-en.pdf.typ``\\ 。一冊のビルドでは従来の "
+"``_build/pdf/book-<language>.typ`` も確認用に残す。失敗時は公開せず、ソースをエラーに示す "
+"``_build/.doctrees/failed`` の場所に残す。複数冊の失敗ソースは別々に保つ。"
+
+#: ../../templates.rst:461
+msgid "Writing a new template"
+msgstr "新しいテンプレートの作成"
+
+#: ../../templates.rst:464
+msgid ""
+"Start from the copies quickstart wrote, which show every part in use:"
+msgstr "quickstart が書いた、各部分の使い方を示すテンプレートから始めます。"
+
+#: ../../templates.rst:466
+msgid ""
+"Keep the ``layout.html`` markup that the default style sheet expects, or "
+"replace ``_static/guidedog.css`` along with it."
+msgstr ""
+"既定の CSS が前提とする ``layout.html`` のマークアップを保つか、\\ ``_static/guidedog.css`` "
+"も置き換えてください。"
+
+#: ../../templates.rst:468
+msgid ""
+"Move repeated parts into files of their own and ``include`` them, or put "
+"a base layout in ``base.html`` and ``extends`` it from ``layout.html``."
+msgstr ""
+"繰り返す部分を別ファイルにして ``include`` するか、\\ ``base.html`` を作って ``layout.html`` から "
+"``extends`` します。"
+
+#: ../../templates.rst:470
+msgid ""
+"For the book, change the ``book`` function's rules, or write a new "
+"function with the same parameters and keep its name ``book``."
+msgstr "本では ``book`` の規則を変えるか、同じ引数を持つ新しい ``book`` 関数を書きます。"
+
+#: ../../templates.rst:473
+msgid ""
+"Preview with ``guidedog serve`` while editing. Save the source and "
+"refresh the browser; the server rebuilds changed inputs before serving "
+"the page."
+msgstr ""
+"編集時は ``guidedog serve`` で確認します。保存してブラウザを更新すると、変更された入力を再ビルドしてからページを返します。"
+
+#~ msgid ""
+#~ "Guidedog renders ``layout.html`` with its own implementation of Jinja, "
+#~ "so Jinja's whole language works: ``extends`` and ``block``, "
+#~ "``include``, ``import`` and macros, ``set``, ``with``, loops with "
+#~ "``loop``, filters, tests, and whitespace control. Output is "
+#~ "autoescaped: a variable holding text is escaped, and the variables "
+#~ "holding HTML (``body``, ``toc``, and ``outline``) are marked safe "
+#~ "already."
+#~ msgstr ""
+#~ "Guidedog 独自の Jinja 実装で ``layout.html`` を描画する。\\ ``extends``\\ 、\\ "
+#~ "``block``\\ 、\\ ``include``\\ 、\\ ``import``\\ 、マクロ、\\ ``set``\\ 、\\ "
+#~ "``with``\\ 、\\ ``loop`` 付きループ、フィルター、テスト、空白制御と、Jinja "
+#~ "の全言語を使える。出力は自動エスケープされ、テキスト変数は処理される。HTML の ``body``\\ 、\\ ``toc``\\ 、\\ "
+#~ "``outline`` は安全と指定済み。"
+
+#~ msgid ""
+#~ "Guidedog looks for a template in each folder of ``templates_path`` in "
+#~ "turn, then among its built-in templates, which are ``layout.html`` "
+#~ "only. Templates can extend and include each other by name, so a large "
+#~ "layout can be split into parts:"
+#~ msgstr ""
+#~ "Guidedog は ``templates_path`` の順に探し、その後で組み込みの ``layout.html`` "
+#~ "を探す。名前で継承やインクルードができるので、大きなレイアウトを分割できる。"
+
+#~ msgid ""
+#~ "Names are relative to the folders of ``templates_path`` and cannot "
+#~ "leave them."
+#~ msgstr "テンプレート名は ``templates_path`` の各ディレクトリからの相対名で、その外には出られません。"

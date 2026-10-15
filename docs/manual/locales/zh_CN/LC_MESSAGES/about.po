@@ -1,0 +1,107 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 02:53+0000\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../about.rst:1
+msgid "About this manual"
+msgstr "关于本手册"
+
+#: ../../about.rst:4
+msgid ""
+"This manual describes the implemented tool and its deliberate limits. The "
+"separate GDS project records proposals, decisions, and review history. A "
+"proposal's state is not changed by making its typography better."
+msgstr "本手册介绍已经实现的工具，以及有意保留的限制。独立的 GDS 项目记录提案、决策和评审历史。改善排版并不会改变提案的状态。"
+
+#: ../../about.rst:8
+msgid ""
+"The organization follows a practical documentation pattern: learn with "
+"tutorials, understand with topic guides, act with practical tasks, and "
+"check details in reference pages. Internals explain the invariants and "
+"proofs."
+msgstr "本手册按实际使用过程组织：通过教程入门，通过专题理解原理，通过操作指南完成任务，再查阅参考资料核对细节。内部实现部分解释不变量和证明。"
+
+#: ../../about.rst:12
+msgid ""
+"The prose favors small examples, named assumptions, and direct "
+"statements. The aim is an explanation that another person can test. The "
+"design uses restrained color, strong headings, serif reading text, and "
+"accessible navigation. It does not imitate an author's words or layout."
+msgstr ""
+"行文以小例子、明确的假设和直接的陈述为主。目标是让读者能够检验解释是否成立。页面采用克制的配色、醒目的标题、适合阅读的衬线字体，以及易于使用的导航。它并不模仿任何作者的措辞或版式。"
+
+#: ../../about.rst:17
+msgid ""
+"This project was created with ``guidedog quickstart`` and is built by "
+"Guidedog. RST holds the prose. Graphviz holds the diagrams. LaTeX math "
+"notation holds equations. Typst remains only where a PDF typesetting "
+"template is required."
+msgstr ""
+"本项目通过 ``guidedog quickstart`` 创建，并由 Guidedog 构建。正文使用 RST，图表使用 "
+"Graphviz，公式使用 LaTeX 数学记法。只有 PDF 排版模板仍使用 Typst。"
+
+#: ../../about.rst:21
+msgid "Build evidence and qualification"
+msgstr "构建与验证记录"
+
+#: ../../about.rst:24
+msgid ""
+"Guidedog release 0.6.2 introduces typed Odin plugins for source, HTML, "
+"and assets, while keeping Pages as an independent publishing service. The "
+"release passed 176 integration tests, all 36 library and tool suites, "
+"AddressSanitizer checks, five-platform builds and smoke tests, and twelve "
+"large-manual builds across CPython, Django, and Flask. Diagnostic and "
+"link results matched their established baselines."
+msgstr ""
+"Guidedog 0.6.2 为源文本、HTML 和静态资源引入了类型明确的 Odin 插件，Pages 仍是独立的发布服务。该版本通过了 176 "
+"项集成测试、全部 36 组库与工具测试、AddressSanitizer 检查、五个平台的构建和冒烟测试，以及 "
+"CPython、Django、Flask 大型手册的十二次构建。诊断和链接检查结果均与既定基线一致。"
+
+#: ../../about.rst:30
+msgid ""
+"Earlier publisher compatibility is no longer a release requirement. "
+"Qualification checks (via ``guidedog plugin check``) demonstrate "
+"interoperability across process boundaries; directly linked native "
+"callbacks remain trusted code."
+msgstr ""
+"兼容旧版发布插件已不再是发布要求。``guidedog plugin check`` 验证跨进程互操作性；直接链接的原生回调仍属于受信任代码。"
+
+#: ../../about.rst:34
+msgid ""
+"That evidence supports the released tool and its documented surface. It "
+"is not a claim of universal Sphinx equivalence or unbounded memory "
+"safety. See :doc:`compatibility` for the retained limits."
+msgstr ""
+"这些记录验证的是已发布工具及其文档所述功能，并不意味着完全等同于 Sphinx，也不保证任意条件下的内存安全。保留的限制见 "
+":doc:`compatibility`。"
+
+#: ../../about.rst:38
+msgid ""
+"Documentation maintenance commands are in :doc:`howto/maintain-docs`."
+msgstr "文档维护命令见 :doc:`howto/maintain-docs`\\ 。"
+
+#~ msgid ""
+#~ "The remote validation on 2026-10-01 ran clean and incremental HTML and "
+#~ "PDF builds for CPython, Django, and Flask. All twelve commands "
+#~ "succeeded. Diagnostic and link results matched the established "
+#~ "baseline. There were 1,039 passing Linux tests and 94 passing targeted "
+#~ "sanitizer tests. That is evidence for the tested checkout. It is not a "
+#~ "claim of complete Sphinx compatibility. See :doc:`compatibility` for "
+#~ "the retained limitations."
+#~ msgstr ""
+#~ "2026-10-01 的远程验证对 CPython、Django 和 Flask 分别进行了全新及增量 HTML、PDF "
+#~ "构建。十二条命令全部成功，诊断和链接检查结果与既有基线一致。Linux 测试通过 1,039 项，定向 sanitizer 测试通过 94 "
+#~ "项。这些结果只证明所测试版本的行为，并不表示完全兼容 Sphinx。已知限制见 :doc:`compatibility`\\ 。"

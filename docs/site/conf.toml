@@ -1,0 +1,72 @@
+# Configuration file for Guidedog: the Guidedog website's landing page.
+#
+# tools/build-site.sh builds it with the manual and the discussions into one static site
+# and publishes it at https://insanai.github.io/guidedog/. The settings use the names of
+# Sphinx's conf.py, written in TOML.
+
+# -- Project information -----------------------------------------------------
+
+project = "Guidedog"
+copyright = "2026, Vikrant Rathore"
+author = "Vikrant Rathore"
+version = "0.7"
+release = "0.7.0"
+
+# -- General configuration ---------------------------------------------------
+
+# githubpages writes .nojekyll, so GitHub Pages serves _static as it is.
+extensions = ["sphinx.ext.githubpages"]
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "locales/**", "README*", "Thumbs.db", ".DS_Store"]
+language = "en"
+source_suffix = [".rst"]
+root_doc = "index"
+gettext_additional_targets = ["literal-block"]
+gettext_last_translator = "Guidedog translation contributors"
+gettext_language_team = "Guidedog translation contributors"
+
+# The links from the page into the rest of the site. They are relative to this edition:
+# tools/build-site.sh gives each translated edition its own, which go up one folder and
+# into the manual of the same language.
+rst_epilog = """
+.. _manual: manual/index.html
+.. _manual-pdf: manual/books/en/guidedog-manual-en.pdf
+.. _manual-tutorial: manual/tutorial/first-project.html
+.. _discussions: discussions/index.html
+.. _manual-discussions: manual/howto/discussions.html
+"""
+
+# -- Options for HTML output -------------------------------------------------
+
+html_theme = "guidedog"
+html_title = "Guidedog"
+html_short_title = "Guidedog"
+html_static_path = ["_static", "../shared/_static/data/fonts"]
+include_roots = ["../shared"]
+html_css_files = ["site.css"]
+html_js_files = ["languages.js"]
+html_favicon = "_static/favicon.svg"
+html_copy_source = false
+html_use_index = false
+
+[html_additional_pages]
+404 = "404.html"
+
+[html_theme_options]
+accent = "#216553"
+
+[html_context]
+# The path of the site's root as a browser sees it, for the 404 page GitHub Pages
+# shows at any depth.
+site_base = "/guidedog/"
+site_url = "https://insanai.github.io/guidedog/"
+repository = "https://github.com/insanai/guidedog"
+site_languages = [
+  {code = "en", tag = "en", name = "English", path = ""},
+  {code = "zh_CN", tag = "zh-CN", name = "简体中文", path = "zh-cn/"},
+  {code = "ja", tag = "ja", name = "日本語", path = "ja/"},
+  {code = "ko", tag = "ko", name = "한국어", path = "ko/"},
+  {code = "hi", tag = "hi", name = "हिन्दी", path = "hi/"},
+  {code = "es", tag = "es", name = "Español", path = "es/"},
+  {code = "de", tag = "de", name = "Deutsch", path = "de/"},
+]

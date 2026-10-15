@@ -1,0 +1,68 @@
+# Guidedog's own API reference, generated from the Rust source of the workspace's main
+# crates by the rust domain's API pages (rust_autoapi_crates), built with Guidedog itself:
+#
+#   guidedog build html docs/api
+#   guidedog build pdf docs/api
+
+project = "Guidedog API"
+copyright = "2026, Vikrant Rathore"
+author = "Vikrant Rathore"
+version = "0.7"
+release = "0.7.0"
+
+exclude_patterns = ["_build"]
+language = "en"
+root_doc = "index"
+primary_domain = "rust"
+
+# Every listed crate gets pages, api/<crate>/<module>, and api/index lists them; the
+# index joins the root document's toctree. The engine first, then the libraries a host
+# or a plugin uses, then the project builder and the command line.
+rust_autoapi_crates = [
+  "../../crates/guidedoc",
+  "../../crates/guidedoc-defaults",
+  "../../crates/guidedoc-rst",
+  "../../crates/guidedoc-commonmark",
+  "../../crates/guidedoc-sphinx",
+  "../../crates/guidedoc-html",
+  "../../crates/guidedoc-typst",
+  "../../crates/guidedoc-text",
+  "../../crates/gd-report",
+  "../../crates/gd-host",
+  "../../crates/gd-jinja",
+  "../../crates/gd-highlight",
+  "../../crates/gd-gettext",
+  "../../crates/gd-toml",
+  "../../crates/gd-json",
+  "../../crates/gd-typst",
+  "../../crates/gd-graphdog",
+  "../../crates/gd-rustdoc",
+  "../../crates/gd-plugins",
+  "../../crates/gd-discussion",
+  "../../crates/gd-project",
+  "../../crates/gd-cli",
+]
+rust_autoapi_root = "api"
+rust_autoapi_member_order = "source"
+
+# Types from the standard library (std::, core::, alloc::) are not documented here.
+nitpick_ignore_regex = [["rust:any", "(std|core|alloc)::.*"]]
+
+html_theme = "guidedog"
+html_title = "Guidedog API reference"
+
+pdf_paper_size = "a4"
+pdf_font_paths = ["../shared/_static/data/fonts"]
+
+# Use the documentation's reader and book layouts.
+templates_path = ["_templates"]
+html_static_path = ["_static", "../shared/_static"]
+include_roots = ["../shared"]
+html_css_files = ["editorial.css"]
+html_js_files = ["data/typography/linked-list.js", "data/typography/linebreak.js",
+                 "data/typography/hypher.js", "data/typography/english.js", "typography.js"]
+mathjax_path = "_static/data/mathjax/tex-svg-full.js"
+mathjax_config_path = "_static/math.js"
+
+[html_theme_options]
+accent = "#216553"

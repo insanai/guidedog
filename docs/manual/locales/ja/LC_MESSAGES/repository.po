@@ -1,0 +1,383 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:42+0800\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: Guidedog translation contributors\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../repository.md:1
+msgid "Guidedog"
+msgstr "Guidedog"
+
+#: ../../repository.md:3
+msgid ""
+"{download}`English <_static/repository/README.md>` · {download}`简体中文 "
+"<_static/repository/README.zh-CN.md>` · {download}`日本語 "
+"<_static/repository/README.ja.md>` · {download}`한국어 "
+"<_static/repository/README.ko.md>` · {download}`हिन्दी "
+"<_static/repository/README.hi.md>` · {download}`Español "
+"<_static/repository/README.es.md>` · {download}`Deutsch "
+"<_static/repository/README.de.md>`"
+msgstr ""
+"{download}`English <_static/repository/README.md>` · {download}`简体中文 "
+"<_static/repository/README.zh-CN.md>` · {download}`日本語 "
+"<_static/repository/README.ja.md>` · {download}`한국어 "
+"<_static/repository/README.ko.md>` · {download}`हिन्दी "
+"<_static/repository/README.hi.md>` · {download}`Español "
+"<_static/repository/README.es.md>` · {download}`Deutsch "
+"<_static/repository/README.de.md>`"
+
+#: ../../repository.md:5
+msgid "**Write once. Explain well. Publish on the web and on paper.**"
+msgstr "**一度書く。明快に伝える。Web と紙に届ける。**"
+
+#: ../../repository.md:7
+msgid ""
+"Guidedog builds HTML documentation sites and PDF books from "
+"reStructuredText and Markdown. It is written in Odin. Its conversion "
+"engine is **Guidedoc**, and Typst typesets the PDF pages. No Python "
+"environment or LaTeX installation is needed."
+msgstr ""
+"Guidedog は reStructuredText と Markdown から HTML 文書サイトと PDF の本を作ります。Odin "
+"で実装され、変換エンジンは **Guidedoc** と呼ばれます。PDF は Typst で組版します。Python 環境や LaTeX "
+"は不要です。"
+
+#: ../../repository.md:9
+msgid ""
+"Sphinx inspires the authoring workflow. Guidedog is an independent "
+"system: configuration is declarative TOML, API extraction is static, and "
+"Python configuration and extensions are never executed. Complete Sphinx "
+"compatibility is not a goal."
+msgstr ""
+"執筆の流れは Sphinx を参考にしています。ただし Guidedog は独立したシステムです。設定は宣言的な TOML、API "
+"抽出は静的解析で行い、Python の設定や拡張を実行しません。Sphinx との完全互換は目標ではありません。"
+
+#: ../../repository.md:11
+msgid "Start a project"
+msgstr "プロジェクトを始める"
+
+#: ../../repository.md:20
+msgid ""
+"The project contains `conf.toml`, `index.rst`, `_templates/layout.html`, "
+"`_templates/book.typ`, and `_static/`. Templates are ordinary files you "
+"can edit. HTML provides navigation, search, code highlighting, diagrams, "
+"and equations. PDF books provide chapters, cross-references, figures, "
+"indexes, and language-aware typesetting."
+msgstr ""
+"プロジェクトには "
+"`conf.toml`、`index.rst`、`_templates/layout.html`、`_templates/book.typ`、`_static/` "
+"があります。テンプレートは普通の編集可能なファイルです。HTML にはナビゲーション、検索、コードの強調、図、数式があり、PDF "
+"には章、相互参照、図、索引、言語に応じた組版があります。"
+
+#: ../../repository.md:22
+msgid ""
+"The default theme is light. Readers can choose dark or the system theme. "
+"The manual detects the browser language on its landing page and "
+"repository overview. A saved choice takes precedence; direct links to an "
+"edition or chapter remain explicit requests."
+msgstr ""
+"既定は明るいテーマで、暗いテーマやシステム設定も選べます。マニュアルの入口とリポジトリ概要ではブラウザーの言語に合わせます。保存した選択が優先され、特定の版や章への直接リンクは尊重されます。"
+
+#: ../../repository.md:30
+msgid "Install"
+msgstr "インストール"
+
+#: ../../repository.md:32
+msgid ""
+"Each [release](https://github.com/insanai/guidedog/releases) has an "
+"archive for Linux (x86-64 and ARM64), macOS (Apple silicon and Intel), "
+"and Windows (x86-64). Each archive carries Typst, Graphviz, and "
+"tree-sitter, so building sites and books needs nothing else installed. "
+"Linux needs glibc 2.35 or later and libcurl; macOS needs version 12 or "
+"later. Download the archive for your system and `SHA256SUMS`, then check "
+"and install it:"
+msgstr ""
+"各[リリース](https://github.com/insanai/guidedog/releases)には Linux（x86-64 と "
+"ARM64）、macOS（Apple シリコンと Intel）、Windows（x86-64）向けのアーカイブがあります。どのアーカイブにも "
+"Typst、Graphviz、tree-sitter が入っているので、サイトや本のビルドにほかのものは要りません。Linux には glibc "
+"2.35 以降と libcurl、macOS にはバージョン 12 以降が必要です。お使いのシステム向けのアーカイブと `SHA256SUMS` "
+"をダウンロードし、確認してからインストールします。"
+
+#: ../../repository.md:40
+msgid ""
+"On macOS, install from the official [Guidedog Homebrew "
+"tap](https://github.com/insanai/homebrew-guidedog). Homebrew selects the "
+"Apple silicon or Intel archive. The tap also supports Linux:"
+msgstr ""
+"macOS では、公式の [Guidedog Homebrew "
+"tap](https://github.com/insanai/homebrew-guidedog) からインストールします。Homebrew が "
+"Apple シリコンまたは Intel 用のアーカイブを選びます。この tap は Linux にも対応しています。"
+
+#: ../../repository.md:48
+msgid ""
+"On Windows, unzip the archive and add its folder to `PATH`; keep the "
+"Graphviz DLLs and `config8` beside `guidedog.exe`. The programs are not "
+"code-signed: on macOS, remove the quarantine from a browser download with "
+"`xattr -d com.apple.quarantine guidedog`. The release notes describe each "
+"platform's limits."
+msgstr ""
+"Windows ではアーカイブを展開し、そのフォルダーを `PATH` に加えます。Graphviz の DLL と `config8` は "
+"`guidedog.exe` と同じ場所に置いたままにします。プログラムにはコード署名がありません。macOS "
+"でブラウザーからダウンロードした場合は、`xattr -d com.apple.quarantine guidedog` "
+"で隔離属性を外してください。各プラットフォームの制限はリリースノートに書いてあります。"
+
+#: ../../repository.md:50
+msgid "Build from source"
+msgstr "ソースからビルドする"
+
+#: ../../repository.md:52
+msgid ""
+"Install Odin `dev-2026-10` (`tools/install-toolchain.sh odin DIR` fetches "
+"and checks it), a C compiler, and on Linux the libcurl, expat, and zlib "
+"development packages. Build the native libraries, then Guidedog:"
+msgstr ""
+"Odin `dev-2026-10`（`tools/install-toolchain.sh odin DIR` で取得と検証ができます）、C "
+"コンパイラー、Linux では libcurl、expat、zlib の開発パッケージを用意します。ネイティブライブラリーをビルドしてから "
+"Guidedog をビルドします。"
+
+#: ../../repository.md:60
+msgid ""
+"`build/guidedog` then uses an installed Typst 0.15.1 for PDF. To embed "
+"the Typst compiler as the releases do, install Rust and Cargo and run:"
+msgstr ""
+"できあがった `build/guidedog` は、PDF の生成にインストール済みの Typst 0.15.1 "
+"を使います。リリース版と同じように Typst コンパイラーを組み込むには、Rust と Cargo を用意して次を実行します。"
+
+#: ../../repository.md:67
+msgid ""
+"On Windows, use Git Bash with Visual Studio's C++ tools and LLVM. "
+"Graphviz has no static Windows build, so run `native/graphviz/windows.sh` "
+"instead of `build.sh`: it installs the official Graphviz 16.1.0 DLLs, "
+"which `tools/release/build.sh` copies beside `build/guidedog.exe`. "
+"`tools/release/suites.sh` runs the test suites, and "
+"[RELEASING.md](https://github.com/insanai/guidedog/blob/main/RELEASING.md) "
+"describes the release workflow."
+msgstr ""
+"Windows では Git Bash と、Visual Studio の C++ ツール、LLVM を使います。Graphviz には "
+"Windows 向けの静的ビルドがないため、`build.sh` の代わりに `native/graphviz/windows.sh` "
+"を実行します。これは公式の Graphviz 16.1.0 の DLL をインストールし、`tools/release/build.sh` "
+"がそれを `build/guidedog.exe` の隣にコピーします。`tools/release/suites.sh` "
+"でテストスイートを実行できます。リリースの手順は "
+"[RELEASING.md](https://github.com/insanai/guidedog/blob/main/RELEASING.md) "
+"にあります。"
+
+#: ../../repository.md:69
+msgid "Translate with Guidedog"
+msgstr "Guidedog で翻訳する"
+
+#: ../../repository.md:81
+msgid ""
+"Translate and review `msgstr` values in the PO files. Guidedog extracts "
+"POT files, merges catalogs, reports progress, and builds each edition. It "
+"does not invent translations. Commands, paths, code, API names, and "
+"reference targets stay unchanged. Only the manual and repository overview "
+"are translated; API and GDS remain English. See the [manual build "
+"instructions](howto/maintain-docs.rst) for assembling all editions and "
+"PDF books."
+msgstr ""
+"PO ファイルの `msgstr` を翻訳し、内容を確認します。Guidedog は POT "
+"抽出、カタログのマージ、進捗表示、各版のビルドを行いますが、翻訳文を自動で作りません。コマンド、パス、コード、API "
+"名、参照先は変えません。翻訳するのはマニュアルとリポジトリ概要のみで、API と GDS は英語のままです。各版と PDF "
+"のまとめ方は[ビルド手順](howto/maintain-docs.rst)を参照してください。"
+
+#: ../../repository.md:83
+msgid ""
+"GitHub readers choose a README language using the links above. Automatic "
+"language selection belongs to the generated documentation website."
+msgstr "GitHub では上のリンクから README の言語を選びます。言語の自動選択は生成した文書サイトで行います。"
+
+#: ../../repository.md:85
+msgid ""
+"Write your own publisher with the {doc}`step-by-step plugin chapter "
+"<plugins>`. Start with a working folder publisher, then follow the real "
+"GitHub Pages implementation through ownership, credentials, conditional "
+"updates and recovery. `guidedog publish --timeout=SECONDS` bounds each "
+"complete exchange (default: 300 seconds); choose a value longer than "
+"`--wait`. After an unknown outcome, recover before publishing again."
+msgstr "独自のパブリッシャーを書くには、{doc}`プラグイン開発の手順 <plugins>`を読んでください。動作するフォルダーパブリッシャーから始め、実際の GitHub Pages 実装で所有権、認証情報、条件付き更新、復旧を学べます。`guidedog publish --timeout=SECONDS` は各やり取り全体を制限します。既定値は 300 秒で、`--wait` より長くしてください。結果が不明な場合は、再公開する前に復旧してください。"
+
+#: ../../repository.md:87
+msgid "Keep discussions"
+msgstr "議論を管理する"
+
+#: ../../repository.md:89
+msgid ""
+"`dsc` keeps proposals and decisions as reStructuredText records, one file "
+"each, and builds them into a website and PDF books with Guidedog. Each "
+"catalog has a prefix: Guidedog's design records use `gds`, and another "
+"project might use `eds`."
+msgstr ""
+"`dsc` は提案と決定を reStructuredText の記録として 1 件 1 ファイルで保管し、Guidedog でウェブサイトと "
+"PDF の本にビルドします。カタログにはそれぞれプレフィックスがあります。Guidedog の設計記録は `gds` を使い、別のプロジェクトなら "
+"`eds` などを使います。"
+
+#: ../../repository.md:100
+msgid ""
+"A catalog's `discussion.toml` sets its lifecycle states, record types, "
+"and numbering, and `dsc config` prints it. `dsc` comes in the Guidedog "
+"archive and builds with the installed `guidedog`. `dscc` is `dsc` with "
+"Guidedog built in, for a machine with nothing else installed; each "
+"release has a `dscc` archive for every platform. `guidedog gds` runs the "
+"same commands on Guidedog's own `docs/gds`. See [Keep a discussion "
+"catalog](howto/discussions.rst)."
+msgstr ""
+"カタログの `discussion.toml` は、ライフサイクルの状態、記録の種類、番号付けを設定し、`dsc config` "
+"はその内容を表示します。`dsc` は Guidedog のアーカイブに含まれ、インストール済みの `guidedog` "
+"でビルドします。`dscc` は Guidedog を組み込んだ `dsc` "
+"で、ほかに何もインストールされていないマシン向けです。各リリースには全プラットフォームの `dscc` アーカイブがあります。`guidedog "
+"gds` は Guidedog 自身の `docs/gds` "
+"に対して同じコマンドを実行します。[議論カタログの管理](howto/discussions.rst)を参照してください。"
+
+#: ../../repository.md:102
+msgid "Read and embed"
+msgstr "読む・組み込む"
+
+#: ../../repository.md:104
+msgid ""
+"[Manual](index.rst): tutorials, topics, practical tasks, reference, and "
+"internals."
+msgstr "[マニュアル](index.rst): チュートリアル、解説、作業手順、リファレンス、内部構造。"
+
+#: ../../repository.md:105
+msgid ""
+"[API reference](api/index): generated from Odin source and included in "
+"the manual's PDF appendix."
+msgstr "[API リファレンス](api/index): Odin ソースから生成し、マニュアル PDF の付録にも含めます。"
+
+#: ../../repository.md:106
+msgid ""
+"{download}`Library guide <_static/repository/library-README.md>`: "
+"caller-owned workspaces, memory, and conversion examples."
+msgstr ""
+"{download}`ライブラリガイド <_static/repository/library-README.md>`: "
+"呼び出し元が所有するワークスペース、メモリ、変換例。"
+
+#: ../../repository.md:107
+msgid ""
+"[Templates](templates.rst): customize HTML with Jinja and books with "
+"Typst."
+msgstr "[テンプレート](templates.rst): Jinja で HTML、Typst で本を調整します。"
+
+#: ../../repository.md:108
+msgid ""
+"{download}`GDS <_static/repository/gds-README.md>`: numbered design "
+"records and implementation decisions."
+msgstr ""
+"{download}`GDS <_static/repository/gds-README.md>`: 番号付きの設計記録と実装上の判断。"
+
+#: ../../repository.md:109
+msgid ""
+"{download}`Discussion library <_static/repository/discussion-README.md>`: "
+"the catalogs that `dsc`, `dscc`, and `guidedog gds` keep."
+msgstr ""
+"{download}`議論ライブラリ <_static/repository/discussion-README.md>`: "
+"`dsc`、`dscc`、`guidedog gds` が管理するカタログ。"
+
+#: ../../repository.md:110
+msgid ""
+"{download}`Beta review <_static/repository/beta-review-20261011.md>`: "
+"fixes, verification, support scope, and remaining release gates."
+msgstr ""
+"{download}`ベータレビュー <_static/repository/beta-review-20261011.md>`: "
+"修正、検証、対応範囲、公開前の残課題。"
+
+#: ../../repository.md:112
+msgid ""
+"Guidedoc uses caller-provided storage and returns structured diagnostics. "
+"The host manages files, budgets, caching, publication, and native "
+"compilers. `--untrusted` restricts capabilities; it is not a process "
+"sandbox or a limit on all native resource use. The beta scope is trusted "
+"documentation projects on macOS and Linux."
+msgstr ""
+"Guidedoc "
+"は呼び出し元のストレージを使い、構造化された診断を返します。ホストがファイル、予算、キャッシュ、公開、ネイティブコンパイラーを管理します。`--untrusted` "
+"は機能を制限しますが、プロセスのサンドボックスでも、すべてのネイティブ資源の上限でもありません。ベータ版の対象は macOS と Linux "
+"の信頼できる文書プロジェクトです。"
+
+#: ../../repository.md:114
+msgid "Credits and license"
+msgstr "謝辞とライセンス"
+
+#: ../../repository.md:116
+msgid ""
+"Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** "
+"and **Kanak Rathore**. Contributions are welcome through issues and pull "
+"requests. Documentation credits use names or handles, not personal email "
+"addresses; Git identity settings are managed separately."
+msgstr ""
+"**Vikrant Rathore** が制作し、**Ronak Rathore** と **Kanak Rathore** "
+"が開発を支援しました。Issue や Pull Request "
+"による貢献を歓迎します。文書の著者表記には名前やハンドルを使い、個人のメールアドレスは掲載しません。Git の識別情報は別に管理します。"
+
+#: ../../repository.md:118
+msgid ""
+"Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, "
+"Tree-sitter and Max Brunsfeld, Graphviz, and Ginger Bill and the Odin "
+"community."
+msgstr ""
+"Sphinx と Georg Brandl、Docutils と David Goodger、Typst、Tree-sitter と Max "
+"Brunsfeld、Graphviz、Ginger Bill と Odin コミュニティに感謝します。"
+
+#: ../../repository.md:120
+msgid ""
+"Guidedog is released under the {download}`GNU Affero General Public "
+"License v3.0 or later <_static/repository/LICENSE>` (AGPL-3.0-or-later). "
+"For other licensing terms, contact the authors. {download}`NOTICE "
+"<_static/repository/NOTICE>` says how to reach them and lists the "
+"third-party components, such as the bundled fonts, that keep their own "
+"licenses."
+msgstr ""
+"Guidedog は {download}`GNU Affero General Public License v3.0 以降 "
+"<_static/repository/LICENSE>`（AGPL-3.0-or-later）で公開しています。別のライセンス条件をご希望の場合は、作者にご連絡ください。連絡方法と、同梱フォントなど独自のライセンスが適用される第三者コンポーネントの一覧は "
+"{download}`NOTICE <_static/repository/NOTICE>` にあります。"
+
+#: ../../repository.md:122
+msgid ""
+"An additional permission allows Guidedog to be linked and distributed "
+"with Graphviz; see {download}`NOTICE <_static/repository/NOTICE>`."
+msgstr ""
+"追加の許可により、Guidedog を Graphviz とリンクして配布できます。詳しくは {download}`NOTICE "
+"<_static/repository/NOTICE>` をご覧ください。"
+
+#~ msgid ""
+#~ "With Homebrew on macOS or Linux, install the `guidedog.rb` formula "
+#~ "attached to the release from a local tap:"
+#~ msgstr ""
+#~ "macOS や Linux で Homebrew を使う場合は、リリースに添付された `guidedog.rb` formula "
+#~ "をローカルの tap からインストールします。"
+
+#~ msgid ""
+#~ "Install Odin (`dev-2026-09` or newer) and Graphviz development "
+#~ "libraries. For PDF, install Typst 0.15.1 or newer, or build the "
+#~ "embedded compiler. Unix builds also need libcurl."
+#~ msgstr ""
+#~ "Odin（`dev-2026-09` 以降）と Graphviz 開発ライブラリを用意します。PDF には Typst 0.15.1 "
+#~ "以降、または組み込みコンパイラーが必要です。Unix では libcurl も必要です。"
+
+#~ msgid ""
+#~ "For embedded Typst and static Graphviz, install Rust and Cargo, then "
+#~ "build:"
+#~ msgstr "Typst と静的 Graphviz を組み込む場合は、Rust と Cargo を用意して次を実行します。"
+
+#~ msgid ""
+#~ "This avoids a separate Typst program and system Graphviz plugins. It "
+#~ "still requires libcurl, platform runtime libraries, and suitable "
+#~ "fonts. Check the exact release archive on a clean supported machine. "
+#~ "For Windows compilation, use an `.exe` output name; Windows runtime "
+#~ "validation is pending."
+#~ msgstr ""
+#~ "この構成では別の Typst プログラムやシステムの Graphviz プラグインは不要です。ただし "
+#~ "libcurl、プラットフォームのランタイム、適切なフォントは必要です。配布前に、クリーンな対応環境で実際のアーカイブを確認してください。Windows "
+#~ "の出力名は `.exe` にします。実行時の検証は未完了です。"

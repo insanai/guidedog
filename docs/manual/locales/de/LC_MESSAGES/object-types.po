@@ -1,0 +1,138 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../object-types.rst:1
+msgid "Declaring object types"
+msgstr "Objekttypen deklarieren"
+
+#: ../../object-types.rst:4
+msgid ""
+"A project may need names that the standard domains do not know. Declare "
+"those object types in TOML. Guidedog can then create targets, index "
+"entries, and roles without loading a Python extension. The declaration "
+"states a syntax, not executable behavior."
+msgstr ""
+"Ein Projekt kann Namen außerhalb der Standarddomänen brauchen. "
+"Deklarieren Sie deren Objekttypen in TOML. Guidedog erzeugt dann Ziele, "
+"Indexeinträge und Rollen ohne Python-Erweiterung. Die Deklaration "
+"beschreibt Syntax, kein ausführbares Verhalten."
+
+#: ../../object-types.rst:8
+msgid "Targets: ``add_crossref_type``"
+msgstr "Ziele: ``add_crossref_type``"
+
+#: ../../object-types.rst:18
+msgid ""
+"``.. setting:: DEBUG`` then makes a target with the id ``setting-DEBUG`` "
+"and an index entry, and ``:setting:`DEBUG``` links to it, as in Sphinx. "
+"``index`` is Sphinx's ``indextemplate``: its type (``single``, ``pair``, "
+"``triple``, ``see``, ``seealso``) before the first colon, and the entry "
+"after it, with ``%s`` the name."
+msgstr "``.. setting:: DEBUG`` erzeugt ein Ziel mit ID ``setting-DEBUG`` und einen Indexeintrag; ``:setting:`DEBUG``` verlinkt es wie bei Sphinx. ``index`` entspricht Sphinx' ``indextemplate``\\ : der Typ (\\ ``single``\\ , ``pair``\\ , ``triple``\\ , ``see``\\ , ``seealso``\\ ) steht vor dem ersten Doppelpunkt, danach der Eintrag mit ``%s`` als Name."
+
+#: ../../object-types.rst:23
+msgid "Descriptions: ``add_object_type``"
+msgstr "Beschreibungen: ``add_object_type``"
+
+#: ../../object-types.rst:36
+msgid ""
+"``.. django-admin:: migrate [app_label]`` then describes the command like "
+"any object: a signature, content, an id (``django-admin-migrate``), and "
+"an index entry. In Sphinx a ``parse_node`` function may read the "
+"signature; its usual work is set by fields instead:"
+msgstr ""
+"``.. django-admin:: migrate [app_label]`` beschreibt den Befehl wie jedes "
+"Objekt: Signatur, Inhalt, ID (\\ ``django-admin-migrate``\\ ) und "
+"Indexeintrag. In Sphinx kann ``parse_node`` die Signatur lesen; typische "
+"Aufgaben werden hier mit Feldern festgelegt:"
+
+#: ../../object-types.rst:41
+msgid "``name``"
+msgstr "``name``"
+
+#: ../../object-types.rst:42
+msgid ""
+"``\"whole\"`` (the default): the object's name is its whole signature. "
+"``\"first-word\"``: the name is the signature up to its first space "
+"(``pdb``'s ``b(reak) [lineno]`` is named ``b(reak)``)."
+msgstr ""
+"``\"whole\"`` (Vorgabe): der Name ist die ganze Signatur. "
+"``\"first-word\"``\\ : der Name reicht bis zum ersten Leerzeichen; "
+"``b(reak) [lineno]`` von ``pdb`` heißt etwa ``b(reak)``\\ ."
+
+#: ../../object-types.rst:46
+msgid "``display``"
+msgstr "``display``"
+
+#: ../../object-types.rst:47
+msgid ""
+"How the signature is shown, ``%s`` standing for it. By default, as "
+"written."
+msgstr ""
+"Die Darstellung der Signatur, vertreten durch ``%s``\\ . Vorgabe ist die "
+"ursprüngliche Schreibweise."
+
+#: ../../object-types.rst:49
+msgid "``program``"
+msgstr "``program``"
+
+#: ../../object-types.rst:50
+msgid ""
+"``true``: the name becomes the program that options described after it "
+"belong to, as ``.. program::`` makes it."
+msgstr ""
+"``true``\\ : Der Name wird zum Programm für nachfolgende Optionen, wie "
+"bei ``.. program::``\\ ."
+
+#: ../../object-types.rst:53
+msgid "Other names for directives"
+msgstr "Weitere Namen für Direktiven"
+
+#: ../../object-types.rst:56
+msgid ""
+"An extension may register one of Sphinx's own directives under another "
+"name:"
+msgstr ""
+"Eine Erweiterung kann Sphinx-Direktiven unter anderem Namen registrieren:"
+
+#: ../../object-types.rst:64
+msgid ""
+"A target without a domain is a standard directive, or one of the default "
+"domain's; a target such as ``py:function`` names its domain."
+msgstr ""
+"Ein Ziel ohne Domäne bezeichnet eine Standarddirektive oder eine der "
+"Standarddomäne. ``py:function`` nennt seine Domäne ausdrücklich."
+
+#: ../../object-types.rst:67
+msgid "Migrating"
+msgstr "Migration"
+
+#: ../../object-types.rst:70
+msgid ""
+"``guidedog migrate`` finds each extension ``conf.py`` lists that is a "
+"module of the project, reads its ``add_crossref_type``, "
+"``add_object_type``, and ``add_directive`` calls without running them, "
+"and writes these tables. It reports what it cannot declare: a "
+"``parse_node`` function (set ``name``, ``display``, and ``program`` to "
+"match it) and directives, roles, and event handlers written in Python."
+msgstr ""
+"``guidedog migrate`` findet die in ``conf.py`` genannten Erweiterungen, "
+"die Projektmodule sind. Es liest ihre Aufrufe von ``add_crossref_type``\\ "
+", ``add_object_type`` und ``add_directive`` ohne Ausführung und schreibt "
+"die Tabellen. Nicht deklarierbare ``parse_node``\\ -Funktionen (mit "
+"``name``\\ , ``display`` und ``program`` nachbilden) sowie "
+"Python-Direktiven, Rollen und Ereignishandler werden gemeldet."

@@ -1,0 +1,164 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:42+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: Guidedog translation contributors\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../repository.md:1
+msgid "Guidedog"
+msgstr ""
+
+#: ../../repository.md:3
+msgid "{download}`English <_static/repository/README.md>` · {download}`简体中文 <_static/repository/README.zh-CN.md>` · {download}`日本語 <_static/repository/README.ja.md>` · {download}`한국어 <_static/repository/README.ko.md>` · {download}`हिन्दी <_static/repository/README.hi.md>` · {download}`Español <_static/repository/README.es.md>` · {download}`Deutsch <_static/repository/README.de.md>`"
+msgstr ""
+
+#: ../../repository.md:5
+msgid "**Write once. Explain well. Publish on the web and on paper.**"
+msgstr ""
+
+#: ../../repository.md:7
+msgid "Guidedog builds HTML documentation sites and PDF books from reStructuredText and Markdown. It is written in Odin. Its conversion engine is **Guidedoc**, and Typst typesets the PDF pages. No Python environment or LaTeX installation is needed."
+msgstr ""
+
+#: ../../repository.md:9
+msgid "Sphinx inspires the authoring workflow. Guidedog is an independent system: configuration is declarative TOML, API extraction is static, and Python configuration and extensions are never executed. Complete Sphinx compatibility is not a goal."
+msgstr ""
+
+#: ../../repository.md:11
+msgid "Start a project"
+msgstr ""
+
+#: ../../repository.md:20
+msgid "The project contains `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ`, and `_static/`. Templates are ordinary files you can edit. HTML provides navigation, search, code highlighting, diagrams, and equations. PDF books provide chapters, cross-references, figures, indexes, and language-aware typesetting."
+msgstr ""
+
+#: ../../repository.md:22
+msgid "The default theme is light. Readers can choose dark or the system theme. The manual detects the browser language on its landing page and repository overview. A saved choice takes precedence; direct links to an edition or chapter remain explicit requests."
+msgstr ""
+
+#: ../../repository.md:30
+msgid "Install"
+msgstr ""
+
+#: ../../repository.md:32
+msgid "Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64), macOS (Apple silicon and Intel), and Windows (x86-64). Each archive carries Typst, Graphviz, and tree-sitter, so building sites and books needs nothing else installed. Linux needs glibc 2.35 or later and libcurl; macOS needs version 12 or later. Download the archive for your system and `SHA256SUMS`, then check and install it:"
+msgstr ""
+
+#: ../../repository.md:40
+msgid "On macOS, install from the official [Guidedog Homebrew tap](https://github.com/insanai/homebrew-guidedog). Homebrew selects the Apple silicon or Intel archive. The tap also supports Linux:"
+msgstr ""
+
+#: ../../repository.md:48
+msgid "On Windows, unzip the archive and add its folder to `PATH`; keep the Graphviz DLLs and `config8` beside `guidedog.exe`. The programs are not code-signed: on macOS, remove the quarantine from a browser download with `xattr -d com.apple.quarantine guidedog`. The release notes describe each platform's limits."
+msgstr ""
+
+#: ../../repository.md:50
+msgid "Build from source"
+msgstr ""
+
+#: ../../repository.md:52
+msgid "Install Odin `dev-2026-10` (`tools/install-toolchain.sh odin DIR` fetches and checks it), a C compiler, and on Linux the libcurl, expat, and zlib development packages. Build the native libraries, then Guidedog:"
+msgstr ""
+
+#: ../../repository.md:60
+msgid "`build/guidedog` then uses an installed Typst 0.15.1 for PDF. To embed the Typst compiler as the releases do, install Rust and Cargo and run:"
+msgstr ""
+
+#: ../../repository.md:67
+msgid "On Windows, use Git Bash with Visual Studio's C++ tools and LLVM. Graphviz has no static Windows build, so run `native/graphviz/windows.sh` instead of `build.sh`: it installs the official Graphviz 16.1.0 DLLs, which `tools/release/build.sh` copies beside `build/guidedog.exe`. `tools/release/suites.sh` runs the test suites, and [RELEASING.md](https://github.com/insanai/guidedog/blob/main/RELEASING.md) describes the release workflow."
+msgstr ""
+
+#: ../../repository.md:69
+msgid "Translate with Guidedog"
+msgstr ""
+
+#: ../../repository.md:81
+msgid "Translate and review `msgstr` values in the PO files. Guidedog extracts POT files, merges catalogs, reports progress, and builds each edition. It does not invent translations. Commands, paths, code, API names, and reference targets stay unchanged. Only the manual and repository overview are translated; API and GDS remain English. See the [manual build instructions](howto/maintain-docs.rst) for assembling all editions and PDF books."
+msgstr ""
+
+#: ../../repository.md:83
+msgid "GitHub readers choose a README language using the links above. Automatic language selection belongs to the generated documentation website."
+msgstr ""
+
+#: ../../repository.md:85
+msgid "Write your own publisher with the {doc}`step-by-step plugin chapter <plugins>`. Start with a working folder publisher, then follow the real GitHub Pages implementation through ownership, credentials, conditional updates and recovery. `guidedog publish --timeout=SECONDS` bounds each complete exchange (default: 300 seconds); choose a value longer than `--wait`. After an unknown outcome, recover before publishing again."
+msgstr ""
+
+#: ../../repository.md:87
+msgid "Keep discussions"
+msgstr ""
+
+#: ../../repository.md:89
+msgid "`dsc` keeps proposals and decisions as reStructuredText records, one file each, and builds them into a website and PDF books with Guidedog. Each catalog has a prefix: Guidedog's design records use `gds`, and another project might use `eds`."
+msgstr ""
+
+#: ../../repository.md:100
+msgid "A catalog's `discussion.toml` sets its lifecycle states, record types, and numbering, and `dsc config` prints it. `dsc` comes in the Guidedog archive and builds with the installed `guidedog`. `dscc` is `dsc` with Guidedog built in, for a machine with nothing else installed; each release has a `dscc` archive for every platform. `guidedog gds` runs the same commands on Guidedog's own `docs/gds`. See [Keep a discussion catalog](howto/discussions.rst)."
+msgstr ""
+
+#: ../../repository.md:102
+msgid "Read and embed"
+msgstr ""
+
+#: ../../repository.md:104
+msgid "[Manual](index.rst): tutorials, topics, practical tasks, reference, and internals."
+msgstr ""
+
+#: ../../repository.md:105
+msgid "[API reference](api/index): generated from Odin source and included in the manual's PDF appendix."
+msgstr ""
+
+#: ../../repository.md:106
+msgid "{download}`Library guide <_static/repository/library-README.md>`: caller-owned workspaces, memory, and conversion examples."
+msgstr ""
+
+#: ../../repository.md:107
+msgid "[Templates](templates.rst): customize HTML with Jinja and books with Typst."
+msgstr ""
+
+#: ../../repository.md:108
+msgid "{download}`GDS <_static/repository/gds-README.md>`: numbered design records and implementation decisions."
+msgstr ""
+
+#: ../../repository.md:109
+msgid "{download}`Discussion library <_static/repository/discussion-README.md>`: the catalogs that `dsc`, `dscc`, and `guidedog gds` keep."
+msgstr ""
+
+#: ../../repository.md:110
+msgid "{download}`Beta review <_static/repository/beta-review-20261011.md>`: fixes, verification, support scope, and remaining release gates."
+msgstr ""
+
+#: ../../repository.md:112
+msgid "Guidedoc uses caller-provided storage and returns structured diagnostics. The host manages files, budgets, caching, publication, and native compilers. `--untrusted` restricts capabilities; it is not a process sandbox or a limit on all native resource use. The beta scope is trusted documentation projects on macOS and Linux."
+msgstr ""
+
+#: ../../repository.md:114
+msgid "Credits and license"
+msgstr ""
+
+#: ../../repository.md:116
+msgid "Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** and **Kanak Rathore**. Contributions are welcome through issues and pull requests. Documentation credits use names or handles, not personal email addresses; Git identity settings are managed separately."
+msgstr ""
+
+#: ../../repository.md:118
+msgid "Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max Brunsfeld, Graphviz, and Ginger Bill and the Odin community."
+msgstr ""
+
+#: ../../repository.md:120
+msgid "Guidedog is released under the {download}`GNU Affero General Public License v3.0 or later <_static/repository/LICENSE>` (AGPL-3.0-or-later). For other licensing terms, contact the authors. {download}`NOTICE <_static/repository/NOTICE>` says how to reach them and lists the third-party components, such as the bundled fonts, that keep their own licenses."
+msgstr ""
+
+#: ../../repository.md:122
+msgid "An additional permission allows Guidedog to be linked and distributed with Graphviz; see {download}`NOTICE <_static/repository/NOTICE>`."
+msgstr ""

@@ -1,0 +1,61 @@
+Guidedog
+Copyright (C) 2026 Vikrant Rathore
+With assistance from Ronak Rathore and Kanak Rathore.
+
+Guidedog is released under the GNU Affero General Public License v3.0 or later
+(AGPL-3.0-or-later). The full text is in LICENSE.
+
+Additional permission under GNU AGPL version 3 section 7
+
+If you modify this Program, or any covered work, by linking or combining it with
+Graphviz (or a modified version of that library), containing parts covered by the
+terms of the Eclipse Public License 1.0, the licensors of this Program grant you
+additional permission to convey the resulting work. Corresponding Source for a
+non-source form of such a combination shall include the source code for the parts
+of Graphviz used as well as that of the covered work.
+
+For other licensing terms, contact the authors through the GitHub repository
+insanai/guidedog (https://github.com/insanai/guidedog): open an issue there, or
+reach the authors through their GitHub profiles.
+
+Third-party components
+----------------------
+
+The components below keep their own licenses. Each license text is kept next to
+the component in this repository, or is downloaded with it.
+
+- Libertinus fonts 7.051 (lib/project/assets/fonts, docs/shared/_static/data/fonts):
+  SIL Open Font License 1.1; see OFL.txt in each folder.
+- Noto Serif CJK 2.003 and Noto Serif Devanagari 2.006 (docs/shared/fonts, and the
+  web subsets in docs/manual/_static/data/fonts): SIL Open Font License 1.1; see
+  OFL-CJK.txt and OFL-Devanagari.txt. The CJK faces are downloaded by
+  tools/fetch-fonts.sh and are not kept in the repository.
+- MathJax 3.2.2 (docs/shared/_static/data/mathjax): Apache License 2.0; see LICENSE
+  in that folder.
+- Typeset and Hypher by Bram Stein, and the TeX English hyphenation patterns
+  (docs/shared/_static/data/typography): BSD licenses and the patterns' own notice;
+  see TYPESET-LICENSE.txt, HYPHER-LICENSE.txt, and hyph-en-us.tex.
+- Unicode Character Database 17.0.0 (tools/data, and the tables generated from it in
+  lib/core and lib/readers/rst/inline): Unicode License v3; see
+  tools/data/LICENSE-UNICODE.txt.
+- Pygments 2.19.2 and Sphinx 9.1.0 style definitions (tools/data, and the tables
+  generated from them in lib/highlight): BSD 2-Clause License; see
+  tools/data/pygments-2.19.2/LICENSE and tools/data/sphinx-9.1.0/LICENSE.rst.
+- tree-sitter 0.26.13 and tree-sitter-python 0.25.0 (built by native/tree-sitter,
+  linked into guidedog): MIT License; see lib/treesitter/licenses. `guidedog
+  --licenses` prints these notices.
+- Graphviz 16.1.0 (linked from the system, or built statically by native/graphviz):
+  Eclipse Public License 1.0; see the COPYING file of the Graphviz release.
+- Typst 0.15.1 and its Rust crates (native/typst_bridge, linked only in builds with
+  -define:GUIDEDOG_TYPST_BRIDGE=true): Apache License 2.0 for Typst; the crates it
+  depends on, the fonts typst-kit embeds, and OpenSSL (vendored on Linux) keep their
+  own licenses, listed in native/typst_bridge/Cargo.lock and the crates' sources.
+- libcurl (linked from the system on Unix): curl license.
+
+Test data
+---------
+
+Test corpora are used as data only and are not part of the built program:
+Docutils sources (tests/data/docutils: public domain, with one BSD 2-Clause file),
+the MyST parser's test data (tests/data/myst: MIT License; see LICENSE there), and
+the CommonMark specification 0.31.2 (tests/data: CC BY-SA 4.0).

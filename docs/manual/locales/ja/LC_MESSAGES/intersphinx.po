@@ -1,0 +1,85 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../intersphinx.rst:1
+msgid "Linking to other projects"
+msgstr "他のプロジェクトへのリンク"
+
+#: ../../intersphinx.rst:4
+msgid ""
+"With ``sphinx.ext.intersphinx``, references this project cannot resolve "
+"are looked up in other projects' inventories, the ``objects.inv`` every "
+"Sphinx or Guidedog site publishes. Name the projects in ``conf.toml``:"
+msgstr ""
+"``sphinx.ext.intersphinx`` "
+"を使うと、このプロジェクトで解決できない参照を他のプロジェクトのインベントリで探します。これは各 Sphinx・Guidedog サイトが公開する "
+"``objects.inv`` です。\\ ``conf.toml`` にプロジェクトを指定します。"
+
+#: ../../intersphinx.rst:16
+msgid ""
+"Each entry is the address of the other project's pages and where its "
+"inventory is: a URL, a file relative to the source folder, or ``\"\"`` "
+"for the ``objects.inv`` at the address. A list is tried in order. This is "
+"Sphinx's ``intersphinx_mapping``, with ``\"\"`` for Python's ``None``; "
+"``guidedog migrate`` converts it."
+msgstr ""
+"各項目には相手のページのアドレスとインベントリの場所を書きます。URL、ソースからの相対ファイル、またはそのアドレスの "
+"``objects.inv`` を表す ``\"\"`` を使えます。リストは順に試します。Sphinx の "
+"``intersphinx_mapping`` と同じですが、Python の ``None`` の代わりに ``\"\"`` を使います。\\ "
+"``guidedog migrate`` が変換します。"
+
+#: ../../intersphinx.rst:21
+msgid "Then references need nothing new:"
+msgstr "参照に新しい書き方は不要です。"
+
+#: ../../intersphinx.rst:29
+msgid ""
+"Links show the other project's titles for labels and documents, and carry "
+"a tooltip such as \"(in Python v3.14)\". As in Sphinx, ``:doc:`` "
+"references need the project's name (``:doc:`python:tutorial/index```), "
+"because ``intersphinx_disabled_reftypes`` is ``[\"std:doc\"]`` by default."
+msgstr "ラベルと文書へのリンクには相手のタイトルと「(in Python v3.14)」などのツールチップを付けます。Sphinx と同じく、\\ ``:doc:`` 参照にはプロジェクト名（\\ ``:doc:`python:tutorial/index```\\ ）が必要です。\\ ``intersphinx_disabled_reftypes`` の既定値が ``[\"std:doc\"]`` のためです。"
+
+#: ../../intersphinx.rst:34
+msgid ""
+"Inventories are fetched when a build starts and kept in "
+"``_build/.doctrees/__intersphinx_cache__`` for "
+"``intersphinx_cache_limit`` days (5; a negative number keeps them); local "
+"files are read on every build. As in Sphinx, an inventory that has moved "
+"(its URL redirects, as "
+"``https://werkzeug.palletsprojects.com/objects.inv`` redirects to "
+"``/en/stable/``) makes its new folder the base of the links, and the "
+"cache remembers that base, so a build from the cache links exactly as the "
+"build that fetched it did. ``intersphinx_timeout`` limits each download "
+"in seconds. A project that cannot be reached is a warning, and its "
+"references stay unresolved."
+msgstr ""
+"ビルド開始時にインベントリを取得し、\\ ``_build/.doctrees/__intersphinx_cache__`` に "
+"``intersphinx_cache_limit`` 日保存します。既定は 5 "
+"日、負値なら保持します。ローカルファイルは毎回読みます。Sphinx と同じく URL "
+"の転送先ディレクトリをリンクの基準にし、キャッシュにも記録するため、キャッシュ利用時も同じリンクになります。例えば "
+"``https://werkzeug.palletsprojects.com/objects.inv`` は ``/en/stable/`` "
+"に転送されます。\\ ``intersphinx_timeout`` "
+"は取得ごとの秒数制限です。到達できないプロジェクトは警告し、参照は未解決のままです。"
+
+#: ../../intersphinx.rst:44
+msgid ""
+"Guidedog writes its own ``objects.inv`` with every page, label, term, and "
+"object, so other projects can link here the same way."
+msgstr ""
+"Guidedog は各ページ、ラベル、用語、オブジェクトを含む ``objects.inv`` "
+"を書き、他のプロジェクトから同じ方法でリンクできます。"

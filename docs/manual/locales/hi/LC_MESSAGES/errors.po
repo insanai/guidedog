@@ -1,0 +1,346 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../errors.rst:3
+msgid "Error messages"
+msgstr "त्रुटि संदेश"
+
+#: ../../errors.rst:6
+msgid ""
+"A report should name the problem, show its location, and give a useful "
+"next step. Guidedog keeps that evidence as structured data. The terminal "
+"adds color and a source marker. JSON keeps the data without terminal "
+"decoration."
+msgstr ""
+"रिपोर्ट समस्या का नाम, स्थान और उपयोगी अगला कदम बताए। Guidedog यह जानकारी "
+"संरचित डेटा में रखता है। टर्मिनल रंग और स्रोत चिह्न जोड़ता है। JSON बिना "
+"टर्मिनल सजावट के डेटा रखता है।"
+
+#: ../../errors.rst:10
+msgid "Reading a report"
+msgstr "रिपोर्ट पढ़ना"
+
+#: ../../errors.rst:25
+msgid "A report has four parts, always in this order:"
+msgstr "रिपोर्ट के चार भाग हमेशा इसी क्रम में होते हैं:"
+
+#: ../../errors.rst:27
+msgid ""
+"**The title bar.** The title names the kind of problem in capitals; "
+"warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right of "
+"the bar is the report's code, such as ``rst.substitution.undefined``: a "
+"stable name you can search for."
+msgstr ""
+"**शीर्षक पट्टी।** शीर्षक समस्या का प्रकार बड़े अक्षरों में बताता है। "
+"चेतावनी और सूचना ``WARNING:`` और ``NOTE:`` से शुरू होती हैं। दाईं ओर "
+"``rst.substitution.undefined`` जैसा रिपोर्ट कोड है: खोजने के लिए स्थिर "
+"नाम।"
+
+#: ../../errors.rst:30
+msgid ""
+"**Where.** The file and line, the source line itself, and a marker under "
+"the text the problem is about. A problem that is not about one line (a "
+"missing folder, a flag) shows only the path, or nothing."
+msgstr ""
+"**स्थान।** फ़ाइल और पंक्ति, मूल पंक्ति और समस्या वाले पाठ के नीचे चिह्न "
+"दिखता है। किसी एक पंक्ति से न जुड़ी समस्या, जैसे लापता फ़ोल्डर या फ़्लैग, "
+"में केवल पथ दिखता है या स्थान नहीं दिखता।"
+
+#: ../../errors.rst:33
+msgid ""
+"**What happened.** The explanation, followed, when it matters, by what "
+"the problem means for the output: here, that nothing was written."
+msgstr ""
+"**क्या हुआ।** पहले कारण की व्याख्या होती है। ज़रूरत हो तो आउटपुट पर असर "
+"बताया जाता है: यहाँ कुछ भी नहीं लिखा गया।"
+
+#: ../../errors.rst:35
+msgid ""
+"**What to do.** The hint, in green on a color terminal: a concrete "
+"direction. Where there are several ways to fix the problem, the hint "
+"names them, the most likely first."
+msgstr ""
+"**क्या करें।** रंगीन टर्मिनल में हरे रंग का संकेत ठोस दिशा देता है। कई "
+"उपाय हों तो सबसे उपयोगी लगने वाला पहले आता है।"
+
+#: ../../errors.rst:39
+msgid ""
+"Colors only underline what the words already say; ``--color=never`` turns "
+"them off and ``--color=always`` keeps them when the output is not a "
+"terminal."
+msgstr ""
+"रंग केवल शब्दों की बात पर ज़ोर देते हैं। ``--color=never`` रंग बंद करता "
+"है। ``--color=always`` गैर-टर्मिनल आउटपुट में भी रंग रखता है।"
+
+#: ../../errors.rst:42
+msgid "Every hint gives directions"
+msgstr "हर संकेत आगे की राह बताता है"
+
+#: ../../errors.rst:45
+msgid ""
+"Guidedog holds its own messages to this: a hint starts with what to do "
+"(\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\") and names what to do it "
+"to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the "
+"directive's option. A test (``tests/hints_test.odin``) reads every "
+"message Guidedog can emit and fails when a hint is empty, repeats the "
+"message, or says only \"report this\" without saying what to report with. "
+"Two forms are allowed because they name the fix themselves: a suggestion "
+"(\"Did you mean numfig?\") and, for a note that needs no action, "
+"\"Nothing to do:\" with the reason."
+msgstr ""
+"Guidedog अपने संदेशों पर भी यह नियम लागू करता है। संकेत पहले क्रिया "
+"(\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\") और उसका लक्ष्य बताता "
+"है, जैसे ``--budget=MIB``\\ , ``conf.toml`` का ``root_doc`` या निर्देश का "
+"विकल्प। ``tests/hints_test.odin`` हर संभव संदेश पढ़ता है। खाली संकेत, "
+"संदेश की पुनरावृत्ति या बिना ज़रूरी विवरण के केवल \"report this\" कहने पर "
+"टेस्ट विफल होता है। दो अन्य रूप स्वीकार हैं: सुधार सुझाना (\"Did you mean "
+"numfig?\") और कार्रवाई-रहित नोट में \"Nothing to do:\" के साथ कारण देना।"
+
+#: ../../errors.rst:53
+msgid ""
+"When the problem is Guidedog's own fault, the hint says so and asks you "
+"to report it with the command you ran, the input that caused it, and the "
+"output of ``guidedog --version``."
+msgstr ""
+"समस्या Guidedog की हो तो संकेत साफ़ बताता है। रिपोर्ट के साथ चलाया कमांड, "
+"समस्या वाला इनपुट और ``guidedog --version`` का आउटपुट माँगता है।"
+
+#: ../../errors.rst:57
+msgid "Reports for programs"
+msgstr "प्रोग्राम के लिए रिपोर्ट"
+
+#: ../../errors.rst:60
+msgid ""
+"``--diagnostics=json`` writes each report as one JSON object per line on "
+"standard error, for editors and continuous integration:"
+msgstr ""
+"``--diagnostics=json`` हर रिपोर्ट को मानक त्रुटि पर एक पंक्ति में एक JSON "
+"ऑब्जेक्ट के रूप में लिखता है, ताकि संपादक और निरंतर एकीकरण पढ़ सकें:"
+
+#: ../../errors.rst:71
+msgid ""
+"(shown wrapped here; each object is on one line). ``schema`` is the "
+"version of this format, which changes only when a field does; check it "
+"before reading the rest. Columns count Unicode scalars, not bytes or "
+"terminal cells, from 1. ``source`` is the complete original source line; "
+"the terminal shows a bounded window around the error and aligns its caret "
+"after escaping controls and measuring wide characters. ``category`` is "
+"the warning's category, as ``suppress_warnings`` names it, or empty."
+msgstr ""
+"यहाँ पाठ मोड़ा गया है; वास्तव में हर ऑब्जेक्ट एक पंक्ति में है। "
+"``schema`` प्रारूप का संस्करण है, जो फ़ील्ड बदलने पर ही बदलता है। बाकी "
+"पढ़ने से पहले इसे जाँचें। कॉलम 1 से Unicode स्केलर गिनते हैं, बाइट या "
+"टर्मिनल खाने नहीं। ``source`` पूरी मूल पंक्ति है। टर्मिनल त्रुटि के आसपास "
+"सीमित हिस्सा दिखाता है और नियंत्रण अक्षर एस्केप करने तथा चौड़े अक्षर "
+"मापने के बाद निशान मिलाता है। ``category`` ``suppress_warnings`` वाली "
+"चेतावनी श्रेणी है, या खाली है।"
+
+#: ../../errors.rst:78
+msgid "When memory runs out"
+msgstr "मेमोरी कम पड़ने पर"
+
+#: ../../errors.rst:81
+msgid ""
+"Running out of memory is a report too, never a crash. There are two kinds:"
+msgstr "मेमोरी कम पड़ना भी रिपोर्ट है, क्रैश नहीं। दो प्रकार हैं:"
+
+#: ../../errors.rst:83
+msgid "``host.budget`` (MEMORY BUDGET REACHED)"
+msgstr "``host.budget`` (मेमोरी बजट पूरा)"
+
+#: ../../errors.rst:84
+msgid ""
+"The build reached the memory it may hold, its budget (``--budget=MIB``, 1 "
+"GiB by default). The report names the step and, for a template, the line "
+"that asked for the memory. At a terminal the build asks once what to do: "
+"raise the budget to one the step fits, go on with the working memory on "
+"disk, or stop; elsewhere it stops, and ``--budget`` or ``--memory=disk`` "
+"chooses ahead. The hint names that same budget as a number, for example:"
+msgstr ""
+"बिल्ड अपनी मेमोरी सीमा तक पहुँचा (\\ ``--budget=MIB``\\ , डिफ़ॉल्ट 1 "
+"GiB)। रिपोर्ट चरण और टेम्पलेट में मेमोरी माँगने वाली पंक्ति बताती है। "
+"टर्मिनल पर एक बार चुनाव मिलता है: पर्याप्त बजट बढ़ाएँ, कार्यशील मेमोरी "
+"डिस्क पर रखकर चलें, या रुकें। दूसरे वातावरण में बिल्ड रुकता है। "
+"``--budget`` या ``--memory=disk`` से पहले चुनाव कर सकते हैं। संकेत बजट का "
+"अंक भी देता है, जैसे:"
+
+#: ../../errors.rst:94
+msgid ""
+"The number holds what the build held and the refused step four times over "
+"(the step also holds its output and the copy it writes), or twice the old "
+"budget, whichever is larger, rounded up to 64 MiB, and no more than the "
+"memory the machine has free when the step fits there. When it does not, "
+"the hint says so, and names ``--memory=disk`` first:"
+msgstr ""
+"संख्या वर्तमान उपयोग में अस्वीकृत चरण की माँग का चार गुना जोड़ती है (चरण "
+"आउटपुट और लिखने की प्रति भी रखता है), या पुराने बजट का दोगुना लेती है—जो "
+"बड़ा हो। इसे 64 MiB तक ऊपर गोल किया जाता है। चरण खाली मेमोरी में समा सके "
+"तो सीमा उपलब्ध मेमोरी से अधिक नहीं। न समाए तो संकेत बताकर पहले "
+"``--memory=disk`` सुझाता है:"
+
+#: ../../errors.rst:104
+msgid "``host.memory`` (OUT OF MEMORY)"
+msgstr "``host.memory`` (मेमोरी उपलब्ध नहीं)"
+
+#: ../../errors.rst:105
+msgid ""
+"The system refused memory the budget allowed. The command stops without "
+"using what it was refused: a build publishes nothing, a GDS change is "
+"applied whole or not at all, and ``convert`` writes a whole page or none. "
+"Free memory, or build with fewer threads (``-j 1``), and run the command "
+"again. Once a build has decided to publish, switching its output into "
+"place needs no memory, so a refusal cannot stop a publication halfway; if "
+"the build instead finds an earlier build's publication to finish and has "
+"no memory to plan it, it leaves that publication as it was, for the next "
+"build."
+msgstr ""
+"सिस्टम ने बजट के भीतर की मेमोरी माँग ठुकराई। कमांड उस मेमोरी को छुए बिना "
+"रुकता है: बिल्ड कुछ प्रकाशित नहीं करता, GDS बदलाव पूरा होता है या बिल्कुल "
+"नहीं, और ``convert`` पूरा पेज लिखता है या कुछ नहीं। मेमोरी खाली करें या "
+"थ्रेड घटाएँ (\\ ``-j 1``\\ ), फिर चलाएँ। प्रकाशन का निर्णय हो जाने पर "
+"आउटपुट बदलने को मेमोरी नहीं चाहिए; अस्वीकृति से अधूरा प्रकाशन नहीं होता। "
+"पुराने प्रकाशन को पूरा करने की योजना हेतु मेमोरी न हो तो उसे अगली बिल्ड "
+"के लिए जस का तस छोड़ा जाता है।"
+
+#: ../../errors.rst:113
+msgid "Both end with status 3."
+msgstr "दोनों स्टेटस 3 पर समाप्त होते हैं।"
+
+#: ../../errors.rst:115
+msgid "Exit status"
+msgstr "एग्ज़िट स्टेटस"
+
+#: ../../errors.rst:118
+msgid ""
+"Every command ends with one of these statuses, so scripts can tell kinds "
+"of failure apart:"
+msgstr ""
+"हर कमांड इनमें से एक स्टेटस पर समाप्त होता है, जिससे स्क्रिप्ट विफलता के "
+"प्रकार पहचान सकती हैं:"
+
+#: ../../errors.rst:122
+msgid "Status"
+msgstr "स्थिति"
+
+#: ../../errors.rst:122
+msgid "Meaning"
+msgstr "अर्थ"
+
+#: ../../errors.rst:124
+msgid "0"
+msgstr "0"
+
+#: ../../errors.rst:124
+msgid "Success. The output was written (and, for a build, published)."
+msgstr "सफलता। आउटपुट लिखा गया और बिल्ड में प्रकाशित हुआ।"
+
+#: ../../errors.rst:125
+msgid "1"
+msgstr "1"
+
+#: ../../errors.rst:125
+msgid ""
+"The input has a problem: an error in a document, a policy refusal (raw "
+"content without ``--raw``), a document that could not be read, or a "
+"warning when ``-W`` or ``--strict`` treats warnings as errors."
+msgstr ""
+"इनपुट में समस्या: दस्तावेज़ त्रुटि, नीति से अस्वीकृति (\\ ``--raw`` के "
+"बिना raw सामग्री), न पढ़ा जा सकने वाला दस्तावेज़, या ``-W`` अथवा "
+"``--strict`` से त्रुटि मानी गई चेतावनी।"
+
+#: ../../errors.rst:128
+msgid "2"
+msgstr "2"
+
+#: ../../errors.rst:128
+msgid ""
+"The command was used wrongly: an unknown flag or command, a missing or "
+"invalid value, or an invalid setting in ``conf.toml`` or ``-D``."
+msgstr ""
+"कमांड का गलत उपयोग: अज्ञात फ़्लैग या कमांड, लापता या अमान्य मान, अथवा "
+"``conf.toml`` या ``-D`` में अमान्य विकल्प।"
+
+#: ../../errors.rst:130
+msgid "3"
+msgstr "3"
+
+#: ../../errors.rst:130
+msgid ""
+"A limit was reached: the memory budget (``--budget``), the nesting depth "
+"(``--max-depth``), the node count (``--max-nodes``), the stack "
+"(``--stack-kib``), a source too large, or memory the system could not "
+"provide."
+msgstr ""
+"सीमा पूरी हुई: मेमोरी बजट (\\ ``--budget``\\ ), नेस्टिंग गहराई (\\ "
+"``--max-depth``\\ ), नोड संख्या (\\ ``--max-nodes``\\ ), स्टैक (\\ "
+"``--stack-kib``\\ ), बहुत बड़ा स्रोत या सिस्टम से न मिल सकी मेमोरी।"
+
+#: ../../errors.rst:133
+msgid "4"
+msgstr "4"
+
+#: ../../errors.rst:133
+msgid ""
+"A file or an outside program failed: a path that cannot be read or "
+"written, a file that changed while it was read, or Typst not starting or "
+"not finishing."
+msgstr ""
+"फ़ाइल या बाहरी प्रोग्राम विफल हुआ: न पढ़ा या लिखा जा सकने वाला पथ, पढ़ते "
+"समय बदली फ़ाइल, या Typst का शुरू या पूरा न होना।"
+
+#: ../../errors.rst:135
+msgid "5"
+msgstr "5"
+
+#: ../../errors.rst:135
+msgid "Guidedog failed internally, and the report asks you to report it."
+msgstr "Guidedog में आंतरिक विफलता हुई और रिपोर्ट इसे बताने को कहती है।"
+
+#: ../../errors.rst:136
+msgid "70"
+msgstr "70"
+
+#: ../../errors.rst:136
+msgid ""
+"Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
+"the command that ran, the fault, and what ``guidedog --version`` prints, "
+"and says where to report it: the issue tracker your build names, or else "
+"whoever provided your build. Because builds publish only at the end, a "
+"crash leaves the previous output in place."
+msgstr ""
+"Guidedog क्रैश होने पर ``GUIDEDOG CRASHED (internal error)``\\ , चला "
+"कमांड, दोष और ``guidedog --version`` का आउटपुट देता है। रिपोर्ट की जगह "
+"बिल्ड का इश्यू ट्रैकर, या बिल्ड देने वाला व्यक्ति है। प्रकाशन अंत में "
+"होने से क्रैश पर पुराना आउटपुट बना रहता है।"
+
+#: ../../errors.rst:141
+msgid "130"
+msgstr "130"
+
+#: ../../errors.rst:141
+msgid ""
+"The command was interrupted with Ctrl+C; published files were left "
+"unchanged."
+msgstr "कमांड Ctrl+C से रोका गया; प्रकाशित फ़ाइलें बदली नहीं गईं।"
+
+#: ../../errors.rst:144
+msgid ""
+"A build that fails for any reason leaves the previous output, and the "
+"records of what it built, as they were: fix the problem and build again."
+msgstr ""
+"किसी भी कारण से बिल्ड विफल हो तो पिछला आउटपुट और बिल्ड रिकॉर्ड वैसे ही "
+"रहते हैं। समस्या सुधारें और फिर बिल्ड करें।"

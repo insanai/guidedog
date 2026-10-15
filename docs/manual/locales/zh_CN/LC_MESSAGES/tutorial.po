@@ -1,0 +1,858 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../tutorial/a-custom-theme.rst:1
+msgid "Build a project theme"
+msgstr "制作项目主题"
+
+#: ../../tutorial/a-custom-theme.rst:4
+msgid ""
+"A theme gives the same content two reading forms: a website and a book. "
+"This tutorial builds an Orbit theme with a shared visual identity, an "
+"HTML partial and macro, and a modular PDF template. It needs no plugin or "
+"compiler."
+msgstr ""
+"主题让同一份内容既成为网站，也成为书籍。本教程制作 Orbit 主题，统一视觉风格，使用 HTML 局部模板和宏，并拆分 PDF "
+"模板。不需要插件或编译器。"
+
+#: ../../tutorial/a-custom-theme.rst:8
+msgid "1. Start with a real project"
+msgstr "1. 从真实项目开始"
+
+#: ../../tutorial/a-custom-theme.rst:11
+msgid ""
+"Use Guidedog 0.6.2 or newer. Run this from the directory that will "
+"contain ``orbit``:"
+msgstr "使用 Guidedog 0.6.2 或更新版本。在准备创建 ``orbit`` 的父目录运行："
+
+#: ../../tutorial/a-custom-theme.rst:17
+msgid ""
+"Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
+"in the same directory. Keep this file: it supplies the tested page "
+"layout, cover, running heads, contents, code styles and optimized "
+"paragraph breaking."
+msgstr ""
+"将生成的 ``orbit/_templates/book.typ`` 在同一目录内重命名为 "
+"``base-book.typ``。保留它：页面布局、封面、页眉、目录、代码样式和优化断行都由此模板提供。"
+
+#: ../../tutorial/a-custom-theme.rst:21
+msgid ""
+"Download :download:`conf.toml <../_static/repository/theme/conf.toml>`, "
+":download:`index.rst <../_static/repository/theme/index.rst>` and "
+":download:`reading.rst "
+"<../_static/repository/theme/chapters/reading.rst>`. Save the first two "
+"in ``orbit`` and the third in ``orbit/chapters``. The finished project "
+"will have these files:"
+msgstr ""
+"下载 :download:`conf.toml "
+"<../_static/repository/theme/conf.toml>`、:download:`index.rst "
+"<../_static/repository/theme/index.rst>` 和 :download:`reading.rst "
+"<../_static/repository/theme/chapters/reading.rst>`。前两份保存到 "
+"``orbit``，第三份保存到 ``orbit/chapters``。完成后的文件结构如下："
+
+#: ../../tutorial/a-custom-theme.rst:45
+msgid "2. Set the contract"
+msgstr "2. 设定契约"
+
+#: ../../tutorial/a-custom-theme.rst:48
+msgid ""
+"The downloaded configuration selects the local template and static "
+"directories. ``html_css_files`` adds our stylesheet after the default "
+"stylesheet. ``html_context`` supplies a project value to Jinja. The "
+"explicit PDF filename makes the output easy to find."
+msgstr ""
+"下载的配置指定本地模板和静态文件目录。``html_css_files`` 在默认样式表之后添加主题 CSS；``html_context`` 向 "
+"Jinja 传入项目值。显式指定 PDF 文件名，便于查找输出。"
+
+#: ../../tutorial/a-custom-theme.rst:55
+msgid "orbit/conf.toml"
+msgstr "orbit/conf.toml"
+
+#: ../../tutorial/a-custom-theme.rst:57
+msgid ""
+"All paths in this tutorial are project files. HTML templates are found "
+"through ``templates_path``. The PDF entry point is always "
+"``_templates/book.typ`` under the source directory; changing "
+"``templates_path`` does not move it."
+msgstr ""
+"本教程中的路径都是项目文件。HTML 模板通过 ``templates_path`` 查找。PDF 入口固定为源目录中的 "
+"``_templates/book.typ``，修改 ``templates_path`` 不会移动它。"
+
+#: ../../tutorial/a-custom-theme.rst:61
+msgid "3. Extend the HTML layout"
+msgstr "3. 扩展 HTML 布局"
+
+#: ../../tutorial/a-custom-theme.rst:64
+msgid ""
+"Save :download:`layout.html "
+"<../_static/repository/theme/_templates/layout.html>` as "
+"``orbit/_templates/layout.html``. Replace the generated file completely:"
+msgstr ""
+"将 :download:`layout.html "
+"<../_static/repository/theme/_templates/layout.html>` 保存为 "
+"``orbit/_templates/layout.html``，完整替换生成的文件："
+
+#: ../../tutorial/a-custom-theme.rst:69
+msgid "orbit/_templates/layout.html"
+msgstr "orbit/_templates/layout.html"
+
+#: ../../tutorial/a-custom-theme.rst:71
+msgid ""
+"``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a "
+"template named ``layout.html`` would try to extend itself. ``super()`` "
+"keeps the parent's block content. Navigation, search, theme controls and "
+"accessible landmarks remain in the base layout. Our blocks add a label, "
+"metadata and an edition footer."
+msgstr ""
+"``!layout.html`` 选择 Guidedog 内置布局。没有 ``!`` 时，名为 ``layout.html`` "
+"的模板会试图继承自己。``super()`` 保留父块内容。导航、搜索、主题控件和无障碍地标都留在基础布局中；我们的块只添加标签、元数据和版本页脚。"
+
+#: ../../tutorial/a-custom-theme.rst:76
+msgid ""
+"A theme changes presentation. A build plugin changes source text, "
+"complete HTML or generated assets. Use :doc:`../plugins` when a template "
+"cannot express the required operation. Ordinary layout changes need no "
+"native code."
+msgstr ""
+"主题改变呈现；构建插件改变源文本、完整 HTML 或生成资源。模板无法表达所需操作时，参见 "
+":doc:`../plugins`。一般布局修改不需要原生代码。"
+
+#: ../../tutorial/a-custom-theme.rst:80
+msgid "4. Give repeated markup one home"
+msgstr "4. 复用重复的标记"
+
+#: ../../tutorial/a-custom-theme.rst:83
+msgid ""
+"Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. "
+"Save :download:`ui.html "
+"<../_static/repository/theme/_templates/macros/ui.html>` and "
+":download:`edition.html "
+"<../_static/repository/theme/_templates/partials/edition.html>` at the "
+"matching paths:"
+msgstr ""
+"创建 ``orbit/_templates/macros`` 和 ``orbit/_templates/partials``，将 "
+":download:`ui.html "
+"<../_static/repository/theme/_templates/macros/ui.html>`、:download:`edition.html "
+"<../_static/repository/theme/_templates/partials/edition.html>` 保存到对应路径："
+
+#: ../../tutorial/a-custom-theme.rst:90
+msgid "orbit/_templates/macros/ui.html"
+msgstr "orbit/_templates/macros/ui.html"
+
+#: ../../tutorial/a-custom-theme.rst:94
+msgid "orbit/_templates/partials/edition.html"
+msgstr "orbit/_templates/partials/edition.html"
+
+#: ../../tutorial/a-custom-theme.rst:96
+msgid ""
+"A macro takes explicit inputs. An included partial uses the current "
+"page's context. Escape plain project values with ``|e``. Use ``pathto`` "
+"for document links: a hard-coded ``chapters/reading.html`` would break on "
+"a nested page or with another HTML builder."
+msgstr ""
+"宏接收明确的参数，包含的局部模板使用当前页面上下文。普通项目值用 ``|e`` 转义，文档链接用 ``pathto``。硬写 "
+"``chapters/reading.html`` 会在嵌套页面或其他 HTML 构建器中失效。"
+
+#: ../../tutorial/a-custom-theme.rst:101
+msgid "5. Design for the reader's theme"
+msgstr "5. 适应读者的主题选择"
+
+#: ../../tutorial/a-custom-theme.rst:104
+msgid ""
+"Save :download:`theme.css "
+"<../_static/repository/theme/_static/theme.css>` as "
+"``orbit/_static/theme.css``:"
+msgstr ""
+"将 :download:`theme.css <../_static/repository/theme/_static/theme.css>` "
+"保存为 ``orbit/_static/theme.css``："
+
+#: ../../tutorial/a-custom-theme.rst:109
+msgid "orbit/_static/theme.css"
+msgstr "orbit/_static/theme.css"
+
+#: ../../tutorial/a-custom-theme.rst:111
+msgid ""
+"The theme begins in light mode. The existing control selects light, dark "
+"or system and saves the choice. Explicit dark rules and the system media "
+"query use the same tokens. Typography and spacing stay shared. No new "
+"JavaScript is needed. Avoid a fixed ink color on a background whose theme "
+"can change."
+msgstr ""
+"默认使用浅色模式。现有控件可选择浅色、深色或跟随系统，并保存选择。显式深色规则和系统媒体查询使用相同变量，排版和间距共用。无须添加 "
+"JavaScript。背景会变时，不要将文字固定为不适应主题的颜色。"
+
+#: ../../tutorial/a-custom-theme.rst:116
+msgid ""
+"Browser hyphenation follows the page language. It is not Typst's "
+"paragraph optimizer. The manual's optional English web optimizer is "
+"described separately in :doc:`../topics/typography`; this example uses "
+"native browser layout."
+msgstr ""
+"浏览器按页面语言断词，不等同于 Typst 的段落优化。本手册可选的英文网页优化器见 "
+":doc:`../topics/typography`；本例使用浏览器原生排版。"
+
+#: ../../tutorial/a-custom-theme.rst:120
+msgid ""
+"Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in "
+"current Guidedog builds. Ordinary graphs retain their own colors. Older "
+"hosts render the same DOT in its light palette. See "
+":doc:`../topics/diagrams` for semantic node classes and print behavior."
+msgstr ""
+"当前 Guidedog 构建中，带 ``:class: graphviz-adaptive`` "
+"的图会跟随所选主题。普通图保留自己的颜色，旧版主机仍能按浅色配色渲染相同 DOT。语义节点类和打印行为见 "
+":doc:`../topics/diagrams`。"
+
+#: ../../tutorial/a-custom-theme.rst:125
+msgid "6. Wrap the PDF book"
+msgstr "6. 包装 PDF 书籍模板"
+
+#: ../../tutorial/a-custom-theme.rst:128
+msgid ""
+"Save :download:`palette.typ "
+"<../_static/repository/theme/_templates/palette.typ>` and "
+":download:`book.typ <../_static/repository/theme/_templates/book.typ>` in "
+"``orbit/_templates``. These are new files; keep ``base-book.typ`` beside "
+"them."
+msgstr ""
+"将 :download:`palette.typ "
+"<../_static/repository/theme/_templates/palette.typ>` 和 "
+":download:`book.typ <../_static/repository/theme/_templates/book.typ>` "
+"保存到 ``orbit/_templates``。这是两个新文件，旁边的 ``base-book.typ`` 要保留。"
+
+#: ../../tutorial/a-custom-theme.rst:134
+msgid "orbit/_templates/palette.typ"
+msgstr "orbit/_templates/palette.typ"
+
+#: ../../tutorial/a-custom-theme.rst:138
+msgid "orbit/_templates/book.typ"
+msgstr "orbit/_templates/book.typ"
+
+#: ../../tutorial/a-custom-theme.rst:140
+msgid ""
+"The host calls ``book`` with metadata and the chapter content. The "
+"wrapper forwards those values to the generated base and supplies our "
+"palette. Passing ``body`` into the styled function keeps its rules in "
+"scope. The web stylesheet does not affect PDF; the Typst template does "
+"not affect HTML."
+msgstr ""
+"主机将元数据和章节正文传给 ``book``。包装函数把这些参数转发给生成的基础模板，并传入配色。将 ``body`` "
+"交给应用样式的函数，规则才会在正文中生效。网页 CSS 不影响 PDF，Typst 模板也不影响 HTML。"
+
+#: ../../tutorial/a-custom-theme.rst:145
+msgid ""
+"The base handles language-aware hyphenation and optimized line breaking. "
+"The wrapper keeps those rules, uses the matching blue accent and adds "
+"page numbers to document cross-references. PDF always uses the light, "
+"print palette."
+msgstr ""
+"基础模板负责按语言断词并优化断行。包装函数保留这些规则，使用与网页相配的蓝色，并为文档交叉引用添加页码。PDF 始终采用适合打印的浅色配色。"
+
+#: ../../tutorial/a-custom-theme.rst:149
+msgid "7. Build and inspect both forms"
+msgstr "7. 构建并检查两种输出"
+
+#: ../../tutorial/a-custom-theme.rst:152
+msgid "Run from the same parent directory as step 1:"
+msgstr "回到第一步的同一个父目录运行："
+
+#: ../../tutorial/a-custom-theme.rst:162
+msgid ""
+"Open the URL printed by ``serve``. Check the chapter and generated search "
+"page, not only the front page. Try light, dark and system modes. Resize "
+"the window. Use the keyboard to reach the navigation and search. Change "
+"the footer partial, save, then refresh: the preview rebuilds its template "
+"dependencies."
+msgstr ""
+"打开 ``serve`` "
+"打印的网址。不只看首页，还要检查章节和生成的搜索页面。尝试浅色、深色及系统模式，缩放窗口，用键盘操作导航和搜索。修改页脚局部模板，保存并刷新，预览服务会重建依赖它的页面。"
+
+#: ../../tutorial/a-custom-theme.rst:167
+msgid ""
+"Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog "
+"adds the language suffix to the configured filename. Inspect the "
+"contents, chapter opening, equation, table, code and diagram. Look for "
+"clipped labels, loose paragraphs and missing glyphs. The other outputs "
+"are below ``_build/html``, ``_build/dirhtml`` and ``_build/singlehtml``. "
+"Stop the server with ``Ctrl+C``."
+msgstr ""
+"在 PDF 阅读器中打开 ``orbit/_build/pdf/orbit-notes-en.pdf``。Guidedog "
+"会在配置的文件名后添加语言后缀。检查目录、章节首页、公式、表格、代码和图示，留意裁切、松散行距和缺字。其他输出位于 "
+"``_build/html``、``_build/dirhtml`` 和 ``_build/singlehtml``。用 ``Ctrl+C`` "
+"停止服务器。"
+
+#: ../../tutorial/a-custom-theme.rst:174
+msgid "8. Reuse and maintain the theme"
+msgstr "8. 复用和维护主题"
+
+#: ../../tutorial/a-custom-theme.rst:177
+msgid ""
+"Create another project with ``guidedog quickstart``. Copy the finished "
+"``_templates`` directory and ``_static/theme.css`` into it. Add "
+"``html_css_files = [\"theme.css\"]``, the accent option and the "
+"``edition_label`` context value to its configuration. Change the footer's "
+"document link to a page that exists in that project. Keep the new "
+"project's metadata and source tree."
+msgstr ""
+"用 ``guidedog quickstart`` 创建另一个项目，将完成的 ``_templates`` 目录和 "
+"``_static/theme.css`` 复制过去。在配置中加入 ``html_css_files = "
+"[\"theme.css\"]``、强调色选项和 ``edition_label`` "
+"上下文值。将页脚文档链接改为新项目中存在的页面，保留新项目自己的元数据和源文件。"
+
+#: ../../tutorial/a-custom-theme.rst:183
+msgid ""
+"The copied PDF base makes the theme self-contained. When upgrading "
+"Guidedog, create a scratch quickstart project and compare its templates "
+"with your saved base. Adopt the changes you need, then rebuild every "
+"target. The built-in HTML layout can evolve too; small block overrides "
+"are easier to maintain than a second complete layout. For every variable "
+"and block, see :doc:`../templates`."
+msgstr ""
+"复制的 PDF 基础模板让主题自包含。升级 Guidedog 时，创建临时 quickstart "
+"项目，将新模板与保存的基础模板比较，按需合入修改，再重建所有目标。内置 HTML "
+"布局也会演变；少量块覆盖比另一整套布局更易维护。变量和块的完整说明见 :doc:`../templates`。"
+
+#: ../../tutorial/a-custom-theme.rst:189
+msgid ""
+"If the build reports a missing ``base-book.typ``, finish the rename in "
+"step 1. If the label is blank, set ``edition_label`` in ``html_context``. "
+"If CSS is missing, check both ``html_static_path`` and "
+"``html_css_files``. Read the file, line and correction in the diagnostic "
+"before changing unrelated settings."
+msgstr ""
+"若报告缺少 ``base-book.typ``，完成第一步的重命名。标签为空时，在 ``html_context`` 中设置 "
+"``edition_label``。CSS 缺失时，同时检查 ``html_static_path`` 和 "
+"``html_css_files``。先阅读诊断中的文件、行号和修正建议，再调整相关设置。"
+
+#: ../../tutorial/a-small-book.rst:1
+msgid "Make a small book"
+msgstr "制作一本小书"
+
+#: ../../tutorial/a-small-book.rst:4
+msgid ""
+"A website is an interconnected web of pages that readers explore "
+"non-linearly. A book, by contrast, requires a deliberate, sequential "
+"reading order with numbered chapters, running headers, and formal front "
+"matter."
+msgstr "网站允许读者通过链接自由浏览；书籍则需要明确的顺序、章节编号、页眉和前置页。"
+
+#: ../../tutorial/a-small-book.rst:8
+msgid ""
+"In Guidedog, the table of contents directive (``toctree``) provides the "
+"bridge between both formats. A single ``toctree`` organizes your "
+"documents into a hierarchical sidebar tree for the web and a linear "
+"chapter progression for the PDF book."
+msgstr "Guidedog 用目录指令 ``toctree`` 连接两种形式：同一棵树既构成网页侧栏，也决定 PDF 的线性章节顺序。"
+
+#: ../../tutorial/a-small-book.rst:14
+msgid ""
+"The root document toctree maps into an interactive sidebar and "
+"breadcrumbs on the web, and numbered chapters in print."
+msgstr "根文档的 toctree 在网页中形成交互导航和面包屑，在打印版中形成编号章节。"
+
+#: ../../tutorial/a-small-book.rst:14
+msgid ""
+"How a single toctree shapes both web navigation and sequential book "
+"chapters."
+msgstr "同一个 toctree 同时决定网页导航和书籍章节顺序。"
+
+#: ../../tutorial/a-small-book.rst:35
+msgid "1. Add a new chapter"
+msgstr "1. 添加新章节"
+
+#: ../../tutorial/a-small-book.rst:38
+msgid ""
+"In your ``notes`` project, create a new document named "
+"``measurement.rst``:"
+msgstr "在 ``notes`` 项目中创建 ``measurement.rst``："
+
+#: ../../tutorial/a-small-book.rst:41
+msgid "notes/measurement.rst"
+msgstr "notes/measurement.rst"
+
+#: ../../tutorial/a-small-book.rst:64
+msgid ""
+"Notice the section label ``.. _measurement-units:`` placed directly above "
+"the heading. Labels establish cross-reference targets that work "
+"identically on the web and in print."
+msgstr "注意标题上方的 ``.. _measurement-units:``。标签定义交叉引用目标，在网页和打印版中均有效。"
+
+#: ../../tutorial/a-small-book.rst:67
+msgid "2. Structure the reading order"
+msgstr "2. 组织阅读顺序"
+
+#: ../../tutorial/a-small-book.rst:70
+msgid "Open ``notes/index.rst`` and declare the table of contents:"
+msgstr "打开 ``notes/index.rst``，声明目录："
+
+#: ../../tutorial/a-small-book.rst:73
+msgid "notes/index.rst"
+msgstr "notes/index.rst"
+
+#: ../../tutorial/a-small-book.rst:92
+msgid "Understanding the toctree options:"
+msgstr "toctree 选项说明："
+
+#: ../../tutorial/a-small-book.rst:94
+msgid ""
+"``:maxdepth: 2`` sets the depth of nested subheadings displayed in the "
+"table of contents."
+msgstr "``:maxdepth: 2`` 设置目录中展示的子标题深度。"
+
+#: ../../tutorial/a-small-book.rst:95
+msgid ""
+"``:numbered:`` activates automatic, hierarchical chapter numbering (for "
+"example, \"1. Measurement\" and \"1.1 Units of measurement\")."
+msgstr ""
+"``:numbered:`` 开启分层章节编号，如“1. Measurement”和“1.1 Units of measurement”。"
+
+#: ../../tutorial/a-small-book.rst:96
+msgid ""
+"``measurement`` references the document file name without the ``.rst`` "
+"extension."
+msgstr "``measurement`` 引用文档名，不带 ``.rst`` 扩展名。"
+
+#: ../../tutorial/a-small-book.rst:98
+msgid "Cross-referencing syntax:"
+msgstr "交叉引用语法："
+
+#: ../../tutorial/a-small-book.rst:100
+msgid "``:doc:`measurement``` links to the chapter by document path."
+msgstr "``:doc:`measurement``` 按文档路径链接到章节。"
+
+#: ../../tutorial/a-small-book.rst:101
+msgid ""
+"``:ref:`measurement-units``` links to the labeled section. PDF uses the "
+"section title. A book template can also add the page number through "
+"``page-ref``; see :doc:`a-custom-theme` for a working example."
+msgstr ""
+"``:ref:`measurement-units``` 链接到带标签的节。PDF 显示节标题；书籍模板还能通过 ``page-ref`` "
+"添加页码，可用示例见 :doc:`a-custom-theme`。"
+
+#: ../../tutorial/a-small-book.rst:105
+msgid "3. Add a diagram with Graphviz"
+msgstr "3. 添加 Graphviz 图示"
+
+#: ../../tutorial/a-small-book.rst:108
+msgid ""
+"Visual diagrams clarify complex relationships. Guidedog embeds the "
+"Graphviz engine natively, compiling vector diagrams directly into SVG for "
+"web pages and PDF drawings for print without requiring an external "
+"browser renderer."
+msgstr "图示能说明复杂关系。Guidedog 原生集成 Graphviz，为网页生成 SVG，为打印版嵌入矢量图，无须外部浏览器渲染器。"
+
+#: ../../tutorial/a-small-book.rst:112
+msgid "Add a diagram to ``notes/measurement.rst``:"
+msgstr "在 ``notes/measurement.rst`` 中添加图示："
+
+#: ../../tutorial/a-small-book.rst:135
+msgid ""
+"The ``:caption:`` option supplies a caption. To number figures, add "
+"``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option provides "
+"alternative text for screen readers."
+msgstr ""
+"``:caption:`` 提供图注。需要编号时，在 ``notes/conf.toml`` 加入 ``numfig = "
+"true``。``:alt:`` 为屏幕阅读器提供替代文本。"
+
+#: ../../tutorial/a-small-book.rst:139
+msgid "4. Build the book and inspect results"
+msgstr "4. 构建并检查书籍"
+
+#: ../../tutorial/a-small-book.rst:142
+msgid "Rebuild your project:"
+msgstr "重新构建项目："
+
+#: ../../tutorial/a-small-book.rst:149
+msgid "Inspect the results in both formats:"
+msgstr "分别检查两种输出："
+
+#: ../../tutorial/a-small-book.rst:151
+msgid ""
+"**HTML website:** Open ``notes/_build/html/index.html``. The sidebar now "
+"shows the numbered chapter hierarchy. Clicking \"1. Measurement\" opens "
+"the new page, complete with local breadcrumbs and the rendered SVG "
+"diagram."
+msgstr ""
+"**HTML 网站：** 打开 ``notes/_build/html/index.html``。侧栏显示编号章节层级，点击“1. "
+"Measurement”可打开含面包屑和 SVG 图示的新页面。"
+
+#: ../../tutorial/a-small-book.rst:154
+msgid ""
+"**PDF book:** Open ``notes/_build/pdf/field-notes-en.pdf``. The contents "
+"lists the chapters and their pages. The diagram remains vector artwork, "
+"and document cross-references link to their targets."
+msgstr ""
+"**PDF 书籍：** 打开 "
+"``notes/_build/pdf/field-notes-en.pdf``。目录列出章节和页码，图示保持矢量形式，文档交叉引用链接到对应位置。"
+
+#: ../../tutorial/a-small-book.rst:158
+msgid "5. Next steps"
+msgstr "5. 下一步"
+
+#: ../../tutorial/a-small-book.rst:161
+msgid ""
+"Now that you understand the dual output model, explore the topics section "
+"to learn more:"
+msgstr "理解两种输出后，可继续阅读专题："
+
+#: ../../tutorial/a-small-book.rst:163
+msgid "Learn rich markup, lists, and tables in :doc:`../topics/writing`."
+msgstr "丰富标记、列表和表格见 :doc:`../topics/writing`。"
+
+#: ../../tutorial/a-small-book.rst:164
+msgid ""
+"Learn how to render formulas and equations in "
+":doc:`../topics/mathematics`."
+msgstr "公式与方程排版见 :doc:`../topics/mathematics`。"
+
+#: ../../tutorial/a-small-book.rst:165
+msgid ""
+"Learn how to configure custom styles and book fonts in "
+":doc:`../topics/typography`."
+msgstr "自定义样式和书籍字体见 :doc:`../topics/typography`。"
+
+#: ../../tutorial/first-project.rst:1
+msgid "Your first project"
+msgstr "第一个项目"
+
+#: ../../tutorial/first-project.rst:4
+msgid ""
+"This tutorial guides you through creating, writing, and building your "
+"first documentation project with Guidedog. The goal is modest and clear: "
+"start from a clean directory, generate both an HTML website and a "
+"printable PDF book from the same source file, and experience the live "
+"preview server."
+msgstr "本教程从空目录开始，创建并编写一个 Guidedog 项目，用同一源文件生成 HTML 网站和可打印的 PDF，再体验实时预览服务。"
+
+#: ../../tutorial/first-project.rst:9
+msgid ""
+"You need a working installation of Guidedog. For PDF output, Guidedog can "
+"use its embedded compiler or an installed Typst binary (0.15.1 or newer). "
+"See :doc:`../howto/install`."
+msgstr ""
+"需要先安装 Guidedog。PDF 可使用内嵌编译器，或已安装的 Typst 0.15.1 及更新版本。见 "
+":doc:`../howto/install`。"
+
+#: ../../tutorial/first-project.rst:12
+msgid "On macOS, you can install the official release using Homebrew:"
+msgstr "macOS 可通过 Homebrew 安装官方版本："
+
+#: ../../tutorial/first-project.rst:18
+msgid "Project architecture and build pipeline"
+msgstr "项目结构与构建流程"
+
+#: ../../tutorial/first-project.rst:21
+msgid ""
+"Guidedog takes a single directory of source files and compiles it into "
+"two distinct artifacts: a responsive HTML website and a typeset PDF book."
+msgstr "Guidedog 将一个源目录构建为两种产物：响应式 HTML 网站和排版好的 PDF 书籍。"
+
+#: ../../tutorial/first-project.rst:26
+msgid ""
+"Project sources and templates pass through the Guidedog compiler to "
+"produce HTML and PDF artifacts."
+msgstr "项目源文件和模板通过 Guidedog 编译器生成 HTML 和 PDF。"
+
+#: ../../tutorial/first-project.rst:26
+msgid "How Guidedog compiles a project into an HTML website and a PDF book."
+msgstr "Guidedog 将项目构建为 HTML 网站与 PDF 书籍的过程。"
+
+#: ../../tutorial/first-project.rst:46
+msgid "1. Create the project"
+msgstr "1. 创建项目"
+
+#: ../../tutorial/first-project.rst:49
+msgid ""
+"Run the ``quickstart`` command from a folder where the target directory "
+"``notes`` does not yet exist:"
+msgstr "在目标目录 ``notes`` 尚不存在的父目录中运行 ``quickstart``："
+
+#: ../../tutorial/first-project.rst:56
+msgid "Guidedog creates a complete, self-contained project structure:"
+msgstr "Guidedog 创建完整、自包含的项目结构："
+
+#: ../../tutorial/first-project.rst:74
+msgid "Understanding the files:"
+msgstr "文件说明："
+
+#: ../../tutorial/first-project.rst:76
+msgid ""
+"``conf.toml``: Project settings (title, author, version, language, "
+"builders)."
+msgstr "``conf.toml``：项目名称、作者、版本、语言和构建器等设置。"
+
+#: ../../tutorial/first-project.rst:77
+msgid ""
+"``index.rst``: The root document that defines your front page and table "
+"of contents."
+msgstr "``index.rst``：定义首页和目录的根文档。"
+
+#: ../../tutorial/first-project.rst:78
+msgid "``_templates/layout.html``: The HTML website template (Jinja)."
+msgstr "``_templates/layout.html``：HTML 网站的 Jinja 布局。"
+
+#: ../../tutorial/first-project.rst:79
+msgid ""
+"``_templates/book.typ``: The PDF book layout and typography template "
+"(Typst)."
+msgstr "``_templates/book.typ``：PDF 书籍的 Typst 布局、字体和封面。"
+
+#: ../../tutorial/first-project.rst:80
+msgid "``_static/``: CSS stylesheets and JavaScript enhancements."
+msgstr "``_static/``：CSS 样式和 JavaScript 增强功能。"
+
+#: ../../tutorial/first-project.rst:81
+msgid ""
+"``assets/``: Dedicated folders for project images, diagrams, audio, and "
+"video files."
+msgstr "``assets/``：存放项目图片、图示、音频和视频的目录。"
+
+#: ../../tutorial/first-project.rst:83
+msgid ""
+"Templates in Guidedog are directly visible and editable. They are placed "
+"directly inside your project rather than hidden within an external theme "
+"or system cache. You can modify them at any time to customize your site "
+"and book design. The first build creates ``_build`` for generated output."
+msgstr ""
+"模板是项目中可直接查看和编辑的文件，不藏在外部主题或系统缓存中。随时可以修改网站与书籍设计。首次构建会创建存放输出的 ``_build``。"
+
+#: ../../tutorial/first-project.rst:88
+msgid "2. Write the first page"
+msgstr "2. 编写第一页"
+
+#: ../../tutorial/first-project.rst:91
+msgid ""
+"Open ``notes/index.rst`` in your editor and replace its contents with the "
+"following:"
+msgstr "在编辑器中打开 ``notes/index.rst``，替换为以下内容："
+
+#: ../../tutorial/first-project.rst:113
+msgid ""
+"This page demonstrates headings, mathematical notation, and an admonition "
+"note."
+msgstr "此页演示标题、数学记号和提示块。"
+
+#: ../../tutorial/first-project.rst:115
+msgid "3. Build and inspect the outputs"
+msgstr "3. 构建并检查输出"
+
+#: ../../tutorial/first-project.rst:118
+msgid "Compile your project into both HTML and PDF formats:"
+msgstr "将项目同时构建为 HTML 和 PDF："
+
+#: ../../tutorial/first-project.rst:125
+msgid ""
+"The ``-W`` flag instructs Guidedog to treat warnings as errors. Keeping "
+"this flag enabled in your routine checks ensures that broken references "
+"or markup errors are caught early."
+msgstr "``-W`` 将警告视为错误。日常检查开启它，能及早发现引用或标记问题。"
+
+#: ../../tutorial/first-project.rst:128
+msgid "Now inspect the output files:"
+msgstr "查看输出文件："
+
+#: ../../tutorial/first-project.rst:130
+msgid ""
+"Open ``notes/_build/html/index.html`` in your web browser. You will see a "
+"clean, responsive documentation website with a theme switch, search bar, "
+"and formatted math."
+msgstr "在浏览器中打开 ``notes/_build/html/index.html``，查看响应式文档网站的主题切换、搜索框和数学排版。"
+
+#: ../../tutorial/first-project.rst:132
+msgid ""
+"Open the PDF file generated in ``notes/_build/pdf/``. You will see a book "
+"layout complete with running headers, page numbers, and typographic math."
+msgstr "打开 ``notes/_build/pdf/`` 中生成的 PDF，检查书籍布局、页眉、页码和公式。"
+
+#: ../../tutorial/first-project.rst:135
+msgid ""
+"Guidedog formats mathematics appropriately for each medium: using "
+"client-side MathJax for the browser, and native vector formulas for the "
+"Typst PDF engine."
+msgstr "网页用客户端 MathJax 排版公式，Typst PDF 引擎则生成原生矢量公式。"
+
+#: ../../tutorial/first-project.rst:138
+msgid "4. Live preview and incremental rebuilds"
+msgstr "4. 实时预览与增量构建"
+
+#: ../../tutorial/first-project.rst:141
+msgid "Guidedog includes a built-in development web server:"
+msgstr "Guidedog 内置开发预览服务器："
+
+#: ../../tutorial/first-project.rst:147
+msgid ""
+"The terminal prints a local URL, such as ``http://localhost:8000``. Open "
+"this address in your browser."
+msgstr "终端会打印本机网址，例如 ``http://localhost:8000``。在浏览器中打开它。"
+
+#: ../../tutorial/first-project.rst:150
+msgid "Now test the live editing loop:"
+msgstr "试一下编辑与预览循环："
+
+#: ../../tutorial/first-project.rst:154
+msgid ""
+"Editing and saving a file triggers timestamp verification and selective "
+"rebuild upon refreshing the browser."
+msgstr "编辑并保存后，刷新浏览器会检查时间戳并选择性重建。"
+
+#: ../../tutorial/first-project.rst:154
+msgid "The live development cycle with guidedog serve."
+msgstr "guidedog serve 的实时开发循环。"
+
+#: ../../tutorial/first-project.rst:173
+msgid "Edit ``notes/index.rst`` to add a new paragraph."
+msgstr "编辑 ``notes/index.rst``，添加一段文字。"
+
+#: ../../tutorial/first-project.rst:174
+msgid "Save the file."
+msgstr "保存文件。"
+
+#: ../../tutorial/first-project.rst:175
+msgid "Refresh your browser page."
+msgstr "刷新浏览器页面。"
+
+#: ../../tutorial/first-project.rst:177
+msgid ""
+"Before serving a requested page, Guidedog checks file modification "
+"timestamps against its cached build environment. If inputs have changed, "
+"it rebuilds only the affected documents before responding to the browser "
+"request."
+msgstr "提供页面前，Guidedog 会比较输入文件的修改时间与缓存记录；若有变化，先重建受影响的文档，再响应请求。"
+
+#: ../../tutorial/first-project.rst:181
+msgid ""
+"When you run a build without modifying any files, Guidedog reuses the "
+"cached document trees, avoiding redundant re-parsing."
+msgstr "没有修改文件时，Guidedog 会复用缓存的文档树，避免重复解析。"
+
+#: ../../tutorial/first-project.rst:184
+msgid ""
+"Press ``Ctrl+C`` in your terminal to stop the server when you are done."
+msgstr "完成后在终端按 ``Ctrl+C`` 停止服务器。"
+
+#: ../../tutorial/first-project.rst:186
+msgid ""
+"Continue to :doc:`a-small-book` to learn how to organize multiple "
+"chapters and cross-references."
+msgstr "接着阅读 :doc:`a-small-book`，学习组织多章文档和交叉引用。"
+
+#: ../../tutorial/index.rst:1
+msgid "Tutorials"
+msgstr "教程"
+
+#: ../../tutorial/index.rst:4
+msgid ""
+"Follow these pages in order. Each step produces a result you can inspect."
+msgstr "按顺序阅读这些页面，每一步都有可检查的结果。"
+
+#~ msgid ""
+#~ "A site is a graph of documents. A book needs a reading order. A "
+#~ "``toctree`` supplies both."
+#~ msgstr "站点是文档组成的图，图书则需要阅读顺序。\\ ``toctree`` 同时提供两者。"
+
+#~ msgid "Replace the contents of ``notes/index.rst`` with:"
+#~ msgstr "将 ``notes/index.rst`` 的内容替换为："
+
+#~ msgid ""
+#~ "The document name omits ``.rst``. The label names an idea within a "
+#~ "document. Use a document link for a chapter. Use a label for a "
+#~ "particular argument."
+#~ msgstr "文档名省略 ``.rst``\\ 。标签命名的是文档中的一个概念。链接整章时用文档链接，链接某段论证时用标签。"
+
+#~ msgid "Put this in ``measurement.rst``:"
+#~ msgstr "将以下内容放入 ``measurement.rst``\\ ："
+
+#~ msgid ""
+#~ "Guidedog uses its linked Graphviz library. The result is an SVG in "
+#~ "HTML and an image in the PDF. No browser diagram interpreter is "
+#~ "needed. A caption explains the conclusion. Alternative text explains "
+#~ "the drawing."
+#~ msgstr ""
+#~ "Guidedog 使用链接的 Graphviz 库。HTML 中显示 SVG，PDF "
+#~ "中显示图片，无需浏览器图表解释器。题注说明结论，替代文本解释图形内容。"
+
+#~ msgid "Build the book"
+#~ msgstr "构建书籍"
+
+#~ msgid ""
+#~ "The chapter is in the sidebar and in the book's contents. Follow the "
+#~ "section link in the browser. Inspect its destination in the PDF."
+#~ msgstr "侧边栏和图书目录中都会出现这一章。在浏览器中点击章节链接，并在 PDF 中检查其目标位置。"
+
+#~ msgid ""
+#~ "The next useful step is :doc:`../topics/writing`. Keep chapters small "
+#~ "enough to explain one subject."
+#~ msgstr "接下来可阅读 :doc:`../topics/writing`\\ 。保持章节简短，每章讲清一个主题。"
+
+#~ msgid ""
+#~ "On macOS, install the release with ``brew install "
+#~ "insanai/guidedog/guidedog``. This adds the official tap and includes "
+#~ "the PDF compiler."
+#~ msgstr ""
+#~ "在 macOS 上，运行 ``brew install insanai/guidedog/guidedog`` 安装发行版。此命令会添加官方 "
+#~ "tap，安装包已包含 PDF 编译器。"
+
+#~ msgid ""
+#~ "Guidedog writes the configuration, the first RST document, and "
+#~ "editable templates. It also creates folders for images, audio, and "
+#~ "video. It refuses to overwrite an existing project."
+#~ msgstr "Guidedog 写入配置、首份 RST 文档和可编辑模板，并为图片、音频、视频创建目录。它拒绝覆盖已有项目。"
+
+#~ msgid ""
+#~ "The RST files hold your content. The templates hold your presentation. "
+#~ "The base templates (``_templates/layout.html`` and "
+#~ "``_templates/book.typ``) are placed directly in your project by "
+#~ "``quickstart`` rather than being stored in an external theme or "
+#~ "package cache. You can inspect and customize them at any time."
+#~ msgstr ""
+#~ "RST 文件保存正文，模板控制呈现。``quickstart`` 会将 ``_templates/layout.html`` 和 "
+#~ "``_templates/book.typ`` 直接写入项目，而不是藏在外部主题或包缓存中。随时可查看和修改。"
+
+#~ msgid ""
+#~ "Open ``notes/_build/html/index.html`` and the PDF in "
+#~ "``notes/_build/pdf``. ``-W`` makes warnings fail the build. Keep it in "
+#~ "your documentation checks. The HTML page contains the navigation and "
+#~ "the text. The PDF adds book furniture. Math is formatted for each "
+#~ "target. :doc:`../topics/mathematics` explains the setup."
+#~ msgstr ""
+#~ "打开 ``notes/_build/html/index.html`` 和 ``notes/_build/pdf`` 中的 PDF。\\ "
+#~ "``-W`` 使警告导致构建失败，应保留在文档检查中。HTML 包含导航和正文；PDF "
+#~ "增加书籍的页眉、页脚等版式。公式按各目标格式排版，设置详见 :doc:`../topics/mathematics`\\ 。"
+
+#~ msgid "Make a change"
+#~ msgstr "修改内容"
+
+#~ msgid ""
+#~ "Open the address printed by the command. Edit the source and save it. "
+#~ "Refresh the browser page. Before serving HTML, Guidedog checks source "
+#~ "modification times and rebuilds when they have advanced. It does not "
+#~ "push a browser reload. Stop the server with Ctrl+C."
+#~ msgstr ""
+#~ "打开命令打印的地址，编辑源文件并保存，然后刷新浏览器。提供 HTML 前，Guidedog "
+#~ "检查源文件修改时间，若有更新则重建。它不会主动推送浏览器刷新。用 Ctrl+C 停止服务器。"
+
+#~ msgid ""
+#~ "Build again without editing anything. Unchanged documents are reused. "
+#~ "The build need not reread every page to prove that its output is "
+#~ "current. Continue with :doc:`a-small-book`."
+#~ msgstr ""
+#~ "不修改任何内容，再次构建。未变化的文档会复用，无需重新读取每一页来证明输出仍有效。接着阅读 :doc:`a-small-book`\\ 。"
+
+#~ msgid ""
+#~ "The RST files hold the explanation. The templates hold the "
+#~ "presentation. ``book.typ`` is a typesetting template, not a second "
+#~ "copy of the prose."
+#~ msgstr "RST 文件保存解释，模板决定呈现。\\ ``book.typ`` 是排版模板，不是另一份正文。"

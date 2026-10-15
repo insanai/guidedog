@@ -1,0 +1,386 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../autodoc.rst:1
+msgid "Documenting Python with autodoc"
+msgstr "用 autodoc 编写 Python 文档"
+
+#: ../../autodoc.rst:4
+msgid ""
+"Guidedog documents Python by reading its source. It does not import a "
+"package. Docstrings and signatures become part of the document graph. "
+"Objects created only at runtime need an explicit description. This is a "
+"deliberate boundary."
+msgstr ""
+"Guidedog 通过读取源代码生成 Python 文档，不会导入软件包。docstring "
+"和函数签名成为文档图的一部分。仅在运行时创建的对象需要显式说明。这是有意划定的边界。"
+
+#: ../../autodoc.rst:8
+msgid "Setting it up"
+msgstr "配置方法"
+
+#: ../../autodoc.rst:11
+msgid ""
+"List the extension and tell Guidedog where your packages are, relative to "
+"the source folder, as ``sys.path`` tells Python:"
+msgstr "列出扩展，并告诉 Guidedog 软件包相对于源目录的位置，就像 ``sys.path`` 告诉 Python 那样："
+
+#: ../../autodoc.rst:19
+msgid ""
+"``guidedog migrate`` writes ``autodoc_source_paths`` for you from the "
+"lines that ``conf.py`` files use to reach their package, such as "
+"``sys.path.insert(0, os.path.abspath('..'))``. A package installed from "
+"elsewhere is found only if you add the folder that holds it, for example "
+"a source checkout of a dependency; Guidedog never looks in Python's own "
+"``site-packages``."
+msgstr ""
+"``guidedog migrate`` 会读取 ``conf.py`` 中用于定位软件包的语句，例如 ``sys.path.insert(0, "
+"os.path.abspath('..'))``\\ ，并为你生成 ``autodoc_source_paths``\\ "
+"。对于安装在其他位置的软件包，必须添加其所在目录，例如依赖项的源代码检出目录；Guidedog 不会搜索 Python 自己的 "
+"``site-packages``\\ 。"
+
+#: ../../autodoc.rst:25
+msgid "The directives then work as in Sphinx:"
+msgstr "接下来，这些指令的用法与 Sphinx 相同："
+
+#: ../../autodoc.rst:37
+msgid ""
+"Every option Sphinx 9.1 accepts is accepted, with the same meaning: "
+"``:members:``, ``:undoc-members:``, ``:private-members:``, "
+"``:special-members:``, ``:inherited-members:``, ``:exclude-members:``, "
+"``:member-order:``, ``:show-inheritance:``, ``:imported-members:``, "
+"``:ignore-module-all:``, ``:class-doc-from:``, ``:no-value:``, "
+"``:annotation:``, ``:no-index:``, ``:no-index-entry:``, ``:synopsis:``, "
+"``:platform:``, ``:deprecated:``, and the ``no-`` forms that cancel "
+"``autodoc_default_options``."
+msgstr ""
+"支持 Sphinx 9.1 的全部选项，含义也相同：\\ ``:members:``\\ 、\\ ``:undoc-members:``\\ "
+"、\\ ``:private-members:``\\ 、\\ ``:special-members:``\\ 、\\ "
+"``:inherited-members:``\\ 、\\ ``:exclude-members:``\\ 、\\ "
+"``:member-order:``\\ 、\\ ``:show-inheritance:``\\ 、\\ "
+"``:imported-members:``\\ 、\\ ``:ignore-module-all:``\\ 、\\ "
+"``:class-doc-from:``\\ 、\\ ``:no-value:``\\ 、\\ ``:annotation:``\\ 、\\ "
+"``:no-index:``\\ 、\\ ``:no-index-entry:``\\ 、\\ ``:synopsis:``\\ 、\\ "
+"``:platform:``\\ 、\\ ``:deprecated:``\\ ，以及取消 ``autodoc_default_options`` "
+"的 ``no-`` 形式。"
+
+#: ../../autodoc.rst:45
+msgid "Settings"
+msgstr "设置"
+
+#: ../../autodoc.rst:48
+msgid ""
+"These ``conf.toml`` settings have Sphinx's names, values, and defaults."
+msgstr "这些 ``conf.toml`` 设置沿用 Sphinx 的名称、取值和默认值。"
+
+#: ../../autodoc.rst:50
+msgid "``autodoc_source_paths``"
+msgstr "``autodoc_source_paths``"
+
+#: ../../autodoc.rst:51
+msgid ""
+"Guidedog's own: the folders Python modules are found in, in order, "
+"relative to the source folder. Only files below them are read, and a path "
+"through a symbolic link that leads elsewhere is refused."
+msgstr ""
+"Guidedog 专用设置：按顺序列出查找 Python "
+"模块的目录，路径相对于源文件目录。只读取这些目录下的文件；若符号链接指向目录外部，则拒绝访问。"
+
+#: ../../autodoc.rst:55
+msgid "``autoclass_content``"
+msgstr "``autoclass_content``"
+
+#: ../../autodoc.rst:56
+msgid ""
+"``\"class\"`` (default), ``\"init\"``, or ``\"both\"``: which docstrings "
+"describe a class."
+msgstr ""
+"指定用于描述类的文档字符串：\\ ``\"class\"``\\ （默认）、\\ ``\"init\"`` 或 ``\"both\"``\\ 。"
+
+#: ../../autodoc.rst:58
+msgid "``autodoc_class_signature``"
+msgstr "``autodoc_class_signature``"
+
+#: ../../autodoc.rst:59
+msgid ""
+"``\"mixed\"`` (default) or ``\"separated\"``, which documents "
+"``__init__`` as a method."
+msgstr ""
+"``\"mixed\"``\\ （默认）或 ``\"separated\"``\\ ；后者将 ``__init__`` 单独作为方法记入文档。"
+
+#: ../../autodoc.rst:61
+msgid "``autodoc_default_options``"
+msgstr "``autodoc_default_options``"
+
+#: ../../autodoc.rst:62
+msgid ""
+"A table of options every directive gets, such as ``members = true`` or "
+"``member-order = \"bysource\"``. A value of ``false`` leaves the option "
+"out."
+msgstr ""
+"为所有指令设置默认选项的表，例如 ``members = true`` 或 ``member-order = \"bysource\"``\\ "
+"。值为 ``false`` 时不添加该选项。"
+
+#: ../../autodoc.rst:65
+msgid "``autodoc_docstring_signature``"
+msgstr "``autodoc_docstring_signature``"
+
+#: ../../autodoc.rst:66
+msgid ""
+"``true`` (default): a first docstring line like ``name(args) -> result`` "
+"is the signature."
+msgstr "``true``\\ （默认）：若文档字符串首行为 ``name(args) -> result`` 这样的形式，则将其作为签名。"
+
+#: ../../autodoc.rst:69
+msgid "``autodoc_inherit_docstrings``"
+msgstr "``autodoc_inherit_docstrings``"
+
+#: ../../autodoc.rst:70
+msgid ""
+"``true`` (default): a member without a docstring takes its base class's."
+msgstr "``true``\\ （默认）：没有文档字符串的成员继承基类的文档字符串。"
+
+#: ../../autodoc.rst:72
+msgid "``autodoc_member_order``"
+msgstr "``autodoc_member_order``"
+
+#: ../../autodoc.rst:73
+msgid ""
+"``\"alphabetical\"`` (default), ``\"groupwise\"``, or ``\"bysource\"``."
+msgstr ""
+"``\"alphabetical\"``\\ （默认）、\\ ``\"groupwise\"`` 或 ``\"bysource\"``\\ 。"
+
+#: ../../autodoc.rst:75
+msgid "``autodoc_preserve_defaults``"
+msgstr "``autodoc_preserve_defaults``"
+
+#: ../../autodoc.rst:76
+msgid ""
+"``false`` (default): defaults are shown as ``repr()`` would write them; "
+"``true`` shows them as written."
+msgstr "``false``\\ （默认）：按 ``repr()`` 的表示方式显示默认值；\\ ``true`` 则保留源码中的写法。"
+
+#: ../../autodoc.rst:79
+msgid "``autodoc_typehints``"
+msgstr "``autodoc_typehints``"
+
+#: ../../autodoc.rst:80
+msgid ""
+"``\"signature\"`` (default), ``\"description\"`` (as ``:type:`` and "
+"``:rtype:`` fields), ``\"both\"``, or ``\"none\"``."
+msgstr ""
+"``\"signature\"``\\ （默认）、\\ ``\"description\"``\\ （使用 ``:type:`` 和 "
+"``:rtype:`` 字段）、\\ ``\"both\"`` 或 ``\"none\"``\\ 。"
+
+#: ../../autodoc.rst:83
+msgid "``autodoc_typehints_description_target``"
+msgstr "``autodoc_typehints_description_target``"
+
+#: ../../autodoc.rst:84
+msgid ""
+"``\"all\"`` (default), ``\"documented\"``, or ``\"documented_params\"``."
+msgstr ""
+"``\"all\"``\\ （默认）、\\ ``\"documented\"`` 或 ``\"documented_params\"``\\ 。"
+
+#: ../../autodoc.rst:86
+msgid "``autodoc_typehints_format``"
+msgstr "``autodoc_typehints_format``"
+
+#: ../../autodoc.rst:87
+msgid "``\"short\"`` (default) or ``\"fully-qualified\"``."
+msgstr "``\"short\"``\\ （默认）或 ``\"fully-qualified\"``\\ 。"
+
+#: ../../autodoc.rst:89
+msgid "``autodoc_use_type_comments``"
+msgstr "``autodoc_use_type_comments``"
+
+#: ../../autodoc.rst:90
+msgid "``true`` (default): ``# type:`` comments count as annotations."
+msgstr "``true``\\ （默认）：将 ``# type:`` 注释作为类型注解。"
+
+#: ../../autodoc.rst:92
+msgid "``strip_signature_backslash``"
+msgstr "``strip_signature_backslash``"
+
+#: ../../autodoc.rst:93
+msgid "Doubles backslashes in signatures, as in Sphinx."
+msgstr "与 Sphinx 一样，将签名中的反斜杠加倍。"
+
+#: ../../autodoc.rst:95
+msgid ""
+"``autodoc_mock_imports``, ``autodoc_type_aliases``, "
+"``autodoc_warningiserror``"
+msgstr ""
+"``autodoc_mock_imports``\\ , ``autodoc_type_aliases``\\ , "
+"``autodoc_warningiserror``"
+
+#: ../../autodoc.rst:96
+msgid ""
+"Accepted. Nothing is imported, so nothing needs mocking; type aliases are "
+"not applied."
+msgstr "接受这些设置。由于不会导入模块，因此无需模拟导入；不应用类型别名。"
+
+#: ../../autodoc.rst:99
+msgid "How Guidedog knows what Python would do"
+msgstr "Guidedog 如何推断 Python 的行为"
+
+#: ../../autodoc.rst:102
+msgid ""
+"Names are followed as Python binds them: ``from .app import Flask`` in a "
+"package's ``__init__.py`` makes ``flask.Flask`` the class defined in "
+"``flask/app.py``, which autodoc then shows with ``:canonical: "
+"flask.app.Flask``. Base classes are resolved the same way, their method "
+"resolution order is computed as Python computes it, and inherited members "
+"come from the bases' source. Names imported only under ``if "
+"TYPE_CHECKING:`` do not exist when the module runs, so annotations naming "
+"them stay as written, as they do in Sphinx."
+msgstr ""
+"名称按照 Python 的绑定规则解析。例如，在包的 ``__init__.py`` 中写入 ``from .app import "
+"Flask``\\ ，\\ ``flask.Flask`` 就指向 ``flask/app.py`` 中定义的类，autodoc 会标注 "
+"``:canonical: flask.app.Flask``\\ 。基类也按相同方式解析；方法解析顺序按 Python "
+"的规则计算，继承的成员从基类源码中读取。仅在 ``if TYPE_CHECKING:`` "
+"下导入的名称在运行时不存在，因此引用这些名称的注解会保留原样，与 Sphinx 一致。"
+
+#: ../../autodoc.rst:110
+msgid ""
+"Docstrings are the strings Python would store: escapes processed and "
+"indentation removed as Python 3.13's compiler removes it. Attribute "
+"documentation comes from the places Sphinx's analyser reads: a ``#:`` "
+"comment after the assignment or on the lines above it, and a string "
+"literal after it. Signatures come from the ``def``; a class's from its "
+"metaclass ``__call__``, ``__new__``, or ``__init__``, as Python finds it; "
+"a dataclass's or ``NamedTuple``'s from its fields; ``@overload`` variants "
+"replace the implementation's signature."
+msgstr ""
+"文档字符串与 Python 实际存储的内容一致：处理转义，并按 Python 3.13 编译器的规则去除缩进。属性文档来自 Sphinx "
+"分析器读取的位置：赋值行末尾或上方的 ``#:`` 注释，以及赋值后紧接的字符串字面量。函数签名来自 ``def``\\ 。类的签名按照 "
+"Python 的查找规则来自元类的 ``__call__``\\ 、\\ ``__new__`` 或 ``__init__``\\ "
+"；dataclass 或 ``NamedTuple`` 的签名来自字段。\\ ``@overload`` 变体会替代实现本身的签名。"
+
+#: ../../autodoc.rst:118
+msgid "What cannot be known without running Python"
+msgstr "不运行 Python 就无法获知的内容"
+
+#: ../../autodoc.rst:121
+msgid ""
+"Guidedog says so, naming the object, whenever the source cannot tell it "
+"what Python would: a warning when something cannot be documented, a note "
+"(shown with ``-v``) when it is documented with less than Sphinx would "
+"show."
+msgstr ""
+"如果源码无法揭示 Python 的实际行为，Guidedog 会明确指出涉及的对象。无法生成文档时给出警告；能生成文档但信息少于 Sphinx "
+"时给出说明，使用 ``-v`` 可查看。"
+
+#: ../../autodoc.rst:125
+msgid ""
+"A compiled module (``.so``, ``.pyd``) has no source to read: its objects "
+"are not found."
+msgstr "编译后的模块（\\ ``.so``\\ 、\\ ``.pyd``\\ ）没有可读取的源码，因此找不到其中的对象。"
+
+#: ../../autodoc.rst:127
+msgid ""
+"A value made by running code (``app = Flask(__name__)``, ``now = "
+"datetime.now()``) has no ``:value:``, and a computed default is shown as "
+"written."
+msgstr ""
+"运行代码得到的值（\\ ``app = Flask(__name__)``\\ 、\\ ``now = datetime.now()``\\ "
+"）不会生成 ``:value:``\\ ；需要计算的默认值保留源码写法。"
+
+#: ../../autodoc.rst:129
+msgid ""
+"A function made by a decorator from outside the source paths "
+"(``@click.command()``) is documented as the function it decorates."
+msgstr "由源码搜索路径之外的装饰器（\\ ``@click.command()``\\ ）生成的函数，按被装饰的原函数生成文档。"
+
+#: ../../autodoc.rst:131
+msgid ""
+"A class from a package outside the source paths is named by the path it "
+"was imported from, which may differ from the module that defines it; its "
+"members, its constructor's signature, and the docstrings it would pass on "
+"are unknown."
+msgstr ""
+"源码搜索路径之外的包中的类，使用导入时的路径命名；该路径可能与定义类的模块不同。它的成员、构造函数签名以及可继承的文档字符串都无法确定。"
+
+#: ../../autodoc.rst:134
+msgid ""
+"Docstrings of builtin types are unknown, so a method that has none and "
+"would inherit one from ``dict`` is left out."
+msgstr "无法读取内置类型的文档字符串。因此，如果某个方法没有自己的文档字符串，只能从 ``dict`` 继承，就不将它列入文档。"
+
+#: ../../autodoc.rst:136
+msgid ""
+"Python extensions that handle autodoc's events "
+"(``autodoc-process-docstring``, ``autodoc-skip-member``, ...) do not run."
+msgstr ""
+"不会执行处理 autodoc 事件（\\ ``autodoc-process-docstring``\\ 、\\ "
+"``autodoc-skip-member`` 等）的 Python 扩展。"
+
+#: ../../autodoc.rst:138
+msgid ""
+"A module nested far deeper than real code (Python itself refuses 200 "
+"nested brackets; Guidedog also refuses a ``+`` chain of a few hundred "
+"operands) is not analysed, with the warning ``autodoc.too_deep``."
+msgstr ""
+"嵌套深度远超正常代码的模块不会进行分析，并给出 ``autodoc.too_deep`` 警告。Python 本身拒绝 200 "
+"层嵌套括号；Guidedog 也拒绝含数百个操作数的 ``+`` 链。"
+
+#: ../../autodoc.rst:141
+msgid ""
+"Work that multiplies is bounded: a name followed through imports and "
+"aliases stops after 48 steps along one path and 100,000 in all; a type "
+"alias or constant is expanded for 10,000 steps and is otherwise shown as "
+"written; a class's MRO is followed 100 classes deep; and one directive "
+"generates at most 10,000 directives (the warning ``autodoc.limit``), "
+"which only a class that contains itself under its own name reaches."
+msgstr ""
+"会产生倍增的工作量都有上限。沿导入和别名查找名称时，单条路径最多 48 步，总计最多 100,000 步。类型别名或常量展开最多 10,000 "
+"步，超过后保留源码写法。类的 MRO 最多追踪 100 层；单条指令最多生成 10,000 条指令，超过时给出 ``autodoc.limit`` "
+"警告。只有以自身名称包含自身的类才会达到最后这一上限。"
+
+#: ../../autodoc.rst:147
+msgid ""
+"Adding the missing packages' source folders to ``autodoc_source_paths`` "
+"closes most of these."
+msgstr "将缺失包的源码目录加入 ``autodoc_source_paths``\\ ，即可解决上述大部分限制。"
+
+#: ../../autodoc.rst:150
+msgid "Rebuilding"
+msgstr "重新构建"
+
+#: ../../autodoc.rst:153
+msgid ""
+"Every Python file an autodoc directive read is a dependency of the page: "
+"editing it reads the page again on the next build. A page whose object "
+"was not found is read again on every build, so it picks the object up as "
+"soon as the source has it."
+msgstr ""
+"autodoc 指令读取的每个 Python "
+"文件都是该页面的依赖项。修改文件后，下次构建会重新读取页面。未找到对象的页面会在每次构建时重读，因此源码中出现该对象后即可识别。"
+
+#: ../../autodoc.rst:157
+msgid "Security"
+msgstr "安全性"
+
+#: ../../autodoc.rst:160
+msgid ""
+"Building documentation never runs the project's code. Guidedog reads "
+"Python source as text, with the same confinement it applies to includes: "
+"only below ``autodoc_source_paths``, and not through links leading "
+"elsewhere."
+msgstr ""
+"构建文档绝不运行项目代码。Guidedog 将 Python 源码作为文本读取，并使用与 include 相同的路径限制：仅访问 "
+"``autodoc_source_paths`` 下的文件，不通过链接访问外部路径。"

@@ -1,0 +1,17 @@
+{% extends "!layout.html" %}
+{% import "macros/ui.html" as ui %}
+
+{% block extrahead %}
+{{ super() }}
+<meta name="theme-name" content="Orbit field notes">
+{% endblock %}
+
+{% block body %}
+<p class="orbit-kicker">{{ ui.tag(edition_label) }}</p>
+{{ super() }}
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+{% include "partials/edition.html" %}
+{% endblock %}

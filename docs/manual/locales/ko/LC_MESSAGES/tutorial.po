@@ -1,0 +1,885 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../tutorial/a-custom-theme.rst:1
+msgid "Build a project theme"
+msgstr "프로젝트 테마 만들기"
+
+#: ../../tutorial/a-custom-theme.rst:4
+msgid ""
+"A theme gives the same content two reading forms: a website and a book. "
+"This tutorial builds an Orbit theme with a shared visual identity, an "
+"HTML partial and macro, and a modular PDF template. It needs no plugin or "
+"compiler."
+msgstr ""
+"테마는 같은 내용을 웹과 책에서 읽기 좋게 만듭니다. 이 튜토리얼은 HTML 부분 템플릿·매크로와 모듈형 PDF 템플릿으로 "
+"Orbit의 시각적 구성을 통일합니다. 플러그인이나 컴파일러는 필요 없습니다."
+
+#: ../../tutorial/a-custom-theme.rst:8
+msgid "1. Start with a real project"
+msgstr "1. 실제 프로젝트에서 시작하기"
+
+#: ../../tutorial/a-custom-theme.rst:11
+msgid ""
+"Use Guidedog 0.6.2 or newer. Run this from the directory that will "
+"contain ``orbit``:"
+msgstr "Guidedog 0.6.2 이상을 사용하고, ``orbit`` 디렉터리를 만들 부모 폴더에서 실행하세요."
+
+#: ../../tutorial/a-custom-theme.rst:17
+msgid ""
+"Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
+"in the same directory. Keep this file: it supplies the tested page "
+"layout, cover, running heads, contents, code styles and optimized "
+"paragraph breaking."
+msgstr ""
+"생성한 ``orbit/_templates/book.typ`` 파일을 같은 위치의 ``base-book.typ`` 파일로 이름만 "
+"바꿉니다. 페이지 구성, 표지, 머리말, 목차, 코드 스타일과 최적화된 줄바꿈을 제공하므로 보관하세요."
+
+#: ../../tutorial/a-custom-theme.rst:21
+msgid ""
+"Download :download:`conf.toml <../_static/repository/theme/conf.toml>`, "
+":download:`index.rst <../_static/repository/theme/index.rst>` and "
+":download:`reading.rst "
+"<../_static/repository/theme/chapters/reading.rst>`. Save the first two "
+"in ``orbit`` and the third in ``orbit/chapters``. The finished project "
+"will have these files:"
+msgstr ""
+":download:`conf.toml <../_static/repository/theme/conf.toml>`, "
+":download:`index.rst <../_static/repository/theme/index.rst>`, "
+":download:`reading.rst "
+"<../_static/repository/theme/chapters/reading.rst>` 파일을 받습니다. 앞의 둘은 "
+"``orbit`` 폴더에, 셋째는 ``orbit/chapters`` 폴더에 저장합니다. 완성할 구조는 다음과 같습니다."
+
+#: ../../tutorial/a-custom-theme.rst:45
+msgid "2. Set the contract"
+msgstr "2. 설정 계약 정하기"
+
+#: ../../tutorial/a-custom-theme.rst:48
+msgid ""
+"The downloaded configuration selects the local template and static "
+"directories. ``html_css_files`` adds our stylesheet after the default "
+"stylesheet. ``html_context`` supplies a project value to Jinja. The "
+"explicit PDF filename makes the output easy to find."
+msgstr ""
+"받은 설정은 로컬 템플릿과 정적 파일 디렉터리를 지정합니다. ``html_css_files`` 설정은 기본 CSS 뒤에 스타일을 "
+"추가하고, ``html_context`` 설정은 Jinja에 값을 전달합니다. PDF 이름도 명시하여 쉽게 찾도록 합니다."
+
+#: ../../tutorial/a-custom-theme.rst:55
+msgid "orbit/conf.toml"
+msgstr "orbit/conf.toml"
+
+#: ../../tutorial/a-custom-theme.rst:57
+msgid ""
+"All paths in this tutorial are project files. HTML templates are found "
+"through ``templates_path``. The PDF entry point is always "
+"``_templates/book.typ`` under the source directory; changing "
+"``templates_path`` does not move it."
+msgstr ""
+"이 튜토리얼의 경로는 모두 프로젝트 파일입니다. HTML 템플릿은 ``templates_path`` 설정으로 찾습니다. PDF "
+"진입점은 소스 아래의 ``_templates/book.typ`` 파일이며, 해당 설정을 바꿔도 이동하지 않습니다."
+
+#: ../../tutorial/a-custom-theme.rst:61
+msgid "3. Extend the HTML layout"
+msgstr "3. HTML 레이아웃 확장하기"
+
+#: ../../tutorial/a-custom-theme.rst:64
+msgid ""
+"Save :download:`layout.html "
+"<../_static/repository/theme/_templates/layout.html>` as "
+"``orbit/_templates/layout.html``. Replace the generated file completely:"
+msgstr ""
+":download:`layout.html "
+"<../_static/repository/theme/_templates/layout.html>` 파일을 "
+"``orbit/_templates/layout.html`` 경로에 저장하고 기존 파일 전체를 바꿉니다."
+
+#: ../../tutorial/a-custom-theme.rst:69
+msgid "orbit/_templates/layout.html"
+msgstr "orbit/_templates/layout.html"
+
+#: ../../tutorial/a-custom-theme.rst:71
+msgid ""
+"``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a "
+"template named ``layout.html`` would try to extend itself. ``super()`` "
+"keeps the parent's block content. Navigation, search, theme controls and "
+"accessible landmarks remain in the base layout. Our blocks add a label, "
+"metadata and an edition footer."
+msgstr ""
+"``!layout.html`` 표기는 내장 레이아웃을 고릅니다. ``!`` 표시가 없으면 자기 자신을 상속하려 합니다. "
+"``super()`` 호출은 부모 블록을 남깁니다. 탐색, 검색, 테마 조작, 접근성 랜드마크는 기본 레이아웃에 맡기고 "
+"라벨·메타데이터·판 정보를 더합니다."
+
+#: ../../tutorial/a-custom-theme.rst:76
+msgid ""
+"A theme changes presentation. A build plugin changes source text, "
+"complete HTML or generated assets. Use :doc:`../plugins` when a template "
+"cannot express the required operation. Ordinary layout changes need no "
+"native code."
+msgstr ""
+"테마는 표현을 바꾸고, 빌드 플러그인은 소스·완전한 HTML·생성 에셋을 바꿉니다. 템플릿으로 할 수 없는 작업에는 "
+":doc:`../plugins` 문서를 참고하세요. 일반 레이아웃 변경에 네이티브 코드는 필요 없습니다."
+
+#: ../../tutorial/a-custom-theme.rst:80
+msgid "4. Give repeated markup one home"
+msgstr "4. 반복 마크업 모으기"
+
+#: ../../tutorial/a-custom-theme.rst:83
+msgid ""
+"Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. "
+"Save :download:`ui.html "
+"<../_static/repository/theme/_templates/macros/ui.html>` and "
+":download:`edition.html "
+"<../_static/repository/theme/_templates/partials/edition.html>` at the "
+"matching paths:"
+msgstr ""
+"``orbit/_templates/macros`` 및 ``orbit/_templates/partials`` 폴더를 만들고, "
+":download:`ui.html "
+"<../_static/repository/theme/_templates/macros/ui.html>` 및 "
+":download:`edition.html "
+"<../_static/repository/theme/_templates/partials/edition.html>` 파일을 각각 "
+"저장합니다."
+
+#: ../../tutorial/a-custom-theme.rst:90
+msgid "orbit/_templates/macros/ui.html"
+msgstr "orbit/_templates/macros/ui.html"
+
+#: ../../tutorial/a-custom-theme.rst:94
+msgid "orbit/_templates/partials/edition.html"
+msgstr "orbit/_templates/partials/edition.html"
+
+#: ../../tutorial/a-custom-theme.rst:96
+msgid ""
+"A macro takes explicit inputs. An included partial uses the current "
+"page's context. Escape plain project values with ``|e``. Use ``pathto`` "
+"for document links: a hard-coded ``chapters/reading.html`` would break on "
+"a nested page or with another HTML builder."
+msgstr ""
+"매크로는 명시적인 입력을 받고 부분 템플릿은 현재 페이지의 문맥을 씁니다. 일반 값은 ``|e`` 필터로 이스케이프합니다. 링크는 "
+"``pathto`` 함수로 만드세요. ``chapters/reading.html`` 경로를 고정하면 중첩 페이지나 다른 빌더에서 "
+"깨집니다."
+
+#: ../../tutorial/a-custom-theme.rst:101
+msgid "5. Design for the reader's theme"
+msgstr "5. 독자의 테마에 맞추기"
+
+#: ../../tutorial/a-custom-theme.rst:104
+msgid ""
+"Save :download:`theme.css "
+"<../_static/repository/theme/_static/theme.css>` as "
+"``orbit/_static/theme.css``:"
+msgstr ""
+":download:`theme.css <../_static/repository/theme/_static/theme.css>` 파일을 "
+"``orbit/_static/theme.css`` 경로에 저장합니다."
+
+#: ../../tutorial/a-custom-theme.rst:109
+msgid "orbit/_static/theme.css"
+msgstr "orbit/_static/theme.css"
+
+#: ../../tutorial/a-custom-theme.rst:111
+msgid ""
+"The theme begins in light mode. The existing control selects light, dark "
+"or system and saves the choice. Explicit dark rules and the system media "
+"query use the same tokens. Typography and spacing stay shared. No new "
+"JavaScript is needed. Avoid a fixed ink color on a background whose theme "
+"can change."
+msgstr ""
+"처음에는 밝은 모드입니다. 기존 조작부가 밝게·어둡게·시스템을 선택하고 기억합니다. 명시적인 다크 규칙과 시스템 미디어 쿼리에서 "
+"같은 변수를 쓰고, 글자 구성과 간격은 공유합니다. JavaScript를 더 넣을 필요 없습니다. 배경이 바뀌는 곳에 고정된 "
+"글자색만 쓰지 마세요."
+
+#: ../../tutorial/a-custom-theme.rst:116
+msgid ""
+"Browser hyphenation follows the page language. It is not Typst's "
+"paragraph optimizer. The manual's optional English web optimizer is "
+"described separately in :doc:`../topics/typography`; this example uses "
+"native browser layout."
+msgstr ""
+"브라우저 하이픈 처리는 페이지 언어를 따르지만 Typst의 문단 최적화와 같지는 않습니다. 매뉴얼의 선택적 영문 웹 최적화는 "
+":doc:`../topics/typography` 문서를 참고하세요. 이 예제는 브라우저 기본 조판을 씁니다."
+
+#: ../../tutorial/a-custom-theme.rst:120
+msgid ""
+"Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in "
+"current Guidedog builds. Ordinary graphs retain their own colors. Older "
+"hosts render the same DOT in its light palette. See "
+":doc:`../topics/diagrams` for semantic node classes and print behavior."
+msgstr ""
+"현재 빌드에서는 ``:class: graphviz-adaptive`` 옵션이 있는 그림이 선택한 모드를 따릅니다. 일반 그림은 원래 "
+"색을 보존하며, 이전 호스트도 같은 DOT를 밝은 팔레트로 그립니다. 노드 의미와 인쇄 방식은 "
+":doc:`../topics/diagrams` 문서를 참고하세요."
+
+#: ../../tutorial/a-custom-theme.rst:125
+msgid "6. Wrap the PDF book"
+msgstr "6. PDF 책 템플릿 감싸기"
+
+#: ../../tutorial/a-custom-theme.rst:128
+msgid ""
+"Save :download:`palette.typ "
+"<../_static/repository/theme/_templates/palette.typ>` and "
+":download:`book.typ <../_static/repository/theme/_templates/book.typ>` in "
+"``orbit/_templates``. These are new files; keep ``base-book.typ`` beside "
+"them."
+msgstr ""
+":download:`palette.typ "
+"<../_static/repository/theme/_templates/palette.typ>` 및 "
+":download:`book.typ <../_static/repository/theme/_templates/book.typ>` "
+"파일을 ``orbit/_templates`` 폴더에 저장합니다. 새 파일이며 옆의 ``base-book.typ`` 파일은 남깁니다."
+
+#: ../../tutorial/a-custom-theme.rst:134
+msgid "orbit/_templates/palette.typ"
+msgstr "orbit/_templates/palette.typ"
+
+#: ../../tutorial/a-custom-theme.rst:138
+msgid "orbit/_templates/book.typ"
+msgstr "orbit/_templates/book.typ"
+
+#: ../../tutorial/a-custom-theme.rst:140
+msgid ""
+"The host calls ``book`` with metadata and the chapter content. The "
+"wrapper forwards those values to the generated base and supplies our "
+"palette. Passing ``body`` into the styled function keeps its rules in "
+"scope. The web stylesheet does not affect PDF; the Typst template does "
+"not affect HTML."
+msgstr ""
+"호스트는 ``book`` 함수에 메타데이터와 장의 내용을 전달합니다. 래퍼는 이를 생성한 기본 템플릿에 넘기고 팔레트를 지정합니다. "
+"``body`` 내용을 스타일 함수에 전달해야 규칙이 본문에 적용됩니다. 웹 CSS는 PDF에, Typst 템플릿은 HTML에 "
+"영향을 주지 않습니다."
+
+#: ../../tutorial/a-custom-theme.rst:145
+msgid ""
+"The base handles language-aware hyphenation and optimized line breaking. "
+"The wrapper keeps those rules, uses the matching blue accent and adds "
+"page numbers to document cross-references. PDF always uses the light, "
+"print palette."
+msgstr ""
+"기본 템플릿이 언어별 하이픈 처리와 최적화된 줄바꿈을 담당합니다. 래퍼는 이를 유지하면서 웹과 같은 파란 강조색과 문서 참조의 "
+"페이지 번호를 더합니다. PDF는 항상 밝은 인쇄용 팔레트를 사용합니다."
+
+#: ../../tutorial/a-custom-theme.rst:149
+msgid "7. Build and inspect both forms"
+msgstr "7. 두 형식 빌드하고 살펴보기"
+
+#: ../../tutorial/a-custom-theme.rst:152
+msgid "Run from the same parent directory as step 1:"
+msgstr "1단계와 같은 부모 디렉터리에서 실행합니다."
+
+#: ../../tutorial/a-custom-theme.rst:162
+msgid ""
+"Open the URL printed by ``serve``. Check the chapter and generated search "
+"page, not only the front page. Try light, dark and system modes. Resize "
+"the window. Use the keyboard to reach the navigation and search. Change "
+"the footer partial, save, then refresh: the preview rebuilds its template "
+"dependencies."
+msgstr ""
+"``serve`` 명령의 주소를 열고 첫 화면뿐 아니라 장과 검색 페이지도 확인합니다. 밝게·어둡게·시스템 모드와 좁은 화면을 "
+"시험하세요. 키보드로 탐색과 검색을 이용하고, 바닥글을 수정해 저장한 뒤 새로 고치세요. 의존 페이지가 다시 빌드됩니다."
+
+#: ../../tutorial/a-custom-theme.rst:167
+msgid ""
+"Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog "
+"adds the language suffix to the configured filename. Inspect the "
+"contents, chapter opening, equation, table, code and diagram. Look for "
+"clipped labels, loose paragraphs and missing glyphs. The other outputs "
+"are below ``_build/html``, ``_build/dirhtml`` and ``_build/singlehtml``. "
+"Stop the server with ``Ctrl+C``."
+msgstr ""
+"PDF 리더에서 ``orbit/_build/pdf/orbit-notes-en.pdf`` 파일을 엽니다. 설정 이름에는 언어 접미사가 "
+"붙습니다. 목차, 장 첫머리, 수식, 표, 코드, 그림에 잘림·과한 간격·누락 글자가 없는지 확인합니다. 다른 출력은 "
+"``_build/html``, ``_build/dirhtml``, ``_build/singlehtml`` 아래에 있습니다. 서버는 "
+"``Ctrl+C`` 로 멈춥니다."
+
+#: ../../tutorial/a-custom-theme.rst:174
+msgid "8. Reuse and maintain the theme"
+msgstr "8. 테마 재사용과 유지보수"
+
+#: ../../tutorial/a-custom-theme.rst:177
+msgid ""
+"Create another project with ``guidedog quickstart``. Copy the finished "
+"``_templates`` directory and ``_static/theme.css`` into it. Add "
+"``html_css_files = [\"theme.css\"]``, the accent option and the "
+"``edition_label`` context value to its configuration. Change the footer's "
+"document link to a page that exists in that project. Keep the new "
+"project's metadata and source tree."
+msgstr ""
+"``guidedog quickstart`` 명령으로 다른 프로젝트를 만들고 완성한 ``_templates`` 디렉터리와 "
+"``_static/theme.css`` 파일을 복사합니다. 설정에 ``html_css_files = "
+"[\"theme.css\"]``, 강조색, ``edition_label`` 값을 더하세요. 바닥글 링크는 새 프로젝트의 실제 문서로 "
+"바꾸고, 새 프로젝트의 메타데이터와 소스는 유지합니다."
+
+#: ../../tutorial/a-custom-theme.rst:183
+msgid ""
+"The copied PDF base makes the theme self-contained. When upgrading "
+"Guidedog, create a scratch quickstart project and compare its templates "
+"with your saved base. Adopt the changes you need, then rebuild every "
+"target. The built-in HTML layout can evolve too; small block overrides "
+"are easier to maintain than a second complete layout. For every variable "
+"and block, see :doc:`../templates`."
+msgstr ""
+"PDF 기본 템플릿도 복사하므로 테마는 독립적으로 동작합니다. 업그레이드할 때 임시 quickstart 프로젝트를 만들어 저장해 둔 "
+"기본 템플릿과 비교하세요. 필요한 변경을 반영하고 모든 형식을 다시 빌드합니다. 내장 HTML도 바뀔 수 있으므로 전체 복사본보다 "
+"작은 블록 재정의가 관리하기 쉽습니다. 계약은 :doc:`../templates` 문서를 참고하세요."
+
+#: ../../tutorial/a-custom-theme.rst:189
+msgid ""
+"If the build reports a missing ``base-book.typ``, finish the rename in "
+"step 1. If the label is blank, set ``edition_label`` in ``html_context``. "
+"If CSS is missing, check both ``html_static_path`` and "
+"``html_css_files``. Read the file, line and correction in the diagnostic "
+"before changing unrelated settings."
+msgstr ""
+"``base-book.typ`` 파일이 없으면 1단계의 이름 변경을 확인합니다. 라벨이 비면 ``html_context`` 안의 "
+"``edition_label`` 값을, CSS가 없으면 ``html_static_path`` 및 ``html_css_files`` "
+"설정을 확인하세요. 관련 없는 설정을 바꾸기 전에 진단의 파일·행·수정 방법을 읽으세요."
+
+#: ../../tutorial/a-small-book.rst:1
+msgid "Make a small book"
+msgstr "작은 책 만들기"
+
+#: ../../tutorial/a-small-book.rst:4
+msgid ""
+"A website is an interconnected web of pages that readers explore "
+"non-linearly. A book, by contrast, requires a deliberate, sequential "
+"reading order with numbered chapters, running headers, and formal front "
+"matter."
+msgstr "웹에서는 링크를 따라 자유롭게 읽지만, 책에는 분명한 순서와 장 번호, 머리말, 앞부분 구성이 필요합니다."
+
+#: ../../tutorial/a-small-book.rst:8
+msgid ""
+"In Guidedog, the table of contents directive (``toctree``) provides the "
+"bridge between both formats. A single ``toctree`` organizes your "
+"documents into a hierarchical sidebar tree for the web and a linear "
+"chapter progression for the PDF book."
+msgstr "``toctree`` 지시문은 두 형식을 연결합니다. 같은 트리가 웹의 계층 탐색과 PDF의 장 순서를 정합니다."
+
+#: ../../tutorial/a-small-book.rst:14
+msgid ""
+"The root document toctree maps into an interactive sidebar and "
+"breadcrumbs on the web, and numbered chapters in print."
+msgstr "루트 toctree가 웹에서는 사이드바와 탐색 경로, 인쇄에서는 번호 있는 장으로 나타납니다."
+
+#: ../../tutorial/a-small-book.rst:14
+msgid ""
+"How a single toctree shapes both web navigation and sequential book "
+"chapters."
+msgstr "하나의 toctree가 웹 탐색과 책의 장 순서를 함께 만듭니다."
+
+#: ../../tutorial/a-small-book.rst:35
+msgid "1. Add a new chapter"
+msgstr "1. 장 추가하기"
+
+#: ../../tutorial/a-small-book.rst:38
+msgid ""
+"In your ``notes`` project, create a new document named "
+"``measurement.rst``:"
+msgstr "``notes`` 프로젝트에 ``measurement.rst`` 파일을 만듭니다."
+
+#: ../../tutorial/a-small-book.rst:41
+msgid "notes/measurement.rst"
+msgstr "notes/measurement.rst"
+
+#: ../../tutorial/a-small-book.rst:64
+msgid ""
+"Notice the section label ``.. _measurement-units:`` placed directly above "
+"the heading. Labels establish cross-reference targets that work "
+"identically on the web and in print."
+msgstr ""
+"제목 바로 위의 ``.. _measurement-units:`` 라벨은 웹과 인쇄 모두에서 쓰는 상호 참조 대상을 정의합니다."
+
+#: ../../tutorial/a-small-book.rst:67
+msgid "2. Structure the reading order"
+msgstr "2. 읽는 순서 정하기"
+
+#: ../../tutorial/a-small-book.rst:70
+msgid "Open ``notes/index.rst`` and declare the table of contents:"
+msgstr "``notes/index.rst`` 파일을 열어 목차를 선언합니다."
+
+#: ../../tutorial/a-small-book.rst:73
+msgid "notes/index.rst"
+msgstr "notes/index.rst"
+
+#: ../../tutorial/a-small-book.rst:92
+msgid "Understanding the toctree options:"
+msgstr "toctree 옵션 설명:"
+
+#: ../../tutorial/a-small-book.rst:94
+msgid ""
+"``:maxdepth: 2`` sets the depth of nested subheadings displayed in the "
+"table of contents."
+msgstr "``:maxdepth: 2`` 옵션은 목차에 표시할 하위 제목 깊이입니다."
+
+#: ../../tutorial/a-small-book.rst:95
+msgid ""
+"``:numbered:`` activates automatic, hierarchical chapter numbering (for "
+"example, \"1. Measurement\" and \"1.1 Units of measurement\")."
+msgstr ""
+"``:numbered:`` 옵션은 “1. Measurement”, “1.1 Units of measurement” 같은 계층 번호를 "
+"붙입니다."
+
+#: ../../tutorial/a-small-book.rst:96
+msgid ""
+"``measurement`` references the document file name without the ``.rst`` "
+"extension."
+msgstr "``measurement`` 항목은 확장자 ``.rst`` 를 뺀 문서 이름입니다."
+
+#: ../../tutorial/a-small-book.rst:98
+msgid "Cross-referencing syntax:"
+msgstr "상호 참조 문법:"
+
+#: ../../tutorial/a-small-book.rst:100
+msgid "``:doc:`measurement``` links to the chapter by document path."
+msgstr "``:doc:`measurement``` 역할은 문서 경로로 장에 연결합니다."
+
+#: ../../tutorial/a-small-book.rst:101
+msgid ""
+"``:ref:`measurement-units``` links to the labeled section. PDF uses the "
+"section title. A book template can also add the page number through "
+"``page-ref``; see :doc:`a-custom-theme` for a working example."
+msgstr ""
+"``:ref:`measurement-units``` 역할은 라벨이 있는 절에 연결합니다. PDF에는 절 제목을 쓰고, 책 템플릿의 "
+"``page-ref`` 설정으로 페이지도 추가할 수 있습니다. 예제는 :doc:`a-custom-theme` 문서를 참고하세요."
+
+#: ../../tutorial/a-small-book.rst:105
+msgid "3. Add a diagram with Graphviz"
+msgstr "3. Graphviz 그림 추가하기"
+
+#: ../../tutorial/a-small-book.rst:108
+msgid ""
+"Visual diagrams clarify complex relationships. Guidedog embeds the "
+"Graphviz engine natively, compiling vector diagrams directly into SVG for "
+"web pages and PDF drawings for print without requiring an external "
+"browser renderer."
+msgstr ""
+"Guidedog는 Graphviz를 네이티브로 통합하여 웹용 SVG와 인쇄용 벡터 그림을 만듭니다. 외부 브라우저 렌더러는 필요 "
+"없습니다."
+
+#: ../../tutorial/a-small-book.rst:112
+msgid "Add a diagram to ``notes/measurement.rst``:"
+msgstr "``notes/measurement.rst`` 문서에 그림을 더합니다."
+
+#: ../../tutorial/a-small-book.rst:135
+msgid ""
+"The ``:caption:`` option supplies a caption. To number figures, add "
+"``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option provides "
+"alternative text for screen readers."
+msgstr ""
+"``:caption:`` 옵션은 그림 설명입니다. 번호는 ``notes/conf.toml`` 파일의 ``numfig = true`` "
+"설정으로 켭니다. ``:alt:`` 옵션은 스크린 리더용 대체 텍스트입니다."
+
+#: ../../tutorial/a-small-book.rst:139
+msgid "4. Build the book and inspect results"
+msgstr "4. 책을 빌드하고 검사하기"
+
+#: ../../tutorial/a-small-book.rst:142
+msgid "Rebuild your project:"
+msgstr "프로젝트를 다시 빌드합니다."
+
+#: ../../tutorial/a-small-book.rst:149
+msgid "Inspect the results in both formats:"
+msgstr "두 출력 모두 살펴봅니다."
+
+#: ../../tutorial/a-small-book.rst:151
+msgid ""
+"**HTML website:** Open ``notes/_build/html/index.html``. The sidebar now "
+"shows the numbered chapter hierarchy. Clicking \"1. Measurement\" opens "
+"the new page, complete with local breadcrumbs and the rendered SVG "
+"diagram."
+msgstr ""
+"**HTML:** ``notes/_build/html/index.html`` 페이지를 열어 번호 있는 장 계층을 확인합니다. “1. "
+"Measurement”를 누르면 탐색 경로와 SVG 그림이 있는 장이 열립니다."
+
+#: ../../tutorial/a-small-book.rst:154
+msgid ""
+"**PDF book:** Open ``notes/_build/pdf/field-notes-en.pdf``. The contents "
+"lists the chapters and their pages. The diagram remains vector artwork, "
+"and document cross-references link to their targets."
+msgstr ""
+"**PDF:** ``notes/_build/pdf/field-notes-en.pdf`` 파일을 엽니다. 목차에는 장과 페이지가 "
+"있으며, 그림은 벡터로 유지되고 참조는 대상에 연결됩니다."
+
+#: ../../tutorial/a-small-book.rst:158
+msgid "5. Next steps"
+msgstr "5. 다음 단계"
+
+#: ../../tutorial/a-small-book.rst:161
+msgid ""
+"Now that you understand the dual output model, explore the topics section "
+"to learn more:"
+msgstr "두 출력의 원리를 알았으니 다음 주제로 진행하세요."
+
+#: ../../tutorial/a-small-book.rst:163
+msgid "Learn rich markup, lists, and tables in :doc:`../topics/writing`."
+msgstr "마크업, 목록, 표는 :doc:`../topics/writing` 문서에서 배웁니다."
+
+#: ../../tutorial/a-small-book.rst:164
+msgid ""
+"Learn how to render formulas and equations in "
+":doc:`../topics/mathematics`."
+msgstr "수식과 방정식은 :doc:`../topics/mathematics` 문서에서 배웁니다."
+
+#: ../../tutorial/a-small-book.rst:165
+msgid ""
+"Learn how to configure custom styles and book fonts in "
+":doc:`../topics/typography`."
+msgstr "스타일과 책 폰트 설정은 :doc:`../topics/typography` 문서에서 배웁니다."
+
+#: ../../tutorial/first-project.rst:1
+msgid "Your first project"
+msgstr "첫 프로젝트"
+
+#: ../../tutorial/first-project.rst:4
+msgid ""
+"This tutorial guides you through creating, writing, and building your "
+"first documentation project with Guidedog. The goal is modest and clear: "
+"start from a clean directory, generate both an HTML website and a "
+"printable PDF book from the same source file, and experience the live "
+"preview server."
+msgstr ""
+"빈 디렉터리에서 Guidedog 프로젝트를 만들어 문서를 쓰고, 같은 소스로 HTML과 인쇄용 PDF를 생성하며 실시간 미리 보기를 "
+"시험합니다."
+
+#: ../../tutorial/first-project.rst:9
+msgid ""
+"You need a working installation of Guidedog. For PDF output, Guidedog can "
+"use its embedded compiler or an installed Typst binary (0.15.1 or newer). "
+"See :doc:`../howto/install`."
+msgstr ""
+"Guidedog를 먼저 설치하세요. PDF는 내장 컴파일러나 설치된 Typst 0.15.1 이상을 사용합니다. "
+":doc:`../howto/install` 문서를 참고하세요."
+
+#: ../../tutorial/first-project.rst:12
+msgid "On macOS, you can install the official release using Homebrew:"
+msgstr "macOS에서는 공식 버전을 Homebrew로 설치할 수 있습니다."
+
+#: ../../tutorial/first-project.rst:18
+msgid "Project architecture and build pipeline"
+msgstr "프로젝트 구조와 빌드 흐름"
+
+#: ../../tutorial/first-project.rst:21
+msgid ""
+"Guidedog takes a single directory of source files and compiles it into "
+"two distinct artifacts: a responsive HTML website and a typeset PDF book."
+msgstr "하나의 소스 디렉터리를 반응형 HTML 사이트와 조판된 PDF 책으로 만듭니다."
+
+#: ../../tutorial/first-project.rst:26
+msgid ""
+"Project sources and templates pass through the Guidedog compiler to "
+"produce HTML and PDF artifacts."
+msgstr "프로젝트 소스와 템플릿이 Guidedog를 거쳐 HTML과 PDF가 됩니다."
+
+#: ../../tutorial/first-project.rst:26
+msgid "How Guidedog compiles a project into an HTML website and a PDF book."
+msgstr "프로젝트에서 HTML 사이트와 PDF 책을 만드는 과정."
+
+#: ../../tutorial/first-project.rst:46
+msgid "1. Create the project"
+msgstr "1. 프로젝트 만들기"
+
+#: ../../tutorial/first-project.rst:49
+msgid ""
+"Run the ``quickstart`` command from a folder where the target directory "
+"``notes`` does not yet exist:"
+msgstr "``notes`` 폴더가 아직 없는 부모 디렉터리에서 ``quickstart`` 명령을 실행합니다."
+
+#: ../../tutorial/first-project.rst:56
+msgid "Guidedog creates a complete, self-contained project structure:"
+msgstr "Guidedog가 독립적으로 쓸 수 있는 프로젝트 구조를 만듭니다."
+
+#: ../../tutorial/first-project.rst:74
+msgid "Understanding the files:"
+msgstr "파일의 역할:"
+
+#: ../../tutorial/first-project.rst:76
+msgid ""
+"``conf.toml``: Project settings (title, author, version, language, "
+"builders)."
+msgstr "``conf.toml``: 제목, 작성자, 버전, 언어, 빌더 설정."
+
+#: ../../tutorial/first-project.rst:77
+msgid ""
+"``index.rst``: The root document that defines your front page and table "
+"of contents."
+msgstr "``index.rst``: 첫 화면과 목차를 정의하는 루트 문서."
+
+#: ../../tutorial/first-project.rst:78
+msgid "``_templates/layout.html``: The HTML website template (Jinja)."
+msgstr "``_templates/layout.html``: HTML 사이트 구조를 정하는 Jinja 템플릿."
+
+#: ../../tutorial/first-project.rst:79
+msgid ""
+"``_templates/book.typ``: The PDF book layout and typography template "
+"(Typst)."
+msgstr "``_templates/book.typ``: PDF의 레이아웃, 글자 구성, 표지를 정하는 Typst 템플릿."
+
+#: ../../tutorial/first-project.rst:80
+msgid "``_static/``: CSS stylesheets and JavaScript enhancements."
+msgstr "``_static/``: CSS와 JavaScript 보조 기능."
+
+#: ../../tutorial/first-project.rst:81
+msgid ""
+"``assets/``: Dedicated folders for project images, diagrams, audio, and "
+"video files."
+msgstr "``assets/``: 이미지, 그림, 오디오, 비디오 디렉터리."
+
+#: ../../tutorial/first-project.rst:83
+msgid ""
+"Templates in Guidedog are directly visible and editable. They are placed "
+"directly inside your project rather than hidden within an external theme "
+"or system cache. You can modify them at any time to customize your site "
+"and book design. The first build creates ``_build`` for generated output."
+msgstr ""
+"템플릿은 외부 테마나 시스템 캐시에 숨기지 않고 프로젝트에서 직접 편집합니다. 사이트와 책을 언제든 조정할 수 있으며, 첫 빌드가 "
+"출력용 ``_build`` 디렉터리를 만듭니다."
+
+#: ../../tutorial/first-project.rst:88
+msgid "2. Write the first page"
+msgstr "2. 첫 페이지 쓰기"
+
+#: ../../tutorial/first-project.rst:91
+msgid ""
+"Open ``notes/index.rst`` in your editor and replace its contents with the "
+"following:"
+msgstr "편집기에서 ``notes/index.rst`` 파일을 열어 다음 내용으로 바꿉니다."
+
+#: ../../tutorial/first-project.rst:113
+msgid ""
+"This page demonstrates headings, mathematical notation, and an admonition "
+"note."
+msgstr "제목, 수학 표기, 주의 블록을 보여 주는 페이지입니다."
+
+#: ../../tutorial/first-project.rst:115
+msgid "3. Build and inspect the outputs"
+msgstr "3. 출력 빌드하고 확인하기"
+
+#: ../../tutorial/first-project.rst:118
+msgid "Compile your project into both HTML and PDF formats:"
+msgstr "프로젝트를 HTML과 PDF로 빌드합니다."
+
+#: ../../tutorial/first-project.rst:125
+msgid ""
+"The ``-W`` flag instructs Guidedog to treat warnings as errors. Keeping "
+"this flag enabled in your routine checks ensures that broken references "
+"or markup errors are caught early."
+msgstr "``-W`` 옵션은 경고를 오류로 처리합니다. 평소에 켜 두면 참조나 마크업 오류를 일찍 찾을 수 있습니다."
+
+#: ../../tutorial/first-project.rst:128
+msgid "Now inspect the output files:"
+msgstr "생성된 파일을 확인합니다."
+
+#: ../../tutorial/first-project.rst:130
+msgid ""
+"Open ``notes/_build/html/index.html`` in your web browser. You will see a "
+"clean, responsive documentation website with a theme switch, search bar, "
+"and formatted math."
+msgstr ""
+"브라우저에서 ``notes/_build/html/index.html`` 페이지를 열어 테마 전환, 검색, 수학 표기를 확인합니다."
+
+#: ../../tutorial/first-project.rst:132
+msgid ""
+"Open the PDF file generated in ``notes/_build/pdf/``. You will see a book "
+"layout complete with running headers, page numbers, and typographic math."
+msgstr "``notes/_build/pdf/`` 디렉터리의 PDF를 열어 머리말, 페이지 번호, 수식을 확인합니다."
+
+#: ../../tutorial/first-project.rst:135
+msgid ""
+"Guidedog formats mathematics appropriately for each medium: using "
+"client-side MathJax for the browser, and native vector formulas for the "
+"Typst PDF engine."
+msgstr "브라우저는 MathJax를, Typst PDF 엔진은 네이티브 벡터 수식을 사용합니다."
+
+#: ../../tutorial/first-project.rst:138
+msgid "4. Live preview and incremental rebuilds"
+msgstr "4. 실시간 미리 보기와 증분 빌드"
+
+#: ../../tutorial/first-project.rst:141
+msgid "Guidedog includes a built-in development web server:"
+msgstr "Guidedog에는 개발용 서버가 내장되어 있습니다."
+
+#: ../../tutorial/first-project.rst:147
+msgid ""
+"The terminal prints a local URL, such as ``http://localhost:8000``. Open "
+"this address in your browser."
+msgstr "터미널의 주소(예: ``http://localhost:8000``)를 브라우저에서 엽니다."
+
+#: ../../tutorial/first-project.rst:150
+msgid "Now test the live editing loop:"
+msgstr "편집과 미리 보기 흐름을 시험합니다."
+
+#: ../../tutorial/first-project.rst:154
+msgid ""
+"Editing and saving a file triggers timestamp verification and selective "
+"rebuild upon refreshing the browser."
+msgstr "편집 후 저장하고 브라우저를 새로 고치면 시각 확인과 필요한 재빌드가 이루어집니다."
+
+#: ../../tutorial/first-project.rst:154
+msgid "The live development cycle with guidedog serve."
+msgstr "guidedog serve의 실시간 개발 흐름."
+
+#: ../../tutorial/first-project.rst:173
+msgid "Edit ``notes/index.rst`` to add a new paragraph."
+msgstr "``notes/index.rst`` 문서에 단락을 추가합니다."
+
+#: ../../tutorial/first-project.rst:174
+msgid "Save the file."
+msgstr "파일을 저장합니다."
+
+#: ../../tutorial/first-project.rst:175
+msgid "Refresh your browser page."
+msgstr "브라우저를 새로 고칩니다."
+
+#: ../../tutorial/first-project.rst:177
+msgid ""
+"Before serving a requested page, Guidedog checks file modification "
+"timestamps against its cached build environment. If inputs have changed, "
+"it rebuilds only the affected documents before responding to the browser "
+"request."
+msgstr "페이지를 제공하기 전 입력 파일의 수정 시각을 캐시와 비교합니다. 바뀌었다면 영향받은 문서를 먼저 빌드한 후 응답합니다."
+
+#: ../../tutorial/first-project.rst:181
+msgid ""
+"When you run a build without modifying any files, Guidedog reuses the "
+"cached document trees, avoiding redundant re-parsing."
+msgstr "파일이 그대로라면 캐시의 문서 트리를 재사용하여 다시 분석하지 않습니다."
+
+#: ../../tutorial/first-project.rst:184
+msgid ""
+"Press ``Ctrl+C`` in your terminal to stop the server when you are done."
+msgstr "마치면 터미널에서 ``Ctrl+C`` 를 눌러 서버를 멈춥니다."
+
+#: ../../tutorial/first-project.rst:186
+msgid ""
+"Continue to :doc:`a-small-book` to learn how to organize multiple "
+"chapters and cross-references."
+msgstr "장 구성과 상호 참조는 :doc:`a-small-book` 문서로 이어집니다."
+
+#: ../../tutorial/index.rst:1
+msgid "Tutorials"
+msgstr "따라 하기"
+
+#: ../../tutorial/index.rst:4
+msgid ""
+"Follow these pages in order. Each step produces a result you can inspect."
+msgstr "순서대로 따라 하세요. 각 단계에서 확인할 수 있는 결과가 나옵니다."
+
+#~ msgid ""
+#~ "A site is a graph of documents. A book needs a reading order. A "
+#~ "``toctree`` supplies both."
+#~ msgstr ""
+#~ "사이트는 문서로 이루어진 그래프입니다. 책에는 읽기 순서가 필요합니다. ``toctree``\\ 는 둘 다 제공합니다."
+
+#~ msgid "Replace the contents of ``notes/index.rst`` with:"
+#~ msgstr "``notes/index.rst``\\ 의 내용을 다음으로 바꾸세요."
+
+#~ msgid ""
+#~ "The document name omits ``.rst``. The label names an idea within a "
+#~ "document. Use a document link for a chapter. Use a label for a "
+#~ "particular argument."
+#~ msgstr ""
+#~ "문서 이름에서 ``.rst``\\ 는 생략합니다. 레이블은 문서 안의 개념에 이름을 붙입니다. 장에는 문서 링크를, 특정 "
+#~ "논증에는 레이블을 사용하세요."
+
+#~ msgid "Put this in ``measurement.rst``:"
+#~ msgstr "다음을 ``measurement.rst``\\ 에 넣으세요."
+
+#~ msgid ""
+#~ "Guidedog uses its linked Graphviz library. The result is an SVG in "
+#~ "HTML and an image in the PDF. No browser diagram interpreter is "
+#~ "needed. A caption explains the conclusion. Alternative text explains "
+#~ "the drawing."
+#~ msgstr ""
+#~ "Guidedog는 링크된 Graphviz 라이브러리를 사용합니다. HTML에는 SVG, PDF에는 이미지가 들어가므로 "
+#~ "브라우저용 다이어그램 해석기가 필요하지 않습니다. 캡션은 결론을, 대체 텍스트는 그림을 설명합니다."
+
+#~ msgid "Build the book"
+#~ msgstr "책 빌드"
+
+#~ msgid ""
+#~ "The chapter is in the sidebar and in the book's contents. Follow the "
+#~ "section link in the browser. Inspect its destination in the PDF."
+#~ msgstr "장은 사이드바와 책의 목차에 나타납니다. 브라우저에서 절 링크를 따라가고 PDF에서도 목적지를 확인하세요."
+
+#~ msgid ""
+#~ "The next useful step is :doc:`../topics/writing`. Keep chapters small "
+#~ "enough to explain one subject."
+#~ msgstr ""
+#~ "다음으로 :doc:`../topics/writing`\\ 을 읽어 보세요. 각 장이 한 주제를 설명할 수 있도록 짧게 "
+#~ "유지하세요."
+
+#~ msgid ""
+#~ "On macOS, install the release with ``brew install "
+#~ "insanai/guidedog/guidedog``. This adds the official tap and includes "
+#~ "the PDF compiler."
+#~ msgstr ""
+#~ "macOS에서는 ``brew install insanai/guidedog/guidedog`` 로 릴리스를 설치하세요. 공식 "
+#~ "tap이 추가되며 PDF 컴파일러도 함께 설치됩니다."
+
+#~ msgid ""
+#~ "Guidedog writes the configuration, the first RST document, and "
+#~ "editable templates. It also creates folders for images, audio, and "
+#~ "video. It refuses to overwrite an existing project."
+#~ msgstr ""
+#~ "Guidedog는 설정, 첫 RST 문서, 편집 가능한 템플릿을 작성합니다. 이미지, 오디오, 동영상 폴더도 만듭니다. 기존 "
+#~ "프로젝트의 덮어쓰기는 거부합니다."
+
+#~ msgid ""
+#~ "The RST files hold your content. The templates hold your presentation. "
+#~ "The base templates (``_templates/layout.html`` and "
+#~ "``_templates/book.typ``) are placed directly in your project by "
+#~ "``quickstart`` rather than being stored in an external theme or "
+#~ "package cache. You can inspect and customize them at any time."
+#~ msgstr ""
+#~ "RST 파일에는 내용을, 템플릿에는 표현 방식을 담습니다. ``quickstart`` 는 "
+#~ "``_templates/layout.html`` 과 ``_templates/book.typ`` 을 외부 테마나 캐시가 아닌 "
+#~ "프로젝트에 직접 생성합니다. 언제든 보고 수정할 수 있습니다."
+
+#~ msgid ""
+#~ "Open ``notes/_build/html/index.html`` and the PDF in "
+#~ "``notes/_build/pdf``. ``-W`` makes warnings fail the build. Keep it in "
+#~ "your documentation checks. The HTML page contains the navigation and "
+#~ "the text. The PDF adds book furniture. Math is formatted for each "
+#~ "target. :doc:`../topics/mathematics` explains the setup."
+#~ msgstr ""
+#~ "``notes/_build/html/index.html``\\ 과 ``notes/_build/pdf``\\ 의 PDF를 "
+#~ "여세요. ``-W``\\ 는 경고가 있으면 빌드를 실패시키므로 문서 검사에 유지하세요. HTML에는 탐색과 본문이 있으며, "
+#~ "PDF에는 책의 머리말·페이지 번호 등도 들어갑니다. 수식은 각 형식에 맞춰 조판합니다. 설정은 "
+#~ ":doc:`../topics/mathematics`\\ 에서 설명합니다."
+
+#~ msgid "Make a change"
+#~ msgstr "내용 바꾸기"
+
+#~ msgid ""
+#~ "Open the address printed by the command. Edit the source and save it. "
+#~ "Refresh the browser page. Before serving HTML, Guidedog checks source "
+#~ "modification times and rebuilds when they have advanced. It does not "
+#~ "push a browser reload. Stop the server with Ctrl+C."
+#~ msgstr ""
+#~ "명령이 출력한 주소를 여세요. 소스를 수정하고 저장한 뒤 브라우저를 새로 고치세요. Guidedog는 HTML을 제공하기 전에 "
+#~ "소스 수정 시각을 확인하고, 변경되었으면 다시 빌드합니다. 브라우저 새로 고침을 자동으로 보내지는 않습니다. Ctrl+C로 "
+#~ "서버를 멈춥니다."
+
+#~ msgid ""
+#~ "Build again without editing anything. Unchanged documents are reused. "
+#~ "The build need not reread every page to prove that its output is "
+#~ "current. Continue with :doc:`a-small-book`."
+#~ msgstr ""
+#~ "수정 없이 다시 빌드하세요. 변경되지 않은 문서는 재사용하므로, 출력이 최신인지 확인하기 위해 모든 페이지를 다시 읽을 필요가 "
+#~ "없습니다. :doc:`a-small-book`\\ 으로 이어 가세요."
+
+#~ msgid ""
+#~ "The RST files hold the explanation. The templates hold the "
+#~ "presentation. ``book.typ`` is a typesetting template, not a second "
+#~ "copy of the prose."
+#~ msgstr ""
+#~ "RST 파일은 설명을, 템플릿은 표현을 담습니다. ``book.typ``\\ 는 조판 템플릿이며 본문의 복사본이 아닙니다."

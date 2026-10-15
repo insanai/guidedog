@@ -1,0 +1,80 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../intersphinx.rst:1
+msgid "Linking to other projects"
+msgstr "链接到其他项目"
+
+#: ../../intersphinx.rst:4
+msgid ""
+"With ``sphinx.ext.intersphinx``, references this project cannot resolve "
+"are looked up in other projects' inventories, the ``objects.inv`` every "
+"Sphinx or Guidedog site publishes. Name the projects in ``conf.toml``:"
+msgstr ""
+"启用 ``sphinx.ext.intersphinx`` 后，本项目无法解析的引用会到其他项目的清单中查找，即各 Sphinx 或 "
+"Guidedog 站点发布的 ``objects.inv``\\ 。在 ``conf.toml`` 中列出这些项目："
+
+#: ../../intersphinx.rst:16
+msgid ""
+"Each entry is the address of the other project's pages and where its "
+"inventory is: a URL, a file relative to the source folder, or ``\"\"`` "
+"for the ``objects.inv`` at the address. A list is tried in order. This is "
+"Sphinx's ``intersphinx_mapping``, with ``\"\"`` for Python's ``None``; "
+"``guidedog migrate`` converts it."
+msgstr ""
+"每项包含其他项目的页面地址及清单位置。清单可用 URL、相对于源目录的文件路径，或用 ``\"\"`` 表示页面地址下的 "
+"``objects.inv``\\ 。列表按顺序尝试。这是 Sphinx 的 ``intersphinx_mapping``\\ ，用 "
+"``\"\"`` 代替 Python 的 ``None``\\ ；\\ ``guidedog migrate`` 会进行转换。"
+
+#: ../../intersphinx.rst:21
+msgid "Then references need nothing new:"
+msgstr "之后，引用无需特殊写法："
+
+#: ../../intersphinx.rst:29
+msgid ""
+"Links show the other project's titles for labels and documents, and carry "
+"a tooltip such as \"(in Python v3.14)\". As in Sphinx, ``:doc:`` "
+"references need the project's name (``:doc:`python:tutorial/index```), "
+"because ``intersphinx_disabled_reftypes`` is ``[\"std:doc\"]`` by default."
+msgstr "标签和文档链接显示其他项目的标题，并附有“(in Python v3.14)”这样的提示。与 Sphinx 一样，\\ ``:doc:`` 引用需指定项目名（\\ ``:doc:`python:tutorial/index```\\ ），因为 ``intersphinx_disabled_reftypes`` 默认为 ``[\"std:doc\"]``\\ 。"
+
+#: ../../intersphinx.rst:34
+msgid ""
+"Inventories are fetched when a build starts and kept in "
+"``_build/.doctrees/__intersphinx_cache__`` for "
+"``intersphinx_cache_limit`` days (5; a negative number keeps them); local "
+"files are read on every build. As in Sphinx, an inventory that has moved "
+"(its URL redirects, as "
+"``https://werkzeug.palletsprojects.com/objects.inv`` redirects to "
+"``/en/stable/``) makes its new folder the base of the links, and the "
+"cache remembers that base, so a build from the cache links exactly as the "
+"build that fetched it did. ``intersphinx_timeout`` limits each download "
+"in seconds. A project that cannot be reached is a warning, and its "
+"references stay unresolved."
+msgstr ""
+"构建开始时获取清单，并在 ``_build/.doctrees/__intersphinx_cache__`` 中按 "
+"``intersphinx_cache_limit`` 缓存若干天（默认 5 天，负值表示保留）；本地文件每次构建都读取。与 Sphinx "
+"一样，清单 URL 重定向后采用新目录作为链接基址，缓存也记录此基址，因此使用缓存与首次获取时的链接一致。例如 "
+"``https://werkzeug.palletsprojects.com/objects.inv`` 会重定向至 "
+"``/en/stable/``\\ 。\\ ``intersphinx_timeout`` "
+"以秒限制每次下载。无法访问的项目会给出警告，其引用保持未解析状态。"
+
+#: ../../intersphinx.rst:44
+msgid ""
+"Guidedog writes its own ``objects.inv`` with every page, label, term, and "
+"object, so other projects can link here the same way."
+msgstr "Guidedog 生成的 ``objects.inv`` 包含各页面、标签、术语和对象，其他项目可用相同方式链接到这里。"

@@ -1,0 +1,116 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 04:29+0000\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../media.rst:3
+msgid "Images, video, audio, and downloads"
+msgstr "이미지, 동영상, 오디오, 다운로드"
+
+#: ../../media.rst:6
+msgid ""
+"Keep a resource near the document that explains it. Name it with a "
+"relative path, or start the path with ``/`` to refer to the source root. "
+"Guidedog copies resources used by the documents. A video remains a video "
+"on the web; a PDF names the recording."
+msgstr ""
+"자원은 이를 설명하는 문서 가까이에 두세요. 상대 경로를 쓰거나 ``/``\\ 로 시작해 소스 루트를 기준으로 지정하세요. "
+"Guidedog는 문서에서 쓰는 자원을 복사합니다. 동영상은 웹에서 재생되며 PDF에는 녹화 내용을 표시합니다."
+
+#: ../../media.rst:10
+msgid "Images"
+msgstr "이미지"
+
+#: ../../media.rst:23
+msgid ""
+"Pages copy images into ``_images``; the book embeds them. PNG, JPEG, GIF, "
+"SVG, and WebP work in both. A missing image is a warning: the page keeps "
+"the image's alternative text, and the book leaves the image out."
+msgstr ""
+"페이지는 이미지를 ``_images``\\ 로 복사하고 책은 포함합니다. PNG, JPEG, GIF, SVG, WebP는 둘 다 "
+"지원합니다. 이미지가 없으면 경고하며, 페이지는 대체 텍스트를 남기고 책은 이미지를 제외합니다."
+
+#: ../../media.rst:27
+msgid "Video and audio"
+msgstr "동영상과 오디오"
+
+#: ../../media.rst:30
+msgid ""
+"An image or figure that names a video (``.mp4``, ``.webm``, ``.ogv``, "
+"``.mov``, ``.m4v``) or an audio file (``.mp3``, ``.ogg``, ``.oga``, "
+"``.m4a``, ``.opus``, ``.wav``, ``.flac``, ``.aac``) plays it, as Docutils "
+"does for video:"
+msgstr ""
+"동영상(\\ ``.mp4``\\ , ``.webm``\\ , ``.ogv``\\ , ``.mov``\\ , ``.m4v``\\ ) "
+"또는 오디오(\\ ``.mp3``\\ , ``.ogg``\\ , ``.oga``\\ , ``.m4a``\\ , ``.opus``\\ "
+", ``.wav``\\ , ``.flac``\\ , ``.aac``\\ )를 지정한 image나 figure는 미디어를 재생합니다. "
+"Docutils의 동영상 처리와 같은 방식입니다."
+
+#: ../../media.rst:44
+msgid ""
+"Pages show the browser's player, with a link to the file for browsers "
+"that cannot play it. A book cannot play media, so it names the recording "
+"in a box where the player would be; text output writes ``[video: ...]`` "
+"or ``[audio: ...]``."
+msgstr ""
+"페이지는 브라우저 플레이어와 재생하지 못하는 브라우저용 파일 링크를 표시합니다. 책은 미디어를 재생할 수 없으므로 플레이어 자리의 "
+"상자에 녹화·녹음을 표시합니다. 텍스트 출력은 ``[video: ...]`` 또는 ``[audio: ...]``\\ 를 씁니다."
+
+#: ../../media.rst:48
+msgid "Downloads"
+msgstr "다운로드"
+
+#: ../../media.rst:51
+msgid ""
+"In HTML, the ``download`` role copies a file into ``_downloads`` and "
+"offers it for saving:"
+msgstr "HTML에서 ``download`` 역할은 파일을 ``_downloads`` 경로에 복사하고 저장용 링크를 제공합니다."
+
+#: ../../media.rst:58
+msgid ""
+"For portable PDF download links, set ``html_baseurl`` to the published "
+"HTML site's absolute HTTP or HTTPS address. The book then links to that "
+"site's copied files. Without it, the link remains source-relative; the "
+"PDF does not embed attachments. This setting does not upload files. "
+"Publish the HTML site before sharing the book. This behavior is available "
+"in Guidedog 0.6.3 and later."
+msgstr ""
+"독립 PDF에서도 다운로드하려면 ``html_baseurl`` 값을 게시한 HTML 사이트의 절대 HTTP 또는 HTTPS 주소로 "
+"설정하세요. 책은 사이트에 복사한 파일을 가리킵니다. 설정하지 않으면 소스 상대 경로이며, PDF에 첨부 파일을 넣지는 않습니다. "
+"이 설정은 업로드하지 않으므로 책을 공유하기 전에 HTML 사이트를 게시하세요. 이 동작은 Guidedog 0.6.3 이상에서 "
+"사용할 수 있습니다."
+
+#: ../../media.rst:64
+msgid "Theme files"
+msgstr "테마 파일"
+
+#: ../../media.rst:67
+msgid ""
+"``_static`` holds the files the theme uses (style sheets, scripts, fonts, "
+"a logo), copied as they are into ``_static`` in the site. "
+"``html_static_path`` lists it, and ``html_css_files``, ``html_js_files``, "
+"``html_logo``, and ``html_favicon`` name files in it. Content media "
+"belongs with the documents instead, so that moving a document with its "
+"media keeps its links working."
+msgstr ""
+"``_static``\\ 에는 테마의 스타일시트, 스크립트, 글꼴, 로고를 두며 사이트의 ``_static``\\ 으로 그대로 "
+"복사합니다. ``html_static_path``\\ 로 디렉터리를 지정하고, ``html_css_files``\\ , "
+"``html_js_files``\\ , ``html_logo``\\ , ``html_favicon``\\ 으로 파일을 지정합니다. "
+"콘텐츠 미디어는 문서와 함께 두어 같이 이동해도 링크가 유지되게 하세요."
+
+#~ msgid ""
+#~ "The ``download`` role links to any file and copies it into "
+#~ "``_downloads``:"
+#~ msgstr "``download`` 역할은 어떤 파일이든 연결하고 ``_downloads``\\ 로 복사합니다."

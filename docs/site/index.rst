@@ -1,0 +1,153 @@
+.. meta::
+   :description: Guidedog builds documentation websites and PDF books from
+      reStructuredText and Markdown.
+
+Guidedog
+========
+
+.. rst-class:: gd-tagline
+
+Write once. Explain well. Publish on the web and on paper.
+
+.. rst-class:: gd-lead
+
+Guidedog builds a documentation website and a PDF book from the same
+reStructuredText or Markdown files. You write the text once; Guidedog keeps the two
+editions in step.
+
+.. container:: gd-actions
+
+   `Read the manual <manual_>`_
+   `Download <download_>`_
+   `Source code <source_>`_
+
+.. container:: gd-flow
+
+   .. raw:: html
+      :file: flow.svg
+
+   .. rst-class:: gd-flow-caption
+
+   A plain text file goes in. Guidedog makes a web page and a book page from it.
+
+
+What it does
+------------
+
+.. rst-class:: gd-features
+
+* **A website.** Pages with navigation, search, highlighted code, and light and dark
+  themes, from Jinja templates you can change as much as you like.
+* **A PDF book.** Chapters, cross-references, figures, tables, footnotes, and an index,
+  set by Typst with hyphenation for each language.
+* **reStructuredText and Markdown.** Directives, roles, toctrees, and cross-references
+  work as Sphinx users expect, and MyST Markdown can sit next to them.
+* **Translations.** Gettext catalogs carry a project into other languages. Chinese,
+  Japanese, Korean, and Hindi text is laid out correctly on screen and on paper.
+* **Diagrams, math, and API pages.** Graphviz diagrams, LaTeX equations, and API
+  reference for Rust, Python, and Odin, read from source code.
+* **Clear errors.** A message says what is wrong, where, and how to fix it. A failed
+  build leaves the last good site in place.
+
+
+One program
+-----------
+
+Guidedog is a single binary. You do not need a Python environment, a LaTeX
+installation, or separate theme and extension packages. Configuration is a TOML file,
+and templates are plain files in your project that you can edit.
+
+Some things still come from outside. The Typst compiler is built into Guidedog; a
+build without it uses the ``typst`` program installed on your system. Diagrams use
+the system's Graphviz library, and fetching remote inventories uses the ``curl``
+program.
+
+
+Write it, see both
+------------------
+
+On the left is reStructuredText. On the right is what Guidedog made of it on this page.
+The PDF builder sets the same lines as a book page.
+
+.. container:: gd-example
+
+   .. code-block:: rst
+
+      .. note::
+
+         Guidedog reads your text once.
+
+      The *same* files become a **website**
+      and a **book**:
+
+      .. list-table::
+         :header-rows: 1
+
+         * - Builder
+           - Result
+         * - ``html``
+           - A website
+         * - ``pdf``
+           - A PDF book
+
+   .. container:: gd-rendered
+
+      .. note::
+
+         Guidedog reads your text once.
+
+      The *same* files become a **website**
+      and a **book**:
+
+      .. list-table::
+         :header-rows: 1
+
+         * - Builder
+           - Result
+         * - ``html``
+           - A website
+         * - ``pdf``
+           - A PDF book
+
+.. rst-class:: gd-more
+
+The `manual as a PDF book <manual-pdf_>`_ is an example of the result on paper. It is
+built from the same files as the manual's website.
+
+
+Get started
+-----------
+
+Download the archive for your system from the `latest release <download_>`_, put
+``guidedog`` on your ``PATH``, and create a project:
+
+.. code-block:: sh
+
+   guidedog quickstart docs
+   guidedog build html docs
+   guidedog build pdf docs
+   guidedog serve docs
+
+``quickstart`` writes ``conf.toml``, ``index.rst``, and templates you can edit.
+``serve`` rebuilds the site while you write. The `tutorial <manual-tutorial_>`_ walks through
+a first project. To build Guidedog from source, install Rust and follow the
+`instructions in the repository <build_>`_.
+
+
+Design discussions
+------------------
+
+Guidedog's design decisions are written down as numbered discussions: the problem, the
+alternatives, the decision, and the evidence. You can read each one on the web or
+download it as a PDF.
+
+Your project can keep its own discussions the same way, with ``dsc``, which comes with
+Guidedog. The `manual <manual-discussions_>`_ shows how.
+
+.. container:: gd-actions gd-actions-quiet
+
+   `Read the discussions <discussions_>`_
+
+.. _download: https://github.com/insanai/guidedog/releases/latest
+.. _source: https://github.com/insanai/guidedog
+.. _build: https://github.com/insanai/guidedog#build-from-source

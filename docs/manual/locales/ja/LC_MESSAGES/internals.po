@@ -1,0 +1,457 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 03:59+0000\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../internals/algorithms.rst:1
+msgid "Invariants before algorithms"
+msgstr "アルゴリズムより先に不変条件"
+
+#: ../../internals/algorithms.rst:4
+msgid ""
+"A useful invariant says what stays true while the algorithm runs. It also "
+"says what the caller may rely on when the algorithm stops. Write it "
+"before writing the loop."
+msgstr "役に立つ不変条件は、実行中に保たれることと、終了後に呼び出し側が頼れることを示す。ループを書く前にそれを書く。"
+
+#: ../../internals/algorithms.rst:8
+msgid "Preorder subtree intervals"
+msgstr "先行順走査の部分木区間"
+
+#: ../../internals/algorithms.rst:11
+msgid ""
+"Assume a tree is emitted in preorder. Every node is emitted before its "
+"children. Assume each subtree is contiguous. Let :math:`e_i` be the first "
+"index after node :math:`i` and all its descendants."
+msgstr ""
+"木を先行順で出力すると仮定する。各ノードは子より先に出力され、部分木は連続する。\\ :math:`e_i` をノード :math:`i` "
+"と全ての子孫の直後の添字とする。"
+
+#: ../../internals/algorithms.rst:15
+msgid "\\operatorname{subtree}(i) = [i,e_i), \\qquad i < e_i \\le N."
+msgstr "\\operatorname{subtree}(i) = [i,e_i), \\qquad i < e_i \\le N."
+
+#: ../../internals/algorithms.rst:20
+msgid ""
+"**Claim.** A traversal can skip the subtree by advancing to :math:`e_i`."
+msgstr "**命題。** 添字を :math:`e_i` に進めれば、部分木を飛ばせる。"
+
+#: ../../internals/algorithms.rst:22
+msgid ""
+"**Proof.** Contiguity puts every descendant before :math:`e_i`. The "
+"exclusive-end definition puts every later node at or after :math:`e_i`. "
+"Advancing there therefore skips exactly the subtree. The validator checks "
+"the assumptions before a renderer relies on them."
+msgstr ""
+"**証明。** 連続性により全ての子孫は :math:`e_i` より前にある。排他的な終端の定義により、以後のノードは :math:`e_i` "
+"以降にある。そこへ進めば部分木だけを飛ばせる。レンダラーが頼る前に、バリデーターが仮定を検査する。"
+
+#: ../../internals/algorithms.rst:29
+msgid ""
+"Document zero contains heading and paragraph subtrees, each with a text "
+"leaf. Five preorder nodes occupy nested half-open intervals."
+msgstr "文書ノード 0 は見出しと段落を含み、それぞれにテキストの葉があります。5 個の先行順ノードが入れ子の半開区間を作ります。"
+
+#: ../../internals/algorithms.rst:29
+msgid "A parent's interval encloses its children's intervals."
+msgstr "親の区間は子の区間を包含します。"
+
+#: ../../internals/algorithms.rst:50
+msgid ""
+"A complete scan visits each node once. Its traversal cost is "
+":math:`O(N)`. Skipping a subtree takes one index update. Payload work "
+"still costs what it uses. Do not confuse a constant-time skip with "
+"constant-time rendering."
+msgstr ""
+"全体走査は各ノードを一度訪れ、走査コストは :math:`O(N)`\\ "
+"。部分木のスキップは添字の更新一回で済むが、ペイロード処理には相応のコストがある。定数時間のスキップを定数時間の描画と混同しない。"
+
+#: ../../internals/algorithms.rst:54
+msgid "Measure before emit"
+msgstr "出力の前に計測する"
+
+#: ../../internals/algorithms.rst:57
+msgid ""
+"The renderer first measures the byte count :math:`m`. Let the caller's "
+"output capacity be :math:`c`."
+msgstr "レンダラーはまずバイト数 :math:`m` を測る。呼び出し側の出力容量を :math:`c` とする。"
+
+#: ../../internals/algorithms.rst:60
+msgid "m \\le c \\quad \\Longrightarrow \\quad \\text{emission may begin}."
+msgstr "m \\le c \\quad \\Longrightarrow \\quad \\text{出力を開始できる}."
+
+#: ../../internals/algorithms.rst:64
+msgid ""
+"The measured and emitted traversals use the same rules. A successful "
+"emission must write exactly :math:`m` bytes. A failure returns no valid "
+"partial artifact. The host owns publication, so incomplete bytes cannot "
+"replace a previous output."
+msgstr ""
+"測定と出力の走査は同じ規則を使う。成功時は正確に :math:`m` "
+"バイトを書く。失敗時に有効な部分成果物は返さない。公開はホストが担うため、不完全なバイト列が以前の出力を置き換えることはない。"
+
+#: ../../internals/algorithms.rst:69
+msgid "Cache validity"
+msgstr "キャッシュの有効性"
+
+#: ../../internals/algorithms.rst:72
+msgid ""
+"A cache key must cover the data that can change a result. Sources alone "
+"are insufficient. Includes, templates, configuration, reference lookups, "
+"resources, and adapter versions can affect the output. Reuse is allowed "
+"only when the recorded dependencies still agree. A missing output "
+"invalidates reuse even when its key matches."
+msgstr ""
+"キャッシュキーは結果を変え得る全データを含める。ソースだけでは足りない。インクルード、テンプレート、設定、参照検索、リソース、アダプターの版も出力に影響する。記録した依存関係が一致するときだけ再利用できる。キーが一致しても出力がなければ無効。"
+
+#: ../../internals/algorithms.rst:78
+msgid ""
+"Tests install failing allocators at the core boundary and compare emitted "
+"content. They also audit imports. Counting allocations without checking "
+"the result could miss a refusal that silently discarded part of the "
+"document."
+msgstr ""
+"テストではコア境界に失敗するアロケーターを置き、出力内容を比較する。インポートも監査する。割り当て数だけを数えて結果を見なければ、拒否で文書の一部を黙って捨てる不具合を見逃し得る。"
+
+#: ../../internals/engine.rst:1
+msgid "The Guidedoc engine"
+msgstr "Guidedoc エンジン"
+
+#: ../../internals/engine.rst:4
+msgid ""
+"Guidedoc is the conversion core. It borrows storage from its caller. It "
+"reads a source, builds a semantic tree, runs passes, measures the output, "
+"and emits bytes. It does not open files or publish artifacts."
+msgstr ""
+"Guidedoc "
+"は変換のコアで、呼び出し側の記憶領域を借用する。ソースを読み、意味木を作り、パスを実行し、出力を測ってバイト列を生成する。ファイルを開いたり公開したりしない。"
+
+#: ../../internals/engine.rst:10
+msgid ""
+"The CLI calls the project host, which supplies fixed storage to the "
+"conversion core."
+msgstr "CLI はプロジェクトホストを呼び、ホストは変換コアに固定した領域を渡す。"
+
+#: ../../internals/engine.rst:10
+msgid "Effects belong to the host; document semantics belong to Guidedoc."
+msgstr "外部への作用はホストが担い、文書の意味は Guidedoc が担う。"
+
+#: ../../internals/engine.rst:29
+msgid "Conversion data flow"
+msgstr "変換のデータフロー"
+
+#: ../../internals/engine.rst:32
+msgid ""
+"A document passes through distinct phases within the Guidedoc conversion "
+"core. Each stage borrows memory from the caller's pre-allocated workspace "
+"buffers:"
+msgstr "Guidedoc の変換は段階に分かれます。各段階は、呼び出し側が先に確保したワークスペースを借ります。"
+
+#: ../../internals/engine.rst:37
+msgid ""
+"Borrowed source becomes a flat tree. Passes transform it. A measurement "
+"determines the output capacity before emission."
+msgstr "借用したソースから平坦なツリーを作り、変換パスを適用し、必要な出力容量を測ってから書き出します。"
+
+#: ../../internals/engine.rst:37
+msgid "Conversion data flow within the Guidedoc core."
+msgstr "Guidedoc コア内の変換データフロー。"
+
+#: ../../internals/engine.rst:57
+msgid "The boundary"
+msgstr "境界"
+
+#: ../../internals/engine.rst:60
+msgid ""
+"Core conversion performs no allocation. The caller supplies node columns, "
+"text storage, diagnostics, and output capacity. A host may allocate while "
+"preparing those buffers. A third-party compiler has its own allocation "
+"rules. The guarantee names the conversion boundary, not the whole process."
+msgstr ""
+"コア変換は割り当てを行わない。ノード列、テキスト、診断、出力の領域を呼び出し側が用意する。ホストは準備時に割り当ててもよく、第三者のコンパイラーには独自の規則がある。保証の範囲は変換境界であってプロセス全体ではない。"
+
+#: ../../internals/engine.rst:66
+msgid "The tree"
+msgstr "木構造"
+
+#: ../../internals/engine.rst:69
+msgid ""
+"Nodes have typed IDs. Hot columns hold the kind and subtree range. Cold "
+"tables hold payloads needed by particular node kinds. A flat preorder "
+"representation lets a traversal skip a whole subtree without following a "
+"chain of heap pointers."
+msgstr ""
+"ノードは型付き ID "
+"を持つ。頻繁に使う列には種類と部分木の範囲を置き、それ以外の表に各種ノードのペイロードを置く。平坦な先行順表現なら、ヒープのポインター列をたどらず部分木全体を飛ばせる。"
+
+#: ../../internals/engine.rst:74
+msgid ""
+"For node :math:`i`, let :math:`e_i` be its exclusive subtree end. The "
+"subtree occupies :math:`[i,e_i)`. A leaf has :math:`e_i=i+1`. A parent "
+"closes after its descendants. See :doc:`algorithms` for the interval "
+"proof."
+msgstr ""
+"ノード :math:`i` の排他的な部分木終端を :math:`e_i` とする。部分木は :math:`[i,e_i)` を占める。葉では "
+":math:`e_i=i+1`\\ 。親は子孫の後で閉じる。区間の証明は :doc:`algorithms` を参照。"
+
+#: ../../internals/engine.rst:79
+msgid "The API"
+msgstr "API"
+
+#: ../../internals/engine.rst:82
+msgid ""
+"The core API is explicit: initialize storage, convert, inspect the "
+"result, reset. Registries are values containing reader, pass, and "
+"renderer descriptors. There is no runtime plugin discovery or global "
+"registration side effect. The small set of verbs is meant to remain easy "
+"to use from another Odin program."
+msgstr ""
+"コア API "
+"は明示的だ。領域の初期化、変換、結果の確認、リセットを行う。レジストリーはリーダー、パス、レンダラーの記述子を含む値で、実行時プラグイン探索やグローバル登録の副作用はない。少数の操作に絞り、他の "
+"Odin プログラムから使いやすくする。"
+
+#: ../../internals/engine.rst:87
+msgid ""
+"Ownership is the key rule. Views into a workspace expire on reset or "
+"reuse. A result held by the host must own any text that outlives the "
+"session. Use :doc:`../api/core` for exact signatures. It is generated "
+"from the same Odin source as the separate ``docs/api`` project. The "
+"manual's PDF includes that reference in the same book, with internal "
+"links. The design record is GDS 0003 in ``docs/gds``."
+msgstr ""
+"所有権が要となる。ワークスペースのビューはリセットや再利用で無効になる。ホストが保持する結果は、セッション後も必要なテキストを所有しなければならない。正確なシグネチャは "
+":doc:`../api/core` を参照。独立した ``docs/api`` と同じ Odin ソースから生成する。マニュアル PDF "
+"は内部リンク付きで同じ本に収める。設計記録は ``docs/gds`` の GDS 0003。"
+
+#: ../../internals/index.rst:1
+msgid "Internals"
+msgstr "内部の仕組み"
+
+#: ../../internals/index.rst:4
+msgid ""
+"These chapters explain the reasoning behind the implementation. They "
+"describe current contracts. GDS records retain decisions and review "
+"states in a separate project."
+msgstr "この各章は実装の根拠と現在の契約を説明する。GDS は別のプロジェクトで判断とレビュー状態を残す。"
+
+#: ../../internals/memory.rst:1
+msgid "Memory and ownership"
+msgstr "メモリと所有権"
+
+#: ../../internals/memory.rst:4
+msgid ""
+"A budget is an accounting contract. It has meaning only when the lifetime "
+"of a charge matches the lifetime of the storage it pays for."
+msgstr "予算は計上の契約である。計上の寿命と、それが賄う記憶領域の寿命が一致して初めて意味を持つ。"
+
+#: ../../internals/memory.rst:9
+msgid ""
+"A managed budget accounts for arenas and conversion buffers, backed by "
+"RAM or memory-mapped disk."
+msgstr "管理対象の予算でアリーナと変換バッファーを計上し、RAM またはメモリマップしたディスクで支えます。"
+
+#: ../../internals/memory.rst:9
+msgid "The host reserves working storage before allocating it."
+msgstr "ホストは割り当てる前に作業用ストレージを予約します。"
+
+#: ../../internals/memory.rst:27
+msgid ""
+"Managed host storage shares a process with native libraries. Installed "
+"plugins and the development Typst backend use child processes."
+msgstr ""
+"管理対象ストレージとネイティブライブラリはホストのプロセスを共有します。インストールしたプラグインと開発用 Typst "
+"バックエンドは子プロセスです。"
+
+#: ../../internals/memory.rst:27
+msgid ""
+"Allocation accounting and process isolation are different boundaries."
+msgstr "割り当ての計上とプロセス分離は別の境界です。"
+
+#: ../../internals/memory.rst:43
+msgid "A charge follows storage"
+msgstr "課金はストレージに伴う"
+
+#: ../../internals/memory.rst:46
+msgid ""
+"Reserve bytes before allocating. Release the charge after freeing the "
+"storage. When replacing a buffer, the old and new buffers can coexist. "
+"Charge the full new allocation during that overlap. Charging only the "
+"increase would understate the peak."
+msgstr ""
+"割り当て前にバイト数を予約し、解放後に計上を解除する。バッファーの置換中は新旧が共存し得るため、新しい割り当て全量を計上する。増分だけではピークを過小評価する。"
+
+#: ../../internals/memory.rst:51
+msgid ""
+"\\text{replacement peak} = \\text{other live storage}\n"
+"  + \\text{old buffer} + \\text{new buffer}."
+msgstr ""
+"\\text{置換時のピーク} = \\text{その他の使用中メモリ} + \\text{旧バッファー} + \\text{新バッファー}."
+
+#: ../../internals/memory.rst:56
+msgid ""
+"Session-owned input is reclaimed by the session. Caller-owned input "
+"remains the caller's responsibility. The names ``read_owned`` and "
+"``read_kept`` make that distinction explicit. A shorter read does not "
+"shrink the allocation already made for it."
+msgstr ""
+"セッション所有の入力はセッションが回収する。呼び出し側所有の入力はその責任のまま。\\ ``read_owned`` と "
+"``read_kept`` はこの違いを明示する。短く読んでも既に確保した領域は小さくならない。"
+
+#: ../../internals/memory.rst:61
+msgid "Known zero is not unknown"
+msgstr "既知のゼロは不明ではない"
+
+#: ../../internals/memory.rst:64
+msgid ""
+"A memory probe can know that no headroom remains. It can also fail to "
+"discover headroom. Those are different states. The policy carries a "
+"separate knowledge flag rather than using zero for both. On Linux, "
+"readable cgroup limits apply through the visible ancestor hierarchy. A "
+"container's host-wide free-memory number alone can be misleading."
+msgstr ""
+"メモリ調査では余裕がないと分かる場合と、余裕を調べられない場合がある。両者をゼロで表さず、既知かどうかのフラグで分ける。Linux "
+"では可視の祖先階層にある読み取り可能な cgroup 制限も適用する。ホスト全体の空きメモリだけではコンテナー内の実態を誤る。"
+
+#: ../../internals/memory.rst:70
+msgid "Reports outlive workspaces"
+msgstr "診断は作業領域より長く残る"
+
+#: ../../internals/memory.rst:73
+msgid ""
+"A report shown after a session ends must own its title, source, and "
+"repair text. It must not borrow a buffer that the session has freed. "
+"Source spans use byte offsets internally. User-facing columns count "
+"Unicode scalars. Terminal markers account for display width separately."
+msgstr ""
+"セッション後に示す報告は、見出し、ソース、修正案を所有し、解放済みのバッファーを借用してはならない。内部の位置はバイトオフセット、利用者向けの列は "
+"Unicode スカラー数、端末の印は別途表示幅を考慮する。"
+
+#: ../../internals/memory.rst:78
+msgid "The remaining boundary"
+msgstr "残る境界"
+
+#: ../../internals/memory.rst:81
+msgid ""
+"Guidedog meters its managed working storage. The Typst compiler and "
+"native dependencies manage their own allocations. Graphviz and "
+"tree-sitter run native code in the host process. The release's embedded "
+"Typst compiler does too; the development backend can use a subprocess. An "
+"installed plugin runs in a separate process. These are different "
+"isolation boundaries, even though their native allocations fall outside "
+"the host ledger. Large PDF books can consume much more memory than the "
+"host budget. The remote CPython validation measured about 14.5 GiB peak "
+"RSS including Typst. Treat that measurement as workload evidence, not a "
+"universal upper bound. See :doc:`../errors` for the user's choices when a "
+"managed budget is reached."
+msgstr ""
+"Guidedog は管理下の作業用ストレージを計測します。Typst "
+"などのネイティブ依存は独自に割り当てます。Graphviz、tree-sitter、製品版の組み込み Typst はホスト内で動き、開発用 "
+"Typst とインストールしたプラグインは子プロセスを使えます。分離の境界は異なりますが、そのネイティブ割り当てはホストの台帳外です。大きな "
+"PDF では予算を大幅に超えることがあります。CPython の遠隔検証では Typst 込みの最大 RSS が約 14.5 GiB "
+"でした。これは測定した負荷の記録で、一般的な上限ではありません。予算到達時の選択肢は :doc:`../errors` を参照してください。"
+
+#: ../../internals/publication.rst:1
+msgid "Publish one complete generation"
+msgstr "完全な世代を公開する"
+
+#: ../../internals/publication.rst:4
+msgid ""
+"A reader should never see half an updated site. This is a publication "
+"property. It is separate from parsing and rendering."
+msgstr "読者に更新途中のサイトを見せてはならない。これは公開の性質であり、解析や描画とは別の問題だ。"
+
+#: ../../internals/publication.rst:7
+msgid "The invariant"
+msgstr "不変条件"
+
+#: ../../internals/publication.rst:10
+msgid ""
+"Let :math:`P` be the published output tree. During preparation, :math:`P` "
+"remains unchanged. The next tree :math:`Q` is complete before the commit "
+"is decided. The commit journal names the output and the records that "
+"belong with it."
+msgstr ""
+"公開済みの出力木を :math:`P` とする。準備中は :math:`P` を変えず、次の木 :math:`Q` "
+"を完成させてからコミットを決定する。ジャーナルは出力と対応する記録を指定する。"
+
+#: ../../internals/publication.rst:14
+msgid ""
+"**Preparation can fail.** The host abandons the unfinished generation. "
+"**A decided commit can be interrupted.** The next build finishes or "
+"restores it from the journal. It does not guess from a staging "
+"directory's name."
+msgstr ""
+"**準備は失敗し得る。** ホストは未完成の世代を破棄する。\\ **確定したコミットも中断し得る。** "
+"次のビルドはジャーナルに基づいて完了または復元する。ステージング名から推測しない。"
+
+#: ../../internals/publication.rst:20
+msgid ""
+"Prepare and flush, save journal, switch output, replace records, then "
+"remove journal."
+msgstr "準備と永続化、ジャーナル保存、出力切り替え、記録置換、ジャーナル削除の順。"
+
+#: ../../internals/publication.rst:20
+msgid "The durable journal separates preparation from a decided commit."
+msgstr "永続化したジャーナルは、準備段階と確定したコミットを分ける。"
+
+#: ../../internals/publication.rst:38
+msgid "Why the cache is outside the output"
+msgstr "キャッシュを出力先の外に置く理由"
+
+#: ../../internals/publication.rst:41
+msgid ""
+"A directory exchange moves everything inside the publication directory. A "
+"journal placed inside it would move during the very operation it "
+"describes. Its location would cease to be stable when recovery needed it "
+"most. Guidedog keeps records in a stable directory outside the "
+"publication tree. A custom output uses a sibling cache for this reason."
+msgstr ""
+"ディレクトリー交換は中の全てを動かす。ジャーナルを中に置くと、記録している操作自身で移動し、復旧時に位置が安定しない。Guidedog "
+"は公開木の外の安定した場所に記録を置く。そのため独自の出力には同階層のキャッシュを使う。"
+
+#: ../../internals/publication.rst:47
+msgid "Durability and visibility"
+msgstr "永続性と可視性"
+
+#: ../../internals/publication.rst:50
+msgid ""
+"Flushing file contents is not the same as flushing directory names. The "
+"algorithm accounts for both before removing the journal. Platforms differ "
+"in how directories are exchanged. The recovery protocol is designed "
+"around those differences. See ``lib/project/commit.odin`` and "
+"``lib/project/publish.odin`` for the implementation."
+msgstr ""
+"ファイル内容の永続化とディレクトリー名の永続化は別だ。ジャーナルを削除する前に両方を扱う。交換方法はプラットフォームで異なり、復旧プロトコルはそれを考慮する。実装は "
+"``lib/project/commit.odin`` と ``lib/project/publish.odin``\\ 。"
+
+#: ../../internals/publication.rst:56
+msgid ""
+"This protects the project publication. It is not a distributed "
+"transaction with an external hosting provider. Copying a successful build "
+"to a server is another operation, owned by the deployment tool."
+msgstr ""
+"これはプロジェクトの公開を保護する。外部ホスティングとの分散トランザクションではない。成功したビルドをサーバーへコピーするのは、デプロイツールが担う別の操作だ。"
+
+#: ../../internals/publication.rst:60
+msgid ""
+"On filesystems with directory exchange, the output path switches in one "
+"operation. The fallback uses two renames and can briefly leave that path "
+"absent. It still never exposes a partly assembled tree. Journal recovery "
+"finishes or restores an interrupted switch. A client making several "
+"requests can span two generations; the build does not promise a snapshot "
+"for an entire browsing session."
+msgstr ""
+"ディレクトリ交換が可能なら一度に切り替わります。代替方式は 2 "
+"回の名前変更を使い、その間だけパスが存在しない場合がありますが、未完成のツリーは公開しません。中断した切り替えはジャーナルから完了または取り消します。複数のリクエストが世代をまたぐことはあり、閲覧セッション全体のスナップショットは保証しません。"

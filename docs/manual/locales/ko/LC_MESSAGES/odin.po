@@ -1,0 +1,546 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../odin.rst:1
+msgid "Documenting Odin"
+msgstr "Odin 문서화"
+
+#: ../../odin.rst:4
+msgid ""
+"The Odin domain gives packages, procedures, types, and members named "
+"targets. Guidedog also generates API pages by parsing Odin source. It "
+"does not run the compiler or execute the package. A generated signature "
+"still needs a useful contract."
+msgstr ""
+"Odin 도메인은 패키지, 프로시저, 타입, 멤버에 명명된 대상을 제공한다. Guidedog은 Odin 소스를 파싱해 API "
+"페이지도 생성하지만 컴파일러나 패키지를 실행하지 않는다. 생성된 시그니처에도 유용한 계약이 필요하다."
+
+#: ../../odin.rst:8
+msgid "Describing objects"
+msgstr "객체 설명"
+
+#: ../../odin.rst:11
+msgid "A package is the context of what follows it, as a Python module is:"
+msgstr "패키지는 Python 모듈처럼 뒤따르는 내용의 문맥을 정한다."
+
+#: ../../odin.rst:33
+msgid ""
+"Signatures are written as Odin writes declarations, on one line, and "
+"shown the same way. This is how the ones below look:"
+msgstr "시그니처는 Odin 선언처럼 한 줄로 쓰고 그대로 표시한다. 아래 예제는 다음과 같이 보인다."
+
+#: ../../odin.rst:48
+msgid "Measures a square."
+msgstr "정사각형을 측정합니다."
+
+#: ../../odin.rst:50
+msgid "Its side."
+msgstr "변의 길이."
+
+#: ../../odin.rst:51
+msgid "Its area."
+msgstr "넓이."
+
+#: ../../odin.rst:52
+msgid "Whether its kind is known."
+msgstr "종류를 아는지 여부."
+
+#: ../../odin.rst:54
+msgid "The directives, and the signatures they take:"
+msgstr "지시문과 받는 시그니처:"
+
+#: ../../odin.rst:56
+msgid "``odin:package`` and ``odin:currentpackage``"
+msgstr "``odin:package``\\ 와 ``odin:currentpackage``"
+
+#: ../../odin.rst:57
+msgid ""
+"``core:fmt``, or a path below a project's roots, such as "
+"``readers/sphinx``. The package's import path names its objects: "
+"``core:fmt.println``. ``odin:currentpackage`` changes the context without "
+"a target; ``None`` clears it. Options: ``:synopsis:``, ``:platform:``, "
+"``:deprecated:``, ``:no-index:``, and ``:imports:``, the import aliases "
+"the package's signatures use, as ``alias=package`` pairs (``gd=core "
+"rst=readers/rst``), so ``gd.Node_Id`` links to ``core.Node_Id``; and "
+"``:private:``, the package's private types and the private members of its "
+"procedure groups (``State Rules catalog_text``), which its signatures "
+"show as text, since they have no descriptions to link to. The generated "
+"pages list them automatically."
+msgstr ""
+"``core:fmt`` 또는 프로젝트 루트 아래 경로인 ``readers/sphinx``\\ 를 쓴다. 객체 이름은 패키지 가져오기 "
+"경로를 쓴다(\\ ``core:fmt.println``\\ ). ``odin:currentpackage``\\ 는 대상 없이 문맥만 "
+"바꾸고 ``None``\\ 은 해제한다. 옵션은 ``:synopsis:``\\ , ``:platform:``\\ , "
+"``:deprecated:``\\ , ``:no-index:``\\ , ``:imports:``\\ 다. 마지막은 "
+"``alias=package`` 쌍(\\ ``gd=core rst=readers/rst``\\ )으로 시그니처 별칭을 지정해 "
+"``gd.Node_Id``\\ 를 ``core.Node_Id``\\ 에 연결한다. ``:private:``\\ 는 비공개 타입과 "
+"프로시저 그룹의 비공개 멤버(\\ ``State Rules catalog_text``\\ )를 나열한다. 연결할 설명이 없어 "
+"텍스트로 표시하며 생성 페이지가 자동으로 목록을 만든다."
+
+#: ../../odin.rst:68
+msgid "``odin:procedure`` (or ``odin:proc``)"
+msgstr "``odin:procedure`` (또는 ``odin:proc``\\ )"
+
+#: ../../odin.rst:69
+msgid ""
+"``name :: proc(params) -> results``, with attributes before the name "
+"(``@(require_results)``), ``#force_inline`` before ``proc``, a calling "
+"convention (``proc \"c\" (...)``), parameters with defaults (``x := 1``, "
+"``x: int = 1``), ``$T`` polymorphic parameters, ``..`` variadics, "
+"``using``, ``#c_vararg``, named results, tags (``#optional_ok``), and a "
+"``where`` clause. ``name(params) -> results`` is short for the same."
+msgstr ""
+"``name :: proc(params) -> results``\\ 에 이름 앞 속성(\\ "
+"``@(require_results)``\\ ), ``proc`` 앞 ``#force_inline``\\ , 호출 규약(\\ "
+"``proc \"c\" (...)``\\ ), 기본 인수(\\ ``x := 1``\\ , ``x: int = 1``\\ ), "
+"``$T`` 다형 인수, ``..`` 가변 인수, ``using``\\ , ``#c_vararg``\\ , 이름 있는 결과, "
+"태그(\\ ``#optional_ok``\\ ), ``where`` 절을 지원한다. ``name(params) -> "
+"results``\\ 는 축약형이다."
+
+#: ../../odin.rst:76
+msgid "``odin:procgroup``"
+msgstr "``odin:procgroup``"
+
+#: ../../odin.rst:77
+msgid "``name :: proc{a, b}``: each member links to its procedure."
+msgstr "``name :: proc{a, b}``\\ : 각 멤버는 해당 프로시저로 연결된다."
+
+#: ../../odin.rst:79
+msgid ""
+"``odin:struct``, ``odin:union``, ``odin:enum``, ``odin:bitset``, "
+"``odin:bitfield``, ``odin:type``"
+msgstr ""
+"``odin:struct``\\ , ``odin:union``\\ , ``odin:enum``\\ , "
+"``odin:bitset``\\ , ``odin:bitfield``\\ , ``odin:type``"
+
+#: ../../odin.rst:80
+msgid ""
+"``Name :: struct($T: typeid) #packed``, ``Name :: union #no_nil {A, B}``, "
+"``Name :: enum u8``, ``Name :: bit_set[Flag; u8]``, ``Name :: bit_field "
+"u32``, and for ``odin:type``, distinct types and aliases (``Handle :: "
+"distinct uintptr``, ``Callback :: proc(x: int) -> bool``). A type's "
+"content holds its members."
+msgstr ""
+"``Name :: struct($T: typeid) #packed``\\ , ``Name :: union #no_nil {A, "
+"B}``\\ , ``Name :: enum u8``\\ , ``Name :: bit_set[Flag; u8]``\\ , ``Name "
+":: bit_field u32``\\ 를 쓴다. ``odin:type``\\ 에는 구별 타입과 별칭(\\ ``Handle :: "
+"distinct uintptr``\\ , ``Callback :: proc(x: int) -> bool``\\ )을 쓴다. 타입 "
+"내용에는 멤버가 들어간다."
+
+#: ../../odin.rst:85
+msgid "``odin:field`` and ``odin:enumerator``"
+msgstr "``odin:field``\\ 와 ``odin:enumerator``"
+
+#: ../../odin.rst:86
+msgid ""
+"Inside a type: ``name: Type`` with a tag (``name: string `json:\"n\"```) "
+"or a bit size (``low: u8 | 3``), and ``Name`` or ``Name = 3``. Their "
+"names are ``Type.member``."
+msgstr "타입 안에서는 ``name: Type``\\ 에 태그(\\ ``name: string `json:\"n\"```\\ ), 비트 크기(\\ ``low: u8 | 3``\\ )를 붙인다. 열거자는 ``Name`` 또는 ``Name = 3``\\ 이다. 이름은 ``Type.member``\\ 다."
+
+#: ../../odin.rst:90
+msgid "``odin:const``, ``odin:var``, ``odin:foreign``"
+msgstr "``odin:const``\\ , ``odin:var``\\ , ``odin:foreign``"
+
+#: ../../odin.rst:91
+msgid ""
+"``NAME :: 64`` or ``NAME : int : 64``; ``name: Type``, ``name := value``, "
+"or ``name: Type = value``; ``libc \"system:c\"`` for a foreign import."
+msgstr ""
+"``NAME :: 64`` 또는 ``NAME : int : 64``\\ ; ``name: Type``\\ , ``name := "
+"value`` 또는 ``name: Type = value``\\ ; 외부 가져오기는 ``libc \"system:c\"``\\ 이다."
+
+#: ../../odin.rst:94
+msgid ""
+"Every object takes the options objects take in Sphinx's domains: "
+"``:no-index:``, ``:no-index-entry:``, ``:no-contents-entry:``, and "
+"``:no-typesetting:``; and these of its own: ``:package:`` (describe it in "
+"another package), ``:private:`` and ``:deprecated: message`` (shown as "
+"``@(private)`` and ``@(deprecated=\"message\")`` unless the signature has "
+"them), ``:availability: Windows, Linux`` (a first line of the content "
+"saying where it exists), and ``:foreign: libc`` (a procedure of a foreign "
+"block). A directive with several signature lines describes one object "
+"whose signature differs between targets: only the first line gets the id "
+"and the index entry."
+msgstr ""
+"모든 객체는 Sphinx의 ``:no-index:``\\ , ``:no-index-entry:``\\ , "
+"``:no-contents-entry:``\\ , ``:no-typesetting:``\\ 을 받는다. 추가로 "
+"``:package:``\\ (다른 패키지에서 설명), ``:private:``\\ 와 ``:deprecated: "
+"message``\\ (시그니처에 없으면 ``@(private)``\\ ·\\ ``@(deprecated=\"message\")`` "
+"표시), ``:availability: Windows, Linux``\\ (첫 줄에 플랫폼 표시), ``:foreign: "
+"libc``\\ (외부 블록 프로시저)가 있다. 여러 시그니처 줄은 대상별로 다른 한 객체를 설명하며 첫 줄만 ID와 색인 항목을 "
+"얻는다."
+
+#: ../../odin.rst:103
+msgid ""
+"Names in type positions link to the types they name, in the package and "
+"type the signature is written in first, then as written. Built-in types "
+"(``int``, ``string``, ``rawptr``, ``typeid``, ``any``, ...), keywords, "
+"polymorphic names (``$T``, and ``T`` after it, in the signature or in the "
+"type the object is nested in), array lengths, default values, constants, "
+"tags, and ``where`` clauses are shown as written, never as links."
+msgstr ""
+"타입 위치의 이름은 시그니처의 패키지·타입에서 먼저 찾고 원래 이름으로 찾아 연결한다. 내장 타입(\\ ``int``\\ , "
+"``string``\\ , ``rawptr``\\ , ``typeid``\\ , ``any`` 등), 키워드, 다형 이름(\\ "
+"``$T``\\ 와 이후 ``T``\\ , 외부 타입 포함), 배열 길이, 기본값, 상수, 태그, ``where`` 절은 그대로 "
+"표시하고 링크하지 않는다."
+
+#: ../../odin.rst:110
+msgid "Roles and ids"
+msgstr "역할과 ID"
+
+#: ../../odin.rst:113
+msgid ""
+"``:odin:pkg:``, ``:odin:proc:``, ``:odin:type:`` (structs, unions, enums, "
+"bit sets, bit fields, and other types), ``:odin:const:``, ``:odin:var:``, "
+"``:odin:field:``, ``:odin:enumerator:``, and ``:odin:obj:`` (any of them) "
+"link to objects. As in the Python domain, ``~`` shows only the last part "
+"(``:odin:proc:`~core:fmt.println``` shows ``println``), and a leading "
+"``.`` finds the name at the end of any object's name. A name is looked up "
+"in the reference's type and package first, then as written, then after a "
+"package path's ``:`` or ``/``, so ``fmt.println`` finds "
+"``core:fmt.println`` and ``sphinx.Config`` finds "
+"``readers/sphinx.Config``, as Odin code names a package by its last "
+"segment. An import alias the current package declares with ``:imports:`` "
+"is followed first. With ``default-domain:: odin`` (or ``primary_domain = "
+"\"odin\"``), the roles need no ``odin:``."
+msgstr "``:odin:pkg:``\\ , ``:odin:proc:``\\ , ``:odin:type:``\\ (구조체·공용체·열거·비트 집합·비트 필드 등), ``:odin:const:``\\ , ``:odin:var:``\\ , ``:odin:field:``\\ , ``:odin:enumerator:``\\ , ``:odin:obj:``\\ (모든 객체)로 링크한다. Python처럼 ``~``\\ 는 마지막 부분만 표시한다(\\ ``:odin:proc:`~core:fmt.println```\\ 는 ``println``\\ ). 앞의 ``.``\\ 은 이름 끝을 찾는다. 참조의 타입·패키지, 원래 이름, 경로의 ``:``\\ ·\\ ``/`` 뒤 순서로 찾는다. ``fmt.println``\\ 는 ``core:fmt.println``\\ 를, ``sphinx.Config``\\ 는 ``readers/sphinx.Config``\\ 를 찾아 Odin의 마지막 경로 이름 사용과 같다. ``:imports:`` 별칭을 우선한다. ``default-domain:: odin`` 또는 ``primary_domain = \"odin\"``\\ 이면 ``odin:``\\ 을 생략한다."
+
+#: ../../odin.rst:125
+msgid ""
+"An object's id is Sphinx's ``make_id`` of ``odin-`` and its full name: "
+"``odin-core-fmt.println``, ``odin-readers-sphinx.Config.docname``. Case "
+"and dots are kept, as Sphinx keeps them for Python ids; the ``:`` and "
+"``/`` of the import path become hyphens. Ids are therefore readable in "
+"URLs, the same in every build, and apart for two packages with the same "
+"last name. A package's id is ``odin-package-`` and its path. Index "
+"entries read \"println (procedure in core:fmt)\", and ``objects.inv`` "
+"lists every object with the domain ``odin`` and its type "
+"(``odin:procedure``, ``odin:struct``, ``odin:field``, ...), packages "
+"first, as Sphinx lists modules."
+msgstr ""
+"객체 ID는 ``odin-``\\ 과 전체 이름에 Sphinx의 ``make_id``\\ 를 적용한 "
+"``odin-core-fmt.println``\\ , ``odin-readers-sphinx.Config.docname``\\ "
+"이다. Python처럼 대소문자와 점을 유지하고 경로의 ``:``\\ ·\\ ``/``\\ 는 하이픈으로 바꾼다. URL에서 읽기 "
+"쉽고 빌드마다 같으며 마지막 이름이 같은 패키지도 구별한다. 패키지 ID는 ``odin-package-``\\ 와 경로다. 색인은 "
+"\"println (procedure in core:fmt)\"처럼 표시한다. ``objects.inv``\\ 는 ``odin`` "
+"도메인과 타입(\\ ``odin:procedure``\\ , ``odin:struct``\\ , ``odin:field`` 등)으로 "
+"모든 객체를 나열하며 Sphinx 모듈처럼 패키지를 먼저 둔다."
+
+#: ../../odin.rst:134
+msgid ""
+"Info fields in the content are grouped as in the other domains: ``:param "
+"name:`` (with ``:type name:``), ``:result name:`` for a named result, "
+"``:returns:``, and ``:rtype:``."
+msgstr ""
+"내용의 정보 필드는 다른 도메인처럼 묶는다. ``:param name:``\\ 와 ``:type name:``\\ , 이름 있는 "
+"결과의 ``:result name:``\\ , ``:returns:``\\ , ``:rtype:``\\ 가 있다."
+
+#: ../../odin.rst:137
+msgid "Generating from source"
+msgstr "소스에서 생성"
+
+#: ../../odin.rst:140
+msgid ""
+"Tell Guidedog where your packages are, relative to the source folder:"
+msgstr "소스 폴더 기준 패키지 위치를 지정한다."
+
+#: ../../odin.rst:147
+msgid ""
+"A package below ``odin_autoapi_dirs`` is named by its path there "
+"(``src/shapes/round`` is ``shapes/round``); one in a collection is named "
+"as Odin imports it (``core:strings``). The generating directives then "
+"work as autodoc's do:"
+msgstr ""
+"``odin_autoapi_dirs`` 아래 패키지는 상대 경로로 이름을 붙인다(\\ ``src/shapes/round``\\ 는 "
+"``shapes/round``\\ ). 컬렉션은 Odin 가져오기 이름(\\ ``core:strings``\\ )을 쓴다. 생성 "
+"지시문은 autodoc처럼 작동한다."
+
+#: ../../odin.rst:161
+msgid ""
+"``odin:autopackage`` writes the package, its doc comment, and with "
+"``:members:`` its declarations (all of them, or those listed). "
+"``odin:autoproc``, ``odin:autoprocgroup``, ``odin:autotype``, "
+"``odin:autoconst``, and ``odin:autovar`` write one declaration, named in "
+"the current package or as ``package.name``. Options: ``:members:``, "
+"``:undoc-members:``, ``:private-members:`` (``@(private)`` declarations, "
+"which are left out otherwise), ``:exclude-members:``, ``:member-order:`` "
+"(``source``, the default, by file name and then position; "
+"``alphabetical``; or ``groupwise``, which heads the groups \"Types\", "
+"\"Procedures\", \"Procedure groups\", \"Constants\", \"Variables\", and "
+"\"Foreign imports\"), and ``:no-index:``."
+msgstr ""
+"``odin:autopackage``\\ 는 패키지와 문서 주석을 출력하고 ``:members:``\\ 로 전체 또는 지정 선언도 "
+"출력한다. ``odin:autoproc``\\ , ``odin:autoprocgroup``\\ , "
+"``odin:autotype``\\ , ``odin:autoconst``\\ , ``odin:autovar``\\ 는 현재 패키지 "
+"이름 또는 ``package.name``\\ 의 선언 하나를 쓴다. 옵션은 ``:members:``\\ , "
+"``:undoc-members:``\\ , ``:private-members:``\\ (기본 제외되는 ``@(private)``\\ "
+"), ``:exclude-members:``\\ , ``:member-order:``\\ (기본 ``source``\\ 는 파일 "
+"이름과 위치순, ``alphabetical``\\ , ``groupwise``\\ 는 \"Types\", "
+"\"Procedures\", \"Procedure groups\", \"Constants\", \"Variables\", "
+"\"Foreign imports\"로 분류), ``:no-index:``\\ 다."
+
+#: ../../odin.rst:171
+msgid ""
+"Doc comments are the ``//`` lines directly above a declaration, or a ``/* "
+"*/`` block there, and a field's or enumerator's comment at the end of its "
+"line. They are plain text, and become reStructuredText as follows:"
+msgstr ""
+"문서 주석은 선언 바로 위의 ``//`` 줄이나 ``/* */`` 블록, 필드·열거자 줄 끝의 주석이다. 일반 텍스트를 다음 "
+"규칙으로 reStructuredText로 바꾼다."
+
+#: ../../odin.rst:175
+msgid "Paragraphs stay paragraphs; a list of ``- item`` lines stays a list."
+msgstr "문단은 문단으로, ``- item`` 행 목록은 목록으로 유지된다."
+
+#: ../../odin.rst:176
+msgid ""
+"An indented block (a tab or spaces) after a blank line, or after a line "
+"ending in a colon (``Example:``), is a ``code-block:: odin``, or ``text`` "
+"after ``Output:``. A line indented more than the text directly after a "
+"paragraph line continues it."
+msgstr ""
+"빈 줄이나 콜론으로 끝나는 줄(\\ ``Example:``\\ ) 뒤의 들여쓴 블록은 ``code-block:: odin``\\ "
+"이며 ``Output:`` 뒤는 ``text``\\ 다. 문단 줄 바로 뒤의 텍스트보다 더 들여쓴 줄은 문단을 이어 간다."
+
+#: ../../odin.rst:179
+msgid ""
+"``Inputs:`` followed by ``- name: text`` items become ``:param name:`` "
+"fields, and ``Returns:`` items ``:result name:`` fields (or ``:returns:`` "
+"when they have no names), as Odin's core library writes them."
+msgstr ""
+"``Inputs:`` 뒤 ``- name: text``\\ 는 ``:param name:`` 필드, ``Returns:`` 항목은 "
+"``:result name:``\\ (이름이 없으면 ``:returns:``\\ )이 된다. Odin 코어 라이브러리 형식을 따른다."
+
+#: ../../odin.rst:182
+msgid "A line starting ``NOTE:`` or ``WARNING:`` is a note or a warning."
+msgstr "``NOTE:`` 또는 ``WARNING:``\\ 로 시작하는 줄은 참고 또는 경고가 된다."
+
+#: ../../odin.rst:183
+msgid ""
+"```code``` is literal text. Every other character reStructuredText would "
+"read as markup (``*``, ``|``, a ``_`` ending a word, ...) is escaped, so "
+"the comment reads as written and never warns."
+msgstr ""
+"```code```\\ 는 리터럴 텍스트다. reStructuredText가 마크업으로 읽는 나머지 문자(\\ ``*``\\ , "
+"``|``\\ , 단어 끝 ``_`` 등)는 이스케이프하므로 주석이 그대로 보이며 경고하지 않는다."
+
+#: ../../odin.rst:187
+msgid "API pages"
+msgstr "API 페이지"
+
+#: ../../odin.rst:190
+msgid ""
+"With ``odin_autoapi_dirs`` set, every package below those folders also "
+"gets a page of its own, generated as the build reads it, like "
+"sphinx-autoapi's: ``api/shapes`` holds ``odin:autopackage:: shapes`` with "
+"``odin_autoapi_options``, and ``api/index`` lists every package with its "
+"synopsis. The pages are documents of the project (in the toctree, search, "
+"the general index, ``singlehtml``, and the PDF book), but they are never "
+"written into the source folder. Settings:"
+msgstr ""
+"``odin_autoapi_dirs``\\ 를 설정하면 각 패키지에 sphinx-autoapi처럼 읽기 중 페이지를 생성한다. "
+"``api/shapes``\\ 에는 ``odin_autoapi_options``\\ 의 ``odin:autopackage:: "
+"shapes``\\ 가, ``api/index``\\ 에는 패키지와 요약이 있다. toctree, 검색, 전체 색인, "
+"``singlehtml``\\ , PDF에 포함되는 프로젝트 문서지만 소스 폴더에는 쓰지 않는다. 설정은 다음과 같다."
+
+#: ../../odin.rst:197
+msgid "``odin_autoapi_dirs``"
+msgstr "``odin_autoapi_dirs``"
+
+#: ../../odin.rst:198
+msgid ""
+"The folders whose packages get pages, relative to the source folder. Only "
+"files below them (and below ``odin_collections``) are read, and a link "
+"leading elsewhere is refused."
+msgstr ""
+"페이지를 만들 패키지 폴더이며 소스 기준 경로다. 이 폴더와 ``odin_collections`` 아래의 파일만 읽고 다른 곳으로 "
+"향하는 링크는 거부한다."
+
+#: ../../odin.rst:202
+msgid "``odin_collections``"
+msgstr "``odin_collections``"
+
+#: ../../odin.rst:203
+msgid ""
+"A table of collection names and folders, for directive arguments such as "
+"``core:strings``; these packages get no pages."
+msgstr "``core:strings`` 같은 지시문 인수용 컬렉션 이름과 폴더 표다. 이 패키지에는 페이지를 만들지 않는다."
+
+#: ../../odin.rst:206
+msgid "``odin_autoapi_root``"
+msgstr "``odin_autoapi_root``"
+
+#: ../../odin.rst:207
+msgid ""
+"The folder of the pages, ``\"api\"`` by default. A document of the source "
+"folder with a page's name keeps its name, with a warning."
+msgstr "페이지 폴더이며 기본값은 ``\"api\"``\\ 다. 같은 이름의 소스 문서가 있으면 그 문서를 유지하고 경고한다."
+
+#: ../../odin.rst:210
+msgid "``odin_autoapi_options``"
+msgstr "``odin_autoapi_options``"
+
+#: ../../odin.rst:211
+msgid ""
+"``[\"members\", \"undoc-members\"]`` by default; ``private-members`` may "
+"be added."
+msgstr ""
+"기본값은 ``[\"members\", \"undoc-members\"]``\\ 이며 ``private-members``\\ 를 "
+"추가할 수 있다."
+
+#: ../../odin.rst:213
+msgid "``odin_autoapi_member_order``"
+msgstr "``odin_autoapi_member_order``"
+
+#: ../../odin.rst:214
+msgid ""
+"``\"source\"`` (default), ``\"alphabetical\"``, or ``\"groupwise\"``."
+msgstr ""
+"``\"source\"``\\ (기본값), ``\"alphabetical\"`` 또는 ``\"groupwise\"``\\ ."
+
+#: ../../odin.rst:216
+msgid "``odin_autoapi_add_toctree_entry``"
+msgstr "``odin_autoapi_add_toctree_entry``"
+
+#: ../../odin.rst:217
+msgid ""
+"``true`` (default): ``api/index`` joins the root document's first toctree."
+msgstr "``true``\\ (기본값): ``api/index``\\ 를 루트 문서의 첫 toctree에 추가한다."
+
+#: ../../odin.rst:219
+msgid "``odin_autoapi_generate_api_docs``"
+msgstr "``odin_autoapi_generate_api_docs``"
+
+#: ../../odin.rst:220
+msgid ""
+"``true`` (default); ``false`` reads the folders for the directives only."
+msgstr "``true``\\ (기본값). ``false``\\ 면 지시문을 위해서만 폴더를 읽는다."
+
+#: ../../odin.rst:222
+msgid ""
+"Types from packages you do not document (``core:io.Writer``) cannot be "
+"linked; with ``-n``, silence them with ``nitpick_ignore_regex = "
+"[[\"odin:type\", \"(core|base):.*\"]]``. Guidedog's own API reference, "
+"``docs/api``, is built this way."
+msgstr ""
+"문서화하지 않는 패키지의 타입(\\ ``core:io.Writer``\\ )은 링크할 수 없다. ``-n``\\ 에서는 "
+"``nitpick_ignore_regex = [[\"odin:type\", \"(core|base):.*\"]]``\\ 로 "
+"억제한다. Guidedog의 ``docs/api``\\ 도 이 방식이다."
+
+#: ../../odin.rst:226
+msgid "Platforms"
+msgstr "플랫폼"
+
+#: ../../odin.rst:229
+msgid ""
+"A package is documented once for every target Odin builds, as Odin itself "
+"sees its files: a file named ``*_windows.odin``, ``*_linux_arm64.odin``, "
+"or ``*_amd64.odin`` builds only for those targets, ``#+build linux, "
+"darwin`` and ``#+build !windows`` tags (and the older ``//+build``) "
+"narrow it, and a file-scope ``when ODIN_OS == .Windows`` block counts for "
+"its targets (and its ``else`` for the others) when its condition only "
+"compares ``ODIN_OS`` and ``ODIN_ARCH``. Files named ``*_test.odin``, and "
+"files tagged ``#+ignore``, are left out. A declaration made for every "
+"target the package builds for is shown once. One made for some targets "
+"says which, \"Availability: Windows\"; one whose signature differs "
+"between targets is shown once per signature, each with its targets, the "
+"first with the id. A package that builds only for some targets says so "
+"with its ``:platform:``."
+msgstr ""
+"Odin과 같은 파일 판단으로 패키지의 빌드 대상을 문서화한다. ``*_windows.odin``\\ , "
+"``*_linux_arm64.odin``\\ , ``*_amd64.odin``\\ 은 해당 대상만 포함한다. ``#+build "
+"linux, darwin``\\ , ``#+build !windows``\\ (구형 ``//+build``\\ 도)가 범위를 "
+"좁힌다. 파일의 ``when ODIN_OS == .Windows``\\ 가 ``ODIN_OS``\\ ·\\ "
+"``ODIN_ARCH``\\ 만 비교하면 각 분기와 ``else``\\ 를 대상별로 구분한다. ``*_test.odin``\\ 과 "
+"``#+ignore``\\ 는 제외한다. 전체 공통 선언은 한 번, 일부 대상은 \"Availability: Windows\"로 "
+"표시한다. 다른 시그니처는 각각 대상과 함께 보여 주고 첫 항목만 ID를 갖는다. 일부 대상만 지원하는 패키지는 "
+"``:platform:``\\ 로 밝힌다."
+
+#: ../../odin.rst:241
+msgid "Rebuilding"
+msgstr "다시 빌드하기"
+
+#: ../../odin.rst:244
+msgid ""
+"Every Odin file a page read is a dependency of that page: editing a "
+"package's source reads only the pages that document it again on the next "
+"build. The package index is read again when a package appears, "
+"disappears, or changes its synopsis. ``guidedog serve`` checks "
+"modification times in ``odin_autoapi_dirs`` and ``odin_collections`` "
+"before serving an HTML page. Refresh the browser after editing."
+msgstr ""
+"읽은 Odin 파일은 페이지의 의존성이다. 소스 수정 뒤에는 해당 패키지를 설명하는 페이지만 다시 읽는다. 패키지 추가·삭제·요약 "
+"변경 시 색인을 다시 읽는다. ``guidedog serve``\\ 는 HTML 제공 전에 "
+"``odin_autoapi_dirs``\\ 와 ``odin_collections``\\ 의 수정 시간을 확인한다. 편집 뒤 "
+"브라우저를 새로 고친다."
+
+#: ../../odin.rst:250
+msgid "Limits"
+msgstr "한계"
+
+#: ../../odin.rst:253
+msgid ""
+"The source is parsed, never compiled or type-checked: types are shown as "
+"written, a constant's value as written (and left out beyond 100 "
+"characters), and nothing is inferred. Whether ``A :: B`` declares a type "
+"or a constant is told from the names: a capitalized name not in capitals "
+"throughout, or a built-in type, is a type."
+msgstr ""
+"소스는 파싱만 하며 컴파일·타입 검사는 하지 않는다. 타입과 상수 값은 그대로 표시하고 100자를 넘는 값은 생략하며 추론하지 "
+"않는다. ``A :: B``\\ 의 타입·상수 여부는 이름으로 판단한다. 전체 대문자가 아닌 대문자 시작 이름이나 내장 타입이면 "
+"타입이다."
+
+#: ../../odin.rst:257
+msgid ""
+"Conditions of ``when`` blocks other than comparisons of ``ODIN_OS`` and "
+"``ODIN_ARCH`` are not evaluated: both branches are documented."
+msgstr ""
+"``when`` 조건은 ``ODIN_OS``\\ 와 ``ODIN_ARCH`` 비교 외에는 평가하지 않고 양쪽 분기를 모두 문서화한다."
+
+#: ../../odin.rst:259
+msgid ""
+"A declaration that mentions a private type shows it as text, since "
+"private declarations have no entries unless ``:private-members:`` is "
+"given; the generated package lists them in ``:private:``, so ``-n`` has "
+"nothing to report."
+msgstr ""
+"비공개 타입을 참조한 선언은 텍스트로 표시한다. ``:private-members:``\\ 가 없으면 해당 항목이 없기 때문이다. "
+"생성 패키지는 ``:private:``\\ 로 나열하므로 ``-n``\\ 에서도 보고하지 않는다."
+
+#: ../../odin.rst:262
+msgid ""
+"``core:odin/parser`` refuses a procedure with both ``#optional_ok`` and a "
+"``where`` clause; such a file is reported, and what could be read is "
+"still documented."
+msgstr ""
+"``core:odin/parser``\\ 는 ``#optional_ok``\\ 와 ``where`` 절을 함께 쓰는 프로시저를 "
+"거부한다. 해당 파일을 보고하고 읽을 수 있었던 부분은 문서화한다."
+
+#: ../../odin.rst:264
+msgid ""
+"Odin's parser needs a lot of stack for deeply nested code (a few hundred "
+"nested brackets overflow a thread), so a file nested far deeper than real "
+"code is (some 50 nested brackets or types, or about a thousand ``else`` "
+"branches in one chain) is left out with the warning "
+"``odin.autodoc.nesting``, and the rest of its package is documented. A "
+"``when`` condition is evaluated to 64 levels of ``&&``, ``||`` and ``!``; "
+"a longer one counts as not evaluated."
+msgstr ""
+"Odin 파서는 깊은 중첩에 많은 스택을 쓰며 수백 괄호로 스레드 스택이 넘칠 수 있다. 실제 코드보다 훨씬 깊은 파일(괄호·타입 "
+"약 50단계, ``else`` 사슬 약 천 개)은 ``odin.autodoc.nesting`` 경고로 제외하고 나머지 패키지는 "
+"문서화한다. ``when``\\ 의 ``&&``\\ , ``||``\\ , ``!``\\ 는 64단계까지 평가하며 그 이상은 "
+"미평가다."

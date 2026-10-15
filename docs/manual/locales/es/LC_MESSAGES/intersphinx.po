@@ -1,0 +1,90 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../intersphinx.rst:1
+msgid "Linking to other projects"
+msgstr "Enlazar con otros proyectos"
+
+#: ../../intersphinx.rst:4
+msgid ""
+"With ``sphinx.ext.intersphinx``, references this project cannot resolve "
+"are looked up in other projects' inventories, the ``objects.inv`` every "
+"Sphinx or Guidedog site publishes. Name the projects in ``conf.toml``:"
+msgstr ""
+"Con ``sphinx.ext.intersphinx``\\ , las referencias no resueltas se buscan "
+"en los inventarios de otros proyectos: el ``objects.inv`` que publica "
+"cada sitio Sphinx o Guidedog. Indique los proyectos en ``conf.toml``\\ :"
+
+#: ../../intersphinx.rst:16
+msgid ""
+"Each entry is the address of the other project's pages and where its "
+"inventory is: a URL, a file relative to the source folder, or ``\"\"`` "
+"for the ``objects.inv`` at the address. A list is tried in order. This is "
+"Sphinx's ``intersphinx_mapping``, with ``\"\"`` for Python's ``None``; "
+"``guidedog migrate`` converts it."
+msgstr ""
+"Cada entrada contiene la dirección de las páginas y la ubicación del "
+"inventario: URL, archivo relativo al directorio de fuentes o ``\"\"`` "
+"para el ``objects.inv`` de esa dirección. Las listas se prueban por "
+"orden. Es el ``intersphinx_mapping`` de Sphinx con ``\"\"`` en lugar de "
+"``None`` de Python; ``guidedog migrate`` lo convierte."
+
+#: ../../intersphinx.rst:21
+msgid "Then references need nothing new:"
+msgstr "Las referencias no necesitan nada más:"
+
+#: ../../intersphinx.rst:29
+msgid ""
+"Links show the other project's titles for labels and documents, and carry "
+"a tooltip such as \"(in Python v3.14)\". As in Sphinx, ``:doc:`` "
+"references need the project's name (``:doc:`python:tutorial/index```), "
+"because ``intersphinx_disabled_reftypes`` is ``[\"std:doc\"]`` by default."
+msgstr "Los enlaces usan los títulos del otro proyecto para etiquetas y documentos y un texto emergente como «(in Python v3.14)». Como en Sphinx, ``:doc:`` necesita el nombre del proyecto (\\ ``:doc:`python:tutorial/index```\\ ), porque ``intersphinx_disabled_reftypes`` es ``[\"std:doc\"]`` por defecto."
+
+#: ../../intersphinx.rst:34
+msgid ""
+"Inventories are fetched when a build starts and kept in "
+"``_build/.doctrees/__intersphinx_cache__`` for "
+"``intersphinx_cache_limit`` days (5; a negative number keeps them); local "
+"files are read on every build. As in Sphinx, an inventory that has moved "
+"(its URL redirects, as "
+"``https://werkzeug.palletsprojects.com/objects.inv`` redirects to "
+"``/en/stable/``) makes its new folder the base of the links, and the "
+"cache remembers that base, so a build from the cache links exactly as the "
+"build that fetched it did. ``intersphinx_timeout`` limits each download "
+"in seconds. A project that cannot be reached is a warning, and its "
+"references stay unresolved."
+msgstr ""
+"Los inventarios se descargan al comenzar y se guardan en "
+"``_build/.doctrees/__intersphinx_cache__`` durante "
+"``intersphinx_cache_limit`` días: 5 por defecto; un valor negativo los "
+"conserva. Los archivos locales se leen en cada build. Como en Sphinx, una "
+"redirección cambia la base de los enlaces y la caché la recuerda, "
+"manteniendo los mismos enlaces. Por ejemplo, "
+"``https://werkzeug.palletsprojects.com/objects.inv`` redirige a "
+"``/en/stable/``\\ . ``intersphinx_timeout`` limita cada descarga en "
+"segundos. Si un proyecto no es accesible, se advierte y sus referencias "
+"quedan sin resolver."
+
+#: ../../intersphinx.rst:44
+msgid ""
+"Guidedog writes its own ``objects.inv`` with every page, label, term, and "
+"object, so other projects can link here the same way."
+msgstr ""
+"Guidedog escribe su propio ``objects.inv`` con páginas, etiquetas, "
+"términos y objetos, para que otros proyectos puedan enlazar aquí del "
+"mismo modo."

@@ -1,0 +1,443 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../autodoc.rst:1
+msgid "Documenting Python with autodoc"
+msgstr "Documentar Python con autodoc"
+
+#: ../../autodoc.rst:4
+msgid ""
+"Guidedog documents Python by reading its source. It does not import a "
+"package. Docstrings and signatures become part of the document graph. "
+"Objects created only at runtime need an explicit description. This is a "
+"deliberate boundary."
+msgstr ""
+"Guidedog documenta Python leyendo su código fuente. No importa el "
+"paquete. Las docstrings y las firmas pasan a formar parte del grafo de "
+"documentos. Los objetos creados únicamente en tiempo de ejecución "
+"necesitan una descripción explícita. Este límite es deliberado."
+
+#: ../../autodoc.rst:8
+msgid "Setting it up"
+msgstr "Configuración inicial"
+
+#: ../../autodoc.rst:11
+msgid ""
+"List the extension and tell Guidedog where your packages are, relative to "
+"the source folder, as ``sys.path`` tells Python:"
+msgstr ""
+"Indique la extensión y la ubicación de los paquetes respecto al "
+"directorio de fuentes, como hace ``sys.path`` en Python:"
+
+#: ../../autodoc.rst:19
+msgid ""
+"``guidedog migrate`` writes ``autodoc_source_paths`` for you from the "
+"lines that ``conf.py`` files use to reach their package, such as "
+"``sys.path.insert(0, os.path.abspath('..'))``. A package installed from "
+"elsewhere is found only if you add the folder that holds it, for example "
+"a source checkout of a dependency; Guidedog never looks in Python's own "
+"``site-packages``."
+msgstr ""
+"``guidedog migrate`` genera ``autodoc_source_paths`` a partir de las "
+"líneas de ``conf.py`` que localizan el paquete, como ``sys.path.insert(0, "
+"os.path.abspath('..'))``\\ . Para encontrar un paquete instalado en otro "
+"lugar, debe añadir el directorio que lo contiene, por ejemplo el código "
+"fuente de una dependencia. Guidedog nunca busca en el propio "
+"``site-packages`` de Python."
+
+#: ../../autodoc.rst:25
+msgid "The directives then work as in Sphinx:"
+msgstr "A continuación, las directivas funcionan como en Sphinx:"
+
+#: ../../autodoc.rst:37
+msgid ""
+"Every option Sphinx 9.1 accepts is accepted, with the same meaning: "
+"``:members:``, ``:undoc-members:``, ``:private-members:``, "
+"``:special-members:``, ``:inherited-members:``, ``:exclude-members:``, "
+"``:member-order:``, ``:show-inheritance:``, ``:imported-members:``, "
+"``:ignore-module-all:``, ``:class-doc-from:``, ``:no-value:``, "
+"``:annotation:``, ``:no-index:``, ``:no-index-entry:``, ``:synopsis:``, "
+"``:platform:``, ``:deprecated:``, and the ``no-`` forms that cancel "
+"``autodoc_default_options``."
+msgstr ""
+"Se aceptan todas las opciones de Sphinx 9.1 con el mismo significado: "
+"``:members:``\\ , ``:undoc-members:``\\ , ``:private-members:``\\ , "
+"``:special-members:``\\ , ``:inherited-members:``\\ , "
+"``:exclude-members:``\\ , ``:member-order:``\\ , ``:show-inheritance:``\\ "
+", ``:imported-members:``\\ , ``:ignore-module-all:``\\ , "
+"``:class-doc-from:``\\ , ``:no-value:``\\ , ``:annotation:``\\ , "
+"``:no-index:``\\ , ``:no-index-entry:``\\ , ``:synopsis:``\\ , "
+"``:platform:``\\ , ``:deprecated:`` y las formas ``no-`` que anulan "
+"``autodoc_default_options``\\ ."
+
+#: ../../autodoc.rst:45
+msgid "Settings"
+msgstr "Opciones"
+
+#: ../../autodoc.rst:48
+msgid ""
+"These ``conf.toml`` settings have Sphinx's names, values, and defaults."
+msgstr ""
+"Estas opciones de ``conf.toml`` usan los mismos nombres, valores y "
+"valores predeterminados que Sphinx."
+
+#: ../../autodoc.rst:50
+msgid "``autodoc_source_paths``"
+msgstr "``autodoc_source_paths``"
+
+#: ../../autodoc.rst:51
+msgid ""
+"Guidedog's own: the folders Python modules are found in, in order, "
+"relative to the source folder. Only files below them are read, and a path "
+"through a symbolic link that leads elsewhere is refused."
+msgstr ""
+"Opción propia de Guidedog: directorios donde se buscan los módulos de "
+"Python, por orden y con rutas relativas al directorio de fuentes. Solo se "
+"leen archivos dentro de ellos. Se rechazan los enlaces simbólicos que "
+"llevan fuera."
+
+#: ../../autodoc.rst:55
+msgid "``autoclass_content``"
+msgstr "``autoclass_content``"
+
+#: ../../autodoc.rst:56
+msgid ""
+"``\"class\"`` (default), ``\"init\"``, or ``\"both\"``: which docstrings "
+"describe a class."
+msgstr ""
+"Docstrings que describen una clase: ``\"class\"`` (predeterminado), "
+"``\"init\"`` o ``\"both\"``\\ ."
+
+#: ../../autodoc.rst:58
+msgid "``autodoc_class_signature``"
+msgstr "``autodoc_class_signature``"
+
+#: ../../autodoc.rst:59
+msgid ""
+"``\"mixed\"`` (default) or ``\"separated\"``, which documents "
+"``__init__`` as a method."
+msgstr ""
+"``\"mixed\"`` (predeterminado) o ``\"separated\"``\\ , que documenta "
+"``__init__`` como método."
+
+#: ../../autodoc.rst:61
+msgid "``autodoc_default_options``"
+msgstr "``autodoc_default_options``"
+
+#: ../../autodoc.rst:62
+msgid ""
+"A table of options every directive gets, such as ``members = true`` or "
+"``member-order = \"bysource\"``. A value of ``false`` leaves the option "
+"out."
+msgstr ""
+"Tabla de opciones que recibe cada directiva, como ``members = true`` o "
+"``member-order = \"bysource\"``\\ . El valor ``false`` omite la opción."
+
+#: ../../autodoc.rst:65
+msgid "``autodoc_docstring_signature``"
+msgstr "``autodoc_docstring_signature``"
+
+#: ../../autodoc.rst:66
+msgid ""
+"``true`` (default): a first docstring line like ``name(args) -> result`` "
+"is the signature."
+msgstr ""
+"``true`` (predeterminado): una primera línea del docstring como "
+"``name(args) -> result`` se usa como firma."
+
+#: ../../autodoc.rst:69
+msgid "``autodoc_inherit_docstrings``"
+msgstr "``autodoc_inherit_docstrings``"
+
+#: ../../autodoc.rst:70
+msgid ""
+"``true`` (default): a member without a docstring takes its base class's."
+msgstr ""
+"``true`` (predeterminado): un miembro sin docstring hereda el de su clase "
+"base."
+
+#: ../../autodoc.rst:72
+msgid "``autodoc_member_order``"
+msgstr "``autodoc_member_order``"
+
+#: ../../autodoc.rst:73
+msgid ""
+"``\"alphabetical\"`` (default), ``\"groupwise\"``, or ``\"bysource\"``."
+msgstr ""
+"``\"alphabetical\"`` (predeterminado), ``\"groupwise\"`` o "
+"``\"bysource\"``\\ ."
+
+#: ../../autodoc.rst:75
+msgid "``autodoc_preserve_defaults``"
+msgstr "``autodoc_preserve_defaults``"
+
+#: ../../autodoc.rst:76
+msgid ""
+"``false`` (default): defaults are shown as ``repr()`` would write them; "
+"``true`` shows them as written."
+msgstr ""
+"``false`` (predeterminado): muestra los valores predeterminados como los "
+"escribiría ``repr()``\\ ; ``true`` conserva la forma del código fuente."
+
+#: ../../autodoc.rst:79
+msgid "``autodoc_typehints``"
+msgstr "``autodoc_typehints``"
+
+#: ../../autodoc.rst:80
+msgid ""
+"``\"signature\"`` (default), ``\"description\"`` (as ``:type:`` and "
+"``:rtype:`` fields), ``\"both\"``, or ``\"none\"``."
+msgstr ""
+"``\"signature\"`` (predeterminado), ``\"description\"`` (en campos "
+"``:type:`` y ``:rtype:``\\ ), ``\"both\"`` o ``\"none\"``\\ ."
+
+#: ../../autodoc.rst:83
+msgid "``autodoc_typehints_description_target``"
+msgstr "``autodoc_typehints_description_target``"
+
+#: ../../autodoc.rst:84
+msgid ""
+"``\"all\"`` (default), ``\"documented\"``, or ``\"documented_params\"``."
+msgstr ""
+"``\"all\"`` (predeterminado), ``\"documented\"`` o "
+"``\"documented_params\"``\\ ."
+
+#: ../../autodoc.rst:86
+msgid "``autodoc_typehints_format``"
+msgstr "``autodoc_typehints_format``"
+
+#: ../../autodoc.rst:87
+msgid "``\"short\"`` (default) or ``\"fully-qualified\"``."
+msgstr "``\"short\"`` (predeterminado) o ``\"fully-qualified\"``\\ ."
+
+#: ../../autodoc.rst:89
+msgid "``autodoc_use_type_comments``"
+msgstr "``autodoc_use_type_comments``"
+
+#: ../../autodoc.rst:90
+msgid "``true`` (default): ``# type:`` comments count as annotations."
+msgstr ""
+"``true`` (predeterminado): los comentarios ``# type:`` cuentan como "
+"anotaciones."
+
+#: ../../autodoc.rst:92
+msgid "``strip_signature_backslash``"
+msgstr "``strip_signature_backslash``"
+
+#: ../../autodoc.rst:93
+msgid "Doubles backslashes in signatures, as in Sphinx."
+msgstr "Duplica las barras inversas en las firmas, como Sphinx."
+
+#: ../../autodoc.rst:95
+msgid ""
+"``autodoc_mock_imports``, ``autodoc_type_aliases``, "
+"``autodoc_warningiserror``"
+msgstr ""
+"``autodoc_mock_imports``\\ , ``autodoc_type_aliases``\\ , "
+"``autodoc_warningiserror``"
+
+#: ../../autodoc.rst:96
+msgid ""
+"Accepted. Nothing is imported, so nothing needs mocking; type aliases are "
+"not applied."
+msgstr ""
+"Se aceptan. No se importa ningún módulo, por lo que no hace falta "
+"simularlo; los alias de tipos no se aplican."
+
+#: ../../autodoc.rst:99
+msgid "How Guidedog knows what Python would do"
+msgstr "Cómo deduce Guidedog el comportamiento de Python"
+
+#: ../../autodoc.rst:102
+msgid ""
+"Names are followed as Python binds them: ``from .app import Flask`` in a "
+"package's ``__init__.py`` makes ``flask.Flask`` the class defined in "
+"``flask/app.py``, which autodoc then shows with ``:canonical: "
+"flask.app.Flask``. Base classes are resolved the same way, their method "
+"resolution order is computed as Python computes it, and inherited members "
+"come from the bases' source. Names imported only under ``if "
+"TYPE_CHECKING:`` do not exist when the module runs, so annotations naming "
+"them stay as written, as they do in Sphinx."
+msgstr ""
+"Los nombres se resuelven según las reglas de enlace de Python. En el "
+"``__init__.py`` de un paquete, ``from .app import Flask`` hace que "
+"``flask.Flask`` sea la clase definida en ``flask/app.py``\\ ; autodoc la "
+"muestra con ``:canonical: flask.app.Flask``\\ . Las clases base se "
+"resuelven igual. El orden de resolución de métodos se calcula como en "
+"Python y los miembros heredados se leen del código de las bases. Los "
+"nombres importados solo bajo ``if TYPE_CHECKING:`` no existen en "
+"ejecución. Las anotaciones que los usan se conservan tal cual, como en "
+"Sphinx."
+
+#: ../../autodoc.rst:110
+msgid ""
+"Docstrings are the strings Python would store: escapes processed and "
+"indentation removed as Python 3.13's compiler removes it. Attribute "
+"documentation comes from the places Sphinx's analyser reads: a ``#:`` "
+"comment after the assignment or on the lines above it, and a string "
+"literal after it. Signatures come from the ``def``; a class's from its "
+"metaclass ``__call__``, ``__new__``, or ``__init__``, as Python finds it; "
+"a dataclass's or ``NamedTuple``'s from its fields; ``@overload`` variants "
+"replace the implementation's signature."
+msgstr ""
+"Los docstrings son las cadenas que guardaría Python: se procesan los "
+"escapes y se quita la sangría como lo hace el compilador de Python 3.13. "
+"La documentación de atributos se lee en los mismos lugares que en el "
+"analizador de Sphinx: comentarios ``#:`` al final de la asignación o "
+"justo encima, y una cadena literal inmediatamente después. Las firmas "
+"proceden de ``def``\\ . Para las clases se busca, como en Python, en "
+"``__call__`` de la metaclase, ``__new__`` o ``__init__``\\ . En dataclass "
+"y ``NamedTuple`` se usan los campos. Las variantes ``@overload`` "
+"sustituyen la firma de la implementación."
+
+#: ../../autodoc.rst:118
+msgid "What cannot be known without running Python"
+msgstr "Qué no puede saberse sin ejecutar Python"
+
+#: ../../autodoc.rst:121
+msgid ""
+"Guidedog says so, naming the object, whenever the source cannot tell it "
+"what Python would: a warning when something cannot be documented, a note "
+"(shown with ``-v``) when it is documented with less than Sphinx would "
+"show."
+msgstr ""
+"Cuando el código fuente no permite deducir el comportamiento de Python, "
+"Guidedog lo indica y nombra el objeto. Emite una advertencia si no puede "
+"documentarlo y una nota, visible con ``-v``\\ , si ofrece menos "
+"información que Sphinx."
+
+#: ../../autodoc.rst:125
+msgid ""
+"A compiled module (``.so``, ``.pyd``) has no source to read: its objects "
+"are not found."
+msgstr ""
+"Un módulo compilado (\\ ``.so``\\ , ``.pyd``\\ ) no tiene código fuente "
+"que leer: sus objetos no se encuentran."
+
+#: ../../autodoc.rst:127
+msgid ""
+"A value made by running code (``app = Flask(__name__)``, ``now = "
+"datetime.now()``) has no ``:value:``, and a computed default is shown as "
+"written."
+msgstr ""
+"Un valor creado al ejecutar código (\\ ``app = Flask(__name__)``\\ , "
+"``now = datetime.now()``\\ ) no tiene ``:value:``\\ . Los valores "
+"predeterminados calculados se muestran como están escritos."
+
+#: ../../autodoc.rst:129
+msgid ""
+"A function made by a decorator from outside the source paths "
+"(``@click.command()``) is documented as the function it decorates."
+msgstr ""
+"Una función creada por un decorador ajeno a las rutas de fuentes (\\ "
+"``@click.command()``\\ ) se documenta como la función original."
+
+#: ../../autodoc.rst:131
+msgid ""
+"A class from a package outside the source paths is named by the path it "
+"was imported from, which may differ from the module that defines it; its "
+"members, its constructor's signature, and the docstrings it would pass on "
+"are unknown."
+msgstr ""
+"Una clase de un paquete fuera de las rutas de fuentes se nombra con la "
+"ruta desde la que se importó, que puede diferir del módulo que la define. "
+"Se desconocen sus miembros, la firma del constructor y los docstrings que "
+"podría transmitir por herencia."
+
+#: ../../autodoc.rst:134
+msgid ""
+"Docstrings of builtin types are unknown, so a method that has none and "
+"would inherit one from ``dict`` is left out."
+msgstr ""
+"Se desconocen los docstrings de los tipos integrados. Por eso se omite un "
+"método sin docstring propio que lo heredaría de ``dict``\\ ."
+
+#: ../../autodoc.rst:136
+msgid ""
+"Python extensions that handle autodoc's events "
+"(``autodoc-process-docstring``, ``autodoc-skip-member``, ...) do not run."
+msgstr ""
+"No se ejecutan las extensiones de Python que procesan eventos de autodoc "
+"(\\ ``autodoc-process-docstring``\\ , ``autodoc-skip-member``\\ , etc.)."
+
+#: ../../autodoc.rst:138
+msgid ""
+"A module nested far deeper than real code (Python itself refuses 200 "
+"nested brackets; Guidedog also refuses a ``+`` chain of a few hundred "
+"operands) is not analysed, with the warning ``autodoc.too_deep``."
+msgstr ""
+"No se analizan módulos con una profundidad de anidación muy superior a la "
+"del código real; se emite ``autodoc.too_deep``\\ . Python ya rechaza 200 "
+"niveles de paréntesis. Guidedog también rechaza cadenas de ``+`` con "
+"varios cientos de operandos."
+
+#: ../../autodoc.rst:141
+msgid ""
+"Work that multiplies is bounded: a name followed through imports and "
+"aliases stops after 48 steps along one path and 100,000 in all; a type "
+"alias or constant is expanded for 10,000 steps and is otherwise shown as "
+"written; a class's MRO is followed 100 classes deep; and one directive "
+"generates at most 10,000 directives (the warning ``autodoc.limit``), "
+"which only a class that contains itself under its own name reaches."
+msgstr ""
+"El trabajo que puede multiplicarse tiene límites. La resolución de un "
+"nombre por importaciones y alias se detiene tras 48 pasos por ruta y "
+"100,000 en total. Los alias de tipos y las constantes se expanden hasta "
+"10,000 pasos; después se conserva su forma escrita. El MRO se recorre "
+"hasta 100 clases. Una directiva genera como máximo 10,000 directivas, con "
+"la advertencia ``autodoc.limit`` al superar el límite. Solo alcanza este "
+"último límite una clase que se contiene a sí misma bajo su propio nombre."
+
+#: ../../autodoc.rst:147
+msgid ""
+"Adding the missing packages' source folders to ``autodoc_source_paths`` "
+"closes most of these."
+msgstr ""
+"Añadir los directorios de fuentes de los paquetes que faltan a "
+"``autodoc_source_paths`` resuelve la mayoría de estas limitaciones."
+
+#: ../../autodoc.rst:150
+msgid "Rebuilding"
+msgstr "Reconstrucción"
+
+#: ../../autodoc.rst:153
+msgid ""
+"Every Python file an autodoc directive read is a dependency of the page: "
+"editing it reads the page again on the next build. A page whose object "
+"was not found is read again on every build, so it picks the object up as "
+"soon as the source has it."
+msgstr ""
+"Cada archivo de Python leído por una directiva autodoc es una dependencia "
+"de la página. Al editarlo, la página se vuelve a leer en el siguiente "
+"build. Si no se encontró un objeto, su página se lee en cada build para "
+"detectarlo en cuanto aparezca en el código fuente."
+
+#: ../../autodoc.rst:157
+msgid "Security"
+msgstr "Seguridad"
+
+#: ../../autodoc.rst:160
+msgid ""
+"Building documentation never runs the project's code. Guidedog reads "
+"Python source as text, with the same confinement it applies to includes: "
+"only below ``autodoc_source_paths``, and not through links leading "
+"elsewhere."
+msgstr ""
+"La documentación se construye sin ejecutar el código del proyecto. "
+"Guidedog lee el código Python como texto, con el mismo confinamiento que "
+"aplica a los includes: solo dentro de ``autodoc_source_paths`` y sin "
+"seguir enlaces que salgan de esas rutas."

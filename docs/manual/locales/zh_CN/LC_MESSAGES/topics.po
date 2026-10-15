@@ -1,0 +1,1414 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 04:29+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../topics/diagrams.rst:1
+msgid "Diagrams that explain"
+msgstr "用图表解释概念"
+
+#: ../../topics/diagrams.rst:4
+msgid ""
+"Choose a diagram for a question. A flow chart explains a choice. A block "
+"diagram explains responsibility. A sequence explains ordering. A graph "
+"explains relationships. Use prose when it answers the question more "
+"directly."
+msgstr "按问题选择图示。流程图解释选择，框图解释职责，时序图解释顺序，关系图解释联系。文字能更直接回答时，就用文字。"
+
+#: ../../topics/diagrams.rst:8
+msgid "A flow chart"
+msgstr "流程图"
+
+#: ../../topics/diagrams.rst:13
+msgid ""
+"If capacity fits, run conversion; otherwise the host prepares storage and "
+"retries."
+msgstr "容量足够则转换；否则由宿主准备存储，再重试。"
+
+#: ../../topics/diagrams.rst:13
+msgid "Capacity is checked before storage is borrowed or grown."
+msgstr "借用或扩展存储前，先检查容量。"
+
+#: ../../topics/diagrams.rst:33
+msgid ""
+"The drawing names the owner at the growth step. It does not suggest that "
+"the conversion core allocates. This distinction is part of the contract."
+msgstr "图中在扩展步骤标明所有者，不暗示转换核心会分配内存。这一区别属于契约。"
+
+#: ../../topics/diagrams.rst:37
+msgid "Author a graph"
+msgstr "编写图表"
+
+#: ../../topics/diagrams.rst:55
+msgid ""
+"``graphviz``, ``graph``, and ``digraph`` are built in. Guidedog renders "
+"them through Graphviz. HTML receives an SVG asset. PDF embeds the "
+"rendered drawing. Both use the same graph source."
+msgstr ""
+"``graphviz``\\ 、\\ ``graph`` 和 ``digraph`` 为内置指令。Guidedog 通过 Graphviz "
+"渲染；HTML 获得 SVG 资源，PDF 嵌入渲染后的图示，两者使用同一图源。"
+
+#: ../../topics/diagrams.rst:59
+msgid "Light, dark and print"
+msgstr "浅色、深色与打印"
+
+#: ../../topics/diagrams.rst:62
+msgid ""
+"A transparent canvas does not change a graph's ink. Dark text can "
+"disappear on a dark page. Ordinary graphs therefore keep their chosen "
+"colors and receive a light panel in the default dark theme."
+msgstr "画布透明不会改变图中文字的颜色。深色文字放在深色页面上可能消失。因此普通图保留原有配色，在默认深色主题下使用浅色面板。"
+
+#: ../../topics/diagrams.rst:66
+msgid ""
+"For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
+"the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
+"adds a fixed stylesheet inside the SVG image. Its dark media query "
+"follows the embedding page's ``color-scheme``, including the theme "
+"control's explicit selection. No script, external stylesheet or inline "
+"page SVG is needed."
+msgstr ""
+"使用本手册的自适应配色时，在指令中加入 ``:class: graphviz-adaptive``。此功能适用于 Guidedog 0.6.3 "
+"及更高版本。Guidedog 在 SVG 内加入固定样式表；深色媒体查询跟随所在页面的 "
+"``color-scheme``，包括主题控件的明确选择。无须脚本、外部样式表或内联页面 SVG。"
+
+#: ../../topics/diagrams.rst:72
+msgid ""
+"Use short labels, rounded boxes for steps, notes for input and cylinders "
+"for durable stores. Node classes distinguish roles in the dark palette:"
+msgstr "标签要短。步骤用圆角框，输入用便笺形，持久存储用圆柱形。节点类区分深色配色中的角色："
+
+#: ../../topics/diagrams.rst:75
+msgid "Semantic node classes"
+msgstr "表示语义的节点类"
+
+#: ../../topics/diagrams.rst:79
+msgid "DOT class"
+msgstr "DOT 类"
+
+#: ../../topics/diagrams.rst:80
+msgid "Role"
+msgstr "角色"
+
+#: ../../topics/diagrams.rst:81
+msgid "``gd-input``"
+msgstr "``gd-input``"
+
+#: ../../topics/diagrams.rst:82
+msgid "Source, configuration or supporting material; warm neutral."
+msgstr "源文件、配置或辅助材料；暖中性色。"
+
+#: ../../topics/diagrams.rst:83
+msgid "``gd-output``"
+msgstr "``gd-output``"
+
+#: ../../topics/diagrams.rst:84
+msgid "A produced artifact; blue."
+msgstr "生成的产物；蓝色。"
+
+#: ../../topics/diagrams.rst:85
+msgid "``gd-plugin``"
+msgstr "``gd-plugin``"
+
+#: ../../topics/diagrams.rst:86
+msgid "An optional extension point; amber, with a dashed border."
+msgstr "可选扩展点；琥珀色、虚线边框。"
+
+#: ../../topics/diagrams.rst:87
+msgid "``gd-choice``"
+msgstr "``gd-choice``"
+
+#: ../../topics/diagrams.rst:88
+msgid "A decision; amber, with a diamond shape."
+msgstr "决策；琥珀色、菱形。"
+
+#: ../../topics/diagrams.rst:89
+msgid "``gd-memory``"
+msgstr "``gd-memory``"
+
+#: ../../topics/diagrams.rst:90
+msgid "A separate native allocation boundary; violet."
+msgstr "独立的原生分配边界；紫色。"
+
+#: ../../topics/diagrams.rst:92
+msgid ""
+"For example, ``source [class=\"gd-input\", shape=note, "
+"fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
+"role. Classes do not choose shapes or add labels: write those explicitly "
+"so the drawing also works in monochrome. Unclassified steps use green. "
+"This palette is opt-in; do not apply it to artwork whose exact colors "
+"carry data."
+msgstr ""
+"例如，``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` "
+"同时设定浅色外观和深色角色。类不会选择形状或添加标签；请显式写出，保证黑白打印也能读懂。未分类的步骤用绿色。配色需要主动启用，不适合颜色本身代表数据的图。"
+
+#: ../../topics/diagrams.rst:98
+msgid ""
+"The light DOT attributes remain the PDF master. The book receives an SVG "
+"without the adaptive stylesheet. Printed HTML selects the light scheme "
+"too. Keep both palettes legible and test the actual book; transparency "
+"alone proves neither. The inheritance rule is defined by the `CSS "
+"color-scheme specification "
+"<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
+msgstr ""
+"浅色 DOT 属性仍是 PDF 的排版依据。书中使用不带自适应样式表的 SVG，打印 HTML "
+"也选择浅色模式。检查两种配色和实际书籍；透明背景本身不能证明可读性。继承规则见 `CSS color-scheme 规范 "
+"<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_。"
+
+#: ../../topics/diagrams.rst:104
+msgid "Make the result legible"
+msgstr "让图表清晰易读"
+
+#: ../../topics/diagrams.rst:107
+msgid ""
+"Keep node labels short. Explain a longer rule below the drawing. Prefer "
+"one direction for the main path. Label a return edge with its condition. "
+"Use shape and text as well as color. A print reader may have no color at "
+"all."
+msgstr "节点标签要短，较长规则写在图下。主路径尽量保持一个方向，返回边标明条件。除颜色外，也使用形状和文字；打印读者可能看不到颜色。"
+
+#: ../../topics/diagrams.rst:111
+msgid ""
+"Supply alternative text and a caption. Test narrow browser windows and "
+"the PDF page. If a diagram needs tiny type to fit, split it into two "
+"drawings. See :doc:`../media` for image and figure sizing."
+msgstr ""
+"提供替代文本和题注。检查窄浏览器窗口和 PDF 页面。若必须用极小字号才能放下，拆成两幅图。图片和插图尺寸见 :doc:`../media`\\ 。"
+
+#: ../../topics/diagrams.rst:115
+msgid ""
+"On narrow screens, captioned diagrams scroll horizontally to keep labels "
+"readable. Scroll inside the figure; the page itself keeps its width."
+msgstr "窄屏上，带图注的图可横向滚动，避免文字缩得太小。在图内滚动即可，页面本身不会变宽。"
+
+#: ../../topics/domains.rst:1
+msgid "Domains"
+msgstr "域"
+
+#: ../../topics/domains.rst:4
+msgid ""
+"A domain is a collection of markup constructs (directives and roles) for "
+"describing and cross-referencing program objects belonging to a specific "
+"programming language or domain of discourse."
+msgstr "域是一组指令和角色，用来描述某种编程语言或知识领域中的对象，并建立交叉引用。"
+
+#: ../../topics/domains.rst:8
+msgid ""
+"Guidedog provides native, built-in implementations of the standard Sphinx "
+"domains:"
+msgstr "Guidedog 内置了以下 Sphinx 风格的域："
+
+#: ../../topics/domains.rst:10
+msgid ""
+"**Standard domain** (``std``): General documentation objects such as "
+"command-line options, environment variables, terms, and UI labels."
+msgstr "**标准域** （``std``）：命令行选项、环境变量、术语和界面标签等通用对象。"
+
+#: ../../topics/domains.rst:11
+msgid ""
+"**Python domain** (``py``): Python modules, classes, functions, methods, "
+"attributes, properties, and exceptions."
+msgstr "**Python 域** （``py``）：模块、类、函数、方法、属性和异常。"
+
+#: ../../topics/domains.rst:12
+msgid ""
+"**C domain** (``c``): C functions, types, structs, unions, enums, "
+"enumerators, variables, and macros."
+msgstr "**C 域** （``c``）：函数、类型、结构体、联合体、枚举、枚举值、变量和宏。"
+
+#: ../../topics/domains.rst:13
+msgid ""
+"**C++ domain** (``cpp``): C++ classes, concepts, templates, namespaces, "
+"methods, and expressions."
+msgstr "**C++ 域** （``cpp``）：类、概念、模板、命名空间、方法和表达式。"
+
+#: ../../topics/domains.rst:14
+msgid ""
+"**JavaScript domain** (``js``): JavaScript functions, methods, classes, "
+"and properties."
+msgstr "**JavaScript 域** （``js``）：函数、方法、类和属性。"
+
+#: ../../topics/domains.rst:15
+msgid ""
+"**Odin domain** (``odin``): Native Odin packages, procedures, structs, "
+"unions, and enums (see :doc:`../odin`)."
+msgstr "**Odin 域** （``odin``）：原生 Odin 包、过程、结构体、联合体和枚举，见 :doc:`../odin`。"
+
+#: ../../topics/domains.rst:17
+msgid "Setting the primary domain"
+msgstr "设置主域"
+
+#: ../../topics/domains.rst:20
+msgid ""
+"The default domain is set with ``primary_domain`` in ``conf.toml`` "
+"(default: ``\"py\"``). When a primary domain is active, its directives "
+"and roles can be written without the domain prefix (for example, ``.. "
+"function::`` instead of ``.. py:function::``, and ``:func:`name``` "
+"instead of ``:py:func:`name```)."
+msgstr ""
+"在 ``conf.toml`` 中用 ``primary_domain`` 设置默认域，默认为 ``\"py\"``。启用后可省略域前缀，例如用 "
+"``.. function::`` 代替 ``.. py:function::``，用 ``:func:`name``` 代替 "
+"``:py:func:`name```。"
+
+#: ../../topics/domains.rst:25
+msgid "To change the active domain locally within a document:"
+msgstr "在文档中局部切换当前域："
+
+#: ../../topics/domains.rst:31
+msgid "Standard domain"
+msgstr "标准域"
+
+#: ../../topics/domains.rst:34
+msgid ""
+"The standard domain describes command-line tools, environment variables, "
+"and document cross-references."
+msgstr "标准域描述命令行工具、环境变量和文档交叉引用。"
+
+#: ../../topics/domains.rst:37 ../../topics/domains.rst:73
+#: ../../topics/domains.rst:118 ../../topics/domains.rst:160
+#: ../../topics/domains.rst:194
+msgid "Directives"
+msgstr "指令"
+
+#: ../../topics/domains.rst:52 ../../topics/domains.rst:102
+#: ../../topics/domains.rst:143 ../../topics/domains.rst:179
+#: ../../topics/domains.rst:209
+msgid "Roles"
+msgstr "角色"
+
+#: ../../topics/domains.rst:55
+msgid "``:doc:`path```: Links to a project document by relative path."
+msgstr "``:doc:`path```: 按相对路径链接到项目文档。"
+
+#: ../../topics/domains.rst:56
+msgid ""
+"``:ref:`label```: Links to an explicit target label (``.. _label:``)."
+msgstr "``:ref:`label```: 链接到显式目标标签 ``.. _label:``。"
+
+#: ../../topics/domains.rst:57
+msgid ""
+"``:term:`term```: Links to a term defined in a ``glossary`` directive."
+msgstr "``:term:`term```: 链接到 ``glossary`` 中定义的术语。"
+
+#: ../../topics/domains.rst:58
+msgid ""
+"``:option:`--config```: Links to a command-line option described by "
+"``option``."
+msgstr "``:option:`--config```: 链接到 ``option`` 中描述的命令行选项。"
+
+#: ../../topics/domains.rst:59
+msgid ""
+"``:envvar:`VARIABLE```: Links to an environment variable described by "
+"``envvar``."
+msgstr "``:envvar:`VARIABLE```: 链接到 ``envvar`` 中描述的环境变量。"
+
+#: ../../topics/domains.rst:60
+msgid "``:command:`name```: Marks a system command name."
+msgstr "``:command:`name```: 标记系统命令名。"
+
+#: ../../topics/domains.rst:61
+msgid ""
+"``:file:`path```: Marks a file or directory path, supporting "
+"``{variable}`` placeholders."
+msgstr "``:file:`path```: 标记文件或目录路径，可包含 ``{variable}`` 占位符。"
+
+#: ../../topics/domains.rst:62
+msgid "``:kbd:`Ctrl+C```: Marks keyboard keystrokes."
+msgstr "``:kbd:`Ctrl+C```: 标记键盘按键。"
+
+#: ../../topics/domains.rst:63
+msgid ""
+"``:menuselection:`File --> Save As```: Formats a software menu sequence."
+msgstr "``:menuselection:`File --> Save As```: 表示菜单操作顺序。"
+
+#: ../../topics/domains.rst:64
+msgid "``:guilabel:`Submit```: Formats a button or user interface element."
+msgstr "``:guilabel:`Submit```: 表示按钮或界面元素。"
+
+#: ../../topics/domains.rst:65
+msgid "``:pep:`8```: Links to a Python Enhancement Proposal."
+msgstr "``:pep:`8```: 链接到 Python 改进提案。"
+
+#: ../../topics/domains.rst:66
+msgid "``:rfc:`7231```: Links to an IETF Request for Comments."
+msgstr "``:rfc:`7231```: 链接到 IETF RFC 文档。"
+
+#: ../../topics/domains.rst:68
+msgid "Python domain"
+msgstr "Python 域"
+
+#: ../../topics/domains.rst:71
+msgid "The Python domain describes Python interfaces and signatures."
+msgstr "Python 域描述 Python 接口和签名。"
+
+#: ../../topics/domains.rst:98
+msgid ""
+"Directives include: ``py:module``, ``py:currentmodule``, ``py:function``, "
+"``py:data``, ``py:class``, ``py:method``, ``py:staticmethod``, "
+"``py:classmethod``, ``py:attribute``, ``py:property``, ``py:exception``, "
+"``py:decorator``, and ``py:type``."
+msgstr ""
+"支持的指令包括：``py:module``、``py:currentmodule``、``py:function``、``py:data``、``py:class``、``py:method``、``py:staticmethod``、``py:classmethod``、``py:attribute``、``py:property``、``py:exception``、``py:decorator`` "
+"和 ``py:type``。"
+
+#: ../../topics/domains.rst:105
+msgid "``:py:func:`name```: Links to a Python function."
+msgstr "``:py:func:`name```: 链接到 Python 函数。"
+
+#: ../../topics/domains.rst:106
+msgid "``:py:class:`name```: Links to a Python class."
+msgstr "``:py:class:`name```: 链接到 Python 类。"
+
+#: ../../topics/domains.rst:107
+msgid "``:py:meth:`name```: Links to a Python class or instance method."
+msgstr "``:py:meth:`name```: 链接到 Python 类方法或实例方法。"
+
+#: ../../topics/domains.rst:108
+msgid "``:py:attr:`name```: Links to a Python attribute."
+msgstr "``:py:attr:`name```: 链接到 Python 属性。"
+
+#: ../../topics/domains.rst:109
+msgid "``:py:data:`name```: Links to Python module-level data."
+msgstr "``:py:data:`name```: 链接到 Python 模块级数据。"
+
+#: ../../topics/domains.rst:110
+msgid "``:py:exc:`name```: Links to a Python exception class."
+msgstr "``:py:exc:`name```: 链接到 Python 异常类。"
+
+#: ../../topics/domains.rst:111
+msgid "``:py:mod:`name```: Links to a Python module."
+msgstr "``:py:mod:`name```: 链接到 Python 模块。"
+
+#: ../../topics/domains.rst:113
+msgid "C domain"
+msgstr "C 域"
+
+#: ../../topics/domains.rst:116
+msgid "The C domain describes C language libraries and headers."
+msgstr "C 域描述 C 语言库和头文件。"
+
+#: ../../topics/domains.rst:146
+msgid "``:c:func:`name```: Links to a C function."
+msgstr "``:c:func:`name```: 链接到 C 函数。"
+
+#: ../../topics/domains.rst:147
+msgid "``:c:member:`name```: Links to a C struct or union member."
+msgstr "``:c:member:`name```: 链接到 C 结构体或联合体的成员。"
+
+#: ../../topics/domains.rst:148
+msgid "``:c:data:`name``` / ``:c:var:`name```: Links to a C variable."
+msgstr "``:c:data:`name``` / ``:c:var:`name```: 链接到 C 变量。"
+
+#: ../../topics/domains.rst:149
+msgid "``:c:type:`name```: Links to a C typedef or type."
+msgstr "``:c:type:`name```: 链接到 C 的 typedef 或类型。"
+
+#: ../../topics/domains.rst:150
+msgid "``:c:struct:`name```: Links to a C struct."
+msgstr "``:c:struct:`name```: 链接到 C 结构体。"
+
+#: ../../topics/domains.rst:151
+msgid "``:c:union:`name```: Links to a C union."
+msgstr "``:c:union:`name```: 链接到 C 联合体。"
+
+#: ../../topics/domains.rst:152
+msgid "``:c:enum:`name```: Links to a C enum."
+msgstr "``:c:enum:`name```: 链接到 C 枚举。"
+
+#: ../../topics/domains.rst:153
+msgid "``:c:macro:`name```: Links to a C preprocessor macro."
+msgstr "``:c:macro:`name```: 链接到 C 预处理器宏。"
+
+#: ../../topics/domains.rst:155
+msgid "C++ domain"
+msgstr "C++ 域"
+
+#: ../../topics/domains.rst:158
+msgid ""
+"The C++ domain supports modern C++ constructs, concepts, namespaces, and "
+"scopes."
+msgstr "C++ 域支持现代 C++ 构造、概念、命名空间和作用域。"
+
+#: ../../topics/domains.rst:182
+msgid "``:cpp:class:`name```: Links to a C++ class or struct."
+msgstr "``:cpp:class:`name```: 链接到 C++ 类或结构体。"
+
+#: ../../topics/domains.rst:183
+msgid "``:cpp:func:`name```: Links to a C++ function or method."
+msgstr "``:cpp:func:`name```: 链接到 C++ 函数或方法。"
+
+#: ../../topics/domains.rst:184
+msgid ""
+"``:cpp:member:`name``` / ``:cpp:var:`name```: Links to a member or "
+"variable."
+msgstr "``:cpp:member:`name``` / ``:cpp:var:`name```: 链接到成员或变量。"
+
+#: ../../topics/domains.rst:185
+msgid "``:cpp:type:`name```: Links to a C++ type alias or typedef."
+msgstr "``:cpp:type:`name```: 链接到 C++ 类型别名或 typedef。"
+
+#: ../../topics/domains.rst:186
+msgid "``:cpp:concept:`name```: Links to a C++20 concept."
+msgstr "``:cpp:concept:`name```: 链接到 C++20 概念。"
+
+#: ../../topics/domains.rst:187
+msgid "``:cpp:enum:`name```: Links to a C++ enum."
+msgstr "``:cpp:enum:`name```: 链接到 C++ 枚举。"
+
+#: ../../topics/domains.rst:189
+msgid "JavaScript domain"
+msgstr "JavaScript 域"
+
+#: ../../topics/domains.rst:192
+msgid ""
+"The JavaScript domain describes client-side scripts, libraries, and "
+"Node.js modules."
+msgstr "JavaScript 域描述浏览器脚本、库和 Node.js 模块。"
+
+#: ../../topics/domains.rst:212
+msgid "``:js:func:`name```: Links to a JavaScript function."
+msgstr "``:js:func:`name```: 链接到 JavaScript 函数。"
+
+#: ../../topics/domains.rst:213
+msgid "``:js:meth:`name```: Links to a JavaScript method."
+msgstr "``:js:meth:`name```: 链接到 JavaScript 方法。"
+
+#: ../../topics/domains.rst:214
+msgid "``:js:class:`name```: Links to a JavaScript class."
+msgstr "``:js:class:`name```: 链接到 JavaScript 类。"
+
+#: ../../topics/domains.rst:215
+msgid "``:js:data:`name```: Links to a JavaScript variable."
+msgstr "``:js:data:`name```: 链接到 JavaScript 变量。"
+
+#: ../../topics/domains.rst:216
+msgid "``:js:attr:`name```: Links to a JavaScript object attribute."
+msgstr "``:js:attr:`name```: 链接到 JavaScript 对象属性。"
+
+#: ../../topics/domains.rst:217
+msgid "``:js:mod:`name```: Links to a JavaScript module."
+msgstr "``:js:mod:`name```: 链接到 JavaScript 模块。"
+
+#: ../../topics/domains.rst:219
+msgid "Cross-referencing conventions"
+msgstr "交叉引用约定"
+
+#: ../../topics/domains.rst:222
+msgid "Cross-references in domains support several helpful modifiers:"
+msgstr "域中的交叉引用支持以下修饰符："
+
+#: ../../topics/domains.rst:224
+msgid ""
+"**Hide prefix**: Prefixing the target with a tilde (``~``) displays only "
+"the final component of the target name. For example, "
+"``:py:func:`~pipeline.reader.DocumentReader.parse``` renders as "
+"``parse()``."
+msgstr ""
+"**隐藏前缀** ：在目标前加 ``~``，只显示名称的最后一部分。例如 "
+"``:py:func:`~pipeline.reader.DocumentReader.parse``` 显示为 ``parse()``。"
+
+#: ../../topics/domains.rst:225
+msgid ""
+"**Current scope resolution**: Relative references look up names within "
+"the active module or namespace before falling back to global lookup."
+msgstr "**当前作用域** ：相对引用先在当前模块或命名空间中查找，再进行全局查找。"
+
+#: ../../topics/domains.rst:226
+msgid ""
+"**Exact match**: Prefixing with a dot (``.``) searches from the current "
+"module or enclosing object."
+msgstr "**精确匹配** ：在目标前加 ``.``，从当前模块或所属对象开始查找。"
+
+#: ../../topics/index.rst:1
+msgid "Topic guides"
+msgstr "专题指南"
+
+#: ../../topics/index.rst:4
+msgid ""
+"These chapters explain the model. They give you enough context to make a "
+"choice."
+msgstr "这些章节解释模型，为你的选择提供必要的背景。"
+
+#: ../../topics/mathematics.rst:1
+msgid "Mathematics and proofs"
+msgstr "数学与证明"
+
+#: ../../topics/mathematics.rst:4
+msgid ""
+"An equation is useful when it makes a relation easier to inspect. Define "
+"every symbol before relying on it. State the units where they matter. The "
+"equation should support the explanation, not replace it."
+msgstr "公式应让关系更容易检查。使用符号前先定义，必要时说明单位。公式应支持解释，而非取代解释。"
+
+#: ../../topics/mathematics.rst:8
+msgid "Inline and display mathematics"
+msgstr "行内公式与独立公式"
+
+#: ../../topics/mathematics.rst:11
+msgid ""
+"Use the ``math`` role for a short expression. Use the ``math`` directive "
+"for a display. Write the common LaTeX mathematics subset that both "
+"targets understand."
+msgstr "短公式用 ``math`` 角色，独立公式用 ``math`` 指令。使用两个目标均支持的通用 LaTeX 数学子集。"
+
+#: ../../topics/mathematics.rst:25
+msgid "A side of length :math:`s` encloses area :math:`s^2`."
+msgstr "边长为 :math:`s` 的正方形，面积为 :math:`s^2`\\ 。"
+
+#: ../../topics/mathematics.rst:27
+msgid "A = s^2"
+msgstr "A = s^2"
+
+#: ../../topics/mathematics.rst:32
+msgid ""
+"The relation is :eq:`area-square`. Guidedog gives a labelled equation a "
+"stable target. The HTML builder supplies MathJax markup. The PDF renderer "
+"translates the supported LaTeX subset to Typst mathematics. An "
+"unsupported PDF command is reported. Arbitrary LaTeX packages are not "
+"evaluated."
+msgstr ""
+"关系见 :eq:`area-square`\\ 。Guidedog 为带标签公式提供稳定目标。HTML 构建器提供 MathJax 标记；PDF "
+"渲染器将受支持的 LaTeX 子集转为 Typst 数学。不支持的 PDF 命令会被报告，不执行任意 LaTeX 包。"
+
+#: ../../topics/mathematics.rst:38
+msgid "A small proof"
+msgstr "一个简短的证明"
+
+#: ../../topics/mathematics.rst:41
+msgid ""
+"Let :math:`U` be the bytes already charged to a budget. Let :math:`B` be "
+"its limit. Let :math:`n` be a requested allocation. Assume all three "
+"values are nonnegative and :math:`U \\le B`."
+msgstr ""
+"设 :math:`U` 为已计入预算的字节数，\\ :math:`B` 为上限，\\ :math:`n` 为申请分配量。假设三者均非负，且 "
+":math:`U \\le B`\\ 。"
+
+#: ../../topics/mathematics.rst:45
+msgid "**Admission rule.** Admit the request exactly when"
+msgstr "**准入规则。** 当且仅当以下条件成立时，接受请求："
+
+#: ../../topics/mathematics.rst:47
+msgid "n \\le B - U."
+msgstr "n \\le B - U."
+
+#: ../../topics/mathematics.rst:52
+msgid "**Claim.** An admitted request preserves :math:`U + n \\le B`."
+msgstr "**命题。** 接受请求后，仍有 :math:`U + n \\le B`\\ 。"
+
+#: ../../topics/mathematics.rst:54
+msgid ""
+"**Proof.** Add :math:`U` to both sides of :eq:`budget-admission`. The "
+"result is :math:`U+n \\le B`. The implementation tests the subtraction "
+"form. It does not first compute :math:`U+n`, which could overflow a "
+"machine integer. The proof and the arithmetic order agree."
+msgstr ""
+"**证明。** 在 :eq:`budget-admission` 两边加 :math:`U`\\ ，得到 :math:`U+n \\le B`\\ "
+"。实现检查减法形式，不先计算可能使机器整数溢出的 :math:`U+n`\\ 。证明与运算顺序一致。"
+
+#: ../../topics/mathematics.rst:59
+msgid ""
+"**Boundary.** This accounts for charged host storage. It does not bound "
+"the separate Typst compiler's internal allocations. A proof is only as "
+"strong as the boundary it states."
+msgstr "**边界。** 这只核算已计费的宿主存储，不限制独立 Typst 编译器的内部分配。证明的效力取决于其声明的边界。"
+
+#: ../../topics/mathematics.rst:63
+msgid "HTML setup"
+msgstr "HTML 设置"
+
+#: ../../topics/mathematics.rst:66
+msgid ""
+"These projects bundle MathJax 3.2.2 with its SVG font data. The bundle is "
+"loaded only on pages containing mathematics. It makes these pages "
+"readable offline after a build. No diagram script or web font service is "
+"required."
+msgstr ""
+"这些项目随附 MathJax 3.2.2 及 SVG 字体数据，仅在含数学公式的页面加载。构建后离线也可阅读，无需图示脚本或网络字体服务。"
+
+#: ../../topics/mathematics.rst:71
+msgid ""
+"For your own project, the default uses MathJax from a CDN. To serve a "
+"local copy, place it in ``_static`` and set:"
+msgstr "你自己的项目默认从 CDN 加载 MathJax。若要使用本地副本，将它放入 ``_static``\\ ，并设置："
+
+#: ../../topics/mathematics.rst:79
+msgid ""
+"JavaScript is needed here to typeset web equations. Without it, their "
+"source remains visible. PDF equations do not need browser JavaScript. See "
+"the `MathJax component contract "
+"<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_."
+msgstr ""
+"Web 公式需要 JavaScript 排版；关闭时仍显示源文。PDF 公式不依赖浏览器 JavaScript。见 `MathJax 组件契约 "
+"<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_\\ 。"
+
+#: ../../topics/projects.rst:1
+msgid "How a project works"
+msgstr "项目如何工作"
+
+#: ../../topics/projects.rst:4
+msgid ""
+"The project root is the directory containing ``conf.toml``. ``root_doc`` "
+"names the document that starts the reading order. Guidedog discovers "
+"source documents, reads them, resolves their relations, and publishes a "
+"complete output generation."
+msgstr ""
+"项目根目录是包含 ``conf.toml`` 的目录。\\ ``root_doc`` 指定阅读顺序起点。Guidedog "
+"发现并读取源文档、解析关系，发布完整输出版本。"
+
+#: ../../topics/projects.rst:11
+msgid ""
+"Pipeline traverses discovery, source plugins, parallel reading, reference "
+"resolution, rendering, HTML plugins, and atomic staging."
+msgstr "流程从发现源文件开始，经源插件、并行读取、引用解析、渲染和 HTML 插件，最后暂存并提交完整输出。"
+
+#: ../../topics/projects.rst:11
+msgid "Guidedog's end-to-end documentation compilation pipeline."
+msgstr "Guidedog 端到端文档编译流程。"
+
+#: ../../topics/projects.rst:35
+msgid "Documents and resources"
+msgstr "文档与资源"
+
+#: ../../topics/projects.rst:38
+msgid ""
+"A source suffix selects a reader. RST and project Markdown share the "
+"project graph. Images and downloads are resources. Guidedog copies "
+"resources that the documents use. Theme assets are listed in "
+"``html_static_path``. An include must remain within the source directory "
+"or the configured ``include_roots``."
+msgstr ""
+"文件后缀选择读取器。RST 和项目 Markdown 共享项目图。图片和下载是资源；Guidedog 复制文档使用的资源。主题资源列于 "
+"``html_static_path``\\ 。包含文件必须位于源目录或配置的 ``include_roots`` 内。"
+
+#: ../../topics/projects.rst:43
+msgid "Separate projects"
+msgstr "独立的项目"
+
+#: ../../topics/projects.rst:46
+msgid ""
+"Keep a manual and design records in separate projects. They have "
+"different readers and different reading orders. Each project has its own "
+"configuration, templates, cache, and output. The Guidedog repository uses "
+"``docs/manual`` and ``docs/gds`` this way."
+msgstr ""
+"手册与设计记录应放在独立项目中：读者和阅读顺序不同。各自拥有配置、模板、缓存和输出。Guidedog 的 ``docs/manual`` 与 "
+"``docs/gds`` 即采用此方式。"
+
+#: ../../topics/projects.rst:51
+msgid "Incremental work"
+msgstr "增量构建"
+
+#: ../../topics/projects.rst:54
+msgid ""
+"Guidedog records the inputs and lookups used by each output. A changed "
+"source is reread. A changed dependency invalidates its users. A changed "
+"template can affect every page. An unchanged document may be loaded from "
+"its saved object."
+msgstr ""
+"Guidedog 记录各输出使用的输入和查找结果。源文件改变会重读，依赖改变使使用者失效，模板改变可影响每页。未变文档可从保存对象加载。"
+
+#: ../../topics/projects.rst:59
+msgid ""
+"The cache is evidence about a previous build. It is not the source of "
+"truth. ``-E`` discards the saved environment for the next build. ``-a`` "
+"writes all outputs. They solve different problems."
+msgstr ""
+"缓存是上次构建的证据，不是事实来源。\\ ``-E`` 丢弃下次构建使用的保存环境，\\ ``-a`` 写出所有输出。它们解决不同问题。"
+
+#: ../../topics/projects.rst:63
+msgid ""
+"\\text{reuse} = \\text{same inputs} \\land \\text{same lookups} \\land "
+"\\text{output exists}"
+msgstr ""
+"\\text{可复用} = \\text{输入相同} \\land \\text{查找结果相同} \\land \\text{输出存在}"
+
+#: ../../topics/projects.rst:67
+msgid ""
+"An explicit timestamp in a template is also an input to the rendered "
+"page. A page that prints the current minute can change even when its "
+"prose does not. Use ``SOURCE_DATE_EPOCH`` when you need a fixed build "
+"time."
+msgstr ""
+"模板中的显式时间戳也是页面输入。即使文字未变，打印当前分钟的页面也可能改变。需要固定构建时间时，用 ``SOURCE_DATE_EPOCH``\\ "
+"。"
+
+#: ../../topics/projects.rst:71
+msgid "Publication"
+msgstr "发布"
+
+#: ../../topics/projects.rst:74
+msgid ""
+"A build writes changes to a sibling staging directory. It completes that "
+"directory, flushes the files and records, and then switches generations. "
+"Readers see a complete previous or new publication. An interrupted commit "
+"is settled on the next build. The design and its proof obligations are in "
+":doc:`../internals/publication`."
+msgstr ""
+"构建将变化写入同级暂存目录，完成目录、刷写文件和记录后，再切换版本。读者看到完整旧版或新版。中断的提交在下次构建处理。设计和证明义务见 "
+":doc:`../internals/publication`\\ 。"
+
+#: ../../topics/typography.rst:1
+msgid "Typography for reading"
+msgstr "适合阅读的排版"
+
+#: ../../topics/typography.rst:4
+msgid ""
+"A page should make its structure visible before the reader studies it. A "
+"strong title, a quiet navigation column, and a measured text column do "
+"most of the work. Color should mark a relation or an action. It should "
+"not carry the meaning alone."
+msgstr "页面应在细读之前展示结构。醒目的标题、安静的导航栏和适度宽的正文栏已能完成大部分工作。颜色应标明关系或操作，不独自承担含义。"
+
+#: ../../topics/typography.rst:8
+msgid "The web page"
+msgstr "网页"
+
+#: ../../topics/typography.rst:11
+msgid ""
+"The custom layout has three regions: project navigation, the document, "
+"and the current page's outline. Small screens use a navigation drawer. "
+"The reading edition bundles Libertinus Serif and Libertinus Sans. Titles "
+"use a bold serif face. Navigation, labels, and controls use its sans "
+"companion. The compressed WOFF2 files are served with the site. There are "
+"no font-service requests."
+msgstr ""
+"自定义布局分为项目导航、正文和当前页面纲要三部分，小屏使用导航抽屉。阅读版随附 Libertinus Serif 和 Libertinus "
+"Sans。标题用粗体衬线字；导航、标签和控件用配套无衬线字。压缩 WOFF2 文件随站点提供，不请求字体服务。"
+
+#: ../../topics/typography.rst:20
+msgid ""
+"Navigation column on left, main document text column in center, local "
+"section outline on right."
+msgstr "左侧为项目导航，中间为正文，右侧为本页标题提纲。"
+
+#: ../../topics/typography.rst:20
+msgid "Three-region reading layout for HTML documentation."
+msgstr "HTML 文档的三栏阅读布局。"
+
+#: ../../topics/typography.rst:37
+msgid ""
+"**Light is the default.** The theme control also offers dark and system "
+"modes. It remembers the choice on the same browser origin. System mode "
+"follows the operating system. Printed HTML uses light colors. Content and "
+"navigation remain usable without JavaScript. The theme control and "
+"enhanced search are progressive enhancements."
+msgstr ""
+"**默认浅色。** 主题控件也提供深色和系统模式，并记住同一浏览器来源上的选择。系统模式跟随操作系统。打印 HTML 使用浅色。禁用 "
+"JavaScript 后，内容和导航仍可用；主题控件与增强搜索属于渐进增强。"
+
+#: ../../topics/typography.rst:43
+msgid ""
+"English prose can use paragraph-wide **Knuth-Plass line breaking** in the "
+"browser. A small template script measures the loaded font, builds boxes, "
+"spaces, and hyphenation penalties, and chooses breaks for the whole "
+"paragraph. Frank Liang's pattern method supplies English hyphenation "
+"candidates. The original TeX patterns and the libraries' licenses are "
+"bundled with the site."
+msgstr ""
+"英文正文可在浏览器中使用整段 **Knuth-Plass "
+"断行**。小型模板脚本测量已加载的字体，构造盒子、空格和断词惩罚，再为整段选择换行点。Frank Liang "
+"的模式匹配法提供英文断词候选。网站附带原始 TeX 模式和各库许可证。"
+
+#: ../../topics/typography.rst:49
+msgid ""
+"The enhancement preserves emphasis and the exact source text. It "
+"recalculates when the reading measure changes. Copying within one "
+"optimized paragraph gives the source text, without visual line divisions "
+"or added hyphens. Printing restores the ordinary paragraph so the print "
+"layout can paginate it."
+msgstr ""
+"增强排版保留强调和原始文字，正文宽度改变时重新计算。复制一个优化段落内的内容，得到的是源文，不含视觉换行或新增连字符。打印时恢复普通段落，交由打印布局分页。"
+
+#: ../../topics/typography.rst:54
+msgid ""
+"Links, mathematics, code, interactive content, narrow measures, and other "
+"languages use native browser layout. So do paragraphs for which no "
+"suitably spaced solution exists. The site remains readable with "
+"JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` "
+"and ``text-wrap: pretty``; those CSS properties alone are not a promise "
+"of Knuth-Plass optimization."
+msgstr ""
+"链接、公式、代码、交互内容、窄栏、其他语言，以及无法找到合适间距方案的段落，都使用浏览器原生排版。禁用 JavaScript "
+"仍可阅读。回退样式使用随语言变化的 ``hyphens: auto`` 和 ``text-wrap: pretty``；仅这两个 CSS "
+"属性并不保证 Knuth-Plass 优化。"
+
+#: ../../topics/typography.rst:60
+msgid "The PDF page"
+msgstr "PDF 页面"
+
+#: ../../topics/typography.rst:63
+msgid ""
+"The book template uses the same Libertinus family as the web edition. It "
+"sets justified paragraphs, optimized line breaking, and language-aware "
+"hyphenation. It also controls spacing, running heads, captions, code "
+"blocks, and table rules. The font, hyphenation cost, and paragraph "
+"measure work together. A forced line break is rarely the right repair for "
+"a loose paragraph."
+msgstr ""
+"书籍模板使用与 Web 相同的 Libertinus "
+"字体，设置两端对齐、优化断行和语言感知断词，也控制间距、页眉、题注、代码块和表格线。字体、断词成本与段落宽度共同作用。强制换行通常不能正确修复松散段落。"
+
+#: ../../topics/typography.rst:69
+msgid ""
+"Typst optimizes the PDF paragraphs. The web enhancement optimizes "
+"eligible prose. They share the source, fonts, and visual hierarchy. Their "
+"line breaks can differ. See the `Typst text contract "
+"<https://typst.app/docs/reference/text/text/>`_ and the `browser "
+"hyphenation contract "
+"<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_."
+msgstr ""
+"Typst 优化 PDF 段落，Web 增强优化适用正文。它们共享源文、字体和视觉层级，但断行可能不同。见 `Typst 文本契约 "
+"<https://typst.app/docs/reference/text/text/>`_ 和 `浏览器断词契约 "
+"<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_\\ "
+"。"
+
+#: ../../topics/typography.rst:74
+msgid "Change the design"
+msgstr "修改设计"
+
+#: ../../topics/typography.rst:77
+msgid ""
+"Edit ``_static/editorial.css`` for the documentation project's visual "
+"tokens. Edit ``_templates/layout.html`` for structure. Edit "
+"``_templates/book.typ`` for the print layout. Keep reading order, focus "
+"indicators, labels, and sufficient contrast intact."
+msgstr ""
+"编辑 ``_static/editorial.css`` 调整视觉变量，编辑 ``_templates/layout.html`` 调整结构，编辑 "
+"``_templates/book.typ`` 调整印刷布局。保留阅读顺序、焦点指示、标签和足够对比度。"
+
+#: ../../topics/typography.rst:82
+msgid ""
+"Build both targets after a change. Inspect a page with code, a table, a "
+"diagram, and an equation. An attractive cover is not proof that the rest "
+"of the book works. Build your own design in "
+":doc:`../tutorial/a-custom-theme`. The full template contract is in "
+":doc:`../templates`. The complete API is in :doc:`../api/index` and in "
+"the same PDF book."
+msgstr ""
+"修改后同时构建两种输出。检查含代码、表格、图示和公式的页面。封面漂亮不代表整本书都排得好。自定义设计见 "
+":doc:`../tutorial/a-custom-theme`，模板契约见 :doc:`../templates`。完整 API 见 "
+":doc:`../api/index`，也收录于同一本 PDF。"
+
+#: ../../topics/writing.rst:1
+msgid "Authoring documents"
+msgstr "编写文档"
+
+#: ../../topics/writing.rst:4
+msgid ""
+"Guidedog supports both reStructuredText (``.rst``) and MyST Markdown "
+"(``.md``). Documents are parsed into a shared semantic document tree, "
+"which is then used to generate both HTML websites and PDF books."
+msgstr ""
+"Guidedog 支持 reStructuredText（``.rst``）和 MyST "
+"Markdown（``.md``）。两者都解析为同一种语义文档树，再生成 HTML 网站和 PDF 图书。"
+
+#: ../../topics/writing.rst:8
+msgid "Choose a source language"
+msgstr "选择源文件语言"
+
+#: ../../topics/writing.rst:11
+msgid ""
+"Use reStructuredText when you need full access to domains, complex "
+"tables, and extensible directives. Use MyST Markdown when you prefer "
+"Markdown syntax while retaining Sphinx-style directives and roles."
+msgstr ""
+"需要完整的域、复杂表格和指令时，使用 reStructuredText。偏好 Markdown 语法，同时需要 Sphinx "
+"风格的指令和角色时，使用 MyST Markdown。"
+
+#: ../../topics/writing.rst:15
+msgid ""
+"In a documentation project, Markdown documents are parsed using the MyST "
+"dialect. Single-document conversions with ``guidedog convert`` use "
+"standard CommonMark by default, unless the MyST reader is explicitly "
+"selected."
+msgstr ""
+"项目中的 Markdown 使用 MyST 方言。单文件转换 ``guidedog convert`` 默认使用 "
+"CommonMark，除非显式指定 MyST。"
+
+#: ../../topics/writing.rst:19
+msgid "Headings and structure"
+msgstr "标题与结构"
+
+#: ../../topics/writing.rst:22
+msgid ""
+"A document title identifies the page. Sections and subsections divide the "
+"text logically. In reStructuredText, headings use underline adornments "
+"(and optional matching overlines). The underline must be at least as long "
+"as the text."
+msgstr "文档标题标识页面，章节标题组织正文。RST 标题用下划线符号，也可加相同的上划线。线条长度不得短于标题。"
+
+#: ../../topics/writing.rst:26
+msgid "Recommended adornment styles:"
+msgstr "建议的标题符号："
+
+#: ../../topics/writing.rst:45
+msgid ""
+"Keep heading levels consistent across your project. In MyST Markdown, use "
+"standard hashes (``#``, ``##``, ``###``)."
+msgstr "项目内的标题层级应保持一致。MyST Markdown 使用 ``#``、``##``、``###`` 等标准写法。"
+
+#: ../../topics/writing.rst:48
+msgid "Text formatting and inline markup"
+msgstr "文字格式与行内标记"
+
+#: ../../topics/writing.rst:51
+msgid "Use inline markup to communicate meaning rather than decoration:"
+msgstr "行内标记应表达含义，而不只是装饰："
+
+#: ../../topics/writing.rst:53
+msgid "Inline markup"
+msgstr "行内标记"
+
+#: ../../topics/writing.rst:57
+msgid "Style"
+msgstr "样式"
+
+#: ../../topics/writing.rst:58
+msgid "reStructuredText"
+msgstr "reStructuredText"
+
+#: ../../topics/writing.rst:59
+msgid "MyST Markdown"
+msgstr "MyST Markdown"
+
+#: ../../topics/writing.rst:60
+msgid "**Strong / Bold**"
+msgstr "**加粗**"
+
+#: ../../topics/writing.rst:61 ../../topics/writing.rst:62
+msgid "``**strong text**``"
+msgstr "``**strong text**``"
+
+#: ../../topics/writing.rst:63
+msgid "*Emphasis / Italic*"
+msgstr "*强调／斜体*"
+
+#: ../../topics/writing.rst:64 ../../topics/writing.rst:65
+msgid "``*emphasized text*``"
+msgstr "``*emphasized text*``"
+
+#: ../../topics/writing.rst:66
+msgid "``Inline code``"
+msgstr "``行内代码``"
+
+#: ../../topics/writing.rst:67
+msgid "````inline code````"
+msgstr "````inline code````"
+
+#: ../../topics/writing.rst:68
+msgid "```inline code```"
+msgstr "```inline code```"
+
+#: ../../topics/writing.rst:69
+msgid "Subscript"
+msgstr "下标"
+
+#: ../../topics/writing.rst:70
+msgid "``:sub:`text```"
+msgstr "``:sub:`text```"
+
+#: ../../topics/writing.rst:71
+msgid "``{sub}`text```"
+msgstr "``{sub}`text```"
+
+#: ../../topics/writing.rst:72
+msgid "Superscript"
+msgstr "上标"
+
+#: ../../topics/writing.rst:73
+msgid "``:sup:`text```"
+msgstr "``:sup:`text```"
+
+#: ../../topics/writing.rst:74
+msgid "``{sup}`text```"
+msgstr "``{sup}`text```"
+
+#: ../../topics/writing.rst:76
+msgid ""
+"To include literal asterisks or backticks within text, escape them with a "
+"backslash: ``\\*not italic\\*``."
+msgstr "正文中的星号和反引号可用反斜杠转义，例如 ``\\*not italic\\*``。"
+
+#: ../../topics/writing.rst:79
+msgid "Lists"
+msgstr "列表"
+
+#: ../../topics/writing.rst:82
+msgid "Guidedog supports four kinds of lists:"
+msgstr "Guidedog 支持四种列表："
+
+#: ../../topics/writing.rst:84
+msgid "Bullet lists"
+msgstr "无序列表"
+
+#: ../../topics/writing.rst:94
+msgid "Enumerated lists"
+msgstr "有序列表"
+
+#: ../../topics/writing.rst:104
+msgid "Definition lists"
+msgstr "定义列表"
+
+#: ../../topics/writing.rst:107
+msgid ""
+"A definition list pairs terms with explanatory blocks. The term appears "
+"on a single line, followed immediately by an indented definition:"
+msgstr "定义列表将术语和说明配对。术语独占一行，紧接着是缩进的定义："
+
+#: ../../topics/writing.rst:118
+msgid "Field lists"
+msgstr "字段列表"
+
+#: ../../topics/writing.rst:121
+msgid "Field lists provide structured metadata and parameter descriptions:"
+msgstr "字段列表用于结构化元数据和参数说明："
+
+#: ../../topics/writing.rst:129
+msgid "Code blocks"
+msgstr "代码块"
+
+#: ../../topics/writing.rst:132
+msgid ""
+"Use the ``code-block`` directive (or ``sourcecode``) to display "
+"syntax-highlighted code. Guidedog provides syntax highlighting for over "
+"35 programming languages:"
+msgstr ""
+"用 ``code-block`` 或 ``sourcecode`` 显示带语法高亮的代码。Guidedog 支持超过 35 种编程语言："
+
+#: ../../topics/writing.rst:146
+msgid "Options for code blocks:"
+msgstr "代码块选项："
+
+#: ../../topics/writing.rst:148
+msgid "``:linenos:``: Displays line numbers beside the code."
+msgstr "``:linenos:``: 在代码旁显示行号。"
+
+#: ../../topics/writing.rst:149
+msgid "``:caption: Title``: Adds a caption above or below the code block."
+msgstr "``:caption: Title``: 在代码块上方或下方添加说明。"
+
+#: ../../topics/writing.rst:150
+msgid "``:emphasize-lines: 1, 3-5``: Highlights specific lines."
+msgstr "``:emphasize-lines: 1, 3-5``: 突出显示指定行。"
+
+#: ../../topics/writing.rst:151
+msgid "``:name: label``: Assigns a reference target to the code block."
+msgstr "``:name: label``: 为代码块指定引用标签。"
+
+#: ../../topics/writing.rst:153
+msgid ""
+"To include external source code directly from a file, use "
+"``literalinclude``:"
+msgstr "用 ``literalinclude`` 直接引入外部源文件："
+
+#: ../../topics/writing.rst:162
+msgid "Admonitions"
+msgstr "提示块"
+
+#: ../../topics/writing.rst:165
+msgid "Admonitions highlight notes, warnings, and supplementary advice:"
+msgstr "提示块突出显示注释、警告和补充建议："
+
+#: ../../topics/writing.rst:187
+msgid ""
+"Guidedog also supports ``danger``, ``error``, ``hint``, and "
+"``attention``. A generic admonition with a custom title uses the "
+"``admonition`` directive:"
+msgstr ""
+"Guidedog 也支持 ``danger``、``error``、``hint`` 和 ``attention``。自定义标题的提示块使用 "
+"``admonition``："
+
+#: ../../topics/writing.rst:196
+msgid "Tables"
+msgstr "表格"
+
+#: ../../topics/writing.rst:199
+msgid ""
+"Guidedog supports simple tables, grid tables, and directive-based tables."
+msgstr "Guidedog 支持简单表格、网格表格和指令生成的表格。"
+
+#: ../../topics/writing.rst:201
+msgid "Simple tables"
+msgstr "简单表格"
+
+#: ../../topics/writing.rst:204
+msgid "Simple tables use horizontal dashes to define column spans:"
+msgstr "简单表格用横线划分列的范围："
+
+#: ../../topics/writing.rst:216
+msgid "Grid tables"
+msgstr "网格表格"
+
+#: ../../topics/writing.rst:219
+msgid ""
+"Grid tables allow complex multi-line cells and arbitrary column/row spans:"
+msgstr "网格表格支持多行单元格和跨行、跨列合并："
+
+#: ../../topics/writing.rst:230
+msgid "List tables"
+msgstr "列表表格"
+
+#: ../../topics/writing.rst:233
+msgid ""
+"The ``list-table`` directive creates tables from nested bullet lists, "
+"making wide tables easy to read and maintain in source control:"
+msgstr "``list-table`` 用嵌套列表创建表格，便于在源码中阅读和维护较宽的表格："
+
+#: ../../topics/writing.rst:252
+msgid "CSV tables"
+msgstr "CSV 表格"
+
+#: ../../topics/writing.rst:255
+msgid ""
+"The ``csv-table`` directive constructs a table from comma-separated "
+"values:"
+msgstr "``csv-table`` 用逗号分隔的数据创建表格："
+
+#: ../../topics/writing.rst:266
+msgid "Images and figures"
+msgstr "图片与插图"
+
+#: ../../topics/writing.rst:269
+msgid ""
+"Include illustrations, screenshots, and diagrams with ``image`` and "
+"``figure``:"
+msgstr "用 ``image`` 和 ``figure`` 插入图片、截图和图表："
+
+#: ../../topics/writing.rst:285
+msgid ""
+"A ``figure`` wraps the image with an explanatory caption and an optional "
+"reference target."
+msgstr "``figure`` 在图片周围添加说明文字，并可指定引用标签。"
+
+#: ../../topics/writing.rst:287
+msgid "Document structure with toctrees"
+msgstr "用目录树组织文档"
+
+#: ../../topics/writing.rst:290
+msgid ""
+"The ``toctree`` directive creates the document hierarchy, navigation "
+"menus, and reading order for both the HTML site and the PDF book:"
+msgstr "``toctree`` 定义文档层级、导航菜单，以及 HTML 和 PDF 的阅读顺序："
+
+#: ../../topics/writing.rst:304
+msgid "Common options for ``toctree``:"
+msgstr "``toctree`` 的常用选项："
+
+#: ../../topics/writing.rst:306
+msgid ""
+"``:maxdepth: N``: Depth of heading levels to include in the table of "
+"contents."
+msgstr "``:maxdepth: N``: 目录中包含的标题层级深度。"
+
+#: ../../topics/writing.rst:307
+msgid ""
+"``:caption: Title``: Category title displayed above the navigation "
+"entries."
+msgstr "``:caption: Title``: 导航条目上方显示的分类标题。"
+
+#: ../../topics/writing.rst:308
+msgid "``:numbered:``: Adds section numbers to chapters and headings."
+msgstr "``:numbered:``: 为章节和标题添加编号。"
+
+#: ../../topics/writing.rst:309
+msgid ""
+"``:titlesonly:``: Lists only the top-level document titles, ignoring "
+"inner sections."
+msgstr "``:titlesonly:``: 只列出文档标题，不显示内部章节。"
+
+#: ../../topics/writing.rst:310
+msgid ""
+"``:hidden:``: Records the documents in the reading order without "
+"rendering an inline list."
+msgstr "``:hidden:``: 记录文档阅读顺序，但不在正文中显示列表。"
+
+#: ../../topics/writing.rst:311
+msgid ""
+"``:glob:``: Allows wildcard patterns to match documents (e.g. "
+"``tutorials/*``)."
+msgstr "``:glob:``: 允许用通配符匹配文档，例如 ``tutorials/*``。"
+
+#: ../../topics/writing.rst:313
+msgid "Cross-references and links"
+msgstr "交叉引用与链接"
+
+#: ../../topics/writing.rst:316
+msgid ""
+"Explicit targets ensure links remain stable even when document files are "
+"renamed:"
+msgstr "显式目标标签可保持引用稳定，不依赖文档文件名。"
+
+#: ../../topics/writing.rst:318
+msgid "Target labels and ``:ref:``"
+msgstr "目标标签与 ``:ref:``"
+
+#: ../../topics/writing.rst:321
+msgid "Place a target label immediately before a heading, table, or figure:"
+msgstr "在标题、表格或插图前放置目标标签："
+
+#: ../../topics/writing.rst:332
+msgid "Refer to this target from any document across the project:"
+msgstr "项目中的任意文档都可引用此目标："
+
+#: ../../topics/writing.rst:339
+msgid "Document references with ``:doc:``"
+msgstr "用 ``:doc:`` 引用文档"
+
+#: ../../topics/writing.rst:342
+msgid "Link to another document by path (omitting the file extension):"
+msgstr "按路径链接到其他文档，省略扩展名："
+
+#: ../../topics/writing.rst:348
+msgid "Glossary terms with ``:term:``"
+msgstr "用 ``:term:`` 引用术语"
+
+#: ../../topics/writing.rst:351
+msgid "Define terms using the ``glossary`` directive:"
+msgstr "用 ``glossary`` 定义术语："
+
+#: ../../topics/writing.rst:363
+msgid "Link to a glossary term using the ``:term:`` role:"
+msgstr "用 ``:term:`` 链接到术语："
+
+#: ../../topics/writing.rst:369
+msgid "File downloads with ``:download:``"
+msgstr "用 ``:download:`` 提供文件下载"
+
+#: ../../topics/writing.rst:372
+msgid "Copy a file to the output's download directory and create a link:"
+msgstr "将文件复制到下载目录，并生成链接："
+
+#: ../../topics/writing.rst:378
+msgid "External links"
+msgstr "外部链接"
+
+#: ../../topics/writing.rst:381
+msgid "Link to external web addresses:"
+msgstr "链接到外部网址："
+
+#: ../../topics/writing.rst:387
+msgid "Substitutions and includes"
+msgstr "替换与包含"
+
+#: ../../topics/writing.rst:390
+msgid "Define reusable phrases, symbols, or images:"
+msgstr "定义可重复使用的短语、符号或图片："
+
+#: ../../topics/writing.rst:399
+msgid "To reuse common reStructuredText content across multiple files:"
+msgstr "在多个文件中共用 reStructuredText 内容："
+
+#: ../../topics/writing.rst:405
+msgid "MyST Markdown authoring"
+msgstr "编写 MyST Markdown"
+
+#: ../../topics/writing.rst:408
+msgid ""
+"MyST Markdown supports the same semantic directives and roles through "
+"fenced blocks:"
+msgstr "MyST Markdown 通过围栏块表达相同的指令和角色语义："
+
+#~ msgid ""
+#~ "Discover sources, read documents, resolve references, render "
+#~ "artifacts, then publish."
+#~ msgstr "发现源文件、读取文档、解析引用、渲染产物，然后发布。"
+
+#~ msgid ""
+#~ "The build separates discovery, meaning, presentation, and publication."
+#~ msgstr "构建将发现、语义、呈现和发布分开。"
+
+#~ msgid "Write an explanation"
+#~ msgstr "写清楚一段解释"
+
+#~ msgid ""
+#~ "Start with the thing the reader wants to understand. Give a small "
+#~ "example. Then name the general rule. When a claim has assumptions, put "
+#~ "them beside the claim."
+#~ msgstr "从读者想理解的事物开始，给一个小例子，再说一般规则。若结论有假设，紧挨结论写出。"
+
+#~ msgid ""
+#~ "**One paragraph should do one piece of work.** It can define a term, "
+#~ "explain a step, or justify a choice. If it does three jobs, split it. "
+#~ "Short sentences help. A short sentence still needs a precise subject."
+#~ msgstr "**一个段落只做一件事。** 可以定义术语、解释步骤或论证选择；若同时做三件，就拆开。短句有帮助，但仍需明确主语。"
+
+#~ msgid ""
+#~ "Use RST when you need roles, directives, domain objects, or detailed "
+#~ "tables. Use Markdown when simple headings, lists, and code are enough. "
+#~ "Project Markdown uses the MyST layer. Single-document ``convert`` uses "
+#~ "CommonMark for ``.md`` unless you choose another reader. The "
+#~ "distinction matters when you copy examples between the two commands."
+#~ msgstr ""
+#~ "需要角色、指令、域对象或详细表格时用 RST；简单标题、列表和代码已足够时用 Markdown。项目 Markdown 使用 MyST "
+#~ "层。单文档 ``convert`` 对 ``.md`` 默认使用 "
+#~ "CommonMark，除非另选读取器。在两个命令间复制示例时，应注意这一区别。"
+
+#~ msgid "Headings are a promise"
+#~ msgstr "标题是一种承诺"
+
+#~ msgid ""
+#~ "A heading should tell the reader what the section answers. Keep its "
+#~ "adornment consistent. An underline must cover the whole heading."
+#~ msgstr "标题应说明这一节回答什么问题。修饰风格保持一致，底线必须覆盖整个标题。"
+
+#~ msgid ""
+#~ "Use one document title. Follow it with a brief statement of purpose. A "
+#~ "deeply nested heading often means the chapter needs to be split."
+#~ msgstr "每个文档一个标题，紧接简短目的说明。标题层级过深，常意味着该章应拆分。"
+
+#~ msgid "Meaning before appearance"
+#~ msgstr "先表达含义，再考虑外观"
+
+#~ msgid ""
+#~ "Use ``**strong text**`` for a conclusion or a term being defined. Use "
+#~ "``*emphasis*`` for a small stress in the argument. Use double "
+#~ "backticks for a name copied into a program. Do not use a code block to "
+#~ "imitate a table or a heading."
+#~ msgstr ""
+#~ "结论或定义中的术语用 ``**strong text**``\\ ；论证中的轻微强调用 ``*emphasis*``\\ "
+#~ "；可复制进程序的名称用双反引号。不要用代码块模拟表格或标题。"
+
+#~ msgid ""
+#~ "A filename changes more often than an idea. Give important arguments "
+#~ "labels."
+#~ msgstr "文件名比概念更容易变化。为重要论证设置标签。"
+
+#~ msgid ""
+#~ "Guidedog resolves these links across the project. It reports an "
+#~ "unresolved reference with its source location. Use ``-n`` when you "
+#~ "want stricter reference checks."
+#~ msgstr "Guidedog 解析项目内这些链接。未解析引用会指出源位置。需要更严格引用检查时，用 ``-n``\\ 。"
+
+#~ msgid "Examples and cautions"
+#~ msgstr "示例与注意事项"
+
+#~ msgid ""
+#~ "An example should be small enough to run and large enough to test the "
+#~ "claim. Show the input, the command, and the expected result. Use a "
+#~ "note for useful context. Use a warning for a concrete condition that "
+#~ "can lose work or change the result. A warning is not decoration."
+#~ msgstr ""
+#~ "示例要小到可运行，也要足以检验结论。展示输入、命令和预期结果。注释提供有用背景；警告只用于确实可能丢失工作或改变结果的条件，不作装饰。"
+
+#~ msgid ""
+#~ "Documentation prose is exempt from the codebase's source-width and "
+#~ "procedure-length rules. Break lines for editing, not to force a page "
+#~ "layout."
+#~ msgstr "文档正文不受代码库的源行宽和过程长度规则约束。换行是为了编辑，不是强制页面布局。"
+
+#~ msgid ""
+#~ "A diagram is part of the argument. Its caption should say what it "
+#~ "establishes. See :doc:`diagrams` and :doc:`mathematics`."
+#~ msgstr "图示是论证的一部分，题注应说明它证明什么。见 :doc:`diagrams` 和 :doc:`mathematics`\\ 。"

@@ -1,0 +1,84 @@
+# Configuration file for Guidedog.
+#
+# The settings use the names of Sphinx's conf.py, written in TOML:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
+# -- Project information -----------------------------------------------------
+
+project = "Guidedog Manual"
+copyright = "2026, Vikrant Rathore"
+author = "Vikrant Rathore"
+version = "0.7"
+release = "0.7.0"
+
+# -- General configuration ---------------------------------------------------
+
+extensions = ["sphinx.ext.graphviz", "sphinx.ext.mathjax"]
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "_editions", "locales/**", "README*", "template/**",
+                    "Thumbs.db", ".DS_Store"]
+language = "en"
+today_fmt = "%Y-%m-%d"
+gettext_exclude_patterns = ["api/**", "evidence/**"]
+gettext_additional_targets = ["image"]
+gettext_last_translator = "Guidedog translation contributors"
+gettext_language_team = "Guidedog translation contributors"
+source_suffix = [".rst", ".md"]
+root_doc = "index"
+
+# -- Options for HTML output -------------------------------------------------
+
+html_theme = "guidedog"
+html_static_path = ["_static", "../shared/_static"]
+include_roots = ["../shared"]
+pdf_font_paths = ["../shared/_static/data/fonts", "../shared/fonts"]
+html_extra_path = ["_editions"]
+html_css_files = ["editorial.css", "languages.css"]
+html_js_files = ["data/typography/linked-list.js", "data/typography/linebreak.js",
+                 "data/typography/hypher.js", "data/typography/english.js",
+                 "typography.js", "languages.js"]
+mathjax_path = "_static/data/mathjax/tex-svg-full.js"
+mathjax_config_path = "_static/math.js"
+html_title = "Guidedog Manual"
+html_short_title = "Guidedog"
+html_baseurl = "https://insanai.github.io/guidedog/manual/"
+numfig = true
+
+# -- Options for PDF output (typeset by Typst from _templates/book.typ) --------
+
+pdf_paper_size = "a4"
+
+# The same generator supplies the separate API site (docs/api) and the book appendix:
+# the public API of Guidedog's main crates, read from their Rust source.
+rust_autoapi_crates = [
+  "../../crates/guidedoc", "../../crates/guidedoc-defaults", "../../crates/guidedoc-rst",
+  "../../crates/guidedoc-commonmark", "../../crates/guidedoc-sphinx",
+  "../../crates/guidedoc-html", "../../crates/guidedoc-typst", "../../crates/guidedoc-text",
+  "../../crates/gd-report", "../../crates/gd-host", "../../crates/gd-jinja",
+  "../../crates/gd-highlight", "../../crates/gd-gettext", "../../crates/gd-plugins",
+  "../../crates/gd-project", "../../crates/gd-cli",
+]
+rust_autoapi_root = "api"
+rust_autoapi_member_order = "source"
+rust_autoapi_add_toctree_entry = false
+nitpick_ignore_regex = [["rust:any", "(std|core|alloc)::.*"]]
+
+[[pdf_documents]]
+root = "index"
+file = "guidedog-manual.pdf"
+title = "Guidedog Manual"
+author = "Vikrant Rathore"
+
+[html_theme_options]
+accent = "#216553"
+
+[html_context]
+manual_languages = [
+  {code = "en", tag = "en", name = "English", path = ""},
+  {code = "zh_CN", tag = "zh-CN", name = "简体中文", path = "zh-cn/"},
+  {code = "ja", tag = "ja", name = "日本語", path = "ja/"},
+  {code = "ko", tag = "ko", name = "한국어", path = "ko/"},
+  {code = "hi", tag = "hi", name = "हिन्दी", path = "hi/"},
+  {code = "es", tag = "es", name = "Español", path = "es/"},
+  {code = "de", tag = "de", name = "Deutsch", path = "de/"},
+]

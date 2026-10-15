@@ -1,0 +1,2546 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 02:53+0000\n"
+"PO-Revision-Date: 2026-10-13 04:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../reference/cli.rst:1
+msgid "Command-line reference"
+msgstr "コマンドラインリファレンス"
+
+#: ../../reference/cli.rst:4
+msgid ""
+"The ``guidedog`` executable provides a complete command-line interface "
+"for managing, building, previewing, translating, and converting "
+"documentation projects."
+msgstr "``guidedog`` では、文書プロジェクトの管理、ビルド、プレビュー、翻訳、変換をコマンドラインから行えます。"
+
+#: ../../reference/cli.rst:7
+msgid "General syntax"
+msgstr "基本構文"
+
+#: ../../reference/cli.rst:16
+msgid "Exit codes"
+msgstr "終了コード"
+
+#: ../../reference/cli.rst:19
+msgid "Exit statuses"
+msgstr "終了状態"
+
+#: ../../reference/cli.rst:23
+msgid "Exit code"
+msgstr "終了コード"
+
+#: ../../reference/cli.rst:24
+msgid "Condition"
+msgstr "条件"
+
+#: ../../reference/cli.rst:25 ../../reference/configuration.rst:386
+msgid "``0``"
+msgstr "``0``"
+
+#: ../../reference/cli.rst:26
+msgid "Success: all operations completed with no unhandled errors."
+msgstr "成功。すべての処理が完了し、未処理のエラーはありません。"
+
+#: ../../reference/cli.rst:27 ../../reference/configuration.rst:177
+msgid "``1``"
+msgstr "``1``"
+
+#: ../../reference/cli.rst:28
+msgid ""
+"Build or conversion error (or warnings treated as errors via ``-W``)."
+msgstr "ビルドまたは変換のエラー。``-W`` によって警告をエラーとした場合も含みます。"
+
+#: ../../reference/cli.rst:29
+msgid "``2``"
+msgstr "``2``"
+
+#: ../../reference/cli.rst:30
+msgid "Command-line syntax error, invalid flag, or unrecognized option."
+msgstr "コマンドラインの構文、フラグ、オプションに誤りがあります。"
+
+#: ../../reference/cli.rst:31
+msgid "``3``"
+msgstr "``3``"
+
+#: ../../reference/cli.rst:32
+msgid "A configured resource limit was reached, or memory was unavailable."
+msgstr "設定した資源の上限に達したか、メモリを確保できません。"
+
+#: ../../reference/cli.rst:33
+msgid "``4``"
+msgstr "``4``"
+
+#: ../../reference/cli.rst:34
+msgid "A file operation or external compiler failed."
+msgstr "ファイル操作または外部コンパイラーが失敗しました。"
+
+#: ../../reference/cli.rst:35
+msgid "``5``"
+msgstr "``5``"
+
+#: ../../reference/cli.rst:36
+msgid "An internal error; the diagnostic explains how to report it."
+msgstr "内部エラー。診断に報告方法が記載されます。"
+
+#: ../../reference/cli.rst:37
+msgid "``6``"
+msgstr "``6``"
+
+#: ../../reference/cli.rst:38
+msgid ""
+"``publish`` only: the host accepted the publication, but has not "
+"confirmed it live."
+msgstr "``publish`` のみ: ホストは公開を受け付けましたが、公開中であることをまだ確認していません。"
+
+#: ../../reference/cli.rst:39
+msgid "``7``"
+msgstr "``7``"
+
+#: ../../reference/cli.rst:40
+msgid ""
+"``publish`` only: whether the publication was applied is not known; run "
+"the publisher's ``recover``."
+msgstr "``publish`` のみ: 公開が反映されたかどうか不明です。パブリッシャーの ``recover`` を実行してください。"
+
+#: ../../reference/cli.rst:42
+msgid "``70``"
+msgstr "``70``"
+
+#: ../../reference/cli.rst:43
+msgid "A crash; the previous published output remains available."
+msgstr "クラッシュ。前回の公開済み出力は残ります。"
+
+#: ../../reference/cli.rst:45
+msgid "Commands overview"
+msgstr "コマンド一覧"
+
+#: ../../reference/cli.rst:48
+msgid "CLI commands"
+msgstr "CLI コマンド"
+
+#: ../../reference/cli.rst:52
+msgid "Command"
+msgstr "コマンド"
+
+#: ../../reference/cli.rst:53
+msgid "Purpose"
+msgstr "用途"
+
+#: ../../reference/cli.rst:54
+msgid "``quickstart [DIR]``"
+msgstr "``quickstart [DIR]``"
+
+#: ../../reference/cli.rst:55
+msgid ""
+"Initializes a new documentation project with visible templates and "
+"configuration."
+msgstr "文書プロジェクトを作成し、編集できるテンプレートと設定を配置します。"
+
+#: ../../reference/cli.rst:56
+msgid "``build [BUILDER] [DIR]``"
+msgstr "``build [BUILDER] [DIR]``"
+
+#: ../../reference/cli.rst:57
+msgid "Builds the documentation project into the requested output target."
+msgstr "指定した出力形式で文書プロジェクトをビルドします。"
+
+#: ../../reference/cli.rst:58
+msgid "``serve [DIR]``"
+msgstr "``serve [DIR]``"
+
+#: ../../reference/cli.rst:59
+msgid ""
+"Starts a local HTTP preview server that rebuilds automatically on file "
+"edits."
+msgstr "ローカルの HTTP プレビューサーバーを起動し、ファイルの変更時に自動で再ビルドします。"
+
+#: ../../reference/cli.rst:60
+msgid "``clean [DIR]``"
+msgstr "``clean [DIR]``"
+
+#: ../../reference/cli.rst:61
+msgid "Deletes generated build artifacts and caches."
+msgstr "生成した出力とキャッシュを削除します。"
+
+#: ../../reference/cli.rst:62
+msgid "``convert INPUT``"
+msgstr "``convert INPUT``"
+
+#: ../../reference/cli.rst:63
+msgid "Converts a single document file or standard input stream directly."
+msgstr "単一のファイルまたは標準入力を直接変換します。"
+
+#: ../../reference/cli.rst:64
+msgid "``migrate [conf.py]``"
+msgstr "``migrate [conf.py]``"
+
+#: ../../reference/cli.rst:65
+msgid ""
+"Translates an existing Sphinx ``conf.py`` into declarative ``conf.toml``."
+msgstr "Sphinx の ``conf.py`` を宣言的な ``conf.toml`` に変換します。"
+
+#: ../../reference/cli.rst:66
+msgid "``intl <update|stat>``"
+msgstr "``intl <update|stat>``"
+
+#: ../../reference/cli.rst:67
+msgid ""
+"Updates translation catalogs (PO) or reports translation completion "
+"statistics."
+msgstr "PO 翻訳カタログを更新するか、翻訳の進捗を表示します。"
+
+#: ../../reference/cli.rst:68
+msgid "``formats``"
+msgstr "``formats``"
+
+#: ../../reference/cli.rst:69
+msgid ""
+"Lists all compiled readers, renderers, and format conformance "
+"specifications."
+msgstr "組み込まれたリーダー、レンダラー、形式への適合状況を一覧表示します。"
+
+#: ../../reference/cli.rst:70
+msgid "``gds <COMMAND>``"
+msgstr "``gds <COMMAND>``"
+
+#: ../../reference/cli.rst:71
+msgid ""
+"Keeps Guidedog's own discussion records in ``docs/gds``, as ``dsc`` does."
+msgstr "``dsc`` と同じように、\\ ``docs/gds`` にある Guidedog 自身の議論記録を管理します。"
+
+#: ../../reference/cli.rst:72
+msgid "``publish --publisher=ID``"
+msgstr "``publish --publisher=ID``"
+
+#: ../../reference/cli.rst:73
+msgid ""
+"Builds the project a publisher's configuration names, and publishes the "
+"site."
+msgstr "パブリッシャーの設定が指定するプロジェクトをビルドし、サイトを公開します。"
+
+#: ../../reference/cli.rst:74
+msgid "``plugin <COMMAND>``"
+msgstr "``plugin <COMMAND>``"
+
+#: ../../reference/cli.rst:75
+msgid ""
+"Registers, lists, inspects, runs, or unregisters native plugin programs."
+msgstr "ネイティブプラグインの登録、一覧、検査、実行、登録解除を行います。"
+
+#: ../../reference/cli.rst:77
+msgid "guidedog quickstart"
+msgstr "guidedog quickstart"
+
+#: ../../reference/cli.rst:80
+msgid ""
+"Creates a project directory containing ``conf.toml``, ``index.rst``, "
+"working templates in ``_templates/``, and styles in ``_static/``:"
+msgstr ""
+"プロジェクトディレクトリに ``conf.toml``、``index.rst``、``_templates/`` "
+"のテンプレート、``_static/`` のスタイルを作成します。"
+
+#: ../../reference/cli.rst:91 ../../reference/cli.rst:163
+#: ../../reference/cli.rst:194 ../../reference/cli.rst:217
+msgid "Options:"
+msgstr "オプション:"
+
+#: ../../reference/cli.rst:93
+msgid ""
+"``-q``: Quiet mode; skips interactive prompts and relies on provided "
+"command-line flags."
+msgstr "``-q``: 対話入力を省き、コマンドラインの指定値を使います。"
+
+#: ../../reference/cli.rst:94
+msgid "``-p, --project NAME``: Sets the project display name."
+msgstr "``-p, --project NAME``: 表示用のプロジェクト名を指定します。"
+
+#: ../../reference/cli.rst:95
+msgid "``-a, --author NAME``: Sets the author or organization name."
+msgstr "``-a, --author NAME``: 著者または組織名を指定します。"
+
+#: ../../reference/cli.rst:96
+msgid "``-v VERSION``: Sets the short version string (e.g. ``1.0``)."
+msgstr "``-v VERSION``: 短いバージョン番号を指定します。例: ``1.0``。"
+
+#: ../../reference/cli.rst:97
+msgid ""
+"``-r RELEASE``: Sets the full release identifier (e.g. ``1.0.0-rc1``)."
+msgstr "``-r RELEASE``: 完全なリリース識別子を指定します。例: ``1.0.0-rc1``。"
+
+#: ../../reference/cli.rst:98
+msgid ""
+"``-l LANGUAGE``: Sets the default project language (default: ``en``)."
+msgstr "``-l LANGUAGE``: 既定の言語を指定します。初期値は ``en`` です。"
+
+#: ../../reference/cli.rst:99
+msgid ""
+"``--sep``: Creates separate ``source/`` and ``build/`` directories "
+"instead of storing sources at the root."
+msgstr "``--sep``: ルートにソースを置かず、``source/`` と ``build/`` を分けて作成します。"
+
+#: ../../reference/cli.rst:100
+msgid ""
+"``--suffix EXT``: Default source document extension (default: ``.rst``)."
+msgstr "``--suffix EXT``: ソース文書の既定の拡張子を指定します。初期値は ``.rst`` です。"
+
+#: ../../reference/cli.rst:102
+msgid "guidedog build"
+msgstr "guidedog build"
+
+#: ../../reference/cli.rst:105
+msgid ""
+"Coordinates the reading of sources, resolution of toctrees and "
+"cross-references, and publication of final output artifacts:"
+msgstr "ソースの読み取り、目次ツリーと相互参照の解決、出力の公開をまとめて行います。"
+
+#: ../../reference/cli.rst:118
+msgid "Supported builders:"
+msgstr "対応するビルダー:"
+
+#: ../../reference/cli.rst:120
+msgid "``html``: Generates a complete HTML site with search and navigation."
+msgstr "``html``: 検索とナビゲーションを備えた HTML サイトを生成します。"
+
+#: ../../reference/cli.rst:121
+msgid ""
+"``dirhtml``: Generates directory-style HTML URLs (``dir/index.html``)."
+msgstr "``dirhtml``: ``dir/index.html`` のようなディレクトリ形式の URL を生成します。"
+
+#: ../../reference/cli.rst:122
+msgid ""
+"``singlehtml``: Compiles all documents into a single contiguous HTML page."
+msgstr "``singlehtml``: すべての文書を一つの HTML ページにまとめます。"
+
+#: ../../reference/cli.rst:123
+msgid ""
+"``pdf``: Typesets PDF books using Typst (aliases: ``latex``, "
+"``latexpdf``)."
+msgstr "``pdf``: Typst で PDF の本を組版します。別名は ``latex`` と ``latexpdf`` です。"
+
+#: ../../reference/cli.rst:124
+msgid "``text``: Generates plain text files for each document."
+msgstr "``text``: 文書ごとにプレーンテキストを生成します。"
+
+#: ../../reference/cli.rst:125
+msgid ""
+"``gettext``: Extracts translatable strings into GNU gettext POT templates."
+msgstr "``gettext``: 翻訳対象の文字列を GNU gettext の POT テンプレートに抽出します。"
+
+#: ../../reference/cli.rst:126
+msgid ""
+"``dummy``: Parses and resolves document trees without writing final files "
+"(syntax check)."
+msgstr "``dummy``: 出力ファイルを作らずに文書ツリーを解析し、参照を解決します。構文確認に使います。"
+
+#: ../../reference/cli.rst:128
+msgid "Build options:"
+msgstr "ビルドのオプション:"
+
+#: ../../reference/cli.rst:130
+msgid "``-a``: Writes all output files, ignoring modification timestamps."
+msgstr "``-a``: 更新時刻によらず、すべての出力を書き込みます。"
+
+#: ../../reference/cli.rst:131
+msgid ""
+"``-E``: Rebuilds the environment from scratch, ignoring cached state."
+msgstr "``-E``: キャッシュを使わず、環境を作り直します。"
+
+#: ../../reference/cli.rst:132
+msgid "``-W``: Treats all warnings as build failures."
+msgstr "``-W``: 警告があればビルドを失敗とします。"
+
+#: ../../reference/cli.rst:133
+msgid ""
+"``--keep-going``: With ``-W``, continues compiling remaining documents to "
+"report all errors before exiting."
+msgstr "``--keep-going``: ``-W`` 使用時も残りの文書を処理し、終了前にすべてのエラーを報告します。"
+
+#: ../../reference/cli.rst:134
+msgid ""
+"``-n``: Nitpicky mode; generates warnings for all unresolved "
+"cross-reference targets."
+msgstr "``-n``: 未解決の相互参照をすべて警告します。"
+
+#: ../../reference/cli.rst:135
+msgid ""
+"``-j N`` / ``-j auto``: Parallel worker count for document parsing "
+"(``auto`` matches CPU cores)."
+msgstr "``-j N`` / ``-j auto``: 文書解析の並列数を指定します。``auto`` は CPU コア数に合わせます。"
+
+#: ../../reference/cli.rst:136
+msgid ""
+"``-D name=value``: Overrides a ``conf.toml`` setting for this invocation "
+"(e.g. ``-D language=de``)."
+msgstr ""
+"``-D name=value``: この実行だけ ``conf.toml`` の設定を上書きします。例: ``-D language=de``。"
+
+#: ../../reference/cli.rst:137
+msgid ""
+"``-D table.key=value``: Sets one key of a table setting, such as "
+"``html_context``, and keeps its other keys, as sphinx-build does."
+msgstr ""
+"``-D table.key=value``: ``html_context`` "
+"などの表の設定のキーを一つだけ設定し、ほかのキーは残します。sphinx-build と同じです。"
+
+#: ../../reference/cli.rst:138
+msgid ""
+"``-t TAG``: Defines a tag for conditional inclusion in ``only`` "
+"directives."
+msgstr "``-t TAG``: ``only`` ディレクティブで使う条件タグを定義します。"
+
+#: ../../reference/cli.rst:139
+msgid "``-c DIR``: Specifies a custom directory containing ``conf.toml``."
+msgstr "``-c DIR``: ``conf.toml`` があるディレクトリを指定します。"
+
+#: ../../reference/cli.rst:140
+msgid "``-C``: Runs the build without loading any ``conf.toml`` file."
+msgstr "``-C``: ``conf.toml`` を読み込まずにビルドします。"
+
+#: ../../reference/cli.rst:141
+msgid ""
+"``-v``: Verbose mode; displays informational notes and timing statistics."
+msgstr "``-v``: 詳細表示。補足情報と処理時間を表示します。"
+
+#: ../../reference/cli.rst:142
+msgid "``-q``: Quiet mode; shows only warnings and errors."
+msgstr "``-q``: 警告とエラーだけを表示します。"
+
+#: ../../reference/cli.rst:143
+msgid "``--color=always|never|auto``: Controls ANSI terminal color output."
+msgstr "``--color=always|never|auto``: 端末の ANSI 色表示を指定します。"
+
+#: ../../reference/cli.rst:144
+msgid ""
+"``--diagnostics=json``: Emits machine-readable JSON diagnostic reports to "
+"standard error."
+msgstr "``--diagnostics=json``: 機械処理用の JSON 診断を標準エラー出力に書き込みます。"
+
+#: ../../reference/cli.rst:145
+msgid ""
+"``--budget=MIB``: Maximum memory budget held by the project host "
+"(default: ``1024`` MiB)."
+msgstr "``--budget=MIB``: プロジェクトホストが保持するメモリの上限を指定します。初期値は ``1024`` MiB です。"
+
+#: ../../reference/cli.rst:146
+msgid "``--memory=ram|disk``: Strategy when memory budget is exceeded."
+msgstr "``--memory=ram|disk``: メモリ予算を使い切ったときの動作を指定します。"
+
+#: ../../reference/cli.rst:147
+msgid ""
+"``--untrusted``: Omits raw embedded markup and disables network fetching. "
+"This is a capability policy, not a process sandbox."
+msgstr ""
+"``--untrusted``: "
+"生の埋め込みマークアップを省き、ネットワーク取得を無効にします。機能を制限する方針であり、プロセスのサンドボックスではありません。"
+
+#: ../../reference/cli.rst:149
+msgid "guidedog serve"
+msgstr "guidedog serve"
+
+#: ../../reference/cli.rst:152
+msgid ""
+"Starts a local HTTP web server and file watcher that automatically "
+"rebuilds and reloads the browser whenever source documents, templates, or "
+"assets change:"
+msgstr "ローカルの HTTP サーバーとファイル監視を起動します。ソース、テンプレート、素材の変更時に再ビルドし、ブラウザーを更新します。"
+
+#: ../../reference/cli.rst:165
+msgid ""
+"``-p, --port PORT``: Local TCP port number to listen on (default: "
+"``8000``)."
+msgstr "``-p, --port PORT``: 待ち受けポート。初期値は ``8000`` です。"
+
+#: ../../reference/cli.rst:166
+msgid "``--host HOST``: IP address to bind to (default: ``127.0.0.1``)."
+msgstr "``--host HOST``: バインドする IP アドレス。初期値は ``127.0.0.1`` です。"
+
+#: ../../reference/cli.rst:168
+msgid "guidedog clean"
+msgstr "guidedog clean"
+
+#: ../../reference/cli.rst:171
+msgid "Deletes the build directory and all cached environment state:"
+msgstr "ビルドディレクトリと環境のキャッシュを削除します。"
+
+#: ../../reference/cli.rst:177
+msgid "guidedog convert"
+msgstr "guidedog convert"
+
+#: ../../reference/cli.rst:180
+msgid ""
+"Converts a standalone file or standard input stream directly, without "
+"requiring a project directory or configuration:"
+msgstr "プロジェクトや設定ファイルを使わず、ファイルまたは標準入力を変換します。"
+
+#: ../../reference/cli.rst:196
+msgid ""
+"``-o, --output FILE``: Output file path, or ``-`` for standard output."
+msgstr "``-o, --output FILE``: 出力先のパス。``-`` は標準出力です。"
+
+#: ../../reference/cli.rst:197
+msgid ""
+"``--to FORMAT``: Target format (``html``, ``pdf``, ``text``; inferred "
+"from output filename)."
+msgstr "``--to FORMAT``: 出力形式は ``html``、``pdf``、``text``。ファイル名からも推定できます。"
+
+#: ../../reference/cli.rst:198
+msgid ""
+"``--from FORMAT``: Source reader (``rst``, ``commonmark``, ``myst``, "
+"``typst``; inferred from input suffix)."
+msgstr ""
+"``--from FORMAT``: 入力リーダーは "
+"``rst``、``commonmark``、``myst``、``typst``。拡張子からも推定できます。"
+
+#: ../../reference/cli.rst:199
+msgid "``--force``: Overwrites an existing output file without prompting."
+msgstr "``--force``: 確認せずに既存の出力ファイルを上書きします。"
+
+#: ../../reference/cli.rst:200
+msgid "``--strict``: Fails if any warnings are emitted."
+msgstr "``--strict``: 警告があれば失敗とします。"
+
+#: ../../reference/cli.rst:201
+msgid ""
+"``--raw=allow|omit``: Security policy for raw embedded code (default: "
+"``omit``)."
+msgstr "``--raw=allow|omit``: 埋め込みの生コードの扱い。初期値は ``omit`` です。"
+
+#: ../../reference/cli.rst:202
+msgid ""
+"``--emit-typst FILE``: Writes the generated intermediate Typst markup to "
+"a separate file."
+msgstr "``--emit-typst FILE``: 生成した中間 Typst ソースを別のファイルに保存します。"
+
+#: ../../reference/cli.rst:204
+msgid "guidedog migrate"
+msgstr "guidedog migrate"
+
+#: ../../reference/cli.rst:207
+msgid ""
+"Converts a Python Sphinx ``conf.py`` file into declarative ``conf.toml``:"
+msgstr "Sphinx の Python 設定ファイル ``conf.py`` を宣言的な ``conf.toml`` に変換します。"
+
+#: ../../reference/cli.rst:219
+msgid ""
+"``-o FILE``: Writes output to the specified file path (or ``-`` for "
+"standard output)."
+msgstr "``-o FILE``: 指定のパスに保存します。``-`` は標準出力です。"
+
+#: ../../reference/cli.rst:220
+msgid "``--force``: Overwrites existing ``conf.toml`` files."
+msgstr "``--force``: 既存の ``conf.toml`` を上書きします。"
+
+#: ../../reference/cli.rst:222
+msgid "guidedog intl"
+msgstr "guidedog intl"
+
+#: ../../reference/cli.rst:225
+msgid "Manages multi-lingual document translation catalogs:"
+msgstr "多言語文書の翻訳カタログを管理します。"
+
+#: ../../reference/cli.rst:238
+msgid "Options for ``intl update``:"
+msgstr "``intl update`` のオプション:"
+
+#: ../../reference/cli.rst:240
+msgid ""
+"``-l, --language LANG``: Target language code (may be repeated for "
+"multiple languages)."
+msgstr "``-l, --language LANG``: 対象言語のコード。複数回指定できます。"
+
+#: ../../reference/cli.rst:241
+msgid ""
+"``-p, --pot-dir DIR``: Custom path to extracted POT message templates."
+msgstr "``-p, --pot-dir DIR``: 抽出済み POT テンプレートのパスを指定します。"
+
+#: ../../reference/cli.rst:243
+msgid "guidedog formats"
+msgstr "guidedog formats"
+
+#: ../../reference/cli.rst:246
+msgid ""
+"Prints a detailed report of all compiled readers, renderers, syntax "
+"highlighting lexers, and specification test suite conformance results:"
+msgstr "組み込まれたリーダー、レンダラー、構文ハイライト機能、仕様テストの結果を表示します。"
+
+#: ../../reference/cli.rst:253
+msgid "guidedog gds"
+msgstr "guidedog gds"
+
+#: ../../reference/cli.rst:256
+msgid ""
+"Keeps Guidedog's own discussion records, the GDS, in ``docs/gds``. It "
+"runs the commands of ``dsc``, below, with the prefix ``gds``:"
+msgstr ""
+"``docs/gds`` にある Guidedog 自身の議論記録 (GDS) を管理します。下記の ``dsc`` のコマンドを、プレフィックス "
+"``gds`` で実行します。"
+
+#: ../../reference/cli.rst:270
+msgid "dsc and dscc"
+msgstr "dsc と dscc"
+
+#: ../../reference/cli.rst:273
+msgid ""
+"``dsc`` keeps a discussion catalog and builds it with the installed "
+"``guidedog``. ``dscc`` is ``dsc`` with Guidedog built in. Both take the "
+"same commands; see :doc:`../howto/discussions`."
+msgstr ""
+"``dsc`` は議論カタログを管理し、インストール済みの ``guidedog`` でビルドします。\\ ``dscc`` は Guidedog "
+"を組み込んだ ``dsc`` です。どちらも同じコマンドを受け付けます。詳しくは :doc:`../howto/discussions` "
+"を参照してください。"
+
+#: ../../reference/cli.rst:291
+msgid ""
+"``dsc config`` prints the catalog's settings in effect, as "
+"``discussion.toml``; see :doc:`../howto/discussions` for each setting."
+msgstr ""
+"``dsc config`` は、カタログで有効な設定を ``discussion.toml`` の形式で表示します。各設定については "
+":doc:`../howto/discussions` を参照してください。"
+
+#: ../../reference/cli.rst:294
+msgid "Options of dsc and dscc"
+msgstr "dsc と dscc のオプション"
+
+#: ../../reference/cli.rst:298 ../../reference/cli.rst:433
+msgid "Option"
+msgstr "オプション"
+
+#: ../../reference/cli.rst:299 ../../reference/cli.rst:407
+#: ../../reference/cli.rst:434
+msgid "Meaning"
+msgstr "意味"
+
+#: ../../reference/cli.rst:300
+msgid "``--dir=DIR``"
+msgstr "``--dir=DIR``"
+
+#: ../../reference/cli.rst:301
+msgid "The catalog. By default, the one the current folder is in."
+msgstr "カタログ。既定では、現在のフォルダーを含むカタログ。"
+
+#: ../../reference/cli.rst:302
+msgid "``--prefix=NAME``"
+msgstr "``--prefix=NAME``"
+
+#: ../../reference/cli.rst:303
+msgid ""
+"The prefix of a catalog without ``discussion.toml``; ``init`` needs it."
+msgstr "``discussion.toml`` のないカタログのプレフィックス。\\ ``init`` には必須です。"
+
+#: ../../reference/cli.rst:304
+msgid ""
+"``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
+"``--template=FILE``"
+msgstr ""
+"``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
+"``--template=FILE``"
+
+#: ../../reference/cli.rst:305
+msgid ""
+"The name, settings, process draft, and record template of a new catalog "
+"(``init``)."
+msgstr "新しいカタログの名前、設定、手順の草案、記録テンプレート (``init``)。"
+
+#: ../../reference/cli.rst:307
+msgid "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
+msgstr "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
+
+#: ../../reference/cli.rst:308
+msgid ""
+"A new draft's author, labels, and file name (``new``; ``init`` takes the "
+"first two)."
+msgstr "新しい草案の著者、ラベル、ファイル名 (``new``; ``init`` は最初の二つを使います)。"
+
+#: ../../reference/cli.rst:309
+msgid "``--number=N``, ``--discussion=URL``"
+msgstr "``--number=N``, ``--discussion=URL``"
+
+#: ../../reference/cli.rst:310
+msgid "The number and review link of a promotion."
+msgstr "昇格時の番号とレビューのリンク。"
+
+#: ../../reference/cli.rst:311
+msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
+msgstr "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
+
+#: ../../reference/cli.rst:312
+msgid "A state change, why, and for ``committed`` the evidence."
+msgstr "状態の変更、その理由、\\ ``committed`` の場合は根拠。"
+
+#: ../../reference/cli.rst:313
+msgid "``--target=html|pdf|both``"
+msgstr "``--target=html|pdf|both``"
+
+#: ../../reference/cli.rst:314
+msgid "What ``build`` writes (default: both). A record selects one PDF."
+msgstr "``build`` が書き出すもの (既定: both)。記録を指定すると PDF を一つ選びます。"
+
+#: ../../reference/cli.rst:315 ../../reference/cli.rst:441
+msgid "``--guidedog=PATH``"
+msgstr "``--guidedog=PATH``"
+
+#: ../../reference/cli.rst:316
+msgid ""
+"``dsc`` only: the ``guidedog`` to build with (default: ``DSC_GUIDEDOG``, "
+"then ``PATH``)."
+msgstr ""
+"``dsc`` のみ: ビルドに使う ``guidedog`` (既定: ``DSC_GUIDEDOG``\\ 、次に ``PATH``)。"
+
+#: ../../reference/cli.rst:318
+msgid "``--typst=PATH``"
+msgstr "``--typst=PATH``"
+
+#: ../../reference/cli.rst:319
+msgid ""
+"``dscc`` and ``guidedog gds`` only: a Typst program, for a Guidedog "
+"without one built in."
+msgstr ""
+"``dscc`` と ``guidedog gds`` のみ: Typst を組み込んでいない Guidedog 向けの Typst プログラム。"
+
+#: ../../reference/cli.rst:321
+msgid ""
+"``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
+"``-q``"
+msgstr ""
+"``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
+"``-q``"
+
+#: ../../reference/cli.rst:322
+msgid "Preview a change; machine-readable output; quiet success."
+msgstr "変更のプレビュー、機械可読な出力、成功時の出力抑制。"
+
+#: ../../reference/cli.rst:324
+msgid ""
+"The exit statuses are those of ``guidedog``. Problems about a catalog "
+"have codes in its prefix, such as ``eds.recovery-needed``; running out of "
+"memory is ``discussion.memory``."
+msgstr ""
+"終了ステータスは ``guidedog`` と同じです。カタログに関する問題には、\\ ``eds.recovery-needed`` "
+"のようにそのプレフィックスで始まるコードが付きます。メモリ不足は ``discussion.memory`` です。"
+
+#: ../../reference/cli.rst:327
+msgid "guidedog publish"
+msgstr "guidedog publish"
+
+#: ../../reference/cli.rst:330
+msgid ""
+"Builds the project that a registered publisher's configuration names, as "
+"HTML with Guidedog's own engine, freezes the site, and has the publisher "
+"plan and publish it:"
+msgstr ""
+"登録済みパブリッシャーの設定が指定するプロジェクトを、Guidedog 自身のエンジンで HTML "
+"としてビルドし、サイトを不変にしてから、パブリッシャーに公開の計画と公開を行わせます。"
+
+#: ../../reference/cli.rst:338
+msgid ""
+"``--dry-run`` builds and plans, and writes nothing to the target. "
+"``--wait=SECONDS`` is how long to wait for the host to confirm the "
+"deployment (``0``: do not wait). ``--timeout=SECONDS`` bounds each whole "
+"exchange with the publisher, including writing the request (default: 300 "
+"seconds). Choose a value longer than ``--wait``. A timeout or Ctrl+C "
+"after a possible write reports an unknown outcome: run the publisher's "
+"recovery command before retrying. ``--verbose`` lists every change. Each "
+"invocation builds into its own private folder, which is removed on "
+"release; concurrent invocations cannot change each other's snapshots. See "
+":doc:`../plugins`."
+msgstr ""
+"``--dry-run`` はビルドと計画だけを行い、公開先には書き込みません。``--wait=SECONDS`` "
+"はホスティングサービスのデプロイ確認を待つ時間です（``0`` は待機なし）。``--timeout=SECONDS`` "
+"はリクエストの書き込みを含む、パブリッシャーとの各やり取り全体の制限時間です。既定値は 300 秒で、``--wait`` "
+"より長くしてください。書き込みが起きた可能性がある場合、タイムアウトや Ctrl+C "
+"は結果不明として報告されます。再試行する前にパブリッシャーの復旧コマンドを実行してください。``--verbose`` "
+"はすべての変更を表示します。呼び出しごとに専用フォルダーでビルドし、解放時に削除するので、同時実行でも互いのスナップショットを変更しません。:doc:`../plugins` "
+"を参照してください。"
+
+#: ../../reference/cli.rst:347
+msgid "guidedog plugin"
+msgstr "guidedog plugin"
+
+#: ../../reference/cli.rst:350
+msgid ""
+"Records which native plugin programs may run on this machine, in "
+"``plugins.toml`` in Guidedog's configuration folder "
+"(``GUIDEDOG_CONFIG_DIR`` moves it):"
+msgstr ""
+"このマシンで実行するネイティブプラグインを、Guidedog 設定フォルダーの ``plugins.toml`` "
+"に記録します。``GUIDEDOG_CONFIG_DIR`` で場所を変えられます。"
+
+#: ../../reference/cli.rst:362
+msgid "Subcommands:"
+msgstr "サブコマンド："
+
+#: ../../reference/cli.rst:364
+msgid ""
+"``register ID PATH [--project=DIR] [--config=FILE] [--yes]``: Inspects "
+"the program after user confirmation (``--yes`` bypasses confirmation) and "
+"records its SHA-256 hash. Build plugins pass qualification checks before "
+"registration."
+msgstr ""
+"``register ID PATH [--project=DIR] [--config=FILE] [--yes]``：確認後に検査し "
+"SHA-256 を記録します。``--yes`` は確認を省きます。ビルドプラグインは登録前に検証に合格する必要があります。"
+
+#: ../../reference/cli.rst:367
+msgid ""
+"``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: Runs "
+"the full suite of qualification checks against a build plugin executable "
+"without writing to the machine registry."
+msgstr ""
+"``check PATH [--project=DIR] [--config=FILE] "
+"[--timeout=SECONDS]``：実行ファイルを一通り検証します。マシンの登録簿は変更しません。"
+
+#: ../../reference/cli.rst:369
+msgid ""
+"``list``: Lists all registered plugins, their IDs, paths, and interface "
+"kinds."
+msgstr "``list``：登録済みプラグインの ID、パス、インターフェース種別を表示します。"
+
+#: ../../reference/cli.rst:370
+msgid ""
+"``inspect ID``: Displays declared build hooks (source, HTML, assets) or "
+"publisher capabilities."
+msgstr "``inspect ID``：ソース、HTML、アセットのフック、または公開機能を表示します。"
+
+#: ../../reference/cli.rst:371
+msgid ""
+"``run ID -- [ARGS...]``: Runs a registered plugin program directly, "
+"verifying its SHA-256 pin first."
+msgstr "``run ID -- [ARGS...]``：固定した SHA-256 を検証してから直接実行します。"
+
+#: ../../reference/cli.rst:372
+msgid ""
+"``unregister ID``: Removes the specified plugin entry from "
+"``plugins.toml``."
+msgstr "``unregister ID``：指定の項目を ``plugins.toml`` から削除します。"
+
+#: ../../reference/cli.rst:374
+msgid ""
+"In Guidedog 0.6.2, build plugins are selected by ``plugins`` in "
+"``conf.toml``. Inspection displays their declared source, HTML, and asset "
+"hooks. Build plugins run during ``guidedog build``, while ``guidedog "
+"publish`` accepts publishers only. See :doc:`../plugins` for the complete "
+"guide, compiled example, and configuration."
+msgstr ""
+"0.6.2 のビルドプラグインは ``conf.toml`` の ``plugins`` "
+"で選びます。検査ではソース・HTML・アセットのフックを表示します。ビルド時に動き、``guidedog publish`` "
+"は公開プラグインだけを受け付けます。実例と設定を含む手順は :doc:`../plugins` を参照してください。"
+
+#: ../../reference/cli.rst:379
+msgid "guidedog-pages"
+msgstr "guidedog-pages"
+
+#: ../../reference/cli.rst:382
+msgid ""
+"Publishes Guidedog sites to GitHub Pages from this machine, building "
+"projects with the installed ``guidedog``; see "
+":doc:`../howto/github-pages`."
+msgstr ""
+"インストール済みの ``guidedog`` でプロジェクトをビルドし、このマシンから Guidedog のサイトを GitHub Pages "
+"に公開します。詳しくは :doc:`../howto/github-pages` を参照してください。"
+
+#: ../../reference/cli.rst:402
+msgid "Settings of pages.toml"
+msgstr "pages.toml の設定"
+
+#: ../../reference/cli.rst:406
+msgid "Setting"
+msgstr "設定"
+
+#: ../../reference/cli.rst:408
+msgid "``schema = 1``"
+msgstr "``schema = 1``"
+
+#: ../../reference/cli.rst:409
+msgid "The file's version; required."
+msgstr "ファイルのバージョン。必須です。"
+
+#: ../../reference/cli.rst:410
+msgid "``repository = \"OWNER/REPO\"``"
+msgstr "``repository = \"OWNER/REPO\"``"
+
+#: ../../reference/cli.rst:411
+msgid "The GitHub.com repository; required."
+msgstr "GitHub.com のリポジトリ。必須です。"
+
+#: ../../reference/cli.rst:412
+msgid "``branch = \"gh-pages\"``"
+msgstr "``branch = \"gh-pages\"``"
+
+#: ../../reference/cli.rst:413
+msgid ""
+"The branch the site is published to: its own, never the default branch."
+msgstr "サイトを公開するブランチ。専用のブランチで、既定のブランチは使えません。"
+
+#: ../../reference/cli.rst:414
+msgid "``project = \"docs\"`` or ``site = \"build/site\"``"
+msgstr "``project = \"docs\"`` または ``site = \"build/site\"``"
+
+#: ../../reference/cli.rst:415
+msgid ""
+"The Guidedog project to build, or the folder of a site built already; one "
+"of them, relative to ``pages.toml``."
+msgstr ""
+"ビルドする Guidedog プロジェクト、またはビルド済みサイトのフォルダー。どちらか一方を ``pages.toml`` "
+"からの相対パスで指定します。"
+
+#: ../../reference/cli.rst:417
+msgid "``profile = \"default\"``"
+msgstr "``profile = \"default\"``"
+
+#: ../../reference/cli.rst:418
+msgid "The credential profile whose token publishes."
+msgstr "公開に使うトークンを持つ、認証情報のプロファイル。"
+
+#: ../../reference/cli.rst:419
+msgid "``site_url``"
+msgstr "``site_url``"
+
+#: ../../reference/cli.rst:420
+msgid ""
+"The address readers open, and ``html_baseurl`` for the build (default: "
+"``https://OWNER.github.io/REPO/``)."
+msgstr ""
+"読者が開くアドレス。ビルドの ``html_baseurl`` にもなります (既定: "
+"``https://OWNER.github.io/REPO/``)。"
+
+#: ../../reference/cli.rst:422
+msgid "``strict = true``"
+msgstr "``strict = true``"
+
+#: ../../reference/cli.rst:423
+msgid "Build with warnings as errors."
+msgstr "警告をエラーとしてビルドします。"
+
+#: ../../reference/cli.rst:424
+msgid "``wait_seconds = 300``"
+msgstr "``wait_seconds = 300``"
+
+#: ../../reference/cli.rst:425
+msgid "How long ``publish`` waits for the deployment."
+msgstr "``publish`` がデプロイを待つ時間。"
+
+#: ../../reference/cli.rst:426
+msgid "``[watch] debounce_ms``, ``max_wait_ms``"
+msgstr "``[watch] debounce_ms``, ``max_wait_ms``"
+
+#: ../../reference/cli.rst:427
+msgid ""
+"How long ``watch`` lets sources settle, and the most it waits after a "
+"change."
+msgstr "``watch`` がソースの変化が収まるのを待つ時間と、変更のあとに待つ最大の時間。"
+
+#: ../../reference/cli.rst:429
+msgid "Options of guidedog-pages"
+msgstr "guidedog-pages のオプション"
+
+#: ../../reference/cli.rst:435
+msgid "``--config=FILE``"
+msgstr "``--config=FILE``"
+
+#: ../../reference/cli.rst:436
+msgid "The configuration (default: ``pages.toml``)."
+msgstr "設定ファイル (既定: ``pages.toml``)。"
+
+#: ../../reference/cli.rst:437
+msgid "``--profile=NAME``"
+msgstr "``--profile=NAME``"
+
+#: ../../reference/cli.rst:438
+msgid "The profile ``auth`` and ``init`` use (default: ``default``)."
+msgstr "``auth`` と ``init`` が使うプロファイル (既定: ``default``)。"
+
+#: ../../reference/cli.rst:439
+msgid "``--credential=env``"
+msgstr "``--credential=env``"
+
+#: ../../reference/cli.rst:440
+msgid ""
+"Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without "
+"storing it."
+msgstr "このコマンドに限り、\\ ``GUIDEDOG_PAGES_TOKEN`` のトークンを保存せずに使います。"
+
+#: ../../reference/cli.rst:442
+msgid ""
+"The ``guidedog`` that builds (default: ``GUIDEDOG_PAGES_GUIDEDOG``, then "
+"``PATH``)."
+msgstr ""
+"ビルドに使う ``guidedog`` (既定: ``GUIDEDOG_PAGES_GUIDEDOG``\\ 、次に ``PATH``)。"
+
+#: ../../reference/cli.rst:443
+msgid "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
+msgstr "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
+
+#: ../../reference/cli.rst:444
+msgid ""
+"``publish``: plan only; how long to wait for the deployment; list every "
+"change."
+msgstr "``publish``: 計画だけを行う、デプロイを待つ時間、すべての変更を一覧表示する。"
+
+#: ../../reference/cli.rst:445
+msgid "``--adopt``, ``--yes``"
+msgstr "``--adopt``, ``--yes``"
+
+#: ../../reference/cli.rst:446
+msgid ""
+"``bind``: let a branch of other work be replaced; answer yes to the "
+"question."
+msgstr "``bind``: 別の内容を持つブランチの置き換えを許可する、確認に yes と答える。"
+
+#: ../../reference/cli.rst:447
+msgid ""
+"``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
+msgstr ""
+"``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
+
+#: ../../reference/cli.rst:448
+msgid ""
+"``auth login``: the app; the repositories an OAuth App token may reach; "
+"open the browser; give the profile to another account."
+msgstr ""
+"``auth login``: 使うアプリ、OAuth App "
+"のトークンがアクセスできるリポジトリ、ブラウザを開く、プロファイルを別のアカウントに切り替える。"
+
+#: ../../reference/cli.rst:450
+msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
+msgstr "``--diagnostics=text|json``, ``--color=auto|always|never``"
+
+#: ../../reference/cli.rst:451
+msgid "How problems and results are written."
+msgstr "問題と結果の出力形式。"
+
+#: ../../reference/cli.rst:453
+msgid ""
+"Its exit statuses are those of ``guidedog publish``: 0 live or unchanged, "
+"1 nothing published, 2 a usage or configuration problem, 6 accepted but "
+"not confirmed, and 7 unknown until ``recover``."
+msgstr ""
+"終了ステータスは ``guidedog publish`` と同じです。0 は公開中または変更なし、1 は何も公開されなかった場合、2 "
+"は使い方または設定の問題、6 は受け付けられたが未確認、7 は ``recover`` するまで結果が不明な場合です。"
+
+#: ../../reference/cli.rst:457
+msgid "Build-plugin registration checks"
+msgstr "ビルドプラグインの登録検査"
+
+#: ../../reference/cli.rst:460
+msgid ""
+"``guidedog plugin check PATH --project=DIR --config=FILE`` tests declared "
+"build hooks without writing a registry entry. Build-plugin registration "
+"runs the same checks before pinning the executable. Its request timeout "
+"defaults to 60 seconds; ``--timeout=SECONDS`` sets it. Publisher "
+"registration remains compatible and does not invoke publication. Passing "
+"checks is not a sandbox or a safety certificate."
+msgstr ""
+"``guidedog plugin check PATH --project=DIR --config=FILE`` "
+"は登録せずに宣言済みフックをテストします。登録処理も実行ファイルを固定する前に同じ検査を行います。要求期限は既定で 60 "
+"秒、``--timeout=SECONDS`` "
+"で変更します。パブリッシャー登録との互換性は保たれ、公開処理は呼びません。合格はサンドボックスでも安全証明でもありません。"
+
+#: ../../reference/configuration.rst:1
+msgid "Configuration reference"
+msgstr "設定リファレンス"
+
+#: ../../reference/configuration.rst:4
+msgid ""
+"Every Guidedog documentation project is configured using ``conf.toml``, "
+"located at the project root directory. Guidedog reads configuration as "
+"declarative TOML data and does not execute arbitrary code."
+msgstr ""
+"Guidedog の設定はプロジェクトルートの ``conf.toml`` に記述します。宣言的な TOML "
+"データとして読み込まれ、任意のコードは実行されません。"
+
+#: ../../reference/configuration.rst:8
+msgid ""
+"Many configuration keys correspond directly to Sphinx's ``conf.py`` "
+"variables, allowing straightforward migration with ``guidedog migrate "
+"conf.py``."
+msgstr ""
+"多くの設定キーは Sphinx の ``conf.py`` 変数に対応し、``guidedog migrate conf.py`` で移行できます。"
+
+#: ../../reference/configuration.rst:11
+msgid "Minimal configuration"
+msgstr "最小構成"
+
+#: ../../reference/configuration.rst:14
+msgid ""
+"A project requires only basic metadata. Default values are applied for "
+"omitted keys:"
+msgstr "基本情報だけでもプロジェクトを作れます。省略した設定には初期値が使われます。"
+
+#: ../../reference/configuration.rst:29
+msgid "Project metadata"
+msgstr "プロジェクト情報"
+
+#: ../../reference/configuration.rst:32
+msgid "Metadata options"
+msgstr "メタデータの設定"
+
+#: ../../reference/configuration.rst:36
+#: ../../reference/configuration.rst:103
+#: ../../reference/configuration.rst:167
+#: ../../reference/configuration.rst:213
+#: ../../reference/configuration.rst:241
+#: ../../reference/configuration.rst:313
+#: ../../reference/configuration.rst:376
+#: ../../reference/configuration.rst:423
+#: ../../reference/configuration.rst:457
+#: ../../reference/configuration.rst:487
+msgid "Key"
+msgstr "キー"
+
+#: ../../reference/configuration.rst:37
+#: ../../reference/configuration.rst:104
+#: ../../reference/configuration.rst:168
+#: ../../reference/configuration.rst:214
+#: ../../reference/configuration.rst:242
+#: ../../reference/configuration.rst:314
+#: ../../reference/configuration.rst:377
+#: ../../reference/configuration.rst:424
+#: ../../reference/configuration.rst:458
+#: ../../reference/configuration.rst:488
+msgid "Type"
+msgstr "型"
+
+#: ../../reference/configuration.rst:38
+#: ../../reference/configuration.rst:105
+#: ../../reference/configuration.rst:169
+#: ../../reference/configuration.rst:215
+#: ../../reference/configuration.rst:243
+#: ../../reference/configuration.rst:315
+#: ../../reference/configuration.rst:378
+#: ../../reference/configuration.rst:425
+#: ../../reference/configuration.rst:459
+#: ../../reference/configuration.rst:489
+msgid "Default"
+msgstr "初期値"
+
+#: ../../reference/configuration.rst:39
+#: ../../reference/configuration.rst:106
+#: ../../reference/configuration.rst:170
+#: ../../reference/configuration.rst:216
+#: ../../reference/configuration.rst:244
+#: ../../reference/configuration.rst:316
+#: ../../reference/configuration.rst:379
+#: ../../reference/configuration.rst:426
+#: ../../reference/configuration.rst:460
+#: ../../reference/configuration.rst:490
+msgid "Description"
+msgstr "説明"
+
+#: ../../reference/configuration.rst:40
+msgid "``project``"
+msgstr "``project``"
+
+#: ../../reference/configuration.rst:41 ../../reference/configuration.rst:45
+#: ../../reference/configuration.rst:49 ../../reference/configuration.rst:53
+#: ../../reference/configuration.rst:57 ../../reference/configuration.rst:61
+#: ../../reference/configuration.rst:65 ../../reference/configuration.rst:69
+#: ../../reference/configuration.rst:108
+#: ../../reference/configuration.rst:132
+#: ../../reference/configuration.rst:136
+#: ../../reference/configuration.rst:140
+#: ../../reference/configuration.rst:144
+#: ../../reference/configuration.rst:152
+#: ../../reference/configuration.rst:156
+#: ../../reference/configuration.rst:188
+#: ../../reference/configuration.rst:192
+#: ../../reference/configuration.rst:246
+#: ../../reference/configuration.rst:254
+#: ../../reference/configuration.rst:258
+#: ../../reference/configuration.rst:262
+#: ../../reference/configuration.rst:266
+#: ../../reference/configuration.rst:290
+#: ../../reference/configuration.rst:294
+#: ../../reference/configuration.rst:318
+#: ../../reference/configuration.rst:322
+#: ../../reference/configuration.rst:326
+#: ../../reference/configuration.rst:330
+#: ../../reference/configuration.rst:334
+#: ../../reference/configuration.rst:342
+#: ../../reference/configuration.rst:346
+#: ../../reference/configuration.rst:432
+#: ../../reference/configuration.rst:436
+#: ../../reference/configuration.rst:440
+#: ../../reference/configuration.rst:466
+#: ../../reference/configuration.rst:474
+#: ../../reference/configuration.rst:508
+msgid "string"
+msgstr "文字列"
+
+#: ../../reference/configuration.rst:42
+msgid "``\"Python\"``"
+msgstr "``\"Python\"``"
+
+#: ../../reference/configuration.rst:43
+msgid "The human-readable name of the project."
+msgstr "表示用のプロジェクト名。"
+
+#: ../../reference/configuration.rst:44
+msgid "``author``"
+msgstr "``author``"
+
+#: ../../reference/configuration.rst:46 ../../reference/configuration.rst:50
+#: ../../reference/configuration.rst:54 ../../reference/configuration.rst:58
+#: ../../reference/configuration.rst:66 ../../reference/configuration.rst:70
+#: ../../reference/configuration.rst:141
+#: ../../reference/configuration.rst:145
+#: ../../reference/configuration.rst:153
+#: ../../reference/configuration.rst:157
+#: ../../reference/configuration.rst:263
+#: ../../reference/configuration.rst:267
+#: ../../reference/configuration.rst:295
+#: ../../reference/configuration.rst:323
+#: ../../reference/configuration.rst:335
+msgid "``\"\"``"
+msgstr "``\"\"``"
+
+#: ../../reference/configuration.rst:47
+msgid "Author or organization name."
+msgstr "著者または組織名。"
+
+#: ../../reference/configuration.rst:48
+msgid "``copyright``"
+msgstr "``copyright``"
+
+#: ../../reference/configuration.rst:51
+msgid "Copyright notice displayed in page footers."
+msgstr "フッターに表示する著作権表記。"
+
+#: ../../reference/configuration.rst:52
+msgid "``version``"
+msgstr "``version``"
+
+#: ../../reference/configuration.rst:55
+msgid "The short project version (e.g. ``\"1.0\"``)."
+msgstr "短いバージョン番号。例: ``\"1.0\"``。"
+
+#: ../../reference/configuration.rst:56
+msgid "``release``"
+msgstr "``release``"
+
+#: ../../reference/configuration.rst:59
+msgid ""
+"The full version string, including alpha/beta identifiers (e.g. "
+"``\"1.0.0b1\"``)."
+msgstr "完全なバージョン番号。alpha や beta の識別子も含みます。例: ``\"1.0.0b1\"``。"
+
+#: ../../reference/configuration.rst:60
+msgid "``language``"
+msgstr "``language``"
+
+#: ../../reference/configuration.rst:62
+msgid "``\"en\"``"
+msgstr "``\"en\"``"
+
+#: ../../reference/configuration.rst:63
+msgid ""
+"ISO language code (e.g. ``\"de\"``, ``\"zh_CN\"``) for typography, "
+"hyphenation, and translations."
+msgstr "組版、ハイフネーション、翻訳に使う ISO 言語コード。例: ``\"de\"``、``\"zh_CN\"``。"
+
+#: ../../reference/configuration.rst:64
+msgid "``today``"
+msgstr "``today``"
+
+#: ../../reference/configuration.rst:67
+msgid ""
+"Custom date text; if omitted, current time is formatted with "
+"``today_fmt``."
+msgstr "日付の表示文字列。未指定なら現在の日付を ``today_fmt`` で整形します。"
+
+#: ../../reference/configuration.rst:68
+msgid "``today_fmt``"
+msgstr "``today_fmt``"
+
+#: ../../reference/configuration.rst:71
+msgid "Format string for document dates."
+msgstr "文書の日付に使う書式文字列。"
+
+#: ../../reference/configuration.rst:73
+msgid "General options"
+msgstr "一般設定"
+
+#: ../../reference/configuration.rst:76
+msgid "Build plugins"
+msgstr "ビルドプラグイン"
+
+#: ../../reference/configuration.rst:79
+msgid ""
+"``plugins`` is an ordered list of explicitly selected native build-plugin "
+"IDs. Register installed programs with ``guidedog plugin register ID "
+"PATH`` first. ``plugin_timeout`` defaults to 60 seconds per complete "
+"process request; valid values are 1 through 86400. ``[plugin_configs]`` "
+"maps IDs to configuration paths, relative to the project configuration "
+"directory. A normal build invokes no publisher. ``--untrusted`` disables "
+"native build plugins. In Guidedog 0.6.2, build plugins provide source "
+"transformations, HTML post-processing, and generated assets. See "
+":doc:`../plugins` for the complete tutorial and architecture."
+msgstr ""
+"``plugins`` は明示的に選ぶネイティブのビルドプラグイン ID の順序付きリストです。先に ``guidedog plugin "
+"register ID PATH`` で登録します。``plugin_timeout`` はリクエスト全体の秒数で、既定は 60、範囲は "
+"1～86400 です。``[plugin_configs]`` "
+"のパスは設定ディレクトリ基準です。通常のビルドは公開しません。``--untrusted`` はプラグインを無効にします。0.6.2 "
+"はソース変換、HTML 後処理、アセット生成を提供します。構成と手順は :doc:`../plugins` を参照してください。"
+
+#: ../../reference/configuration.rst:96
+msgid "Discovery and parsing"
+msgstr "ファイル検出と解析"
+
+#: ../../reference/configuration.rst:99
+msgid "Discovery and parsing options"
+msgstr "検出と解析の設定"
+
+#: ../../reference/configuration.rst:107
+msgid "``root_doc``"
+msgstr "``root_doc``"
+
+#: ../../reference/configuration.rst:109
+msgid "``\"index\"``"
+msgstr "``\"index\"``"
+
+#: ../../reference/configuration.rst:110
+msgid "The document that serves as the root table of contents."
+msgstr "目次のルートとなる文書。"
+
+#: ../../reference/configuration.rst:111
+msgid "``source_suffix``"
+msgstr "``source_suffix``"
+
+#: ../../reference/configuration.rst:112
+#: ../../reference/configuration.rst:116
+#: ../../reference/configuration.rst:120
+#: ../../reference/configuration.rst:124
+#: ../../reference/configuration.rst:128
+#: ../../reference/configuration.rst:222
+#: ../../reference/configuration.rst:226
+#: ../../reference/configuration.rst:270
+#: ../../reference/configuration.rst:274
+#: ../../reference/configuration.rst:278
+#: ../../reference/configuration.rst:282
+#: ../../reference/configuration.rst:338
+#: ../../reference/configuration.rst:381
+#: ../../reference/configuration.rst:393
+#: ../../reference/configuration.rst:428
+#: ../../reference/configuration.rst:462
+#: ../../reference/configuration.rst:470
+#: ../../reference/configuration.rst:492
+msgid "array"
+msgstr "配列"
+
+#: ../../reference/configuration.rst:113
+msgid "``[\".rst\"]``"
+msgstr "``[\".rst\"]``"
+
+#: ../../reference/configuration.rst:114
+msgid "File extensions recognized as documentation source files."
+msgstr "文書ソースとして認識する拡張子。"
+
+#: ../../reference/configuration.rst:115
+msgid "``exclude_patterns``"
+msgstr "``exclude_patterns``"
+
+#: ../../reference/configuration.rst:117
+#: ../../reference/configuration.rst:121
+#: ../../reference/configuration.rst:125
+#: ../../reference/configuration.rst:129
+#: ../../reference/configuration.rst:223
+#: ../../reference/configuration.rst:227
+#: ../../reference/configuration.rst:271
+#: ../../reference/configuration.rst:275
+#: ../../reference/configuration.rst:279
+#: ../../reference/configuration.rst:283
+#: ../../reference/configuration.rst:339
+#: ../../reference/configuration.rst:429
+#: ../../reference/configuration.rst:463
+msgid "``[]``"
+msgstr "``[]``"
+
+#: ../../reference/configuration.rst:118
+msgid "Directory and file glob patterns excluded from source discovery."
+msgstr "ソース検出から除外するファイルやディレクトリの glob パターン。"
+
+#: ../../reference/configuration.rst:119
+msgid "``include_roots``"
+msgstr "``include_roots``"
+
+#: ../../reference/configuration.rst:122
+msgid "External directory roots allowed for source inclusion."
+msgstr "外部ファイルの取り込みを許可するルートディレクトリ。"
+
+#: ../../reference/configuration.rst:123
+msgid "``templates_path``"
+msgstr "``templates_path``"
+
+#: ../../reference/configuration.rst:126
+msgid ""
+"Directories containing HTML and PDF templates, searched before built-ins."
+msgstr "HTML と PDF のテンプレートディレクトリ。組み込みより先に検索します。"
+
+#: ../../reference/configuration.rst:127
+msgid "``extensions``"
+msgstr "``extensions``"
+
+#: ../../reference/configuration.rst:130
+msgid ""
+"Supported built-in Sphinx extensions to enable (e.g. "
+"``\"sphinx.ext.autodoc\"``)."
+msgstr "有効にする組み込みの Sphinx 拡張。例: ``\"sphinx.ext.autodoc\"``。"
+
+#: ../../reference/configuration.rst:131
+msgid "``primary_domain``"
+msgstr "``primary_domain``"
+
+#: ../../reference/configuration.rst:133
+msgid "``\"py\"``"
+msgstr "``\"py\"``"
+
+#: ../../reference/configuration.rst:134
+msgid ""
+"The default domain used for unqualified directives and roles (e.g. "
+"``\"py\"``, ``\"c\"``, ``\"odin\"``)."
+msgstr "接頭辞のないディレクティブやロールに使う既定のドメイン。例: ``\"py\"``、``\"c\"``、``\"odin\"``。"
+
+#: ../../reference/configuration.rst:135
+msgid "``highlight_language``"
+msgstr "``highlight_language``"
+
+#: ../../reference/configuration.rst:137
+msgid "``\"default\"``"
+msgstr "``\"default\"``"
+
+#: ../../reference/configuration.rst:138
+msgid "Default language for code blocks when unspecified."
+msgstr "コードブロックで言語を省略したときの初期値。"
+
+#: ../../reference/configuration.rst:139
+msgid "``pygments_style``"
+msgstr "``pygments_style``"
+
+#: ../../reference/configuration.rst:142
+msgid "Pygments syntax highlighting style for light themes."
+msgstr "明るいテーマで使う Pygments のハイライトスタイル。"
+
+#: ../../reference/configuration.rst:143
+msgid "``pygments_dark_style``"
+msgstr "``pygments_dark_style``"
+
+#: ../../reference/configuration.rst:146
+msgid "Syntax highlighting style used when dark mode is active."
+msgstr "暗いテーマで使う構文ハイライトスタイル。"
+
+#: ../../reference/configuration.rst:147
+msgid "``smartquotes``"
+msgstr "``smartquotes``"
+
+#: ../../reference/configuration.rst:148
+#: ../../reference/configuration.rst:172
+#: ../../reference/configuration.rst:184
+#: ../../reference/configuration.rst:218
+#: ../../reference/configuration.rst:230
+#: ../../reference/configuration.rst:286
+#: ../../reference/configuration.rst:397
+#: ../../reference/configuration.rst:496
+#: ../../reference/configuration.rst:500
+#: ../../reference/configuration.rst:504
+msgid "boolean"
+msgstr "真偽値"
+
+#: ../../reference/configuration.rst:149
+#: ../../reference/configuration.rst:287
+#: ../../reference/configuration.rst:497
+#: ../../reference/configuration.rst:505
+msgid "``true``"
+msgstr "``true``"
+
+#: ../../reference/configuration.rst:150
+msgid ""
+"Automatically transforms straight quotes and dashes into typographer's "
+"punctuation."
+msgstr "直線の引用符やハイフンを組版用の句読点に変換します。"
+
+#: ../../reference/configuration.rst:151
+msgid "``rst_prolog``"
+msgstr "``rst_prolog``"
+
+#: ../../reference/configuration.rst:154
+msgid "ReStructuredText snippet prepended to every parsed document."
+msgstr "各文書の先頭に追加する reStructuredText 断片。"
+
+#: ../../reference/configuration.rst:155
+msgid "``rst_epilog``"
+msgstr "``rst_epilog``"
+
+#: ../../reference/configuration.rst:158
+msgid "ReStructuredText snippet appended to every parsed document."
+msgstr "各文書の末尾に追加する reStructuredText 断片。"
+
+#: ../../reference/configuration.rst:160
+msgid "Numbering and mathematics"
+msgstr "番号と数式"
+
+#: ../../reference/configuration.rst:163
+msgid "Numbering options"
+msgstr "番号の設定"
+
+#: ../../reference/configuration.rst:171
+msgid "``numfig``"
+msgstr "``numfig``"
+
+#: ../../reference/configuration.rst:173
+#: ../../reference/configuration.rst:185
+#: ../../reference/configuration.rst:219
+#: ../../reference/configuration.rst:231
+#: ../../reference/configuration.rst:398
+#: ../../reference/configuration.rst:501
+msgid "``false``"
+msgstr "``false``"
+
+#: ../../reference/configuration.rst:174
+msgid "When true, automatically numbers figures, tables, and code listings."
+msgstr "図、表、コードに自動で番号を付けます。"
+
+#: ../../reference/configuration.rst:175
+msgid "``numfig_secnum_depth``"
+msgstr "``numfig_secnum_depth``"
+
+#: ../../reference/configuration.rst:176
+#: ../../reference/configuration.rst:385
+msgid "integer"
+msgstr "整数"
+
+#: ../../reference/configuration.rst:178
+msgid ""
+"Heading depth included in figure numbers (e.g. ``1`` produces ``Fig. "
+"2.1``)."
+msgstr "図番号に含める見出しの深さ。``1`` なら ``Fig. 2.1`` のようになります。"
+
+#: ../../reference/configuration.rst:179
+msgid "``numfig_format``"
+msgstr "``numfig_format``"
+
+#: ../../reference/configuration.rst:180
+#: ../../reference/configuration.rst:250
+#: ../../reference/configuration.rst:298
+#: ../../reference/configuration.rst:302
+#: ../../reference/configuration.rst:389
+#: ../../reference/configuration.rst:444
+msgid "table"
+msgstr "テーブル"
+
+#: ../../reference/configuration.rst:181
+msgid "see below"
+msgstr "下記参照"
+
+#: ../../reference/configuration.rst:182
+msgid ""
+"Numbering prefix formats for ``\"figure\"``, ``\"table\"``, and "
+"``\"code-block\"``."
+msgstr "``\"figure\"``、``\"table\"``、``\"code-block\"`` の番号書式。"
+
+#: ../../reference/configuration.rst:183
+msgid "``math_number_all``"
+msgstr "``math_number_all``"
+
+#: ../../reference/configuration.rst:186
+msgid "When true, numbers every display equation automatically."
+msgstr "すべての独立行数式に自動で番号を付けます。"
+
+#: ../../reference/configuration.rst:187
+msgid "``math_eqref_format``"
+msgstr "``math_eqref_format``"
+
+#: ../../reference/configuration.rst:189
+msgid "``\"({number})\"``"
+msgstr "``\"({number})\"``"
+
+#: ../../reference/configuration.rst:190
+msgid "Format string for equation references made with ``:eq:``."
+msgstr "``:eq:`` による数式参照の書式。"
+
+#: ../../reference/configuration.rst:191
+msgid "``mathjax_path``"
+msgstr "``mathjax_path``"
+
+#: ../../reference/configuration.rst:193
+msgid "URL"
+msgstr "URL"
+
+#: ../../reference/configuration.rst:194
+msgid "CDN or local path to MathJax JavaScript bundle."
+msgstr "MathJax JavaScript の CDN URL またはローカルパス。"
+
+#: ../../reference/configuration.rst:196
+msgid "Default ``numfig_format`` values:"
+msgstr "``numfig_format`` の初期値:"
+
+#: ../../reference/configuration.rst:206
+msgid "Diagnostics and strictness"
+msgstr "診断と厳密な検査"
+
+#: ../../reference/configuration.rst:209
+msgid "Diagnostic options"
+msgstr "診断の設定"
+
+#: ../../reference/configuration.rst:217
+msgid "``nitpicky``"
+msgstr "``nitpicky``"
+
+#: ../../reference/configuration.rst:220
+msgid "Warns on all unresolved cross-references and broken targets."
+msgstr "未解決の相互参照やリンク先を警告します。"
+
+#: ../../reference/configuration.rst:221
+msgid "``nitpick_ignore``"
+msgstr "``nitpick_ignore``"
+
+#: ../../reference/configuration.rst:224
+msgid "Array of ``[type, target]`` pairs exempted from nitpicky warnings."
+msgstr "警告を除外する ``[type, target]`` の配列。"
+
+#: ../../reference/configuration.rst:225
+msgid "``suppress_warnings``"
+msgstr "``suppress_warnings``"
+
+#: ../../reference/configuration.rst:228
+msgid "Warning category codes that should not be reported."
+msgstr "表示しない警告カテゴリのコード。"
+
+#: ../../reference/configuration.rst:229
+msgid "``keep_warnings``"
+msgstr "``keep_warnings``"
+
+#: ../../reference/configuration.rst:232
+msgid "Includes warnings directly in published document output."
+msgstr "公開文書の本文に警告を含めます。"
+
+#: ../../reference/configuration.rst:234
+msgid "HTML output options"
+msgstr "HTML 出力の設定"
+
+#: ../../reference/configuration.rst:237
+msgid "HTML options"
+msgstr "HTML の設定"
+
+#: ../../reference/configuration.rst:245
+msgid "``html_theme``"
+msgstr "``html_theme``"
+
+#: ../../reference/configuration.rst:247
+msgid "``\"guidedog\"``"
+msgstr "``\"guidedog\"``"
+
+#: ../../reference/configuration.rst:248
+msgid "Theme used for HTML generation."
+msgstr "HTML 生成に使うテーマ。"
+
+#: ../../reference/configuration.rst:249
+msgid "``html_theme_options``"
+msgstr "``html_theme_options``"
+
+#: ../../reference/configuration.rst:251
+#: ../../reference/configuration.rst:299
+#: ../../reference/configuration.rst:303
+#: ../../reference/configuration.rst:390
+#: ../../reference/configuration.rst:445
+msgid "``{}``"
+msgstr "``{}``"
+
+#: ../../reference/configuration.rst:252
+msgid "Key-value options passed to the HTML theme."
+msgstr "HTML テーマに渡すキーと値。"
+
+#: ../../reference/configuration.rst:253
+msgid "``html_title``"
+msgstr "``html_title``"
+
+#: ../../reference/configuration.rst:255
+#: ../../reference/configuration.rst:259
+msgid "derived"
+msgstr "自動生成"
+
+#: ../../reference/configuration.rst:256
+msgid "Page title displayed in browser window tabs."
+msgstr "ブラウザーのタブに表示するタイトル。"
+
+#: ../../reference/configuration.rst:257
+msgid "``html_short_title``"
+msgstr "``html_short_title``"
+
+#: ../../reference/configuration.rst:260
+msgid "Shorter title used in navigation breadcrumbs."
+msgstr "パンくずナビゲーションの短いタイトル。"
+
+#: ../../reference/configuration.rst:261
+msgid "``html_logo``"
+msgstr "``html_logo``"
+
+#: ../../reference/configuration.rst:264
+msgid "Path to project logo image relative to source directory."
+msgstr "ソースディレクトリからのロゴ画像の相対パス。"
+
+#: ../../reference/configuration.rst:265
+msgid "``html_favicon``"
+msgstr "``html_favicon``"
+
+#: ../../reference/configuration.rst:268
+msgid "Path to favicon file."
+msgstr "ファビコンのパス。"
+
+#: ../../reference/configuration.rst:269
+msgid "``html_static_path``"
+msgstr "``html_static_path``"
+
+#: ../../reference/configuration.rst:272
+msgid "Directories copied to the output's ``_static/`` directory."
+msgstr "出力の ``_static/`` にコピーするディレクトリ。"
+
+#: ../../reference/configuration.rst:273
+msgid "``html_extra_path``"
+msgstr "``html_extra_path``"
+
+#: ../../reference/configuration.rst:276
+msgid ""
+"Directories copied directly to the output root without transformation."
+msgstr "変換せずに出力ルートにコピーするディレクトリ。"
+
+#: ../../reference/configuration.rst:277
+msgid "``html_css_files``"
+msgstr "``html_css_files``"
+
+#: ../../reference/configuration.rst:280
+msgid "Custom CSS filenames loaded by HTML pages."
+msgstr "HTML ページが読み込む追加 CSS のファイル名。"
+
+#: ../../reference/configuration.rst:281
+msgid "``html_js_files``"
+msgstr "``html_js_files``"
+
+#: ../../reference/configuration.rst:284
+msgid "Custom JavaScript filenames loaded by HTML pages."
+msgstr "HTML ページが読み込む追加 JavaScript のファイル名。"
+
+#: ../../reference/configuration.rst:285
+msgid "``html_permalinks``"
+msgstr "``html_permalinks``"
+
+#: ../../reference/configuration.rst:288
+msgid "Adds paragraph and section anchor permalinks."
+msgstr "段落と見出しに固定リンクを付けます。"
+
+#: ../../reference/configuration.rst:289
+msgid "``html_permalinks_icon``"
+msgstr "``html_permalinks_icon``"
+
+#: ../../reference/configuration.rst:291
+msgid "Pilcrow (``\\u00b6``)"
+msgstr "段落記号（``\\u00b6``）"
+
+#: ../../reference/configuration.rst:292
+msgid "Glyph or text used for permalink anchors."
+msgstr "固定リンクに使う記号や文字。"
+
+#: ../../reference/configuration.rst:293
+msgid "``html_baseurl``"
+msgstr "``html_baseurl``"
+
+#: ../../reference/configuration.rst:296
+msgid "Canonical base URL used for sitemaps and metadata."
+msgstr "サイトマップとメタデータの正規の基準 URL。"
+
+#: ../../reference/configuration.rst:297
+msgid "``html_context``"
+msgstr "``html_context``"
+
+#: ../../reference/configuration.rst:300
+msgid "Custom dictionary of variables exposed to Jinja templates."
+msgstr "Jinja テンプレートに渡す追加変数の辞書。"
+
+#: ../../reference/configuration.rst:301
+msgid "``html_additional_pages``"
+msgstr "``html_additional_pages``"
+
+#: ../../reference/configuration.rst:304
+msgid "Custom pages to render: ``{ \"page_name\" = \"template.html\" }``."
+msgstr "追加ページ: ``{ \"page_name\" = \"template.html\" }``。"
+
+#: ../../reference/configuration.rst:306
+msgid "PDF and Typst options"
+msgstr "PDF と Typst の設定"
+
+#: ../../reference/configuration.rst:309
+msgid "PDF options"
+msgstr "PDF の設定"
+
+#: ../../reference/configuration.rst:317
+msgid "``pdf_paper_size``"
+msgstr "``pdf_paper_size``"
+
+#: ../../reference/configuration.rst:319
+msgid "``\"a4\"``"
+msgstr "``\"a4\"``"
+
+#: ../../reference/configuration.rst:320
+msgid "Paper format: ``\"a4\"`` or ``\"us-letter\"``."
+msgstr "用紙サイズ: ``\"a4\"`` または ``\"us-letter\"``。"
+
+#: ../../reference/configuration.rst:321
+msgid "``pdf_logo``"
+msgstr "``pdf_logo``"
+
+#: ../../reference/configuration.rst:324
+msgid "Logo image path for book cover pages."
+msgstr "表紙に使うロゴ画像のパス。"
+
+#: ../../reference/configuration.rst:325
+msgid "``pdf_toplevel_sectioning``"
+msgstr "``pdf_toplevel_sectioning``"
+
+#: ../../reference/configuration.rst:327
+msgid "``\"chapter\"``"
+msgstr "``\"chapter\"``"
+
+#: ../../reference/configuration.rst:328
+msgid ""
+"Section level mapped to book divisions: ``\"chapter\"`` or ``\"part\"``."
+msgstr "本の最上位の区分: ``\"chapter\"`` または ``\"part\"``。"
+
+#: ../../reference/configuration.rst:329
+msgid "``pdf_show_urls``"
+msgstr "``pdf_show_urls``"
+
+#: ../../reference/configuration.rst:331
+msgid "``\"no\"``"
+msgstr "``\"no\"``"
+
+#: ../../reference/configuration.rst:332
+msgid ""
+"URL display policy in print: ``\"no\"``, ``\"inline\"``, or "
+"``\"footnote\"``."
+msgstr "印刷版の URL 表示: ``\"no\"``、``\"inline\"``、``\"footnote\"``。"
+
+#: ../../reference/configuration.rst:333
+msgid "``pdf_preamble``"
+msgstr "``pdf_preamble``"
+
+#: ../../reference/configuration.rst:336
+msgid "Raw Typst source injected into generated document headers."
+msgstr "生成文書の先頭に挿入する Typst の生コード。"
+
+#: ../../reference/configuration.rst:337
+msgid "``pdf_font_paths``"
+msgstr "``pdf_font_paths``"
+
+#: ../../reference/configuration.rst:340
+msgid "Additional directory paths searched for custom OTF/TTF fonts."
+msgstr "追加の OTF/TTF フォントを探すディレクトリ。"
+
+#: ../../reference/configuration.rst:341
+msgid "``pdf_packages``"
+msgstr "``pdf_packages``"
+
+#: ../../reference/configuration.rst:343
+msgid "``\"download\"``"
+msgstr "``\"download\"``"
+
+#: ../../reference/configuration.rst:344
+msgid "Package resolution strategy: ``\"download\"`` or ``\"offline\"``."
+msgstr "パッケージ解決の方針: ``\"download\"`` または ``\"offline\"``。"
+
+#: ../../reference/configuration.rst:345
+msgid "``typst``"
+msgstr "``typst``"
+
+#: ../../reference/configuration.rst:347
+msgid "``\"typst\"``"
+msgstr "``\"typst\"``"
+
+#: ../../reference/configuration.rst:348
+msgid "System binary name or absolute path to Typst CLI."
+msgstr "システムの Typst CLI の名前または絶対パス。"
+
+#: ../../reference/configuration.rst:350
+msgid "Defining PDF books"
+msgstr "PDF の本を定義する"
+
+#: ../../reference/configuration.rst:353
+msgid ""
+"The ``[[pdf_documents]]`` table defines one or more books built from the "
+"project:"
+msgstr "``[[pdf_documents]]`` テーブルで、このプロジェクトから作る本を一冊以上定義します。"
+
+#: ../../reference/configuration.rst:369
+#: ../../reference/configuration.rst:372
+msgid "MyST Markdown options"
+msgstr "MyST Markdown の設定"
+
+#: ../../reference/configuration.rst:380
+msgid "``myst_enable_extensions``"
+msgstr "``myst_enable_extensions``"
+
+#: ../../reference/configuration.rst:382
+msgid "``[\"dollarmath\"]``"
+msgstr "``[\"dollarmath\"]``"
+
+#: ../../reference/configuration.rst:383
+msgid ""
+"Syntax extensions: ``\"colon_fence\"``, ``\"deflist\"``, "
+"``\"dollarmath\"``, ``\"fieldlist\"``, ``\"tasklist\"``, "
+"``\"substitution\"``."
+msgstr ""
+"構文拡張: "
+"``\"colon_fence\"``、``\"deflist\"``、``\"dollarmath\"``、``\"fieldlist\"``、``\"tasklist\"``、``\"substitution\"``。"
+
+#: ../../reference/configuration.rst:384
+msgid "``myst_heading_anchors``"
+msgstr "``myst_heading_anchors``"
+
+#: ../../reference/configuration.rst:387
+msgid ""
+"Heading level depth that automatically generates slug anchor targets "
+"(``0`` disables)."
+msgstr "見出しからアンカーを作る深さ。``0`` で無効になります。"
+
+#: ../../reference/configuration.rst:388
+msgid "``myst_substitutions``"
+msgstr "``myst_substitutions``"
+
+#: ../../reference/configuration.rst:391
+msgid ""
+"Variable substitutions available in Markdown documents: ``{key = "
+"\"value\"}``."
+msgstr "Markdown 文書で使う変数の置換。例: ``{key = \"value\"}``。"
+
+#: ../../reference/configuration.rst:392
+msgid "``myst_url_schemes``"
+msgstr "``myst_url_schemes``"
+
+#: ../../reference/configuration.rst:394
+msgid "``[\"http\", ...]``"
+msgstr "``[\"http\", ...]``"
+
+#: ../../reference/configuration.rst:395
+msgid "Recognized URI schemes treated as external links."
+msgstr "外部リンクとして認識する URI スキーム。"
+
+#: ../../reference/configuration.rst:396
+msgid "``myst_commonmark_only``"
+msgstr "``myst_commonmark_only``"
+
+#: ../../reference/configuration.rst:399
+msgid ""
+"Restricts parser strictly to CommonMark syntax without MyST extensions."
+msgstr "MyST 拡張を使わず、CommonMark の構文だけを解析します。"
+
+#: ../../reference/configuration.rst:401
+msgid "Intersphinx options"
+msgstr "Intersphinx の設定"
+
+#: ../../reference/configuration.rst:414
+msgid "See :doc:`../intersphinx` for full workflow instructions."
+msgstr "詳しい手順は :doc:`../intersphinx` を参照してください。"
+
+#: ../../reference/configuration.rst:416
+msgid "Python autodoc options"
+msgstr "Python autodoc の設定"
+
+#: ../../reference/configuration.rst:419
+msgid "Autodoc options"
+msgstr "Autodoc の設定"
+
+#: ../../reference/configuration.rst:427
+msgid "``autodoc_source_paths``"
+msgstr "``autodoc_source_paths``"
+
+#: ../../reference/configuration.rst:430
+msgid "Directories added to Python module search path for static analysis."
+msgstr "静的解析で Python モジュールを探すディレクトリ。"
+
+#: ../../reference/configuration.rst:431
+msgid "``autoclass_content``"
+msgstr "``autoclass_content``"
+
+#: ../../reference/configuration.rst:433
+msgid "``\"class\"``"
+msgstr "``\"class\"``"
+
+#: ../../reference/configuration.rst:434
+msgid ""
+"Docstring source for classes: ``\"class\"``, ``\"init\"``, or "
+"``\"both\"``."
+msgstr "クラスの docstring の取得元: ``\"class\"``、``\"init\"``、``\"both\"``。"
+
+#: ../../reference/configuration.rst:435
+msgid "``autodoc_member_order``"
+msgstr "``autodoc_member_order``"
+
+#: ../../reference/configuration.rst:437
+msgid "``\"alphabetical\"``"
+msgstr "``\"alphabetical\"``"
+
+#: ../../reference/configuration.rst:438
+msgid ""
+"Member ordering: ``\"alphabetical\"``, ``\"bysource\"``, or "
+"``\"groupwise\"``."
+msgstr "メンバーの並び順: ``\"alphabetical\"``、``\"bysource\"``、``\"groupwise\"``。"
+
+#: ../../reference/configuration.rst:439
+msgid "``autodoc_typehints``"
+msgstr "``autodoc_typehints``"
+
+#: ../../reference/configuration.rst:441
+msgid "``\"signature\"``"
+msgstr "``\"signature\"``"
+
+#: ../../reference/configuration.rst:442
+msgid ""
+"Type hint placement: ``\"signature\"``, ``\"description\"``, or "
+"``\"none\"``."
+msgstr "型ヒントの表示位置: ``\"signature\"``、``\"description\"``、``\"none\"``。"
+
+#: ../../reference/configuration.rst:443
+msgid "``autodoc_default_options``"
+msgstr "``autodoc_default_options``"
+
+#: ../../reference/configuration.rst:446
+msgid "Default directive options applied to all ``auto*`` directives."
+msgstr "すべての ``auto*`` ディレクティブに適用する既定の設定。"
+
+#: ../../reference/configuration.rst:448
+msgid "See :doc:`../autodoc` for complete discovery rules."
+msgstr "検出規則の詳細は :doc:`../autodoc` を参照してください。"
+
+#: ../../reference/configuration.rst:450
+msgid "Odin API documentation options"
+msgstr "Odin API 文書の設定"
+
+#: ../../reference/configuration.rst:453
+msgid "Odin domain options"
+msgstr "Odin ドメインの設定"
+
+#: ../../reference/configuration.rst:461
+msgid "``odin_autoapi_dirs``"
+msgstr "``odin_autoapi_dirs``"
+
+#: ../../reference/configuration.rst:464
+msgid "Source directories scanned for Odin packages."
+msgstr "Odin パッケージを探すソースディレクトリ。"
+
+#: ../../reference/configuration.rst:465
+msgid "``odin_autoapi_root``"
+msgstr "``odin_autoapi_root``"
+
+#: ../../reference/configuration.rst:467
+msgid "``\"api\"``"
+msgstr "``\"api\"``"
+
+#: ../../reference/configuration.rst:468
+msgid "Destination subfolder for generated Odin API documentation."
+msgstr "生成する Odin API 文書の出力サブディレクトリ。"
+
+#: ../../reference/configuration.rst:469
+msgid "``odin_autoapi_options``"
+msgstr "``odin_autoapi_options``"
+
+#: ../../reference/configuration.rst:471
+msgid "``[\"members\", \"undoc-members\"]``"
+msgstr "``[\"members\", \"undoc-members\"]``"
+
+#: ../../reference/configuration.rst:472
+msgid "Member inclusion filters."
+msgstr "含めるメンバーのフィルター。"
+
+#: ../../reference/configuration.rst:473
+msgid "``odin_autoapi_member_order``"
+msgstr "``odin_autoapi_member_order``"
+
+#: ../../reference/configuration.rst:475
+msgid "``\"source\"``"
+msgstr "``\"source\"``"
+
+#: ../../reference/configuration.rst:476
+msgid "Member ordering: ``\"source\"`` or ``\"alphabetical\"``."
+msgstr "メンバーの並び順: ``\"source\"`` または ``\"alphabetical\"``。"
+
+#: ../../reference/configuration.rst:478
+msgid "See :doc:`../odin` for complete Odin domain usage."
+msgstr "Odin ドメインの詳しい使い方は :doc:`../odin` を参照してください。"
+
+#: ../../reference/configuration.rst:480
+msgid "Internationalization options"
+msgstr "国際化の設定"
+
+#: ../../reference/configuration.rst:483
+msgid "i18n options"
+msgstr "i18n の設定"
+
+#: ../../reference/configuration.rst:491
+msgid "``locale_dirs``"
+msgstr "``locale_dirs``"
+
+#: ../../reference/configuration.rst:493
+msgid "``[\"locales\"]``"
+msgstr "``[\"locales\"]``"
+
+#: ../../reference/configuration.rst:494
+msgid "Directories searched for gettext message catalogs."
+msgstr "gettext カタログを探すディレクトリ。"
+
+#: ../../reference/configuration.rst:495
+msgid "``gettext_compact``"
+msgstr "``gettext_compact``"
+
+#: ../../reference/configuration.rst:498
+msgid "Consolidates subdocument messages into one catalog per directory."
+msgstr "同じディレクトリの文書を一つのカタログにまとめます。"
+
+#: ../../reference/configuration.rst:499
+msgid "``gettext_uuid``"
+msgstr "``gettext_uuid``"
+
+#: ../../reference/configuration.rst:502
+msgid "Emits stable UUIDs in POT message headers."
+msgstr "POT メッセージに安定した UUID を付けます。"
+
+#: ../../reference/configuration.rst:503
+msgid "``gettext_auto_build``"
+msgstr "``gettext_auto_build``"
+
+#: ../../reference/configuration.rst:506
+msgid ""
+"Compiles ``.po`` files into binary ``.mo`` catalogs during the build."
+msgstr "ビルド時に ``.po`` をバイナリの ``.mo`` にコンパイルします。"
+
+#: ../../reference/configuration.rst:507
+msgid "``figure_language_filename``"
+msgstr "``figure_language_filename``"
+
+#: ../../reference/configuration.rst:509
+msgid "``\"{root}.{language}{ext}\"``"
+msgstr "``\"{root}.{language}{ext}\"``"
+
+#: ../../reference/configuration.rst:510
+msgid "Filename template for localized image selection."
+msgstr "言語別の画像を選ぶファイル名テンプレート。"
+
+#: ../../reference/configuration.rst:512
+msgid "See :doc:`../intl` for translation instructions."
+msgstr "翻訳手順は :doc:`../intl` を参照してください。"
+
+#: ../../reference/formats.rst:1
+msgid "Readers, renderers, and builders"
+msgstr "リーダー、レンダラー、ビルダー"
+
+#: ../../reference/formats.rst:4
+msgid ""
+"A reader understands a source language. A renderer writes one document "
+"tree. A builder coordinates a project and publishes its output. These are "
+"different responsibilities."
+msgstr "リーダーはソース言語を理解し、レンダラーは一つの文書木を書き、ビルダーはプロジェクトを調整して公開する。それぞれ役割が異なる。"
+
+#: ../../reference/formats.rst:8
+msgid "Source routes"
+msgstr "ソースの処理経路"
+
+#: ../../reference/formats.rst:12
+msgid "Input"
+msgstr "入力"
+
+#: ../../reference/formats.rst:13
+msgid "Reader"
+msgstr "リーダー"
+
+#: ../../reference/formats.rst:14
+msgid "Route"
+msgstr "経路"
+
+#: ../../reference/formats.rst:15
+msgid "RST in a project"
+msgstr "プロジェクト内の RST"
+
+#: ../../reference/formats.rst:16
+msgid "RST plus the built-in Sphinx layer"
+msgstr "RST と組み込み Sphinx 層"
+
+#: ../../reference/formats.rst:17
+msgid "Project graph to HTML, Typst/PDF, text, or catalogs."
+msgstr "プロジェクトグラフから HTML、Typst/PDF、テキスト、カタログを生成します。"
+
+#: ../../reference/formats.rst:18
+msgid "Markdown in a project"
+msgstr "プロジェクト内の Markdown"
+
+#: ../../reference/formats.rst:19
+msgid "MyST-compatible Markdown layer"
+msgstr "MyST 互換の Markdown 層"
+
+#: ../../reference/formats.rst:20
+msgid "The same project graph and builders."
+msgstr "同じプロジェクトグラフとビルダーを使います。"
+
+#: ../../reference/formats.rst:21
+msgid "``convert file.md``"
+msgstr "``convert file.md``"
+
+#: ../../reference/formats.rst:22
+msgid "CommonMark by default"
+msgstr "既定は CommonMark"
+
+#: ../../reference/formats.rst:23
+msgid "One document to HTML or Typst/PDF."
+msgstr "1 つの文書から HTML または Typst/PDF を生成します。"
+
+#: ../../reference/formats.rst:24
+msgid "``convert file.typ``"
+msgstr "``convert file.typ``"
+
+#: ../../reference/formats.rst:25
+msgid "Native Typst adapter"
+msgstr "ネイティブ Typst アダプター"
+
+#: ../../reference/formats.rst:26
+msgid "Typst compilation outside Guidedoc's semantic tree."
+msgstr "Guidedoc の意味木の外で Typst をコンパイルします。"
+
+#: ../../reference/formats.rst:28
+msgid "Builders"
+msgstr "ビルダー"
+
+#: ../../reference/formats.rst:31
+msgid "``html``"
+msgstr "``html``"
+
+#: ../../reference/formats.rst:32
+msgid ""
+"One HTML file for each document, with indexes, search, and an inventory."
+msgstr "各文書の HTML ファイルと、索引・検索・インベントリを生成します。"
+
+#: ../../reference/formats.rst:34
+msgid "``dirhtml``"
+msgstr "``dirhtml``"
+
+#: ../../reference/formats.rst:35
+msgid "Directory-style document URLs."
+msgstr "ディレクトリ形式の文書 URL。"
+
+#: ../../reference/formats.rst:37
+msgid "``singlehtml``"
+msgstr "``singlehtml``"
+
+#: ../../reference/formats.rst:38
+msgid "One main HTML page with document sections and local references."
+msgstr "文書ごとの節とローカル参照を含む、1 つのメイン HTML ページです。"
+
+#: ../../reference/formats.rst:40
+msgid "``pdf``"
+msgstr "``pdf``"
+
+#: ../../reference/formats.rst:41
+msgid ""
+"Typst books defined by the project. LaTeX builder aliases select this "
+"route."
+msgstr "プロジェクトが定義する Typst の本を生成します。LaTeX ビルダーの別名もこの経路を選びます。"
+
+#: ../../reference/formats.rst:43
+msgid "``text``"
+msgstr "``text``"
+
+#: ../../reference/formats.rst:44
+msgid "Plain text files for documents."
+msgstr "文書ごとのプレーンテキストファイル。"
+
+#: ../../reference/formats.rst:46
+msgid "``gettext``"
+msgstr "``gettext``"
+
+#: ../../reference/formats.rst:47
+msgid "Message templates for translation."
+msgstr "翻訳用のメッセージテンプレート。"
+
+#: ../../reference/formats.rst:49
+msgid "``dummy``"
+msgstr "``dummy``"
+
+#: ../../reference/formats.rst:50
+msgid "Reads and resolves the project without publishing an artifact."
+msgstr "成果物を公開せずにプロジェクトを読み、参照を解決します。"
+
+#: ../../reference/formats.rst:52
+msgid "Coverage is evidence"
+msgstr "対応範囲は検証の証拠"
+
+#: ../../reference/formats.rst:55
+msgid ""
+"``guidedog formats`` reports the executable's actual adapters. The "
+"compatibility page records pinned suites and real-project checks. Passing "
+"a CommonMark suite does not establish complete MyST coverage. Reading RST "
+"does not establish every Python extension's behavior. See "
+":doc:`../compatibility`."
+msgstr ""
+"``guidedog formats`` "
+"は実行ファイルにあるアダプターを示す。互換性ページは固定テスト群と実プロジェクトの検証を記録する。CommonMark 合格は MyST "
+"全対応を、RST 読み取りは全 Python 拡張の再現を意味しない。\\ :doc:`../compatibility` を参照。"
+
+#: ../../reference/index.rst:1
+msgid "Reference"
+msgstr "リファレンス"
+
+#: ../../reference/index.rst:4
+msgid ""
+"These pages state the contracts. They are meant to be searched and "
+"consulted. Start with a tutorial when you need a first example."
+msgstr "これらのページは規約を示し、検索・参照するためにあります。最初の例が必要ならチュートリアルから始めてください。"
+
+#~| msgid ""
+#~| "``register ID PATH`` runs the program once, after asking (``--yes`` "
+#~| "answers), to read what it is, and pins its SHA-256. ``run`` and "
+#~| "``publish`` check the pin before they start the program; a changed "
+#~| "program must be registered again. ``unregister`` removes only the "
+#~| "entry."
+#~ msgid ""
+#~ "``register ID PATH`` inspects the program after asking (``--yes`` "
+#~ "answers), then pins its SHA-256. Build plugins also pass qualification "
+#~ "before the entry is written; supply ``--project=DIR`` and "
+#~ "``--config=FILE`` when their checks need configuration. ``run`` and "
+#~ "``publish`` check the pin before starting the program; a changed "
+#~ "program must be registered again. ``unregister`` removes only the "
+#~ "entry."
+#~ msgstr ""
+#~ "``register ID PATH`` は確認を求めた後（``--yes`` で確認を省略できます）、プログラムを調べて SHA-256 "
+#~ "を固定します。ビルドプラグインは登録前に互換性チェックも通過する必要があります。設定が必要な場合は ``--project=DIR`` と "
+#~ "``--config=FILE`` を指定してください。``run`` と ``publish`` "
+#~ "は起動前にチェックサムを照合します。変更したプログラムは再登録が必要です。``unregister`` は登録項目だけを削除します。"
+
+#~ msgid "``\"¶\"``"
+#~ msgstr "``\"¶\"``"
+
+#~ msgid ""
+#~ "Manages Guidedog Discussions architectural RFC records and lifecycles."
+#~ msgstr "Guidedog Discussions の設計記録とライフサイクルを管理します。"
+
+#~ msgid ""
+#~ "Manages Guidedog Discussions architectural design proposals (RFCs):"
+#~ msgstr "Guidedog Discussions のアーキテクチャ設計提案（RFC）を管理します。"
+
+#~ msgid ""
+#~ "Required external backend not found (e.g. system Typst executable "
+#~ "missing)."
+#~ msgstr "必要な外部バックエンドが見つかりません。たとえば、システムに Typst の実行ファイルがない場合です。"
+
+#~ msgid ""
+#~ "Use ``guidedog COMMAND --help`` for the options accepted by the "
+#~ "current executable. The reference below describes the main operations."
+#~ msgstr ""
+#~ "``guidedog COMMAND --help`` "
+#~ "で、この実行ファイルが受け付けるオプションを確認できます。以下では主な操作を説明します。"
+
+#~ msgid "Builds and serves a local preview, rebuilding on edits."
+#~ msgstr "ローカルプレビューをビルド・配信し、編集時に再ビルドします。"
+
+#~ msgid "Removes the project's generated build output."
+#~ msgstr "プロジェクトの生成済み出力を削除します。"
+
+#~ msgid "Converts literal Sphinx configuration to TOML."
+#~ msgstr "Sphinx 設定のリテラルを TOML に変換します。"
+
+#~ msgid "Manages the separate discussion project."
+#~ msgstr "独立した議論プロジェクトを管理します。"
+
+#~ msgid "``-j N`` / ``-j auto``"
+#~ msgstr "``-j N`` / ``-j auto``"
+
+#~ msgid "Sets the reading worker count."
+#~ msgstr "読み取りワーカー数を設定します。"
+
+#~ msgid "Writes all output units."
+#~ msgstr "すべての出力単位を書き出します。"
+
+#~ msgid "``-E``"
+#~ msgstr "``-E``"
+
+#~ msgid "Ignores the saved environment."
+#~ msgstr "保存済みの環境を無視します。"
+
+#~ msgid "``-W``"
+#~ msgstr "``-W``"
+
+#~ msgid "Enables nitpicky reference checks."
+#~ msgstr "厳密な参照検査を有効にします。"
+
+#~ msgid "``-D name=value``"
+#~ msgstr "``-D name=value``"
+
+#~ msgid "Overrides a configuration value for the invocation."
+#~ msgstr "今回の呼び出しだけ設定値を上書きします。"
+
+#~ msgid "``-t TAG``"
+#~ msgstr "``-t TAG``"
+
+#~ msgid "Adds a tag used by conditional content."
+#~ msgstr "条件付きコンテンツ用のタグを追加します。"
+
+#~ msgid "``--budget=MIB``"
+#~ msgstr "``--budget=MIB``"
+
+#~ msgid "Sets the host's working-memory budget."
+#~ msgstr "ホストの作業メモリ予算を設定します。"
+
+#~ msgid "``--memory=disk``"
+#~ msgstr "``--memory=disk``"
+
+#~ msgid "Uses disk-backed working storage when the policy selects it."
+#~ msgstr "方針に応じてディスクを利用した作業ストレージを使います。"
+
+#~ msgid "``--diagnostics=json``"
+#~ msgstr "``--diagnostics=json``"
+
+#~ msgid "Emits structured reports without terminal color."
+#~ msgstr "端末の色を付けず、構造化した診断を出力します。"
+
+#~ msgid "Single-document conversion"
+#~ msgstr "単一文書の変換"
+
+#~ msgid ""
+#~ "A source suffix can select the reader. ``--from`` makes the choice "
+#~ "explicit. Existing outputs require ``--force``. ``--strict`` makes "
+#~ "warnings fail conversion. Raw input is a separate policy: "
+#~ "``--raw=omit`` or ``--raw=allow`` is explicit. ``--emit-typst`` keeps "
+#~ "the generated intermediate source for inspection."
+#~ msgstr ""
+#~ "拡張子でリーダーを選び、\\ ``--from`` で明示もできる。既存出力には ``--force`` が必要。\\ "
+#~ "``--strict`` は警告で変換を失敗させる。raw は別の方針で、\\ ``--raw=omit`` または "
+#~ "``--raw=allow`` を指定する。\\ ``--emit-typst`` は生成した中間ソースを確認用に残す。"
+
+#~ msgid "GDS management"
+#~ msgstr "GDS の管理"
+
+#~ msgid ""
+#~ "Use ``--dir`` for another discussion project. A committed state needs "
+#~ "both a reason and implementation evidence. No management command "
+#~ "performs a Git commit. For failure statuses, see :doc:`../errors`."
+#~ msgstr ""
+#~ "別の議論プロジェクトには ``--dir`` を使う。committed 状態には理由と実装の根拠が必要。管理コマンドは Git "
+#~ "コミットを行わない。失敗時の状態は :doc:`../errors` を参照。"
+
+#~ msgid ""
+#~ "``conf.toml`` contains data. Guidedog does not evaluate it as a "
+#~ "program. Many keys use the names of Sphinx's settings. Unknown keys "
+#~ "and values receive a location and a correction direction."
+#~ msgstr ""
+#~ "``conf.toml`` はデータで、Guidedog はプログラムとして評価しない。多くのキーは Sphinx "
+#~ "の設定名を使う。未知のキーや値には位置と修正方針を示す。"
+
+#~ msgid "A minimal project"
+#~ msgstr "最小のプロジェクト"
+
+#~ msgid "Project and sources"
+#~ msgstr "プロジェクトとソース"
+
+#~ msgid "``project``, ``author``, ``copyright``, ``version``, ``release``"
+#~ msgstr ""
+#~ "``project``\\ , ``author``\\ , ``copyright``\\ , ``version``\\ , "
+#~ "``release``"
+
+#~ msgid ""
+#~ "Supply publication metadata. Version is the short name; release is the "
+#~ "full name."
+#~ msgstr "公開用のメタデータです。version は短い版名、release は完全な版名です。"
+
+#~ msgid "``language``, ``today``, ``today_fmt``"
+#~ msgstr "``language``\\ , ``today``\\ , ``today_fmt``"
+
+#~ msgid ""
+#~ "Select the document language and date text. Language also guides "
+#~ "hyphenation."
+#~ msgstr "文書の言語と日付の表記を選びます。言語はハイフネーションにも使います。"
+
+#~ msgid "``root_doc``, ``source_suffix``, ``exclude_patterns``"
+#~ msgstr "``root_doc``\\ , ``source_suffix``\\ , ``exclude_patterns``"
+
+#~ msgid "Define discovery and the root of the reading order."
+#~ msgstr "文書の探索と読む順序のルートを定義します。"
+
+#~ msgid ""
+#~ "Adds readable resource directories outside the source root. It is a "
+#~ "trust boundary, not a way to publish the whole repository."
+#~ msgstr "ソースルート外の読み取り可能なリソースディレクトリを追加します。信頼の境界であり、リポジトリ全体を公開する方法ではありません。"
+
+#~ msgid ""
+#~ "Declares supported built-in Sphinx extension behavior. It does not "
+#~ "import arbitrary Python extension modules."
+#~ msgstr "対応する組み込み Sphinx 拡張の動作を宣言します。任意の Python 拡張モジュールはインポートしません。"
+
+#~ msgid "HTML"
+#~ msgstr "HTML"
+
+#~ msgid ""
+#~ "Searches project template directories before the built-in fallback."
+#~ msgstr "組み込みの代替より先にプロジェクトのテンプレートディレクトリを検索します。"
+
+#~ msgid "``html_static_path``, ``html_css_files``, ``html_js_files``"
+#~ msgstr ""
+#~ "``html_static_path``\\ , ``html_css_files``\\ , ``html_js_files``"
+
+#~ msgid "Copies theme resources and lists additional styles and scripts."
+#~ msgstr "テーマのリソースをコピーし、追加のスタイルとスクリプトを指定します。"
+
+#~ msgid ""
+#~ "``html_title``, ``html_short_title``, ``html_logo``, ``html_favicon``"
+#~ msgstr ""
+#~ "``html_title``\\ , ``html_short_title``\\ , ``html_logo``\\ , "
+#~ "``html_favicon``"
+
+#~ msgid "Defines the site's title and identity."
+#~ msgstr "サイトのタイトルと識別情報を定義します。"
+
+#~ msgid "Supplies typed template values and theme-specific options."
+#~ msgstr "型を保持するテンプレート値とテーマ固有のオプションを渡します。"
+
+#~ msgid "``mathjax_path``, ``mathjax_config_path``"
+#~ msgstr "``mathjax_path``\\ , ``mathjax_config_path``"
+
+#~ msgid "Selects the browser math component and its local configuration."
+#~ msgstr "ブラウザの数式コンポーネントとローカル設定を選びます。"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "Selects A4 or letter paper."
+#~ msgstr "A4 または letter の用紙を選びます。"
+
+#~ msgid "Defines separate books by root, filename, title, and author."
+#~ msgstr "ルート、ファイル名、タイトル、著者で個別の本を定義します。"
+
+#~ msgid "Supplies target-specific typesetting rules and a cover image."
+#~ msgstr "出力形式ごとの組版規則と表紙画像を指定します。"
+
+#~ msgid "``pdf_font_paths``, ``pdf_fonts``, ``pdf_packages``"
+#~ msgstr "``pdf_font_paths``\\ , ``pdf_fonts``\\ , ``pdf_packages``"
+
+#~ msgid ""
+#~ "Selects font directories, embedded fonts, and package download policy."
+#~ msgstr "フォントディレクトリ、組み込みフォント、パッケージ取得方針を選びます。"
+
+#~ msgid "Feature settings"
+#~ msgstr "機能の設定"
+
+#~ msgid ""
+#~ "See :doc:`../intl` for translation settings, :doc:`../intersphinx` for "
+#~ "inventory mappings, :doc:`../object-types` for declarative domains, "
+#~ ":doc:`../autodoc` for Python discovery, and :doc:`../odin` for Odin "
+#~ "API settings. :doc:`../templates` gives the complete page and book "
+#~ "template contracts."
+#~ msgstr ""
+#~ "翻訳設定は :doc:`../intl`\\ 、一覧のマッピングは :doc:`../intersphinx`\\ 、宣言的ドメインは "
+#~ ":doc:`../object-types`\\ 、Python の探索は :doc:`../autodoc`\\ 、Odin API "
+#~ "設定は :doc:`../odin`\\ 。ページと書籍の完全なテンプレート契約は :doc:`../templates`\\ 。"

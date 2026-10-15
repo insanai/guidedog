@@ -1,0 +1,29 @@
+Guidedog multilingual book fonts
+
+Noto Serif CJK 2.003, regular and bold, Simplified Chinese (SC), Japanese (JP), Korean (KR).
+Source: https://github.com/notofonts/noto-cjk/tree/Serif2.003/Serif/OTF
+License: OFL-CJK.txt (SIL Open Font License 1.1). Original OTF files are unchanged.
+
+Noto Serif Devanagari 2.006, regular and bold.
+Source: https://github.com/google/fonts/tree/main/ofl/notoserifdevanagari
+Retrieved: 2026-10-01. License: OFL-Devanagari.txt.
+Static instances were made from the upstream variable font at wght=400/700, wdth=100.
+Upstream variable-font SHA-256: 1191e07bfeb062d80e252eb85b0eafdfbda1e350707a2a60628668e8f677dbbb
+
+The CJK files are not kept in the repository (25 MB each): tools/fetch-fonts.sh
+downloads them from the source above and checks the SHA-256 sums below.
+
+These complete font files are for PDF, through pdf_font_paths. They are outside
+html_static_path and are not downloaded by web readers. The manual web edition
+uses WOFF2 subsets under docs/manual/_static/data/fonts; these retain shaping,
+layout features, and upstream names. Missing web glyphs use system fallbacks.
+
+SHA-256 of bundled font files:
+861a2b2c0e24b23745c262be8c3fdef63f12628f0492fb120ee51aa55c503af8  NotoSerifCJKjp-Bold.otf
+d9854c7a8ef170b5a7932558856fd64eb8de0b007cd823fed6f9f514ad2803d3  NotoSerifCJKjp-Regular.otf
+10cc03741178ad6d2747df8497d911e34b167d0474a826fb9d866c402cbe3d8f  NotoSerifCJKkr-Bold.otf
+77b4b741f864d27f15e90f275b17106dde90b2ad28f82bab72dc95805db5fb42  NotoSerifCJKkr-Regular.otf
+8af07d4b6c2e82bcc72a30e066eaf295f11b9424f4aad2eaa9fe0e9c3b38fc73  NotoSerifCJKsc-Bold.otf
+2a2eae2628df83556c54018c41e20fa532c1b862c5256ae8b3f23feb918d12ca  NotoSerifCJKsc-Regular.otf
+d9c9eba722e9a1f256739626beb90f9cf1acf8b660d0b7eaf43b1e87c949e1a2  NotoSerifDevanagari-Bold.ttf
+c30e7733bc86331bd691c6c53fc85f9d7a3e388efb7624119fdbf5b586afde3c  NotoSerifDevanagari-Regular.ttf

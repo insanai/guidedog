@@ -1,0 +1,369 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:42+0800\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: Guidedog translation contributors\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../repository.md:1
+msgid "Guidedog"
+msgstr "Guidedog"
+
+#: ../../repository.md:3
+msgid ""
+"{download}`English <_static/repository/README.md>` · {download}`简体中文 "
+"<_static/repository/README.zh-CN.md>` · {download}`日本語 "
+"<_static/repository/README.ja.md>` · {download}`한국어 "
+"<_static/repository/README.ko.md>` · {download}`हिन्दी "
+"<_static/repository/README.hi.md>` · {download}`Español "
+"<_static/repository/README.es.md>` · {download}`Deutsch "
+"<_static/repository/README.de.md>`"
+msgstr ""
+"{download}`English <_static/repository/README.md>` · {download}`简体中文 "
+"<_static/repository/README.zh-CN.md>` · {download}`日本語 "
+"<_static/repository/README.ja.md>` · {download}`한국어 "
+"<_static/repository/README.ko.md>` · {download}`हिन्दी "
+"<_static/repository/README.hi.md>` · {download}`Español "
+"<_static/repository/README.es.md>` · {download}`Deutsch "
+"<_static/repository/README.de.md>`"
+
+#: ../../repository.md:5
+msgid "**Write once. Explain well. Publish on the web and on paper.**"
+msgstr "**写一份源码，讲清楚道理，发布到网页与纸上。**"
+
+#: ../../repository.md:7
+msgid ""
+"Guidedog builds HTML documentation sites and PDF books from "
+"reStructuredText and Markdown. It is written in Odin. Its conversion "
+"engine is **Guidedoc**, and Typst typesets the PDF pages. No Python "
+"environment or LaTeX installation is needed."
+msgstr ""
+"Guidedog 将 reStructuredText 和 Markdown 构建为 HTML 文档网站和 PDF 图书。它使用 Odin "
+"编写。转换引擎名为 **Guidedoc**，PDF 由 Typst 排版。无需 Python 环境或 LaTeX 安装。"
+
+#: ../../repository.md:9
+msgid ""
+"Sphinx inspires the authoring workflow. Guidedog is an independent "
+"system: configuration is declarative TOML, API extraction is static, and "
+"Python configuration and extensions are never executed. Complete Sphinx "
+"compatibility is not a goal."
+msgstr ""
+"Sphinx 启发了它的写作流程。Guidedog 是独立系统：配置使用声明式 TOML，API 提取采用静态分析，绝不执行 Python "
+"配置或扩展。完全兼容 Sphinx 不是目标。"
+
+#: ../../repository.md:11
+msgid "Start a project"
+msgstr "创建项目"
+
+#: ../../repository.md:20
+msgid ""
+"The project contains `conf.toml`, `index.rst`, `_templates/layout.html`, "
+"`_templates/book.typ`, and `_static/`. Templates are ordinary files you "
+"can edit. HTML provides navigation, search, code highlighting, diagrams, "
+"and equations. PDF books provide chapters, cross-references, figures, "
+"indexes, and language-aware typesetting."
+msgstr ""
+"项目包含 "
+"`conf.toml`、`index.rst`、`_templates/layout.html`、`_templates/book.typ` 和 "
+"`_static/`。模板是普通文件，可直接编辑。HTML 提供导航、搜索、代码高亮、图表和公式。PDF "
+"提供章节、交叉引用、插图、索引及按语言优化的排版。"
+
+#: ../../repository.md:22
+msgid ""
+"The default theme is light. Readers can choose dark or the system theme. "
+"The manual detects the browser language on its landing page and "
+"repository overview. A saved choice takes precedence; direct links to an "
+"edition or chapter remain explicit requests."
+msgstr ""
+"默认采用浅色主题，也可选择深色或跟随系统。手册首页和仓库概览会按浏览器语言选择版本。已保存的选择优先；直接进入某个语言版本或章节时，会保留该链接的选择。"
+
+#: ../../repository.md:30
+msgid "Install"
+msgstr "安装"
+
+#: ../../repository.md:32
+msgid ""
+"Each [release](https://github.com/insanai/guidedog/releases) has an "
+"archive for Linux (x86-64 and ARM64), macOS (Apple silicon and Intel), "
+"and Windows (x86-64). Each archive carries Typst, Graphviz, and "
+"tree-sitter, so building sites and books needs nothing else installed. "
+"Linux needs glibc 2.35 or later and libcurl; macOS needs version 12 or "
+"later. Download the archive for your system and `SHA256SUMS`, then check "
+"and install it:"
+msgstr ""
+"每个[版本](https://github.com/insanai/guidedog/releases)都提供 Linux（x86-64 和 "
+"ARM64）、macOS（Apple 芯片和 Intel）和 Windows（x86-64）的压缩包。每个压缩包都带有 "
+"Typst、Graphviz 和 tree-sitter，构建网站和图书无需再安装其他软件。Linux 需要 glibc 2.35 或更新版本以及 "
+"libcurl；macOS 需要 12 或更新版本。下载与系统对应的压缩包和 `SHA256SUMS`，校验后安装："
+
+#: ../../repository.md:40
+msgid ""
+"On macOS, install from the official [Guidedog Homebrew "
+"tap](https://github.com/insanai/homebrew-guidedog). Homebrew selects the "
+"Apple silicon or Intel archive. The tap also supports Linux:"
+msgstr ""
+"在 macOS 上，通过官方 [Guidedog Homebrew "
+"tap](https://github.com/insanai/homebrew-guidedog) 安装。Homebrew 会自动选择 "
+"Apple 芯片或 Intel 芯片对应的安装包。该 tap 也支持 Linux："
+
+#: ../../repository.md:48
+msgid ""
+"On Windows, unzip the archive and add its folder to `PATH`; keep the "
+"Graphviz DLLs and `config8` beside `guidedog.exe`. The programs are not "
+"code-signed: on macOS, remove the quarantine from a browser download with "
+"`xattr -d com.apple.quarantine guidedog`. The release notes describe each "
+"platform's limits."
+msgstr ""
+"在 Windows 上，解压压缩包并把其文件夹加入 `PATH`；Graphviz 的 DLL 和 `config8` 要与 "
+"`guidedog.exe` 放在一起。这些程序没有代码签名：在 macOS 上，用 `xattr -d com.apple.quarantine "
+"guidedog` 解除浏览器下载文件的隔离属性。各平台的限制见版本说明。"
+
+#: ../../repository.md:50
+msgid "Build from source"
+msgstr "从源码构建"
+
+#: ../../repository.md:52
+msgid ""
+"Install Odin `dev-2026-10` (`tools/install-toolchain.sh odin DIR` fetches "
+"and checks it), a C compiler, and on Linux the libcurl, expat, and zlib "
+"development packages. Build the native libraries, then Guidedog:"
+msgstr ""
+"安装 Odin `dev-2026-10`（`tools/install-toolchain.sh odin DIR` 会下载并校验它）、C "
+"编译器，Linux 上还需要 libcurl、expat 和 zlib 的开发包。先构建原生库，再构建 Guidedog："
+
+#: ../../repository.md:60
+msgid ""
+"`build/guidedog` then uses an installed Typst 0.15.1 for PDF. To embed "
+"the Typst compiler as the releases do, install Rust and Cargo and run:"
+msgstr ""
+"之后 `build/guidedog` 使用已安装的 Typst 0.15.1 生成 PDF。若要像发布版本那样内置 Typst 编译器，安装 "
+"Rust 和 Cargo 后运行："
+
+#: ../../repository.md:67
+msgid ""
+"On Windows, use Git Bash with Visual Studio's C++ tools and LLVM. "
+"Graphviz has no static Windows build, so run `native/graphviz/windows.sh` "
+"instead of `build.sh`: it installs the official Graphviz 16.1.0 DLLs, "
+"which `tools/release/build.sh` copies beside `build/guidedog.exe`. "
+"`tools/release/suites.sh` runs the test suites, and "
+"[RELEASING.md](https://github.com/insanai/guidedog/blob/main/RELEASING.md) "
+"describes the release workflow."
+msgstr ""
+"在 Windows 上，请使用 Git Bash，并安装 Visual Studio 的 C++ 工具和 LLVM。Graphviz 没有 "
+"Windows 静态构建，因此运行 `native/graphviz/windows.sh` 代替 `build.sh`：它会安装官方的 "
+"Graphviz 16.1.0 DLL，`tools/release/build.sh` 再把它们复制到 `build/guidedog.exe` "
+"旁边。`tools/release/suites.sh` "
+"运行测试套件，[RELEASING.md](https://github.com/insanai/guidedog/blob/main/RELEASING.md) "
+"介绍发布流程。"
+
+#: ../../repository.md:69
+msgid "Translate with Guidedog"
+msgstr "用 Guidedog 翻译"
+
+#: ../../repository.md:81
+msgid ""
+"Translate and review `msgstr` values in the PO files. Guidedog extracts "
+"POT files, merges catalogs, reports progress, and builds each edition. It "
+"does not invent translations. Commands, paths, code, API names, and "
+"reference targets stay unchanged. Only the manual and repository overview "
+"are translated; API and GDS remain English. See the [manual build "
+"instructions](howto/maintain-docs.rst) for assembling all editions and "
+"PDF books."
+msgstr ""
+"在 PO 文件中填写并审阅 `msgstr`。Guidedog 负责提取 "
+"POT、合并目录、报告进度和构建各语言版本，不会自动编写翻译。命令、路径、代码、API 名称和引用目标保持不变。只翻译手册和仓库概览，API 与 "
+"GDS 保持英文。汇总所有网站版本和 PDF 的方法见[手册构建说明](howto/maintain-docs.rst)。"
+
+#: ../../repository.md:83
+msgid ""
+"GitHub readers choose a README language using the links above. Automatic "
+"language selection belongs to the generated documentation website."
+msgstr "GitHub 上的读者用上方链接选择 README 语言。自动语言选择由生成的文档网站提供。"
+
+#: ../../repository.md:85
+msgid ""
+"Write your own publisher with the {doc}`step-by-step plugin chapter "
+"<plugins>`. Start with a working folder publisher, then follow the real "
+"GitHub Pages implementation through ownership, credentials, conditional "
+"updates and recovery. `guidedog publish --timeout=SECONDS` bounds each "
+"complete exchange (default: 300 seconds); choose a value longer than "
+"`--wait`. After an unknown outcome, recover before publishing again."
+msgstr "想编写自己的发布器，请阅读{doc}`插件开发教程 <plugins>`。先运行文件夹发布器，再沿着实际的 GitHub Pages 实现理解内存所有权、凭据、条件更新和恢复。`guidedog publish --timeout=SECONDS` 限制每次完整交互的时间，默认 300 秒，应大于 `--wait`。结果未知时，先恢复，再重新发布。"
+
+#: ../../repository.md:87
+msgid "Keep discussions"
+msgstr "维护讨论"
+
+#: ../../repository.md:89
+msgid ""
+"`dsc` keeps proposals and decisions as reStructuredText records, one file "
+"each, and builds them into a website and PDF books with Guidedog. Each "
+"catalog has a prefix: Guidedog's design records use `gds`, and another "
+"project might use `eds`."
+msgstr ""
+"`dsc` 把提案和决策保存为 reStructuredText 记录，每条一个文件，并用 Guidedog 构建成网站和 PDF "
+"图书。每个目录都有前缀：Guidedog 的设计记录使用 `gds`，其他项目可以使用 `eds`。"
+
+#: ../../repository.md:100
+msgid ""
+"A catalog's `discussion.toml` sets its lifecycle states, record types, "
+"and numbering, and `dsc config` prints it. `dsc` comes in the Guidedog "
+"archive and builds with the installed `guidedog`. `dscc` is `dsc` with "
+"Guidedog built in, for a machine with nothing else installed; each "
+"release has a `dscc` archive for every platform. `guidedog gds` runs the "
+"same commands on Guidedog's own `docs/gds`. See [Keep a discussion "
+"catalog](howto/discussions.rst)."
+msgstr ""
+"目录的 `discussion.toml` 设定它的生命周期状态、记录类型和编号，`dsc config` 会打印它。`dsc` 随 "
+"Guidedog 发行包提供，用已安装的 `guidedog` 构建。`dscc` 是内置 Guidedog 的 "
+"`dsc`，适合未安装其他程序的机器；每个版本都为各平台提供 `dscc` 发行包。`guidedog gds` 对 Guidedog 自己的 "
+"`docs/gds` 运行同样的命令。见[维护讨论目录](howto/discussions.rst)。"
+
+#: ../../repository.md:102
+msgid "Read and embed"
+msgstr "阅读与嵌入"
+
+#: ../../repository.md:104
+msgid ""
+"[Manual](index.rst): tutorials, topics, practical tasks, reference, and "
+"internals."
+msgstr "[手册](index.rst)：教程、专题、操作指南、参考和内部原理。"
+
+#: ../../repository.md:105
+msgid ""
+"[API reference](api/index): generated from Odin source and included in "
+"the manual's PDF appendix."
+msgstr "[API 参考](api/index)：从 Odin 源码生成，并作为附录收入手册 PDF。"
+
+#: ../../repository.md:106
+msgid ""
+"{download}`Library guide <_static/repository/library-README.md>`: "
+"caller-owned workspaces, memory, and conversion examples."
+msgstr ""
+"{download}`库指南 <_static/repository/library-README.md>`：调用方拥有的工作区、内存和转换示例。"
+
+#: ../../repository.md:107
+msgid ""
+"[Templates](templates.rst): customize HTML with Jinja and books with "
+"Typst."
+msgstr "[模板](templates.rst)：用 Jinja 自定义 HTML，用 Typst 自定义图书。"
+
+#: ../../repository.md:108
+msgid ""
+"{download}`GDS <_static/repository/gds-README.md>`: numbered design "
+"records and implementation decisions."
+msgstr "{download}`GDS <_static/repository/gds-README.md>`：编号的设计记录和实现决策。"
+
+#: ../../repository.md:109
+msgid ""
+"{download}`Discussion library <_static/repository/discussion-README.md>`: "
+"the catalogs that `dsc`, `dscc`, and `guidedog gds` keep."
+msgstr ""
+"{download}`讨论库 <_static/repository/discussion-README.md>`：`dsc`、`dscc` 和 "
+"`guidedog gds` 维护的目录。"
+
+#: ../../repository.md:110
+msgid ""
+"{download}`Beta review <_static/repository/beta-review-20261011.md>`: "
+"fixes, verification, support scope, and remaining release gates."
+msgstr ""
+"{download}`Beta 评审 "
+"<_static/repository/beta-review-20261011.md>`：修复、验证、支持范围和发布前的剩余事项。"
+
+#: ../../repository.md:112
+msgid ""
+"Guidedoc uses caller-provided storage and returns structured diagnostics. "
+"The host manages files, budgets, caching, publication, and native "
+"compilers. `--untrusted` restricts capabilities; it is not a process "
+"sandbox or a limit on all native resource use. The beta scope is trusted "
+"documentation projects on macOS and Linux."
+msgstr ""
+"Guidedoc 使用调用方提供的存储，返回结构化诊断。宿主管理文件、预算、缓存、发布和原生编译器。`--untrusted` "
+"只限制能力，不是进程沙箱，也不限制全部原生资源消耗。Beta 面向 macOS 和 Linux 上的可信文档项目。"
+
+#: ../../repository.md:114
+msgid "Credits and license"
+msgstr "致谢与许可"
+
+#: ../../repository.md:116
+msgid ""
+"Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** "
+"and **Kanak Rathore**. Contributions are welcome through issues and pull "
+"requests. Documentation credits use names or handles, not personal email "
+"addresses; Git identity settings are managed separately."
+msgstr ""
+"由 **Vikrant Rathore** 创建，**Ronak Rathore** 和 **Kanak Rathore** 协助开发。欢迎通过 "
+"issue 和 pull request 参与。文档署名使用姓名或账号名，不公开个人邮箱；Git 身份设置单独管理。"
+
+#: ../../repository.md:118
+msgid ""
+"Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, "
+"Tree-sitter and Max Brunsfeld, Graphviz, and Ginger Bill and the Odin "
+"community."
+msgstr ""
+"感谢 Sphinx 和 Georg Brandl、Docutils 和 David Goodger、Typst、Tree-sitter 和 Max "
+"Brunsfeld、Graphviz，以及 Ginger Bill 和 Odin 社区。"
+
+#: ../../repository.md:120
+msgid ""
+"Guidedog is released under the {download}`GNU Affero General Public "
+"License v3.0 or later <_static/repository/LICENSE>` (AGPL-3.0-or-later). "
+"For other licensing terms, contact the authors. {download}`NOTICE "
+"<_static/repository/NOTICE>` says how to reach them and lists the "
+"third-party components, such as the bundled fonts, that keep their own "
+"licenses."
+msgstr ""
+"Guidedog 以 {download}`GNU Affero 通用公共许可证 3.0 或更高版本 "
+"<_static/repository/LICENSE>`（AGPL-3.0-or-later）发布。如需其他许可条款，请联系作者。{download}`NOTICE "
+"<_static/repository/NOTICE>` 说明了联系方式，并列出保留各自许可证的第三方组件，例如捆绑字体。"
+
+#: ../../repository.md:122
+msgid ""
+"An additional permission allows Guidedog to be linked and distributed "
+"with Graphviz; see {download}`NOTICE <_static/repository/NOTICE>`."
+msgstr ""
+"附加许可允许将 Guidedog 与 Graphviz 链接并一同分发，详见 {download}`NOTICE "
+"<_static/repository/NOTICE>`。"
+
+#~ msgid ""
+#~ "With Homebrew on macOS or Linux, install the `guidedog.rb` formula "
+#~ "attached to the release from a local tap:"
+#~ msgstr ""
+#~ "在 macOS 或 Linux 上使用 Homebrew 时，可以通过本地 tap 安装版本附带的 `guidedog.rb` "
+#~ "formula："
+
+#~ msgid ""
+#~ "Install Odin (`dev-2026-09` or newer) and Graphviz development "
+#~ "libraries. For PDF, install Typst 0.15.1 or newer, or build the "
+#~ "embedded compiler. Unix builds also need libcurl."
+#~ msgstr ""
+#~ "安装 Odin（`dev-2026-09` 或更新版本）和 Graphviz 开发库。生成 PDF 时，安装 Typst 0.15.1 "
+#~ "及以上版本，或构建内置编译器。Unix 构建还需要 libcurl。"
+
+#~ msgid ""
+#~ "For embedded Typst and static Graphviz, install Rust and Cargo, then "
+#~ "build:"
+#~ msgstr "若要内置 Typst 并静态链接 Graphviz，先安装 Rust 和 Cargo，再构建："
+
+#~ msgid ""
+#~ "This avoids a separate Typst program and system Graphviz plugins. It "
+#~ "still requires libcurl, platform runtime libraries, and suitable "
+#~ "fonts. Check the exact release archive on a clean supported machine. "
+#~ "For Windows compilation, use an `.exe` output name; Windows runtime "
+#~ "validation is pending."
+#~ msgstr ""
+#~ "这样无需单独安装 Typst 程序或使用系统 Graphviz 插件，但仍需要 "
+#~ "libcurl、平台运行库和合适的字体。发布前应在干净的受支持机器上检查实际安装包。Windows 编译使用 `.exe` "
+#~ "文件名；运行时验证尚未完成。"

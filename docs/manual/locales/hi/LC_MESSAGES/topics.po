@@ -1,0 +1,1572 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 04:29+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../topics/diagrams.rst:1
+msgid "Diagrams that explain"
+msgstr "समझाने वाले आरेख"
+
+#: ../../topics/diagrams.rst:4
+msgid ""
+"Choose a diagram for a question. A flow chart explains a choice. A block "
+"diagram explains responsibility. A sequence explains ordering. A graph "
+"explains relationships. Use prose when it answers the question more "
+"directly."
+msgstr ""
+"प्रश्न के अनुसार आरेख चुनें। फ्लोचार्ट चुनाव, ब्लॉक आरेख ज़िम्मेदारी, "
+"क्रम-आरेख क्रम और ग्राफ़ संबंध बताता है। गद्य अधिक सीधे उत्तर दे तो गद्य "
+"लिखें।"
+
+#: ../../topics/diagrams.rst:8
+msgid "A flow chart"
+msgstr "फ़्लोचार्ट"
+
+#: ../../topics/diagrams.rst:13
+msgid ""
+"If capacity fits, run conversion; otherwise the host prepares storage and "
+"retries."
+msgstr ""
+"क्षमता पर्याप्त हो तो रूपांतरण; नहीं तो होस्ट स्टोरेज तैयार करके फिर "
+"प्रयास करता है।"
+
+#: ../../topics/diagrams.rst:13
+msgid "Capacity is checked before storage is borrowed or grown."
+msgstr "स्टोरेज उधार लेने या बढ़ाने से पहले क्षमता जाँची जाती है।"
+
+#: ../../topics/diagrams.rst:33
+msgid ""
+"The drawing names the owner at the growth step. It does not suggest that "
+"the conversion core allocates. This distinction is part of the contract."
+msgstr ""
+"चित्र बढ़ाने के चरण में मालिक बताता है। वह कोर द्वारा आवंटन नहीं दिखाता। "
+"यह अंतर अनुबंध का हिस्सा है।"
+
+#: ../../topics/diagrams.rst:37
+msgid "Author a graph"
+msgstr "ग्राफ़ लिखना"
+
+#: ../../topics/diagrams.rst:55
+msgid ""
+"``graphviz``, ``graph``, and ``digraph`` are built in. Guidedog renders "
+"them through Graphviz. HTML receives an SVG asset. PDF embeds the "
+"rendered drawing. Both use the same graph source."
+msgstr ""
+"``graphviz``\\ , ``graph`` और ``digraph`` अंतर्निहित हैं। Guidedog "
+"Graphviz से रेंडर करता है। HTML में SVG और PDF में बना चित्र आता है। "
+"दोनों का ग्राफ़ सोर्स समान है।"
+
+#: ../../topics/diagrams.rst:59
+msgid "Light, dark and print"
+msgstr "लाइट, डार्क और प्रिंट"
+
+#: ../../topics/diagrams.rst:62
+msgid ""
+"A transparent canvas does not change a graph's ink. Dark text can "
+"disappear on a dark page. Ordinary graphs therefore keep their chosen "
+"colors and receive a light panel in the default dark theme."
+msgstr ""
+"पारदर्शी कैनवास से अक्षरों का रंग नहीं बदलता। गहरे पृष्ठ पर गहरा टेक्स्ट "
+"गायब हो सकता है। इसलिए सामान्य ग्राफ़ अपने रंग रखते हैं और डिफ़ॉल्ट डार्क "
+"थीम में हल्का पैनल पाते हैं।"
+
+#: ../../topics/diagrams.rst:66
+msgid ""
+"For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
+"the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
+"adds a fixed stylesheet inside the SVG image. Its dark media query "
+"follows the embedding page's ``color-scheme``, including the theme "
+"control's explicit selection. No script, external stylesheet or inline "
+"page SVG is needed."
+msgstr ""
+"मैनुअल की बदलने वाली पैलेट के लिए ``:class: graphviz-adaptive`` जोड़ें। "
+"यह Guidedog 0.6.3 और बाद के संस्करणों में है। SVG के भीतर तय CSS, पृष्ठ "
+"के ``color-scheme`` और उपयोगकर्ता के स्पष्ट चयन का पालन करती है। "
+"स्क्रिप्ट, बाहरी CSS या पृष्ठ में इनलाइन SVG नहीं चाहिए।"
+
+#: ../../topics/diagrams.rst:72
+msgid ""
+"Use short labels, rounded boxes for steps, notes for input and cylinders "
+"for durable stores. Node classes distinguish roles in the dark palette:"
+msgstr ""
+"लेबल छोटे रखें। चरण के लिए गोल कोने वाला बॉक्स, इनपुट के लिए नोट और "
+"स्थायी स्टोरेज के लिए सिलिंडर रखें। डार्क पैलेट में भूमिका क्लास से तय "
+"होती है:"
+
+#: ../../topics/diagrams.rst:75
+msgid "Semantic node classes"
+msgstr "अर्थ बताने वाली नोड क्लास"
+
+#: ../../topics/diagrams.rst:79
+msgid "DOT class"
+msgstr "DOT क्लास"
+
+#: ../../topics/diagrams.rst:80
+msgid "Role"
+msgstr "भूमिका"
+
+#: ../../topics/diagrams.rst:81
+msgid "``gd-input``"
+msgstr "``gd-input``"
+
+#: ../../topics/diagrams.rst:82
+msgid "Source, configuration or supporting material; warm neutral."
+msgstr "सोर्स, सेटिंग या सहायक सामग्री; हल्का गर्म तटस्थ रंग।"
+
+#: ../../topics/diagrams.rst:83
+msgid "``gd-output``"
+msgstr "``gd-output``"
+
+#: ../../topics/diagrams.rst:84
+msgid "A produced artifact; blue."
+msgstr "बना हुआ आउटपुट; नीला।"
+
+#: ../../topics/diagrams.rst:85
+msgid "``gd-plugin``"
+msgstr "``gd-plugin``"
+
+#: ../../topics/diagrams.rst:86
+msgid "An optional extension point; amber, with a dashed border."
+msgstr "वैकल्पिक विस्तार बिंदु; अंबर रंग, टूटी बॉर्डर।"
+
+#: ../../topics/diagrams.rst:87
+msgid "``gd-choice``"
+msgstr "``gd-choice``"
+
+#: ../../topics/diagrams.rst:88
+msgid "A decision; amber, with a diamond shape."
+msgstr "निर्णय; अंबर रंग, हीरे का आकार।"
+
+#: ../../topics/diagrams.rst:89
+msgid "``gd-memory``"
+msgstr "``gd-memory``"
+
+#: ../../topics/diagrams.rst:90
+msgid "A separate native allocation boundary; violet."
+msgstr "अलग नेटिव एलोकेशन सीमा; बैंगनी।"
+
+#: ../../topics/diagrams.rst:92
+msgid ""
+"For example, ``source [class=\"gd-input\", shape=note, "
+"fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
+"role. Classes do not choose shapes or add labels: write those explicitly "
+"so the drawing also works in monochrome. Unclassified steps use green. "
+"This palette is opt-in; do not apply it to artwork whose exact colors "
+"carry data."
+msgstr ""
+"``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` हल्का "
+"रूप और डार्क भूमिका दोनों देता है। क्लास आकार या लेबल नहीं चुनती; उन्हें "
+"लिखें ताकि श्वेत-श्याम में भी अर्थ स्पष्ट हो। बिना क्लास के चरण हरे हैं। "
+"यह वैकल्पिक पैलेट है; जहाँ सही रंग ही डेटा हो, वहाँ इसे न लगाएँ।"
+
+#: ../../topics/diagrams.rst:98
+msgid ""
+"The light DOT attributes remain the PDF master. The book receives an SVG "
+"without the adaptive stylesheet. Printed HTML selects the light scheme "
+"too. Keep both palettes legible and test the actual book; transparency "
+"alone proves neither. The inheritance rule is defined by the `CSS "
+"color-scheme specification "
+"<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
+msgstr ""
+"हल्के DOT गुण PDF का मूल रूप रहते हैं। किताब को अनुकूलित CSS के बिना SVG "
+"मिलता है; HTML प्रिंट भी लाइट चुनता है। दोनों पैलेट और असली किताब जाँचें; "
+"केवल पारदर्शिता पठनीयता का प्रमाण नहीं। नियम `CSS color-scheme विनिर्देश "
+"<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ में है।"
+
+#: ../../topics/diagrams.rst:104
+msgid "Make the result legible"
+msgstr "परिणाम पठनीय बनाएँ"
+
+#: ../../topics/diagrams.rst:107
+msgid ""
+"Keep node labels short. Explain a longer rule below the drawing. Prefer "
+"one direction for the main path. Label a return edge with its condition. "
+"Use shape and text as well as color. A print reader may have no color at "
+"all."
+msgstr ""
+"नोड लेबल छोटे रखें। लंबा नियम चित्र के नीचे समझाएँ। मुख्य पथ एक दिशा में "
+"रखें; लौटती कड़ी पर शर्त दें। रंग के साथ आकार और पाठ भी दें। प्रिंट में "
+"रंग न हो सकता है।"
+
+#: ../../topics/diagrams.rst:111
+msgid ""
+"Supply alternative text and a caption. Test narrow browser windows and "
+"the PDF page. If a diagram needs tiny type to fit, split it into two "
+"drawings. See :doc:`../media` for image and figure sizing."
+msgstr ""
+"वैकल्पिक पाठ और कैप्शन दें। संकरे ब्राउज़र और PDF पेज जाँचें। फिट करने के "
+"लिए बहुत छोटे अक्षर चाहिए हों तो चित्र दो में बाँटें। आकार के लिए "
+":doc:`../media` देखें।"
+
+#: ../../topics/diagrams.rst:115
+msgid ""
+"On narrow screens, captioned diagrams scroll horizontally to keep labels "
+"readable. Scroll inside the figure; the page itself keeps its width."
+msgstr ""
+"छोटे पर्दे पर कैप्शन वाले चित्र को भीतर ही क्षैतिज स्क्रॉल कर सकते हैं। "
+"लेबल छोटे नहीं होते और पृष्ठ की चौड़ाई नहीं बढ़ती।"
+
+#: ../../topics/domains.rst:1
+msgid "Domains"
+msgstr "डोमेन"
+
+#: ../../topics/domains.rst:4
+msgid ""
+"A domain is a collection of markup constructs (directives and roles) for "
+"describing and cross-referencing program objects belonging to a specific "
+"programming language or domain of discourse."
+msgstr ""
+"डोमेन निर्देशों और रोल का समूह है। इससे किसी भाषा या विषय के प्रोग्राम "
+"ऑब्जेक्ट का वर्णन और पार-संदर्भ दिया जाता है।"
+
+#: ../../topics/domains.rst:8
+msgid ""
+"Guidedog provides native, built-in implementations of the standard Sphinx "
+"domains:"
+msgstr "Guidedog में ये Sphinx डोमेन मूल रूप से उपलब्ध हैं:"
+
+#: ../../topics/domains.rst:10
+msgid ""
+"**Standard domain** (``std``): General documentation objects such as "
+"command-line options, environment variables, terms, and UI labels."
+msgstr ""
+"**मानक डोमेन** (``std``): कमांड लाइन विकल्प, वातावरण चर, शब्द और UI लेबल "
+"जैसे सामान्य ऑब्जेक्ट।"
+
+#: ../../topics/domains.rst:11
+msgid ""
+"**Python domain** (``py``): Python modules, classes, functions, methods, "
+"attributes, properties, and exceptions."
+msgstr ""
+"**Python डोमेन** (``py``): मॉड्यूल, क्लास, फ़ंक्शन, मेथड, एट्रिब्यूट, "
+"प्रॉपर्टी और एक्सेप्शन।"
+
+#: ../../topics/domains.rst:12
+msgid ""
+"**C domain** (``c``): C functions, types, structs, unions, enums, "
+"enumerators, variables, and macros."
+msgstr ""
+"**C डोमेन** (``c``): फ़ंक्शन, टाइप, स्ट्रक्ट, यूनियन, एनम, एनम मान, चर और "
+"मैक्रो।"
+
+#: ../../topics/domains.rst:13
+msgid ""
+"**C++ domain** (``cpp``): C++ classes, concepts, templates, namespaces, "
+"methods, and expressions."
+msgstr ""
+"**C++ डोमेन** (``cpp``): क्लास, कॉन्सेप्ट, टेम्पलेट, नेमस्पेस, मेथड और "
+"एक्सप्रेशन।"
+
+#: ../../topics/domains.rst:14
+msgid ""
+"**JavaScript domain** (``js``): JavaScript functions, methods, classes, "
+"and properties."
+msgstr "**JavaScript डोमेन** (``js``): फ़ंक्शन, मेथड, क्लास और प्रॉपर्टी।"
+
+#: ../../topics/domains.rst:15
+msgid ""
+"**Odin domain** (``odin``): Native Odin packages, procedures, structs, "
+"unions, and enums (see :doc:`../odin`)."
+msgstr ""
+"**Odin डोमेन** (``odin``): Odin पैकेज, प्रोसीजर, स्ट्रक्ट, यूनियन और एनम। "
+":doc:`../odin` देखें।"
+
+#: ../../topics/domains.rst:17
+msgid "Setting the primary domain"
+msgstr "मुख्य डोमेन तय करना"
+
+#: ../../topics/domains.rst:20
+msgid ""
+"The default domain is set with ``primary_domain`` in ``conf.toml`` "
+"(default: ``\"py\"``). When a primary domain is active, its directives "
+"and roles can be written without the domain prefix (for example, ``.. "
+"function::`` instead of ``.. py:function::``, and ``:func:`name``` "
+"instead of ``:py:func:`name```)."
+msgstr ""
+"``conf.toml`` के ``primary_domain`` से डिफ़ॉल्ट डोमेन तय होता है; "
+"डिफ़ॉल्ट ``\"py\"`` है। इसके बाद उपसर्ग छोड़ सकते हैं: ``.. "
+"py:function::`` की जगह ``.. function::`` और ``:py:func:`name``` की जगह "
+"``:func:`name``` लिखें।"
+
+#: ../../topics/domains.rst:25
+msgid "To change the active domain locally within a document:"
+msgstr "दस्तावेज़ में स्थानीय रूप से डोमेन बदलने के लिए:"
+
+#: ../../topics/domains.rst:31
+msgid "Standard domain"
+msgstr "मानक डोमेन"
+
+#: ../../topics/domains.rst:34
+msgid ""
+"The standard domain describes command-line tools, environment variables, "
+"and document cross-references."
+msgstr ""
+"मानक डोमेन कमांड लाइन टूल, वातावरण चर और दस्तावेज़ पार-संदर्भ का वर्णन "
+"करता है।"
+
+#: ../../topics/domains.rst:37 ../../topics/domains.rst:73
+#: ../../topics/domains.rst:118 ../../topics/domains.rst:160
+#: ../../topics/domains.rst:194
+msgid "Directives"
+msgstr "निर्देश"
+
+#: ../../topics/domains.rst:52 ../../topics/domains.rst:102
+#: ../../topics/domains.rst:143 ../../topics/domains.rst:179
+#: ../../topics/domains.rst:209
+msgid "Roles"
+msgstr "रोल"
+
+#: ../../topics/domains.rst:55
+msgid "``:doc:`path```: Links to a project document by relative path."
+msgstr ""
+"``:doc:`path```: सापेक्ष पथ से परियोजना के दस्तावेज़ का लिंक देता है।"
+
+#: ../../topics/domains.rst:56
+msgid ""
+"``:ref:`label```: Links to an explicit target label (``.. _label:``)."
+msgstr ""
+"``:ref:`label```: स्पष्ट लक्ष्य लेबल ``.. _label:`` का लिंक देता है।"
+
+#: ../../topics/domains.rst:57
+msgid ""
+"``:term:`term```: Links to a term defined in a ``glossary`` directive."
+msgstr "``:term:`term```: ``glossary`` में परिभाषित शब्द का लिंक देता है।"
+
+#: ../../topics/domains.rst:58
+msgid ""
+"``:option:`--config```: Links to a command-line option described by "
+"``option``."
+msgstr ""
+"``:option:`--config```: ``option`` में बताए कमांड लाइन विकल्प का लिंक "
+"देता है।"
+
+#: ../../topics/domains.rst:59
+msgid ""
+"``:envvar:`VARIABLE```: Links to an environment variable described by "
+"``envvar``."
+msgstr ""
+"``:envvar:`VARIABLE```: ``envvar`` में बताए वातावरण चर का लिंक देता है।"
+
+#: ../../topics/domains.rst:60
+msgid "``:command:`name```: Marks a system command name."
+msgstr "``:command:`name```: सिस्टम कमांड का नाम दर्शाता है।"
+
+#: ../../topics/domains.rst:61
+msgid ""
+"``:file:`path```: Marks a file or directory path, supporting "
+"``{variable}`` placeholders."
+msgstr ""
+"``:file:`path```: फ़ाइल या फ़ोल्डर का पथ दर्शाता है; ``{variable}`` "
+"प्लेसहोल्डर भी चलता है।"
+
+#: ../../topics/domains.rst:62
+msgid "``:kbd:`Ctrl+C```: Marks keyboard keystrokes."
+msgstr "``:kbd:`Ctrl+C```: कीबोर्ड की कुंजियाँ दर्शाता है।"
+
+#: ../../topics/domains.rst:63
+msgid ""
+"``:menuselection:`File --> Save As```: Formats a software menu sequence."
+msgstr "``:menuselection:`File --> Save As```: मेनू चयन का क्रम दिखाता है।"
+
+#: ../../topics/domains.rst:64
+msgid "``:guilabel:`Submit```: Formats a button or user interface element."
+msgstr "``:guilabel:`Submit```: बटन या UI तत्व का नाम दिखाता है।"
+
+#: ../../topics/domains.rst:65
+msgid "``:pep:`8```: Links to a Python Enhancement Proposal."
+msgstr "``:pep:`8```: Python Enhancement Proposal का लिंक देता है।"
+
+#: ../../topics/domains.rst:66
+msgid "``:rfc:`7231```: Links to an IETF Request for Comments."
+msgstr "``:rfc:`7231```: IETF RFC दस्तावेज़ का लिंक देता है।"
+
+#: ../../topics/domains.rst:68
+msgid "Python domain"
+msgstr "Python डोमेन"
+
+#: ../../topics/domains.rst:71
+msgid "The Python domain describes Python interfaces and signatures."
+msgstr "Python डोमेन Python इंटरफ़ेस और सिग्नेचर का वर्णन करता है।"
+
+#: ../../topics/domains.rst:98
+msgid ""
+"Directives include: ``py:module``, ``py:currentmodule``, ``py:function``, "
+"``py:data``, ``py:class``, ``py:method``, ``py:staticmethod``, "
+"``py:classmethod``, ``py:attribute``, ``py:property``, ``py:exception``, "
+"``py:decorator``, and ``py:type``."
+msgstr ""
+"निर्देश हैं: ``py:module``, ``py:currentmodule``, ``py:function``, "
+"``py:data``, ``py:class``, ``py:method``, ``py:staticmethod``, "
+"``py:classmethod``, ``py:attribute``, ``py:property``, ``py:exception``, "
+"``py:decorator`` और ``py:type``।"
+
+#: ../../topics/domains.rst:105
+msgid "``:py:func:`name```: Links to a Python function."
+msgstr "``:py:func:`name```: Python फ़ंक्शन का लिंक देता है।"
+
+#: ../../topics/domains.rst:106
+msgid "``:py:class:`name```: Links to a Python class."
+msgstr "``:py:class:`name```: Python क्लास का लिंक देता है।"
+
+#: ../../topics/domains.rst:107
+msgid "``:py:meth:`name```: Links to a Python class or instance method."
+msgstr "``:py:meth:`name```: Python क्लास या इंस्टेंस मेथड का लिंक देता है।"
+
+#: ../../topics/domains.rst:108
+msgid "``:py:attr:`name```: Links to a Python attribute."
+msgstr "``:py:attr:`name```: Python एट्रिब्यूट का लिंक देता है।"
+
+#: ../../topics/domains.rst:109
+msgid "``:py:data:`name```: Links to Python module-level data."
+msgstr "``:py:data:`name```: Python मॉड्यूल-स्तरीय डेटा का लिंक देता है।"
+
+#: ../../topics/domains.rst:110
+msgid "``:py:exc:`name```: Links to a Python exception class."
+msgstr "``:py:exc:`name```: Python एक्सेप्शन क्लास का लिंक देता है।"
+
+#: ../../topics/domains.rst:111
+msgid "``:py:mod:`name```: Links to a Python module."
+msgstr "``:py:mod:`name```: Python मॉड्यूल का लिंक देता है।"
+
+#: ../../topics/domains.rst:113
+msgid "C domain"
+msgstr "C डोमेन"
+
+#: ../../topics/domains.rst:116
+msgid "The C domain describes C language libraries and headers."
+msgstr "C डोमेन C लाइब्रेरी और हेडर का वर्णन करता है।"
+
+#: ../../topics/domains.rst:146
+msgid "``:c:func:`name```: Links to a C function."
+msgstr "``:c:func:`name```: C फ़ंक्शन का लिंक देता है।"
+
+#: ../../topics/domains.rst:147
+msgid "``:c:member:`name```: Links to a C struct or union member."
+msgstr ""
+"``:c:member:`name```: C स्ट्रक्ट या यूनियन के सदस्य का लिंक देता है।"
+
+#: ../../topics/domains.rst:148
+msgid "``:c:data:`name``` / ``:c:var:`name```: Links to a C variable."
+msgstr "``:c:data:`name``` / ``:c:var:`name```: C चर का लिंक देता है।"
+
+#: ../../topics/domains.rst:149
+msgid "``:c:type:`name```: Links to a C typedef or type."
+msgstr "``:c:type:`name```: C typedef या टाइप का लिंक देता है।"
+
+#: ../../topics/domains.rst:150
+msgid "``:c:struct:`name```: Links to a C struct."
+msgstr "``:c:struct:`name```: C स्ट्रक्ट का लिंक देता है।"
+
+#: ../../topics/domains.rst:151
+msgid "``:c:union:`name```: Links to a C union."
+msgstr "``:c:union:`name```: C यूनियन का लिंक देता है।"
+
+#: ../../topics/domains.rst:152
+msgid "``:c:enum:`name```: Links to a C enum."
+msgstr "``:c:enum:`name```: C एनम का लिंक देता है।"
+
+#: ../../topics/domains.rst:153
+msgid "``:c:macro:`name```: Links to a C preprocessor macro."
+msgstr "``:c:macro:`name```: C प्रीप्रोसेसर मैक्रो का लिंक देता है।"
+
+#: ../../topics/domains.rst:155
+msgid "C++ domain"
+msgstr "C++ डोमेन"
+
+#: ../../topics/domains.rst:158
+msgid ""
+"The C++ domain supports modern C++ constructs, concepts, namespaces, and "
+"scopes."
+msgstr ""
+"C++ डोमेन आधुनिक C++ संरचनाएँ, कॉन्सेप्ट, नेमस्पेस और स्कोप संभालता है।"
+
+#: ../../topics/domains.rst:182
+msgid "``:cpp:class:`name```: Links to a C++ class or struct."
+msgstr "``:cpp:class:`name```: C++ क्लास या स्ट्रक्ट का लिंक देता है।"
+
+#: ../../topics/domains.rst:183
+msgid "``:cpp:func:`name```: Links to a C++ function or method."
+msgstr "``:cpp:func:`name```: C++ फ़ंक्शन या मेथड का लिंक देता है।"
+
+#: ../../topics/domains.rst:184
+msgid ""
+"``:cpp:member:`name``` / ``:cpp:var:`name```: Links to a member or "
+"variable."
+msgstr ""
+"``:cpp:member:`name``` / ``:cpp:var:`name```: सदस्य या चर का लिंक देता है।"
+
+#: ../../topics/domains.rst:185
+msgid "``:cpp:type:`name```: Links to a C++ type alias or typedef."
+msgstr "``:cpp:type:`name```: C++ टाइप उपनाम या typedef का लिंक देता है।"
+
+#: ../../topics/domains.rst:186
+msgid "``:cpp:concept:`name```: Links to a C++20 concept."
+msgstr "``:cpp:concept:`name```: C++20 कॉन्सेप्ट का लिंक देता है।"
+
+#: ../../topics/domains.rst:187
+msgid "``:cpp:enum:`name```: Links to a C++ enum."
+msgstr "``:cpp:enum:`name```: C++ एनम का लिंक देता है।"
+
+#: ../../topics/domains.rst:189
+msgid "JavaScript domain"
+msgstr "JavaScript डोमेन"
+
+#: ../../topics/domains.rst:192
+msgid ""
+"The JavaScript domain describes client-side scripts, libraries, and "
+"Node.js modules."
+msgstr ""
+"JavaScript डोमेन ब्राउज़र स्क्रिप्ट, लाइब्रेरी और Node.js मॉड्यूल का "
+"वर्णन करता है।"
+
+#: ../../topics/domains.rst:212
+msgid "``:js:func:`name```: Links to a JavaScript function."
+msgstr "``:js:func:`name```: JavaScript फ़ंक्शन का लिंक देता है।"
+
+#: ../../topics/domains.rst:213
+msgid "``:js:meth:`name```: Links to a JavaScript method."
+msgstr "``:js:meth:`name```: JavaScript मेथड का लिंक देता है।"
+
+#: ../../topics/domains.rst:214
+msgid "``:js:class:`name```: Links to a JavaScript class."
+msgstr "``:js:class:`name```: JavaScript क्लास का लिंक देता है।"
+
+#: ../../topics/domains.rst:215
+msgid "``:js:data:`name```: Links to a JavaScript variable."
+msgstr "``:js:data:`name```: JavaScript चर का लिंक देता है।"
+
+#: ../../topics/domains.rst:216
+msgid "``:js:attr:`name```: Links to a JavaScript object attribute."
+msgstr "``:js:attr:`name```: JavaScript ऑब्जेक्ट प्रॉपर्टी का लिंक देता है।"
+
+#: ../../topics/domains.rst:217
+msgid "``:js:mod:`name```: Links to a JavaScript module."
+msgstr "``:js:mod:`name```: JavaScript मॉड्यूल का लिंक देता है।"
+
+#: ../../topics/domains.rst:219
+msgid "Cross-referencing conventions"
+msgstr "पार-संदर्भ की परंपराएँ"
+
+#: ../../topics/domains.rst:222
+msgid "Cross-references in domains support several helpful modifiers:"
+msgstr "डोमेन के पार-संदर्भ में ये संशोधक इस्तेमाल कर सकते हैं:"
+
+#: ../../topics/domains.rst:224
+msgid ""
+"**Hide prefix**: Prefixing the target with a tilde (``~``) displays only "
+"the final component of the target name. For example, "
+"``:py:func:`~pipeline.reader.DocumentReader.parse``` renders as "
+"``parse()``."
+msgstr ""
+"**उपसर्ग छिपाना**: लक्ष्य से पहले ``~`` लगाने पर नाम का आख़िरी भाग ही "
+"दिखता है। जैसे ``:py:func:`~pipeline.reader.DocumentReader.parse``` से "
+"``parse()`` दिखता है।"
+
+#: ../../topics/domains.rst:225
+msgid ""
+"**Current scope resolution**: Relative references look up names within "
+"the active module or namespace before falling back to global lookup."
+msgstr ""
+"**वर्तमान स्कोप में खोज**: सापेक्ष संदर्भ पहले वर्तमान मॉड्यूल या "
+"नेमस्पेस में खोजता है, फिर वैश्विक खोज करता है।"
+
+#: ../../topics/domains.rst:226
+msgid ""
+"**Exact match**: Prefixing with a dot (``.``) searches from the current "
+"module or enclosing object."
+msgstr ""
+"**सटीक मिलान**: पहले ``.`` लगाने पर खोज वर्तमान मॉड्यूल या घेरने वाले "
+"ऑब्जेक्ट से शुरू होती है।"
+
+#: ../../topics/index.rst:1
+msgid "Topic guides"
+msgstr "विषय मार्गदर्शिकाएँ"
+
+#: ../../topics/index.rst:4
+msgid ""
+"These chapters explain the model. They give you enough context to make a "
+"choice."
+msgstr ""
+"ये अध्याय मॉडल समझाते हैं। निर्णय लेने के लिए ज़रूरी संदर्भ भी देते हैं।"
+
+#: ../../topics/mathematics.rst:1
+msgid "Mathematics and proofs"
+msgstr "गणित और प्रमाण"
+
+#: ../../topics/mathematics.rst:4
+msgid ""
+"An equation is useful when it makes a relation easier to inspect. Define "
+"every symbol before relying on it. State the units where they matter. The "
+"equation should support the explanation, not replace it."
+msgstr ""
+"समीकरण तब उपयोगी है जब संबंध समझना आसान हो। हर प्रतीक पहले परिभाषित करें। "
+"ज़रूरी जगह इकाई दें। समीकरण व्याख्या का सहारा हो, उसका विकल्प नहीं।"
+
+#: ../../topics/mathematics.rst:8
+msgid "Inline and display mathematics"
+msgstr "इनलाइन और अलग पंक्ति के सूत्र"
+
+#: ../../topics/mathematics.rst:11
+msgid ""
+"Use the ``math`` role for a short expression. Use the ``math`` directive "
+"for a display. Write the common LaTeX mathematics subset that both "
+"targets understand."
+msgstr ""
+"छोटे व्यंजक के लिए ``math`` रोल और अलग समीकरण के लिए ``math`` निर्देश "
+"दें। दोनों प्रारूपों का साझा LaTeX गणित उपसमुच्चय लिखें।"
+
+#: ../../topics/mathematics.rst:25
+msgid "A side of length :math:`s` encloses area :math:`s^2`."
+msgstr "भुजा :math:`s` वाले वर्ग का क्षेत्रफल :math:`s^2` होता है।"
+
+#: ../../topics/mathematics.rst:27
+msgid "A = s^2"
+msgstr "A = s^2"
+
+#: ../../topics/mathematics.rst:32
+msgid ""
+"The relation is :eq:`area-square`. Guidedog gives a labelled equation a "
+"stable target. The HTML builder supplies MathJax markup. The PDF renderer "
+"translates the supported LaTeX subset to Typst mathematics. An "
+"unsupported PDF command is reported. Arbitrary LaTeX packages are not "
+"evaluated."
+msgstr ""
+"संबंध :eq:`area-square` है। लेबल वाला समीकरण स्थिर लक्ष्य पाता है। HTML "
+"MathJax मार्कअप देता है। PDF समर्थित LaTeX को Typst गणित में बदलता है। "
+"असमर्थित PDF कमांड की सूचना मिलती है। मनमाने LaTeX पैकेज नहीं चलते।"
+
+#: ../../topics/mathematics.rst:38
+msgid "A small proof"
+msgstr "एक छोटा प्रमाण"
+
+#: ../../topics/mathematics.rst:41
+msgid ""
+"Let :math:`U` be the bytes already charged to a budget. Let :math:`B` be "
+"its limit. Let :math:`n` be a requested allocation. Assume all three "
+"values are nonnegative and :math:`U \\le B`."
+msgstr ""
+"दर्ज बाइट :math:`U`\\ , बजट सीमा :math:`B` और माँगा आवंटन :math:`n` हो। "
+"सभी गैरऋणात्मक और :math:`U \\le B` मानें।"
+
+#: ../../topics/mathematics.rst:45
+msgid "**Admission rule.** Admit the request exactly when"
+msgstr "**स्वीकृति का नियम।** अनुरोध तभी स्वीकार करें जब"
+
+#: ../../topics/mathematics.rst:47
+msgid "n \\le B - U."
+msgstr "n \\le B - U."
+
+#: ../../topics/mathematics.rst:52
+msgid "**Claim.** An admitted request preserves :math:`U + n \\le B`."
+msgstr "**कथन।** स्वीकृत अनुरोध :math:`U + n \\le B` बनाए रखता है।"
+
+#: ../../topics/mathematics.rst:54
+msgid ""
+"**Proof.** Add :math:`U` to both sides of :eq:`budget-admission`. The "
+"result is :math:`U+n \\le B`. The implementation tests the subtraction "
+"form. It does not first compute :math:`U+n`, which could overflow a "
+"machine integer. The proof and the arithmetic order agree."
+msgstr ""
+"**प्रमाण।** :eq:`budget-admission` के दोनों ओर :math:`U` जोड़ें तो "
+":math:`U+n \\le B` है। कार्यान्वयन घटाव रूप जाँचता है। पहले :math:`U+n` "
+"नहीं निकालता, जो मशीन पूर्णांक में ओवरफ़्लो कर सकता है। प्रमाण और गणना "
+"क्रम समान हैं।"
+
+#: ../../topics/mathematics.rst:59
+msgid ""
+"**Boundary.** This accounts for charged host storage. It does not bound "
+"the separate Typst compiler's internal allocations. A proof is only as "
+"strong as the boundary it states."
+msgstr ""
+"**सीमा।** यह दर्ज होस्ट स्टोरेज का हिसाब है। अलग Typst कंपाइलर का आंतरिक "
+"आवंटन सीमित नहीं। प्रमाण अपनी बताई सीमा तक ही मान्य है।"
+
+#: ../../topics/mathematics.rst:63
+msgid "HTML setup"
+msgstr "HTML विकल्प"
+
+#: ../../topics/mathematics.rst:66
+msgid ""
+"These projects bundle MathJax 3.2.2 with its SVG font data. The bundle is "
+"loaded only on pages containing mathematics. It makes these pages "
+"readable offline after a build. No diagram script or web font service is "
+"required."
+msgstr ""
+"इन प्रोजेक्ट में MathJax 3.2.2 और SVG फ़ॉन्ट डेटा साथ हैं। केवल गणित वाले "
+"पेज इसे लोड करते हैं। बिल्ड के बाद पेज ऑफ़लाइन पढ़े जा सकते हैं। चित्र "
+"स्क्रिप्ट या वेब फ़ॉन्ट सेवा नहीं चाहिए।"
+
+#: ../../topics/mathematics.rst:71
+msgid ""
+"For your own project, the default uses MathJax from a CDN. To serve a "
+"local copy, place it in ``_static`` and set:"
+msgstr ""
+"आपके अपने प्रोजेक्ट में डिफ़ॉल्ट रूप से MathJax CDN से आता है। स्थानीय "
+"प्रति देने के लिए उसे ``_static`` में रखें और सेट करें:"
+
+#: ../../topics/mathematics.rst:79
+msgid ""
+"JavaScript is needed here to typeset web equations. Without it, their "
+"source remains visible. PDF equations do not need browser JavaScript. See "
+"the `MathJax component contract "
+"<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_."
+msgstr ""
+"वेब समीकरण सजाने के लिए JavaScript चाहिए। बिना इसके सोर्स दिखता है। PDF "
+"गणित ब्राउज़र JavaScript पर निर्भर नहीं। `MathJax घटक अनुबंध "
+"<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_ देखें।"
+
+#: ../../topics/projects.rst:1
+msgid "How a project works"
+msgstr "परियोजना कैसे काम करती है"
+
+#: ../../topics/projects.rst:4
+msgid ""
+"The project root is the directory containing ``conf.toml``. ``root_doc`` "
+"names the document that starts the reading order. Guidedog discovers "
+"source documents, reads them, resolves their relations, and publishes a "
+"complete output generation."
+msgstr ""
+"प्रोजेक्ट मूल ``conf.toml`` वाला फ़ोल्डर है। ``root_doc`` पढ़ने का पहला "
+"दस्तावेज़ है। Guidedog सोर्स खोजता, पढ़ता, संबंध हल करता और पूरा आउटपुट "
+"संस्करण प्रकाशित करता है।"
+
+#: ../../topics/projects.rst:11
+msgid ""
+"Pipeline traverses discovery, source plugins, parallel reading, reference "
+"resolution, rendering, HTML plugins, and atomic staging."
+msgstr ""
+"खोज, सोर्स प्लगइन, समानांतर पढ़ाई, संदर्भ समाधान, रेंडरिंग और HTML हुक के "
+"बाद आउटपुट तैयार होकर कमिट होता है।"
+
+#: ../../topics/projects.rst:11
+msgid "Guidedog's end-to-end documentation compilation pipeline."
+msgstr "Guidedog का पूरा दस्तावेज़ बिल्ड प्रवाह।"
+
+#: ../../topics/projects.rst:35
+msgid "Documents and resources"
+msgstr "दस्तावेज़ और संसाधन"
+
+#: ../../topics/projects.rst:38
+msgid ""
+"A source suffix selects a reader. RST and project Markdown share the "
+"project graph. Images and downloads are resources. Guidedog copies "
+"resources that the documents use. Theme assets are listed in "
+"``html_static_path``. An include must remain within the source directory "
+"or the configured ``include_roots``."
+msgstr ""
+"प्रत्यय रीडर चुनता है। RST और प्रोजेक्ट Markdown एक ग्राफ़ साझा करते हैं। "
+"चित्र व डाउनलोड संसाधन हैं; उपयोग किए संसाधन कॉपी होते हैं। थीम सामग्री "
+"``html_static_path`` में है। include सोर्स या दिए ``include_roots`` के "
+"भीतर हो।"
+
+#: ../../topics/projects.rst:43
+msgid "Separate projects"
+msgstr "अलग परियोजनाएँ"
+
+#: ../../topics/projects.rst:46
+msgid ""
+"Keep a manual and design records in separate projects. They have "
+"different readers and different reading orders. Each project has its own "
+"configuration, templates, cache, and output. The Guidedog repository uses "
+"``docs/manual`` and ``docs/gds`` this way."
+msgstr ""
+"मैनुअल और डिज़ाइन रिकॉर्ड अलग प्रोजेक्ट रखें। पाठक और पढ़ने का क्रम अलग "
+"हैं। हर एक का अपना कॉन्फ़िगरेशन, टेम्पलेट, कैश और आउटपुट है। Guidedog में "
+"``docs/manual`` और ``docs/gds`` ऐसे हैं।"
+
+#: ../../topics/projects.rst:51
+msgid "Incremental work"
+msgstr "इन्क्रिमेंटल बिल्ड"
+
+#: ../../topics/projects.rst:54
+msgid ""
+"Guidedog records the inputs and lookups used by each output. A changed "
+"source is reread. A changed dependency invalidates its users. A changed "
+"template can affect every page. An unchanged document may be loaded from "
+"its saved object."
+msgstr ""
+"Guidedog हर आउटपुट के इनपुट और खोज दर्ज करता है। बदला सोर्स फिर पढ़ता है। "
+"निर्भरता बदलने पर उपयोगकर्ता अमान्य होते हैं। टेम्पलेट सभी पेज बदल सकता "
+"है। अपरिवर्तित दस्तावेज़ सहेजे ऑब्जेक्ट से लोड हो सकता है।"
+
+#: ../../topics/projects.rst:59
+msgid ""
+"The cache is evidence about a previous build. It is not the source of "
+"truth. ``-E`` discards the saved environment for the next build. ``-a`` "
+"writes all outputs. They solve different problems."
+msgstr ""
+"कैश पिछली बिल्ड का प्रमाण है, मूल सत्य नहीं। ``-E`` अगली बिल्ड के लिए "
+"सहेजा वातावरण हटाता है। ``-a`` सभी आउटपुट लिखता है। ये अलग समस्याएँ हल "
+"करते हैं।"
+
+#: ../../topics/projects.rst:63
+msgid ""
+"\\text{reuse} = \\text{same inputs} \\land \\text{same lookups} \\land "
+"\\text{output exists}"
+msgstr ""
+"\\text{पुनः उपयोग} = \\text{समान इनपुट} \\land \\text{समान खोज परिणाम} "
+"\\land \\text{आउटपुट मौजूद}"
+
+#: ../../topics/projects.rst:67
+msgid ""
+"An explicit timestamp in a template is also an input to the rendered "
+"page. A page that prints the current minute can change even when its "
+"prose does not. Use ``SOURCE_DATE_EPOCH`` when you need a fixed build "
+"time."
+msgstr ""
+"टेम्पलेट का स्पष्ट टाइमस्टैम्प भी पेज इनपुट है। वर्तमान मिनट दिखाता पेज "
+"पाठ बदले बिना बदल सकता है। तय समय के लिए ``SOURCE_DATE_EPOCH`` दें।"
+
+#: ../../topics/projects.rst:71
+msgid "Publication"
+msgstr "प्रकाशन"
+
+#: ../../topics/projects.rst:74
+msgid ""
+"A build writes changes to a sibling staging directory. It completes that "
+"directory, flushes the files and records, and then switches generations. "
+"Readers see a complete previous or new publication. An interrupted commit "
+"is settled on the next build. The design and its proof obligations are in "
+":doc:`../internals/publication`."
+msgstr ""
+"बिल्ड समान स्तर के स्टेजिंग फ़ोल्डर में बदलाव लिखता है। पूरा करके फ़ाइल "
+"और रिकॉर्ड स्थायी करता, फिर संस्करण बदलता है। पाठक पूरा पुराना या नया "
+"आउटपुट देखते हैं। अधूरा कमिट अगली बिल्ड सँभालती है। डिज़ाइन और प्रमाण "
+"दायित्व :doc:`../internals/publication` में हैं।"
+
+#: ../../topics/typography.rst:1
+msgid "Typography for reading"
+msgstr "पढ़ने के लिए टाइपोग्राफ़ी"
+
+#: ../../topics/typography.rst:4
+msgid ""
+"A page should make its structure visible before the reader studies it. A "
+"strong title, a quiet navigation column, and a measured text column do "
+"most of the work. Color should mark a relation or an action. It should "
+"not carry the meaning alone."
+msgstr ""
+"पढ़ने से पहले पेज की संरचना दिखे। स्पष्ट शीर्षक, शांत नेविगेशन और संतुलित "
+"पाठ चौड़ाई मुख्य काम करते हैं। रंग संबंध या क्रिया बताए; अकेला अर्थ न ढोए।"
+
+#: ../../topics/typography.rst:8
+msgid "The web page"
+msgstr "वेब पृष्ठ"
+
+#: ../../topics/typography.rst:11
+msgid ""
+"The custom layout has three regions: project navigation, the document, "
+"and the current page's outline. Small screens use a navigation drawer. "
+"The reading edition bundles Libertinus Serif and Libertinus Sans. Titles "
+"use a bold serif face. Navigation, labels, and controls use its sans "
+"companion. The compressed WOFF2 files are served with the site. There are "
+"no font-service requests."
+msgstr ""
+"कस्टम लेआउट में प्रोजेक्ट नेविगेशन, दस्तावेज़ और वर्तमान पेज रूपरेखा के "
+"तीन भाग हैं। छोटी स्क्रीन पर नेविगेशन ड्रॉअर है। Libertinus Serif और Sans "
+"साथ हैं। शीर्षक बोल्ड सेरिफ़ में, नेविगेशन, लेबल और नियंत्रण उसके sans "
+"साथी में हैं। संपीड़ित WOFF2 साइट से मिलते हैं; फ़ॉन्ट सेवा अनुरोध नहीं "
+"होता।"
+
+#: ../../topics/typography.rst:20
+msgid ""
+"Navigation column on left, main document text column in center, local "
+"section outline on right."
+msgstr ""
+"बाएँ प्रोजेक्ट नेविगेशन, बीच में मुख्य लेख, दाएँ इस पृष्ठ की रूपरेखा है।"
+
+#: ../../topics/typography.rst:20
+msgid "Three-region reading layout for HTML documentation."
+msgstr "HTML दस्तावेज़ के तीन पढ़ने वाले हिस्से।"
+
+#: ../../topics/typography.rst:37
+msgid ""
+"**Light is the default.** The theme control also offers dark and system "
+"modes. It remembers the choice on the same browser origin. System mode "
+"follows the operating system. Printed HTML uses light colors. Content and "
+"navigation remain usable without JavaScript. The theme control and "
+"enhanced search are progressive enhancements."
+msgstr ""
+"**हल्का थीम डिफ़ॉल्ट है।** गहरा और सिस्टम मोड भी हैं। चुनाव उसी ब्राउज़र "
+"origin पर याद रहता है। सिस्टम मोड ऑपरेटिंग सिस्टम अपनाता है। HTML प्रिंट "
+"हल्के रंग में है। JavaScript के बिना भी सामग्री और नेविगेशन काम करते हैं; "
+"थीम और बेहतर खोज अतिरिक्त संवर्द्धन हैं।"
+
+#: ../../topics/typography.rst:43
+msgid ""
+"English prose can use paragraph-wide **Knuth-Plass line breaking** in the "
+"browser. A small template script measures the loaded font, builds boxes, "
+"spaces, and hyphenation penalties, and chooses breaks for the whole "
+"paragraph. Frank Liang's pattern method supplies English hyphenation "
+"candidates. The original TeX patterns and the libraries' licenses are "
+"bundled with the site."
+msgstr ""
+"अंग्रेज़ी गद्य के लिए ब्राउज़र में पूरे अनुच्छेद का **Knuth-Plass लाइन "
+"ब्रेकिंग** उपयोग कर सकते हैं। छोटा टेम्पलेट स्क्रिप्ट फ़ॉन्ट मापकर बॉक्स, "
+"खाली जगह और दंड मान बनाता है, फिर पूरे अनुच्छेद के ब्रेक चुनता है। "
+"अंग्रेज़ी शब्द-विभाजन के लिए Frank Liang के पैटर्न हैं। मूल TeX पैटर्न और "
+"लाइसेंस साइट में शामिल हैं।"
+
+#: ../../topics/typography.rst:49
+msgid ""
+"The enhancement preserves emphasis and the exact source text. It "
+"recalculates when the reading measure changes. Copying within one "
+"optimized paragraph gives the source text, without visual line divisions "
+"or added hyphens. Printing restores the ordinary paragraph so the print "
+"layout can paginate it."
+msgstr ""
+"संवर्द्धन ज़ोर और मूल पाठ रखता है; चौड़ाई बदले तो फिर गणना करता है। एक "
+"अनुकूलित अनुच्छेद के भीतर कॉपी से मूल पाठ मिलता है, दृश्य पंक्ति-विभाजन "
+"या नए हाइफ़न नहीं। प्रिंट पर सामान्य अनुच्छेद लौटता है, ताकि पेज लेआउट "
+"उसे बाँटे।"
+
+#: ../../topics/typography.rst:54
+msgid ""
+"Links, mathematics, code, interactive content, narrow measures, and other "
+"languages use native browser layout. So do paragraphs for which no "
+"suitably spaced solution exists. The site remains readable with "
+"JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` "
+"and ``text-wrap: pretty``; those CSS properties alone are not a promise "
+"of Knuth-Plass optimization."
+msgstr ""
+"लिंक, गणित, कोड, इंटरैक्टिव सामग्री, संकरी जगह, अन्य भाषाएँ और अनुपयुक्त "
+"अंतर वाले अनुच्छेद ब्राउज़र की मूल व्यवस्था लेते हैं। JavaScript बंद हो "
+"तब भी पढ़ सकते हैं। ``hyphens: auto`` और ``text-wrap: pretty`` अकेले "
+"Knuth-Plass की गारंटी नहीं हैं।"
+
+#: ../../topics/typography.rst:60
+msgid "The PDF page"
+msgstr "PDF पृष्ठ"
+
+#: ../../topics/typography.rst:63
+msgid ""
+"The book template uses the same Libertinus family as the web edition. It "
+"sets justified paragraphs, optimized line breaking, and language-aware "
+"hyphenation. It also controls spacing, running heads, captions, code "
+"blocks, and table rules. The font, hyphenation cost, and paragraph "
+"measure work together. A forced line break is rarely the right repair for "
+"a loose paragraph."
+msgstr ""
+"पुस्तक में वेब वाला Libertinus है। अनुच्छेद दोनों ओर बराबर, पंक्ति-विभाजन "
+"अनुकूलित और हाइफ़न भाषा के अनुसार हैं। अंतर, शीर्षलेख, कैप्शन, कोड और "
+"तालिका रेखाएँ भी नियंत्रित हैं। फ़ॉन्ट, विभाजन लागत और चौड़ाई साथ काम "
+"करते हैं। ढीले अनुच्छेद को ज़बरन लाइन तोड़कर सुधारना शायद ही उचित है।"
+
+#: ../../topics/typography.rst:69
+msgid ""
+"Typst optimizes the PDF paragraphs. The web enhancement optimizes "
+"eligible prose. They share the source, fonts, and visual hierarchy. Their "
+"line breaks can differ. See the `Typst text contract "
+"<https://typst.app/docs/reference/text/text/>`_ and the `browser "
+"hyphenation contract "
+"<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_."
+msgstr ""
+"Typst PDF अनुच्छेद अनुकूलित करता है; वेब संवर्द्धन योग्य गद्य करता है। "
+"सोर्स, फ़ॉन्ट और दृश्य क्रम साझा हैं, लेकिन लाइन विराम अलग हो सकते हैं। "
+"`Typst पाठ अनुबंध <https://typst.app/docs/reference/text/text/>`_ और "
+"`ब्राउज़र हाइफ़न अनुबंध "
+"<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_ "
+"देखें।"
+
+#: ../../topics/typography.rst:74
+msgid "Change the design"
+msgstr "डिज़ाइन बदलना"
+
+#: ../../topics/typography.rst:77
+msgid ""
+"Edit ``_static/editorial.css`` for the documentation project's visual "
+"tokens. Edit ``_templates/layout.html`` for structure. Edit "
+"``_templates/book.typ`` for the print layout. Keep reading order, focus "
+"indicators, labels, and sufficient contrast intact."
+msgstr ""
+"दृश्य मान ``_static/editorial.css``\\ , संरचना ``_templates/layout.html`` "
+"और प्रिंट ``_templates/book.typ`` में बदलें। पढ़ने का क्रम, फ़ोकस संकेत, "
+"लेबल और पर्याप्त कंट्रास्ट बनाए रखें।"
+
+#: ../../topics/typography.rst:82
+msgid ""
+"Build both targets after a change. Inspect a page with code, a table, a "
+"diagram, and an equation. An attractive cover is not proof that the rest "
+"of the book works. Build your own design in "
+":doc:`../tutorial/a-custom-theme`. The full template contract is in "
+":doc:`../templates`. The complete API is in :doc:`../api/index` and in "
+"the same PDF book."
+msgstr ""
+"बदलाव के बाद दोनों आउटपुट बनाएँ और कोड, टेबल, चित्र तथा समीकरण जाँचें। "
+"अच्छा आवरण पूरी किताब का प्रमाण नहीं। अपनी थीम "
+":doc:`../tutorial/a-custom-theme` से बनाएँ और अनुबंध :doc:`../templates` "
+"में देखें। पूरा API :doc:`../api/index` और इसी PDF में है।"
+
+#: ../../topics/writing.rst:1
+msgid "Authoring documents"
+msgstr "दस्तावेज़ लिखना"
+
+#: ../../topics/writing.rst:4
+msgid ""
+"Guidedog supports both reStructuredText (``.rst``) and MyST Markdown "
+"(``.md``). Documents are parsed into a shared semantic document tree, "
+"which is then used to generate both HTML websites and PDF books."
+msgstr ""
+"Guidedog reStructuredText (``.rst``) और MyST Markdown (``.md``) संभालता "
+"है। दोनों का एक साझा अर्थपूर्ण दस्तावेज़ ट्री बनता है, जिससे HTML साइट और "
+"PDF पुस्तक बनती हैं।"
+
+#: ../../topics/writing.rst:8
+msgid "Choose a source language"
+msgstr "स्रोत भाषा चुनना"
+
+#: ../../topics/writing.rst:11
+msgid ""
+"Use reStructuredText when you need full access to domains, complex "
+"tables, and extensible directives. Use MyST Markdown when you prefer "
+"Markdown syntax while retaining Sphinx-style directives and roles."
+msgstr ""
+"डोमेन, जटिल तालिका और विस्तार योग्य निर्देश चाहिए तो reStructuredText "
+"चुनें। Markdown सिंटैक्स के साथ Sphinx जैसे निर्देश और रोल चाहिए तो MyST "
+"Markdown चुनें।"
+
+#: ../../topics/writing.rst:15
+msgid ""
+"In a documentation project, Markdown documents are parsed using the MyST "
+"dialect. Single-document conversions with ``guidedog convert`` use "
+"standard CommonMark by default, unless the MyST reader is explicitly "
+"selected."
+msgstr ""
+"परियोजना में Markdown, MyST के रूप में पढ़ा जाता है। एक फ़ाइल के "
+"``guidedog convert`` रूपांतरण में CommonMark डिफ़ॉल्ट है, जब तक MyST "
+"स्पष्ट रूप से न चुनें।"
+
+#: ../../topics/writing.rst:19
+msgid "Headings and structure"
+msgstr "शीर्षक और संरचना"
+
+#: ../../topics/writing.rst:22
+msgid ""
+"A document title identifies the page. Sections and subsections divide the "
+"text logically. In reStructuredText, headings use underline adornments "
+"(and optional matching overlines). The underline must be at least as long "
+"as the text."
+msgstr ""
+"दस्तावेज़ का शीर्षक पृष्ठ की पहचान देता है; खंड पाठ को व्यवस्थित करते "
+"हैं। RST में शीर्षक के नीचे चिह्नों की रेखा लगती है; ऊपर भी वैसी रेखा लगा "
+"सकते हैं। रेखा शीर्षक से छोटी न हो।"
+
+#: ../../topics/writing.rst:26
+msgid "Recommended adornment styles:"
+msgstr "शीर्षक के लिए सुझाए गए चिह्न:"
+
+#: ../../topics/writing.rst:45
+msgid ""
+"Keep heading levels consistent across your project. In MyST Markdown, use "
+"standard hashes (``#``, ``##``, ``###``)."
+msgstr ""
+"पूरी परियोजना में शीर्षक के स्तर एक जैसे रखें। MyST Markdown में ``#``, "
+"``##``, ``###`` इस्तेमाल करें।"
+
+#: ../../topics/writing.rst:48
+msgid "Text formatting and inline markup"
+msgstr "पाठ का रूप और इनलाइन मार्कअप"
+
+#: ../../topics/writing.rst:51
+msgid "Use inline markup to communicate meaning rather than decoration:"
+msgstr ""
+"इनलाइन मार्कअप अर्थ बताने के लिए इस्तेमाल करें, केवल सजावट के लिए नहीं:"
+
+#: ../../topics/writing.rst:53
+msgid "Inline markup"
+msgstr "इनलाइन मार्कअप"
+
+#: ../../topics/writing.rst:57
+msgid "Style"
+msgstr "शैली"
+
+#: ../../topics/writing.rst:58
+msgid "reStructuredText"
+msgstr "reStructuredText"
+
+#: ../../topics/writing.rst:59
+msgid "MyST Markdown"
+msgstr "MyST Markdown"
+
+#: ../../topics/writing.rst:60
+msgid "**Strong / Bold**"
+msgstr "**मोटे अक्षर**"
+
+#: ../../topics/writing.rst:61 ../../topics/writing.rst:62
+msgid "``**strong text**``"
+msgstr "``**strong text**``"
+
+#: ../../topics/writing.rst:63
+msgid "*Emphasis / Italic*"
+msgstr "*ज़ोर / तिरछे अक्षर*"
+
+#: ../../topics/writing.rst:64 ../../topics/writing.rst:65
+msgid "``*emphasized text*``"
+msgstr "``*emphasized text*``"
+
+#: ../../topics/writing.rst:66
+msgid "``Inline code``"
+msgstr "``इनलाइन कोड``"
+
+#: ../../topics/writing.rst:67
+msgid "````inline code````"
+msgstr "````inline code````"
+
+#: ../../topics/writing.rst:68
+msgid "```inline code```"
+msgstr "```inline code```"
+
+#: ../../topics/writing.rst:69
+msgid "Subscript"
+msgstr "सबस्क्रिप्ट"
+
+#: ../../topics/writing.rst:70
+msgid "``:sub:`text```"
+msgstr "``:sub:`text```"
+
+#: ../../topics/writing.rst:71
+msgid "``{sub}`text```"
+msgstr "``{sub}`text```"
+
+#: ../../topics/writing.rst:72
+msgid "Superscript"
+msgstr "सुपरस्क्रिप्ट"
+
+#: ../../topics/writing.rst:73
+msgid "``:sup:`text```"
+msgstr "``:sup:`text```"
+
+#: ../../topics/writing.rst:74
+msgid "``{sup}`text```"
+msgstr "``{sup}`text```"
+
+#: ../../topics/writing.rst:76
+msgid ""
+"To include literal asterisks or backticks within text, escape them with a "
+"backslash: ``\\*not italic\\*``."
+msgstr ""
+"तारे या बैकटिक को साधारण अक्षर की तरह लिखने के लिए बैकस्लैश से एस्केप "
+"करें: ``\\*not italic\\*``।"
+
+#: ../../topics/writing.rst:79
+msgid "Lists"
+msgstr "सूचियाँ"
+
+#: ../../topics/writing.rst:82
+msgid "Guidedog supports four kinds of lists:"
+msgstr "Guidedog चार तरह की सूचियाँ संभालता है:"
+
+#: ../../topics/writing.rst:84
+msgid "Bullet lists"
+msgstr "बुलेट सूची"
+
+#: ../../topics/writing.rst:94
+msgid "Enumerated lists"
+msgstr "क्रमांकित सूची"
+
+#: ../../topics/writing.rst:104
+msgid "Definition lists"
+msgstr "परिभाषा सूची"
+
+#: ../../topics/writing.rst:107
+msgid ""
+"A definition list pairs terms with explanatory blocks. The term appears "
+"on a single line, followed immediately by an indented definition:"
+msgstr ""
+"परिभाषा सूची में शब्द और उसका अर्थ साथ रहते हैं। शब्द एक पंक्ति में लिखें "
+"और अगली पंक्ति से इंडेंट किया अर्थ दें:"
+
+#: ../../topics/writing.rst:118
+msgid "Field lists"
+msgstr "फ़ील्ड सूची"
+
+#: ../../topics/writing.rst:121
+msgid "Field lists provide structured metadata and parameter descriptions:"
+msgstr "फ़ील्ड सूची से व्यवस्थित मेटाडेटा और पैरामीटर का वर्णन दें:"
+
+#: ../../topics/writing.rst:129
+msgid "Code blocks"
+msgstr "कोड ब्लॉक"
+
+#: ../../topics/writing.rst:132
+msgid ""
+"Use the ``code-block`` directive (or ``sourcecode``) to display "
+"syntax-highlighted code. Guidedog provides syntax highlighting for over "
+"35 programming languages:"
+msgstr ""
+"सिंटैक्स हाइलाइटिंग के लिए ``code-block`` या ``sourcecode`` इस्तेमाल "
+"करें। Guidedog 35 से अधिक प्रोग्रामिंग भाषाएँ संभालता है:"
+
+#: ../../topics/writing.rst:146
+msgid "Options for code blocks:"
+msgstr "कोड ब्लॉक के विकल्प:"
+
+#: ../../topics/writing.rst:148
+msgid "``:linenos:``: Displays line numbers beside the code."
+msgstr "``:linenos:``: कोड के साथ पंक्ति नंबर दिखाता है।"
+
+#: ../../topics/writing.rst:149
+msgid "``:caption: Title``: Adds a caption above or below the code block."
+msgstr "``:caption: Title``: कोड ब्लॉक के ऊपर या नीचे कैप्शन जोड़ता है।"
+
+#: ../../topics/writing.rst:150
+msgid "``:emphasize-lines: 1, 3-5``: Highlights specific lines."
+msgstr "``:emphasize-lines: 1, 3-5``: चुनी हुई पंक्तियों पर ज़ोर देता है।"
+
+#: ../../topics/writing.rst:151
+msgid "``:name: label``: Assigns a reference target to the code block."
+msgstr "``:name: label``: कोड ब्लॉक को संदर्भ का लक्ष्य देता है।"
+
+#: ../../topics/writing.rst:153
+msgid ""
+"To include external source code directly from a file, use "
+"``literalinclude``:"
+msgstr ""
+"बाहरी स्रोत फ़ाइल सीधे शामिल करने के लिए ``literalinclude`` इस्तेमाल करें:"
+
+#: ../../topics/writing.rst:162
+msgid "Admonitions"
+msgstr "सूचना ब्लॉक"
+
+#: ../../topics/writing.rst:165
+msgid "Admonitions highlight notes, warnings, and supplementary advice:"
+msgstr "सूचना ब्लॉक नोट, चेतावनी और अतिरिक्त सलाह उभारते हैं:"
+
+#: ../../topics/writing.rst:187
+msgid ""
+"Guidedog also supports ``danger``, ``error``, ``hint``, and "
+"``attention``. A generic admonition with a custom title uses the "
+"``admonition`` directive:"
+msgstr ""
+"Guidedog ``danger``, ``error``, ``hint`` और ``attention`` भी संभालता है। "
+"अपना शीर्षक देने के लिए ``admonition`` इस्तेमाल करें:"
+
+#: ../../topics/writing.rst:196
+msgid "Tables"
+msgstr "तालिकाएँ"
+
+#: ../../topics/writing.rst:199
+msgid ""
+"Guidedog supports simple tables, grid tables, and directive-based tables."
+msgstr "Guidedog सरल, ग्रिड और निर्देशों से बनी तालिकाएँ संभालता है।"
+
+#: ../../topics/writing.rst:201
+msgid "Simple tables"
+msgstr "सरल तालिकाएँ"
+
+#: ../../topics/writing.rst:204
+msgid "Simple tables use horizontal dashes to define column spans:"
+msgstr "सरल तालिका में क्षैतिज रेखाएँ कॉलम की सीमा बताती हैं:"
+
+#: ../../topics/writing.rst:216
+msgid "Grid tables"
+msgstr "ग्रिड तालिकाएँ"
+
+#: ../../topics/writing.rst:219
+msgid ""
+"Grid tables allow complex multi-line cells and arbitrary column/row spans:"
+msgstr ""
+"ग्रिड तालिका में कई पंक्तियों वाले सेल और कई कॉलम या पंक्तियाँ घेरने वाले "
+"सेल बन सकते हैं:"
+
+#: ../../topics/writing.rst:230
+msgid "List tables"
+msgstr "सूची से बनी तालिकाएँ"
+
+#: ../../topics/writing.rst:233
+msgid ""
+"The ``list-table`` directive creates tables from nested bullet lists, "
+"making wide tables easy to read and maintain in source control:"
+msgstr ""
+"``list-table`` नेस्ट की गई बुलेट सूचियों से तालिका बनाता है। इससे चौड़ी "
+"तालिका का स्रोत पढ़ना और संस्करण नियंत्रण में सँभालना आसान होता है:"
+
+#: ../../topics/writing.rst:252
+msgid "CSV tables"
+msgstr "CSV तालिकाएँ"
+
+#: ../../topics/writing.rst:255
+msgid ""
+"The ``csv-table`` directive constructs a table from comma-separated "
+"values:"
+msgstr "``csv-table`` कॉमा से अलग किए मानों से तालिका बनाता है:"
+
+#: ../../topics/writing.rst:266
+msgid "Images and figures"
+msgstr "चित्र और आकृतियाँ"
+
+#: ../../topics/writing.rst:269
+msgid ""
+"Include illustrations, screenshots, and diagrams with ``image`` and "
+"``figure``:"
+msgstr ""
+"चित्र, स्क्रीनशॉट और आरेख जोड़ने के लिए ``image`` और ``figure`` इस्तेमाल "
+"करें:"
+
+#: ../../topics/writing.rst:285
+msgid ""
+"A ``figure`` wraps the image with an explanatory caption and an optional "
+"reference target."
+msgstr "``figure`` चित्र के साथ कैप्शन और वैकल्पिक संदर्भ लक्ष्य जोड़ता है।"
+
+#: ../../topics/writing.rst:287
+msgid "Document structure with toctrees"
+msgstr "विषय-सूची ट्री से दस्तावेज़ की संरचना"
+
+#: ../../topics/writing.rst:290
+msgid ""
+"The ``toctree`` directive creates the document hierarchy, navigation "
+"menus, and reading order for both the HTML site and the PDF book:"
+msgstr ""
+"``toctree`` दस्तावेज़ का पदानुक्रम, नेविगेशन मेनू और HTML तथा PDF का "
+"पढ़ने का क्रम तय करता है:"
+
+#: ../../topics/writing.rst:304
+msgid "Common options for ``toctree``:"
+msgstr "``toctree`` के सामान्य विकल्प:"
+
+#: ../../topics/writing.rst:306
+msgid ""
+"``:maxdepth: N``: Depth of heading levels to include in the table of "
+"contents."
+msgstr "``:maxdepth: N``: विषय-सूची में शामिल शीर्षकों की गहराई।"
+
+#: ../../topics/writing.rst:307
+msgid ""
+"``:caption: Title``: Category title displayed above the navigation "
+"entries."
+msgstr ""
+"``:caption: Title``: नेविगेशन प्रविष्टियों के ऊपर दिखने वाला वर्ग शीर्षक।"
+
+#: ../../topics/writing.rst:308
+msgid "``:numbered:``: Adds section numbers to chapters and headings."
+msgstr "``:numbered:``: अध्याय और शीर्षकों को क्रमांक देता है।"
+
+#: ../../topics/writing.rst:309
+msgid ""
+"``:titlesonly:``: Lists only the top-level document titles, ignoring "
+"inner sections."
+msgstr ""
+"``:titlesonly:``: केवल दस्तावेज़ के मुख्य शीर्षक दिखाता है, भीतर के खंड "
+"नहीं।"
+
+#: ../../topics/writing.rst:310
+msgid ""
+"``:hidden:``: Records the documents in the reading order without "
+"rendering an inline list."
+msgstr "``:hidden:``: पाठ में सूची दिखाए बिना पढ़ने का क्रम दर्ज करता है।"
+
+#: ../../topics/writing.rst:311
+msgid ""
+"``:glob:``: Allows wildcard patterns to match documents (e.g. "
+"``tutorials/*``)."
+msgstr ""
+"``:glob:``: ``tutorials/*`` जैसे वाइल्डकार्ड से दस्तावेज़ चुनने देता है।"
+
+#: ../../topics/writing.rst:313
+msgid "Cross-references and links"
+msgstr "पार-संदर्भ और लिंक"
+
+#: ../../topics/writing.rst:316
+msgid ""
+"Explicit targets ensure links remain stable even when document files are "
+"renamed:"
+msgstr ""
+"स्पष्ट लक्ष्य लेबल से संदर्भ फ़ाइल के नाम से स्वतंत्र और स्थिर रहता है।"
+
+#: ../../topics/writing.rst:318
+msgid "Target labels and ``:ref:``"
+msgstr "लक्ष्य लेबल और ``:ref:``"
+
+#: ../../topics/writing.rst:321
+msgid "Place a target label immediately before a heading, table, or figure:"
+msgstr "शीर्षक, तालिका या चित्र के ठीक पहले लक्ष्य लेबल रखें:"
+
+#: ../../topics/writing.rst:332
+msgid "Refer to this target from any document across the project:"
+msgstr "परियोजना के किसी भी दस्तावेज़ से इस लक्ष्य का संदर्भ दे सकते हैं:"
+
+#: ../../topics/writing.rst:339
+msgid "Document references with ``:doc:``"
+msgstr "``:doc:`` से दस्तावेज़ संदर्भ"
+
+#: ../../topics/writing.rst:342
+msgid "Link to another document by path (omitting the file extension):"
+msgstr "एक्सटेंशन छोड़े हुए पथ से दूसरे दस्तावेज़ का लिंक दें:"
+
+#: ../../topics/writing.rst:348
+msgid "Glossary terms with ``:term:``"
+msgstr "``:term:`` से शब्द का संदर्भ"
+
+#: ../../topics/writing.rst:351
+msgid "Define terms using the ``glossary`` directive:"
+msgstr "``glossary`` से शब्दों की परिभाषा दें:"
+
+#: ../../topics/writing.rst:363
+msgid "Link to a glossary term using the ``:term:`` role:"
+msgstr "``:term:`` रोल से शब्द का लिंक दें:"
+
+#: ../../topics/writing.rst:369
+msgid "File downloads with ``:download:``"
+msgstr "``:download:`` से फ़ाइल डाउनलोड"
+
+#: ../../topics/writing.rst:372
+msgid "Copy a file to the output's download directory and create a link:"
+msgstr "फ़ाइल को डाउनलोड फ़ोल्डर में कॉपी कर लिंक बनाता है:"
+
+#: ../../topics/writing.rst:378
+msgid "External links"
+msgstr "बाहरी लिंक"
+
+#: ../../topics/writing.rst:381
+msgid "Link to external web addresses:"
+msgstr "बाहरी वेब पते का लिंक दें:"
+
+#: ../../topics/writing.rst:387
+msgid "Substitutions and includes"
+msgstr "प्रतिस्थापन और शामिल करना"
+
+#: ../../topics/writing.rst:390
+msgid "Define reusable phrases, symbols, or images:"
+msgstr "दोबारा इस्तेमाल होने वाला वाक्यांश, चिह्न या चित्र तय करें:"
+
+#: ../../topics/writing.rst:399
+msgid "To reuse common reStructuredText content across multiple files:"
+msgstr "कई फ़ाइलों में reStructuredText सामग्री साझा करने के लिए:"
+
+#: ../../topics/writing.rst:405
+msgid "MyST Markdown authoring"
+msgstr "MyST Markdown लिखना"
+
+#: ../../topics/writing.rst:408
+msgid ""
+"MyST Markdown supports the same semantic directives and roles through "
+"fenced blocks:"
+msgstr ""
+"MyST Markdown में फेंस ब्लॉक से वही निर्देश और रोल व्यक्त किए जाते हैं:"
+
+#~ msgid ""
+#~ "Discover sources, read documents, resolve references, render "
+#~ "artifacts, then publish."
+#~ msgstr ""
+#~ "सोर्स खोजें, दस्तावेज़ पढ़ें, संदर्भ हल करें, परिणाम रेंडर करें, फिर "
+#~ "प्रकाशित करें।"
+
+#~ msgid ""
+#~ "The build separates discovery, meaning, presentation, and publication."
+#~ msgstr "बिल्ड खोज, अर्थ, प्रस्तुति और प्रकाशन को अलग रखता है।"
+
+#~ msgid "Write an explanation"
+#~ msgstr "व्याख्या लिखना"
+
+#~ msgid ""
+#~ "Start with the thing the reader wants to understand. Give a small "
+#~ "example. Then name the general rule. When a claim has assumptions, put "
+#~ "them beside the claim."
+#~ msgstr ""
+#~ "पाठक जो समझना चाहता है, वहीं शुरू करें। छोटा उदाहरण दें, फिर सामान्य "
+#~ "नियम। धारणाएँ कथन के पास रखें।"
+
+#~ msgid ""
+#~ "**One paragraph should do one piece of work.** It can define a term, "
+#~ "explain a step, or justify a choice. If it does three jobs, split it. "
+#~ "Short sentences help. A short sentence still needs a precise subject."
+#~ msgstr ""
+#~ "**एक अनुच्छेद एक काम करे।** शब्द बताए, चरण समझाए या चुनाव का कारण दे। "
+#~ "तीन काम हों तो बाँटें। छोटे वाक्य मदद करते हैं; विषय फिर भी स्पष्ट हो।"
+
+#~ msgid ""
+#~ "Use RST when you need roles, directives, domain objects, or detailed "
+#~ "tables. Use Markdown when simple headings, lists, and code are enough. "
+#~ "Project Markdown uses the MyST layer. Single-document ``convert`` uses "
+#~ "CommonMark for ``.md`` unless you choose another reader. The "
+#~ "distinction matters when you copy examples between the two commands."
+#~ msgstr ""
+#~ "रोल, निर्देश, डोमेन ऑब्जेक्ट या विस्तृत तालिका चाहिए तो RST लें। "
+#~ "साधारण शीर्षक, सूची और कोड के लिए Markdown। प्रोजेक्ट Markdown MyST "
+#~ "लेता है। अकेला ``convert`` ``.md`` पर CommonMark लेता है, जब तक दूसरा "
+#~ "रीडर न चुनें। दोनों कमांड में उदाहरण ले जाते समय अंतर याद रखें।"
+
+#~ msgid "Headings are a promise"
+#~ msgstr "शीर्षक एक वादा है"
+
+#~ msgid ""
+#~ "A heading should tell the reader what the section answers. Keep its "
+#~ "adornment consistent. An underline must cover the whole heading."
+#~ msgstr ""
+#~ "शीर्षक बताए कि खंड किसका उत्तर देता है। सजावट एक जैसी रखें। रेखा पूरे "
+#~ "शीर्षक के नीचे हो।"
+
+#~ msgid ""
+#~ "Use one document title. Follow it with a brief statement of purpose. A "
+#~ "deeply nested heading often means the chapter needs to be split."
+#~ msgstr ""
+#~ "एक दस्तावेज़ शीर्षक दें, फिर संक्षिप्त उद्देश्य। बहुत गहरे शीर्षक "
+#~ "अक्सर अध्याय बाँटने का संकेत हैं।"
+
+#~ msgid "Meaning before appearance"
+#~ msgstr "रूप से पहले अर्थ"
+
+#~ msgid ""
+#~ "Use ``**strong text**`` for a conclusion or a term being defined. Use "
+#~ "``*emphasis*`` for a small stress in the argument. Use double "
+#~ "backticks for a name copied into a program. Do not use a code block to "
+#~ "imitate a table or a heading."
+#~ msgstr ""
+#~ "निष्कर्ष या परिभाषित शब्द को ``**strong text**`` दें। हल्के ज़ोर को "
+#~ "``*emphasis*`` और प्रोग्राम में कॉपी नाम को दो बैकटिक दें। कोड ब्लॉक "
+#~ "से तालिका या शीर्षक न बनाएँ।"
+
+#~ msgid ""
+#~ "A filename changes more often than an idea. Give important arguments "
+#~ "labels."
+#~ msgstr ""
+#~ "विचार की अपेक्षा फ़ाइल का नाम अधिक बदलता है। महत्वपूर्ण तर्कों को लेबल "
+#~ "दें।"
+
+#~ msgid ""
+#~ "Guidedog resolves these links across the project. It reports an "
+#~ "unresolved reference with its source location. Use ``-n`` when you "
+#~ "want stricter reference checks."
+#~ msgstr ""
+#~ "Guidedog प्रोजेक्ट में ये लिंक हल करता है। अनसुलझे संदर्भ पर सोर्स जगह "
+#~ "बताता है। कड़ी जाँच के लिए ``-n`` दें।"
+
+#~ msgid "Examples and cautions"
+#~ msgstr "उदाहरण और सावधानियाँ"
+
+#~ msgid ""
+#~ "An example should be small enough to run and large enough to test the "
+#~ "claim. Show the input, the command, and the expected result. Use a "
+#~ "note for useful context. Use a warning for a concrete condition that "
+#~ "can lose work or change the result. A warning is not decoration."
+#~ msgstr ""
+#~ "उदाहरण चलने जितना छोटा और कथन जाँचने जितना बड़ा हो। इनपुट, कमांड और "
+#~ "अपेक्षित परिणाम दें। उपयोगी संदर्भ नोट में दें। काम खोने या परिणाम "
+#~ "बदलने की ठोस शर्त पर चेतावनी दें। चेतावनी सजावट नहीं।"
+
+#~ msgid ""
+#~ "Documentation prose is exempt from the codebase's source-width and "
+#~ "procedure-length rules. Break lines for editing, not to force a page "
+#~ "layout."
+#~ msgstr ""
+#~ "दस्तावेज़ गद्य पर कोड की पंक्ति चौड़ाई या प्रोसीजर लंबाई के नियम नहीं। "
+#~ "संपादन के लिए लाइन तोड़ें, पेज लेआउट थोपने के लिए नहीं।"
+
+#~ msgid ""
+#~ "A diagram is part of the argument. Its caption should say what it "
+#~ "establishes. See :doc:`diagrams` and :doc:`mathematics`."
+#~ msgstr ""
+#~ "आरेख तर्क का हिस्सा है। कैप्शन बताए वह क्या स्थापित करता है। "
+#~ ":doc:`diagrams` और :doc:`mathematics` देखें।"

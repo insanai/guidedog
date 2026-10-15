@@ -1,0 +1,40 @@
+/* Typography and measure are shared. Color follows the reader's chosen scheme. */
+:root {
+  --gd-measure: 43rem;
+  --gd-radius: 4px;
+  --gd-bg: #fdfbf6;
+  --gd-bg-soft: #f3f0e7;
+  --gd-text: #202c28;
+  --gd-muted: #53605a;
+}
+:root[data-theme="dark"] {
+  --gd-bg: #141c22; --gd-bg-soft: #1b2832;
+  --gd-text: #eaf1f6; --gd-muted: #b0c0cb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --gd-bg: #141c22; --gd-bg-soft: #1b2832;
+    --gd-text: #eaf1f6; --gd-muted: #b0c0cb;
+  }
+}
+.gd-article { font-family: Georgia, "Noto Serif", serif; font-size: 1.12rem; }
+.gd-article p { line-height: 1.7; hyphens: auto; text-wrap: pretty; }
+.gd-article :is(h1, h2, h3) { font-weight: 700; hyphens: none; text-wrap: balance; }
+.gd-article h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -.025em; }
+.gd-header { border-top: 3px solid var(--gd-link); }
+.orbit-kicker { margin-bottom: 1rem; }
+.orbit-tag {
+  display: inline-block; padding: .2rem .65rem;
+  font: 700 .75rem/1.5 var(--gd-sans); letter-spacing: .08em;
+  border: 1px solid var(--gd-link); border-radius: 3px; color: var(--gd-link);
+}
+.orbit-edition {
+  display: flex; flex-wrap: wrap; gap: .5rem 1rem; justify-content: space-between;
+  font: .85rem/1.6 var(--gd-sans); color: var(--gd-muted);
+}
+img.graphviz-adaptive { display: block; margin: 1.5rem auto; padding: 1rem; }
+@media print {
+  :root { color-scheme: light; --gd-bg: #fff; --gd-text: #202c28; --gd-muted: #53605a; }
+  .orbit-tag { color: #202c28; border-color: currentColor; }
+  .gd-article p { orphans: 3; widows: 3; }
+}

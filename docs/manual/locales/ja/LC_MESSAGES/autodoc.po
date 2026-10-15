@@ -1,0 +1,404 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../autodoc.rst:1
+msgid "Documenting Python with autodoc"
+msgstr "autodoc による Python のドキュメント作成"
+
+#: ../../autodoc.rst:4
+msgid ""
+"Guidedog documents Python by reading its source. It does not import a "
+"package. Docstrings and signatures become part of the document graph. "
+"Objects created only at runtime need an explicit description. This is a "
+"deliberate boundary."
+msgstr ""
+"Guidedog はソースコードを読んで Python のドキュメントを生成します。パッケージはインポートしません。docstring "
+"とシグネチャはドキュメントグラフに組み込まれます。実行時にしか作られないオブジェクトは、明示的に記述する必要があります。これは意図的な境界です。"
+
+#: ../../autodoc.rst:8
+msgid "Setting it up"
+msgstr "設定"
+
+#: ../../autodoc.rst:11
+msgid ""
+"List the extension and tell Guidedog where your packages are, relative to "
+"the source folder, as ``sys.path`` tells Python:"
+msgstr ""
+"拡張機能を指定し、ソースディレクトリを基準にパッケージの場所を Guidedog に伝えます。Python の ``sys.path`` "
+"に相当します。"
+
+#: ../../autodoc.rst:19
+msgid ""
+"``guidedog migrate`` writes ``autodoc_source_paths`` for you from the "
+"lines that ``conf.py`` files use to reach their package, such as "
+"``sys.path.insert(0, os.path.abspath('..'))``. A package installed from "
+"elsewhere is found only if you add the folder that holds it, for example "
+"a source checkout of a dependency; Guidedog never looks in Python's own "
+"``site-packages``."
+msgstr ""
+"``guidedog migrate`` は、\\ ``sys.path.insert(0, os.path.abspath('..'))`` "
+"など、\\ ``conf.py`` がパッケージを探すために使う行から ``autodoc_source_paths`` "
+"を生成します。別の場所にインストールされたパッケージは、そのディレクトリを追加した場合にだけ見つかります。依存パッケージのソースを取得したディレクトリなどを指定してください。Guidedog "
+"は Python 自身の ``site-packages`` を検索しません。"
+
+#: ../../autodoc.rst:25
+msgid "The directives then work as in Sphinx:"
+msgstr "各ディレクティブは Sphinx と同じように使えます。"
+
+#: ../../autodoc.rst:37
+msgid ""
+"Every option Sphinx 9.1 accepts is accepted, with the same meaning: "
+"``:members:``, ``:undoc-members:``, ``:private-members:``, "
+"``:special-members:``, ``:inherited-members:``, ``:exclude-members:``, "
+"``:member-order:``, ``:show-inheritance:``, ``:imported-members:``, "
+"``:ignore-module-all:``, ``:class-doc-from:``, ``:no-value:``, "
+"``:annotation:``, ``:no-index:``, ``:no-index-entry:``, ``:synopsis:``, "
+"``:platform:``, ``:deprecated:``, and the ``no-`` forms that cancel "
+"``autodoc_default_options``."
+msgstr ""
+"Sphinx 9.1 の全オプションを同じ意味で受け付けます。\\ ``:members:``\\ 、\\ "
+"``:undoc-members:``\\ 、\\ ``:private-members:``\\ 、\\ "
+"``:special-members:``\\ 、\\ ``:inherited-members:``\\ 、\\ "
+"``:exclude-members:``\\ 、\\ ``:member-order:``\\ 、\\ "
+"``:show-inheritance:``\\ 、\\ ``:imported-members:``\\ 、\\ "
+"``:ignore-module-all:``\\ 、\\ ``:class-doc-from:``\\ 、\\ ``:no-value:``\\ "
+"、\\ ``:annotation:``\\ 、\\ ``:no-index:``\\ 、\\ ``:no-index-entry:``\\ "
+"、\\ ``:synopsis:``\\ 、\\ ``:platform:``\\ 、\\ ``:deprecated:`` と、\\ "
+"``autodoc_default_options`` を取り消す ``no-`` 形式です。"
+
+#: ../../autodoc.rst:45
+msgid "Settings"
+msgstr "設定項目"
+
+#: ../../autodoc.rst:48
+msgid ""
+"These ``conf.toml`` settings have Sphinx's names, values, and defaults."
+msgstr "これらの ``conf.toml`` 設定は、Sphinx と同じ名前、値、既定値を使います。"
+
+#: ../../autodoc.rst:50
+msgid "``autodoc_source_paths``"
+msgstr "``autodoc_source_paths``"
+
+#: ../../autodoc.rst:51
+msgid ""
+"Guidedog's own: the folders Python modules are found in, in order, "
+"relative to the source folder. Only files below them are read, and a path "
+"through a symbolic link that leads elsewhere is refused."
+msgstr ""
+"Guidedog 独自の設定です。Python "
+"モジュールを探すディレクトリを、ソースディレクトリからの相対パスで検索順に指定します。指定したディレクトリ内のファイルだけを読み、外部に通じるシンボリックリンクは拒否します。"
+
+#: ../../autodoc.rst:55
+msgid "``autoclass_content``"
+msgstr "``autoclass_content``"
+
+#: ../../autodoc.rst:56
+msgid ""
+"``\"class\"`` (default), ``\"init\"``, or ``\"both\"``: which docstrings "
+"describe a class."
+msgstr ""
+"クラスの説明に使う docstring を指定します。\\ ``\"class\"``\\ （既定）、\\ ``\"init\"``\\ 、\\ "
+"``\"both\"`` から選びます。"
+
+#: ../../autodoc.rst:58
+msgid "``autodoc_class_signature``"
+msgstr "``autodoc_class_signature``"
+
+#: ../../autodoc.rst:59
+msgid ""
+"``\"mixed\"`` (default) or ``\"separated\"``, which documents "
+"``__init__`` as a method."
+msgstr ""
+"``\"mixed\"``\\ （既定）または ``\"separated\"``\\ 。後者では ``__init__`` "
+"をメソッドとして記載します。"
+
+#: ../../autodoc.rst:61
+msgid "``autodoc_default_options``"
+msgstr "``autodoc_default_options``"
+
+#: ../../autodoc.rst:62
+msgid ""
+"A table of options every directive gets, such as ``members = true`` or "
+"``member-order = \"bysource\"``. A value of ``false`` leaves the option "
+"out."
+msgstr ""
+"すべてのディレクティブに適用するオプションの表です。例は ``members = true`` や ``member-order = "
+"\"bysource\"``\\ 。値を ``false`` にすると、そのオプションを省きます。"
+
+#: ../../autodoc.rst:65
+msgid "``autodoc_docstring_signature``"
+msgstr "``autodoc_docstring_signature``"
+
+#: ../../autodoc.rst:66
+msgid ""
+"``true`` (default): a first docstring line like ``name(args) -> result`` "
+"is the signature."
+msgstr ""
+"``true``\\ （既定）：docstring の先頭行が ``name(args) -> result`` "
+"のような形なら、シグネチャとして使います。"
+
+#: ../../autodoc.rst:69
+msgid "``autodoc_inherit_docstrings``"
+msgstr "``autodoc_inherit_docstrings``"
+
+#: ../../autodoc.rst:70
+msgid ""
+"``true`` (default): a member without a docstring takes its base class's."
+msgstr "``true``\\ （既定）：docstring のないメンバーは基底クラスのものを引き継ぎます。"
+
+#: ../../autodoc.rst:72
+msgid "``autodoc_member_order``"
+msgstr "``autodoc_member_order``"
+
+#: ../../autodoc.rst:73
+msgid ""
+"``\"alphabetical\"`` (default), ``\"groupwise\"``, or ``\"bysource\"``."
+msgstr ""
+"``\"alphabetical\"``\\ （既定）、\\ ``\"groupwise\"``\\ 、\\ ``\"bysource\"`` "
+"から選びます。"
+
+#: ../../autodoc.rst:75
+msgid "``autodoc_preserve_defaults``"
+msgstr "``autodoc_preserve_defaults``"
+
+#: ../../autodoc.rst:76
+msgid ""
+"``false`` (default): defaults are shown as ``repr()`` would write them; "
+"``true`` shows them as written."
+msgstr ""
+"``false``\\ （既定）：既定値を ``repr()`` の表現で表示します。\\ ``true`` ではソースに書かれた形を使います。"
+
+#: ../../autodoc.rst:79
+msgid "``autodoc_typehints``"
+msgstr "``autodoc_typehints``"
+
+#: ../../autodoc.rst:80
+msgid ""
+"``\"signature\"`` (default), ``\"description\"`` (as ``:type:`` and "
+"``:rtype:`` fields), ``\"both\"``, or ``\"none\"``."
+msgstr ""
+"``\"signature\"``\\ （既定）、\\ ``\"description\"``\\ （\\ ``:type:`` と "
+"``:rtype:`` フィールド）、\\ ``\"both\"``\\ 、\\ ``\"none\"`` から選びます。"
+
+#: ../../autodoc.rst:83
+msgid "``autodoc_typehints_description_target``"
+msgstr "``autodoc_typehints_description_target``"
+
+#: ../../autodoc.rst:84
+msgid ""
+"``\"all\"`` (default), ``\"documented\"``, or ``\"documented_params\"``."
+msgstr ""
+"``\"all\"``\\ （既定）、\\ ``\"documented\"``\\ 、\\ ``\"documented_params\"`` "
+"から選びます。"
+
+#: ../../autodoc.rst:86
+msgid "``autodoc_typehints_format``"
+msgstr "``autodoc_typehints_format``"
+
+#: ../../autodoc.rst:87
+msgid "``\"short\"`` (default) or ``\"fully-qualified\"``."
+msgstr "``\"short\"``\\ （既定）または ``\"fully-qualified\"``\\ 。"
+
+#: ../../autodoc.rst:89
+msgid "``autodoc_use_type_comments``"
+msgstr "``autodoc_use_type_comments``"
+
+#: ../../autodoc.rst:90
+msgid "``true`` (default): ``# type:`` comments count as annotations."
+msgstr "``true``\\ （既定）：\\ ``# type:`` コメントを型注釈として扱います。"
+
+#: ../../autodoc.rst:92
+msgid "``strip_signature_backslash``"
+msgstr "``strip_signature_backslash``"
+
+#: ../../autodoc.rst:93
+msgid "Doubles backslashes in signatures, as in Sphinx."
+msgstr "Sphinx と同様に、シグネチャ内のバックスラッシュを二重にします。"
+
+#: ../../autodoc.rst:95
+msgid ""
+"``autodoc_mock_imports``, ``autodoc_type_aliases``, "
+"``autodoc_warningiserror``"
+msgstr ""
+"``autodoc_mock_imports``\\ , ``autodoc_type_aliases``\\ , "
+"``autodoc_warningiserror``"
+
+#: ../../autodoc.rst:96
+msgid ""
+"Accepted. Nothing is imported, so nothing needs mocking; type aliases are "
+"not applied."
+msgstr "設定は受け付けます。インポートしないためモックは不要です。型エイリアスは適用しません。"
+
+#: ../../autodoc.rst:99
+msgid "How Guidedog knows what Python would do"
+msgstr "Guidedog が Python の動作を判断する仕組み"
+
+#: ../../autodoc.rst:102
+msgid ""
+"Names are followed as Python binds them: ``from .app import Flask`` in a "
+"package's ``__init__.py`` makes ``flask.Flask`` the class defined in "
+"``flask/app.py``, which autodoc then shows with ``:canonical: "
+"flask.app.Flask``. Base classes are resolved the same way, their method "
+"resolution order is computed as Python computes it, and inherited members "
+"come from the bases' source. Names imported only under ``if "
+"TYPE_CHECKING:`` do not exist when the module runs, so annotations naming "
+"them stay as written, as they do in Sphinx."
+msgstr ""
+"名前は Python の束縛規則に従って解決します。パッケージの ``__init__.py`` にある ``from .app import "
+"Flask`` により、\\ ``flask.Flask`` は ``flask/app.py`` のクラスを指します。autodoc は "
+"``:canonical: flask.app.Flask`` を表示します。基底クラスも同様に解決し、Python "
+"と同じ規則でメソッド解決順序を計算します。継承したメンバーは基底クラスのソースから取得します。\\ ``if TYPE_CHECKING:`` "
+"の中だけでインポートした名前は実行時には存在しないため、それを使う注釈は Sphinx と同じく原文のままです。"
+
+#: ../../autodoc.rst:110
+msgid ""
+"Docstrings are the strings Python would store: escapes processed and "
+"indentation removed as Python 3.13's compiler removes it. Attribute "
+"documentation comes from the places Sphinx's analyser reads: a ``#:`` "
+"comment after the assignment or on the lines above it, and a string "
+"literal after it. Signatures come from the ``def``; a class's from its "
+"metaclass ``__call__``, ``__new__``, or ``__init__``, as Python finds it; "
+"a dataclass's or ``NamedTuple``'s from its fields; ``@overload`` variants "
+"replace the implementation's signature."
+msgstr ""
+"docstring は Python が保存する文字列です。エスケープを処理し、Python 3.13 "
+"のコンパイラと同じ規則でインデントを取り除きます。属性の説明は Sphinx の解析器と同じ場所から読みます。代入の行末または直前の ``#:`` "
+"コメントと、代入直後の文字列リテラルです。シグネチャは ``def`` から取得します。クラスでは Python の検索順に従い、メタクラスの "
+"``__call__``\\ 、\\ ``__new__``\\ 、\\ ``__init__`` を調べます。dataclass と "
+"``NamedTuple`` ではフィールドを使います。\\ ``@overload`` の各定義は実装のシグネチャに優先します。"
+
+#: ../../autodoc.rst:118
+msgid "What cannot be known without running Python"
+msgstr "Python を実行しないと分からないこと"
+
+#: ../../autodoc.rst:121
+msgid ""
+"Guidedog says so, naming the object, whenever the source cannot tell it "
+"what Python would: a warning when something cannot be documented, a note "
+"(shown with ``-v``) when it is documented with less than Sphinx would "
+"show."
+msgstr ""
+"ソースだけでは Python の動作を判断できない場合、Guidedog "
+"は対象の名前を示して報告します。文書化できなければ警告を出します。Sphinx より情報が少ない状態で文書化した場合は、\\ ``-v`` "
+"で表示する注記を出します。"
+
+#: ../../autodoc.rst:125
+msgid ""
+"A compiled module (``.so``, ``.pyd``) has no source to read: its objects "
+"are not found."
+msgstr ""
+"コンパイル済みのモジュール（\\ ``.so``\\ 、\\ ``.pyd``\\ ）には読めるソースがないため、オブジェクトを見つけられません。"
+
+#: ../../autodoc.rst:127
+msgid ""
+"A value made by running code (``app = Flask(__name__)``, ``now = "
+"datetime.now()``) has no ``:value:``, and a computed default is shown as "
+"written."
+msgstr ""
+"コードの実行で得る値（\\ ``app = Flask(__name__)``\\ 、\\ ``now = datetime.now()``\\ "
+"）には ``:value:`` を付けません。計算が必要な既定値はソースの表記を使います。"
+
+#: ../../autodoc.rst:129
+msgid ""
+"A function made by a decorator from outside the source paths "
+"(``@click.command()``) is documented as the function it decorates."
+msgstr ""
+"ソース検索パスの外にあるデコレータ（\\ ``@click.command()``\\ ）が生成する関数は、装飾前の関数として文書化します。"
+
+#: ../../autodoc.rst:131
+msgid ""
+"A class from a package outside the source paths is named by the path it "
+"was imported from, which may differ from the module that defines it; its "
+"members, its constructor's signature, and the docstrings it would pass on "
+"are unknown."
+msgstr ""
+"ソース検索パスの外にあるパッケージのクラスは、インポート元のパスで名前を表示します。そのパスは定義元のモジュールと異なる場合があります。メンバー、コンストラクタのシグネチャ、継承される "
+"docstring は分かりません。"
+
+#: ../../autodoc.rst:134
+msgid ""
+"Docstrings of builtin types are unknown, so a method that has none and "
+"would inherit one from ``dict`` is left out."
+msgstr ""
+"組み込み型の docstring は分かりません。そのため、独自の docstring がなく ``dict`` "
+"から継承するはずのメソッドは省きます。"
+
+#: ../../autodoc.rst:136
+msgid ""
+"Python extensions that handle autodoc's events "
+"(``autodoc-process-docstring``, ``autodoc-skip-member``, ...) do not run."
+msgstr ""
+"autodoc のイベント（\\ ``autodoc-process-docstring``\\ 、\\ "
+"``autodoc-skip-member`` など）を処理する Python 拡張は実行しません。"
+
+#: ../../autodoc.rst:138
+msgid ""
+"A module nested far deeper than real code (Python itself refuses 200 "
+"nested brackets; Guidedog also refuses a ``+`` chain of a few hundred "
+"operands) is not analysed, with the warning ``autodoc.too_deep``."
+msgstr ""
+"現実のコードを大きく超える深い入れ子は解析せず、\\ ``autodoc.too_deep`` を警告します。Python 自体も 200 "
+"段の括弧の入れ子を拒否します。Guidedog は数百のオペランドを含む ``+`` の連鎖も拒否します。"
+
+#: ../../autodoc.rst:141
+msgid ""
+"Work that multiplies is bounded: a name followed through imports and "
+"aliases stops after 48 steps along one path and 100,000 in all; a type "
+"alias or constant is expanded for 10,000 steps and is otherwise shown as "
+"written; a class's MRO is followed 100 classes deep; and one directive "
+"generates at most 10,000 directives (the warning ``autodoc.limit``), "
+"which only a class that contains itself under its own name reaches."
+msgstr ""
+"増大し得る処理には上限があります。インポートと別名をたどる名前解決は、1 経路で 48 ステップ、全体で 100,000 "
+"ステップまでです。型エイリアスと定数の展開は 10,000 ステップまでで、それを超えると原文を表示します。クラスの MRO は 100 "
+"クラスまでたどります。1 つのディレクティブが生成できる数は 10,000 個までで、超過時は ``autodoc.limit`` "
+"を警告します。この上限に達するのは、自分の名前で自分自身を含むクラスです。"
+
+#: ../../autodoc.rst:147
+msgid ""
+"Adding the missing packages' source folders to ``autodoc_source_paths`` "
+"closes most of these."
+msgstr ""
+"不足するパッケージのソースディレクトリを ``autodoc_source_paths`` に追加すれば、これらの制約の多くを解消できます。"
+
+#: ../../autodoc.rst:150
+msgid "Rebuilding"
+msgstr "再ビルド"
+
+#: ../../autodoc.rst:153
+msgid ""
+"Every Python file an autodoc directive read is a dependency of the page: "
+"editing it reads the page again on the next build. A page whose object "
+"was not found is read again on every build, so it picks the object up as "
+"soon as the source has it."
+msgstr ""
+"autodoc が読んだ Python "
+"ファイルはすべて、そのページの依存関係になります。編集すると次のビルドでページを読み直します。オブジェクトが見つからなかったページは毎回読み直すため、ソースに追加されれば次のビルドで検出します。"
+
+#: ../../autodoc.rst:157
+msgid "Security"
+msgstr "安全性"
+
+#: ../../autodoc.rst:160
+msgid ""
+"Building documentation never runs the project's code. Guidedog reads "
+"Python source as text, with the same confinement it applies to includes: "
+"only below ``autodoc_source_paths``, and not through links leading "
+"elsewhere."
+msgstr ""
+"文書のビルドでプロジェクトのコードを実行することはありません。Guidedog は Python ソースをテキストとして読み、include "
+"と同じ範囲制限を適用します。\\ ``autodoc_source_paths`` の下だけを読み、外部に通じるリンクはたどりません。"

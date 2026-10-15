@@ -1,0 +1,1000 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../templates.rst:3
+msgid "Templates"
+msgstr "템플릿"
+
+#: ../../templates.rst:6
+msgid ""
+"A template controls presentation. It does not duplicate the source prose. "
+"Guidedog uses Jinja for HTML and Typst for PDF. For a complete worked "
+"project, follow :doc:`tutorial/a-custom-theme`. This chapter is the "
+"reference for its settings, blocks and parameters."
+msgstr ""
+"템플릿은 본문을 복제하지 않고 표현을 정합니다. HTML은 Jinja, PDF는 Typst를 씁니다. 전체 예제는 "
+":doc:`tutorial/a-custom-theme` 문서를, 설정·블록·매개변수 계약은 이 장을 참고하세요."
+
+#: ../../templates.rst:11
+msgid ""
+"Templates in Guidedog are standard project files that are directly "
+"visible and editable. When you initialize a project with ``guidedog "
+"quickstart``, it writes the actual working templates directly into your "
+"project:"
+msgstr ""
+"Guidedog 템플릿은 직접 보고 편집할 수 있는 일반 프로젝트 파일입니다. ``guidedog quickstart`` 를 "
+"실행하면 실제 사용할 템플릿이 프로젝트에 생성됩니다."
+
+#: ../../templates.rst:15
+msgid ""
+"``_templates/layout.html`` defines your HTML website structure (Jinja)."
+msgstr "``_templates/layout.html`` 은 Jinja로 HTML 사이트의 구조를 정의합니다."
+
+#: ../../templates.rst:16
+msgid ""
+"``_templates/book.typ`` defines your PDF book layout, typography, and "
+"cover page (Typst)."
+msgstr "``_templates/book.typ`` 은 Typst로 PDF 책의 레이아웃, 타이포그래피, 표지를 정의합니다."
+
+#: ../../templates.rst:17
+msgid ""
+"``_static/guidedog.css`` and ``_static/guidedog.js`` supply default "
+"styles and client behaviors."
+msgstr ""
+"``_static/guidedog.css`` 와 ``_static/guidedog.js`` 는 기본 스타일과 브라우저 동작을 "
+"제공합니다."
+
+#: ../../templates.rst:19
+msgid ""
+"Templates are part of your project directory rather than hidden within an "
+"external package or binary cache. You can edit them directly, rebuild "
+"with ``guidedog build``, and preview changes with ``guidedog serve``."
+msgstr ""
+"템플릿은 외부 패키지나 바이너리 캐시에 숨겨지지 않고 프로젝트 안에 있습니다. 직접 편집한 뒤 ``guidedog build`` 로 "
+"빌드하고 ``guidedog serve`` 로 확인하세요."
+
+#: ../../templates.rst:23
+msgid "HTML templates"
+msgstr "HTML 템플릿"
+
+#: ../../templates.rst:26
+msgid ""
+"Guidedog renders ``layout.html`` as the root page template using a "
+"built-in Jinja engine. Split a layout into partials and macro libraries. "
+"Inherit shared blocks from a base layout. Each file then has one job."
+msgstr ""
+"내장 Jinja 엔진이 ``layout.html`` 페이지를 렌더링합니다. 부분 템플릿과 매크로로 나누고 공통 블록을 상속하면 "
+"파일마다 역할이 명확해집니다."
+
+#: ../../templates.rst:32
+msgid ""
+"Built-in theme layout is extended by project templates with block "
+"overrides and partial includes."
+msgstr "프로젝트 템플릿은 내장 레이아웃을 상속하고 블록과 부분 템플릿을 조합합니다."
+
+#: ../../templates.rst:32
+msgid "Template inheritance and block composition in Guidedog."
+msgstr "Guidedog의 템플릿 상속과 조합."
+
+#: ../../templates.rst:51
+msgid "Modular template structure"
+msgstr "모듈형 템플릿 구조"
+
+#: ../../templates.rst:54
+msgid ""
+"A project can organize templates across any number of files and "
+"subdirectories under the directories listed in ``templates_path`` (by "
+"default, ``[\"_templates\"]``):"
+msgstr ""
+"``templates_path`` 에 지정한 디렉터리 아래에서 템플릿을 여러 파일과 하위 디렉터리로 나눌 수 있습니다. 기본값은 "
+"``[\"_templates\"]`` 입니다."
+
+#: ../../templates.rst:73
+msgid ""
+"Guidedog scans all files and subdirectories within ``templates_path``. "
+"Any file or partial can be included or imported using paths relative to "
+"``templates_path``:"
+msgstr ""
+"Guidedog은 ``templates_path`` 아래의 모든 파일과 하위 디렉터리를 검색합니다. 포함하거나 가져올 때는 이 "
+"디렉터리를 기준으로 한 상대 경로를 사용합니다."
+
+#: ../../templates.rst:77 ../../templates.rst:112
+msgid "_templates/layout.html"
+msgstr "_templates/layout.html"
+
+#: ../../templates.rst:89
+msgid ""
+"Jinja macros can also be defined in separate files and imported wherever "
+"needed:"
+msgstr "Jinja 매크로도 별도 파일에 정의하고 필요한 곳에서 가져올 수 있습니다."
+
+#: ../../templates.rst:92
+msgid "_templates/macros/components.html"
+msgstr "_templates/macros/components.html"
+
+#: ../../templates.rst:99
+msgid "Using macros in any template"
+msgstr "템플릿에서 매크로 사용"
+
+#: ../../templates.rst:104
+msgid "Theme inheritance with ``!layout.html``"
+msgstr "``!layout.html`` 로 테마 상속"
+
+#: ../../templates.rst:107
+msgid ""
+"If you only want to customize select sections of the default theme rather "
+"than rewriting the full page structure from scratch, you can inherit "
+"directly from Guidedog's built-in theme layout using Sphinx's exclamation "
+"mark syntax:"
+msgstr ""
+"기본 테마의 일부만 바꾸려면 전체 페이지를 다시 작성할 필요가 없습니다. Sphinx의 느낌표 구문으로 내장 레이아웃을 상속할 수 "
+"있습니다."
+
+#: ../../templates.rst:128
+msgid ""
+"Using ``{% extends \"!layout.html\" %}`` (or ``{% extends "
+"\"basic/layout.html\" %}``) directs the loader to fetch the theme's "
+"underlying template instead of recursively loading the project's own "
+"``_templates/layout.html``."
+msgstr ""
+"``{% extends \"!layout.html\" %}`` 또는 ``{% extends \"basic/layout.html\" "
+"%}`` 은 프로젝트의 ``_templates/layout.html`` 을 재귀적으로 읽지 않고 기본 테마의 템플릿을 불러옵니다."
+
+#: ../../templates.rst:132
+msgid ""
+"Inside any overridden block, calling ``{{ super() }}`` renders the parent "
+"block's default markup, allowing you to prepend or append markup without "
+"duplicating existing code."
+msgstr "재정의한 블록에서 ``{{ super() }}`` 를 호출하면 부모 내용을 유지하면서 앞뒤에 내용을 추가할 수 있습니다."
+
+#: ../../templates.rst:135
+msgid "Layout blocks"
+msgstr "레이아웃 블록"
+
+#: ../../templates.rst:138
+msgid ""
+"Guidedog's built-in ``layout.html`` defines blocks matching Sphinx's "
+"conventions:"
+msgstr "내장 ``layout.html`` 은 Sphinx 관례에 대응하는 블록을 정의합니다."
+
+#: ../../templates.rst:144
+msgid "Block"
+msgstr "블록"
+
+#: ../../templates.rst:145
+msgid "Purpose"
+msgstr "용도"
+
+#: ../../templates.rst:146
+msgid "``doctype``"
+msgstr "``doctype``"
+
+#: ../../templates.rst:147
+msgid "Document type declaration (default: ``<!DOCTYPE html>``)."
+msgstr "문서 형식 선언입니다. 기본값은 ``<!DOCTYPE html>`` 입니다."
+
+#: ../../templates.rst:148
+msgid "``htmltitle``"
+msgstr "``htmltitle``"
+
+#: ../../templates.rst:149
+msgid "The ``<title>`` element inside ``<head>``."
+msgstr "``<head>`` 안의 ``<title>`` 요소입니다."
+
+#: ../../templates.rst:150
+msgid "``linktags``"
+msgstr "``linktags``"
+
+#: ../../templates.rst:151
+msgid ""
+"Navigation and meta link tags (``favicon``, ``index``, ``search``, "
+"``prev``, ``next``)."
+msgstr ""
+"탐색 및 메타 정보 링크입니다: ``favicon``, ``index``, ``search``, ``prev``, ``next``."
+
+#: ../../templates.rst:152
+msgid "``css``"
+msgstr "``css``"
+
+#: ../../templates.rst:153
+msgid "Stylesheet link tags and inline CSS root variables."
+msgstr "스타일시트 링크와 인라인 CSS 루트 변수입니다."
+
+#: ../../templates.rst:154
+msgid "``scripts``"
+msgstr "``scripts``"
+
+#: ../../templates.rst:155
+msgid "JavaScript tags, including search indexing and interactive features."
+msgstr "검색 색인과 대화형 기능을 포함하는 JavaScript 태그입니다."
+
+#: ../../templates.rst:156
+msgid "``extrahead``"
+msgstr "``extrahead``"
+
+#: ../../templates.rst:157
+msgid ""
+"Empty insertion point at the end of ``<head>`` for analytics, fonts, or "
+"custom meta tags."
+msgstr "글꼴, 분석 도구, 사용자 메타 태그를 위한 ``<head>`` 끝의 삽입 위치입니다."
+
+#: ../../templates.rst:158
+msgid "``header``"
+msgstr "``header``"
+
+#: ../../templates.rst:159
+msgid "Header slot rendered immediately before the main navigation bar."
+msgstr "주 탐색 표시줄 바로 앞의 헤더 영역입니다."
+
+#: ../../templates.rst:160
+msgid "``relbar1``"
+msgstr "``relbar1``"
+
+#: ../../templates.rst:161
+msgid ""
+"Top navigation bar containing branding, version badge, search box, and "
+"theme toggle."
+msgstr "제품 이름, 버전, 검색, 테마 전환이 있는 상단 탐색 표시줄입니다."
+
+#: ../../templates.rst:162
+msgid "``rootrellink``"
+msgstr "``rootrellink``"
+
+#: ../../templates.rst:163
+msgid "Insertion point in navigation bar before related links."
+msgstr "관련 링크 앞의 탐색 삽입 위치입니다."
+
+#: ../../templates.rst:164
+msgid "``relbaritems``"
+msgstr "``relbaritems``"
+
+#: ../../templates.rst:165
+msgid "Custom items inserted into the navigation bar."
+msgstr "탐색 표시줄에 추가할 사용자 항목입니다."
+
+#: ../../templates.rst:166
+msgid "``sidebar1``"
+msgstr "``sidebar1``"
+
+#: ../../templates.rst:167
+msgid "Left-hand navigation sidebar container."
+msgstr "왼쪽 탐색 사이드바 컨테이너입니다."
+
+#: ../../templates.rst:168
+msgid "``sidebartoc``"
+msgstr "``sidebartoc``"
+
+#: ../../templates.rst:169
+msgid "Table of contents navigation tree rendered inside ``sidebar1``."
+msgstr "``sidebar1`` 안의 목차 탐색 트리입니다."
+
+#: ../../templates.rst:170
+msgid "``breadcrumbs``"
+msgstr "``breadcrumbs``"
+
+#: ../../templates.rst:171
+msgid "Hierarchical breadcrumb navigation path above the article content."
+msgstr "본문 위에 표시하는 계층형 이동 경로입니다."
+
+#: ../../templates.rst:172
+msgid "``document``"
+msgstr "``document``"
+
+#: ../../templates.rst:173
+msgid "Article wrapper enclosing the page body."
+msgstr "본문을 감싸는 컨테이너입니다."
+
+#: ../../templates.rst:174 ../../templates.rst:207 ../../templates.rst:382
+msgid "``body``"
+msgstr "``body``"
+
+#: ../../templates.rst:175
+msgid "Rendered HTML content of the current document (``{{ body }}``)."
+msgstr "현재 문서의 HTML 본문인 ``{{ body }}`` 입니다."
+
+#: ../../templates.rst:176
+msgid "``relbar2``"
+msgstr "``relbar2``"
+
+#: ../../templates.rst:177
+msgid "Bottom pagination controls offering previous and next chapter links."
+msgstr "이전 장과 다음 장으로 이동하는 하단 탐색 영역입니다."
+
+#: ../../templates.rst:178
+msgid "``footer``"
+msgstr "``footer``"
+
+#: ../../templates.rst:179
+msgid ""
+"Page footer containing copyright notice, last updated timestamp, and "
+"source links."
+msgstr "저작권, 마지막 수정 시각, 소스 링크가 있는 페이지 하단입니다."
+
+#: ../../templates.rst:180
+msgid "``sidebar2``"
+msgstr "``sidebar2``"
+
+#: ../../templates.rst:181
+msgid ""
+"Right-hand secondary rail containing the local page outline (\"On this "
+"page\")."
+msgstr "현재 페이지의 목차를 표시하는 오른쪽 보조 영역입니다."
+
+#: ../../templates.rst:183
+msgid "Finding templates"
+msgstr "템플릿 찾기"
+
+#: ../../templates.rst:186
+msgid ""
+"Guidedog searches each directory listed in ``conf.toml`` under "
+"``templates_path`` in order, followed by its built-in templates. Template "
+"names are relative to the directories in ``templates_path`` and cannot "
+"escape outside of them using parent directory traversal (``..``)."
+msgstr ""
+"Guidedog은 ``conf.toml`` 의 ``templates_path`` 순서대로 검색한 뒤 내장 템플릿을 찾습니다. 템플릿 "
+"이름은 해당 디렉터리 기준의 상대 경로이며 ``..`` 로 바깥에 접근할 수 없습니다."
+
+#: ../../templates.rst:190
+msgid ""
+"Every file and subdirectory in ``templates_path`` is registered as an "
+"input dependency of the build. Whenever any template or partial file is "
+"added, edited, or removed, ``guidedog build`` and the live server "
+"``guidedog serve`` automatically detect the change and re-render the site."
+msgstr ""
+"``templates_path`` 의 모든 파일과 하위 디렉터리는 빌드 의존성입니다. 템플릿을 추가, 수정, 삭제하면 "
+"``guidedog build`` 와 ``guidedog serve`` 가 감지해 사이트를 다시 렌더링합니다."
+
+#: ../../templates.rst:195
+msgid "Page variables"
+msgstr "페이지 변수"
+
+#: ../../templates.rst:198
+msgid ""
+"Where Sphinx has a name for a variable, Guidedog uses it, so parts of "
+"Sphinx themes carry over."
+msgstr "Sphinx에 변수 이름이 있으면 같은 이름을 사용하므로 Sphinx 테마 일부를 옮길 수 있습니다."
+
+#: ../../templates.rst:205
+msgid "Variable"
+msgstr "변수"
+
+#: ../../templates.rst:206 ../../templates.rst:363
+msgid "Value"
+msgstr "값"
+
+#: ../../templates.rst:208
+msgid "The document, as HTML."
+msgstr "HTML 형식의 문서."
+
+#: ../../templates.rst:209 ../../templates.rst:364
+msgid "``title``"
+msgstr "``title``"
+
+#: ../../templates.rst:210
+msgid "The document's title."
+msgstr "문서 제목."
+
+#: ../../templates.rst:211
+msgid "``pagename``, ``docname``"
+msgstr "``pagename``\\ , ``docname``"
+
+#: ../../templates.rst:212
+msgid ""
+"The document's name, such as ``usage/install``. On a page that is no "
+"document's, ``docname`` is empty and ``pagename`` is the page's name, as "
+"in Sphinx: ``genindex``, ``py-modindex``, ``search``, or the name of a "
+"page made from a template."
+msgstr ""
+"``usage/install`` 같은 문서 이름이다. 문서가 아닌 페이지에서는 ``docname``\\ 이 비고 "
+"``pagename``\\ 은 Sphinx처럼 ``genindex``\\ , ``py-modindex``\\ , ``search`` "
+"또는 템플릿 페이지 이름이다."
+
+#: ../../templates.rst:216
+msgid "``toc``"
+msgstr "``toc``"
+
+#: ../../templates.rst:217
+msgid "The navigation built from the toctrees, as HTML."
+msgstr "목차 트리에서 만든 HTML 탐색."
+
+#: ../../templates.rst:218
+msgid "``outline``"
+msgstr "``outline``"
+
+#: ../../templates.rst:219
+msgid "The document's own sections, as HTML; empty when it has none."
+msgstr "문서 자체의 절을 HTML로 표시합니다. 절이 없으면 비어 있습니다."
+
+#: ../../templates.rst:220
+msgid "``prev``, ``next``"
+msgstr "``prev``\\ , ``next``"
+
+#: ../../templates.rst:221
+msgid ""
+"The neighbouring pages in reading order, with ``url`` (also ``link``) and "
+"``title``; none at either end."
+msgstr ""
+"읽기 순서의 이전·다음 페이지로 ``url``\\ (\\ ``link``\\ 도 가능)과 ``title``\\ 을 갖습니다. 양 "
+"끝에서는 해당 페이지가 없습니다."
+
+#: ../../templates.rst:223
+msgid "``project``, ``version``, ``release``, ``copyright``, ``language``"
+msgstr ""
+"``project``\\ , ``version``\\ , ``release``\\ , ``copyright``\\ , "
+"``language``"
+
+#: ../../templates.rst:224
+msgid "The settings of the same names."
+msgstr "같은 이름의 설정값."
+
+#: ../../templates.rst:225
+msgid "``html_title``, ``docstitle``"
+msgstr "``html_title``\\ , ``docstitle``"
+
+#: ../../templates.rst:226
+msgid "``html_title``, by default \"<project> <release> documentation\"."
+msgstr "``html_title``\\ 이며 기본값은 “<project> <release> documentation”입니다."
+
+#: ../../templates.rst:227
+msgid "``html_short_title``, ``shorttitle``"
+msgstr "``html_short_title``\\ , ``shorttitle``"
+
+#: ../../templates.rst:228
+msgid "``html_short_title``."
+msgstr "``html_short_title``\\ ."
+
+#: ../../templates.rst:229
+msgid "``root_doc``, ``master_doc``"
+msgstr "``root_doc``\\ , ``master_doc``"
+
+#: ../../templates.rst:230
+msgid "The root document's name."
+msgstr "루트 문서 이름."
+
+#: ../../templates.rst:231
+msgid "``pathto_root``"
+msgstr "``pathto_root``"
+
+#: ../../templates.rst:232
+msgid "The path from the page to the site's root, such as ``../``."
+msgstr "페이지에서 사이트 루트까지의 경로입니다. 예: ``../``\\ ."
+
+#: ../../templates.rst:233
+msgid "``root_url``, ``search_url``, ``genindex_url``"
+msgstr "``root_url``\\ , ``search_url``\\ , ``genindex_url``"
+
+#: ../../templates.rst:234
+msgid "Links to the root page, the search page, and the general index."
+msgstr "루트 페이지, 검색 페이지, 전체 색인으로 가는 링크."
+
+#: ../../templates.rst:235
+msgid "``css_files``, ``js_files``"
+msgstr "``css_files``\\ , ``js_files``"
+
+#: ../../templates.rst:236
+msgid ""
+"Lists of files with a ``url``: Guidedog's own, then ``html_css_files`` "
+"and ``html_js_files``."
+msgstr ""
+"``url``\\ 이 있는 파일 목록입니다. Guidedog 파일 다음에 ``html_css_files``\\ 와 "
+"``html_js_files``\\ 가 옵니다."
+
+#: ../../templates.rst:238
+msgid "``logo_url``, ``favicon_url``"
+msgstr "``logo_url``\\ , ``favicon_url``"
+
+#: ../../templates.rst:239
+msgid ""
+"``html_logo`` and ``html_favicon`` below ``_static``; empty when unset."
+msgstr ""
+"``_static``\\ 의 ``html_logo``\\ 와 ``html_favicon``\\ 입니다. 설정하지 않으면 비어 "
+"있습니다."
+
+#: ../../templates.rst:240
+msgid "``accent``"
+msgstr "``accent``"
+
+#: ../../templates.rst:241
+msgid "``html_theme_options.accent``, the theme's colour."
+msgstr "테마 색상 ``html_theme_options.accent``\\ ."
+
+#: ../../templates.rst:242
+msgid "``sourcelink_url``"
+msgstr "``sourcelink_url``"
+
+#: ../../templates.rst:243
+msgid ""
+"The document's source below ``_sources``, when it is shown; otherwise "
+"empty."
+msgstr "소스를 표시할 때는 ``_sources`` 아래의 문서 소스이며, 아니면 비어 있습니다."
+
+#: ../../templates.rst:244
+msgid "``last_updated``"
+msgstr "``last_updated``"
+
+#: ../../templates.rst:245
+msgid ""
+"The build date in ``html_last_updated_fmt`` when it is set; otherwise "
+"empty."
+msgstr "``html_last_updated_fmt``\\ 를 설정하면 그 형식의 빌드 날짜이며, 아니면 비어 있습니다."
+
+#: ../../templates.rst:246
+msgid ""
+"``show_copyright``, ``show_sphinx``, ``show_guidedog``, ``has_source``, "
+"``show_source``"
+msgstr ""
+"``show_copyright``\\ , ``show_sphinx``\\ , ``show_guidedog``\\ , "
+"``has_source``\\ , ``show_source``"
+
+#: ../../templates.rst:248
+msgid "The ``html_show_*`` and ``html_copy_source`` settings."
+msgstr "``html_show_*``\\ 와 ``html_copy_source`` 설정."
+
+#: ../../templates.rst:249
+msgid "``builder``, ``file_suffix``"
+msgstr "``builder``\\ , ``file_suffix``"
+
+#: ../../templates.rst:250
+msgid "The builder's name, such as ``html``, and the page suffix."
+msgstr "``html`` 같은 빌더 이름과 페이지 확장자."
+
+#: ../../templates.rst:251
+msgid "every key of ``html_context``"
+msgstr "``html_context``\\ 의 모든 키"
+
+#: ../../templates.rst:252
+msgid ""
+"Its value, with its type, as Sphinx passes a Python value: ``false`` is "
+"false in ``{% if %}``, numbers are numbers, arrays are lists, and tables "
+"are dicts whose keys keep the order ``conf.toml`` gives them. ``guidedog "
+"migrate`` carries the literal entries of ``conf.py``'s ``html_context``; "
+"a value ``conf.py`` computes is left undefined, which a template reads as "
+"false."
+msgstr ""
+"Sphinx가 Python 값을 넘기듯 타입을 유지한다. ``false``\\ 는 ``{% if %}``\\ 에서 거짓이고 숫자는 "
+"숫자, 배열은 목록, 테이블은 ``conf.toml`` 키 순서의 딕셔너리다. ``guidedog migrate``\\ 는 "
+"``conf.py``\\ 의 ``html_context`` 리터럴 항목을 옮긴다. 계산 값은 미정의로 남아 템플릿에서 거짓으로 "
+"읽힌다."
+
+#: ../../templates.rst:258
+msgid ""
+"``pathto`` is Sphinx's template function. ``pathto(\"usage/install\")`` "
+"is the URL of a document's page, and ``pathto(\"_static/logo.svg\", 1)`` "
+"the URL of a file below the site's root, both relative to the current "
+"page. With the singlehtml builder, as with Sphinx's, a document is its "
+"section of the single page: ``pathto(\"usage/install\")`` is "
+"``#document-usage-install`` on that page and "
+"``index.html#document-usage-install`` on the index and search pages. A "
+"name that is no document's, such as ``genindex`` or a page made from a "
+"template (below), is a page at the site's root with every builder."
+msgstr ""
+"``pathto``\\ 는 Sphinx 템플릿 함수다. ``pathto(\"usage/install\")``\\ 은 문서 페이지, "
+"``pathto(\"_static/logo.svg\", 1)``\\ 은 사이트 아래 파일의 URL이며 현재 페이지 기준 상대 "
+"경로다. singlehtml에서는 문서가 단일 페이지의 절이다. 앞의 호출은 그 페이지에서 "
+"``#document-usage-install``\\ , 색인·검색에서는 "
+"``index.html#document-usage-install``\\ 이 된다. ``genindex``\\ 나 템플릿 페이지 같은 "
+"비문서 이름은 모든 빌더에서 사이트 루트 페이지다."
+
+#: ../../templates.rst:266
+msgid "Pages made from templates"
+msgstr "템플릿으로 만드는 페이지"
+
+#: ../../templates.rst:269
+msgid ""
+"``html_additional_pages`` makes pages from a template alone, as in "
+"Sphinx. Each key is a page's name and each value a template in "
+"``templates_path``:"
+msgstr ""
+"``html_additional_pages``\\ 는 Sphinx처럼 템플릿만으로 페이지를 만든다. 키는 페이지 이름, 값은 "
+"``templates_path``\\ 의 템플릿이다."
+
+#: ../../templates.rst:273
+msgid "conf.toml"
+msgstr "conf.toml"
+
+#: ../../templates.rst:281
+msgid ""
+"A page's template usually extends ``layout.html`` and fills its blocks, "
+"so the page looks like every other one:"
+msgstr "페이지 템플릿은 보통 ``layout.html``\\ 을 상속하고 블록을 채워 다른 페이지와 같은 모습을 만든다."
+
+#: ../../templates.rst:285
+msgid "_templates/indexcontent.html"
+msgstr "_templates/indexcontent.html"
+
+#: ../../templates.rst:294
+msgid ""
+"The template sees the variables of a page that is no document's: "
+"``pagename`` is the page's name (``index``), ``title`` and ``body`` are "
+"empty, and ``pathto``, ``toc``, ``toctree()``, and the values of "
+"``html_context`` work as on any page. The page is written at the site's "
+"root as ``<name>.html`` (``html_file_suffix``) by ``html``, ``dirhtml``, "
+"and ``singlehtml``, and written again on every build; a change to its "
+"template, as to any file in ``templates_path``, rebuilds every page."
+msgstr ""
+"비문서 페이지의 변수를 받는다. ``pagename``\\ 은 페이지 이름(\\ ``index``\\ ), ``title``\\ 과 "
+"``body``\\ 는 빈 값이다. ``pathto``\\ , ``toc``\\ , ``toctree()``\\ , "
+"``html_context``\\ 는 그대로 작동한다. ``html``\\ , ``dirhtml``\\ , "
+"``singlehtml``\\ 은 루트의 ``<name>.html``\\ (\\ ``html_file_suffix``\\ )로 매번 "
+"쓴다. 템플릿이나 ``templates_path``\\ 의 어떤 파일을 바꿔도 모든 페이지를 다시 만든다."
+
+#: ../../templates.rst:301
+msgid "Where the page goes, and where it differs from Sphinx:"
+msgstr "페이지 위치와 Sphinx와의 차이는 다음과 같습니다."
+
+#: ../../templates.rst:303
+msgid ""
+"A page named as a document takes that document's place, as in Sphinx, "
+"where it is written last: ``index = \"landing.html\"`` makes the landing "
+"page ``index.html`` while ``index.rst`` still gives the table of contents "
+"its entries. With ``singlehtml`` the single page keeps its place and the "
+"template page is not written, with a warning."
+msgstr ""
+"같은 이름의 문서 페이지를 대체하며 Sphinx가 마지막에 쓰는 것과 같다. ``index = \"landing.html\"``\\ "
+"이면 ``index.html``\\ 이 소개 페이지가 되고 목차 항목은 ``index.rst``\\ 가 제공한다. "
+"singlehtml은 단일 페이지를 유지하고 템플릿 페이지를 쓰지 않으며 경고한다."
+
+#: ../../templates.rst:307
+msgid ""
+"``dirhtml`` writes the page as ``download.html``, beside "
+"``genindex.html`` and ``search.html``, where Sphinx writes "
+"``download/index.html``; ``pathto(\"download\")`` gives that file."
+msgstr ""
+"``dirhtml``\\ 은 ``genindex.html``\\ , ``search.html`` 옆에 "
+"``download.html``\\ 을 쓴다. Sphinx는 ``download/index.html``\\ 을 쓴다. "
+"``pathto(\"download\")``\\ 는 그 파일을 반환한다."
+
+#: ../../templates.rst:310
+msgid ""
+"A name must be a file name at the site's root: ``\"sub/page\"`` is "
+"refused with a warning (``build.additional_page``), since the page's "
+"links are made from the root. So is a name whose file the site already "
+"has, such as ``genindex``, where Sphinx would write one of the two over "
+"the other."
+msgstr ""
+"이름은 사이트 루트의 파일 이름이어야 한다. 링크가 루트 기준이므로 ``\"sub/page\"``\\ 는 경고(\\ "
+"``build.additional_page``\\ )와 함께 거부한다. ``genindex``\\ 처럼 이미 사용한 이름도 "
+"거부한다. Sphinx는 이 경우 한 페이지로 다른 페이지를 덮어쓴다."
+
+#: ../../templates.rst:314
+msgid ""
+"``guidedog migrate`` carries ``html_additional_pages`` over from "
+"``conf.py``."
+msgstr ""
+"``guidedog migrate``\\ 는 ``conf.py``\\ 의 ``html_additional_pages``\\ 를 "
+"옮깁니다."
+
+#: ../../templates.rst:316
+msgid "Errors"
+msgstr "오류"
+
+#: ../../templates.rst:319
+msgid ""
+"A mistake in a template stops the build with the template's file and "
+"line, the line itself, and a suggestion:"
+msgstr "템플릿 오류는 빌드를 멈추고 파일, 줄 번호, 해당 줄, 수정 제안을 표시합니다."
+
+#: ../../templates.rst:330
+msgid "A variable that is not defined renders as nothing, as in Jinja."
+msgstr "정의하지 않은 변수는 Jinja처럼 아무것도 출력하지 않습니다."
+
+#: ../../templates.rst:332
+msgid ""
+"Runaway templates stop with an error too, never a crash: syntax nested "
+"more than 100 levels deep (brackets, tags, and each link of a long chain "
+"of operators, filters or ``elif`` branches), macros, includes and "
+"recursive loops more than 200 deep, or any recursion needing more than "
+"512 KiB of stack. A list that contains itself prints as ``[...]``, as in "
+"Python."
+msgstr ""
+"과도한 템플릿도 충돌하지 않고 오류로 멈춘다. 구문(괄호, 태그, 연산자·필터·\\ ``elif`` 사슬)이 100단계, "
+"매크로·포함·재귀 루프가 200단계를 넘거나 재귀 스택이 512 KiB를 넘을 때다. 자신을 포함한 목록은 Python처럼 "
+"``[...]``\\ 로 표시한다."
+
+#: ../../templates.rst:339
+msgid "PDF templates"
+msgstr "PDF 템플릿"
+
+#: ../../templates.rst:342
+msgid ""
+"The PDF book is typeset by Typst. ``_templates/book.typ`` is an ordinary "
+"Typst file that defines a ``book`` function; Guidedog writes the book's "
+"source as"
+msgstr ""
+"PDF 책은 Typst로 조판한다. ``_templates/book.typ``\\ 는 ``book`` 함수를 정의하는 일반 "
+"Typst 파일이다. Guidedog은 책 소스를 다음과 같이 쓴다."
+
+#: ../../templates.rst:352
+msgid ""
+"so everything that decides how the book looks is in that file: fonts, "
+"page size and margins, headings, the title page, running heads, and the "
+"table of contents."
+msgstr "책의 모양을 결정하는 모든 요소가 이 파일에 있습니다. 글꼴, 페이지 크기와 여백, 제목, 표제지, 머리말, 목차입니다."
+
+#: ../../templates.rst:355
+msgid "Parameters"
+msgstr "매개변수"
+
+#: ../../templates.rst:362
+msgid "Parameter"
+msgstr "매개변수"
+
+#: ../../templates.rst:365
+msgid "The book's ``title`` in ``pdf_documents``, otherwise ``project``."
+msgstr "``pdf_documents``\\ 의 책 ``title``\\ 이며, 없으면 ``project``\\ 입니다."
+
+#: ../../templates.rst:366
+msgid "``author``"
+msgstr "``author``"
+
+#: ../../templates.rst:367
+msgid "The book's ``author``, otherwise ``author``."
+msgstr "책의 ``author``\\ 이며, 없으면 설정의 ``author``\\ 입니다."
+
+#: ../../templates.rst:368
+msgid "``version``"
+msgstr "``version``"
+
+#: ../../templates.rst:369
+msgid "``release``."
+msgstr "``release``\\ ."
+
+#: ../../templates.rst:370
+msgid "``date``"
+msgstr "``date``"
+
+#: ../../templates.rst:371
+msgid ""
+"``|today|``: ``today`` when it is set, otherwise the build date in "
+"``today_fmt``."
+msgstr "``|today|``\\ 는 설정한 ``today`` 값이며, 없으면 ``today_fmt`` 형식의 빌드 날짜입니다."
+
+#: ../../templates.rst:372
+msgid "``lang``"
+msgstr "``lang``"
+
+#: ../../templates.rst:373
+msgid "``language``."
+msgstr "``language``\\ ."
+
+#: ../../templates.rst:374
+msgid "``paper``"
+msgstr "``paper``"
+
+#: ../../templates.rst:375
+msgid ""
+"``\"a4\"``, or ``\"us-letter\"`` when ``pdf_paper_size`` is ``letter``."
+msgstr ""
+"``\"a4\"``\\ 이며 ``pdf_paper_size``\\ 가 ``letter``\\ 이면 "
+"``\"us-letter\"``\\ 입니다."
+
+#: ../../templates.rst:376
+msgid "``numbering``"
+msgstr "``numbering``"
+
+#: ../../templates.rst:377
+msgid "``true`` when a toctree has the ``numbered`` option."
+msgstr "toctree에 ``numbered`` 옵션이 있으면 ``true``\\ 입니다."
+
+#: ../../templates.rst:378
+msgid "``logo``"
+msgstr "``logo``"
+
+#: ../../templates.rst:379
+msgid "The path of ``pdf_logo``; absent when it is unset."
+msgstr "``pdf_logo``\\ 의 경로입니다. 설정하지 않으면 생략합니다."
+
+#: ../../templates.rst:380
+msgid "``copyright``"
+msgstr "``copyright``"
+
+#: ../../templates.rst:381
+msgid ""
+"``copyright``, for the colophon; passed only to a template that takes it."
+msgstr "판권 페이지의 ``copyright``\\ 이며, 이 매개변수를 받는 템플릿에만 전달합니다."
+
+#: ../../templates.rst:383
+msgid "The chapters."
+msgstr "각 장의 내용."
+
+#: ../../templates.rst:385
+msgid ""
+"A template may add parameters with defaults of its own. The template "
+"quickstart writes has ``accent``, the fonts ``serif``, ``sans``, and "
+"``mono``, the text ``size``, and ``page-ref``, which follows "
+"cross-references to other pages with their page number when set to a "
+"function such as ``n => [p. #n]``."
+msgstr ""
+"템플릿은 기본값이 있는 매개변수를 추가할 수 있다. quickstart 템플릿에는 ``accent``\\ , 글꼴 "
+"``serif``\\ ·\\ ``sans``\\ ·\\ ``mono``\\ , 글자 ``size``\\ , "
+"``page-ref``\\ 가 있다. 마지막 값을 ``n => [p. #n]`` 같은 함수로 설정하면 다른 페이지 참조에 페이지 "
+"번호를 붙인다."
+
+#: ../../templates.rst:390
+msgid "Modular Typst templates"
+msgstr "모듈형 Typst 템플릿"
+
+#: ../../templates.rst:393
+msgid ""
+"Like HTML templates, Typst templates are not restricted to a single file. "
+"You can break book styling, macros, and custom covers into multiple "
+"modular ``.typ`` files under ``_templates/`` and compose them using "
+"standard Typst ``#import`` and ``#include`` statements:"
+msgstr ""
+"Typst 템플릿도 한 파일에 넣을 필요가 없습니다. 스타일, 매크로, 표지를 ``_templates/`` 아래의 여러 "
+"``.typ`` 파일로 나누고 ``#import`` 와 ``#include`` 로 조합할 수 있습니다."
+
+#: ../../templates.rst:398
+msgid "_templates/book.typ"
+msgstr "_templates/book.typ"
+
+#: ../../templates.rst:420
+msgid ""
+"Here ``apply-styles(body)`` must apply its rules around the content it "
+"receives. A helper that sets text and returns nothing cannot change its "
+"caller's later body. The complete tutorial shows a working wrapper around "
+"the generated book template."
+msgstr ""
+"``apply-styles(body)`` 함수는 전달받은 내용을 스타일 규칙 안에 배치해야 합니다. 텍스트 설정만 하고 반환하는 "
+"함수는 호출자의 이후 본문을 바꾸지 못합니다. 전체 튜토리얼은 생성한 책을 감싸는 실제 예제를 보여 줍니다."
+
+#: ../../templates.rst:424
+msgid "What a template can use"
+msgstr "템플릿에서 쓸 수 있는 것"
+
+#: ../../templates.rst:427
+msgid "Typst packages"
+msgstr "Typst 패키지"
+
+#: ../../templates.rst:428
+msgid ""
+"``#import \"@preview/cetz:0.4.2\"`` and other packages work, downloaded "
+"on first use. Set ``pdf_packages = \"offline\"`` to build only with "
+"packages already on disk."
+msgstr ""
+"``#import \"@preview/cetz:0.4.2\"`` 등 패키지는 처음 사용할 때 다운로드된다. "
+"``pdf_packages = \"offline\"``\\ 이면 디스크에 있는 패키지만 사용한다."
+
+#: ../../templates.rst:431
+msgid "Fonts"
+msgstr "글꼴"
+
+#: ../../templates.rst:432
+msgid ""
+"The system's fonts are available, as with the ``typst`` command. Add "
+"folders with ``pdf_font_paths``, or set ``pdf_fonts = \"embedded\"`` to "
+"use only the fonts built into Typst, for byte-for-byte reproducible books."
+msgstr ""
+"``typst`` 명령처럼 시스템 글꼴을 쓸 수 있다. ``pdf_font_paths``\\ 로 폴더를 추가한다. "
+"``pdf_fonts = \"embedded\"``\\ 는 Typst 내장 글꼴만 써서 바이트 단위로 재현 가능한 책을 만든다."
+
+#: ../../templates.rst:436
+msgid "A preamble"
+msgstr "프리앰블"
+
+#: ../../templates.rst:437
+msgid ""
+"``pdf_preamble`` names a Typst file whose content follows the ``#show: "
+"book`` line, which suits a few ``set`` and ``show`` rules without a "
+"template of your own."
+msgstr ""
+"``pdf_preamble``\\ 은 ``#show: book`` 다음에 넣을 Typst 파일을 지정합니다. 별도 템플릿 없이 몇 "
+"가지 ``set``\\ ·\\ ``show`` 규칙을 추가할 때 적합합니다."
+
+#: ../../templates.rst:440
+msgid "Typst in a document"
+msgstr "문서 안의 Typst"
+
+#: ../../templates.rst:441
+msgid ""
+"Documents are reStructuredText and Markdown; Typst files are not "
+"documents. To put Typst markup into the book, write it in a raw block, "
+"which web pages leave out:"
+msgstr ""
+"문서는 reStructuredText와 Markdown이며 Typst 파일은 문서가 아니다. 책에 Typst 마크업을 넣으려면 "
+"raw 블록을 쓴다. 웹 페이지에서는 생략된다."
+
+#: ../../templates.rst:450
+msgid ""
+"``.. only:: pdf`` keeps ordinary content to the book in the same way."
+msgstr "``.. only:: pdf``\\ 도 일반 콘텐츠를 책에만 남깁니다."
+
+#: ../../templates.rst:452
+msgid ""
+"When Typst reports an error, the build names the file and line, whether "
+"it is in your template or in the generated book. Each PDF has its own "
+"generated source at ``_build/pdf/sources/<pdf-filename>.typ``. For "
+"example, ``reference-en.pdf`` has ``sources/reference-en.pdf.typ``. A "
+"single-book build also keeps the familiar "
+"``_build/pdf/book-<language>.typ`` inspection copy. A failed build "
+"publishes nothing. Its source remains in ``_build/.doctrees/failed`` at "
+"the path named by the error. Several books keep distinct failure sources."
+msgstr ""
+"Typst 오류는 템플릿이나 생성된 책 어디서든 파일과 줄 번호를 밝힌다. PDF별 소스는 "
+"``_build/pdf/sources/<pdf-filename>.typ``\\ 에 있다. ``reference-en.pdf``\\ "
+"의 경우 ``sources/reference-en.pdf.typ``\\ 이다. 한 권 빌드에는 "
+"``_build/pdf/book-<language>.typ`` 확인용 사본도 남긴다. 실패하면 게시하지 않고 오류에 명시된 "
+"``_build/.doctrees/failed`` 경로에 소스를 보관한다. 여러 책의 실패 소스는 구분한다."
+
+#: ../../templates.rst:461
+msgid "Writing a new template"
+msgstr "새 템플릿 작성"
+
+#: ../../templates.rst:464
+msgid ""
+"Start from the copies quickstart wrote, which show every part in use:"
+msgstr "각 부분의 사용법을 보여 주는 quickstart 템플릿부터 시작하세요."
+
+#: ../../templates.rst:466
+msgid ""
+"Keep the ``layout.html`` markup that the default style sheet expects, or "
+"replace ``_static/guidedog.css`` along with it."
+msgstr ""
+"기본 스타일시트가 기대하는 ``layout.html`` 마크업을 유지하거나 ``_static/guidedog.css``\\ 도 함께 "
+"바꾸세요."
+
+#: ../../templates.rst:468
+msgid ""
+"Move repeated parts into files of their own and ``include`` them, or put "
+"a base layout in ``base.html`` and ``extends`` it from ``layout.html``."
+msgstr ""
+"반복 부분을 별도 파일로 옮겨 ``include``\\ 하거나, ``base.html``\\ 을 만들고 "
+"``layout.html``\\ 에서 ``extends``\\ 하세요."
+
+#: ../../templates.rst:470
+msgid ""
+"For the book, change the ``book`` function's rules, or write a new "
+"function with the same parameters and keep its name ``book``."
+msgstr "책은 ``book`` 함수의 규칙을 바꾸거나 같은 이름과 매개변수의 새 함수를 작성하세요."
+
+#: ../../templates.rst:473
+msgid ""
+"Preview with ``guidedog serve`` while editing. Save the source and "
+"refresh the browser; the server rebuilds changed inputs before serving "
+"the page."
+msgstr ""
+"편집 중에는 ``guidedog serve``\\ 로 미리 보세요. 소스를 저장하고 브라우저를 새로 고치면 서버가 변경된 입력을 "
+"다시 빌드한 뒤 페이지를 제공합니다."
+
+#~ msgid ""
+#~ "Guidedog renders ``layout.html`` with its own implementation of Jinja, "
+#~ "so Jinja's whole language works: ``extends`` and ``block``, "
+#~ "``include``, ``import`` and macros, ``set``, ``with``, loops with "
+#~ "``loop``, filters, tests, and whitespace control. Output is "
+#~ "autoescaped: a variable holding text is escaped, and the variables "
+#~ "holding HTML (``body``, ``toc``, and ``outline``) are marked safe "
+#~ "already."
+#~ msgstr ""
+#~ "Guidedog은 자체 Jinja 구현으로 ``layout.html``\\ 을 렌더링한다. ``extends``\\ , "
+#~ "``block``\\ , ``include``\\ , ``import``\\ , 매크로, ``set``\\ , "
+#~ "``with``\\ , ``loop`` 반복, 필터, 테스트, 공백 제어 등 Jinja 전체 언어를 지원한다. 출력은 자동 "
+#~ "이스케이프된다. 텍스트 변수는 이스케이프하고 HTML 변수 ``body``\\ , ``toc``\\ , "
+#~ "``outline``\\ 은 이미 안전한 것으로 표시되어 있다."
+
+#~ msgid ""
+#~ "Guidedog looks for a template in each folder of ``templates_path`` in "
+#~ "turn, then among its built-in templates, which are ``layout.html`` "
+#~ "only. Templates can extend and include each other by name, so a large "
+#~ "layout can be split into parts:"
+#~ msgstr ""
+#~ "Guidedog은 ``templates_path`` 폴더를 순서대로 찾고 내장 템플릿인 ``layout.html``\\ 을 "
+#~ "찾는다. 템플릿끼리 이름으로 상속하고 포함할 수 있어 큰 레이아웃을 나눌 수 있다."
+
+#~ msgid ""
+#~ "Names are relative to the folders of ``templates_path`` and cannot "
+#~ "leave them."
+#~ msgstr "이름은 ``templates_path`` 디렉터리 기준이며 그 밖으로 나갈 수 없습니다."

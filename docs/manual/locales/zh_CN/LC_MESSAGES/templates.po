@@ -1,0 +1,978 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../templates.rst:3
+msgid "Templates"
+msgstr "模板"
+
+#: ../../templates.rst:6
+msgid ""
+"A template controls presentation. It does not duplicate the source prose. "
+"Guidedog uses Jinja for HTML and Typst for PDF. For a complete worked "
+"project, follow :doc:`tutorial/a-custom-theme`. This chapter is the "
+"reference for its settings, blocks and parameters."
+msgstr ""
+"模板控制呈现方式，不复制正文。Guidedog 用 Jinja 生成 HTML，用 Typst 排版 PDF。完整实例见 "
+":doc:`tutorial/a-custom-theme`；本章列出设置、块和参数的契约。"
+
+#: ../../templates.rst:11
+msgid ""
+"Templates in Guidedog are standard project files that are directly "
+"visible and editable. When you initialize a project with ``guidedog "
+"quickstart``, it writes the actual working templates directly into your "
+"project:"
+msgstr ""
+"Guidedog 的模板就是普通项目文件，可直接查看和编辑。``guidedog quickstart`` 会将实际使用的模板写入项目："
+
+#: ../../templates.rst:15
+msgid ""
+"``_templates/layout.html`` defines your HTML website structure (Jinja)."
+msgstr "``_templates/layout.html`` 定义 HTML 网站的结构，使用 Jinja。"
+
+#: ../../templates.rst:16
+msgid ""
+"``_templates/book.typ`` defines your PDF book layout, typography, and "
+"cover page (Typst)."
+msgstr "``_templates/book.typ`` 定义 PDF 的版式、字体和封面，使用 Typst。"
+
+#: ../../templates.rst:17
+msgid ""
+"``_static/guidedog.css`` and ``_static/guidedog.js`` supply default "
+"styles and client behaviors."
+msgstr "``_static/guidedog.css`` 和 ``_static/guidedog.js`` 提供默认样式和浏览器交互。"
+
+#: ../../templates.rst:19
+msgid ""
+"Templates are part of your project directory rather than hidden within an "
+"external package or binary cache. You can edit them directly, rebuild "
+"with ``guidedog build``, and preview changes with ``guidedog serve``."
+msgstr ""
+"模板保存在项目目录中，不隐藏在外部包或二进制缓存里。直接编辑后，用 ``guidedog build`` 重建，用 ``guidedog "
+"serve`` 预览。"
+
+#: ../../templates.rst:23
+msgid "HTML templates"
+msgstr "HTML 模板"
+
+#: ../../templates.rst:26
+msgid ""
+"Guidedog renders ``layout.html`` as the root page template using a "
+"built-in Jinja engine. Split a layout into partials and macro libraries. "
+"Inherit shared blocks from a base layout. Each file then has one job."
+msgstr ""
+"Guidedog 用内置 Jinja 引擎将 ``layout.html`` "
+"渲染为页面。将重复部分拆成局部模板和宏库，再从基础布局继承共享块，让每个文件各司其职。"
+
+#: ../../templates.rst:32
+msgid ""
+"Built-in theme layout is extended by project templates with block "
+"overrides and partial includes."
+msgstr "项目模板继承内置主题，覆盖指定块并包含局部模板。"
+
+#: ../../templates.rst:32
+msgid "Template inheritance and block composition in Guidedog."
+msgstr "Guidedog 的模板继承与块组合。"
+
+#: ../../templates.rst:51
+msgid "Modular template structure"
+msgstr "模块化模板结构"
+
+#: ../../templates.rst:54
+msgid ""
+"A project can organize templates across any number of files and "
+"subdirectories under the directories listed in ``templates_path`` (by "
+"default, ``[\"_templates\"]``):"
+msgstr ""
+"模板可分散在 ``templates_path`` 指定目录下的多个文件和子目录中；默认路径为 ``[\"_templates\"]``："
+
+#: ../../templates.rst:73
+msgid ""
+"Guidedog scans all files and subdirectories within ``templates_path``. "
+"Any file or partial can be included or imported using paths relative to "
+"``templates_path``:"
+msgstr "Guidedog 会扫描 ``templates_path`` 下的全部文件和子目录。包含或导入模板时，路径以该目录为基准："
+
+#: ../../templates.rst:77 ../../templates.rst:112
+msgid "_templates/layout.html"
+msgstr "_templates/layout.html"
+
+#: ../../templates.rst:89
+msgid ""
+"Jinja macros can also be defined in separate files and imported wherever "
+"needed:"
+msgstr "Jinja 宏也可定义在单独的文件中，按需导入："
+
+#: ../../templates.rst:92
+msgid "_templates/macros/components.html"
+msgstr "_templates/macros/components.html"
+
+#: ../../templates.rst:99
+msgid "Using macros in any template"
+msgstr "在模板中使用宏"
+
+#: ../../templates.rst:104
+msgid "Theme inheritance with ``!layout.html``"
+msgstr "用 ``!layout.html`` 继承主题"
+
+#: ../../templates.rst:107
+msgid ""
+"If you only want to customize select sections of the default theme rather "
+"than rewriting the full page structure from scratch, you can inherit "
+"directly from Guidedog's built-in theme layout using Sphinx's exclamation "
+"mark syntax:"
+msgstr "若只需修改默认主题的部分内容，无需重写整页。用 Sphinx 风格的感叹号语法继承 Guidedog 的内置布局："
+
+#: ../../templates.rst:128
+msgid ""
+"Using ``{% extends \"!layout.html\" %}`` (or ``{% extends "
+"\"basic/layout.html\" %}``) directs the loader to fetch the theme's "
+"underlying template instead of recursively loading the project's own "
+"``_templates/layout.html``."
+msgstr ""
+"``{% extends \"!layout.html\" %}`` 或 ``{% extends \"basic/layout.html\" "
+"%}`` 会读取内置主题模板，避免再次加载项目自身的 ``_templates/layout.html`` 而形成递归。"
+
+#: ../../templates.rst:132
+msgid ""
+"Inside any overridden block, calling ``{{ super() }}`` renders the parent "
+"block's default markup, allowing you to prepend or append markup without "
+"duplicating existing code."
+msgstr "在覆盖的块中调用 ``{{ super() }}``，即可保留父模板内容，并在其前后追加内容。"
+
+#: ../../templates.rst:135
+msgid "Layout blocks"
+msgstr "布局块"
+
+#: ../../templates.rst:138
+msgid ""
+"Guidedog's built-in ``layout.html`` defines blocks matching Sphinx's "
+"conventions:"
+msgstr "内置 ``layout.html`` 使用与 Sphinx 约定对应的块名："
+
+#: ../../templates.rst:144
+msgid "Block"
+msgstr "块"
+
+#: ../../templates.rst:145
+msgid "Purpose"
+msgstr "用途"
+
+#: ../../templates.rst:146
+msgid "``doctype``"
+msgstr "``doctype``"
+
+#: ../../templates.rst:147
+msgid "Document type declaration (default: ``<!DOCTYPE html>``)."
+msgstr "文档类型声明，默认为 ``<!DOCTYPE html>``。"
+
+#: ../../templates.rst:148
+msgid "``htmltitle``"
+msgstr "``htmltitle``"
+
+#: ../../templates.rst:149
+msgid "The ``<title>`` element inside ``<head>``."
+msgstr "``<head>`` 内的 ``<title>`` 元素。"
+
+#: ../../templates.rst:150
+msgid "``linktags``"
+msgstr "``linktags``"
+
+#: ../../templates.rst:151
+msgid ""
+"Navigation and meta link tags (``favicon``, ``index``, ``search``, "
+"``prev``, ``next``)."
+msgstr "导航和元信息链接：``favicon``、``index``、``search``、``prev``、``next``。"
+
+#: ../../templates.rst:152
+msgid "``css``"
+msgstr "``css``"
+
+#: ../../templates.rst:153
+msgid "Stylesheet link tags and inline CSS root variables."
+msgstr "样式表链接及内联 CSS 根变量。"
+
+#: ../../templates.rst:154
+msgid "``scripts``"
+msgstr "``scripts``"
+
+#: ../../templates.rst:155
+msgid "JavaScript tags, including search indexing and interactive features."
+msgstr "JavaScript 脚本，包括搜索索引和交互功能。"
+
+#: ../../templates.rst:156
+msgid "``extrahead``"
+msgstr "``extrahead``"
+
+#: ../../templates.rst:157
+msgid ""
+"Empty insertion point at the end of ``<head>`` for analytics, fonts, or "
+"custom meta tags."
+msgstr "``<head>`` 末尾的插入位置，用于字体、分析脚本或自定义元信息。"
+
+#: ../../templates.rst:158
+msgid "``header``"
+msgstr "``header``"
+
+#: ../../templates.rst:159
+msgid "Header slot rendered immediately before the main navigation bar."
+msgstr "紧邻主导航栏之前的页头位置。"
+
+#: ../../templates.rst:160
+msgid "``relbar1``"
+msgstr "``relbar1``"
+
+#: ../../templates.rst:161
+msgid ""
+"Top navigation bar containing branding, version badge, search box, and "
+"theme toggle."
+msgstr "顶部导航栏，包含品牌、版本、搜索和主题切换。"
+
+#: ../../templates.rst:162
+msgid "``rootrellink``"
+msgstr "``rootrellink``"
+
+#: ../../templates.rst:163
+msgid "Insertion point in navigation bar before related links."
+msgstr "相关链接之前的导航插入位置。"
+
+#: ../../templates.rst:164
+msgid "``relbaritems``"
+msgstr "``relbaritems``"
+
+#: ../../templates.rst:165
+msgid "Custom items inserted into the navigation bar."
+msgstr "导航栏中的自定义项目。"
+
+#: ../../templates.rst:166
+msgid "``sidebar1``"
+msgstr "``sidebar1``"
+
+#: ../../templates.rst:167
+msgid "Left-hand navigation sidebar container."
+msgstr "左侧导航栏容器。"
+
+#: ../../templates.rst:168
+msgid "``sidebartoc``"
+msgstr "``sidebartoc``"
+
+#: ../../templates.rst:169
+msgid "Table of contents navigation tree rendered inside ``sidebar1``."
+msgstr "``sidebar1`` 内的目录导航树。"
+
+#: ../../templates.rst:170
+msgid "``breadcrumbs``"
+msgstr "``breadcrumbs``"
+
+#: ../../templates.rst:171
+msgid "Hierarchical breadcrumb navigation path above the article content."
+msgstr "正文上方的分层导航路径。"
+
+#: ../../templates.rst:172
+msgid "``document``"
+msgstr "``document``"
+
+#: ../../templates.rst:173
+msgid "Article wrapper enclosing the page body."
+msgstr "包裹页面正文的容器。"
+
+#: ../../templates.rst:174 ../../templates.rst:207 ../../templates.rst:382
+msgid "``body``"
+msgstr "``body``"
+
+#: ../../templates.rst:175
+msgid "Rendered HTML content of the current document (``{{ body }}``)."
+msgstr "当前文档的 HTML 正文，即 ``{{ body }}``。"
+
+#: ../../templates.rst:176
+msgid "``relbar2``"
+msgstr "``relbar2``"
+
+#: ../../templates.rst:177
+msgid "Bottom pagination controls offering previous and next chapter links."
+msgstr "底部翻页导航，链接到上一章和下一章。"
+
+#: ../../templates.rst:178
+msgid "``footer``"
+msgstr "``footer``"
+
+#: ../../templates.rst:179
+msgid ""
+"Page footer containing copyright notice, last updated timestamp, and "
+"source links."
+msgstr "页脚，包含版权、更新日期和源文件链接。"
+
+#: ../../templates.rst:180
+msgid "``sidebar2``"
+msgstr "``sidebar2``"
+
+#: ../../templates.rst:181
+msgid ""
+"Right-hand secondary rail containing the local page outline (\"On this "
+"page\")."
+msgstr "右侧辅助栏，显示本页目录。"
+
+#: ../../templates.rst:183
+msgid "Finding templates"
+msgstr "查找模板"
+
+#: ../../templates.rst:186
+msgid ""
+"Guidedog searches each directory listed in ``conf.toml`` under "
+"``templates_path`` in order, followed by its built-in templates. Template "
+"names are relative to the directories in ``templates_path`` and cannot "
+"escape outside of them using parent directory traversal (``..``)."
+msgstr ""
+"Guidedog 按 ``conf.toml`` 中 ``templates_path`` "
+"的顺序搜索目录，最后搜索内置模板。模板名相对于这些目录，不能用 ``..`` 越出目录。"
+
+#: ../../templates.rst:190
+msgid ""
+"Every file and subdirectory in ``templates_path`` is registered as an "
+"input dependency of the build. Whenever any template or partial file is "
+"added, edited, or removed, ``guidedog build`` and the live server "
+"``guidedog serve`` automatically detect the change and re-render the site."
+msgstr ""
+"``templates_path`` 下的每个文件和子目录都是构建依赖。添加、修改或删除模板后，``guidedog build`` 和 "
+"``guidedog serve`` 会检测变化并重新渲染网站。"
+
+#: ../../templates.rst:195
+msgid "Page variables"
+msgstr "页面变量"
+
+#: ../../templates.rst:198
+msgid ""
+"Where Sphinx has a name for a variable, Guidedog uses it, so parts of "
+"Sphinx themes carry over."
+msgstr "Sphinx 已有名称的变量，Guidedog 采用相同名称，因此可迁移部分 Sphinx 主题。"
+
+#: ../../templates.rst:205
+msgid "Variable"
+msgstr "变量"
+
+#: ../../templates.rst:206 ../../templates.rst:363
+msgid "Value"
+msgstr "值"
+
+#: ../../templates.rst:208
+msgid "The document, as HTML."
+msgstr "HTML 格式的文档。"
+
+#: ../../templates.rst:209 ../../templates.rst:364
+msgid "``title``"
+msgstr "``title``"
+
+#: ../../templates.rst:210
+msgid "The document's title."
+msgstr "文档标题。"
+
+#: ../../templates.rst:211
+msgid "``pagename``, ``docname``"
+msgstr "``pagename``\\ , ``docname``"
+
+#: ../../templates.rst:212
+msgid ""
+"The document's name, such as ``usage/install``. On a page that is no "
+"document's, ``docname`` is empty and ``pagename`` is the page's name, as "
+"in Sphinx: ``genindex``, ``py-modindex``, ``search``, or the name of a "
+"page made from a template."
+msgstr ""
+"文档名称，如 ``usage/install``\\ 。非文档页面的 ``docname`` 为空，\\ ``pagename`` 是页面名，与 "
+"Sphinx 一样，例如 ``genindex``\\ 、\\ ``py-modindex``\\ 、\\ ``search`` "
+"或模板生成的页面名。"
+
+#: ../../templates.rst:216
+msgid "``toc``"
+msgstr "``toc``"
+
+#: ../../templates.rst:217
+msgid "The navigation built from the toctrees, as HTML."
+msgstr "由目录树生成的 HTML 导航。"
+
+#: ../../templates.rst:218
+msgid "``outline``"
+msgstr "``outline``"
+
+#: ../../templates.rst:219
+msgid "The document's own sections, as HTML; empty when it has none."
+msgstr "文档自身各节的 HTML；没有节时为空。"
+
+#: ../../templates.rst:220
+msgid "``prev``, ``next``"
+msgstr "``prev``\\ , ``next``"
+
+#: ../../templates.rst:221
+msgid ""
+"The neighbouring pages in reading order, with ``url`` (also ``link``) and "
+"``title``; none at either end."
+msgstr "阅读顺序中的相邻页面，含 ``url``\\ （也可用 ``link``\\ ）和 ``title``\\ ；首尾无相邻页时为空。"
+
+#: ../../templates.rst:223
+msgid "``project``, ``version``, ``release``, ``copyright``, ``language``"
+msgstr ""
+"``project``\\ , ``version``\\ , ``release``\\ , ``copyright``\\ , "
+"``language``"
+
+#: ../../templates.rst:224
+msgid "The settings of the same names."
+msgstr "同名的配置项。"
+
+#: ../../templates.rst:225
+msgid "``html_title``, ``docstitle``"
+msgstr "``html_title``\\ , ``docstitle``"
+
+#: ../../templates.rst:226
+msgid "``html_title``, by default \"<project> <release> documentation\"."
+msgstr "``html_title``\\ ，默认为“<project> <release> documentation”。"
+
+#: ../../templates.rst:227
+msgid "``html_short_title``, ``shorttitle``"
+msgstr "``html_short_title``\\ , ``shorttitle``"
+
+#: ../../templates.rst:228
+msgid "``html_short_title``."
+msgstr "``html_short_title``\\ ."
+
+#: ../../templates.rst:229
+msgid "``root_doc``, ``master_doc``"
+msgstr "``root_doc``\\ , ``master_doc``"
+
+#: ../../templates.rst:230
+msgid "The root document's name."
+msgstr "根文档的名称。"
+
+#: ../../templates.rst:231
+msgid "``pathto_root``"
+msgstr "``pathto_root``"
+
+#: ../../templates.rst:232
+msgid "The path from the page to the site's root, such as ``../``."
+msgstr "从当前页面到站点根目录的路径，例如 ``../``\\ 。"
+
+#: ../../templates.rst:233
+msgid "``root_url``, ``search_url``, ``genindex_url``"
+msgstr "``root_url``\\ , ``search_url``\\ , ``genindex_url``"
+
+#: ../../templates.rst:234
+msgid "Links to the root page, the search page, and the general index."
+msgstr "根页面、搜索页面和通用索引的链接。"
+
+#: ../../templates.rst:235
+msgid "``css_files``, ``js_files``"
+msgstr "``css_files``\\ , ``js_files``"
+
+#: ../../templates.rst:236
+msgid ""
+"Lists of files with a ``url``: Guidedog's own, then ``html_css_files`` "
+"and ``html_js_files``."
+msgstr ""
+"带有 ``url`` 的文件列表。先列 Guidedog 自有文件，再列 ``html_css_files`` 和 "
+"``html_js_files``\\ 。"
+
+#: ../../templates.rst:238
+msgid "``logo_url``, ``favicon_url``"
+msgstr "``logo_url``\\ , ``favicon_url``"
+
+#: ../../templates.rst:239
+msgid ""
+"``html_logo`` and ``html_favicon`` below ``_static``; empty when unset."
+msgstr "``_static`` 下的 ``html_logo`` 和 ``html_favicon``\\ ；未设置时为空。"
+
+#: ../../templates.rst:240
+msgid "``accent``"
+msgstr "``accent``"
+
+#: ../../templates.rst:241
+msgid "``html_theme_options.accent``, the theme's colour."
+msgstr "主题颜色 ``html_theme_options.accent``\\ 。"
+
+#: ../../templates.rst:242
+msgid "``sourcelink_url``"
+msgstr "``sourcelink_url``"
+
+#: ../../templates.rst:243
+msgid ""
+"The document's source below ``_sources``, when it is shown; otherwise "
+"empty."
+msgstr "显示源码时，指向 ``_sources`` 下的文档源文件；否则为空。"
+
+#: ../../templates.rst:244
+msgid "``last_updated``"
+msgstr "``last_updated``"
+
+#: ../../templates.rst:245
+msgid ""
+"The build date in ``html_last_updated_fmt`` when it is set; otherwise "
+"empty."
+msgstr "设置了 ``html_last_updated_fmt`` 时，按该格式显示构建日期；否则为空。"
+
+#: ../../templates.rst:246
+msgid ""
+"``show_copyright``, ``show_sphinx``, ``show_guidedog``, ``has_source``, "
+"``show_source``"
+msgstr ""
+"``show_copyright``\\ , ``show_sphinx``\\ , ``show_guidedog``\\ , "
+"``has_source``\\ , ``show_source``"
+
+#: ../../templates.rst:248
+msgid "The ``html_show_*`` and ``html_copy_source`` settings."
+msgstr "``html_show_*`` 和 ``html_copy_source`` 配置项。"
+
+#: ../../templates.rst:249
+msgid "``builder``, ``file_suffix``"
+msgstr "``builder``\\ , ``file_suffix``"
+
+#: ../../templates.rst:250
+msgid "The builder's name, such as ``html``, and the page suffix."
+msgstr "构建器名称，例如 ``html``\\ ，以及页面后缀。"
+
+#: ../../templates.rst:251
+msgid "every key of ``html_context``"
+msgstr "``html_context`` 中的每个键"
+
+#: ../../templates.rst:252
+msgid ""
+"Its value, with its type, as Sphinx passes a Python value: ``false`` is "
+"false in ``{% if %}``, numbers are numbers, arrays are lists, and tables "
+"are dicts whose keys keep the order ``conf.toml`` gives them. ``guidedog "
+"migrate`` carries the literal entries of ``conf.py``'s ``html_context``; "
+"a value ``conf.py`` computes is left undefined, which a template reads as "
+"false."
+msgstr ""
+"值及其类型与 Sphinx 传递 Python 值的方式相同：\\ ``false`` 在 ``{% if %}`` "
+"中为假，数值仍为数值，数组为列表，表为字典，其键保留 ``conf.toml`` 顺序。\\ ``guidedog migrate`` 迁移 "
+"``conf.py`` 的 ``html_context`` 字面量条目；计算值保持未定义，模板将其视为假。"
+
+#: ../../templates.rst:258
+msgid ""
+"``pathto`` is Sphinx's template function. ``pathto(\"usage/install\")`` "
+"is the URL of a document's page, and ``pathto(\"_static/logo.svg\", 1)`` "
+"the URL of a file below the site's root, both relative to the current "
+"page. With the singlehtml builder, as with Sphinx's, a document is its "
+"section of the single page: ``pathto(\"usage/install\")`` is "
+"``#document-usage-install`` on that page and "
+"``index.html#document-usage-install`` on the index and search pages. A "
+"name that is no document's, such as ``genindex`` or a page made from a "
+"template (below), is a page at the site's root with every builder."
+msgstr ""
+"``pathto`` 是 Sphinx 的模板函数。\\ ``pathto(\"usage/install\")`` 返回文档页面的 URL，\\ "
+"``pathto(\"_static/logo.svg\", 1)`` 返回站点根目录下文件的 URL，均相对于当前页面。singlehtml 与 "
+"Sphinx 一样，把文档作为单页中的一节：该页上 ``pathto(\"usage/install\")`` 为 "
+"``#document-usage-install``\\ ；索引和搜索页上为 "
+"``index.html#document-usage-install``\\ 。\\ ``genindex`` "
+"或下述模板页等非文档名称，在所有构建器中都是站点根目录页面。"
+
+#: ../../templates.rst:266
+msgid "Pages made from templates"
+msgstr "由模板生成的页面"
+
+#: ../../templates.rst:269
+msgid ""
+"``html_additional_pages`` makes pages from a template alone, as in "
+"Sphinx. Each key is a page's name and each value a template in "
+"``templates_path``:"
+msgstr ""
+"``html_additional_pages`` 与 Sphinx 一样，仅用模板创建页面。每个键是页面名称，值是 "
+"``templates_path`` 中的模板："
+
+#: ../../templates.rst:273
+msgid "conf.toml"
+msgstr "conf.toml"
+
+#: ../../templates.rst:281
+msgid ""
+"A page's template usually extends ``layout.html`` and fills its blocks, "
+"so the page looks like every other one:"
+msgstr "页面模板通常继承 ``layout.html`` 并填充其区块，让页面与其他页面风格一致："
+
+#: ../../templates.rst:285
+msgid "_templates/indexcontent.html"
+msgstr "_templates/indexcontent.html"
+
+#: ../../templates.rst:294
+msgid ""
+"The template sees the variables of a page that is no document's: "
+"``pagename`` is the page's name (``index``), ``title`` and ``body`` are "
+"empty, and ``pathto``, ``toc``, ``toctree()``, and the values of "
+"``html_context`` work as on any page. The page is written at the site's "
+"root as ``<name>.html`` (``html_file_suffix``) by ``html``, ``dirhtml``, "
+"and ``singlehtml``, and written again on every build; a change to its "
+"template, as to any file in ``templates_path``, rebuilds every page."
+msgstr ""
+"模板获得非文档页面的变量：\\ ``pagename`` 是页面名（\\ ``index``\\ ），\\ ``title`` 和 "
+"``body`` 为空；\\ ``pathto``\\ 、\\ ``toc``\\ 、\\ ``toctree()`` 和 "
+"``html_context`` 值照常可用。\\ ``html``\\ 、\\ ``dirhtml``\\ 、\\ ``singlehtml`` "
+"都将其写为根目录 ``<name>.html``\\ （\\ ``html_file_suffix``\\ ），每次构建重写。该模板或 "
+"``templates_path`` 任意文件改变，都会重建所有页面。"
+
+#: ../../templates.rst:301
+msgid "Where the page goes, and where it differs from Sphinx:"
+msgstr "页面位置及与 Sphinx 的差异："
+
+#: ../../templates.rst:303
+msgid ""
+"A page named as a document takes that document's place, as in Sphinx, "
+"where it is written last: ``index = \"landing.html\"`` makes the landing "
+"page ``index.html`` while ``index.rst`` still gives the table of contents "
+"its entries. With ``singlehtml`` the single page keeps its place and the "
+"template page is not written, with a warning."
+msgstr ""
+"与 Sphinx 最后写入的行为一样，同名模板页面替换文档页面：\\ ``index = \"landing.html\"`` 使 "
+"``index.html`` 成为落地页，但 ``index.rst`` 仍提供目录条目。singlehtml 保留单页，不写模板页面，并发出警告。"
+
+#: ../../templates.rst:307
+msgid ""
+"``dirhtml`` writes the page as ``download.html``, beside "
+"``genindex.html`` and ``search.html``, where Sphinx writes "
+"``download/index.html``; ``pathto(\"download\")`` gives that file."
+msgstr ""
+"``dirhtml`` 将页面写为 ``download.html``\\ ，与 ``genindex.html`` 和 "
+"``search.html`` 并列；Sphinx 则写为 ``download/index.html``\\ 。\\ "
+"``pathto(\"download\")`` 返回该文件。"
+
+#: ../../templates.rst:310
+msgid ""
+"A name must be a file name at the site's root: ``\"sub/page\"`` is "
+"refused with a warning (``build.additional_page``), since the page's "
+"links are made from the root. So is a name whose file the site already "
+"has, such as ``genindex``, where Sphinx would write one of the two over "
+"the other."
+msgstr ""
+"名称必须是根目录文件名。\\ ``\"sub/page\"`` 会被警告拒绝（\\ ``build.additional_page``\\ "
+"），因为页面链接以根目录为基准。\\ ``genindex`` 等已占用文件名也会被拒绝；Sphinx 在此会覆盖其中一页。"
+
+#: ../../templates.rst:314
+msgid ""
+"``guidedog migrate`` carries ``html_additional_pages`` over from "
+"``conf.py``."
+msgstr ""
+"``guidedog migrate`` 会迁移 ``conf.py`` 中的 ``html_additional_pages``\\ 。"
+
+#: ../../templates.rst:316
+msgid "Errors"
+msgstr "错误"
+
+#: ../../templates.rst:319
+msgid ""
+"A mistake in a template stops the build with the template's file and "
+"line, the line itself, and a suggestion:"
+msgstr "模板出错会停止构建，并报告文件、行号、该行内容和修改建议："
+
+#: ../../templates.rst:330
+msgid "A variable that is not defined renders as nothing, as in Jinja."
+msgstr "未定义的变量渲染为空，与 Jinja 一致。"
+
+#: ../../templates.rst:332
+msgid ""
+"Runaway templates stop with an error too, never a crash: syntax nested "
+"more than 100 levels deep (brackets, tags, and each link of a long chain "
+"of operators, filters or ``elif`` branches), macros, includes and "
+"recursive loops more than 200 deep, or any recursion needing more than "
+"512 KiB of stack. A list that contains itself prints as ``[...]``, as in "
+"Python."
+msgstr ""
+"失控模板也会报错停止，而非崩溃：语法嵌套超过 100 层（括号、标签，以及长运算符、过滤器或 ``elif`` "
+"链的每一环），宏、包含或递归循环超过 200 层，或任何递归所需栈超过 512 KiB。自包含列表与 Python 一样显示为 "
+"``[...]``\\ 。"
+
+#: ../../templates.rst:339
+msgid "PDF templates"
+msgstr "PDF 模板"
+
+#: ../../templates.rst:342
+msgid ""
+"The PDF book is typeset by Typst. ``_templates/book.typ`` is an ordinary "
+"Typst file that defines a ``book`` function; Guidedog writes the book's "
+"source as"
+msgstr ""
+"PDF 书籍由 Typst 排版。\\ ``_templates/book.typ`` 是定义 ``book`` 函数的普通 Typst "
+"文件。Guidedog 按以下形式生成书籍源文："
+
+#: ../../templates.rst:352
+msgid ""
+"so everything that decides how the book looks is in that file: fonts, "
+"page size and margins, headings, the title page, running heads, and the "
+"table of contents."
+msgstr "因此，决定图书外观的一切都在该文件中：字体、页面尺寸与边距、标题、扉页、页眉和目录。"
+
+#: ../../templates.rst:355
+msgid "Parameters"
+msgstr "参数"
+
+#: ../../templates.rst:362
+msgid "Parameter"
+msgstr "参数"
+
+#: ../../templates.rst:365
+msgid "The book's ``title`` in ``pdf_documents``, otherwise ``project``."
+msgstr "``pdf_documents`` 中的图书 ``title``\\ ，否则为 ``project``\\ 。"
+
+#: ../../templates.rst:366
+msgid "``author``"
+msgstr "``author``"
+
+#: ../../templates.rst:367
+msgid "The book's ``author``, otherwise ``author``."
+msgstr "图书的 ``author``\\ ，否则为 ``author`` 配置项。"
+
+#: ../../templates.rst:368
+msgid "``version``"
+msgstr "``version``"
+
+#: ../../templates.rst:369
+msgid "``release``."
+msgstr "``release``\\ ."
+
+#: ../../templates.rst:370
+msgid "``date``"
+msgstr "``date``"
+
+#: ../../templates.rst:371
+msgid ""
+"``|today|``: ``today`` when it is set, otherwise the build date in "
+"``today_fmt``."
+msgstr "``|today|``\\ ：若设置了 ``today`` 则使用其值，否则按 ``today_fmt`` 显示构建日期。"
+
+#: ../../templates.rst:372
+msgid "``lang``"
+msgstr "``lang``"
+
+#: ../../templates.rst:373
+msgid "``language``."
+msgstr "``language``\\ ."
+
+#: ../../templates.rst:374
+msgid "``paper``"
+msgstr "``paper``"
+
+#: ../../templates.rst:375
+msgid ""
+"``\"a4\"``, or ``\"us-letter\"`` when ``pdf_paper_size`` is ``letter``."
+msgstr ""
+"``\"a4\"``\\ ；若 ``pdf_paper_size`` 为 ``letter``\\ ，则使用 "
+"``\"us-letter\"``\\ 。"
+
+#: ../../templates.rst:376
+msgid "``numbering``"
+msgstr "``numbering``"
+
+#: ../../templates.rst:377
+msgid "``true`` when a toctree has the ``numbered`` option."
+msgstr "当 toctree 含 ``numbered`` 选项时为 ``true``\\ 。"
+
+#: ../../templates.rst:378
+msgid "``logo``"
+msgstr "``logo``"
+
+#: ../../templates.rst:379
+msgid "The path of ``pdf_logo``; absent when it is unset."
+msgstr "``pdf_logo`` 的路径；未设置则不传入。"
+
+#: ../../templates.rst:380
+msgid "``copyright``"
+msgstr "``copyright``"
+
+#: ../../templates.rst:381
+msgid ""
+"``copyright``, for the colophon; passed only to a template that takes it."
+msgstr "供版权页使用的 ``copyright``\\ ，仅传给接受此参数的模板。"
+
+#: ../../templates.rst:383
+msgid "The chapters."
+msgstr "章节内容。"
+
+#: ../../templates.rst:385
+msgid ""
+"A template may add parameters with defaults of its own. The template "
+"quickstart writes has ``accent``, the fonts ``serif``, ``sans``, and "
+"``mono``, the text ``size``, and ``page-ref``, which follows "
+"cross-references to other pages with their page number when set to a "
+"function such as ``n => [p. #n]``."
+msgstr ""
+"模板可增加带默认值的参数。quickstart 模板包含 ``accent``\\ 、字体 ``serif``\\ 、\\ ``sans``\\ "
+"、\\ ``mono``\\ 、字号 ``size``\\ ，以及 ``page-ref``\\ 。将后者设为 ``n => [p. #n]`` "
+"等函数，可为跨页引用附上页码。"
+
+#: ../../templates.rst:390
+msgid "Modular Typst templates"
+msgstr "模块化 Typst 模板"
+
+#: ../../templates.rst:393
+msgid ""
+"Like HTML templates, Typst templates are not restricted to a single file. "
+"You can break book styling, macros, and custom covers into multiple "
+"modular ``.typ`` files under ``_templates/`` and compose them using "
+"standard Typst ``#import`` and ``#include`` statements:"
+msgstr ""
+"Typst 样式也无需放在一个文件中。可将样式、宏和封面拆成 ``_templates/`` 下的多个 ``.typ`` 文件，再用 "
+"``#import`` 和 ``#include`` 组合："
+
+#: ../../templates.rst:398
+msgid "_templates/book.typ"
+msgstr "_templates/book.typ"
+
+#: ../../templates.rst:420
+msgid ""
+"Here ``apply-styles(body)`` must apply its rules around the content it "
+"receives. A helper that sets text and returns nothing cannot change its "
+"caller's later body. The complete tutorial shows a working wrapper around "
+"the generated book template."
+msgstr ""
+"``apply-styles(body)`` "
+"必须将样式规则包裹在传入的内容之外。一个仅设置文字样式并返回空值的函数，不能影响调用方后续的正文。完整教程给出了生成书籍模板的可用包装函数。"
+
+#: ../../templates.rst:424
+msgid "What a template can use"
+msgstr "模板可以使用什么"
+
+#: ../../templates.rst:427
+msgid "Typst packages"
+msgstr "Typst 包"
+
+#: ../../templates.rst:428
+msgid ""
+"``#import \"@preview/cetz:0.4.2\"`` and other packages work, downloaded "
+"on first use. Set ``pdf_packages = \"offline\"`` to build only with "
+"packages already on disk."
+msgstr ""
+"``#import \"@preview/cetz:0.4.2\"`` 等包可用，首次使用时下载。设置 ``pdf_packages = "
+"\"offline\"``\\ ，仅使用磁盘上已有的包构建。"
+
+#: ../../templates.rst:431
+msgid "Fonts"
+msgstr "字体"
+
+#: ../../templates.rst:432
+msgid ""
+"The system's fonts are available, as with the ``typst`` command. Add "
+"folders with ``pdf_font_paths``, or set ``pdf_fonts = \"embedded\"`` to "
+"use only the fonts built into Typst, for byte-for-byte reproducible books."
+msgstr ""
+"可使用系统字体，与 ``typst`` 命令相同。通过 ``pdf_font_paths`` 增加目录；或设 ``pdf_fonts = "
+"\"embedded\"``\\ ，只用 Typst 内置字体，实现逐字节可重复的书籍。"
+
+#: ../../templates.rst:436
+msgid "A preamble"
+msgstr "前置内容"
+
+#: ../../templates.rst:437
+msgid ""
+"``pdf_preamble`` names a Typst file whose content follows the ``#show: "
+"book`` line, which suits a few ``set`` and ``show`` rules without a "
+"template of your own."
+msgstr ""
+"``pdf_preamble`` 指定 Typst 文件，其内容放在 ``#show: book`` 之后。若只需几条 ``set`` 或 "
+"``show`` 规则，则无需自写完整模板。"
+
+#: ../../templates.rst:440
+msgid "Typst in a document"
+msgstr "文档中的 Typst"
+
+#: ../../templates.rst:441
+msgid ""
+"Documents are reStructuredText and Markdown; Typst files are not "
+"documents. To put Typst markup into the book, write it in a raw block, "
+"which web pages leave out:"
+msgstr ""
+"文档是 reStructuredText 或 Markdown；Typst 文件不是文档。要将 Typst "
+"标记放入书籍，写入原始块；网页会忽略该块："
+
+#: ../../templates.rst:450
+msgid ""
+"``.. only:: pdf`` keeps ordinary content to the book in the same way."
+msgstr "``.. only:: pdf`` 也可将普通内容限制在图书中。"
+
+#: ../../templates.rst:452
+msgid ""
+"When Typst reports an error, the build names the file and line, whether "
+"it is in your template or in the generated book. Each PDF has its own "
+"generated source at ``_build/pdf/sources/<pdf-filename>.typ``. For "
+"example, ``reference-en.pdf`` has ``sources/reference-en.pdf.typ``. A "
+"single-book build also keeps the familiar "
+"``_build/pdf/book-<language>.typ`` inspection copy. A failed build "
+"publishes nothing. Its source remains in ``_build/.doctrees/failed`` at "
+"the path named by the error. Several books keep distinct failure sources."
+msgstr ""
+"Typst 报错时，构建会指出文件和行号，无论错误位于模板还是生成书籍。每个 PDF 的源文位于 "
+"``_build/pdf/sources/<pdf-filename>.typ``\\ ，如 ``reference-en.pdf`` 对应 "
+"``sources/reference-en.pdf.typ``\\ 。单本构建也保留熟悉的 "
+"``_build/pdf/book-<language>.typ`` 检查副本。失败不发布内容，源码保留在 "
+"``_build/.doctrees/failed``\\ ，错误会给出路径。多本书各自保留独立失败源码。"
+
+#: ../../templates.rst:461
+msgid "Writing a new template"
+msgstr "编写新模板"
+
+#: ../../templates.rst:464
+msgid ""
+"Start from the copies quickstart wrote, which show every part in use:"
+msgstr "从 quickstart 生成的模板开始，其中展示了各部分的用法："
+
+#: ../../templates.rst:466
+msgid ""
+"Keep the ``layout.html`` markup that the default style sheet expects, or "
+"replace ``_static/guidedog.css`` along with it."
+msgstr "保留默认样式表依赖的 ``layout.html`` 标记，或同时替换 ``_static/guidedog.css``\\ 。"
+
+#: ../../templates.rst:468
+msgid ""
+"Move repeated parts into files of their own and ``include`` them, or put "
+"a base layout in ``base.html`` and ``extends`` it from ``layout.html``."
+msgstr ""
+"将重复部分移入单独文件并用 ``include`` 引入，或建立 ``base.html``\\ ，让 ``layout.html`` 通过 "
+"``extends`` 继承。"
+
+#: ../../templates.rst:470
+msgid ""
+"For the book, change the ``book`` function's rules, or write a new "
+"function with the same parameters and keep its name ``book``."
+msgstr "图书可修改 ``book`` 函数中的规则，或写同名、同参数的新函数。"
+
+#: ../../templates.rst:473
+msgid ""
+"Preview with ``guidedog serve`` while editing. Save the source and "
+"refresh the browser; the server rebuilds changed inputs before serving "
+"the page."
+msgstr "编辑时用 ``guidedog serve`` 预览。保存源文件后刷新浏览器，服务器会先重建变化的输入，再提供页面。"
+
+#~ msgid ""
+#~ "Guidedog renders ``layout.html`` with its own implementation of Jinja, "
+#~ "so Jinja's whole language works: ``extends`` and ``block``, "
+#~ "``include``, ``import`` and macros, ``set``, ``with``, loops with "
+#~ "``loop``, filters, tests, and whitespace control. Output is "
+#~ "autoescaped: a variable holding text is escaped, and the variables "
+#~ "holding HTML (``body``, ``toc``, and ``outline``) are marked safe "
+#~ "already."
+#~ msgstr ""
+#~ "Guidedog 用自己的 Jinja 实现渲染 ``layout.html``\\ ，支持 Jinja 全语言：\\ "
+#~ "``extends``\\ 、\\ ``block``\\ 、\\ ``include``\\ 、\\ ``import``\\ 、宏、\\ "
+#~ "``set``\\ 、\\ ``with``\\ 、带 ``loop`` "
+#~ "的循环、过滤器、测试和空白控制。输出自动转义：文本变量会转义；HTML 变量 ``body``\\ 、\\ ``toc`` 和 "
+#~ "``outline`` 已标为安全。"
+
+#~ msgid ""
+#~ "Guidedog looks for a template in each folder of ``templates_path`` in "
+#~ "turn, then among its built-in templates, which are ``layout.html`` "
+#~ "only. Templates can extend and include each other by name, so a large "
+#~ "layout can be split into parts:"
+#~ msgstr ""
+#~ "Guidedog 依次在 ``templates_path`` 各目录查找模板，然后查找内置模板（只有 ``layout.html``\\ "
+#~ "）。模板可按名称继承和包含，因此大型布局可拆成多个部分："
+
+#~ msgid ""
+#~ "Names are relative to the folders of ``templates_path`` and cannot "
+#~ "leave them."
+#~ msgstr "模板名相对于 ``templates_path`` 中的目录，不能越出这些目录。"

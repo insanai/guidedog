@@ -1,0 +1,25 @@
+project = "Orbit Field Notes"
+author = "Orbit contributors"
+version = "1.0"
+release = "1.0"
+language = "en"
+root_doc = "index"
+source_suffix = [".rst"]
+exclude_patterns = ["_build", "README.md"]
+templates_path = ["_templates"]
+html_static_path = ["_static"]
+html_css_files = ["theme.css"]
+numfig = true
+pdf_paper_size = "a4"
+
+[html_theme_options]
+accent = "#2658a0"
+
+[html_context]
+edition_label = "Field edition"
+
+[[pdf_documents]]
+root = "index"
+file = "orbit-notes.pdf"
+title = "Orbit Field Notes"
+author = "Orbit contributors"

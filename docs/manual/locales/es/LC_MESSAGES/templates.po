@@ -1,0 +1,1070 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../templates.rst:3
+msgid "Templates"
+msgstr "Plantillas"
+
+#: ../../templates.rst:6
+msgid ""
+"A template controls presentation. It does not duplicate the source prose. "
+"Guidedog uses Jinja for HTML and Typst for PDF. For a complete worked "
+"project, follow :doc:`tutorial/a-custom-theme`. This chapter is the "
+"reference for its settings, blocks and parameters."
+msgstr ""
+"Una plantilla controla la presentación sin duplicar la prosa. Guidedog "
+"usa Jinja para HTML y Typst para PDF. El proyecto completo está en "
+":doc:`tutorial/a-custom-theme`; este capítulo recoge opciones, bloques y "
+"parámetros."
+
+#: ../../templates.rst:11
+msgid ""
+"Templates in Guidedog are standard project files that are directly "
+"visible and editable. When you initialize a project with ``guidedog "
+"quickstart``, it writes the actual working templates directly into your "
+"project:"
+msgstr ""
+"Las plantillas de Guidedog son archivos del proyecto, visibles y "
+"editables. ``guidedog quickstart`` coloca las plantillas que se usarán "
+"directamente en el proyecto:"
+
+#: ../../templates.rst:15
+msgid ""
+"``_templates/layout.html`` defines your HTML website structure (Jinja)."
+msgstr ""
+"``_templates/layout.html`` define la estructura HTML mediante Jinja."
+
+#: ../../templates.rst:16
+msgid ""
+"``_templates/book.typ`` defines your PDF book layout, typography, and "
+"cover page (Typst)."
+msgstr ""
+"``_templates/book.typ`` define el diseño, la tipografía y la cubierta del "
+"PDF mediante Typst."
+
+#: ../../templates.rst:17
+msgid ""
+"``_static/guidedog.css`` and ``_static/guidedog.js`` supply default "
+"styles and client behaviors."
+msgstr ""
+"``_static/guidedog.css`` y ``_static/guidedog.js`` aportan los estilos y "
+"las funciones del navegador."
+
+#: ../../templates.rst:19
+msgid ""
+"Templates are part of your project directory rather than hidden within an "
+"external package or binary cache. You can edit them directly, rebuild "
+"with ``guidedog build``, and preview changes with ``guidedog serve``."
+msgstr ""
+"Las plantillas están en el proyecto, no ocultas en paquetes o cachés. "
+"Edítelas, recompile con ``guidedog build`` y compruebe el resultado con "
+"``guidedog serve``."
+
+#: ../../templates.rst:23
+msgid "HTML templates"
+msgstr "Plantillas HTML"
+
+#: ../../templates.rst:26
+msgid ""
+"Guidedog renders ``layout.html`` as the root page template using a "
+"built-in Jinja engine. Split a layout into partials and macro libraries. "
+"Inherit shared blocks from a base layout. Each file then has one job."
+msgstr ""
+"El motor Jinja integrado procesa ``layout.html`` como plantilla raíz. "
+"Separe parciales y macros y herede bloques comunes: cada archivo tendrá "
+"una responsabilidad clara."
+
+#: ../../templates.rst:32
+msgid ""
+"Built-in theme layout is extended by project templates with block "
+"overrides and partial includes."
+msgstr ""
+"Las plantillas del proyecto heredan el tema integrado y combinan bloques "
+"y parciales."
+
+#: ../../templates.rst:32
+msgid "Template inheritance and block composition in Guidedog."
+msgstr "Herencia y composición de plantillas."
+
+#: ../../templates.rst:51
+msgid "Modular template structure"
+msgstr "Estructura modular de plantillas"
+
+#: ../../templates.rst:54
+msgid ""
+"A project can organize templates across any number of files and "
+"subdirectories under the directories listed in ``templates_path`` (by "
+"default, ``[\"_templates\"]``):"
+msgstr ""
+"Las plantillas pueden repartirse en archivos y subdirectorios de "
+"``templates_path``, cuyo valor predeterminado es ``[\"_templates\"]``:"
+
+#: ../../templates.rst:73
+msgid ""
+"Guidedog scans all files and subdirectories within ``templates_path``. "
+"Any file or partial can be included or imported using paths relative to "
+"``templates_path``:"
+msgstr ""
+"Guidedog recorre los archivos y subdirectorios de ``templates_path``. Las "
+"inclusiones e importaciones usan rutas relativas a esos directorios:"
+
+#: ../../templates.rst:77 ../../templates.rst:112
+msgid "_templates/layout.html"
+msgstr "_templates/layout.html"
+
+#: ../../templates.rst:89
+msgid ""
+"Jinja macros can also be defined in separate files and imported wherever "
+"needed:"
+msgstr ""
+"También puede definir macros Jinja en archivos separados e importarlas "
+"donde hagan falta:"
+
+#: ../../templates.rst:92
+msgid "_templates/macros/components.html"
+msgstr "_templates/macros/components.html"
+
+#: ../../templates.rst:99
+msgid "Using macros in any template"
+msgstr "Usar macros en las plantillas"
+
+#: ../../templates.rst:104
+msgid "Theme inheritance with ``!layout.html``"
+msgstr "Herencia del tema con ``!layout.html``"
+
+#: ../../templates.rst:107
+msgid ""
+"If you only want to customize select sections of the default theme rather "
+"than rewriting the full page structure from scratch, you can inherit "
+"directly from Guidedog's built-in theme layout using Sphinx's exclamation "
+"mark syntax:"
+msgstr ""
+"Para modificar solo algunas partes del tema, herede el diseño integrado "
+"con la sintaxis de exclamación de Sphinx:"
+
+#: ../../templates.rst:128
+msgid ""
+"Using ``{% extends \"!layout.html\" %}`` (or ``{% extends "
+"\"basic/layout.html\" %}``) directs the loader to fetch the theme's "
+"underlying template instead of recursively loading the project's own "
+"``_templates/layout.html``."
+msgstr ""
+"``{% extends \"!layout.html\" %}`` o ``{% extends \"basic/layout.html\" "
+"%}`` carga la plantilla del tema y evita volver a cargar recursivamente "
+"``_templates/layout.html`` del proyecto."
+
+#: ../../templates.rst:132
+msgid ""
+"Inside any overridden block, calling ``{{ super() }}`` renders the parent "
+"block's default markup, allowing you to prepend or append markup without "
+"duplicating existing code."
+msgstr ""
+"En un bloque sobrescrito, ``{{ super() }}`` conserva el contenido del "
+"padre y permite añadir contenido antes o después."
+
+#: ../../templates.rst:135
+msgid "Layout blocks"
+msgstr "Bloques del diseño"
+
+#: ../../templates.rst:138
+msgid ""
+"Guidedog's built-in ``layout.html`` defines blocks matching Sphinx's "
+"conventions:"
+msgstr ""
+"El ``layout.html`` integrado define bloques compatibles con las "
+"convenciones de Sphinx:"
+
+#: ../../templates.rst:144
+msgid "Block"
+msgstr "Bloque"
+
+#: ../../templates.rst:145
+msgid "Purpose"
+msgstr "Función"
+
+#: ../../templates.rst:146
+msgid "``doctype``"
+msgstr "``doctype``"
+
+#: ../../templates.rst:147
+msgid "Document type declaration (default: ``<!DOCTYPE html>``)."
+msgstr "Declaración de tipo de documento; por defecto, ``<!DOCTYPE html>``."
+
+#: ../../templates.rst:148
+msgid "``htmltitle``"
+msgstr "``htmltitle``"
+
+#: ../../templates.rst:149
+msgid "The ``<title>`` element inside ``<head>``."
+msgstr "Elemento ``<title>`` dentro de ``<head>``."
+
+#: ../../templates.rst:150
+msgid "``linktags``"
+msgstr "``linktags``"
+
+#: ../../templates.rst:151
+msgid ""
+"Navigation and meta link tags (``favicon``, ``index``, ``search``, "
+"``prev``, ``next``)."
+msgstr ""
+"Enlaces de navegación y metadatos: ``favicon``, ``index``, ``search``, "
+"``prev`` y ``next``."
+
+#: ../../templates.rst:152
+msgid "``css``"
+msgstr "``css``"
+
+#: ../../templates.rst:153
+msgid "Stylesheet link tags and inline CSS root variables."
+msgstr "Enlaces a hojas de estilo y variables CSS en línea."
+
+#: ../../templates.rst:154
+msgid "``scripts``"
+msgstr "``scripts``"
+
+#: ../../templates.rst:155
+msgid "JavaScript tags, including search indexing and interactive features."
+msgstr "Etiquetas JavaScript para búsqueda y funciones interactivas."
+
+#: ../../templates.rst:156
+msgid "``extrahead``"
+msgstr "``extrahead``"
+
+#: ../../templates.rst:157
+msgid ""
+"Empty insertion point at the end of ``<head>`` for analytics, fonts, or "
+"custom meta tags."
+msgstr ""
+"Punto de inserción al final de ``<head>`` para fuentes, analítica o "
+"metadatos."
+
+#: ../../templates.rst:158
+msgid "``header``"
+msgstr "``header``"
+
+#: ../../templates.rst:159
+msgid "Header slot rendered immediately before the main navigation bar."
+msgstr "Cabecera anterior a la barra de navegación principal."
+
+#: ../../templates.rst:160
+msgid "``relbar1``"
+msgstr "``relbar1``"
+
+#: ../../templates.rst:161
+msgid ""
+"Top navigation bar containing branding, version badge, search box, and "
+"theme toggle."
+msgstr "Barra superior con marca, versión, búsqueda y selector de tema."
+
+#: ../../templates.rst:162
+msgid "``rootrellink``"
+msgstr "``rootrellink``"
+
+#: ../../templates.rst:163
+msgid "Insertion point in navigation bar before related links."
+msgstr "Punto de inserción antes de los enlaces relacionados."
+
+#: ../../templates.rst:164
+msgid "``relbaritems``"
+msgstr "``relbaritems``"
+
+#: ../../templates.rst:165
+msgid "Custom items inserted into the navigation bar."
+msgstr "Elementos personalizados de la barra de navegación."
+
+#: ../../templates.rst:166
+msgid "``sidebar1``"
+msgstr "``sidebar1``"
+
+#: ../../templates.rst:167
+msgid "Left-hand navigation sidebar container."
+msgstr "Contenedor de la barra lateral izquierda."
+
+#: ../../templates.rst:168
+msgid "``sidebartoc``"
+msgstr "``sidebartoc``"
+
+#: ../../templates.rst:169
+msgid "Table of contents navigation tree rendered inside ``sidebar1``."
+msgstr "Árbol de navegación del índice dentro de ``sidebar1``."
+
+#: ../../templates.rst:170
+msgid "``breadcrumbs``"
+msgstr "``breadcrumbs``"
+
+#: ../../templates.rst:171
+msgid "Hierarchical breadcrumb navigation path above the article content."
+msgstr "Ruta jerárquica de navegación sobre el artículo."
+
+#: ../../templates.rst:172
+msgid "``document``"
+msgstr "``document``"
+
+#: ../../templates.rst:173
+msgid "Article wrapper enclosing the page body."
+msgstr "Contenedor del cuerpo del artículo."
+
+#: ../../templates.rst:174 ../../templates.rst:207 ../../templates.rst:382
+msgid "``body``"
+msgstr "``body``"
+
+#: ../../templates.rst:175
+msgid "Rendered HTML content of the current document (``{{ body }}``)."
+msgstr "Contenido HTML del documento actual: ``{{ body }}``."
+
+#: ../../templates.rst:176
+msgid "``relbar2``"
+msgstr "``relbar2``"
+
+#: ../../templates.rst:177
+msgid "Bottom pagination controls offering previous and next chapter links."
+msgstr "Navegación inferior a los capítulos anterior y siguiente."
+
+#: ../../templates.rst:178
+msgid "``footer``"
+msgstr "``footer``"
+
+#: ../../templates.rst:179
+msgid ""
+"Page footer containing copyright notice, last updated timestamp, and "
+"source links."
+msgstr ""
+"Pie de página con derechos de autor, fecha de actualización y enlaces al "
+"código fuente."
+
+#: ../../templates.rst:180
+msgid "``sidebar2``"
+msgstr "``sidebar2``"
+
+#: ../../templates.rst:181
+msgid ""
+"Right-hand secondary rail containing the local page outline (\"On this "
+"page\")."
+msgstr "Columna derecha con el índice de la página."
+
+#: ../../templates.rst:183
+msgid "Finding templates"
+msgstr "Buscar plantillas"
+
+#: ../../templates.rst:186
+msgid ""
+"Guidedog searches each directory listed in ``conf.toml`` under "
+"``templates_path`` in order, followed by its built-in templates. Template "
+"names are relative to the directories in ``templates_path`` and cannot "
+"escape outside of them using parent directory traversal (``..``)."
+msgstr ""
+"Guidedog busca en el orden de ``templates_path`` de ``conf.toml`` y "
+"después en las plantillas internas. Los nombres son relativos a esos "
+"directorios; ``..`` no permite salir de ellos."
+
+#: ../../templates.rst:190
+msgid ""
+"Every file and subdirectory in ``templates_path`` is registered as an "
+"input dependency of the build. Whenever any template or partial file is "
+"added, edited, or removed, ``guidedog build`` and the live server "
+"``guidedog serve`` automatically detect the change and re-render the site."
+msgstr ""
+"Todo archivo o subdirectorio de ``templates_path`` es una dependencia. "
+"``guidedog build`` y ``guidedog serve`` detectan adiciones, cambios y "
+"eliminaciones y vuelven a renderizar el sitio."
+
+#: ../../templates.rst:195
+msgid "Page variables"
+msgstr "Variables de página"
+
+#: ../../templates.rst:198
+msgid ""
+"Where Sphinx has a name for a variable, Guidedog uses it, so parts of "
+"Sphinx themes carry over."
+msgstr ""
+"Guidedog usa los nombres de variables de Sphinx cuando existen, lo que "
+"permite reutilizar partes de sus temas."
+
+#: ../../templates.rst:205
+msgid "Variable"
+msgstr "Variable"
+
+#: ../../templates.rst:206 ../../templates.rst:363
+msgid "Value"
+msgstr "Valor"
+
+#: ../../templates.rst:208
+msgid "The document, as HTML."
+msgstr "El documento en HTML."
+
+#: ../../templates.rst:209 ../../templates.rst:364
+msgid "``title``"
+msgstr "``title``"
+
+#: ../../templates.rst:210
+msgid "The document's title."
+msgstr "El título del documento."
+
+#: ../../templates.rst:211
+msgid "``pagename``, ``docname``"
+msgstr "``pagename``\\ , ``docname``"
+
+#: ../../templates.rst:212
+msgid ""
+"The document's name, such as ``usage/install``. On a page that is no "
+"document's, ``docname`` is empty and ``pagename`` is the page's name, as "
+"in Sphinx: ``genindex``, ``py-modindex``, ``search``, or the name of a "
+"page made from a template."
+msgstr ""
+"Nombre del documento, como ``usage/install``\\ . En páginas sin "
+"documento, ``docname`` está vacío y ``pagename`` contiene el nombre, como "
+"en Sphinx: ``genindex``\\ , ``py-modindex``\\ , ``search`` o una página "
+"creada desde una plantilla."
+
+#: ../../templates.rst:216
+msgid "``toc``"
+msgstr "``toc``"
+
+#: ../../templates.rst:217
+msgid "The navigation built from the toctrees, as HTML."
+msgstr "La navegación creada a partir de las toctrees, en HTML."
+
+#: ../../templates.rst:218
+msgid "``outline``"
+msgstr "``outline``"
+
+#: ../../templates.rst:219
+msgid "The document's own sections, as HTML; empty when it has none."
+msgstr ""
+"Las secciones del propio documento en HTML; vacío si no tiene secciones."
+
+#: ../../templates.rst:220
+msgid "``prev``, ``next``"
+msgstr "``prev``\\ , ``next``"
+
+#: ../../templates.rst:221
+msgid ""
+"The neighbouring pages in reading order, with ``url`` (also ``link``) and "
+"``title``; none at either end."
+msgstr ""
+"Las páginas vecinas en orden de lectura, con ``url`` (también ``link``\\ "
+") y ``title``\\ ; ninguna en los extremos."
+
+#: ../../templates.rst:223
+msgid "``project``, ``version``, ``release``, ``copyright``, ``language``"
+msgstr ""
+"``project``\\ , ``version``\\ , ``release``\\ , ``copyright``\\ , "
+"``language``"
+
+#: ../../templates.rst:224
+msgid "The settings of the same names."
+msgstr "Las opciones del mismo nombre."
+
+#: ../../templates.rst:225
+msgid "``html_title``, ``docstitle``"
+msgstr "``html_title``\\ , ``docstitle``"
+
+#: ../../templates.rst:226
+msgid "``html_title``, by default \"<project> <release> documentation\"."
+msgstr "``html_title``\\ , por defecto «<project> <release> documentation»."
+
+#: ../../templates.rst:227
+msgid "``html_short_title``, ``shorttitle``"
+msgstr "``html_short_title``\\ , ``shorttitle``"
+
+#: ../../templates.rst:228
+msgid "``html_short_title``."
+msgstr "``html_short_title``\\ ."
+
+#: ../../templates.rst:229
+msgid "``root_doc``, ``master_doc``"
+msgstr "``root_doc``\\ , ``master_doc``"
+
+#: ../../templates.rst:230
+msgid "The root document's name."
+msgstr "El nombre del documento raíz."
+
+#: ../../templates.rst:231
+msgid "``pathto_root``"
+msgstr "``pathto_root``"
+
+#: ../../templates.rst:232
+msgid "The path from the page to the site's root, such as ``../``."
+msgstr "La ruta de la página a la raíz del sitio, como ``../``\\ ."
+
+#: ../../templates.rst:233
+msgid "``root_url``, ``search_url``, ``genindex_url``"
+msgstr "``root_url``\\ , ``search_url``\\ , ``genindex_url``"
+
+#: ../../templates.rst:234
+msgid "Links to the root page, the search page, and the general index."
+msgstr "Enlaces a la página raíz, la búsqueda y el índice general."
+
+#: ../../templates.rst:235
+msgid "``css_files``, ``js_files``"
+msgstr "``css_files``\\ , ``js_files``"
+
+#: ../../templates.rst:236
+msgid ""
+"Lists of files with a ``url``: Guidedog's own, then ``html_css_files`` "
+"and ``html_js_files``."
+msgstr ""
+"Listas de archivos con ``url``\\ : primero los propios de Guidedog, "
+"después ``html_css_files`` y ``html_js_files``\\ ."
+
+#: ../../templates.rst:238
+msgid "``logo_url``, ``favicon_url``"
+msgstr "``logo_url``\\ , ``favicon_url``"
+
+#: ../../templates.rst:239
+msgid ""
+"``html_logo`` and ``html_favicon`` below ``_static``; empty when unset."
+msgstr ""
+"``html_logo`` y ``html_favicon`` dentro de ``_static``\\ ; vacíos si no "
+"se configuran."
+
+#: ../../templates.rst:240
+msgid "``accent``"
+msgstr "``accent``"
+
+#: ../../templates.rst:241
+msgid "``html_theme_options.accent``, the theme's colour."
+msgstr "``html_theme_options.accent``\\ , el color del tema."
+
+#: ../../templates.rst:242
+msgid "``sourcelink_url``"
+msgstr "``sourcelink_url``"
+
+#: ../../templates.rst:243
+msgid ""
+"The document's source below ``_sources``, when it is shown; otherwise "
+"empty."
+msgstr ""
+"La fuente del documento bajo ``_sources`` cuando se muestra; vacío en "
+"caso contrario."
+
+#: ../../templates.rst:244
+msgid "``last_updated``"
+msgstr "``last_updated``"
+
+#: ../../templates.rst:245
+msgid ""
+"The build date in ``html_last_updated_fmt`` when it is set; otherwise "
+"empty."
+msgstr ""
+"La fecha de compilación en formato ``html_last_updated_fmt`` si se "
+"configura; vacío en caso contrario."
+
+#: ../../templates.rst:246
+msgid ""
+"``show_copyright``, ``show_sphinx``, ``show_guidedog``, ``has_source``, "
+"``show_source``"
+msgstr ""
+"``show_copyright``\\ , ``show_sphinx``\\ , ``show_guidedog``\\ , "
+"``has_source``\\ , ``show_source``"
+
+#: ../../templates.rst:248
+msgid "The ``html_show_*`` and ``html_copy_source`` settings."
+msgstr "Las opciones ``html_show_*`` y ``html_copy_source``\\ ."
+
+#: ../../templates.rst:249
+msgid "``builder``, ``file_suffix``"
+msgstr "``builder``\\ , ``file_suffix``"
+
+#: ../../templates.rst:250
+msgid "The builder's name, such as ``html``, and the page suffix."
+msgstr "El nombre del generador, como ``html``\\ , y el sufijo de página."
+
+#: ../../templates.rst:251
+msgid "every key of ``html_context``"
+msgstr "Cada clave de ``html_context``"
+
+#: ../../templates.rst:252
+msgid ""
+"Its value, with its type, as Sphinx passes a Python value: ``false`` is "
+"false in ``{% if %}``, numbers are numbers, arrays are lists, and tables "
+"are dicts whose keys keep the order ``conf.toml`` gives them. ``guidedog "
+"migrate`` carries the literal entries of ``conf.py``'s ``html_context``; "
+"a value ``conf.py`` computes is left undefined, which a template reads as "
+"false."
+msgstr ""
+"El valor conserva su tipo, como en Sphinx: ``false`` es falso en ``{% if "
+"%}``\\ , los números son números, los arrays listas y las tablas "
+"diccionarios con el orden de ``conf.toml``\\ . ``guidedog migrate`` "
+"conserva las entradas literales de ``html_context``\\ ; los valores "
+"calculados de ``conf.py`` quedan indefinidos y se leen como falsos."
+
+#: ../../templates.rst:258
+msgid ""
+"``pathto`` is Sphinx's template function. ``pathto(\"usage/install\")`` "
+"is the URL of a document's page, and ``pathto(\"_static/logo.svg\", 1)`` "
+"the URL of a file below the site's root, both relative to the current "
+"page. With the singlehtml builder, as with Sphinx's, a document is its "
+"section of the single page: ``pathto(\"usage/install\")`` is "
+"``#document-usage-install`` on that page and "
+"``index.html#document-usage-install`` on the index and search pages. A "
+"name that is no document's, such as ``genindex`` or a page made from a "
+"template (below), is a page at the site's root with every builder."
+msgstr ""
+"``pathto`` es la función de Sphinx: ``pathto(\"usage/install\")`` da la "
+"URL del documento y ``pathto(\"_static/logo.svg\", 1)`` la de un archivo "
+"del sitio, relativas a la página actual. En singlehtml el documento es "
+"una sección: la primera llamada da ``#document-usage-install`` allí y "
+"``index.html#document-usage-install`` desde índice y búsqueda. Los "
+"nombres sin documento, como ``genindex`` o páginas de plantilla, son "
+"páginas raíz con cualquier constructor."
+
+#: ../../templates.rst:266
+msgid "Pages made from templates"
+msgstr "Páginas creadas con plantillas"
+
+#: ../../templates.rst:269
+msgid ""
+"``html_additional_pages`` makes pages from a template alone, as in "
+"Sphinx. Each key is a page's name and each value a template in "
+"``templates_path``:"
+msgstr ""
+"``html_additional_pages`` crea páginas solo con una plantilla, como "
+"Sphinx. Cada clave es un nombre de página y cada valor una plantilla de "
+"``templates_path``\\ :"
+
+#: ../../templates.rst:273
+msgid "conf.toml"
+msgstr "conf.toml"
+
+#: ../../templates.rst:281
+msgid ""
+"A page's template usually extends ``layout.html`` and fills its blocks, "
+"so the page looks like every other one:"
+msgstr ""
+"La plantilla suele extender ``layout.html`` y rellenar sus bloques para "
+"mantener el diseño común:"
+
+#: ../../templates.rst:285
+msgid "_templates/indexcontent.html"
+msgstr "_templates/indexcontent.html"
+
+#: ../../templates.rst:294
+msgid ""
+"The template sees the variables of a page that is no document's: "
+"``pagename`` is the page's name (``index``), ``title`` and ``body`` are "
+"empty, and ``pathto``, ``toc``, ``toctree()``, and the values of "
+"``html_context`` work as on any page. The page is written at the site's "
+"root as ``<name>.html`` (``html_file_suffix``) by ``html``, ``dirhtml``, "
+"and ``singlehtml``, and written again on every build; a change to its "
+"template, as to any file in ``templates_path``, rebuilds every page."
+msgstr ""
+"Recibe las variables de una página sin documento: ``pagename`` es su "
+"nombre (\\ ``index``\\ ), ``title`` y ``body`` están vacíos; ``pathto``\\ "
+", ``toc``\\ , ``toctree()`` y ``html_context`` funcionan normalmente. "
+"``html``\\ , ``dirhtml`` y ``singlehtml`` la escriben en la raíz como "
+"``<name>.html`` (\\ ``html_file_suffix``\\ ) en cada construcción. "
+"Cambiar cualquier archivo de ``templates_path`` reconstruye todas las "
+"páginas."
+
+#: ../../templates.rst:301
+msgid "Where the page goes, and where it differs from Sphinx:"
+msgstr "Ubicación de la página y diferencias con Sphinx:"
+
+#: ../../templates.rst:303
+msgid ""
+"A page named as a document takes that document's place, as in Sphinx, "
+"where it is written last: ``index = \"landing.html\"`` makes the landing "
+"page ``index.html`` while ``index.rst`` still gives the table of contents "
+"its entries. With ``singlehtml`` the single page keeps its place and the "
+"template page is not written, with a warning."
+msgstr ""
+"Una página con nombre de documento lo sustituye, como en Sphinx al "
+"escribirse al final. ``index = \"landing.html\"`` convierte "
+"``index.html`` en portada, mientras ``index.rst`` sigue aportando el "
+"índice. Con singlehtml se conserva la página única y se omite la de "
+"plantilla con una advertencia."
+
+#: ../../templates.rst:307
+msgid ""
+"``dirhtml`` writes the page as ``download.html``, beside "
+"``genindex.html`` and ``search.html``, where Sphinx writes "
+"``download/index.html``; ``pathto(\"download\")`` gives that file."
+msgstr ""
+"``dirhtml`` escribe ``download.html`` junto a ``genindex.html`` y "
+"``search.html``\\ , donde Sphinx escribe ``download/index.html``\\ . "
+"``pathto(\"download\")`` devuelve ese archivo."
+
+#: ../../templates.rst:310
+msgid ""
+"A name must be a file name at the site's root: ``\"sub/page\"`` is "
+"refused with a warning (``build.additional_page``), since the page's "
+"links are made from the root. So is a name whose file the site already "
+"has, such as ``genindex``, where Sphinx would write one of the two over "
+"the other."
+msgstr ""
+"El nombre debe ser un archivo raíz. Se rechaza ``\"sub/page\"`` con "
+"``build.additional_page`` porque los enlaces parten de la raíz. También "
+"se rechazan nombres ocupados, como ``genindex``\\ , donde Sphinx "
+"sobrescribiría una de las páginas."
+
+#: ../../templates.rst:314
+msgid ""
+"``guidedog migrate`` carries ``html_additional_pages`` over from "
+"``conf.py``."
+msgstr ""
+"``guidedog migrate`` transfiere ``html_additional_pages`` de "
+"``conf.py``\\ ."
+
+#: ../../templates.rst:316
+msgid "Errors"
+msgstr "Errores"
+
+#: ../../templates.rst:319
+msgid ""
+"A mistake in a template stops the build with the template's file and "
+"line, the line itself, and a suggestion:"
+msgstr ""
+"Un error de plantilla detiene la compilación e indica archivo, línea, "
+"texto y sugerencia:"
+
+#: ../../templates.rst:330
+msgid "A variable that is not defined renders as nothing, as in Jinja."
+msgstr "Una variable no definida se muestra como vacío, igual que en Jinja."
+
+#: ../../templates.rst:332
+msgid ""
+"Runaway templates stop with an error too, never a crash: syntax nested "
+"more than 100 levels deep (brackets, tags, and each link of a long chain "
+"of operators, filters or ``elif`` branches), macros, includes and "
+"recursive loops more than 200 deep, or any recursion needing more than "
+"512 KiB of stack. A list that contains itself prints as ``[...]``, as in "
+"Python."
+msgstr ""
+"Las plantillas descontroladas se detienen con error, sin bloquearse: "
+"sintaxis de más de 100 niveles (paréntesis, etiquetas y cadenas de "
+"operadores, filtros o ``elif``\\ ), macros, inclusiones y bucles "
+"recursivos de más de 200, o recursión que exija más de 512 KiB de pila. "
+"Una lista que se contiene muestra ``[...]``\\ , como Python."
+
+#: ../../templates.rst:339
+msgid "PDF templates"
+msgstr "Plantillas PDF"
+
+#: ../../templates.rst:342
+msgid ""
+"The PDF book is typeset by Typst. ``_templates/book.typ`` is an ordinary "
+"Typst file that defines a ``book`` function; Guidedog writes the book's "
+"source as"
+msgstr ""
+"Typst compone el PDF. ``_templates/book.typ`` es un archivo normal que "
+"define la función ``book``\\ . Guidedog escribe la fuente así:"
+
+#: ../../templates.rst:352
+msgid ""
+"so everything that decides how the book looks is in that file: fonts, "
+"page size and margins, headings, the title page, running heads, and the "
+"table of contents."
+msgstr ""
+"Todo lo que decide el aspecto del libro está en ese archivo: fuentes, "
+"tamaño y márgenes, títulos, portada, cabeceras e índice."
+
+#: ../../templates.rst:355
+msgid "Parameters"
+msgstr "Parámetros"
+
+#: ../../templates.rst:362
+msgid "Parameter"
+msgstr "Parámetro"
+
+#: ../../templates.rst:365
+msgid "The book's ``title`` in ``pdf_documents``, otherwise ``project``."
+msgstr ""
+"El ``title`` del libro en ``pdf_documents`` o, en su defecto, "
+"``project``\\ ."
+
+#: ../../templates.rst:366
+msgid "``author``"
+msgstr "``author``"
+
+#: ../../templates.rst:367
+msgid "The book's ``author``, otherwise ``author``."
+msgstr "El ``author`` del libro o, en su defecto, la opción ``author``\\ ."
+
+#: ../../templates.rst:368
+msgid "``version``"
+msgstr "``version``"
+
+#: ../../templates.rst:369
+msgid "``release``."
+msgstr "``release``\\ ."
+
+#: ../../templates.rst:370
+msgid "``date``"
+msgstr "``date``"
+
+#: ../../templates.rst:371
+msgid ""
+"``|today|``: ``today`` when it is set, otherwise the build date in "
+"``today_fmt``."
+msgstr ""
+"``|today|``\\ : ``today`` si se configura; de lo contrario, la fecha de "
+"compilación en formato ``today_fmt``\\ ."
+
+#: ../../templates.rst:372
+msgid "``lang``"
+msgstr "``lang``"
+
+#: ../../templates.rst:373
+msgid "``language``."
+msgstr "``language``\\ ."
+
+#: ../../templates.rst:374
+msgid "``paper``"
+msgstr "``paper``"
+
+#: ../../templates.rst:375
+msgid ""
+"``\"a4\"``, or ``\"us-letter\"`` when ``pdf_paper_size`` is ``letter``."
+msgstr ""
+"``\"a4\"`` o ``\"us-letter\"`` si ``pdf_paper_size`` es ``letter``\\ ."
+
+#: ../../templates.rst:376
+msgid "``numbering``"
+msgstr "``numbering``"
+
+#: ../../templates.rst:377
+msgid "``true`` when a toctree has the ``numbered`` option."
+msgstr "``true`` cuando una toctree tiene la opción ``numbered``\\ ."
+
+#: ../../templates.rst:378
+msgid "``logo``"
+msgstr "``logo``"
+
+#: ../../templates.rst:379
+msgid "The path of ``pdf_logo``; absent when it is unset."
+msgstr "La ruta de ``pdf_logo``\\ ; ausente si no se configura."
+
+#: ../../templates.rst:380
+msgid "``copyright``"
+msgstr "``copyright``"
+
+#: ../../templates.rst:381
+msgid ""
+"``copyright``, for the colophon; passed only to a template that takes it."
+msgstr ""
+"``copyright`` para el colofón; solo se pasa a una plantilla que lo acepta."
+
+#: ../../templates.rst:383
+msgid "The chapters."
+msgstr "Los capítulos."
+
+#: ../../templates.rst:385
+msgid ""
+"A template may add parameters with defaults of its own. The template "
+"quickstart writes has ``accent``, the fonts ``serif``, ``sans``, and "
+"``mono``, the text ``size``, and ``page-ref``, which follows "
+"cross-references to other pages with their page number when set to a "
+"function such as ``n => [p. #n]``."
+msgstr ""
+"La plantilla puede añadir parámetros con valores predeterminados. La de "
+"quickstart incluye ``accent``\\ , fuentes ``serif``\\ , ``sans`` y "
+"``mono``\\ , ``size`` y ``page-ref``\\ . Este último añade el número de "
+"página a referencias si recibe una función como ``n => [p. #n]``\\ ."
+
+#: ../../templates.rst:390
+msgid "Modular Typst templates"
+msgstr "Plantillas Typst modulares"
+
+#: ../../templates.rst:393
+msgid ""
+"Like HTML templates, Typst templates are not restricted to a single file. "
+"You can break book styling, macros, and custom covers into multiple "
+"modular ``.typ`` files under ``_templates/`` and compose them using "
+"standard Typst ``#import`` and ``#include`` statements:"
+msgstr ""
+"Puede repartir estilos, macros y cubiertas en archivos ``.typ`` de "
+"``_templates/`` y combinarlos con ``#import`` y ``#include``:"
+
+#: ../../templates.rst:398
+msgid "_templates/book.typ"
+msgstr "_templates/book.typ"
+
+#: ../../templates.rst:420
+msgid ""
+"Here ``apply-styles(body)`` must apply its rules around the content it "
+"receives. A helper that sets text and returns nothing cannot change its "
+"caller's later body. The complete tutorial shows a working wrapper around "
+"the generated book template."
+msgstr ""
+"``apply-styles(body)`` debe envolver el contenido recibido con sus "
+"reglas. Una función que solo ajusta texto y no devuelve contenido no "
+"cambia el cuerpo posterior del llamador. El tutorial muestra un "
+"envoltorio funcional de la plantilla generada."
+
+#: ../../templates.rst:424
+msgid "What a template can use"
+msgstr "Qué puede usar una plantilla"
+
+#: ../../templates.rst:427
+msgid "Typst packages"
+msgstr "Paquetes de Typst"
+
+#: ../../templates.rst:428
+msgid ""
+"``#import \"@preview/cetz:0.4.2\"`` and other packages work, downloaded "
+"on first use. Set ``pdf_packages = \"offline\"`` to build only with "
+"packages already on disk."
+msgstr ""
+"Funcionan paquetes como ``#import \"@preview/cetz:0.4.2\"``\\ , "
+"descargados al primer uso. Con ``pdf_packages = \"offline\"`` se usan "
+"solo los ya presentes en disco."
+
+#: ../../templates.rst:431
+msgid "Fonts"
+msgstr "Fuentes"
+
+#: ../../templates.rst:432
+msgid ""
+"The system's fonts are available, as with the ``typst`` command. Add "
+"folders with ``pdf_font_paths``, or set ``pdf_fonts = \"embedded\"`` to "
+"use only the fonts built into Typst, for byte-for-byte reproducible books."
+msgstr ""
+"Se pueden usar fuentes del sistema, como con ``typst``\\ . Añade carpetas "
+"mediante ``pdf_font_paths`` o usa ``pdf_fonts = \"embedded\"`` para "
+"limitarse a las fuentes integradas y obtener libros reproducibles byte a "
+"byte."
+
+#: ../../templates.rst:436
+msgid "A preamble"
+msgstr "Preámbulo"
+
+#: ../../templates.rst:437
+msgid ""
+"``pdf_preamble`` names a Typst file whose content follows the ``#show: "
+"book`` line, which suits a few ``set`` and ``show`` rules without a "
+"template of your own."
+msgstr ""
+"``pdf_preamble`` nombra un archivo Typst que sigue a ``#show: book``\\ , "
+"útil para unas pocas reglas ``set`` y ``show`` sin crear una plantilla "
+"propia."
+
+#: ../../templates.rst:440
+msgid "Typst in a document"
+msgstr "Typst en un documento"
+
+#: ../../templates.rst:441
+msgid ""
+"Documents are reStructuredText and Markdown; Typst files are not "
+"documents. To put Typst markup into the book, write it in a raw block, "
+"which web pages leave out:"
+msgstr ""
+"Los documentos son reStructuredText y Markdown, no archivos Typst. Para "
+"incluir marcado Typst en el libro, escríbelo en un bloque raw, omitido en "
+"la web:"
+
+#: ../../templates.rst:450
+msgid ""
+"``.. only:: pdf`` keeps ordinary content to the book in the same way."
+msgstr "``.. only:: pdf`` limita también el contenido normal al libro."
+
+#: ../../templates.rst:452
+msgid ""
+"When Typst reports an error, the build names the file and line, whether "
+"it is in your template or in the generated book. Each PDF has its own "
+"generated source at ``_build/pdf/sources/<pdf-filename>.typ``. For "
+"example, ``reference-en.pdf`` has ``sources/reference-en.pdf.typ``. A "
+"single-book build also keeps the familiar "
+"``_build/pdf/book-<language>.typ`` inspection copy. A failed build "
+"publishes nothing. Its source remains in ``_build/.doctrees/failed`` at "
+"the path named by the error. Several books keep distinct failure sources."
+msgstr ""
+"Los errores de Typst indican archivo y línea, de la plantilla o del libro "
+"generado. Cada PDF tiene su fuente en "
+"``_build/pdf/sources/<pdf-filename>.typ``\\ : ``reference-en.pdf`` usa "
+"``sources/reference-en.pdf.typ``\\ . Un libro único conserva también "
+"``_build/pdf/book-<language>.typ`` para inspección. Un fallo no publica; "
+"deja la fuente en la ruta indicada bajo ``_build/.doctrees/failed``\\ . "
+"Varios libros conservan fuentes de fallo distintas."
+
+#: ../../templates.rst:461
+msgid "Writing a new template"
+msgstr "Escribir una plantilla nueva"
+
+#: ../../templates.rst:464
+msgid ""
+"Start from the copies quickstart wrote, which show every part in use:"
+msgstr ""
+"Empiece por las copias de quickstart, que muestran todas las partes en "
+"uso:"
+
+#: ../../templates.rst:466
+msgid ""
+"Keep the ``layout.html`` markup that the default style sheet expects, or "
+"replace ``_static/guidedog.css`` along with it."
+msgstr ""
+"Conserve el marcado de ``layout.html`` que espera la hoja de estilo "
+"predeterminada, o sustituya también ``_static/guidedog.css``\\ ."
+
+#: ../../templates.rst:468
+msgid ""
+"Move repeated parts into files of their own and ``include`` them, or put "
+"a base layout in ``base.html`` and ``extends`` it from ``layout.html``."
+msgstr ""
+"Mueva las partes repetidas a archivos e inclúyalas con ``include``\\ , o "
+"cree ``base.html`` y use ``extends`` desde ``layout.html``\\ ."
+
+#: ../../templates.rst:470
+msgid ""
+"For the book, change the ``book`` function's rules, or write a new "
+"function with the same parameters and keep its name ``book``."
+msgstr ""
+"Para el libro, cambie las reglas de ``book`` o escriba una función nueva "
+"con el mismo nombre y parámetros."
+
+#: ../../templates.rst:473
+msgid ""
+"Preview with ``guidedog serve`` while editing. Save the source and "
+"refresh the browser; the server rebuilds changed inputs before serving "
+"the page."
+msgstr ""
+"Use ``guidedog serve`` al editar. Guarde y recargue el navegador; el "
+"servidor reconstruye las entradas modificadas antes de servir la página."
+
+#~ msgid ""
+#~ "Guidedog renders ``layout.html`` with its own implementation of Jinja, "
+#~ "so Jinja's whole language works: ``extends`` and ``block``, "
+#~ "``include``, ``import`` and macros, ``set``, ``with``, loops with "
+#~ "``loop``, filters, tests, and whitespace control. Output is "
+#~ "autoescaped: a variable holding text is escaped, and the variables "
+#~ "holding HTML (``body``, ``toc``, and ``outline``) are marked safe "
+#~ "already."
+#~ msgstr ""
+#~ "Guidedog renderiza ``layout.html`` con su implementación de Jinja. "
+#~ "Funciona todo su lenguaje: ``extends``\\ , ``block``\\ , ``include``\\ "
+#~ ", ``import``\\ , macros, ``set``\\ , ``with``\\ , bucles con "
+#~ "``loop``\\ , filtros, pruebas y control de espacios. La salida se "
+#~ "escapa automáticamente; ``body``\\ , ``toc`` y ``outline``\\ , que "
+#~ "contienen HTML, ya están marcados como seguros."
+
+#~ msgid ""
+#~ "Guidedog looks for a template in each folder of ``templates_path`` in "
+#~ "turn, then among its built-in templates, which are ``layout.html`` "
+#~ "only. Templates can extend and include each other by name, so a large "
+#~ "layout can be split into parts:"
+#~ msgstr ""
+#~ "Guidedog busca en cada carpeta de ``templates_path`` y después en sus "
+#~ "plantillas integradas, que solo incluyen ``layout.html``\\ . Pueden "
+#~ "extenderse e incluirse por nombre, permitiendo dividir un diseño "
+#~ "grande:"
+
+#~ msgid ""
+#~ "Names are relative to the folders of ``templates_path`` and cannot "
+#~ "leave them."
+#~ msgstr ""
+#~ "Los nombres son relativos a las carpetas de ``templates_path`` y no "
+#~ "pueden salir de ellas."

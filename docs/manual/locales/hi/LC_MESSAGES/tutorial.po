@@ -1,0 +1,942 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 03:03+0000\n"
+"PO-Revision-Date: 2026-10-11 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../tutorial/a-custom-theme.rst:1
+msgid "Build a project theme"
+msgstr "प्रोजेक्ट की थीम बनाना"
+
+#: ../../tutorial/a-custom-theme.rst:4
+msgid ""
+"A theme gives the same content two reading forms: a website and a book. "
+"This tutorial builds an Orbit theme with a shared visual identity, an "
+"HTML partial and macro, and a modular PDF template. It needs no plugin or "
+"compiler."
+msgstr ""
+"थीम एक ही कंटेंट को वेबसाइट और किताब के रूप में पढ़ने योग्य बनाती है। "
+"यहाँ Orbit के लिए एक दृश्य पहचान, HTML के हिस्से और मैक्रो तथा मॉड्यूलर "
+"PDF टेम्पलेट बनाएँगे। प्लगइन या कंपाइलर नहीं चाहिए।"
+
+#: ../../tutorial/a-custom-theme.rst:8
+msgid "1. Start with a real project"
+msgstr "1. असली प्रोजेक्ट से शुरू करें"
+
+#: ../../tutorial/a-custom-theme.rst:11
+msgid ""
+"Use Guidedog 0.6.2 or newer. Run this from the directory that will "
+"contain ``orbit``:"
+msgstr ""
+"Guidedog 0.6.2 या नया लें। जहाँ ``orbit`` बनाना है, उसके पैरेंट फ़ोल्डर "
+"से चलाएँ:"
+
+#: ../../tutorial/a-custom-theme.rst:17
+msgid ""
+"Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
+"in the same directory. Keep this file: it supplies the tested page "
+"layout, cover, running heads, contents, code styles and optimized "
+"paragraph breaking."
+msgstr ""
+"बनी ``orbit/_templates/book.typ`` का नाम उसी फ़ोल्डर में "
+"``base-book.typ`` करें। इसे रखें: पृष्ठ, आवरण, हेडर, विषय-सूची, कोड "
+"स्टाइल और अनुकूलित अनुच्छेद व्यवस्था इसी में हैं।"
+
+#: ../../tutorial/a-custom-theme.rst:21
+msgid ""
+"Download :download:`conf.toml <../_static/repository/theme/conf.toml>`, "
+":download:`index.rst <../_static/repository/theme/index.rst>` and "
+":download:`reading.rst "
+"<../_static/repository/theme/chapters/reading.rst>`. Save the first two "
+"in ``orbit`` and the third in ``orbit/chapters``. The finished project "
+"will have these files:"
+msgstr ""
+":download:`conf.toml <../_static/repository/theme/conf.toml>`, "
+":download:`index.rst <../_static/repository/theme/index.rst>` और "
+":download:`reading.rst "
+"<../_static/repository/theme/chapters/reading.rst>` डाउनलोड करें। पहले दो "
+"``orbit`` में और तीसरी ``orbit/chapters`` में रखें। अंतिम संरचना यह होगी:"
+
+#: ../../tutorial/a-custom-theme.rst:45
+msgid "2. Set the contract"
+msgstr "2. अनुबंध तय करें"
+
+#: ../../tutorial/a-custom-theme.rst:48
+msgid ""
+"The downloaded configuration selects the local template and static "
+"directories. ``html_css_files`` adds our stylesheet after the default "
+"stylesheet. ``html_context`` supplies a project value to Jinja. The "
+"explicit PDF filename makes the output easy to find."
+msgstr ""
+"सेटिंग स्थानीय टेम्पलेट और स्टैटिक फ़ोल्डर चुनती है। ``html_css_files`` "
+"डिफ़ॉल्ट CSS के बाद अपना स्टाइल जोड़ता है; ``html_context`` Jinja को "
+"प्रोजेक्ट मान देता है। साफ़ PDF नाम से आउटपुट आसानी से मिलता है।"
+
+#: ../../tutorial/a-custom-theme.rst:55
+msgid "orbit/conf.toml"
+msgstr "orbit/conf.toml"
+
+#: ../../tutorial/a-custom-theme.rst:57
+msgid ""
+"All paths in this tutorial are project files. HTML templates are found "
+"through ``templates_path``. The PDF entry point is always "
+"``_templates/book.typ`` under the source directory; changing "
+"``templates_path`` does not move it."
+msgstr ""
+"सभी पथ प्रोजेक्ट की फ़ाइलें हैं। HTML टेम्पलेट ``templates_path`` से "
+"मिलते हैं। PDF का प्रवेश सोर्स में ``_templates/book.typ`` ही है; वह "
+"सेटिंग बदलने से नहीं खिसकता।"
+
+#: ../../tutorial/a-custom-theme.rst:61
+msgid "3. Extend the HTML layout"
+msgstr "3. HTML लेआउट बढ़ाएँ"
+
+#: ../../tutorial/a-custom-theme.rst:64
+msgid ""
+"Save :download:`layout.html "
+"<../_static/repository/theme/_templates/layout.html>` as "
+"``orbit/_templates/layout.html``. Replace the generated file completely:"
+msgstr ""
+":download:`layout.html "
+"<../_static/repository/theme/_templates/layout.html>` को "
+"``orbit/_templates/layout.html`` में रखें और बनी फ़ाइल पूरी बदलें:"
+
+#: ../../tutorial/a-custom-theme.rst:69
+msgid "orbit/_templates/layout.html"
+msgstr "orbit/_templates/layout.html"
+
+#: ../../tutorial/a-custom-theme.rst:71
+msgid ""
+"``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a "
+"template named ``layout.html`` would try to extend itself. ``super()`` "
+"keeps the parent's block content. Navigation, search, theme controls and "
+"accessible landmarks remain in the base layout. Our blocks add a label, "
+"metadata and an edition footer."
+msgstr ""
+"``!layout.html`` अंतर्निहित लेआउट चुनता है। ``!`` के बिना वही फ़ाइल अपने "
+"आप से इनहेरिट करेगी। ``super()`` पैरेंट ब्लॉक रखता है। नेविगेशन, खोज, थीम "
+"कंट्रोल और सुलभ हिस्से बेस में रहते हैं; अपने ब्लॉक लेबल, मेटाडेटा और "
+"संस्करण का फ़ुटर जोड़ते हैं।"
+
+#: ../../tutorial/a-custom-theme.rst:76
+msgid ""
+"A theme changes presentation. A build plugin changes source text, "
+"complete HTML or generated assets. Use :doc:`../plugins` when a template "
+"cannot express the required operation. Ordinary layout changes need no "
+"native code."
+msgstr ""
+"थीम प्रस्तुति बदलती है। बिल्ड प्लगइन सोर्स, पूरा HTML या बने एसेट बदलता "
+"है। टेम्पलेट से काम न हो तो :doc:`../plugins` देखें। सामान्य लेआउट बदलाव "
+"में नेटिव कोड नहीं चाहिए।"
+
+#: ../../tutorial/a-custom-theme.rst:80
+msgid "4. Give repeated markup one home"
+msgstr "4. दोहराया मार्कअप एक जगह रखें"
+
+#: ../../tutorial/a-custom-theme.rst:83
+msgid ""
+"Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. "
+"Save :download:`ui.html "
+"<../_static/repository/theme/_templates/macros/ui.html>` and "
+":download:`edition.html "
+"<../_static/repository/theme/_templates/partials/edition.html>` at the "
+"matching paths:"
+msgstr ""
+"``orbit/_templates/macros`` और ``orbit/_templates/partials`` बनाएँ। "
+":download:`ui.html "
+"<../_static/repository/theme/_templates/macros/ui.html>` और "
+":download:`edition.html "
+"<../_static/repository/theme/_templates/partials/edition.html>` सही जगह "
+"रखें:"
+
+#: ../../tutorial/a-custom-theme.rst:90
+msgid "orbit/_templates/macros/ui.html"
+msgstr "orbit/_templates/macros/ui.html"
+
+#: ../../tutorial/a-custom-theme.rst:94
+msgid "orbit/_templates/partials/edition.html"
+msgstr "orbit/_templates/partials/edition.html"
+
+#: ../../tutorial/a-custom-theme.rst:96
+msgid ""
+"A macro takes explicit inputs. An included partial uses the current "
+"page's context. Escape plain project values with ``|e``. Use ``pathto`` "
+"for document links: a hard-coded ``chapters/reading.html`` would break on "
+"a nested page or with another HTML builder."
+msgstr ""
+"मैक्रो के इनपुट स्पष्ट होते हैं; शामिल हिस्सा वर्तमान पृष्ठ का संदर्भ "
+"लेता है। साधारण मान ``|e`` से एस्केप करें और दस्तावेज़ लिंक ``pathto`` से "
+"बनाएँ। ``chapters/reading.html`` सीधे लिखने पर भीतर के पृष्ठ या दूसरे "
+"HTML बिल्डर में लिंक टूटेगा।"
+
+#: ../../tutorial/a-custom-theme.rst:101
+msgid "5. Design for the reader's theme"
+msgstr "5. पाठक की थीम का ध्यान रखें"
+
+#: ../../tutorial/a-custom-theme.rst:104
+msgid ""
+"Save :download:`theme.css "
+"<../_static/repository/theme/_static/theme.css>` as "
+"``orbit/_static/theme.css``:"
+msgstr ""
+":download:`theme.css <../_static/repository/theme/_static/theme.css>` को "
+"``orbit/_static/theme.css`` में रखें:"
+
+#: ../../tutorial/a-custom-theme.rst:109
+msgid "orbit/_static/theme.css"
+msgstr "orbit/_static/theme.css"
+
+#: ../../tutorial/a-custom-theme.rst:111
+msgid ""
+"The theme begins in light mode. The existing control selects light, dark "
+"or system and saves the choice. Explicit dark rules and the system media "
+"query use the same tokens. Typography and spacing stay shared. No new "
+"JavaScript is needed. Avoid a fixed ink color on a background whose theme "
+"can change."
+msgstr ""
+"शुरुआत लाइट मोड से है। मौजूदा कंट्रोल लाइट, डार्क या सिस्टम चुनकर याद "
+"रखता है। डार्क चयन और सिस्टम क्वेरी समान वेरिएबल लेते हैं; अक्षर और जगह "
+"की व्यवस्था साझा है। नया JavaScript नहीं चाहिए। बदलते बैकग्राउंड पर स्थिर "
+"टेक्स्ट रंग से बचें।"
+
+#: ../../tutorial/a-custom-theme.rst:116
+msgid ""
+"Browser hyphenation follows the page language. It is not Typst's "
+"paragraph optimizer. The manual's optional English web optimizer is "
+"described separately in :doc:`../topics/typography`; this example uses "
+"native browser layout."
+msgstr ""
+"ब्राउज़र का शब्द-विभाजन पृष्ठ की भाषा के अनुसार है, Typst का अनुच्छेद "
+"ऑप्टिमाइज़र नहीं। मैनुअल का वैकल्पिक अंग्रेज़ी वेब ऑप्टिमाइज़र "
+":doc:`../topics/typography` में है; यह उदाहरण ब्राउज़र की मूल व्यवस्था "
+"लेता है।"
+
+#: ../../tutorial/a-custom-theme.rst:120
+msgid ""
+"Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in "
+"current Guidedog builds. Ordinary graphs retain their own colors. Older "
+"hosts render the same DOT in its light palette. See "
+":doc:`../topics/diagrams` for semantic node classes and print behavior."
+msgstr ""
+"वर्तमान बिल्ड में ``:class: graphviz-adaptive`` वाला चित्र चुनी थीम "
+"अपनाता है। अन्य चित्र अपने रंग रखते हैं। पुराना होस्ट वही DOT हल्के रंगों "
+"में दिखाता है। नोड भूमिका और प्रिंट :doc:`../topics/diagrams` में हैं।"
+
+#: ../../tutorial/a-custom-theme.rst:125
+msgid "6. Wrap the PDF book"
+msgstr "6. PDF किताब को रैपर दें"
+
+#: ../../tutorial/a-custom-theme.rst:128
+msgid ""
+"Save :download:`palette.typ "
+"<../_static/repository/theme/_templates/palette.typ>` and "
+":download:`book.typ <../_static/repository/theme/_templates/book.typ>` in "
+"``orbit/_templates``. These are new files; keep ``base-book.typ`` beside "
+"them."
+msgstr ""
+":download:`palette.typ "
+"<../_static/repository/theme/_templates/palette.typ>` और "
+":download:`book.typ <../_static/repository/theme/_templates/book.typ>` को "
+"``orbit/_templates`` में रखें। ये नई फ़ाइलें हैं; साथ में "
+"``base-book.typ`` बनाए रखें।"
+
+#: ../../tutorial/a-custom-theme.rst:134
+msgid "orbit/_templates/palette.typ"
+msgstr "orbit/_templates/palette.typ"
+
+#: ../../tutorial/a-custom-theme.rst:138
+msgid "orbit/_templates/book.typ"
+msgstr "orbit/_templates/book.typ"
+
+#: ../../tutorial/a-custom-theme.rst:140
+msgid ""
+"The host calls ``book`` with metadata and the chapter content. The "
+"wrapper forwards those values to the generated base and supplies our "
+"palette. Passing ``body`` into the styled function keeps its rules in "
+"scope. The web stylesheet does not affect PDF; the Typst template does "
+"not affect HTML."
+msgstr ""
+"होस्ट ``book`` को मेटाडेटा और अध्याय देता है। रैपर उन्हें अपनी पैलेट के "
+"साथ बेस को भेजता है। ``body`` को स्टाइल लगाने वाले फ़ंक्शन में देने से "
+"नियम कंटेंट पर लागू रहते हैं। वेब CSS PDF नहीं बदलता और Typst टेम्पलेट "
+"HTML नहीं बदलता।"
+
+#: ../../tutorial/a-custom-theme.rst:145
+msgid ""
+"The base handles language-aware hyphenation and optimized line breaking. "
+"The wrapper keeps those rules, uses the matching blue accent and adds "
+"page numbers to document cross-references. PDF always uses the light, "
+"print palette."
+msgstr ""
+"बेस भाषा के अनुसार शब्द-विभाजन और लाइन अनुकूलन करता है। रैपर इन्हें रखकर "
+"मेल खाता नीला रंग और दस्तावेज़ संदर्भ में पृष्ठ संख्या जोड़ता है। PDF "
+"हमेशा प्रिंट की हल्की पैलेट लेता है।"
+
+#: ../../tutorial/a-custom-theme.rst:149
+msgid "7. Build and inspect both forms"
+msgstr "7. दोनों रूप बनाएँ और देखें"
+
+#: ../../tutorial/a-custom-theme.rst:152
+msgid "Run from the same parent directory as step 1:"
+msgstr "चरण 1 वाले उसी पैरेंट फ़ोल्डर से चलाएँ:"
+
+#: ../../tutorial/a-custom-theme.rst:162
+msgid ""
+"Open the URL printed by ``serve``. Check the chapter and generated search "
+"page, not only the front page. Try light, dark and system modes. Resize "
+"the window. Use the keyboard to reach the navigation and search. Change "
+"the footer partial, save, then refresh: the preview rebuilds its template "
+"dependencies."
+msgstr ""
+"``serve`` का URL खोलें। केवल मुखपृष्ठ नहीं, अध्याय और खोज पृष्ठ भी "
+"जाँचें। सभी मोड, छोटा विंडो और कीबोर्ड से खोज व नेविगेशन आज़माएँ। फ़ुटर "
+"बदलकर सहेजें और रीफ़्रेश करें; उस पर निर्भर पृष्ठ फिर बनेंगे।"
+
+#: ../../tutorial/a-custom-theme.rst:167
+msgid ""
+"Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog "
+"adds the language suffix to the configured filename. Inspect the "
+"contents, chapter opening, equation, table, code and diagram. Look for "
+"clipped labels, loose paragraphs and missing glyphs. The other outputs "
+"are below ``_build/html``, ``_build/dirhtml`` and ``_build/singlehtml``. "
+"Stop the server with ``Ctrl+C``."
+msgstr ""
+"PDF रीडर में ``orbit/_build/pdf/orbit-notes-en.pdf`` खोलें। Guidedog नाम "
+"में भाषा का प्रत्यय जोड़ता है। विषय-सूची, अध्याय की शुरुआत, गणित, टेबल, "
+"कोड और चित्र देखें। कटे लेबल, अधिक खाली जगह या गायब अक्षर नहीं होने "
+"चाहिए। अन्य आउटपुट ``_build/html``, ``_build/dirhtml`` और "
+"``_build/singlehtml`` में हैं। ``Ctrl+C`` से सर्वर रोकें।"
+
+#: ../../tutorial/a-custom-theme.rst:174
+msgid "8. Reuse and maintain the theme"
+msgstr "8. दोबारा उपयोग और रखरखाव"
+
+#: ../../tutorial/a-custom-theme.rst:177
+msgid ""
+"Create another project with ``guidedog quickstart``. Copy the finished "
+"``_templates`` directory and ``_static/theme.css`` into it. Add "
+"``html_css_files = [\"theme.css\"]``, the accent option and the "
+"``edition_label`` context value to its configuration. Change the footer's "
+"document link to a page that exists in that project. Keep the new "
+"project's metadata and source tree."
+msgstr ""
+"``guidedog quickstart`` से दूसरा प्रोजेक्ट बनाएँ। तैयार ``_templates`` और "
+"``_static/theme.css`` उसमें कॉपी करें। सेटिंग में ``html_css_files = "
+"[\"theme.css\"]``, एक्सेंट रंग और ``edition_label`` जोड़ें। फ़ुटर लिंक को "
+"उस प्रोजेक्ट के पृष्ठ पर करें; नए प्रोजेक्ट का मेटाडेटा और सोर्स अपना "
+"रहने दें।"
+
+#: ../../tutorial/a-custom-theme.rst:183
+msgid ""
+"The copied PDF base makes the theme self-contained. When upgrading "
+"Guidedog, create a scratch quickstart project and compare its templates "
+"with your saved base. Adopt the changes you need, then rebuild every "
+"target. The built-in HTML layout can evolve too; small block overrides "
+"are easier to maintain than a second complete layout. For every variable "
+"and block, see :doc:`../templates`."
+msgstr ""
+"कॉपी किया PDF बेस थीम को स्वतंत्र रखता है। अपग्रेड पर अस्थायी quickstart "
+"प्रोजेक्ट बनाकर टेम्पलेट की तुलना करें, ज़रूरी बदलाव लें और सभी आउटपुट "
+"बनाएँ। अंतर्निहित HTML भी बदल सकता है; पूरे दूसरे लेआउट से छोटे ब्लॉक "
+"ओवरराइड आसान हैं। पूरा अनुबंध :doc:`../templates` में है।"
+
+#: ../../tutorial/a-custom-theme.rst:189
+msgid ""
+"If the build reports a missing ``base-book.typ``, finish the rename in "
+"step 1. If the label is blank, set ``edition_label`` in ``html_context``. "
+"If CSS is missing, check both ``html_static_path`` and "
+"``html_css_files``. Read the file, line and correction in the diagnostic "
+"before changing unrelated settings."
+msgstr ""
+"``base-book.typ`` न मिले तो चरण 1 का नाम बदलना पूरा करें। लेबल खाली हो तो "
+"``html_context`` में ``edition_label`` भरें। CSS न मिले तो "
+"``html_static_path`` और ``html_css_files`` जाँचें। असंबंधित सेटिंग बदलने "
+"से पहले डायग्नोस्टिक में फ़ाइल, पंक्ति और सुधार पढ़ें।"
+
+#: ../../tutorial/a-small-book.rst:1
+msgid "Make a small book"
+msgstr "एक छोटी किताब बनाएँ"
+
+#: ../../tutorial/a-small-book.rst:4
+msgid ""
+"A website is an interconnected web of pages that readers explore "
+"non-linearly. A book, by contrast, requires a deliberate, sequential "
+"reading order with numbered chapters, running headers, and formal front "
+"matter."
+msgstr ""
+"वेब पर पाठक लिंक से अलग-अलग पृष्ठ देखता है। किताब को तय क्रम, अध्याय "
+"नंबर, पृष्ठ शीर्ष और शुरुआती पृष्ठ चाहिए।"
+
+#: ../../tutorial/a-small-book.rst:8
+msgid ""
+"In Guidedog, the table of contents directive (``toctree``) provides the "
+"bridge between both formats. A single ``toctree`` organizes your "
+"documents into a hierarchical sidebar tree for the web and a linear "
+"chapter progression for the PDF book."
+msgstr ""
+"``toctree`` दोनों जोड़ता है: वही ट्री वेब की साइडबार और PDF का अध्याय "
+"क्रम तय करता है।"
+
+#: ../../tutorial/a-small-book.rst:14
+msgid ""
+"The root document toctree maps into an interactive sidebar and "
+"breadcrumbs on the web, and numbered chapters in print."
+msgstr ""
+"मूल toctree वेब नेविगेशन और ब्रेडक्रम्ब बनाता है; प्रिंट में नंबर वाले "
+"अध्याय देता है।"
+
+#: ../../tutorial/a-small-book.rst:14
+msgid ""
+"How a single toctree shapes both web navigation and sequential book "
+"chapters."
+msgstr "एक toctree से वेब नेविगेशन और किताब का क्रम मिलता है।"
+
+#: ../../tutorial/a-small-book.rst:35
+msgid "1. Add a new chapter"
+msgstr "1. नया अध्याय जोड़ें"
+
+#: ../../tutorial/a-small-book.rst:38
+msgid ""
+"In your ``notes`` project, create a new document named "
+"``measurement.rst``:"
+msgstr "``notes`` प्रोजेक्ट में ``measurement.rst`` बनाएँ:"
+
+#: ../../tutorial/a-small-book.rst:41
+msgid "notes/measurement.rst"
+msgstr "notes/measurement.rst"
+
+#: ../../tutorial/a-small-book.rst:64
+msgid ""
+"Notice the section label ``.. _measurement-units:`` placed directly above "
+"the heading. Labels establish cross-reference targets that work "
+"identically on the web and in print."
+msgstr ""
+"शीर्षक के ऊपर ``.. _measurement-units:`` संदर्भ का लक्ष्य है। यह वेब और "
+"प्रिंट दोनों में काम करता है।"
+
+#: ../../tutorial/a-small-book.rst:67
+msgid "2. Structure the reading order"
+msgstr "2. पढ़ने का क्रम रखें"
+
+#: ../../tutorial/a-small-book.rst:70
+msgid "Open ``notes/index.rst`` and declare the table of contents:"
+msgstr "``notes/index.rst`` खोलकर विषय-सूची लिखें:"
+
+#: ../../tutorial/a-small-book.rst:73
+msgid "notes/index.rst"
+msgstr "notes/index.rst"
+
+#: ../../tutorial/a-small-book.rst:92
+msgid "Understanding the toctree options:"
+msgstr "toctree के विकल्प:"
+
+#: ../../tutorial/a-small-book.rst:94
+msgid ""
+"``:maxdepth: 2`` sets the depth of nested subheadings displayed in the "
+"table of contents."
+msgstr "``:maxdepth: 2`` विषय-सूची में उपशीर्षक की गहराई तय करता है।"
+
+#: ../../tutorial/a-small-book.rst:95
+msgid ""
+"``:numbered:`` activates automatic, hierarchical chapter numbering (for "
+"example, \"1. Measurement\" and \"1.1 Units of measurement\")."
+msgstr ""
+"``:numbered:`` “1. Measurement” और “1.1 Units of measurement” जैसे क्रमिक "
+"नंबर चालू करता है।"
+
+#: ../../tutorial/a-small-book.rst:96
+msgid ""
+"``measurement`` references the document file name without the ``.rst`` "
+"extension."
+msgstr "``measurement`` में फ़ाइल का नाम है, बिना ``.rst`` के।"
+
+#: ../../tutorial/a-small-book.rst:98
+msgid "Cross-referencing syntax:"
+msgstr "क्रॉस-रेफ़रेंस का रूप:"
+
+#: ../../tutorial/a-small-book.rst:100
+msgid "``:doc:`measurement``` links to the chapter by document path."
+msgstr "``:doc:`measurement``` पथ से अध्याय जोड़ता है।"
+
+#: ../../tutorial/a-small-book.rst:101
+msgid ""
+"``:ref:`measurement-units``` links to the labeled section. PDF uses the "
+"section title. A book template can also add the page number through "
+"``page-ref``; see :doc:`a-custom-theme` for a working example."
+msgstr ""
+"``:ref:`measurement-units``` लेबल वाले हिस्से पर जाता है। PDF शीर्षक देता "
+"है; ``page-ref`` से पृष्ठ संख्या भी जुड़ सकती है। काम करता उदाहरण "
+":doc:`a-custom-theme` में है।"
+
+#: ../../tutorial/a-small-book.rst:105
+msgid "3. Add a diagram with Graphviz"
+msgstr "3. Graphviz चित्र जोड़ें"
+
+#: ../../tutorial/a-small-book.rst:108
+msgid ""
+"Visual diagrams clarify complex relationships. Guidedog embeds the "
+"Graphviz engine natively, compiling vector diagrams directly into SVG for "
+"web pages and PDF drawings for print without requiring an external "
+"browser renderer."
+msgstr ""
+"Guidedog में Graphviz नेटिव है। वेब के लिए SVG और प्रिंट के लिए वेक्टर "
+"चित्र बनते हैं; बाहरी ब्राउज़र रेंडरर नहीं चाहिए।"
+
+#: ../../tutorial/a-small-book.rst:112
+msgid "Add a diagram to ``notes/measurement.rst``:"
+msgstr "``notes/measurement.rst`` में चित्र जोड़ें:"
+
+#: ../../tutorial/a-small-book.rst:135
+msgid ""
+"The ``:caption:`` option supplies a caption. To number figures, add "
+"``numfig = true`` to ``notes/conf.toml``. The ``:alt:`` option provides "
+"alternative text for screen readers."
+msgstr ""
+"``:caption:`` कैप्शन देता है। नंबर के लिए ``notes/conf.toml`` में "
+"``numfig = true`` रखें। ``:alt:`` स्क्रीन रीडर का वैकल्पिक टेक्स्ट है।"
+
+#: ../../tutorial/a-small-book.rst:139
+msgid "4. Build the book and inspect results"
+msgstr "4. किताब बनाएँ और जाँचें"
+
+#: ../../tutorial/a-small-book.rst:142
+msgid "Rebuild your project:"
+msgstr "प्रोजेक्ट फिर बनाएँ:"
+
+#: ../../tutorial/a-small-book.rst:149
+msgid "Inspect the results in both formats:"
+msgstr "दोनों रूप जाँचें:"
+
+#: ../../tutorial/a-small-book.rst:151
+msgid ""
+"**HTML website:** Open ``notes/_build/html/index.html``. The sidebar now "
+"shows the numbered chapter hierarchy. Clicking \"1. Measurement\" opens "
+"the new page, complete with local breadcrumbs and the rendered SVG "
+"diagram."
+msgstr ""
+"**HTML:** ``notes/_build/html/index.html`` खोलें। साइडबार में अध्याय नंबर "
+"हैं। “1. Measurement” से ब्रेडक्रम्ब और SVG वाला पृष्ठ खुलता है।"
+
+#: ../../tutorial/a-small-book.rst:154
+msgid ""
+"**PDF book:** Open ``notes/_build/pdf/field-notes-en.pdf``. The contents "
+"lists the chapters and their pages. The diagram remains vector artwork, "
+"and document cross-references link to their targets."
+msgstr ""
+"**PDF:** ``notes/_build/pdf/field-notes-en.pdf`` खोलें। विषय-सूची अध्याय "
+"और पृष्ठ देती है। चित्र वेक्टर रहता है और संदर्भ सही लक्ष्य पर जाते हैं।"
+
+#: ../../tutorial/a-small-book.rst:158
+msgid "5. Next steps"
+msgstr "5. आगे क्या पढ़ें"
+
+#: ../../tutorial/a-small-book.rst:161
+msgid ""
+"Now that you understand the dual output model, explore the topics section "
+"to learn more:"
+msgstr "दोनों रूप समझने के बाद ये विषय पढ़ें:"
+
+#: ../../tutorial/a-small-book.rst:163
+msgid "Learn rich markup, lists, and tables in :doc:`../topics/writing`."
+msgstr "मार्कअप, सूची और टेबल के लिए :doc:`../topics/writing`।"
+
+#: ../../tutorial/a-small-book.rst:164
+msgid ""
+"Learn how to render formulas and equations in "
+":doc:`../topics/mathematics`."
+msgstr "फ़ॉर्मूले और समीकरण के लिए :doc:`../topics/mathematics`।"
+
+#: ../../tutorial/a-small-book.rst:165
+msgid ""
+"Learn how to configure custom styles and book fonts in "
+":doc:`../topics/typography`."
+msgstr "स्टाइल और किताब के फ़ॉन्ट के लिए :doc:`../topics/typography`।"
+
+#: ../../tutorial/first-project.rst:1
+msgid "Your first project"
+msgstr "आपकी पहली परियोजना"
+
+#: ../../tutorial/first-project.rst:4
+msgid ""
+"This tutorial guides you through creating, writing, and building your "
+"first documentation project with Guidedog. The goal is modest and clear: "
+"start from a clean directory, generate both an HTML website and a "
+"printable PDF book from the same source file, and experience the live "
+"preview server."
+msgstr ""
+"इस ट्यूटोरियल में खाली फ़ोल्डर से प्रोजेक्ट बनाकर लिखेंगे, एक ही सोर्स से "
+"HTML और पढ़ने योग्य PDF बनाएँगे, फिर लाइव प्रीव्यू देखेंगे।"
+
+#: ../../tutorial/first-project.rst:9
+msgid ""
+"You need a working installation of Guidedog. For PDF output, Guidedog can "
+"use its embedded compiler or an installed Typst binary (0.15.1 or newer). "
+"See :doc:`../howto/install`."
+msgstr ""
+"Guidedog इंस्टॉल होना चाहिए। PDF के लिए अंतर्निहित कंपाइलर या Typst "
+"0.15.1 और नया इस्तेमाल करें। :doc:`../howto/install` देखें।"
+
+#: ../../tutorial/first-project.rst:12
+msgid "On macOS, you can install the official release using Homebrew:"
+msgstr "macOS पर आधिकारिक रिलीज़ Homebrew से मिलती है:"
+
+#: ../../tutorial/first-project.rst:18
+msgid "Project architecture and build pipeline"
+msgstr "प्रोजेक्ट संरचना और बिल्ड प्रवाह"
+
+#: ../../tutorial/first-project.rst:21
+msgid ""
+"Guidedog takes a single directory of source files and compiles it into "
+"two distinct artifacts: a responsive HTML website and a typeset PDF book."
+msgstr ""
+"एक सोर्स फ़ोल्डर से रिस्पॉन्सिव HTML वेबसाइट और टाइपसेट PDF किताब बनती है।"
+
+#: ../../tutorial/first-project.rst:26
+msgid ""
+"Project sources and templates pass through the Guidedog compiler to "
+"produce HTML and PDF artifacts."
+msgstr "प्रोजेक्ट सोर्स और टेम्पलेट Guidedog से होकर HTML और PDF बनते हैं।"
+
+#: ../../tutorial/first-project.rst:26
+msgid "How Guidedog compiles a project into an HTML website and a PDF book."
+msgstr "प्रोजेक्ट से HTML साइट और PDF किताब बनाने का क्रम।"
+
+#: ../../tutorial/first-project.rst:46
+msgid "1. Create the project"
+msgstr "1. प्रोजेक्ट बनाएँ"
+
+#: ../../tutorial/first-project.rst:49
+msgid ""
+"Run the ``quickstart`` command from a folder where the target directory "
+"``notes`` does not yet exist:"
+msgstr ""
+"जहाँ ``notes`` अभी नहीं है, उस पैरेंट फ़ोल्डर से ``quickstart`` चलाएँ:"
+
+#: ../../tutorial/first-project.rst:56
+msgid "Guidedog creates a complete, self-contained project structure:"
+msgstr "Guidedog पूरी, स्वतंत्र प्रोजेक्ट संरचना बनाता है:"
+
+#: ../../tutorial/first-project.rst:74
+msgid "Understanding the files:"
+msgstr "फ़ाइलों का काम:"
+
+#: ../../tutorial/first-project.rst:76
+msgid ""
+"``conf.toml``: Project settings (title, author, version, language, "
+"builders)."
+msgstr "``conf.toml``: शीर्षक, लेखक, संस्करण, भाषा और बिल्डर की सेटिंग।"
+
+#: ../../tutorial/first-project.rst:77
+msgid ""
+"``index.rst``: The root document that defines your front page and table "
+"of contents."
+msgstr "``index.rst``: मुखपृष्ठ और विषय-सूची तय करने वाला मूल दस्तावेज़।"
+
+#: ../../tutorial/first-project.rst:78
+msgid "``_templates/layout.html``: The HTML website template (Jinja)."
+msgstr "``_templates/layout.html``: HTML वेबसाइट का Jinja ढाँचा।"
+
+#: ../../tutorial/first-project.rst:79
+msgid ""
+"``_templates/book.typ``: The PDF book layout and typography template "
+"(Typst)."
+msgstr ""
+"``_templates/book.typ``: PDF का लेआउट, अक्षर और आवरण देने वाला Typst "
+"टेम्पलेट।"
+
+#: ../../tutorial/first-project.rst:80
+msgid "``_static/``: CSS stylesheets and JavaScript enhancements."
+msgstr "``_static/``: CSS और JavaScript की अतिरिक्त सुविधाएँ।"
+
+#: ../../tutorial/first-project.rst:81
+msgid ""
+"``assets/``: Dedicated folders for project images, diagrams, audio, and "
+"video files."
+msgstr "``assets/``: चित्र, आरेख, ऑडियो और वीडियो के फ़ोल्डर।"
+
+#: ../../tutorial/first-project.rst:83
+msgid ""
+"Templates in Guidedog are directly visible and editable. They are placed "
+"directly inside your project rather than hidden within an external theme "
+"or system cache. You can modify them at any time to customize your site "
+"and book design. The first build creates ``_build`` for generated output."
+msgstr ""
+"टेम्पलेट प्रोजेक्ट में सीधे दिखते और बदलते हैं; बाहरी थीम या सिस्टम कैश "
+"में छिपे नहीं हैं। वेबसाइट और किताब कभी भी बदल सकते हैं। पहला बिल्ड "
+"आउटपुट के लिए ``_build`` बनाता है।"
+
+#: ../../tutorial/first-project.rst:88
+msgid "2. Write the first page"
+msgstr "2. पहला पृष्ठ लिखें"
+
+#: ../../tutorial/first-project.rst:91
+msgid ""
+"Open ``notes/index.rst`` in your editor and replace its contents with the "
+"following:"
+msgstr "``notes/index.rst`` खोलकर यह सामग्री रखें:"
+
+#: ../../tutorial/first-project.rst:113
+msgid ""
+"This page demonstrates headings, mathematical notation, and an admonition "
+"note."
+msgstr "यह पृष्ठ शीर्षक, गणित और नोट दिखाता है।"
+
+#: ../../tutorial/first-project.rst:115
+msgid "3. Build and inspect the outputs"
+msgstr "3. आउटपुट बनाएँ और देखें"
+
+#: ../../tutorial/first-project.rst:118
+msgid "Compile your project into both HTML and PDF formats:"
+msgstr "HTML और PDF दोनों बनाएँ:"
+
+#: ../../tutorial/first-project.rst:125
+msgid ""
+"The ``-W`` flag instructs Guidedog to treat warnings as errors. Keeping "
+"this flag enabled in your routine checks ensures that broken references "
+"or markup errors are caught early."
+msgstr ""
+"``-W`` चेतावनी को त्रुटि मानता है। इसे रोज़ की जाँच में रखने से संदर्भ और "
+"मार्कअप की गलती जल्दी मिलती है।"
+
+#: ../../tutorial/first-project.rst:128
+msgid "Now inspect the output files:"
+msgstr "बनी फ़ाइलें देखें:"
+
+#: ../../tutorial/first-project.rst:130
+msgid ""
+"Open ``notes/_build/html/index.html`` in your web browser. You will see a "
+"clean, responsive documentation website with a theme switch, search bar, "
+"and formatted math."
+msgstr ""
+"ब्राउज़र में ``notes/_build/html/index.html`` खोलकर थीम, खोज और गणित "
+"जाँचें।"
+
+#: ../../tutorial/first-project.rst:132
+msgid ""
+"Open the PDF file generated in ``notes/_build/pdf/``. You will see a book "
+"layout complete with running headers, page numbers, and typographic math."
+msgstr "``notes/_build/pdf/`` का PDF खोलकर पृष्ठ शीर्ष, नंबर और गणित देखें।"
+
+#: ../../tutorial/first-project.rst:135
+msgid ""
+"Guidedog formats mathematics appropriately for each medium: using "
+"client-side MathJax for the browser, and native vector formulas for the "
+"Typst PDF engine."
+msgstr ""
+"ब्राउज़र में MathJax है; PDF में Typst के नेटिव वेक्टर फ़ॉर्मूले हैं।"
+
+#: ../../tutorial/first-project.rst:138
+msgid "4. Live preview and incremental rebuilds"
+msgstr "4. लाइव प्रीव्यू और इन्क्रिमेंटल बिल्ड"
+
+#: ../../tutorial/first-project.rst:141
+msgid "Guidedog includes a built-in development web server:"
+msgstr "Guidedog में विकास का सर्वर अंतर्निहित है:"
+
+#: ../../tutorial/first-project.rst:147
+msgid ""
+"The terminal prints a local URL, such as ``http://localhost:8000``. Open "
+"this address in your browser."
+msgstr ""
+"टर्मिनल का स्थानीय पता, जैसे ``http://localhost:8000``, ब्राउज़र में "
+"खोलें।"
+
+#: ../../tutorial/first-project.rst:150
+msgid "Now test the live editing loop:"
+msgstr "बदलाव और प्रीव्यू का क्रम आज़माएँ:"
+
+#: ../../tutorial/first-project.rst:154
+msgid ""
+"Editing and saving a file triggers timestamp verification and selective "
+"rebuild upon refreshing the browser."
+msgstr ""
+"सहेजकर रीफ़्रेश करने पर समय जाँचा जाता है और केवल प्रभावित पृष्ठ फिर बनते "
+"हैं।"
+
+#: ../../tutorial/first-project.rst:154
+msgid "The live development cycle with guidedog serve."
+msgstr "guidedog serve का लाइव विकास क्रम।"
+
+#: ../../tutorial/first-project.rst:173
+msgid "Edit ``notes/index.rst`` to add a new paragraph."
+msgstr "``notes/index.rst`` में एक अनुच्छेद जोड़ें।"
+
+#: ../../tutorial/first-project.rst:174
+msgid "Save the file."
+msgstr "फ़ाइल सहेजें।"
+
+#: ../../tutorial/first-project.rst:175
+msgid "Refresh your browser page."
+msgstr "ब्राउज़र रीफ़्रेश करें।"
+
+#: ../../tutorial/first-project.rst:177
+msgid ""
+"Before serving a requested page, Guidedog checks file modification "
+"timestamps against its cached build environment. If inputs have changed, "
+"it rebuilds only the affected documents before responding to the browser "
+"request."
+msgstr ""
+"पृष्ठ देने से पहले Guidedog फ़ाइल के बदलाव समय को कैश से मिलाता है। बदलाव "
+"हो तो प्रभावित दस्तावेज़ बनाकर अनुरोध का उत्तर देता है।"
+
+#: ../../tutorial/first-project.rst:181
+msgid ""
+"When you run a build without modifying any files, Guidedog reuses the "
+"cached document trees, avoiding redundant re-parsing."
+msgstr ""
+"फ़ाइल न बदली हो तो कैश के दस्तावेज़ ट्री काम आते हैं; फिर पार्स नहीं होता।"
+
+#: ../../tutorial/first-project.rst:184
+msgid ""
+"Press ``Ctrl+C`` in your terminal to stop the server when you are done."
+msgstr "काम पूरा होने पर टर्मिनल में ``Ctrl+C`` से सर्वर रोकें।"
+
+#: ../../tutorial/first-project.rst:186
+msgid ""
+"Continue to :doc:`a-small-book` to learn how to organize multiple "
+"chapters and cross-references."
+msgstr "अध्याय और संदर्भ व्यवस्थित करना :doc:`a-small-book` में सीखें।"
+
+#: ../../tutorial/index.rst:1
+msgid "Tutorials"
+msgstr "ट्यूटोरियल"
+
+#: ../../tutorial/index.rst:4
+msgid ""
+"Follow these pages in order. Each step produces a result you can inspect."
+msgstr ""
+"इन पृष्ठों को क्रम से पढ़ें। हर कदम ऐसा परिणाम देता है जिसे आप जाँच सकते "
+"हैं।"
+
+#~ msgid ""
+#~ "A site is a graph of documents. A book needs a reading order. A "
+#~ "``toctree`` supplies both."
+#~ msgstr ""
+#~ "साइट दस्तावेज़ों का ग्राफ़ है। किताब को पढ़ने का क्रम चाहिए। "
+#~ "``toctree`` दोनों देता है।"
+
+#~ msgid "Replace the contents of ``notes/index.rst`` with:"
+#~ msgstr "``notes/index.rst`` की सामग्री इससे बदलें:"
+
+#~ msgid ""
+#~ "The document name omits ``.rst``. The label names an idea within a "
+#~ "document. Use a document link for a chapter. Use a label for a "
+#~ "particular argument."
+#~ msgstr ""
+#~ "दस्तावेज़ के नाम से ``.rst`` हटता है। लेबल दस्तावेज़ के भीतर किसी "
+#~ "विचार को नाम देता है। अध्याय के लिए दस्तावेज़ लिंक और किसी खास तर्क के "
+#~ "लिए लेबल इस्तेमाल करें।"
+
+#~ msgid "Put this in ``measurement.rst``:"
+#~ msgstr "यह ``measurement.rst`` में डालें:"
+
+#~ msgid ""
+#~ "Guidedog uses its linked Graphviz library. The result is an SVG in "
+#~ "HTML and an image in the PDF. No browser diagram interpreter is "
+#~ "needed. A caption explains the conclusion. Alternative text explains "
+#~ "the drawing."
+#~ msgstr ""
+#~ "Guidedog अपनी लिंक की Graphviz लाइब्रेरी इस्तेमाल करता है। HTML में "
+#~ "SVG और PDF में चित्र मिलता है। ब्राउज़र में आरेख इंटरप्रेटर नहीं "
+#~ "चाहिए। कैप्शन निष्कर्ष समझाता है। वैकल्पिक पाठ चित्र समझाता है।"
+
+#~ msgid "Build the book"
+#~ msgstr "किताब बिल्ड करें"
+
+#~ msgid ""
+#~ "The chapter is in the sidebar and in the book's contents. Follow the "
+#~ "section link in the browser. Inspect its destination in the PDF."
+#~ msgstr ""
+#~ "अध्याय साइडबार और किताब की विषय-सूची में है। ब्राउज़र में खंड लिंक "
+#~ "खोलें। PDF में भी उसका लक्ष्य जाँचें।"
+
+#~ msgid ""
+#~ "The next useful step is :doc:`../topics/writing`. Keep chapters small "
+#~ "enough to explain one subject."
+#~ msgstr ""
+#~ "अगला उपयोगी कदम :doc:`../topics/writing` है। हर अध्याय इतना छोटा रखें "
+#~ "कि एक विषय समझाए।"
+
+#~ msgid ""
+#~ "On macOS, install the release with ``brew install "
+#~ "insanai/guidedog/guidedog``. This adds the official tap and includes "
+#~ "the PDF compiler."
+#~ msgstr ""
+#~ "macOS पर ``brew install insanai/guidedog/guidedog`` से रिलीज़ स्थापित "
+#~ "करें। यह आधिकारिक tap जोड़ता है और PDF कंपाइलर भी स्थापित करता है।"
+
+#~ msgid ""
+#~ "Guidedog writes the configuration, the first RST document, and "
+#~ "editable templates. It also creates folders for images, audio, and "
+#~ "video. It refuses to overwrite an existing project."
+#~ msgstr ""
+#~ "Guidedog कॉन्फ़िगरेशन, पहला RST दस्तावेज़ और संपादन योग्य टेम्पलेट "
+#~ "लिखता है। चित्र, ऑडियो और वीडियो के फ़ोल्डर भी बनाता है। मौजूदा "
+#~ "परियोजना पर नहीं लिखता।"
+
+#~ msgid ""
+#~ "The RST files hold your content. The templates hold your presentation. "
+#~ "The base templates (``_templates/layout.html`` and "
+#~ "``_templates/book.typ``) are placed directly in your project by "
+#~ "``quickstart`` rather than being stored in an external theme or "
+#~ "package cache. You can inspect and customize them at any time."
+#~ msgstr ""
+#~ "RST फ़ाइलों में सामग्री और टेम्पलेट में प्रस्तुति रहती है। "
+#~ "``quickstart`` मूल ``_templates/layout.html`` और "
+#~ "``_templates/book.typ`` को परियोजना में ही रखता है, बाहरी थीम या कैश "
+#~ "में नहीं। इन्हें कभी भी देख और बदल सकते हैं।"
+
+#~ msgid ""
+#~ "Open ``notes/_build/html/index.html`` and the PDF in "
+#~ "``notes/_build/pdf``. ``-W`` makes warnings fail the build. Keep it in "
+#~ "your documentation checks. The HTML page contains the navigation and "
+#~ "the text. The PDF adds book furniture. Math is formatted for each "
+#~ "target. :doc:`../topics/mathematics` explains the setup."
+#~ msgstr ""
+#~ "``notes/_build/html/index.html`` और ``notes/_build/pdf`` का PDF खोलें। "
+#~ "``-W`` चेतावनी पर बिल्ड विफल करता है; इसे दस्तावेज़ जाँच में रखें। "
+#~ "HTML पृष्ठ में नेविगेशन और पाठ हैं। PDF में किताब के पृष्ठ-संबंधी तत्व "
+#~ "जुड़ते हैं। गणित हर आउटपुट के लिए सजता है। सेटअप "
+#~ ":doc:`../topics/mathematics` में है।"
+
+#~ msgid "Make a change"
+#~ msgstr "बदलाव करें"
+
+#~ msgid ""
+#~ "Open the address printed by the command. Edit the source and save it. "
+#~ "Refresh the browser page. Before serving HTML, Guidedog checks source "
+#~ "modification times and rebuilds when they have advanced. It does not "
+#~ "push a browser reload. Stop the server with Ctrl+C."
+#~ msgstr ""
+#~ "कमांड का दिखाया पता खोलें। स्रोत बदलकर सहेजें और ब्राउज़र रिफ़्रेश "
+#~ "करें। HTML भेजने से पहले Guidedog स्रोत के बदलाव का समय जाँचता है और "
+#~ "नया होने पर फिर बिल्ड करता है। यह ब्राउज़र को रीलोड नहीं भेजता। सर्वर "
+#~ "Ctrl+C से रोकें।"
+
+#~ msgid ""
+#~ "Build again without editing anything. Unchanged documents are reused. "
+#~ "The build need not reread every page to prove that its output is "
+#~ "current. Continue with :doc:`a-small-book`."
+#~ msgstr ""
+#~ "कुछ बदले बिना फिर बिल्ड करें। अपरिवर्तित दस्तावेज़ फिर इस्तेमाल होते "
+#~ "हैं। आउटपुट नया है यह साबित करने के लिए हर पृष्ठ फिर पढ़ना ज़रूरी "
+#~ "नहीं। :doc:`a-small-book` पर आगे बढ़ें।"
+
+#~ msgid ""
+#~ "The RST files hold the explanation. The templates hold the "
+#~ "presentation. ``book.typ`` is a typesetting template, not a second "
+#~ "copy of the prose."
+#~ msgstr ""
+#~ "RST फ़ाइलें व्याख्या रखती हैं। टेम्पलेट प्रस्तुति रखते हैं। "
+#~ "``book.typ`` टाइपसेटिंग टेम्पलेट है, गद्य की दूसरी प्रति नहीं।"

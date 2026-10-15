@@ -1,0 +1,115 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 02:53+0000\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../about.rst:1
+msgid "About this manual"
+msgstr "이 설명서에 관하여"
+
+#: ../../about.rst:4
+msgid ""
+"This manual describes the implemented tool and its deliberate limits. The "
+"separate GDS project records proposals, decisions, and review history. A "
+"proposal's state is not changed by making its typography better."
+msgstr ""
+"이 설명서는 구현된 도구와 의도적으로 정한 한계를 설명합니다. 제안, 결정, 검토 이력은 별도의 GDS 프로젝트에 기록합니다. "
+"조판을 개선한다고 제안의 상태가 바뀌지는 않습니다."
+
+#: ../../about.rst:8
+msgid ""
+"The organization follows a practical documentation pattern: learn with "
+"tutorials, understand with topic guides, act with practical tasks, and "
+"check details in reference pages. Internals explain the invariants and "
+"proofs."
+msgstr ""
+"실제 사용 흐름에 맞춰 구성했습니다. 튜토리얼로 배우고, 주제별 안내로 이해하고, 작업 안내로 실행하며, 참고 문서에서 세부 사항을 "
+"확인합니다. 내부 구조에서는 불변 조건과 증명을 설명합니다."
+
+#: ../../about.rst:12
+msgid ""
+"The prose favors small examples, named assumptions, and direct "
+"statements. The aim is an explanation that another person can test. The "
+"design uses restrained color, strong headings, serif reading text, and "
+"accessible navigation. It does not imitate an author's words or layout."
+msgstr ""
+"작은 예제를 들고, 가정을 명시하며, 요점을 직접 설명합니다. 독자가 직접 확인할 수 있는 설명을 지향합니다. 절제된 색상, 뚜렷한 "
+"제목, 읽기 편한 세리프 글꼴, 접근성을 고려한 탐색 기능을 사용합니다. 특정 저자의 문장이나 지면을 모방하지는 않습니다."
+
+#: ../../about.rst:17
+msgid ""
+"This project was created with ``guidedog quickstart`` and is built by "
+"Guidedog. RST holds the prose. Graphviz holds the diagrams. LaTeX math "
+"notation holds equations. Typst remains only where a PDF typesetting "
+"template is required."
+msgstr ""
+"이 프로젝트는 ``guidedog quickstart``\\ 로 만들었으며 Guidedog로 빌드합니다. 본문은 RST, 도표는 "
+"Graphviz, 수식은 LaTeX 수학 표기법으로 작성합니다. Typst는 PDF 조판 템플릿에만 사용합니다."
+
+#: ../../about.rst:21
+msgid "Build evidence and qualification"
+msgstr "빌드 및 검증 기록"
+
+#: ../../about.rst:24
+msgid ""
+"Guidedog release 0.6.2 introduces typed Odin plugins for source, HTML, "
+"and assets, while keeping Pages as an independent publishing service. The "
+"release passed 176 integration tests, all 36 library and tool suites, "
+"AddressSanitizer checks, five-platform builds and smoke tests, and twelve "
+"large-manual builds across CPython, Django, and Flask. Diagnostic and "
+"link results matched their established baselines."
+msgstr ""
+"Guidedog 0.6.2는 소스, HTML, 에셋을 다루는 타입 기반 Odin 플러그인을 도입했습니다. Pages는 독립된 게시 "
+"서비스로 유지합니다. 이 버전은 통합 테스트 176개, 라이브러리와 도구 테스트 전체 36개 묶음, AddressSanitizer, "
+"5개 플랫폼의 빌드와 스모크 테스트, CPython·Django·Flask 대형 매뉴얼의 총 12회 빌드를 통과했습니다. 진단과 "
+"링크 검사 결과도 기존 기준과 일치했습니다."
+
+#: ../../about.rst:30
+msgid ""
+"Earlier publisher compatibility is no longer a release requirement. "
+"Qualification checks (via ``guidedog plugin check``) demonstrate "
+"interoperability across process boundaries; directly linked native "
+"callbacks remain trusted code."
+msgstr ""
+"이전 게시 플러그인과의 호환성은 릴리스 요건이 아닙니다. ``guidedog plugin check`` 명령은 프로세스 간 상호 "
+"운용을 확인합니다. 직접 링크한 네이티브 콜백은 여전히 신뢰하는 코드입니다."
+
+#: ../../about.rst:34
+msgid ""
+"That evidence supports the released tool and its documented surface. It "
+"is not a claim of universal Sphinx equivalence or unbounded memory "
+"safety. See :doc:`compatibility` for the retained limits."
+msgstr ""
+"이 기록은 출시된 도구와 문서에 명시한 기능을 뒷받침합니다. Sphinx와의 완전한 동등성이나 조건 없는 메모리 안전성을 뜻하지는 "
+"않습니다. 남은 제약은 :doc:`compatibility` 문서를 참고하세요."
+
+#: ../../about.rst:38
+msgid ""
+"Documentation maintenance commands are in :doc:`howto/maintain-docs`."
+msgstr "문서 유지 관리 명령은 :doc:`howto/maintain-docs`\\ 에 있습니다."
+
+#~ msgid ""
+#~ "The remote validation on 2026-10-01 ran clean and incremental HTML and "
+#~ "PDF builds for CPython, Django, and Flask. All twelve commands "
+#~ "succeeded. Diagnostic and link results matched the established "
+#~ "baseline. There were 1,039 passing Linux tests and 94 passing targeted "
+#~ "sanitizer tests. That is evidence for the tested checkout. It is not a "
+#~ "claim of complete Sphinx compatibility. See :doc:`compatibility` for "
+#~ "the retained limitations."
+#~ msgstr ""
+#~ "2026-10-01 원격 검증에서 CPython, Django, Flask의 HTML과 PDF를 각각 새로 빌드하고 증분 "
+#~ "빌드했습니다. 명령 12개가 모두 성공했으며 진단과 링크 검사 결과는 기존 기준과 일치했습니다. Linux 테스트 "
+#~ "1,039개와 대상별 sanitizer 테스트 94개가 통과했습니다. 이는 검사한 버전의 동작을 뒷받침할 뿐, Sphinx와 "
+#~ "완전히 호환된다는 뜻은 아닙니다. 남은 한계는 :doc:`compatibility`\\ 를 참조하세요."

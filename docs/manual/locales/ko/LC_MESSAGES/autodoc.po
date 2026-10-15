@@ -1,0 +1,407 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../autodoc.rst:1
+msgid "Documenting Python with autodoc"
+msgstr "autodoc으로 Python 문서 작성하기"
+
+#: ../../autodoc.rst:4
+msgid ""
+"Guidedog documents Python by reading its source. It does not import a "
+"package. Docstrings and signatures become part of the document graph. "
+"Objects created only at runtime need an explicit description. This is a "
+"deliberate boundary."
+msgstr ""
+"Guidedog는 소스 코드를 읽어 Python 문서를 생성합니다. 패키지를 import하지 않습니다. docstring과 "
+"시그니처는 문서 그래프에 포함됩니다. 실행 중에만 생성되는 객체는 명시적으로 설명해야 합니다. 이는 의도적으로 정한 경계입니다."
+
+#: ../../autodoc.rst:8
+msgid "Setting it up"
+msgstr "설정하기"
+
+#: ../../autodoc.rst:11
+msgid ""
+"List the extension and tell Guidedog where your packages are, relative to "
+"the source folder, as ``sys.path`` tells Python:"
+msgstr ""
+"확장을 지정하고 소스 폴더를 기준으로 패키지의 위치를 Guidedog에 알려 주세요. Python에서 ``sys.path``\\ 를 "
+"설정하는 것과 같습니다:"
+
+#: ../../autodoc.rst:19
+msgid ""
+"``guidedog migrate`` writes ``autodoc_source_paths`` for you from the "
+"lines that ``conf.py`` files use to reach their package, such as "
+"``sys.path.insert(0, os.path.abspath('..'))``. A package installed from "
+"elsewhere is found only if you add the folder that holds it, for example "
+"a source checkout of a dependency; Guidedog never looks in Python's own "
+"``site-packages``."
+msgstr ""
+"``guidedog migrate``\\ 는 ``sys.path.insert(0, os.path.abspath('..'))``\\ "
+"처럼 ``conf.py``\\ 에서 패키지 경로를 설정하는 줄을 읽고 ``autodoc_source_paths``\\ 를 "
+"작성합니다. 다른 위치에 설치된 패키지는 해당 폴더를 추가해야 찾을 수 있습니다. 예를 들어 의존 패키지의 소스 체크아웃 폴더를 "
+"지정할 수 있습니다. Guidedog는 Python의 ``site-packages``\\ 를 검색하지 않습니다."
+
+#: ../../autodoc.rst:25
+msgid "The directives then work as in Sphinx:"
+msgstr "이제 지시문을 Sphinx와 같은 방식으로 사용할 수 있습니다:"
+
+#: ../../autodoc.rst:37
+msgid ""
+"Every option Sphinx 9.1 accepts is accepted, with the same meaning: "
+"``:members:``, ``:undoc-members:``, ``:private-members:``, "
+"``:special-members:``, ``:inherited-members:``, ``:exclude-members:``, "
+"``:member-order:``, ``:show-inheritance:``, ``:imported-members:``, "
+"``:ignore-module-all:``, ``:class-doc-from:``, ``:no-value:``, "
+"``:annotation:``, ``:no-index:``, ``:no-index-entry:``, ``:synopsis:``, "
+"``:platform:``, ``:deprecated:``, and the ``no-`` forms that cancel "
+"``autodoc_default_options``."
+msgstr ""
+"Sphinx 9.1에서 지원하는 모든 옵션을 같은 의미로 사용할 수 있습니다: ``:members:``\\ , "
+"``:undoc-members:``\\ , ``:private-members:``\\ , ``:special-members:``\\ "
+", ``:inherited-members:``\\ , ``:exclude-members:``\\ , "
+"``:member-order:``\\ , ``:show-inheritance:``\\ , "
+"``:imported-members:``\\ , ``:ignore-module-all:``\\ , "
+"``:class-doc-from:``\\ , ``:no-value:``\\ , ``:annotation:``\\ , "
+"``:no-index:``\\ , ``:no-index-entry:``\\ , ``:synopsis:``\\ , "
+"``:platform:``\\ , ``:deprecated:``\\ . ``autodoc_default_options``\\ 를 "
+"취소하는 ``no-`` 형식도 지원합니다."
+
+#: ../../autodoc.rst:45
+msgid "Settings"
+msgstr "설정"
+
+#: ../../autodoc.rst:48
+msgid ""
+"These ``conf.toml`` settings have Sphinx's names, values, and defaults."
+msgstr "이 ``conf.toml`` 설정은 Sphinx와 이름, 값, 기본값이 같습니다."
+
+#: ../../autodoc.rst:50
+msgid "``autodoc_source_paths``"
+msgstr "``autodoc_source_paths``"
+
+#: ../../autodoc.rst:51
+msgid ""
+"Guidedog's own: the folders Python modules are found in, in order, "
+"relative to the source folder. Only files below them are read, and a path "
+"through a symbolic link that leads elsewhere is refused."
+msgstr ""
+"Guidedog 전용 설정입니다. Python 모듈을 찾을 디렉터리를 소스 디렉터리 기준의 상대 경로로 검색 순서대로 지정합니다. "
+"이 디렉터리 아래의 파일만 읽으며, 밖으로 이어지는 심볼릭 링크는 거부합니다."
+
+#: ../../autodoc.rst:55
+msgid "``autoclass_content``"
+msgstr "``autoclass_content``"
+
+#: ../../autodoc.rst:56
+msgid ""
+"``\"class\"`` (default), ``\"init\"``, or ``\"both\"``: which docstrings "
+"describe a class."
+msgstr ""
+"클래스를 설명할 docstring을 지정합니다. ``\"class\"``\\ (기본값), ``\"init\"``\\ , "
+"``\"both\"`` 중에서 선택합니다."
+
+#: ../../autodoc.rst:58
+msgid "``autodoc_class_signature``"
+msgstr "``autodoc_class_signature``"
+
+#: ../../autodoc.rst:59
+msgid ""
+"``\"mixed\"`` (default) or ``\"separated\"``, which documents "
+"``__init__`` as a method."
+msgstr ""
+"``\"mixed\"``\\ (기본값) 또는 ``\"separated\"``\\ 입니다. 후자는 ``__init__``\\ 를 별도 "
+"메서드로 문서화합니다."
+
+#: ../../autodoc.rst:61
+msgid "``autodoc_default_options``"
+msgstr "``autodoc_default_options``"
+
+#: ../../autodoc.rst:62
+msgid ""
+"A table of options every directive gets, such as ``members = true`` or "
+"``member-order = \"bysource\"``. A value of ``false`` leaves the option "
+"out."
+msgstr ""
+"모든 지시문에 적용할 옵션 표입니다. 예를 들어 ``members = true`` 또는 ``member-order = "
+"\"bysource\"``\\ 를 지정합니다. 값이 ``false``\\ 이면 해당 옵션을 제외합니다."
+
+#: ../../autodoc.rst:65
+msgid "``autodoc_docstring_signature``"
+msgstr "``autodoc_docstring_signature``"
+
+#: ../../autodoc.rst:66
+msgid ""
+"``true`` (default): a first docstring line like ``name(args) -> result`` "
+"is the signature."
+msgstr ""
+"``true``\\ (기본값): docstring의 첫 줄이 ``name(args) -> result`` 같은 형식이면 시그니처로 "
+"사용합니다."
+
+#: ../../autodoc.rst:69
+msgid "``autodoc_inherit_docstrings``"
+msgstr "``autodoc_inherit_docstrings``"
+
+#: ../../autodoc.rst:70
+msgid ""
+"``true`` (default): a member without a docstring takes its base class's."
+msgstr "``true``\\ (기본값): docstring이 없는 멤버는 기반 클래스의 docstring을 상속합니다."
+
+#: ../../autodoc.rst:72
+msgid "``autodoc_member_order``"
+msgstr "``autodoc_member_order``"
+
+#: ../../autodoc.rst:73
+msgid ""
+"``\"alphabetical\"`` (default), ``\"groupwise\"``, or ``\"bysource\"``."
+msgstr ""
+"``\"alphabetical\"``\\ (기본값), ``\"groupwise\"``\\ , ``\"bysource\"`` 중에서 "
+"선택합니다."
+
+#: ../../autodoc.rst:75
+msgid "``autodoc_preserve_defaults``"
+msgstr "``autodoc_preserve_defaults``"
+
+#: ../../autodoc.rst:76
+msgid ""
+"``false`` (default): defaults are shown as ``repr()`` would write them; "
+"``true`` shows them as written."
+msgstr ""
+"``false``\\ (기본값): 기본값을 ``repr()`` 표현으로 표시합니다. ``true``\\ 이면 소스에 쓰인 형태를 "
+"유지합니다."
+
+#: ../../autodoc.rst:79
+msgid "``autodoc_typehints``"
+msgstr "``autodoc_typehints``"
+
+#: ../../autodoc.rst:80
+msgid ""
+"``\"signature\"`` (default), ``\"description\"`` (as ``:type:`` and "
+"``:rtype:`` fields), ``\"both\"``, or ``\"none\"``."
+msgstr ""
+"``\"signature\"``\\ (기본값), ``\"description\"``\\ (\\ ``:type:`` 및 "
+"``:rtype:`` 필드 사용), ``\"both\"``\\ , ``\"none\"`` 중에서 선택합니다."
+
+#: ../../autodoc.rst:83
+msgid "``autodoc_typehints_description_target``"
+msgstr "``autodoc_typehints_description_target``"
+
+#: ../../autodoc.rst:84
+msgid ""
+"``\"all\"`` (default), ``\"documented\"``, or ``\"documented_params\"``."
+msgstr ""
+"``\"all\"``\\ (기본값), ``\"documented\"``\\ , ``\"documented_params\"`` 중에서 "
+"선택합니다."
+
+#: ../../autodoc.rst:86
+msgid "``autodoc_typehints_format``"
+msgstr "``autodoc_typehints_format``"
+
+#: ../../autodoc.rst:87
+msgid "``\"short\"`` (default) or ``\"fully-qualified\"``."
+msgstr "``\"short\"``\\ (기본값) 또는 ``\"fully-qualified\"``\\ 입니다."
+
+#: ../../autodoc.rst:89
+msgid "``autodoc_use_type_comments``"
+msgstr "``autodoc_use_type_comments``"
+
+#: ../../autodoc.rst:90
+msgid "``true`` (default): ``# type:`` comments count as annotations."
+msgstr "``true``\\ (기본값): ``# type:`` 주석을 타입 어노테이션으로 취급합니다."
+
+#: ../../autodoc.rst:92
+msgid "``strip_signature_backslash``"
+msgstr "``strip_signature_backslash``"
+
+#: ../../autodoc.rst:93
+msgid "Doubles backslashes in signatures, as in Sphinx."
+msgstr "Sphinx처럼 시그니처의 역슬래시를 두 번 씁니다."
+
+#: ../../autodoc.rst:95
+msgid ""
+"``autodoc_mock_imports``, ``autodoc_type_aliases``, "
+"``autodoc_warningiserror``"
+msgstr ""
+"``autodoc_mock_imports``\\ , ``autodoc_type_aliases``\\ , "
+"``autodoc_warningiserror``"
+
+#: ../../autodoc.rst:96
+msgid ""
+"Accepted. Nothing is imported, so nothing needs mocking; type aliases are "
+"not applied."
+msgstr "설정은 허용됩니다. 모듈을 임포트하지 않으므로 모킹이 필요하지 않습니다. 타입 별칭은 적용하지 않습니다."
+
+#: ../../autodoc.rst:99
+msgid "How Guidedog knows what Python would do"
+msgstr "Guidedog가 Python의 동작을 판단하는 방법"
+
+#: ../../autodoc.rst:102
+msgid ""
+"Names are followed as Python binds them: ``from .app import Flask`` in a "
+"package's ``__init__.py`` makes ``flask.Flask`` the class defined in "
+"``flask/app.py``, which autodoc then shows with ``:canonical: "
+"flask.app.Flask``. Base classes are resolved the same way, their method "
+"resolution order is computed as Python computes it, and inherited members "
+"come from the bases' source. Names imported only under ``if "
+"TYPE_CHECKING:`` do not exist when the module runs, so annotations naming "
+"them stay as written, as they do in Sphinx."
+msgstr ""
+"이름은 Python의 바인딩 규칙에 따라 해석합니다. 패키지의 ``__init__.py``\\ 에 있는 ``from .app "
+"import Flask``\\ 는 ``flask.Flask``\\ 를 ``flask/app.py``\\ 에 정의된 클래스로 "
+"연결합니다. autodoc은 이를 ``:canonical: flask.app.Flask``\\ 로 표시합니다. 기반 클래스도 같은 "
+"방식으로 찾고, 메서드 결정 순서는 Python과 같은 규칙으로 계산합니다. 상속된 멤버는 기반 클래스의 소스에서 가져옵니다. "
+"``if TYPE_CHECKING:`` 안에서만 임포트한 이름은 실행 시 존재하지 않으므로, 해당 이름을 쓰는 어노테이션은 "
+"Sphinx와 마찬가지로 원문을 유지합니다."
+
+#: ../../autodoc.rst:110
+msgid ""
+"Docstrings are the strings Python would store: escapes processed and "
+"indentation removed as Python 3.13's compiler removes it. Attribute "
+"documentation comes from the places Sphinx's analyser reads: a ``#:`` "
+"comment after the assignment or on the lines above it, and a string "
+"literal after it. Signatures come from the ``def``; a class's from its "
+"metaclass ``__call__``, ``__new__``, or ``__init__``, as Python finds it; "
+"a dataclass's or ``NamedTuple``'s from its fields; ``@overload`` variants "
+"replace the implementation's signature."
+msgstr ""
+"docstring은 Python이 저장할 문자열과 같습니다. 이스케이프를 처리하고 Python 3.13 컴파일러와 같은 규칙으로 "
+"들여쓰기를 제거합니다. 속성 설명은 Sphinx 분석기와 같은 위치에서 읽습니다. 대입문 뒤나 바로 위의 ``#:`` 주석, 그리고 "
+"대입문 바로 다음의 문자열 리터럴입니다. 시그니처는 ``def``\\ 에서 가져옵니다. 클래스는 Python의 탐색 규칙에 따라 "
+"메타클래스의 ``__call__``\\ , ``__new__``\\ , ``__init__``\\ 를 사용합니다. "
+"dataclass와 ``NamedTuple``\\ 은 필드를 사용합니다. ``@overload`` 변형은 구현의 시그니처를 "
+"대신합니다."
+
+#: ../../autodoc.rst:118
+msgid "What cannot be known without running Python"
+msgstr "Python을 실행하지 않고는 알 수 없는 정보"
+
+#: ../../autodoc.rst:121
+msgid ""
+"Guidedog says so, naming the object, whenever the source cannot tell it "
+"what Python would: a warning when something cannot be documented, a note "
+"(shown with ``-v``) when it is documented with less than Sphinx would "
+"show."
+msgstr ""
+"소스만으로 Python의 동작을 알 수 없으면 Guidedog는 해당 객체의 이름을 밝혀 알립니다. 문서화할 수 없으면 경고를 "
+"냅니다. Sphinx보다 적은 정보로 문서화했다면 ``-v``\\ 에서 볼 수 있는 안내를 남깁니다."
+
+#: ../../autodoc.rst:125
+msgid ""
+"A compiled module (``.so``, ``.pyd``) has no source to read: its objects "
+"are not found."
+msgstr "컴파일된 모듈(\\ ``.so``\\ , ``.pyd``\\ )에는 읽을 소스가 없으므로 객체를 찾을 수 없습니다."
+
+#: ../../autodoc.rst:127
+msgid ""
+"A value made by running code (``app = Flask(__name__)``, ``now = "
+"datetime.now()``) has no ``:value:``, and a computed default is shown as "
+"written."
+msgstr ""
+"코드를 실행해 얻는 값(\\ ``app = Flask(__name__)``\\ , ``now = datetime.now()``\\ "
+")에는 ``:value:``\\ 가 없습니다. 계산이 필요한 기본값은 소스의 표기를 유지합니다."
+
+#: ../../autodoc.rst:129
+msgid ""
+"A function made by a decorator from outside the source paths "
+"(``@click.command()``) is documented as the function it decorates."
+msgstr ""
+"소스 경로 밖의 데코레이터(\\ ``@click.command()``\\ )가 만든 함수는 데코레이션 전의 함수를 기준으로 "
+"문서화합니다."
+
+#: ../../autodoc.rst:131
+msgid ""
+"A class from a package outside the source paths is named by the path it "
+"was imported from, which may differ from the module that defines it; its "
+"members, its constructor's signature, and the docstrings it would pass on "
+"are unknown."
+msgstr ""
+"소스 경로 밖의 패키지에 있는 클래스는 임포트한 경로로 이름을 표시합니다. 이 경로는 실제 정의 모듈과 다를 수 있습니다. 멤버, "
+"생성자 시그니처, 상속할 docstring은 알 수 없습니다."
+
+#: ../../autodoc.rst:134
+msgid ""
+"Docstrings of builtin types are unknown, so a method that has none and "
+"would inherit one from ``dict`` is left out."
+msgstr ""
+"내장 타입의 docstring은 알 수 없습니다. 따라서 자체 docstring 없이 ``dict``\\ 의 docstring을 "
+"상속할 메서드는 제외합니다."
+
+#: ../../autodoc.rst:136
+msgid ""
+"Python extensions that handle autodoc's events "
+"(``autodoc-process-docstring``, ``autodoc-skip-member``, ...) do not run."
+msgstr ""
+"autodoc 이벤트(\\ ``autodoc-process-docstring``\\ , ``autodoc-skip-member`` "
+"등)를 처리하는 Python 확장은 실행하지 않습니다."
+
+#: ../../autodoc.rst:138
+msgid ""
+"A module nested far deeper than real code (Python itself refuses 200 "
+"nested brackets; Guidedog also refuses a ``+`` chain of a few hundred "
+"operands) is not analysed, with the warning ``autodoc.too_deep``."
+msgstr ""
+"실제 코드 수준을 훨씬 넘는 깊은 중첩은 분석하지 않고 ``autodoc.too_deep`` 경고를 냅니다. Python 자체도 "
+"200단계의 괄호 중첩을 거부합니다. Guidedog는 수백 개 피연산자로 이어진 ``+`` 연산도 거부합니다."
+
+#: ../../autodoc.rst:141
+msgid ""
+"Work that multiplies is bounded: a name followed through imports and "
+"aliases stops after 48 steps along one path and 100,000 in all; a type "
+"alias or constant is expanded for 10,000 steps and is otherwise shown as "
+"written; a class's MRO is followed 100 classes deep; and one directive "
+"generates at most 10,000 directives (the warning ``autodoc.limit``), "
+"which only a class that contains itself under its own name reaches."
+msgstr ""
+"처리가 계속 늘어날 수 있는 작업에는 한도가 있습니다. 임포트와 별칭을 따라 이름을 찾을 때 한 경로는 48단계, 전체는 "
+"100,000단계까지입니다. 타입 별칭과 상수는 10,000단계까지 확장하며, 그 뒤에는 소스 표기를 유지합니다. 클래스의 MRO는 "
+"100개 클래스까지 추적합니다. 지시문 하나가 생성하는 지시문은 최대 10,000개이며, 초과하면 ``autodoc.limit`` "
+"경고를 냅니다. 마지막 한도에 도달하는 것은 자신의 이름으로 자신을 포함하는 클래스입니다."
+
+#: ../../autodoc.rst:147
+msgid ""
+"Adding the missing packages' source folders to ``autodoc_source_paths`` "
+"closes most of these."
+msgstr ""
+"누락된 패키지의 소스 디렉터리를 ``autodoc_source_paths``\\ 에 추가하면 이러한 제약 대부분을 해결할 수 "
+"있습니다."
+
+#: ../../autodoc.rst:150
+msgid "Rebuilding"
+msgstr "다시 빌드하기"
+
+#: ../../autodoc.rst:153
+msgid ""
+"Every Python file an autodoc directive read is a dependency of the page: "
+"editing it reads the page again on the next build. A page whose object "
+"was not found is read again on every build, so it picks the object up as "
+"soon as the source has it."
+msgstr ""
+"autodoc 지시문이 읽은 모든 Python 파일은 페이지의 의존성으로 기록됩니다. 파일을 수정하면 다음 빌드에서 페이지를 다시 "
+"읽습니다. 객체를 찾지 못한 페이지는 매번 다시 읽으므로, 소스에 객체가 추가되면 바로 인식합니다."
+
+#: ../../autodoc.rst:157
+msgid "Security"
+msgstr "보안"
+
+#: ../../autodoc.rst:160
+msgid ""
+"Building documentation never runs the project's code. Guidedog reads "
+"Python source as text, with the same confinement it applies to includes: "
+"only below ``autodoc_source_paths``, and not through links leading "
+"elsewhere."
+msgstr ""
+"문서 빌드에서는 프로젝트 코드를 실행하지 않습니다. Guidedog는 Python 소스를 텍스트로 읽고 include와 같은 경로 "
+"제한을 적용합니다. ``autodoc_source_paths`` 아래만 읽으며, 밖으로 이어지는 링크는 따라가지 않습니다."

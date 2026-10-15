@@ -1,0 +1,325 @@
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog Manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog Manual 0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-13 12:22+0800\n"
+"PO-Revision-Date: 2026-10-01 00:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../errors.rst:3
+msgid "Error messages"
+msgstr "오류 메시지"
+
+#: ../../errors.rst:6
+msgid ""
+"A report should name the problem, show its location, and give a useful "
+"next step. Guidedog keeps that evidence as structured data. The terminal "
+"adds color and a source marker. JSON keeps the data without terminal "
+"decoration."
+msgstr ""
+"진단은 문제의 이름과 위치를 밝히고 유용한 다음 행동을 알려야 합니다. Guidedog는 이 정보를 구조화된 데이터로 보관합니다. "
+"터미널에는 색상과 소스 표시를 더하고, JSON은 터미널 장식 없이 데이터를 유지합니다."
+
+#: ../../errors.rst:10
+msgid "Reading a report"
+msgstr "진단 읽기"
+
+#: ../../errors.rst:25
+msgid "A report has four parts, always in this order:"
+msgstr "진단은 항상 다음 순서의 네 부분으로 구성됩니다."
+
+#: ../../errors.rst:27
+msgid ""
+"**The title bar.** The title names the kind of problem in capitals; "
+"warnings and notes start with ``WARNING:`` and ``NOTE:``. At the right of "
+"the bar is the report's code, such as ``rst.substitution.undefined``: a "
+"stable name you can search for."
+msgstr ""
+"**제목 표시줄.** 제목은 문제 종류를 대문자로 표시합니다. 경고와 안내는 ``WARNING:``\\ 와 ``NOTE:``\\ 로 "
+"시작합니다. 오른쪽에는 ``rst.substitution.undefined`` 같은 진단 코드가 있으며, 검색에 쓸 수 있는 고정된 "
+"이름입니다."
+
+#: ../../errors.rst:30
+msgid ""
+"**Where.** The file and line, the source line itself, and a marker under "
+"the text the problem is about. A problem that is not about one line (a "
+"missing folder, a flag) shows only the path, or nothing."
+msgstr ""
+"**위치.** 파일과 줄 번호, 소스 줄, 문제 텍스트 아래의 표시를 보여 줍니다. 누락된 폴더나 옵션처럼 특정 줄과 관계없는 "
+"문제는 경로만 표시하거나 위치를 생략합니다."
+
+#: ../../errors.rst:33
+msgid ""
+"**What happened.** The explanation, followed, when it matters, by what "
+"the problem means for the output: here, that nothing was written."
+msgstr ""
+"**무슨 일이 일어났는가.** 문제를 설명하고, 필요하면 출력에 미치는 영향도 알립니다. 이 예에서는 아무것도 기록하지 않았다는 "
+"뜻입니다."
+
+#: ../../errors.rst:35
+msgid ""
+"**What to do.** The hint, in green on a color terminal: a concrete "
+"direction. Where there are several ways to fix the problem, the hint "
+"names them, the most likely first."
+msgstr ""
+"**어떻게 해결하는가.** 컬러 터미널에서 초록색으로 표시하는 구체적인 안내입니다. 해결 방법이 여럿이면 가장 적합할 가능성이 높은 "
+"방법부터 나열합니다."
+
+#: ../../errors.rst:39
+msgid ""
+"Colors only underline what the words already say; ``--color=never`` turns "
+"them off and ``--color=always`` keeps them when the output is not a "
+"terminal."
+msgstr ""
+"색상은 이미 문구로 설명한 내용을 강조할 뿐입니다. ``--color=never``\\ 는 색상을 끄고, "
+"``--color=always``\\ 는 터미널이 아닌 출력에서도 색상을 유지합니다."
+
+#: ../../errors.rst:42
+msgid "Every hint gives directions"
+msgstr "다음 행동을 안내하는 힌트"
+
+#: ../../errors.rst:45
+msgid ""
+"Guidedog holds its own messages to this: a hint starts with what to do "
+"(\"Add\", \"Pass\", \"Set\", \"Rename\", \"Run\") and names what to do it "
+"to, such as ``--budget=MIB``, ``root_doc`` in ``conf.toml``, or the "
+"directive's option. A test (``tests/hints_test.odin``) reads every "
+"message Guidedog can emit and fails when a hint is empty, repeats the "
+"message, or says only \"report this\" without saying what to report with. "
+"Two forms are allowed because they name the fix themselves: a suggestion "
+"(\"Did you mean numfig?\") and, for a note that needs no action, "
+"\"Nothing to do:\" with the reason."
+msgstr ""
+"Guidedog의 메시지도 이 규칙을 따른다. 힌트는 작업(\"Add\", \"Pass\", \"Set\", \"Rename\", "
+"\"Run\")과 대상을 먼저 밝힌다. 대상은 ``--budget=MIB``\\ , ``conf.toml``\\ 의 "
+"``root_doc``\\ , 지시문 옵션 등이다. ``tests/hints_test.odin``\\ 은 모든 메시지를 읽고 빈 "
+"힌트, 메시지 반복, 무엇을 보고할지 없는 \"report this\"를 거부한다. 수정 자체를 제시하는 제안(\"Did you "
+"mean numfig?\")과 작업이 필요 없는 메모의 \"Nothing to do:\" 및 그 이유도 허용한다."
+
+#: ../../errors.rst:53
+msgid ""
+"When the problem is Guidedog's own fault, the hint says so and asks you "
+"to report it with the command you ran, the input that caused it, and the "
+"output of ``guidedog --version``."
+msgstr ""
+"Guidedog 자체의 오류이면 안내에서 이를 명확히 밝힙니다. 실행한 명령, 문제를 일으킨 입력, ``guidedog "
+"--version`` 출력을 함께 보고하도록 요청합니다."
+
+#: ../../errors.rst:57
+msgid "Reports for programs"
+msgstr "프로그램용 진단"
+
+#: ../../errors.rst:60
+msgid ""
+"``--diagnostics=json`` writes each report as one JSON object per line on "
+"standard error, for editors and continuous integration:"
+msgstr ""
+"``--diagnostics=json``\\ 은 보고서마다 한 줄의 JSON 객체를 표준 오류에 써서 편집기와 지속적 통합에서 읽을 "
+"수 있게 한다."
+
+#: ../../errors.rst:71
+msgid ""
+"(shown wrapped here; each object is on one line). ``schema`` is the "
+"version of this format, which changes only when a field does; check it "
+"before reading the rest. Columns count Unicode scalars, not bytes or "
+"terminal cells, from 1. ``source`` is the complete original source line; "
+"the terminal shows a bounded window around the error and aligns its caret "
+"after escaping controls and measuring wide characters. ``category`` is "
+"the warning's category, as ``suppress_warnings`` names it, or empty."
+msgstr ""
+"여기서는 줄바꿈했지만 실제 객체는 한 줄이다. ``schema``\\ 는 필드가 바뀔 때만 변경되는 형식 버전이며 나머지를 읽기 "
+"전에 확인한다. 열은 1부터 Unicode 스칼라를 센다. 바이트나 터미널 칸 수가 아니다. ``source``\\ 는 원본 줄 "
+"전체다. 터미널은 오류 주변 일부를 보여 주며 제어 문자를 이스케이프하고 넓은 문자 폭을 측정해 표시를 맞춘다. "
+"``category``\\ 는 ``suppress_warnings``\\ 의 경고 분류이거나 빈 값이다."
+
+#: ../../errors.rst:78
+msgid "When memory runs out"
+msgstr "메모리가 부족할 때"
+
+#: ../../errors.rst:81
+msgid ""
+"Running out of memory is a report too, never a crash. There are two kinds:"
+msgstr "메모리 부족도 진단으로 보고하며, 충돌하지 않습니다. 두 종류가 있습니다."
+
+#: ../../errors.rst:83
+msgid "``host.budget`` (MEMORY BUDGET REACHED)"
+msgstr "``host.budget`` (메모리 예산 도달)"
+
+#: ../../errors.rst:84
+msgid ""
+"The build reached the memory it may hold, its budget (``--budget=MIB``, 1 "
+"GiB by default). The report names the step and, for a template, the line "
+"that asked for the memory. At a terminal the build asks once what to do: "
+"raise the budget to one the step fits, go on with the working memory on "
+"disk, or stop; elsewhere it stops, and ``--budget`` or ``--memory=disk`` "
+"chooses ahead. The hint names that same budget as a number, for example:"
+msgstr ""
+"빌드가 보유 가능한 메모리 예산(\\ ``--budget=MIB``\\ , 기본 1 GiB)에 도달했다. 보고서는 단계와, "
+"템플릿이라면 메모리를 요청한 줄을 밝힌다. 터미널에서는 예산 확대, 작업 메모리의 디스크 전환, 중단 중 한 번 선택하게 한다. 그 "
+"밖의 환경에서는 중단한다. ``--budget`` 또는 ``--memory=disk``\\ 로 미리 선택할 수 있다. 힌트도 같은 "
+"예산을 숫자로 제시한다."
+
+#: ../../errors.rst:94
+msgid ""
+"The number holds what the build held and the refused step four times over "
+"(the step also holds its output and the copy it writes), or twice the old "
+"budget, whichever is larger, rounded up to 64 MiB, and no more than the "
+"memory the machine has free when the step fits there. When it does not, "
+"the hint says so, and names ``--memory=disk`` first:"
+msgstr ""
+"제안 값은 현재 보유량에 거부된 단계 요구량의 네 배를 더한 값(출력과 쓰기용 사본도 보유함)과 기존 예산의 두 배 중 큰 값을 "
+"64 MiB 단위로 올림한다. 단계가 가용 메모리에 들어갈 때는 그 순간의 가용량을 넘지 않는다. 들어가지 않으면 이를 밝히고 "
+"``--memory=disk``\\ 를 먼저 제안한다."
+
+#: ../../errors.rst:104
+msgid "``host.memory`` (OUT OF MEMORY)"
+msgstr "``host.memory`` (메모리 부족)"
+
+#: ../../errors.rst:105
+msgid ""
+"The system refused memory the budget allowed. The command stops without "
+"using what it was refused: a build publishes nothing, a GDS change is "
+"applied whole or not at all, and ``convert`` writes a whole page or none. "
+"Free memory, or build with fewer threads (``-j 1``), and run the command "
+"again. Once a build has decided to publish, switching its output into "
+"place needs no memory, so a refusal cannot stop a publication halfway; if "
+"the build instead finds an earlier build's publication to finish and has "
+"no memory to plan it, it leaves that publication as it was, for the next "
+"build."
+msgstr ""
+"시스템이 예산 내의 메모리 요청을 거부했다. 명령은 거부된 공간을 쓰지 않고 멈춘다. 빌드는 아무것도 게시하지 않고, GDS 변경은 "
+"전부 적용하거나 전혀 적용하지 않으며, ``convert``\\ 는 완전한 페이지를 쓰거나 아무것도 쓰지 않는다. 메모리를 "
+"확보하거나 스레드를 줄여(\\ ``-j 1``\\ ) 다시 실행한다. 게시 결정 뒤 출력 교체에는 메모리가 필요 없어 할당 거부로 "
+"게시가 중간에 멈추지 않는다. 이전 게시 복구를 계획할 메모리가 없으면 그대로 남겨 다음 빌드가 처리하게 한다."
+
+#: ../../errors.rst:113
+msgid "Both end with status 3."
+msgstr "둘 다 상태 3으로 끝납니다."
+
+#: ../../errors.rst:115
+msgid "Exit status"
+msgstr "종료 상태"
+
+#: ../../errors.rst:118
+msgid ""
+"Every command ends with one of these statuses, so scripts can tell kinds "
+"of failure apart:"
+msgstr "모든 명령은 다음 상태 중 하나로 끝나므로 스크립트에서 실패 종류를 구분할 수 있습니다."
+
+#: ../../errors.rst:122
+msgid "Status"
+msgstr "상태"
+
+#: ../../errors.rst:122
+msgid "Meaning"
+msgstr "의미"
+
+#: ../../errors.rst:124
+msgid "0"
+msgstr "0"
+
+#: ../../errors.rst:124
+msgid "Success. The output was written (and, for a build, published)."
+msgstr "성공입니다. 출력을 기록했고, 빌드라면 게시했습니다."
+
+#: ../../errors.rst:125
+msgid "1"
+msgstr "1"
+
+#: ../../errors.rst:125
+msgid ""
+"The input has a problem: an error in a document, a policy refusal (raw "
+"content without ``--raw``), a document that could not be read, or a "
+"warning when ``-W`` or ``--strict`` treats warnings as errors."
+msgstr ""
+"입력에 문제가 있습니다. 문서 오류, 정책 거부(\\ ``--raw`` 없는 raw 콘텐츠), 읽을 수 없는 문서, 또는 "
+"``-W``\\ 나 ``--strict``\\ 로 오류 처리한 경고입니다."
+
+#: ../../errors.rst:128
+msgid "2"
+msgstr "2"
+
+#: ../../errors.rst:128
+msgid ""
+"The command was used wrongly: an unknown flag or command, a missing or "
+"invalid value, or an invalid setting in ``conf.toml`` or ``-D``."
+msgstr ""
+"명령 사용법이 잘못되었습니다. 알 수 없는 옵션이나 명령, 누락되거나 잘못된 값, ``conf.toml`` 또는 ``-D``\\ 의 "
+"잘못된 설정입니다."
+
+#: ../../errors.rst:130
+msgid "3"
+msgstr "3"
+
+#: ../../errors.rst:130
+msgid ""
+"A limit was reached: the memory budget (``--budget``), the nesting depth "
+"(``--max-depth``), the node count (``--max-nodes``), the stack "
+"(``--stack-kib``), a source too large, or memory the system could not "
+"provide."
+msgstr ""
+"한도에 도달했습니다. 메모리 예산(\\ ``--budget``\\ ), 중첩 깊이(\\ ``--max-depth``\\ ), 노드 "
+"수(\\ ``--max-nodes``\\ ), 스택(\\ ``--stack-kib``\\ ), 너무 큰 소스, 시스템 메모리 부족이 "
+"해당됩니다."
+
+#: ../../errors.rst:133
+msgid "4"
+msgstr "4"
+
+#: ../../errors.rst:133
+msgid ""
+"A file or an outside program failed: a path that cannot be read or "
+"written, a file that changed while it was read, or Typst not starting or "
+"not finishing."
+msgstr ""
+"파일이나 외부 프로그램에서 실패했습니다. 읽거나 쓸 수 없는 경로, 읽는 동안 변경된 파일, Typst 시작 또는 완료 실패가 "
+"해당됩니다."
+
+#: ../../errors.rst:135
+msgid "5"
+msgstr "5"
+
+#: ../../errors.rst:135
+msgid "Guidedog failed internally, and the report asks you to report it."
+msgstr "Guidedog 내부에서 실패했으며, 진단에서 문제 보고를 요청합니다."
+
+#: ../../errors.rst:136
+msgid "70"
+msgstr "70"
+
+#: ../../errors.rst:136
+msgid ""
+"Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
+"the command that ran, the fault, and what ``guidedog --version`` prints, "
+"and says where to report it: the issue tracker your build names, or else "
+"whoever provided your build. Because builds publish only at the end, a "
+"crash leaves the previous output in place."
+msgstr ""
+"Guidedog이 충돌하면 ``GUIDEDOG CRASHED (internal error)``\\ 와 실행 명령, 오류, "
+"``guidedog --version`` 출력을 표시한다. 보고할 곳은 빌드가 지정한 이슈 추적기 또는 빌드 제공자다. 빌드는 "
+"마지막에만 게시하므로 이전 출력은 그대로 남는다."
+
+#: ../../errors.rst:141
+msgid "130"
+msgstr "130"
+
+#: ../../errors.rst:141
+msgid ""
+"The command was interrupted with Ctrl+C; published files were left "
+"unchanged."
+msgstr "Ctrl+C로 명령을 중단했으며, 게시된 파일은 그대로입니다."
+
+#: ../../errors.rst:144
+msgid ""
+"A build that fails for any reason leaves the previous output, and the "
+"records of what it built, as they were: fix the problem and build again."
+msgstr "어떤 이유로 빌드가 실패하든 이전 출력과 빌드 기록을 유지합니다. 문제를 수정한 뒤 다시 빌드하세요."

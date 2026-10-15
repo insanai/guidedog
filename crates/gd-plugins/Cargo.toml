@@ -1,0 +1,16 @@
+[package]
+name = "gd-plugins"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Typed build plugins and publishers, linked in or run as programs."
+
+[dependencies]
+gd-report.workspace = true
+gd-json.workspace = true
+gd-toml.workspace = true
+gd-sha.workspace = true
+
+[lints]
+workspace = true

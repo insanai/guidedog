@@ -1,0 +1,401 @@
+Historical registry
+===================
+
+These entries describe the zenfmt archive. Their paths are historical data.
+They are not local Guidedog documents.
+
+.. list-table::
+   :header-rows: 1
+
+   * - Field
+     - Value
+   * - number
+     - 0001
+   * - slug
+     - zds-process
+   * - title
+     - The Zen Discussion Process
+   * - state
+     - committed
+   * - area
+     - documentation
+   * - category
+     - Process Memo
+   * - status
+     - Committed
+   * - created
+     - 2026-08-06
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Defines the ZDS lifecycle, numbering workflow, Typst project layout, registry, and bundle export for the zenfmt monorepo.
+   * - source
+     - docs/zds/records/0001-zds-process.typ
+   * - html
+     - zds/0001-zds-process.html
+   * - pdf
+     - pdf/zds-0001-zds-process.pdf
+   * - number
+     - 0003
+   * - slug
+     - docx-reader
+   * - title
+     - The DOCX Reader
+   * - state
+     - committed
+   * - area
+     - formats
+   * - category
+     - Format Record
+   * - status
+     - Committed
+   * - created
+     - 2026-08-06
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Mapping, omissions, and round-trip expectations for the DOCX reader
+   * - source
+     - docs/zds/records/0003-docx-reader.typ
+   * - html
+     - zds/0003-docx-reader.html
+   * - pdf
+     - pdf/zds-0003-docx-reader.pdf
+   * - number
+     - 0004
+   * - slug
+     - rtf-reader
+   * - title
+     - The RTF Reader
+   * - state
+     - committed
+   * - area
+     - formats
+   * - category
+     - Format Record
+   * - status
+     - Committed
+   * - created
+     - 2026-08-06
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Mapping, omissions, and round-trip expectations for the RTF reader
+   * - source
+     - docs/zds/records/0004-rtf-reader.typ
+   * - html
+     - zds/0004-rtf-reader.html
+   * - pdf
+     - pdf/zds-0004-rtf-reader.pdf
+   * - number
+     - 0005
+   * - slug
+     - xlsx-reader
+   * - title
+     - The XLSX Reader
+   * - state
+     - committed
+   * - area
+     - formats
+   * - category
+     - Format Record
+   * - status
+     - Committed
+   * - created
+     - 2026-08-06
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Mapping, omissions, and round-trip expectations for the XLSX reader
+   * - source
+     - docs/zds/records/0005-xlsx-reader.typ
+   * - html
+     - zds/0005-xlsx-reader.html
+   * - pdf
+     - pdf/zds-0005-xlsx-reader.pdf
+   * - number
+     - 0006
+   * - slug
+     - odt-reader
+   * - title
+     - The ODT Reader
+   * - state
+     - committed
+   * - area
+     - formats
+   * - category
+     - Format Record
+   * - status
+     - Committed
+   * - created
+     - 2026-08-06
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Mapping, omissions, and round-trip expectations for the ODT reader
+   * - source
+     - docs/zds/records/0006-odt-reader.typ
+   * - html
+     - zds/0006-odt-reader.html
+   * - pdf
+     - pdf/zds-0006-odt-reader.pdf
+   * - number
+     - 0007
+   * - slug
+     - pptx-reader
+   * - title
+     - The PPTX Reader
+   * - state
+     - committed
+   * - area
+     - formats
+   * - category
+     - Format Record
+   * - status
+     - Committed
+   * - created
+     - 2026-08-06
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Mapping, omissions, and round-trip expectations for the PPTX reader
+   * - source
+     - docs/zds/records/0007-pptx-reader.typ
+   * - html
+     - zds/0007-pptx-reader.html
+   * - pdf
+     - pdf/zds-0007-pptx-reader.pdf
+   * - number
+     - 0008
+   * - slug
+     - ods-reader
+   * - title
+     - The ODS Reader
+   * - state
+     - committed
+   * - area
+     - formats
+   * - category
+     - Format Record
+   * - status
+     - Committed
+   * - created
+     - 2026-08-06
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Mapping, omissions, and round-trip expectations for the ODS reader
+   * - source
+     - docs/zds/records/0008-ods-reader.typ
+   * - html
+     - zds/0008-ods-reader.html
+   * - pdf
+     - pdf/zds-0008-ods-reader.pdf
+   * - number
+     - 0009
+   * - slug
+     - odp-reader
+   * - title
+     - The ODP Reader
+   * - state
+     - committed
+   * - area
+     - formats
+   * - category
+     - Format Record
+   * - status
+     - Committed
+   * - created
+     - 2026-08-06
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Mapping, omissions, and round-trip expectations for the ODP reader
+   * - source
+     - docs/zds/records/0009-odp-reader.typ
+   * - html
+     - zds/0009-odp-reader.html
+   * - pdf
+     - pdf/zds-0009-odp-reader.pdf
+   * - number
+     - 0010
+   * - slug
+     - epub-reader
+   * - title
+     - The EPUB Reader
+   * - state
+     - committed
+   * - area
+     - formats
+   * - category
+     - Format Record
+   * - status
+     - Committed
+   * - created
+     - 2026-08-06
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Mapping, omissions, and round-trip expectations for the EPUB reader
+   * - source
+     - docs/zds/records/0010-epub-reader.typ
+   * - html
+     - zds/0010-epub-reader.html
+   * - pdf
+     - pdf/zds-0010-epub-reader.pdf
+   * - number
+     - 0011
+   * - slug
+     - pdf-reader
+   * - title
+     - The PDF Reader
+   * - state
+     - committed
+   * - area
+     - formats
+   * - category
+     - Format Record
+   * - status
+     - Committed
+   * - created
+     - 2026-08-06
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Mapping, omissions, and round-trip expectations for the native PDF reader
+   * - source
+     - docs/zds/records/0011-pdf-reader.typ
+   * - html
+     - zds/0011-pdf-reader.html
+   * - pdf
+     - pdf/zds-0011-pdf-reader.pdf
+   * - number
+     - 0012
+   * - slug
+     - legacy-office-readers
+   * - title
+     - The Legacy Binary Office Readers
+   * - state
+     - committed
+   * - area
+     - formats
+   * - category
+     - Format Record
+   * - status
+     - Committed
+   * - created
+     - 2026-08-07
+   * - updated
+     - 2026-08-08
+   * - summary
+     - Mapping, omissions, and round-trip expectations for the DOC, XLS, PPT, and XLSB readers
+   * - source
+     - docs/zds/records/0012-legacy-office-readers.typ
+   * - html
+     - zds/0012-legacy-office-readers.html
+   * - pdf
+     - pdf/zds-0012-legacy-office-readers.pdf
+   * - number
+     - 0013
+   * - slug
+     - layered-document-ir
+   * - title
+     - Layered Document IR and Writer Lowering
+   * - state
+     - committed
+   * - area
+     - architecture
+   * - category
+     - Architectural Specification
+   * - status
+     - Committed
+   * - created
+     - 2026-08-07
+   * - updated
+     - 2026-08-07
+   * - summary
+     - The implemented IR v2: a layered semantic IR with sparse facets and provably deterministic writer lowering, superseding the AST and writer sections of ZDS 0002
+   * - source
+     - docs/zds/records/0013-layered-document-ir.typ
+   * - html
+     - zds/0013-layered-document-ir.html
+   * - pdf
+     - pdf/zds-0013-layered-document-ir.pdf
+   * - number
+     - 0014
+   * - slug
+     - python-library
+   * - title
+     - The zenfmt Python Library: API and Implementation
+   * - state
+     - committed
+   * - area
+     - python
+   * - category
+     - Implementation Specification
+   * - status
+     - Committed
+   * - created
+     - 2026-08-08
+   * - updated
+     - 2026-08-08
+   * - summary
+     - The implemented Python API, native boundary, uv workflow, packaging, benchmark, and release contract
+   * - source
+     - docs/zds/records/0014-python-library.typ
+   * - html
+     - zds/0014-python-library.html
+   * - pdf
+     - pdf/zds-0014-python-library.pdf
+   * - number
+     - 0015
+   * - slug
+     - wasm-and-project-site
+   * - title
+     - Browser WebAssembly and the zenfmt Project Site
+   * - state
+     - committed
+   * - area
+     - web
+   * - category
+     - Implementation Specification
+   * - status
+     - Committed
+   * - created
+     - 2026-08-08
+   * - updated
+     - 2026-08-09
+   * - summary
+     - The implementation blueprint for the 0.2.0 Zig WebAssembly browser release, local conversion playground, GitHub Pages project site, HTML/PDF book and ZDS help system, and reproducible benchmark dashboard
+   * - source
+     - docs/zds/records/0015-wasm-and-project-site.typ
+   * - html
+     - zds/0015-wasm-and-project-site.html
+   * - pdf
+     - pdf/zds-0015-wasm-and-project-site.pdf
+   * - number
+     - 0016
+   * - slug
+     - server
+   * - title
+     - The zenfmt Server: REST, Streaming, and the Administered Service
+   * - state
+     - committed
+   * - area
+     - server
+   * - category
+     - Implementation Specification
+   * - status
+     - Committed
+   * - created
+     - 2026-08-10
+   * - updated
+     - 2026-08-10
+   * - summary
+     - The zenfmt server: reusable CLI and service libraries, REST and streaming conversion, two-role administration on embedded zaxonlite, observability, a themed Zig WebAssembly interface, and reproducible Tika and Docling comparisons
+   * - source
+     - docs/zds/records/0016-server.typ
+   * - html
+     - zds/0016-server.html
+   * - pdf
+     - pdf/zds-0016-server.pdf

@@ -1,0 +1,116 @@
+# Configuration file for Guidedog.
+#
+# The settings use the names of Sphinx's conf.py, written in TOML:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
+# -- Project information -----------------------------------------------------
+
+project = "Guidedog Discussions"
+copyright = "2026, Vikrant Rathore"
+author = "Vikrant Rathore"
+version = "0.7"
+release = "0.7.0"
+
+# -- General configuration ---------------------------------------------------
+
+extensions = ["sphinx.ext.graphviz", "sphinx.ext.mathjax"]
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "README*", "template/**", "Thumbs.db", ".DS_Store"]
+language = "en"
+source_suffix = [".rst"]
+root_doc = "index"
+
+# -- Options for HTML output -------------------------------------------------
+
+html_theme = "guidedog"
+html_static_path = ["_static", "../shared/_static"]
+include_roots = ["../shared"]
+html_css_files = ["editorial.css"]
+html_js_files = ["data/typography/linked-list.js", "data/typography/linebreak.js",
+                 "data/typography/hypher.js", "data/typography/english.js", "typography.js"]
+mathjax_path = "_static/data/mathjax/tex-svg-full.js"
+mathjax_config_path = "_static/math.js"
+html_title = "Guidedog Discussions"
+html_short_title = "Guidedog"
+numfig = true
+
+# -- Options for PDF output (typeset by Typst from _templates/book.typ) --------
+
+pdf_paper_size = "a4"
+pdf_font_paths = ["../shared/_static/data/fonts"]
+
+[html_theme_options]
+accent = "#216553"
+
+[[pdf_documents]]
+root = "records/0001-gds-process"
+file = "gds-0001-gds-process.pdf"
+title = "The Guidedog Discussion Process"
+author = "Vikrant Rathore"
+
+[[pdf_documents]]
+root = "records/0002-guidedog-cli"
+file = "gds-0002-guidedog-cli.pdf"
+title = "Guidedog: CLI and documentation toolchain"
+author = "Vikrant Rathore"
+
+[[pdf_documents]]
+root = "records/0003-guidedoc-odin"
+file = "gds-0003-guidedoc-odin.pdf"
+title = "Guidedoc: Odin conversion engine"
+author = "Vikrant Rathore"
+
+[[pdf_documents]]
+root = "records/0004-budgets-and-trust"
+file = "gds-0004-budgets-and-trust.pdf"
+title = "Memory budgets and what a build may read"
+author = "Vikrant Rathore"
+
+[[pdf_documents]]
+root = "records/0005-odin-domain"
+file = "gds-0005-odin-domain.pdf"
+title = "An Odin domain and Odin API documentation"
+author = "Vikrant Rathore"
+
+[[pdf_documents]]
+root = "records/0006-sphinx-replacement"
+file = "gds-0006-sphinx-replacement.pdf"
+title = "Sphinx-style projects and recoverable publication"
+author = "Vikrant Rathore"
+
+[[pdf_documents]]
+root = "records/0007-discussion-catalogs"
+file = "gds-0007-discussion-catalogs.pdf"
+title = "Discussion catalogs for any project"
+author = "Vikrant Rathore"
+
+[[pdf_documents]]
+root = "records/0008-github-pages-publishing"
+file = "gds-0008-github-pages-publishing.pdf"
+title = "Publish documentation to GitHub Pages"
+author = "Vikrant Rathore"
+
+[[pdf_documents]]
+root = "records/0009-native-plugin-api"
+file = "gds-0009-native-plugin-api.pdf"
+title = "Native plugin API and registry"
+author = "Vikrant Rathore"
+
+[[pdf_documents]]
+root = "records/0010-typed-build-plugins"
+file = "gds-0010-typed-build-plugins.pdf"
+title = "Typed build plugins"
+author = "Vikrant Rathore"
+
+[[pdf_documents]]
+root = "records/0011-guidedog-in-rust"
+file = "gds-0011-guidedog-in-rust.pdf"
+title = "Guidedog in Rust"
+author = "Vikrant Rathore"
+
+# The index: the process, the registry, and the archive, without the records.
+[[pdf_documents]]
+root = "index"
+file = "gds-index.pdf"
+title = "Guidedog Discussions"
+author = "Vikrant Rathore"

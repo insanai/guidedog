@@ -1,0 +1,69 @@
+# guidedog discussions (gds)
+
+Guidedog Discussions (GDS) is the formal RFC and design-proposal process for the Guidedog project. It tracks architecture proposals, design rationale, API contracts, and consensus review history.
+
+All records, the registry, and draft templates are authored in reStructuredText (`.rst`), while PDF documents are typeset using Typst templates.
+
+Read [the workflow guide](workflow.rst) and [GDS 0001 (Process Specification)](records/0001-gds-process.rst) to learn how proposals progress through the review cycle.
+
+quick commands
+--------------
+
+From the repository root, after `cargo build --release -p guidedog-cmd`:
+
+```sh
+# Refresh the registry and discussion catalog index
+target/release/guidedog gds index
+
+# Check records for style and structural validity
+target/release/guidedog gds check
+
+# Build both HTML site and all PDF records
+target/release/guidedog gds build --target=both
+
+# Build a single record's PDF preview
+target/release/guidedog gds build guidedog-in-rust --target=pdf
+
+# Preview the discussion website locally
+target/release/guidedog serve docs/gds
+```
+
+`dsc` (`cargo build --release -p dsc-cmd`) manages the same catalog from inside
+`docs/gds`: `dsc list`, `dsc check`, `dsc index --check`.
+
+lifecycle and records
+---------------------
+
+Proposals advance through a structured lifecycle:
+`prediscussion` → `discussion` → `accepted` → `published` → `committed` (or `abandoned`).
+
+Records:
+  - [GDS 0001: Discussion Process](records/0001-gds-process.rst)
+  - [GDS 0002: Guidedog CLI and Toolchain](records/0002-guidedog-cli.rst)
+  - [GDS 0003: Guidedoc Conversion Core](records/0003-guidedoc-odin.rst)
+  - [GDS 0004: Memory Budgets and Trust](records/0004-budgets-and-trust.rst)
+  - [GDS 0005: Odin Domain and API Documentation](records/0005-odin-domain.rst)
+  - [GDS 0006: Projects and Publication](records/0006-sphinx-replacement.rst)
+  - [GDS 0007: Discussion Catalogs](records/0007-discussion-catalogs.rst)
+  - [GDS 0008: GitHub Pages Publishing](records/0008-github-pages-publishing.rst)
+  - [GDS 0009: Native Plugin API and Registry](records/0009-native-plugin-api.rst)
+  - [GDS 0010: Typed Build Plugins](records/0010-typed-build-plugins.rst)
+  - [GDS 0011: Guidedog in Rust](records/0011-guidedog-in-rust.rst) — in discussion
+
+GDS 0001 to 0010 were designed and implemented in Odin. Guidedog has since moved to
+Rust: GDS 0011 records that decision, and each earlier record keeps its decisions,
+evidence and lifecycle events and gains an "Implementation in Rust" section stating how
+the crates realize it. A record's state does not change just because code is ported.
+
+New drafts are created with number `XXXXX` (e.g. `guidedog gds new "Feature title"`). Permanent numbers are assigned upon promotion into discussion.
+
+safety and transactions
+-----------------------
+
+All GDS metadata modifications (`new`, `promote`, `state`, and `index`) use transactional file locking and atomic stage replacement:
+  - Use `--dry-run` to preview planned changes before applying them.
+  - Lifecycle state changes require a clear rationale string.
+  - If a command is interrupted, `guidedog gds recover --rollback` safely restores prior state from the journal.
+
+Related documentation: the [user manual](../manual/) and the crate cheat sheets
+(`crates/*/README.md`).

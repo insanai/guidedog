@@ -1,0 +1,21 @@
+[package]
+name = "guidedog-cmd"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "guidedog"
+path = "src/main.rs"
+
+[dependencies]
+gd-cli = { workspace = true }
+gd-host = { workspace = true }
+
+[dev-dependencies]
+# The fixture plugin program the command-line tests register (examples/).
+gd-plugins = { workspace = true }
+
+[lints]
+workspace = true

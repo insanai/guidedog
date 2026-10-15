@@ -158,6 +158,24 @@ bounded by ``Limits`` and the host budget, which return ``Capacity`` or ``Limit`
 results. The ``projects`` capacity tests check them through the real readers and
 renderers.
 
+Verification against Sphinx and Docutils
+----------------------------------------
+
+Three tasks compare Guidedog with the Python programs it replaces. They run in a separate verification environment with pinned versions; Guidedog itself never runs Python, and the tests only read the files the tasks stored.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 35 65
+
+   * - Task
+     - What it does
+   * - ``cargo xtask rstref``
+     - Stores the Docutils reference trees (and, with ``--ids``, ``ids.txt``) of the reStructuredText corpus that ``guidedoc-rst``'s conformance test reads. See :doc:`rst-conformance`.
+   * - ``cargo xtask verify-docutils``
+     - Regenerates that corpus with a pinned Docutils and compares it byte for byte with the committed files, writing ``VERIFICATION.txt``.
+   * - ``cargo xtask sphinxdiff``, ``cargo xtask sphinxdiff-roots``
+     - Compare a Sphinx HTML build with a Guidedog build (pages, ids, links, numbers, ``:numref:`` texts, ``objects.inv``, warnings), one project or 42 of Sphinx's test roots. See :doc:`sphinx-comparison`.
+
 What was not ported
 -------------------
 

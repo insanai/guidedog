@@ -1,6 +1,6 @@
 # reStructuredText conformance corpus
 
-Sources for `tests/rst_conformance_test.odin`, which compares Guidedoc's document trees
+Sources for `crates/guidedoc-rst/tests/conformance.rs`, which compares Guidedoc's document trees
 with those of Docutils 0.22. `corpus.txt` lists every source and the settings it is read
 with.
 
@@ -28,34 +28,33 @@ section subtitles, tabs, character-level markup, and more). They are public doma
 
 ## Expected trees
 
-`expected/<source>.xml` is the Docutils XML of each source, produced by
-`tools/rstref` with the options its settings name, using a Docutils-compatible native
-program (no Python):
+`expected/<source>.xml` is the Docutils XML of each source, stored by
+`cargo xtask rstref` with the options its settings name, using a pinned Python Docutils in
+a separate verification environment (Guidedog never runs Python):
 
-    odin run tools/rstref -- /path/to/docodin tests/data/docutils [source...]
+    cargo xtask rstref ~/verify-venv/bin/docutils crates/guidedoc-rst/tests/data/docutils [source...]
 
 The trees are committed; tests never run the program. Regenerate only after changing
 `corpus.txt` or a source.
 
 ## Verification against Python Docutils
 
-`tools/verify/docutils-corpus.sh` regenerates every tree and `ids.txt` with a pinned
-Python Docutils (the `docutils` command, in a separate verification environment;
-Guidedog never runs Python) and compares them byte for byte with the committed files:
+`cargo xtask verify-docutils` regenerates every tree and `ids.txt` with a pinned Python
+Docutils and compares them byte for byte with the committed files:
 
-    tools/verify/docutils-corpus.sh ~/verify-venv/bin/docutils /tmp/dc \
-        tests/data/docutils/VERIFICATION.txt
+    cargo xtask verify-docutils ~/verify-venv/bin/docutils /tmp/dc \
+        crates/guidedoc-rst/tests/data/docutils/VERIFICATION.txt
 
 `VERIFICATION.txt` is the record of the last run: date, host, Docutils and Python
 versions, Guidedog revision, command, result, and the SHA-256 of every regenerated file
-(check them with `sha256sum -c` against the committed files). On 30 September 2026,
-with Docutils 0.22.4 on Python 3.13.5, all 98 trees and `ids.txt` were identical.
+(check them with `sha256sum -c` against the committed files).
 
 `ids.txt` lists the ids of each source's HTML page from Docutils 0.22.4's html5 writer,
 with Sphinx's `auto_id_prefix = "id"`: the fragments a link can reach. A page that shows
 system messages has a second line, `SOURCE (system messages): ...`, with the ids of the
-messages, which Guidedoc does not write. It was written by Python Docutils:
+messages, which Guidedoc does not write. It is written by Python Docutils:
 
-    odin run tools/rstref -- --ids /path/to/docutils tests/data/docutils
+    cargo xtask rstref --ids ~/verify-venv/bin/docutils crates/guidedoc-rst/tests/data/docutils
 
-For the documentation build and review workflow, see the [manual project](../../../docs/manual/README.md). These files are verification data, not a Python publication pipeline.
+See docs/manual/internals/rst-conformance.rst. These files are verification data, not a
+Python publication pipeline.

@@ -1,6 +1,6 @@
 # Conformance corpus: one source per line, relative to this directory, followed by the
-# settings it is read with. tools/rstref turns the settings into Docutils options when it
-# stores the expected tree; tests/rst_conformance_test.odin turns them into rst.Settings.
+# settings it is read with. `cargo xtask rstref` turns the settings into Docutils options
+# when it stores the expected tree; tests/conformance.rs turns them into reader settings.
 #
 #   sectsubtitle   promote lone subsection titles to section subtitles
 #   smartquotes    typographic quotes, dashes, and ellipses (smartquotes-alt: the

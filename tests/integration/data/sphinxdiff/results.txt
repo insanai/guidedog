@@ -1,0 +1,51 @@
+# Guidedog compared with Sphinx over Sphinx's test roots, written by
+# tools/sphinxdiff/roots.sh. One line per root: the root (with -D settings
+# after @), then sphinxdiff's counts as name=compared/differing. See README.md.
+date: 2026-09-30T04:54:32Z
+host: Linux 7.0.0-28-generic x86_64
+sphinx: sphinx-build 9.1.0
+guidedog revision: 95f6d72336ea8d66a55825faacc59e33a0246a4c
+command: tools/sphinxdiff/roots.sh /home/insan/verify-venv/bin/sphinx-build /home/insan/projects/sphinx-9.1.0/tests/roots /tmp/sd-final
+test-basic: pages=1/0 ids=2/0 links=2/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=0/0 identical=1
+test-toctree: pages=7/0 ids=18/0 links=28/0 numbers=6/0 numrefs=0/0 inventory=12/0 warnings=2/0 identical=7
+test-toctree-glob: pages=12/0 ids=14/0 links=40/0 numbers=0/0 numrefs=0/0 inventory=16/0 warnings=1/0 identical=12
+test-toctree-maxdepth: pages=5/0 ids=12/0 links=27/0 numbers=10/0 numrefs=0/0 inventory=9/0 warnings=3/4 identical=5
+test-toctree-duplicated: pages=2/0 ids=2/0 links=4/0 numbers=0/0 numrefs=0/0 inventory=6/0 warnings=1/0 identical=2
+test-toctree-index: pages=2/0 ids=5/0 links=8/0 numbers=0/0 numrefs=0/0 inventory=8/0 warnings=0/0 identical=2
+test-tocdepth: pages=4/0 ids=11/0 links=20/0 numbers=10/0 numrefs=0/0 inventory=8/0 warnings=0/0 identical=4
+test-numfig: pages=4/0 ids=58/0 links=55/0 numbers=10/0 numrefs=3/0 inventory=25/0 warnings=10/0 identical=4
+test-numfig@numfig=1: pages=4/0 ids=58/0 links=62/0 numbers=40/0 numrefs=10/0 inventory=25/0 warnings=3/0 identical=4
+test-footnotes: pages=3/0 ids=59/1 links=71/1 numbers=0/0 numrefs=0/0 inventory=10/0 warnings=0/0 identical=2
+test-glossary: pages=1/0 ids=8/0 links=8/0 numbers=0/0 numrefs=0/0 inventory=12/0 warnings=0/0 identical=1
+test-productionlist: pages=8/0 ids=18/0 links=39/0 numbers=0/0 numrefs=0/0 inventory=22/0 warnings=1/0 identical=8
+test-directive-only: pages=2/0 ids=38/0 links=75/0 numbers=0/0 numrefs=0/0 inventory=6/0 warnings=0/0 identical=2
+test-domain-py: pages=7/0 ids=48/0 links=122/0 numbers=0/0 numrefs=0/0 inventory=53/0 warnings=0/0 identical=7
+test-domain-c: pages=6/0 ids=31/0 links=49/0 numbers=0/0 numrefs=0/0 inventory=46/0 warnings=5/0 identical=6
+test-domain-cpp: pages=15/0 ids=276/0 links=256/0 numbers=0/0 numrefs=0/0 inventory=120/0 warnings=103/0 identical=15
+test-domain-js: pages=3/0 ids=20/0 links=55/0 numbers=0/0 numrefs=0/0 inventory=24/0 warnings=0/0 identical=3
+test-ext-autosectionlabel: pages=1/0 ids=9/0 links=17/0 numbers=0/0 numrefs=0/0 inventory=14/0 warnings=0/0 identical=1
+test-ext-todo: pages=3/0 ids=4/0 links=7/0 numbers=0/0 numrefs=0/0 inventory=8/0 warnings=0/0 identical=3
+test-ext-math: pages=4/0 ids=6/0 links=12/0 numbers=2/0 numrefs=0/0 inventory=8/0 warnings=1/0 identical=4
+test-ext-extlinks-hardcoded-urls: pages=1/0 ids=1/0 links=1/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=3/0 identical=1
+test-index_on_title: pages=1/0 ids=3/0 links=2/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=1/0 identical=1
+test-markup-citation: pages=1/0 ids=5/0 links=5/0 numbers=0/0 numrefs=0/0 inventory=7/0 warnings=0/0 identical=1
+test-markup-rubric: pages=1/0 ids=1/0 links=1/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=1/0 identical=1
+test-images: pages=2/0 ids=5/0 links=5/0 numbers=0/0 numrefs=0/0 inventory=6/0 warnings=2/0 identical=2
+test-default_role: pages=2/0 ids=3/0 links=2/0 numbers=0/0 numrefs=0/0 inventory=6/0 warnings=1/0 identical=2
+test-directive-code: pages=12/0 ids=39/0 links=61/0 numbers=4/0 numrefs=2/0 inventory=25/0 warnings=0/0 identical=12
+test-directive-include: sphinx=failed
+test-metadata: pages=1/0 ids=1/0 links=1/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=0/0 identical=1
+test-prolog: pages=2/1 ids=2/0 links=3/0 numbers=0/0 numrefs=0/0 inventory=7/1 warnings=1/0 identical=2
+test-smartquotes: pages=2/0 ids=2/0 links=3/0 numbers=0/0 numrefs=0/0 inventory=6/0 warnings=0/0 identical=2
+test-roles-download: pages=1/0 ids=1/0 links=1/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=1/0 identical=1
+test-numbered-circular: sphinx=failed
+test-object-description-sections: pages=1/0 ids=2/0 links=2/0 numbers=0/0 numrefs=0/0 inventory=6/0 warnings=0/0 identical=1
+test-reST-code-block: pages=1/0 ids=0/0 links=0/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=0/0 identical=1
+test-reST-code-role: pages=1/0 ids=0/0 links=0/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=0/0 identical=1
+test-nested-tables: pages=1/0 ids=1/0 links=1/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=0/0 identical=1
+test-refonly_bullet_list: pages=1/0 ids=1/0 links=4/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=0/0 identical=1
+test-html_entity: pages=1/0 ids=7/0 links=6/0 numbers=0/0 numrefs=0/0 inventory=7/0 warnings=0/0 identical=1
+test-keep_warnings: pages=1/0 ids=1/0 links=1/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=1/0 identical=1
+test-ext-ifconfig: pages=1/0 ids=2/0 links=2/0 numbers=0/0 numrefs=0/0 inventory=5/0 warnings=0/0 identical=1
+test-toctree-domain-objects: pages=3/0 ids=23/0 links=42/0 numbers=3/0 numrefs=0/0 inventory=27/0 warnings=0/0 identical=3
+test-search: pages=4/0 ids=6/0 links=8/0 numbers=0/0 numrefs=0/0 inventory=8/0 warnings=3/1 identical=4

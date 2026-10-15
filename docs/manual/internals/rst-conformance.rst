@@ -3,7 +3,7 @@ reStructuredText reader: conformance with Docutils
 
 ``crates/guidedoc-rst/tests/conformance.rs`` reads every source of ``crates/guidedoc-rst/tests/data/docutils/corpus.txt``
 with Guidedoc and compares the document tree with the one Docutils 0.22 builds
-(``tests/data/docutils/expected``, stored by the Odin project's ``tools/rstref``). Run it with
+(``tests/data/docutils/expected``, stored by ``cargo xtask rstref``). Run it with
 
 ::
 
@@ -11,6 +11,24 @@ with Guidedoc and compares the document tree with the one Docutils 0.22 builds
 
 The environment variable ``RST_ONLY=<source>`` checks one source; ``RST_DUMP=<dir>`` writes both
 normalized trees of every source for diffing.
+
+Reference trees
+---------------
+
+The expected trees come from a pinned Python Docutils (0.22.4), run in a separate verification environment. Guidedog never runs Python, and the tests never run Docutils: the trees are committed. ``cargo xtask rstref`` runs the ``docutils`` program for every source of ``corpus.txt`` (its XML writer, with the options the source's settings name) and stores ``expected/<source>.xml``. With ``--ids`` it stores ``ids.txt`` instead (see "Ids" below).
+
+::
+
+    cargo xtask rstref ~/verify-venv/bin/docutils crates/guidedoc-rst/tests/data/docutils [source...]
+    cargo xtask rstref --ids ~/verify-venv/bin/docutils crates/guidedoc-rst/tests/data/docutils
+
+We regenerate them only after changing ``corpus.txt`` or a source. ``cargo xtask verify-docutils`` checks that the committed files are still what Docutils writes: it regenerates every tree and ``ids.txt`` into a work folder, compares them byte for byte with the committed ones, and writes a record (date, host, Docutils and Python versions, Guidedog's revision, the result, and the SHA-256 of every regenerated file).
+
+::
+
+    cargo xtask verify-docutils ~/verify-venv/bin/docutils /tmp/dc crates/guidedoc-rst/tests/data/docutils/VERIFICATION.txt
+
+The record is ``VERIFICATION.txt`` beside the corpus. On 15 October 2026, with Docutils 0.22.4 on Python 3.13.5, all 98 trees and ``ids.txt`` were identical.
 
 Result
 ------

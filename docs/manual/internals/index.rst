@@ -29,6 +29,7 @@ conformance evidence.
    commonmark-ledger
    cpp-declarations
    sphinx-ledger
+   sphinx-comparison
    rust-domain
 
 .. toctree::

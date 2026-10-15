@@ -1,17 +1,17 @@
 # Python Docutils run over the reStructuredText conformance corpus, written by
-# tools/verify/docutils-corpus.sh. Guidedog never runs Python; this is evidence only.
-date: 2026-09-30T03:31:53Z
+# cargo xtask verify-docutils. Guidedog never runs Python; this is evidence only.
+date: 2026-10-15T05:57:23Z
 host: Linux 7.0.0-28-generic x86_64
 docutils: docutils (Docutils 0.22.4, Python 3.13.5, on linux)
-guidedog revision: 689882ac4af0342e49cdfe85fefa00367dea28bb
-command: tools/verify/docutils-corpus.sh /home/insan/verify-venv/bin/docutils /tmp/gde-dc
-rstref options: see tools/rstref (--writer=xml --no-xml-declaration --no-doctype --syntax-highlight=none plus each source's settings from corpus.txt)
-trees regenerated: 98 (rstref exit 0); committed: 98
+guidedog revision: afd724002f817adbf3324a6ca43ad6d4b88427e2
+command: cargo xtask verify-docutils /tmp/claude-1000/-home-insan-projects-guidedog/6c5c87a7-348c-4205-aa01-8c9fd7b54833/scratchpad/venv/bin/docutils /tmp/claude-1000/-home-insan-projects-guidedog/6c5c87a7-348c-4205-aa01-8c9fd7b54833/scratchpad/dc
+rstref options: see cargo xtask rstref (--writer=xml --no-xml-declaration --no-doctype --syntax-highlight=none plus each source's settings from corpus.txt)
+trees regenerated: 98 (0 failed); committed: 98
 trees differing from committed: 0
-ids.txt identical: yes (rstref --ids exit 0)
+ids.txt identical: yes (rstref --ids: 0 failed)
 result: identical
 sha256 of regenerated files:
-5983597f67f6161c72c2f9dbdabdfb05d2d4a150aa5f9e286427db7ca1808579  ids.txt
+d89ac85e3384d14b65cd66ba8bddc92cd610d43875cef7a9d6b53274cce5698d  ids.txt
 d03b4cec71de1ee4f48d6c0038149100fb18ce4012a30b06c1ab9163b319ab6d  expected/docs/header2.rst.xml
 6aaace8b601df4558dd090293b0d0ec1830c313af2fc61584f32a619d51a5d4f  expected/docs/ref/rst/definitions.rst.xml
 bfcfcdc1c82957ab2ee5e3615de860f376f09c93993a895eaf855849b99b5c49  expected/docs/ref/rst/directives.rst.xml
@@ -49,8 +49,8 @@ db61608220b830cecbc92156c822e22edb0e30fb1957cc3fc1714c2baaa6c58e  expected/extra
 d1790044fd9c903943be7ee39567ec5870b78788f6c817a82ac9260dbad7ee10  expected/test/functional/input/dangerous.rst.xml
 8ef2c9e654ae233221f320518eb7b418726af519f8ae23956bcecbfdf20978ae  expected/test/functional/input/data/classes_latex.rst.xml
 9642a551a600cce1ce446a74c85aead7ba552894a0ae0292ddc906e47f7f9e87  expected/test/functional/input/data/comprehensive-math-test.rst.xml
-86b5fd10fffd3c5e668c7f48c3e6fdbe417be69376abceb0c8982b1d06c6733e  expected/test/functional/input/data/custom_roles_latex.rst.xml
 71927ae36b908e98c383cdf00c2f55ad62f29fcad1ecb8c6f14ac73908b774a8  expected/test/functional/input/data/custom_roles.rst.xml
+86b5fd10fffd3c5e668c7f48c3e6fdbe417be69376abceb0c8982b1d06c6733e  expected/test/functional/input/data/custom_roles_latex.rst.xml
 73f26a4af49ae8be3242c4b83c4808b0f8fad0d4e9647d327c98637aeaaa11f9  expected/test/functional/input/data/embed_images.rst.xml
 13bd2abcefac34bad69c279e50080ed63b2df4beeca2f0bc3950d92385e2dc85  expected/test/functional/input/data/errors.rst.xml
 639ecd611a002b549b3e68857e2bf57a4b4e394fe90f23aaefac36d0cfb74e4a  expected/test/functional/input/data/footnote-targets.rst.xml
@@ -58,11 +58,11 @@ e227663364d752eb7b647ea0dee1abfa1e69a425fe821adb7e38f9007a186c87  expected/test/
 93cb8baebb8c39c146302c94603b3233ef5854f443ca3950c678d8205d6c0338  expected/test/functional/input/data/html5-features.rst.xml
 8633af87fc30f6295b971b4b39f33daccdbe16325c59d444a08b1aa783ddfe70  expected/test/functional/input/data/html5-text-level-tags.rst.xml
 3a64fbf8b39060b28acaa28b1cb175feb837a695e1150737951be877de12ea9b  expected/test/functional/input/data/hyperlinking.rst.xml
-9936ac796c6b41c510273d98f94d47518746fd69ef9ca50d2f281a2e3002c947  expected/test/functional/input/data/latex_encoding.rst.xml
 63a3c5d016f345bd2502e235b5b5b7523cefa33e751e9ea3ac604ba0f9abad23  expected/test/functional/input/data/latex-problematic.rst.xml
+9936ac796c6b41c510273d98f94d47518746fd69ef9ca50d2f281a2e3002c947  expected/test/functional/input/data/latex_encoding.rst.xml
 a7102a717de65d0cea7be4c8986da6a0373bcc3e16f2b5d5395447a645ee331a  expected/test/functional/input/data/list_table.rst.xml
-c357821341be102550a072a85f6a185b4f1666d2e33812f72ebce3d3868c9108  expected/test/functional/input/data/math_experiments.rst.xml
 647ceaaa9b478614af387a231b8bf679ac709cd1e0e0865fad51e53dac213b30  expected/test/functional/input/data/math.rst.xml
+c357821341be102550a072a85f6a185b4f1666d2e33812f72ebce3d3868c9108  expected/test/functional/input/data/math_experiments.rst.xml
 23a82f8a45f17a1757f840e39e59a996792aa8cada3c19cf032bfb1d9ce37845  expected/test/functional/input/data/nonalphanumeric.rst.xml
 cadaef40cafc882a55ccdec2e88bb4d1cd1ff6ccc6510b41571e4969a5eef880  expected/test/functional/input/data/option_lists.rst.xml
 51988581b9ba5aeea40c2f069fe7e85ab5d8f122df8d3236913c11e2ad037b1d  expected/test/functional/input/data/section_titles.rst.xml

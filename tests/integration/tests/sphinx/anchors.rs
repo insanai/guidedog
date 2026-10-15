@@ -1,7 +1,7 @@
 //! Anchor ids: the ids Sphinx 9.1 publishes for the same source (so pages moved from
 //! Sphinx keep their links), and, for every source of the Docutils corpus, the ids of
 //! the HTML page are those of the page Docutils 0.22's html5 writer writes (with
-//! Sphinx's auto_id_prefix = "id"). tools/rstref --ids stored Docutils' ids in the
+//! Sphinx's auto_id_prefix = "id"). `cargo xtask rstref --ids` stored Docutils' ids in the
 //! corpus's ids.txt, kept with guidedoc-rst's conformance data. Like Sphinx, Guidedoc
 //! writes no system messages into the page, so their ids are not expected.
 

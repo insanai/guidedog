@@ -26,6 +26,11 @@ msgid ""
 "follow ``sphinx-quickstart``, ``sphinx-build`` and ``sphinx-intl`` where "
 "those have an equivalent. Existing habits and scripts carry over."
 msgstr ""
+"``guidedog`` प्रोग्राम दस्तावेज़ प्रोजेक्ट बनाता, build करता, प्रीव्यू "
+"करता, अनुवाद करता, रूपांतरित करता और प्रकाशित करता है। जहाँ "
+"``sphinx-quickstart``, ``sphinx-build`` और ``sphinx-intl`` में कोई समकक्ष "
+"है, वहाँ इसके कमांड और विकल्प उन्हीं के अनुसार चलते हैं। पुरानी आदतें और "
+"स्क्रिप्ट वैसे ही काम आती हैं।"
 
 #: ../../reference/cli.rst:10
 msgid "General syntax"
@@ -34,21 +39,25 @@ msgstr "सामान्य सिंटैक्स"
 #: ../../reference/cli.rst:21
 msgid ""
 "Options may come before or after the arguments. ``--`` ends the options: "
-"every word after it is an argument, even one that starts with ``-``. A "
-"lone ``-`` is an argument (standard input or output, where a command "
-"accepts it). A long option takes its value as ``--name=VALUE`` or as the "
-"next word, ``--name VALUE``."
+"every word after it is an argument, even one that starts with ``-``. A lone "
+"``-`` is an argument (standard input or output, where a command accepts "
+"it). A long option takes its value as ``--name=VALUE`` or as the next word, "
+"``--name VALUE``."
 msgstr ""
+"विकल्प आर्ग्युमेंट से पहले या बाद में, कहीं भी आ सकते हैं। ``--`` विकल्पों "
+"का अंत करता है: उसके बाद का हर शब्द आर्ग्युमेंट है, चाहे वह ``-`` से शुरू "
+"होता हो। अकेला ``-`` भी आर्ग्युमेंट है (जहाँ कमांड इसे स्वीकार करता है, "
+"वहाँ इसका अर्थ मानक इनपुट या आउटपुट है)। लंबा विकल्प अपना मान "
+"``--name=VALUE`` के रूप में या अगले शब्द के रूप में, ``--name VALUE``, लेता "
+"है।"
 
 #: ../../reference/cli.rst:26 ../../reference/cli.rst:31
-#, fuzzy
-#| msgid "General options"
 msgid "Global options"
-msgstr "सामान्य विकल्प"
+msgstr "ग्लोबल विकल्प"
 
 #: ../../reference/cli.rst:29
 msgid "Every command accepts these:"
-msgstr ""
+msgstr "हर कमांड ये विकल्प स्वीकार करता है:"
 
 #: ../../reference/cli.rst:35 ../../reference/cli.rst:144
 #: ../../reference/cli.rst:202 ../../reference/cli.rst:329
@@ -68,70 +77,65 @@ msgid "Meaning"
 msgstr "अर्थ"
 
 #: ../../reference/cli.rst:37
-#, fuzzy
-#| msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
 msgid "``--color=auto|always|never``"
-msgstr "``--diagnostics=text|json``, ``--color=auto|always|never``"
+msgstr "``--color=auto|always|never``"
 
 #: ../../reference/cli.rst:38
 msgid ""
-"Terminal styling (default: ``auto``). ``auto`` styles only a terminal, "
-"and respects ``NO_COLOR`` and ``TERM=dumb``."
+"Terminal styling (default: ``auto``). ``auto`` styles only a terminal, and "
+"respects ``NO_COLOR`` and ``TERM=dumb``."
 msgstr ""
+"टर्मिनल स्टाइलिंग (डिफ़ॉल्ट: ``auto``)। ``auto`` केवल टर्मिनल पर स्टाइल "
+"लगाता है, और ``NO_COLOR`` तथा ``TERM=dumb`` का ध्यान रखता है।"
 
 #: ../../reference/cli.rst:40
-#, fuzzy
-#| msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
 msgid "``--diagnostics=text|json``"
-msgstr "``--diagnostics=text|json``, ``--color=auto|always|never``"
+msgstr "``--diagnostics=text|json``"
 
 #: ../../reference/cli.rst:41
 msgid ""
 "Explained reports (default), or one JSON object per report on standard "
 "error."
 msgstr ""
+"व्याख्या सहित रिपोर्ट (डिफ़ॉल्ट), या हर रिपोर्ट के लिए एक JSON ऑब्जेक्ट, "
+"मानक त्रुटि पर।"
 
 #: ../../reference/cli.rst:42
-#, fuzzy
-#| msgid "``--adopt``, ``--yes``"
 msgid "``-q``, ``--quiet``"
-msgstr "``--adopt``, ``--yes``"
+msgstr "``-q``, ``--quiet``"
 
 #: ../../reference/cli.rst:43
 msgid "Suppress successful status messages; warnings and errors still show."
 msgstr ""
+"सफल स्थिति वाले संदेश नहीं दिखाता; चेतावनियाँ और त्रुटियाँ फिर भी दिखती हैं।"
 
 #: ../../reference/cli.rst:44
-#, fuzzy
-#| msgid "``--adopt``, ``--yes``"
 msgid "``-h``, ``--help``"
-msgstr "``--adopt``, ``--yes``"
+msgstr "``-h``, ``--help``"
 
 #: ../../reference/cli.rst:45
 msgid "Show the help of ``guidedog``, or of the command it follows."
-msgstr ""
+msgstr "``guidedog`` की, या जिस कमांड के बाद यह आता है उसकी, सहायता दिखाता है।"
 
 #: ../../reference/cli.rst:46
-#, fuzzy
-#| msgid "``version``"
 msgid "``--version``"
-msgstr "``version``"
+msgstr "``--version``"
 
 #: ../../reference/cli.rst:47
 msgid ""
 "Show the versions of Guidedog, the Guidedoc engine (and its document "
 "schema), the tree-sitter grammars, and the Typst backend in use."
 msgstr ""
+"Guidedog, Guidedoc इंजन (और उसके दस्तावेज़ स्कीमा), tree-sitter ग्रामर और "
+"उपयोग में आ रहे Typst बैकएंड के संस्करण दिखाता है।"
 
 #: ../../reference/cli.rst:49
-#, fuzzy
-#| msgid "``release``"
 msgid "``--licenses``"
-msgstr "``release``"
+msgstr "``--licenses``"
 
 #: ../../reference/cli.rst:50
 msgid "Show Guidedog's licence and the notices of the libraries built in."
-msgstr ""
+msgstr "Guidedog का लाइसेंस और उसमें शामिल लाइब्रेरियों की सूचनाएँ दिखाता है।"
 
 #: ../../reference/cli.rst:52
 msgid "Exit codes"
@@ -164,22 +168,20 @@ msgid "``1``"
 msgstr "``1``"
 
 #: ../../reference/cli.rst:64
-msgid ""
-"Build or conversion error (or warnings treated as errors via ``-W``)."
-msgstr ""
-"बिल्ड या रूपांतरण में त्रुटि हुई, या ``-W`` ने चेतावनी को त्रुटि माना।"
+msgid "Build or conversion error (or warnings treated as errors via ``-W``)."
+msgstr "build या रूपांतरण में त्रुटि हुई, या ``-W`` ने चेतावनी को त्रुटि माना।"
 
 #: ../../reference/cli.rst:65
 msgid "``2``"
 msgstr "``2``"
 
 #: ../../reference/cli.rst:66
-#, fuzzy
-#| msgid "Command-line syntax error, invalid flag, or unrecognized option."
 msgid ""
 "Command-line syntax error, invalid flag, unrecognized option, or invalid "
 "configuration."
-msgstr "कमांड लाइन का सिंटैक्स, फ़्लैग या विकल्प गलत है।"
+msgstr ""
+"कमांड लाइन सिंटैक्स त्रुटि, अमान्य फ़्लैग, अज्ञात विकल्प या अमान्य "
+"कॉन्फ़िगरेशन।"
 
 #: ../../reference/cli.rst:68
 msgid "``3``"
@@ -194,10 +196,8 @@ msgid "``4``"
 msgstr "``4``"
 
 #: ../../reference/cli.rst:71
-#, fuzzy
-#| msgid "A file operation or external compiler failed."
 msgid "A file operation or external program failed."
-msgstr "फ़ाइल संबंधी काम या बाहरी कंपाइलर विफल हुआ।"
+msgstr "फ़ाइल संबंधी काम या कोई बाहरी प्रोग्राम विफल हुआ।"
 
 #: ../../reference/cli.rst:72 ../../reference/configuration.rst:775
 msgid "``5``"
@@ -225,10 +225,10 @@ msgstr "``7``"
 
 #: ../../reference/cli.rst:77
 msgid ""
-"``publish`` only: whether the publication was applied is not known; run "
-"the publisher's ``recover``."
+"``publish`` only: whether the publication was applied is not known; run the "
+"publisher's ``recover``."
 msgstr ""
-"केवल ``publish``: पता नहीं कि प्रकाशन लागू हुआ या नहीं; पब्लिशर का "
+"केवल ``publish``: पता नहीं कि प्रकाशन लागू हुआ या नहीं; publisher का "
 "``recover`` चलाएँ।"
 
 #: ../../reference/cli.rst:79
@@ -260,26 +260,19 @@ msgid "``quickstart [DIR]``"
 msgstr "``quickstart [DIR]``"
 
 #: ../../reference/cli.rst:92
-#, fuzzy
-#| msgid ""
-#| "Initializes a new documentation project with visible templates and "
-#| "configuration."
 msgid ""
 "Creates a documentation project with visible templates and configuration."
 msgstr ""
-"नई दस्तावेज़ परियोजना बनाता है, जिसमें टेम्पलेट और कॉन्फ़िगरेशन सीधे "
-"संपादित किए जा सकते हैं।"
+"दस्तावेज़ प्रोजेक्ट बनाता है, जिसके template और कॉन्फ़िगरेशन सामने रहते हैं "
+"और सीधे बदले जा सकते हैं।"
 
 #: ../../reference/cli.rst:93
 msgid "``build [BUILDER] [DIR]``"
 msgstr "``build [BUILDER] [DIR]``"
 
 #: ../../reference/cli.rst:94
-#, fuzzy
-#| msgid ""
-#| "Builds the documentation project into the requested output target."
 msgid "Builds the project into the requested output target."
-msgstr "दस्तावेज़ परियोजना को चुने गए आउटपुट प्रारूप में बनाता है।"
+msgstr "प्रोजेक्ट को माँगे गए आउटपुट लक्ष्य में build करता है।"
 
 #: ../../reference/cli.rst:95
 msgid "``serve [DIR]``"
@@ -287,9 +280,10 @@ msgstr "``serve [DIR]``"
 
 #: ../../reference/cli.rst:96
 msgid ""
-"Builds the website, serves it locally, and rebuilds it when sources "
-"change."
+"Builds the website, serves it locally, and rebuilds it when sources change."
 msgstr ""
+"वेबसाइट build करता है, उसे लोकल रूप से सर्व करता है, और सोर्स फ़ाइलें बदलने "
+"पर उसे फिर से build करता है।"
 
 #: ../../reference/cli.rst:97
 msgid "``clean [DIR]``"
@@ -297,49 +291,32 @@ msgstr "``clean [DIR]``"
 
 #: ../../reference/cli.rst:98
 msgid "Removes the contents of the build folder."
-msgstr ""
+msgstr "build फ़ोल्डर की सामग्री हटाता है।"
 
 #: ../../reference/cli.rst:99
-#, fuzzy
-#| msgid "``migrate [conf.py]``"
 msgid "``migrate [conf.py|DIR]``"
-msgstr "``migrate [conf.py]``"
+msgstr "``migrate [conf.py|DIR]``"
 
 #: ../../reference/cli.rst:100
-#, fuzzy
-#| msgid ""
-#| "Converts a Python Sphinx ``conf.py`` file into declarative "
-#| "``conf.toml``:"
 msgid "Converts a Sphinx ``conf.py`` into declarative ``conf.toml``."
-msgstr ""
-"Sphinx की Python कॉन्फ़िगरेशन फ़ाइल ``conf.py`` को घोषणात्मक "
-"``conf.toml`` में बदलता है:"
+msgstr "Sphinx की ``conf.py`` को घोषणात्मक ``conf.toml`` में बदलता है।"
 
 #: ../../reference/cli.rst:101
-#, fuzzy
-#| msgid "``intl <update|stat>``"
 msgid "``intl update|stat [DIR]``"
-msgstr "``intl <update|stat>``"
+msgstr "``intl update|stat [DIR]``"
 
 #: ../../reference/cli.rst:102
-#, fuzzy
-#| msgid ""
-#| "Updates translation catalogs (PO) or reports translation completion "
-#| "statistics."
-msgid ""
-"Updates translation catalogs (PO), or reports how much is translated."
-msgstr "PO अनुवाद कैटलॉग अद्यतन करता है या अनुवाद की प्रगति बताता है।"
+msgid "Updates translation catalogs (PO), or reports how much is translated."
+msgstr ""
+"अनुवाद कैटलॉग (PO) अद्यतन करता है, या बताता है कि कितना अनुवाद हो चुका है।"
 
 #: ../../reference/cli.rst:103
 msgid "``convert INPUT``"
 msgstr "``convert INPUT``"
 
 #: ../../reference/cli.rst:104
-#, fuzzy
-#| msgid ""
-#| "Converts a single document file or standard input stream directly."
 msgid "Converts one file, or standard input, without a project."
-msgstr "एक फ़ाइल या मानक इनपुट को सीधे रूपांतरित करता है।"
+msgstr "बिना प्रोजेक्ट के एक फ़ाइल या मानक इनपुट को रूपांतरित करता है।"
 
 #: ../../reference/cli.rst:105
 msgid "``formats``"
@@ -347,13 +324,11 @@ msgstr "``formats``"
 
 #: ../../reference/cli.rst:106
 msgid "Lists the readers and renderers built in, and the Typst backend."
-msgstr ""
+msgstr "अंतर्निहित रीडर और रेंडरर, तथा Typst बैकएंड की सूची दिखाता है।"
 
 #: ../../reference/cli.rst:107
-#, fuzzy
-#| msgid "``gds <COMMAND>``"
 msgid "``gds COMMAND``"
-msgstr "``gds <COMMAND>``"
+msgstr "``gds COMMAND``"
 
 #: ../../reference/cli.rst:108
 msgid ""
@@ -371,421 +346,359 @@ msgid ""
 "Builds the project a publisher's configuration names, and publishes the "
 "site."
 msgstr ""
-"पब्लिशर की कॉन्फ़िगरेशन में बताई गई परियोजना बिल्ड करता है और साइट "
+"publisher की कॉन्फ़िगरेशन में बताए गए प्रोजेक्ट को build करता है और साइट "
 "प्रकाशित करता है।"
 
 #: ../../reference/cli.rst:111
-#, fuzzy
-#| msgid "``publish --publisher=ID``"
 msgid "``publish pages``"
-msgstr "``publish --publisher=ID``"
+msgstr "``publish pages``"
 
 #: ../../reference/cli.rst:112
-msgid ""
-"Publishes to GitHub Pages, doing first whatever setup is still missing."
+msgid "Publishes to GitHub Pages, doing first whatever setup is still missing."
 msgstr ""
+"GitHub Pages पर प्रकाशित करता है; जो सेटअप अभी बाकी है, उसे पहले पूरा करता "
+"है।"
 
 #: ../../reference/cli.rst:113
 msgid "``pages workflow``"
-msgstr ""
+msgstr "``pages workflow``"
 
 #: ../../reference/cli.rst:114
 msgid "Writes a GitHub Actions workflow that builds and deploys the site."
-msgstr ""
+msgstr "साइट को build और deploy करने वाला GitHub Actions वर्कफ़्लो लिखता है।"
 
 #: ../../reference/cli.rst:115
-#, fuzzy
-#| msgid "``plugin <COMMAND>``"
 msgid "``plugin COMMAND``"
-msgstr "``plugin <COMMAND>``"
+msgstr "``plugin COMMAND``"
 
 #: ../../reference/cli.rst:116
-#, fuzzy
-#| msgid ""
-#| "Registers, lists, inspects, runs, or unregisters native plugin "
-#| "programs."
 msgid ""
 "Registers, checks, lists, inspects, runs, or unregisters plugin programs."
 msgstr ""
-"Native plugin programs register, list, inspect और run करता है या "
-"registration हटाता है।"
+"plugin प्रोग्रामों को रजिस्टर करता है, जाँचता है, उनकी सूची और विवरण दिखाता "
+"है, उन्हें चलाता है या उनका रजिस्ट्रेशन हटाता है।"
 
 #: ../../reference/cli.rst:118
 msgid ""
 "A command word that is not one of these is a usage error (exit status 2). "
 "Its hint lists the commands."
 msgstr ""
+"इनमें से किसी से मेल न खाने वाला कमांड शब्द उपयोग की त्रुटि है (निकास "
+"स्थिति 2)। उसके संकेत में कमांडों की सूची होती है।"
 
 #: ../../reference/cli.rst:121
 msgid "guidedog quickstart"
 msgstr "guidedog quickstart"
 
 #: ../../reference/cli.rst:124
-#, fuzzy
-#| msgid ""
-#| "Creates a project directory containing ``conf.toml``, ``index.rst``, "
-#| "working templates in ``_templates/``, and styles in ``_static/``:"
 msgid ""
 "Creates a project folder, as ``sphinx-quickstart`` does. It holds "
-"``conf.toml``, ``index.rst``, working templates in ``_templates/``, "
-"styles in ``_static/``, ``assets/`` folders, and a build folder:"
+"``conf.toml``, ``index.rst``, working templates in ``_templates/``, styles "
+"in ``_static/``, ``assets/`` folders, and a build folder:"
 msgstr ""
-"परियोजना फ़ोल्डर में ``conf.toml``, ``index.rst``, ``_templates/`` में "
-"टेम्पलेट और ``_static/`` में स्टाइल बनाता है:"
+"``sphinx-quickstart`` की तरह प्रोजेक्ट फ़ोल्डर बनाता है। उसमें "
+"``conf.toml``, ``index.rst``, ``_templates/`` में काम करने वाले template, "
+"``_static/`` में स्टाइल, ``assets/`` फ़ोल्डर और एक build फ़ोल्डर होते हैं:"
 
 #: ../../reference/cli.rst:135
 msgid ""
-"``DIR`` defaults to the current folder. In a terminal, and without "
-"``-q``, quickstart asks whether to separate source and build folders. It "
-"also asks for the project name, the authors, the release, and the "
-"language (default ``en``). It skips what the options already gave. The "
-"project name and author are required."
+"``DIR`` defaults to the current folder. In a terminal, and without ``-q``, "
+"quickstart asks whether to separate source and build folders. It also asks "
+"for the project name, the authors, the release, and the language (default "
+"``en``). It skips what the options already gave. The project name and "
+"author are required."
 msgstr ""
+"``DIR`` का डिफ़ॉल्ट वर्तमान फ़ोल्डर है। टर्मिनल में और ``-q`` के बिना, "
+"quickstart पूछता है कि सोर्स और build फ़ोल्डर अलग रखें या नहीं। वह "
+"प्रोजेक्ट का नाम, लेखक, रिलीज़ और भाषा (डिफ़ॉल्ट ``en``) भी पूछता है। जो "
+"जानकारी विकल्पों से पहले ही मिल चुकी है, वह नहीं पूछता। प्रोजेक्ट का नाम और "
+"लेखक आवश्यक हैं।"
 
 #: ../../reference/cli.rst:140
-#, fuzzy
-#| msgid "guidedog quickstart"
 msgid "Options of quickstart"
-msgstr "guidedog quickstart"
+msgstr "quickstart के विकल्प"
 
 #: ../../reference/cli.rst:146
-#, fuzzy
-#| msgid "``--adopt``, ``--yes``"
 msgid "``-q``, ``-Q``, ``--quiet``"
-msgstr "``--adopt``, ``--yes``"
+msgstr "``-q``, ``-Q``, ``--quiet``"
 
 #: ../../reference/cli.rst:147
 msgid "Ask nothing; take the answers from the options below."
-msgstr ""
+msgstr "कुछ नहीं पूछता; उत्तर नीचे दिए विकल्पों से लेता है।"
 
 #: ../../reference/cli.rst:148
 msgid "``-p NAME``, ``--project NAME``"
-msgstr ""
+msgstr "``-p NAME``, ``--project NAME``"
 
 #: ../../reference/cli.rst:149
 msgid "The project name."
-msgstr ""
+msgstr "प्रोजेक्ट का नाम।"
 
 #: ../../reference/cli.rst:150
 msgid "``-a NAME``, ``--author NAME``"
-msgstr ""
+msgstr "``-a NAME``, ``--author NAME``"
 
 #: ../../reference/cli.rst:151
-#, fuzzy
-#| msgid "Author or organization name."
 msgid "The author or organization name(s)."
-msgstr "लेखक या संगठन का नाम।"
+msgstr "लेखक या संगठन का नाम (एक या अधिक)।"
 
 #: ../../reference/cli.rst:152
 msgid "``-v VERSION``, ``--version-name VERSION``"
-msgstr ""
+msgstr "``-v VERSION``, ``--version-name VERSION``"
 
 #: ../../reference/cli.rst:153
 msgid "The short version (``1.0``). Without it, the release is used."
-msgstr ""
+msgstr "छोटा संस्करण (``1.0``)। न दिया जाए तो रिलीज़ का उपयोग होता है।"
 
 #: ../../reference/cli.rst:154
 msgid "``-r RELEASE``, ``--release RELEASE``"
-msgstr ""
+msgstr "``-r RELEASE``, ``--release RELEASE``"
 
 #: ../../reference/cli.rst:155
-#, fuzzy
-#| msgid ""
-#| "``-r RELEASE``: Sets the full release identifier (e.g. ``1.0.0-rc1``)."
 msgid "The full release (``1.0.0-rc1``)."
-msgstr ""
-"``-r RELEASE``: पूरा रिलीज़ पहचानकर्ता तय करता है, जैसे ``1.0.0-rc1``।"
+msgstr "पूरी रिलीज़ (``1.0.0-rc1``)।"
 
 #: ../../reference/cli.rst:156
 msgid "``-l LANGUAGE``, ``--language LANGUAGE``"
-msgstr ""
+msgstr "``-l LANGUAGE``, ``--language LANGUAGE``"
 
 #: ../../reference/cli.rst:157
-#, fuzzy
-#| msgid "The configuration (default: ``pages.toml``)."
 msgid "The document language (default: ``en``)."
-msgstr "कॉन्फ़िगरेशन (डिफ़ॉल्ट: ``pages.toml``)।"
+msgstr "दस्तावेज़ की भाषा (डिफ़ॉल्ट: ``en``)।"
 
 #: ../../reference/cli.rst:158
-#, fuzzy
-#| msgid "``--adopt``, ``--yes``"
 msgid "``--sep``, ``--no-sep``"
-msgstr "``--adopt``, ``--yes``"
+msgstr "``--sep``, ``--no-sep``"
 
 #: ../../reference/cli.rst:159
 msgid ""
 "Separate ``source/`` and ``build/`` folders, or keep the sources at the "
 "root with ``_build`` beside them (the default)."
 msgstr ""
+"``source/`` और ``build/`` फ़ोल्डर अलग रखता है, या सोर्स फ़ाइलों को रूट में "
+"रखकर उनके बगल में ``_build`` रखता है (डिफ़ॉल्ट)।"
 
 #: ../../reference/cli.rst:161
-#, fuzzy
-#| msgid "``--prefix=NAME``"
 msgid "``--suffix EXT``"
-msgstr "``--prefix=NAME``"
+msgstr "``--suffix EXT``"
 
 #: ../../reference/cli.rst:162
-#, fuzzy
-#| msgid "The configuration (default: ``pages.toml``)."
 msgid "The source suffix (default: ``.rst``)."
-msgstr "कॉन्फ़िगरेशन (डिफ़ॉल्ट: ``pages.toml``)।"
+msgstr "सोर्स फ़ाइल का एक्सटेंशन (डिफ़ॉल्ट: ``.rst``)।"
 
 #: ../../reference/cli.rst:164
 msgid "guidedog build"
 msgstr "guidedog build"
 
 #: ../../reference/cli.rst:167
-#, fuzzy
-#| msgid ""
-#| "Coordinates the reading of sources, resolution of toctrees and "
-#| "cross-references, and publication of final output artifacts:"
 msgid ""
-"Reads the sources and resolves toctrees and cross-references. It "
-"publishes the output as one complete generation:"
+"Reads the sources and resolves toctrees and cross-references. It publishes "
+"the output as one complete generation:"
 msgstr ""
-"स्रोत पढ़ने, विषय-सूची और पार-संदर्भ सुलझाने, तथा अंतिम आउटपुट प्रकाशित "
-"करने का काम संभालता है:"
+"सोर्स फ़ाइलें पढ़ता है और toctree तथा क्रॉस-रेफ़रेंस सुलझाता है। आउटपुट को "
+"एक ही पूर्ण संस्करण के रूप में प्रकाशित करता है:"
 
 #: ../../reference/cli.rst:180
 msgid ""
-"``guidedog build [BUILDER] [PROJECT]`` builds ``PROJECT`` with "
-"``BUILDER`` into the project's build folder, ``_build/BUILDER``. "
-"``PROJECT`` defaults to the current folder. Guidedog looks for "
-"``conf.toml`` there, in ``PROJECT/source``, then in the nearest parent. "
-"``BUILDER`` defaults to ``html``. ``-b BUILDER SOURCEDIR OUTPUTDIR`` "
-"writes to ``OUTPUTDIR`` itself. ``-M BUILDER SOURCEDIR BUILDDIR`` writes "
-"to ``BUILDDIR/BUILDER``. Both forms need exactly the two folders."
+"``guidedog build [BUILDER] [PROJECT]`` builds ``PROJECT`` with ``BUILDER`` "
+"into the project's build folder, ``_build/BUILDER``. ``PROJECT`` defaults "
+"to the current folder. Guidedog looks for ``conf.toml`` there, in "
+"``PROJECT/source``, then in the nearest parent. ``BUILDER`` defaults to "
+"``html``. ``-b BUILDER SOURCEDIR OUTPUTDIR`` writes to ``OUTPUTDIR`` "
+"itself. ``-M BUILDER SOURCEDIR BUILDDIR`` writes to ``BUILDDIR/BUILDER``. "
+"Both forms need exactly the two folders."
 msgstr ""
+"``guidedog build [BUILDER] [PROJECT]`` कमांड ``PROJECT`` को ``BUILDER`` से "
+"प्रोजेक्ट के build फ़ोल्डर ``_build/BUILDER`` में build करता है। "
+"``PROJECT`` का डिफ़ॉल्ट वर्तमान फ़ोल्डर है। Guidedog ``conf.toml`` को पहले "
+"वहाँ, फिर ``PROJECT/source`` में, फिर सबसे नज़दीकी पैरेंट फ़ोल्डर में खोजता "
+"है। ``BUILDER`` का डिफ़ॉल्ट ``html`` है। ``-b BUILDER SOURCEDIR OUTPUTDIR`` "
+"सीधे ``OUTPUTDIR`` में लिखता है। ``-M BUILDER SOURCEDIR BUILDDIR`` "
+"``BUILDDIR/BUILDER`` में लिखता है। दोनों रूपों में ठीक दो फ़ोल्डर देने होते "
+"हैं।"
 
 #: ../../reference/cli.rst:186
-#, fuzzy
-#| msgid "Builders"
 msgid "Builders:"
-msgstr "बिल्डर"
+msgstr "builder:"
 
 #: ../../reference/cli.rst:188
-#, fuzzy
-#| msgid ""
-#| "``html``: Generates a complete HTML site with search and navigation."
 msgid ""
 "``html``: a complete HTML site with search, indexes, navigation, and "
 "``objects.inv``."
-msgstr "``html``: खोज और नेविगेशन वाला पूरा HTML साइट बनाता है।"
+msgstr ""
+"``html``: खोज, इंडेक्स, नेविगेशन और ``objects.inv`` के साथ पूरी HTML साइट।"
 
 #: ../../reference/cli.rst:189
-#, fuzzy
-#| msgid ""
-#| "``dirhtml``: Generates directory-style HTML URLs (``dir/index.html``)."
 msgid "``dirhtml``: HTML with directory-style URLs (``dir/index.html``)."
-msgstr ""
-"``dirhtml``: ``dir/index.html`` जैसे फ़ोल्डर-आधारित HTML URL बनाता है।"
+msgstr "``dirhtml``: फ़ोल्डर-शैली के URL (``dir/index.html``) वाला HTML।"
 
 #: ../../reference/cli.rst:190
-#, fuzzy
-#| msgid ""
-#| "``singlehtml``: Compiles all documents into a single contiguous HTML "
-#| "page."
 msgid "``singlehtml``: all documents in one HTML page."
-msgstr "``singlehtml``: सभी दस्तावेज़ एक HTML पृष्ठ में जोड़ता है।"
+msgstr "``singlehtml``: सभी दस्तावेज़ एक ही HTML पेज में।"
 
 #: ../../reference/cli.rst:191
 msgid ""
 "``pdf``: PDF books typeset by Typst. Sphinx's ``latex``, ``latexpdf``, "
 "``latexpdfja`` and ``xelatexpdf`` select it too."
 msgstr ""
+"``pdf``: Typst से टाइपसेट की गई PDF किताबें। Sphinx के ``latex``, "
+"``latexpdf``, ``latexpdfja`` और ``xelatexpdf`` भी इसी को चुनते हैं।"
 
 #: ../../reference/cli.rst:193
-#, fuzzy
-#| msgid "``text``: Generates plain text files for each document."
 msgid "``text``: a plain text file for each document."
-msgstr "``text``: हर दस्तावेज़ के लिए सादा टेक्स्ट फ़ाइल बनाता है।"
+msgstr "``text``: हर दस्तावेज़ के लिए एक सादी टेक्स्ट फ़ाइल।"
 
 #: ../../reference/cli.rst:194
-#, fuzzy
-#| msgid "Message templates for translation."
 msgid "``gettext``: message templates (POT) for translation."
-msgstr "अनुवाद के संदेश टेम्पलेट।"
+msgstr "``gettext``: अनुवाद के लिए संदेश template (POT)।"
 
 #: ../../reference/cli.rst:195
-#, fuzzy
-#| msgid ""
-#| "``dummy``: Parses and resolves document trees without writing final "
-#| "files (syntax check)."
 msgid ""
 "``dummy``: reads and resolves every document and writes nothing (a syntax "
 "and reference check)."
 msgstr ""
-"``dummy``: अंतिम फ़ाइल बनाए बिना दस्तावेज़ ट्री पार्स करता है और संदर्भ "
-"सुलझाता है; सिंटैक्स जाँच के लिए उपयोगी है।"
+"``dummy``: हर दस्तावेज़ पढ़ता और रिज़ॉल्व करता है, पर कुछ नहीं लिखता "
+"(सिंटैक्स और संदर्भों की जाँच के लिए)।"
 
 #: ../../reference/cli.rst:198
-#, fuzzy
-#| msgid "Options of guidedog-pages"
 msgid "Options of build"
-msgstr "guidedog-pages के विकल्प"
+msgstr "build के विकल्प"
 
 #: ../../reference/cli.rst:204
-#, fuzzy
-#| msgid "``0``"
 msgid "``-a``"
-msgstr "``0``"
+msgstr "``-a``"
 
 #: ../../reference/cli.rst:205
 msgid "Write all outputs, not only the changed ones."
-msgstr ""
+msgstr "केवल बदले हुए नहीं, सभी आउटपुट लिखता है।"
 
 #: ../../reference/cli.rst:206
-#, fuzzy
 msgid "``-E``"
 msgstr "``-E``"
 
 #: ../../reference/cli.rst:207
 msgid "Fresh build: ignore the saved environment."
-msgstr ""
+msgstr "नए सिरे से build: सहेजे गए वातावरण को अनदेखा करता है।"
 
 #: ../../reference/cli.rst:208
-#, fuzzy
 msgid "``-W``"
 msgstr "``-W``"
 
 #: ../../reference/cli.rst:209
-#, fuzzy
-#| msgid "Build with warnings as errors."
 msgid "Treat warnings as errors."
-msgstr "चेतावनियों को त्रुटि मानकर बिल्ड करना।"
+msgstr "चेतावनियों को त्रुटि मानता है।"
 
 #: ../../reference/cli.rst:210
-#, fuzzy
-#| msgid "``keep_warnings``"
 msgid "``--keep-going``"
-msgstr "``keep_warnings``"
+msgstr "``--keep-going``"
 
 #: ../../reference/cli.rst:211
-msgid ""
-"With ``-W``, finish the build to report every problem before failing."
+msgid "With ``-W``, finish the build to report every problem before failing."
 msgstr ""
+"``-W`` के साथ, विफल होने से पहले build पूरा करता है ताकि हर समस्या रिपोर्ट "
+"हो सके।"
 
 #: ../../reference/cli.rst:212
-#, fuzzy
-#| msgid "``0``"
 msgid "``-n``"
-msgstr "``0``"
+msgstr "``-n``"
 
 #: ../../reference/cli.rst:213
 msgid "Nitpicky: warn about every unresolved reference."
-msgstr ""
+msgstr "सख़्त मोड (nitpicky): हर अनसुलझे संदर्भ पर चेतावनी देता है।"
 
 #: ../../reference/cli.rst:214
 msgid "``-j N``, ``-j auto``"
-msgstr ""
+msgstr "``-j N``, ``-j auto``"
 
 #: ../../reference/cli.rst:215
 msgid "Read documents on ``N`` threads, or one per core."
-msgstr ""
+msgstr "दस्तावेज़ों को ``N`` थ्रेड में, या हर कोर पर एक थ्रेड में पढ़ता है।"
 
 #: ../../reference/cli.rst:216
-#, fuzzy
 msgid "``-D name=value``"
 msgstr "``-D name=value``"
 
 #: ../../reference/cli.rst:217
-#, fuzzy
-#| msgid ""
-#| "``-D table.key=value``: Sets one key of a table setting, such as "
-#| "``html_context``, and keeps its other keys, as sphinx-build does."
 msgid ""
 "Override a ``conf.toml`` setting for this build (``-D language=de``); "
-"repeatable. ``-D table.key=value`` sets one key of a table setting, such "
-"as ``html_context``, and keeps its other keys, as sphinx-build does."
+"repeatable. ``-D table.key=value`` sets one key of a table setting, such as "
+"``html_context``, and keeps its other keys, as sphinx-build does."
 msgstr ""
-"``-D table.key=value``: ``html_context`` जैसी टेबल सेटिंग की एक कुंजी सेट "
-"करता है और बाक़ी कुंजियाँ वैसी ही रखता है, जैसे sphinx-build करता है।"
+"इस build के लिए ``conf.toml`` की कोई सेटिंग बदलता है (``-D language=de``); "
+"कई बार दिया जा सकता है। ``-D table.key=value`` ``html_context`` जैसी टेबल "
+"सेटिंग की एक कुंजी सेट करता है और बाक़ी कुंजियाँ वैसी ही रखता है, जैसे "
+"sphinx-build करता है।"
 
 #: ../../reference/cli.rst:220
-#, fuzzy
 msgid "``-t TAG``"
 msgstr "``-t TAG``"
 
 #: ../../reference/cli.rst:221
 msgid "Define a tag for ``only`` directives; repeatable."
 msgstr ""
+"``only`` निर्देशों के लिए tag परिभाषित करता है; कई बार दिया जा सकता है।"
 
 #: ../../reference/cli.rst:222
-#, fuzzy
-#| msgid "``clean [DIR]``"
 msgid "``-c DIR``"
-msgstr "``clean [DIR]``"
+msgstr "``-c DIR``"
 
 #: ../../reference/cli.rst:223
 msgid "Read ``conf.toml`` from ``DIR`` instead of the source folder."
-msgstr ""
+msgstr "सोर्स फ़ोल्डर की जगह ``DIR`` से ``conf.toml`` पढ़ता है।"
 
 #: ../../reference/cli.rst:224
-#, fuzzy
-#| msgid "``0``"
 msgid "``-C``"
-msgstr "``0``"
+msgstr "``-C``"
 
 #: ../../reference/cli.rst:225
-#, fuzzy
-#| msgid "``-C``: Runs the build without loading any ``conf.toml`` file."
 msgid "Build without any ``conf.toml``."
-msgstr "``-C``: कोई ``conf.toml`` फ़ाइल पढ़े बिना बिल्ड करता है।"
+msgstr "किसी भी ``conf.toml`` के बिना build करता है।"
 
 #: ../../reference/cli.rst:226
-#, fuzzy
-#| msgid "``--dir=DIR``"
 msgid "``-d DIR``"
-msgstr "``--dir=DIR``"
+msgstr "``-d DIR``"
 
 #: ../../reference/cli.rst:227
 msgid ""
-"Accepted for sphinx-build scripts and ignored: the environment lives in "
-"the build's own cache folder."
+"Accepted for sphinx-build scripts and ignored: the environment lives in the "
+"build's own cache folder."
 msgstr ""
+"sphinx-build स्क्रिप्टों के लिए स्वीकार किया जाता है, पर इसे अनदेखा किया "
+"जाता है: वातावरण build के अपने कैश फ़ोल्डर में रहता है।"
 
 #: ../../reference/cli.rst:229
-#, fuzzy
-#| msgid "``0``"
 msgid "``-v``"
-msgstr "``0``"
+msgstr "``-v``"
 
 #: ../../reference/cli.rst:230
 msgid "Also show notes (Docutils' info messages); repeatable."
-msgstr ""
+msgstr "नोट (Docutils के info संदेश) भी दिखाता है; इसे कई बार दिया जा सकता है।"
 
 #: ../../reference/cli.rst:231
-#, fuzzy
-#| msgid "``--adopt``, ``--yes``"
 msgid "``-q``, ``-Q``"
-msgstr "``--adopt``, ``--yes``"
+msgstr "``-q``, ``-Q``"
 
 #: ../../reference/cli.rst:232
 msgid ""
 "Show only errors: no progress, summary, warnings or notes (``-W`` still "
 "counts the warnings)."
 msgstr ""
+"केवल त्रुटियाँ दिखाता है: प्रगति, सारांश, चेतावनियाँ या नोट नहीं (``-W`` "
+"फिर भी चेतावनियाँ गिनता है)।"
 
 #: ../../reference/cli.rst:234
-#, fuzzy
-#| msgid "``true``"
 msgid "``--untrusted``"
-msgstr "``true``"
+msgstr "``--untrusted``"
 
 #: ../../reference/cli.rst:235
-#, fuzzy
-#| msgid ""
-#| "``--untrusted``: Omits raw embedded markup and disables network "
-#| "fetching. This is a capability policy, not a process sandbox."
 msgid ""
 "Leave out raw content, fetch nothing, and run no build plugin. This is a "
 "capability policy, not a process sandbox."
 msgstr ""
-"``--untrusted``: रॉ एम्बेडेड मार्कअप छोड़ता है और नेटवर्क से लाना बंद "
-"करता है। यह क्षमता की नीति है, प्रक्रिया का सैंडबॉक्स नहीं।"
+"रॉ सामग्री छोड़ देता है, कुछ भी फ़ेच नहीं करता और कोई build plugin नहीं "
+"चलाता। यह क्षमता की नीति है, प्रक्रिया का सैंडबॉक्स नहीं।"
 
 #: ../../reference/cli.rst:237 ../../reference/cli.rst:441
-#, fuzzy
 msgid "``--budget=MIB``"
 msgstr "``--budget=MIB``"
 
@@ -793,42 +706,48 @@ msgstr "``--budget=MIB``"
 msgid ""
 "Memory the build may hold at once, from 1 to 1048576 (default: ``1024``)."
 msgstr ""
+"build एक साथ अधिकतम कितनी मेमोरी रख सकता है, 1 से 1048576 तक (डिफ़ॉल्ट: "
+"``1024``)।"
 
 #: ../../reference/cli.rst:239
 msgid "``--memory=ram``"
-msgstr ""
+msgstr "``--memory=ram``"
 
 #: ../../reference/cli.rst:240
 msgid ""
-"At the budget, stop without asking. Without it, a terminal asks whether "
-"to raise the budget or stop; a build without a terminal stops. "
+"At the budget, stop without asking. Without it, a terminal asks whether to "
+"raise the budget or stop; a build without a terminal stops. "
 "``--memory=disk`` and ``--disk-budget`` (working memory on disk, in the "
 "Odin implementation) are refused with ``cli.memory-disk``. This version "
 "keeps working memory in memory, bounded by the budget, so we raise "
 "``--budget`` instead."
 msgstr ""
+"बजट तक पहुँचते ही बिना पूछे रुक जाता है। इसके बिना टर्मिनल पूछता है कि बजट "
+"बढ़ाया जाए या build रोका जाए; बिना टर्मिनल वाला build रुक जाता है। "
+"``--memory=disk`` और ``--disk-budget`` (Odin कार्यान्वयन में डिस्क पर "
+"वर्किंग मेमोरी) ``cli.memory-disk`` के साथ अस्वीकार कर दिए जाते हैं। यह "
+"संस्करण वर्किंग मेमोरी को बजट की सीमा में मेमोरी में ही रखता है, इसलिए हम "
+"इसकी जगह ``--budget`` बढ़ाते हैं।"
 
 #: ../../reference/cli.rst:245
-#, fuzzy
-#| msgid "``mathjax_path``"
 msgid "``--max-depth=N``"
-msgstr "``mathjax_path``"
+msgstr "``--max-depth=N``"
 
 #: ../../reference/cli.rst:246
 msgid "How deep content may nest (default: ``256``)."
-msgstr ""
+msgstr "सामग्री कितनी गहराई तक नेस्ट हो सकती है (डिफ़ॉल्ट: ``256``)।"
 
 #: ../../reference/cli.rst:247
 msgid "``--max-nodes=N``"
-msgstr ""
+msgstr "``--max-nodes=N``"
 
 #: ../../reference/cli.rst:248
 msgid "Nodes per document (default: ``1000000``)."
-msgstr ""
+msgstr "प्रति दस्तावेज़ नोड की संख्या (डिफ़ॉल्ट: ``1000000``)।"
 
 #: ../../reference/cli.rst:249 ../../reference/cli.rst:445
 msgid "``--stack-kib=N``"
-msgstr ""
+msgstr "``--stack-kib=N``"
 
 #: ../../reference/cli.rst:250
 msgid ""
@@ -836,6 +755,9 @@ msgid ""
 "threads hold, 6144 on Linux and macOS). Raise it together with "
 "``--max-depth``."
 msgstr ""
+"नेस्टेड सामग्री के लिए स्टैक (डिफ़ॉल्ट: ``512``; अधिकतम उतना जितना पढ़ने "
+"वाले थ्रेड्स के पास है, Linux और macOS पर 6144)। इसे ``--max-depth`` के साथ "
+"ही बढ़ाएँ।"
 
 #: ../../reference/cli.rst:252 ../../reference/cli.rst:431
 #: ../../reference/cli.rst:538
@@ -845,26 +767,41 @@ msgstr "``--typst=PATH``"
 #: ../../reference/cli.rst:253
 msgid "The Typst program for PDF, overriding ``typst`` in ``conf.toml``."
 msgstr ""
+"PDF के लिए Typst प्रोग्राम; यह ``conf.toml`` के ``typst`` को ओवरराइड करता "
+"है।"
 
 #: ../../reference/cli.rst:255
 msgid ""
 "The build prints what it read and wrote, then a verdict: ``build "
-"succeeded`` or ``build failed``, with the number of errors and warnings "
-"and where the output is. A failed build leaves the previous output as it "
-"was. The warnings of ``conf.toml`` are the build's own, so ``-W`` counts "
-"them. ``suppress_warnings`` silences warnings before ``-W`` counts."
+"succeeded`` or ``build failed``, with the number of errors and warnings and "
+"where the output is. A failed build leaves the previous output as it was. "
+"The warnings of ``conf.toml`` are the build's own, so ``-W`` counts them. "
+"``suppress_warnings`` silences warnings before ``-W`` counts."
 msgstr ""
+"build बताता है कि उसने क्या पढ़ा और क्या लिखा, फिर नतीजा: ``build "
+"succeeded`` या ``build failed``, साथ में त्रुटियों और चेतावनियों की संख्या "
+"और आउटपुट कहाँ है। विफल build पिछले आउटपुट को जैसा था वैसा ही छोड़ देता है। "
+"``conf.toml`` की चेतावनियाँ build की अपनी हैं, इसलिए ``-W`` उन्हें भी गिनता "
+"है। ``suppress_warnings`` चेतावनियों को ``-W`` के गिनने से पहले ही दबा देता "
+"है।"
 
 #: ../../reference/cli.rst:260
 msgid ""
 "``read`` counts the documents parsed and those unchanged since the last "
 "build (taken from the environment). ``write`` counts the outputs written "
-"and those kept. An output is a page for ``html``, ``dirhtml`` and "
-"``text`` (and the search index in the HTML builders), a book for ``pdf``, "
-"and the single output of ``singlehtml`` and ``gettext``. Every build also "
-"writes the site's shared files (theme, indexes, ``objects.inv``). They "
-"are not counted."
+"and those kept. An output is a page for ``html``, ``dirhtml`` and ``text`` "
+"(and the search index in the HTML builders), a book for ``pdf``, and the "
+"single output of ``singlehtml`` and ``gettext``. Every build also writes "
+"the site's shared files (theme, indexes, ``objects.inv``). They are not "
+"counted."
 msgstr ""
+"``read`` पार्स किए गए दस्तावेज़ों को और पिछले build के बाद से न बदले "
+"दस्तावेज़ों (वातावरण से लिए गए) को गिनता है। ``write`` लिखे गए और जस के तस "
+"रखे गए आउटपुट गिनता है। ``html``, ``dirhtml`` और ``text`` के लिए एक आउटपुट "
+"एक पेज है (HTML builders में सर्च इंडेक्स भी), ``pdf`` के लिए एक किताब, और "
+"``singlehtml`` व ``gettext`` के लिए उनका एकमात्र आउटपुट। हर build साइट की "
+"साझा फ़ाइलें (theme, इंडेक्स, ``objects.inv``) भी लिखता है। उन्हें गिना "
+"नहीं जाता।"
 
 #: ../../reference/cli.rst:267
 msgid "guidedog serve"
@@ -876,26 +813,41 @@ msgid ""
 "sources, templates, static files, or ``conf.toml`` changed, it rebuilds "
 "before answering a request:"
 msgstr ""
+"HTML साइट build करता है और उसे ``http://127.0.0.1:PORT/`` पर सर्व करता है। "
+"जब सोर्स फ़ाइलें, template, स्टैटिक फ़ाइलें या ``conf.toml`` बदलते हैं, तो "
+"यह किसी अनुरोध का जवाब देने से पहले फिर से build करता है:"
 
 #: ../../reference/cli.rst:278
 msgid ""
-"``--port PORT`` (``-p`` is quickstart's project name, not the port) "
-"chooses the port, from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, "
-"``-D name=value`` and the build options of ``guidedog build`` apply to "
-"every rebuild. Each rebuild reloads ``conf.toml``. A failed rebuild keeps "
-"the previous site and reports the problem. Ctrl+C stops the server."
+"``--port PORT`` (``-p`` is quickstart's project name, not the port) chooses "
+"the port, from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, ``-D "
+"name=value`` and the build options of ``guidedog build`` apply to every "
+"rebuild. Each rebuild reloads ``conf.toml``. A failed rebuild keeps the "
+"previous site and reports the problem. Ctrl+C stops the server."
 msgstr ""
+"``--port PORT`` पोर्ट चुनता है (``-p`` quickstart का प्रोजेक्ट नाम है, "
+"पोर्ट नहीं), 1 से 65535 तक (डिफ़ॉल्ट: ``8000``)। ``-c``, ``-C``, ``-D "
+"name=value`` और ``guidedog build`` के build विकल्प हर रीबिल्ड पर लागू होते "
+"हैं। हर रीबिल्ड ``conf.toml`` को फिर से लोड करता है। विफल रीबिल्ड पिछली "
+"साइट को बनाए रखता है और समस्या बताता है। Ctrl+C सर्वर को रोकता है।"
 
 #: ../../reference/cli.rst:283
 msgid ""
-"It serves ``_build/html``. It watches the source folder, the Odin and "
-"Rust API sources (``odin_autoapi_dirs``, ``odin_collections``, "
+"It serves ``_build/html``. It watches the source folder, the Odin and Rust "
+"API sources (``odin_autoapi_dirs``, ``odin_collections``, "
 "``rust_autoapi_crates``), and the ``html_static_path``, "
 "``html_extra_path``, ``templates_path``, ``include_roots``, "
 "``autodoc_source_paths`` and ``locale_dirs`` folders outside the source "
-"folder. The build folder is never watched. Changes are found by file "
-"names, sizes and times. The check runs before an HTML page is answered:"
+"folder. The build folder is never watched. Changes are found by file names, "
+"sizes and times. The check runs before an HTML page is answered:"
 msgstr ""
+"यह ``_build/html`` सर्व करता है। यह सोर्स फ़ोल्डर, Odin और Rust API सोर्स "
+"(``odin_autoapi_dirs``, ``odin_collections``, ``rust_autoapi_crates``), और "
+"सोर्स फ़ोल्डर के बाहर के ``html_static_path``, ``html_extra_path``, "
+"``templates_path``, ``include_roots``, ``autodoc_source_paths`` और "
+"``locale_dirs`` फ़ोल्डरों पर नज़र रखता है। build फ़ोल्डर पर कभी नज़र नहीं "
+"रखी जाती। बदलाव फ़ाइलों के नाम, आकार और समय से पहचाने जाते हैं। यह जाँच "
+"किसी HTML पेज का जवाब देने से पहले चलती है:"
 
 #: ../../reference/cli.rst:300
 msgid "guidedog clean"
@@ -905,7 +857,7 @@ msgstr "guidedog clean"
 msgid ""
 "Removes the contents of the project's build folder, the environment cache "
 "included:"
-msgstr ""
+msgstr "प्रोजेक्ट के build फ़ोल्डर की सामग्री हटाता है, वातावरण कैश समेत:"
 
 #: ../../reference/cli.rst:309
 msgid "guidedog migrate"
@@ -914,36 +866,35 @@ msgstr "guidedog migrate"
 #: ../../reference/cli.rst:312
 msgid ""
 "Converts a Sphinx ``conf.py`` (or an old ``guidedog.toml``) to "
-"``conf.toml`` without running Python. Literal settings carry over. "
-"Anything Python would compute is reported and kept in ``conf.toml`` as a "
-"comment:"
+"``conf.toml`` without running Python. Literal settings carry over. Anything "
+"Python would compute is reported and kept in ``conf.toml`` as a comment:"
 msgstr ""
+"Python चलाए बिना Sphinx ``conf.py`` (या पुरानी ``guidedog.toml``) को "
+"``conf.toml`` में बदलता है। लिटरल सेटिंग्स जस की तस आ जाती हैं। जो कुछ "
+"Python गणना करता, उसकी सूचना दी जाती है और उसे ``conf.toml`` में टिप्पणी के "
+"रूप में रखा जाता है:"
 
 #: ../../reference/cli.rst:325
-#, fuzzy
-#| msgid "Options of guidedog-pages"
 msgid "Options of migrate"
-msgstr "guidedog-pages के विकल्प"
+msgstr "migrate के विकल्प"
 
 #: ../../reference/cli.rst:331
 msgid "``-o FILE``, ``--output FILE``"
-msgstr ""
+msgstr "``-o FILE``, ``--output FILE``"
 
 #: ../../reference/cli.rst:332
 msgid "Write here instead of beside ``conf.py``; ``-`` prints it."
 msgstr ""
+"``conf.py`` के बगल में नहीं, यहाँ लिखता है; ``-`` देने पर इसे प्रिंट करता "
+"है।"
 
 #: ../../reference/cli.rst:333 ../../reference/cli.rst:419
-#, fuzzy
-#| msgid "``\"source\"``"
 msgid "``--force``"
-msgstr "``\"source\"``"
+msgstr "``--force``"
 
 #: ../../reference/cli.rst:334
-#, fuzzy
-#| msgid "``--force``: Overwrites existing ``conf.toml`` files."
 msgid "Replace an existing ``conf.toml``."
-msgstr "``--force``: मौजूदा ``conf.toml`` को बदल देता है।"
+msgstr "मौजूदा ``conf.toml`` को बदल देता है।"
 
 #: ../../reference/cli.rst:336
 msgid "guidedog intl"
@@ -952,102 +903,110 @@ msgstr "guidedog intl"
 #: ../../reference/cli.rst:339
 msgid ""
 "Keeps translation catalogs in step with the documents, as ``sphinx-intl`` "
-"does. First we write the message templates with ``guidedog build "
-"gettext``. ``update`` then creates ``locales/LANG/LC_MESSAGES/*.po``, or "
-"merges new templates into them. Translations stay, changed messages turn "
-"fuzzy, and removed ones become obsolete. To use the catalogs, we build "
-"with ``-D language=LANG``, or set ``language`` in ``conf.toml``."
+"does. First we write the message templates with ``guidedog build gettext``. "
+"``update`` then creates ``locales/LANG/LC_MESSAGES/*.po``, or merges new "
+"templates into them. Translations stay, changed messages turn fuzzy, and "
+"removed ones become obsolete. To use the catalogs, we build with ``-D "
+"language=LANG``, or set ``language`` in ``conf.toml``."
 msgstr ""
+"यह ``sphinx-intl`` की तरह अनुवाद कैटलॉग को दस्तावेज़ों के साथ तालमेल में "
+"रखता है। पहले हम ``guidedog build gettext`` से संदेश template लिखते हैं। "
+"फिर ``update`` ``locales/LANG/LC_MESSAGES/*.po`` बनाता है, या नए template "
+"उनमें मर्ज करता है। अनुवाद बने रहते हैं, बदले हुए संदेश fuzzy हो जाते हैं, "
+"और हटाए गए संदेश अप्रचलित (obsolete) हो जाते हैं। कैटलॉग इस्तेमाल करने के "
+"लिए हम ``-D language=LANG`` के साथ build करते हैं, या ``conf.toml`` में "
+"``language`` सेट करते हैं।"
 
 #: ../../reference/cli.rst:351
-#, fuzzy
-#| msgid "Options for ``intl update``:"
 msgid "Options of intl"
-msgstr "``intl update`` के विकल्प:"
+msgstr "intl के विकल्प"
 
 #: ../../reference/cli.rst:357
 msgid "``-l LANG``, ``--language LANG``"
-msgstr ""
+msgstr "``-l LANG``, ``--language LANG``"
 
 #: ../../reference/cli.rst:358
 msgid "A language; repeat it for several."
-msgstr ""
+msgstr "एक भाषा; कई भाषाओं के लिए इसे दोहराएँ।"
 
 #: ../../reference/cli.rst:359
 msgid "``-p DIR``, ``--pot-dir DIR``"
-msgstr ""
+msgstr "``-p DIR``, ``--pot-dir DIR``"
 
 #: ../../reference/cli.rst:360
 msgid "The templates (default: ``_build/gettext``)."
-msgstr ""
+msgstr "template (डिफ़ॉल्ट: ``_build/gettext``)।"
 
 #: ../../reference/cli.rst:361
 msgid "``-d DIR``, ``--locale-dir DIR``"
-msgstr ""
+msgstr "``-d DIR``, ``--locale-dir DIR``"
 
 #: ../../reference/cli.rst:362
-#, fuzzy
-#| msgid "The catalog. By default, the one the current folder is in."
 msgid "The catalogs (default: the first of ``locale_dirs``)."
-msgstr "कैटलॉग। डिफ़ॉल्ट रूप से वह कैटलॉग जिसमें वर्तमान फ़ोल्डर है।"
+msgstr "कैटलॉग (डिफ़ॉल्ट: ``locale_dirs`` में से पहला)।"
 
 #: ../../reference/cli.rst:363
 msgid "``-w N``, ``--line-width N``"
-msgstr ""
+msgstr "``-w N``, ``--line-width N``"
 
 #: ../../reference/cli.rst:364
 msgid "Wrap lines at ``N`` characters (default: ``76``)."
-msgstr ""
+msgstr "पंक्तियाँ ``N`` अक्षरों पर रैप करता है (डिफ़ॉल्ट: ``76``)।"
 
 #: ../../reference/cli.rst:365
 msgid "``--no-obsolete``"
-msgstr ""
+msgstr "``--no-obsolete``"
 
 #: ../../reference/cli.rst:366
 msgid "Drop messages the templates no longer have."
-msgstr ""
+msgstr "वे संदेश हटा देता है जो अब template में नहीं हैं।"
 
 #: ../../reference/cli.rst:367
 msgid "``-c DIR``, ``-D name=value``"
-msgstr ""
+msgstr "``-c DIR``, ``-D name=value``"
 
 #: ../../reference/cli.rst:368
 msgid "Where ``conf.toml`` is; override a setting."
-msgstr ""
+msgstr "``conf.toml`` कहाँ है; किसी सेटिंग को ओवरराइड करता है।"
 
 #: ../../reference/cli.rst:370
 msgid ""
-"``stat`` prints, for each catalog, how many messages are translated, "
-"fuzzy, and untranslated."
+"``stat`` prints, for each catalog, how many messages are translated, fuzzy, "
+"and untranslated."
 msgstr ""
+"``stat`` हर कैटलॉग के लिए बताता है कि कितने संदेश अनुवादित हैं, कितने fuzzy "
+"और कितने बिना अनुवाद के।"
 
 #: ../../reference/cli.rst:373
 msgid "guidedog convert"
 msgstr "guidedog convert"
 
 #: ../../reference/cli.rst:376
-#, fuzzy
-#| msgid ""
-#| "Converts a standalone file or standard input stream directly, without "
-#| "requiring a project directory or configuration:"
 msgid ""
 "Converts one file, or standard input, without a project or configuration:"
-msgstr ""
-"परियोजना फ़ोल्डर या कॉन्फ़िगरेशन के बिना फ़ाइल या मानक इनपुट को सीधे "
-"बदलता है:"
+msgstr "बिना प्रोजेक्ट या कॉन्फ़िगरेशन के, एक फ़ाइल या मानक इनपुट को बदलता है:"
 
 #: ../../reference/cli.rst:386
 msgid ""
-"The input format comes from ``--from`` or the input's suffix: ``.rst`` "
-"and ``.rest`` are reStructuredText, ``.md`` and ``.markdown`` CommonMark, "
-"``.typ`` Typst. A Markdown file is plain CommonMark 0.31.2. ``--from "
-"myst`` reads it as MyST with the Sphinx layer instead, so roles such as "
-"``{doc}`` and ``{ref}`` and directives such as ``{note}`` are understood. "
-"``--from sphinx`` likewise reads reStructuredText with Sphinx's "
-"directives, roles, and domains. The output format comes from ``--to`` or "
-"the output's suffix (``.html``, ``.htm``, ``.pdf``, ``.rst``, ``.rest``). "
-"Only the options below apply to ``convert``."
+"The input format comes from ``--from`` or the input's suffix: ``.rst`` and "
+"``.rest`` are reStructuredText, ``.md`` and ``.markdown`` CommonMark, "
+"``.typ`` Typst. A Markdown file is plain CommonMark 0.31.2. ``--from myst`` "
+"reads it as MyST with the Sphinx layer instead, so roles such as ``{doc}`` "
+"and ``{ref}`` and directives such as ``{note}`` are understood. ``--from "
+"sphinx`` likewise reads reStructuredText with Sphinx's directives, roles, "
+"and domains. The output format comes from ``--to`` or the output's suffix "
+"(``.html``, ``.htm``, ``.pdf``, ``.rst``, ``.rest``). Only the options "
+"below apply to ``convert``."
 msgstr ""
+"इनपुट प्रारूप ``--from`` से या इनपुट के सफ़िक्स से तय होता है: ``.rst`` और "
+"``.rest`` reStructuredText हैं, ``.md`` और ``.markdown`` CommonMark, और "
+"``.typ`` Typst। Markdown फ़ाइल सादा CommonMark 0.31.2 मानी जाती है। "
+"``--from myst`` उसे Sphinx लेयर के साथ MyST के रूप में पढ़ता है, ताकि "
+"``{doc}`` और ``{ref}`` जैसे रोल और ``{note}`` जैसे निर्देश समझे जाएँ। इसी "
+"तरह ``--from sphinx`` reStructuredText को Sphinx के निर्देशों, रोल और डोमेन "
+"के साथ पढ़ता है। आउटपुट प्रारूप ``--to`` से या आउटपुट के सफ़िक्स "
+"(``.html``, ``.htm``, ``.pdf``, ``.rst``, ``.rest``) से तय होता है। "
+"``convert`` पर सिर्फ़ नीचे दिए विकल्प लागू होते हैं।"
 
 #: ../../reference/cli.rst:394
 msgid ""
@@ -1056,177 +1015,180 @@ msgid ""
 "source paragraph stays a line break, and the writer adds none of its own, "
 "so a converted page keeps the sentence and paragraph shape we wrote. It "
 "never splits inline markup, inline code, a role or a URL across lines. It "
-"uses one section adornment per level (``=``, ``-``, ``~``, ``^``, ...). "
-"It keeps roles, cross-references, and directives as Sphinx writes them. "
-"It reads the input without smart quotes, so quotes and dashes stay as "
-"written. Some things reStructuredText cannot express exactly (a hard line "
-"break, an image inside text, a link title). The writer comes as close as "
-"it can and reports a note. Typst input cannot be converted to "
-"reStructuredText."
+"uses one section adornment per level (``=``, ``-``, ``~``, ``^``, ...). It "
+"keeps roles, cross-references, and directives as Sphinx writes them. It "
+"reads the input without smart quotes, so quotes and dashes stay as written. "
+"Some things reStructuredText cannot express exactly (a hard line break, an "
+"image inside text, a link title). The writer comes as close as it can and "
+"reports a note. Typst input cannot be converted to reStructuredText."
 msgstr ""
+"``--to rst`` Guidedog के अपने राइटर (``rst`` रेंडरर) से reStructuredText "
+"लिखता है। यह लेखक की पंक्तियाँ बनाए रखता है: सोर्स पैराग्राफ़ के भीतर हर "
+"लाइन ब्रेक लाइन ब्रेक ही रहता है, और राइटर अपनी ओर से कोई ब्रेक नहीं "
+"जोड़ता, इसलिए बदले गए पेज में वाक्यों और पैराग्राफ़ों का वही आकार रहता है "
+"जो हमने लिखा था। यह इनलाइन मार्कअप, इनलाइन कोड, रोल या URL को कभी कई "
+"पंक्तियों में नहीं तोड़ता। यह हर स्तर के लिए सेक्शन शीर्षक का एक ही सजावटी "
+"चिह्न (``=``, ``-``, ``~``, ``^``, ...) इस्तेमाल करता है। रोल, "
+"क्रॉस-रेफ़रेंस और निर्देश वैसे ही रहते हैं जैसे Sphinx उन्हें लिखता है। यह "
+"इनपुट को स्मार्ट कोट्स के बिना पढ़ता है, इसलिए उद्धरण चिह्न और डैश जैसे "
+"लिखे थे वैसे ही रहते हैं। कुछ चीज़ें reStructuredText ठीक-ठीक व्यक्त नहीं "
+"कर सकता (हार्ड लाइन ब्रेक, टेक्स्ट के भीतर इमेज, लिंक का शीर्षक)। ऐसे में "
+"राइटर जितना हो सके उतना करीब पहुँचता है और एक नोट देता है। Typst इनपुट को "
+"reStructuredText में नहीं बदला जा सकता।"
 
 #: ../../reference/cli.rst:404
-#, fuzzy
-#| msgid "Options of dsc and dscc"
 msgid "Options of convert"
-msgstr "dsc और dscc के विकल्प"
+msgstr "convert के विकल्प"
 
 #: ../../reference/cli.rst:410
 msgid "``-o FILE``, ``--output=FILE``"
-msgstr ""
+msgstr "``-o FILE``, ``--output=FILE``"
 
 #: ../../reference/cli.rst:411
 msgid "The destination, or ``-`` for standard output. Required."
-msgstr ""
+msgstr "आउटपुट कहाँ लिखा जाए, या मानक आउटपुट के लिए ``-``। यह ज़रूरी है।"
 
 #: ../../reference/cli.rst:412
 msgid "``--from=rst|sphinx|commonmark|myst|typst``"
-msgstr ""
+msgstr "``--from=rst|sphinx|commonmark|myst|typst``"
 
 #: ../../reference/cli.rst:413
 msgid ""
 "The input format (``restructuredtext``, ``md``, ``markdown`` and ``typ`` "
 "are accepted spellings)."
 msgstr ""
+"इनपुट प्रारूप (``restructuredtext``, ``md``, ``markdown`` और ``typ`` भी "
+"मान्य नाम हैं)।"
 
 #: ../../reference/cli.rst:415
-#, fuzzy
-#| msgid "``--target=html|pdf|both``"
 msgid "``--to=html|pdf|rst``"
-msgstr "``--target=html|pdf|both``"
+msgstr "``--to=html|pdf|rst``"
 
 #: ../../reference/cli.rst:416
 msgid "The output format (``restructuredtext`` is an accepted spelling)."
-msgstr ""
+msgstr "आउटपुट प्रारूप (``restructuredtext`` भी मान्य नाम है)।"
 
 #: ../../reference/cli.rst:417
-#, fuzzy
-#| msgid "``--typst=PATH``"
 msgid "``--emit-typst=FILE``"
-msgstr "``--typst=PATH``"
+msgstr "``--emit-typst=FILE``"
 
 #: ../../reference/cli.rst:418
 msgid "Also write the generated Typst source (not for Typst input)."
-msgstr ""
+msgstr "जनरेट किया गया Typst सोर्स भी लिखता है (Typst इनपुट के लिए नहीं)।"
 
 #: ../../reference/cli.rst:420
 msgid "Replace an existing output file."
-msgstr ""
+msgstr "मौजूदा आउटपुट फ़ाइल को बदल देता है।"
 
 #: ../../reference/cli.rst:421
 msgid "``--raw=refuse|omit|allow``"
-msgstr ""
+msgstr "``--raw=refuse|omit|allow``"
 
 #: ../../reference/cli.rst:422
 msgid "Raw HTML or Typst content: fail (default), leave it out, or keep it."
 msgstr ""
+"रॉ HTML या Typst सामग्री के लिए: विफल होना (डिफ़ॉल्ट), उसे छोड़ देना, या "
+"रखना।"
 
 #: ../../reference/cli.rst:423
-#, fuzzy
-#| msgid "``strict = true``"
 msgid "``--strict``"
-msgstr "``strict = true``"
+msgstr "``--strict``"
 
 #: ../../reference/cli.rst:424
-#, fuzzy
-#| msgid "``-W``: Treats all warnings as build failures."
 msgid "Treat warnings as failures."
-msgstr "``-W``: हर चेतावनी को बिल्ड की विफलता मानता है।"
+msgstr "चेतावनियों को विफलता मानता है।"
 
 #: ../../reference/cli.rst:425
 msgid "``--title=TEXT``, ``--lang=TAG``"
-msgstr ""
+msgstr "``--title=TEXT``, ``--lang=TAG``"
 
 #: ../../reference/cli.rst:426
 msgid "The document's title and language."
-msgstr ""
+msgstr "दस्तावेज़ का शीर्षक और भाषा।"
 
 #: ../../reference/cli.rst:427
-#, fuzzy
-#| msgid "``--number=N``, ``--discussion=URL``"
 msgid "``--number-sections``"
-msgstr "``--number=N``, ``--discussion=URL``"
+msgstr "``--number-sections``"
 
 #: ../../reference/cli.rst:428
 msgid "Number section headings."
-msgstr ""
+msgstr "सेक्शन शीर्षकों पर क्रमांक लगाता है।"
 
 #: ../../reference/cli.rst:429
-#, fuzzy
-#| msgid "``formats``"
 msgid "``--fragment``"
-msgstr "``formats``"
+msgstr "``--fragment``"
 
 #: ../../reference/cli.rst:430
 msgid "Write the body only, not a complete document."
-msgstr ""
+msgstr "पूरा दस्तावेज़ नहीं, केवल मुख्य भाग (body) लिखता है।"
 
 #: ../../reference/cli.rst:432
 msgid ""
 "The Typst program (default: the embedded compiler, else ``typst`` on "
 "``PATH``)."
 msgstr ""
+"Typst प्रोग्राम (डिफ़ॉल्ट: एम्बेडेड कंपाइलर, वह न हो तो ``PATH`` पर "
+"``typst``)।"
 
 #: ../../reference/cli.rst:433
-#, fuzzy
-#| msgid "``pdf_font_paths``"
 msgid "``--font-path=DIR``"
-msgstr "``pdf_font_paths``"
+msgstr "``--font-path=DIR``"
 
 #: ../../reference/cli.rst:434
 msgid "An extra font folder; repeat it for more."
-msgstr ""
+msgstr "एक अतिरिक्त फ़ॉन्ट फ़ोल्डर; और फ़ोल्डरों के लिए इसे दोहराएँ।"
 
 #: ../../reference/cli.rst:435
 msgid "``--embedded-fonts-only``"
-msgstr ""
+msgstr "``--embedded-fonts-only``"
 
 #: ../../reference/cli.rst:436
 msgid "Ignore system fonts, for reproducible PDFs."
 msgstr ""
+"दोबारा बनाने पर एक जैसे (reproducible) PDF के लिए सिस्टम फ़ॉन्ट अनदेखा करता "
+"है।"
 
 #: ../../reference/cli.rst:437
-#, fuzzy
-#| msgid "``--profile=NAME``"
 msgid "``--offline``"
-msgstr "``--profile=NAME``"
+msgstr "``--offline``"
 
 #: ../../reference/cli.rst:438
 msgid "Use only Typst packages already on disk."
-msgstr ""
+msgstr "केवल डिस्क पर पहले से मौजूद Typst पैकेज इस्तेमाल करता है।"
 
 #: ../../reference/cli.rst:439
 msgid "``--package-cache=DIR``"
-msgstr ""
+msgstr "``--package-cache=DIR``"
 
 #: ../../reference/cli.rst:440
 msgid "The Typst package cache folder."
-msgstr ""
+msgstr "Typst पैकेज कैश फ़ोल्डर।"
 
 #: ../../reference/cli.rst:442
 msgid "The memory budget of the conversion (default: ``256``)."
-msgstr ""
+msgstr "रूपांतरण का मेमोरी बजट (डिफ़ॉल्ट: ``256``)।"
 
 #: ../../reference/cli.rst:443
-#, fuzzy
-#| msgid "``--adopt``, ``--yes``"
 msgid "``--max-depth=N``, ``--max-nodes=N``"
-msgstr "``--adopt``, ``--yes``"
+msgstr "``--max-depth=N``, ``--max-nodes=N``"
 
 #: ../../reference/cli.rst:444
 msgid "Nesting and node limits."
-msgstr ""
+msgstr "नेस्टिंग और नोड की सीमाएँ।"
 
 #: ../../reference/cli.rst:446
 msgid "Stack for nested content (default: ``512``, at most ``6144``)."
-msgstr ""
+msgstr "नेस्टेड सामग्री के लिए स्टैक (डिफ़ॉल्ट: ``512``, अधिकतम ``6144``)।"
 
 #: ../../reference/cli.rst:448
 msgid ""
 "The exit status is 0 for success, 1 for invalid or refused content, 2 for "
-"usage, 3 for a limit, 4 for a file or Typst failure, and 5 for an "
-"internal error. A failed conversion writes no output."
+"usage, 3 for a limit, 4 for a file or Typst failure, and 5 for an internal "
+"error. A failed conversion writes no output."
 msgstr ""
+"एग्ज़िट स्टेटस सफलता पर 0, अमान्य या अस्वीकृत सामग्री पर 1, उपयोग की गलती "
+"पर 2, सीमा पार होने पर 3, फ़ाइल या Typst की विफलता पर 4, और आंतरिक त्रुटि "
+"पर 5 होता है। विफल रूपांतरण कोई आउटपुट नहीं लिखता।"
 
 #: ../../reference/cli.rst:452
 msgid "guidedog formats"
@@ -1234,61 +1196,56 @@ msgstr "guidedog formats"
 
 #: ../../reference/cli.rst:455
 msgid ""
-"Reports the readers and renderers this executable actually has, with "
-"their versions and conformance (``planned``, ``partial``, "
-"``conformant``). It also reports the Typst backend it found (embedded, or "
-"an installed program) and whether it is the pinned version."
+"Reports the readers and renderers this executable actually has, with their "
+"versions and conformance (``planned``, ``partial``, ``conformant``). It "
+"also reports the Typst backend it found (embedded, or an installed program) "
+"and whether it is the pinned version."
 msgstr ""
+"यह बताता है कि इस एक्ज़ीक्यूटेबल में वास्तव में कौन-से रीडर और रेंडरर हैं, "
+"उनके संस्करण और अनुरूपता (``planned``, ``partial``, ``conformant``) के साथ। "
+"यह मिला हुआ Typst बैकएंड (एम्बेडेड, या इंस्टॉल किया गया प्रोग्राम) भी बताता "
+"है, और यह भी कि वह पिन किया गया संस्करण है या नहीं।"
 
 #: ../../reference/cli.rst:465
 msgid "guidedog gds"
 msgstr "guidedog gds"
 
 #: ../../reference/cli.rst:468
-#, fuzzy
-#| msgid ""
-#| "Keeps Guidedog's own discussion records, the GDS, in ``docs/gds``. It "
-#| "runs the commands of ``dsc``, below, with the prefix ``gds``:"
 msgid ""
-"Keeps Guidedog's own discussion records, the GDS, in ``docs/gds``. It "
-"runs the commands of ``dsc`` (below) with the prefix ``gds``. It builds "
-"with this program's engine:"
+"Keeps Guidedog's own discussion records, the GDS, in ``docs/gds``. It runs "
+"the commands of ``dsc`` (below) with the prefix ``gds``. It builds with "
+"this program's engine:"
 msgstr ""
 "Guidedog के अपने चर्चा रिकॉर्ड, यानी GDS, ``docs/gds`` में सँभालता है। यह "
-"नीचे दिए ``dsc`` के कमांड ``gds`` उपसर्ग के साथ चलाता है:"
+"नीचे दिए ``dsc`` के कमांड ``gds`` उपसर्ग के साथ चलाता है। यह इसी प्रोग्राम "
+"के इंजन से build करता है:"
 
 #: ../../reference/cli.rst:482
 msgid "dsc and dscc"
 msgstr "dsc और dscc"
 
 #: ../../reference/cli.rst:485
-#, fuzzy
-#| msgid ""
-#| "``dsc`` keeps a discussion catalog and builds it with the installed "
-#| "``guidedog``. ``dscc`` is ``dsc`` with Guidedog built in. Both take "
-#| "the same commands; see :doc:`../howto/discussions`."
 msgid ""
 "``dsc`` keeps a discussion catalog and builds it with the installed "
 "``guidedog``. ``dscc`` is ``dsc`` with Guidedog built in. It builds a "
-"catalog as a Guidedog project in its own process (``pdf_documents`` set "
-"to the books, warnings as errors). ``dscc --version`` names the Guidedog "
+"catalog as a Guidedog project in its own process (``pdf_documents`` set to "
+"the books, warnings as errors). ``dscc --version`` names the Guidedog "
 "inside it. Both take the same commands (see :doc:`../howto/discussions`)."
 msgstr ""
-"``dsc`` एक चर्चा कैटलॉग सँभालता है और उसे स्थापित ``guidedog`` से बिल्ड "
-"करता है। ``dscc`` वह ``dsc`` है जिसमें Guidedog अंतर्निहित है। दोनों एक "
-"जैसे कमांड लेते हैं; :doc:`../howto/discussions` देखें।"
+"``dsc`` एक चर्चा कैटलॉग सँभालता है और उसे इंस्टॉल किए गए ``guidedog`` से "
+"build करता है। ``dscc`` वह ``dsc`` है जिसमें Guidedog अंतर्निहित है। यह "
+"कैटलॉग को अपनी ही प्रक्रिया में Guidedog प्रोजेक्ट के रूप में build करता है "
+"(``pdf_documents`` में किताबें सेट होती हैं, और चेतावनियाँ त्रुटियाँ मानी "
+"जाती हैं)। ``dscc --version`` बताता है कि इसके भीतर कौन-सा Guidedog है। "
+"दोनों एक जैसे कमांड लेते हैं (:doc:`../howto/discussions` देखें)।"
 
 #: ../../reference/cli.rst:505
-#, fuzzy
-#| msgid ""
-#| "``dsc config`` prints the catalog's settings in effect, as "
-#| "``discussion.toml``; see :doc:`../howto/discussions` for each setting."
 msgid ""
 "``dsc config`` prints the catalog's settings in effect, as "
 "``discussion.toml``. :doc:`../howto/discussions` explains each setting."
 msgstr ""
-"``dsc config`` कैटलॉग की लागू सेटिंग ``discussion.toml`` के रूप में "
-"प्रिंट करता है; हर सेटिंग के लिए :doc:`../howto/discussions` देखें।"
+"``dsc config`` कैटलॉग की लागू सेटिंग्स ``discussion.toml`` के रूप में "
+"प्रिंट करता है। :doc:`../howto/discussions` हर सेटिंग समझाता है।"
 
 #: ../../reference/cli.rst:508
 msgid "Options of dsc and dscc"
@@ -1324,45 +1281,40 @@ msgid ""
 "The name, settings, process draft, and record template of a new catalog "
 "(``init``)."
 msgstr ""
-"नए कैटलॉग का नाम, सेटिंग, प्रक्रिया का मसौदा और रिकॉर्ड टेम्पलेट "
-"(``init``)।"
+"नए कैटलॉग का नाम, सेटिंग, प्रक्रिया का मसौदा और रिकॉर्ड template (``init``)।"
 
 #: ../../reference/cli.rst:521
 msgid "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 msgstr "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 
 #: ../../reference/cli.rst:522
-#, fuzzy
-#| msgid ""
-#| "A new draft's author, labels, and file name (``new``; ``init`` takes "
-#| "the first two)."
 msgid ""
-"A new draft's author (default: Git's ``user.name``), labels, and file "
-"name (``new``; ``init`` takes the first two)."
+"A new draft's author (default: Git's ``user.name``), labels, and file name "
+"(``new``; ``init`` takes the first two)."
 msgstr ""
-"नए मसौदे का लेखक, लेबल और फ़ाइल नाम (``new``; ``init`` पहले दो लेता है)।"
+"नए मसौदे का लेखक (डिफ़ॉल्ट: Git का ``user.name``), लेबल और फ़ाइल नाम "
+"(``new``; ``init`` पहले दो लेता है)।"
 
 #: ../../reference/cli.rst:524
-#, fuzzy
-#| msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 msgid "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
-msgstr "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
+msgstr "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 
 #: ../../reference/cli.rst:525
 msgid "``list``: filter by state or label; include inherited records."
 msgstr ""
+"``list``: स्थिति या लेबल से छाँटें; विरासत में मिले रिकॉर्ड भी शामिल करें।"
 
 #: ../../reference/cli.rst:526
 msgid "``--number=N``, ``--discussion=URL``"
 msgstr "``--number=N``, ``--discussion=URL``"
 
 #: ../../reference/cli.rst:527
-#, fuzzy
-#| msgid "The number and review link of a promotion."
 msgid ""
 "The number and review link of a promotion; ``--number`` also selects a "
 "record to build."
-msgstr "प्रमोट करते समय संख्या और समीक्षा का लिंक।"
+msgstr ""
+"प्रमोट करते समय का नंबर और समीक्षा का लिंक। ``--number`` से build करने के "
+"लिए रिकॉर्ड भी चुना जाता है।"
 
 #: ../../reference/cli.rst:529
 msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
@@ -1373,15 +1325,12 @@ msgid "A state change, why, and for ``committed`` the evidence."
 msgstr "नई स्थिति, उसका कारण, और ``committed`` के लिए प्रमाण।"
 
 #: ../../reference/cli.rst:531
-#, fuzzy
-#| msgid "``--adopt``, ``--yes``"
 msgid "``--check``, ``--render``"
-msgstr "``--adopt``, ``--yes``"
+msgstr "``--check``, ``--render``"
 
 #: ../../reference/cli.rst:532
-msgid ""
-"``index``: check without writing; ``check``: also build the artifacts."
-msgstr ""
+msgid "``index``: check without writing; ``check``: also build the artifacts."
+msgstr "``index``: कुछ लिखे बिना जाँचें; ``check``: आर्टिफ़ैक्ट भी build करें।"
 
 #: ../../reference/cli.rst:533
 msgid "``--target=html|pdf|both``"
@@ -1402,7 +1351,7 @@ msgid ""
 "``dsc`` only: the ``guidedog`` to build with (default: ``DSC_GUIDEDOG``, "
 "then ``PATH``)."
 msgstr ""
-"केवल ``dsc``: बिल्ड के लिए ``guidedog`` (डिफ़ॉल्ट: ``DSC_GUIDEDOG``, फिर "
+"केवल ``dsc``: build के लिए ``guidedog`` (डिफ़ॉल्ट: ``DSC_GUIDEDOG``, फिर "
 "``PATH``)।"
 
 #: ../../reference/cli.rst:539
@@ -1427,37 +1376,26 @@ msgstr ""
 "बदलाव का पूर्वावलोकन; मशीन के पढ़ने लायक आउटपुट; सफल होने पर चुप रहना।"
 
 #: ../../reference/cli.rst:544
-#, fuzzy
-#| msgid ""
-#| "The exit statuses are those of ``guidedog``. Problems about a catalog "
-#| "have codes in its prefix, such as ``eds.recovery-needed``; running out "
-#| "of memory is ``discussion.memory``."
 msgid ""
-"The exit statuses are those of ``guidedog``. Problems about a catalog "
-"have codes in its prefix, such as ``eds.recovery-needed``."
+"The exit statuses are those of ``guidedog``. Problems about a catalog have "
+"codes in its prefix, such as ``eds.recovery-needed``."
 msgstr ""
-"निकास स्थितियाँ वही हैं जो ``guidedog`` की हैं। कैटलॉग से जुड़ी समस्याओं "
-"के कोड उसके उपसर्ग से शुरू होते हैं, जैसे ``eds.recovery-needed``; मेमोरी "
-"खत्म होने का कोड ``discussion.memory`` है।"
+"निकास स्थितियाँ वही हैं जो ``guidedog`` की हैं। किसी कैटलॉग से जुड़ी "
+"समस्याओं के कोड उसके उपसर्ग से शुरू होते हैं, जैसे ``eds.recovery-needed``।"
 
 #: ../../reference/cli.rst:547
 msgid "guidedog publish"
 msgstr "guidedog publish"
 
 #: ../../reference/cli.rst:550
-#, fuzzy
-#| msgid ""
-#| "Builds the project that a registered publisher's configuration names, "
-#| "as HTML with Guidedog's own engine, freezes the site, and has the "
-#| "publisher plan and publish it:"
 msgid ""
 "Builds the project that a publisher's configuration names, as HTML with "
 "Guidedog's own engine. It freezes the site, and the publisher plans and "
 "publishes it:"
 msgstr ""
-"पंजीकृत पब्लिशर की कॉन्फ़िगरेशन में बताई गई परियोजना को Guidedog के अपने "
-"इंजन से HTML के रूप में बिल्ड करता है, साइट को स्थिर (frozen) करता है, और "
-"पब्लिशर से उसकी योजना बनवाकर उसे प्रकाशित करवाता है:"
+"publisher की कॉन्फ़िगरेशन में बताए गए प्रोजेक्ट को Guidedog के अपने इंजन से "
+"HTML के रूप में build करता है। फिर साइट स्थिर (frozen) कर दी जाती है, और "
+"publisher उसकी योजना बनाकर उसे प्रकाशित करता है:"
 
 #: ../../reference/cli.rst:558
 msgid ""
@@ -1465,62 +1403,53 @@ msgid ""
 "first, then in the machine's registry (``guidedog plugin register``). A "
 "build plugin is refused, because only publishers publish."
 msgstr ""
+"publisher पहले इस एग्ज़िक्यूटेबल में लिंक किए गए plugin में खोजा जाता है, "
+"फिर मशीन की registry (``guidedog plugin register``) में। build plugin "
+"अस्वीकार कर दिया जाता है, क्योंकि प्रकाशन सिर्फ़ publisher करते हैं।"
 
 #: ../../reference/cli.rst:562
-#, fuzzy
-#| msgid "Options of guidedog-pages"
 msgid "Options of publish"
-msgstr "guidedog-pages के विकल्प"
+msgstr "publish के विकल्प"
 
 #: ../../reference/cli.rst:568
-#, fuzzy
-#| msgid "``publish --publisher=ID``"
 msgid "``--publisher=ID``"
-msgstr "``publish --publisher=ID``"
+msgstr "``--publisher=ID``"
 
 #: ../../reference/cli.rst:569
-#, fuzzy
-#| msgid "guidedog publish"
 msgid "The publisher."
-msgstr "guidedog publish"
+msgstr "publisher।"
 
 #: ../../reference/cli.rst:570 ../../reference/cli.rst:781
 msgid "``--config=FILE``"
 msgstr "``--config=FILE``"
 
 #: ../../reference/cli.rst:571
-#, fuzzy
-#| msgid ""
-#| "Builds the project a publisher's configuration names, and publishes "
-#| "the site."
 msgid "The publisher's configuration, which names the project or site."
-msgstr ""
-"पब्लिशर की कॉन्फ़िगरेशन में बताई गई परियोजना बिल्ड करता है और साइट "
-"प्रकाशित करता है।"
+msgstr "publisher की कॉन्फ़िगरेशन, जिसमें प्रोजेक्ट या साइट बताई जाती है।"
 
 #: ../../reference/cli.rst:572
-#, fuzzy
-#| msgid "``--dir=DIR``"
 msgid "``--dry-run``"
-msgstr "``--dir=DIR``"
+msgstr "``--dry-run``"
 
 #: ../../reference/cli.rst:573
 msgid "Build and plan; write nothing to the target."
-msgstr ""
+msgstr "build करें और योजना बनाएँ; लक्ष्य पर कुछ न लिखें।"
 
 #: ../../reference/cli.rst:574
 msgid "``--wait=SECONDS``"
-msgstr ""
+msgstr "``--wait=SECONDS``"
 
 #: ../../reference/cli.rst:575
 msgid ""
 "How long to wait for the host to confirm the deployment, from 0 (do not "
 "wait) to 86400."
 msgstr ""
+"होस्ट के deployment की पुष्टि करने तक कितनी देर रुकना है, 0 (बिल्कुल न "
+"रुकें) से 86400 तक।"
 
 #: ../../reference/cli.rst:577
 msgid "``--timeout=SECONDS``"
-msgstr ""
+msgstr "``--timeout=SECONDS``"
 
 #: ../../reference/cli.rst:578
 msgid ""
@@ -1528,31 +1457,34 @@ msgid ""
 "included, from 1 to 86400 (default: 300). Choose a value longer than "
 "``--wait``."
 msgstr ""
+"publisher के साथ हर पूरे आदान-प्रदान की समय-सीमा, अनुरोध लिखने का समय भी "
+"शामिल, 1 से 86400 तक (डिफ़ॉल्ट: 300)। ``--wait`` से बड़ा मान चुनें।"
 
 #: ../../reference/cli.rst:580
-#, fuzzy
-#| msgid "``version``"
 msgid "``--verbose``"
-msgstr "``version``"
+msgstr "``--verbose``"
 
 #: ../../reference/cli.rst:581
 msgid "List every change of the plan."
-msgstr ""
+msgstr "योजना का हर बदलाव दिखाएँ।"
 
 #: ../../reference/cli.rst:583
 msgid ""
-"A timeout or Ctrl+C after a possible write reports an unknown outcome "
-"(exit status 7). We then run the publisher's recovery command before "
-"retrying. Each invocation builds into its own private folder, which is "
-"removed afterwards. Concurrent invocations cannot change each other's "
-"snapshots. See :doc:`../plugins`."
+"A timeout or Ctrl+C after a possible write reports an unknown outcome (exit "
+"status 7). We then run the publisher's recovery command before retrying. "
+"Each invocation builds into its own private folder, which is removed "
+"afterwards. Concurrent invocations cannot change each other's snapshots. "
+"See :doc:`../plugins`."
 msgstr ""
+"अगर कुछ लिखे जाने की संभावना के बाद टाइमआउट हो या Ctrl+C दबाया जाए, तो "
+"परिणाम अज्ञात बताया जाता है (निकास स्थिति 7)। तब दोबारा कोशिश करने से पहले "
+"हम publisher का रिकवरी कमांड चलाते हैं। हर बार कमांड चलाने पर build उसके "
+"अपने निजी फ़ोल्डर में होता है, जिसे बाद में हटा दिया जाता है। एक साथ चल रहे "
+"रन एक-दूसरे के स्नैपशॉट नहीं बदल सकते। :doc:`../plugins` देखें।"
 
 #: ../../reference/cli.rst:588
-#, fuzzy
-#| msgid "guidedog publish"
 msgid "guidedog publish pages"
-msgstr "guidedog publish"
+msgstr "guidedog publish pages"
 
 #: ../../reference/cli.rst:591
 msgid ""
@@ -1560,55 +1492,70 @@ msgid ""
 "whatever is still missing and asks only when it must. Then it builds and "
 "publishes:"
 msgstr ""
+"``guidedog publish pages`` GitHub Pages पर प्रकाशित करने का निर्देशित तरीका "
+"है। जो कुछ अभी बाकी है, उसे यह पूरा करता है और सिर्फ़ ज़रूरत पड़ने पर ही "
+"पूछता है। फिर यह build करके प्रकाशित करता है:"
 
 #: ../../reference/cli.rst:594
 msgid ""
-"``pages.toml``: written once, with the repository taken from the "
-"``origin`` remote and the project from the nearest ``conf.toml`` (or as "
-"given)."
+"``pages.toml``: written once, with the repository taken from the ``origin`` "
+"remote and the project from the nearest ``conf.toml`` (or as given)."
 msgstr ""
+"``pages.toml``: एक ही बार लिखी जाती है। repository ``origin`` रिमोट से और "
+"प्रोजेक्ट सबसे नज़दीकी ``conf.toml`` से लिया जाता है (या जैसा दिया गया हो)।"
 
 #: ../../reference/cli.rst:596
 msgid ""
-"A token: GitHub's device sign-in, stored in the system's credential "
-"store, or the GitHub CLI's token for this run only."
+"A token: GitHub's device sign-in, stored in the system's credential store, "
+"or the GitHub CLI's token for this run only."
 msgstr ""
+"token: GitHub के डिवाइस साइन-इन से मिला token, जो सिस्टम के क्रेडेंशियल "
+"स्टोर में रखा जाता है; या सिर्फ़ इस रन के लिए GitHub CLI का token।"
 
 #: ../../reference/cli.rst:598
 msgid ""
 "The binding: the target is reviewed, and it asks us once to let this "
 "machine publish there."
 msgstr ""
+"बाइंडिंग: लक्ष्य की समीक्षा होती है, और यह हमसे एक बार पूछता है कि क्या यह "
+"मशीन वहाँ प्रकाशित कर सकती है।"
 
 #: ../../reference/cli.rst:600
 msgid ""
-"The Pages source: when Pages publishes another branch, or uses Actions, "
-"it asks us once to switch it."
+"The Pages source: when Pages publishes another branch, or uses Actions, it "
+"asks us once to switch it."
 msgstr ""
+"Pages का सोर्स: अगर Pages किसी दूसरी branch को प्रकाशित करता है या Actions "
+"इस्तेमाल करता है, तो यह हमसे एक बार उसे बदलने के लिए पूछता है।"
 
 #: ../../reference/cli.rst:602
 msgid ""
 "The publication: one push to the site's own branch, then a wait for the "
 "deployment."
-msgstr ""
+msgstr "प्रकाशन: साइट की अपनी branch पर एक push, फिर deployment का इंतज़ार।"
 
 #: ../../reference/cli.rst:604
 msgid ""
 "On a machine that is already set up, it publishes without a question. "
 "Without a terminal it never asks. A missing step then fails with a hint "
 "naming the command or option that does it. ``--yes`` answers the "
-"confirmations. It never signs in or replaces other work on our behalf. "
-"Its options are those of ``guidedog-pages init`` and ``publish`` "
-"(``--config``, ``--repository``, ``--project``, ``--branch``, "
-"``--profile``, ``--wait``, ``--verbose``). See "
-":doc:`../howto/github-pages`."
+"confirmations. It never signs in or replaces other work on our behalf. Its "
+"options are those of ``guidedog-pages init`` and ``publish`` (``--config``, "
+"``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, "
+"``--verbose``). See :doc:`../howto/github-pages`."
 msgstr ""
+"जो मशीन पहले से सेट है, उस पर यह बिना कोई सवाल पूछे प्रकाशित करता है। "
+"टर्मिनल न हो तो यह कभी नहीं पूछता; तब कोई चरण बाकी हो तो यह विफल हो जाता "
+"है, और संकेत में वह कमांड या विकल्प बताता है जिससे वह चरण पूरा होता है। "
+"``--yes`` पुष्टि वाले सवालों का जवाब देता है। यह कभी हमारी ओर से साइन इन "
+"नहीं करता और न ही किसी दूसरे काम को बदलता है। इसके विकल्प वही हैं जो "
+"``guidedog-pages init`` और ``publish`` के हैं (``--config``, "
+"``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, "
+"``--verbose``)। :doc:`../howto/github-pages` देखें।"
 
 #: ../../reference/cli.rst:611
-#, fuzzy
-#| msgid "guidedog-pages"
 msgid "guidedog pages workflow"
-msgstr "guidedog-pages"
+msgstr "guidedog pages workflow"
 
 #: ../../reference/cli.rst:614
 msgid ""
@@ -1618,28 +1565,32 @@ msgid ""
 "actions. We use it instead of publishing from our own machine when every "
 "push to the source branch should deploy."
 msgstr ""
+"``guidedog pages workflow`` और ``guidedog-pages workflow`` एक ही हैं। यह "
+"GitHub Actions workflow को प्रिंट करता है, लिखता है या जाँचता है। workflow "
+"Guidedog की यही रिलीज़ इंस्टॉल करता है, प्रोजेक्ट build करता है, और GitHub "
+"के Pages actions से उसे deploy करता है। जब सोर्स branch पर हर push के साथ "
+"deploy होना चाहिए, तब हम अपनी मशीन से प्रकाशित करने के बजाय इसका इस्तेमाल "
+"करते हैं।"
 
 #: ../../reference/cli.rst:624
-#, fuzzy
-#| msgid "Options of guidedog-pages"
 msgid "Options of pages workflow"
-msgstr "guidedog-pages के विकल्प"
+msgstr "pages workflow के विकल्प"
 
 #: ../../reference/cli.rst:630
-#, fuzzy
-#| msgid "``--adopt``, ``--yes``"
 msgid "``--write``, ``--force``"
-msgstr "``--adopt``, ``--yes``"
+msgstr "``--write``, ``--force``"
 
 #: ../../reference/cli.rst:631
 msgid ""
-"Write ``.github/workflows/docs-pages.yml`` instead of printing it; "
-"replace an existing one."
+"Write ``.github/workflows/docs-pages.yml`` instead of printing it; replace "
+"an existing one."
 msgstr ""
+"``.github/workflows/docs-pages.yml`` को प्रिंट करने के बजाय लिखें; पहले से "
+"मौजूद फ़ाइल को बदल दें।"
 
 #: ../../reference/cli.rst:633
 msgid "``--check``"
-msgstr ""
+msgstr "``--check``"
 
 #: ../../reference/cli.rst:634
 msgid ""
@@ -1647,83 +1598,66 @@ msgid ""
 "unpinned action, ``pull_request_target``, a checkout that keeps its "
 "credentials."
 msgstr ""
+"मौजूदा workflow जाँचें: पुरानी रिलीज़, गायब checksum, बिना पिन किया हुआ "
+"action, ``pull_request_target``, और ऐसा checkout जो अपने credentials रखे "
+"रहता है।"
 
 #: ../../reference/cli.rst:636
 msgid "``--project=DIR``, ``--branch=NAME``"
-msgstr ""
+msgstr "``--project=DIR``, ``--branch=NAME``"
 
 #: ../../reference/cli.rst:637
-#, fuzzy
-#| msgid "The profile ``auth`` and ``init`` use (default: ``default``)."
 msgid ""
 "The project (default: ``docs``) and the source branch (default: ``main``)."
-msgstr ""
-"``auth`` और ``init`` द्वारा इस्तेमाल की जाने वाली प्रोफ़ाइल (डिफ़ॉल्ट: "
-"``default``)।"
+msgstr "प्रोजेक्ट (डिफ़ॉल्ट: ``docs``) और सोर्स branch (डिफ़ॉल्ट: ``main``)।"
 
 #: ../../reference/cli.rst:638
-#, fuzzy
-#| msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 msgid "``--version=X``, ``--sha256=HEX``, ``--offline``"
-msgstr "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
+msgstr "``--version=X``, ``--sha256=HEX``, ``--offline``"
 
 #: ../../reference/cli.rst:639
 msgid ""
 "The release to install, its archive's SHA-256 (default: read from the "
 "release's ``SHA256SUMS``), or a marked placeholder without network access."
 msgstr ""
+"इंस्टॉल की जाने वाली रिलीज़, उसके आर्काइव का SHA-256 (डिफ़ॉल्ट: रिलीज़ की "
+"``SHA256SUMS`` से पढ़ा जाता है), या नेटवर्क के बिना एक चिह्नित प्लेसहोल्डर।"
 
 #: ../../reference/cli.rst:642
 msgid "See :doc:`../howto/github-pages`."
-msgstr ""
+msgstr ":doc:`../howto/github-pages` देखें।"
 
 #: ../../reference/cli.rst:644
 msgid "guidedog plugin"
 msgstr "guidedog plugin"
 
 #: ../../reference/cli.rst:647
-#, fuzzy
-#| msgid ""
-#| "Records which native plugin programs may run on this machine, in "
-#| "``plugins.toml`` in Guidedog's configuration folder "
-#| "(``GUIDEDOG_CONFIG_DIR`` moves it):"
 msgid ""
-"Records which plugin programs may run on this machine, in "
-"``plugins.toml`` in Guidedog's configuration folder "
-"(``GUIDEDOG_CONFIG_DIR`` moves it):"
+"Records which plugin programs may run on this machine, in ``plugins.toml`` "
+"in Guidedog's configuration folder (``GUIDEDOG_CONFIG_DIR`` moves it):"
 msgstr ""
-"इस मशीन पर चल सकने वाले native plugin programs को Guidedog configuration "
-"फ़ोल्डर के ``plugins.toml`` में रखता है। ``GUIDEDOG_CONFIG_DIR`` से यह "
-"फ़ोल्डर बदल सकते हैं:"
+"इस मशीन पर कौन-से plugin प्रोग्राम चल सकते हैं, यह Guidedog के कॉन्फ़िगरेशन "
+"फ़ोल्डर की ``plugins.toml`` में दर्ज करता है (``GUIDEDOG_CONFIG_DIR`` से यह "
+"फ़ोल्डर बदला जा सकता है):"
 
 #: ../../reference/cli.rst:660
 msgid "Subcommands:"
 msgstr "उपकमांड:"
 
 #: ../../reference/cli.rst:662
-#, fuzzy
-#| msgid ""
-#| "``register ID PATH [--project=DIR] [--config=FILE] [--yes]``: Inspects "
-#| "the program after user confirmation (``--yes`` bypasses confirmation) "
-#| "and records its SHA-256 hash. Build plugins pass qualification checks "
-#| "before registration."
 msgid ""
 "``register ID PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS] "
 "[--yes]``: inspects the program after we confirm (``--yes`` skips the "
 "question) and records its SHA-256. The program must say it is ``ID``. A "
-"build plugin passes the qualification checks below before it is "
-"registered."
+"build plugin passes the qualification checks below before it is registered."
 msgstr ""
-"``register ID PATH [--project=DIR] [--config=FILE] [--yes]``: पुष्टि के "
-"बाद प्रोग्राम जाँचकर SHA-256 दर्ज करता है। ``--yes`` सवाल छोड़ता है। "
-"बिल्ड प्लगइन को पहले जाँच पास करनी होती है।"
+"``register ID PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS] "
+"[--yes]``: हमारी पुष्टि के बाद प्रोग्राम की जाँच करता है (``--yes`` सवाल "
+"छोड़ देता है) और उसका SHA-256 दर्ज करता है। प्रोग्राम को खुद बताना होता है "
+"कि वह ``ID`` है। build plugin को रजिस्टर होने से पहले नीचे दी गई योग्यता "
+"जाँचें पास करनी होती हैं।"
 
 #: ../../reference/cli.rst:666
-#, fuzzy
-#| msgid ""
-#| "``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: "
-#| "Runs the full suite of qualification checks against a build plugin "
-#| "executable without writing to the machine registry."
 msgid ""
 "``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: runs "
 "the qualification checks against a build plugin without changing the "
@@ -1731,135 +1665,119 @@ msgid ""
 "and ``guidedog publish --dry-run``."
 msgstr ""
 "``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: "
-"प्रोग्राम की पूरी जाँच करता है, मशीन रजिस्ट्री नहीं बदलता।"
+"registry बदले बिना किसी build plugin पर योग्यता जाँचें चलाता है। publisher "
+"अस्वीकार किया जाता है; publisher को हम उसके अपने टेस्ट और ``guidedog "
+"publish --dry-run`` से जाँचते हैं।"
 
 #: ../../reference/cli.rst:669
-#, fuzzy
-#| msgid ""
-#| "``list``: Lists all registered plugins, their IDs, paths, and "
-#| "interface kinds."
 msgid ""
-"``list``: the registered programs, their IDs, paths, and kinds, beside "
-"the plugins linked into this executable."
-msgstr "``list``: सभी प्लगइन के ID, पथ और इंटरफ़ेस प्रकार दिखाता है।"
+"``list``: the registered programs, their IDs, paths, and kinds, beside the "
+"plugins linked into this executable."
+msgstr ""
+"``list``: रजिस्टर किए गए प्रोग्राम, उनके ID, पथ और प्रकार, साथ ही इस "
+"एग्ज़िक्यूटेबल में लिंक किए गए plugin।"
 
 #: ../../reference/cli.rst:671
-#, fuzzy
-#| msgid ""
-#| "``inspect ID``: Displays declared build hooks (source, HTML, assets) "
-#| "or publisher capabilities."
 msgid ""
 "``inspect ID``: an entry's declared build hooks (source, HTML, assets) or "
 "publisher capabilities, and whether the program on disk is still the one "
 "registered."
 msgstr ""
-"``inspect ID``: सोर्स, HTML, एसेट हुक या प्रकाशन क्षमताएँ दिखाता है।"
+"``inspect ID``: किसी प्रविष्टि के घोषित build hook (सोर्स, HTML, एसेट) या "
+"publisher की क्षमताएँ, और यह कि डिस्क पर मौजूद प्रोग्राम अब भी वही है जो "
+"रजिस्टर किया गया था।"
 
 #: ../../reference/cli.rst:673
-#, fuzzy
-#| msgid ""
-#| "``run ID -- [ARGS...]``: Runs a registered plugin program directly, "
-#| "verifying its SHA-256 pin first."
 msgid ""
 "``run ID -- [ARGS...]``: runs a registered program's own commands, after "
 "checking its SHA-256."
-msgstr "``run ID -- [ARGS...]``: तय SHA-256 जाँचकर सीधे प्रोग्राम चलाता है।"
+msgstr ""
+"``run ID -- [ARGS...]``: SHA-256 जाँचने के बाद पंजीकृत प्रोग्राम के अपने "
+"कमांड चलाता है।"
 
 #: ../../reference/cli.rst:675
-#, fuzzy
-#| msgid ""
-#| "``unregister ID``: Removes the specified plugin entry from "
-#| "``plugins.toml``."
 msgid ""
 "``unregister ID``: removes the entry from ``plugins.toml``. The program, "
 "and anything it published, stay unchanged."
-msgstr "``unregister ID``: ``plugins.toml`` से प्रविष्टि हटाता है।"
+msgstr ""
+"``unregister ID``: ``plugins.toml`` से प्रविष्टि हटाता है। प्रोग्राम और "
+"उसका प्रकाशित किया हुआ सब कुछ जैसा था वैसा ही रहता है।"
 
 #: ../../reference/cli.rst:678
-#, fuzzy
-#| msgid ""
-#| "In Guidedog 0.6.2, build plugins are selected by ``plugins`` in "
-#| "``conf.toml``. Inspection displays their declared source, HTML, and "
-#| "asset hooks. Build plugins run during ``guidedog build``, while "
-#| "``guidedog publish`` accepts publishers only. See :doc:`../plugins` "
-#| "for the complete guide, compiled example, and configuration."
 msgid ""
 "Build plugins are selected by ``plugins`` in ``conf.toml`` and run during "
 "``guidedog build``. ``guidedog publish`` accepts publishers only. "
 "``--untrusted`` disables build plugins. See :doc:`../plugins` for the "
 "complete guide, an example, and configuration."
 msgstr ""
-"0.6.2 में ``conf.toml`` के ``plugins`` से बिल्ड प्लगइन चुनते हैं। "
-"निरीक्षण में सोर्स, HTML और एसेट हुक दिखते हैं। वे ``guidedog build`` में "
-"चलते हैं; ``guidedog publish`` केवल पब्लिशर लेता है। पूरा उदाहरण और "
-"सेटिंग :doc:`../plugins` में हैं।"
+"build plugin ``conf.toml`` के ``plugins`` से चुने जाते हैं और ``guidedog "
+"build`` के दौरान चलते हैं। ``guidedog publish`` सिर्फ़ publisher स्वीकार "
+"करता है। ``--untrusted`` build plugin बंद कर देता है। पूरी गाइड, उदाहरण और "
+"कॉन्फ़िगरेशन के लिए :doc:`../plugins` देखें।"
 
 #: ../../reference/cli.rst:682
-#, fuzzy
-#| msgid "Build-plugin registration checks"
 msgid "Build-plugin qualification checks"
-msgstr "Build plugin registration की जाँच"
+msgstr "build plugin की योग्यता जाँच"
 
 #: ../../reference/cli.rst:685
-#, fuzzy
-#| msgid ""
-#| "``guidedog plugin check PATH --project=DIR --config=FILE`` tests "
-#| "declared build hooks without writing a registry entry. Build-plugin "
-#| "registration runs the same checks before pinning the executable. Its "
-#| "request timeout defaults to 60 seconds; ``--timeout=SECONDS`` sets it. "
-#| "Publisher registration remains compatible and does not invoke "
-#| "publication. Passing checks is not a sandbox or a safety certificate."
 msgid ""
 "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises the "
-"declared hooks in child processes: loading, repeated results, and "
-"cleanup. ``--project`` defaults to the current folder. A relative "
-"``--config`` is relative to it. The request timeout defaults to 60 "
-"seconds. The program's SHA-256 must be the same before and after the "
-"checks. Publisher registration does not invoke publication. Passing "
-"checks is interoperability evidence, not a sandbox or a safety "
-"certificate."
+"declared hooks in child processes: loading, repeated results, and cleanup. "
+"``--project`` defaults to the current folder. A relative ``--config`` is "
+"relative to it. The request timeout defaults to 60 seconds. The program's "
+"SHA-256 must be the same before and after the checks. Publisher "
+"registration does not invoke publication. Passing checks is "
+"interoperability evidence, not a sandbox or a safety certificate."
 msgstr ""
-"``guidedog plugin check PATH --project=DIR --config=FILE`` registry entry "
-"लिखे बिना घोषित build hooks जाँचता है। Registration भी executable तय करने "
-"से पहले यही checks करता है। Request timeout का default 60 सेकंड है; "
-"``--timeout=SECONDS`` उसे बदलता है। Publisher registration compatible "
-"रहता है और publication नहीं करता। जाँच पास करना sandbox या सुरक्षा "
-"प्रमाणपत्र नहीं है।"
+"``guidedog plugin check PATH --project=DIR --config=FILE`` घोषित hook को "
+"चाइल्ड प्रोसेस में आज़माता है: लोड होना, दोहराने पर नतीजे, और सफ़ाई। "
+"``--project`` का डिफ़ॉल्ट मौजूदा फ़ोल्डर है, और सापेक्ष ``--config`` उसी के "
+"सापेक्ष होता है। अनुरोध के टाइमआउट का डिफ़ॉल्ट 60 सेकंड है। जाँच से पहले और "
+"बाद में प्रोग्राम का SHA-256 एक जैसा होना चाहिए। publisher के रजिस्ट्रेशन "
+"में प्रकाशन नहीं चलाया जाता। जाँच पास होना इंटरऑपरेबिलिटी का प्रमाण है, "
+"सैंडबॉक्स या सुरक्षा प्रमाणपत्र नहीं।"
 
 #: ../../reference/cli.rst:692
 msgid "Custom binaries with linked plugins"
-msgstr ""
+msgstr "लिंक किए गए plugin वाली कस्टम बाइनरी"
 
 #: ../../reference/cli.rst:695
 msgid ""
 "The whole command line is the ``gd-cli`` crate. A Rust program can be a "
 "``guidedog`` with plugins linked in, instead of registered as separate "
 "programs. It passes a ``gd_plugins::Registry`` of its plugins to "
-"``gd_cli::run_with``. That function reads the process arguments and "
-"returns the exit status."
+"``gd_cli::run_with``. That function reads the process arguments and returns "
+"the exit status."
 msgstr ""
+"पूरी कमांड लाइन ``gd-cli`` crate है। कोई Rust प्रोग्राम plugin को अलग "
+"प्रोग्राम के रूप में रजिस्टर करने के बजाय, उन्हें लिंक करके खुद एक "
+"``guidedog`` बन सकता है। वह अपने plugin की ``gd_plugins::Registry`` को "
+"``gd_cli::run_with`` में देता है। यह फ़ंक्शन प्रोसेस के आर्ग्युमेंट पढ़ता "
+"है और निकास स्थिति लौटाता है।"
 
 #: ../../reference/cli.rst:714
 msgid ""
 "The program accepts every command and option on this page. A selected "
 "plugin ID is looked up among the linked plugins first, then in the "
-"machine's registry. Linked plugins need no registration and no SHA-256 "
-"pin, because they are part of the executable. ``gd_cli::run`` is the same "
-"with no linked plugins. ``guidedog`` itself runs it. The plugin is the "
-"same ``Plugin`` value its installed form serves with "
+"machine's registry. Linked plugins need no registration and no SHA-256 pin, "
+"because they are part of the executable. ``gd_cli::run`` is the same with "
+"no linked plugins. ``guidedog`` itself runs it. The plugin is the same "
+"``Plugin`` value its installed form serves with "
 "``gd_plugins::serve_plugin`` (see :doc:`../plugins`)."
 msgstr ""
+"यह प्रोग्राम इस पेज का हर कमांड और विकल्प स्वीकार करता है। चुना गया plugin "
+"ID पहले लिंक किए गए plugin में खोजा जाता है, फिर मशीन की registry में। लिंक "
+"किए गए plugin एग्ज़िक्यूटेबल का हिस्सा होते हैं, इसलिए उन्हें न रजिस्ट्रेशन "
+"चाहिए, न SHA-256 पिन। ``gd_cli::run`` वही है, बस उसमें कोई लिंक किया गया "
+"plugin नहीं होता; ``guidedog`` खुद इसी को चलाता है। plugin वही ``Plugin`` "
+"मान है जिसे उसका इंस्टॉल किया गया रूप ``gd_plugins::serve_plugin`` से चलाता "
+"है (देखें :doc:`../plugins`)।"
 
 #: ../../reference/cli.rst:721
 msgid "guidedog-pages"
 msgstr "guidedog-pages"
 
 #: ../../reference/cli.rst:724
-#, fuzzy
-#| msgid ""
-#| "Publishes Guidedog sites to GitHub Pages from this machine, building "
-#| "projects with the installed ``guidedog``; see "
-#| ":doc:`../howto/github-pages`."
 msgid ""
 "Publishes Guidedog sites to GitHub Pages from this machine. It builds "
 "projects with the installed ``guidedog``. ``publish`` does any missing "
@@ -1867,8 +1785,10 @@ msgid ""
 "stay for scripts and for checking each part. See "
 ":doc:`../howto/github-pages`."
 msgstr ""
-"इसी मशीन से Guidedog साइटें GitHub Pages पर प्रकाशित करता है और "
-"परियोजनाएँ स्थापित ``guidedog`` से बिल्ड करता है; "
+"इसी मशीन से Guidedog साइटें GitHub Pages पर प्रकाशित करता है। प्रोजेक्ट "
+"इंस्टॉल किए गए ``guidedog`` से build होते हैं। ``publish`` पहले सेटअप का हर "
+"बाकी चरण पूरा करता है, जैसे ``guidedog publish pages`` करता है। अलग-अलग "
+"चरणों के कमांड स्क्रिप्ट के लिए और हर हिस्से को जाँचने के लिए बने रहते हैं। "
 ":doc:`../howto/github-pages` देखें।"
 
 #: ../../reference/cli.rst:748
@@ -1893,18 +1813,17 @@ msgstr "``repository = \"OWNER/REPO\"``"
 
 #: ../../reference/cli.rst:757
 msgid "The GitHub.com repository; required."
-msgstr "GitHub.com की रिपॉज़िटरी; आवश्यक।"
+msgstr "GitHub.com की repository; आवश्यक।"
 
 #: ../../reference/cli.rst:758
 msgid "``branch = \"gh-pages\"``"
 msgstr "``branch = \"gh-pages\"``"
 
 #: ../../reference/cli.rst:759
-msgid ""
-"The branch the site is published to: its own, never the default branch."
+msgid "The branch the site is published to: its own, never the default branch."
 msgstr ""
-"वह ब्रांच जिस पर साइट प्रकाशित होती है: उसकी अपनी अलग ब्रांच, कभी "
-"डिफ़ॉल्ट ब्रांच नहीं।"
+"वह branch जिस पर साइट प्रकाशित होती है: उसकी अपनी अलग branch, कभी डिफ़ॉल्ट "
+"branch नहीं।"
 
 #: ../../reference/cli.rst:760
 msgid "``project = \"docs\"`` or ``site = \"build/site\"``"
@@ -1915,8 +1834,8 @@ msgid ""
 "The Guidedog project to build, or the folder of a site built already; one "
 "of them, relative to ``pages.toml``."
 msgstr ""
-"बिल्ड करने के लिए Guidedog परियोजना, या पहले से बनी साइट का फ़ोल्डर; "
-"दोनों में से एक, ``pages.toml`` के सापेक्ष।"
+"build करने के लिए Guidedog प्रोजेक्ट, या पहले से बनी साइट का फ़ोल्डर; दोनों "
+"में से एक, ``pages.toml`` के सापेक्ष।"
 
 #: ../../reference/cli.rst:763
 msgid "``profile = \"default\"``"
@@ -1924,7 +1843,7 @@ msgstr "``profile = \"default\"``"
 
 #: ../../reference/cli.rst:764
 msgid "The credential profile whose token publishes."
-msgstr "वह क्रेडेंशियल प्रोफ़ाइल जिसका टोकन प्रकाशित करता है।"
+msgstr "वह क्रेडेंशियल प्रोफ़ाइल जिसका token प्रकाशित करता है।"
 
 #: ../../reference/cli.rst:765
 msgid "``site_url``"
@@ -1935,7 +1854,7 @@ msgid ""
 "The address readers open, and ``html_baseurl`` for the build (default: "
 "``https://OWNER.github.io/REPO/``)."
 msgstr ""
-"पाठक जो पता खोलते हैं, और बिल्ड के लिए ``html_baseurl`` (डिफ़ॉल्ट: "
+"पाठक जो पता खोलते हैं, और build के लिए ``html_baseurl`` (डिफ़ॉल्ट: "
 "``https://OWNER.github.io/REPO/``)।"
 
 #: ../../reference/cli.rst:768
@@ -1944,7 +1863,7 @@ msgstr "``strict = true``"
 
 #: ../../reference/cli.rst:769
 msgid "Build with warnings as errors."
-msgstr "चेतावनियों को त्रुटि मानकर बिल्ड करना।"
+msgstr "चेतावनियों को त्रुटि मानकर build करना।"
 
 #: ../../reference/cli.rst:770
 msgid "``wait_seconds = 300``"
@@ -1952,7 +1871,7 @@ msgstr "``wait_seconds = 300``"
 
 #: ../../reference/cli.rst:771
 msgid "How long ``publish`` waits for the deployment."
-msgstr "``publish`` डिप्लॉयमेंट के लिए कितनी देर इंतज़ार करता है।"
+msgstr "``publish`` deployment के लिए कितनी देर इंतज़ार करता है।"
 
 #: ../../reference/cli.rst:772
 msgid "``[watch] debounce_ms``, ``max_wait_ms``"
@@ -1963,8 +1882,8 @@ msgid ""
 "How long ``watch`` lets sources settle, and the most it waits after a "
 "change."
 msgstr ""
-"``watch`` स्रोतों को स्थिर होने के लिए कितना समय देता है, और किसी बदलाव "
-"के बाद अधिकतम कितना इंतज़ार करता है।"
+"``watch`` सोर्स फ़ाइलों को स्थिर होने के लिए कितना समय देता है, और किसी "
+"बदलाव के बाद अधिकतम कितना इंतज़ार करता है।"
 
 #: ../../reference/cli.rst:775
 msgid "Options of guidedog-pages"
@@ -1989,10 +1908,12 @@ msgid ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
 msgstr ""
+"``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
+"``--branch=NAME``"
 
 #: ../../reference/cli.rst:786
 msgid "``init``: what the new ``pages.toml`` says."
-msgstr ""
+msgstr "``init``: नई ``pages.toml`` में क्या लिखा जाएगा।"
 
 #: ../../reference/cli.rst:787
 msgid "``--credential=env``"
@@ -2000,18 +1921,18 @@ msgstr "``--credential=env``"
 
 #: ../../reference/cli.rst:788
 msgid ""
-"Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without "
-"storing it."
+"Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without storing "
+"it."
 msgstr ""
-"इस कमांड के लिए ``GUIDEDOG_PAGES_TOKEN`` का टोकन, उसे सहेजे बिना, "
-"इस्तेमाल करें।"
+"इस कमांड के लिए ``GUIDEDOG_PAGES_TOKEN`` का token, उसे सहेजे बिना, इस्तेमाल "
+"करें।"
 
 #: ../../reference/cli.rst:790
 msgid ""
 "The ``guidedog`` that builds (default: ``GUIDEDOG_PAGES_GUIDEDOG``, then "
 "``PATH``)."
 msgstr ""
-"बिल्ड करने वाला ``guidedog`` (डिफ़ॉल्ट: ``GUIDEDOG_PAGES_GUIDEDOG``, फिर "
+"build करने वाला ``guidedog`` (डिफ़ॉल्ट: ``GUIDEDOG_PAGES_GUIDEDOG``, फिर "
 "``PATH``)।"
 
 #: ../../reference/cli.rst:791
@@ -2023,8 +1944,8 @@ msgid ""
 "``publish``: plan only; how long to wait for the deployment; list every "
 "change."
 msgstr ""
-"``publish``: केवल योजना; डिप्लॉयमेंट का कितनी देर इंतज़ार करना है; हर "
-"बदलाव की सूची।"
+"``publish``: केवल योजना; deployment का कितनी देर इंतज़ार करना है; हर बदलाव "
+"की सूची।"
 
 #: ../../reference/cli.rst:793
 msgid "``--adopt``, ``--yes``"
@@ -2035,7 +1956,7 @@ msgid ""
 "``bind``: let a branch of other work be replaced; answer yes to the "
 "question."
 msgstr ""
-"``bind``: दूसरे काम वाली ब्रांच को बदलने देना; प्रश्न का उत्तर हाँ देना।"
+"``bind``: दूसरे काम वाली branch को बदलने देना; प्रश्न का उत्तर हाँ देना।"
 
 #: ../../reference/cli.rst:795
 msgid ""
@@ -2048,16 +1969,17 @@ msgid ""
 "``auth login``: the app; the repositories an OAuth App token may reach; "
 "open the browser; give the profile to another account."
 msgstr ""
-"``auth login``: ऐप; वे रिपॉज़िटरी जिन तक OAuth App का टोकन पहुँच सकता है; "
+"``auth login``: ऐप; वे repository जिन तक OAuth App का token पहुँच सकता है; "
 "ब्राउज़र खोलना; प्रोफ़ाइल किसी दूसरे खाते को देना।"
 
 #: ../../reference/cli.rst:798
 msgid "``--operation=COMMIT``"
-msgstr ""
+msgstr "``--operation=COMMIT``"
 
 #: ../../reference/cli.rst:799
 msgid "``status``: the publication to ask about (default: the last one)."
 msgstr ""
+"``status``: किस प्रकाशन के बारे में पूछना है (डिफ़ॉल्ट: आख़िरी प्रकाशन)।"
 
 #: ../../reference/cli.rst:800
 msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
@@ -2068,20 +1990,16 @@ msgid "How problems and results are written."
 msgstr "समस्याएँ और परिणाम किस रूप में लिखे जाते हैं।"
 
 #: ../../reference/cli.rst:803
-#, fuzzy
-#| msgid ""
-#| "Its exit statuses are those of ``guidedog publish``: 0 live or "
-#| "unchanged, 1 nothing published, 2 a usage or configuration problem, 6 "
-#| "accepted but not confirmed, and 7 unknown until ``recover``."
 msgid ""
-"Its exit statuses are those of ``guidedog publish``: 0 live or unchanged, "
-"1 nothing published, 2 a usage or configuration problem, 4 a file, "
-"network or program failure, 6 accepted but not confirmed, 7 unknown until "
-"``recover``, and 130 cancelled."
+"Its exit statuses are those of ``guidedog publish``: 0 live or unchanged, 1 "
+"nothing published, 2 a usage or configuration problem, 4 a file, network or "
+"program failure, 6 accepted but not confirmed, 7 unknown until ``recover``, "
+"and 130 cancelled."
 msgstr ""
 "इसकी निकास स्थितियाँ वही हैं जो ``guidedog publish`` की हैं: 0 लाइव या "
-"अपरिवर्तित, 1 कुछ प्रकाशित नहीं हुआ, 2 उपयोग या कॉन्फ़िगरेशन की समस्या, 6 "
-"स्वीकार हुआ पर पुष्टि नहीं, और 7 ``recover`` तक अज्ञात।"
+"अपरिवर्तित, 1 कुछ प्रकाशित नहीं हुआ, 2 उपयोग या कॉन्फ़िगरेशन की समस्या, 4 "
+"फ़ाइल, नेटवर्क या प्रोग्राम की विफलता, 6 स्वीकार हुआ पर पुष्टि नहीं, 7 "
+"``recover`` तक अज्ञात, और 130 रद्द।"
 
 #: ../../reference/configuration.rst:1
 msgid "Configuration reference"
@@ -2090,11 +2008,16 @@ msgstr "कॉन्फ़िगरेशन संदर्भ"
 #: ../../reference/configuration.rst:4
 msgid ""
 "Every Guidedog documentation project is configured with ``conf.toml``. "
-"Guidedog reads it as TOML data and runs no code. Setting names are those "
-"of Sphinx's ``conf.py``. So ``guidedog migrate conf.py`` can translate an "
+"Guidedog reads it as TOML data and runs no code. Setting names are those of "
+"Sphinx's ``conf.py``. So ``guidedog migrate conf.py`` can translate an "
 "existing project, and the Sphinx documentation describes the settings "
 "Guidedog shares with it."
 msgstr ""
+"हर Guidedog दस्तावेज़ प्रोजेक्ट ``conf.toml`` से कॉन्फ़िगर होता है। "
+"Guidedog इसे TOML डेटा के रूप में पढ़ता है और कोई कोड नहीं चलाता। सेटिंग के "
+"नाम वही हैं जो Sphinx की ``conf.py`` में होते हैं। इसलिए ``guidedog migrate "
+"conf.py`` किसी मौजूदा प्रोजेक्ट को बदल सकता है, और जो सेटिंग Guidedog और "
+"Sphinx दोनों में हैं, उनका विवरण Sphinx के दस्तावेज़ में मिल जाता है।"
 
 #: ../../reference/configuration.rst:9
 msgid ""
@@ -2102,21 +2025,31 @@ msgid ""
 "top-level keys, as in ``conf.py``. A table setting is written as a TOML "
 "table (``[html_context]``) or an inline table."
 msgstr ""
+"यह पेज Guidedog की पढ़ी जाने वाली हर सेटिंग की सूची देता है। ``conf.py`` की "
+"तरह सभी सेटिंग सपाट, शीर्ष-स्तर की कुंजियाँ हैं। टेबल वाली सेटिंग TOML टेबल "
+"(``[html_context]``) या इनलाइन टेबल के रूप में लिखी जाती है।"
 
 #: ../../reference/configuration.rst:13
 msgid "Where conf.toml is"
-msgstr ""
+msgstr "conf.toml कहाँ होती है"
 
 #: ../../reference/configuration.rst:16
 msgid ""
 "Guidedog looks for ``conf.toml`` in the project folder, then in "
 "``PROJECT/source`` (the separated layout of ``quickstart --sep``, with "
-"``build/`` beside ``source/``), then in the nearest parent folder that "
-"has one. The folder holding ``conf.toml`` is the source folder. The build "
+"``build/`` beside ``source/``), then in the nearest parent folder that has "
+"one. The folder holding ``conf.toml`` is the source folder. The build "
 "folder is ``_build`` beside it, or ``build`` in the separated layout. "
 "``guidedog build -c DIR`` reads ``conf.toml`` from another folder. ``-C`` "
 "builds without one, with the defaults below."
 msgstr ""
+"Guidedog ``conf.toml`` को पहले प्रोजेक्ट फ़ोल्डर में खोजता है, फिर "
+"``PROJECT/source`` में (``quickstart --sep`` का अलग लेआउट, जिसमें "
+"``build/`` और ``source/`` साथ-साथ होते हैं), और फिर सबसे नज़दीकी उस पैरेंट "
+"फ़ोल्डर में जिसमें यह फ़ाइल हो। जिस फ़ोल्डर में ``conf.toml`` है, वही सोर्स "
+"फ़ोल्डर है। build फ़ोल्डर उसके बगल में ``_build`` होता है, या अलग लेआउट में "
+"``build``। ``guidedog build -c DIR`` किसी दूसरे फ़ोल्डर से ``conf.toml`` "
+"पढ़ता है। ``-C`` इसके बिना, नीचे दिए डिफ़ॉल्ट मानों से build करता है।"
 
 #: ../../reference/configuration.rst:23
 msgid ""
@@ -2126,46 +2059,55 @@ msgid ""
 "html_context.key=value`` sets one key of a table setting and keeps the "
 "others, as sphinx-build does."
 msgstr ""
+"``-D name=value`` एक build के लिए एक सेटिंग बदल देता है। मान TOML में होता "
+"है (``-D numfig=true``, ``-D 'exclude_patterns=[\"drafts/**\"]'``)। बिना "
+"उद्धरण चिह्न वाला शब्द स्ट्रिंग माना जाता है (``-D language=de``)। ``-D "
+"html_context.key=value`` किसी टेबल सेटिंग की एक कुंजी सेट करता है और बाकी "
+"को वैसे ही रहने देता है, जैसा sphinx-build करता है।"
 
 #: ../../reference/configuration.rst:28
 msgid "Minimal configuration"
 msgstr "न्यूनतम कॉन्फ़िगरेशन"
 
 #: ../../reference/configuration.rst:31
-#, fuzzy
-#| msgid ""
-#| "A project requires only basic metadata. Default values are applied for "
-#| "omitted keys:"
-msgid ""
-"A project needs only basic metadata. Omitted keys take their defaults:"
+msgid "A project needs only basic metadata. Omitted keys take their defaults:"
 msgstr ""
-"परियोजना के लिए मूल जानकारी ही काफ़ी है। छोड़ी गई सेटिंग के लिए डिफ़ॉल्ट "
+"प्रोजेक्ट के लिए मूल मेटाडेटा ही काफ़ी है। छोड़ी गई कुंजियों के डिफ़ॉल्ट "
 "मान लागू होते हैं:"
 
 #: ../../reference/configuration.rst:46
 msgid "How settings are checked"
-msgstr ""
+msgstr "सेटिंग कैसे जाँची जाती हैं"
 
 #: ../../reference/configuration.rst:49
 msgid ""
 "Each value is checked against its type when ``conf.toml`` is read. A "
-"mistake is an ``INVALID CONFIGURATION`` problem (exit status 2) naming "
-"the line and the expected form. An unknown setting is an error too, with "
-"a \"Did you mean ...?\" hint when the name is close to a known one. A "
-"setting of a Sphinx builder or extension Guidedog does not have "
-"(``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, ``autosummary_*``, "
-"``napoleon_*``, ``linkcheck_*``, ``html_sidebars``, ``needs_*`` and "
-"similar) is accepted with a ``config.ignored`` warning. So the same file "
-"can serve a Sphinx build of the sources."
+"mistake is an ``INVALID CONFIGURATION`` problem (exit status 2) naming the "
+"line and the expected form. An unknown setting is an error too, with a "
+"\"Did you mean ...?\" hint when the name is close to a known one. A setting "
+"of a Sphinx builder or extension Guidedog does not have (``latex_*``, "
+"``epub_*``, ``man_*``, ``texinfo_*``, ``autosummary_*``, ``napoleon_*``, "
+"``linkcheck_*``, ``html_sidebars``, ``needs_*`` and similar) is accepted "
+"with a ``config.ignored`` warning. So the same file can serve a Sphinx "
+"build of the sources."
 msgstr ""
+"``conf.toml`` पढ़ते समय हर मान को उसके प्रकार के हिसाब से जाँचा जाता है। "
+"गलती होने पर ``INVALID CONFIGURATION`` समस्या (निकास स्थिति 2) आती है, जो "
+"लाइन और अपेक्षित रूप बताती है। अज्ञात सेटिंग भी त्रुटि है; अगर नाम किसी "
+"ज्ञात सेटिंग से मिलता-जुलता हो तो \"Did you mean ...?\" संकेत भी मिलता है। "
+"Sphinx के ऐसे builder या एक्सटेंशन की सेटिंग जो Guidedog में नहीं हैं "
+"(``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, ``autosummary_*``, "
+"``napoleon_*``, ``linkcheck_*``, ``html_sidebars``, ``needs_*`` और ऐसी ही "
+"दूसरी), ``config.ignored`` चेतावनी के साथ स्वीकार की जाती हैं। इसलिए वही "
+"फ़ाइल सोर्स के Sphinx build में भी काम आ सकती है।"
 
 #: ../../reference/configuration.rst:57
 msgid "Some values are derived after reading:"
-msgstr ""
+msgstr "कुछ मान पढ़ने के बाद दूसरे मानों से तय होते हैं:"
 
 #: ../../reference/configuration.rst:59
 msgid "``release`` defaults to ``version``."
-msgstr ""
+msgstr "``release`` का डिफ़ॉल्ट ``version`` है।"
 
 #: ../../reference/configuration.rst:60
 msgid ""
@@ -2173,6 +2115,9 @@ msgid ""
 "``\"<project> documentation\"`` without a release). ``html_short_title`` "
 "defaults to ``html_title``."
 msgstr ""
+"``html_title`` का डिफ़ॉल्ट ``\"<project> <release> documentation\"`` है "
+"(रिलीज़ न हो तो ``\"<project> documentation\"``)। ``html_short_title`` का "
+"डिफ़ॉल्ट ``html_title`` है।"
 
 #: ../../reference/configuration.rst:63
 msgid ""
@@ -2180,18 +2125,21 @@ msgid ""
 "``root_doc``, is titled with ``project``, is by ``author``, and is in a "
 "file named after the project."
 msgstr ""
+"``pdf_documents`` न हो तो प्रोजेक्ट में एक ही किताब होती है। वह "
+"``root_doc`` से शुरू होती है, उसका शीर्षक ``project`` और लेखक ``author`` "
+"होता है, और वह प्रोजेक्ट के नाम वाली फ़ाइल में बनती है।"
 
 #: ../../reference/configuration.rst:65
 msgid ""
 "``extensions = [\"myst_parser\"]`` adds ``.md`` to ``source_suffix``, as "
 "the Sphinx extension does."
 msgstr ""
+"``extensions = [\"myst_parser\"]`` ``source_suffix`` में ``.md`` जोड़ता है, "
+"जैसा Sphinx एक्सटेंशन करता है।"
 
 #: ../../reference/configuration.rst:68 ../../reference/configuration.rst:71
-#, fuzzy
-#| msgid "Project metadata"
 msgid "Project information"
-msgstr "परियोजना का मेटाडेटा"
+msgstr "प्रोजेक्ट की जानकारी"
 
 #: ../../reference/configuration.rst:75
 #: ../../reference/configuration.rst:121
@@ -2334,7 +2282,7 @@ msgstr "``\"Python\"``"
 
 #: ../../reference/configuration.rst:82
 msgid "The project's name (Sphinx's default)."
-msgstr ""
+msgstr "प्रोजेक्ट का नाम (Sphinx का डिफ़ॉल्ट)।"
 
 #: ../../reference/configuration.rst:83
 msgid "``author``"
@@ -2363,8 +2311,6 @@ msgid "``\"\"``"
 msgstr "``\"\"``"
 
 #: ../../reference/configuration.rst:86
-#, fuzzy
-#| msgid "Author or organization name."
 msgid "The author or organization name."
 msgstr "लेखक या संगठन का नाम।"
 
@@ -2373,34 +2319,24 @@ msgid "``copyright``"
 msgstr "``copyright``"
 
 #: ../../reference/configuration.rst:90
-#, fuzzy
-#| msgid "Copyright notice displayed in page footers."
 msgid "The copyright notice in page footers."
-msgstr "पृष्ठ के नीचे दिखाया जाने वाला कॉपीराइट विवरण।"
+msgstr "पेज के फ़ुटर में दिखने वाली कॉपीराइट सूचना।"
 
 #: ../../reference/configuration.rst:91 ../../reference/configuration.rst:97
 msgid "``version``"
 msgstr "``version``"
 
 #: ../../reference/configuration.rst:94
-#, fuzzy
-#| msgid "The short project version (e.g. ``\"1.0\"``)."
 msgid "The short version (``\"1.0\"``)."
-msgstr "छोटा संस्करण नंबर, जैसे ``\"1.0\"``।"
+msgstr "छोटा संस्करण (``\"1.0\"``)।"
 
 #: ../../reference/configuration.rst:95
 msgid "``release``"
 msgstr "``release``"
 
 #: ../../reference/configuration.rst:98
-#, fuzzy
-#| msgid ""
-#| "The full version string, including alpha/beta identifiers (e.g. "
-#| "``\"1.0.0b1\"``)."
 msgid "The full release, including alpha or beta tags (``\"1.0.0b1\"``)."
-msgstr ""
-"पूरा संस्करण नंबर, जिसमें alpha या beta पहचान भी हो सकती है, जैसे "
-"``\"1.0.0b1\"``।"
+msgstr "पूरी रिलीज़, अल्फ़ा या बीटा tag सहित (``\"1.0.0b1\"``)।"
 
 #: ../../reference/configuration.rst:99
 msgid "``language``"
@@ -2411,32 +2347,24 @@ msgid "``\"en\"``"
 msgstr "``\"en\"``"
 
 #: ../../reference/configuration.rst:102
-#, fuzzy
-#| msgid ""
-#| "ISO language code (e.g. ``\"de\"``, ``\"zh_CN\"``) for typography, "
-#| "hyphenation, and translations."
 msgid ""
-"The document language (``\"de\"``, ``\"zh_CN\"``): typography, "
-"hyphenation, the theme's words, and the translation catalogs used."
+"The document language (``\"de\"``, ``\"zh_CN\"``): typography, hyphenation, "
+"the theme's words, and the translation catalogs used."
 msgstr ""
-"टाइपसेटिंग, शब्द-विभाजन और अनुवाद के लिए ISO भाषा कोड, जैसे ``\"de\"`` या "
-"``\"zh_CN\"``।"
+"दस्तावेज़ की भाषा (``\"de\"``, ``\"zh_CN\"``): इससे टाइपसेटिंग, "
+"शब्द-विभाजन, theme के शब्द और इस्तेमाल होने वाले अनुवाद कैटलॉग तय होते हैं।"
 
 #: ../../reference/configuration.rst:104
 msgid "``today``"
 msgstr "``today``"
 
 #: ../../reference/configuration.rst:107
-#, fuzzy
-#| msgid ""
-#| "Custom date text; if omitted, current time is formatted with "
-#| "``today_fmt``."
 msgid ""
 "A fixed date for ``|today|``; when empty, the build date formatted with "
 "``today_fmt``."
 msgstr ""
-"अपनी तारीख़ का पाठ। इसे छोड़ने पर वर्तमान तारीख़ ``today_fmt`` से "
-"स्वरूपित होती है।"
+"``|today|`` के लिए तय तारीख़; ख़ाली हो तो build की तारीख़, ``today_fmt`` के "
+"अनुसार स्वरूपित।"
 
 #: ../../reference/configuration.rst:109
 msgid "``today_fmt``"
@@ -2444,12 +2372,12 @@ msgstr "``today_fmt``"
 
 #: ../../reference/configuration.rst:112
 msgid "The ``strftime`` format of that date (``\"%Y-%m-%d\"``)."
-msgstr ""
+msgstr "उस तारीख़ का ``strftime`` फ़ॉर्मैट (``\"%Y-%m-%d\"``)।"
 
 #: ../../reference/configuration.rst:114
 #: ../../reference/configuration.rst:117
 msgid "Sources and reading"
-msgstr ""
+msgstr "सोर्स और पढ़ना"
 
 #: ../../reference/configuration.rst:125
 msgid "``root_doc``"
@@ -2465,16 +2393,16 @@ msgid ""
 "The document that starts the reading order. ``master_doc`` is its older "
 "name."
 msgstr ""
+"वह दस्तावेज़ जिससे पढ़ने का क्रम शुरू होता है। ``master_doc`` इसका पुराना "
+"नाम है।"
 
 #: ../../reference/configuration.rst:129
-#, fuzzy
-#| msgid "``root_doc``"
 msgid "``master_doc``"
-msgstr "``root_doc``"
+msgstr "``master_doc``"
 
 #: ../../reference/configuration.rst:132
 msgid "The same setting as ``root_doc``."
-msgstr ""
+msgstr "``root_doc`` वाली ही सेटिंग।"
 
 #: ../../reference/configuration.rst:133
 msgid "``source_suffix``"
@@ -2482,7 +2410,7 @@ msgstr "``source_suffix``"
 
 #: ../../reference/configuration.rst:134
 msgid "string, array or table"
-msgstr ""
+msgstr "स्ट्रिंग, ऐरे या टेबल"
 
 #: ../../reference/configuration.rst:135
 msgid "``[\".rst\"]``"
@@ -2495,6 +2423,10 @@ msgid ""
 "``.md`` documents are MyST. ``.typ`` is refused: Typst shapes the PDF, it "
 "is not a document."
 msgstr ""
+"सोर्स दस्तावेज़ों के प्रत्यय: ``\".rst\"``, ``[\".rst\", \".md\"]``, या "
+"Sphinx का ``{\".rst\" = \"restructuredtext\", \".md\" = \"markdown\"}``। "
+"``.md`` दस्तावेज़ MyST होते हैं। ``.typ`` अस्वीकार किया जाता है: Typst PDF "
+"का रूप तय करता है, वह कोई दस्तावेज़ नहीं है।"
 
 #: ../../reference/configuration.rst:139
 msgid "``exclude_patterns``"
@@ -2565,23 +2497,19 @@ msgstr "``[]``"
 
 #: ../../reference/configuration.rst:142
 msgid "Glob patterns of files and folders that are not documents."
-msgstr ""
+msgstr "उन फ़ाइलों और फ़ोल्डरों के glob पैटर्न जो दस्तावेज़ नहीं हैं।"
 
 #: ../../reference/configuration.rst:143
-#, fuzzy
-#| msgid "``exclude_patterns``"
 msgid "``include_patterns``"
-msgstr "``exclude_patterns``"
+msgstr "``include_patterns``"
 
 #: ../../reference/configuration.rst:145
-#, fuzzy
-#| msgid "``\"\"``"
 msgid "``[\"**\"]``"
-msgstr "``\"\"``"
+msgstr "``[\"**\"]``"
 
 #: ../../reference/configuration.rst:146
 msgid "Glob patterns of the documents to find."
-msgstr ""
+msgstr "खोजे जाने वाले दस्तावेज़ों के glob पैटर्न।"
 
 #: ../../reference/configuration.rst:147
 msgid "``include_roots``"
@@ -2590,24 +2518,22 @@ msgstr "``include_roots``"
 #: ../../reference/configuration.rst:150
 msgid ""
 "Folders, relative to the source folder, that ``include``, "
-"``literalinclude``, images, graphs, logos and other files may also be "
-"read from. Sphinx reads any path; Guidedog reads only the source folder "
-"and these."
+"``literalinclude``, images, graphs, logos and other files may also be read "
+"from. Sphinx reads any path; Guidedog reads only the source folder and "
+"these."
 msgstr ""
+"वे फ़ोल्डर (सोर्स फ़ोल्डर के सापेक्ष) जिनसे ``include``, "
+"``literalinclude``, इमेज, ग्राफ़, लोगो और दूसरी फ़ाइलें भी पढ़ी जा सकती "
+"हैं। Sphinx कोई भी पाथ पढ़ लेता है; Guidedog केवल सोर्स फ़ोल्डर और इन्हीं "
+"फ़ोल्डरों को पढ़ता है।"
 
 #: ../../reference/configuration.rst:153
 msgid "``templates_path``"
 msgstr "``templates_path``"
 
 #: ../../reference/configuration.rst:156
-#, fuzzy
-#| msgid ""
-#| "Directories containing HTML and PDF templates, searched before "
-#| "built-ins."
 msgid "Folders of HTML templates, searched before the built-in theme."
-msgstr ""
-"HTML और PDF टेम्पलेट के फ़ोल्डर; अंतर्निहित टेम्पलेट से पहले खोजे जाते "
-"हैं।"
+msgstr "HTML template के फ़ोल्डर; इन्हें बिल्ट-इन theme से पहले खोजा जाता है।"
 
 #: ../../reference/configuration.rst:157
 msgid "``extensions``"
@@ -2619,40 +2545,41 @@ msgid ""
 "``sphinx.ext.todo``, ``sphinx.ext.githubpages``, ``sphinx.ext.ifconfig``, "
 "``sphinx.ext.extlinks``, ``sphinx.ext.imgmath``, "
 "``sphinx.ext.autosectionlabel``, ``sphinx.ext.graphviz``, "
-"``sphinx.ext.doctest``, ``sphinx.ext.intersphinx``, "
-"``sphinx.ext.autodoc``, and ``myst_parser``. Any other name is an error: "
-"native code is selected with ``plugins``."
+"``sphinx.ext.doctest``, ``sphinx.ext.intersphinx``, ``sphinx.ext.autodoc``, "
+"and ``myst_parser``. Any other name is an error: native code is selected "
+"with ``plugins``."
 msgstr ""
+"चालू करने के लिए बिल्ट-इन Sphinx एक्सटेंशन: ``sphinx.ext.mathjax``, "
+"``sphinx.ext.todo``, ``sphinx.ext.githubpages``, ``sphinx.ext.ifconfig``, "
+"``sphinx.ext.extlinks``, ``sphinx.ext.imgmath``, "
+"``sphinx.ext.autosectionlabel``, ``sphinx.ext.graphviz``, "
+"``sphinx.ext.doctest``, ``sphinx.ext.intersphinx``, ``sphinx.ext.autodoc`` "
+"और ``myst_parser``। कोई और नाम देने पर त्रुटि होती है: नेटिव कोड "
+"``plugins`` से चुना जाता है।"
 
 #: ../../reference/configuration.rst:166
 msgid "``rst_prolog``"
 msgstr "``rst_prolog``"
 
 #: ../../reference/configuration.rst:169
-#, fuzzy
-#| msgid "ReStructuredText snippet appended to every parsed document."
 msgid "reStructuredText read at the start of every document."
-msgstr "हर दस्तावेज़ के अंत में जोड़ा जाने वाला reStructuredText अंश।"
+msgstr "हर दस्तावेज़ की शुरुआत में पढ़ा जाने वाला reStructuredText।"
 
 #: ../../reference/configuration.rst:170
 msgid "``rst_epilog``"
 msgstr "``rst_epilog``"
 
 #: ../../reference/configuration.rst:173
-#, fuzzy
-#| msgid "ReStructuredText snippet prepended to every parsed document."
 msgid "reStructuredText read at the end of every document."
-msgstr "हर दस्तावेज़ के शुरू में जोड़ा जाने वाला reStructuredText अंश।"
+msgstr "हर दस्तावेज़ के अंत में पढ़ा जाने वाला reStructuredText।"
 
 #: ../../reference/configuration.rst:174
-#, fuzzy
-#| msgid "``\"default\"``"
 msgid "``default_role``"
-msgstr "``\"default\"``"
+msgstr "``default_role``"
 
 #: ../../reference/configuration.rst:177
 msgid "The role of text in single backquotes (``\"any\"``, ``\"py:obj\"``)."
-msgstr ""
+msgstr "एक बैककोट में लिखे टेक्स्ट का रोल (``any``, ``py:obj``)।"
 
 #: ../../reference/configuration.rst:178
 msgid "``primary_domain``"
@@ -2663,16 +2590,12 @@ msgid "``\"py\"``"
 msgstr "``\"py\"``"
 
 #: ../../reference/configuration.rst:181
-#, fuzzy
-#| msgid ""
-#| "The default domain used for unqualified directives and roles (e.g. "
-#| "``\"py\"``, ``\"c\"``, ``\"odin\"``)."
 msgid ""
 "The domain of directives and roles written without a prefix (``\"py\"``, "
 "``\"c\"``, ``\"cpp\"``, ``\"js\"``, ``\"odin\"``, ``\"rust\"``)."
 msgstr ""
-"बिना उपसर्ग के निर्देश और रोल का डिफ़ॉल्ट डोमेन, जैसे ``\"py\"``, "
-"``\"c\"`` या ``\"odin\"``।"
+"बिना उपसर्ग लिखे निर्देशों और रोल का डोमेन (``py``, ``c``, ``cpp``, ``js``, "
+"``odin``, ``rust``)।"
 
 #: ../../reference/configuration.rst:183
 msgid "``highlight_language``"
@@ -2684,9 +2607,11 @@ msgstr "``\"default\"``"
 
 #: ../../reference/configuration.rst:186
 msgid ""
-"The language of code blocks that name none. ``default`` is Python, "
-"falling back to plain text; ``guess`` guesses."
+"The language of code blocks that name none. ``default`` is Python, falling "
+"back to plain text; ``guess`` guesses."
 msgstr ""
+"जिन कोड ब्लॉक में भाषा नहीं दी गई, उनकी भाषा। ``default`` Python मानता है "
+"और न चले तो सादा टेक्स्ट; ``guess`` भाषा का अनुमान लगाता है।"
 
 #: ../../reference/configuration.rst:188
 msgid "``pygments_style``"
@@ -2695,9 +2620,12 @@ msgstr "``pygments_style``"
 #: ../../reference/configuration.rst:191
 msgid ""
 "The code style of light pages (Pygments' built-in names, or ``sphinx`` or "
-"``none``); empty: the theme's. An unknown style is replaced by "
-"``sphinx``, with a warning."
+"``none``); empty: the theme's. An unknown style is replaced by ``sphinx``, "
+"with a warning."
 msgstr ""
+"लाइट पेजों की कोड स्टाइल (Pygments के बिल्ट-इन नाम, या ``sphinx`` या "
+"``none``); खाली हो तो theme की स्टाइल। अनजान स्टाइल की जगह चेतावनी के साथ "
+"``sphinx`` लगाई जाती है।"
 
 #: ../../reference/configuration.rst:194
 msgid "``pygments_dark_style``"
@@ -2705,7 +2633,7 @@ msgstr "``pygments_dark_style``"
 
 #: ../../reference/configuration.rst:197
 msgid "The code style of dark pages; empty or unknown: ``github-dark``."
-msgstr ""
+msgstr "डार्क पेजों की कोड स्टाइल; खाली या अनजान हो तो ``github-dark``।"
 
 #: ../../reference/configuration.rst:198
 msgid "``smartquotes``"
@@ -2795,16 +2723,12 @@ msgid "``true``"
 msgstr "``true``"
 
 #: ../../reference/configuration.rst:201
-#, fuzzy
-#| msgid ""
-#| "Automatically transforms straight quotes and dashes into typographer's "
-#| "punctuation."
 msgid "Turn straight quotes and dashes into typographic ones."
-msgstr "सीधे उद्धरण चिह्न और डैश को टाइपोग्राफ़िक चिह्नों में बदलता है।"
+msgstr "सीधे उद्धरण चिह्नों और डैश को टाइपोग्राफ़िक चिह्नों में बदलता है।"
 
 #: ../../reference/configuration.rst:202
 msgid "``trim_footnote_reference_space``"
-msgstr ""
+msgstr "``trim_footnote_reference_space``"
 
 #: ../../reference/configuration.rst:204
 #: ../../reference/configuration.rst:208
@@ -2832,82 +2756,74 @@ msgstr "``false``"
 
 #: ../../reference/configuration.rst:205
 msgid "Remove the space before a footnote reference."
-msgstr ""
+msgstr "फ़ुटनोट संदर्भ से पहले की खाली जगह हटाता है।"
 
 #: ../../reference/configuration.rst:206
-#, fuzzy
-#| msgid "``author``"
 msgid "``show_authors``"
-msgstr "``author``"
+msgstr "``show_authors``"
 
 #: ../../reference/configuration.rst:209
 msgid "Show the ``sectionauthor`` and ``codeauthor`` directives' content."
-msgstr ""
+msgstr "``sectionauthor`` और ``codeauthor`` निर्देशों की सामग्री दिखाता है।"
 
 #: ../../reference/configuration.rst:210
-#, fuzzy
-#| msgid "``pdf_font_paths``"
 msgid "``add_function_parentheses``"
-msgstr "``pdf_font_paths``"
+msgstr "``add_function_parentheses``"
 
 #: ../../reference/configuration.rst:213
 msgid "Add ``()`` to the text of function and method references."
-msgstr ""
+msgstr "फ़ंक्शन और मेथड संदर्भों के टेक्स्ट में ``()`` जोड़ता है।"
 
 #: ../../reference/configuration.rst:214
 msgid "``add_module_names``"
-msgstr ""
+msgstr "``add_module_names``"
 
 #: ../../reference/configuration.rst:217
 msgid "Show module names before object names in signatures."
-msgstr ""
+msgstr "सिग्नेचर में ऑब्जेक्ट के नाम से पहले मॉड्यूल का नाम दिखाता है।"
 
 #: ../../reference/configuration.rst:218
-#, fuzzy
-#| msgid "``autoclass_content``"
 msgid "``toc_object_entries``"
-msgstr "``autoclass_content``"
+msgstr "``toc_object_entries``"
 
 #: ../../reference/configuration.rst:221
 msgid "List described objects in the page's table of contents."
-msgstr ""
+msgstr "वर्णित ऑब्जेक्ट को पेज की विषय-सूची में दिखाता है।"
 
 #: ../../reference/configuration.rst:222
 msgid "``toc_object_entries_show_parents``"
-msgstr ""
+msgstr "``toc_object_entries_show_parents``"
 
 #: ../../reference/configuration.rst:224
-#, fuzzy
-#| msgid "``\"api\"``"
 msgid "``\"domain\"``"
-msgstr "``\"api\"``"
+msgstr "``\"domain\"``"
 
 #: ../../reference/configuration.rst:225
 msgid "How those entries are named: ``domain``, ``hide``, or ``all``."
-msgstr ""
+msgstr "इन प्रविष्टियों के नाम कैसे दिखें: ``domain``, ``hide`` या ``all``।"
 
 #: ../../reference/configuration.rst:226
-#, fuzzy
-#| msgid "``include_roots``"
 msgid "``todo_include_todos``"
-msgstr "``include_roots``"
+msgstr "``todo_include_todos``"
 
 #: ../../reference/configuration.rst:229
 msgid "Show ``todo`` and ``todolist`` content (``sphinx.ext.todo``)."
-msgstr ""
+msgstr "``todo`` और ``todolist`` की सामग्री दिखाता है (``sphinx.ext.todo``)।"
 
 #: ../../reference/configuration.rst:230
 msgid "``autosectionlabel_prefix_document``"
-msgstr ""
+msgstr "``autosectionlabel_prefix_document``"
 
 #: ../../reference/configuration.rst:233
 msgid ""
 "Make section labels ``docname:Title`` (``sphinx.ext.autosectionlabel``)."
 msgstr ""
+"सेक्शन लेबल को ``docname:Title`` रूप में बनाता है "
+"(``sphinx.ext.autosectionlabel``)।"
 
 #: ../../reference/configuration.rst:234
 msgid "``autosectionlabel_maxdepth``"
-msgstr ""
+msgstr "``autosectionlabel_maxdepth``"
 
 #: ../../reference/configuration.rst:235
 #: ../../reference/configuration.rst:285
@@ -2923,42 +2839,38 @@ msgstr "पूर्णांक"
 msgid ""
 "Sections this deep or deeper get no automatic label; ``0``: all get one."
 msgstr ""
+"इतनी या इससे ज़्यादा गहराई वाले सेक्शन को अपने-आप लेबल नहीं मिलता; ``0`` हो "
+"तो सबको मिलता है।"
 
 #: ../../reference/configuration.rst:238
-#, fuzzy
-#| msgid "``html_css_files``"
 msgid "``trim_doctest_flags``"
-msgstr "``html_css_files``"
+msgstr "``trim_doctest_flags``"
 
 #: ../../reference/configuration.rst:241
 msgid "Hide doctest flags and ``<BLANKLINE>`` in Python sessions."
-msgstr ""
+msgstr "Python session में doctest फ़्लैग और ``<BLANKLINE>`` छिपाता है।"
 
 #: ../../reference/configuration.rst:242
-#, fuzzy
-#| msgid "``site_url``"
 msgid "``manpages_url``"
-msgstr "``site_url``"
+msgstr "``manpages_url``"
 
 #: ../../reference/configuration.rst:245
 msgid ""
 "The URL pattern of the ``manpage`` role (``{page}``, ``{section}``, "
 "``{path}``)."
-msgstr ""
+msgstr "``manpage`` रोल का URL पैटर्न (``{page}``, ``{section}``, ``{path}``)।"
 
 #: ../../reference/configuration.rst:246
 msgid "``option_emphasise_placeholders``"
-msgstr ""
+msgstr "``option_emphasise_placeholders``"
 
 #: ../../reference/configuration.rst:249
 msgid "Emphasize ``<placeholder>`` parts of ``option`` signatures."
-msgstr ""
+msgstr "``option`` सिग्नेचर के ``<placeholder>`` हिस्सों पर ज़ोर देता है।"
 
 #: ../../reference/configuration.rst:250
-#, fuzzy
-#| msgid "``extensions``"
 msgid "``extlinks``"
-msgstr "``extensions``"
+msgstr "``extlinks``"
 
 #: ../../reference/configuration.rst:251
 #: ../../reference/configuration.rst:281
@@ -2997,18 +2909,20 @@ msgstr "``{}``"
 
 #: ../../reference/configuration.rst:253
 msgid ""
-"Short link roles (``sphinx.ext.extlinks``): each key is a role, each "
-"value a URL pattern and a caption pattern, with ``%s`` where the target "
-"goes."
+"Short link roles (``sphinx.ext.extlinks``): each key is a role, each value "
+"a URL pattern and a caption pattern, with ``%s`` where the target goes."
 msgstr ""
+"छोटे लिंक रोल (``sphinx.ext.extlinks``): हर कुंजी एक रोल है और हर मान एक "
+"URL पैटर्न व एक कैप्शन पैटर्न, जिनमें लक्ष्य की जगह ``%s`` लिखा जाता है।"
 
 #: ../../reference/configuration.rst:255
 msgid "``extlinks_detect_hardcoded_links``"
-msgstr ""
+msgstr "``extlinks_detect_hardcoded_links``"
 
 #: ../../reference/configuration.rst:258
 msgid "Note full URLs that one of the ``extlinks`` roles could write."
 msgstr ""
+"ऐसे पूरे URL बताता है जिन्हें किसी ``extlinks`` रोल से लिखा जा सकता था।"
 
 #: ../../reference/configuration.rst:265
 #: ../../reference/configuration.rst:268
@@ -3016,105 +2930,113 @@ msgid "Build plugins"
 msgstr "Build plugins"
 
 #: ../../reference/configuration.rst:276
-#, fuzzy
-#| msgid "``plugin <COMMAND>``"
 msgid "``plugins``"
-msgstr "``plugin <COMMAND>``"
+msgstr "``plugins``"
 
 #: ../../reference/configuration.rst:279
-msgid ""
-"The build plugins this project selects, by ID, in the order they run."
+msgid "The build plugins this project selects, by ID, in the order they run."
 msgstr ""
+"इस प्रोजेक्ट के चुने हुए build plugin, ID से, उसी क्रम में जिसमें वे चलते "
+"हैं।"
 
 #: ../../reference/configuration.rst:280
 msgid "``plugin_configs``"
-msgstr ""
+msgstr "``plugin_configs``"
 
 #: ../../reference/configuration.rst:283
 msgid ""
 "Plugin ID to its configuration file, relative to the folder of "
 "``conf.toml``."
 msgstr ""
+"plugin ID से उसकी कॉन्फ़िगरेशन फ़ाइल तक, ``conf.toml`` वाले फ़ोल्डर के "
+"सापेक्ष।"
 
 #: ../../reference/configuration.rst:284
 msgid "``plugin_timeout``"
-msgstr ""
+msgstr "``plugin_timeout``"
 
 #: ../../reference/configuration.rst:286
-#, fuzzy
-#| msgid "``0``"
 msgid "``60``"
-msgstr "``0``"
+msgstr "``60``"
 
 #: ../../reference/configuration.rst:287
 msgid ""
 "Seconds per complete request to an installed plugin program, from 1 to "
 "86400."
 msgstr ""
+"किसी इंस्टॉल किए गए plugin प्रोग्राम के एक पूरे अनुरोध के लिए सेकंड, 1 से "
+"86400 तक।"
 
 #: ../../reference/configuration.rst:289
 msgid ""
 "A plugin ID is looked up among the plugins linked into the ``guidedog`` "
-"executable first, then among the programs registered with ``guidedog "
-"plugin register ID PATH``. A normal build invokes no publisher. "
-"``--untrusted`` disables build plugins. Build plugins transform source "
-"text, post-process complete HTML pages, and add generated assets. See "
-":doc:`../plugins`."
+"executable first, then among the programs registered with ``guidedog plugin "
+"register ID PATH``. A normal build invokes no publisher. ``--untrusted`` "
+"disables build plugins. Build plugins transform source text, post-process "
+"complete HTML pages, and add generated assets. See :doc:`../plugins`."
 msgstr ""
+"plugin ID पहले ``guidedog`` एक्ज़िक्यूटेबल में लिंक किए गए plugin में खोजी "
+"जाती है, फिर ``guidedog plugin register ID PATH`` से रजिस्टर किए गए "
+"प्रोग्रामों में। सामान्य build किसी publisher को नहीं चलाता। "
+"``--untrusted`` build plugin बंद कर देता है। build plugin सोर्स टेक्स्ट "
+"बदलते हैं, पूरे HTML पेजों को पोस्ट-प्रोसेस करते हैं और जनरेट किए गए एसेट "
+"जोड़ते हैं। :doc:`../plugins` देखें।"
 
 #: ../../reference/configuration.rst:303
 msgid "Object types and directive aliases"
-msgstr ""
+msgstr "ऑब्जेक्ट टाइप और निर्देशों के उपनाम"
 
 #: ../../reference/configuration.rst:306
 msgid "Declared object types"
-msgstr ""
+msgstr "घोषित ऑब्जेक्ट टाइप"
 
 #: ../../reference/configuration.rst:314
-#, fuzzy
-#| msgid "``project``"
 msgid "``object_types``"
-msgstr "``project``"
+msgstr "``object_types``"
 
 #: ../../reference/configuration.rst:315
 #: ../../reference/configuration.rst:321
 #: ../../reference/configuration.rst:588
 msgid "array of tables"
-msgstr ""
+msgstr "टेबल का ऐरे"
 
 #: ../../reference/configuration.rst:317
 msgid ""
 "Directives and roles that describe and link custom objects, as Sphinx's "
 "``app.add_object_type``. Fields: ``directive`` (required), ``role``, "
-"``index``, ``name`` (``\"whole\"`` or ``\"first-word\"``), ``display``, "
-"and ``program``."
+"``index``, ``name`` (``\"whole\"`` or ``\"first-word\"``), ``display``, and "
+"``program``."
 msgstr ""
+"कस्टम ऑब्जेक्ट का वर्णन करने और उनसे लिंक करने वाले निर्देश और रोल, Sphinx "
+"के ``app.add_object_type`` की तरह। फ़ील्ड: ``directive`` (ज़रूरी), "
+"``role``, ``index``, ``name`` (``whole`` या ``first-word``), ``display`` और "
+"``program``।"
 
 #: ../../reference/configuration.rst:320
 msgid "``crossref_types``"
-msgstr ""
+msgstr "``crossref_types``"
 
 #: ../../reference/configuration.rst:323
 msgid ""
 "Targets and roles without a description, as ``app.add_crossref_type``. "
 "Fields: ``directive`` (required), ``role``, and ``index``."
 msgstr ""
+"बिना विवरण वाले लक्ष्य और रोल, ``app.add_crossref_type`` की तरह। फ़ील्ड: "
+"``directive`` (ज़रूरी), ``role`` और ``index``।"
 
 #: ../../reference/configuration.rst:325
-#, fuzzy
-#| msgid "``release``"
 msgid "``directive_aliases``"
-msgstr "``release``"
+msgstr "``directive_aliases``"
 
 #: ../../reference/configuration.rst:328
 msgid ""
 "New directive names for existing directives (``django-admin-option = "
 "\"option\"``)."
-msgstr ""
+msgstr "मौजूदा निर्देशों के नए नाम (``django-admin-option = option``)।"
 
 #: ../../reference/configuration.rst:338
 msgid "See :doc:`../object-types`."
-msgstr ""
+msgstr ":doc:`../object-types` देखें।"
 
 #: ../../reference/configuration.rst:340
 #: ../../reference/configuration.rst:343
@@ -3129,6 +3051,7 @@ msgstr "``numfig``"
 msgid ""
 "Number figures, tables, code blocks, and sections with a caption or label."
 msgstr ""
+"कैप्शन या लेबल वाले चित्रों, टेबलों, कोड ब्लॉक और सेक्शन को क्रमांक देता है।"
 
 #: ../../reference/configuration.rst:355
 msgid "``numfig_format``"
@@ -3139,39 +3062,29 @@ msgid "see below"
 msgstr "नीचे देखें"
 
 #: ../../reference/configuration.rst:358
-#, fuzzy
-#| msgid ""
-#| "Numbering prefix formats for ``\"figure\"``, ``\"table\"``, and "
-#| "``\"code-block\"``."
 msgid ""
 "The number formats of ``figure``, ``table``, ``code-block``, and "
 "``section``."
 msgstr ""
-"``\"figure\"``, ``\"table\"`` और ``\"code-block\"`` के क्रमांक उपसर्ग का "
-"प्रारूप।"
+"``figure``, ``table``, ``code-block`` और ``section`` के क्रमांक का प्रारूप।"
 
 #: ../../reference/configuration.rst:359
 msgid "``numfig_secnum_depth``"
 msgstr "``numfig_secnum_depth``"
 
 #: ../../reference/configuration.rst:362
-#, fuzzy
-#| msgid ""
-#| "Heading depth included in figure numbers (e.g. ``1`` produces ``Fig. "
-#| "2.1``)."
 msgid "Section levels in figure numbers (``1`` gives ``Fig. 2.1``)."
 msgstr ""
-"चित्र के क्रमांक में शीर्षक की गहराई; जैसे ``1`` से ``Fig. 2.1`` बनता है।"
+"चित्र के क्रमांक में सेक्शन के कितने स्तर हों (``1`` से ``Fig. 2.1`` बनता "
+"है)।"
 
 #: ../../reference/configuration.rst:363
 msgid "``math_number_all``"
 msgstr "``math_number_all``"
 
 #: ../../reference/configuration.rst:366
-#, fuzzy
-#| msgid "When true, numbers every display equation automatically."
 msgid "Number every displayed equation."
-msgstr "हर अलग पंक्ति वाले समीकरण को अपने आप क्रमांक देता है।"
+msgstr "हर अलग पंक्ति वाले समीकरण को क्रमांक देता है।"
 
 #: ../../reference/configuration.rst:367
 msgid "``math_eqref_format``"
@@ -3183,17 +3096,15 @@ msgstr "``\"({number})\"``"
 
 #: ../../reference/configuration.rst:370
 msgid "The text of ``:eq:`` references."
-msgstr ""
+msgstr "``:eq:`` संदर्भों का टेक्स्ट।"
 
 #: ../../reference/configuration.rst:371
-#, fuzzy
-#| msgid "``numfig``"
 msgid "``math_numfig``"
-msgstr "``numfig``"
+msgstr "``math_numfig``"
 
 #: ../../reference/configuration.rst:374
 msgid "With ``numfig``, number equations by section."
-msgstr ""
+msgstr "``numfig`` के साथ, समीकरणों को सेक्शन के हिसाब से क्रमांक देता है।"
 
 #: ../../reference/configuration.rst:375
 msgid "``mathjax_path``"
@@ -3201,88 +3112,77 @@ msgstr "``mathjax_path``"
 
 #: ../../reference/configuration.rst:377
 msgid "MathJax 4 on jsDelivr"
-msgstr ""
+msgstr "jsDelivr पर MathJax 4"
 
 #: ../../reference/configuration.rst:378
 msgid "The MathJax script: a URL, or a copy in ``html_static_path``."
-msgstr ""
+msgstr "MathJax स्क्रिप्ट: कोई URL, या ``html_static_path`` में रखी उसकी कॉपी।"
 
 #: ../../reference/configuration.rst:379
-#, fuzzy
-#| msgid "``mathjax_path``"
 msgid "``mathjax_options``"
-msgstr "``mathjax_path``"
+msgstr "``mathjax_options``"
 
 #: ../../reference/configuration.rst:382
 msgid "Attributes of the MathJax ``script`` element."
-msgstr ""
+msgstr "MathJax ``script`` एलिमेंट के एट्रिब्यूट।"
 
 #: ../../reference/configuration.rst:383
-#, fuzzy
-#| msgid "``mathjax_path``"
 msgid "``mathjax_inline``"
-msgstr "``mathjax_path``"
+msgstr "``mathjax_inline``"
 
 #: ../../reference/configuration.rst:385
 msgid "``[\"\\\\(\", \"\\\\)\"]``"
-msgstr ""
+msgstr "``[\"\\\\(\", \"\\\\)\"]``"
 
 #: ../../reference/configuration.rst:386
 msgid "The opening and closing delimiters of inline math in HTML."
-msgstr ""
+msgstr "HTML में इनलाइन गणित के खुलने और बंद होने के सीमांकक।"
 
 #: ../../reference/configuration.rst:387
-#, fuzzy
-#| msgid "``mathjax_path``"
 msgid "``mathjax_display``"
-msgstr "``mathjax_path``"
+msgstr "``mathjax_display``"
 
 #: ../../reference/configuration.rst:389
 msgid "``[\"\\\\[\", \"\\\\]\"]``"
-msgstr ""
+msgstr "``[\"\\\\[\", \"\\\\]\"]``"
 
 #: ../../reference/configuration.rst:390
 msgid "The opening and closing delimiters of displayed math in HTML."
-msgstr ""
+msgstr "HTML में अलग पंक्ति वाले गणित के खुलने और बंद होने के सीमांकक।"
 
 #: ../../reference/configuration.rst:391
-#, fuzzy
-#| msgid "``mathjax_path``"
 msgid "``mathjax3_config``"
-msgstr "``mathjax_path``"
+msgstr "``mathjax3_config``"
 
 #: ../../reference/configuration.rst:393
 #: ../../reference/configuration.rst:397
 msgid "none"
-msgstr ""
+msgstr "कोई नहीं"
 
 #: ../../reference/configuration.rst:394
 msgid "The MathJax 3 configuration object, written into the page as JSON."
 msgstr ""
+"MathJax 3 का कॉन्फ़िगरेशन ऑब्जेक्ट, जो पेज में JSON के रूप में लिखा जाता है।"
 
 #: ../../reference/configuration.rst:395
-#, fuzzy
-#| msgid "``mathjax_path``"
 msgid "``mathjax4_config``"
-msgstr "``mathjax_path``"
+msgstr "``mathjax4_config``"
 
 #: ../../reference/configuration.rst:398
 msgid "The MathJax 4 configuration object, written into the page as JSON."
 msgstr ""
+"MathJax 4 का कॉन्फ़िगरेशन ऑब्जेक्ट, जो पेज में JSON के रूप में लिखा जाता है।"
 
 #: ../../reference/configuration.rst:399
-#, fuzzy
-#| msgid "``mathjax_path``"
 msgid "``mathjax_config_path``"
-msgstr "``mathjax_path``"
+msgstr "``mathjax_config_path``"
 
 #: ../../reference/configuration.rst:402
 msgid "A ``.js`` file, relative to ``conf.toml``, that configures MathJax."
 msgstr ""
+"MathJax को कॉन्फ़िगर करने वाली ``.js`` फ़ाइल, ``conf.toml`` के सापेक्ष।"
 
 #: ../../reference/configuration.rst:404
-#, fuzzy
-#| msgid "Default ``numfig_format`` values:"
 msgid "Default ``numfig_format``:"
 msgstr "``numfig_format`` के डिफ़ॉल्ट मान:"
 
@@ -3291,46 +3191,39 @@ msgid "Diagnostics and strictness"
 msgstr "निदान और सख़्त जाँच"
 
 #: ../../reference/configuration.rst:417
-#, fuzzy
-#| msgid "Diagnostic options"
 msgid "Diagnostics"
-msgstr "निदान के विकल्प"
+msgstr "निदान"
 
 #: ../../reference/configuration.rst:425
 msgid "``nitpicky``"
 msgstr "``nitpicky``"
 
 #: ../../reference/configuration.rst:428
-#, fuzzy
-#| msgid "Warns on all unresolved cross-references and broken targets."
 msgid "Warn about every unresolved reference (as ``-n``)."
-msgstr "अनसुलझे पार-संदर्भ और टूटे लक्ष्य पर चेतावनी देता है।"
+msgstr "हर अनसुलझे संदर्भ पर चेतावनी देता है (``-n`` की तरह)।"
 
 #: ../../reference/configuration.rst:429
 msgid "``nitpick_ignore``"
 msgstr "``nitpick_ignore``"
 
 #: ../../reference/configuration.rst:432
-#, fuzzy
-#| msgid ""
-#| "Array of ``[type, target]`` pairs exempted from nitpicky warnings."
 msgid ""
 "``[type, target]`` pairs exempt from nitpicky warnings (``[[\"py:class\", "
 "\"MyType\"]]``)."
 msgstr ""
-"सख़्त संदर्भ जाँच से छूट पाने वाले ``[type, target]`` जोड़ों की सूची।"
+"वे ``[type, target]`` जोड़े जिन पर nitpicky चेतावनी नहीं दी जाती "
+"(``[[py:class, MyType]]``)।"
 
 #: ../../reference/configuration.rst:434
-#, fuzzy
-#| msgid "``nitpick_ignore``"
 msgid "``nitpick_ignore_regex``"
-msgstr "``nitpick_ignore``"
+msgstr "``nitpick_ignore_regex``"
 
 #: ../../reference/configuration.rst:437
 msgid ""
-"The same, as regular expressions that must match the whole type and "
-"target."
+"The same, as regular expressions that must match the whole type and target."
 msgstr ""
+"यही, पर रेगुलर एक्सप्रेशन के रूप में, जिन्हें पूरे टाइप और लक्ष्य से मेल "
+"खाना चाहिए।"
 
 #: ../../reference/configuration.rst:438
 msgid "``suppress_warnings``"
@@ -3339,6 +3232,8 @@ msgstr "``suppress_warnings``"
 #: ../../reference/configuration.rst:441
 msgid "Warning types not reported (``\"ref.ref\"``, ``\"toc.excluded\"``)."
 msgstr ""
+"जिन चेतावनी प्रकारों की रिपोर्ट नहीं होती (``\"ref.ref\"``, "
+"``\"toc.excluded\"``)।"
 
 #: ../../reference/configuration.rst:442
 msgid "``keep_warnings``"
@@ -3346,14 +3241,12 @@ msgstr "``keep_warnings``"
 
 #: ../../reference/configuration.rst:445
 msgid "Also show warnings in the output pages."
-msgstr ""
+msgstr "चेतावनियाँ आउटपुट पेजों में भी दिखाता है।"
 
 #: ../../reference/configuration.rst:447
 #: ../../reference/configuration.rst:450
-#, fuzzy
-#| msgid "HTML output options"
 msgid "HTML output"
-msgstr "HTML आउटपुट के विकल्प"
+msgstr "HTML आउटपुट"
 
 #: ../../reference/configuration.rst:458
 msgid "``html_theme``"
@@ -3370,6 +3263,9 @@ msgid ""
 "others) build with Guidedog's theme, with a note; any other name is an "
 "error."
 msgstr ""
+"theme। Sphinx के theme नाम (``alabaster``, ``furo``, ``sphinx_rtd_theme``, "
+"``pydata_sphinx_theme``, ``sphinx_book_theme`` आदि) एक सूचना के साथ "
+"Guidedog की theme से build होते हैं; कोई और नाम त्रुटि है।"
 
 #: ../../reference/configuration.rst:464
 msgid "``html_theme_options``"
@@ -3377,7 +3273,7 @@ msgstr "``html_theme_options``"
 
 #: ../../reference/configuration.rst:467
 msgid "Theme options, such as ``accent = \"#216553\"``."
-msgstr ""
+msgstr "theme के विकल्प, जैसे ``accent = \"#216553\"``।"
 
 #: ../../reference/configuration.rst:468
 #: ../../reference/configuration.rst:474
@@ -3390,27 +3286,23 @@ msgstr "अपने आप तय होता है"
 
 #: ../../reference/configuration.rst:471
 msgid "The site title in page titles and the header."
-msgstr ""
+msgstr "साइट का शीर्षक, जो पेज के शीर्षकों और हेडर में दिखता है।"
 
 #: ../../reference/configuration.rst:472
 msgid "``html_short_title``"
 msgstr "``html_short_title``"
 
 #: ../../reference/configuration.rst:475
-#, fuzzy
-#| msgid "Shorter title used in navigation breadcrumbs."
 msgid "A shorter title for navigation."
-msgstr "नेविगेशन पथ में दिखने वाला छोटा शीर्षक।"
+msgstr "नेविगेशन के लिए छोटा शीर्षक।"
 
 #: ../../reference/configuration.rst:476
 msgid "``html_logo``"
 msgstr "``html_logo``"
 
 #: ../../reference/configuration.rst:479
-#, fuzzy
-#| msgid "Path to project logo image relative to source directory."
 msgid "A logo image, relative to the source folder, or a URL."
-msgstr "स्रोत फ़ोल्डर के सापेक्ष परियोजना के लोगो का पथ।"
+msgstr "लोगो की इमेज: सोर्स फ़ोल्डर के सापेक्ष पथ या URL।"
 
 #: ../../reference/configuration.rst:480
 msgid "``html_favicon``"
@@ -3418,30 +3310,26 @@ msgstr "``html_favicon``"
 
 #: ../../reference/configuration.rst:483
 msgid "A favicon, relative to the source folder, or a URL."
-msgstr ""
+msgstr "फ़ेविकॉन: सोर्स फ़ोल्डर के सापेक्ष पथ या URL।"
 
 #: ../../reference/configuration.rst:484
 msgid "``html_static_path``"
 msgstr "``html_static_path``"
 
 #: ../../reference/configuration.rst:487
-#, fuzzy
-#| msgid "Directories copied to the output's ``_static/`` directory."
 msgid ""
-"Folders copied into the output's ``_static``; a missing folder is a "
-"warning."
-msgstr "आउटपुट के ``_static/`` में कॉपी किए जाने वाले फ़ोल्डर।"
+"Folders copied into the output's ``_static``; a missing folder is a warning."
+msgstr ""
+"आउटपुट के ``_static`` में कॉपी होने वाले फ़ोल्डर; कोई फ़ोल्डर न मिले तो "
+"चेतावनी मिलती है।"
 
 #: ../../reference/configuration.rst:488
 msgid "``html_extra_path``"
 msgstr "``html_extra_path``"
 
 #: ../../reference/configuration.rst:491
-#, fuzzy
-#| msgid ""
-#| "Directories copied directly to the output root without transformation."
 msgid "Folders copied into the output root as they are."
-msgstr "बिना बदलाव आउटपुट के मूल फ़ोल्डर में कॉपी किए जाने वाले फ़ोल्डर।"
+msgstr "वे फ़ोल्डर जो जैसे के तैसे आउटपुट के रूट में कॉपी होते हैं।"
 
 #: ../../reference/configuration.rst:492
 msgid "``html_css_files``"
@@ -3449,7 +3337,7 @@ msgstr "``html_css_files``"
 
 #: ../../reference/configuration.rst:495
 msgid "Style sheets every page loads, after the theme's."
-msgstr ""
+msgstr "स्टाइल शीट, जिन्हें हर पेज theme की स्टाइल शीट के बाद लोड करता है।"
 
 #: ../../reference/configuration.rst:496
 msgid "``html_js_files``"
@@ -3457,23 +3345,23 @@ msgstr "``html_js_files``"
 
 #: ../../reference/configuration.rst:499
 msgid "Scripts every page loads."
-msgstr ""
+msgstr "स्क्रिप्ट, जिन्हें हर पेज लोड करता है।"
 
 #: ../../reference/configuration.rst:500
-#, fuzzy
-#| msgid "``html_static_path``"
 msgid "``html_last_updated_fmt``"
-msgstr "``html_static_path``"
+msgstr "``html_last_updated_fmt``"
 
 #: ../../reference/configuration.rst:502
 msgid "unset"
-msgstr ""
+msgstr "सेट नहीं"
 
 #: ../../reference/configuration.rst:503
 msgid ""
 "Show a \"Last updated\" date: unset shows none; ``\"\"`` uses the default "
 "format."
 msgstr ""
+"\"अंतिम अपडेट\" की तारीख़ दिखाता है: सेट न हो तो कोई तारीख़ नहीं दिखती; "
+"``\"\"`` पर डिफ़ॉल्ट फ़ॉर्मैट इस्तेमाल होता है।"
 
 #: ../../reference/configuration.rst:504
 msgid "``html_permalinks``"
@@ -3481,114 +3369,95 @@ msgstr "``html_permalinks``"
 
 #: ../../reference/configuration.rst:507
 msgid "Add a link to each heading, caption, and signature."
-msgstr ""
+msgstr "हर शीर्षक, कैप्शन और सिग्नेचर में एक लिंक जोड़ता है।"
 
 #: ../../reference/configuration.rst:508
 msgid "``html_permalinks_icon``"
 msgstr "``html_permalinks_icon``"
 
 #: ../../reference/configuration.rst:510
-#, fuzzy
 msgid "``\"¶\"``"
 msgstr "``\"¶\"``"
 
 #: ../../reference/configuration.rst:511
 msgid "The text of those links."
-msgstr ""
+msgstr "इन लिंक का टेक्स्ट।"
 
 #: ../../reference/configuration.rst:512
-#, fuzzy
-#| msgid "``html_js_files``"
 msgid "``html_use_index``"
-msgstr "``html_js_files``"
+msgstr "``html_use_index``"
 
 #: ../../reference/configuration.rst:515
 msgid "Write the general index, ``genindex.html``."
-msgstr ""
+msgstr "सामान्य इंडेक्स ``genindex.html`` बनाता है।"
 
 #: ../../reference/configuration.rst:516
-#, fuzzy
-#| msgid "``html_title``"
 msgid "``html_split_index``"
-msgstr "``html_title``"
+msgstr "``html_split_index``"
 
 #: ../../reference/configuration.rst:519
 msgid "Split the general index into one page per letter."
-msgstr ""
+msgstr "सामान्य इंडेक्स को हर अक्षर के लिए अलग पेज में बाँटता है।"
 
 #: ../../reference/configuration.rst:520
-#, fuzzy
-#| msgid "``html_permalinks_icon``"
 msgid "``html_domain_indices``"
-msgstr "``html_permalinks_icon``"
+msgstr "``html_domain_indices``"
 
 #: ../../reference/configuration.rst:523
 msgid "Write the Python module index, ``py-modindex.html``."
-msgstr ""
+msgstr "Python मॉड्यूल इंडेक्स ``py-modindex.html`` बनाता है।"
 
 #: ../../reference/configuration.rst:524
 msgid "``modindex_common_prefix``"
-msgstr ""
+msgstr "``modindex_common_prefix``"
 
 #: ../../reference/configuration.rst:527
 msgid "Prefixes the module index leaves out when sorting."
-msgstr ""
+msgstr "वे उपसर्ग, जिन्हें मॉड्यूल इंडेक्स छाँटते समय अनदेखा करता है।"
 
 #: ../../reference/configuration.rst:528
-#, fuzzy
-#| msgid "``html_logo``"
 msgid "``html_copy_source``"
-msgstr "``html_logo``"
+msgstr "``html_copy_source``"
 
 #: ../../reference/configuration.rst:531
 msgid "Copy each source into ``_sources``."
-msgstr ""
+msgstr "हर सोर्स फ़ाइल को ``_sources`` में कॉपी करता है।"
 
 #: ../../reference/configuration.rst:532
-#, fuzzy
-#| msgid "``html_permalinks``"
 msgid "``html_show_sourcelink``"
-msgstr "``html_permalinks``"
+msgstr "``html_show_sourcelink``"
 
 #: ../../reference/configuration.rst:535
 msgid "Link each page to its copied source."
-msgstr ""
+msgstr "हर पेज पर उसकी कॉपी की गई सोर्स फ़ाइल का लिंक देता है।"
 
 #: ../../reference/configuration.rst:536
-#, fuzzy
-#| msgid "``source_suffix``"
 msgid "``html_sourcelink_suffix``"
-msgstr "``source_suffix``"
+msgstr "``html_sourcelink_suffix``"
 
 #: ../../reference/configuration.rst:538
-#, fuzzy
-#| msgid "``text``"
 msgid "``\".txt\"``"
-msgstr "``text``"
+msgstr "``\".txt\"``"
 
 #: ../../reference/configuration.rst:539
 msgid "The suffix of those copies."
-msgstr ""
+msgstr "इन कॉपियों का प्रत्यय।"
 
 #: ../../reference/configuration.rst:540
-#, fuzzy
-#| msgid "``copyright``"
 msgid "``html_show_copyright``"
-msgstr "``copyright``"
+msgstr "``html_show_copyright``"
 
 #: ../../reference/configuration.rst:543
 msgid "Show ``copyright`` in the footer."
-msgstr ""
+msgstr "फ़ुटर में ``copyright`` दिखाता है।"
 
 #: ../../reference/configuration.rst:544
-#, fuzzy
-#| msgid "``html_short_title``"
 msgid "``html_show_sphinx``"
-msgstr "``html_short_title``"
+msgstr "``html_show_sphinx``"
 
 #: ../../reference/configuration.rst:547
 msgid "Show the \"built with\" note in the footer."
-msgstr ""
+msgstr "फ़ुटर में \"built with\" वाला नोट दिखाता है।"
 
 #: ../../reference/configuration.rst:548
 msgid "``html_baseurl``"
@@ -3596,49 +3465,39 @@ msgstr "``html_baseurl``"
 
 #: ../../reference/configuration.rst:551
 msgid "The site's address, for canonical links."
-msgstr ""
+msgstr "साइट का पता, कैनोनिकल लिंक के लिए।"
 
 #: ../../reference/configuration.rst:552
-#, fuzzy
-#| msgid "``html_js_files``"
 msgid "``html_file_suffix``"
-msgstr "``html_js_files``"
+msgstr "``html_file_suffix``"
 
 #: ../../reference/configuration.rst:554
-#, fuzzy
-#| msgid "``html``"
 msgid "``\".html\"``"
-msgstr "``html``"
+msgstr "``\".html\"``"
 
 #: ../../reference/configuration.rst:555
 msgid "The suffix of the pages."
-msgstr ""
+msgstr "पेजों का प्रत्यय।"
 
 #: ../../reference/configuration.rst:556
-#, fuzzy
-#| msgid "``html_permalinks``"
 msgid "``html_link_suffix``"
-msgstr "``html_permalinks``"
+msgstr "``html_link_suffix``"
 
 #: ../../reference/configuration.rst:559
 msgid "The suffix in links to pages; empty: ``html_file_suffix``."
-msgstr ""
+msgstr "पेजों के लिंक में लगने वाला प्रत्यय; ख़ाली हो तो ``html_file_suffix``।"
 
 #: ../../reference/configuration.rst:560
-#, fuzzy
-#| msgid "``source_suffix``"
 msgid "``html_secnumber_suffix``"
-msgstr "``source_suffix``"
+msgstr "``html_secnumber_suffix``"
 
 #: ../../reference/configuration.rst:562
-#, fuzzy
-#| msgid "``\"\"``"
 msgid "``\". \"``"
-msgstr "``\"\"``"
+msgstr "``\". \"``"
 
 #: ../../reference/configuration.rst:563
 msgid "The text after section numbers."
-msgstr ""
+msgstr "सेक्शन नंबर के बाद आने वाला टेक्स्ट।"
 
 #: ../../reference/configuration.rst:564
 msgid "``html_context``"
@@ -3647,7 +3506,7 @@ msgstr "``html_context``"
 #: ../../reference/configuration.rst:567
 msgid ""
 "Variables for the templates; any TOML values, tables and arrays included."
-msgstr ""
+msgstr "template के लिए वेरिएबल; टेबल और ऐरे समेत कोई भी TOML मान चलता है।"
 
 #: ../../reference/configuration.rst:568
 msgid "``html_additional_pages``"
@@ -3658,40 +3517,34 @@ msgid ""
 "Extra pages made from templates: page name to template (``download = "
 "\"download.html\"``)."
 msgstr ""
+"template से बनने वाले अतिरिक्त पेज: पेज का नाम और उसका template (``download "
+"= \"download.html\"``)।"
 
 #: ../../reference/configuration.rst:574
-#, fuzzy
-#| msgid "See :doc:`../autodoc` for complete discovery rules."
 msgid "See :doc:`../templates` for the template variables."
-msgstr "खोज के पूरे नियमों के लिए :doc:`../autodoc` देखें।"
+msgstr "template वेरिएबल के लिए :doc:`../templates` देखें।"
 
 #: ../../reference/configuration.rst:576
-#, fuzzy
-#| msgid "PDF and Typst options"
 msgid "PDF and Typst"
-msgstr "PDF और Typst के विकल्प"
+msgstr "PDF और Typst"
 
 #: ../../reference/configuration.rst:579
-#, fuzzy
-#| msgid "PDF options"
 msgid "PDF output"
-msgstr "PDF के विकल्प"
+msgstr "PDF आउटपुट"
 
 #: ../../reference/configuration.rst:587
-#, fuzzy
-#| msgid "``pdf_font_paths``"
 msgid "``pdf_documents``"
-msgstr "``pdf_font_paths``"
+msgstr "``pdf_documents``"
 
 #: ../../reference/configuration.rst:589
 msgid "one book"
-msgstr ""
+msgstr "एक किताब"
 
 #: ../../reference/configuration.rst:590
 msgid ""
 "The books: ``root`` (the first document), ``file``, ``title``, and "
 "``author``."
-msgstr ""
+msgstr "किताबें: ``root`` (पहला दस्तावेज़), ``file``, ``title`` और ``author``।"
 
 #: ../../reference/configuration.rst:591
 msgid "``pdf_paper_size``"
@@ -3702,10 +3555,8 @@ msgid "``\"a4\"``"
 msgstr "``\"a4\"``"
 
 #: ../../reference/configuration.rst:594
-#, fuzzy
-#| msgid "Paper format: ``\"a4\"`` or ``\"us-letter\"``."
 msgid "The paper size (``\"a4\"``, ``\"us-letter\"``)."
-msgstr "कागज़ का आकार: ``\"a4\"`` या ``\"us-letter\"``।"
+msgstr "काग़ज़ का आकार (``\"a4\"``, ``\"us-letter\"``)।"
 
 #: ../../reference/configuration.rst:595
 msgid "``pdf_logo``"
@@ -3713,7 +3564,7 @@ msgstr "``pdf_logo``"
 
 #: ../../reference/configuration.rst:598
 msgid "A logo for the cover."
-msgstr ""
+msgstr "कवर पर दिखने वाला लोगो।"
 
 #: ../../reference/configuration.rst:599
 msgid "``pdf_toplevel_sectioning``"
@@ -3724,12 +3575,8 @@ msgid "``\"chapter\"``"
 msgstr "``\"chapter\"``"
 
 #: ../../reference/configuration.rst:602
-#, fuzzy
-#| msgid ""
-#| "Section level mapped to book divisions: ``\"chapter\"`` or "
-#| "``\"part\"``."
 msgid "What top-level sections become: ``\"chapter\"`` or ``\"part\"``."
-msgstr "पुस्तक के मुख्य विभाजन का स्तर: ``\"chapter\"`` या ``\"part\"``।"
+msgstr "शीर्ष स्तर के सेक्शन क्या बनें: ``\"chapter\"`` या ``\"part\"``।"
 
 #: ../../reference/configuration.rst:603
 msgid "``pdf_show_urls``"
@@ -3740,16 +3587,10 @@ msgid "``\"no\"``"
 msgstr "``\"no\"``"
 
 #: ../../reference/configuration.rst:606
-#, fuzzy
-#| msgid ""
-#| "URL display policy in print: ``\"no\"``, ``\"inline\"``, or "
-#| "``\"footnote\"``."
 msgid ""
 "How link addresses are printed: ``\"no\"``, ``\"inline\"``, or "
 "``\"footnote\"``."
-msgstr ""
-"मुद्रित पाठ में URL दिखाने की नीति: ``\"no\"``, ``\"inline\"`` या "
-"``\"footnote\"``।"
+msgstr "लिंक के पते कैसे छपें: ``\"no\"``, ``\"inline\"`` या ``\"footnote\"``।"
 
 #: ../../reference/configuration.rst:607
 msgid "``pdf_preamble``"
@@ -3757,7 +3598,7 @@ msgstr "``pdf_preamble``"
 
 #: ../../reference/configuration.rst:610
 msgid "Typst source placed before the book."
-msgstr ""
+msgstr "किताब से पहले रखा जाने वाला Typst सोर्स।"
 
 #: ../../reference/configuration.rst:611
 msgid "``pdf_packages``"
@@ -3769,27 +3610,27 @@ msgstr "``\"download\"``"
 
 #: ../../reference/configuration.rst:614
 msgid ""
-"Typst packages: download what is missing, or ``\"offline\"``, only what "
-"is on disk."
+"Typst packages: download what is missing, or ``\"offline\"``, only what is "
+"on disk."
 msgstr ""
+"Typst पैकेज: जो नहीं हैं उन्हें डाउनलोड करें, या ``\"offline\"`` पर सिर्फ़ "
+"डिस्क पर मौजूद पैकेज इस्तेमाल करें।"
 
 #: ../../reference/configuration.rst:615
-#, fuzzy
-#| msgid "``pdf_font_paths``"
 msgid "``pdf_fonts``"
-msgstr "``pdf_font_paths``"
+msgstr "``pdf_fonts``"
 
 #: ../../reference/configuration.rst:617
-#, fuzzy
-#| msgid "``\"typst\"``"
 msgid "``\"system\"``"
-msgstr "``\"typst\"``"
+msgstr "``\"system\"``"
 
 #: ../../reference/configuration.rst:618
 msgid ""
 "Fonts: the system's and the embedded ones, or ``\"embedded\"`` only, for "
 "byte-reproducible PDFs."
 msgstr ""
+"फ़ॉन्ट: सिस्टम के और एम्बेड किए हुए फ़ॉन्ट, या बाइट-दर-बाइट एक जैसे PDF के "
+"लिए सिर्फ़ ``\"embedded\"``।"
 
 #: ../../reference/configuration.rst:620
 msgid "``pdf_font_paths``"
@@ -3797,7 +3638,7 @@ msgstr "``pdf_font_paths``"
 
 #: ../../reference/configuration.rst:623
 msgid "More font folders, relative to the source folder."
-msgstr ""
+msgstr "और फ़ॉन्ट फ़ोल्डर, सोर्स फ़ोल्डर के सापेक्ष।"
 
 #: ../../reference/configuration.rst:624
 msgid "``typst``"
@@ -3809,65 +3650,70 @@ msgstr "``\"typst\"``"
 
 #: ../../reference/configuration.rst:627
 msgid ""
-"The Typst program when the compiler is not built in, or to use another "
-"one (``--typst`` overrides it)."
+"The Typst program when the compiler is not built in, or to use another one "
+"(``--typst`` overrides it)."
 msgstr ""
+"Typst प्रोग्राम, जब कंपाइलर बिल्ट-इन न हो या कोई दूसरा इस्तेमाल करना हो "
+"(``--typst`` इसे ओवरराइड करता है)।"
 
 #: ../../reference/configuration.rst:630
 msgid ""
-"The book's layout is ``_templates/book.typ`` in the source folder, "
-"written by ``quickstart``. A book's file gets the language as a suffix "
+"The book's layout is ``_templates/book.typ`` in the source folder, written "
+"by ``quickstart``. A book's file gets the language as a suffix "
 "(``field-notes-en.pdf``)."
 msgstr ""
+"किताब का लेआउट सोर्स फ़ोल्डर में ``_templates/book.typ`` है, जिसे "
+"``quickstart`` लिखता है। किताब की फ़ाइल के नाम में भाषा प्रत्यय के रूप में "
+"जुड़ती है (``field-notes-en.pdf``)।"
 
 #: ../../reference/configuration.rst:648
 #: ../../reference/configuration.rst:651
 msgid "Graphviz"
-msgstr ""
+msgstr "Graphviz"
 
 #: ../../reference/configuration.rst:659
 msgid "``graphviz_output_format``"
-msgstr ""
+msgstr "``graphviz_output_format``"
 
 #: ../../reference/configuration.rst:661
-#, fuzzy
-#| msgid "``\"\"``"
 msgid "``\"svg\"``"
-msgstr "``\"\"``"
+msgstr "``\"svg\"``"
 
 #: ../../reference/configuration.rst:662
 msgid "Graphs are SVG; ``\"png\"`` is read as ``\"svg\"``, with a warning."
 msgstr ""
+"ग्राफ़ SVG होते हैं; ``\"png\"`` को चेतावनी के साथ ``\"svg\"`` माना जाता है।"
 
 #: ../../reference/configuration.rst:663
 msgid "``graphviz_dot_args``"
-msgstr ""
+msgstr "``graphviz_dot_args``"
 
 #: ../../reference/configuration.rst:666
 msgid ""
 "Graph, node, and edge attributes for every graph: ``-Gname=value``, "
 "``-Nname=value``, ``-Ename=value``."
 msgstr ""
+"हर ग्राफ़ पर लागू होने वाले ग्राफ़, नोड और एज एट्रिब्यूट: ``-Gname=value``, "
+"``-Nname=value``, ``-Ename=value``।"
 
 #: ../../reference/configuration.rst:668
 msgid "``graphviz_dot``"
-msgstr ""
+msgstr "``graphviz_dot``"
 
 #: ../../reference/configuration.rst:671
-msgid ""
-"Accepted from ``conf.py`` and unused: Graphviz is linked into Guidedog."
+msgid "Accepted from ``conf.py`` and unused: Graphviz is linked into Guidedog."
 msgstr ""
+"``conf.py`` से स्वीकार होता है, पर इस्तेमाल नहीं होता: Graphviz, Guidedog "
+"में ही लिंक है।"
 
 #: ../../reference/configuration.rst:673
 #: ../../reference/configuration.rst:678
-#, fuzzy
-#| msgid "MyST Markdown options"
 msgid "MyST Markdown"
-msgstr "MyST Markdown के विकल्प"
+msgstr "MyST Markdown"
 
 #: ../../reference/configuration.rst:676
 msgid "The names are myst-parser 0.16.1's."
-msgstr ""
+msgstr "ये नाम myst-parser 0.16.1 के हैं।"
 
 #: ../../reference/configuration.rst:686
 msgid "``myst_enable_extensions``"
@@ -3884,62 +3730,58 @@ msgid ""
 "``linkify``, ``replacements``, ``smartquotes``, ``substitution``, and "
 "``tasklist``."
 msgstr ""
+"वैकल्पिक सिंटैक्स: ``amsmath``, ``colon_fence``, ``deflist``, "
+"``dollarmath``, ``fieldlist``, ``html_admonition``, ``html_image``, "
+"``linkify``, ``replacements``, ``smartquotes``, ``substitution`` और "
+"``tasklist``।"
 
 #: ../../reference/configuration.rst:692
 msgid "``myst_heading_anchors``"
 msgstr "``myst_heading_anchors``"
 
 #: ../../reference/configuration.rst:695
-#, fuzzy
-#| msgid ""
-#| "Heading level depth that automatically generates slug anchor targets "
-#| "(``0`` disables)."
 msgid "Heading depth that gets slug anchors; ``0``: none."
-msgstr "शीर्षक से एंकर बनाने की गहराई; ``0`` से यह बंद होता है।"
+msgstr "किस गहराई तक के शीर्षकों को स्लग एंकर मिलें; ``0`` पर किसी को नहीं।"
 
 #: ../../reference/configuration.rst:696
 msgid "``myst_dmath_allow_labels``"
-msgstr ""
+msgstr "``myst_dmath_allow_labels``"
 
 #: ../../reference/configuration.rst:699
 msgid "``$$ ... $$ (label)`` labels an equation."
-msgstr ""
+msgstr "``$$ ... $$ (label)`` से समीकरण पर लेबल लगता है।"
 
 #: ../../reference/configuration.rst:700
-#, fuzzy
-#| msgid "``myst_url_schemes``"
 msgid "``myst_dmath_allow_space``"
-msgstr "``myst_url_schemes``"
+msgstr "``myst_dmath_allow_space``"
 
 #: ../../reference/configuration.rst:703
 msgid "Inline ``$`` math may start or end with a space."
-msgstr ""
+msgstr "इनलाइन ``$`` गणित स्पेस से शुरू या ख़त्म हो सकता है।"
 
 #: ../../reference/configuration.rst:704
 msgid "``myst_dmath_allow_digits``"
-msgstr ""
+msgstr "``myst_dmath_allow_digits``"
 
 #: ../../reference/configuration.rst:707
 msgid "Inline ``$`` math may touch digits."
-msgstr ""
+msgstr "इनलाइन ``$`` गणित अंकों से सटा हो सकता है।"
 
 #: ../../reference/configuration.rst:708
-#, fuzzy
-#| msgid "``myst_enable_extensions``"
 msgid "``myst_dmath_double_inline``"
-msgstr "``myst_enable_extensions``"
+msgstr "``myst_dmath_double_inline``"
 
 #: ../../reference/configuration.rst:711
 msgid "``$$ ... $$`` inside a paragraph is displayed math."
-msgstr ""
+msgstr "पैराग्राफ़ के अंदर ``$$ ... $$`` डिस्प्ले गणित बनता है।"
 
 #: ../../reference/configuration.rst:712
 msgid "``myst_linkify_fuzzy_links``"
-msgstr ""
+msgstr "``myst_linkify_fuzzy_links``"
 
 #: ../../reference/configuration.rst:715
 msgid "``linkify`` also links addresses without a scheme."
-msgstr ""
+msgstr "``linkify`` बिना स्कीम वाले पतों को भी लिंक बनाता है।"
 
 #: ../../reference/configuration.rst:716
 msgid "``myst_substitutions``"
@@ -3947,23 +3789,19 @@ msgstr "``myst_substitutions``"
 
 #: ../../reference/configuration.rst:719
 msgid "Values for ``{{ name }}`` (the ``substitution`` syntax)."
-msgstr ""
+msgstr "``{{ name }}`` के मान (``substitution`` सिंटैक्स)।"
 
 #: ../../reference/configuration.rst:720
-#, fuzzy
-#| msgid "``myst_url_schemes``"
 msgid "``myst_sub_delimiters``"
-msgstr "``myst_url_schemes``"
+msgstr "``myst_sub_delimiters``"
 
 #: ../../reference/configuration.rst:722
-#, fuzzy
-#| msgid "``[\"http\", ...]``"
 msgid "``[\"{\", \"}\"]``"
-msgstr "``[\"http\", ...]``"
+msgstr "``[\"{\", \"}\"]``"
 
 #: ../../reference/configuration.rst:723
 msgid "The two substitution characters, each doubled around a name."
-msgstr ""
+msgstr "दो सब्स्टिट्यूशन वर्ण, जिन्हें नाम के दोनों ओर दो-दो बार लिखा जाता है।"
 
 #: ../../reference/configuration.rst:724
 msgid "``myst_url_schemes``"
@@ -3971,31 +3809,27 @@ msgstr "``myst_url_schemes``"
 
 #: ../../reference/configuration.rst:726
 msgid "``[\"http\", \"https\", \"mailto\", \"ftp\"]``"
-msgstr ""
+msgstr "``[\"http\", \"https\", \"mailto\", \"ftp\"]``"
 
 #: ../../reference/configuration.rst:727
 msgid "Schemes that make external links; empty: all."
-msgstr ""
+msgstr "वे स्कीम जिनसे बाहरी लिंक बनते हैं; ख़ाली होने पर सभी।"
 
 #: ../../reference/configuration.rst:728
-#, fuzzy
-#| msgid "``myst_enable_extensions``"
 msgid "``myst_footnote_transition``"
-msgstr "``myst_enable_extensions``"
+msgstr "``myst_footnote_transition``"
 
 #: ../../reference/configuration.rst:731
 msgid "Put a transition before the footnotes."
-msgstr ""
+msgstr "फ़ुटनोट से पहले एक विभाजक रेखा (transition) लगाता है।"
 
 #: ../../reference/configuration.rst:732
-#, fuzzy
-#| msgid "``html_theme``"
 msgid "``myst_html_meta``"
-msgstr "``html_theme``"
+msgstr "``myst_html_meta``"
 
 #: ../../reference/configuration.rst:735
 msgid "``meta`` elements for every Markdown page."
-msgstr ""
+msgstr "हर Markdown पेज के लिए ``meta`` एलिमेंट।"
 
 #: ../../reference/configuration.rst:736
 msgid "``myst_commonmark_only``"
@@ -4003,68 +3837,53 @@ msgstr "``myst_commonmark_only``"
 
 #: ../../reference/configuration.rst:739
 msgid "CommonMark syntax only; headings still make sections."
-msgstr ""
+msgstr "सिर्फ़ CommonMark सिंटैक्स; हेडिंग फिर भी सेक्शन बनाती हैं।"
 
 #: ../../reference/configuration.rst:740
-#, fuzzy
-#| msgid "``myst_enable_extensions``"
 msgid "``myst_disable_syntax``"
-msgstr "``myst_enable_extensions``"
+msgstr "``myst_disable_syntax``"
 
 #: ../../reference/configuration.rst:743
 msgid "Syntax rules not parsed, by markdown-it's names."
 msgstr ""
+"वे सिंटैक्स नियम जिन्हें पार्स नहीं किया जाता, markdown-it के नामों से।"
 
 #: ../../reference/configuration.rst:744
-#, fuzzy
-#| msgid "``myst_url_schemes``"
 msgid "``myst_words_per_minute``"
-msgstr "``myst_url_schemes``"
+msgstr "``myst_words_per_minute``"
 
 #: ../../reference/configuration.rst:746
-#, fuzzy
-#| msgid "``0``"
 msgid "``200``"
-msgstr "``0``"
+msgstr "``200``"
 
 #: ../../reference/configuration.rst:747
 msgid "The reading speed of the reading-time estimate."
-msgstr ""
+msgstr "पढ़ने के समय के अनुमान में पढ़ने की गति (प्रति मिनट शब्द)।"
 
 #: ../../reference/configuration.rst:748
-#, fuzzy
-#| msgid "``myst_enable_extensions``"
 msgid "``myst_dmath_enable``"
-msgstr "``myst_enable_extensions``"
+msgstr "``myst_dmath_enable``"
 
 #: ../../reference/configuration.rst:751
 msgid "Older spelling of ``dollarmath`` in ``myst_enable_extensions``."
-msgstr ""
+msgstr "``myst_enable_extensions`` में ``dollarmath`` का पुराना नाम।"
 
 #: ../../reference/configuration.rst:752
-#, fuzzy
-#| msgid "``myst_commonmark_only``"
 msgid "``myst_amsmath_enable``"
-msgstr "``myst_commonmark_only``"
+msgstr "``myst_amsmath_enable``"
 
 #: ../../reference/configuration.rst:755
-#, fuzzy
-#| msgid "``myst_enable_extensions``"
 msgid "Older spelling of ``amsmath`` in ``myst_enable_extensions``."
-msgstr "``myst_enable_extensions``"
+msgstr "``myst_enable_extensions`` में ``amsmath`` का पुराना नाम।"
 
 #: ../../reference/configuration.rst:757
 #: ../../reference/configuration.rst:760
-#, fuzzy
-#| msgid "Intersphinx options"
 msgid "Intersphinx"
-msgstr "Intersphinx के विकल्प"
+msgstr "Intersphinx"
 
 #: ../../reference/configuration.rst:768
-#, fuzzy
-#| msgid "Intersphinx options"
 msgid "``intersphinx_mapping``"
-msgstr "Intersphinx के विकल्प"
+msgstr "``intersphinx_mapping``"
 
 #: ../../reference/configuration.rst:771
 msgid ""
@@ -4072,64 +3891,65 @@ msgid ""
 "``\"\"`` (the ``objects.inv`` at the URI), a location, or a list of "
 "locations tried in order."
 msgstr ""
+"दूसरे प्रोजेक्ट: नाम से ``[target URI, inventory]`` तक। इन्वेंटरी ``\"\"`` "
+"(URI पर मौजूद ``objects.inv``), कोई एक लोकेशन, या लोकेशनों की सूची होती है, "
+"जिन्हें क्रम से आज़माया जाता है।"
 
 #: ../../reference/configuration.rst:773
 msgid "``intersphinx_cache_limit``"
-msgstr ""
+msgstr "``intersphinx_cache_limit``"
 
 #: ../../reference/configuration.rst:776
 msgid "Days a downloaded inventory is reused; below 0: always."
-msgstr ""
+msgstr "डाउनलोड की गई इन्वेंटरी कितने दिन दोबारा इस्तेमाल हो; 0 से कम: हमेशा।"
 
 #: ../../reference/configuration.rst:777
-#, fuzzy
-#| msgid "Intersphinx options"
 msgid "``intersphinx_timeout``"
-msgstr "Intersphinx के विकल्प"
+msgstr "``intersphinx_timeout``"
 
 #: ../../reference/configuration.rst:780
 msgid "Seconds a download may take; ``0``: no limit."
-msgstr ""
+msgstr "डाउनलोड को अधिकतम कितने सेकंड लग सकते हैं; ``0``: कोई सीमा नहीं।"
 
 #: ../../reference/configuration.rst:781
 msgid "``intersphinx_disabled_reftypes``"
-msgstr ""
+msgstr "``intersphinx_disabled_reftypes``"
 
 #: ../../reference/configuration.rst:783
-#, fuzzy
-#| msgid "``[\".rst\"]``"
 msgid "``[\"std:doc\"]``"
-msgstr "``[\".rst\"]``"
+msgstr "``[\"std:doc\"]``"
 
 #: ../../reference/configuration.rst:784
 msgid "Reference types that never resolve through inventories."
-msgstr ""
+msgstr "वे रेफ़रेंस टाइप जो कभी इन्वेंटरी के ज़रिए रिज़ॉल्व नहीं होते।"
 
 #: ../../reference/configuration.rst:785
 msgid "``intersphinx_resolve_self``"
-msgstr ""
+msgstr "``intersphinx_resolve_self``"
 
 #: ../../reference/configuration.rst:788
 msgid "A mapping name that refers to this project itself."
-msgstr ""
+msgstr "वह मैपिंग नाम जो इसी प्रोजेक्ट को दर्शाता है।"
 
 #: ../../reference/configuration.rst:800
 msgid ""
 "Inventories are downloaded with the ``curl`` program. ``--untrusted`` "
 "fetches nothing. See :doc:`../intersphinx`."
 msgstr ""
+"इन्वेंटरी ``curl`` प्रोग्राम से डाउनलोड होती हैं। ``--untrusted`` के साथ "
+"कुछ भी डाउनलोड नहीं होता। :doc:`../intersphinx` देखें।"
 
 #: ../../reference/configuration.rst:803
 #: ../../reference/configuration.rst:808
-#, fuzzy
-#| msgid "Python autodoc options"
 msgid "Python autodoc"
-msgstr "Python autodoc के विकल्प"
+msgstr "Python autodoc"
 
 #: ../../reference/configuration.rst:806
 msgid ""
 "Guidedog reads Python source without importing it (see :doc:`../autodoc`)."
 msgstr ""
+"Guidedog Python सोर्स को इम्पोर्ट किए बिना पढ़ता है (देखें "
+":doc:`../autodoc`)।"
 
 #: ../../reference/configuration.rst:816
 msgid "``autodoc_source_paths``"
@@ -4139,7 +3959,7 @@ msgstr "``autodoc_source_paths``"
 msgid ""
 "Folders holding the packages, like ``sys.path``, relative to the source "
 "folder."
-msgstr ""
+msgstr "पैकेज वाले फ़ोल्डर, ``sys.path`` की तरह, सोर्स फ़ोल्डर के सापेक्ष।"
 
 #: ../../reference/configuration.rst:820
 msgid "``autoclass_content``"
@@ -4150,31 +3970,24 @@ msgid "``\"class\"``"
 msgstr "``\"class\"``"
 
 #: ../../reference/configuration.rst:823
-#, fuzzy
-#| msgid ""
-#| "Docstring source for classes: ``\"class\"``, ``\"init\"``, or "
-#| "``\"both\"``."
 msgid "A class's docstring: ``\"class\"``, ``\"init\"``, or ``\"both\"``."
-msgstr ""
-"क्लास के docstring का स्रोत: ``\"class\"``, ``\"init\"`` या ``\"both\"``।"
+msgstr "क्लास का docstring: ``\"class\"``, ``\"init\"`` या ``\"both\"``।"
 
 #: ../../reference/configuration.rst:824
-#, fuzzy
-#| msgid "``autoclass_content``"
 msgid "``autodoc_class_signature``"
-msgstr "``autoclass_content``"
+msgstr "``autodoc_class_signature``"
 
 #: ../../reference/configuration.rst:826
-#, fuzzy
-#| msgid "``\"en\"``"
 msgid "``\"mixed\"``"
-msgstr "``\"en\"``"
+msgstr "``\"mixed\"``"
 
 #: ../../reference/configuration.rst:827
 msgid ""
 "``\"mixed\"`` shows the constructor's signature with the class; "
 "``\"separated\"`` documents ``__init__`` apart."
 msgstr ""
+"``\"mixed\"`` कंस्ट्रक्टर का सिग्नेचर क्लास के साथ दिखाता है; "
+"``\"separated\"`` ``__init__`` का दस्तावेज़ अलग से बनाता है।"
 
 #: ../../reference/configuration.rst:829
 msgid "``autodoc_default_options``"
@@ -4182,29 +3995,27 @@ msgstr "``autodoc_default_options``"
 
 #: ../../reference/configuration.rst:832
 msgid ""
-"Options for every ``auto*`` directive: an option's value, or ``true`` for "
-"a flag (``members = true``)."
+"Options for every ``auto*`` directive: an option's value, or ``true`` for a "
+"flag (``members = true``)."
 msgstr ""
+"हर ``auto*`` निर्देश के विकल्प: विकल्प का मान, या फ़्लैग के लिए ``true`` "
+"(``members = true``)।"
 
 #: ../../reference/configuration.rst:834
-#, fuzzy
-#| msgid "``autodoc_default_options``"
 msgid "``autodoc_docstring_signature``"
-msgstr "``autodoc_default_options``"
+msgstr "``autodoc_docstring_signature``"
 
 #: ../../reference/configuration.rst:837
 msgid "Read a signature from the docstring's first line."
-msgstr ""
+msgstr "docstring की पहली पंक्ति से सिग्नेचर पढ़ता है।"
 
 #: ../../reference/configuration.rst:838
-#, fuzzy
-#| msgid "``autodoc_default_options``"
 msgid "``autodoc_inherit_docstrings``"
-msgstr "``autodoc_default_options``"
+msgstr "``autodoc_inherit_docstrings``"
 
 #: ../../reference/configuration.rst:841
 msgid "Members without a docstring take their parent class's."
-msgstr ""
+msgstr "बिना docstring वाले सदस्य अपनी पैरेंट क्लास का docstring ले लेते हैं।"
 
 #: ../../reference/configuration.rst:842
 msgid "``autodoc_member_order``"
@@ -4215,34 +4026,26 @@ msgid "``\"alphabetical\"``"
 msgstr "``\"alphabetical\"``"
 
 #: ../../reference/configuration.rst:845
-#, fuzzy
-#| msgid ""
-#| "Member ordering: ``\"alphabetical\"``, ``\"bysource\"``, or "
-#| "``\"groupwise\"``."
 msgid "``\"alphabetical\"``, ``\"bysource\"``, or ``\"groupwise\"``."
-msgstr ""
-"सदस्यों का क्रम: ``\"alphabetical\"``, ``\"bysource\"`` या "
-"``\"groupwise\"``।"
+msgstr "``\"alphabetical\"``, ``\"bysource\"`` या ``\"groupwise\"``।"
 
 #: ../../reference/configuration.rst:846
-#, fuzzy
-#| msgid "``autodoc_source_paths``"
 msgid "``autodoc_mock_imports``"
-msgstr "``autodoc_source_paths``"
+msgstr "``autodoc_mock_imports``"
 
 #: ../../reference/configuration.rst:849
 msgid "Accepted: nothing is imported, so nothing needs mocking."
 msgstr ""
+"स्वीकार किया जाता है: कुछ भी इम्पोर्ट नहीं होता, इसलिए mock करने की ज़रूरत "
+"ही नहीं।"
 
 #: ../../reference/configuration.rst:850
-#, fuzzy
-#| msgid "``autodoc_source_paths``"
 msgid "``autodoc_preserve_defaults``"
-msgstr "``autodoc_source_paths``"
+msgstr "``autodoc_preserve_defaults``"
 
 #: ../../reference/configuration.rst:853
 msgid "Show default values as written in the source."
-msgstr ""
+msgstr "डिफ़ॉल्ट मान वैसे ही दिखाता है जैसे सोर्स में लिखे हैं।"
 
 #: ../../reference/configuration.rst:854
 msgid "``autodoc_typehints``"
@@ -4253,106 +4056,88 @@ msgid "``\"signature\"``"
 msgstr "``\"signature\"``"
 
 #: ../../reference/configuration.rst:857
-#, fuzzy
-#| msgid ""
-#| "Type hint placement: ``\"signature\"``, ``\"description\"``, or "
-#| "``\"none\"``."
 msgid ""
-"Where type hints go: ``\"signature\"``, ``\"description\"``, "
-"``\"none\"``, or ``\"both\"``."
+"Where type hints go: ``\"signature\"``, ``\"description\"``, ``\"none\"``, "
+"or ``\"both\"``."
 msgstr ""
-"टाइप संकेत दिखाने की जगह: ``\"signature\"``, ``\"description\"`` या "
-"``\"none\"``।"
+"टाइप हिंट कहाँ दिखें: ``\"signature\"``, ``\"description\"``, ``\"none\"`` "
+"या ``\"both\"``।"
 
 #: ../../reference/configuration.rst:859
-#, fuzzy
-#| msgid "``autodoc_typehints``"
 msgid "``autodoc_typehints_description_target``"
-msgstr "``autodoc_typehints``"
+msgstr "``autodoc_typehints_description_target``"
 
 #: ../../reference/configuration.rst:861
-#, fuzzy
-#| msgid "``\"a4\"``"
 msgid "``\"all\"``"
-msgstr "``\"a4\"``"
+msgstr "``\"all\"``"
 
 #: ../../reference/configuration.rst:862
 msgid ""
 "Which parameters get types in the description: ``\"all\"``, "
 "``\"documented\"``, or ``\"documented_params\"``."
 msgstr ""
+"विवरण में किन पैरामीटरों के टाइप दिखें: ``\"all\"``, ``\"documented\"`` या "
+"``\"documented_params\"``।"
 
 #: ../../reference/configuration.rst:864
-#, fuzzy
-#| msgid "``autodoc_typehints``"
 msgid "``autodoc_typehints_format``"
-msgstr "``autodoc_typehints``"
+msgstr "``autodoc_typehints_format``"
 
 #: ../../reference/configuration.rst:866
-#, fuzzy
-#| msgid "``\"source\"``"
 msgid "``\"short\"``"
-msgstr "``\"source\"``"
+msgstr "``\"short\"``"
 
 #: ../../reference/configuration.rst:867
 msgid "``\"short\"`` or ``\"fully-qualified\"`` type names."
-msgstr ""
+msgstr "टाइप नाम ``\"short\"`` या ``\"fully-qualified\"`` रूप में।"
 
 #: ../../reference/configuration.rst:868
-#, fuzzy
-#| msgid "``autodoc_typehints``"
 msgid "``autodoc_type_aliases``"
-msgstr "``autodoc_typehints``"
+msgstr "``autodoc_type_aliases``"
 
 #: ../../reference/configuration.rst:871
 msgid "Type aliases kept as written: alias to its full name."
-msgstr ""
+msgstr "टाइप एलियास जो लिखे अनुसार ही रहते हैं: एलियास से उसके पूरे नाम तक।"
 
 #: ../../reference/configuration.rst:872
-#, fuzzy
-#| msgid "``autodoc_typehints``"
 msgid "``autodoc_use_type_comments``"
-msgstr "``autodoc_typehints``"
+msgstr "``autodoc_use_type_comments``"
 
 #: ../../reference/configuration.rst:875
 msgid "Read ``# type:`` comments."
-msgstr ""
+msgstr "``# type:`` कमेंट पढ़ता है।"
 
 #: ../../reference/configuration.rst:876
-#, fuzzy
-#| msgid "``autodoc_member_order``"
 msgid "``autodoc_warningiserror``"
-msgstr "``autodoc_member_order``"
+msgstr "``autodoc_warningiserror``"
 
 #: ../../reference/configuration.rst:879
 msgid "Treat a module autodoc cannot find as an error."
-msgstr ""
+msgstr "जिस मॉड्यूल को autodoc नहीं ढूँढ पाता, उसे त्रुटि मानता है।"
 
 #: ../../reference/configuration.rst:880
 msgid "``python_display_short_literal_types``"
-msgstr ""
+msgstr "``python_display_short_literal_types``"
 
 #: ../../reference/configuration.rst:883
 msgid "Write ``Literal[\"a\"]`` types as ``\"a\"``."
-msgstr ""
+msgstr "``Literal[\"a\"]`` टाइप को ``\"a\"`` के रूप में लिखता है।"
 
 #: ../../reference/configuration.rst:884
 msgid "``strip_signature_backslash``"
-msgstr ""
+msgstr "``strip_signature_backslash``"
 
 #: ../../reference/configuration.rst:887
 msgid "Remove backslashes from signatures written in directives."
-msgstr ""
+msgstr "निर्देशों में लिखे सिग्नेचर से बैकस्लैश हटाता है।"
 
 #: ../../reference/configuration.rst:889
-#, fuzzy
-#| msgid "Odin API documentation options"
 msgid "Odin API documentation"
-msgstr "Odin API दस्तावेज़ के विकल्प"
+msgstr "Odin API दस्तावेज़"
 
 #: ../../reference/configuration.rst:892
 msgid "Odin API pages"
-msgstr ""
+msgstr "Odin API पेज"
 
 #: ../../reference/configuration.rst:900
 msgid "``odin_autoapi_dirs``"
@@ -4362,18 +4147,19 @@ msgstr "``odin_autoapi_dirs``"
 msgid ""
 "Folders whose Odin packages get API pages, relative to the source folder."
 msgstr ""
+"वे फ़ोल्डर जिनके Odin पैकेजों के API पेज बनते हैं, सोर्स फ़ोल्डर के सापेक्ष।"
 
 #: ../../reference/configuration.rst:904
-#, fuzzy
-#| msgid "``odin_autoapi_options``"
 msgid "``odin_collections``"
-msgstr "``odin_autoapi_options``"
+msgstr "``odin_collections``"
 
 #: ../../reference/configuration.rst:907
 msgid ""
 "Collection names to folders (``core = \"/opt/odin/core\"``), for imports "
 "such as ``core:fmt``."
 msgstr ""
+"कलेक्शन के नाम से फ़ोल्डर तक (``core = \"/opt/odin/core\"``), ``core:fmt`` "
+"जैसे इम्पोर्ट के लिए।"
 
 #: ../../reference/configuration.rst:909
 msgid "``odin_autoapi_root``"
@@ -4386,7 +4172,7 @@ msgstr "``\"api\"``"
 #: ../../reference/configuration.rst:912
 #: ../../reference/configuration.rst:956
 msgid "The folder of the generated pages, inside the source folder."
-msgstr ""
+msgstr "बनाए गए पेजों का फ़ोल्डर, सोर्स फ़ोल्डर के अंदर।"
 
 #: ../../reference/configuration.rst:913
 msgid "``odin_autoapi_options``"
@@ -4398,7 +4184,7 @@ msgstr "``[\"members\", \"undoc-members\"]``"
 
 #: ../../reference/configuration.rst:916
 msgid "``members``, ``undoc-members``, and ``private-members``."
-msgstr ""
+msgstr "``members``, ``undoc-members`` और ``private-members``।"
 
 #: ../../reference/configuration.rst:917
 msgid "``odin_autoapi_member_order``"
@@ -4410,47 +4196,36 @@ msgid "``\"source\"``"
 msgstr "``\"source\"``"
 
 #: ../../reference/configuration.rst:920
-#, fuzzy
-#| msgid ""
-#| "Member ordering: ``\"alphabetical\"``, ``\"bysource\"``, or "
-#| "``\"groupwise\"``."
 msgid "``\"source\"``, ``\"alphabetical\"``, or ``\"groupwise\"``."
-msgstr ""
-"सदस्यों का क्रम: ``\"alphabetical\"``, ``\"bysource\"`` या "
-"``\"groupwise\"``।"
+msgstr "``\"source\"``, ``\"alphabetical\"`` या ``\"groupwise\"``।"
 
 #: ../../reference/configuration.rst:921
-#, fuzzy
-#| msgid "``odin_autoapi_member_order``"
 msgid "``odin_autoapi_add_toctree_entry``"
-msgstr "``odin_autoapi_member_order``"
+msgstr "``odin_autoapi_add_toctree_entry``"
 
 #: ../../reference/configuration.rst:924
 #: ../../reference/configuration.rst:969
 msgid "Add the API index to the root document's toctree."
-msgstr ""
+msgstr "रूट दस्तावेज़ के toctree में API इंडेक्स जोड़ता है।"
 
 #: ../../reference/configuration.rst:925
-#, fuzzy
-#| msgid "``odin_autoapi_options``"
 msgid "``odin_autoapi_generate_api_docs``"
-msgstr "``odin_autoapi_options``"
+msgstr "``odin_autoapi_generate_api_docs``"
 
 #: ../../reference/configuration.rst:928
 msgid ""
-"Generate the pages; ``false``: only the ``odin:auto*`` directives read "
-"the folders."
+"Generate the pages; ``false``: only the ``odin:auto*`` directives read the "
+"folders."
 msgstr ""
+"पेज बनाता है; ``false``: सिर्फ़ ``odin:auto*`` निर्देश फ़ोल्डर पढ़ते हैं।"
 
 #: ../../reference/configuration.rst:931
 msgid "See :doc:`../odin`."
-msgstr ""
+msgstr ":doc:`../odin` देखें।"
 
 #: ../../reference/configuration.rst:933
-#, fuzzy
-#| msgid "Odin API documentation options"
 msgid "Rust API documentation"
-msgstr "Odin API दस्तावेज़ के विकल्प"
+msgstr "Rust API दस्तावेज़"
 
 #: ../../reference/configuration.rst:936
 msgid ""
@@ -4458,88 +4233,83 @@ msgid ""
 "never compiled. See :doc:`../howto/document-code` and the ``rust`` domain "
 "in :doc:`../topics/domains`."
 msgstr ""
+"Guidedog के Rust रिलीज़ में नया। crate tree-sitter से पढ़े जाते हैं, कभी "
+"कंपाइल नहीं होते। :doc:`../howto/document-code` और :doc:`../topics/domains` "
+"में ``rust`` डोमेन देखें।"
 
 #: ../../reference/configuration.rst:939
 msgid "Rust API pages"
-msgstr ""
+msgstr "Rust API पेज"
 
 #: ../../reference/configuration.rst:947
-#, fuzzy
-#| msgid "``odin_autoapi_dirs``"
 msgid "``rust_autoapi_crates``"
-msgstr "``odin_autoapi_dirs``"
+msgstr "``rust_autoapi_crates``"
 
 #: ../../reference/configuration.rst:950
 msgid ""
-"Crate folders (with ``Cargo.toml``, ``lib.rs``, ``main.rs`` or "
-"``mod.rs``), or root ``.rs`` files, that get API pages, relative to the "
-"source folder. A missing folder is a ``config.rust`` warning."
+"Crate folders (with ``Cargo.toml``, ``lib.rs``, ``main.rs`` or ``mod.rs``), "
+"or root ``.rs`` files, that get API pages, relative to the source folder. A "
+"missing folder is a ``config.rust`` warning."
 msgstr ""
+"crate फ़ोल्डर (जिनमें ``Cargo.toml``, ``lib.rs``, ``main.rs`` या ``mod.rs`` "
+"हो) या रूट ``.rs`` फ़ाइलें, जिनके API पेज बनते हैं, सोर्स फ़ोल्डर के "
+"सापेक्ष। फ़ोल्डर न मिलने पर ``config.rust`` चेतावनी आती है।"
 
 #: ../../reference/configuration.rst:953
-#, fuzzy
-#| msgid "``odin_autoapi_root``"
 msgid "``rust_autoapi_root``"
-msgstr "``odin_autoapi_root``"
+msgstr "``rust_autoapi_root``"
 
 #: ../../reference/configuration.rst:955
-#, fuzzy
-#| msgid "``\"api\"``"
 msgid "``\"rustapi\"``"
-msgstr "``\"api\"``"
+msgstr "``\"rustapi\"``"
 
 #: ../../reference/configuration.rst:957
-#, fuzzy
-#| msgid "``odin_autoapi_options``"
 msgid "``rust_autoapi_options``"
-msgstr "``odin_autoapi_options``"
+msgstr "``rust_autoapi_options``"
 
 #: ../../reference/configuration.rst:960
 msgid ""
 "``private-members`` (document private items, with their visibility), "
 "``hidden-members`` (``#[doc(hidden)]`` items), and ``noindex``."
 msgstr ""
+"``private-members`` (निजी आइटम, उनकी विज़िबिलिटी के साथ), "
+"``hidden-members`` (``#[doc(hidden)]`` आइटम) और ``noindex``।"
 
 #: ../../reference/configuration.rst:962
-#, fuzzy
-#| msgid "``odin_autoapi_member_order``"
 msgid "``rust_autoapi_member_order``"
-msgstr "``odin_autoapi_member_order``"
+msgstr "``rust_autoapi_member_order``"
 
 #: ../../reference/configuration.rst:965
-#, fuzzy
-#| msgid "Member ordering: ``\"source\"`` or ``\"alphabetical\"``."
 msgid "``\"source\"`` or ``\"alphabetical\"``."
-msgstr "सदस्यों का क्रम: ``\"source\"`` या ``\"alphabetical\"``।"
+msgstr "``\"source\"`` या ``\"alphabetical\"``।"
 
 #: ../../reference/configuration.rst:966
 msgid "``rust_autoapi_add_toctree_entry``"
-msgstr ""
+msgstr "``rust_autoapi_add_toctree_entry``"
 
 #: ../../reference/configuration.rst:970
 msgid "``rust_autoapi_generate_api_docs``"
-msgstr ""
+msgstr "``rust_autoapi_generate_api_docs``"
 
 #: ../../reference/configuration.rst:973
 msgid "Generate the pages; ``false`` generates none."
-msgstr ""
+msgstr "पेज बनाता है; ``false`` होने पर कोई पेज नहीं बनता।"
 
 #: ../../reference/configuration.rst:981
 msgid ""
-"With ``--untrusted``, crate folders outside the source folder are not "
-"read."
+"With ``--untrusted``, crate folders outside the source folder are not read."
 msgstr ""
+"``--untrusted`` के साथ, सोर्स फ़ोल्डर के बाहर के crate फ़ोल्डर नहीं पढ़े "
+"जाते।"
 
 #: ../../reference/configuration.rst:983
 #: ../../reference/configuration.rst:988
-#, fuzzy
-#| msgid "Internationalization options"
 msgid "Internationalization"
-msgstr "अंतर्राष्ट्रीयकरण के विकल्प"
+msgstr "अंतर्राष्ट्रीयकरण"
 
 #: ../../reference/configuration.rst:986
 msgid "The names are Sphinx's. See :doc:`../intl`."
-msgstr ""
+msgstr "नाम Sphinx वाले ही हैं। :doc:`../intl` देखें।"
 
 #: ../../reference/configuration.rst:996
 msgid "``locale_dirs``"
@@ -4551,7 +4321,7 @@ msgstr "``[\"locales\"]``"
 
 #: ../../reference/configuration.rst:999
 msgid "Folders of message catalogs, relative to the source folder."
-msgstr ""
+msgstr "संदेश कैटलॉग के फ़ोल्डर, सोर्स फ़ोल्डर के सापेक्ष।"
 
 #: ../../reference/configuration.rst:1000
 msgid "``gettext_compact``"
@@ -4560,102 +4330,93 @@ msgstr "``gettext_compact``"
 #: ../../reference/configuration.rst:1001
 #: ../../reference/configuration.rst:1044
 msgid "boolean or string"
-msgstr ""
+msgstr "बूलियन या स्ट्रिंग"
 
 #: ../../reference/configuration.rst:1003
 msgid ""
-"One catalog per top-level folder (``true``), one per document "
-"(``false``), or one catalog of that name."
+"One catalog per top-level folder (``true``), one per document (``false``), "
+"or one catalog of that name."
 msgstr ""
+"हर शीर्ष-स्तरीय फ़ोल्डर के लिए एक कैटलॉग (``true``), हर दस्तावेज़ के लिए एक "
+"(``false``), या उसी नाम का एक कैटलॉग।"
 
 #: ../../reference/configuration.rst:1005
 msgid "``gettext_uuid``"
 msgstr "``gettext_uuid``"
 
 #: ../../reference/configuration.rst:1008
-#, fuzzy
-#| msgid "Emits stable UUIDs in POT message headers."
 msgid "Write a UUID with each message in the templates."
-msgstr "POT संदेशों में स्थिर UUID लिखता है।"
+msgstr "template में हर संदेश के साथ एक UUID लिखता है।"
 
 #: ../../reference/configuration.rst:1009
-#, fuzzy
-#| msgid "``gettext_compact``"
 msgid "``gettext_location``"
-msgstr "``gettext_compact``"
+msgstr "``gettext_location``"
 
 #: ../../reference/configuration.rst:1012
 msgid "Write each message's source locations in the templates."
-msgstr ""
+msgstr "template में हर संदेश के सोर्स स्थान लिखता है।"
 
 #: ../../reference/configuration.rst:1013
 msgid "``gettext_auto_build``"
 msgstr "``gettext_auto_build``"
 
 #: ../../reference/configuration.rst:1016
-#, fuzzy
-#| msgid ""
-#| "Compiles ``.po`` files into binary ``.mo`` catalogs during the build."
 msgid "Compile ``.po`` catalogs to ``.mo`` beside them during the build."
-msgstr "बिल्ड के दौरान ``.po`` को बाइनरी ``.mo`` कैटलॉग में बदलता है।"
+msgstr ""
+"build के दौरान ``.po`` कैटलॉग को उन्हीं के बगल में ``.mo`` में कंपाइल करता "
+"है।"
 
 #: ../../reference/configuration.rst:1017
-#, fuzzy
-#| msgid "``html_additional_pages``"
 msgid "``gettext_additional_targets``"
-msgstr "``html_additional_pages``"
+msgstr "``gettext_additional_targets``"
 
 #: ../../reference/configuration.rst:1020
 msgid ""
-"Also translate ``index``, ``literal-block``, ``doctest-block``, ``raw``, "
-"or ``image``."
+"Also translate ``index``, ``literal-block``, ``doctest-block``, ``raw``, or "
+"``image``."
 msgstr ""
+"``index``, ``literal-block``, ``doctest-block``, ``raw`` या ``image`` का भी "
+"अनुवाद करता है।"
 
 #: ../../reference/configuration.rst:1022
-#, fuzzy
-#| msgid "``exclude_patterns``"
 msgid "``gettext_exclude_patterns``"
-msgstr "``exclude_patterns``"
+msgstr "``gettext_exclude_patterns``"
 
 #: ../../reference/configuration.rst:1025
 msgid "Document patterns left out of the templates only."
-msgstr ""
+msgstr "दस्तावेज़ पैटर्न जिन्हें केवल template से बाहर रखा जाता है।"
 
 #: ../../reference/configuration.rst:1026
 msgid "``gettext_allow_fuzzy_translations``"
-msgstr ""
+msgstr "``gettext_allow_fuzzy_translations``"
 
 #: ../../reference/configuration.rst:1029
 msgid "Use fuzzy translations too."
-msgstr ""
+msgstr "fuzzy अनुवाद भी इस्तेमाल करता है।"
 
 #: ../../reference/configuration.rst:1030
-#, fuzzy
-#| msgid "``gettext_auto_build``"
 msgid "``gettext_last_translator``"
-msgstr "``gettext_auto_build``"
+msgstr "``gettext_last_translator``"
 
 #: ../../reference/configuration.rst:1032
 msgid "``\"FULL NAME <EMAIL@ADDRESS>\"``"
-msgstr ""
+msgstr "``\"FULL NAME <EMAIL@ADDRESS>\"``"
 
 #: ../../reference/configuration.rst:1033
 msgid "The ``Last-Translator`` header of new catalogs."
-msgstr ""
+msgstr "नए कैटलॉग का ``Last-Translator`` हेडर।"
 
 #: ../../reference/configuration.rst:1034
-#, fuzzy
-#| msgid "``figure_language_filename``"
 msgid "``gettext_language_team``"
-msgstr "``figure_language_filename``"
+msgstr "``gettext_language_team``"
 
 #: ../../reference/configuration.rst:1036
 msgid "``\"LANGUAGE <LL@li.org>\"``"
-msgstr ""
+msgstr "``\"LANGUAGE <LL@li.org>\"``"
 
 #: ../../reference/configuration.rst:1037
 msgid "The ``Language-Team`` header of new catalogs."
-msgstr ""
+msgstr "नए कैटलॉग का ``Language-Team`` हेडर।"
 
 #: ../../reference/configuration.rst:1038
 msgid "``figure_language_filename``"
@@ -4670,28 +4431,32 @@ msgid ""
 "The file name of a translated image, from ``{root}``, ``{path}``, "
 "``{docpath}``, ``{basename}``, ``{ext}``, and ``{language}``."
 msgstr ""
+"अनूदित चित्र का फ़ाइल नाम, जो ``{root}``, ``{path}``, ``{docpath}``, "
+"``{basename}``, ``{ext}`` और ``{language}`` से बनता है।"
 
 #: ../../reference/configuration.rst:1043
 msgid "``translation_progress_classes``"
-msgstr ""
+msgstr "``translation_progress_classes``"
 
 #: ../../reference/configuration.rst:1046
 msgid ""
 "Mark translated and untranslated text with classes: ``true``, ``false``, "
 "``\"translated\"``, or ``\"untranslated\"``."
 msgstr ""
+"अनूदित और बिना अनुवाद वाले टेक्स्ट पर क्लास लगाता है: ``true``, ``false``, "
+"``\"translated\"`` या ``\"untranslated\"``\\ ।"
 
 #: ../../reference/configuration.rst:1049
 msgid "Trust"
-msgstr ""
+msgstr "भरोसा"
 
 #: ../../reference/configuration.rst:1052
 msgid ""
 "``guidedog build --untrusted`` builds a project whose sources we did not "
 "write. Raw content is left out, nothing is fetched, and no build plugin "
-"runs. The project cannot widen what the build reads. ``include_roots`` "
-"and ``pdf_preamble`` are not used. Files and folders that lead outside "
-"the source folder (``html_logo``, ``html_favicon``, ``pdf_logo``, "
+"runs. The project cannot widen what the build reads. ``include_roots`` and "
+"``pdf_preamble`` are not used. Files and folders that lead outside the "
+"source folder (``html_logo``, ``html_favicon``, ``pdf_logo``, "
 "``mathjax_config_path``, ``html_static_path``, ``html_extra_path``, "
 "``templates_path``, ``locale_dirs``, ``pdf_font_paths``, "
 "``autodoc_source_paths``, ``odin_autoapi_dirs``, ``rust_autoapi_crates``) "
@@ -4699,10 +4464,21 @@ msgid ""
 "``build.untrusted`` warning. This is a capability policy, not a process "
 "sandbox. See :doc:`cli`."
 msgstr ""
+"``guidedog build --untrusted`` ऐसा प्रोजेक्ट build करता है जिसके सोर्स हमने "
+"नहीं लिखे। raw सामग्री छोड़ दी जाती है, कुछ भी डाउनलोड नहीं होता और कोई "
+"build plugin नहीं चलता। प्रोजेक्ट build के पढ़ने का दायरा नहीं बढ़ा सकता। "
+"``include_roots`` और ``pdf_preamble`` इस्तेमाल नहीं होते। सोर्स फ़ोल्डर से "
+"बाहर ले जाने वाली फ़ाइलें और फ़ोल्डर (``html_logo``, ``html_favicon``, "
+"``pdf_logo``, ``mathjax_config_path``, ``html_static_path``, "
+"``html_extra_path``, ``templates_path``, ``locale_dirs``, "
+"``pdf_font_paths``, ``autodoc_source_paths``, ``odin_autoapi_dirs``, "
+"``rust_autoapi_crates``) छोड़ दिए जाते हैं। कोई Typst पैकेज डाउनलोड नहीं "
+"होता। हर छोड़ी गई सेटिंग पर ``build.untrusted`` चेतावनी आती है। यह क्षमताओं "
+"की नीति है, प्रोसेस सैंडबॉक्स नहीं। :doc:`cli` देखें।"
 
 #: ../../reference/formats.rst:1
 msgid "Readers, renderers, and builders"
-msgstr "रीडर, रेंडरर और बिल्डर"
+msgstr "रीडर, रेंडरर और builder"
 
 #: ../../reference/formats.rst:4
 msgid ""
@@ -4710,12 +4486,12 @@ msgid ""
 "tree. A builder coordinates a project and publishes its output. These are "
 "different responsibilities."
 msgstr ""
-"रीडर सोर्स भाषा समझता है। रेंडरर एक दस्तावेज़ वृक्ष लिखता है। बिल्डर "
+"रीडर सोर्स भाषा समझता है। रेंडरर एक दस्तावेज़ वृक्ष लिखता है। builder "
 "प्रोजेक्ट का संयोजन और प्रकाशन करता है। ये अलग ज़िम्मेदारियाँ हैं।"
 
 #: ../../reference/formats.rst:8
 msgid "Source routes"
-msgstr "स्रोत के रास्ते"
+msgstr "सोर्स के रास्ते"
 
 #: ../../reference/formats.rst:12
 msgid "Input"
@@ -4731,7 +4507,7 @@ msgstr "रास्ता"
 
 #: ../../reference/formats.rst:15
 msgid "RST in a project"
-msgstr "परियोजना में RST"
+msgstr "प्रोजेक्ट में RST"
 
 #: ../../reference/formats.rst:16
 msgid "RST plus the built-in Sphinx layer"
@@ -4739,11 +4515,11 @@ msgstr "RST और बिल्ट-इन Sphinx परत"
 
 #: ../../reference/formats.rst:17
 msgid "Project graph to HTML, Typst/PDF, text, or catalogs."
-msgstr "परियोजना ग्राफ़ से HTML, Typst/PDF, पाठ या कैटलॉग बनते हैं।"
+msgstr "प्रोजेक्ट ग्राफ़ से HTML, Typst/PDF, टेक्स्ट या कैटलॉग बनते हैं।"
 
 #: ../../reference/formats.rst:18
 msgid "Markdown in a project"
-msgstr "परियोजना में Markdown"
+msgstr "प्रोजेक्ट में Markdown"
 
 #: ../../reference/formats.rst:19
 msgid "MyST-compatible Markdown layer"
@@ -4751,7 +4527,7 @@ msgstr "MyST-संगत Markdown परत"
 
 #: ../../reference/formats.rst:20
 msgid "The same project graph and builders."
-msgstr "वही परियोजना ग्राफ़ और बिल्डर।"
+msgstr "वही प्रोजेक्ट ग्राफ़ और builder।"
 
 #: ../../reference/formats.rst:21
 msgid "``convert file.md``"
@@ -4759,7 +4535,7 @@ msgstr "``convert file.md``"
 
 #: ../../reference/formats.rst:22
 msgid "Plain CommonMark"
-msgstr ""
+msgstr "सादा CommonMark"
 
 #: ../../reference/formats.rst:23
 msgid "One document to HTML or Typst/PDF."
@@ -4787,10 +4563,17 @@ msgid ""
 "``guidedoc-text``. A program can register only the ones it needs; see "
 ":doc:`../howto/install`."
 msgstr ""
+"हर रीडर और रेंडरर अपना अलग crate है, और ``guidedoc-defaults`` उन्हें "
+"रजिस्टर करता है। तीन crate पढ़ते हैं: ``guidedoc-rst`` (reStructuredText), "
+"``guidedoc-commonmark`` (CommonMark 0.31.2 और MyST), और ``guidedoc-sphinx`` "
+"(दोनों पर लागू होने वाले Sphinx निर्देश, रोल और डोमेन)। तीन crate रेंडर "
+"करते हैं: ``guidedoc-html``, ``guidedoc-typst`` और ``guidedoc-text``\\ । "
+"कोई प्रोग्राम केवल वही crate रजिस्टर कर सकता है जिनकी उसे ज़रूरत है; "
+":doc:`../howto/install` देखें।"
 
 #: ../../reference/formats.rst:34
 msgid "Builders"
-msgstr "बिल्डर"
+msgstr "builder"
 
 #: ../../reference/formats.rst:37
 msgid "``html``"
@@ -4807,7 +4590,7 @@ msgstr "``dirhtml``"
 
 #: ../../reference/formats.rst:41
 msgid "Directory-style document URLs."
-msgstr "निर्देशिका जैसे दस्तावेज़ URL।"
+msgstr "डायरेक्टरी जैसे दस्तावेज़ URL।"
 
 #: ../../reference/formats.rst:43
 msgid "``singlehtml``"
@@ -4815,7 +4598,7 @@ msgstr "``singlehtml``"
 
 #: ../../reference/formats.rst:44
 msgid "One main HTML page with document sections and local references."
-msgstr "दस्तावेज़ खंड और स्थानीय संदर्भ वाली एक मुख्य HTML पृष्ठ।"
+msgstr "दस्तावेज़ खंड और स्थानीय संदर्भ वाली एक मुख्य HTML पेज।"
 
 #: ../../reference/formats.rst:46
 msgid "``pdf``"
@@ -4823,10 +4606,9 @@ msgstr "``pdf``"
 
 #: ../../reference/formats.rst:47
 msgid ""
-"Typst books defined by the project. LaTeX builder aliases select this "
-"route."
+"Typst books defined by the project. LaTeX builder aliases select this route."
 msgstr ""
-"परियोजना में तय Typst किताबें। LaTeX बिल्डर के एलियस यही रास्ता चुनते हैं।"
+"प्रोजेक्ट में तय Typst किताबें। LaTeX builder के एलियस यही रास्ता चुनते हैं।"
 
 #: ../../reference/formats.rst:49
 msgid "``text``"
@@ -4834,7 +4616,7 @@ msgstr "``text``"
 
 #: ../../reference/formats.rst:50
 msgid "Plain text files for documents."
-msgstr "दस्तावेज़ों की सादे पाठ की फ़ाइलें।"
+msgstr "दस्तावेज़ों की सादे टेक्स्ट की फ़ाइलें।"
 
 #: ../../reference/formats.rst:52
 msgid "``gettext``"
@@ -4842,7 +4624,7 @@ msgstr "``gettext``"
 
 #: ../../reference/formats.rst:53
 msgid "Message templates for translation."
-msgstr "अनुवाद के संदेश टेम्पलेट।"
+msgstr "अनुवाद के संदेश template।"
 
 #: ../../reference/formats.rst:55
 msgid "``dummy``"
@@ -4850,7 +4632,7 @@ msgstr "``dummy``"
 
 #: ../../reference/formats.rst:56
 msgid "Reads and resolves the project without publishing an artifact."
-msgstr "आर्टिफ़ैक्ट प्रकाशित किए बिना परियोजना पढ़ता और संदर्भ हल करता है।"
+msgstr "आर्टिफ़ैक्ट प्रकाशित किए बिना प्रोजेक्ट पढ़ता और संदर्भ हल करता है।"
 
 #: ../../reference/formats.rst:58
 msgid "Coverage is evidence"
@@ -4874,16 +4656,12 @@ msgid "Reference"
 msgstr "संदर्भ"
 
 #: ../../reference/index.rst:4
-#, fuzzy
-#| msgid ""
-#| "These pages state the contracts. They are meant to be searched and "
-#| "consulted. Start with a tutorial when you need a first example."
 msgid ""
 "These pages state the contracts. They are meant to be searched and "
 "consulted. When we need a first example, we start with a tutorial."
 msgstr ""
-"ये पृष्ठ अनुबंध बताते हैं और खोजकर देखने के लिए हैं। पहला उदाहरण चाहिए तो "
-"ट्यूटोरियल से शुरू करें।"
+"ये पेज अनुबंध बताते हैं। इन्हें ज़रूरत पड़ने पर खोजकर देखा जाता है। पहला "
+"उदाहरण चाहिए तो हम किसी ट्यूटोरियल से शुरू करते हैं।"
 
 #~ msgid ""
 #~ "The ``guidedog`` executable provides a complete command-line interface "

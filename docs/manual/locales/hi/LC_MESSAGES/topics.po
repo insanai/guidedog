@@ -39,24 +39,22 @@ msgid ""
 "If the request fits the limits, the workspace buffer grows and conversion "
 "continues; otherwise the conversion ends with a Limit result."
 msgstr ""
+"अनुरोध सीमाओं के भीतर हो, तो वर्कस्पेस बफ़र बढ़ता है और रूपांतरण जारी रहता "
+"है; नहीं तो रूपांतरण Limit परिणाम के साथ खत्म होता है।"
 
 #: ../../topics/diagrams.rst:13
 msgid "A conversion checks its limits before a buffer grows."
-msgstr ""
+msgstr "रूपांतरण बफ़र बढ़ने से पहले अपनी सीमाएँ जाँचता है।"
 
 #: ../../topics/diagrams.rst:33
-#, fuzzy
-#| msgid ""
-#| "The drawing names the owner at the growth step. It does not suggest "
-#| "that the conversion core allocates. This distinction is part of the "
-#| "contract."
 msgid ""
-"The drawing names the decision at the growth step. It does not suggest "
-"that running out of room aborts the program: a bound produces a result "
-"the caller can report. This distinction is part of the contract."
+"The drawing names the decision at the growth step. It does not suggest that "
+"running out of room aborts the program: a bound produces a result the "
+"caller can report. This distinction is part of the contract."
 msgstr ""
-"चित्र बढ़ाने के चरण में मालिक बताता है। वह कोर द्वारा आवंटन नहीं दिखाता। "
-"यह अंतर अनुबंध का हिस्सा है।"
+"आरेख बढ़ने वाले चरण पर लिए जाने वाले निर्णय को सामने रखता है। वह यह संकेत "
+"नहीं देता कि जगह खत्म होने पर प्रोग्राम रुक जाता है: सीमा से ऐसा परिणाम "
+"मिलता है जिसे कॉलर रिपोर्ट कर सकता है। यह अंतर अनुबंध का हिस्सा है।"
 
 #: ../../topics/diagrams.rst:38
 msgid "Author a graph"
@@ -78,27 +76,26 @@ msgstr "लाइट, डार्क और प्रिंट"
 
 #: ../../topics/diagrams.rst:63
 msgid ""
-"A transparent canvas does not change a graph's ink. Dark text can "
-"disappear on a dark page. Ordinary graphs therefore keep their chosen "
-"colors and receive a light panel in the default dark theme."
+"A transparent canvas does not change a graph's ink. Dark text can disappear "
+"on a dark page. Ordinary graphs therefore keep their chosen colors and "
+"receive a light panel in the default dark theme."
 msgstr ""
-"पारदर्शी कैनवास से अक्षरों का रंग नहीं बदलता। गहरे पृष्ठ पर गहरा टेक्स्ट "
-"गायब हो सकता है। इसलिए सामान्य ग्राफ़ अपने रंग रखते हैं और डिफ़ॉल्ट डार्क "
-"थीम में हल्का पैनल पाते हैं।"
+"पारदर्शी कैनवास से अक्षरों का रंग नहीं बदलता। गहरे पेज पर गहरा टेक्स्ट गायब "
+"हो सकता है। इसलिए सामान्य ग्राफ़ अपने रंग रखते हैं और डिफ़ॉल्ट डार्क theme "
+"में हल्का पैनल पाते हैं।"
 
 #: ../../topics/diagrams.rst:67
 msgid ""
-"For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
-"the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
-"adds a fixed stylesheet inside the SVG image. Its dark media query "
-"follows the embedding page's ``color-scheme``, including the theme "
-"control's explicit selection. No script, external stylesheet or inline "
-"page SVG is needed."
+"For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to the "
+"directive. This is available in Guidedog 0.6.3 and later. Guidedog adds a "
+"fixed stylesheet inside the SVG image. Its dark media query follows the "
+"embedding page's ``color-scheme``, including the theme control's explicit "
+"selection. No script, external stylesheet or inline page SVG is needed."
 msgstr ""
-"मैनुअल की बदलने वाली पैलेट के लिए ``:class: graphviz-adaptive`` जोड़ें। "
-"यह Guidedog 0.6.3 और बाद के संस्करणों में है। SVG के भीतर तय CSS, पृष्ठ "
-"के ``color-scheme`` और उपयोगकर्ता के स्पष्ट चयन का पालन करती है। "
-"स्क्रिप्ट, बाहरी CSS या पृष्ठ में इनलाइन SVG नहीं चाहिए।"
+"मैनुअल की बदलने वाली पैलेट के लिए ``:class: graphviz-adaptive`` जोड़ें। यह "
+"Guidedog 0.6.3 और बाद के संस्करणों में है। SVG के भीतर तय CSS, पेज के "
+"``color-scheme`` और उपयोगकर्ता के स्पष्ट चयन का पालन करती है। स्क्रिप्ट, "
+"बाहरी CSS या पेज में इनलाइन SVG नहीं चाहिए।"
 
 #: ../../topics/diagrams.rst:73
 msgid ""
@@ -158,54 +155,39 @@ msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
 #: ../../topics/diagrams.rst:91
-#, fuzzy
-#| msgid "A separate native allocation boundary; violet."
 msgid "A separate ownership or allocation boundary; violet."
-msgstr "अलग नेटिव एलोकेशन सीमा; बैंगनी।"
+msgstr "अलग ओनरशिप या एलोकेशन सीमा; बैंगनी।"
 
 #: ../../topics/diagrams.rst:93
-#, fuzzy
-#| msgid ""
-#| "For example, ``source [class=\"gd-input\", shape=note, "
-#| "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
-#| "role. Classes do not choose shapes or add labels: write those "
-#| "explicitly so the drawing also works in monochrome. Unclassified steps "
-#| "use green. This palette is opt-in; do not apply it to artwork whose "
-#| "exact colors carry data."
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
 "role. Classes do not choose shapes or add labels. We write those "
-"explicitly, so the drawing also works in monochrome. Unclassified steps "
-"use green. This palette is opt-in. We do not apply it to artwork whose "
-"exact colors carry data."
+"explicitly, so the drawing also works in monochrome. Unclassified steps use "
+"green. This palette is opt-in. We do not apply it to artwork whose exact "
+"colors carry data."
 msgstr ""
-"``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` हल्का "
-"रूप और डार्क भूमिका दोनों देता है। क्लास आकार या लेबल नहीं चुनती; उन्हें "
-"लिखें ताकि श्वेत-श्याम में भी अर्थ स्पष्ट हो। बिना क्लास के चरण हरे हैं। "
-"यह वैकल्पिक पैलेट है; जहाँ सही रंग ही डेटा हो, वहाँ इसे न लगाएँ।"
+"उदाहरण के लिए, ``source [class=\"gd-input\", shape=note, "
+"fillcolor=\"#fbfaf3\"]`` लाइट रूप और उसकी डार्क भूमिका, दोनों तय करता है। "
+"क्लास आकार नहीं चुनतीं और लेबल नहीं जोड़तीं। उन्हें हम खुद लिखते हैं, ताकि "
+"आरेख श्वेत-श्याम में भी काम करे। बिना क्लास वाले चरण हरे रंग में होते हैं। "
+"यह पैलेट वैकल्पिक है। जिस चित्र के सटीक रंग ही डेटा बताते हों, उस पर हम इसे "
+"लागू नहीं करते।"
 
 #: ../../topics/diagrams.rst:99
-#, fuzzy
-#| msgid ""
-#| "The light DOT attributes remain the PDF master. The book receives an "
-#| "SVG without the adaptive stylesheet. Printed HTML selects the light "
-#| "scheme too. Keep both palettes legible and test the actual book; "
-#| "transparency alone proves neither. The inheritance rule is defined by "
-#| "the `CSS color-scheme specification "
-#| "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
-"without the adaptive stylesheet. Printed HTML selects the light scheme "
-"too. Keep both palettes legible and test the actual book. Transparency "
-"alone proves neither. The inheritance rule is defined by the `CSS "
-"color-scheme specification "
+"without the adaptive stylesheet. Printed HTML selects the light scheme too. "
+"Keep both palettes legible and test the actual book. Transparency alone "
+"proves neither. The inheritance rule is defined by the `CSS color-scheme "
+"specification "
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
 msgstr ""
-"हल्के DOT गुण PDF का मूल रूप रहते हैं। किताब को अनुकूलित CSS के बिना SVG "
-"मिलता है; HTML प्रिंट भी लाइट चुनता है। दोनों पैलेट और असली किताब जाँचें; "
-"केवल पारदर्शिता पठनीयता का प्रमाण नहीं। नियम `CSS color-scheme विनिर्देश "
-"<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ में है।"
+"हल्के DOT एट्रिब्यूट ही PDF का मूल रूप रहते हैं। किताब को अनुकूली स्टाइलशीट "
+"के बिना SVG मिलता है। प्रिंट किया गया HTML भी लाइट स्कीम चुनता है। दोनों "
+"पैलेट पढ़ने लायक रखें और असली किताब जाँचें। सिर्फ़ पारदर्शिता से इनमें से "
+"कुछ भी साबित नहीं होता। इनहेरिटेंस का नियम `CSS color-scheme विनिर्देश "
+"<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ में तय है।"
 
 #: ../../topics/diagrams.rst:105
 msgid "Make the result legible"
@@ -213,64 +195,48 @@ msgstr "परिणाम पठनीय बनाएँ"
 
 #: ../../topics/diagrams.rst:108
 msgid ""
-"Keep node labels short. Explain a longer rule below the drawing. Prefer "
-"one direction for the main path. Label a return edge with its condition. "
-"Use shape and text as well as color. A print reader may have no color at "
-"all."
+"Keep node labels short. Explain a longer rule below the drawing. Prefer one "
+"direction for the main path. Label a return edge with its condition. Use "
+"shape and text as well as color. A print reader may have no color at all."
 msgstr ""
 "नोड लेबल छोटे रखें। लंबा नियम चित्र के नीचे समझाएँ। मुख्य पथ एक दिशा में "
-"रखें; लौटती कड़ी पर शर्त दें। रंग के साथ आकार और पाठ भी दें। प्रिंट में "
+"रखें; लौटती कड़ी पर शर्त दें। रंग के साथ आकार और टेक्स्ट भी दें। प्रिंट में "
 "रंग न हो सकता है।"
 
 #: ../../topics/diagrams.rst:112
 msgid ""
-"Supply alternative text and a caption. Test narrow browser windows and "
-"the PDF page. If a diagram needs tiny type to fit, split it into two "
-"drawings. See :doc:`../media` for image and figure sizing."
+"Supply alternative text and a caption. Test narrow browser windows and the "
+"PDF page. If a diagram needs tiny type to fit, split it into two drawings. "
+"See :doc:`../media` for image and figure sizing."
 msgstr ""
-"वैकल्पिक पाठ और कैप्शन दें। संकरे ब्राउज़र और PDF पेज जाँचें। फिट करने के "
-"लिए बहुत छोटे अक्षर चाहिए हों तो चित्र दो में बाँटें। आकार के लिए "
+"वैकल्पिक टेक्स्ट और कैप्शन दें। संकरे ब्राउज़र और PDF पेज जाँचें। फिट करने "
+"के लिए बहुत छोटे अक्षर चाहिए हों तो चित्र दो में बाँटें। आकार के लिए "
 ":doc:`../media` देखें।"
 
 #: ../../topics/diagrams.rst:116
-#, fuzzy
-#| msgid ""
-#| "On narrow screens, captioned diagrams scroll horizontally to keep "
-#| "labels readable. Scroll inside the figure; the page itself keeps its "
-#| "width."
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
 "readable. Scroll inside the figure. The page itself keeps its width."
 msgstr ""
-"छोटे पर्दे पर कैप्शन वाले चित्र को भीतर ही क्षैतिज स्क्रॉल कर सकते हैं। "
-"लेबल छोटे नहीं होते और पृष्ठ की चौड़ाई नहीं बढ़ती।"
+"छोटी स्क्रीन पर कैप्शन वाले आरेख क्षैतिज रूप से स्क्रॉल होते हैं, ताकि लेबल "
+"पढ़े जा सकें। चित्र के भीतर स्क्रॉल करें। पेज की अपनी चौड़ाई वही रहती है।"
 
 #: ../../topics/domains.rst:1
 msgid "Domains"
 msgstr "डोमेन"
 
 #: ../../topics/domains.rst:4
-#, fuzzy
-#| msgid ""
-#| "A domain is a collection of markup constructs (directives and roles) "
-#| "for describing and cross-referencing program objects belonging to a "
-#| "specific programming language or domain of discourse."
 msgid ""
 "A domain is a set of directives and roles. They describe and "
 "cross-reference the objects of one programming language or one field of "
 "discourse."
 msgstr ""
-"डोमेन निर्देशों और रोल का समूह है। इससे किसी भाषा या विषय के प्रोग्राम "
-"ऑब्जेक्ट का वर्णन और पार-संदर्भ दिया जाता है।"
+"डोमेन निर्देशों और रोल का एक समूह है। ये किसी एक प्रोग्रामिंग भाषा या किसी "
+"एक विषय-क्षेत्र के ऑब्जेक्ट का वर्णन और पार-संदर्भ करते हैं।"
 
 #: ../../topics/domains.rst:8
-#, fuzzy
-#| msgid ""
-#| "Guidedog provides native, built-in implementations of the standard "
-#| "Sphinx domains:"
-msgid ""
-"Guidedog has built-in implementations of the standard Sphinx domains:"
-msgstr "Guidedog में ये Sphinx डोमेन मूल रूप से उपलब्ध हैं:"
+msgid "Guidedog has built-in implementations of the standard Sphinx domains:"
+msgstr "Guidedog में मानक Sphinx डोमेन अंतर्निहित रूप से लागू हैं:"
 
 #: ../../topics/domains.rst:10
 msgid ""
@@ -301,7 +267,7 @@ msgid ""
 "**C++ domain** (``cpp``): C++ classes, concepts, templates, namespaces, "
 "methods, and expressions."
 msgstr ""
-"**C++ डोमेन** (``cpp``): क्लास, कॉन्सेप्ट, टेम्पलेट, नेमस्पेस, मेथड और "
+"**C++ डोमेन** (``cpp``): क्लास, कॉन्सेप्ट, template, नेमस्पेस, मेथड और "
 "एक्सप्रेशन।"
 
 #: ../../topics/domains.rst:14
@@ -319,16 +285,12 @@ msgstr ""
 ":doc:`../odin` देखें।"
 
 #: ../../topics/domains.rst:16
-#, fuzzy
-#| msgid ""
-#| "**C domain** (``c``): C functions, types, structs, unions, enums, "
-#| "enumerators, variables, and macros."
 msgid ""
 "**Rust domain** (``rust``): Rust crates, modules, functions, structs, "
 "enums, traits, impls, and macros (see `Rust domain`_ below)."
 msgstr ""
-"**C डोमेन** (``c``): फ़ंक्शन, टाइप, स्ट्रक्ट, यूनियन, एनम, एनम मान, चर और "
-"मैक्रो।"
+"**Rust डोमेन** (``rust``): Rust crate, मॉड्यूल, फ़ंक्शन, स्ट्रक्ट, एनम, "
+"trait, impl और मैक्रो (नीचे `Rust domain`_ देखें)।"
 
 #: ../../topics/domains.rst:18
 msgid "Setting the primary domain"
@@ -348,10 +310,8 @@ msgstr ""
 "``:func:`name``` लिखें।"
 
 #: ../../topics/domains.rst:26
-#, fuzzy
-#| msgid "To change the active domain locally within a document:"
 msgid "To change the active domain within one document:"
-msgstr "दस्तावेज़ में स्थानीय रूप से डोमेन बदलने के लिए:"
+msgstr "किसी एक दस्तावेज़ के भीतर सक्रिय डोमेन बदलने के लिए:"
 
 #: ../../topics/domains.rst:32
 msgid "Standard domain"
@@ -379,8 +339,7 @@ msgstr "रोल"
 
 #: ../../topics/domains.rst:56
 msgid "``:doc:`path```: Links to a project document by relative path."
-msgstr ""
-"``:doc:`path```: सापेक्ष पथ से परियोजना के दस्तावेज़ का लिंक देता है।"
+msgstr "``:doc:`path```: सापेक्ष पथ से प्रोजेक्ट के दस्तावेज़ का लिंक देता है।"
 
 #: ../../topics/domains.rst:57
 msgid ""
@@ -605,10 +564,8 @@ msgid "``:js:mod:`name```: Links to a JavaScript module."
 msgstr "``:js:mod:`name```: JavaScript मॉड्यूल का लिंक देता है।"
 
 #: ../../topics/domains.rst:220
-#, fuzzy
-#| msgid "C domain"
 msgid "Rust domain"
-msgstr "C डोमेन"
+msgstr "Rust डोमेन"
 
 #: ../../topics/domains.rst:223
 msgid ""
@@ -617,6 +574,10 @@ msgid ""
 "qualifiers included. Targets are full paths with ``::``, the crate's name "
 "first."
 msgstr ""
+"Rust डोमेन crate का वर्णन वैसे करता है जैसे rustdoc उन्हें दिखाता है। हर "
+"निर्देश घोषणा को वैसे ही लेता है जैसे Rust में लिखी जाती है: एक पंक्ति में, "
+"दृश्यता और क्वालिफ़ायर समेत। लक्ष्य ``::`` वाले पूरे पाथ होते हैं, जिनमें "
+"सबसे पहले crate का नाम आता है।"
 
 #: ../../topics/domains.rst:258
 msgid ""
@@ -626,41 +587,53 @@ msgid ""
 "``rust:const``, ``rust:static``, ``rust:macro``, ``rust:field``, "
 "``rust:associatedtype``, ``rust:associatedconst``, and ``rust:use``. "
 "Options include ``:visibility:``, ``:cfg:``, ``:unsafe:``, ``:async:``, "
-"``:const:``, ``:provided:``, ``:attributes:``, ``:deprecated:``, "
-"``:for:``, ``:trait:``, ``:target:``, and ``:noindex:``. An ``impl`` is "
-"never a target itself. Its members belong to the type."
+"``:const:``, ``:provided:``, ``:attributes:``, ``:deprecated:``, ``:for:``, "
+"``:trait:``, ``:target:``, and ``:noindex:``. An ``impl`` is never a target "
+"itself. Its members belong to the type."
 msgstr ""
+"निर्देशों में ``rust:crate``, ``rust:module``, ``rust:function``, "
+"``rust:method``, ``rust:struct``, ``rust:enum``, ``rust:variant``, "
+"``rust:union``, ``rust:trait``, ``rust:impl``, ``rust:type``, "
+"``rust:const``, ``rust:static``, ``rust:macro``, ``rust:field``, "
+"``rust:associatedtype``, ``rust:associatedconst`` और ``rust:use`` शामिल "
+"हैं। विकल्पों में ``:visibility:``, ``:cfg:``, ``:unsafe:``, ``:async:``, "
+"``:const:``, ``:provided:``, ``:attributes:``, ``:deprecated:``, ``:for:``, "
+"``:trait:``, ``:target:`` और ``:noindex:`` शामिल हैं। ``impl`` खुद कभी "
+"टारगेट नहीं होता। उसके सदस्य टाइप के होते हैं।"
 
 #: ../../topics/domains.rst:266
 msgid ""
 "Guidedog can also generate these pages from a crate's source, without "
-"compiling it. See :doc:`../howto/document-code` and "
-"``rust_autoapi_crates`` in :doc:`../reference/configuration`."
+"compiling it. See :doc:`../howto/document-code` and ``rust_autoapi_crates`` "
+"in :doc:`../reference/configuration`."
 msgstr ""
+"Guidedog crate के सोर्स से, उसे कंपाइल किए बिना, ये पेज जनरेट भी कर सकता "
+"है। :doc:`../howto/document-code` और :doc:`../reference/configuration` में "
+"``rust_autoapi_crates`` देखें।"
 
 #: ../../topics/domains.rst:273
-#, fuzzy
-#| msgid "``:js:mod:`name```: Links to a JavaScript module."
 msgid "``:rust:mod:`path```: Links to a crate or module."
-msgstr "``:js:mod:`name```: JavaScript मॉड्यूल का लिंक देता है।"
+msgstr "``:rust:mod:`path```: crate या मॉड्यूल का लिंक देता है।"
 
 #: ../../topics/domains.rst:274
-#, fuzzy
-#| msgid "``:cpp:func:`name```: Links to a C++ function or method."
 msgid "``:rust:fn:`path```: Links to a function or method."
-msgstr "``:cpp:func:`name```: C++ फ़ंक्शन या मेथड का लिंक देता है।"
+msgstr "``:rust:fn:`path```: फ़ंक्शन या मेथड का लिंक देता है।"
 
 #: ../../topics/domains.rst:275
 msgid ""
 "``:rust:struct:`path```, ``:rust:enum:`path```, ``:rust:union:`path```, "
 "``:rust:trait:`path```: Link to those types."
 msgstr ""
+"``:rust:struct:`path```, ``:rust:enum:`path```, ``:rust:union:`path```, "
+"``:rust:trait:`path```: इन टाइप के लिंक देते हैं।"
 
 #: ../../topics/domains.rst:277
 msgid ""
 "``:rust:variant:`path```, ``:rust:field:`path```: Link to a variant or a "
 "field."
 msgstr ""
+"``:rust:variant:`path```, ``:rust:field:`path```: वेरिएंट या फ़ील्ड का लिंक "
+"देते हैं।"
 
 #: ../../topics/domains.rst:278
 msgid ""
@@ -668,23 +641,26 @@ msgid ""
 "``:rust:macro:`path```: Link to aliases and associated types, constants, "
 "statics, and macros."
 msgstr ""
+"``:rust:type:`path```, ``:rust:const:`path```, ``:rust:static:`path```, "
+"``:rust:macro:`path```: एलियस और एसोसिएटेड टाइप, स्थिरांक, स्टैटिक और "
+"मैक्रो के लिंक देते हैं।"
 
 #: ../../topics/domains.rst:281
 msgid ""
 "``:rust:any:`path```: Links to any of them, or through an inventory to "
-"another project (``std::vec::Vec``). An unresolved target is shown as "
-"code."
+"another project (``std::vec::Vec``). An unresolved target is shown as code."
 msgstr ""
+"``:rust:any:`path```: इनमें से किसी का भी, या इन्वेंटरी के ज़रिए किसी दूसरे "
+"प्रोजेक्ट (``std::vec::Vec``) का लिंक देता है। जो टारगेट हल न हो, वह कोड के "
+"रूप में दिखता है।"
 
 #: ../../topics/domains.rst:284
 msgid "Cross-referencing conventions"
 msgstr "पार-संदर्भ की परंपराएँ"
 
 #: ../../topics/domains.rst:287
-#, fuzzy
-#| msgid "Cross-references in domains support several helpful modifiers:"
 msgid "Cross-references in domains support several modifiers:"
-msgstr "डोमेन के पार-संदर्भ में ये संशोधक इस्तेमाल कर सकते हैं:"
+msgstr "डोमेन के पार-संदर्भ कई संशोधकों का समर्थन करते हैं:"
 
 #: ../../topics/domains.rst:289
 msgid ""
@@ -718,21 +694,21 @@ msgid ""
 "The Rust domain follows the same conventions with ``::`` paths: "
 "``:rust:struct:`~my_crate::geometry::Point``` renders as ``Point``."
 msgstr ""
+"Rust डोमेन भी ``::`` पथों के साथ यही नियम मानता है: "
+"``:rust:struct:`~my_crate::geometry::Point``` सिर्फ़ ``Point`` के रूप में "
+"दिखता है।"
 
 #: ../../topics/index.rst:1
 msgid "Topic guides"
 msgstr "विषय मार्गदर्शिकाएँ"
 
 #: ../../topics/index.rst:4
-#, fuzzy
-#| msgid ""
-#| "These chapters explain the model. They give you enough context to make "
-#| "a choice."
 msgid ""
 "These chapters explain the model. They give us enough context to make a "
 "choice."
 msgstr ""
-"ये अध्याय मॉडल समझाते हैं। निर्णय लेने के लिए ज़रूरी संदर्भ भी देते हैं।"
+"ये अध्याय मॉडल को समझाते हैं। इनसे हमें इतना संदर्भ मिल जाता है कि हम सही "
+"चुनाव कर सकें।"
 
 #: ../../topics/mathematics.rst:1
 msgid "Mathematics and proofs"
@@ -818,18 +794,14 @@ msgstr ""
 "क्रम समान हैं।"
 
 #: ../../topics/mathematics.rst:59
-#, fuzzy
-#| msgid ""
-#| "**Boundary.** This accounts for charged host storage. It does not "
-#| "bound the separate Typst compiler's internal allocations. A proof is "
-#| "only as strong as the boundary it states."
 msgid ""
-"**Boundary.** This accounts for charged host storage. It does not bound "
-"the Typst compiler's internal allocations. A proof is only as strong as "
-"the boundary it states."
+"**Boundary.** This accounts for charged host storage. It does not bound the "
+"Typst compiler's internal allocations. A proof is only as strong as the "
+"boundary it states."
 msgstr ""
-"**सीमा।** यह दर्ज होस्ट स्टोरेज का हिसाब है। अलग Typst कंपाइलर का आंतरिक "
-"आवंटन सीमित नहीं। प्रमाण अपनी बताई सीमा तक ही मान्य है।"
+"**सीमा।** यह हिसाब सिर्फ़ होस्ट के दर्ज स्टोरेज का है। यह Typst कंपाइलर के "
+"आंतरिक एलोकेशन को सीमित नहीं करता। कोई भी प्रमाण उतना ही मज़बूत होता है "
+"जितनी उसकी बताई सीमा।"
 
 #: ../../topics/mathematics.rst:63
 msgid "HTML setup"
@@ -838,25 +810,20 @@ msgstr "HTML विकल्प"
 #: ../../topics/mathematics.rst:66
 msgid ""
 "These projects bundle MathJax 3.2.2 with its SVG font data. The bundle is "
-"loaded only on pages containing mathematics. It makes these pages "
-"readable offline after a build. No diagram script or web font service is "
-"required."
+"loaded only on pages containing mathematics. It makes these pages readable "
+"offline after a build. No diagram script or web font service is required."
 msgstr ""
 "इन प्रोजेक्ट में MathJax 3.2.2 और SVG फ़ॉन्ट डेटा साथ हैं। केवल गणित वाले "
-"पेज इसे लोड करते हैं। बिल्ड के बाद पेज ऑफ़लाइन पढ़े जा सकते हैं। चित्र "
+"पेज इसे लोड करते हैं। build के बाद पेज ऑफ़लाइन पढ़े जा सकते हैं। चित्र "
 "स्क्रिप्ट या वेब फ़ॉन्ट सेवा नहीं चाहिए।"
 
 #: ../../topics/mathematics.rst:71
-#, fuzzy
-#| msgid ""
-#| "For your own project, the default uses MathJax from a CDN. To serve a "
-#| "local copy, place it in ``_static`` and set:"
 msgid ""
-"For our own projects, the default uses MathJax from a CDN. To serve a "
-"local copy, we place it in ``_static`` and set:"
+"For our own projects, the default uses MathJax from a CDN. To serve a local "
+"copy, we place it in ``_static`` and set:"
 msgstr ""
-"आपके अपने प्रोजेक्ट में डिफ़ॉल्ट रूप से MathJax CDN से आता है। स्थानीय "
-"प्रति देने के लिए उसे ``_static`` में रखें और सेट करें:"
+"अपने प्रोजेक्ट में डिफ़ॉल्ट रूप से MathJax CDN से लोड होता है। लोकल कॉपी "
+"देने के लिए हम उसे ``_static`` में रखते हैं और यह सेट करते हैं:"
 
 #: ../../topics/mathematics.rst:79
 msgid ""
@@ -871,7 +838,7 @@ msgstr ""
 
 #: ../../topics/projects.rst:1
 msgid "How a project works"
-msgstr "परियोजना कैसे काम करती है"
+msgstr "प्रोजेक्ट कैसे काम करता है"
 
 #: ../../topics/projects.rst:4
 msgid ""
@@ -889,12 +856,12 @@ msgid ""
 "Pipeline traverses discovery, source plugins, parallel reading, reference "
 "resolution, rendering, HTML plugins, and atomic staging."
 msgstr ""
-"खोज, सोर्स प्लगइन, समानांतर पढ़ाई, संदर्भ समाधान, रेंडरिंग और HTML हुक के "
-"बाद आउटपुट तैयार होकर कमिट होता है।"
+"खोज, सोर्स plugin, समानांतर पढ़ाई, संदर्भ समाधान, रेंडरिंग और HTML hook के "
+"बाद आउटपुट तैयार होकर commit होता है।"
 
 #: ../../topics/projects.rst:11
 msgid "Guidedog's end-to-end documentation compilation pipeline."
-msgstr "Guidedog का पूरा दस्तावेज़ बिल्ड प्रवाह।"
+msgstr "Guidedog का पूरा दस्तावेज़ build प्रवाह।"
 
 #: ../../topics/projects.rst:35
 msgid "Documents and resources"
@@ -905,38 +872,33 @@ msgid ""
 "A source suffix selects a reader. RST and project Markdown share the "
 "project graph. Images and downloads are resources. Guidedog copies "
 "resources that the documents use. Theme assets are listed in "
-"``html_static_path``. An include must remain within the source directory "
-"or the configured ``include_roots``."
+"``html_static_path``. An include must remain within the source directory or "
+"the configured ``include_roots``."
 msgstr ""
 "प्रत्यय रीडर चुनता है। RST और प्रोजेक्ट Markdown एक ग्राफ़ साझा करते हैं। "
-"चित्र व डाउनलोड संसाधन हैं; उपयोग किए संसाधन कॉपी होते हैं। थीम सामग्री "
-"``html_static_path`` में है। include सोर्स या दिए ``include_roots`` के "
-"भीतर हो।"
+"चित्र व डाउनलोड संसाधन हैं; उपयोग किए संसाधन कॉपी होते हैं। theme सामग्री "
+"``html_static_path`` में है। include सोर्स या दिए ``include_roots`` के भीतर "
+"हो।"
 
 #: ../../topics/projects.rst:43
 msgid "Separate projects"
-msgstr "अलग परियोजनाएँ"
+msgstr "अलग प्रोजेक्ट"
 
 #: ../../topics/projects.rst:46
-#, fuzzy
-#| msgid ""
-#| "Keep a manual and design records in separate projects. They have "
-#| "different readers and different reading orders. Each project has its "
-#| "own configuration, templates, cache, and output. The Guidedog "
-#| "repository uses ``docs/manual`` and ``docs/gds`` this way."
 msgid ""
 "We keep a manual and design records in separate projects. They have "
 "different readers and different reading orders. Each project has its own "
 "configuration, templates, cache, and output. The Guidedog repository uses "
 "``docs/manual`` and ``docs/gds`` this way."
 msgstr ""
-"मैनुअल और डिज़ाइन रिकॉर्ड अलग प्रोजेक्ट रखें। पाठक और पढ़ने का क्रम अलग "
-"हैं। हर एक का अपना कॉन्फ़िगरेशन, टेम्पलेट, कैश और आउटपुट है। Guidedog में "
-"``docs/manual`` और ``docs/gds`` ऐसे हैं।"
+"हम मैनुअल और डिज़ाइन रिकॉर्ड को अलग-अलग प्रोजेक्ट में रखते हैं। दोनों के "
+"पाठक अलग हैं और पढ़ने का क्रम भी। हर प्रोजेक्ट का अपना कॉन्फ़िगरेशन, "
+"template, कैश और आउटपुट होता है। Guidedog repository में ``docs/manual`` और "
+"``docs/gds`` इसी तरह बने हैं।"
 
 #: ../../topics/projects.rst:51
 msgid "Incremental work"
-msgstr "इन्क्रिमेंटल बिल्ड"
+msgstr "इन्क्रिमेंटल build"
 
 #: ../../topics/projects.rst:54
 msgid ""
@@ -946,8 +908,8 @@ msgid ""
 "its saved object."
 msgstr ""
 "Guidedog हर आउटपुट के इनपुट और खोज दर्ज करता है। बदला सोर्स फिर पढ़ता है। "
-"निर्भरता बदलने पर उपयोगकर्ता अमान्य होते हैं। टेम्पलेट सभी पेज बदल सकता "
-"है। अपरिवर्तित दस्तावेज़ सहेजे ऑब्जेक्ट से लोड हो सकता है।"
+"निर्भरता बदलने पर उपयोगकर्ता अमान्य होते हैं। template सभी पेज बदल सकता है। "
+"अपरिवर्तित दस्तावेज़ सहेजे ऑब्जेक्ट से लोड हो सकता है।"
 
 #: ../../topics/projects.rst:59
 msgid ""
@@ -955,9 +917,8 @@ msgid ""
 "truth. ``-E`` discards the saved environment for the next build. ``-a`` "
 "writes all outputs. They solve different problems."
 msgstr ""
-"कैश पिछली बिल्ड का प्रमाण है, मूल सत्य नहीं। ``-E`` अगली बिल्ड के लिए "
-"सहेजा वातावरण हटाता है। ``-a`` सभी आउटपुट लिखता है। ये अलग समस्याएँ हल "
-"करते हैं।"
+"कैश पिछली build का प्रमाण है, मूल सत्य नहीं। ``-E`` अगली build के लिए सहेजा "
+"वातावरण हटाता है। ``-a`` सभी आउटपुट लिखता है। ये अलग समस्याएँ हल करते हैं।"
 
 #: ../../topics/projects.rst:63
 msgid ""
@@ -968,20 +929,14 @@ msgstr ""
 "\\land \\text{आउटपुट मौजूद}"
 
 #: ../../topics/projects.rst:67
-#, fuzzy
-#| msgid ""
-#| "An explicit timestamp in a template is also an input to the rendered "
-#| "page. A page that prints the current minute can change even when its "
-#| "prose does not. Use ``SOURCE_DATE_EPOCH`` when you need a fixed build "
-#| "time."
 msgid ""
-"An explicit timestamp in a template is also an input to the rendered "
-"page. A page that prints the current minute can change even when its "
-"prose does not. We use ``SOURCE_DATE_EPOCH`` when we need a fixed build "
-"time."
+"An explicit timestamp in a template is also an input to the rendered page. "
+"A page that prints the current minute can change even when its prose does "
+"not. We use ``SOURCE_DATE_EPOCH`` when we need a fixed build time."
 msgstr ""
-"टेम्पलेट का स्पष्ट टाइमस्टैम्प भी पेज इनपुट है। वर्तमान मिनट दिखाता पेज "
-"पाठ बदले बिना बदल सकता है। तय समय के लिए ``SOURCE_DATE_EPOCH`` दें।"
+"template में लिखा टाइमस्टैम्प भी रेंडर हुए पेज का इनपुट है। जो पेज मौजूदा "
+"मिनट छापता है, वह टेक्स्ट बदले बिना भी बदल सकता है। build का समय तय रखना हो "
+"तो हम ``SOURCE_DATE_EPOCH`` इस्तेमाल करते हैं।"
 
 #: ../../topics/projects.rst:71
 msgid "Publication"
@@ -995,10 +950,10 @@ msgid ""
 "is settled on the next build. The design and its proof obligations are in "
 ":doc:`../internals/publication`."
 msgstr ""
-"बिल्ड समान स्तर के स्टेजिंग फ़ोल्डर में बदलाव लिखता है। पूरा करके फ़ाइल "
-"और रिकॉर्ड स्थायी करता, फिर संस्करण बदलता है। पाठक पूरा पुराना या नया "
-"आउटपुट देखते हैं। अधूरा कमिट अगली बिल्ड सँभालती है। डिज़ाइन और प्रमाण "
-"दायित्व :doc:`../internals/publication` में हैं।"
+"build समान स्तर के स्टेजिंग फ़ोल्डर में बदलाव लिखता है। पूरा करके फ़ाइल और "
+"रिकॉर्ड स्थायी करता, फिर संस्करण बदलता है। पाठक पूरा पुराना या नया आउटपुट "
+"देखते हैं। अधूरा commit अगली build सँभालती है। डिज़ाइन और प्रमाण दायित्व "
+":doc:`../internals/publication` में हैं।"
 
 #: ../../topics/typography.rst:1
 msgid "Typography for reading"
@@ -1007,38 +962,37 @@ msgstr "पढ़ने के लिए टाइपोग्राफ़ी"
 #: ../../topics/typography.rst:4
 msgid ""
 "A page should make its structure visible before the reader studies it. A "
-"strong title, a quiet navigation column, and a measured text column do "
-"most of the work. Color should mark a relation or an action. It should "
-"not carry the meaning alone."
+"strong title, a quiet navigation column, and a measured text column do most "
+"of the work. Color should mark a relation or an action. It should not carry "
+"the meaning alone."
 msgstr ""
 "पढ़ने से पहले पेज की संरचना दिखे। स्पष्ट शीर्षक, शांत नेविगेशन और संतुलित "
-"पाठ चौड़ाई मुख्य काम करते हैं। रंग संबंध या क्रिया बताए; अकेला अर्थ न ढोए।"
+"टेक्स्ट चौड़ाई मुख्य काम करते हैं। रंग संबंध या क्रिया बताए; अकेला अर्थ न "
+"ढोए।"
 
 #: ../../topics/typography.rst:8
 msgid "The web page"
-msgstr "वेब पृष्ठ"
+msgstr "वेब पेज"
 
 #: ../../topics/typography.rst:11
 msgid ""
-"The custom layout has three regions: project navigation, the document, "
-"and the current page's outline. Small screens use a navigation drawer. "
-"The reading edition bundles Libertinus Serif and Libertinus Sans. Titles "
-"use a bold serif face. Navigation, labels, and controls use its sans "
-"companion. The compressed WOFF2 files are served with the site. There are "
-"no font-service requests."
+"The custom layout has three regions: project navigation, the document, and "
+"the current page's outline. Small screens use a navigation drawer. The "
+"reading edition bundles Libertinus Serif and Libertinus Sans. Titles use a "
+"bold serif face. Navigation, labels, and controls use its sans companion. "
+"The compressed WOFF2 files are served with the site. There are no "
+"font-service requests."
 msgstr ""
-"कस्टम लेआउट में प्रोजेक्ट नेविगेशन, दस्तावेज़ और वर्तमान पेज रूपरेखा के "
-"तीन भाग हैं। छोटी स्क्रीन पर नेविगेशन ड्रॉअर है। Libertinus Serif और Sans "
-"साथ हैं। शीर्षक बोल्ड सेरिफ़ में, नेविगेशन, लेबल और नियंत्रण उसके sans "
-"साथी में हैं। संपीड़ित WOFF2 साइट से मिलते हैं; फ़ॉन्ट सेवा अनुरोध नहीं "
-"होता।"
+"कस्टम लेआउट में प्रोजेक्ट नेविगेशन, दस्तावेज़ और वर्तमान पेज रूपरेखा के तीन "
+"भाग हैं। छोटी स्क्रीन पर नेविगेशन ड्रॉअर है। Libertinus Serif और Sans साथ "
+"हैं। शीर्षक बोल्ड सेरिफ़ में, नेविगेशन, लेबल और नियंत्रण उसके सैन्स साथी "
+"में हैं। संपीड़ित WOFF2 साइट से मिलते हैं; फ़ॉन्ट सेवा अनुरोध नहीं होता।"
 
 #: ../../topics/typography.rst:20
 msgid ""
 "Navigation column on left, main document text column in center, local "
 "section outline on right."
-msgstr ""
-"बाएँ प्रोजेक्ट नेविगेशन, बीच में मुख्य लेख, दाएँ इस पृष्ठ की रूपरेखा है।"
+msgstr "बाएँ प्रोजेक्ट नेविगेशन, बीच में मुख्य लेख, दाएँ इस पेज की रूपरेखा है।"
 
 #: ../../topics/typography.rst:20
 msgid "Three-region reading layout for HTML documentation."
@@ -1049,13 +1003,13 @@ msgid ""
 "**Light is the default.** The theme control also offers dark and system "
 "modes. It remembers the choice on the same browser origin. System mode "
 "follows the operating system. Printed HTML uses light colors. Content and "
-"navigation remain usable without JavaScript. The theme control and "
-"enhanced search are progressive enhancements."
+"navigation remain usable without JavaScript. The theme control and enhanced "
+"search are progressive enhancements."
 msgstr ""
-"**हल्का थीम डिफ़ॉल्ट है।** गहरा और सिस्टम मोड भी हैं। चुनाव उसी ब्राउज़र "
-"origin पर याद रहता है। सिस्टम मोड ऑपरेटिंग सिस्टम अपनाता है। HTML प्रिंट "
+"**हल्का theme डिफ़ॉल्ट है।** गहरा और सिस्टम मोड भी हैं। चुनाव उसी ब्राउज़र "
+"ओरिजिन पर याद रहता है। सिस्टम मोड ऑपरेटिंग सिस्टम अपनाता है। HTML प्रिंट "
 "हल्के रंग में है। JavaScript के बिना भी सामग्री और नेविगेशन काम करते हैं; "
-"थीम और बेहतर खोज अतिरिक्त संवर्द्धन हैं।"
+"theme और बेहतर खोज अतिरिक्त संवर्द्धन हैं।"
 
 #: ../../topics/typography.rst:43
 msgid ""
@@ -1067,7 +1021,7 @@ msgid ""
 "bundled with the site."
 msgstr ""
 "अंग्रेज़ी गद्य के लिए ब्राउज़र में पूरे अनुच्छेद का **Knuth-Plass लाइन "
-"ब्रेकिंग** उपयोग कर सकते हैं। छोटा टेम्पलेट स्क्रिप्ट फ़ॉन्ट मापकर बॉक्स, "
+"ब्रेकिंग** उपयोग कर सकते हैं। छोटा template स्क्रिप्ट फ़ॉन्ट मापकर बॉक्स, "
 "खाली जगह और दंड मान बनाता है, फिर पूरे अनुच्छेद के ब्रेक चुनता है। "
 "अंग्रेज़ी शब्द-विभाजन के लिए Frank Liang के पैटर्न हैं। मूल TeX पैटर्न और "
 "लाइसेंस साइट में शामिल हैं।"
@@ -1075,68 +1029,62 @@ msgstr ""
 #: ../../topics/typography.rst:49
 msgid ""
 "The enhancement preserves emphasis and the exact source text. It "
-"recalculates when the reading measure changes. Copying within one "
-"optimized paragraph gives the source text, without visual line divisions "
-"or added hyphens. Printing restores the ordinary paragraph so the print "
-"layout can paginate it."
+"recalculates when the reading measure changes. Copying within one optimized "
+"paragraph gives the source text, without visual line divisions or added "
+"hyphens. Printing restores the ordinary paragraph so the print layout can "
+"paginate it."
 msgstr ""
-"संवर्द्धन ज़ोर और मूल पाठ रखता है; चौड़ाई बदले तो फिर गणना करता है। एक "
-"अनुकूलित अनुच्छेद के भीतर कॉपी से मूल पाठ मिलता है, दृश्य पंक्ति-विभाजन "
-"या नए हाइफ़न नहीं। प्रिंट पर सामान्य अनुच्छेद लौटता है, ताकि पेज लेआउट "
-"उसे बाँटे।"
+"संवर्द्धन ज़ोर और मूल टेक्स्ट रखता है; चौड़ाई बदले तो फिर गणना करता है। एक "
+"अनुकूलित अनुच्छेद के भीतर कॉपी से मूल टेक्स्ट मिलता है, दृश्य पंक्ति-विभाजन "
+"या नए हाइफ़न नहीं। प्रिंट पर सामान्य अनुच्छेद लौटता है, ताकि पेज लेआउट उसे "
+"बाँटे।"
 
 #: ../../topics/typography.rst:54
-#, fuzzy
-#| msgid ""
-#| "Links, mathematics, code, interactive content, narrow measures, and "
-#| "other languages use native browser layout. So do paragraphs for which "
-#| "no suitably spaced solution exists. The site remains readable with "
-#| "JavaScript disabled. The fallback uses language-aware ``hyphens: "
-#| "auto`` and ``text-wrap: pretty``; those CSS properties alone are not a "
-#| "promise of Knuth-Plass optimization."
 msgid ""
 "Links, mathematics, code, interactive content, narrow measures, and other "
-"languages use native browser layout. So do paragraphs for which no "
-"suitably spaced solution exists. The site remains readable with "
-"JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` "
-"and ``text-wrap: pretty``. Those CSS properties alone are not a promise "
-"of Knuth-Plass optimization."
+"languages use native browser layout. So do paragraphs for which no suitably "
+"spaced solution exists. The site remains readable with JavaScript disabled. "
+"The fallback uses language-aware ``hyphens: auto`` and ``text-wrap: "
+"pretty``. Those CSS properties alone are not a promise of Knuth-Plass "
+"optimization."
 msgstr ""
-"लिंक, गणित, कोड, इंटरैक्टिव सामग्री, संकरी जगह, अन्य भाषाएँ और अनुपयुक्त "
-"अंतर वाले अनुच्छेद ब्राउज़र की मूल व्यवस्था लेते हैं। JavaScript बंद हो "
-"तब भी पढ़ सकते हैं। ``hyphens: auto`` और ``text-wrap: pretty`` अकेले "
-"Knuth-Plass की गारंटी नहीं हैं।"
+"लिंक, गणित, कोड, इंटरैक्टिव सामग्री, संकरी कॉलम चौड़ाई और दूसरी भाषाएँ "
+"ब्राउज़र का अपना लेआउट इस्तेमाल करती हैं। जिन अनुच्छेदों के लिए सही अंतर "
+"वाला हल नहीं मिलता, वे भी यही करते हैं। JavaScript बंद होने पर भी साइट पढ़ी "
+"जा सकती है। फ़ॉलबैक भाषा के हिसाब से ``hyphens: auto`` और ``text-wrap: "
+"pretty`` लगाता है। सिर्फ़ ये CSS प्रॉपर्टी Knuth-Plass ऑप्टिमाइज़ेशन की "
+"गारंटी नहीं देतीं।"
 
 #: ../../topics/typography.rst:60
 msgid "The PDF page"
-msgstr "PDF पृष्ठ"
+msgstr "PDF पेज"
 
 #: ../../topics/typography.rst:63
 msgid ""
 "The book template uses the same Libertinus family as the web edition. It "
 "sets justified paragraphs, optimized line breaking, and language-aware "
 "hyphenation. It also controls spacing, running heads, captions, code "
-"blocks, and table rules. The font, hyphenation cost, and paragraph "
-"measure work together. A forced line break is rarely the right repair for "
-"a loose paragraph."
+"blocks, and table rules. The font, hyphenation cost, and paragraph measure "
+"work together. A forced line break is rarely the right repair for a loose "
+"paragraph."
 msgstr ""
-"पुस्तक में वेब वाला Libertinus है। अनुच्छेद दोनों ओर बराबर, पंक्ति-विभाजन "
-"अनुकूलित और हाइफ़न भाषा के अनुसार हैं। अंतर, शीर्षलेख, कैप्शन, कोड और "
-"तालिका रेखाएँ भी नियंत्रित हैं। फ़ॉन्ट, विभाजन लागत और चौड़ाई साथ काम "
-"करते हैं। ढीले अनुच्छेद को ज़बरन लाइन तोड़कर सुधारना शायद ही उचित है।"
+"किताब में वेब वाला Libertinus है। अनुच्छेद दोनों ओर बराबर, पंक्ति-विभाजन "
+"अनुकूलित और हाइफ़न भाषा के अनुसार हैं। अंतर, शीर्षलेख, कैप्शन, कोड और टेबल "
+"रेखाएँ भी नियंत्रित हैं। फ़ॉन्ट, विभाजन लागत और चौड़ाई साथ काम करते हैं। "
+"ढीले अनुच्छेद को ज़बरन लाइन तोड़कर सुधारना शायद ही उचित है।"
 
 #: ../../topics/typography.rst:69
 msgid ""
-"Typst optimizes the PDF paragraphs. The web enhancement optimizes "
-"eligible prose. They share the source, fonts, and visual hierarchy. Their "
-"line breaks can differ. See the `Typst text contract "
+"Typst optimizes the PDF paragraphs. The web enhancement optimizes eligible "
+"prose. They share the source, fonts, and visual hierarchy. Their line "
+"breaks can differ. See the `Typst text contract "
 "<https://typst.app/docs/reference/text/text/>`_ and the `browser "
 "hyphenation contract "
 "<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_."
 msgstr ""
 "Typst PDF अनुच्छेद अनुकूलित करता है; वेब संवर्द्धन योग्य गद्य करता है। "
 "सोर्स, फ़ॉन्ट और दृश्य क्रम साझा हैं, लेकिन लाइन विराम अलग हो सकते हैं। "
-"`Typst पाठ अनुबंध <https://typst.app/docs/reference/text/text/>`_ और "
+"`Typst टेक्स्ट अनुबंध <https://typst.app/docs/reference/text/text/>`_ और "
 "`ब्राउज़र हाइफ़न अनुबंध "
 "<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_ "
 "देखें।"
@@ -1157,129 +1105,94 @@ msgstr ""
 "लेबल और पर्याप्त कंट्रास्ट बनाए रखें।"
 
 #: ../../topics/typography.rst:82
-#, fuzzy
-#| msgid ""
-#| "Build both targets after a change. Inspect a page with code, a table, "
-#| "a diagram, and an equation. An attractive cover is not proof that the "
-#| "rest of the book works. Build your own design in "
-#| ":doc:`../tutorial/a-custom-theme`. The full template contract is in "
-#| ":doc:`../templates`. The complete API is in :doc:`../api/index` and in "
-#| "the same PDF book."
 msgid ""
 "Build both targets after a change. Inspect a page with code, a table, a "
-"diagram, and an equation. An attractive cover is not proof that the rest "
-"of the book works. We build our own design in "
+"diagram, and an equation. An attractive cover is not proof that the rest of "
+"the book works. We build our own design in "
 ":doc:`../tutorial/a-custom-theme`. The full template contract is in "
-":doc:`../templates`. The Rust API of Guidedog's crates is documented in "
-"the separate ``docs/api`` project."
+":doc:`../templates`. The Rust API of Guidedog's crates is documented in the "
+"separate ``docs/api`` project."
 msgstr ""
-"बदलाव के बाद दोनों आउटपुट बनाएँ और कोड, टेबल, चित्र तथा समीकरण जाँचें। "
-"अच्छा आवरण पूरी किताब का प्रमाण नहीं। अपनी थीम "
-":doc:`../tutorial/a-custom-theme` से बनाएँ और अनुबंध :doc:`../templates` "
-"में देखें। पूरा API :doc:`../api/index` और इसी PDF में है।"
+"बदलाव के बाद दोनों आउटपुट build करें। ऐसा पेज जाँचें जिसमें कोड, टेबल, "
+"डायग्राम और समीकरण हों। आकर्षक कवर इस बात का सबूत नहीं कि बाकी किताब भी ठीक "
+"है। अपना डिज़ाइन हम :doc:`../tutorial/a-custom-theme` में बनाते हैं। "
+"template का पूरा कॉन्ट्रैक्ट :doc:`../templates` में है। Guidedog के crates "
+"की Rust API अलग ``docs/api`` प्रोजेक्ट में दस्तावेज़ित है।"
 
 #: ../../topics/writing.rst:1
 msgid "Authoring documents"
 msgstr "दस्तावेज़ लिखना"
 
 #: ../../topics/writing.rst:4
-#, fuzzy
-#| msgid ""
-#| "Guidedog supports both reStructuredText (``.rst``) and MyST Markdown "
-#| "(``.md``). Documents are parsed into a shared semantic document tree, "
-#| "which is then used to generate both HTML websites and PDF books."
 msgid ""
 "Guidedog supports both reStructuredText (``.rst``) and MyST Markdown "
 "(``.md``). Both are parsed into the same document tree. The HTML website "
 "and the PDF book are made from that tree."
 msgstr ""
-"Guidedog reStructuredText (``.rst``) और MyST Markdown (``.md``) संभालता "
-"है। दोनों का एक साझा अर्थपूर्ण दस्तावेज़ ट्री बनता है, जिससे HTML साइट और "
-"PDF पुस्तक बनती हैं।"
+"Guidedog reStructuredText (``.rst``) और MyST Markdown (``.md``) दोनों को "
+"सपोर्ट करता है। दोनों एक ही दस्तावेज़ ट्री में पार्स होते हैं। HTML वेबसाइट "
+"और PDF किताब इसी ट्री से बनती हैं।"
 
 #: ../../topics/writing.rst:8
 msgid "Choose a source language"
-msgstr "स्रोत भाषा चुनना"
+msgstr "सोर्स भाषा चुनना"
 
 #: ../../topics/writing.rst:11
-#, fuzzy
-#| msgid ""
-#| "Use reStructuredText when you need full access to domains, complex "
-#| "tables, and extensible directives. Use MyST Markdown when you prefer "
-#| "Markdown syntax while retaining Sphinx-style directives and roles."
 msgid ""
 "We use reStructuredText when we need full access to domains, complex "
 "tables, and extensible directives. We use MyST Markdown when we prefer "
 "Markdown syntax but still want Sphinx-style directives and roles."
 msgstr ""
-"डोमेन, जटिल तालिका और विस्तार योग्य निर्देश चाहिए तो reStructuredText "
-"चुनें। Markdown सिंटैक्स के साथ Sphinx जैसे निर्देश और रोल चाहिए तो MyST "
-"Markdown चुनें।"
+"जब हमें डोमेन, जटिल टेबल और विस्तार योग्य निर्देशों की पूरी सुविधा चाहिए, "
+"तब हम reStructuredText इस्तेमाल करते हैं। जब Markdown सिंटैक्स पसंद हो, पर "
+"Sphinx जैसे निर्देश और रोल भी चाहिए, तब हम MyST Markdown इस्तेमाल करते हैं।"
 
 #: ../../topics/writing.rst:15
-#, fuzzy
-#| msgid ""
-#| "In a documentation project, Markdown documents are parsed using the "
-#| "MyST dialect. Single-document conversions with ``guidedog convert`` "
-#| "use standard CommonMark by default, unless the MyST reader is "
-#| "explicitly selected."
 msgid ""
 "In a documentation project, Markdown documents are parsed as MyST. "
 "Single-document conversions with ``guidedog convert`` read Markdown as "
 "plain CommonMark 0.31.2: MyST's directives, roles, and settings belong to "
 "projects."
 msgstr ""
-"परियोजना में Markdown, MyST के रूप में पढ़ा जाता है। एक फ़ाइल के "
-"``guidedog convert`` रूपांतरण में CommonMark डिफ़ॉल्ट है, जब तक MyST "
-"स्पष्ट रूप से न चुनें।"
+"डॉक्यूमेंटेशन प्रोजेक्ट में Markdown दस्तावेज़ MyST के रूप में पार्स होते "
+"हैं। ``guidedog convert`` से एक दस्तावेज़ बदलते समय Markdown को सादे "
+"CommonMark 0.31.2 के रूप में पढ़ा जाता है: MyST के निर्देश, रोल और सेटिंग "
+"प्रोजेक्ट का हिस्सा हैं।"
 
 #: ../../topics/writing.rst:19
 msgid "Headings and structure"
 msgstr "शीर्षक और संरचना"
 
 #: ../../topics/writing.rst:22
-#, fuzzy
-#| msgid ""
-#| "A document title identifies the page. Sections and subsections divide "
-#| "the text logically. In reStructuredText, headings use underline "
-#| "adornments (and optional matching overlines). The underline must be at "
-#| "least as long as the text."
 msgid ""
 "A document title identifies the page. Sections and subsections divide the "
-"text. In reStructuredText, headings use underline adornments (and "
-"optional matching overlines). The underline must be at least as long as "
-"the text."
+"text. In reStructuredText, headings use underline adornments (and optional "
+"matching overlines). The underline must be at least as long as the text."
 msgstr ""
-"दस्तावेज़ का शीर्षक पृष्ठ की पहचान देता है; खंड पाठ को व्यवस्थित करते "
-"हैं। RST में शीर्षक के नीचे चिह्नों की रेखा लगती है; ऊपर भी वैसी रेखा लगा "
-"सकते हैं। रेखा शीर्षक से छोटी न हो।"
+"दस्तावेज़ का शीर्षक पेज की पहचान है। सेक्शन और सब-सेक्शन टेक्स्ट को बाँटते "
+"हैं। reStructuredText में शीर्षक के नीचे चिह्नों की रेखा (अंडरलाइन) होती "
+"है, और चाहें तो ऊपर भी वैसी ही रेखा। अंडरलाइन कम से कम टेक्स्ट जितनी लंबी "
+"होनी चाहिए।"
 
 #: ../../topics/writing.rst:26
 msgid "Recommended adornment styles:"
 msgstr "शीर्षक के लिए सुझाए गए चिह्न:"
 
 #: ../../topics/writing.rst:45
-#, fuzzy
-#| msgid ""
-#| "Keep heading levels consistent across your project. In MyST Markdown, "
-#| "use standard hashes (``#``, ``##``, ``###``)."
 msgid ""
-"We keep heading levels consistent across the project. In MyST Markdown, "
-"we use standard hashes (``#``, ``##``, ``###``)."
+"We keep heading levels consistent across the project. In MyST Markdown, we "
+"use standard hashes (``#``, ``##``, ``###``)."
 msgstr ""
-"पूरी परियोजना में शीर्षक के स्तर एक जैसे रखें। MyST Markdown में ``#``, "
-"``##``, ``###`` इस्तेमाल करें।"
+"हम पूरे प्रोजेक्ट में शीर्षक के स्तर एक जैसे रखते हैं। MyST Markdown में हम "
+"सामान्य हैश (``#``, ``##``, ``###``) इस्तेमाल करते हैं।"
 
 #: ../../topics/writing.rst:48
 msgid "Text formatting and inline markup"
-msgstr "पाठ का रूप और इनलाइन मार्कअप"
+msgstr "टेक्स्ट का रूप और इनलाइन मार्कअप"
 
 #: ../../topics/writing.rst:51
-#, fuzzy
-#| msgid "Use inline markup to communicate meaning rather than decoration:"
 msgid "Inline markup carries meaning, not decoration:"
-msgstr ""
-"इनलाइन मार्कअप अर्थ बताने के लिए इस्तेमाल करें, केवल सजावट के लिए नहीं:"
+msgstr "इनलाइन मार्कअप सजावट नहीं, अर्थ बताता है:"
 
 #: ../../topics/writing.rst:53
 msgid "Inline markup"
@@ -1350,16 +1263,12 @@ msgid "``{sup}`text```"
 msgstr "``{sup}`text```"
 
 #: ../../topics/writing.rst:76
-#, fuzzy
-#| msgid ""
-#| "To include literal asterisks or backticks within text, escape them "
-#| "with a backslash: ``\\*not italic\\*``."
 msgid ""
 "To write literal asterisks or backticks in text, we escape them with a "
 "backslash: ``\\*not italic\\*``."
 msgstr ""
-"तारे या बैकटिक को साधारण अक्षर की तरह लिखने के लिए बैकस्लैश से एस्केप "
-"करें: ``\\*not italic\\*``।"
+"टेक्स्ट में तारांकन या बैकटिक को अक्षर की तरह लिखने के लिए हम उन्हें "
+"बैकस्लैश से एस्केप करते हैं: ``\\*not italic\\*``।"
 
 #: ../../topics/writing.rst:79
 msgid "Lists"
@@ -1382,17 +1291,12 @@ msgid "Definition lists"
 msgstr "परिभाषा सूची"
 
 #: ../../topics/writing.rst:107
-#, fuzzy
-#| msgid ""
-#| "A definition list pairs terms with explanatory blocks. The term "
-#| "appears on a single line, followed immediately by an indented "
-#| "definition:"
 msgid ""
 "A definition list pairs terms with explanations. The term stands on one "
 "line. An indented definition follows it directly:"
 msgstr ""
-"परिभाषा सूची में शब्द और उसका अर्थ साथ रहते हैं। शब्द एक पंक्ति में लिखें "
-"और अगली पंक्ति से इंडेंट किया अर्थ दें:"
+"डेफ़िनिशन लिस्ट शब्दों को उनकी व्याख्या के साथ जोड़ती है। शब्द एक पंक्ति "
+"में होता है। उसके ठीक बाद इंडेंट की हुई परिभाषा आती है:"
 
 #: ../../topics/writing.rst:118
 msgid "Field lists"
@@ -1407,18 +1311,14 @@ msgid "Code blocks"
 msgstr "कोड ब्लॉक"
 
 #: ../../topics/writing.rst:132
-#, fuzzy
-#| msgid ""
-#| "Use the ``code-block`` directive (or ``sourcecode``) to display "
-#| "syntax-highlighted code. Guidedog provides syntax highlighting for "
-#| "over 35 programming languages:"
 msgid ""
 "The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted "
 "code. Guidedog highlights 35 programming languages, Rust and Odin among "
 "them, with Pygments' names and styles and no Python runtime:"
 msgstr ""
-"सिंटैक्स हाइलाइटिंग के लिए ``code-block`` या ``sourcecode`` इस्तेमाल "
-"करें। Guidedog 35 से अधिक प्रोग्रामिंग भाषाएँ संभालता है:"
+"``code-block`` निर्देश (या ``sourcecode``) सिंटैक्स हाइलाइट किया हुआ कोड "
+"दिखाता है। Guidedog Rust और Odin समेत 35 प्रोग्रामिंग भाषाओं को Pygments के "
+"नामों और स्टाइल के साथ हाइलाइट करता है, वह भी बिना Python रनटाइम के:"
 
 #: ../../topics/writing.rst:147
 msgid "Options for code blocks:"
@@ -1441,13 +1341,10 @@ msgid "``:name: label``: Assigns a reference target to the code block."
 msgstr "``:name: label``: कोड ब्लॉक को संदर्भ का लक्ष्य देता है।"
 
 #: ../../topics/writing.rst:154
-#, fuzzy
-#| msgid ""
-#| "To include external source code directly from a file, use "
-#| "``literalinclude``:"
 msgid "To include source code from a file, we use ``literalinclude``:"
 msgstr ""
-"बाहरी स्रोत फ़ाइल सीधे शामिल करने के लिए ``literalinclude`` इस्तेमाल करें:"
+"किसी फ़ाइल से सोर्स कोड शामिल करने के लिए हम ``literalinclude`` इस्तेमाल "
+"करते हैं:"
 
 #: ../../topics/writing.rst:163
 msgid "Admonitions"
@@ -1468,83 +1365,70 @@ msgstr ""
 
 #: ../../topics/writing.rst:197
 msgid "Tables"
-msgstr "तालिकाएँ"
+msgstr "टेबलें"
 
 #: ../../topics/writing.rst:200
 msgid ""
 "Guidedog supports simple tables, grid tables, and directive-based tables."
-msgstr "Guidedog सरल, ग्रिड और निर्देशों से बनी तालिकाएँ संभालता है।"
+msgstr "Guidedog सरल, ग्रिड और निर्देशों से बनी टेबलें संभालता है।"
 
 #: ../../topics/writing.rst:202
 msgid "Simple tables"
-msgstr "सरल तालिकाएँ"
+msgstr "सरल टेबलें"
 
 #: ../../topics/writing.rst:205
 msgid "Simple tables use horizontal dashes to define column spans:"
-msgstr "सरल तालिका में क्षैतिज रेखाएँ कॉलम की सीमा बताती हैं:"
+msgstr "सरल टेबल में क्षैतिज रेखाएँ कॉलम की सीमा बताती हैं:"
 
 #: ../../topics/writing.rst:217
 msgid "Grid tables"
-msgstr "ग्रिड तालिकाएँ"
+msgstr "ग्रिड टेबलें"
 
 #: ../../topics/writing.rst:220
 msgid ""
 "Grid tables allow complex multi-line cells and arbitrary column/row spans:"
 msgstr ""
-"ग्रिड तालिका में कई पंक्तियों वाले सेल और कई कॉलम या पंक्तियाँ घेरने वाले "
-"सेल बन सकते हैं:"
+"ग्रिड टेबल में कई पंक्तियों वाले सेल और कई कॉलम या पंक्तियाँ घेरने वाले सेल "
+"बन सकते हैं:"
 
 #: ../../topics/writing.rst:231
 msgid "List tables"
-msgstr "सूची से बनी तालिकाएँ"
+msgstr "सूची से बनी टेबलें"
 
 #: ../../topics/writing.rst:234
-#, fuzzy
-#| msgid ""
-#| "The ``list-table`` directive creates tables from nested bullet lists, "
-#| "making wide tables easy to read and maintain in source control:"
 msgid ""
-"The ``list-table`` directive creates tables from nested bullet lists. "
-"Wide tables stay easy to read and maintain in source control:"
+"The ``list-table`` directive creates tables from nested bullet lists. Wide "
+"tables stay easy to read and maintain in source control:"
 msgstr ""
-"``list-table`` नेस्ट की गई बुलेट सूचियों से तालिका बनाता है। इससे चौड़ी "
-"तालिका का स्रोत पढ़ना और संस्करण नियंत्रण में सँभालना आसान होता है:"
+"``list-table`` निर्देश नेस्टेड बुलेट लिस्ट से टेबल बनाता है। इससे चौड़ी "
+"टेबल भी सोर्स कंट्रोल में पढ़ने और सँभालने में आसान रहती है:"
 
 #: ../../topics/writing.rst:253
 msgid "CSV tables"
-msgstr "CSV तालिकाएँ"
+msgstr "CSV टेबलें"
 
 #: ../../topics/writing.rst:256
 msgid ""
-"The ``csv-table`` directive constructs a table from comma-separated "
-"values:"
-msgstr "``csv-table`` कॉमा से अलग किए मानों से तालिका बनाता है:"
+"The ``csv-table`` directive constructs a table from comma-separated values:"
+msgstr "``csv-table`` कॉमा से अलग किए मानों से टेबल बनाता है:"
 
 #: ../../topics/writing.rst:267
 msgid "Images and figures"
 msgstr "चित्र और आकृतियाँ"
 
 #: ../../topics/writing.rst:270
-#, fuzzy
-#| msgid ""
-#| "Include illustrations, screenshots, and diagrams with ``image`` and "
-#| "``figure``:"
 msgid ""
 "We include illustrations, screenshots, and diagrams with ``image`` and "
 "``figure``:"
 msgstr ""
-"चित्र, स्क्रीनशॉट और आरेख जोड़ने के लिए ``image`` और ``figure`` इस्तेमाल "
-"करें:"
+"चित्र, स्क्रीनशॉट और डायग्राम हम ``image`` और ``figure`` से जोड़ते हैं:"
 
 #: ../../topics/writing.rst:286
-#, fuzzy
-#| msgid ""
-#| "A ``figure`` wraps the image with an explanatory caption and an "
-#| "optional reference target."
 msgid ""
 "A ``figure`` wraps the image with a caption and an optional reference "
 "target."
-msgstr "``figure`` चित्र के साथ कैप्शन और वैकल्पिक संदर्भ लक्ष्य जोड़ता है।"
+msgstr ""
+"``figure`` चित्र को कैप्शन और वैकल्पिक रेफ़रेंस टार्गेट के साथ लपेटता है।"
 
 #: ../../topics/writing.rst:288
 msgid "Document structure with toctrees"
@@ -1589,9 +1473,9 @@ msgstr ""
 
 #: ../../topics/writing.rst:311
 msgid ""
-"``:hidden:``: Records the documents in the reading order without "
-"rendering an inline list."
-msgstr "``:hidden:``: पाठ में सूची दिखाए बिना पढ़ने का क्रम दर्ज करता है।"
+"``:hidden:``: Records the documents in the reading order without rendering "
+"an inline list."
+msgstr "``:hidden:``: टेक्स्ट में सूची दिखाए बिना पढ़ने का क्रम दर्ज करता है।"
 
 #: ../../topics/writing.rst:312
 msgid ""
@@ -1605,107 +1489,87 @@ msgid "Cross-references and links"
 msgstr "पार-संदर्भ और लिंक"
 
 #: ../../topics/writing.rst:317
-#, fuzzy
-#| msgid ""
-#| "Explicit targets ensure links remain stable even when document files "
-#| "are renamed:"
 msgid ""
 "Explicit targets keep links stable, even when document files are renamed."
 msgstr ""
-"स्पष्ट लक्ष्य लेबल से संदर्भ फ़ाइल के नाम से स्वतंत्र और स्थिर रहता है।"
+"स्पष्ट टार्गेट से लिंक स्थिर रहते हैं, भले ही दस्तावेज़ फ़ाइलों के नाम बदल "
+"जाएँ।"
 
 #: ../../topics/writing.rst:319
 msgid "Target labels and ``:ref:``"
 msgstr "लक्ष्य लेबल और ``:ref:``"
 
 #: ../../topics/writing.rst:322
-#, fuzzy
-#| msgid ""
-#| "Place a target label immediately before a heading, table, or figure:"
 msgid "We place a target label directly before a heading, table, or figure:"
-msgstr "शीर्षक, तालिका या चित्र के ठीक पहले लक्ष्य लेबल रखें:"
+msgstr "हम शीर्षक, टेबल या चित्र के ठीक पहले टार्गेट लेबल रखते हैं:"
 
 #: ../../topics/writing.rst:333
 msgid "Any document in the project can refer to this target:"
-msgstr ""
+msgstr "प्रोजेक्ट का कोई भी दस्तावेज़ इस टार्गेट का संदर्भ दे सकता है:"
 
 #: ../../topics/writing.rst:340
 msgid "Document references with ``:doc:``"
 msgstr "``:doc:`` से दस्तावेज़ संदर्भ"
 
 #: ../../topics/writing.rst:343
-#, fuzzy
-#| msgid "Link to another document by path (omitting the file extension):"
 msgid "We link to another document by its path, without the file extension:"
-msgstr "एक्सटेंशन छोड़े हुए पथ से दूसरे दस्तावेज़ का लिंक दें:"
+msgstr ""
+"दूसरे दस्तावेज़ का लिंक हम उसके पथ से देते हैं, फ़ाइल एक्सटेंशन के बिना:"
 
 #: ../../topics/writing.rst:349
 msgid "Glossary terms with ``:term:``"
 msgstr "``:term:`` से शब्द का संदर्भ"
 
 #: ../../topics/writing.rst:352
-#, fuzzy
-#| msgid "Define terms using the ``glossary`` directive:"
 msgid "We define terms with the ``glossary`` directive:"
-msgstr "``glossary`` से शब्दों की परिभाषा दें:"
+msgstr "शब्दों की परिभाषा हम ``glossary`` निर्देश से देते हैं:"
 
 #: ../../topics/writing.rst:364
-#, fuzzy
-#| msgid "Link to a glossary term using the ``:term:`` role:"
 msgid "We link to a glossary term with the ``:term:`` role:"
-msgstr "``:term:`` रोल से शब्द का लिंक दें:"
+msgstr "शब्दावली के किसी शब्द का लिंक हम ``:term:`` रोल से देते हैं:"
 
 #: ../../topics/writing.rst:370
 msgid "File downloads with ``:download:``"
 msgstr "``:download:`` से फ़ाइल डाउनलोड"
 
 #: ../../topics/writing.rst:373
-#, fuzzy
-#| msgid "Copy a file to the output's download directory and create a link:"
-msgid ""
-"This copies a file to the output's download directory and links to it:"
-msgstr "फ़ाइल को डाउनलोड फ़ोल्डर में कॉपी कर लिंक बनाता है:"
+msgid "This copies a file to the output's download directory and links to it:"
+msgstr ""
+"यह फ़ाइल को आउटपुट की डाउनलोड डायरेक्टरी में कॉपी करता है और उसका लिंक "
+"बनाता है:"
 
 #: ../../topics/writing.rst:379
 msgid "External links"
 msgstr "बाहरी लिंक"
 
 #: ../../topics/writing.rst:382
-#, fuzzy
-#| msgid "Link to external web addresses:"
 msgid "We link to external web addresses like this:"
-msgstr "बाहरी वेब पते का लिंक दें:"
+msgstr "बाहरी वेब पतों का लिंक हम इस तरह देते हैं:"
 
 #: ../../topics/writing.rst:388
 msgid "Substitutions and includes"
 msgstr "प्रतिस्थापन और शामिल करना"
 
 #: ../../topics/writing.rst:391
-#, fuzzy
-#| msgid "Define reusable phrases, symbols, or images:"
 msgid "We define reusable phrases, symbols, or images:"
-msgstr "दोबारा इस्तेमाल होने वाला वाक्यांश, चिह्न या चित्र तय करें:"
+msgstr ""
+"दोबारा इस्तेमाल होने वाले वाक्यांश, चिह्न या चित्र हम इस तरह परिभाषित करते "
+"हैं:"
 
 #: ../../topics/writing.rst:400
-#, fuzzy
-#| msgid "To reuse common reStructuredText content across multiple files:"
 msgid "To reuse reStructuredText content in several files:"
-msgstr "कई फ़ाइलों में reStructuredText सामग्री साझा करने के लिए:"
+msgstr ""
+"reStructuredText सामग्री को कई फ़ाइलों में दोबारा इस्तेमाल करने के लिए:"
 
 #: ../../topics/writing.rst:406
 msgid "MyST Markdown authoring"
 msgstr "MyST Markdown लिखना"
 
 #: ../../topics/writing.rst:409
-#, fuzzy
-#| msgid ""
-#| "MyST Markdown supports the same semantic directives and roles through "
-#| "fenced blocks:"
 msgid ""
-"MyST Markdown supports the same directives and roles through fenced "
-"blocks:"
+"MyST Markdown supports the same directives and roles through fenced blocks:"
 msgstr ""
-"MyST Markdown में फेंस ब्लॉक से वही निर्देश और रोल व्यक्त किए जाते हैं:"
+"MyST Markdown फ़ेंस्ड ब्लॉक के ज़रिए वही निर्देश और रोल सपोर्ट करता है:"
 
 #~ msgid ""
 #~ "If capacity fits, run conversion; otherwise the host prepares storage "

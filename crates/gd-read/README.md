@@ -23,7 +23,7 @@ let fresh = gd_read::reread_document(&ctx, source, doc)?;          // new object
 | Item | Does |
 |---|---|
 | `ReadContext` (`thread_count`) | what reading borrows from the build: config, registry, object store, `gd_intl::Intl`, `gd_env::PluginRun`, budget, policy, limits, settings digest, dates, `-j` |
-| `read_documents(&ctx, previous, &sources) -> Result<ReadOutcome, Problem>` | the new `Environment` and the counts `read`, `reused`, `unread` |
+| `read_documents(&ctx, previous, &sources) -> Result<ReadOutcome, Problem>` | the new `Environment`, the counts `read`, `reused`, `unread`, and `reading_times: Vec<ReadingTime { docname, time }>` of the documents parsed |
 | `reread_document`, `stale_warning` | reading a document again when its cached object is stale (gd-intl's `Reread`, the page writers) |
 | `api_sources(&config, &taken, &mut reports)` | the generated Odin (`<odin_autoapi_root>/...`) and Rust (`<rust_autoapi_root>/...`) pages |
 | `sphinx_config`, `myst_settings` | conf.toml as the `sphinx` and `myst` readers' settings |
@@ -31,7 +31,8 @@ let fresh = gd_read::reread_document(&ctx, source, doc)?;          // new object
 Reports: `build.reader` (problem), `build.read`, `build.object`, `host.utf8`, `host.io`,
 plugin codes, every reader and autodoc code (`autodoc.*` with Sphinx's categories
 `autodoc` / `autodoc.import_object`, `odin.autodoc.*`, `autodoc.paths`,
-`odin.autodoc.paths`), `rust.autodoc.*` and `odin.autoapi.clash` /
+`odin.autodoc.paths`), `inheritance.class`, `inheritance.limit`, `viewcode.source`,
+`viewcode.limit`, `rust.autodoc.*` and `odin.autoapi.clash` /
 `rust.autoapi.clash` from `api_sources`, `build.object.stale`.
 
 ## Design notes
@@ -55,6 +56,16 @@ plugin codes, every reader and autodoc code (`autodoc.*` with Sphinx's categorie
   annotations carry over between directives as in Sphinx. The document's files are read
   from disk once and recorded in a shared, confined log (`files.rs`) that becomes its
   dependencies.
+- **Source scan for the GDS 0011 extensions.** With sphinx.ext.viewcode or linkcode
+  listed, each document parsed records `DocInfo::locations`: for every `py`
+  description, the module and lines gd-pyscan finds it defined at (`sources.rs`), its
+  Python files becoming dependencies. sphinx.ext.inheritance_diagram's directive is
+  served by a provider registered as `guidedoc_sphinx::INHERITANCE_DIAGRAM`
+  (`inheritance.rs`), which walks the bases in the scan and answers with a `graphviz`
+  directive whose node URLs are `gd-xref:py:class:<name>` references for the link
+  pass, and a list of the classes for text.
+- **Reading times** are measured around each document's read, on the thread that
+  reads it, with `std::time::Instant` (sphinx.ext.duration).
 - **Static messages.** The engine reports `&'static` messages; gd-autodoc and gd-odindoc
   messages are reported with their code and title from a table (checked against those
   crates' sources by a test) and their text and hint as arguments, so braces in them are

@@ -70,4 +70,17 @@ pub struct ReadOutcome {
     pub reused: usize,
     /// Documents that could not be read (their `DocInfo::failed` is set).
     pub unread: usize,
+    /// How long each document parsed this build took to read, in the order of the
+    /// sources; documents kept from the previous environment took no time.
+    pub reading_times: Vec<ReadingTime>,
+}
+
+/// How long one document took to read: its source, the parse, and what reading
+/// collects, measured with a monotonic clock (sphinx.ext.duration).
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct ReadingTime {
+    /// The document.
+    pub docname: String,
+    /// The time it took.
+    pub time: std::time::Duration,
 }

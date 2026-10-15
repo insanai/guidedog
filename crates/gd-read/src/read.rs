@@ -7,11 +7,13 @@
 //! in turn, each with its own workspace; results are placed by the source's position,
 //! so the environment is the same however the threads were scheduled.
 
+use std::time::{Duration, Instant};
+
 use gd_env::{DocInfo, Environment, SourceFile};
 use gd_host::Problem;
 use gd_report::{Report, Severity};
 
-use crate::context::{ReadContext, ReadOutcome};
+use crate::context::{ReadContext, ReadOutcome, ReadingTime};
 use crate::parse::{Prepared, Slot, Worker};
 
 /// Reads `sources` (sorted by docname, as `gd_env::discover` and
@@ -36,7 +38,11 @@ pub fn read_documents(
     }
     let slots = read_all(ctx, &prepared, &previous, sources);
     let mut outcome = ReadOutcome { env: Environment::new(ctx.settings), ..Default::default() };
-    for slot in slots {
+    for (slot, time) in slots {
+        if let Slot::Read(doc) = &slot {
+            let docname = doc.docname.clone();
+            outcome.reading_times.push(ReadingTime { docname, time });
+        }
         let doc = match slot {
             Slot::Reused(i) => {
                 outcome.reused += 1;
@@ -59,14 +65,14 @@ pub fn read_documents(
     Ok(outcome)
 }
 
-/// Reads every source on `ctx.thread_count` threads and returns each one's slot, in the
-/// order of `sources`.
+/// Reads every source on `ctx.thread_count` threads and returns each one's slot and how
+/// long it took, in the order of `sources`.
 fn read_all(
     ctx: &ReadContext<'_>,
     prepared: &Prepared,
     previous: &Environment,
     sources: &[SourceFile],
-) -> Vec<Slot> {
+) -> Vec<(Slot, Duration)> {
     let threads = ctx.thread_count(sources.len());
     let init = || {
         // The thread waits for memory the other reading threads hold rather than exceed
@@ -75,7 +81,9 @@ fn read_all(
         (Worker::new(ctx, prepared), member)
     };
     gd_host::map_ordered(threads, sources, init, |(worker, _), source| {
-        worker.read(source, previous)
+        let start = Instant::now();
+        let slot = worker.read(source, previous);
+        (slot, start.elapsed())
     })
 }
 

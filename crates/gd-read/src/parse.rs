@@ -19,6 +19,7 @@ use guidedoc_sphinx::Autodoc;
 
 use crate::autodoc::{PythonHost, tag_autodoc_reports};
 use crate::context::ReadContext;
+use crate::inheritance::InheritanceHost;
 use crate::odin::OdinHost;
 use crate::translate::{image_exists, translation};
 
@@ -214,6 +215,11 @@ impl<'a> Worker<'a> {
             sphinx.autodoc.push(Autodoc { domain: "py".into(), provider: python.clone() });
         }
         sphinx.autodoc.push(Autodoc { domain: "odin".into(), provider: odin.clone() });
+        let inheritance = InheritanceHost::new(c).map(Arc::new);
+        if let Some(host) = &inheritance {
+            let domain = guidedoc_sphinx::INHERITANCE_DIAGRAM.into();
+            sphinx.autodoc.push(Autodoc { domain, provider: host.clone() });
+        }
         let myst;
         let extension = match f.kind {
             SourceKind::Rst => read_extension(&sphinx),
@@ -255,6 +261,9 @@ impl<'a> Worker<'a> {
             python.dependencies(&mut d.deps);
         }
         odin.dependencies(&mut d.deps);
+        if let Some(host) = &inheritance {
+            host.dependencies(&mut d.deps);
+        }
         if let Some(generated) = &f.generated {
             d.deps.extend_from_slice(&generated.deps);
         }
@@ -282,6 +291,9 @@ impl<'a> Worker<'a> {
             Err(p) => reports.push(p.report()),
         }
         let words = crate::collect::collect(d, doc);
+        if crate::sources::wanted(self.ctx.config) {
+            crate::sources::locate_objects(self.ctx.config, doc, d, &mut reports);
+        }
         if !words.is_empty() {
             match store.save_search(&d.docname, &words) {
                 Ok(search) => d.search = Some(search),

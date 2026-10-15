@@ -607,14 +607,14 @@ It does not change this record's review state or assert acceptance.
 
 ::
 
-   2026-10-11: discussion → published. Maintainer-requested reconciliation: the
+   2026-10-11: discussion -> published. Maintainer-requested reconciliation: the
    RST workflow and inherited lifecycle are implemented and reviewed.
 
 .. rubric:: Lifecycle event
 
 ::
 
-   2026-10-11: published → committed. RST discussion management and recoverable
+   2026-10-11: published -> committed. RST discussion management and recoverable
    lifecycle transactions implemented. tests/manual_test.odin; workflow,
    concurrency, recovery and date tests; native GDS strict HTML/PDF verification;
    docs/manual/evidence/beta-review-20261011.md.

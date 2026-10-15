@@ -17,7 +17,7 @@ use std::process::Command;
 pub struct NewDraft {
     /// The title; required.
     pub title: String,
-    /// The slug; empty derives it from the title (`Cache policy` → `cache-policy`).
+    /// The slug; empty derives it from the title (`Cache policy` -> `cache-policy`).
     pub slug: String,
     /// The author; empty takes Git's `user.name` in the catalog.
     pub author: String,

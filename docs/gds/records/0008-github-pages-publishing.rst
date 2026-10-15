@@ -607,21 +607,21 @@ References
 
 ::
 
-   2026-10-12: prediscussion → discussion. Open the maintainer-requested
+   2026-10-12: prediscussion -> discussion. Open the maintainer-requested
    publishing plugin design for review
 
 .. rubric:: Lifecycle event
 
 ::
 
-   2026-10-14: discussion → accepted. Maintainer requested acceptance after
+   2026-10-14: discussion -> accepted. Maintainer requested acceptance after
    review of the implemented 0.6.2 scope.
 
 .. rubric:: Lifecycle event
 
 ::
 
-   2026-10-14: accepted → committed. Implemented scope reviewed against source
+   2026-10-14: accepted -> committed. Implemented scope reviewed against source
    and published qualification.
    docs/gds/evidence/plugin-acceptance-20261014.rst;
    docs/manual/evidence/plugin-review-20261014.md; successful 0.6.2 release run

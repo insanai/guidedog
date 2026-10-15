@@ -277,21 +277,21 @@ References
 
 ::
 
-   2026-10-12: prediscussion → discussion. Assigned a permanent number and
+   2026-10-12: prediscussion -> discussion. Assigned a permanent number and
    opened for discussion.
 
 .. rubric:: Lifecycle event
 
 ::
 
-   2026-10-12: discussion → published. The maintainer-requested review adopted
+   2026-10-12: discussion -> published. The maintainer-requested review adopted
    the reusable catalog design after qualification.
 
 .. rubric:: Lifecycle event
 
 ::
 
-   2026-10-12: published → committed. The implementation and review
+   2026-10-12: published -> committed. The implementation and review
    corrections shipped in Guidedog 0.2.3.
    docs/gds/evidence/discussion-review-20261012.rst;
    https://github.com/insanai/guidedog/actions/runs/38225096535;

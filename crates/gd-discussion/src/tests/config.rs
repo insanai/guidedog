@@ -202,7 +202,12 @@ fn a_configured_workflow_and_numbering_are_followed() {
     assert_eq!(c.records[0].state, "approved");
     assert_eq!(c.records[0].kind, "Decision");
     let text = std::fs::read_to_string(&c.records[0].path).unwrap();
-    assert!(text.contains(": review → approved. ok tests\n"), "{text}");
+    assert!(text.contains(": review -> approved. ok tests\n"), "{text}");
+    // Older catalogs wrote the event with a Unicode arrow; they still load and check.
+    std::fs::write(&c.records[0].path, text.replace(" -> ", " \u{2192} ")).unwrap();
+    let c = load_catalog(&dir, &prefix("adr")).unwrap();
+    assert_eq!(c.records[0].state, "approved");
+    check_sources(&c).expect("an old lifecycle event is still a valid record");
 }
 
 #[test]

@@ -38,7 +38,7 @@ pub(crate) fn record_plan(
     } else {
         &d.reason
     };
-    let event = format!("{date}: {} → {target}. {reason} {}", r.state, d.evidence);
+    let event = format!("{date}: {} -> {target}. {reason} {}", r.state, d.evidence);
     if is_rst(&r.path) {
         text.push_str(&rst::history(event.trim()));
     } else {
@@ -69,6 +69,6 @@ pub(crate) fn record_plan(
         plan.changes.push(Change { path: old_path.clone(), before, after: None });
         plan.changes.push(Change { path: path.clone(), before: None, after: Some(text) });
     }
-    plan.summary = format!("{old_path} → {path} ({target})");
+    plan.summary = format!("{old_path} -> {path} ({target})");
     Ok(plan)
 }

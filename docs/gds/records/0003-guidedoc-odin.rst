@@ -1469,13 +1469,13 @@ proposal. Web sources were checked on 29 September 2026.
 
 .. rubric:: Lifecycle event
 
-2026-09-29: prediscussion → discussion. Assigned a permanent number and opened for discussion.
+2026-09-29: prediscussion -> discussion. Assigned a permanent number and opened for discussion.
 
 .. rubric:: Lifecycle event
 
 ::
 
-   2026-10-11: discussion → accepted. Maintainer-requested implementation-status
+   2026-10-11: discussion -> accepted. Maintainer-requested implementation-status
    reconciliation; current supported contract reviewed and deferred scope stated
    explicitly.
 
@@ -1483,7 +1483,7 @@ proposal. Web sources were checked on 29 September 2026.
 
 ::
 
-   2026-10-11: accepted → committed. Current supported design implemented; beta
+   2026-10-11: accepted -> committed. Current supported design implemented; beta
    review fixes and limitations are recorded. Native library and integration
    suites with leak checks; sanitizer and embedded-backend validation;
    docs/manual/evidence/beta-review-20261011.md. Deferred features are not

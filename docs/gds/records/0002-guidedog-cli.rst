@@ -727,7 +727,7 @@ References
 
 .. rubric:: Lifecycle event
 
-2026-09-29: prediscussion → discussion. Assigned a permanent number and opened for discussion.
+2026-09-29: prediscussion -> discussion. Assigned a permanent number and opened for discussion.
 
 .. rubric:: Source-format revision, 2026-10-01
 
@@ -738,7 +738,7 @@ in discussion. See GDS 0001 for the revised authoring contract.
 
 ::
 
-   2026-10-11: discussion → published. Retain the implemented CLI contract with
+   2026-10-11: discussion -> published. Retain the implemented CLI contract with
    explicit unfinished worker, native Typst chapter, Windows and packaging
    obligations.
 

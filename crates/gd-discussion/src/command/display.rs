@@ -60,7 +60,7 @@ impl Console<'_> {
             o.insert("message".into(), message.into());
             let _ = writeln!(self.out, "{}", gd_json::to_string(&Value::Object(o)));
         } else {
-            let mark = styled("✓", GREEN, self.color_out);
+            let mark = styled(gd_report::terminal_symbols().check, GREEN, self.color_out);
             let _ = writeln!(self.out, "  {mark} {}", escape_terminal(message));
         }
     }
@@ -74,7 +74,12 @@ impl Console<'_> {
             let _ = writeln!(self.out, "{}", gd_json::to_string(&Value::Object(o)));
             return 0;
         }
-        let _ = writeln!(self.out, "\n  Preview · {}", escape_terminal(&plan.summary));
+        let _ = writeln!(
+            self.out,
+            "\n  Preview {} {}",
+            gd_report::terminal_symbols().dot,
+            escape_terminal(&plan.summary)
+        );
         for change in &plan.changes {
             let _ = writeln!(self.out, "    {}", escape_terminal(&change.path));
         }
@@ -116,8 +121,9 @@ impl Console<'_> {
         }
         let _ = writeln!(
             self.out,
-            "\n  {} discussion(s) · {}\n",
+            "\n  {} discussion(s) {} {}\n",
             rows.len(),
+            gd_report::terminal_symbols().dot,
             escape_terminal(&c.dir.display().to_string())
         );
     }
@@ -130,9 +136,10 @@ impl Console<'_> {
         }
         let _ = writeln!(
             self.out,
-            "\n  {} {} · {}\n",
+            "\n  {} {} {} {}\n",
             c.prefix.upper(),
             r.number,
+            gd_report::terminal_symbols().dot,
             escape_terminal(&r.title)
         );
         let source = r.path.display().to_string();

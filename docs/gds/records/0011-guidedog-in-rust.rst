@@ -437,4 +437,4 @@ References
 
 ::
 
-   2026-10-15: prediscussion → discussion. Opened for review with the Rust port
+   2026-10-15: prediscussion -> discussion. Opened for review with the Rust port

@@ -162,6 +162,9 @@ fn write_index_pages(
     if view.config.html.use_index {
         write_general_index(site, unit, reports)?;
     }
+    if crate::viewcode::has_source_pages(view) {
+        crate::viewcode::write_source_pages(site, unit, reports)?;
+    }
     write_additional_pages(site, unit, reports)?;
     write_github_pages(view, unit)?;
     let mut inventory = Vec::new();

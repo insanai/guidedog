@@ -23,6 +23,10 @@ builder.write(&view, &mut generation, &mut reports)?; // then generation.commit(
 | `tokenize(text, \|word\| ..)`, `STOPWORDS_EN` | how the search index splits words (the theme's script splits queries the same way) |
 | `pygments_css(light, dark)` | `_static/pygments.css` for `pygments_style` / `pygments_dark_style` |
 
+With sphinx.ext.viewcode listed, html and dirhtml write `_modules/<package>/<module>.html`
+(the module's source highlighted, each described object in a `viewcode-block` with a
+`[docs]` link) and `_modules/index.html` into the site unit (`viewcode.rs`).
+
 Output: one unit per document (`<docname>.html`, `<docname>/index.html` in dirhtml, or
 the single page in singlehtml's site unit); the site unit (`SITE_UNIT`: theme files from
 gd-theme, `pygments.css`, `html_static_path`, `html_extra_path`, logo and favicon,

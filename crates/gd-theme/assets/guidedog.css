@@ -406,6 +406,14 @@ a.headerlink:hover { color: var(--gd-link); background: var(--gd-accent-soft); }
 a.headerlink:focus-visible { opacity: 1; }
 @media (hover: none) { a.headerlink { opacity: .4; } }
 
+/* Source links (sphinx.ext.viewcode and linkcode) and the highlighted source pages. */
+a.viewcode-link, a.viewcode-back {
+  float: right; margin-left: .75em; font-family: var(--gd-sans);
+  font-size: .85em; font-weight: 400; color: var(--gd-muted); text-decoration: none;
+}
+a.viewcode-link:hover, a.viewcode-back:hover { color: var(--gd-link); }
+div.viewcode-block:target { background: var(--gd-accent-soft); border-radius: 4px; }
+
 /* Inline markup. */
 code, kbd, samp, pre { font-family: var(--gd-mono); }
 .gd-article :not(pre) > code, .gd-article code.literal {
@@ -691,7 +699,7 @@ figcaption .legend { margin-top: .4rem; text-align: left; }
 .align-center { display: block; margin-left: auto; margin-right: auto; text-align: center; }
 .align-left { float: left; margin: .25rem 1.5rem 1rem 0; }
 .align-right { float: right; margin: .25rem 0 1rem 1.5rem; }
-img.graphviz, .graphviz img { max-width: 100%; height: auto; }
+img.graphviz, .graphviz img, object.graphviz { max-width: 100%; height: auto; }
 /* Adaptive SVGs inherit the chosen scheme; ordinary artwork keeps a light panel. */
 img.graphviz-adaptive { color-scheme: inherit; }
 :root[data-theme="dark"] :is(img.graphviz, .graphviz img):not(.graphviz-adaptive) {

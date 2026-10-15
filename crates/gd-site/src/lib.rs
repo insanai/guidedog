@@ -36,6 +36,7 @@ mod search;
 mod site;
 mod site_files;
 mod templates;
+mod viewcode;
 
 #[cfg(test)]
 extern crate self as gd_site; // the shared test harness names the crate.

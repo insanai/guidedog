@@ -142,7 +142,7 @@ pub fn write_key(out: &mut String, key: &str) {
     if bare {
         out.push_str(key);
     } else {
-        write_basic(out, key);
+        write_basic_string(out, key);
     }
 }
 
@@ -158,11 +158,15 @@ pub fn write_string(out: &mut String, s: &str) {
         out.push_str(s);
         out.push_str("'''");
     } else {
-        write_basic(out, s);
+        write_basic_string(out, s);
     }
 }
 
-fn write_basic(out: &mut String, s: &str) {
+/// Appends `s` to `out` as a one-line TOML basic string: quoted, with `"`, `\`, line
+/// breaks, tabs and other control characters escaped, so the text stays data wherever
+/// it lands (a `-D` override, an inline table). [`write_string`] may choose a multi-line
+/// literal instead.
+pub fn write_basic_string(out: &mut String, s: &str) {
     out.push('"');
     for c in s.chars() {
         match c {

@@ -45,7 +45,7 @@ let text = gd_toml::to_string(&table);          // a document parse reads back e
 | `Table::{new, get, get_mut, path, insert, remove, iter, keys, len, contains_key}` | ordered; hashed above 16 keys |
 | `Datetime { date, time, offset }`, `Datetime::parse`, `Display` | the four TOML date-time kinds |
 | `Error { kind, message, hint, offset, end, line, column }`, `e.report(path, source)` | `ErrorKind::{Syntax, Duplicate, String, Number, Datetime, Depth}` |
-| `to_string(&Table)`, `write_table`, `write_value`, `write_string`, `write_key` | writer |
+| `to_string(&Table)`, `write_table`, `write_value`, `write_string`, `write_basic_string` (always one line), `write_key` | writer |
 
 Redesigns: a `Value` is an enum-backed struct instead of one struct with a field per kind;
 date-times are parsed and validated rather than kept as text; `inf`/`nan` are real

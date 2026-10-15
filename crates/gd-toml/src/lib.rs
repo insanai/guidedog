@@ -30,7 +30,9 @@ pub use datetime::{Date, Datetime, Offset, Time};
 pub use error::{Error, ErrorKind};
 pub use parse::{MAX_DEPTH, parse};
 pub use table::Table;
-pub use write::{to_string, write_key, write_string, write_table, write_value};
+pub use write::{
+    to_string, write_basic_string, write_key, write_string, write_table, write_value,
+};
 
 /// One TOML value with the place it was written.
 ///

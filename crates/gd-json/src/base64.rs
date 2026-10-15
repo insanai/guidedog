@@ -1,9 +1,23 @@
-//! Standard, padded Base64 (RFC 4648), which carries asset bytes in the protocol.
+//! Standard, padded Base64 (RFC 4648): how JSON carries bytes, such as the asset files
+//! of the plugin protocol, and how data URLs and HTTP Basic credentials hold them.
+//!
+//! ```
+//! assert_eq!(gd_json::base64::encode(b"foo"), "Zm9v");
+//! assert_eq!(gd_json::base64::decode("Zm8=").as_deref(), Some(&b"fo"[..]));
+//! ```
 
 const ALPHABET: &[u8; 64] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-/// Appends the Base64 form of `data` to `out`.
-pub(crate) fn encode_into(out: &mut String, data: &[u8]) {
+/// The Base64 form of `data`, padded with `=`; [`encode_into`] appends to a buffer the
+/// caller reuses instead.
+pub fn encode(data: &[u8]) -> String {
+    let mut out = String::new();
+    encode_into(&mut out, data);
+    out
+}
+
+/// Appends the Base64 form of `data`, padded with `=`, to `out`.
+pub fn encode_into(out: &mut String, data: &[u8]) {
     out.reserve(data.len().div_ceil(3) * 4);
     for chunk in data.chunks(3) {
         let b = [chunk[0], *chunk.get(1).unwrap_or(&0), *chunk.get(2).unwrap_or(&0)];
@@ -18,14 +32,17 @@ pub(crate) fn encode_into(out: &mut String, data: &[u8]) {
     }
 }
 
-/// The number of bytes `text` decodes to, without checking it.
-pub(crate) fn decoded_len(text: &str) -> usize {
+/// The number of bytes `text` decodes to, without checking it, so a caller can refuse
+/// data that is too large before decoding it.
+pub fn decoded_len(text: &str) -> usize {
     let padding = text.bytes().rev().take_while(|&c| c == b'=').count().min(2);
     (text.len() / 4 * 3).saturating_sub(padding)
 }
 
-/// Decodes padded Base64; `None` when `text` is not.
-pub(crate) fn decode(text: &str) -> Option<Vec<u8>> {
+/// Decodes padded Base64 into the bytes it holds; `None` when `text` is not padded
+/// Base64 (a length that is no multiple of 4, padding inside, another character), or
+/// when the bytes cannot be allocated.
+pub fn decode(text: &str) -> Option<Vec<u8>> {
     let bytes = text.as_bytes();
     if !bytes.len().is_multiple_of(4) {
         return None;
@@ -72,12 +89,19 @@ mod tests {
 
     #[test]
     fn round_trips_every_length() {
-        let cases =
-            [("", ""), ("f", "Zg=="), ("fo", "Zm8="), ("foo", "Zm9v"), ("foob", "Zm9vYg==")];
+        let cases = [
+            ("", ""),
+            ("f", "Zg=="),
+            ("fo", "Zm8="),
+            ("foo", "Zm9v"),
+            ("foob", "Zm9vYg=="),
+            ("foobar", "Zm9vYmFy"),
+        ];
         for (plain, coded) in cases {
             let mut out = String::new();
             encode_into(&mut out, plain.as_bytes());
             assert_eq!(out, coded);
+            assert_eq!(encode(plain.as_bytes()), coded);
             assert_eq!(decode(coded).as_deref(), Some(plain.as_bytes()));
             assert_eq!(decoded_len(coded), plain.len());
         }

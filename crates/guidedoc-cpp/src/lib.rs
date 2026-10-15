@@ -21,6 +21,7 @@ mod error;
 mod ids;
 mod ids_decl;
 mod lex;
+mod parse_binop;
 mod parse_decl;
 mod parse_expr;
 mod parse_top;

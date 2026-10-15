@@ -65,5 +65,9 @@ assert_eq!((symbol.template_params, symbol.function_params), (vec!["T".into()], 
   the value passed. The stack guard is local (the crate does not depend on `guidedoc`);
   a caller inside its own guarded recursion passes what remains of its budget as
   `Limits::stack_bytes`.
+- **Flat precedence levels.** Sphinx (and the Odin port) recurse once per binary
+  precedence level, eleven frames per level of parentheses (about 5 KiB). One loop over
+  a reused buffer of open levels (`parse_binop`) builds the same tree in about 1.5 KiB,
+  so the default stack budget always holds the default depth.
 - **The C domain** (`cdomain.odin`) has its own simpler parser and stays in
   `guidedoc-sphinx`.

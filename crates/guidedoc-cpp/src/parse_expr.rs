@@ -11,21 +11,6 @@ const CASTS: [&str; 4] = ["dynamic_cast", "static_cast", "const_cast", "reinterp
 
 const UNARY_OPS: [&str; 10] = ["++", "--", "*", "&", "+", "-", "!", "not", "~", "compl"];
 
-/// The binary operators by precedence, loosest first.
-const BIN_OPS: [&[&str]; 11] = [
-    &["||", "or"],
-    &["&&", "and"],
-    &["|", "bitor"],
-    &["^", "xor"],
-    &["&", "bitand"],
-    &["==", "!=", "not_eq"],
-    &["<=>", "<=", ">=", "<", ">"],
-    &["<<", ">>"],
-    &["+", "-"],
-    &["*", "/", "%"],
-    &[".*", "->*"],
-];
-
 const ASSIGNMENT_OPS: [&str; 14] = [
     "=", "*=", "/=", "%=", "+=", "-=", ">>=", "<<=", "&=", "and_eq", "^=", "|=", "xor_eq", "or_eq",
 ];
@@ -431,7 +416,7 @@ impl<'a> Parser<'a> {
     }
 
     /// `(` type-id `)` cast-expression, or a unary expression.
-    fn cast_expression(&mut self) -> PResult<NodeId> {
+    pub(crate) fn cast_expression(&mut self) -> PResult<NodeId> {
         self.guarded(|p| {
             let m = p.mark();
             p.skip_ws();
@@ -447,57 +432,6 @@ impl<'a> Parser<'a> {
             p.reset(m);
             p.unary_expression()
         })
-    }
-
-    pub(crate) fn logical_or_expression(&mut self, in_template: bool) -> PResult<NodeId> {
-        self.bin_op_expression(0, in_template)
-    }
-
-    fn bin_op_operand(&mut self, level: usize, in_template: bool) -> PResult<NodeId> {
-        if level + 1 == BIN_OPS.len() {
-            self.cast_expression()
-        } else {
-            self.bin_op_expression(level + 1, in_template)
-        }
-    }
-
-    /// Reads operands of one precedence level joined by its operators. A single operand
-    /// stands for itself (Sphinx wraps it in a list of one, which reads and prints the
-    /// same).
-    fn bin_op_expression(&mut self, level: usize, in_template: bool) -> PResult<NodeId> {
-        let first = self.bin_op_operand(level, in_template)?;
-        let mut rest = ListBuilder::default();
-        loop {
-            self.skip_ws();
-            if in_template && self.current() == b'>' {
-                break;
-            }
-            let m = self.mark();
-            let mut more = false;
-            for &op in BIN_OPS[level] {
-                if !self.skip_operator(op) {
-                    continue;
-                }
-                if op == "&" && self.current() == b'&' {
-                    self.pos -= 1; // "&&" is one token, of lower precedence.
-                    break;
-                }
-                if let Ok(expr) = self.bin_op_operand(level, in_template) {
-                    let operand = self.add(Node::BinOperand { op, expr })?;
-                    rest.push(self, operand);
-                    more = true;
-                    break;
-                }
-                self.reset(m);
-            }
-            if !more {
-                break;
-            }
-        }
-        if rest.is_empty() {
-            return Ok(first);
-        }
-        self.add(Node::BinOp { first, rest: rest.head() })
     }
 
     /// `?` expression `:` assignment-expression after the condition; `None` without `?`.

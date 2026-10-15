@@ -6,6 +6,7 @@ use crate::Limits;
 use crate::ast::{Ast, List, Node, NodeId, Slot};
 use crate::error::{CppError, Stop};
 use crate::lex;
+use crate::parse_binop::BinLevel;
 use crate::stack::StackGuard;
 
 /// A production that did not match, as Sphinx raises `DefinitionError`. The parser
@@ -55,6 +56,9 @@ pub(crate) struct Parser<'a> {
     pub max_steps: usize,
     /// Why the parse stopped at a limit; every production fails from then on.
     pub stopped: Option<Stop>,
+    /// The precedence levels of binary operators being read (`parse_binop`), shared
+    /// by nested expressions so the buffer is reused.
+    pub bin_levels: Vec<BinLevel>,
 }
 
 impl<'a> Parser<'a> {
@@ -74,6 +78,7 @@ impl<'a> Parser<'a> {
             steps: 0,
             max_steps: STEPS_PER_BYTE * def.len() + BASE_STEPS,
             stopped: None,
+            bin_levels: Vec::new(),
         }
     }
 

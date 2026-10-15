@@ -65,10 +65,14 @@ stack budget") requires:
 
 Once a parse stops at a limit, every later production fails, and the parse returns
 ``ErrorKind::Limit``: a declaration too deep or too costly to parse is not an invalid
-one. In an optimized build a level of parentheses in an expression takes about 5 KiB of
-stack (the eleven precedence levels recurse), a level of template arguments about
-1 KiB; without optimization about twice that, so the stack budget may stop such a
-build first, which is still a ``Limit``.
+one. The eleven precedence levels of binary operators are read by one loop that keeps
+the open levels in a buffer (``parse_binop``), not by one recursive call per level as
+Sphinx does, so a level of parentheses in an expression, the costliest nesting, takes
+about 1.5 KiB of stack in an optimized build (4.4 KiB without optimization) for three
+units of depth, and a level of template arguments about 1 KiB (2.3 KiB). The default
+budget of 512 KiB therefore holds the default depth of 256 in either build: the depth
+limit stops a parse first. ``cargo test --release -p guidedoc-cpp --test limits --
+--ignored --nocapture stack_per_level`` prints the measures.
 
 Conformance
 -----------

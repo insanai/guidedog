@@ -422,10 +422,16 @@ dependencies = [
 [[package]]
 name = "dsc-cmd"
 version = "0.7.0"
+dependencies = [
+ "gd-discussion",
+]
 
 [[package]]
 name = "dscc-cmd"
 version = "0.7.0"
+dependencies = [
+ "gd-discussion",
+]
 
 [[package]]
 name = "ecow"
@@ -641,8 +647,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "gd-book"
+version = "0.7.0"
+
+[[package]]
 name = "gd-cli"
 version = "0.7.0"
+
+[[package]]
+name = "gd-conf"
+version = "0.7.0"
+dependencies = [
+ "gd-highlight",
+ "gd-host",
+ "gd-report",
+ "gd-sha",
+ "gd-toml",
+ "guidedoc",
+]
 
 [[package]]
 name = "gd-discussion"
@@ -652,6 +674,10 @@ dependencies = [
  "gd-report",
  "gd-toml",
 ]
+
+[[package]]
+name = "gd-env"
+version = "0.7.0"
 
 [[package]]
 name = "gd-fetch"
@@ -700,6 +726,17 @@ dependencies = [
 [[package]]
 name = "gd-i18n"
 version = "0.7.0"
+dependencies = [
+ "gd-gettext",
+ "guidedoc",
+ "guidedoc-commonmark",
+ "guidedoc-html",
+ "guidedoc-rst",
+]
+
+[[package]]
+name = "gd-intl"
+version = "0.7.0"
 
 [[package]]
 name = "gd-inventory"
@@ -723,12 +760,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "gd-link"
+version = "0.7.0"
+
+[[package]]
+name = "gd-migrate"
+version = "0.7.0"
+
+[[package]]
 name = "gd-odindoc"
+version = "0.7.0"
+
+[[package]]
+name = "gd-outputs"
 version = "0.7.0"
 
 [[package]]
 name = "gd-pages"
 version = "0.7.0"
+dependencies = [
+ "gd-fetch",
+ "gd-git",
+ "gd-json",
+ "gd-plugins",
+ "gd-report",
+ "gd-toml",
+]
 
 [[package]]
 name = "gd-plugins"
@@ -753,7 +810,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "gd-read"
+version = "0.7.0"
+
+[[package]]
 name = "gd-report"
+version = "0.7.0"
+
+[[package]]
+name = "gd-resolve"
 version = "0.7.0"
 
 [[package]]
@@ -765,7 +830,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "gd-serve"
+version = "0.7.0"
+dependencies = [
+ "gd-host",
+]
+
+[[package]]
 name = "gd-sha"
+version = "0.7.0"
+
+[[package]]
+name = "gd-site"
 version = "0.7.0"
 
 [[package]]
@@ -846,10 +922,22 @@ version = "0.7.0"
 [[package]]
 name = "guidedoc-commonmark"
 version = "0.7.0"
+dependencies = [
+ "guidedoc",
+ "guidedoc-html",
+]
+
+[[package]]
+name = "guidedoc-cpp"
+version = "0.7.0"
 
 [[package]]
 name = "guidedoc-defaults"
 version = "0.7.0"
+dependencies = [
+ "gd-highlight",
+ "guidedoc",
+]
 
 [[package]]
 name = "guidedoc-html"
@@ -887,6 +975,9 @@ dependencies = [
 [[package]]
 name = "guidedoc-typst"
 version = "0.7.0"
+dependencies = [
+ "guidedoc",
+]
 
 [[package]]
 name = "guidedog-cmd"

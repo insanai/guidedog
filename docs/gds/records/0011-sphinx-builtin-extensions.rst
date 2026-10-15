@@ -157,7 +157,7 @@ An entry may override any of the general settings by its short name: ``exclude_p
 
 **Limits.** A walk visits at most 10,000 modules. ``follow_links`` never leaves the readable folders (GDS 0004).
 
-**Migration.** The extension name and the settings convert. ``apidoc_automodule_options`` written as a Python set is reported for conversion by hand.
+**Migration.** The extension name and the settings convert. A Python set, such as Sphinx's default for ``apidoc_automodule_options``, becomes a list.
 
 sphinx.ext.viewcode
 ~~~~~~~~~~~~~~~~~~~
@@ -235,7 +235,7 @@ sphinx.ext.inheritance_diagram
 
 **Limits.** A diagram has at most 1,000 classes. Graphviz runs under the confinement of every drawing (GDS 0004).
 
-**Migration.** The extension name and the four settings convert. A Python ``dict(...)`` call for an attribute table is evaluated as a literal when it is one.
+**Migration.** The extension name and the four settings convert. A ``dict(rankdir="LR")`` call with literal keyword arguments converts like a dictionary.
 
 sphinx.ext.coverage
 ~~~~~~~~~~~~~~~~~~~

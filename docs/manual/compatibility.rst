@@ -1,9 +1,10 @@
 Compatibility with Sphinx
 =========================
 
-Guidedog follows Sphinx where that helps an author move a project.
+Guidedog supports all of reStructuredText and all of Sphinx's built-in extensions.
+It supports them in its own way: the output serves the same purpose, but it is not identical to Sphinx's.
+Guidedog never runs Python, neither the configuration nor an extension.
 It measures compatibility feature by feature.
-It does not execute Python configuration or arbitrary Python extensions.
 **A successful build is evidence of a build, not proof of complete equivalence.**
 
 Projects and publication
@@ -40,8 +41,8 @@ meaning on a clean build and an unchanged build. A deleted document's page is re
 Publication uses a recoverable journal. The next build settles an interrupted commit.
 See :doc:`internals/publication` for the invariant and its platform boundary.
 
-The builders ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest``,
-``coverage``, and ``changes`` are unavailable. Their names receive a correction
+``coverage`` comes with the ``coverage`` extension, described below.
+The builders ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest``, and ``changes`` are unavailable. Their names receive a correction
 message. The repository's ``tools/linkcheck`` is a separate verification tool.
 
 Source languages
@@ -103,17 +104,19 @@ Declarative object types replace a useful class of Python extension registration
 A custom Python ``parse_node`` becomes declarative name, display, and program rules.
 Migration reports code it cannot express. See :doc:`object-types`.
 
-Built-in extension behavior
----------------------------
+Built-in extensions
+-------------------
 
-.. list-table:: Extension boundary
+Every extension in Sphinx's ``sphinx.ext`` package is built in. A project lists it by its Sphinx name in ``extensions``, and its directives, roles, settings and builders are there. The settings keep Sphinx's names and defaults, so ``guidedog migrate`` carries them over from ``conf.py``. Where Sphinx imports Python, Guidedog reads the source instead. Where Sphinx calls a program, Guidedog uses what it has built in. GDS 0011 records the design of each one.
+
+.. list-table:: Built-in extensions
    :header-rows: 1
-   :widths: 36 64
+   :widths: 30 70
 
-   * - Behavior
-     - Status
+   * - Extension
+     - Guidedog's way
    * - ``todo``, ``ifconfig``, ``extlinks``, ``autosectionlabel``
-     - Built in. Hardcoded extlinks can receive a suggested role.
+     - As in Sphinx. Hardcoded extlinks can receive a suggested role.
    * - ``graphviz``
      - Linked Graphviz produces static drawings. Resource confinement applies.
    * - ``intersphinx``
@@ -122,22 +125,34 @@ Built-in extension behavior
      - Built-in publication files for a static site.
    * - ``mathjax`` and ``imgmath``
      - HTML mathematics uses MathJax. PDF translates its supported LaTeX subset to Typst.
-   * - ``myst_parser``
-     - The implemented project Markdown layer.
-   * - ``doctest`` directives
-     - Displayed. The project builder does not execute their tests.
+   * - ``doctest``
+     - The tests are shown, highlighted. Guidedog never runs Python, so it never runs them.
    * - ``autodoc``
      - Python source is read without importing or executing the package.
+   * - ``napoleon``
+     - Google and NumPy docstring sections become the fields autodoc shows.
+   * - ``autosummary`` and ``apidoc``
+     - Summary tables and API pages are generated from the source, in memory. Nothing is written into the source folder.
+   * - ``viewcode``
+     - Highlighted source pages under ``_modules/``, linked to the descriptions and back.
+   * - ``linkcode``
+     - A URL template, ``linkcode_url``, replaces the Python function ``linkcode_resolve``.
+   * - ``inheritance_diagram``
+     - Class graphs from the source, drawn by the linked Graphviz.
+   * - ``coverage``
+     - ``guidedog build coverage`` writes ``python.txt`` from the source and the documents.
+   * - ``duration``
+     - The slowest documents to read, in the build summary and a JSON file.
+   * - ``imgconverter``
+     - Accepted, and nothing runs: Typst reads SVG, PNG, JPEG and GIF itself. Other formats are reported.
+   * - ``myst_parser``
+     - The implemented project Markdown layer.
 
-Source-based autodoc cannot discover every object created at runtime.
-Compiled modules, external decorators, computed values, and extension event hooks
-have explicit limits. Python 3.13 and the pinned Sphinx documenter tests provide
-the reference behavior. See :doc:`autodoc` for the full settings and exceptions.
+Reading source has limits that importing does not. Compiled modules, objects created at run time, external decorators, computed values and extension event hooks cannot be seen. Python 3.13 and the pinned Sphinx documenter tests provide the reference behavior. See :doc:`autodoc` for the full settings and exceptions.
 
-``autosummary``, ``napoleon``, ``viewcode``, and arbitrary Python extensions remain
-outside this route. An unsupported extension named in configuration is reported.
-An unknown directive or role is reported at its source location.
+A third-party extension, such as ``sphinx_design``, is not built in. Configuration that names one is refused, and ``guidedog migrate`` leaves it out with a note. An unknown directive or role is reported at its source location.
 **Its omitted content must be reviewed before publication.**
+Declared object types (:doc:`object-types`) and build plugins (:doc:`plugins`) cover many of them.
 Other theme names are accepted using Guidedog's theme implementation.
 
 Trust and resource limits

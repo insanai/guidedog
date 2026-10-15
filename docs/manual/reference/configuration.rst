@@ -50,7 +50,7 @@ Each value is checked against its type when ``conf.toml`` is read. A mistake is 
 ``INVALID CONFIGURATION`` problem (exit status 2) naming the line and the expected form.
 An unknown setting is an error too, with a "Did you mean ...?" hint when the name is
 close to a known one. A setting of a Sphinx builder or extension Guidedog does not have
-(``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, ``autosummary_*``, ``napoleon_*``,
+(``latex_*``, ``epub_*``, ``man_*``, ``texinfo_*``, ``doctest_*``,
 ``linkcheck_*``, ``html_sidebars``, ``needs_*`` and similar) is accepted with a
 ``config.ignored`` warning. So the same file can serve a Sphinx build of the sources.
 

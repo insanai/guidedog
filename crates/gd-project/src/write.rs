@@ -26,7 +26,9 @@ pub(crate) fn write_output(
             let builder = SiteBuilder { kind: view.kind, labels, sources };
             builder.write(view, generation, reports)
         }
-        BuilderKind::Pdf => PdfBuilder { labels }.write(view, generation, reports),
+        BuilderKind::Pdf => {
+            PdfBuilder { labels, ..PdfBuilder::default() }.write(view, generation, reports)
+        }
         BuilderKind::Text => TextBuilder { labels }.write(view, generation, reports),
         BuilderKind::Gettext => {
             GettextBuilder { reread: Some(reread) }.write(view, generation, reports)

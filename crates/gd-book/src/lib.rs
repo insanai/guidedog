@@ -36,7 +36,7 @@ mod typst_root;
 
 pub use compose::{language_file, typst_markup, typst_string};
 pub use fonts::bundled_font_dir;
-pub use pdf::PdfBuilder;
+pub use pdf::{PdfBuilder, TypesetBook};
 pub use text::{DummyBuilder, TextBuilder};
 
 #[cfg(test)]

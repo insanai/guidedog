@@ -3,6 +3,7 @@
 
 use std::collections::HashSet;
 use std::path::Path;
+use std::sync::Mutex;
 
 use gd_conf::PdfDocument;
 use gd_env::{BuilderKind, Digest};
@@ -29,6 +30,20 @@ use crate::typst_root::{TypstRoot, typst_folders};
 pub struct PdfBuilder<'a> {
     /// The renderer labels in the build's language.
     pub labels: Option<&'a Labels>,
+    /// When set, every book Typst typesets in this build is added to it (a book kept
+    /// from the previous build is not), so a caller can check the PDF's pages without
+    /// reading the file back.
+    pub typeset: Option<&'a Mutex<Vec<TypesetBook>>>,
+}
+
+/// A book Typst typeset: what [`PdfBuilder::typeset`] collects.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct TypesetBook {
+    /// The PDF's file name in the output folder (`demo-en.pdf`).
+    pub file: String,
+    /// The text of each page, in order, as Typst laid it out; `None` when the typst
+    /// program typeset the book, since it hands back only the file it wrote.
+    pub pages: Option<Vec<String>>,
 }
 
 impl OutputBuilder for PdfBuilder<'_> {
@@ -109,7 +124,14 @@ impl PdfBuilder<'_> {
             reports.extend(kept.reports.iter().cloned());
             return Ok(());
         }
-        let run = TypstRun { view, labels: self.labels, book: &composed, settings, backend };
+        let run = TypstRun {
+            view,
+            labels: self.labels,
+            typeset: self.typeset,
+            book: &composed,
+            settings,
+            backend,
+        };
         run.typeset(generation, &key, inputs, &ledger, reports)
     }
 }
@@ -118,6 +140,7 @@ impl PdfBuilder<'_> {
 struct TypstRun<'a, 'b> {
     view: &'a BuildView<'b>,
     labels: Option<&'a Labels>,
+    typeset: Option<&'a Mutex<Vec<TypesetBook>>>,
     book: &'a Book,
     settings: TypstSettings,
     backend: Backend,
@@ -184,6 +207,11 @@ impl TypstRun<'_, '_> {
         }
         unit.emit_text(&format!("sources/{source_name}"), &self.book.source)?;
         unit.finish(UnitRecord { inputs, reports: warnings, ..UnitRecord::default() });
+        if let Some(typeset) = self.typeset {
+            // A poisoned list only means another book's caller panicked; keep adding.
+            let mut books = typeset.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+            books.push(TypesetBook { file, pages: compiled.pages });
+        }
         Ok(())
     }
 

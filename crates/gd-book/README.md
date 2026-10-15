@@ -8,7 +8,7 @@ write_dummy; book_index.odin; typst_root.odin; fonts.odin and its fonts).
 ```rust
 use gd_resolve::OutputBuilder;
 let labels = ui.labels();                                   // gd_intl::UiTranslator
-gd_book::PdfBuilder { labels: Some(&labels) }.write(&view, &mut generation, &mut reports)?;
+gd_book::PdfBuilder { labels: Some(&labels), ..Default::default() }.write(&view, &mut generation, &mut reports)?;
 gd_book::TextBuilder { labels: Some(&labels) }.write(&view, &mut generation, &mut reports)?;
 gd_book::DummyBuilder.write(&view, &mut generation, &mut reports)?;
 assert_eq!(gd_book::language_file("manual.pdf", "de"), "manual-de.pdf");
@@ -16,7 +16,7 @@ assert_eq!(gd_book::language_file("manual.pdf", "de"), "manual-de.pdf");
 
 | Item | Does |
 |---|---|
-| `PdfBuilder { labels }` | one book per `pdf_documents` entry: `<file>-<lang>.pdf`, `sources/<file>-<lang>.pdf.typ`, and `book-<lang>.typ` for a single book; unit `book:<file>` |
+| `PdfBuilder { labels, typeset }` | one book per `pdf_documents` entry: `<file>-<lang>.pdf`, `sources/<file>-<lang>.pdf.typ`, and `book-<lang>.typ` for a single book; unit `book:<file>`. `typeset` collects a `TypesetBook` (file, each page's text) per book Typst typeset, which the tests check instead of reading the PDF back |
 | `TextBuilder { labels }` | `<docname>.txt` per document, one unit each |
 | `DummyBuilder` | links every document (references checked), writes nothing |
 | `language_file`, `typst_string`, `typst_markup` | book names and Typst escaping |

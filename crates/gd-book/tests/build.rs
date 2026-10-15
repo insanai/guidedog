@@ -1,15 +1,15 @@
 //! End-to-end builds of small projects made by hand: reStructuredText documents read
 //! with guidedoc-rst, saved to an object store, and an environment and tables filled
 //! as gd-read and gd-resolve would (gd-read is not ported yet). The PDF builds run the
-//! embedded Typst compiler; their text is checked with `pdftotext` when it is
-//! installed.
+//! embedded Typst compiler; their pages and text are checked on what Typst laid out,
+//! as the builder hands it back.
 
 #![allow(clippy::unwrap_used)]
 
 use std::path::{Path, PathBuf};
-use std::process::Command;
+use std::sync::Mutex;
 
-use gd_book::{DummyBuilder, PdfBuilder, TextBuilder};
+use gd_book::{DummyBuilder, PdfBuilder, TextBuilder, TypesetBook};
 use gd_conf::{Config, Digest, PdfDocument};
 use gd_env::{
     BuildOptions, BuilderKind, DocId, DocInfo, EnglishUi, Environment, ObjectStore, PluginRun,
@@ -207,17 +207,15 @@ Read the code::
 const LOGO: &str = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"10\">\
                     <rect width=\"20\" height=\"10\" fill=\"#126d78\"/></svg>\n";
 
-/// The PDF's text, or `None` when pdftotext is not installed.
-fn pdf_text(path: &Path) -> Option<String> {
-    let out = Command::new("pdftotext").arg("-layout").arg(path).arg("-").output().ok()?;
-    out.status.success().then(|| String::from_utf8_lossy(&out.stdout).into_owned())
-}
-
-fn pdf_pages(path: &Path) -> Option<usize> {
-    let out = Command::new("pdfinfo").arg(path).output().ok()?;
-    let text = String::from_utf8_lossy(&out.stdout).into_owned();
-    let line = text.lines().find(|l| l.starts_with("Pages:"))?;
-    line["Pages:".len()..].trim().parse().ok()
+impl Project {
+    /// Runs the pdf builder like [`Project::build`], and returns the books Typst
+    /// typeset in this build as well.
+    fn typeset(&self) -> (PathBuf, Vec<Report>, Option<Problem>, Vec<TypesetBook>) {
+        let books = Mutex::new(Vec::new());
+        let builder = PdfBuilder { typeset: Some(&books), ..PdfBuilder::default() };
+        let (out, reports, problem) = self.build(&builder);
+        (out, reports, problem, books.into_inner().unwrap())
+    }
 }
 
 fn errors(reports: &[Report]) -> Vec<&Report> {
@@ -228,7 +226,7 @@ fn errors(reports: &[Report]) -> Vec<&Report> {
 fn a_small_book_is_typeset_and_kept_when_unchanged() {
     let project = Project::new("pdf", &[("index", INDEX), ("guide", GUIDE)]);
     std::fs::write(project.source().join("logo.svg"), LOGO).unwrap();
-    let (out, reports, problem) = project.build(&PdfBuilder::default());
+    let (out, reports, problem, books) = project.typeset();
     assert!(problem.is_none(), "{problem:?}\n{reports:#?}");
     assert!(errors(&reports).is_empty(), "{reports:#?}");
     let pdf = out.join("demo-en.pdf");
@@ -239,25 +237,27 @@ fn a_small_book_is_typeset_and_kept_when_unchanged() {
     assert!(source.contains("#show: book.with(title: \"Demo Book\", author: \"Ada\""));
     assert!(source.contains("#metadata(none) <guide>"));
     assert!(source.contains("\"/logo.svg\""), "the image is named by its book path");
-    if let Some(text) = pdf_text(&pdf) {
-        assert!(text.contains("Demo Book"), "{text}");
-        assert!(text.contains("Getting Started"), "{text}");
-        assert!(text.contains("Install the tool with care."), "{text}");
-        assert!(text.contains("let answer = 42;"), "{text}");
-    }
-    if let Some(pages) = pdf_pages(&pdf) {
-        assert!(pages >= 2, "a cover and the chapters: {pages}");
-    }
+    assert_eq!(books.len(), 1, "{books:#?}");
+    assert_eq!(books[0].file, "demo-en.pdf");
+    let pages = books[0].pages.as_ref().expect("the embedded compiler reports its pages");
+    assert!(pages.len() >= 2, "a cover and the chapters: {pages:#?}");
+    assert!(pages[0].contains("Demo Book"), "the cover: {pages:#?}");
+    let text = pages.join("\n");
+    assert!(text.contains("Getting Started"), "{text}");
+    assert!(text.contains("Install the tool with care."), "{text}");
+    assert!(text.contains("let answer = 42;"), "{text}");
     // Nothing changed: the book is kept, not typeset again.
     let before = std::fs::metadata(&pdf).unwrap().modified().unwrap();
-    let (_, _, problem) = project.build(&PdfBuilder::default());
+    let (_, _, problem, books) = project.typeset();
     assert!(problem.is_none(), "{problem:?}");
+    assert!(books.is_empty(), "{books:#?}");
     assert_eq!(std::fs::metadata(&pdf).unwrap().modified().unwrap(), before);
     // A changed image is a changed input.
     std::thread::sleep(std::time::Duration::from_millis(20));
     std::fs::write(project.source().join("logo.svg"), LOGO.replace("126d78", "aa0000")).unwrap();
-    let (_, _, problem) = project.build(&PdfBuilder::default());
+    let (_, _, problem, books) = project.typeset();
     assert!(problem.is_none(), "{problem:?}");
+    assert_eq!(books.len(), 1, "{books:#?}");
     assert_ne!(std::fs::metadata(&pdf).unwrap().modified().unwrap(), before);
 }
 
@@ -265,7 +265,8 @@ fn a_small_book_is_typeset_and_kept_when_unchanged() {
 fn typst_errors_point_at_the_document_source() {
     let bad = "Broken\n======\n\nFine text.\n\n.. raw:: typst\n\n   #nope-not-defined\n";
     let project = Project::new("pdf-error", &[("index", INDEX), ("bad", bad)]);
-    let (out, reports, problem) = project.build(&PdfBuilder::default());
+    let (out, reports, problem, books) = project.typeset();
+    assert!(books.is_empty(), "a failed book is not typeset: {books:#?}");
     let problem = problem.expect("Typst fails");
     assert_eq!(problem.code, "typst.compile");
     let error = reports.iter().find(|r| r.code == "typst.compiler").expect("{reports:#?}");
@@ -333,7 +334,8 @@ fn typst_reads_only_the_folders_a_build_may_read() {
     }
     std::fs::create_dir_all(gd_env::doctrees_dir(&project.config).join("graphs")).unwrap();
     std::fs::write(parent.join("secret.txt"), "secret").unwrap();
-    let (_, reports, problem) = project.build(&PdfBuilder::default());
+    let (_, reports, problem, books) = project.typeset();
+    assert!(books.is_empty(), "{books:#?}");
     assert_eq!(problem.expect("the read is refused").code, "typst.compile");
     let error = reports.iter().find(|r| r.code == "typst.compiler").expect("{reports:#?}");
     assert!(error.message.contains("denied"), "{error:#?}");
@@ -346,13 +348,19 @@ fn an_untrusted_build_uses_guidedogs_template() {
     let templates = project.source().join("_templates");
     std::fs::create_dir_all(&templates).unwrap();
     std::fs::write(templates.join("book.typ"), "#let book(..args, body) = body\n").unwrap();
-    let (out, reports, problem) = project.build(&PdfBuilder::default());
+    let (out, reports, problem, books) = project.typeset();
     assert!(problem.is_none(), "{problem:?}\n{reports:#?}");
     let source = std::fs::read_to_string(out.join("book-en.typ")).unwrap();
     assert!(source.contains("#import \"/_templates/book.typ\": book"));
+    // The project's template sets the body alone: no cover with the book's title.
+    let pages = books[0].pages.as_ref().unwrap();
+    assert!(!pages[0].contains("Demo Book"), "{pages:#?}");
+    assert!(pages.join("\n").contains("Welcome to the demo manual."), "{pages:#?}");
     project.options.untrusted = true;
-    let (out, reports, problem) = project.build(&PdfBuilder::default());
+    let (out, reports, problem, books) = project.typeset();
     assert!(problem.is_none(), "{problem:?}\n{reports:#?}");
+    let pages = books[0].pages.as_ref().unwrap();
+    assert!(pages[0].contains("Demo Book"), "Guidedog's cover: {pages:#?}");
     assert!(reports.iter().any(|r| r.code == "build.untrusted"), "{reports:#?}");
     let source = std::fs::read_to_string(out.join("book-en.typ")).unwrap();
     assert!(!source.contains("_templates/book.typ"));
@@ -367,13 +375,14 @@ fn the_typst_program_typesets_in_a_private_root() {
     std::fs::write(project.source().join("logo.svg"), LOGO).unwrap();
     project.config.pdf.typst = program.display().to_string();
     project.config.build_dir = project.source().parent().unwrap().join("build");
-    let (out, reports, problem) = project.build(&PdfBuilder::default());
+    let (out, reports, problem, books) = project.typeset();
     assert!(problem.is_none(), "{problem:?}\n{reports:#?}");
     let pdf = out.join("demo-en.pdf");
     assert!(std::fs::read(&pdf).unwrap().starts_with(b"%PDF"));
-    if let Some(text) = pdf_text(&pdf) {
-        assert!(text.contains("Install the tool with care."), "{text}");
-    }
+    // The program hands back only the file, so the text is checked in the embedded
+    // builds above; here the book is recorded as typeset without pages.
+    assert_eq!(books.len(), 1, "{books:#?}");
+    assert_eq!(books[0].pages, None);
     let temp = std::fs::read_dir(std::env::temp_dir()).unwrap().flatten();
     let pid = format!("guidedog-typst-{}-", std::process::id());
     let left: Vec<_> =

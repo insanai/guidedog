@@ -186,7 +186,11 @@ impl Plugin {
     /// Checks the plugin's metadata without running any of its hooks.
     pub fn validate(&self) -> Result<(), Problem> {
         match &self.kind {
-            Kind::Build { info, .. } => validate_build(info)?,
+            // A plugin that only adds commands needs no build hooks.
+            Kind::Build { info, .. } if info.hooks.is_any() || self.commands.is_empty() => {
+                validate_build(info)?
+            }
+            Kind::Build { info, .. } => validate_build_identity(info)?,
             Kind::Publisher { info, .. } => validate_publisher(info)?,
         }
         validate_commands(self.id(), &self.commands)
@@ -219,6 +223,19 @@ impl fmt::Debug for Plugin {
 }
 
 pub(crate) fn validate_build(info: &PluginInfo) -> Result<(), Problem> {
+    validate_build_identity(info)?;
+    if !info.hooks.is_any() {
+        return Err(problem::contract(
+            &info.id,
+            "Offer source, html, or assets hooks, or wrap a publisher with \
+             Plugin::publisher.",
+        ));
+    }
+    Ok(())
+}
+
+/// Checks a build plugin's ID, name, version and API version, but not its hooks.
+fn validate_build_identity(info: &PluginInfo) -> Result<(), Problem> {
     let id = info.id.as_str();
     if !is_valid_id(id)
         || info.name.is_empty()
@@ -233,12 +250,6 @@ pub(crate) fn validate_build(info: &PluginInfo) -> Result<(), Problem> {
     }
     if !info.api.is_compatible_with(PLUGIN_API_VERSION) {
         return Err(problem::contract(id, "Rebuild against PLUGIN_API_VERSION 1.0."));
-    }
-    if !info.hooks.is_any() {
-        return Err(problem::contract(
-            id,
-            "Offer source, html, or assets hooks, or wrap a publisher with Plugin::publisher.",
-        ));
     }
     Ok(())
 }

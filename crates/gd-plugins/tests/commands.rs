@@ -117,6 +117,25 @@ fn invalid_command_declarations_make_no_registry() {
     assert_eq!(p.code, "plugins.contract");
 }
 
+/// A plugin may add commands and no build hooks, as the discussion catalogs do; a
+/// plugin with neither is refused.
+#[test]
+fn a_plugin_may_add_only_commands() {
+    #[derive(Clone, Default)]
+    struct Commands(bool);
+    impl BuildPlugin for Commands {
+        fn info(&self) -> PluginInfo {
+            PluginInfo::new("only-commands", "Only commands", "1", Hooks::NONE)
+        }
+        fn commands(&self) -> Vec<CommandInfo> {
+            if self.0 { vec![CommandInfo::new("only list", "List")] } else { Vec::new() }
+        }
+    }
+    assert!(Registry::new(vec![Plugin::build(Commands(true))]).is_ok());
+    let p = Registry::new(vec![Plugin::build(Commands(false))]).unwrap_err();
+    assert_eq!(p.code, "plugins.contract");
+}
+
 // One implementation, two deployments: the badge's command linked into this process,
 // and the same command run through the installed program, write the same preview.
 #[test]

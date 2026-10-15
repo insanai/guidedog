@@ -3,7 +3,8 @@
 Typed build plugins (GDS 0010: source text, complete HTML pages, generated static
 assets) and publishers (GDS 0009: send a finished site somewhere), linked into an
 application or run as installed programs behind a bounded JSON Lines protocol. A
-`Plugin` is build hooks **or** a publisher, never both. Protocol and design details:
+`Plugin` is build hooks **or** a publisher, never both; a build plugin that adds
+commands may offer no hooks (`Hooks::NONE`). Protocol and design details:
 [docs/manual/internals/plugins.rst](../../docs/manual/internals/plugins.rst).
 
 ## Use

@@ -11,7 +11,7 @@
 use guidedoc::{Builder, Fail, Label, NodeId, NodeKind, is_ascii_space};
 
 use crate::docfield_write::{replace_nodes, write_group, write_kept, write_plain};
-use crate::domains::{Cx, Object, find_domain, generated};
+use crate::domains::{Cx, Object, find_domain};
 use crate::text::{has_at, trim_space};
 
 pub(crate) use crate::docfield_write::reopen;
@@ -364,9 +364,4 @@ pub(crate) fn single_paragraph(b: &Builder<'_>, body: NodeId) -> Option<NodeId> 
         return None;
     }
     (b.snap.nodes[first].subtree_end as usize == end).then(|| NodeId::from_index(first))
-}
-
-/// Marks the nodes written since `first` as Generated (re-exported for the writers).
-pub(crate) fn mark_generated(b: &mut Builder<'_>, first: usize) {
-    generated(b, first);
 }

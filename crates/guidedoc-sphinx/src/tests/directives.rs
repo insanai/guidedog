@@ -1,4 +1,4 @@
-//! Ported from the Odin package's directives_test.odin.
+//! Tests of the Sphinx directives outside the domains.
 
 #[allow(unused_imports)]
 use crate::config::{Config, TocParents};

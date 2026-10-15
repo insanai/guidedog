@@ -1,4 +1,4 @@
-//! Ported from the Odin package's domains_test.odin.
+//! Tests of the object domains: signatures, ids, index entries and nesting.
 
 #[allow(unused_imports)]
 use crate::config::{Config, TocParents};

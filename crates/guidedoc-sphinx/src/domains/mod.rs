@@ -161,7 +161,7 @@ pub(crate) trait Domain: Sync {
     }
 
     /// Emits what an object's content starts with, inside the open Desc_Content and
-    /// before the content itself (Odin's `:availability:` paragraph).
+    /// before the content itself (the odin domain's `:availability:` paragraph).
     fn content_begin(&self, cx: &mut Cx<'_, '_, '_>, o: &Object<'_>) -> Result<(), Fail> {
         let _ = (cx, o);
         Ok(())
@@ -194,8 +194,8 @@ pub(crate) trait Domain: Sync {
         None
     }
 
-    /// Rewrites the target of one of the domain's cross-references (Odin follows an
-    /// import alias); `None` keeps it.
+    /// Rewrites the target of one of the domain's cross-references (the odin domain
+    /// follows an import alias); `None` keeps it.
     fn map_target(&self, st: &State, target: &str) -> Option<String> {
         let _ = (st, target);
         None
@@ -300,8 +300,8 @@ pub(crate) struct Object<'o> {
     pub cpp_objtype: String,
     /// The signatures that gave a name.
     pub signatures: usize,
-    /// What a domain's signature leaves for its `before_content` (Odin: the
-    /// polymorphic names members see).
+    /// What a domain's signature leaves for its `before_content` (for the odin
+    /// domain, the polymorphic names members see).
     pub extra: String,
 }
 

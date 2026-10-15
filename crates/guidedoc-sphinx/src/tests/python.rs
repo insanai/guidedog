@@ -1,4 +1,4 @@
-//! Ported from the Odin package's python_test.odin.
+//! Tests of the Python domain.
 
 #[allow(unused_imports)]
 use crate::config::{Config, TocParents};

@@ -1,4 +1,4 @@
-//! Ported from the Odin package's code_test.odin.
+//! Tests of code blocks (code-block, literalinclude, highlight) and math.
 
 #[allow(unused_imports)]
 use crate::config::{Config, TocParents};

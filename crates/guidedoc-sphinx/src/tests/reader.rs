@@ -1,4 +1,4 @@
-//! Ported from the Odin package's reader_test.odin.
+//! Tests of the sphinx reader: settings, documents and reports.
 
 #[allow(unused_imports)]
 use crate::config::{Config, TocParents};

@@ -1,4 +1,4 @@
-//! Ported from the Odin package's cpp_nesting_test.odin. The C++ parser is recursive
+//! Tests of deep C++ nesting. The C++ parser is recursive
 //! descent over nested templates, declarators, and expressions. Nesting past max_depth,
 //! or past the reader's stack budget when max_depth is huge, is a Limit, never a stack
 //! overflow.

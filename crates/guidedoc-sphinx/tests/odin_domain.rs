@@ -1,6 +1,5 @@
 //! The odin domain: signatures, ids, index and table of contents entries, roles, info
-//! fields, nesting, and the generating directives (ported from the Odin reader's
-//! odin_test.odin).
+//! fields, nesting, and the generating directives.
 
 use std::sync::{Arc, Mutex};
 

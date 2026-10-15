@@ -1,4 +1,4 @@
-//! Ported from the Odin package's glossary_test.odin.
+//! Tests of the glossary directive and its terms.
 
 #[allow(unused_imports)]
 use crate::config::{Config, TocParents};

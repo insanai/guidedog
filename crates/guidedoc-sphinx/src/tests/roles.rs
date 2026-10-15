@@ -1,4 +1,4 @@
-//! Ported from the Odin package's roles_test.odin.
+//! Tests of the Sphinx roles.
 
 #[allow(unused_imports)]
 use crate::config::{Config, TocParents};

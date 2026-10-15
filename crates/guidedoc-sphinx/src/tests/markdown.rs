@@ -1,4 +1,4 @@
-//! Ported from the Odin package's markdown_test.odin.
+//! Tests of the Sphinx directives and roles in MyST Markdown.
 
 use crate::tests::*;
 

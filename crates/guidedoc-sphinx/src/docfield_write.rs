@@ -16,8 +16,7 @@ use guidedoc::{
 };
 
 use crate::docfields::{
-    DocField, DocFields, FieldItem, FieldShape, field_parts, mark_generated, one_text,
-    single_paragraph,
+    DocField, DocFields, FieldItem, FieldShape, field_parts, one_text, single_paragraph,
 };
 use crate::domains::{Cx, XrefParts, text_leaf};
 use crate::roles::{RoleCx, field_role, xref_begin};
@@ -478,10 +477,4 @@ pub(crate) fn replace_nodes(
         row.subtree_end -= k as u32;
     }
     Ok(a + moved as usize)
-}
-
-/// Marks generated nodes (kept for the writers' symmetry with Odin's `generated`).
-#[allow(dead_code)]
-fn generated_since(b: &mut Builder<'_>, first: usize) {
-    mark_generated(b, first);
 }

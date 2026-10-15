@@ -358,10 +358,10 @@ fn record(cx: &mut Cx<'_, '_, '_>, c: &SigCx<'_>, r: &str) -> Result<(), Fail> {
     odin_type(cx, c, rest, "")
 }
 
-/// Emits a parameter or field list. As in Odin, when any item has a type (":"), items
-/// without one are names ("a, b: int"); otherwise every item is a type ("(int,
-/// bool)"). With `nodes`, the list is a DescParameterlist of DescParameters; without,
-/// text in a type.
+/// Emits a parameter or field list. As Odin source writes them, when any item has a type
+/// (":"), items without one are names ("a, b: int"); otherwise every item is a type
+/// ("(int, bool)"). With `nodes`, the list is a DescParameterlist of DescParameters;
+/// without, text in a type.
 fn fields(cx: &mut Cx<'_, '_, '_>, c: &SigCx<'_>, text: &str, nodes: bool) -> Result<(), Fail> {
     let span = c.span;
     let named = items(text).any(|item| find(item, b':') < item.len());

@@ -1,4 +1,4 @@
-//! Ported from the Odin package's toc_test.odin.
+//! Tests of toctrees and the table of contents.
 
 #[allow(unused_imports)]
 use crate::config::{Config, TocParents};

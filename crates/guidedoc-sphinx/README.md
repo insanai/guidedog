@@ -93,17 +93,17 @@ a per-document state struct (`OdinState`, `RustState`, `Default`) that `State` h
 
 **Hooks** (all have defaults):
 
-| Hook | Called | Odin |
+| Hook | Called | The odin domain's use |
 |---|---|---|
-| `signature(cx, o, sig, span)` | per signature of an object directive | `odin_signature` |
-| `content_begin(cx, o)` | inside Desc_Content, before the content | `odin_availability` |
-| `before_content(cx, o) -> u32` | when a signature gave a name; returns what to pop | `before_content` "odin" case |
-| `after_content(st, o, pushed)` | after every object's content | `after_content` |
-| `toc_name(config, st, o, TocNames{fullname, module, sig}) -> Option<String>` | from `cx.toc_entry_name` | `odin_toc_name` |
-| `map_target(st, target) -> Option<String>` | a role of the domain rewrites its target | `odin_mapped` |
-| `xref_context(b, st, id, &XrefInfo{reftype, target, any})` | an Xref of the domain or `any` | `xref_begin` "odin" lines |
-| `run(sx, p, d, tag)` | `DomainDirective::run` directives | `odin_package_directive`, ... |
-| `autodoc_context(st)` | autodoc request | `odin_package`, top type |
+| `signature(cx, o, sig, span)` | per signature of an object directive | reads one declaration line |
+| `content_begin(cx, o)` | inside Desc_Content, before the content | the `:availability:` paragraph |
+| `before_content(cx, o) -> u32` | when a signature gave a name; returns what to pop | pushes the type, its polymorphic names and a `:package:` |
+| `after_content(st, o, pushed)` | after every object's content | pops what `before_content` pushed |
+| `toc_name(config, st, o, TocNames{fullname, module, sig}) -> Option<String>` | from `cx.toc_entry_name` | the name as `toc_object_entries_show_parents` asks |
+| `map_target(st, target) -> Option<String>` | a role of the domain rewrites its target | follows an import alias |
+| `xref_context(b, st, id, &XrefInfo{reftype, target, any})` | an Xref of the domain or `any` | records `odin:package` and the enclosing type |
+| `run(sx, p, d, tag)` | `DomainDirective::run` directives | `odin:package`, ... |
+| `autodoc_context(st)` | autodoc request | the current package and top type |
 
 **Contexts.** `Cx { p: &mut Parser, st: &mut State, config: &Config }` holds the state
 borrowed: inside a `Cx` hook never parse nested content (`p.parse_body`, `p.inline`),
@@ -127,31 +127,31 @@ annotation_xrefs}`, `text::{trim_space, has_at, last_part, is_identifier_byte, .
 Messages: `messages::SIGNATURE`, `NESTING`, ... (we add our own `Message` consts in our
 module; every message has a hint).
 
-## Redesigns from the Odin package
+## Design notes
 
-- **One `Domain` trait instead of `switch domain` in a dozen places.** Each domain is a
-  value with its tables and hooks; the shared object description, roles, info fields,
-  and toc names call the hooks. Per-domain state moved out of the one big `State`
-  struct for the odin and rust domains (`OdinState`, `RustState`).
-- **No scratch, no pool strings in the state.** `State` owns `String`s and `Vec`s
+- **One `Domain` trait.** Each domain is a value with its tables and hooks; the shared
+  object description, roles, info fields, and toc names call the hooks, so no code
+  switches on the domain. The odin and rust domains keep their own state (`OdinState`,
+  `RustState`) beside the shared `State`.
+- **Owned state.** `State` owns `String`s and `Vec`s
   (`NameStack` is a bounded `Vec<String>`); index entries and ids are built in
   `String`s and copied into the pool once.
 - **State in a `RefCell` behind `&self`**, as `guidedoc-rst`'s `Extension` takes
   `&self` and handlers run re-entrantly. Roles receive the `ReadContext`, not the
   parser, so role code is written against `RoleCx { ctx, st, config }`.
-- **Directives dispatch on tags** (`(group << 16) | index`) instead of procedure
-  pointers; core directives are an enum (`Core`).
+- **Directives dispatch on tags** (`(group << 16) | index`), so a handler is
+  found by a number; core directives are an enum (`Core`).
 - **Autodoc providers are a trait** (`AutodocProvider`) per domain in
-  `Config::autodoc`, replacing the two procedure+pointer fields; messages are static
-  `guidedoc::Message`s with arguments (Elm style), not strings built at run time.
+  `Config::autodoc`; messages are static `guidedoc::Message`s with arguments (Elm
+  style), not strings built at run time.
 - **Config is owned data** (`String`, `Vec`, `Labels`), `Default` = Sphinx's defaults.
-- **MyST without aliasing.** Odin's Markdown host and embedded parser pointed into one
-  read context. Here a directive detaches the Markdown reader's state from the context
+- **MyST without aliasing.** The Markdown host and the embedded parser never share one
+  read context at the same time: a directive detaches the Markdown reader's state from the context
   (`guidedoc_commonmark::Host::detach`), lends the context to the embedded
   reStructuredText parser, and nested Markdown attaches it again
   (`Detached::attach`) after moving the parser's state where nested directives find it
   (`guidedoc_rst::Parser::lend`). Both are small additive APIs of those crates.
 - **The C++ parser is its own crate** (`guidedoc-cpp`): this crate keeps the glue
-  (signatures, describing, scopes, xref lookup data). Its ids follow Sphinx where the
-  Odin wrote some id pieces twice (`PFidE`, not `PFiddE`).
-- **Not ported**: the tests counting allocator calls (reads allocate by design).
+  (signatures, describing, scopes, xref lookup data). Its ids follow Sphinx exactly,
+  each id piece written once (`PFidE`, not `PFiddE`).
+- **Reads allocate by design**, so no test counts allocator calls here.

@@ -1,4 +1,4 @@
-//! Ported from the Odin package's docfields_test.odin.
+//! Tests of info field lists in object descriptions.
 
 #[allow(unused_imports)]
 use crate::config::{Config, TocParents};

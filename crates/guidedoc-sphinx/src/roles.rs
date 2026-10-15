@@ -208,6 +208,10 @@ fn declared_role<'c>(config: &'c Config, domain: &str, name: &str) -> Option<Fou
 
 /// Returns the role a name denotes in the current state.
 pub(crate) fn find_role<'c>(config: &'c Config, st: &State, name: &str) -> Option<Found<'c>> {
+    // sphinx.ext.autosummary's autolink, with Python's provider: a py:obj reference.
+    if equal_fold(name, "autolink") && config.autodoc_for("py").is_some() {
+        return role_in("py", "obj");
+    }
     if let Some((domain, local)) = name.split_once(':') {
         return role_in(domain, local).or_else(|| declared_role(config, domain, local));
     }

@@ -21,6 +21,7 @@ mod summary;
 
 use std::collections::HashSet;
 
+pub(crate) use stub::package_entries;
 pub use stub::{Stub, StubOptions, stub};
 
 use crate::options::Options;
@@ -100,7 +101,7 @@ fn rst_escape(s: &str) -> String {
 }
 
 /// A generator for work outside a directive: no options, no document context.
-fn generator<'a>(
+pub(crate) fn generator<'a>(
     session: &'a mut Session,
     config: &'a Config,
     request: &'a Request,

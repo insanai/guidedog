@@ -29,6 +29,7 @@
 
 mod autosummary;
 mod config;
+mod coverage;
 mod dataclasses;
 mod docstrings;
 mod emit;
@@ -60,6 +61,7 @@ pub use autosummary::{
 };
 pub use config::{ClassContent, ClassSignature, Config, DefaultOption, DescriptionTarget};
 pub use config::{MemberOrder, TypeAlias, Typehints, TypehintsFormat};
+pub use coverage::{CoveredClass, CoveredObject, ModuleObjects, module_objects, package_modules};
 pub use napoleon::{
     DocstringStyle, Napoleon, NapoleonContext, NapoleonNote, NapoleonOutput, NapoleonSection,
     convert_docstring, includes_member, napoleon_docstring, unknown_custom_sections,

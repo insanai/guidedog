@@ -246,7 +246,7 @@ fn submodule_lists(
 
 /// `pkgutil.iter_modules(package.__path__)`: the module files and packages in the
 /// package's folder, sorted, without `__init__` and `__main__`.
-fn package_entries(module: &gd_pyscan::Module) -> Vec<String> {
+pub(crate) fn package_entries(module: &gd_pyscan::Module) -> Vec<String> {
     let Some(dir) = module.path.parent() else { return Vec::new() };
     let Ok(entries) = std::fs::read_dir(dir) else { return Vec::new() };
     let mut names = Vec::new();

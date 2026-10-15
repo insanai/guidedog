@@ -27,6 +27,7 @@
 
 #![forbid(unsafe_code)]
 
+mod autosummary;
 mod config;
 mod dataclasses;
 mod docstrings;
@@ -53,6 +54,10 @@ use std::fmt;
 
 use gd_pyscan::Project;
 
+pub use autosummary::{
+    Stub, StubOptions, Summary, SummaryItem, SummaryRequest, SummarySignatures, module_docstring,
+    stub, summarize, summary_table,
+};
 pub use config::{ClassContent, ClassSignature, Config, DefaultOption, DescriptionTarget};
 pub use config::{MemberOrder, TypeAlias, Typehints, TypehintsFormat};
 pub use napoleon::{

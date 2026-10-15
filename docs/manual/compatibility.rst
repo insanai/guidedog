@@ -177,13 +177,16 @@ need a hard bound. See :doc:`errors` and :doc:`internals/memory`.
 Verification and real projects
 ------------------------------
 
-The Odin implementation's ``tools/sphinxdiff`` compared 42 pinned Sphinx test roots.
-It checked pages, identifiers, body links, inventories, numbering, and diagnostics.
-Its stored results explained deliberate differences, for example precise source locations,
-stable reading-order numbering, and explicit reports for omitted target-specific raw
-content. The Rust crates keep the reader conformance tests
-(:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) and their
-expected outputs.
+``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx 9.1.0 over 42 of
+Sphinx's own test roots. It checks pages, identifiers, body links, inventories, numbering,
+and diagnostics. The run of 15 October 2026 checked the Rust implementation and agrees with
+the Odin implementation's record on every root but one, where Sphinx itself changed
+(:doc:`internals/sphinx-comparison`). The stored results explain deliberate differences, for
+example precise source locations, stable reading-order numbering, and explicit reports for
+omitted target-specific raw content. The reader conformance tests
+(:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) keep their
+expected outputs, and ``cargo xtask verify-docutils`` checks those against a pinned Docutils
+0.22.4: all 98 trees still match.
 
 The remote validation of the Odin implementation on 1 October 2026 ran clean and
 unchanged HTML and PDF builds for CPython, Django, and Flask. All twelve builds

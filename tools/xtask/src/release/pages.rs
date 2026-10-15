@@ -114,7 +114,13 @@ pub(crate) fn smoke_pages(program: &Path, guidedog: &Path) -> Result<()> {
     let publish = &["publish", "--publisher=pages", "--config=pages.toml"];
     pages.expect("pages.unbound", guidedog, &[publish.as_slice(), &["--dry-run"]].concat())?;
     process::run(&mut pages.command(guidedog, &["plugin", "unregister", "pages"]))?;
-    pages.expect("cli.plugin-missing", guidedog, publish)?;
+    // guidedog links the Pages publisher in (gd_cli's default registry), so after the
+    // registered program is gone `--publisher=pages` still finds the linked one, which
+    // stops safely at the same authorization check. A plugin that is neither linked
+    // nor registered is reported as missing.
+    pages.expect("pages.unbound", guidedog, publish)?;
+    let missing = &["publish", "--publisher=no-such-publisher", "--config=pages.toml"];
+    pages.expect("cli.plugin-missing", guidedog, missing)?;
     let name = program.file_name().unwrap_or_default().to_string_lossy();
     println!("pages smoke test passed: {name} registered; each publication stopped safely");
     Ok(())

@@ -108,15 +108,23 @@ Commands overview
      - Keeps Guidedog's own discussion records in ``docs/gds``, as ``dsc`` does.
    * - ``publish --publisher=ID``
      - Builds the project a publisher's configuration names, and publishes the site.
+   * - ``plugin COMMAND``
+     - Registers, checks, lists, inspects, runs, or unregisters plugin programs.
+
+Plugins add commands of their own (see `Commands plugins add`_). The GitHub Pages plugin, linked into every ``guidedog``, adds two:
+
+.. list-table:: Commands of the linked GitHub Pages plugin
+   :header-rows: 1
+   :widths: 30 70
+
+   * - Command
+     - What it does
    * - ``publish pages``
      - Publishes to GitHub Pages, doing first whatever setup is still missing.
    * - ``pages workflow``
      - Writes a GitHub Actions workflow that builds and deploys the site.
-   * - ``plugin COMMAND``
-     - Registers, checks, lists, inspects, runs, or unregisters plugin programs.
 
-A command word that is not one of these is a usage error (exit status 2). Its hint
-lists the commands.
+A command word that is neither guidedog's nor a plugin's is a usage error (exit status 2). Its hint lists the commands, and suggests the closest of both kinds.
 
 guidedog quickstart
 -------------------
@@ -588,7 +596,7 @@ each other's snapshots. See :doc:`../plugins`.
 guidedog publish pages
 ~~~~~~~~~~~~~~~~~~~~~~
 
-``guidedog publish pages`` is the guided way to GitHub Pages. It does whatever is still
+``guidedog publish pages`` is the guided way to GitHub Pages; the GitHub Pages plugin adds it. It does whatever is still
 missing and asks only when it must. Then it builds and publishes:
 
 #. ``pages.toml``: written once, with the repository taken from the ``origin`` remote and
@@ -605,13 +613,14 @@ On a machine that is already set up, it publishes without a question. Without a 
 it never asks. A missing step then fails with a hint naming the command or option that does
 it. ``--yes`` answers the confirmations. It never signs in or replaces other work on
 our behalf. Its options are those of ``guidedog-pages init`` and ``publish`` (``--config``,
-``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, ``--verbose``).
+``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, ``--verbose``,
+``--dry-run``); ``guidedog publish pages --help`` lists them. guidedog builds the project itself, with its own engine and linked plugins; ``--guidedog=PATH`` builds with another program instead.
 See :doc:`../howto/github-pages`.
 
 guidedog pages workflow
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-``guidedog pages workflow`` is ``guidedog-pages workflow``. It prints, writes, or checks
+``guidedog pages workflow`` is ``guidedog-pages workflow``, added by the GitHub Pages plugin. It prints, writes, or checks
 a GitHub Actions workflow. The workflow installs this Guidedog release, builds the project, and
 deploys it with GitHub's Pages actions. We use it instead of publishing from our own machine
 when every push to the source branch should deploy.
@@ -669,7 +678,8 @@ Subcommands:
 * ``list``: the registered programs, their IDs, paths, and kinds, beside the plugins
   linked into this executable.
 * ``inspect ID``: an entry's declared build hooks (source, HTML, assets) or publisher
-  capabilities, and whether the program on disk is still the one registered.
+  capabilities, the commands it adds, and whether the program on disk is still the one
+  registered.
 * ``run ID -- [ARGS...]``: runs a registered program's own commands, after checking its
   SHA-256.
 * ``unregister ID``: removes the entry from ``plugins.toml``. The program, and anything
@@ -715,8 +725,25 @@ The program accepts every command and option on this page. A selected plugin ID 
 looked up among the linked plugins first, then in the machine's registry. Linked plugins
 need no registration and no SHA-256 pin, because they are part of the executable.
 ``gd_cli::run`` is the same with no linked plugins. ``guidedog`` itself
-runs it. The plugin is the same ``Plugin`` value its installed form serves with
+links one, the GitHub Pages plugin. The plugin is the same ``Plugin`` value its installed form serves with
 ``gd_plugins::serve_plugin`` (see :doc:`../plugins`).
+
+Commands plugins add
+~~~~~~~~~~~~~~~~~~~~
+
+A plugin may add commands to guidedog, or targets to ``guidedog publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a plugin's:
+
+.. code-block:: console
+
+   $ guidedog --help
+     ...
+     PLUGIN COMMANDS
+       publish pages      Publish to GitHub Pages, doing whatever setup is missing (pages)
+       pages workflow     Print, write, or check a GitHub Actions workflow ... (pages)
+
+guidedog looks for a word it does not know (or a ``publish`` target) among the commands of the linked plugins first, then among those of the registered programs, and runs the plugin that adds it. ``--help`` after such a command prints its help, made from what the plugin declares. A plugin cannot replace one of guidedog's commands, and the first plugin to add a name keeps it.
+
+A linked plugin's command runs inside guidedog. A registered program's command runs as that program, started on our terminal after its SHA-256 is checked: it may ask questions, and its exit status is the command's. When either asks for a build, guidedog builds the project. The program's commands are read when it is registered, so a new version is registered again, as always.
 
 guidedog-pages
 --------------

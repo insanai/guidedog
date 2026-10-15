@@ -19,8 +19,9 @@ unchanged; existing projects build as before.
   tree-sitter and its Python grammar are crates instead of a vendored C build.
 - **Graphviz from the system.** `gd-graphdog` links the system's `libgvc` and `libcgraph`.
   Install Graphviz (`libgvc6`, `graphviz`, or Homebrew's `graphviz`) to run the release
-  programs, and its development files to build them. HTTP goes through the `curl`
-  program, so libcurl is no longer linked.
+  programs, and its development files to build them. HTTP and HTTPS are built in
+  (`ureq` with `rustls` and Mozilla's root certificates): neither libcurl nor the `curl`
+  program is needed.
 - **Crates instead of packages.** The engine (`guidedoc`), the readers and renderers
   (`guidedoc-rst`, `guidedoc-commonmark`, `guidedoc-sphinx`, `guidedoc-html`,
   `guidedoc-typst`, `guidedoc-text`), and the libraries (`gd-*`) are separate crates with

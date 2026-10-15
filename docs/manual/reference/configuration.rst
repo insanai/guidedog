@@ -797,7 +797,7 @@ Intersphinx
    python = ["https://docs.python.org/3/", ""]
    click = ["https://click.palletsprojects.com/", ["click.inv", ""]]
 
-Inventories are downloaded with the ``curl`` program. ``--untrusted`` fetches nothing.
+Inventories are downloaded with the built-in HTTP client, which honours ``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing.
 See :doc:`../intersphinx`.
 
 Python autodoc

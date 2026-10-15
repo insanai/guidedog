@@ -50,7 +50,7 @@ From the repository that holds our documentation, we run:
 
    guidedog-pages publish
 
-On a machine that has never published, it does each missing step once and says what it
+(``guidedog publish pages`` does the same; see `Through guidedog publish`_.) On a machine that has never published, it does each missing step once and says what it
 does. It asks before anything that changes GitHub or this machine's permissions:
 
 1. **Configuration.** Without ``pages.toml`` it reads the repository from
@@ -359,9 +359,16 @@ the stored token. We revoke it at GitHub too.
 Through guidedog publish
 ------------------------
 
-``guidedog publish pages`` runs the same guided publish with Guidedog's own engine.
-``guidedog-pages`` is also a publisher program for ``guidedog publish --publisher=pages``
-(see :doc:`../plugins`).
+The GitHub Pages plugin is linked into ``guidedog``, and it adds two commands to it:
+
+.. code-block:: sh
+
+   guidedog publish pages            # the guided publish above
+   guidedog pages workflow --write   # the workflow of the GitHub Actions route
+
+``guidedog publish pages`` runs the same guided publish as ``guidedog-pages publish``, with the same options, but guidedog builds the project itself, with its own engine and linked plugins, instead of starting an installed ``guidedog``. ``guidedog pages workflow`` is ``guidedog-pages workflow``. ``guidedog publish pages --help`` and ``guidedog pages workflow --help`` list their options.
+
+A custom ``guidedog`` built without the plugin can still have both commands: we register the ``guidedog-pages`` program (``guidedog plugin register pages /usr/local/bin/guidedog-pages``), and guidedog runs it for them on our terminal. ``guidedog-pages`` is also the publisher program for ``guidedog publish --publisher=pages`` (see :doc:`../plugins`).
 
 Troubleshooting
 ---------------

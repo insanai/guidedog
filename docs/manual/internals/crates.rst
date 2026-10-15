@@ -190,6 +190,8 @@ Every other package is internal:
 
 ``gd-typst`` embeds the Typst compiler. Keeping it internal keeps Typst's large dependency tree out of every reusable crate: ``guidedoc-typst`` writes Typst source as text, and only the program compiles it.
 
+``gd-fetch`` reads URLs and files and sends HTTP requests for remote intersphinx inventories and the Pages publisher. It uses ``ureq``, a small blocking HTTP client, with ``rustls`` for TLS and Mozilla's root certificates built in (``webpki-roots``). Guidedog therefore needs no ``curl`` program, OpenSSL or system certificate store, and request headers never appear on a command line. The crate stays internal, so the reusable crates do not carry an HTTP stack.
+
 ``gd-clock`` gives the program one answer to "what time is it?". A build stamps its output with ``SOURCE_DATE_EPOCH`` when reproducible builds set it, and with the clock otherwise. The crate turns Unix seconds into civil dates with plain arithmetic and asks the operating system only for the local time zone's offset from UTC. That offset is the crate's one piece of unsafe code (``localtime_r`` on Unix, ``SystemTimeToTzSpecificLocalTime`` on Windows), so the rest of the program needs none for dates. The plugin SDK ``gd-plugins`` is reusable and cannot depend on it; it keeps its own few lines of date arithmetic.
 
 Rules the gate checks

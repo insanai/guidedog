@@ -59,8 +59,8 @@ Templates are plain files in our project, and we can edit them.
 
 Some things still come from outside. The Typst compiler is built into Guidedog. A
 build without it uses the ``typst`` program installed on the system. Diagrams use
-the system's Graphviz library, and fetching remote inventories uses the ``curl``
-program.
+the system's Graphviz library. Fetching remote inventories uses the HTTP client
+built into Guidedog.
 
 
 Write it, see both

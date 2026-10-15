@@ -46,7 +46,7 @@ Each `release <https://github.com/insanai/guidedog/releases>`__ has an archive f
 macOS, and Windows, with ``SHA256SUMS``. The Typst compiler and the tree-sitter parsers are
 compiled into ``guidedog``. Diagrams use the Graphviz library (``libgvc``). Where the system does not provide it,
 the archive's notes say how to install it. Fetching remote
-intersphinx inventories and publishing to GitHub Pages run the system's ``curl`` program.
+intersphinx inventories and publishing to GitHub Pages use the HTTP client built into ``guidedog``, so no ``curl`` program is needed.
 Check and install the archive:
 
 .. code:: sh

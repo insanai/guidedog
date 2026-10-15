@@ -100,9 +100,9 @@ guidedog-pages setup                # deploy GitHub Pages from the branch
 guidedog-pages watch                # publish again whenever the sources change
 ```
 
-GitHub Actions is the other route, for publishing after every push. `guidedog publish --publisher=pages` builds with Guidedog's own engine and runs the same publisher. See [Publish to GitHub Pages](docs/manual/howto/github-pages.rst) and [Write a plugin](docs/manual/plugins.rst).
+The same guided flow is part of `guidedog` itself: the GitHub Pages plugin is linked in and adds `guidedog publish pages` (built with Guidedog's own engine) and `guidedog pages workflow`. GitHub Actions is the other route, for publishing after every push. `guidedog publish --publisher=pages` runs the same publisher. See [Publish to GitHub Pages](docs/manual/howto/github-pages.rst) and [Write a plugin](docs/manual/plugins.rst).
 
-Build plugins transform source text, complete HTML pages, and static assets through a typed, versioned contract. A plugin is an ordinary Rust crate. We link it into our own `guidedog` with `gd_cli::run_with`, or we run it as a separate program that `guidedog plugin register` pins by SHA-256. `guidedog publish --timeout=SECONDS` bounds each complete exchange with a publisher (default: 300 seconds); choose a value longer than `--wait`. After an unknown outcome, recover before publishing again.
+Build plugins transform source text, complete HTML pages, and static assets through a typed, versioned contract. A plugin is an ordinary Rust crate. We link it into our own `guidedog` with `gd_cli::run_with`, or we run it as a separate program that `guidedog plugin register` pins by SHA-256. A plugin can also add commands to `guidedog` itself, listed by `guidedog --help`. `guidedog publish --timeout=SECONDS` bounds each complete exchange with a publisher (default: 300 seconds); choose a value longer than `--wait`. After an unknown outcome, recover before publishing again.
 
 ## Keep discussions
 

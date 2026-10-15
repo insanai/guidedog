@@ -55,6 +55,32 @@ and are implemented by ``gd-project`` and ``gd-cli`` on top of this crate:
   ``guidedog publish``; ``check`` and registration of a build program run
   ``check_plugin`` through ``process_plugin``.
 
+Command-line extensions
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A plugin of either kind may also add commands to guidedog's command line. The GitHub Pages plugin adds two:
+
+.. code-block:: console
+
+   $ guidedog publish pages          # the guided publication
+   $ guidedog pages workflow --write # the GitHub Actions route
+
+Neither is written in ``gd-cli``. The plugin declares them, and guidedog finds them when it meets a word it does not know.
+
+Declaring
+   ``BuildPlugin::commands`` and ``Publisher::commands`` return a list of ``CommandInfo``. Each has a ``path`` of 1 to 4 lowercase words (``["pages", "workflow"]``), a one-line ``summary``, plain-text ``help``, and the ``options`` it takes (``CommandOption``: a name such as ``--write``, a value placeholder such as ``DIR`` or nothing for a switch, and a summary). The default is no commands. ``Registry::new`` checks the declarations: at most 32 commands, distinct names, bounded text. The declared options serve the help and the host's parsing; the plugin still reads its own arguments, so a command is free to have nested subcommands of its own.
+
+Running
+   ``run_command(&mut self, ctx: &mut CommandContext, name, args) -> Result<i32, Problem>`` runs the command ``name`` (its words joined by spaces) on a fresh, unloaded value. ``args`` is the command line without the command's words, global options included. ``Ok`` is the exit status; a ``Problem`` is reported by the host and its ``exit`` becomes the status.
+
+``CommandContext``
+   What the host offers, and nothing more. Its methods are ``print`` and ``eprint`` (or ``streams`` for both writers at once), ``ask`` and ``confirm`` (they return no answer when ``interactive`` is false, so a script never hangs), and ``build_project(&BuildRequest)``, which has the host build a project with its own engine and linked plugins. A ``BuildRequest`` names the project, the output folder, the builder (``html`` by default, or ``pdf``, ``dirhtml``, ``singlehtml``, ``text``), ``-D`` overrides, the base URL and ``strict``. Its public fields say where the command runs (``dir``), the plugin's configuration file when the project's ``plugin_configs`` names one (``config``), the host program (``host_program``), the reporting choices (``interactive``, ``color``, ``json``, ``quiet``) and the ``cancel`` probe. The context borrows a ``CommandHost``, a trait with ``streams``, ``read_line`` and ``build_project``: ``gd-cli`` implements it over its console, tests over buffers.
+
+Dispatch in ``gd-cli``
+   ``extensions(&linked, machine)`` lists the commands of the linked plugins, then those of the registered programs (the machine registry is read only when the command line may name one). A name guidedog already has is skipped, except targets of ``publish``; an earlier plugin wins a name. The parser matches the longest path against the command line's words, skipping the values of options (guidedog's and every declared option that takes a value), so ``publish --config pages.toml`` never names a target ``pages.toml``. ``--help`` on a contributed command prints help made from its declaration, without running the plugin. ``guidedog --help`` lists the commands under PLUGIN COMMANDS with their plugin IDs, ``guidedog publish --help`` lists the targets, and "Did you mean" draws on both guidedog's commands and the plugins'. ``guidedog plugin inspect ID`` shows the commands a plugin adds.
+
+Which plugins are linked is the program's decision, not the command line's: ``cmd/guidedog`` passes ``Registry::new(vec![gd_pages::plugin()])`` to ``gd_cli::run_status``, and ``gd-cli`` depends only on ``gd-plugins``. The dependency gate holds that rule.
+
 Identity and cache keys
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -134,6 +160,8 @@ folder is removed on ``Drop``.
 Process transport
 -----------------
 
+Build hooks and publishers converse over pipes, as described next. A contributed command does not: it runs on the person's terminal (see `Command protocol`_).
+
 A host starts a program with ``--guidedog-protocol``. The two exchange one JSON object
 per line over the child's standard input and output. Standard error is the
 child's log for people. Two helper threads own the pipes: a writer sending request
@@ -197,6 +225,33 @@ Publisher protocol requests (lines at most 1 MiB):
   request gets no answer the host reports ``Unknown`` with the plan's generation;
 * ``unload``.
 
+Command protocol
+~~~~~~~~~~~~~~~~
+
+Either handshake may carry two optional fields, which older hosts ignore and older programs leave out:
+
+.. code-block:: json
+
+   {"command_versions":[{"major":1,"minor":0}],
+    "commands":[{"path":["badge","preview"],"summary":"Write a product's label",
+                 "help":"...","options":[{"name":"--quiet-ok","value":"",
+                 "summary":"Print nothing on success"}]}]}
+
+The command protocol is versioned on its own (``COMMAND_PROTOCOL_VERSION`` 1.0), so the build and publisher protocols keep their versions. Registration selects the shared major version and refuses commands in a version the host does not speak (``plugins.command-version``), or declarations that break the limits above.
+
+To run a command, the host starts the program with two arguments, ``--guidedog-command`` and one JSON request (at most 64 KiB):
+
+.. code-block:: json
+
+   {"protocol":"guidedog-command","version":{"major":1,"minor":0},
+    "command":["badge","preview"],"args":["Orbit"],"dir":"/home/ada/docs",
+    "config":"","host":"/usr/bin/guidedog","interactive":true,"color":true,
+    "json":false,"quiet":false}
+
+The program inherits the host's standard input, output and error, in the folder ``dir``. There is no conversation: the command writes to the terminal and asks the person directly, and its exit status is the command's (a signal becomes 128 plus its number). The host flushes its own output first and verifies the program's SHA-256 before starting it. ``serve``, ``serve_publisher`` and ``serve_plugin`` answer the request by themselves, and ``serve_command(&plugin, request)`` lets a program with its own ``main`` do it. In the program, ``build_project`` starts ``host`` with ``build -b BUILDER PROJECT OUTPUT``, its output sent to standard error; a problem is reported on standard error as the request asks (text or JSON).
+
+Why the terminal and not the pipes? A guided command asks questions, shows progress and may run for minutes. Relaying every keystroke through JSON would add a second, harder protocol for no gain; the program is already trusted to the extent of its pinned SHA-256.
+
 Machine registry
 ----------------
 
@@ -204,7 +259,7 @@ Machine registry
 (``guidedog/``), schema 1, readable only by the user, at most 1 MiB. Each
 ``[[plugins]]`` table has ``id``, ``name``, ``version``, absolute ``path``,
 ``sha256``, ``protocol = "1.0"``, ``capabilities``, ``registered`` (UTC date) and, for
-build programs only, ``protocol_name = "guidedog-build-plugin"`` and ``hooks``.
+build programs only, ``protocol_name = "guidedog-build-plugin"`` and ``hooks``. A program that adds commands also has ``command_protocol = "1.0"`` and ``commands``, an array of inline tables with ``path``, ``summary``, ``help`` and ``options`` (each ``{ name, value, summary }``). Entries without them are read as adding none.
 Mutations take ``plugins.toml.lock`` with ``File::try_lock`` (separate opens conflict
 even within a process), then write ``plugins.toml.next``, sync it, and rename it over
 the registry. ``inspect_entry`` accepts only absolute paths to ELF, Mach-O or PE files
@@ -235,4 +290,4 @@ The arena owners and their ``release_*`` procedures, allocation-refusal accounti
 (``memory_refused`` and the tests that refused each allocation in turn), Windows pipe
 and handle-inheritance code (``std::process`` covers it), and the exported
 ``try_lock``/``unlock``, line reader and JSON field helpers. The CLI commands
-(``guidedog plugin register``/``check``/``inspect``) belong to ``gd-cli``.
+(``guidedog plugin register``/``check``/``inspect``) belong to ``gd-cli``. Command-line extensions are new in the Rust port; the Odin CLI hard-wired its GitHub Pages commands.

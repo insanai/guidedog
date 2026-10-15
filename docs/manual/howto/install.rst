@@ -42,11 +42,10 @@ Guidedog is a Cargo workspace. We need:
 * Graphviz's development files, because Guidedog links the Graphviz library
   (``libgvc`` and ``libcgraph``) to draw graphs in process: ``libgraphviz-dev`` on
   Debian and Ubuntu, ``graphviz-devel`` on Fedora, ``graphviz`` from Homebrew on macOS;
-* ``curl`` on the ``PATH`` for intersphinx inventories and the GitHub Pages publisher,
-  which run the ``curl`` program instead of linking an HTTP library.
+* a C compiler (``cc``, Xcode's command-line tools, or MSVC), which Cargo uses to build the tree-sitter grammars and the cryptography in the ``ring`` crate (TLS for HTTPS).
 
-Nothing else is built by hand. The Typst compiler (0.15.1) and the tree-sitter grammars
-for Python and Rust are ordinary Cargo dependencies, compiled with the workspace. There
+Nothing else is built by hand. The Typst compiler (0.15.1), the tree-sitter grammars
+for Python and Rust, and the HTTP client (``ureq`` with ``rustls``) are ordinary Cargo dependencies, compiled with the workspace. HTTPS needs no ``curl`` program, OpenSSL or system certificate store: the root certificates are built in. There
 are no native build scripts to run first.
 
 Release build

@@ -335,7 +335,41 @@ A remote acceptance is not a live deployment. ``Accepted`` and ``Pending`` retur
 Never retry an uncertain write blindly. See :doc:`howto/github-pages` for the
 complete user workflow.
 
-10. Version and distribute the contract
+10. Add a command to guidedog
+-----------------------------
+
+A plugin can also add commands to guidedog's own command line. The badge adds one:
+
+.. code-block:: console
+
+   $ guidedog badge preview Orbit
+   Wrote /home/ada/docs/badge-preview.html
+
+The GitHub Pages plugin works the same way: ``guidedog publish pages`` and ``guidedog pages workflow`` are its commands, not guidedog's. We declare a command with ``commands`` and run it with ``run_command``:
+
+.. code-block:: rust
+   :class: sketch
+
+   fn commands(&self) -> Vec<CommandInfo> {
+       vec![CommandInfo::new("badge preview", "Write a product's label to badge-preview.html")
+           .with_help("Writes the label the plugin adds to pages, for the product NAME.")
+           .with_option(CommandOption::switch("--quiet-ok", "Print nothing on success"))]
+   }
+
+   fn run_command(&mut self, ctx: &mut CommandContext<'_>, name: &str, args: &[String])
+       -> Result<i32, Problem> {
+       // ... read args, write the file in ctx.dir ...
+       ctx.print("Wrote badge-preview.html\n");
+       Ok(0)
+   }
+
+The words of the name decide where the command appears. ``badge preview`` is a new command; ``publish NAME`` is a target of ``guidedog publish``. A plugin cannot replace a command guidedog has. The summary, help and options we declare become the command's ``--help`` and its line under PLUGIN COMMANDS in ``guidedog --help``, and a mistyped name gets a "Did you mean" that knows our command.
+
+The ``CommandContext`` is everything guidedog lends the command. ``print`` and ``eprint`` write to its output. ``ask`` and ``confirm`` put a question to the person, and answer nothing when nobody can be asked (a script, a CI job), so a command never hangs. ``build_project`` has guidedog build a project, HTML or PDF, into a folder we name, with its engine and its linked plugins. ``dir`` is the folder the command was started in, and ``config`` the plugin's configuration file when the project's ``plugin_configs`` names one. We return the exit status, or a ``Problem`` with a hint, which guidedog reports.
+
+The same command works in both deployments. Linked, it runs inside guidedog. Registered, guidedog starts our program with ``--guidedog-command`` and a request, on the same terminal, so questions and progress reach the person directly; ``serve_plugin`` answers that request without any code of ours. ``guidedog plugin inspect ID`` lists the commands a plugin adds.
+
+11. Version and distribute the contract
 ---------------------------------------
 
 The build-plugin interface (``PLUGIN_API_VERSION``) is 1.0 and uses protocol
@@ -344,7 +378,9 @@ keeps ``guidedog-publisher`` protocol 1.0. These are separate contracts. The wir
 format is the one that programs built with the Odin SDK speak, so registered programs from
 earlier releases keep working. Product versions are separate from interface versions.
 New hooks arrive as trait methods with "absent" defaults, and host-made inputs are
-``#[non_exhaustive]``, so a new field does not break a plugin.
+``#[non_exhaustive]``, so a new field does not break a plugin. Contributed commands have
+their own command protocol (1.0), announced in optional handshake fields: programs
+without commands are unchanged.
 
 Register each rebuilt program deliberately, because its checksum changes. ``guidedog plugin
 inspect ID`` shows its kind and declared hooks. The public catalog describes plugins.
@@ -352,7 +388,7 @@ It does not download, install or run them. Custom markup readers, renderers,
 directives and roles are not part of this interface. They use the
 ``guidedoc::Registry`` API in a program that embeds the engine.
 
-11. Check a plugin before registering it
+12. Check a plugin before registering it
 ----------------------------------------
 
 ``guidedog plugin check PATH --project=DIR --config=FILE`` exercises a build plugin

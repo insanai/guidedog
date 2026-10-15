@@ -117,7 +117,7 @@ Built-in extension behavior
    * - ``graphviz``
      - Linked Graphviz produces static drawings. Resource confinement applies.
    * - ``intersphinx``
-     - Local and fetched inventories. Fetching runs the system's ``curl`` program.
+     - Local and fetched inventories. Fetching uses the built-in HTTP client.
    * - ``githubpages``
      - Built-in publication files for a static site.
    * - ``mathjax`` and ``imgmath``

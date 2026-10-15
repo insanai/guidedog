@@ -175,29 +175,10 @@ need a hard bound. See :doc:`errors` and :doc:`internals/memory`.
 Verification and real projects
 ------------------------------
 
-``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx 9.1.0 over 42 of
-Sphinx's own test roots. It checks pages, identifiers, body links, inventories, numbering,
-and diagnostics. The run of 15 October 2026 checked the Rust implementation and agrees with
-the Odin implementation's record on every root but one, where Sphinx itself changed
-(:doc:`internals/sphinx-comparison`). The stored results explain deliberate differences, for
-example precise source locations, stable reading-order numbering, and explicit reports for
-omitted target-specific raw content. The reader conformance tests
-(:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) keep their
-expected outputs, and ``cargo xtask verify-docutils`` checks those against a pinned Docutils
-0.22.4: all 98 trees still match.
+``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx 9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, body links, inventories, numbering, and diagnostics. The stored results explain each difference, for example precise source locations, stable reading-order numbering, and explicit reports for omitted target-specific raw content (:doc:`internals/sphinx-comparison`). The reader conformance tests (:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) keep their expected outputs, and ``cargo xtask verify-docutils`` checks those against a pinned Docutils 0.22.4. All 98 trees match.
 
-The remote validation of the Odin implementation on 1 October 2026 ran clean and
-unchanged HTML and PDF builds for CPython, Django, and Flask. All twelve builds
-succeeded and retained the baseline diagnostics and link results. It also passed 1,039 Linux tests
-and 94 targeted AddressSanitizer tests.
+On 15 October 2026 we built the manuals of CPython, Django and Flask as HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). Every HTML build succeeded, and the link check found no broken internal link besides two inert ones in CPython. The Django and Flask books built; the CPython book needs more memory than the 12 GB machine had.
 
-Those projects contain unsupported Python extension constructs.
-Their diagnostics remain part of the evidence. A zero exit status does not mean
-all their private directives were reproduced. We run with ``-W`` when publishing
-requires zero diagnostics.
+Those projects contain unsupported Python extension constructs. Their diagnostics remain part of the evidence. A zero exit status does not mean all their private directives were reproduced. We run with ``-W`` when publishing requires zero diagnostics.
 
-The historical measurements and source revisions remain in
-``docs/manual/evidence/manuals.rst``. They were made with the Odin implementation
-(release 0.6). User-facing behavior carries over to the Rust implementation, but its
-timings and memory use must be measured again. These measurements describe the
-recorded workloads. They are not universal speed or memory bounds.
+The measurements describe the recorded workloads on the recorded machine. They are not universal speed or memory bounds.

@@ -7,7 +7,7 @@ use std::path::{Path, PathBuf};
 use gd_host::{Format, Problem, Target};
 use guidedoc::ContentPolicy;
 
-use crate::args::{Word, Words, command_word, positive, unexpected_value, unknown_option, usage};
+use crate::args::{Word, Words, command_word, no_value, positive, unknown_option, usage};
 use crate::args::{with_suggestion, without};
 use crate::command::Parsed;
 use crate::command::{ColorMode, Command, ConvertCommand, Diagnostics, FormatsCommand, Output};
@@ -144,9 +144,7 @@ pub(crate) fn output_option<'a>(
 ) -> Result<bool, Problem> {
     match name {
         "-q" | "--quiet" => {
-            if let Some(v) = inline {
-                return Err(unexpected_value(name, v));
-            }
+            no_value(name, inline)?;
             output.quiet = true;
         }
         "--color" => {
@@ -309,7 +307,7 @@ const CONVERT_OPTIONS: &[&str] = &[
 ];
 
 /// What `convert`'s options say before the formats are resolved.
-#[derive(Debug)]
+#[derive(Debug, Default)]
 struct ConvertArgs {
     inputs: Vec<String>,
     from: String,
@@ -322,14 +320,8 @@ struct ConvertArgs {
 /// `guidedog convert INPUT --output FILE [options]`.
 fn parse_convert(args: &[String], output: &mut Output) -> Result<Command, Problem> {
     let mut words = Words::new(args);
-    let mut a = ConvertArgs {
-        inputs: Vec::new(),
-        from: String::new(),
-        to: String::new(),
-        output: String::new(),
-        raw: String::new(),
-        command: blank_convert(),
-    };
+    let command = ConvertCommand { typst: "typst".to_string(), ..Default::default() };
+    let mut a = ConvertArgs { command, ..Default::default() };
     while let Some(word) = words.next_word() {
         let (name, inline) = match word {
             Word::Arg(arg) => {
@@ -349,32 +341,6 @@ fn parse_convert(args: &[String], output: &mut Output) -> Result<Command, Proble
     finish_convert(a).map(|c| Command::Convert(Box::new(c)))
 }
 
-fn blank_convert() -> ConvertCommand {
-    ConvertCommand {
-        input: String::new(),
-        output: String::new(),
-        from: Format::Rst,
-        to: Target::Html,
-        emit_typst: None,
-        force: false,
-        raw: ContentPolicy::Refuse,
-        strict: false,
-        title: String::new(),
-        lang: String::new(),
-        fragment: false,
-        number_sections: false,
-        typst: "typst".to_string(),
-        font_paths: Vec::new(),
-        package_cache: None,
-        offline: false,
-        embedded_fonts_only: false,
-        budget_mib: None,
-        max_depth: None,
-        max_nodes: None,
-        stack_kib: None,
-    }
-}
-
 fn convert_option<'a>(
     words: &mut Words<'a>,
     a: &mut ConvertArgs,
@@ -392,9 +358,7 @@ fn convert_option<'a>(
         _ => None,
     };
     if let Some(flag) = flag {
-        if let Some(v) = inline {
-            return Err(unexpected_value(name, v));
-        }
+        no_value(name, inline)?;
         *flag = true;
         return Ok(());
     }

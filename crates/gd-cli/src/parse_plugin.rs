@@ -4,9 +4,7 @@ use std::path::PathBuf;
 
 use gd_host::Problem;
 
-use crate::args::{
-    Word, Words, seconds, unexpected_value, unknown_option, usage, with_suggestion,
-};
+use crate::args::{Word, Words, no_value, seconds, unknown_option, usage, with_suggestion};
 use crate::command::{Command, Output, PluginAction, PluginCommand, PublishCommand};
 use crate::parse::output_option;
 
@@ -108,9 +106,7 @@ fn set_option<'a>(
         _ => None,
     };
     if let Some(flag) = flag {
-        if let Some(v) = inline {
-            return Err(unexpected_value(name, v));
-        }
+        no_value(name, inline)?;
         *flag = true;
         return Ok(());
     }

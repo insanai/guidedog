@@ -103,7 +103,7 @@ pub struct FormatsCommand {
 
 /// `guidedog convert INPUT`: one file to HTML or PDF, without a project. The formats
 /// are resolved from the options and the file suffixes while parsing.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct ConvertCommand {
     /// The input path, or `-` for standard input.
     pub input: String,

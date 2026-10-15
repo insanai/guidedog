@@ -114,13 +114,17 @@ pub(crate) fn unknown_option(command: &str, name: &str, known: &[&str]) -> Probl
     )
 }
 
-/// The problem of a switch written with a value (`--force=yes`).
-pub(crate) fn unexpected_value(name: &str, value: &str) -> Problem {
-    usage(
-        "UNEXPECTED OPTION VALUE",
-        format!("`{name}` is a switch and takes no value, but was given `{value}`."),
-        format!("Write {name} without ={value}."),
-    )
+/// Checks that the switch `name` was written without a value; `--force=yes` is a
+/// usage problem.
+pub(crate) fn no_value(name: &str, inline: Option<&str>) -> Result<(), Problem> {
+    match inline {
+        None => Ok(()),
+        Some(value) => Err(usage(
+            "UNEXPECTED OPTION VALUE",
+            format!("`{name}` is a switch and takes no value, but was given `{value}`."),
+            format!("Write {name} without ={value}."),
+        )),
+    }
 }
 
 /// Reads a whole number from 1 to `max` for the option `name`.

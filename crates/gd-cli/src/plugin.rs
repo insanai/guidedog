@@ -172,9 +172,8 @@ fn confirm(console: &mut Console<'_>, question: &str) -> bool {
     if !console.terminals.stdin {
         return false;
     }
-    console.print(&format!("  {question} [y/N] "));
-    let _ = console.out.flush();
-    let answer = console.read_line().unwrap_or_default().to_lowercase();
+    let answer = console.prompt(&format!("  {question} [y/N] ")).unwrap_or_default();
+    let answer = answer.to_lowercase();
     answer == "y" || answer == "yes"
 }
 

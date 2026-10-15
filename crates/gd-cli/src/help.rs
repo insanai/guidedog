@@ -1,9 +1,7 @@
 //! The help texts: the overview and each command's options.
 
-use crate::console::Console;
+use crate::console::{BOLD_CYAN, Console};
 use crate::version::full_version;
-
-const BOLD_CYAN: &str = "1;36";
 
 /// The help of `topic` (`None` for the overview), styled when `color`.
 pub(crate) fn help_text(topic: Option<&str>, color: bool) -> String {

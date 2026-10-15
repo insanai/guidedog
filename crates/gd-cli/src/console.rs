@@ -50,41 +50,7 @@ impl std::fmt::Debug for Streams<'_> {
     }
 }
 
-/// Standard input read on demand, a buffer at a time, without holding its lock between
-/// reads (a command may read standard input itself, as `convert -` does).
-#[derive(Debug, Default)]
-pub(crate) struct StdinLines {
-    buffer: Vec<u8>,
-    start: usize,
-}
-
-impl std::io::Read for StdinLines {
-    fn read(&mut self, out: &mut [u8]) -> std::io::Result<usize> {
-        let available = BufRead::fill_buf(self)?;
-        let n = available.len().min(out.len());
-        out[..n].copy_from_slice(&available[..n]);
-        BufRead::consume(self, n);
-        Ok(n)
-    }
-}
-
-impl BufRead for StdinLines {
-    fn fill_buf(&mut self) -> std::io::Result<&[u8]> {
-        if self.start >= self.buffer.len() {
-            self.buffer.resize(4096, 0);
-            let n = std::io::Read::read(&mut std::io::stdin(), &mut self.buffer)?;
-            self.buffer.truncate(n);
-            self.start = 0;
-        }
-        Ok(&self.buffer[self.start..])
-    }
-
-    fn consume(&mut self, amount: usize) {
-        self.start = (self.start + amount).min(self.buffer.len());
-    }
-}
-
-const BOLD_CYAN: &str = "1;36";
+pub(crate) const BOLD_CYAN: &str = "1;36";
 const FAINT: &str = "2";
 const GREEN: &str = "32";
 const RED: &str = "31";
@@ -230,8 +196,11 @@ impl<'a> Console<'a> {
         Console::styled(text, BOLD_CYAN, self.color_out)
     }
 
-    /// Reads one line of standard input without its line ending; `None` at the end.
-    pub fn read_line(&mut self) -> Option<String> {
+    /// Shows `question` on standard output and reads the answer: one line of standard
+    /// input, trimmed; `None` at the end of input.
+    pub fn prompt(&mut self, question: &str) -> Option<String> {
+        self.print(question);
+        let _ = self.out.flush();
         let mut line = String::new();
         match self.input.read_line(&mut line) {
             Ok(0) | Err(_) => None,

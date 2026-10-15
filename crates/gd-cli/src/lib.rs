@@ -86,8 +86,8 @@ pub fn run_status(args: &[String], linked: &Registry) -> i32 {
     let (stdout, stderr) = (std::io::stdout(), std::io::stderr());
     let (mut out, mut err) = (stdout.lock(), stderr.lock());
     // Not a lock on standard input: `convert -` reads it through the standard library,
-    // whose lock is not reentrant.
-    let mut input = console::StdinLines::default();
+    // whose lock is not reentrant. `Stdin` locks only for the length of each read.
+    let mut input = std::io::BufReader::new(std::io::stdin());
     let streams = Streams {
         out: &mut out,
         err: &mut err,

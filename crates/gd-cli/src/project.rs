@@ -370,13 +370,12 @@ fn ask_quickstart(console: &mut Console<'_>, q: &mut QuickstartCommand) {
 }
 
 fn ask(console: &mut Console<'_>, question: &str, fallback: &str) -> String {
-    if fallback.is_empty() {
-        console.print(&format!("> {question}: "));
+    let shown = if fallback.is_empty() {
+        format!("> {question}: ")
     } else {
-        console.print(&format!("> {question} [{fallback}]: "));
-    }
-    let _ = console.out.flush();
-    match console.read_line() {
+        format!("> {question} [{fallback}]: ")
+    };
+    match console.prompt(&shown) {
         Some(line) if !line.is_empty() => line,
         _ => fallback.to_string(),
     }

@@ -102,15 +102,19 @@ pub(crate) fn start_question(state: &mut MemoryState, budget: usize) -> Start {
             "l" if fit > 0 => return Start::Lower(fit),
             "s" => return Start::Stop,
             answer => {
-                if let Some(n) = answer.parse::<usize>().ok().filter(|n| (1..=1 << 20).contains(n))
-                {
-                    return Start::Lower(n * MIB);
+                if let Some(bytes) = budget_answer(answer) {
+                    return Start::Lower(bytes);
                 }
             }
         }
         state.ask.show(&format!("Please answer {choices}, or give a budget in MiB.\n"));
     }
     Start::Stop
+}
+
+/// A budget answered in MiB, from 1 MiB to 1 TiB, as bytes.
+fn budget_answer(answer: &str) -> Option<usize> {
+    answer.parse::<usize>().ok().filter(|n| (1..=1 << 20).contains(n)).map(|n| n * MIB)
 }
 
 /// Asks what to do with a reservation the budget cannot hold: raise the budget (to the
@@ -137,9 +141,8 @@ pub(crate) fn ask_refusal(state: &mut MemoryState, r: &Refusal) -> RefusalChoice
             "" | "r" => return RefusalChoice::Raise(raise),
             "s" => return RefusalChoice::Stop,
             answer => {
-                let bytes = answer.parse::<usize>().ok().filter(|n| (1..=1 << 20).contains(n));
-                if let Some(bytes) = bytes.map(|n| n * MIB).filter(|&b| b >= needed && b > r.limit)
-                {
+                let bytes = budget_answer(answer).filter(|&b| b >= needed && b > r.limit);
+                if let Some(bytes) = bytes {
                     return RefusalChoice::Raise(bytes);
                 }
             }

@@ -8,9 +8,7 @@ use gd_conf::LoadOptions;
 use gd_env::{BuildOptions, BuilderKind, Jobs};
 use gd_host::Problem;
 
-use crate::args::{
-    Word, Words, positive, unexpected_value, unknown_option, usage, with_suggestion,
-};
+use crate::args::{Word, Words, no_value, positive, unknown_option, usage, with_suggestion};
 use crate::command::{BuildCommand, CleanCommand, Command, IntlAction, IntlCommand, MemoryMode};
 use crate::command::{MigrateCommand, MigrateOutput, Output, QuickstartCommand, ServeCommand};
 use crate::parse::output_option;
@@ -160,9 +158,7 @@ pub(crate) fn parse_project(
             return Ok(Command::Help(Some(help_topic(command))));
         }
         if !takes_value(command, name) {
-            if let Some(v) = inline {
-                return Err(unexpected_value(name, v));
-            }
+            no_value(name, inline)?;
             set_flag(&mut a, command, name);
             continue;
         }

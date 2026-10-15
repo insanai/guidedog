@@ -71,7 +71,6 @@ const LAYERS: &[(&str, u8)] = &[
     // 6: programs, examples, tools and tests.
     ("guidedog-cmd", 6),
     ("dsc-cmd", 6),
-    ("dscc-cmd", 6),
     ("graphdog-cmd", 6),
     ("guidedog-pages-cmd", 6),
     ("guidedoc-examples", 6),
@@ -130,6 +129,7 @@ const EXTERNAL: &[(&str, &[&str])] = &[
     ("tree-sitter-rust", &["gd-rustdoc"]),
     ("serde_json", &["gd-json"]),
     ("serde", &["gd-json"]),
+    ("ureq", &["gd-fetch"]),
 ];
 
 /// The workspace's packages and their compiled (normal and build) dependencies.
@@ -362,15 +362,33 @@ fn publication_problems(graph: &Graph) -> Vec<String> {
     problems
 }
 
+/// Plugins the command line must not need: programs link them and hand gd-cli their
+/// registry, so gd-cli knows only gd-plugins' interface.
+const PROGRAM_PLUGINS: &[&str] = &["gd-pages"];
+
+/// The command line needing a plugin crate, directly or not.
+fn plugin_problems(graph: &Graph) -> Vec<String> {
+    let mut problems = Vec::new();
+    for (id, name) in graph.member_names().into_iter().filter(|(_, n)| *n == "gd-cli") {
+        for dep in graph.closure(id) {
+            if PROGRAM_PLUGINS.contains(&graph.name(&dep)) {
+                problems.push(format!("{name} depends on the plugin {}", graph.name(&dep)));
+            }
+        }
+    }
+    problems
+}
+
 #[test]
 fn the_workspace_follows_the_dependency_rules() {
     let graph = Graph::load();
-    let checks: [(&str, Check); 5] = [
+    let checks: [(&str, Check); 6] = [
         ("dependencies point one way", direction_problems),
         ("the engine stays std-only", engine_problems),
         ("supporting libraries never use the engine", support_problems),
         ("external crates are the chosen few, in their own crates", external_problems),
         ("reusable crates are published and need only each other", publication_problems),
+        ("programs link plugins; the command line knows only their interface", plugin_problems),
     ];
     let mut report = String::new();
     for (rule, check) in checks {
@@ -419,6 +437,7 @@ fn the_rules_find_what_they_forbid() {
             ("gd-toml", true),
             ("gd-cli", true),
             ("gd-mystery", true),
+            ("gd-pages", true),
             ("regex", false),
             ("typst", false),
         ],
@@ -428,6 +447,7 @@ fn the_rules_find_what_they_forbid() {
             ("guidedoc", "regex"),
             ("guidedoc-html", "gd-cli"),
             ("gd-cli", "typst"),
+            ("gd-cli", "gd-pages"),
         ],
     );
     let direction = direction_problems(&graph);
@@ -446,4 +466,6 @@ fn the_rules_find_what_they_forbid() {
     assert!(
         publication.iter().any(|p| p == "guidedoc-html is reusable but needs the internal gd-cli")
     );
+    let plugins = plugin_problems(&graph);
+    assert_eq!(plugins, ["gd-cli depends on the plugin gd-pages"]);
 }

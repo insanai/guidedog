@@ -41,10 +41,19 @@ Rust crates compiled into the programs (versions as in Cargo.lock):
   tree-sitter-rust 0.24: MIT License. `guidedog --licenses` prints these notices.
 - serde_json 1 and serde 1 (crates/gd-json): MIT License or Apache License 2.0, at
   the user's option.
+- ureq 2 (crates/gd-fetch, HTTP and HTTPS): MIT License or Apache License 2.0, at
+  the user's option. Its TLS stack: rustls 0.23 (Apache License 2.0, ISC License or
+  MIT License, at the user's option); rustls-webpki (ISC License); rustls-pki-types
+  (MIT or Apache-2.0); ring 0.17 (ISC License, with code from BoringSSL under the
+  Apache License 2.0 and the ISC License; see its LICENSE files); untrusted (ISC
+  License); subtle (BSD-3-Clause); zeroize (Apache-2.0 or MIT); and webpki-roots,
+  which embeds Mozilla's root certificates (Community Data License Agreement,
+  Permissive, Version 2.0).
 - The other crates these depend on are each under a permissive license: mostly MIT
   or Apache-2.0 (often both, at the user's option), and also BSD-2-Clause,
   BSD-3-Clause, Zlib, Unicode-3.0, BSL-1.0, 0BSD, CC0-1.0, Unlicense, and MPL-2.0
-  (option-ext). `cargo metadata` lists every crate with its license.
+  (option-ext), CDLA-Permissive-2.0 (webpki-roots). `cargo metadata` lists every
+  crate with its license.
 
 Linked from the system, not distributed with Guidedog:
 
@@ -53,7 +62,6 @@ Linked from the system, not distributed with Guidedog:
   Common Public License); see the COPYING file of the installed Graphviz. The
   additional permission above covers this combination. The release archives do not
   contain Graphviz; install it from the system's package manager or Homebrew.
-- curl (run as a program by crates/gd-fetch; not linked): curl license.
 
 Files kept in this repository:
 

@@ -5,8 +5,9 @@ use gd_conf::Config;
 use gd_env::{Dependency, Generated, SourceFile, SourceKind};
 use gd_report::Report;
 
-/// The API pages the configuration asks for (`odin_autoapi_*`, `rust_autoapi_*`), as
-/// generated documents, sorted by docname. A page whose name a document of `taken`
+/// The API pages the configuration asks for (`odin_autoapi_*`, `rust_autoapi_*`,
+/// `apidoc_modules`, and the stub pages of autosummary directives), as generated
+/// documents, sorted by docname. A page whose name a document of `taken`
 /// already has is left out with a warning (`odin.autoapi.clash`, `rust.autoapi.clash`).
 /// What generating the Rust pages found (`rust.autodoc.*`) is added to `reports`, every
 /// build, since the pages are generated every build. Pass the result with `taken` to
@@ -22,6 +23,15 @@ pub fn api_sources(
     keep_unclaimed(odin, taken, "odin", &mut out, reports);
     let rust = crate::rustdoc::rust_api_sources(config, reports);
     keep_unclaimed(rust, taken, "rust", &mut out, reports);
+    // apidoc and autosummary leave out the pages the source folder has, with a note.
+    let python = crate::apidoc::apidoc_sources(config, taken, reports)
+        .into_iter()
+        .chain(crate::autosummary::autosummary_sources(config, taken, reports));
+    for page in python {
+        if !out.iter().any(|o| o.docname == page.docname) {
+            out.push(page);
+        }
+    }
     out.sort_by(|a, b| a.docname.cmp(&b.docname));
     out
 }

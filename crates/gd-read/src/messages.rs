@@ -26,6 +26,13 @@ const CODES: &[&str] = &[
     "autodoc.signature",
     "autodoc.too_deep",
     "autodoc.value",
+    "autosummary.import",
+    "autosummary.import_cycle",
+    "autosummary.option",
+    "autosummary.toctree",
+    "napoleon.field",
+    "napoleon.section",
+    "napoleon.type",
     "odin.autodoc.directive",
     "odin.autodoc.kind",
     "odin.autodoc.memory",
@@ -42,6 +49,7 @@ const TITLES: &[&str] = &[
     "__ALL__ IS COMPUTED",
     "AUTODOC OPTION NOT ACCEPTED",
     "AUTOMODULE TAKES NO SIGNATURE",
+    "CAPTION WITHOUT TOCTREE",
     "COMPILED MODULE CANNOT BE READ",
     "CONSTRUCTOR OUTSIDE THE SOURCE PATHS",
     "DECORATOR OUTSIDE THE SOURCE PATHS",
@@ -49,8 +57,10 @@ const TITLES: &[&str] = &[
     "DEFAULT VALUE NOT PRESERVED",
     "DOCSTRING KNOWN ONLY AT RUN TIME",
     "DOCSTRING MAY BE INHERITED",
+    "FIELD NOT READ",
     "FUNCTION MADE AT RUN TIME",
     "INVALID AUTODOC SIGNATURE",
+    "MALFORMED TYPE",
     "MEMBER NOT FOUND",
     "MEMBERS OUTSIDE THE SOURCE PATHS",
     "NO MODULE FOR AUTODOC",
@@ -65,11 +75,15 @@ const TITLES: &[&str] = &[
     "ODIN SOURCE TOO LARGE",
     "PYTHON MODULE NOT FOUND",
     "PYTHON OBJECT NOT FOUND",
+    "SECTION READ AS TEXT",
     "SOURCE NESTS TOO DEEPLY",
+    "SUMMARY ENTRY NOT FOUND",
+    "SUMMARY ENTRY REPEATS ITS MODULE",
     "TOO MANY MEMBERS",
     "TYPE OUTSIDE THE SOURCE PATHS",
     "UNKNOWN AUTODOC DIRECTIVE",
     "UNKNOWN MEMBER ORDER",
+    "UNKNOWN SIGNATURE STYLE",
     "UNKNOWN ODIN AUTODOC DIRECTIVE",
     "UNKNOWN ODIN AUTODOC OPTION",
     "VALUE KNOWN ONLY AT RUN TIME",
@@ -144,8 +158,16 @@ mod tests {
     fn quoted_in(dir: &str, prefix: &str) -> (Vec<String>, Vec<String>) {
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("..").join(dir);
         let (mut codes, mut titles) = (Vec::new(), Vec::new());
-        for entry in std::fs::read_dir(root.join("src")).unwrap().flatten() {
-            let text = std::fs::read_to_string(entry.path()).unwrap_or_default();
+        let mut dirs = vec![root.join("src")];
+        let mut files = Vec::new();
+        while let Some(dir) = dirs.pop() {
+            for entry in std::fs::read_dir(dir).unwrap().flatten() {
+                let path = entry.path();
+                if path.is_dir() { dirs.push(path) } else { files.push(path) }
+            }
+        }
+        for path in files {
+            let text = std::fs::read_to_string(path).unwrap_or_default();
             for piece in text.split('"').skip(1).step_by(2) {
                 if piece.starts_with(prefix)
                     && piece[prefix.len()..].chars().all(|c| c.is_ascii_lowercase() || c == '_')
@@ -164,7 +186,13 @@ mod tests {
 
     #[test]
     fn every_code_and_title_of_the_generators_is_known() {
-        for (dir, prefix) in [("gd-autodoc", "autodoc."), ("gd-odindoc", "odin.autodoc.")] {
+        let generators = [
+            ("gd-autodoc", "autodoc."),
+            ("gd-autodoc", "napoleon."),
+            ("gd-autodoc", "autosummary."),
+            ("gd-odindoc", "odin.autodoc."),
+        ];
+        for (dir, prefix) in generators {
             let (codes, titles) = quoted_in(dir, prefix);
             assert!(!codes.is_empty(), "{dir}: no codes found");
             for code in codes {

@@ -26,7 +26,9 @@
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod api;
+mod apidoc;
 mod autodoc;
+mod autosummary;
 mod collect;
 mod config;
 mod context;

@@ -33,6 +33,8 @@ const MISSING: &str = "<autodoc: an object was not found>";
 #[derive(Debug)]
 pub(crate) struct PythonHost {
     config: gd_autodoc::Config,
+    /// `autosummary_filename_map`.
+    filename_map: std::collections::BTreeMap<String, String>,
     /// `autodoc_source_paths`, absolute.
     roots: Vec<PathBuf>,
     files: SourceFiles,
@@ -43,17 +45,66 @@ pub(crate) struct PythonHost {
 impl PythonHost {
     /// The host for one document, or `None` when sphinx.ext.autodoc is off.
     pub(crate) fn new(c: &Config) -> Option<PythonHost> {
-        if !c.has_extension("sphinx.ext.autodoc") {
+        if !uses_autodoc(c) {
             return None;
         }
-        let roots = gd_conf::autodoc_roots(c);
+        let roots = python_roots(c);
         let files = SourceFiles::new(&roots);
-        Some(PythonHost { config: autodoc_config(c), roots, files, session: Mutex::new(None) })
+        Some(PythonHost {
+            config: autodoc_config(c),
+            filename_map: c.ext.autosummary.filename_map.clone(),
+            roots,
+            files,
+            session: Mutex::new(None),
+        })
     }
 
     /// Adds the Python files read to `deps`.
     pub(crate) fn dependencies(&self, deps: &mut Vec<Dependency>) {
         self.files.dependencies(MISSING, deps);
+    }
+}
+
+/// Whether autodoc reads Python: sphinx.ext.autodoc, or an extension that sets it up
+/// as Sphinx's do (napoleon, autosummary, apidoc).
+pub(crate) fn uses_autodoc(c: &Config) -> bool {
+    ["sphinx.ext.autodoc", "sphinx.ext.napoleon", "sphinx.ext.autosummary", "sphinx.ext.apidoc"]
+        .iter()
+        .any(|e| c.has_extension(e))
+}
+
+/// The folders autodoc reads Python from: `autodoc_source_paths`, then the folders
+/// holding the packages of `apidoc_modules`.
+pub(crate) fn python_roots(c: &Config) -> Vec<PathBuf> {
+    let mut roots = gd_conf::autodoc_roots(c);
+    for root in crate::apidoc::package_roots(c) {
+        if !roots.contains(&root) {
+            roots.push(root);
+        }
+    }
+    roots
+}
+
+impl PythonHost {
+    /// Runs `f` with the document's autodoc session, made at the first directive; the
+    /// grammar's failure as a message.
+    fn with_session<T>(
+        &self,
+        f: impl FnOnce(&mut Session) -> T,
+    ) -> Result<T, guidedoc_sphinx::AutodocMessage> {
+        let mut slot = self.session.lock().unwrap_or_else(PoisonError::into_inner);
+        if slot.is_none() {
+            let files = self.files.clone();
+            let reader = Box::new(move |path: &std::path::Path| files.read(path));
+            match gd_pyscan::Project::with_reader(&self.roots, reader) {
+                Ok(project) => *slot = Some(Session::new(project)),
+                Err(e) => return Err(static_message(PYTHON_GRAMMAR, Some(&e.to_string()))),
+            }
+        }
+        match slot.as_mut() {
+            Some(session) => Ok(f(session)),
+            None => Err(static_message(PYTHON_GRAMMAR, None)),
+        }
     }
 }
 
@@ -63,21 +114,34 @@ impl AutodocProvider for PythonHost {
             name: format!("<autodoc {}>", request.argument),
             ..Default::default()
         };
-        let mut slot = self.session.lock().unwrap_or_else(PoisonError::into_inner);
-        if slot.is_none() {
-            let files = self.files.clone();
-            let reader = Box::new(move |path: &std::path::Path| files.read(path));
-            match gd_pyscan::Project::with_reader(&self.roots, reader) {
-                Ok(project) => *slot = Some(Session::new(project)),
-                Err(e) => {
-                    out.messages.push(static_message(PYTHON_GRAMMAR, Some(&e.to_string())));
-                    return out;
+        if request.directive == "autosummary" {
+            let summary = self.with_session(|session| {
+                crate::autosummary::summary_text(
+                    session,
+                    &self.filename_map,
+                    &self.config,
+                    request,
+                )
+            });
+            return match summary {
+                Ok(summary) => {
+                    if summary.messages.iter().any(|m| m.message.code == "autosummary.import") {
+                        self.files.note_missing();
+                    }
+                    summary
                 }
-            }
+                Err(m) => AutodocResult { messages: vec![m], ..out },
+            };
         }
-        let Some(session) = slot.as_mut() else { return out };
-        let generated = gd_autodoc::document(session, &self.config, &python_request(request));
-        drop(slot);
+        let python = python_request(request);
+        let generated = match self.with_session(|s| gd_autodoc::document(s, &self.config, &python))
+        {
+            Ok(generated) => generated,
+            Err(m) => {
+                out.messages.push(m);
+                return out;
+            }
+        };
         for m in &generated.messages {
             if m.code == "autodoc.import" {
                 self.files.note_missing();

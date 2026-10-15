@@ -90,8 +90,8 @@ checks each against its pinned SHA-256, and builds this checkout's `guidedog`,
 `guidedog` then registers, inspects and dry-runs the new `guidedog-pages` and publishes
 with the new folder publisher (dry run, first, unchanged and changed publication); it must
 refuse the build-plugin example cleanly. The new `guidedog` does the same with the 0.6.0
-`guidedog-pages` and the 0.6.0 folder publisher example (built with `odin` when it is
-installed). Everything after the download runs offline. 0.6.0 has no build plugins and no
+`guidedog-pages` and the 0.6.0 folder publisher example (built from its source archive when
+that toolchain is installed). Everything after the download runs offline. 0.6.0 has no build plugins and no
 release ships a build-plugin program, so the new-host direction covers publishers only.
 It prints a record of versions, pins and results, and exits 1 on any incompatibility.
 

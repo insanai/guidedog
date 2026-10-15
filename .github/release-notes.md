@@ -1,9 +1,9 @@
-Guidedog 0.7.0 is the Rust port. Guidedog, its Guidedoc engine and every supporting
-library are rewritten in Rust as one Cargo workspace. Commands, options, `conf.toml`
-keys, directives, roles and output are unchanged, so existing projects build as before.
+Guidedog 0.7.0 is a self-contained documentation builder in one Cargo workspace.
+Commands, options, `conf.toml` keys, directives, roles and output stay compatible, so
+existing projects build as before.
 
 - **One toolchain.** `cargo build --release -p guidedog-cmd` builds Guidedog from source;
-  the Odin toolchain and the native build scripts are gone.
+  no other compiler or build script is needed.
 - **Typst and Graphviz embedded.** The Typst 0.15.1 compiler is built in, and Graphviz
   16.1.0 is linked statically: the programs need nothing installed besides the C library.
 - **Rust API documentation.** The `rust` domain and the `rust_autoapi_*` settings
@@ -81,4 +81,4 @@ Guidedog, `guidedog-pages`, and `graphdog` are released under the GNU Lesser Gen
 
 Created by Vikrant Rathore, with assistance from Ronak Rathore and Kanak Rathore.
 
-Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max Brunsfeld, Graphviz, the Rust project and its community, and Ginger Bill and the Odin community, whose language carried Guidedog's first implementation.
+Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max Brunsfeld, Graphviz, the Rust project and its community, and Ginger Bill and the Odin community.

@@ -7,29 +7,29 @@ beside it.
 
 ## 0.7.0 — 2026-10-15
 
-The Rust port. Guidedog, Guidedoc and every supporting library are rewritten in Rust as a
-Cargo workspace. Commands, options, `conf.toml` keys, directives, roles and output are
-unchanged, except the discussion commands below; existing projects build as before.
+A self-contained Guidedog in one Cargo workspace. Commands, options, `conf.toml` keys,
+directives, roles and output stay compatible, except the discussion commands below;
+existing projects build as before.
 
 - **One toolchain.** `cargo build --release -p guidedog-cmd` builds Guidedog; `cargo test
-  --workspace` runs every suite and `cargo run -p check` checks the source limits. The
-  Odin toolchain, the `native/` build scripts and the separate Typst bridge are gone.
+  --workspace` runs every suite and `cargo run -p check` checks the source limits. No
+  other compiler, build script or separate Typst bridge is needed.
 - **Embedded Typst by default.** The Typst 0.15.1 compiler is a regular dependency of
   `gd-typst` (the `embedded` feature); an installed `typst` program remains the fallback.
-  tree-sitter and its Python grammar are crates instead of a vendored C build.
+  tree-sitter and its Python grammar are ordinary dependencies.
 - **Graphviz from the system.** `gd-graphdog` links the system's `libgvc` and `libcgraph`.
   Install Graphviz (`libgvc6`, `graphviz`, or Homebrew's `graphviz`) to run the release
   programs, and its development files to build them. HTTP and HTTPS are built in
   (`ureq` with `rustls` and Mozilla's root certificates): neither libcurl nor the `curl`
   program is needed.
-- **Crates instead of packages.** The engine (`guidedoc`), the readers and renderers
+- **Reusable crates.** The engine (`guidedoc`), the readers and renderers
   (`guidedoc-rst`, `guidedoc-commonmark`, `guidedoc-sphinx`, `guidedoc-html`,
   `guidedoc-typst`, `guidedoc-text`), and the libraries (`gd-*`) are separate crates with
-  one workspace version. Each crate's README lists its API and its redesigns.
-- **Ownership instead of slabs.** A `Workspace` owns its tables and reuses their capacity,
-  so a conversion in steady state allocates nothing; caller-sized slabs, banks and
-  arenas are gone. Documents borrow their workspace, so stale handles do not compile.
-  `Limits` still bound every conversion and report `Capacity` or `Limit` failures.
+  one workspace version. Each crate's README lists its API.
+- **An embeddable engine.** A `Workspace` owns its tables and reuses their capacity,
+  so a conversion in steady state allocates nothing. Documents borrow their workspace,
+  so stale handles do not compile. `Limits` bound every conversion and report
+  `Capacity` or `Limit` failures.
 - **Rust API documentation.** The `rust` domain and the `rust_autoapi_*` settings document
   Rust crates from source with tree-sitter, without running the compiler. Guidedog's own
   API reference is generated this way.
@@ -48,7 +48,6 @@ unchanged, except the discussion commands below; existing projects build as befo
 - **`graphdog`** ships in the `guidedog` archive: a `dot`-compatible renderer for DOT to
   SVG, PNG or laid-out DOT, with Elm-style errors.
 - **Examples** are Cargo examples: `cargo run -p guidedoc-examples --example hello`.
-  `reuse_workspace` replaces `no_heap`.
 - **Releases** cover Linux (x86-64, ARM64) and macOS (Apple silicon, Intel). Windows
   has no release archive in this version.
 
@@ -70,7 +69,7 @@ unchanged, except the discussion commands below; existing projects build as befo
 ## 0.6.2 — 2026-10-14
 
 - Add typed native build plugins for source transformations, complete HTML pages
-  and namespaced static assets. A reusable Odin package works in an embedded
+  and namespaced static assets. A reusable plugin library works in an embedded
   application or an explicitly registered executable. Build hooks use their own
   versioned contract, separate from the publishing service. This beta does not
   promise compatibility with earlier plugin SDKs.
@@ -130,8 +129,8 @@ Publisher reliability fixes and a complete plugin tutorial.
 
 The native SDK is **1.1** and accepts SDK 1.0 publishers. Process protocol **1.0** and
 snapshot schema **1** retain their required fields and meanings; actual old/new hosts
-and publishers are tested in both directions. This is source compatibility, not an
-Odin dynamic-library ABI. Plugins remain trusted native programs selected explicitly.
+and publishers are tested in both directions. This is source compatibility, not a
+dynamic-library ABI. Plugins remain trusted native programs selected explicitly.
 The public catalog describes plugins; it does not install them automatically.
 
 ## 0.6.0 — 2026-10-13
@@ -152,14 +151,13 @@ Publish to GitHub Pages from your own machine, and a publisher interface for plu
   versioned JSON Lines protocol. `guidedog plugin register` pins a program's SHA-256;
   a changed program does not run until it is registered again. A normal build never
   starts a publisher.
-- **`lib/plugins`.** The publisher interface of GDS 0009: publishers as typed procedure
-  tables, sessions, frozen and checked snapshots, plans, verified outcomes, the process
-  protocol, and the machine registry. `examples/publisher` is a whole publisher.
-- **`lib/git`.** Git objects, trees, commits, packs, and the push protocol's messages,
+- **`gd-plugins`.** The publisher interface of GDS 0009: publishers as typed
+  interfaces, sessions, frozen and checked snapshots, plans, verified outcomes, the process
+  protocol, and the machine registry. Its publisher example is a whole publisher.
+- **`gd-git`.** Git objects, trees, commits, packs, and the push protocol's messages,
   without a git program.
-- **`lib/fetch`** sends HTTP requests (`send`): any method, headers, streamed bodies,
-  bounded answers, cancellation, and no redirects. On Windows it uses WinHTTP, so
-  `intersphinx` inventories load there too.
+- **`gd-fetch`** sends HTTP requests (`send`): any method, headers, streamed bodies,
+  bounded answers, cancellation, and no redirects.
 - The manual explains both routes to GitHub Pages, with launchd, systemd, and Task
   Scheduler examples, and the plugin chapter shows a publisher that compiles.
 
@@ -207,7 +205,7 @@ Discussion catalogs you can configure, of any size.
   fast. Duplicate numbers are found in linear time.
 - **A process draft that matches the catalog.** The draft `init` writes describes the
   configured lifecycle, with a table of the states and a diagram of the moves.
-- **`lib/toml`.** Guidedog's TOML 1.0 reader is now its own package, used by projects
+- **`gd-toml`.** Guidedog's TOML 1.0 reader is now its own library, used by projects
   and catalogs alike.
 - **Library changes.** `Init.process` is now `Init.draft` (the process draft's text), and
   `Init.process` holds the configuration. `edit_plan` reads the record it changes from
@@ -226,15 +224,15 @@ Discussion catalogs for any project, with the programs `dsc` and `dscc`
   `dsc` comes in the Guidedog archive and builds with the installed `guidedog`; `dscc`
   is `dsc` with Guidedog built in, released as its own archive for every platform.
 - **One implementation.** `guidedog gds` now runs the same commands, from the same
-  Odin package, `lib/discussion`. GDS records, numbers, locks, journals, and problem
-  codes are unchanged. The `gds` Odin package is folded into `discussion`, whose
-  default prefix is `gds`; its `replace_field` returns a problem beside the text, and
+  discussion library. GDS records, numbers, locks, journals, and problem codes are
+  unchanged. The GDS library is folded into the discussion library, whose default
+  prefix is `gds`; its `replace_field` returns a problem beside the text, and
   takes only literal values, never a Typst expression.
 - **Readable metadata for every catalog.** The leading `:PREFIX-number:`,
   `-title:`, `-authors:`, `-last-updated:`, `-labels:`, `-category:`, `-status:`, and
   `-summary:` fields show as Number, Title, Authors, Updated, Labels, and so on, in HTML
   and PDF, for any prefix. A page whose first fields are ordinary keeps them as written.
-- **Catalog changes that are whole or nothing.** Every procedure of `lib/discussion`
+- **Catalog changes that are whole or nothing.** Every operation of the discussion library
   reports running out of memory as `discussion.memory` and returns nothing it made:
   a metadata edit never yields a shortened record, and an index plan never a partial
   one. `apply` refuses an empty or cut-short record, or an index without its generated
@@ -246,7 +244,7 @@ Discussion catalogs for any project, with the programs `dsc` and `dscc`
 ## 0.2.0 — 2026-10-11
 
 The first public release. Guidedog builds HTML documentation sites and PDF books from
-reStructuredText and Markdown, as one native program written in Odin. It needs no Python
+reStructuredText and Markdown, as one native program. It needs no Python
 environment and no LaTeX installation. This is a beta for trusted documentation projects
 on macOS and Linux.
 
@@ -258,7 +256,7 @@ on macOS and Linux.
 - **Guidedoc, the conversion engine.** It reads reStructuredText (with Sphinx's directives
   and roles), CommonMark, and MyST Markdown into one document model, and renders HTML,
   Typst, and text. It works in memory the caller provides and returns structured
-  diagnostics instead of crashing, so other programs can embed it (`lib/README.md`).
+  diagnostics instead of crashing, so other programs can embed it.
 - **PDF books through Typst.** Chapters, cross-references, figures, indexes, equations,
   diagrams, and language-aware typesetting, from editable Typst templates. Typst can be an
   installed program or embedded in the executable.

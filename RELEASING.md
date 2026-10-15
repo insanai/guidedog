@@ -35,7 +35,7 @@ uploaded by hand, and a published release is never changed.
     installs `guidedog`, then installs and
     tests it from a local tap.
   - `publish` (tags only): writes `SHA256SUMS`, attests build provenance, creates a draft
-    release with `.github/release-notes.md`, uploads every file, and publishes it as a prerelease when the version has a suffix, or as the latest stable release otherwise. It stops if the release is already published.
+    release with `.github/release-notes.md`, uploads every file, and publishes it as the latest release. It stops if the release is already published.
   - `refresh`: runs the Pages workflow, so the website names the new release.
 - **Recover release publication** (`.github/workflows/release-recover.yml`) publishes the
   artifacts of an earlier tagged run whose only failure was publishing.
@@ -145,6 +145,6 @@ brew tap insanai/guidedog
 brew install insanai/guidedog/guidedog
 ```
 
-The tap's Update workflow checks published releases every hour, including prereleases, and selects the greatest version. We can also run it manually after publication with an explicit tag. It verifies the formula and checksum manifest against GitHub's asset digests, checks all four archive URLs and hashes, and installs and tests the candidate on Apple silicon and Intel macOS before committing it. The release workflow remains the source of the packages and formula; the tap does not rebuild the engine or change published assets. No cross-repository write token is needed.
+The tap's Update workflow checks published releases every hour, including beta versions, and selects the greatest version. We can also run it manually after publication with an explicit tag. It verifies the formula and checksum manifest against GitHub's asset digests, checks all four archive URLs and hashes, and installs and tests the candidate on Apple silicon and Intel macOS before committing it. The release workflow remains the source of the packages and formula; the tap does not rebuild the engine or change published assets. No cross-repository write token is needed.
 
-Beta releases use GitHub's prerelease flag. Scheduled tap updates include `v1.0.0-beta.1` and later prereleases, then follow the stable release when its version is greater. The updater rejects downgrades.
+We publish `v1.0.0-beta.1` as a normal GitHub release. The version already identifies it as a beta. Scheduled tap updates include beta versions and follow the final release when its version is greater. The updater rejects downgrades.

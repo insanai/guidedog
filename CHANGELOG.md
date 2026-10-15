@@ -13,7 +13,7 @@ First 1.0 beta. Build documentation websites and PDF books from one set of sourc
 - One `guidedog` executable in every platform archive, with linked Pages and discussion plugins and the `gd-graphdog` Graphviz library, with embedded Typst, notices, build metadata, SHA-256 checksums and build provenance.
 - Guidedog builds its own website, multilingual manual, API reference and discussion catalog for GitHub Pages.
 - The official Homebrew tap installs the release and follows new versions automatically after checksum and installation checks.
-- Prerelease tags publish GitHub prereleases and do not replace the latest stable release.
+- The version tag names the release; `v1.0.0-beta.1` is published as a normal GitHub release.
 
 ## 0.7.0 — 2026-10-15
 

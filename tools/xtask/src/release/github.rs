@@ -166,11 +166,7 @@ fn publish_commands(
     commands.push(upload);
     let mut edit = Command::new("gh");
     edit.args(["release", "edit", tag, "--repo", repo, "--draft=false"]);
-    if version.contains('-') {
-        edit.args(["--prerelease", "--latest=false"]);
-    } else {
-        edit.args(["--prerelease=false", "--latest"]);
-    }
+    edit.args(["--prerelease=false", "--latest"]);
     commands.push(edit);
     Ok(commands)
 }
@@ -271,12 +267,9 @@ mod tests {
     use crate::fsutil::TempDir;
 
     #[test]
-    fn beta_publication_keeps_latest_stable() -> Result<()> {
+    fn publication_marks_each_version_as_the_latest_release() -> Result<()> {
         let dir = TempDir::new("publish-test")?;
-        for (version, prerelease, latest) in [
-            ("1.0.0-beta.1", "--prerelease", "--latest=false"),
-            ("1.0.0", "--prerelease=false", "--latest"),
-        ] {
+        for version in ["1.0.0-beta.1", "1.0.0"] {
             let tag = format!("v{version}");
             let commands = publish_commands(
                 dir.path(),
@@ -288,8 +281,8 @@ mod tests {
             )?;
             let Some(edit) = commands.last() else { panic!("no publication command") };
             let args: Vec<_> = edit.get_args().map(|arg| arg.to_string_lossy()).collect();
-            assert!(args.iter().any(|arg| arg == prerelease));
-            assert!(args.iter().any(|arg| arg == latest));
+            assert!(args.iter().any(|arg| arg == "--prerelease=false"));
+            assert!(args.iter().any(|arg| arg == "--latest"));
         }
         Ok(())
     }

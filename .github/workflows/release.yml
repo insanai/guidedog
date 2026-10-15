@@ -306,7 +306,7 @@ jobs:
             dist/*.tar.gz
             dist/*.zip
             dist/guidedog.rb
-      - name: Draft, upload, then publish (prerelease for beta tags)
+      - name: Draft, upload, then publish the release
         env:
           GH_TOKEN: ${{ github.token }}
         run: cargo xtask release publish "$GITHUB_REF_NAME" dist

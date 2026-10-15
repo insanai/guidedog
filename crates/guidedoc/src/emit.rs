@@ -105,7 +105,7 @@ impl<'a> Emitter<'a> {
         self.emit_bytes(&[c]);
     }
 
-    /// Writes `c` UTF-8 encoded (Odin `emit_rune`).
+    /// Writes `c` UTF-8 encoded.
     pub fn emit_char(&mut self, c: char) {
         let mut bytes = [0u8; 4];
         self.emit(c.encode_utf8(&mut bytes));

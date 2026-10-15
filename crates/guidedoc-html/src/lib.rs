@@ -49,7 +49,7 @@ pub const RENDERER: Renderer = Renderer {
     render,
 };
 
-/// Returns `RENDERER` (Odin `html.renderer()`).
+/// Returns `RENDERER`, the HTML renderer descriptor.
 pub fn renderer() -> Renderer {
     RENDERER
 }

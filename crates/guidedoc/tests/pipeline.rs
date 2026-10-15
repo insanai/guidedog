@@ -1,6 +1,5 @@
-//! The pipeline end to end with the toy adapters: the Rust form of the Odin
-//! `core_test.odin`. Tests of the slab and bank machinery the port dropped are replaced
-//! by tests of what took their place (limits, `Option` documents, lifetimes).
+//! The pipeline end to end with the toy adapters: reading, transforming, rendering,
+//! limits, `Option` documents, and lifetimes.
 
 mod common;
 

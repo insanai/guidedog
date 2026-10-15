@@ -5,7 +5,7 @@
 //! and diagnostics can quote source text. Loading validates everything, as a reader's
 //! output is validated.
 //!
-//! Format version 2 (the Rust port's; version 1 was the Odin engine's): magic `GDOB`,
+//! Format version 2: magic `GDOB`,
 //! the format and schema versions, seven counts (nodes, attributes, lists, links, cells,
 //! text bytes, sources), the sources (name, text, parent, include span, usage), the
 //! tables in that order, and the text pool.

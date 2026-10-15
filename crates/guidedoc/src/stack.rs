@@ -70,12 +70,12 @@ impl StackGuard {
     }
 }
 
-/// Tells whether the guard's budget is spent (Odin `stack_exhausted`).
+/// Tells whether the guard's budget is spent.
 pub fn stack_exhausted(g: &StackGuard) -> bool {
     g.is_exhausted()
 }
 
-/// Returns the diagnostic a guard's recursion reports (Odin `stack_diagnostic`).
+/// Returns the diagnostic a guard's recursion reports.
 pub fn stack_diagnostic(g: &StackGuard, span: SourceSpan) -> Diagnostic {
     g.diagnostic(span)
 }

@@ -38,8 +38,8 @@ impl TextSink for Vec<u8> {
 }
 
 /// Decodes the character starting at byte `i` of `s`, with its width. A position that
-/// is not a character boundary decodes as U+FFFD with width 1, as Odin's decoder does
-/// for an invalid byte; past the end gives U+FFFD with width 0.
+/// is not a character boundary decodes as U+FFFD with width 1, so a scan always moves
+/// forward; past the end gives U+FFFD with width 0.
 pub fn decode_rune(s: &str, i: usize) -> (char, usize) {
     match s.get(i..).and_then(|rest| rest.chars().next()) {
         Some(c) => (c, c.len_utf8()),
@@ -116,9 +116,9 @@ pub fn is_decimal_digit(r: char) -> bool {
     in_ranges(DECIMAL_DIGITS, r)
 }
 
-/// Returns the simple lowercase mapping of `r` (one character), as Odin's
-/// `unicode.to_lower`; characters whose full mapping has several characters keep the
-/// first one, which is the simple mapping for every such character (U+0130 gives 'i').
+/// Returns the simple lowercase mapping of `r` (one character); characters whose full
+/// mapping has several characters keep the first one, which is the simple mapping for
+/// every such character (U+0130 gives 'i').
 pub fn to_lower(r: char) -> char {
     r.to_lowercase().next().unwrap_or(r)
 }

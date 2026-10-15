@@ -59,7 +59,7 @@ pub const RENDERER: Renderer = Renderer {
     render,
 };
 
-/// Returns [`RENDERER`] (Odin `renderer()`).
+/// Returns [`RENDERER`], the Typst renderer descriptor.
 pub fn renderer() -> Renderer {
     RENDERER
 }

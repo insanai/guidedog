@@ -84,8 +84,7 @@ const FULL_SOURCE: &str = concat!(
     "one\nsym\nmanual\ncit\ntext\n",
 );
 
-/// Odin checked that this document made no allocator calls; Rust's resolution uses
-/// growing maps, so the test keeps the document and checks the outcome.
+/// Every inline construct in one document resolves to the expected outcome.
 #[test]
 fn every_construct_in_one_document() {
     fixture(FULL_SOURCE, true, |f| {

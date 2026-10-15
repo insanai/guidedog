@@ -1,8 +1,8 @@
-//! Conformance with the Odin implementation this crate ports. `data/oracle.tsv` holds,
-//! for a corpus of declarations, cross-reference targets, namespace arguments, and role
-//! expressions (many from Sphinx's `test_domain_cpp`), what the Odin C++ machinery
-//! gave: ids of every version, names, parameter names, `str()` and display text, and
-//! symbol paths. Each line is `kind TAB text TAB => TAB fields...`.
+//! Conformance with a recorded oracle. `data/oracle.tsv` holds, for a corpus of
+//! declarations, cross-reference targets, namespace arguments, and role expressions (many
+//! from Sphinx's `test_domain_cpp`), the expected results: ids of every version, names,
+//! parameter names, `str()` and display text, and symbol paths. Each line is
+//! `kind TAB text TAB => TAB fields...`. Any change in the parser's output shows up here.
 
 use guidedoc_cpp::{
     Ast, Directive, Element, Limits, Node, NodeId, namespace_path, parse_declaration,
@@ -99,8 +99,8 @@ fn ns_line(base: &str, arg: &str) -> String {
     }
 }
 
-/// The Odin node kind an expression role's root has.
-fn odin_kind(ast: &Ast<'_>, id: NodeId) -> &'static str {
+/// The node kind name the oracle records for an expression role's root.
+fn root_kind(ast: &Ast<'_>, id: NodeId) -> &'static str {
     match ast.node(id) {
         Node::LitPointer => "Lit_Pointer",
         Node::LitBool(_) => "Lit_Bool",
@@ -145,7 +145,7 @@ fn expr_line(text: &str) -> String {
         "ok\t{}\t{}\t{}",
         ast.text(root, false),
         ast.text(root, true),
-        odin_kind(ast, root)
+        root_kind(ast, root)
     );
     for v in 2..=4 {
         line.push('\t');
@@ -168,7 +168,7 @@ fn evaluate(kind: &str, text: &str) -> String {
 }
 
 #[test]
-fn every_line_matches_the_odin_implementation() {
+fn every_line_matches_the_oracle() {
     let mut failures = Vec::new();
     let mut count = 0;
     for line in ORACLE.lines() {

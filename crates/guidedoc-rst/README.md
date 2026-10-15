@@ -69,40 +69,37 @@ let doc = read_document(&mut ws, &reader(), &request)?;
 | a host markup (MyST) | `impl Host` (`body`, `inline`, `items`); `embed_begin(ctx, &settings, ext) -> ReaderState`; per call `state.parser(ctx, ext, Some(&host))`; `p.run_hosted(&HostDirective)`, `p.directive_shape(name)`, `p.apply_host_role`, `p.host_lines`/`p.host_views`, `p.take_table_extra` + `p.table_decorate`, `p.take_pending_classes`; end with `p.embed_end()`; `p.lend(\|ctx, st\| ..)` hands a host the context and state for nested content |
 | messages | `guidedoc_rst::messages::*` (every one has a hint) |
 
-## Redesigns from the Odin reader
+## Design notes
 
-- **No scratch arena.** Lines are `Copy` views (`Line<'s>`) of the source; lines with
+- **Borrowed lines.** Lines are `Copy` views (`Line<'s>`) of the source; lines with
   tabs, form feeds, or vertical tabs are expanded once into a `String` the lines borrow
-  (`split_lines`, `expand_views`). Derived line arrays are `Vec`s; there is no
-  `take`/`mark`/`release`. The Odin guarantee of zero allocator calls per read is not
-  kept: a read allocates small vectors per block (the workspace's tables are still
-  reused).
+  (`split_lines`, `expand_views`). Derived line arrays are `Vec`s: a read allocates small
+  vectors per block, while the workspace's tables are reused.
 - **Errors with `?`.** Every parsing function returns `Result<_, Fail>`; problems are
-  reports, only builder failures (limits, capacity) are `Err`. The `alive(p)` checks and
-  status returns are gone.
+  reports, only builder failures (limits, capacity) are `Err`.
 - **Parser = view over state.** `ReaderState` owns the per-document state (sections,
   adornment styles, pending classes, inline state); `Parser<'p, 'a>` borrows it with the
   `ReadContext`, the dialect's `&dyn Extension`, and the `&dyn Host`. A host keeps the
   state between its own calls and builds a parser view per call, so it never gives its
-  context away (Odin stored the parser inside the host).
-- **Traits instead of procedure + `rawptr` tables.** `Extension` (directive lookup,
+  context away.
+- **Traits for dialects and hosts.** `Extension` (directive lookup,
   `run_directive`, `role`, hooks, `substitution`) and `Host` take `&self`; dialect state
   that changes lives in cells, because handlers run re-entrantly. A `DirectiveHandler`
-  carries the rules and a `tag` instead of a procedure; the extension dispatches its own
+  carries the rules and a `tag`; the extension dispatches its own
   handlers in `run_directive`. Role handlers receive the `ReadContext` (the inline crate's
   `RoleHook`), not the parser.
 - **Settings are plain data** (`String`s, `'static`), so they travel through
   `ReadOptions::extension`; the extension and host are passed to `read_with` /
-  `embed_begin` instead of living inside `Settings`.
+  `embed_begin` rather than living inside `Settings`.
 - **Directive** owns its parts (`Vec<Line>` argument, options, content) and has
-  accessor methods (`option_value` replaces `opt_value(p, d, name)`).
+  accessor methods (`option`, `option_value`, `option_lines`).
 - `TableExtra` stores the table title as source ranges, so the hosted table directive
   can hand it to the host's table across calls; the first table takes it
   (`take_table_extra`).
-- The list-table walks its rows from one collected list (`bullet_items`) instead of a
-  primed iterator; enumerator ordinals are `Option<i64>` instead of -1.
-- East Asian widths use the Unicode 15.1 table Odin's `core:unicode` ships, and
-  combining marks the blocks Odin's `is_combining` names.
+- The list-table walks its rows from one collected list (`bullet_items`); enumerator
+  ordinals are `Option<i64>`.
+- East Asian widths use a pinned Unicode 15.1 table, and combining marks are the
+  combining diacritical mark blocks.
 - Deep-nesting tests run on a large-stack thread with a raised stack budget in debug
   builds, whose frames are larger; in release builds the default 512 KiB budget holds
   the default depth limit (`default_stack_budget_holds_the_default_depth`).

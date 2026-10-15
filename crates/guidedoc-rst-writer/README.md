@@ -4,7 +4,7 @@ The reStructuredText writer of Guidedoc: renderer id `rst`. It writes a document
 (docs/manual/internals/ast.rst) back out as clean reStructuredText that reads back into
 the same tree, so Guidedog converts MyST/Markdown and reStructuredText to
 reStructuredText itself (`guidedog convert page.md --from myst --to rst -o page.rst`).
-Std-only; it has no Odin counterpart (the Odin project used pandoc).
+Std-only, so conversion needs no external tool such as pandoc.
 
 ## Use
 

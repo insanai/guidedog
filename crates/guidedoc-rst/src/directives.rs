@@ -74,7 +74,7 @@ impl<'d> Directive<'d> {
         }
     }
 
-    /// Returns the option called `name` the directive was given (Odin `get_opt`).
+    /// Returns the option called `name` the directive was given.
     pub fn option(&self, name: &str) -> Option<&DirOption<'d>> {
         self.options.iter().find(|o| o.spec.name == name)
     }
@@ -89,8 +89,8 @@ impl<'d> Directive<'d> {
         self.option(name).map(|o| o.lines.as_slice())
     }
 
-    /// Returns option `name`'s value lines joined by spaces and trimmed (Odin
-    /// `opt_value`); `None` when the option was not given.
+    /// Returns option `name`'s value lines joined by spaces and trimmed; `None` when the
+    /// option was not given.
     pub fn option_value(&self, name: &str) -> Option<Cow<'d, str>> {
         self.option(name).map(|o| trimmed(join_lines(&o.lines, " ")))
     }

@@ -92,7 +92,7 @@ impl<'a> Builder<'a> {
         self.status
     }
 
-    /// Tells whether the builder has not failed (Odin `b.status == .Ok`).
+    /// Tells whether the builder has not failed.
     pub fn is_ok(&self) -> bool {
         self.status == Status::Ok
     }
@@ -133,7 +133,7 @@ impl<'a> Builder<'a> {
     }
 
     /// Reports `d` and poisons the builder with its status (the first failure wins);
-    /// returns the failure to propagate (Odin `builder_fail`).
+    /// returns the failure to propagate.
     pub fn fail(&mut self, d: Diagnostic) -> Fail {
         if self.status == Status::Ok {
             self.status = d.status;
@@ -143,8 +143,8 @@ impl<'a> Builder<'a> {
         self.poisoned()
     }
 
-    /// Poisons the builder with a `Capacity` failure of `region`, lacking `minimum`
-    /// (Odin `builder_capacity`); nothing new is reported once it has failed.
+    /// Poisons the builder with a `Capacity` failure of `region`, lacking `minimum`;
+    /// nothing new is reported once it has failed.
     pub fn capacity(&mut self, region: Region, minimum: u64) -> Fail {
         if self.status != Status::Ok {
             return self.poisoned();
@@ -196,7 +196,7 @@ impl<'a> Builder<'a> {
         self.open.last().map_or(NodeKind::Document, |&id| self.snap.nodes[id].kind)
     }
 
-    /// Returns the open nodes, outermost first (Odin `b.open.items[:b.open.used]`).
+    /// Returns the open nodes, outermost first.
     pub fn open_nodes(&self) -> &[NodeId] {
         self.open
     }
@@ -301,8 +301,7 @@ impl<'a> Builder<'a> {
         Ok(id)
     }
 
-    /// Copies `s` into the pool and adds a leaf holding it (Odin
-    /// `add_leaf(b, kind, span, add_text(b, s))`).
+    /// Copies `s` into the pool and adds a leaf holding it.
     pub fn add_text_leaf(
         &mut self,
         kind: NodeKind,
@@ -325,7 +324,7 @@ impl<'a> Builder<'a> {
         u32::try_from(self.snap.text.len()).unwrap_or(u32::MAX)
     }
 
-    /// Returns the bytes in the pool (Odin `b.snap.text_used`).
+    /// Returns the bytes in the pool.
     pub fn text_used(&self) -> usize {
         self.snap.text.len()
     }
@@ -357,7 +356,7 @@ impl<'a> Builder<'a> {
         self.text_push_bytes(&[c])
     }
 
-    /// Copies `c`, UTF-8 encoded, into the text pool (Odin `text_push_rune`).
+    /// Copies `c`, UTF-8 encoded, into the text pool.
     pub fn text_push_char(&mut self, c: char) -> Result<(), Fail> {
         let mut bytes = [0u8; 4];
         self.text_push(c.encode_utf8(&mut bytes))
@@ -438,8 +437,7 @@ impl<'a> Builder<'a> {
         self.add_attribute_named(id, key, value, Text::default())
     }
 
-    /// Adds an attribute whose Custom key is the pool text `name` (Odin `add_attribute`
-    /// with its `name` argument).
+    /// Adds an attribute whose Custom key is the pool text `name`.
     pub fn add_attribute_named(
         &mut self,
         id: NodeId,
@@ -479,8 +477,7 @@ impl<'a> Builder<'a> {
         self.add_attribute(id, key, value)
     }
 
-    /// Copies `name` and `value` into the pool and adds them as a Custom attribute
-    /// (Odin `add_attribute_string(b, id, .Custom, value, name)`).
+    /// Copies `name` and `value` into the pool and adds them as a Custom attribute.
     pub fn add_custom_attribute(
         &mut self,
         id: NodeId,

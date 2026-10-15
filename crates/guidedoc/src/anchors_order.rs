@@ -327,7 +327,7 @@ impl<'a, 'd> Order<'a, 'd> {
         if link.is_some_and(|l| l.kind == LinkKind::Internal) {
             return;
         }
-        // A node without a link row counts as unresolved, as Odin's zero row did.
+        // A node without a link row counts as unresolved: nothing has linked it yet.
         let kind = link.map_or(LinkKind::Unresolved, |l| l.kind);
         if k == NodeKind::Reference
             && (doc.node(id).flags.has(NodeFlag::Anonymous) || kind != LinkKind::Unresolved)

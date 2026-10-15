@@ -2,7 +2,8 @@
 //! fullwidth characters take two columns, combining marks none, all else one.
 
 /// Inclusive ranges of East Asian Fullwidth (F) and Wide (W) characters, sorted, from
-/// Unicode 15.1.0 `EastAsianWidth.txt` as Odin's `core:unicode` ships it.
+/// Unicode 15.1.0 `EastAsianWidth.txt`. The version is pinned so widths, and therefore
+/// which title underlines are long enough, do not change from build to build.
 #[rustfmt::skip]
 const WIDE: &[(u32, u32)] = &[
     (0x1100, 0x115F), (0x231A, 0x231B), (0x2329, 0x232A), (0x23E9, 0x23EC), (0x23F0, 0x23F0),
@@ -24,8 +25,8 @@ const WIDE: &[(u32, u32)] = &[
     0x1F93A), (0x1F93C, 0x1F945), (0x1F947, 0x1F9FF), (0x1FA70, 0x1FAF8), (0x20000, 0x3FFFD),
 ];
 
-/// The combining marks Odin's `unicode.is_combining` names: the combining diacritical
-/// mark blocks.
+/// The combining marks: the combining diacritical mark blocks. A short list of blocks
+/// keeps the check cheap and covers the marks titles use in practice.
 fn is_combining(c: u32) -> bool {
     matches!(c, 0x0300..=0x036f | 0x1ab0..=0x1aff | 0x1dc0..=0x1dff | 0x20d0..=0x20ff
         | 0xfe20..=0xfe2f)

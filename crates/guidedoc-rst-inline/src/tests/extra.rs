@@ -1,4 +1,4 @@
-//! Tests of behaviour the Odin package tested only through the block reader.
+//! Tests of inline behaviour that the block reader usually exercises.
 
 use super::*;
 use crate::{Options, RoleCall, SmartQuotes, apply_host_role, resolve_with_substitutions};

@@ -69,27 +69,25 @@ Handlers use the `Host`: `parse_body(lines, source, sections, classes)`,
 context to another parser takes the host apart with `detach(|ctx, detached| ..)` and
 parses nested Markdown with `detached.attach(ctx, |h| ..)`.
 
-## Redesigns from the Odin package
+## Design notes
 
-- **No scratch slabs.** The skeleton (blocks, arena, line segments) is a `Skeleton`
+- **One owned skeleton.** The skeleton (blocks, arena, line segments) is a `Skeleton`
   owned by one parse and only read during emission, so directive lines borrow it while
   handlers get `&mut Host`. Inline items keep their text in the inline parser's own
   buffer; only emitted text reaches the document's pool (no garbage from discarded
   delimiter runs or from slug and image probes).
 - **`Result` everywhere**: every builder-touching function returns `Result<_, Fail>`
-  and propagates with `?`, instead of checking `b.status` after each call.
-- **Extension as a trait** with default methods, replacing tables of procedures plus a
-  `user` pointer; per-read state lives in the host (`set_extension_state`). A handler's
-  "classes for the next element" output became `Host::set_classes_for_next`.
+  and propagates with `?`, so no caller checks a status after each call.
+- **Extension as a trait** with default methods; per-read state lives in the host
+  (`set_extension_state`). A handler sets the classes for the next element with
+  `Host::set_classes_for_next`.
 - **Owned settings** (`Vec<String>`, `Option<Vec<String>>` for url_schemes) with
-  `Default` = myst-parser's defaults; `Settings::default()` replaces
-  `default_settings()`. Readers are `const`s (`READER`, `MYST_READER`).
+  `Default` = myst-parser's defaults. Readers are `const`s (`READER`, `MYST_READER`).
 - **Entities**: the full WHATWG HTML5 table (2125 names, generated from Python's
-  `html.entities.html5`), replacing Odin's XML table minus a deny-list.
+  `html.entities.html5`), so every name CommonMark allows decodes.
 - **Reference definitions** in a `HashMap<String, Ref>` of decoded strings; footnote
   lines and slugs are owned copies, so nothing outlives the source it came from.
 - **YAML** nodes own their text; nesting is bounded (64) so hostile flow collections
   cannot overflow the stack. Tree walks of inline items are iterative.
-- **Not ported**: the allocator-refusal tests (Rust readers allocate per read by
-  design) and the `REFERENCES` "label table full" message (the map is unbounded,
-  growing with the input).
+- **Unbounded label map.** Reference labels live in a map that grows with the input,
+  so there is no "label table full" message.

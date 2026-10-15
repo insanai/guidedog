@@ -54,20 +54,18 @@ Options it reads (`guidedoc::RenderOptions`): `standalone`, `reference_profile`,
 `math_display`. Policy: `raw` and `unsafe_urls` (refuse / omit / allow),
 `keep_documents_with_errors` (problematic text instead of errors).
 
-## Redesigns from the Odin package
+## Design notes
 
 - **One exhaustive match.** `walk.rs::enter` routes every `NodeKind` to the code that
   writes it; there is no `_ =>` arm and no "unhandled kind" path. `enter` returns a
   `Visit`: skip the children, or descend and close with a `Close` value that the walk
   keeps on its stack, so `leave` matches on `Close`, not on the kind again.
 - **Explicit stack, shared.** Nested walks (substitutions, captions, hlist columns)
-  share one `Vec<(NodeId, Close)>` with a base index instead of taking scratch per walk.
+  share one `Vec<(NodeId, Close)>` with a base index, so a nested walk allocates nothing.
 - **Writer split from state.** `Writer` owns output, the last byte, and reporting; the
   anchor table and the other state are separate fields, so ids borrowed from the table
   are written without copies.
-- **Notes** keep per-note reference lists (`Vec<Vec<NodeId>>`) instead of linked
-  head/next arrays.
-- **No measure pass and no scratch.** The emitter counts past its limit; the renderer
-  allocates its small working state (anchors, stack) per render, so the Odin
-  zero-allocation tests are not ported.
+- **Notes** keep per-note reference lists (`Vec<Vec<NodeId>>`).
+- **One pass.** The emitter counts past its limit rather than measuring first; the
+  renderer allocates its small working state (anchors, stack) per render.
 - Highlighting goes through the `guidedoc::Highlighter` trait.

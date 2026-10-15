@@ -35,7 +35,7 @@ The API documentation is on [docs.rs](https://docs.rs/guidedoc-cpp). This is one
 ## Overview
 
 - Design, bounds, and conformance: `docs/manual/internals/cpp-declarations.rst`
-- Conformance with the Odin implementation (702 of 702 corpus lines match):
+- Conformance with a recorded oracle (702 of 702 corpus lines match):
   `tests/oracle.rs`, `tests/data/oracle.tsv`
 
 ```rust
@@ -69,33 +69,28 @@ assert_eq!((symbol.template_params, symbol.function_params), (vec!["T".into()], 
 | errors | `CppError { kind: Invalid / Limit(Depth/Stack/Work) / NoId, code, title, message, hint, span, limit }`, `is_limit()` |
 | bounds | `Limits { max_depth, stack_bytes }` (256, 512 KiB); `STEPS_PER_BYTE` (64) |
 
-## Redesign notes (from the Odin `cpp_*.odin`)
+## Design notes
 
-- **Typed tree.** The Odin pool of `Cpp_Node` with generic `a`/`b`/`c`/`d`/`text`/`flags`
-  fields became `Node<'a>`, an enum whose variants name their fields (`Class { name,
+- **Typed tree.** `Node<'a>` is an enum whose variants name their fields (`Class { name,
   bases, is_final, attrs }`); lists stay linked through the nodes, so the tree is one flat
   `Vec` with `NodeId` indices. Texts borrow the definition (`&'a str`, `Cow` for the
   canonical fundamental words).
 - **No buffers or pools from the caller.** Ids, text, and paths are written into
-  `&mut String` or returned as `String`; the parser's node table is a `Vec` bounded as
-  the pool was (16 nodes per byte + 256).
-- **Fixed: doubled id pieces.** The Odin built an id's pieces in one shared arena, and a
-  piece computed while writing into that arena was written twice
-  (`void f(int (*cb)(double))` gave `_CPPv41fPFiddE`; Sphinx gives `_CPPv41fPFidE`;
-  also template arguments, array sizes, `decltype`, and call arguments in ids). Here
-  each piece is its own string, so the ids are Sphinx's.
-- **Plain data instead of node writing.** `cpp_signature`, `cpp_xref_target`, and
-  `cpp_namespace_path` wrote node attributes; here they return `Symbol`, `XrefTarget`,
-  and a path `String`. The attribute text formats (paths, `cpp:name`, `cpp:query`) are
-  unchanged.
-- **Limits as errors.** `cpp_stopped` reported into the builder; here a parse returns
+  `&mut String` or returned as `String`; the parser's node table is a `Vec` bounded at
+  16 nodes per byte + 256.
+- **Each id piece is its own string.** A piece computed while another is being written
+  never lands twice, so `void f(int (*cb)(double))` gives Sphinx's `_CPPv41fPFidE`
+  (likewise for template arguments, array sizes, `decltype`, and call arguments).
+- **Plain data, not node writing.** Signatures, cross-reference targets, and namespace
+  paths are returned as `Symbol`, `XrefTarget`, and a path `String`; the caller writes
+  the attributes (paths, `cpp:name`, `cpp:query`).
+- **Limits as errors.** A parse returns
   `ErrorKind::Limit` with the engine's codes (`core.limit.depth`, `.stack`, `.work`) and
   the value passed. The stack guard is local (the crate does not depend on `guidedoc`);
   a caller inside its own guarded recursion passes what remains of its budget as
   `Limits::stack_bytes`.
-- **Flat precedence levels.** Sphinx (and the Odin port) recurse once per binary
+- **Flat precedence levels.** Sphinx recurses once per binary
   precedence level, eleven frames per level of parentheses (about 5 KiB). One loop over
   a reused buffer of open levels (`parse_binop`) builds the same tree in about 1.5 KiB,
   so the default stack budget always holds the default depth.
-- **The C domain** (`cdomain.odin`) has its own simpler parser and stays in
-  `guidedoc-sphinx`.
+- **The C domain** has its own simpler parser and stays in `guidedoc-sphinx`.

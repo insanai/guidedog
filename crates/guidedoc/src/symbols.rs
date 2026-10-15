@@ -1,7 +1,7 @@
 //! Bounded symbol tables. A table never holds more than the capacity it was made with,
 //! so hostile input costs bounded memory and ends in a `Full` status rather than
-//! unbounded growth. The standard hasher resists collision attacks, so the Odin table's
-//! probe limit has no counterpart.
+//! unbounded growth. The standard hasher resists collision attacks, so lookups need no
+//! probe limit.
 
 use std::collections::HashMap;
 
@@ -22,8 +22,8 @@ pub struct SymbolTable {
 }
 
 impl SymbolTable {
-    /// Makes a table for about `capacity` names. As the Odin table did, it holds at least
-    /// 8 and rounds `capacity` up to a power of two.
+    /// Makes a table for about `capacity` names. It holds at least 8 and rounds
+    /// `capacity` up to a power of two, so the bound a caller sees is predictable.
     pub fn with_capacity(capacity: usize) -> SymbolTable {
         let mut slots = 16usize;
         while slots < capacity.saturating_mul(2) {
@@ -33,8 +33,7 @@ impl SymbolTable {
         SymbolTable { map: HashMap::with_capacity(capacity), capacity }
     }
 
-    /// Inserts `key` with `value`. A duplicate or a full table leaves the table as it is
-    /// (Odin `symbol_put`).
+    /// Inserts `key` with `value`. A duplicate or a full table leaves the table as it is.
     pub fn insert(&mut self, key: &str, value: u32) -> Result<(), SymbolClash> {
         if let Some(&existing) = self.map.get(key) {
             return Err(SymbolClash::Duplicate(existing));

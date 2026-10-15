@@ -1,5 +1,5 @@
-//! The one-call API as the Sphinx layer uses it, with the expectations of the Odin
-//! `domains_test` (the ids Sphinx 9.1 writes for its `test-domain-cpp`).
+//! The one-call API as the Sphinx layer uses it, checked against the ids Sphinx 9.1
+//! writes for its `test-domain-cpp`.
 
 use guidedoc_cpp::{
     Directive, ErrorKind, Limits, Node, ObjectType, Symbol, namespace_path, parse_declaration,

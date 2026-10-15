@@ -96,7 +96,7 @@ impl<'a> Document<'a> {
         self.first_child(id).filter(|&c| self.kind(c) == NodeKind::Caption)
     }
 
-    /// Iterates the children of node `id` (Odin `children` + `next_child`).
+    /// Iterates the children of node `id`.
     pub fn children(&self, id: NodeId) -> Children<'a> {
         Children { nodes: &self.snap.nodes, next: id.0 + 1, end: self.node(id).subtree_end }
     }
@@ -157,8 +157,9 @@ impl<'a> Document<'a> {
             .unwrap_or_default()
     }
 
-    /// Returns the link payload of node `id`, or `None` when it has none. Odin's
-    /// `l, _ := link_info(v, id)` is `doc.link_info(id).unwrap_or(LinkInfo::UNRESOLVED)`.
+    /// Returns the link payload of node `id`, or `None` when it has none. Callers that
+    /// treat a missing payload as unresolved write
+    /// `doc.link_info(id).unwrap_or(LinkInfo::UNRESOLVED)`.
     pub fn link_info(&self, id: NodeId) -> Option<LinkInfo> {
         self.payload_row(id, Payload::Link).and_then(|p| self.snap.links.get(p).copied())
     }

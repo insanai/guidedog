@@ -1,4 +1,4 @@
-//! Tests, ported from the Odin package; `Fx` is the Odin `Fixture`.
+//! Tests; `Fx` is the fixture a test body receives: a read context and an inline state.
 
 mod extra;
 mod inline;

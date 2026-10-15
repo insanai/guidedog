@@ -48,11 +48,11 @@ let options = guidedoc::RenderOptions { highlighter: Some(&highlighter), ..Defau
 | `rst_options`, `sphinx_options`, `myst_options` | `ReadOptions` carrying the reader's own settings by type |
 | `HtmlHighlighter`, `TypstHighlighter` | `guidedoc::Highlighter` over `gd-highlight`; one per thread, buffer reused |
 
-## Design notes (from Odin `lib/defaults` and `lib/highlight/guidedoc`)
+## Design notes
 
-- The registry is built per call from the crates' `const` descriptors instead of
-  static tables; it is two short vectors.
+- The registry is built per call from the crates' `const` descriptors; it is two short
+  vectors.
 - Typed options use `guidedoc::read_extension`, which records the settings' type name, so a
-  mismatch is `core.read.settings_type` exactly as in Odin.
-- Highlighters keep a reusable buffer in a `RefCell` instead of writing straight into the
-  emitter in two passes; the engine now renders once.
+  mismatch is the diagnostic `core.read.settings_type`.
+- Highlighters keep a reusable buffer in a `RefCell`, so a thread highlights every code
+  block without allocating a new buffer; the engine renders once.

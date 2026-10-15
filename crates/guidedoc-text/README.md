@@ -49,17 +49,16 @@ let registry = guidedoc::Registry {
 
 Only raw content with format `text` is written, and only when the policy allows it.
 
-## Redesigns from the Odin package
+## Design notes
 
 - **One exhaustive match.** `blocks.rs::render_node` routes every `NodeKind` (blocks and
   inlines; a `Context` says which, for images). Structure parts met on their own are
   reported as `core.unhandled_kind` by explicit arms, never by a wildcard.
-- **Strings instead of measure-then-write.** Inline layouts and table cells are laid
-  out once into `String`s taken from a small pool of reused buffers; the whole output is
-  built in a `String` and emitted once. The Odin two-pass layout and scratch
-  bookkeeping are gone.
+- **One pass into strings.** Inline layouts and table cells are laid out once into
+  `String`s taken from a small pool of reused buffers; the whole output is built in a
+  `String` and emitted once, so no layout is measured before it is written.
 - **Fill as an enum.** What a layout writes (`Fill::Inlines`, `Fill::Term`, ...) is a
-  plain enum instead of a procedure pointer.
+  plain enum.
 - Frames keep their marker strings and are reused; table cells own their laid-out text.
 - Recursion is bounded by `Limits::max_depth` (`text.limit.depth`) and the stack guard
-  (`core.stack`), as in Odin.
+  (`core.stack`), so deep input fails with a diagnostic, never a stack overflow.

@@ -3,10 +3,8 @@
 //! pipeline that reads, transforms, and renders a document.
 //!
 //! The engine imports no reader, renderer, operating system, or Typst crate. Every name
-//! is exported at the crate root, so ported code reads `guidedoc::begin_node`-style
-//! names directly; docs/manual/internals/engine-api-map.rst maps every Odin `gd.` name to
-//! its Rust form, and docs/manual/internals/ast.rst is
-//! the normative node mapping.
+//! is exported at the crate root, so adapters read `guidedoc::begin_node`-style names
+//! directly; docs/manual/internals/ast.rst is the normative node mapping.
 //!
 //! ```
 //! use guidedoc::{convert_text, Registry, Workspace};

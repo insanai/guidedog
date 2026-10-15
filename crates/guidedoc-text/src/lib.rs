@@ -42,7 +42,7 @@ pub const RENDERER: Renderer = Renderer {
     render,
 };
 
-/// Returns `RENDERER` (Odin `text_render.renderer()`).
+/// Returns `RENDERER`, the plain-text renderer descriptor.
 pub fn renderer() -> Renderer {
     RENDERER
 }

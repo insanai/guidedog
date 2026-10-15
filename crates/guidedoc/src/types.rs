@@ -58,7 +58,7 @@ impl SourceId {
 
 /// "No row": a node's payload when it has none.
 pub const NONE: u32 = u32::MAX;
-/// "No node": returned where a node may be absent, as Odin's `INVALID_NODE`.
+/// "No node": the table value for a node that is absent.
 pub const INVALID_NODE: NodeId = NodeId(u32::MAX);
 /// The root Document node of every snapshot.
 pub const ROOT: NodeId = NodeId(0);
@@ -532,7 +532,7 @@ impl NodeFlags {
         NodeFlags(1 << flag as u8)
     }
 
-    /// Tells whether `flag` is in the set (Odin `flag in flags`).
+    /// Tells whether `flag` is in the set.
     #[inline]
     pub const fn has(self, flag: NodeFlag) -> bool {
         self.0 & (1 << flag as u8) != 0
@@ -544,7 +544,7 @@ impl NodeFlags {
         self.0 & other.0 == other.0
     }
 
-    /// Tells whether the sets share a flag (Odin `flags & other != {}`).
+    /// Tells whether the sets share a flag.
     #[inline]
     pub const fn intersects(self, other: NodeFlags) -> bool {
         self.0 & other.0 != 0
@@ -556,13 +556,13 @@ impl NodeFlags {
         self.0 == 0
     }
 
-    /// Adds every flag of `other` (Odin `flags += other`).
+    /// Adds every flag of `other`.
     #[inline]
     pub fn insert(&mut self, other: NodeFlags) {
         self.0 |= other.0;
     }
 
-    /// Removes every flag of `other` (Odin `flags -= other`).
+    /// Removes every flag of `other`.
     #[inline]
     pub fn remove(&mut self, other: NodeFlags) {
         self.0 &= !other.0;
@@ -724,7 +724,7 @@ impl ListStyle {
         ListStyle::UpperRoman,
     ];
 
-    /// Returns the static name dumps write ("loweralpha"), Odin's `LIST_STYLE_NAMES`.
+    /// Returns the static name dumps write ("loweralpha").
     pub const fn name(self) -> &'static str {
         match self {
             ListStyle::Bullet => "bullet",

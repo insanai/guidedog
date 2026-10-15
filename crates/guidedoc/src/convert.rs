@@ -124,7 +124,8 @@ enum RenderMode {
 }
 
 /// Runs the renderer over the current document and returns the bytes it wrote (or
-/// would have written). Errors it reported fail the render, as in Odin.
+/// would have written). Errors it reported fail the render, so output a renderer knows
+/// to be wrong is never returned.
 fn run_renderer(
     ws: &mut Workspace,
     renderer: &Renderer,

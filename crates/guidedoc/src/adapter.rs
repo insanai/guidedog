@@ -128,7 +128,7 @@ fn adapter_diagnostic(id: &'static str, why: &'static str) -> Diagnostic {
     diagnostic(REGISTRY_INVALID, SourceSpan::default(), arg_static(id), arg_static(why))
 }
 
-/// Validates a registry (Odin `validate_registry`).
+/// Validates a registry: fails when an adapter lacks metadata or is registered twice.
 pub fn validate_registry(r: &Registry) -> Result<(), Fail> {
     r.validate()
 }
@@ -203,7 +203,7 @@ impl<'a> ReadContext<'a> {
         self.scratch.put(value);
     }
 
-    /// Reports message `m` at `span` (Odin `report_message(ctx.reports, ...)`).
+    /// Reports message `m` at `span`, filled with the arguments `a` and `b`.
     pub fn report(&mut self, m: Message, span: SourceSpan, a: Arg, b: Arg) {
         self.b.report(m, span, a, b);
     }

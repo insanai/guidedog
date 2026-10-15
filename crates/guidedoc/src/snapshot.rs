@@ -8,8 +8,7 @@ use crate::types::{
 };
 
 /// The tables of one document. Readers and passes fill them through a `Builder`; its
-/// `snap` field gives direct access for the few edits the builder has no method for
-/// (`Vec::len()` is Odin's `used`).
+/// `snap` field gives direct access for the few edits the builder has no method for.
 #[derive(Debug, Clone, Default)]
 pub struct Snapshot {
     /// Nodes in preorder; `nodes[0]` is the Document.

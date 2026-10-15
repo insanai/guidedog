@@ -49,7 +49,7 @@ pub struct Rendered {
     pub warnings: usize,
 }
 
-/// Fragment options: the Odin tests' zero options.
+/// Fragment options: the defaults without a standalone page wrapper.
 pub fn frag() -> RenderOptions<'static> {
     RenderOptions { standalone: false, ..RenderOptions::default() }
 }

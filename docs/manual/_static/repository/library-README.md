@@ -37,8 +37,6 @@ The API documentation is on [docs.rs](https://docs.rs/guidedoc). This is one of 
 ## Cheat sheet
 
 - Node shapes: [docs/manual/internals/ast.rst](../../docs/manual/internals/ast.rst) (normative)
-- Every Odin `gd.` name and its Rust form: [docs/manual/internals/engine-api-map.rst](../../docs/manual/internals/engine-api-map.rst)
-- Design specification: `../guidedog_old/docs/gds/records/0003-guidedoc-odin.rst`
 
 ```rust
 use guidedoc::{convert_text, Workspace};
@@ -125,45 +123,39 @@ ctx.put_scratch(work);
 | `recycle(vec)` | keeps a `Vec<Line<'s>>` of borrowed values as an empty `Vec<Line<'static>>` between conversions |
 | `build_anchors_into(&mut anchors, doc, options, headings)` | rebuilds an anchor table in the storage of the last one |
 
-## Redesigns from the Odin engine
+## Design notes
 
-The Odin core is the specification of behaviour; these are the deliberate differences.
-
-- **Memory.** No slabs, plans, banks to size, or scratch region. The `Workspace` owns its
-  tables as `Vec`s and `String`s and clears them between conversions, keeping their
-  capacity, so a conversion in steady state allocates nothing (a test with a counting
-  allocator checks it). Bounds stay as `Limits` (`max_nodes`, `max_text_bytes`,
-  `max_output_bytes`, `max_reports`, depth, work, stack, includes), and input-driven
-  growth uses `try_reserve`, so running out is a `Capacity` result, not an abort.
-- **Documents are borrows.** Generation and revision checks are gone: a `Document<'w>`
-  borrows the workspace, so a stale or foreign document does not compile. Stages work
-  on the workspace's current document instead of taking a handle.
-- **Results.** Every fallible call returns `Result<_, Fail>`; the builder still poisons
+- **Memory.** The `Workspace` owns its tables as `Vec`s and `String`s and clears them
+  between conversions, keeping their capacity, so a conversion in steady state allocates
+  nothing (a test with a counting allocator checks it). Bounds are `Limits`
+  (`max_nodes`, `max_text_bytes`, `max_output_bytes`, `max_reports`, depth, work, stack,
+  includes), and input-driven growth uses `try_reserve`, so running out is a `Capacity`
+  result, not an abort.
+- **Documents are borrows.** A `Document<'w>` borrows the workspace, so a stale or
+  foreign document does not compile and no runtime check is needed. Stages work on the
+  workspace's current document rather than taking a handle.
+- **Results.** Every fallible call returns `Result<_, Fail>`; the builder poisons
   itself on the first failure, and every later call returns that same failure, so `?`
   propagates it and an ignored failure still cannot publish a truncated tree.
 - **Option, not sentinels**, at the API: `first_child`, `code_caption`, `parent_of`,
   `Builder::current`, `link_info`, `attribute`, `anchor_of`, `include_source`. The tables
   keep `NONE`/`INVALID_NODE` inside (`Node::payload`, `LinkInfo::resolved`) so the AST
   stays 1:1 with docs/manual/internals/ast.rst.
-- **Iterators** replace `children`/`next_child`, `attributes`/`next_attribute`, and
-  `anchor_ids`/`next_anchor_id`.
+- **Iterators** walk children, attributes, and anchor ids.
 - **Single-pass rendering.** Renderers run once into an emitter with a byte limit that
-  keeps counting past it, so an oversized output still reports its exact size; the
-  measure-then-write double run is gone. `check_render` runs in check mode.
-- **Text pool as bytes, output as bytes.** Readers may push bytes one at a time, as the
-  Odin readers do; validation checks that the pool is UTF-8 and that every `Text` lies on
-  character boundaries, and the engine checks the output is UTF-8 before returning it.
+  keeps counting past it, so an oversized output still reports its exact size without a
+  separate measuring run. `check_render` runs in check mode.
+- **Text pool as bytes, output as bytes.** Readers may push bytes one at a time;
+  validation checks that the pool is UTF-8 and that every `Text` lies on character
+  boundaries, and the engine checks the output is UTF-8 before returning it.
 - **Traits for caller code**: `ResourceProvider`, `Highlighter`, and closures for passes
-  and cancellation replace procedure-plus-`rawptr` pairs. Reader settings are a typed
-  `&dyn Any` (`read_extension`, `ctx.reader_settings::<T>()`).
+  and cancellation. Reader settings are a typed `&dyn Any` (`read_extension`,
+  `ctx.reader_settings::<T>()`).
 - **Sources.** The main source is copied into a reused workspace buffer; included and
   added sources are `Arc<str>` (a host can share its file cache). `check_utf8` is the
   host's UTF-8 check, since a `&str` is UTF-8 by type.
-- **Symbol tables** use `HashMap` (collision-resistant hashing) with the same capacity
-  bound; `insert` returns `Result<(), SymbolClash>`.
-- **Objects** keep the field-by-field little-endian format, now version 2 (adds a
-  source's usage); Odin caches are rebuilt.
-- **Working storage in the workspace.** Odin readers and renderers took their temporary tables from the workspace's scratch region and released them with a mark. Here each adapter keeps a struct of reusable `Vec`s and `String`s in the workspace's `Scratch` store, a pool per type, so its buffers survive between conversions instead of being freed and allocated again (see docs/manual/internals/memory.rst).
-- **Not ported**, because Rust makes them unnecessary: Odin's `Scratch` region and marks, `Stack(T)`, `Buffer`,
-  `merge_sort` (std's stable sort), the region-overlap check, `init_workspace*`,
-  `workspace_size`, `slab_plan`, `Second_Bank`, `document_valid`, `view`.
+- **Symbol tables** use `HashMap` (collision-resistant hashing) with a capacity bound;
+  `insert` returns `Result<(), SymbolClash>`.
+- **Objects** use a field-by-field little-endian format, version 2 (with each source's
+  usage); objects of another version are rebuilt.
+- **Working storage in the workspace.** Each adapter keeps a struct of reusable `Vec`s and `String`s in the workspace's `Scratch` store, a pool per type, so its buffers survive between conversions instead of being freed and allocated again (see docs/manual/internals/memory.rst).

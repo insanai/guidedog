@@ -1,6 +1,6 @@
 //! The parser is recursive descent over nested templates, declarators, and expressions.
 //! Nesting past `max_depth`, or past the stack budget when `max_depth` is huge, is a
-//! `Limit`, never a stack overflow (ported from the Odin `cpp_nesting_test`).
+//! `Limit`, never a stack overflow.
 
 use std::time::{Duration, Instant};
 

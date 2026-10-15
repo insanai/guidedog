@@ -8,7 +8,10 @@ use std::time::Duration;
 
 use crate::paths::is_bounded;
 use crate::problem::{self, Problem};
-use crate::{Cancel, MAX_PATH, MAX_PLUGIN_TEXT, MAX_REQUEST, PLUGIN_API_VERSION, Version};
+use crate::{
+    Cancel, CommandContext, CommandInfo, MAX_PATH, MAX_PLUGIN_TEXT, MAX_REQUEST,
+    PLUGIN_API_VERSION, Version,
+};
 
 /// The most dependency files one load may declare.
 pub(crate) const MAX_DEPENDENCIES: usize = 256;
@@ -52,6 +55,25 @@ pub trait BuildPlugin: Send {
     fn collect_assets(&mut self) -> Result<Vec<Asset>, Problem> {
         Ok(Vec::new())
     }
+
+    /// The commands the plugin adds to the host's command line; constant over the
+    /// value's life. The default adds none.
+    fn commands(&self) -> Vec<CommandInfo> {
+        Vec::new()
+    }
+
+    /// Runs the contributed command `name` (its words joined by spaces, as
+    /// [`CommandInfo::name`] gives them) with the arguments after its name, and returns
+    /// the exit status. Runs on a fresh, unloaded value. The default refuses.
+    fn run_command(
+        &mut self,
+        ctx: &mut CommandContext<'_>,
+        name: &str,
+        args: &[String],
+    ) -> Result<i32, Problem> {
+        let _ = (ctx, args);
+        Err(crate::command::no_command(&self.info().id, name))
+    }
 }
 
 /// A boxed plugin is a plugin, so registries and servers can hold any kind. Every hook
@@ -75,6 +97,19 @@ impl BuildPlugin for Box<dyn BuildPlugin> {
 
     fn collect_assets(&mut self) -> Result<Vec<Asset>, Problem> {
         (**self).collect_assets()
+    }
+
+    fn commands(&self) -> Vec<CommandInfo> {
+        (**self).commands()
+    }
+
+    fn run_command(
+        &mut self,
+        ctx: &mut CommandContext<'_>,
+        name: &str,
+        args: &[String],
+    ) -> Result<i32, Problem> {
+        (**self).run_command(ctx, name, args)
     }
 }
 

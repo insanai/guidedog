@@ -5,20 +5,30 @@ use std::process::ExitCode;
 
 use gd_json::{Object, Value};
 
+use crate::command::validate_commands;
 use crate::problem::{self, Problem};
+use crate::process_command::{command_request, serve_request};
 use crate::serve_build::{end_status, request_of, started_by_host};
 use crate::wire::{self, Handshake, object};
 use crate::{
-    API_VERSION, LoadOptions, MAX_REQUEST, Outcome, PROTOCOL_NAME, PROTOCOL_VERSION, Plan,
-    Publisher, PublisherSession, SNAPSHOT_SCHEMA, Snapshot, SnapshotMode, SnapshotOptions,
-    digest_hex, snapshot,
+    API_VERSION, CommandContext, LoadOptions, MAX_REQUEST, Outcome, PROTOCOL_NAME,
+    PROTOCOL_VERSION, Plan, Publisher, PublisherSession, SNAPSHOT_SCHEMA, Snapshot, SnapshotMode,
+    SnapshotOptions, digest_hex, snapshot,
 };
 
 /// The whole `main` of a publisher program: when started with
 /// [`crate::PROTOCOL_FLAG`], it serves `publisher` over standard input and output
-/// until the host unloads it; otherwise it writes a one-line usage note to standard
+/// until the host unloads it; started with [`crate::COMMAND_FLAG`], it runs the
+/// contributed command the request names; otherwise it writes a one-line usage note to standard
 /// error and returns 2.
-pub fn serve_publisher<P: Publisher + 'static>(publisher: P) -> ExitCode {
+pub fn serve_publisher<P: Publisher + 'static>(mut publisher: P) -> ExitCode {
+    if let Some(request) = command_request() {
+        let (id, commands) = (publisher.info().id, publisher.commands());
+        let mut run = |ctx: &mut CommandContext<'_>, name: &str, args: &[String]| {
+            publisher.run_command(ctx, name, args)
+        };
+        return ExitCode::from(serve_request(&request, &id, &commands, &mut run));
+    }
     if !started_by_host() {
         eprintln!("Run this publisher through guidedog publish after guidedog plugin register.");
         return ExitCode::from(2);
@@ -37,7 +47,10 @@ pub fn serve_publisher_streams<P: Publisher + 'static>(
     output: impl Write,
 ) -> u8 {
     let info = publisher.info();
-    if crate::registry::validate_publisher(&info).is_err() {
+    let commands = publisher.commands();
+    if crate::registry::validate_publisher(&info).is_err()
+        || validate_commands(&info.id, &commands).is_err()
+    {
         return 2;
     }
     let handshake = Handshake {
@@ -49,8 +62,9 @@ pub fn serve_publisher_streams<P: Publisher + 'static>(
         version: info.version.clone(),
         capabilities: info.capabilities.names().map(str::to_string).collect(),
         snapshot_schemas: vec![SNAPSHOT_SCHEMA],
-        hooks: Vec::new(),
-    };
+        ..Handshake::default()
+    }
+    .with_commands(commands);
     let mut server = Server {
         publisher: Some(Box::new(publisher)),
         session: None,

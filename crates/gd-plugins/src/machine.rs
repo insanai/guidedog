@@ -1,10 +1,11 @@
 //! The machine registry: a user's record of the plugin programs they chose to run.
 //!
 //! For each program it holds its ID, absolute path, SHA-256, and what it declared when
-//! registered. It lives in the user's configuration folder ([`config_dir`]), never in
-//! a project; only [`register`] and [`unregister`] change it, under a lock, by
-//! replacing the whole file. Running an entry checks its SHA-256 first
-//! ([`verify_entry`]), so a program that changed does not run until registered again.
+//! registered, the commands it contributes to the command line included. It lives in
+//! the user's configuration folder ([`config_dir`]), never in a project; only
+//! [`register`] and [`unregister`] change it, under a lock, by replacing the whole
+//! file. Running an entry checks its SHA-256 first ([`verify_entry`]), so a program
+//! that changed does not run until registered again.
 
 use std::fs;
 use std::io::Read;
@@ -12,12 +13,15 @@ use std::path::{Path, PathBuf};
 
 use gd_toml::{Table, Value};
 
+use crate::command::validate_commands;
 use crate::files::{create_private_dir, write_atomically};
 use crate::problem::{self, Problem};
 use crate::process_build::build_plugin_of;
+use crate::process_command::select_command_version;
 use crate::{
-    BUILD_PROTOCOL_NAME, Capabilities, HANDSHAKE_TIMEOUT, PROTOCOL_NAME, Version, inspect_program,
-    is_valid_id, process_plugin, select_version,
+    BUILD_PROTOCOL_NAME, COMMAND_PROTOCOL_VERSION, Capabilities, CommandInfo, CommandOption,
+    HANDSHAKE_TIMEOUT, PROTOCOL_NAME, Version, inspect_program, is_valid_id, process_plugin,
+    select_version,
 };
 
 /// The registry's file name in [`config_dir`].
@@ -52,6 +56,11 @@ pub struct MachineEntry {
     pub protocol_name: String,
     /// A build plugin's hook names; empty for a publisher.
     pub hooks: Vec<String>,
+    /// The commands the program contributes to the command line; empty for none.
+    pub commands: Vec<CommandInfo>,
+    /// The command protocol version selected when it was registered; `0.0` when it
+    /// contributes no command.
+    pub command_protocol: Version,
 }
 
 impl MachineEntry {
@@ -169,6 +178,7 @@ fn entry_of(t: &Table) -> Option<MachineEntry> {
     let protocol = Version::new(major.parse().ok()?, minor.parse().ok()?);
     let names = t.get("capabilities").and_then(Value::as_array).unwrap_or_default();
     let capabilities = Capabilities::from_names(names.iter().filter_map(Value::as_str));
+    let (commands, command_protocol) = commands_of(t)?;
     let entry = MachineEntry {
         id: text("id"),
         name: text("name"),
@@ -180,13 +190,51 @@ fn entry_of(t: &Table) -> Option<MachineEntry> {
         registered: text("registered"),
         protocol_name,
         hooks,
+        commands,
+        command_protocol,
     };
     let valid = is_valid_id(&entry.id)
         && !entry.name.is_empty()
         && !entry.version.is_empty()
         && Path::new(&entry.path).is_absolute()
-        && entry.sha256.len() == 64;
+        && entry.sha256.len() == 64
+        && validate_commands(&entry.id, &entry.commands).is_ok();
     valid.then_some(entry)
+}
+
+/// An entry's optional `commands` and `command_protocol`; `None` when malformed.
+fn commands_of(t: &Table) -> Option<(Vec<CommandInfo>, Version)> {
+    let Some(items) = t.get("commands") else {
+        return Some((Vec::new(), Version::default()));
+    };
+    let mut commands = Vec::new();
+    for item in items.as_array()? {
+        let c = item.as_table()?;
+        let words = |key| -> Option<Vec<String>> {
+            let list = c.get(key)?.as_array()?;
+            list.iter().map(|w| w.as_str().map(str::to_string)).collect()
+        };
+        let text = |t: &Table, key| t.get(key).and_then(Value::as_str).map(str::to_string);
+        let mut options = Vec::new();
+        for o in c.get("options").and_then(Value::as_array).unwrap_or_default() {
+            let o = o.as_table()?;
+            options.push(CommandOption {
+                name: text(o, "name")?,
+                value: text(o, "value").unwrap_or_default(),
+                summary: text(o, "summary").unwrap_or_default(),
+            });
+        }
+        commands.push(CommandInfo {
+            path: words("path")?,
+            summary: text(c, "summary")?,
+            help: text(c, "help").unwrap_or_default(),
+            options,
+        });
+    }
+    let protocol = t.get("command_protocol")?.as_str()?;
+    let (major, minor) = protocol.split_once('.')?;
+    let version = Version::new(major.parse().ok()?, minor.parse().ok()?);
+    (version.major == COMMAND_PROTOCOL_VERSION.major).then_some((commands, version))
 }
 
 /// Describes the program at `path` as a registry entry: checks that `path` is an
@@ -219,9 +267,12 @@ pub fn inspect_entry(path: &str) -> Result<MachineEntry, Problem> {
     if h.is_build() {
         build_plugin_of(&h, path)?;
     }
+    let command_protocol = entry_command_protocol(&h, path)?;
     Ok(MachineEntry {
         capabilities: Capabilities::from_names(h.capabilities.iter().map(String::as_str)),
         protocol_name: if h.is_build() { BUILD_PROTOCOL_NAME.to_string() } else { String::new() },
+        commands: h.commands,
+        command_protocol,
         hooks: h.hooks,
         id: h.id,
         name: h.name,
@@ -230,6 +281,27 @@ pub fn inspect_entry(path: &str) -> Result<MachineEntry, Problem> {
         sha256,
         protocol,
         registered: today(),
+    })
+}
+
+/// The command protocol version shared with a program whose handshake is `h`: `0.0`
+/// when it contributes no command. Fails for invalid commands, or commands in a
+/// protocol version this Guidedog does not speak.
+fn entry_command_protocol(h: &crate::Handshake, path: &str) -> Result<Version, Problem> {
+    if h.commands.is_empty() {
+        return Ok(Version::default());
+    }
+    validate_commands(&h.id, &h.commands)?;
+    select_command_version(&h.command_versions).ok_or_else(|| {
+        Problem::new(
+            "plugins.command-version",
+            "The program's commands speak another protocol",
+            "It contributes commands in a command protocol version this Guidedog does not \
+             speak.",
+        )
+        .hint("Install a version of the plugin made for this Guidedog.")
+        .path(path)
+        .exit(2)
     })
 }
 
@@ -262,7 +334,9 @@ pub fn register(path: &Path, entry: &MachineEntry) -> Result<(), Problem> {
         && !entry.version.is_empty()
         && Path::new(&entry.path).is_absolute()
         && entry.sha256.len() == 64
-        && entry.protocol.major != 0;
+        && entry.protocol.major != 0
+        && (entry.commands.is_empty() || entry.command_protocol.major != 0)
+        && validate_commands(&entry.id, &entry.commands).is_ok();
     if !complete {
         return Err(Problem::new(
             "plugins.entry",
@@ -403,8 +477,39 @@ fn machine_text(entries: &[MachineEntry]) -> String {
             out.push_str(&format!("protocol_name = \"{BUILD_PROTOCOL_NAME}\"\nhooks = "));
             string_list(&mut out, &mut e.hooks.iter().map(String::as_str));
         }
+        if !e.commands.is_empty() {
+            write_commands(&mut out, e);
+        }
     }
     out
+}
+
+/// Writes an entry's commands as an array of inline tables, one command a line.
+fn write_commands(out: &mut String, e: &MachineEntry) {
+    out.push_str(&format!("command_protocol = \"{}\"\ncommands = [\n", e.command_protocol));
+    for c in &e.commands {
+        out.push_str("  { path = [");
+        for (i, word) in c.path.iter().enumerate() {
+            out.push_str(if i > 0 { ", " } else { "" });
+            gd_toml::write_string(out, word);
+        }
+        out.push_str("], summary = ");
+        gd_toml::write_string(out, &c.summary);
+        out.push_str(", help = ");
+        gd_toml::write_string(out, &c.help);
+        out.push_str(", options = [");
+        for (i, o) in c.options.iter().enumerate() {
+            out.push_str(if i > 0 { ", { name = " } else { "{ name = " });
+            gd_toml::write_string(out, &o.name);
+            out.push_str(", value = ");
+            gd_toml::write_string(out, &o.value);
+            out.push_str(", summary = ");
+            gd_toml::write_string(out, &o.summary);
+            out.push_str(" }");
+        }
+        out.push_str("] },\n");
+    }
+    out.push_str("]\n");
 }
 
 /// The SHA-256 of the native program at `path`, which must be a regular file that

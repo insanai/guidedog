@@ -1,6 +1,7 @@
 //! The product badge, a complete build plugin: it replaces `{{product}}` in source
 //! text, labels HTML pages, and supplies the label's stylesheet. Its settings file holds
-//! `product = "Orbit"`.
+//! `product = "Orbit"`. It also adds a command to the command line, `guidedog badge
+//! preview NAME`, which writes the label for NAME to `badge-preview.html`.
 //!
 //! In a plugin crate this file is the library: a custom `guidedog` binary links it with
 //! `Registry::new(vec![badge::plugin()])`, and the crate's own small binary
@@ -9,8 +10,8 @@
 use std::borrow::Cow;
 
 use gd_plugins::{
-    Asset, BuildPlugin, Hooks, HtmlInput, LoadContext, MAX_PLUGIN_TEXT, Plugin, PluginInfo,
-    Problem, SourceInput,
+    Asset, BuildPlugin, CommandContext, CommandInfo, CommandOption, Hooks, HtmlInput, LoadContext,
+    MAX_PLUGIN_TEXT, Plugin, PluginInfo, Problem, SourceInput,
 };
 
 const MARKER: &str = "{{product}}";
@@ -31,6 +32,44 @@ pub struct Badge {
 impl BuildPlugin for Badge {
     fn info(&self) -> PluginInfo {
         PluginInfo::new("product-badge", "Product badge", "1.0.0", Hooks::ALL)
+    }
+
+    fn commands(&self) -> Vec<CommandInfo> {
+        vec![
+            CommandInfo::new("badge preview", "Write a product's label to badge-preview.html")
+                .with_help("Writes the label the plugin adds to pages, for the product NAME.")
+                .with_option(CommandOption::switch("--quiet-ok", "Print nothing on success")),
+        ]
+    }
+
+    fn run_command(
+        &mut self,
+        ctx: &mut CommandContext<'_>,
+        name: &str,
+        args: &[String],
+    ) -> Result<i32, Problem> {
+        let product = args.iter().find(|a| !a.starts_with('-'));
+        let (Some(product), "badge preview") = (product, name) else {
+            return Err(Problem::new(
+                "badge.usage",
+                "Name the product",
+                "guidedog badge preview needs the product's name.",
+            )
+            .hint("Write guidedog badge preview Orbit.")
+            .exit(2));
+        };
+        let html = format!("<p class=\"product-badge\">{product}</p>\n<!-- {} -->\n", ctx.config);
+        let path = ctx.dir.join("badge-preview.html");
+        std::fs::write(&path, html).map_err(|e| {
+            Problem::new("badge.io", "Cannot write the preview", &e.to_string())
+                .hint("Run the command in a folder you may write to.")
+                .path(&path.to_string_lossy())
+                .exit(4)
+        })?;
+        if !args.iter().any(|a| a == "--quiet-ok") {
+            ctx.print(&format!("Wrote {}\n", path.display()));
+        }
+        Ok(0)
     }
 
     fn load(&mut self, ctx: &mut LoadContext<'_>) -> Result<(), Problem> {

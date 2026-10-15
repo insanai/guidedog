@@ -52,11 +52,13 @@ mod build_session;
 mod cancel;
 mod check;
 mod child;
+mod command;
 pub mod files;
 mod machine;
 mod paths;
 mod problem;
 mod process_build;
+mod process_command;
 mod process_publish;
 mod publisher;
 mod registry;
@@ -76,12 +78,19 @@ pub use build::{
 pub use build_session::{PluginSession, load_plugin};
 pub use cancel::Cancel;
 pub use check::check_plugin;
+pub use command::{
+    BuildRequest, CommandContext, CommandHost, CommandInfo, CommandOption, MAX_COMMANDS,
+};
 pub use machine::{
     CONFIG_VARIABLE, MACHINE_FILE, Machine, MachineEntry, config_dir, inspect_entry, machine_path,
     read_machine, register, unregister, verify_entry,
 };
 pub use problem::{EXIT_ACCEPTED, EXIT_UNKNOWN, Problem, ProblemData};
 pub use process_build::process_plugin;
+pub use process_command::{
+    COMMAND_FLAG, COMMAND_PROTOCOL_NAME, COMMAND_PROTOCOL_VERSION, build_with_program,
+    serve_command,
+};
 pub use process_publish::{
     DEFAULT_REQUEST_TIMEOUT, HANDSHAKE_TIMEOUT, inspect_program, process_publisher,
 };

@@ -13,9 +13,11 @@ use std::io::BufRead;
 
 use gd_json::{Object, Value};
 
+use crate::command::{command_json, command_of};
 use crate::problem::{self, EXIT_UNKNOWN, Problem};
 use crate::{
-    BUILD_PROTOCOL_NAME, BUILD_PROTOCOL_VERSION, PROTOCOL_NAME, PROTOCOL_VERSION, Version,
+    BUILD_PROTOCOL_NAME, BUILD_PROTOCOL_VERSION, COMMAND_PROTOCOL_VERSION, CommandInfo,
+    PROTOCOL_NAME, PROTOCOL_VERSION, Version,
 };
 
 /// The deepest nesting of objects and arrays a message may have.
@@ -23,8 +25,9 @@ const MAX_NESTING: usize = 16;
 
 /// The first line a plugin program writes: the protocol, the highest minor version of
 /// each major version it speaks, the interface version it was built against, what it
-/// is, its capabilities (publishers), the snapshot schemas it reads (publishers), and
-/// its hooks (build plugins).
+/// is, its capabilities (publishers), the snapshot schemas it reads (publishers), its
+/// hooks (build plugins), and, optionally, the commands it contributes with the command
+/// protocol versions it speaks.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 #[non_exhaustive]
 pub struct Handshake {
@@ -46,6 +49,11 @@ pub struct Handshake {
     pub snapshot_schemas: Vec<i64>,
     /// A build plugin's hooks.
     pub hooks: Vec<String>,
+    /// The commands the plugin adds to the host's command line (optional; a host that
+    /// does not know them ignores them).
+    pub commands: Vec<CommandInfo>,
+    /// The command protocol versions it speaks; set when `commands` is not empty.
+    pub command_versions: Vec<Version>,
 }
 
 impl Handshake {
@@ -54,7 +62,27 @@ impl Handshake {
         self.protocol == BUILD_PROTOCOL_NAME
     }
 
+    /// The handshake declaring `commands`, with the command protocol version this SDK
+    /// speaks when there are any.
+    pub(crate) fn with_commands(mut self, commands: Vec<CommandInfo>) -> Handshake {
+        self.command_versions =
+            if commands.is_empty() { Vec::new() } else { vec![COMMAND_PROTOCOL_VERSION] };
+        self.commands = commands;
+        self
+    }
+
     pub(crate) fn to_json(&self) -> Value {
+        let mut value = self.required_json();
+        if let (Value::Object(o), false) = (&mut value, self.commands.is_empty()) {
+            let versions = self.command_versions.iter().map(|v| version_json(*v));
+            o.insert("command_versions".to_string(), Value::Array(versions.collect()));
+            let commands = self.commands.iter().map(command_json);
+            o.insert("commands".to_string(), Value::Array(commands.collect()));
+        }
+        value
+    }
+
+    fn required_json(&self) -> Value {
         let strings =
             |list: &[String]| Value::Array(list.iter().map(|s| s.as_str().into()).collect());
         object([
@@ -117,7 +145,24 @@ pub(crate) fn parse_handshake(line: &str) -> Result<Handshake, Problem> {
     if h.is_build() {
         h.hooks = build_hooks(&o, &h.id)?;
     }
+    read_commands(&o, &mut h)?;
     Ok(h)
+}
+
+/// Reads the optional `commands` and `command_versions` of a handshake.
+fn read_commands(o: &Object, h: &mut Handshake) -> Result<(), Problem> {
+    for item in arr_field(o, "commands").unwrap_or_default() {
+        let command = item.as_object().and_then(command_of);
+        let command = command
+            .ok_or_else(|| problem::protocol("The handshake lists a malformed command."))?;
+        h.commands.push(command);
+    }
+    for item in arr_field(o, "command_versions").unwrap_or_default() {
+        let v = version_of(item)
+            .ok_or_else(|| problem::protocol("The handshake lists a malformed version."))?;
+        h.command_versions.push(v);
+    }
+    Ok(())
 }
 
 fn build_hooks(o: &Object, id: &str) -> Result<Vec<String>, Problem> {
@@ -337,6 +382,12 @@ mod tests {
         };
         let line = message_line(&h.to_json());
         assert_eq!(parse_handshake(line.trim_end()).unwrap(), h);
+        assert!(!line.contains("commands"), "{line}");
+        let h = h.with_commands(vec![CommandInfo::new("badge show", "Show the badge")]);
+        let line = message_line(&h.to_json());
+        let back = parse_handshake(line.trim_end()).unwrap();
+        assert_eq!(back.command_versions, [COMMAND_PROTOCOL_VERSION]);
+        assert_eq!(back, h);
         assert!(parse_handshake(r#"{"protocol":"other"}"#).is_err());
         let deep = format!("{}{}", "[".repeat(20), "]".repeat(20));
         assert!(parse_message(&deep).is_err());

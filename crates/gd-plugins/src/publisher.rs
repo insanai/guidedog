@@ -5,7 +5,7 @@ use std::fmt;
 use std::time::Duration;
 
 use crate::problem::{EXIT_ACCEPTED, EXIT_UNKNOWN, Problem};
-use crate::{API_VERSION, Cancel, Snapshot, Version};
+use crate::{API_VERSION, Cancel, CommandContext, CommandInfo, Snapshot, Version};
 
 /// A publisher sends a complete, frozen site to a destination such as GitHub Pages.
 ///
@@ -42,6 +42,25 @@ pub trait Publisher: Send {
     fn recover(&mut self) -> Outcome {
         Outcome::failed(Problem::new("plugins.unsupported", "No recover", "Not offered."))
     }
+
+    /// The commands the publisher adds to the host's command line, such as a guided
+    /// `publish` target; constant over the value's life. The default adds none.
+    fn commands(&self) -> Vec<CommandInfo> {
+        Vec::new()
+    }
+
+    /// Runs the contributed command `name` (its words joined by spaces) with the
+    /// arguments after its name, and returns the exit status. Runs on a fresh, unloaded
+    /// value. The default refuses.
+    fn run_command(
+        &mut self,
+        ctx: &mut CommandContext<'_>,
+        name: &str,
+        args: &[String],
+    ) -> Result<i32, Problem> {
+        let _ = (ctx, args);
+        Err(crate::command::no_command(&self.info().id, name))
+    }
 }
 
 /// A boxed publisher is a publisher; every operation forwards (forward new ones too).
@@ -68,6 +87,19 @@ impl Publisher for Box<dyn Publisher> {
 
     fn recover(&mut self) -> Outcome {
         (**self).recover()
+    }
+
+    fn commands(&self) -> Vec<CommandInfo> {
+        (**self).commands()
+    }
+
+    fn run_command(
+        &mut self,
+        ctx: &mut CommandContext<'_>,
+        name: &str,
+        args: &[String],
+    ) -> Result<i32, Problem> {
+        (**self).run_command(ctx, name, args)
     }
 }
 

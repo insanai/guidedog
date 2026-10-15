@@ -98,6 +98,7 @@ let outcome = p.publish(&snap, &plan);     // outcome.exit_status(): 0, 1-5, 6, 
 | Publisher sessions | `load_publisher`, `PublisherSession::{load, plan, publish, status, recover}` |
 | Snapshots | `snapshot(dir, &SnapshotOptions)`, `Snapshot::{entries, digest, verify}`, `SnapshotMode::{Copy, Borrow, Adopt}`, `digest_hex` |
 | Registry | `Plugin::{build, publisher, identity}`, `Registry::{new, find}`, `select_build_plugin`, `MAX_BUILD_PLUGINS` (64), `is_valid_id` |
+| Commands | `commands` and `run_command` on both traits (default: none), `CommandInfo` (`new`, `with_help`, `with_option`, `name`), `CommandOption::{switch, with_value}`, `CommandContext` (`print`, `eprint`, `streams`, `ask`, `confirm`, `build_project`; `dir`, `config`, `host_program`, `interactive`, `color`, `json`, `quiet`, `cancel`), `CommandHost`, `BuildRequest`, `Plugin::{commands, run_command}`, `Registry::commands`, `serve_command`, `build_with_program`, `COMMAND_FLAG`, `COMMAND_PROTOCOL_VERSION`, `MAX_COMMANDS` (32) |
 | Programs | `serve_plugin`, `serve`, `serve_publisher`, `serve_streams`, `serve_publisher_streams`, `process_plugin`, `process_publisher`, `inspect_program`, `Handshake`, `select_version`, `Cancel` |
 | Private files | `files::{create_private_dir, make_temp_dir, create_private, write_atomically}` (folders `0700`, files `0600`; a file replaced in one step) |
 | Machine registry | `config_dir`, `machine_path`, `read_machine`, `Machine`, `MachineEntry`, `inspect_entry`, `verify_entry`, `register`, `unregister` |
@@ -107,11 +108,16 @@ Limits: text 8 MiB, configuration 1 MiB, 256 assets / 16 MiB, 256 dependencies, 
 1 KiB; request lines 1 MiB (publisher), responses 64 MiB; build requests time out after
 60 s, publisher requests after 5 min, handshakes after 10 s.
 
-Examples: `examples/build_plugin/` (the product badge: `badge.rs` library, `main.rs` server), `examples/publisher.rs` (a
+Examples: `examples/build_plugin/` (the product badge: `badge.rs` library with the
+`badge preview` command, `main.rs` server), `examples/publisher.rs` (a
 local-folder publisher), `examples/protocol_fixture.rs` (faulty programs for tests).
 
 ## Redesign notes (from Odin `lib/plugins`)
 
+- **Command-line extensions (new).** A plugin may add commands to the host's command
+  line; an installed program announces them in optional handshake fields and runs them
+  on the person's terminal when started with `--guidedog-command REQUEST`. Old programs
+  and hosts are unaffected. See docs/manual/internals/plugins.rst.
 - **Traits instead of procedure tables.** A plugin value *is* its session state: no
   `rawptr data`, no `unload` callback (use `Drop`), no context structs carrying
   allocators. A `Plugin` holds a prototype and clones it per session, so sessions never

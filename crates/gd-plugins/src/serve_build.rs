@@ -6,19 +6,23 @@ use std::process::ExitCode;
 
 use gd_json::{Object, Value, base64};
 
+use crate::command::validate_commands;
 use crate::paths::is_bounded;
 use crate::problem::{self, Problem};
+use crate::process_command::{command_request, serve_request};
 use crate::wire::{self, Handshake, object};
 use crate::{
-    BUILD_PROTOCOL_NAME, BUILD_PROTOCOL_VERSION, BuildPlugin, HtmlInput, MAX_PATH, MAX_RESPONSE,
-    PLUGIN_API_VERSION, PROTOCOL_FLAG, Plugin, PluginOptions, PluginSession, SourceFormat,
-    SourceInput,
+    BUILD_PROTOCOL_NAME, BUILD_PROTOCOL_VERSION, BuildPlugin, CommandContext, HtmlInput, MAX_PATH,
+    MAX_RESPONSE, PLUGIN_API_VERSION, PROTOCOL_FLAG, Plugin, PluginOptions, PluginSession,
+    SourceFormat, SourceInput,
 };
 
 /// The whole `main` of a build-plugin program: when started with [`PROTOCOL_FLAG`], it
 /// serves `plugin` over standard input and output until the host unloads it, and
-/// returns the program's exit status; otherwise it writes a one-line usage note to
-/// standard error and returns 2. Keep protocol output on stdout: log to stderr only.
+/// returns the program's exit status; when started with [`crate::COMMAND_FLAG`], it
+/// runs the contributed command the request names ([`crate::serve_command`]);
+/// otherwise it writes a one-line usage note to standard error and returns 2. Keep
+/// protocol output on stdout: log to stderr only.
 ///
 /// ```no_run
 /// # #[derive(Clone)] struct Badge;
@@ -29,7 +33,14 @@ use crate::{
 ///     gd_plugins::serve(Badge)
 /// }
 /// ```
-pub fn serve<P: BuildPlugin + 'static>(plugin: P) -> ExitCode {
+pub fn serve<P: BuildPlugin + 'static>(mut plugin: P) -> ExitCode {
+    if let Some(request) = command_request() {
+        let (id, commands) = (plugin.info().id, plugin.commands());
+        let mut run = |ctx: &mut CommandContext<'_>, name: &str, args: &[String]| {
+            plugin.run_command(ctx, name, args)
+        };
+        return ExitCode::from(serve_request(&request, &id, &commands, &mut run));
+    }
     if !started_by_host() {
         let id = plugin.info().id;
         eprintln!("Run this plugin through guidedog build with plugins = [\"{id}\"].");
@@ -77,7 +88,10 @@ pub fn serve_streams<P: BuildPlugin + 'static>(
     output: impl Write,
 ) -> u8 {
     let info = plugin.info();
-    if crate::registry::validate_build(&info).is_err() {
+    let commands = plugin.commands();
+    if crate::registry::validate_build(&info).is_err()
+        || validate_commands(&info.id, &commands).is_err()
+    {
         return 2;
     }
     let handshake = Handshake {
@@ -89,7 +103,8 @@ pub fn serve_streams<P: BuildPlugin + 'static>(
         version: info.version.clone(),
         hooks: info.hooks.names().map(str::to_string).collect(),
         ..Handshake::default()
-    };
+    }
+    .with_commands(commands);
     let mut server = Server {
         id: info.id,
         hooks: info.hooks,

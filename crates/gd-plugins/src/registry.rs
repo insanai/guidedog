@@ -3,11 +3,12 @@
 use std::fmt;
 use std::sync::Arc;
 
+use crate::command::validate_commands;
 use crate::paths::is_bounded;
 use crate::problem::{self, Problem};
 use crate::{
-    API_VERSION, BuildPlugin, PLUGIN_API_VERSION, PluginInfo, Publisher, PublisherInfo,
-    is_valid_id,
+    API_VERSION, BuildPlugin, CommandContext, CommandInfo, PLUGIN_API_VERSION, PluginInfo,
+    Publisher, PublisherInfo, Version, is_valid_id,
 };
 
 type BuildMaker = Arc<dyn Fn() -> Box<dyn BuildPlugin> + Send + Sync>;
@@ -20,6 +21,9 @@ pub struct Plugin {
     kind: Kind,
     executable: String,
     program_sha256: String,
+    commands: Vec<CommandInfo>,
+    /// The command protocol an installed program's commands are run with.
+    command_protocol: Version,
 }
 
 #[derive(Clone)]
@@ -33,23 +37,17 @@ impl Plugin {
     /// unloaded plugin, and its `info` is read once, here.
     pub fn build<P: BuildPlugin + Clone + Sync + 'static>(prototype: P) -> Plugin {
         let info = prototype.info();
+        let commands = prototype.commands();
         let make: BuildMaker = Arc::new(move || Box::new(prototype.clone()));
-        Plugin {
-            kind: Kind::Build { info, make },
-            executable: String::new(),
-            program_sha256: String::new(),
-        }
+        Plugin::of(Kind::Build { info, make }, "").with_commands(commands, Version::default())
     }
 
     /// Offers a publisher. Each session starts from a clone of `prototype`.
     pub fn publisher<P: Publisher + Clone + Sync + 'static>(prototype: P) -> Plugin {
         let info = prototype.info();
+        let commands = prototype.commands();
         let make: PublisherMaker = Arc::new(move || Box::new(prototype.clone()));
-        Plugin {
-            kind: Kind::Publisher { info, make },
-            executable: String::new(),
-            program_sha256: String::new(),
-        }
+        Plugin::of(Kind::Publisher { info, make }, "").with_commands(commands, Version::default())
     }
 
     pub(crate) fn from_build_maker(
@@ -57,11 +55,7 @@ impl Plugin {
         executable: &str,
         make: BuildMaker,
     ) -> Plugin {
-        Plugin {
-            kind: Kind::Build { info, make },
-            executable: executable.to_string(),
-            program_sha256: String::new(),
-        }
+        Plugin::of(Kind::Build { info, make }, executable)
     }
 
     pub(crate) fn from_publisher_maker(
@@ -69,10 +63,63 @@ impl Plugin {
         executable: &str,
         make: PublisherMaker,
     ) -> Plugin {
+        Plugin::of(Kind::Publisher { info, make }, executable)
+    }
+
+    fn of(kind: Kind, executable: &str) -> Plugin {
         Plugin {
-            kind: Kind::Publisher { info, make },
+            kind,
             executable: executable.to_string(),
             program_sha256: String::new(),
+            commands: Vec::new(),
+            command_protocol: Version::default(),
+        }
+    }
+
+    /// Records the commands the plugin contributes, and for an installed program the
+    /// command protocol version it was registered with.
+    pub(crate) fn with_commands(
+        mut self,
+        commands: Vec<CommandInfo>,
+        protocol: Version,
+    ) -> Plugin {
+        self.commands = commands;
+        self.command_protocol = protocol;
+        self
+    }
+
+    /// The commands the plugin adds to the host's command line, in its order.
+    pub fn commands(&self) -> &[CommandInfo] {
+        &self.commands
+    }
+
+    pub(crate) fn command_protocol(&self) -> Version {
+        self.command_protocol
+    }
+
+    /// Runs the contributed command `name` (its words joined by spaces, such as
+    /// `pages workflow`) with `args`, the words after its name, and returns its exit
+    /// status. A linked plugin runs it on a fresh value; an installed program is started
+    /// with [`crate::COMMAND_FLAG`] on the host's terminal. Fails when the plugin
+    /// contributes no such command, or the command or its program fails.
+    pub fn run_command(
+        &self,
+        ctx: &mut CommandContext<'_>,
+        name: &str,
+        args: &[String],
+    ) -> Result<i32, Problem> {
+        crate::process_command::run_command(self, ctx, name, args)
+    }
+
+    pub(crate) fn run_linked_command(
+        &self,
+        ctx: &mut CommandContext<'_>,
+        name: &str,
+        args: &[String],
+    ) -> Result<i32, Problem> {
+        match &self.kind {
+            Kind::Build { make, .. } => make().run_command(ctx, name, args),
+            Kind::Publisher { make, .. } => make().run_command(ctx, name, args),
         }
     }
 
@@ -139,9 +186,10 @@ impl Plugin {
     /// Checks the plugin's metadata without running any of its hooks.
     pub fn validate(&self) -> Result<(), Problem> {
         match &self.kind {
-            Kind::Build { info, .. } => validate_build(info),
-            Kind::Publisher { info, .. } => validate_publisher(info),
+            Kind::Build { info, .. } => validate_build(info)?,
+            Kind::Publisher { info, .. } => validate_publisher(info)?,
         }
+        validate_commands(self.id(), &self.commands)
     }
 
     pub(crate) fn make_build(&self) -> Option<Box<dyn BuildPlugin>> {
@@ -166,7 +214,7 @@ impl fmt::Debug for Plugin {
             Kind::Build { info, .. } => d.field("build", info),
             Kind::Publisher { info, .. } => d.field("publisher", info),
         };
-        d.field("executable", &self.executable).finish()
+        d.field("executable", &self.executable).field("commands", &self.commands).finish()
     }
 }
 
@@ -237,7 +285,8 @@ fn registry_problem(id: &str, what: &str, hint: &str) -> Problem {
 }
 
 /// The plugins an application offers, checked when it is made: every plugin is valid
-/// and has its own ID. Running nothing, it never executes a plugin's hooks.
+/// (its commands included) and has its own ID. Running nothing, it never executes a
+/// plugin's hooks.
 #[derive(Debug, Clone, Default)]
 pub struct Registry {
     plugins: Vec<Plugin>,
@@ -266,5 +315,10 @@ impl Registry {
     /// Every plugin, in the order given.
     pub fn plugins(&self) -> &[Plugin] {
         &self.plugins
+    }
+
+    /// Every contributed command with the plugin that runs it, in the plugins' order.
+    pub fn commands(&self) -> impl Iterator<Item = (&Plugin, &CommandInfo)> {
+        self.plugins.iter().flat_map(|p| p.commands.iter().map(move |c| (p, c)))
     }
 }

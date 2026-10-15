@@ -58,7 +58,9 @@ use std::path::PathBuf;
 
 use gd_plugins::{Cancel, Plugin, Problem};
 
-pub use build::{GUIDEDOG_VARIABLE, freeze_site, guidedog_program, guidedog_version};
+pub use build::{
+    GUIDEDOG_VARIABLE, build_with_guidedog, freeze_site, guidedog_program, guidedog_version,
+};
 pub use client::{API_ROOT, Client, Roots, WEB_ROOT};
 pub use config::{
     CONFIG_FILE, Config, SiteSource, default_site_url, is_valid_branch, is_valid_owner,

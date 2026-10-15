@@ -31,7 +31,8 @@ let plugin = gd_pages::plugin_with(settings);
 | GitHub | `Client`, `Roots`, `account`, `read_repository`, `pages_site`, `configure_pages`, `pages_build` (`BuildState`), `commit_tree`, `remote_files`, `branch_head`, `push` (`PushOutcome`), `start_device`, `wait_device` (`DeviceCode`, `CLIENT_ID`) |
 | Guided publish | `publish_guided(&GuideOptions, &mut dyn Prompt)`, `Prompt` (`show`, `confirm`, `choose`), `GuideOptions`, `plan_lines`; inference: `parse_github_remote`, `origin_url`, `find_project`, `gh_token` |
 | Actions workflow | `render_workflow(&WorkflowOptions)`, `check_workflow`, `release_sha256`, `is_safe_workflow_name`, `ACTION_PINS` (reviewed commits), `WORKFLOW_PATH`, `SHA256_PLACEHOLDER` |
-| Building | `freeze_site`, `guidedog_program`, `guidedog_version`, `GUIDEDOG_VARIABLE` |
+| Building | `freeze_site(settings, config, dry_run, &mut build)`, `build_with_guidedog`, `guidedog_program`, `guidedog_version`, `GUIDEDOG_VARIABLE`; `Prompt::build` (default: start `guidedog`) |
+| guidedog commands | `Pages` adds `publish pages` and `pages workflow` to guidedog (`commands`, `run_command`; `command/extension.rs`), linked into `guidedog` or served by `guidedog-pages --guidedog-command` |
 | Command line | `command::{run, run_with, Program}` (`publish` is guided; `watch --serve[=PORT]` previews with `gd-serve`; `workflow [--write] [--check]`) |
 
 Exit statuses: 0 live or unchanged, 1 failed (nothing published), 2 usage or
@@ -76,6 +77,13 @@ unknown (run `recover`), 130 cancelled.
 
 ## Redesign notes (from Odin `lib/pages` and `lib/pages/command`)
 
+- **guidedog's Pages commands are the plugin's.** Odin's CLI hard-wired `publish pages`
+  and `pages workflow`; here `Pages` contributes them through gd-plugins' command
+  interface. Linked into guidedog they ask through its `CommandContext` and build with
+  its engine (`HostPrompt`); `--guidedog`/`$GUIDEDOG_PAGES_GUIDEDOG` still name a
+  program instead. A site build is a closure (`freeze_site`), so both paths share the
+  publication code (`command::publish::{stage, finish}`).
+
 - **No package globals.** Odin's `test_roots`, `credential_override`, `service`,
   `poll_unit` and the `TEST_BUILD` root variable became plain data: `Settings` (roots,
   credential, store, state and cache folders) and `Client::poll_unit`. A release still
@@ -95,5 +103,4 @@ unknown (run `recover`), 130 cancelled.
 - **Arenas, `release_*` and memory-refusal checks** are gone with Odin's allocators.
 - **Not wired yet:** `gd-host`'s crash reporter in `guidedog-pages` (gd-host is now
   linked for the preview, so it could be). Tokens never appear on a command line: `gd-fetch`
-  hands curl its headers in a private file (`--header @file`, mode 0600, removed after
-  the request).
+  sends HTTP in-process.

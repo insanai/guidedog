@@ -5,8 +5,8 @@ use std::path::{Path, PathBuf};
 
 use gd_git::{Id, Kind, Mode, Tree};
 use gd_plugins::{
-    Capabilities, Change, ChangeKind, LoadOptions, Loaded, Outcome, Plan, Problem, Publisher,
-    PublisherInfo, Snapshot, Source,
+    Capabilities, Change, ChangeKind, CommandContext, CommandInfo, LoadOptions, Loaded, Outcome,
+    Plan, Problem, Publisher, PublisherInfo, Snapshot, Source,
 };
 
 use crate::client::Client;
@@ -79,6 +79,20 @@ impl Publisher for Pages {
     fn info(&self) -> PublisherInfo {
         let caps = Capabilities { status: true, recover: true };
         PublisherInfo::new(ID, "GitHub Pages", VERSION, caps)
+    }
+
+    /// `guidedog publish pages` and `guidedog pages workflow`.
+    fn commands(&self) -> Vec<CommandInfo> {
+        crate::command::extension::commands()
+    }
+
+    fn run_command(
+        &mut self,
+        ctx: &mut CommandContext<'_>,
+        name: &str,
+        args: &[String],
+    ) -> Result<i32, Problem> {
+        crate::command::extension::run(&self.settings, ctx, name, args)
     }
 
     fn load(&mut self, options: &LoadOptions) -> Result<Loaded, Problem> {

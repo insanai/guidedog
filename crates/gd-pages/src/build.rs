@@ -1,9 +1,10 @@
-//! Building a project with the installed `guidedog`, and freezing the site to publish.
+//! Building a project (with the installed `guidedog`, or the host's own build) and
+//! freezing the site to publish.
 
 use std::path::Path;
 use std::process::{Command, Stdio};
 
-use gd_plugins::{Problem, Snapshot, SnapshotMode, SnapshotOptions, snapshot};
+use gd_plugins::{BuildRequest, Problem, Snapshot, SnapshotMode, SnapshotOptions, snapshot};
 
 use crate::config::{Config, SiteSource};
 use crate::problem::problem;
@@ -49,51 +50,63 @@ pub(crate) fn guidedog_missing(program: &str) -> Problem {
     .exit(4)
 }
 
-/// Builds `project` as HTML into `out` with `program`; its report goes to standard
-/// error. A build that fails publishes nothing.
-fn build(program: &str, c: &Config, project: &Path, out: &Path) -> Result<(), Problem> {
+/// Builds `request`'s project as HTML by starting `program` (an installed `guidedog`);
+/// its report goes to standard error, so that a script's output stays the outcome.
+/// Fails with `pages.guidedog` when `program` cannot run and `pages.build` when the
+/// build fails; a build that fails publishes nothing.
+pub fn build_with_guidedog(program: &str, request: &BuildRequest) -> Result<(), Problem> {
     let mut command = Command::new(program);
-    command.args(["build", "-b", "html"]).arg(project).arg(out);
-    if c.strict {
+    command.args(["build", "-b", "html"]).arg(&request.project).arg(&request.output);
+    if request.strict {
         command.arg("-W");
     }
-    command.arg("-D").arg(format!("html_baseurl={}", c.site_url));
-    // Standard error, so that a script's output stays the outcome.
+    command.arg("-D").arg(format!("html_baseurl={}", request.base_url));
     command.stdin(Stdio::null()).stdout(Stdio::from(std::io::stderr()));
     let status = command.status().map_err(|_| guidedog_missing(program))?;
     if !status.success() {
         let code = status.code().unwrap_or(1);
-        return Err(problem(
-            "pages.build",
-            "The project did not build",
-            &project.display().to_string(),
-            &format!(
-                "guidedog stopped with status {code}; its report is above. Nothing was \
-                 published."
-            ),
-            "Fix what Guidedog reported, then publish again.",
+        return Err(build_failed(
+            &request.project,
+            &format!("guidedog stopped with status {code}; its report is above."),
         ));
     }
     Ok(())
 }
 
-/// The site the configuration publishes, frozen: its project built with `program` into
-/// the target's build folder ([`build_dir`]), or its built site copied. `progress`
-/// hears what is happening.
+/// `pages.build` (exit 1): the project did not build; `why` says how it stopped.
+pub(crate) fn build_failed(project: &Path, why: &str) -> Problem {
+    problem(
+        "pages.build",
+        "The project did not build",
+        &project.display().to_string(),
+        &format!("{why} Nothing was published."),
+        "Fix what Guidedog reported, then publish again.",
+    )
+}
+
+/// The site the configuration publishes, frozen: its project built by `build` into the
+/// target's build folder ([`build_dir`]), or its built site copied. `build` is
+/// [`build_with_guidedog`] for a program, or the host's own build when Pages runs
+/// inside `guidedog`.
 pub fn freeze_site(
     settings: &Settings,
     c: &Config,
-    program: &str,
     dry_run: bool,
-    progress: &mut dyn FnMut(&str),
+    build: &mut dyn FnMut(&BuildRequest) -> Result<(), Problem>,
 ) -> Result<Snapshot, Problem> {
     let project = match &c.source {
         SiteSource::Built(site) => return snapshot(site, &SnapshotOptions::default()),
         SiteSource::Project(p) => p,
     };
     let out = build_dir(settings, c, dry_run)?;
-    progress(&format!("Building {} with {program}...", project.display()));
-    let built = build(program, c, project, &out);
+    let request = BuildRequest {
+        project: project.clone(),
+        output: out.clone(),
+        base_url: c.site_url.clone(),
+        strict: c.strict,
+        ..BuildRequest::default()
+    };
+    let built = build(&request);
     // A real publication holds the target's lock; dry runs use folders of their own.
     let mode = if dry_run { SnapshotMode::Adopt } else { SnapshotMode::Borrow };
     let frozen = built.and_then(|()| snapshot(&out, &SnapshotOptions::new(mode)));

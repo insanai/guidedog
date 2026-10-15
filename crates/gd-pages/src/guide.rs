@@ -19,7 +19,8 @@ use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant};
 
 use gd_plugins::{
-    Cancel, ChangeKind, LoadOptions, Outcome, Plan, Plugin, Problem, PublisherSession, State,
+    BuildRequest, Cancel, ChangeKind, LoadOptions, Outcome, Plan, Plugin, Problem,
+    PublisherSession, State,
 };
 
 use crate::config::{Config, SiteSource, is_valid_owner, is_valid_repo, read_config};
@@ -30,10 +31,13 @@ use crate::infer::{find_project, gh_token, origin_url, parse_github_remote};
 use crate::problem::{not_confirmed, problem};
 use crate::push::branch_head;
 use crate::target::{bind, remember_token, review_lines, review_target, setup, short};
-use crate::{Client, Pages, Settings, freeze_site, guidedog_program, render_config};
+use crate::{
+    Client, Pages, Settings, build_with_guidedog, freeze_site, guidedog_program, render_config,
+};
 
-/// How the guided publish talks to a person. The command line answers on the terminal;
-/// tests answer from a script.
+/// How the guided publish talks to a person, and has the project built. The command line
+/// answers on the terminal; tests answer from a script; inside `guidedog` the host's
+/// command context answers and builds.
 pub trait Prompt {
     /// Shows a line of progress, a review, or a plan.
     fn show(&mut self, text: &str);
@@ -41,6 +45,12 @@ pub trait Prompt {
     fn confirm(&mut self, question: &str) -> bool;
     /// Asks the person to choose one of `choices`; `None` when they choose none.
     fn choose(&mut self, question: &str, choices: &[&str]) -> Option<usize>;
+    /// Builds `request`'s project as HTML. The default starts `program`, the installed
+    /// `guidedog` ([`build_with_guidedog`]), after showing what it builds.
+    fn build(&mut self, program: &str, request: &BuildRequest) -> Result<(), Problem> {
+        self.show(&format!("Building {} with {program}...", request.project.display()));
+        build_with_guidedog(program, request)
+    }
 }
 
 /// A guided publish's settings. The default publishes `pages.toml` in the current
@@ -383,7 +393,9 @@ impl Guide<'_> {
         let mut session = PublisherSession::load(&plugin, &options)?;
         let program = guidedog_program(&self.o.guidedog);
         let prompt = &mut *self.prompt;
-        let snap = freeze_site(&self.settings, config, &program, false, &mut |l| prompt.show(l))?;
+        let snap = freeze_site(&self.settings, config, false, &mut |request| {
+            prompt.build(&program, request)
+        })?;
         let plan = session.plan(&snap)?;
         for line in plan_lines(&plan, self.o.verbose) {
             self.prompt.show(&line);

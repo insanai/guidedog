@@ -3,12 +3,12 @@
 use std::io::IsTerminal;
 use std::path::PathBuf;
 
-use gd_plugins::{LoadOptions, Plugin, Problem, PublisherSession, Snapshot, State};
+use gd_plugins::{BuildRequest, LoadOptions, Plugin, Problem, PublisherSession, Snapshot, State};
 
 use super::display::{Console, ConsolePrompt};
 use super::{Context, Options};
-use crate::build::{freeze_site, guidedog_program};
-use crate::config::{Config, read_config};
+use crate::build::{build_with_guidedog, freeze_site, guidedog_program};
+use crate::config::read_config;
 use crate::{GuideOptions, Pages, publish_guided};
 
 /// The program that builds for this command line.
@@ -24,17 +24,6 @@ pub(crate) fn guidedog_version(o: &Options) -> Option<String> {
 /// `pages.guidedog` (exit 4): no `guidedog` could be run.
 pub(crate) fn guidedog_missing(o: &Options) -> Problem {
     crate::build::guidedog_missing(&guidedog(o))
-}
-
-/// The site a session publishes: its project built, or its site copied.
-fn freeze(
-    ctx: &Context<'_>,
-    console: &mut Console<'_>,
-    c: &Config,
-    dry_run: bool,
-) -> Result<Snapshot, Problem> {
-    let program = guidedog(ctx.o);
-    freeze_site(ctx.settings, c, &program, dry_run, &mut |line| console.say(line))
 }
 
 /// `--wait` as `LoadOptions::wait_seconds`: none given is the configuration's, 0 is
@@ -68,8 +57,20 @@ pub(crate) fn publish(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
     if ctx.o.dry_run {
         return publish_once(ctx, console, true).0;
     }
+    let interactive = std::io::stdin().is_terminal() && !ctx.o.yes;
+    let options = guide_options(ctx, interactive);
+    let result = publish_guided(&options, &mut ConsolePrompt { console: &mut *console });
+    match result {
+        Ok(r) => console.show_result(&r),
+        Err(p) => console.report(&p),
+    }
+}
+
+/// The guided publication's options for a command line; `interactive` when a person
+/// may be asked.
+pub(crate) fn guide_options(ctx: &Context<'_>, interactive: bool) -> GuideOptions {
     let o = ctx.o;
-    let options = GuideOptions {
+    GuideOptions {
         settings: ctx.settings.clone(),
         cancel: ctx.cancel.clone(),
         config: ctx.config_path(),
@@ -81,15 +82,10 @@ pub(crate) fn publish(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
         client_id: o.client_id.clone(),
         guidedog: o.guidedog.clone(),
         wait_seconds: wait_seconds(o),
-        interactive: std::io::stdin().is_terminal() && !o.yes,
+        interactive,
         assume_yes: o.yes,
         verbose: o.verbose,
         ..GuideOptions::default()
-    };
-    let result = publish_guided(&options, &mut ConsolePrompt { console: &mut *console });
-    match result {
-        Ok(r) => console.show_result(&r),
-        Err(p) => console.report(&p),
     }
 }
 
@@ -99,11 +95,35 @@ pub(crate) fn publish_once(
     console: &mut Console<'_>,
     dry_run: bool,
 ) -> (i32, String) {
-    let staged = load(ctx, dry_run).and_then(|s| {
-        let c = read_config(&ctx.config_path())?;
-        let snap = freeze(ctx, console, &c, dry_run)?;
-        Ok((s, snap))
+    let program = guidedog(ctx.o);
+    let staged = stage(ctx, dry_run, &mut |request| {
+        console.say(&format!("Building {} with {program}...", request.project.display()));
+        build_with_guidedog(&program, request)
     });
+    finish(ctx, console, staged, dry_run)
+}
+
+/// The loaded session and the frozen site of a publication, its project built by
+/// `build`.
+pub(crate) fn stage(
+    ctx: &Context<'_>,
+    dry_run: bool,
+    build: &mut dyn FnMut(&BuildRequest) -> Result<(), Problem>,
+) -> Result<(PublisherSession, Snapshot), Problem> {
+    let session = load(ctx, dry_run)?;
+    let c = read_config(&ctx.config_path())?;
+    let snap = freeze_site(ctx.settings, &c, dry_run, build)?;
+    Ok((session, snap))
+}
+
+/// Plans and (unless `dry_run`) publishes what [`stage`] gave, showing the plan and
+/// the outcome; returns the exit status and the problem's code (empty for none).
+pub(crate) fn finish(
+    ctx: &Context<'_>,
+    console: &mut Console<'_>,
+    staged: Result<(PublisherSession, Snapshot), Problem>,
+    dry_run: bool,
+) -> (i32, String) {
     let (mut session, snap) = match staged {
         Ok(found) => found,
         Err(p) => return (console.report(&p), p.code.clone()),

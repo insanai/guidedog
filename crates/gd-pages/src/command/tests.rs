@@ -77,3 +77,47 @@ fn init_writes_a_configuration_once() {
         run_text(&["init", "--repository=octo/m", "--project=docs", "--site=out"]);
     assert_eq!(status, 2);
 }
+
+/// A host that keeps what a contributed command writes.
+#[derive(Default)]
+struct Captured {
+    out: Vec<u8>,
+    err: Vec<u8>,
+}
+
+impl gd_plugins::CommandHost for Captured {
+    fn streams(&mut self) -> (&mut dyn Write, &mut dyn Write) {
+        (&mut self.out, &mut self.err)
+    }
+
+    fn read_line(&mut self) -> Option<String> {
+        None
+    }
+
+    fn build_project(&mut self, _: &gd_plugins::BuildRequest) -> Result<(), Problem> {
+        Ok(())
+    }
+}
+
+#[test]
+fn guidedog_runs_the_contributed_commands() {
+    let plugin = crate::plugin();
+    let registry = gd_plugins::Registry::new(vec![plugin.clone()]).unwrap();
+    let names: Vec<String> = registry.commands().map(|(_, c)| c.name()).collect();
+    assert_eq!(names, ["publish pages", "pages workflow"]);
+    let dir = TestDir::new("extension");
+    let mut host = Captured::default();
+    let mut ctx = gd_plugins::CommandContext::new(&mut host);
+    ctx.dir = dir.path().to_path_buf();
+    let offline = args(&["--offline", "--project=manual", "--color=never"]);
+    let status = plugin.run_command(&mut ctx, "pages workflow", &offline).unwrap();
+    // Offline, the checksum is a placeholder: the workflow is printed, and status 1.
+    assert_eq!(status, 1);
+    let out = String::from_utf8(host.out).unwrap();
+    assert!(out.contains("manual") && out.contains("GUIDEDOG_SHA256"), "{out}");
+    assert!(String::from_utf8(host.err).unwrap().contains("pages.workflow-sha256"));
+    let mut host = Captured::default();
+    let mut ctx = gd_plugins::CommandContext::new(&mut host);
+    let p = plugin.run_command(&mut ctx, "publish pages", &args(&["--adopt"])).unwrap_err();
+    assert_eq!((p.code.as_str(), p.exit), ("pages.usage", 2));
+}

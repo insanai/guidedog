@@ -2,10 +2,13 @@
 //! publishes Guidedog sites to GitHub Pages. A project is built by the installed
 //! `guidedog`; the program links no document engine. Started with
 //! `gd_plugins::PROTOCOL_FLAG`, it serves the publisher protocol instead, for
-//! `guidedog publish --publisher=pages`.
+//! `guidedog publish --publisher=pages`; started with `gd_plugins::COMMAND_FLAG`, it
+//! runs the command it contributes to guidedog's command line (`guidedog publish pages`,
+//! `guidedog pages workflow`) on the terminal guidedog lends it.
 
 mod auth;
 mod display;
+pub(crate) mod extension;
 mod help;
 mod publish;
 mod secret_input;
@@ -165,6 +168,10 @@ impl Default for Options {
 /// error, and returns the exit status: 0 published or unchanged, 1 failed (nothing
 /// published), 2 usage, 6 published but not confirmed live, 7 unknown (run recover).
 pub fn run(program: &Program, args: &[String]) -> i32 {
+    if args.len() == 2 && args[0] == gd_plugins::COMMAND_FLAG {
+        let plugin = gd_plugins::Plugin::publisher(Pages::new(program.settings.clone()));
+        return i32::from(gd_plugins::serve_command(&plugin, &args[1]));
+    }
     if args.len() == 1 && args[0] == gd_plugins::PROTOCOL_FLAG {
         let input = std::io::BufReader::new(std::io::stdin().lock());
         let publisher = Pages::new(program.settings.clone());

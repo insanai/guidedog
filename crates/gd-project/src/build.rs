@@ -110,6 +110,10 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
         log.reports.extend(gd_conf::confine_untrusted(config));
     }
     let paths = gd_outputs::output_paths(config, kind, options.output_dir.as_deref())?;
+    // A custom output keeps its records in a cache folder of its own beside it; every
+    // record (environment, objects, graphs, fonts) must live there, or the next build
+    // would find none of them and read everything again.
+    config.build_dir.clone_from(&paths.build_dir);
     log.result.output = paths.out_dir.clone();
     let generation_options = GenerationOptions { all: options.all, budget: &s.budget };
     let mut generation = Generation::begin(paths, generation_options, &mut log.reports)?;

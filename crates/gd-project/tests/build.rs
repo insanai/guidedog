@@ -212,6 +212,12 @@ fn an_explicit_output_folder_is_used() {
     assert_built(&r);
     assert_eq!(r.output, out);
     assert!(out.join("index.html").is_file());
+    // Its records live in its own cache folder, so the next build reuses every document.
+    let again = gd_project::build(&project, BuilderKind::Html, &options);
+    assert_built(&again);
+    assert_eq!((again.read, again.reused, again.written), (0, 3, 0));
+    assert!(dir.path(".site.guidedog/.doctrees/environment.json").is_file());
+    assert!(!dir.path("_build/.doctrees").exists(), "nothing goes to the default folder");
 }
 
 #[test]

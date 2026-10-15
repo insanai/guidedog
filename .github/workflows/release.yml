@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - id: check
         name: The tag, VERSION and Cargo.toml agree
-        run: echo "version=$(tools/release/check-version.sh)" >> "$GITHUB_OUTPUT"
+        run: echo "version=$(cargo xtask release check-version)" >> "$GITHUB_OUTPUT"
       - id: plan
         name: Choose the platforms
         env:
@@ -71,13 +71,15 @@ jobs:
           keyring: ${{ runner.os == 'Linux' }}
       - name: Source limits
         run: cargo run --locked -p check
+      - name: Data tables match tools/data
+        run: cargo xtask tables --check
       - name: Clippy
         run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - name: Every test suite
         run: cargo test --locked --workspace
       - name: Linux Secret Service with a real keyring
         if: runner.os == 'Linux'
-        run: tools/release/credential-store.sh
+        run: cargo xtask release credential-store
 
   build:
     name: build (${{ matrix.package }})
@@ -94,16 +96,16 @@ jobs:
         with:
           cache: release
       - name: Build guidedog (with the embedded Typst compiler), dsc, dscc, guidedog-pages and graphdog
-        run: tools/release/build.sh
+        run: cargo xtask release build
       - name: The programs report VERSION
         run: |
           for program in guidedog dsc dscc guidedog-pages graphdog; do
-            tools/release/check-version.sh "build/$program"
+            cargo xtask release check-version "build/$program"
           done
       - name: Integration tests against the release build
         run: cargo test --locked --release --workspace --test '*'
       - name: Package guidedog with dsc, guidedog-pages and graphdog, and dscc, with notices and manifests
-        run: tools/release/package.sh ${{ matrix.package }}
+        run: cargo xtask release package ${{ matrix.package }}
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: guidedog-${{ matrix.package }}
@@ -131,6 +133,12 @@ jobs:
           else
             sudo apt-get update -qq
             sudo apt-get install -y -qq --no-install-recommends libgvc6
+          fi
+      - name: Rust, for cargo xtask (the smoke tests themselves)
+        run: |
+          if ! command -v cargo >/dev/null; then
+            curl --proto '=https' -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+            echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
           fi
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -162,18 +170,18 @@ jobs:
       - name: The packaged programs report VERSION
         run: |
           for program in "$PROGRAM" "$DSC" "$DSCC" "$PAGES" "$GRAPHDOG"; do
-            tools/release/check-version.sh "$program"
+            cargo xtask release check-version "$program"
           done
       - name: Quickstart, HTML and PDF with nothing but the system libraries
-        run: tools/release/smoke.sh "$PROGRAM"
+        run: cargo xtask release smoke "$PROGRAM"
       - name: Discussions with dsc and the packaged guidedog, and with dscc alone
         run: |
-          tools/release/smoke-discussion.sh "$DSC" "$PROGRAM"
-          tools/release/smoke-discussion.sh "$DSCC"
+          cargo xtask release smoke-discussion "$DSC" "$PROGRAM"
+          cargo xtask release smoke-discussion "$DSCC"
       - name: guidedog-pages registered with the packaged guidedog, offline
-        run: tools/release/smoke-pages.sh "$PAGES" "$PROGRAM"
+        run: cargo xtask release smoke-pages "$PAGES" "$PROGRAM"
       - name: graphdog with the system's Graphviz
-        run: tools/release/smoke-graphdog.sh "$GRAPHDOG"
+        run: cargo xtask release smoke-graphdog "$GRAPHDOG"
 
   source:
     needs: version
@@ -182,7 +190,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - run: tools/release/source.sh
+      - run: cargo xtask release source
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: guidedog-source
@@ -202,7 +210,7 @@ jobs:
           merge-multiple: true
           path: dist
       - name: Render the formula from the archives
-        run: tools/release/formula.sh dist
+        run: cargo xtask release formula dist
       - name: Install and test the formula from a local tap, using the local archive
         env:
           HOMEBREW_NO_AUTO_UPDATE: '1'
@@ -235,14 +243,14 @@ jobs:
       - name: The release is not published yet
         env:
           GH_TOKEN: ${{ github.token }}
-        run: tools/release/publish.sh --check "$GITHUB_REF_NAME"
+        run: cargo xtask release publish --check "$GITHUB_REF_NAME"
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: guidedog-*
           merge-multiple: true
           path: dist
       - name: SHA256SUMS
-        run: tools/release/checksums.sh dist
+        run: cargo xtask release checksums dist
       - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-path: |
@@ -251,7 +259,7 @@ jobs:
       - name: Draft, upload, then publish as the latest release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: tools/release/publish.sh "$GITHUB_REF_NAME" dist
+        run: cargo xtask release publish "$GITHUB_REF_NAME" dist
 
   refresh:
     needs: publish

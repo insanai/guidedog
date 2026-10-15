@@ -51,6 +51,8 @@ jobs:
         run: cargo fmt --all --check
       - name: Source limits
         run: cargo run --locked -p check
+      - name: Data tables match tools/data
+        run: cargo xtask tables --check
       - name: Build
         run: cargo build --locked --workspace --all-targets
       - name: Clippy
@@ -59,7 +61,7 @@ jobs:
         run: cargo test --locked --workspace
       - name: Linux Secret Service with a real keyring
         if: runner.os == 'Linux'
-        run: tools/release/credential-store.sh
+        run: cargo xtask release credential-store
       - name: Examples run
         run: |
           for example in hello reuse_workspace custom_pass plain_text graphdog; do
@@ -68,7 +70,7 @@ jobs:
       - name: Smoke tests of the built programs
         run: |
           bin=target/debug
-          tools/release/smoke.sh --external-typst "$bin/guidedog"
-          tools/release/smoke-discussion.sh "$bin/dsc" "$PWD/$bin/guidedog"
-          tools/release/smoke-pages.sh "$bin/guidedog-pages" "$bin/guidedog"
-          tools/release/smoke-graphdog.sh "$bin/graphdog"
+          cargo xtask release smoke --external-typst "$bin/guidedog"
+          cargo xtask release smoke-discussion "$bin/dsc" "$bin/guidedog"
+          cargo xtask release smoke-pages "$bin/guidedog-pages" "$bin/guidedog"
+          cargo xtask release smoke-graphdog "$bin/graphdog"

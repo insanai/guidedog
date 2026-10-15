@@ -78,6 +78,7 @@ const LAYERS: &[(&str, u8)] = &[
     ("guidedog-tests", 6),
     ("check", 6),
     ("linkcheck", 6),
+    ("xtask", 6),
 ];
 
 /// The crates other projects may use (docs/manual/internals/crates.rst): published to

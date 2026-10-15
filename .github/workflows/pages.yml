@@ -1,7 +1,7 @@
 name: Website
 # Builds https://insanai.github.io/guidedog/ with Guidedog itself: the landing page
 # (docs/site), the manual in seven languages with a PDF book each (docs/manual), and the
-# discussions with a PDF each (docs/gds), put together by tools/build-site.sh. The
+# discussions with a PDF each (docs/gds), put together by `cargo xtask build-site`. The
 # generator's sources are in the path filters too, since a change there changes the site.
 on:
   push:
@@ -14,8 +14,7 @@ on:
       - 'Cargo.lock'
       - 'crates/**'
       - 'cmd/**'
-      - 'tools/build-site.sh'
-      - 'tools/fetch-fonts.sh'
+      - 'tools/xtask/**'
       - 'tools/linkcheck/**'
       - '.github/actions/prepare/**'
       - '.github/workflows/pages.yml'
@@ -48,11 +47,11 @@ jobs:
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: docs/shared/fonts/NotoSerifCJK*.otf
-          key: cjk-fonts-${{ hashFiles('tools/fetch-fonts.sh') }}
+          key: cjk-fonts-${{ hashFiles('tools/xtask/src/fonts.rs') }}
       - name: Fetch the CJK fonts of the PDF books
-        run: sh tools/fetch-fonts.sh
+        run: cargo xtask fetch-fonts
       - name: Build the website
-        run: sh tools/build-site.sh --guidedog target/release/guidedog
+        run: cargo xtask build-site --guidedog target/release/guidedog
       - name: Check every link inside the website
         run: target/release/linkcheck build/site -v
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

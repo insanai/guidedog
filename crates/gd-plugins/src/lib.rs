@@ -47,12 +47,12 @@
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod assets;
-mod base64;
 mod build;
 mod build_session;
 mod cancel;
 mod check;
 mod child;
+pub mod files;
 mod machine;
 mod paths;
 mod problem;

@@ -7,6 +7,7 @@ use std::path::{Path, PathBuf};
 
 use gd_sha::Sha256;
 
+use crate::files::{create_private, make_temp_dir};
 use crate::paths::is_servable;
 use crate::problem::{self, Problem};
 
@@ -365,46 +366,6 @@ fn manifest_digest(entries: &[Entry]) -> [u8; 32] {
         hash.update(&e.digest);
     }
     hash.finish()
-}
-
-/// Makes a new folder, readable only by the user, named `prefix-...` in `parent`.
-pub(crate) fn make_temp_dir(parent: &Path, prefix: &str) -> std::io::Result<PathBuf> {
-    use std::sync::atomic::{AtomicU64, Ordering};
-    static COUNTER: AtomicU64 = AtomicU64::new(0);
-    let nanos = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .map_or(0, |d| d.subsec_nanos());
-    loop {
-        let n = COUNTER.fetch_add(1, Ordering::Relaxed);
-        let path = parent.join(format!("{prefix}-{}-{nanos:x}-{n}", std::process::id()));
-        match private_dir_builder().create(&path) {
-            Ok(()) => return Ok(path),
-            Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => continue,
-            Err(e) => return Err(e),
-        }
-    }
-}
-
-fn private_dir_builder() -> fs::DirBuilder {
-    #[cfg(unix)]
-    {
-        let mut builder = fs::DirBuilder::new();
-        std::os::unix::fs::DirBuilderExt::mode(&mut builder, 0o700);
-        builder
-    }
-    #[cfg(not(unix))]
-    {
-        fs::DirBuilder::new()
-    }
-}
-
-/// Creates a new file readable and writable only by the user; fails if it exists.
-pub(crate) fn create_private(path: &Path) -> std::io::Result<fs::File> {
-    let mut options = fs::OpenOptions::new();
-    options.write(true).create_new(true);
-    #[cfg(unix)]
-    std::os::unix::fs::OpenOptionsExt::mode(&mut options, 0o600);
-    options.open(path)
 }
 
 fn changed(root: &Path) -> Problem {

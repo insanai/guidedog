@@ -99,6 +99,7 @@ let outcome = p.publish(&snap, &plan);     // outcome.exit_status(): 0, 1-5, 6, 
 | Snapshots | `snapshot(dir, &SnapshotOptions)`, `Snapshot::{entries, digest, verify}`, `SnapshotMode::{Copy, Borrow, Adopt}`, `digest_hex` |
 | Registry | `Plugin::{build, publisher, identity}`, `Registry::{new, find}`, `select_build_plugin`, `MAX_BUILD_PLUGINS` (64), `is_valid_id` |
 | Programs | `serve_plugin`, `serve`, `serve_publisher`, `serve_streams`, `serve_publisher_streams`, `process_plugin`, `process_publisher`, `inspect_program`, `Handshake`, `select_version`, `Cancel` |
+| Private files | `files::{create_private_dir, make_temp_dir, create_private, write_atomically}` (folders `0700`, files `0600`; a file replaced in one step) |
 | Machine registry | `config_dir`, `machine_path`, `read_machine`, `Machine`, `MachineEntry`, `inspect_entry`, `verify_entry`, `register`, `unregister` |
 | Errors | `Problem` (boxed `ProblemData { code, title, path, message, hint, exit }`) (+ `report()` for gd-report), `EXIT_ACCEPTED` (6), `EXIT_UNKNOWN` (7) |
 

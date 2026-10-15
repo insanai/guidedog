@@ -4,7 +4,7 @@
 use std::io::{BufRead, BufReader, Write};
 use std::process::ExitCode;
 
-use gd_json::{Object, Value};
+use gd_json::{Object, Value, base64};
 
 use crate::paths::is_bounded;
 use crate::problem::{self, Problem};
@@ -12,7 +12,7 @@ use crate::wire::{self, Handshake, object};
 use crate::{
     BUILD_PROTOCOL_NAME, BUILD_PROTOCOL_VERSION, BuildPlugin, HtmlInput, MAX_PATH, MAX_RESPONSE,
     PLUGIN_API_VERSION, PROTOCOL_FLAG, Plugin, PluginOptions, PluginSession, SourceFormat,
-    SourceInput, base64,
+    SourceInput,
 };
 
 /// The whole `main` of a build-plugin program: when started with [`PROTOCOL_FLAG`], it

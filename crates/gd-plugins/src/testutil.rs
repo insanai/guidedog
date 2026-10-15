@@ -7,7 +7,7 @@ pub(crate) struct TempDir(PathBuf);
 
 impl TempDir {
     pub(crate) fn new(name: &str) -> TempDir {
-        let path = crate::snapshot::make_temp_dir(&std::env::temp_dir(), name).unwrap();
+        let path = crate::files::make_temp_dir(&std::env::temp_dir(), name).unwrap();
         TempDir(path)
     }
 

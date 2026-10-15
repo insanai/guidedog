@@ -7,14 +7,14 @@
 //! ([`verify_entry`]), so a program that changed does not run until registered again.
 
 use std::fs;
-use std::io::{Read, Write};
+use std::io::Read;
 use std::path::{Path, PathBuf};
 
 use gd_toml::{Table, Value};
 
+use crate::files::{create_private_dir, write_atomically};
 use crate::problem::{self, Problem};
 use crate::process_build::build_plugin_of;
-use crate::snapshot::create_private;
 use crate::{
     BUILD_PROTOCOL_NAME, Capabilities, HANDSHAKE_TIMEOUT, PROTOCOL_NAME, Version, inspect_program,
     is_valid_id, process_plugin, select_version,
@@ -353,11 +353,7 @@ fn make_private_dirs(path: &Path) -> Result<(), Problem> {
     let Some(dir) = path.parent().filter(|d| !d.as_os_str().is_empty()) else {
         return Ok(());
     };
-    let mut builder = fs::DirBuilder::new();
-    builder.recursive(true);
-    #[cfg(unix)]
-    std::os::unix::fs::DirBuilderExt::mode(&mut builder, 0o700);
-    builder.create(dir).map_err(|e| problem::io(&dir.to_string_lossy(), &e))
+    create_private_dir(dir).map_err(|e| problem::io(&dir.to_string_lossy(), &e))
 }
 
 /// Writes the registry to a file beside `path`, synced, then renamed over it, so a
@@ -365,23 +361,8 @@ fn make_private_dirs(path: &Path) -> Result<(), Problem> {
 fn write_machine(path: &Path, entries: &[MachineEntry]) -> Result<(), Problem> {
     make_private_dirs(path)?;
     let text = machine_text(entries);
-    let mut next = path.as_os_str().to_owned();
-    next.push(".next");
-    let next = PathBuf::from(next);
-    let shown = next.to_string_lossy().into_owned();
-    let _ = fs::remove_file(&next);
-    let written = create_private(&next).and_then(|mut f| {
-        f.write_all(text.as_bytes())?;
-        f.sync_all()
-    });
-    if let Err(e) = written {
-        let _ = fs::remove_file(&next);
-        return Err(problem::io(&shown, &e));
-    }
-    fs::rename(&next, path).map_err(|e| {
-        let _ = fs::remove_file(&next);
-        problem::io(&path.to_string_lossy(), &e)
-    })
+    write_atomically(path, text.as_bytes())
+        .map_err(|(failed, e)| problem::io(&failed.to_string_lossy(), &e))
 }
 
 fn machine_text(entries: &[MachineEntry]) -> String {

@@ -5,7 +5,7 @@ use std::borrow::Cow;
 use std::sync::Arc;
 use std::time::Duration;
 
-use gd_json::{Object, Value};
+use gd_json::{Object, Value, base64};
 
 use crate::child::{Child, ChildKind};
 use crate::paths::is_bounded;
@@ -15,7 +15,7 @@ use crate::wire::{self, Handshake, object};
 use crate::{
     Asset, BUILD_PROTOCOL_NAME, BuildPlugin, Hooks, HtmlInput, LoadContext, MAX_PATH,
     MAX_PLUGIN_ASSET_BYTES, MAX_PLUGIN_ASSETS, MAX_PLUGIN_TEXT, MachineEntry, Plugin, PluginInfo,
-    SourceInput, Version, base64, select_version,
+    SourceInput, Version, select_version,
 };
 
 /// Bounds a build-plugin request when the options leave it zero.

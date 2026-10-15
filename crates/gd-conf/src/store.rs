@@ -10,6 +10,7 @@ use gd_toml::{Data, Table, Value};
 use crate::check::check_config;
 use crate::config::{Config, FlagOrName};
 use crate::custom;
+use crate::extensions::FlagOrList;
 use crate::settings::{Setting, SettingKind, Store, find_setting, is_foreign_setting, suggestion};
 
 /// The problem of a setting that is not right: `config.invalid`, exit status 2, at
@@ -148,6 +149,29 @@ pub(crate) fn store(
             };
             Ok(())
         }
+        Store::FlagOrList(field) => flag_or_list(v, path, name).map(|x| *field(config) = x),
+        Store::StringLists(field) => string_lists(v, path, name).map(|x| *field(config) = x),
+        Store::OptionalNumber(field) => number(v, path, name).map(|x| *field(config) = Some(x)),
+    }
+}
+
+/// `true`, `false`, or a list of strings.
+fn flag_or_list(v: &Value, path: &str, name: &str) -> Result<FlagOrList, Problem> {
+    if let Data::Boolean(b) = v.data {
+        return Ok(FlagOrList::Flag(b));
+    }
+    let list =
+        string_list(v).ok_or_else(|| wrong(path, v, name, "true, false, or a list of strings"))?;
+    Ok(FlagOrList::List(list))
+}
+
+/// A whole or decimal number, as a float.
+fn number(v: &Value, path: &str, name: &str) -> Result<f64, Problem> {
+    match v.data {
+        // Seconds and similar quantities: far below 2^53, so the conversion is exact.
+        Data::Integer(n) => Ok(n as f64),
+        Data::Float(x) => Ok(x),
+        _ => Err(wrong(path, v, name, "a number, such as 2.5")),
     }
 }
 
@@ -207,6 +231,21 @@ fn string_table(v: &Value) -> Option<BTreeMap<String, String>> {
         out.insert(key.to_string(), text);
     }
     Some(out)
+}
+
+/// A table whose values are each a string or a list of strings.
+fn string_lists(
+    v: &Value,
+    path: &str,
+    name: &str,
+) -> Result<BTreeMap<String, Vec<String>>, Problem> {
+    let table = match &v.data {
+        Data::Table(t) => {
+            t.iter().map(|(key, item)| Some((key.to_string(), string_list(item)?))).collect()
+        }
+        _ => None,
+    };
+    table.ok_or_else(|| wrong(path, v, name, "a table of lists of strings"))
 }
 
 /// A list of string pairs, such as `nitpick_ignore`.

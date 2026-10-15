@@ -92,7 +92,7 @@ Reading settings (``gd_env::reading_settings``)
    inheritance, defaults, literal-type, backslash and type-comment flags); the odin
    API settings (folders, root, options, member order, generate and toctree flags,
    collections); the rust API settings (crates, root, options, member order, generate
-   and toctree flags).
+   and toctree flags); whether napoleon, autosummary, apidoc, viewcode, linkcode and inheritance_diagram are on, and their settings (GDS 0011). The coverage, duration and imgconverter settings change no document, so they are not in it.
 
 Build settings (``gd_env::build_settings``), saved as ``Environment::settings``
    The reading settings; the translation digest; whether the build is untrusted; the

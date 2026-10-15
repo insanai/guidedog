@@ -2,7 +2,7 @@
 
 conf.toml: a Guidedog project's configuration. Loading, the settings table, object
 types, trust (readable roots), and the checks of the mathjax, intersphinx, autodoc,
-Odin API, Rust API, plugins and intl settings.
+Odin API, Rust API, plugins, intl and built-in extension settings.
 
 ```rust
 let loaded = gd_conf::load_config(Path::new("docs"), &gd_conf::LoadOptions {
@@ -17,14 +17,14 @@ let dropped = gd_conf::confine_untrusted(&mut c.clone()); // --untrusted
 
 | Item | Does |
 |---|---|
-| `Config` (+ `Config::new(source, build)`) | Sphinx's names and defaults; general settings flat, the rest grouped: `mathjax`, `intersphinx`, `autodoc`, `odin_api`, `rust_api`, `plugins`, `html`, `pdf`, `graphviz`, `myst`, `intl` |
+| `Config` (+ `Config::new(source, build)`) | Sphinx's names and defaults; general settings flat, the rest grouped: `mathjax`, `intersphinx`, `autodoc`, `odin_api`, `rust_api`, `plugins`, `html`, `pdf`, `graphviz`, `myst`, `intl`, and `ext` (`ExtensionSettings`: `napoleon`, `autosummary`, `apidoc`, `viewcode`, `linkcode`, `inheritance`, `coverage`, `duration`, `image_converter`; GDS 0011) |
 | `load_config(dir, &LoadOptions) -> Result<Loaded, Problem>` | find, read, `-D`, check, finish; `Loaded { config, warnings, settings: Digest }` |
 | `find_project`, `apply_table`, `apply_override`, `check_config`, `finish_config`, `merge_table` | the staged path |
 | `SETTINGS`, `Setting { name, kind }`, `SettingKind`, `find_setting`, `suggestion`, `is_foreign_setting`, `NATIVE_EXTENSIONS`, `KNOWN_THEMES` | the settings table (gd-migrate checks conf.py values against it) |
 | `readable_roots`, `confine_untrusted`, `unread_warning`, `rust_crate_roots` | trust |
 | `Digest`, `Digester` | SHA-256 of parts (each followed by a zero byte), hex `Display`; gd-env re-exports them |
 | `Pattern` | `nitpick_ignore_regex`: a small bounded regex, `full_match` |
-| `json_dumps` | a TOML table as Python's `json.dumps` (mathjax3/4_config) |
+| `json_dumps`, `json_dumps_table` | a TOML value or table as Python's `json.dumps` (mathjax3/4_config) |
 
 ## Design notes
 

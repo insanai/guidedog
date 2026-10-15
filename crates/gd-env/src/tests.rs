@@ -192,3 +192,25 @@ fn reading_settings_follow_the_configuration() {
     c.html.theme = "alabaster".into(); // an output setting, not a reading one.
     assert_eq!(reading_settings(&a), reading_settings(&c));
 }
+
+#[test]
+fn reading_settings_follow_the_extensions_that_change_documents() {
+    let a = Config::new("/p", "/p/_build");
+    let changed = |change: fn(&mut Config)| {
+        let mut b = a.clone();
+        change(&mut b);
+        reading_settings(&a) != reading_settings(&b)
+    };
+    assert!(changed(|c| c.extensions.push("sphinx.ext.napoleon".into())));
+    assert!(changed(|c| c.ext.napoleon.use_ivar = true));
+    assert!(changed(|c| c.ext.autosummary.generate = gd_conf::FlagOrList::Flag(false)));
+    assert!(changed(|c| c.ext.apidoc.max_depth = 2));
+    assert!(changed(|c| c.ext.linkcode.url = "https://x/{path}".into()));
+    assert!(changed(|c| c.ext.viewcode.line_numbers = true));
+    assert!(changed(|c| {
+        c.ext.inheritance.graph_attrs.insert("rankdir".into(), "LR".into());
+    }));
+    // Reports on a build change no document.
+    assert!(!changed(|c| c.ext.duration.n_slowest = 10));
+    assert!(!changed(|c| c.ext.coverage.write_headline = false));
+}

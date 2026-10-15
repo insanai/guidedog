@@ -4,7 +4,9 @@ use std::path::{Path, PathBuf};
 
 use super::*;
 
-fn load_text(text: &str) -> (Config, Vec<String>, String) {
+mod extensions;
+
+pub(super) fn load_text(text: &str) -> (Config, Vec<String>, String) {
     let mut c = Config::new("/project", "/project/_build");
     let table = match gd_toml::parse(text) {
         Ok(t) => t,
@@ -63,8 +65,8 @@ fn configuration_rejects_mistakes_with_directions() {
     assert!(typo.contains("Did you mean project?"));
     let (_, _, kind) = load_text("numfig = \"yes\"\n");
     assert!(kind.contains("numfig must be true or false"));
-    let (_, _, ext) = load_text("extensions = [\"sphinx.ext.napoleon\"]\n");
-    assert!(ext.contains("sphinx.ext.napoleon"));
+    let (_, _, ext) = load_text("extensions = [\"sphinxcontrib.bibtex\"]\n");
+    assert!(ext.contains("sphinxcontrib.bibtex"));
     let (_, _, theme) = load_text("html_theme = \"mytheme\"\n");
     assert!(theme.contains("mytheme"));
     assert_eq!(suggestion("projct"), "Did you mean project?");

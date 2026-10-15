@@ -28,6 +28,7 @@ use crate::config::{
     AutodocDefaultOption, Config, IntersphinxProject, MAX_OBJECT_TYPES, ObjectTypeDecl,
     PdfDocument,
 };
+use crate::custom_ext;
 use crate::pattern::Pattern;
 use crate::settings::SettingKind;
 use crate::store::{config_problem, pairs, string_list};
@@ -50,6 +51,12 @@ pub(crate) fn store(
         SettingKind::AutodocOptions => {
             config.autodoc.default_options = autodoc_default_options(v, path)?;
         }
+        SettingKind::NapoleonSections => {
+            config.ext.napoleon.custom_sections = custom_ext::napoleon_sections(v, path)?;
+        }
+        SettingKind::ApidocModules => {
+            config.ext.apidoc.modules = custom_ext::apidoc_modules(v, path)?;
+        }
         SettingKind::String
         | SettingKind::Bool
         | SettingKind::Int
@@ -60,7 +67,10 @@ pub(crate) fn store(
         | SettingKind::Json
         | SettingKind::Values
         | SettingKind::OptionalString
-        | SettingKind::FlagOrName => {
+        | SettingKind::FlagOrName
+        | SettingKind::FlagOrList
+        | SettingKind::StringLists
+        | SettingKind::Number => {
             unreachable!("the settings table gives {kind:?} a field of its own")
         }
     }

@@ -29,10 +29,11 @@ pub fn check_config(
     check_graphviz(config, path, warnings)?;
     check_pdf(config, path)?;
     check_toc(config, path)?;
-    check_intl(config, path)
+    check_intl(config, path)?;
+    crate::check_ext::check_extensions(config, path, warnings)
 }
 
-fn invalid(path: &str, message: String, hint: &str) -> Problem {
+pub(crate) fn invalid(path: &str, message: String, hint: &str) -> Problem {
     config_problem(path, 0, message, hint)
 }
 
@@ -509,6 +510,16 @@ fn check_intl(config: &Config, path: &str) -> Result<(), Problem> {
 /// Checks a `figure_language_filename` format: `{{` and `}}` are braces, and every
 /// `{field}` is one of [`FIGURE_FIELDS`]. Fails with why it is not.
 pub fn check_figure_format(format: &str) -> Result<(), String> {
+    check_format_fields(format, FIGURE_FIELDS, "figure_language_filename")
+}
+
+/// Checks a format with `{field}` placeholders: `{{` and `}}` are braces, and every
+/// field is one of `fields`. Fails with why it is not, naming `setting`.
+pub(crate) fn check_format_fields(
+    format: &str,
+    fields: &[&str],
+    setting: &str,
+) -> Result<(), String> {
     let mut rest = format;
     while let Some(i) = rest.find(['{', '}']) {
         let doubled = rest[i + 1..].starts_with(&rest[i..=i]);
@@ -524,8 +535,8 @@ pub fn check_figure_format(format: &str) -> Result<(), String> {
             return Err("a \"{\" is not closed".to_string());
         };
         let field = &rest[i + 1..i + close];
-        if !FIGURE_FIELDS.contains(&field) {
-            return Err(format!("{{{field}}} is not a field of figure_language_filename"));
+        if !fields.contains(&field) {
+            return Err(format!("{{{field}}} is not a field of {setting}"));
         }
         rest = &rest[i + close + 1..];
     }

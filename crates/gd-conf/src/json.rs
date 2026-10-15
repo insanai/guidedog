@@ -11,6 +11,11 @@ pub fn json_dumps(value: &Value) -> String {
     out
 }
 
+/// Writes a table as [`json_dumps`] does; where it was in conf.toml does not show.
+pub fn json_dumps_table(table: &gd_toml::Table) -> String {
+    json_dumps(&Value { data: Data::Table(table.clone()), line: 0, offset: 0 })
+}
+
 fn write_json(out: &mut String, value: &Value) {
     match &value.data {
         Data::Table(table) => {

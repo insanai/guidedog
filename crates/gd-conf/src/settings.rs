@@ -6,6 +6,7 @@
 use std::collections::BTreeMap;
 
 use crate::config::{Config, FlagOrName};
+use crate::extensions::FlagOrList;
 
 /// What a setting's value is, as conf.toml writes it. gd-migrate checks a conf.py
 /// value against it before writing the key.
@@ -49,6 +50,16 @@ pub enum SettingKind {
     DirectiveAliases,
     /// `autodoc_default_options`: option names to values or `true`.
     AutodocOptions,
+    /// True, false, or a list of strings.
+    FlagOrList,
+    /// A table of string lists.
+    StringLists,
+    /// A whole or decimal number that may be unset (None in conf.py).
+    Number,
+    /// `napoleon_custom_sections`: names, or pairs of a name and a section it is like.
+    NapoleonSections,
+    /// `apidoc_modules`: a list of tables.
+    ApidocModules,
 }
 
 /// Where a setting's value goes: a typed field, or a reader of its own for the kinds
@@ -64,6 +75,9 @@ pub(crate) enum Store {
     Values(fn(&mut Config) -> &mut gd_toml::Table),
     OptionalString(fn(&mut Config) -> &mut Option<String>),
     FlagOrName(fn(&mut Config) -> &mut FlagOrName),
+    FlagOrList(fn(&mut Config) -> &mut FlagOrList),
+    StringLists(fn(&mut Config) -> &mut BTreeMap<String, Vec<String>>),
+    OptionalNumber(fn(&mut Config) -> &mut Option<f64>),
     /// The kind's own reader (`custom.rs`).
     Custom,
 }
@@ -117,6 +131,21 @@ const fn custom(name: &'static str, kind: SettingKind) -> Setting {
 
 const fn either(name: &'static str, field: fn(&mut Config) -> &mut FlagOrName) -> Setting {
     Setting { name, kind: SettingKind::FlagOrName, store: Store::FlagOrName(field) }
+}
+
+const fn flag_or_list(name: &'static str, field: fn(&mut Config) -> &mut FlagOrList) -> Setting {
+    Setting { name, kind: SettingKind::FlagOrList, store: Store::FlagOrList(field) }
+}
+
+const fn string_lists(
+    name: &'static str,
+    field: fn(&mut Config) -> &mut BTreeMap<String, Vec<String>>,
+) -> Setting {
+    Setting { name, kind: SettingKind::StringLists, store: Store::StringLists(field) }
+}
+
+const fn number(name: &'static str, field: fn(&mut Config) -> &mut Option<f64>) -> Setting {
+    Setting { name, kind: SettingKind::Number, store: Store::OptionalNumber(field) }
 }
 
 /// Every conf.toml key Guidedog reads, in the order the Sphinx documentation lists them.
@@ -206,6 +235,78 @@ pub static SETTINGS: &[Setting] = &[
         &mut c.autodoc.python_display_short_literal_types
     }),
     flag("strip_signature_backslash", |c| &mut c.autodoc.strip_signature_backslash),
+    flag("napoleon_google_docstring", |c| &mut c.ext.napoleon.google_docstring),
+    flag("napoleon_numpy_docstring", |c| &mut c.ext.napoleon.numpy_docstring),
+    flag("napoleon_include_init_with_doc", |c| &mut c.ext.napoleon.include_init_with_doc),
+    flag("napoleon_include_private_with_doc", |c| &mut c.ext.napoleon.include_private_with_doc),
+    flag("napoleon_include_special_with_doc", |c| &mut c.ext.napoleon.include_special_with_doc),
+    flag("napoleon_use_admonition_for_examples", |c| {
+        &mut c.ext.napoleon.use_admonition_for_examples
+    }),
+    flag("napoleon_use_admonition_for_notes", |c| &mut c.ext.napoleon.use_admonition_for_notes),
+    flag("napoleon_use_admonition_for_references", |c| {
+        &mut c.ext.napoleon.use_admonition_for_references
+    }),
+    flag("napoleon_use_ivar", |c| &mut c.ext.napoleon.use_ivar),
+    flag("napoleon_use_param", |c| &mut c.ext.napoleon.use_param),
+    flag("napoleon_use_rtype", |c| &mut c.ext.napoleon.use_rtype),
+    flag("napoleon_use_keyword", |c| &mut c.ext.napoleon.use_keyword),
+    flag("napoleon_preprocess_types", |c| &mut c.ext.napoleon.preprocess_types),
+    table("napoleon_type_aliases", |c| &mut c.ext.napoleon.type_aliases),
+    custom("napoleon_custom_sections", SettingKind::NapoleonSections),
+    flag("napoleon_attr_annotations", |c| &mut c.ext.napoleon.attr_annotations),
+    Setting {
+        name: "autosummary_context",
+        kind: SettingKind::Values,
+        store: Store::Values(|c| &mut c.ext.autosummary.context),
+    },
+    table("autosummary_filename_map", |c| &mut c.ext.autosummary.filename_map),
+    flag_or_list("autosummary_generate", |c| &mut c.ext.autosummary.generate),
+    flag("autosummary_generate_overwrite", |c| &mut c.ext.autosummary.generate_overwrite),
+    list("autosummary_mock_imports", |c| &mut c.ext.autosummary.mock_imports),
+    flag("autosummary_imported_members", |c| &mut c.ext.autosummary.imported_members),
+    flag("autosummary_ignore_module_all", |c| &mut c.ext.autosummary.ignore_module_all),
+    custom("apidoc_modules", SettingKind::ApidocModules),
+    list("apidoc_exclude_patterns", |c| &mut c.ext.apidoc.exclude_patterns),
+    int("apidoc_max_depth", |c| &mut c.ext.apidoc.max_depth),
+    flag("apidoc_follow_links", |c| &mut c.ext.apidoc.follow_links),
+    flag("apidoc_separate_modules", |c| &mut c.ext.apidoc.separate_modules),
+    flag("apidoc_include_private", |c| &mut c.ext.apidoc.include_private),
+    flag("apidoc_no_headings", |c| &mut c.ext.apidoc.no_headings),
+    flag("apidoc_module_first", |c| &mut c.ext.apidoc.module_first),
+    flag("apidoc_implicit_namespaces", |c| &mut c.ext.apidoc.implicit_namespaces),
+    list("apidoc_automodule_options", |c| &mut c.ext.apidoc.automodule_options),
+    flag("viewcode_follow_imported_members", |c| &mut c.ext.viewcode.follow_imported_members),
+    flag("viewcode_import", |c| &mut c.ext.viewcode.follow_imported_members),
+    flag("viewcode_enable_epub", |c| &mut c.ext.viewcode.enable_epub),
+    flag("viewcode_line_numbers", |c| &mut c.ext.viewcode.line_numbers),
+    text("linkcode_url", |c| &mut c.ext.linkcode.url),
+    text("linkcode_branch", |c| &mut c.ext.linkcode.branch),
+    text("linkcode_root", |c| &mut c.ext.linkcode.root),
+    table("inheritance_graph_attrs", |c| &mut c.ext.inheritance.graph_attrs),
+    table("inheritance_node_attrs", |c| &mut c.ext.inheritance.node_attrs),
+    table("inheritance_edge_attrs", |c| &mut c.ext.inheritance.edge_attrs),
+    table("inheritance_alias", |c| &mut c.ext.inheritance.alias),
+    list("coverage_modules", |c| &mut c.ext.coverage.modules),
+    list("coverage_ignore_modules", |c| &mut c.ext.coverage.ignore_modules),
+    list("coverage_ignore_functions", |c| &mut c.ext.coverage.ignore_functions),
+    list("coverage_ignore_classes", |c| &mut c.ext.coverage.ignore_classes),
+    list("coverage_ignore_pyobjects", |c| &mut c.ext.coverage.ignore_pyobjects),
+    list("coverage_c_path", |c| &mut c.ext.coverage.c_path),
+    table("coverage_c_regexes", |c| &mut c.ext.coverage.c_regexes),
+    string_lists("coverage_ignore_c_items", |c| &mut c.ext.coverage.ignore_c_items),
+    flag("coverage_write_headline", |c| &mut c.ext.coverage.write_headline),
+    flag("coverage_statistics_to_report", |c| &mut c.ext.coverage.statistics_to_report),
+    flag("coverage_statistics_to_stdout", |c| &mut c.ext.coverage.statistics_to_stdout),
+    flag("coverage_skip_undoc_in_source", |c| &mut c.ext.coverage.skip_undoc_in_source),
+    flag("coverage_show_missing_items", |c| &mut c.ext.coverage.show_missing_items),
+    flag("duration_print_total", |c| &mut c.ext.duration.print_total),
+    flag("duration_print_slowest", |c| &mut c.ext.duration.print_slowest),
+    int("duration_n_slowest", |c| &mut c.ext.duration.n_slowest),
+    text("duration_write_json", |c| &mut c.ext.duration.write_json),
+    number("duration_limit", |c| &mut c.ext.duration.limit),
+    text("image_converter", |c| &mut c.ext.image_converter.converter),
+    list("image_converter_args", |c| &mut c.ext.image_converter.converter_args),
     custom("nitpick_ignore_regex", SettingKind::PatternPairs),
     flag("show_authors", |c| &mut c.show_authors),
     flag("add_function_parentheses", |c| &mut c.add_function_parentheses),
@@ -316,9 +417,7 @@ pub const FOREIGN_PREFIXES: &[&str] = &[
     "man_",
     "texinfo_",
     "autodoc_",
-    "autosummary_",
     "intersphinx_",
-    "napoleon_",
     "htmlhelp_",
     "applehelp_",
     "qthelp_",
@@ -338,7 +437,8 @@ pub const FOREIGN_PREFIXES: &[&str] = &[
     "myst_title_to_header",
 ];
 
-/// Extensions Guidedog implements natively; anything else needs the plugin system.
+/// Sphinx's built-in extensions and myst_parser, which Guidedog implements in its own way
+/// (GDS 0011); anything else needs the plugin system.
 pub const NATIVE_EXTENSIONS: &[&str] = &[
     "sphinx.ext.mathjax",
     "sphinx.ext.todo",
@@ -351,6 +451,15 @@ pub const NATIVE_EXTENSIONS: &[&str] = &[
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.linkcode",
+    "sphinx.ext.inheritance_diagram",
+    "sphinx.ext.apidoc",
+    "sphinx.ext.coverage",
+    "sphinx.ext.duration",
+    "sphinx.ext.imgconverter",
     "myst_parser",
 ];
 

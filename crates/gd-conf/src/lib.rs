@@ -23,9 +23,12 @@
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod check;
+mod check_ext;
 mod config;
 mod custom;
+mod custom_ext;
 mod digest;
+mod extensions;
 mod json;
 mod load;
 mod paths;
@@ -43,8 +46,14 @@ pub use config::{
     MathjaxConfig, MystConfig, ObjectTypeDecl, OdinApiConfig, PdfConfig, PdfDocument,
     PluginConfig, RustApiConfig,
 };
+pub use custom_ext::APIDOC_MODULE_KEYS;
 pub use digest::{Digest, Digester};
-pub use json::json_dumps;
+pub use extensions::{
+    ApidocConfig, ApidocModule, AutosummaryConfig, CoverageConfig, DurationConfig,
+    ExtensionSettings, FlagOrList, ImageConverterConfig, InheritanceConfig, LINKCODE_FIELDS,
+    LinkcodeConfig, NapoleonConfig, NapoleonSection, ViewcodeConfig,
+};
+pub use json::{json_dumps, json_dumps_table};
 pub use load::{
     LoadOptions, Loaded, MAX_CONFIG_BYTES, apply_override, find_project, finish_config,
     load_config, merge_table,

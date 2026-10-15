@@ -63,6 +63,7 @@ pub fn reading_settings(c: &Config) -> Digest {
     }
     myst_settings(&mut d, c);
     api_settings(&mut d, c);
+    extension_settings(&mut d, c);
     d.finish()
 }
 
@@ -124,6 +125,95 @@ fn api_settings(d: &mut Digester, c: &Config) {
     let r = &c.rust_api;
     d.texts(&r.crates).text(&r.root).texts(&r.options).text(&r.member_order);
     d.flag(r.generate_api_docs).flag(r.add_toctree_entry);
+}
+
+/// The settings of Sphinx's built-in extensions that change how documents read (GDS
+/// 0011): which are listed, napoleon, autosummary, apidoc, viewcode, linkcode and
+/// inheritance diagrams. coverage, duration and imgconverter change no document.
+fn extension_settings(d: &mut Digester, c: &Config) {
+    for name in [
+        "sphinx.ext.napoleon",
+        "sphinx.ext.autosummary",
+        "sphinx.ext.apidoc",
+        "sphinx.ext.viewcode",
+        "sphinx.ext.linkcode",
+        "sphinx.ext.inheritance_diagram",
+    ] {
+        d.flag(c.has_extension(name));
+    }
+    napoleon_settings(d, c);
+    autosummary_settings(d, c);
+    apidoc_settings(d, c);
+    let v = &c.ext.viewcode;
+    d.flag(v.follow_imported_members).flag(v.line_numbers);
+    let l = &c.ext.linkcode;
+    d.text(&l.url).text(&l.branch).text(&l.root);
+    let i = &c.ext.inheritance;
+    for table in [&i.graph_attrs, &i.node_attrs, &i.edge_attrs, &i.alias] {
+        for (k, v) in table {
+            d.text(k).text(v);
+        }
+        d.number(table.len() as i64);
+    }
+}
+
+fn napoleon_settings(d: &mut Digester, c: &Config) {
+    let n = &c.ext.napoleon;
+    for flag in [
+        n.google_docstring,
+        n.numpy_docstring,
+        n.include_init_with_doc,
+        n.include_private_with_doc,
+        n.include_special_with_doc,
+        n.use_admonition_for_examples,
+        n.use_admonition_for_notes,
+        n.use_admonition_for_references,
+        n.use_ivar,
+        n.use_param,
+        n.use_rtype,
+        n.use_keyword,
+        n.preprocess_types,
+        n.attr_annotations,
+    ] {
+        d.flag(flag);
+    }
+    for (k, v) in &n.type_aliases {
+        d.text(k).text(v);
+    }
+    for s in &n.custom_sections {
+        d.text(&s.name).text(&s.like);
+    }
+    d.number(n.custom_sections.len() as i64);
+}
+
+fn autosummary_settings(d: &mut Digester, c: &Config) {
+    let a = &c.ext.autosummary;
+    // As JSON, so the context's place in conf.toml (its line numbers) does not count.
+    d.text(&gd_conf::json_dumps_table(&a.context));
+    for (k, v) in &a.filename_map {
+        d.text(k).text(v);
+    }
+    match &a.generate {
+        gd_conf::FlagOrList::Flag(on) => d.flag(*on),
+        gd_conf::FlagOrList::List(files) => d.texts(files),
+    };
+    d.texts(&a.mock_imports).flag(a.imported_members).flag(a.ignore_module_all);
+}
+
+fn apidoc_settings(d: &mut Digester, c: &Config) {
+    let a = &c.ext.apidoc;
+    d.text(&format!("{:?}", a.modules)).texts(&a.exclude_patterns).number(a.max_depth);
+    for flag in [
+        a.follow_links,
+        a.separate_modules,
+        a.include_private,
+        a.no_headings,
+        a.module_first,
+        a.implicit_namespaces,
+    ] {
+        d.flag(flag);
+    }
+    d.texts(&a.automodule_options);
 }
 
 /// The digest the environment is saved with: [`reading_settings`] and what the build

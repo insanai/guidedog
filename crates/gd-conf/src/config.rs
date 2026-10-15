@@ -6,6 +6,7 @@
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 
+use crate::extensions::ExtensionSettings;
 use crate::pattern::Pattern;
 
 /// The name of a project's configuration, in its source directory.
@@ -151,6 +152,9 @@ pub struct Config {
     pub myst: MystConfig,
     /// Internationalization: `locale_dirs`, `gettext_*` and their relatives.
     pub intl: IntlConfig,
+    /// The settings of napoleon, autosummary, apidoc, viewcode, linkcode,
+    /// inheritance_diagram, coverage, duration and imgconverter (GDS 0011).
+    pub ext: ExtensionSettings,
 }
 
 /// One book of `pdf_documents`: the document it starts from, and its file, title and
@@ -632,6 +636,7 @@ impl Config {
             graphviz: GraphvizConfig::default(),
             myst: MystConfig::default(),
             intl: IntlConfig::default(),
+            ext: ExtensionSettings::default(),
         }
     }
 

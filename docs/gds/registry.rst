@@ -44,6 +44,6 @@ Discussion registry
      - committed
    * - 0011
      - :doc:`records/0011-sphinx-builtin-extensions`
-     - accepted
+     - committed
 
 .. gds-generated-end

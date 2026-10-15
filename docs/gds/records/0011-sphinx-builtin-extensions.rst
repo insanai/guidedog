@@ -1,6 +1,6 @@
 :gds-number: 0011
 :gds-title: Sphinx's built-in extensions
-:gds-state: accepted
+:gds-state: committed
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-10-15
@@ -354,3 +354,10 @@ References
 
    2026-10-15: discussion -> accepted. Maintainer decided that Guidedog supports
    all of Sphinx's built-in extensions; settings and migration implemented
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-10-15: accepted -> committed. All nine extensions implemented and
+   verified. evidence/builtin-extensions-20261015.rst

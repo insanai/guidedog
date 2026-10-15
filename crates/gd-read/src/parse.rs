@@ -276,7 +276,6 @@ impl<'a> Worker<'a> {
             d.failed = true;
             return;
         };
-        content_warnings(&mut reports);
         let store = self.ctx.store;
         match store.save_object(&d.docname, doc) {
             Ok(object) => d.object = Some(object),
@@ -369,15 +368,6 @@ fn reusable(ctx: &ReadContext<'_>, prepared: &Prepared, old: &DocInfo, now: &Doc
         return false;
     }
     old.object.as_ref().is_some_and(|object| ctx.store.path_of(object).is_file())
-}
-
-/// Makes the errors a reader found in a document it read anyway warnings, as Sphinx
-/// logs Docutils' ERROR and SEVERE messages: the build succeeds with them, and `-W`
-/// fails it. Only a document that could not be read is an error of the build.
-pub(crate) fn content_warnings(reports: &mut [Report]) {
-    for report in reports.iter_mut().filter(|r| r.severity == Severity::Error) {
-        report.severity = Severity::Warning;
-    }
 }
 
 /// `d` failed with `report`.

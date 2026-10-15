@@ -51,11 +51,11 @@ fn publish(
     outcome.problem
 }
 
-/// Why a build that finished its work does not publish it. As sphinx-build does,
-/// problems in a document's content are reported as warnings and the build still
-/// succeeds; a document that could not be read at all has no page and fails it
-/// (`build.read`), any other error fails it (`build.errors`), so a build never
-/// succeeds with errors, and `-W` fails a build with any warning (`build.warnings`).
+/// Why a build that finished its work does not publish it. As sphinx-build does, errors
+/// and warnings in a document's content are reported with their own severity and the
+/// build still succeeds; a document that could not be read at all has no page and fails
+/// it (`build.read`), and `-W` fails a build with any warning or error
+/// (`build.warnings`).
 fn publication_problem(s: &Setup<'_>, written: &Written, reports: &[Report]) -> Option<Problem> {
     let unread = written.env.docs.iter().filter(|d| d.failed).count();
     if unread > 0 {
@@ -72,16 +72,9 @@ fn publication_problem(s: &Setup<'_>, written: &Written, reports: &[Report]) -> 
     }
     let count = |severity| reports.iter().filter(|r| r.severity == severity).count();
     let (errors, warnings) = (count(Severity::Error), count(Severity::Warning));
-    if errors > 0 && !s.options.warnings_as_errors {
-        return Some(Problem::new(
-            "build.errors",
-            "BUILD HAD ERRORS",
-            "",
-            format!("The build reported {errors} error(s), so its output was not published."),
-            "Fix the errors reported above, then run the build again.",
-            1,
-        ));
-    }
+    // As sphinx-build does, errors in a document's content are reported and the build
+    // still succeeds; only a document that could not be read fails it (above), and -W
+    // fails a build with any warning or error (below).
     if !s.options.warnings_as_errors {
         return None;
     }

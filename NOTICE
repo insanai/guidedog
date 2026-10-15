@@ -22,10 +22,44 @@ Third-party components
 ----------------------
 
 The components below keep their own licenses. Each license text is kept next to
-the component in this repository, or is downloaded with it.
+the component in this repository, or is part of the Rust crate's published source
+(in Cargo's registry after `cargo fetch`, and on https://crates.io).
 
-- Libertinus fonts 7.051 (lib/project/assets/fonts, docs/shared/_static/data/fonts):
-  SIL Open Font License 1.1; see OFL.txt in each folder.
+Rust crates compiled into the programs (versions as in Cargo.lock):
+
+- Typst 0.15.1 (typst, typst-layout, typst-pdf, typst-html, typst-kit and the
+  typst-* crates they use; linked by crates/gd-typst with its default `embedded`
+  feature): Apache License 2.0. The fonts typst-assets embeds keep their own
+  licenses, listed in that crate's NOTICE: Libertinus Serif (SIL Open Font License
+  1.1), New Computer Modern (GUST Font License 1.0; NewCM10-Regular GPL-3.0-or-later
+  with the font exception), DejaVu Sans Mono (Bitstream Vera license, DejaVu changes
+  in the public domain), and the Foxit PDF standard fonts (PDFium's BSD-style
+  license).
+- OpenSSL 3 (openssl-src, built and linked statically on Linux only, for Typst's
+  package downloader): Apache License 2.0. macOS and Windows use the system's TLS.
+- tree-sitter 0.25 (crates/gd-pyscan, crates/gd-rustdoc), tree-sitter-python 0.25 and
+  tree-sitter-rust 0.24: MIT License. `guidedog --licenses` prints these notices.
+- serde_json 1 and serde 1 (crates/gd-json): MIT License or Apache License 2.0, at
+  the user's option.
+- The other crates these depend on are each under a permissive license: mostly MIT
+  or Apache-2.0 (often both, at the user's option), and also BSD-2-Clause,
+  BSD-3-Clause, Zlib, Unicode-3.0, BSL-1.0, 0BSD, CC0-1.0, Unlicense, and MPL-2.0
+  (option-ext). `cargo metadata` lists every crate with its license.
+
+Linked from the system, not distributed with Guidedog:
+
+- Graphviz (libgvc and libcgraph, linked dynamically by crates/gd-graphdog): Eclipse
+  Public License 1.0 for current releases (older distribution packages may carry the
+  Common Public License); see the COPYING file of the installed Graphviz. The
+  additional permission above covers this combination. The release archives do not
+  contain Graphviz; install it from the system's package manager or Homebrew.
+- curl (run as a program by crates/gd-fetch; not linked): curl license.
+
+Files kept in this repository:
+
+- Libertinus fonts 7.051 (docs/shared/_static/data/fonts, and the fonts new projects
+  receive from `guidedog quickstart`): SIL Open Font License 1.1; see OFL.txt in each
+  folder.
 - Noto Serif CJK 2.003 and Noto Serif Devanagari 2.006 (docs/shared/fonts, and the
   web subsets in docs/manual/_static/data/fonts): SIL Open Font License 1.1; see
   OFL-CJK.txt and OFL-Devanagari.txt. The CJK faces are downloaded by
@@ -35,27 +69,18 @@ the component in this repository, or is downloaded with it.
 - Typeset and Hypher by Bram Stein, and the TeX English hyphenation patterns
   (docs/shared/_static/data/typography): BSD licenses and the patterns' own notice;
   see TYPESET-LICENSE.txt, HYPHER-LICENSE.txt, and hyph-en-us.tex.
-- Unicode Character Database 17.0.0 (tools/data, and the tables generated from it in
-  lib/core and lib/readers/rst/inline): Unicode License v3; see
-  tools/data/LICENSE-UNICODE.txt.
+- Unicode Character Database 17.0.0 (tools/data, and the tables derived from it in
+  crates/guidedoc/src/tables and crates/guidedoc-rst-inline/src/punctuation_table.rs): Unicode License v3;
+  see tools/data/LICENSE-UNICODE.txt.
 - Pygments 2.19.2 and Sphinx 9.1.0 style definitions (tools/data, and the tables
-  generated from them in lib/highlight): BSD 2-Clause License; see
+  derived from them in crates/gd-highlight/src/style_tables.rs): BSD 2-Clause License; see
   tools/data/pygments-2.19.2/LICENSE and tools/data/sphinx-9.1.0/LICENSE.rst.
-- tree-sitter 0.26.13 and tree-sitter-python 0.25.0 (built by native/tree-sitter,
-  linked into guidedog): MIT License; see lib/treesitter/licenses. `guidedog
-  --licenses` prints these notices.
-- Graphviz 16.1.0 (linked from the system, or built statically by native/graphviz):
-  Eclipse Public License 1.0; see the COPYING file of the Graphviz release.
-- Typst 0.15.1 and its Rust crates (native/typst_bridge, linked only in builds with
-  -define:GUIDEDOG_TYPST_BRIDGE=true): Apache License 2.0 for Typst; the crates it
-  depends on, the fonts typst-kit embeds, and OpenSSL (vendored on Linux) keep their
-  own licenses, listed in native/typst_bridge/Cargo.lock and the crates' sources.
-- libcurl (linked from the system on Unix): curl license.
 
 Test data
 ---------
 
-Test corpora are used as data only and are not part of the built program:
-Docutils sources (tests/data/docutils: public domain, with one BSD 2-Clause file),
-the MyST parser's test data (tests/data/myst: MIT License; see LICENSE there), and
-the CommonMark specification 0.31.2 (tests/data: CC BY-SA 4.0).
+Test corpora are used as data only and are not part of the built programs:
+Docutils sources (crates/guidedoc-rst/tests/data/docutils: public domain, with one
+BSD 2-Clause file), the MyST parser's test data
+(crates/guidedoc-commonmark/tests/data/myst: MIT License; see LICENSE there), and the
+CommonMark specification 0.31.2 (crates/guidedoc-commonmark/tests/data: CC BY-SA 4.0).

@@ -386,10 +386,16 @@ pub(crate) fn make_temp_dir(parent: &Path, prefix: &str) -> std::io::Result<Path
 }
 
 fn private_dir_builder() -> fs::DirBuilder {
-    let mut builder = fs::DirBuilder::new();
     #[cfg(unix)]
-    std::os::unix::fs::DirBuilderExt::mode(&mut builder, 0o700);
-    builder
+    {
+        let mut builder = fs::DirBuilder::new();
+        std::os::unix::fs::DirBuilderExt::mode(&mut builder, 0o700);
+        builder
+    }
+    #[cfg(not(unix))]
+    {
+        fs::DirBuilder::new()
+    }
 }
 
 /// Creates a new file readable and writable only by the user; fails if it exists.

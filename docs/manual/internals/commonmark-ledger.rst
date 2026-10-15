@@ -151,5 +151,4 @@ Known gaps
 -  ``dmath_double_inline``: ``$$...$$`` inside a paragraph is inline Math.
 -  ``myst_update_mathjax`` and ``myst_mathjax_classes`` concern the HTML output, not
    reading.
--  The Odin reader's test that reading allocates nothing has no counterpart: the Rust
-   reader allocates its per-read skeleton, as the engine's design allows.
+-  Reading allocates: the reader builds its per-read skeleton on the heap, as the engine's design allows.

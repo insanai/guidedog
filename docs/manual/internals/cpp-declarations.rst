@@ -61,7 +61,7 @@ stack budget") requires:
 - A fold expression is tried only when its ``...`` stands in the parenthesized group,
   outside nested brackets and literals, so nested parentheses parse in linear time.
 - The node table holds at most 16 nodes per byte plus 256; a parse that needs more
-  fails as an invalid declaration, as the Odin reader's fixed pool did.
+  fails as an invalid declaration.
 
 Once a parse stops at a limit, every later production fails, and the parse returns
 ``ErrorKind::Limit``. A declaration too deep or too costly to parse is not an invalid
@@ -77,25 +77,15 @@ limit stops a parse first. ``cargo test --release -p guidedoc-cpp --test limits 
 Conformance
 -----------
 
-``crates/guidedoc-cpp/tests/oracle.rs`` checks 702 inputs (declarations of every object
-type, in scopes, namespace arguments, cross-reference targets, and role expressions,
-many from Sphinx's ``test_domain_cpp``) against what the Odin implementation gives for
-them: ids of every version, names, parameter names, ``str()`` and display text, symbol
-paths, and expression ids. All 702 match. Run it with
+``crates/guidedoc-cpp/tests/oracle.rs`` checks 702 inputs (declarations of every object type, in scopes, namespace arguments, cross-reference targets, and role expressions, many from Sphinx's ``test_domain_cpp``) against recorded expectations: ids of every version, names, parameter names, ``str()`` and display text, symbol paths, and expression ids. All 702 match. Run it with
 
 ::
 
     cargo test -p guidedoc-cpp --test oracle
 
-The expectations (``tests/data/oracle.tsv``) were written by the Odin package with
-``tests/data/oracle_test.odin`` added to it, reading ``tests/data/corpus.txt``. One
-Odin defect was fixed first. It built an id's pieces in a shared arena, so a piece
-computed while writing into that arena was written twice (``int (*)(double)`` as
-``PFiddE`` where Sphinx writes ``PFidE``; also in template arguments, array sizes,
-``decltype``, and call arguments). The Rust port builds each piece in its own string
-and gives Sphinx's ids. 28 of the 702 lines differ from the unfixed Odin output.
+The expectations are in ``tests/data/oracle.tsv``, one line for each input of ``tests/data/corpus.txt``. The ids are Sphinx's. Each piece of an id is built in its own string, so a piece computed while another is being written is never written twice: ``int (*)(double)`` gives ``PFidE``, as in Sphinx, and the same holds in template arguments, array sizes, ``decltype``, and call arguments.
 
-``tests/limits.rs`` ports the Odin nesting tests. Seven constructs nested 1000 deep stop
+``tests/limits.rs`` holds the nesting tests. Seven constructs nested 1000 deep stop
 at the depth limit. Nested 4000 deep with a huge depth limit, they stop at the stack
 limit. Nested 12 deep, none stops at a limit. And 60 levels of parentheses parse in
 linear time.

@@ -1,12 +1,7 @@
 Guidedoc AST contract
 =====================
 
-This is the normative mapping between source constructs and Guidedoc nodes (GDS 0003),
-ported from the Odin engine's ``lib/core/AST.md`` with Rust names (``Block_Quote`` is
-``NodeKind::BlockQuote``, ``Link_Info`` is ``LinkInfo``). Paths to reader packages
-(``lib/readers/...``) name the Odin sources the Rust readers port. Readers produce exactly
-these shapes; renderers may rely on them. ``src/kinds.rs`` (``child_allowed``) enforces the
-parent-child rules during building and validation.
+This is the normative mapping between source constructs and Guidedoc nodes (GDS 0003). Readers produce exactly these shapes; renderers may rely on them. ``crates/guidedoc/src/kinds.rs`` (``child_allowed``) enforces the parent-child rules during building and validation.
 
 General rules
 -------------
@@ -147,7 +142,7 @@ Markdown (MyST) mapping
 -----------------------
 
 By default the ``commonmark`` reader reads the Markdown that Sphinx projects write with
-myst-parser 0.16.1 (``lib/readers/commonmark/LEDGER.md``). Its tree is reStructuredText's
+myst-parser 0.16.1 (:doc:`commonmark-ledger`). Its tree is reStructuredText's
 for the equivalent construct, so renderers and the project host need nothing new:
 
 +--------------------------------------------+--------------------------------------------+
@@ -241,13 +236,7 @@ for the equivalent construct, so renderers and the project host need nothing new
 |                                            | filling a paragraph, as blocks             |
 +--------------------------------------------+--------------------------------------------+
 
-Directive and role hosts: the RST reader's directives and roles serve a host markup through
-``rst.Host`` (``lib/readers/rst/host.odin``): the host runs a directive with
-``rst.run_hosted``, a role with ``rst_inline.apply_host_role``, and the handler asks for
-nested content with ``rst.parse_body`` and ``rst.inline``, which call back into the host for
-a hosted directive. The Markdown reader defines its own interface (``commonmark.Extension``,
-``lib/readers/commonmark/extension.odin``); ``sphinx.markdown_settings`` (Sphinx layer)
-connects the two, so one set of handlers serves reStructuredText and Markdown.
+Directive and role hosts: the RST reader's directives and roles serve a host markup through the ``guidedoc_rst::Host`` trait (``crates/guidedoc-rst/src/host.rs``): the host runs a directive with ``Parser::run_hosted``, a role with ``guidedoc_rst_inline::apply_host_role``, and the handler asks for nested content with ``Parser::parse_body`` and ``Parser::inline``, which call back into the host for a hosted directive. The Markdown reader defines its own interface (``guidedoc_commonmark::Extension``, ``crates/guidedoc-commonmark/src/extension.rs``); ``MystExtension`` (Sphinx layer, ``crates/guidedoc-sphinx/src/markdown.rs``) connects the two, so one set of handlers serves reStructuredText and Markdown.
 
 reStructuredText mapping
 ------------------------

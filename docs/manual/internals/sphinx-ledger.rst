@@ -1,8 +1,7 @@
 Sphinx layer: coverage ledger
 =============================
 
-This ledger tracks ``guidedoc-sphinx`` (ported from the Odin ``lib/readers/sphinx``
-package) against its baseline. Test names refer to the unit tests in
+This ledger tracks ``guidedoc-sphinx`` against its baseline. Test names refer to the unit tests in
 ``crates/guidedoc-sphinx/src/tests/`` and the integration tests in its ``tests/``;
 ``integration_tests.*`` names are the project host's tests.
 
@@ -293,10 +292,7 @@ myst-parser 0.16.1 or be a documented difference (see :doc:`commonmark-conforman
 - Fixtures: 218 cases, 215 match, 3 documented differences.
 - Sphinx builds: 10 cases, 8 match, 2 documented differences.
 
-Not ported
-----------
+Covered elsewhere
+-----------------
 
-- The Odin tests that counted allocator calls (``reading_makes_no_allocator_calls``,
-  ``markdown_reading_makes_no_allocator_calls``): the Rust layer allocates per read by
-  design. ``extension_interface_serves_other_dialects`` is covered by guidedoc-rst's own
-  extension tests; ``cpp_parse_steps_are_bounded`` by guidedoc-cpp's.
+- Reading allocates per read by design, so no test counts allocator calls. The extension interface for other dialects is covered by guidedoc-rst's own extension tests, and bounded C++ parsing by guidedoc-cpp's limit tests.

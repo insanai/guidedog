@@ -26,7 +26,7 @@ The roots folder is ``tests/roots`` of Sphinx's source distribution (``sphinx-9.
 
 The record ``tests/integration/data/sphinxdiff/results.txt`` holds the last run: the date, the host, Sphinx's version, Guidedog's revision, the command, and one line per root.
 
-The run of 15 October 2026 checked the Rust implementation against the same pinned Sphinx 9.1.0. It agrees with the earlier record on every root but one. In ``test-images`` Sphinx 9.1.0 now reports one warning where the record had two, and the two builds still agree. The run also found one regression in the port, which we fixed before recording it: the reader had relabelled errors in a document's content (an invalid directive option, an invalid option block) as warnings, where Docutils and Sphinx report them as errors. Now the severity stays as the reader reports it, the build still succeeds, and ``-W`` fails it, as with Sphinx.
+The run of 15 October 2026 checked Guidedog against the same pinned Sphinx 9.1.0 again. It agrees with the earlier record on every root but one. In ``test-images`` Sphinx 9.1.0 now reports one warning where the record had two, and the two builds still agree. The run also found one regression, which we fixed before recording it: the reader had relabelled errors in a document's content (an invalid directive option, an invalid option block) as warnings, where Docutils and Sphinx report them as errors. Now the severity stays as the reader reports it, the build still succeeds, and ``-W`` fails it, as with Sphinx.
 
 
 One comparison
@@ -81,6 +81,6 @@ History
 
 The first comparison (29 September 2026) found differences in ``test-domain-cpp`` (ids and links), ``test-numfig`` (ids and links), and ``test-images``. We fixed them before the record's first run. The record's comparisons of numbers, numref texts and warnings, and the counting of repeated links, found the differences fixed in these commits: ``:numref:`` to a labelled figure, table or code block, explicit numref formats, and their warnings; figure numbers across toctree documents; section numbers of toctree documents among subsections; toctree warnings (lines, repeated entries, cycles through the root, documents numbered twice); glob patterns listing a document twice; ``:any:`` for Python and JavaScript; C function parameters; links in C and C++ signatures and expressions; C++ roles naming another kind of declaration; duplicate object descriptions; ``extlinks_detect_hardcoded_links``; ``contents`` as the root document; the lines of missing images and duplicate declarations; ``-D name=0|1``.
 
-The Odin implementation made that record with its own ``tools/sphinxdiff``. The Rust port keeps the comparison as ``cargo xtask sphinxdiff`` with the same rules and the same summary, so a new record can be read line by line against the old one.
+Every record is made by ``cargo xtask sphinxdiff`` with the same rules and the same summary, so a new record can be read line by line against an older one.
 
 The reStructuredText reader is checked against Docutils itself in :doc:`rst-conformance`.

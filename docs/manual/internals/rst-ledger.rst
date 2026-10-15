@@ -1,8 +1,7 @@
 reStructuredText block reader: coverage ledger
 ==============================================
 
-This ledger tracks ``guidedoc-rst`` (ported from the Odin ``lib/readers/rst`` package,
-without its ``inline/`` subpackage) against its baseline.
+This ledger tracks ``guidedoc-rst`` (the block reader; inline markup is ``guidedoc-rst-inline``) against its baseline.
 
 Baseline: the Docutils *reStructuredText Markup Specification* and *reStructuredText
 Directives*, implemented independently (GDS 0003, "Reader conformance is explicit").
@@ -384,7 +383,7 @@ Resources, limits, and allocation
      - Tests
    * - Every construct reads, and rereads identically in a reused workspace
      - done
-     - ``every_construct_reads_repeatedly`` (the Odin reader's no-allocation guarantee is not kept: see the crate README)
+     - ``every_construct_reads_repeatedly``
    * - Stack budget bounds nesting below ``max_depth``; huge depth limits still end in a ``Limit``
      - done
      - ``deep_lists_past_a_huge_depth_limit_hit_the_stack_limit``, ``stack_budget_bounds_nesting_below_max_depth``

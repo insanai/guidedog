@@ -28,7 +28,7 @@ harness with its extension, where every difference must be documented below.
 
    * - Part
      - Cases
-     - With the Sphinx layer (Odin result)
+     - With the Sphinx layer
      - Reader alone (no handlers)
    * - Renderer fixtures (syntax elements, tables, directive options, Docutils and
        Sphinx directives and roles, amsmath, containers, eval-rst, definition lists)

@@ -2,10 +2,7 @@ The rust and odin domains (guidedoc-sphinx)
 ===========================================
 
 ``crates/guidedoc-sphinx/src/domains/rust.rs`` and ``.../odin.rs`` implement the
-Sphinx layer's two domains for compiled languages. The odin domain is a port of
-``lib/readers/sphinx/odin.odin`` (GDS 0005 remains its specification, and its tests are
-ported unchanged in ``tests/odin_domain.rs``). The rust domain is new, designed after
-it. It reads the vocabulary ``gd-rustdoc`` writes (see :doc:`../rust` for the user's
+Sphinx layer's two domains for compiled languages. GDS 0005 is the specification of the odin domain, and ``tests/odin_domain.rs`` holds its tests. The rust domain follows the same design. It reads the vocabulary ``gd-rustdoc`` writes (see :doc:`../rust` for the user's
 view). This page records the node shapes the rust domain produces and how both are
 built.
 
@@ -30,10 +27,7 @@ roles and info fields, and hooks the shared object description calls (``signatur
 the module itself
    Tables, hooks, the module or package directives, ids and index entries.
 
-The Odin version kept its context as space-separated pool strings and a fixed array of
-polymorphic names. The port keeps the import aliases as ``Vec<(alias, package)>``, the
-private names as a ``Vec<String>``, and a signature's polymorphic names as borrowed
-``&str`` slices of the signature (``SigCx``). Nothing else changed in behaviour.
+The odin domain keeps the import aliases as ``Vec<(alias, package)>``, the private names as a ``Vec<String>``, and a signature's polymorphic names as borrowed ``&str`` slices of the signature (``SigCx``).
 
 Rust signatures
 ---------------
@@ -132,5 +126,4 @@ node shapes of representative items (a generic struct with an inherent and a tra
 impl, variants with fields, a union, a trait with associated items, an unsafe generic
 function with a where clause, a deprecated async function, re-exports, a cfg-gated
 module), hand-written short forms, ``:module:``, standalone impls, roles, no-index
-forms, and the table of contents settings. ``tests/odin_domain.rs`` holds the Odin
-port's tests.
+forms, and the table of contents settings. ``tests/odin_domain.rs`` holds the odin domain's tests.

@@ -1,8 +1,7 @@
 reStructuredText inline markup and resolution: coverage ledger
 ==============================================================
 
-This ledger tracks ``guidedoc-rst-inline`` (ported from the Odin
-``lib/readers/rst/inline`` package) against its baseline.
+This ledger tracks ``guidedoc-rst-inline`` against its baseline.
 
 Baseline: the Docutils *reStructuredText Markup Specification* (sections "Inline
 Markup", "Hyperlink Targets", "Footnotes", "Citations", "Substitution Definitions")
@@ -59,7 +58,7 @@ Recognition rules
      - ``unterminated_markup_warns_and_stays_text``
    * - Unicode categories Ps/Pe/Pi/Pf/Pd/Po (and Pc, which is no context)
      - done
-     - ``punctuation_categories_come_from_unicode_data``; ``punctuation_table.rs`` was generated from DerivedGeneralCategory-17.0.0.txt (the Odin ``tools/punctuation``); quote and bracket pairs for rule 5 stay in ``chars.rs``
+     - ``punctuation_categories_come_from_unicode_data``; ``punctuation_table.rs`` was generated from DerivedGeneralCategory-17.0.0.txt; quote and bracket pairs for rule 5 stay in ``chars.rs``
    * - white space is Python's ``str.isspace`` (Zs, or bidi WS/B/S): U+200B, U+200E/F, U+FEFF are not white space, U+001C-U+001F are
      - done
      - ``white_space_is_pythons_isspace``; ``SPACES`` in ``punctuation_table.rs`` comes from UnicodeData-17.0.0.txt
@@ -444,8 +443,8 @@ Bounds and allocation
      - done
      - every parse; no per-call buffer allocation in steady state
    * - resolution uses growing ``Vec``/``HashMap`` tables
-     - deviation
-     - The Odin counted-and-sized scratch tables and the "no allocator calls" test are gone; ``every_construct_in_one_document`` keeps the document of that test.
+     - done
+     - ``every_construct_in_one_document``
    * - work charged through ``Builder::spend``; limit is a result
      - done
      - ``work_limit_is_a_result``
@@ -455,6 +454,3 @@ Bounds and allocation
    * - linear-time recognition on hostile input (cached end-string searches, simplename, scheme, email, URI tail memos)
      - done
      - ``hostile_input_stays_linear``
-   * - symbol-table probe limit (``rst.resolve.limit``)
-     - deviation
-     - Rust maps have no probe limit, so the message is never reported.

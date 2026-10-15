@@ -1,0 +1,25 @@
+[package]
+name = "gd-link"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "The link pass of a Guidedog build, and rendering a linked page."
+
+[dependencies]
+guidedoc = { workspace = true }
+gd-conf = { workspace = true }
+gd-env = { workspace = true }
+gd-resolve = { workspace = true }
+gd-host = { workspace = true }
+gd-report = { workspace = true }
+gd-graphdog = { workspace = true }
+gd-json = { workspace = true }
+
+[dev-dependencies]
+guidedoc-html = { workspace = true }
+guidedoc-text = { workspace = true }
+guidedoc-typst = { workspace = true }
+
+[lints]
+workspace = true

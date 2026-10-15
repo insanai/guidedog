@@ -1,0 +1,20 @@
+/* Only opted-in diagrams use this palette. Light attributes remain the print master.
+   A browser evaluates this query against the embedding image's color-scheme. */
+@media screen and (prefers-color-scheme: dark) {
+  .graph > polygon { fill: transparent; stroke: transparent; }
+  .node > :where(path, polygon, ellipse):where(:not([fill="none"]):not([fill="transparent"])) {
+    fill: #203830; stroke: #7cb39f;
+  }
+  .node > :is(path, polygon, ellipse)[fill="none"] { stroke: #7cb39f; }
+  .node text, .edge text, .cluster text, .graph > text { fill: #edf5f1; }
+  .edge > path { stroke: #9bb8ad; }
+  .edge > polygon { fill: #9bb8ad; stroke: #9bb8ad; }
+  .cluster > :is(path, polygon) { stroke: #73968a; }
+  .cluster > :is(path, polygon):not([fill="none"]):not([fill="transparent"]) { fill: #192920; }
+  .gd-input > :is(path, polygon, ellipse) { fill: #30332d; stroke: #b4b39d; }
+  .gd-output > :is(path, polygon, ellipse) { fill: #20364b; stroke: #93b8e4; }
+  .gd-plugin > :is(path, polygon, ellipse), .gd-choice > :is(path, polygon, ellipse) {
+    fill: #41341d; stroke: #dfbc72;
+  }
+  .gd-memory > :is(path, polygon, ellipse) { fill: #362c48; stroke: #bca3de; }
+}

@@ -139,6 +139,16 @@ const OPTS_INHERITANCE: &[OptSpec] = &[
     opt("top-classes", OptType::TextRequired),
     opt("include-subclasses", OptType::Flag),
 ];
+/// sphinx.ext.autosummary's options; the provider checks their values.
+const OPTS_AUTOSUMMARY: &[OptSpec] = &[
+    opt("caption", OptType::TextRequired),
+    opt("class", OptType::Class),
+    opt("toctree", OptType::Text),
+    opt("nosignatures", OptType::Flag),
+    opt("recursive", OptType::Flag),
+    opt("signatures", OptType::Text),
+    opt("template", OptType::Text),
+];
 const OPTS_MATH: &[OptSpec] = &[
     opt("label", OptType::Text),
     opt("name", OptType::Text),
@@ -199,6 +209,7 @@ static CORE: &[CoreDirective] = &[
     core("autoattribute", Core::Autodoc, (A::Required, true, C::Optional), AUTODOC_OPTIONS),
     core("autodata", Core::Autodoc, (A::Required, true, C::Optional), AUTODOC_OPTIONS),
     core("autotype", Core::Autodoc, (A::Required, true, C::Optional), AUTODOC_OPTIONS),
+    core("autosummary", Core::Autodoc, (A::None, false, C::Optional), OPTS_AUTOSUMMARY),
     core("inheritance-diagram", Core::Inheritance, (A::Required, true, C::None), OPTS_INHERITANCE),
 ];
 

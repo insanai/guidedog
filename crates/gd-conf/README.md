@@ -25,6 +25,7 @@ let dropped = gd_conf::confine_untrusted(&mut c.clone()); // --untrusted
 | `Digest`, `Digester` | SHA-256 of parts (each followed by a zero byte), hex `Display`; gd-env re-exports them |
 | `Pattern` | `nitpick_ignore_regex`: a small bounded regex, `full_match` |
 | `json_dumps`, `json_dumps_table` | a TOML value or table as Python's `json.dumps` (mathjax3/4_config) |
+| `LinkcodeSite::of(&config)`, `.url(&LinkcodeObject)`, `.branch_report` | `linkcode_url` filled for one object; the root and branch found from `.git` |
 
 ## Design notes
 

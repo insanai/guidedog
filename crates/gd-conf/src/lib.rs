@@ -30,6 +30,7 @@ mod custom_ext;
 mod digest;
 mod extensions;
 mod json;
+mod linkcode;
 mod load;
 mod paths;
 mod pattern;
@@ -54,6 +55,7 @@ pub use extensions::{
     LinkcodeConfig, NapoleonConfig, NapoleonSection, ViewcodeConfig,
 };
 pub use json::{json_dumps, json_dumps_table};
+pub use linkcode::{LinkcodeObject, LinkcodeSite};
 pub use load::{
     LoadOptions, Loaded, MAX_CONFIG_BYTES, apply_override, find_project, finish_config,
     load_config, merge_table,

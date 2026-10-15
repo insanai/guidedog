@@ -1,0 +1,31 @@
+[package]
+name = "gd-read"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Incremental, parallel reading of a project's documents, and the API page hosts."
+
+[dependencies]
+guidedoc = { workspace = true }
+guidedoc-sphinx = { workspace = true }
+guidedoc-rst = { workspace = true }
+guidedoc-commonmark = { workspace = true }
+gd-conf = { workspace = true }
+gd-env = { workspace = true }
+gd-intl = { workspace = true }
+gd-i18n = { workspace = true }
+gd-gettext = { workspace = true }
+gd-host = { workspace = true }
+gd-report = { workspace = true }
+gd-autodoc = { workspace = true }
+gd-pyscan = { workspace = true }
+gd-odindoc = { workspace = true }
+gd-rustdoc = { workspace = true }
+
+[dev-dependencies]
+guidedoc-defaults = { workspace = true }
+
+
+[lints]
+workspace = true

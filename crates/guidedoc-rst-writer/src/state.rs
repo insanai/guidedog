@@ -12,7 +12,7 @@ use std::fmt;
 use crate::inline::{Inline, Lines};
 use crate::roles::RoleTable;
 use crate::tables::TableWork;
-use crate::{DEPTH_LIMIT, LOSSY, Settings};
+use crate::{DEPTH_LIMIT, LOSSY, Settings, TABLE_WIDTH};
 
 /// One level of indentation. A marker ("- ", "1. ", ":name: ") takes the place of the
 /// indentation on the first line written inside the frame; it may be wider than the
@@ -44,7 +44,11 @@ pub(crate) struct WriterWork {
 pub(crate) struct Writer<'c, 'a> {
     ctx: &'c mut RenderContext<'a>,
     pub doc: Document<'a>,
-    pub settings: Settings,
+    /// The line width: where paragraphs wrap when `reflow` is set, and the room grid
+    /// tables are laid out in.
+    pub width: usize,
+    /// Paragraphs are rewrapped at `width`; otherwise they keep the source's lines.
+    pub reflow: bool,
     pub out: String,
     frames: Vec<Frame>,
     /// The first frame of the current output (a captured table cell starts its own).
@@ -119,7 +123,8 @@ impl<'c, 'a> Writer<'c, 'a> {
         Writer {
             ctx,
             doc,
-            settings,
+            width: settings.width.unwrap_or(TABLE_WIDTH),
+            reflow: settings.width.is_some(),
             out,
             frames,
             frame_base: 0,
@@ -296,7 +301,7 @@ impl<'c, 'a> Writer<'c, 'a> {
 
     /// The width wrapped text may use on lines after the first.
     pub fn available(&self) -> usize {
-        self.settings.width.saturating_sub(self.indentation()).max(self.settings.width / 3)
+        self.width.saturating_sub(self.indentation()).max(self.width / 3)
     }
 
     /// Writes one line: the indentation (or pending markers) and `text`. An empty
@@ -360,13 +365,14 @@ impl<'c, 'a> Writer<'c, 'a> {
         }
     }
 
-    /// Runs `f` with output going to a fresh buffer at `width`, outside every frame,
-    /// and returns what it wrote (a table cell's content); give it back with
-    /// `recycle` when done.
+    /// Runs `f` with output going to a fresh buffer, outside every frame, with its
+    /// paragraphs rewrapped at `width`, and returns what it wrote (a table cell's
+    /// content); give it back with `recycle` when done.
     pub fn capture(&mut self, width: usize, f: impl FnOnce(&mut Self)) -> String {
         let fresh = self.buffer();
         let out = std::mem::replace(&mut self.out, fresh);
-        let saved_width = self.settings.width;
+        let saved_width = std::mem::replace(&mut self.width, width);
+        let saved_reflow = std::mem::replace(&mut self.reflow, true);
         let saved_depth = self.depth;
         let saved_blank = self.blank;
         let saved_inline = self.begin_inline(false);
@@ -374,14 +380,14 @@ impl<'c, 'a> Writer<'c, 'a> {
         let saved_tight = std::mem::replace(&mut self.tight_wrap, true);
         // Frames below the capture stay in the vector; the capture starts past them.
         let saved_base = std::mem::replace(&mut self.frame_base, self.depth);
-        self.settings.width = width;
         self.blank = false;
         self.in_inline = false;
         f(self);
         let captured = std::mem::replace(&mut self.out, out);
         self.frame_base = saved_base;
         self.depth = saved_depth;
-        self.settings.width = saved_width;
+        self.width = saved_width;
+        self.reflow = saved_reflow;
         self.blank = saved_blank;
         let used = self.end_inline(saved_inline);
         self.give_inline(used);

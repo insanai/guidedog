@@ -392,8 +392,10 @@ domains. The output format comes from ``--to`` or the output's suffix (``.html``
 ``.htm``, ``.pdf``, ``.rst``, ``.rest``). Only the options below apply to ``convert``.
 
 ``--to rst`` writes reStructuredText with Guidedog's own writer (the ``rst`` renderer).
-It wraps paragraphs at 92 columns and uses one section adornment per level (``=``, ``-``, ``~``,
-``^``, ...). It keeps roles, cross-references, and directives as Sphinx writes them. It reads
+It keeps the author's lines: each line break inside a source paragraph stays a line break, and the writer adds none of its own, so a converted page keeps the sentence and paragraph shape we wrote.
+It never splits inline markup, inline code, a role or a URL across lines.
+It uses one section adornment per level (``=``, ``-``, ``~``, ``^``, ...).
+It keeps roles, cross-references, and directives as Sphinx writes them. It reads
 the input without smart quotes, so quotes and dashes stay as written. Some things
 reStructuredText cannot express exactly (a hard line break, an image inside text, a link
 title). The writer comes as close as it can and reports a note. Typst input cannot be

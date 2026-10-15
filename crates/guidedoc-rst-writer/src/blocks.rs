@@ -37,13 +37,23 @@ impl Writer<'_, '_> {
         self.inline_children(id);
         self.in_inline = saved_mode;
         finish(&mut self.inline);
-        let first = self.settings.width.saturating_sub(self.first_indentation());
-        let first = first.max(self.settings.width / 3);
-        let mut lines = self.take_lines();
-        let (rest, tight) = (self.available(), self.tight_wrap);
-        self.inline.wrap(first, rest, tight, &mut lines);
+        let lines = self.inline_lines();
         let used = self.end_inline(saved);
         self.give_inline(used);
+        lines
+    }
+
+    /// Breaks the inline buffer into lines: at the source's soft line breaks, or
+    /// rewrapped at the width when the settings (or a table cell) ask for it.
+    pub fn inline_lines(&mut self) -> Lines {
+        let mut lines = self.take_lines();
+        if !self.reflow {
+            self.inline.keep_lines(&mut lines);
+            return lines;
+        }
+        let first = self.width.saturating_sub(self.first_indentation()).max(self.width / 3);
+        let (rest, tight) = (self.available(), self.tight_wrap);
+        self.inline.wrap(first, rest, tight, &mut lines);
         lines
     }
 
@@ -341,8 +351,8 @@ impl Writer<'_, '_> {
 
     /// A hard line break, which reStructuredText paragraphs cannot hold.
     pub fn hard_break(&mut self, id: NodeId) {
-        self.lossy(id, "a hard line break", "a space; use a line block for verse");
-        self.inline.space();
+        self.lossy(id, "a hard line break", "a soft one; use a line block for verse");
+        self.inline.soft_break();
     }
 }
 

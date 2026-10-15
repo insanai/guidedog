@@ -60,7 +60,7 @@ impl Writer<'_, '_> {
             K::ProductionList => self.production_list(id), K::Index => self.index(id),
             // Inline content (Image and Index may also be blocks).
             K::Image => self.image(id), K::Text => self.text_node(id),
-            K::SoftBreak => self.inline.space(), K::HardBreak => self.hard_break(id),
+            K::SoftBreak => self.inline.soft_break(), K::HardBreak => self.hard_break(id),
             K::Emphasis => self.emphasis(id, "*", "emphasis"),
             K::Strong => self.emphasis(id, "**", "strong"),
             K::Code => self.code(id), K::Link | K::Reference => self.link(id),

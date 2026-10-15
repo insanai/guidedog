@@ -3,8 +3,10 @@
 //! serves the `rst` renderer id, so Guidedog converts Markdown (MyST with the Sphinx
 //! layer) and reStructuredText to reStructuredText itself.
 //!
-//! Paragraphs are wrapped at [`Settings::width`] columns (never inside inline markup),
-//! sections take one adornment per level (`=`, `-`, `~`, `^`, ...), and every Sphinx
+//! Paragraphs keep the author's own lines: each soft line break of the source is
+//! written as a line break, and the writer adds none of its own (unless
+//! [`Settings::width`] asks it to wrap, which never breaks inside inline markup).
+//! Sections take one adornment per level (`=`, `-`, `~`, `^`, ...), and every Sphinx
 //! construct the tree keeps (cross-references, toctrees, domain objects, info fields)
 //! is written as its directive or role. Where the tree has lost what reStructuredText
 //! would need, the writer chooses the closest faithful markup and reports a Note
@@ -48,8 +50,8 @@ pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 /// How completely the writer covers the document model.
 pub const CONFORMANCE: Conformance = Conformance::Partial;
 
-/// The line width paragraphs are wrapped at by default.
-pub const DEFAULT_WIDTH: usize = 92;
+/// The line width grid tables are laid out in when [`Settings::width`] is `None`.
+pub const TABLE_WIDTH: usize = 92;
 
 /// The "rst" renderer descriptor, for a `guidedoc::Registry`. It writes with the
 /// default [`Settings`]; call [`render_with`] for others.
@@ -68,18 +70,14 @@ pub fn renderer() -> Renderer {
 }
 
 /// How the writer lays out its output. Fill it with struct-update syntax.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub struct Settings {
-    /// The column paragraphs wrap at (indentation included); markup and URLs that are
-    /// longer stay whole.
-    pub width: usize,
-}
-
-impl Default for Settings {
-    /// Wraps at [`DEFAULT_WIDTH`].
-    fn default() -> Self {
-        Settings { width: DEFAULT_WIDTH }
-    }
+    /// `None` (the default) keeps the author's lines: a soft line break of the source
+    /// is written as a line break and no other breaks are added. `Some(n)` rewraps
+    /// paragraphs at column `n` (indentation included, at least 20) and lays out grid
+    /// tables in that width; inline markup, inline code, roles and URLs stay whole on
+    /// one line even when they are longer.
+    pub width: Option<usize>,
 }
 
 /// Writes `ctx.doc` as reStructuredText with the default settings. See
@@ -97,7 +95,7 @@ pub fn render_with(ctx: &mut RenderContext<'_>, settings: Settings) -> Result<()
     if ctx.doc.node_count() == 0 {
         return Ok(());
     }
-    let settings = Settings { width: settings.width.max(20) };
+    let settings = Settings { width: settings.width.map(|w| w.max(20)) };
     let mut work: WriterWork = ctx.take_scratch();
     let mut text = std::mem::take(&mut work.text);
     let mut w = Writer::new(ctx, settings, work);

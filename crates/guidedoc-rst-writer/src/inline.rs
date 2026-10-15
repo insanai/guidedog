@@ -1,5 +1,6 @@
 //! Inline content: the buffer a block collects its inline markup in, with the places
-//! where a line may break, and the wrapping that writes it as lines.
+//! where a line may break, and the two ways of writing it as lines: at the source's
+//! soft line breaks (the default) or rewrapped at a width.
 
 use std::fmt;
 use std::ops::{Deref, DerefMut};
@@ -16,6 +17,8 @@ pub(crate) struct Inline {
     pub buf: String,
     /// Byte offsets in `buf` of spaces a line may break at.
     breaks: Vec<usize>,
+    /// The subset of `breaks` that stand for the source's soft line breaks.
+    softs: Vec<usize>,
     /// Spaces inside markup, where a line may break only when nothing else fits (a
     /// table cell of fixed width).
     inner: Vec<usize>,
@@ -89,6 +92,7 @@ impl Inline {
     pub fn clear(&mut self, preserve: bool) {
         self.buf.clear();
         self.breaks.clear();
+        self.softs.clear();
         self.inner.clear();
         self.colons = false;
         self.markup_end = false;
@@ -159,6 +163,26 @@ impl Inline {
         self.markup_end = false;
     }
 
+    /// Appends a soft line break of the source: a break opportunity that `keep_lines`
+    /// writes as a line break. A space just before it (a recorded break) takes its
+    /// place; an escaped space does not, since a line may not end in a backslash.
+    pub fn soft_break(&mut self) {
+        if self.preserve {
+            self.space();
+            return;
+        }
+        let before = self.buf.len();
+        self.space();
+        if self.buf.len() > before {
+            self.softs.push(before);
+        } else if let Some(&last) = self.breaks.last()
+            && last + 1 == self.buf.len()
+            && self.softs.last() != Some(&last)
+        {
+            self.softs.push(last);
+        }
+    }
+
     /// Appends a whole piece of markup, separated from what precedes it by an escaped
     /// space when its start-string would not be recognized there.
     pub fn markup(&mut self, s: &str) {
@@ -201,6 +225,29 @@ impl Inline {
         }
     }
 
+    /// Breaks the buffer into `out`'s lines at the source's soft line breaks only, so
+    /// the author's lines come out as written. Lines that would start another
+    /// construct are escaped.
+    pub fn keep_lines(&mut self, out: &mut Lines) {
+        out.clear();
+        if self.preserve {
+            self.buf.split('\n').for_each(|line| out.push(line));
+            return;
+        }
+        let mut start = 0;
+        // A soft break at the very end would leave an empty line; it is dropped.
+        for &b in self.softs.iter().filter(|&&b| b + 1 < self.buf.len()) {
+            out.push(&self.buf[start..b]);
+            start = b + 1;
+        }
+        let end = match self.softs.last() {
+            Some(&b) if b + 1 == self.buf.len() => b,
+            _ => self.buf.len(),
+        };
+        out.push(&self.buf[start..end.max(start)]);
+        self.finish_lines(out);
+    }
+
     /// Breaks the buffer into `out`'s lines: the first at most `first` columns wide,
     /// the others `rest`. Lines that would start another construct are escaped.
     pub fn wrap(&mut self, first: usize, rest: usize, tight: bool, out: &mut Lines) {
@@ -232,6 +279,11 @@ impl Inline {
         }
         self.points = points;
         out.push(&self.buf[start..]);
+        self.finish_lines(out);
+    }
+
+    /// Escapes risky line starts and splits lines at the line breaks markup holds.
+    fn finish_lines(&mut self, out: &mut Lines) {
         guard_lines(out);
         if out.iter().any(|l| l.contains('\n')) {
             // Markup holding a line break (math) continues on the next line.

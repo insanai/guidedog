@@ -41,12 +41,12 @@ use guidedoc_rst_writer::{RENDERER, Settings, render_with};
 
 let registry = guidedoc::Registry { renderers: vec![RENDERER], ..Default::default() };
 // With a RenderContext `ctx` (the engine makes one per render):
-// render_with(&mut ctx, Settings { width: 79 })?;   // the registry uses width 92
+// render_with(&mut ctx, Settings { width: Some(79) })?;   // rewrap at 79 columns
 ```
 
 - `RENDERER` / `renderer()`, `render` (default settings), `render_with(ctx, Settings)`.
-- `Settings { width }`: paragraphs wrap at `width` columns (default `DEFAULT_WIDTH` = 92),
-  never inside inline markup or URLs.
+- `Settings { width: None }` (the default) keeps the author's lines: each soft line break of the source is written as a line break, and the writer adds no breaks of its own, so a converted page keeps the shape it was written in.
+- `Settings { width: Some(n) }` rewraps paragraphs at `n` columns instead, never inside inline markup, inline code, roles or URLs. Grid tables are laid out in `n` columns, or `TABLE_WIDTH` (92) by default.
 - `LOSSY` (`rst.write.lossy`, a Note): something reStructuredText cannot express exactly;
   `DEPTH_LIMIT` (`rst.limit.depth`, Error/Limit): nesting past the limits.
 - `walk.rs` holds the one exhaustive match over `NodeKind`.
@@ -66,7 +66,7 @@ info fields as `:param int a: text`.
 
 ## Written approximately (a Note each)
 
-- Hard line breaks: a space (reStructuredText paragraphs have none; use a line block).
+- Hard line breaks: a soft one, a line break by default (reStructuredText paragraphs have none; use a line block).
 - Markup nested in markup (`**bold *em***`, code inside a link): the inner markup's text.
 - An image inside text: a substitution reference and an `image` definition after the
   block. An image or link title: dropped. An empty image source.
@@ -90,12 +90,13 @@ annotations and module prefixes (written as `:module:` or the package directive)
 ## Round trips
 
 `tests/roundtrip.rs` reads a source, writes it, reads the output, and compares the two
-`dump_tree` outlines (soft breaks as spaces, as the writer rewraps):
+`dump_tree` outlines with soft breaks as spaces. It also counts the round trips that keep every soft break where the source had it (the same lines):
 
-- docs/manual (Sphinx reader): 69/70.
-- guidedoc-rst conformance sources (Docutils settings per corpus.txt): 77/98.
-- myst-parser fixtures (MyST with the Sphinx layer, read back as Sphinx RST, normalized
-  for MyST-only attributes): 185/202.
+- docs/manual (Sphinx reader): 71/71, 58 with the same lines.
+- guidedoc-rst conformance sources (Docutils settings per corpus.txt): 77/98, 65 with the same lines.
+- myst-parser fixtures (MyST with the Sphinx layer, read back as Sphinx RST, normalized for MyST-only attributes): 185/202, 185 with the same lines.
+
+A soft break inside inline markup (a link text over two lines) becomes a space, since markup stays on one line; table cells are rewrapped to their column. `RSTW_LINES=1` prints where lines moved.
 
 Remaining differences: grid widths that a cell's unbreakable content outgrows; anonymous
 references inside a `header` directive (the reader matches them in another order); the

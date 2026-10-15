@@ -10,7 +10,7 @@ use crate::{Settings, render_with};
 
 /// Reads `source` with `reader` ("rst", "sphinx", or "myst") and writes it with
 /// `width`; returns the output, the outline read, and the notes reported.
-fn write_with(reader: &str, source: &str, width: usize) -> (String, String, Vec<String>) {
+fn write_with(reader: &str, source: &str, width: Option<usize>) -> (String, String, Vec<String>) {
     let config = guidedoc_sphinx::Config::default();
     let myst = guidedoc_sphinx::myst_settings(config.clone(), Default::default());
     let mut request = default_request("t.rst", source, reader, "rst");
@@ -72,9 +72,9 @@ fn comparable(outline: &str) -> String {
 /// Writes `source` and checks that the output reads back into the same tree; returns
 /// the output.
 fn round_trip(reader: &str, source: &str) -> String {
-    let (out, outline, _) = write_with(reader, source, 92);
+    let (out, outline, _) = write_with(reader, source, None);
     let second = if reader == "myst" { "sphinx" } else { reader };
-    let (_, again, _) = write_with(second, &out, 92);
+    let (_, again, _) = write_with(second, &out, None);
     if reader != "myst" {
         let (a, b) = (comparable(&outline), comparable(&again));
         let i = a.lines().zip(b.lines()).take_while(|(x, y)| x == y).count();
@@ -102,9 +102,49 @@ fn inline_markup_and_escapes_survive() {
 #[test]
 fn paragraphs_wrap_at_the_width_but_not_inside_markup() {
     let source = "word word word `a long link text <https://example.com/a/b>`_ word word word\n";
-    let (out, _, _) = write_with("rst", source, 30);
+    let (out, _, _) = write_with("rst", source, Some(30));
     assert!(out.lines().any(|l| l.ends_with("`a long link text <https://example.com/a/b>`_")));
     assert!(out.lines().filter(|l| !l.contains('`')).all(|l| l.len() <= 30), "{out}");
+}
+
+#[test]
+fn paragraphs_keep_the_authors_lines_by_default() {
+    let source = "The first sentence stays on its own line.\n\
+                  The second one is long enough to pass any width a writer might have \
+                  chosen for it, and it is still not broken.\n\
+                  Short.\n\n\
+                  - An item\n  over two lines.\n\n\
+                  A paragraph with *emphasis*, ``code``, :sub:`2` and\n\
+                  `a link <https://example.com/a/b>`_ at the start of a line.\n";
+    let (out, _, _) = write_with("rst", source, None);
+    assert_eq!(out, source);
+    let (out, _, _) = write_with("myst", "One line\nand *another*\nthird.\n", None);
+    assert_eq!(out, "One line\nand *another*\nthird.\n");
+}
+
+#[test]
+fn long_inline_literals_are_never_split() {
+    let literal = "``a long inline literal with many spaces inside that passes every width``";
+    let source = format!("Before {literal} after, and more words follow it here.\n");
+    for width in [None, Some(30)] {
+        let (out, _, _) = write_with("rst", &source, width);
+        assert!(out.lines().any(|l| l.contains(literal)), "{width:?}: {out}");
+    }
+}
+
+#[test]
+fn width_mode_wraps_but_never_inside_markup() {
+    let source = "word word *some emphasis here* word word ``code with spaces`` word \
+                  :sub:`a role with spaces` word word `a link text <https://example.com/x>`_ \
+                  word word word word\n";
+    let (out, _, _) = write_with("rst", source, Some(24));
+    assert!(out.lines().count() > 3, "{out}");
+    for piece in ["*some emphasis here*", "``code with spaces``", ":sub:`a role with spaces`"] {
+        assert!(out.lines().any(|l| l.contains(piece)), "{piece}: {out}");
+    }
+    assert!(out.lines().any(|l| l.contains("`a link text <https://example.com/x>`_")));
+    assert!(out.lines().filter(|l| !l.contains('`') && !l.contains('*')).all(|l| l.len() <= 24));
+    round_trip("rst", source);
 }
 
 #[test]
@@ -234,7 +274,7 @@ fn myst_becomes_restructuredtext() {
 
 #[test]
 fn lossy_constructs_are_noted() {
-    let (out, _, notes) = write_with("myst", "a  \nb\n", 92);
-    assert!(out.contains("a b"), "{out}");
+    let (out, _, notes) = write_with("myst", "a  \nb\n", None);
+    assert!(out.contains("a\nb"), "{out}");
     assert!(notes.iter().any(|c| c == "rst.write.lossy"), "{notes:?}");
 }

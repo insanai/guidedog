@@ -117,9 +117,10 @@ fn write(name: &str, text: &str, how: &ReadWith<'_>) -> Result<(String, String, 
     Ok((String::from_utf8(bytes).unwrap(), outline, notes))
 }
 
-/// An outline in comparable form: soft breaks become spaces in the text around them,
-/// and internal link targets are named by kind instead of node number.
-fn comparable(outline: &str, myst: bool) -> String {
+/// An outline in comparable form: soft breaks become spaces in the text around them
+/// (unless `soft` keeps them, to check that the author's lines survive), and internal
+/// link targets are named by kind instead of node number.
+fn comparable(outline: &str, myst: bool, soft: bool) -> String {
     let lines: Vec<&str> = outline.lines().collect();
     let kinds: Vec<&str> =
         lines.iter().map(|l| l.trim_start().split(' ').next().unwrap_or("")).collect();
@@ -128,7 +129,7 @@ fn comparable(outline: &str, myst: bool) -> String {
         let indent = line.len() - line.trim_start().len();
         let body = line.trim_start();
         let mut body =
-            if body == "soft-break" { "text \" \"".to_owned() } else { body.to_owned() };
+            if body == "soft-break" && !soft { "text \" \"".to_owned() } else { body.to_owned() };
         if let Some(at) = body.find(" ->").filter(|&a| {
             body[a + 3..].starts_with(|c: char| c.is_ascii_digit()) && !body.starts_with("code")
         }) {
@@ -206,6 +207,8 @@ fn myst_form(body: &str) -> String {
 struct Tally {
     total: usize,
     passed: usize,
+    /// Round trips that also keep every soft line break where the source had it.
+    same_lines: usize,
     notes: usize,
     failures: Vec<String>,
 }
@@ -231,9 +234,16 @@ impl Tally {
         let mut ws = Workspace::new();
         let again =
             read(name, &rst, second, &mut ws).unwrap_or_else(|e| format!("read failed: {e}"));
-        let (a, b) = (comparable(&outline, myst), comparable(&again, myst));
+        let (a, b) = (comparable(&outline, myst, false), comparable(&again, myst, false));
         if a == b {
             self.passed += 1;
+            let (a, b) = (comparable(&outline, myst, true), comparable(&again, myst, true));
+            if a == b {
+                self.same_lines += 1;
+            } else if std::env::var("RSTW_LINES").is_ok() {
+                // Soft breaks inside markup and table cells are expected to move.
+                eprintln!("LINES {name}: {}", first_difference(&a, &b));
+            }
             return;
         }
         self.failures.push(format!("{name}: {}", first_difference(&a, &b)));
@@ -247,7 +257,10 @@ impl Tally {
     }
 
     fn report(&self, part: &str) {
-        eprintln!("{part}: {}/{} round-trip ({} notes)", self.passed, self.total, self.notes);
+        eprintln!(
+            "{part}: {}/{} round-trip, {} with the same lines ({} notes)",
+            self.passed, self.total, self.same_lines, self.notes
+        );
         for f in &self.failures {
             eprintln!("  {f}");
         }
@@ -294,6 +307,7 @@ fn rst_conformance_sources_round_trip() {
     // Raise this when the writer improves; the README lists what still differs.
     assert!(only().is_empty() || tally.passed > 0);
     assert!(!only().is_empty() || tally.passed >= 77, "fewer round trips than before");
+    assert!(!only().is_empty() || tally.same_lines >= 65, "fewer kept lines than before");
 }
 
 #[test]
@@ -319,6 +333,7 @@ fn manual_pages_round_trip() {
     // Raise this when the writer improves; the README lists what still differs.
     assert!(only().is_empty() || tally.passed > 0);
     assert!(!only().is_empty() || tally.passed >= 69, "fewer round trips than before");
+    assert!(!only().is_empty() || tally.same_lines >= 56, "fewer kept lines than before");
 }
 
 fn collect_pages(dir: &Path, out: &mut Vec<PathBuf>) {
@@ -410,4 +425,5 @@ fn myst_fixtures_round_trip() {
     // Raise this when the writer improves; the README lists what still differs.
     assert!(only().is_empty() || tally.passed > 0);
     assert!(!only().is_empty() || tally.passed >= 185, "fewer round trips than before");
+    assert!(!only().is_empty() || tally.same_lines >= 185, "fewer kept lines than before");
 }

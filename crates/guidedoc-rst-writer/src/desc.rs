@@ -256,11 +256,7 @@ impl Writer<'_, '_> {
             self.node(child);
         }
         self.in_inline = saved_mode;
-        let first = self.settings.width.saturating_sub(self.first_indentation());
-        let first = first.max(self.settings.width / 3);
-        let (rest, tight) = (self.available(), self.tight_wrap);
-        let mut lines = self.take_lines();
-        self.inline.wrap(first, rest, tight, &mut lines);
+        let lines = self.inline_lines();
         let used = self.end_inline(saved);
         self.give_inline(used);
         lines

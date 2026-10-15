@@ -758,6 +758,7 @@ dependencies = [
  "gd-report",
  "gd-resolve",
  "guidedoc",
+ "guidedoc-rst",
 ]
 
 [[package]]
@@ -784,10 +785,29 @@ dependencies = [
 [[package]]
 name = "gd-link"
 version = "0.7.0"
+dependencies = [
+ "gd-conf",
+ "gd-env",
+ "gd-graphdog",
+ "gd-host",
+ "gd-json",
+ "gd-report",
+ "gd-resolve",
+ "guidedoc",
+ "guidedoc-html",
+ "guidedoc-text",
+]
 
 [[package]]
 name = "gd-migrate"
 version = "0.7.0"
+dependencies = [
+ "gd-conf",
+ "gd-host",
+ "gd-report",
+ "gd-theme",
+ "gd-toml",
+]
 
 [[package]]
 name = "gd-odindoc"
@@ -884,6 +904,10 @@ version = "0.7.0"
 
 [[package]]
 name = "gd-site"
+version = "0.7.0"
+
+[[package]]
+name = "gd-theme"
 version = "0.7.0"
 
 [[package]]
@@ -1022,6 +1046,7 @@ version = "0.7.0"
 dependencies = [
  "guidedoc",
  "guidedoc-commonmark",
+ "guidedoc-cpp",
  "guidedoc-html",
  "guidedoc-rst",
  "guidedoc-rst-inline",

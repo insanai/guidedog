@@ -8,11 +8,15 @@ rust-version.workspace = true
 publish = false
 
 [dependencies]
-# Elm-style error reports, SHA-256 for downloads and release sums, and JSON for GitHub's
-# API answers and the WHATWG entity list: the workspace's own std-only libraries.
+# Elm-style error reports, SHA-256 for downloads and release sums, JSON for GitHub's API
+# answers, the WHATWG entity list and Guidedog's diagnostics, and objects.inv for the
+# Sphinx comparison: the workspace's own libraries.
+gd-inventory = { workspace = true }
 gd-report = { workspace = true }
 gd-sha = { workspace = true }
 gd-json = { workspace = true }
+# HTTPS downloads of the pinned release assets plugin-compatibility qualifies against.
+gd-fetch = { workspace = true }
 
 [lints]
 workspace = true

@@ -92,7 +92,7 @@ pub(crate) fn build(options: &Options) -> Result<()> {
 }
 
 /// Cargo's target folder: CARGO_TARGET_DIR (relative to the repository) or target.
-fn target_dir(root: &std::path::Path) -> PathBuf {
+pub(super) fn target_dir(root: &std::path::Path) -> PathBuf {
     let dir = std::env::var_os("CARGO_TARGET_DIR").filter(|d| !d.is_empty());
     match dir.map(PathBuf::from) {
         Some(dir) if dir.is_absolute() => dir,

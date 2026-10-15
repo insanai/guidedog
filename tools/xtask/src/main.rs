@@ -1,6 +1,7 @@
 //! Guidedog's repository tasks, run as `cargo xtask <task>` (an alias in
 //! `.cargo/config.toml`): the website, the CJK fonts, the release steps and their smoke
-//! tests, and the data tables generated from `tools/data`.
+//! tests, the data tables generated from `tools/data`, and the verification tasks that
+//! compare Guidedog with Sphinx and the RST corpus with Docutils.
 //!
 //! Every task is plain Rust: external programs (cargo, guidedog, git, gh, curl, tar,
 //! gzip) run through `std::process::Command` with argument vectors, never a shell, and
@@ -10,12 +11,15 @@
 #![forbid(unsafe_code)]
 
 mod args;
+mod docutils;
+mod evidence;
 mod fonts;
 mod fsutil;
 mod graphviz;
 mod process;
 mod release;
 mod site;
+mod sphinxdiff;
 mod tables;
 
 use std::io::IsTerminal;
@@ -37,11 +41,24 @@ Tasks:
                      against their pinned SHA-256
   graphviz [--out DIR] [--jobs N]
                      build the static Graphviz libraries release binaries link
+  rstref [--ids] DOCUTILS FIXTURES_DIR [SOURCE...]
+                     store the Docutils reference trees (or ids.txt) of the RST
+                     conformance corpus, with a pinned Python Docutils
   release <STEP>     one step of a release (build, package, checksums, source, formula,
                      publish, check-version, check-run, credential-store, smoke,
-                     smoke-discussion, smoke-graphdog, smoke-pages)
+                     smoke-discussion, smoke-graphdog, smoke-pages,
+                     plugin-compatibility)
+  sphinxdiff SPHINX_HTML GUIDEDOG_HTML [-v]
+             [--warnings SPHINX_LOG GUIDEDOG_JSON_LOG SOURCE_DIR]
+                     compare a project's HTML built by Sphinx with Guidedog's
+  sphinxdiff-roots SPHINX_BUILD ROOTS_DIR WORK_DIR [RECORD] [--guidedog PATH]
+                     build Sphinx's test roots with both builders and record the
+                     comparison
   tables [--check]   regenerate the Unicode, HTML entity and Pygments style tables from
                      tools/data; --check only compares them with the committed files
+  verify-docutils DOCUTILS WORK_DIR [RECORD]
+                     regenerate the RST conformance corpus with a pinned Docutils and
+                     compare it byte for byte with the committed files
 
 `cargo xtask <TASK> --help` explains a task and its options.
 ";
@@ -97,9 +114,23 @@ fn run(args: &[String]) -> Result<()> {
         Some("fetch-fonts") => fonts::main(rest),
         Some("graphviz") => graphviz::main(rest),
         Some("release") => release::main(rest),
+        Some("rstref") => docutils::main(rest),
+        Some("sphinxdiff") => sphinxdiff::main(rest),
+        Some("sphinxdiff-roots") => sphinxdiff::roots_main(rest),
         Some("tables") => tables::main(rest),
+        Some("verify-docutils") => docutils::verify_main(rest),
         Some(other) => {
-            let tasks = ["build-site", "fetch-fonts", "graphviz", "release", "tables"];
+            let tasks = [
+                "build-site",
+                "fetch-fonts",
+                "graphviz",
+                "release",
+                "rstref",
+                "sphinxdiff",
+                "sphinxdiff-roots",
+                "tables",
+                "verify-docutils",
+            ];
             let mut hint = String::from("`cargo xtask --help` lists the tasks.");
             if let Some(near) = gd_report::suggest(other, tasks) {
                 hint.push_str(&format!(" Did you mean `{near}`?"));

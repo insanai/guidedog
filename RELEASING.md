@@ -75,6 +75,26 @@ cargo xtask release checksums dist         # dist/SHA256SUMS
 `release package` refuses a working tree with uncommitted changes, so an archive always
 matches its commit.
 
+## Plugin protocol compatibility
+
+Before a release that touches the plugin protocol or the publisher SDK, qualify protocol
+1.0 against the released 0.6.0 host and SDK in both directions:
+
+```sh
+cargo xtask release plugin-compatibility [--work DIR]
+```
+
+It downloads the 0.6.0 Linux x86-64 (or Apple silicon) archive and source archive,
+checks each against its pinned SHA-256, and builds this checkout's `guidedog`,
+`guidedog-pages` and the `gd-plugins` publisher and build-plugin examples. The 0.6.0
+`guidedog` then registers, inspects and dry-runs the new `guidedog-pages` and publishes
+with the new folder publisher (dry run, first, unchanged and changed publication); it must
+refuse the build-plugin example cleanly. The new `guidedog` does the same with the 0.6.0
+`guidedog-pages` and the 0.6.0 folder publisher example (built with `odin` when it is
+installed). Everything after the download runs offline. 0.6.0 has no build plugins and no
+release ships a build-plugin program, so the new-host direction covers publishers only.
+It prints a record of versions, pins and results, and exits 1 on any incompatibility.
+
 ## Cut a release
 
 1. Update `VERSION` and the `version` in `[workspace.package]` of the root `Cargo.toml` together (every crate and program inherits it), and the `version` of each reusable crate's entry in `[workspace.dependencies]` (the dependency gate in `tests/integration` checks them). Run `cargo build` so `Cargo.lock` follows, and update the release setting in each documentation project's `conf.toml`. `cargo xtask release check-version` checks that they agree.

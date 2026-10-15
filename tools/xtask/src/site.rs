@@ -74,7 +74,7 @@ pub(crate) fn main(args: &[String]) -> Result<()> {
 
 /// A program named on the command line: a path when it has a separator, else found on
 /// PATH (or left as it is, to fail later with a clear message).
-fn program_path(name: &str) -> PathBuf {
+pub(crate) fn program_path(name: &str) -> PathBuf {
     if name.contains(std::path::MAIN_SEPARATOR) || name.contains('/') {
         return absolute(Path::new(name));
     }
@@ -163,7 +163,9 @@ pub(crate) fn build_site(options: &Options) -> Result<()> {
     print_sizes(&folders.out, &builder.root)
 }
 
-fn build_guidedog(root: &Path, started: Instant) -> Result<PathBuf> {
+/// Builds target/release/guidedog with Cargo (CARGO_TARGET_DIR is honoured) and returns
+/// its path; fails when Cargo fails.
+pub(crate) fn build_guidedog(root: &Path, started: Instant) -> Result<PathBuf> {
     println!("== building guidedog ({} s)", started.elapsed().as_secs());
     let mut cargo = Command::new("cargo");
     cargo.current_dir(root).args(["build", "--release", "-p", "guidedog-cmd"]);

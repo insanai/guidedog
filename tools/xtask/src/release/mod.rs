@@ -2,6 +2,7 @@
 //! runs them (RELEASING.md tells the whole story). Each step also runs by hand.
 
 mod build;
+mod compat;
 mod files;
 mod github;
 mod package;
@@ -42,6 +43,8 @@ Steps:
                       smoke-test graphdog with its built-in Graphviz
   smoke-pages PAGES GUIDEDOG
                       smoke-test guidedog-pages and guidedog publish, offline
+  plugin-compatibility [--work DIR]
+                      qualify plugin protocol 1.0 against the 0.6.0 release, both ways
 
 OUT sets the output folder of package and source (default: dist). GitHub steps read
 GH_TOKEN and GITHUB_REPOSITORY. `cargo xtask release <STEP> --help` explains a step.
@@ -51,7 +54,7 @@ GH_TOKEN and GITHUB_REPOSITORY. `cargo xtask release <STEP> --help` explains a s
 pub(crate) const PROGRAMS: [&str; 3] = ["guidedog", "guidedog-pages", "graphdog"];
 
 /// The steps, for "Did you mean" hints.
-const STEPS: [&str; 13] = [
+const STEPS: [&str; 14] = [
     "build",
     "package",
     "source",
@@ -65,6 +68,7 @@ const STEPS: [&str; 13] = [
     "smoke-discussion",
     "smoke-graphdog",
     "smoke-pages",
+    "plugin-compatibility",
 ];
 
 /// Runs `cargo xtask release <step>`.
@@ -88,6 +92,7 @@ pub(crate) fn main(args: &[String]) -> Result<()> {
         Some("smoke-discussion") => smoke::discussion_main(rest),
         Some("smoke-graphdog") => smoke::graphdog_main(rest),
         Some("smoke-pages") => pages::smoke_main(rest),
+        Some("plugin-compatibility") => compat::main(rest),
         Some(other) => {
             let mut hint = String::from("`cargo xtask release --help` lists the steps.");
             if let Some(near) = gd_report::suggest(other, STEPS) {

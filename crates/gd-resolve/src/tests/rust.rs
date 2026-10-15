@@ -131,3 +131,20 @@ fn the_inventory_ranks_rust_modules_first() {
     let parser = inv.find("rust:struct", "kit::parser::Parser").unwrap();
     assert_eq!((parser.priority, parser.uri.as_str()), (1, "api.html#rust-kit--parser--Parser"));
 }
+
+/// A field and a method of one name live in different Rust namespaces: describing both
+/// is no duplicate. A second method of that name is.
+#[test]
+fn a_field_and_a_method_of_one_name_are_not_duplicates() {
+    let mut docs = project();
+    let mut field = object("rust", "field", "kit::parser::Parser::new");
+    field.anchor = "rust-field-new".into();
+    docs[1].objects.insert(4, field);
+    let f = Fixture::new(docs.clone());
+    assert!(!f.codes().contains(&"build.object.duplicate"), "{:?}", f.codes());
+    let mut again = object("rust", "method", "kit::parser::Parser::new");
+    again.anchor = "rust-again".into();
+    docs[1].objects.push(again);
+    let f = Fixture::new(docs);
+    assert!(f.codes().contains(&"build.object.duplicate"), "{:?}", f.codes());
+}

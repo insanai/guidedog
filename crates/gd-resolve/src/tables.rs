@@ -329,6 +329,15 @@ impl Pass<'_> {
             if o.aliased && self.tables.objects.get(&key).is_some_and(|other| !other.aliased) {
                 continue;
             }
+            // A Rust field shares its path with a method of its name, in another
+            // namespace; the path names the method, which references name more often.
+            let other_type = self.tables.objects.get(&key).map(|other| other.objtype.as_str());
+            if o.domain == "rust"
+                && o.objtype == "field"
+                && other_type.is_some_and(|t| t != "field")
+            {
+                continue;
+            }
             self.warn_duplicate_object(id, d, o, &key);
             self.tables.objects.insert(key, object_target(id, o, o.aliased));
         }
@@ -350,6 +359,9 @@ impl Pass<'_> {
         let Some(other) = self.tables.objects.get(key) else { return };
         if !checked || other.aliased || o.aliased || (other.doc == id && other.anchor == o.anchor)
         {
+            return;
+        }
+        if o.domain == "rust" && rust_namespaces_differ(&other.objtype, &o.objtype) {
             return;
         }
         let message = format!(
@@ -457,4 +469,12 @@ fn document_keys(env: &Environment) -> Vec<String> {
         keys.push(key);
     }
     keys
+}
+
+/// Whether two Rust objects of one path live in different namespaces, so describing
+/// both is not a duplicate: a struct's field and its method of the same name
+/// (`GuidedogProgram::program` and `GuidedogProgram::program()`). The path names the
+/// method (`register_objects`).
+fn rust_namespaces_differ(a: &str, b: &str) -> bool {
+    (a == "field") != (b == "field")
 }

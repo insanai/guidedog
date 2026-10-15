@@ -1,0 +1,30 @@
+[package]
+name = "gd-project"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "The Guidedog project builder: load a project, build it, clean it."
+
+[dependencies]
+guidedoc = { workspace = true }
+guidedoc-defaults = { workspace = true }
+gd-conf = { workspace = true }
+gd-env = { workspace = true }
+gd-outputs = { workspace = true }
+gd-resolve = { workspace = true }
+gd-read = { workspace = true }
+gd-intl = { workspace = true }
+gd-site = { workspace = true }
+gd-book = { workspace = true }
+gd-host = { workspace = true }
+gd-report = { workspace = true }
+gd-plugins = { workspace = true }
+
+[dev-dependencies]
+guidedoc-rst = { workspace = true }
+guidedoc-sphinx = { workspace = true }
+guidedoc-html = { workspace = true }
+
+[lints]
+workspace = true

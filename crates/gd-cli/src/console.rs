@@ -251,6 +251,8 @@ fn limit_hint(code: &str) -> Option<&'static str> {
         }
         "commonmark.nesting" => "Flatten the nesting of quotes and lists, or raise --max-depth=N.",
         "core.limit.nodes" => "Split the document, or raise --max-nodes=N.",
+        // One conversion's text and output may use at most the memory budget.
+        "core.capacity" => "Split the document, or raise --budget=N (MiB).",
         _ => return None,
     })
 }
@@ -269,6 +271,7 @@ mod tests {
     #[test]
     fn limit_reports_name_the_flag_to_raise() {
         assert!(limit_hint("core.limit.nodes").is_some_and(|h| h.contains("--max-nodes")));
+        assert!(limit_hint("core.capacity").is_some_and(|h| h.contains("--budget")));
         assert_eq!(limit_hint("rst.unknown"), None);
     }
 }

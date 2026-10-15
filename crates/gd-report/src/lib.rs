@@ -32,6 +32,7 @@
 
 #![forbid(unsafe_code)]
 
+pub mod ansi;
 mod json;
 mod symbols;
 mod text;
@@ -83,8 +84,8 @@ pub struct Excerpt {
 
 /// A diagnostic ready to render: what happened, where, and what to do about it.
 ///
-/// Fill it with struct-update syntax, or start from [`Report::error`] and attach a
-/// position with [`Report::at`].
+/// Fill it with struct-update syntax, or start from [`Report::error`],
+/// [`Report::warning`] or [`Report::note`] and attach a position with [`Report::at`].
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct Report {
     /// A stable identifier such as `"toml.duplicate-key"`; may be empty.
@@ -122,6 +123,16 @@ impl Report {
             message: message.to_string(),
             ..Report::default()
         }
+    }
+
+    /// Starts a warning report with a code, title and message; it has no position yet.
+    pub fn warning(code: &str, title: &str, message: &str) -> Report {
+        Report { severity: Severity::Warning, ..Report::error(code, title, message) }
+    }
+
+    /// Starts a note with a code, title and message; it has no position yet.
+    pub fn note(code: &str, title: &str, message: &str) -> Report {
+        Report { severity: Severity::Note, ..Report::error(code, title, message) }
     }
 
     /// Adds a hint and returns the report, for chaining.

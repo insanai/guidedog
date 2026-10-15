@@ -1,5 +1,6 @@
 //! The terminal form of a report.
 
+use crate::ansi::{BOLD_CYAN, BOLD_RED, BOLD_YELLOW, CYAN, FAINT, GREEN, RED, write_styled};
 use crate::width::{display_width, escape_char, escape_terminal, escaped_width};
 use crate::{Excerpt, Report, Severity};
 use std::fmt::Write;
@@ -21,22 +22,6 @@ impl Default for Style {
 
 /// The widest excerpt window in cells; longer lines are cut around the span with `…`.
 const MAX_EXCERPT: usize = 160;
-
-const BOLD_RED: &str = "1;31";
-const BOLD_YELLOW: &str = "1;33";
-const BOLD_CYAN: &str = "1;36";
-const CYAN: &str = "36";
-const RED: &str = "31";
-const GREEN: &str = "32";
-const FAINT: &str = "2";
-
-fn paint(out: &mut String, text: &str, code: &str, color: bool) {
-    if color {
-        let _ = write!(out, "\x1b[{code}m{text}\x1b[0m");
-    } else {
-        out.push_str(text);
-    }
-}
 
 /// Lays `report` out the Elm way: a title rule naming the place, the explanation, the
 /// source line with carets under the span, and the hints. Every text from the report
@@ -91,13 +76,13 @@ fn write_title(out: &mut String, report: &Report, style: &Style) {
     let used = 4 + display_width(&title) + display_width(&code) + display_width(&place);
     let dashes = style.width.saturating_sub(used + 1).max(3);
     out.push_str("-- ");
-    paint(out, &title, heading, style.color);
-    paint(out, &code, FAINT, style.color);
+    write_styled(out, &title, heading, style.color);
+    write_styled(out, &code, FAINT, style.color);
     out.push(' ');
     out.push_str(&"-".repeat(dashes));
     if !place.is_empty() {
         out.push(' ');
-        paint(out, &place, CYAN, style.color);
+        write_styled(out, &place, CYAN, style.color);
     }
     out.push('\n');
 }
@@ -112,7 +97,7 @@ fn write_hints(out: &mut String, report: &Report, style: &Style) {
         text.push_str(&escape_terminal(more));
     }
     if style.color {
-        paint(out, "Hint:", GREEN, true);
+        write_styled(out, "Hint:", GREEN, true);
         let mark = out.len();
         write_wrapped(out, &text, style.width);
         out.replace_range(mark..mark + 5, "");
@@ -132,7 +117,7 @@ fn write_excerpt(out: &mut String, excerpt: &Excerpt, line: usize, color: bool) 
     let (text, marker, carets) = window(&excerpt.text, excerpt.start, excerpt.end);
     let _ = writeln!(out, "{line:>gutter$}| {text}");
     out.push_str(&" ".repeat(gutter + 2 + marker));
-    paint(out, &"^".repeat(carets.max(1)), RED, color);
+    write_styled(out, &"^".repeat(carets.max(1)), RED, color);
     out.push('\n');
 }
 

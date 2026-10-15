@@ -43,7 +43,7 @@ println!("{}", gd_report::render_json(&report));     // one JSON object (SCHEMA 
 | Item | Does |
 |---|---|
 | `Report { code, severity, title, message, hints, path, line, column, end_line, end_column, excerpt, category }` | plain data, `Default` |
-| `Report::error(code, title, message)`, `.hint(h)`, `.at(path, source, start, end)` | chaining builders |
+| `Report::error`/`warning`/`note(code, title, message)`, `.hint(h)`, `.at(path, source, start, end)` | chaining builders |
 | `set_span(&mut r, source, start, end)`, `set_line_column(&mut r, source, line, col)` | position from bytes or line/column |
 | `render_text(&r, &Style)` / `write_text(&mut String, ..)` | `-- TITLE [code] ---- path:line:col`, message, `N| line`, carets, `Hint:` |
 | `render_json(&r)` / `write_json` / `escape_json` | JSON form for tools |

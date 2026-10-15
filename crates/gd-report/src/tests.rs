@@ -112,3 +112,10 @@ fn suggestions_and_wrapping() {
     assert_eq!(wrap("aa bb cc", 5), "aa bb\ncc\n");
     assert_eq!(wrap("  aa bb\nx", 5), "  aa\n  bb\nx\n");
 }
+
+#[test]
+fn warning_and_note_start_like_an_error_with_their_severity() {
+    let warning = Report::warning("c", "T", "m");
+    assert_eq!(warning, Report { severity: Severity::Warning, ..Report::error("c", "T", "m") });
+    assert_eq!(Report::note("c", "T", "m").severity, Severity::Note);
+}

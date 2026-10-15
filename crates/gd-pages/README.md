@@ -70,11 +70,9 @@ unknown (run `recover`), 130 cancelled.
   `--offline` writes a placeholder checksum that makes the workflow's own checksum test
   fail, and exits 1.
 - `watch --serve` runs the `gd-serve` preview on a thread over the build folder (or the
-  built site); the run's cancel stops the watch, which stops the server. It is the
-  optional `preview` feature (gd-serve brings gd-host, the engine and Typst; a debug
-  binary grows from ~20 MB to ~450 MB), which `guidedog-pages` enables; without it
-  `--serve` is `pages.preview`. `cargo test -p gd-pages --features preview` runs its
-  test.
+  built site); the run's cancel stops the watch, which stops the server. The preview is
+  always available: gd-serve uses gd-host without its `artifact` feature, so no Typst
+  compiler or engine renderer is linked for it.
 
 ## Redesign notes (from Odin `lib/pages` and `lib/pages/command`)
 

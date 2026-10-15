@@ -5,17 +5,13 @@
 use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant, UNIX_EPOCH};
 
-#[cfg(feature = "preview")]
 use gd_plugins::Cancel;
-#[cfg(feature = "preview")]
 use gd_serve::{ServeOptions, Server, Watch};
 
 use super::Context;
 use super::display::Console;
 use super::publish::publish_once;
-#[cfg(feature = "preview")]
 use crate::build_dir;
-#[cfg(feature = "preview")]
 use crate::config::SiteSource;
 use crate::config::{Config, read_config};
 
@@ -44,30 +40,6 @@ pub(crate) fn watch(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
     }
 }
 
-/// Without the `preview` feature there is no server to start.
-#[cfg(not(feature = "preview"))]
-fn watch_with_preview(
-    _ctx: &Context<'_>,
-    console: &mut Console<'_>,
-    _c: &Config,
-    _port: u16,
-) -> i32 {
-    console.report(
-        &crate::problem::problem(
-            "pages.preview",
-            "This build has no preview",
-            "--serve",
-            "This program was built without the preview server (the preview feature).",
-            "Run guidedog-pages watch without --serve, or use a guidedog-pages built with it.",
-        )
-        .exit(2),
-    )
-}
-
-/// Serves the published site's folder (the build folder of a project) on `port` while
-/// the watch publishes. One Ctrl+C stops both: the watch stops on the run's cancel and
-/// then stops the server; a server that ends stops the watch.
-#[cfg(feature = "preview")]
 fn watch_with_preview(ctx: &Context<'_>, console: &mut Console<'_>, c: &Config, port: u16) -> i32 {
     let site_dir = match &c.source {
         SiteSource::Built(site) => site.clone(),
@@ -106,7 +78,6 @@ fn watch_with_preview(ctx: &Context<'_>, console: &mut Console<'_>, c: &Config, 
 }
 
 /// A preview server's problem as this crate reports it.
-#[cfg(feature = "preview")]
 fn host_problem(p: &gd_host::Problem) -> gd_plugins::Problem {
     crate::problem::problem(p.code, p.title, &p.path, &p.message, &p.hint).exit(p.exit)
 }

@@ -5,12 +5,11 @@ use std::io::{IsTerminal, Write};
 
 use gd_json::Value;
 use gd_plugins::{Outcome, Plan, Problem, State};
+use gd_report::ansi::{GREEN, styled};
 use gd_report::{Style, escape_terminal};
 
 use super::Options;
 use crate::target::short;
-
-const GREEN: &str = "32";
 
 /// Where a command writes, and how.
 pub(crate) struct Console<'a> {
@@ -26,16 +25,8 @@ fn use_color(choice: &str, terminal: bool) -> bool {
     match choice {
         "always" => true,
         "never" => false,
-        _ => {
-            terminal
-                && std::env::var_os("NO_COLOR").is_none()
-                && std::env::var("TERM").map_or(true, |t| t != "dumb")
-        }
+        _ => gd_report::ansi::terminal_color(terminal),
     }
-}
-
-fn styled(text: &str, code: &str, color: bool) -> String {
-    if color { format!("\x1b[{code}m{text}\x1b[0m") } else { text.to_string() }
 }
 
 /// A JSON object of `fields`, in their order.

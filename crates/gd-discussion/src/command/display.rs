@@ -3,12 +3,9 @@
 use super::options::Options;
 use crate::{Catalog, Plan, Problem, Record};
 use gd_json::{Object, Value};
+use gd_report::ansi::{BOLD_CYAN, FAINT, GREEN, styled};
 use gd_report::{Style, escape_terminal};
 use std::io::Write;
-
-const BOLD_CYAN: &str = "1;36";
-const GREEN: &str = "32";
-const FAINT: &str = "2";
 
 /// Where a command writes, and how.
 pub(crate) struct Console<'a> {
@@ -27,10 +24,6 @@ impl std::fmt::Debug for Console<'_> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("Console").field("json", &self.json).finish_non_exhaustive()
     }
-}
-
-fn styled(text: &str, code: &str, color: bool) -> String {
-    if color { format!("\x1b[{code}m{text}\x1b[0m") } else { text.to_string() }
 }
 
 impl Console<'_> {

@@ -4,6 +4,7 @@
 use std::io::{BufRead, Write};
 
 use gd_host::Problem;
+use gd_report::ansi::{BOLD_CYAN, FAINT, GREEN, RED, styled};
 use gd_report::{Report, Severity, Style};
 
 use crate::command::{ColorMode, Diagnostics, Output};
@@ -50,11 +51,6 @@ impl std::fmt::Debug for Streams<'_> {
     }
 }
 
-pub(crate) const BOLD_CYAN: &str = "1;36";
-const FAINT: &str = "2";
-const GREEN: &str = "32";
-const RED: &str = "31";
-
 /// A command's streams with its reporting options applied.
 pub(crate) struct Console<'a> {
     pub out: &'a mut dyn Write,
@@ -72,10 +68,7 @@ fn use_color(mode: ColorMode, tty: bool) -> bool {
     match mode {
         ColorMode::Always => true,
         ColorMode::Never => false,
-        ColorMode::Auto => {
-            tty && std::env::var_os("NO_COLOR").is_none()
-                && std::env::var("TERM").map_or(true, |t| t != "dumb")
-        }
+        ColorMode::Auto => gd_report::ansi::terminal_color(tty),
     }
 }
 
@@ -106,11 +99,6 @@ impl<'a> Console<'a> {
     /// Writes `text` to standard error.
     pub fn eprint(&mut self, text: &str) {
         let _ = self.err.write_all(text.as_bytes());
-    }
-
-    /// `text` in the ANSI style `code` when `color`.
-    pub fn styled(text: &str, code: &str, color: bool) -> String {
-        if color { format!("\x1b[{code}m{text}\x1b[0m") } else { text.to_string() }
     }
 
     /// Reports `problem` on standard error and returns its exit status.
@@ -154,7 +142,7 @@ impl<'a> Console<'a> {
             line.push_str("}\n");
             self.print(&line);
         } else {
-            let tick = Console::styled(gd_report::terminal_symbols().check, GREEN, self.color_out);
+            let tick = styled(gd_report::terminal_symbols().check, GREEN, self.color_out);
             let text = format!("  {tick} {}\n", gd_report::escape_terminal(message));
             self.print(&text);
         }
@@ -164,9 +152,9 @@ impl<'a> Console<'a> {
     pub fn verdict(&self, ok: bool) -> String {
         let symbols = gd_report::terminal_symbols();
         if ok {
-            Console::styled(&format!("{} build succeeded", symbols.check), GREEN, self.color_out)
+            styled(&format!("{} build succeeded", symbols.check), GREEN, self.color_out)
         } else {
-            Console::styled(&format!("{} build failed", symbols.cross), RED, self.color_out)
+            styled(&format!("{} build failed", symbols.cross), RED, self.color_out)
         }
     }
 
@@ -176,7 +164,7 @@ impl<'a> Console<'a> {
         if self.quiet || self.json {
             return;
         }
-        let name = Console::styled("guidedog", BOLD_CYAN, self.color_out);
+        let name = styled("guidedog", BOLD_CYAN, self.color_out);
         let line = format!("{name} {}\n", gd_report::escape_terminal(text));
         self.print(&line);
     }
@@ -186,14 +174,14 @@ impl<'a> Console<'a> {
         if self.quiet || self.json {
             return;
         }
-        let label = Console::styled(&format!("{label:<8}"), FAINT, self.color_out);
+        let label = styled(&format!("{label:<8}"), FAINT, self.color_out);
         let line = format!("  {label} {}\n", gd_report::escape_terminal(text));
         self.print(&line);
     }
 
     /// A section heading of a table (`INPUT FORMATS`).
     pub fn section(&self, text: &str) -> String {
-        Console::styled(text, BOLD_CYAN, self.color_out)
+        styled(text, BOLD_CYAN, self.color_out)
     }
 
     /// Shows `question` on standard output and reads the answer: one line of standard

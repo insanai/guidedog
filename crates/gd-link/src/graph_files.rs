@@ -98,7 +98,8 @@ impl GraphFiles<'_> {
                     .into());
             }
             let media = media_type(path).unwrap_or("application/octet-stream");
-            let url = format!("xlink:href=\"data:{media};base64,{}\"", base64(&data));
+            let url =
+                format!("xlink:href=\"data:{media};base64,{}\"", gd_json::base64::encode(&data));
             out = out.replace(&href, &url);
         }
         let leaked = self.named.iter().any(|p| out.contains(&*p.to_string_lossy()));
@@ -130,37 +131,9 @@ fn media_type(path: &Path) -> Option<&'static str> {
     GRAPH_IMAGE_TYPES.iter().find(|(e, _)| *e == ext).map(|(_, media)| *media)
 }
 
-/// Standard base64 with padding.
-fn base64(data: &[u8]) -> String {
-    const ALPHABET: &[u8; 64] =
-        b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    let mut out = String::with_capacity(4 * data.len().div_ceil(3));
-    for chunk in data.chunks(3) {
-        let b = [chunk[0], *chunk.get(1).unwrap_or(&0), *chunk.get(2).unwrap_or(&0)];
-        let n = (u32::from(b[0]) << 16) | (u32::from(b[1]) << 8) | u32::from(b[2]);
-        for i in 0..4 {
-            if i <= chunk.len() {
-                out.push(char::from(ALPHABET[((n >> (18 - 6 * i)) & 63) as usize]));
-            } else {
-                out.push('=');
-            }
-        }
-    }
-    out
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn base64_pads_like_the_standard() {
-        assert_eq!(base64(b""), "");
-        assert_eq!(base64(b"f"), "Zg==");
-        assert_eq!(base64(b"fo"), "Zm8=");
-        assert_eq!(base64(b"foo"), "Zm9v");
-        assert_eq!(base64(b"foobar"), "Zm9vYmFy");
-    }
 
     #[test]
     fn graphs_that_may_name_files_are_drawn_again() {

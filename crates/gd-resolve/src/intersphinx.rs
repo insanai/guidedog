@@ -13,7 +13,7 @@ use gd_conf::{Config, IntersphinxProject};
 use gd_env::{Digest, Digester};
 use gd_host::{Budget, Ledger, Problem};
 use gd_inventory::{Inventory, Item};
-use gd_report::{Report, Severity};
+use gd_report::Report;
 
 /// The loaded inventories: each by its `intersphinx_mapping` name, and all merged, a
 /// later name replacing an earlier one's entries, as Sphinx merges them.
@@ -262,10 +262,10 @@ fn fetch_warning(config: &Config, p: &IntersphinxProject, failures: &[String]) -
         p.name,
         failures.join("\n")
     );
-    let report = Report::error("build.intersphinx.fetch", "INVENTORY NOT LOADED", &message)
+    let report = Report::warning("build.intersphinx.fetch", "INVENTORY NOT LOADED", &message)
         .hint("Check the URL and the network, or give a local copy as a location.");
     let path = config.config_path().to_string_lossy().into_owned();
-    Report { severity: Severity::Warning, path, ..report }
+    Report { path, ..report }
 }
 
 /// `posixpath.join`: a second part starting with `/` replaces the first.

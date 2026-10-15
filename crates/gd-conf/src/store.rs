@@ -4,7 +4,7 @@
 use std::collections::BTreeMap;
 
 use gd_host::Problem;
-use gd_report::{Report, Severity};
+use gd_report::Report;
 use gd_toml::{Data, Table, Value};
 
 use crate::check::check_config;
@@ -28,16 +28,7 @@ pub(crate) fn warning(
     message: String,
     hint: &str,
 ) -> Report {
-    Report {
-        code: code.to_string(),
-        severity: Severity::Warning,
-        title: title.to_string(),
-        message,
-        hints: vec![hint.to_string()],
-        path: path.to_string(),
-        line,
-        ..Report::default()
-    }
+    Report { path: path.to_string(), line, ..Report::warning(code, title, &message).hint(hint) }
 }
 
 /// Stores every key of `table`, a parsed conf.toml (or a `-D` override, `path` `"-D"`),

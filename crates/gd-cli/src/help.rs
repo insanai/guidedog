@@ -1,13 +1,14 @@
 //! The help texts: the overview and each command's options.
 
-use crate::console::{BOLD_CYAN, Console};
+use gd_report::ansi::{BOLD_CYAN, styled};
+
 use crate::version::full_version;
 
 /// The help of `topic` (`None` for the overview), styled when `color`.
 pub(crate) fn help_text(topic: Option<&str>, color: bool) -> String {
     let mut text = format!(
         "\n  {}  {}\n  Thoughtful documentation, from source to publication.\n\n",
-        Console::styled("guidedog", BOLD_CYAN, color),
+        styled("guidedog", BOLD_CYAN, color),
         full_version()
     );
     text.push_str(match topic {

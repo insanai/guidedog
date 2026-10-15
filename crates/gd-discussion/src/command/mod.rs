@@ -90,10 +90,7 @@ pub fn run_with(
     let color = |tty: bool| match o.color {
         Color::Always => true,
         Color::Never => false,
-        Color::Auto => {
-            tty && std::env::var_os("NO_COLOR").is_none()
-                && std::env::var("TERM").map_or(true, |t| t != "dumb")
-        }
+        Color::Auto => gd_report::ansi::terminal_color(tty),
     };
     let mut console = Console {
         out,

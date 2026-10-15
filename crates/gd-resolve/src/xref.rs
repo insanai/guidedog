@@ -9,7 +9,7 @@
 use std::fmt;
 
 use gd_env::{Asset, DocId, OutputFormat, Trace};
-use gd_report::{Report, Severity};
+use gd_report::Report;
 
 use crate::lookups::Look;
 use crate::view::BuildView;
@@ -127,16 +127,11 @@ impl Unresolved {
     /// The warning as a report on `path` (the document's path below the source folder),
     /// with no position yet: the caller places it at the reference.
     pub fn report(&self, path: &str) -> Report {
-        let mut report = Report::error(&self.code, &self.title, &self.message).hint(&self.hint);
+        let mut report = Report::warning(&self.code, &self.title, &self.message).hint(&self.hint);
         if let Some(name) = &self.suggestion {
             report.hints.push(format!("Did you mean `{name}`?"));
         }
-        Report {
-            severity: Severity::Warning,
-            path: path.to_string(),
-            category: self.category.clone(),
-            ..report
-        }
+        Report { path: path.to_string(), category: self.category.clone(), ..report }
     }
 
     pub(crate) fn warning(parts: [&str; 5]) -> Box<Unresolved> {

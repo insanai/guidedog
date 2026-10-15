@@ -6,11 +6,7 @@ use std::fmt::Write;
 /// The help text of `program`, styled when `color` is set.
 pub(crate) fn help_text(program: &Program<'_>, color: bool) -> String {
     let mut out = String::with_capacity(4096);
-    let name = if color {
-        format!("\x1b[1;36m{}\x1b[0m", program.name)
-    } else {
-        program.name.to_string()
-    };
+    let name = gd_report::ansi::styled(program.name, gd_report::ansi::BOLD_CYAN, color);
     let _ = writeln!(out, "\n  {name}  {VERSION}");
     out.push_str("  Proposals and decisions, written down and kept in order.\n\n");
     let _ = writeln!(out, "  USAGE\n    {} <command> [title or record] [options]\n", program.name);

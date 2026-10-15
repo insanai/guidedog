@@ -138,37 +138,24 @@ fn books_setting(books: &[Book]) -> String {
         if i > 0 {
             out.push_str(", ");
         }
-        let _ = write!(
-            out,
-            "{{root={}, file={}, title={}, author={}}}",
-            toml(&book.root),
-            toml(&book.file),
-            toml(&book.title),
-            toml(&book.author)
-        );
+        let fields = [
+            ("root", &book.root),
+            ("file", &book.file),
+            ("title", &book.title),
+            ("author", &book.author),
+        ];
+        out.push('{');
+        for (j, (name, value)) in fields.into_iter().enumerate() {
+            if j > 0 {
+                out.push_str(", ");
+            }
+            out.push_str(name);
+            out.push('=');
+            gd_toml::write_basic_string(&mut out, value);
+        }
+        out.push('}');
     }
     out.push(']');
-    out
-}
-
-/// `value` as a one-line TOML basic string.
-fn toml(value: &str) -> String {
-    let mut out = String::with_capacity(value.len() + 2);
-    out.push('"');
-    for c in value.chars() {
-        match c {
-            '"' => out.push_str("\\\""),
-            '\\' => out.push_str("\\\\"),
-            '\n' => out.push_str("\\n"),
-            '\r' => out.push_str("\\r"),
-            '\t' => out.push_str("\\t"),
-            c if (c as u32) < 32 || c == '\u{7f}' => {
-                let _ = write!(out, "\\u{:04x}", c as u32);
-            }
-            c => out.push(c),
-        }
-    }
-    out.push('"');
     out
 }
 
@@ -197,8 +184,7 @@ mod tests {
             path: "records/0001-cache.rst".into(),
             line: 3,
             column: 0,
-            severity: gd_report::Severity::Warning,
-            ..gd_report::Report::error("rst.title", "TITLE UNDERLINE TOO SHORT", "Too short.")
+            ..gd_report::Report::warning("rst.title", "TITLE UNDERLINE TOO SHORT", "Too short.")
                 .hint("Lengthen it.")
         };
         let problem = gd_host::Problem::new("build.warnings", "WARNINGS", "", "1 warning.", "", 1);

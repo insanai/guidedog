@@ -21,8 +21,8 @@ use gd_plugins::Problem;
 use gd_toml::{Table, Value};
 
 use crate::config::quoted;
-use crate::files::{create_private_dir, write_atomically};
 use crate::problem::{io_problem, problem};
+use gd_plugins::files::{create_private_dir, write_atomically};
 
 const MAX_STATE_BYTES: u64 = 1024 * 1024;
 const PROFILES_ABOUT: &str = "Credential profiles: each names a token in the credential store.";
@@ -325,7 +325,7 @@ impl State {
     }
 
     fn write(&self, name: &str, text: &str) -> Result<(), Problem> {
-        write_atomically(&self.dir.join(name), text)
+        write_atomically(&self.dir.join(name), text.as_bytes())
             .map_err(|(path, e)| io_problem(&path.display().to_string(), &e))
     }
 }

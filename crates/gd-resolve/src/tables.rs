@@ -6,7 +6,7 @@ use std::path::PathBuf;
 
 use gd_conf::Config;
 use gd_env::{DocId, DocInfo, Environment, LabelKind, ObjectInfo, UiText, normalize_name};
-use gd_report::{Report, Severity};
+use gd_report::Report;
 
 use crate::cpp::CppTree;
 use crate::view::chapter_key;
@@ -142,11 +142,10 @@ pub(crate) struct Pass<'a> {
 pub(crate) fn doc_warning(d: &DocInfo, line: u32, parts: [&str; 5]) -> Report {
     let [code, title, message, hint, category] = parts;
     Report {
-        severity: Severity::Warning,
         path: d.relative.clone(),
         line: line as usize,
         category: category.to_string(),
-        ..Report::error(code, title, message).hint(hint)
+        ..Report::warning(code, title, message).hint(hint)
     }
 }
 

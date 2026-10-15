@@ -7,7 +7,7 @@
 use std::sync::{Arc, Mutex};
 
 use gd_host::{Problem, Refusal, RefusalChoice};
-use gd_report::{Report, Severity, Style};
+use gd_report::{Report, Style};
 
 const MIB: usize = 1 << 20;
 
@@ -174,10 +174,7 @@ pub(crate) fn low_memory_report(budget: usize, available: usize, asking: bool) -
         budget / MIB,
         available / MIB
     );
-    Report {
-        severity: Severity::Warning,
-        ..Report::error("host.memory.low", "LITTLE MEMORY FREE", &message).hint(&hint)
-    }
+    Report::warning("host.memory.low", "LITTLE MEMORY FREE", &message).hint(&hint)
 }
 
 /// Explains a refusal as the build's report would, with what it needs.
@@ -192,11 +189,8 @@ pub(crate) fn refusal_report(r: &Refusal, available: Option<usize>) -> Report {
         r.limit / MIB,
         mib_text(left)
     );
-    Report {
-        severity: Severity::Warning,
-        ..Report::error("host.budget", "MEMORY BUDGET REACHED", &message)
-            .hint(&next_time_hint(r, available))
-    }
+    Report::warning("host.budget", "MEMORY BUDGET REACHED", &message)
+        .hint(&next_time_hint(r, available))
 }
 
 /// How to choose ahead of a refusal: the budget the step fits in (`suggest_budget`), the

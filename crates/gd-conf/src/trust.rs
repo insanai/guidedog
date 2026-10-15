@@ -7,7 +7,7 @@
 use std::path::{Path, PathBuf};
 
 use gd_host::Confinement;
-use gd_report::{Report, Severity};
+use gd_report::Report;
 
 use crate::config::Config;
 use crate::paths::source_path;
@@ -138,14 +138,10 @@ pub fn unread_warning(
             "Add its folder to include_roots, or move it below the source folder.",
         ),
     };
+    let code = format!("{code}.{suffix}");
     Some(Report {
-        code: format!("{code}.{suffix}"),
-        severity: Severity::Warning,
-        title: title.to_string(),
-        message,
-        hints: vec![hint.to_string()],
         path: path.display().to_string(),
-        ..Report::default()
+        ..Report::warning(&code, title, &message).hint(hint)
     })
 }
 

@@ -197,7 +197,8 @@ fn reply(status: u16, body: impl Into<Vec<u8>>) -> Reply {
 
 fn answer(world: &Mutex<World>, bare: &Path, r: &Request) -> Reply {
     let auth = r.headers.get("authorization").map(String::as_str).unwrap_or("");
-    let basic = format!("Basic {}", base64(format!("x-access-token:{TOKEN}").as_bytes()));
+    let basic =
+        format!("Basic {}", gd_json::base64::encode(format!("x-access-token:{TOKEN}").as_bytes()));
     let (path, query) = r.path.split_once('?').unwrap_or((&r.path, ""));
     let bare_arg = bare.to_string_lossy().into_owned();
     if path.starts_with("/login/") {
@@ -365,23 +366,4 @@ fn device(world: &Mutex<World>, path: &str) -> Reply {
         2 => reply(200, r#"{"error":"slow_down","interval":10}"#),
         _ => reply(200, format!(r#"{{"access_token":"{TOKEN}","token_type":"bearer"}}"#)),
     }
-}
-
-fn base64(bytes: &[u8]) -> String {
-    const ALPHABET: &[u8; 64] =
-        b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    let mut out = String::new();
-    for chunk in bytes.chunks(3) {
-        let n =
-            chunk.iter().enumerate().fold(0u32, |n, (i, &b)| n | (u32::from(b) << (16 - 8 * i)));
-        for i in 0..4 {
-            let c = if i <= chunk.len() {
-                ALPHABET[((n >> (18 - 6 * i)) & 63) as usize]
-            } else {
-                b'='
-            };
-            out.push(char::from(c));
-        }
-    }
-    out
 }

@@ -171,7 +171,8 @@ impl Client {
     /// The `Authorization` header Git's smart HTTP takes the token in.
     pub(crate) fn basic_auth(&self) -> Header {
         let credentials = Secret::from_string(format!("x-access-token:{}", self.token.expose()));
-        let encoded = Secret::from_string(base64(credentials.expose().as_bytes()));
+        let encoded =
+            Secret::from_string(gd_json::base64::encode(credentials.expose().as_bytes()));
         Header::new("Authorization", &format!("Basic {}", encoded.expose()))
     }
 }
@@ -338,24 +339,6 @@ pub(crate) fn sleep_cancellable(cancel: &Cancel, d: Duration) -> bool {
     !cancel.is_cancelled()
 }
 
-/// `bytes` in standard base64, with padding.
-pub(crate) fn base64(bytes: &[u8]) -> String {
-    const ALPHABET: &[u8; 64] =
-        b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    let mut out = String::with_capacity(bytes.len().div_ceil(3) * 4);
-    for chunk in bytes.chunks(3) {
-        let n = chunk.iter().enumerate().fold(0u32, |n, (i, &b)| n | u32::from(b) << (16 - 8 * i));
-        for i in 0..4 {
-            if i <= chunk.len() {
-                out.push(char::from(ALPHABET[(n >> (18 - 6 * i) & 63) as usize]));
-            } else {
-                out.push('=');
-            }
-        }
-    }
-    out
-}
-
 /// `text` percent-encoded for a form: everything but unreserved characters.
 pub(crate) fn percent_encode(text: &str) -> String {
     let mut out = String::with_capacity(text.len());
@@ -374,12 +357,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn base64_matches_rfc_4648() {
-        let cases =
-            [("", ""), ("f", "Zg=="), ("fo", "Zm8="), ("foo", "Zm9v"), ("foob", "Zm9vYg==")];
-        for (plain, encoded) in cases {
-            assert_eq!(base64(plain.as_bytes()), encoded);
-        }
+    fn percent_encoding_keeps_unreserved_characters() {
         assert_eq!(percent_encode("a b/c~"), "a%20b%2Fc~");
     }
 

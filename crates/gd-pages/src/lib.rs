@@ -41,7 +41,6 @@ mod config;
 #[allow(unsafe_code)]
 mod credential;
 mod device;
-mod files;
 mod github;
 mod guide;
 mod infer;
@@ -157,7 +156,7 @@ impl Settings {
             })?,
         };
         let dir = base.join("guidedog").join("pages").join(key);
-        files::create_private_dir(&dir)
+        gd_plugins::files::create_private_dir(&dir)
             .map_err(|e| problem::io_problem(&dir.display().to_string(), &e))?;
         Ok(dir)
     }
@@ -197,7 +196,7 @@ pub fn build_dir(settings: &Settings, config: &Config, dry_run: bool) -> Result<
     };
     let work = settings.work_dir(&target_key(binding.repository_id, &config.branch))?;
     if dry_run {
-        return files::make_unique_dir(&work, "dry-run-")
+        return gd_plugins::files::make_temp_dir(&work, "dry-run")
             .map_err(|e| problem::io_problem(&work.display().to_string(), &e));
     }
     Ok(work.join("site"))

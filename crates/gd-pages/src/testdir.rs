@@ -8,7 +8,8 @@ pub(crate) struct TestDir(PathBuf);
 impl TestDir {
     pub(crate) fn new(name: &str) -> TestDir {
         let base = std::env::temp_dir().join("gd-pages-tests");
-        TestDir(crate::files::make_unique_dir(&base, name).unwrap())
+        gd_plugins::files::create_private_dir(&base).unwrap();
+        TestDir(gd_plugins::files::make_temp_dir(&base, name).unwrap())
     }
 
     pub(crate) fn path(&self) -> &Path {

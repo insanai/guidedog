@@ -7,7 +7,7 @@ use gd_conf::Config;
 use gd_env::{Asset, DocId, DocInfo, LabelKind, OutputFormat, Trace};
 use gd_graphdog::Context;
 use gd_host::Ledger;
-use gd_report::{Report, Severity};
+use gd_report::Report;
 use gd_resolve::BuildView;
 use guidedoc::{
     AdmonitionKind, AttributeKey, Builder, Document, Fail, NodeId, NodeKind, PassOutcome, ROOT,
@@ -164,14 +164,9 @@ impl<'p> Page<'p> {
     /// Adds a warning about this document at `span` of `doc`.
     pub fn warn(&mut self, doc: Document<'_>, span: SourceSpan, w: Warning<'_>) {
         let mut report = Report {
-            code: w.code.to_string(),
-            severity: Severity::Warning,
-            title: w.title.to_string(),
-            message: w.message,
-            hints: vec![w.hint.to_string()],
             path: self.info.relative.clone(),
             category: w.category.to_string(),
-            ..Report::default()
+            ..Report::warning(w.code, w.title, &w.message).hint(w.hint)
         };
         locate(doc, span, &mut report);
         self.reports.push(report);

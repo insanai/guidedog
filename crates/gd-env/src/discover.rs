@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 
 use gd_conf::Config;
 use gd_host::Problem;
-use gd_report::{Report, Severity};
+use gd_report::Report;
 
 use crate::environment::Dependency;
 
@@ -311,16 +311,13 @@ pub fn contents_root(config: &mut Config, sources: &[SourceFile]) -> Option<Repo
     for book in config.pdf.documents.iter_mut().filter(|b| b.root == "index") {
         book.root = "contents".into();
     }
-    Some(Report {
-        code: "build.root.contents".into(),
-        severity: Severity::Warning,
-        title: "ROOT DOCUMENT IS CONTENTS".into(),
-        message: "There is no index document, so contents is the root document, as it was \
-                  before Sphinx 2.0."
-            .into(),
-        hints: vec!["Set root_doc = \"contents\" in conf.toml.".into()],
-        ..Report::default()
-    })
+    let report = Report::warning(
+        "build.root.contents",
+        "ROOT DOCUMENT IS CONTENTS",
+        "There is no index document, so contents is the root document, as it was before \
+         Sphinx 2.0.",
+    );
+    Some(report.hint("Set root_doc = \"contents\" in conf.toml."))
 }
 
 /// Adds generated pages to `sources`, keeping them sorted by docname.

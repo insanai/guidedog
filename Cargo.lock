@@ -649,6 +649,22 @@ dependencies = [
 [[package]]
 name = "gd-book"
 version = "0.7.0"
+dependencies = [
+ "gd-conf",
+ "gd-env",
+ "gd-host",
+ "gd-link",
+ "gd-outputs",
+ "gd-report",
+ "gd-resolve",
+ "gd-theme",
+ "gd-typst",
+ "guidedoc",
+ "guidedoc-defaults",
+ "guidedoc-rst",
+ "guidedoc-text",
+ "guidedoc-typst",
+]
 
 [[package]]
 name = "gd-cli"
@@ -760,6 +776,7 @@ dependencies = [
  "guidedoc-commonmark",
  "guidedoc-html",
  "guidedoc-rst",
+ "guidedoc-sphinx",
  "guidedoc-text",
  "guidedoc-typst",
 ]
@@ -884,6 +901,24 @@ dependencies = [
 [[package]]
 name = "gd-read"
 version = "0.7.0"
+dependencies = [
+ "gd-autodoc",
+ "gd-conf",
+ "gd-env",
+ "gd-gettext",
+ "gd-host",
+ "gd-i18n",
+ "gd-intl",
+ "gd-odindoc",
+ "gd-pyscan",
+ "gd-report",
+ "gd-rustdoc",
+ "guidedoc",
+ "guidedoc-commonmark",
+ "guidedoc-defaults",
+ "guidedoc-rst",
+ "guidedoc-sphinx",
+]
 
 [[package]]
 name = "gd-report"
@@ -925,6 +960,23 @@ version = "0.7.0"
 [[package]]
 name = "gd-site"
 version = "0.7.0"
+dependencies = [
+ "gd-conf",
+ "gd-env",
+ "gd-highlight",
+ "gd-host",
+ "gd-jinja",
+ "gd-link",
+ "gd-outputs",
+ "gd-report",
+ "gd-resolve",
+ "gd-theme",
+ "gd-toml",
+ "guidedoc",
+ "guidedoc-defaults",
+ "guidedoc-html",
+ "guidedoc-sphinx",
+]
 
 [[package]]
 name = "gd-theme"

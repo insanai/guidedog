@@ -678,6 +678,15 @@ dependencies = [
 [[package]]
 name = "gd-env"
 version = "0.7.0"
+dependencies = [
+ "gd-conf",
+ "gd-host",
+ "gd-json",
+ "gd-plugins",
+ "gd-report",
+ "gd-sha",
+ "guidedoc",
+]
 
 [[package]]
 name = "gd-fetch"
@@ -776,6 +785,14 @@ version = "0.7.0"
 [[package]]
 name = "gd-outputs"
 version = "0.7.0"
+dependencies = [
+ "gd-conf",
+ "gd-env",
+ "gd-host",
+ "gd-json",
+ "gd-report",
+ "gd-sha",
+]
 
 [[package]]
 name = "gd-pages"
@@ -783,9 +800,11 @@ version = "0.7.0"
 dependencies = [
  "gd-fetch",
  "gd-git",
+ "gd-host",
  "gd-json",
  "gd-plugins",
  "gd-report",
+ "gd-serve",
  "gd-toml",
 ]
 
@@ -822,6 +841,16 @@ version = "0.7.0"
 [[package]]
 name = "gd-resolve"
 version = "0.7.0"
+dependencies = [
+ "gd-conf",
+ "gd-env",
+ "gd-fetch",
+ "gd-host",
+ "gd-inventory",
+ "gd-outputs",
+ "gd-report",
+ "guidedoc",
+]
 
 [[package]]
 name = "gd-rustdoc"
@@ -942,6 +971,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "guidedoc-examples"
+version = "0.7.0"
+dependencies = [
+ "gd-graphdog",
+ "guidedoc",
+ "guidedoc-commonmark",
+ "guidedoc-html",
+ "guidedoc-rst",
+ "guidedoc-text",
+ "guidedoc-typst",
+]
+
+[[package]]
 name = "guidedoc-html"
 version = "0.7.0"
 dependencies = [
@@ -966,6 +1008,13 @@ dependencies = [
 [[package]]
 name = "guidedoc-sphinx"
 version = "0.7.0"
+dependencies = [
+ "guidedoc",
+ "guidedoc-commonmark",
+ "guidedoc-html",
+ "guidedoc-rst",
+ "guidedoc-rst-inline",
+]
 
 [[package]]
 name = "guidedoc-text"
@@ -1541,6 +1590,10 @@ name = "linebender_resource_handle"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d4a5ff6bcca6c4867b1c4fd4ef63e4db7436ef363e0ad7531d1558856bae64f4"
+
+[[package]]
+name = "linkcheck"
+version = "0.7.0"
 
 [[package]]
 name = "linked-hash-map"

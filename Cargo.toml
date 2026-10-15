@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/*", "cmd/*", "tools/*"]
+members = ["crates/*", "cmd/*", "tools/check", "tools/linkcheck", "examples/*"]
 
 [workspace.package]
 version = "0.7.0"
@@ -15,6 +15,7 @@ guidedoc-rst = { path = "crates/guidedoc-rst" }
 guidedoc-rst-inline = { path = "crates/guidedoc-rst-inline" }
 guidedoc-commonmark = { path = "crates/guidedoc-commonmark" }
 guidedoc-sphinx = { path = "crates/guidedoc-sphinx" }
+guidedoc-cpp = { path = "crates/guidedoc-cpp" }
 guidedoc-html = { path = "crates/guidedoc-html" }
 guidedoc-typst = { path = "crates/guidedoc-typst" }
 guidedoc-text = { path = "crates/guidedoc-text" }
@@ -42,6 +43,17 @@ gd-discussion = { path = "crates/gd-discussion" }
 gd-plugins = { path = "crates/gd-plugins" }
 gd-pages = { path = "crates/gd-pages" }
 gd-cli = { path = "crates/gd-cli" }
+gd-serve = { path = "crates/gd-serve" }
+gd-intl = { path = "crates/gd-intl" }
+gd-book = { path = "crates/gd-book" }
+gd-site = { path = "crates/gd-site" }
+gd-read = { path = "crates/gd-read" }
+gd-link = { path = "crates/gd-link" }
+gd-resolve = { path = "crates/gd-resolve" }
+gd-outputs = { path = "crates/gd-outputs" }
+gd-env = { path = "crates/gd-env" }
+gd-migrate = { path = "crates/gd-migrate" }
+gd-conf = { path = "crates/gd-conf" }
 gd-rustdoc = { path = "crates/gd-rustdoc" }
 
 # External crates: only mature, self-contained ones that solve a genuinely large problem.

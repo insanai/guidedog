@@ -1,0 +1,267 @@
+name: Release
+# A v* tag builds, qualifies and publishes a release. Running the workflow by hand builds
+# a candidate (every job but publishing), optionally for one platform.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Platform to build as a candidate (a tag always builds all)
+        type: choice
+        default: all
+        options: [all, linux-amd64, linux-arm64, macos-arm64, macos-amd64]
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}-${{ inputs.platform || 'all' }}
+  cancel-in-progress: false
+defaults:
+  run:
+    shell: bash
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: '0'
+  # Where each release archive is built and smoke-tested. Every archive is built natively
+  # on its own platform, because the programs link that platform's Graphviz. Linux builds
+  # on Ubuntu 22.04 (glibc 2.35) on both architectures.
+  PLATFORMS: >-
+    [{"package": "linux-amd64", "runner": "ubuntu-22.04", "smoke": "ubuntu-22.04"},
+     {"package": "linux-arm64", "runner": "ubuntu-22.04-arm", "smoke": "ubuntu-22.04-arm"},
+     {"package": "macos-arm64", "runner": "macos-15", "smoke": "macos-15"},
+     {"package": "macos-amd64", "runner": "macos-15-intel", "smoke": "macos-15-intel"}]
+jobs:
+  version:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.check.outputs.version }}
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - id: check
+        name: The tag, VERSION and Cargo.toml agree
+        run: echo "version=$(tools/release/check-version.sh)" >> "$GITHUB_OUTPUT"
+      - id: plan
+        name: Choose the platforms
+        env:
+          PLATFORM: ${{ inputs.platform || 'all' }}
+        run: |
+          [ "$GITHUB_REF_TYPE" = tag ] && PLATFORM=all
+          matrix=$(echo "$PLATFORMS" |
+            jq -c --arg p "$PLATFORM" 'map(select($p == "all" or .package == $p))')
+          [ "$matrix" != "[]" ]
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+
+  qualify:
+    name: qualify (${{ matrix.package }})
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {package: linux-amd64, runner: ubuntu-22.04}
+          - {package: macos-arm64, runner: macos-15}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/prepare
+        with:
+          keyring: ${{ runner.os == 'Linux' }}
+      - name: Source limits
+        run: cargo run --locked -p check
+      - name: Clippy
+        run: cargo clippy --locked --workspace --all-targets -- -D warnings
+      - name: Every test suite
+        run: cargo test --locked --workspace
+      - name: Linux Secret Service with a real keyring
+        if: runner.os == 'Linux'
+        run: tools/release/credential-store.sh
+
+  build:
+    name: build (${{ matrix.package }})
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.version.outputs.matrix) }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/prepare
+        with:
+          cache: release
+      - name: Build guidedog (with the embedded Typst compiler), dsc, dscc, guidedog-pages and graphdog
+        run: tools/release/build.sh
+      - name: The programs report VERSION
+        run: |
+          for program in guidedog dsc dscc guidedog-pages graphdog; do
+            tools/release/check-version.sh "build/$program"
+          done
+      - name: Integration tests against the release build
+        run: cargo test --locked --release --workspace --test '*'
+      - name: Package guidedog with dsc, guidedog-pages and graphdog, and dscc, with notices and manifests
+        run: tools/release/package.sh ${{ matrix.package }}
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: guidedog-${{ matrix.package }}
+          path: dist/*
+          if-no-files-found: error
+
+  smoke:
+    name: smoke (${{ matrix.package }})
+    needs: [version, build]
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.version.outputs.matrix) }}
+    runs-on: ${{ matrix.smoke }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install the Graphviz runtime, as a user would
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: '1'
+          HOMEBREW_NO_INSTALL_CLEANUP: '1'
+        run: |
+          if [ "$RUNNER_OS" = macOS ]; then
+            brew list graphviz >/dev/null 2>&1 || brew install --quiet graphviz
+          else
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq --no-install-recommends libgvc6
+          fi
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: guidedog-${{ matrix.package }}
+          path: dist
+      - name: Unpack the archives and check each program against its manifest
+        env:
+          PACKAGE: ${{ matrix.package }}
+        run: |
+          cd dist
+          for name in guidedog dscc; do
+            tar -xzf "$name-$PACKAGE.tar.gz"
+            folder=$PWD/$name-$PACKAGE
+            for binary in $(jq -r '.programs | keys[]' "$folder/$name.build.json"); do
+              expected=$(jq -r --arg b "$binary" '.programs[$b]' "$folder/$name.build.json")
+              if command -v sha256sum >/dev/null; then actual=$(sha256sum "$folder/$binary")
+              else actual=$(shasum -a 256 "$folder/$binary"); fi
+              actual=${actual%% *}
+              [ "$actual" = "$expected" ] || { echo "$binary does not match its manifest"; exit 1; }
+            done
+          done
+          {
+            echo "PROGRAM=$PWD/guidedog-$PACKAGE/guidedog"
+            echo "DSC=$PWD/guidedog-$PACKAGE/dsc"
+            echo "PAGES=$PWD/guidedog-$PACKAGE/guidedog-pages"
+            echo "GRAPHDOG=$PWD/guidedog-$PACKAGE/graphdog"
+            echo "DSCC=$PWD/dscc-$PACKAGE/dscc"
+          } >> "$GITHUB_ENV"
+      - name: The packaged programs report VERSION
+        run: |
+          for program in "$PROGRAM" "$DSC" "$DSCC" "$PAGES" "$GRAPHDOG"; do
+            tools/release/check-version.sh "$program"
+          done
+      - name: Quickstart, HTML and PDF with nothing but the system libraries
+        run: tools/release/smoke.sh "$PROGRAM"
+      - name: Discussions with dsc and the packaged guidedog, and with dscc alone
+        run: |
+          tools/release/smoke-discussion.sh "$DSC" "$PROGRAM"
+          tools/release/smoke-discussion.sh "$DSCC"
+      - name: guidedog-pages registered with the packaged guidedog, offline
+        run: tools/release/smoke-pages.sh "$PAGES" "$PROGRAM"
+      - name: graphdog with the system's Graphviz
+        run: tools/release/smoke-graphdog.sh "$GRAPHDOG"
+
+  source:
+    needs: version
+    if: github.ref_type == 'tag' || inputs.platform == 'all'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: tools/release/source.sh
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: guidedog-source
+          path: dist/*
+          if-no-files-found: error
+
+  homebrew:
+    needs: [version, build]
+    if: github.ref_type == 'tag' || inputs.platform == 'all'
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: guidedog-*-*
+          merge-multiple: true
+          path: dist
+      - name: Render the formula from the archives
+        run: tools/release/formula.sh dist
+      - name: Install and test the formula from a local tap, using the local archive
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: '1'
+          HOMEBREW_NO_INSTALL_CLEANUP: '1'
+        run: |
+          brew tap-new --no-git guidedog/qualification
+          tap=$(brew --repository guidedog/qualification)
+          sed "s|https://.*/guidedog-macos-arm64.tar.gz|file://$PWD/dist/guidedog-macos-arm64.tar.gz|" \
+            dist/guidedog.rb > "$tap/Formula/guidedog.rb"
+          brew install --formula guidedog/qualification/guidedog
+          brew test guidedog/qualification/guidedog
+          brew uninstall --formula guidedog/qualification/guidedog
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: guidedog-formula
+          path: dist/guidedog.rb
+          if-no-files-found: error
+
+  publish:
+    if: github.ref_type == 'tag'
+    needs: [version, qualify, build, smoke, source, homebrew]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: The release is not published yet
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: tools/release/publish.sh --check "$GITHUB_REF_NAME"
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: guidedog-*
+          merge-multiple: true
+          path: dist
+      - name: SHA256SUMS
+        run: tools/release/checksums.sh dist
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: |
+            dist/*.tar.gz
+            dist/guidedog.rb
+      - name: Draft, upload, then publish as the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: tools/release/publish.sh "$GITHUB_REF_NAME" dist
+
+  refresh:
+    needs: publish
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - name: Rebuild the documentation site with the new release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY"

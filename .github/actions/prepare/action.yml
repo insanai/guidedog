@@ -1,0 +1,62 @@
+name: Prepare a Guidedog build
+description: >
+  Installs the Rust toolchain and the system libraries Guidedog links (Graphviz), and
+  restores Cargo's download and build caches.
+inputs:
+  cache:
+    description: Name of the build cache (jobs that build differently keep separate caches)
+    default: debug
+  keyring:
+    description: Also install a Secret Service (gnome-keyring, libsecret-tools) on Linux
+    default: 'false'
+runs:
+  using: composite
+  steps:
+    - name: Install Graphviz and the build tools (Linux)
+      if: runner.os == 'Linux'
+      shell: bash
+      env:
+        KEYRING: ${{ inputs.keyring }}
+      run: |
+        # libgraphviz-dev for gd-graphdog (libgvc, libcgraph); perl and make build the
+        # OpenSSL that Typst's package downloader links statically on Linux.
+        packages="libgraphviz-dev graphviz perl make"
+        if [ "$KEYRING" = true ]; then
+          packages="$packages gnome-keyring libsecret-tools dbus-x11"
+        fi
+        if ! dpkg -s $packages >/dev/null 2>&1; then
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends $packages
+        fi
+
+    - name: Install Graphviz (macOS)
+      if: runner.os == 'macOS'
+      shell: bash
+      env:
+        HOMEBREW_NO_AUTO_UPDATE: '1'
+        HOMEBREW_NO_INSTALL_CLEANUP: '1'
+      run: |
+        brew list graphviz >/dev/null 2>&1 || brew install --quiet graphviz
+        # rustc links -lgvc -lcgraph; Homebrew's lib folder is not on the default path.
+        echo "LIBRARY_PATH=$(brew --prefix graphviz)/lib" >> "$GITHUB_ENV"
+        echo "MACOSX_DEPLOYMENT_TARGET=12.0" >> "$GITHUB_ENV"
+
+    - name: Install the Rust toolchain
+      shell: bash
+      run: |
+        rustup toolchain install stable --profile minimal --component clippy,rustfmt
+        rustup default stable
+        rustc --version
+
+    - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: |
+          ~/.cargo/registry/index
+          ~/.cargo/registry/cache
+          ~/.cargo/git/db
+          target
+        key: >-
+          cargo-${{ runner.os }}-${{ runner.arch }}-${{ inputs.cache }}-${{
+          hashFiles('Cargo.lock', 'rust-toolchain.toml') }}
+        restore-keys: |
+          cargo-${{ runner.os }}-${{ runner.arch }}-${{ inputs.cache }}-

@@ -1,0 +1,87 @@
+name: Website
+# Builds https://insanai.github.io/guidedog/ with Guidedog itself: the landing page
+# (docs/site), the manual in seven languages with a PDF book each (docs/manual), and the
+# discussions with a PDF each (docs/gds), put together by tools/build-site.sh. The
+# generator's sources are in the path filters too, since a change there changes the site.
+on:
+  push:
+    branches: [main]
+    paths: &site
+      - 'docs/**'
+      - 'README*.md'
+      - 'VERSION'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+      - 'crates/**'
+      - 'cmd/**'
+      - 'tools/build-site.sh'
+      - 'tools/fetch-fonts.sh'
+      - 'tools/linkcheck/**'
+      - '.github/actions/prepare/**'
+      - '.github/workflows/pages.yml'
+  pull_request:
+    paths: *site
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: website-${{ github.ref }}
+  cancel-in-progress: true
+defaults:
+  run:
+    shell: bash
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: '0'
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # The Rust toolchain and Graphviz, with Cargo's caches, as in the Verify workflow.
+      - uses: ./.github/actions/prepare
+        with:
+          cache: release
+      - name: Build Guidedog and the link checker
+        run: cargo build --locked --release -p guidedog-cmd -p linkcheck
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: docs/shared/fonts/NotoSerifCJK*.otf
+          key: cjk-fonts-${{ hashFiles('tools/fetch-fonts.sh') }}
+      - name: Fetch the CJK fonts of the PDF books
+        run: sh tools/fetch-fonts.sh
+      - name: Build the website
+        run: sh tools/build-site.sh --guidedog target/release/guidedog
+      - name: Check every link inside the website
+        run: target/release/linkcheck build/site -v
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: github.event_name == 'pull_request'
+        with:
+          name: website-preview
+          path: build/site
+          include-hidden-files: true
+          retention-days: 7
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        with:
+          path: build/site
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages-production
+      cancel-in-progress: false
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

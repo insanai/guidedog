@@ -1,0 +1,72 @@
+name: Verify
+# Quick feedback for every change, on Linux and macOS: build, every test suite, clippy,
+# the source limits, and the smoke tests of the built programs.
+# The release workflow runs the same checks again on every platform it packages.
+on:
+  push:
+    branches: [main]
+    paths: &code
+      # Changes only to documentation skip this workflow (the Pages workflow still builds
+      # it), except the documents the tests read: README files, whose examples run, the
+      # tutorials, the GDS, and the manual's copies of repository files.
+      - '**'
+      - '!docs/**'
+      - '!**.md'
+      - '**/README.md'
+      - 'README*.md'
+      - 'docs/manual/tutorial/**'
+      - 'docs/gds/**'
+      - 'docs/manual/_static/repository/**'
+  pull_request:
+    paths: *code
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+defaults:
+  run:
+    shell: bash
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: '0'
+jobs:
+  verify:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: linux-amd64, runner: ubuntu-22.04}
+          - {name: macos-arm64, runner: macos-15}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/prepare
+        with:
+          keyring: ${{ runner.os == 'Linux' }}
+      - name: Source limits
+        run: cargo run --locked -p check
+      - name: Build
+        run: cargo build --locked --workspace --all-targets
+      - name: Clippy
+        run: cargo clippy --locked --workspace --all-targets -- -D warnings
+      - name: Tests
+        run: cargo test --locked --workspace
+      - name: Linux Secret Service with a real keyring
+        if: runner.os == 'Linux'
+        run: tools/release/credential-store.sh
+      - name: Examples run
+        run: |
+          for example in hello reuse_workspace custom_pass plain_text graphdog; do
+            cargo run --locked -q -p guidedoc-examples --example "$example" > /dev/null
+          done
+      - name: Smoke tests of the built programs
+        run: |
+          bin=target/debug
+          tools/release/smoke.sh --external-typst "$bin/guidedog"
+          tools/release/smoke-discussion.sh "$bin/dsc" "$PWD/$bin/guidedog"
+          tools/release/smoke-pages.sh "$bin/guidedog-pages" "$bin/guidedog"
+          tools/release/smoke-graphdog.sh "$bin/graphdog"

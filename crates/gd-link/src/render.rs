@@ -181,12 +181,31 @@ fn run_page(
         }
         _ => linked.then(String::new),
     };
-    out.reports.extend(gd_host::describe_all(ws));
+    let mut rendered_reports = gd_host::describe_all(ws);
+    if rendered.is_some() {
+        page_warnings(&mut rendered_reports, &info.reports);
+    }
+    out.reports.extend(rendered_reports);
     match rendered {
         Some(body) => out.body = body,
         None => out.failed = true,
     }
     out
+}
+
+/// What rendering a page that was made found, the way Sphinx reports it: each problem
+/// once, and as a warning. A reference the reader already reported unresolved is left
+/// out (the renderer meets the same link again), and the renderer's errors are
+/// warnings, as Sphinx logs Docutils' errors, so `-W` fails the build.
+fn page_warnings(reports: &mut Vec<Report>, read: &[Report]) {
+    let unresolved = |r: &Report| r.code.ends_with(".reference.unresolved");
+    let known = |r: &Report| {
+        read.iter().any(|k| unresolved(k) && k.line == r.line && k.column == r.column)
+    };
+    reports.retain(|r| !(unresolved(r) && known(r)));
+    for report in reports.iter_mut().filter(|r| r.severity == Severity::Error) {
+        report.severity = Severity::Warning;
+    }
 }
 
 /// A page that could not be made, with the problem that says why.

@@ -16,12 +16,14 @@ impl Pass<'_> {
         let mut trees: Vec<Vec<TreeEntry>> =
             d.toctrees.iter().map(|tree| self.resolve_toctree(id, d, tree)).collect();
         let config = self.config;
+        // Only a language that generates pages adds its index: the Odin and Rust roots
+        // are both `api` by default, and one's index is not the other's to add.
         let odin = &config.odin_api;
-        if odin.add_toctree_entry {
+        if odin.add_toctree_entry && odin.generate_api_docs && !odin.dirs.is_empty() {
             self.api_toctree_entry(id, &mut trees, &odin.root, "odin");
         }
         let rust = &config.rust_api;
-        if rust.add_toctree_entry {
+        if rust.add_toctree_entry && rust.generate_api_docs && !rust.crates.is_empty() {
             self.api_toctree_entry(id, &mut trees, &rust.root, "rust");
         }
         trees

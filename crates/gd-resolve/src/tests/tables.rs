@@ -152,12 +152,29 @@ fn the_api_index_joins_the_root_toctree() {
     let mut config = Config::new("/p", "/p/_build");
     config.rust_api.add_toctree_entry = true;
     config.rust_api.root = "rustapi".into();
+    config.rust_api.crates = vec!["../crates/shapes".into()];
     let mut index = doc("index", "Home");
     index.toctrees.push(toctree(&[]));
     let api = DocInfo { generated: true, ..doc("rustapi/index", "API") };
     let f = Fixture::with_config(config, vec![index, api]);
     let first = &f.tables.trees[f.id("index").index()][0];
     assert_eq!(first[0].doc, Some(f.id("rustapi/index")));
+}
+
+/// The Odin and Rust pages share the root `api` by default: Odin, which generates no
+/// pages here, must not add the Rust index the project placed itself.
+#[test]
+fn only_a_language_with_pages_adds_its_index() {
+    let mut config = Config::new("/p", "/p/_build");
+    config.rust_api.root = "api".into();
+    config.rust_api.crates = vec!["../crates/shapes".into()];
+    config.rust_api.add_toctree_entry = false;
+    assert!(config.odin_api.add_toctree_entry && config.odin_api.root == "api");
+    let mut index = doc("index", "Home");
+    index.toctrees.push(toctree(&[]));
+    let api = DocInfo { generated: true, ..doc("api/index", "API") };
+    let f = Fixture::with_config(config, vec![index, api]);
+    assert!(f.tables.trees[f.id("index").index()][0].is_empty());
 }
 
 fn cpp_element(ident: &str, id4: &str, decl: &str) -> String {

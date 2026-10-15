@@ -18,4 +18,5 @@ These chapters explain the model. They give you enough context to make a choice.
    ../intersphinx
    ../object-types
    ../autodoc
+   ../rust
    ../odin

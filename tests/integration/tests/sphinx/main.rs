@@ -7,6 +7,7 @@
 
 mod anchors;
 mod declared;
+mod glossary;
 mod intl;
 mod inventory;
 mod roots;

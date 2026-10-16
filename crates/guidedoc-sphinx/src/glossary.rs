@@ -1,7 +1,8 @@
 //! The standard domain's glossary and productionlist directives.
 
 use guidedoc::{
-    Arg, AttributeKey, Fail, INVALID_NODE, LinkInfo, LinkKind, NodeKind, SourceSpan, arg_span,
+    Arg, AttributeKey, Fail, INVALID_NODE, LinkInfo, LinkKind, NodeFlags, NodeKind, SourceSpan,
+    arg_span,
 };
 use guidedoc_rst::{Directive, Line, Parser, indent_of};
 
@@ -156,6 +157,8 @@ fn glossary_term(sx: &Sphinx<'_>, p: &mut Parser<'_, '_>, l: Line<'_>) -> Result
     p.inline(&views)?;
     let b = &mut p.ctx.b;
     let ix = b.begin_node(NodeKind::Index, span)?;
+    // This is structural metadata, not part of the term's replaceable inline text.
+    b.add_flags(ix, NodeFlags::GENERATED);
     b.add_custom_attribute(ix, "entries", &format!("!single: {plain}"))?;
     if !classifier.is_empty() {
         b.add_custom_attribute(ix, "key", classifier)?;

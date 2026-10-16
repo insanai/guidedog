@@ -5,8 +5,9 @@ use std::cell::{Cell, RefCell};
 
 use gd_gettext::Lookup;
 use guidedoc::{
-    Builder, Document, Fail, INVALID_NODE, Limits, LinkKind, NONE, NodeId, NodeKind, Pass,
-    PassOutcome, Policy, ROOT, ReadInlineFn, ReadOptions, Workspace, make_id, transform_document,
+    Builder, Document, Fail, INVALID_NODE, Limits, LinkKind, NONE, NodeFlag, NodeId, NodeKind,
+    Pass, PassOutcome, Policy, ROOT, ReadInlineFn, ReadOptions, Workspace, make_id,
+    transform_document,
 };
 
 use crate::extract::is_hidden_container;
@@ -290,13 +291,46 @@ impl<'a> Walk<'_, 'a, '_, '_, '_> {
             self.copy_children(id + 1, rest, hidden)?;
             translated = self.translate_inline(id)?;
         }
-        if !translated {
+        if translated {
+            self.copy_generated_children(id, copy, rest)?;
+        } else {
             self.copy_children(rest, end, hidden)?;
         }
         if unit.is_inline() && !self.t.progress.is_empty() {
             self.mark_progress(id, copy, translated)?;
         }
         self.b.end_node(copy)
+    }
+
+    /// Keeps structural children outside the replaced inline text. Glossary entries
+    /// follow the translated display text, while their target and category stay fixed.
+    fn copy_generated_children(
+        &mut self,
+        id: NodeId,
+        copy: NodeId,
+        first: NodeId,
+    ) -> Result<(), Fail> {
+        let doc = self.doc;
+        let mut term = String::new();
+        if doc.kind(id) == NodeKind::Term {
+            let fresh = self.b.document();
+            let mut child = copy + 1;
+            while child.index() < fresh.node_count() {
+                fresh.plain_text(child, &mut term);
+                child = fresh.subtree_end(child);
+            }
+        }
+        for child in doc.children(id) {
+            if child < first || !doc.node(child).flags.has(NodeFlag::Generated) {
+                continue;
+            }
+            let new = NodeId::from_index(self.b.snap.nodes.len());
+            self.copy_node(child, false)?;
+            if doc.kind(id) == NodeKind::Term && doc.kind(child) == NodeKind::Index {
+                self.set_index_term(new, &term)?;
+            }
+        }
+        Ok(())
     }
 
     /// Copies the sibling subtrees from `first` up to `end`.

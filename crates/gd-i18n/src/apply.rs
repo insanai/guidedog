@@ -55,6 +55,19 @@ enum Parsed {
 }
 
 impl<'a> Walk<'_, 'a, '_, '_, '_> {
+    /// Gives a generated glossary entry the translated term's plain display text.
+    pub(crate) fn set_index_term(&mut self, index: NodeId, term: &str) -> Result<(), Fail> {
+        let entries = self.b.add_text(&format!("!single: {term}"))?;
+        let range = self.b.snap.nodes[index.index()].attributes.range();
+        for row in range {
+            let attr = &self.b.snap.attributes[row];
+            if attr.key == AttributeKey::Custom && self.b.pool_string(attr.name) == "entries" {
+                self.b.snap.attributes[row].value = entries;
+            }
+        }
+        Ok(())
+    }
+
     /// Copies node `id`'s attributes to `copy`, translating those that carry messages:
     /// alt text, toctree captions and titles, meta values, and index entries.
     pub(crate) fn copy_attributes(

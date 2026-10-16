@@ -39,6 +39,9 @@ fn ref_of(doc: Document<'_>, id: NodeId) -> Option<Ref<'_>> {
         | NodeKind::SubstitutionReference
         | NodeKind::InlineTarget => (doc.node_text(id), ""),
         NodeKind::Xref => (link_name(), doc.custom_attribute(id, "reftype").unwrap_or("")),
+        NodeKind::Index if doc.attribute(id, AttributeKey::Id).is_some() => {
+            (doc.custom_attribute(id, "entries").unwrap_or(""), "")
+        }
         _ => return None,
     };
     Some(Ref { id, kind: n.kind, key, role, matched: false })
@@ -71,10 +74,18 @@ fn pair_references(old: &mut [Ref<'_>], new: &mut [Ref<'_>]) -> Matching {
             o.matched = true;
             r.matched = true;
             m.pairs.push((o.id, r.id));
-        } else if r.kind != NodeKind::InlineTarget {
-            m.missing = true;
         }
     }
+    // Translated :index: roles may change their entry text. Match unchanged entries
+    // first, then pair remaining indexes in order, preserving document-wide ids.
+    for r in new.iter_mut().filter(|r| !r.matched && r.kind == NodeKind::Index) {
+        if let Some(o) = old.iter_mut().find(|o| !o.matched && o.kind == NodeKind::Index) {
+            o.matched = true;
+            r.matched = true;
+            m.pairs.push((o.id, r.id));
+        }
+    }
+    m.missing = new.iter().any(|r| !r.matched && r.kind != NodeKind::InlineTarget);
     m.extra = old.iter().any(|o| !o.matched && o.kind != NodeKind::InlineTarget);
     m
 }
@@ -137,6 +148,21 @@ impl Walk<'_, '_, '_, '_, '_> {
         }
         if n.kind == NodeKind::Xref {
             self.adopt_attributes(old, new)?;
+        } else if n.kind == NodeKind::Index {
+            self.adopt_index_id(old, new)?;
+        }
+        Ok(())
+    }
+
+    /// Inline parsing has its own index serial. Keep the source document's identity
+    /// instead, so separate translated messages cannot both become index-0.
+    fn adopt_index_id(&mut self, old: NodeId, new: NodeId) -> Result<(), Fail> {
+        let original = self.doc.attribute(old, AttributeKey::Id).unwrap_or("");
+        let value = self.b.add_text(original)?;
+        for row in self.b.snap.nodes[new.index()].attributes.range() {
+            if self.b.snap.attributes[row].key == AttributeKey::Id {
+                self.b.snap.attributes[row].value = value;
+            }
         }
         Ok(())
     }

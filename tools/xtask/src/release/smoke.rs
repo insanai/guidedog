@@ -9,6 +9,8 @@ use crate::args::{self, Spec};
 use crate::fsutil::{TempDir, create_dir, read_text, write};
 use crate::{Failure, Result, fail, process};
 
+mod ssg;
+
 const SMOKE_HELP: &str = "\
 Smoke-tests a guidedog program the way a new user runs it: quickstart, then an HTML site
 and a PDF book from a project with a Graphviz diagram, an equation, Markdown, and API
@@ -175,6 +177,7 @@ pub(crate) fn smoke(program: &Path, external_typst: bool) -> Result<()> {
     let bytes = check_pdf(&dir.join("docs/_build/pdf/smoke-en.pdf"), "guidedog")?;
     smoke_translation(&runner, dir)?;
     smoke_publication(&runner, dir)?;
+    ssg::run(&runner, dir)?;
     println!("smoke test passed: {bytes} byte PDF and an HTML site");
     Ok(())
 }

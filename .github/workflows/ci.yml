@@ -59,6 +59,8 @@ jobs:
         run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - name: Tests
         run: cargo test --locked --workspace --no-fail-fast
+      - name: Large-site incremental SSG regression
+        run: cargo test --locked -p gd-project --test ssg_benchmark -- --ignored --nocapture
       - name: Linux Secret Service with a real keyring
         if: runner.os == 'Linux'
         run: cargo xtask release credential-store

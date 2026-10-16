@@ -190,7 +190,9 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
         {% set edition_root = pathto_root + ('../' if language != 'en' else '') %}
         {% if manual_languages %}{% for edition in manual_languages %}
         {% if edition.code == language %}{% set book_path = edition.path or 'en/' %}
+        {% if not ssg_no_pdf %}
         <a href="{{ edition_root }}books/{{ book_path }}guidedog-manual-{{ language }}.pdf">PDF</a>
+        {% endif %}
         {%- if site_home %}
         <a href="{{ edition_root }}{{ site_home }}{{ edition.path }}index.html">{{ _('Home') }}</a>
         {%- endif %}

@@ -130,11 +130,6 @@ pub(crate) fn absolute(path: &Path) -> PathBuf {
     std::env::current_dir().map(|dir| dir.join(path)).unwrap_or_else(|_| path.to_path_buf())
 }
 
-/// A path for messages: relative to `base` when it is inside it.
-pub(crate) fn shown(path: &Path, base: &Path) -> String {
-    path.strip_prefix(base).unwrap_or(path).display().to_string()
-}
-
 /// A new, empty temporary folder, removed with everything in it when dropped.
 #[derive(Debug)]
 pub(crate) struct TempDir {

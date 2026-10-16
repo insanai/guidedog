@@ -122,11 +122,11 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
       <li{% if e.code == language %} class="gd-current"{% endif %}>
         <a class="gd-edition-web" lang="{{ e.tag }}" hreflang="{{ e.tag }}"
           href="{{ site_root }}manual/{{ e.path }}index.html">{{ e.name }}</a>
-        <a class="gd-edition-pdf" hreflang="{{ e.tag }}" type="application/pdf"
+        {% if not ssg_no_pdf %}<a class="gd-edition-pdf" hreflang="{{ e.tag }}" type="application/pdf"
           href="{{ site_root }}manual/books/{{ e.path or 'en/' }}guidedog-manual-{{ e.code }}.pdf">
           <svg class="gd-icon" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 4v11m-4.5-4.5L12 15l4.5-4.5M5 19.5h14"/></svg>
-          PDF<span class="gd-sr"> · {{ e.name }}</span></a>
+          PDF<span class="gd-sr"> · {{ e.name }}</span></a>{% endif %}
       </li>
     {%- endfor %}
     </ul>

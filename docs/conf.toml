@@ -1,0 +1,80 @@
+# The complete website. Every mount is built before one output transaction publishes it.
+project = "Guidedog Website"
+version = "1.0"
+release = "1.0.0-beta.6"
+exclude_patterns = ["**"]
+
+[site]
+base_url = "https://insanai.github.io/guidedog"
+
+[[site.mounts]]
+name = "home"
+source = "site"
+output = ""
+exclude = ["search.html", "_static/searchindex.js", "_static/*.otf"]
+overrides = ['''rst_epilog="""
+.. _manual: mount://manual/index.html
+.. _manual-pdf: mount://books/guidedog-manual-{language}.pdf
+.. _manual-tutorial: mount://manual/tutorial/first-project.html
+.. _discussions: mount://discussions/index.html
+.. _manual-discussions: mount://manual/howto/discussions.html
+"""''']
+editions = [
+  {language = "en", output = ""},
+  {language = "zh_CN", output = "zh-cn", overrides = ['html_additional_pages={}', 'extensions=[]']},
+  {language = "ja", output = "ja", overrides = ['html_additional_pages={}', 'extensions=[]']},
+  {language = "ko", output = "ko", overrides = ['html_additional_pages={}', 'extensions=[]']},
+  {language = "hi", output = "hi", overrides = ['html_additional_pages={}', 'extensions=[]']},
+  {language = "es", output = "es", overrides = ['html_additional_pages={}', 'extensions=[]']},
+  {language = "de", output = "de", overrides = ['html_additional_pages={}', 'extensions=[]']},
+]
+
+[[site.mounts]]
+name = "manual"
+source = "manual"
+output = "manual"
+overrides = ['html_extra_path=[]', 'html_context.site_home=../']
+editions = [
+  {language = "en", output = ""},
+  {language = "zh_CN", output = "zh-cn"},
+  {language = "ja", output = "ja"},
+  {language = "ko", output = "ko"},
+  {language = "hi", output = "hi"},
+  {language = "es", output = "es"},
+  {language = "de", output = "de"},
+]
+
+[[site.mounts]]
+name = "books"
+source = "manual"
+output = "manual/books"
+builder = "pdf"
+overrides = ['html_extra_path=[]']
+editions = [
+  {language = "en", output = "en"},
+  {language = "zh_CN", output = "zh-cn"},
+  {language = "ja", output = "ja"},
+  {language = "ko", output = "ko"},
+  {language = "hi", output = "hi"},
+  {language = "es", output = "es"},
+  {language = "de", output = "de"},
+]
+
+[[site.mounts]]
+name = "discussions"
+source = "gds"
+output = "discussions"
+overrides = ['html_context.pdf_downloads=pdf/', 'html_context.site_home=../']
+
+[[site.mounts]]
+name = "discussion-records"
+source = "gds"
+output = "discussions/pdf"
+builder = "discussion-pdf"
+prefix = "gds"
+
+[[site.mounts]]
+name = "discussion-index"
+source = "gds"
+output = "discussions/pdf"
+builder = "pdf"

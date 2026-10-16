@@ -140,7 +140,7 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
       {#- pdf_downloads, when set, is the folder below the project's root that holds the
           PDF of each record (guidedog build pdf names it gds-RECORD-LANGUAGE.pdf) and of
           the index (gds-index-LANGUAGE.pdf). cargo xtask build-site sets it. -#}
-      {%- if pdf_downloads and (pagename[:8] == 'records/' or pagename == root_doc) %}
+      {%- if not ssg_no_pdf and pdf_downloads and (pagename[:8] == 'records/' or pagename == root_doc) %}
       <p class="gd-download"><a type="application/pdf" href="{{ pathto_root }}
         {{- pdf_downloads }}gds-{{ pagename[8:] if pagename != root_doc else 'index' }}-
         {{- language }}.pdf">

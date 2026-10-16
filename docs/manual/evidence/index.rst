@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`release-1.0.0-beta.5`
+     - Shared PDF theme, imported-module cache fix, platform qualification and published archive checks (16 October 2026)
    * - :doc:`pdf-theme-review`
      - Shared PDF theme, distinct book and discussion layouts, visual review and imported-module cache regression coverage (16 October 2026)
    * - :doc:`release-1.0.0-beta.4`
@@ -40,3 +42,4 @@ Each record is dated. It describes what we built or checked on that day, with th
    translation-index-review
    discussion-pdf-layout
    pdf-theme-review
+   release-1.0.0-beta.5

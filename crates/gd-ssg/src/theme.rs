@@ -31,15 +31,21 @@ pub fn install_theme(project: &Path, source: &str, sha256: &str) -> Result<Lock,
         archive_sha256: actual,
         tree_sha256: pack::tree_digest(&files),
     };
+    let encoded = lock.encode();
+    Lock::decode(&encoded).map_err(|e| problem(project, &e.to_string()))?;
     install_tree(project, &lock, &files)?;
+    let installed =
+        pack::read_tree(&lock.directory(project)).map_err(|e| problem(project, &e.to_string()))?;
+    if pack::tree_digest(&installed) != lock.tree_sha256 {
+        return Err(problem(project, "The installed tree differs from the pinned archive."));
+    }
     let path = project.join(pack::LOCK_FILE);
     let before = if path.try_exists().map_err(|e| io_problem(&path, &e))? {
         Some(crate::lifecycle::read_source(&path)?)
     } else {
         None
     };
-    crate::transaction::write_source(&path, before.as_deref(), &lock.encode())?;
-    pack::verify(project).map_err(|e| problem(project, &e.to_string()))?;
+    crate::transaction::write_source(&path, before.as_deref(), &encoded)?;
     Ok(lock)
 }
 

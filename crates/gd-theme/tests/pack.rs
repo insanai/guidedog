@@ -23,6 +23,8 @@ fn archives_round_trip_and_hash_names_as_well_as_bytes() {
         tree_sha256: pack::tree_digest(&files),
     };
     assert_eq!(Lock::decode(&lock.encode()).unwrap(), lock);
+    let oversized = Lock { source: "x".repeat(pack::MAX_LOCK_BYTES), ..lock.clone() };
+    assert!(Lock::decode(&oversized.encode()).is_err());
     assert_eq!(
         pack::archive_digest(b"abc"),
         "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
@@ -43,10 +45,16 @@ fn archives_reject_traversal_platform_aliases_and_file_directory_overlap() {
         let files = Files::from([(name.into(), b"data".to_vec())]);
         assert!(pack::encode(&files).is_err(), "{name}");
     }
-    for names in [["_static/A.css", "_static/a.css"], ["_static/dir", "_static/dir/file"]] {
+    for names in [
+        ["_static/A.css", "_static/a.css"],
+        ["_static/dir", "_static/dir/file"],
+        ["_static/Part/a.css", "_static/part/b.css"],
+    ] {
         let files = names.into_iter().map(|s| (s.into(), Vec::new())).collect();
         assert!(pack::encode(&files).is_err());
     }
+    let too_deep = format!("_static/{}file.css", "d/".repeat(32));
+    assert!(pack::encode(&Files::from([(too_deep, Vec::new())])).is_err());
     for archive in [
         br#"{"format":2,"files":{}}"#.as_slice(),
         br#"{"format":1,"files":{"_static/x":"!bad!"}}"#,

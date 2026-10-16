@@ -36,6 +36,9 @@ An old artifact cannot satisfy a cross-mount link to a newly withheld target.
 Separate source editions, shared assets, path conflicts, confined sources and HTML-only previews are covered.
 
 Theme checks cover canonical archive round trips, raw archive pins, traversal, reserved platform names, case aliases, file/directory overlap and symlinks.
+The maximum-file-count regression reproduced an inconsistency between archive validation and directory verification.
+File and directory bounds now agree, directory case aliases are rejected, and the deepest accepted path survives installation and offline verification.
+We verify the installed tree and encoded lock before selecting the lock, so a validation failure cannot select an unusable theme.
 A loopback HTTP install makes exactly one request.
 Subsequent builds succeed after that server shuts down.
 Changed installed files fail verification before a project can build.

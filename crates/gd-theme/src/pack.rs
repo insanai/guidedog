@@ -15,6 +15,9 @@ pub use files::{read_tree, verify};
 pub const MAX_BYTES: usize = 64 << 20;
 /// Maximum file count, bounding decoding and offline directory walks.
 pub const MAX_FILES: usize = 4096;
+/// Maximum encoded lock bytes, shared by installation and offline verification.
+pub const MAX_LOCK_BYTES: usize = 16 << 10;
+const MAX_DEPTH: usize = 32;
 /// The project's lock file. Builds read this file without making network requests.
 pub const LOCK_FILE: &str = "guidedog-theme.lock";
 
@@ -56,6 +59,9 @@ impl Lock {
 
     /// Reads a version-one lock and validates both checksum representations.
     pub fn decode(text: &str) -> Result<Self, Error> {
+        if text.len() > MAX_LOCK_BYTES {
+            return Err(error("Theme lock exceeds its byte limit."));
+        }
         let value = gd_json::parse(text).map_err(|e| Error(e.to_string()))?;
         if value.get("format").and_then(Value::as_i64) != Some(1) {
             return Err(error("Unsupported theme lock format."));
@@ -159,6 +165,7 @@ pub(crate) fn validate(files: &Files) -> Result<(), Error> {
         return Err(error("Theme must contain 1 to 4096 files."));
     }
     let mut seen = std::collections::BTreeSet::new();
+    let mut directories = BTreeMap::new();
     let mut bytes = 0usize;
     for (name, data) in files {
         if !valid_path(name) {
@@ -167,6 +174,14 @@ pub(crate) fn validate(files: &Files) -> Result<(), Error> {
         let lower = name.to_ascii_lowercase();
         if !seen.insert(lower.clone()) {
             return Err(Error(format!("Case-colliding theme path: {name}.")));
+        }
+        for (end, _) in name.match_indices('/') {
+            let directory = &name[..end];
+            if let Some(previous) = directories.insert(directory.to_ascii_lowercase(), directory)
+                && previous != directory
+            {
+                return Err(Error(format!("Case-colliding theme directory: {directory}.")));
+            }
         }
         bytes = bytes.checked_add(data.len()).ok_or_else(|| error("Theme size overflow."))?;
         if bytes > MAX_BYTES {
@@ -186,6 +201,7 @@ pub(crate) fn validate(files: &Files) -> Result<(), Error> {
 pub(crate) fn valid_path(path: &str) -> bool {
     (path.starts_with("_templates/") || path.starts_with("_static/"))
         && path.len() <= 512
+        && path.split('/').count() <= MAX_DEPTH + 1
         && path.split('/').all(|p| {
             !p.is_empty()
                 && p != "."

@@ -2,7 +2,10 @@
 
 use std::path::Path;
 
-use super::{Error, Files, LOCK_FILE, Lock, MAX_BYTES, MAX_FILES, error, tree_digest, validate};
+use super::{
+    Error, Files, LOCK_FILE, Lock, MAX_BYTES, MAX_DEPTH, MAX_FILES, MAX_LOCK_BYTES, error,
+    tree_digest, validate,
+};
 
 /// Reads a theme directory containing only _templates and _static trees.
 /// Symlinks, special files, unsafe names and oversized trees return an error.
@@ -13,12 +16,12 @@ pub fn read_tree(root: &Path) -> Result<Files, Error> {
     let mut bytes = 0usize;
     let mut entries_seen = 0usize;
     while let Some((dir, prefix, depth)) = pending.pop() {
-        if depth > 32 {
+        if depth > MAX_DEPTH {
             return Err(error("Theme tree exceeds its directory depth limit."));
         }
         for entry in std::fs::read_dir(&dir).map_err(io)? {
             entries_seen += 1;
-            if entries_seen > MAX_FILES {
+            if entries_seen > MAX_FILES * (MAX_DEPTH + 1) {
                 return Err(error("Theme tree exceeds its entry limit."));
             }
             let entry = entry.map_err(io)?;
@@ -35,6 +38,9 @@ pub fn read_tree(root: &Path) -> Result<Files, Error> {
                 }
                 pending.push((entry.path(), name, depth + 1));
             } else if kind.is_file() {
+                if files.len() >= MAX_FILES {
+                    return Err(error("Theme exceeds its file limit."));
+                }
                 if !super::valid_path(&name) {
                     return Err(error("Unsafe theme filename."));
                 }
@@ -43,9 +49,6 @@ pub fn read_tree(root: &Path) -> Result<Files, Error> {
                 files.insert(name, data);
             } else {
                 return Err(error("Theme trees cannot contain symlinks or special files."));
-            }
-            if pending.len() + files.len() > MAX_FILES {
-                return Err(error("Theme tree exceeds its entry limit."));
             }
         }
     }
@@ -56,7 +59,7 @@ pub fn read_tree(root: &Path) -> Result<Files, Error> {
 /// Verifies the project's lock and complete installed tree without accessing the network.
 /// A missing file, added file, changed byte or symlink fails verification.
 pub fn verify(project: &Path) -> Result<Lock, Error> {
-    let lock = read_limited(&project.join(LOCK_FILE), 16 << 10)?;
+    let lock = read_limited(&project.join(LOCK_FILE), MAX_LOCK_BYTES)?;
     let text = std::str::from_utf8(&lock).map_err(|_| error("Theme lock must be UTF-8."))?;
     let lock = Lock::decode(text)?;
     regular_directory(&project.join("_themes"))?;

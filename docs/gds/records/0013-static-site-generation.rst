@@ -341,10 +341,12 @@ The version-one ``.gdt`` format is bounded UTF-8 JSON containing base64 file byt
 ``ssg theme pack`` creates this format without depending on an external archive program or executing hooks.
 We reject symlinks, traversal, special files, case aliases, platform-reserved names and file/directory overlaps.
 The maximum expanded size is 64 MiB and the maximum file count is 4,096.
+Paths have at most 32 directory levels, and directory spellings cannot alias under ASCII case folding.
 
 ``guidedog-theme.lock`` stores the source, archive pin and canonical tree checksum.
 The checksum hashes a versioned domain tag and sorted length-delimited filenames and file bytes.
-Installation syncs an immutable directory named by that checksum before atomically selecting its lock.
+Installation syncs and verifies an immutable directory named by that checksum before atomically selecting its lock.
+The encoded lock is validated against the same 16 KiB limit used by offline verification before selection.
 Offline verification rejects missing, changed or extra files.
 Project templates take precedence, and project static files can override installed static files.
 ``site.theme = true`` selects the verified installation.

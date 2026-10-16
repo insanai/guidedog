@@ -235,6 +235,7 @@ The version-one archive is UTF-8 JSON with ``format`` set to ``1`` and a ``files
 Only portable files beneath ``_templates/`` and ``_static/`` are accepted.
 Traversal, case aliases, reserved platform names, symlinks and file/directory overlaps are refused.
 An archive contains at most 4,096 files and 64 MiB of expanded data.
+Its directory depth is at most 32 levels.
 It carries no executable installation hooks.
 
 ``guidedog-theme.lock`` records the source, archive SHA-256 and canonical tree SHA-256.

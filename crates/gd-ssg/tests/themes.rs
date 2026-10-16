@@ -86,6 +86,29 @@ fn failed_pins_and_tampered_trees_preserve_the_selected_theme_or_fail_closed() {
     assert!(gd_project::load(&project.0, &Default::default()).is_err());
 }
 
+#[test]
+fn archive_file_and_depth_limits_survive_installation_and_offline_verification() {
+    let project = Project::new("theme-limits");
+    let mut files = Files::new();
+    for index in 0..pack::MAX_FILES {
+        files.insert(format!("_static/d{index:04}/file.txt"), b"data".to_vec());
+    }
+    let archive = pack::encode(&files).unwrap();
+    let path = project.0.join("theme.gdt");
+    std::fs::write(&path, &archive).unwrap();
+    let lock =
+        gd_ssg::install_theme(&project.0, path.to_str().unwrap(), &pack::archive_digest(&archive))
+            .unwrap();
+    assert_eq!(pack::read_tree(&lock.directory(&project.0)).unwrap().len(), pack::MAX_FILES);
+    assert_eq!(pack::verify(&project.0).unwrap(), lock);
+    let deepest = format!("_static/{}file.txt", "d/".repeat(31));
+    let archive = pack::encode(&Files::from([(deepest, b"deep".to_vec())])).unwrap();
+    std::fs::write(&path, &archive).unwrap();
+    gd_ssg::install_theme(&project.0, path.to_str().unwrap(), &pack::archive_digest(&archive))
+        .unwrap();
+    pack::verify(&project.0).unwrap();
+}
+
 #[cfg(unix)]
 #[test]
 fn packing_and_verification_refuse_symbolic_links() {

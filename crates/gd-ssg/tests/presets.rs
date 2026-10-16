@@ -54,6 +54,10 @@ fn all_presets_build_html_collections_and_real_research_pdfs() {
                 assert!(output.join("papers/index.html").exists());
                 let pdf = std::fs::read(output.join("papers/first-paper.pdf")).unwrap();
                 assert!(pdf.starts_with(b"%PDF-"));
+                let source =
+                    std::fs::read_to_string(output.join("sources/papers/first-paper.pdf.typ"))
+                        .unwrap();
+                assert!(source.contains("authors: (\"Ada\",)"));
                 assert!(index.contains("A first paper"));
             }
         }

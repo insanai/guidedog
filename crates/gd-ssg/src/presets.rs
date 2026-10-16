@@ -84,11 +84,11 @@ fn populate(
         )),
         Preset::Journal => files.push((
             "posts/welcome.rst".into(),
-            include_str!("../assets/welcome.rst").replace("@DATE@", date),
+            article(include_str!("../assets/welcome.rst"), date, author),
         )),
         Preset::Research => files.push((
             "papers/first-paper.rst".into(),
-            include_str!("../assets/paper.rst").replace("@DATE@", date),
+            article(include_str!("../assets/paper.rst"), date, author),
         )),
     }
     let mut synced = Vec::new();
@@ -111,6 +111,11 @@ fn populate(
     synced.sort();
     synced.dedup();
     gd_host::sync_each(&synced)
+}
+
+fn article(source: &str, date: &str, author: &str) -> String {
+    let source = source.replace("@DATE@", date);
+    if author.is_empty() { source } else { format!(":author: {author}\n{source}") }
 }
 
 fn config(preset: Preset, title: &str, author: &str) -> String {

@@ -137,6 +137,8 @@ Field               Meaning
 
 Unknown metadata fields remain available to other document consumers.
 Only the first root field list supplies publication metadata.
+Publication fields and their values are source configuration and are excluded from gettext extraction and translation.
+Translation catalogs cannot rename a publication key, clear a draft flag or change a release boundary.
 Later examples and nested field lists cannot change publication state.
 A dated document is implicitly an orphan for toctree validation.
 

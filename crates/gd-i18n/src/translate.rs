@@ -10,7 +10,7 @@ use guidedoc::{
     transform_document,
 };
 
-use crate::extract::is_hidden_container;
+use crate::extract::is_untranslated;
 use crate::figures::ImageLocalization;
 use crate::units::{Targets, Unit, literal_message, unit_of, write_message};
 
@@ -181,7 +181,7 @@ impl<'a> Walk<'_, 'a, '_, '_, '_> {
         let mut i = 0;
         while i < doc.node_count() {
             let id = NodeId::from_index(i);
-            if is_hidden_container(doc.kind(id)) {
+            if is_untranslated(doc, id) {
                 i = doc.subtree_end(id).index();
                 continue;
             }
@@ -264,7 +264,7 @@ impl<'a> Walk<'_, 'a, '_, '_, '_> {
     fn copy_node(&mut self, id: NodeId, hidden: bool) -> Result<(), Fail> {
         let doc = self.doc;
         let n = *doc.node(id);
-        let hidden = hidden || is_hidden_container(n.kind);
+        let hidden = hidden || is_untranslated(doc, id);
         let unit = if hidden { Unit::None } else { unit_of(doc, id, self.t.targets) };
         let copy = self.b.begin_node(n.kind, n.span)?;
         self.st.moved[id.index()] = copy;

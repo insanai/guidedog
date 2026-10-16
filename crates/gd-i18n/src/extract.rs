@@ -143,7 +143,7 @@ impl Template {
         let mut i = 0;
         while i < doc.node_count() {
             let id = NodeId::from_index(i);
-            if is_hidden_container(doc.kind(id)) {
+            if is_untranslated(doc, id) {
                 i = doc.subtree_end(id).index();
                 continue;
             }
@@ -234,8 +234,41 @@ impl Template {
 }
 
 /// Tells whether a kind's content is never translated (nor extracted).
-pub(crate) fn is_hidden_container(kind: NodeKind) -> bool {
-    matches!(kind, NodeKind::SubstitutionDefinition | NodeKind::Comment | NodeKind::Target)
+pub(crate) fn is_untranslated(doc: Document<'_>, id: NodeId) -> bool {
+    if matches!(
+        doc.kind(id),
+        NodeKind::SubstitutionDefinition | NodeKind::Comment | NodeKind::Target
+    ) {
+        return true;
+    }
+    if doc.kind(id) != NodeKind::Field {
+        return false;
+    }
+    let Some(list) = doc.parent_of(id) else { return false };
+    if doc.kind(list) != NodeKind::FieldList || doc.first_child(guidedoc::ROOT) != Some(list) {
+        return false;
+    }
+    // Publication metadata is source configuration. Translating a key can erase a draft
+    // flag, and translating its value can change a release boundary.
+    let mut name = String::new();
+    doc.plain_text(id + 1, &mut name);
+    matches!(
+        name.trim().to_ascii_lowercase().as_str(),
+        "template"
+            | "date"
+            | "updated"
+            | "publish-at"
+            | "expires-at"
+            | "draft"
+            | "author"
+            | "authors"
+            | "tags"
+            | "category"
+            | "series"
+            | "summary"
+            | "pdf"
+            | "nosidebar"
+    )
 }
 
 /// Calls `f` with each msgid node `id` carries; `scratch` holds an inline message.

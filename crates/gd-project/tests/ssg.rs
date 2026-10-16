@@ -167,3 +167,38 @@ fn malformed_markdown_publication_blocks_fail_closed() {
         assert!(!dir.exists("_build/html/post.html"));
     }
 }
+
+#[test]
+fn translations_cannot_change_publication_state() {
+    for suffix in ["rst", "md"] {
+        let dir = project(&format!("ssg-i18n-{suffix}"));
+        let source = if suffix == "rst" {
+            ":date: 2026-10-15\n:draft: true\n\nPrivate article\n===============\n\nBody.\n"
+        } else {
+            "---\ndate: 2026-10-15\ndraft: true\n---\n# Private article\n\nBody.\n"
+        };
+        dir.put(&format!("post.{suffix}"), source);
+        dir.put(
+            "locales/de/LC_MESSAGES/post.po",
+            concat!(
+                "msgid \"draft\"\nmsgstr \"status\"\n\n",
+                "msgid \"true\"\nmsgstr \"false\"\n\n",
+                "msgid \"True\"\nmsgstr \"False\"\n\n",
+                "msgid \"Body.\"\nmsgstr \"Translated body.\"\n"
+            ),
+        );
+        let mut project = load(&dir.0);
+        project.config.language = "de".into();
+        let result = gd_project::build(&project, BuilderKind::Html, &options("2026-10-16"));
+        assert_built(&result);
+        assert!(!dir.exists("_build/html/post.html"), "translated {suffix} draft leaked");
+        let preview = BuildOptions { preview: true, ..options("2026-10-16") };
+        assert_built(&gd_project::build(&project, BuilderKind::Html, &preview));
+        assert!(dir.read("_build/html/post.html").contains("Translated body."));
+        assert_built(&gd_project::build(&project, BuilderKind::Gettext, &preview));
+        let catalog = dir.read("_build/gettext/post.pot");
+        assert!(catalog.contains("msgid \"Body.\""));
+        assert!(!catalog.contains("msgid \"draft\""));
+        assert!(!catalog.contains("msgid \"true\""));
+    }
+}

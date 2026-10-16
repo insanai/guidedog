@@ -35,6 +35,8 @@ Date-only publication starts at midnight UTC.
 ``publish-at`` overrides that boundary with an RFC 3339 instant.
 ``expires-at`` ends publication at an exclusive instant.
 Drafts, future articles and expired articles are excluded before navigation, search, feeds and source downloads are built.
+Publication metadata is source configuration and is not translated by gettext catalogs.
+We change metadata for a separate language edition in that edition's source files.
 Invalid publication metadata stops the output commit.
 A failed build retains the previous successful website.
 

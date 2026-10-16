@@ -9,6 +9,7 @@ beside it.
 
 - Add `guidedog ssg new`, `draft`, `schedule`, `publish` and `status` for RST and Markdown articles, using validated atomic source updates that retain body bytes, line endings and permissions.
 - Filter drafts, future articles and expired articles before resolution and public indices. Add `--preview` and `--now=RFC3339`, reuse cached withheld documents across clock changes, and remove obsolete public outputs on successful rebuilds.
+- Keep publication metadata out of gettext extraction and translation so catalogs cannot rename state fields or expose a translated draft.
 - Add chronological `postlist` queries with path, category, tag, author and series filters, stable date ordering and optional summaries. Add opt-in Atom, RSS and sitemap output through `[site]` in `conf.toml`.
 - Select HTML layouts per page, expose publication metadata to templates, and add article and landing layouts. Generate opt-in standalone article PDFs beside HTML pages using the shared Typst theme.
 - Track actual template requests, including cached imports, dynamic includes and missing optional templates, so unused template changes leave document pages cached. Retain content hashing and conservative navigation dependencies.

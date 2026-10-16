@@ -32,6 +32,8 @@ mod extensions;
 mod json;
 mod linkcode;
 mod load;
+mod mount_links;
+mod mounts;
 mod paths;
 mod pattern;
 mod settings;
@@ -61,13 +63,15 @@ pub use load::{
     LoadOptions, Loaded, MAX_CONFIG_BYTES, apply_override, find_project, finish_config,
     load_config, merge_table,
 };
+pub use mount_links::mount_target;
+pub use mounts::{SiteAsset, SiteEdition, SiteMount};
 pub use paths::{absolute, clean_path, readable_roots, source_path};
 pub use pattern::{Pattern, PatternError};
 pub use settings::{
     FOREIGN_PREFIXES, KNOWN_THEMES, MYST_EXTENSIONS, NATIVE_EXTENSIONS, SETTINGS, Setting,
     SettingKind, find_setting, is_foreign_setting, suggestion,
 };
-pub use site::SiteConfig;
+pub use site::{CollectionConfig, SiteConfig, valid_output};
 pub use store::apply_table;
 pub use trust::{confine_untrusted, rust_crate_roots, unread_warning};
 

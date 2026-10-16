@@ -110,12 +110,34 @@ pub fn load_config(dir: &Path, options: &LoadOptions) -> Result<Loaded, Problem>
     for o in &options.overrides {
         apply_override(&mut config, o, &mut warnings, false)?;
     }
+    if config.site.theme {
+        apply_theme(&mut config)?;
+    }
     if later {
         check_config(&mut config, &origin, &mut warnings)?;
     }
     finish_config(&mut config);
     digest.texts(&options.overrides);
     Ok(Loaded { config, warnings, settings: digest.finish() })
+}
+
+fn apply_theme(config: &mut Config) -> Result<(), Problem> {
+    let lock = gd_theme::pack::verify(&config.source_dir).map_err(|e| {
+        config_problem(
+            &config.source_dir.join(gd_theme::pack::LOCK_FILE).display().to_string(),
+            0,
+            e.to_string(),
+            "Reinstall the pinned theme explicitly; builds never fetch missing theme files.",
+        )
+    })?;
+    let base = format!("_themes/{}", lock.tree_sha256);
+    if lock.directory(&config.source_dir).join("_templates").is_dir() {
+        config.templates_path.push(format!("{base}/_templates"));
+    }
+    if lock.directory(&config.source_dir).join("_static").is_dir() {
+        config.html.static_path.insert(0, format!("{base}/_static"));
+    }
+    Ok(())
 }
 
 /// Reads conf.toml at `path` into `config` and returns its text.
@@ -184,6 +206,12 @@ pub fn apply_override(
         gd_toml::parse(&format!("{name} = {value}")).or_else(|_| quoted())
     };
     let table = parsed.map_err(|e| define_problem(assignment, e.message, "Quote the value."))?;
+    if name.starts_with("site.")
+        && let Some(value) = table.get("site")
+    {
+        crate::site::merge(&mut config.site, value, "-D")?;
+        return if check { check_config(config, "-D", warnings) } else { Ok(()) };
+    }
     if merge_into_values(config, name, &table) {
         return if check { check_config(config, "-D", warnings) } else { Ok(()) };
     }

@@ -15,3 +15,7 @@ assert_eq!(gd_theme::builtin("_templates/layout.html"), Some(gd_theme::LAYOUT_HT
 ```
 
 The shared PDF theme defines Guidedog colors, fonts and a language-aware content wrapper. The book and discussion layouts import it with ordinary Typst imports. Built-in fallback layouts inline the shared module, so they need no project files and never run project code in an untrusted build.
+
+`pack` defines bounded theme archives, canonical tree hashes and offline installation verification.
+Archives contain base64 file bytes beneath `_templates/` and `_static/`, without extraction hooks or platform-dependent archive metadata.
+The `gd-ssg` command owns downloads and atomic lock selection; the configuration loader verifies the selected tree before adding its template and static directories.

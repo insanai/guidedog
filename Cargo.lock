@@ -685,6 +685,7 @@ dependencies = [
  "gd-host",
  "gd-report",
  "gd-sha",
+ "gd-theme",
  "gd-toml",
  "guidedoc",
 ]
@@ -1004,10 +1005,15 @@ version = "1.0.0-beta.6"
 dependencies = [
  "gd-clock",
  "gd-conf",
+ "gd-discussion",
  "gd-env",
+ "gd-fetch",
  "gd-host",
+ "gd-outputs",
  "gd-plugins",
+ "gd-project",
  "gd-theme",
+ "gd-toml",
  "guidedoc",
  "guidedoc-commonmark",
  "guidedoc-sphinx",
@@ -1016,6 +1022,10 @@ dependencies = [
 [[package]]
 name = "gd-theme"
 version = "1.0.0-beta.6"
+dependencies = [
+ "gd-json",
+ "gd-sha",
+]
 
 [[package]]
 name = "gd-toml"

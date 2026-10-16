@@ -5,6 +5,13 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
+## 1.0.0-beta.2 - 2026-10-16
+
+- Fix captioned PDF tables overflowing a page and hiding later rows ([#1](https://github.com/insanai/guidedog/issues/1)). Long tables now continue across pages with repeated headers.
+- Fix the same enclosing-figure problem for long captioned code listings.
+- Apply pagination defaults in the shared renderer, including existing book templates and standalone PDF conversion.
+- Add page-layout regression checks for every entry, repeated headers and all supported template paths.
+
 ## 1.0.0-beta.1 - 2026-10-15
 
 First 1.0 beta. Build documentation websites and PDF books from one set of source files.

@@ -1,15 +1,13 @@
-Guidedog builds documentation websites and PDF books from the same reStructuredText or Markdown files. We maintain one set of source files and publish it for readers on the web and on paper.
+Guidedog builds documentation websites and PDF books from the same reStructuredText or Markdown files.
 
-This first 1.0 beta brings that workflow into one `guidedog` executable for Linux, macOS and Windows.
+Version 1.0.0-beta.2 fixes PDF content that could run past the bottom of a page when a table or code listing had a caption.
 
-- **Websites and books.** Build HTML with navigation, search and highlighted code, or PDF with chapters, cross-references and an index.
-- **One download.** PDF typesetting and diagram rendering are included. No separate documentation toolchain is needed.
-- **Familiar source files.** Use reStructuredText and MyST Markdown, with editable templates and a `conf.toml` configuration file.
-- **API references and translations.** Read API documentation from source and build language editions from gettext catalogs.
-- **Publishing.** `guidedog publish pages` builds and publishes through the linked GitHub Pages plugin. `guidedog pages` handles its setup and maintenance.
-- **Discussions and decisions.** `guidedog dsc` keeps numbered records with the project and publishes them as HTML and PDF.
+- **Long tables continue across pages.** All rows remain visible, and table headers repeat. This fixes [issue #1](https://github.com/insanai/guidedog/issues/1).
+- **Captioned code listings continue too.** The review found the same unbreakable outer figure around long listings.
+- **Existing projects inherit the fix.** The pagination defaults live in the shared renderer, so built-in books, copied templates and standalone PDF conversion agree. We do not need to replace our book template.
+- **Checks cover the output.** Regression tests inspect the laid-out pages and verify that all 120 entries appear once, span pages and retain repeated table headers.
 
-This is a beta for trusted documentation projects. Reports from projects that try it will help us find problems before 1.0.0. The [manual](https://insanai.github.io/guidedog/manual/) describes the supported features and current limits; the [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.1/CHANGELOG.md) records the changes.
+The [review record](https://insanai.github.io/guidedog/manual/evidence/pdf-pagination.html) explains the root cause. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.2/CHANGELOG.md) records the changes.
 
 ## Downloads
 
@@ -20,7 +18,7 @@ This is a beta for trusted documentation projects. Reports from projects that tr
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.1-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.2-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

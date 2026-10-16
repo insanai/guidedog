@@ -30,7 +30,7 @@ fn main() -> ExitCode {
 fn linked_plugins() -> gd_plugins::Registry {
     // The plugins are valid by construction; an empty registry is the fallback a broken
     // build would still run with.
-    gd_plugins::Registry::new(vec![gd_pages::plugin(), gd_discussion::plugin()])
+    gd_plugins::Registry::new(vec![gd_pages::plugin(), gd_discussion::plugin(), gd_ssg::plugin()])
         .unwrap_or_default()
 }
 

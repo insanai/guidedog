@@ -174,7 +174,50 @@ pub(crate) fn smoke(program: &Path, external_typst: bool) -> Result<()> {
     }
     let bytes = check_pdf(&dir.join("docs/_build/pdf/smoke-en.pdf"), "guidedog")?;
     smoke_translation(&runner, dir)?;
+    smoke_publication(&runner, dir)?;
     println!("smoke test passed: {bytes} byte PDF and an HTML site");
+    Ok(())
+}
+
+/// Qualifies the linked publication commands and article compiler in every archive.
+fn smoke_publication(runner: &Runner, dir: &Path) -> Result<()> {
+    let docs = dir.join("docs");
+    runner.run(
+        &docs,
+        &["ssg", "new", "article.rst", "--title", "Publication", "--now=2026-10-16T09:00:00Z"],
+    )?;
+    let path = docs.join("article.rst");
+    let source = read_text(&path)?;
+    write(&path, format!(":pdf: article\n{source}"))?;
+    write(
+        &docs.join("conf.toml"),
+        format!(
+            "{SMOKE_CONF}\n[site]\n\
+        base_url = \"https://example.org/smoke\"\nfeeds = true\nsitemap = true\n"
+        ),
+    )?;
+    write(&docs.join("index.rst"), format!("{SMOKE_INDEX}\n\n.. postlist::\n"))?;
+    runner.run(&docs, &["ssg", "schedule", "article.rst", "--at=2026-10-17T00:00:00Z"])?;
+    runner.run(&docs, &["build", "html", "--now=2026-10-16T23:59:59Z", "-W"])?;
+    let html = docs.join("_build/html");
+    if html.join("article.html").exists() || html.join("article.pdf").exists() {
+        return Err(smoke_failure("ssg", "scheduled article leaked before release"));
+    }
+    runner.run(&docs, &["build", "html", "--now=2026-10-17T00:00:00Z", "-W"])?;
+    check_pdf(&html.join("article.pdf"), "ssg")?;
+    for file in ["article.html", "atom.xml", "rss.xml", "sitemap.xml"] {
+        if !html.join(file).is_file() {
+            return Err(smoke_failure("ssg", &format!("missing {file}")));
+        }
+    }
+    runner.run(&docs, &["ssg", "draft", "article.rst"])?;
+    runner.run(&docs, &["build", "html", "--now=2026-10-17T00:00:00Z", "-W"])?;
+    if html.join("article.html").exists() || html.join("article.pdf").exists() {
+        return Err(smoke_failure("ssg", "withheld article artifacts were retained"));
+    }
+    runner.run(&docs, &["ssg", "publish", "article.rst", "--now=2026-10-17T00:00:00Z"])?;
+    runner.run(&docs, &["ssg", "status", "--now=2026-10-17T00:00:00Z"])?;
+    println!("ssg smoke test passed: lifecycle, collection, discovery and article PDF");
     Ok(())
 }
 

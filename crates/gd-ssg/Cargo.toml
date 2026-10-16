@@ -1,0 +1,22 @@
+[package]
+name = "gd-ssg"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+description = "Source-level static publication commands for Guidedog."
+
+[dependencies]
+guidedoc = { workspace = true }
+guidedoc-sphinx = { workspace = true }
+guidedoc-commonmark = { workspace = true }
+gd-clock = { workspace = true }
+gd-conf = { workspace = true }
+gd-env = { workspace = true }
+gd-host = { workspace = true }
+gd-plugins = { workspace = true }
+gd-theme = { workspace = true }
+
+[lints]
+workspace = true

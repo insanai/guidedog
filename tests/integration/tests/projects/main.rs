@@ -12,5 +12,6 @@ mod limits;
 mod publication;
 mod sphinx;
 mod sphinx_pages;
+mod ssg;
 mod support;
 mod tutorials;

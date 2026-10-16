@@ -5,6 +5,15 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
+## 1.0.0-beta.6 - 2026-10-16
+
+- Add `guidedog ssg new`, `draft`, `schedule`, `publish` and `status` for RST and Markdown articles, using validated atomic source updates that retain body bytes, line endings and permissions.
+- Filter drafts, future articles and expired articles before resolution and public indices. Add `--preview` and `--now=RFC3339`, reuse cached withheld documents across clock changes, and remove obsolete public outputs on successful rebuilds.
+- Add chronological `postlist` queries with path, category, tag, author and series filters, stable date ordering and optional summaries. Add opt-in Atom, RSS and sitemap output through `[site]` in `conf.toml`.
+- Select HTML layouts per page, expose publication metadata to templates, and add article and landing layouts. Generate opt-in standalone article PDFs beside HTML pages using the shared Typst theme.
+- Track actual template requests, including cached imports, dynamic includes and missing optional templates, so unused template changes leave document pages cached. Retain content hashing and conservative navigation dependencies.
+- Review GDS 0013 against the Rust workspace, document the implemented publication foundation and distinguish remaining mounts, taxonomy, pagination and remote-theme work. Add a publishing guide and a dated release article to the website.
+
 ## 1.0.0-beta.5 - 2026-10-16
 
 - Share Guidedog's PDF colors, fonts and language-aware typography through an embedded `theme.typ`, with separate book and discussion layouts.

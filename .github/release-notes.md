@@ -1,13 +1,14 @@
-Guidedog builds documentation websites and PDF books from the same reStructuredText or Markdown files.
+Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.5 brings a shared PDF theme to books and discussion records.
+Version 1.0.0-beta.6 introduces the static publication foundation of GDS 0013.
 
-- **One visual theme, two layouts.** Books have centered covers, teal chapter openings and balanced margins. Discussion records open with a metadata panel, state badges, a status note and compact contents. Each layout keeps its own structure.
-- **The defaults travel with Guidedog.** The shared `theme.typ`, `book.typ` and `discussion.typ` are embedded in the executable. `guidedog quickstart` copies all three for editing; `guidedog dsc init` copies the discussion layout and shared theme. Built-in fallback layouts need no project files.
-- **Imported modules rebuild correctly.** Editing, adding or removing files beneath `_templates/` invalidates cached PDFs. Tests cover nested imports and missing modules, as well as shared-theme edits and untrusted fallback.
-- **Reading support is preserved.** Tables and listings continue across pages. Language-aware typography, localized manual titles, regional script fonts, links and section bookmarks remain part of the build.
+- **Source-level publication.** `guidedog ssg new`, `draft`, `schedule`, `publish` and `status` manage RST and Markdown articles. Edits preserve body bytes, line endings and permissions, and refuse existing destinations and source symlinks.
+- **Clock-aware release builds.** Drafts, scheduled articles and expired articles are withheld before resolution and public indices. `--preview` includes them for review; `--now=RFC3339` fixes the build clock. Clock-only changes reuse parsed objects, and successful rebuilds remove old unpublished outputs.
+- **Collections and discovery.** `postlist` filters and sorts dated articles. Optional `[site]` settings emit Atom, RSS and sitemap files using eligible documents.
+- **Article layouts.** Per-page HTML templates receive typed metadata in `page.meta`. `:pdf: article` produces a standalone PDF beside HTML with a title, author block, abstract and running headers.
+- **Precise template dependencies.** Actual template requests, including dynamic and missing optional includes, are tracked. Unused template edits leave document pages cached.
 
-The [theme review](https://insanai.github.io/guidedog/manual/evidence/pdf-theme-review.html) describes the design and checks. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.5/CHANGELOG.md) records the changes.
+The [static publishing guide](https://insanai.github.io/guidedog/manual/howto/static-publishing.html) describes the supported commands. [GDS 0013](https://insanai.github.io/guidedog/discussions/records/0013-static-site-generation.html) distinguishes this foundation from the remaining mounts, taxonomy, pagination and remote-theme proposals. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.6/CHANGELOG.md) records the changes.
 
 ## Downloads
 
@@ -18,7 +19,7 @@ The [theme review](https://insanai.github.io/guidedog/manual/evidence/pdf-theme-
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.5-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.6-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

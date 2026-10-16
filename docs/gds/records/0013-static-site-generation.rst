@@ -9,7 +9,7 @@
 :gds-labels: ["architecture", "build", "theme", "typst", "cli"]
 
 Static Website and Article Publishing in Guidedog
-================================================
+================================================================================
 
 Abstract
 ========
@@ -193,7 +193,7 @@ The gate does not inspect arbitrary raw HTML, manually copied extra files or con
 Those remain explicit publication inputs.
 
 Collections and discovery
-========================
+================================================================================
 
 We insert a chronological collection in any RST or MyST document:
 
@@ -235,7 +235,7 @@ Sitemaps contain eligible document pages.
 The feature is opt-in, so projects without ``[site]`` acquire no discovery files.
 
 Templates and article PDFs
-=========================
+================================================================================
 
 The default HTML template is ``page.html``, which extends the existing ``layout.html``.
 Dated documents select ``article.html``.

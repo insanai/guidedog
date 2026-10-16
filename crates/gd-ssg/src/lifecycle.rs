@@ -59,7 +59,8 @@ pub fn create_post(path: &Path, title: &str, template: &str, date: &str) -> Resu
     let body = if markdown {
         format!("# {title}\n\n")
     } else {
-        format!("{title}\n{}\n\n", "=".repeat(title.chars().count()))
+        // Byte length covers wide Unicode characters without a terminal-width dependency.
+        format!("{title}\n{}\n\n", "=".repeat(title.len()))
     };
     let mut fields = vec![("draft", Some("true")), ("date", Some(date))];
     if !template.is_empty() {

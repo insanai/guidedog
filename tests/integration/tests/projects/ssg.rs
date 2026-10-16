@@ -16,19 +16,19 @@ fn publication_commands_are_linked_and_drive_real_builds() {
         cli(
             &dir.path,
             0,
-            &["ssg", "new", &path, "--title", "Article", "--now=2026-10-16T09:00:00Z"],
+            &["ssg", "new", &path, "--title", "出版の記録", "--now=2026-10-16T09:00:00Z"],
         );
         cli(&dir.path, 2, &["ssg", "new", &path]);
         cli(&dir.path, 0, &["ssg", "schedule", &path, "--at=2026-10-17T09:00:00Z"]);
         let status = cli(&dir.path, 0, &["ssg", "status", "--now=2026-10-16T09:00:00Z"]);
         assert!(status.out.contains("scheduled"), "{}", status.out);
-        build(&dir.path, 0, &["html", "--now=2026-10-16T09:00:00Z"]);
+        build(&dir.path, 0, &["html", "-W", "--now=2026-10-16T09:00:00Z"]);
         assert!(!dir.path.join("_build/html/post.html").exists());
         cli(&dir.path, 0, &["ssg", "publish", &path, "--now=2026-10-16T09:00:00Z"]);
-        build(&dir.path, 0, &["html", "--now=2026-10-16T09:00:00Z"]);
+        build(&dir.path, 0, &["html", "-W", "--now=2026-10-16T09:00:00Z"]);
         assert!(dir.path.join("_build/html/post.html").exists());
         cli(&dir.path, 0, &["ssg", "draft", &path]);
-        build(&dir.path, 0, &["html", "--now=2026-10-16T09:00:00Z"]);
+        build(&dir.path, 0, &["html", "-W", "--now=2026-10-16T09:00:00Z"]);
         assert!(!dir.path.join("_build/html/post.html").exists());
         std::fs::remove_file(dir.path.join(path)).unwrap();
     }

@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`release-1.0.0-beta.2`
+     - PDF pagination fix, published-binary regression checks, platform qualification and automatic tap update (16 October 2026)
    * - :doc:`pdf-pagination`
      - Root cause and regression coverage for overflowing captioned tables and listings (16 October 2026)
    * - :doc:`release-1.0.0-beta.1`
@@ -21,4 +23,5 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    manuals
    release-1.0.0-beta.1
+   release-1.0.0-beta.2
    pdf-pagination

@@ -30,3 +30,5 @@ Independent PDF check
 We built the same inputs with the published 1.0.0-beta.1 executable and the corrected working tree, then inspected the PDF text coordinates with PyMuPDF 1.28.2. A table in the old PDF had 120 text labels but only 44 distinct row positions: the remaining labels overlapped the final row. A captioned listing exposed only 85 of its 120 lines. Counting text labels alone would miss the table defect.
 
 The corrected PDFs contain all 120 entries at distinct, non-overlapping positions. The table spans three content pages with repeated headers, and the listing spans two content pages. The copied-template table has the same result as the built-in template. The independent check also verifies that consecutive entry rectangles do not overlap vertically.
+
+After publication, we repeated these checks with the downloaded 1.0.0-beta.2 Linux x86-64 executable in fresh build folders. All three PDFs passed the same coordinate checks. The :doc:`release-1.0.0-beta.2` record identifies the published artifacts and qualification runs.

@@ -21,7 +21,7 @@ The published Linux x86-64 archive has SHA-256:
 
    3dfbebc3c8189cbeff05a8ade620dee72a1400ed12c583b3f4df2d5679c8a9a8
 
-The example in :doc:`../howto/github-pages` uses this published version and checksum.
+At publication, the example in :doc:`../howto/github-pages` used this version and checksum. That example now follows the current release.
 
 Homebrew and documentation
 --------------------------

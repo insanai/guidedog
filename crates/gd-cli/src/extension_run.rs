@@ -143,6 +143,16 @@ fn build_command(request: &BuildRequest) -> Result<BuildCommand, Problem> {
         },
         options: gd_env::BuildOptions {
             warnings_as_errors: request.strict,
+            now: if request.now.is_empty() {
+                None
+            } else {
+                Some(gd_clock::parse_timestamp(&request.now).map_err(|e| {
+                    Problem::new("cli.plugin-clock", "Invalid publication clock", &e.to_string())
+                        .hint("Use an RFC 3339 timestamp with an explicit time zone.")
+                        .exit(2)
+                })?)
+            },
+            preview: request.preview,
             output_dir: Some(request.output.clone()),
             ..Default::default()
         },

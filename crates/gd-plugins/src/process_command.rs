@@ -282,6 +282,12 @@ pub fn build_with_program(program: &str, request: &BuildRequest) -> Result<(), P
     if request.strict {
         command.arg("-W");
     }
+    if !request.now.is_empty() {
+        command.arg("--now").arg(&request.now);
+    }
+    if request.preview {
+        command.arg("--preview");
+    }
     for setting in &request.overrides {
         command.arg("-D").arg(setting);
     }

@@ -20,7 +20,7 @@ impl Drop for Temporary {
 }
 
 pub(crate) fn write_source(path: &Path, before: Option<&str>, after: &str) -> Result<(), Problem> {
-    let parent = path.parent().unwrap_or(Path::new("."));
+    let parent = path.parent().filter(|p| !p.as_os_str().is_empty()).unwrap_or(Path::new("."));
     let lock_path = parent.join(".guidedog-ssg.lock");
     if std::fs::symlink_metadata(&lock_path).is_ok_and(|m| !m.is_file()) {
         return Err(conflict(path, "The publication lock is not a regular file."));

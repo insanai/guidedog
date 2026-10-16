@@ -127,6 +127,10 @@ pub struct BuildRequest {
     pub base_url: String,
     /// Build with warnings as errors.
     pub strict: bool,
+    /// Fixed RFC 3339 publication clock; empty uses the host's build clock.
+    pub now: String,
+    /// Include withheld pages in a separate preview publication.
+    pub preview: bool,
 }
 
 /// What a host offers a contributed command. `guidedog` implements it over its own

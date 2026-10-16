@@ -1,6 +1,5 @@
 //! Support for Guidedog's end-to-end tests: private scratch folders, the repository's
-//! own files, and the built programs (`guidedog`, `graphdog`, ...) run as a user runs
-//! them.
+//! own files, and the built `guidedog` program run as a user runs it.
 //!
 //! The programs are found beside the test executable, in the profile folder cargo builds
 //! into (`target/<profile>/`). `cargo test --workspace` builds them; running only this
@@ -36,7 +35,7 @@ pub fn profile_dir() -> PathBuf {
     exe.parent().and_then(Path::parent).unwrap().to_path_buf()
 }
 
-/// The path of a built program of the workspace (`"guidedog"`, `"graphdog"`, ...). Panics
+/// The path of a built program of the workspace (`"guidedog"`). Panics
 /// with directions when cargo has not built it.
 pub fn program(name: &str) -> PathBuf {
     let path = profile_dir().join(format!("{name}{}", std::env::consts::EXE_SUFFIX));

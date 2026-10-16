@@ -127,6 +127,18 @@ Smoke
    e^{i \\pi} + 1 = 0
 
 .. autofunction:: tool.run
+
+.. glossary::
+
+   Admission
+      Letting a request through.
+
+   Gate
+      The surface without inspection.
+
+First :envvar:`FIRST`.
+
+Second :envvar:`SECOND`.
 ";
 
 /// Smoke-tests a guidedog program; `external_typst` keeps the environment.
@@ -161,7 +173,37 @@ pub(crate) fn smoke(program: &Path, external_typst: bool) -> Result<()> {
         return Err(smoke_failure("guidedog", what));
     }
     let bytes = check_pdf(&dir.join("docs/_build/pdf/smoke-en.pdf"), "guidedog")?;
+    smoke_translation(&runner, dir)?;
     println!("smoke test passed: {bytes} byte PDF and an HTML site");
+    Ok(())
+}
+
+/// Checks translated metadata with the shipped executable on every release platform.
+fn smoke_translation(runner: &Runner, dir: &Path) -> Result<()> {
+    let po = "msgid \"Admission\"\nmsgstr \"許可\"\n\n\
+              msgid \"First :envvar:`FIRST`.\"\nmsgstr \"最初 :envvar:`FIRST`.\"\n\n\
+              msgid \"Second :envvar:`SECOND`.\"\nmsgstr \"次 :envvar:`SECOND`.\"\n";
+    let catalogs = dir.join("docs/locales/ja/LC_MESSAGES");
+    create_dir(&catalogs)?;
+    write(&catalogs.join("index.po"), po)?;
+    runner.run(dir, &["build", "html", "docs", "-W", "-D", "language=ja", "--color=never"])?;
+    let index = read_text(&dir.join("docs/_build/html/genindex.html"))?;
+    let page = read_text(&dir.join("docs/_build/html/index.html"))?;
+    for word in ["許可", "Gate"] {
+        if !index.contains(word) {
+            return Err(smoke_failure("translation", &format!("the index lost {word}")));
+        }
+    }
+    for anchor in ["term-Admission", "index-0", "index-1"] {
+        if !index.contains(&format!("index.html#{anchor}"))
+            || page.matches(&format!("id=\"{anchor}\"")).count() != 1
+        {
+            return Err(smoke_failure(
+                "translation",
+                &format!("index target {anchor} is invalid"),
+            ));
+        }
+    }
     Ok(())
 }
 

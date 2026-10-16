@@ -31,6 +31,8 @@ Both defects were reproduced with failing tests before the fixes. Reader-level t
 
 End-to-end checks use the real gettext extraction, ``intl update`` and MO compilation paths. They verify translated entries, unchanged entries, native non-Latin terms, stable term links, cached rebuilds and catalog changes. A PDF build verifies that the book index contains the same translated entries and targets. Every release archive's smoke test also builds a translated glossary and separate translated paragraphs with inline index roles.
 
+We also compared the published 1.0.0-beta.2 Linux executable with the corrected 1.0.0-beta.3 working tree in fresh project folders. In each of the six languages, the old binary indexed only the untranslated term out of three and emitted only the first of two inline index anchors. The corrected build indexes all three terms and emits both distinct anchors. Original glossary anchors remain present exactly once in both builds.
+
 Wider review
 ------------
 

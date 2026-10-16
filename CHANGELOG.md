@@ -5,6 +5,13 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
+## 1.0.0-beta.3 - 2026-10-16
+
+- Preserve translated glossary terms in the HTML and PDF general indexes ([#2](https://github.com/insanai/guidedog/issues/2)). Generated index metadata survives replacement of inline content, with translated display text and stable targets and category keys.
+- Preserve original inline index IDs across translated messages, including reordered and renamed roles, so separate paragraphs cannot reuse an index identity.
+- Add regression checks for six translation languages, reStructuredText and MyST, marked-up terms, refused translations, cached rebuilds, catalog edits and PDF book indexes.
+- Exercise translated glossary entries and inline index targets in every release archive's smoke test.
+
 ## 1.0.0-beta.2 - 2026-10-16
 
 - Fix captioned PDF tables overflowing a page and hiding later rows ([#1](https://github.com/insanai/guidedog/issues/1)). Long tables now continue across pages with repeated headers.

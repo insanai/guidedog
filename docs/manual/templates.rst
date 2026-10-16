@@ -352,6 +352,8 @@ that defines a ``book`` function. Guidedog writes the book's source as
 so everything that decides how the book looks is in that file: fonts, page size and
 margins, headings, the title page, running heads, and the table of contents.
 
+Standalone discussion records select ``_templates/discussion.typ`` instead. Its built-in RFC-style layout starts the content on the first page and uses the record metadata as front matter. A copied ``book.typ`` does not override this layout. We can customize each kind of PDF independently. :doc:`howto/discussions` describes the discussion template's additional ``record`` parameter.
+
 Parameters
 ~~~~~~~~~~
 

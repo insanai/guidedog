@@ -247,6 +247,10 @@ pub(crate) fn smoke_discussion(program: &Path) -> Result<()> {
         &["dsc", "init", "eds", "--prefix=eds", "--name=Smoke Discussions", "--author=Release"],
     )?;
     let eds = work.path().join("eds");
+    let template = read_text(&eds.join("_templates/discussion.typ"))?;
+    if !template.contains("record: (id:") {
+        return Err(smoke_failure("discussion", "init did not install the discussion PDF layout"));
+    }
     runner.run(&eds, &["dsc", "new", "Cache policy", "--labels=architecture"])?;
     runner.run(&eds, &["dsc", "promote", "cache-policy"])?;
     runner.run(
@@ -265,6 +269,13 @@ pub(crate) fn smoke_discussion(program: &Path) -> Result<()> {
         ));
     }
     check_pdf(&eds.join("_build/pdf/eds-0001-cache-policy-en.pdf"), "discussion")?;
+    let source = read_text(&eds.join("_build/pdf/sources/eds-0001-cache-policy-en.pdf.typ"))?;
+    if !source.contains("#import \"/_templates/discussion.typ\": book")
+        || !source.contains("record: (id: \"EDS 0001\"")
+        || source.contains("#gd-fields(")
+    {
+        return Err(smoke_failure("discussion", "the PDF did not use the discussion layout"));
+    }
     let name = program.file_name().unwrap_or_default().to_string_lossy();
     println!("discussion smoke test passed: {name} dsc, an HTML site and PDF books");
     Ok(())

@@ -4,7 +4,7 @@
 :gds-type: Process
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-09-29
-:gds-updated: 2026-10-15
+:gds-updated: 2026-10-16
 :gds-discussion: Local review; no external discussion URL assigned
 :gds-labels: ["process"]
 
@@ -284,13 +284,15 @@ The CLI refreshes their managed regions without discarding surrounding prose.
 
 RST publication uses the project builder (``gd-project``) and Guidedoc, like any other project.
 HTML is a coherent site in ``docs/gds/_build/html``. A selector limits PDFs,
-not the linked HTML graph. PDF builds produce one book per active record in
+not the linked HTML graph. PDF builds produce one PDF per active record in
 ``docs/gds/_build/pdf``. There is no combined design book by default.
 Typst is required for PDF, not for RST HTML.
 
 The HTML template supplies navigation, search, and a page outline.
 The default is light. Readers may choose dark or system appearance.
-PDF uses the project book template. Graphviz diagrams render to static SVG assets.
+We build each record with an RFC-style discussion layout, with metadata and content on the first page.
+We can customize it in ``_templates/discussion.typ``, independently of the book template.
+Graphviz diagrams render to static SVG assets.
 A typesetting template can remain Typst; the authored record is RST.
 
 Legacy Typst catalogs remain supported by the library for existing callers.

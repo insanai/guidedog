@@ -23,6 +23,7 @@ fn dsc_makes_keeps_and_builds_a_catalog() {
         &["init", "eds", "--prefix=eds", "--name=Enso Discussions", "--author=Ada"],
     );
     let dir = root.join("eds");
+    has(&root.read("eds/_templates/discussion.typ"), "record: (id:");
     dsc(&dir, 0, &["new", "Cache policy", "--labels=architecture"]);
     dsc(&dir, 0, &["promote", "cache-policy"]);
     dsc(&dir, 0, &["state", "1", "--to=accepted", "--reason=Reviewed"]);
@@ -34,6 +35,14 @@ fn dsc_makes_keeps_and_builds_a_catalog() {
     dsc(&root.path, 2, &["init", "eds", "--prefix=eds", "--author=Ada"]);
     dsc(&dir, 0, &["build", "--target=html"]);
     assert!(root.exists("eds/_build/html/records/0001-cache-policy.html"));
+    dsc(&dir, 0, &["build", "--target=pdf"]);
+    let source = "eds/_build/pdf/sources/eds-0001-cache-policy-en.pdf.typ";
+    has(&root.read(source), "record: (id: \"EDS 0001\"");
+    has(&root.read(source), "#import \"/_templates/discussion.typ\": book");
+    assert!(!root.read(source).contains("#gd-fields("));
+    dsc(&dir, 0, &["build", "1", "--target=pdf"]);
+    let selected = "eds/_build/selected/eds-0001-cache-policy/pdf/book-en.typ";
+    has(&root.read(selected), "record: (id: \"EDS 0001\"");
     // guidedog builds the catalog itself, so no other guidedog can be named.
     dsc(&dir, 2, &["build", "--target=html", "--guidedog=/no/such/guidedog"]);
     // Options that belong to another command are refused, with the command's help.

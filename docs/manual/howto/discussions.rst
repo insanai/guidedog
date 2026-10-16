@@ -30,6 +30,7 @@ letters. ``init`` writes a complete catalog into a missing or empty folder:
   numbering;
 * ``conf.toml``, ``index.rst``, and ``workflow.rst``, an ordinary Guidedog project;
 * ``template/rfc-template.rst``, the template of new drafts;
+* ``_templates/discussion.typ``, the editable PDF layout copied from the binary;
 * ``registry.rst`` and ``bundle.rst``, the generated index;
 * ``records/XXXXX-eds-process.rst``, a draft of our review process.
 
@@ -162,6 +163,17 @@ Build
 the complete output alone. Warnings stop the build.
 
 The build is guidedog's own: the same build as ``guidedog build``, with the catalog as the project. Graphviz, Typst, and the other tools it needs are guidedog's too. An older catalog of Typst records compiles each record with Typst; ``--typst=PATH`` names a Typst program to use instead of the embedded compiler.
+
+Discussion PDFs
+~~~~~~~~~~~~~~~
+
+Each RST record uses an RFC-style paper layout. The first page contains the record identifier, title, metadata and the start of the discussion. Numbered sections flow continuously. Running headers identify the catalog and record, and footers show the page number and total. Tables and captioned listings can continue across pages.
+
+The PDF builder recognizes the leading metadata, such as ``:eds-number:`` and ``:eds-title:``, for any catalog prefix. Existing catalogs inherit the layout without being initialized again. Ordinary books keep their book template.
+
+The layout is embedded in the Guidedog binary. ``guidedog dsc init`` copies it into ``_templates/discussion.typ`` for customization. Existing catalogs without a copy use the embedded layout. It defines a ``book`` function with the usual PDF parameters and an additional ``record`` dictionary. ``record.id`` is the readable identifier, ``record.catalog`` is the project name, and ``record.fields`` contains pairs of readable field labels and values. All values arrive as quoted strings. The source heading supplies the title and its anchor; the template places the metadata beneath it. :doc:`../templates` describes the shared PDF parameters.
+
+An ``--untrusted`` build uses the built-in discussion layout instead of running a project template. A record included as a chapter of a larger book keeps its metadata in that chapter; the root document selects the book's layout.
 
 When an update is interrupted
 -----------------------------

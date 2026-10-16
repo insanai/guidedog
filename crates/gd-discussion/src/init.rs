@@ -90,6 +90,7 @@ pub fn init_plan(init: &Init) -> Result<Plan> {
         ("README.md", fill(README, init)),
         (".gitignore", fill(IGNORE, init)),
         ("template/rfc-template.rst", template),
+        ("_templates/discussion.typ", gd_theme::DISCUSSION_TYP.to_string()),
         (path.as_str(), process),
     ];
     for (name, text) in files {

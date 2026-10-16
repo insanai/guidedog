@@ -485,3 +485,79 @@ fn standalone_conversion_paginates_long_captioned_content() {
         assert_paginated_entries(compiled.pages.as_ref().unwrap(), header);
     }
 }
+
+const DISCUSSION: &str = ":eds-number: 0007\n:eds-title: Cache policy\n\
+    :eds-state: accepted\n:eds-type: Standards Track\n\
+    :eds-authors: [\"Ada\", \"René\"]\n:eds-created: 2026-10-01\n\
+    :eds-updated: 2026-10-16\n:eds-labels: [\"architecture\"]\n\
+    :eds-discussion: https://example.org/review\n\n\
+    Cache policy\n============\n\nAbstract\n--------\n\n\
+    A bounded cache keeps the previous generation usable.\n\n\
+    Specification\n-------------\n\nSee `Abstract`_.\n";
+
+#[test]
+fn discussions_start_with_their_content_and_structured_front_matter() {
+    let mut project = Project::new("discussion-layout", &[("index", DISCUSSION)]);
+    let templates = project.source().join("_templates");
+    std::fs::create_dir_all(&templates).unwrap();
+    // Old catalogs may carry a copied book template. Records have their own override.
+    std::fs::write(templates.join("book.typ"), "#panic(\"book template used\")").unwrap();
+    let (out, reports, problem, books) = project.typeset();
+    assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
+    let pages = books[0].pages.as_ref().unwrap();
+    assert_eq!(pages.len(), 1, "a short discussion needs no cover or blank pages: {pages:#?}");
+    for text in ["EDS 0007", "Cache policy", "Ada, René", "accepted", "Abstract", "bounded cache"]
+    {
+        assert!(pages[0].contains(text), "missing {text:?}: {pages:#?}");
+    }
+    let source = std::fs::read_to_string(out.join("book-en.typ")).unwrap();
+    assert!(source.contains("record: (id: \"EDS 0007\""));
+    assert!(!source.contains("#gd-fields("));
+    assert!(!source.contains("#import \"/_templates/book.typ\""));
+    // The selected template is an input: editing it invalidates a cached PDF.
+    let copied = gd_theme::DISCUSSION_TYP.replace("size: 10.5pt", "size: 10pt");
+    std::fs::write(templates.join("discussion.typ"), copied).unwrap();
+    let (_, reports, problem, books) = project.typeset();
+    assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
+    assert_eq!(books.len(), 1, "a new discussion template must rebuild the PDF");
+    std::fs::write(templates.join("discussion.typ"), "#panic(\"untrusted template used\")")
+        .unwrap();
+    project.options.untrusted = true;
+    let (_, reports, problem, books) = project.typeset();
+    assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
+    assert!(reports.iter().any(|report| report.code == "build.untrusted"));
+    assert!(books[0].pages.as_ref().unwrap()[0].contains("EDS 0007"));
+}
+
+#[test]
+fn discussion_tables_and_listings_continue_on_following_pages() {
+    let cases =
+        [(long_table_source("Long table"), Some("Repeatedheader")), (long_listing_source(), None)];
+    for (index, (source, header)) in cases.into_iter().enumerate() {
+        let text = format!("{DISCUSSION}\n{source}");
+        for copied in [false, true] {
+            let name = format!("discussion-long-{index}-{copied}");
+            let project = Project::new(&name, &[("index", &text)]);
+            if copied {
+                let templates = project.source().join("_templates");
+                std::fs::create_dir_all(&templates).unwrap();
+                std::fs::write(templates.join("discussion.typ"), gd_theme::DISCUSSION_TYP)
+                    .unwrap();
+            }
+            let (_, reports, problem, books) = project.typeset();
+            assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
+            assert_paginated_entries(books[0].pages.as_ref().unwrap(), header);
+        }
+    }
+}
+
+#[test]
+fn partial_discussion_metadata_keeps_the_book_layout() {
+    let text = ":eds-number: 7\n\nOrdinary manual\n===============\n\nWelcome.\n";
+    let project = Project::new("ordinary-layout", &[("index", text)]);
+    let (_, reports, problem, books) = project.typeset();
+    assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
+    let pages = books[0].pages.as_ref().unwrap();
+    assert!(pages[0].contains("Demo Book"), "the book keeps its cover: {pages:#?}");
+    assert!(!pages[0].contains("Welcome"));
+}

@@ -60,6 +60,8 @@ A request names the catalog, the target, the record books and, for a preview, th
 
 An older catalog of Typst records never reaches the builder. ``build`` compiles each record with gd-typst (``legacy.rs``: the embedded compiler, or the program ``--typst`` names) into the ``build`` folder beside the catalog, staged and themed.
 
+For an RST record, the PDF composer and link pass share ``gd_link::discussion_record`` as their metadata contract. A root with a number and title selects ``discussion.typ``. The composer passes its front matter as quoted data; the link pass keeps the title heading and removes the redundant metadata field list from the body. Both full-catalog and selected-record builds follow this path. A record nested in an ordinary book remains a chapter, with its metadata in place.
+
 Command line
 ------------
 

@@ -41,7 +41,7 @@ mod source_links;
 mod todolist;
 mod xref;
 
-pub use discussion::{discussion_field, discussion_prefix};
+pub use discussion::{Discussion, discussion_field, discussion_prefix, discussion_record};
 pub use graph_theme::{
     ADAPTIVE_CLASS, AdaptError, GRAPH_ADAPTIVE_CSS, adapt_graph, graph_adaptive,
 };

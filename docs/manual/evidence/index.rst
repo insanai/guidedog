@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`discussion-pdf-layout`
+     - Dedicated RFC-style discussion PDFs, visual review and layout regression coverage
    * - :doc:`release-1.0.0-beta.3`
      - Translation and index fixes, published-binary regression checks, platform qualification and automatic tap update (16 October 2026)
    * - :doc:`translation-index-review`
@@ -31,3 +33,4 @@ Each record is dated. It describes what we built or checked on that day, with th
    release-1.0.0-beta.3
    pdf-pagination
    translation-index-review
+   discussion-pdf-layout

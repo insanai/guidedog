@@ -82,8 +82,8 @@ fn discussion_metadata_supports_other_namespaces_and_memo_fields() {
     }
 }
 
-// The book has the same readable metadata: its Typst source shows the labels and the
-// lists, never the field names.
+// A standalone record's PDF composition puts metadata in its front matter. The page
+// body keeps its source heading and content, without a duplicate metadata table.
 #[test]
 fn discussion_metadata_presentation_reaches_the_book() {
     let source = ":eds-number: XXXXX\n:eds-title: Cache policy\n\
@@ -93,11 +93,45 @@ fn discussion_metadata_presentation_reaches_the_book() {
     let mut project = Project::new("discussion-book", &[("index", source)]);
     project.kind = gd_env::BuilderKind::Pdf;
     let text = render(&project, "typst", OutputFormat::Pdf);
-    for want in ["Authors", "Ada", "René", "caching", "architecture", "Updated", "Status"] {
-        assert!(text.contains(want), "the book lacks {want}: {text}");
+    for want in ["Cache policy", "Abstract", "A proposal\\."] {
+        assert!(text.contains(want), "the body lacks {want}: {text}");
     }
     assert!(!text.contains("eds-authors"));
     assert!(!text.contains("eds-last-updated"));
+    assert!(!text.contains("#gd-fields("));
+}
+
+#[test]
+fn discussion_front_matter_keeps_lists_and_unknown_fields_as_data() {
+    let source = ":adr-number: XXXXX\n:adr-title: Proposal\n\
+        :adr-authors: [\"Ada\", \"Name #panic(\\\"no\\\")\"]\n\
+        :adr-labels: [\"cache\", \"design\"]\n:adr-custom: Keep this value\n\n\
+        Proposal\n========\n\nA paragraph.\n";
+    let project = Project::new("discussion-front-matter", &[("index", source)]);
+    let view = project.view();
+    let mut workspace = guidedoc::Workspace::new();
+    let object = view.doc_named("index").and_then(|id| view.doc(id).object.as_ref()).unwrap();
+    let doc = view.objects.load_object(&mut workspace, object, view.limits).unwrap();
+    let record = gd_link::discussion_record(doc).unwrap();
+    assert_eq!((record.prefix.as_str(), record.number.as_str()), ("adr", "XXXXX"));
+    assert!(record.fields.contains(&("Authors".into(), "Ada, Name #panic(\"no\")".into())));
+    assert!(record.fields.contains(&("Labels".into(), "cache, design".into())));
+    assert!(record.fields.contains(&("adr-custom".into(), "Keep this value".into())));
+    // In a larger book this is a chapter, so its metadata stays in its body.
+    let id = project.id("index");
+    let page = render_page(
+        &view,
+        &mut Worker::new(),
+        &PageRequest {
+            doc: id,
+            format: OutputFormat::Pdf,
+            renderer: "typst",
+            options: render_options(&view, id, OutputFormat::Pdf),
+            depth: 1,
+        },
+    );
+    assert!(!page.failed, "{:?}", page.reports);
+    assert!(page.body.contains("#gd-fields("));
 }
 
 // A page that starts with fields but is not a discussion keeps them as written.

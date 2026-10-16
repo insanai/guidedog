@@ -19,6 +19,9 @@ pub const GUIDEDOG_JS: &str = include_str!("../assets/guidedog.js");
 /// `_templates/book.typ`: the Typst template of the PDF book.
 pub const BOOK_TYP: &str = include_str!("../assets/book.typ");
 
+/// `_templates/discussion.typ`: the RFC-style layout for standalone discussion records.
+pub const DISCUSSION_TYP: &str = include_str!("../assets/discussion.typ");
+
 /// One theme file: where a project keeps its copy, and the built-in text.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ThemeFile {
@@ -38,6 +41,9 @@ pub const FILES: [ThemeFile; 4] = [
 
 /// The built-in text for a project-relative theme path, or `None` for other paths.
 pub fn builtin(path: &str) -> Option<&'static str> {
+    if path == "_templates/discussion.typ" {
+        return Some(DISCUSSION_TYP);
+    }
     FILES.iter().find(|f| f.path == path).map(|f| f.text)
 }
 
@@ -53,5 +59,6 @@ mod tests {
         }
         assert!(LAYOUT_HTML.contains("{% block"), "the layout keeps Sphinx's blocks");
         assert_eq!(builtin("_static/other.css"), None);
+        assert_eq!(builtin("_templates/discussion.typ"), Some(DISCUSSION_TYP));
     }
 }

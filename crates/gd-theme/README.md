@@ -4,6 +4,8 @@ Guidedog's built-in theme: `layout.html`, `book.typ`, `guidedog.css` and `guided
 embedded at compile time. `guidedog quickstart` copies them into a new project, and the
 HTML and PDF builders use them when a project has no copy of its own.
 
+Standalone discussion records use the embedded RFC-style `discussion.typ` layout. `guidedog dsc init` copies it into `_templates/discussion.typ` for customization, independently of `book.typ`. Existing catalogs without a copy use the embedded layout.
+
 ```rust
 let css = gd_theme::GUIDEDOG_CSS;
 for file in gd_theme::FILES {

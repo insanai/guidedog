@@ -9,6 +9,52 @@ use guidedoc::{Document, Fail, NodeId, NodeKind, ROOT};
 use crate::page::Page;
 use crate::rewrite::{Action, Rewriter};
 
+/// The front matter of a standalone discussion PDF, read as data from its source.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Discussion {
+    /// The catalog prefix, such as `gds` or `adr`.
+    pub prefix: String,
+    /// The record number, including a draft placeholder when present.
+    pub number: String,
+    /// Readable field labels and values, excluding the title and number.
+    pub fields: Vec<(String, String)>,
+}
+
+/// Reads a record's leading metadata. A record must have both a number and title;
+/// registry pages and ordinary field lists return `None`. JSON lists stay data.
+pub fn discussion_record(doc: Document<'_>) -> Option<Discussion> {
+    let list = doc.first_child(ROOT).filter(|&id| doc.kind(id) == NodeKind::FieldList)?;
+    let prefix = discussion_prefix(doc, list)?;
+    let mut number = String::new();
+    let mut title = String::new();
+    let mut fields = Vec::new();
+    for field in doc.children(list) {
+        let name = doc.first_child(field)?;
+        let body = doc.children(field).find(|&id| doc.kind(id) == NodeKind::FieldBody)?;
+        let mut value = String::new();
+        doc.plain_text(body, &mut value);
+        let named = discussion_field(doc, field);
+        match named {
+            Some(("number", _)) => number = value,
+            Some(("title", _)) => title = value,
+            _ => {
+                let label =
+                    named.map_or_else(|| doc.source_text(doc.node(name).span), |(_, label)| label);
+                if matches!(named, Some(("authors" | "labels", _)))
+                    && let Some(list) = json_strings(doc.source_text(doc.node(body).span).trim())
+                {
+                    value = list.join(", ");
+                }
+                fields.push((label.to_string(), value));
+            }
+        }
+    }
+    if number.trim().is_empty() || title.trim().is_empty() {
+        return None;
+    }
+    Some(Discussion { prefix: prefix.to_string(), number, fields })
+}
+
 /// The key (`authors`) and readable label (`Authors`) of a field of a discussion's
 /// leading metadata list; `None` for any other field, and for a key without a label.
 pub fn discussion_field<'d>(doc: Document<'d>, field: NodeId) -> Option<(&'d str, &'static str)> {

@@ -7,6 +7,8 @@
 //! program conf.toml names) typesets it; a problem Typst finds in a chapter is reported
 //! at the line of reStructuredText or Markdown it came from. The text builder writes one
 //! `.txt` file per document.
+//! Standalone discussion records select `_templates/discussion.typ` or the built-in
+//! RFC-style layout, with structured front matter instead of book covers.
 //!
 //! ```no_run
 //! # fn build(view: &gd_resolve::BuildView<'_>, generation: &mut gd_outputs::Generation)
@@ -29,6 +31,7 @@ mod compose;
 mod failure;
 mod fonts;
 mod inputs;
+mod layout;
 mod pages;
 mod pdf;
 mod text;

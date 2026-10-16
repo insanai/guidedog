@@ -64,6 +64,8 @@ pub(crate) struct Page<'p> {
     /// linkcode's template, root and branch, looked up at the first signature.
     pub linkcode: Option<gd_conf::LinkcodeSite>,
     index: Vec<Indexed>,
+    /// The root's metadata belongs in an RFC-style PDF front matter.
+    discussion: bool,
 }
 
 /// A warning's fixed parts; `Page::warn` adds the document and the location.
@@ -101,11 +103,15 @@ impl<'p> Page<'p> {
             source_links: Vec::new(),
             linkcode: None,
             index: Vec::new(),
+            discussion: false,
         }
     }
 
     /// The link pass's body: index the document, then rewrite it into `b`.
     pub fn link(&mut self, doc: Document<'_>, b: &mut Builder<'_>) -> PassOutcome {
+        self.discussion = self.format == OutputFormat::Pdf
+            && self.depth == 0
+            && discussion::discussion_record(doc).is_some();
         self.index_nodes(doc);
         rewrite_document(doc, b, self)
     }
@@ -206,6 +212,7 @@ impl Rule for Page<'_> {
             NodeKind::Link | NodeKind::Reference => self.config().extlinks_detect_hardcoded_links,
             NodeKind::FieldName
             | NodeKind::FieldBody
+            | NodeKind::FieldList
             | NodeKind::Toctree
             | NodeKind::Only
             | NodeKind::Xref
@@ -228,6 +235,10 @@ impl Rule for Page<'_> {
     fn decide(&mut self, doc: Document<'_>, id: NodeId) -> Action {
         let format = self.format;
         match doc.kind(id) {
+            NodeKind::FieldList if self.discussion && doc.first_child(ROOT) == Some(id) => {
+                // The PDF template receives this front matter as structured data.
+                Action::Drop
+            }
             NodeKind::FieldName | NodeKind::FieldBody => discussion::decide(doc, id),
             NodeKind::Toctree => {
                 let hidden = doc.custom_attribute(id, "hidden") == Some("1");
@@ -328,12 +339,12 @@ impl Page<'_> {
         if self.format != OutputFormat::Pdf || doc.parent_of(id) != Some(ROOT) {
             return Action::Copy;
         }
-        if self.depth == 0 { Action::Drop } else { Action::Replace }
+        if self.depth == 0 && !self.discussion { Action::Drop } else { Action::Replace }
     }
 
     /// The root document's title is the book's title, not a chapter.
     fn is_book_title(&self, doc: Document<'_>, id: NodeId) -> bool {
-        if self.format != OutputFormat::Pdf || self.depth != 0 {
+        if self.format != OutputFormat::Pdf || self.depth != 0 || self.discussion {
             return false;
         }
         doc.parent_of(id).is_some_and(|parent| {
@@ -345,7 +356,7 @@ impl Page<'_> {
     fn replace_title(&mut self, rw: &mut Rewriter<'_, '_, '_>, id: NodeId) -> Result<(), Fail> {
         let heading = rw.open(NodeKind::Heading, rw.doc.node(id).span)?;
         rw.moved_to(id, heading);
-        rw.b.set_value(heading, i32::try_from(self.depth).unwrap_or(i32::MAX));
+        rw.b.set_value(heading, i32::try_from(self.depth.max(1)).unwrap_or(i32::MAX));
         rw.rewrite_children(self, id)?;
         rw.close(heading)
     }

@@ -24,6 +24,8 @@
 #![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
+mod article_context;
+mod collections;
 mod context;
 mod digests;
 mod escape;
@@ -31,6 +33,7 @@ mod feeds;
 mod index_pages;
 mod mathjax;
 mod nav;
+mod navigation_trace;
 mod pages;
 mod render;
 mod search;
@@ -100,7 +103,13 @@ impl OutputBuilder for SiteBuilder<'_> {
             return Err(not_a_site(self.kind, view.kind));
         }
         let layout = Layout::load(view, reports)?;
-        let site = Site { view, layout, labels: self.labels, sources: self.sources };
+        let site = Site {
+            view,
+            layout,
+            labels: self.labels,
+            sources: self.sources,
+            articles: article_context::ArticleIndex::new(view),
+        };
         match view.kind {
             BuilderKind::Singlehtml => pages::write_singlehtml(&site, generation, reports),
             _ => pages::write_html(&site, generation, reports),

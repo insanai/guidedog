@@ -17,6 +17,7 @@ pub(crate) struct Site<'v, 'b> {
     pub layout: Layout,
     pub labels: Option<&'v Labels>,
     pub sources: &'v [SourceFile],
+    pub articles: crate::article_context::ArticleIndex,
 }
 
 impl Site<'_, '_> {
@@ -27,7 +28,7 @@ impl Site<'_, '_> {
         body: &str,
         reports: &mut Vec<Report>,
     ) -> Result<String, Problem> {
-        let (ctx, state) = page_context(self.view, Page::Doc(id), body);
+        let (ctx, state) = page_context(self.view, Page::Doc(id), body, &self.articles);
         let template = self.view.doc(id).page.html_template();
         let html = self.layout.render(self.view, template, &ctx, &state, reports)?;
         let file = state.page;
@@ -42,7 +43,7 @@ impl Site<'_, '_> {
         body: &str,
         reports: &mut Vec<Report>,
     ) -> Result<String, Problem> {
-        let (ctx, state) = page_context(self.view, Page::Doc(root), body);
+        let (ctx, state) = page_context(self.view, Page::Doc(root), body, &self.articles);
         ctx.set("prev", Value::None);
         ctx.set("next", Value::None);
         let html = self.layout.render(self.view, LAYOUT, &ctx, &state, reports)?;
@@ -59,7 +60,7 @@ impl Site<'_, '_> {
         body: &str,
         reports: &mut Vec<Report>,
     ) -> Result<String, Problem> {
-        let (ctx, state) = page_context(self.view, Page::Special(name), body);
+        let (ctx, state) = page_context(self.view, Page::Special(name), body, &self.articles);
         ctx.set("title", Value::from(title));
         let html = self.layout.render(self.view, LAYOUT, &ctx, &state, reports)?;
         self.plugin_html(name, name, html)
@@ -74,7 +75,7 @@ impl Site<'_, '_> {
         template: &str,
         reports: &mut Vec<Report>,
     ) -> Result<String, Problem> {
-        let (ctx, state) = page_context(self.view, Page::Special(file), "");
+        let (ctx, state) = page_context(self.view, Page::Special(file), "", &self.articles);
         ctx.set("pagename", Value::from(name));
         let html = self.layout.render(self.view, template, &ctx, &state, reports)?;
         self.plugin_html(file, name, html)

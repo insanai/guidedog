@@ -3,10 +3,25 @@
 <header class="gd-article-meta">
 {% if page.meta.draft %}<strong>Draft</strong>{% endif %}
 {% if page.meta.date %}<time datetime="{{ page.meta.date }}">{{ page.meta.date }}</time>{% endif %}
+{% if page.meta.authors %}
 {% for author in page.meta.authors %}<span>{{ author }}</span>{% endfor %}
+{% elif author %}<span>{{ author }}</span>{% endif %}
 {% if page.meta.category %}<span>{{ page.meta.category }}</span>{% endif %}
+{% if not page.taxonomies.tags %}
 {% for tag in page.meta.tags %}<span>#{{ tag }}</span>{% endfor %}
+{% endif %}
 {% if page.meta.pdf_url %}<a href="{{ page.meta.pdf_url }}">PDF</a>{% endif %}
+{% if page.reading_minutes %}<span>{{ page.reading_minutes }} min read</span>{% endif %}
+{% for tag in page.taxonomies.tags %}<a href="{{ tag.url }}">#{{ tag.name }}</a>{% endfor %}
 </header>
+{% if page.meta.summary %}<p class="gd-abstract">{{ page.meta.summary }}</p>{% endif %}
 {{ body }}
+<nav aria-label="Articles">
+{% if page.newer %}
+<a rel="prev" href="{{ page.newer.url }}">Newer: {{ page.newer.title }}</a>
+{% endif %}
+{% if page.older %}
+<a rel="next" href="{{ page.older.url }}">Older: {{ page.older.title }}</a>
+{% endif %}
+</nav>
 {% endblock %}

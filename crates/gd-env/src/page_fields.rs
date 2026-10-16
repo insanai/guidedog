@@ -1,8 +1,45 @@
 //! One shared AST contract for build metadata and authoring tools.
 
-use guidedoc::{Document, NodeKind, ROOT, SourceSpan};
+use guidedoc::{Document, NodeId, NodeKind, ROOT, SourceSpan};
 
 use crate::PageMeta;
+
+/// Whether a normalized leading field name configures static publication.
+pub fn is_publication_field(name: &str) -> bool {
+    matches!(
+        name,
+        "template"
+            | "date"
+            | "updated"
+            | "publish-at"
+            | "expires-at"
+            | "draft"
+            | "author"
+            | "authors"
+            | "tags"
+            | "category"
+            | "series"
+            | "summary"
+            | "pdf"
+            | "nosidebar"
+    )
+}
+
+/// Whether a field node belongs to the first root publication metadata block.
+pub fn publication_field(doc: Document<'_>, id: NodeId) -> bool {
+    if doc.kind(id) != NodeKind::Field {
+        return false;
+    }
+    let Some(list) = doc.parent_of(id) else { return false };
+    if doc.first_child(ROOT) != Some(list) || doc.kind(list) != NodeKind::FieldList {
+        return false;
+    }
+    let mut name = String::new();
+    if let Some(name_node) = doc.first_child(id) {
+        doc.plain_text(name_node, &mut name);
+    }
+    is_publication_field(&name.trim().to_ascii_lowercase())
+}
 
 /// An invalid or repeated publication field and its source location.
 #[derive(Debug, Clone, PartialEq, Eq)]

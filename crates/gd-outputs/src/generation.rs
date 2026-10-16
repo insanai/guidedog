@@ -152,6 +152,31 @@ impl Generation {
         }
     }
 
+    /// Refuses a generated file that collides with any output already owned this build.
+    /// Checks ASCII case as well as file/directory overlap for portable archives.
+    pub fn check_available(&self, file: &str) -> Result<(), Problem> {
+        let candidate = file.to_ascii_lowercase();
+        for record in self.current.units.values() {
+            for owned in &record.files {
+                let path = owned.to_ascii_lowercase();
+                if path == candidate
+                    || path.starts_with(&format!("{candidate}/"))
+                    || candidate.starts_with(&format!("{path}/"))
+                {
+                    return Err(Problem::new(
+                        "site.collision",
+                        "OUTPUT PATH COLLISION",
+                        file,
+                        format!("The generated output conflicts with {owned}."),
+                        "Rename the collection, taxonomy or author-written output.",
+                        1,
+                    ));
+                }
+            }
+        }
+        Ok(())
+    }
+
     /// How many units besides the site unit ([`SITE_UNIT`]) were written this
     /// generation: the pages, books or indexes the build's summary counts.
     pub fn written_count(&self) -> usize {

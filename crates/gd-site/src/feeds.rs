@@ -2,7 +2,7 @@
 
 use std::fmt::Write as _;
 
-use gd_env::PostlistSpec;
+use gd_env::{DocId, PostlistSpec};
 use gd_host::Problem;
 use gd_outputs::Unit;
 use gd_resolve::BuildView;
@@ -24,6 +24,11 @@ pub(crate) fn write_feeds(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(
             }
             xml.push_str("</url>\n");
         }
+        for file in crate::collections::files(view) {
+            xml.push_str("<url>");
+            element(&mut xml, "loc", &file_url(view, &file));
+            xml.push_str("</url>\n");
+        }
         xml.push_str("</urlset>\n");
         unit.emit_text("sitemap.xml", &xml)?;
     }
@@ -34,24 +39,43 @@ pub(crate) fn write_feeds(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(
 }
 
 fn write_articles(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(), Problem> {
+    let posts = PostlistSpec::default().select(view.env);
+    write_selected(view, unit, "", &view.config.project, &posts)
+}
+
+pub(crate) fn write_collection(
+    view: &BuildView<'_>,
+    unit: &mut Unit<'_>,
+    c: &gd_conf::CollectionConfig,
+    posts: &[DocId],
+) -> Result<(), Problem> {
+    write_selected(view, unit, &format!("{}/", c.output), &c.title, posts)
+}
+
+fn write_selected(
+    view: &BuildView<'_>,
+    unit: &mut Unit<'_>,
+    prefix: &str,
+    title: &str,
+    posts: &[DocId],
+) -> Result<(), Problem> {
     let base = &view.config.site.base_url;
     let mut rss = String::from(
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
         <rss version=\"2.0\"><channel>",
     );
-    element(&mut rss, "title", &view.config.project);
+    element(&mut rss, "title", title);
     element(&mut rss, "link", base);
     element(&mut rss, "description", &view.config.project);
     let mut atom = String::from(
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
         <feed xmlns=\"http://www.w3.org/2005/Atom\">",
     );
-    element(&mut atom, "id", base);
-    element(&mut atom, "title", &view.config.project);
+    element(&mut atom, "id", &format!("{base}/{prefix}"));
+    element(&mut atom, "title", title);
     atom.push_str("<link rel=\"self\" href=\"");
-    push_escaped(&mut atom, &format!("{base}/atom.xml"));
+    push_escaped(&mut atom, &format!("{base}/{prefix}atom.xml"));
     atom.push_str("\"/>");
-    let posts = PostlistSpec::default().select(view.env);
     let updated = posts
         .iter()
         .map(|&id| {
@@ -61,7 +85,7 @@ fn write_articles(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(), Probl
         .max_by_key(|date| gd_env::publication_time(date).ok())
         .unwrap_or_else(|| "1970-01-01T00:00:00Z".into());
     element(&mut atom, "updated", &updated);
-    for id in posts {
+    for &id in posts {
         let doc = view.doc(id);
         let link = url(view, &doc.docname);
         rss.push_str("<item>");
@@ -101,12 +125,16 @@ fn write_articles(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(), Probl
     }
     rss.push_str("</channel></rss>\n");
     atom.push_str("</feed>\n");
-    unit.emit_text("rss.xml", &rss)?;
-    unit.emit_text("atom.xml", &atom)
+    unit.emit_text(&format!("{prefix}rss.xml"), &rss)?;
+    unit.emit_text(&format!("{prefix}atom.xml"), &atom)
 }
 
 fn url(view: &BuildView<'_>, docname: &str) -> String {
     let page = view.page_name(docname);
+    file_url(view, &page)
+}
+
+fn file_url(view: &BuildView<'_>, page: &str) -> String {
     let mut out = format!("{}/", view.config.site.base_url);
     for byte in page.bytes() {
         if byte.is_ascii_alphanumeric() || b"-._~/".contains(&byte) {

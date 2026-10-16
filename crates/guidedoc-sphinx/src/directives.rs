@@ -73,6 +73,7 @@ const OPTS_POSTLIST: &[OptSpec] = &[
     opt("tags", OptType::Text),
     opt("author", OptType::Text),
     opt("series", OptType::Text),
+    opt("year", OptType::Text),
     choice("sort", "date -date"),
     choice("style", "list cards"),
     opt("excerpts", OptType::Flag),

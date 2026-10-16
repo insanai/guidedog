@@ -30,7 +30,13 @@ fn each_page_renders_its_template_once() {
     let view = p.view(BuilderKind::Html);
     let mut reports = Vec::new();
     let layout = Layout::load(&view, &mut reports).unwrap();
-    let site = Site { view: &view, layout, labels: None, sources: &[] };
+    let site = Site {
+        view: &view,
+        layout,
+        labels: None,
+        sources: &[],
+        articles: crate::article_context::ArticleIndex::new(&view),
+    };
     let paths = output_paths(&p.config, BuilderKind::Html, None).unwrap();
     let options = GenerationOptions { all: false, budget: &p.budget };
     let mut generation = Generation::begin(paths, options, &mut reports).unwrap();

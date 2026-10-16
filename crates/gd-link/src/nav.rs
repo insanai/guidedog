@@ -348,6 +348,7 @@ pub(crate) fn replace_toctree(
 ) -> Result<(), Fail> {
     let Indexed::Toctree(tree) = page.indexed(id) else { return Ok(()) };
     let Some(info) = page.info.toctrees.get(tree as usize) else { return Ok(()) };
+    page.trace.note_key(gd_env::LookupKind::Navigation, &format!("tree\0{tree}"));
     let options = NavOptions {
         maxdepth: info.maxdepth,
         titles_only: info.titlesonly,

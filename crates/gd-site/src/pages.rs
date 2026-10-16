@@ -27,6 +27,7 @@ pub(crate) fn write_html(
     let mut assets = Vec::new();
     write_documents(site, generation, reports, &mut assets)?;
     write_site_unit(site, generation, None, &assets, reports)?;
+    crate::collections::write(site, generation, reports)?;
     write_search(site.view, generation, reports)
 }
 
@@ -44,12 +45,12 @@ fn write_documents(
     let mut todo: Vec<(DocId, Digest)> = Vec::new();
     for (id, d) in view.env.iter().filter(|(_, d)| !d.failed) {
         let inputs = page_inputs(view, id, &common);
-        let answer = |lookup: &Lookup| {
-            if lookup.kind == LookupKind::Template {
-                site.layout.template_digest(&lookup.key)
-            } else {
-                lookup_answer(view, &d.docname, lookup)
+        let answer = |lookup: &Lookup| match lookup.kind {
+            LookupKind::Template => site.layout.template_digest(&lookup.key),
+            LookupKind::Navigation => {
+                crate::navigation_trace::answer(view, &d.docname, lookup, &site.articles)
             }
+            _ => lookup_answer(view, &d.docname, lookup),
         };
         if let Some(old) = generation.reuse(&d.docname, inputs, answer) {
             reports.extend(old.reports.iter().cloned());
@@ -105,8 +106,20 @@ fn write_page(
         unit.emit_text(&view.page_name(docname), &html)?;
     }
     let lookups = page.trace.lookups().iter();
-    let mut lookups: Vec<_> =
-        lookups.map(|l| (l.clone(), lookup_answer(view, docname, l))).collect();
+    let mut lookups: Vec<_> = lookups
+        .map(|l| {
+            let digest = if l.kind == LookupKind::Navigation {
+                crate::navigation_trace::answer(view, docname, l, &site.articles)
+            } else {
+                lookup_answer(view, docname, l)
+            };
+            (l.clone(), digest)
+        })
+        .collect();
+    for lookup in site.layout.take_navigation_lookups() {
+        let digest = crate::navigation_trace::answer(view, docname, &lookup, &site.articles);
+        lookups.push((lookup, digest));
+    }
     for name in site.layout.take_template_loads() {
         let digest = site.layout.template_digest(&name);
         lookups.push((Lookup::new(LookupKind::Template, &name), digest));

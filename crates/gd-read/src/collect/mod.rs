@@ -29,8 +29,15 @@ pub(crate) fn collect(d: &mut DocInfo, doc: Document<'_>) -> String {
         onlys: Vec::new(),
         search: SearchText::default(),
     };
-    for i in 0..doc.node_count() {
-        c.visit(NodeId::from_index(i));
+    let mut i = 0;
+    while i < doc.node_count() {
+        let id = NodeId::from_index(i);
+        if gd_env::publication_field(doc, id) {
+            i = doc.subtree_end(id).index();
+            continue;
+        }
+        c.visit(id);
+        i += 1;
     }
     let words = c.search.lines(&c.d.sections);
     if c.d.title.is_empty()

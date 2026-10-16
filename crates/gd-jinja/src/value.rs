@@ -1,7 +1,7 @@
 //! Values: everything a template can see, and how hosts build them.
 
 use std::cell::{Cell, Ref, RefCell};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fmt;
 use std::rc::Rc;
 
@@ -84,6 +84,7 @@ pub struct Dict {
     map: RefCell<DictMap>,
     kind: DictKind,
     name: Rc<str>,
+    reads: RefCell<Option<HashSet<String>>>,
 }
 
 #[derive(Default)]
@@ -230,11 +231,48 @@ fn drop_values(mut stack: Vec<Value>) {
 impl Dict {
     /// Makes an empty shared dict of `kind`.
     pub fn new(kind: DictKind) -> Rc<Dict> {
-        Rc::new(Dict { map: RefCell::default(), kind, name: Rc::from("") })
+        Rc::new(Dict {
+            map: RefCell::default(),
+            kind,
+            name: Rc::from(""),
+            reads: RefCell::default(),
+        })
     }
 
     pub(crate) fn module(name: Rc<str>) -> Rc<Dict> {
-        Rc::new(Dict { map: RefCell::default(), kind: DictKind::Module, name })
+        Rc::new(Dict {
+            map: RefCell::default(),
+            kind: DictKind::Module,
+            name,
+            reads: RefCell::default(),
+        })
+    }
+
+    /// Starts recording string-key reads, including missing keys. Replaces any prior trace.
+    pub fn begin_key_trace(&self) {
+        *self.reads.borrow_mut() = Some(HashSet::new());
+    }
+
+    /// Stops recording and returns distinct keys in sorted order; empty if tracing was off.
+    pub fn end_key_trace(&self) -> Vec<String> {
+        let mut keys: Vec<_> =
+            self.reads.borrow_mut().take().unwrap_or_default().into_iter().collect();
+        keys.sort();
+        keys
+    }
+
+    fn note_key(&self, key: &str) {
+        if let Some(keys) = self.reads.borrow_mut().as_mut() {
+            keys.insert(key.into());
+        }
+    }
+
+    fn note_all(&self) {
+        if let Some(keys) = self.reads.borrow_mut().as_mut() {
+            keys.extend(
+                self.map.borrow().keys.iter().filter_map(|k| k.as_str().map(str::to_owned)),
+            );
+        }
     }
 
     /// What the dict is.
@@ -267,12 +305,16 @@ impl Dict {
 
     /// The value stored under `key`.
     pub fn get(&self, key: &Value) -> Option<Value> {
+        if let Some(key) = key.as_str() {
+            self.note_key(key);
+        }
         let i = self.find(key)?;
         Some(self.map.borrow().values[i].clone())
     }
 
     /// The value stored under the string `key`.
     pub fn get_str(&self, key: &str) -> Option<Value> {
+        self.note_key(key);
         let map = self.map.borrow();
         map.index.get(key).map(|&i| map.values[i].clone())
     }
@@ -318,22 +360,26 @@ impl Dict {
 
     /// The keys, in insertion order (shared handles).
     pub fn keys(&self) -> Vec<Value> {
+        self.note_all();
         self.map.borrow().keys.clone()
     }
 
     /// The values, in insertion order (shared handles).
     pub fn values(&self) -> Vec<Value> {
+        self.note_all();
         self.map.borrow().values.clone()
     }
 
     /// The entries, in insertion order (shared handles).
     pub fn entries(&self) -> Vec<(Value, Value)> {
+        self.note_all();
         let map = self.map.borrow();
         map.keys.iter().cloned().zip(map.values.iter().cloned()).collect()
     }
 
     /// Calls `f` with each entry without copying them.
     pub(crate) fn each<R>(&self, f: impl FnOnce(&[Value], &[Value]) -> R) -> R {
+        self.note_all();
         let map = self.map.borrow();
         f(&map.keys, &map.values)
     }

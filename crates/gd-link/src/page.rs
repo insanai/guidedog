@@ -209,8 +209,11 @@ pub(crate) fn flag(doc: Document<'_>, id: NodeId, name: &str) -> bool {
 impl Rule for Page<'_> {
     fn visits(&self, doc: Document<'_>, id: NodeId) -> bool {
         match doc.kind(id) {
-            NodeKind::Link | NodeKind::Reference => self.config().extlinks_detect_hardcoded_links,
+            NodeKind::Link | NodeKind::Reference => {
+                self.config().extlinks_detect_hardcoded_links || crate::mounts::is_mount(doc, id)
+            }
             NodeKind::FieldName
+            | NodeKind::Field
             | NodeKind::FieldBody
             | NodeKind::FieldList
             | NodeKind::Toctree
@@ -235,6 +238,8 @@ impl Rule for Page<'_> {
     fn decide(&mut self, doc: Document<'_>, id: NodeId) -> Action {
         let format = self.format;
         match doc.kind(id) {
+            NodeKind::Field if crate::publication::field(doc, id) => Action::Drop,
+            NodeKind::FieldList if crate::publication::list(doc, id) => Action::Drop,
             NodeKind::FieldList
                 if (self.discussion
                     || self.format == OutputFormat::Pdf && self.info.page.pdf == "article")
@@ -258,7 +263,7 @@ impl Rule for Page<'_> {
             NodeKind::Xref => Action::Replace,
             NodeKind::Link | NodeKind::Reference => {
                 extlinks::check_hardcoded_link(self, doc, id);
-                Action::Copy
+                if crate::mounts::is_mount(doc, id) { Action::Replace } else { Action::Copy }
             }
             NodeKind::CodeBlock
                 if format != OutputFormat::Text && graph::is_graph(self, doc, id) =>
@@ -294,6 +299,7 @@ impl Rule for Page<'_> {
             NodeKind::Toctree => nav::replace_toctree(self, rw, id),
             NodeKind::Xref => xref::replace_xref(self, rw, id),
             NodeKind::Image => image::replace_image(self, rw, id),
+            NodeKind::Link | NodeKind::Reference => crate::mounts::replace(self, rw, id),
             NodeKind::Title => self.replace_title(rw, id),
             NodeKind::CodeBlock => graph::replace_graph(self, rw, id),
             NodeKind::Directive => {

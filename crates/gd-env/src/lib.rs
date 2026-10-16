@@ -56,7 +56,7 @@ pub use gd_conf::{Digest, Digester};
 pub use lookup::{Lookup, LookupKind, Trace};
 pub use objects::{OBJECTS_FOLDER, ObjectError, ObjectStore, SEARCH_FOLDER};
 pub use page::{PageMeta, publication_time};
-pub use page_fields::{PageMetadataError, page_metadata};
+pub use page_fields::{PageMetadataError, is_publication_field, page_metadata, publication_field};
 pub use plugins::{PluginRun, PluginStart, assets_url, host_problem};
 pub use posts::{PostlistError, PostlistSpec};
 pub use records::{ObjectBuilder, ObjectReader, read_record, report_from_json, report_to_json};

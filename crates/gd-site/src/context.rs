@@ -32,6 +32,7 @@ pub(crate) fn page_context(
     view: &BuildView<'_>,
     page: Page<'_>,
     body: &str,
+    articles: &crate::article_context::ArticleIndex,
 ) -> (Value, PageState) {
     let c = view.config;
     let (doc, file, title, docname) = match page {
@@ -77,6 +78,9 @@ pub(crate) fn page_context(
     }
     let page_value = Value::dict();
     page_value.set("meta", page_meta.clone());
+    if let Some(id) = doc.filter(|&id| !view.doc(id).page.date.is_empty()) {
+        crate::article_context::fill(view, id, body, &page_value, articles);
+    }
     ctx.set("page", page_value);
     ctx.set("nosidebar", page_meta.get("nosidebar"));
     ctx.set("toc", Value::markup(&sidebar_html(view, doc, TocOptions::SIDEBAR)));
@@ -99,7 +103,7 @@ pub(crate) fn page_context(
     (ctx, PageState { doc, page: file, root })
 }
 
-fn metadata(page: &gd_env::PageMeta) -> Value {
+pub(crate) fn metadata(page: &gd_env::PageMeta) -> Value {
     let out = Value::dict();
     for (key, text) in [
         ("date", &page.date),
@@ -116,6 +120,7 @@ fn metadata(page: &gd_env::PageMeta) -> Value {
     out.set("authors", Value::list(page.authors.iter().map(|s| Value::from(s.as_str()))));
     out.set("tags", Value::list(page.tags.iter().map(|s| Value::from(s.as_str()))));
     out.set("draft", Value::from(page.draft));
+    out.set("pdf", Value::from(page.pdf.as_str()));
     out.set("nosidebar", Value::from(page.nosidebar));
     out
 }
@@ -131,6 +136,7 @@ fn project_names(view: &BuildView<'_>, ctx: &Value) {
     text("html_short_title", &html.short_title);
     text("shorttitle", &html.short_title);
     text("project", &c.project);
+    text("author", &c.author);
     text("version", &c.version);
     text("release", &c.release);
     text("copyright", &c.copyright);

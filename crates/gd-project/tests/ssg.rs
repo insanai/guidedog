@@ -202,3 +202,31 @@ fn translations_cannot_change_publication_state() {
         assert!(!catalog.contains("msgid \"true\""));
     }
 }
+
+#[test]
+fn publication_fields_are_layout_data_while_unknown_and_later_fields_remain_content() {
+    for suffix in ["rst", "md"] {
+        let dir = project(&format!("ssg-metadata-display-{suffix}"));
+        let source = if suffix == "rst" {
+            concat!(
+                ":template: landing.html\n:source-note: Kept note.\n\n",
+                "Article\n=======\n\nLater example.\n\n:template: Ordinary later field.\n"
+            )
+        } else {
+            concat!(
+                "---\ntemplate: landing.html\nsource-note: Kept note.\n---\n",
+                "# Article\n\nOrdinary later field.\n"
+            )
+        };
+        dir.put(&format!("post.{suffix}"), source);
+        let project = load(&dir.0);
+        assert_built(&gd_project::build(&project, BuilderKind::Html, &options("2026-10-16")));
+        let html = dir.read("_build/html/post.html");
+        assert!(!html.contains("landing.html"), "{html}");
+        assert!(html.contains("Kept note."));
+        assert!(html.contains("Ordinary later field."));
+        let search = dir.read("_build/html/_static/searchindex.js");
+        assert!(!search.contains("landing.html"));
+        assert!(search.contains("Kept note."));
+    }
+}

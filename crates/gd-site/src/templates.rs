@@ -12,7 +12,7 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 
-use gd_env::{BuilderKind, DocId};
+use gd_env::{BuilderKind, DocId, Lookup};
 use gd_host::{Confinement, Problem};
 use gd_jinja::{Autoescape, Call, Environment, Error, ErrorKind, Loader, Locals, Options, Value};
 use gd_report::Report;
@@ -56,6 +56,7 @@ pub(crate) struct Layout {
     files: Vec<PathBuf>,
     /// The build's memory budget in bytes, which bounds what one render may build.
     budget: usize,
+    navigation: RefCell<Vec<Lookup>>,
     /// How many templates were rendered, for tests that a page renders once.
     #[cfg(test)]
     pub(crate) renders: std::cell::Cell<usize>,
@@ -98,6 +99,7 @@ impl Layout {
             sources,
             files,
             budget,
+            navigation: RefCell::default(),
             #[cfg(test)]
             renders: std::cell::Cell::new(0),
         };
@@ -126,6 +128,13 @@ impl Layout {
         self.env.take_template_loads()
     }
 
+    pub(crate) fn take_navigation_lookups(&self) -> Vec<Lookup> {
+        let mut lookups = std::mem::take(&mut *self.navigation.borrow_mut());
+        lookups.sort();
+        lookups.dedup();
+        lookups
+    }
+
     /// Renders the template `name` with `ctx` for `page`, once, with the functions that
     /// read the build. Problems reading a template it loads are added to `reports`.
     /// Fails with `template.error`.
@@ -139,9 +148,24 @@ impl Layout {
     ) -> Result<String, Problem> {
         #[cfg(test)]
         self.renders.set(self.renders.get() + 1);
-        let locals = page_functions(view, page);
+        self.navigation.borrow_mut().clear();
+        if let Value::Dict(dict) = ctx {
+            dict.begin_key_trace();
+        }
+        let locals = page_functions(view, page, &self.navigation);
         self.env.take_template_loads();
         let rendered = self.env.load_template(name).and_then(|t| t.render_with(ctx, &locals));
+        if let Value::Dict(dict) = ctx {
+            for key in dict
+                .end_key_trace()
+                .into_iter()
+                .filter(|k| crate::navigation_trace::context_key(k))
+            {
+                self.navigation
+                    .borrow_mut()
+                    .push(crate::navigation_trace::lookup(&format!("ctx\0{key}")));
+            }
+        }
         reports.append(&mut self.sources.errors.borrow_mut());
         rendered.map_err(|e| self.problem(&e))
     }
@@ -206,17 +230,29 @@ fn register_functions(env: &mut Environment) {
 }
 
 /// The functions of one page's render, borrowing the view and the page.
-fn page_functions<'a>(view: &'a BuildView<'a>, page: &'a PageState) -> Locals<'a> {
+fn page_functions<'a>(
+    view: &'a BuildView<'a>,
+    page: &'a PageState,
+    trace: &'a RefCell<Vec<Lookup>>,
+) -> Locals<'a> {
     let mut locals = Locals::new();
     locals.add_function("_", move |c| Ok(word(view, c)));
     locals.add_function("gettext", move |c| Ok(word(view, c)));
     locals.add_function("ngettext", move |c| plural(view, c));
-    locals.add_function("pathto", move |c| Ok(pathto(view, page, c)));
+    locals.add_function("pathto", move |c| {
+        let target = gd_jinja::to_str(&c.arg_or(0, "otheruri", Value::from(""))).into_owned();
+        let resource = c.arg_flag(1, "resource", false);
+        trace
+            .borrow_mut()
+            .push(crate::navigation_trace::lookup(&format!("pathto\0{resource}\0{target}")));
+        Ok(Value::from(path_to(view, page, &target, resource)))
+    });
     locals.add_function("hasdoc", move |c| {
         let name = gd_jinja::to_str(&c.arg(0, "name")).into_owned();
+        trace.borrow_mut().push(crate::navigation_trace::lookup(&format!("hasdoc\0{name}")));
         Ok(Value::from(view.doc_named(&name).is_some()))
     });
-    locals.add_function("toctree", move |c| toctree(view, page, c));
+    locals.add_function("toctree", move |c| toctree(view, page, trace, c));
     locals
 }
 
@@ -237,7 +273,12 @@ fn plural(view: &BuildView<'_>, c: &Call<'_, '_>) -> Result<Value, Error> {
 
 /// Sphinx's `toctree()` with its keyword arguments: `maxdepth` (-1 unlimited),
 /// `collapse` (default true), `titles_only`, `includehidden`.
-fn toctree(view: &BuildView<'_>, page: &PageState, c: &Call<'_, '_>) -> Result<Value, Error> {
+fn toctree(
+    view: &BuildView<'_>,
+    page: &PageState,
+    trace: &RefCell<Vec<Lookup>>,
+    c: &Call<'_, '_>,
+) -> Result<Value, Error> {
     let mut options = TocOptions::TOCTREE;
     let depth = c.arg_int(KEYWORD_ONLY, "maxdepth", -1)?;
     if depth > 0 {
@@ -246,6 +287,11 @@ fn toctree(view: &BuildView<'_>, page: &PageState, c: &Call<'_, '_>) -> Result<V
     options.collapse = c.arg_flag(KEYWORD_ONLY, "collapse", options.collapse);
     options.titles_only = c.arg_flag(KEYWORD_ONLY, "titles_only", false);
     options.include_hidden = c.arg_flag(KEYWORD_ONLY, "includehidden", false);
+    let key = format!(
+        "toctree\0{}/{}/{}/{}",
+        options.maxdepth, options.collapse, options.titles_only, options.include_hidden
+    );
+    trace.borrow_mut().push(crate::navigation_trace::lookup(&key));
     Ok(Value::markup(&sidebar_html(view, page.doc, options)))
 }
 
@@ -253,21 +299,25 @@ fn toctree(view: &BuildView<'_>, page: &PageState, c: &Call<'_, '_>) -> Result<V
 /// a file below the output root, from the current page. In singlehtml a document is
 /// its section of the single page. Any other name, such as genindex or a page of
 /// html_additional_pages, is a page at the output root, with every builder.
-fn pathto(view: &BuildView<'_>, page: &PageState, c: &Call<'_, '_>) -> Value {
-    let target = gd_jinja::to_str(&c.arg_or(0, "otheruri", Value::from(""))).into_owned();
+pub(crate) fn path_to(
+    view: &BuildView<'_>,
+    page: &PageState,
+    target: &str,
+    resource: bool,
+) -> String {
     if target.contains("://") || target.starts_with('#') {
-        return Value::from(target);
+        return target.into();
     }
-    if c.arg_flag(1, "resource", false) {
-        return Value::from(format!("{}{target}", page.root));
+    if resource {
+        return format!("{}{target}", page.root);
     }
-    let Some(id) = view.doc_named(&target) else {
-        return Value::from(format!("{}{target}{}", page.root, view.config.html.file_suffix));
+    let Some(id) = view.doc_named(target) else {
+        return format!("{}{target}{}", page.root, view.config.html.file_suffix);
     };
     if view.kind == BuilderKind::Singlehtml {
-        return Value::from(view.page_url(page.doc, id, ""));
+        return view.page_url(page.doc, id, "");
     }
-    Value::from(format!("{}{}", page.root, view.page_name(&target)))
+    format!("{}{}", page.root, view.page_name(target))
 }
 
 /// A `css_files` or `js_files` entry's URL: a dict's `url` (none for an inline script),
@@ -308,6 +358,7 @@ fn template_source(sources: &TemplateSources, name: &str) -> Option<String> {
         "page.html" => Some("{% extends \"layout.html\" %}".into()),
         "article.html" => Some(gd_theme::ARTICLE_HTML.to_string()),
         "landing.html" => Some(gd_theme::LANDING_HTML.to_string()),
+        "collection.html" => Some("{% extends \"layout.html\" %}".into()),
         _ => None,
     }
 }

@@ -181,6 +181,9 @@ pub fn page_inputs(view: &BuildView<'_>, id: DocId, common: &Digest) -> Digest {
     if let Some(numbers) = view.tables.fignumbers.get(id.index()) {
         d.texts(numbers);
     }
+    if let Some(numbers) = view.tables.secnumbers.get(id.index()) {
+        d.texts(numbers);
+    }
     for dep in &doc.deps {
         d.digest(&dep.digest);
     }
@@ -237,6 +240,12 @@ pub fn lookup_answer(view: &BuildView<'_>, page: &str, lookup: &Lookup) -> Diges
         }
         LookupKind::Template => {
             // HTML resolves template names through its own confined loader.
+            d.text(&lookup.key);
+        }
+        LookupKind::Mount => {
+            d.text(&lookup.key);
+        }
+        LookupKind::Navigation => {
             d.text(&lookup.key);
         }
         LookupKind::Postlist => {

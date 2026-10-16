@@ -30,6 +30,8 @@ pub struct PostlistSpec {
     pub author: String,
     /// Required series.
     pub series: String,
+    /// Publication year; empty accepts every year.
+    pub year: String,
     /// Maximum items; zero means unlimited.
     pub limit: usize,
     /// Oldest articles first instead of newest first.
@@ -55,6 +57,10 @@ impl PostlistSpec {
             "date" => true,
             _ => return Err(PostlistError("postlist sort must be date or -date")),
         };
+        let year = value("year");
+        if !year.is_empty() && (year.len() != 4 || !year.bytes().all(|b| b.is_ascii_digit())) {
+            return Err(PostlistError("postlist year must contain four digits"));
+        }
         Ok(Self {
             path: value("path").into(),
             category: value("category").into(),
@@ -66,6 +72,7 @@ impl PostlistSpec {
                 .collect(),
             author: value("author").into(),
             series: value("series").into(),
+            year: value("year").into(),
             limit,
             ascending,
             excerpts: value("excerpts") == "1",
@@ -81,6 +88,7 @@ impl PostlistSpec {
                 .texts("tags", &self.tags)
                 .text("author", &self.author)
                 .text("series", &self.series)
+                .text("year", &self.year)
                 .number("limit", self.limit as u64)
                 .flag("ascending", self.ascending)
                 .flag("excerpts", self.excerpts)
@@ -98,6 +106,7 @@ impl PostlistSpec {
             tags: r.texts("tags")?,
             author: r.text("author")?,
             series: r.text("series")?,
+            year: r.text("year")?,
             limit: usize::try_from(r.number("limit")?).ok()?,
             ascending: r.flag("ascending")?,
             excerpts: r.flag("excerpts")?,
@@ -106,17 +115,19 @@ impl PostlistSpec {
 
     /// Selects eligible articles in date order, breaking ties by docname before limiting.
     pub fn select(&self, env: &Environment) -> Vec<DocId> {
-        let mut posts: Vec<_> = env.iter().filter(|(_, doc)| self.matches(doc)).collect();
-        posts.sort_by(|(_, a), (_, b)| {
-            let a_date = crate::publication_time(&a.page.date).ok();
-            let b_date = crate::publication_time(&b.page.date).ok();
-            let dates = if self.ascending { a_date.cmp(&b_date) } else { b_date.cmp(&a_date) };
+        let mut posts: Vec<_> = env
+            .iter()
+            .filter(|(_, doc)| self.matches(doc))
+            .map(|(id, doc)| (id, doc, crate::publication_time(&doc.page.date).ok()))
+            .collect();
+        posts.sort_by(|(_, a, a_date), (_, b, b_date)| {
+            let dates = if self.ascending { a_date.cmp(b_date) } else { b_date.cmp(a_date) };
             dates.then_with(|| a.docname.cmp(&b.docname))
         });
         if self.limit > 0 {
             posts.truncate(self.limit);
         }
-        posts.into_iter().map(|(id, _)| id).collect()
+        posts.into_iter().map(|(id, _, _)| id).collect()
     }
 
     fn matches(&self, doc: &DocInfo) -> bool {
@@ -126,6 +137,7 @@ impl PostlistSpec {
             && (self.path.is_empty() || crate::glob_match(&self.path, &doc.docname))
             && (self.category.is_empty() || self.category == p.category)
             && (self.series.is_empty() || self.series == p.series)
+            && (self.year.is_empty() || p.date.get(..4) == Some(self.year.as_str()))
             && (self.author.is_empty() || p.authors.contains(&self.author))
             && self.tags.iter().all(|tag| p.tags.contains(tag))
     }

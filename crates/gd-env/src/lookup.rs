@@ -36,6 +36,10 @@ pub enum LookupKind {
     Template,
     /// A chronological collection query, encoded by `PostlistSpec`.
     Postlist,
+    /// A website-relative cross-mount file, validated before whole-site publication.
+    Mount,
+    /// An HTML navigation context value, native template call or body toctree.
+    Navigation,
 }
 
 impl LookupKind {
@@ -54,6 +58,8 @@ impl LookupKind {
             LookupKind::Cpp => 'C',
             LookupKind::Template => 'J',
             LookupKind::Postlist => 'P',
+            LookupKind::Mount => 'U',
+            LookupKind::Navigation => 'N',
         }
     }
 
@@ -71,6 +77,8 @@ impl LookupKind {
             'C' => LookupKind::Cpp,
             'J' => LookupKind::Template,
             'P' => LookupKind::Postlist,
+            'U' => LookupKind::Mount,
+            'N' => LookupKind::Navigation,
             _ => return None,
         })
     }

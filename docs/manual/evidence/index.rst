@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`release-1.0.0-beta.3`
+     - Translation and index fixes, published-binary regression checks, platform qualification and automatic tap update (16 October 2026)
    * - :doc:`translation-index-review`
      - Root causes, shared fixes and regression coverage for translated glossary metadata and inline index identities (16 October 2026)
    * - :doc:`release-1.0.0-beta.2`
@@ -26,5 +28,6 @@ Each record is dated. It describes what we built or checked on that day, with th
    manuals
    release-1.0.0-beta.1
    release-1.0.0-beta.2
+   release-1.0.0-beta.3
    pdf-pagination
    translation-index-review

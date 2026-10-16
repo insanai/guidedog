@@ -33,6 +33,8 @@ End-to-end checks use the real gettext extraction, ``intl update`` and MO compil
 
 We also compared the published 1.0.0-beta.2 Linux executable with the corrected 1.0.0-beta.3 working tree in fresh project folders. In each of the six languages, the old binary indexed only the untranslated term out of three and emitted only the first of two inline index anchors. The corrected build indexes all three terms and emits both distinct anchors. Original glossary anchors remain present exactly once in both builds.
 
+After publication, we repeated the six-language checks with the downloaded 1.0.0-beta.3 Linux executable. Fresh builds, cached builds and edited catalogs all preserved the three glossary entries, both inline index targets and the original term links. A German PDF also passed checks of its generated index labels and visible index text. The :doc:`release-1.0.0-beta.3` record identifies the artifacts and qualification runs.
+
 Wider review
 ------------
 

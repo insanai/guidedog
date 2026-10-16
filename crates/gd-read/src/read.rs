@@ -31,6 +31,8 @@ pub fn read_documents(
     let prepared = Prepared::new(ctx, sources)?;
     let mut previous =
         if previous.settings == ctx.settings { previous } else { Environment::new(ctx.settings) };
+    previous.docs.append(&mut previous.ineligible_docs);
+    previous.docs.sort_by(|a, b| a.docname.cmp(&b.docname));
     if !sources.is_empty() {
         // Made before any thread writes an object, so threads never race to make it; a
         // failure shows when the first object is written.

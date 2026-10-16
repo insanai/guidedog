@@ -18,7 +18,7 @@ use crate::records;
 
 /// The environment's format version; an environment of another version is not read.
 /// Raise it whenever the saved form changes, so an older environment is rebuilt.
-pub const ENVIRONMENT_VERSION: u32 = 27;
+pub const ENVIRONMENT_VERSION: u32 = 28;
 
 /// A document's index in the environment, which the project tables are indexed by.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Default)]
@@ -351,6 +351,8 @@ pub struct CachedFile {
 /// What reading learned about one document.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct DocInfo {
+    /// Publication and presentation fields from the leading metadata block.
+    pub page: crate::PageMeta,
     /// Its name.
     pub docname: String,
     /// Its path below the source folder, with its suffix.
@@ -423,12 +425,14 @@ pub struct Environment {
     pub settings: Digest,
     /// The documents, sorted by docname.
     pub docs: Vec<DocInfo>,
+    /// Read documents withheld before resolving; retained for incremental reuse.
+    pub ineligible_docs: Vec<DocInfo>,
 }
 
 impl Environment {
     /// An empty environment for `settings`.
     pub fn new(settings: Digest) -> Environment {
-        Environment { settings, docs: Vec::new() }
+        Environment { settings, docs: Vec::new(), ineligible_docs: Vec::new() }
     }
 
     /// The document named `docname`.

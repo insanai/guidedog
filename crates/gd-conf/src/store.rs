@@ -47,6 +47,10 @@ pub fn apply_table(
     check: bool,
 ) -> Result<(), Problem> {
     for (key, value) in table.iter() {
+        if key == "site" {
+            config.site = crate::site::read(value, path)?;
+            continue;
+        }
         let Some(setting) = find_setting(key) else {
             if is_foreign_setting(key) {
                 warnings.push(warning(

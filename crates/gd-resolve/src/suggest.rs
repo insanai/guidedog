@@ -11,6 +11,28 @@ use gd_env::normalize_name;
 /// The failure of a reference nothing resolves.
 pub(crate) fn unresolved(view: &BuildView<'_>, q: &XrefQuery) -> Box<Unresolved> {
     let role = q.reftype.rsplit(':').next().unwrap_or(&q.reftype);
+    if matches!(role, "doc" | "ref") {
+        let target = doc_target(dir_of(&view.doc(q.from).docname), &q.target);
+        let label = gd_env::normalize_name(&q.target);
+        let hidden = view.env.ineligible_docs.iter().find(|doc| {
+            if role == "doc" {
+                doc.docname == target
+            } else {
+                doc.labels.iter().any(|l| l.name == label)
+            }
+        });
+        if hidden.is_some() {
+            return Box::new(Unresolved {
+                warn: true,
+                code: "link.unpublished_target".into(),
+                category: "ref.unpublished".into(),
+                title: "TARGET IS NOT PUBLISHED".into(),
+                message: "The target is withheld by its publication metadata.".into(),
+                hint: "Publish the target, remove this link, or build with --preview.".into(),
+                suggestion: None,
+            });
+        }
+    }
     let warn = must_resolve(view, q);
     Box::new(Unresolved {
         warn,

@@ -291,6 +291,7 @@ impl<'a> Worker<'a> {
             Err(p) => reports.push(p.report()),
         }
         let words = crate::collect::collect(d, doc);
+        d.failed |= reports.iter().any(|r| r.code == "myst.topmatter");
         if crate::sources::wanted(self.ctx.config) {
             crate::sources::locate_objects(self.ctx.config, doc, d, &mut reports);
         }
@@ -307,8 +308,9 @@ impl<'a> Worker<'a> {
             )
             .unwrap_or(u32::MAX);
         }
-        d.failed = d.object.is_none();
+        d.failed |= d.object.is_none();
         d.written = !d.failed;
+        reports.append(&mut d.reports);
         d.reports = reports;
         self.note_included(d);
     }

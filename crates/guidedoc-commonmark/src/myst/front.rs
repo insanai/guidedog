@@ -41,6 +41,18 @@ pub(crate) fn front_matter<'l, 's>(
             if read_front_matter(h, &lines[1..end], lines[0])? {
                 return Ok(body);
             }
+        } else if lines.iter().skip(1).any(|line| {
+            line.text
+                .split_once(':')
+                .is_some_and(|(key, _)| matches!(key, "draft" | "publish-at" | "expires-at"))
+        }) {
+            let span = SourceSpan::new(h.ctx.source, lines[0].offset, lines[0].offset + 3);
+            h.report(
+                FRONT_MATTER,
+                span,
+                guidedoc::arg_static("publication front matter is not closed"),
+                Arg::None,
+            );
         }
     }
     emit_meta(h, None, SourceSpan::new(h.ctx.source, 0, 0))?;
@@ -103,6 +115,9 @@ fn front_field(h: &mut Host<'_, '_>, y: &Yaml, id: usize, span: SourceSpan) -> R
     let body = b.begin_node(NodeKind::FieldBody, span)?;
     let mut value = String::new();
     y.write_value(&mut value, id);
+    if y.nodes[id].kind == YamlKind::Sequence && matches!(key, "authors" | "tags") {
+        h.b().add_custom_attribute(body, "metadata-value", &value)?;
+    }
     if !value.is_empty() {
         let para = h.b().begin_node(NodeKind::Paragraph, span)?;
         if BIBLIOGRAPHIC_FIELDS.contains(&key) {

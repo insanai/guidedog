@@ -140,7 +140,11 @@ fn sample_doc() -> DocInfo {
 
 #[test]
 fn environments_round_trip_through_json() {
-    let env = Environment { settings: Digest::of_text("settings"), docs: vec![sample_doc()] };
+    let env = Environment {
+        settings: Digest::of_text("settings"),
+        docs: vec![sample_doc()],
+        ..Default::default()
+    };
     let text = env.to_json();
     let back = Environment::from_json(&text).unwrap();
     assert_eq!(back, env);
@@ -152,7 +156,11 @@ fn environments_round_trip_through_json() {
 #[test]
 fn saved_environments_are_reused_only_with_the_same_settings() {
     let dir = TempDir::new("env");
-    let env = Environment { settings: Digest::of_text("a"), docs: vec![sample_doc()] };
+    let env = Environment {
+        settings: Digest::of_text("a"),
+        docs: vec![sample_doc()],
+        ..Default::default()
+    };
     let path = dir.put("environment.json", &env.to_json());
     let budget = gd_host::Budget::new(BUILD_BUDGET);
     let same = load_environment(&path, Digest::of_text("a"), false, &budget).unwrap();

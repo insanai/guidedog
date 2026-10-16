@@ -65,6 +65,20 @@ pub(crate) fn page_context(
     text("last_updated", &view.dates.last_updated);
     file_names(view, &ctx, body, &root);
     ctx.set("body", Value::markup(body));
+    let page_meta = doc.map_or_else(Value::dict, |id| metadata(&view.doc(id).page));
+    if doc.is_some_and(|id| view.doc(id).page.pdf == "article")
+        && view.kind != BuilderKind::Singlehtml
+    {
+        let stem = file.strip_suffix(&c.html.file_suffix).unwrap_or(&file);
+        let name = format!("{stem}.pdf");
+        page_meta.set("pdf_url", Value::from(format!("{root}{name}")));
+    } else {
+        page_meta.set("pdf_url", Value::None);
+    }
+    let page_value = Value::dict();
+    page_value.set("meta", page_meta.clone());
+    ctx.set("page", page_value);
+    ctx.set("nosidebar", page_meta.get("nosidebar"));
     ctx.set("toc", Value::markup(&sidebar_html(view, doc, TocOptions::SIDEBAR)));
     let outline = doc.map_or(String::new(), |id| outline_html(view, id));
     ctx.set("outline", Value::markup(&outline));
@@ -83,6 +97,27 @@ pub(crate) fn page_context(
     ctx.set("parents", parents(view, doc));
     ctx.set("metatags", Value::markup(&doc.map_or(String::new(), |id| metatags(view, id))));
     (ctx, PageState { doc, page: file, root })
+}
+
+fn metadata(page: &gd_env::PageMeta) -> Value {
+    let out = Value::dict();
+    for (key, text) in [
+        ("date", &page.date),
+        ("updated", &page.updated),
+        ("publish_at", &page.publish_at),
+        ("expires_at", &page.expires_at),
+        ("summary", &page.summary),
+        ("category", &page.category),
+        ("series", &page.series),
+        ("template", &page.template),
+    ] {
+        out.set(key, Value::from(text.as_str()));
+    }
+    out.set("authors", Value::list(page.authors.iter().map(|s| Value::from(s.as_str()))));
+    out.set("tags", Value::list(page.tags.iter().map(|s| Value::from(s.as_str()))));
+    out.set("draft", Value::from(page.draft));
+    out.set("nosidebar", Value::from(page.nosidebar));
+    out
 }
 
 /// The names every page shares: the project's settings as Sphinx names them.

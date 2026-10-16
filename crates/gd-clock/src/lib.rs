@@ -16,6 +16,7 @@
 
 mod civil;
 mod epoch;
+mod parse;
 // localtime_r (Unix) and SystemTimeToTzSpecificLocalTime (Windows): FFI.
 #[allow(unsafe_code)]
 mod offset;
@@ -25,6 +26,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 pub use civil::{Date, DateTime};
 pub use epoch::{EpochError, SOURCE_DATE_EPOCH, parse_source_date_epoch, source_date_epoch};
 pub use offset::local_offset;
+pub use parse::{ParseTimeError, parse_date, parse_timestamp};
 
 /// A moment and the local zone's offset at it. `Default` is 1970-01-01 00:00:00 UTC.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]

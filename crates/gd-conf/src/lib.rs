@@ -35,6 +35,7 @@ mod load;
 mod paths;
 mod pattern;
 mod settings;
+mod site;
 mod store;
 mod trust;
 
@@ -66,6 +67,7 @@ pub use settings::{
     FOREIGN_PREFIXES, KNOWN_THEMES, MYST_EXTENSIONS, NATIVE_EXTENSIONS, SETTINGS, Setting,
     SettingKind, find_setting, is_foreign_setting, suggestion,
 };
+pub use site::SiteConfig;
 pub use store::apply_table;
 pub use trust::{confine_untrusted, rust_crate_roots, unread_warning};
 

@@ -127,6 +127,21 @@ pub(crate) fn link_destination(page: &Page<'_>, to: &Resolved) -> (String, LinkK
         return (to.url.clone(), LinkKind::External);
     };
     if page.format == OutputFormat::Pdf {
+        if page.info.page.pdf == "article" && doc != page.id {
+            let mut url = page.view.page_url(Some(page.id), doc, &to.anchor);
+            if !page.config().site.base_url.is_empty() {
+                url = format!(
+                    "{}/{}",
+                    page.config().site.base_url,
+                    page.view.page_name(&page.view.doc(doc).docname)
+                );
+                if !to.anchor.is_empty() {
+                    url.push('#');
+                    url.push_str(&to.anchor);
+                }
+            }
+            return (url, LinkKind::External);
+        }
         let mut key = page.view.doc_key(doc).to_string();
         if !to.anchor.is_empty() {
             key.push('-');

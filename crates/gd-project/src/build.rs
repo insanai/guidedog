@@ -93,6 +93,7 @@ pub(crate) struct Written {
 
 /// What reading and writing share once the build is prepared.
 struct Parts<'c> {
+    now: SystemTime,
     config: &'c Config,
     /// The limits the options ask for, which the reading and output settings record.
     limits: Limits,
@@ -135,8 +136,8 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
         gd_intl::localize_config(config, &intl.ui);
     }
     let config: &Config = config;
-    let dates =
-        gd_intl::build_dates(config, &intl.ui, options.now.unwrap_or_else(SystemTime::now));
+    let now = options.now.unwrap_or_else(SystemTime::now);
+    let dates = gd_intl::build_dates(config, &intl.ui, now);
     let network = IntersphinxOptions { network: !options.untrusted, budget: &s.budget };
     let intersphinx = gd_resolve::load_intersphinx(config, network, &mut log.reports)?;
     log.result.reached = BuildStage::Reading;
@@ -146,6 +147,7 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
     let store = ObjectStore::new(gd_env::doctrees_dir(config));
     let run_limits = gd_host::limits_within(limits, s.budget.limit());
     let parts = Parts {
+        now,
         config,
         limits,
         run_limits,
@@ -223,6 +225,15 @@ fn read(
     }
     for doc in &outcome.env.docs {
         log.reports.extend(doc.reports.iter().cloned());
+    }
+    if !s.options.preview {
+        let (eligible, hidden) = outcome
+            .env
+            .docs
+            .into_iter()
+            .partition(|doc| doc.failed || doc.page.ineligible_reason(parts.now).is_none());
+        outcome.env.docs = eligible;
+        outcome.env.ineligible_docs = hidden;
     }
     Ok((outcome.env, outcome.reading_times))
 }

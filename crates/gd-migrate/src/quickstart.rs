@@ -6,7 +6,9 @@ use std::path::{Path, PathBuf};
 use gd_conf::CONFIG_FILE;
 use gd_host::Problem;
 
-use gd_theme::{BOOK_TYP, DISCUSSION_TYP, GUIDEDOG_CSS, GUIDEDOG_JS, LAYOUT_HTML, PDF_THEME_TYP};
+use gd_theme::{
+    ARTICLE_TYP, BOOK_TYP, DISCUSSION_TYP, GUIDEDOG_CSS, GUIDEDOG_JS, LAYOUT_HTML, PDF_THEME_TYP,
+};
 
 const QUICKSTART_CONF: &str = include_str!("../assets/quickstart/conf.toml");
 const QUICKSTART_INDEX: &str = include_str!("../assets/quickstart/index.rst");
@@ -72,7 +74,7 @@ impl Default for QuickstartOptions {
 }
 
 /// Creates a documentation project in `options.dir`: conf.toml, the root document,
-/// `.gitignore`, `_templates/layout.html`, the three PDF theme modules, `_static/guidedog.css` and
+/// `.gitignore`, `_templates/layout.html`, the four PDF theme modules, `_static/guidedog.css` and
 /// `.js`, notes in the media folders, and the (empty) build folder. Returns the files
 /// it created, in order.
 ///
@@ -156,6 +158,7 @@ fn quickstart_files(
         (source.join("_templates/layout.html"), LAYOUT_HTML.into()),
         (source.join("_templates/book.typ"), BOOK_TYP.into()),
         (source.join("_templates/discussion.typ"), DISCUSSION_TYP.into()),
+        (source.join("_templates/article.typ"), ARTICLE_TYP.into()),
         (source.join("_templates/theme.typ"), PDF_THEME_TYP.into()),
         (assets.join("images/README.txt"), README_IMAGES.into()),
         (assets.join("video/README.txt"), README_VIDEO.into()),

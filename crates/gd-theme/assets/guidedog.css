@@ -227,6 +227,15 @@ mark { background: var(--gd-mark); color: inherit; border-radius: 2px; padding: 
   min-width: 0; width: 100%; max-width: var(--gd-measure); justify-self: center;
   padding: 2rem 0 0;
 }
+.gd-page:not(:has(> .gd-sidebar)) .gd-main { grid-column: 1 / 3; }
+.gd-article-meta { display: flex; flex-wrap: wrap; gap: .5rem 1rem; color: var(--gd-muted); }
+.postlist-cards > ul {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem; list-style: none; padding: 0;
+}
+.postlist-cards > ul > li {
+  padding: 1rem; border: 1px solid var(--gd-border); border-radius: .5rem;
+}
 
 /* The navigation: the toctrees, as Sphinx's toctree() writes them. */
 .gd-toctree { font-size: .9rem; line-height: 1.45; }

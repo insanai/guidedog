@@ -240,7 +240,11 @@ fn environment_of(pages: &BTreeMap<String, String>) -> Environment {
         title: title_of(text).to_string(),
         ..DocInfo::default()
     });
-    Environment { settings: Digest::of_text("settings"), docs: docs.collect() }
+    Environment {
+        settings: Digest::of_text("settings"),
+        docs: docs.collect(),
+        ..Default::default()
+    }
 }
 
 /// A folder's files and folders, each with its contents ("/" for a folder), and, with

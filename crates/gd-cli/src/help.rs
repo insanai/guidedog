@@ -249,6 +249,8 @@ const BUILD: &str = "  USAGE
     -W                 Treat warnings as errors
     --keep-going       With -W, finish the build before failing
     --untrusted        Leave out raw content, fetch nothing, run no build plugin
+    --preview          Include drafts, scheduled pages and expired pages
+    --now=RFC3339      Fix the UTC build clock for scheduled publication
     -n                 Nitpicky: warn about every unresolved reference
     -j N, -j auto      Read documents on N threads, or one per core
     --budget=MIB       Memory the build may hold at once (default 1024)

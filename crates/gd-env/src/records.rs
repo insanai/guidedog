@@ -156,6 +156,7 @@ pub(crate) fn environment_to_json(env: &Environment) -> String {
         .number("version", u64::from(ENVIRONMENT_VERSION))
         .digest("settings", &env.settings)
         .list("docs", &env.docs, doc_to_json)
+        .list("ineligible_docs", &env.ineligible_docs, doc_to_json)
         .done();
     gd_json::to_string(&value)
 }
@@ -163,7 +164,11 @@ pub(crate) fn environment_to_json(env: &Environment) -> String {
 /// Reads the environment's JSON; `None` for another version or a malformed record.
 pub(crate) fn environment_from_json(text: &str) -> Option<Environment> {
     ObjectReader::read_versioned(text, u64::from(ENVIRONMENT_VERSION), |r| {
-        Some(Environment { settings: r.digest("settings")?, docs: r.list("docs", doc_from_json)? })
+        Some(Environment {
+            settings: r.digest("settings")?,
+            docs: r.list("docs", doc_from_json)?,
+            ineligible_docs: r.list("ineligible_docs", doc_from_json)?,
+        })
     })
 }
 
@@ -186,6 +191,7 @@ fn cached_from_json(value: &Value) -> Option<Option<CachedFile>> {
 
 fn doc_to_json(d: &DocInfo) -> Value {
     ObjectBuilder::default()
+        .value("page", d.page.to_json())
         .text("docname", &d.docname)
         .text("relative", &d.relative)
         .text("kind", d.kind.name())
@@ -222,6 +228,7 @@ fn doc_to_json(d: &DocInfo) -> Value {
 fn doc_from_json(value: &Value) -> Option<DocInfo> {
     let r = ObjectReader::of(value)?;
     Some(DocInfo {
+        page: crate::PageMeta::from_json(r.value("page")?)?,
         docname: r.text("docname")?,
         relative: r.text("relative")?,
         kind: SourceKind::from_name(&r.text("kind")?)?,

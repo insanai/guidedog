@@ -327,6 +327,20 @@ impl Collector<'_, '_> {
         match self.doc.attribute(id, AttributeKey::Name) {
             Some("todolist") => self.d.todolist = true,
             Some("meta") => self.add_meta(id),
+            Some("postlist") => {
+                if let Err(why) = gd_env::PostlistSpec::from_node(self.doc, id) {
+                    self.d.failed = true;
+                    self.d.reports.push(gd_report::Report {
+                        path: self.d.relative.clone(),
+                        ..gd_report::Report::error(
+                            "page.postlist",
+                            "INVALID POSTLIST",
+                            &why.to_string(),
+                        )
+                        .hint("Use a non-negative item count and sort by date or -date.")
+                    });
+                }
+            }
             _ => {}
         }
     }
@@ -347,14 +361,41 @@ impl Collector<'_, '_> {
         if doc.parent_of(id) != Some(ROOT) {
             return;
         }
+        if doc.first_child(ROOT) == Some(id) {
+            match gd_env::page_metadata(doc) {
+                Ok(page) => self.d.page = page,
+                Err(error) => {
+                    self.d.failed = true;
+                    let mut report = gd_report::Report {
+                        path: self.d.relative.clone(),
+                        ..gd_report::Report::error(
+                            "page.metadata",
+                            "INVALID PAGE METADATA",
+                            &format!("Invalid publication field: {error}."),
+                        )
+                        .hint("Correct the leading metadata field and build again.")
+                    };
+                    let span = error.span;
+                    gd_report::set_span(
+                        &mut report,
+                        doc.source_str(span.source),
+                        span.start as usize,
+                        span.end as usize,
+                    );
+                    self.d.reports.push(report);
+                }
+            }
+            self.d.orphan |= !self.d.page.date.is_empty();
+        }
         for field in doc.children(id) {
             let name = self.plain(field + 1).to_lowercase();
+            let body = doc.subtree_end(field + 1);
+            let value = self.plain(body);
             if name == "orphan" {
                 self.d.orphan = true;
             }
             if name == "tocdepth" {
-                let body = doc.subtree_end(field + 1);
-                self.d.tocdepth = self.plain(body).parse().unwrap_or(0);
+                self.d.tocdepth = value.parse().unwrap_or(0);
             }
         }
     }

@@ -35,6 +35,7 @@ mod image;
 mod nav;
 mod only;
 mod page;
+mod posts;
 mod render;
 mod rewrite;
 mod source_links;

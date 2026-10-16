@@ -153,6 +153,8 @@ pub struct BuildOptions {
     pub keep_going: bool,
     /// `--untrusted`: build a project from elsewhere (see `gd_conf::confine_untrusted`).
     pub untrusted: bool,
+    /// Include drafts, scheduled pages and expired pages for local review.
+    pub preview: bool,
     /// `-j`: reading threads.
     pub jobs: Jobs,
     /// `--budget`: the bytes the build holds at once; `None`: [`BUILD_BUDGET`].

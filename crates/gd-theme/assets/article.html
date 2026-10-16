@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+<header class="gd-article-meta">
+{% if page.meta.draft %}<strong>Draft</strong>{% endif %}
+{% if page.meta.date %}<time datetime="{{ page.meta.date }}">{{ page.meta.date }}</time>{% endif %}
+{% for author in page.meta.authors %}<span>{{ author }}</span>{% endfor %}
+{% if page.meta.category %}<span>{{ page.meta.category }}</span>{% endif %}
+{% for tag in page.meta.tags %}<span>#{{ tag }}</span>{% endfor %}
+{% if page.meta.pdf_url %}<a href="{{ page.meta.pdf_url }}">PDF</a>{% endif %}
+</header>
+{{ body }}
+{% endblock %}

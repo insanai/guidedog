@@ -10,6 +10,40 @@ use guidedoc::Workspace;
 use crate::compose::{Book, Composer, typst_string};
 
 impl Composer<'_, '_> {
+    pub(crate) fn write_article_cover(
+        &self,
+        out: &mut Book,
+        book: &gd_conf::PdfDocument,
+        root: DocId,
+    ) {
+        let doc = self.view.doc(root);
+        let page = &doc.page;
+        let title = if book.title.is_empty() { &doc.title } else { &book.title };
+        let _ = write!(
+            out.source,
+            "#show: book.with(title: {}, lang: {}, paper: {}",
+            typst_string(title),
+            typst_string(&self.view.config.language),
+            typst_string(&self.view.config.pdf.paper_size)
+        );
+        for (key, value) in [
+            ("date", &page.date),
+            ("updated", &page.updated),
+            ("category", &page.category),
+            ("summary", &page.summary),
+        ] {
+            let _ = write!(out.source, ", {key}: {}", typst_string(value));
+        }
+        for (key, values) in [("authors", &page.authors), ("tags", &page.tags)] {
+            let _ = write!(out.source, ", {key}: (");
+            for value in values {
+                let _ = write!(out.source, "{},", typst_string(value));
+            }
+            out.source.push(')');
+        }
+        out.source.push_str(")\n");
+    }
+
     /// Reads the root's metadata using the same contract as the PDF link pass.
     /// Object failures fail the composition instead of silently changing its layout.
     pub(crate) fn discussion(

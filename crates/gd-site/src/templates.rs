@@ -107,9 +107,23 @@ impl Layout {
         Ok(layout)
     }
 
-    /// The template files the build uses: every page depends on all of them.
-    pub(crate) fn files(&self) -> &[PathBuf] {
-        &self.files
+    /// The effective source, so overrides and missing optional includes invalidate pages.
+    pub(crate) fn template_digest(&self, name: &str) -> gd_env::Digest {
+        let mut digest = gd_env::Digester::new();
+        digest.text(name);
+        match template_source(&self.sources, name) {
+            Some(text) => {
+                digest.flag(true).text(&text);
+            }
+            None => {
+                digest.flag(false);
+            }
+        }
+        digest.finish()
+    }
+
+    pub(crate) fn take_template_loads(&self) -> Vec<String> {
+        self.env.take_template_loads()
     }
 
     /// Renders the template `name` with `ctx` for `page`, once, with the functions that
@@ -126,6 +140,7 @@ impl Layout {
         #[cfg(test)]
         self.renders.set(self.renders.get() + 1);
         let locals = page_functions(view, page);
+        self.env.take_template_loads();
         let rendered = self.env.load_template(name).and_then(|t| t.render_with(ctx, &locals));
         reports.append(&mut self.sources.errors.borrow_mut());
         rendered.map_err(|e| self.problem(&e))
@@ -290,6 +305,9 @@ fn template_source(sources: &TemplateSources, name: &str) -> Option<String> {
     }
     match builtin_name(name) {
         "layout.html" => Some(gd_theme::LAYOUT_HTML.to_string()),
+        "page.html" => Some("{% extends \"layout.html\" %}".into()),
+        "article.html" => Some(gd_theme::ARTICLE_HTML.to_string()),
+        "landing.html" => Some(gd_theme::LANDING_HTML.to_string()),
         _ => None,
     }
 }

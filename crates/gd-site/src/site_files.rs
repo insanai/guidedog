@@ -62,6 +62,9 @@ pub(crate) fn write_site_files(
         write_sources(site, unit)?;
     }
     write_plugin_assets(view, unit)?;
+    if view.kind != gd_env::BuilderKind::Singlehtml {
+        crate::feeds::write_feeds(view, unit)?;
+    }
     write_index_pages(site, unit, reports)
 }
 

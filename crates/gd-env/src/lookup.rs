@@ -32,6 +32,10 @@ pub enum LookupKind {
     Modules,
     /// A C++ name, looked up in the whole symbol tree; the key is empty.
     Cpp,
+    /// A template name requested by the HTML layout, answered by gd-site.
+    Template,
+    /// A chronological collection query, encoded by `PostlistSpec`.
+    Postlist,
 }
 
 impl LookupKind {
@@ -48,6 +52,8 @@ impl LookupKind {
             LookupKind::Image => 'I',
             LookupKind::Modules => 'M',
             LookupKind::Cpp => 'C',
+            LookupKind::Template => 'J',
+            LookupKind::Postlist => 'P',
         }
     }
 
@@ -63,6 +69,8 @@ impl LookupKind {
             'I' => LookupKind::Image,
             'M' => LookupKind::Modules,
             'C' => LookupKind::Cpp,
+            'J' => LookupKind::Template,
+            'P' => LookupKind::Postlist,
             _ => return None,
         })
     }

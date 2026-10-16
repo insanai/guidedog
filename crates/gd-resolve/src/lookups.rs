@@ -235,6 +235,18 @@ pub fn lookup_answer(view: &BuildView<'_>, page: &str, lookup: &Lookup) -> Diges
         LookupKind::Cpp => {
             d.digest(&t.cpp.digest);
         }
+        LookupKind::Template => {
+            // HTML resolves template names through its own confined loader.
+            d.text(&lookup.key);
+        }
+        LookupKind::Postlist => {
+            if let Some(spec) = gd_env::PostlistSpec::decode(&lookup.key) {
+                for id in spec.select(view.env) {
+                    let doc = view.doc(id);
+                    d.text(&doc.docname).text(&doc.title).digest(&doc.page.digest());
+                }
+            }
+        }
     }
     d.finish()
 }

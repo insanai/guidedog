@@ -94,6 +94,7 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
 <div class="gd-page">
   <label class="gd-overlay" for="gd-nav-toggle" aria-hidden="true"></label>
   {%- block sidebar1 %}
+  {% if not nosidebar %}
   <aside class="gd-sidebar" id="gd-sidebar" aria-label="{{ _('Documentation') }}">
     <div class="gd-sidebar-inner">
       {%- block sidebartoc %}
@@ -101,6 +102,7 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
       {%- endblock %}
     </div>
   </aside>
+  {% endif %}
   {%- endblock %}
   <main id="content" class="gd-main" tabindex="-1">
     {%- block breadcrumbs %}

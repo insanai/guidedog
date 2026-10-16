@@ -28,7 +28,12 @@ pub(crate) fn write_output(
     match view.kind {
         BuilderKind::Html | BuilderKind::Dirhtml | BuilderKind::Singlehtml => {
             let builder = SiteBuilder { kind: view.kind, labels, sources };
-            builder.write(view, generation, reports)
+            builder.write(view, generation, reports)?;
+            if view.kind != BuilderKind::Singlehtml {
+                PdfBuilder { labels, ..Default::default() }
+                    .write_articles(view, generation, reports)?;
+            }
+            Ok(())
         }
         BuilderKind::Pdf => {
             PdfBuilder { labels, ..PdfBuilder::default() }.write(view, generation, reports)

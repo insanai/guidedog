@@ -1,7 +1,7 @@
 //! The environment: options, filters, tests, globals and the template cache.
 
 use std::cell::{Cell, RefCell};
-use std::collections::HashMap;
+use std::collections::{BTreeSet, HashMap};
 use std::fmt;
 use std::rc::Rc;
 
@@ -108,6 +108,7 @@ pub struct Environment {
     pub(crate) globals: HashMap<String, Value>,
     cache: RefCell<HashMap<String, Rc<Compiled>>>,
     stack: Cell<StackGuard>,
+    loads: RefCell<BTreeSet<String>>,
 }
 
 impl fmt::Debug for Environment {
@@ -154,6 +155,7 @@ impl Environment {
             globals: HashMap::with_capacity(16),
             cache: RefCell::default(),
             stack: Cell::default(),
+            loads: RefCell::default(),
         };
         crate::filters_text::register(&mut env);
         crate::filters_seq::register(&mut env);
@@ -199,6 +201,12 @@ impl Environment {
     /// Forgets parsed templates, so the next load reads them again.
     pub fn clear_cache(&self) {
         self.cache.borrow_mut().clear();
+    }
+
+    /// Takes the names requested since the last call, sorted and deduplicated.
+    /// Includes cached templates and missing names, including `ignore missing` lookups.
+    pub fn take_template_loads(&self) -> Vec<String> {
+        std::mem::take(&mut *self.loads.borrow_mut()).into_iter().collect()
     }
 
     /// Loads a template through the loader, cached until clear_cache.
@@ -288,6 +296,7 @@ impl Environment {
 
     /// Finds a template in the cache, or loads, parses and caches it.
     pub(crate) fn load_compiled(&self, name: &str) -> Result<Rc<Compiled>, Error> {
+        self.loads.borrow_mut().insert(name.to_owned());
         if let Some(t) = self.cache.borrow().get(name) {
             return Ok(t.clone());
         }

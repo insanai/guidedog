@@ -30,7 +30,10 @@ mod discover;
 mod environment;
 mod lookup;
 mod objects;
+mod page;
+mod page_fields;
 mod plugins;
+mod posts;
 mod records;
 mod rendered;
 mod settings;
@@ -52,7 +55,10 @@ pub use environment::{
 pub use gd_conf::{Digest, Digester};
 pub use lookup::{Lookup, LookupKind, Trace};
 pub use objects::{OBJECTS_FOLDER, ObjectError, ObjectStore, SEARCH_FOLDER};
+pub use page::{PageMeta, publication_time};
+pub use page_fields::{PageMetadataError, page_metadata};
 pub use plugins::{PluginRun, PluginStart, assets_url, host_problem};
+pub use posts::{PostlistError, PostlistSpec};
 pub use records::{ObjectBuilder, ObjectReader, read_record, report_from_json, report_to_json};
 pub use rendered::{Asset, EnglishUi, Rendered, UiText};
 pub use settings::{

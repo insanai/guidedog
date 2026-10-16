@@ -213,7 +213,13 @@ impl Generation {
             kept.push(r.from.clone());
             kept.extend(r.previous.clone());
         }
-        for doc in records.environment.docs.iter().filter(|d| d.written) {
+        for doc in records
+            .environment
+            .docs
+            .iter()
+            .chain(&records.environment.ineligible_docs)
+            .filter(|d| d.written)
+        {
             let cached = doc.object.iter().chain(&doc.search);
             kept.extend(cached.map(|file| records.store.path_of(file)));
         }
@@ -319,7 +325,7 @@ fn pending_records(paths: &OutputPaths) -> [PendingFile; 2] {
 /// Removes the objects and search words the environment does not name: those of
 /// documents that are gone or changed, and those a failed build wrote.
 fn sweep(records: CommitRecords<'_>) {
-    let docs = records.environment.docs.iter();
+    let docs = records.environment.docs.iter().chain(&records.environment.ineligible_docs);
     let named = docs.flat_map(|d| d.object.iter().chain(&d.search)).map(|f| f.path.as_str());
     records.store.sweep(named);
 }

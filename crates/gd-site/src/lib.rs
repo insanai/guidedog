@@ -27,6 +27,7 @@
 mod context;
 mod digests;
 mod escape;
+mod feeds;
 mod index_pages;
 mod mathjax;
 mod nav;

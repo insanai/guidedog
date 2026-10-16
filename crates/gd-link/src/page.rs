@@ -235,7 +235,11 @@ impl Rule for Page<'_> {
     fn decide(&mut self, doc: Document<'_>, id: NodeId) -> Action {
         let format = self.format;
         match doc.kind(id) {
-            NodeKind::FieldList if self.discussion && doc.first_child(ROOT) == Some(id) => {
+            NodeKind::FieldList
+                if (self.discussion
+                    || self.format == OutputFormat::Pdf && self.info.page.pdf == "article")
+                    && doc.first_child(ROOT) == Some(id) =>
+            {
                 // The PDF template receives this front matter as structured data.
                 Action::Drop
             }
@@ -277,6 +281,9 @@ impl Rule for Page<'_> {
                     Action::Drop
                 }
             }
+            NodeKind::Directive if doc.attribute(id, AttributeKey::Name) == Some("postlist") => {
+                Action::Replace
+            }
             _ => Action::Copy,
         }
     }
@@ -289,7 +296,13 @@ impl Rule for Page<'_> {
             NodeKind::Image => image::replace_image(self, rw, id),
             NodeKind::Title => self.replace_title(rw, id),
             NodeKind::CodeBlock => graph::replace_graph(self, rw, id),
-            NodeKind::Directive => todolist::replace_todolist(self, rw, id),
+            NodeKind::Directive => {
+                if rw.doc.attribute(id, AttributeKey::Name) == Some("postlist") {
+                    crate::posts::replace_postlist(self, rw, id)
+                } else {
+                    todolist::replace_todolist(self, rw, id)
+                }
+            }
             NodeKind::DescSignature => source_links::replace_signature(self, rw, id),
             // decide replaces nothing else; keep the node should that change.
             _ => rw.copy_node(self, id),

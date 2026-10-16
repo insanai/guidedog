@@ -9,6 +9,12 @@
 /// `_templates/layout.html`: the Jinja page layout, with Sphinx's block names.
 pub const LAYOUT_HTML: &str = include_str!("../assets/layout.html");
 
+/// The default layout for dated articles.
+pub const ARTICLE_HTML: &str = include_str!("../assets/article.html");
+
+/// A standalone landing page without chapter navigation.
+pub const LANDING_HTML: &str = include_str!("../assets/landing.html");
+
 /// `_static/guidedog.css`: the page styles.
 pub const GUIDEDOG_CSS: &str = include_str!("../assets/guidedog.css");
 
@@ -22,6 +28,9 @@ pub const BOOK_TYP: &str = include_str!("../assets/book.typ");
 /// `_templates/discussion.typ`: the RFC-style layout for standalone discussion records.
 pub const DISCUSSION_TYP: &str = include_str!("../assets/discussion.typ");
 
+/// The continuous standalone article layout.
+pub const ARTICLE_TYP: &str = include_str!("../assets/article.typ");
+
 /// `_templates/theme.typ`: the shared PDF palette, fonts and language-aware wrapper.
 pub const PDF_THEME_TYP: &str = include_str!("../assets/theme.typ");
 
@@ -30,6 +39,12 @@ pub const PDF_THEME_TYP: &str = include_str!("../assets/theme.typ");
 pub fn pdf_template(discussion: bool) -> String {
     let template = if discussion { DISCUSSION_TYP } else { BOOK_TYP };
     let (_, body) = template.split_once('\n').unwrap_or(("", template));
+    format!("{PDF_THEME_TYP}\n{body}")
+}
+
+/// The article layout with its shared theme inlined for offline and untrusted builds.
+pub fn article_template() -> String {
+    let (_, body) = ARTICLE_TYP.split_once('\n').unwrap_or(("", ARTICLE_TYP));
     format!("{PDF_THEME_TYP}\n{body}")
 }
 
@@ -43,10 +58,11 @@ pub struct ThemeFile {
 }
 
 /// Every theme file, in the order quickstart writes them.
-pub const FILES: [ThemeFile; 6] = [
+pub const FILES: [ThemeFile; 7] = [
     ThemeFile { path: "_templates/layout.html", text: LAYOUT_HTML },
     ThemeFile { path: "_templates/book.typ", text: BOOK_TYP },
     ThemeFile { path: "_templates/discussion.typ", text: DISCUSSION_TYP },
+    ThemeFile { path: "_templates/article.typ", text: ARTICLE_TYP },
     ThemeFile { path: "_templates/theme.typ", text: PDF_THEME_TYP },
     ThemeFile { path: "_static/guidedog.css", text: GUIDEDOG_CSS },
     ThemeFile { path: "_static/guidedog.js", text: GUIDEDOG_JS },

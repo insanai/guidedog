@@ -24,6 +24,8 @@ const BUILD: &[&str] = &[
     "-W",
     "--keep-going",
     "--untrusted",
+    "--preview",
+    "--now",
     "-C",
     "-c",
     "-d",
@@ -100,7 +102,7 @@ fn takes_value(command: &str, name: &str) -> bool {
         | "--disk-budget" | "--max-depth" | "--max-nodes" | "--stack-kib" | "--typst" | "-p"
         | "--project" | "--author" | "--version-name" | "-r" | "--release" | "-l"
         | "--language" | "--suffix" | "-o" | "--output" | "-w" | "--line-width" | "--pot-dir"
-        | "--locale-dir" => true,
+        | "--locale-dir" | "--now" => true,
         _ => false,
     }
 }
@@ -190,6 +192,7 @@ fn set_flag(a: &mut ProjectArgs, command: &str, name: &str) {
         "-W" => a.build.warnings_as_errors = true,
         "--keep-going" => a.build.keep_going = true,
         "--untrusted" => a.build.untrusted = true,
+        "--preview" => a.build.preview = true,
         "-C" => a.load.no_config = true,
         "-v" => a.verbose += 1,
         "--sep" => a.quickstart.separate = Some(true),
@@ -215,6 +218,15 @@ fn set_value(a: &mut ProjectArgs, command: &str, name: &str, value: &str) -> Res
         (_, "-D") => a.load.overrides.push(text),
         (_, "-t") => a.build.tags.push(text),
         (_, "--typst") => a.typst = Some(text),
+        (_, "--now") => {
+            a.build.now = Some(gd_clock::parse_timestamp(value).map_err(|e| {
+                usage(
+                    "INVALID BUILD TIME",
+                    format!("Invalid --now value: {e}."),
+                    "Use an RFC 3339 instant, such as --now=2026-10-16T09:00:00Z.",
+                )
+            })?);
+        }
         (_, "-o" | "--output") => a.migrate_output = Some(text),
         (_, "-p" | "--project") => a.quickstart.project = text,
         (_, "-a" | "--author") => a.quickstart.author = text,

@@ -24,6 +24,8 @@ pub const MAX_OBJECT_TYPES: usize = 64;
 /// config has empty folders.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Config {
+    /// Optional static publication outputs from `[site]`.
+    pub site: crate::SiteConfig,
     /// The source-document folder (absolute).
     pub source_dir: PathBuf,
     /// conf.toml's folder; `-c` may put it outside `source_dir`.
@@ -573,6 +575,7 @@ impl Config {
     fn empty() -> Config {
         Config {
             source_dir: PathBuf::new(),
+            site: crate::SiteConfig::default(),
             config_dir: PathBuf::new(),
             build_dir: PathBuf::new(),
             project: String::new(),

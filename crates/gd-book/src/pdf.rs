@@ -82,6 +82,29 @@ impl OutputBuilder for PdfBuilder<'_> {
 }
 
 impl PdfBuilder<'_> {
+    /// Emits opt-in standalone article PDFs beside HTML pages in the same generation.
+    /// Uses the existing book compiler, diagnostics and transactional output handling.
+    pub fn write_articles(
+        &self,
+        view: &BuildView<'_>,
+        generation: &mut Generation,
+        reports: &mut Vec<Report>,
+    ) -> Result<(), Problem> {
+        for doc in view.env.docs.iter().filter(|d| !d.failed && d.page.pdf == "article") {
+            let page = view.page_name(&doc.docname);
+            let suffix = &view.config.html.file_suffix;
+            let stem = page.strip_suffix(suffix).unwrap_or(&page);
+            let book = PdfDocument {
+                root: doc.docname.clone(),
+                file: format!("{stem}.pdf"),
+                title: doc.title.clone(),
+                ..Default::default()
+            };
+            self.write_book(view, generation, &book, reports)?;
+        }
+        Ok(())
+    }
+
     /// Composes one book and, when anything it is made from changed, typesets it.
     fn write_book(
         &self,
@@ -105,7 +128,11 @@ impl PdfBuilder<'_> {
         let ledger = Ledger::new(view.budget);
         let composer = Composer { view, labels: self.labels, ledger: &ledger };
         let composed = composer.compose(book, root, reports);
-        let key = format!("book:{}", book.file);
+        let key = if view.kind == BuilderKind::Pdf {
+            format!("book:{}", book.file)
+        } else {
+            format!("article:{}", book.file)
+        };
         if gd_host::was_interrupted() {
             return Err(gd_host::interrupted_problem());
         }
@@ -158,9 +185,13 @@ impl TypstRun<'_, '_> {
         reports: &mut Vec<Report>,
     ) -> Result<(), Problem> {
         let c = self.view.config;
-        let file = language_file(key.trim_start_matches("book:"), &c.language);
+        let article = key.strip_prefix("article:");
+        let file = article.map_or_else(
+            || language_file(key.trim_start_matches("book:"), &c.language),
+            str::to_owned,
+        );
         let source_name = format!("{file}.typ");
-        let single = c.pdf.documents.len() == 1;
+        let single = article.is_none() && c.pdf.documents.len() == 1;
         let failed_name =
             if single { language_file("book.typ", &c.language) } else { source_name.clone() };
         let failed_copy = gd_env::doctrees_dir(c).join("failed").join(&failed_name);

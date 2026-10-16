@@ -34,6 +34,7 @@ pub(crate) enum Core {
     DefaultRole,
     Todo,
     Todolist,
+    Postlist,
     Acks,
     RstClass,
     Graphviz,
@@ -66,6 +67,16 @@ use ArgRule as A;
 use ContentRule as C;
 
 const OPTS_NAME: &[OptSpec] = &[opt("name", OptType::Text)];
+const OPTS_POSTLIST: &[OptSpec] = &[
+    opt("path", OptType::Text),
+    opt("category", OptType::Text),
+    opt("tags", OptType::Text),
+    opt("author", OptType::Text),
+    opt("series", OptType::Text),
+    choice("sort", "date -date"),
+    choice("style", "list cards"),
+    opt("excerpts", OptType::Flag),
+];
 const OPTS_CLASS_NAME: &[OptSpec] = &[opt("class", OptType::Class), opt("name", OptType::Name)];
 const OPTS_TOCTREE: &[OptSpec] = &[
     opt("maxdepth", OptType::Int),
@@ -189,6 +200,7 @@ static CORE: &[CoreDirective] = &[
     core("default-role", Core::DefaultRole, (A::Optional, false, C::None), &[]),
     core("todo", Core::Todo, (A::None, false, C::Required), OPTS_CLASS_NAME),
     core("todolist", Core::Todolist, (A::None, false, C::None), &[]),
+    core("postlist", Core::Postlist, (A::Optional, false, C::None), OPTS_POSTLIST),
     core("acks", Core::Acks, (A::None, false, C::Required), &[]),
     core("rst-class", Core::RstClass, (A::Required, true, C::Optional), &[]),
     core("graphviz", Core::Graphviz, (A::Optional, true, C::Optional), graphviz::OPTS_GRAPHVIZ),
@@ -245,6 +257,15 @@ pub(crate) fn run_core(
         Core::Todo => body::todo_directive(sx, p, d),
         Core::Todolist => {
             let id = p.directive_node(d, "todolist")?;
+            p.close(id)
+        }
+        Core::Postlist => {
+            let id = p.directive_node(d, "postlist")?;
+            p.custom(id, "limit", &d.argument())?;
+            for name in ["path", "category", "tags", "author", "series", "sort", "style"] {
+                value_attribute(p, id, d, name)?;
+            }
+            flag_attribute(p, id, d, "excerpts")?;
             p.close(id)
         }
         Core::Acks => body::acks_directive(p, d),

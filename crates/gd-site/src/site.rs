@@ -28,7 +28,8 @@ impl Site<'_, '_> {
         reports: &mut Vec<Report>,
     ) -> Result<String, Problem> {
         let (ctx, state) = page_context(self.view, Page::Doc(id), body);
-        let html = self.layout.render(self.view, LAYOUT, &ctx, &state, reports)?;
+        let template = self.view.doc(id).page.html_template();
+        let html = self.layout.render(self.view, template, &ctx, &state, reports)?;
         let file = state.page;
         self.plugin_html(&file, &self.view.doc(id).docname, html)
     }

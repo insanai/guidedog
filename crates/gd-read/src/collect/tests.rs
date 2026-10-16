@@ -11,6 +11,18 @@ fn collect_rst(text: &str) -> (DocInfo, String) {
     collect_with(guidedoc_sphinx::Config::default(), text)
 }
 
+#[test]
+fn publication_fields_are_leading_and_keep_author_separators() {
+    let (doc, _) = collect_rst(concat!(
+        ":date: 2026-10-16\n:authors: Ada, Grace\n",
+        ":tags: rust, publishing\n\nTitle\n=====\n\n:draft: true\n"
+    ));
+    assert_eq!(doc.page.authors, ["Ada", "Grace"]);
+    assert_eq!(doc.page.tags, ["rust", "publishing"]);
+    assert!(!doc.page.draft);
+    assert!(doc.orphan);
+}
+
 fn collect_with(config: guidedoc_sphinx::Config, text: &str) -> (DocInfo, String) {
     let config = guidedoc_sphinx::Config { docname: "page".into(), ..config };
     let mut request: Request<'_> = default_request("page.rst", text, "sphinx", "");

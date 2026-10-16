@@ -2,7 +2,7 @@
 //! lookups are unchanged; the rest rendered on worker threads in batches and written in
 //! docname order; then the site unit and the search index. Also the singlehtml builder.
 
-use gd_env::{Asset, Digest, DocId, Rendered};
+use gd_env::{Asset, Digest, DocId, Lookup, LookupKind, Rendered};
 use gd_host::{Ledger, Problem};
 use gd_outputs::{Generation, SITE_UNIT, UnitRecord};
 use gd_report::Report;
@@ -40,11 +40,17 @@ fn write_documents(
     assets: &mut Vec<Asset>,
 ) -> Result<(), Problem> {
     let view = site.view;
-    let common = html_settings(view, &site.layout);
+    let common = html_settings(view);
     let mut todo: Vec<(DocId, Digest)> = Vec::new();
     for (id, d) in view.env.iter().filter(|(_, d)| !d.failed) {
         let inputs = page_inputs(view, id, &common);
-        let answer = |lookup: &_| lookup_answer(view, &d.docname, lookup);
+        let answer = |lookup: &Lookup| {
+            if lookup.kind == LookupKind::Template {
+                site.layout.template_digest(&lookup.key)
+            } else {
+                lookup_answer(view, &d.docname, lookup)
+            }
+        };
         if let Some(old) = generation.reuse(&d.docname, inputs, answer) {
             reports.extend(old.reports.iter().cloned());
             assets.extend(old.assets.iter().cloned());
@@ -99,7 +105,12 @@ fn write_page(
         unit.emit_text(&view.page_name(docname), &html)?;
     }
     let lookups = page.trace.lookups().iter();
-    let lookups = lookups.map(|l| (l.clone(), lookup_answer(view, docname, l))).collect();
+    let mut lookups: Vec<_> =
+        lookups.map(|l| (l.clone(), lookup_answer(view, docname, l))).collect();
+    for name in site.layout.take_template_loads() {
+        let digest = site.layout.template_digest(&name);
+        lookups.push((Lookup::new(LookupKind::Template, &name), digest));
+    }
     assets.extend(page.assets.iter().cloned());
     reports.extend(own.iter().cloned());
     unit.finish(UnitRecord { inputs, assets: page.assets, lookups, reports: own });

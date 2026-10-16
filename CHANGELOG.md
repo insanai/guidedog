@@ -5,6 +5,14 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
+## 1.0.0-beta.5 - 2026-10-16
+
+- Share Guidedog's PDF colors, fonts and language-aware typography through an embedded `theme.typ`, with separate book and discussion layouts.
+- Give books centered covers, teal chapter openings and balanced margins. Give discussion records metadata panels, state badges, a status note and compact contents.
+- Copy all PDF theme modules during `guidedog quickstart`, and the discussion layout and shared theme during `guidedog dsc init`. Keep built-in and untrusted fallback layouts self-contained.
+- Rebuild cached PDFs when imported template modules or assets change, including nested additions and deletions. Track readable template folders with cycle detection and a bounded input count.
+- Update the manual's theme, typography guidance, discussion guide and custom-theme tutorial. Preserve localized manual titles and regional script fonts.
+
 ## 1.0.0-beta.4 - 2026-10-16
 
 - Give standalone discussion PDFs an RFC-style layout, with record metadata, numbered sections, running headers and page counts. Existing catalogs inherit it; `_templates/discussion.typ` customizes records independently of ordinary books.

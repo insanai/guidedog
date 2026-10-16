@@ -1,13 +1,13 @@
 Guidedog builds documentation websites and PDF books from the same reStructuredText or Markdown files.
 
-Version 1.0.0-beta.4 gives discussion PDFs a compact RFC-style layout.
+Version 1.0.0-beta.5 brings a shared PDF theme to books and discussion records.
 
-- **Discussion records start on the first page.** The identifier, title, metadata and abstract appear together, followed by numbered sections. Running headers and page counts keep longer records easy to follow.
-- **The template travels with Guidedog.** The layout is embedded in the single binary. `guidedog dsc init` writes an editable `_templates/discussion.typ`; existing catalogs without a copy use the embedded layout.
-- **Books keep their own layout.** `_templates/book.typ` remains the ordinary book template. Discussion records use their own customization point.
-- **Long content stays readable.** Tables and captioned listings continue across pages. Regression checks cover metadata, bookmarks, template changes, existing catalogs and untrusted builds. Every archive checks a newly initialized catalog and its PDF template selection.
+- **One visual theme, two layouts.** Books have centered covers, teal chapter openings and balanced margins. Discussion records open with a metadata panel, state badges, a status note and compact contents. Each layout keeps its own structure.
+- **The defaults travel with Guidedog.** The shared `theme.typ`, `book.typ` and `discussion.typ` are embedded in the executable. `guidedog quickstart` copies all three for editing; `guidedog dsc init` copies the discussion layout and shared theme. Built-in fallback layouts need no project files.
+- **Imported modules rebuild correctly.** Editing, adding or removing files beneath `_templates/` invalidates cached PDFs. Tests cover nested imports and missing modules, as well as shared-theme edits and untrusted fallback.
+- **Reading support is preserved.** Tables and listings continue across pages. Language-aware typography, localized manual titles, regional script fonts, links and section bookmarks remain part of the build.
 
-The [layout review](https://insanai.github.io/guidedog/manual/evidence/discussion-pdf-layout.html) describes the cause and verification. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.4/CHANGELOG.md) records the changes.
+The [theme review](https://insanai.github.io/guidedog/manual/evidence/pdf-theme-review.html) describes the design and checks. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.5/CHANGELOG.md) records the changes.
 
 ## Downloads
 
@@ -18,7 +18,7 @@ The [layout review](https://insanai.github.io/guidedog/manual/evidence/discussio
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.4-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.5-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

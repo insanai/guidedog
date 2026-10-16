@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`ssg-review`
+     - Complete static publishing contracts, mount and theme checks, visual review and a 1,000-article incremental benchmark (16 October 2026)
    * - :doc:`release-1.0.0-beta.5`
      - Shared PDF theme, imported-module cache fix, platform qualification and published archive checks (16 October 2026)
    * - :doc:`pdf-theme-review`
@@ -34,6 +36,7 @@ Each record is dated. It describes what we built or checked on that day, with th
    :hidden:
 
    manuals
+   ssg-review
    release-1.0.0-beta.1
    release-1.0.0-beta.2
    release-1.0.0-beta.3

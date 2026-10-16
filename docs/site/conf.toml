@@ -70,3 +70,17 @@ site_languages = [
   {code = "es", tag = "es", name = "Español", path = "es/"},
   {code = "de", tag = "de", name = "Deutsch", path = "de/"},
 ]
+
+[site]
+base_url = "https://insanai.github.io/guidedog"
+sitemap = true
+feeds = true
+taxonomies = ["tags", "category", "year"]
+page_size = 10
+
+[[site.collections]]
+output = "releases"
+title = "Guidedog releases"
+path = "releases/*"
+page_size = 10
+feeds = true

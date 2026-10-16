@@ -2,7 +2,7 @@
 :author: Guidedog contributors
 :category: releases
 :tags: rust, publishing
-:summary: Source-level publication commands, chronological collections, article PDFs and precise template dependencies.
+:summary: Complete static publishing with mounts, language editions, taxonomy, pagination, pinned themes and article PDFs.
 :pdf: article
 
 Guidedog 1.0.0-beta.6
@@ -22,7 +22,16 @@ Clock-only changes reuse parsed documents, and successful rebuilds remove artifa
 
 Template dependencies follow the names requested during rendering, including dynamic and optional includes.
 Changing a template that no document uses leaves document pages cached.
-Content hashing and conservative navigation dependencies preserve incremental correctness.
+Navigation context reads and native calls have their own verifying traces.
+A 1,000-article benchmark checks cold and incremental work, including unchanged builds and isolated body edits.
+
+Named mounts assemble existing projects, language editions, shared assets and PDF books in one publication transaction.
+The Guidedog website itself now uses those mounts.
+Generated taxonomy archives and paginated collections share the publication gate and remove obsolete pages on successful rebuilds.
+
+Project, journal and research presets provide complete starting sites.
+Theme archives require an explicit SHA-256 pin, use canonical tree checksums and install atomically.
+Builds verify installed themes offline.
 
 We describe the commands and metadata in the `static publishing guide <https://insanai.github.io/guidedog/manual/howto/static-publishing.html>`_.
-GDS 0013 records the implementation and the remaining work on declarative mounts, taxonomy pages, pagination and theme repositories.
+GDS 0013 specifies the complete implementation and its release qualification.

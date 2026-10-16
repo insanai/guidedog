@@ -1,14 +1,17 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.6 introduces the static publication foundation of GDS 0013.
+Version 1.0.0-beta.6 implements the complete static publishing design of GDS 0013.
 
 - **Source-level publication.** `guidedog ssg new`, `draft`, `schedule`, `publish` and `status` manage RST and Markdown articles. Edits preserve body bytes, line endings and permissions, and refuse existing destinations and source symlinks.
 - **Clock-aware release builds.** Drafts, scheduled articles and expired articles are withheld before resolution and public indices. `--preview` includes them for review; `--now=RFC3339` fixes the build clock. Clock-only changes reuse parsed objects, and successful rebuilds remove old unpublished outputs.
 - **Collections and discovery.** `postlist` filters and sorts dated articles. Optional `[site]` settings emit Atom, RSS and sitemap files using eligible documents.
+- **Taxonomy and pagination.** Tag, category, year, author and series archives share filtered collections, stable pagination, per-collection feeds and output collision checks. Shrinking collections remove obsolete pages.
+- **Whole websites.** `guidedog ssg build` assembles project mounts, language editions, shared assets, documentation and discussion PDFs in one publication transaction. Cross-mount links select language editions and require current published targets. Guidedog's seven-language website uses this same system.
+- **Themes and starters.** `ssg init` supplies project, journal and research presets. Explicit pinned theme installation records archive and canonical tree checksums; builds verify installed themes offline.
 - **Article layouts.** Per-page HTML templates receive typed metadata in `page.meta`. `:pdf: article` produces a standalone PDF beside HTML with a title, author block, abstract and running headers.
-- **Precise template dependencies.** Actual template requests, including dynamic and missing optional includes, are tracked. Unused template edits leave document pages cached.
+- **Precise template dependencies.** Actual template requests, navigation context reads and dynamic navigation calls are tracked. Unused templates and sections beyond a requested navigation depth leave unrelated pages cached. Chronological neighbors are computed once per build.
 
-The [static publishing guide](https://insanai.github.io/guidedog/manual/howto/static-publishing.html) describes the supported commands. [GDS 0013](https://insanai.github.io/guidedog/discussions/records/0013-static-site-generation.html) distinguishes this foundation from the remaining mounts, taxonomy, pagination and remote-theme proposals. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.6/CHANGELOG.md) records the changes.
+The [static publishing guide](https://insanai.github.io/guidedog/manual/howto/static-publishing.html) describes the commands and configuration. [GDS 0013](https://insanai.github.io/guidedog/discussions/records/0013-static-site-generation.html) specifies their contracts and qualification. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.6/CHANGELOG.md) records the changes.
 
 ## Downloads
 

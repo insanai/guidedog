@@ -12,8 +12,11 @@ beside it.
 - Keep publication metadata out of gettext extraction and translation so catalogs cannot rename state fields or expose a translated draft.
 - Add chronological `postlist` queries with path, category, tag, author and series filters, stable date ordering and optional summaries. Add opt-in Atom, RSS and sitemap output through `[site]` in `conf.toml`.
 - Select HTML layouts per page, expose publication metadata to templates, and add article and landing layouts. Generate opt-in standalone article PDFs beside HTML pages using the shared Typst theme.
-- Track actual template requests, including cached imports, dynamic includes and missing optional templates, so unused template changes leave document pages cached. Retain content hashing and conservative navigation dependencies.
-- Review GDS 0013 against the Rust workspace, document the implemented publication foundation and distinguish remaining mounts, taxonomy, pagination and remote-theme work. Add a publishing guide and a dated release article to the website.
+- Generate tag, category, year, author and series archives, paginated filtered collections, per-collection feeds, chronological neighbor links and reading estimates. Reject output collisions and remove obsolete pagination pages.
+- Assemble named project mounts, language editions, shared assets and PDF books through `guidedog ssg build`, with one clock, verified cross-mount targets and atomic whole-site publication. Replace the repository's website assembly with declarative mounts.
+- Add project, journal and research presets. Package and explicitly install pinned theme archives with canonical tree checksums, symlink rejection, atomic lock selection and offline build verification.
+- Track actual template requests, navigation context reads and dynamic navigation calls, so unused templates and unobserved navigation changes leave pages cached. Compute chronological neighbors once per build and measure a complete 1,000-article site.
+- Review and implement the complete GDS 0013 contract in the Rust workspace. Add a publishing guide and release qualification evidence.
 
 ## 1.0.0-beta.5 - 2026-10-16
 

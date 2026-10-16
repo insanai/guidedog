@@ -19,10 +19,10 @@ We read publication metadata from the first root field list, apply a build-clock
 We express collections with ``.. postlist::`` and compile optional standalone article PDFs with the shared Typst theme.
 The ``guidedog ssg`` commands edit publication state in source files.
 
-This record separates the implemented publication foundation from proposed website orchestration.
-Version 1.0.0-beta.6 introduces the foundation described below.
-Declarative mounts, generated taxonomies, pagination, remote theme packs and distinct starter presets remain proposed work.
-They are not supported configuration in this release.
+Version 1.0.0-beta.6 requires the complete static publishing system described in this record.
+The implementation includes publication state, mounts, language editions, archives, pagination, collection feeds, pinned themes, starter presets and traced navigation.
+We publish the release only after the complete acceptance evidence has passed.
+We do not publish beta.6 with pending SSG work.
 
 Review of the initial proposal
 ==============================
@@ -39,8 +39,8 @@ We retain the publishing model and correct several assumptions about the impleme
   We do not introduce serde derives or a parallel document map.
 * A plain body edit already leaves unrelated pages cached when navigation does not change.
   ``document_settings`` hashes titles and navigation, not every source body.
-  We retain conservative navigation invalidation because templates can call ``hasdoc`` and ``toctree`` dynamically.
-  Removing those dependencies without tracing the template functions would produce stale pages.
+  Templates can call ``hasdoc`` and ``toctree`` dynamically.
+  We trace their actual arguments and answers before removing the shared HTML navigation digest.
 * File size and modification time do not establish content equality.
   An editor, restored archive or copied file can preserve both while changing the bytes.
   We retain content hashing.
@@ -271,7 +271,88 @@ It records cached requests, transitive inheritance, imports, dynamic includes an
 We compare effective sources through the same confined loader before reusing a page.
 Adding a project override or creating an optional include therefore invalidates the affected pages.
 Changing an unused template does not invalidate document pages.
-We retain the global navigation digest until template function calls and every navigation context value have their own complete dependency model.
+HTML navigation uses per-page verifying traces.
+The template context records reads of ``toc``, ``outline``, ``prev``, ``next``, ``parents``, ``rellinks``, ``root_url`` and article context.
+Native calls record the actual arguments to ``hasdoc``, ``pathto`` and ``toctree``.
+Their answers hash existence, resolved URLs or the navigation actually rendered at the requested depth.
+Body toctrees record their selected navigation items, including titles, numbers and child boundaries.
+A section beyond a traced depth does not invalidate its listing page.
+The HTML common digest therefore contains configuration, environment settings, inventories and MathJax configuration, without every document's navigation.
+Books and text builders retain their existing whole-document settings contract.
+We compute chronological article neighbors once per site build instead of repeatedly sorting the environment during trace checks.
+
+Archives and pagination
+========================
+
+``site.taxonomies`` enables tag, category, year, author and series archives.
+Only eligible dated documents contribute terms.
+``site.collections`` declares named filtered collections with independent destinations, page sizes, templates and feeds.
+The filter fields share ``PostlistSpec`` rather than introducing a second selection language.
+
+A collection starts at ``OUTPUT/index.html`` and continues at ``OUTPUT/page/N/index.html``.
+Every page has its own output unit and records template and navigation dependencies.
+Previous and next links are relative to that page.
+Shrinking or withholding a collection removes its obsolete tail through ordinary output ownership.
+An empty named collection retains one empty first page.
+
+Taxonomy labels keep their original display text.
+Portable paths escape uppercase, punctuation and non-ASCII bytes without merging distinct labels.
+Reserved platform names use a separate escape prefix, and long names use a separately prefixed digest.
+Before writing a generated output, we reject collisions with author-written pages, additional pages, assets and other generated outputs, including ASCII case aliases and file/directory overlap.
+Collection feeds contain the complete selection rather than only the current pagination page.
+Sitemaps include generated collection pages.
+
+Mounted websites
+================
+
+``site.mounts`` declares named projects with a source directory, output prefix, builder, setting overrides and optional language editions.
+An edition can override its source project or use gettext in the common source.
+Sources remain below the site configuration's directory after canonicalization.
+Outputs use portable relative directories.
+Different mounts can share a directory only when their actual files remain disjoint.
+``site.assets`` copies shared files and directories once, under the same collision policy.
+
+``guidedog ssg build`` builds every selected mount before committing the complete website.
+Each project keeps its own incremental cache.
+One clock applies to every project, and an outer directory lock serializes complete site builds.
+The existing output journal publishes the aggregate files and manifest together.
+A failed later mount or missing cross-mount target preserves the preceding complete site.
+
+The ``mount://NAME/path`` link scheme selects a matching language edition, then the target's default edition.
+HTML receives a relative URL; PDFs use the configured public site URL.
+The link pass records each addressed public file in its verifying trace.
+Assembly validates those files against the current generation, so old artifacts cannot satisfy links to withheld sources.
+
+The supported builders are ``html``, ``dirhtml``, ``pdf`` and ``discussion-pdf``.
+The discussion builder validates a catalog and builds a PDF for each active record.
+The root project's nonempty version and release values apply to its mounts.
+The ``{language}``, ``{edition}``, ``{site_root}`` and ``{base_url}`` placeholders support declarative setting overrides.
+
+The repository's complete seven-language website is declared in ``docs/conf.toml``.
+``tools/xtask/src/site.rs`` selects an executable and delegates to ``ssg build``.
+It contains no project-specific assembly, language loop or publication transaction.
+
+Themes and presets
+==================
+
+Theme downloads are explicit ``ssg theme install`` commands with a required archive SHA-256.
+Builds never fetch missing themes.
+The version-one ``.gdt`` format is bounded UTF-8 JSON containing base64 file bytes beneath ``_templates/`` and ``_static/``.
+``ssg theme pack`` creates this format without depending on an external archive program or executing hooks.
+We reject symlinks, traversal, special files, case aliases, platform-reserved names and file/directory overlaps.
+The maximum expanded size is 64 MiB and the maximum file count is 4,096.
+
+``guidedog-theme.lock`` stores the source, archive pin and canonical tree checksum.
+The checksum hashes a versioned domain tag and sorted length-delimited filenames and file bytes.
+Installation syncs an immutable directory named by that checksum before atomically selecting its lock.
+Offline verification rejects missing, changed or extra files.
+Project templates take precedence, and project static files can override installed static files.
+``site.theme = true`` selects the verified installation.
+
+``ssg init`` creates project, journal and research presets.
+They respectively supply a documentation guide, a chronological journal, and a paper with an abstract, mathematics and a standalone PDF.
+All three are complete projects using the same build pipeline and editable shared theme modules.
+Initialization refuses an existing destination.
 
 Acceptance evidence
 ===================
@@ -283,22 +364,13 @@ Changing an unused template must emit no document pages.
 A standalone article must compile to a real PDF through the embedded Typst compiler.
 The existing workspace tests, Clippy, source limits and full website build remain release gates.
 
-Remaining proposals
-===================
+Release qualification
+=====================
 
-The following work needs separate implementation and acceptance evidence before this record can be considered complete:
-
-* Declarative mounts and language editions, including path overlap checks, cross-mount links, shared assets, atomic whole-site publication and translation overrides.
-* Replacement of repository-specific website assembly in ``tools/xtask/src/site.rs`` after those contracts can express the existing seven-language website.
-* Generated tag, category and year archives with a collision policy for author-written pages.
-* Collection pagination with stable output ownership and navigation.
-* Per-collection feed destinations and filters.
-* Remote theme installation with a defined archive format, canonical tree checksum, symlink policy, lockfile and offline verification.
-* Distinct project, journal and research presets whose output has been reviewed.
-* Reading time, chronological neighbor links and taxonomy URLs in template context.
-* Fine-grained navigation tracing and a measured large-project benchmark.
-
-We do not install incomplete command stubs or silently accept configuration for those features.
+Beta.6 requires the complete implementation in this record, including archives, pagination, mounts, editions, themes, presets and navigation tracing.
+The 1,000-article benchmark is reproducible with ``cargo test -p gd-project --test ssg_benchmark -- --ignored --nocapture``.
+It checks cold and unchanged builds, one body edit and an unused template edit, with actual parsed and written unit counts.
+The complete workspace checks, multilingual website, internal links and archive smoke tests must pass before publication.
 Version-control actions remain outside publication commands, and per-article PDFs remain opt-in.
 
 References
@@ -315,6 +387,7 @@ Review history
 
 * 2026-10-16: Initial discussion draft.
 * 2026-10-16: Reviewed against the Rust workspace and revised around existing configuration, cache records, template tracing, source transactions and measured acceptance evidence.
+* 2026-10-16: Completed the website orchestration, taxonomy, pagination, themes, presets and navigation contracts; added behavioral, visual, archive-smoke and large-site evidence.
 
 .. rubric:: Lifecycle event
 

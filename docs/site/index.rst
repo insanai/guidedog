@@ -150,6 +150,8 @@ Our own project can keep its discussions the same way, with ``guidedog dsc``. Th
 Recent releases
 ---------------
 
+`All releases <releases/index.html>`_ | `Atom feed <releases/atom.xml>`_
+
 .. postlist:: 3
    :path: releases/*
    :excerpts:

@@ -187,22 +187,23 @@ place only records the file, so unchanged files keep their times.
 Unit inputs
 ~~~~~~~~~~~
 
-Document settings (text, dummy, and the base of the HTML ones)
+Document settings (text and dummy)
    The output settings; the translation digest; the inventory digest; every document's
    docname and title (a page may test whether any page exists); and in toctree order,
    per document: docname, anchor key, parent, number of toctrees, and per section its
    title, anchor and number. A change of navigation (a title, a section, a toctree)
-   therefore rewrites every page, which shows it in its sidebar and links.
+   therefore invalidates these builders' document units.
 
 HTML settings (html, dirhtml)
-   The document settings and the digest of ``mathjax_config_path``.
+   The output settings, environment settings, inventory digest and digest of ``mathjax_config_path``.
+   Navigation is traced per page rather than included as a global HTML dependency.
    Template requests are per-page lookup dependencies, including transitive, cached, dynamic and unsuccessful optional loads.
    Their answers hash the effective source selected by the confined template loader.
    Postlist lookups hash the selected docnames, titles and publication metadata in query order.
 
 A document's page
    The HTML settings (or the document settings for text and dummy); the document's
-   source digest and object digest; its figure numbers; each dependency's digest; and,
+   source digest and object digest; its figure and section numbers; each dependency's digest; and,
    for a page with a ``todolist``, the source digest of every document that has todos.
 
 The search index (``search``)
@@ -218,6 +219,11 @@ A book (``book:<file>``)
 The site unit
    Written every build; its files are compared byte for byte, so only changed ones are
    staged.
+
+A generated collection page
+   HTML settings, the complete collection configuration and its rendered selection and pagination links.
+   Its template and navigation lookups follow the document-page contract.
+   Each page owns its path, so a shrinking collection leaves no obsolete tail.
 
 Lookups and their answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -241,6 +247,18 @@ A page notes each lookup once (``gd_env::Trace``); the answer's digest covers:
    Whether the project has a module index.
 ``Cpp``
    The digest of every C++ declaration.
+``Template``
+   The effective source for a template name, including missing optional includes and project overrides.
+``Postlist``
+   The complete encoded filter query, then selected docnames, titles and publication metadata in stable date order.
+``Navigation``
+   Actual reads of navigation context and actual calls to ``hasdoc``, ``pathto`` and ``toctree``.
+   Answers hash the existence, resolved URL or selected navigation at the requested depth.
+   Body toctrees hash their items, stable docnames, titles, numbers and child boundaries.
+   Article context depends on its chronological neighbors; their order is computed once per build.
+``Mount``
+   A public website-relative file addressed by a cross-mount link.
+   Mounted builds record it, and whole-site assembly requires that file in the current output generation.
 
 Publication
 -----------

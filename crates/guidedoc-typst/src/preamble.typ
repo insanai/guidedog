@@ -213,5 +213,9 @@
 }
 #show outline: it => { show footnote: none; it }
 #show raw: set text(font: gd-mono)
+// A caption must not turn a multipage table or listing into an unbreakable figure.
+// Keep this in the shared preamble so existing book templates and conversions agree.
+#show figure.where(kind: table): set block(breakable: true)
+#show figure.where(kind: raw): set block(breakable: true)
 #show figure.where(kind: table): set figure.caption(position: top)
 #show figure.where(kind: raw): set align(start)

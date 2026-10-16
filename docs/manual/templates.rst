@@ -421,6 +421,13 @@ Here ``apply-styles(body)`` must apply its rules around the content it receives.
 A helper that sets text and returns nothing cannot change its caller's later body.
 The complete tutorial shows a working wrapper around the generated book template.
 
+Page breaks in captioned content
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Guidedog's shared Typst preamble lets captioned tables and code listings continue across pages. Table headers repeat on each table page. This also applies to existing copies of the book template and to standalone PDF conversion.
+
+When we customize their layout, a breakable table or code block must remain inside breakable containers. An unbreakable enclosing figure can otherwise force its contents past the page boundary. Image figures keep their existing layout behavior. :doc:`evidence/pdf-pagination` records the root cause and regression checks.
+
 What a template can use
 ~~~~~~~~~~~~~~~~~~~~~~~
 

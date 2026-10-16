@@ -1,11 +1,11 @@
-//! End-to-end builds of small projects made by hand: reStructuredText documents read
-//! with guidedoc-rst, saved to an object store, and an environment and tables filled
-//! as gd-read and gd-resolve would, so the builders are tested alone. The PDF builds run the
-//! embedded Typst compiler; their pages and text are checked on what Typst laid out,
-//! as the builder hands it back.
+//! End-to-end builds of projects read by the Sphinx-aware rst reader and saved to an
+//! object store. Their environment and tables follow gd-read and gd-resolve, so the
+//! builders are tested alone. PDF builds run the embedded Typst compiler and check
+//! the laid-out pages and text returned by the builder.
 
 #![allow(clippy::unwrap_used)]
 
+use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
 use std::sync::Mutex;
 
@@ -82,7 +82,7 @@ impl Project {
             tables: Tables::default(),
             intersphinx: Intersphinx::default(),
             registry: Registry {
-                readers: vec![guidedoc_rst::reader()],
+                readers: guidedoc_defaults::registry().readers,
                 renderers: vec![guidedoc_typst::RENDERER, guidedoc_text::RENDERER],
             },
             policy: Policy { raw: ContentPolicy::Allow, ..Policy::default() },
@@ -114,7 +114,8 @@ impl Project {
             policy: self.policy,
             ..Request::default()
         };
-        let doc = guidedoc::read_document(&mut ws, &guidedoc_rst::reader(), &request).unwrap();
+        let reader = self.registry.readers.iter().find(|reader| reader.id == "sphinx").unwrap();
+        let doc = guidedoc::read_document(&mut ws, reader, &request).unwrap();
         let object = self.objects.save_object(docname, doc).unwrap();
         let title = text.lines().find(|l| !l.is_empty() && !l.starts_with("..")).unwrap();
         self.env.docs.push(DocInfo {
@@ -388,4 +389,99 @@ fn the_typst_program_typesets_in_a_private_root() {
     let left: Vec<_> =
         temp.filter(|e| e.file_name().to_string_lossy().starts_with(&pid)).collect();
     assert!(left.is_empty(), "the private root is removed: {left:?}");
+}
+
+/// Checks pagination and every row on the pages returned by the embedded compiler.
+fn assert_long_block(name: &str, source: &str, copied_template: bool, header: Option<&str>) {
+    let project = Project::new(name, &[("index", source)]);
+    if copied_template {
+        let templates = project.source().join("_templates");
+        std::fs::create_dir_all(&templates).unwrap();
+        std::fs::write(templates.join("book.typ"), gd_theme::BOOK_TYP).unwrap();
+    }
+    let (_, reports, problem, books) = project.typeset();
+    assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
+    assert_eq!(books.len(), 1);
+    let pages = books[0].pages.as_ref().expect("the embedded compiler reports its pages");
+    assert_paginated_entries(pages, header);
+}
+
+fn assert_paginated_entries(pages: &[String], header: Option<&str>) {
+    let first = pages.iter().position(|page| page.contains("entry001")).unwrap();
+    let last = pages.iter().position(|page| page.contains("entry120")).unwrap();
+    assert!(first < last, "the long block must span pages, not overflow one page: {pages:#?}");
+    for row in 1..=120 {
+        let marker = format!("entry{row:03}");
+        let count: usize = pages.iter().map(|page| page.matches(&marker).count()).sum();
+        assert_eq!(count, 1, "{marker} must appear exactly once");
+    }
+    if let Some(header) = header {
+        for page in &pages[first..=last] {
+            assert!(page.contains(header), "the table header must repeat: {page}");
+        }
+    }
+}
+
+#[test]
+fn long_tables_continue_across_pages_with_repeated_headers() {
+    for caption in ["A long table", ""] {
+        let source = long_table_source(caption);
+        for copied in [false, true] {
+            let name = format!("long-table-{}-{copied}", !caption.is_empty());
+            assert_long_block(&name, &source, copied, Some("Repeatedheader"));
+        }
+    }
+}
+
+#[test]
+fn long_captioned_listings_continue_across_pages() {
+    let source = long_listing_source();
+    for copied in [false, true] {
+        assert_long_block(&format!("long-listing-{copied}"), &source, copied, None);
+    }
+}
+
+fn long_table_source(caption: &str) -> String {
+    let mut source =
+        format!("Long table\n==========\n\n.. list-table:: {caption}\n   :header-rows: 1\n\n");
+    source.push_str("   * - Repeatedheader\n     - Value\n");
+    for row in 1..=120 {
+        writeln!(source, "   * - entry{row:03}\n     - value{row:03}").unwrap();
+    }
+    source
+}
+
+fn long_listing_source() -> String {
+    let mut source = String::from(
+        "Long listing\n============\n\n.. code-block:: text\n   :caption: A long listing\n\n",
+    );
+    for row in 1..=120 {
+        writeln!(source, "   entry{row:03}").unwrap();
+    }
+    source
+}
+
+#[test]
+fn standalone_conversion_paginates_long_captioned_content() {
+    let sources = [
+        (long_table_source("A long table"), Some("Repeatedheader")),
+        (long_listing_source(), None),
+    ];
+    for (index, (source, header)) in sources.into_iter().enumerate() {
+        let dir = TempDir::new(&format!("standalone-long-{index}"));
+        let mut workspace = Workspace::new();
+        let registry = guidedoc_defaults::registry();
+        let typst = guidedoc::convert_text(&mut workspace, &registry, "sphinx", "typst", &source)
+            .expect("the document converts to standalone Typst");
+        let options = gd_typst::Options {
+            offline: true,
+            embedded_fonts_only: true,
+            ..gd_typst::Options::default()
+        };
+        let backend = gd_typst::locate("typst").expect("the embedded compiler");
+        let output = dir.0.join("long.pdf");
+        let compiled = gd_typst::compile_text(&backend, typst, &dir.0, &output, &options)
+            .expect("the standalone document compiles");
+        assert_paginated_entries(compiled.pages.as_ref().unwrap(), header);
+    }
 }

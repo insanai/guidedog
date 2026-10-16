@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`pdf-pagination`
+     - Root cause and regression coverage for overflowing captioned tables and listings (16 October 2026)
    * - :doc:`release-1.0.0-beta.1`
      - Published archives, source qualification, platform smoke tests, automatic tap update and download checksums (15 October 2026)
    * - :doc:`manuals`
@@ -19,3 +21,4 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    manuals
    release-1.0.0-beta.1
+   pdf-pagination

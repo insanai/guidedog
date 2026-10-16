@@ -1,13 +1,13 @@
 Guidedog builds documentation websites and PDF books from the same reStructuredText or Markdown files.
 
-Version 1.0.0-beta.3 keeps translated glossary terms and inline index links in our documentation indexes.
+Version 1.0.0-beta.4 gives discussion PDFs a compact RFC-style layout.
 
-- **Translated glossary terms stay in the index.** Glossary entries retain their metadata when their visible text is translated. This fixes [issue #2](https://github.com/insanai/guidedog/issues/2) for both website and PDF indexes.
-- **Inline index links keep their targets.** Separate translated paragraphs no longer reuse the same index identity. Reordered and renamed index roles preserve the source document's anchors.
-- **Markup and languages are covered.** Regression checks cover reStructuredText, MyST, six translation languages, stable term links, cached rebuilds, catalog edits and PDF indexes.
-- **Every package checks translation.** The archive smoke tests now build a translated glossary and separate translated paragraphs with inline index roles.
+- **Discussion records start on the first page.** The identifier, title, metadata and abstract appear together, followed by numbered sections. Running headers and page counts keep longer records easy to follow.
+- **The template travels with Guidedog.** The layout is embedded in the single binary. `guidedog dsc init` writes an editable `_templates/discussion.typ`; existing catalogs without a copy use the embedded layout.
+- **Books keep their own layout.** `_templates/book.typ` remains the ordinary book template. Discussion records use their own customization point.
+- **Long content stays readable.** Tables and captioned listings continue across pages. Regression checks cover metadata, bookmarks, template changes, existing catalogs and untrusted builds. Every archive checks a newly initialized catalog and its PDF template selection.
 
-The [review record](https://insanai.github.io/guidedog/manual/evidence/translation-index-review.html) explains both root causes, the shared fixes and the wider review. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.3/CHANGELOG.md) records the changes.
+The [layout review](https://insanai.github.io/guidedog/manual/evidence/discussion-pdf-layout.html) describes the cause and verification. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.4/CHANGELOG.md) records the changes.
 
 ## Downloads
 
@@ -18,7 +18,7 @@ The [review record](https://insanai.github.io/guidedog/manual/evidence/translati
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.3-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.4-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

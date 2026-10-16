@@ -5,6 +5,12 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
+## 1.0.0-beta.4 - 2026-10-16
+
+- Give standalone discussion PDFs an RFC-style layout, with record metadata, numbered sections, running headers and page counts. Existing catalogs inherit it; `_templates/discussion.typ` customizes records independently of ordinary books.
+
+- Embed the discussion layout in the binary and install an editable `_templates/discussion.typ` during `guidedog dsc init`. Verify initialization and PDF template selection in every release archive.
+
 ## 1.0.0-beta.3 - 2026-10-16
 
 - Preserve translated glossary terms in the HTML and PDF general indexes ([#2](https://github.com/insanai/guidedog/issues/2)). Generated index metadata survives replacement of inline content, with translated display text and stable targets and category keys.

@@ -48,5 +48,8 @@ Discussion registry
    * - 0012
      - :doc:`records/0012-single-executable-release`
      - committed
+   * - 0013
+     - :doc:`records/0013-static-site-generation`
+     - discussion
 
 .. gds-generated-end

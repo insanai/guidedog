@@ -195,8 +195,10 @@ Document settings (text, dummy, and the base of the HTML ones)
    therefore rewrites every page, which shows it in its sidebar and links.
 
 HTML settings (html, dirhtml)
-   The document settings; the digest of ``mathjax_config_path``; the built-in layout
-   template; every template file used, path and digest.
+   The document settings and the digest of ``mathjax_config_path``.
+   Template requests are per-page lookup dependencies, including transitive, cached, dynamic and unsuccessful optional loads.
+   Their answers hash the effective source selected by the confined template loader.
+   Postlist lookups hash the selected docnames, titles and publication metadata in query order.
 
 A document's page
    The HTML settings (or the document settings for text and dummy); the document's

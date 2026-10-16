@@ -185,7 +185,7 @@ Internal crates
 Every other package is internal:
 
 - the host and project layers: ``gd-host``, ``gd-conf``, ``gd-env``, ``gd-outputs``, ``gd-serve``, ``gd-i18n``, ``gd-read``, ``gd-resolve``, ``gd-link``, ``gd-site``, ``gd-book``, ``gd-intl``, ``gd-migrate``, ``gd-pages`` and ``gd-project``;
-- the command line and its services: ``gd-cli``, ``gd-theme``, ``gd-discussion``, ``gd-fetch``, ``gd-git``, ``gd-typst`` and ``gd-clock``;
+- the command line and its services: ``gd-cli``, ``gd-theme``, ``gd-discussion``, ``gd-ssg``, ``gd-fetch``, ``gd-git``, ``gd-typst`` and ``gd-clock``;
 - the programs under ``cmd/``, the tools under ``tools/``, the examples under ``examples/`` and the end-to-end tests under ``tests/integration``.
 
 ``gd-typst`` embeds the Typst compiler. Keeping it internal keeps Typst's large dependency tree out of every reusable crate: ``guidedoc-typst`` writes Typst source as text, and only the program compiles it.

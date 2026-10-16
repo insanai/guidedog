@@ -18,5 +18,6 @@ Discussion reading order
    records/0010-typed-build-plugins
    records/0011-sphinx-builtin-extensions
    records/0012-single-executable-release
+   records/0013-static-site-generation
 
 .. gds-generated-end

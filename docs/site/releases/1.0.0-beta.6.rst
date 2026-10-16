@@ -1,0 +1,28 @@
+:date: 2026-10-16
+:author: Guidedog contributors
+:category: releases
+:tags: rust, publishing
+:summary: Source-level publication commands, chronological collections, article PDFs and precise template dependencies.
+:pdf: article
+
+Guidedog 1.0.0-beta.6
+========================================
+
+We can now publish dated articles alongside documentation pages.
+The new ``guidedog ssg`` commands create drafts, schedule release instants, publish articles and withhold them again.
+Both reStructuredText and Markdown use the same metadata and build-clock gate.
+
+We collect articles with ``.. postlist::`` and enable Atom, RSS and sitemap files through ``[site]`` in ``conf.toml``.
+A dated article uses the built-in article HTML layout, and ``:pdf: article`` adds a standalone PDF using the shared print theme.
+Project templates receive publication metadata through ``page.meta``.
+
+Release builds exclude drafts, future articles and expired articles before resolving navigation, links and public indices.
+Preview builds include them for local review.
+Clock-only changes reuse parsed documents, and successful rebuilds remove artifacts for pages that have become unpublished.
+
+Template dependencies follow the names requested during rendering, including dynamic and optional includes.
+Changing a template that no document uses leaves document pages cached.
+Content hashing and conservative navigation dependencies preserve incremental correctness.
+
+We describe the commands and metadata in the `static publishing guide <https://insanai.github.io/guidedog/manual/howto/static-publishing.html>`_.
+GDS 0013 records the implementation and the remaining work on declarative mounts, taxonomy pages, pagination and theme repositories.

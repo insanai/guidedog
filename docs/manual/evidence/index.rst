@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`release-1.0.0-beta.4`
+     - Embedded discussion PDF template, catalog initialization, platform qualification and published archive checks (16 October 2026)
    * - :doc:`discussion-pdf-layout`
      - Dedicated RFC-style discussion PDFs, visual review and layout regression coverage
    * - :doc:`release-1.0.0-beta.3`
@@ -31,6 +33,7 @@ Each record is dated. It describes what we built or checked on that day, with th
    release-1.0.0-beta.1
    release-1.0.0-beta.2
    release-1.0.0-beta.3
+   release-1.0.0-beta.4
    pdf-pagination
    translation-index-review
    discussion-pdf-layout

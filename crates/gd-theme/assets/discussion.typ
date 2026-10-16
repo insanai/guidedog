@@ -1,3 +1,4 @@
+#import "theme.typ": gd-palette, gd-serif, gd-sans, gd-mono, gd-script-fonts, configure-document
 // Guidedog's discussion paper. The PDF composer selects this layout for a record,
 // independently of book.typ. A project can override it with _templates/discussion.typ.
 // Record metadata arrives as strings, not executable source.
@@ -5,33 +6,26 @@
   title: "", author: "", version: "", date: "", lang: "en", paper: "a4",
   numbering: false, version-label: "Version", logo: none, copyright: "",
   record: (id: "Discussion", catalog: "", fields: ()),
-  accent: rgb("#285b60"),
-  serif: ("Libertinus Serif", "New Computer Modern"),
-  sans: ("Libertinus Sans", "Libertinus Serif"),
-  mono: ("DejaVu Sans Mono",),
+  accent: gd-palette.accent,
+  serif: gd-serif,
+  sans: gd-sans,
+  mono: gd-mono,
   size: 10.5pt,
+  contents: true,
+  contents-label: "Contents",
+  memo: true,
   body,
 ) = {
-  let ink = rgb("#20282b")
-  let quiet = rgb("#526269")
-  let rule = rgb("#d4dddf")
-  let wash = rgb("#f3f6f6")
+  show: configure-document.with(lang: lang, serif: serif, sans: sans, mono: mono,
+    size: size, accent: accent)
+  sans = sans + gd-script-fonts(lang)
+  let ink = gd-palette.ink
+  let quiet = gd-palette.quiet
+  let rule = gd-palette.rule
+  let wash = gd-palette.paper
   let sans-text = text.with(font: sans, number-type: "lining")
   let small = sans-text.with(size: 8pt, fill: quiet)
-  let parts = lang.replace("_", "-").split("-")
-  let code = lower(parts.first())
-  if code.len() < 2 or code.len() > 3 or code.match(regex("^[a-z]+$")) == none { code = "en" }
-  let region = if parts.len() > 1 and parts.at(1).match(regex("^[A-Za-z]{2}$")) != none {
-    upper(parts.at(1))
-  } else { none }
-
-  state("gd-math-sans").update(_ => sans)
   set document(title: title, author: if author == "" { () } else { author })
-  set text(font: serif, size: size, fill: ink, lang: code, region: region,
-    hyphenate: true, number-type: "lining", costs: (widow: 100%, orphan: 100%))
-  set par(justify: true, linebreaks: "optimized", leading: 0.58em, spacing: 0.7em,
-    first-line-indent: 0em)
-  set block(spacing: 0.9em)
   set page(paper: paper, margin: (x: 25mm, top: 23mm, bottom: 23mm),
     numbering: "1", header-ascent: 30%, footer-descent: 35%,
     header: context {
@@ -54,20 +48,63 @@
 
   // The title is the source heading, so its anchor and PDF outline stay intact.
   // Its metadata replaces the source field list, never a second title or a cover.
-  let front-matter() = {
+  let state-chip(value) = {
+    let tone = (published: gd-palette.blue, accepted: gd-palette.green,
+      discussion: gd-palette.green, committed: gd-palette.violet,
+      abandoned: quiet, withdrawn: quiet, rejected: quiet,
+      draft: gd-palette.amber, prediscussion: gd-palette.amber).at(value, default: accent)
+    box(inset: (x: 0.6em, y: 0.25em), radius: 8pt, fill: tone.lighten(91%),
+      sans-text(size: 9pt, fill: tone.darken(15%), weight: "semibold", value))
+  }
+  let field(pair) = block(breakable: true, {
+    small(size: 7.4pt, weight: "bold", tracking: 0.06em, upper(pair.first()))
+    v(1mm)
+    let value = pair.last()
+    let shown = if pair.first() in ("State", "Status") { state-chip(value) }
+      else if value.starts-with("https://") or value.starts-with("http://") { link(value, value) }
+      else { value }
+    sans-text(size: 9pt, fill: ink, shown)
+  })
+  let front-matter(title) = {
     set text(weight: "regular")
-    let cells = record.fields.map(pair => block(breakable: true, {
-      small(size: 7.4pt, weight: "bold", tracking: 0.07em, upper(pair.first()))
-      v(0.7mm)
-      let value = pair.last()
-      let shown = if value.starts-with("https://") or value.starts-with("http://") {
-        link(value, value)
-      } else { value }
-      sans-text(size: 9pt, fill: ink, shown)
-    }))
-    block(width: 100%, above: 5mm, below: 7mm, inset: (y: 4mm),
-      stroke: (top: 0.5pt + rule, bottom: 0.5pt + rule), breakable: true,
-      grid(columns: (1fr, 1fr), column-gutter: 9mm, row-gutter: 3mm, ..cells))
+    set par(justify: false)
+    block(width: 100%, inset: 13pt, radius: 5pt, stroke: 0.6pt + rule,
+      fill: wash, breakable: true, {
+        grid(columns: (1fr, auto), column-gutter: 8mm,
+          sans-text(size: 10pt, weight: "bold", fill: accent, record.catalog),
+          sans-text(size: 11pt, weight: "bold", fill: accent, record.id))
+        v(4mm)
+        sans-text(size: 22pt, weight: "bold", tracking: -0.015em,
+          par(leading: 0.3em, title))
+        v(3mm)
+        line(length: 100%, stroke: 0.5pt + rule)
+        v(3mm)
+        let compact = record.fields.filter(pair => pair.first() not in ("Discussion", "Labels"))
+        grid(columns: (1fr, 1fr), column-gutter: 8mm, row-gutter: 2.5mm,
+          ..compact.map(field))
+        for pair in record.fields.filter(pair => pair.first() in ("Discussion", "Labels")) {
+          v(2.5mm)
+          field(pair)
+        }
+      })
+    if memo {
+      block(width: 100%, above: 4mm, below: 4mm, inset: 10pt, radius: 3pt,
+        stroke: (left: 1.5pt + accent), fill: gd-palette.soft, breakable: true, {
+          sans-text(size: 9pt, weight: "bold", [Record status])
+          v(1.5mm)
+          text(size: 9pt, [The catalog defines the review process and the meaning of each state.
+            #if record.id.match(regex("X+$")) != none {
+              [This placeholder identifies a provisional draft.]
+            } else { [This numbered record forms part of the catalog.] }])
+        })
+    }
+    if contents and query(heading.where(level: 2)).len() > 0 {
+      show outline.entry: set text(size: 8.5pt)
+      set par(leading: 0.4em, spacing: 0.3em)
+      block(above: 2mm, below: 2mm, sans-text(size: 10pt, weight: "bold", contents-label))
+      outline(title: none, target: heading.where(level: 2), depth: 2, indent: 0pt)
+      v(3mm)
+    }
   }
   let section-number(..values) = if values.pos().len() > 1 {
     std.numbering("1.1.", ..values.pos().slice(1))
@@ -77,15 +114,13 @@
   show heading: set text(font: sans, fill: ink, hyphenate: false)
   show heading: set par(justify: false, first-line-indent: 0em)
   show heading.where(level: 1): it => context {
-    let first = query(heading.where(level: 1)).first().location() == it.location()
+    if not it.outlined {
+      return block(above: 1em, below: 0.5em, sticky: true,
+        sans-text(size: 11pt, weight: "bold", it.body))
+    }
+    let first = query(heading.where(level: 1, outlined: true)).first().location() == it.location()
     if first {
-      block(above: 0pt, below: 3mm, sticky: true, {
-        sans-text(size: 8pt, weight: "bold", tracking: 0.1em, fill: accent, record.id)
-        v(3mm)
-        sans-text(size: 23pt, weight: "bold", tracking: -0.015em,
-          par(leading: 0.3em, it.body))
-      })
-      front-matter()
+      front-matter(it.body)
     } else {
       block(above: 1.5em, below: 0.6em, sticky: true,
         sans-text(size: 14pt, weight: "bold", it.body))
@@ -122,6 +157,6 @@
   set footnote.entry(separator: line(length: 22%, stroke: 0.4pt + rule), gap: 0.5em)
   show footnote.entry: set text(size: 0.83em)
 
-  // Start the paper immediately. No cover, colophon, recto breaks or automatic contents.
+  // Start the record with its metadata, status note and compact contents, without a book cover.
   body
 }

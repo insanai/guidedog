@@ -13,6 +13,8 @@ When we start a project with ``guidedog quickstart``, it writes the working
 templates into our project:
 
 * ``_templates/layout.html`` defines the HTML website structure (Jinja).
+* ``_templates/theme.typ`` defines the shared PDF palette, fonts and language-aware content wrapper.
+* ``_templates/discussion.typ`` defines the discussion record layout (Typst).
 * ``_templates/book.typ`` defines the PDF book layout, typography, and cover page (Typst).
 * ``_static/guidedog.css`` and ``_static/guidedog.js`` supply default styles and client behaviors.
 
@@ -352,7 +354,7 @@ that defines a ``book`` function. Guidedog writes the book's source as
 so everything that decides how the book looks is in that file: fonts, page size and
 margins, headings, the title page, running heads, and the table of contents.
 
-Standalone discussion records select ``_templates/discussion.typ`` instead. Its built-in RFC-style layout starts the content on the first page and uses the record metadata as front matter. A copied ``book.typ`` does not override this layout. We can customize each kind of PDF independently. :doc:`howto/discussions` describes the discussion template's additional ``record`` parameter.
+Standalone discussion records select ``_templates/discussion.typ`` instead. Its built-in RFC-style layout opens with a metadata panel, state badges, a status note and compact contents. A copied ``book.typ`` does not override this layout. We can customize each kind of PDF independently. :doc:`howto/discussions` describes the discussion template's additional ``record`` parameter.
 
 Parameters
 ~~~~~~~~~~
@@ -391,6 +393,15 @@ cross-references to other pages are followed by their page number.
 
 Modular Typst templates
 ~~~~~~~~~~~~~~~~~~~~~~~
+
+The default book and discussion layouts import ``theme.typ``. It defines ``gd-palette``, the font defaults and ``configure-document(body, ...)``. The wrapper applies its rules to the content it receives. The default palette uses Guidedog teal (``#126d78``), dark ink and light neutral panels. Books use a centered cover and teal chapter openings. Discussion records use metadata panels, state badges, a status note and compact contents.
+
+``guidedog quickstart`` copies all three PDF files. ``guidedog dsc init`` copies the shared theme and discussion layout. All three are embedded in the executable. Without a project layout, the builder composes a self-contained built-in template; it does not read a project theme. Untrusted builds use that same isolated fallback.
+
+We can edit ``theme.typ`` to change both copied layouts together. Changes to files beneath ``_templates/``, including nested imported modules and assets, invalidate cached PDFs. The builder tracks directory membership as well, so adding or removing a module cannot leave a stale PDF. Template discovery stays inside the project's readable roots and permits at most 16,384 template inputs.
+
+To adopt a new default in an older project, we first keep a backup of our custom files. We can remove the copied layout to use the embedded version, or copy fresh files from a temporary ``guidedog quickstart`` project. We keep ``theme.typ`` beside the new layouts. A lone copied layout that imports a missing theme produces a Typst error. Guidedog never overwrites an existing customized template during a build.
+
 
 Like HTML templates, Typst templates are not restricted to a single file. We can split
 book styling, macros, and custom covers into several ``.typ`` files under

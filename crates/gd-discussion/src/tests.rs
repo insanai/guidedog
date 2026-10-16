@@ -269,6 +269,10 @@ fn init_makes_a_whole_catalog_and_refuses_to_merge() {
         std::fs::read_to_string(dir.join("_templates/discussion.typ")).unwrap(),
         gd_theme::DISCUSSION_TYP
     );
+    assert_eq!(
+        std::fs::read_to_string(dir.join("_templates/theme.typ")).unwrap(),
+        gd_theme::PDF_THEME_TYP
+    );
     let d = definition(&dir).unwrap().expect("a configuration");
     assert!(d.prefix.as_str() == "eds" && d.labels.is_empty());
     let c = load_catalog(&dir, &prefix("eds")).expect("a catalog");

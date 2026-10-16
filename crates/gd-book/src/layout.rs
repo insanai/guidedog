@@ -45,3 +45,60 @@ pub(crate) fn record_arguments(out: &mut String, record: &Discussion, catalog: &
     }
     out.push_str("))");
 }
+
+/// Tracks all local template modules and assets, including directory membership.
+/// Canonical folder identities stop link cycles; confinement and a file limit bound work.
+pub(crate) fn template_inputs(
+    view: &gd_resolve::BuildView<'_>,
+    out: &mut Book,
+    reports: &mut Vec<Report>,
+) {
+    let mut pending = vec![view.config.source_dir.join("_templates")];
+    let mut seen = std::collections::BTreeSet::new();
+    while let Some(folder) = pending.pop() {
+        if gd_host::confinement(view.roots, &folder) != gd_host::Confinement::Inside {
+            continue;
+        }
+        let Ok(canonical) = std::fs::canonicalize(&folder) else { continue };
+        if !seen.insert(canonical) {
+            continue;
+        }
+        out.files.insert(folder.clone());
+        let entries = match std::fs::read_dir(&folder) {
+            Ok(entries) => entries,
+            Err(error) => {
+                template_failure(out, reports, &folder, &error.to_string());
+                return;
+            }
+        };
+        for entry in entries {
+            let path = match entry {
+                Ok(entry) => entry.path(),
+                Err(error) => {
+                    template_failure(out, reports, &folder, &error.to_string());
+                    return;
+                }
+            };
+            if out.files.len() >= 16_384 {
+                template_failure(out, reports, &folder, "More than 16384 template inputs.");
+                return;
+            }
+            if gd_host::confinement(view.roots, &path) != gd_host::Confinement::Inside {
+                continue;
+            }
+            out.files.insert(path.clone());
+            if path.is_dir() {
+                pending.push(path);
+            }
+        }
+    }
+}
+
+fn template_failure(out: &mut Book, reports: &mut Vec<Report>, path: &std::path::Path, why: &str) {
+    out.failed += 1;
+    reports.push(Report {
+        path: path.display().to_string(),
+        ..Report::error("build.template", "CANNOT TRACK PDF TEMPLATES", why)
+            .hint("Keep template files readable and move unrelated files out of _templates.")
+    });
+}

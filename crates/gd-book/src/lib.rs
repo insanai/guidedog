@@ -2,7 +2,7 @@
 //!
 //! The pdf builder composes one Typst book per `pdf_documents` entry: the renderer's
 //! preamble, the book template (the project's `_templates/book.typ` or
-//! `gd_theme::BOOK_TYP`), the cover settings, then every document of the root's
+//! `gd_theme::pdf_template`), cover settings, then every document of the root's
 //! toctree as a chapter, and the general index. Typst (embedded, or the `typst`
 //! program conf.toml names) typesets it; a problem Typst finds in a chapter is reported
 //! at the line of reStructuredText or Markdown it came from. The text builder writes one

@@ -76,7 +76,7 @@ Change the design
 
 Edit ``_static/editorial.css`` for the documentation project's visual tokens.
 Edit ``_templates/layout.html`` for structure.
-Edit ``_templates/book.typ`` for the print layout.
+Edit ``_templates/theme.typ`` for the PDF palette and typography. Edit ``_templates/book.typ`` for book structure and ``_templates/discussion.typ`` for discussion structure. Both layouts wrap their content with the shared language-aware theme.
 Keep reading order, focus indicators, labels, and sufficient contrast intact.
 
 Build both targets after a change. Inspect a page with code, a table,

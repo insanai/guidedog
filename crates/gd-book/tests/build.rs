@@ -398,6 +398,7 @@ fn assert_long_block(name: &str, source: &str, copied_template: bool, header: Op
         let templates = project.source().join("_templates");
         std::fs::create_dir_all(&templates).unwrap();
         std::fs::write(templates.join("book.typ"), gd_theme::BOOK_TYP).unwrap();
+        std::fs::write(templates.join("theme.typ"), gd_theme::PDF_THEME_TYP).unwrap();
     }
     let (_, reports, problem, books) = project.typeset();
     assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
@@ -517,11 +518,18 @@ fn discussions_start_with_their_content_and_structured_front_matter() {
     // The selected template is an input: editing it invalidates a cached PDF.
     let copied = gd_theme::DISCUSSION_TYP.replace("size: 10.5pt", "size: 10pt");
     std::fs::write(templates.join("discussion.typ"), copied).unwrap();
+    std::fs::write(templates.join("theme.typ"), gd_theme::PDF_THEME_TYP).unwrap();
     let (_, reports, problem, books) = project.typeset();
     assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
     assert_eq!(books.len(), 1, "a new discussion template must rebuild the PDF");
+    let theme = gd_theme::PDF_THEME_TYP.replace("#126d78", "#196b62");
+    std::fs::write(templates.join("theme.typ"), theme).unwrap();
+    let (_, reports, problem, books) = project.typeset();
+    assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
+    assert_eq!(books.len(), 1, "editing the shared theme must rebuild the PDF");
     std::fs::write(templates.join("discussion.typ"), "#panic(\"untrusted template used\")")
         .unwrap();
+    std::fs::write(templates.join("theme.typ"), "#panic(\"untrusted theme used\")").unwrap();
     project.options.untrusted = true;
     let (_, reports, problem, books) = project.typeset();
     assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
@@ -543,6 +551,7 @@ fn discussion_tables_and_listings_continue_on_following_pages() {
                 std::fs::create_dir_all(&templates).unwrap();
                 std::fs::write(templates.join("discussion.typ"), gd_theme::DISCUSSION_TYP)
                     .unwrap();
+                std::fs::write(templates.join("theme.typ"), gd_theme::PDF_THEME_TYP).unwrap();
             }
             let (_, reports, problem, books) = project.typeset();
             assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
@@ -560,4 +569,30 @@ fn partial_discussion_metadata_keeps_the_book_layout() {
     let pages = books[0].pages.as_ref().unwrap();
     assert!(pages[0].contains("Demo Book"), "the book keeps its cover: {pages:#?}");
     assert!(!pages[0].contains("Welcome"));
+}
+
+#[test]
+fn imported_pdf_modules_invalidate_cached_books() {
+    let project = Project::new("pdf-modules", &[("index", INDEX)]);
+    let templates = project.source().join("_templates");
+    std::fs::create_dir_all(templates.join("parts")).unwrap();
+    std::fs::write(
+        templates.join("book.typ"),
+        "#import \"parts/style.typ\": decorate\n#let book(..args, body) = decorate(body)",
+    )
+    .unwrap();
+    let module = templates.join("parts/style.typ");
+    std::fs::write(&module, "#let decorate(body) = [First module #body]").unwrap();
+    let (_, reports, problem, books) = project.typeset();
+    assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
+    assert!(books[0].pages.as_ref().unwrap()[0].contains("First module"));
+    let (_, _, _, books) = project.typeset();
+    assert!(books.is_empty(), "an unchanged imported module keeps the cached PDF");
+    std::fs::write(&module, "#let decorate(body) = [Other module #body]").unwrap();
+    let (_, reports, problem, books) = project.typeset();
+    assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
+    assert!(books[0].pages.as_ref().unwrap()[0].contains("Other module"));
+    std::fs::remove_file(module).unwrap();
+    let (_, _, problem, _) = project.typeset();
+    assert_eq!(problem.unwrap().code, "typst.compile", "missing modules must not reuse a PDF");
 }

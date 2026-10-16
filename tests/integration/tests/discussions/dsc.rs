@@ -24,6 +24,7 @@ fn dsc_makes_keeps_and_builds_a_catalog() {
     );
     let dir = root.join("eds");
     has(&root.read("eds/_templates/discussion.typ"), "record: (id:");
+    has(&root.read("eds/_templates/theme.typ"), "configure-document");
     dsc(&dir, 0, &["new", "Cache policy", "--labels=architecture"]);
     dsc(&dir, 0, &["promote", "cache-policy"]);
     dsc(&dir, 0, &["state", "1", "--to=accepted", "--reason=Reviewed"]);

@@ -21,7 +21,7 @@ Create a catalog
 
 .. code-block:: sh
 
-   guidedog dsc init docs/eds --prefix=eds --name="Enso Discussions" --author="Ada"
+   guidedog dsc init docs/eds --prefix=eds --name="Example Discussions" --author="Ada"
 
 The prefix names the catalog's fields, such as ``:eds-number:``. It is 2 to 16 lowercase
 letters. ``init`` writes a complete catalog into a missing or empty folder:
@@ -30,7 +30,7 @@ letters. ``init`` writes a complete catalog into a missing or empty folder:
   numbering;
 * ``conf.toml``, ``index.rst``, and ``workflow.rst``, an ordinary Guidedog project;
 * ``template/rfc-template.rst``, the template of new drafts;
-* ``_templates/discussion.typ``, the editable PDF layout copied from the binary;
+* ``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable PDF layout and shared theme copied from the binary;
 * ``registry.rst`` and ``bundle.rst``, the generated index;
 * ``records/XXXXX-eds-process.rst``, a draft of our review process.
 
@@ -93,7 +93,7 @@ file follows the defaults below. They are the process of Guidedog's own GDS.
 .. code-block:: toml
 
    prefix = "eds"
-   name = "Enso Discussions"
+   name = "Example Discussions"
    author = "Ada"
    labels = ["architecture", "process"]   # leave out to allow any label
    types = ["Standards Track", "Process", "Informational"]
@@ -167,11 +167,11 @@ The build is guidedog's own: the same build as ``guidedog build``, with the cata
 Discussion PDFs
 ~~~~~~~~~~~~~~~
 
-Each RST record uses an RFC-style paper layout. The first page contains the record identifier, title, metadata and the start of the discussion. Numbered sections flow continuously. Running headers identify the catalog and record, and footers show the page number and total. Tables and captioned listings can continue across pages.
+Each RST record uses an RFC-style paper layout. The record opens with a metadata panel, state badges, a short status note and compact contents, followed by its text. Numbered sections flow continuously. Running headers identify the catalog and record, and footers show the page number and total. Tables and captioned listings can continue across pages.
 
-The PDF builder recognizes the leading metadata, such as ``:eds-number:`` and ``:eds-title:``, for any catalog prefix. Existing catalogs inherit the layout without being initialized again. Ordinary books keep their book template.
+The PDF builder recognizes the leading metadata, such as ``:eds-number:`` and ``:eds-title:``, for any catalog prefix. Existing catalogs without a copied discussion template use the current embedded layout. We keep existing template customizations until we replace or remove their files. Ordinary books keep their book template.
 
-The layout is embedded in the Guidedog binary. ``guidedog dsc init`` copies it into ``_templates/discussion.typ`` for customization. Existing catalogs without a copy use the embedded layout. It defines a ``book`` function with the usual PDF parameters and an additional ``record`` dictionary. ``record.id`` is the readable identifier, ``record.catalog`` is the project name, and ``record.fields`` contains pairs of readable field labels and values. All values arrive as quoted strings. The source heading supplies the title and its anchor; the template places the metadata beneath it. :doc:`../templates` describes the shared PDF parameters.
+The layout is embedded in the Guidedog binary. ``guidedog dsc init`` copies ``_templates/discussion.typ`` and its shared ``_templates/theme.typ`` for customization. Existing catalogs without a copy use the embedded layout. It defines a ``book`` function with the usual PDF parameters and an additional ``record`` dictionary. ``record.id`` is the readable identifier, ``record.catalog`` is the project name, and ``record.fields`` contains pairs of readable field labels and values. All values arrive as quoted strings. The source heading supplies the title and its anchor. The template reads the catalog metadata without assuming a fixed prefix or lifecycle. Its optional ``contents`` and ``memo`` parameters control the contents and status note. :doc:`../templates` describes the shared PDF parameters.
 
 An ``--untrusted`` build uses the built-in discussion layout instead of running a project template. A record included as a chapter of a larger book keeps its metadata in that chapter; the root document selects the book's layout.
 

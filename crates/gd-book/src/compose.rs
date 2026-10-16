@@ -68,7 +68,7 @@ impl Composer<'_, '_> {
         let template = match self.project_template(name, &mut out, reports) {
             Some(text) => text,
             None => {
-                out.source.push_str(builtin);
+                out.source.push_str(&gd_theme::pdf_template(record.is_some()));
                 builtin.to_string()
             }
         };
@@ -114,6 +114,7 @@ impl Composer<'_, '_> {
         let target = book_path(config, &path);
         let _ = writeln!(out.source, "#import {}: book", typst_string(&target));
         out.files.insert(path);
+        crate::layout::template_inputs(self.view, out, reports);
         Some(text)
     }
 
@@ -146,6 +147,10 @@ impl Composer<'_, '_> {
         if template.contains("version-label") {
             let label = view.ui.gettext("Version");
             let _ = write!(extra, ", version-label: {}", typst_string(&label));
+        }
+        if template.contains("contents-label:") {
+            let _ =
+                write!(extra, ", contents-label: {}", typst_string(&view.ui.gettext("Contents")));
         }
         if template.contains("copyright:") && !c.copyright.is_empty() {
             let _ = write!(extra, ", copyright: {}", typst_string(&c.copyright));

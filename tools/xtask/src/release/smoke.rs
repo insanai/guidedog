@@ -248,7 +248,8 @@ pub(crate) fn smoke_discussion(program: &Path) -> Result<()> {
     )?;
     let eds = work.path().join("eds");
     let template = read_text(&eds.join("_templates/discussion.typ"))?;
-    if !template.contains("record: (id:") {
+    let theme = read_text(&eds.join("_templates/theme.typ"))?;
+    if !template.contains("record: (id:") || !theme.contains("configure-document") {
         return Err(smoke_failure("discussion", "init did not install the discussion PDF layout"));
     }
     runner.run(&eds, &["dsc", "new", "Cache policy", "--labels=architecture"])?;

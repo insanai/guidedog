@@ -291,7 +291,7 @@ Typst is required for PDF, not for RST HTML.
 The HTML template supplies navigation, search, and a page outline.
 The default is light. Readers may choose dark or system appearance.
 We build each record with an RFC-style discussion layout, with metadata and content on the first page.
-We can customize it in ``_templates/discussion.typ``, independently of the book template.
+We can customize it in ``_templates/discussion.typ``, independently of the book template. Both layouts share colors and typography through ``_templates/theme.typ``. The binary embeds these files, and catalog initialization copies the discussion layout and shared theme for editing.
 Graphviz diagrams render to static SVG assets.
 A typesetting template can remain Typst; the authored record is RST.
 

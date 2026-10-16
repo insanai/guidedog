@@ -22,6 +22,17 @@ pub const BOOK_TYP: &str = include_str!("../assets/book.typ");
 /// `_templates/discussion.typ`: the RFC-style layout for standalone discussion records.
 pub const DISCUSSION_TYP: &str = include_str!("../assets/discussion.typ");
 
+/// `_templates/theme.typ`: the shared PDF palette, fonts and language-aware wrapper.
+pub const PDF_THEME_TYP: &str = include_str!("../assets/theme.typ");
+
+/// Returns a self-contained built-in layout, for a discussion when `discussion` is true.
+/// Inlines the shared theme instead of reading project files, including in untrusted builds.
+pub fn pdf_template(discussion: bool) -> String {
+    let template = if discussion { DISCUSSION_TYP } else { BOOK_TYP };
+    let (_, body) = template.split_once('\n').unwrap_or(("", template));
+    format!("{PDF_THEME_TYP}\n{body}")
+}
+
 /// One theme file: where a project keeps its copy, and the built-in text.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ThemeFile {
@@ -32,18 +43,17 @@ pub struct ThemeFile {
 }
 
 /// Every theme file, in the order quickstart writes them.
-pub const FILES: [ThemeFile; 4] = [
+pub const FILES: [ThemeFile; 6] = [
     ThemeFile { path: "_templates/layout.html", text: LAYOUT_HTML },
     ThemeFile { path: "_templates/book.typ", text: BOOK_TYP },
+    ThemeFile { path: "_templates/discussion.typ", text: DISCUSSION_TYP },
+    ThemeFile { path: "_templates/theme.typ", text: PDF_THEME_TYP },
     ThemeFile { path: "_static/guidedog.css", text: GUIDEDOG_CSS },
     ThemeFile { path: "_static/guidedog.js", text: GUIDEDOG_JS },
 ];
 
 /// The built-in text for a project-relative theme path, or `None` for other paths.
 pub fn builtin(path: &str) -> Option<&'static str> {
-    if path == "_templates/discussion.typ" {
-        return Some(DISCUSSION_TYP);
-    }
     FILES.iter().find(|f| f.path == path).map(|f| f.text)
 }
 
@@ -60,5 +70,8 @@ mod tests {
         assert!(LAYOUT_HTML.contains("{% block"), "the layout keeps Sphinx's blocks");
         assert_eq!(builtin("_static/other.css"), None);
         assert_eq!(builtin("_templates/discussion.typ"), Some(DISCUSSION_TYP));
+        for template in [BOOK_TYP, DISCUSSION_TYP] {
+            assert!(template.starts_with("#import \"theme.typ\":"));
+        }
     }
 }

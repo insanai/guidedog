@@ -41,7 +41,7 @@ fn quickstart_lays_out_a_sphinx_project() {
             ..Default::default()
         };
         let created = quickstart(&o).unwrap();
-        assert_eq!(created.len(), 10);
+        assert_eq!(created.len(), 12);
         let source = if separate { dir.join("source") } else { dir.clone() };
         for f in [
             "conf.toml",
@@ -50,6 +50,8 @@ fn quickstart_lays_out_a_sphinx_project() {
             "_static/guidedog.js",
             "_templates/layout.html",
             "_templates/book.typ",
+            "_templates/discussion.typ",
+            "_templates/theme.typ",
             "assets/images/README.txt",
             "assets/video/README.txt",
             "assets/audio/README.txt",

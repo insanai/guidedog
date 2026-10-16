@@ -28,7 +28,7 @@ pub struct Init {
     pub dir: PathBuf,
     /// The catalog's prefix.
     pub prefix: Prefix,
-    /// The display name, such as `Enso Discussions`.
+    /// The display name, such as `Example Discussions`.
     pub name: String,
     /// The default author, also the process draft's author.
     pub author: String,
@@ -91,6 +91,7 @@ pub fn init_plan(init: &Init) -> Result<Plan> {
         (".gitignore", fill(IGNORE, init)),
         ("template/rfc-template.rst", template),
         ("_templates/discussion.typ", gd_theme::DISCUSSION_TYP.to_string()),
+        ("_templates/theme.typ", gd_theme::PDF_THEME_TYP.to_string()),
         (path.as_str(), process),
     ];
     for (name, text) in files {

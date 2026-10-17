@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 07:02+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -26,10 +26,18 @@ msgid "**Write once. Explain well. Publish on the web and on paper.**"
 msgstr "**한 번 쓰고, 명확히 설명하고, 웹과 종이로 전하세요.**"
 
 #: ../../repository.rst:6
-msgid "Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one ``guidedog`` executable, with PDF typesetting and diagram rendering included."
-msgstr "Guidedog은 같은 reStructuredText 또는 Markdown 파일로 문서 사이트와 PDF 책을 만듭니다. 하나의 원고를 관리하고 웹과 종이의 독자에게 전합니다. 배포판은 PDF 조판과 다이어그램 렌더링을 포함한 실행 파일 ``guidedog`` 하나로 제공됩니다."
+msgid ""
+"Guidedog builds a documentation website and a PDF book from the same "
+"reStructuredText or Markdown files. We keep one set of source files and "
+"publish it for readers on the web and on paper. The release provides one "
+"``guidedog`` executable, with PDF typesetting and diagram rendering "
+"included."
+msgstr ""
+"Guidedog은 같은 reStructuredText 또는 Markdown 파일로 문서 사이트와 PDF 책을 만듭니다. 하나의 "
+"원고를 관리하고 웹과 종이의 독자에게 전합니다. 배포판은 PDF 조판과 다이어그램 렌더링을 포함한 실행 파일 ``guidedog`` "
+"하나로 제공됩니다."
 
-#: ../../repository.rst:10
+#: ../../repository.rst:8
 msgid ""
 "Sphinx inspires the authoring workflow. Guidedog is an independent "
 "system: configuration is declarative TOML, API extraction is static, and "
@@ -39,7 +47,7 @@ msgstr ""
 "작성 흐름은 Sphinx에서 배웠지만 Guidedog은 독립적인 시스템입니다. 설정은 선언형 TOML이며 API는 정적으로 "
 "추출합니다. Python 설정이나 확장은 실행하지 않습니다. Sphinx와의 완전한 호환은 목표가 아닙니다."
 
-#: ../../repository.rst:14
+#: ../../repository.rst:12
 msgid ""
 "This page is the repository overview. On GitHub, the ``README`` files at "
 "the root of the repository give the same overview in each language of the "
@@ -48,11 +56,11 @@ msgstr ""
 "이 페이지는 저장소 개요입니다. GitHub에서는 저장소 루트의 ``README`` 파일들이 매뉴얼의 각 언어로 같은 개요를 보여 "
 "줍니다."
 
-#: ../../repository.rst:17
+#: ../../repository.rst:15
 msgid "Start a project"
 msgstr "프로젝트 시작"
 
-#: ../../repository.rst:27
+#: ../../repository.rst:25
 msgid ""
 "The project contains ``conf.toml``, ``index.rst``, "
 "``_templates/layout.html``, ``_templates/book.typ``, and ``_static/``. "
@@ -66,7 +74,7 @@ msgstr ""
 "일반 파일입니다. HTML은 탐색, 검색, 코드 강조, 다이어그램, 수식을 제공합니다. PDF 책은 장, 상호 참조, 그림, 색인, "
 "언어에 맞는 조판을 제공합니다."
 
-#: ../../repository.rst:32
+#: ../../repository.rst:30
 msgid ""
 "The default theme is light. Readers can choose dark or the system theme. "
 "The manual detects the browser language on its landing page and "
@@ -77,11 +85,11 @@ msgstr ""
 "언어를 감지합니다. 저장해 둔 선택이 있으면 그것이 우선합니다. 특정 언어판이나 장으로 바로 가는 링크는 명시적인 요청으로 보고 "
 "그대로 따릅니다."
 
-#: ../../repository.rst:42
+#: ../../repository.rst:40
 msgid "Install"
 msgstr "설치"
 
-#: ../../repository.rst:45
+#: ../../repository.rst:43
 msgid ""
 "Each `release <https://github.com/insanai/guidedog/releases>`__ has an "
 "archive for Linux, macOS, and Windows, with ``SHA256SUMS``. The Typst "
@@ -99,7 +107,7 @@ msgstr ""
 "가져오거나 GitHub Pages에 게시할 때는 ``guidedog``\\ 에 내장된 HTTP 클라이언트를 쓰므로 ``curl`` "
 "프로그램이 필요 없습니다. 압축 파일을 확인하고 설치합니다:"
 
-#: ../../repository.rst:58
+#: ../../repository.rst:56
 msgid ""
 "The release notes describe each platform's requirements and limits. See "
 "the :doc:`installation guide <howto/install>` for the details."
@@ -107,11 +115,11 @@ msgstr ""
 "플랫폼별 요구 사항과 제약은 릴리스 노트에 나와 있습니다. 자세한 내용은 :doc:`설치 안내 <howto/install>`\\ 를 "
 "참고하세요."
 
-#: ../../repository.rst:61
+#: ../../repository.rst:59
 msgid "Build from source"
 msgstr "소스에서 빌드"
 
-#: ../../repository.rst:64
+#: ../../repository.rst:62
 msgid ""
 "Install a Rust toolchain (the workspace's ``rust-version`` or later) and "
 "the Graphviz development files (``libgvc``, ``libcgraph``; for example "
@@ -122,7 +130,7 @@ msgstr ""
 "``libcgraph``. 예: Debian과 Ubuntu의 ``graphviz-dev`` 또는 ``brew install "
 "graphviz``)을 설치합니다. 그런 다음 체크아웃한 루트에서 실행합니다:"
 
-#: ../../repository.rst:75
+#: ../../repository.rst:73
 msgid ""
 "The ``typst`` crates are a default feature of ``gd-typst``. Without them, "
 "Guidedog runs an installed, pinned ``typst`` program for PDF output. "
@@ -135,7 +143,7 @@ msgstr ""
 "<https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__\\ 에 설명되어 "
 "있습니다."
 
-#: ../../repository.rst:80
+#: ../../repository.rst:78
 msgid ""
 "The workspace is split by responsibility. The engine crates "
 "(``guidedoc``, the readers and renderers, ``guidedoc-defaults``) use only "
@@ -151,11 +159,11 @@ msgstr ""
 "``gd-graphdog``, ``gd-typst``, ...)는 엔진에 의존하지 않습니다. 프로젝트 빌더와 명령줄은 그 둘 위에 "
 "놓입니다. 프로그램은 ``cmd/``\\ 에 있습니다. :doc:`내부 구조 <internals/index>`\\ 를 참고하세요."
 
-#: ../../repository.rst:86
+#: ../../repository.rst:84
 msgid "Translate with Guidedog"
 msgstr "Guidedog으로 번역"
 
-#: ../../repository.rst:99
+#: ../../repository.rst:97
 msgid ""
 "Translate and review ``msgstr`` values in the PO files. Guidedog extracts "
 "POT files, merges catalogs, reports progress, and builds each edition. It "
@@ -170,11 +178,11 @@ msgstr ""
 "않습니다. 번역하는 것은 매뉴얼과 저장소 개요뿐이며, API와 GDS는 영어로 남습니다. 모든 언어판과 PDF 책을 한데 묶는 "
 "방법은 :doc:`매뉴얼 빌드 안내 <howto/maintain-docs>`\\ 를 참고하세요."
 
-#: ../../repository.rst:105
+#: ../../repository.rst:103
 msgid "Extend and publish"
 msgstr "확장과 게시"
 
-#: ../../repository.rst:108
+#: ../../repository.rst:106
 msgid ""
 "Write a build plugin or a publisher with the :doc:`step-by-step plugin "
 "chapter <plugins>`. A plugin implements one Rust trait. The same value is "
@@ -193,11 +201,11 @@ msgstr ""
 "--timeout=SECONDS``\\ 는 교환 하나가 끝날 때까지의 시간을 제한합니다(기본값: 300초). 이 값은 "
 "``--wait``\\ 보다 길게 잡습니다. 결과를 알 수 없게 되면 다시 게시하기 전에 먼저 복구합니다."
 
-#: ../../repository.rst:117
+#: ../../repository.rst:115
 msgid "Keep discussions"
 msgstr "논의 기록 관리"
 
-#: ../../repository.rst:120
+#: ../../repository.rst:118
 msgid ""
 "``guidedog dsc`` keeps proposals and decisions as reStructuredText "
 "records, one file each. It builds them into a website and PDF books. Each "
@@ -208,7 +216,7 @@ msgstr ""
 "이 기록을 웹사이트와 PDF 책으로 빌드합니다. 카탈로그마다 접두사가 있습니다. Guidedog의 설계 기록은 ``gds``\\ 를 "
 "쓰고, 다른 프로젝트라면 ``eds``\\ 를 쓸 수도 있습니다."
 
-#: ../../repository.rst:133
+#: ../../repository.rst:131
 msgid ""
 "A catalog's ``discussion.toml`` sets its lifecycle states, record types, "
 "and numbering. ``guidedog dsc config`` prints it. The commands come from "
@@ -223,24 +231,50 @@ msgstr ""
 "우리는 그 폴더에서 ``guidedog dsc check``\\ 를 실행합니다. :doc:`논의 카탈로그 관리하기 "
 "<howto/discussions>`\\ 를 참고하세요."
 
-#: ../../repository.rst:136
+#: ../../repository.rst:134
+msgid "Publish static sites"
+msgstr "정적 사이트 게시"
+
+#: ../../repository.rst:137
+msgid ""
+"``guidedog ssg`` manages articles, research logs, collections, feeds, "
+"pinned theme archives, and multi-project websites from the same "
+"``conf.toml`` and document tree:"
+msgstr ""
+"``guidedog ssg``\\ 는 동일한 ``conf.toml``\\ 과 문서 트리에서 글(article), 연구 기록, "
+"컬렉션, 피드, 해시로 고정된 테마 아카이브, 다중 프로젝트 웹사이트를 관리합니다:"
+
+#: ../../repository.rst:148
+msgid ""
+"Pages marked with ``:pdf: article`` also build standalone print-quality "
+"PDFs alongside their HTML pages. Multi-project websites mount "
+"sub-projects (such as ``docs/manual``, ``docs/api``, and ``docs/gds``) "
+"declaratively through ``[[site.mounts]]``. See :doc:`Static site "
+"publishing <howto/static-publishing>`."
+msgstr ""
+"``:pdf: article``\\ 이 표시된 페이지는 HTML 페이지와 함께 인쇄 품질의 독립형 PDF로도 빌드됩니다. 다중 "
+"프로젝트 웹사이트는 ``[[site.mounts]]``\\ 를 통해 하위 프로젝트(``docs/manual``, "
+"``docs/api``, ``docs/gds`` 등)를 선언적으로 마운트합니다. :doc:`정적 사이트 게시 "
+"<howto/static-publishing>`\\ 를 참고하세요."
+
+#: ../../repository.rst:150
 msgid "Read and embed"
 msgstr "문서 읽기와 임베딩"
 
-#: ../../repository.rst:139
+#: ../../repository.rst:153
 msgid ""
 ":doc:`Manual <index>`: tutorials, topics, practical tasks, reference, and "
 "internals."
 msgstr ":doc:`매뉴얼 <index>`: 튜토리얼, 주제, 실무 작업, 참조, 내부 구조."
 
-#: ../../repository.rst:140
+#: ../../repository.rst:154
 msgid ""
 ":doc:`API reference <api/index>`: generated from the Rust source of the "
 "main crates and included in the manual's PDF appendix."
 msgstr ""
 ":doc:`API 참조 <api/index>`: 주요 크레이트의 Rust 소스에서 생성하며, 매뉴얼 PDF 부록에도 들어갑니다."
 
-#: ../../repository.rst:142
+#: ../../repository.rst:156
 msgid ""
 ":download:`Engine guide <_static/repository/library-README.md>`: the "
 "``guidedoc`` crate's workspaces, requests, adapters, and conversion "
@@ -249,20 +283,20 @@ msgstr ""
 ":download:`엔진 안내 <_static/repository/library-README.md>`: ``guidedoc`` "
 "크레이트의 작업 공간, 요청, 어댑터, 변환 예제."
 
-#: ../../repository.rst:144
+#: ../../repository.rst:158
 msgid ""
 ":doc:`Templates <templates>`: customize HTML with Jinja and books with "
 "Typst."
 msgstr ":doc:`템플릿 <templates>`: Jinja로 HTML을, Typst로 책을 사용자 정의합니다."
 
-#: ../../repository.rst:145
+#: ../../repository.rst:159
 msgid ""
 ":download:`GDS <_static/repository/gds-README.md>`: numbered design "
 "records and implementation decisions."
 msgstr ""
 ":download:`GDS <_static/repository/gds-README.md>`: 번호가 붙은 설계 기록과 구현 결정."
 
-#: ../../repository.rst:147
+#: ../../repository.rst:161
 msgid ""
 ":download:`Discussion library <_static/repository/discussion-README.md>`: "
 "the catalogs that ``guidedog dsc`` keeps."
@@ -270,7 +304,7 @@ msgstr ""
 ":download:`논의 라이브러리 <_static/repository/discussion-README.md>`: "
 "``guidedog dsc``\\ 가 관리하는 카탈로그."
 
-#: ../../repository.rst:150
+#: ../../repository.rst:164
 msgid ""
 "Guidedoc works in a caller-owned, reusable workspace and returns "
 "structured diagnostics. The host manages files, budgets, caching, "
@@ -282,11 +316,11 @@ msgstr ""
 "네이티브 컴파일러는 호스트가 관리합니다. ``--untrusted``\\ 는 기능을 제한합니다. 프로세스 샌드박스가 아니며, 모든 "
 "네이티브 자원 사용을 제한하는 것도 아닙니다."
 
-#: ../../repository.rst:154
+#: ../../repository.rst:168
 msgid "Credits and license"
 msgstr "기여자와 라이선스"
 
-#: ../../repository.rst:157
+#: ../../repository.rst:171
 msgid ""
 "Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** "
 "and **Kanak Rathore**. Contributions are welcome through issues and pull "
@@ -297,7 +331,7 @@ msgstr ""
 "도왔습니다. 이슈와 풀 리퀘스트를 통한 기여를 환영합니다. 문서의 크레딧에는 개인 이메일 주소가 아니라 이름이나 핸들을 씁니다. "
 "Git 신원 설정은 따로 관리합니다."
 
-#: ../../repository.rst:162
+#: ../../repository.rst:176
 msgid ""
 "Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, "
 "Tree-sitter and Max Brunsfeld, Graphviz, and the Rust project."
@@ -305,7 +339,7 @@ msgstr ""
 "Sphinx와 Georg Brandl, Docutils와 David Goodger, Typst, Tree-sitter와 Max "
 "Brunsfeld, Graphviz, 그리고 Rust 프로젝트에 감사드립니다."
 
-#: ../../repository.rst:165
+#: ../../repository.rst:179
 msgid ""
 "Guidedog is released under the :download:`GNU Lesser General Public "
 "License v3.0 or later <_static/repository/LICENSE>` (LGPL-3.0-or-later), "
@@ -322,7 +356,7 @@ msgstr ""
 "문의하세요. 연락 방법과, 함께 제공되는 글꼴이나 프로그램에 컴파일되어 들어간 Rust 크레이트처럼 자체 라이선스를 따르는 서드파티 "
 "구성 요소 목록은 :download:`NOTICE <_static/repository/NOTICE>`\\ 에 있습니다."
 
-#: ../../repository.rst:173
+#: ../../repository.rst:187
 msgid ""
 "An additional permission allows Guidedog to be linked and distributed "
 "with Graphviz. See :download:`NOTICE <_static/repository/NOTICE>`."

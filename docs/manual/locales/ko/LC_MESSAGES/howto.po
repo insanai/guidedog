@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -26,8 +26,8 @@ msgid ""
 "review, and its state says where the decision stands. Guidedog's own "
 "design records, GDS, are one such catalog."
 msgstr ""
-"논의 카탈로그는 제안과 결정을 보관합니다. 논의 하나는 reStructuredText 기록 하나입니다. 기록은 검토를 시작할 때 번호를 "
-"받고, 상태는 결정이 어디까지 왔는지 알려 줍니다. Guidedog 자체의 설계 기록인 GDS도 이런 카탈로그입니다."
+"논의 카탈로그는 제안과 결정을 보관합니다. 논의 하나는 reStructuredText 기록 하나입니다. 기록은 검토를 시작할 때 "
+"번호를 받고, 상태는 결정이 어디까지 왔는지 알려 줍니다. Guidedog 자체의 설계 기록인 GDS도 이런 카탈로그입니다."
 
 #: ../../howto/discussions.rst:9
 msgid ""
@@ -40,10 +40,10 @@ msgid ""
 "build --help`` shows one command's options."
 msgstr ""
 "명령은 ``guidedog dsc init``, ``new``, ``list``, ``show``, ``promote``, "
-"``state``, ``index``, ``check``, ``build``, ``recover``, ``config``\\ 입니다. "
-"이 명령들은 모든 ``guidedog``\\ 에 링크된 논의 플러그인이 제공하므로 따로 설치할 것이 없습니다. 각 명령은 현재 폴더가 "
-"속한 카탈로그나 ``--dir``\\ 로 지정한 카탈로그에서 동작합니다. ``guidedog dsc --help``\\ 는 명령 "
-"목록을, ``guidedog dsc build --help``\\ 는 명령 하나의 옵션을 보여 줍니다."
+"``state``, ``index``, ``check``, ``build``, ``recover``, ``config``\\ "
+"입니다. 이 명령들은 모든 ``guidedog``\\ 에 링크된 논의 플러그인이 제공하므로 따로 설치할 것이 없습니다. 각 명령은 "
+"현재 폴더가 속한 카탈로그나 ``--dir``\\ 로 지정한 카탈로그에서 동작합니다. ``guidedog dsc --help``\\ "
+"는 명령 목록을, ``guidedog dsc build --help``\\ 는 명령 하나의 옵션을 보여 줍니다."
 
 #: ../../howto/discussions.rst:11
 msgid ""
@@ -81,14 +81,22 @@ msgid "``template/rfc-template.rst``, the template of new drafts;"
 msgstr "``template/rfc-template.rst``: 새 초안의 템플릿"
 
 #: ../../howto/discussions.rst:33
+msgid ""
+"``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable "
+"PDF layout and shared theme copied from the binary;"
+msgstr ""
+"``_templates/discussion.typ``, ``_templates/theme.typ``: 바이너리에서 복사된 편집 가능한 "
+"PDF 레이아웃과 공통 테마"
+
+#: ../../howto/discussions.rst:34
 msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
 msgstr "``registry.rst``, ``bundle.rst``: 생성된 색인"
 
-#: ../../howto/discussions.rst:34
+#: ../../howto/discussions.rst:35
 msgid "``records/XXXXX-eds-process.rst``, a draft of our review process."
 msgstr "``records/XXXXX-eds-process.rst``: 우리 검토 절차의 초안"
 
-#: ../../howto/discussions.rst:36
+#: ../../howto/discussions.rst:37
 msgid ""
 "We edit the process draft to say how our project decides. To start from "
 "our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), "
@@ -104,16 +112,16 @@ msgstr ""
 "``--labels=a,b``\\ 는 기록에 붙일 수 있는 레이블을 제한합니다. ``init``\\ 은 새 카탈로그를 제자리로 "
 "옮기기 전에 검사합니다. 파일이 있는 폴더에는 절대 쓰지 않습니다."
 
-#: ../../howto/discussions.rst:43
+#: ../../howto/discussions.rst:44
 msgid "Write and review"
 msgstr "작성과 검토"
 
-#: ../../howto/discussions.rst:46
+#: ../../howto/discussions.rst:47
 msgid ""
 "We run the commands in the catalog folder, or in any folder inside it."
 msgstr "명령은 카탈로그 폴더나 그 안의 어느 폴더에서든 실행합니다."
 
-#: ../../howto/discussions.rst:57
+#: ../../howto/discussions.rst:58
 msgid ""
 "A new draft has the number ``XXXXX``. Promotion gives it the next number "
 "and opens it for discussion. A state change needs ``--reason``, and "
@@ -125,11 +133,11 @@ msgstr ""
 "``--dry-run``\\ 은 실제로 바꾸지 않고 변경 내용을 보여 줍니다. 여기까지가 기본 설정입니다. 다음 절에서 이를 바꾸는 "
 "방법을 설명합니다."
 
-#: ../../howto/discussions.rst:62
+#: ../../howto/discussions.rst:63
 msgid "A record starts with its metadata, one field per line:"
 msgstr "기록은 메타데이터로 시작하며, 한 줄에 필드 하나를 씁니다."
 
-#: ../../howto/discussions.rst:76
+#: ../../howto/discussions.rst:77
 msgid ""
 "Authors and labels are JSON lists. ``last-updated`` may stand for "
 "``updated``. A record may also carry ``category``, ``status``, and "
@@ -142,11 +150,11 @@ msgstr ""
 "``status``\\ 를 상태에 맞춰 유지합니다. HTML과 PDF는 필드를 Number, Title, Authors, "
 "Updated, Labels 등으로 표시하고, 목록은 일반 텍스트로 보여 줍니다."
 
-#: ../../howto/discussions.rst:81
+#: ../../howto/discussions.rst:82
 msgid "Configure the lifecycle and numbering"
 msgstr "수명 주기와 번호 설정하기"
 
-#: ../../howto/discussions.rst:84
+#: ../../howto/discussions.rst:85
 msgid ""
 "``discussion.toml`` holds the catalog's settings. ``init`` writes every "
 "one of them, with comments. ``guidedog dsc config`` prints the settings "
@@ -154,10 +162,10 @@ msgid ""
 "are the process of Guidedog's own GDS."
 msgstr ""
 "``discussion.toml``\\ 에는 카탈로그 설정이 담깁니다. ``init``\\ 은 모든 설정을 주석과 함께 씁니다. "
-"``guidedog dsc config``\\ 는 현재 적용되는 설정을 출력합니다. 이 파일이 없는 카탈로그는 아래 기본값을 따릅니다. "
-"이 기본값이 Guidedog 자체 GDS의 절차입니다."
+"``guidedog dsc config``\\ 는 현재 적용되는 설정을 출력합니다. 이 파일이 없는 카탈로그는 아래 기본값을 "
+"따릅니다. 이 기본값이 Guidedog 자체 GDS의 절차입니다."
 
-#: ../../howto/discussions.rst:121
+#: ../../howto/discussions.rst:122
 msgid ""
 "``[workflow.states.NAME]`` defines a state. ``next`` lists the states the "
 "``state`` command may move a record to. ``evidence = true`` asks for "
@@ -174,7 +182,7 @@ msgstr ""
 "번호를 주는 것이 승격이기 때문입니다. 번호가 없는 초안은 자기 ``next``\\ 에 나열된 상태, 예를 들어 "
 "``abandoned``\\ 로만 옮길 수 있습니다."
 
-#: ../../howto/discussions.rst:128
+#: ../../howto/discussions.rst:129
 msgid ""
 "Numbers have at least ``width`` digits, padded with zeros. A number that "
 "needs more digits gets them, so 10000 follows 9999, and lists sort by "
@@ -189,26 +197,26 @@ msgstr ""
 "하지만 기록에 번호가 매겨진 뒤에 ``width``\\ 를 바꾸는 것은 안전하지 않습니다. 기존 번호가 더 이상 그 값과 맞지 않기 "
 "때문입니다."
 
-#: ../../howto/discussions.rst:134
+#: ../../howto/discussions.rst:135
 msgid ""
 "``guidedog dsc`` checks the file whenever it reads the catalog. A mistake "
 "names the line and what to write instead:"
 msgstr ""
-"``guidedog dsc``\\ 는 카탈로그를 읽을 때마다 이 파일을 검사합니다. 잘못이 있으면 그 줄과 대신 써야 할 내용을 알려 "
-"줍니다:"
+"``guidedog dsc``\\ 는 카탈로그를 읽을 때마다 이 파일을 검사합니다. 잘못이 있으면 그 줄과 대신 써야 할 내용을 "
+"알려 줍니다:"
 
-#: ../../howto/discussions.rst:149
+#: ../../howto/discussions.rst:150
 msgid ""
 "The process draft that ``init`` writes describes the lifecycle we "
 "configured. It has a table of the states and a diagram of the moves."
 msgstr ""
 "``init``\\ 이 쓰는 절차 초안은 우리가 설정한 수명 주기를 설명합니다. 상태 표와 상태 이동 다이어그램이 들어 있습니다."
 
-#: ../../howto/discussions.rst:152
+#: ../../howto/discussions.rst:153
 msgid "Build"
 msgstr "빌드"
 
-#: ../../howto/discussions.rst:160
+#: ../../howto/discussions.rst:161
 msgid ""
 "``guidedog dsc build`` writes the website to ``_build/html`` and one PDF "
 "per record to ``_build/pdf``. Naming a record writes only its PDF, to "
@@ -219,7 +227,7 @@ msgstr ""
 "``_build/pdf``\\ 에 씁니다. 기록 이름을 지정하면 그 PDF만 ``_build/selected``\\ 에 쓰고 전체 "
 "출력은 건드리지 않습니다. 경고가 있으면 빌드가 멈춥니다."
 
-#: ../../howto/discussions.rst:164
+#: ../../howto/discussions.rst:165
 msgid ""
 "The build is guidedog's own: the same build as ``guidedog build``, with "
 "the catalog as the project. Graphviz, Typst, and the other tools it needs "
@@ -229,14 +237,77 @@ msgid ""
 msgstr ""
 "빌드는 guidedog가 직접 합니다. 카탈로그를 프로젝트로 삼는다는 점만 빼면 ``guidedog build``\\ 와 같은 "
 "빌드입니다. 필요한 Graphviz, Typst 등의 도구도 guidedog에 들어 있는 것을 씁니다. Typst 기록으로 된 예전 "
-"카탈로그는 기록마다 Typst로 컴파일합니다. 내장 컴파일러 대신 다른 Typst 프로그램을 쓰려면 ``--typst=PATH``\\ "
-"로 지정합니다."
+"카탈로그는 기록마다 Typst로 컴파일합니다. 내장 컴파일러 대신 다른 Typst 프로그램을 쓰려면 "
+"``--typst=PATH``\\ 로 지정합니다."
 
-#: ../../howto/discussions.rst:166
+#: ../../howto/discussions.rst:167
+msgid "Discussion PDFs"
+msgstr "논의 기록 PDF"
+
+#: ../../howto/discussions.rst:170
+msgid ""
+"Each RST record uses an RFC-style paper layout. The record opens with a "
+"metadata panel, state badges, a short status note and compact contents, "
+"followed by its text. Numbered sections flow continuously. Running "
+"headers identify the catalog and record, and footers show the page number "
+"and total. Tables and captioned listings can continue across pages."
+msgstr ""
+"각 RST 기록은 RFC 스타일의 문서 레이아웃을 사용합니다. 기록은 메타데이터 패널, 상태 배지, 짧은 상태 안내문, 간결한 "
+"목차로 시작하고 그 뒤에 본문이 이어집니다. 번호가 매겨진 절은 페이지 구분 없이 이어집니다. 머리글에는 카탈로그와 기록 식별자가 "
+"표시되고 바닥글에는 현재 페이지 번호와 전체 페이지 수가 표시됩니다. 표와 캡션이 달린 목록은 페이지를 넘어 이어질 수 있습니다."
+
+#: ../../howto/discussions.rst:172
+msgid ""
+"The PDF builder recognizes the leading metadata, such as ``:eds-number:`` "
+"and ``:eds-title:``, for any catalog prefix. Existing catalogs without a "
+"copied discussion template use the current embedded layout. We keep "
+"existing template customizations until we replace or remove their files. "
+"Ordinary books keep their book template."
+msgstr ""
+"PDF 빌더는 어떤 카탈로그 접두사에 대해서든 ``:eds-number:``, ``:eds-title:`` 같은 선행 메타데이터를 "
+"인식합니다. 복사된 논의 템플릿이 없는 기존 카탈로그는 현재 내장된 레이아웃을 사용합니다. 기존에 사용자화한 템플릿은 해당 파일을 "
+"교체하거나 삭제할 때까지 그대로 유지되며, 일반 책은 기존의 책 템플릿을 그대로 사용합니다."
+
+#: ../../howto/discussions.rst:174
+msgid ""
+"The layout is embedded in the Guidedog binary. ``guidedog dsc init`` "
+"copies ``_templates/discussion.typ`` and its shared "
+"``_templates/theme.typ`` for customization. Existing catalogs without a "
+"copy use the embedded layout. It defines a ``book`` function with the "
+"usual PDF parameters and an additional ``record`` dictionary. "
+"``record.id`` is the readable identifier, ``record.catalog`` is the "
+"project name, and ``record.fields`` contains pairs of readable field "
+"labels and values. All values arrive as quoted strings. The source "
+"heading supplies the title and its anchor. The template reads the catalog "
+"metadata without assuming a fixed prefix or lifecycle. Its optional "
+"``contents`` and ``memo`` parameters control the contents and status "
+"note. :doc:`../templates` describes the shared PDF parameters."
+msgstr ""
+"이 레이아웃은 Guidedog 바이너리에 내장되어 있습니다. ``guidedog dsc init``\\ 은 사용자화를 위해 "
+"``_templates/discussion.typ``\\ 과 공통 테마 ``_templates/theme.typ``\\ 을 "
+"복사합니다. 복사본이 없는 기존 카탈로그는 내장 레이아웃을 사용합니다. 이 템플릿은 일반적인 PDF 매개변수와 추가 ``record`` "
+"딕셔너리를 받는 ``book`` 함수를 정의합니다. ``record.id``\\ 는 읽기 쉬운 식별자이고, "
+"``record.catalog``\\ 는 프로젝트 이름이며, ``record.fields``\\ 에는 사람이 읽을 수 있는 필드 레이블과 "
+"값의 쌍이 들어 있습니다. 모든 값은 따옴표로 감싼 문자열로 전달됩니다. 원본 문서의 제목이 제목과 앵커를 제공합니다. 템플릿은 "
+"고정된 접두사나 수명 주기를 가정하지 않고 카탈로그 메타데이터를 읽습니다. 선택 매개변수인 ``contents``\\ 와 "
+"``memo``\\ 로 목차와 상태 안내문을 제어할 수 있습니다. 공통 PDF 매개변수는 :doc:`../templates`\\ 에서 "
+"설명합니다."
+
+#: ../../howto/discussions.rst:176
+msgid ""
+"An ``--untrusted`` build uses the built-in discussion layout instead of "
+"running a project template. A record included as a chapter of a larger "
+"book keeps its metadata in that chapter; the root document selects the "
+"book's layout."
+msgstr ""
+"``--untrusted`` 빌드는 프로젝트 템플릿을 실행하는 대신 내장된 논의 레이아웃을 사용합니다. 더 큰 책의 한 장으로 포함된 "
+"기록은 해당 장 안에 메타데이터를 유지하며, 책 전체의 레이아웃은 루트 문서가 결정합니다."
+
+#: ../../howto/discussions.rst:178
 msgid "When an update is interrupted"
 msgstr "갱신이 중단되었을 때"
 
-#: ../../howto/discussions.rst:169
+#: ../../howto/discussions.rst:181
 msgid ""
 "Commands that change records hold the catalog's lock, ``.eds.lock``. An "
 "update of several files first writes a journal, ``.eds-journal.json``. If "
@@ -245,17 +316,17 @@ msgstr ""
 "기록을 바꾸는 명령은 카탈로그 잠금 ``.eds.lock``\\ 을 잡습니다. 여러 파일을 갱신할 때는 먼저 저널 "
 "``.eds-journal.json``\\ 을 씁니다. 갱신이 도중에 멈추면 다음 명령이 이를 알려 줍니다."
 
-#: ../../howto/discussions.rst:178
+#: ../../howto/discussions.rst:190
 msgid ""
 "Recovery puts back the files as they were. It refuses to overwrite a file "
 "someone edited since. ``guidedog dsc`` also checks each change before it "
 "writes anything. It refuses an empty or cut-short record, and an index "
 "without its generated region."
 msgstr ""
-"복구는 파일을 원래 상태로 되돌립니다. 그 뒤에 누군가 수정한 파일은 덮어쓰지 않습니다. ``guidedog dsc``\\ 는 무엇이든 "
-"쓰기 전에 각 변경도 검사합니다. 비어 있거나 중간에 잘린 기록, 생성 영역이 없는 색인은 거부합니다."
+"복구는 파일을 원래 상태로 되돌립니다. 그 뒤에 누군가 수정한 파일은 덮어쓰지 않습니다. ``guidedog dsc``\\ 는 "
+"무엇이든 쓰기 전에 각 변경도 검사합니다. 비어 있거나 중간에 잘린 기록, 생성 영역이 없는 색인은 거부합니다."
 
-#: ../../howto/discussions.rst:182
+#: ../../howto/discussions.rst:194
 msgid ""
 "``guidedog dsc`` keeps only each record's metadata in memory. It reads a "
 "record whole only to change it. So checking a large catalog stays fast "
@@ -264,11 +335,11 @@ msgstr ""
 "``guidedog dsc``\\ 는 기록마다 메타데이터만 메모리에 둡니다. 기록 전체는 바꿀 때만 읽습니다. 그래서 큰 카탈로그도 "
 "빠르게, 적은 메모리로 검사합니다."
 
-#: ../../howto/discussions.rst:185
+#: ../../howto/discussions.rst:197
 msgid "Use the library"
 msgstr "라이브러리 사용하기"
 
-#: ../../howto/discussions.rst:188
+#: ../../howto/discussions.rst:200
 msgid ""
 "The commands are one Rust crate, ``gd-discussion``. Its ``README.md`` "
 "shows how to load a catalog, plan a change, and apply it from our own "
@@ -277,7 +348,7 @@ msgstr ""
 "이 명령들은 Rust 크레이트 ``gd-discussion`` 하나로 되어 있습니다. 이 크레이트의 ``README.md``\\ 는 "
 "우리 프로그램에서 카탈로그를 읽고, 변경을 계획하고, 적용하는 방법을 보여 줍니다:"
 
-#: ../../howto/discussions.rst:206
+#: ../../howto/discussions.rst:218
 msgid ""
 "``ds::plugin()`` is the whole ``guidedog dsc`` command line, as a plugin. "
 "A ``guidedog`` of our own links it beside its other plugins (see "
@@ -440,22 +511,23 @@ msgstr "GitHub Pages에 게시하기"
 msgid ""
 "We can publish a Guidedog site to GitHub Pages in one of two ways. GitHub "
 "Actions can build and deploy it on each push, with released Guidedog and "
-"GitHub's official Pages actions, and no personal token. Or "
-"``guidedog pages`` can publish it from our own machine, whenever we ask "
-"or whenever the sources change. We use one route per site, because a "
+"GitHub's official Pages actions, and no personal token. Or ``guidedog "
+"publish pages`` can publish it from our own machine, whenever we ask or "
+"whenever the sources change. We use one route per site, because a "
 "repository has one Pages source: GitHub Actions or a branch."
 msgstr ""
 "Guidedog 사이트를 GitHub Pages에 게시하는 방법은 두 가지입니다. GitHub Actions를 쓰면 푸시할 때마다 "
-"릴리스된 Guidedog와 GitHub 공식 Pages 액션으로 사이트를 빌드하고 배포합니다. 개인 토큰은 필요 없습니다. 또는 "
-"``guidedog pages``\\ 로 우리 컴퓨터에서, 원할 때나 소스가 바뀔 때마다 게시할 수 있습니다. 저장소의 Pages "
-"소스는 GitHub Actions와 브랜치 중 하나뿐이므로 사이트마다 한 가지 방법만 씁니다."
+"릴리스된 Guidedog과 GitHub 공식 Pages 액션으로 사이트를 빌드하고 배포하며 개인 토큰은 필요 없습니다. 또는 "
+"``guidedog publish pages``\\ 로 우리 컴퓨터에서 원할 때나 소스가 바뀔 때마다 게시할 수 있습니다. 저장소의 "
+"Pages 소스는 GitHub Actions와 브랜치 중 하나뿐이므로 사이트마다 한 가지 방법만 사용합니다."
 
 #: ../../howto/github-pages.rst:12
 msgid ""
-"Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog pages "
-"publisher with a durable journal."
+"Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog "
+"publish pages publisher with a durable journal."
 msgstr ""
-"경로 1은 GitHub Actions CI/CD를, 경로 2는 영속 저널을 쓰는 로컬 guidedog pages 게시기를 사용합니다."
+"경로 1은 GitHub Actions CI/CD를, 경로 2는 영속 저널을 쓰는 로컬 guidedog publish pages 게시기를 "
+"사용합니다."
 
 #: ../../howto/github-pages.rst:12
 msgid "The two routes for publishing documentation to GitHub Pages."
@@ -471,14 +543,12 @@ msgstr "문서가 있는 저장소에서 다음을 실행합니다:"
 
 #: ../../howto/github-pages.rst:53
 msgid ""
-"(``guidedog publish pages`` does the same; see `Through guidedog "
-"publish`_.) On a machine that has never published, it does each missing "
-"step once and says what it does. It asks before anything that changes "
-"GitHub or this machine's permissions:"
+"On a machine that has never published, it does each missing step once and "
+"says what it does. It asks before anything that changes GitHub or this "
+"machine's permissions:"
 msgstr ""
-"(``guidedog publish pages``\\ 도 같은 일을 합니다. `guidedog publish로 게시하기 <Through "
-"guidedog publish_>`_\\ 를 참고하세요.) 한 번도 게시한 적 없는 컴퓨터에서는 빠진 단계를 한 번씩 수행하면서 무엇을 "
-"하는지 알려 줍니다. GitHub나 이 컴퓨터의 권한을 바꾸는 작업 전에는 먼저 묻습니다:"
+"한 번도 게시한 적 없는 컴퓨터에서는 빠진 단계를 한 번씩 수행하면서 무엇을 하는지 알려 줍니다. GitHub나 이 컴퓨터의 권한을 "
+"바꾸는 작업 전에는 먼저 묻습니다:"
 
 #: ../../howto/github-pages.rst:56
 msgid ""
@@ -563,14 +633,14 @@ msgstr "이 컴퓨터에서 단계별로 게시하기"
 
 #: ../../howto/github-pages.rst:88
 msgid ""
-"The step commands stay for scripts and for checking each part. "
-"``guidedog pages`` builds the project with the installed ``guidedog``. It "
-"pushes the whole site to a branch of its own in one Git commit."
+"The step commands stay for scripts and for checking each part. The linked "
+"Pages plugin builds the project with Guidedog. It pushes the whole site "
+"to a branch of its own in one Git commit."
 msgstr ""
-"단계별 명령은 스크립트에서 쓰거나 각 부분을 확인할 때 쓰도록 그대로 남아 있습니다. ``guidedog pages``\\ 는 "
-"설치된 ``guidedog``\\ 로 프로젝트를 빌드합니다. 그리고 사이트 전체를 Git 커밋 하나로 전용 브랜치에 푸시합니다."
+"단계별 명령은 스크립트에서 쓰거나 각 부분을 확인할 때 쓰도록 그대로 남아 있습니다. 링크된 Pages 플러그인은 "
+"Guidedog으로 프로젝트를 빌드한 뒤 사이트 전체를 Git 커밋 하나로 전용 브랜치에 푸시합니다."
 
-#: ../../howto/github-pages.rst:92
+#: ../../howto/github-pages.rst:91
 msgid ""
 "We write ``pages.toml`` beside our project. It names the repository, the "
 "branch, and the credential profile. It holds no secret, so we can commit "
@@ -579,7 +649,7 @@ msgstr ""
 "프로젝트 옆에 ``pages.toml``\\ 을 작성합니다. 이 파일은 저장소, 브랜치, 자격 증명 프로필을 지정합니다. 비밀 "
 "정보가 없으므로 커밋해도 됩니다:"
 
-#: ../../howto/github-pages.rst:99
+#: ../../howto/github-pages.rst:98
 msgid ""
 "Next we store a token for the profile. We make a fine-grained personal "
 "access token for the repository with **Contents: read and write**, and "
@@ -594,7 +664,7 @@ msgstr ""
 "**Administration: write** 권한도 필요합니다. 요청이 나오면 토큰을 붙여 넣습니다. 토큰은 화면에 표시되지 "
 "않으며 파일에 저장되지도 않습니다:"
 
-#: ../../howto/github-pages.rst:110
+#: ../../howto/github-pages.rst:109
 msgid ""
 "``auth login`` signs in with a code instead, for a GitHub App or OAuth "
 "App we registered with the device flow enabled: ``guidedog pages auth "
@@ -603,13 +673,13 @@ msgstr ""
 "``auth login``\\ 은 대신 코드로 로그인합니다. 기기 흐름을 활성화해 등록한 GitHub App이나 OAuth App에 "
 "쓰며, ``guidedog pages auth login --client-id=YOUR_APP_ID``\\ 로 실행합니다."
 
-#: ../../howto/github-pages.rst:114
+#: ../../howto/github-pages.rst:113
 msgid ""
 "We authorize the target, point Pages at the branch, and check that "
 "everything is ready:"
 msgstr "게시 대상을 승인하고, Pages가 이 브랜치를 가리키게 한 뒤, 모든 준비가 되었는지 확인합니다:"
 
-#: ../../howto/github-pages.rst:122
+#: ../../howto/github-pages.rst:121
 msgid ""
 "``bind`` refuses a branch that holds work Guidedog did not publish. "
 "``--adopt`` lets the next publication replace it. The branch must not be "
@@ -623,7 +693,7 @@ msgstr ""
 "다른 저장소를 가리키는 ``pages.toml``, 이름이 바뀌었거나 이전되었거나 다시 만들어진 저장소, 다른 계정의 토큰은 다시 "
 "바인딩할 때까지 Guidedog가 거부합니다."
 
-#: ../../howto/github-pages.rst:133
+#: ../../howto/github-pages.rst:132
 msgid ""
 "``publish`` builds with warnings as errors (``strict = true``) and "
 "``html_baseurl`` set to ``site_url``. It lists what it adds, changes, and "
@@ -639,33 +709,33 @@ msgstr ""
 "일은 없습니다. GitHub가 ``_static`` 같은 폴더도 제공하도록 ``.nojekyll`` 파일을 추가합니다. 그 뒤 "
 "GitHub Pages가 그 커밋을 배포할 때까지 최대 ``wait_seconds``\\ 초 동안 기다립니다."
 
-#: ../../howto/github-pages.rst:140
+#: ../../howto/github-pages.rst:139
 msgid "The exit status says what happened:"
 msgstr "종료 상태로 결과를 알 수 있습니다:"
 
-#: ../../howto/github-pages.rst:142
+#: ../../howto/github-pages.rst:141
 msgid "0: the site is live or was already published."
 msgstr "0: 사이트가 공개되었거나 이미 게시되어 있습니다."
 
-#: ../../howto/github-pages.rst:143
+#: ../../howto/github-pages.rst:142
 msgid "1: nothing was published."
 msgstr "1: 아무것도 게시하지 않았습니다."
 
-#: ../../howto/github-pages.rst:144
+#: ../../howto/github-pages.rst:143
 msgid "2: a usage, configuration, or missing step problem."
 msgstr "2: 사용법, 설정, 또는 빠진 단계의 문제입니다."
 
-#: ../../howto/github-pages.rst:145
+#: ../../howto/github-pages.rst:144
 msgid ""
 "6: GitHub accepted the publication but has not confirmed the deployment "
 "yet."
 msgstr "6: GitHub가 게시를 받아들였지만 아직 배포를 확인하지 않았습니다."
 
-#: ../../howto/github-pages.rst:146
+#: ../../howto/github-pages.rst:145
 msgid "7: it is not known whether the branch moved."
 msgstr "7: 브랜치가 옮겨졌는지 알 수 없습니다."
 
-#: ../../howto/github-pages.rst:148
+#: ../../howto/github-pages.rst:147
 msgid ""
 "We check later with ``guidedog pages status``. ``guidedog pages recover`` "
 "settles a publication whose answer was lost, and it never moves the "
@@ -674,7 +744,7 @@ msgstr ""
 "나중에 ``guidedog pages status``\\ 로 확인합니다. ``guidedog pages recover``\\ 는 "
 "응답을 받지 못한 게시를 마무리하며, 브랜치를 되돌리는 일은 없습니다."
 
-#: ../../howto/github-pages.rst:152
+#: ../../howto/github-pages.rst:151
 msgid ""
 "To publish a site we build ourselves, we write ``site = \"build/site\"`` "
 "instead of ``project``. The folder is copied and checked before it is "
@@ -683,11 +753,11 @@ msgstr ""
 "직접 빌드한 사이트를 게시하려면 ``project`` 대신 ``site = \"build/site\"``\\ 를 씁니다. 그 폴더는 "
 "게시 전에 복사되고 검사됩니다."
 
-#: ../../howto/github-pages.rst:155
+#: ../../howto/github-pages.rst:154
 msgid "Publish on every change, with a preview"
 msgstr "변경할 때마다 게시하고 미리 보기"
 
-#: ../../howto/github-pages.rst:158
+#: ../../howto/github-pages.rst:157
 msgid ""
 "``guidedog pages watch`` publishes once, then again whenever the sources "
 "change and have been quiet for ``debounce_ms`` (at most ``max_wait_ms`` "
@@ -698,7 +768,7 @@ msgstr ""
 "않을 때마다 다시 게시합니다(첫 변경 후 최대 ``max_wait_ms``). 빌드나 게시가 실패하면 알려 주며, 게시된 사이트는 "
 "그대로 유지됩니다."
 
-#: ../../howto/github-pages.rst:162
+#: ../../howto/github-pages.rst:161
 msgid ""
 "``guidedog pages watch --serve`` also serves the built site on this "
 "machine, at ``http://127.0.0.1:8000/`` (``--serve=PORT`` for another "
@@ -709,7 +779,7 @@ msgstr ""
 "``http://127.0.0.1:8000/``\\ 에서도 제공합니다(다른 포트는 ``--serve=PORT``). GitHub "
 "Pages가 배포하기 전에 빌드 결과를 매번 미리 볼 수 있습니다. Ctrl+C 한 번으로 감시와 미리 보기가 함께 멈춥니다."
 
-#: ../../howto/github-pages.rst:166
+#: ../../howto/github-pages.rst:165
 msgid ""
 "A scheduler can keep it running. On macOS, a launch agent in "
 "``~/Library/LaunchAgents/org.example.docs.plist``:"
@@ -773,8 +843,8 @@ msgstr ""
 "``github-pages`` 환경을 ``main``\\ 으로 제한합니다."
 
 #: ../../howto/github-pages.rst:235
-msgid "The workflow it writes is this one (for Guidedog 0.6.3):"
-msgstr "생성되는 워크플로는 다음과 같습니다(Guidedog 0.6.3 기준)."
+msgid "The workflow it writes is this one (for Guidedog 1.0.0-beta.6):"
+msgstr "생성되는 워크플로는 다음과 같습니다(Guidedog 1.0.0-beta.6 기준):"
 
 #: ../../howto/github-pages.rst:320
 msgid ""
@@ -855,70 +925,52 @@ msgstr "guidedog publish로 게시하기"
 
 #: ../../howto/github-pages.rst:362
 msgid ""
-"The GitHub Pages plugin is linked into ``guidedog``, and it adds two "
-"commands to it:"
-msgstr "GitHub Pages 플러그인은 ``guidedog``\\ 에 링크되어 있으며, 명령 두 개를 추가합니다:"
+"The Pages plugin is linked into ``guidedog``. ``guidedog publish pages`` "
+"guides the publication and builds the project with the host's own engine. "
+"``guidedog pages init``, ``auth``, ``bind``, ``setup``, ``doctor``, "
+"``watch``, ``status``, ``recover`` and ``workflow`` expose individual "
+"steps for scripts and maintenance."
+msgstr ""
+"Pages 플러그인은 ``guidedog``\\ 에 링크되어 있습니다. ``guidedog publish pages``\\ 는 게시 "
+"과정을 안내하고 호스트 자체 엔진으로 프로젝트를 빌드합니다. ``guidedog pages init``, ``auth``, "
+"``bind``, ``setup``, ``doctor``, ``watch``, ``status``, ``recover``, "
+"``workflow``\\ 는 스크립트와 유지 관리를 위해 각 단계를 개별 명령으로 제공합니다."
 
 #: ../../howto/github-pages.rst:369
-msgid ""
-"``guidedog publish pages`` runs the same guided publish as "
-"``guidedog publish pages``, with the same options, but guidedog builds "
-"the project itself, with its own engine and linked plugins, instead of "
-"starting an installed ``guidedog``. ``guidedog pages workflow`` is "
-"``guidedog pages workflow``. ``guidedog publish pages --help`` and "
-"``guidedog pages workflow --help`` list their options."
-msgstr ""
-"``guidedog publish pages``\\ 는 ``guidedog publish pages``\\ 와 같은 안내형 게시를 같은 "
-"옵션으로 실행합니다. 다만 설치된 ``guidedog``\\ 을 실행하는 대신, guidedog가 자체 엔진과 링크된 플러그인으로 "
-"프로젝트를 직접 빌드합니다. ``guidedog pages workflow``\\ 는 ``guidedog pages "
-"workflow``\\ 와 같습니다. 옵션은 ``guidedog publish pages --help``\\ 와 ``guidedog "
-"pages workflow --help``\\ 로 확인할 수 있습니다."
+msgid "No separate publisher program or registration step is needed."
+msgstr "별도의 게시기 프로그램이나 등록 단계는 필요하지 않습니다."
 
 #: ../../howto/github-pages.rst:371
-msgid ""
-"A custom ``guidedog`` built without the plugin can still have both "
-"commands: we register the ``guidedog pages`` program (``guidedog plugin "
-"register pages /usr/local/bin/guidedog pages``), and guidedog runs it for "
-"them on our terminal. ``guidedog pages`` is also the publisher program "
-"for ``guidedog publish --publisher=pages`` (see :doc:`../plugins`)."
-msgstr ""
-"이 플러그인 없이 빌드한 맞춤 ``guidedog``\\ 에서도 두 명령을 쓸 수 있습니다. ``guidedog pages`` "
-"프로그램을 등록하면(``guidedog plugin register pages "
-"/usr/local/bin/guidedog pages``) guidedog가 우리 터미널에서 그 프로그램을 대신 실행합니다. "
-"``guidedog pages``\\ 는 ``guidedog publish --publisher=pages``\\ 에서 쓰는 게시 "
-"프로그램이기도 합니다(:doc:`../plugins` 참고)."
-
-#: ../../howto/github-pages.rst:373
 msgid "Troubleshooting"
 msgstr "문제 해결"
 
-#: ../../howto/github-pages.rst:376
+#: ../../howto/github-pages.rst:374
 msgid "Every problem names its code and what to do. The common ones:"
 msgstr "모든 문제는 코드와 해야 할 일을 알려 줍니다. 자주 나오는 문제는 다음과 같습니다."
 
-#: ../../howto/github-pages.rst:382
+#: ../../howto/github-pages.rst:380
 msgid "Code"
 msgstr "코드"
 
-#: ../../howto/github-pages.rst:383
+#: ../../howto/github-pages.rst:381
 msgid "What to do"
 msgstr "해야 할 일"
 
-#: ../../howto/github-pages.rst:384
+#: ../../howto/github-pages.rst:382
 msgid "``pages.unbound``"
 msgstr "``pages.unbound``"
 
-#: ../../howto/github-pages.rst:385
+#: ../../howto/github-pages.rst:383
 msgid ""
 "Run ``guidedog pages bind``: this machine has not been allowed to publish "
 "there."
 msgstr "``guidedog pages bind``\\ 를 실행하세요. 이 컴퓨터는 그 대상에 게시하도록 허용되지 않았습니다."
 
-#: ../../howto/github-pages.rst:386
+#: ../../howto/github-pages.rst:384
 msgid "``pages.no-token``, ``pages.credential``"
 msgstr "``pages.no-token``, ``pages.credential``"
 
-#: ../../howto/github-pages.rst:387
+#: ../../howto/github-pages.rst:385
 msgid ""
 "Store a token with ``auth import`` or ``auth login``; GitHub refused or "
 "expired it."
@@ -926,11 +978,11 @@ msgstr ""
 "``auth import`` 또는 ``auth login``\\ 으로 토큰을 저장하세요. GitHub가 토큰을 거부했거나 토큰이 "
 "만료되었습니다."
 
-#: ../../howto/github-pages.rst:388
+#: ../../howto/github-pages.rst:386
 msgid "``pages.permission``"
 msgstr "``pages.permission``"
 
-#: ../../howto/github-pages.rst:389
+#: ../../howto/github-pages.rst:387
 msgid ""
 "Give the token Contents: read and write for the repository, or approve it "
 "for the organization's single sign-on."
@@ -938,67 +990,67 @@ msgstr ""
 "토큰에 저장소의 Contents: read and write 권한을 주거나, 조직의 Single Sign-On에 대해 토큰을 "
 "승인하세요."
 
-#: ../../howto/github-pages.rst:391
+#: ../../howto/github-pages.rst:389
 msgid "``pages.source``, ``pages.no-site``"
 msgstr "``pages.source``, ``pages.no-site``"
 
-#: ../../howto/github-pages.rst:392
+#: ../../howto/github-pages.rst:390
 msgid ""
 "Run ``guidedog pages setup``, or change the Pages source in the settings."
 msgstr "``guidedog pages setup``\\ 을 실행하거나, 설정에서 Pages 게시 원본을 바꾸세요."
 
-#: ../../howto/github-pages.rst:393
+#: ../../howto/github-pages.rst:391
 msgid "``pages.conflict``"
 msgstr "``pages.conflict``"
 
-#: ../../howto/github-pages.rst:394
+#: ../../howto/github-pages.rst:392
 msgid "Another publication moved the branch first; run the command again."
 msgstr "다른 게시가 먼저 브랜치를 옮겼습니다. 명령을 다시 실행하세요."
 
-#: ../../howto/github-pages.rst:395
+#: ../../howto/github-pages.rst:393
 msgid "``pages.ruleset``"
 msgstr "``pages.ruleset``"
 
-#: ../../howto/github-pages.rst:396
+#: ../../howto/github-pages.rst:394
 msgid ""
 "A ruleset or branch protection refused the push; allow the account to "
 "push."
 msgstr "규칙 세트나 브랜치 보호가 푸시를 거부했습니다. 해당 계정의 푸시를 허용하세요."
 
-#: ../../howto/github-pages.rst:397
+#: ../../howto/github-pages.rst:395
 msgid "``pages.guide``"
 msgstr "``pages.guide``"
 
-#: ../../howto/github-pages.rst:398
+#: ../../howto/github-pages.rst:396
 msgid ""
 "A step needs our answer and the run may not ask; run it in a terminal, or "
 "do the step the hint names."
 msgstr ""
 "어떤 단계에 우리의 답이 필요한데 실행 중에 물어볼 수 없습니다. 터미널에서 실행하거나, 힌트가 알려 주는 단계를 직접 수행하세요."
 
-#: ../../howto/github-pages.rst:400
+#: ../../howto/github-pages.rst:398
 msgid "``pages.unsettled``"
 msgstr "``pages.unsettled``"
 
-#: ../../howto/github-pages.rst:401
+#: ../../howto/github-pages.rst:399
 msgid "Run ``guidedog pages recover``."
 msgstr "``guidedog pages recover``\\ 를 실행하세요."
 
-#: ../../howto/github-pages.rst:402
+#: ../../howto/github-pages.rst:400
 msgid "``pages.deployment``"
 msgstr "``pages.deployment``"
 
-#: ../../howto/github-pages.rst:403
+#: ../../howto/github-pages.rst:401
 msgid ""
 "The branch holds the site, but the Pages build failed; see the "
 "repository's Actions tab."
 msgstr "브랜치에는 사이트가 있지만 Pages 빌드가 실패했습니다. 저장소의 Actions 탭을 확인하세요."
 
-#: ../../howto/github-pages.rst:406
+#: ../../howto/github-pages.rst:404
 msgid "References"
 msgstr "참고 자료"
 
-#: ../../howto/github-pages.rst:409
+#: ../../howto/github-pages.rst:407
 msgid ""
 "`GitHub's custom Pages workflows "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
@@ -1006,7 +1058,7 @@ msgstr ""
 "`GitHub 사용자 지정 Pages 워크플로 "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
 
-#: ../../howto/github-pages.rst:410
+#: ../../howto/github-pages.rst:408
 msgid ""
 "`Configure a Pages source "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
@@ -1014,7 +1066,7 @@ msgstr ""
 "`Pages 게시 원본 설정 "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
 
-#: ../../howto/github-pages.rst:411
+#: ../../howto/github-pages.rst:409
 msgid ""
 "`The configure-pages v6.0.0 release "
 "<https://github.com/actions/configure-pages/releases/tag/v6.0.0>`_."
@@ -1061,14 +1113,18 @@ msgstr ""
 
 #: ../../howto/install.rst:19
 msgid ""
-"The package also installs ``guidedog pages``, which publishes sites to "
-"GitHub Pages (see :doc:`github-pages`), and ``graphdog``. Discussion "
-"catalogs need no program of their own: ``guidedog dsc`` keeps them (see "
-":doc:`discussions`)."
+"The package installs one executable, ``guidedog``. Its built-in plugins "
+"add GitHub Pages publishing (``guidedog publish pages`` and ``guidedog "
+"pages``; see :doc:`github-pages`), discussion catalogs (``guidedog dsc``; "
+"see :doc:`discussions`), and static site publishing (``guidedog ssg``; "
+"see :doc:`static-publishing`). The ``gd-graphdog`` library encapsulates "
+"Graphviz inside Guidedog."
 msgstr ""
-"패키지는 GitHub Pages에 사이트를 게시하는 ``guidedog pages``\\ (:doc:`github-pages` 참고)와 "
-"``graphdog``\\ 도 함께 설치합니다. 논의 카탈로그에는 별도 프로그램이 필요 없습니다. ``guidedog dsc``\\ 가 "
-"관리합니다(:doc:`discussions` 참고)."
+"이 패키지는 ``guidedog`` 실행 파일 하나를 설치합니다. 내장 플러그인이 GitHub Pages 게시(``guidedog "
+"publish pages`` 및 ``guidedog pages``; :doc:`github-pages` 참고), 논의 카탈로그("
+"``guidedog dsc``; :doc:`discussions` 참고), 정적 사이트 게시(``guidedog ssg``; "
+":doc:`static-publishing` 참고) 명령을 추가합니다. ``gd-graphdog`` 라이브러리는 Guidedog "
+"내부에서 Graphviz를 캡슐화합니다."
 
 #: ../../howto/install.rst:21
 msgid ""
@@ -1177,11 +1233,12 @@ msgid ""
 "static build renders SVG and laid-out DOT, but not PNG."
 msgstr ""
 "``cargo xtask graphviz``\\ 는 Graphviz 16.1.0과 Expat 2.7.1을 내려받아 각각 고정된 "
-"SHA-256과 대조한 뒤, 정적 라이브러리를 ``target/graphviz/16.1.0``\\ 에 빌드하고 그 폴더를 출력합니다. "
-"C와 C++ 컴파일러, ``make``, ``curl``, ``tar``, ``xz``\\ 가 필요하며 몇 분 정도 걸립니다. 빌드에는 "
-"Guidedog가 쓰는 것만 들어갑니다. dot과 neato 레이아웃 플러그인(dot, neato, fdp, sfdp, circo, "
-"twopi, osage, patchwork)과 핵심 렌더러(SVG, DOT)이며, X11, cairo, gd, ltdl, zlib은 "
-"들어가지 않습니다. 그래서 정적 빌드는 SVG와 레이아웃을 마친 DOT은 출력하지만 PNG는 출력하지 않습니다."
+"SHA-256과 대조한 뒤, 정적 라이브러리를 ``target/graphviz/16.1.0``\\ 에 빌드하고 그 폴더를 "
+"출력합니다. C와 C++ 컴파일러, ``make``, ``curl``, ``tar``, ``xz``\\ 가 필요하며 몇 분 정도 "
+"걸립니다. 빌드에는 Guidedog가 쓰는 것만 들어갑니다. dot과 neato 레이아웃 플러그인(dot, neato, fdp, "
+"sfdp, circo, twopi, osage, patchwork)과 핵심 렌더러(SVG, DOT)이며, X11, cairo, "
+"gd, ltdl, zlib은 들어가지 않습니다. 그래서 정적 빌드는 SVG와 레이아웃을 마친 DOT은 출력하지만 PNG는 출력하지 "
+"않습니다."
 
 #: ../../howto/install.rst:72
 msgid ""
@@ -1190,8 +1247,8 @@ msgid ""
 "uses the default folder. ``guidedog --version`` then reports ``graphviz "
 "16.1.0 (static)``."
 msgstr ""
-"``GUIDEDOG_GRAPHVIZ_STATIC``\\ 은 ``gd-graphdog``\\ 의 빌드 스크립트에 라이브러리 위치를 알려 "
-"줍니다. ``gd-graphdog``\\ 의 ``static-graphviz`` 기능은 기본 폴더를 사용합니다. 그러면 "
+"``GUIDEDOG_GRAPHVIZ_STATIC``\\ 은 ``gd-graphdog``\\ 의 빌드 스크립트에 라이브러리 위치를 "
+"알려 줍니다. ``gd-graphdog``\\ 의 ``static-graphviz`` 기능은 기본 폴더를 사용합니다. 그러면 "
 "``guidedog --version``\\ 이 ``graphviz 16.1.0 (static)``\\ 을 표시합니다."
 
 #: ../../howto/install.rst:74
@@ -1256,27 +1313,29 @@ msgid ""
 "``tools/data``. ``cargo xtask --help`` lists the other repository tasks: "
 "the website, the fonts, and the release steps."
 msgstr ""
-"``cargo run -p check``\\ 는 ``tools/check``\\ 에 있는 소스 한도 검사기로, 함수와 파일 길이, 줄 "
-"너비를 검사합니다. ``cargo xtask tables --check``\\ 는 생성된 데이터 테이블이 ``tools/data``\\ "
-"의 업스트림 데이터와 일치하는지 검사합니다. ``cargo xtask --help``\\ 는 웹사이트, 글꼴, 릴리스 단계 같은 다른 "
-"저장소 작업을 보여 줍니다."
+"``cargo run -p check``\\ 는 ``tools/check``\\ 에 있는 소스 한도 검사기로, 함수와 파일 길이, "
+"줄 너비를 검사합니다. ``cargo xtask tables --check``\\ 는 생성된 데이터 테이블이 "
+"``tools/data``\\ 의 업스트림 데이터와 일치하는지 검사합니다. ``cargo xtask --help``\\ 는 "
+"웹사이트, 글꼴, 릴리스 단계 같은 다른 저장소 작업을 보여 줍니다."
 
 #: ../../howto/install.rst:113
-msgid "Other programs"
-msgstr "다른 프로그램"
+msgid "Built-in plugins"
+msgstr "내장 플러그인"
 
 #: ../../howto/install.rst:116
 msgid ""
-"``guidedog dsc``, the discussion catalogs, is part of ``guidedog``: the "
-"discussion plugin is linked in, so there is nothing more to build. The "
-"GitHub Pages publisher builds the same way as ``guidedog``. It does not "
-"link the engine:"
+"The release has one executable. The discussion plugin adds ``guidedog "
+"dsc``. The static site plugin adds ``guidedog ssg``. The Pages plugin "
+"adds ``guidedog publish pages`` and ``guidedog pages`` maintenance "
+"commands. All three are linked into ``guidedog`` and use its services; no "
+"additional program or registration is needed."
 msgstr ""
-"논의 카탈로그를 다루는 ``guidedog dsc``\\ 는 ``guidedog``\\ 의 일부입니다. 논의 플러그인이 링크되어 "
-"있으므로 더 빌드할 것이 없습니다. GitHub Pages 게시기는 ``guidedog``\\ 과 같은 방식으로 빌드하며, 엔진을 "
-"링크하지 않습니다:"
+"릴리스는 실행 파일 하나로 제공됩니다. 논의 플러그인은 ``guidedog dsc``\\ 를, 정적 사이트 플러그인은 "
+"``guidedog ssg``\\ 를, Pages 플러그인은 ``guidedog publish pages``\\ 와 "
+"``guidedog pages`` 유지 관리 명령을 추가합니다. 세 플러그인 모두 ``guidedog``\\ 에 링크되어 그 "
+"서비스를 사용하므로 별도의 프로그램이나 등록이 필요하지 않습니다."
 
-#: ../../howto/install.rst:122
+#: ../../howto/install.rst:118
 msgid ""
 "It keeps tokens in the system's credential store: the Keychain on macOS, "
 "the Credential Manager on Windows, and on Linux the Secret Service "
@@ -1287,11 +1346,11 @@ msgstr ""
 "``secret-tool`` 프로그램(``libsecret-tools``)을 거치는 Secret Service입니다. 이 프로그램은 "
 "토큰을 처음 저장하거나 읽을 때만 필요합니다."
 
-#: ../../howto/install.rst:126
+#: ../../howto/install.rst:122
 msgid "Embed the engine"
 msgstr "엔진 임베드하기"
 
-#: ../../howto/install.rst:129
+#: ../../howto/install.rst:125
 msgid ""
 "The conversion engine is a library. A Rust program can convert text "
 "without the ``guidedog`` command, through the ``guidedoc`` crate and the "
@@ -1300,7 +1359,7 @@ msgstr ""
 "변환 엔진은 라이브러리입니다. Rust 프로그램은 ``guidedog`` 명령 없이도 ``guidedoc`` 크레이트와 필요한 "
 "리더, 렌더러 크레이트로 텍스트를 변환할 수 있습니다."
 
-#: ../../howto/install.rst:156
+#: ../../howto/install.rst:152
 msgid ""
 "``guidedoc_rst::reader()``, ``guidedoc_commonmark::MYST_READER``, "
 "``guidedoc_typst::renderer()`` and ``guidedoc_text::renderer()`` join the "
@@ -1407,9 +1466,9 @@ msgid ""
 "``_build/pdf`` intact."
 msgstr ""
 "``docs/gds``\\ 는 여느 논의 카탈로그와 같으므로 이곳에서 ``guidedog dsc``\\ 를 "
-"실행합니다(:doc:`discussions` 참고). 메타데이터, 번호, 상태, 복구를 관리합니다. RST 게시 경로는 프로젝트 엔진을 "
-"같은 프로세스 안에서 호출합니다. 전체 HTML 사이트와 기록마다 별도의 PDF를 만듭니다. 선택자는 PDF의 범위만 제한합니다. "
-"HTML은 전체 카탈로그를 갖춘 일관된 사이트로 남습니다. 선택한 PDF 미리 보기는 "
+"실행합니다(:doc:`discussions` 참고). 메타데이터, 번호, 상태, 복구를 관리합니다. RST 게시 경로는 프로젝트 "
+"엔진을 같은 프로세스 안에서 호출합니다. 전체 HTML 사이트와 기록마다 별도의 PDF를 만듭니다. 선택자는 PDF의 범위만 "
+"제한합니다. HTML은 전체 카탈로그를 갖춘 일관된 사이트로 남습니다. 선택한 PDF 미리 보기는 "
 "``_build/selected/<artifact>/pdf``\\ 를 사용하며, ``_build/pdf``\\ 의 전체 카탈로그는 "
 "그대로 둡니다."
 
@@ -1936,8 +1995,8 @@ msgid ""
 "output's one cache folder beside it (``.<target>.guidedog``), so the "
 "output gains a single hidden neighbour."
 msgstr ""
-"**스테이징:** 새로 렌더링한 페이지는 모두 숨겨진 스테이징 폴더(``.<target>.next``)에 씁니다. 기본 빌더에서는 이 "
-"폴더가 빌드 폴더 안에 있습니다. ``-o``\\ 로 지정한 출력에서는 출력 옆에 있는 캐시 폴더 "
+"**스테이징:** 새로 렌더링한 페이지는 모두 숨겨진 스테이징 폴더(``.<target>.next``)에 씁니다. 기본 빌더에서는 "
+"이 폴더가 빌드 폴더 안에 있습니다. ``-o``\\ 로 지정한 출력에서는 출력 옆에 있는 캐시 폴더 "
 "하나(``.<target>.guidedog``) 안에 있으므로, 출력 옆에는 숨겨진 폴더 하나만 생깁니다."
 
 #: ../../howto/publish.rst:53
@@ -2094,25 +2153,36 @@ msgstr ""
 #: ../../howto/publish.rst:129
 msgid ""
 "When this variable is set, Guidedog uses the specified Unix epoch "
-"timestamp instead of the current system clock for all date formatting and "
-"template variables."
-msgstr "지정하면 시스템 현재 시각 대신 해당 Unix 타임스탬프를 날짜와 템플릿 변수에 사용합니다."
+"timestamp instead of the current system clock for all date formatting, "
+"publication eligibility checks, and template variables. We can also pass "
+"``--now=2026-05-01T09:00:00Z`` to ``guidedog build``, ``guidedog serve``, "
+"or ``guidedog ssg build`` to evaluate scheduled ``:publish-at:`` and "
+"``:expires-at:`` windows against an explicit RFC 3339 instant, or "
+"``--preview`` to include drafts and future-scheduled pages in a local "
+"build. See :doc:`static-publishing`."
+msgstr ""
+"이 변수를 설정하면 Guidedog은 모든 날짜 서식 지정, 공개 가능 여부 검사, 템플릿 변수에 현재 시스템 시계 대신 지정된 "
+"Unix 에포크 타임스탬프를 사용합니다. 또한 ``guidedog build``, ``guidedog serve``, "
+"``guidedog ssg build``\\ 에 ``--now=2026-05-01T09:00:00Z``\\ 를 전달해 예약된 "
+"``:publish-at:``\\ 과 ``:expires-at:`` 기간을 명시적인 RFC 3339 시각 기준으로 평가하거나, "
+"``--preview``\\ 를 전달해 초안과 미래로 예약된 페이지를 로컬 빌드에 포함할 수 있습니다. "
+":doc:`static-publishing`\\ 을 참고하세요."
 
-#: ../../howto/publish.rst:132
+#: ../../howto/publish.rst:131
 msgid "Deployment options"
 msgstr "배포 방식"
 
-#: ../../howto/publish.rst:135
+#: ../../howto/publish.rst:134
 msgid "Once the build succeeds, we deploy the static files to our host:"
 msgstr "빌드가 성공하면 정적 파일을 호스트에 배포합니다:"
 
-#: ../../howto/publish.rst:137
+#: ../../howto/publish.rst:136
 msgid ""
 "**Static web servers (Nginx / Caddy / Apache):** Point the server's root "
 "directive directly to the built HTML directory."
 msgstr "**웹 서버(Nginx / Caddy / Apache):** 서버의 루트를 생성된 HTML 디렉터리로 지정합니다."
 
-#: ../../howto/publish.rst:139
+#: ../../howto/publish.rst:138
 msgid ""
 "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud "
 "Storage):** Sync the contents of ``_build/html`` to our bucket with the "
@@ -2121,23 +2191,22 @@ msgstr ""
 "**클라우드 스토리지 버킷(AWS S3 / Cloudflare R2 / Google Cloud Storage):** 클라우드 "
 "제공자의 CLI 도구로 ``_build/html``\\ 의 내용을 버킷에 동기화합니다."
 
-#: ../../howto/publish.rst:141
+#: ../../howto/publish.rst:140
 msgid "**GitHub Pages:**"
 msgstr "**GitHub Pages:**"
 
-#: ../../howto/publish.rst:143
+#: ../../howto/publish.rst:142
 msgid ""
 "To deploy directly from our own machine, we run ``guidedog publish "
 "pages``. It asks for what is still missing (the repository, a token, the "
-"Pages settings), then builds and publishes in one push. "
-"``guidedog pages`` offers the same steps one by one. See "
-":doc:`github-pages`."
+"Pages settings), then builds and publishes in one push. ``guidedog "
+"pages`` offers the same steps one by one. See :doc:`github-pages`."
 msgstr ""
 "내 컴퓨터에서 바로 배포하려면 ``guidedog publish pages``\\ 를 실행합니다. 아직 빠진 정보(저장소, 토큰, "
 "Pages 설정)를 물어본 뒤 한 번의 푸시로 빌드하고 게시합니다. ``guidedog pages``\\ 는 같은 단계를 하나씩 "
 "실행할 수 있게 해 줍니다. :doc:`github-pages`\\ 를 참고하세요."
 
-#: ../../howto/publish.rst:147
+#: ../../howto/publish.rst:146
 msgid ""
 "For automated deployments with GitHub Actions, ``guidedog pages "
 "workflow`` writes a workflow that builds and deploys the site. See "
@@ -2146,7 +2215,7 @@ msgstr ""
 "GitHub Actions로 자동 배포할 때는 ``guidedog pages workflow``\\ 가 사이트를 빌드하고 배포하는 "
 "워크플로를 작성해 줍니다. :doc:`github-pages`\\ 를 참고하세요."
 
-#: ../../howto/publish.rst:149
+#: ../../howto/publish.rst:148
 msgid ""
 "For any other destination, we write a publisher plugin as described in "
 ":doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
@@ -2154,7 +2223,7 @@ msgstr ""
 "그 밖의 대상에는 :doc:`../plugins`\\ 에서 설명하는 대로 게시기 플러그인을 작성하고 ``guidedog "
 "publish --publisher=ID``\\ 로 실행합니다."
 
-#: ../../howto/publish.rst:152
+#: ../../howto/publish.rst:151
 msgid ""
 "On filesystems with directory exchange, the output path switches in one "
 "operation. The fallback uses two renames and can briefly leave that path "
@@ -2166,3 +2235,494 @@ msgstr ""
 "디렉터리 교환을 지원하는 파일 시스템에서는 출력 경로가 한 번의 작업으로 바뀝니다. 대체 방식은 이름을 두 번 바꾸므로 그 경로가 "
 "잠시 사라질 수 있습니다. 그래도 일부만 조립된 트리가 드러나는 일은 없습니다. 저널 복구는 중단된 전환을 마무리하거나 되돌립니다. "
 "여러 번 요청하는 클라이언트는 두 세대에 걸칠 수 있습니다. 빌드는 탐색 세션 전체에 걸쳐 하나의 스냅샷을 보장하지 않습니다."
+
+#: ../../howto/static-publishing.rst:1
+msgid "Static websites and articles"
+msgstr "정적 웹사이트와 글"
+
+#: ../../howto/static-publishing.rst:4
+msgid ""
+"Dated articles, release notes, whitepapers and standalone landing pages "
+"share the normal HTML and PDF pipeline. Leading metadata fields declare "
+"when a page is eligible for publication, which layout it uses, and "
+"whether it also compiles to a standalone article PDF."
+msgstr ""
+"날짜가 있는 글(article), 릴리스 노트, 백서, 독립형 랜딩 페이지는 모두 일반 HTML 및 PDF 파이프라인을 공유합니다. "
+"문서 맨 앞의 메타데이터 필드는 페이지의 공개 가능 시점, 사용할 레이아웃, 독립형 글 PDF로도 컴파일할지 여부를 선언합니다."
+
+#: ../../howto/static-publishing.rst:6
+msgid "Authoring and publication state"
+msgstr "작성과 게시 상태"
+
+#: ../../howto/static-publishing.rst:9
+msgid ""
+"The ``guidedog ssg`` commands create and transition articles in place:"
+msgstr "``guidedog ssg`` 명령은 글을 생성하고 제자리에서 상태를 전환합니다:"
+
+#: ../../howto/static-publishing.rst:16
+msgid ""
+"Pass a ``.md`` path to create Markdown with YAML front matter instead of "
+"reStructuredText. For Markdown builds, include ``.md`` in "
+"``source_suffix`` and enable ``myst_parser`` in ``extensions`` as usual. "
+"``new`` creates a draft and refuses to overwrite an existing file. "
+"``publish`` clears draft, schedule and expiration, retaining an existing "
+"past date or stamping the current UTC date when the source had none or a "
+"future date. ``draft`` withholds a source from subsequent release builds "
+"without discarding its existing date metadata. Version control stays in "
+"the author's hands; the commands never commit, tag or move files."
+msgstr ""
+"reStructuredText 대신 YAML 프런트 매터가 있는 Markdown을 만들려면 ``.md`` 경로를 전달합니다. "
+"Markdown 빌드를 사용할 때는 평소처럼 ``source_suffix``\\ 에 ``.md``\\ 를 포함하고 "
+"``extensions``\\ 에서 ``myst_parser``\\ 를 활성화하세요. ``new``\\ 는 초안을 생성하며 기존 "
+"파일을 덮어쓰지 않습니다. ``publish``\\ 는 초안, 예약, 만료 설정을 지우고, 기존의 과거 날짜를 유지하거나 원본에 "
+"날짜가 없거나 미래 날짜가 적혀 있으면 현재 UTC 날짜를 기록합니다. ``draft``\\ 는 기존 날짜 메타데이터를 버리지 않고 "
+"이후 릴리스 빌드에서 원본을 보류합니다. 버전 관리는 작성자의 몫이며, 이 명령들은 파일을 커밋하거나 태그를 붙이거나 이동하지 "
+"않습니다."
+
+#: ../../howto/static-publishing.rst:18
+msgid ""
+"An article declares its metadata in the leading field list (or YAML front "
+"matter block):"
+msgstr "글은 문서 맨 앞의 필드 목록(또는 YAML 프런트 매터 블록)에 메타데이터를 선언합니다:"
+
+#: ../../howto/static-publishing.rst:33
+msgid ""
+"Date-only publication starts at midnight UTC. ``publish-at`` overrides "
+"that boundary with an RFC 3339 instant, and ``expires-at`` ends "
+"publication at an exclusive instant. Drafts, future articles and expired "
+"articles are excluded before navigation, search, feeds and source "
+"downloads are built. Publication metadata is source configuration and is "
+"excluded from gettext catalogs. Recognized publication fields supply "
+"layout data and are omitted from body rendering and search text, while "
+"unknown fields and ordinary later field lists remain content. To vary "
+"metadata for a separate language edition, edit that edition's source "
+"files. Invalid publication metadata stops the output commit and preserves "
+"the previous successful website."
+msgstr ""
+"날짜만 적은 게시는 UTC 자정에 시작됩니다. ``publish-at``\\ 은 이 경계를 RFC 3339 시각으로 재정의하고, "
+"``expires-at``\\ 은 지정한 시각(해당 시각 미포함)에 게시를 종료합니다. 초안, 미래 글, 만료된 글은 탐색, 검색, "
+"피드, 소스 다운로드가 생성되기 전에 먼저 제외됩니다. 게시 메타데이터는 소스 설정이므로 gettext 카탈로그에서 제외됩니다. "
+"인식된 게시 필드는 레이아웃 데이터를 제공하며 본문 렌더링과 검색 텍스트에서는 생략되고, 알 수 없는 필드나 뒤쪽에 나오는 일반 "
+"필드 목록은 본문 콘텐츠로 남습니다. 별도 언어판의 메타데이터를 다르게 하려면 해당 언어판의 소스 파일을 편집하세요. 잘못된 게시 "
+"메타데이터가 있으면 출력 커밋을 중단하고 이전에 성공한 웹사이트를 그대로 보존합니다."
+
+#: ../../howto/static-publishing.rst:37
+msgid ""
+"Sources with leading metadata pass through the build-clock gate; eligible "
+"documents produce HTML pages, optional article PDFs, collection archives "
+"and discovery feeds, while withheld documents stay in the private cache."
+msgstr ""
+"선행 메타데이터가 있는 소스는 빌드 시각 게이트를 거칩니다. 공개 조건을 충족한 문서는 HTML 페이지, 선택적 글 PDF, 컬렉션 "
+"아카이브, 탐색 피드를 생성하고, 보류된 문서는 비공개 캐시에 머뭅니다."
+
+#: ../../howto/static-publishing.rst:37
+msgid ""
+"The build-clock gate filters sources before navigation, collections, "
+"feeds and article PDFs are built."
+msgstr ""
+"빌드 시각 게이트는 탐색, 컬렉션, 피드, 글 PDF를 빌드하기 전에 소스를 필터링합니다."
+
+#: ../../howto/static-publishing.rst:63
+msgid ""
+"Use ``guidedog build html --preview`` (or ``guidedog serve --preview``) "
+"to inspect unpublished pages locally. When keeping both public and "
+"preview outputs on disk, write the preview to a separate output directory:"
+msgstr ""
+"비공개 페이지를 로컬에서 확인하려면 ``guidedog build html --preview``(또는 ``guidedog serve "
+"--preview``)를 사용하세요. 디스크에 공개 출력과 미리보기 출력을 함께 둘 때는 미리보기를 별도의 출력 디렉터리에 "
+"작성하세요:"
+
+#: ../../howto/static-publishing.rst:67
+msgid "Collections, archives and feeds"
+msgstr "컬렉션, 아카이브, 피드"
+
+#: ../../howto/static-publishing.rst:70
+msgid ""
+"Embed a chronological list of eligible articles in any page with ``.. "
+"postlist::``:"
+msgstr "``.. postlist::``\\ 를 사용해 어느 페이지에나 공개 대상 글의 시간순 목록을 넣을 수 있습니다:"
+
+#: ../../howto/static-publishing.rst:80
+msgid ""
+"``:path:`` matches docnames without a source suffix. Category, author and "
+"series filters match exactly, and every listed tag must match. Articles "
+"are ordered by publication instant (newest first by default), with "
+"docname breaking ties; ``:sort: date`` places the oldest first. ``:style: "
+"cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each "
+"article's plain-text summary."
+msgstr ""
+"``:path:``\\ 는 소스 확장자를 제외한 문서 이름(docname)과 대조합니다. 카테고리, 저자, 시리즈 필터는 정확히 "
+"일치해야 하며, 나열된 모든 태그가 일치해야 합니다. 글은 게시 시점 순(기본값은 최신순)으로 정렬되고 시점이 같으면 문서 이름으로 "
+"순서를 정하며, ``:sort: date``\\ 는 오래된 글을 먼저 놓습니다. ``:style: cards``\\ 는 카드 레이아웃 "
+"CSS 클래스를 추가하고, ``:excerpts:``\\ 는 각 글의 일반 텍스트 요약을 포함합니다."
+
+#: ../../howto/static-publishing.rst:82
+msgid "Enable site-wide discovery files in ``conf.toml``:"
+msgstr "``conf.toml``\\ 에서 사이트 전체 탐색 파일을 활성화합니다:"
+
+#: ../../howto/static-publishing.rst:91
+msgid ""
+"The HTML and dirhtml builders emit ``sitemap.xml``, ``rss.xml`` and "
+"``atom.xml`` using the configured ``base_url`` (including any hosting "
+"prefix). Discovery files derive their timestamps from source metadata "
+"rather than the wall clock, producing identical bytes when eligible "
+"sources and metadata are unchanged."
+msgstr ""
+"HTML 및 dirhtml 빌더는 설정된 ``base_url``(호스팅 경로 접두사 포함)을 사용해 ``sitemap.xml``, "
+"``rss.xml``, ``atom.xml``\\ 을 생성합니다. 탐색 파일은 시스템 시계가 아니라 소스 메타데이터에서 타임스탬프를 "
+"가져오므로, 공개 대상 소스와 메타데이터가 바뀌지 않았다면 동일한 바이트를 만들어 냅니다."
+
+#: ../../howto/static-publishing.rst:93
+msgid ""
+"Generate taxonomy archives and paginated collections from the same "
+"``[site]`` table:"
+msgstr "같은 ``[site]`` 테이블에서 분류(taxonomy) 아카이브와 페이지가 나뉜 컬렉션을 생성합니다:"
+
+#: ../../howto/static-publishing.rst:110
+msgid ""
+"The collection starts at ``journal/index.html`` and continues at "
+"``journal/page/2/index.html`` with relative previous and next links. A "
+"zero ``page_size`` keeps the collection on a single page. Each collection "
+"accepts ``path``, ``category``, ``tags``, ``author``, ``series`` and "
+"``year`` filters. When ``feeds = true``, ``journal/rss.xml`` and "
+"``journal/atom.xml`` contain the complete filtered selection across all "
+"pages. The collection layout defaults to ``collection.html`` unless "
+"``template`` names an override. Templates receive the current page "
+"number, page count and selected posts in ``collection``, with "
+"``collection.previous_url`` and ``collection.next_url`` set to relative "
+"URLs or ``None``. Each post entry provides ``title``, ``docname``, "
+"``date``, ``url``, ``summary`` and typed ``meta`` values, including its "
+"optional ``pdf_url``."
+msgstr ""
+"컬렉션은 ``journal/index.html``\\ 에서 시작해 상대 경로의 이전·다음 링크와 함께 "
+"``journal/page/2/index.html``\\ 로 이어집니다. ``page_size``\\ 가 ``0``\\ 이면 컬렉션 "
+"전체를 한 페이지에 유지합니다. 각 컬렉션에는 ``path``, ``category``, ``tags``, ``author``, "
+"``series``, ``year`` 필터를 지정할 수 있습니다. ``feeds = true``\\ 일 때 "
+"``journal/rss.xml``\\ 과 ``journal/atom.xml``\\ 에는 모든 페이지에 걸친 필터링 결과 전체가 "
+"담깁니다. 컬렉션 레이아웃은 ``template``\\ 으로 재정의하지 않으면 기본값으로 ``collection.html``\\ 을 "
+"사용합니다. 템플릿은 ``collection``\\ 을 통해 현재 페이지 번호, 전체 페이지 수, 선택된 포스트들을 받으며, "
+"``collection.previous_url``\\ 과 ``collection.next_url``\\ 은 상대 URL이나 "
+"``None``\\ 으로 설정됩니다. 각 포스트 항목은 ``title``, ``docname``, ``date``, ``url``, "
+"``summary``\\ 와 선택적인 ``pdf_url``\\ 을 포함한 타입이 지정된 ``meta`` 값을 제공합니다."
+
+#: ../../howto/static-publishing.rst:112
+msgid ""
+"Taxonomy archives are written at paths such as ``tags/rust/index.html`` "
+"and ``year/2026/index.html``. Headings preserve the original label text "
+"while filesystem paths escape uppercase, punctuation and non-ASCII bytes "
+"so distinct labels never collide on case-insensitive filesystems. "
+"Generated pages never overwrite an author-written page or another "
+"generated output. When publication state or collection membership "
+"shrinks, the output commit removes obsolete archive and pagination pages "
+"automatically."
+msgstr ""
+"분류 아카이브는 ``tags/rust/index.html``, ``year/2026/index.html`` 같은 경로에 작성됩니다. "
+"제목에는 원래 레이블 텍스트가 그대로 유지되지만, 파일 시스템 경로에서는 대소문자를 구분하지 않는 파일 시스템에서도 서로 다른 "
+"레이블이 충돌하지 않도록 대문자, 문장 부호, 비 ASCII 바이트를 이스케이프합니다. 생성된 페이지는 작성자가 직접 쓴 페이지나 "
+"다른 생성 출력을 절대 덮어쓰지 않습니다. 게시 상태가 바뀌거나 컬렉션 구성원이 줄어들면 출력 커밋 단계에서 더 이상 쓰이지 않는 "
+"아카이브 및 페이지네이션 페이지를 자동으로 제거합니다."
+
+#: ../../howto/static-publishing.rst:114
+msgid "Layouts and standalone article PDFs"
+msgstr "레이아웃과 독립형 글 PDF"
+
+#: ../../howto/static-publishing.rst:117
+msgid ""
+"Dated articles select ``article.html`` by default; other pages select "
+"``page.html``, which extends ``layout.html``. Any page can choose a "
+"custom template in ``templates_path`` with ``:template: landing.html``, "
+"and ``:nosidebar: true`` hides the built-in navigation sidebar. Templates "
+"receive dates, authors, tags, category, series, summary, draft state and "
+"PDF links in ``page.meta``. Article templates also receive ``page.older`` "
+"and ``page.newer`` in publication order, ``page.taxonomies`` mapping each "
+"enabled taxonomy to ``{name, url}`` entries, and ``page.word_count`` and "
+"``page.reading_minutes`` (computed using ``myst_words_per_minute``, "
+"counting CJK characters individually)."
+msgstr ""
+"날짜가 있는 글은 기본적으로 ``article.html``\\ 을 선택하고, 그 밖의 페이지는 ``layout.html``\\ 을 "
+"상속하는 ``page.html``\\ 을 선택합니다. 어느 페이지든 ``:template: landing.html``\\ 로 "
+"``templates_path`` 안의 사용자 지정 템플릿을 고를 수 있으며, ``:nosidebar: true``\\ 를 지정하면 "
+"내장 탐색 사이드바를 숨깁니다. 템플릿은 ``page.meta``\\ 를 통해 날짜, 저자, 태그, 카테고리, 시리즈, 요약, 초안 "
+"상태, PDF 링크를 받습니다. 글 템플릿은 게시 순서에 따른 ``page.older``\\ 와 ``page.newer``, 활성화된 "
+"각 분류를 ``{name, url}`` 항목으로 매핑하는 ``page.taxonomies``, 그리고 "
+"``myst_words_per_minute``(한중일 문자는 글자 단위로 계산)로 산출한 ``page.word_count``\\ 와 "
+"``page.reading_minutes``\\ 도 받습니다."
+
+#: ../../howto/static-publishing.rst:119
+msgid ""
+"Setting ``:pdf: article`` compiles a standalone PDF next to the article's "
+"HTML page (``notes.pdf`` for ``html``, ``notes/index.pdf`` for "
+"``dirhtml``). The built-in ``article.typ`` layout renders continuous "
+"prose with a title and author block, abstract, and running headers after "
+"page one. Override it by placing ``_templates/article.typ`` in the "
+"project with the same ``book`` function signature. The generated Typst "
+"source is saved under ``sources/`` in the output folder for inspection. "
+"Standalone article PDFs are produced by the ``html`` and ``dirhtml`` "
+"builders; ``singlehtml`` retains its single-page HTML behavior."
+msgstr ""
+"``:pdf: article``\\ 을 설정하면 글의 HTML 페이지 옆에 독립형 PDF(``html``\\ 에서는 "
+"``notes.pdf``, ``dirhtml``\\ 에서는 ``notes/index.pdf``)를 컴파일합니다. 내장된 "
+"``article.typ`` 레이아웃은 제목 및 저자 블록, 요약, 2페이지부터 표시되는 머리글과 함께 이어지는 본문을 조판합니다. "
+"이를 재정의하려면 동일한 ``book`` 함수 시그니처를 가진 ``_templates/article.typ``\\ 을 프로젝트에 "
+"두세요. 생성된 Typst 소스는 확인할 수 있도록 출력 폴더 아래의 ``sources/``\\ 에 저장됩니다. 독립형 글 PDF는 "
+"``html``\\ 과 ``dirhtml`` 빌더에서 생성되며, ``singlehtml``\\ 은 단일 페이지 HTML 동작을 "
+"그대로 유지합니다."
+
+#: ../../howto/static-publishing.rst:121
+msgid "Starter sites"
+msgstr "시작 사이트 프리셋"
+
+#: ../../howto/static-publishing.rst:124
+msgid "Initialize a complete starter project with one of three presets:"
+msgstr "세 가지 프리셋 중 하나로 완전한 시작 프로젝트를 초기화할 수 있습니다:"
+
+#: ../../howto/static-publishing.rst:131
+msgid ""
+"``project`` starts with a custom landing page and a documentation guide."
+msgstr "``project``\\ 는 사용자 지정 랜딩 페이지와 문서 가이드로 시작합니다."
+
+#: ../../howto/static-publishing.rst:132
+msgid ""
+"``journal`` starts with a dated article, chronological cards, feeds and "
+"taxonomy archives."
+msgstr "``journal``\\ 은 날짜가 있는 글, 시간순 카드 목록, 피드, 분류 아카이브로 시작합니다."
+
+#: ../../howto/static-publishing.rst:133
+msgid ""
+"``research`` starts with a paper containing an abstract and mathematics, "
+"and builds its standalone PDF."
+msgstr "``research``\\ 는 초록과 수식이 포함된 논문으로 시작하며 독립형 PDF를 함께 빌드합니다."
+
+#: ../../howto/static-publishing.rst:135
+msgid ""
+"All three presets copy editable HTML, CSS and Typst theme files and "
+"refuse to overwrite an existing destination. Update the example "
+"``base_url`` in ``conf.toml`` before publishing feeds or sitemaps."
+msgstr ""
+"세 프리셋 모두 편집 가능한 HTML, CSS, Typst 테마 파일을 복사하며 기존 대상 폴더는 덮어쓰지 않습니다. 피드나 "
+"사이트맵을 게시하기 전에 ``conf.toml``\\ 의 예제 ``base_url``\\ 을 실제 주소로 수정하세요."
+
+#: ../../howto/static-publishing.rst:137
+msgid ""
+"When no mounts are configured, ``guidedog ssg build`` builds the single "
+"project into ``_build/site`` by default. ``--out DIR`` selects another "
+"destination, ``--now RFC3339`` fixes the publication clock, and "
+"``--preview`` includes withheld documents."
+msgstr ""
+"마운트가 설정되어 있지 않으면 ``guidedog ssg build``\\ 는 기본적으로 단일 프로젝트를 ``_build/site``\\ "
+"에 빌드합니다. ``--out DIR``\\ 로 다른 출력 폴더를 선택하고, ``--now RFC3339``\\ 로 게시 시계를 "
+"고정하며, ``--preview``\\ 로 보류된 문서를 포함할 수 있습니다."
+
+#: ../../howto/static-publishing.rst:139
+msgid "Mounted projects and editions"
+msgstr "마운트된 프로젝트와 언어판"
+
+#: ../../howto/static-publishing.rst:142
+msgid ""
+"Assemble multiple Guidedog projects and language editions into one "
+"website from a root ``conf.toml``:"
+msgstr "루트 ``conf.toml`` 하나로 여러 Guidedog 프로젝트와 언어판을 하나의 웹사이트로 조립할 수 있습니다:"
+
+#: ../../howto/static-publishing.rst:172
+msgid ""
+"Every mount ``source`` must resolve beneath the site configuration's "
+"directory after following symbolic links. An edition uses gettext "
+"catalogs in the mount's source project unless ``source`` names a separate "
+"translated project directory. Edition ``output`` is relative to the "
+"mount's ``output`` prefix; an empty string mounts at the root of that "
+"prefix. Mount names and edition output directories must be distinct "
+"ignoring ASCII case, though different mounts may share an output "
+"directory when their emitted files are disjoint."
+msgstr ""
+"모든 마운트 ``source``\\ 는 심볼릭 링크를 따라간 뒤 사이트 설정 디렉터리 아래에 놓여야 합니다. 언어판은 "
+"``source``\\ 가 별도의 번역된 프로젝트 디렉터리를 가리키지 않는 한 마운트 원본 프로젝트의 gettext 카탈로그를 "
+"사용합니다. 언어판의 ``output``\\ 은 마운트의 ``output`` 접두사를 기준으로 한 상대 경로이며, 빈 문자열이면 해당 "
+"접두사의 루트에 마운트됩니다. 마운트 이름과 언어판 출력 디렉터리는 ASCII 대소문자를 무시하고 서로 구분되어야 하지만, 서로 다른 "
+"마운트가 생성하는 파일들이 겹치지 않는다면 같은 출력 디렉터리를 공유할 수 있습니다."
+
+#: ../../howto/static-publishing.rst:176
+msgid ""
+"Root conf.toml declares mounts, language editions, and shared assets; ssg "
+"build compiles each mount, verifies mount:// links and file collisions, "
+"and commits the assembled site in one Generation."
+msgstr ""
+"루트 conf.toml이 마운트, 언어판, 공유 에셋을 선언하면 ssg build가 각 마운트를 컴파일하고 mount:// 링크와 파일 "
+"충돌을 검증한 뒤 조립된 사이트를 단일 세대로 커밋합니다."
+
+#: ../../howto/static-publishing.rst:176
+msgid ""
+"Mounted builds stage every project and language edition under one clock "
+"and publish the complete website atomically."
+msgstr ""
+"마운트 빌드는 모든 프로젝트와 언어판을 하나의 시계 아래에서 스테이징하고 완성된 웹사이트 전체를 원자적으로 게시합니다."
+
+#: ../../howto/static-publishing.rst:198
+msgid ""
+"Supported mount builders are ``html``, ``dirhtml``, ``pdf`` and "
+"``discussion-pdf`` (which validates a discussion catalog under ``prefix`` "
+"and builds a PDF book for each active record). ``exclude`` filters a "
+"mount's relative output files with globs, and ``overrides`` passes ``-D`` "
+"setting assignments (with ``{language}``, ``{edition}``, ``{site_root}`` "
+"and ``{base_url}`` placeholders). Select languages through "
+"``editions.language`` rather than a ``language`` override so routing and "
+"translated output stay aligned. Nonempty ``version`` and ``release`` "
+"values from the root configuration propagate to every mount, and one "
+"publication clock governs the entire build."
+msgstr ""
+"지원하는 마운트 빌더는 ``html``, ``dirhtml``, ``pdf``, 그리고 ``discussion-pdf``(지정된 "
+"``prefix``\\ 로 논의 카탈로그를 검증하고 각 활성 기록의 PDF 책을 빌드함)입니다. ``exclude``\\ 는 마운트의 "
+"상대 출력 파일을 glob 패턴으로 걸러 내고, ``overrides``\\ 는 ``-D`` 설정 할당(``{language}``, "
+"``{edition}``, ``{site_root}``, ``{base_url}`` 자리표시자 지원)을 전달합니다. 라우팅과 번역된 "
+"출력이 어긋나지 않도록 ``language`` 재정의 대신 ``editions.language``\\ 로 언어를 선택하세요. 루트 "
+"설정의 비어 있지 않은 ``version``\\ 과 ``release`` 값은 모든 마운트로 전파되며, 단일 게시 시계가 빌드 전체를 "
+"관장합니다."
+
+#: ../../howto/static-publishing.rst:200
+msgid "Link across mounts with the ``mount://`` scheme:"
+msgstr "``mount://`` 스킴으로 마운트 간 링크를 연결합니다:"
+
+#: ../../howto/static-publishing.rst:206
+msgid ""
+"The link resolves to the target mount's matching language edition, "
+"falling back to its default edition. HTML receives a relative URL "
+"(preserving any hosting prefix), while PDFs use the public ``base_url``. "
+"Assembly verifies that every ``mount://`` target exists in the current "
+"generation, so a stale file from an earlier build cannot satisfy a link "
+"to a newly withheld document. If any mount fails or a cross-mount target "
+"is missing, the previous published website remains intact."
+msgstr ""
+"이 링크는 대상 마운트에서 일치하는 언어판으로 해석되며, 해당 언어판이 없으면 기본 판으로 대체됩니다. HTML은 호스팅 접두사를 "
+"유지하는 상대 URL을 받고, PDF는 공개 ``base_url``\\ 을 사용합니다. 조립 단계에서 모든 ``mount://`` "
+"대상이 현재 세대에 존재하는지 검증하므로, 이전 빌드에서 남은 오래된 파일이 새로 보류된 문서로 가는 링크를 충족할 수 없습니다. "
+"어느 마운트라도 실패하거나 마운트 간 링크 대상이 누락되면 이전에 게시된 웹사이트가 그대로 유지됩니다."
+
+#: ../../howto/static-publishing.rst:208
+msgid ""
+"Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
+"cross-mount PDF download links; custom templates can inspect "
+"``ssg_no_pdf`` to hide PDF controls. Guidedog's own ``docs/conf.toml`` "
+"declares the landing pages, seven manual HTML editions, seven manual PDF "
+"books and discussion catalog builds in this format, and ``cargo xtask "
+"build-site`` delegates directly to ``guidedog ssg build``."
+msgstr ""
+"HTML 미리보기 중에 PDF 마운트를 건너뛰고 마운트 간 PDF 다운로드 링크를 제거하려면 ``--no-pdf``\\ 를 전달하세요. "
+"사용자 지정 템플릿에서는 ``ssg_no_pdf``\\ 를 확인해 PDF 컨트롤을 숨길 수 있습니다. Guidedog 자체의 "
+"``docs/conf.toml``\\ 도 랜딩 페이지, 7개 언어의 매뉴얼 HTML 판, 7개 언어의 매뉴얼 PDF 책, 논의 "
+"카탈로그 빌드를 이 형식으로 선언하며, ``cargo xtask build-site``\\ 는 ``guidedog ssg "
+"build``\\ 에 직접 작업을 위임합니다."
+
+#: ../../howto/static-publishing.rst:210
+msgid "Pinned themes"
+msgstr "고정된 테마"
+
+#: ../../howto/static-publishing.rst:213
+msgid ""
+"Package a directory containing ``_templates/`` and ``_static/`` into a "
+"portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
+msgstr ""
+"``_templates/``\\ 와 ``_static/``\\ 이 들어 있는 디렉터리를 이식 가능한 ``.gdt`` 아카이브로 묶고 "
+"명시적인 SHA-256 고정값으로 설치합니다:"
+
+#: ../../howto/static-publishing.rst:220
+msgid ""
+"Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
+"theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
+"files take precedence over the installed theme, and project static files "
+"override theme static files of the same relative path."
+msgstr ""
+"``HASH``\\ 를 아카이브의 SHA-256 다이제스트로 바꿉니다. ``[site]``\\ 에서 ``theme = true``\\ "
+"를 설정해 검증된 테마를 활성화합니다. 프로젝트의 ``_templates/`` 파일은 설치된 테마보다 우선하며, 프로젝트의 정적 "
+"파일은 같은 상대 경로의 테마 정적 파일을 재정의합니다."
+
+#: ../../howto/static-publishing.rst:222
+msgid ""
+"A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
+"portable relative paths beneath ``_templates/`` and ``_static/`` to "
+"base64 file bytes. Archives are bounded to 4,096 files, 64 MiB of "
+"expanded data, and 32 directory levels; traversal, case aliases, reserved "
+"platform names, symlinks, file/directory overlaps and executable hooks "
+"are rejected."
+msgstr ""
+"버전 1 ``.gdt`` 아카이브는 ``_templates/``\\ 와 ``_static/`` 아래의 이식 가능한 상대 경로를 "
+"base64 파일 바이트에 매핑하는 UTF-8 JSON(``format = 1``)입니다. 아카이브는 최대 4,096개 파일, 압축 "
+"해제 후 64 MiB 데이터, 32단계 디렉터리 깊이로 제한되며, 상위 경로 이탈, 대소문자 별칭 충돌, 플랫폼 예약 이름, 심볼릭 "
+"링크, 파일·디렉터리 중첩, 실행 가능한 훅은 거부됩니다."
+
+#: ../../howto/static-publishing.rst:224
+msgid ""
+"``guidedog-theme.lock`` records the source URL or path, the archive "
+"SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "
+"tag and length-delimited sorted filenames and file bytes). Installation "
+"writes and syncs ``_themes/<TREE_SHA256>/`` and verifies both the "
+"directory and the encoded lock before atomically replacing "
+"``guidedog-theme.lock``. Builds never fetch themes over the network; they "
+"verify the locked tree offline and fail closed if any file is missing, "
+"modified, added or replaced by a symlink."
+msgstr ""
+"``guidedog-theme.lock``\\ 은 원본 URL이나 경로, 아카이브 SHA-256, 그리고 정규 트리 SHA-256(버전이 "
+"지정된 도메인 태그와 길이로 구분된 정렬된 파일 이름 및 파일 바이트로 계산)을 기록합니다. 설치 과정은 "
+"``_themes/<TREE_SHA256>/``\\ 을 쓰고 동기화한 뒤 디렉터리와 인코딩된 잠금 파일을 모두 검증하고 나서 "
+"``guidedog-theme.lock``\\ 을 원자적으로 교체합니다. 빌드는 네트워크로 테마를 가져오지 않으며, 잠긴 트리를 "
+"오프라인에서 검증하고 파일이 누락되었거나 수정·추가되었거나 심볼릭 링크로 바뀐 경우 안전하게 실패(fail closed)합니다."
+
+#~ msgid ""
+#~ "The GitHub Pages plugin is linked into ``guidedog``, and it adds two "
+#~ "commands to it:"
+#~ msgstr "GitHub Pages 플러그인은 ``guidedog``\\ 에 링크되어 있으며, 명령 두 개를 추가합니다:"
+
+#~ msgid ""
+#~ "``guidedog publish pages`` runs the same guided publish as ``guidedog "
+#~ "publish pages``, with the same options, but guidedog builds the "
+#~ "project itself, with its own engine and linked plugins, instead of "
+#~ "starting an installed ``guidedog``. ``guidedog pages workflow`` is "
+#~ "``guidedog pages workflow``. ``guidedog publish pages --help`` and "
+#~ "``guidedog pages workflow --help`` list their options."
+#~ msgstr ""
+#~ "``guidedog publish pages``\\ 는 ``guidedog publish pages``\\ 와 같은 안내형 "
+#~ "게시를 같은 옵션으로 실행합니다. 다만 설치된 ``guidedog``\\ 을 실행하는 대신, guidedog가 자체 엔진과 "
+#~ "링크된 플러그인으로 프로젝트를 직접 빌드합니다. ``guidedog pages workflow``\\ 는 ``guidedog "
+#~ "pages workflow``\\ 와 같습니다. 옵션은 ``guidedog publish pages --help``\\ 와 "
+#~ "``guidedog pages workflow --help``\\ 로 확인할 수 있습니다."
+
+#~ msgid ""
+#~ "A custom ``guidedog`` built without the plugin can still have both "
+#~ "commands: we register the ``guidedog pages`` program (``guidedog "
+#~ "plugin register pages /usr/local/bin/guidedog pages``), and guidedog "
+#~ "runs it for them on our terminal. ``guidedog pages`` is also the "
+#~ "publisher program for ``guidedog publish --publisher=pages`` (see "
+#~ ":doc:`../plugins`)."
+#~ msgstr ""
+#~ "이 플러그인 없이 빌드한 맞춤 ``guidedog``\\ 에서도 두 명령을 쓸 수 있습니다. ``guidedog pages`` "
+#~ "프로그램을 등록하면(``guidedog plugin register pages /usr/local/bin/guidedog "
+#~ "pages``) guidedog가 우리 터미널에서 그 프로그램을 대신 실행합니다. ``guidedog pages``\\ 는 "
+#~ "``guidedog publish --publisher=pages``\\ 에서 쓰는 게시 프로그램이기도 "
+#~ "합니다(:doc:`../plugins` 참고)."
+
+#~ msgid ""
+#~ "The package also installs ``guidedog pages``, which publishes sites to "
+#~ "GitHub Pages (see :doc:`github-pages`), and ``graphdog``. Discussion "
+#~ "catalogs need no program of their own: ``guidedog dsc`` keeps them "
+#~ "(see :doc:`discussions`)."
+#~ msgstr ""
+#~ "패키지는 GitHub Pages에 사이트를 게시하는 ``guidedog pages``\\ (:doc:`github-pages` "
+#~ "참고)와 ``graphdog``\\ 도 함께 설치합니다. 논의 카탈로그에는 별도 프로그램이 필요 없습니다. ``guidedog "
+#~ "dsc``\\ 가 관리합니다(:doc:`discussions` 참고)."
+
+#~ msgid "Other programs"
+#~ msgstr "다른 프로그램"
+
+#~ msgid ""
+#~ "``guidedog dsc``, the discussion catalogs, is part of ``guidedog``: "
+#~ "the discussion plugin is linked in, so there is nothing more to build. "
+#~ "The GitHub Pages publisher builds the same way as ``guidedog``. It "
+#~ "does not link the engine:"
+#~ msgstr ""
+#~ "논의 카탈로그를 다루는 ``guidedog dsc``\\ 는 ``guidedog``\\ 의 일부입니다. 논의 플러그인이 "
+#~ "링크되어 있으므로 더 빌드할 것이 없습니다. GitHub Pages 게시기는 ``guidedog``\\ 과 같은 방식으로 "
+#~ "빌드하며, 엔진을 링크하지 않습니다:"
+
+#~ msgid ""
+#~ "When this variable is set, Guidedog uses the specified Unix epoch "
+#~ "timestamp instead of the current system clock for all date formatting "
+#~ "and template variables."
+#~ msgstr "지정하면 시스템 현재 시각 대신 해당 Unix 타임스탬프를 날짜와 템플릿 변수에 사용합니다."

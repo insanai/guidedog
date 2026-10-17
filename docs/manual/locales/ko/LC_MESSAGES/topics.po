@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -805,19 +805,23 @@ msgstr ""
 
 #: ../../topics/projects.rst:11
 msgid ""
-"Pipeline traverses discovery, source plugins, parallel reading, reference "
-"resolution, rendering, HTML plugins, and atomic staging."
-msgstr "소스 탐색, 소스 플러그인, 병렬 읽기, 참조 해석, 렌더링, HTML 플러그인을 거쳐 출력을 준비하고 커밋합니다."
+"Pipeline traverses discovery, source plugins, parallel reading, "
+"publication gate, reference resolution, rendering, HTML plugins, and "
+"atomic staging."
+msgstr ""
+"파이프라인은 소스 탐색, 소스 플러그인, 병렬 읽기, 게시 게이트, 참조 해석, 렌더링, HTML 플러그인, 원자적 스테이징 순서로 "
+"진행됩니다."
 
 #: ../../topics/projects.rst:11
-msgid "Guidedog's end-to-end documentation compilation pipeline."
-msgstr "Guidedog 문서 컴파일 전체 흐름."
+msgid ""
+"Guidedog's end-to-end documentation and static site compilation pipeline."
+msgstr "Guidedog의 문서 및 정적 사이트 컴파일 전체 파이프라인."
 
-#: ../../topics/projects.rst:35
+#: ../../topics/projects.rst:36
 msgid "Documents and resources"
 msgstr "문서와 자원"
 
-#: ../../topics/projects.rst:38
+#: ../../topics/projects.rst:39
 msgid ""
 "A source suffix selects a reader. RST and project Markdown share the "
 "project graph. Images and downloads are resources. Guidedog copies "
@@ -829,36 +833,40 @@ msgstr ""
 "것을 복사합니다. 테마 자산은 ``html_static_path``\\ 에 둡니다. 포함 파일은 소스 또는 "
 "``include_roots`` 안에 있어야 합니다."
 
-#: ../../topics/projects.rst:43
-msgid "Separate projects"
-msgstr "독립된 프로젝트"
+#: ../../topics/projects.rst:44
+msgid "Separate projects and mounted sites"
+msgstr "독립된 프로젝트와 마운트된 사이트"
 
-#: ../../topics/projects.rst:46
+#: ../../topics/projects.rst:47
 msgid ""
 "We keep a manual and design records in separate projects. They have "
 "different readers and different reading orders. Each project has its own "
 "configuration, templates, cache, and output. The Guidedog repository uses "
-"``docs/manual`` and ``docs/gds`` this way."
+"``docs/manual`` and ``docs/gds`` this way, and mounts them into the root "
+"website in ``docs/conf.toml`` via ``[[site.mounts]]``."
 msgstr ""
 "설명서와 설계 기록은 별도 프로젝트로 둡니다. 독자도 다르고 읽는 순서도 다르기 때문입니다. 프로젝트마다 설정, 템플릿, 캐시, "
-"출력이 따로 있습니다. Guidedog 저장소의 ``docs/manual``\\ 과 ``docs/gds``\\ 가 이렇게 구성되어 "
-"있습니다."
+"출력이 따로 있습니다. Guidedog 저장소는 ``docs/manual``\\ 과 ``docs/gds``\\ 를 이렇게 구성하고, "
+"``docs/conf.toml``\\ 의 ``[[site.mounts]]``\\ 를 통해 루트 웹사이트에 마운트합니다."
 
-#: ../../topics/projects.rst:51
+#: ../../topics/projects.rst:49
 msgid "Incremental work"
 msgstr "증분 빌드"
 
-#: ../../topics/projects.rst:54
+#: ../../topics/projects.rst:52
 msgid ""
 "Guidedog records the inputs and lookups used by each output. A changed "
 "source is reread. A changed dependency invalidates its users. A changed "
-"template can affect every page. An unchanged document may be loaded from "
-"its saved object."
+"template invalidates the pages whose template chain loaded it. An "
+"unchanged document may be loaded from its saved object, including "
+"withheld drafts and scheduled posts that become eligible on a later build "
+"clock."
 msgstr ""
-"Guidedog은 출력별 입력과 조회를 기록합니다. 소스가 바뀌면 다시 읽고 의존성이 바뀌면 사용자를 무효화합니다. 템플릿 변경은 "
-"모든 페이지에 영향을 줄 수 있습니다. 그대로인 문서는 저장된 객체에서 읽습니다."
+"Guidedog은 각 출력에 사용된 입력과 조회를 기록합니다. 소스가 바뀌면 다시 읽고 의존성이 바뀌면 이를 사용하는 대상을 "
+"무효화합니다. 템플릿이 바뀌면 템플릿 체인에서 해당 템플릿을 불러온 페이지를 무효화합니다. 바뀌지 않은 문서는 저장된 객체에서 읽어 "
+"올 수 있으며, 보류된 초안이나 이후 빌드 시각에 공개 조건을 충족하게 되는 예약 포스트도 마찬가지입니다."
 
-#: ../../topics/projects.rst:59
+#: ../../topics/projects.rst:54
 msgid ""
 "The cache is evidence about a previous build. It is not the source of "
 "truth. ``-E`` discards the saved environment for the next build. ``-a`` "
@@ -867,14 +875,14 @@ msgstr ""
 "캐시는 이전 빌드의 증거일 뿐 원본 진실이 아닙니다. ``-E``\\ 는 다음 빌드의 저장 환경을 버리고 ``-a``\\ 는 모든 "
 "출력을 씁니다. 둘은 서로 다른 문제를 해결합니다."
 
-#: ../../topics/projects.rst:63
+#: ../../topics/projects.rst:58
 msgid ""
 "\\text{reuse} = \\text{same inputs} \\land \\text{same lookups} \\land "
 "\\text{output exists}"
 msgstr ""
 "\\text{재사용} = \\text{같은 입력} \\land \\text{같은 조회 결과} \\land \\text{출력 존재}"
 
-#: ../../topics/projects.rst:67
+#: ../../topics/projects.rst:62
 msgid ""
 "An explicit timestamp in a template is also an input to the rendered "
 "page. A page that prints the current minute can change even when its "
@@ -884,11 +892,11 @@ msgstr ""
 "템플릿에 직접 넣은 타임스탬프도 렌더링된 페이지의 입력입니다. 현재 시각을 분 단위로 출력하는 페이지는 본문이 그대로여도 바뀔 수 "
 "있습니다. 빌드 시각을 고정해야 할 때는 ``SOURCE_DATE_EPOCH``\\ 를 사용합니다."
 
-#: ../../topics/projects.rst:71
+#: ../../topics/projects.rst:66
 msgid "Publication"
 msgstr "게시"
 
-#: ../../topics/projects.rst:74
+#: ../../topics/projects.rst:69
 msgid ""
 "A build writes changes to a sibling staging directory. It completes that "
 "directory, flushes the files and records, and then switches generations. "
@@ -941,7 +949,7 @@ msgstr "왼쪽은 프로젝트 탐색, 가운데는 본문, 오른쪽은 현재 
 msgid "Three-region reading layout for HTML documentation."
 msgstr "HTML 문서의 세 영역 읽기 레이아웃."
 
-#: ../../topics/typography.rst:37
+#: ../../topics/typography.rst:36
 msgid ""
 "**Light is the default.** The theme control also offers dark and system "
 "modes. It remembers the choice on the same browser origin. System mode "
@@ -953,7 +961,7 @@ msgstr ""
 "따릅니다. HTML 인쇄는 밝은 색입니다. JavaScript가 없어도 내용과 탐색은 사용할 수 있으며 테마와 향상된 검색은 점진적 "
 "향상입니다."
 
-#: ../../topics/typography.rst:43
+#: ../../topics/typography.rst:42
 msgid ""
 "English prose can use paragraph-wide **Knuth-Plass line breaking** in the "
 "browser. A small template script measures the loaded font, builds boxes, "
@@ -966,7 +974,7 @@ msgstr ""
 "측정하고 상자·공백·페널티를 구성하여 문단 전체의 줄을 정합니다. 영어 하이픈 후보는 Frank Liang의 패턴 방식을 씁니다. "
 "원래 TeX 패턴과 라이선스도 사이트에 포함합니다."
 
-#: ../../topics/typography.rst:49
+#: ../../topics/typography.rst:48
 msgid ""
 "The enhancement preserves emphasis and the exact source text. It "
 "recalculates when the reading measure changes. Copying within one "
@@ -977,7 +985,7 @@ msgstr ""
 "강조와 원문을 유지하며 본문 너비가 바뀌면 다시 계산합니다. 최적화한 한 문단 안에서 복사하면 시각적 줄바꿈이나 추가 하이픈 없는 "
 "원문을 얻습니다. 인쇄할 때는 일반 문단으로 복원해 인쇄 레이아웃이 페이지를 나눕니다."
 
-#: ../../topics/typography.rst:54
+#: ../../topics/typography.rst:53
 msgid ""
 "Links, mathematics, code, interactive content, narrow measures, and other "
 "languages use native browser layout. So do paragraphs for which no "
@@ -991,24 +999,24 @@ msgstr ""
 "auto``\\ 와 ``text-wrap: pretty``\\ 를 사용합니다. 이 CSS 속성만으로 Knuth-Plass 최적화가 "
 "보장되지는 않습니다."
 
-#: ../../topics/typography.rst:60
+#: ../../topics/typography.rst:59
 msgid "The PDF page"
 msgstr "PDF 페이지"
 
-#: ../../topics/typography.rst:63
+#: ../../topics/typography.rst:62
 msgid ""
-"The book template uses the same Libertinus family as the web edition. It "
-"sets justified paragraphs, optimized line breaking, and language-aware "
-"hyphenation. It also controls spacing, running heads, captions, code "
-"blocks, and table rules. The font, hyphenation cost, and paragraph "
-"measure work together. A forced line break is rarely the right repair for "
-"a loose paragraph."
+"The book and standalone article templates use the same Libertinus family "
+"as the web edition. They set justified paragraphs, optimized line "
+"breaking, and language-aware hyphenation. They also control spacing, "
+"running heads, captions, code blocks, and table rules. The font, "
+"hyphenation cost, and paragraph measure work together. A forced line "
+"break is rarely the right repair for a loose paragraph."
 msgstr ""
-"책 템플릿도 Libertinus를 사용해 양쪽 정렬, 최적 줄바꿈, 언어별 하이픈을 설정합니다. 간격, 머리글, 캡션, 코드 블록, "
-"표 선도 제어합니다. 글꼴, 하이픈 비용, 문단 너비가 함께 작용합니다. 느슨한 문단을 강제 줄바꿈으로 고치는 것은 대개 적절하지 "
-"않습니다."
+"책 템플릿과 독립형 글 템플릿은 웹 판과 같은 Libertinus 글꼴 패밀리를 사용합니다. 양쪽 정렬 문단, 최적 줄바꿈, 언어별 "
+"하이픈을 설정하고 간격, 머리글, 캡션, 코드 블록, 표 선도 제어합니다. 글꼴, 하이픈 비용, 문단 너비가 함께 작용하므로 느슨한 "
+"문단을 강제 줄바꿈으로 고치는 것은 대개 적절하지 않습니다."
 
-#: ../../topics/typography.rst:69
+#: ../../topics/typography.rst:64
 msgid ""
 "Typst optimizes the PDF paragraphs. The web enhancement optimizes "
 "eligible prose. They share the source, fonts, and visual hierarchy. Their "
@@ -1023,21 +1031,29 @@ msgstr ""
 "<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_\\ "
 "을 참고하세요."
 
-#: ../../topics/typography.rst:74
+#: ../../topics/typography.rst:69
 msgid "Change the design"
 msgstr "디자인 바꾸기"
 
-#: ../../topics/typography.rst:77
+#: ../../topics/typography.rst:72
 msgid ""
 "Edit ``_static/editorial.css`` for the documentation project's visual "
 "tokens. Edit ``_templates/layout.html`` for structure. Edit "
-"``_templates/book.typ`` for the print layout. Keep reading order, focus "
-"indicators, labels, and sufficient contrast intact."
+"``_templates/theme.typ`` for the PDF palette and typography. Edit "
+"``_templates/book.typ`` for book structure, ``_templates/discussion.typ`` "
+"for discussion structure, and ``_templates/article.typ`` for standalone "
+"article PDFs. All three layouts wrap their content with the shared "
+"language-aware theme. Keep reading order, focus indicators, labels, and "
+"sufficient contrast intact."
 msgstr ""
-"시각 토큰은 ``_static/editorial.css``\\ , 구조는 ``_templates/layout.html``\\ , "
-"인쇄는 ``_templates/book.typ``\\ 를 편집하세요. 읽기 순서, 초점 표시, 레이블, 충분한 대비를 유지하세요."
+"문서 프로젝트의 시각 토큰은 ``_static/editorial.css``\\ 를, 구조는 "
+"``_templates/layout.html``\\ 을, PDF 팔레트와 타이포그래피는 ``_templates/theme.typ``\\ "
+"을 편집하세요. 책 구조는 ``_templates/book.typ``, 논의 구조는 "
+"``_templates/discussion.typ``, 독립형 글 PDF는 ``_templates/article.typ``\\ 을 "
+"편집합니다. 세 레이아웃 모두 언어별 공통 테마로 콘텐츠를 감쌉니다. 읽기 순서, 초점 표시, 레이블, 충분한 대비를 그대로 "
+"유지하세요."
 
-#: ../../topics/typography.rst:82
+#: ../../topics/typography.rst:74
 msgid ""
 "Build both targets after a change. Inspect a page with code, a table, a "
 "diagram, and an equation. An attractive cover is not proof that the rest "
@@ -1231,10 +1247,29 @@ msgid "Field lists provide structured metadata and parameter descriptions:"
 msgstr "필드 목록은 구조화된 메타데이터와 매개변수 설명에 사용합니다."
 
 #: ../../topics/writing.rst:129
+msgid ""
+"When a field list precedes the document title, Guidedog reads recognized "
+"publication metadata fields into the page's metadata record and removes "
+"those fields from the rendered body. These fields include ``:date:``, "
+"``:updated:``, ``:publish-at:``, ``:expires-at:``, ``:draft:``, "
+"``:authors:``, ``:category:``, ``:tags:``, ``:series:``, ``:summary:``, "
+"``:template:`` and ``:pdf:``. MyST Markdown documents supply the same "
+"fields in leading YAML front matter. Field lists after the title remain "
+"ordinary content. See :doc:`../howto/static-publishing` for the full "
+"publication lifecycle."
+msgstr ""
+"문서 제목 앞에 필드 목록이 오면 Guidedog은 인식된 게시 메타데이터 필드를 페이지의 메타데이터 레코드로 읽어 들이고 렌더링되는 "
+"본문에서는 해당 필드를 제거합니다. 이러한 필드에는 ``:date:``, ``:updated:``, ``:publish-at:``, "
+"``:expires-at:``, ``:draft:``, ``:authors:``, ``:category:``, ``:tags:``, "
+"``:series:``, ``:summary:``, ``:template:``, ``:pdf:``\\ 가 있습니다. MyST "
+"Markdown 문서는 문서 맨 앞의 YAML 프런트 매터로 동일한 필드를 제공합니다. 제목 뒤에 오는 필드 목록은 일반 본문 "
+"콘텐츠로 남습니다. 전체 게시 수명 주기는 :doc:`../howto/static-publishing`\\ 을 참고하세요."
+
+#: ../../topics/writing.rst:131
 msgid "Code blocks"
 msgstr "코드 블록"
 
-#: ../../topics/writing.rst:132
+#: ../../topics/writing.rst:134
 msgid ""
 "The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted "
 "code. Guidedog highlights 35 programming languages, Rust and Odin among "
@@ -1243,39 +1278,39 @@ msgstr ""
 "``code-block`` 지시문(또는 ``sourcecode``)은 구문을 강조한 코드를 보여 줍니다. Guidedog은 "
 "Rust와 Odin을 비롯한 35개 프로그래밍 언어를 Python 런타임 없이 Pygments의 이름과 스타일로 강조합니다."
 
-#: ../../topics/writing.rst:147
+#: ../../topics/writing.rst:149
 msgid "Options for code blocks:"
 msgstr "코드 블록 옵션:"
 
-#: ../../topics/writing.rst:149
+#: ../../topics/writing.rst:151
 msgid "``:linenos:``: Displays line numbers beside the code."
 msgstr "``:linenos:``: 코드 옆에 줄 번호를 표시합니다."
 
-#: ../../topics/writing.rst:150
+#: ../../topics/writing.rst:152
 msgid "``:caption: Title``: Adds a caption above or below the code block."
 msgstr "``:caption: Title``: 코드 위나 아래에 캡션을 붙입니다."
 
-#: ../../topics/writing.rst:151
+#: ../../topics/writing.rst:153
 msgid "``:emphasize-lines: 1, 3-5``: Highlights specific lines."
 msgstr "``:emphasize-lines: 1, 3-5``: 지정한 줄을 강조합니다."
 
-#: ../../topics/writing.rst:152
+#: ../../topics/writing.rst:154
 msgid "``:name: label``: Assigns a reference target to the code block."
 msgstr "``:name: label``: 코드 블록에 참조 대상을 지정합니다."
 
-#: ../../topics/writing.rst:154
+#: ../../topics/writing.rst:156
 msgid "To include source code from a file, we use ``literalinclude``:"
 msgstr "파일에서 소스 코드를 가져오려면 ``literalinclude``\\ 를 씁니다."
 
-#: ../../topics/writing.rst:163
+#: ../../topics/writing.rst:165
 msgid "Admonitions"
 msgstr "안내 상자"
 
-#: ../../topics/writing.rst:166
+#: ../../topics/writing.rst:168
 msgid "Admonitions highlight notes, warnings, and supplementary advice:"
 msgstr "안내 상자는 주의 사항, 경고, 보충 설명을 강조합니다."
 
-#: ../../topics/writing.rst:188
+#: ../../topics/writing.rst:190
 msgid ""
 "Guidedog also supports ``danger``, ``error``, ``hint``, and "
 "``attention``. A generic admonition with a custom title uses the "
@@ -1284,192 +1319,272 @@ msgstr ""
 "Guidedog은 ``danger``, ``error``, ``hint``, ``attention`` 도 지원합니다. 제목을 직접 "
 "지정하려면 ``admonition`` 을 사용하세요."
 
-#: ../../topics/writing.rst:197
+#: ../../topics/writing.rst:199
 msgid "Tables"
 msgstr "표"
 
-#: ../../topics/writing.rst:200
+#: ../../topics/writing.rst:202
 msgid ""
 "Guidedog supports simple tables, grid tables, and directive-based tables."
 msgstr "Guidedog은 단순 표, 격자 표, 지시문 기반 표를 지원합니다."
 
-#: ../../topics/writing.rst:202
+#: ../../topics/writing.rst:204
 msgid "Simple tables"
 msgstr "단순 표"
 
-#: ../../topics/writing.rst:205
+#: ../../topics/writing.rst:207
 msgid "Simple tables use horizontal dashes to define column spans:"
 msgstr "단순 표는 가로선으로 열의 범위를 표시합니다."
 
-#: ../../topics/writing.rst:217
+#: ../../topics/writing.rst:219
 msgid "Grid tables"
 msgstr "격자 표"
 
-#: ../../topics/writing.rst:220
+#: ../../topics/writing.rst:222
 msgid ""
 "Grid tables allow complex multi-line cells and arbitrary column/row spans:"
 msgstr "격자 표는 여러 줄의 셀과 행·열 병합을 지원합니다."
 
-#: ../../topics/writing.rst:231
+#: ../../topics/writing.rst:233
 msgid "List tables"
 msgstr "목록 표"
 
-#: ../../topics/writing.rst:234
+#: ../../topics/writing.rst:236
 msgid ""
 "The ``list-table`` directive creates tables from nested bullet lists. "
 "Wide tables stay easy to read and maintain in source control:"
 msgstr ""
 "``list-table`` 지시문은 중첩된 글머리 기호 목록으로 표를 만듭니다. 넓은 표도 소스 관리에서 읽고 유지하기 쉽습니다."
 
-#: ../../topics/writing.rst:253
+#: ../../topics/writing.rst:255
 msgid "CSV tables"
 msgstr "CSV 표"
 
-#: ../../topics/writing.rst:256
+#: ../../topics/writing.rst:258
 msgid ""
 "The ``csv-table`` directive constructs a table from comma-separated "
 "values:"
 msgstr "``csv-table`` 은 쉼표로 구분한 값으로 표를 만듭니다."
 
-#: ../../topics/writing.rst:267
+#: ../../topics/writing.rst:269
 msgid "Images and figures"
 msgstr "이미지와 그림"
 
-#: ../../topics/writing.rst:270
+#: ../../topics/writing.rst:272
 msgid ""
 "We include illustrations, screenshots, and diagrams with ``image`` and "
 "``figure``:"
 msgstr "그림, 스크린샷, 다이어그램은 ``image``\\ 와 ``figure``\\ 로 넣습니다."
 
-#: ../../topics/writing.rst:286
+#: ../../topics/writing.rst:288
 msgid ""
 "A ``figure`` wraps the image with a caption and an optional reference "
 "target."
 msgstr "``figure``\\ 는 이미지에 캡션을 붙이고, 필요하면 참조 대상도 붙입니다."
 
-#: ../../topics/writing.rst:288
+#: ../../topics/writing.rst:290
 msgid "Document structure with toctrees"
 msgstr "목차 트리로 문서 구성"
 
-#: ../../topics/writing.rst:291
+#: ../../topics/writing.rst:293
 msgid ""
 "The ``toctree`` directive creates the document hierarchy, navigation "
 "menus, and reading order for both the HTML site and the PDF book:"
 msgstr "``toctree`` 는 문서 계층, 탐색 메뉴, HTML과 PDF의 읽는 순서를 정의합니다."
 
-#: ../../topics/writing.rst:305
+#: ../../topics/writing.rst:307
 msgid "Common options for ``toctree``:"
 msgstr "``toctree`` 의 주요 옵션:"
 
-#: ../../topics/writing.rst:307
+#: ../../topics/writing.rst:309
 msgid ""
 "``:maxdepth: N``: Depth of heading levels to include in the table of "
 "contents."
 msgstr "``:maxdepth: N``: 목차에 포함할 제목 깊이입니다."
 
-#: ../../topics/writing.rst:308
+#: ../../topics/writing.rst:310
 msgid ""
 "``:caption: Title``: Category title displayed above the navigation "
 "entries."
 msgstr "``:caption: Title``: 탐색 항목 위에 표시할 범주 제목입니다."
 
-#: ../../topics/writing.rst:309
+#: ../../topics/writing.rst:311
 msgid "``:numbered:``: Adds section numbers to chapters and headings."
 msgstr "``:numbered:``: 장과 제목에 번호를 붙입니다."
 
-#: ../../topics/writing.rst:310
+#: ../../topics/writing.rst:312
 msgid ""
 "``:titlesonly:``: Lists only the top-level document titles, ignoring "
 "inner sections."
 msgstr "``:titlesonly:``: 문서 제목만 표시하고 내부 절은 생략합니다."
 
-#: ../../topics/writing.rst:311
+#: ../../topics/writing.rst:313
 msgid ""
 "``:hidden:``: Records the documents in the reading order without "
 "rendering an inline list."
 msgstr "``:hidden:``: 본문에 목록을 표시하지 않고 문서의 읽는 순서만 기록합니다."
 
-#: ../../topics/writing.rst:312
+#: ../../topics/writing.rst:314
 msgid ""
 "``:glob:``: Allows wildcard patterns to match documents (e.g. "
 "``tutorials/*``)."
 msgstr "``:glob:``: ``tutorials/*`` 같은 와일드카드로 문서를 선택할 수 있습니다."
 
-#: ../../topics/writing.rst:314
+#: ../../topics/writing.rst:316
+msgid "Dated post listings with ``postlist``"
+msgstr "``postlist``\\ 로 날짜별 포스트 목록 만들기"
+
+#: ../../topics/writing.rst:319
+msgid ""
+"For articles, release notes, and research logs that carry ``:date:`` "
+"metadata, the ``postlist`` directive renders a reverse-chronological list "
+"of matching published pages:"
+msgstr ""
+"``:date:`` 메타데이터가 있는 글, 릴리스 노트, 연구 기록의 경우 ``postlist`` 지시문은 조건에 맞는 게시된 "
+"페이지들을 최신순으로 렌더링합니다:"
+
+#: ../../topics/writing.rst:329
+msgid "Options for ``postlist``:"
+msgstr "``postlist`` 옵션:"
+
+#: ../../topics/writing.rst:331
+msgid ""
+"Argument ``N``: Maximum number of matching posts to show; zero or an "
+"omitted argument includes every match."
+msgstr ""
+"인자 ``N``: 표시할 일치 포스트의 최대 개수입니다. ``0``\\ 이거나 인자를 생략하면 일치하는 모든 항목을 포함합니다."
+
+#: ../../topics/writing.rst:332
+msgid ""
+"``:path: GLOB``: Restrict entries to document names matching the glob "
+"pattern."
+msgstr "``:path: GLOB``: 항목을 glob 패턴과 일치하는 문서 이름으로 제한합니다."
+
+#: ../../topics/writing.rst:333
+msgid ""
+"``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: "
+"NAME``, ``:year: YYYY``: Filter entries by publication metadata."
+msgstr ""
+"``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: "
+"NAME``, ``:year: YYYY``: 게시 메타데이터로 항목을 필터링합니다."
+
+#: ../../topics/writing.rst:334
+msgid ""
+"``:sort: date`` or ``:sort: -date``: Order by oldest or newest "
+"publication instant, with docname breaking ties."
+msgstr ""
+"``:sort: date`` 또는 ``:sort: -date``: 가장 오래된 게시 시점 또는 가장 최근 게시 시점 순으로 정렬하며, "
+"시점이 같으면 문서 이름(docname)으로 순서를 정합니다."
+
+#: ../../topics/writing.rst:335
+msgid ""
+"``:style: list`` or ``:style: cards``: Select the listing's CSS class."
+msgstr "``:style: list`` 또는 ``:style: cards``: 목록의 CSS 클래스를 선택합니다."
+
+#: ../../topics/writing.rst:336
+msgid ""
+"``:excerpts:``: Render each entry's explicit ``:summary:`` below its "
+"title and date."
+msgstr "``:excerpts:``: 각 항목의 제목과 날짜 아래에 명시된 ``:summary:``\\ 를 렌더링합니다."
+
+#: ../../topics/writing.rst:338
+msgid ""
+"See :doc:`../howto/static-publishing` for collections, feeds, and "
+"scheduled publishing."
+msgstr ""
+"컬렉션, 피드, 예약 게시는 :doc:`../howto/static-publishing`\\ 을 참고하세요."
+
+#: ../../topics/writing.rst:340
 msgid "Cross-references and links"
 msgstr "상호 참조와 링크"
 
-#: ../../topics/writing.rst:317
+#: ../../topics/writing.rst:343
 msgid ""
 "Explicit targets keep links stable, even when document files are renamed."
 msgstr "명시적 대상을 쓰면 문서 파일 이름이 바뀌어도 링크가 깨지지 않습니다."
 
-#: ../../topics/writing.rst:319
+#: ../../topics/writing.rst:345
 msgid "Target labels and ``:ref:``"
 msgstr "대상 레이블과 ``:ref:``"
 
-#: ../../topics/writing.rst:322
+#: ../../topics/writing.rst:348
 msgid "We place a target label directly before a heading, table, or figure:"
 msgstr "제목, 표, 그림 바로 앞에 대상 레이블을 둡니다."
 
-#: ../../topics/writing.rst:333
+#: ../../topics/writing.rst:359
 msgid "Any document in the project can refer to this target:"
 msgstr "프로젝트의 어느 문서에서든 이 대상을 참조할 수 있습니다."
 
-#: ../../topics/writing.rst:340
+#: ../../topics/writing.rst:366
 msgid "Document references with ``:doc:``"
 msgstr "``:doc:`` 문서 참조"
 
-#: ../../topics/writing.rst:343
+#: ../../topics/writing.rst:369
 msgid "We link to another document by its path, without the file extension:"
 msgstr "다른 문서에는 확장자를 뺀 경로로 연결합니다."
 
-#: ../../topics/writing.rst:349
+#: ../../topics/writing.rst:375
 msgid "Glossary terms with ``:term:``"
 msgstr "``:term:`` 용어 참조"
 
-#: ../../topics/writing.rst:352
+#: ../../topics/writing.rst:378
 msgid "We define terms with the ``glossary`` directive:"
 msgstr "용어는 ``glossary`` 지시문으로 정의합니다."
 
-#: ../../topics/writing.rst:364
+#: ../../topics/writing.rst:390
 msgid "We link to a glossary term with the ``:term:`` role:"
 msgstr "용어집의 용어에는 ``:term:`` 역할로 연결합니다."
 
-#: ../../topics/writing.rst:370
+#: ../../topics/writing.rst:396
 msgid "File downloads with ``:download:``"
 msgstr "``:download:`` 파일 다운로드"
 
-#: ../../topics/writing.rst:373
+#: ../../topics/writing.rst:399
 msgid ""
 "This copies a file to the output's download directory and links to it:"
 msgstr "파일을 출력의 다운로드 디렉터리로 복사하고 그 파일에 연결합니다."
 
-#: ../../topics/writing.rst:379
-msgid "External links"
-msgstr "외부 링크"
+#: ../../topics/writing.rst:405
+msgid "External and cross-mount links"
+msgstr "외부 링크와 마운트 간 링크"
 
-#: ../../topics/writing.rst:382
+#: ../../topics/writing.rst:408
 msgid "We link to external web addresses like this:"
 msgstr "외부 웹 주소에는 이렇게 연결합니다."
 
-#: ../../topics/writing.rst:388
+#: ../../topics/writing.rst:414
+msgid ""
+"In a multi-project website assembled with ``[[site.mounts]]``, we can "
+"also link to a mounted sub-project by its mount name using "
+"``mount://<name>/<path>``:"
+msgstr ""
+"``[[site.mounts]]``\\ 로 조립된 다중 프로젝트 웹사이트에서는 ``mount://<name>/<path>``\\ 를 "
+"사용해 마운트 이름으로 마운트된 하위 프로젝트에 연결할 수도 있습니다:"
+
+#: ../../topics/writing.rst:420
+msgid ""
+"The mount names must match ``[[site.mounts]]`` and the paths must name "
+"current output files."
+msgstr ""
+"마운트 이름은 ``[[site.mounts]]``\\ 와 일치해야 하며 경로는 현재 출력 파일을 가리켜야 합니다."
+
+#: ../../topics/writing.rst:422
 msgid "Substitutions and includes"
 msgstr "치환과 포함"
 
-#: ../../topics/writing.rst:391
+#: ../../topics/writing.rst:425
 msgid "We define reusable phrases, symbols, or images:"
 msgstr "재사용할 문구, 기호, 이미지를 정의합니다."
 
-#: ../../topics/writing.rst:400
+#: ../../topics/writing.rst:434
 msgid "To reuse reStructuredText content in several files:"
 msgstr "reStructuredText 내용을 여러 파일에서 재사용하려면 다음과 같이 합니다."
 
-#: ../../topics/writing.rst:406
+#: ../../topics/writing.rst:440
 msgid "MyST Markdown authoring"
 msgstr "MyST Markdown 작성"
 
-#: ../../topics/writing.rst:409
+#: ../../topics/writing.rst:443
 msgid ""
 "MyST Markdown supports the same directives and roles through fenced "
 "blocks:"

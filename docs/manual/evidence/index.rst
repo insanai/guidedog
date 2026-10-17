@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`release-1.0.0-beta.6`
+     - Complete static publishing, five-platform qualification and published archive checks (17 October 2026)
    * - :doc:`ssg-review`
      - Complete static publishing contracts, mount and theme checks, visual review and a 1,000-article incremental benchmark (16 October 2026)
    * - :doc:`release-1.0.0-beta.5`
@@ -46,3 +48,4 @@ Each record is dated. It describes what we built or checked on that day, with th
    discussion-pdf-layout
    pdf-theme-review
    release-1.0.0-beta.5
+   release-1.0.0-beta.6

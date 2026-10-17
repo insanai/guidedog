@@ -64,6 +64,11 @@ let items = gd_link::nav_for_toctree(&view, doc, 0, NavOptions::default());
 - **Images the book cannot read** (any suffix but PNG, JPEG, GIF, SVG, WebP and PDF)
   are shown as their alternative text with the warning `imgconverter.format`.
 - **Base64** for embedded graph images is written in-house (std only).
+- **Rich excerpts** select the parsed introduction before `more`, then use the normal
+  link pass in the article's source context. A second AST pass relocates URLs and
+  namespaces anchors for the destination listing. Both collection HTML and native
+  postlists use this path; neither slices rendered HTML. Source-scoped lookup traces
+  keep images and references correct when a cached listing is reused.
 - The sidebar and the page outline (`sidebar_html`, `outline_html`) are gd-site's; the
   numfig template and the image lookup are `BuildView::number_template` and
   `BuildView::image_file` in gd-resolve, shared with lookup answers.

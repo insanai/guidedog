@@ -21,7 +21,7 @@ use crate::page::Page;
 /// renders; its buffers keep their capacity.
 #[derive(Default)]
 pub struct Worker {
-    ws: Workspace,
+    pub(crate) ws: Workspace,
     spare: Workspace,
     graphs: OnceCell<Option<Context>>,
 }
@@ -63,7 +63,7 @@ pub fn render_page(
     worker: &mut Worker,
     request: &PageRequest<'_>,
 ) -> Rendered {
-    run_page(view, worker, request, false)
+    run_page(view, worker, request, false, None)
 }
 
 /// Renders a page again with a source map, and reports where in its sources the
@@ -76,7 +76,7 @@ pub fn source_location(
     request: &PageRequest<'_>,
     offset: usize,
 ) -> Option<Report> {
-    let rendered = run_page(view, worker, request, true);
+    let rendered = run_page(view, worker, request, true, None);
     if rendered.failed {
         return None;
     }
@@ -128,11 +128,12 @@ pub fn render_options<'b>(
 
 /// Links and renders one page in the worker's workspace, which keeps the result (and
 /// the source map, when asked) for the caller.
-fn run_page(
+pub(crate) fn run_page(
     view: &BuildView<'_>,
     worker: &mut Worker,
     request: &PageRequest<'_>,
     source_map: bool,
+    excerpt: Option<&crate::excerpts::Excerpt<'_>>,
 ) -> Rendered {
     let mut out = Rendered::default();
     let info = view.env.doc(request.doc);
@@ -160,14 +161,19 @@ fn run_page(
         graphs,
         &ledger,
     ));
+    page.borrow_mut().excerpt = excerpt.is_some();
     let run =
         |doc: Document<'_>, b: &mut Builder<'_>| -> PassOutcome { page.borrow_mut().link(doc, b) };
-    let linked =
+    let mut linked =
         guidedoc::transform_document(ws, &[Pass { name: "link", run: &run }], view.limits).is_ok();
     let page = page.into_inner();
     out.assets = page.assets;
     out.trace = page.trace;
     out.reports = page.reports;
+    if let Some(excerpt) = excerpt {
+        linked = linked && crate::excerpt_copy::relocate(view, ws, request, excerpt);
+        out.trace = crate::excerpts::source_trace(&info.docname, out.trace);
+    }
     let rendered = match renderer {
         Some(renderer) if linked => {
             let render = Request {

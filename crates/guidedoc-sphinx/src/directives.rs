@@ -35,6 +35,7 @@ pub(crate) enum Core {
     Todo,
     Todolist,
     Postlist,
+    More,
     Acks,
     RstClass,
     Graphviz,
@@ -202,6 +203,7 @@ static CORE: &[CoreDirective] = &[
     core("todo", Core::Todo, (A::None, false, C::Required), OPTS_CLASS_NAME),
     core("todolist", Core::Todolist, (A::None, false, C::None), &[]),
     core("postlist", Core::Postlist, (A::Optional, false, C::None), OPTS_POSTLIST),
+    core("more", Core::More, (A::None, false, C::None), &[]),
     core("acks", Core::Acks, (A::None, false, C::Required), &[]),
     core("rst-class", Core::RstClass, (A::Required, true, C::Optional), &[]),
     core("graphviz", Core::Graphviz, (A::Optional, true, C::Optional), graphviz::OPTS_GRAPHVIZ),
@@ -259,6 +261,10 @@ pub(crate) fn run_core(
         Core::Todolist => {
             let id = p.directive_node(d, "todolist")?;
             p.close(id)
+        }
+        Core::More => {
+            let id = p.directive_node(d, "more")?;
+            p.b().end_node(id)
         }
         Core::Postlist => {
             let id = p.directive_node(d, "postlist")?;

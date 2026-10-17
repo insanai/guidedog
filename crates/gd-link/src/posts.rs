@@ -24,6 +24,7 @@ pub(crate) fn replace_postlist(
     rw.add_class(container, &format!("postlist postlist-{style}"))?;
     let list = rw.open(NodeKind::List, span)?;
     rw.b.set_list(list, ListInfo { style: ListStyle::Bullet, delimiter: b'*', start: 1 })?;
+    let mut worker = crate::Worker::new();
     for other in spec.select(page.view.env) {
         let doc = page.view.doc(other);
         let item = rw.open(NodeKind::ListItem, span)?;
@@ -35,8 +36,12 @@ pub(crate) fn replace_postlist(
         rw.add_plain(&doc.title, span)?;
         rw.close(link)?;
         rw.close(para)?;
-        if spec.excerpts && !doc.page.summary.is_empty() {
-            summary(rw, &doc.page.summary, span)?;
+        if spec.excerpts {
+            if doc.excerpt {
+                crate::excerpts::append(page, rw, &mut worker, other, id)?;
+            } else if !doc.page.summary.is_empty() {
+                summary(rw, &doc.page.summary, span)?;
+            }
         }
         rw.close(item)?;
     }

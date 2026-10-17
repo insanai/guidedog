@@ -3,6 +3,7 @@
 //! the table renderers build (`guidedoc::build_anchors`), so an id recorded here is the
 //! id on the published page.
 
+mod excerpts;
 mod symbols;
 
 use gd_env::{DocInfo, LabelKind, NumberedInfo, SectionInfo, SourceKind, TocEntry, ToctreeInfo};
@@ -18,6 +19,7 @@ use crate::search::SearchText;
 /// as the byte offset of its start in the document's own source; the caller turns it
 /// into a line once it holds the text.
 pub(crate) fn collect(d: &mut DocInfo, doc: Document<'_>) -> String {
+    excerpts::collect(d, doc);
     let anchors = build_anchors(doc, &RenderOptions::default(), true);
     let mut c = Collector {
         rst: d.kind == SourceKind::Rst,

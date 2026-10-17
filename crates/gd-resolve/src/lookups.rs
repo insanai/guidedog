@@ -253,7 +253,18 @@ pub fn lookup_answer(view: &BuildView<'_>, page: &str, lookup: &Lookup) -> Diges
                 for id in spec.select(view.env) {
                     let doc = view.doc(id);
                     d.text(&doc.docname).text(&doc.title).digest(&doc.page.digest());
+                    if spec.excerpts && doc.excerpt {
+                        d.digest(&doc.object.as_ref().map_or(Digest::default(), |o| o.digest));
+                    }
                 }
+            }
+        }
+        LookupKind::Excerpt => {
+            if let Some((source, encoded)) = lookup.key.split_once('\0')
+                && let Some(inner) = Lookup::decode(encoded)
+                && inner.kind != LookupKind::Excerpt
+            {
+                d.digest(&lookup_answer(view, source, &inner));
             }
         }
     }

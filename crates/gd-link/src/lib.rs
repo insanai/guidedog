@@ -26,6 +26,8 @@
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod discussion;
+mod excerpt_copy;
+mod excerpts;
 mod extlinks;
 mod graph;
 mod graph_files;
@@ -45,6 +47,7 @@ mod todolist;
 mod xref;
 
 pub use discussion::{Discussion, discussion_field, discussion_prefix, discussion_record};
+pub use excerpts::{Excerpt, render_excerpt};
 pub use graph_theme::{
     ADAPTIVE_CLASS, AdaptError, GRAPH_ADAPTIVE_CSS, adapt_graph, graph_adaptive,
 };

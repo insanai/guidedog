@@ -29,7 +29,8 @@ pub(super) fn run(runner: &Runner, root: &Path) -> Result<()> {
         &root.join("journal/posts/second.rst"),
         concat!(
             ":date: 2026-10-16\n:tags: journal\n\nSecond observation\n==================\n",
-            "\nWe test the next pagination page.\n"
+            "\nWe test **rich archive excerpts**. See `the guide <mount://home/guide.html>`_.\n",
+            "\n.. more::\n\nArchive-only tail.\n"
         ),
     )?;
     install_theme(runner, root)?;
@@ -65,9 +66,30 @@ pub(super) fn run(runner: &Runner, root: &Path) -> Result<()> {
         ));
     }
     check_pdf(&site.join("research/papers/first-paper.pdf"), "ssg-complete")?;
+    check_excerpts(&site)?;
     println!(
-        "ssg smoke passed: presets, mounts, taxonomy, pagination, feeds, pinned theme and PDF"
+        "ssg smoke passed: presets, mounts, taxonomy, pagination, excerpts, feeds, theme and PDF"
     );
+    Ok(())
+}
+
+fn check_excerpts(site: &Path) -> Result<()> {
+    for (file, guide) in [
+        ("journal/index.html", "../guide.html"),
+        ("journal/journal/index.html", "../../guide.html"),
+    ] {
+        let html = read_text(&site.join(file))?;
+        if !html.contains("<strong>rich archive excerpts</strong>")
+            || html.contains("Archive-only tail.")
+            || !html.contains(&format!("href=\"{guide}\""))
+        {
+            return Err(smoke_failure("ssg-excerpts", "rich introduction missing or tail leaked"));
+        }
+    }
+    let full = read_text(&site.join("journal/posts/second.html"))?;
+    if !full.contains("Archive-only tail.") || full.contains("more::") {
+        return Err(smoke_failure("ssg-excerpts", "full article lost content or rendered marker"));
+    }
     Ok(())
 }
 

@@ -62,6 +62,8 @@ pub struct Rewriter<'r, 'd, 'b> {
     /// Per source node: how many nodes before it the rule visits, to find subtrees
     /// it takes no interest in.
     visited_before: Vec<u32>,
+    /// Foreign documents already point at builder nodes, not source nodes.
+    foreign_links: Vec<std::ops::Range<usize>>,
 }
 
 impl std::fmt::Debug for Rewriter<'_, '_, '_> {
@@ -89,7 +91,7 @@ pub fn rewrite_document(
     if let Some(root) = moved.first_mut() {
         *root = ROOT;
     }
-    let mut rw = Rewriter { doc, b, moved, visited_before };
+    let mut rw = Rewriter { doc, b, moved, visited_before, foreign_links: Vec::new() };
     rw.b.set_value(ROOT, doc.node(ROOT).value); // who read it.
     let result = rw.rewrite_children(rule, ROOT);
     rw.remap_links();
@@ -97,6 +99,31 @@ pub fn rewrite_document(
 }
 
 impl Rewriter<'_, '_, '_> {
+    /// Appends a complete foreign document's children under the current node. Its
+    /// spans become `span`, and internal links point at the appended copies. The
+    /// caller must namespace the foreign document's anchors before copying it.
+    pub fn copy_foreign_document(
+        &mut self,
+        doc: Document<'_>,
+        span: SourceSpan,
+    ) -> Result<(), Fail> {
+        let first = self.b.snap.nodes.len();
+        let links = self.b.snap.links.len();
+        for child in doc.children(ROOT) {
+            self.b.copy_subtree(doc, child)?;
+        }
+        for node in &mut self.b.snap.nodes[first..] {
+            node.span = span;
+        }
+        for link in &mut self.b.snap.links[links..] {
+            if link.kind == LinkKind::Internal && link.resolved != ROOT {
+                link.resolved = NodeId::from_index(first + link.resolved.index() - 1);
+            }
+        }
+        self.foreign_links.push(links..self.b.snap.links.len());
+        Ok(())
+    }
+
     /// Rewrites the children of `parent`, each as the rule decides.
     pub fn rewrite_children(&mut self, rule: &mut dyn Rule, parent: NodeId) -> Result<(), Fail> {
         for child in self.doc.children(parent) {
@@ -229,7 +256,14 @@ impl Rewriter<'_, '_, '_> {
     /// Points internal links at the copies of their targets; a link whose target was
     /// left out points at the document root.
     fn remap_links(&mut self) {
-        for link in &mut self.b.snap.links {
+        let mut foreign = self.foreign_links.iter().peekable();
+        for (row, link) in self.b.snap.links.iter_mut().enumerate() {
+            while foreign.peek().is_some_and(|range| range.end <= row) {
+                foreign.next();
+            }
+            if foreign.peek().is_some_and(|range| range.contains(&row)) {
+                continue;
+            }
             if link.kind != LinkKind::Internal {
                 continue;
             }

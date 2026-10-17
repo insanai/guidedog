@@ -28,6 +28,7 @@
 mod builder;
 mod discover;
 mod environment;
+mod excerpts;
 mod lookup;
 mod objects;
 mod page;
@@ -52,6 +53,7 @@ pub use environment::{
     dependencies_changed, digest_name, doctrees_dir, environment_path, load_environment,
     normalize_name, option_key,
 };
+pub use excerpts::excerpt_root;
 pub use gd_conf::{Digest, Digester};
 pub use lookup::{Lookup, LookupKind, Trace};
 pub use objects::{OBJECTS_FOLDER, ObjectError, ObjectStore, SEARCH_FOLDER};

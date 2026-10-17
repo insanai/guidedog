@@ -26,8 +26,8 @@ pub(crate) fn write_html(
 ) -> Result<(), Problem> {
     let mut assets = Vec::new();
     write_documents(site, generation, reports, &mut assets)?;
+    crate::collections::write(site, generation, reports, &mut assets)?;
     write_site_unit(site, generation, None, &assets, reports)?;
-    crate::collections::write(site, generation, reports)?;
     write_search(site.view, generation, reports)
 }
 

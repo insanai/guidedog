@@ -4,7 +4,7 @@ use std::collections::BTreeSet;
 use std::fmt::Write as _;
 
 use gd_conf::CollectionConfig;
-use gd_env::{Digester, DocId, Lookup, LookupKind, PostlistSpec};
+use gd_env::{Asset, Digester, DocId, Lookup, LookupKind, PostlistSpec};
 use gd_host::Problem;
 use gd_jinja::Value;
 use gd_outputs::{Generation, UnitRecord};
@@ -14,6 +14,11 @@ use gd_resolve::{BuildView, relative_url};
 use crate::context::{Page, page_context};
 use crate::escape::push_escaped;
 use crate::site::Site;
+
+struct Pagination {
+    number: usize,
+    count: usize,
+}
 
 pub(crate) fn query(c: &CollectionConfig) -> PostlistSpec {
     PostlistSpec {
@@ -120,9 +125,10 @@ pub(crate) fn write(
     site: &Site<'_, '_>,
     generation: &mut Generation,
     reports: &mut Vec<Report>,
+    assets: &mut Vec<Asset>,
 ) -> Result<(), Problem> {
     for c in definitions(site.view) {
-        write_collection(site, &c, generation, reports)?;
+        write_collection(site, &c, generation, reports, assets)?;
     }
     Ok(())
 }
@@ -132,6 +138,7 @@ fn write_collection(
     c: &CollectionConfig,
     generation: &mut Generation,
     reports: &mut Vec<Report>,
+    assets: &mut Vec<Asset>,
 ) -> Result<(), Problem> {
     let spec = query(c);
     let posts = spec.select(site.view.env);
@@ -151,7 +158,8 @@ fn write_collection(
         } else {
             first.saturating_add(c.page_size).min(posts.len())
         };
-        write_page(site, c, &posts[first..last], number, count, generation, reports)?;
+        let pagination = Pagination { number, count };
+        write_page(site, c, &posts[first..last], pagination, generation, reports, assets)?;
         // Ownership is per page, so shrinking a collection removes its old tail.
         debug_assert!(paths.contains(&file));
     }
@@ -167,32 +175,37 @@ fn write_page(
     site: &Site<'_, '_>,
     c: &CollectionConfig,
     posts: &[DocId],
-    number: usize,
-    count: usize,
+    pagination: Pagination,
     generation: &mut Generation,
     reports: &mut Vec<Report>,
+    assets: &mut Vec<Asset>,
 ) -> Result<(), Problem> {
     let view = site.view;
+    let Pagination { number, count } = pagination;
     let file = page_file(&c.output, number);
-    let body = body(view, c, posts, number, count);
     let mut digest = Digester::new();
     digest.digest(&crate::digests::html_settings(view));
-    digest.text(&format!("{c:?}")).text(&body);
+    digest.text(&format!("{c:?}")).number(number as i64).number(count as i64);
     for &id in posts {
-        digest.digest(&view.doc(id).page.digest());
+        let doc = view.doc(id);
+        digest.text(&doc.docname).text(&doc.title).digest(&doc.page.digest());
+        if doc.excerpt {
+            digest.digest(&doc.object.as_ref().map_or(Default::default(), |o| o.digest));
+        }
     }
     let inputs = digest.finish();
     let key = format!("collection:{file}");
-    if let Some(old) = generation.reuse(&key, inputs, |l| {
-        if l.kind == LookupKind::Navigation {
-            crate::navigation_trace::answer(view, &file, l, &site.articles)
-        } else {
-            site.layout.template_digest(&l.key)
-        }
+    if let Some(old) = generation.reuse(&key, inputs, |l| match l.kind {
+        LookupKind::Navigation => crate::navigation_trace::answer(view, &file, l, &site.articles),
+        LookupKind::Template => site.layout.template_digest(&l.key),
+        _ => gd_resolve::lookup_answer(view, &file, l),
     }) {
         reports.extend(old.reports.iter().cloned());
+        assets.extend(old.assets.iter().cloned());
         return Ok(());
     }
+    let rendered = crate::collection_posts::render(site, &file, posts)?;
+    let body = body(view, c, posts, &rendered.html, number, count);
     let (ctx, state) = page_context(view, Page::Special(&file), &body, &site.articles);
     let title = if c.title.is_empty() { c.output.as_str() } else { c.title.as_str() };
     ctx.set("title", Value::from(title));
@@ -204,10 +217,10 @@ fn write_page(
     let adjacent = |n| Value::from(relative_url(&file, &page_file(&c.output, n)));
     collection.set("previous_url", if number > 1 { adjacent(number - 1) } else { Value::None });
     collection.set("next_url", if number < count { adjacent(number + 1) } else { Value::None });
-    collection.set("posts", Value::list(posts.iter().map(|&id| post_value(view, &file, id))));
+    collection.set("posts", Value::list(rendered.values));
     ctx.set("collection", collection);
     let template = if c.template.is_empty() { "collection.html" } else { &c.template };
-    let mut own = Vec::new();
+    let mut own = rendered.reports;
     let html = site.layout.render(view, template, &ctx, &state, &mut own)?;
     let mut lookups: Vec<_> = site
         .layout
@@ -222,14 +235,16 @@ fn write_page(
         let digest = crate::navigation_trace::answer(view, &file, &lookup, &site.articles);
         lookups.push((lookup, digest));
     }
+    lookups.extend(rendered.lookups);
     let mut unit = generation.unit(&key);
     unit.emit_text(&file, &html)?;
     reports.extend(own.iter().cloned());
-    unit.finish(UnitRecord { inputs, lookups, reports: own, ..Default::default() });
+    assets.extend(rendered.assets.iter().cloned());
+    unit.finish(UnitRecord { inputs, lookups, reports: own, assets: rendered.assets });
     Ok(())
 }
 
-fn post_value(view: &BuildView<'_>, file: &str, id: DocId) -> Value {
+pub(crate) fn post_value(view: &BuildView<'_>, file: &str, id: DocId) -> Value {
     let doc = view.doc(id);
     let value = Value::dict();
     value.set("title", Value::from(doc.title.as_str()));
@@ -253,6 +268,7 @@ fn body(
     view: &BuildView<'_>,
     c: &CollectionConfig,
     posts: &[DocId],
+    excerpts: &[String],
     number: usize,
     count: usize,
 ) -> String {
@@ -260,15 +276,15 @@ fn body(
     let mut out = String::from("<h1>");
     push_escaped(&mut out, if c.title.is_empty() { &c.output } else { &c.title });
     out.push_str("</h1><div class=\"postlist postlist-cards\"><ul>");
-    for &id in posts {
+    for (&id, excerpt) in posts.iter().zip(excerpts) {
         let d = view.doc(id);
         out.push_str("<li><p>");
         push_escaped(&mut out, &d.page.date);
         out.push(' ');
         link(&mut out, &relative_url(&file, &view.page_name(&d.docname)), &d.title);
-        out.push_str("</p><p>");
-        push_escaped(&mut out, &d.page.summary);
-        out.push_str("</p></li>");
+        out.push_str("</p>");
+        out.push_str(excerpt);
+        out.push_str("</li>");
     }
     out.push_str("</ul></div><nav aria-label=\"Pagination\">");
     if number > 1 {

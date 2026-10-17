@@ -66,6 +66,8 @@ pub(crate) struct Page<'p> {
     index: Vec<Indexed>,
     /// The root's metadata belongs in an RFC-style PDF front matter.
     discussion: bool,
+    /// Render only the author's introduction, suppressing recursive listings.
+    pub excerpt: bool,
 }
 
 /// A warning's fixed parts; `Page::warn` adds the document and the location.
@@ -104,6 +106,7 @@ impl<'p> Page<'p> {
             linkcode: None,
             index: Vec::new(),
             discussion: false,
+            excerpt: false,
         }
     }
 
@@ -113,6 +116,9 @@ impl<'p> Page<'p> {
             && self.depth == 0
             && discussion::discussion_record(doc).is_some();
         self.index_nodes(doc);
+        if self.excerpt {
+            return crate::excerpts::link(self, doc, b);
+        }
         rewrite_document(doc, b, self)
     }
 
@@ -288,6 +294,9 @@ impl Rule for Page<'_> {
             }
             NodeKind::Directive if doc.attribute(id, AttributeKey::Name) == Some("postlist") => {
                 Action::Replace
+            }
+            NodeKind::Directive if doc.attribute(id, AttributeKey::Name) == Some("more") => {
+                Action::Drop
             }
             _ => Action::Copy,
         }

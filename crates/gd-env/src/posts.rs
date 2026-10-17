@@ -36,7 +36,7 @@ pub struct PostlistSpec {
     pub limit: usize,
     /// Oldest articles first instead of newest first.
     pub ascending: bool,
-    /// Include plain-text summaries.
+    /// Include explicit rich excerpts, falling back to plain-text summaries.
     pub excerpts: bool,
 }
 

@@ -25,6 +25,7 @@
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod article_context;
+mod collection_posts;
 mod collections;
 mod context;
 mod digests;

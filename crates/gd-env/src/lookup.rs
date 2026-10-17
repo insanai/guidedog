@@ -40,6 +40,8 @@ pub enum LookupKind {
     Mount,
     /// An HTML navigation context value, native template call or body toctree.
     Navigation,
+    /// An excerpt's source document and source-relative lookup, separated by NUL.
+    Excerpt,
 }
 
 impl LookupKind {
@@ -60,6 +62,7 @@ impl LookupKind {
             LookupKind::Postlist => 'P',
             LookupKind::Mount => 'U',
             LookupKind::Navigation => 'N',
+            LookupKind::Excerpt => 'E',
         }
     }
 
@@ -79,6 +82,7 @@ impl LookupKind {
             'P' => LookupKind::Postlist,
             'U' => LookupKind::Mount,
             'N' => LookupKind::Navigation,
+            'E' => LookupKind::Excerpt,
             _ => return None,
         })
     }
@@ -94,6 +98,11 @@ pub struct Lookup {
 }
 
 impl Lookup {
+    /// Records a lookup in an excerpt's source context, rather than its listing.
+    pub fn excerpt(docname: &str, lookup: &Lookup) -> Lookup {
+        Lookup::new(LookupKind::Excerpt, &format!("{docname}\0{}", lookup.encode()))
+    }
+
     /// A lookup of `kind` for `key`.
     pub fn new(kind: LookupKind, key: &str) -> Lookup {
         Lookup { kind, key: key.to_string() }

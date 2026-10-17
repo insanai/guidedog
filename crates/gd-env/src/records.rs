@@ -191,6 +191,7 @@ fn cached_from_json(value: &Value) -> Option<Option<CachedFile>> {
 
 fn doc_to_json(d: &DocInfo) -> Value {
     ObjectBuilder::default()
+        .flag("excerpt", d.excerpt)
         .value("page", d.page.to_json())
         .text("docname", &d.docname)
         .text("relative", &d.relative)
@@ -228,6 +229,7 @@ fn doc_to_json(d: &DocInfo) -> Value {
 fn doc_from_json(value: &Value) -> Option<DocInfo> {
     let r = ObjectReader::of(value)?;
     Some(DocInfo {
+        excerpt: r.flag("excerpt")?,
         page: crate::PageMeta::from_json(r.value("page")?)?,
         docname: r.text("docname")?,
         relative: r.text("relative")?,

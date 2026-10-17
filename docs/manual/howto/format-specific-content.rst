@@ -73,11 +73,11 @@ into every generated page.
 ------------------------------------------
 
 To introduce vector shapes, tailored callout boxes, or custom typography for printed pages, wrap the markup
-in ``.. only:: typst or latex`` (or ``.. only:: pdf``):
+in ``.. only:: pdf``:
 
 .. code-block:: rst
 
-   .. only:: typst or latex
+   .. only:: pdf
 
       .. raw:: typst
 
@@ -94,6 +94,23 @@ in ``.. only:: typst or latex`` (or ``.. only:: pdf``):
 
 Guidedog emits this block directly into the Typst document before invoking the Typst compiler.
 The HTML builder automatically omits this block without emitting warnings.
+
+.. note::
+
+   **Why Typst and not LaTeX?**
+
+   Guidedog generates PDF books through native `Typst <https://typst.app/>`_, not TeX or LaTeX.
+   Raw blocks are passed verbatim to the target rendering engine:
+
+   * **Raw Typst** (``.. raw:: typst``): Rendered directly by the Typst compiler in PDF builds.
+   * **Raw LaTeX** (``.. raw:: latex``): Not supported in PDF builds. Guidedog reports a
+     ``typst.raw.foreign`` warning and omits the content because Typst cannot execute LaTeX commands.
+   * **LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. Guidedog includes a built-in
+     mathematical translator that converts standard LaTeX equation syntax into native Typst math
+     expressions at compile time.
+   * **The ``latex`` tag in ``.. only::``**: For backward compatibility with legacy Sphinx projects,
+     Guidedog recognizes ``latex`` as an alias for PDF builds in ``.. only::`` expressions. In
+     native Guidedog projects, prefer ``.. only:: pdf``.
 
 3. Declare custom domain directives in conf.toml
 ------------------------------------------------

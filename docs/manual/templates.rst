@@ -475,16 +475,19 @@ Target-specific markup and raw blocks
               <button onclick="runSample()">Test Endpoint</button>
             </div>
 
-      .. only:: typst or latex
+      .. only:: pdf
 
          .. raw:: typst
 
             #align(center)[#text(size: 14pt, weight: "bold")[Typeset only in the book]]
 
    ``.. only:: html`` limits interactive web components and custom HTML to web builds.
-   ``.. only:: typst or latex`` (or ``.. only:: pdf``) keeps vector formatting, callouts, and
-   native Typst expressions to the book. To build reusable, semantic directives, see
-   :doc:`tutorial/dynamic-content-and-directives` and :doc:`howto/format-specific-content`.
+   ``.. only:: pdf`` keeps vector formatting, callouts, and native Typst expressions to the book
+   (``.. only:: latex`` is recognized as an alias for compatibility with Sphinx projects).
+   Because Guidedog typesets books with Typst rather than LaTeX, raw blocks for the book must use
+   ``.. raw:: typst``; verbatim ``.. raw:: latex`` is not supported and is omitted by the PDF builder.
+   To build reusable, semantic directives, see :doc:`tutorial/dynamic-content-and-directives` and
+   :doc:`howto/format-specific-content`.
 
 When Typst reports an error, the build names the file and line, whether it is in our
 template or in the generated book. Each PDF has its own generated source at

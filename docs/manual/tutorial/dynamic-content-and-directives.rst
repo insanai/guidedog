@@ -124,7 +124,7 @@ Replace the contents of ``index.rst`` with the following document:
            <p style="margin-top: 10pt; color: #16382f;">Estimated P99 Latency: <strong id="est-p99" style="color: #216553; font-size: 1.15em;">1.40 ms</strong></p>
          </div>
 
-   .. only:: typst or latex
+   .. only:: pdf
 
       .. raw:: typst
 
@@ -140,6 +140,14 @@ Replace the contents of ``index.rst`` with the following document:
            P99 latency must remain strictly below 2.50 ms under sustained 5,000 req/s load.
            An interactive calculator is available in the web edition.
          ]
+
+.. note::
+
+   **Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using native Typst.
+   Always write ``.. raw:: typst`` for print callouts and vector blocks. Guidedog does not
+   execute verbatim ``.. raw:: latex`` (which is omitted with a diagnostic). However, standard
+   LaTeX math written in ``.. math::`` and ``:math:`` is automatically translated into Typst
+   formulas by Guidedog's built-in math compiler.
 
 4. Build and inspect both publications
 --------------------------------------

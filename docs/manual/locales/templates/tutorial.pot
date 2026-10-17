@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:33+0000\n"
+"POT-Creation-Date: 2026-10-17 15:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -354,55 +354,99 @@ msgid "Open ``conf.toml`` and append the declaration for a ``metric`` directive:
 msgstr ""
 
 #: ../../tutorial/dynamic-content-and-directives.rst:89
-msgid "This single declaration establishes a complete syntax contract: * ``.. metric:: p99_latency (milliseconds)`` describes the metric. * ``:metric:`p99_latency``` links to the definition from any document. * The index table automatically generates a pair index entry (``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a semantic definition list with CSS anchor hooks. * In PDF, Guidedog typesets a styled description entry with back-references in the appendix."
+msgid "This single declaration establishes a complete syntax contract:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:96
+#: ../../tutorial/dynamic-content-and-directives.rst:91
+msgid "``.. metric:: p99_latency (milliseconds)`` describes the metric."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:92
+msgid "``:metric:`p99_latency``` links to the definition from any document."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:93
+msgid "The index table automatically generates a pair index entry (``p99_latency; cluster telemetry``)."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:94
+msgid "In HTML, Guidedog generates a semantic definition list with CSS anchor hooks."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:95
+msgid "In PDF, Guidedog typesets a description and an index entry linking to its page."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:97
 msgid "3. Author the document with format guards"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:99
+#: ../../tutorial/dynamic-content-and-directives.rst:100
 msgid "Replace the contents of ``index.rst`` with the following document:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:146
-msgid "**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using native Typst. Always write ``.. raw:: typst`` for print callouts and vector blocks. Guidedog does not execute verbatim ``.. raw:: latex`` (which is omitted with a diagnostic). However, standard LaTeX math written in ``.. math::`` and ``:math:`` is automatically translated into Typst formulas by Guidedog's built-in math compiler."
+#: ../../tutorial/dynamic-content-and-directives.rst:147
+msgid "**Typst and LaTeX in Guidedog**: PDF books use Typst. Trusted builds execute ``.. raw:: typst``; ``.. raw:: latex`` is omitted with ``typst.raw.foreign``. ``.. math::`` and ``:math:`` translate supported LaTeX mathematics into Typst equations. Unsupported commands produce ``typst.math.unsupported``; see :doc:`../topics/mathematics` for the supported syntax and policies."
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:152
+#: ../../tutorial/dynamic-content-and-directives.rst:149
 msgid "4. Build and inspect both publications"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:155
+#: ../../tutorial/dynamic-content-and-directives.rst:152
 msgid "Build the HTML website:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:161
-msgid "Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. Notice that: * The ``:metric:`p99_latency``` reference resolves directly to the definition anchor. * The interactive calculator slider is rendered and active in the web DOM. * The PDF callout block is omitted entirely, without emitting warnings."
+#: ../../tutorial/dynamic-content-and-directives.rst:158
+msgid "Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. Notice that:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:166
+#: ../../tutorial/dynamic-content-and-directives.rst:160
+msgid "The ``:metric:`p99_latency``` reference resolves directly to the definition anchor."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:161
+msgid "The interactive calculator slider is rendered and active in the web DOM."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:162
+msgid "The PDF callout block is omitted entirely, without emitting warnings."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:164
 msgid "Now build the PDF book:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:172
-msgid "Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at ``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are completely absent. * The Typst ``#rect(...)`` vector box is typeset with native margins, borders, and typography. * The appendix includes an index entry under ``p99_latency``."
+#: ../../tutorial/dynamic-content-and-directives.rst:170
+msgid "Open ``_build/pdf/cluster-telemetry-en.pdf`` (or the inspection source at ``_build/pdf/book-en.typ``). Notice that:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:177
+#: ../../tutorial/dynamic-content-and-directives.rst:172
+msgid "The slider and raw HTML are completely absent."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:173
+msgid "The Typst ``#rect(...)`` vector box is typeset with native margins, borders, and typography."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:174
+msgid "The book's index includes an entry under ``p99_latency``."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:176
 msgid "5. Custom Typst functions in theme templates"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:180
-msgid "When you have formatting patterns used across many chapters, define a reusable Typst function in ``_templates/theme.typ``:"
+#: ../../tutorial/dynamic-content-and-directives.rst:179
+msgid "When we reuse formatting across chapters, we append a Typst function to ``_templates/theme.typ``:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:193
+#: ../../tutorial/dynamic-content-and-directives.rst:191
 msgid "In any document, invoke the function inside a raw Typst block:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:203
-msgid "This keeps your reStructuredText prose focused on documentation while granting full access to Typst's typesetting engine for printed publications."
+#: ../../tutorial/dynamic-content-and-directives.rst:202
+msgid "Import the function explicitly: the book template's own imports are scoped to its module and do not expose helpers to document content. For many call sites, place this import in a project preamble selected by ``pdf_preamble``."
 msgstr ""
 
 #: ../../tutorial/first-project.rst:1

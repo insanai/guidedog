@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-17 14:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -238,6 +238,114 @@ msgstr ""
 
 #: ../../howto/document-code.rst:128
 msgid "We publish the generated ``objects.inv`` with the site. An intersphinx mapping in another project can then resolve our names. Explicit mappings keep builds reproducible. See :doc:`../intersphinx`."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:1
+msgid "Deliver format-specific content and custom directives"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:4
+msgid "A single source tree can publish rich, dynamic HTML pages on the web while typesetting elegant, print-quality PDF books. This guide covers how to route content to specific output formats, declare custom domain directives, and invoke Typst typesetting functions."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:10
+msgid "Content passes through format guards and object type tables to produce tailored web and print deliverables."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:10
+msgid "Content routing and directive handling for HTML and PDF outputs."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:43
+msgid "1. Embed dynamic HTML and client scripts"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:46
+msgid "Use ``.. only:: html`` paired with a ``.. raw:: html`` block to inject web-specific markup, interactive calculators, or embedded audio/video components:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:60
+msgid "To supply the supporting CSS and JavaScript: 1. Place your script and stylesheet in ``_static/`` (e.g. ``_static/interactive.js`` and ``_static/interactive.css``). 2. Register them in ``conf.toml``:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:69
+msgid "The HTML builder copies these files into the build directory and injects ``<link>`` and ``<script>`` tags into every generated page."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:72
+msgid "2. Typeset custom Typst formatting for PDF"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:75
+msgid "To introduce vector shapes, tailored callout boxes, or custom typography for printed pages, wrap the markup in ``.. only:: typst or latex`` (or ``.. only:: pdf``):"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:95
+msgid "Guidedog emits this block directly into the Typst document before invoking the Typst compiler. The HTML builder automatically omits this block without emitting warnings."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:98
+msgid "3. Declare custom domain directives in conf.toml"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:101
+msgid "When you need custom structured blocks with signature parsing, cross-references, and index entries, declare them in ``conf.toml`` under ``[[object_types]]``:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:113
+msgid "Now authors can describe services across all documents:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:121
+msgid "Other documents can link directly to this service using the declared role:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:127
+msgid "In HTML, Guidedog produces semantic definition tags (``<dl class=\"service\">``) with automatic anchor links. In PDF, Guidedog typesets a styled description entry and records an index entry in the book's index."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:130
+msgid "4. Alias existing directives"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:133
+msgid "If you are migrating documentation or want friendlier names for built-in directives, declare aliases in ``[directive_aliases]`` in ``conf.toml``:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:142
+msgid "Authors can then use ``.. callout::`` or ``.. endpoint::`` using the options and rules of the target directive."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:144
+msgid "5. Call reusable Typst functions from templates"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:147
+msgid "Instead of writing verbose Typst code inline across multiple documents, define a reusable function in ``_templates/theme.typ``:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:164
+msgid "Call it concisely from reStructuredText:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:174
+msgid "6. Advanced: Preprocessing directives with a build plugin"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:177
+msgid "When you want to invent a completely custom directive syntax and expand it dynamically during build time, implement a ``gd_plugins::BuildPlugin`` in Rust."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:180
+msgid "The plugin implements ``process_source``, intercepting the raw document text before parsing:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:214
+msgid "Register the compiled plugin using:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:220
+msgid "Guidedog verifies the plugin's SHA-256 fingerprint, starts it per build, and forwards document sources through its pipeline."
 msgstr ""
 
 #: ../../howto/github-pages.rst:1

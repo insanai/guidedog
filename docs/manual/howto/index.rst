@@ -14,3 +14,4 @@ Each page starts from a concrete task. It names the command and the result.
    maintain-docs
    discussions
    static-publishing
+   format-specific-content

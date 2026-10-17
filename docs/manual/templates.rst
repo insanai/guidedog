@@ -460,17 +460,31 @@ A preamble
    ``pdf_preamble`` names a Typst file whose content follows the ``#show: book``
    line. It suits a few ``set`` and ``show`` rules without a template of our own.
 
-Typst in a document
-   Documents are reStructuredText and Markdown. Typst files are not documents. To put
-   Typst markup into the book, we write it in a raw block, which web pages leave out:
+Target-specific markup and raw blocks
+   Documents are reStructuredText and Markdown. Typst files and HTML fragments are not documents.
+   To insert specialized markup into either output format without contaminating the other, wrap
+   the block in an ``.. only::`` guard with a matching ``.. raw::`` directive:
 
    .. code-block:: rst
 
-      .. raw:: typst
+      .. only:: html
 
-         #align(center)[#text(size: 14pt)[Only in the book]]
+         .. raw:: html
 
-   ``.. only:: pdf`` keeps ordinary content to the book in the same way.
+            <div class="interactive-demo">
+              <button onclick="runSample()">Test Endpoint</button>
+            </div>
+
+      .. only:: typst or latex
+
+         .. raw:: typst
+
+            #align(center)[#text(size: 14pt, weight: "bold")[Typeset only in the book]]
+
+   ``.. only:: html`` limits interactive web components and custom HTML to web builds.
+   ``.. only:: typst or latex`` (or ``.. only:: pdf``) keeps vector formatting, callouts, and
+   native Typst expressions to the book. To build reusable, semantic directives, see
+   :doc:`tutorial/dynamic-content-and-directives` and :doc:`howto/format-specific-content`.
 
 When Typst reports an error, the build names the file and line, whether it is in our
 template or in the generated book. Each PDF has its own generated source at

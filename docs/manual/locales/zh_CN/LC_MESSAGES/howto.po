@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-17 14:14+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -86,8 +86,8 @@ msgid ""
 "``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable "
 "PDF layout and shared theme copied from the binary;"
 msgstr ""
-"``_templates/discussion.typ`` 和 ``_templates/theme.typ``\\ ：从二进制文件中复制出来的可编辑 "
-"PDF 版式和共享主题；"
+"``_templates/discussion.typ`` 和 ``_templates/theme.typ``\\ "
+"：从二进制文件中复制出来的可编辑 PDF 版式和共享主题；"
 
 #: ../../howto/discussions.rst:34
 msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
@@ -241,8 +241,8 @@ msgid ""
 "headers identify the catalog and record, and footers show the page number "
 "and total. Tables and captioned listings can continue across pages."
 msgstr ""
-"每条 RST 记录都使用 RFC 风格的文稿版式。记录开头包含元数据面板、状态徽章、简短的状态说明和紧凑目录，随后是正文。带编号的小节连续排版。"
-"页眉标明目录名和记录编号，页脚显示当前页码和总页数。表格和带题注的代码清单可以跨页延续。"
+"每条 RST 记录都使用 RFC "
+"风格的文稿版式。记录开头包含元数据面板、状态徽章、简短的状态说明和紧凑目录，随后是正文。带编号的小节连续排版。页眉标明目录名和记录编号，页脚显示当前页码和总页数。表格和带题注的代码清单可以跨页延续。"
 
 #: ../../howto/discussions.rst:172
 msgid ""
@@ -252,8 +252,8 @@ msgid ""
 "existing template customizations until we replace or remove their files. "
 "Ordinary books keep their book template."
 msgstr ""
-"对于任意目录前缀，PDF 构建器都能识别开头的元数据（如 ``:eds-number:`` 和 ``:eds-title:``）。未复制讨论模板的现有目录会使用当前内嵌的版式。"
-"在替换或删除模板文件之前，已有的模板定制会保持不变。普通图书仍使用其书籍模板。"
+"对于任意目录前缀，PDF 构建器都能识别开头的元数据（如 ``:eds-number:`` 和 "
+"``:eds-title:``）。未复制讨论模板的现有目录会使用当前内嵌的版式。在替换或删除模板文件之前，已有的模板定制会保持不变。普通图书仍使用其书籍模板。"
 
 #: ../../howto/discussions.rst:174
 msgid ""
@@ -270,12 +270,13 @@ msgid ""
 "``contents`` and ``memo`` parameters control the contents and status "
 "note. :doc:`../templates` describes the shared PDF parameters."
 msgstr ""
-"该版式已内嵌在 Guidedog 二进制文件中。``guidedog dsc init`` 会复制 ``_templates/discussion.typ`` "
-"及其共享的 ``_templates/theme.typ`` 供用户定制；未复制这些文件的现有目录则使用内嵌版式。该模板定义了一个 ``book`` "
-"函数，除了常规 PDF 参数外还额外接收一个 ``record`` 字典：``record.id`` 是可读标识符，``record.catalog`` "
-"是项目名称，``record.fields`` 包含可读字段标签和值的配对，所有值均以带引号的字符串形式传入。源文档标题提供标题文字及其锚点。"
-"模板在读取目录元数据时不假设固定的前缀或生命周期，其可选的 ``contents`` 和 ``memo`` 参数用于控制目录和状态说明。"
-"共享的 PDF 参数详见 :doc:`../templates`。"
+"该版式已内嵌在 Guidedog 二进制文件中。``guidedog dsc init`` 会复制 "
+"``_templates/discussion.typ`` 及其共享的 ``_templates/theme.typ`` "
+"供用户定制；未复制这些文件的现有目录则使用内嵌版式。该模板定义了一个 ``book`` 函数，除了常规 PDF 参数外还额外接收一个 "
+"``record`` 字典：``record.id`` 是可读标识符，``record.catalog`` "
+"是项目名称，``record.fields`` "
+"包含可读字段标签和值的配对，所有值均以带引号的字符串形式传入。源文档标题提供标题文字及其锚点。模板在读取目录元数据时不假设固定的前缀或生命周期，其可选的 "
+"``contents`` 和 ``memo`` 参数用于控制目录和状态说明。共享的 PDF 参数详见 :doc:`../templates`。"
 
 #: ../../howto/discussions.rst:176
 msgid ""
@@ -284,8 +285,8 @@ msgid ""
 "book keeps its metadata in that chapter; the root document selects the "
 "book's layout."
 msgstr ""
-"``--untrusted`` 构建会使用内置的讨论版式，而不运行项目模板。如果某条记录作为更大图书中的一章被包含进去，它会在该章中保留自己的元数据，"
-"而整本书的版式由根文档决定。"
+"``--untrusted`` "
+"构建会使用内置的讨论版式，而不运行项目模板。如果某条记录作为更大图书中的一章被包含进去，它会在该章中保留自己的元数据，而整本书的版式由根文档决定。"
 
 #: ../../howto/discussions.rst:178
 msgid "When an update is interrupted"
@@ -480,6 +481,155 @@ msgstr ""
 "我们将生成的 ``objects.inv`` 随网站一起发布，其他项目就能通过 intersphinx "
 "映射解析我们的名称。显式映射可以保证构建可重复。见 :doc:`../intersphinx`。"
 
+#: ../../howto/format-specific-content.rst:1
+msgid "Deliver format-specific content and custom directives"
+msgstr "交付格式专用内容与自定义指令"
+
+#: ../../howto/format-specific-content.rst:4
+msgid ""
+"A single source tree can publish rich, dynamic HTML pages on the web "
+"while typesetting elegant, print-quality PDF books. This guide covers how "
+"to route content to specific output formats, declare custom domain "
+"directives, and invoke Typst typesetting functions."
+msgstr "单个源码树既能在 Web 上发布富媒体动态 HTML 页面，又能排版出优雅且具备印刷品质的 PDF 图书。本指南介绍如何将内容路由到特定输出格式、声明自定义领域指令以及调用 Typst 排版函数。"
+
+#: ../../howto/format-specific-content.rst:10
+msgid ""
+"Content passes through format guards and object type tables to produce "
+"tailored web and print deliverables."
+msgstr "内容通过格式保护块与对象类型表，生成定制的 Web 与印刷输出。"
+
+#: ../../howto/format-specific-content.rst:10
+msgid "Content routing and directive handling for HTML and PDF outputs."
+msgstr "针对 HTML 和 PDF 输出的内容路由与指令处理。"
+
+#: ../../howto/format-specific-content.rst:43
+msgid "1. Embed dynamic HTML and client scripts"
+msgstr "1. 嵌入动态 HTML 与客户端脚本"
+
+#: ../../howto/format-specific-content.rst:46
+msgid ""
+"Use ``.. only:: html`` paired with a ``.. raw:: html`` block to inject "
+"web-specific markup, interactive calculators, or embedded audio/video "
+"components:"
+msgstr "使用 ``.. only:: html`` 与 ``.. raw:: html`` 组合块来注入 Web 专用标记、交互式计算器或内嵌音视频组件："
+
+#: ../../howto/format-specific-content.rst:60
+msgid ""
+"To supply the supporting CSS and JavaScript: 1. Place your script and "
+"stylesheet in ``_static/`` (e.g. ``_static/interactive.js`` and "
+"``_static/interactive.css``). 2. Register them in ``conf.toml``:"
+msgstr "要提供配套的 CSS 和 JavaScript：1. 将脚本和样式表放入 ``_static/``（例如 ``_static/interactive.js`` 和 ``_static/interactive.css``）。2. 在 ``conf.toml`` 中注册它们："
+
+#: ../../howto/format-specific-content.rst:69
+msgid ""
+"The HTML builder copies these files into the build directory and injects "
+"``<link>`` and ``<script>`` tags into every generated page."
+msgstr "HTML 构建器会将这些文件复制到输出目录，并向生成的每个页面注入 ``<link>`` 和 ``<script>`` 标签。"
+
+#: ../../howto/format-specific-content.rst:72
+msgid "2. Typeset custom Typst formatting for PDF"
+msgstr "2. 为 PDF 排版自定义 Typst 格式"
+
+#: ../../howto/format-specific-content.rst:75
+msgid ""
+"To introduce vector shapes, tailored callout boxes, or custom typography "
+"for printed pages, wrap the markup in ``.. only:: typst or latex`` (or "
+"``.. only:: pdf``):"
+msgstr "要在印刷页面中引入矢量图形、定制标注框或特殊排版效果，请将标记包裹在 ``.. only:: typst or latex``（或 ``.. only:: pdf``）中："
+
+#: ../../howto/format-specific-content.rst:95
+msgid ""
+"Guidedog emits this block directly into the Typst document before "
+"invoking the Typst compiler. The HTML builder automatically omits this "
+"block without emitting warnings."
+msgstr "Guidedog 会在调用 Typst 编译器之前直接将该块输出到 Typst 文档中。HTML 构建器会自动忽略此块且不产生任何警告。"
+
+#: ../../howto/format-specific-content.rst:98
+msgid "3. Declare custom domain directives in conf.toml"
+msgstr "3. 在 conf.toml 中声明自定义领域指令"
+
+#: ../../howto/format-specific-content.rst:101
+msgid ""
+"When you need custom structured blocks with signature parsing, "
+"cross-references, and index entries, declare them in ``conf.toml`` under "
+"``[[object_types]]``:"
+msgstr "当需要具备签名解析、交叉引用和索引项的自定义结构化块时，请在 ``conf.toml`` 的 ``[[object_types]]`` 下进行声明："
+
+#: ../../howto/format-specific-content.rst:113
+msgid "Now authors can describe services across all documents:"
+msgstr "现在作者可以在所有文档中描述服务："
+
+#: ../../howto/format-specific-content.rst:121
+msgid ""
+"Other documents can link directly to this service using the declared role:"
+msgstr "其他文档可以使用声明的角色直接链接到此服务："
+
+#: ../../howto/format-specific-content.rst:127
+msgid ""
+"In HTML, Guidedog produces semantic definition tags (``<dl "
+"class=\"service\">``) with automatic anchor links. In PDF, Guidedog "
+"typesets a styled description entry and records an index entry in the "
+"book's index."
+msgstr "在 HTML 中，Guidedog 生成带有自动锚点链接的语义定义标签（``<dl class=\"service\">``）。在 PDF 中，Guidedog 排版带样式的描述条目并在图书索引中登记条目。"
+
+#: ../../howto/format-specific-content.rst:130
+msgid "4. Alias existing directives"
+msgstr "4. 为已有指令设置别名"
+
+#: ../../howto/format-specific-content.rst:133
+msgid ""
+"If you are migrating documentation or want friendlier names for built-in "
+"directives, declare aliases in ``[directive_aliases]`` in ``conf.toml``:"
+msgstr "如果正在迁移文档，或者希望为内置指令提供更友好的名称，可以在 ``conf.toml`` 的 ``[directive_aliases]`` 中声明别名："
+
+#: ../../howto/format-specific-content.rst:142
+msgid ""
+"Authors can then use ``.. callout::`` or ``.. endpoint::`` using the "
+"options and rules of the target directive."
+msgstr "作者随后即可按照目标指令的选项和规则使用 ``.. callout::`` 或 ``.. endpoint::``。"
+
+#: ../../howto/format-specific-content.rst:144
+msgid "5. Call reusable Typst functions from templates"
+msgstr "5. 从模板调用可复用的 Typst 函数"
+
+#: ../../howto/format-specific-content.rst:147
+msgid ""
+"Instead of writing verbose Typst code inline across multiple documents, "
+"define a reusable function in ``_templates/theme.typ``:"
+msgstr "无需在多篇文档中重复内联繁冗的 Typst 代码，可以在 ``_templates/theme.typ`` 中定义可复用函数："
+
+#: ../../howto/format-specific-content.rst:164
+msgid "Call it concisely from reStructuredText:"
+msgstr "在 reStructuredText 中简洁地调用它："
+
+#: ../../howto/format-specific-content.rst:174
+msgid "6. Advanced: Preprocessing directives with a build plugin"
+msgstr "6. 高级用法：使用构建插件预处理指令"
+
+#: ../../howto/format-specific-content.rst:177
+msgid ""
+"When you want to invent a completely custom directive syntax and expand "
+"it dynamically during build time, implement a ``gd_plugins::BuildPlugin`` "
+"in Rust."
+msgstr "若想创造一套完全自定义的指令语法并在构建时动态展开，可用 Rust 实现一个 ``gd_plugins::BuildPlugin``。"
+
+#: ../../howto/format-specific-content.rst:180
+msgid ""
+"The plugin implements ``process_source``, intercepting the raw document "
+"text before parsing:"
+msgstr "插件实现 ``process_source``，在解析前拦截原始文档文本："
+
+#: ../../howto/format-specific-content.rst:214
+msgid "Register the compiled plugin using:"
+msgstr "使用以下命令注册编译好的插件："
+
+#: ../../howto/format-specific-content.rst:220
+msgid ""
+"Guidedog verifies the plugin's SHA-256 fingerprint, starts it per build, "
+"and forwards document sources through its pipeline."
+msgstr "Guidedog 校验插件的 SHA-256 指纹，在每次构建时启动它，并通过其流水线传递文档源文件。"
+
 #: ../../howto/github-pages.rst:1
 msgid "Publish to GitHub Pages"
 msgstr "发布到 GitHub Pages"
@@ -494,15 +644,16 @@ msgid ""
 "repository has one Pages source: GitHub Actions or a branch."
 msgstr ""
 "将 Guidedog 网站发布到 GitHub Pages 有两种方式。一种是 GitHub Actions：每次推送时，用已发布的 "
-"Guidedog 和 GitHub 官方的 Pages Actions 构建并部署，无需个人令牌。另一种是 ``guidedog "
-"publish pages``：从我们自己的机器发布，可以随时手动发布，也可以在源文件变化时自动发布。每个网站只用其中一种方式，因为一个仓库只有一个 Pages "
+"Guidedog 和 GitHub 官方的 Pages Actions 构建并部署，无需个人令牌。另一种是 ``guidedog publish "
+"pages``：从我们自己的机器发布，可以随时手动发布，也可以在源文件变化时自动发布。每个网站只用其中一种方式，因为一个仓库只有一个 Pages "
 "来源：GitHub Actions 或某个分支。"
 
 #: ../../howto/github-pages.rst:12
 msgid ""
 "Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog "
 "publish pages publisher with a durable journal."
-msgstr "路径一使用 GitHub Actions CI/CD；路径二使用带持久化日志的本地 guidedog publish pages 发布器。"
+msgstr ""
+"路径一使用 GitHub Actions CI/CD；路径二使用带持久化日志的本地 guidedog publish pages 发布器。"
 
 #: ../../howto/github-pages.rst:12
 msgid "The two routes for publishing documentation to GitHub Pages."
@@ -521,8 +672,7 @@ msgid ""
 "On a machine that has never published, it does each missing step once and "
 "says what it does. It asks before anything that changes GitHub or this "
 "machine's permissions:"
-msgstr ""
-"在从未发布过的机器上，它会把缺少的步骤各执行一次，并说明正在做什么。凡是会更改 GitHub 或本机权限的操作，它都会先询问："
+msgstr "在从未发布过的机器上，它会把缺少的步骤各执行一次，并说明正在做什么。凡是会更改 GitHub 或本机权限的操作，它都会先询问："
 
 #: ../../howto/github-pages.rst:56
 msgid ""
@@ -608,8 +758,8 @@ msgid ""
 "Pages plugin builds the project with Guidedog. It pushes the whole site "
 "to a branch of its own in one Git commit."
 msgstr ""
-"单步命令仍然保留，供脚本使用，也便于逐一检查各个环节。链接进来的 Pages 插件会用 Guidedog "
-"构建项目，再用一次 Git 提交把整个网站推送到它专用的分支。"
+"单步命令仍然保留，供脚本使用，也便于逐一检查各个环节。链接进来的 Pages 插件会用 Guidedog 构建项目，再用一次 Git "
+"提交把整个网站推送到它专用的分支。"
 
 #: ../../howto/github-pages.rst:91
 msgid ""
@@ -892,9 +1042,10 @@ msgid ""
 "``watch``, ``status``, ``recover`` and ``workflow`` expose individual "
 "steps for scripts and maintenance."
 msgstr ""
-"Pages 插件已链接进 ``guidedog``。``guidedog publish pages`` 引导完成发布，并使用宿主自身的引擎构建项目。"
-"``guidedog pages init``、``auth``、``bind``、``setup``、``doctor``、``watch``、"
-"``status``、``recover`` 和 ``workflow`` 则公开了各个独立步骤，供脚本调用和日常维护使用。"
+"Pages 插件已链接进 ``guidedog``。``guidedog publish pages`` "
+"引导完成发布，并使用宿主自身的引擎构建项目。``guidedog pages "
+"init``、``auth``、``bind``、``setup``、``doctor``、``watch``、``status``、``recover`` "
+"和 ``workflow`` 则公开了各个独立步骤，供脚本调用和日常维护使用。"
 
 #: ../../howto/github-pages.rst:369
 msgid "No separate publisher program or registration step is needed."
@@ -2150,8 +2301,8 @@ msgid ""
 "when a page is eligible for publication, which layout it uses, and "
 "whether it also compiles to a standalone article PDF."
 msgstr ""
-"带日期的文章、版本说明、白皮书和独立落地页共用常规的 HTML 与 PDF 构建流水线。开头的元数据字段声明页面何时满足发布条件、使用哪种布局，"
-"以及是否同时编译为独立的文章 PDF。"
+"带日期的文章、版本说明、白皮书和独立落地页共用常规的 HTML 与 PDF "
+"构建流水线。开头的元数据字段声明页面何时满足发布条件、使用哪种布局，以及是否同时编译为独立的文章 PDF。"
 
 #: ../../howto/static-publishing.rst:6
 msgid "Authoring and publication state"
@@ -2174,11 +2325,11 @@ msgid ""
 "without discarding its existing date metadata. Version control stays in "
 "the author's hands; the commands never commit, tag or move files."
 msgstr ""
-"传入 ``.md`` 路径即可创建带有 YAML front matter 的 Markdown 文件，而非 reStructuredText。"
-"构建 Markdown 时，请照常将 ``.md`` 加入 ``source_suffix`` 并在 ``extensions`` 中启用 "
-"``myst_parser``。``new`` 会创建草稿并拒绝覆盖已有文件。``publish`` 会清除草稿、定时发布和过期设置，保留已有的过去日期，"
-"或者在源文件没有日期或带有未来日期时填入当前 UTC 日期。``draft`` 会让源文件在后续正式构建中暂不发布，同时保留其现有的日期元数据。"
-"版本控制完全由作者掌控；这些命令绝不会执行提交、打标签或移动文件操作。"
+"传入 ``.md`` 路径即可创建带有 YAML front matter 的 Markdown 文件，而非 "
+"reStructuredText。构建 Markdown 时，请照常将 ``.md`` 加入 ``source_suffix`` 并在 "
+"``extensions`` 中启用 ``myst_parser``。``new`` 会创建草稿并拒绝覆盖已有文件。``publish`` "
+"会清除草稿、定时发布和过期设置，保留已有的过去日期，或者在源文件没有日期或带有未来日期时填入当前 UTC 日期。``draft`` "
+"会让源文件在后续正式构建中暂不发布，同时保留其现有的日期元数据。版本控制完全由作者掌控；这些命令绝不会执行提交、打标签或移动文件操作。"
 
 #: ../../howto/static-publishing.rst:18
 msgid ""
@@ -2201,10 +2352,9 @@ msgid ""
 "the previous successful website."
 msgstr ""
 "仅指定日期时，发布从 UTC 零点开始。``publish-at`` 用 RFC 3339 时间点覆盖这一起始边界，``expires-at`` "
-"则在指定的排他时间点结束发布。草稿、未到发布时间的文章和已过期的文章会在构建导航、搜索、订阅源和源码下载之前被排除。"
-"发布元数据属于源文件配置，不包含在 gettext 消息目录中。受识别的发布字段用于提供布局数据，不会出现在渲染后的正文和搜索文本中；"
-"未识别的字段以及后续的普通字段列表则仍作为正文内容。若要为单独的语言版本调整元数据，请编辑该语言版本的源文件。"
-"无效的发布元数据会阻止提交输出，并保留上一次成功生成的网站。"
+"则在指定的排他时间点结束发布。草稿、未到发布时间的文章和已过期的文章会在构建导航、搜索、订阅源和源码下载之前被排除。发布元数据属于源文件配置，不包含在 "
+"gettext "
+"消息目录中。受识别的发布字段用于提供布局数据，不会出现在渲染后的正文和搜索文本中；未识别的字段以及后续的普通字段列表则仍作为正文内容。若要为单独的语言版本调整元数据，请编辑该语言版本的源文件。无效的发布元数据会阻止提交输出，并保留上一次成功生成的网站。"
 
 #: ../../howto/static-publishing.rst:37
 msgid ""
@@ -2212,8 +2362,8 @@ msgid ""
 "documents produce HTML pages, optional article PDFs, collection archives "
 "and discovery feeds, while withheld documents stay in the private cache."
 msgstr ""
-"带有开头元数据的源文件会经过构建时钟门控：满足发布条件的文档会生成 HTML 页面、可选的文章 PDF、集合归档页和发现订阅源，"
-"而暂不发布的文档则留在私有缓存中。"
+"带有开头元数据的源文件会经过构建时钟门控：满足发布条件的文档会生成 HTML 页面、可选的文章 "
+"PDF、集合归档页和发现订阅源，而暂不发布的文档则留在私有缓存中。"
 
 #: ../../howto/static-publishing.rst:37
 msgid ""
@@ -2227,8 +2377,8 @@ msgid ""
 "to inspect unpublished pages locally. When keeping both public and "
 "preview outputs on disk, write the preview to a separate output directory:"
 msgstr ""
-"使用 ``guidedog build html --preview``（或 ``guidedog serve --preview``）可在本地查看尚未发布的页面。"
-"如果需要在磁盘上同时保留公开输出和预览输出，请将预览写入单独的输出目录："
+"使用 ``guidedog build html --preview``（或 ``guidedog serve "
+"--preview``）可在本地查看尚未发布的页面。如果需要在磁盘上同时保留公开输出和预览输出，请将预览写入单独的输出目录："
 
 #: ../../howto/static-publishing.rst:67
 msgid "Collections, archives and feeds"
@@ -2249,9 +2399,10 @@ msgid ""
 "cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each "
 "article's plain-text summary."
 msgstr ""
-"``:path:`` 匹配不带源文件后缀的文档名。分类（category）、作者（author）和系列（series）筛选器按精确匹配，"
-"且所列的每个标签（tag）都必须匹配。文章按发布时间点排序（默认最新在前），时间相同时按文档名排序；``:sort: date`` "
-"将最早的文章排在前面。``:style: cards`` 会添加卡片布局 CSS 类，``:excerpts:`` 则包含每篇文章的纯文本摘要。"
+"``:path:`` "
+"匹配不带源文件后缀的文档名。分类（category）、作者（author）和系列（series）筛选器按精确匹配，且所列的每个标签（tag）都必须匹配。文章按发布时间点排序（默认最新在前），时间相同时按文档名排序；``:sort: "
+"date`` 将最早的文章排在前面。``:style: cards`` 会添加卡片布局 CSS 类，``:excerpts:`` "
+"则包含每篇文章的纯文本摘要。"
 
 #: ../../howto/static-publishing.rst:82
 msgid "Enable site-wide discovery files in ``conf.toml``:"
@@ -2265,8 +2416,9 @@ msgid ""
 "rather than the wall clock, producing identical bytes when eligible "
 "sources and metadata are unchanged."
 msgstr ""
-"HTML 和 dirhtml 构建器会使用所配置的 ``base_url``（包括任何托管路径前缀）输出 ``sitemap.xml``、"
-"``rss.xml`` 和 ``atom.xml``。这些发现文件的时间戳源自源文件元数据而非实时系统时钟，因此在满足条件的源文件和元数据未改变时会生成完全相同的字节。"
+"HTML 和 dirhtml 构建器会使用所配置的 ``base_url``（包括任何托管路径前缀）输出 "
+"``sitemap.xml``、``rss.xml`` 和 "
+"``atom.xml``。这些发现文件的时间戳源自源文件元数据而非实时系统时钟，因此在满足条件的源文件和元数据未改变时会生成完全相同的字节。"
 
 #: ../../howto/static-publishing.rst:93
 msgid ""
@@ -2290,14 +2442,16 @@ msgid ""
 "``date``, ``url``, ``summary`` and typed ``meta`` values, including its "
 "optional ``pdf_url``."
 msgstr ""
-"该集合从 ``journal/index.html`` 开始，后续分页位于 ``journal/page/2/index.html``，"
-"并带有相对路径的上一页和下一页链接。将 ``page_size`` 设为 0 可将整个集合保留在单个页面上。每个集合都接受 "
+"该集合从 ``journal/index.html`` 开始，后续分页位于 "
+"``journal/page/2/index.html``，并带有相对路径的上一页和下一页链接。将 ``page_size`` 设为 0 "
+"可将整个集合保留在单个页面上。每个集合都接受 "
 "``path``、``category``、``tags``、``author``、``series`` 和 ``year`` 筛选器。当设置 "
-"``feeds = true`` 时，``journal/rss.xml`` 和 ``journal/atom.xml`` 会包含跨所有分页的完整筛选结果。"
-"除非通过 ``template`` 指定覆盖模板，集合布局默认使用 ``collection.html``。模板通过 ``collection`` "
-"接收当前页码、总页数和选中的文章列表，其中 ``collection.previous_url`` 和 ``collection.next_url`` "
-"为相对 URL 或 ``None``。每个文章条目都提供 ``title``、``docname``、``date``、``url``、"
-"``summary`` 以及带类型的 ``meta`` 值（包括可选的 ``pdf_url``）。"
+"``feeds = true`` 时，``journal/rss.xml`` 和 ``journal/atom.xml`` "
+"会包含跨所有分页的完整筛选结果。除非通过 ``template`` 指定覆盖模板，集合布局默认使用 "
+"``collection.html``。模板通过 ``collection`` 接收当前页码、总页数和选中的文章列表，其中 "
+"``collection.previous_url`` 和 ``collection.next_url`` 为相对 URL 或 "
+"``None``。每个文章条目都提供 ``title``、``docname``、``date``、``url``、``summary`` "
+"以及带类型的 ``meta`` 值（包括可选的 ``pdf_url``）。"
 
 #: ../../howto/static-publishing.rst:112
 msgid ""
@@ -2310,9 +2464,9 @@ msgid ""
 "shrinks, the output commit removes obsolete archive and pagination pages "
 "automatically."
 msgstr ""
-"分类法归档页写入诸如 ``tags/rust/index.html`` 和 ``year/2026/index.html`` 的路径。页面标题保留原始标签文本，"
-"而文件系统路径会对大写字母、标点符号和非 ASCII 字节进行转义，确保不同标签在大小写不敏感的文件系统上绝不会发生冲突。"
-"自动生成的页面绝不会覆盖作者手写的页面或其他生成输出。当发布状态改变或集合成员减少时，提交输出会自动清理过时的归档页和分页页面。"
+"分类法归档页写入诸如 ``tags/rust/index.html`` 和 ``year/2026/index.html`` "
+"的路径。页面标题保留原始标签文本，而文件系统路径会对大写字母、标点符号和非 ASCII "
+"字节进行转义，确保不同标签在大小写不敏感的文件系统上绝不会发生冲突。自动生成的页面绝不会覆盖作者手写的页面或其他生成输出。当发布状态改变或集合成员减少时，提交输出会自动清理过时的归档页和分页页面。"
 
 #: ../../howto/static-publishing.rst:114
 msgid "Layouts and standalone article PDFs"
@@ -2331,12 +2485,13 @@ msgid ""
 "``page.reading_minutes`` (computed using ``myst_words_per_minute``, "
 "counting CJK characters individually)."
 msgstr ""
-"带日期的文章默认选用 ``article.html``；其他页面选用继承自 ``layout.html`` 的 ``page.html``。"
-"任何页面都可以通过 ``:template: landing.html`` 选用 ``templates_path`` 中的自定义模板，"
-"并通过 ``:nosidebar: true`` 隐藏内置的导航侧边栏。模板通过 ``page.meta`` 接收日期、作者、标签、分类、"
-"系列、摘要、草稿状态和 PDF 链接。文章模板还会收到按发布顺序排列的 ``page.older`` 和 ``page.newer``、"
-"将每个已启用分类法映射为 ``{name, url}`` 条目的 ``page.taxonomies``，以及 ``page.word_count`` "
-"和 ``page.reading_minutes``（按 ``myst_words_per_minute`` 计算，中日韩字符逐字计入）。"
+"带日期的文章默认选用 ``article.html``；其他页面选用继承自 ``layout.html`` 的 "
+"``page.html``。任何页面都可以通过 ``:template: landing.html`` 选用 ``templates_path`` "
+"中的自定义模板，并通过 ``:nosidebar: true`` 隐藏内置的导航侧边栏。模板通过 ``page.meta`` "
+"接收日期、作者、标签、分类、系列、摘要、草稿状态和 PDF 链接。文章模板还会收到按发布顺序排列的 ``page.older`` 和 "
+"``page.newer``、将每个已启用分类法映射为 ``{name, url}`` 条目的 ``page.taxonomies``，以及 "
+"``page.word_count`` 和 ``page.reading_minutes``（按 "
+"``myst_words_per_minute`` 计算，中日韩字符逐字计入）。"
 
 #: ../../howto/static-publishing.rst:119
 msgid ""
@@ -2353,8 +2508,8 @@ msgstr ""
 "设置 ``:pdf: article`` 会在文章的 HTML 页面旁编译生成一份独立的 PDF（``html`` 构建器下为 "
 "``notes.pdf``，``dirhtml`` 构建器下为 ``notes/index.pdf``）。内置的 ``article.typ`` "
 "版式将正文渲染为连续文稿，带有标题与作者块、摘要以及从第二页开始的页眉。如需覆盖该版式，可在项目中放置具有相同 ``book`` 函数签名的 "
-"``_templates/article.typ``。生成的 Typst 源文件保存在输出目录下的 ``sources/`` 中以供检查。"
-"独立文章 PDF 由 ``html`` 和 ``dirhtml`` 构建器生成；``singlehtml`` 仍保持单页 HTML 行为。"
+"``_templates/article.typ``。生成的 Typst 源文件保存在输出目录下的 ``sources/`` 中以供检查。独立文章 "
+"PDF 由 ``html`` 和 ``dirhtml`` 构建器生成；``singlehtml`` 仍保持单页 HTML 行为。"
 
 #: ../../howto/static-publishing.rst:121
 msgid "Starter sites"
@@ -2387,8 +2542,8 @@ msgid ""
 "refuse to overwrite an existing destination. Update the example "
 "``base_url`` in ``conf.toml`` before publishing feeds or sitemaps."
 msgstr ""
-"这三种预设都会复制可编辑的 HTML、CSS 和 Typst 主题文件，并拒绝覆盖已存在的目标目录。在发布订阅源或 sitemap 之前，"
-"请先更新 ``conf.toml`` 中的示例 ``base_url``。"
+"这三种预设都会复制可编辑的 HTML、CSS 和 Typst 主题文件，并拒绝覆盖已存在的目标目录。在发布订阅源或 sitemap 之前，请先更新 "
+"``conf.toml`` 中的示例 ``base_url``。"
 
 #: ../../howto/static-publishing.rst:137
 msgid ""
@@ -2423,8 +2578,8 @@ msgid ""
 msgstr ""
 "每个挂载项的 ``source`` 在解析符号链接后都必须位于站点配置所在目录之下。除非语言版本的 ``source`` "
 "指定了单独的已翻译项目目录，否则该版本会使用挂载源项目中的 gettext 消息目录。语言版本的 ``output`` 相对于挂载项的 "
-"``output`` 前缀；空字符串表示直接挂载在该前缀的根路径下。挂载名称和语言版本输出目录在忽略 ASCII 大小写时必须互不相同，"
-"但只要输出文件互不重叠，不同的挂载项可以共用同一个输出目录。"
+"``output`` 前缀；空字符串表示直接挂载在该前缀的根路径下。挂载名称和语言版本输出目录在忽略 ASCII "
+"大小写时必须互不相同，但只要输出文件互不重叠，不同的挂载项可以共用同一个输出目录。"
 
 #: ../../howto/static-publishing.rst:176
 msgid ""
@@ -2432,8 +2587,8 @@ msgid ""
 "build compiles each mount, verifies mount:// links and file collisions, "
 "and commits the assembled site in one Generation."
 msgstr ""
-"根 conf.toml 声明挂载项、语言版本和共享资源；ssg build 编译每个挂载项，校验 mount:// 链接与文件冲突，"
-"并在一次版本切换中提交组装完成的站点。"
+"根 conf.toml 声明挂载项、语言版本和共享资源；ssg build 编译每个挂载项，校验 mount:// "
+"链接与文件冲突，并在一次版本切换中提交组装完成的站点。"
 
 #: ../../howto/static-publishing.rst:176
 msgid ""
@@ -2455,11 +2610,11 @@ msgid ""
 "publication clock governs the entire build."
 msgstr ""
 "支持的挂载构建器包括 ``html``、``dirhtml``、``pdf`` 和 ``discussion-pdf``（后者会校验 "
-"``prefix`` 下的讨论目录，并为每条有效记录构建 PDF 图书）。``exclude`` 使用 glob 模式过滤挂载项的相对输出文件，"
-"``overrides`` 传递 ``-D`` 配置赋值（支持 ``{language}``、``{edition}``、``{site_root}`` "
-"和 ``{base_url}`` 占位符）。请通过 ``editions.language`` 而非 ``language`` 覆盖项来选择语言，"
-"以确保路由与翻译输出保持一致。根配置中非空的 ``version`` 和 ``release`` 值会传播到每个挂载项，"
-"且整个构建过程由同一个发布时钟统管。"
+"``prefix`` 下的讨论目录，并为每条有效记录构建 PDF 图书）。``exclude`` 使用 glob "
+"模式过滤挂载项的相对输出文件，``overrides`` 传递 ``-D`` 配置赋值（支持 "
+"``{language}``、``{edition}``、``{site_root}`` 和 ``{base_url}`` 占位符）。请通过 "
+"``editions.language`` 而非 ``language`` 覆盖项来选择语言，以确保路由与翻译输出保持一致。根配置中非空的 "
+"``version`` 和 ``release`` 值会传播到每个挂载项，且整个构建过程由同一个发布时钟统管。"
 
 #: ../../howto/static-publishing.rst:200
 msgid "Link across mounts with the ``mount://`` scheme:"
@@ -2476,8 +2631,8 @@ msgid ""
 "is missing, the previous published website remains intact."
 msgstr ""
 "该链接会解析到目标挂载项中匹配的语言版本，若无匹配则回退到其默认版本。HTML 会获得相对 URL（保留任何托管路径前缀），而 PDF "
-"则使用公开的 ``base_url``。组装阶段会校验每个 ``mount://`` 目标在当前生成版本中确实存在，"
-"因此早期构建遗留的旧文件无法满足指向新撤回文档的链接。如果任何挂载项构建失败或跨挂载目标缺失，此前已发布的网站将保持完好。"
+"则使用公开的 ``base_url``。组装阶段会校验每个 ``mount://`` "
+"目标在当前生成版本中确实存在，因此早期构建遗留的旧文件无法满足指向新撤回文档的链接。如果任何挂载项构建失败或跨挂载目标缺失，此前已发布的网站将保持完好。"
 
 #: ../../howto/static-publishing.rst:208
 msgid ""
@@ -2489,9 +2644,9 @@ msgid ""
 "build-site`` delegates directly to ``guidedog ssg build``."
 msgstr ""
 "在预览 HTML 时传入 ``--no-pdf`` 可跳过 PDF 挂载项并移除跨挂载的 PDF 下载链接；自定义模板可以检查 "
-"``ssg_no_pdf`` 变量以隐藏 PDF 控件。Guidedog 自身的 ``docs/conf.toml`` 就以这种格式声明了落地页、"
-"七种语言的手册 HTML 版本、七种语言的手册 PDF 图书以及讨论目录构建，而 ``cargo xtask build-site`` 则直接委托给 "
-"``guidedog ssg build`` 执行。"
+"``ssg_no_pdf`` 变量以隐藏 PDF 控件。Guidedog 自身的 ``docs/conf.toml`` "
+"就以这种格式声明了落地页、七种语言的手册 HTML 版本、七种语言的手册 PDF 图书以及讨论目录构建，而 ``cargo xtask "
+"build-site`` 则直接委托给 ``guidedog ssg build`` 执行。"
 
 #: ../../howto/static-publishing.rst:210
 msgid "Pinned themes"
@@ -2512,8 +2667,8 @@ msgid ""
 "files take precedence over the installed theme, and project static files "
 "override theme static files of the same relative path."
 msgstr ""
-"请将 ``HASH`` 替换为归档包的 SHA-256 摘要。在 ``[site]`` 中设置 ``theme = true`` 即可启用已校验的主题。"
-"项目的 ``_templates/`` 文件优先于已安装的主题，项目的静态文件也会覆盖具有相同相对路径的主题静态文件。"
+"请将 ``HASH`` 替换为归档包的 SHA-256 摘要。在 ``[site]`` 中设置 ``theme = true`` "
+"即可启用已校验的主题。项目的 ``_templates/`` 文件优先于已安装的主题，项目的静态文件也会覆盖具有相同相对路径的主题静态文件。"
 
 #: ../../howto/static-publishing.rst:222
 msgid ""
@@ -2525,8 +2680,8 @@ msgid ""
 "are rejected."
 msgstr ""
 "第 1 版 ``.gdt`` 归档包是 UTF-8 编码的 JSON 文件（``format = 1``），将 ``_templates/`` 和 "
-"``_static/`` 下的可移植相对路径映射为 base64 编码的文件字节。归档包上限为 4,096 个文件、展开后 64 MiB "
-"数据和 32 层目录深度；路径穿越、大小写别名、平台保留名称、符号链接、文件与目录重叠以及可执行钩子均会被拒绝。"
+"``_static/`` 下的可移植相对路径映射为 base64 编码的文件字节。归档包上限为 4,096 个文件、展开后 64 MiB 数据和 "
+"32 层目录深度；路径穿越、大小写别名、平台保留名称、符号链接、文件与目录重叠以及可执行钩子均会被拒绝。"
 
 #: ../../howto/static-publishing.rst:224
 msgid ""
@@ -2539,9 +2694,11 @@ msgid ""
 "verify the locked tree offline and fail closed if any file is missing, "
 "modified, added or replaced by a symlink."
 msgstr ""
-"``guidedog-theme.lock`` 记录源 URL 或路径、归档包 SHA-256 以及规范目录树 SHA-256（基于带版本的域标签以及按长度分隔并排序的文件名和文件字节计算得出）。"
-"安装过程会写入并同步 ``_themes/<TREE_SHA256>/``，先校验目录内容和编码后的锁文件，再以原子方式替换 "
-"``guidedog-theme.lock``。构建过程绝不会通过网络拉取主题，而是在离线状态下校验锁定的目录树；若有任何文件缺失、被修改、新增或被替换为符号链接，构建会安全中止（fail closed）。"
+"``guidedog-theme.lock`` 记录源 URL 或路径、归档包 SHA-256 以及规范目录树 "
+"SHA-256（基于带版本的域标签以及按长度分隔并排序的文件名和文件字节计算得出）。安装过程会写入并同步 "
+"``_themes/<TREE_SHA256>/``，先校验目录内容和编码后的锁文件，再以原子方式替换 "
+"``guidedog-theme.lock``。构建过程绝不会通过网络拉取主题，而是在离线状态下校验锁定的目录树；若有任何文件缺失、被修改、新增或被替换为符号链接，构建会安全中止（fail "
+"closed）。"
 
 #~ msgid ""
 #~ "The GitHub Pages plugin is linked into ``guidedog``, and it adds two "
@@ -2603,3 +2760,4 @@ msgstr ""
 #~ "timestamp instead of the current system clock for all date formatting "
 #~ "and template variables."
 #~ msgstr "设置后，日期格式化和模板变量均使用指定的 Unix 时间戳，而非当前系统时间。"
+

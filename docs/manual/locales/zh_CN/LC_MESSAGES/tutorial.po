@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-17 14:14+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -520,6 +520,140 @@ msgstr "公式和方程见 :doc:`../topics/mathematics`。"
 msgid "Custom styles and book fonts are in :doc:`../topics/typography`."
 msgstr "自定义样式和书籍字体见 :doc:`../topics/typography`。"
 
+#: ../../tutorial/dynamic-content-and-directives.rst:1
+msgid "Custom directives and dynamic content"
+msgstr "自定义指令与动态内容"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:4
+msgid ""
+"Guidedog publishes the same document tree to an interactive HTML website "
+"and a typeset PDF book. Web readers benefit from interactive calculators, "
+"search filters, and embedded widgets. Book readers benefit from balanced "
+"columns, callout cards, and vector typography."
+msgstr "Guidedog 将同一棵文档树发布为交互式 HTML 网站和排版精美的 PDF 图书。Web 读者可以体验交互式计算器、搜索过滤器和内嵌小组件；图书读者则能享受均衡的分栏、标注卡片以及矢量级排版效果。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:8
+msgid ""
+"This tutorial builds a project that demonstrates both without duplicating "
+"prose. We declare a custom semantic directive in ``conf.toml``, add an "
+"interactive calculator for web readers, and design a print-quality "
+"callout block for the PDF book."
+msgstr "本教程将构建一个同时兼顾两者的示例项目，而无需重复编写说明文本。我们将在 ``conf.toml`` 中声明自定义语义指令，为 Web 读者添加交互式计算器，并为 PDF 图书设计印刷品质的标注块。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:14
+msgid ""
+"One source document evaluates object types for both outputs, sending raw "
+"HTML to the web and raw Typst to the PDF book."
+msgstr "单份源文档同时为两种输出计算对象类型，将原始 HTML 发送到 Web，并将原始 Typst 发送到 PDF 图书。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:14
+msgid ""
+"Format-gated evaluation and custom directives across HTML and PDF "
+"pipelines."
+msgstr "跨越 HTML 和 PDF 流水线的格式门控计算与自定义指令。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:56
+#: ../../tutorial/first-project.rst:54
+msgid "1. Create the project"
+msgstr "1. 创建项目"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:59
+msgid "Start in a clean directory and run:"
+msgstr "在干净的目录下开始并运行："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:65
+msgid "Move into the new directory:"
+msgstr "进入新建的目录："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:71
+msgid "2. Declare custom domain directives in conf.toml"
+msgstr "2. 在 conf.toml 中声明自定义领域指令"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:74
+msgid ""
+"A project often needs structured entities that standard domains (such as "
+"Python or C++) do not cover. Rather than requiring a Python runtime or "
+"custom extension compiler, Guidedog lets us declare custom directives and "
+"roles in ``conf.toml``."
+msgstr "项目通常需要标准领域（如 Python 或 C++）未涵盖的结构化实体。与其依赖 Python 运行时或自定义扩展编译器，Guidedog 允许直接在 ``conf.toml`` 中声明自定义指令与角色。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:78
+msgid ""
+"Open ``conf.toml`` and append the declaration for a ``metric`` directive:"
+msgstr "打开 ``conf.toml`` 并追加 ``metric`` 指令的声明："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:89
+msgid ""
+"This single declaration establishes a complete syntax contract: * ``.. "
+"metric:: p99_latency (milliseconds)`` describes the metric. * "
+"``:metric:`p99_latency``` links to the definition from any document. * "
+"The index table automatically generates a pair index entry "
+"(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
+"semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
+"typesets a styled description entry with back-references in the appendix."
+msgstr "这单一声明建立了一套完整的语法契约：* ``.. metric:: p99_latency (milliseconds)`` 描述该指标。* ``:metric:`p99_latency``` 可从任意文档链接到该定义。* 索引表自动生成复合索引项（``p99_latency; cluster telemetry``）。* 在 HTML 中，Guidedog 生成带有 CSS 锚点钩子的语义定义列表。* 在 PDF 中，Guidedog 排版带样式的描述条目，并在附录中生成反向引用。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:96
+msgid "3. Author the document with format guards"
+msgstr "3. 使用格式保护编写文档"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:99
+msgid "Replace the contents of ``index.rst`` with the following document:"
+msgstr "将 ``index.rst`` 的内容替换为以下文档："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:144
+#| msgid "7. Build and inspect both forms"
+msgid "4. Build and inspect both publications"
+msgstr "4. 构建并检查两种发布产物"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:147
+msgid "Build the HTML website:"
+msgstr "构建 HTML 网站："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:153
+msgid ""
+"Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. "
+"Notice that: * The ``:metric:`p99_latency``` reference resolves directly "
+"to the definition anchor. * The interactive calculator slider is rendered "
+"and active in the web DOM. * The PDF callout block is omitted entirely, "
+"without emitting warnings."
+msgstr "在浏览器中打开 ``_build/html/index.html`` 或运行 ``guidedog serve``。注意观察：* ``:metric:`p99_latency``` 引用直接解析到定义锚点。* 交互式计算器滑块已渲染并在 Web DOM 中生效。* PDF 标注块被完全忽略，且不产生任何警告。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:158
+#| msgid "6. Wrap the PDF book"
+msgid "Now build the PDF book:"
+msgstr "现在构建 PDF 图书："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:164
+msgid ""
+"Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
+"``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are "
+"completely absent. * The Typst ``#rect(...)`` vector box is typeset with "
+"native margins, borders, and typography. * The appendix includes an index "
+"entry under ``p99_latency``."
+msgstr "打开 ``_build/pdf/telemetry-en.pdf``（或检查位于 ``_build/pdf/book-en.typ`` 的源文件）。注意观察：* 滑块与原始 HTML 完全不存在。* Typst ``#rect(...)`` 矢量方框按原生边距、边框和排版样式完成渲染。* 附录中包含位于 ``p99_latency`` 下的索引项。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:169
+msgid "5. Custom Typst functions in theme templates"
+msgstr "5. 在主题模板中编写自定义 Typst 函数"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:172
+msgid ""
+"When you have formatting patterns used across many chapters, define a "
+"reusable Typst function in ``_templates/theme.typ``:"
+msgstr "当多个章节复用同一种排版模式时，可以在 ``_templates/theme.typ`` 中定义可复用的 Typst 函数："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:185
+msgid "In any document, invoke the function inside a raw Typst block:"
+msgstr "在任意文档中，均可在原始 Typst 块内调用该函数："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:195
+msgid ""
+"This keeps your reStructuredText prose focused on documentation while "
+"granting full access to Typst's typesetting engine for printed "
+"publications."
+msgstr "这使 reStructuredText 原文保持专注于文档内容，同时赋予印刷发布物使用 Typst 排版引擎的全部能力。"
+
 #: ../../tutorial/first-project.rst:1
 msgid "Our first project"
 msgstr "我们的第一个项目"
@@ -573,10 +707,6 @@ msgstr "项目源文件和模板通过 Guidedog 编译器生成 HTML 和 PDF。"
 #: ../../tutorial/first-project.rst:34
 msgid "How Guidedog compiles a project into an HTML website and a PDF book."
 msgstr "Guidedog 将项目构建为 HTML 网站与 PDF 书籍的过程。"
-
-#: ../../tutorial/first-project.rst:54
-msgid "1. Create the project"
-msgstr "1. 创建项目"
 
 #: ../../tutorial/first-project.rst:57
 msgid ""
@@ -767,3 +897,4 @@ msgid ""
 "We follow these pages in order. Each step produces a result we can "
 "inspect."
 msgstr "请按顺序阅读这些页面。每一步都会产生可以检查的结果。"
+

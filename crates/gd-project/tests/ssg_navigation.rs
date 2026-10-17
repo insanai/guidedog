@@ -76,3 +76,41 @@ fn sections_beyond_a_traced_depth_do_not_invalidate_the_listing_page() {
     assert_built(&result);
     assert_eq!(result.written, 2, "changed document and search index: {result:?}");
 }
+
+#[test]
+fn article_templates_track_only_the_neighbour_keys_they_read() {
+    for (name, template, written) in [
+        ("meta", "{{ page.meta.date }}|{{ body }}", 2),
+        ("alias", "{% set article = page %}{{ article.meta.date }}|{{ body }}", 2),
+        ("older", "{% if page.older %}{{ page.older.title }}{% endif %}|{{ body }}", 2),
+        ("newer", "{% if page.newer %}{{ page.newer.title }}{% endif %}|{{ body }}", 3),
+        ("whole", "{{ page }}|{{ body }}", 3),
+    ] {
+        let dir = TempDir::new(&format!("ssg-page-{name}"));
+        dir.put("conf.toml", "project=\"Site\"\ntemplates_path=[\"_templates\"]\n");
+        dir.put("_templates/layout.html", template);
+        dir.put("index.rst", "Home\n====\n");
+        dir.put("first.rst", ":date: 2026-10-14\n\nFirst\n=====\n");
+        dir.put("second.rst", ":date: 2026-10-15\n\nSecond\n======\n");
+        dir.put(
+            "third.rst",
+            ":date: 2026-10-16\n:publish-at: 2026-10-16T00:00:00Z\n\nThird\n=====\n",
+        );
+        let project = load(&dir.0);
+        let run = |at| {
+            let options = BuildOptions {
+                now: Some(gd_env::publication_time(at).unwrap()),
+                ..Default::default()
+            };
+            gd_project::build(&project, BuilderKind::Html, &options)
+        };
+        assert_built(&run("2026-10-15"));
+        let old_page = dir.read("_build/html/second.html");
+        let changed = run("2026-10-16");
+        assert_built(&changed);
+        assert_eq!(changed.read, 0, "cached scheduled document: {changed:?}");
+        assert_eq!(changed.written, written, "{name}: {changed:?}");
+        assert_eq!(old_page == dir.read("_build/html/second.html"), written == 2);
+        assert_eq!(run("2026-10-16").written, 0);
+    }
+}

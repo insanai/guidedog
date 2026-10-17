@@ -149,12 +149,27 @@ impl Layout {
         #[cfg(test)]
         self.renders.set(self.renders.get() + 1);
         self.navigation.borrow_mut().clear();
+        let article = ctx.get("page");
+        if let Value::Dict(dict) = &article {
+            dict.begin_key_trace();
+        }
         if let Value::Dict(dict) = ctx {
             dict.begin_key_trace();
         }
         let locals = page_functions(view, page, &self.navigation);
         self.env.take_template_loads();
         let rendered = self.env.load_template(name).and_then(|t| t.render_with(ctx, &locals));
+        if let Value::Dict(dict) = &article {
+            for key in dict
+                .end_key_trace()
+                .into_iter()
+                .filter(|k| matches!(k.as_str(), "older" | "newer"))
+            {
+                self.navigation
+                    .borrow_mut()
+                    .push(crate::navigation_trace::lookup(&format!("page\0{key}")));
+            }
+        }
         if let Value::Dict(dict) = ctx {
             for key in dict
                 .end_key_trace()

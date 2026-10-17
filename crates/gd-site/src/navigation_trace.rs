@@ -8,10 +8,7 @@ use crate::context::{Page, page_context};
 use crate::nav::{TocOptions, sidebar_html};
 
 pub(crate) fn context_key(name: &str) -> bool {
-    matches!(
-        name,
-        "toc" | "outline" | "prev" | "next" | "parents" | "rellinks" | "root_url" | "page"
-    )
+    matches!(name, "toc" | "outline" | "prev" | "next" | "parents" | "rellinks" | "root_url")
 }
 
 pub(crate) fn lookup(key: &str) -> Lookup {
@@ -28,9 +25,10 @@ pub(crate) fn answer(
     let id = view.doc_named(page);
     let Some((kind, key)) = lookup.key.split_once('\0') else { return digest.finish() };
     match kind {
-        "ctx" if key == "page" => {
+        // Keep old whole-page traces valid while new renders record individual neighbours.
+        "ctx" | "page" if key == "page" || matches!(key, "older" | "newer") => {
             if let Some(id) = id {
-                digest.digest(&crate::article_context::inputs(view, id, articles));
+                digest.digest(&crate::article_context::inputs(view, id, articles, key));
             }
         }
         "ctx" if context_key(key) => {

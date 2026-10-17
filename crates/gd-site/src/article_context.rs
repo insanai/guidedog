@@ -26,10 +26,13 @@ impl ArticleIndex {
     }
 }
 
-pub(crate) fn inputs(view: &BuildView<'_>, id: DocId, index: &ArticleIndex) -> Digest {
+pub(crate) fn inputs(view: &BuildView<'_>, id: DocId, index: &ArticleIndex, key: &str) -> Digest {
     let mut digest = Digester::new();
     let (older, newer) = index.neighbours(id);
-    for other in [older, newer] {
+    for (name, other) in [("older", older), ("newer", newer)] {
+        if key != "page" && key != name {
+            continue;
+        }
         digest.flag(other.is_some());
         if let Some(other) = other {
             let doc = view.doc(other);

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-17 14:14+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -286,8 +286,8 @@ msgid ""
 "and total. Tables and captioned listings can continue across pages."
 msgstr ""
 "Cada registro RST utiliza una maquetación impresa de estilo RFC. El "
-"registro se abre con un panel de metadatos, insignias de estado, una "
-"nota breve de situación y un índice compacto, seguidos de su texto. Las "
+"registro se abre con un panel de metadatos, insignias de estado, una nota "
+"breve de situación y un índice compacto, seguidos de su texto. Las "
 "secciones numeradas fluyen de forma continua. Las cabeceras identifican "
 "el catálogo y el registro, y los pies de página muestran el número de "
 "página y el total. Las tablas y los listados con leyenda pueden continuar "
@@ -575,6 +575,155 @@ msgstr ""
 "mapeos explícitos hacen que las compilaciones sean reproducibles. Véase "
 ":doc:`../intersphinx`."
 
+#: ../../howto/format-specific-content.rst:1
+msgid "Deliver format-specific content and custom directives"
+msgstr "Entregar contenido específico por formato y directivas personalizadas"
+
+#: ../../howto/format-specific-content.rst:4
+msgid ""
+"A single source tree can publish rich, dynamic HTML pages on the web "
+"while typesetting elegant, print-quality PDF books. This guide covers how "
+"to route content to specific output formats, declare custom domain "
+"directives, and invoke Typst typesetting functions."
+msgstr "Un solo árbol de fuentes puede publicar páginas HTML dinámicas en la web mientras compone elegantes libros PDF con calidad de imprenta. Esta guía explica cómo dirigir el contenido a formatos de salida específicos, declarar directivas de dominio personalizadas e invocar funciones de composición tipográfica de Typst."
+
+#: ../../howto/format-specific-content.rst:10
+msgid ""
+"Content passes through format guards and object type tables to produce "
+"tailored web and print deliverables."
+msgstr "El contenido pasa por filtros de formato y tablas de tipos de objetos para producir entregables adaptados para la web y la impresión."
+
+#: ../../howto/format-specific-content.rst:10
+msgid "Content routing and directive handling for HTML and PDF outputs."
+msgstr "Enrutamiento de contenido y gestión de directivas para salidas HTML y PDF."
+
+#: ../../howto/format-specific-content.rst:43
+msgid "1. Embed dynamic HTML and client scripts"
+msgstr "1. Incrustar HTML dinámico y scripts de cliente"
+
+#: ../../howto/format-specific-content.rst:46
+msgid ""
+"Use ``.. only:: html`` paired with a ``.. raw:: html`` block to inject "
+"web-specific markup, interactive calculators, or embedded audio/video "
+"components:"
+msgstr "Use ``.. only:: html`` junto con un bloque ``.. raw:: html`` para inyectar marcado web específico, calculadoras interactivas o componentes de audio y vídeo integrados:"
+
+#: ../../howto/format-specific-content.rst:60
+msgid ""
+"To supply the supporting CSS and JavaScript: 1. Place your script and "
+"stylesheet in ``_static/`` (e.g. ``_static/interactive.js`` and "
+"``_static/interactive.css``). 2. Register them in ``conf.toml``:"
+msgstr "Para proporcionar el CSS y JavaScript complementarios: 1. Coloque su script y hoja de estilo en ``_static/`` (por ejemplo, ``_static/interactive.js`` y ``_static/interactive.css``). 2. Regístrelos en ``conf.toml``:"
+
+#: ../../howto/format-specific-content.rst:69
+msgid ""
+"The HTML builder copies these files into the build directory and injects "
+"``<link>`` and ``<script>`` tags into every generated page."
+msgstr "El compilador HTML copia estos archivos en el directorio de salida e inserta etiquetas ``<link>`` y ``<script>`` en cada página generada."
+
+#: ../../howto/format-specific-content.rst:72
+msgid "2. Typeset custom Typst formatting for PDF"
+msgstr "2. Componer formatos personalizados de Typst para PDF"
+
+#: ../../howto/format-specific-content.rst:75
+msgid ""
+"To introduce vector shapes, tailored callout boxes, or custom typography "
+"for printed pages, wrap the markup in ``.. only:: typst or latex`` (or "
+"``.. only:: pdf``):"
+msgstr "Para introducir figuras vectoriales, cuadros de aviso personalizados o tipografía a medida en páginas impresas, envuelva el marcado en ``.. only:: typst or latex`` (o ``.. only:: pdf``):"
+
+#: ../../howto/format-specific-content.rst:95
+msgid ""
+"Guidedog emits this block directly into the Typst document before "
+"invoking the Typst compiler. The HTML builder automatically omits this "
+"block without emitting warnings."
+msgstr "Guidedog emite este bloque directamente en el documento Typst antes de invocar el compilador Typst. El compilador HTML lo omite automáticamente sin generar advertencias."
+
+#: ../../howto/format-specific-content.rst:98
+msgid "3. Declare custom domain directives in conf.toml"
+msgstr "3. Declarar directivas de dominio personalizadas en conf.toml"
+
+#: ../../howto/format-specific-content.rst:101
+msgid ""
+"When you need custom structured blocks with signature parsing, "
+"cross-references, and index entries, declare them in ``conf.toml`` under "
+"``[[object_types]]``:"
+msgstr "Cuando necesite bloques estructurados personalizados con análisis de firmas, referencias cruzadas y entradas de índice, declárelos en ``conf.toml`` bajo ``[[object_types]]``:"
+
+#: ../../howto/format-specific-content.rst:113
+msgid "Now authors can describe services across all documents:"
+msgstr "Ahora los autores pueden describir servicios en todos los documentos:"
+
+#: ../../howto/format-specific-content.rst:121
+msgid ""
+"Other documents can link directly to this service using the declared role:"
+msgstr "Otros documentos pueden enlazar directamente a este servicio mediante el rol declarado:"
+
+#: ../../howto/format-specific-content.rst:127
+msgid ""
+"In HTML, Guidedog produces semantic definition tags (``<dl "
+"class=\"service\">``) with automatic anchor links. In PDF, Guidedog "
+"typesets a styled description entry and records an index entry in the "
+"book's index."
+msgstr "En HTML, Guidedog genera etiquetas de definición semánticas (``<dl class=\"service\">``) con enlaces de anclaje automáticos. En PDF, Guidedog compone una entrada descriptiva con estilo y registra una entrada en el índice del libro."
+
+#: ../../howto/format-specific-content.rst:130
+msgid "4. Alias existing directives"
+msgstr "4. Crear alias para directivas existentes"
+
+#: ../../howto/format-specific-content.rst:133
+msgid ""
+"If you are migrating documentation or want friendlier names for built-in "
+"directives, declare aliases in ``[directive_aliases]`` in ``conf.toml``:"
+msgstr "Si está migrando documentación o desea nombres más claros para las directivas integradas, declare alias en ``[directive_aliases]`` en ``conf.toml``:"
+
+#: ../../howto/format-specific-content.rst:142
+msgid ""
+"Authors can then use ``.. callout::`` or ``.. endpoint::`` using the "
+"options and rules of the target directive."
+msgstr "Los autores pueden entonces usar ``.. callout::`` o ``.. endpoint::`` empleando las opciones y reglas de la directiva de destino."
+
+#: ../../howto/format-specific-content.rst:144
+msgid "5. Call reusable Typst functions from templates"
+msgstr "5. Invocar funciones reutilizables de Typst desde plantillas"
+
+#: ../../howto/format-specific-content.rst:147
+msgid ""
+"Instead of writing verbose Typst code inline across multiple documents, "
+"define a reusable function in ``_templates/theme.typ``:"
+msgstr "En lugar de escribir código detallado de Typst en línea en varios documentos, defina una función reutilizable en ``_templates/theme.typ``:"
+
+#: ../../howto/format-specific-content.rst:164
+msgid "Call it concisely from reStructuredText:"
+msgstr "Invóquela de forma concisa desde reStructuredText:"
+
+#: ../../howto/format-specific-content.rst:174
+msgid "6. Advanced: Preprocessing directives with a build plugin"
+msgstr "6. Avanzado: Preprocesar directivas con un complemento de compilación"
+
+#: ../../howto/format-specific-content.rst:177
+msgid ""
+"When you want to invent a completely custom directive syntax and expand "
+"it dynamically during build time, implement a ``gd_plugins::BuildPlugin`` "
+"in Rust."
+msgstr "Cuando desee inventar una sintaxis de directiva totalmente personalizada y expandirla dinámicamente durante la compilación, implemente un ``gd_plugins::BuildPlugin`` en Rust."
+
+#: ../../howto/format-specific-content.rst:180
+msgid ""
+"The plugin implements ``process_source``, intercepting the raw document "
+"text before parsing:"
+msgstr "El complemento implementa ``process_source``, interceptando el texto del documento original antes del análisis sintáctico:"
+
+#: ../../howto/format-specific-content.rst:214
+msgid "Register the compiled plugin using:"
+msgstr "Registre el complemento compilado mediante:"
+
+#: ../../howto/format-specific-content.rst:220
+msgid ""
+"Guidedog verifies the plugin's SHA-256 fingerprint, starts it per build, "
+"and forwards document sources through its pipeline."
+msgstr "Guidedog verifica la huella digital SHA-256 del complemento, lo inicia en cada compilación y canaliza los archivos de origen a través de su flujo de trabajo."
+
 #: ../../howto/github-pages.rst:1
 msgid "Publish to GitHub Pages"
 msgstr "Publicar en GitHub Pages"
@@ -587,13 +736,22 @@ msgid ""
 "publish pages`` can publish it from our own machine, whenever we ask or "
 "whenever the sources change. We use one route per site, because a "
 "repository has one Pages source: GitHub Actions or a branch."
-msgstr "Podemos publicar un sitio de Guidedog en GitHub Pages de dos formas. GitHub Actions puede compilarlo y desplegarlo con cada push, usando una versión publicada de Guidedog y las acciones oficiales de GitHub Pages, sin token personal. O bien ``guidedog publish pages`` puede publicarlo desde nuestra propia máquina, cuando lo pidamos o cada vez que cambien las fuentes. Usamos una sola vía por sitio, porque un repositorio tiene un único origen de Pages: GitHub Actions o una rama."
+msgstr ""
+"Podemos publicar un sitio de Guidedog en GitHub Pages de dos formas. "
+"GitHub Actions puede compilarlo y desplegarlo con cada push, usando una "
+"versión publicada de Guidedog y las acciones oficiales de GitHub Pages, "
+"sin token personal. O bien ``guidedog publish pages`` puede publicarlo "
+"desde nuestra propia máquina, cuando lo pidamos o cada vez que cambien "
+"las fuentes. Usamos una sola vía por sitio, porque un repositorio tiene "
+"un único origen de Pages: GitHub Actions o una rama."
 
 #: ../../howto/github-pages.rst:12
 msgid ""
 "Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog "
 "publish pages publisher with a durable journal."
-msgstr "La primera vía usa GitHub Actions CI/CD; la segunda usa el publicador local de guidedog publish pages con un diario persistente."
+msgstr ""
+"La primera vía usa GitHub Actions CI/CD; la segunda usa el publicador "
+"local de guidedog publish pages con un diario persistente."
 
 #: ../../howto/github-pages.rst:12
 msgid "The two routes for publishing documentation to GitHub Pages."
@@ -613,7 +771,10 @@ msgid ""
 "On a machine that has never published, it does each missing step once and "
 "says what it does. It asks before anything that changes GitHub or this "
 "machine's permissions:"
-msgstr "En una máquina que nunca ha publicado, realiza una vez cada paso que falte y explica lo que hace. Pregunta antes de realizar cualquier cambio en GitHub o en los permisos de esta máquina:"
+msgstr ""
+"En una máquina que nunca ha publicado, realiza una vez cada paso que "
+"falte y explica lo que hace. Pregunta antes de realizar cualquier cambio "
+"en GitHub o en los permisos de esta máquina:"
 
 #: ../../howto/github-pages.rst:56
 msgid ""
@@ -714,7 +875,11 @@ msgid ""
 "The step commands stay for scripts and for checking each part. The linked "
 "Pages plugin builds the project with Guidedog. It pushes the whole site "
 "to a branch of its own in one Git commit."
-msgstr "Los comandos de cada paso se mantienen para scripts y para comprobar cada parte por separado. El plugin integrado de Pages compila el proyecto con Guidedog y sube el sitio completo a una rama propia en un solo commit de Git."
+msgstr ""
+"Los comandos de cada paso se mantienen para scripts y para comprobar cada "
+"parte por separado. El plugin integrado de Pages compila el proyecto con "
+"Guidedog y sube el sitio completo a una rama propia en un solo commit de "
+"Git."
 
 #: ../../howto/github-pages.rst:91
 msgid ""
@@ -1044,11 +1209,18 @@ msgid ""
 "``guidedog pages init``, ``auth``, ``bind``, ``setup``, ``doctor``, "
 "``watch``, ``status``, ``recover`` and ``workflow`` expose individual "
 "steps for scripts and maintenance."
-msgstr "El plugin de Pages está integrado en ``guidedog``. ``guidedog publish pages`` guía la publicación y compila el proyecto con el motor propio del anfitrión. ``guidedog pages init``, ``auth``, ``bind``, ``setup``, ``doctor``, ``watch``, ``status``, ``recover`` y ``workflow`` exponen pasos individuales para scripts y mantenimiento."
+msgstr ""
+"El plugin de Pages está integrado en ``guidedog``. ``guidedog publish "
+"pages`` guía la publicación y compila el proyecto con el motor propio del "
+"anfitrión. ``guidedog pages init``, ``auth``, ``bind``, ``setup``, "
+"``doctor``, ``watch``, ``status``, ``recover`` y ``workflow`` exponen "
+"pasos individuales para scripts y mantenimiento."
 
 #: ../../howto/github-pages.rst:369
 msgid "No separate publisher program or registration step is needed."
-msgstr "No se requiere ningún programa publicador independiente ni paso de registro adicional."
+msgstr ""
+"No se requiere ningún programa publicador independiente ni paso de "
+"registro adicional."
 
 #: ../../howto/github-pages.rst:371
 msgid "Troubleshooting"
@@ -1244,7 +1416,13 @@ msgid ""
 "see :doc:`discussions`), and static site publishing (``guidedog ssg``; "
 "see :doc:`static-publishing`). The ``gd-graphdog`` library encapsulates "
 "Graphviz inside Guidedog."
-msgstr "El paquete instala un único ejecutable, ``guidedog``. Sus plugins integrados añaden la publicación en GitHub Pages (``guidedog publish pages`` y ``guidedog pages``; véase :doc:`github-pages`), catálogos de discusión (``guidedog dsc``; véase :doc:`discussions`) y publicación de sitios estáticos (``guidedog ssg``; véase :doc:`static-publishing`). La biblioteca ``gd-graphdog`` encapsula Graphviz dentro de Guidedog."
+msgstr ""
+"El paquete instala un único ejecutable, ``guidedog``. Sus plugins "
+"integrados añaden la publicación en GitHub Pages (``guidedog publish "
+"pages`` y ``guidedog pages``; véase :doc:`github-pages`), catálogos de "
+"discusión (``guidedog dsc``; véase :doc:`discussions`) y publicación de "
+"sitios estáticos (``guidedog ssg``; véase :doc:`static-publishing`). La "
+"biblioteca ``gd-graphdog`` encapsula Graphviz dentro de Guidedog."
 
 #: ../../howto/install.rst:21
 msgid ""
@@ -1471,7 +1649,13 @@ msgid ""
 "adds ``guidedog publish pages`` and ``guidedog pages`` maintenance "
 "commands. All three are linked into ``guidedog`` and use its services; no "
 "additional program or registration is needed."
-msgstr "La versión incluye un único ejecutable. El plugin de discusiones añade ``guidedog dsc``. El plugin de sitios estáticos añade ``guidedog ssg``. El plugin de Pages añade ``guidedog publish pages`` y los comandos de mantenimiento de ``guidedog pages``. Los tres están integrados en ``guidedog`` y utilizan sus servicios; no se requiere ningún programa adicional ni registro."
+msgstr ""
+"La versión incluye un único ejecutable. El plugin de discusiones añade "
+"``guidedog dsc``. El plugin de sitios estáticos añade ``guidedog ssg``. "
+"El plugin de Pages añade ``guidedog publish pages`` y los comandos de "
+"mantenimiento de ``guidedog pages``. Los tres están integrados en "
+"``guidedog`` y utilizan sus servicios; no se requiere ningún programa "
+"adicional ni registro."
 
 #: ../../howto/install.rst:118
 msgid ""
@@ -3084,5 +3268,4 @@ msgstr ""
 #~ msgstr ""
 #~ "Las fechas y variables de plantilla usarán ese instante Unix en lugar "
 #~ "del reloj actual."
-
 

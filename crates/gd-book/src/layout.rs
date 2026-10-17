@@ -24,7 +24,7 @@ impl Composer<'_, '_> {
             "#show: book.with(title: {}, lang: {}, paper: {}",
             typst_string(title),
             typst_string(&self.view.config.language),
-            typst_string(&self.view.config.pdf.paper_size)
+            typst_string(paper_size(&self.view.config.pdf.paper_size))
         );
         for (key, value) in [
             ("date", &page.date),
@@ -62,6 +62,14 @@ impl Composer<'_, '_> {
                 None
             }
         }
+    }
+}
+
+/// Uses the same supported paper identifiers for books, records and articles.
+pub(crate) fn paper_size(configured: &str) -> &'static str {
+    match configured {
+        "letter" | "us-letter" => "us-letter",
+        _ => "a4",
     }
 }
 

@@ -143,11 +143,6 @@ impl Composer<'_, '_> {
     ) {
         let view = self.view;
         let c = view.config;
-        let paper = if matches!(c.pdf.paper_size.as_str(), "letter" | "us-letter") {
-            "us-letter"
-        } else {
-            "a4"
-        };
         let title = if book.title.is_empty() { &c.project } else { &book.title };
         let author = if book.author.is_empty() { &c.author } else { &book.author };
         let numbered = view.env.docs.iter().any(|d| d.toctrees.iter().any(|t| t.numbered != 0));
@@ -181,7 +176,7 @@ impl Composer<'_, '_> {
             typst_string(&c.release),
             typst_string(&view.dates.today),
             typst_string(&c.language),
-            typst_string(paper),
+            typst_string(crate::layout::paper_size(&c.pdf.paper_size)),
         );
     }
 

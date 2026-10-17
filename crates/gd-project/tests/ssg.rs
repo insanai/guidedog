@@ -96,6 +96,8 @@ fn body_edits_and_unused_templates_leave_other_pages_cached() {
 #[test]
 fn article_pdf_uses_metadata_and_is_removed_when_the_article_is_withheld() {
     let dir = project("ssg-pdf");
+    let config = dir.read("conf.toml");
+    dir.put("conf.toml", &format!("pdf_paper_size = \"letter\"\n{config}"));
     dir.put(
         "post.rst",
         concat!(
@@ -109,6 +111,7 @@ fn article_pdf_uses_metadata_and_is_removed_when_the_article_is_withheld() {
     let pdf = std::fs::read(dir.path("_build/html/post.pdf")).unwrap();
     assert!(pdf.starts_with(b"%PDF-"));
     let source = dir.read("_build/html/sources/post.pdf.typ");
+    assert!(source.contains("paper: \"us-letter\""));
     assert!(source.contains("authors: (\"Ada\",)"));
     assert!(source.contains("Abstract content."));
     dir.put("post.rst", ":draft: true\n:date: 2026-10-15\n:pdf: article\n\nPaper\n=====\n");

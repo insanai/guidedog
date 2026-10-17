@@ -333,7 +333,7 @@ Options for ``postlist``:
 * ``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: NAME``, ``:year: YYYY``: Filter entries by publication metadata.
 * ``:sort: date`` or ``:sort: -date``: Order by oldest or newest publication instant, with docname breaking ties.
 * ``:style: list`` or ``:style: cards``: Select the listing's CSS class.
-* ``:excerpts:``: Render each entry's explicit ``:summary:`` below its title and date.
+* ``:excerpts:``: Render each entry's rich introduction before ``.. more::``, falling back to its plain-text ``:summary:`` when no boundary is present.
 
 See :doc:`../howto/static-publishing` for collections, feeds, and scheduled publishing.
 

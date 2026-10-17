@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 15:27+0000\n"
+"POT-Creation-Date: 2026-10-17 18:28+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -3019,7 +3019,7 @@ msgid ""
 "are ordered by publication instant (newest first by default), with "
 "docname breaking ties; ``:sort: date`` places the oldest first. ``:style: "
 "cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each "
-"article's plain-text summary."
+"article's introduction or plain-text summary."
 msgstr ""
 "``:path:`` busca coincidencias con nombres de documento sin extensión. "
 "Los filtros de categoría, autor y serie exigen coincidencia exacta, y "
@@ -3027,16 +3027,113 @@ msgstr ""
 "por instante de publicación (los más recientes primero por defecto), "
 "usando el nombre de documento para desempatar; ``:sort: date`` coloca los "
 "más antiguos primero. ``:style: cards`` añade una clase CSS de diseño en "
-"tarjetas, y ``:excerpts:`` incluye el resumen en texto plano de cada "
-"artículo."
+"tarjetas, y ``:excerpts:`` incluye la introducción o el resumen en texto "
+"plano de cada artículo."
 
 #: ../../howto/static-publishing.rst:82
+msgid "Rich article introductions"
+msgstr "Introducciones de artículos con formato"
+
+#: ../../howto/static-publishing.rst:85
+msgid ""
+"We place one ``.. more::`` boundary after the introduction to select a "
+"rich excerpt:"
+msgstr ""
+"Colocamos un límite ``.. more::`` después de la introducción para "
+"seleccionar un extracto con formato:"
+
+#: ../../howto/static-publishing.rst:108
+msgid ""
+"The introduction retains paragraphs, inline markup, links, lists, images "
+"and other ordinary document nodes. Both ``postlist`` with ``:excerpts:`` "
+"and generated collection or taxonomy pages render it during the build. "
+"The full article retains everything on both sides of the boundary in HTML "
+"and PDF. The boundary emits no visible content. Drafts, scheduled "
+"articles and expired articles follow the same publication gate as other "
+"listings."
+msgstr ""
+"La introducción conserva párrafos, marcado en línea, enlaces, listas, "
+"imágenes y otros nodos normales del documento. Tanto ``postlist`` con "
+"``:excerpts:`` como las páginas generadas de colecciones o taxonomías la "
+"renderizan durante la compilación. El artículo completo conserva todo el "
+"contenido a ambos lados del límite en HTML y PDF. El límite no produce "
+"contenido visible. Los borradores y los artículos programados o caducados "
+"siguen las mismas reglas de publicación que las demás listas."
+
+#: ../../howto/static-publishing.rst:114
+msgid ""
+"We put the boundary at document level, before any subsection, outside "
+"lists and other directives. It accepts no argument, option or body. A "
+"second boundary or a nested boundary produces a diagnostic. Literal ``.. "
+"more::`` text inside a code example remains literal text. An empty "
+"introduction is allowed. Toctrees, postlists and todolists inside an "
+"introduction are omitted from its excerpt to prevent recursive listings."
+msgstr ""
+"Colocamos el límite a nivel de documento, antes de cualquier subsección y "
+"fuera de listas y otras directivas. No acepta argumentos, opciones ni "
+"contenido. Un segundo límite o uno anidado produce un diagnóstico. El "
+"texto literal ``.. more::`` dentro de un ejemplo de código sigue siendo "
+"literal. Se permite una introducción vacía. Los toctrees, postlists y "
+"todolists dentro de una introducción se omiten en el extracto para "
+"impedir listas recursivas."
+
+#: ../../howto/static-publishing.rst:121
+msgid ""
+"Without a boundary, the excerpt is the escaped plain-text ``:summary:`` "
+"in a paragraph, or empty when no summary is given. We keep ``:summary:`` "
+"independent of the rich introduction: feeds and description metadata "
+"continue to use that plain text. For a Tinkerer migration, we can retain "
+"``.. more::`` and replace site-specific browser code with native "
+"``postlist`` directives or collection templates. No runtime plugin or "
+"browser fetch is required."
+msgstr ""
+"Sin un límite, el extracto es el texto plano escapado de ``:summary:`` en "
+"un párrafo, o queda vacío si no hay resumen. Mantenemos ``:summary:`` "
+"independiente de la introducción con formato: las fuentes y los metadatos "
+"de descripción siguen usando ese texto plano. Al migrar desde Tinkerer, "
+"podemos conservar ``.. more::`` y sustituir el código del navegador "
+"específico del sitio por directivas ``postlist`` nativas o plantillas de "
+"colección. No se requiere un complemento en tiempo de ejecución ni una "
+"solicitud del navegador."
+
+#: ../../howto/static-publishing.rst:126
+msgid "A collection template can render the selected introduction directly:"
+msgstr ""
+"Una plantilla de colección puede renderizar directamente la introducción "
+"seleccionada:"
+
+#: ../../howto/static-publishing.rst:137
+msgid ""
+"``post.excerpt_html`` is rendered HTML marked safe for the template "
+"engine. It follows the build's content policy, including restrictions on "
+"raw markup and unsafe URLs. Links, images and downloads are relative to "
+"the destination listing, including nested archives and pagination pages. "
+"Each listing occurrence has its own anchor namespace. Local references to "
+"included targets stay within the excerpt; references to targets or "
+"footnotes after the boundary link to the full article. We render a post's "
+"excerpt once per template occurrence; repeating the same "
+"``post.excerpt_html`` value in a template also repeats its HTML IDs."
+msgstr ""
+"``post.excerpt_html`` es HTML renderizado marcado como seguro para el "
+"motor de plantillas. Respeta la política de contenido de la compilación, "
+"incluidas las restricciones de marcado sin procesar y URL inseguras. Los "
+"enlaces, las imágenes y las descargas son relativos a la lista de "
+"destino, incluidos los archivos anidados y las páginas de paginación. "
+"Cada aparición en una lista tiene su propio espacio de nombres de anclas. "
+"Las referencias locales a destinos incluidos permanecen dentro del "
+"extracto; las referencias a destinos o notas posteriores al límite "
+"enlazan al artículo completo. Renderizamos el extracto de una entrada una "
+"vez por aparición en la plantilla; repetir el mismo valor "
+"``post.excerpt_html`` en una plantilla también repite sus identificadores "
+"HTML."
+
+#: ../../howto/static-publishing.rst:144
 msgid "Enable site-wide discovery files in ``conf.toml``:"
 msgstr ""
 "Habilitamos los archivos de descubrimiento de todo el sitio en "
 "``conf.toml``:"
 
-#: ../../howto/static-publishing.rst:91
+#: ../../howto/static-publishing.rst:153
 msgid ""
 "The HTML and dirhtml builders emit ``sitemap.xml``, ``rss.xml`` and "
 "``atom.xml`` using the configured ``base_url`` (including any hosting "
@@ -3051,7 +3148,7 @@ msgstr ""
 "reloj del sistema, por lo que producen bytes idénticos cuando las fuentes "
 "publicables y los metadatos no cambian."
 
-#: ../../howto/static-publishing.rst:93
+#: ../../howto/static-publishing.rst:155
 msgid ""
 "Generate taxonomy archives and paginated collections from the same "
 "``[site]`` table:"
@@ -3059,7 +3156,7 @@ msgstr ""
 "Generamos archivos por taxonomía y colecciones paginadas desde la misma "
 "tabla ``[site]``:"
 
-#: ../../howto/static-publishing.rst:110
+#: ../../howto/static-publishing.rst:172
 msgid ""
 "The collection starts at ``journal/index.html`` and continues at "
 "``journal/page/2/index.html`` with relative previous and next links. A "
@@ -3072,8 +3169,8 @@ msgid ""
 "number, page count and selected posts in ``collection``, with "
 "``collection.previous_url`` and ``collection.next_url`` set to relative "
 "URLs or ``None``. Each post entry provides ``title``, ``docname``, "
-"``date``, ``url``, ``summary`` and typed ``meta`` values, including its "
-"optional ``pdf_url``."
+"``date``, ``url``, ``summary``, ``excerpt_html`` and typed ``meta`` "
+"values, including its optional ``pdf_url``."
 msgstr ""
 "La colección comienza en ``journal/index.html`` y continúa en "
 "``journal/page/2/index.html`` con enlaces relativos a la página anterior "
@@ -3087,10 +3184,10 @@ msgstr ""
 "actual, el total de páginas y las entradas seleccionadas en "
 "``collection``, con ``collection.previous_url`` y ``collection.next_url`` "
 "definidos como URL relativas o ``None``. Cada entrada proporciona "
-"``title``, ``docname``, ``date``, ``url``, ``summary`` y valores tipados "
-"en ``meta``, incluido su ``pdf_url`` opcional."
+"``title``, ``docname``, ``date``, ``url``, ``summary``, ``excerpt_html`` "
+"y valores tipados en ``meta``, incluido su ``pdf_url`` opcional."
 
-#: ../../howto/static-publishing.rst:112
+#: ../../howto/static-publishing.rst:174
 msgid ""
 "Taxonomy archives are written at paths such as ``tags/rust/index.html`` "
 "and ``year/2026/index.html``. Headings preserve the original label text "
@@ -3112,11 +3209,11 @@ msgstr ""
 "o pertenecientes a una colección, la confirmación de la salida elimina "
 "automáticamente las páginas de archivo y paginación obsoletas."
 
-#: ../../howto/static-publishing.rst:114
+#: ../../howto/static-publishing.rst:176
 msgid "Layouts and standalone article PDFs"
 msgstr "Diseños y PDF de artículos independientes"
 
-#: ../../howto/static-publishing.rst:117
+#: ../../howto/static-publishing.rst:179
 msgid ""
 "Dated articles select ``article.html`` by default; other pages select "
 "``page.html``, which extends ``layout.html``. Any page can choose a "
@@ -3143,7 +3240,7 @@ msgstr ""
 "``myst_words_per_minute``, contando los caracteres CJK de forma "
 "individual)."
 
-#: ../../howto/static-publishing.rst:119
+#: ../../howto/static-publishing.rst:181
 msgid ""
 "Setting ``:pdf: article`` compiles a standalone PDF next to the article's "
 "HTML page (``notes.pdf`` for ``html``, ``notes/index.pdf`` for "
@@ -3166,24 +3263,24 @@ msgstr ""
 "independientes los producen los constructores ``html`` y ``dirhtml``; "
 "``singlehtml`` conserva su comportamiento de HTML en una sola página."
 
-#: ../../howto/static-publishing.rst:121
+#: ../../howto/static-publishing.rst:183
 msgid "Starter sites"
 msgstr "Sitios de partida"
 
-#: ../../howto/static-publishing.rst:124
+#: ../../howto/static-publishing.rst:186
 msgid "Initialize a complete starter project with one of three presets:"
 msgstr ""
 "Inicializamos un proyecto de partida completo con una de las tres "
 "plantillas iniciales:"
 
-#: ../../howto/static-publishing.rst:131
+#: ../../howto/static-publishing.rst:193
 msgid ""
 "``project`` starts with a custom landing page and a documentation guide."
 msgstr ""
 "``project`` comienza con una portada personalizada y una guía de "
 "documentación."
 
-#: ../../howto/static-publishing.rst:132
+#: ../../howto/static-publishing.rst:194
 msgid ""
 "``journal`` starts with a dated article, chronological cards, feeds and "
 "taxonomy archives."
@@ -3191,7 +3288,7 @@ msgstr ""
 "``journal`` comienza con un artículo fechado, tarjetas cronológicas, "
 "canales de sindicación y archivos por taxonomía."
 
-#: ../../howto/static-publishing.rst:133
+#: ../../howto/static-publishing.rst:195
 msgid ""
 "``research`` starts with a paper containing an abstract and mathematics, "
 "and builds its standalone PDF."
@@ -3199,7 +3296,7 @@ msgstr ""
 "``research`` comienza con un artículo que contiene un resumen y fórmulas "
 "matemáticas, y genera su PDF independiente."
 
-#: ../../howto/static-publishing.rst:135
+#: ../../howto/static-publishing.rst:197
 msgid ""
 "All three presets copy editable HTML, CSS and Typst theme files and "
 "refuse to overwrite an existing destination. Update the example "
@@ -3210,7 +3307,7 @@ msgstr ""
 "actualizar el ``base_url`` de ejemplo en ``conf.toml`` antes de publicar "
 "canales o mapas del sitio."
 
-#: ../../howto/static-publishing.rst:137
+#: ../../howto/static-publishing.rst:199
 msgid ""
 "When no mounts are configured, ``guidedog ssg build`` builds the single "
 "project into ``_build/site`` by default. ``--out DIR`` selects another "
@@ -3222,11 +3319,11 @@ msgstr ""
 "otro destino, ``--now RFC3339`` fija el reloj de publicación y "
 "``--preview`` incluye los documentos retenidos."
 
-#: ../../howto/static-publishing.rst:139
+#: ../../howto/static-publishing.rst:201
 msgid "Mounted projects and editions"
 msgstr "Proyectos montados y ediciones"
 
-#: ../../howto/static-publishing.rst:142
+#: ../../howto/static-publishing.rst:204
 msgid ""
 "Assemble multiple Guidedog projects and language editions into one "
 "website from a root ``conf.toml``:"
@@ -3234,7 +3331,7 @@ msgstr ""
 "Ensamblamos varios proyectos de Guidedog y ediciones por idioma en un "
 "único sitio web a partir de un ``conf.toml`` raíz:"
 
-#: ../../howto/static-publishing.rst:172
+#: ../../howto/static-publishing.rst:234
 msgid ""
 "Every mount ``source`` must resolve beneath the site configuration's "
 "directory after following symbolic links. An edition uses gettext "
@@ -3256,7 +3353,7 @@ msgstr ""
 "pueden compartir un directorio de salida cuando los archivos que generan "
 "son disjuntos."
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid ""
 "Root conf.toml declares mounts, language editions, and shared assets; ssg "
 "build compiles each mount, verifies mount:// links and file collisions, "
@@ -3267,7 +3364,7 @@ msgstr ""
 "mount:// y las colisiones de archivos, y confirma el sitio ensamblado en "
 "una sola generación."
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid ""
 "Mounted builds stage every project and language edition under one clock "
 "and publish the complete website atomically."
@@ -3275,7 +3372,7 @@ msgstr ""
 "Las compilaciones montadas preparan cada proyecto y edición por idioma "
 "bajo un mismo reloj y publican el sitio web completo de forma atómica."
 
-#: ../../howto/static-publishing.rst:198
+#: ../../howto/static-publishing.rst:260
 msgid ""
 "Supported mount builders are ``html``, ``dirhtml``, ``pdf`` and "
 "``discussion-pdf`` (which validates a discussion catalog under ``prefix`` "
@@ -3301,11 +3398,11 @@ msgstr ""
 "a todos los montajes, y un único reloj de publicación rige toda la "
 "compilación."
 
-#: ../../howto/static-publishing.rst:200
+#: ../../howto/static-publishing.rst:262
 msgid "Link across mounts with the ``mount://`` scheme:"
 msgstr "Enlazamos entre montajes mediante el esquema ``mount://``:"
 
-#: ../../howto/static-publishing.rst:206
+#: ../../howto/static-publishing.rst:268
 msgid ""
 "The link resolves to the target mount's matching language edition, "
 "falling back to its default edition. HTML receives a relative URL "
@@ -3325,7 +3422,7 @@ msgstr ""
 "un destino entre montajes, el sitio web publicado anteriormente permanece "
 "intacto."
 
-#: ../../howto/static-publishing.rst:208
+#: ../../howto/static-publishing.rst:270
 msgid ""
 "Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
 "cross-mount PDF download links; custom templates can inspect "
@@ -3343,11 +3440,11 @@ msgstr ""
 "de discusiones, y ``cargo xtask build-site`` delega directamente en "
 "``guidedog ssg build``."
 
-#: ../../howto/static-publishing.rst:210
+#: ../../howto/static-publishing.rst:272
 msgid "Pinned themes"
 msgstr "Temas fijados"
 
-#: ../../howto/static-publishing.rst:213
+#: ../../howto/static-publishing.rst:275
 msgid ""
 "Package a directory containing ``_templates/`` and ``_static/`` into a "
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
@@ -3356,7 +3453,7 @@ msgstr ""
 "un archivo portable ``.gdt`` y lo instalamos fijando explícitamente su "
 "SHA-256:"
 
-#: ../../howto/static-publishing.rst:220
+#: ../../howto/static-publishing.rst:282
 msgid ""
 "Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
 "theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
@@ -3369,7 +3466,7 @@ msgstr ""
 "y los archivos estáticos del proyecto prevalecen sobre los archivos "
 "estáticos del tema con la misma ruta relativa."
 
-#: ../../howto/static-publishing.rst:222
+#: ../../howto/static-publishing.rst:284
 msgid ""
 "A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
 "portable relative paths beneath ``_templates/`` and ``_static/`` to "
@@ -3387,7 +3484,7 @@ msgstr ""
 "plataforma, los enlaces simbólicos, los solapamientos entre archivos y "
 "directorios y los hooks ejecutables."
 
-#: ../../howto/static-publishing.rst:224
+#: ../../howto/static-publishing.rst:286
 msgid ""
 "``guidedog-theme.lock`` records the source URL or path, the archive "
 "SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "

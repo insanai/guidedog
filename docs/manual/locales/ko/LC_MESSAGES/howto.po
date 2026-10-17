@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 15:27+0000\n"
+"POT-Creation-Date: 2026-10-17 18:28+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -2659,18 +2659,93 @@ msgid ""
 "are ordered by publication instant (newest first by default), with "
 "docname breaking ties; ``:sort: date`` places the oldest first. ``:style: "
 "cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each "
-"article's plain-text summary."
+"article's introduction or plain-text summary."
 msgstr ""
 "``:path:``\\ 는 소스 확장자를 제외한 문서 이름(docname)과 대조합니다. 카테고리, 저자, 시리즈 필터는 정확히 "
 "일치해야 하며, 나열된 모든 태그가 일치해야 합니다. 글은 게시 시점 순(기본값은 최신순)으로 정렬되고 시점이 같으면 문서 이름으로 "
 "순서를 정하며, ``:sort: date``\\ 는 오래된 글을 먼저 놓습니다. ``:style: cards``\\ 는 카드 "
-"레이아웃 CSS 클래스를 추가하고, ``:excerpts:``\\ 는 각 글의 일반 텍스트 요약을 포함합니다."
+"레이아웃 CSS 클래스를 추가하고, ``:excerpts:``\\ 는 각 글의 도입부 또는 일반 텍스트 요약을 포함합니다."
 
 #: ../../howto/static-publishing.rst:82
+msgid "Rich article introductions"
+msgstr "서식이 있는 글 도입부"
+
+#: ../../howto/static-publishing.rst:85
+msgid ""
+"We place one ``.. more::`` boundary after the introduction to select a "
+"rich excerpt:"
+msgstr "도입부 뒤에 ``.. more::`` 경계를 하나 두어 서식이 있는 발췌문을 선택합니다."
+
+#: ../../howto/static-publishing.rst:108
+msgid ""
+"The introduction retains paragraphs, inline markup, links, lists, images "
+"and other ordinary document nodes. Both ``postlist`` with ``:excerpts:`` "
+"and generated collection or taxonomy pages render it during the build. "
+"The full article retains everything on both sides of the boundary in HTML "
+"and PDF. The boundary emits no visible content. Drafts, scheduled "
+"articles and expired articles follow the same publication gate as other "
+"listings."
+msgstr ""
+"도입부는 문단, 인라인 마크업, 링크, 목록, 이미지와 기타 일반 문서 노드를 유지합니다. ``:excerpts:`` 옵션을 지정한 "
+"``postlist``\\ 와 생성된 컬렉션 또는 분류 페이지 모두 빌드 시 도입부를 렌더링합니다. 전체 글은 HTML과 PDF에서 "
+"경계 양쪽의 모든 내용을 유지합니다. 경계 자체는 표시되지 않습니다. 초안, 예약된 글, 만료된 글에는 다른 목록과 같은 게시 "
+"조건이 적용됩니다."
+
+#: ../../howto/static-publishing.rst:114
+msgid ""
+"We put the boundary at document level, before any subsection, outside "
+"lists and other directives. It accepts no argument, option or body. A "
+"second boundary or a nested boundary produces a diagnostic. Literal ``.. "
+"more::`` text inside a code example remains literal text. An empty "
+"introduction is allowed. Toctrees, postlists and todolists inside an "
+"introduction are omitted from its excerpt to prevent recursive listings."
+msgstr ""
+"경계는 문서 수준에서 모든 하위 절보다 앞에, 목록과 다른 지시문 밖에 둡니다. 인수, 옵션, 본문은 허용되지 않습니다. 두 번째 "
+"경계나 중첩된 경계는 진단을 생성합니다. 코드 예제 안의 리터럴 ``.. more::`` 텍스트는 그대로 남습니다. 빈 도입부도 "
+"허용됩니다. 재귀적인 목록을 막기 위해 도입부 안의 toctree, postlist, todolist는 발췌문에서 생략됩니다."
+
+#: ../../howto/static-publishing.rst:121
+msgid ""
+"Without a boundary, the excerpt is the escaped plain-text ``:summary:`` "
+"in a paragraph, or empty when no summary is given. We keep ``:summary:`` "
+"independent of the rich introduction: feeds and description metadata "
+"continue to use that plain text. For a Tinkerer migration, we can retain "
+"``.. more::`` and replace site-specific browser code with native "
+"``postlist`` directives or collection templates. No runtime plugin or "
+"browser fetch is required."
+msgstr ""
+"경계가 없으면 발췌문은 이스케이프된 일반 텍스트 ``:summary:``\\ 를 문단으로 렌더링하며, 요약도 없으면 비어 있습니다. "
+"``:summary:``\\ 는 서식이 있는 도입부와 독립적으로 유지되므로 피드와 설명 메타데이터는 계속 일반 텍스트를 사용합니다. "
+"Tinkerer에서 이전할 때 ``.. more::``\\ 를 유지하고 사이트 전용 브라우저 코드를 기본 ``postlist`` "
+"지시문이나 컬렉션 템플릿으로 바꿀 수 있습니다. 런타임 플러그인이나 브라우저 가져오기는 필요하지 않습니다."
+
+#: ../../howto/static-publishing.rst:126
+msgid "A collection template can render the selected introduction directly:"
+msgstr "컬렉션 템플릿에서 선택된 도입부를 직접 렌더링할 수 있습니다."
+
+#: ../../howto/static-publishing.rst:137
+msgid ""
+"``post.excerpt_html`` is rendered HTML marked safe for the template "
+"engine. It follows the build's content policy, including restrictions on "
+"raw markup and unsafe URLs. Links, images and downloads are relative to "
+"the destination listing, including nested archives and pagination pages. "
+"Each listing occurrence has its own anchor namespace. Local references to "
+"included targets stay within the excerpt; references to targets or "
+"footnotes after the boundary link to the full article. We render a post's "
+"excerpt once per template occurrence; repeating the same "
+"``post.excerpt_html`` value in a template also repeats its HTML IDs."
+msgstr ""
+"``post.excerpt_html``\\ 은 템플릿 엔진에 안전한 것으로 표시된 렌더링된 HTML입니다. 원시 마크업과 안전하지 "
+"않은 URL의 제한을 포함한 빌드 콘텐츠 정책을 따릅니다. 링크, 이미지, 다운로드는 중첩된 아카이브와 페이지 매김 페이지를 "
+"포함하여 대상 목록을 기준으로 한 상대 경로입니다. 목록의 각 발췌문에는 독립된 앵커 네임스페이스가 있습니다. 포함된 대상으로 "
+"향하는 로컬 참조는 발췌문 안에 남고, 경계 뒤의 대상이나 각주 참조는 전체 글로 연결됩니다. 글의 발췌문은 템플릿에 나타날 때마다 "
+"한 번 렌더링됩니다. 템플릿에서 같은 ``post.excerpt_html`` 값을 반복하면 HTML ID도 반복됩니다."
+
+#: ../../howto/static-publishing.rst:144
 msgid "Enable site-wide discovery files in ``conf.toml``:"
 msgstr "``conf.toml``\\ 에서 사이트 전체 탐색 파일을 활성화합니다:"
 
-#: ../../howto/static-publishing.rst:91
+#: ../../howto/static-publishing.rst:153
 msgid ""
 "The HTML and dirhtml builders emit ``sitemap.xml``, ``rss.xml`` and "
 "``atom.xml`` using the configured ``base_url`` (including any hosting "
@@ -2682,13 +2757,13 @@ msgstr ""
 "``rss.xml``, ``atom.xml``\\ 을 생성합니다. 탐색 파일은 시스템 시계가 아니라 소스 메타데이터에서 타임스탬프를 "
 "가져오므로, 공개 대상 소스와 메타데이터가 바뀌지 않았다면 동일한 바이트를 만들어 냅니다."
 
-#: ../../howto/static-publishing.rst:93
+#: ../../howto/static-publishing.rst:155
 msgid ""
 "Generate taxonomy archives and paginated collections from the same "
 "``[site]`` table:"
 msgstr "같은 ``[site]`` 테이블에서 분류(taxonomy) 아카이브와 페이지가 나뉜 컬렉션을 생성합니다:"
 
-#: ../../howto/static-publishing.rst:110
+#: ../../howto/static-publishing.rst:172
 msgid ""
 "The collection starts at ``journal/index.html`` and continues at "
 "``journal/page/2/index.html`` with relative previous and next links. A "
@@ -2701,8 +2776,8 @@ msgid ""
 "number, page count and selected posts in ``collection``, with "
 "``collection.previous_url`` and ``collection.next_url`` set to relative "
 "URLs or ``None``. Each post entry provides ``title``, ``docname``, "
-"``date``, ``url``, ``summary`` and typed ``meta`` values, including its "
-"optional ``pdf_url``."
+"``date``, ``url``, ``summary``, ``excerpt_html`` and typed ``meta`` "
+"values, including its optional ``pdf_url``."
 msgstr ""
 "컬렉션은 ``journal/index.html``\\ 에서 시작해 상대 경로의 이전·다음 링크와 함께 "
 "``journal/page/2/index.html``\\ 로 이어집니다. ``page_size``\\ 가 ``0``\\ 이면 컬렉션 "
@@ -2713,9 +2788,10 @@ msgstr ""
 "사용합니다. 템플릿은 ``collection``\\ 을 통해 현재 페이지 번호, 전체 페이지 수, 선택된 포스트들을 받으며, "
 "``collection.previous_url``\\ 과 ``collection.next_url``\\ 은 상대 URL이나 "
 "``None``\\ 으로 설정됩니다. 각 포스트 항목은 ``title``, ``docname``, ``date``, ``url``, "
-"``summary``\\ 와 선택적인 ``pdf_url``\\ 을 포함한 타입이 지정된 ``meta`` 값을 제공합니다."
+"``summary``, ``excerpt_html``\\ 와 선택적인 ``pdf_url``\\ 을 포함한 타입이 지정된 "
+"``meta`` 값을 제공합니다."
 
-#: ../../howto/static-publishing.rst:112
+#: ../../howto/static-publishing.rst:174
 msgid ""
 "Taxonomy archives are written at paths such as ``tags/rust/index.html`` "
 "and ``year/2026/index.html``. Headings preserve the original label text "
@@ -2732,11 +2808,11 @@ msgstr ""
 "다른 생성 출력을 절대 덮어쓰지 않습니다. 게시 상태가 바뀌거나 컬렉션 구성원이 줄어들면 출력 커밋 단계에서 더 이상 쓰이지 않는 "
 "아카이브 및 페이지네이션 페이지를 자동으로 제거합니다."
 
-#: ../../howto/static-publishing.rst:114
+#: ../../howto/static-publishing.rst:176
 msgid "Layouts and standalone article PDFs"
 msgstr "레이아웃과 독립형 글 PDF"
 
-#: ../../howto/static-publishing.rst:117
+#: ../../howto/static-publishing.rst:179
 msgid ""
 "Dated articles select ``article.html`` by default; other pages select "
 "``page.html``, which extends ``layout.html``. Any page can choose a "
@@ -2758,7 +2834,7 @@ msgstr ""
 "``myst_words_per_minute``(한중일 문자는 글자 단위로 계산)로 산출한 ``page.word_count``\\ 와 "
 "``page.reading_minutes``\\ 도 받습니다."
 
-#: ../../howto/static-publishing.rst:119
+#: ../../howto/static-publishing.rst:181
 msgid ""
 "Setting ``:pdf: article`` compiles a standalone PDF next to the article's "
 "HTML page (``notes.pdf`` for ``html``, ``notes/index.pdf`` for "
@@ -2778,32 +2854,32 @@ msgstr ""
 "``html``\\ 과 ``dirhtml`` 빌더에서 생성되며, ``singlehtml``\\ 은 단일 페이지 HTML 동작을 "
 "그대로 유지합니다."
 
-#: ../../howto/static-publishing.rst:121
+#: ../../howto/static-publishing.rst:183
 msgid "Starter sites"
 msgstr "시작 사이트 프리셋"
 
-#: ../../howto/static-publishing.rst:124
+#: ../../howto/static-publishing.rst:186
 msgid "Initialize a complete starter project with one of three presets:"
 msgstr "세 가지 프리셋 중 하나로 완전한 시작 프로젝트를 초기화할 수 있습니다:"
 
-#: ../../howto/static-publishing.rst:131
+#: ../../howto/static-publishing.rst:193
 msgid ""
 "``project`` starts with a custom landing page and a documentation guide."
 msgstr "``project``\\ 는 사용자 지정 랜딩 페이지와 문서 가이드로 시작합니다."
 
-#: ../../howto/static-publishing.rst:132
+#: ../../howto/static-publishing.rst:194
 msgid ""
 "``journal`` starts with a dated article, chronological cards, feeds and "
 "taxonomy archives."
 msgstr "``journal``\\ 은 날짜가 있는 글, 시간순 카드 목록, 피드, 분류 아카이브로 시작합니다."
 
-#: ../../howto/static-publishing.rst:133
+#: ../../howto/static-publishing.rst:195
 msgid ""
 "``research`` starts with a paper containing an abstract and mathematics, "
 "and builds its standalone PDF."
 msgstr "``research``\\ 는 초록과 수식이 포함된 논문으로 시작하며 독립형 PDF를 함께 빌드합니다."
 
-#: ../../howto/static-publishing.rst:135
+#: ../../howto/static-publishing.rst:197
 msgid ""
 "All three presets copy editable HTML, CSS and Typst theme files and "
 "refuse to overwrite an existing destination. Update the example "
@@ -2812,7 +2888,7 @@ msgstr ""
 "세 프리셋 모두 편집 가능한 HTML, CSS, Typst 테마 파일을 복사하며 기존 대상 폴더는 덮어쓰지 않습니다. 피드나 "
 "사이트맵을 게시하기 전에 ``conf.toml``\\ 의 예제 ``base_url``\\ 을 실제 주소로 수정하세요."
 
-#: ../../howto/static-publishing.rst:137
+#: ../../howto/static-publishing.rst:199
 msgid ""
 "When no mounts are configured, ``guidedog ssg build`` builds the single "
 "project into ``_build/site`` by default. ``--out DIR`` selects another "
@@ -2823,17 +2899,17 @@ msgstr ""
 "``_build/site``\\ 에 빌드합니다. ``--out DIR``\\ 로 다른 출력 폴더를 선택하고, ``--now "
 "RFC3339``\\ 로 게시 시계를 고정하며, ``--preview``\\ 로 보류된 문서를 포함할 수 있습니다."
 
-#: ../../howto/static-publishing.rst:139
+#: ../../howto/static-publishing.rst:201
 msgid "Mounted projects and editions"
 msgstr "마운트된 프로젝트와 언어판"
 
-#: ../../howto/static-publishing.rst:142
+#: ../../howto/static-publishing.rst:204
 msgid ""
 "Assemble multiple Guidedog projects and language editions into one "
 "website from a root ``conf.toml``:"
 msgstr "루트 ``conf.toml`` 하나로 여러 Guidedog 프로젝트와 언어판을 하나의 웹사이트로 조립할 수 있습니다:"
 
-#: ../../howto/static-publishing.rst:172
+#: ../../howto/static-publishing.rst:234
 msgid ""
 "Every mount ``source`` must resolve beneath the site configuration's "
 "directory after following symbolic links. An edition uses gettext "
@@ -2850,7 +2926,7 @@ msgstr ""
 "해당 접두사의 루트에 마운트됩니다. 마운트 이름과 언어판 출력 디렉터리는 ASCII 대소문자를 무시하고 서로 구분되어야 하지만, "
 "서로 다른 마운트가 생성하는 파일들이 겹치지 않는다면 같은 출력 디렉터리를 공유할 수 있습니다."
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid ""
 "Root conf.toml declares mounts, language editions, and shared assets; ssg "
 "build compiles each mount, verifies mount:// links and file collisions, "
@@ -2859,13 +2935,13 @@ msgstr ""
 "루트 conf.toml이 마운트, 언어판, 공유 에셋을 선언하면 ssg build가 각 마운트를 컴파일하고 mount:// 링크와 "
 "파일 충돌을 검증한 뒤 조립된 사이트를 단일 세대로 커밋합니다."
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid ""
 "Mounted builds stage every project and language edition under one clock "
 "and publish the complete website atomically."
 msgstr "마운트 빌드는 모든 프로젝트와 언어판을 하나의 시계 아래에서 스테이징하고 완성된 웹사이트 전체를 원자적으로 게시합니다."
 
-#: ../../howto/static-publishing.rst:198
+#: ../../howto/static-publishing.rst:260
 msgid ""
 "Supported mount builders are ``html``, ``dirhtml``, ``pdf`` and "
 "``discussion-pdf`` (which validates a discussion catalog under ``prefix`` "
@@ -2886,11 +2962,11 @@ msgstr ""
 "``editions.language``\\ 로 언어를 선택하세요. 루트 설정의 비어 있지 않은 ``version``\\ 과 "
 "``release`` 값은 모든 마운트로 전파되며, 단일 게시 시계가 빌드 전체를 관장합니다."
 
-#: ../../howto/static-publishing.rst:200
+#: ../../howto/static-publishing.rst:262
 msgid "Link across mounts with the ``mount://`` scheme:"
 msgstr "``mount://`` 스킴으로 마운트 간 링크를 연결합니다:"
 
-#: ../../howto/static-publishing.rst:206
+#: ../../howto/static-publishing.rst:268
 msgid ""
 "The link resolves to the target mount's matching language edition, "
 "falling back to its default edition. HTML receives a relative URL "
@@ -2905,7 +2981,7 @@ msgstr ""
 "대상이 현재 세대에 존재하는지 검증하므로, 이전 빌드에서 남은 오래된 파일이 새로 보류된 문서로 가는 링크를 충족할 수 없습니다. "
 "어느 마운트라도 실패하거나 마운트 간 링크 대상이 누락되면 이전에 게시된 웹사이트가 그대로 유지됩니다."
 
-#: ../../howto/static-publishing.rst:208
+#: ../../howto/static-publishing.rst:270
 msgid ""
 "Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
 "cross-mount PDF download links; custom templates can inspect "
@@ -2920,11 +2996,11 @@ msgstr ""
 "논의 카탈로그 빌드를 이 형식으로 선언하며, ``cargo xtask build-site``\\ 는 ``guidedog ssg "
 "build``\\ 에 직접 작업을 위임합니다."
 
-#: ../../howto/static-publishing.rst:210
+#: ../../howto/static-publishing.rst:272
 msgid "Pinned themes"
 msgstr "고정된 테마"
 
-#: ../../howto/static-publishing.rst:213
+#: ../../howto/static-publishing.rst:275
 msgid ""
 "Package a directory containing ``_templates/`` and ``_static/`` into a "
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
@@ -2932,7 +3008,7 @@ msgstr ""
 "``_templates/``\\ 와 ``_static/``\\ 이 들어 있는 디렉터리를 이식 가능한 ``.gdt`` 아카이브로 묶고 "
 "명시적인 SHA-256 고정값으로 설치합니다:"
 
-#: ../../howto/static-publishing.rst:220
+#: ../../howto/static-publishing.rst:282
 msgid ""
 "Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
 "theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
@@ -2943,7 +3019,7 @@ msgstr ""
 "true``\\ 를 설정해 검증된 테마를 활성화합니다. 프로젝트의 ``_templates/`` 파일은 설치된 테마보다 우선하며, "
 "프로젝트의 정적 파일은 같은 상대 경로의 테마 정적 파일을 재정의합니다."
 
-#: ../../howto/static-publishing.rst:222
+#: ../../howto/static-publishing.rst:284
 msgid ""
 "A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
 "portable relative paths beneath ``_templates/`` and ``_static/`` to "
@@ -2957,7 +3033,7 @@ msgstr ""
 "해제 후 64 MiB 데이터, 32단계 디렉터리 깊이로 제한되며, 상위 경로 이탈, 대소문자 별칭 충돌, 플랫폼 예약 이름, 심볼릭 "
 "링크, 파일·디렉터리 중첩, 실행 가능한 훅은 거부됩니다."
 
-#: ../../howto/static-publishing.rst:224
+#: ../../howto/static-publishing.rst:286
 msgid ""
 "``guidedog-theme.lock`` records the source URL or path, the archive "
 "SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "

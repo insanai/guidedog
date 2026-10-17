@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 15:27+0000\n"
+"POT-Creation-Date: 2026-10-17 18:28+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -2935,21 +2935,110 @@ msgid ""
 "are ordered by publication instant (newest first by default), with "
 "docname breaking ties; ``:sort: date`` places the oldest first. ``:style: "
 "cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each "
-"article's plain-text summary."
+"article's introduction or plain-text summary."
 msgstr ""
 "``:path:`` बिना सोर्स एक्सटेंशन के docname से मिलान करता है। श्रेणी, लेखक "
 "और शृंखला फ़िल्टर हूबहू मिलान करते हैं, और सूची में दिए गए हर टैग का "
 "मिलना ज़रूरी है। लेख प्रकाशन क्षण के क्रम में लगते हैं (डिफ़ॉल्ट रूप से "
 "सबसे नया पहले), और बराबरी होने पर docname से क्रम तय होता है; ``:sort: "
 "date`` सबसे पुराने को पहले रखता है। ``:style: cards`` कार्ड-लेआउट CSS "
-"क्लास जोड़ता है, और ``:excerpts:`` हर लेख का सादे टेक्स्ट वाला सारांश "
-"शामिल करता है।"
+"क्लास जोड़ता है, और ``:excerpts:`` हर लेख का परिचय या सादे टेक्स्ट वाला "
+"सारांश शामिल करता है।"
 
 #: ../../howto/static-publishing.rst:82
+msgid "Rich article introductions"
+msgstr "फ़ॉर्मैट किए गए लेख परिचय"
+
+#: ../../howto/static-publishing.rst:85
+msgid ""
+"We place one ``.. more::`` boundary after the introduction to select a "
+"rich excerpt:"
+msgstr ""
+"फ़ॉर्मैट किया गया अंश चुनने के लिए हम परिचय के बाद एक ``.. more::`` सीमा "
+"रखते हैं:"
+
+#: ../../howto/static-publishing.rst:108
+msgid ""
+"The introduction retains paragraphs, inline markup, links, lists, images "
+"and other ordinary document nodes. Both ``postlist`` with ``:excerpts:`` "
+"and generated collection or taxonomy pages render it during the build. "
+"The full article retains everything on both sides of the boundary in HTML "
+"and PDF. The boundary emits no visible content. Drafts, scheduled "
+"articles and expired articles follow the same publication gate as other "
+"listings."
+msgstr ""
+"परिचय में अनुच्छेद, इनलाइन मार्कअप, लिंक, सूचियाँ, चित्र और दस्तावेज़ के "
+"अन्य सामान्य नोड बने रहते हैं। ``:excerpts:`` वाले ``postlist`` और जनरेट "
+"किए गए संग्रह या वर्गीकरण पृष्ठ, दोनों इसे बिल्ड के समय रेंडर करते हैं। "
+"पूरा लेख HTML और PDF में सीमा के दोनों ओर का सारा कंटेंट रखता है। सीमा "
+"कोई दिखाई देने वाला कंटेंट नहीं बनाती। ड्राफ़्ट, निर्धारित और समय समाप्त "
+"हो चुके लेखों पर अन्य सूचियों वाले ही प्रकाशन नियम लागू होते हैं।"
+
+#: ../../howto/static-publishing.rst:114
+msgid ""
+"We put the boundary at document level, before any subsection, outside "
+"lists and other directives. It accepts no argument, option or body. A "
+"second boundary or a nested boundary produces a diagnostic. Literal ``.. "
+"more::`` text inside a code example remains literal text. An empty "
+"introduction is allowed. Toctrees, postlists and todolists inside an "
+"introduction are omitted from its excerpt to prevent recursive listings."
+msgstr ""
+"हम सीमा को दस्तावेज़ स्तर पर, किसी भी उपखंड से पहले और सूचियों तथा अन्य "
+"डायरेक्टिव के बाहर रखते हैं। यह आर्ग्युमेंट, विकल्प या बॉडी स्वीकार नहीं "
+"करती। दूसरी या नेस्ट की गई सीमा डायग्नोस्टिक देती है। कोड उदाहरण में लिखा "
+"शाब्दिक ``.. more::`` टेक्स्ट वैसा ही रहता है। खाली परिचय की अनुमति है। "
+"पुनरावर्ती सूचियाँ रोकने के लिए परिचय के भीतर के toctree, postlist और "
+"todolist अंश से हटा दिए जाते हैं।"
+
+#: ../../howto/static-publishing.rst:121
+msgid ""
+"Without a boundary, the excerpt is the escaped plain-text ``:summary:`` "
+"in a paragraph, or empty when no summary is given. We keep ``:summary:`` "
+"independent of the rich introduction: feeds and description metadata "
+"continue to use that plain text. For a Tinkerer migration, we can retain "
+"``.. more::`` and replace site-specific browser code with native "
+"``postlist`` directives or collection templates. No runtime plugin or "
+"browser fetch is required."
+msgstr ""
+"सीमा न होने पर अंश एक अनुच्छेद में एस्केप किया गया सादा ``:summary:`` "
+"टेक्स्ट होता है, या सारांश न होने पर खाली रहता है। हम ``:summary:`` को "
+"फ़ॉर्मैट किए गए परिचय से अलग रखते हैं: फ़ीड और विवरण मेटाडेटा उसी सादे "
+"टेक्स्ट का उपयोग करते हैं। Tinkerer से माइग्रेशन में हम ``.. more::`` को "
+"रखकर साइट-विशिष्ट ब्राउज़र कोड की जगह मूल ``postlist`` डायरेक्टिव या "
+"संग्रह टेम्पलेट इस्तेमाल कर सकते हैं। रनटाइम प्लगइन या ब्राउज़र फ़ेच की "
+"ज़रूरत नहीं है।"
+
+#: ../../howto/static-publishing.rst:126
+msgid "A collection template can render the selected introduction directly:"
+msgstr "संग्रह टेम्पलेट चुने गए परिचय को सीधे रेंडर कर सकता है:"
+
+#: ../../howto/static-publishing.rst:137
+msgid ""
+"``post.excerpt_html`` is rendered HTML marked safe for the template "
+"engine. It follows the build's content policy, including restrictions on "
+"raw markup and unsafe URLs. Links, images and downloads are relative to "
+"the destination listing, including nested archives and pagination pages. "
+"Each listing occurrence has its own anchor namespace. Local references to "
+"included targets stay within the excerpt; references to targets or "
+"footnotes after the boundary link to the full article. We render a post's "
+"excerpt once per template occurrence; repeating the same "
+"``post.excerpt_html`` value in a template also repeats its HTML IDs."
+msgstr ""
+"``post.excerpt_html`` रेंडर किया गया HTML है जिसे टेम्पलेट इंजन के लिए "
+"सुरक्षित चिह्नित किया गया है। यह बिल्ड की कंटेंट नीति का पालन करता है, "
+"जिसमें रॉ मार्कअप और असुरक्षित URL के प्रतिबंध भी शामिल हैं। लिंक, चित्र "
+"और डाउनलोड लक्ष्य सूची के सापेक्ष होते हैं, जिनमें नेस्ट किए गए आर्काइव "
+"और पेजिनेशन पृष्ठ भी शामिल हैं। सूची में हर अंश का अपना एंकर नेमस्पेस "
+"होता है। शामिल लक्ष्यों के स्थानीय संदर्भ अंश के भीतर रहते हैं; सीमा के "
+"बाद के लक्ष्य या फ़ुटनोट के संदर्भ पूरे लेख से लिंक होते हैं। हम टेम्पलेट "
+"में हर उपस्थिति के लिए लेख का अंश एक बार रेंडर करते हैं; टेम्पलेट में उसी "
+"``post.excerpt_html`` मान को दोहराने से उसके HTML ID भी दोहरते हैं।"
+
+#: ../../howto/static-publishing.rst:144
 msgid "Enable site-wide discovery files in ``conf.toml``:"
 msgstr "``conf.toml`` में पूरी साइट की डिस्कवरी फ़ाइलें चालू करें:"
 
-#: ../../howto/static-publishing.rst:91
+#: ../../howto/static-publishing.rst:153
 msgid ""
 "The HTML and dirhtml builders emit ``sitemap.xml``, ``rss.xml`` and "
 "``atom.xml`` using the configured ``base_url`` (including any hosting "
@@ -2963,7 +3052,7 @@ msgstr ""
 "बजाय सोर्स मेटाडेटा से लेती हैं, इसलिए पात्र सोर्स और मेटाडेटा अपरिवर्तित "
 "रहने पर हर बार बिल्कुल समान बाइट बनते हैं।"
 
-#: ../../howto/static-publishing.rst:93
+#: ../../howto/static-publishing.rst:155
 msgid ""
 "Generate taxonomy archives and paginated collections from the same "
 "``[site]`` table:"
@@ -2971,7 +3060,7 @@ msgstr ""
 "उसी ``[site]`` टेबल से वर्गीकरण अभिलेख (taxonomy archives) और पृष्ठबद्ध "
 "संग्रह बनाएँ:"
 
-#: ../../howto/static-publishing.rst:110
+#: ../../howto/static-publishing.rst:172
 msgid ""
 "The collection starts at ``journal/index.html`` and continues at "
 "``journal/page/2/index.html`` with relative previous and next links. A "
@@ -2984,8 +3073,8 @@ msgid ""
 "number, page count and selected posts in ``collection``, with "
 "``collection.previous_url`` and ``collection.next_url`` set to relative "
 "URLs or ``None``. Each post entry provides ``title``, ``docname``, "
-"``date``, ``url``, ``summary`` and typed ``meta`` values, including its "
-"optional ``pdf_url``."
+"``date``, ``url``, ``summary``, ``excerpt_html`` and typed ``meta`` "
+"values, including its optional ``pdf_url``."
 msgstr ""
 "संग्रह ``journal/index.html`` से शुरू होता है और सापेक्ष पिछले तथा अगले "
 "लिंक के साथ ``journal/page/2/index.html`` पर जारी रहता है। शून्य "
@@ -2998,10 +3087,10 @@ msgstr ""
 "संख्या, कुल पेज और चुनी हुई पोस्ट मिलती हैं, और "
 "``collection.previous_url`` तथा ``collection.next_url`` सापेक्ष URL या "
 "``None`` पर सेट होते हैं। हर पोस्ट प्रविष्टि ``title``, ``docname``, "
-"``date``, ``url``, ``summary`` और टाइप किए गए ``meta`` मान देती है, "
-"जिनमें उसका वैकल्पिक ``pdf_url`` भी शामिल है।"
+"``date``, ``url``, ``summary``, ``excerpt_html`` और टाइप किए गए ``meta`` "
+"मान देती है, जिनमें उसका वैकल्पिक ``pdf_url`` भी शामिल है।"
 
-#: ../../howto/static-publishing.rst:112
+#: ../../howto/static-publishing.rst:174
 msgid ""
 "Taxonomy archives are written at paths such as ``tags/rust/index.html`` "
 "and ``year/2026/index.html``. Headings preserve the original label text "
@@ -3021,11 +3110,11 @@ msgstr ""
 "है, तो आउटपुट commit पुराने हो चुके अभिलेख और पेजिनेशन पेजों को अपने आप "
 "हटा देता है।"
 
-#: ../../howto/static-publishing.rst:114
+#: ../../howto/static-publishing.rst:176
 msgid "Layouts and standalone article PDFs"
 msgstr "लेआउट और स्वतंत्र लेख PDF"
 
-#: ../../howto/static-publishing.rst:117
+#: ../../howto/static-publishing.rst:179
 msgid ""
 "Dated articles select ``article.html`` by default; other pages select "
 "``page.html``, which extends ``layout.html``. Any page can choose a "
@@ -3050,7 +3139,7 @@ msgstr ""
 "``myst_words_per_minute`` से और CJK अक्षरों को अलग-अलग गिनकर की जाती है) "
 "भी मिलते हैं।"
 
-#: ../../howto/static-publishing.rst:119
+#: ../../howto/static-publishing.rst:181
 msgid ""
 "Setting ``:pdf: article`` compiles a standalone PDF next to the article's "
 "HTML page (``notes.pdf`` for ``html``, ``notes/index.pdf`` for "
@@ -3072,21 +3161,21 @@ msgstr ""
 "स्वतंत्र लेख PDF ``html`` और ``dirhtml`` बिल्डर बनाते हैं; ``singlehtml`` "
 "अपना एकल-पेज HTML व्यवहार बनाए रखता है।"
 
-#: ../../howto/static-publishing.rst:121
+#: ../../howto/static-publishing.rst:183
 msgid "Starter sites"
 msgstr "स्टार्टर साइटें"
 
-#: ../../howto/static-publishing.rst:124
+#: ../../howto/static-publishing.rst:186
 msgid "Initialize a complete starter project with one of three presets:"
 msgstr "तीन प्रीसेट में से किसी एक से पूरा स्टार्टर प्रोजेक्ट शुरू करें:"
 
-#: ../../howto/static-publishing.rst:131
+#: ../../howto/static-publishing.rst:193
 msgid ""
 "``project`` starts with a custom landing page and a documentation guide."
 msgstr ""
 "``project`` कस्टम लैंडिंग पेज और दस्तावेज़ीकरण गाइड से शुरू होता है।"
 
-#: ../../howto/static-publishing.rst:132
+#: ../../howto/static-publishing.rst:194
 msgid ""
 "``journal`` starts with a dated article, chronological cards, feeds and "
 "taxonomy archives."
@@ -3094,7 +3183,7 @@ msgstr ""
 "``journal`` तारीख़ वाले लेख, कालानुक्रमिक कार्ड, फ़ीड और वर्गीकरण "
 "अभिलेखों से शुरू होता है।"
 
-#: ../../howto/static-publishing.rst:133
+#: ../../howto/static-publishing.rst:195
 msgid ""
 "``research`` starts with a paper containing an abstract and mathematics, "
 "and builds its standalone PDF."
@@ -3102,7 +3191,7 @@ msgstr ""
 "``research`` सारांश और गणित वाले एक शोध-पत्र से शुरू होता है, और उसका "
 "स्वतंत्र PDF बनाता है।"
 
-#: ../../howto/static-publishing.rst:135
+#: ../../howto/static-publishing.rst:197
 msgid ""
 "All three presets copy editable HTML, CSS and Typst theme files and "
 "refuse to overwrite an existing destination. Update the example "
@@ -3113,7 +3202,7 @@ msgstr ""
 "प्रकाशित करने से पहले ``conf.toml`` में दिए उदाहरण ``base_url`` को अपडेट "
 "करें।"
 
-#: ../../howto/static-publishing.rst:137
+#: ../../howto/static-publishing.rst:199
 msgid ""
 "When no mounts are configured, ``guidedog ssg build`` builds the single "
 "project into ``_build/site`` by default. ``--out DIR`` selects another "
@@ -3125,11 +3214,11 @@ msgstr ""
 "गंतव्य चुनता है, ``--now RFC3339`` प्रकाशन घड़ी स्थिर करता है, और "
 "``--preview`` रोके गए दस्तावेज़ों को शामिल करता है।"
 
-#: ../../howto/static-publishing.rst:139
+#: ../../howto/static-publishing.rst:201
 msgid "Mounted projects and editions"
 msgstr "माउंट किए गए प्रोजेक्ट और भाषा संस्करण"
 
-#: ../../howto/static-publishing.rst:142
+#: ../../howto/static-publishing.rst:204
 msgid ""
 "Assemble multiple Guidedog projects and language editions into one "
 "website from a root ``conf.toml``:"
@@ -3137,7 +3226,7 @@ msgstr ""
 "रूट ``conf.toml`` से कई Guidedog प्रोजेक्ट और भाषा संस्करणों को जोड़कर एक "
 "ही वेबसाइट बनाएँ:"
 
-#: ../../howto/static-publishing.rst:172
+#: ../../howto/static-publishing.rst:234
 msgid ""
 "Every mount ``source`` must resolve beneath the site configuration's "
 "directory after following symbolic links. An edition uses gettext "
@@ -3158,7 +3247,7 @@ msgstr ""
 "जब अलग-अलग माउंट की जनरेट की गई फ़ाइलें आपस में न टकराएँ तो वे एक ही "
 "आउटपुट डायरेक्टरी साझा कर सकते हैं।"
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid ""
 "Root conf.toml declares mounts, language editions, and shared assets; ssg "
 "build compiles each mount, verifies mount:// links and file collisions, "
@@ -3168,7 +3257,7 @@ msgstr ""
 "प्रत्येक माउंट को कंपाइल करता है, mount:// लिंक और फ़ाइल टकराव जाँचता है, "
 "और पूरी जुड़ी हुई साइट को एक ही Generation में commit करता है।"
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid ""
 "Mounted builds stage every project and language edition under one clock "
 "and publish the complete website atomically."
@@ -3176,7 +3265,7 @@ msgstr ""
 "माउंट किए गए build हर प्रोजेक्ट और भाषा संस्करण को एक ही घड़ी के अंतर्गत "
 "तैयार करते हैं और पूरी वेबसाइट को एटॉमिक रूप से प्रकाशित करते हैं।"
 
-#: ../../howto/static-publishing.rst:198
+#: ../../howto/static-publishing.rst:260
 msgid ""
 "Supported mount builders are ``html``, ``dirhtml``, ``pdf`` and "
 "``discussion-pdf`` (which validates a discussion catalog under ``prefix`` "
@@ -3200,11 +3289,11 @@ msgstr ""
 "``release`` मान हर माउंट तक पहुँचते हैं, और एक ही प्रकाशन घड़ी पूरे build "
 "को नियंत्रित करती है।"
 
-#: ../../howto/static-publishing.rst:200
+#: ../../howto/static-publishing.rst:262
 msgid "Link across mounts with the ``mount://`` scheme:"
 msgstr "``mount://`` स्कीम से अलग-अलग माउंट के बीच लिंक बनाएँ:"
 
-#: ../../howto/static-publishing.rst:206
+#: ../../howto/static-publishing.rst:268
 msgid ""
 "The link resolves to the target mount's matching language edition, "
 "falling back to its default edition. HTML receives a relative URL "
@@ -3223,7 +3312,7 @@ msgstr ""
 "या कोई क्रॉस-माउंट लक्ष्य गायब है, तो पहले से प्रकाशित वेबसाइट जस की तस "
 "बनी रहती है।"
 
-#: ../../howto/static-publishing.rst:208
+#: ../../howto/static-publishing.rst:270
 msgid ""
 "Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
 "cross-mount PDF download links; custom templates can inspect "
@@ -3239,11 +3328,11 @@ msgstr ""
 "किताबें और चर्चा कैटलॉग build घोषित करती है, तथा ``cargo xtask "
 "build-site`` सीधे ``guidedog ssg build`` को काम सौंपता है।"
 
-#: ../../howto/static-publishing.rst:210
+#: ../../howto/static-publishing.rst:272
 msgid "Pinned themes"
 msgstr "पिन की गई थीम"
 
-#: ../../howto/static-publishing.rst:213
+#: ../../howto/static-publishing.rst:275
 msgid ""
 "Package a directory containing ``_templates/`` and ``_static/`` into a "
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
@@ -3251,7 +3340,7 @@ msgstr ""
 "``_templates/`` और ``_static/`` वाली डायरेक्टरी को पोर्टेबल ``.gdt`` "
 "आर्काइव में पैक करें और स्पष्ट SHA-256 पिन के साथ इंस्टॉल करें:"
 
-#: ../../howto/static-publishing.rst:220
+#: ../../howto/static-publishing.rst:282
 msgid ""
 "Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
 "theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
@@ -3263,7 +3352,7 @@ msgstr ""
 "फ़ाइलें इंस्टॉल की गई थीम से प्राथमिकता पाती हैं, और प्रोजेक्ट की स्टैटिक "
 "फ़ाइलें समान सापेक्ष पाथ वाली थीम स्टैटिक फ़ाइलों को ओवरराइड करती हैं।"
 
-#: ../../howto/static-publishing.rst:222
+#: ../../howto/static-publishing.rst:284
 msgid ""
 "A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
 "portable relative paths beneath ``_templates/`` and ``_static/`` to "
@@ -3279,7 +3368,7 @@ msgstr ""
 "आरक्षित प्लेटफ़ॉर्म नाम, सिम्लिंक, फ़ाइल/डायरेक्टरी टकराव और "
 "एग्ज़िक्यूटेबल हुक अस्वीकार कर दिए जाते हैं।"
 
-#: ../../howto/static-publishing.rst:224
+#: ../../howto/static-publishing.rst:286
 msgid ""
 "``guidedog-theme.lock`` records the source URL or path, the archive "
 "SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "

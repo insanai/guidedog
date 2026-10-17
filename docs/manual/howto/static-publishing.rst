@@ -77,7 +77,69 @@ Embed a chronological list of eligible articles in any page with ``.. postlist::
       :sort: -date
       :excerpts:
 
-``:path:`` matches docnames without a source suffix. Category, author and series filters match exactly, and every listed tag must match. Articles are ordered by publication instant (newest first by default), with docname breaking ties; ``:sort: date`` places the oldest first. ``:style: cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each article's plain-text summary.
+``:path:`` matches docnames without a source suffix. Category, author and series filters match exactly, and every listed tag must match. Articles are ordered by publication instant (newest first by default), with docname breaking ties; ``:sort: date`` places the oldest first. ``:style: cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each article's introduction or plain-text summary.
+
+Rich article introductions
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We place one ``.. more::`` boundary after the introduction to select a rich excerpt:
+
+.. code-block:: rst
+
+   :date: 2026-10-17
+   :author: Ada
+   :summary: A plain description for metadata and feeds.
+
+   Our first observation
+   =====================
+
+   We introduce the result with **emphasis**, `a reference <https://example.org>`_, and a list.
+
+   * The first observation.
+   * The second observation.
+
+   .. image:: images/observation.svg
+      :alt: Our observation
+
+   .. more::
+
+   We explain the complete result here.
+
+The introduction retains paragraphs, inline markup, links, lists, images and other ordinary document nodes.
+Both ``postlist`` with ``:excerpts:`` and generated collection or taxonomy pages render it during the build.
+The full article retains everything on both sides of the boundary in HTML and PDF.
+The boundary emits no visible content.
+Drafts, scheduled articles and expired articles follow the same publication gate as other listings.
+
+We put the boundary at document level, before any subsection, outside lists and other directives.
+It accepts no argument, option or body.
+A second boundary or a nested boundary produces a diagnostic.
+Literal ``.. more::`` text inside a code example remains literal text.
+An empty introduction is allowed.
+Toctrees, postlists and todolists inside an introduction are omitted from its excerpt to prevent recursive listings.
+
+Without a boundary, the excerpt is the escaped plain-text ``:summary:`` in a paragraph, or empty when no summary is given.
+We keep ``:summary:`` independent of the rich introduction: feeds and description metadata continue to use that plain text.
+For a Tinkerer migration, we can retain ``.. more::`` and replace site-specific browser code with native ``postlist`` directives or collection templates.
+No runtime plugin or browser fetch is required.
+
+A collection template can render the selected introduction directly:
+
+.. code-block:: jinja
+
+   {% for post in collection.posts %}
+   <article>
+     <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+     {{ post.excerpt_html }}
+   </article>
+   {% endfor %}
+
+``post.excerpt_html`` is rendered HTML marked safe for the template engine.
+It follows the build's content policy, including restrictions on raw markup and unsafe URLs.
+Links, images and downloads are relative to the destination listing, including nested archives and pagination pages.
+Each listing occurrence has its own anchor namespace.
+Local references to included targets stay within the excerpt; references to targets or footnotes after the boundary link to the full article.
+We render a post's excerpt once per template occurrence; repeating the same ``post.excerpt_html`` value in a template also repeats its HTML IDs.
 
 Enable site-wide discovery files in ``conf.toml``:
 
@@ -107,7 +169,7 @@ Generate taxonomy archives and paginated collections from the same ``[site]`` ta
    page_size = 5
    feeds = true
 
-The collection starts at ``journal/index.html`` and continues at ``journal/page/2/index.html`` with relative previous and next links. A zero ``page_size`` keeps the collection on a single page. Each collection accepts ``path``, ``category``, ``tags``, ``author``, ``series`` and ``year`` filters. When ``feeds = true``, ``journal/rss.xml`` and ``journal/atom.xml`` contain the complete filtered selection across all pages. The collection layout defaults to ``collection.html`` unless ``template`` names an override. Templates receive the current page number, page count and selected posts in ``collection``, with ``collection.previous_url`` and ``collection.next_url`` set to relative URLs or ``None``. Each post entry provides ``title``, ``docname``, ``date``, ``url``, ``summary`` and typed ``meta`` values, including its optional ``pdf_url``.
+The collection starts at ``journal/index.html`` and continues at ``journal/page/2/index.html`` with relative previous and next links. A zero ``page_size`` keeps the collection on a single page. Each collection accepts ``path``, ``category``, ``tags``, ``author``, ``series`` and ``year`` filters. When ``feeds = true``, ``journal/rss.xml`` and ``journal/atom.xml`` contain the complete filtered selection across all pages. The collection layout defaults to ``collection.html`` unless ``template`` names an override. Templates receive the current page number, page count and selected posts in ``collection``, with ``collection.previous_url`` and ``collection.next_url`` set to relative URLs or ``None``. Each post entry provides ``title``, ``docname``, ``date``, ``url``, ``summary``, ``excerpt_html`` and typed ``meta`` values, including its optional ``pdf_url``.
 
 Taxonomy archives are written at paths such as ``tags/rust/index.html`` and ``year/2026/index.html``. Headings preserve the original label text while filesystem paths escape uppercase, punctuation and non-ASCII bytes so distinct labels never collide on case-insensitive filesystems. Generated pages never overwrite an author-written page or another generated output. When publication state or collection membership shrinks, the output commit removes obsolete archive and pagination pages automatically.
 

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 15:27+0000\n"
+"POT-Creation-Date: 2026-10-17 18:28+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -2656,18 +2656,94 @@ msgid ""
 "are ordered by publication instant (newest first by default), with "
 "docname breaking ties; ``:sort: date`` places the oldest first. ``:style: "
 "cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each "
-"article's plain-text summary."
+"article's introduction or plain-text summary."
 msgstr ""
 "``:path:`` はソース拡張子のない docname "
 "にマッチします。カテゴリー、著者、シリーズの各フィルターは完全一致し、指定されたすべてのタグが一致する必要があります。記事は公開日時順に並べられ（デフォルトでは最新順）、同日時の場合は "
 "docname で順序を決定します。``:sort: date`` は最古のものを先頭に配置します。``:style: cards`` "
-"はカードレイアウト用の CSS クラスを追加し、``:excerpts:`` は各記事のプレーンテキスト要約を含めます。"
+"はカードレイアウト用の CSS クラスを追加し、``:excerpts:`` は各記事の導入部またはプレーンテキスト要約を含めます。"
 
 #: ../../howto/static-publishing.rst:82
+msgid "Rich article introductions"
+msgstr "書式付きの記事導入部"
+
+#: ../../howto/static-publishing.rst:85
+msgid ""
+"We place one ``.. more::`` boundary after the introduction to select a "
+"rich excerpt:"
+msgstr "導入部の後に ``.. more::`` 境界を一つ置き、書式付きの抜粋を選択します。"
+
+#: ../../howto/static-publishing.rst:108
+msgid ""
+"The introduction retains paragraphs, inline markup, links, lists, images "
+"and other ordinary document nodes. Both ``postlist`` with ``:excerpts:`` "
+"and generated collection or taxonomy pages render it during the build. "
+"The full article retains everything on both sides of the boundary in HTML "
+"and PDF. The boundary emits no visible content. Drafts, scheduled "
+"articles and expired articles follow the same publication gate as other "
+"listings."
+msgstr ""
+"導入部には段落、インラインマークアップ、リンク、リスト、画像などの通常の文書ノードが保持されます。``:excerpts:`` を指定した "
+"``postlist`` と、生成されるコレクションや分類ページの両方が、ビルド時に導入部をレンダリングします。記事全体の HTML と PDF "
+"には境界の前後の内容がすべて残ります。境界自体は表示されません。下書き、公開予定、公開期限切れの記事には、他の一覧と同じ公開条件が適用されます。"
+
+#: ../../howto/static-publishing.rst:114
+msgid ""
+"We put the boundary at document level, before any subsection, outside "
+"lists and other directives. It accepts no argument, option or body. A "
+"second boundary or a nested boundary produces a diagnostic. Literal ``.. "
+"more::`` text inside a code example remains literal text. An empty "
+"introduction is allowed. Toctrees, postlists and todolists inside an "
+"introduction are omitted from its excerpt to prevent recursive listings."
+msgstr ""
+"境界は文書レベルに置き、小節より前で、リストや他のディレクティブの外に配置します。引数、オプション、本文は指定できません。二つ目の境界や入れ子の境界は診断を生成します。コード例内のリテラル "
+"``.. more::`` はそのままのテキストとして残ります。空の導入部も許可されます。再帰的な一覧を防ぐため、導入部内の "
+"toctree、postlist、todolist は抜粋から除かれます。"
+
+#: ../../howto/static-publishing.rst:121
+msgid ""
+"Without a boundary, the excerpt is the escaped plain-text ``:summary:`` "
+"in a paragraph, or empty when no summary is given. We keep ``:summary:`` "
+"independent of the rich introduction: feeds and description metadata "
+"continue to use that plain text. For a Tinkerer migration, we can retain "
+"``.. more::`` and replace site-specific browser code with native "
+"``postlist`` directives or collection templates. No runtime plugin or "
+"browser fetch is required."
+msgstr ""
+"境界がない場合、抜粋はエスケープされたプレーンテキストの ``:summary:`` "
+"を段落にしたものです。要約もなければ空になります。``:summary:`` "
+"は書式付きの導入部から独立しており、フィードと説明メタデータは引き続きそのプレーンテキストを使います。Tinkerer からの移行では ``.. "
+"more::`` を保持し、サイト固有のブラウザーコードを標準の ``postlist`` "
+"ディレクティブやコレクションテンプレートに置き換えられます。実行時プラグインやブラウザーによる取得は不要です。"
+
+#: ../../howto/static-publishing.rst:126
+msgid "A collection template can render the selected introduction directly:"
+msgstr "コレクションテンプレートは選択された導入部を直接レンダリングできます。"
+
+#: ../../howto/static-publishing.rst:137
+msgid ""
+"``post.excerpt_html`` is rendered HTML marked safe for the template "
+"engine. It follows the build's content policy, including restrictions on "
+"raw markup and unsafe URLs. Links, images and downloads are relative to "
+"the destination listing, including nested archives and pagination pages. "
+"Each listing occurrence has its own anchor namespace. Local references to "
+"included targets stay within the excerpt; references to targets or "
+"footnotes after the boundary link to the full article. We render a post's "
+"excerpt once per template occurrence; repeating the same "
+"``post.excerpt_html`` value in a template also repeats its HTML IDs."
+msgstr ""
+"``post.excerpt_html`` はテンプレートエンジン用に安全と指定されたレンダリング済み HTML "
+"です。生のマークアップや安全でない URL "
+"の制限を含め、ビルドのコンテンツポリシーに従います。リンク、画像、ダウンロードは、入れ子のアーカイブやページ分割先も含めて、表示先の一覧を基準とする相対 "
+"URL "
+"になります。一覧内の各抜粋には独立したアンカー名前空間があります。含まれる対象へのローカル参照は抜粋内に留まり、境界より後の対象や脚注への参照は記事全体へリンクします。記事の抜粋はテンプレートでの出現ごとに一度レンダリングされます。同じ "
+"``post.excerpt_html`` 値をテンプレート内で繰り返すと、その HTML ID も繰り返されます。"
+
+#: ../../howto/static-publishing.rst:144
 msgid "Enable site-wide discovery files in ``conf.toml``:"
 msgstr "``conf.toml`` でサイト全体のディスカバリーファイルを有効にします:"
 
-#: ../../howto/static-publishing.rst:91
+#: ../../howto/static-publishing.rst:153
 msgid ""
 "The HTML and dirhtml builders emit ``sitemap.xml``, ``rss.xml`` and "
 "``atom.xml`` using the configured ``base_url`` (including any hosting "
@@ -2679,13 +2755,13 @@ msgstr ""
 "``sitemap.xml``、``rss.xml``、``atom.xml`` "
 "を出力します。ディスカバリーファイルは実時間ではなくソースメタデータからタイムスタンプを導出するため、適格なソースとメタデータが変更されていない場合はまったく同じバイト列を生成します。"
 
-#: ../../howto/static-publishing.rst:93
+#: ../../howto/static-publishing.rst:155
 msgid ""
 "Generate taxonomy archives and paginated collections from the same "
 "``[site]`` table:"
 msgstr "同じ ``[site]`` テーブルからタクソノミーアーカイブとページネーション付きコレクションを生成します:"
 
-#: ../../howto/static-publishing.rst:110
+#: ../../howto/static-publishing.rst:172
 msgid ""
 "The collection starts at ``journal/index.html`` and continues at "
 "``journal/page/2/index.html`` with relative previous and next links. A "
@@ -2698,8 +2774,8 @@ msgid ""
 "number, page count and selected posts in ``collection``, with "
 "``collection.previous_url`` and ``collection.next_url`` set to relative "
 "URLs or ``None``. Each post entry provides ``title``, ``docname``, "
-"``date``, ``url``, ``summary`` and typed ``meta`` values, including its "
-"optional ``pdf_url``."
+"``date``, ``url``, ``summary``, ``excerpt_html`` and typed ``meta`` "
+"values, including its optional ``pdf_url``."
 msgstr ""
 "コレクションは ``journal/index.html`` から始まり、相対的な前後のリンクを伴って "
 "``journal/page/2/index.html`` へと続きます。``page_size`` を 0 にすると、コレクションは 1 "
@@ -2711,10 +2787,10 @@ msgstr ""
 "でオーバーライドが指定されない限り ``collection.html`` がデフォルトになります。テンプレートは ``collection`` "
 "内で現在のページ番号、総ページ数、選択された投稿を受け取り、``collection.previous_url`` と "
 "``collection.next_url`` には相対 URL または ``None`` が設定されます。各投稿エントリーは "
-"``title``、``docname``、``date``、``url``、``summary``、およびオプションの ``pdf_url`` "
-"を含む型付き ``meta`` 値を提供します。"
+"``title``、``docname``、``date``、``url``、``summary``, "
+"``excerpt_html``、およびオプションの ``pdf_url`` を含む型付き ``meta`` 値を提供します。"
 
-#: ../../howto/static-publishing.rst:112
+#: ../../howto/static-publishing.rst:174
 msgid ""
 "Taxonomy archives are written at paths such as ``tags/rust/index.html`` "
 "and ``year/2026/index.html``. Headings preserve the original label text "
@@ -2729,11 +2805,11 @@ msgstr ""
 "などのパスに出力されます。見出しは元のラベルテキストを保持しますが、ファイルシステムパスは大文字、句読点、非 ASCII "
 "バイトをエスケープするため、大文字小文字を区別しないファイルシステムでも別々のラベルが衝突することはありません。生成されたページが執筆者の作成したページや他の生成出力を上書きすることはありません。公開状態やコレクションの所属が減少した場合、出力コミットは不要になったアーカイブやページネーションページを自動的に削除します。"
 
-#: ../../howto/static-publishing.rst:114
+#: ../../howto/static-publishing.rst:176
 msgid "Layouts and standalone article PDFs"
 msgstr "レイアウトと独立した記事 PDF"
 
-#: ../../howto/static-publishing.rst:117
+#: ../../howto/static-publishing.rst:179
 msgid ""
 "Dated articles select ``article.html`` by default; other pages select "
 "``page.html``, which extends ``layout.html``. Any page can choose a "
@@ -2756,7 +2832,7 @@ msgstr ""
 "``page.reading_minutes``（CJK 文字を個別にカウントする ``myst_words_per_minute`` "
 "を使用して算出）も受け取ります。"
 
-#: ../../howto/static-publishing.rst:119
+#: ../../howto/static-publishing.rst:181
 msgid ""
 "Setting ``:pdf: article`` compiles a standalone PDF next to the article's "
 "HTML page (``notes.pdf`` for ``html``, ``notes/index.pdf`` for "
@@ -2776,32 +2852,32 @@ msgstr ""
 "ソースは、検査用に出力フォルダー内の ``sources/`` 下に保存されます。独立した記事 PDF は ``html`` および "
 "``dirhtml`` ビルダーによって生成されます。``singlehtml`` は単一ページ HTML の動作を維持します。"
 
-#: ../../howto/static-publishing.rst:121
+#: ../../howto/static-publishing.rst:183
 msgid "Starter sites"
 msgstr "スターターサイト"
 
-#: ../../howto/static-publishing.rst:124
+#: ../../howto/static-publishing.rst:186
 msgid "Initialize a complete starter project with one of three presets:"
 msgstr "3 つのプリセットのいずれかを使用して完全なスタータープロジェクトを初期化します:"
 
-#: ../../howto/static-publishing.rst:131
+#: ../../howto/static-publishing.rst:193
 msgid ""
 "``project`` starts with a custom landing page and a documentation guide."
 msgstr "``project`` は、カスタムランディングページとドキュメントガイドから始まります。"
 
-#: ../../howto/static-publishing.rst:132
+#: ../../howto/static-publishing.rst:194
 msgid ""
 "``journal`` starts with a dated article, chronological cards, feeds and "
 "taxonomy archives."
 msgstr "``journal`` は、日付付き記事、時系列カード、フィード、タクソノミーアーカイブから始まります。"
 
-#: ../../howto/static-publishing.rst:133
+#: ../../howto/static-publishing.rst:195
 msgid ""
 "``research`` starts with a paper containing an abstract and mathematics, "
 "and builds its standalone PDF."
 msgstr "``research`` は、要約と数式を含む論文から始まり、独立した PDF をビルドします。"
 
-#: ../../howto/static-publishing.rst:135
+#: ../../howto/static-publishing.rst:197
 msgid ""
 "All three presets copy editable HTML, CSS and Typst theme files and "
 "refuse to overwrite an existing destination. Update the example "
@@ -2811,7 +2887,7 @@ msgstr ""
 "テーマファイルをコピーし、既存の送信先の上書きを拒否します。フィードやサイトマップを公開する前に、``conf.toml`` のサンプル "
 "``base_url`` を更新してください。"
 
-#: ../../howto/static-publishing.rst:137
+#: ../../howto/static-publishing.rst:199
 msgid ""
 "When no mounts are configured, ``guidedog ssg build`` builds the single "
 "project into ``_build/site`` by default. ``--out DIR`` selects another "
@@ -2822,17 +2898,17 @@ msgstr ""
 "にビルドします。``--out DIR`` で別の出力先を選択し、``--now RFC3339`` "
 "で公開クロックを固定し、``--preview`` で保留されたドキュメントを含めます。"
 
-#: ../../howto/static-publishing.rst:139
+#: ../../howto/static-publishing.rst:201
 msgid "Mounted projects and editions"
 msgstr "マウントされたプロジェクトとエディション"
 
-#: ../../howto/static-publishing.rst:142
+#: ../../howto/static-publishing.rst:204
 msgid ""
 "Assemble multiple Guidedog projects and language editions into one "
 "website from a root ``conf.toml``:"
 msgstr "ルート ``conf.toml`` から複数の Guidedog プロジェクトと言語エディションを 1 つのウェブサイトにまとめます:"
 
-#: ../../howto/static-publishing.rst:172
+#: ../../howto/static-publishing.rst:234
 msgid ""
 "Every mount ``source`` must resolve beneath the site configuration's "
 "directory after following symbolic links. An edition uses gettext "
@@ -2851,7 +2927,7 @@ msgstr ""
 "ASCII "
 "の大文字小文字を無視して一意である必要がありますが、出力ファイルが互いに重複しない場合は、異なるマウント間で出力ディレクトリを共有できます。"
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid ""
 "Root conf.toml declares mounts, language editions, and shared assets; ssg "
 "build compiles each mount, verifies mount:// links and file collisions, "
@@ -2860,14 +2936,14 @@ msgstr ""
 "ルートの conf.toml でマウント、言語エディション、共有アセットを宣言します。ssg build "
 "は各マウントをコンパイルし、mount:// リンクとファイルの衝突を検証して、構築されたサイトを 1 つの世代としてコミットします。"
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid ""
 "Mounted builds stage every project and language edition under one clock "
 "and publish the complete website atomically."
 msgstr ""
 "マウントビルドは、単一のクロックの下ですべてのプロジェクトと言語エディションをステージングし、ウェブサイト全体をアトミックに公開します。"
 
-#: ../../howto/static-publishing.rst:198
+#: ../../howto/static-publishing.rst:260
 msgid ""
 "Supported mount builders are ``html``, ``dirhtml``, ``pdf`` and "
 "``discussion-pdf`` (which validates a discussion catalog under ``prefix`` "
@@ -2889,11 +2965,11 @@ msgstr ""
 "``editions.language`` を通じて言語を選択してください。ルート設定の空でない ``version`` と "
 "``release`` の値はすべてのマウントに伝播し、単一の公開クロックがビルド全体を制御します。"
 
-#: ../../howto/static-publishing.rst:200
+#: ../../howto/static-publishing.rst:262
 msgid "Link across mounts with the ``mount://`` scheme:"
 msgstr "``mount://`` スキームを使用してマウント間をリンクします:"
 
-#: ../../howto/static-publishing.rst:206
+#: ../../howto/static-publishing.rst:268
 msgid ""
 "The link resolves to the target mount's matching language edition, "
 "falling back to its default edition. HTML receives a relative URL "
@@ -2908,7 +2984,7 @@ msgstr ""
 "``mount://`` "
 "ターゲットが現在の世代に存在することが検証されるため、以前のビルドの古いファイルが新しく保留されたドキュメントへのリンクを満たすことはありません。いずれかのマウントが失敗するか、マウント間ターゲットが見つからない場合、以前公開されたウェブサイトはそのまま保持されます。"
 
-#: ../../howto/static-publishing.rst:208
+#: ../../howto/static-publishing.rst:270
 msgid ""
 "Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
 "cross-mount PDF download links; custom templates can inspect "
@@ -2923,11 +2999,11 @@ msgstr ""
 "書籍、議論カタログのビルドをこの形式で宣言しており、``cargo xtask build-site`` は ``guidedog ssg "
 "build`` に直接処理を委譲します。"
 
-#: ../../howto/static-publishing.rst:210
+#: ../../howto/static-publishing.rst:272
 msgid "Pinned themes"
 msgstr "ピン留めされたテーマ"
 
-#: ../../howto/static-publishing.rst:213
+#: ../../howto/static-publishing.rst:275
 msgid ""
 "Package a directory containing ``_templates/`` and ``_static/`` into a "
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
@@ -2935,7 +3011,7 @@ msgstr ""
 "``_templates/`` と ``_static/`` を含むディレクトリをポータブルな ``.gdt`` "
 "アーカイブにパッケージ化し、明示的な SHA-256 ピンを指定してインストールします:"
 
-#: ../../howto/static-publishing.rst:220
+#: ../../howto/static-publishing.rst:282
 msgid ""
 "Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
 "theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
@@ -2946,7 +3022,7 @@ msgstr ""
 "を設定して検証済みテーマを有効にします。プロジェクトの ``_templates/`` "
 "ファイルはインストールされたテーマより優先され、プロジェクトの静的ファイルは同じ相対パスを持つテーマの静的ファイルを上書きします。"
 
-#: ../../howto/static-publishing.rst:222
+#: ../../howto/static-publishing.rst:284
 msgid ""
 "A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
 "portable relative paths beneath ``_templates/`` and ``_static/`` to "
@@ -2960,7 +3036,7 @@ msgstr ""
 "ファイル、展開後データ 64 MiB、ディレクトリ階層 32 "
 "レベルに制限されており、パストラバーサル、大文字小文字のエイリアス、予約されたプラットフォーム名、シンボリックリンク、ファイルとディレクトリの重複、実行可能フックは拒否されます。"
 
-#: ../../howto/static-publishing.rst:224
+#: ../../howto/static-publishing.rst:286
 msgid ""
 "``guidedog-theme.lock`` records the source URL or path, the archive "
 "SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "

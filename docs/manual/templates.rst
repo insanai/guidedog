@@ -227,7 +227,7 @@ carry over.
    * - ``page``
      - ``page.meta`` contains ``date``, ``updated``, ``publish_at``, ``expires_at``, ``draft``, ``authors``, ``category``, ``tags``, ``series``, ``summary``, ``template``, ``pdf``, ``pdf_url`` and ``nosidebar``. Dated pages also provide ``page.word_count``, ``page.reading_minutes``, ``page.older``, ``page.newer`` and ``page.taxonomies``. Neighbors contain ``title``, ``url`` and ``date``, or are ``None`` at either end. Each enabled taxonomy maps to a list of ``name`` and ``url`` entries.
    * - ``collection``
-     - Generated archive pages provide ``collection.title``, ``collection.output``, ``collection.page`` (one-based), ``collection.pages``, ``collection.previous_url``, ``collection.next_url`` and ``collection.posts``. Each post contains ``title``, ``docname``, ``date``, ``url``, ``summary`` and ``meta``. Previous and next URLs are relative, or ``None`` at either end. Collection feeds use RSS and Atom.
+     - Generated archive pages provide ``collection.title``, ``collection.output``, ``collection.page`` (one-based), ``collection.pages``, ``collection.previous_url``, ``collection.next_url`` and ``collection.posts``. Each post contains ``title``, ``docname``, ``date``, ``url``, ``summary``, ``excerpt_html`` and ``meta``. Previous and next URLs are relative, or ``None`` at either end. Collection feeds use RSS and Atom.
    * - ``project``, ``version``, ``release``, ``copyright``, ``language``
      - The settings of the same names.
    * - ``html_title``, ``docstitle``

@@ -314,6 +314,14 @@ Its answer hashes the ordered selected docnames, titles and page metadata.
 A body edit therefore does not invalidate a summary-only collection.
 A membership, ordering, title or metadata change does.
 
+An author-defined ``.. more::`` boundary selects the rich introduction for ``postlist`` with ``:excerpts:`` and for collection templates through ``post.excerpt_html``.
+Without a boundary, both use the escaped plain-text summary.
+The normal link pass resolves the introduction in its article context, then relocates AST links and namespaces anchors for the destination listing.
+Targets and footnotes outside the selected AST link to the complete article.
+Full HTML and PDF articles discard only the marker.
+Rich listings hash the source object's digest conservatively, including changes after the boundary, and preserve source-scoped reference and asset lookups as ``LookupKind::Excerpt``.
+Feeds retain plain-text summaries and the ordinary publication eligibility gate applies before any excerpt is selected.
+
 Template dependency tracing happens inside ``gd-jinja::Environment::load_compiled``.
 It records cached requests, transitive inheritance, imports, dynamic includes and unsuccessful optional includes.
 We compare effective sources through the same confined loader before reusing a page.

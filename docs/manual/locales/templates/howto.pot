@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 15:27+0000\n"
+"POT-Creation-Date: 2026-10-17 18:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -1446,121 +1446,149 @@ msgid "Embed a chronological list of eligible articles in any page with ``.. pos
 msgstr ""
 
 #: ../../howto/static-publishing.rst:80
-msgid "``:path:`` matches docnames without a source suffix. Category, author and series filters match exactly, and every listed tag must match. Articles are ordered by publication instant (newest first by default), with docname breaking ties; ``:sort: date`` places the oldest first. ``:style: cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each article's plain-text summary."
+msgid "``:path:`` matches docnames without a source suffix. Category, author and series filters match exactly, and every listed tag must match. Articles are ordered by publication instant (newest first by default), with docname breaking ties; ``:sort: date`` places the oldest first. ``:style: cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each article's introduction or plain-text summary."
 msgstr ""
 
 #: ../../howto/static-publishing.rst:82
-msgid "Enable site-wide discovery files in ``conf.toml``:"
+msgid "Rich article introductions"
 msgstr ""
 
-#: ../../howto/static-publishing.rst:91
-msgid "The HTML and dirhtml builders emit ``sitemap.xml``, ``rss.xml`` and ``atom.xml`` using the configured ``base_url`` (including any hosting prefix). Discovery files derive their timestamps from source metadata rather than the wall clock, producing identical bytes when eligible sources and metadata are unchanged."
+#: ../../howto/static-publishing.rst:85
+msgid "We place one ``.. more::`` boundary after the introduction to select a rich excerpt:"
 msgstr ""
 
-#: ../../howto/static-publishing.rst:93
-msgid "Generate taxonomy archives and paginated collections from the same ``[site]`` table:"
-msgstr ""
-
-#: ../../howto/static-publishing.rst:110
-msgid "The collection starts at ``journal/index.html`` and continues at ``journal/page/2/index.html`` with relative previous and next links. A zero ``page_size`` keeps the collection on a single page. Each collection accepts ``path``, ``category``, ``tags``, ``author``, ``series`` and ``year`` filters. When ``feeds = true``, ``journal/rss.xml`` and ``journal/atom.xml`` contain the complete filtered selection across all pages. The collection layout defaults to ``collection.html`` unless ``template`` names an override. Templates receive the current page number, page count and selected posts in ``collection``, with ``collection.previous_url`` and ``collection.next_url`` set to relative URLs or ``None``. Each post entry provides ``title``, ``docname``, ``date``, ``url``, ``summary`` and typed ``meta`` values, including its optional ``pdf_url``."
-msgstr ""
-
-#: ../../howto/static-publishing.rst:112
-msgid "Taxonomy archives are written at paths such as ``tags/rust/index.html`` and ``year/2026/index.html``. Headings preserve the original label text while filesystem paths escape uppercase, punctuation and non-ASCII bytes so distinct labels never collide on case-insensitive filesystems. Generated pages never overwrite an author-written page or another generated output. When publication state or collection membership shrinks, the output commit removes obsolete archive and pagination pages automatically."
+#: ../../howto/static-publishing.rst:108
+msgid "The introduction retains paragraphs, inline markup, links, lists, images and other ordinary document nodes. Both ``postlist`` with ``:excerpts:`` and generated collection or taxonomy pages render it during the build. The full article retains everything on both sides of the boundary in HTML and PDF. The boundary emits no visible content. Drafts, scheduled articles and expired articles follow the same publication gate as other listings."
 msgstr ""
 
 #: ../../howto/static-publishing.rst:114
-msgid "Layouts and standalone article PDFs"
-msgstr ""
-
-#: ../../howto/static-publishing.rst:117
-msgid "Dated articles select ``article.html`` by default; other pages select ``page.html``, which extends ``layout.html``. Any page can choose a custom template in ``templates_path`` with ``:template: landing.html``, and ``:nosidebar: true`` hides the built-in navigation sidebar. Templates receive dates, authors, tags, category, series, summary, draft state and PDF links in ``page.meta``. Article templates also receive ``page.older`` and ``page.newer`` in publication order, ``page.taxonomies`` mapping each enabled taxonomy to ``{name, url}`` entries, and ``page.word_count`` and ``page.reading_minutes`` (computed using ``myst_words_per_minute``, counting CJK characters individually)."
-msgstr ""
-
-#: ../../howto/static-publishing.rst:119
-msgid "Setting ``:pdf: article`` compiles a standalone PDF next to the article's HTML page (``notes.pdf`` for ``html``, ``notes/index.pdf`` for ``dirhtml``). The built-in ``article.typ`` layout renders continuous prose with a title and author block, abstract, and running headers after page one. Override it by placing ``_templates/article.typ`` in the project with the same ``book`` function signature. The generated Typst source is saved under ``sources/`` in the output folder for inspection. Standalone article PDFs are produced by the ``html`` and ``dirhtml`` builders; ``singlehtml`` retains its single-page HTML behavior."
+msgid "We put the boundary at document level, before any subsection, outside lists and other directives. It accepts no argument, option or body. A second boundary or a nested boundary produces a diagnostic. Literal ``.. more::`` text inside a code example remains literal text. An empty introduction is allowed. Toctrees, postlists and todolists inside an introduction are omitted from its excerpt to prevent recursive listings."
 msgstr ""
 
 #: ../../howto/static-publishing.rst:121
-msgid "Starter sites"
+msgid "Without a boundary, the excerpt is the escaped plain-text ``:summary:`` in a paragraph, or empty when no summary is given. We keep ``:summary:`` independent of the rich introduction: feeds and description metadata continue to use that plain text. For a Tinkerer migration, we can retain ``.. more::`` and replace site-specific browser code with native ``postlist`` directives or collection templates. No runtime plugin or browser fetch is required."
 msgstr ""
 
-#: ../../howto/static-publishing.rst:124
-msgid "Initialize a complete starter project with one of three presets:"
-msgstr ""
-
-#: ../../howto/static-publishing.rst:131
-msgid "``project`` starts with a custom landing page and a documentation guide."
-msgstr ""
-
-#: ../../howto/static-publishing.rst:132
-msgid "``journal`` starts with a dated article, chronological cards, feeds and taxonomy archives."
-msgstr ""
-
-#: ../../howto/static-publishing.rst:133
-msgid "``research`` starts with a paper containing an abstract and mathematics, and builds its standalone PDF."
-msgstr ""
-
-#: ../../howto/static-publishing.rst:135
-msgid "All three presets copy editable HTML, CSS and Typst theme files and refuse to overwrite an existing destination. Update the example ``base_url`` in ``conf.toml`` before publishing feeds or sitemaps."
+#: ../../howto/static-publishing.rst:126
+msgid "A collection template can render the selected introduction directly:"
 msgstr ""
 
 #: ../../howto/static-publishing.rst:137
-msgid "When no mounts are configured, ``guidedog ssg build`` builds the single project into ``_build/site`` by default. ``--out DIR`` selects another destination, ``--now RFC3339`` fixes the publication clock, and ``--preview`` includes withheld documents."
+msgid "``post.excerpt_html`` is rendered HTML marked safe for the template engine. It follows the build's content policy, including restrictions on raw markup and unsafe URLs. Links, images and downloads are relative to the destination listing, including nested archives and pagination pages. Each listing occurrence has its own anchor namespace. Local references to included targets stay within the excerpt; references to targets or footnotes after the boundary link to the full article. We render a post's excerpt once per template occurrence; repeating the same ``post.excerpt_html`` value in a template also repeats its HTML IDs."
 msgstr ""
 
-#: ../../howto/static-publishing.rst:139
-msgid "Mounted projects and editions"
+#: ../../howto/static-publishing.rst:144
+msgid "Enable site-wide discovery files in ``conf.toml``:"
 msgstr ""
 
-#: ../../howto/static-publishing.rst:142
-msgid "Assemble multiple Guidedog projects and language editions into one website from a root ``conf.toml``:"
+#: ../../howto/static-publishing.rst:153
+msgid "The HTML and dirhtml builders emit ``sitemap.xml``, ``rss.xml`` and ``atom.xml`` using the configured ``base_url`` (including any hosting prefix). Discovery files derive their timestamps from source metadata rather than the wall clock, producing identical bytes when eligible sources and metadata are unchanged."
+msgstr ""
+
+#: ../../howto/static-publishing.rst:155
+msgid "Generate taxonomy archives and paginated collections from the same ``[site]`` table:"
 msgstr ""
 
 #: ../../howto/static-publishing.rst:172
+msgid "The collection starts at ``journal/index.html`` and continues at ``journal/page/2/index.html`` with relative previous and next links. A zero ``page_size`` keeps the collection on a single page. Each collection accepts ``path``, ``category``, ``tags``, ``author``, ``series`` and ``year`` filters. When ``feeds = true``, ``journal/rss.xml`` and ``journal/atom.xml`` contain the complete filtered selection across all pages. The collection layout defaults to ``collection.html`` unless ``template`` names an override. Templates receive the current page number, page count and selected posts in ``collection``, with ``collection.previous_url`` and ``collection.next_url`` set to relative URLs or ``None``. Each post entry provides ``title``, ``docname``, ``date``, ``url``, ``summary``, ``excerpt_html`` and typed ``meta`` values, including its optional ``pdf_url``."
+msgstr ""
+
+#: ../../howto/static-publishing.rst:174
+msgid "Taxonomy archives are written at paths such as ``tags/rust/index.html`` and ``year/2026/index.html``. Headings preserve the original label text while filesystem paths escape uppercase, punctuation and non-ASCII bytes so distinct labels never collide on case-insensitive filesystems. Generated pages never overwrite an author-written page or another generated output. When publication state or collection membership shrinks, the output commit removes obsolete archive and pagination pages automatically."
+msgstr ""
+
+#: ../../howto/static-publishing.rst:176
+msgid "Layouts and standalone article PDFs"
+msgstr ""
+
+#: ../../howto/static-publishing.rst:179
+msgid "Dated articles select ``article.html`` by default; other pages select ``page.html``, which extends ``layout.html``. Any page can choose a custom template in ``templates_path`` with ``:template: landing.html``, and ``:nosidebar: true`` hides the built-in navigation sidebar. Templates receive dates, authors, tags, category, series, summary, draft state and PDF links in ``page.meta``. Article templates also receive ``page.older`` and ``page.newer`` in publication order, ``page.taxonomies`` mapping each enabled taxonomy to ``{name, url}`` entries, and ``page.word_count`` and ``page.reading_minutes`` (computed using ``myst_words_per_minute``, counting CJK characters individually)."
+msgstr ""
+
+#: ../../howto/static-publishing.rst:181
+msgid "Setting ``:pdf: article`` compiles a standalone PDF next to the article's HTML page (``notes.pdf`` for ``html``, ``notes/index.pdf`` for ``dirhtml``). The built-in ``article.typ`` layout renders continuous prose with a title and author block, abstract, and running headers after page one. Override it by placing ``_templates/article.typ`` in the project with the same ``book`` function signature. The generated Typst source is saved under ``sources/`` in the output folder for inspection. Standalone article PDFs are produced by the ``html`` and ``dirhtml`` builders; ``singlehtml`` retains its single-page HTML behavior."
+msgstr ""
+
+#: ../../howto/static-publishing.rst:183
+msgid "Starter sites"
+msgstr ""
+
+#: ../../howto/static-publishing.rst:186
+msgid "Initialize a complete starter project with one of three presets:"
+msgstr ""
+
+#: ../../howto/static-publishing.rst:193
+msgid "``project`` starts with a custom landing page and a documentation guide."
+msgstr ""
+
+#: ../../howto/static-publishing.rst:194
+msgid "``journal`` starts with a dated article, chronological cards, feeds and taxonomy archives."
+msgstr ""
+
+#: ../../howto/static-publishing.rst:195
+msgid "``research`` starts with a paper containing an abstract and mathematics, and builds its standalone PDF."
+msgstr ""
+
+#: ../../howto/static-publishing.rst:197
+msgid "All three presets copy editable HTML, CSS and Typst theme files and refuse to overwrite an existing destination. Update the example ``base_url`` in ``conf.toml`` before publishing feeds or sitemaps."
+msgstr ""
+
+#: ../../howto/static-publishing.rst:199
+msgid "When no mounts are configured, ``guidedog ssg build`` builds the single project into ``_build/site`` by default. ``--out DIR`` selects another destination, ``--now RFC3339`` fixes the publication clock, and ``--preview`` includes withheld documents."
+msgstr ""
+
+#: ../../howto/static-publishing.rst:201
+msgid "Mounted projects and editions"
+msgstr ""
+
+#: ../../howto/static-publishing.rst:204
+msgid "Assemble multiple Guidedog projects and language editions into one website from a root ``conf.toml``:"
+msgstr ""
+
+#: ../../howto/static-publishing.rst:234
 msgid "Every mount ``source`` must resolve beneath the site configuration's directory after following symbolic links. An edition uses gettext catalogs in the mount's source project unless ``source`` names a separate translated project directory. Edition ``output`` is relative to the mount's ``output`` prefix; an empty string mounts at the root of that prefix. Mount names and edition output directories must be distinct ignoring ASCII case, though different mounts may share an output directory when their emitted files are disjoint."
 msgstr ""
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid "Root conf.toml declares mounts, language editions, and shared assets; ssg build compiles each mount, verifies mount:// links and file collisions, and commits the assembled site in one Generation."
 msgstr ""
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid "Mounted builds stage every project and language edition under one clock and publish the complete website atomically."
 msgstr ""
 
-#: ../../howto/static-publishing.rst:198
+#: ../../howto/static-publishing.rst:260
 msgid "Supported mount builders are ``html``, ``dirhtml``, ``pdf`` and ``discussion-pdf`` (which validates a discussion catalog under ``prefix`` and builds a PDF book for each active record). ``exclude`` filters a mount's relative output files with globs, and ``overrides`` passes ``-D`` setting assignments (with ``{language}``, ``{edition}``, ``{site_root}`` and ``{base_url}`` placeholders). Select languages through ``editions.language`` rather than a ``language`` override so routing and translated output stay aligned. Nonempty ``version`` and ``release`` values from the root configuration propagate to every mount, and one publication clock governs the entire build."
 msgstr ""
 
-#: ../../howto/static-publishing.rst:200
+#: ../../howto/static-publishing.rst:262
 msgid "Link across mounts with the ``mount://`` scheme:"
 msgstr ""
 
-#: ../../howto/static-publishing.rst:206
+#: ../../howto/static-publishing.rst:268
 msgid "The link resolves to the target mount's matching language edition, falling back to its default edition. HTML receives a relative URL (preserving any hosting prefix), while PDFs use the public ``base_url``. Assembly verifies that every ``mount://`` target exists in the current generation, so a stale file from an earlier build cannot satisfy a link to a newly withheld document. If any mount fails or a cross-mount target is missing, the previous published website remains intact."
 msgstr ""
 
-#: ../../howto/static-publishing.rst:208
+#: ../../howto/static-publishing.rst:270
 msgid "Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip cross-mount PDF download links; custom templates can inspect ``ssg_no_pdf`` to hide PDF controls. Guidedog's own ``docs/conf.toml`` declares the landing pages, seven manual HTML editions, seven manual PDF books and discussion catalog builds in this format, and ``cargo xtask build-site`` delegates directly to ``guidedog ssg build``."
 msgstr ""
 
-#: ../../howto/static-publishing.rst:210
+#: ../../howto/static-publishing.rst:272
 msgid "Pinned themes"
 msgstr ""
 
-#: ../../howto/static-publishing.rst:213
+#: ../../howto/static-publishing.rst:275
 msgid "Package a directory containing ``_templates/`` and ``_static/`` into a portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
 msgstr ""
 
-#: ../../howto/static-publishing.rst:220
+#: ../../howto/static-publishing.rst:282
 msgid "Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` files take precedence over the installed theme, and project static files override theme static files of the same relative path."
 msgstr ""
 
-#: ../../howto/static-publishing.rst:222
+#: ../../howto/static-publishing.rst:284
 msgid "A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping portable relative paths beneath ``_templates/`` and ``_static/`` to base64 file bytes. Archives are bounded to 4,096 files, 64 MiB of expanded data, and 32 directory levels; traversal, case aliases, reserved platform names, symlinks, file/directory overlaps and executable hooks are rejected."
 msgstr ""
 
-#: ../../howto/static-publishing.rst:224
+#: ../../howto/static-publishing.rst:286
 msgid "``guidedog-theme.lock`` records the source URL or path, the archive SHA-256 and the canonical tree SHA-256 (computed over a versioned domain tag and length-delimited sorted filenames and file bytes). Installation writes and syncs ``_themes/<TREE_SHA256>/`` and verifies both the directory and the encoded lock before atomically replacing ``guidedog-theme.lock``. Builds never fetch themes over the network; they verify the locked tree offline and fail closed if any file is missing, modified, added or replaced by a symlink."
 msgstr ""

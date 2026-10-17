@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 15:27+0000\n"
+"POT-Creation-Date: 2026-10-17 18:28+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -2546,18 +2546,88 @@ msgid ""
 "are ordered by publication instant (newest first by default), with "
 "docname breaking ties; ``:sort: date`` places the oldest first. ``:style: "
 "cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each "
-"article's plain-text summary."
+"article's introduction or plain-text summary."
 msgstr ""
 "``:path:`` "
 "匹配不带源文件后缀的文档名。分类（category）、作者（author）和系列（series）筛选器按精确匹配，且所列的每个标签（tag）都必须匹配。文章按发布时间点排序（默认最新在前），时间相同时按文档名排序；``:sort: "
 "date`` 将最早的文章排在前面。``:style: cards`` 会添加卡片布局 CSS 类，``:excerpts:`` "
-"则包含每篇文章的纯文本摘要。"
+"则包含每篇文章的引言或纯文本摘要。"
 
 #: ../../howto/static-publishing.rst:82
+msgid "Rich article introductions"
+msgstr "富文本文章引言"
+
+#: ../../howto/static-publishing.rst:85
+msgid ""
+"We place one ``.. more::`` boundary after the introduction to select a "
+"rich excerpt:"
+msgstr "我们在引言后放置一个 ``.. more::`` 分界标记，以选择富文本摘要："
+
+#: ../../howto/static-publishing.rst:108
+msgid ""
+"The introduction retains paragraphs, inline markup, links, lists, images "
+"and other ordinary document nodes. Both ``postlist`` with ``:excerpts:`` "
+"and generated collection or taxonomy pages render it during the build. "
+"The full article retains everything on both sides of the boundary in HTML "
+"and PDF. The boundary emits no visible content. Drafts, scheduled "
+"articles and expired articles follow the same publication gate as other "
+"listings."
+msgstr ""
+"引言保留段落、行内标记、链接、列表、图片和其他普通文档节点。带 ``:excerpts:`` 的 ``postlist`` "
+"以及生成的集合或分类页面都会在构建时渲染引言。完整文章的 HTML 和 PDF "
+"保留分界两侧的全部内容。标记本身不生成可见内容。草稿、定时文章和已过期文章遵循与其他列表相同的发布条件。"
+
+#: ../../howto/static-publishing.rst:114
+msgid ""
+"We put the boundary at document level, before any subsection, outside "
+"lists and other directives. It accepts no argument, option or body. A "
+"second boundary or a nested boundary produces a diagnostic. Literal ``.. "
+"more::`` text inside a code example remains literal text. An empty "
+"introduction is allowed. Toctrees, postlists and todolists inside an "
+"introduction are omitted from its excerpt to prevent recursive listings."
+msgstr ""
+"我们将标记放在文档顶层、任何子节之前，并置于列表和其他指令之外。它不接受参数、选项或正文。第二个标记或嵌套标记会产生诊断。代码示例中的字面文本 "
+"``.. more::`` 保持原样。允许空引言。引言内的 toctree、postlist 和 todolist 会从摘要中省略，以防止递归列表。"
+
+#: ../../howto/static-publishing.rst:121
+msgid ""
+"Without a boundary, the excerpt is the escaped plain-text ``:summary:`` "
+"in a paragraph, or empty when no summary is given. We keep ``:summary:`` "
+"independent of the rich introduction: feeds and description metadata "
+"continue to use that plain text. For a Tinkerer migration, we can retain "
+"``.. more::`` and replace site-specific browser code with native "
+"``postlist`` directives or collection templates. No runtime plugin or "
+"browser fetch is required."
+msgstr ""
+"没有分界标记时，摘要是经转义的纯文本 ``:summary:`` 段落；没有纯文本摘要时则为空。我们将 ``:summary:`` "
+"与富文本引言独立维护：订阅源和描述元数据继续使用该纯文本。迁移 Tinkerer 时，我们可以保留 ``.. more::``，并用原生 "
+"``postlist`` 指令或集合模板替换站点专用的浏览器代码。无需运行时插件或浏览器请求。"
+
+#: ../../howto/static-publishing.rst:126
+msgid "A collection template can render the selected introduction directly:"
+msgstr "集合模板可以直接渲染所选引言："
+
+#: ../../howto/static-publishing.rst:137
+msgid ""
+"``post.excerpt_html`` is rendered HTML marked safe for the template "
+"engine. It follows the build's content policy, including restrictions on "
+"raw markup and unsafe URLs. Links, images and downloads are relative to "
+"the destination listing, including nested archives and pagination pages. "
+"Each listing occurrence has its own anchor namespace. Local references to "
+"included targets stay within the excerpt; references to targets or "
+"footnotes after the boundary link to the full article. We render a post's "
+"excerpt once per template occurrence; repeating the same "
+"``post.excerpt_html`` value in a template also repeats its HTML IDs."
+msgstr ""
+"``post.excerpt_html`` 是已渲染的 HTML，并为模板引擎标记为安全内容。它遵循构建的内容策略，包括原始标记和不安全 URL "
+"的限制。链接、图片和下载路径相对于目标列表，包括嵌套归档和分页页面。每个列表中的摘要实例都有独立的锚点命名空间。指向摘要内目标的本地引用保留在摘要内；指向分界之后的目标或脚注的引用则链接到完整文章。我们为模板中的每个文章实例渲染一次摘要；在模板中重复同一个 "
+"``post.excerpt_html`` 值也会重复其 HTML ID。"
+
+#: ../../howto/static-publishing.rst:144
 msgid "Enable site-wide discovery files in ``conf.toml``:"
 msgstr "在 ``conf.toml`` 中启用全站发现文件："
 
-#: ../../howto/static-publishing.rst:91
+#: ../../howto/static-publishing.rst:153
 msgid ""
 "The HTML and dirhtml builders emit ``sitemap.xml``, ``rss.xml`` and "
 "``atom.xml`` using the configured ``base_url`` (including any hosting "
@@ -2569,13 +2639,13 @@ msgstr ""
 "``sitemap.xml``、``rss.xml`` 和 "
 "``atom.xml``。这些发现文件的时间戳源自源文件元数据而非实时系统时钟，因此在满足条件的源文件和元数据未改变时会生成完全相同的字节。"
 
-#: ../../howto/static-publishing.rst:93
+#: ../../howto/static-publishing.rst:155
 msgid ""
 "Generate taxonomy archives and paginated collections from the same "
 "``[site]`` table:"
 msgstr "在同一个 ``[site]`` 表中生成分类法归档页和分页集合："
 
-#: ../../howto/static-publishing.rst:110
+#: ../../howto/static-publishing.rst:172
 msgid ""
 "The collection starts at ``journal/index.html`` and continues at "
 "``journal/page/2/index.html`` with relative previous and next links. A "
@@ -2588,8 +2658,8 @@ msgid ""
 "number, page count and selected posts in ``collection``, with "
 "``collection.previous_url`` and ``collection.next_url`` set to relative "
 "URLs or ``None``. Each post entry provides ``title``, ``docname``, "
-"``date``, ``url``, ``summary`` and typed ``meta`` values, including its "
-"optional ``pdf_url``."
+"``date``, ``url``, ``summary``, ``excerpt_html`` and typed ``meta`` "
+"values, including its optional ``pdf_url``."
 msgstr ""
 "该集合从 ``journal/index.html`` 开始，后续分页位于 "
 "``journal/page/2/index.html``，并带有相对路径的上一页和下一页链接。将 ``page_size`` 设为 0 "
@@ -2599,10 +2669,10 @@ msgstr ""
 "会包含跨所有分页的完整筛选结果。除非通过 ``template`` 指定覆盖模板，集合布局默认使用 "
 "``collection.html``。模板通过 ``collection`` 接收当前页码、总页数和选中的文章列表，其中 "
 "``collection.previous_url`` 和 ``collection.next_url`` 为相对 URL 或 "
-"``None``。每个文章条目都提供 ``title``、``docname``、``date``、``url``、``summary`` "
-"以及带类型的 ``meta`` 值（包括可选的 ``pdf_url``）。"
+"``None``。每个文章条目都提供 ``title``、``docname``、``date``、``url``、``summary``, "
+"``excerpt_html`` 以及带类型的 ``meta`` 值（包括可选的 ``pdf_url``）。"
 
-#: ../../howto/static-publishing.rst:112
+#: ../../howto/static-publishing.rst:174
 msgid ""
 "Taxonomy archives are written at paths such as ``tags/rust/index.html`` "
 "and ``year/2026/index.html``. Headings preserve the original label text "
@@ -2617,11 +2687,11 @@ msgstr ""
 "的路径。页面标题保留原始标签文本，而文件系统路径会对大写字母、标点符号和非 ASCII "
 "字节进行转义，确保不同标签在大小写不敏感的文件系统上绝不会发生冲突。自动生成的页面绝不会覆盖作者手写的页面或其他生成输出。当发布状态改变或集合成员减少时，提交输出会自动清理过时的归档页和分页页面。"
 
-#: ../../howto/static-publishing.rst:114
+#: ../../howto/static-publishing.rst:176
 msgid "Layouts and standalone article PDFs"
 msgstr "页面布局与独立文章 PDF"
 
-#: ../../howto/static-publishing.rst:117
+#: ../../howto/static-publishing.rst:179
 msgid ""
 "Dated articles select ``article.html`` by default; other pages select "
 "``page.html``, which extends ``layout.html``. Any page can choose a "
@@ -2642,7 +2712,7 @@ msgstr ""
 "``page.word_count`` 和 ``page.reading_minutes``（按 "
 "``myst_words_per_minute`` 计算，中日韩字符逐字计入）。"
 
-#: ../../howto/static-publishing.rst:119
+#: ../../howto/static-publishing.rst:181
 msgid ""
 "Setting ``:pdf: article`` compiles a standalone PDF next to the article's "
 "HTML page (``notes.pdf`` for ``html``, ``notes/index.pdf`` for "
@@ -2660,32 +2730,32 @@ msgstr ""
 "``_templates/article.typ``。生成的 Typst 源文件保存在输出目录下的 ``sources/`` 中以供检查。独立文章 "
 "PDF 由 ``html`` 和 ``dirhtml`` 构建器生成；``singlehtml`` 仍保持单页 HTML 行为。"
 
-#: ../../howto/static-publishing.rst:121
+#: ../../howto/static-publishing.rst:183
 msgid "Starter sites"
 msgstr "初始站点预设"
 
-#: ../../howto/static-publishing.rst:124
+#: ../../howto/static-publishing.rst:186
 msgid "Initialize a complete starter project with one of three presets:"
 msgstr "使用三种预设之一初始化完整的初始项目："
 
-#: ../../howto/static-publishing.rst:131
+#: ../../howto/static-publishing.rst:193
 msgid ""
 "``project`` starts with a custom landing page and a documentation guide."
 msgstr "``project`` 提供自定义落地页和文档指南。"
 
-#: ../../howto/static-publishing.rst:132
+#: ../../howto/static-publishing.rst:194
 msgid ""
 "``journal`` starts with a dated article, chronological cards, feeds and "
 "taxonomy archives."
 msgstr "``journal`` 提供带日期的文章、按时间排列的卡片、订阅源和分类法归档页。"
 
-#: ../../howto/static-publishing.rst:133
+#: ../../howto/static-publishing.rst:195
 msgid ""
 "``research`` starts with a paper containing an abstract and mathematics, "
 "and builds its standalone PDF."
 msgstr "``research`` 提供包含摘要和数学公式的论文，并构建其独立 PDF。"
 
-#: ../../howto/static-publishing.rst:135
+#: ../../howto/static-publishing.rst:197
 msgid ""
 "All three presets copy editable HTML, CSS and Typst theme files and "
 "refuse to overwrite an existing destination. Update the example "
@@ -2694,7 +2764,7 @@ msgstr ""
 "这三种预设都会复制可编辑的 HTML、CSS 和 Typst 主题文件，并拒绝覆盖已存在的目标目录。在发布订阅源或 sitemap 之前，请先更新 "
 "``conf.toml`` 中的示例 ``base_url``。"
 
-#: ../../howto/static-publishing.rst:137
+#: ../../howto/static-publishing.rst:199
 msgid ""
 "When no mounts are configured, ``guidedog ssg build`` builds the single "
 "project into ``_build/site`` by default. ``--out DIR`` selects another "
@@ -2704,17 +2774,17 @@ msgstr ""
 "未配置挂载时，``guidedog ssg build`` 默认将单个项目构建到 ``_build/site``。``--out DIR`` "
 "可选择其他输出目录，``--now RFC3339`` 用于固定发布时钟，``--preview`` 则包含暂不发布的文档。"
 
-#: ../../howto/static-publishing.rst:139
+#: ../../howto/static-publishing.rst:201
 msgid "Mounted projects and editions"
 msgstr "挂载项目与多语言版本"
 
-#: ../../howto/static-publishing.rst:142
+#: ../../howto/static-publishing.rst:204
 msgid ""
 "Assemble multiple Guidedog projects and language editions into one "
 "website from a root ``conf.toml``:"
 msgstr "通过根 ``conf.toml`` 将多个 Guidedog 项目和多语言版本组装为一个网站："
 
-#: ../../howto/static-publishing.rst:172
+#: ../../howto/static-publishing.rst:234
 msgid ""
 "Every mount ``source`` must resolve beneath the site configuration's "
 "directory after following symbolic links. An edition uses gettext "
@@ -2730,7 +2800,7 @@ msgstr ""
 "``output`` 前缀；空字符串表示直接挂载在该前缀的根路径下。挂载名称和语言版本输出目录在忽略 ASCII "
 "大小写时必须互不相同，但只要输出文件互不重叠，不同的挂载项可以共用同一个输出目录。"
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid ""
 "Root conf.toml declares mounts, language editions, and shared assets; ssg "
 "build compiles each mount, verifies mount:// links and file collisions, "
@@ -2739,13 +2809,13 @@ msgstr ""
 "根 conf.toml 声明挂载项、语言版本和共享资源；ssg build 编译每个挂载项，校验 mount:// "
 "链接与文件冲突，并在一次版本切换中提交组装完成的站点。"
 
-#: ../../howto/static-publishing.rst:176
+#: ../../howto/static-publishing.rst:238
 msgid ""
 "Mounted builds stage every project and language edition under one clock "
 "and publish the complete website atomically."
 msgstr "挂载式构建在同一时钟下暂存所有项目和语言版本，并以原子方式发布整个网站。"
 
-#: ../../howto/static-publishing.rst:198
+#: ../../howto/static-publishing.rst:260
 msgid ""
 "Supported mount builders are ``html``, ``dirhtml``, ``pdf`` and "
 "``discussion-pdf`` (which validates a discussion catalog under ``prefix`` "
@@ -2765,11 +2835,11 @@ msgstr ""
 "``editions.language`` 而非 ``language`` 覆盖项来选择语言，以确保路由与翻译输出保持一致。根配置中非空的 "
 "``version`` 和 ``release`` 值会传播到每个挂载项，且整个构建过程由同一个发布时钟统管。"
 
-#: ../../howto/static-publishing.rst:200
+#: ../../howto/static-publishing.rst:262
 msgid "Link across mounts with the ``mount://`` scheme:"
 msgstr "使用 ``mount://`` 协议跨挂载链接："
 
-#: ../../howto/static-publishing.rst:206
+#: ../../howto/static-publishing.rst:268
 msgid ""
 "The link resolves to the target mount's matching language edition, "
 "falling back to its default edition. HTML receives a relative URL "
@@ -2783,7 +2853,7 @@ msgstr ""
 "则使用公开的 ``base_url``。组装阶段会校验每个 ``mount://`` "
 "目标在当前生成版本中确实存在，因此早期构建遗留的旧文件无法满足指向新撤回文档的链接。如果任何挂载项构建失败或跨挂载目标缺失，此前已发布的网站将保持完好。"
 
-#: ../../howto/static-publishing.rst:208
+#: ../../howto/static-publishing.rst:270
 msgid ""
 "Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
 "cross-mount PDF download links; custom templates can inspect "
@@ -2797,11 +2867,11 @@ msgstr ""
 "就以这种格式声明了落地页、七种语言的手册 HTML 版本、七种语言的手册 PDF 图书以及讨论目录构建，而 ``cargo xtask "
 "build-site`` 则直接委托给 ``guidedog ssg build`` 执行。"
 
-#: ../../howto/static-publishing.rst:210
+#: ../../howto/static-publishing.rst:272
 msgid "Pinned themes"
 msgstr "固定校验和的主题"
 
-#: ../../howto/static-publishing.rst:213
+#: ../../howto/static-publishing.rst:275
 msgid ""
 "Package a directory containing ``_templates/`` and ``_static/`` into a "
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
@@ -2809,7 +2879,7 @@ msgstr ""
 "将包含 ``_templates/`` 和 ``_static/`` 的目录打包为可移植的 ``.gdt`` 归档包，并使用显式指定的 "
 "SHA-256 固定值安装："
 
-#: ../../howto/static-publishing.rst:220
+#: ../../howto/static-publishing.rst:282
 msgid ""
 "Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
 "theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
@@ -2819,7 +2889,7 @@ msgstr ""
 "请将 ``HASH`` 替换为归档包的 SHA-256 摘要。在 ``[site]`` 中设置 ``theme = true`` "
 "即可启用已校验的主题。项目的 ``_templates/`` 文件优先于已安装的主题，项目的静态文件也会覆盖具有相同相对路径的主题静态文件。"
 
-#: ../../howto/static-publishing.rst:222
+#: ../../howto/static-publishing.rst:284
 msgid ""
 "A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
 "portable relative paths beneath ``_templates/`` and ``_static/`` to "
@@ -2832,7 +2902,7 @@ msgstr ""
 "``_static/`` 下的可移植相对路径映射为 base64 编码的文件字节。归档包上限为 4,096 个文件、展开后 64 MiB 数据和 "
 "32 层目录深度；路径穿越、大小写别名、平台保留名称、符号链接、文件与目录重叠以及可执行钩子均会被拒绝。"
 
-#: ../../howto/static-publishing.rst:224
+#: ../../howto/static-publishing.rst:286
 msgid ""
 "``guidedog-theme.lock`` records the source URL or path, the archive "
 "SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "

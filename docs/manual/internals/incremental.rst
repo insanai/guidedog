@@ -230,7 +230,13 @@ A generated collection page
 Fine-grained dependency tracking
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-HTML rendering records per-page verifying traces for templates, navigation and article collections. Editing an article's body changes its own document digest and rewrites its page and the full-text search index. Summary-only collections, feeds and sibling articles with unchanged neighbor metadata remain cached. ``postlist`` with ``:excerpts:`` reads explicit summaries, not article bodies.
+HTML rendering records per-page verifying traces for templates, navigation and article collections. Editing an article's body changes its own document digest and rewrites its page and the full-text search index. Summary-only collections, feeds and sibling articles with unchanged neighbor metadata remain cached. ``postlist`` with ``:excerpts:`` reads an explicit ``.. more::`` introduction when present, otherwise the plain-text summary.
+
+Rich excerpts conservatively depend on the source article's cached object, including reader dependencies such as included files and translations.
+A body edit in an article with an explicit boundary can therefore rebuild its listings even when the edit follows the boundary.
+``LookupKind::Excerpt`` wraps each rendered reference or asset lookup with the source docname.
+Verifying it uses the source context, so an image or reference in a nested article resolves identically on its article page and on a generated archive.
+Collection units retain those traces and asset ownership when reused.
 
 .. graphviz::
    :class: graphviz-adaptive

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -885,22 +885,27 @@ msgstr ""
 
 #: ../../topics/projects.rst:11
 msgid ""
-"Pipeline traverses discovery, source plugins, parallel reading, reference "
-"resolution, rendering, HTML plugins, and atomic staging."
+"Pipeline traverses discovery, source plugins, parallel reading, "
+"publication gate, reference resolution, rendering, HTML plugins, and "
+"atomic staging."
 msgstr ""
-"El flujo pasa por descubrimiento, plugins de fuente, lectura paralela, "
-"referencias, renderizado, hooks HTML y preparación de la salida antes del "
-"commit."
+"El flujo recorre el descubrimiento, los plugins de código fuente, la "
+"lectura en paralelo, el filtro de publicación, la resolución de "
+"referencias, el renderizado, los plugins HTML y la preparación atómica de "
+"la salida."
 
 #: ../../topics/projects.rst:11
-msgid "Guidedog's end-to-end documentation compilation pipeline."
-msgstr "Flujo completo de generación de documentación."
+msgid ""
+"Guidedog's end-to-end documentation and static site compilation pipeline."
+msgstr ""
+"Flujo completo de compilación de documentación y sitios estáticos de "
+"Guidedog."
 
-#: ../../topics/projects.rst:35
+#: ../../topics/projects.rst:36
 msgid "Documents and resources"
 msgstr "Documentos y recursos"
 
-#: ../../topics/projects.rst:38
+#: ../../topics/projects.rst:39
 msgid ""
 "A source suffix selects a reader. RST and project Markdown share the "
 "project graph. Images and downloads are resources. Guidedog copies "
@@ -913,39 +918,46 @@ msgstr ""
 "recursos del tema van en ``html_static_path``\\ . Las inclusiones deben "
 "permanecer en las fuentes o ``include_roots``\\ ."
 
-#: ../../topics/projects.rst:43
-msgid "Separate projects"
-msgstr "Proyectos separados"
+#: ../../topics/projects.rst:44
+msgid "Separate projects and mounted sites"
+msgstr "Proyectos separados y sitios montados"
 
-#: ../../topics/projects.rst:46
+#: ../../topics/projects.rst:47
 msgid ""
 "We keep a manual and design records in separate projects. They have "
 "different readers and different reading orders. Each project has its own "
 "configuration, templates, cache, and output. The Guidedog repository uses "
-"``docs/manual`` and ``docs/gds`` this way."
+"``docs/manual`` and ``docs/gds`` this way, and mounts them into the root "
+"website in ``docs/conf.toml`` via ``[[site.mounts]]``."
 msgstr ""
 "Mantenemos el manual y los registros de diseño en proyectos separados. "
 "Tienen lectores distintos y órdenes de lectura distintos. Cada proyecto "
 "tiene su propia configuración, plantillas, caché y salida. El repositorio "
-"de Guidedog usa ``docs/manual`` y ``docs/gds`` de esta forma."
+"de Guidedog usa ``docs/manual`` y ``docs/gds`` de esta forma, y los monta "
+"en el sitio web raíz en ``docs/conf.toml`` mediante ``[[site.mounts]]``."
 
-#: ../../topics/projects.rst:51
+#: ../../topics/projects.rst:49
 msgid "Incremental work"
 msgstr "Compilación incremental"
 
-#: ../../topics/projects.rst:54
+#: ../../topics/projects.rst:52
 msgid ""
 "Guidedog records the inputs and lookups used by each output. A changed "
 "source is reread. A changed dependency invalidates its users. A changed "
-"template can affect every page. An unchanged document may be loaded from "
-"its saved object."
+"template invalidates the pages whose template chain loaded it. An "
+"unchanged document may be loaded from its saved object, including "
+"withheld drafts and scheduled posts that become eligible on a later build "
+"clock."
 msgstr ""
-"Guidedog registra entradas y consultas de cada salida. Relee fuentes "
-"cambiadas, invalida usuarios de dependencias modificadas y puede afectar "
-"todas las páginas al cambiar plantillas. Los documentos intactos pueden "
-"cargarse del objeto guardado."
+"Guidedog registra las entradas y las consultas usadas por cada salida. "
+"Una fuente modificada se vuelve a leer. Una dependencia modificada "
+"invalida a sus usuarios. Una plantilla modificada invalida las páginas "
+"cuya cadena de plantillas la cargó. Un documento sin cambios puede "
+"cargarse desde su objeto guardado, incluidos los borradores retenidos y "
+"las entradas programadas que pasen a ser publicables en un reloj de "
+"compilación posterior."
 
-#: ../../topics/projects.rst:59
+#: ../../topics/projects.rst:54
 msgid ""
 "The cache is evidence about a previous build. It is not the source of "
 "truth. ``-E`` discards the saved environment for the next build. ``-a`` "
@@ -955,7 +967,7 @@ msgstr ""
 "descarta el entorno guardado para el siguiente build; ``-a`` escribe "
 "todas las salidas. Resuelven problemas distintos."
 
-#: ../../topics/projects.rst:63
+#: ../../topics/projects.rst:58
 msgid ""
 "\\text{reuse} = \\text{same inputs} \\land \\text{same lookups} \\land "
 "\\text{output exists}"
@@ -963,7 +975,7 @@ msgstr ""
 "\\text{reutilización} = \\text{mismas entradas} \\land \\text{mismas "
 "consultas} \\land \\text{salida existente}"
 
-#: ../../topics/projects.rst:67
+#: ../../topics/projects.rst:62
 msgid ""
 "An explicit timestamp in a template is also an input to the rendered "
 "page. A page that prints the current minute can change even when its "
@@ -975,11 +987,11 @@ msgstr ""
 "aunque su texto no cambie. Cuando necesitamos una hora de compilación "
 "fija, usamos ``SOURCE_DATE_EPOCH``."
 
-#: ../../topics/projects.rst:71
+#: ../../topics/projects.rst:66
 msgid "Publication"
 msgstr "Publicación"
 
-#: ../../topics/projects.rst:74
+#: ../../topics/projects.rst:69
 msgid ""
 "A build writes changes to a sibling staging directory. It completes that "
 "directory, flushes the files and records, and then switches generations. "
@@ -1039,7 +1051,7 @@ msgstr ""
 msgid "Three-region reading layout for HTML documentation."
 msgstr "Tres regiones de lectura en HTML."
 
-#: ../../topics/typography.rst:37
+#: ../../topics/typography.rst:36
 msgid ""
 "**Light is the default.** The theme control also offers dark and system "
 "modes. It remembers the choice on the same browser origin. System mode "
@@ -1053,7 +1065,7 @@ msgstr ""
 "funcionan sin JavaScript; tema y búsqueda avanzada son mejoras "
 "progresivas."
 
-#: ../../topics/typography.rst:43
+#: ../../topics/typography.rst:42
 msgid ""
 "English prose can use paragraph-wide **Knuth-Plass line breaking** in the "
 "browser. A small template script measures the loaded font, builds boxes, "
@@ -1068,7 +1080,7 @@ msgstr ""
 "patrones de Frank Liang propone divisiones silábicas. El sitio incluye "
 "los patrones TeX originales y las licencias."
 
-#: ../../topics/typography.rst:49
+#: ../../topics/typography.rst:48
 msgid ""
 "The enhancement preserves emphasis and the exact source text. It "
 "recalculates when the reading measure changes. Copying within one "
@@ -1081,7 +1093,7 @@ msgstr ""
 "divisiones visuales ni guiones añadidos. Al imprimir restaura el párrafo "
 "normal para paginarlo."
 
-#: ../../topics/typography.rst:54
+#: ../../topics/typography.rst:53
 msgid ""
 "Links, mathematics, code, interactive content, narrow measures, and other "
 "languages use native browser layout. So do paragraphs for which no "
@@ -1098,25 +1110,28 @@ msgstr ""
 "en cuenta el idioma, y ``text-wrap: pretty``. Esas propiedades de CSS por "
 "sí solas no garantizan la optimización de Knuth-Plass."
 
-#: ../../topics/typography.rst:60
+#: ../../topics/typography.rst:59
 msgid "The PDF page"
 msgstr "La página PDF"
 
-#: ../../topics/typography.rst:63
+#: ../../topics/typography.rst:62
 msgid ""
-"The book template uses the same Libertinus family as the web edition. It "
-"sets justified paragraphs, optimized line breaking, and language-aware "
-"hyphenation. It also controls spacing, running heads, captions, code "
-"blocks, and table rules. The font, hyphenation cost, and paragraph "
-"measure work together. A forced line break is rarely the right repair for "
-"a loose paragraph."
+"The book and standalone article templates use the same Libertinus family "
+"as the web edition. They set justified paragraphs, optimized line "
+"breaking, and language-aware hyphenation. They also control spacing, "
+"running heads, captions, code blocks, and table rules. The font, "
+"hyphenation cost, and paragraph measure work together. A forced line "
+"break is rarely the right repair for a loose paragraph."
 msgstr ""
-"El libro usa Libertinus, como la web, con justificación, cortes "
-"optimizados y guionado por idioma. Controla espacios, encabezados, "
-"leyendas, código y tablas. Fuente, coste de guionado y ancho actúan "
-"juntos. Forzar un salto rara vez arregla bien un párrafo flojo."
+"Las plantillas de libros y de artículos independientes usan la misma "
+"familia Libertinus que la edición web. Componen párrafos justificados, "
+"saltos de línea optimizados y división silábica adaptada al idioma. "
+"También controlan el espaciado, las cabeceras, las leyendas, los bloques "
+"de código y los filetes de las tablas. La fuente, el coste de guionado y "
+"el ancho del párrafo actúan conjuntamente. Un salto de línea forzado rara "
+"vez es la solución adecuada para un párrafo suelto."
 
-#: ../../topics/typography.rst:69
+#: ../../topics/typography.rst:64
 msgid ""
 "Typst optimizes the PDF paragraphs. The web enhancement optimizes "
 "eligible prose. They share the source, fonts, and visual hierarchy. Their "
@@ -1132,23 +1147,32 @@ msgstr ""
 "guionado del navegador "
 "<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_."
 
-#: ../../topics/typography.rst:74
+#: ../../topics/typography.rst:69
 msgid "Change the design"
 msgstr "Cambiar el diseño"
 
-#: ../../topics/typography.rst:77
+#: ../../topics/typography.rst:72
 msgid ""
 "Edit ``_static/editorial.css`` for the documentation project's visual "
 "tokens. Edit ``_templates/layout.html`` for structure. Edit "
-"``_templates/book.typ`` for the print layout. Keep reading order, focus "
-"indicators, labels, and sufficient contrast intact."
+"``_templates/theme.typ`` for the PDF palette and typography. Edit "
+"``_templates/book.typ`` for book structure, ``_templates/discussion.typ`` "
+"for discussion structure, and ``_templates/article.typ`` for standalone "
+"article PDFs. All three layouts wrap their content with the shared "
+"language-aware theme. Keep reading order, focus indicators, labels, and "
+"sufficient contrast intact."
 msgstr ""
-"Editamos ``_static/editorial.css`` para los tokens visuales del proyecto, "
-"``_templates/layout.html`` para la estructura y ``_templates/book.typ`` "
-"para la maquetación impresa. Mantenemos intactos el orden de lectura, los "
-"indicadores de foco, las etiquetas y un contraste suficiente."
+"Editamos ``_static/editorial.css`` para los tokens visuales del proyecto "
+"de documentación. Editamos ``_templates/layout.html`` para la estructura, "
+"``_templates/theme.typ`` para la paleta y la tipografía del PDF, "
+"``_templates/book.typ`` para la estructura del libro, "
+"``_templates/discussion.typ`` para la de las discusiones y "
+"``_templates/article.typ`` para los PDF de artículos independientes. Las "
+"tres maquetaciones envuelven su contenido con el tema compartido sensible "
+"al idioma. Mantenemos intactos el orden de lectura, los indicadores de "
+"foco, las etiquetas y un contraste suficiente."
 
-#: ../../topics/typography.rst:82
+#: ../../topics/typography.rst:74
 msgid ""
 "Build both targets after a change. Inspect a page with code, a table, a "
 "diagram, and an equation. An attractive cover is not proof that the rest "
@@ -1357,10 +1381,33 @@ msgstr ""
 "parámetros:"
 
 #: ../../topics/writing.rst:129
+msgid ""
+"When a field list precedes the document title, Guidedog reads recognized "
+"publication metadata fields into the page's metadata record and removes "
+"those fields from the rendered body. These fields include ``:date:``, "
+"``:updated:``, ``:publish-at:``, ``:expires-at:``, ``:draft:``, "
+"``:authors:``, ``:category:``, ``:tags:``, ``:series:``, ``:summary:``, "
+"``:template:`` and ``:pdf:``. MyST Markdown documents supply the same "
+"fields in leading YAML front matter. Field lists after the title remain "
+"ordinary content. See :doc:`../howto/static-publishing` for the full "
+"publication lifecycle."
+msgstr ""
+"Cuando una lista de campos precede al título del documento, Guidedog "
+"incorpora los campos reconocidos de metadatos de publicación al registro "
+"de metadatos de la página y los retira del cuerpo generado. Entre estos "
+"campos se incluyen ``:date:``, ``:updated:``, ``:publish-at:``, "
+"``:expires-at:``, ``:draft:``, ``:authors:``, ``:category:``, ``:tags:``, "
+"``:series:``, ``:summary:``, ``:template:`` y ``:pdf:``. Los documentos "
+"MyST Markdown proporcionan los mismos campos en un bloque inicial de YAML "
+"front matter. Las listas de campos situadas después del título siguen "
+"siendo contenido ordinario. Véase :doc:`../howto/static-publishing` para "
+"el ciclo de vida completo de publicación."
+
+#: ../../topics/writing.rst:131
 msgid "Code blocks"
 msgstr "Bloques de código"
 
-#: ../../topics/writing.rst:132
+#: ../../topics/writing.rst:134
 msgid ""
 "The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted "
 "code. Guidedog highlights 35 programming languages, Rust and Odin among "
@@ -1371,40 +1418,40 @@ msgstr ""
 "entre ellos Rust y Odin, con los nombres y estilos de Pygments y sin "
 "necesidad de Python:"
 
-#: ../../topics/writing.rst:147
+#: ../../topics/writing.rst:149
 msgid "Options for code blocks:"
 msgstr "Opciones de los bloques de código:"
 
-#: ../../topics/writing.rst:149
+#: ../../topics/writing.rst:151
 msgid "``:linenos:``: Displays line numbers beside the code."
 msgstr "``:linenos:``: Muestra números de línea junto al código."
 
-#: ../../topics/writing.rst:150
+#: ../../topics/writing.rst:152
 msgid "``:caption: Title``: Adds a caption above or below the code block."
 msgstr "``:caption: Title``: Añade un título encima o debajo del código."
 
-#: ../../topics/writing.rst:151
+#: ../../topics/writing.rst:153
 msgid "``:emphasize-lines: 1, 3-5``: Highlights specific lines."
 msgstr "``:emphasize-lines: 1, 3-5``: Resalta las líneas indicadas."
 
-#: ../../topics/writing.rst:152
+#: ../../topics/writing.rst:154
 msgid "``:name: label``: Assigns a reference target to the code block."
 msgstr "``:name: label``: Asigna un destino de referencia al bloque."
 
-#: ../../topics/writing.rst:154
+#: ../../topics/writing.rst:156
 msgid "To include source code from a file, we use ``literalinclude``:"
 msgstr ""
 "Para incluir código fuente desde un archivo, usamos ``literalinclude``:"
 
-#: ../../topics/writing.rst:163
+#: ../../topics/writing.rst:165
 msgid "Admonitions"
 msgstr "Avisos"
 
-#: ../../topics/writing.rst:166
+#: ../../topics/writing.rst:168
 msgid "Admonitions highlight notes, warnings, and supplementary advice:"
 msgstr "Los avisos destacan notas, advertencias y consejos adicionales:"
 
-#: ../../topics/writing.rst:188
+#: ../../topics/writing.rst:190
 msgid ""
 "Guidedog also supports ``danger``, ``error``, ``hint``, and "
 "``attention``. A generic admonition with a custom title uses the "
@@ -1414,40 +1461,40 @@ msgstr ""
 "Para un aviso genérico con título propio se usa la directiva "
 "``admonition``:"
 
-#: ../../topics/writing.rst:197
+#: ../../topics/writing.rst:199
 msgid "Tables"
 msgstr "Tablas"
 
-#: ../../topics/writing.rst:200
+#: ../../topics/writing.rst:202
 msgid ""
 "Guidedog supports simple tables, grid tables, and directive-based tables."
 msgstr ""
 "Guidedog admite tablas simples, de cuadrícula y basadas en directivas."
 
-#: ../../topics/writing.rst:202
+#: ../../topics/writing.rst:204
 msgid "Simple tables"
 msgstr "Tablas simples"
 
-#: ../../topics/writing.rst:205
+#: ../../topics/writing.rst:207
 msgid "Simple tables use horizontal dashes to define column spans:"
 msgstr "Las tablas simples delimitan las columnas con líneas horizontales:"
 
-#: ../../topics/writing.rst:217
+#: ../../topics/writing.rst:219
 msgid "Grid tables"
 msgstr "Tablas de cuadrícula"
 
-#: ../../topics/writing.rst:220
+#: ../../topics/writing.rst:222
 msgid ""
 "Grid tables allow complex multi-line cells and arbitrary column/row spans:"
 msgstr ""
 "Las tablas de cuadrícula permiten celdas multilínea y combinaciones de "
 "filas y columnas:"
 
-#: ../../topics/writing.rst:231
+#: ../../topics/writing.rst:233
 msgid "List tables"
 msgstr "Tablas de listas"
 
-#: ../../topics/writing.rst:234
+#: ../../topics/writing.rst:236
 msgid ""
 "The ``list-table`` directive creates tables from nested bullet lists. "
 "Wide tables stay easy to read and maintain in source control:"
@@ -1456,22 +1503,22 @@ msgstr ""
 "anidadas. Así, las tablas anchas siguen siendo fáciles de leer y de "
 "mantener en el control de versiones:"
 
-#: ../../topics/writing.rst:253
+#: ../../topics/writing.rst:255
 msgid "CSV tables"
 msgstr "Tablas CSV"
 
-#: ../../topics/writing.rst:256
+#: ../../topics/writing.rst:258
 msgid ""
 "The ``csv-table`` directive constructs a table from comma-separated "
 "values:"
 msgstr ""
 "``csv-table`` crea una tabla a partir de valores separados por comas:"
 
-#: ../../topics/writing.rst:267
+#: ../../topics/writing.rst:269
 msgid "Images and figures"
 msgstr "Imágenes y figuras"
 
-#: ../../topics/writing.rst:270
+#: ../../topics/writing.rst:272
 msgid ""
 "We include illustrations, screenshots, and diagrams with ``image`` and "
 "``figure``:"
@@ -1479,7 +1526,7 @@ msgstr ""
 "Incluimos ilustraciones, capturas de pantalla y diagramas con ``image`` y "
 "``figure``:"
 
-#: ../../topics/writing.rst:286
+#: ../../topics/writing.rst:288
 msgid ""
 "A ``figure`` wraps the image with a caption and an optional reference "
 "target."
@@ -1487,11 +1534,11 @@ msgstr ""
 "Una ``figure`` envuelve la imagen con un pie y, opcionalmente, un destino "
 "de referencia."
 
-#: ../../topics/writing.rst:288
+#: ../../topics/writing.rst:290
 msgid "Document structure with toctrees"
 msgstr "Estructurar documentos con toctrees"
 
-#: ../../topics/writing.rst:291
+#: ../../topics/writing.rst:293
 msgid ""
 "The ``toctree`` directive creates the document hierarchy, navigation "
 "menus, and reading order for both the HTML site and the PDF book:"
@@ -1499,28 +1546,28 @@ msgstr ""
 "``toctree`` define la jerarquía, los menús y el orden de lectura del "
 "sitio HTML y del libro PDF:"
 
-#: ../../topics/writing.rst:305
+#: ../../topics/writing.rst:307
 msgid "Common options for ``toctree``:"
 msgstr "Opciones habituales de ``toctree``:"
 
-#: ../../topics/writing.rst:307
+#: ../../topics/writing.rst:309
 msgid ""
 "``:maxdepth: N``: Depth of heading levels to include in the table of "
 "contents."
 msgstr "``:maxdepth: N``: Profundidad de títulos incluidos en el índice."
 
-#: ../../topics/writing.rst:308
+#: ../../topics/writing.rst:310
 msgid ""
 "``:caption: Title``: Category title displayed above the navigation "
 "entries."
 msgstr ""
 "``:caption: Title``: Título de categoría sobre las entradas de navegación."
 
-#: ../../topics/writing.rst:309
+#: ../../topics/writing.rst:311
 msgid "``:numbered:``: Adds section numbers to chapters and headings."
 msgstr "``:numbered:``: Numera capítulos y títulos."
 
-#: ../../topics/writing.rst:310
+#: ../../topics/writing.rst:312
 msgid ""
 "``:titlesonly:``: Lists only the top-level document titles, ignoring "
 "inner sections."
@@ -1528,7 +1575,7 @@ msgstr ""
 "``:titlesonly:``: Muestra solo los títulos de documento, sin sus "
 "secciones internas."
 
-#: ../../topics/writing.rst:311
+#: ../../topics/writing.rst:313
 msgid ""
 "``:hidden:``: Records the documents in the reading order without "
 "rendering an inline list."
@@ -1536,7 +1583,7 @@ msgstr ""
 "``:hidden:``: Registra el orden de lectura sin mostrar una lista en el "
 "texto."
 
-#: ../../topics/writing.rst:312
+#: ../../topics/writing.rst:314
 msgid ""
 "``:glob:``: Allows wildcard patterns to match documents (e.g. "
 "``tutorials/*``)."
@@ -1544,89 +1591,180 @@ msgstr ""
 "``:glob:``: Permite seleccionar documentos con patrones como "
 "``tutorials/*``."
 
-#: ../../topics/writing.rst:314
+#: ../../topics/writing.rst:316
+msgid "Dated post listings with ``postlist``"
+msgstr "Listados de entradas fechadas con ``postlist``"
+
+#: ../../topics/writing.rst:319
+msgid ""
+"For articles, release notes, and research logs that carry ``:date:`` "
+"metadata, the ``postlist`` directive renders a reverse-chronological list "
+"of matching published pages:"
+msgstr ""
+"Para los artículos, las notas de la versión y los cuadernos de "
+"investigación que incluyen el metadato ``:date:``, la directiva "
+"``postlist`` muestra una lista en orden cronológico inverso de las "
+"páginas publicadas que coinciden:"
+
+#: ../../topics/writing.rst:329
+msgid "Options for ``postlist``:"
+msgstr "Opciones de ``postlist``:"
+
+#: ../../topics/writing.rst:331
+msgid ""
+"Argument ``N``: Maximum number of matching posts to show; zero or an "
+"omitted argument includes every match."
+msgstr ""
+"Argumento ``N``: Número máximo de entradas coincidentes que se muestran; "
+"cero o ningún argumento incluye todas las coincidencias."
+
+#: ../../topics/writing.rst:332
+msgid ""
+"``:path: GLOB``: Restrict entries to document names matching the glob "
+"pattern."
+msgstr ""
+"``:path: GLOB``: Restringe las entradas a los nombres de documento que "
+"coincidan con el patrón glob."
+
+#: ../../topics/writing.rst:333
+msgid ""
+"``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: "
+"NAME``, ``:year: YYYY``: Filter entries by publication metadata."
+msgstr ""
+"``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: "
+"NAME``, ``:year: YYYY``: Filtra las entradas por metadatos de publicación."
+
+#: ../../topics/writing.rst:334
+msgid ""
+"``:sort: date`` or ``:sort: -date``: Order by oldest or newest "
+"publication instant, with docname breaking ties."
+msgstr ""
+"``:sort: date`` o ``:sort: -date``: Ordena por el instante de publicación "
+"más antiguo o más reciente, usando el nombre de documento para desempatar."
+
+#: ../../topics/writing.rst:335
+msgid ""
+"``:style: list`` or ``:style: cards``: Select the listing's CSS class."
+msgstr ""
+"``:style: list`` o ``:style: cards``: Selecciona la clase CSS del listado."
+
+#: ../../topics/writing.rst:336
+msgid ""
+"``:excerpts:``: Render each entry's explicit ``:summary:`` below its "
+"title and date."
+msgstr ""
+"``:excerpts:``: Muestra el resumen explícito ``:summary:`` de cada "
+"entrada debajo de su título y fecha."
+
+#: ../../topics/writing.rst:338
+msgid ""
+"See :doc:`../howto/static-publishing` for collections, feeds, and "
+"scheduled publishing."
+msgstr ""
+"Véase :doc:`../howto/static-publishing` para colecciones, canales de "
+"sindicación y publicación programada."
+
+#: ../../topics/writing.rst:340
 msgid "Cross-references and links"
 msgstr "Referencias cruzadas y enlaces"
 
-#: ../../topics/writing.rst:317
+#: ../../topics/writing.rst:343
 msgid ""
 "Explicit targets keep links stable, even when document files are renamed."
 msgstr ""
 "Los destinos explícitos mantienen estables los enlaces, aunque se cambie "
 "el nombre de los archivos de los documentos."
 
-#: ../../topics/writing.rst:319
+#: ../../topics/writing.rst:345
 msgid "Target labels and ``:ref:``"
 msgstr "Etiquetas de destino y ``:ref:``"
 
-#: ../../topics/writing.rst:322
+#: ../../topics/writing.rst:348
 msgid "We place a target label directly before a heading, table, or figure:"
 msgstr ""
 "Colocamos una etiqueta de destino justo antes de un título, una tabla o "
 "una figura:"
 
-#: ../../topics/writing.rst:333
+#: ../../topics/writing.rst:359
 msgid "Any document in the project can refer to this target:"
 msgstr ""
 "Cualquier documento del proyecto puede hacer referencia a este destino:"
 
-#: ../../topics/writing.rst:340
+#: ../../topics/writing.rst:366
 msgid "Document references with ``:doc:``"
 msgstr "Referencias a documentos con ``:doc:``"
 
-#: ../../topics/writing.rst:343
+#: ../../topics/writing.rst:369
 msgid "We link to another document by its path, without the file extension:"
 msgstr ""
 "Enlazamos a otro documento por su ruta, sin la extensión del archivo:"
 
-#: ../../topics/writing.rst:349
+#: ../../topics/writing.rst:375
 msgid "Glossary terms with ``:term:``"
 msgstr "Términos del glosario con ``:term:``"
 
-#: ../../topics/writing.rst:352
+#: ../../topics/writing.rst:378
 msgid "We define terms with the ``glossary`` directive:"
 msgstr "Definimos los términos con la directiva ``glossary``:"
 
-#: ../../topics/writing.rst:364
+#: ../../topics/writing.rst:390
 msgid "We link to a glossary term with the ``:term:`` role:"
 msgstr "Enlazamos a un término del glosario con el rol ``:term:``:"
 
-#: ../../topics/writing.rst:370
+#: ../../topics/writing.rst:396
 msgid "File downloads with ``:download:``"
 msgstr "Descargas con ``:download:``"
 
-#: ../../topics/writing.rst:373
+#: ../../topics/writing.rst:399
 msgid ""
 "This copies a file to the output's download directory and links to it:"
 msgstr ""
 "Esto copia un archivo al directorio de descargas de la salida y crea un "
 "enlace a él:"
 
-#: ../../topics/writing.rst:379
-msgid "External links"
-msgstr "Enlaces externos"
+#: ../../topics/writing.rst:405
+msgid "External and cross-mount links"
+msgstr "Enlaces externos y entre montajes"
 
-#: ../../topics/writing.rst:382
+#: ../../topics/writing.rst:408
 msgid "We link to external web addresses like this:"
 msgstr "Enlazamos a direcciones web externas así:"
 
-#: ../../topics/writing.rst:388
+#: ../../topics/writing.rst:414
+msgid ""
+"In a multi-project website assembled with ``[[site.mounts]]``, we can "
+"also link to a mounted sub-project by its mount name using "
+"``mount://<name>/<path>``:"
+msgstr ""
+"En un sitio web multiproyecto ensamblado con ``[[site.mounts]]``, también "
+"podemos enlazar a un subproyecto montado por su nombre de montaje "
+"mediante ``mount://<name>/<path>``:"
+
+#: ../../topics/writing.rst:420
+msgid ""
+"The mount names must match ``[[site.mounts]]`` and the paths must name "
+"current output files."
+msgstr ""
+"Los nombres de montaje deben coincidir con ``[[site.mounts]]`` y las "
+"rutas deben nombrar archivos de salida actuales."
+
+#: ../../topics/writing.rst:422
 msgid "Substitutions and includes"
 msgstr "Sustituciones e inclusiones"
 
-#: ../../topics/writing.rst:391
+#: ../../topics/writing.rst:425
 msgid "We define reusable phrases, symbols, or images:"
 msgstr "Definimos frases, símbolos o imágenes reutilizables:"
 
-#: ../../topics/writing.rst:400
+#: ../../topics/writing.rst:434
 msgid "To reuse reStructuredText content in several files:"
 msgstr "Para reutilizar contenido reStructuredText en varios archivos:"
 
-#: ../../topics/writing.rst:406
+#: ../../topics/writing.rst:440
 msgid "MyST Markdown authoring"
 msgstr "Redactar MyST Markdown"
 
-#: ../../topics/writing.rst:409
+#: ../../topics/writing.rst:443
 msgid ""
 "MyST Markdown supports the same directives and roles through fenced "
 "blocks:"

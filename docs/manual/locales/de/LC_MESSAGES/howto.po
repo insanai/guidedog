@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:14+0000\n"
+"POT-Creation-Date: 2026-10-17 14:33+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -586,17 +586,25 @@ msgid ""
 "while typesetting elegant, print-quality PDF books. This guide covers how "
 "to route content to specific output formats, declare custom domain "
 "directives, and invoke Typst typesetting functions."
-msgstr "Aus einem einzigen Quellbaum lassen sich reichhaltige, dynamische HTML-Seiten im Web veröffentlichen und zugleich elegante PDF-Bücher in Druckqualität setzen. Diese Anleitung beschreibt, wie Inhalte auf bestimmte Ausgabeformate geleitet, benutzerdefinierte Domänendirektiven deklariert und Typst-Satzfunktionen aufgerufen werden."
+msgstr ""
+"Aus einem einzigen Quellbaum lassen sich reichhaltige, dynamische "
+"HTML-Seiten im Web veröffentlichen und zugleich elegante PDF-Bücher in "
+"Druckqualität setzen. Diese Anleitung beschreibt, wie Inhalte auf "
+"bestimmte Ausgabeformate geleitet, benutzerdefinierte Domänendirektiven "
+"deklariert und Typst-Satzfunktionen aufgerufen werden."
 
 #: ../../howto/format-specific-content.rst:10
 msgid ""
 "Content passes through format guards and object type tables to produce "
 "tailored web and print deliverables."
-msgstr "Inhalte durchlaufen Formatschutzfilter und Objekttyptabellen, um maßgeschneiderte Web- und Druckausgaben zu erzeugen."
+msgstr ""
+"Inhalte durchlaufen Formatschutzfilter und Objekttyptabellen, um "
+"maßgeschneiderte Web- und Druckausgaben zu erzeugen."
 
 #: ../../howto/format-specific-content.rst:10
 msgid "Content routing and directive handling for HTML and PDF outputs."
-msgstr "Inhaltsweiterleitung und Direktivenbehandlung für HTML- und PDF-Ausgaben."
+msgstr ""
+"Inhaltsweiterleitung und Direktivenbehandlung für HTML- und PDF-Ausgaben."
 
 #: ../../howto/format-specific-content.rst:43
 msgid "1. Embed dynamic HTML and client scripts"
@@ -607,20 +615,28 @@ msgid ""
 "Use ``.. only:: html`` paired with a ``.. raw:: html`` block to inject "
 "web-specific markup, interactive calculators, or embedded audio/video "
 "components:"
-msgstr "Verwenden Sie ``.. only:: html`` zusammen mit einem ``.. raw:: html``-Block, um webspezifisches Markup, interaktive Rechner oder eingebettete Medien einzubinden:"
+msgstr ""
+"Verwenden Sie ``.. only:: html`` zusammen mit einem ``.. raw:: "
+"html``-Block, um webspezifisches Markup, interaktive Rechner oder "
+"eingebettete Medien einzubinden:"
 
 #: ../../howto/format-specific-content.rst:60
 msgid ""
 "To supply the supporting CSS and JavaScript: 1. Place your script and "
 "stylesheet in ``_static/`` (e.g. ``_static/interactive.js`` and "
 "``_static/interactive.css``). 2. Register them in ``conf.toml``:"
-msgstr "So binden Sie begleitendes CSS und JavaScript ein: 1. Legen Sie Skript und Stylesheet in ``_static/`` ab (z. B. ``_static/interactive.js`` und ``_static/interactive.css``). 2. Tragen Sie diese in ``conf.toml`` ein:"
+msgstr ""
+"So binden Sie begleitendes CSS und JavaScript ein: 1. Legen Sie Skript "
+"und Stylesheet in ``_static/`` ab (z. B. ``_static/interactive.js`` und "
+"``_static/interactive.css``). 2. Tragen Sie diese in ``conf.toml`` ein:"
 
 #: ../../howto/format-specific-content.rst:69
 msgid ""
 "The HTML builder copies these files into the build directory and injects "
 "``<link>`` and ``<script>`` tags into every generated page."
-msgstr "Der HTML-Builder kopiert diese Dateien in das Ausgabeverzeichnis und fügt ``<link>``- sowie ``<script>``-Tags in jede erzeugte Seite ein."
+msgstr ""
+"Der HTML-Builder kopiert diese Dateien in das Ausgabeverzeichnis und fügt "
+"``<link>``- sowie ``<script>``-Tags in jede erzeugte Seite ein."
 
 #: ../../howto/format-specific-content.rst:72
 msgid "2. Typeset custom Typst formatting for PDF"
@@ -629,101 +645,186 @@ msgstr "2. Eigene Typst-Formatierungen für PDF setzen"
 #: ../../howto/format-specific-content.rst:75
 msgid ""
 "To introduce vector shapes, tailored callout boxes, or custom typography "
-"for printed pages, wrap the markup in ``.. only:: typst or latex`` (or "
-"``.. only:: pdf``):"
-msgstr "Um Vektorformen, angepasste Hinweiskästen oder eigene Typografie für gedruckte Seiten einzuführen, umschließen Sie das Markup mit ``.. only:: typst or latex`` (oder ``.. only:: pdf``):"
+"for printed pages, wrap the markup in ``.. only:: pdf``:"
+msgstr ""
+"Um Vektorformen, angepasste Hinweiskästen oder eigene Typografie für "
+"gedruckte Seiten einzuführen, umschließen Sie das Markup mit ``.. only:: "
+"pdf``:"
 
 #: ../../howto/format-specific-content.rst:95
 msgid ""
 "Guidedog emits this block directly into the Typst document before "
 "invoking the Typst compiler. The HTML builder automatically omits this "
 "block without emitting warnings."
-msgstr "Guidedog gibt diesen Block direkt in das Typst-Dokument aus, bevor der Typst-Compiler aufgerufen wird. Der HTML-Builder lässt diesen Block ohne Warnung automatisch aus."
+msgstr ""
+"Guidedog gibt diesen Block direkt in das Typst-Dokument aus, bevor der "
+"Typst-Compiler aufgerufen wird. Der HTML-Builder lässt diesen Block ohne "
+"Warnung automatisch aus."
 
-#: ../../howto/format-specific-content.rst:98
+#: ../../howto/format-specific-content.rst:100
+msgid "**Why Typst and not LaTeX?**"
+msgstr "**Warum Typst und nicht LaTeX?**"
+
+#: ../../howto/format-specific-content.rst:102
+msgid ""
+"Guidedog generates PDF books through native `Typst "
+"<https://typst.app/>`_, not TeX or LaTeX. Raw blocks are passed verbatim "
+"to the target rendering engine:"
+msgstr ""
+"Guidedog erzeugt PDF-Bücher über natives `Typst <https://typst.app/>`_, "
+"nicht über TeX oder LaTeX. Raw-Blöcke werden unverändert an die "
+"jeweilige Rendering-Engine übergeben:"
+
+#: ../../howto/format-specific-content.rst:105
+msgid ""
+"**Raw Typst** (``.. raw:: typst``): Rendered directly by the Typst "
+"compiler in PDF builds."
+msgstr ""
+"**Natives Typst** (``.. raw:: typst``): Wird bei PDF-Builds direkt vom "
+"Typst-Compiler gerendert."
+
+#: ../../howto/format-specific-content.rst:106
+msgid ""
+"**Raw LaTeX** (``.. raw:: latex``): Not supported in PDF builds. Guidedog "
+"reports a ``typst.raw.foreign`` warning and omits the content because "
+"Typst cannot execute LaTeX commands."
+msgstr ""
+"**Natives LaTeX** (``.. raw:: latex``): Wird bei PDF-Builds nicht "
+"unterstützt. Guidedog gibt eine ``typst.raw.foreign``-Warnung aus und "
+"lässt den Inhalt aus, da Typst keine LaTeX-Befehle ausführen kann."
+
+#: ../../howto/format-specific-content.rst:108
+msgid ""
+"**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. Guidedog "
+"includes a built-in mathematical translator that converts standard LaTeX "
+"equation syntax into native Typst math expressions at compile time."
+msgstr ""
+"**LaTeX-Mathematik** (``.. math::`` und ``:math:``): Vollständig "
+"unterstützt. Guidedog enthält einen integrierten mathematischen "
+"Übersetzer, der die Standard-LaTeX-Gleichungssyntax zur Kompilierzeit in "
+"native Typst-Matheausdrücke umwandelt."
+
+#: ../../howto/format-specific-content.rst:111
+msgid ""
+"**The ``latex`` tag in ``.. only::``**: For backward compatibility with "
+"legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias for PDF "
+"builds in ``.. only::`` expressions. In native Guidedog projects, prefer "
+"``.. only:: pdf``."
+msgstr ""
+"**Das ``latex``-Tag in ``.. only::``**: Zur Abwärtskompatibilität mit "
+"bestehenden Sphinx-Projekten erkennt Guidedog ``latex`` in ``.. "
+"only::``-Ausdrücken als Alias für PDF-Builds an. In nativen "
+"Guidedog-Projekten ist ``.. only:: pdf`` zu bevorzugen."
+
+#: ../../howto/format-specific-content.rst:115
 msgid "3. Declare custom domain directives in conf.toml"
 msgstr "3. Eigene Domänendirektiven in conf.toml deklarieren"
 
-#: ../../howto/format-specific-content.rst:101
+#: ../../howto/format-specific-content.rst:118
 msgid ""
 "When you need custom structured blocks with signature parsing, "
 "cross-references, and index entries, declare them in ``conf.toml`` under "
 "``[[object_types]]``:"
-msgstr "Wenn Sie strukturierte Blöcke mit Signatur-Parsing, Querverweisen und Indexeinträgen benötigen, deklarieren Sie diese in ``conf.toml`` unter ``[[object_types]]``:"
+msgstr ""
+"Wenn Sie strukturierte Blöcke mit Signatur-Parsing, Querverweisen und "
+"Indexeinträgen benötigen, deklarieren Sie diese in ``conf.toml`` unter "
+"``[[object_types]]``:"
 
-#: ../../howto/format-specific-content.rst:113
+#: ../../howto/format-specific-content.rst:130
 msgid "Now authors can describe services across all documents:"
 msgstr "Jetzt können Autoren Dienste dokumentübergreifend beschreiben:"
 
-#: ../../howto/format-specific-content.rst:121
+#: ../../howto/format-specific-content.rst:138
 msgid ""
 "Other documents can link directly to this service using the declared role:"
-msgstr "Andere Dokumente können über die deklarierte Rolle direkt auf diesen Dienst verlinken:"
+msgstr ""
+"Andere Dokumente können über die deklarierte Rolle direkt auf diesen "
+"Dienst verlinken:"
 
-#: ../../howto/format-specific-content.rst:127
+#: ../../howto/format-specific-content.rst:144
 msgid ""
 "In HTML, Guidedog produces semantic definition tags (``<dl "
 "class=\"service\">``) with automatic anchor links. In PDF, Guidedog "
 "typesets a styled description entry and records an index entry in the "
 "book's index."
-msgstr "Im HTML erzeugt Guidedog semantische Definitions-Tags (``<dl class=\"service\">``) mit automatischen Anker-Links. Im PDF setzt Guidedog einen formatierten Beschreibungseintrag und erfasst einen Eintrag im Buchindex."
+msgstr ""
+"Im HTML erzeugt Guidedog semantische Definitions-Tags (``<dl "
+"class=\"service\">``) mit automatischen Anker-Links. Im PDF setzt "
+"Guidedog einen formatierten Beschreibungseintrag und erfasst einen "
+"Eintrag im Buchindex."
 
-#: ../../howto/format-specific-content.rst:130
+#: ../../howto/format-specific-content.rst:147
 msgid "4. Alias existing directives"
 msgstr "4. Aliase für vorhandene Direktiven anlegen"
 
-#: ../../howto/format-specific-content.rst:133
+#: ../../howto/format-specific-content.rst:150
 msgid ""
 "If you are migrating documentation or want friendlier names for built-in "
 "directives, declare aliases in ``[directive_aliases]`` in ``conf.toml``:"
-msgstr "Wenn Sie Dokumentation migrieren oder vertrautere Namen für integrierte Direktiven wünschen, deklarieren Sie Aliase in ``[directive_aliases]`` in ``conf.toml``:"
+msgstr ""
+"Wenn Sie Dokumentation migrieren oder vertrautere Namen für integrierte "
+"Direktiven wünschen, deklarieren Sie Aliase in ``[directive_aliases]`` in "
+"``conf.toml``:"
 
-#: ../../howto/format-specific-content.rst:142
+#: ../../howto/format-specific-content.rst:159
 msgid ""
 "Authors can then use ``.. callout::`` or ``.. endpoint::`` using the "
 "options and rules of the target directive."
-msgstr "Autoren können dann ``.. callout::`` oder ``.. endpoint::`` mit den Optionen und Regeln der Zieldirektive verwenden."
+msgstr ""
+"Autoren können dann ``.. callout::`` oder ``.. endpoint::`` mit den "
+"Optionen und Regeln der Zieldirektive verwenden."
 
-#: ../../howto/format-specific-content.rst:144
+#: ../../howto/format-specific-content.rst:161
 msgid "5. Call reusable Typst functions from templates"
 msgstr "5. Wiederverwendbare Typst-Funktionen aus Vorlagen aufrufen"
 
-#: ../../howto/format-specific-content.rst:147
+#: ../../howto/format-specific-content.rst:164
 msgid ""
 "Instead of writing verbose Typst code inline across multiple documents, "
 "define a reusable function in ``_templates/theme.typ``:"
-msgstr "Anstatt ausführlichen Typst-Code wiederholt in Dokumente einzubetten, definieren Sie eine wiederverwendbare Funktion in ``_templates/theme.typ``:"
+msgstr ""
+"Anstatt ausführlichen Typst-Code wiederholt in Dokumente einzubetten, "
+"definieren Sie eine wiederverwendbare Funktion in "
+"``_templates/theme.typ``:"
 
-#: ../../howto/format-specific-content.rst:164
+#: ../../howto/format-specific-content.rst:181
 msgid "Call it concisely from reStructuredText:"
 msgstr "Rufen Sie sie prägnant aus reStructuredText auf:"
 
-#: ../../howto/format-specific-content.rst:174
+#: ../../howto/format-specific-content.rst:191
 msgid "6. Advanced: Preprocessing directives with a build plugin"
-msgstr "6. Fortgeschritten: Direktiven mit einem Build-Plugin vorverarbeiten"
+msgstr ""
+"6. Fortgeschritten: Direktiven mit einem Build-Plugin vorverarbeiten"
 
-#: ../../howto/format-specific-content.rst:177
+#: ../../howto/format-specific-content.rst:194
 msgid ""
 "When you want to invent a completely custom directive syntax and expand "
 "it dynamically during build time, implement a ``gd_plugins::BuildPlugin`` "
 "in Rust."
-msgstr "Wenn Sie eine gänzlich eigene Direktiven-Syntax entwerfen und zur Build-Zeit dynamisch auflösen möchten, implementieren Sie ein ``gd_plugins::BuildPlugin`` in Rust."
+msgstr ""
+"Wenn Sie eine gänzlich eigene Direktiven-Syntax entwerfen und zur "
+"Build-Zeit dynamisch auflösen möchten, implementieren Sie ein "
+"``gd_plugins::BuildPlugin`` in Rust."
 
-#: ../../howto/format-specific-content.rst:180
+#: ../../howto/format-specific-content.rst:197
 msgid ""
 "The plugin implements ``process_source``, intercepting the raw document "
 "text before parsing:"
-msgstr "Das Plugin implementiert ``process_source`` und fängt den Dokumententext vor dem Parsen ab:"
+msgstr ""
+"Das Plugin implementiert ``process_source`` und fängt den Dokumententext "
+"vor dem Parsen ab:"
 
-#: ../../howto/format-specific-content.rst:214
+#: ../../howto/format-specific-content.rst:231
 msgid "Register the compiled plugin using:"
 msgstr "Registrieren Sie das kompilierte Plugin mit:"
 
-#: ../../howto/format-specific-content.rst:220
+#: ../../howto/format-specific-content.rst:237
 msgid ""
 "Guidedog verifies the plugin's SHA-256 fingerprint, starts it per build, "
 "and forwards document sources through its pipeline."
-msgstr "Guidedog prüft den SHA-256-Fingerabdruck des Plugins, startet es pro Build und leitet die Dokumentquellen durch seine Pipeline."
+msgstr ""
+"Guidedog prüft den SHA-256-Fingerabdruck des Plugins, startet es pro "
+"Build und leitet die Dokumentquellen durch seine Pipeline."
 
 #: ../../howto/github-pages.rst:1
 msgid "Publish to GitHub Pages"

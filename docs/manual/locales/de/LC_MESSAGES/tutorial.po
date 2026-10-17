@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:14+0000\n"
+"POT-Creation-Date: 2026-10-17 14:33+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -610,7 +610,11 @@ msgid ""
 "and a typeset PDF book. Web readers benefit from interactive calculators, "
 "search filters, and embedded widgets. Book readers benefit from balanced "
 "columns, callout cards, and vector typography."
-msgstr "Guidedog veröffentlicht denselben Dokumentenbaum als interaktive HTML-Website und als gesetztes PDF-Buch. Weblerner profitieren von interaktiven Rechnern, Suchfiltern und eingebetteten Widgets; Buchleser genießen ausgewogene Spalten, Hinweiskarten und Vektortypografie."
+msgstr ""
+"Guidedog veröffentlicht denselben Dokumentenbaum als interaktive "
+"HTML-Website und als gesetztes PDF-Buch. Weblerner profitieren von "
+"interaktiven Rechnern, Suchfiltern und eingebetteten Widgets; Buchleser "
+"genießen ausgewogene Spalten, Hinweiskarten und Vektortypografie."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:8
 msgid ""
@@ -618,19 +622,28 @@ msgid ""
 "prose. We declare a custom semantic directive in ``conf.toml``, add an "
 "interactive calculator for web readers, and design a print-quality "
 "callout block for the PDF book."
-msgstr "Dieses Tutorial erstellt ein Projekt, das beides demonstriert, ohne Erklärungstexte zu duplizieren. Wir deklarieren eine semantische Direktive in ``conf.toml``, fügen einen interaktiven Rechner für Web-Leser hinzu und gestalten einen druckreifen Hinweiskasten für das PDF-Buch."
+msgstr ""
+"Dieses Tutorial erstellt ein Projekt, das beides demonstriert, ohne "
+"Erklärungstexte zu duplizieren. Wir deklarieren eine semantische "
+"Direktive in ``conf.toml``, fügen einen interaktiven Rechner für "
+"Web-Leser hinzu und gestalten einen druckreifen Hinweiskasten für das "
+"PDF-Buch."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:14
 msgid ""
 "One source document evaluates object types for both outputs, sending raw "
 "HTML to the web and raw Typst to the PDF book."
-msgstr "Ein einziges Quelldokument wertet Objekttypen für beide Ausgaben aus und leitet rohes HTML an das Web sowie rohes Typst an das PDF-Buch weiter."
+msgstr ""
+"Ein einziges Quelldokument wertet Objekttypen für beide Ausgaben aus und "
+"leitet rohes HTML an das Web sowie rohes Typst an das PDF-Buch weiter."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:14
 msgid ""
 "Format-gated evaluation and custom directives across HTML and PDF "
 "pipelines."
-msgstr "Formatabhängige Auswertung und benutzerdefinierte Direktiven in HTML- und PDF-Pipelines."
+msgstr ""
+"Formatabhängige Auswertung und benutzerdefinierte Direktiven in HTML- und "
+"PDF-Pipelines."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:56
 #: ../../tutorial/first-project.rst:54
@@ -655,12 +668,19 @@ msgid ""
 "Python or C++) do not cover. Rather than requiring a Python runtime or "
 "custom extension compiler, Guidedog lets us declare custom directives and "
 "roles in ``conf.toml``."
-msgstr "Ein Dokumentationsprojekt benötigt häufig strukturierte Entitäten, die Standarddomänen (wie Python oder C++) nicht abdecken. Anstatt eine Python-Laufzeitumgebung oder Compiler zu erfordern, erlaubt Guidedog die Deklaration benutzerdefinierter Direktiven und Rollen direkt in ``conf.toml``."
+msgstr ""
+"Ein Dokumentationsprojekt benötigt häufig strukturierte Entitäten, die "
+"Standarddomänen (wie Python oder C++) nicht abdecken. Anstatt eine "
+"Python-Laufzeitumgebung oder Compiler zu erfordern, erlaubt Guidedog die "
+"Deklaration benutzerdefinierter Direktiven und Rollen direkt in "
+"``conf.toml``."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:78
 msgid ""
 "Open ``conf.toml`` and append the declaration for a ``metric`` directive:"
-msgstr "Öffnen Sie ``conf.toml`` und fügen Sie die Deklaration für eine ``metric``-Direktive an:"
+msgstr ""
+"Öffnen Sie ``conf.toml`` und fügen Sie die Deklaration für eine "
+"``metric``-Direktive an:"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:89
 msgid ""
@@ -671,7 +691,14 @@ msgid ""
 "(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
 "semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
 "typesets a styled description entry with back-references in the appendix."
-msgstr "Diese einzelne Deklaration begründet einen vollständigen Syntaxvertrag: * ``.. metric:: p99_latency (milliseconds)`` beschreibt die Metrik. * ``:metric:`p99_latency``` verlinkt aus jedem Dokument auf die Definition. * Die Indextabelle erzeugt automatisch einen Paareintrag (``p99_latency; cluster telemetry``). * Im HTML erzeugt Guidedog eine semantische Definitionsliste mit CSS-Ankerhaken. * Im PDF setzt Guidedog einen formatierten Beschreibungseintrag mit Rückverweisen im Anhang."
+msgstr ""
+"Diese einzelne Deklaration begründet einen vollständigen Syntaxvertrag: * "
+"``.. metric:: p99_latency (milliseconds)`` beschreibt die Metrik. * "
+"``:metric:`p99_latency``` verlinkt aus jedem Dokument auf die Definition. "
+"* Die Indextabelle erzeugt automatisch einen Paareintrag (``p99_latency; "
+"cluster telemetry``). * Im HTML erzeugt Guidedog eine semantische "
+"Definitionsliste mit CSS-Ankerhaken. * Im PDF setzt Guidedog einen "
+"formatierten Beschreibungseintrag mit Rückverweisen im Anhang."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:96
 msgid "3. Author the document with format guards"
@@ -681,58 +708,90 @@ msgstr "3. Dokument mit Formatschutz verfassen"
 msgid "Replace the contents of ``index.rst`` with the following document:"
 msgstr "Ersetzen Sie den Inhalt von ``index.rst`` durch folgendes Dokument:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:144
-#| msgid "7. Build and inspect both forms"
+#: ../../tutorial/dynamic-content-and-directives.rst:146
+msgid ""
+"**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using native "
+"Typst. Always write ``.. raw:: typst`` for print callouts and vector "
+"blocks. Guidedog does not execute verbatim ``.. raw:: latex`` (which is "
+"omitted with a diagnostic). However, standard LaTeX math written in ``.. "
+"math::`` and ``:math:`` is automatically translated into Typst formulas "
+"by Guidedog's built-in math compiler."
+msgstr ""
+"**Typst und LaTeX in Guidedog**: Guidedog kompiliert PDF-Bücher mit "
+"nativem Typst. Schreiben Sie für gedruckte Hinweiskästen und "
+"Vektorblöcke stets ``.. raw:: typst``. Guidedog führt wörtliches ``.. "
+"raw:: latex`` nicht aus (dieses wird mit einer Diagnosemeldung "
+"ausgelassen). Standardmäßige LaTeX-Mathematik in ``.. math::`` und "
+"``:math:`` wird jedoch vom integrierten Mathe-Compiler von Guidedog "
+"automatisch in Typst-Formeln übersetzt."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:152
 msgid "4. Build and inspect both publications"
 msgstr "4. Beide Publikationen erstellen und prüfen"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:147
+#: ../../tutorial/dynamic-content-and-directives.rst:155
 msgid "Build the HTML website:"
 msgstr "Erstellen Sie die HTML-Website:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:153
+#: ../../tutorial/dynamic-content-and-directives.rst:161
 msgid ""
 "Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. "
 "Notice that: * The ``:metric:`p99_latency``` reference resolves directly "
 "to the definition anchor. * The interactive calculator slider is rendered "
 "and active in the web DOM. * The PDF callout block is omitted entirely, "
 "without emitting warnings."
-msgstr "Öffnen Sie ``_build/html/index.html`` im Browser oder führen Sie ``guidedog serve`` aus. Beachten Sie: * Die Referenz ``:metric:`p99_latency``` löst direkt auf den Definitionsanker auf. * Der interaktive Rechnerschieberegler ist im Web-DOM aktiv. * Der PDF-Hinweiskasten wird ohne Warnungen vollständig weggelassen."
+msgstr ""
+"Öffnen Sie ``_build/html/index.html`` im Browser oder führen Sie "
+"``guidedog serve`` aus. Beachten Sie: * Die Referenz "
+"``:metric:`p99_latency``` löst direkt auf den Definitionsanker auf. * Der "
+"interaktive Rechnerschieberegler ist im Web-DOM aktiv. * Der "
+"PDF-Hinweiskasten wird ohne Warnungen vollständig weggelassen."
 
-#: ../../tutorial/dynamic-content-and-directives.rst:158
-#| msgid "6. Wrap the PDF book"
+#: ../../tutorial/dynamic-content-and-directives.rst:166
 msgid "Now build the PDF book:"
 msgstr "Erstellen Sie nun das PDF-Buch:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:164
+#: ../../tutorial/dynamic-content-and-directives.rst:172
 msgid ""
 "Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
 "``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are "
 "completely absent. * The Typst ``#rect(...)`` vector box is typeset with "
 "native margins, borders, and typography. * The appendix includes an index "
 "entry under ``p99_latency``."
-msgstr "Öffnen Sie ``_build/pdf/telemetry-en.pdf`` (oder die Prüfquelle unter ``_build/pdf/book-en.typ``). Beachten Sie: * Schieberegler und Roh-HTML fehlen vollständig. * Der Typst-Vektorkasten ``#rect(...)`` wird mit nativen Rändern und nativer Typografie gesetzt. * Der Anhang enthält einen Indexeintrag unter ``p99_latency``."
+msgstr ""
+"Öffnen Sie ``_build/pdf/telemetry-en.pdf`` (oder die Prüfquelle unter "
+"``_build/pdf/book-en.typ``). Beachten Sie: * Schieberegler und Roh-HTML "
+"fehlen vollständig. * Der Typst-Vektorkasten ``#rect(...)`` wird mit "
+"nativen Rändern und nativer Typografie gesetzt. * Der Anhang enthält "
+"einen Indexeintrag unter ``p99_latency``."
 
-#: ../../tutorial/dynamic-content-and-directives.rst:169
+#: ../../tutorial/dynamic-content-and-directives.rst:177
 msgid "5. Custom Typst functions in theme templates"
 msgstr "5. Eigene Typst-Funktionen in Theme-Vorlagen"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:172
+#: ../../tutorial/dynamic-content-and-directives.rst:180
 msgid ""
 "When you have formatting patterns used across many chapters, define a "
 "reusable Typst function in ``_templates/theme.typ``:"
-msgstr "Wenn Formatierungsmuster kapitelübergreifend wiederkehren, definieren Sie eine wiederverwendbare Typst-Funktion in ``_templates/theme.typ``:"
+msgstr ""
+"Wenn Formatierungsmuster kapitelübergreifend wiederkehren, definieren Sie "
+"eine wiederverwendbare Typst-Funktion in ``_templates/theme.typ``:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:185
+#: ../../tutorial/dynamic-content-and-directives.rst:193
 msgid "In any document, invoke the function inside a raw Typst block:"
-msgstr "Rufen Sie die Funktion in einem beliebigen Dokument innerhalb eines Typst-Raw-Blocks auf:"
+msgstr ""
+"Rufen Sie die Funktion in einem beliebigen Dokument innerhalb eines "
+"Typst-Raw-Blocks auf:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:195
+#: ../../tutorial/dynamic-content-and-directives.rst:203
 msgid ""
 "This keeps your reStructuredText prose focused on documentation while "
 "granting full access to Typst's typesetting engine for printed "
 "publications."
-msgstr "So bleibt Ihr reStructuredText-Fließtext auf die Dokumentation fokussiert, während Druckpublikationen vollen Zugriff auf das Typst-Satzsystem erhalten."
+msgstr ""
+"So bleibt Ihr reStructuredText-Fließtext auf die Dokumentation "
+"fokussiert, während Druckpublikationen vollen Zugriff auf das "
+"Typst-Satzsystem erhalten."
 
 #: ../../tutorial/first-project.rst:1
 msgid "Our first project"

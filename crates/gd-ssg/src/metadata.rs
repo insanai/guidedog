@@ -41,9 +41,12 @@ pub(crate) fn replace_fields(
     changes: &[(&str, Option<&str>)],
 ) -> Result<String, Problem> {
     let (bom, text) = source.strip_prefix('\u{feff}').map_or(("", source), |s| ("\u{feff}", s));
+    let newline = match text.find('\n') {
+        Some(index) if text[..index].ends_with('\r') => "\r\n",
+        _ => "\n",
+    };
     let prefix = if markdown { 0 } else { blank_prefix(text) };
     let (padding, text) = text.split_at(prefix);
-    let newline = if text.contains("\r\n") { "\r\n" } else { "\n" };
     let lines: Vec<_> = text.split_inclusive('\n').collect();
     let yaml = markdown && lines.first().is_some_and(|l| l.trim_end() == "---");
     let end = if yaml {
@@ -175,5 +178,19 @@ mod tests {
             replace_fields(":draft: true\n:draft: false\n\n", false, &[("draft", Some("false"))])
                 .is_err()
         );
+    }
+
+    #[test]
+    fn inserted_fields_use_the_first_line_ending_without_changing_the_body() {
+        for (source, markdown, expected) in [
+            ("Title\n=====\n\nExample\r\n", false, ":draft: true\n\n"),
+            ("# Title\n\nExample\r\n", true, "---\ndraft: true\n---\n\n"),
+            ("\r\nTitle\n=====\n", false, "\r\n:draft: true\r\n\r\n"),
+            ("Title", false, ":draft: true\n\n"),
+        ] {
+            let edited = replace_fields(source, markdown, &[("draft", Some("true"))]).unwrap();
+            assert!(edited.starts_with(expected), "{edited:?}");
+            assert!(edited.ends_with(source.trim_start_matches(['\r', '\n'])));
+        }
     }
 }

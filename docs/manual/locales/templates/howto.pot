@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:14+0000\n"
+"POT-Creation-Date: 2026-10-17 14:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -277,74 +277,98 @@ msgid "2. Typeset custom Typst formatting for PDF"
 msgstr ""
 
 #: ../../howto/format-specific-content.rst:75
-msgid "To introduce vector shapes, tailored callout boxes, or custom typography for printed pages, wrap the markup in ``.. only:: typst or latex`` (or ``.. only:: pdf``):"
+msgid "To introduce vector shapes, tailored callout boxes, or custom typography for printed pages, wrap the markup in ``.. only:: pdf``:"
 msgstr ""
 
 #: ../../howto/format-specific-content.rst:95
 msgid "Guidedog emits this block directly into the Typst document before invoking the Typst compiler. The HTML builder automatically omits this block without emitting warnings."
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:98
+#: ../../howto/format-specific-content.rst:100
+msgid "**Why Typst and not LaTeX?**"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:102
+msgid "Guidedog generates PDF books through native `Typst <https://typst.app/>`_, not TeX or LaTeX. Raw blocks are passed verbatim to the target rendering engine:"
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:105
+msgid "**Raw Typst** (``.. raw:: typst``): Rendered directly by the Typst compiler in PDF builds."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:106
+msgid "**Raw LaTeX** (``.. raw:: latex``): Not supported in PDF builds. Guidedog reports a ``typst.raw.foreign`` warning and omits the content because Typst cannot execute LaTeX commands."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:108
+msgid "**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. Guidedog includes a built-in mathematical translator that converts standard LaTeX equation syntax into native Typst math expressions at compile time."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:111
+msgid "**The ``latex`` tag in ``.. only::``**: For backward compatibility with legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias for PDF builds in ``.. only::`` expressions. In native Guidedog projects, prefer ``.. only:: pdf``."
+msgstr ""
+
+#: ../../howto/format-specific-content.rst:115
 msgid "3. Declare custom domain directives in conf.toml"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:101
+#: ../../howto/format-specific-content.rst:118
 msgid "When you need custom structured blocks with signature parsing, cross-references, and index entries, declare them in ``conf.toml`` under ``[[object_types]]``:"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:113
+#: ../../howto/format-specific-content.rst:130
 msgid "Now authors can describe services across all documents:"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:121
+#: ../../howto/format-specific-content.rst:138
 msgid "Other documents can link directly to this service using the declared role:"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:127
+#: ../../howto/format-specific-content.rst:144
 msgid "In HTML, Guidedog produces semantic definition tags (``<dl class=\"service\">``) with automatic anchor links. In PDF, Guidedog typesets a styled description entry and records an index entry in the book's index."
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:130
+#: ../../howto/format-specific-content.rst:147
 msgid "4. Alias existing directives"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:133
+#: ../../howto/format-specific-content.rst:150
 msgid "If you are migrating documentation or want friendlier names for built-in directives, declare aliases in ``[directive_aliases]`` in ``conf.toml``:"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:142
+#: ../../howto/format-specific-content.rst:159
 msgid "Authors can then use ``.. callout::`` or ``.. endpoint::`` using the options and rules of the target directive."
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:144
+#: ../../howto/format-specific-content.rst:161
 msgid "5. Call reusable Typst functions from templates"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:147
+#: ../../howto/format-specific-content.rst:164
 msgid "Instead of writing verbose Typst code inline across multiple documents, define a reusable function in ``_templates/theme.typ``:"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:164
+#: ../../howto/format-specific-content.rst:181
 msgid "Call it concisely from reStructuredText:"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:174
+#: ../../howto/format-specific-content.rst:191
 msgid "6. Advanced: Preprocessing directives with a build plugin"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:177
+#: ../../howto/format-specific-content.rst:194
 msgid "When you want to invent a completely custom directive syntax and expand it dynamically during build time, implement a ``gd_plugins::BuildPlugin`` in Rust."
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:180
+#: ../../howto/format-specific-content.rst:197
 msgid "The plugin implements ``process_source``, intercepting the raw document text before parsing:"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:214
+#: ../../howto/format-specific-content.rst:231
 msgid "Register the compiled plugin using:"
 msgstr ""
 
-#: ../../howto/format-specific-content.rst:220
+#: ../../howto/format-specific-content.rst:237
 msgid "Guidedog verifies the plugin's SHA-256 fingerprint, starts it per build, and forwards document sources through its pipeline."
 msgstr ""
 

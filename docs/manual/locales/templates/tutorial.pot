@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:14+0000\n"
+"POT-Creation-Date: 2026-10-17 14:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -365,39 +365,43 @@ msgstr ""
 msgid "Replace the contents of ``index.rst`` with the following document:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:144
+#: ../../tutorial/dynamic-content-and-directives.rst:146
+msgid "**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using native Typst. Always write ``.. raw:: typst`` for print callouts and vector blocks. Guidedog does not execute verbatim ``.. raw:: latex`` (which is omitted with a diagnostic). However, standard LaTeX math written in ``.. math::`` and ``:math:`` is automatically translated into Typst formulas by Guidedog's built-in math compiler."
+msgstr ""
+
+#: ../../tutorial/dynamic-content-and-directives.rst:152
 msgid "4. Build and inspect both publications"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:147
+#: ../../tutorial/dynamic-content-and-directives.rst:155
 msgid "Build the HTML website:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:153
+#: ../../tutorial/dynamic-content-and-directives.rst:161
 msgid "Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. Notice that: * The ``:metric:`p99_latency``` reference resolves directly to the definition anchor. * The interactive calculator slider is rendered and active in the web DOM. * The PDF callout block is omitted entirely, without emitting warnings."
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:158
+#: ../../tutorial/dynamic-content-and-directives.rst:166
 msgid "Now build the PDF book:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:164
+#: ../../tutorial/dynamic-content-and-directives.rst:172
 msgid "Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at ``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are completely absent. * The Typst ``#rect(...)`` vector box is typeset with native margins, borders, and typography. * The appendix includes an index entry under ``p99_latency``."
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:169
+#: ../../tutorial/dynamic-content-and-directives.rst:177
 msgid "5. Custom Typst functions in theme templates"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:172
+#: ../../tutorial/dynamic-content-and-directives.rst:180
 msgid "When you have formatting patterns used across many chapters, define a reusable Typst function in ``_templates/theme.typ``:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:185
+#: ../../tutorial/dynamic-content-and-directives.rst:193
 msgid "In any document, invoke the function inside a raw Typst block:"
 msgstr ""
 
-#: ../../tutorial/dynamic-content-and-directives.rst:195
+#: ../../tutorial/dynamic-content-and-directives.rst:203
 msgid "This keeps your reStructuredText prose focused on documentation while granting full access to Typst's typesetting engine for printed publications."
 msgstr ""
 

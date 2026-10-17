@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:33+0000\n"
+"POT-Creation-Date: 2026-10-17 15:18+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -678,116 +678,160 @@ msgstr ""
 "Abra ``conf.toml`` y añada la declaración para una directiva ``metric``:"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:89
-msgid ""
-"This single declaration establishes a complete syntax contract: * ``.. "
-"metric:: p99_latency (milliseconds)`` describes the metric. * "
-"``:metric:`p99_latency``` links to the definition from any document. * "
-"The index table automatically generates a pair index entry "
-"(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
-"semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
-"typesets a styled description entry with back-references in the appendix."
-msgstr ""
-"Esta única declaración establece un contrato sintáctico completo: * ``.. "
-"metric:: p99_latency (milliseconds)`` describe la métrica. * "
-"``:metric:`p99_latency``` enlaza con la definición desde cualquier "
-"documento. * La tabla de índice genera automáticamente una entrada de "
-"índice combinada (``p99_latency; cluster telemetry``). * En HTML, "
-"Guidedog genera una lista de definición semántica con anclas CSS. * En "
-"PDF, Guidedog compone una entrada de descripción con estilo y referencias "
-"cruzadas en el apéndice."
+msgid "This single declaration establishes a complete syntax contract:"
+msgstr "Esta única declaración establece un contrato sintáctico completo:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:96
+#: ../../tutorial/dynamic-content-and-directives.rst:91
+msgid "``.. metric:: p99_latency (milliseconds)`` describes the metric."
+msgstr "``.. metric:: p99_latency (milliseconds)`` describe la métrica."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:92
+msgid "``:metric:`p99_latency``` links to the definition from any document."
+msgstr ""
+"``:metric:`p99_latency``` enlaza su definición desde cualquier documento."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:93
+msgid ""
+"The index table automatically generates a pair index entry "
+"(``p99_latency; cluster telemetry``)."
+msgstr ""
+"El índice genera automáticamente una entrada de par (``p99_latency; "
+"cluster telemetry``)."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:94
+msgid ""
+"In HTML, Guidedog generates a semantic definition list with CSS anchor "
+"hooks."
+msgstr ""
+"En HTML, Guidedog genera una lista semántica de definiciones con puntos "
+"de anclaje para CSS."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:95
+msgid ""
+"In PDF, Guidedog typesets a description and an index entry linking to its "
+"page."
+msgstr ""
+"En PDF, Guidedog compone una descripción y una entrada de índice que "
+"enlaza su página."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:97
 msgid "3. Author the document with format guards"
 msgstr "3. Redactar el documento con protecciones de formato"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:99
+#: ../../tutorial/dynamic-content-and-directives.rst:100
 msgid "Replace the contents of ``index.rst`` with the following document:"
 msgstr "Reemplace el contenido de ``index.rst`` con el siguiente documento:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:146
+#: ../../tutorial/dynamic-content-and-directives.rst:147
 msgid ""
-"**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using native "
-"Typst. Always write ``.. raw:: typst`` for print callouts and vector "
-"blocks. Guidedog does not execute verbatim ``.. raw:: latex`` (which is "
-"omitted with a diagnostic). However, standard LaTeX math written in ``.. "
-"math::`` and ``:math:`` is automatically translated into Typst formulas "
-"by Guidedog's built-in math compiler."
+"**Typst and LaTeX in Guidedog**: PDF books use Typst. Trusted builds "
+"execute ``.. raw:: typst``; ``.. raw:: latex`` is omitted with "
+"``typst.raw.foreign``. ``.. math::`` and ``:math:`` translate supported "
+"LaTeX mathematics into Typst equations. Unsupported commands produce "
+"``typst.math.unsupported``; see :doc:`../topics/mathematics` for the "
+"supported syntax and policies."
 msgstr ""
-"**Typst y LaTeX en Guidedog**: Guidedog compila libros en PDF utilizando "
-"Typst de forma nativa. Escriba siempre ``.. raw:: typst`` para cuadros "
-"de aviso y bloques vectoriales impresos. Guidedog no ejecuta bloques "
-"literales ``.. raw:: latex`` (que se omiten con un diagnóstico). Sin "
-"embargo, las matemáticas estándar escritas en LaTeX dentro de ``.. "
-"math::`` y ``:math:`` se traducen automáticamente a fórmulas de Typst "
-"mediante el compilador matemático integrado de Guidedog."
+"**Typst y LaTeX en Guidedog**: Los libros PDF usan Typst. Las "
+"compilaciones confiables ejecutan ``.. raw:: typst``; ``.. raw:: latex`` "
+"se omite con ``typst.raw.foreign``. ``.. math::`` y ``:math:`` traducen "
+"las matemáticas LaTeX admitidas a ecuaciones de Typst. Los comandos no "
+"admitidos generan ``typst.math.unsupported``; véase "
+":doc:`../topics/mathematics` para la sintaxis y las políticas disponibles."
 
-#: ../../tutorial/dynamic-content-and-directives.rst:152
+#: ../../tutorial/dynamic-content-and-directives.rst:149
 msgid "4. Build and inspect both publications"
 msgstr "4. Compilar e inspeccionar ambas publicaciones"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:155
+#: ../../tutorial/dynamic-content-and-directives.rst:152
 msgid "Build the HTML website:"
 msgstr "Compile el sitio web HTML:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:161
+#: ../../tutorial/dynamic-content-and-directives.rst:158
 msgid ""
 "Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. "
-"Notice that: * The ``:metric:`p99_latency``` reference resolves directly "
-"to the definition anchor. * The interactive calculator slider is rendered "
-"and active in the web DOM. * The PDF callout block is omitted entirely, "
-"without emitting warnings."
+"Notice that:"
 msgstr ""
-"Abra ``_build/html/index.html`` en un navegador o ejecute ``guidedog "
-"serve``. Observe que: * La referencia ``:metric:`p99_latency``` se "
-"resuelve directamente en el ancla de definición. * El control deslizante "
-"interactivo está representado y activo en el DOM web. * El bloque de "
-"aviso para PDF se omite por completo sin emitir advertencias."
+"Abrimos ``_build/html/index.html`` en un navegador o ejecutamos "
+"``guidedog serve``. Observamos que:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:166
+#: ../../tutorial/dynamic-content-and-directives.rst:160
+msgid ""
+"The ``:metric:`p99_latency``` reference resolves directly to the "
+"definition anchor."
+msgstr ""
+"La referencia ``:metric:`p99_latency``` enlaza directamente el ancla de "
+"la definición."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:161
+msgid ""
+"The interactive calculator slider is rendered and active in the web DOM."
+msgstr ""
+"El control deslizante interactivo aparece y funciona en el DOM de la web."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:162
+msgid ""
+"The PDF callout block is omitted entirely, without emitting warnings."
+msgstr "El aviso para PDF se omite por completo sin generar advertencias."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:164
 msgid "Now build the PDF book:"
 msgstr "Ahora compile el libro PDF:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:172
+#: ../../tutorial/dynamic-content-and-directives.rst:170
 msgid ""
-"Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
-"``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are "
-"completely absent. * The Typst ``#rect(...)`` vector box is typeset with "
-"native margins, borders, and typography. * The appendix includes an index "
-"entry under ``p99_latency``."
+"Open ``_build/pdf/cluster-telemetry-en.pdf`` (or the inspection source at "
+"``_build/pdf/book-en.typ``). Notice that:"
 msgstr ""
-"Abra ``_build/pdf/telemetry-en.pdf`` (o el archivo fuente de inspección "
-"en ``_build/pdf/book-en.typ``). Observe que: * El control deslizante y el "
-"HTML sin procesar están ausentes. * La caja vectorial ``#rect(...)`` de "
-"Typst está compuesta con márgenes, bordes y tipografía nativos. * El "
-"apéndice incluye una entrada de índice bajo ``p99_latency``."
+"Abrimos ``_build/pdf/cluster-telemetry-en.pdf`` o el código de inspección "
+"``_build/pdf/book-en.typ``. Observamos que:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:177
+#: ../../tutorial/dynamic-content-and-directives.rst:172
+msgid "The slider and raw HTML are completely absent."
+msgstr ""
+"El control deslizante y el HTML sin procesar están totalmente ausentes."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:173
+msgid ""
+"The Typst ``#rect(...)`` vector box is typeset with native margins, "
+"borders, and typography."
+msgstr ""
+"El recuadro vectorial Typst ``#rect(...)`` se compone con márgenes, "
+"bordes y tipografía nativos."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:174
+msgid "The book's index includes an entry under ``p99_latency``."
+msgstr "El índice del libro incluye una entrada en ``p99_latency``."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:176
 msgid "5. Custom Typst functions in theme templates"
 msgstr "5. Funciones Typst personalizadas en plantillas de tema"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:180
+#: ../../tutorial/dynamic-content-and-directives.rst:179
 msgid ""
-"When you have formatting patterns used across many chapters, define a "
-"reusable Typst function in ``_templates/theme.typ``:"
+"When we reuse formatting across chapters, we append a Typst function to "
+"``_templates/theme.typ``:"
 msgstr ""
-"Cuando tenga patrones de formato repetidos en muchos capítulos, defina "
-"una función reutilizable de Typst en ``_templates/theme.typ``:"
+"Cuando reutilizamos formatos en varios capítulos, añadimos una función "
+"Typst a ``_templates/theme.typ``:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:193
+#: ../../tutorial/dynamic-content-and-directives.rst:191
 msgid "In any document, invoke the function inside a raw Typst block:"
 msgstr ""
 "En cualquier documento, invoque la función dentro de un bloque raw de "
 "Typst:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:203
+#: ../../tutorial/dynamic-content-and-directives.rst:202
 msgid ""
-"This keeps your reStructuredText prose focused on documentation while "
-"granting full access to Typst's typesetting engine for printed "
-"publications."
+"Import the function explicitly: the book template's own imports are "
+"scoped to its module and do not expose helpers to document content. For "
+"many call sites, place this import in a project preamble selected by "
+"``pdf_preamble``."
 msgstr ""
-"Esto mantiene el texto reStructuredText enfocado en la documentación "
-"mientras otorga acceso total al motor tipográfico de Typst para "
-"publicaciones impresas."
+"Importamos la función explícitamente: las importaciones de la plantilla "
+"del libro están limitadas a su módulo y no exponen funciones auxiliares "
+"al contenido del documento. Para muchos puntos de llamada, podemos "
+"colocar esta importación en un preámbulo del proyecto seleccionado "
+"mediante ``pdf_preamble``."
 
 #: ../../tutorial/first-project.rst:1
 msgid "Our first project"
@@ -1077,3 +1121,74 @@ msgstr ""
 "Seguimos estas páginas en orden. Cada paso produce un resultado que "
 "podemos revisar."
 
+#~ msgid ""
+#~ "This single declaration establishes a complete syntax contract: * ``.. "
+#~ "metric:: p99_latency (milliseconds)`` describes the metric. * "
+#~ "``:metric:`p99_latency``` links to the definition from any document. * "
+#~ "The index table automatically generates a pair index entry "
+#~ "(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
+#~ "semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
+#~ "typesets a styled description entry with back-references in the "
+#~ "appendix."
+#~ msgstr ""
+#~ "Esta única declaración establece un contrato sintáctico completo: * "
+#~ "``.. metric:: p99_latency (milliseconds)`` describe la métrica. * "
+#~ "``:metric:`p99_latency``` enlaza con la definición desde cualquier "
+#~ "documento. * La tabla de índice genera automáticamente una entrada de "
+#~ "índice combinada (``p99_latency; cluster telemetry``). * En HTML, "
+#~ "Guidedog genera una lista de definición semántica con anclas CSS. * En "
+#~ "PDF, Guidedog compone una entrada de descripción con estilo y "
+#~ "referencias cruzadas en el apéndice."
+
+#~ msgid ""
+#~ "**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using "
+#~ "native Typst. Always write ``.. raw:: typst`` for print callouts and "
+#~ "vector blocks. Guidedog does not execute verbatim ``.. raw:: latex`` "
+#~ "(which is omitted with a diagnostic). However, standard LaTeX math "
+#~ "written in ``.. math::`` and ``:math:`` is automatically translated "
+#~ "into Typst formulas by Guidedog's built-in math compiler."
+#~ msgstr ""
+#~ "**Typst y LaTeX en Guidedog**: Guidedog compila libros en PDF "
+#~ "utilizando Typst de forma nativa. Escriba siempre ``.. raw:: typst`` "
+#~ "para cuadros de aviso y bloques vectoriales impresos. Guidedog no "
+#~ "ejecuta bloques literales ``.. raw:: latex`` (que se omiten con un "
+#~ "diagnóstico). Sin embargo, las matemáticas estándar escritas en LaTeX "
+#~ "dentro de ``.. math::`` y ``:math:`` se traducen automáticamente a "
+#~ "fórmulas de Typst mediante el compilador matemático integrado de "
+#~ "Guidedog."
+
+#~ msgid ""
+#~ "Open ``_build/html/index.html`` in a browser or run ``guidedog "
+#~ "serve``. Notice that: * The ``:metric:`p99_latency``` reference "
+#~ "resolves directly to the definition anchor. * The interactive "
+#~ "calculator slider is rendered and active in the web DOM. * The PDF "
+#~ "callout block is omitted entirely, without emitting warnings."
+#~ msgstr ""
+#~ "Abra ``_build/html/index.html`` en un navegador o ejecute ``guidedog "
+#~ "serve``. Observe que: * La referencia ``:metric:`p99_latency``` se "
+#~ "resuelve directamente en el ancla de definición. * El control "
+#~ "deslizante interactivo está representado y activo en el DOM web. * El "
+#~ "bloque de aviso para PDF se omite por completo sin emitir advertencias."
+
+#~ msgid ""
+#~ "Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
+#~ "``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML "
+#~ "are completely absent. * The Typst ``#rect(...)`` vector box is "
+#~ "typeset with native margins, borders, and typography. * The appendix "
+#~ "includes an index entry under ``p99_latency``."
+#~ msgstr ""
+#~ "Abra ``_build/pdf/telemetry-en.pdf`` (o el archivo fuente de "
+#~ "inspección en ``_build/pdf/book-en.typ``). Observe que: * El control "
+#~ "deslizante y el HTML sin procesar están ausentes. * La caja vectorial "
+#~ "``#rect(...)`` de Typst está compuesta con márgenes, bordes y "
+#~ "tipografía nativos. * El apéndice incluye una entrada de índice bajo "
+#~ "``p99_latency``."
+
+#~ msgid ""
+#~ "This keeps your reStructuredText prose focused on documentation while "
+#~ "granting full access to Typst's typesetting engine for printed "
+#~ "publications."
+#~ msgstr ""
+#~ "Esto mantiene el texto reStructuredText enfocado en la documentación "
+#~ "mientras otorga acceso total al motor tipográfico de Typst para "
+#~ "publicaciones impresas."

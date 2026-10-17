@@ -1,0 +1,97 @@
+# Guidedog website, release notes.
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-17 01:58+0000\n"
+"PO-Revision-Date: 2026-10-17 02:05+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: Guidedog translation contributors\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../releases/1.0.0-beta.6.rst:8
+msgid "Guidedog 1.0.0-beta.6"
+msgstr "Guidedog 1.0.0-beta.6"
+
+#: ../../releases/1.0.0-beta.6.rst:11
+msgid ""
+"We can now publish dated articles alongside documentation pages. The new "
+"``guidedog ssg`` commands create drafts, schedule release instants, "
+"publish articles and withhold them again. Both reStructuredText and "
+"Markdown use the same metadata and build-clock gate."
+msgstr ""
+"现在我们可以在文档页面旁一并发布带日期的文章。新增的 ``guidedog ssg`` 命令可用于创建草稿、安排发布时间点、发布文章以及再次撤回文章。"
+"reStructuredText 和 Markdown 共用同一套元数据和构建时钟门控机制。"
+
+#: ../../releases/1.0.0-beta.6.rst:15
+msgid ""
+"We collect articles with ``.. postlist::`` and enable Atom, RSS and "
+"sitemap files through ``[site]`` in ``conf.toml``. A dated article uses "
+"the built-in article HTML layout, and ``:pdf: article`` adds a standalone "
+"PDF using the shared print theme. Project templates receive publication "
+"metadata through ``page.meta``."
+msgstr ""
+"我们可以用 ``.. postlist::`` 汇总文章，并通过 ``conf.toml`` 中的 ``[site]`` 启用 Atom、RSS 和 "
+"sitemap 文件。带日期的文章使用内置的文章 HTML 布局，``:pdf: article`` 则使用共享的印刷主题额外生成独立的 PDF。"
+"项目模板通过 ``page.meta`` 接收发布元数据。"
+
+#: ../../releases/1.0.0-beta.6.rst:19
+msgid ""
+"Release builds exclude drafts, future articles and expired articles "
+"before resolving navigation, links and public indices. Preview builds "
+"include them for local review. Clock-only changes reuse parsed documents, "
+"and successful rebuilds remove artifacts for pages that have become "
+"unpublished."
+msgstr ""
+"正式构建会在解析导航、链接和公开索引之前排除草稿、尚未到期的文章和已过期的文章；预览构建则会包含它们以便本地审阅。"
+"仅构建时钟发生变化时会复用已解析的文档，且重新构建成功后会清理已变为未发布状态的页面产物。"
+
+#: ../../releases/1.0.0-beta.6.rst:23
+msgid ""
+"Template dependencies follow the names requested during rendering, "
+"including dynamic and optional includes. Changing a template that no "
+"document uses leaves document pages cached. Navigation context reads and "
+"native calls have their own verifying traces. A 1,000-article benchmark "
+"checks cold and incremental work, including unchanged builds and isolated "
+"body edits."
+msgstr ""
+"模板依赖关系会追踪渲染期间实际请求的名称，包括动态和可选的包含项。修改没有任何文档使用的模板不会使已缓存的文档页面失效。"
+"导航上下文读取和原生调用各自带有校验追踪记录。1,000 篇文章的基准测试会检验冷构建和增量构建表现，包括无变更构建和单独的正文修改。"
+
+#: ../../releases/1.0.0-beta.6.rst:28
+msgid ""
+"Named mounts assemble existing projects, language editions, shared assets "
+"and PDF books in one publication transaction. The Guidedog website itself "
+"now uses those mounts. Generated taxonomy archives and paginated "
+"collections share the publication gate and remove obsolete pages on "
+"successful rebuilds."
+msgstr ""
+"命名挂载可在一次发布事务中将现有项目、各语言版本、共享资源和 PDF 图书组装到一起。Guidedog 网站自身现在就采用了这种挂载机制。"
+"自动生成的分类归档页和分页集合共用同一套发布门控，并在重新构建成功后自动移除过时页面。"
+
+#: ../../releases/1.0.0-beta.6.rst:32
+msgid ""
+"Project, journal and research presets provide complete starting sites. "
+"Theme archives require an explicit SHA-256 pin, use canonical tree "
+"checksums and install atomically. Builds verify installed themes offline."
+msgstr ""
+"项目（project）、日志（journal）和研究（research）预设提供了完整的初始站点结构。主题归档包要求显式指定 SHA-256 固定值，"
+"使用规范目录树校验和并以原子方式安装。构建过程会在离线状态下校验已安装的主题。"
+
+#: ../../releases/1.0.0-beta.6.rst:36
+msgid ""
+"We describe the commands and metadata in the `static publishing guide "
+"<https://insanai.github.io/guidedog/manual/howto/static-publishing.html>`_. "
+"GDS 0013 specifies the complete implementation and its release "
+"qualification."
+msgstr ""
+"我们在 `静态站点发布指南 "
+"<https://insanai.github.io/guidedog/manual/howto/static-publishing.html>`_ "
+"中介绍了相关命令和元数据。GDS 0013 规定了完整实现及其发布验收标准。"

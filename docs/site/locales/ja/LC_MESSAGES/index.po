@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 06:56+0000\n"
+"POT-Creation-Date: 2026-10-17 01:58+0000\n"
 "PO-Revision-Date: 2026-10-11 16:00+0800\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -107,28 +107,29 @@ msgstr "一つのプログラム"
 
 #: ../../index.rst:56
 msgid ""
-"Guidedog is a single binary. We do not need a Python environment, a LaTeX "
-"installation, or separate theme and extension packages. Configuration is "
-"a TOML file. Templates are plain files in our project, and we can edit "
-"them."
+"The release provides one ``guidedog`` executable with PDF typesetting and "
+"diagram rendering included. We download the archive for our system, "
+"unpack it, and start a project. On Windows we keep the bundled runtime "
+"files beside the executable."
 msgstr ""
-"Guidedog は一つの実行ファイルです。Python の環境も、LaTeX "
-"のインストールも、テーマや拡張機能の別パッケージもいりません。設定は TOML "
-"ファイル一つです。テンプレートはプロジェクト内の普通のファイルなので、そのまま編集できます。"
+"リリース版には、PDF の組版と図の描画を組み込んだ一つの実行ファイル ``guidedog`` "
+"が含まれています。システムに合ったアーカイブをダウンロードして展開すれば、すぐにプロジェクトを始められます。Windows "
+"では、同梱のランタイムファイルを実行ファイルと同じ場所に置いたまま使います。"
 
-#: ../../index.rst:60
+#: ../../index.rst:58
 msgid ""
-"Some things still come from outside. The Typst compiler is built into "
-"Guidedog. A build without it uses the ``typst`` program installed on the "
-"system. Diagrams use the system's Graphviz library. Fetching remote "
-"inventories uses the HTTP client built into Guidedog."
-msgstr "外部に頼る部分もまだあります。Typst コンパイラーは Guidedog に組み込まれています。組み込まずにビルドした場合は、システムにインストールされた ``typst`` プログラムを使います。図にはシステムの Graphviz ライブラリを使います。リモートのインベントリは、Guidedog に組み込まれた HTTP クライアントで取得します。"
+"Configuration is a TOML file. Templates are plain files in our project, "
+"and we can edit them. The same command also publishes to GitHub Pages and "
+"keeps discussion records through its linked plugins."
+msgstr ""
+"設定は TOML ファイル一つです。テンプレートはプロジェクト内の普通のファイルなので、自由に編集できます。また、リンク済みプラグインを通じて、同じコマンドから "
+"GitHub Pages への公開や議論の記録の管理も行えます。"
 
-#: ../../index.rst:66
+#: ../../index.rst:61
 msgid "Write it, see both"
 msgstr "一度書いて、両方を見る"
 
-#: ../../index.rst:69
+#: ../../index.rst:64
 msgid ""
 "On the left is reStructuredText. On the right is what Guidedog made of it "
 "on this page. The PDF builder sets the same lines as a book page."
@@ -136,7 +137,7 @@ msgstr ""
 "左が reStructuredText で、右はそれから Guidedog がこのページに作ったものです。PDF "
 "ビルダーは同じ内容を本のページとして組みます。"
 
-#: ../../index.rst:74
+#: ../../index.rst:69
 msgid ""
 ".. note::\n"
 "\n"
@@ -172,39 +173,39 @@ msgstr ""
 "   * - ``pdf``\n"
 "     - PDF の本"
 
-#: ../../index.rst:97
+#: ../../index.rst:92
 msgid "Guidedog reads our text once."
 msgstr "Guidedog は文章を一度だけ読みます。"
 
-#: ../../index.rst:99
+#: ../../index.rst:94
 msgid "The *same* files become a **website** and a **book**:"
 msgstr "*同じ* ファイルが **ウェブサイト** にも **本** にもなります。"
 
-#: ../../index.rst:105
+#: ../../index.rst:100
 msgid "Builder"
 msgstr "ビルダー"
 
-#: ../../index.rst:106
+#: ../../index.rst:101
 msgid "Result"
 msgstr "結果"
 
-#: ../../index.rst:107
+#: ../../index.rst:102
 msgid "``html``"
 msgstr "``html``"
 
-#: ../../index.rst:108
+#: ../../index.rst:103
 msgid "A website"
 msgstr "ウェブサイト"
 
-#: ../../index.rst:109
+#: ../../index.rst:104
 msgid "``pdf``"
 msgstr "``pdf``"
 
-#: ../../index.rst:110
+#: ../../index.rst:105
 msgid "A PDF book"
 msgstr "PDF の本"
 
-#: ../../index.rst:114
+#: ../../index.rst:109
 msgid ""
 "The `manual as a PDF book <manual-pdf_>`_ is an example of the result on "
 "paper. It is built from the same files as the manual's website."
@@ -212,11 +213,11 @@ msgstr ""
 "紙での仕上がりの例として `PDF 版のマニュアル <manual-pdf_>`_ "
 "があります。マニュアルのウェブサイトと同じファイルから作られています。"
 
-#: ../../index.rst:118
+#: ../../index.rst:113
 msgid "Get started"
 msgstr "はじめに"
 
-#: ../../index.rst:121
+#: ../../index.rst:116
 msgid ""
 "Download the archive for our system from the `latest release "
 "<download_>`_, put ``guidedog`` on the ``PATH``, and create a project:"
@@ -224,7 +225,7 @@ msgstr ""
 "`最新のリリース <download_>`_ からシステムに合ったアーカイブをダウンロードし、 ``guidedog`` を ``PATH`` "
 "の通った場所に置いて、プロジェクトを作ります。"
 
-#: ../../index.rst:124
+#: ../../index.rst:119
 msgid ""
 "guidedog quickstart docs\n"
 "guidedog build html docs\n"
@@ -236,7 +237,7 @@ msgstr ""
 "guidedog build pdf docs\n"
 "guidedog serve docs"
 
-#: ../../index.rst:131
+#: ../../index.rst:126
 msgid ""
 "``quickstart`` writes ``conf.toml``, ``index.rst``, and templates we can "
 "edit. ``serve`` rebuilds the site while we write. The `tutorial "
@@ -249,11 +250,11 @@ msgstr ""
 "で順に説明しています。Guidedog をソースからビルドするには、Rust をインストールし、 `リポジトリの説明 <build_>`_ "
 "に従ってください。"
 
-#: ../../index.rst:137
+#: ../../index.rst:132
 msgid "Design discussions"
 msgstr "設計の議論"
 
-#: ../../index.rst:140
+#: ../../index.rst:135
 msgid ""
 "Guidedog's design decisions are written down as numbered discussions: the "
 "problem, the alternatives, the decision, and the evidence. We can read "
@@ -263,7 +264,7 @@ msgstr ""
 "の設計上の決定は、番号付きの議論として書き残しています。問題、検討した案、決定、根拠をまとめたものです。どれもウェブで読めるほか、PDF "
 "でダウンロードすることもできます。"
 
-#: ../../index.rst:144
+#: ../../index.rst:139
 msgid ""
 "Our own project can keep its discussions the same way, with ``guidedog "
 "dsc``. The `manual <manual-discussions_>`_ shows how."
@@ -271,6 +272,35 @@ msgstr ""
 "自分のプロジェクトでも、 ``guidedog dsc`` を使って同じように議論を記録できます。やり方は `マニュアル "
 "<manual-discussions_>`_ で説明しています。"
 
-#: ../../index.rst:148
+#: ../../index.rst:143
 msgid "`Read the discussions <discussions_>`_"
 msgstr "`議論を読む <discussions_>`_"
+
+#: ../../index.rst:150
+msgid "Recent releases"
+msgstr "最近のリリース"
+
+#: ../../index.rst:153
+msgid ""
+"`All releases <releases/index.html>`_ | `Atom feed <releases/atom.xml>`_"
+msgstr "`すべてのリリース <releases/index.html>`_ | `Atom フィード <releases/atom.xml>`_"
+
+#~ msgid ""
+#~ "Guidedog is a single binary. We do not need a Python environment, a "
+#~ "LaTeX installation, or separate theme and extension packages. "
+#~ "Configuration is a TOML file. Templates are plain files in our "
+#~ "project, and we can edit them."
+#~ msgstr ""
+#~ "Guidedog は一つの実行ファイルです。Python の環境も、LaTeX "
+#~ "のインストールも、テーマや拡張機能の別パッケージもいりません。設定は TOML "
+#~ "ファイル一つです。テンプレートはプロジェクト内の普通のファイルなので、そのまま編集できます。"
+
+#~ msgid ""
+#~ "Some things still come from outside. The Typst compiler is built into "
+#~ "Guidedog. A build without it uses the ``typst`` program installed on "
+#~ "the system. Diagrams use the system's Graphviz library. Fetching "
+#~ "remote inventories uses the HTTP client built into Guidedog."
+#~ msgstr ""
+#~ "外部に頼る部分もまだあります。Typst コンパイラーは Guidedog "
+#~ "に組み込まれています。組み込まずにビルドした場合は、システムにインストールされた ``typst`` プログラムを使います。図にはシステムの "
+#~ "Graphviz ライブラリを使います。リモートのインベントリは、Guidedog に組み込まれた HTTP クライアントで取得します。"

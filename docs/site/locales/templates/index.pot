@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog 0.7\n"
+"Project-Id-Version: Guidedog 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 06:56+0000\n"
+"POT-Creation-Date: 2026-10-17 01:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -73,22 +73,22 @@ msgid "One program"
 msgstr ""
 
 #: ../../index.rst:56
-msgid "Guidedog is a single binary. We do not need a Python environment, a LaTeX installation, or separate theme and extension packages. Configuration is a TOML file. Templates are plain files in our project, and we can edit them."
+msgid "The release provides one ``guidedog`` executable with PDF typesetting and diagram rendering included. We download the archive for our system, unpack it, and start a project. On Windows we keep the bundled runtime files beside the executable."
 msgstr ""
 
-#: ../../index.rst:60
-msgid "Some things still come from outside. The Typst compiler is built into Guidedog. A build without it uses the ``typst`` program installed on the system. Diagrams use the system's Graphviz library. Fetching remote inventories uses the HTTP client built into Guidedog."
+#: ../../index.rst:58
+msgid "Configuration is a TOML file. Templates are plain files in our project, and we can edit them. The same command also publishes to GitHub Pages and keeps discussion records through its linked plugins."
 msgstr ""
 
-#: ../../index.rst:66
+#: ../../index.rst:61
 msgid "Write it, see both"
 msgstr ""
 
-#: ../../index.rst:69
+#: ../../index.rst:64
 msgid "On the left is reStructuredText. On the right is what Guidedog made of it on this page. The PDF builder sets the same lines as a book page."
 msgstr ""
 
-#: ../../index.rst:74
+#: ../../index.rst:69
 msgid ""
 ".. note::\n"
 "\n"
@@ -108,51 +108,51 @@ msgid ""
 "     - A PDF book"
 msgstr ""
 
-#: ../../index.rst:97
+#: ../../index.rst:92
 msgid "Guidedog reads our text once."
 msgstr ""
 
-#: ../../index.rst:99
+#: ../../index.rst:94
 msgid "The *same* files become a **website** and a **book**:"
 msgstr ""
 
-#: ../../index.rst:105
+#: ../../index.rst:100
 msgid "Builder"
 msgstr ""
 
-#: ../../index.rst:106
+#: ../../index.rst:101
 msgid "Result"
 msgstr ""
 
-#: ../../index.rst:107
+#: ../../index.rst:102
 msgid "``html``"
 msgstr ""
 
-#: ../../index.rst:108
+#: ../../index.rst:103
 msgid "A website"
 msgstr ""
 
-#: ../../index.rst:109
+#: ../../index.rst:104
 msgid "``pdf``"
 msgstr ""
 
-#: ../../index.rst:110
+#: ../../index.rst:105
 msgid "A PDF book"
 msgstr ""
 
-#: ../../index.rst:114
+#: ../../index.rst:109
 msgid "The `manual as a PDF book <manual-pdf_>`_ is an example of the result on paper. It is built from the same files as the manual's website."
 msgstr ""
 
-#: ../../index.rst:118
+#: ../../index.rst:113
 msgid "Get started"
 msgstr ""
 
-#: ../../index.rst:121
+#: ../../index.rst:116
 msgid "Download the archive for our system from the `latest release <download_>`_, put ``guidedog`` on the ``PATH``, and create a project:"
 msgstr ""
 
-#: ../../index.rst:124
+#: ../../index.rst:119
 msgid ""
 "guidedog quickstart docs\n"
 "guidedog build html docs\n"
@@ -160,22 +160,30 @@ msgid ""
 "guidedog serve docs"
 msgstr ""
 
-#: ../../index.rst:131
+#: ../../index.rst:126
 msgid "``quickstart`` writes ``conf.toml``, ``index.rst``, and templates we can edit. ``serve`` rebuilds the site while we write. The `tutorial <manual-tutorial_>`_ walks through a first project. To build Guidedog from source, install Rust and follow the `instructions in the repository <build_>`_."
 msgstr ""
 
-#: ../../index.rst:137
+#: ../../index.rst:132
 msgid "Design discussions"
 msgstr ""
 
-#: ../../index.rst:140
+#: ../../index.rst:135
 msgid "Guidedog's design decisions are written down as numbered discussions: the problem, the alternatives, the decision, and the evidence. We can read each one on the web or download it as a PDF."
 msgstr ""
 
-#: ../../index.rst:144
+#: ../../index.rst:139
 msgid "Our own project can keep its discussions the same way, with ``guidedog dsc``. The `manual <manual-discussions_>`_ shows how."
 msgstr ""
 
-#: ../../index.rst:148
+#: ../../index.rst:143
 msgid "`Read the discussions <discussions_>`_"
+msgstr ""
+
+#: ../../index.rst:150
+msgid "Recent releases"
+msgstr ""
+
+#: ../../index.rst:153
+msgid "`All releases <releases/index.html>`_ | `Atom feed <releases/atom.xml>`_"
 msgstr ""

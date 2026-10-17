@@ -1,0 +1,102 @@
+# Guidedog website, release notes.
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-17 01:58+0000\n"
+"PO-Revision-Date: 2026-10-17 02:00+0000\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: Guidedog translation contributors\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../releases/1.0.0-beta.6.rst:8
+msgid "Guidedog 1.0.0-beta.6"
+msgstr "Guidedog 1.0.0-beta.6"
+
+#: ../../releases/1.0.0-beta.6.rst:11
+msgid ""
+"We can now publish dated articles alongside documentation pages. The new "
+"``guidedog ssg`` commands create drafts, schedule release instants, "
+"publish articles and withhold them again. Both reStructuredText and "
+"Markdown use the same metadata and build-clock gate."
+msgstr ""
+"이제 문서 페이지와 함께 날짜가 지정된 글(article)을 게시할 수 있습니다. 새로 추가된 ``guidedog ssg`` 명령으로 "
+"초안을 작성하고, 공개 시점을 예약하며, 글을 게시하거나 다시 보류할 수 있습니다. reStructuredText와 Markdown "
+"모두 동일한 메타데이터와 빌드 시각 게이트를 사용합니다."
+
+#: ../../releases/1.0.0-beta.6.rst:15
+msgid ""
+"We collect articles with ``.. postlist::`` and enable Atom, RSS and "
+"sitemap files through ``[site]`` in ``conf.toml``. A dated article uses "
+"the built-in article HTML layout, and ``:pdf: article`` adds a standalone "
+"PDF using the shared print theme. Project templates receive publication "
+"metadata through ``page.meta``."
+msgstr ""
+"``.. postlist::``\\ 로 글을 모으고 ``conf.toml``\\ 의 ``[site]`` 설정을 통해 Atom, RSS, "
+"사이트맵 파일을 활성화할 수 있습니다. 날짜가 있는 글은 내장된 글 전용 HTML 레이아웃을 사용하며, ``:pdf: article``\\ "
+"을 지정하면 공통 인쇄 테마를 사용한 독립형 PDF가 추가됩니다. 프로젝트 템플릿은 ``page.meta``\\ 를 통해 게시 "
+"메타데이터를 전달받습니다."
+
+#: ../../releases/1.0.0-beta.6.rst:19
+msgid ""
+"Release builds exclude drafts, future articles and expired articles "
+"before resolving navigation, links and public indices. Preview builds "
+"include them for local review. Clock-only changes reuse parsed documents, "
+"and successful rebuilds remove artifacts for pages that have become "
+"unpublished."
+msgstr ""
+"릴리스 빌드는 탐색, 링크, 공개 색인을 해석하기 전에 초안, 예약된 미래 글, 만료된 글을 먼저 제외합니다. 미리보기 빌드는 로컬 "
+"검토를 위해 이러한 글을 포함합니다. 빌드 시각만 바뀐 경우에는 파싱된 문서를 재사용하며, 재빌드에 성공하면 비공개로 전환된 페이지의 "
+"산출물을 제거합니다."
+
+#: ../../releases/1.0.0-beta.6.rst:23
+msgid ""
+"Template dependencies follow the names requested during rendering, "
+"including dynamic and optional includes. Changing a template that no "
+"document uses leaves document pages cached. Navigation context reads and "
+"native calls have their own verifying traces. A 1,000-article benchmark "
+"checks cold and incremental work, including unchanged builds and isolated "
+"body edits."
+msgstr ""
+"템플릿 의존성은 동적 include와 선택적 include를 포함해 렌더링 중에 요청된 이름을 그대로 추적합니다. 어떤 문서도 사용하지 "
+"않는 템플릿을 변경하면 문서 페이지 캐시는 그대로 유지됩니다. 탐색 컨텍스트 읽기와 네이티브 호출에는 자체 검증 트레이스가 있습니다. "
+"1,000개 글 규모의 벤치마크로 변경 없는 빌드와 단일 본문 수정을 포함한 콜드 빌드 및 증분 빌드 작업을 검증합니다."
+
+#: ../../releases/1.0.0-beta.6.rst:28
+msgid ""
+"Named mounts assemble existing projects, language editions, shared assets "
+"and PDF books in one publication transaction. The Guidedog website itself "
+"now uses those mounts. Generated taxonomy archives and paginated "
+"collections share the publication gate and remove obsolete pages on "
+"successful rebuilds."
+msgstr ""
+"이름이 지정된 마운트는 기존 프로젝트, 언어판, 공유 에셋, PDF 책을 하나의 게시 트랜잭션으로 조립합니다. 이제 Guidedog "
+"웹사이트 자체도 이 마운트를 사용합니다. 생성된 분류(taxonomy) 아카이브와 페이지가 매겨진 컬렉션은 동일한 게시 게이트를 "
+"공유하며, 재빌드에 성공하면 더 이상 쓰이지 않는 페이지를 제거합니다."
+
+#: ../../releases/1.0.0-beta.6.rst:32
+msgid ""
+"Project, journal and research presets provide complete starting sites. "
+"Theme archives require an explicit SHA-256 pin, use canonical tree "
+"checksums and install atomically. Builds verify installed themes offline."
+msgstr ""
+"project, journal, research 프리셋은 바로 시작할 수 있는 완전한 사이트 구성을 제공합니다. 테마 아카이브는 명시적인 "
+"SHA-256 고정을 요구하며, 정규 트리 체크섬을 사용하고 원자적으로 설치됩니다. 빌드 시에는 설치된 테마를 오프라인에서 검증합니다."
+
+#: ../../releases/1.0.0-beta.6.rst:36
+msgid ""
+"We describe the commands and metadata in the `static publishing guide "
+"<https://insanai.github.io/guidedog/manual/howto/static-publishing.html>`_. "
+"GDS 0013 specifies the complete implementation and its release "
+"qualification."
+msgstr ""
+"명령과 메타데이터는 `정적 사이트 게시 가이드 "
+"<https://insanai.github.io/guidedog/manual/howto/static-publishing.html>`_\\ "
+"에 설명되어 있습니다. GDS 0013은 전체 구현과 릴리스 검증 기준을 규정합니다."

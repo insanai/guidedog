@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 06:56+0000\n"
+"POT-Creation-Date: 2026-10-17 01:58+0000\n"
 "PO-Revision-Date: 2026-10-11 16:00+0800\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -106,27 +106,29 @@ msgstr "하나의 프로그램"
 
 #: ../../index.rst:56
 msgid ""
-"Guidedog is a single binary. We do not need a Python environment, a LaTeX "
-"installation, or separate theme and extension packages. Configuration is "
-"a TOML file. Templates are plain files in our project, and we can edit "
-"them."
+"The release provides one ``guidedog`` executable with PDF typesetting and "
+"diagram rendering included. We download the archive for our system, "
+"unpack it, and start a project. On Windows we keep the bundled runtime "
+"files beside the executable."
 msgstr ""
-"Guidedog는 실행 파일 하나입니다. Python 환경도, LaTeX 설치도, 따로 설치하는 테마나 확장 패키지도 필요 "
-"없습니다. 설정은 TOML 파일 하나입니다. 템플릿은 프로젝트 안에 있는 평범한 파일이라 바로 고칠 수 있습니다."
+"릴리스는 PDF 조판과 다이어그램 렌더링을 포함한 ``guidedog`` 실행 파일 하나로 제공됩니다. 시스템에 맞는 압축 파일을 "
+"내려받아 압축을 풀고 바로 프로젝트를 시작할 수 있습니다. Windows에서는 함께 들어 있는 런타임 파일들을 실행 파일 옆에 그대로 "
+"유지합니다."
 
-#: ../../index.rst:60
+#: ../../index.rst:58
 msgid ""
-"Some things still come from outside. The Typst compiler is built into "
-"Guidedog. A build without it uses the ``typst`` program installed on the "
-"system. Diagrams use the system's Graphviz library. Fetching remote "
-"inventories uses the HTTP client built into Guidedog."
-msgstr "아직 바깥에서 가져오는 것도 있습니다. Typst 컴파일러는 Guidedog에 들어 있습니다. 컴파일러 없이 빌드한 Guidedog는 시스템에 설치된 ``typst`` 프로그램을 씁니다. 도표는 시스템의 Graphviz 라이브러리를 씁니다. 원격 인벤토리는 Guidedog에 내장된 HTTP 클라이언트로 가져옵니다."
+"Configuration is a TOML file. Templates are plain files in our project, "
+"and we can edit them. The same command also publishes to GitHub Pages and "
+"keeps discussion records through its linked plugins."
+msgstr ""
+"설정은 TOML 파일 하나입니다. 템플릿은 프로젝트 안의 일반 파일이므로 직접 편집할 수 있습니다. 링크된 내장 플러그인을 통해 같은 "
+"명령으로 GitHub Pages에 게시하고 논의 기록도 관리합니다."
 
-#: ../../index.rst:66
+#: ../../index.rst:61
 msgid "Write it, see both"
 msgstr "한 번 쓰고, 둘 다 보기"
 
-#: ../../index.rst:69
+#: ../../index.rst:64
 msgid ""
 "On the left is reStructuredText. On the right is what Guidedog made of it "
 "on this page. The PDF builder sets the same lines as a book page."
@@ -134,7 +136,7 @@ msgstr ""
 "왼쪽은 reStructuredText이고, 오른쪽은 Guidedog가 그것으로 이 페이지에 만든 결과입니다. PDF 빌더는 같은 "
 "내용을 책 페이지로 조판합니다."
 
-#: ../../index.rst:74
+#: ../../index.rst:69
 msgid ""
 ".. note::\n"
 "\n"
@@ -170,39 +172,39 @@ msgstr ""
 "   * - ``pdf``\n"
 "     - PDF 책"
 
-#: ../../index.rst:97
+#: ../../index.rst:92
 msgid "Guidedog reads our text once."
 msgstr "Guidedog는 글을 한 번만 읽습니다."
 
-#: ../../index.rst:99
+#: ../../index.rst:94
 msgid "The *same* files become a **website** and a **book**:"
 msgstr "*같은* 파일이 **웹사이트** 도 되고 **책** 도 됩니다."
 
-#: ../../index.rst:105
+#: ../../index.rst:100
 msgid "Builder"
 msgstr "빌더"
 
-#: ../../index.rst:106
+#: ../../index.rst:101
 msgid "Result"
 msgstr "결과"
 
-#: ../../index.rst:107
+#: ../../index.rst:102
 msgid "``html``"
 msgstr "``html``"
 
-#: ../../index.rst:108
+#: ../../index.rst:103
 msgid "A website"
 msgstr "웹사이트"
 
-#: ../../index.rst:109
+#: ../../index.rst:104
 msgid "``pdf``"
 msgstr "``pdf``"
 
-#: ../../index.rst:110
+#: ../../index.rst:105
 msgid "A PDF book"
 msgstr "PDF 책"
 
-#: ../../index.rst:114
+#: ../../index.rst:109
 msgid ""
 "The `manual as a PDF book <manual-pdf_>`_ is an example of the result on "
 "paper. It is built from the same files as the manual's website."
@@ -210,11 +212,11 @@ msgstr ""
 "`PDF 책으로 만든 설명서 <manual-pdf_>`_ 가 종이에서의 결과를 보여 주는 예입니다. 설명서 웹사이트와 같은 파일로 "
 "만들었습니다."
 
-#: ../../index.rst:118
+#: ../../index.rst:113
 msgid "Get started"
 msgstr "시작하기"
 
-#: ../../index.rst:121
+#: ../../index.rst:116
 msgid ""
 "Download the archive for our system from the `latest release "
 "<download_>`_, put ``guidedog`` on the ``PATH``, and create a project:"
@@ -222,7 +224,7 @@ msgstr ""
 "`최신 릴리스 <download_>`_ 에서 사용하는 시스템에 맞는 압축 파일을 내려받아 ``guidedog`` 를 ``PATH`` "
 "에 두고, 프로젝트를 만듭니다."
 
-#: ../../index.rst:124
+#: ../../index.rst:119
 msgid ""
 "guidedog quickstart docs\n"
 "guidedog build html docs\n"
@@ -234,7 +236,7 @@ msgstr ""
 "guidedog build pdf docs\n"
 "guidedog serve docs"
 
-#: ../../index.rst:131
+#: ../../index.rst:126
 msgid ""
 "``quickstart`` writes ``conf.toml``, ``index.rst``, and templates we can "
 "edit. ``serve`` rebuilds the site while we write. The `tutorial "
@@ -247,11 +249,11 @@ msgstr ""
 "차례로 따라 할 수 있습니다. Guidedog를 소스에서 빌드하려면 Rust를 설치하고 `저장소의 안내 <build_>`_ 를 "
 "따르세요."
 
-#: ../../index.rst:137
+#: ../../index.rst:132
 msgid "Design discussions"
 msgstr "설계 논의"
 
-#: ../../index.rst:140
+#: ../../index.rst:135
 msgid ""
 "Guidedog's design decisions are written down as numbered discussions: the "
 "problem, the alternatives, the decision, and the evidence. We can read "
@@ -260,7 +262,7 @@ msgstr ""
 "Guidedog의 설계 결정은 번호가 붙은 논의로 기록합니다. 문제, 대안, 결정, 근거를 담습니다. 각 논의는 웹에서 읽거나 "
 "PDF로 내려받을 수 있습니다."
 
-#: ../../index.rst:144
+#: ../../index.rst:139
 msgid ""
 "Our own project can keep its discussions the same way, with ``guidedog "
 "dsc``. The `manual <manual-discussions_>`_ shows how."
@@ -268,6 +270,34 @@ msgstr ""
 "우리 프로젝트도 ``guidedog dsc``\\ 로 같은 방식으로 논의를 기록할 수 있습니다. 방법은 `매뉴얼 "
 "<manual-discussions_>`_ 에 있습니다."
 
-#: ../../index.rst:148
+#: ../../index.rst:143
 msgid "`Read the discussions <discussions_>`_"
 msgstr "`논의 읽기 <discussions_>`_"
+
+#: ../../index.rst:150
+msgid "Recent releases"
+msgstr "최근 릴리스"
+
+#: ../../index.rst:153
+msgid ""
+"`All releases <releases/index.html>`_ | `Atom feed <releases/atom.xml>`_"
+msgstr "`모든 릴리스 <releases/index.html>`_ | `Atom 피드 <releases/atom.xml>`_"
+
+#~ msgid ""
+#~ "Guidedog is a single binary. We do not need a Python environment, a "
+#~ "LaTeX installation, or separate theme and extension packages. "
+#~ "Configuration is a TOML file. Templates are plain files in our "
+#~ "project, and we can edit them."
+#~ msgstr ""
+#~ "Guidedog는 실행 파일 하나입니다. Python 환경도, LaTeX 설치도, 따로 설치하는 테마나 확장 패키지도 필요 "
+#~ "없습니다. 설정은 TOML 파일 하나입니다. 템플릿은 프로젝트 안에 있는 평범한 파일이라 바로 고칠 수 있습니다."
+
+#~ msgid ""
+#~ "Some things still come from outside. The Typst compiler is built into "
+#~ "Guidedog. A build without it uses the ``typst`` program installed on "
+#~ "the system. Diagrams use the system's Graphviz library. Fetching "
+#~ "remote inventories uses the HTTP client built into Guidedog."
+#~ msgstr ""
+#~ "아직 바깥에서 가져오는 것도 있습니다. Typst 컴파일러는 Guidedog에 들어 있습니다. 컴파일러 없이 빌드한 "
+#~ "Guidedog는 시스템에 설치된 ``typst`` 프로그램을 씁니다. 도표는 시스템의 Graphviz 라이브러리를 씁니다. "
+#~ "원격 인벤토리는 Guidedog에 내장된 HTTP 클라이언트로 가져옵니다."

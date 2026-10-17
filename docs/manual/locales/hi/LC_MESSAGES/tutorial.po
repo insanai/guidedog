@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-17 14:14+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -39,8 +39,8 @@ msgid ""
 "Use Guidedog 1.0.0-beta.5 or newer. Run this from the directory that will "
 "contain ``orbit``:"
 msgstr ""
-"Guidedog 1.0.0-beta.5 या उससे नया संस्करण इस्तेमाल करें। इसे उस डायरेक्टरी से "
-"चलाएँ जिसमें ``orbit`` बनेगा:"
+"Guidedog 1.0.0-beta.5 या उससे नया संस्करण इस्तेमाल करें। इसे उस "
+"डायरेक्टरी से चलाएँ जिसमें ``orbit`` बनेगा:"
 
 #: ../../tutorial/a-custom-theme.rst:17
 msgid ""
@@ -51,8 +51,8 @@ msgid ""
 "paragraph breaking."
 msgstr ""
 "बनी हुई ``orbit/_templates/book.typ`` फ़ाइल का नाम उसी डायरेक्टरी में "
-"बदलकर ``base-book.typ`` करें। जनरेट हुई ``theme.typ`` को भी उसके पास ही रखें। "
-"हम नाम बदला हुआ पुस्तक template रखते हैं: इसी से परखा हुआ पेज "
+"बदलकर ``base-book.typ`` करें। जनरेट हुई ``theme.typ`` को भी उसके पास ही "
+"रखें। हम नाम बदला हुआ पुस्तक template रखते हैं: इसी से परखा हुआ पेज "
 "लेआउट, कवर, रनिंग हेडर, विषय-सूची, कोड स्टाइल और ऑप्टिमाइज़ की हुई "
 "अनुच्छेद लाइन-ब्रेकिंग मिलती है।"
 
@@ -573,6 +573,140 @@ msgid "Custom styles and book fonts are in :doc:`../topics/typography`."
 msgstr ""
 "कस्टम स्टाइल और किताब के फ़ॉन्ट :doc:`../topics/typography` में हैं।"
 
+#: ../../tutorial/dynamic-content-and-directives.rst:1
+msgid "Custom directives and dynamic content"
+msgstr "कस्टम निर्देश और गतिशील सामग्री"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:4
+msgid ""
+"Guidedog publishes the same document tree to an interactive HTML website "
+"and a typeset PDF book. Web readers benefit from interactive calculators, "
+"search filters, and embedded widgets. Book readers benefit from balanced "
+"columns, callout cards, and vector typography."
+msgstr "Guidedog एक ही दस्तावेज़ ट्री को इंटरैक्टिव HTML वेबसाइट और सुव्यवस्थित PDF पुस्तक के रूप में प्रकाशित करता है। वेब पाठकों को इंटरैक्टिव कैलकुलेटर, खोज फ़िल्टर और एम्बेडेड विजेट मिलते हैं; पुस्तक पाठकों को संतुलित कॉलम, कॉलआउट कार्ड और वेक्टर टाइपोग्राफी का लाभ मिलता है।"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:8
+msgid ""
+"This tutorial builds a project that demonstrates both without duplicating "
+"prose. We declare a custom semantic directive in ``conf.toml``, add an "
+"interactive calculator for web readers, and design a print-quality "
+"callout block for the PDF book."
+msgstr "यह ट्यूटोरियल बिना पाठ दोहराए दोनों रूपों को प्रदर्शित करने वाला प्रोजेक्ट बनाता है। हम ``conf.toml`` में एक कस्टम अर्थपूर्ण निर्देश घोषित करते हैं, वेब पाठकों के लिए इंटरैक्टिव कैलकुलेटर जोड़ते हैं, और PDF पुस्तक के लिए मुद्रण-गुणवत्ता वाला कॉलआउट ब्लॉक तैयार करते हैं।"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:14
+msgid ""
+"One source document evaluates object types for both outputs, sending raw "
+"HTML to the web and raw Typst to the PDF book."
+msgstr "एक स्रोत दस्तावेज़ दोनों आउटपुट के लिए ऑब्जेक्ट प्रकारों का मूल्यांकन करता है, रॉ HTML वेब पर और रॉ Typst PDF पुस्तक में भेजता है।"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:14
+msgid ""
+"Format-gated evaluation and custom directives across HTML and PDF "
+"pipelines."
+msgstr "HTML और PDF पाइपलाइनों में प्रारूप-सुरक्षित मूल्यांकन और कस्टम निर्देश।"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:56
+#: ../../tutorial/first-project.rst:54
+msgid "1. Create the project"
+msgstr "1. प्रोजेक्ट बनाएँ"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:59
+msgid "Start in a clean directory and run:"
+msgstr "एक स्वच्छ निर्देशिका में शुरू करें और चलाएँ:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:65
+msgid "Move into the new directory:"
+msgstr "नई निर्देशिका में प्रवेश करें:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:71
+msgid "2. Declare custom domain directives in conf.toml"
+msgstr "2. conf.toml में कस्टम डोमेन निर्देश घोषित करें"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:74
+msgid ""
+"A project often needs structured entities that standard domains (such as "
+"Python or C++) do not cover. Rather than requiring a Python runtime or "
+"custom extension compiler, Guidedog lets us declare custom directives and "
+"roles in ``conf.toml``."
+msgstr "परियोजनाओं को अक्सर ऐसी संरचित संस्थाओं की आवश्यकता होती है जिन्हें मानक डोमेन (जैसे Python या C++) कवर नहीं करते। Python रनटाइम या कंपाइलर की आवश्यकता के बिना, Guidedog हमें सीधे ``conf.toml`` में कस्टम निर्देश और भूमिकाएँ घोषित करने देता है।"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:78
+msgid ""
+"Open ``conf.toml`` and append the declaration for a ``metric`` directive:"
+msgstr "``conf.toml`` खोलें और ``metric`` निर्देश की घोषणा जोड़ें:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:89
+msgid ""
+"This single declaration establishes a complete syntax contract: * ``.. "
+"metric:: p99_latency (milliseconds)`` describes the metric. * "
+"``:metric:`p99_latency``` links to the definition from any document. * "
+"The index table automatically generates a pair index entry "
+"(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
+"semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
+"typesets a styled description entry with back-references in the appendix."
+msgstr "यह एकल घोषणा एक पूर्ण सिंटैक्स अनुबंध स्थापित करती है: * ``.. metric:: p99_latency (milliseconds)`` मीट्रिक का वर्णन करता है। * ``:metric:`p99_latency``` किसी भी दस्तावेज़ से इस परिभाषा से जुड़ता है। * अनुक्रमणिका तालिका स्वचालित रूप से युग्म प्रविष्टि (``p99_latency; cluster telemetry``) बनाती है। * HTML में Guidedog CSS एंकर हुक के साथ अर्थपूर्ण परिभाषा सूची बनाता है। * PDF में Guidedog परिशिष्ट में संदर्भों के साथ विवरण प्रविष्टि तैयार करता है।"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:96
+msgid "3. Author the document with format guards"
+msgstr "3. प्रारूप सुरक्षा के साथ दस्तावेज़ लिखें"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:99
+msgid "Replace the contents of ``index.rst`` with the following document:"
+msgstr "``index.rst`` की सामग्री को निम्न दस्तावेज़ से बदलें:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:144
+#| msgid "7. Build and inspect both forms"
+msgid "4. Build and inspect both publications"
+msgstr "4. दोनों प्रकाशनों का निर्माण और निरीक्षण करें"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:147
+msgid "Build the HTML website:"
+msgstr "HTML वेबसाइट बनाएँ:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:153
+msgid ""
+"Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. "
+"Notice that: * The ``:metric:`p99_latency``` reference resolves directly "
+"to the definition anchor. * The interactive calculator slider is rendered "
+"and active in the web DOM. * The PDF callout block is omitted entirely, "
+"without emitting warnings."
+msgstr "ब्राउज़र में ``_build/html/index.html`` खोलें या ``guidedog serve`` चलाएँ। ध्यान दें: * ``:metric:`p99_latency``` संदर्भ सीधे परिभाषा एंकर से जुड़ता है। * इंटरैक्टिव कैलकुलेटर स्लाइडर वेब DOM में सक्रिय है। * PDF कॉलआउट ब्लॉक बिना किसी चेतावनी के पूरी तरह छोड़ दिया गया है।"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:158
+#| msgid "6. Wrap the PDF book"
+msgid "Now build the PDF book:"
+msgstr "अब PDF पुस्तक बनाएँ:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:164
+msgid ""
+"Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
+"``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are "
+"completely absent. * The Typst ``#rect(...)`` vector box is typeset with "
+"native margins, borders, and typography. * The appendix includes an index "
+"entry under ``p99_latency``."
+msgstr "``_build/pdf/telemetry-en.pdf`` (या ``_build/pdf/book-en.typ``) खोलें। ध्यान दें: * स्लाइडर और रॉ HTML पूरी तरह अनुपस्थित हैं। * Typst ``#rect(...)`` वेक्टर बॉक्स मूल मार्जिन, बॉर्डर और टाइपोग्राफी के साथ तैयार है। * परिशिष्ट में ``p99_latency`` के अंतर्गत अनुक्रमणिका प्रविष्टि शामिल है।"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:169
+msgid "5. Custom Typst functions in theme templates"
+msgstr "5. थीम टेम्प्लेट में कस्टम Typst फ़ंक्शन"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:172
+msgid ""
+"When you have formatting patterns used across many chapters, define a "
+"reusable Typst function in ``_templates/theme.typ``:"
+msgstr "जब आपके पास कई अध्यायों में उपयोग किए जाने वाले फ़ॉर्मेटिंग पैटर्न हों, तो ``_templates/theme.typ`` में एक पुन: प्रयोज्य Typst फ़ंक्शन परिभाषित करें:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:185
+msgid "In any document, invoke the function inside a raw Typst block:"
+msgstr "किसी भी दस्तावेज़ में, रॉ Typst ब्लॉक के अंदर फ़ंक्शन को लागू करें:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:195
+msgid ""
+"This keeps your reStructuredText prose focused on documentation while "
+"granting full access to Typst's typesetting engine for printed "
+"publications."
+msgstr "यह आपके reStructuredText गद्य को दस्तावेज़ीकरण पर केंद्रित रखता है और मुद्रित प्रकाशनों के लिए Typst के टाइपसेटिंग इंजन की पूरी शक्ति प्रदान करता है।"
+
 #: ../../tutorial/first-project.rst:1
 msgid "Our first project"
 msgstr "हमारा पहला प्रोजेक्ट"
@@ -633,10 +767,6 @@ msgstr "प्रोजेक्ट सोर्स और template Guidedog स
 #: ../../tutorial/first-project.rst:34
 msgid "How Guidedog compiles a project into an HTML website and a PDF book."
 msgstr "प्रोजेक्ट से HTML साइट और PDF किताब बनाने का क्रम।"
-
-#: ../../tutorial/first-project.rst:54
-msgid "1. Create the project"
-msgstr "1. प्रोजेक्ट बनाएँ"
 
 #: ../../tutorial/first-project.rst:57
 msgid ""
@@ -859,3 +989,4 @@ msgid ""
 msgstr ""
 "हम इन पेजों को क्रम से पढ़ते हैं। हर कदम पर ऐसा नतीजा मिलता है जिसे हम "
 "जाँच सकते हैं।"
+

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -42,11 +42,38 @@ msgstr ""
 
 #: ../../templates.rst:15
 msgid ""
-"``_templates/layout.html`` defines the HTML website structure (Jinja)."
+"``_templates/layout.html`` defines the base HTML website structure "
+"(Jinja), while built-in ``article.html``, ``collection.html``, and "
+"``landing.html`` extend it for articles, archives, and landing pages."
 msgstr ""
-"``_templates/layout.html`` HTML वेबसाइट की संरचना तय करता है (Jinja)।"
+"``_templates/layout.html`` आधार HTML वेबसाइट संरचना (Jinja) तय करता है, "
+"जबकि अंतर्निहित ``article.html``, ``collection.html`` और ``landing.html`` "
+"लेखों, आर्काइव और लैंडिंग पेजों के लिए उसका विस्तार करते हैं।"
 
 #: ../../templates.rst:16
+msgid ""
+"``_templates/theme.typ`` defines the shared PDF palette, fonts and "
+"language-aware content wrapper."
+msgstr ""
+"``_templates/theme.typ`` साझा PDF पैलेट, फ़ॉन्ट और भाषा-सचेत सामग्री रैपर "
+"परिभाषित करता है।"
+
+#: ../../templates.rst:17
+msgid ""
+"``_templates/discussion.typ`` defines the discussion record layout "
+"(Typst)."
+msgstr ""
+"``_templates/discussion.typ`` चर्चा रिकॉर्ड का लेआउट तय करता है (Typst)।"
+
+#: ../../templates.rst:18
+msgid ""
+"``_templates/article.typ`` defines the standalone print-quality article "
+"layout for pages with ``:pdf: article`` (Typst)."
+msgstr ""
+"``_templates/article.typ`` ``:pdf: article`` वाले पेजों के लिए स्वतंत्र, "
+"प्रिंट-गुणवत्ता वाले लेख का लेआउट तय करता है (Typst)।"
+
+#: ../../templates.rst:19
 msgid ""
 "``_templates/book.typ`` defines the PDF book layout, typography, and "
 "cover page (Typst)."
@@ -54,7 +81,7 @@ msgstr ""
 "``_templates/book.typ`` PDF किताब का लेआउट, टाइपोग्राफ़ी और कवर पेज तय "
 "करता है (Typst)।"
 
-#: ../../templates.rst:17
+#: ../../templates.rst:20
 msgid ""
 "``_static/guidedog.css`` and ``_static/guidedog.js`` supply default "
 "styles and client behaviors."
@@ -62,48 +89,53 @@ msgstr ""
 "``_static/guidedog.css`` और ``_static/guidedog.js`` डिफ़ॉल्ट स्टाइल और "
 "ब्राउज़र के व्यवहार देते हैं।"
 
-#: ../../templates.rst:19
+#: ../../templates.rst:22
 msgid ""
-"Templates live in the project directory. They are not hidden in an "
-"external package or binary cache. We edit them directly, rebuild with "
-"``guidedog build``, and preview changes with ``guidedog serve``."
+"Templates live in the project directory or in a content-addressed pinned "
+"theme archive. They are not hidden in an external package or binary "
+"cache. We edit them directly, rebuild with ``guidedog build``, and "
+"preview changes with ``guidedog serve``."
 msgstr ""
-"template प्रोजेक्ट फ़ोल्डर में रहते हैं। वे किसी बाहरी पैकेज या बाइनरी "
-"कैश में छिपे नहीं होते। हम उन्हें सीधे बदलते हैं, ``guidedog build`` से "
-"दोबारा build करते हैं और ``guidedog serve`` से बदलावों का प्रीव्यू देखते "
-"हैं।"
+"template प्रोजेक्ट फ़ोल्डर में या सामग्री-आधारित पिन किए गए थीम आर्काइव में "
+"रहते हैं। वे किसी बाहरी पैकेज या बाइनरी कैश में छिपे नहीं होते। हम उन्हें सीधे "
+"बदलते हैं, ``guidedog build`` से दोबारा build करते हैं और ``guidedog serve`` "
+"से बदलावों का प्रीव्यू देखते हैं।"
 
-#: ../../templates.rst:23
+#: ../../templates.rst:24
 msgid "HTML templates"
 msgstr "HTML template"
 
-#: ../../templates.rst:26
+#: ../../templates.rst:27
 msgid ""
-"Guidedog renders ``layout.html`` as the root page template using a "
-"built-in Jinja engine. Split a layout into partials and macro libraries. "
-"Inherit shared blocks from a base layout. Each file then has one job."
+"Guidedog renders ``layout.html`` (or a page's selected ``:template:`` "
+"such as ``article.html`` or ``landing.html``) using its built-in Jinja "
+"engine. Split a layout into partials and macro libraries. Inherit shared "
+"blocks from a base layout. Each file then has one job."
 msgstr ""
-"अंतर्निहित Jinja ``layout.html`` को मुख्य पेज template बनाता है। हिस्सों "
-"और मैक्रो लाइब्रेरी में बाँटें, साझा ब्लॉक बेस से लें, ताकि हर फ़ाइल का "
-"एक काम हो।"
+"Guidedog अपने अंतर्निहित Jinja इंजन से ``layout.html`` (या पेज के चुने गए "
+"``:template:`` जैसे ``article.html`` या ``landing.html``) को रेंडर करता है। "
+"लेआउट को हिस्सों और मैक्रो लाइब्रेरी में बाँटें। साझा ब्लॉक बेस लेआउट से लें। "
+"तब हर फ़ाइल का एक ही काम होता है।"
 
-#: ../../templates.rst:32
+#: ../../templates.rst:31
 msgid ""
-"Built-in theme layout is extended by project templates with block "
-"overrides and partial includes."
+"Project templates override pinned theme archives and built-in layouts, "
+"composing partials and macros into complete HTML pages."
 msgstr ""
-"प्रोजेक्ट template अंतर्निहित लेआउट से ब्लॉक लेते हैं और हिस्से जोड़ते "
-"हैं।"
+"प्रोजेक्ट template पिन किए गए थीम आर्काइव और अंतर्निहित लेआउट को ओवरराइड करते हैं, "
+"तथा हिस्सों और मैक्रो को जोड़कर पूरे HTML पेज बनाते हैं।"
 
-#: ../../templates.rst:32
-msgid "Template inheritance and block composition in Guidedog."
-msgstr "template इनहेरिटेंस और संयोजन।"
+#: ../../templates.rst:31
+msgid ""
+"Three-tier template lookup, inheritance, and block composition in "
+"Guidedog."
+msgstr "Guidedog में तीन-स्तरीय template खोज, इनहेरिटेंस और ब्लॉक संयोजन।"
 
-#: ../../templates.rst:51
+#: ../../templates.rst:53
 msgid "Modular template structure"
 msgstr "मॉड्यूलर template संरचना"
 
-#: ../../templates.rst:54
+#: ../../templates.rst:56
 msgid ""
 "A project can organize templates across any number of files and "
 "subdirectories under the directories listed in ``templates_path`` (by "
@@ -112,7 +144,7 @@ msgstr ""
 "``templates_path`` के फ़ोल्डरों में template को कई फ़ाइलों और उपफ़ोल्डरों "
 "में रख सकते हैं। डिफ़ॉल्ट मान ``[\"_templates\"]`` है:"
 
-#: ../../templates.rst:73
+#: ../../templates.rst:75
 msgid ""
 "Guidedog scans all files and subdirectories within ``templates_path``. "
 "Any file or partial can be included or imported using paths relative to "
@@ -121,11 +153,11 @@ msgstr ""
 "Guidedog ``templates_path`` के सभी फ़ाइल और उपफ़ोल्डर खोजता है। शामिल या "
 "इम्पोर्ट करने का पथ इन्हीं फ़ोल्डरों के सापेक्ष होता है:"
 
-#: ../../templates.rst:77 ../../templates.rst:112
+#: ../../templates.rst:79 ../../templates.rst:114
 msgid "_templates/layout.html"
 msgstr "_templates/layout.html"
 
-#: ../../templates.rst:89
+#: ../../templates.rst:91
 msgid ""
 "Jinja macros can also be defined in separate files and imported wherever "
 "needed:"
@@ -133,19 +165,19 @@ msgstr ""
 "Jinja मैक्रो भी अलग फ़ाइलों में परिभाषित करके ज़रूरत की जगह इम्पोर्ट कर "
 "सकते हैं:"
 
-#: ../../templates.rst:92
+#: ../../templates.rst:94
 msgid "_templates/macros/components.html"
 msgstr "_templates/macros/components.html"
 
-#: ../../templates.rst:99
+#: ../../templates.rst:101
 msgid "Using macros in any template"
 msgstr "template में मैक्रो का इस्तेमाल"
 
-#: ../../templates.rst:104
+#: ../../templates.rst:106
 msgid "Theme inheritance with ``!layout.html``"
 msgstr "``!layout.html`` से theme इनहेरिट करना"
 
-#: ../../templates.rst:107
+#: ../../templates.rst:109
 msgid ""
 "Sometimes we want to change only some sections of the default theme, not "
 "write the whole page structure from scratch. Then we inherit from "
@@ -155,7 +187,7 @@ msgstr ""
 "ही हिस्से बदलना चाहते हैं। तब हम Sphinx के विस्मयादिबोधक चिह्न वाले "
 "सिंटैक्स से Guidedog के अंतर्निहित theme लेआउट को इनहेरिट करते हैं:"
 
-#: ../../templates.rst:128
+#: ../../templates.rst:130
 msgid ""
 "``{% extends \"!layout.html\" %}`` (or ``{% extends \"basic/layout.html\" "
 "%}``) tells the loader to fetch the theme's underlying template. Without "
@@ -167,7 +199,7 @@ msgstr ""
 "प्रोजेक्ट का अपना ``_templates/layout.html`` ही फिर से लोड करता, और यह "
 "बार-बार होता रहता।"
 
-#: ../../templates.rst:132
+#: ../../templates.rst:134
 msgid ""
 "Inside any overridden block, ``{{ super() }}`` renders the parent block's "
 "default markup. So we can add markup before or after it without copying "
@@ -177,11 +209,11 @@ msgstr ""
 "डिफ़ॉल्ट मार्कअप रेंडर करता है। इसलिए हम मौजूदा कोड कॉपी किए बिना उसके "
 "पहले या बाद में मार्कअप जोड़ सकते हैं।"
 
-#: ../../templates.rst:135
+#: ../../templates.rst:137
 msgid "Layout blocks"
 msgstr "लेआउट ब्लॉक"
 
-#: ../../templates.rst:138
+#: ../../templates.rst:140
 msgid ""
 "Guidedog's built-in ``layout.html`` defines blocks matching Sphinx's "
 "conventions:"
@@ -189,35 +221,35 @@ msgstr ""
 "अंतर्निहित ``layout.html`` में Sphinx की परंपरा के अनुसार ब्लॉक परिभाषित "
 "हैं:"
 
-#: ../../templates.rst:144
+#: ../../templates.rst:146
 msgid "Block"
 msgstr "ब्लॉक"
 
-#: ../../templates.rst:145
+#: ../../templates.rst:147
 msgid "Purpose"
 msgstr "उद्देश्य"
 
-#: ../../templates.rst:146
+#: ../../templates.rst:148
 msgid "``doctype``"
 msgstr "``doctype``"
 
-#: ../../templates.rst:147
+#: ../../templates.rst:149
 msgid "Document type declaration (default: ``<!DOCTYPE html>``)."
 msgstr "दस्तावेज़ प्रकार की घोषणा। डिफ़ॉल्ट ``<!DOCTYPE html>`` है।"
 
-#: ../../templates.rst:148
+#: ../../templates.rst:150
 msgid "``htmltitle``"
 msgstr "``htmltitle``"
 
-#: ../../templates.rst:149
+#: ../../templates.rst:151
 msgid "The ``<title>`` element inside ``<head>``."
 msgstr "``<head>`` के भीतर ``<title>`` तत्व।"
 
-#: ../../templates.rst:150
+#: ../../templates.rst:152
 msgid "``linktags``"
 msgstr "``linktags``"
 
-#: ../../templates.rst:151
+#: ../../templates.rst:153
 msgid ""
 "Navigation and meta link tags (``favicon``, ``index``, ``search``, "
 "``prev``, ``next``)."
@@ -225,168 +257,201 @@ msgstr ""
 "नेविगेशन और मेटा लिंक: ``favicon``, ``index``, ``search``, ``prev``, "
 "``next``।"
 
-#: ../../templates.rst:152
+#: ../../templates.rst:154
 msgid "``css``"
 msgstr "``css``"
 
-#: ../../templates.rst:153
+#: ../../templates.rst:155
 msgid "Stylesheet link tags and inline CSS root variables."
 msgstr "स्टाइलशीट लिंक और इनलाइन CSS के मूल चर।"
 
-#: ../../templates.rst:154
+#: ../../templates.rst:156
 msgid "``scripts``"
 msgstr "``scripts``"
 
-#: ../../templates.rst:155
+#: ../../templates.rst:157
 msgid "JavaScript tags, including search indexing and interactive features."
 msgstr "खोज इंडेक्स और इंटरैक्टिव सुविधाओं वाले JavaScript tag।"
 
-#: ../../templates.rst:156
+#: ../../templates.rst:158
 msgid "``extrahead``"
 msgstr "``extrahead``"
 
-#: ../../templates.rst:157
+#: ../../templates.rst:159
 msgid ""
 "Empty insertion point at the end of ``<head>`` for analytics, fonts, or "
 "custom meta tags."
 msgstr ""
 "फ़ॉन्ट, विश्लेषण या अपने मेटा tag जोड़ने के लिए ``<head>`` के अंत की जगह।"
 
-#: ../../templates.rst:158
+#: ../../templates.rst:160
 msgid "``header``"
 msgstr "``header``"
 
-#: ../../templates.rst:159
+#: ../../templates.rst:161
 msgid "Header slot rendered immediately before the main navigation bar."
 msgstr "मुख्य नेविगेशन से ठीक पहले का हेडर स्थान।"
 
-#: ../../templates.rst:160
+#: ../../templates.rst:162
 msgid "``relbar1``"
 msgstr "``relbar1``"
 
-#: ../../templates.rst:161
+#: ../../templates.rst:163
 msgid ""
 "Top navigation bar containing branding, version badge, search box, and "
 "theme toggle."
 msgstr "नाम, संस्करण, खोज और theme बदलने वाली ऊपरी नेविगेशन पट्टी।"
 
-#: ../../templates.rst:162
+#: ../../templates.rst:164
 msgid "``rootrellink``"
 msgstr "``rootrellink``"
 
-#: ../../templates.rst:163
+#: ../../templates.rst:165
 msgid "Insertion point in navigation bar before related links."
 msgstr "संबंधित लिंक से पहले नेविगेशन में जोड़ने की जगह।"
 
-#: ../../templates.rst:164
+#: ../../templates.rst:166
 msgid "``relbaritems``"
 msgstr "``relbaritems``"
 
-#: ../../templates.rst:165
+#: ../../templates.rst:167
 msgid "Custom items inserted into the navigation bar."
 msgstr "नेविगेशन पट्टी में अपने अतिरिक्त आइटम।"
 
-#: ../../templates.rst:166
+#: ../../templates.rst:168
 msgid "``sidebar1``"
 msgstr "``sidebar1``"
 
-#: ../../templates.rst:167
+#: ../../templates.rst:169
 msgid "Left-hand navigation sidebar container."
 msgstr "बाईं नेविगेशन पट्टी का कंटेनर।"
 
-#: ../../templates.rst:168
+#: ../../templates.rst:170
 msgid "``sidebartoc``"
 msgstr "``sidebartoc``"
 
-#: ../../templates.rst:169
+#: ../../templates.rst:171
 msgid "Table of contents navigation tree rendered inside ``sidebar1``."
 msgstr "``sidebar1`` के भीतर विषय-सूची का नेविगेशन ट्री।"
 
-#: ../../templates.rst:170
+#: ../../templates.rst:172
 msgid "``breadcrumbs``"
 msgstr "``breadcrumbs``"
 
-#: ../../templates.rst:171
+#: ../../templates.rst:173
 msgid "Hierarchical breadcrumb navigation path above the article content."
 msgstr "मुख्य टेक्स्ट के ऊपर क्रमबद्ध नेविगेशन पथ।"
 
-#: ../../templates.rst:172
+#: ../../templates.rst:174
 msgid "``document``"
 msgstr "``document``"
 
-#: ../../templates.rst:173
+#: ../../templates.rst:175
 msgid "Article wrapper enclosing the page body."
 msgstr "मुख्य टेक्स्ट को घेरने वाला कंटेनर।"
 
-#: ../../templates.rst:174 ../../templates.rst:207 ../../templates.rst:382
+#: ../../templates.rst:176 ../../templates.rst:211 ../../templates.rst:389
 msgid "``body``"
 msgstr "``body``"
 
-#: ../../templates.rst:175
+#: ../../templates.rst:177
 msgid "Rendered HTML content of the current document (``{{ body }}``)."
 msgstr "वर्तमान दस्तावेज़ का रेंडर किया HTML टेक्स्ट, ``{{ body }}``।"
 
-#: ../../templates.rst:176
+#: ../../templates.rst:178
 msgid "``relbar2``"
 msgstr "``relbar2``"
 
-#: ../../templates.rst:177
+#: ../../templates.rst:179
 msgid "Bottom pagination controls offering previous and next chapter links."
 msgstr "पिछले और अगले अध्याय के लिंक वाला निचला नेविगेशन।"
 
-#: ../../templates.rst:178
+#: ../../templates.rst:180
 msgid "``footer``"
 msgstr "``footer``"
 
-#: ../../templates.rst:179
+#: ../../templates.rst:181
 msgid ""
 "Page footer containing copyright notice, last updated timestamp, and "
 "source links."
 msgstr "कॉपीराइट, अद्यतन समय और सोर्स लिंक वाला पादलेख।"
 
-#: ../../templates.rst:180
+#: ../../templates.rst:182
 msgid "``sidebar2``"
 msgstr "``sidebar2``"
 
-#: ../../templates.rst:181
+#: ../../templates.rst:183
 msgid ""
 "Right-hand secondary rail containing the local page outline (\"On this "
 "page\")."
 msgstr "वर्तमान पेज की रूपरेखा दिखाने वाली दाईं पट्टी।"
 
-#: ../../templates.rst:183
+#: ../../templates.rst:185
 msgid "Finding templates"
 msgstr "template खोजना"
 
-#: ../../templates.rst:186
-msgid ""
-"Guidedog searches each directory listed in ``conf.toml`` under "
-"``templates_path`` in order, followed by its built-in templates. Template "
-"names are relative to the directories in ``templates_path``. They cannot "
-"escape those directories with parent directory traversal (``..``)."
-msgstr ""
-"Guidedog ``conf.toml`` में ``templates_path`` के अंतर्गत दिए हर फ़ोल्डर "
-"को क्रम से खोजता है, फिर अपने अंतर्निहित template। template के नाम "
-"``templates_path`` के फ़ोल्डरों के सापेक्ष होते हैं। पैरेंट फ़ोल्डर में "
-"जाकर (``..``) वे इन फ़ोल्डरों से बाहर नहीं निकल सकते।"
+#: ../../templates.rst:188
+msgid "Guidedog searches three tiers in order:"
+msgstr "Guidedog क्रम से तीन स्तरों में खोज करता है:"
 
 #: ../../templates.rst:190
 msgid ""
-"Every file and subdirectory in ``templates_path`` is an input dependency "
-"of the build. When a template or partial file is added, edited, or "
-"removed, ``guidedog build`` and the live server ``guidedog serve`` detect "
-"the change and render the site again."
+"Each project directory listed in ``conf.toml`` under ``templates_path`` "
+"(by default ``[\"_templates\"]``)."
 msgstr ""
-"``templates_path`` की हर फ़ाइल और सब-फ़ोल्डर build की इनपुट निर्भरता है। "
-"जब कोई template या पार्शियल फ़ाइल जोड़ी, बदली या हटाई जाती है, तो "
-"``guidedog build`` और लाइव सर्वर ``guidedog serve`` बदलाव पहचानकर साइट "
-"फिर से रेंडर करते हैं।"
+"``conf.toml`` में ``templates_path`` के अंतर्गत दिया गया हर प्रोजेक्ट फ़ोल्डर "
+"(डिफ़ॉल्ट रूप से ``[\"_templates\"]``)।"
 
-#: ../../templates.rst:195
+#: ../../templates.rst:191
+msgid ""
+"The verified pinned theme directory ``_themes/<tree-sha256>/_templates`` "
+"when ``site.theme = true``."
+msgstr ""
+"जब ``site.theme = true`` हो, तब सत्यापित पिन किया गया थीम फ़ोल्डर "
+"``_themes/<tree-sha256>/_templates``।"
+
+#: ../../templates.rst:192
+msgid ""
+"Guidedog's embedded built-in templates (``layout.html``, ``page.html``, "
+"``article.html``, ``collection.html``, ``landing.html``, ``search.html``, "
+"``genindex.html``, ``modindex.html``)."
+msgstr ""
+"Guidedog के अंतर्निहित बिल्ट-इन template (``layout.html``, ``page.html``, "
+"``article.html``, ``collection.html``, ``landing.html``, ``search.html``, "
+"``genindex.html``, ``modindex.html``)।"
+
+#: ../../templates.rst:194
+msgid ""
+"Template names are relative to the template directories. They cannot "
+"escape those directories with parent directory traversal (``..``)."
+msgstr ""
+"template के नाम template फ़ोल्डरों के सापेक्ष होते हैं। पैरेंट फ़ोल्डर में "
+"जाकर (``..``) वे उन फ़ोल्डरों से बाहर नहीं निकल सकते।"
+
+#: ../../templates.rst:196
+msgid ""
+"During rendering, the Jinja environment records the content digest of "
+"every template, parent layout, included partial, and imported macro file "
+"that each page loads. When a template or partial file is edited, "
+"``guidedog build`` and ``guidedog serve`` rebuild only the pages whose "
+"template chain loaded that file. Editing ``article.html`` rebuilds "
+"articles without rebuilding documentation chapters that render "
+"``layout.html`` directly; editing ``layout.html`` rebuilds every page "
+"that extends it."
+msgstr ""
+"रेंडरिंग के दौरान, Jinja वातावरण हर उस template, पैरेंट लेआउट, शामिल किए गए "
+"पार्शियल और इम्पोर्ट किए गए मैक्रो फ़ाइल का सामग्री डाइजेस्ट दर्ज करता है जिसे "
+"प्रत्येक पेज लोड करता है। जब किसी template या पार्शियल फ़ाइल में संपादन होता है, तो "
+"``guidedog build`` और ``guidedog serve`` केवल उन्हीं पेजों को दोबारा बनाते हैं "
+"जिनकी template शृंखला ने उस फ़ाइल को लोड किया था। ``article.html`` में संपादन करने "
+"पर केवल लेख दोबारा बनते हैं, सीधे ``layout.html`` रेंडर करने वाले दस्तावेज़ अध्याय "
+"नहीं; ``layout.html`` में संपादन करने पर उसका विस्तार करने वाला हर पेज दोबारा बनता है।"
+
+#: ../../templates.rst:199
 msgid "Page variables"
 msgstr "पेज के वेरिएबल"
 
-#: ../../templates.rst:198
+#: ../../templates.rst:202
 msgid ""
 "Where Sphinx has a name for a variable, Guidedog uses it, so parts of "
 "Sphinx themes carry over."
@@ -394,31 +459,31 @@ msgstr ""
 "Sphinx के मौजूदा वेरिएबल नाम Guidedog भी रखता है, जिससे theme के कुछ "
 "हिस्से लाए जा सकते हैं।"
 
-#: ../../templates.rst:205
+#: ../../templates.rst:209
 msgid "Variable"
 msgstr "वेरिएबल"
 
-#: ../../templates.rst:206 ../../templates.rst:363
+#: ../../templates.rst:210 ../../templates.rst:370
 msgid "Value"
 msgstr "मान"
 
-#: ../../templates.rst:208
+#: ../../templates.rst:212
 msgid "The document, as HTML."
 msgstr "HTML में दस्तावेज़।"
 
-#: ../../templates.rst:209 ../../templates.rst:364
+#: ../../templates.rst:213 ../../templates.rst:371
 msgid "``title``"
 msgstr "``title``"
 
-#: ../../templates.rst:210
+#: ../../templates.rst:214
 msgid "The document's title."
 msgstr "दस्तावेज़ का शीर्षक।"
 
-#: ../../templates.rst:211
+#: ../../templates.rst:215
 msgid "``pagename``, ``docname``"
 msgstr "``pagename``\\ , ``docname``"
 
-#: ../../templates.rst:212
+#: ../../templates.rst:216
 msgid ""
 "The document's name, such as ``usage/install``. On a page that is no "
 "document's, ``docname`` is empty and ``pagename`` is the page's name, as "
@@ -429,27 +494,27 @@ msgstr ""
 "``docname`` खाली और ``pagename`` पेज नाम है: Sphinx की तरह ``genindex``\\ "
 ", ``py-modindex``\\ , ``search`` या template पेज का नाम।"
 
-#: ../../templates.rst:216
+#: ../../templates.rst:220
 msgid "``toc``"
 msgstr "``toc``"
 
-#: ../../templates.rst:217
+#: ../../templates.rst:221
 msgid "The navigation built from the toctrees, as HTML."
 msgstr "विषय-सूची वृक्ष से बना HTML नेविगेशन।"
 
-#: ../../templates.rst:218
+#: ../../templates.rst:222
 msgid "``outline``"
 msgstr "``outline``"
 
-#: ../../templates.rst:219
+#: ../../templates.rst:223
 msgid "The document's own sections, as HTML; empty when it has none."
 msgstr "दस्तावेज़ के खंड HTML में; खंड न हों तो खाली।"
 
-#: ../../templates.rst:220
+#: ../../templates.rst:224
 msgid "``prev``, ``next``"
 msgstr "``prev``\\ , ``next``"
 
-#: ../../templates.rst:221
+#: ../../templates.rst:225
 msgid ""
 "The neighbouring pages in reading order, with ``url`` (also ``link``) and "
 "``title``; none at either end."
@@ -457,61 +522,105 @@ msgstr ""
 "पढ़ने के क्रम में पड़ोसी पेज, ``url`` (या ``link``\\ ) और ``title`` सहित; "
 "आरंभ और अंत में पड़ोसी नहीं होता।"
 
-#: ../../templates.rst:223
+#: ../../templates.rst:227
+msgid "``page``"
+msgstr "``page``"
+
+#: ../../templates.rst:228
+msgid ""
+"``page.meta`` contains ``date``, ``updated``, ``publish_at``, "
+"``expires_at``, ``draft``, ``authors``, ``category``, ``tags``, "
+"``series``, ``summary``, ``template``, ``pdf``, ``pdf_url`` and "
+"``nosidebar``. Dated pages also provide ``page.word_count``, "
+"``page.reading_minutes``, ``page.older``, ``page.newer`` and "
+"``page.taxonomies``. Neighbors contain ``title``, ``url`` and ``date``, "
+"or are ``None`` at either end. Each enabled taxonomy maps to a list of "
+"``name`` and ``url`` entries."
+msgstr ""
+"``page.meta`` में ``date``, ``updated``, ``publish_at``, ``expires_at``, "
+"``draft``, ``authors``, ``category``, ``tags``, ``series``, ``summary``, "
+"``template``, ``pdf``, ``pdf_url`` और ``nosidebar`` होते हैं। दिनांकित पेज "
+"``page.word_count``, ``page.reading_minutes``, ``page.older``, ``page.newer`` "
+"और ``page.taxonomies`` भी देते हैं। पड़ोसी प्रविष्टियों में ``title``, ``url`` और "
+"``date`` होते हैं, या किसी भी छोर पर ``None`` होता है। हर सक्षम वर्गीकरण (taxonomy) "
+"``name`` और ``url`` प्रविष्टियों की सूची से जुड़ता है।"
+
+#: ../../templates.rst:229
+msgid "``collection``"
+msgstr "``collection``"
+
+#: ../../templates.rst:230
+msgid ""
+"Generated archive pages provide ``collection.title``, "
+"``collection.output``, ``collection.page`` (one-based), "
+"``collection.pages``, ``collection.previous_url``, "
+"``collection.next_url`` and ``collection.posts``. Each post contains "
+"``title``, ``docname``, ``date``, ``url``, ``summary`` and ``meta``. "
+"Previous and next URLs are relative, or ``None`` at either end. "
+"Collection feeds use RSS and Atom."
+msgstr ""
+"जनरेट किए गए आर्काइव पेज ``collection.title``, ``collection.output``, "
+"``collection.page`` (1 से शुरू), ``collection.pages``, "
+"``collection.previous_url``, ``collection.next_url`` और ``collection.posts`` "
+"देते हैं। हर पोस्ट में ``title``, ``docname``, ``date``, ``url``, ``summary`` "
+"और ``meta`` होते हैं। पिछले और अगले URL सापेक्ष होते हैं, या किसी भी छोर पर "
+"``None`` होते हैं। संग्रह फ़ीड RSS और Atom का उपयोग करते हैं।"
+
+#: ../../templates.rst:231
 msgid "``project``, ``version``, ``release``, ``copyright``, ``language``"
 msgstr ""
 "``project``\\ , ``version``\\ , ``release``\\ , ``copyright``\\ , "
 "``language``"
 
-#: ../../templates.rst:224
+#: ../../templates.rst:232
 msgid "The settings of the same names."
 msgstr "इसी नाम के विकल्प।"
 
-#: ../../templates.rst:225
+#: ../../templates.rst:233
 msgid "``html_title``, ``docstitle``"
 msgstr "``html_title``\\ , ``docstitle``"
 
-#: ../../templates.rst:226
+#: ../../templates.rst:234
 msgid "``html_title``, by default \"<project> <release> documentation\"."
 msgstr "``html_title``\\ ; डिफ़ॉल्ट “<project> <release> documentation”।"
 
-#: ../../templates.rst:227
+#: ../../templates.rst:235
 msgid "``html_short_title``, ``shorttitle``"
 msgstr "``html_short_title``\\ , ``shorttitle``"
 
-#: ../../templates.rst:228
+#: ../../templates.rst:236
 msgid "``html_short_title``."
 msgstr "``html_short_title``\\ ."
 
-#: ../../templates.rst:229
+#: ../../templates.rst:237
 msgid "``root_doc``, ``master_doc``"
 msgstr "``root_doc``\\ , ``master_doc``"
 
-#: ../../templates.rst:230
+#: ../../templates.rst:238
 msgid "The root document's name."
 msgstr "रूट दस्तावेज़ का नाम।"
 
-#: ../../templates.rst:231
+#: ../../templates.rst:239
 msgid "``pathto_root``"
 msgstr "``pathto_root``"
 
-#: ../../templates.rst:232
+#: ../../templates.rst:240
 msgid "The path from the page to the site's root, such as ``../``."
 msgstr "पेज से साइट के रूट का पथ, जैसे ``../``\\ ।"
 
-#: ../../templates.rst:233
+#: ../../templates.rst:241
 msgid "``root_url``, ``search_url``, ``genindex_url``"
 msgstr "``root_url``\\ , ``search_url``\\ , ``genindex_url``"
 
-#: ../../templates.rst:234
+#: ../../templates.rst:242
 msgid "Links to the root page, the search page, and the general index."
 msgstr "रूट पेज, खोज पेज और सामान्य इंडेक्स के लिंक।"
 
-#: ../../templates.rst:235
+#: ../../templates.rst:243
 msgid "``css_files``, ``js_files``"
 msgstr "``css_files``\\ , ``js_files``"
 
-#: ../../templates.rst:236
+#: ../../templates.rst:244
 msgid ""
 "Lists of files with a ``url``: Guidedog's own, then ``html_css_files`` "
 "and ``html_js_files``."
@@ -519,48 +628,48 @@ msgstr ""
 "``url`` वाली फ़ाइलों की सूची: पहले Guidedog की, फिर ``html_css_files`` और "
 "``html_js_files``\\ ।"
 
-#: ../../templates.rst:238
+#: ../../templates.rst:246
 msgid "``logo_url``, ``favicon_url``"
 msgstr "``logo_url``\\ , ``favicon_url``"
 
-#: ../../templates.rst:239
+#: ../../templates.rst:247
 msgid ""
 "``html_logo`` and ``html_favicon`` below ``_static``; empty when unset."
 msgstr ""
 "``_static`` के भीतर ``html_logo`` और ``html_favicon``\\ ; न दिए हों तो "
 "खाली।"
 
-#: ../../templates.rst:240
+#: ../../templates.rst:248
 msgid "``accent``"
 msgstr "``accent``"
 
-#: ../../templates.rst:241
+#: ../../templates.rst:249
 msgid "``html_theme_options.accent``, the theme's colour."
 msgstr "theme का रंग ``html_theme_options.accent``\\ ।"
 
-#: ../../templates.rst:242
+#: ../../templates.rst:250
 msgid "``sourcelink_url``"
 msgstr "``sourcelink_url``"
 
-#: ../../templates.rst:243
+#: ../../templates.rst:251
 msgid ""
 "The document's source below ``_sources``, when it is shown; otherwise "
 "empty."
 msgstr ""
 "सोर्स दिखाने पर ``_sources`` के भीतर दस्तावेज़ का सोर्स; अन्यथा खाली।"
 
-#: ../../templates.rst:244
+#: ../../templates.rst:252
 msgid "``last_updated``"
 msgstr "``last_updated``"
 
-#: ../../templates.rst:245
+#: ../../templates.rst:253
 msgid ""
 "The build date in ``html_last_updated_fmt`` when it is set; otherwise "
 "empty."
 msgstr ""
 "``html_last_updated_fmt`` हो तो उस रूप में build की तारीख़; अन्यथा खाली।"
 
-#: ../../templates.rst:246
+#: ../../templates.rst:254
 msgid ""
 "``show_copyright``, ``show_sphinx``, ``show_guidedog``, ``has_source``, "
 "``show_source``"
@@ -568,23 +677,23 @@ msgstr ""
 "``show_copyright``\\ , ``show_sphinx``\\ , ``show_guidedog``\\ , "
 "``has_source``\\ , ``show_source``"
 
-#: ../../templates.rst:248
+#: ../../templates.rst:256
 msgid "The ``html_show_*`` and ``html_copy_source`` settings."
 msgstr "``html_show_*`` और ``html_copy_source`` विकल्प।"
 
-#: ../../templates.rst:249
+#: ../../templates.rst:257
 msgid "``builder``, ``file_suffix``"
 msgstr "``builder``\\ , ``file_suffix``"
 
-#: ../../templates.rst:250
+#: ../../templates.rst:258
 msgid "The builder's name, such as ``html``, and the page suffix."
 msgstr "builder का नाम, जैसे ``html``\\ , और पेज का प्रत्यय।"
 
-#: ../../templates.rst:251
+#: ../../templates.rst:259
 msgid "every key of ``html_context``"
 msgstr "``html_context`` की हर कुंजी"
 
-#: ../../templates.rst:252
+#: ../../templates.rst:260
 msgid ""
 "Its value, with its type, as Sphinx passes a Python value: ``false`` is "
 "false in ``{% if %}``, numbers are numbers, arrays are lists, and tables "
@@ -600,7 +709,7 @@ msgstr ""
 "``html_context`` की लिटरल प्रविष्टियाँ ले आता है। जो मान ``conf.py`` गणना "
 "करके बनाता है, वह अपरिभाषित रहता है, और template उसे असत्य पढ़ता है।"
 
-#: ../../templates.rst:258
+#: ../../templates.rst:266
 msgid ""
 "``pathto`` is Sphinx's template function. ``pathto(\"usage/install\")`` "
 "is the URL of a document's page, and ``pathto(\"_static/logo.svg\", 1)`` "
@@ -619,11 +728,11 @@ msgstr ""
 "``index.html#document-usage-install`` देता है। ``genindex`` या template "
 "पेज जैसे गैर-दस्तावेज़ नाम हर builder में साइट के मूल पेज हैं।"
 
-#: ../../templates.rst:266
+#: ../../templates.rst:274
 msgid "Pages made from templates"
 msgstr "template से बने पेज"
 
-#: ../../templates.rst:269
+#: ../../templates.rst:277
 msgid ""
 "``html_additional_pages`` makes pages from a template alone, as in "
 "Sphinx. Each key is a page's name and each value a template in "
@@ -632,11 +741,11 @@ msgstr ""
 "``html_additional_pages`` Sphinx की तरह केवल template से पेज बनाता है। "
 "कुंजी पेज नाम है और मान ``templates_path`` का template:"
 
-#: ../../templates.rst:273
+#: ../../templates.rst:281
 msgid "conf.toml"
 msgstr "conf.toml"
 
-#: ../../templates.rst:281
+#: ../../templates.rst:289
 msgid ""
 "A page's template usually extends ``layout.html`` and fills its blocks, "
 "so the page looks like every other one:"
@@ -644,11 +753,11 @@ msgstr ""
 "पेज template आम तौर पर ``layout.html`` को एक्सटेंड करके उसके ब्लॉक भरता "
 "है, ताकि रूप बाकी पेजों जैसा हो:"
 
-#: ../../templates.rst:285
+#: ../../templates.rst:293
 msgid "_templates/indexcontent.html"
 msgstr "_templates/indexcontent.html"
 
-#: ../../templates.rst:294
+#: ../../templates.rst:302
 msgid ""
 "The template sees the variables of a page that is no document's: "
 "``pagename`` is the page's name (``index``), ``title`` and ``body`` are "
@@ -656,21 +765,23 @@ msgid ""
 "``html_context`` work as on any page. The page is written at the site's "
 "root as ``<name>.html`` (``html_file_suffix``) by ``html``, ``dirhtml``, "
 "and ``singlehtml``, and written again on every build. A change to its "
-"template, as to any file in ``templates_path``, rebuilds every page."
+"template rebuilds that page, and a change to a shared base template "
+"rebuilds every page that extends it."
 msgstr ""
 "template को ऐसे पेज के वेरिएबल मिलते हैं जो किसी दस्तावेज़ का नहीं है: "
 "``pagename`` पेज का नाम है (``index``), ``title`` और ``body`` खाली हैं, "
 "और ``pathto``, ``toc``, ``toctree()`` तथा ``html_context`` के मान किसी भी "
 "पेज की तरह काम करते हैं। ``html``, ``dirhtml`` और ``singlehtml`` यह पेज "
 "साइट के रूट पर ``<name>.html`` (``html_file_suffix``) के रूप में लिखते "
-"हैं, और हर build पर इसे फिर से लिखते हैं। ``templates_path`` की किसी भी "
-"फ़ाइल की तरह, इसके template में बदलाव से सारे पेज फिर से बनते हैं।"
+"हैं, और हर build पर इसे फिर से लिखते हैं। इसके template में बदलाव से केवल "
+"वही पेज दोबारा बनता है, और साझा बेस template में बदलाव से उसका विस्तार करने वाला "
+"हर पेज दोबारा बनता है।"
 
-#: ../../templates.rst:301
+#: ../../templates.rst:304
 msgid "Where the page goes, and where it differs from Sphinx:"
 msgstr "पेज कहाँ जाता है और Sphinx से कहाँ अलग है:"
 
-#: ../../templates.rst:303
+#: ../../templates.rst:306
 msgid ""
 "A page named as a document takes that document's place, as in Sphinx, "
 "where it is written last. ``index = \"landing.html\"`` makes the landing "
@@ -685,7 +796,7 @@ msgstr ""
 "के साथ एकल पेज अपनी जगह रहता है और template पेज नहीं लिखा जाता; इसकी "
 "चेतावनी मिलती है।"
 
-#: ../../templates.rst:307
+#: ../../templates.rst:310
 msgid ""
 "``dirhtml`` writes the page as ``download.html``, beside "
 "``genindex.html`` and ``search.html``, where Sphinx writes "
@@ -696,7 +807,7 @@ msgstr ""
 "``download/index.html`` लिखता है। ``pathto(\"download\")`` उसी फ़ाइल का "
 "पाथ देता है।"
 
-#: ../../templates.rst:310
+#: ../../templates.rst:313
 msgid ""
 "A name must be a file name at the site's root: ``\"sub/page\"`` is "
 "refused with a warning (``build.additional_page``), since the page's "
@@ -709,18 +820,18 @@ msgstr ""
 "अस्वीकार है। ``genindex`` जैसा मौजूद नाम भी अस्वीकार है; Sphinx वहाँ एक "
 "पेज पर दूसरा लिख देता है।"
 
-#: ../../templates.rst:314
+#: ../../templates.rst:317
 msgid ""
 "``guidedog migrate`` carries ``html_additional_pages`` over from "
 "``conf.py``."
 msgstr ""
 "``guidedog migrate`` ``conf.py`` से ``html_additional_pages`` लाता है।"
 
-#: ../../templates.rst:316
+#: ../../templates.rst:319
 msgid "Errors"
 msgstr "त्रुटियाँ"
 
-#: ../../templates.rst:319
+#: ../../templates.rst:322
 msgid ""
 "A mistake in a template stops the build with the template's file and "
 "line, the line itself, and a suggestion:"
@@ -728,11 +839,11 @@ msgstr ""
 "template की गलती build रोकती है और फ़ाइल, पंक्ति संख्या, पंक्ति तथा सुझाव "
 "दिखाती है:"
 
-#: ../../templates.rst:330
+#: ../../templates.rst:333
 msgid "A variable that is not defined renders as nothing, as in Jinja."
 msgstr "अपरिभाषित वेरिएबल Jinja की तरह खाली दिखता है।"
 
-#: ../../templates.rst:332
+#: ../../templates.rst:335
 msgid ""
 "Runaway templates stop with an error too, never a crash. The limits are: "
 "syntax nested more than 100 levels deep (brackets, tags, and each link of "
@@ -748,11 +859,11 @@ msgstr ""
 "वाला कोई भी रिकर्शन। जो सूची खुद को ही रखती है, वह Python की तरह "
 "``[...]`` के रूप में छपती है।"
 
-#: ../../templates.rst:339
+#: ../../templates.rst:342
 msgid "PDF templates"
 msgstr "PDF template"
 
-#: ../../templates.rst:342
+#: ../../templates.rst:345
 msgid ""
 "The PDF book is typeset by Typst. ``_templates/book.typ`` is an ordinary "
 "Typst file that defines a ``book`` function. Guidedog writes the book's "
@@ -762,7 +873,7 @@ msgstr ""
 "Typst फ़ाइल है, जो ``book`` फ़ंक्शन परिभाषित करती है। Guidedog किताब का "
 "सोर्स इस तरह लिखता है:"
 
-#: ../../templates.rst:352
+#: ../../templates.rst:355
 msgid ""
 "so everything that decides how the book looks is in that file: fonts, "
 "page size and margins, headings, the title page, running heads, and the "
@@ -771,39 +882,70 @@ msgstr ""
 "इसलिए किताब का रूप तय करने वाली हर चीज़ उसी फ़ाइल में है: फ़ॉन्ट, पेज और "
 "हाशिए, शीर्षक, शीर्षक पेज, पेज शीर्ष और विषय-सूची।"
 
-#: ../../templates.rst:355
+#: ../../templates.rst:358
+msgid ""
+"Standalone discussion records select ``_templates/discussion.typ`` "
+"instead. Its built-in RFC-style layout opens with a metadata panel, state "
+"badges, a status note and compact contents."
+msgstr ""
+"स्वतंत्र चर्चा रिकॉर्ड इसके बजाय ``_templates/discussion.typ`` चुनते हैं। "
+"इसका अंतर्निहित RFC-शैली का लेआउट मेटाडेटा पैनल, स्थिति बैज, स्थिति नोट "
+"और संक्षिप्त विषय-सूची के साथ खुलता है।"
+
+#: ../../templates.rst:360
+msgid ""
+"Standalone articles marked with ``:pdf: article`` select "
+"``_templates/article.typ`` and emit a PDF beside their HTML page. The "
+"template defines a ``book`` function accepting ``title``, ``lang``, "
+"``paper``, ``date``, ``updated``, ``category``, ``summary``, ``authors``, "
+"``tags`` and the content body. A copied ``book.typ`` does not override "
+"``discussion.typ`` or ``article.typ``. We can customize each kind of PDF "
+"independently. :doc:`howto/discussions` describes the discussion "
+"template's additional ``record`` parameter, and "
+":doc:`howto/static-publishing` describes standalone article PDFs."
+msgstr ""
+"``:pdf: article`` से चिह्नित स्वतंत्र लेख ``_templates/article.typ`` चुनते हैं "
+"और अपने HTML पेज के पास ही एक PDF बनाते हैं। यह template एक ``book`` फ़ंक्शन "
+"परिभाषित करता है जो ``title``, ``lang``, ``paper``, ``date``, ``updated``, "
+"``category``, ``summary``, ``authors``, ``tags`` और मुख्य सामग्री स्वीकार करता है। "
+"कॉपी किया गया ``book.typ`` किसी ``discussion.typ`` या ``article.typ`` को ओवरराइड नहीं करता। "
+"हम हर प्रकार की PDF को स्वतंत्र रूप से कस्टमाइज़ कर सकते हैं। :doc:`howto/discussions` में "
+"चर्चा template के अतिरिक्त ``record`` पैरामीटर का वर्णन है, और :doc:`howto/static-publishing` "
+"में स्वतंत्र लेख PDF का वर्णन है।"
+
+#: ../../templates.rst:362
 msgid "Parameters"
 msgstr "पैरामीटर"
 
-#: ../../templates.rst:362
+#: ../../templates.rst:369
 msgid "Parameter"
 msgstr "पैरामीटर"
 
-#: ../../templates.rst:365
+#: ../../templates.rst:372
 msgid "The book's ``title`` in ``pdf_documents``, otherwise ``project``."
 msgstr "``pdf_documents`` का ``title``\\ ; अन्यथा ``project``\\ ।"
 
-#: ../../templates.rst:366
+#: ../../templates.rst:373
 msgid "``author``"
 msgstr "``author``"
 
-#: ../../templates.rst:367
+#: ../../templates.rst:374
 msgid "The book's ``author``, otherwise ``author``."
 msgstr "किताब का ``author``\\ ; अन्यथा ``author`` विकल्प।"
 
-#: ../../templates.rst:368
+#: ../../templates.rst:375
 msgid "``version``"
 msgstr "``version``"
 
-#: ../../templates.rst:369
+#: ../../templates.rst:376
 msgid "``release``."
 msgstr "``release``\\ ."
 
-#: ../../templates.rst:370
+#: ../../templates.rst:377
 msgid "``date``"
 msgstr "``date``"
 
-#: ../../templates.rst:371
+#: ../../templates.rst:378
 msgid ""
 "``|today|``: ``today`` when it is set, otherwise the build date in "
 "``today_fmt``."
@@ -811,45 +953,45 @@ msgstr ""
 "``|today|``\\ : दिया गया ``today``\\ ; अन्यथा ``today_fmt`` में build की "
 "तारीख़।"
 
-#: ../../templates.rst:372
+#: ../../templates.rst:379
 msgid "``lang``"
 msgstr "``lang``"
 
-#: ../../templates.rst:373
+#: ../../templates.rst:380
 msgid "``language``."
 msgstr "``language``\\ ."
 
-#: ../../templates.rst:374
+#: ../../templates.rst:381
 msgid "``paper``"
 msgstr "``paper``"
 
-#: ../../templates.rst:375
+#: ../../templates.rst:382
 msgid ""
 "``\"a4\"``, or ``\"us-letter\"`` when ``pdf_paper_size`` is ``letter``."
 msgstr ""
 "``\"a4\"``\\ ; ``pdf_paper_size`` ``letter`` हो तो ``\"us-letter\"``\\ ।"
 
-#: ../../templates.rst:376
+#: ../../templates.rst:383
 msgid "``numbering``"
 msgstr "``numbering``"
 
-#: ../../templates.rst:377
+#: ../../templates.rst:384
 msgid "``true`` when a toctree has the ``numbered`` option."
 msgstr "toctree में ``numbered`` हो तो ``true``\\ ।"
 
-#: ../../templates.rst:378
+#: ../../templates.rst:385
 msgid "``logo``"
 msgstr "``logo``"
 
-#: ../../templates.rst:379
+#: ../../templates.rst:386
 msgid "The path of ``pdf_logo``; absent when it is unset."
 msgstr "``pdf_logo`` का पथ; न दिया हो तो अनुपस्थित।"
 
-#: ../../templates.rst:380
+#: ../../templates.rst:387
 msgid "``copyright``"
 msgstr "``copyright``"
 
-#: ../../templates.rst:381
+#: ../../templates.rst:388
 msgid ""
 "``copyright``, for the colophon. It is passed only to a template that "
 "takes it."
@@ -857,11 +999,11 @@ msgstr ""
 "कोलोफ़ोन के लिए ``copyright``\\ । यह केवल उसी template को दिया जाता है जो "
 "इसे लेता है।"
 
-#: ../../templates.rst:383
+#: ../../templates.rst:390
 msgid "The chapters."
 msgstr "अध्यायों की सामग्री।"
 
-#: ../../templates.rst:385
+#: ../../templates.rst:392
 msgid ""
 "A template may add parameters with defaults of its own. The template that "
 "quickstart writes has ``accent``, the fonts ``serif``, ``sans``, and "
@@ -875,11 +1017,79 @@ msgstr ""
 "=> [p. #n]`` जैसे फ़ंक्शन पर सेट किया जाता है, तो दूसरे पेजों के "
 "पार-संदर्भों के बाद उनका पेज नंबर आता है।"
 
-#: ../../templates.rst:390
+#: ../../templates.rst:397
 msgid "Modular Typst templates"
 msgstr "मॉड्यूलर Typst template"
 
-#: ../../templates.rst:393
+#: ../../templates.rst:400
+msgid ""
+"The default book, discussion, and article layouts share ``theme.typ``. It "
+"defines ``gd-palette``, the font defaults and ``configure-document(body, "
+"...)``. The wrapper applies its rules to the content it receives. The "
+"default palette uses Guidedog teal (``#126d78``), dark ink and light "
+"neutral panels. Books use a centered cover and teal chapter openings. "
+"Discussion records use metadata panels, state badges, a status note and "
+"compact contents. Standalone articles use a masthead with authors, "
+"publication date, abstract block, and article headings without chapter "
+"counters."
+msgstr ""
+"डिफ़ॉल्ट पुस्तक, चर्चा और लेख लेआउट ``theme.typ`` साझा करते हैं। यह "
+"``gd-palette``, डिफ़ॉल्ट फ़ॉन्ट और ``configure-document(body, ...)`` को "
+"परिभाषित करता है। रैपर अपने नियम प्राप्त सामग्री पर लागू करता है। डिफ़ॉल्ट "
+"पैलेट Guidedog टील (``#126d78``), गहरी स्याही और हल्के तटस्थ पैनलों का उपयोग "
+"करती है। पुस्तकों में बीच में सजा कवर और टील रंग के अध्याय शीर्षक होते हैं। चर्चा "
+"रिकॉर्ड में मेटाडेटा पैनल, स्थिति बैज, स्थिति नोट और संक्षिप्त विषय-सूची होती है। "
+"स्वतंत्र लेखों में लेखकों, प्रकाशन तिथि, सारांश ब्लॉक और बिना अध्याय क्रमांक वाले "
+"शीर्षकों के साथ एक मास्टहेड होता है।"
+
+#: ../../templates.rst:402
+msgid ""
+"``guidedog quickstart`` copies ``theme.typ``, ``book.typ``, "
+"``discussion.typ`` and ``article.typ``. ``guidedog dsc init`` copies the "
+"shared theme and discussion layout. All four files are embedded in the "
+"executable. Without a project layout, the builder composes a "
+"self-contained built-in template; it does not read a project theme. "
+"Untrusted builds use that same isolated fallback."
+msgstr ""
+"``guidedog quickstart`` ``theme.typ``, ``book.typ``, ``discussion.typ`` और "
+"``article.typ`` कॉपी करता है। ``guidedog dsc init`` साझा थीम और चर्चा लेआउट "
+"कॉपी करता है। चारों फ़ाइलें एक्ज़ीक्यूटेबल में अंतर्निहित हैं। प्रोजेक्ट लेआउट के बिना, "
+"बिल्डर अपने आप में पूर्ण अंतर्निहित template तैयार करता है; वह प्रोजेक्ट थीम नहीं "
+"पढ़ता। अविश्वसनीय (untrusted) बिल्ड भी वही अलग-थलग फ़ॉलबैक उपयोग करते हैं।"
+
+#: ../../templates.rst:404
+msgid ""
+"We can edit ``theme.typ`` to change all three copied layouts together. "
+"Changes to files beneath ``_templates/``, including nested imported "
+"modules and assets, invalidate cached PDFs. The builder tracks directory "
+"membership as well, so adding or removing a module cannot leave a stale "
+"PDF. Template discovery stays inside the project's readable roots and "
+"permits at most 16,384 template inputs."
+msgstr ""
+"हम तीनों कॉपी किए गए लेआउट एक साथ बदलने के लिए ``theme.typ`` संपादित कर सकते हैं। "
+"``_templates/`` के नीचे की फ़ाइलों में बदलाव—जिनमें नेस्टेड इम्पोर्ट किए गए मॉड्यूल "
+"और ऐसेट भी शामिल हैं—कैश की गई PDF को अमान्य कर देते हैं। बिल्डर डायरेक्टरी के सदस्यों "
+"पर भी नज़र रखता है, इसलिए किसी मॉड्यूल को जोड़ने या हटाने से पुरानी PDF बची नहीं रह सकती। "
+"template की खोज प्रोजेक्ट के पठनीय रूट के भीतर ही रहती है और अधिकतम 16,384 template "
+"इनपुट की अनुमति देती है।"
+
+#: ../../templates.rst:406
+msgid ""
+"To adopt a new default in an older project, we first keep a backup of our "
+"custom files. We can remove the copied layout to use the embedded "
+"version, or copy fresh files from a temporary ``guidedog quickstart`` "
+"project. We keep ``theme.typ`` beside the new layouts. A lone copied "
+"layout that imports a missing theme produces a Typst error. Guidedog "
+"never overwrites an existing customized template during a build."
+msgstr ""
+"किसी पुराने प्रोजेक्ट में नया डिफ़ॉल्ट अपनाने के लिए, हम पहले अपनी कस्टम फ़ाइलों का "
+"बैकअप रखते हैं। हम अंतर्निहित संस्करण का उपयोग करने के लिए कॉपी किए गए लेआउट को हटा "
+"सकते हैं, या किसी अस्थायी ``guidedog quickstart`` प्रोजेक्ट से नई फ़ाइलें कॉपी कर "
+"सकते हैं। हम नए लेआउट के पास ``theme.typ`` रखते हैं। कोई अकेला कॉपी किया गया लेआउट जो "
+"अनुपस्थित थीम को इम्पोर्ट करता है, Typst त्रुटि देता है। Guidedog बिल्ड के दौरान "
+"किसी मौजूदा कस्टमाइज़ किए गए template को कभी ओवरराइट नहीं करता।"
+
+#: ../../templates.rst:409
 msgid ""
 "Like HTML templates, Typst templates are not restricted to a single file. "
 "We can split book styling, macros, and custom covers into several "
@@ -891,11 +1101,11 @@ msgstr ""
 "``.typ`` फ़ाइलों में बाँट सकते हैं। Typst के मानक ``#import`` और "
 "``#include`` स्टेटमेंट उन्हें एक साथ जोड़ते हैं:"
 
-#: ../../templates.rst:398
+#: ../../templates.rst:414
 msgid "_templates/book.typ"
 msgstr "_templates/book.typ"
 
-#: ../../templates.rst:420
+#: ../../templates.rst:436
 msgid ""
 "Here ``apply-styles(body)`` must apply its rules around the content it "
 "receives. A helper that sets text and returns nothing cannot change its "
@@ -907,15 +1117,45 @@ msgstr ""
 "बदलता। पूरा ट्यूटोरियल बने हुए बुक template को लपेटने का काम करता उदाहरण "
 "देता है।"
 
-#: ../../templates.rst:424
+#: ../../templates.rst:440
+msgid "Page breaks in captioned content"
+msgstr "कैप्शन वाली सामग्री में पृष्ठ-विभाजन"
+
+#: ../../templates.rst:443
+msgid ""
+"Guidedog's shared Typst preamble lets captioned tables and code listings "
+"continue across pages. Table headers repeat on each table page. This also "
+"applies to existing copies of the book template and to standalone PDF "
+"conversion."
+msgstr ""
+"Guidedog का साझा Typst प्रीऐम्बल कैप्शन वाली तालिकाओं और कोड सूचियों को "
+"पृष्ठों के पार जारी रहने देता है। तालिका के हर पृष्ठ पर तालिका के शीर्षक "
+"दोहराए जाते हैं। यह पुस्तक template की मौजूदा प्रतियों और स्वतंत्र PDF "
+"रूपांतरण पर भी लागू होता है।"
+
+#: ../../templates.rst:445
+msgid ""
+"When we customize their layout, a breakable table or code block must "
+"remain inside breakable containers. An unbreakable enclosing figure can "
+"otherwise force its contents past the page boundary. Image figures keep "
+"their existing layout behavior. :doc:`evidence/pdf-pagination` records "
+"the root cause and regression checks."
+msgstr ""
+"जब हम उनका लेआउट कस्टमाइज़ करते हैं, तो पृष्ठों में बँट सकने वाली तालिका या "
+"कोड ब्लॉक को विभाज्य कंटेनरों के भीतर ही रहना चाहिए। अन्यथा कोई अविभाज्य बाहरी "
+"figure अपनी सामग्री को पृष्ठ की सीमा के बाहर धकेल सकता है। चित्र वाले figure अपना "
+"मौजूदा लेआउट व्यवहार बनाए रखते हैं। :doc:`evidence/pdf-pagination` में मूल कारण "
+"और रिग्रेशन जाँचें दर्ज हैं।"
+
+#: ../../templates.rst:447
 msgid "What a template can use"
 msgstr "template क्या इस्तेमाल कर सकता है"
 
-#: ../../templates.rst:427
+#: ../../templates.rst:450
 msgid "Typst packages"
 msgstr "Typst पैकेज"
 
-#: ../../templates.rst:428
+#: ../../templates.rst:451
 msgid ""
 "``#import \"@preview/cetz:0.4.2\"`` and other packages work, downloaded "
 "on first use. Set ``pdf_packages = \"offline\"`` to build only with "
@@ -925,11 +1165,11 @@ msgstr ""
 "डाउनलोड होते हैं। केवल डिस्क के पैकेज से बनाने के लिए ``pdf_packages = "
 "\"offline\"`` सेट करें।"
 
-#: ../../templates.rst:431
+#: ../../templates.rst:454
 msgid "Fonts"
 msgstr "फ़ॉन्ट"
 
-#: ../../templates.rst:432
+#: ../../templates.rst:455
 msgid ""
 "The system's fonts are available, as with the ``typst`` command. Add "
 "folders with ``pdf_font_paths``, or set ``pdf_fonts = \"embedded\"`` to "
@@ -939,11 +1179,11 @@ msgstr ""
 "जोड़ें, या ``pdf_fonts = \"embedded\"`` से केवल Typst के अंतर्निहित "
 "फ़ॉन्ट चुनें, ताकि किताब बाइट-दर-बाइट दोहराई जा सके।"
 
-#: ../../templates.rst:436
+#: ../../templates.rst:459
 msgid "A preamble"
 msgstr "प्रीऐम्बल"
 
-#: ../../templates.rst:437
+#: ../../templates.rst:460
 msgid ""
 "``pdf_preamble`` names a Typst file whose content follows the ``#show: "
 "book`` line. It suits a few ``set`` and ``show`` rules without a template "
@@ -953,11 +1193,11 @@ msgstr ""
 "book`` पंक्ति के बाद आती है। अपना template बनाए बिना कुछ ``set`` और "
 "``show`` नियम जोड़ने के लिए यह ठीक रहता है।"
 
-#: ../../templates.rst:440
+#: ../../templates.rst:463
 msgid "Typst in a document"
 msgstr "दस्तावेज़ में Typst"
 
-#: ../../templates.rst:441
+#: ../../templates.rst:464
 msgid ""
 "Documents are reStructuredText and Markdown. Typst files are not "
 "documents. To put Typst markup into the book, we write it in a raw block, "
@@ -967,12 +1207,12 @@ msgstr ""
 "नहीं हैं। किताब में Typst मार्कअप डालने के लिए हम उसे raw ब्लॉक में लिखते "
 "हैं, जिसे वेब पेज छोड़ देते हैं:"
 
-#: ../../templates.rst:450
+#: ../../templates.rst:473
 msgid ""
 "``.. only:: pdf`` keeps ordinary content to the book in the same way."
 msgstr "``.. only:: pdf`` भी सामान्य सामग्री केवल किताब में रखता है।"
 
-#: ../../templates.rst:452
+#: ../../templates.rst:475
 msgid ""
 "When Typst reports an error, the build names the file and line, whether "
 "it is in our template or in the generated book. Each PDF has its own "
@@ -992,18 +1232,18 @@ msgstr ""
 "प्रकाशित नहीं करता। उसका सोर्स ``_build/.doctrees/failed`` में, त्रुटि "
 "में बताए पाथ पर, बना रहता है। कई किताबों के विफल सोर्स अलग-अलग रहते हैं।"
 
-#: ../../templates.rst:461
+#: ../../templates.rst:484
 msgid "Writing a new template"
 msgstr "नया template लिखना"
 
-#: ../../templates.rst:464
+#: ../../templates.rst:487
 msgid ""
 "We start from the copies quickstart wrote. They show every part in use:"
 msgstr ""
 "हम quickstart की लिखी प्रतियों से शुरू करते हैं। उनमें हर हिस्सा इस्तेमाल "
 "होता दिखता है:"
 
-#: ../../templates.rst:466
+#: ../../templates.rst:489
 msgid ""
 "Keep the ``layout.html`` markup that the default style sheet expects, or "
 "replace ``_static/guidedog.css`` along with it."
@@ -1011,7 +1251,7 @@ msgstr ""
 "डिफ़ॉल्ट स्टाइलशीट वाला ``layout.html`` मार्कअप रखें या उसके साथ "
 "``_static/guidedog.css`` भी बदलें।"
 
-#: ../../templates.rst:468
+#: ../../templates.rst:491
 msgid ""
 "Move repeated parts into files of their own and ``include`` them, or put "
 "a base layout in ``base.html`` and ``extends`` it from ``layout.html``."
@@ -1019,7 +1259,7 @@ msgstr ""
 "दोहराए हिस्से अलग फ़ाइल में ले जाकर ``include`` करें, या ``base.html`` "
 "बनाकर ``layout.html`` में ``extends`` करें।"
 
-#: ../../templates.rst:470
+#: ../../templates.rst:493
 msgid ""
 "For the book, change the ``book`` function's rules, or write a new "
 "function with the same parameters and keep its name ``book``."
@@ -1027,7 +1267,7 @@ msgstr ""
 "किताब के लिए ``book`` के नियम बदलें या उसी नाम और पैरामीटर का नया फ़ंक्शन "
 "लिखें।"
 
-#: ../../templates.rst:473
+#: ../../templates.rst:496
 msgid ""
 "Preview with ``guidedog serve`` while editing. Save the source and "
 "refresh the browser. The server rebuilds changed inputs before serving "
@@ -1036,3 +1276,26 @@ msgstr ""
 "संपादन के दौरान ``guidedog serve`` से प्रीव्यू देखें। सोर्स सहेजें और "
 "ब्राउज़र रिफ़्रेश करें। सर्वर पेज भेजने से पहले बदले हुए इनपुट दोबारा "
 "build करता है।"
+
+#~ msgid ""
+#~ "``_templates/layout.html`` defines the HTML website structure (Jinja)."
+#~ msgstr ""
+#~ "``_templates/layout.html`` HTML वेबसाइट की संरचना तय करता है (Jinja)।"
+
+#~ msgid ""
+#~ "Built-in theme layout is extended by project templates with block "
+#~ "overrides and partial includes."
+#~ msgstr ""
+#~ "प्रोजेक्ट template अंतर्निहित लेआउट से ब्लॉक लेते हैं और हिस्से जोड़ते "
+#~ "हैं।"
+
+#~ msgid ""
+#~ "Every file and subdirectory in ``templates_path`` is an input "
+#~ "dependency of the build. When a template or partial file is added, "
+#~ "edited, or removed, ``guidedog build`` and the live server ``guidedog "
+#~ "serve`` detect the change and render the site again."
+#~ msgstr ""
+#~ "``templates_path`` की हर फ़ाइल और सब-फ़ोल्डर build की इनपुट निर्भरता "
+#~ "है। जब कोई template या पार्शियल फ़ाइल जोड़ी, बदली या हटाई जाती है, तो "
+#~ "``guidedog build`` और लाइव सर्वर ``guidedog serve`` बदलाव पहचानकर साइट "
+#~ "फिर से रेंडर करते हैं।"

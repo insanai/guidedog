@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -36,21 +36,23 @@ msgstr "1. असली प्रोजेक्ट से शुरू कर�
 
 #: ../../tutorial/a-custom-theme.rst:11
 msgid ""
-"Use Guidedog 0.7.0 or newer. Run this from the directory that will "
+"Use Guidedog 1.0.0-beta.5 or newer. Run this from the directory that will "
 "contain ``orbit``:"
 msgstr ""
-"Guidedog 0.7.0 या उससे नया वर्ज़न इस्तेमाल करें। इसे उस डायरेक्टरी से "
+"Guidedog 1.0.0-beta.5 या उससे नया संस्करण इस्तेमाल करें। इसे उस डायरेक्टरी से "
 "चलाएँ जिसमें ``orbit`` बनेगा:"
 
 #: ../../tutorial/a-custom-theme.rst:17
 msgid ""
 "Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
-"in the same directory. We keep this file: it supplies the tested page "
+"in the same directory. We also keep the generated ``theme.typ`` beside "
+"it. We keep the renamed book template: it supplies the tested page "
 "layout, cover, running heads, contents, code styles and optimized "
 "paragraph breaking."
 msgstr ""
 "बनी हुई ``orbit/_templates/book.typ`` फ़ाइल का नाम उसी डायरेक्टरी में "
-"बदलकर ``base-book.typ`` करें। यह फ़ाइल हम रखते हैं: इसी से परखा हुआ पेज "
+"बदलकर ``base-book.typ`` करें। जनरेट हुई ``theme.typ`` को भी उसके पास ही रखें। "
+"हम नाम बदला हुआ पुस्तक template रखते हैं: इसी से परखा हुआ पेज "
 "लेआउट, कवर, रनिंग हेडर, विषय-सूची, कोड स्टाइल और ऑप्टिमाइज़ की हुई "
 "अनुच्छेद लाइन-ब्रेकिंग मिलती है।"
 
@@ -69,11 +71,11 @@ msgstr ""
 "<../_static/repository/theme/chapters/reading.rst>` डाउनलोड करें। पहले दो "
 "``orbit`` में और तीसरी ``orbit/chapters`` में रखें। अंतिम संरचना यह होगी:"
 
-#: ../../tutorial/a-custom-theme.rst:45
+#: ../../tutorial/a-custom-theme.rst:47
 msgid "2. Set the contract"
 msgstr "2. अनुबंध तय करें"
 
-#: ../../tutorial/a-custom-theme.rst:48
+#: ../../tutorial/a-custom-theme.rst:50
 msgid ""
 "The downloaded configuration selects the local template and static "
 "directories. ``html_css_files`` adds our stylesheet after the default "
@@ -84,11 +86,11 @@ msgstr ""
 "डिफ़ॉल्ट CSS के बाद अपना स्टाइल जोड़ता है; ``html_context`` Jinja को "
 "प्रोजेक्ट मान देता है। साफ़ PDF नाम से आउटपुट आसानी से मिलता है।"
 
-#: ../../tutorial/a-custom-theme.rst:55
+#: ../../tutorial/a-custom-theme.rst:57
 msgid "orbit/conf.toml"
 msgstr "orbit/conf.toml"
 
-#: ../../tutorial/a-custom-theme.rst:57
+#: ../../tutorial/a-custom-theme.rst:59
 msgid ""
 "All paths in this tutorial are project files. HTML templates are found "
 "through ``templates_path``. The PDF entry point is always "
@@ -100,11 +102,11 @@ msgstr ""
 "सोर्स डायरेक्टरी के अंदर ``_templates/book.typ`` होता है। "
 "``templates_path`` बदलने से यह अपनी जगह से नहीं हटता।"
 
-#: ../../tutorial/a-custom-theme.rst:61
+#: ../../tutorial/a-custom-theme.rst:63
 msgid "3. Extend the HTML layout"
 msgstr "3. HTML लेआउट बढ़ाएँ"
 
-#: ../../tutorial/a-custom-theme.rst:64
+#: ../../tutorial/a-custom-theme.rst:66
 msgid ""
 "Save :download:`layout.html "
 "<../_static/repository/theme/_templates/layout.html>` as "
@@ -114,11 +116,11 @@ msgstr ""
 "<../_static/repository/theme/_templates/layout.html>` को "
 "``orbit/_templates/layout.html`` में रखें और बनी फ़ाइल पूरी बदलें:"
 
-#: ../../tutorial/a-custom-theme.rst:69
+#: ../../tutorial/a-custom-theme.rst:71
 msgid "orbit/_templates/layout.html"
 msgstr "orbit/_templates/layout.html"
 
-#: ../../tutorial/a-custom-theme.rst:71
+#: ../../tutorial/a-custom-theme.rst:73
 msgid ""
 "``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a "
 "template named ``layout.html`` would try to extend itself. ``super()`` "
@@ -131,7 +133,7 @@ msgstr ""
 "theme कंट्रोल और सुलभ हिस्से बेस में रहते हैं; अपने ब्लॉक लेबल, मेटाडेटा "
 "और संस्करण का फ़ुटर जोड़ते हैं।"
 
-#: ../../tutorial/a-custom-theme.rst:76
+#: ../../tutorial/a-custom-theme.rst:78
 msgid ""
 "A theme changes presentation. A build plugin changes source text, "
 "complete HTML or generated assets. Use :doc:`../plugins` when a template "
@@ -142,11 +144,11 @@ msgstr ""
 "है। template से काम न हो तो :doc:`../plugins` देखें। सामान्य लेआउट बदलाव "
 "में नेटिव कोड नहीं चाहिए।"
 
-#: ../../tutorial/a-custom-theme.rst:80
+#: ../../tutorial/a-custom-theme.rst:82
 msgid "4. Give repeated markup one home"
 msgstr "4. दोहराया मार्कअप एक जगह रखें"
 
-#: ../../tutorial/a-custom-theme.rst:83
+#: ../../tutorial/a-custom-theme.rst:85
 msgid ""
 "Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. "
 "Save :download:`ui.html "
@@ -162,15 +164,15 @@ msgstr ""
 "<../_static/repository/theme/_templates/partials/edition.html>` सही जगह "
 "रखें:"
 
-#: ../../tutorial/a-custom-theme.rst:90
+#: ../../tutorial/a-custom-theme.rst:92
 msgid "orbit/_templates/macros/ui.html"
 msgstr "orbit/_templates/macros/ui.html"
 
-#: ../../tutorial/a-custom-theme.rst:94
+#: ../../tutorial/a-custom-theme.rst:96
 msgid "orbit/_templates/partials/edition.html"
 msgstr "orbit/_templates/partials/edition.html"
 
-#: ../../tutorial/a-custom-theme.rst:96
+#: ../../tutorial/a-custom-theme.rst:98
 msgid ""
 "A macro takes explicit inputs. An included partial uses the current "
 "page's context. Escape plain project values with ``|e``. Use ``pathto`` "
@@ -182,11 +184,11 @@ msgstr ""
 "बनाएँ। ``chapters/reading.html`` सीधे लिखने पर भीतर के पेज या दूसरे HTML "
 "builder में लिंक टूटेगा।"
 
-#: ../../tutorial/a-custom-theme.rst:101
+#: ../../tutorial/a-custom-theme.rst:103
 msgid "5. Design for the reader's theme"
 msgstr "5. पाठक की theme का ध्यान रखें"
 
-#: ../../tutorial/a-custom-theme.rst:104
+#: ../../tutorial/a-custom-theme.rst:106
 msgid ""
 "Save :download:`theme.css "
 "<../_static/repository/theme/_static/theme.css>` as "
@@ -195,11 +197,11 @@ msgstr ""
 ":download:`theme.css <../_static/repository/theme/_static/theme.css>` को "
 "``orbit/_static/theme.css`` में रखें:"
 
-#: ../../tutorial/a-custom-theme.rst:109
+#: ../../tutorial/a-custom-theme.rst:111
 msgid "orbit/_static/theme.css"
 msgstr "orbit/_static/theme.css"
 
-#: ../../tutorial/a-custom-theme.rst:111
+#: ../../tutorial/a-custom-theme.rst:113
 msgid ""
 "The theme begins in light mode. The existing control selects light, dark "
 "or system and saves the choice. Explicit dark rules and the system media "
@@ -212,7 +214,7 @@ msgstr ""
 "की व्यवस्था साझा है। नया JavaScript नहीं चाहिए। बदलते बैकग्राउंड पर स्थिर "
 "टेक्स्ट रंग से बचें।"
 
-#: ../../tutorial/a-custom-theme.rst:116
+#: ../../tutorial/a-custom-theme.rst:118
 msgid ""
 "Browser hyphenation follows the page language. It is not Typst's "
 "paragraph optimizer. The manual's optional English web optimizer is "
@@ -224,7 +226,7 @@ msgstr ""
 "ऑप्टिमाइज़र का वर्णन अलग से :doc:`../topics/typography` में है। यह उदाहरण "
 "ब्राउज़र का अपना लेआउट इस्तेमाल करता है।"
 
-#: ../../tutorial/a-custom-theme.rst:120
+#: ../../tutorial/a-custom-theme.rst:122
 msgid ""
 "Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in "
 "current Guidedog builds. Ordinary graphs retain their own colors. Older "
@@ -235,11 +237,11 @@ msgstr ""
 "अपनाता है। अन्य चित्र अपने रंग रखते हैं। पुराना होस्ट वही DOT हल्के रंगों "
 "में दिखाता है। नोड भूमिका और प्रिंट :doc:`../topics/diagrams` में हैं।"
 
-#: ../../tutorial/a-custom-theme.rst:125
+#: ../../tutorial/a-custom-theme.rst:127
 msgid "6. Wrap the PDF book"
 msgstr "6. PDF किताब को रैपर दें"
 
-#: ../../tutorial/a-custom-theme.rst:128
+#: ../../tutorial/a-custom-theme.rst:130
 msgid ""
 "Save :download:`palette.typ "
 "<../_static/repository/theme/_templates/palette.typ>` and "
@@ -253,15 +255,15 @@ msgstr ""
 "``orbit/_templates`` में रखें। ये नई फ़ाइलें हैं; साथ में "
 "``base-book.typ`` बनाए रखें।"
 
-#: ../../tutorial/a-custom-theme.rst:134
+#: ../../tutorial/a-custom-theme.rst:136
 msgid "orbit/_templates/palette.typ"
 msgstr "orbit/_templates/palette.typ"
 
-#: ../../tutorial/a-custom-theme.rst:138
+#: ../../tutorial/a-custom-theme.rst:140
 msgid "orbit/_templates/book.typ"
 msgstr "orbit/_templates/book.typ"
 
-#: ../../tutorial/a-custom-theme.rst:140
+#: ../../tutorial/a-custom-theme.rst:142
 msgid ""
 "The host calls ``book`` with metadata and the chapter content. The "
 "wrapper forwards those values to the generated base and supplies our "
@@ -274,7 +276,7 @@ msgstr ""
 "स्टाइल वाले फ़ंक्शन में देने से उसके नियम दायरे में बने रहते हैं। वेब "
 "स्टाइलशीट PDF पर असर नहीं डालती, और Typst template HTML पर असर नहीं डालता।"
 
-#: ../../tutorial/a-custom-theme.rst:145
+#: ../../tutorial/a-custom-theme.rst:147
 msgid ""
 "The base handles language-aware hyphenation and optimized line breaking. "
 "The wrapper keeps those rules, uses the matching blue accent and adds "
@@ -285,15 +287,15 @@ msgstr ""
 "मेल खाता नीला रंग और दस्तावेज़ संदर्भ में पेज संख्या जोड़ता है। PDF हमेशा "
 "प्रिंट की हल्की पैलेट लेता है।"
 
-#: ../../tutorial/a-custom-theme.rst:149
+#: ../../tutorial/a-custom-theme.rst:151
 msgid "7. Build and inspect both forms"
 msgstr "7. दोनों रूप बनाएँ और देखें"
 
-#: ../../tutorial/a-custom-theme.rst:152
+#: ../../tutorial/a-custom-theme.rst:154
 msgid "Run from the same parent directory as step 1:"
 msgstr "चरण 1 वाले उसी पैरेंट फ़ोल्डर से चलाएँ:"
 
-#: ../../tutorial/a-custom-theme.rst:162
+#: ../../tutorial/a-custom-theme.rst:164
 msgid ""
 "Open the URL printed by ``serve``. Check the chapter and generated search "
 "page, not only the front page. Try light, dark and system modes. Resize "
@@ -305,7 +307,7 @@ msgstr ""
 "सभी मोड, छोटा विंडो और कीबोर्ड से खोज व नेविगेशन आज़माएँ। फ़ुटर बदलकर "
 "सहेजें और रीफ़्रेश करें; उस पर निर्भर पेज फिर बनेंगे।"
 
-#: ../../tutorial/a-custom-theme.rst:167
+#: ../../tutorial/a-custom-theme.rst:169
 msgid ""
 "Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog "
 "adds the language suffix to the configured filename. Inspect the "
@@ -320,11 +322,11 @@ msgstr ""
 "चाहिए। अन्य आउटपुट ``_build/html``, ``_build/dirhtml`` और "
 "``_build/singlehtml`` में हैं। ``Ctrl+C`` से सर्वर रोकें।"
 
-#: ../../tutorial/a-custom-theme.rst:174
+#: ../../tutorial/a-custom-theme.rst:176
 msgid "8. Reuse and maintain the theme"
 msgstr "8. दोबारा उपयोग और रखरखाव"
 
-#: ../../tutorial/a-custom-theme.rst:177
+#: ../../tutorial/a-custom-theme.rst:179
 msgid ""
 "Create another project with ``guidedog quickstart``. Copy the finished "
 "``_templates`` directory and ``_static/theme.css`` into it. Add "
@@ -339,7 +341,7 @@ msgstr ""
 "उस प्रोजेक्ट के पेज पर करें; नए प्रोजेक्ट का मेटाडेटा और सोर्स अपना रहने "
 "दें।"
 
-#: ../../tutorial/a-custom-theme.rst:183
+#: ../../tutorial/a-custom-theme.rst:185
 msgid ""
 "The copied PDF base makes the theme self-contained. When we upgrade "
 "Guidedog, we create a scratch quickstart project and compare its "
@@ -355,7 +357,7 @@ msgstr ""
 "बदल सकता है। पूरा दूसरा लेआउट रखने से छोटे ब्लॉक ओवरराइड सँभालना आसान है। "
 "हर वेरिएबल और ब्लॉक के लिए :doc:`../templates` देखें।"
 
-#: ../../tutorial/a-custom-theme.rst:189
+#: ../../tutorial/a-custom-theme.rst:191
 msgid ""
 "If the build reports a missing ``base-book.typ``, finish the rename in "
 "step 1. If the label is blank, set ``edition_label`` in ``html_context``. "

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "चर्चा कैटलॉग प्रस्ताव और निर्णय सँभालकर रखता है। हर चर्चा एक "
 "reStructuredText रिकॉर्ड है। समीक्षा के लिए खुलने पर रिकॉर्ड को एक संख्या "
-"मिलती है, और उसकी स्थिति बताती है कि निर्णय कहाँ तक पहुँचा है। Guidedog के "
-"अपने डिज़ाइन रिकॉर्ड, GDS, ऐसा ही एक कैटलॉग हैं।"
+"मिलती है, और उसकी स्थिति बताती है कि निर्णय कहाँ तक पहुँचा है। Guidedog "
+"के अपने डिज़ाइन रिकॉर्ड, GDS, ऐसा ही एक कैटलॉग हैं।"
 
 #: ../../howto/discussions.rst:9
 msgid ""
@@ -54,8 +54,8 @@ msgid ""
 "Guidedog's own catalog is no exception. We run the same commands in "
 "``docs/gds``:"
 msgstr ""
-"Guidedog का अपना कैटलॉग भी इससे अलग नहीं है। ``docs/gds`` में हम यही कमांड "
-"चलाते हैं:"
+"Guidedog का अपना कैटलॉग भी इससे अलग नहीं है। ``docs/gds`` में हम यही "
+"कमांड चलाते हैं:"
 
 #: ../../howto/discussions.rst:19
 msgid "Create a catalog"
@@ -89,18 +89,26 @@ msgstr ""
 
 #: ../../howto/discussions.rst:32
 msgid "``template/rfc-template.rst``, the template of new drafts;"
-msgstr "``template/rfc-template.rst``, नए मसौदों का template;"
+msgstr "``template/rfc-template.rst``, नए मसौदों का टेम्पलेट;"
 
 #: ../../howto/discussions.rst:33
+msgid ""
+"``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable "
+"PDF layout and shared theme copied from the binary;"
+msgstr ""
+"``_templates/discussion.typ`` और ``_templates/theme.typ``, बाइनरी से कॉपी किया "
+"गया संपादन-योग्य PDF लेआउट और साझा थीम;"
+
+#: ../../howto/discussions.rst:34
 msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
 msgstr "``registry.rst`` और ``bundle.rst``, बनाई गई अनुक्रमणिका;"
 
-#: ../../howto/discussions.rst:34
+#: ../../howto/discussions.rst:35
 msgid "``records/XXXXX-eds-process.rst``, a draft of our review process."
 msgstr ""
 "``records/XXXXX-eds-process.rst``, हमारी समीक्षा प्रक्रिया का मसौदा।"
 
-#: ../../howto/discussions.rst:36
+#: ../../howto/discussions.rst:37
 msgid ""
 "We edit the process draft to say how our project decides. To start from "
 "our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), "
@@ -114,21 +122,21 @@ msgstr ""
 "है। अपने दस्तावेज़ों से शुरू करने के लिए हम ``--config=FILE`` (एक "
 "``discussion.toml``), ``--process=FILE`` (प्रक्रिया का टेक्स्ट, उसके "
 "शीर्षक से आगे) और ``--template=FILE`` (``:eds-*:`` फ़ील्ड वाला रिकॉर्ड "
-"template) देते हैं। ``--labels=a,b`` उन लेबलों को सीमित करता है जो "
+"टेम्पलेट) देते हैं। ``--labels=a,b`` उन लेबलों को सीमित करता है जो "
 "रिकॉर्ड पर लग सकते हैं। ``init`` नए कैटलॉग को उसकी जगह ले जाने से पहले "
 "जाँचता है। वह फ़ाइलों वाले फ़ोल्डर में कभी नहीं लिखता।"
 
-#: ../../howto/discussions.rst:43
+#: ../../howto/discussions.rst:44
 msgid "Write and review"
 msgstr "लिखना और समीक्षा"
 
-#: ../../howto/discussions.rst:46
+#: ../../howto/discussions.rst:47
 msgid ""
 "We run the commands in the catalog folder, or in any folder inside it."
 msgstr ""
 "हम कमांड कैटलॉग फ़ोल्डर में, या उसके अंदर किसी भी फ़ोल्डर में चलाते हैं।"
 
-#: ../../howto/discussions.rst:57
+#: ../../howto/discussions.rst:58
 msgid ""
 "A new draft has the number ``XXXXX``. Promotion gives it the next number "
 "and opens it for discussion. A state change needs ``--reason``, and "
@@ -141,11 +149,11 @@ msgstr ""
 "बिना उसे दिखाता है। ये डिफ़ॉल्ट हैं। अगला खंड बताता है कि इन्हें कैसे "
 "बदलें।"
 
-#: ../../howto/discussions.rst:62
+#: ../../howto/discussions.rst:63
 msgid "A record starts with its metadata, one field per line:"
 msgstr "रिकॉर्ड अपने मेटाडेटा से शुरू होता है, हर पंक्ति में एक फ़ील्ड:"
 
-#: ../../howto/discussions.rst:76
+#: ../../howto/discussions.rst:77
 msgid ""
 "Authors and labels are JSON lists. ``last-updated`` may stand for "
 "``updated``. A record may also carry ``category``, ``status``, and "
@@ -153,17 +161,17 @@ msgid ""
 "HTML and PDF show the fields as Number, Title, Authors, Updated, Labels, "
 "and so on, with the lists as plain text."
 msgstr ""
-"लेखक और लेबल JSON सूचियाँ हैं। ``updated`` की जगह ``last-updated`` भी लिखा "
-"जा सकता है। रिकॉर्ड में ``category``, ``status`` और ``summary`` भी हो सकते "
-"हैं। ``guidedog dsc`` ``status`` को स्थिति के साथ मेल में रखता है। HTML और "
-"PDF फ़ील्ड को Number, Title, Authors, Updated, Labels आदि नामों से दिखाते "
-"हैं, और सूचियों को सादे टेक्स्ट के रूप में।"
+"लेखक और लेबल JSON सूचियाँ हैं। ``updated`` की जगह ``last-updated`` भी "
+"लिखा जा सकता है। रिकॉर्ड में ``category``, ``status`` और ``summary`` भी "
+"हो सकते हैं। ``guidedog dsc`` ``status`` को स्थिति के साथ मेल में रखता "
+"है। HTML और PDF फ़ील्ड को Number, Title, Authors, Updated, Labels आदि "
+"नामों से दिखाते हैं, और सूचियों को सादे टेक्स्ट के रूप में।"
 
-#: ../../howto/discussions.rst:81
+#: ../../howto/discussions.rst:82
 msgid "Configure the lifecycle and numbering"
 msgstr "जीवनचक्र और क्रमांकन तय करना"
 
-#: ../../howto/discussions.rst:84
+#: ../../howto/discussions.rst:85
 msgid ""
 "``discussion.toml`` holds the catalog's settings. ``init`` writes every "
 "one of them, with comments. ``guidedog dsc config`` prints the settings "
@@ -171,11 +179,11 @@ msgid ""
 "are the process of Guidedog's own GDS."
 msgstr ""
 "``discussion.toml`` में कैटलॉग की सेटिंग रहती हैं। ``init`` हर सेटिंग "
-"टिप्पणियों के साथ लिखता है। ``guidedog dsc config`` लागू सेटिंग प्रिंट करता "
-"है। जिस कैटलॉग में यह फ़ाइल नहीं है, वह नीचे दिए डिफ़ॉल्ट मानता है। यही "
-"Guidedog के अपने GDS की प्रक्रिया है।"
+"टिप्पणियों के साथ लिखता है। ``guidedog dsc config`` लागू सेटिंग प्रिंट "
+"करता है। जिस कैटलॉग में यह फ़ाइल नहीं है, वह नीचे दिए डिफ़ॉल्ट मानता है। "
+"यही Guidedog के अपने GDS की प्रक्रिया है।"
 
-#: ../../howto/discussions.rst:121
+#: ../../howto/discussions.rst:122
 msgid ""
 "``[workflow.states.NAME]`` defines a state. ``next`` lists the states the "
 "``state`` command may move a record to. ``evidence = true`` asks for "
@@ -194,7 +202,7 @@ msgstr ""
 "प्रमोशन ही संख्या देता है। बिना संख्या के मसौदा केवल उन्हीं स्थितियों में "
 "जा सकता है जो उसकी अपनी ``next`` में हैं, जैसे ``abandoned``\\ ।"
 
-#: ../../howto/discussions.rst:128
+#: ../../howto/discussions.rst:129
 msgid ""
 "Numbers have at least ``width`` digits, padded with zeros. A number that "
 "needs more digits gets them, so 10000 follows 9999, and lists sort by "
@@ -211,15 +219,15 @@ msgstr ""
 "है। रिकॉर्डों को संख्या मिल जाने के बाद ``width`` बदलना सुरक्षित नहीं है: "
 "तब उनकी संख्याएँ उससे मेल नहीं खाएँगी।"
 
-#: ../../howto/discussions.rst:134
+#: ../../howto/discussions.rst:135
 msgid ""
 "``guidedog dsc`` checks the file whenever it reads the catalog. A mistake "
 "names the line and what to write instead:"
 msgstr ""
-"``guidedog dsc`` जब भी कैटलॉग पढ़ता है, इस फ़ाइल को जाँचता है। गलती होने पर "
-"वह पंक्ति बताता है, और यह भी कि उसकी जगह क्या लिखें:"
+"``guidedog dsc`` जब भी कैटलॉग पढ़ता है, इस फ़ाइल को जाँचता है। गलती होने "
+"पर वह पंक्ति बताता है, और यह भी कि उसकी जगह क्या लिखें:"
 
-#: ../../howto/discussions.rst:149
+#: ../../howto/discussions.rst:150
 msgid ""
 "The process draft that ``init`` writes describes the lifecycle we "
 "configured. It has a table of the states and a diagram of the moves."
@@ -228,23 +236,23 @@ msgstr ""
 "वर्णन करता है। उसमें स्थितियों की टेबल और उनके बीच के बदलावों का आरेख "
 "होता है।"
 
-#: ../../howto/discussions.rst:152
+#: ../../howto/discussions.rst:153
 msgid "Build"
 msgstr "build"
 
-#: ../../howto/discussions.rst:160
+#: ../../howto/discussions.rst:161
 msgid ""
 "``guidedog dsc build`` writes the website to ``_build/html`` and one PDF "
 "per record to ``_build/pdf``. Naming a record writes only its PDF, to "
 "``_build/selected``, and leaves the complete output alone. Warnings stop "
 "the build."
 msgstr ""
-"``guidedog dsc build`` वेबसाइट ``_build/html`` में और हर रिकॉर्ड का एक PDF "
-"``_build/pdf`` में लिखता है। किसी रिकॉर्ड का नाम देने पर केवल उसका PDF "
-"``_build/selected`` में लिखा जाता है, और पूरा आउटपुट जैसा था वैसा रहता है। "
-"चेतावनी आने पर build रुक जाता है।"
+"``guidedog dsc build`` वेबसाइट ``_build/html`` में और हर रिकॉर्ड का एक "
+"PDF ``_build/pdf`` में लिखता है। किसी रिकॉर्ड का नाम देने पर केवल उसका "
+"PDF ``_build/selected`` में लिखा जाता है, और पूरा आउटपुट जैसा था वैसा "
+"रहता है। चेतावनी आने पर build रुक जाता है।"
 
-#: ../../howto/discussions.rst:164
+#: ../../howto/discussions.rst:165
 msgid ""
 "The build is guidedog's own: the same build as ``guidedog build``, with "
 "the catalog as the project. Graphviz, Typst, and the other tools it needs "
@@ -253,16 +261,89 @@ msgid ""
 "of the embedded compiler."
 msgstr ""
 "यह build guidedog का अपना है: वही build जो ``guidedog build`` करता है, बस "
-"कैटलॉग ही प्रोजेक्ट होता है। Graphviz, Typst और बाकी ज़रूरी टूल भी guidedog "
-"के अपने हैं। Typst रिकॉर्ड वाला कोई पुराना कैटलॉग हर रिकॉर्ड को Typst से "
-"कंपाइल करता है; ``--typst=PATH`` अंतर्निहित कंपाइलर की जगह इस्तेमाल होने "
-"वाला Typst प्रोग्राम बताता है।"
+"कैटलॉग ही प्रोजेक्ट होता है। Graphviz, Typst और बाकी ज़रूरी टूल भी "
+"guidedog के अपने हैं। Typst रिकॉर्ड वाला कोई पुराना कैटलॉग हर रिकॉर्ड को "
+"Typst से कंपाइल करता है; ``--typst=PATH`` अंतर्निहित कंपाइलर की जगह "
+"इस्तेमाल होने वाला Typst प्रोग्राम बताता है।"
 
-#: ../../howto/discussions.rst:166
+#: ../../howto/discussions.rst:167
+msgid "Discussion PDFs"
+msgstr "चर्चा रिकॉर्ड के PDF"
+
+#: ../../howto/discussions.rst:170
+msgid ""
+"Each RST record uses an RFC-style paper layout. The record opens with a "
+"metadata panel, state badges, a short status note and compact contents, "
+"followed by its text. Numbered sections flow continuously. Running "
+"headers identify the catalog and record, and footers show the page number "
+"and total. Tables and captioned listings can continue across pages."
+msgstr ""
+"हर RST रिकॉर्ड RFC-शैली का पेपर लेआउट इस्तेमाल करता है। रिकॉर्ड मेटाडेटा "
+"पैनल, स्थिति बैज, संक्षिप्त स्थिति नोट और संक्षिप्त विषय-सूची से शुरू होता "
+"है, और उसके बाद मुख्य टेक्स्ट आता है। क्रमांकित खंड लगातार आगे बढ़ते हैं। "
+"रनिंग हेडर कैटलॉग और रिकॉर्ड की पहचान बताते हैं, और फ़ुटर पेज संख्या तथा कुल "
+"पेज दिखाते हैं। टेबलें और कैप्शन वाली कोड सूचियाँ कई पेजों में जारी रह सकती "
+"हैं।"
+
+#: ../../howto/discussions.rst:172
+msgid ""
+"The PDF builder recognizes the leading metadata, such as ``:eds-number:`` "
+"and ``:eds-title:``, for any catalog prefix. Existing catalogs without a "
+"copied discussion template use the current embedded layout. We keep "
+"existing template customizations until we replace or remove their files. "
+"Ordinary books keep their book template."
+msgstr ""
+"PDF बिल्डर किसी भी कैटलॉग प्रीफ़िक्स के लिए शुरुआती मेटाडेटा, जैसे "
+"``:eds-number:`` और ``:eds-title:``, पहचान लेता है। जिन मौजूदा कैटलॉग में "
+"कॉपी किया हुआ चर्चा टेम्पलेट नहीं है, वे मौजूदा अंतर्निहित लेआउट इस्तेमाल "
+"करते हैं। जब तक हम उनकी फ़ाइलें बदलते या हटाते नहीं, मौजूदा टेम्पलेट बदलाव "
+"बने रहते हैं। सामान्य किताबें अपना बुक टेम्पलेट ही रखती हैं।"
+
+#: ../../howto/discussions.rst:174
+msgid ""
+"The layout is embedded in the Guidedog binary. ``guidedog dsc init`` "
+"copies ``_templates/discussion.typ`` and its shared "
+"``_templates/theme.typ`` for customization. Existing catalogs without a "
+"copy use the embedded layout. It defines a ``book`` function with the "
+"usual PDF parameters and an additional ``record`` dictionary. "
+"``record.id`` is the readable identifier, ``record.catalog`` is the "
+"project name, and ``record.fields`` contains pairs of readable field "
+"labels and values. All values arrive as quoted strings. The source "
+"heading supplies the title and its anchor. The template reads the catalog "
+"metadata without assuming a fixed prefix or lifecycle. Its optional "
+"``contents`` and ``memo`` parameters control the contents and status "
+"note. :doc:`../templates` describes the shared PDF parameters."
+msgstr ""
+"यह लेआउट Guidedog बाइनरी में अंतर्निहित है। कस्टमाइज़ेशन के लिए ``guidedog "
+"dsc init`` ``_templates/discussion.typ`` और उसकी साझा "
+"``_templates/theme.typ`` कॉपी करता है। जिन मौजूदा कैटलॉग में यह कॉपी नहीं "
+"है, वे अंतर्निहित लेआउट इस्तेमाल करते हैं। यह सामान्य PDF पैरामीटर और एक "
+"अतिरिक्त ``record`` डिक्शनरी के साथ ``book`` फ़ंक्शन परिभाषित करता है। "
+"``record.id`` पढ़ने योग्य पहचानकर्ता है, ``record.catalog`` प्रोजेक्ट का नाम "
+"है, और ``record.fields`` में पढ़ने योग्य फ़ील्ड लेबल और मानों के जोड़े होते "
+"हैं। सभी मान उद्धृत स्ट्रिंग के रूप में आते हैं। सोर्स हेडिंग शीर्षक और उसका "
+"एंकर देती है। टेम्पलेट किसी तय प्रीफ़िक्स या जीवनचक्र को माने बिना कैटलॉग "
+"मेटाडेटा पढ़ता है। इसके वैकल्पिक ``contents`` और ``memo`` पैरामीटर विषय-सूची "
+"और स्थिति नोट को नियंत्रित करते हैं। :doc:`../templates` साझा PDF पैरामीटर "
+"समझाता है।"
+
+#: ../../howto/discussions.rst:176
+msgid ""
+"An ``--untrusted`` build uses the built-in discussion layout instead of "
+"running a project template. A record included as a chapter of a larger "
+"book keeps its metadata in that chapter; the root document selects the "
+"book's layout."
+msgstr ""
+"``--untrusted`` build प्रोजेक्ट टेम्पलेट चलाने के बजाय अंतर्निहित चर्चा लेआउट "
+"इस्तेमाल करता है। किसी बड़ी किताब के अध्याय के रूप में शामिल किया गया रिकॉर्ड "
+"उस अध्याय में अपना मेटाडेटा बनाए रखता है; रूट दस्तावेज़ किताब का लेआउट चुनता "
+"है।"
+
+#: ../../howto/discussions.rst:178
 msgid "When an update is interrupted"
 msgstr "जब अपडेट बीच में रुक जाए"
 
-#: ../../howto/discussions.rst:169
+#: ../../howto/discussions.rst:181
 msgid ""
 "Commands that change records hold the catalog's lock, ``.eds.lock``. An "
 "update of several files first writes a journal, ``.eds-journal.json``. If "
@@ -272,33 +353,33 @@ msgstr ""
 "फ़ाइलों का अपडेट पहले एक जर्नल, ``.eds-journal.json``, लिखता है। अगर "
 "अपडेट बीच में रुक जाए, तो अगला कमांड यह बताता है:"
 
-#: ../../howto/discussions.rst:178
+#: ../../howto/discussions.rst:190
 msgid ""
 "Recovery puts back the files as they were. It refuses to overwrite a file "
 "someone edited since. ``guidedog dsc`` also checks each change before it "
 "writes anything. It refuses an empty or cut-short record, and an index "
 "without its generated region."
 msgstr ""
-"रिकवरी फ़ाइलों को पहले जैसा लौटा देती है। उसके बाद किसी ने जो फ़ाइल संपादित "
-"की हो, उसे वह ओवरराइट नहीं करती। ``guidedog dsc`` कुछ भी लिखने से पहले हर "
-"बदलाव को जाँचता भी है। वह खाली या बीच में कटा रिकॉर्ड, और बने हुए हिस्से के "
-"बिना इंडेक्स अस्वीकार करता है।"
+"रिकवरी फ़ाइलों को पहले जैसा लौटा देती है। उसके बाद किसी ने जो फ़ाइल "
+"संपादित की हो, उसे वह ओवरराइट नहीं करती। ``guidedog dsc`` कुछ भी लिखने से "
+"पहले हर बदलाव को जाँचता भी है। वह खाली या बीच में कटा रिकॉर्ड, और बने हुए "
+"हिस्से के बिना इंडेक्स अस्वीकार करता है।"
 
-#: ../../howto/discussions.rst:182
+#: ../../howto/discussions.rst:194
 msgid ""
 "``guidedog dsc`` keeps only each record's metadata in memory. It reads a "
 "record whole only to change it. So checking a large catalog stays fast "
 "and small."
 msgstr ""
 "``guidedog dsc`` मेमोरी में हर रिकॉर्ड का केवल मेटाडेटा रखता है। वह किसी "
-"रिकॉर्ड को पूरा तभी पढ़ता है जब उसे बदलना हो। इसलिए बड़े कैटलॉग की जाँच भी "
-"तेज़ और हल्की रहती है।"
+"रिकॉर्ड को पूरा तभी पढ़ता है जब उसे बदलना हो। इसलिए बड़े कैटलॉग की जाँच "
+"भी तेज़ और हल्की रहती है।"
 
-#: ../../howto/discussions.rst:185
+#: ../../howto/discussions.rst:197
 msgid "Use the library"
 msgstr "लाइब्रेरी का उपयोग"
 
-#: ../../howto/discussions.rst:188
+#: ../../howto/discussions.rst:200
 msgid ""
 "The commands are one Rust crate, ``gd-discussion``. Its ``README.md`` "
 "shows how to load a catalog, plan a change, and apply it from our own "
@@ -308,7 +389,7 @@ msgstr ""
 "दिखाता है कि अपने प्रोग्राम से कैटलॉग कैसे लोड करें, बदलाव की योजना कैसे "
 "बनाएँ और उसे कैसे लागू करें:"
 
-#: ../../howto/discussions.rst:206
+#: ../../howto/discussions.rst:218
 msgid ""
 "``ds::plugin()`` is the whole ``guidedog dsc`` command line, as a plugin. "
 "A ``guidedog`` of our own links it beside its other plugins (see "
@@ -317,8 +398,8 @@ msgid ""
 msgstr ""
 "``ds::plugin()`` पूरी ``guidedog dsc`` कमांड लाइन है, plugin के रूप में। "
 "हमारा अपना ``guidedog`` इसे अपने बाकी plugins के साथ लिंक करता है "
-"(:doc:`../plugins` देखें)। डिज़ाइन नोट्स :doc:`../internals/discussion` में "
-"हैं।"
+"(:doc:`../plugins` देखें)। डिज़ाइन नोट्स :doc:`../internals/discussion` "
+"में हैं।"
 
 #: ../../howto/document-code.rst:1
 msgid "Document a codebase"
@@ -488,26 +569,26 @@ msgstr "GitHub Pages पर प्रकाशित करें"
 msgid ""
 "We can publish a Guidedog site to GitHub Pages in one of two ways. GitHub "
 "Actions can build and deploy it on each push, with released Guidedog and "
-"GitHub's official Pages actions, and no personal token. Or "
-"``guidedog pages`` can publish it from our own machine, whenever we ask "
-"or whenever the sources change. We use one route per site, because a "
+"GitHub's official Pages actions, and no personal token. Or ``guidedog "
+"publish pages`` can publish it from our own machine, whenever we ask or "
+"whenever the sources change. We use one route per site, because a "
 "repository has one Pages source: GitHub Actions or a branch."
 msgstr ""
 "हम Guidedog साइट को GitHub Pages पर दो में से किसी एक तरीके से प्रकाशित "
 "कर सकते हैं। GitHub Actions हर push पर जारी Guidedog और GitHub के "
 "आधिकारिक Pages actions से साइट build और deploy कर सकता है, बिना किसी "
-"व्यक्तिगत token के। या ``guidedog pages`` हमारी अपनी मशीन से साइट "
+"व्यक्तिगत token के। या ``guidedog publish pages`` हमारी अपनी मशीन से साइट "
 "प्रकाशित कर सकता है, जब हम कहें या जब भी सोर्स फ़ाइलें बदलें। हम हर साइट "
 "के लिए एक ही रास्ता अपनाते हैं, क्योंकि किसी repository का Pages सोर्स एक "
 "ही होता है: GitHub Actions या कोई branch।"
 
 #: ../../howto/github-pages.rst:12
 msgid ""
-"Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog pages "
-"publisher with a durable journal."
+"Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog "
+"publish pages publisher with a durable journal."
 msgstr ""
-"पहला रास्ता GitHub Actions CI/CD है; दूसरा स्थायी जर्नल वाला स्थानीय "
-"guidedog publish pageser है।"
+"पहला रास्ता GitHub Actions CI/CD का उपयोग करता है; दूसरा स्थायी जर्नल वाले "
+"स्थानीय guidedog publish pages पब्लिशर का उपयोग करता है।"
 
 #: ../../howto/github-pages.rst:12
 msgid "The two routes for publishing documentation to GitHub Pages."
@@ -523,15 +604,13 @@ msgstr "अपने दस्तावेज़ वाली repository मे�
 
 #: ../../howto/github-pages.rst:53
 msgid ""
-"(``guidedog publish pages`` does the same; see `Through guidedog "
-"publish`_.) On a machine that has never published, it does each missing "
-"step once and says what it does. It asks before anything that changes "
-"GitHub or this machine's permissions:"
+"On a machine that has never published, it does each missing step once and "
+"says what it does. It asks before anything that changes GitHub or this "
+"machine's permissions:"
 msgstr ""
-"(``guidedog publish pages`` भी यही करता है; `guidedog publish के ज़रिए "
-"<Through guidedog publish_>`_ देखें।) जिस मशीन से कभी प्रकाशन नहीं हुआ, उस "
-"पर यह हर छूटा हुआ चरण एक बार करता है और बताता है कि क्या कर रहा है। GitHub "
-"या इस मशीन की अनुमतियाँ बदलने वाले किसी भी काम से पहले यह पूछता है:"
+"जिस मशीन से कभी प्रकाशन नहीं हुआ, उस पर यह हर छूटा हुआ चरण एक बार करता है "
+"और बताता है कि क्या कर रहा है। GitHub या इस मशीन की अनुमतियाँ बदलने वाले "
+"किसी भी काम से पहले यह पूछता है:"
 
 #: ../../howto/github-pages.rst:56
 msgid ""
@@ -628,15 +707,15 @@ msgstr "इस मशीन से चरण-दर-चरण प्रकाश
 
 #: ../../howto/github-pages.rst:88
 msgid ""
-"The step commands stay for scripts and for checking each part. "
-"``guidedog pages`` builds the project with the installed ``guidedog``. It "
-"pushes the whole site to a branch of its own in one Git commit."
+"The step commands stay for scripts and for checking each part. The linked "
+"Pages plugin builds the project with Guidedog. It pushes the whole site "
+"to a branch of its own in one Git commit."
 msgstr ""
 "चरणों वाले कमांड स्क्रिप्ट के लिए और हर हिस्से को जाँचने के लिए बने रहते "
-"हैं। ``guidedog pages`` इंस्टॉल किए गए ``guidedog`` से प्रोजेक्ट build "
-"करता है। यह पूरी साइट एक Git commit में अपनी अलग branch पर push करता है।"
+"हैं। लिंक किया गया Pages plugin Guidedog से प्रोजेक्ट build करता है। यह "
+"पूरी साइट एक Git commit में अपनी अलग branch पर push करता है।"
 
-#: ../../howto/github-pages.rst:92
+#: ../../howto/github-pages.rst:91
 msgid ""
 "We write ``pages.toml`` beside our project. It names the repository, the "
 "branch, and the credential profile. It holds no secret, so we can commit "
@@ -646,7 +725,7 @@ msgstr ""
 "branch और credential प्रोफ़ाइल के नाम होते हैं। इसमें कोई secret नहीं "
 "होता, इसलिए हम इसे commit कर सकते हैं:"
 
-#: ../../howto/github-pages.rst:99
+#: ../../howto/github-pages.rst:98
 msgid ""
 "Next we store a token for the profile. We make a fine-grained personal "
 "access token for the repository with **Contents: read and write**, and "
@@ -662,7 +741,7 @@ msgstr ""
 "**Pages: write** और **Administration: write** भी चाहिए। पूछे जाने पर हम "
 "token पेस्ट करते हैं। वह दिखाई नहीं देता, और कभी किसी फ़ाइल में नहीं जाता:"
 
-#: ../../howto/github-pages.rst:110
+#: ../../howto/github-pages.rst:109
 msgid ""
 "``auth login`` signs in with a code instead, for a GitHub App or OAuth "
 "App we registered with the device flow enabled: ``guidedog pages auth "
@@ -672,7 +751,7 @@ msgstr ""
 "OAuth App के लिए जिसे हमने डिवाइस फ़्लो चालू करके रजिस्टर किया हो: "
 "``guidedog pages auth login --client-id=YOUR_APP_ID``\\ ।"
 
-#: ../../howto/github-pages.rst:114
+#: ../../howto/github-pages.rst:113
 msgid ""
 "We authorize the target, point Pages at the branch, and check that "
 "everything is ready:"
@@ -680,7 +759,7 @@ msgstr ""
 "हम लक्ष्य को अधिकृत करते हैं, Pages को branch की ओर मोड़ते हैं, और जाँचते "
 "हैं कि सब कुछ तैयार है:"
 
-#: ../../howto/github-pages.rst:122
+#: ../../howto/github-pages.rst:121
 msgid ""
 "``bind`` refuses a branch that holds work Guidedog did not publish. "
 "``--adopt`` lets the next publication replace it. The branch must not be "
@@ -697,7 +776,7 @@ msgstr ""
 "repository जिसका नाम बदला गया, जो ट्रांसफ़र हुई या फिर से बनाई गई, और "
 "किसी दूसरे खाते का token।"
 
-#: ../../howto/github-pages.rst:133
+#: ../../howto/github-pages.rst:132
 msgid ""
 "``publish`` builds with warnings as errors (``strict = true``) and "
 "``html_baseurl`` set to ``site_url``. It lists what it adds, changes, and "
@@ -716,34 +795,34 @@ msgstr ""
 "ताकि GitHub ``_static`` जैसे फ़ोल्डर भी सर्व करे। फिर यह ``wait_seconds`` "
 "तक इंतज़ार करता है कि GitHub Pages उस commit को deploy करे।"
 
-#: ../../howto/github-pages.rst:140
+#: ../../howto/github-pages.rst:139
 msgid "The exit status says what happened:"
 msgstr "एग्ज़िट स्टेटस बताता है कि क्या हुआ:"
 
-#: ../../howto/github-pages.rst:142
+#: ../../howto/github-pages.rst:141
 msgid "0: the site is live or was already published."
 msgstr "0: साइट लाइव है या पहले ही प्रकाशित हो चुकी थी।"
 
-#: ../../howto/github-pages.rst:143
+#: ../../howto/github-pages.rst:142
 msgid "1: nothing was published."
 msgstr "1: कुछ भी प्रकाशित नहीं हुआ।"
 
-#: ../../howto/github-pages.rst:144
+#: ../../howto/github-pages.rst:143
 msgid "2: a usage, configuration, or missing step problem."
 msgstr "2: उपयोग, कॉन्फ़िगरेशन या किसी छूटे हुए चरण की समस्या।"
 
-#: ../../howto/github-pages.rst:145
+#: ../../howto/github-pages.rst:144
 msgid ""
 "6: GitHub accepted the publication but has not confirmed the deployment "
 "yet."
 msgstr ""
 "6: GitHub ने प्रकाशन स्वीकार कर लिया, पर deployment की पुष्टि अभी नहीं की।"
 
-#: ../../howto/github-pages.rst:146
+#: ../../howto/github-pages.rst:145
 msgid "7: it is not known whether the branch moved."
 msgstr "7: यह पता नहीं कि branch आगे बढ़ी या नहीं।"
 
-#: ../../howto/github-pages.rst:148
+#: ../../howto/github-pages.rst:147
 msgid ""
 "We check later with ``guidedog pages status``. ``guidedog pages recover`` "
 "settles a publication whose answer was lost, and it never moves the "
@@ -753,7 +832,7 @@ msgstr ""
 "recover`` उस प्रकाशन को निपटाता है जिसका जवाब खो गया था, और branch को कभी "
 "पीछे नहीं ले जाता।"
 
-#: ../../howto/github-pages.rst:152
+#: ../../howto/github-pages.rst:151
 msgid ""
 "To publish a site we build ourselves, we write ``site = \"build/site\"`` "
 "instead of ``project``. The folder is copied and checked before it is "
@@ -763,11 +842,11 @@ msgstr ""
 "जगह ``site = \"build/site\"`` लिखते हैं। प्रकाशन से पहले फ़ोल्डर की कॉपी "
 "बनाकर उसकी जाँच की जाती है।"
 
-#: ../../howto/github-pages.rst:155
+#: ../../howto/github-pages.rst:154
 msgid "Publish on every change, with a preview"
 msgstr "हर बदलाव पर प्रकाशित करें, प्रीव्यू के साथ"
 
-#: ../../howto/github-pages.rst:158
+#: ../../howto/github-pages.rst:157
 msgid ""
 "``guidedog pages watch`` publishes once, then again whenever the sources "
 "change and have been quiet for ``debounce_ms`` (at most ``max_wait_ms`` "
@@ -779,7 +858,7 @@ msgstr ""
 "अधिकतम ``max_wait_ms``), तब फिर से प्रकाशित करता है। विफल build या "
 "प्रकाशन की सूचना दी जाती है, और प्रकाशित साइट जैसी थी वैसी रहती है।"
 
-#: ../../howto/github-pages.rst:162
+#: ../../howto/github-pages.rst:161
 msgid ""
 "``guidedog pages watch --serve`` also serves the built site on this "
 "machine, at ``http://127.0.0.1:8000/`` (``--serve=PORT`` for another "
@@ -791,7 +870,7 @@ msgstr ""
 "``--serve=PORT``)। GitHub Pages के deploy करने से पहले हम हर build देख "
 "लेते हैं। एक Ctrl+C से निगरानी और प्रीव्यू दोनों रुक जाते हैं।"
 
-#: ../../howto/github-pages.rst:166
+#: ../../howto/github-pages.rst:165
 msgid ""
 "A scheduler can keep it running. On macOS, a launch agent in "
 "``~/Library/LaunchAgents/org.example.docs.plist``:"
@@ -861,8 +940,8 @@ msgstr ""
 "सीमित करते हैं।"
 
 #: ../../howto/github-pages.rst:235
-msgid "The workflow it writes is this one (for Guidedog 0.6.3):"
-msgstr "यह जो workflow लिखता है, वह यह है (Guidedog 0.6.3 के लिए):"
+msgid "The workflow it writes is this one (for Guidedog 1.0.0-beta.6):"
+msgstr "यह जो workflow लिखता है, वह यह है (Guidedog 1.0.0-beta.6 के लिए):"
 
 #: ../../howto/github-pages.rst:320
 msgid ""
@@ -902,10 +981,10 @@ msgstr ""
 "गायब या प्लेसहोल्डर checksum, tag पर या समीक्षा किए गए commit के बजाय "
 "किसी दूसरे commit पर पिन किया गया action (``pages.workflow-unpinned``, "
 "``pages.workflow-pin``), ``pull_request_target``, और ऐसा checkout जो अपने "
-"credentials रखता है; हर एक के साथ उसकी पंक्ति और उपाय। हम "
-"``guidedog pages workflow --write --force`` से अपडेट करते हैं। action "
-"अपडेट की समीक्षा अलग होती है: पिन किए गए commit ``gd-pages`` में सूचीबद्ध "
-"हैं और केवल समीक्षा की गई रिलीज़ के साथ बदलते हैं।"
+"credentials रखता है; हर एक के साथ उसकी पंक्ति और उपाय। हम ``guidedog "
+"pages workflow --write --force`` से अपडेट करते हैं। action अपडेट की "
+"समीक्षा अलग होती है: पिन किए गए commit ``gd-pages`` में सूचीबद्ध हैं और "
+"केवल समीक्षा की गई रिलीज़ के साथ बदलते हैं।"
 
 #: ../../howto/github-pages.rst:341
 msgid ""
@@ -953,64 +1032,43 @@ msgstr "guidedog publish के ज़रिए"
 
 #: ../../howto/github-pages.rst:362
 msgid ""
-"The GitHub Pages plugin is linked into ``guidedog``, and it adds two "
-"commands to it:"
+"The Pages plugin is linked into ``guidedog``. ``guidedog publish pages`` "
+"guides the publication and builds the project with the host's own engine. "
+"``guidedog pages init``, ``auth``, ``bind``, ``setup``, ``doctor``, "
+"``watch``, ``status``, ``recover`` and ``workflow`` expose individual "
+"steps for scripts and maintenance."
 msgstr ""
-"GitHub Pages plugin ``guidedog`` में लिंक है, और यह उसमें दो कमांड जोड़ता "
-"है:"
+"Pages plugin ``guidedog`` में लिंक है। ``guidedog publish pages`` प्रकाशन का "
+"मार्गदर्शन करता है और होस्ट के अपने इंजन से प्रोजेक्ट build करता है। "
+"``guidedog pages init``, ``auth``, ``bind``, ``setup``, ``doctor``, "
+"``watch``, ``status``, ``recover`` और ``workflow`` स्क्रिप्ट तथा रखरखाव के "
+"लिए अलग-अलग चरण उपलब्ध कराते हैं।"
 
 #: ../../howto/github-pages.rst:369
-msgid ""
-"``guidedog publish pages`` runs the same guided publish as "
-"``guidedog publish pages``, with the same options, but guidedog builds "
-"the project itself, with its own engine and linked plugins, instead of "
-"starting an installed ``guidedog``. ``guidedog pages workflow`` is "
-"``guidedog pages workflow``. ``guidedog publish pages --help`` and "
-"``guidedog pages workflow --help`` list their options."
-msgstr ""
-"``guidedog publish pages`` वही निर्देशित प्रकाशन चलाता है जो "
-"``guidedog publish pages`` करता है, उन्हीं विकल्पों के साथ, लेकिन इंस्टॉल "
-"किए गए ``guidedog`` को शुरू करने के बजाय guidedog प्रोजेक्ट को खुद build "
-"करता है, अपने इंजन और लिंक किए गए plugins के साथ। ``guidedog pages "
-"workflow`` और ``guidedog pages workflow`` एक ही हैं। ``guidedog publish "
-"pages --help`` और ``guidedog pages workflow --help`` इनके विकल्प दिखाते हैं।"
+msgid "No separate publisher program or registration step is needed."
+msgstr "किसी अलग publisher प्रोग्राम या रजिस्ट्रेशन चरण की ज़रूरत नहीं है।"
 
 #: ../../howto/github-pages.rst:371
-msgid ""
-"A custom ``guidedog`` built without the plugin can still have both "
-"commands: we register the ``guidedog pages`` program (``guidedog plugin "
-"register pages /usr/local/bin/guidedog pages``), and guidedog runs it for "
-"them on our terminal. ``guidedog pages`` is also the publisher program "
-"for ``guidedog publish --publisher=pages`` (see :doc:`../plugins`)."
-msgstr ""
-"plugin के बिना बना कस्टम ``guidedog`` भी ये दोनों कमांड पा सकता है: हम "
-"``guidedog pages`` प्रोग्राम को रजिस्टर करते हैं (``guidedog plugin "
-"register pages /usr/local/bin/guidedog pages``), और guidedog इन कमांड के "
-"लिए उसे हमारे ही टर्मिनल पर चलाता है। ``guidedog pages`` ``guidedog publish "
-"--publisher=pages`` के लिए publisher प्रोग्राम भी है (:doc:`../plugins` "
-"देखें)।"
-
-#: ../../howto/github-pages.rst:373
 msgid "Troubleshooting"
 msgstr "समस्याएँ सुलझाना"
 
-#: ../../howto/github-pages.rst:376
+#: ../../howto/github-pages.rst:374
 msgid "Every problem names its code and what to do. The common ones:"
 msgstr "हर समस्या अपना कोड और करने लायक काम बताती है। आम समस्याएँ:"
 
-#: ../../howto/github-pages.rst:382
+#: ../../howto/github-pages.rst:380
 msgid "Code"
 msgstr "कोड"
 
-#: ../../howto/github-pages.rst:383
+#: ../../howto/github-pages.rst:381
 msgid "What to do"
 msgstr "क्या करें"
 
-#: ../../howto/github-pages.rst:384
+#: ../../howto/github-pages.rst:382
 msgid "``pages.unbound``"
 msgstr "``pages.unbound``"
 
-#: ../../howto/github-pages.rst:385
+#: ../../howto/github-pages.rst:383
 msgid ""
 "Run ``guidedog pages bind``: this machine has not been allowed to publish "
 "there."
@@ -1018,11 +1076,11 @@ msgstr ""
 "``guidedog pages bind`` चलाएँ: इस मशीन को वहाँ प्रकाशित करने की अनुमति "
 "नहीं मिली है।"
 
-#: ../../howto/github-pages.rst:386
+#: ../../howto/github-pages.rst:384
 msgid "``pages.no-token``, ``pages.credential``"
 msgstr "``pages.no-token``, ``pages.credential``"
 
-#: ../../howto/github-pages.rst:387
+#: ../../howto/github-pages.rst:385
 msgid ""
 "Store a token with ``auth import`` or ``auth login``; GitHub refused or "
 "expired it."
@@ -1030,11 +1088,11 @@ msgstr ""
 "``auth import`` या ``auth login`` से token सहेजें; GitHub ने token "
 "अस्वीकार किया या उसकी अवधि खत्म हो गई।"
 
-#: ../../howto/github-pages.rst:388
+#: ../../howto/github-pages.rst:386
 msgid "``pages.permission``"
 msgstr "``pages.permission``"
 
-#: ../../howto/github-pages.rst:389
+#: ../../howto/github-pages.rst:387
 msgid ""
 "Give the token Contents: read and write for the repository, or approve it "
 "for the organization's single sign-on."
@@ -1042,29 +1100,29 @@ msgstr ""
 "token को repository के लिए Contents: read and write दें, या संगठन के "
 "सिंगल साइन-ऑन के लिए उसे मंज़ूरी दें।"
 
-#: ../../howto/github-pages.rst:391
+#: ../../howto/github-pages.rst:389
 msgid "``pages.source``, ``pages.no-site``"
 msgstr "``pages.source``, ``pages.no-site``"
 
-#: ../../howto/github-pages.rst:392
+#: ../../howto/github-pages.rst:390
 msgid ""
 "Run ``guidedog pages setup``, or change the Pages source in the settings."
 msgstr "``guidedog pages setup`` चलाएँ, या सेटिंग में Pages सोर्स बदलें।"
 
-#: ../../howto/github-pages.rst:393
+#: ../../howto/github-pages.rst:391
 msgid "``pages.conflict``"
 msgstr "``pages.conflict``"
 
-#: ../../howto/github-pages.rst:394
+#: ../../howto/github-pages.rst:392
 msgid "Another publication moved the branch first; run the command again."
 msgstr ""
 "किसी दूसरे प्रकाशन ने branch को पहले आगे बढ़ा दिया; कमांड फिर से चलाएँ।"
 
-#: ../../howto/github-pages.rst:395
+#: ../../howto/github-pages.rst:393
 msgid "``pages.ruleset``"
 msgstr "``pages.ruleset``"
 
-#: ../../howto/github-pages.rst:396
+#: ../../howto/github-pages.rst:394
 msgid ""
 "A ruleset or branch protection refused the push; allow the account to "
 "push."
@@ -1072,11 +1130,11 @@ msgstr ""
 "किसी रूलसेट या branch सुरक्षा नियम ने push अस्वीकार किया; खाते को push "
 "करने की अनुमति दें।"
 
-#: ../../howto/github-pages.rst:397
+#: ../../howto/github-pages.rst:395
 msgid "``pages.guide``"
 msgstr "``pages.guide``"
 
-#: ../../howto/github-pages.rst:398
+#: ../../howto/github-pages.rst:396
 msgid ""
 "A step needs our answer and the run may not ask; run it in a terminal, or "
 "do the step the hint names."
@@ -1084,19 +1142,19 @@ msgstr ""
 "किसी चरण को हमारे जवाब की ज़रूरत है और रन पूछ नहीं सकता; इसे टर्मिनल में "
 "चलाएँ, या संकेत में बताया गया चरण खुद करें।"
 
-#: ../../howto/github-pages.rst:400
+#: ../../howto/github-pages.rst:398
 msgid "``pages.unsettled``"
 msgstr "``pages.unsettled``"
 
-#: ../../howto/github-pages.rst:401
+#: ../../howto/github-pages.rst:399
 msgid "Run ``guidedog pages recover``."
 msgstr "``guidedog pages recover`` चलाएँ।"
 
-#: ../../howto/github-pages.rst:402
+#: ../../howto/github-pages.rst:400
 msgid "``pages.deployment``"
 msgstr "``pages.deployment``"
 
-#: ../../howto/github-pages.rst:403
+#: ../../howto/github-pages.rst:401
 msgid ""
 "The branch holds the site, but the Pages build failed; see the "
 "repository's Actions tab."
@@ -1104,11 +1162,11 @@ msgstr ""
 "Branch में साइट है, पर Pages build विफल हुआ; repository का Actions tab "
 "देखें।"
 
-#: ../../howto/github-pages.rst:406
+#: ../../howto/github-pages.rst:404
 msgid "References"
 msgstr "संदर्भ"
 
-#: ../../howto/github-pages.rst:409
+#: ../../howto/github-pages.rst:407
 msgid ""
 "`GitHub's custom Pages workflows "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
@@ -1116,7 +1174,7 @@ msgstr ""
 "`GitHub के custom Pages workflows "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
 
-#: ../../howto/github-pages.rst:410
+#: ../../howto/github-pages.rst:408
 msgid ""
 "`Configure a Pages source "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
@@ -1124,7 +1182,7 @@ msgstr ""
 "`Pages का publishing source सेट करें "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
 
-#: ../../howto/github-pages.rst:411
+#: ../../howto/github-pages.rst:409
 msgid ""
 "`The configure-pages v6.0.0 release "
 "<https://github.com/actions/configure-pages/releases/tag/v6.0.0>`_."
@@ -1167,22 +1225,26 @@ msgid ""
 "PDF. The release requires macOS 12 or later."
 msgstr ""
 "Homebrew हमारे प्रोसेसर के लिए रिलीज़ आर्काइव चुनता है और उसका SHA-256 "
-"जाँचता है। एग्ज़िक्यूटेबल में Typst कंपाइलर और Graphviz पहले से शामिल हैं, "
-"इसलिए चलते समय इसे और कुछ नहीं चाहिए। HTML और PDF build करने के लिए हमें "
-"Rust टूलचेन, Python वातावरण या अलग से Typst इंस्टॉल करने की ज़रूरत नहीं है। "
-"इस रिलीज़ के लिए macOS 12 या उससे नया संस्करण चाहिए।"
+"जाँचता है। एग्ज़िक्यूटेबल में Typst कंपाइलर और Graphviz पहले से शामिल "
+"हैं, इसलिए चलते समय इसे और कुछ नहीं चाहिए। HTML और PDF build करने के लिए "
+"हमें Rust टूलचेन, Python वातावरण या अलग से Typst इंस्टॉल करने की ज़रूरत "
+"नहीं है। इस रिलीज़ के लिए macOS 12 या उससे नया संस्करण चाहिए।"
 
 #: ../../howto/install.rst:19
 msgid ""
-"The package also installs ``guidedog pages``, which publishes sites to "
-"GitHub Pages (see :doc:`github-pages`), and ``graphdog``. Discussion "
-"catalogs need no program of their own: ``guidedog dsc`` keeps them (see "
-":doc:`discussions`)."
+"The package installs one executable, ``guidedog``. Its built-in plugins "
+"add GitHub Pages publishing (``guidedog publish pages`` and ``guidedog "
+"pages``; see :doc:`github-pages`), discussion catalogs (``guidedog dsc``; "
+"see :doc:`discussions`), and static site publishing (``guidedog ssg``; "
+"see :doc:`static-publishing`). The ``gd-graphdog`` library encapsulates "
+"Graphviz inside Guidedog."
 msgstr ""
-"पैकेज ``guidedog pages`` भी इंस्टॉल करता है, जो साइटों को GitHub Pages पर "
-"प्रकाशित करता है (:doc:`github-pages` देखें), और ``graphdog`` भी। चर्चा "
-"कैटलॉग के लिए अलग प्रोग्राम नहीं चाहिए: उन्हें ``guidedog dsc`` सँभालता है "
-"(:doc:`discussions` देखें)।"
+"पैकेज एक ही एग्ज़िक्यूटेबल, ``guidedog``, इंस्टॉल करता है। इसके अंतर्निहित "
+"plugins से GitHub Pages प्रकाशन (``guidedog publish pages`` और ``guidedog "
+"pages``; :doc:`github-pages` देखें), चर्चा कैटलॉग (``guidedog dsc``; "
+":doc:`discussions` देखें) और स्टैटिक साइट प्रकाशन (``guidedog ssg``; "
+":doc:`static-publishing` देखें) जुड़ते हैं। ``gd-graphdog`` लाइब्रेरी "
+"Graphviz को Guidedog के भीतर समाहित करती है।"
 
 #: ../../howto/install.rst:21
 msgid ""
@@ -1226,8 +1288,8 @@ msgid ""
 "``graphviz-devel`` on Fedora, ``graphviz`` from Homebrew on macOS), or "
 "build static libraries with ``cargo xtask graphviz`` (see below);"
 msgstr ""
-"Graphviz लाइब्रेरी, क्योंकि Guidedog ग्राफ़ को प्रोसेस के भीतर ही बनाने के "
-"लिए इसे (``libgvc`` और ``libcgraph``) लिंक करता है। या तो सिस्टम की "
+"Graphviz लाइब्रेरी, क्योंकि Guidedog ग्राफ़ को प्रोसेस के भीतर ही बनाने "
+"के लिए इसे (``libgvc`` और ``libcgraph``) लिंक करता है। या तो सिस्टम की "
 "डेवलपमेंट फ़ाइलें इंस्टॉल करें (Debian और Ubuntu पर ``libgraphviz-dev``, "
 "Fedora पर ``graphviz-devel``, macOS पर Homebrew का ``graphviz``), या "
 "``cargo xtask graphviz`` से स्टैटिक लाइब्रेरी build करें (नीचे देखें);"
@@ -1239,8 +1301,8 @@ msgid ""
 "``ring`` crate (TLS for HTTPS)."
 msgstr ""
 "एक C कंपाइलर (``cc``, Xcode के कमांड-लाइन टूल, या MSVC), जिससे Cargo "
-"tree-sitter ग्रामर और ``ring`` crate की क्रिप्टोग्राफ़ी (HTTPS के लिए TLS) "
-"build करता है।"
+"tree-sitter ग्रामर और ``ring`` crate की क्रिप्टोग्राफ़ी (HTTPS के लिए "
+"TLS) build करता है।"
 
 #: ../../howto/install.rst:42
 msgid ""
@@ -1251,12 +1313,12 @@ msgid ""
 "store: the root certificates are built in. There are no native build "
 "scripts to run first."
 msgstr ""
-"हाथ से और कुछ build नहीं करना पड़ता। Typst कंपाइलर (0.15.1), Python व Rust "
-"के tree-sitter ग्रामर और HTTP क्लाइंट (``rustls`` के साथ ``ureq``) सामान्य "
-"Cargo डिपेंडेंसी हैं, जो वर्कस्पेस के साथ ही कंपाइल होती हैं। HTTPS के लिए "
-"न ``curl`` प्रोग्राम चाहिए, न OpenSSL, न सिस्टम का सर्टिफ़िकेट स्टोर: रूट "
-"सर्टिफ़िकेट भीतर ही शामिल हैं। पहले से चलाने के लिए कोई नेटिव build "
-"स्क्रिप्ट नहीं है।"
+"हाथ से और कुछ build नहीं करना पड़ता। Typst कंपाइलर (0.15.1), Python व "
+"Rust के tree-sitter ग्रामर और HTTP क्लाइंट (``rustls`` के साथ ``ureq``) "
+"सामान्य Cargo डिपेंडेंसी हैं, जो वर्कस्पेस के साथ ही कंपाइल होती हैं। "
+"HTTPS के लिए न ``curl`` प्रोग्राम चाहिए, न OpenSSL, न सिस्टम का "
+"सर्टिफ़िकेट स्टोर: रूट सर्टिफ़िकेट भीतर ही शामिल हैं। पहले से चलाने के "
+"लिए कोई नेटिव build स्क्रिप्ट नहीं है।"
 
 #: ../../howto/install.rst:46
 msgid "Release build"
@@ -1283,8 +1345,8 @@ msgid ""
 "The release archives link Graphviz statically, so they need no Graphviz "
 "on the machine that runs them. We build the same way:"
 msgstr ""
-"रिलीज़ आर्काइव Graphviz को स्टैटिक रूप से लिंक करते हैं, इसलिए जिस मशीन पर "
-"वे चलते हैं, उस पर Graphviz नहीं चाहिए। हम भी इसी तरह build करते हैं:"
+"रिलीज़ आर्काइव Graphviz को स्टैटिक रूप से लिंक करते हैं, इसलिए जिस मशीन "
+"पर वे चलते हैं, उस पर Graphviz नहीं चाहिए। हम भी इसी तरह build करते हैं:"
 
 #: ../../howto/install.rst:70
 msgid ""
@@ -1297,15 +1359,15 @@ msgid ""
 "core renderers (SVG and DOT), with no X11, cairo, gd, ltdl or zlib. So a "
 "static build renders SVG and laid-out DOT, but not PNG."
 msgstr ""
-"``cargo xtask graphviz`` Graphviz 16.1.0 और Expat 2.7.1 डाउनलोड करता है, हर "
-"एक को उसके पिन किए गए SHA-256 से जाँचता है, और स्टैटिक लाइब्रेरी "
+"``cargo xtask graphviz`` Graphviz 16.1.0 और Expat 2.7.1 डाउनलोड करता है, "
+"हर एक को उसके पिन किए गए SHA-256 से जाँचता है, और स्टैटिक लाइब्रेरी "
 "``target/graphviz/16.1.0`` में build करता है, जिस फ़ोल्डर को वह प्रिंट भी "
 "करता है। इसके लिए C और C++ कंपाइलर, ``make``, ``curl``, ``tar`` और ``xz`` "
 "चाहिए, और इसमें कुछ मिनट लगते हैं। इस build में केवल वही है जो Guidedog "
-"इस्तेमाल करता है: dot और neato लेआउट plugin (dot, neato, fdp, sfdp, circo, "
-"twopi, osage, patchwork) और मुख्य रेंडरर (SVG और DOT); X11, cairo, gd, ltdl "
-"या zlib नहीं। इसलिए स्टैटिक build SVG और लेआउट किया हुआ DOT रेंडर करता है, "
-"PNG नहीं।"
+"इस्तेमाल करता है: dot और neato लेआउट plugin (dot, neato, fdp, sfdp, "
+"circo, twopi, osage, patchwork) और मुख्य रेंडरर (SVG और DOT); X11, cairo, "
+"gd, ltdl या zlib नहीं। इसलिए स्टैटिक build SVG और लेआउट किया हुआ DOT "
+"रेंडर करता है, PNG नहीं।"
 
 #: ../../howto/install.rst:72
 msgid ""
@@ -1314,8 +1376,8 @@ msgid ""
 "uses the default folder. ``guidedog --version`` then reports ``graphviz "
 "16.1.0 (static)``."
 msgstr ""
-"``GUIDEDOG_GRAPHVIZ_STATIC`` ``gd-graphdog`` की build स्क्रिप्ट को बताता है "
-"कि लाइब्रेरी कहाँ हैं; ``gd-graphdog`` का ``static-graphviz`` फ़ीचर "
+"``GUIDEDOG_GRAPHVIZ_STATIC`` ``gd-graphdog`` की build स्क्रिप्ट को बताता "
+"है कि लाइब्रेरी कहाँ हैं; ``gd-graphdog`` का ``static-graphviz`` फ़ीचर "
 "डिफ़ॉल्ट फ़ोल्डर इस्तेमाल करता है। इसके बाद ``guidedog --version`` "
 "``graphviz 16.1.0 (static)`` बताता है।"
 
@@ -1390,28 +1452,31 @@ msgid ""
 "``tools/data``. ``cargo xtask --help`` lists the other repository tasks: "
 "the website, the fonts, and the release steps."
 msgstr ""
-"``cargo run -p check`` ``tools/check`` में मौजूद सोर्स-सीमा जाँचने वाला टूल "
-"है: यह फ़ंक्शन और फ़ाइल की लंबाई और पंक्ति की चौड़ाई जाँचता है। ``cargo "
-"xtask tables --check`` जाँचता है कि बनाई गई डेटा टेबल ``tools/data`` के "
-"upstream डेटा से मेल खाती हैं। ``cargo xtask --help`` repository के बाकी "
-"काम दिखाता है: वेबसाइट, फ़ॉन्ट और रिलीज़ के चरण।"
+"``cargo run -p check`` ``tools/check`` में मौजूद सोर्स-सीमा जाँचने वाला "
+"टूल है: यह फ़ंक्शन और फ़ाइल की लंबाई और पंक्ति की चौड़ाई जाँचता है। "
+"``cargo xtask tables --check`` जाँचता है कि बनाई गई डेटा टेबल "
+"``tools/data`` के upstream डेटा से मेल खाती हैं। ``cargo xtask --help`` "
+"repository के बाकी काम दिखाता है: वेबसाइट, फ़ॉन्ट और रिलीज़ के चरण।"
 
 #: ../../howto/install.rst:113
-msgid "Other programs"
-msgstr "दूसरे प्रोग्राम"
+msgid "Built-in plugins"
+msgstr "अंतर्निहित plugins"
 
 #: ../../howto/install.rst:116
 msgid ""
-"``guidedog dsc``, the discussion catalogs, is part of ``guidedog``: the "
-"discussion plugin is linked in, so there is nothing more to build. The "
-"GitHub Pages publisher builds the same way as ``guidedog``. It does not "
-"link the engine:"
+"The release has one executable. The discussion plugin adds ``guidedog "
+"dsc``. The static site plugin adds ``guidedog ssg``. The Pages plugin "
+"adds ``guidedog publish pages`` and ``guidedog pages`` maintenance "
+"commands. All three are linked into ``guidedog`` and use its services; no "
+"additional program or registration is needed."
 msgstr ""
-"चर्चा कैटलॉग वाला ``guidedog dsc`` ``guidedog`` का ही हिस्सा है: चर्चा "
-"plugin उसमें लिंक है, इसलिए अलग से कुछ build नहीं करना पड़ता। GitHub Pages "
-"publisher भी ``guidedog`` की तरह ही build होता है। यह इंजन लिंक नहीं करता:"
+"रिलीज़ में एक ही एग्ज़िक्यूटेबल होता है। चर्चा plugin ``guidedog dsc`` "
+"जोड़ता है। स्टैटिक साइट plugin ``guidedog ssg`` जोड़ता है। Pages plugin "
+"``guidedog publish pages`` और ``guidedog pages`` रखरखाव कमांड जोड़ता है। "
+"तीनों ``guidedog`` में लिंक हैं और उसकी सेवाएँ इस्तेमाल करते हैं; किसी "
+"अतिरिक्त प्रोग्राम या रजिस्ट्रेशन की ज़रूरत नहीं है।"
 
-#: ../../howto/install.rst:122
+#: ../../howto/install.rst:118
 msgid ""
 "It keeps tokens in the system's credential store: the Keychain on macOS, "
 "the Credential Manager on Windows, and on Linux the Secret Service "
@@ -1423,11 +1488,11 @@ msgstr ""
 "(``libsecret-tools``) के ज़रिए Secret Service। उस प्रोग्राम की ज़रूरत "
 "केवल तब होती है जब यह पहली बार कोई token सहेजता या पढ़ता है।"
 
-#: ../../howto/install.rst:126
+#: ../../howto/install.rst:122
 msgid "Embed the engine"
 msgstr "इंजन एम्बेड करें"
 
-#: ../../howto/install.rst:129
+#: ../../howto/install.rst:125
 msgid ""
 "The conversion engine is a library. A Rust program can convert text "
 "without the ``guidedog`` command, through the ``guidedoc`` crate and the "
@@ -1437,7 +1502,7 @@ msgstr ""
 "बिना, ``guidedoc`` crate और ज़रूरी रीडर व रेंडरर crates के ज़रिए टेक्स्ट "
 "बदल सकता है:"
 
-#: ../../howto/install.rst:156
+#: ../../howto/install.rst:152
 msgid ""
 "``guidedoc_rst::reader()``, ``guidedoc_commonmark::MYST_READER``, "
 "``guidedoc_typst::renderer()`` and ``guidedoc_text::renderer()`` join the "
@@ -1552,13 +1617,13 @@ msgid ""
 "``_build/selected/<artifact>/pdf``. It leaves the complete catalog in "
 "``_build/pdf`` intact."
 msgstr ""
-"``docs/gds`` भी बाकी कैटलॉग जैसा एक चर्चा कैटलॉग है, इसलिए ``guidedog dsc`` "
-"उसमें चलता है (:doc:`discussions` देखें)। यह मेटाडेटा, नंबर, स्थिति और "
-"रिकवरी सँभालता है। इसका RST प्रकाशन पथ प्रोजेक्ट इंजन को उसी प्रोसेस में "
-"बुलाता है। यह पूरी HTML साइट और हर रिकॉर्ड का अलग PDF बनाता है। सिलेक्टर "
-"केवल PDF सीमित करता है। HTML पूरे कैटलॉग वाली सुसंगत साइट बनी रहती है। चुने "
-"हुए PDF का प्रीव्यू ``_build/selected/<artifact>/pdf`` इस्तेमाल करता है। "
-"``_build/pdf`` में पूरा कैटलॉग जस का तस रहता है।"
+"``docs/gds`` भी बाकी कैटलॉग जैसा एक चर्चा कैटलॉग है, इसलिए ``guidedog "
+"dsc`` उसमें चलता है (:doc:`discussions` देखें)। यह मेटाडेटा, नंबर, स्थिति "
+"और रिकवरी सँभालता है। इसका RST प्रकाशन पथ प्रोजेक्ट इंजन को उसी प्रोसेस "
+"में बुलाता है। यह पूरी HTML साइट और हर रिकॉर्ड का अलग PDF बनाता है। "
+"सिलेक्टर केवल PDF सीमित करता है। HTML पूरे कैटलॉग वाली सुसंगत साइट बनी "
+"रहती है। चुने हुए PDF का प्रीव्यू ``_build/selected/<artifact>/pdf`` "
+"इस्तेमाल करता है। ``_build/pdf`` में पूरा कैटलॉग जस का तस रहता है।"
 
 #: ../../howto/maintain-docs.rst:71
 msgid ""
@@ -2297,21 +2362,32 @@ msgstr ""
 #: ../../howto/publish.rst:129
 msgid ""
 "When this variable is set, Guidedog uses the specified Unix epoch "
-"timestamp instead of the current system clock for all date formatting and "
-"template variables."
+"timestamp instead of the current system clock for all date formatting, "
+"publication eligibility checks, and template variables. We can also pass "
+"``--now=2026-05-01T09:00:00Z`` to ``guidedog build``, ``guidedog serve``, "
+"or ``guidedog ssg build`` to evaluate scheduled ``:publish-at:`` and "
+"``:expires-at:`` windows against an explicit RFC 3339 instant, or "
+"``--preview`` to include drafts and future-scheduled pages in a local "
+"build. See :doc:`static-publishing`."
 msgstr ""
-"तब तारीख़ और template वेरिएबल सिस्टम घड़ी के बजाय दिए Unix समय का उपयोग "
-"करते हैं।"
+"जब यह वेरिएबल सेट होता है, तो Guidedog सभी तारीख़ों के फ़ॉर्मैट, प्रकाशन "
+"पात्रता जाँचों और टेम्पलेट वेरिएबल के लिए मौजूदा सिस्टम घड़ी के बजाय दिए "
+"गए Unix epoch टाइमस्टैम्प का उपयोग करता है। हम निर्धारित ``:publish-at:`` "
+"और ``:expires-at:`` समयावधियों को किसी स्पष्ट RFC 3339 क्षण के सापेक्ष "
+"जाँचने के लिए ``guidedog build``, ``guidedog serve`` या ``guidedog ssg "
+"build`` को ``--now=2026-05-01T09:00:00Z`` भी दे सकते हैं, या स्थानीय "
+"build में मसौदों और भविष्य के लिए निर्धारित पेजों को शामिल करने के लिए "
+"``--preview`` दे सकते हैं। :doc:`static-publishing` देखें।"
 
-#: ../../howto/publish.rst:132
+#: ../../howto/publish.rst:131
 msgid "Deployment options"
 msgstr "deployment के तरीके"
 
-#: ../../howto/publish.rst:135
+#: ../../howto/publish.rst:134
 msgid "Once the build succeeds, we deploy the static files to our host:"
 msgstr "build सफल होने पर हम स्टैटिक फ़ाइलें अपने होस्ट पर deploy करते हैं:"
 
-#: ../../howto/publish.rst:137
+#: ../../howto/publish.rst:136
 msgid ""
 "**Static web servers (Nginx / Caddy / Apache):** Point the server's root "
 "directive directly to the built HTML directory."
@@ -2319,7 +2395,7 @@ msgstr ""
 "**वेब सर्वर (Nginx / Caddy / Apache):** बनी HTML डायरेक्टरी को सर्वर की "
 "जड़ बनाएँ।"
 
-#: ../../howto/publish.rst:139
+#: ../../howto/publish.rst:138
 msgid ""
 "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud "
 "Storage):** Sync the contents of ``_build/html`` to our bucket with the "
@@ -2329,24 +2405,23 @@ msgstr ""
 "क्लाउड प्रदाता के CLI टूल से ``_build/html`` की सामग्री अपने बकेट में "
 "सिंक करें।"
 
-#: ../../howto/publish.rst:141
+#: ../../howto/publish.rst:140
 msgid "**GitHub Pages:**"
 msgstr "**GitHub Pages:**"
 
-#: ../../howto/publish.rst:143
+#: ../../howto/publish.rst:142
 msgid ""
 "To deploy directly from our own machine, we run ``guidedog publish "
 "pages``. It asks for what is still missing (the repository, a token, the "
-"Pages settings), then builds and publishes in one push. "
-"``guidedog pages`` offers the same steps one by one. See "
-":doc:`github-pages`."
+"Pages settings), then builds and publishes in one push. ``guidedog "
+"pages`` offers the same steps one by one. See :doc:`github-pages`."
 msgstr ""
 "अपनी मशीन से सीधे deploy करने के लिए हम ``guidedog publish pages`` चलाते "
 "हैं। जो अभी बाकी है (repository, token, Pages सेटिंग्स), यह वह पूछता है, "
 "फिर एक ही push में build और प्रकाशित करता है। ``guidedog pages`` यही चरण "
 "एक-एक करके देता है। :doc:`github-pages` देखें।"
 
-#: ../../howto/publish.rst:147
+#: ../../howto/publish.rst:146
 msgid ""
 "For automated deployments with GitHub Actions, ``guidedog pages "
 "workflow`` writes a workflow that builds and deploys the site. See "
@@ -2356,7 +2431,7 @@ msgstr ""
 "एक वर्कफ़्लो लिखता है जो साइट को build और deploy करता है। "
 ":doc:`github-pages` देखें।"
 
-#: ../../howto/publish.rst:149
+#: ../../howto/publish.rst:148
 msgid ""
 "For any other destination, we write a publisher plugin as described in "
 ":doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
@@ -2364,7 +2439,7 @@ msgstr ""
 "किसी और गंतव्य के लिए हम :doc:`../plugins` में बताए तरीके से एक publisher "
 "plugin लिखते हैं और उसे ``guidedog publish --publisher=ID`` से चलाते हैं।"
 
-#: ../../howto/publish.rst:152
+#: ../../howto/publish.rst:151
 msgid ""
 "On filesystems with directory exchange, the output path switches in one "
 "operation. The fallback uses two renames and can briefly leave that path "
@@ -2380,3 +2455,568 @@ msgstr ""
 "पहले जैसा कर देती है। कई अनुरोध करने वाला क्लाइंट दो अलग जनरेशन तक पहुँच "
 "सकता है। build पूरे ब्राउज़िंग session के लिए एक ही स्नैपशॉट का वादा नहीं "
 "करता।"
+
+#: ../../howto/static-publishing.rst:1
+msgid "Static websites and articles"
+msgstr "स्टैटिक वेबसाइटें और लेख"
+
+#: ../../howto/static-publishing.rst:4
+msgid ""
+"Dated articles, release notes, whitepapers and standalone landing pages "
+"share the normal HTML and PDF pipeline. Leading metadata fields declare "
+"when a page is eligible for publication, which layout it uses, and "
+"whether it also compiles to a standalone article PDF."
+msgstr ""
+"तारीख़ वाले लेख, रिलीज़ नोट्स, व्हाइटपेपर और स्वतंत्र लैंडिंग पेज सामान्य "
+"HTML और PDF पाइपलाइन ही साझा करते हैं। शुरुआती मेटाडेटा फ़ील्ड बताते हैं "
+"कि कोई पेज प्रकाशन के लिए कब पात्र है, वह कौन-सा लेआउट इस्तेमाल करता है, और "
+"क्या उसका स्वतंत्र लेख PDF भी कंपाइल किया जाएगा।"
+
+#: ../../howto/static-publishing.rst:6
+msgid "Authoring and publication state"
+msgstr "लेखन और प्रकाशन स्थिति"
+
+#: ../../howto/static-publishing.rst:9
+msgid ""
+"The ``guidedog ssg`` commands create and transition articles in place:"
+msgstr ""
+"``guidedog ssg`` कमांड लेखों को वहीं बनाते हैं और उनकी प्रकाशन स्थिति "
+"बदलते हैं:"
+
+#: ../../howto/static-publishing.rst:16
+msgid ""
+"Pass a ``.md`` path to create Markdown with YAML front matter instead of "
+"reStructuredText. For Markdown builds, include ``.md`` in "
+"``source_suffix`` and enable ``myst_parser`` in ``extensions`` as usual. "
+"``new`` creates a draft and refuses to overwrite an existing file. "
+"``publish`` clears draft, schedule and expiration, retaining an existing "
+"past date or stamping the current UTC date when the source had none or a "
+"future date. ``draft`` withholds a source from subsequent release builds "
+"without discarding its existing date metadata. Version control stays in "
+"the author's hands; the commands never commit, tag or move files."
+msgstr ""
+"reStructuredText के बजाय YAML फ्रंट मैटर वाला Markdown बनाने के लिए "
+"``.md`` पाथ दें। Markdown build के लिए हमेशा की तरह ``source_suffix`` में "
+"``.md`` जोड़ें और ``extensions`` में ``myst_parser`` चालू करें। ``new`` एक "
+"मसौदा बनाता है और मौजूदा फ़ाइल को ओवरराइट करने से मना करता है। ``publish`` "
+"मसौदा, निर्धारित समय और समाप्ति समय हटा देता है, तथा पहले से मौजूद बीती "
+"तारीख़ बनाए रखता है या जब सोर्स में कोई तारीख़ न हो या भविष्य की तारीख़ हो "
+"तब वर्तमान UTC तारीख़ अंकित करता है। ``draft`` सोर्स के मौजूदा तारीख़ "
+"मेटाडेटा को हटाए बिना उसे आगे की रिलीज़ build से रोक लेता है। वर्ज़न "
+"कंट्रोल लेखक के हाथ में रहता है; ये कमांड कभी फ़ाइलों को commit, tag या "
+"स्थानांतरित नहीं करते।"
+
+#: ../../howto/static-publishing.rst:18
+msgid ""
+"An article declares its metadata in the leading field list (or YAML front "
+"matter block):"
+msgstr ""
+"कोई लेख अपना मेटाडेटा शुरुआती फ़ील्ड सूची (या YAML फ्रंट मैटर ब्लॉक) में "
+"घोषित करता है:"
+
+#: ../../howto/static-publishing.rst:33
+msgid ""
+"Date-only publication starts at midnight UTC. ``publish-at`` overrides "
+"that boundary with an RFC 3339 instant, and ``expires-at`` ends "
+"publication at an exclusive instant. Drafts, future articles and expired "
+"articles are excluded before navigation, search, feeds and source "
+"downloads are built. Publication metadata is source configuration and is "
+"excluded from gettext catalogs. Recognized publication fields supply "
+"layout data and are omitted from body rendering and search text, while "
+"unknown fields and ordinary later field lists remain content. To vary "
+"metadata for a separate language edition, edit that edition's source "
+"files. Invalid publication metadata stops the output commit and preserves "
+"the previous successful website."
+msgstr ""
+"केवल तारीख़ वाला प्रकाशन मध्यरात्रि UTC से शुरू होता है। ``publish-at`` उस "
+"सीमा को किसी RFC 3339 क्षण से बदल देता है, और ``expires-at`` एक अपवर्जी "
+"(exclusive) क्षण पर प्रकाशन समाप्त कर देता है। नेविगेशन, खोज, फ़ीड और सोर्स "
+"डाउनलोड बनने से पहले ही मसौदे, भविष्य के लेख और समय-समाप्त लेख बाहर कर दिए "
+"जाते हैं। प्रकाशन मेटाडेटा सोर्स कॉन्फ़िगरेशन है और इसे gettext कैटलॉग से "
+"बाहर रखा जाता है। पहचाने गए प्रकाशन फ़ील्ड लेआउट डेटा देते हैं और मुख्य "
+"टेक्स्ट रेंडरिंग तथा खोज टेक्स्ट में शामिल नहीं होते, जबकि अपरिचित फ़ील्ड "
+"और बाद की सामान्य फ़ील्ड सूचियाँ सामग्री का हिस्सा बनी रहती हैं। किसी अलग "
+"भाषा संस्करण का मेटाडेटा बदलने के लिए उस संस्करण की सोर्स फ़ाइलें संपादित "
+"करें। अमान्य प्रकाशन मेटाडेटा आउटपुट commit को रोक देता है और पिछली सफल "
+"वेबसाइट को सुरक्षित रखता है।"
+
+#: ../../howto/static-publishing.rst:37
+msgid ""
+"Sources with leading metadata pass through the build-clock gate; eligible "
+"documents produce HTML pages, optional article PDFs, collection archives "
+"and discovery feeds, while withheld documents stay in the private cache."
+msgstr ""
+"शुरुआती मेटाडेटा वाली सोर्स फ़ाइलें build-clock गेट से गुज़रती हैं; पात्र "
+"दस्तावेज़ HTML पेज, वैकल्पिक लेख PDF, संग्रह अभिलेख और डिस्कवरी फ़ीड बनाते "
+"हैं, जबकि रोके गए दस्तावेज़ निजी कैश में रहते हैं।"
+
+#: ../../howto/static-publishing.rst:37
+msgid ""
+"The build-clock gate filters sources before navigation, collections, "
+"feeds and article PDFs are built."
+msgstr ""
+"नेविगेशन, संग्रह, फ़ीड और लेख PDF बनने से पहले build-clock गेट सोर्स "
+"फ़ाइलों को छानता है।"
+
+#: ../../howto/static-publishing.rst:63
+msgid ""
+"Use ``guidedog build html --preview`` (or ``guidedog serve --preview``) "
+"to inspect unpublished pages locally. When keeping both public and "
+"preview outputs on disk, write the preview to a separate output directory:"
+msgstr ""
+"अप्रकाशित पेजों को स्थानीय रूप से देखने के लिए ``guidedog build html "
+"--preview`` (या ``guidedog serve --preview``) का उपयोग करें। जब डिस्क पर "
+"सार्वजनिक और प्रीव्यू दोनों आउटपुट रखने हों, तो प्रीव्यू को अलग आउटपुट "
+"डायरेक्टरी में लिखें:"
+
+#: ../../howto/static-publishing.rst:67
+msgid "Collections, archives and feeds"
+msgstr "संग्रह, अभिलेख और फ़ीड"
+
+#: ../../howto/static-publishing.rst:70
+msgid ""
+"Embed a chronological list of eligible articles in any page with ``.. "
+"postlist::``:"
+msgstr ""
+"``.. postlist::`` से किसी भी पेज में पात्र लेखों की कालानुक्रमिक सूची जोड़ें:"
+
+#: ../../howto/static-publishing.rst:80
+msgid ""
+"``:path:`` matches docnames without a source suffix. Category, author and "
+"series filters match exactly, and every listed tag must match. Articles "
+"are ordered by publication instant (newest first by default), with "
+"docname breaking ties; ``:sort: date`` places the oldest first. ``:style: "
+"cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each "
+"article's plain-text summary."
+msgstr ""
+"``:path:`` बिना सोर्स एक्सटेंशन के docname से मिलान करता है। श्रेणी, लेखक "
+"और शृंखला फ़िल्टर हूबहू मिलान करते हैं, और सूची में दिए गए हर टैग का मिलना "
+"ज़रूरी है। लेख प्रकाशन क्षण के क्रम में लगते हैं (डिफ़ॉल्ट रूप से सबसे नया "
+"पहले), और बराबरी होने पर docname से क्रम तय होता है; ``:sort: date`` सबसे "
+"पुराने को पहले रखता है। ``:style: cards`` कार्ड-लेआउट CSS क्लास जोड़ता है, "
+"और ``:excerpts:`` हर लेख का सादे टेक्स्ट वाला सारांश शामिल करता है।"
+
+#: ../../howto/static-publishing.rst:82
+msgid "Enable site-wide discovery files in ``conf.toml``:"
+msgstr "``conf.toml`` में पूरी साइट की डिस्कवरी फ़ाइलें चालू करें:"
+
+#: ../../howto/static-publishing.rst:91
+msgid ""
+"The HTML and dirhtml builders emit ``sitemap.xml``, ``rss.xml`` and "
+"``atom.xml`` using the configured ``base_url`` (including any hosting "
+"prefix). Discovery files derive their timestamps from source metadata "
+"rather than the wall clock, producing identical bytes when eligible "
+"sources and metadata are unchanged."
+msgstr ""
+"HTML और dirhtml बिल्डर कॉन्फ़िगर किए गए ``base_url`` (किसी भी होस्टिंग "
+"प्रीफ़िक्स सहित) का उपयोग करके ``sitemap.xml``, ``rss.xml`` और "
+"``atom.xml`` बनाते हैं। डिस्कवरी फ़ाइलें अपने टाइमस्टैम्प सिस्टम घड़ी के "
+"बजाय सोर्स मेटाडेटा से लेती हैं, इसलिए पात्र सोर्स और मेटाडेटा अपरिवर्तित "
+"रहने पर हर बार बिल्कुल समान बाइट बनते हैं।"
+
+#: ../../howto/static-publishing.rst:93
+msgid ""
+"Generate taxonomy archives and paginated collections from the same "
+"``[site]`` table:"
+msgstr ""
+"उसी ``[site]`` टेबल से वर्गीकरण अभिलेख (taxonomy archives) और पृष्ठबद्ध "
+"संग्रह बनाएँ:"
+
+#: ../../howto/static-publishing.rst:110
+msgid ""
+"The collection starts at ``journal/index.html`` and continues at "
+"``journal/page/2/index.html`` with relative previous and next links. A "
+"zero ``page_size`` keeps the collection on a single page. Each collection "
+"accepts ``path``, ``category``, ``tags``, ``author``, ``series`` and "
+"``year`` filters. When ``feeds = true``, ``journal/rss.xml`` and "
+"``journal/atom.xml`` contain the complete filtered selection across all "
+"pages. The collection layout defaults to ``collection.html`` unless "
+"``template`` names an override. Templates receive the current page "
+"number, page count and selected posts in ``collection``, with "
+"``collection.previous_url`` and ``collection.next_url`` set to relative "
+"URLs or ``None``. Each post entry provides ``title``, ``docname``, "
+"``date``, ``url``, ``summary`` and typed ``meta`` values, including its "
+"optional ``pdf_url``."
+msgstr ""
+"संग्रह ``journal/index.html`` से शुरू होता है और सापेक्ष पिछले तथा अगले "
+"लिंक के साथ ``journal/page/2/index.html`` पर जारी रहता है। शून्य "
+"``page_size`` पूरे संग्रह को एक ही पेज पर रखता है। हर संग्रह ``path``, "
+"``category``, ``tags``, ``author``, ``series`` और ``year`` फ़िल्टर "
+"स्वीकार करता है। जब ``feeds = true`` हो, तब ``journal/rss.xml`` और "
+"``journal/atom.xml`` में सभी पेजों का पूरा फ़िल्टर किया हुआ चयन रहता है। जब "
+"तक ``template`` कोई दूसरा नाम न दे, संग्रह का लेआउट डिफ़ॉल्ट रूप से "
+"``collection.html`` होता है। टेम्पलेट को ``collection`` में वर्तमान पेज "
+"संख्या, कुल पेज और चुनी हुई पोस्ट मिलती हैं, और ``collection.previous_url`` "
+"तथा ``collection.next_url`` सापेक्ष URL या ``None`` पर सेट होते हैं। हर "
+"पोस्ट प्रविष्टि ``title``, ``docname``, ``date``, ``url``, ``summary`` और "
+"टाइप किए गए ``meta`` मान देती है, जिनमें उसका वैकल्पिक ``pdf_url`` भी "
+"शामिल है।"
+
+#: ../../howto/static-publishing.rst:112
+msgid ""
+"Taxonomy archives are written at paths such as ``tags/rust/index.html`` "
+"and ``year/2026/index.html``. Headings preserve the original label text "
+"while filesystem paths escape uppercase, punctuation and non-ASCII bytes "
+"so distinct labels never collide on case-insensitive filesystems. "
+"Generated pages never overwrite an author-written page or another "
+"generated output. When publication state or collection membership "
+"shrinks, the output commit removes obsolete archive and pagination pages "
+"automatically."
+msgstr ""
+"वर्गीकरण अभिलेख ``tags/rust/index.html`` और ``year/2026/index.html`` जैसे "
+"पाथ पर लिखे जाते हैं। हेडिंग मूल लेबल टेक्स्ट बनाए रखती हैं, जबकि फ़ाइल "
+"सिस्टम पाथ बड़े अक्षरों, विराम चिह्नों और गैर-ASCII बाइट को एस्केप करते हैं "
+"ताकि केस-इनसेंसिटिव फ़ाइल सिस्टम पर भी अलग-अलग लेबल कभी न टकराएँ। जनरेट "
+"किए गए पेज कभी किसी लेखक के लिखे पेज या किसी दूसरे जनरेट किए गए आउटपुट को "
+"ओवरराइट नहीं करते। जब प्रकाशन स्थिति या संग्रह की सदस्यता घटती है, तो "
+"आउटपुट commit पुराने हो चुके अभिलेख और पेजिनेशन पेजों को अपने आप हटा देता "
+"है।"
+
+#: ../../howto/static-publishing.rst:114
+msgid "Layouts and standalone article PDFs"
+msgstr "लेआउट और स्वतंत्र लेख PDF"
+
+#: ../../howto/static-publishing.rst:117
+msgid ""
+"Dated articles select ``article.html`` by default; other pages select "
+"``page.html``, which extends ``layout.html``. Any page can choose a "
+"custom template in ``templates_path`` with ``:template: landing.html``, "
+"and ``:nosidebar: true`` hides the built-in navigation sidebar. Templates "
+"receive dates, authors, tags, category, series, summary, draft state and "
+"PDF links in ``page.meta``. Article templates also receive ``page.older`` "
+"and ``page.newer`` in publication order, ``page.taxonomies`` mapping each "
+"enabled taxonomy to ``{name, url}`` entries, and ``page.word_count`` and "
+"``page.reading_minutes`` (computed using ``myst_words_per_minute``, "
+"counting CJK characters individually)."
+msgstr ""
+"तारीख़ वाले लेख डिफ़ॉल्ट रूप से ``article.html`` चुनते हैं; बाकी पेज "
+"``page.html`` चुनते हैं, जो ``layout.html`` को विस्तारित करता है। कोई भी "
+"पेज ``:template: landing.html`` से ``templates_path`` में रखा कस्टम टेम्पलेट "
+"चुन सकता है, और ``:nosidebar: true`` अंतर्निहित नेविगेशन साइडबार छिपा देता "
+"है। टेम्पलेट को ``page.meta`` में तारीख़ें, लेखक, टैग, श्रेणी, शृंखला, "
+"सारांश, मसौदा स्थिति और PDF लिंक मिलते हैं। लेख टेम्पलेट को प्रकाशन क्रम "
+"में ``page.older`` और ``page.newer``, हर चालू वर्गीकरण को ``{name, url}`` "
+"प्रविष्टियों से मैप करने वाला ``page.taxonomies``, तथा ``page.word_count`` "
+"और ``page.reading_minutes`` (जिनकी गणना ``myst_words_per_minute`` से और CJK "
+"अक्षरों को अलग-अलग गिनकर की जाती है) भी मिलते हैं।"
+
+#: ../../howto/static-publishing.rst:119
+msgid ""
+"Setting ``:pdf: article`` compiles a standalone PDF next to the article's "
+"HTML page (``notes.pdf`` for ``html``, ``notes/index.pdf`` for "
+"``dirhtml``). The built-in ``article.typ`` layout renders continuous "
+"prose with a title and author block, abstract, and running headers after "
+"page one. Override it by placing ``_templates/article.typ`` in the "
+"project with the same ``book`` function signature. The generated Typst "
+"source is saved under ``sources/`` in the output folder for inspection. "
+"Standalone article PDFs are produced by the ``html`` and ``dirhtml`` "
+"builders; ``singlehtml`` retains its single-page HTML behavior."
+msgstr ""
+"``:pdf: article`` सेट करने पर लेख के HTML पेज के पास ही एक स्वतंत्र PDF "
+"कंपाइल होता है (``html`` के लिए ``notes.pdf``, ``dirhtml`` के लिए "
+"``notes/index.pdf``)। अंतर्निहित ``article.typ`` लेआउट शीर्षक और लेखक "
+"ब्लॉक, सारांश (abstract), तथा पहले पेज के बाद रनिंग हेडर के साथ निरंतर गद्य "
+"रेंडर करता है। इसे बदलने के लिए प्रोजेक्ट में समान ``book`` फ़ंक्शन सिग्नेचर "
+"के साथ ``_templates/article.typ`` रखें। जनरेट किया गया Typst सोर्स जाँच के "
+"लिए आउटपुट फ़ोल्डर में ``sources/`` के नीचे सहेजा जाता है। स्वतंत्र लेख PDF "
+"``html`` और ``dirhtml`` बिल्डर बनाते हैं; ``singlehtml`` अपना एकल-पेज HTML "
+"व्यवहार बनाए रखता है।"
+
+#: ../../howto/static-publishing.rst:121
+msgid "Starter sites"
+msgstr "स्टार्टर साइटें"
+
+#: ../../howto/static-publishing.rst:124
+msgid "Initialize a complete starter project with one of three presets:"
+msgstr ""
+"तीन प्रीसेट में से किसी एक से पूरा स्टार्टर प्रोजेक्ट शुरू करें:"
+
+#: ../../howto/static-publishing.rst:131
+msgid ""
+"``project`` starts with a custom landing page and a documentation guide."
+msgstr ""
+"``project`` कस्टम लैंडिंग पेज और दस्तावेज़ीकरण गाइड से शुरू होता है।"
+
+#: ../../howto/static-publishing.rst:132
+msgid ""
+"``journal`` starts with a dated article, chronological cards, feeds and "
+"taxonomy archives."
+msgstr ""
+"``journal`` तारीख़ वाले लेख, कालानुक्रमिक कार्ड, फ़ीड और वर्गीकरण अभिलेखों "
+"से शुरू होता है।"
+
+#: ../../howto/static-publishing.rst:133
+msgid ""
+"``research`` starts with a paper containing an abstract and mathematics, "
+"and builds its standalone PDF."
+msgstr ""
+"``research`` सारांश और गणित वाले एक शोध-पत्र से शुरू होता है, और उसका "
+"स्वतंत्र PDF बनाता है।"
+
+#: ../../howto/static-publishing.rst:135
+msgid ""
+"All three presets copy editable HTML, CSS and Typst theme files and "
+"refuse to overwrite an existing destination. Update the example "
+"``base_url`` in ``conf.toml`` before publishing feeds or sitemaps."
+msgstr ""
+"तीनों प्रीसेट संपादन-योग्य HTML, CSS और Typst थीम फ़ाइलें कॉपी करते हैं और "
+"किसी मौजूदा गंतव्य को ओवरराइट करने से मना करते हैं। फ़ीड या साइटमैप "
+"प्रकाशित करने से पहले ``conf.toml`` में दिए उदाहरण ``base_url`` को अपडेट "
+"करें।"
+
+#: ../../howto/static-publishing.rst:137
+msgid ""
+"When no mounts are configured, ``guidedog ssg build`` builds the single "
+"project into ``_build/site`` by default. ``--out DIR`` selects another "
+"destination, ``--now RFC3339`` fixes the publication clock, and "
+"``--preview`` includes withheld documents."
+msgstr ""
+"जब कोई माउंट कॉन्फ़िगर न हो, तो ``guidedog ssg build`` डिफ़ॉल्ट रूप से एकल "
+"प्रोजेक्ट को ``_build/site`` में build करता है। ``--out DIR`` दूसरा गंतव्य "
+"चुनता है, ``--now RFC3339`` प्रकाशन घड़ी स्थिर करता है, और ``--preview`` "
+"रोके गए दस्तावेज़ों को शामिल करता है।"
+
+#: ../../howto/static-publishing.rst:139
+msgid "Mounted projects and editions"
+msgstr "माउंट किए गए प्रोजेक्ट और भाषा संस्करण"
+
+#: ../../howto/static-publishing.rst:142
+msgid ""
+"Assemble multiple Guidedog projects and language editions into one "
+"website from a root ``conf.toml``:"
+msgstr ""
+"रूट ``conf.toml`` से कई Guidedog प्रोजेक्ट और भाषा संस्करणों को जोड़कर एक "
+"ही वेबसाइट बनाएँ:"
+
+#: ../../howto/static-publishing.rst:172
+msgid ""
+"Every mount ``source`` must resolve beneath the site configuration's "
+"directory after following symbolic links. An edition uses gettext "
+"catalogs in the mount's source project unless ``source`` names a separate "
+"translated project directory. Edition ``output`` is relative to the "
+"mount's ``output`` prefix; an empty string mounts at the root of that "
+"prefix. Mount names and edition output directories must be distinct "
+"ignoring ASCII case, though different mounts may share an output "
+"directory when their emitted files are disjoint."
+msgstr ""
+"प्रत्येक माउंट का ``source`` सिम्बॉलिक लिंक का अनुसरण करने के बाद साइट "
+"कॉन्फ़िगरेशन की डायरेक्टरी के भीतर ही हल होना चाहिए। जब तक ``source`` किसी "
+"अलग अनूदित प्रोजेक्ट डायरेक्टरी का नाम न दे, संस्करण माउंट के सोर्स "
+"प्रोजेक्ट में रखे gettext कैटलॉग इस्तेमाल करता है। संस्करण का ``output`` "
+"माउंट के ``output`` प्रीफ़िक्स के सापेक्ष होता है; खाली स्ट्रिंग उस "
+"प्रीफ़िक्स के रूट पर माउंट करती है। माउंट के नाम और संस्करण की आउटपुट "
+"डायरेक्टरियाँ ASCII केस को अनदेखा करते हुए भी अलग-अलग होनी चाहिए, हालाँकि "
+"जब अलग-अलग माउंट की जनरेट की गई फ़ाइलें आपस में न टकराएँ तो वे एक ही आउटपुट "
+"डायरेक्टरी साझा कर सकते हैं।"
+
+#: ../../howto/static-publishing.rst:176
+msgid ""
+"Root conf.toml declares mounts, language editions, and shared assets; ssg "
+"build compiles each mount, verifies mount:// links and file collisions, "
+"and commits the assembled site in one Generation."
+msgstr ""
+"रूट conf.toml माउंट, भाषा संस्करण और साझा एसेट घोषित करता है; ssg build "
+"प्रत्येक माउंट को कंपाइल करता है, mount:// लिंक और फ़ाइल टकराव जाँचता है, "
+"और पूरी जुड़ी हुई साइट को एक ही Generation में commit करता है।"
+
+#: ../../howto/static-publishing.rst:176
+msgid ""
+"Mounted builds stage every project and language edition under one clock "
+"and publish the complete website atomically."
+msgstr ""
+"माउंट किए गए build हर प्रोजेक्ट और भाषा संस्करण को एक ही घड़ी के अंतर्गत "
+"तैयार करते हैं और पूरी वेबसाइट को एटॉमिक रूप से प्रकाशित करते हैं।"
+
+#: ../../howto/static-publishing.rst:198
+msgid ""
+"Supported mount builders are ``html``, ``dirhtml``, ``pdf`` and "
+"``discussion-pdf`` (which validates a discussion catalog under ``prefix`` "
+"and builds a PDF book for each active record). ``exclude`` filters a "
+"mount's relative output files with globs, and ``overrides`` passes ``-D`` "
+"setting assignments (with ``{language}``, ``{edition}``, ``{site_root}`` "
+"and ``{base_url}`` placeholders). Select languages through "
+"``editions.language`` rather than a ``language`` override so routing and "
+"translated output stay aligned. Nonempty ``version`` and ``release`` "
+"values from the root configuration propagate to every mount, and one "
+"publication clock governs the entire build."
+msgstr ""
+"समर्थित माउंट बिल्डर ``html``, ``dirhtml``, ``pdf`` और ``discussion-pdf`` "
+"(जो ``prefix`` के अंतर्गत चर्चा कैटलॉग को सत्यापित करता है और प्रत्येक "
+"सक्रिय रिकॉर्ड के लिए एक PDF बनाता है) हैं। ``exclude`` ग्लोब पैटर्न से "
+"माउंट की सापेक्ष आउटपुट फ़ाइलों को छानता है, और ``overrides`` ``-D`` "
+"सेटिंग असाइनमेंट (``{language}``, ``{edition}``, ``{site_root}`` और "
+"``{base_url}`` प्लेसहोल्डर के साथ) भेजता है। भाषा का चयन ``language`` "
+"ओवरराइड के बजाय ``editions.language`` से करें ताकि राउटिंग और अनूदित "
+"आउटपुट एक सीध में रहें। रूट कॉन्फ़िगरेशन के गैर-खाली ``version`` और "
+"``release`` मान हर माउंट तक पहुँचते हैं, और एक ही प्रकाशन घड़ी पूरे build "
+"को नियंत्रित करती है।"
+
+#: ../../howto/static-publishing.rst:200
+msgid "Link across mounts with the ``mount://`` scheme:"
+msgstr "``mount://`` स्कीम से अलग-अलग माउंट के बीच लिंक बनाएँ:"
+
+#: ../../howto/static-publishing.rst:206
+msgid ""
+"The link resolves to the target mount's matching language edition, "
+"falling back to its default edition. HTML receives a relative URL "
+"(preserving any hosting prefix), while PDFs use the public ``base_url``. "
+"Assembly verifies that every ``mount://`` target exists in the current "
+"generation, so a stale file from an earlier build cannot satisfy a link "
+"to a newly withheld document. If any mount fails or a cross-mount target "
+"is missing, the previous published website remains intact."
+msgstr ""
+"यह लिंक लक्ष्य माउंट के मेल खाते भाषा संस्करण पर खुलता है, और न मिलने पर "
+"उसके डिफ़ॉल्ट संस्करण पर जाता है। HTML को सापेक्ष URL (किसी भी होस्टिंग "
+"प्रीफ़िक्स को बनाए रखते हुए) मिलता है, जबकि PDF सार्वजनिक ``base_url`` का "
+"उपयोग करते हैं। असेंबली यह सत्यापित करती है कि हर ``mount://`` लक्ष्य "
+"वर्तमान जनरेशन में मौजूद है, ताकि पिछले build की कोई पुरानी फ़ाइल नए रोके "
+"गए दस्तावेज़ के लिंक को संतुष्ट न कर सके। यदि कोई भी माउंट विफल होता है या "
+"कोई क्रॉस-माउंट लक्ष्य गायब है, तो पहले से प्रकाशित वेबसाइट जस की तस बनी "
+"रहती है।"
+
+#: ../../howto/static-publishing.rst:208
+msgid ""
+"Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
+"cross-mount PDF download links; custom templates can inspect "
+"``ssg_no_pdf`` to hide PDF controls. Guidedog's own ``docs/conf.toml`` "
+"declares the landing pages, seven manual HTML editions, seven manual PDF "
+"books and discussion catalog builds in this format, and ``cargo xtask "
+"build-site`` delegates directly to ``guidedog ssg build``."
+msgstr ""
+"HTML प्रीव्यू के दौरान PDF माउंट छोड़ने और क्रॉस-माउंट PDF डाउनलोड लिंक "
+"हटाने के लिए ``--no-pdf`` दें; कस्टम टेम्पलेट PDF नियंत्रण छिपाने के लिए "
+"``ssg_no_pdf`` जाँच सकते हैं। Guidedog की अपनी ``docs/conf.toml`` इसी "
+"फ़ॉर्मैट में लैंडिंग पेज, मैनुअल के सात HTML संस्करण, मैनुअल की सात PDF "
+"किताबें और चर्चा कैटलॉग build घोषित करती है, तथा ``cargo xtask "
+"build-site`` सीधे ``guidedog ssg build`` को काम सौंपता है।"
+
+#: ../../howto/static-publishing.rst:210
+msgid "Pinned themes"
+msgstr "पिन की गई थीम"
+
+#: ../../howto/static-publishing.rst:213
+msgid ""
+"Package a directory containing ``_templates/`` and ``_static/`` into a "
+"portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
+msgstr ""
+"``_templates/`` और ``_static/`` वाली डायरेक्टरी को पोर्टेबल ``.gdt`` "
+"आर्काइव में पैक करें और स्पष्ट SHA-256 पिन के साथ इंस्टॉल करें:"
+
+#: ../../howto/static-publishing.rst:220
+msgid ""
+"Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
+"theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
+"files take precedence over the installed theme, and project static files "
+"override theme static files of the same relative path."
+msgstr ""
+"``HASH`` की जगह आर्काइव का SHA-256 डाइजेस्ट लिखें। ``[site]`` में ``theme = "
+"true`` सेट करके सत्यापित थीम चालू करें। प्रोजेक्ट की ``_templates/`` "
+"फ़ाइलें इंस्टॉल की गई थीम से प्राथमिकता पाती हैं, और प्रोजेक्ट की स्टैटिक "
+"फ़ाइलें समान सापेक्ष पाथ वाली थीम स्टैटिक फ़ाइलों को ओवरराइड करती हैं।"
+
+#: ../../howto/static-publishing.rst:222
+msgid ""
+"A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
+"portable relative paths beneath ``_templates/`` and ``_static/`` to "
+"base64 file bytes. Archives are bounded to 4,096 files, 64 MiB of "
+"expanded data, and 32 directory levels; traversal, case aliases, reserved "
+"platform names, symlinks, file/directory overlaps and executable hooks "
+"are rejected."
+msgstr ""
+"संस्करण-एक का ``.gdt`` आर्काइव UTF-8 JSON (``format = 1``) होता है जो "
+"``_templates/`` और ``_static/`` के नीचे के पोर्टेबल सापेक्ष पाथ को base64 "
+"फ़ाइल बाइट से मैप करता है। आर्काइव की सीमा 4,096 फ़ाइलें, 64 MiB विस्तारित "
+"डेटा और 32 डायरेक्टरी स्तर है; पाथ ट्रैवर्सल, केस उपनाम, आरक्षित प्लेटफ़ॉर्म "
+"नाम, सिम्लिंक, फ़ाइल/डायरेक्टरी टकराव और एग्ज़िक्यूटेबल हुक अस्वीकार कर दिए "
+"जाते हैं।"
+
+#: ../../howto/static-publishing.rst:224
+msgid ""
+"``guidedog-theme.lock`` records the source URL or path, the archive "
+"SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "
+"tag and length-delimited sorted filenames and file bytes). Installation "
+"writes and syncs ``_themes/<TREE_SHA256>/`` and verifies both the "
+"directory and the encoded lock before atomically replacing "
+"``guidedog-theme.lock``. Builds never fetch themes over the network; they "
+"verify the locked tree offline and fail closed if any file is missing, "
+"modified, added or replaced by a symlink."
+msgstr ""
+"``guidedog-theme.lock`` सोर्स URL या पाथ, आर्काइव का SHA-256 और कैननिकल "
+"ट्री SHA-256 (जिसकी गणना संस्करणयुक्त डोमेन टैग और लंबाई-सीमित क्रमबद्ध "
+"फ़ाइलनामों व फ़ाइल बाइट पर की जाती है) दर्ज करता है। इंस्टॉलेशन "
+"``_themes/<TREE_SHA256>/`` को लिखकर सिंक करता है और ``guidedog-theme.lock`` "
+"को एटॉमिक रूप से बदलने से पहले डायरेक्टरी और एनकोड किए गए लॉक दोनों को "
+"सत्यापित करता है। build कभी नेटवर्क से थीम नहीं लाते; वे लॉक किए गए ट्री को "
+"ऑफ़लाइन सत्यापित करते हैं और किसी भी फ़ाइल के गायब होने, बदलने, जुड़ने या "
+"सिम्लिंक से बदले जाने पर सुरक्षित रूप से विफल हो जाते हैं।"
+
+#~ msgid ""
+#~ "The GitHub Pages plugin is linked into ``guidedog``, and it adds two "
+#~ "commands to it:"
+#~ msgstr ""
+#~ "GitHub Pages plugin ``guidedog`` में लिंक है, और यह उसमें दो कमांड "
+#~ "जोड़ता है:"
+
+#~ msgid ""
+#~ "``guidedog publish pages`` runs the same guided publish as ``guidedog "
+#~ "publish pages``, with the same options, but guidedog builds the "
+#~ "project itself, with its own engine and linked plugins, instead of "
+#~ "starting an installed ``guidedog``. ``guidedog pages workflow`` is "
+#~ "``guidedog pages workflow``. ``guidedog publish pages --help`` and "
+#~ "``guidedog pages workflow --help`` list their options."
+#~ msgstr ""
+#~ "``guidedog publish pages`` वही निर्देशित प्रकाशन चलाता है जो "
+#~ "``guidedog publish pages`` करता है, उन्हीं विकल्पों के साथ, लेकिन "
+#~ "इंस्टॉल किए गए ``guidedog`` को शुरू करने के बजाय guidedog प्रोजेक्ट को "
+#~ "खुद build करता है, अपने इंजन और लिंक किए गए plugins के साथ। ``guidedog "
+#~ "pages workflow`` और ``guidedog pages workflow`` एक ही हैं। ``guidedog "
+#~ "publish pages --help`` और ``guidedog pages workflow --help`` इनके "
+#~ "विकल्प दिखाते हैं।"
+
+#~ msgid ""
+#~ "A custom ``guidedog`` built without the plugin can still have both "
+#~ "commands: we register the ``guidedog pages`` program (``guidedog "
+#~ "plugin register pages /usr/local/bin/guidedog pages``), and guidedog "
+#~ "runs it for them on our terminal. ``guidedog pages`` is also the "
+#~ "publisher program for ``guidedog publish --publisher=pages`` (see "
+#~ ":doc:`../plugins`)."
+#~ msgstr ""
+#~ "plugin के बिना बना कस्टम ``guidedog`` भी ये दोनों कमांड पा सकता है: हम "
+#~ "``guidedog pages`` प्रोग्राम को रजिस्टर करते हैं (``guidedog plugin "
+#~ "register pages /usr/local/bin/guidedog pages``), और guidedog इन कमांड "
+#~ "के लिए उसे हमारे ही टर्मिनल पर चलाता है। ``guidedog pages`` ``guidedog "
+#~ "publish --publisher=pages`` के लिए publisher प्रोग्राम भी है "
+#~ "(:doc:`../plugins` देखें)।"
+
+#~ msgid ""
+#~ "The package also installs ``guidedog pages``, which publishes sites to "
+#~ "GitHub Pages (see :doc:`github-pages`), and ``graphdog``. Discussion "
+#~ "catalogs need no program of their own: ``guidedog dsc`` keeps them "
+#~ "(see :doc:`discussions`)."
+#~ msgstr ""
+#~ "पैकेज ``guidedog pages`` भी इंस्टॉल करता है, जो साइटों को GitHub Pages "
+#~ "पर प्रकाशित करता है (:doc:`github-pages` देखें), और ``graphdog`` भी। "
+#~ "चर्चा कैटलॉग के लिए अलग प्रोग्राम नहीं चाहिए: उन्हें ``guidedog dsc`` "
+#~ "सँभालता है (:doc:`discussions` देखें)।"
+
+#~ msgid "Other programs"
+#~ msgstr "दूसरे प्रोग्राम"
+
+#~ msgid ""
+#~ "``guidedog dsc``, the discussion catalogs, is part of ``guidedog``: "
+#~ "the discussion plugin is linked in, so there is nothing more to build. "
+#~ "The GitHub Pages publisher builds the same way as ``guidedog``. It "
+#~ "does not link the engine:"
+#~ msgstr ""
+#~ "चर्चा कैटलॉग वाला ``guidedog dsc`` ``guidedog`` का ही हिस्सा है: चर्चा "
+#~ "plugin उसमें लिंक है, इसलिए अलग से कुछ build नहीं करना पड़ता। GitHub "
+#~ "Pages publisher भी ``guidedog`` की तरह ही build होता है। यह इंजन लिंक "
+#~ "नहीं करता:"
+
+#~ msgid ""
+#~ "When this variable is set, Guidedog uses the specified Unix epoch "
+#~ "timestamp instead of the current system clock for all date formatting "
+#~ "and template variables."
+#~ msgstr ""
+#~ "तब तारीख़ और template वेरिएबल सिस्टम घड़ी के बजाय दिए Unix समय का "
+#~ "उपयोग करते हैं।"

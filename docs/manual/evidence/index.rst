@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`release-1.0.0-beta.7`
+     - Rich excerpts, five-platform qualification, published archive verification and tested Homebrew update (17 October 2026)
    * - :doc:`release-1.0.0-beta.6`
      - Complete static publishing, five-platform qualification and published archive checks (17 October 2026)
    * - :doc:`ssg-review`
@@ -38,6 +40,7 @@ Each record is dated. It describes what we built or checked on that day, with th
    :hidden:
 
    manuals
+   release-1.0.0-beta.7
    ssg-review
    release-1.0.0-beta.1
    release-1.0.0-beta.2

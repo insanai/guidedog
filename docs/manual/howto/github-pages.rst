@@ -232,7 +232,7 @@ workflow's checksum test fails on it, and the command exits with status 1 until 
 In the repository's **Settings -> Pages**, we choose **GitHub Actions** as the publishing
 source and restrict the ``github-pages`` environment to ``main``.
 
-The workflow it writes is this one (for Guidedog 1.0.0-beta.6):
+The workflow it writes is this one:
 
 .. code-block:: yaml
 
@@ -268,8 +268,8 @@ The workflow it writes is this one (for Guidedog 1.0.0-beta.6):
 
          - name: Install Guidedog
            env:
-             GUIDEDOG_VERSION: 1.0.0-beta.6
-             GUIDEDOG_SHA256: a67074a91d3de18056b0c5a0fc910cd2318d2c3d6ee42706b395df34123dc048
+             GUIDEDOG_VERSION: 1.0.0-beta.7
+             GUIDEDOG_SHA256: a5ac102adada94e9919c3b0a0c18a162f6a470d023f0da0cf1db8c560c52a5dd
            run: |
              set -euo pipefail
              archive="$RUNNER_TEMP/guidedog-linux-amd64.tar.gz"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-17 14:14+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -37,7 +37,8 @@ msgstr "1. 실제 프로젝트에서 시작하기"
 msgid ""
 "Use Guidedog 1.0.0-beta.5 or newer. Run this from the directory that will "
 "contain ``orbit``:"
-msgstr "Guidedog 1.0.0-beta.5 이상을 사용합니다. ``orbit``\\ 이 들어갈 디렉터리에서 다음을 실행합니다:"
+msgstr ""
+"Guidedog 1.0.0-beta.5 이상을 사용합니다. ``orbit``\\ 이 들어갈 디렉터리에서 다음을 실행합니다:"
 
 #: ../../tutorial/a-custom-theme.rst:17
 msgid ""
@@ -537,6 +538,140 @@ msgstr "수식과 방정식은 :doc:`../topics/mathematics`\\ 에서 다룹니�
 msgid "Custom styles and book fonts are in :doc:`../topics/typography`."
 msgstr "사용자 정의 스타일과 책 글꼴은 :doc:`../topics/typography`\\ 에서 다룹니다."
 
+#: ../../tutorial/dynamic-content-and-directives.rst:1
+msgid "Custom directives and dynamic content"
+msgstr "맞춤 지시어 및 동적 콘텐츠"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:4
+msgid ""
+"Guidedog publishes the same document tree to an interactive HTML website "
+"and a typeset PDF book. Web readers benefit from interactive calculators, "
+"search filters, and embedded widgets. Book readers benefit from balanced "
+"columns, callout cards, and vector typography."
+msgstr "Guidedog은 동일한 문서 트리를 대화형 HTML 웹사이트와 정밀 조판된 PDF 책으로 발행합니다. 웹 독자는 대화형 계산기, 검색 필터, 임베디드 위젯을 활용할 수 있으며, 책 독자는 균형 잡힌 다단 레이아웃, 콜아웃 카드, 벡터 타이포그래피의 이점을 누릴 수 있습니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:8
+msgid ""
+"This tutorial builds a project that demonstrates both without duplicating "
+"prose. We declare a custom semantic directive in ``conf.toml``, add an "
+"interactive calculator for web readers, and design a print-quality "
+"callout block for the PDF book."
+msgstr "이 튜토리얼에서는 본문을 중복 작성하지 않고 두 형식을 모두 구현하는 프로젝트를 구축합니다. ``conf.toml``\\ 에 맞춤 의미론적 지시어를 선언하고 웹 독자를 위한 대화형 계산기를 추가하며 PDF 책을 위한 인쇄 품질 콜아웃 블록을 디자인합니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:14
+msgid ""
+"One source document evaluates object types for both outputs, sending raw "
+"HTML to the web and raw Typst to the PDF book."
+msgstr "단일 소스 문서는 두 출력 모두에 대해 객체 유형을 평가하여 원시 HTML을 웹으로, 원시 Typst를 PDF 책으로 전달합니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:14
+msgid ""
+"Format-gated evaluation and custom directives across HTML and PDF "
+"pipelines."
+msgstr "HTML 및 PDF 파이프라인 전반의 형식 게이트 평가 및 맞춤 지시어."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:56
+#: ../../tutorial/first-project.rst:54
+msgid "1. Create the project"
+msgstr "1. 프로젝트 만들기"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:59
+msgid "Start in a clean directory and run:"
+msgstr "깨끗한 디렉터리에서 시작하여 다음을 실행합니다:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:65
+msgid "Move into the new directory:"
+msgstr "새 디렉터리로 이동합니다:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:71
+msgid "2. Declare custom domain directives in conf.toml"
+msgstr "2. conf.toml에서 맞춤 도메인 지시어 선언"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:74
+msgid ""
+"A project often needs structured entities that standard domains (such as "
+"Python or C++) do not cover. Rather than requiring a Python runtime or "
+"custom extension compiler, Guidedog lets us declare custom directives and "
+"roles in ``conf.toml``."
+msgstr "프로젝트에서는 표준 도메인(Python, C++ 등)이 지원하지 않는 구조화된 엔터티가 필요한 경우가 많습니다. Guidedog은 Python 런타임이나 확장 컴파일러 없이 ``conf.toml``\\ 에서 맞춤 지시어와 역할을 직접 선언할 수 있도록 지원합니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:78
+msgid ""
+"Open ``conf.toml`` and append the declaration for a ``metric`` directive:"
+msgstr "``conf.toml``\\ 을 열고 ``metric`` 지시어 선언을 추가합니다:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:89
+msgid ""
+"This single declaration establishes a complete syntax contract: * ``.. "
+"metric:: p99_latency (milliseconds)`` describes the metric. * "
+"``:metric:`p99_latency``` links to the definition from any document. * "
+"The index table automatically generates a pair index entry "
+"(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
+"semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
+"typesets a styled description entry with back-references in the appendix."
+msgstr "이 단일 선언으로 완전한 구문 계약이 확립됩니다: * ``.. metric:: p99_latency (milliseconds)``\\ 가 지표를 설명합니다. * ``:metric:`p99_latency```\\ 가 모든 문서에서 해당 정의로 링크합니다. * 색인 표가 쌍 색인 항목(``p99_latency; cluster telemetry``)을 자동 생성합니다. * HTML에서 Guidedog은 CSS 앵커 훅이 포함된 의미론적 정의 목록을 생성합니다. * PDF에서 Guidedog은 스타일이 적용된 설명 항목을 조판하고 부록에 역참조를 기록합니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:96
+msgid "3. Author the document with format guards"
+msgstr "3. 형식 가드를 사용하여 문서 작성"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:99
+msgid "Replace the contents of ``index.rst`` with the following document:"
+msgstr "``index.rst``\\ 의 내용을 다음 문서로 교체합니다:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:144
+#| msgid "7. Build and inspect both forms"
+msgid "4. Build and inspect both publications"
+msgstr "4. 두 발행물 빌드 및 확인"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:147
+msgid "Build the HTML website:"
+msgstr "HTML 웹사이트를 빌드합니다:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:153
+msgid ""
+"Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. "
+"Notice that: * The ``:metric:`p99_latency``` reference resolves directly "
+"to the definition anchor. * The interactive calculator slider is rendered "
+"and active in the web DOM. * The PDF callout block is omitted entirely, "
+"without emitting warnings."
+msgstr "브라우저에서 ``_build/html/index.html``\\ 을 열거나 ``guidedog serve``\\ 를 실행합니다. 다음 사항을 확인하세요: * ``:metric:`p99_latency``` 참조가 정의 앵커로 직접 확인됩니다. * 대화형 계산기 슬라이더가 렌더링되어 웹 DOM에서 동작합니다. * PDF 콜아웃 블록은 경고 없이 완전히 제외됩니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:158
+#| msgid "6. Wrap the PDF book"
+msgid "Now build the PDF book:"
+msgstr "이제 PDF 책을 빌드합니다:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:164
+msgid ""
+"Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
+"``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are "
+"completely absent. * The Typst ``#rect(...)`` vector box is typeset with "
+"native margins, borders, and typography. * The appendix includes an index "
+"entry under ``p99_latency``."
+msgstr "``_build/pdf/telemetry-en.pdf``(또는 확인용 소스 ``_build/pdf/book-en.typ``)\\ 를 엽니다. 다음 사항을 확인하세요: * 슬라이더와 원시 HTML이 완전히 제외되었습니다. * Typst ``#rect(...)`` 벡터 상자가 네이티브 여백, 테두리, 타이포그래피로 조판되었습니다. * 부록의 ``p99_latency`` 항목 아래에 색인 항목이 포함되어 있습니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:169
+msgid "5. Custom Typst functions in theme templates"
+msgstr "5. 테마 템플릿에서 맞춤 Typst 함수 정의"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:172
+msgid ""
+"When you have formatting patterns used across many chapters, define a "
+"reusable Typst function in ``_templates/theme.typ``:"
+msgstr "여러 장에서 반복 사용하는 서식 패턴이 있는 경우 ``_templates/theme.typ``\\ 에서 재사용 가능한 Typst 함수를 정의합니다:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:185
+msgid "In any document, invoke the function inside a raw Typst block:"
+msgstr "모든 문서에서 원시 Typst 블록 내부로부터 해당 함수를 호출합니다:"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:195
+msgid ""
+"This keeps your reStructuredText prose focused on documentation while "
+"granting full access to Typst's typesetting engine for printed "
+"publications."
+msgstr "이를 통해 reStructuredText 본문은 문서 작성에만 집중하면서 인쇄 발행물에 대해서는 Typst 조판 엔진의 모든 기능을 완벽하게 활용할 수 있습니다."
+
 #: ../../tutorial/first-project.rst:1
 msgid "Our first project"
 msgstr "첫 프로젝트"
@@ -593,10 +728,6 @@ msgstr "프로젝트 소스와 템플릿이 Guidedog를 거쳐 HTML과 PDF가 �
 #: ../../tutorial/first-project.rst:34
 msgid "How Guidedog compiles a project into an HTML website and a PDF book."
 msgstr "프로젝트에서 HTML 사이트와 PDF 책을 만드는 과정."
-
-#: ../../tutorial/first-project.rst:54
-msgid "1. Create the project"
-msgstr "1. 프로젝트 만들기"
 
 #: ../../tutorial/first-project.rst:57
 msgid ""
@@ -795,3 +926,4 @@ msgid ""
 "We follow these pages in order. Each step produces a result we can "
 "inspect."
 msgstr "이 페이지들은 순서대로 따라갑니다. 단계마다 직접 확인할 수 있는 결과가 나옵니다."
+

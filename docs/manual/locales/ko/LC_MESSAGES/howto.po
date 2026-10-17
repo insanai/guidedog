@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-17 14:14+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -85,8 +85,8 @@ msgid ""
 "``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable "
 "PDF layout and shared theme copied from the binary;"
 msgstr ""
-"``_templates/discussion.typ``, ``_templates/theme.typ``: 바이너리에서 복사된 편집 가능한 "
-"PDF 레이아웃과 공통 테마"
+"``_templates/discussion.typ``, ``_templates/theme.typ``: 바이너리에서 복사된 편집 "
+"가능한 PDF 레이아웃과 공통 테마"
 
 #: ../../howto/discussions.rst:34
 msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
@@ -285,13 +285,13 @@ msgid ""
 msgstr ""
 "이 레이아웃은 Guidedog 바이너리에 내장되어 있습니다. ``guidedog dsc init``\\ 은 사용자화를 위해 "
 "``_templates/discussion.typ``\\ 과 공통 테마 ``_templates/theme.typ``\\ 을 "
-"복사합니다. 복사본이 없는 기존 카탈로그는 내장 레이아웃을 사용합니다. 이 템플릿은 일반적인 PDF 매개변수와 추가 ``record`` "
-"딕셔너리를 받는 ``book`` 함수를 정의합니다. ``record.id``\\ 는 읽기 쉬운 식별자이고, "
-"``record.catalog``\\ 는 프로젝트 이름이며, ``record.fields``\\ 에는 사람이 읽을 수 있는 필드 레이블과 "
-"값의 쌍이 들어 있습니다. 모든 값은 따옴표로 감싼 문자열로 전달됩니다. 원본 문서의 제목이 제목과 앵커를 제공합니다. 템플릿은 "
-"고정된 접두사나 수명 주기를 가정하지 않고 카탈로그 메타데이터를 읽습니다. 선택 매개변수인 ``contents``\\ 와 "
-"``memo``\\ 로 목차와 상태 안내문을 제어할 수 있습니다. 공통 PDF 매개변수는 :doc:`../templates`\\ 에서 "
-"설명합니다."
+"복사합니다. 복사본이 없는 기존 카탈로그는 내장 레이아웃을 사용합니다. 이 템플릿은 일반적인 PDF 매개변수와 추가 "
+"``record`` 딕셔너리를 받는 ``book`` 함수를 정의합니다. ``record.id``\\ 는 읽기 쉬운 식별자이고, "
+"``record.catalog``\\ 는 프로젝트 이름이며, ``record.fields``\\ 에는 사람이 읽을 수 있는 필드 "
+"레이블과 값의 쌍이 들어 있습니다. 모든 값은 따옴표로 감싼 문자열로 전달됩니다. 원본 문서의 제목이 제목과 앵커를 제공합니다. "
+"템플릿은 고정된 접두사나 수명 주기를 가정하지 않고 카탈로그 메타데이터를 읽습니다. 선택 매개변수인 ``contents``\\ 와 "
+"``memo``\\ 로 목차와 상태 안내문을 제어할 수 있습니다. 공통 PDF 매개변수는 :doc:`../templates`\\ "
+"에서 설명합니다."
 
 #: ../../howto/discussions.rst:176
 msgid ""
@@ -300,8 +300,8 @@ msgid ""
 "book keeps its metadata in that chapter; the root document selects the "
 "book's layout."
 msgstr ""
-"``--untrusted`` 빌드는 프로젝트 템플릿을 실행하는 대신 내장된 논의 레이아웃을 사용합니다. 더 큰 책의 한 장으로 포함된 "
-"기록은 해당 장 안에 메타데이터를 유지하며, 책 전체의 레이아웃은 루트 문서가 결정합니다."
+"``--untrusted`` 빌드는 프로젝트 템플릿을 실행하는 대신 내장된 논의 레이아웃을 사용합니다. 더 큰 책의 한 장으로 "
+"포함된 기록은 해당 장 안에 메타데이터를 유지하며, 책 전체의 레이아웃은 루트 문서가 결정합니다."
 
 #: ../../howto/discussions.rst:178
 msgid "When an update is interrupted"
@@ -503,6 +503,155 @@ msgstr ""
 "이름을 해석할 수 있습니다. 명시적인 매핑을 쓰면 빌드를 재현할 수 있습니다. :doc:`../intersphinx`\\ 를 "
 "참고하세요."
 
+#: ../../howto/format-specific-content.rst:1
+msgid "Deliver format-specific content and custom directives"
+msgstr "형식별 전용 콘텐츠 및 맞춤 지시어 제공"
+
+#: ../../howto/format-specific-content.rst:4
+msgid ""
+"A single source tree can publish rich, dynamic HTML pages on the web "
+"while typesetting elegant, print-quality PDF books. This guide covers how "
+"to route content to specific output formats, declare custom domain "
+"directives, and invoke Typst typesetting functions."
+msgstr "단일 소스 트리에서 웹용 풍부한 동적 HTML 페이지를 게시하는 동시에 인쇄 품질의 우아한 PDF 책을 조판할 수 있습니다. 이 가이드에서는 콘텐츠를 특정 출력 형식으로 라우팅하고 맞춤 도메인 지시어를 선언하며 Typst 조판 함수를 호출하는 방법을 다룹니다."
+
+#: ../../howto/format-specific-content.rst:10
+msgid ""
+"Content passes through format guards and object type tables to produce "
+"tailored web and print deliverables."
+msgstr "콘텐츠는 형식 가드와 객체 유형 테이블을 거쳐 최적화된 웹 및 인쇄 결과물을 생성합니다."
+
+#: ../../howto/format-specific-content.rst:10
+msgid "Content routing and directive handling for HTML and PDF outputs."
+msgstr "HTML 및 PDF 출력을 위한 콘텐츠 라우팅과 지시어 처리."
+
+#: ../../howto/format-specific-content.rst:43
+msgid "1. Embed dynamic HTML and client scripts"
+msgstr "1. 동적 HTML 및 클라이언트 스크립트 임베드"
+
+#: ../../howto/format-specific-content.rst:46
+msgid ""
+"Use ``.. only:: html`` paired with a ``.. raw:: html`` block to inject "
+"web-specific markup, interactive calculators, or embedded audio/video "
+"components:"
+msgstr "``.. only:: html``\\ 과 ``.. raw:: html`` 블록을 함께 사용하여 웹 전용 마크업, 대화형 계산기, 임베디드 오디오/비디오 컴포넌트를 삽입합니다:"
+
+#: ../../howto/format-specific-content.rst:60
+msgid ""
+"To supply the supporting CSS and JavaScript: 1. Place your script and "
+"stylesheet in ``_static/`` (e.g. ``_static/interactive.js`` and "
+"``_static/interactive.css``). 2. Register them in ``conf.toml``:"
+msgstr "지원하는 CSS 및 JavaScript를 제공하려면: 1. 스크립트와 스타일시트를 ``_static/``\\ 에 배치합니다(예: ``_static/interactive.js`` 및 ``_static/interactive.css``). 2. ``conf.toml``\\ 에 등록합니다:"
+
+#: ../../howto/format-specific-content.rst:69
+msgid ""
+"The HTML builder copies these files into the build directory and injects "
+"``<link>`` and ``<script>`` tags into every generated page."
+msgstr "HTML 빌더는 이 파일들을 빌드 디렉터리로 복사하고 생성되는 모든 페이지에 ``<link>`` 및 ``<script>`` 태그를 삽입합니다."
+
+#: ../../howto/format-specific-content.rst:72
+msgid "2. Typeset custom Typst formatting for PDF"
+msgstr "2. PDF용 맞춤 Typst 서식 조판"
+
+#: ../../howto/format-specific-content.rst:75
+msgid ""
+"To introduce vector shapes, tailored callout boxes, or custom typography "
+"for printed pages, wrap the markup in ``.. only:: typst or latex`` (or "
+"``.. only:: pdf``):"
+msgstr "인쇄 페이지에 벡터 도형, 맞춤 콜아웃 상자 또는 특수 타이포그래피를 적용하려면 마크업을 ``.. only:: typst or latex``(또는 ``.. only:: pdf``)\\ 로 감쌉니다:"
+
+#: ../../howto/format-specific-content.rst:95
+msgid ""
+"Guidedog emits this block directly into the Typst document before "
+"invoking the Typst compiler. The HTML builder automatically omits this "
+"block without emitting warnings."
+msgstr "Guidedog은 Typst 컴파일러를 호출하기 전에 이 블록을 Typst 문서에 직접 출력합니다. HTML 빌더는 경고 없이 이 블록을 자동으로 생략합니다."
+
+#: ../../howto/format-specific-content.rst:98
+msgid "3. Declare custom domain directives in conf.toml"
+msgstr "3. conf.toml에서 맞춤 도메인 지시어 선언"
+
+#: ../../howto/format-specific-content.rst:101
+msgid ""
+"When you need custom structured blocks with signature parsing, "
+"cross-references, and index entries, declare them in ``conf.toml`` under "
+"``[[object_types]]``:"
+msgstr "서명 구문 분석, 상호 참조, 색인 항목을 지원하는 맞춤 구조화 블록이 필요한 경우 ``conf.toml``\\ 의 ``[[object_types]]`` 아래에 선언합니다:"
+
+#: ../../howto/format-specific-content.rst:113
+msgid "Now authors can describe services across all documents:"
+msgstr "이제 작성자는 모든 문서에서 서비스를 설명할 수 있습니다:"
+
+#: ../../howto/format-specific-content.rst:121
+msgid ""
+"Other documents can link directly to this service using the declared role:"
+msgstr "다른 문서에서 선언된 역할을 사용하여 이 서비스로 직접 링크할 수 있습니다:"
+
+#: ../../howto/format-specific-content.rst:127
+msgid ""
+"In HTML, Guidedog produces semantic definition tags (``<dl "
+"class=\"service\">``) with automatic anchor links. In PDF, Guidedog "
+"typesets a styled description entry and records an index entry in the "
+"book's index."
+msgstr "HTML에서 Guidedog은 자동 앵커 링크가 포함된 의미론적 정의 태그(``<dl class=\"service\">``)\\ 를 생성합니다. PDF에서 Guidedog은 스타일이 적용된 설명 항목을 조판하고 책 색인에 항목을 기록합니다."
+
+#: ../../howto/format-specific-content.rst:130
+msgid "4. Alias existing directives"
+msgstr "4. 기존 지시어 별칭 지정"
+
+#: ../../howto/format-specific-content.rst:133
+msgid ""
+"If you are migrating documentation or want friendlier names for built-in "
+"directives, declare aliases in ``[directive_aliases]`` in ``conf.toml``:"
+msgstr "문서를 마이그레이션 중이거나 내장 지시어에 보다 친숙한 이름을 부여하려는 경우 ``conf.toml``\\ 의 ``[directive_aliases]``\\ 에 별칭을 선언합니다:"
+
+#: ../../howto/format-specific-content.rst:142
+msgid ""
+"Authors can then use ``.. callout::`` or ``.. endpoint::`` using the "
+"options and rules of the target directive."
+msgstr "작성자는 대상 지시어의 옵션과 규칙을 그대로 사용하여 ``.. callout::`` 또는 ``.. endpoint::``\\ 를 사용할 수 있습니다."
+
+#: ../../howto/format-specific-content.rst:144
+msgid "5. Call reusable Typst functions from templates"
+msgstr "5. 템플릿에서 재사용 가능한 Typst 함수 호출"
+
+#: ../../howto/format-specific-content.rst:147
+msgid ""
+"Instead of writing verbose Typst code inline across multiple documents, "
+"define a reusable function in ``_templates/theme.typ``:"
+msgstr "여러 문서에 걸쳐 장황한 Typst 코드를 인라인으로 작성하는 대신 ``_templates/theme.typ``\\ 에서 재사용 가능한 함수를 정의합니다:"
+
+#: ../../howto/format-specific-content.rst:164
+msgid "Call it concisely from reStructuredText:"
+msgstr "reStructuredText에서 간결하게 호출합니다:"
+
+#: ../../howto/format-specific-content.rst:174
+msgid "6. Advanced: Preprocessing directives with a build plugin"
+msgstr "6. 고급: 빌드 플러그인으로 지시어 전처리"
+
+#: ../../howto/format-specific-content.rst:177
+msgid ""
+"When you want to invent a completely custom directive syntax and expand "
+"it dynamically during build time, implement a ``gd_plugins::BuildPlugin`` "
+"in Rust."
+msgstr "완전히 독창적인 지시어 구문을 고안하고 빌드 시 동적으로 확장하려는 경우 Rust로 ``gd_plugins::BuildPlugin``\\ 을 구현합니다."
+
+#: ../../howto/format-specific-content.rst:180
+msgid ""
+"The plugin implements ``process_source``, intercepting the raw document "
+"text before parsing:"
+msgstr "플러그인은 ``process_source``\\ 를 구현하여 구문 분석 전 원시 문서 텍스트를 가로챕니다:"
+
+#: ../../howto/format-specific-content.rst:214
+msgid "Register the compiled plugin using:"
+msgstr "다음 명령으로 컴파일된 플러그인을 등록합니다:"
+
+#: ../../howto/format-specific-content.rst:220
+msgid ""
+"Guidedog verifies the plugin's SHA-256 fingerprint, starts it per build, "
+"and forwards document sources through its pipeline."
+msgstr "Guidedog은 플러그인의 SHA-256 지문을 확인하고 빌드마다 플러그인을 시작하며 파이프라인을 통해 문서 소스를 전달합니다."
+
 #: ../../howto/github-pages.rst:1
 msgid "Publish to GitHub Pages"
 msgstr "GitHub Pages에 게시하기"
@@ -526,8 +675,8 @@ msgid ""
 "Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog "
 "publish pages publisher with a durable journal."
 msgstr ""
-"경로 1은 GitHub Actions CI/CD를, 경로 2는 영속 저널을 쓰는 로컬 guidedog publish pages 게시기를 "
-"사용합니다."
+"경로 1은 GitHub Actions CI/CD를, 경로 2는 영속 저널을 쓰는 로컬 guidedog publish pages "
+"게시기를 사용합니다."
 
 #: ../../howto/github-pages.rst:12
 msgid "The two routes for publishing documentation to GitHub Pages."
@@ -1121,10 +1270,10 @@ msgid ""
 "Graphviz inside Guidedog."
 msgstr ""
 "이 패키지는 ``guidedog`` 실행 파일 하나를 설치합니다. 내장 플러그인이 GitHub Pages 게시(``guidedog "
-"publish pages`` 및 ``guidedog pages``; :doc:`github-pages` 참고), 논의 카탈로그("
-"``guidedog dsc``; :doc:`discussions` 참고), 정적 사이트 게시(``guidedog ssg``; "
-":doc:`static-publishing` 참고) 명령을 추가합니다. ``gd-graphdog`` 라이브러리는 Guidedog "
-"내부에서 Graphviz를 캡슐화합니다."
+"publish pages`` 및 ``guidedog pages``; :doc:`github-pages` 참고), 논의 "
+"카탈로그(``guidedog dsc``; :doc:`discussions` 참고), 정적 사이트 게시(``guidedog "
+"ssg``; :doc:`static-publishing` 참고) 명령을 추가합니다. ``gd-graphdog`` 라이브러리는 "
+"Guidedog 내부에서 Graphviz를 캡슐화합니다."
 
 #: ../../howto/install.rst:21
 msgid ""
@@ -2319,8 +2468,7 @@ msgstr ""
 msgid ""
 "The build-clock gate filters sources before navigation, collections, "
 "feeds and article PDFs are built."
-msgstr ""
-"빌드 시각 게이트는 탐색, 컬렉션, 피드, 글 PDF를 빌드하기 전에 소스를 필터링합니다."
+msgstr "빌드 시각 게이트는 탐색, 컬렉션, 피드, 글 PDF를 빌드하기 전에 소스를 필터링합니다."
 
 #: ../../howto/static-publishing.rst:63
 msgid ""
@@ -2353,8 +2501,8 @@ msgid ""
 msgstr ""
 "``:path:``\\ 는 소스 확장자를 제외한 문서 이름(docname)과 대조합니다. 카테고리, 저자, 시리즈 필터는 정확히 "
 "일치해야 하며, 나열된 모든 태그가 일치해야 합니다. 글은 게시 시점 순(기본값은 최신순)으로 정렬되고 시점이 같으면 문서 이름으로 "
-"순서를 정하며, ``:sort: date``\\ 는 오래된 글을 먼저 놓습니다. ``:style: cards``\\ 는 카드 레이아웃 "
-"CSS 클래스를 추가하고, ``:excerpts:``\\ 는 각 글의 일반 텍스트 요약을 포함합니다."
+"순서를 정하며, ``:sort: date``\\ 는 오래된 글을 먼저 놓습니다. ``:style: cards``\\ 는 카드 "
+"레이아웃 CSS 클래스를 추가하고, ``:excerpts:``\\ 는 각 글의 일반 텍스트 요약을 포함합니다."
 
 #: ../../howto/static-publishing.rst:82
 msgid "Enable site-wide discovery files in ``conf.toml``:"
@@ -2443,8 +2591,8 @@ msgstr ""
 "상속하는 ``page.html``\\ 을 선택합니다. 어느 페이지든 ``:template: landing.html``\\ 로 "
 "``templates_path`` 안의 사용자 지정 템플릿을 고를 수 있으며, ``:nosidebar: true``\\ 를 지정하면 "
 "내장 탐색 사이드바를 숨깁니다. 템플릿은 ``page.meta``\\ 를 통해 날짜, 저자, 태그, 카테고리, 시리즈, 요약, 초안 "
-"상태, PDF 링크를 받습니다. 글 템플릿은 게시 순서에 따른 ``page.older``\\ 와 ``page.newer``, 활성화된 "
-"각 분류를 ``{name, url}`` 항목으로 매핑하는 ``page.taxonomies``, 그리고 "
+"상태, PDF 링크를 받습니다. 글 템플릿은 게시 순서에 따른 ``page.older``\\ 와 ``page.newer``, "
+"활성화된 각 분류를 ``{name, url}`` 항목으로 매핑하는 ``page.taxonomies``, 그리고 "
 "``myst_words_per_minute``(한중일 문자는 글자 단위로 계산)로 산출한 ``page.word_count``\\ 와 "
 "``page.reading_minutes``\\ 도 받습니다."
 
@@ -2509,9 +2657,9 @@ msgid ""
 "destination, ``--now RFC3339`` fixes the publication clock, and "
 "``--preview`` includes withheld documents."
 msgstr ""
-"마운트가 설정되어 있지 않으면 ``guidedog ssg build``\\ 는 기본적으로 단일 프로젝트를 ``_build/site``\\ "
-"에 빌드합니다. ``--out DIR``\\ 로 다른 출력 폴더를 선택하고, ``--now RFC3339``\\ 로 게시 시계를 "
-"고정하며, ``--preview``\\ 로 보류된 문서를 포함할 수 있습니다."
+"마운트가 설정되어 있지 않으면 ``guidedog ssg build``\\ 는 기본적으로 단일 프로젝트를 "
+"``_build/site``\\ 에 빌드합니다. ``--out DIR``\\ 로 다른 출력 폴더를 선택하고, ``--now "
+"RFC3339``\\ 로 게시 시계를 고정하며, ``--preview``\\ 로 보류된 문서를 포함할 수 있습니다."
 
 #: ../../howto/static-publishing.rst:139
 msgid "Mounted projects and editions"
@@ -2536,9 +2684,9 @@ msgid ""
 msgstr ""
 "모든 마운트 ``source``\\ 는 심볼릭 링크를 따라간 뒤 사이트 설정 디렉터리 아래에 놓여야 합니다. 언어판은 "
 "``source``\\ 가 별도의 번역된 프로젝트 디렉터리를 가리키지 않는 한 마운트 원본 프로젝트의 gettext 카탈로그를 "
-"사용합니다. 언어판의 ``output``\\ 은 마운트의 ``output`` 접두사를 기준으로 한 상대 경로이며, 빈 문자열이면 해당 "
-"접두사의 루트에 마운트됩니다. 마운트 이름과 언어판 출력 디렉터리는 ASCII 대소문자를 무시하고 서로 구분되어야 하지만, 서로 다른 "
-"마운트가 생성하는 파일들이 겹치지 않는다면 같은 출력 디렉터리를 공유할 수 있습니다."
+"사용합니다. 언어판의 ``output``\\ 은 마운트의 ``output`` 접두사를 기준으로 한 상대 경로이며, 빈 문자열이면 "
+"해당 접두사의 루트에 마운트됩니다. 마운트 이름과 언어판 출력 디렉터리는 ASCII 대소문자를 무시하고 서로 구분되어야 하지만, "
+"서로 다른 마운트가 생성하는 파일들이 겹치지 않는다면 같은 출력 디렉터리를 공유할 수 있습니다."
 
 #: ../../howto/static-publishing.rst:176
 msgid ""
@@ -2546,15 +2694,14 @@ msgid ""
 "build compiles each mount, verifies mount:// links and file collisions, "
 "and commits the assembled site in one Generation."
 msgstr ""
-"루트 conf.toml이 마운트, 언어판, 공유 에셋을 선언하면 ssg build가 각 마운트를 컴파일하고 mount:// 링크와 파일 "
-"충돌을 검증한 뒤 조립된 사이트를 단일 세대로 커밋합니다."
+"루트 conf.toml이 마운트, 언어판, 공유 에셋을 선언하면 ssg build가 각 마운트를 컴파일하고 mount:// 링크와 "
+"파일 충돌을 검증한 뒤 조립된 사이트를 단일 세대로 커밋합니다."
 
 #: ../../howto/static-publishing.rst:176
 msgid ""
 "Mounted builds stage every project and language edition under one clock "
 "and publish the complete website atomically."
-msgstr ""
-"마운트 빌드는 모든 프로젝트와 언어판을 하나의 시계 아래에서 스테이징하고 완성된 웹사이트 전체를 원자적으로 게시합니다."
+msgstr "마운트 빌드는 모든 프로젝트와 언어판을 하나의 시계 아래에서 스테이징하고 완성된 웹사이트 전체를 원자적으로 게시합니다."
 
 #: ../../howto/static-publishing.rst:198
 msgid ""
@@ -2570,12 +2717,12 @@ msgid ""
 "publication clock governs the entire build."
 msgstr ""
 "지원하는 마운트 빌더는 ``html``, ``dirhtml``, ``pdf``, 그리고 ``discussion-pdf``(지정된 "
-"``prefix``\\ 로 논의 카탈로그를 검증하고 각 활성 기록의 PDF 책을 빌드함)입니다. ``exclude``\\ 는 마운트의 "
-"상대 출력 파일을 glob 패턴으로 걸러 내고, ``overrides``\\ 는 ``-D`` 설정 할당(``{language}``, "
-"``{edition}``, ``{site_root}``, ``{base_url}`` 자리표시자 지원)을 전달합니다. 라우팅과 번역된 "
-"출력이 어긋나지 않도록 ``language`` 재정의 대신 ``editions.language``\\ 로 언어를 선택하세요. 루트 "
-"설정의 비어 있지 않은 ``version``\\ 과 ``release`` 값은 모든 마운트로 전파되며, 단일 게시 시계가 빌드 전체를 "
-"관장합니다."
+"``prefix``\\ 로 논의 카탈로그를 검증하고 각 활성 기록의 PDF 책을 빌드함)입니다. ``exclude``\\ 는 "
+"마운트의 상대 출력 파일을 glob 패턴으로 걸러 내고, ``overrides``\\ 는 ``-D`` 설정 "
+"할당(``{language}``, ``{edition}``, ``{site_root}``, ``{base_url}`` 자리표시자 "
+"지원)을 전달합니다. 라우팅과 번역된 출력이 어긋나지 않도록 ``language`` 재정의 대신 "
+"``editions.language``\\ 로 언어를 선택하세요. 루트 설정의 비어 있지 않은 ``version``\\ 과 "
+"``release`` 값은 모든 마운트로 전파되며, 단일 게시 시계가 빌드 전체를 관장합니다."
 
 #: ../../howto/static-publishing.rst:200
 msgid "Link across mounts with the ``mount://`` scheme:"
@@ -2605,10 +2752,10 @@ msgid ""
 "books and discussion catalog builds in this format, and ``cargo xtask "
 "build-site`` delegates directly to ``guidedog ssg build``."
 msgstr ""
-"HTML 미리보기 중에 PDF 마운트를 건너뛰고 마운트 간 PDF 다운로드 링크를 제거하려면 ``--no-pdf``\\ 를 전달하세요. "
-"사용자 지정 템플릿에서는 ``ssg_no_pdf``\\ 를 확인해 PDF 컨트롤을 숨길 수 있습니다. Guidedog 자체의 "
-"``docs/conf.toml``\\ 도 랜딩 페이지, 7개 언어의 매뉴얼 HTML 판, 7개 언어의 매뉴얼 PDF 책, 논의 "
-"카탈로그 빌드를 이 형식으로 선언하며, ``cargo xtask build-site``\\ 는 ``guidedog ssg "
+"HTML 미리보기 중에 PDF 마운트를 건너뛰고 마운트 간 PDF 다운로드 링크를 제거하려면 ``--no-pdf``\\ 를 "
+"전달하세요. 사용자 지정 템플릿에서는 ``ssg_no_pdf``\\ 를 확인해 PDF 컨트롤을 숨길 수 있습니다. Guidedog "
+"자체의 ``docs/conf.toml``\\ 도 랜딩 페이지, 7개 언어의 매뉴얼 HTML 판, 7개 언어의 매뉴얼 PDF 책, "
+"논의 카탈로그 빌드를 이 형식으로 선언하며, ``cargo xtask build-site``\\ 는 ``guidedog ssg "
 "build``\\ 에 직접 작업을 위임합니다."
 
 #: ../../howto/static-publishing.rst:210
@@ -2630,9 +2777,9 @@ msgid ""
 "files take precedence over the installed theme, and project static files "
 "override theme static files of the same relative path."
 msgstr ""
-"``HASH``\\ 를 아카이브의 SHA-256 다이제스트로 바꿉니다. ``[site]``\\ 에서 ``theme = true``\\ "
-"를 설정해 검증된 테마를 활성화합니다. 프로젝트의 ``_templates/`` 파일은 설치된 테마보다 우선하며, 프로젝트의 정적 "
-"파일은 같은 상대 경로의 테마 정적 파일을 재정의합니다."
+"``HASH``\\ 를 아카이브의 SHA-256 다이제스트로 바꿉니다. ``[site]``\\ 에서 ``theme = "
+"true``\\ 를 설정해 검증된 테마를 활성화합니다. 프로젝트의 ``_templates/`` 파일은 설치된 테마보다 우선하며, "
+"프로젝트의 정적 파일은 같은 상대 경로의 테마 정적 파일을 재정의합니다."
 
 #: ../../howto/static-publishing.rst:222
 msgid ""
@@ -2659,8 +2806,8 @@ msgid ""
 "verify the locked tree offline and fail closed if any file is missing, "
 "modified, added or replaced by a symlink."
 msgstr ""
-"``guidedog-theme.lock``\\ 은 원본 URL이나 경로, 아카이브 SHA-256, 그리고 정규 트리 SHA-256(버전이 "
-"지정된 도메인 태그와 길이로 구분된 정렬된 파일 이름 및 파일 바이트로 계산)을 기록합니다. 설치 과정은 "
+"``guidedog-theme.lock``\\ 은 원본 URL이나 경로, 아카이브 SHA-256, 그리고 정규 트리 "
+"SHA-256(버전이 지정된 도메인 태그와 길이로 구분된 정렬된 파일 이름 및 파일 바이트로 계산)을 기록합니다. 설치 과정은 "
 "``_themes/<TREE_SHA256>/``\\ 을 쓰고 동기화한 뒤 디렉터리와 인코딩된 잠금 파일을 모두 검증하고 나서 "
 "``guidedog-theme.lock``\\ 을 원자적으로 교체합니다. 빌드는 네트워크로 테마를 가져오지 않으며, 잠긴 트리를 "
 "오프라인에서 검증하고 파일이 누락되었거나 수정·추가되었거나 심볼릭 링크로 바뀐 경우 안전하게 실패(fail closed)합니다."
@@ -2726,3 +2873,4 @@ msgstr ""
 #~ "timestamp instead of the current system clock for all date formatting "
 #~ "and template variables."
 #~ msgstr "지정하면 시스템 현재 시각 대신 해당 Unix 타임스탬프를 날짜와 템플릿 변수에 사용합니다."
+

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:14+0000\n"
+"POT-Creation-Date: 2026-10-17 14:33+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -548,7 +548,10 @@ msgid ""
 "and a typeset PDF book. Web readers benefit from interactive calculators, "
 "search filters, and embedded widgets. Book readers benefit from balanced "
 "columns, callout cards, and vector typography."
-msgstr "Guidedog은 동일한 문서 트리를 대화형 HTML 웹사이트와 정밀 조판된 PDF 책으로 발행합니다. 웹 독자는 대화형 계산기, 검색 필터, 임베디드 위젯을 활용할 수 있으며, 책 독자는 균형 잡힌 다단 레이아웃, 콜아웃 카드, 벡터 타이포그래피의 이점을 누릴 수 있습니다."
+msgstr ""
+"Guidedog은 동일한 문서 트리를 대화형 HTML 웹사이트와 정밀 조판된 PDF 책으로 발행합니다. 웹 독자는 대화형 계산기, "
+"검색 필터, 임베디드 위젯을 활용할 수 있으며, 책 독자는 균형 잡힌 다단 레이아웃, 콜아웃 카드, 벡터 타이포그래피의 이점을 누릴 "
+"수 있습니다."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:8
 msgid ""
@@ -556,13 +559,16 @@ msgid ""
 "prose. We declare a custom semantic directive in ``conf.toml``, add an "
 "interactive calculator for web readers, and design a print-quality "
 "callout block for the PDF book."
-msgstr "이 튜토리얼에서는 본문을 중복 작성하지 않고 두 형식을 모두 구현하는 프로젝트를 구축합니다. ``conf.toml``\\ 에 맞춤 의미론적 지시어를 선언하고 웹 독자를 위한 대화형 계산기를 추가하며 PDF 책을 위한 인쇄 품질 콜아웃 블록을 디자인합니다."
+msgstr ""
+"이 튜토리얼에서는 본문을 중복 작성하지 않고 두 형식을 모두 구현하는 프로젝트를 구축합니다. ``conf.toml``\\ 에 맞춤 "
+"의미론적 지시어를 선언하고 웹 독자를 위한 대화형 계산기를 추가하며 PDF 책을 위한 인쇄 품질 콜아웃 블록을 디자인합니다."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:14
 msgid ""
 "One source document evaluates object types for both outputs, sending raw "
 "HTML to the web and raw Typst to the PDF book."
-msgstr "단일 소스 문서는 두 출력 모두에 대해 객체 유형을 평가하여 원시 HTML을 웹으로, 원시 Typst를 PDF 책으로 전달합니다."
+msgstr ""
+"단일 소스 문서는 두 출력 모두에 대해 객체 유형을 평가하여 원시 HTML을 웹으로, 원시 Typst를 PDF 책으로 전달합니다."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:14
 msgid ""
@@ -593,7 +599,9 @@ msgid ""
 "Python or C++) do not cover. Rather than requiring a Python runtime or "
 "custom extension compiler, Guidedog lets us declare custom directives and "
 "roles in ``conf.toml``."
-msgstr "프로젝트에서는 표준 도메인(Python, C++ 등)이 지원하지 않는 구조화된 엔터티가 필요한 경우가 많습니다. Guidedog은 Python 런타임이나 확장 컴파일러 없이 ``conf.toml``\\ 에서 맞춤 지시어와 역할을 직접 선언할 수 있도록 지원합니다."
+msgstr ""
+"프로젝트에서는 표준 도메인(Python, C++ 등)이 지원하지 않는 구조화된 엔터티가 필요한 경우가 많습니다. Guidedog은 "
+"Python 런타임이나 확장 컴파일러 없이 ``conf.toml``\\ 에서 맞춤 지시어와 역할을 직접 선언할 수 있도록 지원합니다."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:78
 msgid ""
@@ -609,7 +617,12 @@ msgid ""
 "(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
 "semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
 "typesets a styled description entry with back-references in the appendix."
-msgstr "이 단일 선언으로 완전한 구문 계약이 확립됩니다: * ``.. metric:: p99_latency (milliseconds)``\\ 가 지표를 설명합니다. * ``:metric:`p99_latency```\\ 가 모든 문서에서 해당 정의로 링크합니다. * 색인 표가 쌍 색인 항목(``p99_latency; cluster telemetry``)을 자동 생성합니다. * HTML에서 Guidedog은 CSS 앵커 훅이 포함된 의미론적 정의 목록을 생성합니다. * PDF에서 Guidedog은 스타일이 적용된 설명 항목을 조판하고 부록에 역참조를 기록합니다."
+msgstr ""
+"이 단일 선언으로 완전한 구문 계약이 확립됩니다: * ``.. metric:: p99_latency "
+"(milliseconds)``\\ 가 지표를 설명합니다. * ``:metric:`p99_latency```\\ 가 모든 문서에서 "
+"해당 정의로 링크합니다. * 색인 표가 쌍 색인 항목(``p99_latency; cluster telemetry``)을 자동 "
+"생성합니다. * HTML에서 Guidedog은 CSS 앵커 훅이 포함된 의미론적 정의 목록을 생성합니다. * PDF에서 "
+"Guidedog은 스타일이 적용된 설명 항목을 조판하고 부록에 역참조를 기록합니다."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:96
 msgid "3. Author the document with format guards"
@@ -619,58 +632,82 @@ msgstr "3. 형식 가드를 사용하여 문서 작성"
 msgid "Replace the contents of ``index.rst`` with the following document:"
 msgstr "``index.rst``\\ 의 내용을 다음 문서로 교체합니다:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:144
-#| msgid "7. Build and inspect both forms"
+#: ../../tutorial/dynamic-content-and-directives.rst:146
+msgid ""
+"**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using native "
+"Typst. Always write ``.. raw:: typst`` for print callouts and vector "
+"blocks. Guidedog does not execute verbatim ``.. raw:: latex`` (which is "
+"omitted with a diagnostic). However, standard LaTeX math written in ``.. "
+"math::`` and ``:math:`` is automatically translated into Typst formulas "
+"by Guidedog's built-in math compiler."
+msgstr ""
+"**Guidedog의 Typst 및 LaTeX**：Guidedog은 네이티브 Typst를 사용하여 PDF 책을 컴파일합니다. "
+"인쇄용 콜아웃 상자나 벡터 블록에는 항상 ``.. raw:: typst``\\ 로 작성하세요. Guidedog은 리터럴 ``.. "
+"raw:: latex``\\ 를 실행하지 않으며 진단 메시지와 함께 생략됩니다. 그러나 ``.. math::`` 및 "
+"``:math:``\\ 로 작성된 표준 LaTeX 수식은 Guidedog의 내장 수식 컴파일러를 통해 네이티브 Typst 수식으로 "
+"자동 번역됩니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:152
 msgid "4. Build and inspect both publications"
 msgstr "4. 두 발행물 빌드 및 확인"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:147
+#: ../../tutorial/dynamic-content-and-directives.rst:155
 msgid "Build the HTML website:"
 msgstr "HTML 웹사이트를 빌드합니다:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:153
+#: ../../tutorial/dynamic-content-and-directives.rst:161
 msgid ""
 "Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. "
 "Notice that: * The ``:metric:`p99_latency``` reference resolves directly "
 "to the definition anchor. * The interactive calculator slider is rendered "
 "and active in the web DOM. * The PDF callout block is omitted entirely, "
 "without emitting warnings."
-msgstr "브라우저에서 ``_build/html/index.html``\\ 을 열거나 ``guidedog serve``\\ 를 실행합니다. 다음 사항을 확인하세요: * ``:metric:`p99_latency``` 참조가 정의 앵커로 직접 확인됩니다. * 대화형 계산기 슬라이더가 렌더링되어 웹 DOM에서 동작합니다. * PDF 콜아웃 블록은 경고 없이 완전히 제외됩니다."
+msgstr ""
+"브라우저에서 ``_build/html/index.html``\\ 을 열거나 ``guidedog serve``\\ 를 실행합니다. "
+"다음 사항을 확인하세요: * ``:metric:`p99_latency``` 참조가 정의 앵커로 직접 확인됩니다. * 대화형 계산기 "
+"슬라이더가 렌더링되어 웹 DOM에서 동작합니다. * PDF 콜아웃 블록은 경고 없이 완전히 제외됩니다."
 
-#: ../../tutorial/dynamic-content-and-directives.rst:158
-#| msgid "6. Wrap the PDF book"
+#: ../../tutorial/dynamic-content-and-directives.rst:166
 msgid "Now build the PDF book:"
 msgstr "이제 PDF 책을 빌드합니다:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:164
+#: ../../tutorial/dynamic-content-and-directives.rst:172
 msgid ""
 "Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
 "``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are "
 "completely absent. * The Typst ``#rect(...)`` vector box is typeset with "
 "native margins, borders, and typography. * The appendix includes an index "
 "entry under ``p99_latency``."
-msgstr "``_build/pdf/telemetry-en.pdf``(또는 확인용 소스 ``_build/pdf/book-en.typ``)\\ 를 엽니다. 다음 사항을 확인하세요: * 슬라이더와 원시 HTML이 완전히 제외되었습니다. * Typst ``#rect(...)`` 벡터 상자가 네이티브 여백, 테두리, 타이포그래피로 조판되었습니다. * 부록의 ``p99_latency`` 항목 아래에 색인 항목이 포함되어 있습니다."
+msgstr ""
+"``_build/pdf/telemetry-en.pdf``(또는 확인용 소스 ``_build/pdf/book-en.typ``)\\ 를 "
+"엽니다. 다음 사항을 확인하세요: * 슬라이더와 원시 HTML이 완전히 제외되었습니다. * Typst ``#rect(...)`` "
+"벡터 상자가 네이티브 여백, 테두리, 타이포그래피로 조판되었습니다. * 부록의 ``p99_latency`` 항목 아래에 색인 항목이 "
+"포함되어 있습니다."
 
-#: ../../tutorial/dynamic-content-and-directives.rst:169
+#: ../../tutorial/dynamic-content-and-directives.rst:177
 msgid "5. Custom Typst functions in theme templates"
 msgstr "5. 테마 템플릿에서 맞춤 Typst 함수 정의"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:172
+#: ../../tutorial/dynamic-content-and-directives.rst:180
 msgid ""
 "When you have formatting patterns used across many chapters, define a "
 "reusable Typst function in ``_templates/theme.typ``:"
-msgstr "여러 장에서 반복 사용하는 서식 패턴이 있는 경우 ``_templates/theme.typ``\\ 에서 재사용 가능한 Typst 함수를 정의합니다:"
+msgstr ""
+"여러 장에서 반복 사용하는 서식 패턴이 있는 경우 ``_templates/theme.typ``\\ 에서 재사용 가능한 Typst "
+"함수를 정의합니다:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:185
+#: ../../tutorial/dynamic-content-and-directives.rst:193
 msgid "In any document, invoke the function inside a raw Typst block:"
 msgstr "모든 문서에서 원시 Typst 블록 내부로부터 해당 함수를 호출합니다:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:195
+#: ../../tutorial/dynamic-content-and-directives.rst:203
 msgid ""
 "This keeps your reStructuredText prose focused on documentation while "
 "granting full access to Typst's typesetting engine for printed "
 "publications."
-msgstr "이를 통해 reStructuredText 본문은 문서 작성에만 집중하면서 인쇄 발행물에 대해서는 Typst 조판 엔진의 모든 기능을 완벽하게 활용할 수 있습니다."
+msgstr ""
+"이를 통해 reStructuredText 본문은 문서 작성에만 집중하면서 인쇄 발행물에 대해서는 Typst 조판 엔진의 모든 기능을 "
+"완벽하게 활용할 수 있습니다."
 
 #: ../../tutorial/first-project.rst:1
 msgid "Our first project"

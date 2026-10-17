@@ -87,6 +87,36 @@ fn failed_pins_and_tampered_trees_preserve_the_selected_theme_or_fail_closed() {
 }
 
 #[test]
+fn static_only_theme_changes_update_settings_with_and_without_overrides() {
+    let project = Project::new("static-settings");
+    let path = project.0.join("theme.gdt");
+    let load = |overrides| {
+        gd_conf::load_config(&project.0, &gd_conf::LoadOptions { overrides, ..Default::default() })
+            .unwrap()
+    };
+    let mut previous = None;
+    for label in ["First", "Second"] {
+        let files = Files::from([("_static/theme.txt".into(), label.as_bytes().to_vec())]);
+        let data = pack::encode(&files).unwrap();
+        std::fs::write(&path, &data).unwrap();
+        gd_ssg::install_theme(&project.0, path.to_str().unwrap(), &pack::archive_digest(&data))
+            .unwrap();
+        let settings = [load(Vec::new()).settings, load(vec!["version=1".into()]).settings];
+        if let Some(previous) = previous {
+            for (before, after) in std::iter::zip(previous, settings) {
+                assert_ne!(before, after, "a static-only theme is a settings input");
+            }
+        }
+        previous = Some(settings);
+        project.build();
+        assert_eq!(
+            std::fs::read_to_string(project.0.join("_build/html/_static/theme.txt")).unwrap(),
+            label
+        );
+    }
+}
+
+#[test]
 fn archive_file_and_depth_limits_survive_installation_and_offline_verification() {
     let project = Project::new("theme-limits");
     let mut files = Files::new();

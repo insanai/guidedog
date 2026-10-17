@@ -40,7 +40,7 @@ pub struct Loaded {
     pub config: Config,
     /// What loading warned about: ignored Sphinx settings, a substituted theme, ...
     pub warnings: Vec<Report>,
-    /// The digest of conf.toml's text and the `-D` overrides: what every output uses.
+    /// The digest of conf.toml, `-D` overrides and the selected theme tree.
     pub settings: Digest,
 }
 
@@ -99,29 +99,26 @@ pub fn load_config(dir: &Path, options: &LoadOptions) -> Result<Loaded, Problem>
     let mut config = Config::new(source.clone(), build);
     let mut warnings = Vec::new();
     let mut digest = Digester::new();
-    let later = !options.overrides.is_empty();
     let mut origin = "-D".to_string();
     if !options.no_config {
         let path = options.conf_dir.as_deref().unwrap_or(&source).join(CONFIG_FILE);
         origin = path.display().to_string();
-        let text = read_config(&mut config, &path, &mut warnings, !later)?;
+        let text = read_config(&mut config, &path, &mut warnings)?;
         digest.text(&text);
     }
     for o in &options.overrides {
         apply_override(&mut config, o, &mut warnings, false)?;
     }
     if config.site.theme {
-        apply_theme(&mut config)?;
+        digest.text(&apply_theme(&mut config)?);
     }
-    if later {
-        check_config(&mut config, &origin, &mut warnings)?;
-    }
+    check_config(&mut config, &origin, &mut warnings)?;
     finish_config(&mut config);
     digest.texts(&options.overrides);
     Ok(Loaded { config, warnings, settings: digest.finish() })
 }
 
-fn apply_theme(config: &mut Config) -> Result<(), Problem> {
+fn apply_theme(config: &mut Config) -> Result<String, Problem> {
     let lock = gd_theme::pack::verify(&config.source_dir).map_err(|e| {
         config_problem(
             &config.source_dir.join(gd_theme::pack::LOCK_FILE).display().to_string(),
@@ -137,7 +134,7 @@ fn apply_theme(config: &mut Config) -> Result<(), Problem> {
     if lock.directory(&config.source_dir).join("_static").is_dir() {
         config.html.static_path.insert(0, format!("{base}/_static"));
     }
-    Ok(())
+    Ok(lock.tree_sha256)
 }
 
 /// Reads conf.toml at `path` into `config` and returns its text.
@@ -145,7 +142,6 @@ fn read_config(
     config: &mut Config,
     path: &Path,
     warnings: &mut Vec<Report>,
-    check: bool,
 ) -> Result<String, Problem> {
     let shown = path.display().to_string();
     let text = gd_host::read_source(&shown, MAX_CONFIG_BYTES)?.text;
@@ -158,7 +154,7 @@ fn read_config(
             "Fix the line; guidedog quickstart writes a complete example.",
         )
     })?;
-    apply_table(config, &table, &shown, warnings, check)?;
+    apply_table(config, &table, &shown, warnings, false)?;
     Ok(text)
 }
 

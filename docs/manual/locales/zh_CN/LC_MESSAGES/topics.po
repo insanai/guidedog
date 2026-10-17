@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -762,19 +762,21 @@ msgstr ""
 
 #: ../../topics/projects.rst:11
 msgid ""
-"Pipeline traverses discovery, source plugins, parallel reading, reference "
-"resolution, rendering, HTML plugins, and atomic staging."
-msgstr "流程从发现源文件开始，经源插件、并行读取、引用解析、渲染和 HTML 插件，最后暂存并提交完整输出。"
+"Pipeline traverses discovery, source plugins, parallel reading, "
+"publication gate, reference resolution, rendering, HTML plugins, and "
+"atomic staging."
+msgstr "流程依次经过发现源文件、源码插件、并行读取、发布门控、引用解析、渲染、HTML 插件和原子暂存切换。"
 
 #: ../../topics/projects.rst:11
-msgid "Guidedog's end-to-end documentation compilation pipeline."
-msgstr "Guidedog 端到端文档编译流程。"
+msgid ""
+"Guidedog's end-to-end documentation and static site compilation pipeline."
+msgstr "Guidedog 的端到端文档与静态站点编译流水线。"
 
-#: ../../topics/projects.rst:35
+#: ../../topics/projects.rst:36
 msgid "Documents and resources"
 msgstr "文档与资源"
 
-#: ../../topics/projects.rst:38
+#: ../../topics/projects.rst:39
 msgid ""
 "A source suffix selects a reader. RST and project Markdown share the "
 "project graph. Images and downloads are resources. Guidedog copies "
@@ -785,34 +787,39 @@ msgstr ""
 "文件后缀选择读取器。RST 和项目 Markdown 共享项目图。图片和下载是资源；Guidedog 复制文档使用的资源。主题资源列于 "
 "``html_static_path``\\ 。包含文件必须位于源目录或配置的 ``include_roots`` 内。"
 
-#: ../../topics/projects.rst:43
-msgid "Separate projects"
-msgstr "独立的项目"
+#: ../../topics/projects.rst:44
+msgid "Separate projects and mounted sites"
+msgstr "独立的项目与挂载站点"
 
-#: ../../topics/projects.rst:46
+#: ../../topics/projects.rst:47
 msgid ""
 "We keep a manual and design records in separate projects. They have "
 "different readers and different reading orders. Each project has its own "
 "configuration, templates, cache, and output. The Guidedog repository uses "
-"``docs/manual`` and ``docs/gds`` this way."
+"``docs/manual`` and ``docs/gds`` this way, and mounts them into the root "
+"website in ``docs/conf.toml`` via ``[[site.mounts]]``."
 msgstr ""
 "我们把手册和设计记录放在不同的项目中，因为它们的读者和阅读顺序都不一样。每个项目都有自己的配置、模板、缓存和输出。Guidedog 仓库中的 "
-"``docs/manual`` 和 ``docs/gds`` 就是这样组织的。"
+"``docs/manual`` 和 ``docs/gds`` 就是这样组织的，并通过 ``docs/conf.toml`` 中的 "
+"``[[site.mounts]]`` 挂载到根网站下。"
 
-#: ../../topics/projects.rst:51
+#: ../../topics/projects.rst:49
 msgid "Incremental work"
 msgstr "增量构建"
 
-#: ../../topics/projects.rst:54
+#: ../../topics/projects.rst:52
 msgid ""
 "Guidedog records the inputs and lookups used by each output. A changed "
 "source is reread. A changed dependency invalidates its users. A changed "
-"template can affect every page. An unchanged document may be loaded from "
-"its saved object."
+"template invalidates the pages whose template chain loaded it. An "
+"unchanged document may be loaded from its saved object, including "
+"withheld drafts and scheduled posts that become eligible on a later build "
+"clock."
 msgstr ""
-"Guidedog 记录各输出使用的输入和查找结果。源文件改变会重读，依赖改变使使用者失效，模板改变可影响每页。未变文档可从保存对象加载。"
+"Guidedog 会记录每个输出使用的输入和查找结果。源文件改变时会重新读取，依赖改变时使其调用方失效，模板改变时使模板链加载了该模板的页面失效。"
+"未改变的文档可从已保存的对象加载，包括暂不发布的草稿以及在后续构建时钟下达到发布条件的定时文章。"
 
-#: ../../topics/projects.rst:59
+#: ../../topics/projects.rst:54
 msgid ""
 "The cache is evidence about a previous build. It is not the source of "
 "truth. ``-E`` discards the saved environment for the next build. ``-a`` "
@@ -820,14 +827,14 @@ msgid ""
 msgstr ""
 "缓存是上次构建的证据，不是事实来源。\\ ``-E`` 丢弃下次构建使用的保存环境，\\ ``-a`` 写出所有输出。它们解决不同问题。"
 
-#: ../../topics/projects.rst:63
+#: ../../topics/projects.rst:58
 msgid ""
 "\\text{reuse} = \\text{same inputs} \\land \\text{same lookups} \\land "
 "\\text{output exists}"
 msgstr ""
 "\\text{可复用} = \\text{输入相同} \\land \\text{查找结果相同} \\land \\text{输出存在}"
 
-#: ../../topics/projects.rst:67
+#: ../../topics/projects.rst:62
 msgid ""
 "An explicit timestamp in a template is also an input to the rendered "
 "page. A page that prints the current minute can change even when its "
@@ -837,11 +844,11 @@ msgstr ""
 "模板中显式写入的时间戳也是渲染页面的输入。打印当前分钟的页面，即使正文没变也可能发生变化。需要固定的构建时间时，我们使用 "
 "``SOURCE_DATE_EPOCH``。"
 
-#: ../../topics/projects.rst:71
+#: ../../topics/projects.rst:66
 msgid "Publication"
 msgstr "发布"
 
-#: ../../topics/projects.rst:74
+#: ../../topics/projects.rst:69
 msgid ""
 "A build writes changes to a sibling staging directory. It completes that "
 "directory, flushes the files and records, and then switches generations. "
@@ -890,7 +897,7 @@ msgstr "左侧为项目导航，中间为正文，右侧为本页标题提纲。
 msgid "Three-region reading layout for HTML documentation."
 msgstr "HTML 文档的三栏阅读布局。"
 
-#: ../../topics/typography.rst:37
+#: ../../topics/typography.rst:36
 msgid ""
 "**Light is the default.** The theme control also offers dark and system "
 "modes. It remembers the choice on the same browser origin. System mode "
@@ -901,7 +908,7 @@ msgstr ""
 "**默认浅色。** 主题控件也提供深色和系统模式，并记住同一浏览器来源上的选择。系统模式跟随操作系统。打印 HTML 使用浅色。禁用 "
 "JavaScript 后，内容和导航仍可用；主题控件与增强搜索属于渐进增强。"
 
-#: ../../topics/typography.rst:43
+#: ../../topics/typography.rst:42
 msgid ""
 "English prose can use paragraph-wide **Knuth-Plass line breaking** in the "
 "browser. A small template script measures the loaded font, builds boxes, "
@@ -914,7 +921,7 @@ msgstr ""
 "断行**。小型模板脚本测量已加载的字体，构造盒子、空格和断词惩罚，再为整段选择换行点。Frank Liang "
 "的模式匹配法提供英文断词候选。网站附带原始 TeX 模式和各库许可证。"
 
-#: ../../topics/typography.rst:49
+#: ../../topics/typography.rst:48
 msgid ""
 "The enhancement preserves emphasis and the exact source text. It "
 "recalculates when the reading measure changes. Copying within one "
@@ -924,7 +931,7 @@ msgid ""
 msgstr ""
 "增强排版保留强调和原始文字，正文宽度改变时重新计算。复制一个优化段落内的内容，得到的是源文，不含视觉换行或新增连字符。打印时恢复普通段落，交由打印布局分页。"
 
-#: ../../topics/typography.rst:54
+#: ../../topics/typography.rst:53
 msgid ""
 "Links, mathematics, code, interactive content, narrow measures, and other "
 "languages use native browser layout. So do paragraphs for which no "
@@ -937,23 +944,23 @@ msgstr ""
 "后网站依然可读。回退方案使用按语言生效的 ``hyphens: auto`` 和 ``text-wrap: pretty``。仅靠这两个 CSS "
 "属性，并不能保证 Knuth-Plass 优化。"
 
-#: ../../topics/typography.rst:60
+#: ../../topics/typography.rst:59
 msgid "The PDF page"
 msgstr "PDF 页面"
 
-#: ../../topics/typography.rst:63
+#: ../../topics/typography.rst:62
 msgid ""
-"The book template uses the same Libertinus family as the web edition. It "
-"sets justified paragraphs, optimized line breaking, and language-aware "
-"hyphenation. It also controls spacing, running heads, captions, code "
-"blocks, and table rules. The font, hyphenation cost, and paragraph "
-"measure work together. A forced line break is rarely the right repair for "
-"a loose paragraph."
+"The book and standalone article templates use the same Libertinus family "
+"as the web edition. They set justified paragraphs, optimized line "
+"breaking, and language-aware hyphenation. They also control spacing, "
+"running heads, captions, code blocks, and table rules. The font, "
+"hyphenation cost, and paragraph measure work together. A forced line "
+"break is rarely the right repair for a loose paragraph."
 msgstr ""
-"书籍模板使用与 Web 相同的 Libertinus "
-"字体，设置两端对齐、优化断行和语言感知断词，也控制间距、页眉、题注、代码块和表格线。字体、断词成本与段落宽度共同作用。强制换行通常不能正确修复松散段落。"
+"书籍模板和独立文章模板使用与网页版相同的 Libertinus "
+"字体，设置两端对齐段落、优化断行和按语言生效的断词，同时也控制间距、页眉、题注、代码块和表格线。字体、断词成本与段落宽度协同作用。强制换行通常不能正确修复松散段落。"
 
-#: ../../topics/typography.rst:69
+#: ../../topics/typography.rst:64
 msgid ""
 "Typst optimizes the PDF paragraphs. The web enhancement optimizes "
 "eligible prose. They share the source, fonts, and visual hierarchy. Their "
@@ -967,21 +974,27 @@ msgstr ""
 "<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_\\ "
 "。"
 
-#: ../../topics/typography.rst:74
+#: ../../topics/typography.rst:69
 msgid "Change the design"
 msgstr "修改设计"
 
-#: ../../topics/typography.rst:77
+#: ../../topics/typography.rst:72
 msgid ""
 "Edit ``_static/editorial.css`` for the documentation project's visual "
 "tokens. Edit ``_templates/layout.html`` for structure. Edit "
-"``_templates/book.typ`` for the print layout. Keep reading order, focus "
-"indicators, labels, and sufficient contrast intact."
+"``_templates/theme.typ`` for the PDF palette and typography. Edit "
+"``_templates/book.typ`` for book structure, ``_templates/discussion.typ`` "
+"for discussion structure, and ``_templates/article.typ`` for standalone "
+"article PDFs. All three layouts wrap their content with the shared "
+"language-aware theme. Keep reading order, focus indicators, labels, and "
+"sufficient contrast intact."
 msgstr ""
-"编辑 ``_static/editorial.css`` 调整视觉变量，编辑 ``_templates/layout.html`` 调整结构，编辑 "
-"``_templates/book.typ`` 调整印刷布局。保留阅读顺序、焦点指示、标签和足够对比度。"
+"编辑 ``_static/editorial.css`` 调整文档项目的视觉变量，编辑 ``_templates/layout.html`` "
+"调整结构，编辑 ``_templates/theme.typ`` 调整 PDF 配色和字体排印。编辑 ``_templates/book.typ`` "
+"调整书籍结构，编辑 ``_templates/discussion.typ`` 调整讨论记录结构，编辑 "
+"``_templates/article.typ`` 调整独立文章 PDF。这三种布局都会用共享的语言感知主题包裹正文内容。请保留阅读顺序、焦点指示、标签和足够的对比度。"
 
-#: ../../topics/typography.rst:82
+#: ../../topics/typography.rst:74
 msgid ""
 "Build both targets after a change. Inspect a page with code, a table, a "
 "diagram, and an equation. An attractive cover is not proof that the rest "
@@ -1171,10 +1184,27 @@ msgid "Field lists provide structured metadata and parameter descriptions:"
 msgstr "字段列表用于结构化元数据和参数说明："
 
 #: ../../topics/writing.rst:129
+msgid ""
+"When a field list precedes the document title, Guidedog reads recognized "
+"publication metadata fields into the page's metadata record and removes "
+"those fields from the rendered body. These fields include ``:date:``, "
+"``:updated:``, ``:publish-at:``, ``:expires-at:``, ``:draft:``, "
+"``:authors:``, ``:category:``, ``:tags:``, ``:series:``, ``:summary:``, "
+"``:template:`` and ``:pdf:``. MyST Markdown documents supply the same "
+"fields in leading YAML front matter. Field lists after the title remain "
+"ordinary content. See :doc:`../howto/static-publishing` for the full "
+"publication lifecycle."
+msgstr ""
+"当字段列表位于文档标题之前时，Guidedog 会将受识别的发布元数据字段读入页面的元数据记录，并从渲染后的正文中移除这些字段。这些字段包括 "
+"``:date:``、``:updated:``、``:publish-at:``、``:expires-at:``、``:draft:``、``:authors:``、``:category:``、``:tags:``、``:series:``、``:summary:``、``:template:`` "
+"和 ``:pdf:``。MyST Markdown 文档可在开头的 YAML front matter "
+"中提供相同的字段。位于标题之后的字段列表仍作为普通正文内容。完整的发布生命周期参见 :doc:`../howto/static-publishing`。"
+
+#: ../../topics/writing.rst:131
 msgid "Code blocks"
 msgstr "代码块"
 
-#: ../../topics/writing.rst:132
+#: ../../topics/writing.rst:134
 msgid ""
 "The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted "
 "code. Guidedog highlights 35 programming languages, Rust and Odin among "
@@ -1183,39 +1213,39 @@ msgstr ""
 "``code-block`` 指令（或 ``sourcecode``）显示带语法高亮的代码。Guidedog 能高亮 35 种编程语言，其中包括 "
 "Rust 和 Odin，使用 Pygments 的名称和样式，且无需 Python 运行时："
 
-#: ../../topics/writing.rst:147
+#: ../../topics/writing.rst:149
 msgid "Options for code blocks:"
 msgstr "代码块选项："
 
-#: ../../topics/writing.rst:149
+#: ../../topics/writing.rst:151
 msgid "``:linenos:``: Displays line numbers beside the code."
 msgstr "``:linenos:``: 在代码旁显示行号。"
 
-#: ../../topics/writing.rst:150
+#: ../../topics/writing.rst:152
 msgid "``:caption: Title``: Adds a caption above or below the code block."
 msgstr "``:caption: Title``: 在代码块上方或下方添加说明。"
 
-#: ../../topics/writing.rst:151
+#: ../../topics/writing.rst:153
 msgid "``:emphasize-lines: 1, 3-5``: Highlights specific lines."
 msgstr "``:emphasize-lines: 1, 3-5``: 突出显示指定行。"
 
-#: ../../topics/writing.rst:152
+#: ../../topics/writing.rst:154
 msgid "``:name: label``: Assigns a reference target to the code block."
 msgstr "``:name: label``: 为代码块指定引用标签。"
 
-#: ../../topics/writing.rst:154
+#: ../../topics/writing.rst:156
 msgid "To include source code from a file, we use ``literalinclude``:"
 msgstr "要从文件中引入源代码，我们使用 ``literalinclude``："
 
-#: ../../topics/writing.rst:163
+#: ../../topics/writing.rst:165
 msgid "Admonitions"
 msgstr "提示块"
 
-#: ../../topics/writing.rst:166
+#: ../../topics/writing.rst:168
 msgid "Admonitions highlight notes, warnings, and supplementary advice:"
 msgstr "提示块突出显示注释、警告和补充建议："
 
-#: ../../topics/writing.rst:188
+#: ../../topics/writing.rst:190
 msgid ""
 "Guidedog also supports ``danger``, ``error``, ``hint``, and "
 "``attention``. A generic admonition with a custom title uses the "
@@ -1224,191 +1254,265 @@ msgstr ""
 "Guidedog 也支持 ``danger``、``error``、``hint`` 和 ``attention``。自定义标题的提示块使用 "
 "``admonition``："
 
-#: ../../topics/writing.rst:197
+#: ../../topics/writing.rst:199
 msgid "Tables"
 msgstr "表格"
 
-#: ../../topics/writing.rst:200
+#: ../../topics/writing.rst:202
 msgid ""
 "Guidedog supports simple tables, grid tables, and directive-based tables."
 msgstr "Guidedog 支持简单表格、网格表格和指令生成的表格。"
 
-#: ../../topics/writing.rst:202
+#: ../../topics/writing.rst:204
 msgid "Simple tables"
 msgstr "简单表格"
 
-#: ../../topics/writing.rst:205
+#: ../../topics/writing.rst:207
 msgid "Simple tables use horizontal dashes to define column spans:"
 msgstr "简单表格用横线划分列的范围："
 
-#: ../../topics/writing.rst:217
+#: ../../topics/writing.rst:219
 msgid "Grid tables"
 msgstr "网格表格"
 
-#: ../../topics/writing.rst:220
+#: ../../topics/writing.rst:222
 msgid ""
 "Grid tables allow complex multi-line cells and arbitrary column/row spans:"
 msgstr "网格表格支持多行单元格和跨行、跨列合并："
 
-#: ../../topics/writing.rst:231
+#: ../../topics/writing.rst:233
 msgid "List tables"
 msgstr "列表表格"
 
-#: ../../topics/writing.rst:234
+#: ../../topics/writing.rst:236
 msgid ""
 "The ``list-table`` directive creates tables from nested bullet lists. "
 "Wide tables stay easy to read and maintain in source control:"
 msgstr "``list-table`` 指令用嵌套的无序列表创建表格。即使是较宽的表格，在源码中也便于阅读和维护："
 
-#: ../../topics/writing.rst:253
+#: ../../topics/writing.rst:255
 msgid "CSV tables"
 msgstr "CSV 表格"
 
-#: ../../topics/writing.rst:256
+#: ../../topics/writing.rst:258
 msgid ""
 "The ``csv-table`` directive constructs a table from comma-separated "
 "values:"
 msgstr "``csv-table`` 用逗号分隔的数据创建表格："
 
-#: ../../topics/writing.rst:267
+#: ../../topics/writing.rst:269
 msgid "Images and figures"
 msgstr "图片与插图"
 
-#: ../../topics/writing.rst:270
+#: ../../topics/writing.rst:272
 msgid ""
 "We include illustrations, screenshots, and diagrams with ``image`` and "
 "``figure``:"
 msgstr "我们用 ``image`` 和 ``figure`` 插入插图、截图和图表："
 
-#: ../../topics/writing.rst:286
+#: ../../topics/writing.rst:288
 msgid ""
 "A ``figure`` wraps the image with a caption and an optional reference "
 "target."
 msgstr "``figure`` 为图片加上图注，还可以指定引用目标。"
 
-#: ../../topics/writing.rst:288
+#: ../../topics/writing.rst:290
 msgid "Document structure with toctrees"
 msgstr "用目录树组织文档"
 
-#: ../../topics/writing.rst:291
+#: ../../topics/writing.rst:293
 msgid ""
 "The ``toctree`` directive creates the document hierarchy, navigation "
 "menus, and reading order for both the HTML site and the PDF book:"
 msgstr "``toctree`` 定义文档层级、导航菜单，以及 HTML 和 PDF 的阅读顺序："
 
-#: ../../topics/writing.rst:305
+#: ../../topics/writing.rst:307
 msgid "Common options for ``toctree``:"
 msgstr "``toctree`` 的常用选项："
 
-#: ../../topics/writing.rst:307
+#: ../../topics/writing.rst:309
 msgid ""
 "``:maxdepth: N``: Depth of heading levels to include in the table of "
 "contents."
 msgstr "``:maxdepth: N``: 目录中包含的标题层级深度。"
 
-#: ../../topics/writing.rst:308
+#: ../../topics/writing.rst:310
 msgid ""
 "``:caption: Title``: Category title displayed above the navigation "
 "entries."
 msgstr "``:caption: Title``: 导航条目上方显示的分类标题。"
 
-#: ../../topics/writing.rst:309
+#: ../../topics/writing.rst:311
 msgid "``:numbered:``: Adds section numbers to chapters and headings."
 msgstr "``:numbered:``: 为章节和标题添加编号。"
 
-#: ../../topics/writing.rst:310
+#: ../../topics/writing.rst:312
 msgid ""
 "``:titlesonly:``: Lists only the top-level document titles, ignoring "
 "inner sections."
 msgstr "``:titlesonly:``: 只列出文档标题，不显示内部章节。"
 
-#: ../../topics/writing.rst:311
+#: ../../topics/writing.rst:313
 msgid ""
 "``:hidden:``: Records the documents in the reading order without "
 "rendering an inline list."
 msgstr "``:hidden:``: 记录文档阅读顺序，但不在正文中显示列表。"
 
-#: ../../topics/writing.rst:312
+#: ../../topics/writing.rst:314
 msgid ""
 "``:glob:``: Allows wildcard patterns to match documents (e.g. "
 "``tutorials/*``)."
 msgstr "``:glob:``: 允许用通配符匹配文档，例如 ``tutorials/*``。"
 
-#: ../../topics/writing.rst:314
+#: ../../topics/writing.rst:316
+msgid "Dated post listings with ``postlist``"
+msgstr "用 ``postlist`` 生成带日期的文章列表"
+
+#: ../../topics/writing.rst:319
+msgid ""
+"For articles, release notes, and research logs that carry ``:date:`` "
+"metadata, the ``postlist`` directive renders a reverse-chronological list "
+"of matching published pages:"
+msgstr ""
+"对于带有 ``:date:`` 元数据的文章、版本说明和研究日志，``postlist`` 指令会按时间倒序渲染匹配的已发布页面列表："
+
+#: ../../topics/writing.rst:329
+msgid "Options for ``postlist``:"
+msgstr "``postlist`` 的选项："
+
+#: ../../topics/writing.rst:331
+msgid ""
+"Argument ``N``: Maximum number of matching posts to show; zero or an "
+"omitted argument includes every match."
+msgstr "参数 ``N``：最多显示的匹配文章数；为 0 或省略参数时包含全部匹配项。"
+
+#: ../../topics/writing.rst:332
+msgid ""
+"``:path: GLOB``: Restrict entries to document names matching the glob "
+"pattern."
+msgstr "``:path: GLOB``：将条目限制为匹配该 glob 模式的文档名。"
+
+#: ../../topics/writing.rst:333
+msgid ""
+"``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: "
+"NAME``, ``:year: YYYY``: Filter entries by publication metadata."
+msgstr ""
+"``:category: NAME``、``:tags: TAG, ...``、``:author: NAME``、``:series: "
+"NAME``、``:year: YYYY``：按发布元数据筛选条目。"
+
+#: ../../topics/writing.rst:334
+msgid ""
+"``:sort: date`` or ``:sort: -date``: Order by oldest or newest "
+"publication instant, with docname breaking ties."
+msgstr "``:sort: date`` 或 ``:sort: -date``：按发布时间从早到晚或从新到旧排序，时间相同时按文档名排序。"
+
+#: ../../topics/writing.rst:335
+msgid ""
+"``:style: list`` or ``:style: cards``: Select the listing's CSS class."
+msgstr "``:style: list`` 或 ``:style: cards``：选择列表的 CSS 类。"
+
+#: ../../topics/writing.rst:336
+msgid ""
+"``:excerpts:``: Render each entry's explicit ``:summary:`` below its "
+"title and date."
+msgstr "``:excerpts:``：在每个条目的标题和日期下方渲染其显式指定的 ``:summary:``。"
+
+#: ../../topics/writing.rst:338
+msgid ""
+"See :doc:`../howto/static-publishing` for collections, feeds, and "
+"scheduled publishing."
+msgstr "关于集合、订阅源和定时发布，参见 :doc:`../howto/static-publishing`。"
+
+#: ../../topics/writing.rst:340
 msgid "Cross-references and links"
 msgstr "交叉引用与链接"
 
-#: ../../topics/writing.rst:317
+#: ../../topics/writing.rst:343
 msgid ""
 "Explicit targets keep links stable, even when document files are renamed."
 msgstr "显式目标让链接保持稳定，即使文档文件改名也不受影响。"
 
-#: ../../topics/writing.rst:319
+#: ../../topics/writing.rst:345
 msgid "Target labels and ``:ref:``"
 msgstr "目标标签与 ``:ref:``"
 
-#: ../../topics/writing.rst:322
+#: ../../topics/writing.rst:348
 msgid "We place a target label directly before a heading, table, or figure:"
 msgstr "我们把目标标签直接放在标题、表格或插图之前："
 
-#: ../../topics/writing.rst:333
+#: ../../topics/writing.rst:359
 msgid "Any document in the project can refer to this target:"
 msgstr "项目中的任何文档都可以引用这个目标："
 
-#: ../../topics/writing.rst:340
+#: ../../topics/writing.rst:366
 msgid "Document references with ``:doc:``"
 msgstr "用 ``:doc:`` 引用文档"
 
-#: ../../topics/writing.rst:343
+#: ../../topics/writing.rst:369
 msgid "We link to another document by its path, without the file extension:"
 msgstr "我们按路径链接到其他文档，省略文件扩展名："
 
-#: ../../topics/writing.rst:349
+#: ../../topics/writing.rst:375
 msgid "Glossary terms with ``:term:``"
 msgstr "用 ``:term:`` 引用术语"
 
-#: ../../topics/writing.rst:352
+#: ../../topics/writing.rst:378
 msgid "We define terms with the ``glossary`` directive:"
 msgstr "我们用 ``glossary`` 指令定义术语："
 
-#: ../../topics/writing.rst:364
+#: ../../topics/writing.rst:390
 msgid "We link to a glossary term with the ``:term:`` role:"
 msgstr "我们用 ``:term:`` 角色链接到术语表中的术语："
 
-#: ../../topics/writing.rst:370
+#: ../../topics/writing.rst:396
 msgid "File downloads with ``:download:``"
 msgstr "用 ``:download:`` 提供文件下载"
 
-#: ../../topics/writing.rst:373
+#: ../../topics/writing.rst:399
 msgid ""
 "This copies a file to the output's download directory and links to it:"
 msgstr "下面的写法会把文件复制到输出的下载目录，并生成指向它的链接："
 
-#: ../../topics/writing.rst:379
-msgid "External links"
-msgstr "外部链接"
+#: ../../topics/writing.rst:405
+msgid "External and cross-mount links"
+msgstr "外部链接与跨挂载链接"
 
-#: ../../topics/writing.rst:382
+#: ../../topics/writing.rst:408
 msgid "We link to external web addresses like this:"
 msgstr "链接到外部网址的写法如下："
 
-#: ../../topics/writing.rst:388
+#: ../../topics/writing.rst:414
+msgid ""
+"In a multi-project website assembled with ``[[site.mounts]]``, we can "
+"also link to a mounted sub-project by its mount name using "
+"``mount://<name>/<path>``:"
+msgstr ""
+"在通过 ``[[site.mounts]]`` 组装的多项目网站中，我们还可以使用 ``mount://<name>/<path>`` "
+"按挂载名链接到已挂载的子项目："
+
+#: ../../topics/writing.rst:420
+msgid ""
+"The mount names must match ``[[site.mounts]]`` and the paths must name "
+"current output files."
+msgstr "挂载名必须与 ``[[site.mounts]]`` 一致，且路径必须指向当前的输出文件。"
+
+#: ../../topics/writing.rst:422
 msgid "Substitutions and includes"
 msgstr "替换与包含"
 
-#: ../../topics/writing.rst:391
+#: ../../topics/writing.rst:425
 msgid "We define reusable phrases, symbols, or images:"
 msgstr "我们可以定义可复用的短语、符号或图片："
 
-#: ../../topics/writing.rst:400
+#: ../../topics/writing.rst:434
 msgid "To reuse reStructuredText content in several files:"
 msgstr "要在多个文件中复用 reStructuredText 内容："
 
-#: ../../topics/writing.rst:406
+#: ../../topics/writing.rst:440
 msgid "MyST Markdown authoring"
 msgstr "编写 MyST Markdown"
 
-#: ../../topics/writing.rst:409
+#: ../../topics/writing.rst:443
 msgid ""
 "MyST Markdown supports the same directives and roles through fenced "
 "blocks:"

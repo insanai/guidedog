@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 09:09+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -72,7 +72,7 @@ msgid ""
 "links, pages and drawings."
 msgstr "读取阶段找出每个对象定义在哪里；写出阶段把它变成链接、页面和图。"
 
-#: ../../sources-and-diagrams.rst:42
+#: ../../sources-and-diagrams.rst:48
 msgid ""
 "Every Python file the scan reads is a dependency of the document that "
 "needed it. When we edit a module, the documents that describe it are read "
@@ -81,11 +81,11 @@ msgstr ""
 "扫描读取的每个 Python "
 "文件都是需要它的那个文档的依赖。我们修改某个模块后，描述该模块的文档会被重新读取，其中的链接、源码页面和类图也随之更新。"
 
-#: ../../sources-and-diagrams.rst:44
+#: ../../sources-and-diagrams.rst:50
 msgid "Source pages: viewcode"
 msgstr "源码页面：viewcode"
 
-#: ../../sources-and-diagrams.rst:47
+#: ../../sources-and-diagrams.rst:53
 msgid ""
 "With ``sphinx.ext.viewcode`` listed, each Python description gets a "
 "``[source]`` link after its signature. The link leads to a page that "
@@ -97,11 +97,11 @@ msgstr ""
 "链接。该链接指向显示模块源码的页面，源码像普通代码块一样高亮。在该页面上，每个有描述的类和函数各占一块，并带有一个链回其描述的 "
 "``[docs]`` 链接。"
 
-#: ../../sources-and-diagrams.rst:49
+#: ../../sources-and-diagrams.rst:55
 msgid "For this module, ``src/shapes.py``:"
 msgstr "对于下面这个模块 ``src/shapes.py``："
 
-#: ../../sources-and-diagrams.rst:60
+#: ../../sources-and-diagrams.rst:66
 msgid ""
 "the description of ``shapes.Square`` links to "
 "``_modules/shapes.html#Square``, and the source page links back to "
@@ -116,7 +116,7 @@ msgstr ""
 "``_modules/<package>/<module>.html``，``_modules/index.html`` "
 "列出所有这些页面，包的模块嵌套在包之下。链接都是相对路径，因此在 ``dirhtml`` 下，或直接从磁盘打开文件时，都能正常使用。"
 
-#: ../../sources-and-diagrams.rst:62
+#: ../../sources-and-diagrams.rst:68
 msgid ""
 "A class that a package re-exports is linked to the module that defines "
 "it. If ``Square`` were defined in ``shapes/square.py`` and imported by "
@@ -129,15 +129,15 @@ msgstr ""
 "``shapes/__init__.py`` 导入，那么 ``shapes.Square`` 的描述会链接到 "
 "``_modules/shapes/square.html#Square``。每一块从定义的第一个装饰器开始，到定义的最后一行结束，因此带装饰器的方法会显示其装饰器。"
 
-#: ../../sources-and-diagrams.rst:64
+#: ../../sources-and-diagrams.rst:70
 msgid "The settings have Sphinx's names and defaults:"
 msgstr "这些设置沿用 Sphinx 的名称和默认值："
 
-#: ../../sources-and-diagrams.rst:66
+#: ../../sources-and-diagrams.rst:72
 msgid "``viewcode_follow_imported_members``"
 msgstr "``viewcode_follow_imported_members``"
 
-#: ../../sources-and-diagrams.rst:67
+#: ../../sources-and-diagrams.rst:73
 msgid ""
 "``true`` (default): link a re-exported object to the module that defines "
 "it. ``false``: link only objects that the named module defines itself. "
@@ -146,23 +146,23 @@ msgstr ""
 "``true``\\ （默认）：把重新导出的对象链接到定义它的模块。``false``：只链接指定模块自己定义的对象。旧名称 "
 "``viewcode_import`` 会按此设置读取。"
 
-#: ../../sources-and-diagrams.rst:69
+#: ../../sources-and-diagrams.rst:75
 msgid "``viewcode_line_numbers``"
 msgstr "``viewcode_line_numbers``"
 
-#: ../../sources-and-diagrams.rst:70
+#: ../../sources-and-diagrams.rst:76
 msgid "``false`` (default). ``true`` numbers the lines of the source pages."
 msgstr "``false``\\ （默认）。``true`` 为源码页面加上行号。"
 
-#: ../../sources-and-diagrams.rst:72
+#: ../../sources-and-diagrams.rst:78
 msgid "``viewcode_enable_epub``"
 msgstr "``viewcode_enable_epub``"
 
-#: ../../sources-and-diagrams.rst:73
+#: ../../sources-and-diagrams.rst:79
 msgid "Accepted and unused, since Guidedog has no EPUB builder."
 msgstr "会被接受但不使用，因为 Guidedog 没有 EPUB 构建器。"
 
-#: ../../sources-and-diagrams.rst:75
+#: ../../sources-and-diagrams.rst:81
 msgid ""
 "Source pages exist in ``html`` and ``dirhtml`` only, as in Sphinx. "
 "``singlehtml``, the PDF and text have neither the links nor the pages: a "
@@ -171,7 +171,7 @@ msgstr ""
 "与 Sphinx 一样，源码页面只出现在 ``html`` 和 ``dirhtml`` 中。``singlehtml``、PDF "
 "和纯文本既没有这些链接，也没有这些页面：一本书不需要再附一份代码。"
 
-#: ../../sources-and-diagrams.rst:77
+#: ../../sources-and-diagrams.rst:83
 msgid ""
 "A description whose module is not below ``autodoc_source_paths`` gets no "
 "link. The note ``viewcode.source`` names the module once per document, "
@@ -183,11 +183,11 @@ msgstr ""
 "在每个文档中对该模块只提示一次，并建议添加其所在的文件夹。大于 8 MiB（所有源码读取的上限）的模块文件不会生成页面，并给出警告 "
 "``viewcode.limit``。"
 
-#: ../../sources-and-diagrams.rst:79
+#: ../../sources-and-diagrams.rst:85
 msgid "Source links on the web: linkcode"
 msgstr "网上的源码链接：linkcode"
 
-#: ../../sources-and-diagrams.rst:82
+#: ../../sources-and-diagrams.rst:88
 msgid ""
 "Sphinx's ``linkcode`` calls a Python function, ``linkcode_resolve``, to "
 "make each link. Guidedog never runs Python, so it takes a URL template "
@@ -196,7 +196,7 @@ msgstr ""
 "Sphinx 的 ``linkcode`` 调用 Python 函数 ``linkcode_resolve`` 来生成每个链接。Guidedog "
 "从不运行 Python，因此改用 URL 模板："
 
-#: ../../sources-and-diagrams.rst:89
+#: ../../sources-and-diagrams.rst:95
 msgid ""
 "In a repository whose checked-out branch is ``main``, the description of "
 "``Square.area`` above then links to "
@@ -206,90 +206,90 @@ msgstr ""
 "在检出分支为 ``main`` 的仓库中，上面 ``Square.area`` 的描述会链接到 "
 "``https://github.com/acme/shapes/blob/main/src/shapes.py#L4-L6``。每个对象都会填入以下占位符："
 
-#: ../../sources-and-diagrams.rst:91
+#: ../../sources-and-diagrams.rst:97
 msgid "Placeholders of ``linkcode_url``"
 msgstr "``linkcode_url`` 的占位符"
 
-#: ../../sources-and-diagrams.rst:95
+#: ../../sources-and-diagrams.rst:101
 msgid "Placeholder"
 msgstr "占位符"
 
-#: ../../sources-and-diagrams.rst:96
+#: ../../sources-and-diagrams.rst:102
 msgid "Value"
 msgstr "值"
 
-#: ../../sources-and-diagrams.rst:97
+#: ../../sources-and-diagrams.rst:103
 msgid "``{domain}``"
 msgstr "``{domain}``"
 
-#: ../../sources-and-diagrams.rst:98
+#: ../../sources-and-diagrams.rst:104
 msgid ""
 "The object's domain: ``py``, ``c``, ``cpp``, ``js``, ``rust``, ``odin``."
 msgstr "对象所属的域：``py``、``c``、``cpp``、``js``、``rust``、``odin``。"
 
-#: ../../sources-and-diagrams.rst:99
+#: ../../sources-and-diagrams.rst:105
 msgid "``{module}``"
 msgstr "``{module}``"
 
-#: ../../sources-and-diagrams.rst:100
+#: ../../sources-and-diagrams.rst:106
 msgid ""
 "The module as the description names it, or the Rust or Odin crate or "
 "package path."
 msgstr "描述中给出的模块名，或 Rust crate、Odin 包的路径。"
 
-#: ../../sources-and-diagrams.rst:101
+#: ../../sources-and-diagrams.rst:107
 msgid "``{fullname}``"
 msgstr "``{fullname}``"
 
-#: ../../sources-and-diagrams.rst:102
+#: ../../sources-and-diagrams.rst:108
 msgid "The object's name within its module, such as ``Square.area``."
 msgstr "对象在其模块内的名称，例如 ``Square.area``。"
 
-#: ../../sources-and-diagrams.rst:103
+#: ../../sources-and-diagrams.rst:109
 msgid "``{path}``"
 msgstr "``{path}``"
 
-#: ../../sources-and-diagrams.rst:104
+#: ../../sources-and-diagrams.rst:110
 msgid ""
 "The object's source file, relative to ``linkcode_root``, with ``/`` "
 "between folders."
 msgstr "对象的源文件，相对于 ``linkcode_root``，文件夹之间用 ``/`` 分隔。"
 
-#: ../../sources-and-diagrams.rst:105
+#: ../../sources-and-diagrams.rst:111
 msgid "``{line}``"
 msgstr "``{line}``"
 
-#: ../../sources-and-diagrams.rst:106
+#: ../../sources-and-diagrams.rst:112
 msgid ""
 "The first line of the definition, counted from 1. A decorator's line "
 "counts."
 msgstr "定义的第一行，从 1 开始计数。装饰器所在的行也算在内。"
 
-#: ../../sources-and-diagrams.rst:107
+#: ../../sources-and-diagrams.rst:113
 msgid "``{end_line}``"
 msgstr "``{end_line}``"
 
-#: ../../sources-and-diagrams.rst:108
+#: ../../sources-and-diagrams.rst:114
 msgid "The last line of the definition."
 msgstr "定义的最后一行。"
 
-#: ../../sources-and-diagrams.rst:109
+#: ../../sources-and-diagrams.rst:115
 msgid "``{branch}``"
 msgstr "``{branch}``"
 
-#: ../../sources-and-diagrams.rst:110
+#: ../../sources-and-diagrams.rst:116
 msgid "``linkcode_branch``, or the branch read from the repository."
 msgstr "``linkcode_branch``，或从仓库读取的分支。"
 
-#: ../../sources-and-diagrams.rst:111
+#: ../../sources-and-diagrams.rst:117
 msgid "``{{`` and ``}}``"
 msgstr "``{{`` 和 ``}}``"
 
-#: ../../sources-and-diagrams.rst:112
+#: ../../sources-and-diagrams.rst:118
 msgid "A literal brace."
 msgstr "一个字面意义上的花括号。"
 
-#: ../../sources-and-diagrams.rst:114
+#: ../../sources-and-diagrams.rst:120
 msgid ""
 "``linkcode_root`` names the folder ``{path}`` is relative to, relative to "
 "the source folder. Left empty, it is the nearest folder at or above the "
@@ -302,7 +302,7 @@ msgstr ""
 "``.git`` 的文件夹。``linkcode_branch`` 是 ``{branch}`` 的文本。留空时，取仓库当前检出的分支（从 "
 "``.git/HEAD`` 读取）；``HEAD`` 处于分离状态时，取当前提交。"
 
-#: ../../sources-and-diagrams.rst:116
+#: ../../sources-and-diagrams.rst:122
 msgid ""
 "A link is added only when every placeholder the template uses has a "
 "value. A Python object that the scan found has them all. A ``c:`` or "
@@ -315,7 +315,7 @@ msgstr ""
 "Rust 和 Odin 域的对象，只有名称而没有文件。只有仅使用 ``{domain}``、``{module}``、``{fullname}`` "
 "和 ``{branch}`` 的模板才能为它们生成链接，例如指向 API 搜索的模板。"
 
-#: ../../sources-and-diagrams.rst:118
+#: ../../sources-and-diagrams.rst:124
 msgid ""
 "The links appear in HTML builders, ``singlehtml`` included, after the "
 "signature and before the permalink. The PDF and text add nothing. With "
@@ -324,7 +324,7 @@ msgstr ""
 "链接出现在 HTML 构建器（包括 ``singlehtml``）的输出中，位于签名之后、永久链接之前。PDF 和纯文本不添加任何内容。同时列出 "
 "``viewcode`` 和 ``linkcode`` 时，描述会同时得到两个链接。"
 
-#: ../../sources-and-diagrams.rst:120
+#: ../../sources-and-diagrams.rst:126
 msgid ""
 "Mistakes in the template are found when ``conf.toml`` loads. An unknown "
 "placeholder or an unclosed brace is refused, and listing the extension "
@@ -339,7 +339,7 @@ msgstr ""
 "``{branch}``，却既没有分支也没有仓库时，会给出一次警告 ``linkcode.branch``，并且不添加链接。文件位于 "
 "``linkcode_root`` 之外的对象不会得到链接，并给出说明 ``linkcode.outside``。"
 
-#: ../../sources-and-diagrams.rst:122
+#: ../../sources-and-diagrams.rst:128
 msgid ""
 "``guidedog migrate`` cannot read a ``linkcode_resolve`` function as data. "
 "It reports ``migrate.linkcode`` with a template to write in its place."
@@ -347,17 +347,17 @@ msgstr ""
 "``guidedog migrate`` 无法把 ``linkcode_resolve`` 函数当作数据来读取。它会报告 "
 "``migrate.linkcode``，并给出一个可以用来代替它的模板。"
 
-#: ../../sources-and-diagrams.rst:124
+#: ../../sources-and-diagrams.rst:130
 msgid "Class diagrams: inheritance_diagram"
 msgstr "类图：inheritance_diagram"
 
-#: ../../sources-and-diagrams.rst:127
+#: ../../sources-and-diagrams.rst:133
 msgid ""
 "The ``inheritance-diagram`` directive draws the classes it names, a "
 "module's classes when it names a module, and their bases up to the roots:"
 msgstr "``inheritance-diagram`` 指令绘制它指定的类（指定模块时绘制该模块的类），以及这些类直到根部的基类："
 
-#: ../../sources-and-diagrams.rst:134
+#: ../../sources-and-diagrams.rst:140
 msgid ""
 "The names are found as Sphinx finds them: relative to the current module "
 "first (``py:currentmodule``), then as written. The bases are read from "
@@ -370,55 +370,55 @@ msgstr ""
 "语句中读取，并在所有已扫描的模块中解析。Python 的内置类，例如 ``object`` 和 "
 "``Exception``，不会画出。来自源码文件夹之外的包的基类，以完整名称画出，其上方不再画任何类。"
 
-#: ../../sources-and-diagrams.rst:136
+#: ../../sources-and-diagrams.rst:142
 msgid "The directive takes Sphinx's options:"
 msgstr "该指令接受 Sphinx 的选项："
 
-#: ../../sources-and-diagrams.rst:138
+#: ../../sources-and-diagrams.rst:144
 msgid "``:parts: N``"
 msgstr "``:parts: N``"
 
-#: ../../sources-and-diagrams.rst:139
+#: ../../sources-and-diagrams.rst:145
 msgid ""
 "Show only the last ``N`` parts of each dotted name; a negative ``N`` "
 "drops the first ``-N`` parts instead. ``0`` (default) shows the full name."
 msgstr "每个点分名称只显示最后 ``N`` 部分；``N`` 为负数时，改为去掉前 ``-N`` 部分。``0``\\ （默认）显示完整名称。"
 
-#: ../../sources-and-diagrams.rst:141
+#: ../../sources-and-diagrams.rst:147
 msgid "``:private-bases:``"
 msgstr "``:private-bases:``"
 
-#: ../../sources-and-diagrams.rst:142
+#: ../../sources-and-diagrams.rst:148
 msgid "Draw classes whose names start with ``_`` as well."
 msgstr "名称以 ``_`` 开头的类也画出来。"
 
-#: ../../sources-and-diagrams.rst:144
+#: ../../sources-and-diagrams.rst:150
 msgid "``:top-classes: a.B, a.C``"
 msgstr "``:top-classes: a.B, a.C``"
 
-#: ../../sources-and-diagrams.rst:145
+#: ../../sources-and-diagrams.rst:151
 msgid "Stop at these classes: their own bases are not drawn."
 msgstr "到这些类为止：不再画出它们的基类。"
 
-#: ../../sources-and-diagrams.rst:147
+#: ../../sources-and-diagrams.rst:153
 msgid "``:include-subclasses:``"
 msgstr "``:include-subclasses:``"
 
-#: ../../sources-and-diagrams.rst:148
+#: ../../sources-and-diagrams.rst:154
 msgid ""
 "Draw the classes that derive from the named ones too. The scan looks for "
 "them in the packages of the named classes."
 msgstr "同时画出从指定类派生的类。扫描会在指定类所在的包中查找它们。"
 
-#: ../../sources-and-diagrams.rst:150
+#: ../../sources-and-diagrams.rst:156
 msgid "``:caption: text``"
 msgstr "``:caption: text``"
 
-#: ../../sources-and-diagrams.rst:151
+#: ../../sources-and-diagrams.rst:157
 msgid "Put the drawing in a figure with this caption."
 msgstr "把图放进带有此标题的插图中。"
 
-#: ../../sources-and-diagrams.rst:153
+#: ../../sources-and-diagrams.rst:159
 msgid ""
 "The settings ``inheritance_graph_attrs``, ``inheritance_node_attrs`` and "
 "``inheritance_edge_attrs`` add Graphviz attributes to the graph, its "
@@ -429,7 +429,7 @@ msgstr ""
 "``inheritance_edge_attrs`` 分别为图、节点和边添加 Graphviz 属性；``inheritance_alias`` "
 "把完整的类名显示为另一个名称："
 
-#: ../../sources-and-diagrams.rst:163
+#: ../../sources-and-diagrams.rst:169
 msgid ""
 "The graph is written as Sphinx writes it and drawn by the linked "
 "Graphviz, like a ``graphviz`` directive, so no ``dot`` program is needed. "
@@ -443,7 +443,7 @@ msgstr ""
 "SVG；项目中有某个类的描述时，该类的节点会链接到描述。没有描述的类画出来但不带链接。PDF 嵌入同一张 "
 "SVG。纯文本把这些类显示为列表，每个类附带其基类。"
 
-#: ../../sources-and-diagrams.rst:165
+#: ../../sources-and-diagrams.rst:171
 msgid ""
 "A name that is neither a class nor a module in the scan is reported as "
 "``inheritance.class`` and left out. A diagram may hold at most 1,000 "
@@ -456,17 +456,17 @@ msgstr ""
 "``inheritance.limit``，并且不绘制。加载 ``conf.toml`` 时，不是 Graphviz "
 "标识符的属性名会被拒绝；不是普通单词、数字或带引号字符串的值会被加上引号，因此属性无法改动图的其余部分。"
 
-#: ../../sources-and-diagrams.rst:167
+#: ../../sources-and-diagrams.rst:173
 msgid "Reading times: duration"
 msgstr "读取耗时：duration"
 
-#: ../../sources-and-diagrams.rst:170
+#: ../../sources-and-diagrams.rst:176
 msgid ""
 "With ``sphinx.ext.duration`` listed, the build summary shows how long "
 "reading took, and which documents took longest:"
 msgstr "列出 ``sphinx.ext.duration`` 后，构建摘要会显示读取花了多长时间，以及哪些文档耗时最长："
 
-#: ../../sources-and-diagrams.rst:181
+#: ../../sources-and-diagrams.rst:187
 msgid ""
 "Each time is measured with a monotonic clock around one document's read. "
 "A document taken unchanged from the previous build took no time and is "
@@ -477,61 +477,61 @@ msgstr ""
 "每个时间都用单调时钟围绕一个文档的读取来测量。从上一次构建原样沿用的文档不耗时，也不会列出。输出目录中还会写入 "
 "``sphinx-reading-durations.json``，这是一个从文档名映射到秒数的对象。"
 
-#: ../../sources-and-diagrams.rst:183
+#: ../../sources-and-diagrams.rst:189
 msgid "``duration_print_total``"
 msgstr "``duration_print_total``"
 
-#: ../../sources-and-diagrams.rst:184
+#: ../../sources-and-diagrams.rst:190
 msgid "``true`` (default): show the total reading time."
 msgstr "``true``\\ （默认）：显示总读取时间。"
 
-#: ../../sources-and-diagrams.rst:186
+#: ../../sources-and-diagrams.rst:192
 msgid "``duration_print_slowest``"
 msgstr "``duration_print_slowest``"
 
-#: ../../sources-and-diagrams.rst:187
+#: ../../sources-and-diagrams.rst:193
 msgid "``true`` (default): show the slowest documents."
 msgstr "``true``\\ （默认）：显示最慢的文档。"
 
-#: ../../sources-and-diagrams.rst:189
+#: ../../sources-and-diagrams.rst:195
 msgid "``duration_n_slowest``"
 msgstr "``duration_n_slowest``"
 
-#: ../../sources-and-diagrams.rst:190
+#: ../../sources-and-diagrams.rst:196
 msgid "How many slowest documents to show: ``5`` by default, ``0`` for all."
 msgstr "显示多少个最慢的文档：默认 ``5``，``0`` 表示全部显示。"
 
-#: ../../sources-and-diagrams.rst:192
+#: ../../sources-and-diagrams.rst:198
 msgid "``duration_write_json``"
 msgstr "``duration_write_json``"
 
-#: ../../sources-and-diagrams.rst:193
+#: ../../sources-and-diagrams.rst:199
 msgid ""
 "The JSON file's name in the output folder; empty writes none. A name that "
 "leaves the output folder is refused."
 msgstr "输出目录中 JSON 文件的名称；为空时不写出。会跳出输出目录的名称会被拒绝。"
 
-#: ../../sources-and-diagrams.rst:195
+#: ../../sources-and-diagrams.rst:201
 msgid "``duration_limit``"
 msgstr "``duration_limit``"
 
-#: ../../sources-and-diagrams.rst:196
+#: ../../sources-and-diagrams.rst:202
 msgid ""
 "Seconds a document may take; a slower one is the warning "
 "``duration.limit``. Unset, there is no limit."
 msgstr "一个文档允许耗费的秒数；更慢的文档会给出警告 ``duration.limit``。不设置时没有上限。"
 
-#: ../../sources-and-diagrams.rst:198
+#: ../../sources-and-diagrams.rst:204
 msgid ""
 "The times are evidence about one build on one machine. They differ from "
 "run to run."
 msgstr "这些时间只是一台机器上一次构建的记录。每次运行都会有所不同。"
 
-#: ../../sources-and-diagrams.rst:200
+#: ../../sources-and-diagrams.rst:206
 msgid "Images for the book: imgconverter"
 msgstr "书籍中的图片：imgconverter"
 
-#: ../../sources-and-diagrams.rst:203
+#: ../../sources-and-diagrams.rst:209
 msgid ""
 "Sphinx's ``imgconverter`` runs ImageMagick to turn images LaTeX cannot "
 "use, such as GIF and SVG, into ones it can. Guidedog's PDF is typeset by "
@@ -545,7 +545,7 @@ msgstr ""
 "和 PDF 图片，因此没有什么需要转换。该扩展会被接受，但从不启动任何程序。``image_converter`` 和 "
 "``image_converter_args`` 会被接受，但不起作用。"
 
-#: ../../sources-and-diagrams.rst:205
+#: ../../sources-and-diagrams.rst:211
 msgid ""
 "An image in a format the book cannot show, such as TIFF or BMP, is "
 "reported as ``imgconverter.format``, and the book shows its alternative "
@@ -557,11 +557,11 @@ msgstr ""
 "``imgconverter.format``，书中会在其位置显示替代文本。提示会建议提供 PNG、JPEG、GIF 或 SVG "
 "版本。如果我们把图片写成 ``picture.*``，每种输出都会选用它能读取的第一个版本。"
 
-#: ../../sources-and-diagrams.rst:207
+#: ../../sources-and-diagrams.rst:213
 msgid "Diagnostics"
 msgstr "诊断信息"
 
-#: ../../sources-and-diagrams.rst:210
+#: ../../sources-and-diagrams.rst:216
 msgid ""
 "Every message has a code, the location, an explanation and a hint. "
 "``suppress_warnings`` silences them by their prefix, such as ``viewcode`` "
@@ -570,96 +570,96 @@ msgstr ""
 "每条消息都有代码、位置、解释和提示。``suppress_warnings`` 按前缀关闭它们，例如 ``viewcode`` 或 "
 "``inheritance``。"
 
-#: ../../sources-and-diagrams.rst:212
+#: ../../sources-and-diagrams.rst:218
 msgid "Codes of these extensions"
 msgstr "这些扩展的代码"
 
-#: ../../sources-and-diagrams.rst:216
+#: ../../sources-and-diagrams.rst:222
 msgid "Code"
 msgstr "代码"
 
-#: ../../sources-and-diagrams.rst:217
+#: ../../sources-and-diagrams.rst:223
 msgid "Meaning"
 msgstr "含义"
 
-#: ../../sources-and-diagrams.rst:218
+#: ../../sources-and-diagrams.rst:224
 msgid "``viewcode.source``"
 msgstr "``viewcode.source``"
 
-#: ../../sources-and-diagrams.rst:219
+#: ../../sources-and-diagrams.rst:225
 msgid ""
 "A documented module is not below ``autodoc_source_paths``; its objects "
 "have no ``[source]`` link."
 msgstr "有文档的模块不在 ``autodoc_source_paths`` 之下；它的对象没有 ``[source]`` 链接。"
 
-#: ../../sources-and-diagrams.rst:220
+#: ../../sources-and-diagrams.rst:226
 msgid "``viewcode.limit``"
 msgstr "``viewcode.limit``"
 
-#: ../../sources-and-diagrams.rst:221
+#: ../../sources-and-diagrams.rst:227
 msgid ""
 "A module's file is too large or cannot be read; it has no source page."
 msgstr "模块文件过大或无法读取；它没有源码页面。"
 
-#: ../../sources-and-diagrams.rst:222
+#: ../../sources-and-diagrams.rst:228
 msgid "``config.ext.linkcode``"
 msgstr "``config.ext.linkcode``"
 
-#: ../../sources-and-diagrams.rst:223
+#: ../../sources-and-diagrams.rst:229
 msgid "``linkcode`` is listed without ``linkcode_url``."
 msgstr "列出了 ``linkcode``，却没有设置 ``linkcode_url``。"
 
-#: ../../sources-and-diagrams.rst:224
+#: ../../sources-and-diagrams.rst:230
 msgid "``linkcode.branch``"
 msgstr "``linkcode.branch``"
 
-#: ../../sources-and-diagrams.rst:225
+#: ../../sources-and-diagrams.rst:231
 msgid "The template uses ``{branch}``, and no branch is set or found."
 msgstr "模板用到了 ``{branch}``，但没有设置分支，也找不到分支。"
 
-#: ../../sources-and-diagrams.rst:226
+#: ../../sources-and-diagrams.rst:232
 msgid "``linkcode.outside``"
 msgstr "``linkcode.outside``"
 
-#: ../../sources-and-diagrams.rst:227
+#: ../../sources-and-diagrams.rst:233
 msgid "An object's file lies outside ``linkcode_root``."
 msgstr "对象的文件位于 ``linkcode_root`` 之外。"
 
-#: ../../sources-and-diagrams.rst:228
+#: ../../sources-and-diagrams.rst:234
 msgid "``inheritance.class``"
 msgstr "``inheritance.class``"
 
-#: ../../sources-and-diagrams.rst:229
+#: ../../sources-and-diagrams.rst:235
 msgid ""
 "A name in an ``inheritance-diagram`` is neither a class nor a module of "
 "the scan."
 msgstr "``inheritance-diagram`` 中的某个名称在扫描结果中既不是类也不是模块。"
 
-#: ../../sources-and-diagrams.rst:230
+#: ../../sources-and-diagrams.rst:236
 msgid "``inheritance.limit``"
 msgstr "``inheritance.limit``"
 
-#: ../../sources-and-diagrams.rst:231
+#: ../../sources-and-diagrams.rst:237
 msgid "A diagram would hold more than 1,000 classes."
 msgstr "一张图将包含超过 1,000 个类。"
 
-#: ../../sources-and-diagrams.rst:232
+#: ../../sources-and-diagrams.rst:238
 msgid "``duration.limit``"
 msgstr "``duration.limit``"
 
-#: ../../sources-and-diagrams.rst:233
+#: ../../sources-and-diagrams.rst:239
 msgid "A document took longer to read than ``duration_limit``."
 msgstr "某个文档的读取时间超过了 ``duration_limit``。"
 
-#: ../../sources-and-diagrams.rst:234
+#: ../../sources-and-diagrams.rst:240
 msgid "``imgconverter.format``"
 msgstr "``imgconverter.format``"
 
-#: ../../sources-and-diagrams.rst:235
+#: ../../sources-and-diagrams.rst:241
 msgid "The book cannot show an image's format."
 msgstr "书籍无法显示某张图片的格式。"
 
-#: ../../sources-and-diagrams.rst:237
+#: ../../sources-and-diagrams.rst:243
 msgid ""
 "GDS 0011 records the design of these extensions and of the four others "
 "that read Python source."

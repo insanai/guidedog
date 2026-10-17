@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -35,19 +35,20 @@ msgstr "1. 从真实项目开始"
 
 #: ../../tutorial/a-custom-theme.rst:11
 msgid ""
-"Use Guidedog 0.7.0 or newer. Run this from the directory that will "
+"Use Guidedog 1.0.0-beta.5 or newer. Run this from the directory that will "
 "contain ``orbit``:"
-msgstr "请使用 Guidedog 0.7.0 或更新版本。在将要包含 ``orbit`` 的目录中运行："
+msgstr "请使用 Guidedog 1.0.0-beta.5 或更新版本。在将要包含 ``orbit`` 的目录中运行："
 
 #: ../../tutorial/a-custom-theme.rst:17
 msgid ""
 "Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
-"in the same directory. We keep this file: it supplies the tested page "
+"in the same directory. We also keep the generated ``theme.typ`` beside "
+"it. We keep the renamed book template: it supplies the tested page "
 "layout, cover, running heads, contents, code styles and optimized "
 "paragraph breaking."
 msgstr ""
-"将生成的 ``orbit/_templates/book.typ`` 在同一目录中重命名为 "
-"``base-book.typ``。我们保留这个文件：经过测试的页面布局、封面、页眉、目录、代码样式和优化的段落断行都由它提供。"
+"将生成的 ``orbit/_templates/book.typ`` 在同一目录中重命名为 ``base-book.typ``，同时保留旁边的 "
+"``theme.typ``。我们保留重命名后的书籍模板：经过测试的页面布局、封面、页眉、目录、代码样式和优化的段落断行都由它提供。"
 
 #: ../../tutorial/a-custom-theme.rst:21
 msgid ""
@@ -64,11 +65,11 @@ msgstr ""
 "<../_static/repository/theme/chapters/reading.rst>`。前两份保存到 "
 "``orbit``，第三份保存到 ``orbit/chapters``。完成后的文件结构如下："
 
-#: ../../tutorial/a-custom-theme.rst:45
+#: ../../tutorial/a-custom-theme.rst:47
 msgid "2. Set the contract"
 msgstr "2. 设定契约"
 
-#: ../../tutorial/a-custom-theme.rst:48
+#: ../../tutorial/a-custom-theme.rst:50
 msgid ""
 "The downloaded configuration selects the local template and static "
 "directories. ``html_css_files`` adds our stylesheet after the default "
@@ -78,11 +79,11 @@ msgstr ""
 "下载的配置指定本地模板和静态文件目录。``html_css_files`` 在默认样式表之后添加主题 CSS；``html_context`` 向 "
 "Jinja 传入项目值。显式指定 PDF 文件名，便于查找输出。"
 
-#: ../../tutorial/a-custom-theme.rst:55
+#: ../../tutorial/a-custom-theme.rst:57
 msgid "orbit/conf.toml"
 msgstr "orbit/conf.toml"
 
-#: ../../tutorial/a-custom-theme.rst:57
+#: ../../tutorial/a-custom-theme.rst:59
 msgid ""
 "All paths in this tutorial are project files. HTML templates are found "
 "through ``templates_path``. The PDF entry point is always "
@@ -92,11 +93,11 @@ msgstr ""
 "本教程中的路径都是项目文件。HTML 模板通过 ``templates_path`` 查找。PDF 入口始终是源目录下的 "
 "``_templates/book.typ``。修改 ``templates_path`` 不会改变它的位置。"
 
-#: ../../tutorial/a-custom-theme.rst:61
+#: ../../tutorial/a-custom-theme.rst:63
 msgid "3. Extend the HTML layout"
 msgstr "3. 扩展 HTML 布局"
 
-#: ../../tutorial/a-custom-theme.rst:64
+#: ../../tutorial/a-custom-theme.rst:66
 msgid ""
 "Save :download:`layout.html "
 "<../_static/repository/theme/_templates/layout.html>` as "
@@ -106,11 +107,11 @@ msgstr ""
 "<../_static/repository/theme/_templates/layout.html>` 保存为 "
 "``orbit/_templates/layout.html``，完整替换生成的文件："
 
-#: ../../tutorial/a-custom-theme.rst:69
+#: ../../tutorial/a-custom-theme.rst:71
 msgid "orbit/_templates/layout.html"
 msgstr "orbit/_templates/layout.html"
 
-#: ../../tutorial/a-custom-theme.rst:71
+#: ../../tutorial/a-custom-theme.rst:73
 msgid ""
 "``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a "
 "template named ``layout.html`` would try to extend itself. ``super()`` "
@@ -121,7 +122,7 @@ msgstr ""
 "``!layout.html`` 选择 Guidedog 内置布局。没有 ``!`` 时，名为 ``layout.html`` "
 "的模板会试图继承自己。``super()`` 保留父块内容。导航、搜索、主题控件和无障碍地标都留在基础布局中；我们的块只添加标签、元数据和版本页脚。"
 
-#: ../../tutorial/a-custom-theme.rst:76
+#: ../../tutorial/a-custom-theme.rst:78
 msgid ""
 "A theme changes presentation. A build plugin changes source text, "
 "complete HTML or generated assets. Use :doc:`../plugins` when a template "
@@ -131,11 +132,11 @@ msgstr ""
 "主题改变呈现；构建插件改变源文本、完整 HTML 或生成资源。模板无法表达所需操作时，参见 "
 ":doc:`../plugins`。一般布局修改不需要原生代码。"
 
-#: ../../tutorial/a-custom-theme.rst:80
+#: ../../tutorial/a-custom-theme.rst:82
 msgid "4. Give repeated markup one home"
 msgstr "4. 复用重复的标记"
 
-#: ../../tutorial/a-custom-theme.rst:83
+#: ../../tutorial/a-custom-theme.rst:85
 msgid ""
 "Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. "
 "Save :download:`ui.html "
@@ -149,15 +150,15 @@ msgstr ""
 "<../_static/repository/theme/_templates/macros/ui.html>`、:download:`edition.html "
 "<../_static/repository/theme/_templates/partials/edition.html>` 保存到对应路径："
 
-#: ../../tutorial/a-custom-theme.rst:90
+#: ../../tutorial/a-custom-theme.rst:92
 msgid "orbit/_templates/macros/ui.html"
 msgstr "orbit/_templates/macros/ui.html"
 
-#: ../../tutorial/a-custom-theme.rst:94
+#: ../../tutorial/a-custom-theme.rst:96
 msgid "orbit/_templates/partials/edition.html"
 msgstr "orbit/_templates/partials/edition.html"
 
-#: ../../tutorial/a-custom-theme.rst:96
+#: ../../tutorial/a-custom-theme.rst:98
 msgid ""
 "A macro takes explicit inputs. An included partial uses the current "
 "page's context. Escape plain project values with ``|e``. Use ``pathto`` "
@@ -167,11 +168,11 @@ msgstr ""
 "宏接收明确的参数，包含的局部模板使用当前页面上下文。普通项目值用 ``|e`` 转义，文档链接用 ``pathto``。硬写 "
 "``chapters/reading.html`` 会在嵌套页面或其他 HTML 构建器中失效。"
 
-#: ../../tutorial/a-custom-theme.rst:101
+#: ../../tutorial/a-custom-theme.rst:103
 msgid "5. Design for the reader's theme"
 msgstr "5. 适应读者的主题选择"
 
-#: ../../tutorial/a-custom-theme.rst:104
+#: ../../tutorial/a-custom-theme.rst:106
 msgid ""
 "Save :download:`theme.css "
 "<../_static/repository/theme/_static/theme.css>` as "
@@ -180,11 +181,11 @@ msgstr ""
 "将 :download:`theme.css <../_static/repository/theme/_static/theme.css>` "
 "保存为 ``orbit/_static/theme.css``："
 
-#: ../../tutorial/a-custom-theme.rst:109
+#: ../../tutorial/a-custom-theme.rst:111
 msgid "orbit/_static/theme.css"
 msgstr "orbit/_static/theme.css"
 
-#: ../../tutorial/a-custom-theme.rst:111
+#: ../../tutorial/a-custom-theme.rst:113
 msgid ""
 "The theme begins in light mode. The existing control selects light, dark "
 "or system and saves the choice. Explicit dark rules and the system media "
@@ -195,7 +196,7 @@ msgstr ""
 "默认使用浅色模式。现有控件可选择浅色、深色或跟随系统，并保存选择。显式深色规则和系统媒体查询使用相同变量，排版和间距共用。无须添加 "
 "JavaScript。背景会变时，不要将文字固定为不适应主题的颜色。"
 
-#: ../../tutorial/a-custom-theme.rst:116
+#: ../../tutorial/a-custom-theme.rst:118
 msgid ""
 "Browser hyphenation follows the page language. It is not Typst's "
 "paragraph optimizer. The manual's optional English web optimizer is "
@@ -205,7 +206,7 @@ msgstr ""
 "浏览器按页面语言进行断词，这不是 Typst 的段落优化器。本手册可选的英文网页优化器另见 "
 ":doc:`../topics/typography`。本例使用浏览器自身的排版。"
 
-#: ../../tutorial/a-custom-theme.rst:120
+#: ../../tutorial/a-custom-theme.rst:122
 msgid ""
 "Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in "
 "current Guidedog builds. Ordinary graphs retain their own colors. Older "
@@ -216,11 +217,11 @@ msgstr ""
 "的图会跟随所选主题。普通图保留自己的颜色，旧版主机仍能按浅色配色渲染相同 DOT。语义节点类和打印行为见 "
 ":doc:`../topics/diagrams`。"
 
-#: ../../tutorial/a-custom-theme.rst:125
+#: ../../tutorial/a-custom-theme.rst:127
 msgid "6. Wrap the PDF book"
 msgstr "6. 包装 PDF 书籍模板"
 
-#: ../../tutorial/a-custom-theme.rst:128
+#: ../../tutorial/a-custom-theme.rst:130
 msgid ""
 "Save :download:`palette.typ "
 "<../_static/repository/theme/_templates/palette.typ>` and "
@@ -233,15 +234,15 @@ msgstr ""
 ":download:`book.typ <../_static/repository/theme/_templates/book.typ>` "
 "保存到 ``orbit/_templates``。这是两个新文件，旁边的 ``base-book.typ`` 要保留。"
 
-#: ../../tutorial/a-custom-theme.rst:134
+#: ../../tutorial/a-custom-theme.rst:136
 msgid "orbit/_templates/palette.typ"
 msgstr "orbit/_templates/palette.typ"
 
-#: ../../tutorial/a-custom-theme.rst:138
+#: ../../tutorial/a-custom-theme.rst:140
 msgid "orbit/_templates/book.typ"
 msgstr "orbit/_templates/book.typ"
 
-#: ../../tutorial/a-custom-theme.rst:140
+#: ../../tutorial/a-custom-theme.rst:142
 msgid ""
 "The host calls ``book`` with metadata and the chapter content. The "
 "wrapper forwards those values to the generated base and supplies our "
@@ -252,7 +253,7 @@ msgstr ""
 "主机调用 ``book``，传入元数据和章节内容。包装函数把这些值转发给生成的基础模板，并提供我们的配色。把 ``body`` "
 "传给应用样式的函数，样式规则才会作用于正文。网页样式表不影响 PDF，Typst 模板也不影响 HTML。"
 
-#: ../../tutorial/a-custom-theme.rst:145
+#: ../../tutorial/a-custom-theme.rst:147
 msgid ""
 "The base handles language-aware hyphenation and optimized line breaking. "
 "The wrapper keeps those rules, uses the matching blue accent and adds "
@@ -261,15 +262,15 @@ msgid ""
 msgstr ""
 "基础模板负责按语言断词并优化断行。包装函数保留这些规则，使用与网页相配的蓝色，并为文档交叉引用添加页码。PDF 始终采用适合打印的浅色配色。"
 
-#: ../../tutorial/a-custom-theme.rst:149
+#: ../../tutorial/a-custom-theme.rst:151
 msgid "7. Build and inspect both forms"
 msgstr "7. 构建并检查两种输出"
 
-#: ../../tutorial/a-custom-theme.rst:152
+#: ../../tutorial/a-custom-theme.rst:154
 msgid "Run from the same parent directory as step 1:"
 msgstr "回到第一步的同一个父目录运行："
 
-#: ../../tutorial/a-custom-theme.rst:162
+#: ../../tutorial/a-custom-theme.rst:164
 msgid ""
 "Open the URL printed by ``serve``. Check the chapter and generated search "
 "page, not only the front page. Try light, dark and system modes. Resize "
@@ -280,7 +281,7 @@ msgstr ""
 "打开 ``serve`` "
 "打印的网址。不只看首页，还要检查章节和生成的搜索页面。尝试浅色、深色及系统模式，缩放窗口，用键盘操作导航和搜索。修改页脚局部模板，保存并刷新，预览服务会重建依赖它的页面。"
 
-#: ../../tutorial/a-custom-theme.rst:167
+#: ../../tutorial/a-custom-theme.rst:169
 msgid ""
 "Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog "
 "adds the language suffix to the configured filename. Inspect the "
@@ -294,11 +295,11 @@ msgstr ""
 "``_build/html``、``_build/dirhtml`` 和 ``_build/singlehtml``。用 ``Ctrl+C`` "
 "停止服务器。"
 
-#: ../../tutorial/a-custom-theme.rst:174
+#: ../../tutorial/a-custom-theme.rst:176
 msgid "8. Reuse and maintain the theme"
 msgstr "8. 复用和维护主题"
 
-#: ../../tutorial/a-custom-theme.rst:177
+#: ../../tutorial/a-custom-theme.rst:179
 msgid ""
 "Create another project with ``guidedog quickstart``. Copy the finished "
 "``_templates`` directory and ``_static/theme.css`` into it. Add "
@@ -312,7 +313,7 @@ msgstr ""
 "[\"theme.css\"]``、强调色选项和 ``edition_label`` "
 "上下文值。将页脚文档链接改为新项目中存在的页面，保留新项目自己的元数据和源文件。"
 
-#: ../../tutorial/a-custom-theme.rst:183
+#: ../../tutorial/a-custom-theme.rst:185
 msgid ""
 "The copied PDF base makes the theme self-contained. When we upgrade "
 "Guidedog, we create a scratch quickstart project and compare its "
@@ -325,7 +326,7 @@ msgstr ""
 "项目，把其中的模板与保存的基础模板进行比较，合入需要的改动，然后重新构建所有目标。内置的 HTML "
 "布局也可能变化。少量的块覆盖比另一整套布局更容易维护。所有变量和块的说明见 :doc:`../templates`。"
 
-#: ../../tutorial/a-custom-theme.rst:189
+#: ../../tutorial/a-custom-theme.rst:191
 msgid ""
 "If the build reports a missing ``base-book.typ``, finish the rename in "
 "step 1. If the label is blank, set ``edition_label`` in ``html_context``. "

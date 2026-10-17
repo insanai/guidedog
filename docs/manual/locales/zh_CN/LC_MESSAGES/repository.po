@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 07:02+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -26,10 +26,17 @@ msgid "**Write once. Explain well. Publish on the web and on paper.**"
 msgstr "**写一份源码，讲清楚道理，发布到网页与纸上。**"
 
 #: ../../repository.rst:6
-msgid "Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one ``guidedog`` executable, with PDF typesetting and diagram rendering included."
-msgstr "Guidedog 从同一组 reStructuredText 或 Markdown 文件生成文档网站和 PDF 图书。我们只需维护一份内容，就能面向网页和纸张上的读者发布。发行版提供一个 ``guidedog`` 可执行文件，内含 PDF 排版和图表渲染功能。"
+msgid ""
+"Guidedog builds a documentation website and a PDF book from the same "
+"reStructuredText or Markdown files. We keep one set of source files and "
+"publish it for readers on the web and on paper. The release provides one "
+"``guidedog`` executable, with PDF typesetting and diagram rendering "
+"included."
+msgstr ""
+"Guidedog 从同一组 reStructuredText 或 Markdown 文件生成文档网站和 PDF "
+"图书。我们只需维护一份内容，就能面向网页和纸张上的读者发布。发行版提供一个 ``guidedog`` 可执行文件，内含 PDF 排版和图表渲染功能。"
 
-#: ../../repository.rst:10
+#: ../../repository.rst:8
 msgid ""
 "Sphinx inspires the authoring workflow. Guidedog is an independent "
 "system: configuration is declarative TOML, API extraction is static, and "
@@ -39,18 +46,18 @@ msgstr ""
 "Sphinx 启发了它的写作流程。Guidedog 是独立系统：配置使用声明式 TOML，API 提取采用静态分析，绝不执行 Python "
 "配置或扩展。完全兼容 Sphinx 不是目标。"
 
-#: ../../repository.rst:14
+#: ../../repository.rst:12
 msgid ""
 "This page is the repository overview. On GitHub, the ``README`` files at "
 "the root of the repository give the same overview in each language of the "
 "manual."
 msgstr "本页是仓库概览。在 GitHub 上，仓库根目录下的各个 ``README`` 文件用手册的每种语言提供同样的概览。"
 
-#: ../../repository.rst:17
+#: ../../repository.rst:15
 msgid "Start a project"
 msgstr "创建项目"
 
-#: ../../repository.rst:27
+#: ../../repository.rst:25
 msgid ""
 "The project contains ``conf.toml``, ``index.rst``, "
 "``_templates/layout.html``, ``_templates/book.typ``, and ``_static/``. "
@@ -64,7 +71,7 @@ msgstr ""
 "和 ``_static/``。模板是普通文件，我们可以直接编辑。HTML 提供导航、搜索、代码高亮、图表和公式。PDF "
 "图书提供章节、交叉引用、插图、索引以及按语言优化的排版。"
 
-#: ../../repository.rst:32
+#: ../../repository.rst:30
 msgid ""
 "The default theme is light. Readers can choose dark or the system theme. "
 "The manual detects the browser language on its landing page and "
@@ -73,11 +80,11 @@ msgid ""
 msgstr ""
 "默认使用浅色主题，读者也可以选择深色或跟随系统。手册首页和仓库概览会检测浏览器语言。已保存的选择优先。直接指向某个语言版本或章节的链接，仍按链接本身的选择打开。"
 
-#: ../../repository.rst:42
+#: ../../repository.rst:40
 msgid "Install"
 msgstr "安装"
 
-#: ../../repository.rst:45
+#: ../../repository.rst:43
 msgid ""
 "Each `release <https://github.com/insanai/guidedog/releases>`__ has an "
 "archive for Linux, macOS, and Windows, with ``SHA256SUMS``. The Typst "
@@ -94,17 +101,17 @@ msgstr ""
 "库（``libgvc``）。如果系统没有提供该库，归档包的说明会介绍如何安装。获取远程 intersphinx 清单和发布到 GitHub "
 "Pages 时，使用 ``guidedog`` 内置的 HTTP 客户端，因此不需要 ``curl`` 程序。校验并安装归档包："
 
-#: ../../repository.rst:58
+#: ../../repository.rst:56
 msgid ""
 "The release notes describe each platform's requirements and limits. See "
 "the :doc:`installation guide <howto/install>` for the details."
 msgstr "发行说明介绍了各平台的要求和限制。详情请参阅 :doc:`安装指南 <howto/install>`。"
 
-#: ../../repository.rst:61
+#: ../../repository.rst:59
 msgid "Build from source"
 msgstr "从源码构建"
 
-#: ../../repository.rst:64
+#: ../../repository.rst:62
 msgid ""
 "Install a Rust toolchain (the workspace's ``rust-version`` or later) and "
 "the Graphviz development files (``libgvc``, ``libcgraph``; for example "
@@ -115,7 +122,7 @@ msgstr ""
 "开发文件（``libgvc``、``libcgraph``；例如 Debian 和 Ubuntu 上的 ``graphviz-dev``，或 "
 "``brew install graphviz``）。然后在检出目录的根目录下运行："
 
-#: ../../repository.rst:75
+#: ../../repository.rst:73
 msgid ""
 "The ``typst`` crates are a default feature of ``gd-typst``. Without them, "
 "Guidedog runs an installed, pinned ``typst`` program for PDF output. "
@@ -127,7 +134,7 @@ msgstr ""
 "会调用已安装且版本固定的 ``typst`` 程序来输出 PDF。发布流程见 `RELEASING.md "
 "<https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__。"
 
-#: ../../repository.rst:80
+#: ../../repository.rst:78
 msgid ""
 "The workspace is split by responsibility. The engine crates "
 "(``guidedoc``, the readers and renderers, ``guidedoc-defaults``) use only "
@@ -142,11 +149,11 @@ msgstr ""
 "等）从不依赖引擎。项目构建器和命令行位于两者之上。各个程序位于 ``cmd/`` 下。参见 :doc:`内部原理 "
 "<internals/index>`。"
 
-#: ../../repository.rst:86
+#: ../../repository.rst:84
 msgid "Translate with Guidedog"
 msgstr "用 Guidedog 翻译"
 
-#: ../../repository.rst:99
+#: ../../repository.rst:97
 msgid ""
 "Translate and review ``msgstr`` values in the PO files. Guidedog extracts "
 "POT files, merges catalogs, reports progress, and builds each edition. It "
@@ -160,11 +167,11 @@ msgstr ""
 "文件、合并目录、报告进度和构建各语言版本，但不会自动生成翻译。命令、路径、代码、API 名称和引用目标保持不变。只翻译手册和仓库概览，API 与 "
 "GDS 保持英文。汇总所有语言版本和 PDF 图书的方法见 :doc:`手册构建说明 <howto/maintain-docs>`。"
 
-#: ../../repository.rst:105
+#: ../../repository.rst:103
 msgid "Extend and publish"
 msgstr "扩展与发布"
 
-#: ../../repository.rst:108
+#: ../../repository.rst:106
 msgid ""
 "Write a build plugin or a publisher with the :doc:`step-by-step plugin "
 "chapter <plugins>`. A plugin implements one Rust trait. The same value is "
@@ -182,11 +189,11 @@ msgstr ""
 "发布器，讲解所有权、凭据、条件更新和恢复。``guidedog publish --timeout=SECONDS`` "
 "限制每次完整交互的时长（默认 300 秒）。我们选择一个比 ``--wait`` 更长的值。结果未知时，我们先恢复，再重新发布。"
 
-#: ../../repository.rst:117
+#: ../../repository.rst:115
 msgid "Keep discussions"
 msgstr "维护讨论"
 
-#: ../../repository.rst:120
+#: ../../repository.rst:118
 msgid ""
 "``guidedog dsc`` keeps proposals and decisions as reStructuredText "
 "records, one file each. It builds them into a website and PDF books. Each "
@@ -196,7 +203,7 @@ msgstr ""
 "``guidedog dsc`` 把提案和决策保存为 reStructuredText 记录，每条一个文件，并把它们构建成网站和 PDF "
 "图书。每个目录都有前缀：Guidedog 的设计记录使用 ``gds``，其他项目可以使用 ``eds``。"
 
-#: ../../repository.rst:133
+#: ../../repository.rst:131
 msgid ""
 "A catalog's ``discussion.toml`` sets its lifecycle states, record types, "
 "and numbering. ``guidedog dsc config`` prints it. The commands come from "
@@ -210,23 +217,47 @@ msgstr ""
 "``docs/gds`` 就是这样一个目录：我们在该文件夹中运行 ``guidedog dsc check``。参见 :doc:`维护讨论目录 "
 "<howto/discussions>`。"
 
-#: ../../repository.rst:136
+#: ../../repository.rst:134
+msgid "Publish static sites"
+msgstr "发布静态站点"
+
+#: ../../repository.rst:137
+msgid ""
+"``guidedog ssg`` manages articles, research logs, collections, feeds, "
+"pinned theme archives, and multi-project websites from the same "
+"``conf.toml`` and document tree:"
+msgstr ""
+"``guidedog ssg`` 基于同一份 ``conf.toml`` 和文档树管理文章、研究日志、集合、订阅源、固定校验和的主题归档包以及多项目网站："
+
+#: ../../repository.rst:148
+msgid ""
+"Pages marked with ``:pdf: article`` also build standalone print-quality "
+"PDFs alongside their HTML pages. Multi-project websites mount "
+"sub-projects (such as ``docs/manual``, ``docs/api``, and ``docs/gds``) "
+"declaratively through ``[[site.mounts]]``. See :doc:`Static site "
+"publishing <howto/static-publishing>`."
+msgstr ""
+"标有 ``:pdf: article`` 的页面还会在生成 HTML 页面的同时生成具有印刷品质的独立 PDF。多项目网站通过 "
+"``[[site.mounts]]`` 以声明方式挂载子项目（例如 ``docs/manual``、``docs/api`` 和 "
+"``docs/gds``）。参见 :doc:`静态站点发布 <howto/static-publishing>`。"
+
+#: ../../repository.rst:150
 msgid "Read and embed"
 msgstr "阅读与嵌入"
 
-#: ../../repository.rst:139
+#: ../../repository.rst:153
 msgid ""
 ":doc:`Manual <index>`: tutorials, topics, practical tasks, reference, and "
 "internals."
 msgstr ":doc:`手册 <index>`：教程、专题、操作指南、参考和内部原理。"
 
-#: ../../repository.rst:140
+#: ../../repository.rst:154
 msgid ""
 ":doc:`API reference <api/index>`: generated from the Rust source of the "
 "main crates and included in the manual's PDF appendix."
 msgstr ":doc:`API 参考 <api/index>`：从主要 crate 的 Rust 源码生成，并作为附录收入手册 PDF。"
 
-#: ../../repository.rst:142
+#: ../../repository.rst:156
 msgid ""
 ":download:`Engine guide <_static/repository/library-README.md>`: the "
 "``guidedoc`` crate's workspaces, requests, adapters, and conversion "
@@ -235,19 +266,19 @@ msgstr ""
 ":download:`引擎指南 <_static/repository/library-README.md>`：``guidedoc`` "
 "crate 的工作区、请求、适配器和转换示例。"
 
-#: ../../repository.rst:144
+#: ../../repository.rst:158
 msgid ""
 ":doc:`Templates <templates>`: customize HTML with Jinja and books with "
 "Typst."
 msgstr ":doc:`模板 <templates>`：用 Jinja 自定义 HTML，用 Typst 自定义图书。"
 
-#: ../../repository.rst:145
+#: ../../repository.rst:159
 msgid ""
 ":download:`GDS <_static/repository/gds-README.md>`: numbered design "
 "records and implementation decisions."
 msgstr ":download:`GDS <_static/repository/gds-README.md>`：编号的设计记录和实现决策。"
 
-#: ../../repository.rst:147
+#: ../../repository.rst:161
 msgid ""
 ":download:`Discussion library <_static/repository/discussion-README.md>`: "
 "the catalogs that ``guidedog dsc`` keeps."
@@ -255,7 +286,7 @@ msgstr ""
 ":download:`讨论库 <_static/repository/discussion-README.md>`：``guidedog "
 "dsc`` 维护的目录。"
 
-#: ../../repository.rst:150
+#: ../../repository.rst:164
 msgid ""
 "Guidedoc works in a caller-owned, reusable workspace and returns "
 "structured diagnostics. The host manages files, budgets, caching, "
@@ -267,11 +298,11 @@ msgstr ""
 "在调用方拥有、可重复使用的工作区中工作，并返回结构化诊断。宿主负责管理文件、预算、缓存、发布和原生编译器。``--untrusted`` "
 "会限制能力，但它不是进程沙箱，也不限制所有原生资源的使用。"
 
-#: ../../repository.rst:154
+#: ../../repository.rst:168
 msgid "Credits and license"
 msgstr "致谢与许可"
 
-#: ../../repository.rst:157
+#: ../../repository.rst:171
 msgid ""
 "Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** "
 "and **Kanak Rathore**. Contributions are welcome through issues and pull "
@@ -281,7 +312,7 @@ msgstr ""
 "由 **Vikrant Rathore** 创建，**Ronak Rathore** 和 **Kanak Rathore** 协助开发。欢迎通过 "
 "issue 和 pull request 参与贡献。文档署名使用姓名或账号名，不使用个人邮箱。Git 身份设置单独管理。"
 
-#: ../../repository.rst:162
+#: ../../repository.rst:176
 msgid ""
 "Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, "
 "Tree-sitter and Max Brunsfeld, Graphviz, and the Rust project."
@@ -289,7 +320,7 @@ msgstr ""
 "感谢 Sphinx 和 Georg Brandl、Docutils 和 David Goodger、Typst、Tree-sitter 和 Max "
 "Brunsfeld、Graphviz，以及 Rust 项目。"
 
-#: ../../repository.rst:165
+#: ../../repository.rst:179
 msgid ""
 "Guidedog is released under the :download:`GNU Lesser General Public "
 "License v3.0 or later <_static/repository/LICENSE>` (LGPL-3.0-or-later), "
@@ -306,7 +337,7 @@ msgstr ""
 "<_static/repository/NOTICE>` 说明了联系方式，并列出保留各自许可证的第三方组件，例如捆绑的字体和编译进程序的 Rust "
 "crate。"
 
-#: ../../repository.rst:173
+#: ../../repository.rst:187
 msgid ""
 "An additional permission allows Guidedog to be linked and distributed "
 "with Graphviz. See :download:`NOTICE <_static/repository/NOTICE>`."

@@ -38,14 +38,14 @@ writing layer decides which output units are written again. ``Generation::reuse`
            color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=12, margin="0.15,0.1"];
      edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=10];
 
-     source [class="gd-input", shape=note, fillcolor="#fbfaf3", label="Source and\ndependencies"];
-     same_read [class="gd-choice", shape=diamond, fillcolor="#fff4e6", color="#ca8a04", fontcolor="#854d0e", label="Digests\nmatch?"];
-     reuse [label="Reuse the object"];
-     reread [label="Read again"];
-     object [label="Object digest"];
-     same_unit [class="gd-choice", shape=diamond, fillcolor="#fff4e6", color="#ca8a04", fontcolor="#854d0e", label="Inputs and\nanswers match?"];
-     keep [class="gd-output", fillcolor="#eef4fa", label="Keep the unit"];
-     write [class="gd-output", fillcolor="#eef4fa", label="Write the unit"];
+     source [class="gd-input", shape=note, fillcolor="#fbfaf3", label=<<B>Source &amp; deps</B><BR/><FONT POINT-SIZE="11">Text and file digests</FONT>>];
+     same_read [class="gd-choice", shape=diamond, fillcolor="#fff4e6", color="#ca8a04", fontcolor="#854d0e", label=<<B>Digests match?</B><BR/><FONT POINT-SIZE="11">Reading cutoff</FONT>>];
+     reuse [label=<<B>Reuse object</B><BR/><FONT POINT-SIZE="11">Cached DocInfo &amp; .gdo</FONT>>];
+     reread [label=<<B>Read again</B><BR/><FONT POINT-SIZE="11">Parse &amp; collect symbols</FONT>>];
+     object [label=<<B>Object digest</B><BR/><FONT POINT-SIZE="11">Content-addressed AST</FONT>>];
+     same_unit [class="gd-choice", shape=diamond, fillcolor="#fff4e6", color="#ca8a04", fontcolor="#854d0e", label=<<B>Inputs &amp; traces?</B><BR/><FONT POINT-SIZE="11">Writing cutoff</FONT>>];
+     keep [class="gd-output", fillcolor="#eef4fa", label=<<B>Keep the unit</B><BR/><FONT POINT-SIZE="11">Replay diagnostics</FONT>>];
+     write [class="gd-output", fillcolor="#eef4fa", label=<<B>Write the unit</B><BR/><FONT POINT-SIZE="11">Render &amp; stage output</FONT>>];
 
      source -> same_read;
      same_read -> reuse [label="yes"];
@@ -137,6 +137,8 @@ environment, without parsing it, when all of these hold:
   cannot be read counts as changed;
 * its object file is still in the doctrees folder.
 
+Before ``read_documents`` checks the previous environment, both ``previous.docs`` and ``previous.ineligible_docs`` are indexed by docname. When the build finishes reading, the publication clock filter partitions ``env.docs`` against the build's ``now`` instant (unless ``--preview`` is active): eligible documents stay in ``env.docs`` for resolution and writing, while documents withheld by ``:draft: true``, a future ``:publish-at:``, or a past ``:expires-at:`` move into ``env.ineligible_docs``. Because ``ineligible_docs`` is saved in ``environment.json`` and its ``.gdo`` objects are preserved by the object-store sweep, a subsequent clock-only build (such as advancing ``--now=RFC3339`` past a scheduled release or expiry instant) transitions those pages into or out of the active site without reparsing any cached AST.
+
 A document's dependencies are every file it was made from besides its source: included
 files (``included = true``, so a document included by another is part of that page),
 files it quotes (``literalinclude``, ``csv-table``, graphs), the Python, Odin and Rust
@@ -225,6 +227,40 @@ A generated collection page
    Its template and navigation lookups follow the document-page contract.
    Each page owns its path, so a shrinking collection leaves no obsolete tail.
 
+Fine-grained dependency tracking
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+HTML rendering records per-page verifying traces for templates, navigation and article collections. Editing an article's body changes its own document digest and rewrites its page and the full-text search index. Summary-only collections, feeds and sibling articles with unchanged neighbor metadata remain cached. ``postlist`` with ``:excerpts:`` reads explicit summaries, not article bodies.
+
+.. graphviz::
+   :class: graphviz-adaptive
+   :caption: Per-page verifying traces isolate an article body edit from summary collections and unrelated pages.
+   :alt: Editing posts/a.rst changes its DocAst and rewrites posts/a.html, while LookupKind::Postlist (summary metadata), LookupKind::Navigation (prev/next titles and URLs) and LookupKind::Template answers stay unchanged, keeping blog/index.html and posts/b.html.
+
+   digraph fine_grained_traces {
+     graph [rankdir=LR, bgcolor="transparent", pad="0.3", nodesep="0.35", ranksep="0.45"];
+     node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
+           color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=12, margin="0.15,0.08"];
+     edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=10];
+
+     edit [class="gd-input", shape=note, fillcolor="#fbfaf3", label=<<B>Edit posts/a.rst body</B><BR/><FONT POINT-SIZE="11">Title &amp; PageMeta unchanged</FONT>>];
+     ast_a [class="gd-choice", fillcolor="#fff4e6", color="#ca8a04", fontcolor="#854d0e", label=<<B>DocAst (posts/a)</B><BR/><FONT POINT-SIZE="11">Object digest changed</FONT>>];
+     postlist [label=<<B>LookupKind::Postlist</B><BR/><FONT POINT-SIZE="11">Docnames, titles, PageMeta</FONT>>];
+     nav [label=<<B>LookupKind::Navigation</B><BR/><FONT POINT-SIZE="11">ctx, pathto, toctree, tree</FONT>>];
+     tmpl [label=<<B>LookupKind::Template</B><BR/><FONT POINT-SIZE="11">article.html &amp; layout.html</FONT>>];
+
+     page_a [class="gd-output", fillcolor="#eef4fa", label=<<B>Write posts/a.html</B><BR/><FONT POINT-SIZE="11">Unit inputs changed</FONT>>];
+     coll [class="gd-output", fillcolor="#eef4fa", label=<<B>Keep blog/index.html</B><BR/><FONT POINT-SIZE="11">Summary trace unchanged</FONT>>];
+     page_b [class="gd-output", fillcolor="#eef4fa", label=<<B>Keep posts/b.html</B><BR/><FONT POINT-SIZE="11">Neighbor &amp; template traces match</FONT>>];
+
+     edit -> ast_a [label="re-parsed"];
+     edit -> postlist [style=dashed, label="same answer"];
+     edit -> nav [style=dashed, label="same answer"];
+     ast_a -> page_a;
+     {postlist tmpl} -> coll;
+     {nav tmpl} -> page_b;
+   }
+
 Lookups and their answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -248,17 +284,30 @@ A page notes each lookup once (``gd_env::Trace``); the answer's digest covers:
 ``Cpp``
    The digest of every C++ declaration.
 ``Template``
-   The effective source for a template name, including missing optional includes and project overrides.
+   Every template name requested while rendering the page (collected via
+   ``gd_jinja::Environment::take_template_loads``, including cached templates, transitive
+   ``extends``/``include``/``import`` loads, and missing ``ignore missing`` probes). The
+   answer hashes whether the confined template loader found the name and the effective
+   source text (from ``templates_path``, the verified ``_themes/<tree-sha256>/`` tree, or
+   ``gd-theme``).
 ``Postlist``
-   The complete encoded filter query, then selected docnames, titles and publication metadata in stable date order.
+   The complete JSON-encoded ``PostlistSpec`` query (``path``, ``category``, ``tags``, ``author``, ``series``, ``year``, ``limit``, ``ascending``, ``excerpts``), answered by hashing selected docnames, titles and ``PageMeta`` fields in stable date order.
 ``Navigation``
-   Actual reads of navigation context and actual calls to ``hasdoc``, ``pathto`` and ``toctree``.
-   Answers hash the existence, resolved URL or selected navigation at the requested depth.
-   Body toctrees hash their items, stable docnames, titles, numbers and child boundaries.
-   Article context depends on its chronological neighbors; their order is computed once per build.
+   Only the navigation keys the page and its template actually read:
+
+   * ``ctx\0<key>``: context dictionary reads for ``toc``, ``outline``, ``prev``, ``next``, ``parents``, ``rellinks`` and ``root_url``;
+   * ``page\0older`` and ``page\0newer``: only the chronological neighbor fields read from the inner ``page`` dictionary, using an ``ArticleIndex`` computed once per build. Reading ``page.meta.date`` alone adds no neighbor dependency. Existing ``ctx\0page`` records retain their conservative two-neighbor answer until rerendered;
+   * ``hasdoc\0<docname>``: whether ``docname`` exists in the eligible environment;
+   * ``pathto\0<resource>\0<target>``: the resolved relative URL for ``pathto``;
+   * ``toctree\0<maxdepth>/<collapse>/<titles_only>/<include_hidden>``: the rendered
+     sidebar HTML for the requested options;
+   * ``tree\0<index>``: a body ``.. toctree::`` directive's resolved ``NavItem`` tree
+     (stable docnames, anchors, URLs, titles, section numbers, and child boundaries).
 ``Mount``
-   A public website-relative file addressed by a cross-mount link.
-   Mounted builds record it, and whole-site assembly requires that file in the current output generation.
+   A website-relative file path addressed by a cross-mount link (such as
+   ``/manual/index.html``). Recorded in the page's trace so ``guidedog ssg build`` can
+   verify that the target file exists in the assembled output generation before
+   committing.
 
 Publication
 -----------

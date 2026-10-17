@@ -142,6 +142,10 @@ Directives
      - class, name
      - done
      - ``todo_follows_todo_include_todos``
+   * - postlist (optional limit argument)
+     - path, category, tags, author, series, year, sort (``date`` | ``-date``), style (``list`` | ``cards``), excerpts
+     - done
+     - ``body_edits_and_unused_templates_leave_other_pages_cached``
    * - graphviz, graph, digraph
      - alt, align, caption, layout, graphviz_dot, name, class; file argument
      - done

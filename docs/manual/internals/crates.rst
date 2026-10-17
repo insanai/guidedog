@@ -82,15 +82,15 @@ The engine crates use only the standard library, so they embed wherever Rust com
            color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=12, margin="0.15,0.08"];
      edge [color="#216553", arrowsize=0.7];
 
-     defaults [label=<<B>guidedoc-defaults</B><BR/><FONT POINT-SIZE="11">every reader and renderer</FONT>>];
-     sphinx [label="guidedoc-sphinx"];
-     rst [label="guidedoc-rst"];
-     inline [label="guidedoc-rst-inline"];
-     commonmark [label="guidedoc-commonmark"];
-     cpp [label="guidedoc-cpp"];
+     defaults [class="gd-output", fillcolor="#eef4fa", label=<<B>guidedoc-defaults</B><BR/><FONT POINT-SIZE="11">Every reader and renderer</FONT>>];
+     sphinx [label=<<B>guidedoc-sphinx</B><BR/><FONT POINT-SIZE="11">Directives, roles, domains</FONT>>];
+     rst [label=<<B>guidedoc-rst</B><BR/><FONT POINT-SIZE="11">Docutils blocks &amp; directives</FONT>>];
+     inline [label=<<B>guidedoc-rst-inline</B><BR/><FONT POINT-SIZE="11">Inline markup &amp; references</FONT>>];
+     commonmark [label=<<B>guidedoc-commonmark</B><BR/><FONT POINT-SIZE="11">CommonMark 0.31.2 &amp; MyST</FONT>>];
+     cpp [label=<<B>guidedoc-cpp</B><BR/><FONT POINT-SIZE="11">C++ declaration parser</FONT>>];
      renderers [label=<<B>renderers</B><BR/><FONT POINT-SIZE="11">html, typst, text, rst-writer</FONT>>];
-     highlight [class="gd-input", label="gd-highlight", fillcolor="#fbfaf3"];
-     guidedoc [label=<<B>guidedoc</B><BR/><FONT POINT-SIZE="11">AST, workspace, registry</FONT>>];
+     highlight [class="gd-input", fillcolor="#fbfaf3", label=<<B>gd-highlight</B><BR/><FONT POINT-SIZE="11">Pygments tokens &amp; styles</FONT>>];
+     guidedoc [class="gd-input", fillcolor="#fbfaf3", label=<<B>guidedoc</B><BR/><FONT POINT-SIZE="11">AST, workspace, registry</FONT>>];
 
      defaults -> {sphinx rst commonmark renderers highlight};
      sphinx -> {rst inline commonmark cpp};
@@ -155,19 +155,19 @@ Plugin SDK
            color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=12, margin="0.15,0.08"];
      edge [color="#216553", arrowsize=0.7];
 
-     plugins [label=<<B>gd-plugins</B><BR/><FONT POINT-SIZE="11">plugin SDK</FONT>>];
-     toml [label="gd-toml"];
-     json [label="gd-json"];
-     sha [label="gd-sha"];
-     graphdog [label="gd-graphdog"];
-     inventory [label="gd-inventory"];
-     flate [label="gd-flate"];
-     report [label=<<B>gd-report</B><BR/><FONT POINT-SIZE="11">Elm-style reports</FONT>>];
-     autodoc [label="gd-autodoc"];
-     pyscan [label="gd-pyscan"];
-     rustdoc [label="gd-rustdoc"];
-     serde [class="gd-input", shape=note, label="serde_json, serde", fillcolor="#fbfaf3"];
-     treesitter [class="gd-input", shape=note, label="tree-sitter + grammars", fillcolor="#fbfaf3"];
+     plugins [class="gd-plugin", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e", label=<<B>gd-plugins</B><BR/><FONT POINT-SIZE="11">Plugin SDK &amp; protocol</FONT>>];
+     toml [label=<<B>gd-toml</B><BR/><FONT POINT-SIZE="11">TOML 1.0 parser</FONT>>];
+     json [label=<<B>gd-json</B><BR/><FONT POINT-SIZE="11">Checked JSON</FONT>>];
+     sha [label=<<B>gd-sha</B><BR/><FONT POINT-SIZE="11">SHA-256, SHA-1, FNV-1a</FONT>>];
+     graphdog [label=<<B>gd-graphdog</B><BR/><FONT POINT-SIZE="11">Graphviz C bindings</FONT>>];
+     inventory [label=<<B>gd-inventory</B><BR/><FONT POINT-SIZE="11">Sphinx objects.inv</FONT>>];
+     flate [label=<<B>gd-flate</B><BR/><FONT POINT-SIZE="11">Bounded DEFLATE / zlib</FONT>>];
+     report [class="gd-output", fillcolor="#eef4fa", label=<<B>gd-report</B><BR/><FONT POINT-SIZE="11">Elm-style reports</FONT>>];
+     autodoc [label=<<B>gd-autodoc</B><BR/><FONT POINT-SIZE="11">Python autodoc RST</FONT>>];
+     pyscan [label=<<B>gd-pyscan</B><BR/><FONT POINT-SIZE="11">Python static analysis</FONT>>];
+     rustdoc [label=<<B>gd-rustdoc</B><BR/><FONT POINT-SIZE="11">Rust crate scanner</FONT>>];
+     serde [class="gd-input", shape=note, fillcolor="#fbfaf3", label=<<B>serde_json, serde</B><BR/><FONT POINT-SIZE="11">External JSON runtime</FONT>>];
+     treesitter [class="gd-input", shape=note, fillcolor="#fbfaf3", label=<<B>tree-sitter + grammars</B><BR/><FONT POINT-SIZE="11">External syntax parsers</FONT>>];
 
      plugins -> {toml json sha report};
      {toml json graphdog} -> report;
@@ -188,9 +188,13 @@ Every other package is internal:
 - the command line and its services: ``gd-cli``, ``gd-theme``, ``gd-discussion``, ``gd-ssg``, ``gd-fetch``, ``gd-git``, ``gd-typst`` and ``gd-clock``;
 - the programs under ``cmd/``, the tools under ``tools/``, the examples under ``examples/`` and the end-to-end tests under ``tests/integration``.
 
+``gd-theme`` embeds the built-in HTML and Typst templates (``layout.html``, ``article.html``, ``landing.html``, ``book.typ``, ``discussion.typ``, ``article.typ``, ``theme.typ``) and the browser assets (``guidedog.css``, ``guidedog.js``) so that ``quickstart``, ``gd-site`` and ``gd-book`` share one source without a runtime data folder. Its ``pack`` module encodes, decodes, and verifies deterministic ``.gdt`` theme archives and ``guidedog-theme.lock`` files offline.
+
+``gd-ssg`` implements the linked ``guidedog ssg`` plugin and authoring surface: site presets (``project``, ``journal``, ``research``), surgical front-matter and field-list transitions (``new``, ``draft``, ``schedule``, ``publish``, ``status``), explicit SHA-256-pinned ``.gdt`` theme installation, and multi-project ``[[site.mounts]]`` website assembly (``guidedog ssg build``). It owns no renderer; mounted builds run through the standard Guidedog project pipeline.
+
 ``gd-typst`` embeds the Typst compiler. Keeping it internal keeps Typst's large dependency tree out of every reusable crate: ``guidedoc-typst`` writes Typst source as text, and only the program compiles it.
 
-``gd-fetch`` reads URLs and files and sends HTTP requests for remote intersphinx inventories and the Pages publisher. It uses ``ureq``, a small blocking HTTP client, with ``rustls`` for TLS and Mozilla's root certificates built in (``webpki-roots``). Guidedog therefore needs no ``curl`` program, OpenSSL or system certificate store, and request headers never appear on a command line. The crate stays internal, so the reusable crates do not carry an HTTP stack.
+``gd-fetch`` reads URLs and files and sends HTTP requests for remote intersphinx inventories, pinned ``.gdt`` theme archives and the Pages publisher. It uses ``ureq``, a small blocking HTTP client, with ``rustls`` for TLS and Mozilla's root certificates built in (``webpki-roots``). Guidedog therefore needs no ``curl`` program, OpenSSL or system certificate store, and request headers never appear on a command line. The crate stays internal, so the reusable crates do not carry an HTTP stack.
 
 ``gd-clock`` gives the program one answer to "what time is it?". A build stamps its output with ``SOURCE_DATE_EPOCH`` when reproducible builds set it, and with the clock otherwise. The crate turns Unix seconds into civil dates with plain arithmetic and asks the operating system only for the local time zone's offset from UTC. That offset is the crate's one piece of unsafe code (``localtime_r`` on Unix, ``SystemTimeToTzSpecificLocalTime`` on Windows), so the rest of the program needs none for dates. The plugin SDK ``gd-plugins`` is reusable and cannot depend on it; it keeps its own few lines of date arithmetic.
 

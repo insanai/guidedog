@@ -72,7 +72,7 @@ Running
 Dispatch in ``gd-cli``
    ``extensions(&linked, machine)`` lists the commands of the linked plugins, then those of the registered programs (the machine registry is read only when the command line may name one). A name guidedog already has is skipped, except targets of ``publish``; an earlier plugin wins a name. The parser matches the longest path against the command line's words, skipping the values of options (guidedog's and every declared option that takes a value), so ``publish --config pages.toml`` never names a target ``pages.toml``. ``--help`` on a contributed command prints help made from its declaration, without running the plugin. ``guidedog --help`` lists the commands under PLUGIN COMMANDS with their plugin IDs, ``guidedog publish --help`` lists the targets, and "Did you mean" draws on both guidedog's commands and the plugins'. ``guidedog plugin inspect ID`` shows the commands a plugin adds.
 
-Which plugins are linked is the program's decision, not the command line's: ``cmd/guidedog`` passes ``Registry::new(vec![gd_pages::plugin(), gd_discussion::plugin()])`` to ``gd_cli::run_status``, and ``gd-cli`` depends only on ``gd-plugins``. The dependency gate holds that rule.
+Which plugins are linked is the program's decision, not the command line's: ``cmd/guidedog`` passes ``Registry::new(vec![gd_pages::plugin(), gd_discussion::plugin(), gd_ssg::plugin()])`` to ``gd_cli::run_status``, and ``gd-cli`` depends only on ``gd-plugins``. The dependency gate holds that rule.
 
 Identity and cache keys
 ~~~~~~~~~~~~~~~~~~~~~~~

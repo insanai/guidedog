@@ -8,6 +8,13 @@ Beta.6 is withheld until the complete implementation and release qualification p
 Review corrections
 ------------------
 
+On 17 October 2026 a follow-up review reproduced and corrected four edge cases.
+Standalone article PDFs now share the book and discussion paper-size normalization, with a real ``letter`` PDF regression.
+Inner ``page`` dictionary tracing distinguishes metadata-only templates, individual chronological neighbors, aliases and whole-dictionary rendering during clock-only publication changes.
+Installed theme trees are applied before final configuration checks, and their digest is included in settings with and without command-line overrides, including static-only themes.
+Metadata insertion follows the first line ending, preserving leading CRLF padding and later mixed-ending body examples byte for byte.
+The documentation review also corrected unsupported template fields and postlist options, the article template function signature and publication transition descriptions.
+
 We retain the existing ``conf.toml`` model, ``gd-jinja`` renderer, explicit environment records and output journal.
 We do not add a competing configuration format or a second rendering pipeline.
 Publication filtering precedes resolution, navigation, search, source downloads and discovery output.

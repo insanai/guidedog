@@ -665,8 +665,18 @@ Other Sphinx constructs use existing kinds:
    text when there is no Caption.
 -  ``seealso``: Admonition{Seealso}; ``todo``: Admonition{Todo}; ``todolist``,
    ``sectionauthor``, ``moduleauthor``, ``codeauthor``: Directive{Name} with ``author``;
+   ``postlist``: Directive{Name ``"postlist"``} with Custom ``limit`` (the optional
+   argument), ``path``, ``category``, ``tags``, ``author``, ``series``, ``year``, ``sort``,
+   ``style``, and ``excerpts`` = ``"1"``;
    ``centered``: Paragraph with class ``centered``; ``tabularcolumns``, ``highlight``,
    ``default-domain``, ``currentmodule``: reader state only.
+-  Leading publication metadata (``PageMeta``): when the document's first child is a root
+   ``FieldList`` (an RST bibliographic field list or MyST YAML front matter), ``gd-read``
+   extracts ``page_metadata`` (``template``, ``date``, ``updated``, ``publish-at``,
+   ``expires-at``, ``draft``, ``author``, ``authors``, ``tags``, ``category``, ``series``,
+   ``summary``, ``pdf``, ``nosidebar``) into ``DocInfo::page``, and ``gd-link`` consumes
+   those publication fields (``gd_env::publication_field``) from the leading ``FieldList``
+   so they do not render as body fields.
 -  ``math`` with ``:label:``: MathBlock with Id ``equation-<label>``; ``:nowrap:`` gives
    ``nowrap``.
 -  Info fields: a FieldList directly in a DescContent is rebuilt as Sphinx's
@@ -695,6 +705,8 @@ Other Sphinx constructs use existing kinds:
    Title. ``index``: Index then the text.
 -  *host*: Section ``secnumber`` ("1.2"); Figure, Table, CodeBlock, MathBlock ``number`` and
    ``number-label`` ("Fig. 1.2"); Directive{todolist} is replaced by the collected todos;
+   Directive{postlist} is replaced by the rendered chronological article list or cards and
+   records a ``LookupKind::Postlist`` trace;
    in HTML, a drawn graph whose nodes link (an inheritance diagram) is an Image with
    ``interactive`` = "1", which HTML writes as an ``object`` element, and a DescSignature
    with ``[source]`` links (viewcode, linkcode) ends with Links of class ``viewcode-link``.

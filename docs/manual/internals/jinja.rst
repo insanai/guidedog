@@ -68,6 +68,8 @@ function looked up becomes a ``CallKind::Local`` callable tagged with the render
 finds its closure again by name when called. A copy kept past its render is refused, just
 as a macro kept past its render is. "Did you mean" hints include the locals' names.
 
+``Environment::load_compiled`` records every requested template name before consulting the parsed-template cache or loader. ``Environment::take_template_loads`` returns those names in sorted order and clears the set. This includes cached templates, transitive ``extends``, ``include`` and ``import`` loads, and missing ``ignore missing`` probes. ``gd-site`` records their effective source digests as per-page ``LookupKind::Template`` dependencies.
+
 Limits and the stack
 --------------------
 

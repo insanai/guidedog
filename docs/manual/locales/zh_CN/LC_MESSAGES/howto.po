@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:14+0000\n"
+"POT-Creation-Date: 2026-10-17 14:33+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -491,7 +491,9 @@ msgid ""
 "while typesetting elegant, print-quality PDF books. This guide covers how "
 "to route content to specific output formats, declare custom domain "
 "directives, and invoke Typst typesetting functions."
-msgstr "单个源码树既能在 Web 上发布富媒体动态 HTML 页面，又能排版出优雅且具备印刷品质的 PDF 图书。本指南介绍如何将内容路由到特定输出格式、声明自定义领域指令以及调用 Typst 排版函数。"
+msgstr ""
+"单个源码树既能在 Web 上发布富媒体动态 HTML 页面，又能排版出优雅且具备印刷品质的 PDF "
+"图书。本指南介绍如何将内容路由到特定输出格式、声明自定义领域指令以及调用 Typst 排版函数。"
 
 #: ../../howto/format-specific-content.rst:10
 msgid ""
@@ -512,14 +514,18 @@ msgid ""
 "Use ``.. only:: html`` paired with a ``.. raw:: html`` block to inject "
 "web-specific markup, interactive calculators, or embedded audio/video "
 "components:"
-msgstr "使用 ``.. only:: html`` 与 ``.. raw:: html`` 组合块来注入 Web 专用标记、交互式计算器或内嵌音视频组件："
+msgstr ""
+"使用 ``.. only:: html`` 与 ``.. raw:: html`` 组合块来注入 Web 专用标记、交互式计算器或内嵌音视频组件："
 
 #: ../../howto/format-specific-content.rst:60
 msgid ""
 "To supply the supporting CSS and JavaScript: 1. Place your script and "
 "stylesheet in ``_static/`` (e.g. ``_static/interactive.js`` and "
 "``_static/interactive.css``). 2. Register them in ``conf.toml``:"
-msgstr "要提供配套的 CSS 和 JavaScript：1. 将脚本和样式表放入 ``_static/``（例如 ``_static/interactive.js`` 和 ``_static/interactive.css``）。2. 在 ``conf.toml`` 中注册它们："
+msgstr ""
+"要提供配套的 CSS 和 JavaScript：1. 将脚本和样式表放入 ``_static/``（例如 "
+"``_static/interactive.js`` 和 ``_static/interactive.css``）。2. 在 "
+"``conf.toml`` 中注册它们："
 
 #: ../../howto/format-specific-content.rst:69
 msgid ""
@@ -534,97 +540,150 @@ msgstr "2. 为 PDF 排版自定义 Typst 格式"
 #: ../../howto/format-specific-content.rst:75
 msgid ""
 "To introduce vector shapes, tailored callout boxes, or custom typography "
-"for printed pages, wrap the markup in ``.. only:: typst or latex`` (or "
-"``.. only:: pdf``):"
-msgstr "要在印刷页面中引入矢量图形、定制标注框或特殊排版效果，请将标记包裹在 ``.. only:: typst or latex``（或 ``.. only:: pdf``）中："
+"for printed pages, wrap the markup in ``.. only:: pdf``:"
+msgstr "要在印刷页面中引入矢量图形、定制标注框或特殊排版效果，请将标记包裹在 ``.. only:: pdf`` 中："
 
 #: ../../howto/format-specific-content.rst:95
 msgid ""
 "Guidedog emits this block directly into the Typst document before "
 "invoking the Typst compiler. The HTML builder automatically omits this "
 "block without emitting warnings."
-msgstr "Guidedog 会在调用 Typst 编译器之前直接将该块输出到 Typst 文档中。HTML 构建器会自动忽略此块且不产生任何警告。"
+msgstr ""
+"Guidedog 会在调用 Typst 编译器之前直接将该块输出到 Typst 文档中。HTML 构建器会自动忽略此块且不产生任何警告。"
 
-#: ../../howto/format-specific-content.rst:98
+#: ../../howto/format-specific-content.rst:100
+msgid "**Why Typst and not LaTeX?**"
+msgstr "**为什么选择 Typst 而非 LaTeX？**"
+
+#: ../../howto/format-specific-content.rst:102
+msgid ""
+"Guidedog generates PDF books through native `Typst "
+"<https://typst.app/>`_, not TeX or LaTeX. Raw blocks are passed verbatim "
+"to the target rendering engine:"
+msgstr ""
+"Guidedog 通过原生 `Typst <https://typst.app/>`_ 而非 TeX 或 LaTeX 生成 PDF "
+"图书。原生代码块会逐字原样传递给目标渲染引擎："
+
+#: ../../howto/format-specific-content.rst:105
+msgid ""
+"**Raw Typst** (``.. raw:: typst``): Rendered directly by the Typst "
+"compiler in PDF builds."
+msgstr "**原生 Typst** (``.. raw:: typst``)：在 PDF 构建中直接由 Typst 编译器渲染。"
+
+#: ../../howto/format-specific-content.rst:106
+msgid ""
+"**Raw LaTeX** (``.. raw:: latex``): Not supported in PDF builds. Guidedog "
+"reports a ``typst.raw.foreign`` warning and omits the content because "
+"Typst cannot execute LaTeX commands."
+msgstr ""
+"**原生 LaTeX** (``.. raw:: latex``)：在 PDF 构建中不受支持。因为 Typst 无法执行 LaTeX "
+"命令，Guidedog 会报告 ``typst.raw.foreign`` 警告并忽略该内容。"
+
+#: ../../howto/format-specific-content.rst:108
+msgid ""
+"**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. Guidedog "
+"includes a built-in mathematical translator that converts standard LaTeX "
+"equation syntax into native Typst math expressions at compile time."
+msgstr ""
+"**LaTeX 数学公式** (``.. math::`` 和 ``:math:``)：完全支持。Guidedog "
+"包含内置数学转换器，可在编译期间将标准 LaTeX 方程语法转换为原生 Typst 数学表达式。"
+
+#: ../../howto/format-specific-content.rst:111
+msgid ""
+"**The ``latex`` tag in ``.. only::``**: For backward compatibility with "
+"legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias for PDF "
+"builds in ``.. only::`` expressions. In native Guidedog projects, prefer "
+"``.. only:: pdf``."
+msgstr ""
+"**``.. only::`` 中的 ``latex`` 标签**：为了向后兼容传统的 Sphinx 项目，Guidedog 在 ``.. "
+"only::`` 表达式中将 ``latex`` 识别为 PDF 构建的别名。在原生 Guidedog 项目中，请优先使用 ``.. "
+"only:: pdf``。"
+
+#: ../../howto/format-specific-content.rst:115
 msgid "3. Declare custom domain directives in conf.toml"
 msgstr "3. 在 conf.toml 中声明自定义领域指令"
 
-#: ../../howto/format-specific-content.rst:101
+#: ../../howto/format-specific-content.rst:118
 msgid ""
 "When you need custom structured blocks with signature parsing, "
 "cross-references, and index entries, declare them in ``conf.toml`` under "
 "``[[object_types]]``:"
-msgstr "当需要具备签名解析、交叉引用和索引项的自定义结构化块时，请在 ``conf.toml`` 的 ``[[object_types]]`` 下进行声明："
+msgstr ""
+"当需要具备签名解析、交叉引用和索引项的自定义结构化块时，请在 ``conf.toml`` 的 ``[[object_types]]`` 下进行声明："
 
-#: ../../howto/format-specific-content.rst:113
+#: ../../howto/format-specific-content.rst:130
 msgid "Now authors can describe services across all documents:"
 msgstr "现在作者可以在所有文档中描述服务："
 
-#: ../../howto/format-specific-content.rst:121
+#: ../../howto/format-specific-content.rst:138
 msgid ""
 "Other documents can link directly to this service using the declared role:"
 msgstr "其他文档可以使用声明的角色直接链接到此服务："
 
-#: ../../howto/format-specific-content.rst:127
+#: ../../howto/format-specific-content.rst:144
 msgid ""
 "In HTML, Guidedog produces semantic definition tags (``<dl "
 "class=\"service\">``) with automatic anchor links. In PDF, Guidedog "
 "typesets a styled description entry and records an index entry in the "
 "book's index."
-msgstr "在 HTML 中，Guidedog 生成带有自动锚点链接的语义定义标签（``<dl class=\"service\">``）。在 PDF 中，Guidedog 排版带样式的描述条目并在图书索引中登记条目。"
+msgstr ""
+"在 HTML 中，Guidedog 生成带有自动锚点链接的语义定义标签（``<dl class=\"service\">``）。在 PDF "
+"中，Guidedog 排版带样式的描述条目并在图书索引中登记条目。"
 
-#: ../../howto/format-specific-content.rst:130
+#: ../../howto/format-specific-content.rst:147
 msgid "4. Alias existing directives"
 msgstr "4. 为已有指令设置别名"
 
-#: ../../howto/format-specific-content.rst:133
+#: ../../howto/format-specific-content.rst:150
 msgid ""
 "If you are migrating documentation or want friendlier names for built-in "
 "directives, declare aliases in ``[directive_aliases]`` in ``conf.toml``:"
-msgstr "如果正在迁移文档，或者希望为内置指令提供更友好的名称，可以在 ``conf.toml`` 的 ``[directive_aliases]`` 中声明别名："
+msgstr ""
+"如果正在迁移文档，或者希望为内置指令提供更友好的名称，可以在 ``conf.toml`` 的 ``[directive_aliases]`` "
+"中声明别名："
 
-#: ../../howto/format-specific-content.rst:142
+#: ../../howto/format-specific-content.rst:159
 msgid ""
 "Authors can then use ``.. callout::`` or ``.. endpoint::`` using the "
 "options and rules of the target directive."
 msgstr "作者随后即可按照目标指令的选项和规则使用 ``.. callout::`` 或 ``.. endpoint::``。"
 
-#: ../../howto/format-specific-content.rst:144
+#: ../../howto/format-specific-content.rst:161
 msgid "5. Call reusable Typst functions from templates"
 msgstr "5. 从模板调用可复用的 Typst 函数"
 
-#: ../../howto/format-specific-content.rst:147
+#: ../../howto/format-specific-content.rst:164
 msgid ""
 "Instead of writing verbose Typst code inline across multiple documents, "
 "define a reusable function in ``_templates/theme.typ``:"
 msgstr "无需在多篇文档中重复内联繁冗的 Typst 代码，可以在 ``_templates/theme.typ`` 中定义可复用函数："
 
-#: ../../howto/format-specific-content.rst:164
+#: ../../howto/format-specific-content.rst:181
 msgid "Call it concisely from reStructuredText:"
 msgstr "在 reStructuredText 中简洁地调用它："
 
-#: ../../howto/format-specific-content.rst:174
+#: ../../howto/format-specific-content.rst:191
 msgid "6. Advanced: Preprocessing directives with a build plugin"
 msgstr "6. 高级用法：使用构建插件预处理指令"
 
-#: ../../howto/format-specific-content.rst:177
+#: ../../howto/format-specific-content.rst:194
 msgid ""
 "When you want to invent a completely custom directive syntax and expand "
 "it dynamically during build time, implement a ``gd_plugins::BuildPlugin`` "
 "in Rust."
 msgstr "若想创造一套完全自定义的指令语法并在构建时动态展开，可用 Rust 实现一个 ``gd_plugins::BuildPlugin``。"
 
-#: ../../howto/format-specific-content.rst:180
+#: ../../howto/format-specific-content.rst:197
 msgid ""
 "The plugin implements ``process_source``, intercepting the raw document "
 "text before parsing:"
 msgstr "插件实现 ``process_source``，在解析前拦截原始文档文本："
 
-#: ../../howto/format-specific-content.rst:214
+#: ../../howto/format-specific-content.rst:231
 msgid "Register the compiled plugin using:"
 msgstr "使用以下命令注册编译好的插件："
 
-#: ../../howto/format-specific-content.rst:220
+#: ../../howto/format-specific-content.rst:237
 msgid ""
 "Guidedog verifies the plugin's SHA-256 fingerprint, starts it per build, "
 "and forwards document sources through its pipeline."

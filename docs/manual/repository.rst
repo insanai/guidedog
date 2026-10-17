@@ -131,6 +131,22 @@ design records use ``gds``, and another project might use ``eds``.
 A catalog's ``discussion.toml`` sets its lifecycle states, record types, and numbering.
 ``guidedog dsc config`` prints it. The commands come from the discussion plugin, which every ``guidedog`` links, so nothing else needs to be installed. Guidedog's own ``docs/gds`` is one such catalog: we run ``guidedog dsc check`` in that folder. See :doc:`Keep a discussion catalog <howto/discussions>`.
 
+Publish static sites
+--------------------
+
+``guidedog ssg`` manages articles, research logs, collections, feeds, pinned theme archives, and multi-project websites from the same ``conf.toml`` and document tree:
+
+.. code:: sh
+
+   guidedog ssg init site --preset=journal --title="Field Notes"
+   cd site
+   guidedog ssg new posts/2026-04-17-zero-copy.rst --title="Zero-Copy Readers"
+   guidedog ssg schedule posts/2026-04-17-zero-copy.rst --at=2026-05-01T09:00:00Z
+   guidedog ssg publish posts/2026-04-17-zero-copy.rst
+   guidedog ssg build
+
+Pages marked with ``:pdf: article`` also build standalone print-quality PDFs alongside their HTML pages. Multi-project websites mount sub-projects (such as ``docs/manual``, ``docs/api``, and ``docs/gds``) declaratively through ``[[site.mounts]]``. See :doc:`Static site publishing <howto/static-publishing>`.
+
 Read and embed
 --------------
 

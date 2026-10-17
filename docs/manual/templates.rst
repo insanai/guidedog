@@ -12,40 +12,40 @@ Templates in Guidedog are ordinary project files. We can see them and edit them.
 When we start a project with ``guidedog quickstart``, it writes the working
 templates into our project:
 
-* ``_templates/layout.html`` defines the HTML website structure (Jinja).
+* ``_templates/layout.html`` defines the base HTML website structure (Jinja), while built-in ``article.html``, ``collection.html``, and ``landing.html`` extend it for articles, archives, and landing pages.
 * ``_templates/theme.typ`` defines the shared PDF palette, fonts and language-aware content wrapper.
 * ``_templates/discussion.typ`` defines the discussion record layout (Typst).
+* ``_templates/article.typ`` defines the standalone print-quality article layout for pages with ``:pdf: article`` (Typst).
 * ``_templates/book.typ`` defines the PDF book layout, typography, and cover page (Typst).
 * ``_static/guidedog.css`` and ``_static/guidedog.js`` supply default styles and client behaviors.
 
-Templates live in the project directory. They are not hidden in an external
-package or binary cache. We edit them directly, rebuild with ``guidedog build``,
-and preview changes with ``guidedog serve``.
+Templates live in the project directory or in a content-addressed pinned theme archive. They are not hidden in an external package or binary cache. We edit them directly, rebuild with ``guidedog build``, and preview changes with ``guidedog serve``.
 
 HTML templates
 --------------
 
-Guidedog renders ``layout.html`` as the root page template using a built-in Jinja engine.
-Split a layout into partials and macro libraries. Inherit shared blocks from a base
-layout. Each file then has one job.
+Guidedog renders ``layout.html`` (or a page's selected ``:template:`` such as ``article.html`` or ``landing.html``) using its built-in Jinja engine. Split a layout into partials and macro libraries. Inherit shared blocks from a base layout. Each file then has one job.
 
 .. graphviz::
    :class: graphviz-adaptive
-   :caption: Template inheritance and block composition in Guidedog.
-   :alt: Built-in theme layout is extended by project templates with block overrides and partial includes.
+   :caption: Three-tier template lookup, inheritance, and block composition in Guidedog.
+   :alt: Project templates override pinned theme archives and built-in layouts, composing partials and macros into complete HTML pages.
 
    digraph template_inheritance {
      graph [rankdir=TB, bgcolor="transparent", pad="0.22", nodesep="0.3", ranksep="0.35"];
      node [shape=box, style="rounded,filled", fillcolor="#edf5f2", color="#216553",
            fontname="Helvetica", fontcolor="#16382f", fontsize=12, margin="0.18,0.1"];
      edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=10, arrowsize=0.7];
-     builtin [label=<<B>Built-in layout</B><BR/><FONT POINT-SIZE="11">!layout.html</FONT>>];
-     layout [label=<<B>Project layout.html</B><BR/><FONT POINT-SIZE="11">Override named blocks</FONT>>];
+     builtin [label=<<B>3. Built-in templates</B><BR/><FONT POINT-SIZE="11">!layout.html, article.html,<BR/>collection.html, landing.html</FONT>>];
+     theme [class="gd-plugin", style="rounded,dashed,filled", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e",
+            label=<<B>2. Pinned theme archive</B><BR/><FONT POINT-SIZE="11">_themes/&lt;tree-sha256&gt;/_templates</FONT>>];
+     layout [label=<<B>1. Project _templates/</B><BR/><FONT POINT-SIZE="11">Override templates and blocks</FONT>>];
      parts [class="gd-input", shape=note, fillcolor="#fbfaf3",
             label=<<B>Reusable components</B><BR/><FONT POINT-SIZE="11">include partials<BR/>import macros</FONT>>];
      page [class="gd-output", fillcolor="#eef4fa",
-           label=<<B>Complete HTML page</B><BR/><FONT POINT-SIZE="11">Content + navigation + assets</FONT>>];
-     builtin -> layout [label="extends"];
+           label=<<B>Complete HTML page</B><BR/><FONT POINT-SIZE="11">Traced per-page dependencies</FONT>>];
+     builtin -> theme [label="fallback"];
+     theme -> layout [label="extends / overrides"];
      layout -> parts [label="composes"];
      parts -> page [label="renders"];
    }
@@ -185,13 +185,15 @@ Guidedog's built-in ``layout.html`` defines blocks matching Sphinx's conventions
 Finding templates
 ~~~~~~~~~~~~~~~~~
 
-Guidedog searches each directory listed in ``conf.toml`` under ``templates_path`` in order,
-followed by its built-in templates. Template names are relative to the directories in
-``templates_path``. They cannot escape those directories with parent directory traversal (``..``).
+Guidedog searches three tiers in order:
 
-Every file and subdirectory in ``templates_path`` is an input dependency of the
-build. When a template or partial file is added, edited, or removed, ``guidedog build``
-and the live server ``guidedog serve`` detect the change and render the site again.
+1. Each project directory listed in ``conf.toml`` under ``templates_path`` (by default ``["_templates"]``).
+2. The verified pinned theme directory ``_themes/<tree-sha256>/_templates`` when ``site.theme = true``.
+3. Guidedog's embedded built-in templates (``layout.html``, ``page.html``, ``article.html``, ``collection.html``, ``landing.html``, ``search.html``, ``genindex.html``, ``modindex.html``).
+
+Template names are relative to the template directories. They cannot escape those directories with parent directory traversal (``..``).
+
+During rendering, the Jinja environment records the content digest of every template, parent layout, included partial, and imported macro file that each page loads. When a template or partial file is edited, ``guidedog build`` and ``guidedog serve`` rebuild only the pages whose template chain loaded that file. Editing ``article.html`` rebuilds articles without rebuilding documentation chapters that render ``layout.html`` directly; editing ``layout.html`` rebuilds every page that extends it.
 
 
 Page variables
@@ -222,6 +224,10 @@ carry over.
    * - ``prev``, ``next``
      - The neighbouring pages in reading order, with ``url`` (also ``link``) and
        ``title``; none at either end.
+   * - ``page``
+     - ``page.meta`` contains ``date``, ``updated``, ``publish_at``, ``expires_at``, ``draft``, ``authors``, ``category``, ``tags``, ``series``, ``summary``, ``template``, ``pdf``, ``pdf_url`` and ``nosidebar``. Dated pages also provide ``page.word_count``, ``page.reading_minutes``, ``page.older``, ``page.newer`` and ``page.taxonomies``. Neighbors contain ``title``, ``url`` and ``date``, or are ``None`` at either end. Each enabled taxonomy maps to a list of ``name`` and ``url`` entries.
+   * - ``collection``
+     - Generated archive pages provide ``collection.title``, ``collection.output``, ``collection.page`` (one-based), ``collection.pages``, ``collection.previous_url``, ``collection.next_url`` and ``collection.posts``. Each post contains ``title``, ``docname``, ``date``, ``url``, ``summary`` and ``meta``. Previous and next URLs are relative, or ``None`` at either end. Collection feeds use RSS and Atom.
    * - ``project``, ``version``, ``release``, ``copyright``, ``language``
      - The settings of the same names.
    * - ``html_title``, ``docstitle``
@@ -293,12 +299,7 @@ looks like every other one:
      <p><a href="{{ pathto("tutorial/index") }}">Tutorial</a></p>
    {% endblock %}
 
-The template sees the variables of a page that is no document's: ``pagename`` is the
-page's name (``index``), ``title`` and ``body`` are empty, and ``pathto``, ``toc``,
-``toctree()``, and the values of ``html_context`` work as on any page. The page is
-written at the site's root as ``<name>.html`` (``html_file_suffix``) by ``html``,
-``dirhtml``, and ``singlehtml``, and written again on every build. A change to its
-template, as to any file in ``templates_path``, rebuilds every page.
+The template sees the variables of a page that is no document's: ``pagename`` is the page's name (``index``), ``title`` and ``body`` are empty, and ``pathto``, ``toc``, ``toctree()``, and the values of ``html_context`` work as on any page. The page is written at the site's root as ``<name>.html`` (``html_file_suffix``) by ``html``, ``dirhtml``, and ``singlehtml``, and written again on every build. A change to its template rebuilds that page, and a change to a shared base template rebuilds every page that extends it.
 
 Where the page goes, and where it differs from Sphinx:
 
@@ -354,7 +355,9 @@ that defines a ``book`` function. Guidedog writes the book's source as
 so everything that decides how the book looks is in that file: fonts, page size and
 margins, headings, the title page, running heads, and the table of contents.
 
-Standalone discussion records select ``_templates/discussion.typ`` instead. Its built-in RFC-style layout opens with a metadata panel, state badges, a status note and compact contents. A copied ``book.typ`` does not override this layout. We can customize each kind of PDF independently. :doc:`howto/discussions` describes the discussion template's additional ``record`` parameter.
+Standalone discussion records select ``_templates/discussion.typ`` instead. Its built-in RFC-style layout opens with a metadata panel, state badges, a status note and compact contents.
+
+Standalone articles marked with ``:pdf: article`` select ``_templates/article.typ`` and emit a PDF beside their HTML page. The template defines a ``book`` function accepting ``title``, ``lang``, ``paper``, ``date``, ``updated``, ``category``, ``summary``, ``authors``, ``tags`` and the content body. A copied ``book.typ`` does not override ``discussion.typ`` or ``article.typ``. We can customize each kind of PDF independently. :doc:`howto/discussions` describes the discussion template's additional ``record`` parameter, and :doc:`howto/static-publishing` describes standalone article PDFs.
 
 Parameters
 ~~~~~~~~~~
@@ -394,11 +397,11 @@ cross-references to other pages are followed by their page number.
 Modular Typst templates
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The default book and discussion layouts import ``theme.typ``. It defines ``gd-palette``, the font defaults and ``configure-document(body, ...)``. The wrapper applies its rules to the content it receives. The default palette uses Guidedog teal (``#126d78``), dark ink and light neutral panels. Books use a centered cover and teal chapter openings. Discussion records use metadata panels, state badges, a status note and compact contents.
+The default book, discussion, and article layouts share ``theme.typ``. It defines ``gd-palette``, the font defaults and ``configure-document(body, ...)``. The wrapper applies its rules to the content it receives. The default palette uses Guidedog teal (``#126d78``), dark ink and light neutral panels. Books use a centered cover and teal chapter openings. Discussion records use metadata panels, state badges, a status note and compact contents. Standalone articles use a masthead with authors, publication date, abstract block, and article headings without chapter counters.
 
-``guidedog quickstart`` copies all three PDF files. ``guidedog dsc init`` copies the shared theme and discussion layout. All three are embedded in the executable. Without a project layout, the builder composes a self-contained built-in template; it does not read a project theme. Untrusted builds use that same isolated fallback.
+``guidedog quickstart`` copies ``theme.typ``, ``book.typ``, ``discussion.typ`` and ``article.typ``. ``guidedog dsc init`` copies the shared theme and discussion layout. All four files are embedded in the executable. Without a project layout, the builder composes a self-contained built-in template; it does not read a project theme. Untrusted builds use that same isolated fallback.
 
-We can edit ``theme.typ`` to change both copied layouts together. Changes to files beneath ``_templates/``, including nested imported modules and assets, invalidate cached PDFs. The builder tracks directory membership as well, so adding or removing a module cannot leave a stale PDF. Template discovery stays inside the project's readable roots and permits at most 16,384 template inputs.
+We can edit ``theme.typ`` to change all three copied layouts together. Changes to files beneath ``_templates/``, including nested imported modules and assets, invalidate cached PDFs. The builder tracks directory membership as well, so adding or removing a module cannot leave a stale PDF. Template discovery stays inside the project's readable roots and permits at most 16,384 template inputs.
 
 To adopt a new default in an older project, we first keep a backup of our custom files. We can remove the copied layout to use the embedded version, or copy fresh files from a temporary ``guidedog quickstart`` project. We keep ``theme.typ`` beside the new layouts. A lone copied layout that imports a missing theme produces a Typst error. Guidedog never overwrites an existing customized template during a build.
 

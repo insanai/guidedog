@@ -126,8 +126,7 @@ we pin the clock with the standard ``SOURCE_DATE_EPOCH`` environment variable:
 
    SOURCE_DATE_EPOCH=1790812800 guidedog build html docs/manual -W
 
-When this variable is set, Guidedog uses the specified Unix epoch timestamp instead of
-the current system clock for all date formatting and template variables.
+When this variable is set, Guidedog uses the specified Unix epoch timestamp instead of the current system clock for all date formatting, publication eligibility checks, and template variables. We can also pass ``--now=2026-05-01T09:00:00Z`` to ``guidedog build``, ``guidedog serve``, or ``guidedog ssg build`` to evaluate scheduled ``:publish-at:`` and ``:expires-at:`` windows against an explicit RFC 3339 instant, or ``--preview`` to include drafts and future-scheduled pages in a local build. See :doc:`static-publishing`.
 
 Deployment options
 ------------------

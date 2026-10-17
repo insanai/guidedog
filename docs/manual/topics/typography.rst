@@ -21,11 +21,10 @@ There are no font-service requests.
    :alt: Navigation column on left, main document text column in center, local section outline on right.
 
    digraph reading_layout {
-     graph [rankdir=TB, bgcolor="transparent", pad="0.22", nodesep="0.3", ranksep="0.35"];
+     graph [rankdir=LR, bgcolor="transparent", pad="0.22", nodesep="0.18", ranksep="0.22"];
      node [shape=box, style="rounded,filled", fillcolor="#edf5f2", color="#216553",
            fontname="Helvetica", fontcolor="#16382f", fontsize=12, margin="0.18,0.1"];
      edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=10, arrowsize=0.7];
-     graph [rankdir=LR, nodesep="0.12", ranksep="0.15"];
      nav [class="gd-input", fillcolor="#fbfaf3", width=1.2,
           label=<<B>Navigation</B><BR/><FONT POINT-SIZE="11">Project tree</FONT>>];
      doc [width=1.2, label=<<B>Document</B><BR/><FONT POINT-SIZE="11">Reading text</FONT>>];
@@ -60,11 +59,7 @@ Those CSS properties alone are not a promise of Knuth-Plass optimization.
 The PDF page
 ------------
 
-The book template uses the same Libertinus family as the web edition.
-It sets justified paragraphs, optimized line breaking, and language-aware hyphenation.
-It also controls spacing, running heads, captions, code blocks, and table rules.
-The font, hyphenation cost, and paragraph measure work together.
-A forced line break is rarely the right repair for a loose paragraph.
+The book and standalone article templates use the same Libertinus family as the web edition. They set justified paragraphs, optimized line breaking, and language-aware hyphenation. They also control spacing, running heads, captions, code blocks, and table rules. The font, hyphenation cost, and paragraph measure work together. A forced line break is rarely the right repair for a loose paragraph.
 
 Typst optimizes the PDF paragraphs. The web enhancement optimizes eligible prose.
 They share the source, fonts, and visual hierarchy. Their line breaks can differ.
@@ -74,10 +69,7 @@ and the `browser hyphenation contract <https://developer.mozilla.org/en-US/docs/
 Change the design
 -----------------
 
-Edit ``_static/editorial.css`` for the documentation project's visual tokens.
-Edit ``_templates/layout.html`` for structure.
-Edit ``_templates/theme.typ`` for the PDF palette and typography. Edit ``_templates/book.typ`` for book structure and ``_templates/discussion.typ`` for discussion structure. Both layouts wrap their content with the shared language-aware theme.
-Keep reading order, focus indicators, labels, and sufficient contrast intact.
+Edit ``_static/editorial.css`` for the documentation project's visual tokens. Edit ``_templates/layout.html`` for structure. Edit ``_templates/theme.typ`` for the PDF palette and typography. Edit ``_templates/book.typ`` for book structure, ``_templates/discussion.typ`` for discussion structure, and ``_templates/article.typ`` for standalone article PDFs. All three layouts wrap their content with the shared language-aware theme. Keep reading order, focus indicators, labels, and sufficient contrast intact.
 
 Build both targets after a change. Inspect a page with code, a table,
 a diagram, and an equation. An attractive cover is not proof that the rest of the book works.

@@ -1046,6 +1046,218 @@ The names are Sphinx's. See :doc:`../intl`.
      - Mark translated and untranslated text with classes: ``true``, ``false``,
        ``"translated"``, or ``"untranslated"``.
 
+Static publishing
+-----------------
+
+The ``[site]`` table configures static website outputs: sitemaps, syndication feeds, taxonomy archives, filtered article collections, installed ``.gdt`` themes, and multi-project mounted site assembly (``guidedog ssg build``). Every setting is optional; when ``[site]`` is omitted, none of these outputs are written.
+
+.. list-table:: Static publishing ([site])
+   :header-rows: 1
+   :widths: 28 14 18 40
+
+   * - Key
+     - Type
+     - Default
+     - Description
+   * - ``site.base_url``
+     - string
+     - ``""``
+     - The absolute ``http://`` or ``https://`` root URL of the published site (trailing ``/`` is trimmed). Required when ``sitemap``, ``feeds``, or any collection's ``feeds`` is ``true``.
+   * - ``site.sitemap``
+     - boolean
+     - ``false``
+     - Write ``sitemap.xml`` at the output root.
+   * - ``site.feeds``
+     - boolean
+     - ``false``
+     - Write ``rss.xml`` and ``atom.xml`` at the output root for all eligible dated documents.
+   * - ``site.taxonomies``
+     - array of strings
+     - ``[]``
+     - Archive kinds to generate automatically: ``"tags"``, ``"category"``, ``"year"``, ``"authors"``, and ``"series"``.
+   * - ``site.page_size``
+     - integer
+     - ``0``
+     - Maximum articles per generated taxonomy archive page; ``0`` writes all entries on one page.
+   * - ``site.theme``
+     - boolean
+     - ``false``
+     - Load the project's installed theme from ``_themes/<tree-sha256>/`` after verifying ``guidedog-theme.lock`` offline.
+
+.. list-table:: Article collections ([[site.collections]])
+   :header-rows: 1
+   :widths: 28 14 18 40
+
+   * - Key
+     - Type
+     - Default
+     - Description
+   * - ``output``
+     - string
+     - required
+     - Portable relative output directory for the collection (for example, ``"blog"`` or ``"notes/2026"``); never a source path.
+   * - ``title``
+     - string
+     - ``output``
+     - Heading for the generated collection pages.
+   * - ``path``
+     - string
+     - ``""``
+     - Docname glob filter (for example, ``"posts/*"``); empty accepts every eligible dated document.
+   * - ``category``
+     - string
+     - ``""``
+     - Required ``:category:`` value; empty accepts any category.
+   * - ``tags``
+     - array of strings
+     - ``[]``
+     - Required ``:tags:`` values; an article must carry all listed tags.
+   * - ``author``
+     - string
+     - ``""``
+     - Required author name in ``:author:`` or ``:authors:``.
+   * - ``series``
+     - string
+     - ``""``
+     - Required ``:series:`` value.
+   * - ``year``
+     - string
+     - ``""``
+     - Required four-digit publication year (``"2026"``); empty accepts all years.
+   * - ``page_size``
+     - integer
+     - ``0``
+     - Articles per collection page; ``0`` puts all matching articles on one page.
+   * - ``feeds``
+     - boolean
+     - ``false``
+     - Write ``rss.xml`` and ``atom.xml`` inside this collection's ``output`` folder.
+   * - ``template``
+     - string
+     - ``""``
+     - HTML layout template for the collection; empty uses ``collection.html``.
+
+.. list-table:: Mounted projects ([[site.mounts]])
+   :header-rows: 1
+   :widths: 28 14 18 40
+
+   * - Key
+     - Type
+     - Default
+     - Description
+   * - ``name``
+     - string
+     - required
+     - Portable single-segment mount identifier. Names must be unique ignoring ASCII case; cross-mount links use the exact configured spelling.
+   * - ``source``
+     - string
+     - required
+     - Project folder relative to the site configuration folder.
+   * - ``output``
+     - string
+     - ``""``
+     - Portable relative destination folder inside the assembled site; ``""`` mounts at the website root.
+   * - ``builder``
+     - string
+     - ``"html"``
+     - Builder for this mount: ``"html"``, ``"dirhtml"``, ``"pdf"``, or ``"discussion-pdf"``.
+   * - ``prefix``
+     - string
+     - ``""``
+     - Discussion catalog prefix for ``builder = "discussion-pdf"``; empty uses ``"gds"``.
+   * - ``overrides``
+     - array of strings
+     - ``[]``
+     - ``key=value`` setting overrides (as ``-D`` takes them) applied when building this mount. Use ``editions`` rather than ``language=...`` to build language variants.
+   * - ``exclude``
+     - array of strings
+     - ``[]``
+     - Output path globs omitted when copying this mount into the assembled site.
+   * - ``editions``
+     - array of tables
+     - ``[]``
+     - Language editions for this mount (``[[site.mounts.editions]]``); when empty, the mount builds once in its configured language.
+
+.. list-table:: Mount language editions ([[site.mounts.editions]])
+   :header-rows: 1
+   :widths: 28 14 18 40
+
+   * - Key
+     - Type
+     - Default
+     - Description
+   * - ``language``
+     - string
+     - required
+     - Language code for this edition (such as ``"en"`` or ``"zh_CN"``), unique within the mount.
+   * - ``output``
+     - string
+     - ``""``
+     - Portable relative subdirectory beneath the mount's ``output`` folder; ``""`` places this edition at the mount's root. Unique within the mount.
+   * - ``source``
+     - string
+     - ``""``
+     - Optional separate translated project folder relative to the site root; when empty, the mount's ``source`` is built with gettext catalogs for ``language``.
+   * - ``overrides``
+     - array of strings
+     - ``[]``
+     - Extra ``key=value`` overrides applied after the mount's own ``overrides``.
+
+.. list-table:: Shared site assets ([[site.assets]])
+   :header-rows: 1
+   :widths: 28 14 18 40
+
+   * - Key
+     - Type
+     - Default
+     - Description
+   * - ``source``
+     - string
+     - required
+     - File or folder relative to the site configuration folder, copied once after all mounts build.
+   * - ``output``
+     - string
+     - ``""``
+     - Portable relative destination folder inside the assembled site; ``""`` copies to the website root.
+
+.. code-block:: toml
+
+   [site]
+   base_url = "https://example.org"
+   sitemap = true
+   feeds = true
+   taxonomies = ["tags", "category", "year", "authors", "series"]
+   page_size = 20
+   theme = false
+
+   [[site.collections]]
+   output = "blog"
+   title = "Engineering Notes"
+   path = "posts/*"
+   tags = ["release"]
+   page_size = 10
+   feeds = true
+   template = "collection.html"
+
+   [[site.mounts]]
+   name = "manual"
+   source = "docs/manual"
+   output = "manual"
+   builder = "dirhtml"
+   exclude = ["_sources/**"]
+
+   [[site.mounts.editions]]
+   language = "en"
+   output = ""
+
+   [[site.mounts.editions]]
+   language = "de"
+   output = "de"
+
+   [[site.assets]]
+   source = "static/robots.txt"
+   output = ""
+
 Trust
 -----
 

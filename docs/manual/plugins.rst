@@ -345,7 +345,7 @@ A plugin can also add commands to guidedog's own command line. The badge adds on
    $ guidedog badge preview Orbit
    Wrote /home/ada/docs/badge-preview.html
 
-The GitHub Pages plugin works the same way: ``guidedog publish pages`` and ``guidedog pages workflow`` are its commands, not guidedog's. We declare a command with ``commands`` and run it with ``run_command``:
+The GitHub Pages, discussion, and static site plugins work the same way: ``guidedog publish pages``, ``guidedog dsc``, and ``guidedog ssg`` are their commands, not ``gd-cli``'s. We declare a command with ``commands`` and run it with ``run_command``:
 
 .. code-block:: rust
    :class: sketch

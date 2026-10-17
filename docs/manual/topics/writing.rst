@@ -126,6 +126,8 @@ Field lists provide structured metadata and parameter descriptions:
    :Version: 1.2
    :Status: Active
 
+When a field list precedes the document title, Guidedog reads recognized publication metadata fields into the page's metadata record and removes those fields from the rendered body. These fields include ``:date:``, ``:updated:``, ``:publish-at:``, ``:expires-at:``, ``:draft:``, ``:authors:``, ``:category:``, ``:tags:``, ``:series:``, ``:summary:``, ``:template:`` and ``:pdf:``. MyST Markdown documents supply the same fields in leading YAML front matter. Field lists after the title remain ordinary content. See :doc:`../howto/static-publishing` for the full publication lifecycle.
+
 Code blocks
 -----------
 
@@ -311,6 +313,30 @@ Common options for ``toctree``:
 * ``:hidden:``: Records the documents in the reading order without rendering an inline list.
 * ``:glob:``: Allows wildcard patterns to match documents (e.g. ``tutorials/*``).
 
+Dated post listings with ``postlist``
+-------------------------------------
+
+For articles, release notes, and research logs that carry ``:date:`` metadata, the ``postlist`` directive renders a reverse-chronological list of matching published pages:
+
+.. code-block:: rst
+
+   .. postlist:: 5
+      :path: posts/*
+      :category: systems
+      :tags: rust, incremental
+      :excerpts:
+
+Options for ``postlist``:
+
+* Argument ``N``: Maximum number of matching posts to show; zero or an omitted argument includes every match.
+* ``:path: GLOB``: Restrict entries to document names matching the glob pattern.
+* ``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: NAME``, ``:year: YYYY``: Filter entries by publication metadata.
+* ``:sort: date`` or ``:sort: -date``: Order by oldest or newest publication instant, with docname breaking ties.
+* ``:style: list`` or ``:style: cards``: Select the listing's CSS class.
+* ``:excerpts:``: Render each entry's explicit ``:summary:`` below its title and date.
+
+See :doc:`../howto/static-publishing` for collections, feeds, and scheduled publishing.
+
 Cross-references and links
 --------------------------
 
@@ -376,14 +402,22 @@ This copies a file to the output's download directory and links to it:
 
    Download the :download:`starter template <files/starter.toml>`.
 
-External links
-~~~~~~~~~~~~~~
+External and cross-mount links
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We link to external web addresses like this:
 
 .. code-block:: rst
 
    Visit `Typst <https://typst.app>`_ for typography details.
+
+In a multi-project website assembled with ``[[site.mounts]]``, we can also link to a mounted sub-project by its mount name using ``mount://<name>/<path>``:
+
+.. code-block:: rst
+
+   Read the `User Manual <mount://manual/index.html>`_ or `GDS 0013 <mount://discussions/records/0013-static-site-generation.html>`_.
+
+The mount names must match ``[[site.mounts]]`` and the paths must name current output files.
 
 Substitutions and includes
 --------------------------

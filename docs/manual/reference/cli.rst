@@ -106,6 +106,8 @@ Commands overview
      - Lists the readers and renderers built in, and the Typst backend.
    * - ``publish --publisher=ID``
      - Builds the project a publisher's configuration names, and publishes the site.
+   * - ``ssg init|new|draft|schedule|publish|status|build|theme``
+     - Scaffolds static sites, manages article publication lifecycles, packs or verifies portable themes, and assembles multi-project mounted sites.
    * - ``plugin COMMAND``
      - Registers, checks, lists, inspects, runs, or unregisters plugin programs.
 
@@ -122,7 +124,7 @@ Plugins add commands of their own (see `Commands plugins add`_). The GitHub Page
    * - ``pages workflow``
      - Writes a GitHub Actions workflow that builds and deploys the site.
 
-The discussion plugin, also linked into every ``guidedog``, adds ``dsc`` and its commands: ``guidedog dsc init``, ``new``, ``build``, and the rest (see `guidedog dsc`_).
+The discussion plugin, also linked into every ``guidedog``, adds ``dsc`` and its commands: ``guidedog dsc init``, ``new``, ``build``, and the rest (see `guidedog dsc`_). The static publishing plugin, likewise linked into every ``guidedog``, adds ``ssg`` and its commands: ``guidedog ssg init``, ``new``, ``draft``, ``schedule``, ``publish``, ``status``, ``build``, and ``theme`` (see `guidedog ssg`_).
 
 A command word that is neither guidedog's nor a plugin's is a usage error (exit status 2). Its hint lists the commands, and suggests the closest of both kinds.
 
@@ -260,6 +262,10 @@ Builders:
        hold, 6144 on Linux and macOS). Raise it together with ``--max-depth``.
    * - ``--typst=PATH``
      - The Typst program for PDF, overriding ``typst`` in ``conf.toml``.
+   * - ``--preview``
+     - Include pages that would otherwise be withheld by ``:draft:``, ``:publish-at:`` in the future, or ``:expires-at:`` in the past.
+   * - ``--now=RFC3339``
+     - Evaluate publication timestamps (``:publish-at:`` and ``:expires-at:``) and default build dates against this UTC instant (for example, ``--now=2026-10-16T09:00:00Z``) instead of the system clock or ``SOURCE_DATE_EPOCH``.
 
 The build prints what it read and wrote, then a verdict: ``build succeeded`` or
 ``build failed``, with the number of errors and warnings and where the output is. A failed build
@@ -283,11 +289,9 @@ it rebuilds before answering a request:
 
    guidedog serve docs
    guidedog serve docs --port 9000
+   guidedog serve docs --preview --now=2026-10-16T09:00:00Z
 
-``--port PORT`` (``-p`` is quickstart's project name, not the port) chooses the port,
-from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, ``-D name=value`` and the build
-options of ``guidedog build`` apply to every rebuild. Each rebuild reloads ``conf.toml``. A
-failed rebuild keeps the previous site and reports the problem. Ctrl+C stops the server.
+``--port PORT`` (``-p`` is quickstart's project name, not the port) chooses the port, from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, ``-D name=value`` and the build options of ``guidedog build``, including ``--preview`` and ``--now=RFC3339``, apply to every rebuild. Each rebuild reloads ``conf.toml``. A failed rebuild keeps the previous site and reports the problem. Ctrl+C stops the server.
 
 It serves ``_build/html``. It watches the source folder, the Odin and Rust API sources
 (``odin_autoapi_dirs``, ``odin_collections``, ``rust_autoapi_crates``), and the
@@ -528,6 +532,71 @@ Keeps a discussion catalog and builds it. The commands come from the discussion 
 The exit statuses are those of ``guidedog``. Problems about a catalog have codes in its
 prefix, such as ``eds.recovery-needed``.
 
+guidedog ssg
+------------
+
+Scaffolds static websites, manages article lifecycles, packs and verifies portable theme archives, and builds multi-project mounted sites. The commands come from the static publishing plugin (``ssg``), which every ``guidedog`` links. Authoring commands rewrite only the leading metadata block (an RST field list or MyST YAML front matter) and leave body text, comments and line endings untouched. RFC 3339 timestamps require a time zone; date-only values start at midnight UTC.
+
+.. code-block:: sh
+
+   guidedog ssg init PATH [--preset=project|journal|research] [--title=TITLE] [--author=NAME] [--now=RFC3339]
+   guidedog ssg new PATH [--title=TITLE] [--template=NAME] [--now=RFC3339]
+   guidedog ssg draft PATH [--now=RFC3339]
+   guidedog ssg schedule PATH --at=RFC3339 [--now=RFC3339]
+   guidedog ssg publish PATH [--date=DATE] [--now=RFC3339]
+   guidedog ssg status [PROJECT] [--now=RFC3339]
+   guidedog ssg build [PROJECT] [--out=DIR] [--no-pdf] [--preview] [--now=RFC3339]
+   guidedog ssg theme pack DIR --out=FILE
+   guidedog ssg theme install URL --sha256=HASH [--project=DIR]
+   guidedog ssg theme verify [PROJECT]
+
+Subcommands:
+
+* ``guidedog ssg init PATH [--preset=project|journal|research] [--title=TITLE] [--author=NAME] [--now=RFC3339]``: creates a complete static website in ``PATH`` using one of the built-in presets (``project`` by default, ``journal``, or ``research``). Sets ``project`` and ``author`` in ``conf.toml`` and stamps the initial post with today's UTC date (or ``--now``).
+* ``guidedog ssg new PATH [--title=TITLE] [--template=NAME] [--now=RFC3339]``: creates a new draft article at ``PATH`` (``.rst`` or ``.md``) with ``:draft: true`` and ``:date: YYYY-MM-DD``. ``--title`` defaults to the file stem; ``--template`` sets ``:template: NAME`` when given.
+* ``guidedog ssg draft PATH [--now=RFC3339]``: marks an existing article at ``PATH`` as a draft (``:draft: true``), preserving its date and schedule. Normal builds withhold it while draft is true.
+* ``guidedog ssg schedule PATH --at=RFC3339 [--now=RFC3339]``: clears draft and expiration and sets ``:publish-at: RFC3339``. The article stays withheld until that instant; a past instant is accepted.
+* ``guidedog ssg publish PATH [--date=DATE] [--now=RFC3339]``: clears draft, schedule and expiration. ``--date`` sets a date or RFC 3339 instant that cannot be in the future. Without it, publishing retains an existing past date or uses today's UTC date when the old date is absent or in the future.
+* ``guidedog ssg status [PROJECT] [--now=RFC3339]``: lists every dated, draft, or scheduled document in ``PROJECT`` (default: ``.``) with its state (``published``, ``draft``, ``scheduled``, or ``expired``), its release date or timestamp, and its source path relative to the project.
+* ``guidedog ssg build [PROJECT] [--out=DIR] [--no-pdf] [--preview] [--now=RFC3339]``: builds every ``[[site.mounts]]`` entry (and each mount's ``[[site.mounts.editions]]``), copies ``[[site.assets]]``, verifies cross-mount targets and publishes the assembled site into ``--out`` (default: ``_build/site``) as one generation. ``--no-pdf`` skips ``pdf`` and ``discussion-pdf`` mounts; ``--preview`` includes withheld pages; ``--now`` fixes the publication clock across all mounts.
+
+  Sitemaps and feeds are generated by each mounted project's own ``[site]`` settings. Assembly preserves their output paths; it does not merge them into an aggregate sitemap.
+
+* ``guidedog ssg theme pack DIR --out=FILE``: packs the ``_templates`` and ``_static`` trees of ``DIR`` into a deterministic ``.gdt`` theme archive at ``FILE``.
+* ``guidedog ssg theme install URL --sha256=HASH [--project=DIR]``: fetches a ``.gdt`` archive from ``URL`` (or a local path), checks its 64-hex-digit ``--sha256`` digest before unpacking, installs the tree under ``_themes/<tree-sha256>/`` in ``--project`` (default: ``.``), and writes ``guidedog-theme.lock``.
+* ``guidedog ssg theme verify [PROJECT]``: reads ``guidedog-theme.lock`` and verifies the installed ``_themes/<tree-sha256>/`` tree in ``PROJECT`` (default: ``.``) against ``tree_sha256`` without network access.
+
+.. list-table:: Options of guidedog ssg
+   :header-rows: 1
+   :widths: 35 65
+
+   * - Option
+     - Meaning
+   * - ``--preset=project|journal|research``
+     - ``init``: the site layout preset (default: ``project``).
+   * - ``--title=TITLE``
+     - ``init``, ``new``: the website or article title.
+   * - ``--author=NAME``
+     - ``init``: the website author.
+   * - ``--template=NAME``
+     - ``new``: the HTML layout template to set in ``:template:``.
+   * - ``--at=RFC3339``
+     - ``schedule``: the UTC release instant for ``:publish-at:``; required.
+   * - ``--date=DATE``
+     - ``publish``: the publication date (``YYYY-MM-DD`` or RFC 3339).
+   * - ``--out=DIR``
+     - ``build``: the assembled site output folder (default: ``_build/site``); ``theme pack``: the destination ``.gdt`` archive file (required).
+   * - ``--no-pdf``
+     - ``build``: skip ``pdf`` and ``discussion-pdf`` mounts.
+   * - ``--preview``
+     - ``build``: include draft, scheduled, and expired pages.
+   * - ``--now=RFC3339``
+     - ``init``, ``new``, ``draft``, ``schedule``, ``publish``, ``status``, ``build``: fix the UTC clock used for timestamps and publication eligibility.
+   * - ``--sha256=HASH``
+     - ``theme install``: the required 64-digit hexadecimal SHA-256 of the ``.gdt`` archive.
+   * - ``--project=DIR``
+     - ``theme install``: the project root where ``_themes/`` and ``guidedog-theme.lock`` live (default: ``.``).
+
 guidedog publish
 ----------------
 
@@ -697,12 +766,7 @@ arguments and returns the exit status.
        }
    }
 
-The program accepts every command and option on this page. A selected plugin ID is
-looked up among the linked plugins first, then in the machine's registry. Linked plugins
-need no registration and no SHA-256 pin, because they are part of the executable.
-``gd_cli::run`` is the same with no linked plugins. ``guidedog`` itself
-links one, the GitHub Pages plugin. The plugin is the same ``Plugin`` value its installed form serves with
-``gd_plugins::serve_plugin`` (see :doc:`../plugins`).
+The program accepts every command and option on this page. A selected plugin ID is looked up among the linked plugins first, then in the machine's registry. Linked plugins need no registration and no SHA-256 pin, because they are part of the executable. ``gd_cli::run`` is the same with no linked plugins. ``guidedog`` itself links three: the GitHub Pages plugin (``pages``), the discussion plugin (``dsc``), and the static publishing plugin (``ssg``). Each plugin is the same ``Plugin`` value its installed form serves with ``gd_plugins::serve_plugin`` (see :doc:`../plugins`).
 
 Commands plugins add
 ~~~~~~~~~~~~~~~~~~~~

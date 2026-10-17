@@ -22,20 +22,26 @@ The first three read Python source with the same scan that autodoc uses (:doc:`a
    :alt: Python source is read by the source scan while documents are read. The scan gives each Python description its file and lines, and each inheritance diagram its classes. When pages are written, the lines become source links and source pages, and the classes become a Graphviz drawing whose nodes link to the descriptions.
 
    digraph sources {
-     graph [rankdir=LR, bgcolor="transparent", pad="0.3", nodesep="0.25", ranksep="0.45"];
+     graph [rankdir=LR, bgcolor="transparent", pad="0.25", nodesep="0.25", ranksep="0.45"];
      node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
-           color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=12];
-     edge [color="#216553"];
-     source [label="Python source\nautodoc_source_paths", fillcolor="#eef4fa"];
-     scan [label="source scan\nmodules, classes, lines"];
-     where [label="each description:\nfile and lines"];
-     graph_ [label="inheritance-diagram:\nclasses and bases"];
-     links [label="[source] links\nviewcode, linkcode"];
-     pages [label="_modules/ pages\n[docs] links back"];
-     drawing [label="Graphviz drawing\nlinked nodes"];
+           color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=11, margin="0.18,0.1"];
+     edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=9.5, arrowsize=0.7];
+     source [class="gd-input", shape=note, fillcolor="#fbfaf3",
+             label=<<B>Python source</B><BR/><FONT POINT-SIZE="10">autodoc_source_paths</FONT>>];
+     scan [label=<<B>Source scan</B><BR/><FONT POINT-SIZE="10">Modules, classes, lines</FONT>>];
+     where [label=<<B>Object locations</B><BR/><FONT POINT-SIZE="10">File and line span</FONT>>];
+     graph_ [label=<<B>inheritance-diagram</B><BR/><FONT POINT-SIZE="10">Classes and bases</FONT>>];
+     links [class="gd-output", fillcolor="#eef4fa",
+            label=<<B>[source] links</B><BR/><FONT POINT-SIZE="10">viewcode, linkcode</FONT>>];
+     pages [class="gd-output", fillcolor="#eef4fa",
+            label=<<B>_modules/ pages</B><BR/><FONT POINT-SIZE="10">[docs] links back</FONT>>];
+     drawing [class="gd-output", fillcolor="#eef4fa",
+              label=<<B>Graphviz drawing</B><BR/><FONT POINT-SIZE="10">Linked class nodes</FONT>>];
      source -> scan;
-     scan -> where; scan -> graph_;
-     where -> links; where -> pages;
+     scan -> where;
+     scan -> graph_;
+     where -> links;
+     where -> pages;
      graph_ -> drawing;
    }
 

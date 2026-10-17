@@ -16,7 +16,7 @@ Homebrew selects the release archive for our processor and checks its SHA-256.
 The executable has the Typst compiler and Graphviz built in, so it needs nothing else at run time. We do not need a Rust toolchain, a Python environment, or a separate
 Typst installation to build HTML and PDF. The release requires macOS 12 or later.
 
-The package installs one executable, ``guidedog``. Its built-in plugins add GitHub Pages publishing (``guidedog publish pages`` and ``guidedog pages``; see :doc:`github-pages`) and discussion catalogs (``guidedog dsc``; see :doc:`discussions`). The ``gd-graphdog`` library encapsulates Graphviz inside Guidedog.
+The package installs one executable, ``guidedog``. Its built-in plugins add GitHub Pages publishing (``guidedog publish pages`` and ``guidedog pages``; see :doc:`github-pages`), discussion catalogs (``guidedog dsc``; see :doc:`discussions`), and static site publishing (``guidedog ssg``; see :doc:`static-publishing`). The ``gd-graphdog`` library encapsulates Graphviz inside Guidedog.
 
 We create our first project in :doc:`../tutorial/first-project`.
 To update an installed release:
@@ -113,7 +113,7 @@ lengths and line widths. ``cargo xtask tables --check`` checks that the generate
 Built-in plugins
 ================
 
-The release has one executable. The discussion plugin adds ``guidedog dsc``. The Pages plugin adds ``guidedog publish pages`` and ``guidedog pages`` maintenance commands. Both are linked into ``guidedog`` and use its services; no additional program or registration is needed.
+The release has one executable. The discussion plugin adds ``guidedog dsc``. The static site plugin adds ``guidedog ssg``. The Pages plugin adds ``guidedog publish pages`` and ``guidedog pages`` maintenance commands. All three are linked into ``guidedog`` and use its services; no additional program or registration is needed.
 
 It keeps tokens in the system's credential store: the Keychain on macOS, the Credential
 Manager on Windows, and on Linux the Secret Service through the ``secret-tool`` program

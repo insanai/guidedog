@@ -10,7 +10,7 @@ repository has one Pages source: GitHub Actions or a branch.
 .. graphviz::
    :class: graphviz-adaptive
    :caption: The two routes for publishing documentation to GitHub Pages.
-   :alt: Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog publish pageser with a durable journal.
+   :alt: Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog publish pages publisher with a durable journal.
 
    digraph pages_routes {
      graph [rankdir=TB, bgcolor="transparent", pad="0.22", nodesep="0.3", ranksep="0.35"];
@@ -232,7 +232,7 @@ workflow's checksum test fails on it, and the command exits with status 1 until 
 In the repository's **Settings -> Pages**, we choose **GitHub Actions** as the publishing
 source and restrict the ``github-pages`` environment to ``main``.
 
-The workflow it writes is this one (for Guidedog 1.0.0-beta.3):
+The workflow it writes is this one (for Guidedog 1.0.0-beta.6):
 
 .. code-block:: yaml
 

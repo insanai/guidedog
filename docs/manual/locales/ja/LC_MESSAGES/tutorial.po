@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:33+0000\n"
+"POT-Creation-Date: 2026-10-17 15:18+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -608,107 +608,139 @@ msgid ""
 msgstr "``conf.toml`` を開き、``metric`` ディレクティブの宣言を追加します："
 
 #: ../../tutorial/dynamic-content-and-directives.rst:89
-msgid ""
-"This single declaration establishes a complete syntax contract: * ``.. "
-"metric:: p99_latency (milliseconds)`` describes the metric. * "
-"``:metric:`p99_latency``` links to the definition from any document. * "
-"The index table automatically generates a pair index entry "
-"(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
-"semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
-"typesets a styled description entry with back-references in the appendix."
-msgstr ""
-"この単一の宣言により完全な構文契約が確立されます：* ``.. metric:: p99_latency (milliseconds)`` "
-"が指標を記述します。* ``:metric:`p99_latency``` が任意のドキュメントからその定義へリンクします。* "
-"索引表がペア索引エントリ（``p99_latency; cluster telemetry``）を自動生成します。* HTML "
-"では、Guidedog が CSS アンカーフック付きの意味論的定義リストを生成します。* PDF では、Guidedog "
-"がスタイル付きの説明エントリを組版し、付録に逆参照を記録します。"
+msgid "This single declaration establishes a complete syntax contract:"
+msgstr "この一つの宣言で、次の構文全体が定義されます。"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:96
+#: ../../tutorial/dynamic-content-and-directives.rst:91
+msgid "``.. metric:: p99_latency (milliseconds)`` describes the metric."
+msgstr "``.. metric:: p99_latency (milliseconds)`` でメトリクスを記述します。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:92
+msgid "``:metric:`p99_latency``` links to the definition from any document."
+msgstr "``:metric:`p99_latency``` で、どの文書からでも定義を参照できます。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:93
+msgid ""
+"The index table automatically generates a pair index entry "
+"(``p99_latency; cluster telemetry``)."
+msgstr "索引にはペア項目 (``p99_latency; cluster telemetry``) が自動的に生成されます。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:94
+msgid ""
+"In HTML, Guidedog generates a semantic definition list with CSS anchor "
+"hooks."
+msgstr "HTML では、Guidedog は CSS 用のフックを持つ意味的な定義リストを生成します。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:95
+msgid ""
+"In PDF, Guidedog typesets a description and an index entry linking to its "
+"page."
+msgstr "PDF では、Guidedog は説明と、そのページを参照する索引項目を組版します。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:97
 msgid "3. Author the document with format guards"
 msgstr "3. フォーマットガードを使ってドキュメントを執筆する"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:99
+#: ../../tutorial/dynamic-content-and-directives.rst:100
 msgid "Replace the contents of ``index.rst`` with the following document:"
 msgstr "``index.rst`` の内容を次のドキュメントに置き換えます："
 
-#: ../../tutorial/dynamic-content-and-directives.rst:146
+#: ../../tutorial/dynamic-content-and-directives.rst:147
 msgid ""
-"**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using native "
-"Typst. Always write ``.. raw:: typst`` for print callouts and vector "
-"blocks. Guidedog does not execute verbatim ``.. raw:: latex`` (which is "
-"omitted with a diagnostic). However, standard LaTeX math written in ``.. "
-"math::`` and ``:math:`` is automatically translated into Typst formulas "
-"by Guidedog's built-in math compiler."
+"**Typst and LaTeX in Guidedog**: PDF books use Typst. Trusted builds "
+"execute ``.. raw:: typst``; ``.. raw:: latex`` is omitted with "
+"``typst.raw.foreign``. ``.. math::`` and ``:math:`` translate supported "
+"LaTeX mathematics into Typst equations. Unsupported commands produce "
+"``typst.math.unsupported``; see :doc:`../topics/mathematics` for the "
+"supported syntax and policies."
 msgstr ""
-"**Guidedog における Typst と LaTeX**：Guidedog はネイティブ Typst を使用して PDF "
-"書籍をコンパイルします。印刷用コールアウトやベクターブロックには必ず ``.. raw:: typst`` と記述してください。Guidedog "
-"は逐語的な ``.. raw:: latex`` を実行しません（診断メッセージとともに出力から除外されます）。ただし、``.. "
-"math::`` や ``:math:`` で記述された標準的な LaTeX 数式は、Guidedog "
-"の組み込み数式コンパイラによってネイティブ Typst 数式に自動変換されます。"
+"**Guidedog の Typst と LaTeX**: PDF 書籍には Typst を使用します。信頼するビルドは ``.. raw:: "
+"typst`` を実行し、``.. raw:: latex`` は ``typst.raw.foreign`` とともに省略されます。``.. "
+"math::`` と ``:math:`` は対応する LaTeX 数式を Typst 数式に変換します。未対応のコマンドでは "
+"``typst.math.unsupported`` が報告されます。対応する構文とポリシーは "
+":doc:`../topics/mathematics` を参照してください。"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:152
+#: ../../tutorial/dynamic-content-and-directives.rst:149
 msgid "4. Build and inspect both publications"
 msgstr "4. 両方の刊行物をビルドして確認する"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:155
+#: ../../tutorial/dynamic-content-and-directives.rst:152
 msgid "Build the HTML website:"
 msgstr "HTML ウェブサイトをビルドします："
 
-#: ../../tutorial/dynamic-content-and-directives.rst:161
+#: ../../tutorial/dynamic-content-and-directives.rst:158
 msgid ""
 "Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. "
-"Notice that: * The ``:metric:`p99_latency``` reference resolves directly "
-"to the definition anchor. * The interactive calculator slider is rendered "
-"and active in the web DOM. * The PDF callout block is omitted entirely, "
-"without emitting warnings."
+"Notice that:"
 msgstr ""
-"ブラウザで ``_build/html/index.html`` を開くか ``guidedog serve`` "
-"を実行します。次の点を確認してください：* ``:metric:`p99_latency``` の参照が定義アンカーに直接解決されます。* "
-"対話型計算機スライダーがレンダリングされ、Web DOM 上で動作します。* PDF "
-"用コールアウトブロックは警告を発生させることなく完全に除外されます。"
+"ブラウザーで ``_build/html/index.html`` を開くか、``guidedog serve`` "
+"を実行します。次の点を確認します。"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:166
+#: ../../tutorial/dynamic-content-and-directives.rst:160
+msgid ""
+"The ``:metric:`p99_latency``` reference resolves directly to the "
+"definition anchor."
+msgstr "``:metric:`p99_latency``` の参照は、定義のアンカーに直接移動します。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:161
+msgid ""
+"The interactive calculator slider is rendered and active in the web DOM."
+msgstr "対話式のスライダーが Web の DOM に表示され、操作できます。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:162
+msgid ""
+"The PDF callout block is omitted entirely, without emitting warnings."
+msgstr "PDF 用の注意書きは、警告を出さずに完全に省略されます。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:164
 msgid "Now build the PDF book:"
 msgstr "次に PDF 書籍をビルドします："
 
-#: ../../tutorial/dynamic-content-and-directives.rst:172
+#: ../../tutorial/dynamic-content-and-directives.rst:170
 msgid ""
-"Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
-"``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are "
-"completely absent. * The Typst ``#rect(...)`` vector box is typeset with "
-"native margins, borders, and typography. * The appendix includes an index "
-"entry under ``p99_latency``."
+"Open ``_build/pdf/cluster-telemetry-en.pdf`` (or the inspection source at "
+"``_build/pdf/book-en.typ``). Notice that:"
 msgstr ""
-"``_build/pdf/telemetry-en.pdf``（または確認用ソース "
-"``_build/pdf/book-en.typ``）を開きます。次の点を確認してください：* スライダーと raw HTML "
-"は完全に除外されています。* Typst の ``#rect(...)`` "
-"ベクターボックスがネイティブのマージン、枠線、タイポグラフィで組版されています。* 付録の ``p99_latency`` "
-"の項目に索引エントリが含まれています。"
+"``_build/pdf/cluster-telemetry-en.pdf`` または確認用ソース "
+"``_build/pdf/book-en.typ`` を開きます。次の点を確認します。"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:177
+#: ../../tutorial/dynamic-content-and-directives.rst:172
+msgid "The slider and raw HTML are completely absent."
+msgstr "スライダーと raw HTML は完全に含まれていません。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:173
+msgid ""
+"The Typst ``#rect(...)`` vector box is typeset with native margins, "
+"borders, and typography."
+msgstr "Typst のベクトル図形 ``#rect(...)`` が、ネイティブの余白、枠線、書体で組版されます。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:174
+msgid "The book's index includes an entry under ``p99_latency``."
+msgstr "書籍の索引に ``p99_latency`` の項目があります。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:176
 msgid "5. Custom Typst functions in theme templates"
 msgstr "5. テーマテンプレートでカスタム Typst 関数を定義する"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:180
+#: ../../tutorial/dynamic-content-and-directives.rst:179
 msgid ""
-"When you have formatting patterns used across many chapters, define a "
-"reusable Typst function in ``_templates/theme.typ``:"
-msgstr ""
-"多くの章で共通して使用する書式パターンがある場合は、``_templates/theme.typ`` 内で再利用可能な Typst "
-"関数を定義します："
+"When we reuse formatting across chapters, we append a Typst function to "
+"``_templates/theme.typ``:"
+msgstr "複数の章で書式を再利用する場合は、``_templates/theme.typ`` に Typst 関数を追記します。"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:193
+#: ../../tutorial/dynamic-content-and-directives.rst:191
 msgid "In any document, invoke the function inside a raw Typst block:"
 msgstr "任意のドキュメントで、raw Typst ブロック内からその関数を呼び出します："
 
-#: ../../tutorial/dynamic-content-and-directives.rst:203
+#: ../../tutorial/dynamic-content-and-directives.rst:202
 msgid ""
-"This keeps your reStructuredText prose focused on documentation while "
-"granting full access to Typst's typesetting engine for printed "
-"publications."
+"Import the function explicitly: the book template's own imports are "
+"scoped to its module and do not expose helpers to document content. For "
+"many call sites, place this import in a project preamble selected by "
+"``pdf_preamble``."
 msgstr ""
-"これにより、reStructuredText の本文は文書内容そのものに集中させながら、印刷刊行物に対しては Typst "
-"の組版エンジンの全機能を活用できます。"
+"関数を明示的にインポートします。書籍テンプレート内のインポートは、そのモジュール内でのみ有効で、文書本文からヘルパーを参照することはできません。呼び出す場所が多い場合は、``pdf_preamble`` "
+"で指定するプロジェクトのプリアンブルにインポートを記述できます。"
 
 #: ../../tutorial/first-project.rst:1
 msgid "Our first project"
@@ -964,3 +996,65 @@ msgid ""
 "inspect."
 msgstr "これらのページを順番に進めてください。各ステップで、確認できる結果が得られます。"
 
+#~ msgid ""
+#~ "This single declaration establishes a complete syntax contract: * ``.. "
+#~ "metric:: p99_latency (milliseconds)`` describes the metric. * "
+#~ "``:metric:`p99_latency``` links to the definition from any document. * "
+#~ "The index table automatically generates a pair index entry "
+#~ "(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
+#~ "semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
+#~ "typesets a styled description entry with back-references in the "
+#~ "appendix."
+#~ msgstr ""
+#~ "この単一の宣言により完全な構文契約が確立されます：* ``.. metric:: p99_latency (milliseconds)`` "
+#~ "が指標を記述します。* ``:metric:`p99_latency``` が任意のドキュメントからその定義へリンクします。* "
+#~ "索引表がペア索引エントリ（``p99_latency; cluster telemetry``）を自動生成します。* HTML "
+#~ "では、Guidedog が CSS アンカーフック付きの意味論的定義リストを生成します。* PDF では、Guidedog "
+#~ "がスタイル付きの説明エントリを組版し、付録に逆参照を記録します。"
+
+#~ msgid ""
+#~ "**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using "
+#~ "native Typst. Always write ``.. raw:: typst`` for print callouts and "
+#~ "vector blocks. Guidedog does not execute verbatim ``.. raw:: latex`` "
+#~ "(which is omitted with a diagnostic). However, standard LaTeX math "
+#~ "written in ``.. math::`` and ``:math:`` is automatically translated "
+#~ "into Typst formulas by Guidedog's built-in math compiler."
+#~ msgstr ""
+#~ "**Guidedog における Typst と LaTeX**：Guidedog はネイティブ Typst を使用して PDF "
+#~ "書籍をコンパイルします。印刷用コールアウトやベクターブロックには必ず ``.. raw:: typst`` "
+#~ "と記述してください。Guidedog は逐語的な ``.. raw:: latex`` "
+#~ "を実行しません（診断メッセージとともに出力から除外されます）。ただし、``.. math::`` や ``:math:`` "
+#~ "で記述された標準的な LaTeX 数式は、Guidedog の組み込み数式コンパイラによってネイティブ Typst 数式に自動変換されます。"
+
+#~ msgid ""
+#~ "Open ``_build/html/index.html`` in a browser or run ``guidedog "
+#~ "serve``. Notice that: * The ``:metric:`p99_latency``` reference "
+#~ "resolves directly to the definition anchor. * The interactive "
+#~ "calculator slider is rendered and active in the web DOM. * The PDF "
+#~ "callout block is omitted entirely, without emitting warnings."
+#~ msgstr ""
+#~ "ブラウザで ``_build/html/index.html`` を開くか ``guidedog serve`` "
+#~ "を実行します。次の点を確認してください：* ``:metric:`p99_latency``` の参照が定義アンカーに直接解決されます。* "
+#~ "対話型計算機スライダーがレンダリングされ、Web DOM 上で動作します。* PDF "
+#~ "用コールアウトブロックは警告を発生させることなく完全に除外されます。"
+
+#~ msgid ""
+#~ "Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
+#~ "``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML "
+#~ "are completely absent. * The Typst ``#rect(...)`` vector box is "
+#~ "typeset with native margins, borders, and typography. * The appendix "
+#~ "includes an index entry under ``p99_latency``."
+#~ msgstr ""
+#~ "``_build/pdf/telemetry-en.pdf``（または確認用ソース "
+#~ "``_build/pdf/book-en.typ``）を開きます。次の点を確認してください：* スライダーと raw HTML "
+#~ "は完全に除外されています。* Typst の ``#rect(...)`` "
+#~ "ベクターボックスがネイティブのマージン、枠線、タイポグラフィで組版されています。* 付録の ``p99_latency`` "
+#~ "の項目に索引エントリが含まれています。"
+
+#~ msgid ""
+#~ "This keeps your reStructuredText prose focused on documentation while "
+#~ "granting full access to Typst's typesetting engine for printed "
+#~ "publications."
+#~ msgstr ""
+#~ "これにより、reStructuredText の本文は文書内容そのものに集中させながら、印刷刊行物に対しては Typst "
+#~ "の組版エンジンの全機能を活用できます。"

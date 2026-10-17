@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-17 14:14+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -88,7 +88,9 @@ msgstr "``template/rfc-template.rst``: 新しい草案のテンプレート。"
 msgid ""
 "``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable "
 "PDF layout and shared theme copied from the binary;"
-msgstr "バイナリからコピーされた、編集可能な PDF レイアウトと共通テーマである ``_templates/discussion.typ`` および ``_templates/theme.typ``。"
+msgstr ""
+"バイナリからコピーされた、編集可能な PDF レイアウトと共通テーマである ``_templates/discussion.typ`` および "
+"``_templates/theme.typ``。"
 
 #: ../../howto/discussions.rst:34
 msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
@@ -247,7 +249,9 @@ msgid ""
 "followed by its text. Numbered sections flow continuously. Running "
 "headers identify the catalog and record, and footers show the page number "
 "and total. Tables and captioned listings can continue across pages."
-msgstr "各 RST レコードは RFC スタイルの論文レイアウトを採用しています。レコードの冒頭にはメタデータパネル、ステータスバッジ、簡潔なステータスノート、コンパクトな目次が配置され、その後に本文が続きます。番号付きの節は連続して流れます。ランニングヘッダーはカタログ名とレコードを識別し、フッターにはページ番号と総ページ数が表示されます。表やキャプション付きコードリストはページをまたいで継続できます。"
+msgstr ""
+"各 RST レコードは RFC "
+"スタイルの論文レイアウトを採用しています。レコードの冒頭にはメタデータパネル、ステータスバッジ、簡潔なステータスノート、コンパクトな目次が配置され、その後に本文が続きます。番号付きの節は連続して流れます。ランニングヘッダーはカタログ名とレコードを識別し、フッターにはページ番号と総ページ数が表示されます。表やキャプション付きコードリストはページをまたいで継続できます。"
 
 #: ../../howto/discussions.rst:172
 msgid ""
@@ -256,7 +260,9 @@ msgid ""
 "copied discussion template use the current embedded layout. We keep "
 "existing template customizations until we replace or remove their files. "
 "Ordinary books keep their book template."
-msgstr "PDF ビルダーは、カタログプレフィックスにかかわらず ``:eds-number:`` や ``:eds-title:`` などの先頭メタデータを認識します。コピーされた議論テンプレートを持たない既存のカタログは、組み込みのレイアウトを使用します。既存のテンプレートカスタマイズは、ファイルを置き換えるか削除するまで保持されます。通常の書籍はそれぞれの書籍テンプレートをそのまま使用します。"
+msgstr ""
+"PDF ビルダーは、カタログプレフィックスにかかわらず ``:eds-number:`` や ``:eds-title:`` "
+"などの先頭メタデータを認識します。コピーされた議論テンプレートを持たない既存のカタログは、組み込みのレイアウトを使用します。既存のテンプレートカスタマイズは、ファイルを置き換えるか削除するまで保持されます。通常の書籍はそれぞれの書籍テンプレートをそのまま使用します。"
 
 #: ../../howto/discussions.rst:174
 msgid ""
@@ -272,7 +278,15 @@ msgid ""
 "metadata without assuming a fixed prefix or lifecycle. Its optional "
 "``contents`` and ``memo`` parameters control the contents and status "
 "note. :doc:`../templates` describes the shared PDF parameters."
-msgstr "レイアウトは Guidedog バイナリに組み込まれています。``guidedog dsc init`` はカスタマイズ用に ``_templates/discussion.typ`` と共通の ``_templates/theme.typ`` をコピーします。コピーを持たない既存カタログは組み込みレイアウトを使用します。このテンプレートは、通常の PDF パラメーターに加えて ``record`` 辞書を受け取る ``book`` 関数を定義します。``record.id`` は可読な識別子、``record.catalog`` はプロジェクト名、``record.fields`` は可読なフィールドラベルと値のペアを保持します。すべての値はクォートされた文字列として渡されます。ソースの見出しがタイトルとそのアンカーを提供します。テンプレートは特定のプレフィックスやライフサイクルを前提とせずにカタログメタデータを読み取ります。オプションの ``contents`` および ``memo`` パラメーターで目次とステータスノートを制御します。共通の PDF パラメーターについては :doc:`../templates` で説明しています。"
+msgstr ""
+"レイアウトは Guidedog バイナリに組み込まれています。``guidedog dsc init`` はカスタマイズ用に "
+"``_templates/discussion.typ`` と共通の ``_templates/theme.typ`` "
+"をコピーします。コピーを持たない既存カタログは組み込みレイアウトを使用します。このテンプレートは、通常の PDF パラメーターに加えて "
+"``record`` 辞書を受け取る ``book`` 関数を定義します。``record.id`` "
+"は可読な識別子、``record.catalog`` はプロジェクト名、``record.fields`` "
+"は可読なフィールドラベルと値のペアを保持します。すべての値はクォートされた文字列として渡されます。ソースの見出しがタイトルとそのアンカーを提供します。テンプレートは特定のプレフィックスやライフサイクルを前提とせずにカタログメタデータを読み取ります。オプションの "
+"``contents`` および ``memo`` パラメーターで目次とステータスノートを制御します。共通の PDF パラメーターについては "
+":doc:`../templates` で説明しています。"
 
 #: ../../howto/discussions.rst:176
 msgid ""
@@ -280,7 +294,9 @@ msgid ""
 "running a project template. A record included as a chapter of a larger "
 "book keeps its metadata in that chapter; the root document selects the "
 "book's layout."
-msgstr "``--untrusted`` ビルドでは、プロジェクトテンプレートを実行する代わりに組み込みの議論レイアウトが使用されます。より大きな書籍の章としてインクルードされたレコードは、その章内でメタデータを保持し、ルートドキュメントが書籍全体のレイアウトを選択します。"
+msgstr ""
+"``--untrusted`` "
+"ビルドでは、プロジェクトテンプレートを実行する代わりに組み込みの議論レイアウトが使用されます。より大きな書籍の章としてインクルードされたレコードは、その章内でメタデータを保持し、ルートドキュメントが書籍全体のレイアウトを選択します。"
 
 #: ../../howto/discussions.rst:178
 msgid "When an update is interrupted"
@@ -480,6 +496,155 @@ msgstr ""
 "のマッピングで名前を解決できます。明示的なマッピングを使うと、ビルドの再現性を保てます。:doc:`../intersphinx` "
 "を参照してください。"
 
+#: ../../howto/format-specific-content.rst:1
+msgid "Deliver format-specific content and custom directives"
+msgstr "フォーマット固有コンテンツとカスタムディレクティブの配信"
+
+#: ../../howto/format-specific-content.rst:4
+msgid ""
+"A single source tree can publish rich, dynamic HTML pages on the web "
+"while typesetting elegant, print-quality PDF books. This guide covers how "
+"to route content to specific output formats, declare custom domain "
+"directives, and invoke Typst typesetting functions."
+msgstr "単一のソースツリーから、Web 上でリッチな動的 HTML ページを公開しつつ、印刷品質のエレガントな PDF 書籍を組版できます。本ガイドでは、特定の出力形式へコンテンツをルーティングし、カスタムドメインディレクティブを宣言し、Typst 組版関数を呼び出す方法を解説します。"
+
+#: ../../howto/format-specific-content.rst:10
+msgid ""
+"Content passes through format guards and object type tables to produce "
+"tailored web and print deliverables."
+msgstr "コンテンツはフォーマットガードと対象型テーブルを通過し、Web と印刷それぞれに最適化された成果物を生成します。"
+
+#: ../../howto/format-specific-content.rst:10
+msgid "Content routing and directive handling for HTML and PDF outputs."
+msgstr "HTML および PDF 出力向けコンテンツルーティングとディレクティブ処理。"
+
+#: ../../howto/format-specific-content.rst:43
+msgid "1. Embed dynamic HTML and client scripts"
+msgstr "1. 動的 HTML とクライアントスクリプトの埋め込み"
+
+#: ../../howto/format-specific-content.rst:46
+msgid ""
+"Use ``.. only:: html`` paired with a ``.. raw:: html`` block to inject "
+"web-specific markup, interactive calculators, or embedded audio/video "
+"components:"
+msgstr "``.. only:: html`` と ``.. raw:: html`` ブロックを組み合わせて使用し、Web 専用マークアップ、対話型計算機、埋め込み音声/動画コンポーネントを挿入します："
+
+#: ../../howto/format-specific-content.rst:60
+msgid ""
+"To supply the supporting CSS and JavaScript: 1. Place your script and "
+"stylesheet in ``_static/`` (e.g. ``_static/interactive.js`` and "
+"``_static/interactive.css``). 2. Register them in ``conf.toml``:"
+msgstr "関連する CSS と JavaScript を提供するには：1. スクリプトとスタイルシートを ``_static/`` に配置します（例：``_static/interactive.js`` と ``_static/interactive.css``）。2. ``conf.toml`` に登録します："
+
+#: ../../howto/format-specific-content.rst:69
+msgid ""
+"The HTML builder copies these files into the build directory and injects "
+"``<link>`` and ``<script>`` tags into every generated page."
+msgstr "HTML ビルダーはこれらのファイルをビルドディレクトリにコピーし、生成されるすべてのページに ``<link>`` および ``<script>`` タグを挿入します。"
+
+#: ../../howto/format-specific-content.rst:72
+msgid "2. Typeset custom Typst formatting for PDF"
+msgstr "2. PDF 向けカスタム Typst 書式設定の組版"
+
+#: ../../howto/format-specific-content.rst:75
+msgid ""
+"To introduce vector shapes, tailored callout boxes, or custom typography "
+"for printed pages, wrap the markup in ``.. only:: typst or latex`` (or "
+"``.. only:: pdf``):"
+msgstr "印刷ページにベクター図形、専用コールアウトボックス、カスタムタイポグラフィを導入するには、マークアップを ``.. only:: typst or latex``（または ``.. only:: pdf``）で囲みます："
+
+#: ../../howto/format-specific-content.rst:95
+msgid ""
+"Guidedog emits this block directly into the Typst document before "
+"invoking the Typst compiler. The HTML builder automatically omits this "
+"block without emitting warnings."
+msgstr "Guidedog は Typst コンパイラを呼び出す前に、このブロックを Typst ドキュメントへ直接出力します。HTML ビルダーは警告を出さずに自動的にこのブロックを除外します。"
+
+#: ../../howto/format-specific-content.rst:98
+msgid "3. Declare custom domain directives in conf.toml"
+msgstr "3. conf.toml でカスタムドメインディレクティブを宣言する"
+
+#: ../../howto/format-specific-content.rst:101
+msgid ""
+"When you need custom structured blocks with signature parsing, "
+"cross-references, and index entries, declare them in ``conf.toml`` under "
+"``[[object_types]]``:"
+msgstr "シグネチャ解析、相互参照、索引エントリを備えたカスタム構造化ブロックが必要な場合は、``conf.toml`` の ``[[object_types]]`` 下で宣言します："
+
+#: ../../howto/format-specific-content.rst:113
+msgid "Now authors can describe services across all documents:"
+msgstr "これで執筆者はすべてのドキュメントでサービスを記述できます："
+
+#: ../../howto/format-specific-content.rst:121
+msgid ""
+"Other documents can link directly to this service using the declared role:"
+msgstr "他のドキュメントから、宣言されたロールを使用してこのサービスへ直接リンクできます："
+
+#: ../../howto/format-specific-content.rst:127
+msgid ""
+"In HTML, Guidedog produces semantic definition tags (``<dl "
+"class=\"service\">``) with automatic anchor links. In PDF, Guidedog "
+"typesets a styled description entry and records an index entry in the "
+"book's index."
+msgstr "HTML では、Guidedog が自動アンカーリンク付きの意味論的定義タグ（``<dl class=\"service\">``）を生成します。PDF では、Guidedog がスタイル付きの説明エントリを組版し、書籍の索引にエントリを記録します。"
+
+#: ../../howto/format-specific-content.rst:130
+msgid "4. Alias existing directives"
+msgstr "4. 既存ディレクティブの別名定義"
+
+#: ../../howto/format-specific-content.rst:133
+msgid ""
+"If you are migrating documentation or want friendlier names for built-in "
+"directives, declare aliases in ``[directive_aliases]`` in ``conf.toml``:"
+msgstr "ドキュメントを移行中である場合や、組み込みディレクティブにより親しみやすい名前を付けたい場合は、``conf.toml`` の ``[directive_aliases]`` で別名を宣言します："
+
+#: ../../howto/format-specific-content.rst:142
+msgid ""
+"Authors can then use ``.. callout::`` or ``.. endpoint::`` using the "
+"options and rules of the target directive."
+msgstr "執筆者は対象ディレクティブのオプションとルールをそのまま使って ``.. callout::`` や ``.. endpoint::`` を利用できます。"
+
+#: ../../howto/format-specific-content.rst:144
+msgid "5. Call reusable Typst functions from templates"
+msgstr "5. テンプレートから再利用可能な Typst 関数を呼び出す"
+
+#: ../../howto/format-specific-content.rst:147
+msgid ""
+"Instead of writing verbose Typst code inline across multiple documents, "
+"define a reusable function in ``_templates/theme.typ``:"
+msgstr "複数のドキュメントに冗長な Typst コードをインライン記述する代わりに、``_templates/theme.typ`` で再利用可能な関数を定義します："
+
+#: ../../howto/format-specific-content.rst:164
+msgid "Call it concisely from reStructuredText:"
+msgstr "reStructuredText から簡潔に呼び出します："
+
+#: ../../howto/format-specific-content.rst:174
+msgid "6. Advanced: Preprocessing directives with a build plugin"
+msgstr "6. 発展：ビルドプラグインによるディレクティブの前処理"
+
+#: ../../howto/format-specific-content.rst:177
+msgid ""
+"When you want to invent a completely custom directive syntax and expand "
+"it dynamically during build time, implement a ``gd_plugins::BuildPlugin`` "
+"in Rust."
+msgstr "完全に独自のディレクティブ構文を考案し、ビルド時に動的に展開したい場合は、Rust で ``gd_plugins::BuildPlugin`` を実装します。"
+
+#: ../../howto/format-specific-content.rst:180
+msgid ""
+"The plugin implements ``process_source``, intercepting the raw document "
+"text before parsing:"
+msgstr "プラグインは ``process_source`` を実装し、解析前の未加工ドキュメントテキストをインターセプトします："
+
+#: ../../howto/format-specific-content.rst:214
+msgid "Register the compiled plugin using:"
+msgstr "コンパイルしたプラグインを次のコマンドで登録します："
+
+#: ../../howto/format-specific-content.rst:220
+msgid ""
+"Guidedog verifies the plugin's SHA-256 fingerprint, starts it per build, "
+"and forwards document sources through its pipeline."
+msgstr "Guidedog はプラグインの SHA-256 フィンガープリントを検証し、ビルドごとに起動して、そのパイプライン経由でドキュメントソースを処理します。"
+
 #: ../../howto/github-pages.rst:1
 msgid "Publish to GitHub Pages"
 msgstr "GitHub Pages に公開する"
@@ -492,13 +657,20 @@ msgid ""
 "publish pages`` can publish it from our own machine, whenever we ask or "
 "whenever the sources change. We use one route per site, because a "
 "repository has one Pages source: GitHub Actions or a branch."
-msgstr "Guidedog のサイトを GitHub Pages に公開する方法は 2 つあります。1 つは GitHub Actions で、リリース版の Guidedog と GitHub 公式の Pages 用 Action を使い、プッシュのたびにビルドしてデプロイします。個人用トークンは不要です。もう 1 つは ``guidedog publish pages`` で、自分のマシンから、指示したときやソースが変わったときに公開します。リポジトリの Pages の公開元は GitHub Actions かブランチのどちらか 1 つなので、1 つのサイトにはどちらか一方の方法を使います。"
+msgstr ""
+"Guidedog のサイトを GitHub Pages に公開する方法は 2 つあります。1 つは GitHub Actions で、リリース版の "
+"Guidedog と GitHub 公式の Pages 用 Action "
+"を使い、プッシュのたびにビルドしてデプロイします。個人用トークンは不要です。もう 1 つは ``guidedog publish pages`` "
+"で、自分のマシンから、指示したときやソースが変わったときに公開します。リポジトリの Pages の公開元は GitHub Actions "
+"かブランチのどちらか 1 つなので、1 つのサイトにはどちらか一方の方法を使います。"
 
 #: ../../howto/github-pages.rst:12
 msgid ""
 "Route 1 uses GitHub Actions CI/CD; Route 2 uses the local guidedog "
 "publish pages publisher with a durable journal."
-msgstr "経路 1 は GitHub Actions CI/CD、経路 2 は永続ジャーナルを持つローカルの guidedog publish pages パブリッシャーです。"
+msgstr ""
+"経路 1 は GitHub Actions CI/CD、経路 2 は永続ジャーナルを持つローカルの guidedog publish pages "
+"パブリッシャーです。"
 
 #: ../../howto/github-pages.rst:12
 msgid "The two routes for publishing documentation to GitHub Pages."
@@ -517,7 +689,9 @@ msgid ""
 "On a machine that has never published, it does each missing step once and "
 "says what it does. It asks before anything that changes GitHub or this "
 "machine's permissions:"
-msgstr "まだ公開したことのないマシンでは、足りない手順をそれぞれ一度だけ実行し、何をしているかを表示します。GitHub やこのマシンの権限を変更する操作の前には、確認を求めます："
+msgstr ""
+"まだ公開したことのないマシンでは、足りない手順をそれぞれ一度だけ実行し、何をしているかを表示します。GitHub "
+"やこのマシンの権限を変更する操作の前には、確認を求めます："
 
 #: ../../howto/github-pages.rst:56
 msgid ""
@@ -606,7 +780,9 @@ msgid ""
 "The step commands stay for scripts and for checking each part. The linked "
 "Pages plugin builds the project with Guidedog. It pushes the whole site "
 "to a branch of its own in one Git commit."
-msgstr "個別の手順コマンドは、スクリプトや各部分の確認のために残しています。リンクされた Pages プラグインは Guidedog でプロジェクトをビルドします。そしてサイト全体を、専用のブランチに 1 つの Git コミットでプッシュします。"
+msgstr ""
+"個別の手順コマンドは、スクリプトや各部分の確認のために残しています。リンクされた Pages プラグインは Guidedog "
+"でプロジェクトをビルドします。そしてサイト全体を、専用のブランチに 1 つの Git コミットでプッシュします。"
 
 #: ../../howto/github-pages.rst:91
 msgid ""
@@ -897,7 +1073,11 @@ msgid ""
 "``guidedog pages init``, ``auth``, ``bind``, ``setup``, ``doctor``, "
 "``watch``, ``status``, ``recover`` and ``workflow`` expose individual "
 "steps for scripts and maintenance."
-msgstr "Pages プラグインは ``guidedog`` にリンクされています。``guidedog publish pages`` は公開プロセスを案内し、ホスト独自の内蔵エンジンでプロジェクトをビルドします。``guidedog pages init``、``auth``、``bind``、``setup``、``doctor``、``watch``、``status``、``recover``、``workflow`` は、スクリプト作成やメンテナンスのための個別の手順を提供します。"
+msgstr ""
+"Pages プラグインは ``guidedog`` にリンクされています。``guidedog publish pages`` "
+"は公開プロセスを案内し、ホスト独自の内蔵エンジンでプロジェクトをビルドします。``guidedog pages "
+"init``、``auth``、``bind``、``setup``、``doctor``、``watch``、``status``、``recover``、``workflow`` "
+"は、スクリプト作成やメンテナンスのための個別の手順を提供します。"
 
 #: ../../howto/github-pages.rst:369
 msgid "No separate publisher program or registration step is needed."
@@ -1081,7 +1261,12 @@ msgid ""
 "see :doc:`discussions`), and static site publishing (``guidedog ssg``; "
 "see :doc:`static-publishing`). The ``gd-graphdog`` library encapsulates "
 "Graphviz inside Guidedog."
-msgstr "パッケージは 1 つの実行ファイル ``guidedog`` をインストールします。その組み込みプラグインにより、GitHub Pages 公開（``guidedog publish pages`` および ``guidedog pages``、:doc:`github-pages` を参照）、議論カタログ（``guidedog dsc``、:doc:`discussions` を参照）、静的サイト公開（``guidedog ssg``、:doc:`static-publishing` を参照）が追加されます。``gd-graphdog`` ライブラリが Guidedog 内部に Graphviz をカプセル化しています。"
+msgstr ""
+"パッケージは 1 つの実行ファイル ``guidedog`` をインストールします。その組み込みプラグインにより、GitHub Pages "
+"公開（``guidedog publish pages`` および ``guidedog pages``、:doc:`github-pages` "
+"を参照）、議論カタログ（``guidedog dsc``、:doc:`discussions` を参照）、静的サイト公開（``guidedog "
+"ssg``、:doc:`static-publishing` を参照）が追加されます。``gd-graphdog`` ライブラリが "
+"Guidedog 内部に Graphviz をカプセル化しています。"
 
 #: ../../howto/install.rst:21
 msgid ""
@@ -1291,7 +1476,11 @@ msgid ""
 "adds ``guidedog publish pages`` and ``guidedog pages`` maintenance "
 "commands. All three are linked into ``guidedog`` and use its services; no "
 "additional program or registration is needed."
-msgstr "リリース版には 1 つの実行ファイルが含まれています。議論プラグインが ``guidedog dsc`` を追加し、静的サイトプラグインが ``guidedog ssg`` を追加し、Pages プラグインが ``guidedog publish pages`` と ``guidedog pages`` メンテナンスコマンドを追加します。3 つすべてが ``guidedog`` にリンクされており、そのサービスを利用します。追加のプログラムや登録は必要ありません。"
+msgstr ""
+"リリース版には 1 つの実行ファイルが含まれています。議論プラグインが ``guidedog dsc`` を追加し、静的サイトプラグインが "
+"``guidedog ssg`` を追加し、Pages プラグインが ``guidedog publish pages`` と "
+"``guidedog pages`` メンテナンスコマンドを追加します。3 つすべてが ``guidedog`` "
+"にリンクされており、そのサービスを利用します。追加のプログラムや登録は必要ありません。"
 
 #: ../../howto/install.rst:118
 msgid ""
@@ -2113,7 +2302,15 @@ msgid ""
 "``:expires-at:`` windows against an explicit RFC 3339 instant, or "
 "``--preview`` to include drafts and future-scheduled pages in a local "
 "build. See :doc:`static-publishing`."
-msgstr "この変数が設定されている場合、Guidedog はすべての日付フォーマット、公開判定、テンプレート変数において、現在のシステムクロックの代わりに指定された Unix エポックタイムスタンプを使用します。また、``guidedog build``、``guidedog serve``、または ``guidedog ssg build`` に ``--now=2026-05-01T09:00:00Z`` を渡して、スケジュールされた ``:publish-at:`` や ``:expires-at:`` の期間を明示的な RFC 3339 日時に対して評価したり、``--preview`` を渡して下書きや将来公開予定のページをローカルビルドに含めたりすることもできます。:doc:`static-publishing` を参照してください。"
+msgstr ""
+"この変数が設定されている場合、Guidedog "
+"はすべての日付フォーマット、公開判定、テンプレート変数において、現在のシステムクロックの代わりに指定された Unix "
+"エポックタイムスタンプを使用します。また、``guidedog build``、``guidedog serve``、または ``guidedog "
+"ssg build`` に ``--now=2026-05-01T09:00:00Z`` を渡して、スケジュールされた "
+"``:publish-at:`` や ``:expires-at:`` の期間を明示的な RFC 3339 "
+"日時に対して評価したり、``--preview`` "
+"を渡して下書きや将来公開予定のページをローカルビルドに含めたりすることもできます。:doc:`static-publishing` "
+"を参照してください。"
 
 #: ../../howto/publish.rst:131
 msgid "Deployment options"
@@ -2192,7 +2389,10 @@ msgid ""
 "share the normal HTML and PDF pipeline. Leading metadata fields declare "
 "when a page is eligible for publication, which layout it uses, and "
 "whether it also compiles to a standalone article PDF."
-msgstr "日付付きの記事、リリースノート、ホワイトペーパー、独立したランディングページは、通常の HTML および PDF パイプラインを共有します。先頭のメタデータフィールドで、ページがいつ公開可能になるか、どのレイアウトを使用するか、および独立した記事 PDF にもコンパイルするかどうかを宣言します。"
+msgstr ""
+"日付付きの記事、リリースノート、ホワイトペーパー、独立したランディングページは、通常の HTML および PDF "
+"パイプラインを共有します。先頭のメタデータフィールドで、ページがいつ公開可能になるか、どのレイアウトを使用するか、および独立した記事 PDF "
+"にもコンパイルするかどうかを宣言します。"
 
 #: ../../howto/static-publishing.rst:6
 msgid "Authoring and publication state"
@@ -2214,7 +2414,14 @@ msgid ""
 "future date. ``draft`` withholds a source from subsequent release builds "
 "without discarding its existing date metadata. Version control stays in "
 "the author's hands; the commands never commit, tag or move files."
-msgstr "reStructuredText の代わりに YAML フロントマター付きの Markdown を作成するには、``.md`` パスを渡します。Markdown ビルドの場合は、通常どおり ``source_suffix`` に ``.md`` を含め、``extensions`` で ``myst_parser`` を有効にします。``new`` は下書きを作成し、既存のファイルの上書きを拒否します。``publish`` は下書き、スケジュール、有効期限をクリアし、過去の日付が存在すればそれを保持し、ソースに日付がないか将来の日付である場合は現在の UTC 日付を記録します。``draft`` は、既存の日付メタデータを破棄することなく、以降のリリースビルドからソースを保留します。バージョン管理は執筆者の手元に委ねられており、コマンドがコミット、タグ付け、ファイルの移動を行うことはありません。"
+msgstr ""
+"reStructuredText の代わりに YAML フロントマター付きの Markdown を作成するには、``.md`` "
+"パスを渡します。Markdown ビルドの場合は、通常どおり ``source_suffix`` に ``.md`` "
+"を含め、``extensions`` で ``myst_parser`` を有効にします。``new`` "
+"は下書きを作成し、既存のファイルの上書きを拒否します。``publish`` "
+"は下書き、スケジュール、有効期限をクリアし、過去の日付が存在すればそれを保持し、ソースに日付がないか将来の日付である場合は現在の UTC "
+"日付を記録します。``draft`` "
+"は、既存の日付メタデータを破棄することなく、以降のリリースビルドからソースを保留します。バージョン管理は執筆者の手元に委ねられており、コマンドがコミット、タグ付け、ファイルの移動を行うことはありません。"
 
 #: ../../howto/static-publishing.rst:18
 msgid ""
@@ -2235,14 +2442,20 @@ msgid ""
 "metadata for a separate language edition, edit that edition's source "
 "files. Invalid publication metadata stops the output commit and preserves "
 "the previous successful website."
-msgstr "日付のみの公開は UTC 午前 0 時に開始されます。``publish-at`` は RFC 3339 日時でその境界を上書きし、``expires-at`` は排他的な日時に公開を終了します。下書き、将来の記事、および期限切れの記事は、ナビゲーション、検索、フィード、およびソースダウンロードが構築される前に除外されます。公開メタデータはソースの設定とみなされ、gettext カタログからは除外されます。認識された公開フィールドはレイアウトデータを提供し、本文のレンダリングや検索テキストからは省略されますが、未知のフィールドや後続の通常のフィールドリストはコンテンツとして残ります。別の言語エディションでメタデータを変更する場合は、そのエディションのソースファイルを編集します。無効な公開メタデータは出力のコミットを中止し、以前の正常なウェブサイトを保持します。"
+msgstr ""
+"日付のみの公開は UTC 午前 0 時に開始されます。``publish-at`` は RFC 3339 "
+"日時でその境界を上書きし、``expires-at`` "
+"は排他的な日時に公開を終了します。下書き、将来の記事、および期限切れの記事は、ナビゲーション、検索、フィード、およびソースダウンロードが構築される前に除外されます。公開メタデータはソースの設定とみなされ、gettext "
+"カタログからは除外されます。認識された公開フィールドはレイアウトデータを提供し、本文のレンダリングや検索テキストからは省略されますが、未知のフィールドや後続の通常のフィールドリストはコンテンツとして残ります。別の言語エディションでメタデータを変更する場合は、そのエディションのソースファイルを編集します。無効な公開メタデータは出力のコミットを中止し、以前の正常なウェブサイトを保持します。"
 
 #: ../../howto/static-publishing.rst:37
 msgid ""
 "Sources with leading metadata pass through the build-clock gate; eligible "
 "documents produce HTML pages, optional article PDFs, collection archives "
 "and discovery feeds, while withheld documents stay in the private cache."
-msgstr "先頭にメタデータを持つソースはビルドクロックゲートを通過します。適格なドキュメントは HTML ページ、オプションの記事 PDF、コレクションアーカイブ、およびディスカバリーフィードを生成しますが、保留されたドキュメントは非公開キャッシュにとどまります。"
+msgstr ""
+"先頭にメタデータを持つソースはビルドクロックゲートを通過します。適格なドキュメントは HTML ページ、オプションの記事 "
+"PDF、コレクションアーカイブ、およびディスカバリーフィードを生成しますが、保留されたドキュメントは非公開キャッシュにとどまります。"
 
 #: ../../howto/static-publishing.rst:37
 msgid ""
@@ -2255,7 +2468,9 @@ msgid ""
 "Use ``guidedog build html --preview`` (or ``guidedog serve --preview``) "
 "to inspect unpublished pages locally. When keeping both public and "
 "preview outputs on disk, write the preview to a separate output directory:"
-msgstr "ローカルで未公開ページを確認するには、``guidedog build html --preview``（または ``guidedog serve --preview``）を使用します。公開出力とプレビュー出力の両方をディスクに保持する場合は、プレビューを別の出力ディレクトリに書き出します:"
+msgstr ""
+"ローカルで未公開ページを確認するには、``guidedog build html --preview``（または ``guidedog serve "
+"--preview``）を使用します。公開出力とプレビュー出力の両方をディスクに保持する場合は、プレビューを別の出力ディレクトリに書き出します:"
 
 #: ../../howto/static-publishing.rst:67
 msgid "Collections, archives and feeds"
@@ -2275,7 +2490,11 @@ msgid ""
 "docname breaking ties; ``:sort: date`` places the oldest first. ``:style: "
 "cards`` adds a card-layout CSS class, and ``:excerpts:`` includes each "
 "article's plain-text summary."
-msgstr "``:path:`` はソース拡張子のない docname にマッチします。カテゴリー、著者、シリーズの各フィルターは完全一致し、指定されたすべてのタグが一致する必要があります。記事は公開日時順に並べられ（デフォルトでは最新順）、同日時の場合は docname で順序を決定します。``:sort: date`` は最古のものを先頭に配置します。``:style: cards`` はカードレイアウト用の CSS クラスを追加し、``:excerpts:`` は各記事のプレーンテキスト要約を含めます。"
+msgstr ""
+"``:path:`` はソース拡張子のない docname "
+"にマッチします。カテゴリー、著者、シリーズの各フィルターは完全一致し、指定されたすべてのタグが一致する必要があります。記事は公開日時順に並べられ（デフォルトでは最新順）、同日時の場合は "
+"docname で順序を決定します。``:sort: date`` は最古のものを先頭に配置します。``:style: cards`` "
+"はカードレイアウト用の CSS クラスを追加し、``:excerpts:`` は各記事のプレーンテキスト要約を含めます。"
 
 #: ../../howto/static-publishing.rst:82
 msgid "Enable site-wide discovery files in ``conf.toml``:"
@@ -2288,7 +2507,10 @@ msgid ""
 "prefix). Discovery files derive their timestamps from source metadata "
 "rather than the wall clock, producing identical bytes when eligible "
 "sources and metadata are unchanged."
-msgstr "HTML および dirhtml ビルダーは、設定された ``base_url``（ホスティングプレフィックスを含む）を使用して ``sitemap.xml``、``rss.xml``、``atom.xml`` を出力します。ディスカバリーファイルは実時間ではなくソースメタデータからタイムスタンプを導出するため、適格なソースとメタデータが変更されていない場合はまったく同じバイト列を生成します。"
+msgstr ""
+"HTML および dirhtml ビルダーは、設定された ``base_url``（ホスティングプレフィックスを含む）を使用して "
+"``sitemap.xml``、``rss.xml``、``atom.xml`` "
+"を出力します。ディスカバリーファイルは実時間ではなくソースメタデータからタイムスタンプを導出するため、適格なソースとメタデータが変更されていない場合はまったく同じバイト列を生成します。"
 
 #: ../../howto/static-publishing.rst:93
 msgid ""
@@ -2311,7 +2533,19 @@ msgid ""
 "URLs or ``None``. Each post entry provides ``title``, ``docname``, "
 "``date``, ``url``, ``summary`` and typed ``meta`` values, including its "
 "optional ``pdf_url``."
-msgstr "コレクションは ``journal/index.html`` から始まり、相対的な前後のリンクを伴って ``journal/page/2/index.html`` へと続きます。``page_size`` を 0 にすると、コレクションは 1 ページにまとめられます。各コレクションは ``path``、``category``、``tags``、``author``、``series``、``year`` フィルターを受け付けます。``feeds = true`` の場合、``journal/rss.xml`` および ``journal/atom.xml`` にはすべてのページにわたる完全なフィルタリング済みセレクションが含まれます。コレクションのレイアウトは、``template`` でオーバーライドが指定されない限り ``collection.html`` がデフォルトになります。テンプレートは ``collection`` 内で現在のページ番号、総ページ数、選択された投稿を受け取り、``collection.previous_url`` と ``collection.next_url`` には相対 URL または ``None`` が設定されます。各投稿エントリーは ``title``、``docname``、``date``、``url``、``summary``、およびオプションの ``pdf_url`` を含む型付き ``meta`` 値を提供します。"
+msgstr ""
+"コレクションは ``journal/index.html`` から始まり、相対的な前後のリンクを伴って "
+"``journal/page/2/index.html`` へと続きます。``page_size`` を 0 にすると、コレクションは 1 "
+"ページにまとめられます。各コレクションは "
+"``path``、``category``、``tags``、``author``、``series``、``year`` "
+"フィルターを受け付けます。``feeds = true`` の場合、``journal/rss.xml`` および "
+"``journal/atom.xml`` "
+"にはすべてのページにわたる完全なフィルタリング済みセレクションが含まれます。コレクションのレイアウトは、``template`` "
+"でオーバーライドが指定されない限り ``collection.html`` がデフォルトになります。テンプレートは ``collection`` "
+"内で現在のページ番号、総ページ数、選択された投稿を受け取り、``collection.previous_url`` と "
+"``collection.next_url`` には相対 URL または ``None`` が設定されます。各投稿エントリーは "
+"``title``、``docname``、``date``、``url``、``summary``、およびオプションの ``pdf_url`` "
+"を含む型付き ``meta`` 値を提供します。"
 
 #: ../../howto/static-publishing.rst:112
 msgid ""
@@ -2323,7 +2557,10 @@ msgid ""
 "generated output. When publication state or collection membership "
 "shrinks, the output commit removes obsolete archive and pagination pages "
 "automatically."
-msgstr "タクソノミーアーカイブは ``tags/rust/index.html`` や ``year/2026/index.html`` などのパスに出力されます。見出しは元のラベルテキストを保持しますが、ファイルシステムパスは大文字、句読点、非 ASCII バイトをエスケープするため、大文字小文字を区別しないファイルシステムでも別々のラベルが衝突することはありません。生成されたページが執筆者の作成したページや他の生成出力を上書きすることはありません。公開状態やコレクションの所属が減少した場合、出力コミットは不要になったアーカイブやページネーションページを自動的に削除します。"
+msgstr ""
+"タクソノミーアーカイブは ``tags/rust/index.html`` や ``year/2026/index.html`` "
+"などのパスに出力されます。見出しは元のラベルテキストを保持しますが、ファイルシステムパスは大文字、句読点、非 ASCII "
+"バイトをエスケープするため、大文字小文字を区別しないファイルシステムでも別々のラベルが衝突することはありません。生成されたページが執筆者の作成したページや他の生成出力を上書きすることはありません。公開状態やコレクションの所属が減少した場合、出力コミットは不要になったアーカイブやページネーションページを自動的に削除します。"
 
 #: ../../howto/static-publishing.rst:114
 msgid "Layouts and standalone article PDFs"
@@ -2341,7 +2578,16 @@ msgid ""
 "enabled taxonomy to ``{name, url}`` entries, and ``page.word_count`` and "
 "``page.reading_minutes`` (computed using ``myst_words_per_minute``, "
 "counting CJK characters individually)."
-msgstr "日付付きの記事はデフォルトで ``article.html`` を選択し、その他のページは ``layout.html`` を拡張した ``page.html`` を選択します。どのページでも ``templates_path`` 内のカスタムテンプレートを ``:template: landing.html`` で選択でき、``:nosidebar: true`` で組み込みのナビゲーションサイドバーを非表示にできます。テンプレートは ``page.meta`` 内で日付、著者、タグ、カテゴリー、シリーズ、要約、下書き状態、PDF リンクを受け取ります。また、記事テンプレートは公開順の ``page.older`` と ``page.newer``、有効化された各タクソノミーを ``{name, url}`` エントリーに対応付ける ``page.taxonomies``、ならびに ``page.word_count`` と ``page.reading_minutes``（CJK 文字を個別にカウントする ``myst_words_per_minute`` を使用して算出）も受け取ります。"
+msgstr ""
+"日付付きの記事はデフォルトで ``article.html`` を選択し、その他のページは ``layout.html`` を拡張した "
+"``page.html`` を選択します。どのページでも ``templates_path`` 内のカスタムテンプレートを "
+"``:template: landing.html`` で選択でき、``:nosidebar: true`` "
+"で組み込みのナビゲーションサイドバーを非表示にできます。テンプレートは ``page.meta`` "
+"内で日付、著者、タグ、カテゴリー、シリーズ、要約、下書き状態、PDF リンクを受け取ります。また、記事テンプレートは公開順の "
+"``page.older`` と ``page.newer``、有効化された各タクソノミーを ``{name, url}`` "
+"エントリーに対応付ける ``page.taxonomies``、ならびに ``page.word_count`` と "
+"``page.reading_minutes``（CJK 文字を個別にカウントする ``myst_words_per_minute`` "
+"を使用して算出）も受け取ります。"
 
 #: ../../howto/static-publishing.rst:119
 msgid ""
@@ -2354,7 +2600,14 @@ msgid ""
 "source is saved under ``sources/`` in the output folder for inspection. "
 "Standalone article PDFs are produced by the ``html`` and ``dirhtml`` "
 "builders; ``singlehtml`` retains its single-page HTML behavior."
-msgstr "``:pdf: article`` を設定すると、記事の HTML ページの隣に独立した PDF がコンパイルされます（``html`` では ``notes.pdf``、``dirhtml`` では ``notes/index.pdf``）。組み込みの ``article.typ`` レイアウトは、タイトルと著者のブロック、要約、および 2 ページ目以降のランニングヘッダーを備えた連続した文章をレンダリングします。プロジェクト内に同じ ``book`` 関数シグネチャを持つ ``_templates/article.typ`` を配置することでオーバーライドできます。生成された Typst ソースは、検査用に出力フォルダー内の ``sources/`` 下に保存されます。独立した記事 PDF は ``html`` および ``dirhtml`` ビルダーによって生成されます。``singlehtml`` は単一ページ HTML の動作を維持します。"
+msgstr ""
+"``:pdf: article`` を設定すると、記事の HTML ページの隣に独立した PDF がコンパイルされます（``html`` では "
+"``notes.pdf``、``dirhtml`` では ``notes/index.pdf``）。組み込みの ``article.typ`` "
+"レイアウトは、タイトルと著者のブロック、要約、および 2 "
+"ページ目以降のランニングヘッダーを備えた連続した文章をレンダリングします。プロジェクト内に同じ ``book`` 関数シグネチャを持つ "
+"``_templates/article.typ`` を配置することでオーバーライドできます。生成された Typst "
+"ソースは、検査用に出力フォルダー内の ``sources/`` 下に保存されます。独立した記事 PDF は ``html`` および "
+"``dirhtml`` ビルダーによって生成されます。``singlehtml`` は単一ページ HTML の動作を維持します。"
 
 #: ../../howto/static-publishing.rst:121
 msgid "Starter sites"
@@ -2386,7 +2639,10 @@ msgid ""
 "All three presets copy editable HTML, CSS and Typst theme files and "
 "refuse to overwrite an existing destination. Update the example "
 "``base_url`` in ``conf.toml`` before publishing feeds or sitemaps."
-msgstr "3 つのプリセットはいずれも編集可能な HTML、CSS、Typst テーマファイルをコピーし、既存の送信先の上書きを拒否します。フィードやサイトマップを公開する前に、``conf.toml`` のサンプル ``base_url`` を更新してください。"
+msgstr ""
+"3 つのプリセットはいずれも編集可能な HTML、CSS、Typst "
+"テーマファイルをコピーし、既存の送信先の上書きを拒否します。フィードやサイトマップを公開する前に、``conf.toml`` のサンプル "
+"``base_url`` を更新してください。"
 
 #: ../../howto/static-publishing.rst:137
 msgid ""
@@ -2394,7 +2650,10 @@ msgid ""
 "project into ``_build/site`` by default. ``--out DIR`` selects another "
 "destination, ``--now RFC3339`` fixes the publication clock, and "
 "``--preview`` includes withheld documents."
-msgstr "マウントが設定されていない場合、``guidedog ssg build`` はデフォルトで単一プロジェクトを ``_build/site`` にビルドします。``--out DIR`` で別の出力先を選択し、``--now RFC3339`` で公開クロックを固定し、``--preview`` で保留されたドキュメントを含めます。"
+msgstr ""
+"マウントが設定されていない場合、``guidedog ssg build`` はデフォルトで単一プロジェクトを ``_build/site`` "
+"にビルドします。``--out DIR`` で別の出力先を選択し、``--now RFC3339`` "
+"で公開クロックを固定し、``--preview`` で保留されたドキュメントを含めます。"
 
 #: ../../howto/static-publishing.rst:139
 msgid "Mounted projects and editions"
@@ -2416,20 +2675,30 @@ msgid ""
 "prefix. Mount names and edition output directories must be distinct "
 "ignoring ASCII case, though different mounts may share an output "
 "directory when their emitted files are disjoint."
-msgstr "すべてのマウント ``source`` は、シンボリックリンクをたどった後にサイト設定ディレクトリの下に解決される必要があります。エディションは、``source`` に別の翻訳済みプロジェクトディレクトリが指定されていない限り、マウントのソースプロジェクト内の gettext カタログを使用します。エディションの ``output`` はマウントの ``output`` プレフィックスに対する相対パスであり、空文字列はそのプレフィックスのルートにマウントされます。マウント名とエディションの出力ディレクトリは ASCII の大文字小文字を無視して一意である必要がありますが、出力ファイルが互いに重複しない場合は、異なるマウント間で出力ディレクトリを共有できます。"
+msgstr ""
+"すべてのマウント ``source`` "
+"は、シンボリックリンクをたどった後にサイト設定ディレクトリの下に解決される必要があります。エディションは、``source`` "
+"に別の翻訳済みプロジェクトディレクトリが指定されていない限り、マウントのソースプロジェクト内の gettext "
+"カタログを使用します。エディションの ``output`` はマウントの ``output`` "
+"プレフィックスに対する相対パスであり、空文字列はそのプレフィックスのルートにマウントされます。マウント名とエディションの出力ディレクトリは "
+"ASCII "
+"の大文字小文字を無視して一意である必要がありますが、出力ファイルが互いに重複しない場合は、異なるマウント間で出力ディレクトリを共有できます。"
 
 #: ../../howto/static-publishing.rst:176
 msgid ""
 "Root conf.toml declares mounts, language editions, and shared assets; ssg "
 "build compiles each mount, verifies mount:// links and file collisions, "
 "and commits the assembled site in one Generation."
-msgstr "ルートの conf.toml でマウント、言語エディション、共有アセットを宣言します。ssg build は各マウントをコンパイルし、mount:// リンクとファイルの衝突を検証して、構築されたサイトを 1 つの世代としてコミットします。"
+msgstr ""
+"ルートの conf.toml でマウント、言語エディション、共有アセットを宣言します。ssg build "
+"は各マウントをコンパイルし、mount:// リンクとファイルの衝突を検証して、構築されたサイトを 1 つの世代としてコミットします。"
 
 #: ../../howto/static-publishing.rst:176
 msgid ""
 "Mounted builds stage every project and language edition under one clock "
 "and publish the complete website atomically."
-msgstr "マウントビルドは、単一のクロックの下ですべてのプロジェクトと言語エディションをステージングし、ウェブサイト全体をアトミックに公開します。"
+msgstr ""
+"マウントビルドは、単一のクロックの下ですべてのプロジェクトと言語エディションをステージングし、ウェブサイト全体をアトミックに公開します。"
 
 #: ../../howto/static-publishing.rst:198
 msgid ""
@@ -2443,7 +2712,15 @@ msgid ""
 "translated output stay aligned. Nonempty ``version`` and ``release`` "
 "values from the root configuration propagate to every mount, and one "
 "publication clock governs the entire build."
-msgstr "サポートされているマウントビルダーは ``html``、``dirhtml``、``pdf``、および ``discussion-pdf``（``prefix`` 下の議論カタログを検証し、アクティブなレコードごとに PDF 書籍をビルドする）です。``exclude`` はグロブでマウントの相対出力ファイルをフィルタリングし、``overrides`` は ``-D`` 設定の割り当て（``{language}``、``{edition}``、``{site_root}``、``{base_url}`` プレースホルダー付き）を渡します。ルーティングと翻訳出力の整合性を保つため、``language`` のオーバーライドではなく ``editions.language`` を通じて言語を選択してください。ルート設定の空でない ``version`` と ``release`` の値はすべてのマウントに伝播し、単一の公開クロックがビルド全体を制御します。"
+msgstr ""
+"サポートされているマウントビルダーは ``html``、``dirhtml``、``pdf``、および "
+"``discussion-pdf``（``prefix`` 下の議論カタログを検証し、アクティブなレコードごとに PDF "
+"書籍をビルドする）です。``exclude`` はグロブでマウントの相対出力ファイルをフィルタリングし、``overrides`` は "
+"``-D`` "
+"設定の割り当て（``{language}``、``{edition}``、``{site_root}``、``{base_url}`` "
+"プレースホルダー付き）を渡します。ルーティングと翻訳出力の整合性を保つため、``language`` のオーバーライドではなく "
+"``editions.language`` を通じて言語を選択してください。ルート設定の空でない ``version`` と "
+"``release`` の値はすべてのマウントに伝播し、単一の公開クロックがビルド全体を制御します。"
 
 #: ../../howto/static-publishing.rst:200
 msgid "Link across mounts with the ``mount://`` scheme:"
@@ -2458,7 +2735,11 @@ msgid ""
 "generation, so a stale file from an earlier build cannot satisfy a link "
 "to a newly withheld document. If any mount fails or a cross-mount target "
 "is missing, the previous published website remains intact."
-msgstr "リンクは対象マウントの一致する言語エディションに解決され、なければデフォルトエディションにフォールバックします。HTML は相対 URL を受け取り（ホスティングプレフィックスがあれば維持）、PDF は公開 ``base_url`` を使用します。組み立て時にすべての ``mount://`` ターゲットが現在の世代に存在することが検証されるため、以前のビルドの古いファイルが新しく保留されたドキュメントへのリンクを満たすことはありません。いずれかのマウントが失敗するか、マウント間ターゲットが見つからない場合、以前公開されたウェブサイトはそのまま保持されます。"
+msgstr ""
+"リンクは対象マウントの一致する言語エディションに解決され、なければデフォルトエディションにフォールバックします。HTML は相対 URL "
+"を受け取り（ホスティングプレフィックスがあれば維持）、PDF は公開 ``base_url`` を使用します。組み立て時にすべての "
+"``mount://`` "
+"ターゲットが現在の世代に存在することが検証されるため、以前のビルドの古いファイルが新しく保留されたドキュメントへのリンクを満たすことはありません。いずれかのマウントが失敗するか、マウント間ターゲットが見つからない場合、以前公開されたウェブサイトはそのまま保持されます。"
 
 #: ../../howto/static-publishing.rst:208
 msgid ""
@@ -2468,7 +2749,12 @@ msgid ""
 "declares the landing pages, seven manual HTML editions, seven manual PDF "
 "books and discussion catalog builds in this format, and ``cargo xtask "
 "build-site`` delegates directly to ``guidedog ssg build``."
-msgstr "HTML プレビュー時に PDF マウントをスキップし、マウント間の PDF ダウンロードリンクを削除するには ``--no-pdf`` を渡します。カスタムテンプレートは ``ssg_no_pdf`` を検査して PDF コントロールを非表示にできます。Guidedog 自身の ``docs/conf.toml`` は、ランディングページ、7 つのマニュアル HTML エディション、7 つのマニュアル PDF 書籍、議論カタログのビルドをこの形式で宣言しており、``cargo xtask build-site`` は ``guidedog ssg build`` に直接処理を委譲します。"
+msgstr ""
+"HTML プレビュー時に PDF マウントをスキップし、マウント間の PDF ダウンロードリンクを削除するには ``--no-pdf`` "
+"を渡します。カスタムテンプレートは ``ssg_no_pdf`` を検査して PDF コントロールを非表示にできます。Guidedog 自身の "
+"``docs/conf.toml`` は、ランディングページ、7 つのマニュアル HTML エディション、7 つのマニュアル PDF "
+"書籍、議論カタログのビルドをこの形式で宣言しており、``cargo xtask build-site`` は ``guidedog ssg "
+"build`` に直接処理を委譲します。"
 
 #: ../../howto/static-publishing.rst:210
 msgid "Pinned themes"
@@ -2478,7 +2764,9 @@ msgstr "ピン留めされたテーマ"
 msgid ""
 "Package a directory containing ``_templates/`` and ``_static/`` into a "
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
-msgstr "``_templates/`` と ``_static/`` を含むディレクトリをポータブルな ``.gdt`` アーカイブにパッケージ化し、明示的な SHA-256 ピンを指定してインストールします:"
+msgstr ""
+"``_templates/`` と ``_static/`` を含むディレクトリをポータブルな ``.gdt`` "
+"アーカイブにパッケージ化し、明示的な SHA-256 ピンを指定してインストールします:"
 
 #: ../../howto/static-publishing.rst:220
 msgid ""
@@ -2486,7 +2774,10 @@ msgid ""
 "theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
 "files take precedence over the installed theme, and project static files "
 "override theme static files of the same relative path."
-msgstr "``HASH`` をアーカイブの SHA-256 ダイジェストに置き換えます。``[site]`` で ``theme = true`` を設定して検証済みテーマを有効にします。プロジェクトの ``_templates/`` ファイルはインストールされたテーマより優先され、プロジェクトの静的ファイルは同じ相対パスを持つテーマの静的ファイルを上書きします。"
+msgstr ""
+"``HASH`` をアーカイブの SHA-256 ダイジェストに置き換えます。``[site]`` で ``theme = true`` "
+"を設定して検証済みテーマを有効にします。プロジェクトの ``_templates/`` "
+"ファイルはインストールされたテーマより優先され、プロジェクトの静的ファイルは同じ相対パスを持つテーマの静的ファイルを上書きします。"
 
 #: ../../howto/static-publishing.rst:222
 msgid ""
@@ -2496,7 +2787,11 @@ msgid ""
 "expanded data, and 32 directory levels; traversal, case aliases, reserved "
 "platform names, symlinks, file/directory overlaps and executable hooks "
 "are rejected."
-msgstr "バージョン 1 の ``.gdt`` アーカイブは、``_templates/`` および ``_static/`` 下のポータブルな相対パスを base64 形式のファイルバイト列に対応付ける UTF-8 JSON（``format = 1``）です。アーカイブは最大 4,096 ファイル、展開後データ 64 MiB、ディレクトリ階層 32 レベルに制限されており、パストラバーサル、大文字小文字のエイリアス、予約されたプラットフォーム名、シンボリックリンク、ファイルとディレクトリの重複、実行可能フックは拒否されます。"
+msgstr ""
+"バージョン 1 の ``.gdt`` アーカイブは、``_templates/`` および ``_static/`` 下のポータブルな相対パスを "
+"base64 形式のファイルバイト列に対応付ける UTF-8 JSON（``format = 1``）です。アーカイブは最大 4,096 "
+"ファイル、展開後データ 64 MiB、ディレクトリ階層 32 "
+"レベルに制限されており、パストラバーサル、大文字小文字のエイリアス、予約されたプラットフォーム名、シンボリックリンク、ファイルとディレクトリの重複、実行可能フックは拒否されます。"
 
 #: ../../howto/static-publishing.rst:224
 msgid ""
@@ -2508,7 +2803,11 @@ msgid ""
 "``guidedog-theme.lock``. Builds never fetch themes over the network; they "
 "verify the locked tree offline and fail closed if any file is missing, "
 "modified, added or replaced by a symlink."
-msgstr "``guidedog-theme.lock`` は、ソース URL またはパス、アーカイブの SHA-256、および正規ツリー SHA-256（バージョン付きドメインタグ、長さ区切りでソートされたファイル名とファイルバイト列から計算）を記録します。インストール処理は ``_themes/<TREE_SHA256>/`` を書き込んで同期し、``guidedog-theme.lock`` をアトミックに置き換える前にディレクトリとエンコードされたロックの両方を検証します。ビルド時にネットワーク経由でテーマを取得することは一切ありません。ロックされたツリーをオフラインで検証し、ファイルの欠落、変更、追加、またはシンボリックリンクによる置き換えがあった場合はフェイルクローズ（安全に終了）します。"
+msgstr ""
+"``guidedog-theme.lock`` は、ソース URL またはパス、アーカイブの SHA-256、および正規ツリー "
+"SHA-256（バージョン付きドメインタグ、長さ区切りでソートされたファイル名とファイルバイト列から計算）を記録します。インストール処理は "
+"``_themes/<TREE_SHA256>/`` を書き込んで同期し、``guidedog-theme.lock`` "
+"をアトミックに置き換える前にディレクトリとエンコードされたロックの両方を検証します。ビルド時にネットワーク経由でテーマを取得することは一切ありません。ロックされたツリーをオフラインで検証し、ファイルの欠落、変更、追加、またはシンボリックリンクによる置き換えがあった場合はフェイルクローズ（安全に終了）します。"
 
 #~ msgid ""
 #~ "The GitHub Pages plugin is linked into ``guidedog``, and it adds two "
@@ -2572,5 +2871,4 @@ msgstr "``guidedog-theme.lock`` は、ソース URL またはパス、アーカ�
 #~ "timestamp instead of the current system clock for all date formatting "
 #~ "and template variables."
 #~ msgstr "指定した Unix 時刻を、現在時刻の代わりに日付書式とテンプレート変数に使います。"
-
 

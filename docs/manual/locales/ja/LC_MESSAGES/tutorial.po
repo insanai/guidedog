@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-17 14:14+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -47,7 +47,9 @@ msgid ""
 "layout, cover, running heads, contents, code styles and optimized "
 "paragraph breaking."
 msgstr ""
-"生成された ``orbit/_templates/book.typ`` を、同じディレクトリ内で ``base-book.typ`` に名前変更します。あわせて生成された ``theme.typ`` もその隣に残しておきます。名前を変えた書籍テンプレートもそのまま保持します。検証済みのページレイアウト、表紙、柱、目次、コードのスタイル、最適化された段落の改行処理を提供するからです。"
+"生成された ``orbit/_templates/book.typ`` を、同じディレクトリ内で ``base-book.typ`` "
+"に名前変更します。あわせて生成された ``theme.typ`` "
+"もその隣に残しておきます。名前を変えた書籍テンプレートもそのまま保持します。検証済みのページレイアウト、表紙、柱、目次、コードのスタイル、最適化された段落の改行処理を提供するからです。"
 
 #: ../../tutorial/a-custom-theme.rst:21
 msgid ""
@@ -535,6 +537,140 @@ msgstr "数式については :doc:`../topics/mathematics` を参照してくだ
 msgid "Custom styles and book fonts are in :doc:`../topics/typography`."
 msgstr "独自のスタイルと書籍用フォントについては :doc:`../topics/typography` を参照してください。"
 
+#: ../../tutorial/dynamic-content-and-directives.rst:1
+msgid "Custom directives and dynamic content"
+msgstr "カスタムディレクティブと動的コンテンツ"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:4
+msgid ""
+"Guidedog publishes the same document tree to an interactive HTML website "
+"and a typeset PDF book. Web readers benefit from interactive calculators, "
+"search filters, and embedded widgets. Book readers benefit from balanced "
+"columns, callout cards, and vector typography."
+msgstr "Guidedog は同一のドキュメントツリーから対話型 HTML ウェブサイトと組版された PDF 書籍を公開します。Web 読者は対話型計算機、検索フィルター、埋め込みウィジェットを活用できます。書籍の読者は整った段組み、コールアウトカード、高品質なベクタータイポグラフィの恩恵を受けられます。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:8
+msgid ""
+"This tutorial builds a project that demonstrates both without duplicating "
+"prose. We declare a custom semantic directive in ``conf.toml``, add an "
+"interactive calculator for web readers, and design a print-quality "
+"callout block for the PDF book."
+msgstr "このチュートリアルでは、本文を重複させることなく両方を実現するプロジェクトを構築します。``conf.toml`` でカスタムの意味論的ディレクティブを宣言し、Web 読者向けの対話型計算機を追加し、PDF 書籍向けの印刷品質コールアウトブロックを設計します。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:14
+msgid ""
+"One source document evaluates object types for both outputs, sending raw "
+"HTML to the web and raw Typst to the PDF book."
+msgstr "1 つのソースドキュメントが両方の出力向けに対象型を評価し、未加工の HTML を Web に、未加工の Typst を PDF 書籍に送ります。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:14
+msgid ""
+"Format-gated evaluation and custom directives across HTML and PDF "
+"pipelines."
+msgstr "HTML および PDF パイプラインを跨ぐフォーマット制限評価とカスタムディレクティブ。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:56
+#: ../../tutorial/first-project.rst:54
+msgid "1. Create the project"
+msgstr "1. プロジェクトを作る"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:59
+msgid "Start in a clean directory and run:"
+msgstr "クリーンなディレクトリで以下を実行します："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:65
+msgid "Move into the new directory:"
+msgstr "作成されたディレクトリに移動します："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:71
+msgid "2. Declare custom domain directives in conf.toml"
+msgstr "2. conf.toml でカスタムドメインディレクティブを宣言する"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:74
+msgid ""
+"A project often needs structured entities that standard domains (such as "
+"Python or C++) do not cover. Rather than requiring a Python runtime or "
+"custom extension compiler, Guidedog lets us declare custom directives and "
+"roles in ``conf.toml``."
+msgstr "プロジェクトでは、標準ドメイン（Python や C++ など）がカバーしていない構造化エンティティが必要になることがよくあります。Guidedog では、Python ランタイムや拡張コンパイラを必要とせず、``conf.toml`` 内でカスタムディレクティブとロールを直接宣言できます。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:78
+msgid ""
+"Open ``conf.toml`` and append the declaration for a ``metric`` directive:"
+msgstr "``conf.toml`` を開き、``metric`` ディレクティブの宣言を追加します："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:89
+msgid ""
+"This single declaration establishes a complete syntax contract: * ``.. "
+"metric:: p99_latency (milliseconds)`` describes the metric. * "
+"``:metric:`p99_latency``` links to the definition from any document. * "
+"The index table automatically generates a pair index entry "
+"(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
+"semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
+"typesets a styled description entry with back-references in the appendix."
+msgstr "この単一の宣言により完全な構文契約が確立されます：* ``.. metric:: p99_latency (milliseconds)`` が指標を記述します。* ``:metric:`p99_latency``` が任意のドキュメントからその定義へリンクします。* 索引表がペア索引エントリ（``p99_latency; cluster telemetry``）を自動生成します。* HTML では、Guidedog が CSS アンカーフック付きの意味論的定義リストを生成します。* PDF では、Guidedog がスタイル付きの説明エントリを組版し、付録に逆参照を記録します。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:96
+msgid "3. Author the document with format guards"
+msgstr "3. フォーマットガードを使ってドキュメントを執筆する"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:99
+msgid "Replace the contents of ``index.rst`` with the following document:"
+msgstr "``index.rst`` の内容を次のドキュメントに置き換えます："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:144
+#| msgid "7. Build and inspect both forms"
+msgid "4. Build and inspect both publications"
+msgstr "4. 両方の刊行物をビルドして確認する"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:147
+msgid "Build the HTML website:"
+msgstr "HTML ウェブサイトをビルドします："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:153
+msgid ""
+"Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. "
+"Notice that: * The ``:metric:`p99_latency``` reference resolves directly "
+"to the definition anchor. * The interactive calculator slider is rendered "
+"and active in the web DOM. * The PDF callout block is omitted entirely, "
+"without emitting warnings."
+msgstr "ブラウザで ``_build/html/index.html`` を開くか ``guidedog serve`` を実行します。次の点を確認してください：* ``:metric:`p99_latency``` の参照が定義アンカーに直接解決されます。* 対話型計算機スライダーがレンダリングされ、Web DOM 上で動作します。* PDF 用コールアウトブロックは警告を発生させることなく完全に除外されます。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:158
+#| msgid "6. Wrap the PDF book"
+msgid "Now build the PDF book:"
+msgstr "次に PDF 書籍をビルドします："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:164
+msgid ""
+"Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
+"``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are "
+"completely absent. * The Typst ``#rect(...)`` vector box is typeset with "
+"native margins, borders, and typography. * The appendix includes an index "
+"entry under ``p99_latency``."
+msgstr "``_build/pdf/telemetry-en.pdf``（または確認用ソース ``_build/pdf/book-en.typ``）を開きます。次の点を確認してください：* スライダーと raw HTML は完全に除外されています。* Typst の ``#rect(...)`` ベクターボックスがネイティブのマージン、枠線、タイポグラフィで組版されています。* 付録の ``p99_latency`` の項目に索引エントリが含まれています。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:169
+msgid "5. Custom Typst functions in theme templates"
+msgstr "5. テーマテンプレートでカスタム Typst 関数を定義する"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:172
+msgid ""
+"When you have formatting patterns used across many chapters, define a "
+"reusable Typst function in ``_templates/theme.typ``:"
+msgstr "多くの章で共通して使用する書式パターンがある場合は、``_templates/theme.typ`` 内で再利用可能な Typst 関数を定義します："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:185
+msgid "In any document, invoke the function inside a raw Typst block:"
+msgstr "任意のドキュメントで、raw Typst ブロック内からその関数を呼び出します："
+
+#: ../../tutorial/dynamic-content-and-directives.rst:195
+msgid ""
+"This keeps your reStructuredText prose focused on documentation while "
+"granting full access to Typst's typesetting engine for printed "
+"publications."
+msgstr "これにより、reStructuredText の本文は文書内容そのものに集中させながら、印刷刊行物に対しては Typst の組版エンジンの全機能を活用できます。"
+
 #: ../../tutorial/first-project.rst:1
 msgid "Our first project"
 msgstr "はじめてのプロジェクト"
@@ -591,10 +727,6 @@ msgstr "プロジェクトのソースとテンプレートから HTML と PDF �
 #: ../../tutorial/first-project.rst:34
 msgid "How Guidedog compiles a project into an HTML website and a PDF book."
 msgstr "HTML サイトと PDF 書籍を作る仕組み。"
-
-#: ../../tutorial/first-project.rst:54
-msgid "1. Create the project"
-msgstr "1. プロジェクトを作る"
 
 #: ../../tutorial/first-project.rst:57
 msgid ""
@@ -792,3 +924,4 @@ msgid ""
 "We follow these pages in order. Each step produces a result we can "
 "inspect."
 msgstr "これらのページを順番に進めてください。各ステップで、確認できる結果が得られます。"
+

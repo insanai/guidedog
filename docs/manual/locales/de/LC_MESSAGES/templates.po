@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-17 14:14+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -1069,9 +1069,9 @@ msgstr ""
 "``configure-document(body, ...)`` definiert. Der Wrapper wendet seine "
 "Regeln auf den übergebenen Inhalt an. Die Standardpalette verwendet "
 "Guidedog-Petrol (``#126d78``), dunkle Schrift und helle, neutrale "
-"Kastenflächen. Bücher nutzen eine zentrierte Titelseite und Kapitelanfänge "
-"in Petrol. Diskussionsaufzeichnungen verwenden Metadatenfelder, "
-"Statusabzeichen, einen Statushinweis und ein kompaktes "
+"Kastenflächen. Bücher nutzen eine zentrierte Titelseite und "
+"Kapitelanfänge in Petrol. Diskussionsaufzeichnungen verwenden "
+"Metadatenfelder, Statusabzeichen, einen Statushinweis und ein kompaktes "
 "Inhaltsverzeichnis. Eigenständige Artikel nutzen einen Kopfbereich mit "
 "Autoren, Veröffentlichungsdatum, Zusammenfassungsblock sowie "
 "Artikelüberschriften ohne Kapitelnummerierung."
@@ -1103,13 +1103,13 @@ msgid ""
 "permits at most 16,384 template inputs."
 msgstr ""
 "Wir können ``theme.typ`` bearbeiten, um alle drei kopierten Layouts "
-"gemeinsam anzupassen. Änderungen an Dateien unterhalb von ``_templates/``, "
-"einschließlich verschachtelt importierter Module und Assets, machen "
-"zwischengespeicherte PDFs ungültig. Der Builder überwacht auch den "
-"Verzeichnisbestand, sodass das Hinzufügen oder Entfernen eines Moduls kein "
-"veraltetes PDF zurücklassen kann. Die Vorlagensuche bleibt innerhalb der "
-"lesbaren Wurzelverzeichnisse des Projekts und erlaubt höchstens 16.384 "
-"Vorlageneingaben."
+"gemeinsam anzupassen. Änderungen an Dateien unterhalb von "
+"``_templates/``, einschließlich verschachtelt importierter Module und "
+"Assets, machen zwischengespeicherte PDFs ungültig. Der Builder überwacht "
+"auch den Verzeichnisbestand, sodass das Hinzufügen oder Entfernen eines "
+"Moduls kein veraltetes PDF zurücklassen kann. Die Vorlagensuche bleibt "
+"innerhalb der lesbaren Wurzelverzeichnisse des Projekts und erlaubt "
+"höchstens 16.384 Vorlageneingaben."
 
 #: ../../templates.rst:406
 msgid ""
@@ -1237,25 +1237,32 @@ msgstr ""
 "``show``-Regeln, ohne dass wir eine eigene Vorlage brauchen."
 
 #: ../../templates.rst:463
-msgid "Typst in a document"
-msgstr "Typst in einem Dokument"
+msgid "Target-specific markup and raw blocks"
+msgstr "Zielformatspezifisches Markup und Raw-Blöcke"
 
 #: ../../templates.rst:464
+#| msgid ""
+#| "Documents are reStructuredText and Markdown. Typst files are not "
+#| "documents. To put Typst markup into the book, we write it in a raw "
+#| "block, which web pages leave out:"
 msgid ""
-"Documents are reStructuredText and Markdown. Typst files are not "
-"documents. To put Typst markup into the book, we write it in a raw block, "
-"which web pages leave out:"
-msgstr ""
-"Dokumente sind reStructuredText und Markdown. Typst-Dateien sind keine "
-"Dokumente. Um Typst-Markup ins Buch zu bringen, schreiben wir es in einen "
-"Raw-Block, den Webseiten auslassen:"
+"Documents are reStructuredText and Markdown. Typst files and HTML "
+"fragments are not documents. To insert specialized markup into either "
+"output format without contaminating the other, wrap the block in an ``.. "
+"only::`` guard with a matching ``.. raw::`` directive:"
+msgstr "Dokumente sind reStructuredText- und Markdown-Quellen. Typst-Dateien und HTML-Fragmente sind keine eigenständigen Dokumente. Um spezielles Markup in eines der Ausgabeformate einzufügen, ohne das andere zu beeinträchtigen, umschließen Sie den Block mit einem passenden ``.. raw::``-Befehl innerhalb eines ``.. only::``-Schutzes:"
 
-#: ../../templates.rst:473
+#: ../../templates.rst:484
 msgid ""
-"``.. only:: pdf`` keeps ordinary content to the book in the same way."
-msgstr "``.. only:: pdf`` beschränkt auch gewöhnliche Inhalte auf das Buch."
+"``.. only:: html`` limits interactive web components and custom HTML to "
+"web builds. ``.. only:: typst or latex`` (or ``.. only:: pdf``) keeps "
+"vector formatting, callouts, and native Typst expressions to the book. To "
+"build reusable, semantic directives, see "
+":doc:`tutorial/dynamic-content-and-directives` and "
+":doc:`howto/format-specific-content`."
+msgstr "``.. only:: html`` beschränkt interaktive Webkomponenten und benutzerdefiniertes HTML auf Web-Builds. ``.. only:: typst or latex`` (oder ``.. only:: pdf``) behält Vektorformatierungen, Hinweiskästen und native Typst-Ausdrücke dem Buch vor. Informationen zum Erstellen wiederverwendbarer, semantischer Direktiven finden Sie unter :doc:`tutorial/dynamic-content-and-directives` und :doc:`howto/format-specific-content`."
 
-#: ../../templates.rst:475
+#: ../../templates.rst:489
 msgid ""
 "When Typst reports an error, the build names the file and line, whether "
 "it is in our template or in the generated book. Each PDF has its own "
@@ -1277,18 +1284,18 @@ msgstr ""
 "``_build/.doctrees/failed`` unter dem Pfad, den der Fehler nennt. Mehrere "
 "Bücher behalten getrennte Fehlerquelltexte."
 
-#: ../../templates.rst:484
+#: ../../templates.rst:498
 msgid "Writing a new template"
 msgstr "Eine neue Vorlage schreiben"
 
-#: ../../templates.rst:487
+#: ../../templates.rst:501
 msgid ""
 "We start from the copies quickstart wrote. They show every part in use:"
 msgstr ""
 "Wir beginnen mit den Kopien, die quickstart geschrieben hat. Sie zeigen "
 "alle Teile im Einsatz:"
 
-#: ../../templates.rst:489
+#: ../../templates.rst:503
 msgid ""
 "Keep the ``layout.html`` markup that the default style sheet expects, or "
 "replace ``_static/guidedog.css`` along with it."
@@ -1296,7 +1303,7 @@ msgstr ""
 "Wir behalten das ``layout.html``-Markup bei, das das Standard-Stylesheet "
 "erwartet, oder ersetzen ``_static/guidedog.css`` gleich mit."
 
-#: ../../templates.rst:491
+#: ../../templates.rst:505
 msgid ""
 "Move repeated parts into files of their own and ``include`` them, or put "
 "a base layout in ``base.html`` and ``extends`` it from ``layout.html``."
@@ -1305,7 +1312,7 @@ msgstr ""
 "``include`` ein, oder wir legen ein Basislayout in ``base.html`` an und "
 "erben in ``layout.html`` per ``extends`` davon."
 
-#: ../../templates.rst:493
+#: ../../templates.rst:507
 msgid ""
 "For the book, change the ``book`` function's rules, or write a new "
 "function with the same parameters and keep its name ``book``."
@@ -1314,7 +1321,7 @@ msgstr ""
 "eine neue Funktion mit denselben Parametern und behalten den Namen "
 "``book``."
 
-#: ../../templates.rst:496
+#: ../../templates.rst:510
 msgid ""
 "Preview with ``guidedog serve`` while editing. Save the source and "
 "refresh the browser. The server rebuilds changed inputs before serving "
@@ -1323,6 +1330,14 @@ msgstr ""
 "Beim Bearbeiten nutzen wir ``guidedog serve`` als Vorschau. Quelltext "
 "speichern, Browser neu laden. Der Server baut geänderte Eingaben neu, "
 "bevor er die Seite ausliefert."
+
+#~ msgid "Typst in a document"
+#~ msgstr "Typst in einem Dokument"
+
+#~ msgid ""
+#~ "``.. only:: pdf`` keeps ordinary content to the book in the same way."
+#~ msgstr ""
+#~ "``.. only:: pdf`` beschränkt auch gewöhnliche Inhalte auf das Buch."
 
 #~ msgid ""
 #~ "``_templates/layout.html`` defines the HTML website structure (Jinja)."
@@ -1348,3 +1363,4 @@ msgstr ""
 #~ "Teilvorlage hinzugefügt, bearbeitet oder entfernt, erkennen ``guidedog "
 #~ "build`` und der Live-Server ``guidedog serve`` die Änderung und "
 #~ "rendern die Website neu."
+

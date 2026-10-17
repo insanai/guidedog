@@ -87,11 +87,41 @@ The commands never commit, tag or move source files.
 
 We validate metadata with the real readers before writing.
 Edits retain the body bytes, UTF-8 BOM, line endings and file permissions.
+Inserted metadata follows the first line ending, including leading blank lines, rather than a later mixed-ending example in the body.
 Duplicate publication fields and unclosed front matter are refused.
 A directory lock serializes publication commands.
 A synced temporary file and atomic rename replace an existing source.
 New sources use an exclusive hard link from the completed temporary file so an existing destination cannot be overwritten.
 A crash can leave an unused temporary file, but cannot expose a half-written source.
+
+.. graphviz::
+   :class: graphviz-adaptive
+   :caption: Source commands edit leading metadata atomically while the build clock governs release and expiration.
+   :alt: Directed graph from ssg new to a Draft source, transitioning via ssg schedule or ssg publish to Scheduled and Published states, and expiring when the build clock reaches expires-at.
+
+   digraph authoring_lifecycle {
+     graph [rankdir=LR, bgcolor="transparent", pad="0.25", nodesep="0.38", ranksep="0.52"];
+     node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
+           color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=11, margin="0.18,0.1"];
+     edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=9.5, arrowsize=0.7];
+
+     cmd_new [class="gd-input", shape=note, fillcolor="#fbfaf3",
+              label=<<B>ssg new</B><BR/><FONT POINT-SIZE="10">.rst or .md source</FONT>>];
+     draft [label=<<B>Draft</B><BR/><FONT POINT-SIZE="10">:draft: true</FONT>>];
+     scheduled [class="gd-choice", fillcolor="#fff4e6", color="#ca8a04", fontcolor="#854d0e",
+                label=<<B>Scheduled</B><BR/><FONT POINT-SIZE="10">:draft: false, t &lt; r(x)</FONT>>];
+     published [class="gd-output", fillcolor="#eef4fa",
+                label=<<B>Published</B><BR/><FONT POINT-SIZE="10">r(x) &lt;= t &lt; e(x)</FONT>>];
+     expired [class="gd-plugin", style="rounded,dashed,filled", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e",
+              label=<<B>Expired</B><BR/><FONT POINT-SIZE="10">e(x) &lt;= t</FONT>>];
+
+     cmd_new -> draft [label=" exclusive link"];
+     draft -> scheduled [label=" ssg schedule --at"];
+     draft -> published [label=" ssg publish"];
+     scheduled -> published [label=" ssg publish / t >= r(x)"];
+     published -> draft [label=" ssg draft", style=dashed];
+     published -> expired [label=" t >= e(x)"];
+   }
 
 Metadata
 ========
@@ -167,17 +197,34 @@ A preview output directory can therefore contain unpublished content.
 We use a separate output directory when retaining both public and preview artifacts.
 
 .. graphviz::
-   :caption: Publication filtering precedes every public index and renderer.
-   :alt: Source files are read into a private cache, filtered by the build clock, and then resolved and rendered.
    :class: graphviz-adaptive
+   :caption: Publication filtering partitions the cached environment before resolution, indexing and rendering.
+   :alt: Source files are parsed into cached objects and DocInfo records, partitioned by the build-clock gate into eligible docs for resolution and rendering and withheld ineligible_docs retained for cache reuse and link diagnostics.
 
    digraph publication {
-     rankdir=LR;
-     source [label="Sources"];
-     cache [label="Private environment cache"];
-     gate [label="Publication gate"];
-     output [label="Resolution, HTML, PDF, search, feeds"];
-     source -> cache -> gate -> output;
+     graph [rankdir=LR, bgcolor="transparent", pad="0.25", nodesep="0.36", ranksep="0.48"];
+     node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
+           color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=11, margin="0.18,0.1"];
+     edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=9.5, arrowsize=0.7];
+
+     source [class="gd-input", shape=note, fillcolor="#fbfaf3",
+             label=<<B>Sources</B><BR/><FONT POINT-SIZE="10">.rst / .md / conf.toml</FONT>>];
+     cache [shape=cylinder, fillcolor="#eef6f2",
+            label=<<B>Reading &amp; ObjectStore</B><BR/><FONT POINT-SIZE="10">cached AST + PageMeta</FONT>>];
+     gate [class="gd-choice", shape=diamond, fillcolor="#fff4e6", color="#ca8a04", fontcolor="#854d0e",
+           label=<<B>Clock Gate</B><BR/><FONT POINT-SIZE="10">eligible(x, t)</FONT>>];
+     eligible [label=<<B>env.docs</B><BR/><FONT POINT-SIZE="10">gd-resolve / gd-link</FONT>>];
+     withheld [class="gd-plugin", style="rounded,dashed,filled", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e",
+               label=<<B>env.ineligible_docs</B><BR/><FONT POINT-SIZE="10">kept in cache / unpublished_target</FONT>>];
+     output [class="gd-output", fillcolor="#eef4fa",
+             label=<<B>Committed Generation</B><BR/><FONT POINT-SIZE="10">HTML / PDF / search / feeds / sitemap</FONT>>];
+
+     source -> cache;
+     cache -> gate;
+     gate -> eligible [label=" eligible"];
+     gate -> withheld [label=" withheld", style=dashed];
+     eligible -> output;
+     withheld -> cache [label=" clock-only reuse", style=dotted, constraint=false];
    }
 
 We retain withheld ``DocInfo`` records in ``Environment::ineligible_docs`` for reuse.
@@ -254,6 +301,7 @@ The generated Typst remains available under ``sources/`` for inspection.
 The article template uses continuous prose, a title and author block, an abstract, and running headers and page numbers after page one.
 It shares typography and directive support with the book and discussion layouts.
 Project ``_templates/article.typ`` overrides use the existing ``book`` function convention with article metadata arguments.
+Books, discussions and articles share paper-size normalization: ``letter`` and ``us-letter`` select Typst's ``us-letter``, while the default is ``a4``.
 Untrusted builds use the embedded article template.
 
 Incremental correctness
@@ -280,6 +328,48 @@ A section beyond a traced depth does not invalidate its listing page.
 The HTML common digest therefore contains configuration, environment settings, inventories and MathJax configuration, without every document's navigation.
 Books and text builders retain their existing whole-document settings contract.
 We compute chronological article neighbors once per site build instead of repeatedly sorting the environment during trace checks.
+We trace the inner ``page`` dictionary so reading ``page.meta.date`` does not depend on unused neighbors.
+Reading ``page.older`` or ``page.newer`` records only that neighbor, while rendering the whole dictionary records both.
+
+.. graphviz::
+   :class: graphviz-adaptive
+   :caption: Per-unit verifying traces isolate body edits from summary-only collections, navigation trees and unused templates.
+   :alt: Dependency graph from source AST, PageMeta, Jinja templates, navigation calls, and postlist queries to page HTML, article PDF, and collection units.
+
+   digraph verifying_traces {
+     graph [rankdir=TB, bgcolor="transparent", pad="0.25", nodesep="0.34", ranksep="0.46"];
+     node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
+           color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=11, margin="0.16,0.1"];
+     edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=9.5, arrowsize=0.7];
+
+     doc_body [class="gd-input", shape=note, fillcolor="#fbfaf3",
+               label=<<B>Document Body</B><BR/><FONT POINT-SIZE="10">DocInfo::digest (.gdo AST)</FONT>>];
+     doc_meta [class="gd-input", shape=note, fillcolor="#fbfaf3",
+               label=<<B>Title &amp; PageMeta</B><BR/><FONT POINT-SIZE="10">date / tags / summary / pdf</FONT>>];
+
+     trace_tmpl [label=<<B>LookupKind::Template</B><BR/><FONT POINT-SIZE="10">extends / include / ignore missing</FONT>>];
+     trace_nav [label=<<B>LookupKind::Navigation</B><BR/><FONT POINT-SIZE="10">ctx / hasdoc / pathto / toctree</FONT>>];
+     trace_post [label=<<B>LookupKind::Postlist</B><BR/><FONT POINT-SIZE="10">encoded PostlistSpec query</FONT>>];
+
+     unit_page [class="gd-output", fillcolor="#eef4fa",
+                label=<<B>page:&lt;docname&gt;</B><BR/><FONT POINT-SIZE="10">Page or Article HTML</FONT>>];
+     unit_pdf [class="gd-output", fillcolor="#eef4fa",
+               label=<<B>article:&lt;stem&gt;.pdf</B><BR/><FONT POINT-SIZE="10">Typst Article PDF</FONT>>];
+     unit_coll [class="gd-output", fillcolor="#eef4fa",
+                label=<<B>collection:&lt;file&gt;</B><BR/><FONT POINT-SIZE="10">Archives / Pagination / Feeds</FONT>>];
+
+     doc_body -> unit_page;
+     doc_body -> unit_pdf;
+     doc_meta -> unit_page;
+     doc_meta -> unit_pdf;
+     doc_meta -> trace_nav;
+     doc_meta -> trace_post;
+     trace_tmpl -> unit_page;
+     trace_tmpl -> unit_coll;
+     trace_nav -> unit_page;
+     trace_post -> unit_page [style=dashed, label=" .. postlist::"];
+     trace_post -> unit_coll;
+   }
 
 Archives and pagination
 ========================
@@ -350,6 +440,34 @@ The encoded lock is validated against the same 16 KiB limit used by offline veri
 Offline verification rejects missing, changed or extra files.
 Project templates take precedence, and project static files can override installed static files.
 ``site.theme = true`` selects the verified installation.
+We apply the installed theme before checking the final configuration and include its tree digest in the settings digest, including for themes that change only static files.
+
+.. graphviz::
+   :class: graphviz-adaptive
+   :caption: Mounted website assembly and three-tier offline template resolution.
+   :alt: Site conf.toml mounts and assets feed staged project builds using project templates, verified _themes/<tree-sha256>, and built-in defaults, followed by mount:// link verification and atomic Generation commit.
+
+   digraph mounted_site {
+     graph [rankdir=LR, bgcolor="transparent", pad="0.25", nodesep="0.34", ranksep="0.46"];
+     node [shape=box, style="rounded,filled", fillcolor="#edf5f2",
+           color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=11, margin="0.16,0.1"];
+     edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=9.5, arrowsize=0.7];
+
+     conf [class="gd-input", shape=note, fillcolor="#fbfaf3",
+           label=<<B>Site conf.toml</B><BR/><FONT POINT-SIZE="10">[[site.mounts]] + editions</FONT>>];
+     theme [class="gd-plugin", style="rounded,dashed,filled", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e",
+            label=<<B>Template Layers</B><BR/><FONT POINT-SIZE="10">_templates/ &gt; _themes/SHA &gt; gd-theme</FONT>>];
+     stage [label=<<B>Staged Mount Builds</B><BR/><FONT POINT-SIZE="10">html / dirhtml / pdf / discussion-pdf</FONT>>];
+     verify [class="gd-choice", shape=diamond, fillcolor="#fff4e6", color="#ca8a04", fontcolor="#854d0e",
+             label=<<B>Verify Assembly</B><BR/><FONT POINT-SIZE="10">mount:// links &amp; collisions</FONT>>];
+     site [class="gd-output", fillcolor="#eef4fa",
+           label=<<B>Atomic Site Commit</B><BR/><FONT POINT-SIZE="10">gd_outputs::Generation</FONT>>];
+
+     conf -> stage;
+     theme -> stage [style=dashed];
+     stage -> verify;
+     verify -> site [label=" valid"];
+   }
 
 ``ssg init`` creates project, journal and research presets.
 They respectively supply a documentation guide, a chronological journal, and a paper with an abstract, mathematics and a standalone PDF.

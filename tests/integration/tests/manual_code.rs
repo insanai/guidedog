@@ -159,6 +159,54 @@ mod crates_engine {
     }
 }
 
+#[rustfmt::skip] // a twin keeps the manual's exact text
+mod format_plugin {
+    // manual: docs/manual/howto/format-specific-content.rst#1
+    use std::borrow::Cow;
+    use gd_plugins::{BuildPlugin, Hooks, PluginInfo, Problem, SourceFormat, SourceInput};
+
+    #[derive(Clone, Default)]
+    pub struct ChartPlugin;
+
+    impl BuildPlugin for ChartPlugin {
+        fn info(&self) -> PluginInfo {
+            PluginInfo::new("chart", "Chart", "1.0.0", Hooks { source: true, ..Hooks::NONE })
+        }
+
+        fn process_source<'a>(
+            &mut self,
+            input: &SourceInput<'a>,
+        ) -> Result<Cow<'a, str>, Problem> {
+            if input.format != SourceFormat::Rst
+                || !input.text.lines().any(|line| line == ".. chart:: latency")
+            {
+                return Ok(Cow::Borrowed(input.text));
+            }
+            let replacement = concat!(
+                ".. only:: html\n\n",
+                "   .. raw:: html\n\n",
+                "      <div class=\"chart\" data-type=\"latency\">Latency Chart</div>\n\n",
+                ".. only:: pdf\n\n",
+                "   .. raw:: typst\n\n",
+                "      #rect(stroke: 0.5pt)[*Latency Chart*]\n\n"
+            );
+            let transformed = input.text.split_inclusive('\n').map(|line| {
+                if line.trim_end_matches(['\r', '\n']) == ".. chart:: latency" {
+                    replacement
+                } else {
+                    line
+                }
+            }).collect();
+            Ok(Cow::Owned(transformed))
+        }
+    }
+
+    fn main() -> std::process::ExitCode {
+        gd_plugins::serve(ChartPlugin)
+    }
+    // end manual
+}
+
 /// The twins in this file: (`file#n`, code without the common indentation).
 fn twins() -> Vec<(String, String)> {
     let source = include_str!("manual_code.rs");

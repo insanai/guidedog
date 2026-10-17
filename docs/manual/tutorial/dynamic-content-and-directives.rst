@@ -34,7 +34,7 @@ print-quality callout block for the PDF book.
                 label=<<B>.. only:: html</B><BR/><FONT POINT-SIZE="11">Active for web builder</FONT>>];
 
      only_typst [class="gd-plugin", style="rounded,dashed,filled", fillcolor="#fff9e6", color="#ca8a04", fontcolor="#854d0e",
-                 label=<<B>.. only:: typst or pdf</B><BR/><FONT POINT-SIZE="11">Active for book builder</FONT>>];
+                 label=<<B>.. only:: pdf</B><BR/><FONT POINT-SIZE="11">Active for book builder</FONT>>];
 
      html_out [class="gd-output", fillcolor="#eef4fa",
                label=<<B>HTML Website</B><BR/><FONT POINT-SIZE="11">Interactive widget &amp; DOM script</FONT>>];
@@ -87,11 +87,12 @@ Open ``conf.toml`` and append the declaration for a ``metric`` directive:
    display = "Metric: %s"
 
 This single declaration establishes a complete syntax contract:
+
 * ``.. metric:: p99_latency (milliseconds)`` describes the metric.
 * ``:metric:`p99_latency``` links to the definition from any document.
 * The index table automatically generates a pair index entry (``p99_latency; cluster telemetry``).
 * In HTML, Guidedog generates a semantic definition list with CSS anchor hooks.
-* In PDF, Guidedog typesets a styled description entry with back-references in the appendix.
+* In PDF, Guidedog typesets a description and an index entry linking to its page.
 
 3. Author the document with format guards
 -----------------------------------------
@@ -143,11 +144,7 @@ Replace the contents of ``index.rst`` with the following document:
 
 .. note::
 
-   **Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using native Typst.
-   Always write ``.. raw:: typst`` for print callouts and vector blocks. Guidedog does not
-   execute verbatim ``.. raw:: latex`` (which is omitted with a diagnostic). However, standard
-   LaTeX math written in ``.. math::`` and ``:math:`` is automatically translated into Typst
-   formulas by Guidedog's built-in math compiler.
+   **Typst and LaTeX in Guidedog**: PDF books use Typst. Trusted builds execute ``.. raw:: typst``; ``.. raw:: latex`` is omitted with ``typst.raw.foreign``. ``.. math::`` and ``:math:`` translate supported LaTeX mathematics into Typst equations. Unsupported commands produce ``typst.math.unsupported``; see :doc:`../topics/mathematics` for the supported syntax and policies.
 
 4. Build and inspect both publications
 --------------------------------------
@@ -159,6 +156,7 @@ Build the HTML website:
    guidedog build -b html . _build/html -W
 
 Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. Notice that:
+
 * The ``:metric:`p99_latency``` reference resolves directly to the definition anchor.
 * The interactive calculator slider is rendered and active in the web DOM.
 * The PDF callout block is omitted entirely, without emitting warnings.
@@ -169,16 +167,16 @@ Now build the PDF book:
 
    guidedog build -b pdf . _build/pdf -W
 
-Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at ``_build/pdf/book-en.typ``). Notice that:
+Open ``_build/pdf/cluster-telemetry-en.pdf`` (or the inspection source at ``_build/pdf/book-en.typ``). Notice that:
+
 * The slider and raw HTML are completely absent.
 * The Typst ``#rect(...)`` vector box is typeset with native margins, borders, and typography.
-* The appendix includes an index entry under ``p99_latency``.
+* The book's index includes an entry under ``p99_latency``.
 
 5. Custom Typst functions in theme templates
 --------------------------------------------
 
-When you have formatting patterns used across many chapters, define a reusable Typst function in
-``_templates/theme.typ``:
+When we reuse formatting across chapters, we append a Typst function to ``_templates/theme.typ``:
 
 .. code-block:: typst
 
@@ -194,11 +192,11 @@ In any document, invoke the function inside a raw Typst block:
 
 .. code-block:: rst
 
-   .. only:: typst
+   .. only:: pdf
 
       .. raw:: typst
 
+         #import "/_templates/theme.typ": status-badge
          #status-badge("ok")[SLO COMPLIANT]
 
-This keeps your reStructuredText prose focused on documentation while granting full access to Typst's
-typesetting engine for printed publications.
+Import the function explicitly: the book template's own imports are scoped to its module and do not expose helpers to document content. For many call sites, place this import in a project preamble selected by ``pdf_preamble``.

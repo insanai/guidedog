@@ -489,6 +489,8 @@ Target-specific markup and raw blocks
    To build reusable, semantic directives, see :doc:`tutorial/dynamic-content-and-directives` and
    :doc:`howto/format-specific-content`.
 
+   A function defined in ``theme.typ`` is scoped to that module. Document-level raw Typst must import the function explicitly, or use an import in ``pdf_preamble``. A book template's private imports do not make helpers visible in the generated document. Raw Typst follows the raw-content policy; untrusted builds omit it.
+
 When Typst reports an error, the build names the file and line, whether it is in our
 template or in the generated book. Each PDF has its own generated source at
 ``_build/pdf/sources/<pdf-filename>.typ``. For example, ``reference-en.pdf`` has

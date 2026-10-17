@@ -7,6 +7,7 @@
 #![allow(clippy::unwrap_used)] // a test failing on unexpected input is the point.
 
 mod capacity;
+mod directives;
 mod inventories;
 mod limits;
 mod publication;

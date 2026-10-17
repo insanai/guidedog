@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:33+0000\n"
+"POT-Creation-Date: 2026-10-17 15:18+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -609,105 +609,139 @@ msgid ""
 msgstr "``conf.toml``\\ 을 열고 ``metric`` 지시어 선언을 추가합니다:"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:89
-msgid ""
-"This single declaration establishes a complete syntax contract: * ``.. "
-"metric:: p99_latency (milliseconds)`` describes the metric. * "
-"``:metric:`p99_latency``` links to the definition from any document. * "
-"The index table automatically generates a pair index entry "
-"(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
-"semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
-"typesets a styled description entry with back-references in the appendix."
-msgstr ""
-"이 단일 선언으로 완전한 구문 계약이 확립됩니다: * ``.. metric:: p99_latency "
-"(milliseconds)``\\ 가 지표를 설명합니다. * ``:metric:`p99_latency```\\ 가 모든 문서에서 "
-"해당 정의로 링크합니다. * 색인 표가 쌍 색인 항목(``p99_latency; cluster telemetry``)을 자동 "
-"생성합니다. * HTML에서 Guidedog은 CSS 앵커 훅이 포함된 의미론적 정의 목록을 생성합니다. * PDF에서 "
-"Guidedog은 스타일이 적용된 설명 항목을 조판하고 부록에 역참조를 기록합니다."
+msgid "This single declaration establishes a complete syntax contract:"
+msgstr "이 선언 하나로 다음 구문 계약이 완성됩니다."
 
-#: ../../tutorial/dynamic-content-and-directives.rst:96
+#: ../../tutorial/dynamic-content-and-directives.rst:91
+msgid "``.. metric:: p99_latency (milliseconds)`` describes the metric."
+msgstr "``.. metric:: p99_latency (milliseconds)`` 는 메트릭을 설명합니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:92
+msgid "``:metric:`p99_latency``` links to the definition from any document."
+msgstr "``:metric:`p99_latency``` 는 어느 문서에서든 정의로 연결합니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:93
+msgid ""
+"The index table automatically generates a pair index entry "
+"(``p99_latency; cluster telemetry``)."
+msgstr "색인에 쌍 항목 (``p99_latency; cluster telemetry``) 이 자동으로 생성됩니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:94
+msgid ""
+"In HTML, Guidedog generates a semantic definition list with CSS anchor "
+"hooks."
+msgstr "HTML에서 Guidedog는 CSS 연결 지점이 있는 의미적 정의 목록을 생성합니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:95
+msgid ""
+"In PDF, Guidedog typesets a description and an index entry linking to its "
+"page."
+msgstr "PDF에서 Guidedog는 설명과 해당 페이지로 연결되는 색인 항목을 조판합니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:97
 msgid "3. Author the document with format guards"
 msgstr "3. 형식 가드를 사용하여 문서 작성"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:99
+#: ../../tutorial/dynamic-content-and-directives.rst:100
 msgid "Replace the contents of ``index.rst`` with the following document:"
 msgstr "``index.rst``\\ 의 내용을 다음 문서로 교체합니다:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:146
+#: ../../tutorial/dynamic-content-and-directives.rst:147
 msgid ""
-"**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using native "
-"Typst. Always write ``.. raw:: typst`` for print callouts and vector "
-"blocks. Guidedog does not execute verbatim ``.. raw:: latex`` (which is "
-"omitted with a diagnostic). However, standard LaTeX math written in ``.. "
-"math::`` and ``:math:`` is automatically translated into Typst formulas "
-"by Guidedog's built-in math compiler."
+"**Typst and LaTeX in Guidedog**: PDF books use Typst. Trusted builds "
+"execute ``.. raw:: typst``; ``.. raw:: latex`` is omitted with "
+"``typst.raw.foreign``. ``.. math::`` and ``:math:`` translate supported "
+"LaTeX mathematics into Typst equations. Unsupported commands produce "
+"``typst.math.unsupported``; see :doc:`../topics/mathematics` for the "
+"supported syntax and policies."
 msgstr ""
-"**Guidedog의 Typst 및 LaTeX**：Guidedog은 네이티브 Typst를 사용하여 PDF 책을 컴파일합니다. "
-"인쇄용 콜아웃 상자나 벡터 블록에는 항상 ``.. raw:: typst``\\ 로 작성하세요. Guidedog은 리터럴 ``.. "
-"raw:: latex``\\ 를 실행하지 않으며 진단 메시지와 함께 생략됩니다. 그러나 ``.. math::`` 및 "
-"``:math:``\\ 로 작성된 표준 LaTeX 수식은 Guidedog의 내장 수식 컴파일러를 통해 네이티브 Typst 수식으로 "
-"자동 번역됩니다."
+"**Guidedog의 Typst와 LaTeX**: PDF 책은 Typst를 사용합니다. 신뢰하는 빌드는 ``.. raw:: "
+"typst`` 를 실행하고 ``.. raw:: latex`` 는 ``typst.raw.foreign`` 진단과 함께 생략합니다. "
+"``.. math::`` 와 ``:math:`` 는 지원되는 LaTeX 수학을 Typst 수식으로 변환합니다. 지원하지 않는 명령은 "
+"``typst.math.unsupported`` 를 발생시킵니다. 지원 구문과 정책은 "
+":doc:`../topics/mathematics` 를 참조합니다."
 
-#: ../../tutorial/dynamic-content-and-directives.rst:152
+#: ../../tutorial/dynamic-content-and-directives.rst:149
 msgid "4. Build and inspect both publications"
 msgstr "4. 두 발행물 빌드 및 확인"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:155
+#: ../../tutorial/dynamic-content-and-directives.rst:152
 msgid "Build the HTML website:"
 msgstr "HTML 웹사이트를 빌드합니다:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:161
+#: ../../tutorial/dynamic-content-and-directives.rst:158
 msgid ""
 "Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. "
-"Notice that: * The ``:metric:`p99_latency``` reference resolves directly "
-"to the definition anchor. * The interactive calculator slider is rendered "
-"and active in the web DOM. * The PDF callout block is omitted entirely, "
-"without emitting warnings."
+"Notice that:"
 msgstr ""
-"브라우저에서 ``_build/html/index.html``\\ 을 열거나 ``guidedog serve``\\ 를 실행합니다. "
-"다음 사항을 확인하세요: * ``:metric:`p99_latency``` 참조가 정의 앵커로 직접 확인됩니다. * 대화형 계산기 "
-"슬라이더가 렌더링되어 웹 DOM에서 동작합니다. * PDF 콜아웃 블록은 경고 없이 완전히 제외됩니다."
+"브라우저에서 ``_build/html/index.html`` 을 열거나 ``guidedog serve`` 를 실행합니다. 다음 "
+"사항을 확인합니다."
 
-#: ../../tutorial/dynamic-content-and-directives.rst:166
+#: ../../tutorial/dynamic-content-and-directives.rst:160
+msgid ""
+"The ``:metric:`p99_latency``` reference resolves directly to the "
+"definition anchor."
+msgstr "``:metric:`p99_latency``` 참조는 정의 앵커로 직접 연결됩니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:161
+msgid ""
+"The interactive calculator slider is rendered and active in the web DOM."
+msgstr "대화형 슬라이더가 웹 DOM에 표시되고 동작합니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:162
+msgid ""
+"The PDF callout block is omitted entirely, without emitting warnings."
+msgstr "PDF 알림 블록은 경고 없이 완전히 생략됩니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:164
 msgid "Now build the PDF book:"
 msgstr "이제 PDF 책을 빌드합니다:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:172
+#: ../../tutorial/dynamic-content-and-directives.rst:170
 msgid ""
-"Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
-"``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are "
-"completely absent. * The Typst ``#rect(...)`` vector box is typeset with "
-"native margins, borders, and typography. * The appendix includes an index "
-"entry under ``p99_latency``."
+"Open ``_build/pdf/cluster-telemetry-en.pdf`` (or the inspection source at "
+"``_build/pdf/book-en.typ``). Notice that:"
 msgstr ""
-"``_build/pdf/telemetry-en.pdf``(또는 확인용 소스 ``_build/pdf/book-en.typ``)\\ 를 "
-"엽니다. 다음 사항을 확인하세요: * 슬라이더와 원시 HTML이 완전히 제외되었습니다. * Typst ``#rect(...)`` "
-"벡터 상자가 네이티브 여백, 테두리, 타이포그래피로 조판되었습니다. * 부록의 ``p99_latency`` 항목 아래에 색인 항목이 "
-"포함되어 있습니다."
+"``_build/pdf/cluster-telemetry-en.pdf`` 또는 확인용 소스 "
+"``_build/pdf/book-en.typ`` 를 엽니다. 다음 사항을 확인합니다."
 
-#: ../../tutorial/dynamic-content-and-directives.rst:177
+#: ../../tutorial/dynamic-content-and-directives.rst:172
+msgid "The slider and raw HTML are completely absent."
+msgstr "슬라이더와 raw HTML은 전혀 포함되지 않습니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:173
+msgid ""
+"The Typst ``#rect(...)`` vector box is typeset with native margins, "
+"borders, and typography."
+msgstr "Typst 벡터 상자 ``#rect(...)`` 는 네이티브 여백, 테두리 및 타이포그래피로 조판됩니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:174
+msgid "The book's index includes an entry under ``p99_latency``."
+msgstr "책의 색인에는 ``p99_latency`` 항목이 포함됩니다."
+
+#: ../../tutorial/dynamic-content-and-directives.rst:176
 msgid "5. Custom Typst functions in theme templates"
 msgstr "5. 테마 템플릿에서 맞춤 Typst 함수 정의"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:180
+#: ../../tutorial/dynamic-content-and-directives.rst:179
 msgid ""
-"When you have formatting patterns used across many chapters, define a "
-"reusable Typst function in ``_templates/theme.typ``:"
-msgstr ""
-"여러 장에서 반복 사용하는 서식 패턴이 있는 경우 ``_templates/theme.typ``\\ 에서 재사용 가능한 Typst "
-"함수를 정의합니다:"
+"When we reuse formatting across chapters, we append a Typst function to "
+"``_templates/theme.typ``:"
+msgstr "여러 장에서 서식을 재사용할 때는 ``_templates/theme.typ`` 에 Typst 함수를 추가합니다."
 
-#: ../../tutorial/dynamic-content-and-directives.rst:193
+#: ../../tutorial/dynamic-content-and-directives.rst:191
 msgid "In any document, invoke the function inside a raw Typst block:"
 msgstr "모든 문서에서 원시 Typst 블록 내부로부터 해당 함수를 호출합니다:"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:203
+#: ../../tutorial/dynamic-content-and-directives.rst:202
 msgid ""
-"This keeps your reStructuredText prose focused on documentation while "
-"granting full access to Typst's typesetting engine for printed "
-"publications."
+"Import the function explicitly: the book template's own imports are "
+"scoped to its module and do not expose helpers to document content. For "
+"many call sites, place this import in a project preamble selected by "
+"``pdf_preamble``."
 msgstr ""
-"이를 통해 reStructuredText 본문은 문서 작성에만 집중하면서 인쇄 발행물에 대해서는 Typst 조판 엔진의 모든 기능을 "
-"완벽하게 활용할 수 있습니다."
+"함수를 명시적으로 가져옵니다. 책 템플릿의 가져오기는 해당 모듈 안에서만 유효하며 문서 콘텐츠에 도우미 함수를 노출하지 않습니다. "
+"호출 위치가 많으면 ``pdf_preamble`` 으로 선택한 프로젝트 프리앰블에 가져오기를 넣을 수 있습니다."
 
 #: ../../tutorial/first-project.rst:1
 msgid "Our first project"
@@ -964,3 +998,63 @@ msgid ""
 "inspect."
 msgstr "이 페이지들은 순서대로 따라갑니다. 단계마다 직접 확인할 수 있는 결과가 나옵니다."
 
+#~ msgid ""
+#~ "This single declaration establishes a complete syntax contract: * ``.. "
+#~ "metric:: p99_latency (milliseconds)`` describes the metric. * "
+#~ "``:metric:`p99_latency``` links to the definition from any document. * "
+#~ "The index table automatically generates a pair index entry "
+#~ "(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
+#~ "semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
+#~ "typesets a styled description entry with back-references in the "
+#~ "appendix."
+#~ msgstr ""
+#~ "이 단일 선언으로 완전한 구문 계약이 확립됩니다: * ``.. metric:: p99_latency "
+#~ "(milliseconds)``\\ 가 지표를 설명합니다. * ``:metric:`p99_latency```\\ 가 모든 "
+#~ "문서에서 해당 정의로 링크합니다. * 색인 표가 쌍 색인 항목(``p99_latency; cluster "
+#~ "telemetry``)을 자동 생성합니다. * HTML에서 Guidedog은 CSS 앵커 훅이 포함된 의미론적 정의 목록을 "
+#~ "생성합니다. * PDF에서 Guidedog은 스타일이 적용된 설명 항목을 조판하고 부록에 역참조를 기록합니다."
+
+#~ msgid ""
+#~ "**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using "
+#~ "native Typst. Always write ``.. raw:: typst`` for print callouts and "
+#~ "vector blocks. Guidedog does not execute verbatim ``.. raw:: latex`` "
+#~ "(which is omitted with a diagnostic). However, standard LaTeX math "
+#~ "written in ``.. math::`` and ``:math:`` is automatically translated "
+#~ "into Typst formulas by Guidedog's built-in math compiler."
+#~ msgstr ""
+#~ "**Guidedog의 Typst 및 LaTeX**：Guidedog은 네이티브 Typst를 사용하여 PDF 책을 컴파일합니다. "
+#~ "인쇄용 콜아웃 상자나 벡터 블록에는 항상 ``.. raw:: typst``\\ 로 작성하세요. Guidedog은 리터럴 "
+#~ "``.. raw:: latex``\\ 를 실행하지 않으며 진단 메시지와 함께 생략됩니다. 그러나 ``.. math::`` 및 "
+#~ "``:math:``\\ 로 작성된 표준 LaTeX 수식은 Guidedog의 내장 수식 컴파일러를 통해 네이티브 Typst "
+#~ "수식으로 자동 번역됩니다."
+
+#~ msgid ""
+#~ "Open ``_build/html/index.html`` in a browser or run ``guidedog "
+#~ "serve``. Notice that: * The ``:metric:`p99_latency``` reference "
+#~ "resolves directly to the definition anchor. * The interactive "
+#~ "calculator slider is rendered and active in the web DOM. * The PDF "
+#~ "callout block is omitted entirely, without emitting warnings."
+#~ msgstr ""
+#~ "브라우저에서 ``_build/html/index.html``\\ 을 열거나 ``guidedog serve``\\ 를 "
+#~ "실행합니다. 다음 사항을 확인하세요: * ``:metric:`p99_latency``` 참조가 정의 앵커로 직접 확인됩니다. "
+#~ "* 대화형 계산기 슬라이더가 렌더링되어 웹 DOM에서 동작합니다. * PDF 콜아웃 블록은 경고 없이 완전히 제외됩니다."
+
+#~ msgid ""
+#~ "Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
+#~ "``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML "
+#~ "are completely absent. * The Typst ``#rect(...)`` vector box is "
+#~ "typeset with native margins, borders, and typography. * The appendix "
+#~ "includes an index entry under ``p99_latency``."
+#~ msgstr ""
+#~ "``_build/pdf/telemetry-en.pdf``(또는 확인용 소스 "
+#~ "``_build/pdf/book-en.typ``)\\ 를 엽니다. 다음 사항을 확인하세요: * 슬라이더와 원시 HTML이 "
+#~ "완전히 제외되었습니다. * Typst ``#rect(...)`` 벡터 상자가 네이티브 여백, 테두리, 타이포그래피로 "
+#~ "조판되었습니다. * 부록의 ``p99_latency`` 항목 아래에 색인 항목이 포함되어 있습니다."
+
+#~ msgid ""
+#~ "This keeps your reStructuredText prose focused on documentation while "
+#~ "granting full access to Typst's typesetting engine for printed "
+#~ "publications."
+#~ msgstr ""
+#~ "이를 통해 reStructuredText 본문은 문서 작성에만 집중하면서 인쇄 발행물에 대해서는 Typst 조판 엔진의 모든 "
+#~ "기능을 완벽하게 활용할 수 있습니다."

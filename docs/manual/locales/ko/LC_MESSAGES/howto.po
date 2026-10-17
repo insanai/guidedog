@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:33+0000\n"
+"POT-Creation-Date: 2026-10-17 15:27+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -541,16 +541,22 @@ msgstr ""
 "임베디드 오디오/비디오 컴포넌트를 삽입합니다:"
 
 #: ../../howto/format-specific-content.rst:60
-msgid ""
-"To supply the supporting CSS and JavaScript: 1. Place your script and "
-"stylesheet in ``_static/`` (e.g. ``_static/interactive.js`` and "
-"``_static/interactive.css``). 2. Register them in ``conf.toml``:"
-msgstr ""
-"지원하는 CSS 및 JavaScript를 제공하려면: 1. 스크립트와 스타일시트를 ``_static/``\\ 에 배치합니다(예: "
-"``_static/interactive.js`` 및 ``_static/interactive.css``). 2. "
-"``conf.toml``\\ 에 등록합니다:"
+msgid "To supply the supporting CSS and JavaScript:"
+msgstr "필요한 CSS와 JavaScript를 다음과 같이 준비합니다."
 
-#: ../../howto/format-specific-content.rst:69
+#: ../../howto/format-specific-content.rst:62
+msgid ""
+"Place our script and stylesheet in ``_static/`` (e.g. "
+"``_static/interactive.js`` and ``_static/interactive.css``)."
+msgstr ""
+"스크립트와 스타일시트를 ``_static/`` 에 배치합니다. 예를 들어 ``_static/interactive.js`` 와 "
+"``_static/interactive.css`` 를 사용합니다."
+
+#: ../../howto/format-specific-content.rst:63
+msgid "Register them in ``conf.toml``:"
+msgstr "이를 ``conf.toml`` 에 등록합니다."
+
+#: ../../howto/format-specific-content.rst:70
 msgid ""
 "The HTML builder copies these files into the build directory and injects "
 "``<link>`` and ``<script>`` tags into every generated page."
@@ -558,11 +564,26 @@ msgstr ""
 "HTML 빌더는 이 파일들을 빌드 디렉터리로 복사하고 생성되는 모든 페이지에 ``<link>`` 및 ``<script>`` 태그를 "
 "삽입합니다."
 
-#: ../../howto/format-specific-content.rst:72
+#: ../../howto/format-specific-content.rst:73
+msgid ""
+"For this self-contained example, write ``_static/interactive.js`` as "
+"follows:"
+msgstr "외부 서비스 없이 동작하는 이 예제에서는 ``_static/interactive.js`` 를 다음과 같이 작성합니다."
+
+#: ../../howto/format-specific-content.rst:81
+msgid ""
+"This changes a local status label. A live health check needs an "
+"application endpoint and request handling. We can leave "
+"``_static/interactive.css`` empty until we add custom styles."
+msgstr ""
+"이 코드는 로컬 상태 표시를 변경합니다. 실제 상태 검사에는 애플리케이션 엔드포인트와 요청 처리가 필요합니다. 사용자 정의 스타일을 "
+"추가하기 전까지 ``_static/interactive.css`` 를 비워 둘 수 있습니다."
+
+#: ../../howto/format-specific-content.rst:83
 msgid "2. Typeset custom Typst formatting for PDF"
 msgstr "2. PDF용 맞춤 Typst 서식 조판"
 
-#: ../../howto/format-specific-content.rst:75
+#: ../../howto/format-specific-content.rst:86
 msgid ""
 "To introduce vector shapes, tailored callout boxes, or custom typography "
 "for printed pages, wrap the markup in ``.. only:: pdf``:"
@@ -570,7 +591,7 @@ msgstr ""
 "인쇄 페이지에 벡터 도형, 맞춤 콜아웃 상자 또는 특수 타이포그래피를 적용하려면 마크업을 ``.. only:: pdf``\\ 로 "
 "감쌉니다:"
 
-#: ../../howto/format-specific-content.rst:95
+#: ../../howto/format-specific-content.rst:106
 msgid ""
 "Guidedog emits this block directly into the Typst document before "
 "invoking the Typst compiler. The HTML builder automatically omits this "
@@ -579,11 +600,32 @@ msgstr ""
 "Guidedog은 Typst 컴파일러를 호출하기 전에 이 블록을 Typst 문서에 직접 출력합니다. HTML 빌더는 경고 없이 이 "
 "블록을 자동으로 생략합니다."
 
-#: ../../howto/format-specific-content.rst:100
+#: ../../howto/format-specific-content.rst:109
+msgid ""
+"The ``only`` directive controls output after parsing. Both branches must "
+"contain valid RST, and custom directives must be declared even in a "
+"branch omitted from the selected output. ``typst`` is not a built-in "
+"``only`` tag; the raw block's format name and the output guard serve "
+"different purposes."
+msgstr ""
+"``only`` 지시문은 구문 분석 후 출력을 제어합니다. 두 분기 모두 유효한 RST를 포함해야 하며, 선택한 출력에서 제외되는 "
+"분기에서도 사용자 정의 지시문을 선언해야 합니다. ``typst`` 는 내장 ``only`` 태그가 아닙니다. raw 블록의 형식 "
+"이름과 출력 조건은 서로 다른 역할을 합니다."
+
+#: ../../howto/format-specific-content.rst:111
+msgid ""
+"Raw Typst executes only when the raw-content policy allows it. "
+"``--untrusted`` omits raw content and disables build plugins; it "
+"therefore cannot run these formatting and preprocessing examples."
+msgstr ""
+"raw Typst는 원시 콘텐츠 정책이 허용할 때만 실행됩니다. ``--untrusted`` 는 원시 콘텐츠를 생략하고 빌드 "
+"플러그인을 비활성화하므로 이러한 서식 지정 및 전처리 예제를 실행할 수 없습니다."
+
+#: ../../howto/format-specific-content.rst:115
 msgid "**Why Typst and not LaTeX?**"
 msgstr "**왜 LaTeX가 아닌 Typst인가요?**"
 
-#: ../../howto/format-specific-content.rst:102
+#: ../../howto/format-specific-content.rst:117
 msgid ""
 "Guidedog generates PDF books through native `Typst "
 "<https://typst.app/>`_, not TeX or LaTeX. Raw blocks are passed verbatim "
@@ -592,13 +634,13 @@ msgstr ""
 "Guidedog은 TeX나 LaTeX가 아닌 네이티브 `Typst <https://typst.app/>`_\\ 을 통해 PDF 책을 "
 "생성합니다. 원시 블록은 대상 렌더링 엔진으로 그대로 전달됩니다:"
 
-#: ../../howto/format-specific-content.rst:105
+#: ../../howto/format-specific-content.rst:120
 msgid ""
 "**Raw Typst** (``.. raw:: typst``): Rendered directly by the Typst "
 "compiler in PDF builds."
 msgstr "**원시 Typst** (``.. raw:: typst``): PDF 빌드에서 Typst 컴파일러가 직접 렌더링합니다."
 
-#: ../../howto/format-specific-content.rst:106
+#: ../../howto/format-specific-content.rst:121
 msgid ""
 "**Raw LaTeX** (``.. raw:: latex``): Not supported in PDF builds. Guidedog "
 "reports a ``typst.raw.foreign`` warning and omits the content because "
@@ -607,16 +649,18 @@ msgstr ""
 "**원시 LaTeX** (``.. raw:: latex``): PDF 빌드에서 지원되지 않습니다. Typst는 LaTeX 명령을 "
 "실행할 수 없으므로 Guidedog은 ``typst.raw.foreign`` 경고를 보고하고 해당 콘텐츠를 생략합니다."
 
-#: ../../howto/format-specific-content.rst:108
+#: ../../howto/format-specific-content.rst:123
 msgid ""
-"**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. Guidedog "
-"includes a built-in mathematical translator that converts standard LaTeX "
-"equation syntax into native Typst math expressions at compile time."
+"**LaTeX Math** (``.. math::`` and ``:math:``): Supported commands "
+"translate into native Typst equations. Unsupported commands produce "
+"``typst.math.unsupported`` and follow the math policy; see "
+":doc:`../topics/mathematics`."
 msgstr ""
-"**LaTeX 수식** (``.. math::`` 및 ``:math:``): 완벽하게 지원됩니다. Guidedog에는 컴파일 시 "
-"표준 LaTeX 수식 구문을 네이티브 Typst 수식 표현식으로 변환하는 내장 수식 번역기가 포함되어 있습니다."
+"**LaTeX 수학** (``.. math::`` 및 ``:math:``): 지원되는 명령은 네이티브 Typst 수식으로 "
+"변환됩니다. 지원되지 않는 명령은 ``typst.math.unsupported`` 를 발생시키며 수학 정책에 따라 처리됩니다. "
+":doc:`../topics/mathematics` 를 참조합니다."
 
-#: ../../howto/format-specific-content.rst:111
+#: ../../howto/format-specific-content.rst:124
 msgid ""
 "**The ``latex`` tag in ``.. only::``**: For backward compatibility with "
 "legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias for PDF "
@@ -627,29 +671,30 @@ msgstr ""
 "``.. only::`` 표현식에서 ``latex``\\ 를 PDF 빌드의 별칭으로 인식합니다. 순수 Guidedog 프로젝트에서는 "
 "``.. only:: pdf``\\ 를 사용하는 것이 좋습니다."
 
-#: ../../howto/format-specific-content.rst:115
+#: ../../howto/format-specific-content.rst:128
 msgid "3. Declare custom domain directives in conf.toml"
 msgstr "3. conf.toml에서 맞춤 도메인 지시어 선언"
 
-#: ../../howto/format-specific-content.rst:118
+#: ../../howto/format-specific-content.rst:131
 msgid ""
-"When you need custom structured blocks with signature parsing, "
-"cross-references, and index entries, declare them in ``conf.toml`` under "
-"``[[object_types]]``:"
+"When we need structured blocks with signatures, cross-references and "
+"index entries, we declare them under ``[[object_types]]`` in "
+"``conf.toml``. These declarations describe objects; they do not execute "
+"custom rendering code."
 msgstr ""
-"서명 구문 분석, 상호 참조, 색인 항목을 지원하는 맞춤 구조화 블록이 필요한 경우 ``conf.toml``\\ 의 "
-"``[[object_types]]`` 아래에 선언합니다:"
+"시그니처, 상호 참조 및 색인 항목이 있는 구조화된 블록은 ``conf.toml`` 의 ``[[object_types]]`` 에 "
+"선언합니다. 이 선언은 객체를 설명하며 사용자 정의 렌더링 코드를 실행하지 않습니다."
 
-#: ../../howto/format-specific-content.rst:130
+#: ../../howto/format-specific-content.rst:142
 msgid "Now authors can describe services across all documents:"
 msgstr "이제 작성자는 모든 문서에서 서비스를 설명할 수 있습니다:"
 
-#: ../../howto/format-specific-content.rst:138
+#: ../../howto/format-specific-content.rst:150
 msgid ""
 "Other documents can link directly to this service using the declared role:"
 msgstr "다른 문서에서 선언된 역할을 사용하여 이 서비스로 직접 링크할 수 있습니다:"
 
-#: ../../howto/format-specific-content.rst:144
+#: ../../howto/format-specific-content.rst:156
 msgid ""
 "In HTML, Guidedog produces semantic definition tags (``<dl "
 "class=\"service\">``) with automatic anchor links. In PDF, Guidedog "
@@ -659,31 +704,36 @@ msgstr ""
 "HTML에서 Guidedog은 자동 앵커 링크가 포함된 의미론적 정의 태그(``<dl class=\"service\">``)\\ 를 "
 "생성합니다. PDF에서 Guidedog은 스타일이 적용된 설명 항목을 조판하고 책 색인에 항목을 기록합니다."
 
-#: ../../howto/format-specific-content.rst:147
+#: ../../howto/format-specific-content.rst:159
 msgid "4. Alias existing directives"
 msgstr "4. 기존 지시어 별칭 지정"
 
-#: ../../howto/format-specific-content.rst:150
+#: ../../howto/format-specific-content.rst:162
 msgid ""
-"If you are migrating documentation or want friendlier names for built-in "
-"directives, declare aliases in ``[directive_aliases]`` in ``conf.toml``:"
+"We can give Sphinx domain directives alternative names in "
+"``[directive_aliases]``. Targets may name their domain explicitly, or "
+"resolve in the standard or current domain. Core RST directives such as "
+"``admonition`` are outside this alias mechanism."
 msgstr ""
-"문서를 마이그레이션 중이거나 내장 지시어에 보다 친숙한 이름을 부여하려는 경우 ``conf.toml``\\ 의 "
-"``[directive_aliases]``\\ 에 별칭을 선언합니다:"
+"``[directive_aliases]`` 에서 Sphinx 도메인 지시문에 다른 이름을 지정할 수 있습니다. 대상은 도메인을 "
+"명시하거나 표준 도메인 또는 현재 도메인에서 해석됩니다. ``admonition`` 과 같은 핵심 RST 지시문은 이 별칭 기능에 "
+"포함되지 않습니다."
 
-#: ../../howto/format-specific-content.rst:159
+#: ../../howto/format-specific-content.rst:169
 msgid ""
-"Authors can then use ``.. callout::`` or ``.. endpoint::`` using the "
-"options and rules of the target directive."
+"``.. endpoint:: check_health()`` uses the syntax and options of "
+"``py:function``. We can link to it with ``:py:func:`check_health```. For "
+"callouts, we use ``.. admonition:: Title`` directly."
 msgstr ""
-"작성자는 대상 지시어의 옵션과 규칙을 그대로 사용하여 ``.. callout::`` 또는 ``.. endpoint::``\\ 를 "
-"사용할 수 있습니다."
+"``.. endpoint:: check_health()`` 는 ``py:function`` 의 구문과 옵션을 사용합니다. "
+"``:py:func:`check_health``` 로 참조할 수 있습니다. 알림 상자에는 ``.. admonition:: "
+"Title`` 을 직접 사용합니다."
 
-#: ../../howto/format-specific-content.rst:161
+#: ../../howto/format-specific-content.rst:171
 msgid "5. Call reusable Typst functions from templates"
 msgstr "5. 템플릿에서 재사용 가능한 Typst 함수 호출"
 
-#: ../../howto/format-specific-content.rst:164
+#: ../../howto/format-specific-content.rst:174
 msgid ""
 "Instead of writing verbose Typst code inline across multiple documents, "
 "define a reusable function in ``_templates/theme.typ``:"
@@ -691,39 +741,78 @@ msgstr ""
 "여러 문서에 걸쳐 장황한 Typst 코드를 인라인으로 작성하는 대신 ``_templates/theme.typ``\\ 에서 재사용 "
 "가능한 함수를 정의합니다:"
 
-#: ../../howto/format-specific-content.rst:181
+#: ../../howto/format-specific-content.rst:191
 msgid "Call it concisely from reStructuredText:"
 msgstr "reStructuredText에서 간결하게 호출합니다:"
 
-#: ../../howto/format-specific-content.rst:191
+#: ../../howto/format-specific-content.rst:202
+msgid ""
+"Import the function explicitly: the book template's own imports are "
+"scoped to its module and do not expose helpers to document content. For "
+"many call sites, place this import in a project preamble selected by "
+"``pdf_preamble``."
+msgstr ""
+"함수를 명시적으로 가져옵니다. 책 템플릿의 가져오기는 해당 모듈 안에서만 유효하며 문서 콘텐츠에 도우미 함수를 노출하지 않습니다. "
+"호출 위치가 많으면 ``pdf_preamble`` 으로 선택한 프로젝트 프리앰블에 가져오기를 넣을 수 있습니다."
+
+#: ../../howto/format-specific-content.rst:204
 msgid "6. Advanced: Preprocessing directives with a build plugin"
 msgstr "6. 고급: 빌드 플러그인으로 지시어 전처리"
 
-#: ../../howto/format-specific-content.rst:194
+#: ../../howto/format-specific-content.rst:207
 msgid ""
-"When you want to invent a completely custom directive syntax and expand "
-"it dynamically during build time, implement a ``gd_plugins::BuildPlugin`` "
-"in Rust."
+"For computed source content, we implement ``gd_plugins::BuildPlugin`` in "
+"Rust. This small example expands an exact, unindented ``.. chart:: "
+"latency`` line in RST documents. It leaves indented code examples and "
+"other source formats unchanged; it is not a general directive parser."
 msgstr ""
-"완전히 독창적인 지시어 구문을 고안하고 빌드 시 동적으로 확장하려는 경우 Rust로 "
-"``gd_plugins::BuildPlugin``\\ 을 구현합니다."
+"계산된 소스 콘텐츠를 위해 Rust로 ``gd_plugins::BuildPlugin`` 을 구현합니다. 이 작은 예제는 RST "
+"문서에서 들여쓰기 없이 정확히 일치하는 ``.. chart:: latency`` 행을 확장합니다. 들여쓴 코드 예제와 다른 소스 "
+"형식은 변경하지 않으며, 범용 지시문 구문 분석기는 아닙니다."
 
-#: ../../howto/format-specific-content.rst:197
+#: ../../howto/format-specific-content.rst:209
 msgid ""
 "The plugin implements ``process_source``, intercepting the raw document "
 "text before parsing:"
 msgstr "플러그인은 ``process_source``\\ 를 구현하여 구문 분석 전 원시 문서 텍스트를 가로챕니다:"
 
-#: ../../howto/format-specific-content.rst:231
-msgid "Register the compiled plugin using:"
-msgstr "다음 명령으로 컴파일된 플러그인을 등록합니다:"
-
-#: ../../howto/format-specific-content.rst:237
+#: ../../howto/format-specific-content.rst:256
 msgid ""
-"Guidedog verifies the plugin's SHA-256 fingerprint, starts it per build, "
-"and forwards document sources through its pipeline."
+"Create a separate binary crate named ``chart-plugin`` and use the example "
+"as ``src/main.rs``. Add a path dependency on this checkout's "
+"``crates/gd-plugins`` in its ``Cargo.toml``; for sibling ``chart-plugin`` "
+"and ``guidedog`` directories:"
 msgstr ""
-"Guidedog은 플러그인의 SHA-256 지문을 확인하고 빌드마다 플러그인을 시작하며 파이프라인을 통해 문서 소스를 전달합니다."
+"``chart-plugin`` 이라는 별도의 바이너리 크레이트를 만들고 예제를 ``src/main.rs`` 로 사용합니다. 해당 "
+"``Cargo.toml`` 에 현재 체크아웃의 ``crates/gd-plugins`` 경로 의존성을 추가합니다. "
+"``chart-plugin`` 과 ``guidedog`` 가 이웃한 디렉터리라면 다음과 같이 작성합니다."
+
+#: ../../howto/format-specific-content.rst:263
+msgid ""
+"Build in the plugin crate, then register the executable with the "
+"documentation project:"
+msgstr "플러그인 크레이트에서 빌드한 뒤 실행 파일을 문서 프로젝트에 등록합니다."
+
+#: ../../howto/format-specific-content.rst:270
+msgid ""
+"On Windows the executable ends in ``.exe``. Registration checks and pins "
+"the executable. To run it during builds, set ``plugins = [\"chart\"]`` at "
+"the top level of the documentation project's ``conf.toml``. Registration "
+"alone does not enable a plugin. See :doc:`../plugins` for the complete "
+"plugin lifecycle and trust model."
+msgstr ""
+"Windows 실행 파일은 ``.exe`` 로 끝납니다. 등록 과정에서 실행 파일을 검사하고 고정합니다. 빌드 중 실행하려면 문서 "
+"프로젝트 ``conf.toml`` 의 최상위에 ``plugins = [\"chart\"]`` 를 설정합니다. 등록만으로 플러그인이 "
+"활성화되지는 않습니다. 전체 수명 주기와 신뢰 모델은 :doc:`../plugins` 를 참조합니다."
+
+#: ../../howto/format-specific-content.rst:272
+msgid ""
+"The HTML example produces a static chart placeholder, not a plotted data "
+"series. A real chart plugin must generate its data and provide the HTML "
+"assets and print rendering it needs."
+msgstr ""
+"HTML 예제는 데이터 계열을 그리는 대신 정적인 차트 자리표시자를 만듭니다. 실제 차트 플러그인은 데이터를 생성하고 필요한 "
+"HTML 자산과 인쇄용 렌더링을 제공해야 합니다."
 
 #: ../../howto/github-pages.rst:1
 msgid "Publish to GitHub Pages"
@@ -2886,6 +2975,48 @@ msgstr ""
 "오프라인에서 검증하고 파일이 누락되었거나 수정·추가되었거나 심볼릭 링크로 바뀐 경우 안전하게 실패(fail closed)합니다."
 
 #~ msgid ""
+#~ "**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. "
+#~ "Guidedog includes a built-in mathematical translator that converts "
+#~ "standard LaTeX equation syntax into native Typst math expressions at "
+#~ "compile time."
+#~ msgstr ""
+#~ "**LaTeX 수식** (``.. math::`` 및 ``:math:``): 완벽하게 지원됩니다. Guidedog에는 컴파일 "
+#~ "시 표준 LaTeX 수식 구문을 네이티브 Typst 수식 표현식으로 변환하는 내장 수식 번역기가 포함되어 있습니다."
+
+#~ msgid ""
+#~ "If you are migrating documentation or want friendlier names for "
+#~ "built-in directives, declare aliases in ``[directive_aliases]`` in "
+#~ "``conf.toml``:"
+#~ msgstr ""
+#~ "문서를 마이그레이션 중이거나 내장 지시어에 보다 친숙한 이름을 부여하려는 경우 ``conf.toml``\\ 의 "
+#~ "``[directive_aliases]``\\ 에 별칭을 선언합니다:"
+
+#~ msgid ""
+#~ "Authors can then use ``.. callout::`` or ``.. endpoint::`` using the "
+#~ "options and rules of the target directive."
+#~ msgstr ""
+#~ "작성자는 대상 지시어의 옵션과 규칙을 그대로 사용하여 ``.. callout::`` 또는 ``.. endpoint::``\\ "
+#~ "를 사용할 수 있습니다."
+
+#~ msgid ""
+#~ "When you want to invent a completely custom directive syntax and "
+#~ "expand it dynamically during build time, implement a "
+#~ "``gd_plugins::BuildPlugin`` in Rust."
+#~ msgstr ""
+#~ "완전히 독창적인 지시어 구문을 고안하고 빌드 시 동적으로 확장하려는 경우 Rust로 "
+#~ "``gd_plugins::BuildPlugin``\\ 을 구현합니다."
+
+#~ msgid "Register the compiled plugin using:"
+#~ msgstr "다음 명령으로 컴파일된 플러그인을 등록합니다:"
+
+#~ msgid ""
+#~ "Guidedog verifies the plugin's SHA-256 fingerprint, starts it per "
+#~ "build, and forwards document sources through its pipeline."
+#~ msgstr ""
+#~ "Guidedog은 플러그인의 SHA-256 지문을 확인하고 빌드마다 플러그인을 시작하며 파이프라인을 통해 문서 소스를 "
+#~ "전달합니다."
+
+#~ msgid ""
 #~ "The GitHub Pages plugin is linked into ``guidedog``, and it adds two "
 #~ "commands to it:"
 #~ msgstr "GitHub Pages 플러그인은 ``guidedog``\\ 에 링크되어 있으며, 명령 두 개를 추가합니다:"
@@ -2946,4 +3077,3 @@ msgstr ""
 #~ "timestamp instead of the current system clock for all date formatting "
 #~ "and template variables."
 #~ msgstr "지정하면 시스템 현재 시각 대신 해당 Unix 타임스탬프를 날짜와 템플릿 변수에 사용합니다."
-

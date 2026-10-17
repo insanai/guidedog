@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.7\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -29,150 +29,150 @@ msgid "1. Start with a real project"
 msgstr ""
 
 #: ../../tutorial/a-custom-theme.rst:11
-msgid "Use Guidedog 0.7.0 or newer. Run this from the directory that will contain ``orbit``:"
+msgid "Use Guidedog 1.0.0-beta.5 or newer. Run this from the directory that will contain ``orbit``:"
 msgstr ""
 
 #: ../../tutorial/a-custom-theme.rst:17
-msgid "Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` in the same directory. We keep this file: it supplies the tested page layout, cover, running heads, contents, code styles and optimized paragraph breaking."
+msgid "Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` in the same directory. We also keep the generated ``theme.typ`` beside it. We keep the renamed book template: it supplies the tested page layout, cover, running heads, contents, code styles and optimized paragraph breaking."
 msgstr ""
 
 #: ../../tutorial/a-custom-theme.rst:21
 msgid "Download :download:`conf.toml <../_static/repository/theme/conf.toml>`, :download:`index.rst <../_static/repository/theme/index.rst>` and :download:`reading.rst <../_static/repository/theme/chapters/reading.rst>`. Save the first two in ``orbit`` and the third in ``orbit/chapters``. The finished project will have these files:"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:45
+#: ../../tutorial/a-custom-theme.rst:47
 msgid "2. Set the contract"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:48
+#: ../../tutorial/a-custom-theme.rst:50
 msgid "The downloaded configuration selects the local template and static directories. ``html_css_files`` adds our stylesheet after the default stylesheet. ``html_context`` supplies a project value to Jinja. The explicit PDF filename makes the output easy to find."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:55
+#: ../../tutorial/a-custom-theme.rst:57
 msgid "orbit/conf.toml"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:57
+#: ../../tutorial/a-custom-theme.rst:59
 msgid "All paths in this tutorial are project files. HTML templates are found through ``templates_path``. The PDF entry point is always ``_templates/book.typ`` under the source directory. Changing ``templates_path`` does not move it."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:61
+#: ../../tutorial/a-custom-theme.rst:63
 msgid "3. Extend the HTML layout"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:64
+#: ../../tutorial/a-custom-theme.rst:66
 msgid "Save :download:`layout.html <../_static/repository/theme/_templates/layout.html>` as ``orbit/_templates/layout.html``. Replace the generated file completely:"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:69
+#: ../../tutorial/a-custom-theme.rst:71
 msgid "orbit/_templates/layout.html"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:71
+#: ../../tutorial/a-custom-theme.rst:73
 msgid "``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a template named ``layout.html`` would try to extend itself. ``super()`` keeps the parent's block content. Navigation, search, theme controls and accessible landmarks remain in the base layout. Our blocks add a label, metadata and an edition footer."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:76
+#: ../../tutorial/a-custom-theme.rst:78
 msgid "A theme changes presentation. A build plugin changes source text, complete HTML or generated assets. Use :doc:`../plugins` when a template cannot express the required operation. Ordinary layout changes need no native code."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:80
+#: ../../tutorial/a-custom-theme.rst:82
 msgid "4. Give repeated markup one home"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:83
+#: ../../tutorial/a-custom-theme.rst:85
 msgid "Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. Save :download:`ui.html <../_static/repository/theme/_templates/macros/ui.html>` and :download:`edition.html <../_static/repository/theme/_templates/partials/edition.html>` at the matching paths:"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:90
+#: ../../tutorial/a-custom-theme.rst:92
 msgid "orbit/_templates/macros/ui.html"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:94
+#: ../../tutorial/a-custom-theme.rst:96
 msgid "orbit/_templates/partials/edition.html"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:96
+#: ../../tutorial/a-custom-theme.rst:98
 msgid "A macro takes explicit inputs. An included partial uses the current page's context. Escape plain project values with ``|e``. Use ``pathto`` for document links: a hard-coded ``chapters/reading.html`` would break on a nested page or with another HTML builder."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:101
+#: ../../tutorial/a-custom-theme.rst:103
 msgid "5. Design for the reader's theme"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:104
+#: ../../tutorial/a-custom-theme.rst:106
 msgid "Save :download:`theme.css <../_static/repository/theme/_static/theme.css>` as ``orbit/_static/theme.css``:"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:109
+#: ../../tutorial/a-custom-theme.rst:111
 msgid "orbit/_static/theme.css"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:111
+#: ../../tutorial/a-custom-theme.rst:113
 msgid "The theme begins in light mode. The existing control selects light, dark or system and saves the choice. Explicit dark rules and the system media query use the same tokens. Typography and spacing stay shared. No new JavaScript is needed. Avoid a fixed ink color on a background whose theme can change."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:116
+#: ../../tutorial/a-custom-theme.rst:118
 msgid "Browser hyphenation follows the page language. It is not Typst's paragraph optimizer. The manual's optional English web optimizer is described separately in :doc:`../topics/typography`. This example uses the browser's own layout."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:120
+#: ../../tutorial/a-custom-theme.rst:122
 msgid "Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in current Guidedog builds. Ordinary graphs retain their own colors. Older hosts render the same DOT in its light palette. See :doc:`../topics/diagrams` for semantic node classes and print behavior."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:125
+#: ../../tutorial/a-custom-theme.rst:127
 msgid "6. Wrap the PDF book"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:128
+#: ../../tutorial/a-custom-theme.rst:130
 msgid "Save :download:`palette.typ <../_static/repository/theme/_templates/palette.typ>` and :download:`book.typ <../_static/repository/theme/_templates/book.typ>` in ``orbit/_templates``. These are new files; keep ``base-book.typ`` beside them."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:134
+#: ../../tutorial/a-custom-theme.rst:136
 msgid "orbit/_templates/palette.typ"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:138
+#: ../../tutorial/a-custom-theme.rst:140
 msgid "orbit/_templates/book.typ"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:140
+#: ../../tutorial/a-custom-theme.rst:142
 msgid "The host calls ``book`` with metadata and the chapter content. The wrapper forwards those values to the generated base and supplies our palette. Passing ``body`` into the styled function keeps its rules in scope. The web stylesheet does not affect PDF, and the Typst template does not affect HTML."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:145
+#: ../../tutorial/a-custom-theme.rst:147
 msgid "The base handles language-aware hyphenation and optimized line breaking. The wrapper keeps those rules, uses the matching blue accent and adds page numbers to document cross-references. PDF always uses the light, print palette."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:149
+#: ../../tutorial/a-custom-theme.rst:151
 msgid "7. Build and inspect both forms"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:152
+#: ../../tutorial/a-custom-theme.rst:154
 msgid "Run from the same parent directory as step 1:"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:162
+#: ../../tutorial/a-custom-theme.rst:164
 msgid "Open the URL printed by ``serve``. Check the chapter and generated search page, not only the front page. Try light, dark and system modes. Resize the window. Use the keyboard to reach the navigation and search. Change the footer partial, save, then refresh: the preview rebuilds its template dependencies."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:167
+#: ../../tutorial/a-custom-theme.rst:169
 msgid "Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog adds the language suffix to the configured filename. Inspect the contents, chapter opening, equation, table, code and diagram. Look for clipped labels, loose paragraphs and missing glyphs. The other outputs are below ``_build/html``, ``_build/dirhtml`` and ``_build/singlehtml``. Stop the server with ``Ctrl+C``."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:174
+#: ../../tutorial/a-custom-theme.rst:176
 msgid "8. Reuse and maintain the theme"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:177
+#: ../../tutorial/a-custom-theme.rst:179
 msgid "Create another project with ``guidedog quickstart``. Copy the finished ``_templates`` directory and ``_static/theme.css`` into it. Add ``html_css_files = [\"theme.css\"]``, the accent option and the ``edition_label`` context value to its configuration. Change the footer's document link to a page that exists in that project. Keep the new project's metadata and source tree."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:183
+#: ../../tutorial/a-custom-theme.rst:185
 msgid "The copied PDF base makes the theme self-contained. When we upgrade Guidedog, we create a scratch quickstart project and compare its templates with our saved base. We adopt the changes we need, then rebuild every target. The built-in HTML layout can change too. Small block overrides are easier to maintain than a second complete layout. For every variable and block, see :doc:`../templates`."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:189
+#: ../../tutorial/a-custom-theme.rst:191
 msgid "If the build reports a missing ``base-book.typ``, finish the rename in step 1. If the label is blank, set ``edition_label`` in ``html_context``. If CSS is missing, check both ``html_static_path`` and ``html_css_files``. Read the file, line and correction in the diagnostic before changing unrelated settings."
 msgstr ""
 

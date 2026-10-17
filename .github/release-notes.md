@@ -1,17 +1,15 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.6 implements the complete static publishing design of GDS 0013.
+Version 1.0.0-beta.7 adds build-time rich article excerpts and fixes [issue #3](https://github.com/insanai/guidedog/issues/3).
 
-- **Source-level publication.** `guidedog ssg new`, `draft`, `schedule`, `publish` and `status` manage RST and Markdown articles. Edits preserve body bytes, line endings and permissions, and refuse existing destinations and source symlinks.
-- **Clock-aware release builds.** Drafts, scheduled articles and expired articles are withheld before resolution and public indices. `--preview` includes them for review; `--now=RFC3339` fixes the build clock. Clock-only changes reuse parsed objects, and successful rebuilds remove old unpublished outputs.
-- **Collections and discovery.** `postlist` filters and sorts dated articles. Optional `[site]` settings emit Atom, RSS and sitemap files using eligible documents.
-- **Taxonomy and pagination.** Tag, category, year, author and series archives share filtered collections, stable pagination, per-collection feeds and output collision checks. Shrinking collections remove obsolete pages.
-- **Whole websites.** `guidedog ssg build` assembles project mounts, language editions, shared assets, documentation and discussion PDFs in one publication transaction. Cross-mount links select language editions and require current published targets. Guidedog's seven-language website uses this same system.
-- **Themes and starters.** `ssg init` supplies project, journal and research presets. Explicit pinned theme installation records archive and canonical tree checksums; builds verify installed themes offline.
-- **Article layouts.** Per-page HTML templates receive typed metadata in `page.meta`. `:pdf: article` produces a standalone PDF beside HTML with a title, author block, abstract and running headers.
-- **Precise template dependencies.** Actual template requests, navigation context reads and dynamic navigation calls are tracked. Unused templates and sections beyond a requested navigation depth leave unrelated pages cached. Chronological neighbors are computed once per build.
+- **Rich introductions.** Place `.. more::` after an article's introduction. Native `postlist` directives with `:excerpts:` and collection templates using `post.excerpt_html` retain paragraphs, emphasis, links, lists and lead images. Full HTML and PDF articles keep both sides of the boundary.
+- **Build-time rendering.** Nested archives, taxonomy pages and pagination receive correct relative links, images and downloads. Repeated native listings use separate anchor namespaces; references to excluded targets and footnotes link to the full article. No browser fetch or runtime plugin is required.
+- **Compatible fallback.** Articles without a boundary retain their escaped plain-text summary. Feeds and description metadata continue to use `:summary:`. Draft, schedule and expiry filtering applies before excerpt selection.
+- **Verified dependencies.** Listings track the source article and its reference and asset lookups, including reader dependencies. Edits to introductions, included files and referenced titles invalidate the affected listings.
+- **Reviewed SSG behavior.** This release also includes the article paper-size normalization, finer neighbor tracing, pinned-theme configuration digest and line-ending fixes made after beta.6, with the reviewed custom-directive manual examples.
+- **Qualification.** Regression tests cover rich output, local and excluded targets, repeated IDs, publication filtering, incremental changes and PDF compilation. Every unpacked platform archive builds rich excerpts as part of its complete SSG smoke test.
 
-The [static publishing guide](https://insanai.github.io/guidedog/manual/howto/static-publishing.html) describes the commands and configuration. [GDS 0013](https://insanai.github.io/guidedog/discussions/records/0013-static-site-generation.html) specifies their contracts and qualification. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.6/CHANGELOG.md) records the changes.
+The [static publishing guide](https://insanai.github.io/guidedog/manual/howto/static-publishing.html) describes the commands and configuration. [GDS 0013](https://insanai.github.io/guidedog/discussions/records/0013-static-site-generation.html) specifies their contracts and qualification. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.7/CHANGELOG.md) records the changes.
 
 ## Downloads
 
@@ -22,7 +20,7 @@ The [static publishing guide](https://insanai.github.io/guidedog/manual/howto/st
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.6-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.7-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

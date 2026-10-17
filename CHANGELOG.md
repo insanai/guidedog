@@ -5,6 +5,15 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
+## 1.0.0-beta.7 - 2026-10-17
+
+- Add author-defined rich article excerpts with a parsed `.. more::` boundary. Full HTML and PDF articles retain their complete content, and code examples remain literal.
+- Render introductions at build time in native `postlist :excerpts:` lists and collection templates through `post.excerpt_html`, with plain-text summary fallback and unchanged feed descriptions.
+- Resolve excerpt links, images, downloads and references for nested archives and pagination. Isolate repeated excerpt anchors and link excluded targets and footnotes to the full article.
+- Keep publication eligibility and content policy intact. Track source-scoped dependencies and included files so changed introductions and reference targets refresh their listings.
+- Document authoring, template use and Tinkerer migration. Exercise excerpts in every platform's unpacked release archive, alongside the existing complete SSG smoke test.
+- Include the post-beta.6 fixes for article paper sizes, observed neighbor dependencies, pinned theme configuration digests and metadata line endings, plus the reviewed custom-directive manual examples.
+
 ## 1.0.0-beta.6 - 2026-10-16
 
 - Add `guidedog ssg new`, `draft`, `schedule`, `publish` and `status` for RST and Markdown articles, using validated atomic source updates that retain body bytes, line endings and permissions.

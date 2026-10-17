@@ -96,8 +96,8 @@ It prints a record of versions, pins and results, and exits 1 on any incompatibi
 5. Tag the verified commit and push the tag:
 
    ```sh
-   git tag -a v1.0.0-beta.6 -m "Guidedog 1.0.0-beta.6"
-   git push origin v1.0.0-beta.6
+   git tag -a v1.0.0-beta.7 -m "Guidedog 1.0.0-beta.7"
+   git push origin v1.0.0-beta.7
    ```
 
 6. The tagged run publishes the release when every job passes. Check the release page,
@@ -120,7 +120,7 @@ If every job of the tagged run passed except `publish` or `refresh` (a GitHub ou
 permissions problem), publish the files that run already built:
 
 1. Fix the cause, if it is in the repository settings.
-2. Run **Recover release publication** with the tag (`v1.0.0-beta.6`) and the ID of the tagged
+2. Run **Recover release publication** with the tag (`v1.0.0-beta.7`) and the ID of the tagged
    run (the number in its URL).
 
 It checks with `cargo xtask release check-run` that the run built that tag at the commit the
@@ -141,4 +141,4 @@ brew install insanai/guidedog/guidedog
 
 The tap's Update workflow checks published releases every hour, including beta versions, and selects the greatest version. We can also run it manually after publication with an explicit tag. It verifies the formula and checksum manifest against GitHub's asset digests, checks all four archive URLs and hashes, and installs and tests the candidate on Apple silicon and Intel macOS before committing it. The release workflow remains the source of the packages and formula; the tap does not rebuild the engine or change published assets. No cross-repository write token is needed.
 
-We publish `v1.0.0-beta.6` as a normal GitHub release. The version already identifies it as a beta. Scheduled tap updates include beta versions and follow the final release when its version is greater. The updater rejects downgrades.
+We publish `v1.0.0-beta.7` as a normal GitHub release. The version already identifies it as a beta. Scheduled tap updates include beta versions and follow the final release when its version is greater. The updater rejects downgrades.

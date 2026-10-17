@@ -1,0 +1,29 @@
+:date: 2026-10-17
+:author: Guidedog contributors
+:category: releases
+:tags: rust, publishing
+:summary: Rich article introductions rendered at build time, with portable links, isolated anchors and verified dependencies.
+:pdf: article
+
+Guidedog 1.0.0-beta.7
+=====================
+
+We can now select a rich introduction with ``.. more::``.
+Native postlists and collection templates preserve paragraphs, **emphasis**, links, lists and lead images during the build.
+The full article retains its complete content in HTML and PDF.
+
+.. more::
+
+We render collection introductions through ``post.excerpt_html`` and native listings through ``.. postlist::`` with ``:excerpts:``.
+Articles without a boundary keep the plain-text summary fallback.
+Feeds and description metadata continue to use ``:summary:`` independently.
+
+Excerpt links and resources are relative to their destination, including nested taxonomy archives and pagination.
+Repeated native listings use separate anchor namespaces.
+References to targets and footnotes beyond the boundary lead to the full article.
+Listings retain source-scoped reference and asset dependencies, and included-file edits rebuild them.
+
+This fixes `issue 3 <https://github.com/insanai/guidedog/issues/3>`_.
+We describe authoring, templates and Tinkerer migration in the `static publishing guide <https://insanai.github.io/guidedog/manual/howto/static-publishing.html>`_.
+The release also includes the SSG corrections and custom-directive documentation reviewed after beta.6.
+Every platform archive exercises rich excerpts in its complete SSG smoke test.

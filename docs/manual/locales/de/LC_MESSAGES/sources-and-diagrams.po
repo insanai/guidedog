@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 09:09+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -85,7 +85,7 @@ msgstr ""
 "Beim Lesen wird ermittelt, wo jedes Objekt definiert ist; beim Schreiben "
 "werden daraus Links, Seiten und Zeichnungen."
 
-#: ../../sources-and-diagrams.rst:42
+#: ../../sources-and-diagrams.rst:48
 msgid ""
 "Every Python file the scan reads is a dependency of the document that "
 "needed it. When we edit a module, the documents that describe it are read "
@@ -96,11 +96,11 @@ msgstr ""
 "Dokumente, die es beschreiben, neu gelesen, und ihre Links, "
 "Quelltextseiten und Diagramme folgen der Änderung."
 
-#: ../../sources-and-diagrams.rst:44
+#: ../../sources-and-diagrams.rst:50
 msgid "Source pages: viewcode"
 msgstr "Quelltextseiten: viewcode"
 
-#: ../../sources-and-diagrams.rst:47
+#: ../../sources-and-diagrams.rst:53
 msgid ""
 "With ``sphinx.ext.viewcode`` listed, each Python description gets a "
 "``[source]`` link after its signature. The link leads to a page that "
@@ -115,11 +115,11 @@ msgstr ""
 "Funktion in einem Block mit einem Link ``[docs]`` zurück zu ihrer "
 "Beschreibung."
 
-#: ../../sources-and-diagrams.rst:49
+#: ../../sources-and-diagrams.rst:55
 msgid "For this module, ``src/shapes.py``:"
 msgstr "Für dieses Modul, ``src/shapes.py``:"
 
-#: ../../sources-and-diagrams.rst:60
+#: ../../sources-and-diagrams.rst:66
 msgid ""
 "the description of ``shapes.Square`` links to "
 "``_modules/shapes.html#Square``, and the source page links back to "
@@ -137,7 +137,7 @@ msgstr ""
 "relativ. Sie funktionieren also auch unter ``dirhtml`` und wenn wir die "
 "Dateien direkt von der Festplatte öffnen."
 
-#: ../../sources-and-diagrams.rst:62
+#: ../../sources-and-diagrams.rst:68
 msgid ""
 "A class that a package re-exports is linked to the module that defines "
 "it. If ``Square`` were defined in ``shapes/square.py`` and imported by "
@@ -153,15 +153,15 @@ msgstr ""
 "beginnt beim ersten Dekorator der Definition und endet bei ihrer letzten "
 "Zeile. Eine dekorierte Methode zeigt also ihre Dekoratoren."
 
-#: ../../sources-and-diagrams.rst:64
+#: ../../sources-and-diagrams.rst:70
 msgid "The settings have Sphinx's names and defaults:"
 msgstr "Die Einstellungen haben die Namen und Standardwerte von Sphinx:"
 
-#: ../../sources-and-diagrams.rst:66
+#: ../../sources-and-diagrams.rst:72
 msgid "``viewcode_follow_imported_members``"
 msgstr "``viewcode_follow_imported_members``"
 
-#: ../../sources-and-diagrams.rst:67
+#: ../../sources-and-diagrams.rst:73
 msgid ""
 "``true`` (default): link a re-exported object to the module that defines "
 "it. ``false``: link only objects that the named module defines itself. "
@@ -172,24 +172,24 @@ msgstr ""
 "Modul selbst definiert. Der alte Name ``viewcode_import`` wird als diese "
 "Einstellung gelesen."
 
-#: ../../sources-and-diagrams.rst:69
+#: ../../sources-and-diagrams.rst:75
 msgid "``viewcode_line_numbers``"
 msgstr "``viewcode_line_numbers``"
 
-#: ../../sources-and-diagrams.rst:70
+#: ../../sources-and-diagrams.rst:76
 msgid "``false`` (default). ``true`` numbers the lines of the source pages."
 msgstr ""
 "``false`` (Standard). ``true`` nummeriert die Zeilen der Quelltextseiten."
 
-#: ../../sources-and-diagrams.rst:72
+#: ../../sources-and-diagrams.rst:78
 msgid "``viewcode_enable_epub``"
 msgstr "``viewcode_enable_epub``"
 
-#: ../../sources-and-diagrams.rst:73
+#: ../../sources-and-diagrams.rst:79
 msgid "Accepted and unused, since Guidedog has no EPUB builder."
 msgstr "Akzeptiert und ungenutzt, da Guidedog keinen EPUB-Builder hat."
 
-#: ../../sources-and-diagrams.rst:75
+#: ../../sources-and-diagrams.rst:81
 msgid ""
 "Source pages exist in ``html`` and ``dirhtml`` only, as in Sphinx. "
 "``singlehtml``, the PDF and text have neither the links nor the pages: a "
@@ -199,7 +199,7 @@ msgstr ""
 "``singlehtml``, das PDF und der Text haben weder die Links noch die "
 "Seiten: Ein Buch braucht keine zweite Kopie des Codes."
 
-#: ../../sources-and-diagrams.rst:77
+#: ../../sources-and-diagrams.rst:83
 msgid ""
 "A description whose module is not below ``autodoc_source_paths`` gets no "
 "link. The note ``viewcode.source`` names the module once per document, "
@@ -214,11 +214,11 @@ msgstr ""
 "jedes Lesen von Quellen, erhält keine Seite; dazu erscheint die Warnung "
 "``viewcode.limit``."
 
-#: ../../sources-and-diagrams.rst:79
+#: ../../sources-and-diagrams.rst:85
 msgid "Source links on the web: linkcode"
 msgstr "Quelltextlinks im Web: linkcode"
 
-#: ../../sources-and-diagrams.rst:82
+#: ../../sources-and-diagrams.rst:88
 msgid ""
 "Sphinx's ``linkcode`` calls a Python function, ``linkcode_resolve``, to "
 "make each link. Guidedog never runs Python, so it takes a URL template "
@@ -228,7 +228,7 @@ msgstr ""
 "``linkcode_resolve``. Guidedog führt nie Python aus und nimmt stattdessen "
 "eine URL-Vorlage:"
 
-#: ../../sources-and-diagrams.rst:89
+#: ../../sources-and-diagrams.rst:95
 msgid ""
 "In a repository whose checked-out branch is ``main``, the description of "
 "``Square.area`` above then links to "
@@ -240,34 +240,34 @@ msgstr ""
 "``https://github.com/acme/shapes/blob/main/src/shapes.py#L4-L6``. Diese "
 "Platzhalter werden für jedes Objekt gefüllt:"
 
-#: ../../sources-and-diagrams.rst:91
+#: ../../sources-and-diagrams.rst:97
 msgid "Placeholders of ``linkcode_url``"
 msgstr "Platzhalter von ``linkcode_url``"
 
-#: ../../sources-and-diagrams.rst:95
+#: ../../sources-and-diagrams.rst:101
 msgid "Placeholder"
 msgstr "Platzhalter"
 
-#: ../../sources-and-diagrams.rst:96
+#: ../../sources-and-diagrams.rst:102
 msgid "Value"
 msgstr "Wert"
 
-#: ../../sources-and-diagrams.rst:97
+#: ../../sources-and-diagrams.rst:103
 msgid "``{domain}``"
 msgstr "``{domain}``"
 
-#: ../../sources-and-diagrams.rst:98
+#: ../../sources-and-diagrams.rst:104
 msgid ""
 "The object's domain: ``py``, ``c``, ``cpp``, ``js``, ``rust``, ``odin``."
 msgstr ""
 "Die Domäne des Objekts: ``py``, ``c``, ``cpp``, ``js``, ``rust``, "
 "``odin``."
 
-#: ../../sources-and-diagrams.rst:99
+#: ../../sources-and-diagrams.rst:105
 msgid "``{module}``"
 msgstr "``{module}``"
 
-#: ../../sources-and-diagrams.rst:100
+#: ../../sources-and-diagrams.rst:106
 msgid ""
 "The module as the description names it, or the Rust or Odin crate or "
 "package path."
@@ -275,19 +275,19 @@ msgstr ""
 "Das Modul, wie die Beschreibung es nennt, oder der Crate- oder Paketpfad "
 "bei Rust oder Odin."
 
-#: ../../sources-and-diagrams.rst:101
+#: ../../sources-and-diagrams.rst:107
 msgid "``{fullname}``"
 msgstr "``{fullname}``"
 
-#: ../../sources-and-diagrams.rst:102
+#: ../../sources-and-diagrams.rst:108
 msgid "The object's name within its module, such as ``Square.area``."
 msgstr "Der Name des Objekts innerhalb seines Moduls, etwa ``Square.area``."
 
-#: ../../sources-and-diagrams.rst:103
+#: ../../sources-and-diagrams.rst:109
 msgid "``{path}``"
 msgstr "``{path}``"
 
-#: ../../sources-and-diagrams.rst:104
+#: ../../sources-and-diagrams.rst:110
 msgid ""
 "The object's source file, relative to ``linkcode_root``, with ``/`` "
 "between folders."
@@ -295,11 +295,11 @@ msgstr ""
 "Die Quelldatei des Objekts, relativ zu ``linkcode_root``, mit ``/`` "
 "zwischen den Ordnern."
 
-#: ../../sources-and-diagrams.rst:105
+#: ../../sources-and-diagrams.rst:111
 msgid "``{line}``"
 msgstr "``{line}``"
 
-#: ../../sources-and-diagrams.rst:106
+#: ../../sources-and-diagrams.rst:112
 msgid ""
 "The first line of the definition, counted from 1. A decorator's line "
 "counts."
@@ -307,31 +307,31 @@ msgstr ""
 "Die erste Zeile der Definition, gezählt ab 1. Die Zeile eines Dekorators "
 "zählt mit."
 
-#: ../../sources-and-diagrams.rst:107
+#: ../../sources-and-diagrams.rst:113
 msgid "``{end_line}``"
 msgstr "``{end_line}``"
 
-#: ../../sources-and-diagrams.rst:108
+#: ../../sources-and-diagrams.rst:114
 msgid "The last line of the definition."
 msgstr "Die letzte Zeile der Definition."
 
-#: ../../sources-and-diagrams.rst:109
+#: ../../sources-and-diagrams.rst:115
 msgid "``{branch}``"
 msgstr "``{branch}``"
 
-#: ../../sources-and-diagrams.rst:110
+#: ../../sources-and-diagrams.rst:116
 msgid "``linkcode_branch``, or the branch read from the repository."
 msgstr "``linkcode_branch`` oder der aus dem Repository gelesene Branch."
 
-#: ../../sources-and-diagrams.rst:111
+#: ../../sources-and-diagrams.rst:117
 msgid "``{{`` and ``}}``"
 msgstr "``{{`` und ``}}``"
 
-#: ../../sources-and-diagrams.rst:112
+#: ../../sources-and-diagrams.rst:118
 msgid "A literal brace."
 msgstr "Eine wörtliche geschweifte Klammer."
 
-#: ../../sources-and-diagrams.rst:114
+#: ../../sources-and-diagrams.rst:120
 msgid ""
 "``linkcode_root`` names the folder ``{path}`` is relative to, relative to "
 "the source folder. Left empty, it is the nearest folder at or above the "
@@ -347,7 +347,7 @@ msgstr ""
 "leer, ist es der im Repository ausgecheckte Branch, gelesen aus "
 "``.git/HEAD``, oder der Commit, wenn ``HEAD`` losgelöst ist."
 
-#: ../../sources-and-diagrams.rst:116
+#: ../../sources-and-diagrams.rst:122
 msgid ""
 "A link is added only when every placeholder the template uses has a "
 "value. A Python object that the scan found has them all. A ``c:`` or "
@@ -364,7 +364,7 @@ msgstr ""
 "``{module}``, ``{fullname}`` und ``{branch}`` verwendet, zum Beispiel "
 "einer Vorlage, die auf eine API-Suche zeigt."
 
-#: ../../sources-and-diagrams.rst:118
+#: ../../sources-and-diagrams.rst:124
 msgid ""
 "The links appear in HTML builders, ``singlehtml`` included, after the "
 "signature and before the permalink. The PDF and text add nothing. With "
@@ -375,7 +375,7 @@ msgstr ""
 "hinzu. Sind ``viewcode`` und ``linkcode`` beide eingetragen, erhält eine "
 "Beschreibung beide Links."
 
-#: ../../sources-and-diagrams.rst:120
+#: ../../sources-and-diagrams.rst:126
 msgid ""
 "Mistakes in the template are found when ``conf.toml`` loads. An unknown "
 "placeholder or an unclosed brace is refused, and listing the extension "
@@ -394,7 +394,7 @@ msgstr ""
 "außerhalb von ``linkcode_root`` liegt, erhält keinen Link; dazu erscheint "
 "der Hinweis ``linkcode.outside``."
 
-#: ../../sources-and-diagrams.rst:122
+#: ../../sources-and-diagrams.rst:128
 msgid ""
 "``guidedog migrate`` cannot read a ``linkcode_resolve`` function as data. "
 "It reports ``migrate.linkcode`` with a template to write in its place."
@@ -403,11 +403,11 @@ msgstr ""
 "Daten lesen. Es meldet ``migrate.linkcode`` und schlägt eine Vorlage vor, "
 "die wir stattdessen schreiben."
 
-#: ../../sources-and-diagrams.rst:124
+#: ../../sources-and-diagrams.rst:130
 msgid "Class diagrams: inheritance_diagram"
 msgstr "Klassendiagramme: inheritance_diagram"
 
-#: ../../sources-and-diagrams.rst:127
+#: ../../sources-and-diagrams.rst:133
 msgid ""
 "The ``inheritance-diagram`` directive draws the classes it names, a "
 "module's classes when it names a module, and their bases up to the roots:"
@@ -416,7 +416,7 @@ msgstr ""
 "nennt, die Klassen eines Moduls, wenn sie ein Modul nennt, und deren "
 "Basisklassen bis zu den Wurzeln:"
 
-#: ../../sources-and-diagrams.rst:134
+#: ../../sources-and-diagrams.rst:140
 msgid ""
 "The names are found as Sphinx finds them: relative to the current module "
 "first (``py:currentmodule``), then as written. The bases are read from "
@@ -433,15 +433,15 @@ msgstr ""
 "aus einem Paket außerhalb der Quellordner wird mit ihrem vollständigen "
 "Namen und ohne etwas darüber gezeichnet."
 
-#: ../../sources-and-diagrams.rst:136
+#: ../../sources-and-diagrams.rst:142
 msgid "The directive takes Sphinx's options:"
 msgstr "Die Direktive nimmt die Optionen von Sphinx:"
 
-#: ../../sources-and-diagrams.rst:138
+#: ../../sources-and-diagrams.rst:144
 msgid "``:parts: N``"
 msgstr "``:parts: N``"
 
-#: ../../sources-and-diagrams.rst:139
+#: ../../sources-and-diagrams.rst:145
 msgid ""
 "Show only the last ``N`` parts of each dotted name; a negative ``N`` "
 "drops the first ``-N`` parts instead. ``0`` (default) shows the full name."
@@ -450,29 +450,29 @@ msgstr ""
 "``N`` lässt stattdessen die ersten ``-N`` Teile weg. ``0`` (Standard) "
 "zeigt den vollständigen Namen."
 
-#: ../../sources-and-diagrams.rst:141
+#: ../../sources-and-diagrams.rst:147
 msgid "``:private-bases:``"
 msgstr "``:private-bases:``"
 
-#: ../../sources-and-diagrams.rst:142
+#: ../../sources-and-diagrams.rst:148
 msgid "Draw classes whose names start with ``_`` as well."
 msgstr "Zeichnet auch Klassen, deren Namen mit ``_`` beginnen."
 
-#: ../../sources-and-diagrams.rst:144
+#: ../../sources-and-diagrams.rst:150
 msgid "``:top-classes: a.B, a.C``"
 msgstr "``:top-classes: a.B, a.C``"
 
-#: ../../sources-and-diagrams.rst:145
+#: ../../sources-and-diagrams.rst:151
 msgid "Stop at these classes: their own bases are not drawn."
 msgstr ""
 "Hält bei diesen Klassen an: Ihre eigenen Basisklassen werden nicht "
 "gezeichnet."
 
-#: ../../sources-and-diagrams.rst:147
+#: ../../sources-and-diagrams.rst:153
 msgid "``:include-subclasses:``"
 msgstr "``:include-subclasses:``"
 
-#: ../../sources-and-diagrams.rst:148
+#: ../../sources-and-diagrams.rst:154
 msgid ""
 "Draw the classes that derive from the named ones too. The scan looks for "
 "them in the packages of the named classes."
@@ -480,15 +480,15 @@ msgstr ""
 "Zeichnet auch die Klassen, die von den genannten abgeleitet sind. Die "
 "Analyse sucht sie in den Paketen der genannten Klassen."
 
-#: ../../sources-and-diagrams.rst:150
+#: ../../sources-and-diagrams.rst:156
 msgid "``:caption: text``"
 msgstr "``:caption: text``"
 
-#: ../../sources-and-diagrams.rst:151
+#: ../../sources-and-diagrams.rst:157
 msgid "Put the drawing in a figure with this caption."
 msgstr "Setzt die Zeichnung in eine Abbildung mit dieser Beschriftung."
 
-#: ../../sources-and-diagrams.rst:153
+#: ../../sources-and-diagrams.rst:159
 msgid ""
 "The settings ``inheritance_graph_attrs``, ``inheritance_node_attrs`` and "
 "``inheritance_edge_attrs`` add Graphviz attributes to the graph, its "
@@ -500,7 +500,7 @@ msgstr ""
 "seinen Kanten Graphviz-Attribute hinzu, und ``inheritance_alias`` zeigt "
 "einen vollständigen Klassennamen unter einem anderen Namen:"
 
-#: ../../sources-and-diagrams.rst:163
+#: ../../sources-and-diagrams.rst:169
 msgid ""
 "The graph is written as Sphinx writes it and drawn by the linked "
 "Graphviz, like a ``graphviz`` directive, so no ``dot`` program is needed. "
@@ -517,7 +517,7 @@ msgstr ""
 "ohne Beschreibung wird ohne Link gezeichnet. Das PDF bettet dasselbe SVG "
 "ein. Der Text zeigt die Klassen als Liste, jede mit ihren Basisklassen."
 
-#: ../../sources-and-diagrams.rst:165
+#: ../../sources-and-diagrams.rst:171
 msgid ""
 "A name that is neither a class nor a module in the scan is reported as "
 "``inheritance.class`` and left out. A diagram may hold at most 1,000 "
@@ -536,11 +536,11 @@ msgstr ""
 "Anführungszeichen gesetzt. So kann ein Attribut den Rest des Graphen "
 "nicht verändern."
 
-#: ../../sources-and-diagrams.rst:167
+#: ../../sources-and-diagrams.rst:173
 msgid "Reading times: duration"
 msgstr "Einlesezeiten: duration"
 
-#: ../../sources-and-diagrams.rst:170
+#: ../../sources-and-diagrams.rst:176
 msgid ""
 "With ``sphinx.ext.duration`` listed, the build summary shows how long "
 "reading took, and which documents took longest:"
@@ -549,7 +549,7 @@ msgstr ""
 "Build-Zusammenfassung, wie lange das Einlesen gedauert hat und welche "
 "Dokumente am längsten brauchten:"
 
-#: ../../sources-and-diagrams.rst:181
+#: ../../sources-and-diagrams.rst:187
 msgid ""
 "Each time is measured with a monotonic clock around one document's read. "
 "A document taken unchanged from the previous build took no time and is "
@@ -563,37 +563,37 @@ msgstr ""
 "Ausgabeordner erhält außerdem ``sphinx-reading-durations.json``, ein "
 "Objekt, das Dokumentnamen auf Sekunden abbildet."
 
-#: ../../sources-and-diagrams.rst:183
+#: ../../sources-and-diagrams.rst:189
 msgid "``duration_print_total``"
 msgstr "``duration_print_total``"
 
-#: ../../sources-and-diagrams.rst:184
+#: ../../sources-and-diagrams.rst:190
 msgid "``true`` (default): show the total reading time."
 msgstr "``true`` (Standard): die gesamte Einlesezeit anzeigen."
 
-#: ../../sources-and-diagrams.rst:186
+#: ../../sources-and-diagrams.rst:192
 msgid "``duration_print_slowest``"
 msgstr "``duration_print_slowest``"
 
-#: ../../sources-and-diagrams.rst:187
+#: ../../sources-and-diagrams.rst:193
 msgid "``true`` (default): show the slowest documents."
 msgstr "``true`` (Standard): die langsamsten Dokumente anzeigen."
 
-#: ../../sources-and-diagrams.rst:189
+#: ../../sources-and-diagrams.rst:195
 msgid "``duration_n_slowest``"
 msgstr "``duration_n_slowest``"
 
-#: ../../sources-and-diagrams.rst:190
+#: ../../sources-and-diagrams.rst:196
 msgid "How many slowest documents to show: ``5`` by default, ``0`` for all."
 msgstr ""
 "Wie viele der langsamsten Dokumente angezeigt werden: standardmäßig "
 "``5``, ``0`` für alle."
 
-#: ../../sources-and-diagrams.rst:192
+#: ../../sources-and-diagrams.rst:198
 msgid "``duration_write_json``"
 msgstr "``duration_write_json``"
 
-#: ../../sources-and-diagrams.rst:193
+#: ../../sources-and-diagrams.rst:199
 msgid ""
 "The JSON file's name in the output folder; empty writes none. A name that "
 "leaves the output folder is refused."
@@ -601,11 +601,11 @@ msgstr ""
 "Der Name der JSON-Datei im Ausgabeordner; leer wird keine geschrieben. "
 "Ein Name, der aus dem Ausgabeordner hinausführt, wird abgelehnt."
 
-#: ../../sources-and-diagrams.rst:195
+#: ../../sources-and-diagrams.rst:201
 msgid "``duration_limit``"
 msgstr "``duration_limit``"
 
-#: ../../sources-and-diagrams.rst:196
+#: ../../sources-and-diagrams.rst:202
 msgid ""
 "Seconds a document may take; a slower one is the warning "
 "``duration.limit``. Unset, there is no limit."
@@ -613,7 +613,7 @@ msgstr ""
 "Die Sekunden, die ein Dokument brauchen darf; ein langsameres ergibt die "
 "Warnung ``duration.limit``. Ohne Wert gibt es keine Grenze."
 
-#: ../../sources-and-diagrams.rst:198
+#: ../../sources-and-diagrams.rst:204
 msgid ""
 "The times are evidence about one build on one machine. They differ from "
 "run to run."
@@ -621,11 +621,11 @@ msgstr ""
 "Die Zeiten belegen einen Build auf einer Maschine. Sie schwanken von Lauf "
 "zu Lauf."
 
-#: ../../sources-and-diagrams.rst:200
+#: ../../sources-and-diagrams.rst:206
 msgid "Images for the book: imgconverter"
 msgstr "Bilder für das Buch: imgconverter"
 
-#: ../../sources-and-diagrams.rst:203
+#: ../../sources-and-diagrams.rst:209
 msgid ""
 "Sphinx's ``imgconverter`` runs ImageMagick to turn images LaTeX cannot "
 "use, such as GIF and SVG, into ones it can. Guidedog's PDF is typeset by "
@@ -641,7 +641,7 @@ msgstr ""
 "akzeptiert, und nie wird ein Programm gestartet. ``image_converter`` und "
 "``image_converter_args`` werden akzeptiert und bleiben wirkungslos."
 
-#: ../../sources-and-diagrams.rst:205
+#: ../../sources-and-diagrams.rst:211
 msgid ""
 "An image in a format the book cannot show, such as TIFF or BMP, is "
 "reported as ``imgconverter.format``, and the book shows its alternative "
@@ -655,11 +655,11 @@ msgstr ""
 "PNG, JPEG, GIF oder SVG vor. Nennen wir das Bild ``picture.*``, wählt "
 "jede Ausgabe die erste Fassung, die sie lesen kann."
 
-#: ../../sources-and-diagrams.rst:207
+#: ../../sources-and-diagrams.rst:213
 msgid "Diagnostics"
 msgstr "Diagnosen"
 
-#: ../../sources-and-diagrams.rst:210
+#: ../../sources-and-diagrams.rst:216
 msgid ""
 "Every message has a code, the location, an explanation and a hint. "
 "``suppress_warnings`` silences them by their prefix, such as ``viewcode`` "
@@ -669,23 +669,23 @@ msgstr ""
 "``suppress_warnings`` schaltet sie über ihr Präfix ab, etwa ``viewcode`` "
 "oder ``inheritance``."
 
-#: ../../sources-and-diagrams.rst:212
+#: ../../sources-and-diagrams.rst:218
 msgid "Codes of these extensions"
 msgstr "Codes dieser Erweiterungen"
 
-#: ../../sources-and-diagrams.rst:216
+#: ../../sources-and-diagrams.rst:222
 msgid "Code"
 msgstr "Code"
 
-#: ../../sources-and-diagrams.rst:217
+#: ../../sources-and-diagrams.rst:223
 msgid "Meaning"
 msgstr "Bedeutung"
 
-#: ../../sources-and-diagrams.rst:218
+#: ../../sources-and-diagrams.rst:224
 msgid "``viewcode.source``"
 msgstr "``viewcode.source``"
 
-#: ../../sources-and-diagrams.rst:219
+#: ../../sources-and-diagrams.rst:225
 msgid ""
 "A documented module is not below ``autodoc_source_paths``; its objects "
 "have no ``[source]`` link."
@@ -693,48 +693,48 @@ msgstr ""
 "Ein dokumentiertes Modul liegt nicht unterhalb von "
 "``autodoc_source_paths``; seine Objekte haben keinen Link ``[source]``."
 
-#: ../../sources-and-diagrams.rst:220
+#: ../../sources-and-diagrams.rst:226
 msgid "``viewcode.limit``"
 msgstr "``viewcode.limit``"
 
-#: ../../sources-and-diagrams.rst:221
+#: ../../sources-and-diagrams.rst:227
 msgid ""
 "A module's file is too large or cannot be read; it has no source page."
 msgstr ""
 "Die Datei eines Moduls ist zu groß oder nicht lesbar; es hat keine "
 "Quelltextseite."
 
-#: ../../sources-and-diagrams.rst:222
+#: ../../sources-and-diagrams.rst:228
 msgid "``config.ext.linkcode``"
 msgstr "``config.ext.linkcode``"
 
-#: ../../sources-and-diagrams.rst:223
+#: ../../sources-and-diagrams.rst:229
 msgid "``linkcode`` is listed without ``linkcode_url``."
 msgstr "``linkcode`` ist ohne ``linkcode_url`` eingetragen."
 
-#: ../../sources-and-diagrams.rst:224
+#: ../../sources-and-diagrams.rst:230
 msgid "``linkcode.branch``"
 msgstr "``linkcode.branch``"
 
-#: ../../sources-and-diagrams.rst:225
+#: ../../sources-and-diagrams.rst:231
 msgid "The template uses ``{branch}``, and no branch is set or found."
 msgstr ""
 "Die Vorlage verwendet ``{branch}``, und es ist kein Branch gesetzt oder "
 "auffindbar."
 
-#: ../../sources-and-diagrams.rst:226
+#: ../../sources-and-diagrams.rst:232
 msgid "``linkcode.outside``"
 msgstr "``linkcode.outside``"
 
-#: ../../sources-and-diagrams.rst:227
+#: ../../sources-and-diagrams.rst:233
 msgid "An object's file lies outside ``linkcode_root``."
 msgstr "Die Datei eines Objekts liegt außerhalb von ``linkcode_root``."
 
-#: ../../sources-and-diagrams.rst:228
+#: ../../sources-and-diagrams.rst:234
 msgid "``inheritance.class``"
 msgstr "``inheritance.class``"
 
-#: ../../sources-and-diagrams.rst:229
+#: ../../sources-and-diagrams.rst:235
 msgid ""
 "A name in an ``inheritance-diagram`` is neither a class nor a module of "
 "the scan."
@@ -742,32 +742,32 @@ msgstr ""
 "Ein Name in einem ``inheritance-diagram`` ist in der Analyse weder eine "
 "Klasse noch ein Modul."
 
-#: ../../sources-and-diagrams.rst:230
+#: ../../sources-and-diagrams.rst:236
 msgid "``inheritance.limit``"
 msgstr "``inheritance.limit``"
 
-#: ../../sources-and-diagrams.rst:231
+#: ../../sources-and-diagrams.rst:237
 msgid "A diagram would hold more than 1,000 classes."
 msgstr "Ein Diagramm hätte mehr als 1.000 Klassen."
 
-#: ../../sources-and-diagrams.rst:232
+#: ../../sources-and-diagrams.rst:238
 msgid "``duration.limit``"
 msgstr "``duration.limit``"
 
-#: ../../sources-and-diagrams.rst:233
+#: ../../sources-and-diagrams.rst:239
 msgid "A document took longer to read than ``duration_limit``."
 msgstr ""
 "Das Einlesen eines Dokuments hat länger gedauert als ``duration_limit``."
 
-#: ../../sources-and-diagrams.rst:234
+#: ../../sources-and-diagrams.rst:240
 msgid "``imgconverter.format``"
 msgstr "``imgconverter.format``"
 
-#: ../../sources-and-diagrams.rst:235
+#: ../../sources-and-diagrams.rst:241
 msgid "The book cannot show an image's format."
 msgstr "Das Buch kann das Format eines Bildes nicht anzeigen."
 
-#: ../../sources-and-diagrams.rst:237
+#: ../../sources-and-diagrams.rst:243
 msgid ""
 "GDS 0011 records the design of these extensions and of the four others "
 "that read Python source."

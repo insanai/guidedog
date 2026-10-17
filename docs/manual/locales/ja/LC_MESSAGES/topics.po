@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -788,19 +788,21 @@ msgstr ""
 
 #: ../../topics/projects.rst:11
 msgid ""
-"Pipeline traverses discovery, source plugins, parallel reading, reference "
-"resolution, rendering, HTML plugins, and atomic staging."
-msgstr "ソース発見、ソースフック、並列解析、参照解決、レンダリング、HTML フックを経て、出力をステージングしてコミットします。"
+"Pipeline traverses discovery, source plugins, parallel reading, "
+"publication gate, reference resolution, rendering, HTML plugins, and "
+"atomic staging."
+msgstr "パイプラインは、ソース探索、ソースプラグイン、並列読み取り、公開判定ゲート、参照解決、レンダリング、HTML プラグイン、アトミックなステージングの順に進みます。"
 
 #: ../../topics/projects.rst:11
-msgid "Guidedog's end-to-end documentation compilation pipeline."
-msgstr "Guidedog の文書コンパイル全体像。"
+msgid ""
+"Guidedog's end-to-end documentation and static site compilation pipeline."
+msgstr "Guidedog のドキュメントおよび静的サイトコンパイルの全体パイプライン。"
 
-#: ../../topics/projects.rst:35
+#: ../../topics/projects.rst:36
 msgid "Documents and resources"
 msgstr "文書とリソース"
 
-#: ../../topics/projects.rst:38
+#: ../../topics/projects.rst:39
 msgid ""
 "A source suffix selects a reader. RST and project Markdown share the "
 "project graph. Images and downloads are resources. Guidedog copies "
@@ -808,47 +810,49 @@ msgid ""
 "``html_static_path``. An include must remain within the source directory "
 "or the configured ``include_roots``."
 msgstr ""
-"拡張子でリーダーを選ぶ。RST とプロジェクト Markdown "
-"は同じグラフを使う。画像とダウンロードはリソースで、文書が使うものをコピーする。テーマ資産は ``html_static_path``\\ "
-"。インクルードはソースまたは ``include_roots`` 内に限る。"
+"拡張子によってリーダーが選ばれます。RST とプロジェクトの Markdown "
+"は同じプロジェクトグラフを共有します。画像とダウンロードファイルはリソースであり、文書から使われているものがコピーされます。テーマのアセットは ``html_static_path`` に指定します。インクルードはソースディレクトリまたは設定した ``include_roots`` の範囲内に収まる必要があります。"
 
-#: ../../topics/projects.rst:43
-msgid "Separate projects"
-msgstr "独立したプロジェクト"
+#: ../../topics/projects.rst:44
+msgid "Separate projects and mounted sites"
+msgstr "独立したプロジェクトとマウントされたサイト"
 
-#: ../../topics/projects.rst:46
+#: ../../topics/projects.rst:47
 msgid ""
 "We keep a manual and design records in separate projects. They have "
 "different readers and different reading orders. Each project has its own "
 "configuration, templates, cache, and output. The Guidedog repository uses "
-"``docs/manual`` and ``docs/gds`` this way."
+"``docs/manual`` and ``docs/gds`` this way, and mounts them into the root "
+"website in ``docs/conf.toml`` via ``[[site.mounts]]``."
 msgstr ""
 "マニュアルと設計記録は別々のプロジェクトにします。読者も読む順序も違うからです。プロジェクトごとに設定、テンプレート、キャッシュ、出力を持ちます。Guidedog "
-"のリポジトリでは ``docs/manual`` と ``docs/gds`` をこのように分けています。"
+"のリポジトリでは ``docs/manual`` と ``docs/gds`` をこのように分け、``docs/conf.toml`` の ``[[site.mounts]]`` でルートのウェブサイトにマウントしています。"
 
-#: ../../topics/projects.rst:51
+#: ../../topics/projects.rst:49
 msgid "Incremental work"
 msgstr "差分ビルド"
 
-#: ../../topics/projects.rst:54
+#: ../../topics/projects.rst:52
 msgid ""
 "Guidedog records the inputs and lookups used by each output. A changed "
 "source is reread. A changed dependency invalidates its users. A changed "
-"template can affect every page. An unchanged document may be loaded from "
-"its saved object."
+"template invalidates the pages whose template chain loaded it. An "
+"unchanged document may be loaded from its saved object, including "
+"withheld drafts and scheduled posts that become eligible on a later build "
+"clock."
 msgstr ""
-"各出力の入力と参照結果を記録する。ソース変更は再読、依存変更は利用側の無効化、テンプレート変更は全ページに影響し得る。未変更文書は保存したオブジェクトから読める。"
+"Guidedog は各出力が使った入力と参照結果を記録します。変更されたソースは再読み込みされ、依存先が変更されればその利用側が無効化されます。テンプレートが変更されると、そのファイルをテンプレートチェーンで読み込んだページが無効化されます。未変更の文書は保存されたオブジェクトから読み込め、保留中の下書きや後のビルド時刻で公開対象になる予約記事も同様です。"
 
-#: ../../topics/projects.rst:59
+#: ../../topics/projects.rst:54
 msgid ""
 "The cache is evidence about a previous build. It is not the source of "
 "truth. ``-E`` discards the saved environment for the next build. ``-a`` "
 "writes all outputs. They solve different problems."
 msgstr ""
-"キャッシュは以前のビルドの証拠で、真実の源ではない。\\ ``-E`` は保存環境を次回に使わず、\\ ``-a`` "
-"は全出力を書く。解く問題は異なる。"
+"キャッシュは前回のビルドに関する証拠であり、信頼の源ではありません。\\ ``-E`` は保存済みの環境を次回のビルドで使わず、\\ ``-a`` "
+"はすべての出力を書き出します。この二つは異なる問題を解決します。"
 
-#: ../../topics/projects.rst:63
+#: ../../topics/projects.rst:58
 msgid ""
 "\\text{reuse} = \\text{same inputs} \\land \\text{same lookups} \\land "
 "\\text{output exists}"
@@ -856,7 +860,7 @@ msgstr ""
 "\\text{再利用可能} = \\text{入力が同じ} \\land \\text{参照結果が同じ} \\land "
 "\\text{出力が存在する}"
 
-#: ../../topics/projects.rst:67
+#: ../../topics/projects.rst:62
 msgid ""
 "An explicit timestamp in a template is also an input to the rendered "
 "page. A page that prints the current minute can change even when its "
@@ -866,11 +870,11 @@ msgstr ""
 "テンプレートに明示したタイムスタンプも、描画されるページへの入力です。現在の分を表示するページは、本文が変わらなくても変化することがあります。ビルド時刻を固定したい場合は "
 "``SOURCE_DATE_EPOCH`` を使います。"
 
-#: ../../topics/projects.rst:71
+#: ../../topics/projects.rst:66
 msgid "Publication"
 msgstr "公開"
 
-#: ../../topics/projects.rst:74
+#: ../../topics/projects.rst:69
 msgid ""
 "A build writes changes to a sibling staging directory. It completes that "
 "directory, flushes the files and records, and then switches generations. "
@@ -878,8 +882,8 @@ msgid ""
 "is settled on the next build. The design and its proof obligations are in "
 ":doc:`../internals/publication`."
 msgstr ""
-"変更は同階層のステージングに書く。完成とファイル・記録の永続化後に世代を切り替える。読者には完全な旧版か新版を見せ、中断コミットは次回処理する。設計と証明責務は "
-":doc:`../internals/publication`\\ 。"
+"ビルドは同じ階層にあるステージングディレクトリへ変更を書き出します。そのディレクトリを完成させ、ファイルと記録をディスクへフラッシュしてから世代を切り替えます。読者には完全な旧版か新版のいずれかが見え、中断されたコミットは次のビルドで決着します。設計と証明責務は "
+":doc:`../internals/publication` にあります。"
 
 #: ../../topics/typography.rst:1
 msgid "Typography for reading"
@@ -892,7 +896,7 @@ msgid ""
 "most of the work. Color should mark a relation or an action. It should "
 "not carry the meaning alone."
 msgstr ""
-"熟読前に構造が見えるページにする。明確な見出し、静かなナビゲーション、適度な本文幅が中心だ。色は関係や操作を示す補助とし、それだけに意味を託さない。"
+"ページは、読者がじっくり読む前にその構造が伝わるようにすべきです。明確なタイトル、落ち着いたナビゲーション列、適度な幅の本文列が大部分の役割を果たします。色は関係や操作を示す目印とし、色だけに意味を託してはいけません。"
 
 #: ../../topics/typography.rst:8
 msgid "The web page"
@@ -907,8 +911,7 @@ msgid ""
 "companion. The compressed WOFF2 files are served with the site. There are "
 "no font-service requests."
 msgstr ""
-"独自レイアウトはプロジェクト案内、本文、ページ目次の三領域で、小画面はドロワーを使う。Libertinus Serif と Sans "
-"を同梱する。見出しは太いセリフ体、案内・ラベル・操作は対応するサンセリフ体。WOFF2 をサイトから配信し、フォントサービスに接続しない。"
+"カスタムレイアウトは、プロジェクトのナビゲーション、本文、現在のページのアウトラインの 3 領域に分かれています。小さな画面ではナビゲーションドロワーを使います。閲覧版には Libertinus Serif と Libertinus Sans を同梱しています。見出しには太字のセリフ体、ナビゲーションやラベル、操作部には対応するサンセリフ体を使います。圧縮された WOFF2 ファイルはサイトと一緒に配信され、外部のフォントサービスへのリクエストは発生しません。"
 
 #: ../../topics/typography.rst:20
 msgid ""
@@ -920,7 +923,7 @@ msgstr "左にプロジェクト案内、中央に本文、右にページ内の
 msgid "Three-region reading layout for HTML documentation."
 msgstr "HTML 文書の 3 領域レイアウト。"
 
-#: ../../topics/typography.rst:37
+#: ../../topics/typography.rst:36
 msgid ""
 "**Light is the default.** The theme control also offers dark and system "
 "modes. It remembers the choice on the same browser origin. System mode "
@@ -928,10 +931,9 @@ msgid ""
 "navigation remain usable without JavaScript. The theme control and "
 "enhanced search are progressive enhancements."
 msgstr ""
-"**既定はライト。** ダークとシステムも選べ、同一オリジンで選択を記憶する。システムは OS に従う。印刷 HTML "
-"は明るい色を使う。JavaScript なしでも本文と案内は使える。テーマ操作と高度な検索は段階的な機能追加だ。"
+"**既定はライトです。** テーマ切替ではダークとシステムモードも選べ、同じブラウザーオリジン上で選択を記憶します。システムモードは OS の設定に従います。HTML の印刷にはライト配色を使います。JavaScript がなくても本文とナビゲーションはそのまま利用でき、テーマ切替と拡張検索は段階的な機能向上として提供されます。"
 
-#: ../../topics/typography.rst:43
+#: ../../topics/typography.rst:42
 msgid ""
 "English prose can use paragraph-wide **Knuth-Plass line breaking** in the "
 "browser. A small template script measures the loaded font, builds boxes, "
@@ -944,7 +946,7 @@ msgstr ""
 "を使えます。テンプレートの小さなスクリプトがフォントを測り、ボックス、空白、ペナルティーを組み立て、段落全体の改行を選びます。英語の分綴候補には "
 "Frank Liang のパターン方式を使います。TeX の元パターンと各ライセンスもサイトに同梱します。"
 
-#: ../../topics/typography.rst:49
+#: ../../topics/typography.rst:48
 msgid ""
 "The enhancement preserves emphasis and the exact source text. It "
 "recalculates when the reading measure changes. Copying within one "
@@ -952,9 +954,9 @@ msgid ""
 "or added hyphens. Printing restores the ordinary paragraph so the print "
 "layout can paginate it."
 msgstr ""
-"強調と原文を保ち、本文幅の変更時に再計算する。最適化した一段落内のコピーは見かけの改行やハイフンを含まない原文になる。印刷時は通常段落に戻し、印刷レイアウトで改ページする。"
+"この機能は強調や元の文字列をそのまま保ち、行幅が変わると再計算します。最適化された一つの段落内をコピーすると、表示上の改行や追加されたハイフンを含まない元のテキストが得られます。印刷時には通常の段落に戻り、印刷レイアウトで改ページできるようになります。"
 
-#: ../../topics/typography.rst:54
+#: ../../topics/typography.rst:53
 msgid ""
 "Links, mathematics, code, interactive content, narrow measures, and other "
 "languages use native browser layout. So do paragraphs for which no "
@@ -967,23 +969,22 @@ msgstr ""
 "を無効にしてもサイトは読めます。フォールバックでは、言語に応じた ``hyphens: auto`` と ``text-wrap: "
 "pretty`` を使います。ただし、これらの CSS プロパティだけで Knuth-Plass の最適化が保証されるわけではありません。"
 
-#: ../../topics/typography.rst:60
+#: ../../topics/typography.rst:59
 msgid "The PDF page"
 msgstr "PDF のページ"
 
-#: ../../topics/typography.rst:63
+#: ../../topics/typography.rst:62
 msgid ""
-"The book template uses the same Libertinus family as the web edition. It "
-"sets justified paragraphs, optimized line breaking, and language-aware "
-"hyphenation. It also controls spacing, running heads, captions, code "
-"blocks, and table rules. The font, hyphenation cost, and paragraph "
-"measure work together. A forced line break is rarely the right repair for "
-"a loose paragraph."
+"The book and standalone article templates use the same Libertinus family "
+"as the web edition. They set justified paragraphs, optimized line "
+"breaking, and language-aware hyphenation. They also control spacing, "
+"running heads, captions, code blocks, and table rules. The font, "
+"hyphenation cost, and paragraph measure work together. A forced line "
+"break is rarely the right repair for a loose paragraph."
 msgstr ""
-"書籍も Web と同じ Libertinus "
-"を使い、両端揃え、最適化した改行、言語別ハイフネーションを設定する。間隔、柱、キャプション、コード、罫線も制御する。フォント・分割コスト・段落幅は共同で働く。不自然な空きに強制改行を足すのは大抵適切でない。"
+"書籍と単体記事のテンプレートは、Web 版と同じ Libertinus ファミリーを使います。両端揃えの段落、最適化された改行、言語に応じたハイフネーションを設定し、余白、柱、キャプション、コードブロック、表の罫線も制御します。フォント、ハイフネーションのコスト、段落幅は互いに連携して働きます。字間がゆるい段落に対して強制改行を入れるのは、たいてい適切な修正ではありません。"
 
-#: ../../topics/typography.rst:69
+#: ../../topics/typography.rst:64
 msgid ""
 "Typst optimizes the PDF paragraphs. The web enhancement optimizes "
 "eligible prose. They share the source, fonts, and visual hierarchy. Their "
@@ -992,27 +993,30 @@ msgid ""
 "hyphenation contract "
 "<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_."
 msgstr ""
-"Typst は PDF の段落を、Web の補助は対象の本文を最適化する。ソース・フォント・階層は共有するが改行は異なり得る。\\ `Typst "
+"Typst は PDF の段落を最適化し、Web の補助機能は対象の本文を最適化します。ソース、フォント、視覚的な階層は共有しますが、改行位置は異なる場合があります。\\ `Typst "
 "テキスト契約 <https://typst.app/docs/reference/text/text/>`_ と "
 "`ブラウザーのハイフネーション契約 "
 "<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_ "
-"を参照。"
+"を参照してください。"
 
-#: ../../topics/typography.rst:74
+#: ../../topics/typography.rst:69
 msgid "Change the design"
 msgstr "デザインの変更"
 
-#: ../../topics/typography.rst:77
+#: ../../topics/typography.rst:72
 msgid ""
 "Edit ``_static/editorial.css`` for the documentation project's visual "
 "tokens. Edit ``_templates/layout.html`` for structure. Edit "
-"``_templates/book.typ`` for the print layout. Keep reading order, focus "
-"indicators, labels, and sufficient contrast intact."
+"``_templates/theme.typ`` for the PDF palette and typography. Edit "
+"``_templates/book.typ`` for book structure, ``_templates/discussion.typ`` "
+"for discussion structure, and ``_templates/article.typ`` for standalone "
+"article PDFs. All three layouts wrap their content with the shared "
+"language-aware theme. Keep reading order, focus indicators, labels, and "
+"sufficient contrast intact."
 msgstr ""
-"見た目の変数は ``_static/editorial.css``\\ 、構造は ``_templates/layout.html``\\ "
-"、印刷は ``_templates/book.typ`` で編集する。読む順、フォーカス表示、ラベル、十分なコントラストを保つ。"
+"ドキュメントプロジェクトのデザイントークンは ``_static/editorial.css``\\ 、HTML の構造は ``_templates/layout.html``\\ 、PDF の配色と文字組みは ``_templates/theme.typ`` で編集します。また、書籍の構造は ``_templates/book.typ``\\ 、議論記録の構造は ``_templates/discussion.typ``\\ 、単体記事の PDF は ``_templates/article.typ`` で編集します。これら 3 つのレイアウトはいずれも、言語に応じた共通テーマで本文を包みます。読む順序、フォーカス表示、ラベル、十分なコントラストは損なわないようにしてください。"
 
-#: ../../topics/typography.rst:82
+#: ../../topics/typography.rst:74
 msgid ""
 "Build both targets after a change. Inspect a page with code, a table, a "
 "diagram, and an equation. An attractive cover is not proof that the rest "
@@ -1207,10 +1211,24 @@ msgid "Field lists provide structured metadata and parameter descriptions:"
 msgstr "フィールドリストは構造化したメタデータや引数の説明に使います。"
 
 #: ../../topics/writing.rst:129
+msgid ""
+"When a field list precedes the document title, Guidedog reads recognized "
+"publication metadata fields into the page's metadata record and removes "
+"those fields from the rendered body. These fields include ``:date:``, "
+"``:updated:``, ``:publish-at:``, ``:expires-at:``, ``:draft:``, "
+"``:authors:``, ``:category:``, ``:tags:``, ``:series:``, ``:summary:``, "
+"``:template:`` and ``:pdf:``. MyST Markdown documents supply the same "
+"fields in leading YAML front matter. Field lists after the title remain "
+"ordinary content. See :doc:`../howto/static-publishing` for the full "
+"publication lifecycle."
+msgstr ""
+"文書のタイトルより前にフィールドリストがある場合、Guidedog は認識可能な公開メタデータフィールドをページのメタデータレコードに読み込み、レンダリングされる本文からは取り除きます。対象となるフィールドは ``:date:``、``:updated:``、``:publish-at:``、``:expires-at:``、``:draft:``、``:authors:``、``:category:``、``:tags:``、``:series:``、``:summary:``、``:template:``、``:pdf:`` です。MyST Markdown の文書では、先頭の YAML フロントマターで同じフィールドを指定します。タイトルより後ろにあるフィールドリストは通常の本文として扱われます。公開ライフサイクルの全体については :doc:`../howto/static-publishing` を参照してください。"
+
+#: ../../topics/writing.rst:131
 msgid "Code blocks"
 msgstr "コードブロック"
 
-#: ../../topics/writing.rst:132
+#: ../../topics/writing.rst:134
 msgid ""
 "The ``code-block`` directive (or ``sourcecode``) shows syntax-highlighted "
 "code. Guidedog highlights 35 programming languages, Rust and Odin among "
@@ -1220,39 +1238,39 @@ msgstr ""
 "Rust や Odin を含む 35 のプログラミング言語を、Pygments の名前とスタイルで強調表示します。Python "
 "のランタイムは不要です。"
 
-#: ../../topics/writing.rst:147
+#: ../../topics/writing.rst:149
 msgid "Options for code blocks:"
 msgstr "コードブロックのオプション:"
 
-#: ../../topics/writing.rst:149
+#: ../../topics/writing.rst:151
 msgid "``:linenos:``: Displays line numbers beside the code."
 msgstr "``:linenos:``: コードの横に行番号を表示します。"
 
-#: ../../topics/writing.rst:150
+#: ../../topics/writing.rst:152
 msgid "``:caption: Title``: Adds a caption above or below the code block."
 msgstr "``:caption: Title``: コードの上下にキャプションを付けます。"
 
-#: ../../topics/writing.rst:151
+#: ../../topics/writing.rst:153
 msgid "``:emphasize-lines: 1, 3-5``: Highlights specific lines."
 msgstr "``:emphasize-lines: 1, 3-5``: 指定した行を強調します。"
 
-#: ../../topics/writing.rst:152
+#: ../../topics/writing.rst:154
 msgid "``:name: label``: Assigns a reference target to the code block."
 msgstr "``:name: label``: コードに参照用のラベルを付けます。"
 
-#: ../../topics/writing.rst:154
+#: ../../topics/writing.rst:156
 msgid "To include source code from a file, we use ``literalinclude``:"
 msgstr "ファイルからソースコードを取り込むには ``literalinclude`` を使います。"
 
-#: ../../topics/writing.rst:163
+#: ../../topics/writing.rst:165
 msgid "Admonitions"
 msgstr "注記ブロック"
 
-#: ../../topics/writing.rst:166
+#: ../../topics/writing.rst:168
 msgid "Admonitions highlight notes, warnings, and supplementary advice:"
 msgstr "注記ブロックは注意事項、警告、補足を目立たせます。"
 
-#: ../../topics/writing.rst:188
+#: ../../topics/writing.rst:190
 msgid ""
 "Guidedog also supports ``danger``, ``error``, ``hint``, and "
 "``attention``. A generic admonition with a custom title uses the "
@@ -1261,192 +1279,271 @@ msgstr ""
 "``danger``、``error``、``hint``、``attention`` も使えます。独自のタイトルには "
 "``admonition`` を使います。"
 
-#: ../../topics/writing.rst:197
+#: ../../topics/writing.rst:199
 msgid "Tables"
 msgstr "表"
 
-#: ../../topics/writing.rst:200
+#: ../../topics/writing.rst:202
 msgid ""
 "Guidedog supports simple tables, grid tables, and directive-based tables."
 msgstr "Guidedog はシンプルテーブル、グリッドテーブル、ディレクティブによる表に対応します。"
 
-#: ../../topics/writing.rst:202
+#: ../../topics/writing.rst:204
 msgid "Simple tables"
 msgstr "シンプルテーブル"
 
-#: ../../topics/writing.rst:205
+#: ../../topics/writing.rst:207
 msgid "Simple tables use horizontal dashes to define column spans:"
 msgstr "シンプルテーブルは横線で列の範囲を示します。"
 
-#: ../../topics/writing.rst:217
+#: ../../topics/writing.rst:219
 msgid "Grid tables"
 msgstr "グリッドテーブル"
 
-#: ../../topics/writing.rst:220
+#: ../../topics/writing.rst:222
 msgid ""
 "Grid tables allow complex multi-line cells and arbitrary column/row spans:"
 msgstr "グリッドテーブルは複数行のセルや、行・列にまたがるセルを扱えます。"
 
-#: ../../topics/writing.rst:231
+#: ../../topics/writing.rst:233
 msgid "List tables"
 msgstr "リストテーブル"
 
-#: ../../topics/writing.rst:234
+#: ../../topics/writing.rst:236
 msgid ""
 "The ``list-table`` directive creates tables from nested bullet lists. "
 "Wide tables stay easy to read and maintain in source control:"
 msgstr ""
 "``list-table`` ディレクティブは、入れ子の箇条書きから表を作ります。幅の広い表でも、ソース上で読みやすく管理しやすいままです。"
 
-#: ../../topics/writing.rst:253
+#: ../../topics/writing.rst:255
 msgid "CSV tables"
 msgstr "CSV テーブル"
 
-#: ../../topics/writing.rst:256
+#: ../../topics/writing.rst:258
 msgid ""
 "The ``csv-table`` directive constructs a table from comma-separated "
 "values:"
 msgstr "``csv-table`` はカンマ区切りのデータから表を作ります。"
 
-#: ../../topics/writing.rst:267
+#: ../../topics/writing.rst:269
 msgid "Images and figures"
 msgstr "画像と図"
 
-#: ../../topics/writing.rst:270
+#: ../../topics/writing.rst:272
 msgid ""
 "We include illustrations, screenshots, and diagrams with ``image`` and "
 "``figure``:"
 msgstr "イラスト、スクリーンショット、図は ``image`` と ``figure`` で挿入します。"
 
-#: ../../topics/writing.rst:286
+#: ../../topics/writing.rst:288
 msgid ""
 "A ``figure`` wraps the image with a caption and an optional reference "
 "target."
 msgstr "``figure`` は画像にキャプションを付け、参照用のターゲットも指定できます。"
 
-#: ../../topics/writing.rst:288
+#: ../../topics/writing.rst:290
 msgid "Document structure with toctrees"
 msgstr "目次ツリーで構成する"
 
-#: ../../topics/writing.rst:291
+#: ../../topics/writing.rst:293
 msgid ""
 "The ``toctree`` directive creates the document hierarchy, navigation "
 "menus, and reading order for both the HTML site and the PDF book:"
 msgstr "``toctree`` は文書の階層、ナビゲーション、HTML と PDF の読み順を定義します。"
 
-#: ../../topics/writing.rst:305
+#: ../../topics/writing.rst:307
 msgid "Common options for ``toctree``:"
 msgstr "``toctree`` の主なオプション:"
 
-#: ../../topics/writing.rst:307
+#: ../../topics/writing.rst:309
 msgid ""
 "``:maxdepth: N``: Depth of heading levels to include in the table of "
 "contents."
 msgstr "``:maxdepth: N``: 目次に含める見出しの深さ。"
 
-#: ../../topics/writing.rst:308
+#: ../../topics/writing.rst:310
 msgid ""
 "``:caption: Title``: Category title displayed above the navigation "
 "entries."
 msgstr "``:caption: Title``: ナビゲーション項目の上に表示する分類名。"
 
-#: ../../topics/writing.rst:309
+#: ../../topics/writing.rst:311
 msgid "``:numbered:``: Adds section numbers to chapters and headings."
 msgstr "``:numbered:``: 章と見出しに番号を付けます。"
 
-#: ../../topics/writing.rst:310
+#: ../../topics/writing.rst:312
 msgid ""
 "``:titlesonly:``: Lists only the top-level document titles, ignoring "
 "inner sections."
 msgstr "``:titlesonly:``: 文書のタイトルだけを並べ、内部の見出しは省きます。"
 
-#: ../../topics/writing.rst:311
+#: ../../topics/writing.rst:313
 msgid ""
 "``:hidden:``: Records the documents in the reading order without "
 "rendering an inline list."
 msgstr "``:hidden:``: 本文内にリストを表示せず、読み順だけを記録します。"
 
-#: ../../topics/writing.rst:312
+#: ../../topics/writing.rst:314
 msgid ""
 "``:glob:``: Allows wildcard patterns to match documents (e.g. "
 "``tutorials/*``)."
 msgstr "``:glob:``: ``tutorials/*`` のようなワイルドカードで文書を選べます。"
 
-#: ../../topics/writing.rst:314
+#: ../../topics/writing.rst:316
+msgid "Dated post listings with ``postlist``"
+msgstr "``postlist`` による日付付き記事の一覧"
+
+#: ../../topics/writing.rst:319
+msgid ""
+"For articles, release notes, and research logs that carry ``:date:`` "
+"metadata, the ``postlist`` directive renders a reverse-chronological list "
+"of matching published pages:"
+msgstr ""
+"``:date:`` メタデータを持つ記事、リリースノート、研究ログに対して、``postlist`` ディレクティブは条件に一致する公開済みページを新しい順の一覧として出力します："
+
+#: ../../topics/writing.rst:329
+msgid "Options for ``postlist``:"
+msgstr "``postlist`` のオプション:"
+
+#: ../../topics/writing.rst:331
+msgid ""
+"Argument ``N``: Maximum number of matching posts to show; zero or an "
+"omitted argument includes every match."
+msgstr ""
+"引数 ``N``: 表示する記事の最大件数。0 または省略時は一致するすべての記事を含めます。"
+
+#: ../../topics/writing.rst:332
+msgid ""
+"``:path: GLOB``: Restrict entries to document names matching the glob "
+"pattern."
+msgstr ""
+"``:path: GLOB``: glob パターンに一致する文書名の項目に絞り込みます。"
+
+#: ../../topics/writing.rst:333
+msgid ""
+"``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: "
+"NAME``, ``:year: YYYY``: Filter entries by publication metadata."
+msgstr ""
+"``:category: NAME``、``:tags: TAG, ...``、``:author: NAME``、``:series: NAME``、``:year: YYYY``: 公開メタデータで項目を絞り込みます。"
+
+#: ../../topics/writing.rst:334
+msgid ""
+"``:sort: date`` or ``:sort: -date``: Order by oldest or newest "
+"publication instant, with docname breaking ties."
+msgstr ""
+"``:sort: date`` または ``:sort: -date``: 公開日時の古い順または新しい順に並べます（同時刻の場合は文書名順）。"
+
+#: ../../topics/writing.rst:335
+msgid ""
+"``:style: list`` or ``:style: cards``: Select the listing's CSS class."
+msgstr ""
+"``:style: list`` または ``:style: cards``: 一覧の CSS クラスを選択します。"
+
+#: ../../topics/writing.rst:336
+msgid ""
+"``:excerpts:``: Render each entry's explicit ``:summary:`` below its "
+"title and date."
+msgstr ""
+"``:excerpts:``: 各項目のタイトルと日付の下に、明示された ``:summary:`` を表示します。"
+
+#: ../../topics/writing.rst:338
+msgid ""
+"See :doc:`../howto/static-publishing` for collections, feeds, and "
+"scheduled publishing."
+msgstr ""
+"コレクション、フィード、予約公開については :doc:`../howto/static-publishing` を参照してください。"
+
+#: ../../topics/writing.rst:340
 msgid "Cross-references and links"
 msgstr "相互参照とリンク"
 
-#: ../../topics/writing.rst:317
+#: ../../topics/writing.rst:343
 msgid ""
 "Explicit targets keep links stable, even when document files are renamed."
 msgstr "明示的なターゲットを使えば、文書ファイルの名前を変えてもリンクは壊れません。"
 
-#: ../../topics/writing.rst:319
+#: ../../topics/writing.rst:345
 msgid "Target labels and ``:ref:``"
 msgstr "ラベルと ``:ref:``"
 
-#: ../../topics/writing.rst:322
+#: ../../topics/writing.rst:348
 msgid "We place a target label directly before a heading, table, or figure:"
 msgstr "見出し、表、図の直前にターゲットのラベルを置きます。"
 
-#: ../../topics/writing.rst:333
+#: ../../topics/writing.rst:359
 msgid "Any document in the project can refer to this target:"
 msgstr "プロジェクト内のどの文書からも、このターゲットを参照できます。"
 
-#: ../../topics/writing.rst:340
+#: ../../topics/writing.rst:366
 msgid "Document references with ``:doc:``"
 msgstr "``:doc:`` による文書参照"
 
-#: ../../topics/writing.rst:343
+#: ../../topics/writing.rst:369
 msgid "We link to another document by its path, without the file extension:"
 msgstr "別の文書へは、拡張子を省いたパスでリンクします。"
 
-#: ../../topics/writing.rst:349
+#: ../../topics/writing.rst:375
 msgid "Glossary terms with ``:term:``"
 msgstr "``:term:`` による用語参照"
 
-#: ../../topics/writing.rst:352
+#: ../../topics/writing.rst:378
 msgid "We define terms with the ``glossary`` directive:"
 msgstr "用語は ``glossary`` ディレクティブで定義します。"
 
-#: ../../topics/writing.rst:364
+#: ../../topics/writing.rst:390
 msgid "We link to a glossary term with the ``:term:`` role:"
 msgstr "用語集の用語へは ``:term:`` ロールでリンクします。"
 
-#: ../../topics/writing.rst:370
+#: ../../topics/writing.rst:396
 msgid "File downloads with ``:download:``"
 msgstr "``:download:`` によるファイル配布"
 
-#: ../../topics/writing.rst:373
+#: ../../topics/writing.rst:399
 msgid ""
 "This copies a file to the output's download directory and links to it:"
 msgstr "次のように書くと、ファイルを出力先のダウンロード用ディレクトリにコピーし、そこへのリンクを作ります。"
 
-#: ../../topics/writing.rst:379
-msgid "External links"
-msgstr "外部リンク"
+#: ../../topics/writing.rst:405
+msgid "External and cross-mount links"
+msgstr "外部リンクとマウント間リンク"
 
-#: ../../topics/writing.rst:382
+#: ../../topics/writing.rst:408
 msgid "We link to external web addresses like this:"
 msgstr "外部の Web アドレスへは次のようにリンクします。"
 
-#: ../../topics/writing.rst:388
+#: ../../topics/writing.rst:414
+msgid ""
+"In a multi-project website assembled with ``[[site.mounts]]``, we can "
+"also link to a mounted sub-project by its mount name using "
+"``mount://<name>/<path>``:"
+msgstr ""
+"``[[site.mounts]]`` で組み立てたマルチプロジェクトのウェブサイトでは、``mount://<name>/<path>`` を使ってマウント名でサブプロジェクトへリンクすることもできます："
+
+#: ../../topics/writing.rst:420
+msgid ""
+"The mount names must match ``[[site.mounts]]`` and the paths must name "
+"current output files."
+msgstr ""
+"マウント名は ``[[site.mounts]]`` と一致し、パスは現在の出力ファイルを指している必要があります。"
+
+#: ../../topics/writing.rst:422
 msgid "Substitutions and includes"
 msgstr "置換と取り込み"
 
-#: ../../topics/writing.rst:391
+#: ../../topics/writing.rst:425
 msgid "We define reusable phrases, symbols, or images:"
 msgstr "再利用する語句、記号、画像を定義します。"
 
-#: ../../topics/writing.rst:400
+#: ../../topics/writing.rst:434
 msgid "To reuse reStructuredText content in several files:"
 msgstr "reStructuredText の内容を複数のファイルで再利用するには、次のようにします。"
 
-#: ../../topics/writing.rst:406
+#: ../../topics/writing.rst:440
 msgid "MyST Markdown authoring"
 msgstr "MyST Markdown を書く"
 
-#: ../../topics/writing.rst:409
+#: ../../topics/writing.rst:443
 msgid ""
 "MyST Markdown supports the same directives and roles through fenced "
 "blocks:"

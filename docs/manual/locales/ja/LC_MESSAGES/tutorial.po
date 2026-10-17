@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 05:49+0000\n"
+"POT-Creation-Date: 2026-10-17 01:54+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -35,19 +35,19 @@ msgstr "1. 実際のプロジェクトから始める"
 
 #: ../../tutorial/a-custom-theme.rst:11
 msgid ""
-"Use Guidedog 0.7.0 or newer. Run this from the directory that will "
+"Use Guidedog 1.0.0-beta.5 or newer. Run this from the directory that will "
 "contain ``orbit``:"
-msgstr "Guidedog 0.7.0 以降を使ってください。``orbit`` を置くディレクトリで次を実行します。"
+msgstr "Guidedog 1.0.0-beta.5 以降を使ってください。``orbit`` を置くディレクトリで次を実行します。"
 
 #: ../../tutorial/a-custom-theme.rst:17
 msgid ""
 "Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
-"in the same directory. We keep this file: it supplies the tested page "
+"in the same directory. We also keep the generated ``theme.typ`` beside "
+"it. We keep the renamed book template: it supplies the tested page "
 "layout, cover, running heads, contents, code styles and optimized "
 "paragraph breaking."
 msgstr ""
-"生成された ``orbit/_templates/book.typ`` を、同じディレクトリで ``base-book.typ`` "
-"に名前変更します。このファイルは残しておきます。検証済みのページレイアウト、表紙、柱、目次、コードのスタイル、最適化された段落の改行処理を提供するからです。"
+"生成された ``orbit/_templates/book.typ`` を、同じディレクトリ内で ``base-book.typ`` に名前変更します。あわせて生成された ``theme.typ`` もその隣に残しておきます。名前を変えた書籍テンプレートもそのまま保持します。検証済みのページレイアウト、表紙、柱、目次、コードのスタイル、最適化された段落の改行処理を提供するからです。"
 
 #: ../../tutorial/a-custom-theme.rst:21
 msgid ""
@@ -64,11 +64,11 @@ msgstr ""
 "<../_static/repository/theme/chapters/reading.rst>` をダウンロードします。最初の 2 つは "
 "``orbit``、3 つ目は ``orbit/chapters`` に保存します。完成時の構成は次のとおりです。"
 
-#: ../../tutorial/a-custom-theme.rst:45
+#: ../../tutorial/a-custom-theme.rst:47
 msgid "2. Set the contract"
 msgstr "2. 設定を定める"
 
-#: ../../tutorial/a-custom-theme.rst:48
+#: ../../tutorial/a-custom-theme.rst:50
 msgid ""
 "The downloaded configuration selects the local template and static "
 "directories. ``html_css_files`` adds our stylesheet after the default "
@@ -78,11 +78,11 @@ msgstr ""
 "設定はローカルのテンプレートと静的ファイルを指定します。``html_css_files`` は既定 CSS "
 "の後に追加され、``html_context`` は値を Jinja に渡します。PDF のファイル名も明示します。"
 
-#: ../../tutorial/a-custom-theme.rst:55
+#: ../../tutorial/a-custom-theme.rst:57
 msgid "orbit/conf.toml"
 msgstr "orbit/conf.toml"
 
-#: ../../tutorial/a-custom-theme.rst:57
+#: ../../tutorial/a-custom-theme.rst:59
 msgid ""
 "All paths in this tutorial are project files. HTML templates are found "
 "through ``templates_path``. The PDF entry point is always "
@@ -93,11 +93,11 @@ msgstr ""
 "の入口は常にソースディレクトリ配下の ``_templates/book.typ`` です。``templates_path`` "
 "を変えても、この場所は変わりません。"
 
-#: ../../tutorial/a-custom-theme.rst:61
+#: ../../tutorial/a-custom-theme.rst:63
 msgid "3. Extend the HTML layout"
 msgstr "3. HTML レイアウトを拡張する"
 
-#: ../../tutorial/a-custom-theme.rst:64
+#: ../../tutorial/a-custom-theme.rst:66
 msgid ""
 "Save :download:`layout.html "
 "<../_static/repository/theme/_templates/layout.html>` as "
@@ -107,11 +107,11 @@ msgstr ""
 "<../_static/repository/theme/_templates/layout.html>` を "
 "``orbit/_templates/layout.html`` に保存し、生成済みの内容をすべて置き換えます。"
 
-#: ../../tutorial/a-custom-theme.rst:69
+#: ../../tutorial/a-custom-theme.rst:71
 msgid "orbit/_templates/layout.html"
 msgstr "orbit/_templates/layout.html"
 
-#: ../../tutorial/a-custom-theme.rst:71
+#: ../../tutorial/a-custom-theme.rst:73
 msgid ""
 "``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a "
 "template named ``layout.html`` would try to extend itself. ``super()`` "
@@ -122,7 +122,7 @@ msgstr ""
 "``!layout.html`` は組み込みレイアウトを選びます。``!`` がなければ自分自身を継承してしまいます。``super()`` "
 "は親ブロックを残します。案内、検索、テーマ操作、アクセシブルなランドマークは基底に任せ、ラベル、メタデータ、版のフッターだけを加えます。"
 
-#: ../../tutorial/a-custom-theme.rst:76
+#: ../../tutorial/a-custom-theme.rst:78
 msgid ""
 "A theme changes presentation. A build plugin changes source text, "
 "complete HTML or generated assets. Use :doc:`../plugins` when a template "
@@ -132,11 +132,11 @@ msgstr ""
 "テーマは見た目を、ビルドプラグインはソース・完全な HTML・生成アセットを変えます。テンプレートでは表せない処理には "
 ":doc:`../plugins` を参照してください。通常のレイアウト変更にネイティブコードは要りません。"
 
-#: ../../tutorial/a-custom-theme.rst:80
+#: ../../tutorial/a-custom-theme.rst:82
 msgid "4. Give repeated markup one home"
 msgstr "4. 共通のマークアップをまとめる"
 
-#: ../../tutorial/a-custom-theme.rst:83
+#: ../../tutorial/a-custom-theme.rst:85
 msgid ""
 "Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. "
 "Save :download:`ui.html "
@@ -152,15 +152,15 @@ msgstr ""
 "<../_static/repository/theme/_templates/partials/edition.html>` "
 "をそれぞれ保存します。"
 
-#: ../../tutorial/a-custom-theme.rst:90
+#: ../../tutorial/a-custom-theme.rst:92
 msgid "orbit/_templates/macros/ui.html"
 msgstr "orbit/_templates/macros/ui.html"
 
-#: ../../tutorial/a-custom-theme.rst:94
+#: ../../tutorial/a-custom-theme.rst:96
 msgid "orbit/_templates/partials/edition.html"
 msgstr "orbit/_templates/partials/edition.html"
 
-#: ../../tutorial/a-custom-theme.rst:96
+#: ../../tutorial/a-custom-theme.rst:98
 msgid ""
 "A macro takes explicit inputs. An included partial uses the current "
 "page's context. Escape plain project values with ``|e``. Use ``pathto`` "
@@ -170,11 +170,11 @@ msgstr ""
 "マクロは引数を明示し、部分テンプレートは現在のページの文脈を使います。通常の値は ``|e`` でエスケープします。文書リンクは "
 "``pathto`` で作ります。``chapters/reading.html`` と固定すると、深いページや別ビルダーで壊れます。"
 
-#: ../../tutorial/a-custom-theme.rst:101
+#: ../../tutorial/a-custom-theme.rst:103
 msgid "5. Design for the reader's theme"
 msgstr "5. 読者のテーマ選択に合わせる"
 
-#: ../../tutorial/a-custom-theme.rst:104
+#: ../../tutorial/a-custom-theme.rst:106
 msgid ""
 "Save :download:`theme.css "
 "<../_static/repository/theme/_static/theme.css>` as "
@@ -183,11 +183,11 @@ msgstr ""
 ":download:`theme.css <../_static/repository/theme/_static/theme.css>` を "
 "``orbit/_static/theme.css`` に保存します。"
 
-#: ../../tutorial/a-custom-theme.rst:109
+#: ../../tutorial/a-custom-theme.rst:111
 msgid "orbit/_static/theme.css"
 msgstr "orbit/_static/theme.css"
 
-#: ../../tutorial/a-custom-theme.rst:111
+#: ../../tutorial/a-custom-theme.rst:113
 msgid ""
 "The theme begins in light mode. The existing control selects light, dark "
 "or system and saves the choice. Explicit dark rules and the system media "
@@ -198,7 +198,7 @@ msgstr ""
 "初期状態はライトです。既存の操作部がライト・ダーク・システムを選び、選択を保存します。明示的なダーク指定とシステム用クエリーで同じ変数を使い、組版と余白は共有します。JavaScript "
 "の追加は不要です。背景が変わる場所で文字色だけを固定しないでください。"
 
-#: ../../tutorial/a-custom-theme.rst:116
+#: ../../tutorial/a-custom-theme.rst:118
 msgid ""
 "Browser hyphenation follows the page language. It is not Typst's "
 "paragraph optimizer. The manual's optional English web optimizer is "
@@ -208,7 +208,7 @@ msgstr ""
 "ブラウザーのハイフネーションはページの言語に従います。これは Typst の段落最適化とは別物です。本書で任意に使える英文 Web "
 "最適化については :doc:`../topics/typography` で別途説明しています。この例ではブラウザー自身のレイアウトを使います。"
 
-#: ../../tutorial/a-custom-theme.rst:120
+#: ../../tutorial/a-custom-theme.rst:122
 msgid ""
 "Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in "
 "current Guidedog builds. Ordinary graphs retain their own colors. Older "
@@ -219,11 +219,11 @@ msgstr ""
 "の図が選択した配色に従います。通常の図は元の色を保ち、旧ホストでも同じ DOT を明るい配色で描けます。ノードの役割と印刷は "
 ":doc:`../topics/diagrams` を参照してください。"
 
-#: ../../tutorial/a-custom-theme.rst:125
+#: ../../tutorial/a-custom-theme.rst:127
 msgid "6. Wrap the PDF book"
 msgstr "6. PDF の書籍を包む"
 
-#: ../../tutorial/a-custom-theme.rst:128
+#: ../../tutorial/a-custom-theme.rst:130
 msgid ""
 "Save :download:`palette.typ "
 "<../_static/repository/theme/_templates/palette.typ>` and "
@@ -236,15 +236,15 @@ msgstr ""
 ":download:`book.typ <../_static/repository/theme/_templates/book.typ>` を "
 "``orbit/_templates`` に保存します。新規ファイルです。隣の ``base-book.typ`` は残します。"
 
-#: ../../tutorial/a-custom-theme.rst:134
+#: ../../tutorial/a-custom-theme.rst:136
 msgid "orbit/_templates/palette.typ"
 msgstr "orbit/_templates/palette.typ"
 
-#: ../../tutorial/a-custom-theme.rst:138
+#: ../../tutorial/a-custom-theme.rst:140
 msgid "orbit/_templates/book.typ"
 msgstr "orbit/_templates/book.typ"
 
-#: ../../tutorial/a-custom-theme.rst:140
+#: ../../tutorial/a-custom-theme.rst:142
 msgid ""
 "The host calls ``book`` with metadata and the chapter content. The "
 "wrapper forwards those values to the generated base and supplies our "
@@ -257,7 +257,7 @@ msgstr ""
 "をスタイル付きの関数に渡すことで、その規則が本文に適用されます。Web のスタイルシートは PDF に影響せず、Typst テンプレートも "
 "HTML に影響しません。"
 
-#: ../../tutorial/a-custom-theme.rst:145
+#: ../../tutorial/a-custom-theme.rst:147
 msgid ""
 "The base handles language-aware hyphenation and optimized line breaking. "
 "The wrapper keeps those rules, uses the matching blue accent and adds "
@@ -267,15 +267,15 @@ msgstr ""
 "基底は言語別の分綴と改行最適化を担当します。ラッパーはこれを残し、Web と同じ青のアクセントと文書参照のページ番号を加えます。PDF "
 "は常に印刷用の明るい配色です。"
 
-#: ../../tutorial/a-custom-theme.rst:149
+#: ../../tutorial/a-custom-theme.rst:151
 msgid "7. Build and inspect both forms"
 msgstr "7. 両形式を確認する"
 
-#: ../../tutorial/a-custom-theme.rst:152
+#: ../../tutorial/a-custom-theme.rst:154
 msgid "Run from the same parent directory as step 1:"
 msgstr "手順 1 と同じ親ディレクトリで実行します。"
 
-#: ../../tutorial/a-custom-theme.rst:162
+#: ../../tutorial/a-custom-theme.rst:164
 msgid ""
 "Open the URL printed by ``serve``. Check the chapter and generated search "
 "page, not only the front page. Try light, dark and system modes. Resize "
@@ -286,7 +286,7 @@ msgstr ""
 "``serve`` の URL "
 "を開き、トップだけでなく章と検索ページも確認します。ライト・ダーク・システム、狭い画面、キーボードでの案内と検索を試します。フッターを保存して再読み込みすると、依存するページが再構築されます。"
 
-#: ../../tutorial/a-custom-theme.rst:167
+#: ../../tutorial/a-custom-theme.rst:169
 msgid ""
 "Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog "
 "adds the language suffix to the configured filename. Inspect the "
@@ -300,11 +300,11 @@ msgstr ""
 "``_build/html``、``_build/dirhtml``、``_build/singlehtml`` です。停止は "
 "``Ctrl+C`` です。"
 
-#: ../../tutorial/a-custom-theme.rst:174
+#: ../../tutorial/a-custom-theme.rst:176
 msgid "8. Reuse and maintain the theme"
 msgstr "8. 再利用して保守する"
 
-#: ../../tutorial/a-custom-theme.rst:177
+#: ../../tutorial/a-custom-theme.rst:179
 msgid ""
 "Create another project with ``guidedog quickstart``. Copy the finished "
 "``_templates`` directory and ``_static/theme.css`` into it. Add "
@@ -318,7 +318,7 @@ msgstr ""
 "[\"theme.css\"]``、アクセント色、``edition_label`` "
 "を加えます。フッターのリンクは実在する文書へ変え、移行先のメタデータとソースは保ちます。"
 
-#: ../../tutorial/a-custom-theme.rst:183
+#: ../../tutorial/a-custom-theme.rst:185
 msgid ""
 "The copied PDF base makes the theme self-contained. When we upgrade "
 "Guidedog, we create a scratch quickstart project and compare its "
@@ -333,7 +333,7 @@ msgstr ""
 "レイアウトも変わることがあります。レイアウトをまるごと複製するより、小さなブロックの上書きの方が保守しやすくなります。変数とブロックの一覧は "
 ":doc:`../templates` を参照してください。"
 
-#: ../../tutorial/a-custom-theme.rst:189
+#: ../../tutorial/a-custom-theme.rst:191
 msgid ""
 "If the build reports a missing ``base-book.typ``, finish the rename in "
 "step 1. If the label is blank, set ``edition_label`` in ``html_context``. "

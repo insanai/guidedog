@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:14+0000\n"
+"POT-Creation-Date: 2026-10-17 14:33+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -547,7 +547,9 @@ msgid ""
 "and a typeset PDF book. Web readers benefit from interactive calculators, "
 "search filters, and embedded widgets. Book readers benefit from balanced "
 "columns, callout cards, and vector typography."
-msgstr "Guidedog は同一のドキュメントツリーから対話型 HTML ウェブサイトと組版された PDF 書籍を公開します。Web 読者は対話型計算機、検索フィルター、埋め込みウィジェットを活用できます。書籍の読者は整った段組み、コールアウトカード、高品質なベクタータイポグラフィの恩恵を受けられます。"
+msgstr ""
+"Guidedog は同一のドキュメントツリーから対話型 HTML ウェブサイトと組版された PDF 書籍を公開します。Web "
+"読者は対話型計算機、検索フィルター、埋め込みウィジェットを活用できます。書籍の読者は整った段組み、コールアウトカード、高品質なベクタータイポグラフィの恩恵を受けられます。"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:8
 msgid ""
@@ -555,13 +557,16 @@ msgid ""
 "prose. We declare a custom semantic directive in ``conf.toml``, add an "
 "interactive calculator for web readers, and design a print-quality "
 "callout block for the PDF book."
-msgstr "このチュートリアルでは、本文を重複させることなく両方を実現するプロジェクトを構築します。``conf.toml`` でカスタムの意味論的ディレクティブを宣言し、Web 読者向けの対話型計算機を追加し、PDF 書籍向けの印刷品質コールアウトブロックを設計します。"
+msgstr ""
+"このチュートリアルでは、本文を重複させることなく両方を実現するプロジェクトを構築します。``conf.toml`` "
+"でカスタムの意味論的ディレクティブを宣言し、Web 読者向けの対話型計算機を追加し、PDF 書籍向けの印刷品質コールアウトブロックを設計します。"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:14
 msgid ""
 "One source document evaluates object types for both outputs, sending raw "
 "HTML to the web and raw Typst to the PDF book."
-msgstr "1 つのソースドキュメントが両方の出力向けに対象型を評価し、未加工の HTML を Web に、未加工の Typst を PDF 書籍に送ります。"
+msgstr ""
+"1 つのソースドキュメントが両方の出力向けに対象型を評価し、未加工の HTML を Web に、未加工の Typst を PDF 書籍に送ります。"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:14
 msgid ""
@@ -592,7 +597,10 @@ msgid ""
 "Python or C++) do not cover. Rather than requiring a Python runtime or "
 "custom extension compiler, Guidedog lets us declare custom directives and "
 "roles in ``conf.toml``."
-msgstr "プロジェクトでは、標準ドメイン（Python や C++ など）がカバーしていない構造化エンティティが必要になることがよくあります。Guidedog では、Python ランタイムや拡張コンパイラを必要とせず、``conf.toml`` 内でカスタムディレクティブとロールを直接宣言できます。"
+msgstr ""
+"プロジェクトでは、標準ドメイン（Python や C++ "
+"など）がカバーしていない構造化エンティティが必要になることがよくあります。Guidedog では、Python "
+"ランタイムや拡張コンパイラを必要とせず、``conf.toml`` 内でカスタムディレクティブとロールを直接宣言できます。"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:78
 msgid ""
@@ -608,7 +616,12 @@ msgid ""
 "(``p99_latency; cluster telemetry``). * In HTML, Guidedog generates a "
 "semantic definition list with CSS anchor hooks. * In PDF, Guidedog "
 "typesets a styled description entry with back-references in the appendix."
-msgstr "この単一の宣言により完全な構文契約が確立されます：* ``.. metric:: p99_latency (milliseconds)`` が指標を記述します。* ``:metric:`p99_latency``` が任意のドキュメントからその定義へリンクします。* 索引表がペア索引エントリ（``p99_latency; cluster telemetry``）を自動生成します。* HTML では、Guidedog が CSS アンカーフック付きの意味論的定義リストを生成します。* PDF では、Guidedog がスタイル付きの説明エントリを組版し、付録に逆参照を記録します。"
+msgstr ""
+"この単一の宣言により完全な構文契約が確立されます：* ``.. metric:: p99_latency (milliseconds)`` "
+"が指標を記述します。* ``:metric:`p99_latency``` が任意のドキュメントからその定義へリンクします。* "
+"索引表がペア索引エントリ（``p99_latency; cluster telemetry``）を自動生成します。* HTML "
+"では、Guidedog が CSS アンカーフック付きの意味論的定義リストを生成します。* PDF では、Guidedog "
+"がスタイル付きの説明エントリを組版し、付録に逆参照を記録します。"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:96
 msgid "3. Author the document with format guards"
@@ -618,58 +631,84 @@ msgstr "3. フォーマットガードを使ってドキュメントを執筆す
 msgid "Replace the contents of ``index.rst`` with the following document:"
 msgstr "``index.rst`` の内容を次のドキュメントに置き換えます："
 
-#: ../../tutorial/dynamic-content-and-directives.rst:144
-#| msgid "7. Build and inspect both forms"
+#: ../../tutorial/dynamic-content-and-directives.rst:146
+msgid ""
+"**Typst and LaTeX in Guidedog**: Guidedog compiles PDF books using native "
+"Typst. Always write ``.. raw:: typst`` for print callouts and vector "
+"blocks. Guidedog does not execute verbatim ``.. raw:: latex`` (which is "
+"omitted with a diagnostic). However, standard LaTeX math written in ``.. "
+"math::`` and ``:math:`` is automatically translated into Typst formulas "
+"by Guidedog's built-in math compiler."
+msgstr ""
+"**Guidedog における Typst と LaTeX**：Guidedog はネイティブ Typst を使用して PDF "
+"書籍をコンパイルします。印刷用コールアウトやベクターブロックには必ず ``.. raw:: typst`` と記述してください。Guidedog "
+"は逐語的な ``.. raw:: latex`` を実行しません（診断メッセージとともに出力から除外されます）。ただし、``.. "
+"math::`` や ``:math:`` で記述された標準的な LaTeX 数式は、Guidedog "
+"の組み込み数式コンパイラによってネイティブ Typst 数式に自動変換されます。"
+
+#: ../../tutorial/dynamic-content-and-directives.rst:152
 msgid "4. Build and inspect both publications"
 msgstr "4. 両方の刊行物をビルドして確認する"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:147
+#: ../../tutorial/dynamic-content-and-directives.rst:155
 msgid "Build the HTML website:"
 msgstr "HTML ウェブサイトをビルドします："
 
-#: ../../tutorial/dynamic-content-and-directives.rst:153
+#: ../../tutorial/dynamic-content-and-directives.rst:161
 msgid ""
 "Open ``_build/html/index.html`` in a browser or run ``guidedog serve``. "
 "Notice that: * The ``:metric:`p99_latency``` reference resolves directly "
 "to the definition anchor. * The interactive calculator slider is rendered "
 "and active in the web DOM. * The PDF callout block is omitted entirely, "
 "without emitting warnings."
-msgstr "ブラウザで ``_build/html/index.html`` を開くか ``guidedog serve`` を実行します。次の点を確認してください：* ``:metric:`p99_latency``` の参照が定義アンカーに直接解決されます。* 対話型計算機スライダーがレンダリングされ、Web DOM 上で動作します。* PDF 用コールアウトブロックは警告を発生させることなく完全に除外されます。"
+msgstr ""
+"ブラウザで ``_build/html/index.html`` を開くか ``guidedog serve`` "
+"を実行します。次の点を確認してください：* ``:metric:`p99_latency``` の参照が定義アンカーに直接解決されます。* "
+"対話型計算機スライダーがレンダリングされ、Web DOM 上で動作します。* PDF "
+"用コールアウトブロックは警告を発生させることなく完全に除外されます。"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:158
-#| msgid "6. Wrap the PDF book"
+#: ../../tutorial/dynamic-content-and-directives.rst:166
 msgid "Now build the PDF book:"
 msgstr "次に PDF 書籍をビルドします："
 
-#: ../../tutorial/dynamic-content-and-directives.rst:164
+#: ../../tutorial/dynamic-content-and-directives.rst:172
 msgid ""
 "Open ``_build/pdf/telemetry-en.pdf`` (or the inspection source at "
 "``_build/pdf/book-en.typ``). Notice that: * The slider and raw HTML are "
 "completely absent. * The Typst ``#rect(...)`` vector box is typeset with "
 "native margins, borders, and typography. * The appendix includes an index "
 "entry under ``p99_latency``."
-msgstr "``_build/pdf/telemetry-en.pdf``（または確認用ソース ``_build/pdf/book-en.typ``）を開きます。次の点を確認してください：* スライダーと raw HTML は完全に除外されています。* Typst の ``#rect(...)`` ベクターボックスがネイティブのマージン、枠線、タイポグラフィで組版されています。* 付録の ``p99_latency`` の項目に索引エントリが含まれています。"
+msgstr ""
+"``_build/pdf/telemetry-en.pdf``（または確認用ソース "
+"``_build/pdf/book-en.typ``）を開きます。次の点を確認してください：* スライダーと raw HTML "
+"は完全に除外されています。* Typst の ``#rect(...)`` "
+"ベクターボックスがネイティブのマージン、枠線、タイポグラフィで組版されています。* 付録の ``p99_latency`` "
+"の項目に索引エントリが含まれています。"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:169
+#: ../../tutorial/dynamic-content-and-directives.rst:177
 msgid "5. Custom Typst functions in theme templates"
 msgstr "5. テーマテンプレートでカスタム Typst 関数を定義する"
 
-#: ../../tutorial/dynamic-content-and-directives.rst:172
+#: ../../tutorial/dynamic-content-and-directives.rst:180
 msgid ""
 "When you have formatting patterns used across many chapters, define a "
 "reusable Typst function in ``_templates/theme.typ``:"
-msgstr "多くの章で共通して使用する書式パターンがある場合は、``_templates/theme.typ`` 内で再利用可能な Typst 関数を定義します："
+msgstr ""
+"多くの章で共通して使用する書式パターンがある場合は、``_templates/theme.typ`` 内で再利用可能な Typst "
+"関数を定義します："
 
-#: ../../tutorial/dynamic-content-and-directives.rst:185
+#: ../../tutorial/dynamic-content-and-directives.rst:193
 msgid "In any document, invoke the function inside a raw Typst block:"
 msgstr "任意のドキュメントで、raw Typst ブロック内からその関数を呼び出します："
 
-#: ../../tutorial/dynamic-content-and-directives.rst:195
+#: ../../tutorial/dynamic-content-and-directives.rst:203
 msgid ""
 "This keeps your reStructuredText prose focused on documentation while "
 "granting full access to Typst's typesetting engine for printed "
 "publications."
-msgstr "これにより、reStructuredText の本文は文書内容そのものに集中させながら、印刷刊行物に対しては Typst の組版エンジンの全機能を活用できます。"
+msgstr ""
+"これにより、reStructuredText の本文は文書内容そのものに集中させながら、印刷刊行物に対しては Typst "
+"の組版エンジンの全機能を活用できます。"
 
 #: ../../tutorial/first-project.rst:1
 msgid "Our first project"

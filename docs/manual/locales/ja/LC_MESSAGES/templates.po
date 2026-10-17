@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 14:14+0000\n"
+"POT-Creation-Date: 2026-10-17 14:28+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -1125,28 +1125,37 @@ msgid "Target-specific markup and raw blocks"
 msgstr "ターゲット固有マークアップと raw ブロック"
 
 #: ../../templates.rst:464
-#| msgid ""
-#| "Documents are reStructuredText and Markdown. Typst files are not "
-#| "documents. To put Typst markup into the book, we write it in a raw "
-#| "block, which web pages leave out:"
 msgid ""
 "Documents are reStructuredText and Markdown. Typst files and HTML "
 "fragments are not documents. To insert specialized markup into either "
 "output format without contaminating the other, wrap the block in an ``.. "
 "only::`` guard with a matching ``.. raw::`` directive:"
-msgstr "ドキュメントは reStructuredText および Markdown です。Typst ファイルや HTML 断片はそれ自体ではドキュメントではありません。一方の出力形式に固有のマークアップを他方を汚染せずに挿入するには、ブロックを対応する ``.. raw::`` ディレクティブを含む ``.. only::`` ガードで囲みます："
+msgstr ""
+"ドキュメントは reStructuredText および Markdown です。Typst ファイルや HTML "
+"断片はそれ自体ではドキュメントではありません。一方の出力形式に固有のマークアップを他方を汚染せずに挿入するには、ブロックを対応する ``.. "
+"raw::`` ディレクティブを含む ``.. only::`` ガードで囲みます："
 
 #: ../../templates.rst:484
 msgid ""
 "``.. only:: html`` limits interactive web components and custom HTML to "
-"web builds. ``.. only:: typst or latex`` (or ``.. only:: pdf``) keeps "
-"vector formatting, callouts, and native Typst expressions to the book. To "
-"build reusable, semantic directives, see "
-":doc:`tutorial/dynamic-content-and-directives` and "
+"web builds. ``.. only:: pdf`` keeps vector formatting, callouts, and "
+"native Typst expressions to the book (``.. only:: latex`` is recognized "
+"as an alias for compatibility with Sphinx projects). Because Guidedog "
+"typesets books with Typst rather than LaTeX, raw blocks for the book must "
+"use ``.. raw:: typst``; verbatim ``.. raw:: latex`` is not supported and "
+"is omitted by the PDF builder. To build reusable, semantic directives, "
+"see :doc:`tutorial/dynamic-content-and-directives` and "
 ":doc:`howto/format-specific-content`."
-msgstr "``.. only:: html`` は対話型 Web コンポーネントやカスタム HTML を Web ビルドのみに限定します。``.. only:: typst or latex``（または ``.. only:: pdf``）はベクター書式設定、コールアウト、ネイティブ Typst 式を書籍のみに保持します。再利用可能な意味論的ディレクティブの作成については、:doc:`tutorial/dynamic-content-and-directives` および :doc:`howto/format-specific-content` を参照してください。"
+msgstr ""
+"``.. only:: html`` は対話型 Web コンポーネントやカスタム HTML を Web ビルドのみに限定します。``.. "
+"only:: pdf`` はベクター書式設定、コールアウト、ネイティブ Typst 式を書籍のみに保持します（Sphinx "
+"プロジェクトとの互換性のため、``.. only:: latex`` もエイリアスとして認識されます）。Guidedog は LaTeX "
+"ではなく Typst で書籍を組版するため、書籍用の raw ブロックには ``.. raw:: typst`` "
+"を使用する必要があります。逐語的な ``.. raw:: latex`` はサポートされておらず、PDF "
+"ビルダーによって除外されます。再利用可能な意味論的ディレクティブの作成については、:doc:`tutorial/dynamic-content-and-directives` "
+"および :doc:`howto/format-specific-content` を参照してください。"
 
-#: ../../templates.rst:489
+#: ../../templates.rst:492
 msgid ""
 "When Typst reports an error, the build names the file and line, whether "
 "it is in our template or in the generated book. Each PDF has its own "
@@ -1164,16 +1173,16 @@ msgstr ""
 "も残します。ビルドに失敗した場合は何も公開しません。そのソースは ``_build/.doctrees/failed`` "
 "内の、エラーが示すパスに残ります。複数の本では、失敗したソースをそれぞれ別に保持します。"
 
-#: ../../templates.rst:498
+#: ../../templates.rst:501
 msgid "Writing a new template"
 msgstr "新しいテンプレートの作成"
 
-#: ../../templates.rst:501
+#: ../../templates.rst:504
 msgid ""
 "We start from the copies quickstart wrote. They show every part in use:"
 msgstr "quickstart が書き出したテンプレートから始めましょう。各部分の使い方がすべて示されています。"
 
-#: ../../templates.rst:503
+#: ../../templates.rst:506
 msgid ""
 "Keep the ``layout.html`` markup that the default style sheet expects, or "
 "replace ``_static/guidedog.css`` along with it."
@@ -1181,7 +1190,7 @@ msgstr ""
 "既定の CSS が前提とする ``layout.html`` のマークアップを保つか、\\ ``_static/guidedog.css`` "
 "も置き換えてください。"
 
-#: ../../templates.rst:505
+#: ../../templates.rst:508
 msgid ""
 "Move repeated parts into files of their own and ``include`` them, or put "
 "a base layout in ``base.html`` and ``extends`` it from ``layout.html``."
@@ -1189,13 +1198,13 @@ msgstr ""
 "繰り返す部分を別ファイルにして ``include`` するか、\\ ``base.html`` を作って ``layout.html`` から "
 "``extends`` します。"
 
-#: ../../templates.rst:507
+#: ../../templates.rst:510
 msgid ""
 "For the book, change the ``book`` function's rules, or write a new "
 "function with the same parameters and keep its name ``book``."
 msgstr "本では ``book`` の規則を変えるか、同じ引数を持つ新しい ``book`` 関数を書きます。"
 
-#: ../../templates.rst:510
+#: ../../templates.rst:513
 msgid ""
 "Preview with ``guidedog serve`` while editing. Save the source and "
 "refresh the browser. The server rebuilds changed inputs before serving "
@@ -1229,4 +1238,3 @@ msgstr ""
 #~ "``templates_path`` "
 #~ "内のファイルとサブディレクトリはすべて、ビルドの入力依存です。テンプレートやパーシャルを追加、編集、削除すると、``guidedog "
 #~ "build`` とライブサーバーの ``guidedog serve`` が変更を検出し、サイトを再描画します。"
-

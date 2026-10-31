@@ -21,7 +21,7 @@ missing: pages.toml (from the origin remote and the nearest conf.toml), a GitHub
 token, this machine's permission to publish to the target, and the Pages source.
 Each step is asked once; a configured machine publishes without a question.
 guidedog builds the project itself. Without a terminal nothing is asked: a step
-that needs an answer fails with a hint naming the flag or the guidedog-pages
+that needs an answer fails with a hint naming the flag or the `guidedog pages`
 command that does it.
 
 Exit status: 0 published or unchanged, 1 failed (nothing published), 2 usage,
@@ -90,10 +90,29 @@ pub(crate) fn commands() -> Vec<CommandInfo> {
     commands
 }
 
+/// The one-line summary of a maintenance command, as the program's help describes it.
+fn maintenance_summary(tail: &str) -> &'static str {
+    match tail {
+        "init" => "Write pages.toml for a repository and a project or a built site",
+        "auth login" => "Sign in on GitHub with a device code",
+        "auth import" => "Store a token read from standard input",
+        "auth status" => "Check the profile's stored token",
+        "auth logout" => "Delete the profile's stored token",
+        "bind" => "Review the target and let this machine publish there",
+        "unbind" => "Stop this machine publishing to the target",
+        "setup" => "Make GitHub Pages publish the branch",
+        "doctor" => "Check the configuration, credential, and target, changing nothing",
+        "watch" => "Publish again whenever the sources change",
+        "status" => "Report whether the last publication is live",
+        "recover" => "Settle a publication whose answer was lost",
+        _ => "Maintain GitHub Pages publishing",
+    }
+}
+
 /// Describes a maintenance command using the same options its parser validates.
 fn maintenance(word: &str, sub: &str) -> CommandInfo {
     let tail = if sub.is_empty() { word.to_string() } else { format!("{word} {sub}") };
-    let mut info = CommandInfo::new(&format!("pages {tail}"), &format!("GitHub Pages: {tail}"));
+    let mut info = CommandInfo::new(&format!("pages {tail}"), maintenance_summary(&tail));
     for key in super::allowed(word, sub) {
         let name = format!("--{key}");
         let summary = key.replace('-', " ");

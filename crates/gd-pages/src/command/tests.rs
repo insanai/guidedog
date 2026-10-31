@@ -108,6 +108,10 @@ fn guidedog_runs_the_contributed_commands() {
     assert!(names.contains(&"pages workflow".into()));
     assert!(names.contains(&"pages init".into()));
     assert!(names.contains(&"pages recover".into()));
+    // Each maintenance command has its own summary in `guidedog pages --help`.
+    for (_, command) in registry.commands() {
+        assert_ne!(command.summary, "Maintain GitHub Pages publishing", "{}", command.name());
+    }
     let dir = TestDir::new("extension");
     let mut host = Captured::default();
     let mut ctx = gd_plugins::CommandContext::new(&mut host);

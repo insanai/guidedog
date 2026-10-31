@@ -64,6 +64,10 @@ pub enum Target {
     Pdf,
     /// An HTML page (Typst's experimental HTML export).
     Html,
+    /// Exactly one page as a scalable vector image.
+    Svg,
+    /// Exactly one page as a PNG at 144 pixels per inch.
+    Png,
 }
 
 /// The compiler a compile runs: the embedded one, or an installed typst program.
@@ -108,6 +112,12 @@ impl Backend {
 pub struct Options<'a> {
     /// The artifact to write.
     pub target: Target,
+    /// Virtual location of generated text below `root`, for relative imports (embedded only).
+    /// `None` uses the root-level generated path. No source file is written.
+    pub source_path: Option<PathBuf>,
+    /// Observes file lookups, including missing files (embedded only). Borrowed for the call.
+    /// Return false to refuse a read. The callback must tolerate concurrent compiler reads.
+    pub observe_file: Option<&'a (dyn Fn(&Path) -> bool + Send + Sync)>,
     /// Use only packages already on disk (honoured by the embedded backend only).
     pub offline: bool,
     /// The package cache directory; `None` is the system cache.
@@ -130,6 +140,8 @@ impl fmt::Debug for Options<'_> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Options")
             .field("target", &self.target)
+            .field("source_path", &self.source_path)
+            .field("observe_file", &self.observe_file.is_some())
             .field("offline", &self.offline)
             .field("package_cache", &self.package_cache)
             .field("embedded_fonts_only", &self.embedded_fonts_only)
@@ -213,7 +225,7 @@ pub fn compile_file(
                     root: root.to_path_buf(),
                 });
             };
-            embedded_compile(root, Some(&main), "", output, options)
+            embedded_compile(root, Some(&main), None, output, options)
         }
         Backend::Program { path, .. } => {
             cli::run(path, cli::Input::File(source), root, output, options)
@@ -231,7 +243,16 @@ pub fn compile_text(
     options: &Options<'_>,
 ) -> Result<Compiled, Error> {
     match backend {
-        Backend::Embedded => embedded_compile(root, None, text, output, options),
+        Backend::Embedded => {
+            let main = match &options.source_path {
+                Some(path) => Some(rooted_path(root, path).ok_or_else(|| Error::OutsideRoot {
+                    source: path.clone(),
+                    root: root.to_path_buf(),
+                })?),
+                None => None,
+            };
+            embedded_compile(root, main.as_deref(), Some(text), output, options)
+        }
         Backend::Program { path, .. } => {
             cli::run(path, cli::Input::Text(text), root, output, options)
         }
@@ -276,7 +297,7 @@ fn rooted_path(root: &Path, source: &Path) -> Option<String> {
 fn embedded_compile(
     root: &Path,
     main: Option<&str>,
-    text: &str,
+    text: Option<&str>,
     output: &Path,
     options: &Options<'_>,
 ) -> Result<Compiled, Error> {
@@ -287,7 +308,7 @@ fn embedded_compile(
 fn embedded_compile(
     _root: &Path,
     _main: Option<&str>,
-    _text: &str,
+    _text: Option<&str>,
     _output: &Path,
     _options: &Options<'_>,
 ) -> Result<Compiled, Error> {

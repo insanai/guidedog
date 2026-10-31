@@ -42,6 +42,8 @@ pub(crate) fn run(
     match options.target {
         Target::Pdf => command.args(["--format", "pdf"]),
         Target::Html => command.args(["--features", "html", "--format", "html"]),
+        Target::Svg => command.args(["--format", "svg"]),
+        Target::Png => command.args(["--format", "png", "--ppi", "144"]),
     };
     let _temp = match input {
         Input::File(source) => {

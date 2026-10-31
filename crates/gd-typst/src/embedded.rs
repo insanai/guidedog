@@ -20,6 +20,8 @@ use typst_kit::downloader::SystemDownloader;
 use typst_kit::fonts::FontStore;
 use typst_kit::packages::{FsPackages, SystemPackages, UniversePackages};
 
+mod image;
+
 use crate::{Compiled, Diagnostic, Error, GENERATED_MAIN, Options, Severity, Target};
 
 const USER_AGENT: &str = concat!("guidedog/", env!("CARGO_PKG_VERSION"));
@@ -29,12 +31,12 @@ const USER_AGENT: &str = concat!("guidedog/", env!("CARGO_PKG_VERSION"));
 pub(crate) fn compile(
     root: &Path,
     main: Option<&str>,
-    text: &str,
+    text: Option<&str>,
     output: &Path,
     options: &Options<'_>,
 ) -> Result<Compiled, Error> {
     let world = make_world(root, main, text, options).ok_or(Error::InvalidRequest)?;
-    let compiled = catch_unwind(AssertUnwindSafe(|| run(&world)));
+    let compiled = catch_unwind(AssertUnwindSafe(|| run(&world, options.target)));
     // Typst memoizes layout in a process-wide cache that only grows. A build compiles
     // each book once, so nothing is lost by emptying it; without this, a project with
     // many books keeps every earlier book's layout in memory.
@@ -79,7 +81,7 @@ struct Exported {
 }
 
 /// Compiles and exports the world's main file.
-fn run(world: &EmbeddedWorld) -> Exported {
+fn run(world: &EmbeddedWorld, target: Target) -> Exported {
     let mut found = Vec::new();
     let mut pages = None;
     let output = if world.html {
@@ -93,7 +95,12 @@ fn run(world: &EmbeddedWorld) -> Exported {
         record(world, &warned.warnings, &mut found);
         warned.output.and_then(|doc| {
             pages = Some(doc.pages().iter().map(|page| page_text(&page.frame)).collect());
-            typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default())
+            match target {
+                Target::Pdf | Target::Html => {
+                    typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default())
+                }
+                Target::Svg | Target::Png => image::export(&doc, target),
+            }
         })
     };
     match output {
@@ -165,17 +172,17 @@ fn record(world: &EmbeddedWorld, diags: &[SourceDiagnostic], found: &mut Vec<Dia
                 out.span = Some(range);
             }
         }
-        out.stdin = out.file == GENERATED_MAIN;
+        out.stdin = world.main_text.is_some() && d.span.id() == Some(world.main);
         found.push(out);
     }
 }
 
-fn make_world(
+fn make_world<'a>(
     root: &Path,
     main: Option<&str>,
-    text: &str,
-    options: &Options<'_>,
-) -> Option<EmbeddedWorld> {
+    text: Option<&str>,
+    options: &'a Options<'_>,
+) -> Option<EmbeddedWorld<'a>> {
     let vpath = VirtualPath::new(main.unwrap_or(GENERATED_MAIN)).ok()?;
     let main_id = FileId::new(RootedPath::new(VirtualRoot::Project, vpath));
     // One instant for the whole compile. `datetime.today()` uses the local date; an
@@ -199,7 +206,8 @@ fn make_world(
         read_roots: (!options.read_roots.is_empty())
             .then(|| options.read_roots.iter().filter_map(|r| r.canonicalize().ok()).collect()),
         main: main_id,
-        main_text: main.is_none().then(|| text.to_string()),
+        main_text: text.map(str::to_string),
+        observe_file: options.observe_file,
         today,
         moment,
         sources: Mutex::new(HashMap::new()),
@@ -273,7 +281,8 @@ fn packages(cache: Option<&Path>) -> &'static SystemPackages {
     })
 }
 
-struct EmbeddedWorld {
+struct EmbeddedWorld<'a> {
+    observe_file: Option<&'a (dyn Fn(&Path) -> bool + Send + Sync)>,
     fonts: &'static FontStore,
     html: bool,
     download: bool,
@@ -289,7 +298,7 @@ struct EmbeddedWorld {
     sources: Mutex<HashMap<FileId, Source>>,
 }
 
-impl EmbeddedWorld {
+impl EmbeddedWorld<'_> {
     fn package_root(&self, spec: &PackageSpec) -> FileResult<PathBuf> {
         if let Some(dir) = lock(&self.package_roots).get(spec) {
             return Ok(dir.clone());
@@ -333,6 +342,9 @@ impl EmbeddedWorld {
         if matches!(id.root(), VirtualRoot::Project) && !self.may_read(&path) {
             return Err(FileError::AccessDenied);
         }
+        if self.observe_file.is_some_and(|observe| !observe(&path)) {
+            return Err(FileError::AccessDenied);
+        }
         std::fs::read(&path).map_err(|err| match err.kind() {
             std::io::ErrorKind::NotFound => FileError::NotFound(path.clone()),
             std::io::ErrorKind::PermissionDenied => FileError::AccessDenied,
@@ -341,7 +353,7 @@ impl EmbeddedWorld {
     }
 }
 
-impl World for EmbeddedWorld {
+impl World for EmbeddedWorld<'_> {
     fn library(&self) -> &LazyHash<Library> {
         library(self.html)
     }

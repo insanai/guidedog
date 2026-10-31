@@ -120,6 +120,8 @@ const EXTERNAL: &[(&str, &[&str])] = &[
     ("typst-layout", &["gd-typst"]),
     ("typst-pdf", &["gd-typst"]),
     ("typst-html", &["gd-typst"]),
+    ("typst-svg", &["gd-typst"]),
+    ("typst-render", &["gd-typst"]),
     ("typst-kit", &["gd-typst"]),
     ("tree-sitter", &["gd-pyscan", "gd-rustdoc"]),
     ("tree-sitter-python", &["gd-pyscan"]),

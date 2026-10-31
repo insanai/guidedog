@@ -397,6 +397,7 @@ fn typst_options<'a>(
         font_paths: o.font_paths.clone(),
         read_roots: o.read_roots.clone(),
         reserve: Some(reserve),
+        ..Default::default()
     }
 }
 

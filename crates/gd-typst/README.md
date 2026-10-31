@@ -9,7 +9,7 @@ an installed, pinned `typst` program.
 | `backend.version()`, `.is_pinned()`, `.is_embedded()` | against `PINNED_VERSION` |
 | `compile_file(&backend, source, root, output, &Options)` | `Result<Compiled, Error>` |
 | `compile_text(&backend, text, root, output, &Options)` | generated text, no file beside the sources |
-| `Options { target, offline, package_cache, embedded_fonts_only, font_paths, read_roots, reserve }` | `Default`: PDF, online, system fonts, anything below the root |
+| `Options { target, offline, package_cache, embedded_fonts_only, font_paths, read_roots, reserve, source_path, observe_file }` | `Default`: PDF, online, system fonts, anything below the root |
 | `Diagnostic::report(source) -> gd_report::Report`, `.render(source)` | Elm-style with excerpt and carets |
 | `Error::{Compile, Launch, Io, OutsideRoot, ...}`, `.report()` | codes `typst.*` |
 
@@ -31,3 +31,5 @@ an installed, pinned `typst` program.
 - `read_roots` (embedded backend) narrows the files a compile reads to a few folders
   below the root, checked with every link followed, so a caller need not build a root
   holding only links to them (gd-book still does for the typst program).
+
+Image export uses `Target::Svg` or `Target::Png` and requires exactly one finite page. PNG uses 144 pixels per inch, with at most 16 million pixels and 16,384 pixels on either side in the embedded backend. `source_path` places generated text below the root for relative imports. `observe_file` receives attempted file reads and can refuse them; both options apply to the embedded backend. No source file is written.

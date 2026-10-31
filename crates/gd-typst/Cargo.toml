@@ -9,7 +9,10 @@ publish = false
 [features]
 # The embedded compiler links Typst in; without it, only an installed `typst` program runs.
 default = ["embedded"]
-embedded = ["dep:typst", "dep:typst-layout", "dep:typst-pdf", "dep:typst-html", "dep:typst-kit"]
+embedded = [
+    "dep:typst", "dep:typst-layout", "dep:typst-pdf", "dep:typst-html",
+    "dep:typst-svg", "dep:typst-render", "dep:typst-kit",
+]
 
 [dependencies]
 gd-report = { workspace = true }
@@ -21,6 +24,8 @@ typst = { workspace = true, optional = true }
 typst-layout = { workspace = true, optional = true }
 typst-pdf = { workspace = true, optional = true }
 typst-html = { workspace = true, optional = true }
+typst-svg = { workspace = true, optional = true }
+typst-render = { workspace = true, optional = true }
 typst-kit = { workspace = true, optional = true, features = [
     "embedded-fonts", "scan-fonts", "system-packages", "system-downloader",
 ] }

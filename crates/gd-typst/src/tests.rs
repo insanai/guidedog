@@ -244,3 +244,6 @@ fn without_the_feature_the_program_is_located() {
         assert!(!backend.is_embedded());
     }
 }
+
+#[cfg(feature = "embedded")]
+mod images;

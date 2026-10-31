@@ -147,7 +147,7 @@ msgid ""
 "the body's edges in the corresponding DOT graph. A plain ``dot`` or "
 "``graphviz`` Markdown fence also draws a graph; we use the directive form "
 "when we need options."
-msgstr "``graphviz``의 파일 인수는 문서 내 본문 대신 DOT 파일을 읽습니다. ``graph``와 ``digraph``는 그래프 이름을 인수로 받고 본문의 간선을 해당 DOT 그래프로 감쌉니다. 일반 ``dot`` 또는 ``graphviz`` Markdown 펜스도 그래프를 그리지만 옵션이 필요하면 지시문 형식을 사용합니다."
+msgstr "``graphviz``\\ 의 파일 인수는 문서 내 본문 대신 DOT 파일을 읽습니다. ``graph``\\ 와 ``digraph``\\ 는 그래프 이름을 인수로 받고 본문의 간선을 해당 DOT 그래프로 감쌉니다. 일반 ``dot`` 또는 ``graphviz`` Markdown 펜스도 그래프를 그리지만 옵션이 필요하면 지시문 형식을 사용합니다."
 
 #: ../../topics/diagrams.rst:103
 msgid "Draw with Typst"
@@ -168,7 +168,7 @@ msgstr "Typst 소스에서 생성한 그림."
 msgid ""
 "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
 "An ordinary ``typst`` code fence displays source without compiling it."
-msgstr "MyST에서 같은 그림을 그릴 때는 펜스 언어로 ``{typst-diagram}``을 사용합니다. 일반 ``typst`` 코드 펜스는 소스를 컴파일하지 않고 표시합니다."
+msgstr "MyST에서 같은 그림을 그릴 때는 펜스 언어로 ``{typst-diagram}``\\ 을 사용합니다. 일반 ``typst`` 코드 펜스는 소스를 컴파일하지 않고 표시합니다."
 
 #: ../../topics/diagrams.rst:139
 msgid ""
@@ -195,7 +195,7 @@ msgid ""
 "this book. Alternative text explains the information conveyed by the "
 "drawing. It is especially useful for Typst SVGs, which draw letters as "
 "outlines."
-msgstr "두 지시문은 ``:caption:``, ``:alt:``, ``:name:``, ``:class:``, ``:align:``를 지원합니다. ``conf.toml``에서 ``numfig = true``를 활성화하고 이름과 설명이 있는 그림을 RST의 ``:numref:`` 또는 MyST의 ``{numref}``로 참조합니다. 예를 들어 :numref:`chapter-typst-circle`은 이 책의 번호가 붙은 그림입니다. 대체 텍스트는 그림이 전달하는 정보를 설명합니다. 글자를 윤곽선으로 그리는 Typst SVG에서 특히 유용합니다."
+msgstr "두 지시문은 ``:caption:``, ``:alt:``, ``:name:``, ``:class:``, ``:align:``\\ 를 지원합니다. ``conf.toml``\\ 에서 ``numfig = true``\\ 를 활성화하고 이름과 설명이 있는 그림을 RST의 ``:numref:`` 또는 MyST의 ``{numref}``\\ 로 참조합니다. 예를 들어 :numref:`chapter-typst-circle`\\ 은 이 책의 번호가 붙은 그림입니다. 대체 텍스트는 그림이 전달하는 정보를 설명합니다. 글자를 윤곽선으로 그리는 Typst SVG에서 특히 유용합니다."
 
 #: ../../topics/diagrams.rst:181
 msgid ""
@@ -229,7 +229,7 @@ msgid ""
 "source directory, including through symlinks. Diagrams must produce one "
 "finite page; PNG export is limited to 16 million pixels and 16,384 pixels "
 "on either side."
-msgstr "``pdf_packages``, ``pdf_fonts``, ``pdf_font_paths`` 설정은 두 출력의 Typst 다이어그램을 제어합니다. ``pdf_packages = \"offline\"``이면 Typst 패키지 디렉터리에 이미 설치된 패키지만 사용합니다. 기본값은 없는 패키지를 다운로드합니다. 없던 패키지를 설치하거나 글꼴을 편집한 후에는 새 프로세스에서 ``guidedog build html -a``를 실행합니다. 프로젝트 가져오기는 심볼릭 링크를 통과하더라도 소스 디렉터리 안에 있어야 합니다. 다이어그램은 유한한 크기의 한 페이지를 생성해야 하며 PNG는 최대 1,600만 픽셀, 각 변 16,384픽셀로 제한됩니다."
+msgstr "``pdf_packages``, ``pdf_fonts``, ``pdf_font_paths`` 설정은 두 출력의 Typst 다이어그램을 제어합니다. ``pdf_packages = \"offline\"``\\ 이면 Typst 패키지 디렉터리에 이미 설치된 패키지만 사용합니다. 기본값은 없는 패키지를 다운로드합니다. 없던 패키지를 설치하거나 글꼴을 편집한 후에는 새 프로세스에서 ``guidedog build html -a``\\ 를 실행합니다. 프로젝트 가져오기는 심볼릭 링크를 통과하더라도 소스 디렉터리 안에 있어야 합니다. 다이어그램은 유한한 크기의 한 페이지를 생성해야 하며 PNG는 최대 1,600만 픽셀, 각 변 16,384픽셀로 제한됩니다."
 
 #: ../../topics/diagrams.rst:206
 msgid ""
@@ -239,7 +239,7 @@ msgid ""
 "without compiling a drawing. The :doc:`../howto/typst-diagrams` guide "
 "lists every option, source limit and migration step for existing figure "
 "files."
-msgstr "그리기에 실패하면 소스 코드와 경고가 계속 표시됩니다. 다이어그램 누락 시 게시를 막아야 한다면 ``-W``로 빌드합니다. ``--untrusted``는 Typst 컴파일을 거부하고 소스를 유지합니다. 텍스트 빌드는 그림을 컴파일하지 않고 소스를 표시합니다. :doc:`../howto/typst-diagrams`에는 모든 옵션, 소스 제한, 기존 그림 파일의 이전 절차가 있습니다."
+msgstr "그리기에 실패하면 소스 코드와 경고가 계속 표시됩니다. 다이어그램 누락 시 게시를 막아야 한다면 ``-W``\\ 로 빌드합니다. ``--untrusted``\\ 는 Typst 컴파일을 거부하고 소스를 유지합니다. 텍스트 빌드는 그림을 컴파일하지 않고 소스를 표시합니다. :doc:`../howto/typst-diagrams`\\ 에는 모든 옵션, 소스 제한, 기존 그림 파일의 이전 절차가 있습니다."
 
 #: ../../topics/diagrams.rst:212
 msgid "Light, dark and print"
@@ -1560,7 +1560,7 @@ msgid ""
 "``image`` and ``figure``. We can also author Graphviz and Typst drawings "
 "directly in markup with automatic HTML and PDF assets; see "
 ":doc:`diagrams`."
-msgstr "``image``와 ``figure``로 삽화, 스크린샷, 기존 다이어그램을 포함합니다. Graphviz와 Typst 그림을 마크업에 직접 작성하고 HTML 및 PDF 이미지 리소스를 자동으로 생성할 수도 있습니다. :doc:`diagrams`를 참고합니다."
+msgstr "``image``\\ 와 ``figure``\\ 로 삽화, 스크린샷, 기존 다이어그램을 포함합니다. Graphviz와 Typst 그림을 마크업에 직접 작성하고 HTML 및 PDF 이미지 리소스를 자동으로 생성할 수도 있습니다. :doc:`diagrams`\\ 를 참고합니다."
 
 #: ../../topics/writing.rst:274
 msgid "For an existing image:"

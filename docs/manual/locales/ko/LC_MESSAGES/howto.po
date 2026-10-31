@@ -3060,7 +3060,7 @@ msgid ""
 "``typst-diagram`` compiles the code with Guidedog's embedded Typst "
 "compiler and includes the resulting image in HTML and PDF. We need no "
 "separate figure task or installed Typst program."
-msgstr "RST 또는 MyST 문서에 Typst 그리기 코드를 직접 작성할 수 있습니다. ``typst-diagram``은 Guidedog에 내장된 Typst 컴파일러로 코드를 컴파일하고 생성한 이미지를 HTML과 PDF에 포함합니다. 별도의 그림 생성 작업이나 설치된 Typst 프로그램은 필요하지 않습니다."
+msgstr "RST 또는 MyST 문서에 Typst 그리기 코드를 직접 작성할 수 있습니다. ``typst-diagram``\\ 은 Guidedog에 내장된 Typst 컴파일러로 코드를 컴파일하고 생성한 이미지를 HTML과 PDF에 포함합니다. 별도의 그림 생성 작업이나 설치된 Typst 프로그램은 필요하지 않습니다."
 
 #: ../../howto/typst-diagrams.rst:8
 msgid "A first drawing"
@@ -3088,7 +3088,7 @@ msgid ""
 "``numfig = true``, a captioned diagram is a numbered figure and "
 "``:numref:`` can refer to its ``:name:``. We provide meaningful ``:alt:`` "
 "text because SVG text is drawn as outlines."
-msgstr "기본 이미지 형식은 SVG이므로 같은 벡터 그림을 사이트와 책에서 확대하거나 축소할 수 있습니다. ``:format: png``는 인치당 144픽셀의 PNG를 선택합니다. ``:class:``와 ``:align: left|center|right``도 설정할 수 있습니다. ``numfig = true``를 설정하면 설명이 있는 그림에 번호가 붙고 ``:numref:``로 그 ``:name:``을 참조할 수 있습니다. SVG의 글자는 윤곽선으로 그려지므로 의미 있는 ``:alt:`` 텍스트를 제공합니다."
+msgstr "기본 이미지 형식은 SVG이므로 같은 벡터 그림을 사이트와 책에서 확대하거나 축소할 수 있습니다. ``:format: png``\\ 는 인치당 144픽셀의 PNG를 선택합니다. ``:class:``\\ 와 ``:align: left|center|right``\\ 도 설정할 수 있습니다. ``numfig = true``\\ 를 설정하면 설명이 있는 그림에 번호가 붙고 ``:numref:``\\ 로 그 ``:name:``\\ 을 참조할 수 있습니다. SVG의 글자는 윤곽선으로 그려지므로 의미 있는 ``:alt:`` 텍스트를 제공합니다."
 
 #: ../../howto/typst-diagrams.rst:46
 msgid "CeTZ and Fletcher"
@@ -3114,7 +3114,7 @@ msgid ""
 "with ``pdf_font_paths``. After installing a previously missing package or "
 "changing font files, we run a fresh ``guidedog build html -a`` command to "
 "redraw cached pages and reload the compiler's font store."
-msgstr "``pdf_packages``, ``pdf_fonts``, ``pdf_font_paths`` 설정은 HTML과 PDF의 다이어그램에 모두 적용됩니다. ``pdf_packages = \"offline\"``은 Typst 패키지 디렉터리에 이미 설치된 패키지만 사용합니다. 기본 설정은 없는 패키지의 다운로드를 허용합니다. 재현 가능한 조판을 위해 ``pdf_fonts = \"embedded\"``를 설정하고 ``pdf_font_paths``로 프로젝트 글꼴 디렉터리를 추가합니다. 없던 패키지를 설치하거나 글꼴 파일을 변경한 뒤에는 새 프로세스에서 ``guidedog build html -a``를 실행하여 캐시된 페이지를 다시 그리고 컴파일러의 글꼴 저장소를 다시 읽습니다."
+msgstr "``pdf_packages``, ``pdf_fonts``, ``pdf_font_paths`` 설정은 HTML과 PDF의 다이어그램에 모두 적용됩니다. ``pdf_packages = \"offline\"``\\ 은 Typst 패키지 디렉터리에 이미 설치된 패키지만 사용합니다. 기본 설정은 없는 패키지의 다운로드를 허용합니다. 재현 가능한 조판을 위해 ``pdf_fonts = \"embedded\"``\\ 를 설정하고 ``pdf_font_paths``\\ 로 프로젝트 글꼴 디렉터리를 추가합니다. 없던 패키지를 설치하거나 글꼴 파일을 변경한 뒤에는 새 프로세스에서 ``guidedog build html -a``\\ 를 실행하여 캐시된 페이지를 다시 그리고 컴파일러의 글꼴 저장소를 다시 읽습니다."
 
 #: ../../howto/typst-diagrams.rst:86
 msgid "Shared helpers and existing files"
@@ -3158,7 +3158,7 @@ msgid ""
 "most 4,096 distinct file lookups per diagram. Typst layout uses the "
 "compiler's own memory; these limits do not impose a compiler timeout or a "
 "total memory ceiling."
-msgstr "Guidedog은 ``#set page(width: auto, height: auto, margin: 0pt)``를 앞에 추가하여 페이지를 그림에 맞춥니다. ``html.frame``으로 감싸지 않은 일반 Typst 내용을 작성합니다. 다이어그램은 유한한 크기의 페이지를 정확히 하나 생성해야 합니다. 지시문 본문은 최대 1 MiB이고 PNG는 최대 1,600만 픽셀, 각 변은 16,384픽셀까지 허용합니다. 어댑터는 다이어그램마다 최대 4,096개의 서로 다른 파일 조회를 추적합니다. Typst 레이아웃은 컴파일러 자체 메모리를 사용하므로 이러한 제한은 컴파일러 시간 제한이나 전체 메모리 상한을 제공하지 않습니다."
+msgstr "Guidedog은 ``#set page(width: auto, height: auto, margin: 0pt)``\\ 를 앞에 추가하여 페이지를 그림에 맞춥니다. ``html.frame``\\ 으로 감싸지 않은 일반 Typst 내용을 작성합니다. 다이어그램은 유한한 크기의 페이지를 정확히 하나 생성해야 합니다. 지시문 본문은 최대 1 MiB이고 PNG는 최대 1,600만 픽셀, 각 변은 16,384픽셀까지 허용합니다. 어댑터는 다이어그램마다 최대 4,096개의 서로 다른 파일 조회를 추적합니다. Typst 레이아웃은 컴파일러 자체 메모리를 사용하므로 이러한 제한은 컴파일러 시간 제한이나 전체 메모리 상한을 제공하지 않습니다."
 
 #: ../../howto/typst-diagrams.rst:126
 msgid ""
@@ -3168,7 +3168,7 @@ msgid ""
 "the published site or book. ``--untrusted`` keeps diagram source visible "
 "and warns without running Typst. Text builds retain source without "
 "compiling it."
-msgstr "컴파일이 실패하면 지시문 위치에 경고가 나오고 소스는 코드로 계속 표시됩니다. 메시지에는 다이어그램 또는 가져온 Typst 파일 안의 위치가 포함됩니다. ``-W``는 이 빌드가 게시된 사이트나 책을 교체하지 못하게 합니다. ``--untrusted``는 Typst를 실행하지 않고 다이어그램 소스를 유지하며 경고합니다. 텍스트 빌드도 컴파일 없이 소스를 보존합니다."
+msgstr "컴파일이 실패하면 지시문 위치에 경고가 나오고 소스는 코드로 계속 표시됩니다. 메시지에는 다이어그램 또는 가져온 Typst 파일 안의 위치가 포함됩니다. ``-W``\\ 는 이 빌드가 게시된 사이트나 책을 교체하지 못하게 합니다. ``--untrusted``\\ 는 Typst를 실행하지 않고 다이어그램 소스를 유지하며 경고합니다. 텍스트 빌드도 컴파일 없이 소스를 보존합니다."
 
 #~ msgid ""
 #~ "**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. "

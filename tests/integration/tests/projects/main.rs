@@ -16,3 +16,4 @@ mod sphinx_pages;
 mod ssg;
 mod support;
 mod tutorials;
+mod typst_diagrams;

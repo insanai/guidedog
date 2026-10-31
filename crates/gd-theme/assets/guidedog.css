@@ -708,22 +708,26 @@ figcaption .legend { margin-top: .4rem; text-align: left; }
 .align-center { display: block; margin-left: auto; margin-right: auto; text-align: center; }
 .align-left { float: left; margin: .25rem 1.5rem 1rem 0; }
 .align-right { float: right; margin: .25rem 0 1rem 1.5rem; }
-img.graphviz, .graphviz img, object.graphviz { max-width: 100%; height: auto; }
+:is(img.graphviz, img.typst-diagram), .graphviz img, object.graphviz {
+  max-width: 100%; height: auto;
+}
 /* Adaptive SVGs inherit the chosen scheme; ordinary artwork keeps a light panel. */
 img.graphviz-adaptive { color-scheme: inherit; }
-:root[data-theme="dark"] :is(img.graphviz, .graphviz img):not(.graphviz-adaptive) {
+:root[data-theme="dark"]
+  :is(img.graphviz, .graphviz img, img.typst-diagram):not(.graphviz-adaptive) {
   background: #fff; border-radius: 4px;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) :is(img.graphviz, .graphviz img):not(.graphviz-adaptive) {
+  :root:not([data-theme="light"])
+    :is(img.graphviz, .graphviz img, img.typst-diagram):not(.graphviz-adaptive) {
     background: #fff; border-radius: 4px;
   }
 }
 
 /* On narrow screens, keep graph labels readable inside a scrollable figure. */
 @media (max-width: 700px) {
-  .gd-article figure:has(img.graphviz) { overflow-x: auto; }
-  .gd-article figure:has(img.graphviz) img.graphviz { max-width: none; }
+  .gd-article figure:has(:is(img.graphviz, img.typst-diagram)) { overflow-x: auto; }
+  .gd-article figure :is(img.graphviz, img.typst-diagram) { max-width: none; }
 }
 
 /* Math, as TeX for MathJax or KaTeX: display math scrolls rather than overflowing. */

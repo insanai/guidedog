@@ -13,7 +13,8 @@ mod ssg;
 
 const SMOKE_HELP: &str = "\
 Smoke-tests a guidedog program the way a new user runs it: quickstart, then an HTML site
-and a PDF book from a project with a Graphviz diagram, an equation, Markdown, and API
+and a PDF book from a project with Graphviz and Typst SVG/PNG diagrams, an equation, Markdown,
+and API
 documentation read from Python source without running Python.
 
 Usage: cargo xtask release smoke [--external-typst] PROGRAM
@@ -109,6 +110,7 @@ author = \"Release\"
 extensions = [\"sphinx.ext.graphviz\", \"sphinx.ext.mathjax\", \
     \"myst_parser\", \"sphinx.ext.autodoc\"]
 autodoc_source_paths = [\".\"]
+pdf_packages = \"offline\"
 ";
 
 const SMOKE_INDEX: &str = "\
@@ -123,6 +125,12 @@ Smoke
 
    source -> html
    source -> pdf
+
+.. typst-diagram::
+   :alt: A circle compiled by embedded Typst
+
+   #import \"diagrams/helper.typ\": draw
+   #draw
 
 .. math::
 
@@ -159,8 +167,17 @@ pub(crate) fn smoke(program: &Path, external_typst: bool) -> Result<()> {
     runner.run(dir, &["quickstart", "docs", "-q", "-p", "Smoke", "-a", "Release"])?;
     write(&dir.join("docs/conf.toml"), SMOKE_CONF)?;
     write(&dir.join("docs/index.rst"), SMOKE_INDEX)?;
+    create_dir(&dir.join("docs/diagrams"))?;
+    write(&dir.join("docs/diagrams/helper.typ"), "#let draw = circle(radius: 12pt)\n")?;
     write(&dir.join("docs/tool.py"), "def run(x, y=1):\n    \"\"\"Runs x.\"\"\"\n")?;
-    write(&dir.join("docs/notes.md"), "# Notes\n\nSome *Markdown*, and ``code``.\n")?;
+    write(
+        &dir.join("docs/notes.md"),
+        concat!(
+            "# Notes\n\nSome *Markdown*, and ``code``.\n\n",
+            "```{typst-diagram}\n:format: png\n:alt: A square\n\n",
+            "#rect(width: 20pt, height: 20pt)\n```\n",
+        ),
+    )?;
     runner.run(dir, &["build", "html", "docs", "-W", "--color=never"])?;
     runner.run(dir, &["build", "pdf", "docs", "-W", "--color=never"])?;
     let html_path = dir.join("docs/_build/html/index.html");
@@ -169,11 +186,13 @@ pub(crate) fn smoke(program: &Path, external_typst: bool) -> Result<()> {
         (dir.join("docs/_build/html/notes.html").is_file(), "no notes.html from Markdown"),
         (html.contains("class=\"graphviz\""), "the diagram is missing from index.html"),
         (html.contains("<svg"), "no SVG in index.html"),
+        (html.contains("class=\"typst-diagram\""), "no embedded Typst diagram"),
         (html.contains("id=\"tool.run\""), "autodoc did not document tool.run"),
     ];
     if let Some((_, what)) = checks.iter().find(|(ok, _)| !ok) {
         return Err(smoke_failure("guidedog", what));
     }
+    check_diagram_images(&dir.join("docs/_build/html/_images"))?;
     let bytes = check_pdf(&dir.join("docs/_build/pdf/smoke-en.pdf"), "guidedog")?;
     smoke_translation(&runner, dir)?;
     smoke_publication(&runner, dir)?;
@@ -326,4 +345,24 @@ pub(crate) fn smoke_discussion(program: &Path) -> Result<()> {
     let name = program.file_name().unwrap_or_default().to_string_lossy();
     println!("discussion smoke test passed: {name} dsc, an HTML site and PDF books");
     Ok(())
+}
+
+/// Both embedded exporters must work in an unpacked archive with no installed tools.
+fn check_diagram_images(folder: &Path) -> Result<()> {
+    let mut svg = false;
+    let mut png = false;
+    for entry in std::fs::read_dir(folder).map_err(|e| smoke_failure("typst", &e.to_string()))? {
+        let path = entry.map_err(|e| smoke_failure("typst", &e.to_string()))?.path();
+        if !path.file_name().is_some_and(|n| n.to_string_lossy().starts_with("typst-")) {
+            continue;
+        }
+        let bytes = std::fs::read(&path).map_err(|e| smoke_failure("typst", &e.to_string()))?;
+        svg |= bytes.windows(4).any(|part| part == b"<svg");
+        png |= bytes.starts_with(b"\x89PNG\r\n\x1a\n");
+    }
+    if svg && png {
+        Ok(())
+    } else {
+        Err(smoke_failure("typst", "the SVG or PNG diagram was not rendered"))
+    }
 }

@@ -222,6 +222,10 @@ pub fn lookup_answer(view: &BuildView<'_>, page: &str, lookup: &Lookup) -> Diges
         LookupKind::File => {
             d.flag(Path::new(&lookup.key).is_file());
         }
+        LookupKind::FileContent => {
+            file_content_answer(view, Path::new(&lookup.key), &mut d);
+        }
+
         LookupKind::Image => {
             match view.image_file(page, &lookup.key) {
                 None => d.flag(false),
@@ -289,4 +293,18 @@ fn target_answer(view: &BuildView<'_>, target: Option<&TargetRef>, d: &mut Diges
     if r.kind == LabelKind::Section {
         d.text(view.section_number(r.doc, &r.anchor));
     }
+}
+
+/// Recheck source confinement before hashing a previously observed compiler input.
+fn file_content_answer(view: &BuildView<'_>, path: &Path, d: &mut Digester) {
+    // A source symlink may have been retargeted since compilation. Never read its
+    // new bytes outside the diagram's source root while checking a trace.
+    let confined = !path.starts_with(&view.config.source_dir)
+        || path.canonicalize().ok().is_some_and(|real| {
+            view.config.source_dir.canonicalize().ok().is_some_and(|root| real.starts_with(root))
+        });
+    match confined.then(|| gd_env::file_digest(path)).flatten() {
+        Some(digest) => d.flag(true).digest(&digest),
+        None => d.flag(false),
+    };
 }

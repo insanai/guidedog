@@ -26,6 +26,8 @@ pub enum LookupKind {
     Doc,
     /// Whether a file exists, by path.
     File,
+    /// The bytes of a compiler input file, by path; missing or unreadable is absent.
+    FileContent,
     /// The file an image names, by the image's URI as written in the page.
     Image,
     /// Whether the project has a module index; the key is empty.
@@ -55,6 +57,7 @@ impl LookupKind {
             LookupKind::Suffix => 'S',
             LookupKind::Doc => 'D',
             LookupKind::File => 'F',
+            LookupKind::FileContent => 'B',
             LookupKind::Image => 'I',
             LookupKind::Modules => 'M',
             LookupKind::Cpp => 'C',
@@ -75,6 +78,7 @@ impl LookupKind {
             'S' => LookupKind::Suffix,
             'D' => LookupKind::Doc,
             'F' => LookupKind::File,
+            'B' => LookupKind::FileContent,
             'I' => LookupKind::Image,
             'M' => LookupKind::Modules,
             'C' => LookupKind::Cpp,

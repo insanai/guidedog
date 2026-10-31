@@ -72,3 +72,5 @@ let items = gd_link::nav_for_toctree(&view, doc, 0, NavOptions::default());
 - The sidebar and the page outline (`sidebar_html`, `outline_html`) are gd-site's; the
   numfig template and the image lookup are `BuildView::number_template` and
   `BuildView::image_file` in gd-resolve, shared with lookup answers.
+
+Typst diagrams use `gd-typst` for embedded SVG or PNG export. The marked `typst-diagram` block shares generated-figure rewriting with Graphviz. Imports resolve beside their source, stay under the source root and record `FileContent` lookups. Assets are named by output digest and matching files keep their timestamps. Untrusted builds retain source with a warning; ordinary Typst code remains literal. Project package and font settings apply in both HTML and PDF.

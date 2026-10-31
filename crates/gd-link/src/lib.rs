@@ -29,6 +29,7 @@ mod discussion;
 mod excerpt_copy;
 mod excerpts;
 mod extlinks;
+mod figure;
 mod graph;
 mod graph_files;
 mod graph_links;
@@ -44,6 +45,7 @@ mod render;
 mod rewrite;
 mod source_links;
 mod todolist;
+mod typst;
 mod xref;
 
 pub use discussion::{Discussion, discussion_field, discussion_prefix, discussion_record};

@@ -272,7 +272,8 @@ impl Rule for Page<'_> {
                 if crate::mounts::is_mount(doc, id) { Action::Replace } else { Action::Copy }
             }
             NodeKind::CodeBlock
-                if format != OutputFormat::Text && graph::is_graph(self, doc, id) =>
+                if format != OutputFormat::Text
+                    && (graph::is_graph(self, doc, id) || flag(doc, id, "typst-diagram")) =>
             {
                 Action::Replace
             }
@@ -310,6 +311,9 @@ impl Rule for Page<'_> {
             NodeKind::Image => image::replace_image(self, rw, id),
             NodeKind::Link | NodeKind::Reference => crate::mounts::replace(self, rw, id),
             NodeKind::Title => self.replace_title(rw, id),
+            NodeKind::CodeBlock if flag(rw.doc, id, "typst-diagram") => {
+                crate::typst::replace_diagram(self, rw, id)
+            }
             NodeKind::CodeBlock => graph::replace_graph(self, rw, id),
             NodeKind::Directive => {
                 if rw.doc.attribute(id, AttributeKey::Name) == Some("postlist") {

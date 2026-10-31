@@ -7,17 +7,15 @@
 use std::path::PathBuf;
 
 use gd_conf::Digest;
-use gd_env::{Asset, LookupKind, OutputFormat, SourceKind};
+use gd_env::{LookupKind, OutputFormat, SourceKind};
 use gd_graphdog::{Attribute, AttributeKind, Context, Engine, Format, Options};
-use gd_resolve::relative_url;
-use guidedoc::{AttributeKey, Document, Fail, LinkInfo, LinkKind, NodeId, NodeKind, SourceSpan};
+use guidedoc::{AttributeKey, Document, Fail, NodeId, SourceSpan};
 
 use crate::graph_files::{GraphFiles, may_name_files};
 use crate::graph_links::resolve_graph_links;
 use crate::graph_theme::{GRAPH_ADAPTIVE_CSS, adapt_graph, graph_adaptive};
-use crate::image::{book_path, file_name};
 use crate::page::{Page, Warning, flag};
-use crate::rewrite::{Rewriter, Rule};
+use crate::rewrite::Rewriter;
 
 /// Whether a code block is a graph to draw.
 pub(crate) fn is_graph(page: &Page<'_>, doc: Document<'_>, id: NodeId) -> bool {
@@ -43,53 +41,12 @@ pub(crate) fn replace_graph(
     let drawn =
         draw_graph(page, doc, source, layout, span, adaptive && page.format == OutputFormat::Html);
     let Some(path) = drawn else { return rw.copy_node(page, id) };
-    let caption = doc.custom_attribute(id, "caption");
-    let outer =
-        rw.open(if caption.is_some() { NodeKind::Figure } else { NodeKind::Image }, span)?;
-    rw.moved_to(id, outer);
-    // The code block's ids, :name: and classes move to the image.
-    rw.copy_attributes(id, outer, |key, name| {
-        matches!(key, AttributeKey::Id | AttributeKey::Class)
-            || (key == AttributeKey::Custom && name == "name")
-    })?;
-    let image = match caption {
-        Some(_) => {
-            page.decorate(rw, id, outer)?; // its figure number.
-            rw.open(NodeKind::Image, span)?
-        }
-        None => outer,
-    };
-    let alt = doc.custom_attribute(id, "alt").unwrap_or_else(|| source.trim());
-    rw.b.add_attribute_string(image, AttributeKey::Alt, alt)?;
-    if let Some(align) = doc.custom_attribute(id, "align") {
-        rw.b.add_attribute_string(image, AttributeKey::Align, align)?;
-    }
-    rw.add_class(image, "graphviz")?;
-    if linked {
-        // Shown so that its links work: an img element's links are not followed.
-        rw.add_custom(image, "interactive", "1")?;
-    }
-    if adaptive && caption.is_some() {
-        rw.add_class(image, "graphviz-adaptive")?;
-    }
-    let url = graph_url(page, path);
-    let destination = rw.b.add_text(&url)?;
-    rw.b.set_link(
-        image,
-        LinkInfo { destination, kind: LinkKind::External, ..LinkInfo::default() },
-    )?;
-    if let Some(text) = caption {
-        rw.close(image)?;
-        match doc.code_caption(id) {
-            Some(parsed) => rw.copy_node(page, parsed)?,
-            None => {
-                let c = rw.open(NodeKind::Caption, span)?;
-                rw.add_plain(text, span)?;
-                rw.close(c)?;
-            }
-        }
-    }
-    rw.close(outer)
+    crate::figure::replace(
+        page,
+        rw,
+        id,
+        crate::figure::Drawing { path, source, class: "graphviz", interactive: linked, adaptive },
+    )
 }
 
 /// Lays the graph out once per distinct source, engine, and arguments, into
@@ -254,20 +211,6 @@ fn graph_attributes(args: &[String]) -> Vec<Attribute> {
         out.push(Attribute { kind, name: name.to_string(), value: value.to_string() });
     }
     out
-}
-
-/// Where the page or the book finds the drawn graph; the page copies it to `_images`
-/// as it copies other images.
-fn graph_url(page: &mut Page<'_>, path: PathBuf) -> String {
-    if page.format == OutputFormat::Pdf {
-        let book = book_path(page.config(), &path);
-        page.assets.push(Asset { source: path, target: book.clone() });
-        return book;
-    }
-    let target = format!("_images/{}", file_name(&path));
-    let url = relative_url(&page.view.page_name(&page.info.docname), &target);
-    page.assets.push(Asset { source: path, target });
-    url
 }
 
 #[cfg(test)]

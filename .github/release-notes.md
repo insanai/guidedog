@@ -1,15 +1,15 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.7 adds build-time rich article excerpts and fixes [issue #3](https://github.com/insanai/guidedog/issues/3).
+Version 1.0.0-beta.8 adds embedded Typst diagrams and network preview.
 
-- **Rich introductions.** Place `.. more::` after an article's introduction. Native `postlist` directives with `:excerpts:` and collection templates using `post.excerpt_html` retain paragraphs, emphasis, links, lists and lead images. Full HTML and PDF articles keep both sides of the boundary.
-- **Build-time rendering.** Nested archives, taxonomy pages and pagination receive correct relative links, images and downloads. Repeated native listings use separate anchor namespaces; references to excluded targets and footnotes link to the full article. No browser fetch or runtime plugin is required.
-- **Compatible fallback.** Articles without a boundary retain their escaped plain-text summary. Feeds and description metadata continue to use `:summary:`. Draft, schedule and expiry filtering applies before excerpt selection.
-- **Verified dependencies.** Listings track the source article and its reference and asset lookups, including reader dependencies. Edits to introductions, included files and referenced titles invalidate the affected listings.
-- **Reviewed SSG behavior.** This release also includes the article paper-size normalization, finer neighbor tracing, pinned-theme configuration digest and line-ending fixes made after beta.6, with the reviewed custom-directive manual examples.
-- **Qualification.** Regression tests cover rich output, local and excluded targets, repeated IDs, publication filtering, incremental changes and PDF compilation. Every unpacked platform archive builds rich excerpts as part of its complete SSG smoke test.
+- **Diagrams in markup.** Write `typst-diagram` directives in RST or MyST, with inline code or a Typst file. The embedded compiler generates SVG or PNG and includes it automatically in HTML and PDF. CeTZ and Fletcher use ordinary version-pinned imports.
+- **Figures and dependencies.** Captions, alternative text, names, classes, alignment and numbered references use the existing figure pipeline. Imported helpers and data are tracked by content; unchanged drawings retain their timestamps so PDF caching remains effective.
+- **Explicit policy.** Project package and font settings apply to both outputs. Untrusted builds retain source without executing Typst. Canonical source-root confinement, one-page validation, source limits and bounded PNG dimensions protect the adapter's boundaries.
+- **Network preview.** `guidedog serve docs --host 0.0.0.0 --port 8000` permits access over IPv4; `--host ::` selects IPv6. The default remains loopback. The preview has no authentication or TLS.
+- **Documentation.** The book has a combined Graphviz and Typst chapter, a complete Typst guide and related reference updates. All six manual translations include the new material. GDS 0014 records the reviewed design, and the catalog's implementation states have been audited.
+- **Qualification.** Parser, compiler, round-trip and project tests cover both markup languages, SVG/PNG, imports, failures, offline packages and real PDFs. Every unpacked release archive exercises the embedded exporters with an empty PATH.
 
-The [static publishing guide](https://insanai.github.io/guidedog/manual/howto/static-publishing.html) describes the commands and configuration. [GDS 0013](https://insanai.github.io/guidedog/discussions/records/0013-static-site-generation.html) specifies their contracts and qualification. The [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.7/CHANGELOG.md) records the changes.
+The [diagrams chapter](https://insanai.github.io/guidedog/manual/topics/diagrams.html), [Typst guide](https://insanai.github.io/guidedog/manual/howto/typst-diagrams.html), [GDS 0014](https://insanai.github.io/guidedog/discussions/records/0014-typst-diagrams.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.8/CHANGELOG.md) describe the behavior and limits.
 
 ## Downloads
 
@@ -20,7 +20,7 @@ The [static publishing guide](https://insanai.github.io/guidedog/manual/howto/st
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.7-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.8-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

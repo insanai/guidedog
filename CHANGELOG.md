@@ -5,7 +5,7 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
-## Unreleased
+## 1.0.0-beta.8 - 2026-10-31
 
 - Add `guidedog serve --host IP` for IPv4 and IPv6 network preview, retaining the loopback default.
 - Add RST and MyST `typst-diagram` directives with inline or file source, SVG or PNG export, captions, figure references and automatic HTML/PDF assets through the embedded Typst compiler. CeTZ, Fletcher and local helpers use ordinary pinned imports.

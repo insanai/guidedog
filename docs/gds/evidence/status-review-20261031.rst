@@ -69,6 +69,14 @@ The full manual builds to an English PDF, and all six localized HTML editions bu
 The release smoke test exercises both diagram image formats with an empty PATH.
 Platform CI and unpacked release-archive qualification are still required for the beta.8 release commit.
 
+Release follow-up, 31 October 2026
+----------------------------------
+
+The final beta.8 commit passed `Verify <https://github.com/insanai/guidedog/actions/runs/41177167506>`_ on Linux and macOS, with 1,984 passing tests on each runner after the mounted-diagram regression was added.
+The exact commit's `Website build <https://github.com/insanai/guidedog/actions/runs/41177167390>`_ deployed all language editions and PDF books and checked 177,526 internal links without missing targets.
+The five-platform `release workflow <https://github.com/insanai/guidedog/actions/runs/41177963905>`_ passed archive qualification and published beta.8.
+The post-publication checks are recorded in ``docs/manual/evidence/release-1.0.0-beta.8.rst``.
+
 References
 ----------
 

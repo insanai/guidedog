@@ -43,6 +43,25 @@ We can also set ``:class:`` and ``:align: left|center|right``.
 With ``numfig = true``, a captioned diagram is a numbered figure and ``:numref:`` can refer to its ``:name:``.
 We provide meaningful ``:alt:`` text because SVG text is drawn as outlines.
 
+.. list-table:: ``typst-diagram`` options
+   :header-rows: 1
+   :widths: 24 76
+
+   * - Option
+     - Meaning
+   * - ``:alt: text``
+     - Alternative text describing the diagram's content.
+   * - ``:caption: text``
+     - Wraps the drawing in a figure with this caption (numbered when ``numfig = true``).
+   * - ``:name: label``
+     - Cross-reference anchor for ``:ref:`` and ``:numref:``.
+   * - ``:format: svg|png``
+     - Output image format: ``svg`` (default) or ``png`` (144 PPI).
+   * - ``:align: left|center|right``
+     - Horizontal placement of the image or figure.
+   * - ``:class: names``
+     - Extra CSS class names added alongside ``typst-diagram``.
+
 CeTZ and Fletcher
 -----------------
 
@@ -123,8 +142,19 @@ The directive body is limited to 1 MiB; PNG export permits at most 16 million pi
 The adapter tracks at most 4,096 distinct file lookups per diagram.
 Typst layout uses the compiler's own memory; these limits do not impose a compiler timeout or a total memory ceiling.
 
-If compilation fails, we see a warning at the directive and the source stays visible as code.
+If compilation fails, we see a ``build.typst-diagram`` warning at the directive and the source stays visible as code.
 The message includes the position within the diagram or imported Typst file.
-``-W`` prevents that build from replacing the published site or book.
-``--untrusted`` keeps diagram source visible and warns without running Typst.
+Giving neither or both of a file argument and an inline body reports ``sphinx.typst.source``.
+A ``guidedog`` built without the ``embedded`` Typst feature reports ``typst.embedded``, and exceeding the host memory budget reports ``host.budget``.
+``-W`` prevents a failed build from replacing the published site or book.
+``--untrusted`` keeps diagram source visible and warns ``build.typst-diagram`` without running Typst.
 Text builds retain source without compiling it.
+
+Migrate existing figure files
+-----------------------------
+
+When a project previously ran ``typst compile`` by hand or in a Makefile to generate prebuilt ``.svg`` or ``.png`` files:
+
+1. Remove any explicit ``#set page(...)`` or ``html.frame(...)`` wrapper that existed only to crop the figure; Guidedog prepends ``#set page(width: auto, height: auto, margin: 0pt)`` automatically.
+2. Replace ``.. figure:: figures/arch.svg`` (and its separate build script) with ``.. typst-diagram:: figures/arch.typ``, keeping ``:caption:``, ``:alt:``, ``:name:`` and ``:align:`` on the directive.
+3. Delete the committed generated ``.svg`` or ``.png`` artifacts once ``guidedog build html -W`` and ``guidedog build pdf -W`` succeed.

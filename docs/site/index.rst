@@ -44,8 +44,8 @@ What it does
   work as Sphinx users expect, and MyST Markdown can sit next to them.
 * **Translations.** Gettext catalogs carry a project into other languages. Chinese,
   Japanese, Korean, and Hindi text is laid out correctly on screen and on paper.
-* **Diagrams, math, and API pages.** Graphviz diagrams, LaTeX equations, and API
-  reference for Rust, Python, and Odin, read from source code.
+* **Diagrams, math, and API pages.** Graphviz and Typst diagrams, LaTeX equations, and
+  API reference for Rust, Python, and Odin, read from source code.
 * **Clear errors.** A message says what is wrong, where, and how to fix it. A failed
   build leaves the last good site in place.
 
@@ -55,7 +55,7 @@ One program
 
 The release provides one ``guidedog`` executable with PDF typesetting and diagram rendering included. We download the archive for our system, unpack it, and start a project. On Windows we keep the bundled runtime files beside the executable.
 
-Configuration is a TOML file. Templates are plain files in our project, and we can edit them. The same command also publishes to GitHub Pages and keeps discussion records through its linked plugins.
+Configuration is a TOML file. Templates are plain files in our project, and we can edit them. The same command also manages static websites, publishes to GitHub Pages, and keeps discussion records through its linked ``ssg``, ``pages``, and ``dsc`` plugins.
 
 
 Write it, see both

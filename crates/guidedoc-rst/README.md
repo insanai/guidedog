@@ -8,9 +8,9 @@ MyST reader build on. Inline markup and resolution are `guidedoc-rst-inline`.
 
 ```toml
 [dependencies]
-guidedoc-rst = "0.7"
-guidedoc = "0.7"
-guidedoc-html = "0.7"
+guidedoc-rst = "1.0.0-beta.8"
+guidedoc = "1.0.0-beta.8"
+guidedoc-html = "1.0.0-beta.8"
 ```
 
 We convert reStructuredText to HTML:
@@ -31,7 +31,7 @@ fn main() -> Result<(), guidedoc::Fail> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/guidedoc-rst). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p guidedoc-rst --no-deps` (and on [docs.rs](https://docs.rs/guidedoc-rst) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Overview
 

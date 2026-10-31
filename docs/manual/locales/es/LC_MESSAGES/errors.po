@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -170,18 +170,20 @@ msgstr "``host.budget`` (LÍMITE DE MEMORIA ALCANZADO)"
 
 #: ../../errors.rst:83
 msgid ""
-"The build reached the memory it may hold, its budget (``--budget=MIB``, 1 "
-"GiB by default). The budget counts what Guidedog reads and keeps: "
-"sources, included files, and the PDF the embedded Typst compiler returns. "
-"The report names the step and the file that needed the memory. The hint "
-"names a budget that fits, as a number. For example:"
+"The build reached the memory it may hold, its budget (``--budget=MIB``, "
+"1 GiB by default). The budget counts what Guidedog reads and keeps: "
+"sources, included files, compiled diagram images, and the PDF the "
+"embedded Typst compiler returns. The report names the step and the file "
+"that needed the memory. The hint names a budget that fits, as a number. "
+"For example:"
 msgstr ""
 "La compilación alcanzó la memoria que puede retener, su presupuesto "
 "(``--budget=MIB``, 1 GiB por defecto). El presupuesto cuenta lo que "
-"Guidedog lee y conserva: las fuentes, los archivos incluidos y el PDF que "
-"devuelve el compilador de Typst integrado. El informe nombra el paso y el "
-"archivo que necesitaba la memoria. La sugerencia da como número un "
-"presupuesto suficiente. Por ejemplo:"
+"Guidedog lee y conserva: las fuentes, los archivos incluidos, las "
+"imágenes de diagramas compiladas y el PDF que devuelve el compilador de "
+"Typst integrado. El informe nombra el paso y el archivo que necesitaba "
+"la memoria. La sugerencia da como número un presupuesto suficiente. Por "
+"ejemplo:"
 
 #: ../../errors.rst:91
 msgid ""
@@ -341,10 +343,34 @@ msgstr ""
 "Guidedog falló internamente y el informe nos pide que lo comuniquemos."
 
 #: ../../errors.rst:137
+msgid "6"
+msgstr "6"
+
+#: ../../errors.rst:137
+msgid ""
+"``publish`` only: the host accepted the publication, but has not "
+"confirmed it live."
+msgstr ""
+"Solo en ``publish``: el servidor aceptó la publicación, pero aún no ha "
+"confirmado que esté activa."
+
+#: ../../errors.rst:139
+msgid "7"
+msgstr "7"
+
+#: ../../errors.rst:139
+msgid ""
+"``publish`` only: whether the publication was applied is not known; run "
+"the publisher's ``recover`` command before publishing again."
+msgstr ""
+"Solo en ``publish``: no se sabe si la publicación llegó a aplicarse; "
+"ejecute el comando ``recover`` del publicador antes de volver a publicar."
+
+#: ../../errors.rst:141
 msgid "70"
 msgstr "70"
 
-#: ../../errors.rst:137
+#: ../../errors.rst:141
 msgid ""
 "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
 "the command that ran, the fault, and what ``guidedog --version`` prints, "
@@ -359,11 +385,11 @@ msgstr ""
 "proporcionó. Como las compilaciones solo publican al final, un fallo así "
 "deja intacta la salida anterior."
 
-#: ../../errors.rst:142
+#: ../../errors.rst:146
 msgid "130"
 msgstr "130"
 
-#: ../../errors.rst:142
+#: ../../errors.rst:146
 msgid ""
 "The command was interrupted with Ctrl+C. Published files were left "
 "unchanged."
@@ -371,7 +397,7 @@ msgstr ""
 "El comando se interrumpió con Ctrl+C. Los archivos publicados no "
 "cambiaron."
 
-#: ../../errors.rst:145
+#: ../../errors.rst:149
 msgid ""
 "A build that fails for any reason leaves the previous output, and the "
 "records of what it built, as they were. We fix the problem and build "

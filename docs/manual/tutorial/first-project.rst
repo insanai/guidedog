@@ -7,7 +7,7 @@ directory. We make an HTML website and a printable PDF book from the same source
 file. Then we try the live preview server.
 
 We need a working installation of Guidedog. For PDF output, Guidedog can use its
-embedded compiler or an installed Typst binary (0.15.1 or newer). See :doc:`../howto/install`.
+embedded compiler or an installed Typst binary (0.15.1). See :doc:`../howto/install`.
 
 On macOS, we can install the official release with Homebrew:
 
@@ -66,26 +66,32 @@ Guidedog creates a complete, self-contained project:
 .. code-block:: text
 
    notes/
+     .gitignore
      conf.toml
      index.rst
      _templates/
        layout.html
        book.typ
+       discussion.typ
+       article.typ
+       theme.typ
      _static/
        guidedog.css
        guidedog.js
+       typography.js
      assets/
-       images/
-       audio/
-       video/
+       images/README.txt
+       audio/README.txt
+       video/README.txt
 
 The files are:
 
+* ``.gitignore``: Ignores ``_build/`` so generated files stay out of version control.
 * ``conf.toml``: Project settings (title, author, version, language, builders).
 * ``index.rst``: The root document. It defines our front page and table of contents.
 * ``_templates/layout.html``: The HTML website template (Jinja).
-* ``_templates/book.typ``: The PDF book layout and typography template (Typst).
-* ``_static/``: CSS stylesheets and JavaScript enhancements.
+* ``_templates/book.typ``, ``discussion.typ``, ``article.typ``, and ``theme.typ``: The PDF book, discussion, standalone article, and shared typography templates (Typst).
+* ``_static/``: Editable CSS stylesheets (``guidedog.css``) and JavaScript enhancements (``guidedog.js`` and ``typography.js``).
 * ``assets/``: Folders for project images, diagrams, audio, and video files.
 
 Templates in Guidedog are ordinary files that we can see and edit. They live inside

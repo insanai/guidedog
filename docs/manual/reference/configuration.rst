@@ -160,7 +160,10 @@ Sources and reading
      - Built-in Sphinx extensions to enable: ``sphinx.ext.mathjax``, ``sphinx.ext.todo``,
        ``sphinx.ext.githubpages``, ``sphinx.ext.ifconfig``, ``sphinx.ext.extlinks``,
        ``sphinx.ext.imgmath``, ``sphinx.ext.autosectionlabel``, ``sphinx.ext.graphviz``,
-       ``sphinx.ext.doctest``, ``sphinx.ext.intersphinx``, ``sphinx.ext.autodoc``, and
+       ``sphinx.ext.doctest``, ``sphinx.ext.intersphinx``, ``sphinx.ext.autodoc``,
+       ``sphinx.ext.napoleon``, ``sphinx.ext.autosummary``, ``sphinx.ext.viewcode``,
+       ``sphinx.ext.linkcode``, ``sphinx.ext.inheritance_diagram``, ``sphinx.ext.apidoc``,
+       ``sphinx.ext.coverage``, ``sphinx.ext.duration``, ``sphinx.ext.imgconverter``, and
        ``myst_parser``. Any other name is an error: native code is selected with
        ``plugins``.
    * - ``rst_prolog``
@@ -897,6 +900,290 @@ Guidedog reads Python source without importing it (see :doc:`../autodoc`).
      - ``false``
      - Remove backslashes from signatures written in directives.
 
+Napoleon, autosummary, and apidoc
+---------------------------------
+
+Built-in Python docstring and API-page extensions (``sphinx.ext.napoleon``, ``sphinx.ext.autosummary``, and ``sphinx.ext.apidoc``; see :doc:`../autodoc`).
+
+.. list-table:: Napoleon, autosummary, and apidoc
+   :header-rows: 1
+   :widths: 28 14 18 40
+
+   * - Key
+     - Type
+     - Default
+     - Description
+   * - ``napoleon_google_docstring``
+     - boolean
+     - ``true``
+     - Parse Google-style docstring sections.
+   * - ``napoleon_numpy_docstring``
+     - boolean
+     - ``true``
+     - Parse NumPy-style docstring sections.
+   * - ``napoleon_include_init_with_doc``
+     - boolean
+     - ``false``
+     - Document ``__init__`` separately when it has a docstring.
+   * - ``napoleon_include_private_with_doc``
+     - boolean
+     - ``false``
+     - Include ``_private`` members that have docstrings.
+   * - ``napoleon_include_special_with_doc``
+     - boolean
+     - ``false``
+     - Include ``__special__`` members that have docstrings.
+   * - ``napoleon_use_admonition_for_examples``
+     - boolean
+     - ``false``
+     - Render ``Examples`` sections as admonitions rather than rubrics.
+   * - ``napoleon_use_admonition_for_notes``
+     - boolean
+     - ``false``
+     - Render ``Notes`` sections as admonitions rather than rubrics.
+   * - ``napoleon_use_admonition_for_references``
+     - boolean
+     - ``false``
+     - Render ``References`` sections as admonitions rather than rubrics.
+   * - ``napoleon_use_ivar``
+     - boolean
+     - ``false``
+     - Render attributes as ``:ivar:`` fields instead of ``.. attribute::`` directives.
+   * - ``napoleon_use_param``
+     - boolean
+     - ``true``
+     - Render parameters as ``:param:`` fields.
+   * - ``napoleon_use_rtype``
+     - boolean
+     - ``true``
+     - Render return types as a separate ``:rtype:`` field.
+   * - ``napoleon_use_keyword``
+     - boolean
+     - ``true``
+     - Render keyword arguments as ``:keyword:`` fields.
+   * - ``napoleon_preprocess_types``
+     - boolean
+     - ``false``
+     - Turn type names in Napoleon type specifications into cross-references.
+   * - ``napoleon_type_aliases``
+     - table
+     - ``{}``
+     - Type name aliases mapped to full reference targets when preprocessing types.
+   * - ``napoleon_custom_sections``
+     - array
+     - ``[]``
+     - Extra docstring section names or ``[name, style]`` pairs (``"params_style"``, ``"returns_style"``, or another section name).
+   * - ``napoleon_attr_annotations``
+     - boolean
+     - ``true``
+     - Read attribute types from PEP 526 class annotations.
+   * - ``autosummary_context``
+     - table
+     - ``{}``
+     - Extra template variables passed to ``autosummary`` stub templates.
+   * - ``autosummary_filename_map``
+     - table
+     - ``{}``
+     - Map from object name to generated stub document name.
+   * - ``autosummary_generate``
+     - boolean or array
+     - ``true``
+     - Generate stub pages in memory for all documents (``true``), none (``false``), or the listed documents.
+   * - ``autosummary_generate_overwrite``
+     - boolean
+     - ``true``
+     - Accepted: stub pages are generated in memory and never overwrite source files.
+   * - ``autosummary_mock_imports``
+     - array
+     - ``[]``
+     - Accepted: nothing is imported.
+   * - ``autosummary_imported_members``
+     - boolean
+     - ``false``
+     - Include members imported into a module in ``autosummary``.
+   * - ``autosummary_ignore_module_all``
+     - boolean
+     - ``true``
+     - Inspect all module members rather than restricting to ``__all__``.
+   * - ``apidoc_modules``
+     - array of tables
+     - ``[]``
+     - Package entries ``{ path = "../src/pkg", destination = "api" }`` (plus optional per-module ``apidoc_*`` overrides) generated in memory.
+   * - ``apidoc_exclude_patterns``
+     - array
+     - ``[]``
+     - Paths or glob patterns omitted from ``apidoc`` discovery.
+   * - ``apidoc_max_depth``
+     - integer
+     - ``4``
+     - Maximum ``toctree`` depth in generated package pages.
+   * - ``apidoc_follow_links``
+     - boolean
+     - ``false``
+     - Follow symbolic links that stay within readable roots.
+   * - ``apidoc_separate_modules``
+     - boolean
+     - ``false``
+     - Put each module on its own generated page.
+   * - ``apidoc_include_private``
+     - boolean
+     - ``false``
+     - Document ``_private`` modules and members.
+   * - ``apidoc_no_headings``
+     - boolean
+     - ``false``
+     - Omit module and package headings on generated pages.
+   * - ``apidoc_module_first``
+     - boolean
+     - ``false``
+     - Place package ``automodule`` content before submodule links.
+   * - ``apidoc_implicit_namespaces``
+     - boolean
+     - ``false``
+     - Treat directories without ``__init__.py`` as PEP 420 namespace packages.
+   * - ``apidoc_automodule_options``
+     - array
+     - ``["members", "show-inheritance", "undoc-members"]``
+     - Options placed on generated ``automodule`` directives.
+
+Source links, class diagrams, coverage, and build reports
+---------------------------------------------------------
+
+Settings for ``sphinx.ext.viewcode``, ``sphinx.ext.linkcode``, ``sphinx.ext.inheritance_diagram``, ``sphinx.ext.coverage``, ``sphinx.ext.duration``, and ``sphinx.ext.imgconverter`` (see :doc:`../sources-and-diagrams` and :doc:`../autodoc`).
+
+.. list-table:: Source links, class diagrams, coverage, and build reports
+   :header-rows: 1
+   :widths: 28 14 18 40
+
+   * - Key
+     - Type
+     - Default
+     - Description
+   * - ``viewcode_follow_imported_members``
+     - boolean
+     - ``true``
+     - Link re-exported Python objects to the module that defines them.
+   * - ``viewcode_import``
+     - boolean
+     - ``true``
+     - Older alias of ``viewcode_follow_imported_members``.
+   * - ``viewcode_line_numbers``
+     - boolean
+     - ``false``
+     - Show line numbers on generated ``_modules/`` source pages.
+   * - ``viewcode_enable_epub``
+     - boolean
+     - ``false``
+     - Accepted and unused (Guidedog has no EPUB builder).
+   * - ``linkcode_url``
+     - string
+     - ``""``
+     - URL template for ``[source]`` web links using ``{domain}``, ``{module}``, ``{fullname}``, ``{path}``, ``{line}``, ``{end_line}``, and ``{branch}``.
+   * - ``linkcode_branch``
+     - string
+     - ``""``
+     - Value of ``{branch}``; empty reads the checked-out branch or commit from ``.git/HEAD``.
+   * - ``linkcode_root``
+     - string
+     - ``""``
+     - Base folder for ``{path}``, relative to ``conf.toml``; empty uses the nearest ancestor holding ``.git``.
+   * - ``inheritance_graph_attrs``
+     - table
+     - ``{}``
+     - Extra Graphviz graph attributes for ``inheritance-diagram``.
+   * - ``inheritance_node_attrs``
+     - table
+     - ``{}``
+     - Extra Graphviz node attributes for ``inheritance-diagram``.
+   * - ``inheritance_edge_attrs``
+     - table
+     - ``{}``
+     - Extra Graphviz edge attributes for ``inheritance-diagram``.
+   * - ``inheritance_alias``
+     - table
+     - ``{}``
+     - Map from full Python class names to shorter display labels in class diagrams.
+   * - ``coverage_modules``
+     - array
+     - ``[]``
+     - Python packages checked by ``guidedog build coverage``; empty checks modules named in documents.
+   * - ``coverage_ignore_modules``
+     - array
+     - ``[]``
+     - Regular expressions matched at the start of module names to skip.
+   * - ``coverage_ignore_functions``
+     - array
+     - ``[]``
+     - Regular expressions matched at the start of function names to skip.
+   * - ``coverage_ignore_classes``
+     - array
+     - ``[]``
+     - Regular expressions matched at the start of class names to skip.
+   * - ``coverage_ignore_pyobjects``
+     - array
+     - ``[]``
+     - Regular expressions matched anywhere in full Python object names to skip.
+   * - ``coverage_c_path``
+     - array
+     - ``[]``
+     - C header files or globs checked for undocumented C symbols, relative to the source folder.
+   * - ``coverage_c_regexes``
+     - table
+     - ``{}``
+     - Map from C object kind to custom regular expression used to scan headers.
+   * - ``coverage_ignore_c_items``
+     - table
+     - ``{}``
+     - Map from C object kind to list of regular expressions of names to ignore.
+   * - ``coverage_write_headline``
+     - boolean
+     - ``true``
+     - Write section headings in ``python.txt`` and ``c.txt``.
+   * - ``coverage_statistics_to_report``
+     - boolean
+     - ``true``
+     - Write coverage summary tables into the report files.
+   * - ``coverage_statistics_to_stdout``
+     - boolean
+     - ``true``
+     - Print coverage summary tables to standard output.
+   * - ``coverage_skip_undoc_in_source``
+     - boolean
+     - ``false``
+     - Ignore Python objects that lack docstrings in source.
+   * - ``coverage_show_missing_items``
+     - boolean
+     - ``false``
+     - Emit each undocumented item as a build note as well.
+   * - ``duration_print_total``
+     - boolean
+     - ``true``
+     - Show total document reading time in the build summary.
+   * - ``duration_print_slowest``
+     - boolean
+     - ``true``
+     - List the slowest documents in the build summary.
+   * - ``duration_n_slowest``
+     - integer
+     - ``5``
+     - Number of slowest documents printed; ``0`` prints all read documents.
+   * - ``duration_write_json``
+     - string
+     - ``"sphinx-reading-durations.json"``
+     - Output JSON file for reading durations; ``""`` disables writing the file.
+   * - ``duration_limit``
+     - number
+     - unset
+     - Maximum seconds one document may take to read before warning ``duration.limit``.
+   * - ``image_converter``
+     - string
+     - ``"convert"``
+     - Accepted from ``conf.py`` and unused: Typst reads PNG, JPEG, GIF, SVG, WebP, and PDF directly.
+   * - ``image_converter_args``
+     - array
+     - ``[]``
+     - Accepted from ``conf.py`` and unused.
+
 Odin API documentation
 ----------------------
 
@@ -1278,6 +1565,6 @@ widen what the build reads. ``include_roots`` and ``pdf_preamble`` are not used.
 and folders that lead outside the source folder (``html_logo``, ``html_favicon``,
 ``pdf_logo``, ``mathjax_config_path``, ``html_static_path``, ``html_extra_path``,
 ``templates_path``, ``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``,
-``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. No Typst package is
-downloaded. Each dropped setting is a ``build.untrusted`` warning. This is a capability
-policy, not a process sandbox. See :doc:`cli`.
+``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. Embedded ``typst-diagram``
+compilation is disabled and no Typst package is downloaded. Each dropped setting is a
+``build.untrusted`` warning. This is a capability policy, not a process sandbox. See :doc:`cli`.

@@ -7,7 +7,7 @@ Standard library only.
 
 ```toml
 [dependencies]
-gd-sha = "0.7"
+gd-sha = "1.0.0-beta.8"
 ```
 
 We hash bytes in one call, or stream them through `io::Write` (a file goes through `io::copy` without being loaded whole):
@@ -26,7 +26,7 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-sha). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-sha --no-deps` (and on [docs.rs](https://docs.rs/gd-sha) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

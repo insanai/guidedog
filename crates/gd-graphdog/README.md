@@ -7,7 +7,7 @@ hand in `src/ffi.rs`; links `-lgvc -lcgraph`, or a static Graphviz, see below).
 
 ```toml
 [dependencies]
-gd-graphdog = "0.7"
+gd-graphdog = "1.0.0-beta.8"
 ```
 
 We render DOT to SVG. The Graphviz libraries `libgvc` and `libcgraph` must be installed (on Debian and Ubuntu, `sudo apt install libgraphviz-dev`):
@@ -24,7 +24,7 @@ fn main() -> Result<(), gd_graphdog::Error> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-graphdog). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-graphdog --no-deps` (and on [docs.rs](https://docs.rs/gd-graphdog) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

@@ -17,9 +17,9 @@ guidedog build pdf docs
 guidedog serve docs
 ```
 
-프로젝트에는 `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ`, `_static/`이 들어 있습니다. 템플릿은 직접 편집할 수 있는 일반 파일입니다. HTML은 탐색, 검색, 코드 강조, 다이어그램, 수식을 제공합니다. PDF 책은 장, 상호 참조, 그림, 색인, 언어에 맞춘 조판을 제공합니다.
+프로젝트에는 `conf.toml`, `index.rst`, `_templates/`(`layout.html`, `book.typ`, `discussion.typ`, `article.typ`, `theme.typ`), `_static/`(`guidedog.css`, `guidedog.js`, `typography.js`)이 들어 있습니다. 템플릿과 정적 에셋은 로컬에서 직접 편집할 수 있는 일반 파일입니다. HTML은 탐색, 검색, 코드 강조, 다이어그램, 수식, Knuth-Plass 문단 조판을 제공합니다. PDF 책은 장, 상호 참조, 그림, 색인, 언어에 맞춘 조판을 제공합니다. CeTZ와 Fletcher를 포함한 Graphviz 또는 Typst 드로잉 소스를 RST와 MyST에 직접 내장하면 HTML과 PDF 에셋이 자동으로 생성됩니다. 자세한 내용은 [다이어그램 장](docs/manual/topics/diagrams.rst)을 참고하세요.
 
-기본 테마는 밝은 테마이며, 독자는 어두운 테마나 시스템 테마를 선택할 수 있습니다. 매뉴얼 첫 페이지와 저장소 개요는 브라우저 언어를 감지합니다. 저장된 선택이 우선하며, 특정 언어판이나 장으로 바로 연결되는 링크는 명시적 요청으로 그대로 따릅니다.
+내장 테마는 기본으로 시스템 테마를 따르며 밝은 테마와 어두운 테마도 선택할 수 있습니다. Guidedog 자체 문서 웹사이트는 기본으로 밝은 읽기용 에디션을 사용합니다. 웹사이트 첫 페이지와 저장소 개요는 브라우저 언어를 감지합니다. 저장된 선택이 우선하며, 특정 언어판이나 장으로 바로 연결되는 링크는 명시적 요청으로 그대로 따릅니다.
 
 ```sh
 guidedog convert notes.md --to pdf --output notes.pdf
@@ -58,7 +58,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-실행 파일은 `target/release`에 생성됩니다. Homebrew를 사용하는 macOS에서는 먼저 링커가 Graphviz를 찾도록 `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`를 설정하세요. Typst 컴파일러는 기본으로 내장됩니다(`gd-typst`의 `embedded` 기능). 이 기능을 끄면 Guidedog은 PDF 생성을 위해 시스템에 설치된 `typst` 0.15.1을 실행합니다. Linux에서는 내장 컴파일러의 패키지 다운로더가 함께 번들된 OpenSSL을 링크하므로, 빌드할 때 `perl`과 `make`가 필요합니다.
+실행 파일은 `target/release`에 생성됩니다. Homebrew를 사용하는 macOS에서는 먼저 링커가 Graphviz를 찾도록 `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`를 설정하세요. Typst 컴파일러는 기본으로 내장됩니다(`gd-typst`의 `embedded` 기능). 이 기능을 끄면 Guidedog은 PDF 책 생성을 위해 시스템에 설치된 `typst` 0.15.1을 실행하며, `.. typst-diagram::`에는 내장 컴파일러가 필요합니다. Linux에서는 내장 컴파일러의 패키지 다운로더가 함께 번들된 OpenSSL을 링크하므로, 빌드할 때 `perl`과 `make`가 필요합니다.
 
 변경 사항을 보내기 전에 CI가 실행하는 검사를 수행하세요:
 
@@ -82,7 +82,7 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
     -D language=de -D 'html_extra_path=[]' -W
 ```
 
-PO 파일의 `msgstr` 값을 번역하고 검토하세요. Guidedog은 POT 파일을 추출하고, 카탈로그를 병합하며, 진행 상황을 보고하고, 각 언어판을 빌드하지만 번역을 대신 만들어 주지는 않습니다. 명령어, 경로, 코드, API 이름, 참조 대상은 그대로 유지됩니다. 매뉴얼과 저장소 개요만 번역하며, API와 GDS는 영어로 유지합니다. `cargo xtask build-site`는 모든 언어판과 각 언어판의 PDF 책, 논의 기록을 하나의 웹사이트로 조립합니다.
+PO 파일의 `msgstr` 값을 번역하고 검토하세요. Guidedog은 POT 파일을 추출하고, 카탈로그를 병합하며, 진행 상황을 보고하고, 각 언어판을 빌드하지만 번역을 대신 만들어 주지는 않습니다. 명령어, 경로, 코드, API 이름, 참조 대상은 그대로 유지됩니다. 웹사이트 첫 페이지, 매뉴얼, 저장소 개요를 번역하며, API 레퍼런스와 GDS는 영어로 유지합니다. `cargo xtask build-site`는 모든 언어판과 각 언어판의 PDF 책, 논의 기록을 하나의 웹사이트로 조립합니다.
 
 GitHub 독자는 상단 링크를 통해 README 언어를 선택합니다. 자동 언어 선택은 생성된 문서 웹사이트에서 동작합니다.
 
@@ -129,7 +129,7 @@ guidedog ssg publish posts/2026-04-17-zero-copy.rst
 guidedog ssg build site
 ```
 
-`:pdf: article`이 표시된 페이지는 HTML 페이지와 함께 인쇄 품질의 독립 실행형 PDF로도 빌드됩니다. 다중 프로젝트 웹사이트는 `[[site.mounts]]`를 통해 하위 프로젝트(`docs/manual`, `docs/api`, `docs/gds` 등)를 선언적으로 마운트합니다. 자세한 내용은 [정적 사이트 게시](docs/manual/howto/static-publishing.rst)를 참고하세요.
+`:pdf: article`이 표시된 페이지는 HTML 페이지와 함께 인쇄 품질의 독립 실행형 PDF로도 빌드됩니다. 다중 프로젝트 웹사이트는 `[[site.mounts]]`를 통해 하위 프로젝트(`docs/site`, `docs/manual`, `docs/gds` 등)를 선언적으로 마운트하며, `docs/api`는 독립 실행형 레퍼런스 프로젝트이자 매뉴얼 PDF의 부록으로 빌드됩니다. 자세한 내용은 [정적 사이트 게시](docs/manual/howto/static-publishing.rst)를 참고하세요.
 
 ## 문서 읽기와 임베딩
 
@@ -140,7 +140,7 @@ guidedog ssg build site
 - [GDS](docs/gds/README.md): 번호가 부여된 설계 기록과 구현 결정.
 - [논의 라이브러리](crates/gd-discussion/README.md): `guidedog dsc`가 관리하는 카탈로그 라이브러리.
 - [플러그인 라이브러리](crates/gd-plugins/README.md): 타입이 지정된 빌드 서비스와 `guidedog publish` 및 링크된 Pages 플러그인이 사용하는 게시기 인터페이스.
-- [재사용 가능한 크레이트](docs/manual/internals/crates.rst): 다른 Rust 프로젝트가 crates.io에서 가져다 쓸 수 있는 엔진, 라이브러리, API 생성기, 플러그인 SDK와 이들 사이의 의존 관계.
+- [재사용 가능한 크레이트](docs/manual/internals/crates.rst): 독립적으로 사용할 수 있도록 구성된 엔진, 라이브러리, API 생성기, 플러그인 SDK(현재는 이 워크스페이스에서 빌드하며 크레이트 이름은 crates.io용으로 예약됨)와 이들 사이의 의존 관계.
 
 `crates/` 아래의 각 크레이트에는 API와 설계 결정을 요약한 짧은 README가 있습니다. Guidedoc은 문서 테이블을 직접 소유하고 변환 사이에 재사용하므로, 안정 상태(steady state)의 변환에서는 메모리를 새로 할당하지 않습니다. 또한 힌트가 포함된 구조화된 진단을 반환합니다. 호스트는 파일, 예산, 캐싱, 게시, 내장 컴파일러를 관리합니다. `--untrusted`는 기능을 제한할 뿐 프로세스 샌드박스나 모든 네이티브 자원 사용량에 대한 상한은 아닙니다. 베타 범위는 Linux, macOS, Windows의 신뢰할 수 있는 문서 프로젝트입니다.
 

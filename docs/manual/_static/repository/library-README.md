@@ -1,7 +1,7 @@
 # guidedoc
 
-**The conversion engine of Guidedog: reStructuredText and Markdown in, HTML, Typst, and
-text out, through one validated document model.** The engine owns the AST, the builder,
+**The conversion engine of Guidedog: reStructuredText and Markdown in, HTML, Typst,
+reStructuredText, and text out, through one validated document model.** The engine owns the AST, the builder,
 validation, diagnostics, the adapter registry, and the pipeline; readers and renderers
 live in their own crates (`guidedoc-rst`, `guidedoc-html`, ...) and `guidedoc-defaults`
 registers them.
@@ -10,9 +10,9 @@ registers them.
 
 ```toml
 [dependencies]
-guidedoc = "0.7"
-guidedoc-commonmark = "0.7"
-guidedoc-html = "0.7"
+guidedoc = "1.0.0-beta.8"
+guidedoc-commonmark = "1.0.0-beta.8"
+guidedoc-html = "1.0.0-beta.8"
 ```
 
 The engine converts with the readers and renderers we register; `guidedoc-defaults` registers them all. With only CommonMark and HTML:
@@ -32,7 +32,7 @@ fn main() -> Result<(), guidedoc::Fail> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/guidedoc). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p guidedoc --no-deps` (and on [docs.rs](https://docs.rs/guidedoc) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

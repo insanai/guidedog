@@ -18,9 +18,9 @@ These are different responsibilities.
    * - Markdown in a project
      - MyST-compatible Markdown layer
      - The same project graph and builders.
-   * - ``convert file.md``
-     - Plain CommonMark
-     - One document to HTML or Typst/PDF.
+   * - ``convert file.md`` / ``file.rst``
+     - Plain CommonMark, MyST, RST, or Sphinx RST
+     - One document to HTML, Typst/PDF, or reStructuredText (``--to rst``).
    * - ``convert file.typ``
      - Native Typst adapter
      - Typst compilation outside Guidedoc's semantic tree.
@@ -28,7 +28,7 @@ These are different responsibilities.
 Each reader and renderer is its own crate, and ``guidedoc-defaults`` registers them.
 Three crates read: ``guidedoc-rst`` (reStructuredText), ``guidedoc-commonmark`` (CommonMark 0.31.2 and
 MyST), and ``guidedoc-sphinx`` (the Sphinx directives, roles and domains on both).
-Three crates render: ``guidedoc-html``, ``guidedoc-typst``, and ``guidedoc-text``. A program can
+Four crates render: ``guidedoc-html``, ``guidedoc-typst``, ``guidedoc-text``, and ``guidedoc-rst-writer``. A program can
 register only the ones it needs; see :doc:`../howto/install`.
 
 Builders

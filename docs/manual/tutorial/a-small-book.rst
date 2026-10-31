@@ -162,4 +162,5 @@ We now know how one source makes two outputs. The topics section goes further:
 
 * Markup, lists, and tables are in :doc:`../topics/writing`.
 * Formulas and equations are in :doc:`../topics/mathematics`.
+* Graphviz and Typst diagrams are in :doc:`../topics/diagrams`.
 * Custom styles and book fonts are in :doc:`../topics/typography`.

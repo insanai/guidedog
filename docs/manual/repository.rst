@@ -22,14 +22,19 @@ Start a project
    guidedog build pdf docs
    guidedog serve docs
 
-The project contains ``conf.toml``, ``index.rst``, ``_templates/layout.html``,
-``_templates/book.typ``, and ``_static/``. Templates are ordinary files we can edit. HTML
-provides navigation, search, code highlighting, diagrams, and equations. PDF books provide
-chapters, cross-references, figures, indexes, and language-aware typesetting.
+The project contains ``conf.toml``, ``index.rst``, ``_templates/`` (``layout.html``,
+``book.typ``, ``discussion.typ``, ``article.typ``, and ``theme.typ``), and ``_static/``
+(``guidedog.css``, ``guidedog.js``, and ``typography.js``). Templates and static assets are
+ordinary files we can edit locally. HTML provides navigation, search, code highlighting,
+diagrams, equations, and Knuth-Plass paragraph typesetting. PDF books provide chapters,
+cross-references, figures, indexes, and language-aware typesetting. We can embed Graphviz
+or Typst drawing source, including CeTZ and Fletcher, directly in RST and MyST with
+automatic HTML and PDF assets; see :doc:`topics/diagrams`.
 
-The default theme is light. Readers can choose dark or the system theme. The manual detects
-the browser language on its landing page and repository overview. A saved choice takes
-precedence. Direct links to an edition or chapter remain explicit requests.
+The built-in theme follows the system theme by default, with light and dark choices;
+Guidedog's own documentation website defaults to the light reading edition. The website
+detects the browser language on its landing page and repository overview. A saved choice
+takes precedence. Direct links to an edition or chapter remain explicit requests.
 
 .. code:: sh
 
@@ -42,8 +47,8 @@ Install
 
 Each `release <https://github.com/insanai/guidedog/releases>`__ has an archive for Linux,
 macOS, and Windows, with ``SHA256SUMS``. The Typst compiler and the tree-sitter parsers are
-compiled into ``guidedog``. Diagrams use the Graphviz library (``libgvc``). Where the system does not provide it,
-the archive's notes say how to install it. Fetching remote
+compiled into ``guidedog``. Unix archives link Graphviz statically, and the Windows ZIP
+bundles Graphviz DLLs, so nothing else needs to be installed at run time. Fetching remote
 intersphinx inventories and publishing to GitHub Pages use the HTTP client built into ``guidedog``, so no ``curl`` program is needed.
 Check and install the archive:
 
@@ -59,9 +64,9 @@ guide <howto/install>` for the details.
 Build from source
 -----------------
 
-Install a Rust toolchain (the workspace's ``rust-version`` or later) and the Graphviz
-development files (``libgvc``, ``libcgraph``; for example ``graphviz-dev`` on Debian and
-Ubuntu, or ``brew install graphviz``). Then, at the checkout root:
+Install a Rust toolchain (the workspace's ``rust-version`` or later), a C compiler, and the Graphviz
+development files (``libgvc``, ``libcgraph``; for example ``libgraphviz-dev`` on Debian and
+Ubuntu, ``graphviz-devel`` on Fedora, or ``brew install graphviz`` on macOS; on Linux, also ``perl`` and ``make`` for the embedded Typst package downloader's vendored OpenSSL). Then, at the checkout root:
 
 .. code:: sh
 
@@ -71,7 +76,7 @@ Ubuntu, or ``brew install graphviz``). Then, at the checkout root:
    cargo run -p check                        # source limits
 
 The ``typst`` crates are a default feature of ``gd-typst``. Without them, Guidedog runs an
-installed, pinned ``typst`` program for PDF output.
+installed ``typst`` 0.15.1 program for PDF books, while ``.. typst-diagram::`` requires the embedded compiler.
 `RELEASING.md <https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ describes the
 release workflow.
 
@@ -96,8 +101,8 @@ Translate with Guidedog
 
 Translate and review ``msgstr`` values in the PO files. Guidedog extracts POT files, merges
 catalogs, reports progress, and builds each edition. It does not invent translations.
-Commands, paths, code, API names, and reference targets stay unchanged. Only the manual and
-repository overview are translated. API and GDS remain English. See the :doc:`manual build
+Commands, paths, code, API names, and reference targets stay unchanged. The website landing page,
+the manual, and the repository overview are translated. The API reference and GDS remain English. See the :doc:`manual build
 instructions <howto/maintain-docs>` for assembling all editions and PDF books.
 
 Extend and publish
@@ -145,7 +150,7 @@ Publish static sites
    guidedog ssg publish posts/2026-04-17-zero-copy.rst
    guidedog ssg build
 
-Pages marked with ``:pdf: article`` also build standalone print-quality PDFs alongside their HTML pages. Multi-project websites mount sub-projects (such as ``docs/manual``, ``docs/api``, and ``docs/gds``) declaratively through ``[[site.mounts]]``. See :doc:`Static site publishing <howto/static-publishing>`.
+Pages marked with ``:pdf: article`` also build standalone print-quality PDFs alongside their HTML pages. Multi-project websites mount sub-projects (such as ``docs/site``, ``docs/manual``, and ``docs/gds``) declaratively through ``[[site.mounts]]``; ``docs/api`` builds as a standalone reference project and manual PDF appendix. See :doc:`Static site publishing <howto/static-publishing>`.
 
 Read and embed
 --------------

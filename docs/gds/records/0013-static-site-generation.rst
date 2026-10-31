@@ -265,7 +265,7 @@ Every requested tag must match.
 We sort by the parsed publication instant, newest first by default, with docname as the stable tie breaker.
 ``:sort: date`` selects oldest first.
 ``list`` and ``cards`` use the same semantic list structure with different CSS classes.
-``:excerpts:`` adds plain-text summaries.
+``:excerpts:`` adds rich HTML introductions up to ``.. more::``, or escaped plain-text summaries when no marker is present (see *Incremental correctness* below).
 The link pass produces ordinary list and link nodes, so collection output works through the existing renderers.
 
 We enable deterministic discovery files in ``conf.toml``:

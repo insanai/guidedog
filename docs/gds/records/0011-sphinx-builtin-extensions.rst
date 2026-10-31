@@ -4,7 +4,7 @@
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-10-15
-:gds-updated: 2026-10-15
+:gds-updated: 2026-10-31
 :gds-discussion: No external discussion URL assigned
 :gds-labels: ["compatibility","architecture","build"]
 
@@ -212,11 +212,11 @@ The template's placeholders are:
    * - ``{{`` and ``}}``
      - A literal brace.
 
-``linkcode_root`` names the folder that ``{path}`` is relative to, relative to the source folder. Empty, it is the nearest folder above the source folder that holds ``.git``. ``linkcode_branch`` is the text of ``{branch}``. Empty, it is the branch named in that repository's ``.git/HEAD``, or the commit id when ``HEAD`` is detached. A link is added only when every placeholder the template uses has a value for that object. A ``py:`` object found by the source scan has them all. A ``c:`` or ``cpp:`` object described by hand has no file, so only a template that uses nothing but ``{domain}``, ``{module}`` and ``{fullname}`` links it.
+``linkcode_root`` names the folder that ``{path}`` is relative to, relative to the source folder. Empty, it is the nearest folder above the source folder that holds ``.git``. ``linkcode_branch`` is the text of ``{branch}``. Empty, it is the branch named in that repository's ``.git/HEAD``, or the commit id when ``HEAD`` is detached. A link is added only when every placeholder the template uses has a value for that object. A ``py:`` object found by the source scan has them all. A ``c:`` or ``cpp:`` object described by hand has no file, so only a template that uses nothing beyond ``{domain}``, ``{module}``, ``{fullname}`` and ``{branch}`` links it.
 
 **Output.** HTML builders add the ``[source]`` link after the signature. The PDF and text add nothing.
 
-**Diagnostics.** Loading ``conf.toml`` refuses a template with an unknown placeholder or an unclosed brace. Listing the extension without ``linkcode_url`` is a warning, ``config.linkcode``, and adds no links. At build time, ``linkcode.branch`` reports that ``{branch}`` is used but no branch is set and no repository was found. ``linkcode.outside`` notes an object whose file lies outside ``linkcode_root``.
+**Diagnostics.** Loading ``conf.toml`` refuses a template with an unknown placeholder or an unclosed brace. Listing the extension without ``linkcode_url`` is a warning, ``config.ext.linkcode``, and adds no links. At build time, ``linkcode.branch`` reports that ``{branch}`` is used but no branch is set and no repository was found. ``linkcode.outside`` notes an object whose file lies outside ``linkcode_root``.
 
 **Limits.** None beyond the source scan's.
 
@@ -229,7 +229,7 @@ sphinx.ext.inheritance_diagram
 
 **Guidedog.** The classes come from the source scan: their bases as written, resolved across the scanned modules. A base the scan cannot resolve (a class from a package outside the source folders) is drawn as a plain node with its written name and no link. The graph is written as DOT and drawn by the linked Graphviz, so it needs no ``dot`` program. The directive's options are Sphinx's: ``:parts:``, ``:private-bases:``, ``:caption:``, ``:top-classes:`` and ``:include-subclasses:``. The settings are ``inheritance_graph_attrs``, ``inheritance_node_attrs``, ``inheritance_edge_attrs`` (tables of Graphviz attributes, empty) and ``inheritance_alias`` (a table from full class names to the names shown, empty).
 
-**Output.** HTML shows the SVG inline, each node linked to its class description when there is one, with the ``graphviz-adaptive`` behaviour of other drawings. The PDF embeds the same SVG. Text shows the list of classes and their bases.
+**Output.** HTML embeds the adaptive SVG with ``<object type="image/svg+xml">`` when nodes carry links (each node linked to its class description when there is one) or ``<img>`` when unlinked, with the ``graphviz-adaptive`` behaviour of other drawings. The PDF embeds a separate unlinked light-palette SVG. Text shows the list of classes and their bases.
 
 **Diagnostics.** ``inheritance.class`` reports a name that is neither a class nor a module in the scan. ``inheritance.limit`` reports a graph that exceeds the limit below. Loading ``conf.toml`` refuses an attribute name that is not a Graphviz identifier, so attributes cannot inject DOT.
 
@@ -276,13 +276,13 @@ sphinx.ext.imgconverter
 
 **Sphinx.** Imgconverter runs ImageMagick to convert images a builder cannot use, such as GIF or SVG for LaTeX.
 
-**Guidedog.** The PDF is typeset by Typst, which reads SVG, PNG, JPEG and GIF directly. HTML reads them as well. There is nothing to convert, so the extension is accepted and runs nothing. Where an image names several candidates (``picture.*``), each builder picks the first one it reads. An image in a format the PDF cannot read (TIFF or BMP, for example) is reported, and its alternative text is shown instead.
+**Guidedog.** The PDF is typeset by Typst, which reads SVG, PNG, JPEG, GIF, WebP and PDF directly. HTML reads SVG, PNG, JPEG, GIF and WebP directly. There is nothing to convert, so the extension is accepted and runs nothing. Where an image names several candidates (``picture.*``), each builder picks the first one it reads. An image in a format the PDF cannot read (TIFF or BMP, for example) is reported, and its alternative text is shown instead.
 
 The settings ``image_converter`` (``convert``) and ``image_converter_args`` (empty) are accepted and have no effect. No program is ever started.
 
 **Output.** Unchanged images in every builder.
 
-**Diagnostics.** ``imgconverter.format`` names the image and its format, with the hint to provide a PNG, JPEG, GIF or SVG version.
+**Diagnostics.** ``imgconverter.format`` names the image and its format, with the hint to provide a PNG, JPEG, GIF, WebP or SVG version.
 
 **Limits.** None.
 

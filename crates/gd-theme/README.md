@@ -1,10 +1,10 @@
 # gd-theme
 
-Guidedog's built-in theme: `layout.html`, `theme.typ`, `book.typ`, `discussion.typ`, `guidedog.css` and `guidedog.js`,
-embedded at compile time. `guidedog quickstart` copies them into a new project, and the
+Guidedog's built-in theme: `layout.html` (plus `article.html` and `landing.html`), `theme.typ`, `book.typ`, `discussion.typ`, `article.typ`, `guidedog.css`, `guidedog.js`, and `typography.js`,
+embedded at compile time. `guidedog quickstart` and `guidedog ssg init` copy the eight `FILES` into a new project, and the
 HTML and PDF builders use them when a project has no copy of its own.
 
-Standalone discussion records use the embedded RFC-style `discussion.typ` layout. `guidedog dsc init` copies it and the shared `theme.typ` into `_templates/` for customization, independently of `book.typ`. Existing catalogs without a copy use the embedded layout.
+Standalone discussion records use the embedded RFC-style `discussion.typ` layout. `guidedog dsc init` copies `layout.html`, `discussion.typ`, and `theme.typ` into `_templates/` and `guidedog.css`, `guidedog.js`, and `typography.js` into `_static/` for customization, independently of `book.typ`. Existing catalogs without a copy use the embedded files.
 
 ```rust
 let css = gd_theme::GUIDEDOG_CSS;

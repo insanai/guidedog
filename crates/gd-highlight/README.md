@@ -8,7 +8,7 @@ blocks in HTML sites and PDF books (the `guidedoc` adapter lives in `guidedoc-de
 
 ```toml
 [dependencies]
-gd-highlight = "0.7"
+gd-highlight = "1.0.0-beta.8"
 ```
 
 We highlight code as HTML spans with Pygments' classes:
@@ -21,7 +21,7 @@ fn main() {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-highlight). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-highlight --no-deps` (and on [docs.rs](https://docs.rs/gd-highlight) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

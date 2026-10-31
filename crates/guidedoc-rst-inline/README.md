@@ -10,8 +10,8 @@ inline context, and calls `resolve` once when the document is parsed. Sphinx
 
 ```toml
 [dependencies]
-guidedoc-rst-inline = "0.7"
-guidedoc = "0.7"
+guidedoc-rst-inline = "1.0.0-beta.8"
+guidedoc = "1.0.0-beta.8"
 ```
 
 A reader parses the inline markup of a paragraph it has opened, then resolves references once per document:
@@ -36,7 +36,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/guidedoc-rst-inline). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p guidedoc-rst-inline --no-deps` (and on [docs.rs](https://docs.rs/guidedoc-rst-inline) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

@@ -8,7 +8,7 @@ the template engine all print errors the same way.
 
 ```toml
 [dependencies]
-gd-report = "0.7"
+gd-report = "1.0.0-beta.8"
 ```
 
 We build a report and render it for a terminal:
@@ -28,7 +28,7 @@ fn main() {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-report). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-report --no-deps` (and on [docs.rs](https://docs.rs/gd-report) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

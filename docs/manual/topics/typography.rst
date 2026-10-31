@@ -33,28 +33,37 @@ There are no font-service requests.
      nav -> doc -> toc [style=invis];
    }
 
-**Light is the default.** The theme control also offers dark and system modes.
-It remembers the choice on the same browser origin.
-System mode follows the operating system. Printed HTML uses light colors.
+The built-in theme follows the operating system by default, with light and dark choices;
+Guidedog's own documentation website defaults to the light reading edition.
+The theme control remembers the reader's choice on the same browser origin.
+Printed HTML uses light colors.
 Content and navigation remain usable without JavaScript.
-The theme control and enhanced search are progressive enhancements.
+The theme control, enhanced search, and paragraph line breaking are progressive enhancements.
 
-English prose can use paragraph-wide **Knuth-Plass line breaking** in the browser.
-A small template script measures the loaded font, builds boxes, spaces, and
-hyphenation penalties, and chooses breaks for the whole paragraph.
-Frank Liang's pattern method supplies English hyphenation candidates.
-The original TeX patterns and the libraries' licenses are bundled with the site.
+Every initialized project (``guidedog quickstart``, ``guidedog ssg init``, and ``guidedog dsc init``)
+copies ``_static/typography.js`` beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a
+project owns and can edit its scripts directly. On desktop reading measures (``40rem`` and wider),
+English prose uses paragraph-wide **Knuth-Plass line breaking** in the browser across paragraphs,
+list items, definitions, admonitions, block quotes, and footnotes, while leaving tables,
+navigation trees, metadata headers, and figure captions ragged.
+The script measures the loaded font, builds boxes, glue, and hyphenation penalties,
+and chooses breaks for the whole block. Frank Liang's pattern method supplies English
+hyphenation candidates, and break penalty widths are discarded after a hyphenated break so
+following lines are measured accurately. Inline mathematics (after MathJax finishes),
+footnote references, superscripts, and subscripts are measured as inline atoms; links keep
+their markup, and inline code literals may break cleanly after ``/`` or ``::``.
+The original TeX patterns and the libraries' BSD notices are recorded in ``NOTICE``.
 
 The enhancement preserves emphasis and the exact source text.
-It recalculates when the reading measure changes. Copying within one optimized
-paragraph gives the source text, without visual line divisions or added hyphens.
-Printing restores the ordinary paragraph so the print layout can paginate it.
+It recalculates when the reading measure changes. Copying within or across typeset
+blocks gives the source text, without visual line divisions or added hyphens.
+Narrow screens (below ``40rem``) and printing restore ordinary layout so mobile browsers
+wrap naturally and print engines can paginate paragraphs.
 
-Links, mathematics, code, interactive content, narrow measures, and other languages use
-native browser layout. So do paragraphs for which no suitably spaced solution exists.
-The site remains readable with JavaScript disabled.
-The fallback uses language-aware ``hyphens: auto`` and ``text-wrap: pretty``.
-Those CSS properties alone are not a promise of Knuth-Plass optimization.
+Other languages, narrow measures, JavaScript-disabled browsers, and paragraphs for which
+no suitably spaced solution exists use native browser layout with ``text-wrap: pretty``
+(without greedy CSS justification or browser ``hyphens: auto``).
+That CSS property alone is not a promise of Knuth-Plass optimization.
 
 The PDF page
 ------------

@@ -62,12 +62,12 @@ We corrected its obsolete packaging description to match the already committed G
 Validation
 ----------
 
-The Linux x86-64 workspace build and all 1,982 tests passed, with five intentionally ignored tests.
-Clippy with warnings denied, formatting, all nine generated tables and the source checker passed; the checker reports six existing soft-width warnings and no limit violations.
-The diagram compiler also passes without its embedded feature.
-The full manual builds to an English PDF, and all six localized HTML editions build with warnings treated as errors.
-The release smoke test exercises both diagram image formats with an empty PATH.
-Platform CI and unpacked release-archive qualification are still required for the beta.8 release commit.
+During the initial pre-tag audit on Linux x86-64, the workspace build and all 1,982 tests passed, with five intentionally ignored tests.
+Clippy with warnings denied, formatting, all nine generated tables and the source checker passed; the checker reported six existing soft-width warnings and no limit violations.
+The diagram compiler also passed without its embedded feature.
+The full manual built to an English PDF, and all six localized HTML editions built with warnings treated as errors.
+The release smoke test exercised both diagram image formats with an empty PATH.
+Platform CI and unpacked release-archive qualification followed in the ``beta.8`` release run below.
 
 Release follow-up, 31 October 2026
 ----------------------------------
@@ -87,3 +87,4 @@ References
 * ``docs/manual/evidence/ssg-review.rst``
 * ``docs/manual/evidence/release-1.0.0-beta.6.rst``
 * ``docs/manual/evidence/release-1.0.0-beta.7.rst``
+* ``docs/manual/evidence/release-1.0.0-beta.8.rst``

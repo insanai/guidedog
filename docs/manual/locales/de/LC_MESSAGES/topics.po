@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:11+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -36,7 +36,11 @@ msgid ""
 "We keep diagram source beside the explanation and let Guidedog build the "
 "image for HTML and PDF. Graphviz and Typst are included in the "
 "executable. We need no separate ``dot`` or ``typst`` program."
-msgstr "Wir halten den Diagrammquelltext bei der Erklärung und lassen Guidedog das Bild für HTML und PDF bauen. Graphviz und Typst sind in der ausführbaren Datei enthalten. Wir benötigen weder ein separates ``dot``- noch ein ``typst``-Programm."
+msgstr ""
+"Wir halten den Diagrammquelltext bei der Erklärung und lassen Guidedog "
+"das Bild für HTML und PDF bauen. Graphviz und Typst sind in der "
+"ausführbaren Datei enthalten. Wir benötigen weder ein separates ``dot``- "
+"noch ein ``typst``-Programm."
 
 #: ../../topics/diagrams.rst:12
 msgid "Choose the drawing tool"
@@ -65,7 +69,9 @@ msgstr "Graphviz"
 #: ../../topics/diagrams.rst:23
 msgid ""
 "We describe nodes and edges and want the layout engine to place them."
-msgstr "Wir beschreiben Knoten und Kanten und lassen die Layout-Engine ihre Positionen bestimmen."
+msgstr ""
+"Wir beschreiben Knoten und Kanten und lassen die Layout-Engine ihre "
+"Positionen bestimmen."
 
 #: ../../topics/diagrams.rst:24
 msgid "DOT inside ``graphviz``, ``graph`` or ``digraph``."
@@ -77,7 +83,9 @@ msgstr "Typst mit CeTZ"
 
 #: ../../topics/diagrams.rst:26
 msgid "We need explicit geometry, custom shapes, plots or sequence layouts."
-msgstr "Wir benötigen explizite Geometrie, eigene Formen, Plots oder Sequenzlayouts."
+msgstr ""
+"Wir benötigen explizite Geometrie, eigene Formen, Plots oder "
+"Sequenzlayouts."
 
 #: ../../topics/diagrams.rst:27
 msgid "Typst inside ``typst-diagram``."
@@ -89,18 +97,26 @@ msgstr "Typst mit Fletcher"
 
 #: ../../topics/diagrams.rst:29
 msgid "We need positioned nodes, mathematical labels and precise arrows."
-msgstr "Wir benötigen positionierte Knoten, mathematische Beschriftungen und präzise Pfeile."
+msgstr ""
+"Wir benötigen positionierte Knoten, mathematische Beschriftungen und "
+"präzise Pfeile."
 
 #: ../../topics/diagrams.rst:30
 msgid "Typst inside ``typst-diagram`` with a pinned Fletcher import."
-msgstr "Typst innerhalb von ``typst-diagram`` mit einem Fletcher-Import fester Version."
+msgstr ""
+"Typst innerhalb von ``typst-diagram`` mit einem Fletcher-Import fester "
+"Version."
 
 #: ../../topics/diagrams.rst:32
 msgid ""
 "We choose SVG for scalable drawings in both the browser and book. Typst "
 "diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
 "PNG files still work with ordinary image and figure directives."
-msgstr "Wir wählen SVG für skalierbare Zeichnungen in Browser und Buch. Typst-Diagramme können auch PNG mit 144 Pixeln pro Zoll erzeugen. Vorhandene SVG- und PNG-Dateien funktionieren weiterhin mit gewöhnlichen Bild- und Abbildungsdirektiven."
+msgstr ""
+"Wir wählen SVG für skalierbare Zeichnungen in Browser und Buch. "
+"Typst-Diagramme können auch PNG mit 144 Pixeln pro Zoll erzeugen. "
+"Vorhandene SVG- und PNG-Dateien funktionieren weiterhin mit gewöhnlichen "
+"Bild- und Abbildungsdirektiven."
 
 #: ../../topics/diagrams.rst:36
 msgid "A flow chart"
@@ -146,55 +162,80 @@ msgstr ""
 
 #: ../../topics/diagrams.rst:88
 msgid "In MyST Markdown, we use a directive fence with the same options."
-msgstr "In MyST Markdown verwenden wir einen Direktivenblock mit denselben Optionen."
+msgstr ""
+"In MyST Markdown verwenden wir einen Direktivenblock mit denselben "
+"Optionen."
 
 #: ../../topics/diagrams.rst:99
 msgid ""
-"A ``graphviz`` file argument reads a DOT file instead of an inline body. "
-"``graph`` and ``digraph`` take the graph name as their argument and wrap "
-"the body's edges in the corresponding DOT graph. A plain ``dot`` or "
-"``graphviz`` Markdown fence also draws a graph; we use the directive form "
-"when we need options."
-msgstr "Ein Dateiargument von ``graphviz`` liest eine DOT-Datei anstelle eines eingebetteten Rumpfs. ``graph`` und ``digraph`` nehmen den Graphnamen als Argument und umschließen die Kanten des Rumpfs mit dem entsprechenden DOT-Graphen. Auch ein gewöhnlicher ``dot``- oder ``graphviz``-Markdown-Codeblock zeichnet einen Graphen; für Optionen verwenden wir die Direktivenform."
+"A ``graphviz`` file argument reads a DOT file instead of an inline "
+"body. ``graph`` and ``digraph`` take the graph name as their argument "
+"and wrap the body's edges in the corresponding DOT graph. ``:layout:`` "
+"(or Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout "
+"engine: ``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, "
+"``twopi``, ``osage`` or ``patchwork``. A plain ``dot`` or ``graphviz`` "
+"Markdown fence also draws a graph; we use the directive form when we "
+"need options."
+msgstr ""
+"Ein Dateiargument von ``graphviz`` liest eine DOT-Datei anstelle eines "
+"eingebetteten Rumpfs. ``graph`` und ``digraph`` nehmen den Graphnamen "
+"als Argument und umschließen die Kanten des Rumpfs mit dem "
+"entsprechenden DOT-Graphen. ``:layout:`` (oder der Sphinx-Alias "
+"``:graphviz_dot:``) wählt die Graphviz-Layout-Engine: ``dot`` "
+"(Standard), ``neato``, ``fdp``, ``sfdp``, ``circo``, ``twopi``, "
+"``osage`` oder ``patchwork``. Auch ein gewöhnlicher ``dot``- oder "
+"``graphviz``-Markdown-Codeblock zeichnet einen Graphen; für Optionen "
+"verwenden wir die Direktivenform."
 
-#: ../../topics/diagrams.rst:103
+#: ../../topics/diagrams.rst:104
 msgid "Draw with Typst"
 msgstr "Mit Typst zeichnen"
 
-#: ../../topics/diagrams.rst:106
+#: ../../topics/diagrams.rst:107
 msgid ""
 "The ``typst-diagram`` directive compiles its body to an image. The page "
 "fits the drawing automatically. We can start with Typst's built-in shapes "
 "before adding a package."
-msgstr "Die Direktive ``typst-diagram`` kompiliert ihren Rumpf zu einem Bild. Die Seite passt sich automatisch der Zeichnung an. Wir können mit Typsts eingebauten Formen beginnen, bevor wir ein Paket hinzufügen."
+msgstr ""
+"Die Direktive ``typst-diagram`` kompiliert ihren Rumpf zu einem Bild. Die "
+"Seite passt sich automatisch der Zeichnung an. Wir können mit Typsts "
+"eingebauten Formen beginnen, bevor wir ein Paket hinzufügen."
 
-#: ../../topics/diagrams.rst:120
+#: ../../topics/diagrams.rst:121
 msgid "A drawing from Typst source."
 msgstr "Eine Zeichnung aus Typst-Quelltext."
 
-#: ../../topics/diagrams.rst:126
+#: ../../topics/diagrams.rst:127
 msgid ""
 "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
 "An ordinary ``typst`` code fence displays source without compiling it."
-msgstr "Dieselbe Zeichnung in MyST verwendet ``{typst-diagram}`` als Blocksprache. Ein gewöhnlicher ``typst``-Codeblock zeigt Quelltext ohne Kompilierung."
+msgstr ""
+"Dieselbe Zeichnung in MyST verwendet ``{typst-diagram}`` als "
+"Blocksprache. Ein gewöhnlicher ``typst``-Codeblock zeigt Quelltext ohne "
+"Kompilierung."
 
-#: ../../topics/diagrams.rst:139
+#: ../../topics/diagrams.rst:140
 msgid ""
 "CeTZ supplies a drawing canvas and geometric operations. We import a "
 "specific package version so the source states its dependency."
-msgstr "CeTZ stellt eine Zeichenfläche und geometrische Operationen bereit. Wir importieren eine bestimmte Paketversion, damit der Quelltext seine Abhängigkeit angibt."
+msgstr ""
+"CeTZ stellt eine Zeichenfläche und geometrische Operationen bereit. Wir "
+"importieren eine bestimmte Paketversion, damit der Quelltext seine "
+"Abhängigkeit angibt."
 
-#: ../../topics/diagrams.rst:156
+#: ../../topics/diagrams.rst:157
 msgid ""
 "Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
 "are useful when position carries meaning."
-msgstr "Fletcher baut Knoten-Pfeil-Diagramme auf CeTZ auf. Seine expliziten Koordinaten helfen, wenn die Position Bedeutung trägt."
+msgstr ""
+"Fletcher baut Knoten-Pfeil-Diagramme auf CeTZ auf. Seine expliziten "
+"Koordinaten helfen, wenn die Position Bedeutung trägt."
 
-#: ../../topics/diagrams.rst:172
+#: ../../topics/diagrams.rst:173
 msgid "Share source and refer to figures"
 msgstr "Quelltext teilen und auf Abbildungen verweisen"
 
-#: ../../topics/diagrams.rst:175
+#: ../../topics/diagrams.rst:176
 msgid ""
 "Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` "
 "and ``:align:``. We enable ``numfig = true`` in ``conf.toml`` and refer "
@@ -203,15 +244,25 @@ msgid ""
 "this book. Alternative text explains the information conveyed by the "
 "drawing. It is especially useful for Typst SVGs, which draw letters as "
 "outlines."
-msgstr "Beide Direktiven akzeptieren ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` und ``:align:``. Wir aktivieren ``numfig = true`` in ``conf.toml`` und verweisen auf eine benannte beschriftete Zeichnung mit ``:numref:`` in RST oder ``{numref}`` in MyST. Zum Beispiel ist :numref:`chapter-typst-circle` eine nummerierte Abbildung in diesem Buch. Alternativtext erklärt die von der Zeichnung vermittelte Information. Dies ist besonders bei Typst-SVGs hilfreich, die Buchstaben als Konturen zeichnen."
+msgstr ""
+"Beide Direktiven akzeptieren ``:caption:``, ``:alt:``, ``:name:``, "
+"``:class:`` und ``:align:``. Wir aktivieren ``numfig = true`` in "
+"``conf.toml`` und verweisen auf eine benannte beschriftete Zeichnung mit "
+"``:numref:`` in RST oder ``{numref}`` in MyST. Zum Beispiel ist "
+":numref:`chapter-typst-circle` eine nummerierte Abbildung in diesem Buch. "
+"Alternativtext erklärt die von der Zeichnung vermittelte Information. "
+"Dies ist besonders bei Typst-SVGs hilfreich, die Buchstaben als Konturen "
+"zeichnen."
 
-#: ../../topics/diagrams.rst:181
+#: ../../topics/diagrams.rst:182
 msgid ""
 "For a larger drawing we keep Typst source in a file. Guidedog compiles it "
 "during the ordinary build."
-msgstr "Größere Zeichnungen halten wir als Typst-Quelltext in einer Datei. Guidedog kompiliert sie beim gewöhnlichen Build."
+msgstr ""
+"Größere Zeichnungen halten wir als Typst-Quelltext in einer Datei. "
+"Guidedog kompiliert sie beim gewöhnlichen Build."
 
-#: ../../topics/diagrams.rst:190
+#: ../../topics/diagrams.rst:191
 msgid ""
 "An inline diagram's imports resolve beside the document containing it. A "
 "file diagram's imports resolve beside its Typst file. We can therefore "
@@ -219,14 +270,20 @@ msgid ""
 "Changing an imported helper or data file redraws the affected HTML pages. "
 "Identical generated images keep their timestamps so unchanged PDF books "
 "remain cached."
-msgstr "Importe eines eingebetteten Diagramms werden relativ zum umgebenden Dokument aufgelöst. Importe eines Dateidiagramms werden relativ zu seiner Typst-Datei aufgelöst. So können wir eine lokale Hilfsbibliothek für Farben, Knoten und Sequenzdiagramme teilen. Änderungen an importierten Hilfs- oder Datendateien zeichnen die betroffenen HTML-Seiten neu. Identische erzeugte Bilder behalten ihre Zeitstempel, damit unveränderte PDF-Bücher zwischengespeichert bleiben."
+msgstr ""
+"Importe eines eingebetteten Diagramms werden relativ zum umgebenden "
+"Dokument aufgelöst. Importe eines Dateidiagramms werden relativ zu seiner "
+"Typst-Datei aufgelöst. So können wir eine lokale Hilfsbibliothek für "
+"Farben, Knoten und Sequenzdiagramme teilen. Änderungen an importierten "
+"Hilfs- oder Datendateien zeichnen die betroffenen HTML-Seiten neu. "
+"Identische erzeugte Bilder behalten ihre Zeitstempel, damit unveränderte "
+"PDF-Bücher zwischengespeichert bleiben."
 
-#: ../../topics/diagrams.rst:196
-#| msgid "Images and figures"
+#: ../../topics/diagrams.rst:197
 msgid "Packages, limits and failures"
 msgstr "Pakete, Grenzen und Fehler"
 
-#: ../../topics/diagrams.rst:199
+#: ../../topics/diagrams.rst:200
 msgid ""
 "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings "
 "govern Typst diagrams in both outputs. With ``pdf_packages = "
@@ -237,30 +294,55 @@ msgid ""
 "source directory, including through symlinks. Diagrams must produce one "
 "finite page; PNG export is limited to 16 million pixels and 16,384 pixels "
 "on either side."
-msgstr "Die Einstellungen ``pdf_packages``, ``pdf_fonts`` und ``pdf_font_paths`` steuern Typst-Diagramme in beiden Ausgaben. Mit ``pdf_packages = \"offline\"`` verwendet der Compiler nur bereits in Typsts Paketverzeichnissen installierte Pakete. Standardmäßig lädt er fehlende Pakete herunter. Nach der Installation eines fehlenden Pakets oder Schriftänderungen führen wir ``guidedog build html -a`` in einem neuen Prozess aus. Projektimporte bleiben auch über symbolische Links unterhalb des Quellverzeichnisses. Diagramme müssen eine Seite mit endlichen Abmessungen erzeugen; PNG ist auf 16 Millionen Pixel und 16.384 Pixel je Seite begrenzt."
+msgstr ""
+"Die Einstellungen ``pdf_packages``, ``pdf_fonts`` und ``pdf_font_paths`` "
+"steuern Typst-Diagramme in beiden Ausgaben. Mit ``pdf_packages = "
+"\"offline\"`` verwendet der Compiler nur bereits in Typsts "
+"Paketverzeichnissen installierte Pakete. Standardmäßig lädt er fehlende "
+"Pakete herunter. Nach der Installation eines fehlenden Pakets oder "
+"Schriftänderungen führen wir ``guidedog build html -a`` in einem neuen "
+"Prozess aus. Projektimporte bleiben auch über symbolische Links unterhalb "
+"des Quellverzeichnisses. Diagramme müssen eine Seite mit endlichen "
+"Abmessungen erzeugen; PNG ist auf 16 Millionen Pixel und 16.384 Pixel je "
+"Seite begrenzt."
 
-#: ../../topics/diagrams.rst:206
+#: ../../topics/diagrams.rst:207
 msgid ""
-"A failed drawing remains visible as source with a warning. We build with "
-"``-W`` when a missing diagram must prevent publication. ``--untrusted`` "
-"refuses Typst compilation and retains its source. Text builds show source "
-"without compiling a drawing. The :doc:`../howto/typst-diagrams` guide "
-"lists every option, source limit and migration step for existing figure "
-"files."
-msgstr "Eine fehlgeschlagene Zeichnung bleibt mit einer Warnung als Quelltext sichtbar. Wir bauen mit ``-W``, wenn eine fehlende Zeichnung die Veröffentlichung verhindern muss. ``--untrusted`` verweigert die Typst-Kompilierung und behält den Quelltext. Text-Builds zeigen Quelltext ohne Kompilierung. :doc:`../howto/typst-diagrams` beschreibt alle Optionen, Quelltextgrenzen und Migrationsschritte für vorhandene Abbildungsdateien."
+"A failed drawing remains visible as source with a warning "
+"(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
+"directive sources report ``sphinx.graphviz.source`` or "
+"``sphinx.typst.source``). We build with ``-W`` when a missing diagram "
+"must prevent publication. ``--untrusted`` refuses Typst compilation and "
+"external Graphviz resources and retains the source. Text builds show "
+"source without compiling a drawing. The :doc:`../howto/typst-diagrams` "
+"guide lists every option, source limit and migration step for existing "
+"figure files."
+msgstr ""
+"Eine fehlgeschlagene Zeichnung bleibt mit einer Warnung als Quelltext "
+"sichtbar (``build.graphviz`` oder ``build.typst-diagram``; fehlende "
+"oder doppelte Direktivenquellen melden ``sphinx.graphviz.source`` oder "
+"``sphinx.typst.source``). Wir bauen mit ``-W``, wenn eine fehlende "
+"Zeichnung die Veröffentlichung verhindern muss. ``--untrusted`` "
+"verweigert die Typst-Kompilierung sowie externe Graphviz-Ressourcen und "
+"behält den Quelltext. Text-Builds zeigen Quelltext ohne Kompilierung. "
+":doc:`../howto/typst-diagrams` beschreibt alle Optionen, "
+"Quelltextgrenzen und Migrationsschritte für vorhandene Abbildungsdateien."
 
-#: ../../topics/diagrams.rst:212
+#: ../../topics/diagrams.rst:213
 msgid "Light, dark and print"
 msgstr "Hell, dunkel und Druck"
 
-#: ../../topics/diagrams.rst:215
+#: ../../topics/diagrams.rst:216
 msgid ""
 "Typst diagrams keep their authored colors and receive the same light "
 "panel as ordinary Graphviz images in the default dark theme. The adaptive "
 "Graphviz palette does not recolor Typst drawings."
-msgstr "Typst-Diagramme behalten ihre gewählten Farben und erhalten im dunklen Standarddesign dieselbe helle Fläche wie gewöhnliche Graphviz-Bilder. Die adaptive Graphviz-Palette färbt Typst-Zeichnungen nicht um."
+msgstr ""
+"Typst-Diagramme behalten ihre gewählten Farben und erhalten im dunklen "
+"Standarddesign dieselbe helle Fläche wie gewöhnliche Graphviz-Bilder. Die "
+"adaptive Graphviz-Palette färbt Typst-Zeichnungen nicht um."
 
-#: ../../topics/diagrams.rst:217
+#: ../../topics/diagrams.rst:218
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
@@ -270,24 +352,22 @@ msgstr ""
 "Text lesbar bleibt, behalten gewöhnliche Grafiken ihre Farben und "
 "bekommen im dunklen Standardthema eine helle Fläche."
 
-#: ../../topics/diagrams.rst:221
+#: ../../topics/diagrams.rst:222
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
-"the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
-"adds a fixed stylesheet inside the SVG image. Its dark media query "
-"follows the embedding page's ``color-scheme``, including the theme "
-"control's explicit selection. No script, external stylesheet or inline "
-"page SVG is needed."
+"the directive. Guidedog adds a fixed stylesheet inside the SVG image. "
+"Its dark media query follows the embedding page's ``color-scheme``, "
+"including the theme control's explicit selection. No script, external "
+"stylesheet or inline page SVG is needed."
 msgstr ""
 "Für die adaptive Palette des Handbuchs ergänzen wir ``:class: "
-"graphviz-adaptive`` an der Direktive. Das gibt es ab Guidedog 0.6.3. "
-"Guidedog fügt dann ein festes Stylesheet in das SVG-Bild ein. Dessen "
-"Media Query für den dunklen Modus folgt dem ``color-scheme`` der "
-"einbettenden Seite, auch einer ausdrücklichen Wahl im Theme-Umschalter. "
-"Skripte, externe Stylesheets oder Inline-SVG in der Seite sind nicht "
-"nötig."
+"graphviz-adaptive`` an der Direktive. Guidedog fügt dann ein festes "
+"Stylesheet in das SVG-Bild ein. Dessen Media Query für den dunklen "
+"Modus folgt dem ``color-scheme`` der einbettenden Seite, auch einer "
+"ausdrücklichen Wahl im Theme-Umschalter. Skripte, externe Stylesheets "
+"oder Inline-SVG in der Seite sind nicht nötig."
 
-#: ../../topics/diagrams.rst:227
+#: ../../topics/diagrams.rst:228
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
@@ -296,59 +376,59 @@ msgstr ""
 "Notizen für Eingaben und Zylinder für dauerhafte Speicher. Knotenklassen "
 "unterscheiden die Rollen in der dunklen Palette:"
 
-#: ../../topics/diagrams.rst:230
+#: ../../topics/diagrams.rst:231
 msgid "Semantic node classes"
 msgstr "Semantische Knotenklassen"
 
-#: ../../topics/diagrams.rst:234
+#: ../../topics/diagrams.rst:235
 msgid "DOT class"
 msgstr "DOT-Klasse"
 
-#: ../../topics/diagrams.rst:235
+#: ../../topics/diagrams.rst:236
 msgid "Role"
 msgstr "Rolle"
 
-#: ../../topics/diagrams.rst:236
+#: ../../topics/diagrams.rst:237
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:237
+#: ../../topics/diagrams.rst:238
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "Quelle, Konfiguration oder Hilfsmaterial; warmer Neutralton."
 
-#: ../../topics/diagrams.rst:238
+#: ../../topics/diagrams.rst:239
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:239
+#: ../../topics/diagrams.rst:240
 msgid "A produced artifact; blue."
 msgstr "Erzeugtes Artefakt; blau."
 
-#: ../../topics/diagrams.rst:240
+#: ../../topics/diagrams.rst:241
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:241
+#: ../../topics/diagrams.rst:242
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "Optionaler Erweiterungspunkt; bernsteinfarben und gestrichelt."
 
-#: ../../topics/diagrams.rst:242
+#: ../../topics/diagrams.rst:243
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:243
+#: ../../topics/diagrams.rst:244
 msgid "A decision; amber, with a diamond shape."
 msgstr "Entscheidung; bernsteinfarbene Raute."
 
-#: ../../topics/diagrams.rst:244
+#: ../../topics/diagrams.rst:245
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:245
+#: ../../topics/diagrams.rst:246
 msgid "A separate ownership or allocation boundary; violet."
 msgstr "Eine eigene Ownership- oder Allokationsgrenze; violett."
 
-#: ../../topics/diagrams.rst:247
+#: ../../topics/diagrams.rst:248
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
@@ -365,7 +445,7 @@ msgstr ""
 "ist optional. Wir wenden sie nicht auf Grafiken an, deren genaue Farben "
 "Daten tragen."
 
-#: ../../topics/diagrams.rst:253
+#: ../../topics/diagrams.rst:254
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
@@ -381,11 +461,11 @@ msgstr ""
 "Die Vererbungsregel definiert die `CSS-Spezifikation zu color-scheme "
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
 
-#: ../../topics/diagrams.rst:259
+#: ../../topics/diagrams.rst:260
 msgid "Make the result legible"
 msgstr "Das Ergebnis lesbar gestalten"
 
-#: ../../topics/diagrams.rst:262
+#: ../../topics/diagrams.rst:263
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -397,7 +477,7 @@ msgstr ""
 "beschriften wir mit ihrer Bedingung. Neben Farbe nutzen wir Form und "
 "Text, denn im Druck gibt es womöglich gar keine Farbe."
 
-#: ../../topics/diagrams.rst:266
+#: ../../topics/diagrams.rst:267
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -408,7 +488,7 @@ msgstr ""
 "um zu passen, teilen wir es in zwei Zeichnungen auf. Bild- und "
 "Abbildungsgrößen beschreibt :doc:`../media`."
 
-#: ../../topics/diagrams.rst:270
+#: ../../topics/diagrams.rst:271
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
 "readable. Scroll inside the figure. The page itself keeps its width."
@@ -1245,68 +1325,97 @@ msgstr "Drei Lesebereiche der HTML-Dokumentation."
 
 #: ../../topics/typography.rst:36
 msgid ""
-"**Light is the default.** The theme control also offers dark and system "
-"modes. It remembers the choice on the same browser origin. System mode "
-"follows the operating system. Printed HTML uses light colors. Content and "
-"navigation remain usable without JavaScript. The theme control and "
-"enhanced search are progressive enhancements."
+"The built-in theme follows the operating system by default, with light "
+"and dark choices; Guidedog's own documentation website defaults to the "
+"light reading edition. The theme control remembers the reader's choice "
+"on the same browser origin. Printed HTML uses light colors. Content and "
+"navigation remain usable without JavaScript. The theme control, "
+"enhanced search, and paragraph line breaking are progressive enhancements."
 msgstr ""
-"**Hell ist der Standard.** Es gibt auch Dunkel- und Systemmodus; die Wahl "
-"wird für dieselbe Browser-Origin gespeichert. System folgt dem "
-"Betriebssystem. Gedrucktes HTML nutzt helle Farben. Inhalt und Navigation "
-"funktionieren ohne JavaScript. Theme-Steuerung und erweiterte Suche sind "
-"progressive Ergänzungen."
+"Das eingebaute Theme folgt standardmäßig dem Betriebssystem und bietet "
+"helle sowie dunkle Ansichten; die eigene Dokumentations-Website von "
+"Guidedog startet standardmäßig in der hellen Leseausgabe. Die "
+"Theme-Steuerung merkt sich die Wahl der Lesenden für dieselbe "
+"Browser-Origin. Gedrucktes HTML nutzt helle Farben. Inhalt und "
+"Navigation bleiben ohne JavaScript nutzbar. Theme-Steuerung, erweiterte "
+"Suche und Absatzumbruch sind progressive Ergänzungen."
 
-#: ../../topics/typography.rst:42
+#: ../../topics/typography.rst:43
 msgid ""
-"English prose can use paragraph-wide **Knuth-Plass line breaking** in the "
-"browser. A small template script measures the loaded font, builds boxes, "
-"spaces, and hyphenation penalties, and chooses breaks for the whole "
-"paragraph. Frank Liang's pattern method supplies English hyphenation "
-"candidates. The original TeX patterns and the libraries' licenses are "
-"bundled with the site."
+"Every initialized project (``guidedog quickstart``, ``guidedog ssg "
+"init``, and ``guidedog dsc init``) copies ``_static/typography.js`` "
+"beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a "
+"project owns and can edit its scripts directly. On desktop reading "
+"measures (``40rem`` and wider), English prose uses paragraph-wide "
+"**Knuth-Plass line breaking** in the browser across paragraphs, list "
+"items, definitions, admonitions, block quotes, and footnotes, while "
+"leaving tables, navigation trees, metadata headers, and figure captions "
+"ragged. The script measures the loaded font, builds boxes, glue, and "
+"hyphenation penalties, and chooses breaks for the whole block. Frank "
+"Liang's pattern method supplies English hyphenation candidates, and "
+"break penalty widths are discarded after a hyphenated break so "
+"following lines are measured accurately. Inline mathematics (after "
+"MathJax finishes), footnote references, superscripts, and subscripts "
+"are measured as inline atoms; links keep their markup, and inline code "
+"literals may break cleanly after ``/`` or ``::``. The original TeX "
+"patterns and the libraries' BSD notices are recorded in ``NOTICE``."
 msgstr ""
-"Englischer Fließtext kann im Browser **Knuth-Plass-Absatzumbruch** "
-"verwenden. Ein kleines Vorlagenskript vermisst die Schrift, bildet Boxen, "
-"Abstände und Strafwerte und wählt Umbrüche für den ganzen Absatz. Frank "
-"Liangs Muster liefern Trennstellen. Originale TeX-Muster und "
-"Bibliothekslizenzen liegen der Website bei."
+"Jedes neu angelegte Projekt (``guidedog quickstart``, ``guidedog ssg "
+"init`` und ``guidedog dsc init``) kopiert ``_static/typography.js`` "
+"neben ``_static/guidedog.css`` und ``_static/guidedog.js``, sodass das "
+"Projekt seine Skripte selbst besitzt und direkt bearbeiten kann. Auf "
+"Desktop-Satzbreiten (ab ``40rem``) verwendet englischer Fließtext im "
+"Browser absatzweiten **Knuth-Plass-Zeilenumbruch** in Absätzen, "
+"Listenelementen, Definitionen, Hinweisblöcken, Blockzitaten und "
+"Fußnoten, während Tabellen, Navigationsbäume, Metadatenköpfe und "
+"Bildunterschriften im Flattersatz bleiben. Das Skript vermisst die "
+"geladene Schrift, erzeugt Boxen, Zwischenräume (Glue) und Trennstrafen "
+"und wählt die Umbrüche für den gesamten Block. Frank Liangs "
+"Musterverfahren liefert englische Trennkandidaten, und Strafbreiten "
+"nach einem Trennumbruch werden verworfen, damit Folgezeilen exakt "
+"gemessen werden. Eingebettete Formeln (nach Abschluss von MathJax), "
+"Fußnotenverweise, Hoch- und Tiefstellungen werden als unteilbare "
+"Inline-Atome gemessen; Links behalten ihr Markup, und "
+"Inline-Codeliterale dürfen sauber nach ``/`` oder ``::`` umbrechen. Die "
+"ursprünglichen TeX-Muster und die BSD-Hinweise der Bibliotheken sind in "
+"``NOTICE`` festgehalten."
 
-#: ../../topics/typography.rst:48
+#: ../../topics/typography.rst:57
 msgid ""
 "The enhancement preserves emphasis and the exact source text. It "
-"recalculates when the reading measure changes. Copying within one "
-"optimized paragraph gives the source text, without visual line divisions "
-"or added hyphens. Printing restores the ordinary paragraph so the print "
-"layout can paginate it."
+"recalculates when the reading measure changes. Copying within or across "
+"typeset blocks gives the source text, without visual line divisions or "
+"added hyphens. Narrow screens (below ``40rem``) and printing restore "
+"ordinary layout so mobile browsers wrap naturally and print engines can "
+"paginate paragraphs."
 msgstr ""
-"Die Ergänzung erhält Hervorhebungen und Originaltext und berechnet bei "
-"Breitenänderungen neu. Kopieren innerhalb eines optimierten Absatzes "
-"liefert den Quelltext ohne sichtbare Zeilenaufteilungen oder zusätzliche "
-"Trennstriche. Beim Drucken wird der normale Absatz für die Paginierung "
-"wiederhergestellt."
+"Die Ergänzung erhält Hervorhebungen und den exakten Quelltext und "
+"berechnet bei Änderungen der Satzbreite neu. Kopieren innerhalb eines "
+"oder über mehrere gesetzte Blöcke hinweg liefert den Quelltext ohne "
+"sichtbare Zeilenaufteilungen oder zusätzliche Trennstriche. Schmale "
+"Bildschirme (unter ``40rem``) und der Druck stellen das normale Layout "
+"wieder her, damit mobile Browser natürlich umbrechen und Druck-Engines "
+"Absätze paginieren können."
 
-#: ../../topics/typography.rst:53
+#: ../../topics/typography.rst:63
 msgid ""
-"Links, mathematics, code, interactive content, narrow measures, and other "
-"languages use native browser layout. So do paragraphs for which no "
-"suitably spaced solution exists. The site remains readable with "
-"JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` "
-"and ``text-wrap: pretty``. Those CSS properties alone are not a promise "
-"of Knuth-Plass optimization."
+"Other languages, narrow measures, JavaScript-disabled browsers, and "
+"paragraphs for which no suitably spaced solution exists use native "
+"browser layout with ``text-wrap: pretty`` (without greedy CSS "
+"justification or browser ``hyphens: auto``). That CSS property alone is "
+"not a promise of Knuth-Plass optimization."
 msgstr ""
-"Links, Formeln, Code, interaktive Inhalte, schmale Satzbreiten und andere "
-"Sprachen nutzen das native Layout des Browsers. Dasselbe gilt für "
-"Absätze, für die es keine Lösung mit passenden Abständen gibt. Die "
-"Website bleibt auch mit deaktiviertem JavaScript lesbar. Der Fallback "
-"nutzt sprachabhängiges ``hyphens: auto`` und ``text-wrap: pretty``. Diese "
-"CSS-Eigenschaften allein versprechen keine Knuth-Plass-Optimierung."
+"Andere Sprachen, schmale Satzbreiten, Browser mit deaktiviertem "
+"JavaScript sowie Absätze, für die keine Lösung mit passenden Abständen "
+"existiert, nutzen das native Browser-Layout mit ``text-wrap: pretty`` "
+"(ohne gierigen CSS-Blocksatz oder browserseitiges ``hyphens: auto``). "
+"Diese CSS-Eigenschaft allein verspricht keine Knuth-Plass-Optimierung."
 
-#: ../../topics/typography.rst:59
+#: ../../topics/typography.rst:68
 msgid "The PDF page"
 msgstr "Die PDF-Seite"
 
-#: ../../topics/typography.rst:62
+#: ../../topics/typography.rst:71
 msgid ""
 "The book and standalone article templates use the same Libertinus family "
 "as the web edition. They set justified paragraphs, optimized line "
@@ -1323,7 +1432,7 @@ msgstr ""
 "Ein erzwungener Zeilenumbruch behebt einen zu lockeren Absatz selten "
 "richtig."
 
-#: ../../topics/typography.rst:64
+#: ../../topics/typography.rst:73
 msgid ""
 "Typst optimizes the PDF paragraphs. The web enhancement optimizes "
 "eligible prose. They share the source, fonts, and visual hierarchy. Their "
@@ -1340,11 +1449,11 @@ msgstr ""
 "<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_\\ "
 "."
 
-#: ../../topics/typography.rst:69
+#: ../../topics/typography.rst:78
 msgid "Change the design"
 msgstr "Das Design ändern"
 
-#: ../../topics/typography.rst:72
+#: ../../topics/typography.rst:81
 msgid ""
 "Edit ``_static/editorial.css`` for the documentation project's visual "
 "tokens. Edit ``_templates/layout.html`` for structure. Edit "
@@ -1365,7 +1474,7 @@ msgstr ""
 "Fokusmarkierungen, Beschriftungen und ausreichenden Kontrast lassen wir "
 "intakt."
 
-#: ../../topics/typography.rst:74
+#: ../../topics/typography.rst:83
 msgid ""
 "Build both targets after a change. Inspect a page with code, a table, a "
 "diagram, and an equation. An attractive cover is not proof that the rest "
@@ -1720,7 +1829,11 @@ msgid ""
 "``image`` and ``figure``. We can also author Graphviz and Typst drawings "
 "directly in markup with automatic HTML and PDF assets; see "
 ":doc:`diagrams`."
-msgstr "Wir binden Illustrationen, Screenshots und fertige Diagramme mit ``image`` und ``figure`` ein. Wir können Graphviz- und Typst-Zeichnungen auch direkt im Markup schreiben und ihre HTML- und PDF-Bilder automatisch erzeugen lassen; siehe :doc:`diagrams`."
+msgstr ""
+"Wir binden Illustrationen, Screenshots und fertige Diagramme mit "
+"``image`` und ``figure`` ein. Wir können Graphviz- und Typst-Zeichnungen "
+"auch direkt im Markup schreiben und ihre HTML- und PDF-Bilder automatisch "
+"erzeugen lassen; siehe :doc:`diagrams`."
 
 #: ../../topics/writing.rst:274
 msgid "For an existing image:"
@@ -1969,6 +2082,20 @@ msgid ""
 msgstr ""
 "MyST Markdown unterstützt dieselben Direktiven und Rollen über umzäunte "
 "Blöcke:"
+
+#~ msgid ""
+#~ "English prose can use paragraph-wide **Knuth-Plass line breaking** in "
+#~ "the browser. A small template script measures the loaded font, builds "
+#~ "boxes, spaces, and hyphenation penalties, and chooses breaks for the "
+#~ "whole paragraph. Frank Liang's pattern method supplies English "
+#~ "hyphenation candidates. The original TeX patterns and the libraries' "
+#~ "licenses are bundled with the site."
+#~ msgstr ""
+#~ "Englischer Fließtext kann im Browser **Knuth-Plass-Absatzumbruch** "
+#~ "verwenden. Ein kleines Vorlagenskript vermisst die Schrift, bildet "
+#~ "Boxen, Abstände und Strafwerte und wählt Umbrüche für den ganzen "
+#~ "Absatz. Frank Liangs Muster liefern Trennstellen. Originale TeX-Muster "
+#~ "und Bibliothekslizenzen liegen der Website bei."
 
 #~ msgid "Diagrams that explain"
 #~ msgstr "Diagramme zur Erklärung"

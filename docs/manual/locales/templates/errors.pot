@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -89,7 +89,7 @@ msgid "``host.budget`` (MEMORY BUDGET REACHED)"
 msgstr ""
 
 #: ../../errors.rst:83
-msgid "The build reached the memory it may hold, its budget (``--budget=MIB``, 1 GiB by default). The budget counts what Guidedog reads and keeps: sources, included files, and the PDF the embedded Typst compiler returns. The report names the step and the file that needed the memory. The hint names a budget that fits, as a number. For example:"
+msgid "The build reached the memory it may hold, its budget (``--budget=MIB``, 1 GiB by default). The budget counts what Guidedog reads and keeps: sources, included files, compiled diagram images, and the PDF the embedded Typst compiler returns. The report names the step and the file that needed the memory. The hint names a budget that fits, as a number. For example:"
 msgstr ""
 
 #: ../../errors.rst:91
@@ -181,21 +181,37 @@ msgid "Guidedog failed internally, and the report asks us to report it."
 msgstr ""
 
 #: ../../errors.rst:137
-msgid "70"
+msgid "6"
 msgstr ""
 
 #: ../../errors.rst:137
+msgid "``publish`` only: the host accepted the publication, but has not confirmed it live."
+msgstr ""
+
+#: ../../errors.rst:139
+msgid "7"
+msgstr ""
+
+#: ../../errors.rst:139
+msgid "``publish`` only: whether the publication was applied is not known; run the publisher's ``recover`` command before publishing again."
+msgstr ""
+
+#: ../../errors.rst:141
+msgid "70"
+msgstr ""
+
+#: ../../errors.rst:141
 msgid "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with the command that ran, the fault, and what ``guidedog --version`` prints, and says where to report it: the issue tracker our build names, or else whoever provided our build. Because builds publish only at the end, a crash leaves the previous output in place."
 msgstr ""
 
-#: ../../errors.rst:142
+#: ../../errors.rst:146
 msgid "130"
 msgstr ""
 
-#: ../../errors.rst:142
+#: ../../errors.rst:146
 msgid "The command was interrupted with Ctrl+C. Published files were left unchanged."
 msgstr ""
 
-#: ../../errors.rst:145
+#: ../../errors.rst:149
 msgid "A build that fails for any reason leaves the previous output, and the records of what it built, as they were. We fix the problem and build again."
 msgstr ""

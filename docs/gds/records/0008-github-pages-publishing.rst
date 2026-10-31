@@ -4,7 +4,7 @@
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-10-12
-:gds-updated: 2026-10-15
+:gds-updated: 2026-10-31
 :gds-discussion: Local review; no external discussion URL assigned
 :gds-labels: ["cli","build","security","documentation"]
 
@@ -49,9 +49,9 @@ on Guidedog's servers.
 
 GitHub.com is the only supported host. GitHub Enterprise Server needs separate
 qualification and host binding; a different API URL is not proof of support. DNS,
-custom domains, and repository creation remain outside the publisher. A test build
-alone (``-define:GUIDEDOG_PAGES_TEST_BUILD=true``) can be pointed at another server,
-for the tests; a release cannot send its token anywhere but GitHub.
+custom domains, and repository creation remain outside the publisher. Only test code
+(``Roots::at`` in ``gd-pages``), never a configuration or CLI flag, can point a client
+at a local test server; a release command never sends its token anywhere but GitHub.com.
 
 Review of the first draft
 -------------------------
@@ -94,9 +94,11 @@ states were sound and are kept. Four parts would not have worked as written:
    * - Device login "out of the box".
      - The device flow needs a registered GitHub App or OAuth App's client ID, a
        maintainer decision the draft left open.
-     - The client ID is a build setting (``-define:GUIDEDOG_PAGES_CLIENT_ID``) or
-       ``--client-id``. 0.6.0 ships without one; ``auth import`` stores a fine-grained
-       token, and ``auth login --client-id`` works with an app the user registered.
+     - The client ID is a compile-time environment variable
+       (``GUIDEDOG_PAGES_CLIENT_ID`` via ``option_env!``) or
+       ``--client-id``. Releases built without one use ``auth import`` to store a
+       fine-grained token, and ``auth login --client-id`` works with an app the user
+       registered.
 
 Two smaller corrections: status is correlated through the Pages builds API, which
 lists each build's commit (a deployment of a branch has no Actions OIDC deployment to
@@ -278,8 +280,9 @@ Credentials
 
 Tokens are stored under the service ``guidedog-pages`` with the profile as account: in
 the macOS Keychain (Security framework items), the Windows Credential Manager
-(generic credentials), or the Secret Service of a Linux desktop (libsecret, loaded
-when first needed, so the program runs where it is absent). ``profiles.toml`` records
+(generic credentials), or the Secret Service of a Linux desktop (reached through
+``secret-tool`` over standard input and output, so the program links no desktop C
+library and runs where ``secret-tool`` is absent). ``profiles.toml`` records
 each profile's account login, ID, method, and date, never the token. A missing or
 locked store is a problem naming the store; there is no plaintext fallback.
 
@@ -579,7 +582,7 @@ References
 * `GitHub App user tokens <https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-user-access-token-for-a-github-app>`_.
 * `GitHub Pages limits <https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits>`_.
 * ``docs/manual/howto/github-pages.rst``, both routes, step by step.
-* ``crates/gd-pages``, ``crates/gd-git``, ``crates/gd-fetch``, and ``cmd/guidedog-pages``.
+* ``crates/gd-pages``, ``crates/gd-git``, and ``crates/gd-fetch`` (linked into ``cmd/guidedog`` per GDS 0012).
 
 .. rubric:: Lifecycle event
 

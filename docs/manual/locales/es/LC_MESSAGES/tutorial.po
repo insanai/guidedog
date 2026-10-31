@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 15:18+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -72,11 +72,11 @@ msgstr ""
 "primeros en ``orbit`` y el tercero en ``orbit/chapters``. El proyecto "
 "terminado tendrá estos archivos:"
 
-#: ../../tutorial/a-custom-theme.rst:47
+#: ../../tutorial/a-custom-theme.rst:49
 msgid "2. Set the contract"
 msgstr "2. Definir el contrato"
 
-#: ../../tutorial/a-custom-theme.rst:50
+#: ../../tutorial/a-custom-theme.rst:52
 msgid ""
 "The downloaded configuration selects the local template and static "
 "directories. ``html_css_files`` adds our stylesheet after the default "
@@ -87,11 +87,11 @@ msgstr ""
 "después del predeterminado; ``html_context`` pasa valores a Jinja. El "
 "nombre PDF explícito facilita encontrar la salida."
 
-#: ../../tutorial/a-custom-theme.rst:57
+#: ../../tutorial/a-custom-theme.rst:59
 msgid "orbit/conf.toml"
 msgstr "orbit/conf.toml"
 
-#: ../../tutorial/a-custom-theme.rst:59
+#: ../../tutorial/a-custom-theme.rst:61
 msgid ""
 "All paths in this tutorial are project files. HTML templates are found "
 "through ``templates_path``. The PDF entry point is always "
@@ -103,11 +103,11 @@ msgstr ""
 "entrada del PDF es siempre ``_templates/book.typ`` dentro del directorio "
 "de fuentes. Cambiar ``templates_path`` no lo mueve."
 
-#: ../../tutorial/a-custom-theme.rst:63
+#: ../../tutorial/a-custom-theme.rst:65
 msgid "3. Extend the HTML layout"
 msgstr "3. Extender HTML"
 
-#: ../../tutorial/a-custom-theme.rst:66
+#: ../../tutorial/a-custom-theme.rst:68
 msgid ""
 "Save :download:`layout.html "
 "<../_static/repository/theme/_templates/layout.html>` as "
@@ -118,11 +118,11 @@ msgstr ""
 "``orbit/_templates/layout.html``, sustituyendo por completo el archivo "
 "generado:"
 
-#: ../../tutorial/a-custom-theme.rst:71
+#: ../../tutorial/a-custom-theme.rst:73
 msgid "orbit/_templates/layout.html"
 msgstr "orbit/_templates/layout.html"
 
-#: ../../tutorial/a-custom-theme.rst:73
+#: ../../tutorial/a-custom-theme.rst:75
 msgid ""
 "``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a "
 "template named ``layout.html`` would try to extend itself. ``super()`` "
@@ -135,7 +135,7 @@ msgstr ""
 "base mantiene navegación, búsqueda, temas y regiones accesibles; añadimos "
 "una etiqueta, metadatos y un pie de edición."
 
-#: ../../tutorial/a-custom-theme.rst:78
+#: ../../tutorial/a-custom-theme.rst:80
 msgid ""
 "A theme changes presentation. A build plugin changes source text, "
 "complete HTML or generated assets. Use :doc:`../plugins` when a template "
@@ -147,11 +147,11 @@ msgstr ""
 ":doc:`../plugins` cuando una plantilla no puede expresar la operación "
 "necesaria. Los cambios de diseño habituales no necesitan código nativo."
 
-#: ../../tutorial/a-custom-theme.rst:82
+#: ../../tutorial/a-custom-theme.rst:84
 msgid "4. Give repeated markup one home"
 msgstr "4. Reunir el marcado repetido"
 
-#: ../../tutorial/a-custom-theme.rst:85
+#: ../../tutorial/a-custom-theme.rst:87
 msgid ""
 "Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. "
 "Save :download:`ui.html "
@@ -167,15 +167,15 @@ msgstr ""
 "<../_static/repository/theme/_templates/partials/edition.html>` en las "
 "rutas correspondientes:"
 
-#: ../../tutorial/a-custom-theme.rst:92
+#: ../../tutorial/a-custom-theme.rst:94
 msgid "orbit/_templates/macros/ui.html"
 msgstr "orbit/_templates/macros/ui.html"
 
-#: ../../tutorial/a-custom-theme.rst:96
+#: ../../tutorial/a-custom-theme.rst:98
 msgid "orbit/_templates/partials/edition.html"
 msgstr "orbit/_templates/partials/edition.html"
 
-#: ../../tutorial/a-custom-theme.rst:98
+#: ../../tutorial/a-custom-theme.rst:100
 msgid ""
 "A macro takes explicit inputs. An included partial uses the current "
 "page's context. Escape plain project values with ``|e``. Use ``pathto`` "
@@ -187,11 +187,11 @@ msgstr ""
 "``pathto`` para enlaces. Fijar ``chapters/reading.html`` rompe páginas "
 "anidadas y otros generadores HTML."
 
-#: ../../tutorial/a-custom-theme.rst:103
+#: ../../tutorial/a-custom-theme.rst:105
 msgid "5. Design for the reader's theme"
 msgstr "5. Respetar el tema del lector"
 
-#: ../../tutorial/a-custom-theme.rst:106
+#: ../../tutorial/a-custom-theme.rst:108
 msgid ""
 "Save :download:`theme.css "
 "<../_static/repository/theme/_static/theme.css>` as "
@@ -201,37 +201,38 @@ msgstr ""
 "<../_static/repository/theme/_static/theme.css>` como "
 "``orbit/_static/theme.css``:"
 
-#: ../../tutorial/a-custom-theme.rst:111
+#: ../../tutorial/a-custom-theme.rst:113
 msgid "orbit/_static/theme.css"
 msgstr "orbit/_static/theme.css"
 
-#: ../../tutorial/a-custom-theme.rst:113
+#: ../../tutorial/a-custom-theme.rst:115
 msgid ""
-"The theme begins in light mode. The existing control selects light, dark "
-"or system and saves the choice. Explicit dark rules and the system media "
-"query use the same tokens. Typography and spacing stay shared. No new "
-"JavaScript is needed. Avoid a fixed ink color on a background whose theme "
-"can change."
+"The built-in theme follows the system scheme by default, and the "
+"existing control selects system, light or dark and saves the choice. "
+"Explicit dark rules and the system media query use the same tokens. "
+"Typography and spacing stay shared. No new JavaScript is needed. Avoid "
+"a fixed ink color on a background whose theme can change."
 msgstr ""
-"El tema empieza en modo claro. El control existente permite elegir claro, "
-"oscuro o sistema, y guarda la elección. Las reglas oscuras explícitas y "
-"la media query del sistema usan los mismos tokens. La tipografía y el "
-"espaciado se comparten. No hace falta JavaScript nuevo. Evitamos un color "
-"de tinta fijo sobre un fondo cuyo tema puede cambiar."
+"El tema integrado sigue el esquema del sistema de forma predeterminada, "
+"y el control existente permite elegir sistema, claro u oscuro y guarda "
+"la elección. Las reglas oscuras explícitas y la media query del sistema "
+"usan los mismos tokens. La tipografía y el espaciado se comparten. No "
+"hace falta JavaScript nuevo. Evitamos un color de tinta fijo sobre un "
+"fondo cuyo tema puede cambiar."
 
-#: ../../tutorial/a-custom-theme.rst:118
+#: ../../tutorial/a-custom-theme.rst:120
 msgid ""
-"Browser hyphenation follows the page language. It is not Typst's "
-"paragraph optimizer. The manual's optional English web optimizer is "
-"described separately in :doc:`../topics/typography`. This example uses "
-"the browser's own layout."
+"``_static/typography.js`` optimizes desktop English paragraphs with "
+"Knuth-Plass line breaking and Liang hyphenation, while ``guidedog.css`` "
+"falls back cleanly to ``text-wrap: pretty`` when JavaScript is disabled "
+"or on narrow screens; see :doc:`../topics/typography`."
 msgstr ""
-"La división silábica del navegador sigue el idioma de la página. No es el "
-"optimizador de párrafos de Typst. El optimizador web opcional del manual, "
-"para inglés, se describe aparte en :doc:`../topics/typography`. Este "
-"ejemplo usa la composición propia del navegador."
+"``_static/typography.js`` optimiza los párrafos en inglés en escritorio "
+"mediante partición de líneas Knuth-Plass y guionado de Liang, mientras "
+"que ``guidedog.css`` recurre limpiamente a ``text-wrap: pretty`` sin "
+"JavaScript o en pantallas estrechas; véase :doc:`../topics/typography`."
 
-#: ../../tutorial/a-custom-theme.rst:122
+#: ../../tutorial/a-custom-theme.rst:125
 msgid ""
 "Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in "
 "current Guidedog builds. Ordinary graphs retain their own colors. Older "
@@ -242,11 +243,11 @@ msgstr ""
 "elegido. Otros gráficos conservan sus colores. Los hosts anteriores "
 "dibujan el mismo DOT con paleta clara. Véase :doc:`../topics/diagrams`."
 
-#: ../../tutorial/a-custom-theme.rst:127
+#: ../../tutorial/a-custom-theme.rst:130
 msgid "6. Wrap the PDF book"
 msgstr "6. Envolver el libro PDF"
 
-#: ../../tutorial/a-custom-theme.rst:130
+#: ../../tutorial/a-custom-theme.rst:133
 msgid ""
 "Save :download:`palette.typ "
 "<../_static/repository/theme/_templates/palette.typ>` and "
@@ -260,15 +261,15 @@ msgstr ""
 "``orbit/_templates``. Son archivos nuevos; ``base-book.typ`` se queda a "
 "su lado."
 
-#: ../../tutorial/a-custom-theme.rst:136
+#: ../../tutorial/a-custom-theme.rst:139
 msgid "orbit/_templates/palette.typ"
 msgstr "orbit/_templates/palette.typ"
 
-#: ../../tutorial/a-custom-theme.rst:140
+#: ../../tutorial/a-custom-theme.rst:143
 msgid "orbit/_templates/book.typ"
 msgstr "orbit/_templates/book.typ"
 
-#: ../../tutorial/a-custom-theme.rst:142
+#: ../../tutorial/a-custom-theme.rst:145
 msgid ""
 "The host calls ``book`` with metadata and the chapter content. The "
 "wrapper forwards those values to the generated base and supplies our "
@@ -282,7 +283,7 @@ msgstr ""
 "aplican al contenido. La hoja de estilos web no afecta al PDF, y la "
 "plantilla de Typst no afecta al HTML."
 
-#: ../../tutorial/a-custom-theme.rst:147
+#: ../../tutorial/a-custom-theme.rst:150
 msgid ""
 "The base handles language-aware hyphenation and optimized line breaking. "
 "The wrapper keeps those rules, uses the matching blue accent and adds "
@@ -294,15 +295,15 @@ msgstr ""
 "página a las referencias. PDF siempre utiliza la paleta clara de "
 "impresión."
 
-#: ../../tutorial/a-custom-theme.rst:151
+#: ../../tutorial/a-custom-theme.rst:154
 msgid "7. Build and inspect both forms"
 msgstr "7. Construir y revisar ambos formatos"
 
-#: ../../tutorial/a-custom-theme.rst:154
+#: ../../tutorial/a-custom-theme.rst:157
 msgid "Run from the same parent directory as step 1:"
 msgstr "Ejecutamos desde el mismo directorio padre que en el paso 1:"
 
-#: ../../tutorial/a-custom-theme.rst:164
+#: ../../tutorial/a-custom-theme.rst:167
 msgid ""
 "Open the URL printed by ``serve``. Check the chapter and generated search "
 "page, not only the front page. Try light, dark and system modes. Resize "
@@ -317,7 +318,7 @@ msgstr ""
 "pie, guardamos y recargamos: la vista previa recompila las dependencias "
 "de sus plantillas."
 
-#: ../../tutorial/a-custom-theme.rst:169
+#: ../../tutorial/a-custom-theme.rst:172
 msgid ""
 "Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog "
 "adds the language suffix to the configured filename. Inspect the "
@@ -334,11 +335,11 @@ msgstr ""
 "``_build/dirhtml`` y ``_build/singlehtml``. Detenemos el servidor con "
 "``Ctrl+C``."
 
-#: ../../tutorial/a-custom-theme.rst:176
+#: ../../tutorial/a-custom-theme.rst:179
 msgid "8. Reuse and maintain the theme"
 msgstr "8. Reutilizar y mantener"
 
-#: ../../tutorial/a-custom-theme.rst:179
+#: ../../tutorial/a-custom-theme.rst:182
 msgid ""
 "Create another project with ``guidedog quickstart``. Copy the finished "
 "``_templates`` directory and ``_static/theme.css`` into it. Add "
@@ -354,7 +355,7 @@ msgstr ""
 "pie a una página que exista en ese proyecto. Conservamos los metadatos y "
 "el árbol de fuentes del proyecto nuevo."
 
-#: ../../tutorial/a-custom-theme.rst:185
+#: ../../tutorial/a-custom-theme.rst:188
 msgid ""
 "The copied PDF base makes the theme self-contained. When we upgrade "
 "Guidedog, we create a scratch quickstart project and compare its "
@@ -371,7 +372,7 @@ msgstr ""
 "mantener que un segundo diseño completo. Todas las variables y bloques "
 "están en :doc:`../templates`."
 
-#: ../../tutorial/a-custom-theme.rst:191
+#: ../../tutorial/a-custom-theme.rst:194
 msgid ""
 "If the build reports a missing ``base-book.typ``, finish the rename in "
 "step 1. If the label is blank, set ``edition_label`` in ``html_context``. "
@@ -591,6 +592,10 @@ msgid "Formulas and equations are in :doc:`../topics/mathematics`."
 msgstr "Las fórmulas y ecuaciones están en :doc:`../topics/mathematics`."
 
 #: ../../tutorial/a-small-book.rst:165
+msgid "Graphviz and Typst diagrams are in :doc:`../topics/diagrams`."
+msgstr "Los diagramas de Graphviz y Typst están en :doc:`../topics/diagrams`."
+
+#: ../../tutorial/a-small-book.rst:166
 msgid "Custom styles and book fonts are in :doc:`../topics/typography`."
 msgstr ""
 "Los estilos personalizados y las fuentes del libro están en "
@@ -852,13 +857,13 @@ msgstr ""
 
 #: ../../tutorial/first-project.rst:9
 msgid ""
-"We need a working installation of Guidedog. For PDF output, Guidedog can "
-"use its embedded compiler or an installed Typst binary (0.15.1 or newer). "
+"We need a working installation of Guidedog. For PDF output, Guidedog "
+"can use its embedded compiler or an installed Typst binary (0.15.1). "
 "See :doc:`../howto/install`."
 msgstr ""
-"Necesitamos una instalación de Guidedog que funcione. Para la salida PDF, "
-"Guidedog puede usar su compilador integrado o un binario de Typst "
-"instalado (0.15.1 o posterior). Véase :doc:`../howto/install`."
+"Necesitamos una instalación de Guidedog que funcione. Para la salida "
+"PDF, Guidedog puede usar su compilador integrado o un binario de Typst "
+"instalado (0.15.1). Véase :doc:`../howto/install`."
 
 #: ../../tutorial/first-project.rst:12
 msgid "On macOS, we can install the official release with Homebrew:"
@@ -907,17 +912,25 @@ msgstr ""
 msgid "Guidedog creates a complete, self-contained project:"
 msgstr "Guidedog crea un proyecto completo y autónomo:"
 
-#: ../../tutorial/first-project.rst:82
+#: ../../tutorial/first-project.rst:87
 msgid "The files are:"
 msgstr "Los archivos son:"
 
-#: ../../tutorial/first-project.rst:84
+#: ../../tutorial/first-project.rst:89
+msgid ""
+"``.gitignore``: Ignores ``_build/`` so generated files stay out of "
+"version control."
+msgstr ""
+"``.gitignore``: Ignora ``_build/`` para mantener los archivos generados "
+"fuera del control de versiones."
+
+#: ../../tutorial/first-project.rst:90
 msgid ""
 "``conf.toml``: Project settings (title, author, version, language, "
 "builders)."
 msgstr "``conf.toml``: título, autor, versión, idioma y generadores."
 
-#: ../../tutorial/first-project.rst:85
+#: ../../tutorial/first-project.rst:91
 msgid ""
 "``index.rst``: The root document. It defines our front page and table of "
 "contents."
@@ -925,29 +938,36 @@ msgstr ""
 "``index.rst``: el documento raíz. Define nuestra portada y la tabla de "
 "contenidos."
 
-#: ../../tutorial/first-project.rst:86
+#: ../../tutorial/first-project.rst:92
 msgid "``_templates/layout.html``: The HTML website template (Jinja)."
 msgstr "``_templates/layout.html``: estructura HTML en Jinja."
 
-#: ../../tutorial/first-project.rst:87
+#: ../../tutorial/first-project.rst:93
 msgid ""
-"``_templates/book.typ``: The PDF book layout and typography template "
-"(Typst)."
+"``_templates/book.typ``, ``discussion.typ``, ``article.typ``, and "
+"``theme.typ``: The PDF book, discussion, standalone article, and shared "
+"typography templates (Typst)."
 msgstr ""
-"``_templates/book.typ``: composición, tipografía y portada PDF en Typst."
+"``_templates/book.typ``, ``discussion.typ``, ``article.typ`` y "
+"``theme.typ``: Las plantillas PDF de libro, discusión, artículo "
+"independiente y tipografía compartida (Typst)."
 
-#: ../../tutorial/first-project.rst:88
-msgid "``_static/``: CSS stylesheets and JavaScript enhancements."
-msgstr "``_static/``: CSS y mejoras JavaScript."
+#: ../../tutorial/first-project.rst:94
+msgid ""
+"``_static/``: Editable CSS stylesheets (``guidedog.css``) and "
+"JavaScript enhancements (``guidedog.js`` and ``typography.js``)."
+msgstr ""
+"``_static/``: Hojas de estilo CSS editables (``guidedog.css``) y "
+"mejoras en JavaScript (``guidedog.js`` y ``typography.js``)."
 
-#: ../../tutorial/first-project.rst:89
+#: ../../tutorial/first-project.rst:95
 msgid ""
 "``assets/``: Folders for project images, diagrams, audio, and video files."
 msgstr ""
 "``assets/``: carpetas para las imágenes, los diagramas y los archivos de "
 "audio y vídeo del proyecto."
 
-#: ../../tutorial/first-project.rst:91
+#: ../../tutorial/first-project.rst:97
 msgid ""
 "Templates in Guidedog are ordinary files that we can see and edit. They "
 "live inside our project, not in an external theme or a system cache. We "
@@ -960,11 +980,11 @@ msgstr ""
 "el diseño del sitio y del libro. La primera compilación crea ``_build`` "
 "para la salida generada."
 
-#: ../../tutorial/first-project.rst:96
+#: ../../tutorial/first-project.rst:102
 msgid "2. Write the first page"
 msgstr "2. Escribir la primera página"
 
-#: ../../tutorial/first-project.rst:99
+#: ../../tutorial/first-project.rst:105
 msgid ""
 "We open ``notes/index.rst`` in an editor and replace its contents with "
 "the following:"
@@ -972,19 +992,19 @@ msgstr ""
 "Abrimos ``notes/index.rst`` en un editor y sustituimos su contenido por "
 "lo siguiente:"
 
-#: ../../tutorial/first-project.rst:121
+#: ../../tutorial/first-project.rst:127
 msgid "This page shows headings, mathematical notation, and a note."
 msgstr "Esta página muestra títulos, notación matemática y una nota."
 
-#: ../../tutorial/first-project.rst:123
+#: ../../tutorial/first-project.rst:129
 msgid "3. Build and inspect the outputs"
 msgstr "3. Construir e inspeccionar"
 
-#: ../../tutorial/first-project.rst:126
+#: ../../tutorial/first-project.rst:132
 msgid "We compile our project into both HTML and PDF:"
 msgstr "Compilamos el proyecto a HTML y a PDF:"
 
-#: ../../tutorial/first-project.rst:133
+#: ../../tutorial/first-project.rst:139
 msgid ""
 "The ``-W`` flag tells Guidedog to treat warnings as errors. With this "
 "flag in our routine checks, broken references and markup errors are "
@@ -994,11 +1014,11 @@ msgstr ""
 "errores. Si la usamos en nuestras comprobaciones habituales, detectamos "
 "pronto las referencias rotas y los errores de marcado."
 
-#: ../../tutorial/first-project.rst:136
+#: ../../tutorial/first-project.rst:142
 msgid "Now we inspect the output files:"
 msgstr "Ahora revisamos los archivos de salida:"
 
-#: ../../tutorial/first-project.rst:138
+#: ../../tutorial/first-project.rst:144
 msgid ""
 "We open ``notes/_build/html/index.html`` in a web browser. We see a "
 "clean, responsive documentation website with a theme switch, search bar, "
@@ -1008,7 +1028,7 @@ msgstr ""
 "de documentación limpio y adaptable, con selector de tema, barra de "
 "búsqueda y fórmulas bien formateadas."
 
-#: ../../tutorial/first-project.rst:140
+#: ../../tutorial/first-project.rst:146
 msgid ""
 "We open the PDF file in ``notes/_build/pdf/``. We see a book layout with "
 "running headers, page numbers, and typeset math."
@@ -1016,7 +1036,7 @@ msgstr ""
 "Abrimos el archivo PDF de ``notes/_build/pdf/``. Vemos una maquetación de "
 "libro con cabeceras, números de página y fórmulas compuestas."
 
-#: ../../tutorial/first-project.rst:143
+#: ../../tutorial/first-project.rst:149
 msgid ""
 "Guidedog formats mathematics for each medium. The browser gets MathJax, "
 "and the PDF gets Typst's own vector formulas."
@@ -1024,15 +1044,15 @@ msgstr ""
 "Guidedog da formato a las matemáticas según el medio. El navegador recibe "
 "MathJax, y el PDF recibe las fórmulas vectoriales propias de Typst."
 
-#: ../../tutorial/first-project.rst:146
+#: ../../tutorial/first-project.rst:152
 msgid "4. Live preview and incremental rebuilds"
 msgstr "4. Vista previa y regeneración incremental"
 
-#: ../../tutorial/first-project.rst:149
+#: ../../tutorial/first-project.rst:155
 msgid "Guidedog includes a built-in development web server:"
 msgstr "Guidedog incluye un servidor de desarrollo:"
 
-#: ../../tutorial/first-project.rst:155
+#: ../../tutorial/first-project.rst:161
 msgid ""
 "The terminal prints a local URL, such as ``http://localhost:8000``. We "
 "open this address in a browser."
@@ -1040,11 +1060,11 @@ msgstr ""
 "El terminal muestra una URL local, como ``http://localhost:8000``. "
 "Abrimos esa dirección en un navegador."
 
-#: ../../tutorial/first-project.rst:158
+#: ../../tutorial/first-project.rst:164
 msgid "Now we test the live editing loop:"
 msgstr "Ahora probamos el ciclo de edición en vivo:"
 
-#: ../../tutorial/first-project.rst:162
+#: ../../tutorial/first-project.rst:168
 msgid ""
 "Editing and saving a file triggers an input check and a selective rebuild "
 "upon refreshing the browser."
@@ -1053,23 +1073,23 @@ msgstr ""
 "desencadena una comprobación de las entradas y una recompilación "
 "selectiva."
 
-#: ../../tutorial/first-project.rst:162
+#: ../../tutorial/first-project.rst:168
 msgid "The live development cycle with guidedog serve."
 msgstr "Ciclo de desarrollo de guidedog serve."
 
-#: ../../tutorial/first-project.rst:181
+#: ../../tutorial/first-project.rst:187
 msgid "Edit ``notes/index.rst`` to add a new paragraph."
 msgstr "Editamos ``notes/index.rst`` para añadir un párrafo nuevo."
 
-#: ../../tutorial/first-project.rst:182
+#: ../../tutorial/first-project.rst:188
 msgid "Save the file."
 msgstr "Guardamos el archivo."
 
-#: ../../tutorial/first-project.rst:183
+#: ../../tutorial/first-project.rst:189
 msgid "Refresh the browser page."
 msgstr "Recargamos la página en el navegador."
 
-#: ../../tutorial/first-project.rst:185
+#: ../../tutorial/first-project.rst:191
 msgid ""
 "Before serving a requested page, Guidedog checks the project's inputs "
 "(sources, templates, static files and configuration) against its saved "
@@ -1084,7 +1104,7 @@ msgstr ""
 "recompilación falla, se conserva el sitio anterior y el problema se "
 "muestra en el terminal."
 
-#: ../../tutorial/first-project.rst:191
+#: ../../tutorial/first-project.rst:197
 msgid ""
 "When we run a build without changing any files, Guidedog reuses the saved "
 "document trees and parses nothing again. See :doc:`../topics/projects` "
@@ -1094,14 +1114,14 @@ msgstr ""
 "los árboles de documento guardados y no vuelve a analizar nada. Cómo lo "
 "decide se explica en :doc:`../topics/projects`."
 
-#: ../../tutorial/first-project.rst:194
+#: ../../tutorial/first-project.rst:200
 msgid ""
 "We press ``Ctrl+C`` in the terminal to stop the server when we are done."
 msgstr ""
 "Cuando terminamos, pulsamos ``Ctrl+C`` en el terminal para detener el "
 "servidor."
 
-#: ../../tutorial/first-project.rst:196
+#: ../../tutorial/first-project.rst:202
 msgid ""
 "Next, :doc:`a-small-book` shows how to organize several chapters and "
 "cross-references."
@@ -1120,6 +1140,18 @@ msgid ""
 msgstr ""
 "Seguimos estas páginas en orden. Cada paso produce un resultado que "
 "podemos revisar."
+
+#~ msgid ""
+#~ "Browser hyphenation follows the page language. It is not Typst's "
+#~ "paragraph optimizer. The manual's optional English web optimizer is "
+#~ "described separately in :doc:`../topics/typography`. This example uses "
+#~ "the browser's own layout."
+#~ msgstr ""
+#~ "La división silábica del navegador sigue el idioma de la página. No es "
+#~ "el optimizador de párrafos de Typst. El optimizador web opcional del "
+#~ "manual, para inglés, se describe aparte en "
+#~ ":doc:`../topics/typography`. Este ejemplo usa la composición propia "
+#~ "del navegador."
 
 #~ msgid ""
 #~ "This single declaration establishes a complete syntax contract: * ``.. "

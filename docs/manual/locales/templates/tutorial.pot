@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 15:18+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -40,139 +40,139 @@ msgstr ""
 msgid "Download :download:`conf.toml <../_static/repository/theme/conf.toml>`, :download:`index.rst <../_static/repository/theme/index.rst>` and :download:`reading.rst <../_static/repository/theme/chapters/reading.rst>`. Save the first two in ``orbit`` and the third in ``orbit/chapters``. The finished project will have these files:"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:47
+#: ../../tutorial/a-custom-theme.rst:49
 msgid "2. Set the contract"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:50
+#: ../../tutorial/a-custom-theme.rst:52
 msgid "The downloaded configuration selects the local template and static directories. ``html_css_files`` adds our stylesheet after the default stylesheet. ``html_context`` supplies a project value to Jinja. The explicit PDF filename makes the output easy to find."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:57
+#: ../../tutorial/a-custom-theme.rst:59
 msgid "orbit/conf.toml"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:59
+#: ../../tutorial/a-custom-theme.rst:61
 msgid "All paths in this tutorial are project files. HTML templates are found through ``templates_path``. The PDF entry point is always ``_templates/book.typ`` under the source directory. Changing ``templates_path`` does not move it."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:63
+#: ../../tutorial/a-custom-theme.rst:65
 msgid "3. Extend the HTML layout"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:66
+#: ../../tutorial/a-custom-theme.rst:68
 msgid "Save :download:`layout.html <../_static/repository/theme/_templates/layout.html>` as ``orbit/_templates/layout.html``. Replace the generated file completely:"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:71
+#: ../../tutorial/a-custom-theme.rst:73
 msgid "orbit/_templates/layout.html"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:73
+#: ../../tutorial/a-custom-theme.rst:75
 msgid "``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a template named ``layout.html`` would try to extend itself. ``super()`` keeps the parent's block content. Navigation, search, theme controls and accessible landmarks remain in the base layout. Our blocks add a label, metadata and an edition footer."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:78
+#: ../../tutorial/a-custom-theme.rst:80
 msgid "A theme changes presentation. A build plugin changes source text, complete HTML or generated assets. Use :doc:`../plugins` when a template cannot express the required operation. Ordinary layout changes need no native code."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:82
+#: ../../tutorial/a-custom-theme.rst:84
 msgid "4. Give repeated markup one home"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:85
+#: ../../tutorial/a-custom-theme.rst:87
 msgid "Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. Save :download:`ui.html <../_static/repository/theme/_templates/macros/ui.html>` and :download:`edition.html <../_static/repository/theme/_templates/partials/edition.html>` at the matching paths:"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:92
+#: ../../tutorial/a-custom-theme.rst:94
 msgid "orbit/_templates/macros/ui.html"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:96
+#: ../../tutorial/a-custom-theme.rst:98
 msgid "orbit/_templates/partials/edition.html"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:98
+#: ../../tutorial/a-custom-theme.rst:100
 msgid "A macro takes explicit inputs. An included partial uses the current page's context. Escape plain project values with ``|e``. Use ``pathto`` for document links: a hard-coded ``chapters/reading.html`` would break on a nested page or with another HTML builder."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:103
+#: ../../tutorial/a-custom-theme.rst:105
 msgid "5. Design for the reader's theme"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:106
+#: ../../tutorial/a-custom-theme.rst:108
 msgid "Save :download:`theme.css <../_static/repository/theme/_static/theme.css>` as ``orbit/_static/theme.css``:"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:111
+#: ../../tutorial/a-custom-theme.rst:113
 msgid "orbit/_static/theme.css"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:113
-msgid "The theme begins in light mode. The existing control selects light, dark or system and saves the choice. Explicit dark rules and the system media query use the same tokens. Typography and spacing stay shared. No new JavaScript is needed. Avoid a fixed ink color on a background whose theme can change."
+#: ../../tutorial/a-custom-theme.rst:115
+msgid "The built-in theme follows the system scheme by default, and the existing control selects system, light or dark and saves the choice. Explicit dark rules and the system media query use the same tokens. Typography and spacing stay shared. No new JavaScript is needed. Avoid a fixed ink color on a background whose theme can change."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:118
-msgid "Browser hyphenation follows the page language. It is not Typst's paragraph optimizer. The manual's optional English web optimizer is described separately in :doc:`../topics/typography`. This example uses the browser's own layout."
+#: ../../tutorial/a-custom-theme.rst:120
+msgid "``_static/typography.js`` optimizes desktop English paragraphs with Knuth-Plass line breaking and Liang hyphenation, while ``guidedog.css`` falls back cleanly to ``text-wrap: pretty`` when JavaScript is disabled or on narrow screens; see :doc:`../topics/typography`."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:122
+#: ../../tutorial/a-custom-theme.rst:125
 msgid "Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in current Guidedog builds. Ordinary graphs retain their own colors. Older hosts render the same DOT in its light palette. See :doc:`../topics/diagrams` for semantic node classes and print behavior."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:127
+#: ../../tutorial/a-custom-theme.rst:130
 msgid "6. Wrap the PDF book"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:130
+#: ../../tutorial/a-custom-theme.rst:133
 msgid "Save :download:`palette.typ <../_static/repository/theme/_templates/palette.typ>` and :download:`book.typ <../_static/repository/theme/_templates/book.typ>` in ``orbit/_templates``. These are new files; keep ``base-book.typ`` beside them."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:136
+#: ../../tutorial/a-custom-theme.rst:139
 msgid "orbit/_templates/palette.typ"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:140
+#: ../../tutorial/a-custom-theme.rst:143
 msgid "orbit/_templates/book.typ"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:142
+#: ../../tutorial/a-custom-theme.rst:145
 msgid "The host calls ``book`` with metadata and the chapter content. The wrapper forwards those values to the generated base and supplies our palette. Passing ``body`` into the styled function keeps its rules in scope. The web stylesheet does not affect PDF, and the Typst template does not affect HTML."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:147
+#: ../../tutorial/a-custom-theme.rst:150
 msgid "The base handles language-aware hyphenation and optimized line breaking. The wrapper keeps those rules, uses the matching blue accent and adds page numbers to document cross-references. PDF always uses the light, print palette."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:151
+#: ../../tutorial/a-custom-theme.rst:154
 msgid "7. Build and inspect both forms"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:154
+#: ../../tutorial/a-custom-theme.rst:157
 msgid "Run from the same parent directory as step 1:"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:164
+#: ../../tutorial/a-custom-theme.rst:167
 msgid "Open the URL printed by ``serve``. Check the chapter and generated search page, not only the front page. Try light, dark and system modes. Resize the window. Use the keyboard to reach the navigation and search. Change the footer partial, save, then refresh: the preview rebuilds its template dependencies."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:169
+#: ../../tutorial/a-custom-theme.rst:172
 msgid "Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog adds the language suffix to the configured filename. Inspect the contents, chapter opening, equation, table, code and diagram. Look for clipped labels, loose paragraphs and missing glyphs. The other outputs are below ``_build/html``, ``_build/dirhtml`` and ``_build/singlehtml``. Stop the server with ``Ctrl+C``."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:176
+#: ../../tutorial/a-custom-theme.rst:179
 msgid "8. Reuse and maintain the theme"
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:179
+#: ../../tutorial/a-custom-theme.rst:182
 msgid "Create another project with ``guidedog quickstart``. Copy the finished ``_templates`` directory and ``_static/theme.css`` into it. Add ``html_css_files = [\"theme.css\"]``, the accent option and the ``edition_label`` context value to its configuration. Change the footer's document link to a page that exists in that project. Keep the new project's metadata and source tree."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:185
+#: ../../tutorial/a-custom-theme.rst:188
 msgid "The copied PDF base makes the theme self-contained. When we upgrade Guidedog, we create a scratch quickstart project and compare its templates with our saved base. We adopt the changes we need, then rebuild every target. The built-in HTML layout can change too. Small block overrides are easier to maintain than a second complete layout. For every variable and block, see :doc:`../templates`."
 msgstr ""
 
-#: ../../tutorial/a-custom-theme.rst:191
+#: ../../tutorial/a-custom-theme.rst:194
 msgid "If the build reports a missing ``base-book.typ``, finish the rename in step 1. If the label is blank, set ``edition_label`` in ``html_context``. If CSS is missing, check both ``html_static_path`` and ``html_css_files``. Read the file, line and correction in the diagnostic before changing unrelated settings."
 msgstr ""
 
@@ -305,6 +305,10 @@ msgid "Formulas and equations are in :doc:`../topics/mathematics`."
 msgstr ""
 
 #: ../../tutorial/a-small-book.rst:165
+msgid "Graphviz and Typst diagrams are in :doc:`../topics/diagrams`."
+msgstr ""
+
+#: ../../tutorial/a-small-book.rst:166
 msgid "Custom styles and book fonts are in :doc:`../topics/typography`."
 msgstr ""
 
@@ -458,7 +462,7 @@ msgid "In this tutorial we create, write, and build our first documentation proj
 msgstr ""
 
 #: ../../tutorial/first-project.rst:9
-msgid "We need a working installation of Guidedog. For PDF output, Guidedog can use its embedded compiler or an installed Typst binary (0.15.1 or newer). See :doc:`../howto/install`."
+msgid "We need a working installation of Guidedog. For PDF output, Guidedog can use its embedded compiler or an installed Typst binary (0.15.1). See :doc:`../howto/install`."
 msgstr ""
 
 #: ../../tutorial/first-project.rst:12
@@ -493,127 +497,131 @@ msgstr ""
 msgid "Guidedog creates a complete, self-contained project:"
 msgstr ""
 
-#: ../../tutorial/first-project.rst:82
+#: ../../tutorial/first-project.rst:87
 msgid "The files are:"
 msgstr ""
 
-#: ../../tutorial/first-project.rst:84
+#: ../../tutorial/first-project.rst:89
+msgid "``.gitignore``: Ignores ``_build/`` so generated files stay out of version control."
+msgstr ""
+
+#: ../../tutorial/first-project.rst:90
 msgid "``conf.toml``: Project settings (title, author, version, language, builders)."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:85
+#: ../../tutorial/first-project.rst:91
 msgid "``index.rst``: The root document. It defines our front page and table of contents."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:86
+#: ../../tutorial/first-project.rst:92
 msgid "``_templates/layout.html``: The HTML website template (Jinja)."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:87
-msgid "``_templates/book.typ``: The PDF book layout and typography template (Typst)."
+#: ../../tutorial/first-project.rst:93
+msgid "``_templates/book.typ``, ``discussion.typ``, ``article.typ``, and ``theme.typ``: The PDF book, discussion, standalone article, and shared typography templates (Typst)."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:88
-msgid "``_static/``: CSS stylesheets and JavaScript enhancements."
+#: ../../tutorial/first-project.rst:94
+msgid "``_static/``: Editable CSS stylesheets (``guidedog.css``) and JavaScript enhancements (``guidedog.js`` and ``typography.js``)."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:89
+#: ../../tutorial/first-project.rst:95
 msgid "``assets/``: Folders for project images, diagrams, audio, and video files."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:91
+#: ../../tutorial/first-project.rst:97
 msgid "Templates in Guidedog are ordinary files that we can see and edit. They live inside our project, not in an external theme or a system cache. We can change them at any time to adjust the design of our site and book. The first build creates ``_build`` for generated output."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:96
+#: ../../tutorial/first-project.rst:102
 msgid "2. Write the first page"
 msgstr ""
 
-#: ../../tutorial/first-project.rst:99
+#: ../../tutorial/first-project.rst:105
 msgid "We open ``notes/index.rst`` in an editor and replace its contents with the following:"
 msgstr ""
 
-#: ../../tutorial/first-project.rst:121
+#: ../../tutorial/first-project.rst:127
 msgid "This page shows headings, mathematical notation, and a note."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:123
+#: ../../tutorial/first-project.rst:129
 msgid "3. Build and inspect the outputs"
 msgstr ""
 
-#: ../../tutorial/first-project.rst:126
+#: ../../tutorial/first-project.rst:132
 msgid "We compile our project into both HTML and PDF:"
 msgstr ""
 
-#: ../../tutorial/first-project.rst:133
+#: ../../tutorial/first-project.rst:139
 msgid "The ``-W`` flag tells Guidedog to treat warnings as errors. With this flag in our routine checks, broken references and markup errors are caught early."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:136
+#: ../../tutorial/first-project.rst:142
 msgid "Now we inspect the output files:"
 msgstr ""
 
-#: ../../tutorial/first-project.rst:138
+#: ../../tutorial/first-project.rst:144
 msgid "We open ``notes/_build/html/index.html`` in a web browser. We see a clean, responsive documentation website with a theme switch, search bar, and formatted math."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:140
+#: ../../tutorial/first-project.rst:146
 msgid "We open the PDF file in ``notes/_build/pdf/``. We see a book layout with running headers, page numbers, and typeset math."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:143
+#: ../../tutorial/first-project.rst:149
 msgid "Guidedog formats mathematics for each medium. The browser gets MathJax, and the PDF gets Typst's own vector formulas."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:146
+#: ../../tutorial/first-project.rst:152
 msgid "4. Live preview and incremental rebuilds"
 msgstr ""
 
-#: ../../tutorial/first-project.rst:149
+#: ../../tutorial/first-project.rst:155
 msgid "Guidedog includes a built-in development web server:"
 msgstr ""
 
-#: ../../tutorial/first-project.rst:155
+#: ../../tutorial/first-project.rst:161
 msgid "The terminal prints a local URL, such as ``http://localhost:8000``. We open this address in a browser."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:158
+#: ../../tutorial/first-project.rst:164
 msgid "Now we test the live editing loop:"
 msgstr ""
 
-#: ../../tutorial/first-project.rst:162
+#: ../../tutorial/first-project.rst:168
 msgid "Editing and saving a file triggers an input check and a selective rebuild upon refreshing the browser."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:162
+#: ../../tutorial/first-project.rst:168
 msgid "The live development cycle with guidedog serve."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:181
+#: ../../tutorial/first-project.rst:187
 msgid "Edit ``notes/index.rst`` to add a new paragraph."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:182
+#: ../../tutorial/first-project.rst:188
 msgid "Save the file."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:183
+#: ../../tutorial/first-project.rst:189
 msgid "Refresh the browser page."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:185
+#: ../../tutorial/first-project.rst:191
 msgid "Before serving a requested page, Guidedog checks the project's inputs (sources, templates, static files and configuration) against its saved build environment. If an input has changed, it rebuilds only the affected documents before it answers the browser request. A failed rebuild keeps the previous site and reports the problem in the terminal."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:191
+#: ../../tutorial/first-project.rst:197
 msgid "When we run a build without changing any files, Guidedog reuses the saved document trees and parses nothing again. See :doc:`../topics/projects` for how it decides."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:194
+#: ../../tutorial/first-project.rst:200
 msgid "We press ``Ctrl+C`` in the terminal to stop the server when we are done."
 msgstr ""
 
-#: ../../tutorial/first-project.rst:196
+#: ../../tutorial/first-project.rst:202
 msgid "Next, :doc:`a-small-book` shows how to organize several chapters and cross-references."
 msgstr ""
 

@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:11+0000\n"
+"POT-Creation-Date: 2026-10-31 15:41+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -82,21 +82,34 @@ msgstr "``template/rfc-template.rst``: 새 초안의 템플릿"
 
 #: ../../howto/discussions.rst:33
 msgid ""
-"``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable "
-"PDF layout and shared theme copied from the binary;"
+"``_templates/layout.html``, ``_templates/discussion.typ``, and "
+"``_templates/theme.typ``, the editable HTML layout, PDF discussion "
+"layout, and shared PDF theme copied from the binary;"
 msgstr ""
-"``_templates/discussion.typ``, ``_templates/theme.typ``: 바이너리에서 복사된 편집 "
-"가능한 PDF 레이아웃과 공통 테마"
+"``_templates/layout.html``, ``_templates/discussion.typ``, "
+"``_templates/theme.typ``: 바이너리에서 복사된 편집 가능한 HTML 레이아웃, PDF 논의 레이아웃, 공통 "
+"PDF 테마;"
 
 #: ../../howto/discussions.rst:34
-msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
-msgstr "``registry.rst``, ``bundle.rst``: 생성된 색인"
+msgid ""
+"``_static/guidedog.css``, ``_static/guidedog.js``, and "
+"``_static/typography.js``, the editable stylesheets and scripts copied "
+"from the binary;"
+msgstr ""
+"``_static/guidedog.css``, ``_static/guidedog.js``, "
+"``_static/typography.js``: 바이너리에서 복사된 편집 가능한 스타일시트와 스크립트;"
 
 #: ../../howto/discussions.rst:35
+msgid ""
+"``registry.rst`` and ``bundle.rst``, the generated index and catalog "
+"check list;"
+msgstr "``registry.rst``, ``bundle.rst``: 생성된 색인과 카탈로그 점검 목록;"
+
+#: ../../howto/discussions.rst:36
 msgid "``records/XXXXX-eds-process.rst``, a draft of our review process."
 msgstr "``records/XXXXX-eds-process.rst``: 우리 검토 절차의 초안"
 
-#: ../../howto/discussions.rst:37
+#: ../../howto/discussions.rst:38
 msgid ""
 "We edit the process draft to say how our project decides. To start from "
 "our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), "
@@ -112,16 +125,16 @@ msgstr ""
 "``--labels=a,b``\\ 는 기록에 붙일 수 있는 레이블을 제한합니다. ``init``\\ 은 새 카탈로그를 제자리로 "
 "옮기기 전에 검사합니다. 파일이 있는 폴더에는 절대 쓰지 않습니다."
 
-#: ../../howto/discussions.rst:44
+#: ../../howto/discussions.rst:45
 msgid "Write and review"
 msgstr "작성과 검토"
 
-#: ../../howto/discussions.rst:47
+#: ../../howto/discussions.rst:48
 msgid ""
 "We run the commands in the catalog folder, or in any folder inside it."
 msgstr "명령은 카탈로그 폴더나 그 안의 어느 폴더에서든 실행합니다."
 
-#: ../../howto/discussions.rst:58
+#: ../../howto/discussions.rst:59
 msgid ""
 "A new draft has the number ``XXXXX``. Promotion gives it the next number "
 "and opens it for discussion. A state change needs ``--reason``, and "
@@ -133,11 +146,11 @@ msgstr ""
 "``--dry-run``\\ 은 실제로 바꾸지 않고 변경 내용을 보여 줍니다. 여기까지가 기본 설정입니다. 다음 절에서 이를 바꾸는 "
 "방법을 설명합니다."
 
-#: ../../howto/discussions.rst:63
+#: ../../howto/discussions.rst:64
 msgid "A record starts with its metadata, one field per line:"
 msgstr "기록은 메타데이터로 시작하며, 한 줄에 필드 하나를 씁니다."
 
-#: ../../howto/discussions.rst:77
+#: ../../howto/discussions.rst:78
 msgid ""
 "Authors and labels are JSON lists. ``last-updated`` may stand for "
 "``updated``. A record may also carry ``category``, ``status``, and "
@@ -150,11 +163,11 @@ msgstr ""
 "``status``\\ 를 상태에 맞춰 유지합니다. HTML과 PDF는 필드를 Number, Title, Authors, "
 "Updated, Labels 등으로 표시하고, 목록은 일반 텍스트로 보여 줍니다."
 
-#: ../../howto/discussions.rst:82
+#: ../../howto/discussions.rst:83
 msgid "Configure the lifecycle and numbering"
 msgstr "수명 주기와 번호 설정하기"
 
-#: ../../howto/discussions.rst:85
+#: ../../howto/discussions.rst:86
 msgid ""
 "``discussion.toml`` holds the catalog's settings. ``init`` writes every "
 "one of them, with comments. ``guidedog dsc config`` prints the settings "
@@ -165,7 +178,7 @@ msgstr ""
 "``guidedog dsc config``\\ 는 현재 적용되는 설정을 출력합니다. 이 파일이 없는 카탈로그는 아래 기본값을 "
 "따릅니다. 이 기본값이 Guidedog 자체 GDS의 절차입니다."
 
-#: ../../howto/discussions.rst:122
+#: ../../howto/discussions.rst:123
 msgid ""
 "``[workflow.states.NAME]`` defines a state. ``next`` lists the states the "
 "``state`` command may move a record to. ``evidence = true`` asks for "
@@ -182,7 +195,7 @@ msgstr ""
 "번호를 주는 것이 승격이기 때문입니다. 번호가 없는 초안은 자기 ``next``\\ 에 나열된 상태, 예를 들어 "
 "``abandoned``\\ 로만 옮길 수 있습니다."
 
-#: ../../howto/discussions.rst:129
+#: ../../howto/discussions.rst:130
 msgid ""
 "Numbers have at least ``width`` digits, padded with zeros. A number that "
 "needs more digits gets them, so 10000 follows 9999, and lists sort by "
@@ -197,7 +210,7 @@ msgstr ""
 "하지만 기록에 번호가 매겨진 뒤에 ``width``\\ 를 바꾸는 것은 안전하지 않습니다. 기존 번호가 더 이상 그 값과 맞지 않기 "
 "때문입니다."
 
-#: ../../howto/discussions.rst:135
+#: ../../howto/discussions.rst:136
 msgid ""
 "``guidedog dsc`` checks the file whenever it reads the catalog. A mistake "
 "names the line and what to write instead:"
@@ -205,29 +218,39 @@ msgstr ""
 "``guidedog dsc``\\ 는 카탈로그를 읽을 때마다 이 파일을 검사합니다. 잘못이 있으면 그 줄과 대신 써야 할 내용을 "
 "알려 줍니다:"
 
-#: ../../howto/discussions.rst:150
+#: ../../howto/discussions.rst:151
 msgid ""
 "The process draft that ``init`` writes describes the lifecycle we "
 "configured. It has a table of the states and a diagram of the moves."
 msgstr ""
 "``init``\\ 이 쓰는 절차 초안은 우리가 설정한 수명 주기를 설명합니다. 상태 표와 상태 이동 다이어그램이 들어 있습니다."
 
-#: ../../howto/discussions.rst:153
+#: ../../howto/discussions.rst:154
 msgid "Build"
 msgstr "빌드"
 
-#: ../../howto/discussions.rst:161
+#: ../../howto/discussions.rst:162
 msgid ""
-"``guidedog dsc build`` writes the website to ``_build/html`` and one PDF "
-"per record to ``_build/pdf``. Naming a record writes only its PDF, to "
-"``_build/selected``, and leaves the complete output alone. Warnings stop "
-"the build."
+"``guidedog dsc build`` writes the website to ``_build/html`` and one "
+"standalone PDF per record to ``_build/pdf`` (there is no combined catalog "
+"PDF; ``index.rst``, ``registry.rst``, ``workflow.rst``, and ``bundle.rst`` "
+"serve HTML navigation and catalog validation). Naming a record writes only "
+"its PDF, to ``_build/selected``, and leaves the complete output alone. When "
+"``pdf_downloads`` in ``[html_context]`` names the folder of the record "
+"PDFs, relative to the root of the HTML output (for example ``pdf_downloads "
+"= \"pdf/\"`` when a multi-project site mounts the PDFs there), each HTML "
+"record page under ``records/`` offers a link to download that record's PDF. "
+"Warnings stop the build."
 msgstr ""
-"``guidedog dsc build``\\ 는 웹사이트를 ``_build/html``\\ 에, 기록마다 PDF 하나를 "
-"``_build/pdf``\\ 에 씁니다. 기록 이름을 지정하면 그 PDF만 ``_build/selected``\\ 에 쓰고 전체 "
-"출력은 건드리지 않습니다. 경고가 있으면 빌드가 멈춥니다."
+"``guidedog dsc build``\\ 는 웹사이트를 ``_build/html``\\ 에, 기록별 독립형 PDF를 "
+"``_build/pdf``\\ 에 기록합니다(통합 카탈로그 PDF는 없으며 ``index.rst``, ``registry.rst``, "
+"``workflow.rst``, ``bundle.rst``\\ 는 HTML 탐색과 카탈로그 검증에 쓰입니다). 특정 기록을 지정하면 "
+"해당 PDF만 ``_build/selected``\\ 에 쓰고 전체 출력은 건드리지 않습니다. ``[html_context]``\\ 의 "
+"``pdf_downloads``\\ 에 HTML 출력 루트를 기준으로 한 기록 PDF 폴더를 지정하면(예: 다중 프로젝트 사이트가 "
+"PDF를 그곳에 마운트할 때 ``pdf_downloads = \"pdf/\"``) ``records/`` 아래의 각 HTML 기록 "
+"페이지에 해당 기록의 PDF 다운로드 링크가 제공됩니다. 경고가 발생하면 빌드를 멈춥니다."
 
-#: ../../howto/discussions.rst:165
+#: ../../howto/discussions.rst:166
 msgid ""
 "The build is guidedog's own: the same build as ``guidedog build``, with "
 "the catalog as the project. Graphviz, Typst, and the other tools it needs "
@@ -240,11 +263,11 @@ msgstr ""
 "카탈로그는 기록마다 Typst로 컴파일합니다. 내장 컴파일러 대신 다른 Typst 프로그램을 쓰려면 "
 "``--typst=PATH``\\ 로 지정합니다."
 
-#: ../../howto/discussions.rst:167
+#: ../../howto/discussions.rst:168
 msgid "Discussion PDFs"
 msgstr "논의 기록 PDF"
 
-#: ../../howto/discussions.rst:170
+#: ../../howto/discussions.rst:171
 msgid ""
 "Each RST record uses an RFC-style paper layout. The record opens with a "
 "metadata panel, state badges, a short status note and compact contents, "
@@ -256,7 +279,7 @@ msgstr ""
 "목차로 시작하고 그 뒤에 본문이 이어집니다. 번호가 매겨진 절은 페이지 구분 없이 이어집니다. 머리글에는 카탈로그와 기록 식별자가 "
 "표시되고 바닥글에는 현재 페이지 번호와 전체 페이지 수가 표시됩니다. 표와 캡션이 달린 목록은 페이지를 넘어 이어질 수 있습니다."
 
-#: ../../howto/discussions.rst:172
+#: ../../howto/discussions.rst:173
 msgid ""
 "The PDF builder recognizes the leading metadata, such as ``:eds-number:`` "
 "and ``:eds-title:``, for any catalog prefix. Existing catalogs without a "
@@ -268,7 +291,7 @@ msgstr ""
 "인식합니다. 복사된 논의 템플릿이 없는 기존 카탈로그는 현재 내장된 레이아웃을 사용합니다. 기존에 사용자화한 템플릿은 해당 파일을 "
 "교체하거나 삭제할 때까지 그대로 유지되며, 일반 책은 기존의 책 템플릿을 그대로 사용합니다."
 
-#: ../../howto/discussions.rst:174
+#: ../../howto/discussions.rst:175
 msgid ""
 "The layout is embedded in the Guidedog binary. ``guidedog dsc init`` "
 "copies ``_templates/discussion.typ`` and its shared "
@@ -293,7 +316,7 @@ msgstr ""
 "``memo``\\ 로 목차와 상태 안내문을 제어할 수 있습니다. 공통 PDF 매개변수는 :doc:`../templates`\\ "
 "에서 설명합니다."
 
-#: ../../howto/discussions.rst:176
+#: ../../howto/discussions.rst:177
 msgid ""
 "An ``--untrusted`` build uses the built-in discussion layout instead of "
 "running a project template. A record included as a chapter of a larger "
@@ -303,11 +326,11 @@ msgstr ""
 "``--untrusted`` 빌드는 프로젝트 템플릿을 실행하는 대신 내장된 논의 레이아웃을 사용합니다. 더 큰 책의 한 장으로 "
 "포함된 기록은 해당 장 안에 메타데이터를 유지하며, 책 전체의 레이아웃은 루트 문서가 결정합니다."
 
-#: ../../howto/discussions.rst:178
+#: ../../howto/discussions.rst:179
 msgid "When an update is interrupted"
 msgstr "갱신이 중단되었을 때"
 
-#: ../../howto/discussions.rst:181
+#: ../../howto/discussions.rst:182
 msgid ""
 "Commands that change records hold the catalog's lock, ``.eds.lock``. An "
 "update of several files first writes a journal, ``.eds-journal.json``. If "
@@ -316,7 +339,7 @@ msgstr ""
 "기록을 바꾸는 명령은 카탈로그 잠금 ``.eds.lock``\\ 을 잡습니다. 여러 파일을 갱신할 때는 먼저 저널 "
 "``.eds-journal.json``\\ 을 씁니다. 갱신이 도중에 멈추면 다음 명령이 이를 알려 줍니다."
 
-#: ../../howto/discussions.rst:190
+#: ../../howto/discussions.rst:191
 msgid ""
 "Recovery puts back the files as they were. It refuses to overwrite a file "
 "someone edited since. ``guidedog dsc`` also checks each change before it "
@@ -326,7 +349,7 @@ msgstr ""
 "복구는 파일을 원래 상태로 되돌립니다. 그 뒤에 누군가 수정한 파일은 덮어쓰지 않습니다. ``guidedog dsc``\\ 는 "
 "무엇이든 쓰기 전에 각 변경도 검사합니다. 비어 있거나 중간에 잘린 기록, 생성 영역이 없는 색인은 거부합니다."
 
-#: ../../howto/discussions.rst:194
+#: ../../howto/discussions.rst:195
 msgid ""
 "``guidedog dsc`` keeps only each record's metadata in memory. It reads a "
 "record whole only to change it. So checking a large catalog stays fast "
@@ -335,11 +358,11 @@ msgstr ""
 "``guidedog dsc``\\ 는 기록마다 메타데이터만 메모리에 둡니다. 기록 전체는 바꿀 때만 읽습니다. 그래서 큰 카탈로그도 "
 "빠르게, 적은 메모리로 검사합니다."
 
-#: ../../howto/discussions.rst:197
+#: ../../howto/discussions.rst:198
 msgid "Use the library"
 msgstr "라이브러리 사용하기"
 
-#: ../../howto/discussions.rst:200
+#: ../../howto/discussions.rst:201
 msgid ""
 "The commands are one Rust crate, ``gd-discussion``. Its ``README.md`` "
 "shows how to load a catalog, plan a change, and apply it from our own "
@@ -348,7 +371,7 @@ msgstr ""
 "이 명령들은 Rust 크레이트 ``gd-discussion`` 하나로 되어 있습니다. 이 크레이트의 ``README.md``\\ 는 "
 "우리 프로그램에서 카탈로그를 읽고, 변경을 계획하고, 적용하는 방법을 보여 줍니다:"
 
-#: ../../howto/discussions.rst:218
+#: ../../howto/discussions.rst:219
 msgid ""
 "``ds::plugin()`` is the whole ``guidedog dsc`` command line, as a plugin. "
 "A ``guidedog`` of our own links it beside its other plugins (see "
@@ -662,14 +685,14 @@ msgstr ""
 
 #: ../../howto/format-specific-content.rst:124
 msgid ""
-"**The ``latex`` tag in ``.. only::``**: For backward compatibility with "
-"legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias for PDF "
-"builds in ``.. only::`` expressions. In native Guidedog projects, prefer "
-"``.. only:: pdf``."
+"**The latex tag** (``.. only:: latex``): For backward compatibility "
+"with legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias "
+"for PDF builds in ``.. only::`` expressions. In native Guidedog "
+"projects, prefer ``.. only:: pdf``."
 msgstr ""
-"**``.. only::``\\ 의 ``latex`` 태그**: 기존 Sphinx 프로젝트와의 하위 호환성을 위해 Guidedog은 "
-"``.. only::`` 표현식에서 ``latex``\\ 를 PDF 빌드의 별칭으로 인식합니다. 순수 Guidedog 프로젝트에서는 "
-"``.. only:: pdf``\\ 를 사용하는 것이 좋습니다."
+"**latex 태그**\\ (``.. only:: latex``): 기존 Sphinx 프로젝트와의 하위 호환성을 위해 "
+"Guidedog은 ``.. only::`` 표현식에서 ``latex``\\ 를 PDF 빌드의 별칭으로 인식합니다. 순수 "
+"Guidedog 프로젝트에서는 ``.. only:: pdf``\\ 를 사용하는 것이 좋습니다."
 
 #: ../../howto/format-specific-content.rst:128
 msgid "3. Declare custom domain directives in conf.toml"
@@ -1487,24 +1510,25 @@ msgstr ""
 msgid ""
 "a C compiler (``cc``, Xcode's command-line tools, or MSVC), which Cargo "
 "uses to build the tree-sitter grammars and the cryptography in the "
-"``ring`` crate (TLS for HTTPS)."
+"``ring`` crate (TLS for HTTPS); and on Linux ``perl`` and ``make``, "
+"which Cargo uses to build the vendored OpenSSL linked by the embedded "
+"Typst package downloader."
 msgstr ""
 "C 컴파일러(``cc``, Xcode 명령줄 도구, 또는 MSVC). Cargo는 이 컴파일러로 tree-sitter 문법과 "
-"``ring`` 크레이트의 암호화 코드(HTTPS용 TLS)를 빌드합니다."
+"``ring`` 크레이트의 암호화 코드(HTTPS용 TLS)를 빌드합니다. 또한 Linux에서는 내장 Typst 패키지 "
+"다운로더가 링크하는 번들 OpenSSL을 Cargo가 빌드하기 위해 ``perl``\\ 과 ``make``\\ 가 필요합니다."
 
 #: ../../howto/install.rst:42
 msgid ""
 "Nothing else is built by hand. The Typst compiler (0.15.1), the "
-"tree-sitter grammars for Python and Rust, and the HTTP client (``ureq`` "
-"with ``rustls``) are ordinary Cargo dependencies, compiled with the "
-"workspace. HTTPS needs no ``curl`` program, OpenSSL or system certificate "
-"store: the root certificates are built in. There are no native build "
-"scripts to run first."
+"tree-sitter grammars for Python and Rust, and the Guidedog HTTP client "
+"(``ureq`` with ``rustls`` and built-in root certificates) are ordinary "
+"Cargo dependencies, compiled with the workspace. There are no separate "
+"setup scripts to run first."
 msgstr ""
 "그 밖에 손으로 빌드할 것은 없습니다. Typst 컴파일러(0.15.1), Python과 Rust용 tree-sitter 문법, "
-"HTTP 클라이언트(``ureq``\\ 와 ``rustls``)는 일반 Cargo 의존성이며 워크스페이스와 함께 컴파일됩니다. "
-"HTTPS에는 ``curl`` 프로그램도, OpenSSL도, 시스템 인증서 저장소도 필요 없습니다. 루트 인증서가 내장되어 있기 "
-"때문입니다. 먼저 실행해야 하는 네이티브 빌드 스크립트도 없습니다."
+"Guidedog HTTP 클라이언트(``rustls``\\ 와 내장 루트 인증서를 쓰는 ``ureq``)는 일반 Cargo "
+"의존성이며 워크스페이스와 함께 컴파일됩니다. 먼저 실행해야 하는 별도의 설정 스크립트는 없습니다."
 
 #: ../../howto/install.rst:46
 msgid "Release build"
@@ -1584,18 +1608,23 @@ msgstr "Typst: 내장 또는 설치"
 #: ../../howto/install.rst:88
 msgid ""
 "By default the Typst compiler is linked into ``guidedog`` (the "
-"``embedded`` feature of the ``gd-typst`` crate). PDF then needs no other "
-"program. A build of ``gd-typst`` without that feature runs an installed "
-"``typst`` program (0.15.1) instead. Either way, "
+"``embedded`` feature of the ``gd-typst`` crate). PDF books and ``.. "
+"typst-diagram::`` directives then need no other program. A build of "
+"``gd-typst`` without that feature runs an installed ``typst`` program "
+"(pinned to 0.15.1) for PDF books, while ``.. typst-diagram::`` requires "
+"the embedded compiler (``typst.embedded``). For PDF books, "
 "``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) "
-"selects a program explicitly, and ``guidedog --version`` names the "
-"backend in use."
+"selects an external ``typst`` 0.15.1 program explicitly, and ``guidedog "
+"--version`` names the backend in use."
 msgstr ""
-"기본적으로 Typst 컴파일러는 ``guidedog``\\ 에 링크됩니다(``gd-typst`` 크레이트의 ``embedded`` "
-"기능). 이 경우 PDF에 다른 프로그램이 필요하지 않습니다. 이 기능 없이 빌드한 ``gd-typst``\\ 는 대신 설치된 "
-"``typst`` 프로그램(0.15.1)을 실행합니다. 어느 쪽이든 "
+"기본적으로 Typst 컴파일러는 ``guidedog``\\ 에 링크됩니다(``gd-typst`` 크레이트의 "
+"``embedded`` 기능). 이 경우 PDF 책과 ``.. typst-diagram::`` 지시문에 다른 프로그램이 필요하지 "
+"않습니다. 이 기능 없이 빌드한 ``gd-typst``\\ 는 PDF 책을 만들 때 설치된 ``typst`` "
+"프로그램(0.15.1로 고정)을 실행하며, ``.. typst-diagram::``\\ 에는 내장 컴파일러가 "
+"필요합니다(``typst.embedded``). PDF 책에서는 "
 "``--typst=/absolute/path/to/typst``\\ (또는 ``conf.toml``\\ 의 ``typst``)로 "
-"프로그램을 명시적으로 고를 수 있고, ``guidedog --version``\\ 이 사용 중인 백엔드를 알려 줍니다."
+"외부 ``typst`` 0.15.1 프로그램을 명시적으로 고를 수 있고, ``guidedog --version``\\ 이 사용 "
+"중인 백엔드를 알려 줍니다."
 
 #: ../../howto/install.rst:94
 msgid ""
@@ -1697,18 +1726,23 @@ msgstr "이 문서 관리하기"
 #: ../../howto/maintain-docs.rst:4
 msgid ""
 "Guidedog documents itself with Guidedog. The repository has four "
-"projects: ``docs/manual`` (this manual), ``docs/api`` (the Rust API "
-"reference of the crates), ``docs/gds`` (the design records), and "
-"``docs/site`` (the front page). The manual and GDS began with ``guidedog "
-"quickstart``. We edit their generated templates in place. Design records "
-"stay out of the manual's table of contents."
+"documentation projects and a root site manifest: ``docs/manual`` (this "
+"manual), ``docs/api`` (the standalone Rust API reference of the crates, "
+"also included in the manual's PDF appendix), ``docs/gds`` (the design "
+"records), ``docs/site`` (the website landing page and release notes), "
+"and ``docs/conf.toml`` (the multi-project SSG configuration that mounts "
+"``docs/site``, ``docs/manual``, and ``docs/gds``). Each project keeps "
+"its generated templates and static assets locally so we can edit them "
+"in place. Design records stay out of the manual's table of contents."
 msgstr ""
-"Guidedog는 Guidedog로 자기 문서를 만듭니다. 저장소에는 프로젝트가 네 개 있습니다. ``docs/manual``\\ "
-"(이 설명서), ``docs/api``\\ (크레이트의 Rust API 레퍼런스), ``docs/gds``\\ (설계 기록), "
-"``docs/site``\\ (첫 페이지)입니다. 설명서와 GDS는 ``guidedog quickstart``\\ 로 시작했습니다. "
-"생성된 템플릿은 그 자리에서 직접 수정합니다. 설계 기록은 설명서 목차에 넣지 않습니다."
+"Guidedog는 Guidedog로 자기 문서를 만듭니다. 저장소에는 네 개의 문서 프로젝트와 루트 사이트 매니페스트가 "
+"있습니다. ``docs/manual``\\ (이 설명서), ``docs/api``\\ (크레이트의 독립형 Rust API "
+"레퍼런스로, 설명서 PDF 부록에도 수록됨), ``docs/gds``\\ (설계 기록), ``docs/site``\\ (웹사이트 "
+"첫 페이지와 릴리스 노트), 그리고 ``docs/conf.toml``\\ (``docs/site``, "
+"``docs/manual``, ``docs/gds``\\ 를 마운트하는 다중 프로젝트 SSG 설정)입니다. 각 프로젝트는 생성된 "
+"템플릿과 정적 에셋을 로컬에 보관하므로 그 자리에서 바로 수정할 수 있습니다. 설계 기록은 설명서 목차에 넣지 않습니다."
 
-#: ../../howto/maintain-docs.rst:10
+#: ../../howto/maintain-docs.rst:12
 msgid ""
 "All documentation is reStructuredText under ``docs/``. The only Markdown "
 "files are each crate's ``README.md``, a short cheat sheet, and the files "
@@ -1719,18 +1753,18 @@ msgstr ""
 "``README.md``\\ 와 GitHub가 루트에 요구하는 파일뿐입니다. 설계 노트, 내부 구조 문서, 관리 대장, 적합성 표는 "
 "``docs/manual/internals`` 아래의 페이지입니다."
 
-#: ../../howto/maintain-docs.rst:15
+#: ../../howto/maintain-docs.rst:17
 msgid "Build the manual"
 msgstr "설명서 빌드"
 
-#: ../../howto/maintain-docs.rst:18
+#: ../../howto/maintain-docs.rst:20
 msgid ""
 "We build ``guidedog`` first (see :doc:`install`). Then, from the "
 "repository root:"
 msgstr ""
 "먼저 ``guidedog``\\ 을 빌드합니다(:doc:`install` 참고). 그런 다음 저장소 루트에서 다음을 실행합니다."
 
-#: ../../howto/maintain-docs.rst:27
+#: ../../howto/maintain-docs.rst:29
 msgid ""
 "The PDF command creates one book, with links between its chapters. "
 "``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` "
@@ -1739,11 +1773,11 @@ msgstr ""
 "PDF 명령은 장 사이에 링크가 걸린 책 한 권을 만듭니다. ``cargo run --release -p guidedog-cmd "
 "-- build html docs/manual -W``\\ 는 빌드와 실행을 한 번에 합니다."
 
-#: ../../howto/maintain-docs.rst:31
+#: ../../howto/maintain-docs.rst:33
 msgid "The API reference"
 msgstr "API 레퍼런스"
 
-#: ../../howto/maintain-docs.rst:34
+#: ../../howto/maintain-docs.rst:36
 msgid ""
 "``docs/api`` generates its pages from the crates' source with "
 "``rust_autoapi_crates`` (see :doc:`document-code`). The reference is the "
@@ -1755,17 +1789,17 @@ msgstr ""
 "생성합니다(:doc:`document-code` 참고). 레퍼런스는 문서 주석 그 자체입니다(모든 공개 항목의 ``///``). "
 "따로 맞춰 둬야 할 API 원고 사본은 없습니다. 잘못된 내용은 크레이트에서 고치고 다시 빌드합니다."
 
-#: ../../howto/maintain-docs.rst:44
+#: ../../howto/maintain-docs.rst:46
 msgid ""
 "A warning such as ``rust.autodoc.link`` names the doc comment and the "
 "link that does not resolve."
 msgstr "``rust.autodoc.link`` 같은 경고는 해당 문서 주석과 해석되지 않는 링크를 알려 줍니다."
 
-#: ../../howto/maintain-docs.rst:47
+#: ../../howto/maintain-docs.rst:49
 msgid "Build and check discussions"
 msgstr "논의 문서 빌드와 검사"
 
-#: ../../howto/maintain-docs.rst:57
+#: ../../howto/maintain-docs.rst:59
 msgid ""
 "``docs/gds`` is a discussion catalog like any other, so ``guidedog dsc`` "
 "runs in it (see :doc:`discussions`). It manages metadata, numbers, state, "
@@ -1783,35 +1817,43 @@ msgstr ""
 "``_build/selected/<artifact>/pdf``\\ 를 사용하며, ``_build/pdf``\\ 의 전체 카탈로그는 "
 "그대로 둡니다."
 
-#: ../../howto/maintain-docs.rst:71
+#: ../../howto/maintain-docs.rst:72
 msgid ""
-"The ordinary project commands work too. The GDS project uses its own "
-"``conf.toml`` and its own ``_build`` directory. Read "
-"``docs/gds/workflow.rst`` for the authoring workflow."
+"The ordinary HTML project command works directly on ``docs/gds``, while "
+"``guidedog dsc build`` (or the ``discussion-records`` mount in "
+"``docs/conf.toml``) builds one standalone PDF per record without a "
+"combined index PDF. The GDS project uses its own ``conf.toml`` and its "
+"own ``_build`` directory. Read ``docs/gds/workflow.rst`` for the "
+"authoring workflow."
 msgstr ""
-"일반 프로젝트 명령도 사용할 수 있습니다. GDS 프로젝트는 자체 ``conf.toml``\\ 과 ``_build`` 폴더를 "
+"일반 HTML 프로젝트 명령은 ``docs/gds``\\ 에 바로 작동하며, ``guidedog dsc build``\\ (또는 "
+"``docs/conf.toml``\\ 의 ``discussion-records`` 마운트)는 통합 색인 PDF 없이 기록마다 "
+"독립형 PDF를 하나씩 빌드합니다. GDS 프로젝트는 자체 ``conf.toml``\\ 과 자체 ``_build`` 디렉터리를 "
 "씁니다. 작성 절차는 ``docs/gds/workflow.rst``\\ 를 참고하세요."
 
-#: ../../howto/maintain-docs.rst:75
+#: ../../howto/maintain-docs.rst:76
 msgid "Translations"
 msgstr "번역"
 
-#: ../../howto/maintain-docs.rst:78
+#: ../../howto/maintain-docs.rst:79
 msgid ""
-"The manual's catalogs are in ``docs/manual/locales``. After we change "
-"English text, we refresh them:"
+"Translation catalogs live in ``docs/manual/locales`` (for the manual "
+"and repository overview) and ``docs/site/locales`` (for the landing "
+"page and release notes). After we change English text, we refresh them:"
 msgstr ""
-"설명서의 카탈로그는 ``docs/manual/locales``\\ 에 있습니다. 영어 텍스트를 바꾼 뒤에는 카탈로그를 갱신합니다."
+"번역 카탈로그는 ``docs/manual/locales``\\ (설명서 및 저장소 개요용)와 "
+"``docs/site/locales``\\ (첫 페이지 및 릴리스 노트용)에 있습니다. 영어 본문을 수정한 뒤에는 다음과 같이 "
+"갱신합니다:"
 
-#: ../../howto/maintain-docs.rst:86
+#: ../../howto/maintain-docs.rst:89
 msgid "See :doc:`../intl` for the translation workflow."
 msgstr "번역 작업 흐름은 :doc:`../intl` 문서를 참고하세요."
 
-#: ../../howto/maintain-docs.rst:88
+#: ../../howto/maintain-docs.rst:91
 msgid "Before publishing"
 msgstr "게시하기 전에"
 
-#: ../../howto/maintain-docs.rst:91
+#: ../../howto/maintain-docs.rst:94
 msgid ""
 "Check links and diagnostics. Inspect wide tables and code blocks. Render "
 "the PDF pages after changing typography. Test the HTML at desktop and "
@@ -2302,20 +2344,22 @@ msgstr "원자적 커밋이 사이트를 보호하는 방식은 다음과 같습
 msgid ""
 "**Staging:** All newly rendered pages are written to a hidden staging "
 "folder (``.<target>.next``). For the default builders it sits in the "
-"build folder. For an output we name with ``-o``, it sits inside the "
-"output's one cache folder beside it (``.<target>.guidedog``), so the "
-"output gains a single hidden neighbour."
+"build folder. For a custom output folder passed to ``guidedog build -b "
+"html SOURCEDIR OUTPUTDIR``, it sits inside the output's one cache "
+"folder beside it (``.<target>.guidedog``), so the output gains a single "
+"hidden neighbour."
 msgstr ""
-"**스테이징:** 새로 렌더링한 페이지는 모두 숨겨진 스테이징 폴더(``.<target>.next``)에 씁니다. 기본 빌더에서는 "
-"이 폴더가 빌드 폴더 안에 있습니다. ``-o``\\ 로 지정한 출력에서는 출력 옆에 있는 캐시 폴더 "
+"**스테이징:** 새로 렌더링한 페이지는 모두 숨겨진 스테이징 폴더(``.<target>.next``)에 씁니다. 기본 "
+"빌더에서는 이 폴더가 빌드 폴더 안에 있습니다. ``guidedog build -b html SOURCEDIR "
+"OUTPUTDIR``\\ 에 전달한 사용자 지정 출력 폴더에서는 출력 옆에 있는 캐시 폴더 "
 "하나(``.<target>.guidedog``) 안에 있으므로, 출력 옆에는 숨겨진 폴더 하나만 생깁니다."
 
-#: ../../howto/publish.rst:53
+#: ../../howto/publish.rst:54
 msgid ""
 "**Isolation:** The live output folder stays untouched while pages compile."
 msgstr "**격리:** 페이지를 컴파일하는 동안 운영 중인 출력 폴더는 건드리지 않습니다."
 
-#: ../../howto/publish.rst:54
+#: ../../howto/publish.rst:55
 msgid ""
 "**Failure safety:** If any page fails to render, or a warning becomes an "
 "error under ``-W``, the build abandons the staging folder. The live site "
@@ -2324,7 +2368,7 @@ msgstr ""
 "**실패 보호:** 페이지 하나라도 렌더링에 실패하거나 ``-W`` 옵션으로 경고가 오류로 바뀌면, 빌드는 스테이징 폴더를 "
 "버립니다. 운영 중인 사이트는 바뀌지 않습니다."
 
-#: ../../howto/publish.rst:56
+#: ../../howto/publish.rst:57
 msgid ""
 "**Atomic swap:** Once all files are flushed, Guidedog switches the "
 "staging folder into place. Where the filesystem supports it, this is a "
@@ -2333,7 +2377,7 @@ msgstr ""
 "**원자적 교체:** 모든 파일을 플러시하고 나면 Guidedog가 스테이징 폴더를 제자리로 옮겨 넣습니다. 파일 시스템이 지원하면 "
 "디렉터리 교환 한 번으로 끝납니다."
 
-#: ../../howto/publish.rst:58
+#: ../../howto/publish.rst:59
 msgid ""
 "**Interrupted recovery:** If a crash interrupts the swap, the next build "
 "reads the durable journal. It settles the interrupted commit instead of "
@@ -2341,39 +2385,39 @@ msgid ""
 msgstr ""
 "**중단 복구:** 교체 도중 충돌로 작업이 끊기면 다음 빌드가 영속 저널을 읽습니다. 추측하지 않고 중단된 커밋을 확정합니다."
 
-#: ../../howto/publish.rst:61
+#: ../../howto/publish.rst:62
 msgid "Standard build workflow"
 msgstr "일반적인 빌드 절차"
 
-#: ../../howto/publish.rst:64
+#: ../../howto/publish.rst:65
 msgid ""
 "To build both HTML and PDF outputs into the default project output "
 "directory:"
 msgstr "HTML과 PDF를 기본 출력 디렉터리에 만듭니다."
 
-#: ../../howto/publish.rst:71
+#: ../../howto/publish.rst:72
 msgid "Output locations:"
 msgstr "출력 위치:"
 
-#: ../../howto/publish.rst:73
+#: ../../howto/publish.rst:74
 msgid "The HTML website is written to ``docs/manual/_build/html/``."
 msgstr "HTML은 ``docs/manual/_build/html/`` 경로에 씁니다."
 
-#: ../../howto/publish.rst:74
+#: ../../howto/publish.rst:75
 msgid "The PDF book is written to ``docs/manual/_build/pdf/``."
 msgstr "PDF는 ``docs/manual/_build/pdf/`` 경로에 씁니다."
 
-#: ../../howto/publish.rst:76
+#: ../../howto/publish.rst:77
 msgid ""
 "The ``-j auto`` flag parallelizes document parsing across all available "
 "CPU cores."
 msgstr "``-j auto`` 옵션은 사용 가능한 CPU 코어로 문서를 병렬 분석합니다."
 
-#: ../../howto/publish.rst:78
+#: ../../howto/publish.rst:79
 msgid "Custom output directories"
 msgstr "출력 디렉터리 지정"
 
-#: ../../howto/publish.rst:81
+#: ../../howto/publish.rst:82
 msgid ""
 "To write the site to a folder of our choice (for example, in a CI/CD "
 "pipeline or a deployment script), we use the Sphinx-compatible command "
@@ -2381,11 +2425,11 @@ msgid ""
 msgstr ""
 "사이트를 원하는 폴더에 쓰려면(예를 들어 CI/CD 파이프라인이나 배포 스크립트에서) Sphinx 호환 명령 형식을 사용합니다:"
 
-#: ../../howto/publish.rst:88
+#: ../../howto/publish.rst:89
 msgid "Guidedog enforces safety constraints on output paths:"
 msgstr "출력 경로에는 다음 제약이 있습니다."
 
-#: ../../howto/publish.rst:90
+#: ../../howto/publish.rst:91
 msgid ""
 "Choose a dedicated output folder, such as ``_build/html`` inside the "
 "project or ``build/site`` beside it. The output must not be the source "
@@ -2395,7 +2439,7 @@ msgstr ""
 "프로젝트 안의 ``_build/html`` 또는 옆의 ``build/site`` 같은 전용 폴더를 고르세요. 소스 루트나 상위 "
 "폴더는 출력으로 지정할 수 없습니다. 세대 전환이 소스 프로젝트를 교체하기 때문입니다."
 
-#: ../../howto/publish.rst:93
+#: ../../howto/publish.rst:94
 msgid ""
 "For a custom destination such as ``build/site``, Guidedog keeps its "
 "internal caches in a sibling folder (such as "
@@ -2405,30 +2449,30 @@ msgstr ""
 "``build/site`` 같은 출력 위치를 직접 지정하면 Guidedog은 내부 캐시를 옆의 형제 폴더(예: "
 "``build/.site.guidedog/.doctrees``)에 둡니다. 그러면 게시 폴더에는 우리가 배포할 정적 파일만 남습니다."
 
-#: ../../howto/publish.rst:97
+#: ../../howto/publish.rst:98
 msgid "Semantic checks and pre-flight validation"
 msgstr "의미 검사와 사전 검증"
 
-#: ../../howto/publish.rst:100
+#: ../../howto/publish.rst:101
 msgid ""
 "To check a project without writing HTML files to disk, we use the "
 "``dummy`` builder:"
 msgstr "디스크에 HTML 파일을 쓰지 않고 프로젝트를 검사하려면 ``dummy`` 빌더를 사용합니다:"
 
-#: ../../howto/publish.rst:107
+#: ../../howto/publish.rst:108
 msgid "The dummy builder:"
 msgstr "dummy 빌더의 작업:"
 
-#: ../../howto/publish.rst:109
+#: ../../howto/publish.rst:110
 msgid "Reads and parses all documents."
 msgstr "모든 문서를 읽고 파싱합니다."
 
-#: ../../howto/publish.rst:110
+#: ../../howto/publish.rst:111
 msgid ""
 "Resolves all toctrees, headings, cross-references, and domain objects."
 msgstr "toctree, 제목, 상호 참조, 도메인 객체를 해석합니다."
 
-#: ../../howto/publish.rst:111
+#: ../../howto/publish.rst:112
 msgid ""
 "Checks document references and domain objects (``-n`` enables nitpicky "
 "cross-reference checking). It does not make HTTP requests to test "
@@ -2437,21 +2481,21 @@ msgstr ""
 "문서 참조와 도메인 객체를 검사합니다. ``-n`` 옵션은 엄격한 상호 참조 검사를 켭니다. 외부 URL로 HTTP 요청을 보내 "
 "확인하지는 않습니다."
 
-#: ../../howto/publish.rst:113
+#: ../../howto/publish.rst:114
 msgid "Exits with status 1 if any broken link or warning is found (``-W``)."
 msgstr "``-W`` 옵션에서 깨진 참조나 경고가 발견되면 종료 코드 1을 반환합니다."
 
-#: ../../howto/publish.rst:115
+#: ../../howto/publish.rst:116
 msgid ""
 "In continuous integration, the dummy builder is a fast check to run "
 "before the full site build."
 msgstr "지속적 통합(CI)에서는 전체 사이트를 빌드하기 전에 dummy 빌더로 빠르게 검사할 수 있습니다."
 
-#: ../../howto/publish.rst:118
+#: ../../howto/publish.rst:119
 msgid "Reproducible build timestamps"
 msgstr "재현 가능한 빌드 시각"
 
-#: ../../howto/publish.rst:121
+#: ../../howto/publish.rst:122
 msgid ""
 "Documentation builds often embed timestamps (for example, in \"Last "
 "updated\" footer notices). When an automated deployment must give the "
@@ -2461,7 +2505,7 @@ msgstr ""
 "문서 빌드에는 시각이 들어가는 경우가 많습니다(예를 들어 푸터의 \"최종 업데이트\" 문구). 자동 배포가 실행할 때마다 같은 "
 "바이트를 만들어야 한다면 표준 환경 변수 ``SOURCE_DATE_EPOCH``\\ 로 시각을 고정합니다:"
 
-#: ../../howto/publish.rst:129
+#: ../../howto/publish.rst:130
 msgid ""
 "When this variable is set, Guidedog uses the specified Unix epoch "
 "timestamp instead of the current system clock for all date formatting, "
@@ -2479,21 +2523,21 @@ msgstr ""
 "``--preview``\\ 를 전달해 초안과 미래로 예약된 페이지를 로컬 빌드에 포함할 수 있습니다. "
 ":doc:`static-publishing`\\ 을 참고하세요."
 
-#: ../../howto/publish.rst:131
+#: ../../howto/publish.rst:132
 msgid "Deployment options"
 msgstr "배포 방식"
 
-#: ../../howto/publish.rst:134
+#: ../../howto/publish.rst:135
 msgid "Once the build succeeds, we deploy the static files to our host:"
 msgstr "빌드가 성공하면 정적 파일을 호스트에 배포합니다:"
 
-#: ../../howto/publish.rst:136
+#: ../../howto/publish.rst:137
 msgid ""
 "**Static web servers (Nginx / Caddy / Apache):** Point the server's root "
 "directive directly to the built HTML directory."
 msgstr "**웹 서버(Nginx / Caddy / Apache):** 서버의 루트를 생성된 HTML 디렉터리로 지정합니다."
 
-#: ../../howto/publish.rst:138
+#: ../../howto/publish.rst:139
 msgid ""
 "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud "
 "Storage):** Sync the contents of ``_build/html`` to our bucket with the "
@@ -2502,11 +2546,11 @@ msgstr ""
 "**클라우드 스토리지 버킷(AWS S3 / Cloudflare R2 / Google Cloud Storage):** 클라우드 "
 "제공자의 CLI 도구로 ``_build/html``\\ 의 내용을 버킷에 동기화합니다."
 
-#: ../../howto/publish.rst:140
+#: ../../howto/publish.rst:141
 msgid "**GitHub Pages:**"
 msgstr "**GitHub Pages:**"
 
-#: ../../howto/publish.rst:142
+#: ../../howto/publish.rst:143
 msgid ""
 "To deploy directly from our own machine, we run ``guidedog publish "
 "pages``. It asks for what is still missing (the repository, a token, the "
@@ -2517,7 +2561,7 @@ msgstr ""
 "Pages 설정)를 물어본 뒤 한 번의 푸시로 빌드하고 게시합니다. ``guidedog pages``\\ 는 같은 단계를 하나씩 "
 "실행할 수 있게 해 줍니다. :doc:`github-pages`\\ 를 참고하세요."
 
-#: ../../howto/publish.rst:146
+#: ../../howto/publish.rst:147
 msgid ""
 "For automated deployments with GitHub Actions, ``guidedog pages "
 "workflow`` writes a workflow that builds and deploys the site. See "
@@ -2526,7 +2570,7 @@ msgstr ""
 "GitHub Actions로 자동 배포할 때는 ``guidedog pages workflow``\\ 가 사이트를 빌드하고 배포하는 "
 "워크플로를 작성해 줍니다. :doc:`github-pages`\\ 를 참고하세요."
 
-#: ../../howto/publish.rst:148
+#: ../../howto/publish.rst:149
 msgid ""
 "For any other destination, we write a publisher plugin as described in "
 ":doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
@@ -2534,7 +2578,7 @@ msgstr ""
 "그 밖의 대상에는 :doc:`../plugins`\\ 에서 설명하는 대로 게시기 플러그인을 작성하고 ``guidedog "
 "publish --publisher=ID``\\ 로 실행합니다."
 
-#: ../../howto/publish.rst:151
+#: ../../howto/publish.rst:152
 msgid ""
 "On filesystems with directory exchange, the output path switches in one "
 "operation. The fallback uses two renames and can briefly leave that path "
@@ -2638,9 +2682,9 @@ msgid ""
 "to inspect unpublished pages locally. When keeping both public and "
 "preview outputs on disk, write the preview to a separate output directory:"
 msgstr ""
-"비공개 페이지를 로컬에서 확인하려면 ``guidedog build html --preview``(또는 ``guidedog serve "
-"--preview``)를 사용하세요. 디스크에 공개 출력과 미리보기 출력을 함께 둘 때는 미리보기를 별도의 출력 디렉터리에 "
-"작성하세요:"
+"비공개 페이지를 로컬에서 확인하려면 ``guidedog build html --preview``\\ (또는 ``guidedog "
+"serve --preview``)를 사용하세요. 디스크에 공개 출력과 미리보기 출력을 함께 둘 때는 미리보기를 별도의 출력 "
+"디렉터리에 작성하세요:"
 
 #: ../../howto/static-publishing.rst:67
 msgid "Collections, archives and feeds"
@@ -2753,9 +2797,9 @@ msgid ""
 "rather than the wall clock, producing identical bytes when eligible "
 "sources and metadata are unchanged."
 msgstr ""
-"HTML 및 dirhtml 빌더는 설정된 ``base_url``(호스팅 경로 접두사 포함)을 사용해 ``sitemap.xml``, "
-"``rss.xml``, ``atom.xml``\\ 을 생성합니다. 탐색 파일은 시스템 시계가 아니라 소스 메타데이터에서 타임스탬프를 "
-"가져오므로, 공개 대상 소스와 메타데이터가 바뀌지 않았다면 동일한 바이트를 만들어 냅니다."
+"HTML 및 dirhtml 빌더는 설정된 ``base_url``\\ (호스팅 경로 접두사 포함)을 사용해 "
+"``sitemap.xml``, ``rss.xml``, ``atom.xml``\\ 을 생성합니다. 탐색 파일은 시스템 시계가 "
+"아니라 소스 메타데이터에서 타임스탬프를 가져오므로, 공개 대상 소스와 메타데이터가 바뀌지 않았다면 동일한 바이트를 만들어 냅니다."
 
 #: ../../howto/static-publishing.rst:155
 msgid ""
@@ -2817,22 +2861,22 @@ msgid ""
 "Dated articles select ``article.html`` by default; other pages select "
 "``page.html``, which extends ``layout.html``. Any page can choose a "
 "custom template in ``templates_path`` with ``:template: landing.html``, "
-"and ``:nosidebar: true`` hides the built-in navigation sidebar. Templates "
-"receive dates, authors, tags, category, series, summary, draft state and "
-"PDF links in ``page.meta``. Article templates also receive ``page.older`` "
-"and ``page.newer`` in publication order, ``page.taxonomies`` mapping each "
-"enabled taxonomy to ``{name, url}`` entries, and ``page.word_count`` and "
-"``page.reading_minutes`` (computed using ``myst_words_per_minute``, "
-"counting CJK characters individually)."
+"and ``:nosidebar: true`` hides the built-in navigation sidebar. "
+"Templates receive dates, authors, tags, category, series, summary, "
+"draft state and PDF links in ``page.meta``. Article templates also "
+"receive ``page.older`` and ``page.newer`` in publication order, "
+"``page.taxonomies`` mapping each enabled taxonomy to ``{name, url}`` "
+"entries, and ``page.word_count`` and ``page.reading_minutes`` (computed "
+"using ``myst_words_per_minute``, counting CJK characters individually)."
 msgstr ""
-"날짜가 있는 글은 기본적으로 ``article.html``\\ 을 선택하고, 그 밖의 페이지는 ``layout.html``\\ 을 "
-"상속하는 ``page.html``\\ 을 선택합니다. 어느 페이지든 ``:template: landing.html``\\ 로 "
-"``templates_path`` 안의 사용자 지정 템플릿을 고를 수 있으며, ``:nosidebar: true``\\ 를 지정하면 "
-"내장 탐색 사이드바를 숨깁니다. 템플릿은 ``page.meta``\\ 를 통해 날짜, 저자, 태그, 카테고리, 시리즈, 요약, 초안 "
-"상태, PDF 링크를 받습니다. 글 템플릿은 게시 순서에 따른 ``page.older``\\ 와 ``page.newer``, "
-"활성화된 각 분류를 ``{name, url}`` 항목으로 매핑하는 ``page.taxonomies``, 그리고 "
-"``myst_words_per_minute``(한중일 문자는 글자 단위로 계산)로 산출한 ``page.word_count``\\ 와 "
-"``page.reading_minutes``\\ 도 받습니다."
+"날짜가 있는 글은 기본적으로 ``article.html``\\ 을 선택하고, 그 밖의 페이지는 ``layout.html``\\ "
+"을 상속하는 ``page.html``\\ 을 선택합니다. 어느 페이지든 ``:template: landing.html``\\ 로 "
+"``templates_path`` 안의 사용자 지정 템플릿을 고를 수 있으며, ``:nosidebar: true``\\ 를 "
+"지정하면 내장 탐색 사이드바를 숨깁니다. 템플릿은 ``page.meta``\\ 를 통해 날짜, 저자, 태그, 카테고리, 시리즈, "
+"요약, 초안 상태, PDF 링크를 받습니다. 글 템플릿은 게시 순서에 따른 ``page.older``\\ 와 "
+"``page.newer``, 활성화된 각 분류를 ``{name, url}`` 항목으로 매핑하는 "
+"``page.taxonomies``, 그리고 ``myst_words_per_minute``\\ (한중일 문자는 글자 단위로 "
+"계산)로 산출한 ``page.word_count``\\ 와 ``page.reading_minutes``\\ 도 받습니다."
 
 #: ../../howto/static-publishing.rst:181
 msgid ""
@@ -2944,22 +2988,22 @@ msgstr "마운트 빌드는 모든 프로젝트와 언어판을 하나의 시계
 #: ../../howto/static-publishing.rst:260
 msgid ""
 "Supported mount builders are ``html``, ``dirhtml``, ``pdf`` and "
-"``discussion-pdf`` (which validates a discussion catalog under ``prefix`` "
-"and builds a PDF book for each active record). ``exclude`` filters a "
-"mount's relative output files with globs, and ``overrides`` passes ``-D`` "
-"setting assignments (with ``{language}``, ``{edition}``, ``{site_root}`` "
-"and ``{base_url}`` placeholders). Select languages through "
-"``editions.language`` rather than a ``language`` override so routing and "
-"translated output stay aligned. Nonempty ``version`` and ``release`` "
-"values from the root configuration propagate to every mount, and one "
-"publication clock governs the entire build."
+"``discussion-pdf`` (which validates a discussion catalog under "
+"``prefix`` and builds a PDF book for each active record). ``exclude`` "
+"filters a mount's relative output files with globs, and ``overrides`` "
+"passes ``-D`` setting assignments (with ``{language}``, ``{edition}``, "
+"``{site_root}`` and ``{base_url}`` placeholders). Select languages "
+"through ``editions.language`` rather than a ``language`` override so "
+"routing and translated output stay aligned. Nonempty ``version`` and "
+"``release`` values from the root configuration propagate to every "
+"mount, and one publication clock governs the entire build."
 msgstr ""
-"지원하는 마운트 빌더는 ``html``, ``dirhtml``, ``pdf``, 그리고 ``discussion-pdf``(지정된 "
-"``prefix``\\ 로 논의 카탈로그를 검증하고 각 활성 기록의 PDF 책을 빌드함)입니다. ``exclude``\\ 는 "
-"마운트의 상대 출력 파일을 glob 패턴으로 걸러 내고, ``overrides``\\ 는 ``-D`` 설정 "
-"할당(``{language}``, ``{edition}``, ``{site_root}``, ``{base_url}`` 자리표시자 "
-"지원)을 전달합니다. 라우팅과 번역된 출력이 어긋나지 않도록 ``language`` 재정의 대신 "
-"``editions.language``\\ 로 언어를 선택하세요. 루트 설정의 비어 있지 않은 ``version``\\ 과 "
+"지원하는 마운트 빌더는 ``html``, ``dirhtml``, ``pdf``, 그리고 ``discussion-pdf``\\ "
+"(지정된 ``prefix``\\ 로 논의 카탈로그를 검증하고 각 활성 기록의 PDF 책을 빌드함)입니다. "
+"``exclude``\\ 는 마운트의 상대 출력 파일을 glob 패턴으로 걸러 내고, ``overrides``\\ 는 "
+"``-D`` 설정 할당(``{language}``, ``{edition}``, ``{site_root}``, "
+"``{base_url}`` 자리표시자 지원)을 전달합니다. 라우팅과 번역된 출력이 어긋나지 않도록 ``language`` 재정의 "
+"대신 ``editions.language``\\ 로 언어를 선택하세요. 루트 설정의 비어 있지 않은 ``version``\\ 과 "
 "``release`` 값은 모든 마운트로 전파되며, 단일 게시 시계가 빌드 전체를 관장합니다."
 
 #: ../../howto/static-publishing.rst:262
@@ -3060,7 +3104,10 @@ msgid ""
 "``typst-diagram`` compiles the code with Guidedog's embedded Typst "
 "compiler and includes the resulting image in HTML and PDF. We need no "
 "separate figure task or installed Typst program."
-msgstr "RST 또는 MyST 문서에 Typst 그리기 코드를 직접 작성할 수 있습니다. ``typst-diagram``\\ 은 Guidedog에 내장된 Typst 컴파일러로 코드를 컴파일하고 생성한 이미지를 HTML과 PDF에 포함합니다. 별도의 그림 생성 작업이나 설치된 Typst 프로그램은 필요하지 않습니다."
+msgstr ""
+"RST 또는 MyST 문서에 Typst 그리기 코드를 직접 작성할 수 있습니다. ``typst-diagram``\\ 은 "
+"Guidedog에 내장된 Typst 컴파일러로 코드를 컴파일하고 생성한 이미지를 HTML과 PDF에 포함합니다. 별도의 그림 생성 "
+"작업이나 설치된 Typst 프로그램은 필요하지 않습니다."
 
 #: ../../howto/typst-diagrams.rst:8
 msgid "A first drawing"
@@ -3088,23 +3135,92 @@ msgid ""
 "``numfig = true``, a captioned diagram is a numbered figure and "
 "``:numref:`` can refer to its ``:name:``. We provide meaningful ``:alt:`` "
 "text because SVG text is drawn as outlines."
-msgstr "기본 이미지 형식은 SVG이므로 같은 벡터 그림을 사이트와 책에서 확대하거나 축소할 수 있습니다. ``:format: png``\\ 는 인치당 144픽셀의 PNG를 선택합니다. ``:class:``\\ 와 ``:align: left|center|right``\\ 도 설정할 수 있습니다. ``numfig = true``\\ 를 설정하면 설명이 있는 그림에 번호가 붙고 ``:numref:``\\ 로 그 ``:name:``\\ 을 참조할 수 있습니다. SVG의 글자는 윤곽선으로 그려지므로 의미 있는 ``:alt:`` 텍스트를 제공합니다."
+msgstr ""
+"기본 이미지 형식은 SVG이므로 같은 벡터 그림을 사이트와 책에서 확대하거나 축소할 수 있습니다. ``:format: png``\\ "
+"는 인치당 144픽셀의 PNG를 선택합니다. ``:class:``\\ 와 ``:align: left|center|right``\\ "
+"도 설정할 수 있습니다. ``numfig = true``\\ 를 설정하면 설명이 있는 그림에 번호가 붙고 ``:numref:``\\ "
+"로 그 ``:name:``\\ 을 참조할 수 있습니다. SVG의 글자는 윤곽선으로 그려지므로 의미 있는 ``:alt:`` 텍스트를 "
+"제공합니다."
 
 #: ../../howto/typst-diagrams.rst:46
+msgid "``typst-diagram`` options"
+msgstr "``typst-diagram`` 옵션"
+
+#: ../../howto/typst-diagrams.rst:50
+msgid "Option"
+msgstr "옵션"
+
+#: ../../howto/typst-diagrams.rst:51
+msgid "Meaning"
+msgstr "설명"
+
+#: ../../howto/typst-diagrams.rst:52
+msgid "``:alt: text``"
+msgstr "``:alt: text``"
+
+#: ../../howto/typst-diagrams.rst:53
+msgid "Alternative text describing the diagram's content."
+msgstr "다이어그램 내용을 설명하는 대체 텍스트."
+
+#: ../../howto/typst-diagrams.rst:54
+msgid "``:caption: text``"
+msgstr "``:caption: text``"
+
+#: ../../howto/typst-diagrams.rst:55
+msgid ""
+"Wraps the drawing in a figure with this caption (numbered when ``numfig "
+"= true``)."
+msgstr "그림을 이 캡션이 달린 figure로 감쌉니다(``numfig = true``\\ 일 때 번호 부여)."
+
+#: ../../howto/typst-diagrams.rst:56
+msgid "``:name: label``"
+msgstr "``:name: label``"
+
+#: ../../howto/typst-diagrams.rst:57
+msgid "Cross-reference anchor for ``:ref:`` and ``:numref:``."
+msgstr "``:ref:``\\ 와 ``:numref:``\\ 용 상호 참조 앵커."
+
+#: ../../howto/typst-diagrams.rst:58
+msgid "``:format: svg|png``"
+msgstr "``:format: svg|png``"
+
+#: ../../howto/typst-diagrams.rst:59
+msgid "Output image format: ``svg`` (default) or ``png`` (144 PPI)."
+msgstr "출력 이미지 형식: ``svg``\\ (기본값) 또는 ``png``\\ (144 PPI)."
+
+#: ../../howto/typst-diagrams.rst:60
+msgid "``:align: left|center|right``"
+msgstr "``:align: left|center|right``"
+
+#: ../../howto/typst-diagrams.rst:61
+msgid "Horizontal placement of the image or figure."
+msgstr "이미지나 그림의 가로 배치."
+
+#: ../../howto/typst-diagrams.rst:62
+msgid "``:class: names``"
+msgstr "``:class: names``"
+
+#: ../../howto/typst-diagrams.rst:63
+msgid "Extra CSS class names added alongside ``typst-diagram``."
+msgstr "``typst-diagram``\\ 과 함께 추가되는 CSS 클래스 이름."
+
+#: ../../howto/typst-diagrams.rst:65
 msgid "CeTZ and Fletcher"
 msgstr "CeTZ와 Fletcher"
 
-#: ../../howto/typst-diagrams.rst:49
+#: ../../howto/typst-diagrams.rst:68
 msgid ""
 "We import packages explicitly with pinned versions. This CeTZ example "
 "uses the version shared by Fletcher 0.5.8."
-msgstr "버전을 고정하여 패키지를 명시적으로 가져옵니다. 이 CeTZ 예제는 Fletcher 0.5.8이 사용하는 것과 같은 버전을 사용합니다."
+msgstr ""
+"버전을 고정하여 패키지를 명시적으로 가져옵니다. 이 CeTZ 예제는 Fletcher 0.5.8이 사용하는 것과 같은 버전을 "
+"사용합니다."
 
-#: ../../howto/typst-diagrams.rst:65
+#: ../../howto/typst-diagrams.rst:84
 msgid "Fletcher supplies nodes and arrows."
 msgstr "Fletcher는 노드와 화살표를 제공합니다."
 
-#: ../../howto/typst-diagrams.rst:80
+#: ../../howto/typst-diagrams.rst:99
 msgid ""
 "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings apply "
 "to diagrams in both HTML and PDF. ``pdf_packages = \"offline\"`` uses "
@@ -3114,41 +3230,53 @@ msgid ""
 "with ``pdf_font_paths``. After installing a previously missing package or "
 "changing font files, we run a fresh ``guidedog build html -a`` command to "
 "redraw cached pages and reload the compiler's font store."
-msgstr "``pdf_packages``, ``pdf_fonts``, ``pdf_font_paths`` 설정은 HTML과 PDF의 다이어그램에 모두 적용됩니다. ``pdf_packages = \"offline\"``\\ 은 Typst 패키지 디렉터리에 이미 설치된 패키지만 사용합니다. 기본 설정은 없는 패키지의 다운로드를 허용합니다. 재현 가능한 조판을 위해 ``pdf_fonts = \"embedded\"``\\ 를 설정하고 ``pdf_font_paths``\\ 로 프로젝트 글꼴 디렉터리를 추가합니다. 없던 패키지를 설치하거나 글꼴 파일을 변경한 뒤에는 새 프로세스에서 ``guidedog build html -a``\\ 를 실행하여 캐시된 페이지를 다시 그리고 컴파일러의 글꼴 저장소를 다시 읽습니다."
+msgstr ""
+"``pdf_packages``, ``pdf_fonts``, ``pdf_font_paths`` 설정은 HTML과 PDF의 다이어그램에 "
+"모두 적용됩니다. ``pdf_packages = \"offline\"``\\ 은 Typst 패키지 디렉터리에 이미 설치된 패키지만 "
+"사용합니다. 기본 설정은 없는 패키지의 다운로드를 허용합니다. 재현 가능한 조판을 위해 ``pdf_fonts = "
+"\"embedded\"``\\ 를 설정하고 ``pdf_font_paths``\\ 로 프로젝트 글꼴 디렉터리를 추가합니다. 없던 "
+"패키지를 설치하거나 글꼴 파일을 변경한 뒤에는 새 프로세스에서 ``guidedog build html -a``\\ 를 실행하여 "
+"캐시된 페이지를 다시 그리고 컴파일러의 글꼴 저장소를 다시 읽습니다."
 
-#: ../../howto/typst-diagrams.rst:86
+#: ../../howto/typst-diagrams.rst:105
 msgid "Shared helpers and existing files"
 msgstr "공유 보조 코드와 기존 파일"
 
-#: ../../howto/typst-diagrams.rst:89
+#: ../../howto/typst-diagrams.rst:108
 msgid ""
 "We can move common colors and drawing functions into a local ``.typ`` "
 "file. An inline diagram imports paths relative to the RST or Markdown "
 "file containing it. A directive inside an included document uses that "
 "document's folder."
-msgstr "공통 색상과 그리기 함수를 로컬 ``.typ`` 파일로 옮길 수 있습니다. 문서 안의 다이어그램은 자신을 포함하는 RST 또는 Markdown 파일을 기준으로 가져오기 경로를 해석합니다. 포함된 문서에 있는 지시문은 그 문서의 폴더를 사용합니다."
+msgstr ""
+"공통 색상과 그리기 함수를 로컬 ``.typ`` 파일로 옮길 수 있습니다. 문서 안의 다이어그램은 자신을 포함하는 RST 또는 "
+"Markdown 파일을 기준으로 가져오기 경로를 해석합니다. 포함된 문서에 있는 지시문은 그 문서의 폴더를 사용합니다."
 
-#: ../../howto/typst-diagrams.rst:101
+#: ../../howto/typst-diagrams.rst:120
 msgid ""
 "We can also retain a complete figure source file and let Guidedog build "
 "it. We give either a file argument or an inline body. Imports in the file "
 "resolve beside that file."
-msgstr "완전한 그림 소스 파일을 유지하고 Guidedog이 빌드하도록 할 수도 있습니다. 파일 인수 또는 문서 내 본문 중 하나만 제공합니다. 파일 안의 가져오기는 그 파일을 기준으로 해석합니다."
+msgstr ""
+"완전한 그림 소스 파일을 유지하고 Guidedog이 빌드하도록 할 수도 있습니다. 파일 인수 또는 문서 내 본문 중 하나만 "
+"제공합니다. 파일 안의 가져오기는 그 파일을 기준으로 해석합니다."
 
-#: ../../howto/typst-diagrams.rst:111
+#: ../../howto/typst-diagrams.rst:130
 msgid ""
 "Imported helpers and data files become build dependencies. Changing one "
 "redraws the affected HTML pages without changing their markup. We keep "
 "project imports below the source directory; symlinks leading outside it "
 "are refused. Absolute Typst imports start at that source directory."
-msgstr "가져온 보조 파일과 데이터 파일은 빌드 의존성이 됩니다. 이를 변경하면 마크업을 수정하지 않아도 관련 HTML 페이지를 다시 그립니다. 프로젝트 가져오기는 소스 디렉터리 안에 두며 바깥을 가리키는 심볼릭 링크는 거부됩니다. Typst의 절대 가져오기 경로는 소스 디렉터리에서 시작합니다."
+msgstr ""
+"가져온 보조 파일과 데이터 파일은 빌드 의존성이 됩니다. 이를 변경하면 마크업을 수정하지 않아도 관련 HTML 페이지를 다시 "
+"그립니다. 프로젝트 가져오기는 소스 디렉터리 안에 두며 바깥을 가리키는 심볼릭 링크는 거부됩니다. Typst의 절대 가져오기 경로는 "
+"소스 디렉터리에서 시작합니다."
 
-#: ../../howto/typst-diagrams.rst:116
-#| msgid "Static websites and articles"
+#: ../../howto/typst-diagrams.rst:135
 msgid "Page size and failures"
 msgstr "페이지 크기와 실패 처리"
 
-#: ../../howto/typst-diagrams.rst:119
+#: ../../howto/typst-diagrams.rst:138
 msgid ""
 "Guidedog prepends ``#set page(width: auto, height: auto, margin: 0pt)`` "
 "so the page fits the drawing. We write ordinary Typst content, without an "
@@ -3158,17 +3286,90 @@ msgid ""
 "most 4,096 distinct file lookups per diagram. Typst layout uses the "
 "compiler's own memory; these limits do not impose a compiler timeout or a "
 "total memory ceiling."
-msgstr "Guidedog은 ``#set page(width: auto, height: auto, margin: 0pt)``\\ 를 앞에 추가하여 페이지를 그림에 맞춥니다. ``html.frame``\\ 으로 감싸지 않은 일반 Typst 내용을 작성합니다. 다이어그램은 유한한 크기의 페이지를 정확히 하나 생성해야 합니다. 지시문 본문은 최대 1 MiB이고 PNG는 최대 1,600만 픽셀, 각 변은 16,384픽셀까지 허용합니다. 어댑터는 다이어그램마다 최대 4,096개의 서로 다른 파일 조회를 추적합니다. Typst 레이아웃은 컴파일러 자체 메모리를 사용하므로 이러한 제한은 컴파일러 시간 제한이나 전체 메모리 상한을 제공하지 않습니다."
+msgstr ""
+"Guidedog은 ``#set page(width: auto, height: auto, margin: 0pt)``\\ 를 앞에 "
+"추가하여 페이지를 그림에 맞춥니다. ``html.frame``\\ 으로 감싸지 않은 일반 Typst 내용을 작성합니다. 다이어그램은 "
+"유한한 크기의 페이지를 정확히 하나 생성해야 합니다. 지시문 본문은 최대 1 MiB이고 PNG는 최대 1,600만 픽셀, 각 변은 "
+"16,384픽셀까지 허용합니다. 어댑터는 다이어그램마다 최대 4,096개의 서로 다른 파일 조회를 추적합니다. Typst 레이아웃은 "
+"컴파일러 자체 메모리를 사용하므로 이러한 제한은 컴파일러 시간 제한이나 전체 메모리 상한을 제공하지 않습니다."
 
-#: ../../howto/typst-diagrams.rst:126
+#: ../../howto/typst-diagrams.rst:145
 msgid ""
-"If compilation fails, we see a warning at the directive and the source "
-"stays visible as code. The message includes the position within the "
-"diagram or imported Typst file. ``-W`` prevents that build from replacing "
-"the published site or book. ``--untrusted`` keeps diagram source visible "
-"and warns without running Typst. Text builds retain source without "
-"compiling it."
-msgstr "컴파일이 실패하면 지시문 위치에 경고가 나오고 소스는 코드로 계속 표시됩니다. 메시지에는 다이어그램 또는 가져온 Typst 파일 안의 위치가 포함됩니다. ``-W``\\ 는 이 빌드가 게시된 사이트나 책을 교체하지 못하게 합니다. ``--untrusted``\\ 는 Typst를 실행하지 않고 다이어그램 소스를 유지하며 경고합니다. 텍스트 빌드도 컴파일 없이 소스를 보존합니다."
+"If compilation fails, we see a ``build.typst-diagram`` warning at the "
+"directive and the source stays visible as code. The message includes "
+"the position within the diagram or imported Typst file. Giving neither "
+"or both of a file argument and an inline body reports "
+"``sphinx.typst.source``. A ``guidedog`` built without the ``embedded`` "
+"Typst feature reports ``typst.embedded``, and exceeding the host memory "
+"budget reports ``host.budget``. ``-W`` prevents a failed build from "
+"replacing the published site or book. ``--untrusted`` keeps diagram "
+"source visible and warns ``build.typst-diagram`` without running Typst. "
+"Text builds retain source without compiling it."
+msgstr ""
+"컴파일이 실패하면 지시문 위치에 ``build.typst-diagram`` 경고가 나오고 소스는 코드로 계속 표시됩니다. "
+"메시지에는 다이어그램이나 가져온 Typst 파일 안의 위치가 포함됩니다. 파일 인수와 인라인 본문을 둘 다 생략하거나 둘 다 "
+"지정하면 ``sphinx.typst.source``\\ 를 보고합니다. ``embedded`` Typst 기능 없이 빌드한 "
+"``guidedog``\\ 은 ``typst.embedded``\\ 를 보고하며, 호스트 메모리 예산을 초과하면 "
+"``host.budget``\\ 을 보고합니다. ``-W``\\ 는 실패한 빌드가 게시된 사이트나 책을 교체하지 못하게 "
+"막습니다. ``--untrusted``\\ 는 Typst를 실행하지 않고 다이어그램 소스를 유지하며 "
+"``build.typst-diagram`` 경고를 내보냅니다. 텍스트 빌드도 컴파일 없이 소스를 보존합니다."
+
+#: ../../howto/typst-diagrams.rst:153
+msgid "Migrate existing figure files"
+msgstr "기존 그림 파일 이전하기"
+
+#: ../../howto/typst-diagrams.rst:156
+msgid ""
+"When a project previously ran ``typst compile`` by hand or in a "
+"Makefile to generate prebuilt ``.svg`` or ``.png`` files:"
+msgstr ""
+"이전에 수동으로나 Makefile에서 ``typst compile``\\ 을 실행해 미리 빌드된 ``.svg`` 또는 "
+"``.png`` 파일을 생성하던 프로젝트라면 다음과 같이 이전합니다:"
+
+#: ../../howto/typst-diagrams.rst:158
+msgid ""
+"Remove any explicit ``#set page(...)`` or ``html.frame(...)`` wrapper "
+"that existed only to crop the figure; Guidedog prepends ``#set "
+"page(width: auto, height: auto, margin: 0pt)`` automatically."
+msgstr ""
+"그림 여백을 자르기 위해서만 넣었던 명시적인 ``#set page(...)`` 또는 ``html.frame(...)`` 래퍼를 "
+"제거합니다. Guidedog이 ``#set page(width: auto, height: auto, margin: "
+"0pt)``\\ 를 자동으로 앞에 붙입니다."
+
+#: ../../howto/typst-diagrams.rst:159
+msgid ""
+"Replace ``.. figure:: figures/arch.svg`` (and its separate build "
+"script) with ``.. typst-diagram:: figures/arch.typ``, keeping "
+"``:caption:``, ``:alt:``, ``:name:`` and ``:align:`` on the directive."
+msgstr ""
+"``.. figure:: figures/arch.svg``\\ (및 별도의 빌드 스크립트)를 ``.. "
+"typst-diagram:: figures/arch.typ``\\ 로 바꾸고, 지시문의 ``:caption:``, "
+"``:alt:``, ``:name:``, ``:align:`` 옵션은 그대로 유지합니다."
+
+#: ../../howto/typst-diagrams.rst:160
+msgid ""
+"Delete the committed generated ``.svg`` or ``.png`` artifacts once "
+"``guidedog build html -W`` and ``guidedog build pdf -W`` succeed."
+msgstr ""
+"``guidedog build html -W``\\ 와 ``guidedog build pdf -W``\\ 가 성공하면 저장소에 "
+"커밋해 두었던 생성된 ``.svg`` 또는 ``.png`` 결과물을 삭제합니다."
+
+#~ msgid ""
+#~ "``guidedog dsc build`` writes the website to ``_build/html`` and one "
+#~ "PDF per record to ``_build/pdf``. Naming a record writes only its PDF, "
+#~ "to ``_build/selected``, and leaves the complete output alone. Warnings "
+#~ "stop the build."
+#~ msgstr ""
+#~ "``guidedog dsc build``\\ 는 웹사이트를 ``_build/html``\\ 에, 기록마다 PDF 하나를 "
+#~ "``_build/pdf``\\ 에 씁니다. 기록 이름을 지정하면 그 PDF만 ``_build/selected``\\ 에 쓰고 "
+#~ "전체 출력은 건드리지 않습니다. 경고가 있으면 빌드가 멈춥니다."
+
+#~ msgid ""
+#~ "The manual's catalogs are in ``docs/manual/locales``. After we change "
+#~ "English text, we refresh them:"
+#~ msgstr ""
+#~ "설명서의 카탈로그는 ``docs/manual/locales``\\ 에 있습니다. 영어 텍스트를 바꾼 뒤에는 카탈로그를 "
+#~ "갱신합니다."
 
 #~ msgid ""
 #~ "**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. "

@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:02+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -84,18 +84,16 @@ msgid ""
 "HTML site's absolute HTTP or HTTPS address. The book then links to that "
 "site's copied files. Without it, the link remains source-relative. The "
 "PDF does not embed attachments. This setting does not upload files. "
-"Publish the HTML site before sharing the book. This behavior is available "
-"in Guidedog 0.6.3 and later."
+"Publish the HTML site before sharing the book."
 msgstr ""
 "要让 PDF 中的下载链接在任何地方都能用，请把 ``html_baseurl`` 设为已发布 HTML 网站的 HTTP 或 HTTPS "
-"绝对地址。书籍会链接到该网站上复制的文件。不设置时，链接仍相对于源目录。PDF 不嵌入附件。这个设置不会上传文件，分享书籍之前请先发布 HTML "
-"网站。此功能适用于 Guidedog 0.6.3 及更高版本。"
+"绝对地址。书籍会链接到该网站上复制的文件。不设置时，链接仍相对于源目录。PDF 不嵌入附件。这个设置不会上传文件，分享书籍之前请先发布 HTML 网站。"
 
-#: ../../media.rst:64
+#: ../../media.rst:63
 msgid "Theme files"
 msgstr "主题文件"
 
-#: ../../media.rst:67
+#: ../../media.rst:66
 msgid ""
 "``_static`` holds the files the theme uses (style sheets, scripts, fonts, "
 "a logo), copied as they are into ``_static`` in the site. "
@@ -109,14 +107,16 @@ msgstr ""
 "``html_js_files``\\ 、\\ ``html_logo`` 和 ``html_favicon`` "
 "指定其中的文件。内容媒体应与文档放在一起，这样移动文档和媒体后，链接仍有效。"
 
-#: ../../media.rst:73
+#: ../../media.rst:72
 msgid "Generated diagrams"
 msgstr "生成的图表"
 
-#: ../../media.rst:76
+#: ../../media.rst:75
 msgid ""
 "We author Graphviz and Typst diagrams as source in the document. Guidedog "
 "creates their image assets during project builds and includes them in "
 "HTML and PDF. The :doc:`topics/diagrams` chapter covers both tools, "
 "captions, references and shared drawing libraries."
-msgstr "我们在文档中以源代码编写 Graphviz 和 Typst 图表。Guidedog 在项目构建时生成图像资源，并将其加入 HTML 和 PDF。:doc:`topics/diagrams` 一章介绍两种工具、图注、引用和共享绘图库。"
+msgstr ""
+"我们在文档中以源代码编写 Graphviz 和 Typst 图表。Guidedog 在项目构建时生成图像资源，并将其加入 HTML 和 "
+"PDF。:doc:`topics/diagrams` 一章介绍两种工具、图注、引用和共享绘图库。"

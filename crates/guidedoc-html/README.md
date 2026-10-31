@@ -7,9 +7,9 @@ structure, or the CommonMark reference renderer's bytes for conformance tests.
 
 ```toml
 [dependencies]
-guidedoc-html = "0.7"
-guidedoc = "0.7"
-guidedoc-commonmark = "0.7"
+guidedoc-html = "1.0.0-beta.8"
+guidedoc = "1.0.0-beta.8"
+guidedoc-commonmark = "1.0.0-beta.8"
 ```
 
 We render CommonMark as HTML:
@@ -29,7 +29,7 @@ fn main() -> Result<(), guidedoc::Fail> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/guidedoc-html). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p guidedoc-html --no-deps` (and on [docs.rs](https://docs.rs/guidedoc-html) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

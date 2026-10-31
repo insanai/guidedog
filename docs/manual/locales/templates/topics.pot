@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:11+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -117,154 +117,154 @@ msgid "In MyST Markdown, we use a directive fence with the same options."
 msgstr ""
 
 #: ../../topics/diagrams.rst:99
-msgid "A ``graphviz`` file argument reads a DOT file instead of an inline body. ``graph`` and ``digraph`` take the graph name as their argument and wrap the body's edges in the corresponding DOT graph. A plain ``dot`` or ``graphviz`` Markdown fence also draws a graph; we use the directive form when we need options."
+msgid "A ``graphviz`` file argument reads a DOT file instead of an inline body. ``graph`` and ``digraph`` take the graph name as their argument and wrap the body's edges in the corresponding DOT graph. ``:layout:`` (or Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout engine: ``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, ``twopi``, ``osage`` or ``patchwork``. A plain ``dot`` or ``graphviz`` Markdown fence also draws a graph; we use the directive form when we need options."
 msgstr ""
 
-#: ../../topics/diagrams.rst:103
+#: ../../topics/diagrams.rst:104
 msgid "Draw with Typst"
 msgstr ""
 
-#: ../../topics/diagrams.rst:106
+#: ../../topics/diagrams.rst:107
 msgid "The ``typst-diagram`` directive compiles its body to an image. The page fits the drawing automatically. We can start with Typst's built-in shapes before adding a package."
 msgstr ""
 
-#: ../../topics/diagrams.rst:120
+#: ../../topics/diagrams.rst:121
 msgid "A drawing from Typst source."
 msgstr ""
 
-#: ../../topics/diagrams.rst:126
+#: ../../topics/diagrams.rst:127
 msgid "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. An ordinary ``typst`` code fence displays source without compiling it."
 msgstr ""
 
-#: ../../topics/diagrams.rst:139
+#: ../../topics/diagrams.rst:140
 msgid "CeTZ supplies a drawing canvas and geometric operations. We import a specific package version so the source states its dependency."
 msgstr ""
 
-#: ../../topics/diagrams.rst:156
+#: ../../topics/diagrams.rst:157
 msgid "Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates are useful when position carries meaning."
 msgstr ""
 
-#: ../../topics/diagrams.rst:172
+#: ../../topics/diagrams.rst:173
 msgid "Share source and refer to figures"
 msgstr ""
 
-#: ../../topics/diagrams.rst:175
+#: ../../topics/diagrams.rst:176
 msgid "Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` and ``:align:``. We enable ``numfig = true`` in ``conf.toml`` and refer to a named captioned drawing with ``:numref:`` in RST or ``{numref}`` in MyST. For example, :numref:`chapter-typst-circle` is a numbered figure in this book. Alternative text explains the information conveyed by the drawing. It is especially useful for Typst SVGs, which draw letters as outlines."
 msgstr ""
 
-#: ../../topics/diagrams.rst:181
+#: ../../topics/diagrams.rst:182
 msgid "For a larger drawing we keep Typst source in a file. Guidedog compiles it during the ordinary build."
 msgstr ""
 
-#: ../../topics/diagrams.rst:190
+#: ../../topics/diagrams.rst:191
 msgid "An inline diagram's imports resolve beside the document containing it. A file diagram's imports resolve beside its Typst file. We can therefore share a local helper library for colors, nodes and sequence diagrams. Changing an imported helper or data file redraws the affected HTML pages. Identical generated images keep their timestamps so unchanged PDF books remain cached."
 msgstr ""
 
-#: ../../topics/diagrams.rst:196
+#: ../../topics/diagrams.rst:197
 msgid "Packages, limits and failures"
 msgstr ""
 
-#: ../../topics/diagrams.rst:199
+#: ../../topics/diagrams.rst:200
 msgid "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings govern Typst diagrams in both outputs. With ``pdf_packages = \"offline\"``, the compiler uses only packages already installed in Typst's package directories. The default downloads missing packages. After installing a previously missing package or editing fonts, we run a fresh ``guidedog build html -a`` command. Project imports stay below the source directory, including through symlinks. Diagrams must produce one finite page; PNG export is limited to 16 million pixels and 16,384 pixels on either side."
 msgstr ""
 
-#: ../../topics/diagrams.rst:206
-msgid "A failed drawing remains visible as source with a warning. We build with ``-W`` when a missing diagram must prevent publication. ``--untrusted`` refuses Typst compilation and retains its source. Text builds show source without compiling a drawing. The :doc:`../howto/typst-diagrams` guide lists every option, source limit and migration step for existing figure files."
+#: ../../topics/diagrams.rst:207
+msgid "A failed drawing remains visible as source with a warning (``build.graphviz`` or ``build.typst-diagram``; missing or duplicate directive sources report ``sphinx.graphviz.source`` or ``sphinx.typst.source``). We build with ``-W`` when a missing diagram must prevent publication. ``--untrusted`` refuses Typst compilation and external Graphviz resources and retains the source. Text builds show source without compiling a drawing. The :doc:`../howto/typst-diagrams` guide lists every option, source limit and migration step for existing figure files."
 msgstr ""
 
-#: ../../topics/diagrams.rst:212
+#: ../../topics/diagrams.rst:213
 msgid "Light, dark and print"
 msgstr ""
 
-#: ../../topics/diagrams.rst:215
+#: ../../topics/diagrams.rst:216
 msgid "Typst diagrams keep their authored colors and receive the same light panel as ordinary Graphviz images in the default dark theme. The adaptive Graphviz palette does not recolor Typst drawings."
 msgstr ""
 
-#: ../../topics/diagrams.rst:217
+#: ../../topics/diagrams.rst:218
 msgid "A transparent canvas does not change a graph's ink. Dark text can disappear on a dark page. Ordinary graphs therefore keep their chosen colors and receive a light panel in the default dark theme."
 msgstr ""
 
-#: ../../topics/diagrams.rst:221
-msgid "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to the directive. This is available in Guidedog 0.6.3 and later. Guidedog adds a fixed stylesheet inside the SVG image. Its dark media query follows the embedding page's ``color-scheme``, including the theme control's explicit selection. No script, external stylesheet or inline page SVG is needed."
+#: ../../topics/diagrams.rst:222
+msgid "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to the directive. Guidedog adds a fixed stylesheet inside the SVG image. Its dark media query follows the embedding page's ``color-scheme``, including the theme control's explicit selection. No script, external stylesheet or inline page SVG is needed."
 msgstr ""
 
-#: ../../topics/diagrams.rst:227
+#: ../../topics/diagrams.rst:228
 msgid "Use short labels, rounded boxes for steps, notes for input and cylinders for durable stores. Node classes distinguish roles in the dark palette:"
 msgstr ""
 
-#: ../../topics/diagrams.rst:230
+#: ../../topics/diagrams.rst:231
 msgid "Semantic node classes"
 msgstr ""
 
-#: ../../topics/diagrams.rst:234
+#: ../../topics/diagrams.rst:235
 msgid "DOT class"
 msgstr ""
 
-#: ../../topics/diagrams.rst:235
+#: ../../topics/diagrams.rst:236
 msgid "Role"
 msgstr ""
 
-#: ../../topics/diagrams.rst:236
+#: ../../topics/diagrams.rst:237
 msgid "``gd-input``"
 msgstr ""
 
-#: ../../topics/diagrams.rst:237
+#: ../../topics/diagrams.rst:238
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr ""
 
-#: ../../topics/diagrams.rst:238
+#: ../../topics/diagrams.rst:239
 msgid "``gd-output``"
 msgstr ""
 
-#: ../../topics/diagrams.rst:239
+#: ../../topics/diagrams.rst:240
 msgid "A produced artifact; blue."
 msgstr ""
 
-#: ../../topics/diagrams.rst:240
+#: ../../topics/diagrams.rst:241
 msgid "``gd-plugin``"
 msgstr ""
 
-#: ../../topics/diagrams.rst:241
+#: ../../topics/diagrams.rst:242
 msgid "An optional extension point; amber, with a dashed border."
 msgstr ""
 
-#: ../../topics/diagrams.rst:242
+#: ../../topics/diagrams.rst:243
 msgid "``gd-choice``"
 msgstr ""
 
-#: ../../topics/diagrams.rst:243
+#: ../../topics/diagrams.rst:244
 msgid "A decision; amber, with a diamond shape."
 msgstr ""
 
-#: ../../topics/diagrams.rst:244
+#: ../../topics/diagrams.rst:245
 msgid "``gd-memory``"
 msgstr ""
 
-#: ../../topics/diagrams.rst:245
+#: ../../topics/diagrams.rst:246
 msgid "A separate ownership or allocation boundary; violet."
 msgstr ""
 
-#: ../../topics/diagrams.rst:247
+#: ../../topics/diagrams.rst:248
 msgid "For example, ``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark role. Classes do not choose shapes or add labels. We write those explicitly, so the drawing also works in monochrome. Unclassified steps use green. This palette is opt-in. We do not apply it to artwork whose exact colors carry data."
 msgstr ""
 
-#: ../../topics/diagrams.rst:253
+#: ../../topics/diagrams.rst:254
 msgid "The light DOT attributes remain the PDF master. The book receives an SVG without the adaptive stylesheet. Printed HTML selects the light scheme too. Keep both palettes legible and test the actual book. Transparency alone proves neither. The inheritance rule is defined by the `CSS color-scheme specification <https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
 msgstr ""
 
-#: ../../topics/diagrams.rst:259
+#: ../../topics/diagrams.rst:260
 msgid "Make the result legible"
 msgstr ""
 
-#: ../../topics/diagrams.rst:262
+#: ../../topics/diagrams.rst:263
 msgid "Keep node labels short. Explain a longer rule below the drawing. Prefer one direction for the main path. Label a return edge with its condition. Use shape and text as well as color. A print reader may have no color at all."
 msgstr ""
 
-#: ../../topics/diagrams.rst:266
+#: ../../topics/diagrams.rst:267
 msgid "Supply alternative text and a caption. Test narrow browser windows and the PDF page. If a diagram needs tiny type to fit, split it into two drawings. See :doc:`../media` for image and figure sizing."
 msgstr ""
 
-#: ../../topics/diagrams.rst:270
+#: ../../topics/diagrams.rst:271
 msgid "On narrow screens, captioned diagrams scroll horizontally to keep labels readable. Scroll inside the figure. The page itself keeps its width."
 msgstr ""
 
@@ -767,42 +767,42 @@ msgid "Three-region reading layout for HTML documentation."
 msgstr ""
 
 #: ../../topics/typography.rst:36
-msgid "**Light is the default.** The theme control also offers dark and system modes. It remembers the choice on the same browser origin. System mode follows the operating system. Printed HTML uses light colors. Content and navigation remain usable without JavaScript. The theme control and enhanced search are progressive enhancements."
+msgid "The built-in theme follows the operating system by default, with light and dark choices; Guidedog's own documentation website defaults to the light reading edition. The theme control remembers the reader's choice on the same browser origin. Printed HTML uses light colors. Content and navigation remain usable without JavaScript. The theme control, enhanced search, and paragraph line breaking are progressive enhancements."
 msgstr ""
 
-#: ../../topics/typography.rst:42
-msgid "English prose can use paragraph-wide **Knuth-Plass line breaking** in the browser. A small template script measures the loaded font, builds boxes, spaces, and hyphenation penalties, and chooses breaks for the whole paragraph. Frank Liang's pattern method supplies English hyphenation candidates. The original TeX patterns and the libraries' licenses are bundled with the site."
+#: ../../topics/typography.rst:43
+msgid "Every initialized project (``guidedog quickstart``, ``guidedog ssg init``, and ``guidedog dsc init``) copies ``_static/typography.js`` beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a project owns and can edit its scripts directly. On desktop reading measures (``40rem`` and wider), English prose uses paragraph-wide **Knuth-Plass line breaking** in the browser across paragraphs, list items, definitions, admonitions, block quotes, and footnotes, while leaving tables, navigation trees, metadata headers, and figure captions ragged. The script measures the loaded font, builds boxes, glue, and hyphenation penalties, and chooses breaks for the whole block. Frank Liang's pattern method supplies English hyphenation candidates, and break penalty widths are discarded after a hyphenated break so following lines are measured accurately. Inline mathematics (after MathJax finishes), footnote references, superscripts, and subscripts are measured as inline atoms; links keep their markup, and inline code literals may break cleanly after ``/`` or ``::``. The original TeX patterns and the libraries' BSD notices are recorded in ``NOTICE``."
 msgstr ""
 
-#: ../../topics/typography.rst:48
-msgid "The enhancement preserves emphasis and the exact source text. It recalculates when the reading measure changes. Copying within one optimized paragraph gives the source text, without visual line divisions or added hyphens. Printing restores the ordinary paragraph so the print layout can paginate it."
+#: ../../topics/typography.rst:57
+msgid "The enhancement preserves emphasis and the exact source text. It recalculates when the reading measure changes. Copying within or across typeset blocks gives the source text, without visual line divisions or added hyphens. Narrow screens (below ``40rem``) and printing restore ordinary layout so mobile browsers wrap naturally and print engines can paginate paragraphs."
 msgstr ""
 
-#: ../../topics/typography.rst:53
-msgid "Links, mathematics, code, interactive content, narrow measures, and other languages use native browser layout. So do paragraphs for which no suitably spaced solution exists. The site remains readable with JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` and ``text-wrap: pretty``. Those CSS properties alone are not a promise of Knuth-Plass optimization."
+#: ../../topics/typography.rst:63
+msgid "Other languages, narrow measures, JavaScript-disabled browsers, and paragraphs for which no suitably spaced solution exists use native browser layout with ``text-wrap: pretty`` (without greedy CSS justification or browser ``hyphens: auto``). That CSS property alone is not a promise of Knuth-Plass optimization."
 msgstr ""
 
-#: ../../topics/typography.rst:59
+#: ../../topics/typography.rst:68
 msgid "The PDF page"
 msgstr ""
 
-#: ../../topics/typography.rst:62
+#: ../../topics/typography.rst:71
 msgid "The book and standalone article templates use the same Libertinus family as the web edition. They set justified paragraphs, optimized line breaking, and language-aware hyphenation. They also control spacing, running heads, captions, code blocks, and table rules. The font, hyphenation cost, and paragraph measure work together. A forced line break is rarely the right repair for a loose paragraph."
 msgstr ""
 
-#: ../../topics/typography.rst:64
+#: ../../topics/typography.rst:73
 msgid "Typst optimizes the PDF paragraphs. The web enhancement optimizes eligible prose. They share the source, fonts, and visual hierarchy. Their line breaks can differ. See the `Typst text contract <https://typst.app/docs/reference/text/text/>`_ and the `browser hyphenation contract <https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_."
 msgstr ""
 
-#: ../../topics/typography.rst:69
+#: ../../topics/typography.rst:78
 msgid "Change the design"
 msgstr ""
 
-#: ../../topics/typography.rst:72
+#: ../../topics/typography.rst:81
 msgid "Edit ``_static/editorial.css`` for the documentation project's visual tokens. Edit ``_templates/layout.html`` for structure. Edit ``_templates/theme.typ`` for the PDF palette and typography. Edit ``_templates/book.typ`` for book structure, ``_templates/discussion.typ`` for discussion structure, and ``_templates/article.typ`` for standalone article PDFs. All three layouts wrap their content with the shared language-aware theme. Keep reading order, focus indicators, labels, and sufficient contrast intact."
 msgstr ""
 
-#: ../../topics/typography.rst:74
+#: ../../topics/typography.rst:83
 msgid "Build both targets after a change. Inspect a page with code, a table, a diagram, and an equation. An attractive cover is not proof that the rest of the book works. We build our own design in :doc:`../tutorial/a-custom-theme`. The full template contract is in :doc:`../templates`. The Rust API of Guidedog's crates is documented in the separate ``docs/api`` project."
 msgstr ""
 

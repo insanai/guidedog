@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:02+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -519,11 +519,12 @@ msgstr "``imgconverter``"
 
 #: ../../compatibility.rst:147
 msgid ""
-"Accepted, and nothing runs: Typst reads SVG, PNG, JPEG and GIF itself. "
-"Other formats are reported (:doc:`sources-and-diagrams`)."
+"Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and "
+"PDF itself. Other formats are reported (:doc:`sources-and-diagrams`)."
 msgstr ""
-"स्वीकार होता है, पर कुछ नहीं चलता: Typst SVG, PNG, JPEG और GIF खुद पढ़ता "
-"है। दूसरे फ़ॉर्मैट की सूचना दी जाती है (:doc:`sources-and-diagrams`)।"
+"स्वीकार होता है, पर कुछ नहीं चलता: Typst PNG, JPEG, GIF, SVG, WebP और "
+"PDF खुद पढ़ता है। दूसरे फ़ॉर्मैट की सूचना दी जाती है "
+"(:doc:`sources-and-diagrams`)।"
 
 #: ../../compatibility.rst:148
 msgid "``myst_parser``"
@@ -586,29 +587,38 @@ msgstr ""
 #: ../../compatibility.rst:166
 msgid ""
 "Graphviz image resources are resolved relative to their document and "
-"confined."
-msgstr "Graphviz के चित्र संसाधनों के पथ उनके दस्तावेज़ के सापेक्ष हल किए जाते हैं और अनुमत सीमा में रहते हैं।"
+"confined. Supported image bytes are embedded in the drawing. "
+"``imagepath`` and ``fontpath`` do not expand the boundary. The embedded "
+"Typst compiler enforces the declared readable folders directly, while "
+"an external ``typst`` program runs with a private symlink root "
+"containing only those folders. This keeps book templates and preambles "
+"within the declared resources."
+msgstr ""
+"Graphviz के चित्र संसाधन अपने दस्तावेज़ के सापेक्ष हल किए जाते हैं और "
+"सीमित रहते हैं। समर्थित चित्र बाइट्स आरेख में समाहित होते हैं। "
+"``imagepath`` और ``fontpath`` सीमा नहीं बढ़ाते। अंतर्निहित Typst "
+"कंपाइलर घोषित पठनीय फ़ोल्डरों को सीधे लागू करता है, जबकि बाहरी "
+"``typst`` प्रोग्राम एक निजी सिमलिंक रूट के साथ चलता है जिसमें केवल वही "
+"फ़ोल्डर होते हैं। इससे पुस्तक टेम्पलेट और प्रस्तावनाएँ घोषित संसाधनों "
+"के भीतर रहती हैं।"
 
-#: ../../compatibility.rst:168
-#| msgid ""
-#| "Graphviz image resources are resolved relative to their document and "
-#| "confined. Supported image bytes are embedded in the drawing. "
-#| "``imagepath`` and ``fontpath`` do not expand the boundary. Typst runs "
-#| "with a private root containing the readable folders. This keeps book "
-#| "templates and preambles within the declared resources."
+#: ../../compatibility.rst:173
 msgid ""
 "``typst-diagram`` is a Guidedog extension for RST and MyST projects, "
 "rather than a Sphinx extension contract. It compiles inline or file "
 "source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks "
 "remain examples. The embedded compiler uses the project's package and "
 "font policy; ``--untrusted`` refuses compilation. See "
-":doc:`topics/diagrams`. Supported image bytes are embedded in the "
-"drawing. ``imagepath`` and ``fontpath`` do not expand the boundary. Typst "
-"runs with a private root containing the readable folders. This keeps book "
-"templates and preambles within the declared resources."
-msgstr "``typst-diagram`` RST और MyST परियोजनाओं के लिए Guidedog का विस्तार है, Sphinx विस्तार का अनुबंध नहीं। यह दस्तावेज़ के भीतर या फ़ाइल के स्रोत को HTML तथा PDF के लिए SVG या PNG में कंपाइल करता है। सामान्य Typst कोड ब्लॉक उदाहरण ही रहते हैं। अंतर्निहित कंपाइलर परियोजना की पैकेज और फ़ॉन्ट नीति इस्तेमाल करता है; ``--untrusted`` कंपाइलेशन अस्वीकार करता है। :doc:`topics/diagrams` देखें। समर्थित चित्र डेटा आरेख में समाहित होता है। ``imagepath`` और ``fontpath`` पढ़ने की सीमा नहीं बढ़ाते। Typst एक निजी मूल निर्देशिका के भीतर चलता है जिसमें पढ़ने योग्य फ़ोल्डर होते हैं। इससे पुस्तक टेम्पलेट और प्रस्तावनाएँ घोषित संसाधनों के भीतर रहती हैं।"
+":doc:`topics/diagrams`."
+msgstr ""
+"``typst-diagram`` RST और MyST परियोजनाओं के लिए Guidedog का विस्तार है, "
+"Sphinx विस्तार का अनुबंध नहीं। यह दस्तावेज़ के भीतर या फ़ाइल के स्रोत "
+"को HTML तथा PDF के लिए SVG या PNG में कंपाइल करता है। सामान्य Typst कोड "
+"ब्लॉक उदाहरण ही रहते हैं। अंतर्निहित कंपाइलर परियोजना की पैकेज और "
+"फ़ॉन्ट नीति इस्तेमाल करता है; ``--untrusted`` कंपाइलेशन अस्वीकार करता "
+"है। :doc:`topics/diagrams` देखें।"
 
-#: ../../compatibility.rst:173
+#: ../../compatibility.rst:175
 msgid ""
 "``--untrusted`` narrows the read boundary to the source folder. It omits "
 "raw content, unsafe URLs, outside resources, project Typst templates, and "
@@ -622,7 +632,7 @@ msgstr ""
 "संसाधन पढ़ने वाले ग्राफ़ चेतावनी के साथ कोड में दिखते हैं। यह मोड नेटिव "
 "कम्पाइलर की मेमोरी या चलने का समय सीमित नहीं करता।"
 
-#: ../../compatibility.rst:179
+#: ../../compatibility.rst:181
 msgid ""
 "The host budget defaults to 1 GiB. It is coarse: it counts the sources, "
 "included files, and PDF output the host holds, reserved before they are "
@@ -643,7 +653,7 @@ msgstr ""
 "में ही रहती है। डिस्क पर आधारित कोई मोड नहीं है, और ``--memory=disk`` तथा "
 "``--disk-budget`` अस्वीकार कर दिए जाते हैं।"
 
-#: ../../compatibility.rst:186
+#: ../../compatibility.rst:188
 msgid ""
 "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document "
 "work. Changing a limit invalidates cached reading and output. Depth and "
@@ -659,11 +669,11 @@ msgstr ""
 "ऑपरेटिंग सिस्टम की सीमाएँ इस्तेमाल करते हैं। :doc:`errors` और "
 ":doc:`internals/memory` देखें।"
 
-#: ../../compatibility.rst:192
+#: ../../compatibility.rst:194
 msgid "Verification and real projects"
 msgstr "सत्यापन और वास्तविक प्रोजेक्ट"
 
-#: ../../compatibility.rst:195
+#: ../../compatibility.rst:197
 msgid ""
 "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx "
 "9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, "
@@ -687,7 +697,7 @@ msgstr ""
 "हैं। ``cargo xtask verify-docutils`` उन्हें निश्चित Docutils 0.22.4 से "
 "मिलाकर जाँचता है। सभी 98 ट्री मेल खाते हैं।"
 
-#: ../../compatibility.rst:197
+#: ../../compatibility.rst:199
 msgid ""
 "On 15 October 2026 we built the manuals of CPython, Django and Flask as "
 "HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). "
@@ -702,7 +712,7 @@ msgstr ""
 "Django और Flask की पुस्तकें बन गईं; CPython की पुस्तक को 12 GB वाली उस "
 "मशीन से ज़्यादा मेमोरी चाहिए।"
 
-#: ../../compatibility.rst:199
+#: ../../compatibility.rst:201
 msgid ""
 "Those projects contain unsupported Python extension constructs. Their "
 "diagnostics remain part of the evidence. A zero exit status does not mean "
@@ -714,10 +724,17 @@ msgstr ""
 "उनके सभी निजी निर्देश दोहराए गए। जब प्रकाशन के लिए शून्य निदान ज़रूरी "
 "हों, तो हम ``-W`` के साथ चलाते हैं।"
 
-#: ../../compatibility.rst:201
+#: ../../compatibility.rst:203
 msgid ""
 "The measurements describe the recorded workloads on the recorded machine. "
 "They are not universal speed or memory bounds."
 msgstr ""
 "ये माप दर्ज की गई मशीन पर दर्ज किए गए वर्कलोड के हैं। ये गति या मेमोरी की "
 "सार्वभौमिक सीमाएँ नहीं हैं।"
+
+#~ msgid ""
+#~ "Graphviz image resources are resolved relative to their document and "
+#~ "confined."
+#~ msgstr ""
+#~ "Graphviz के चित्र संसाधनों के पथ उनके दस्तावेज़ के सापेक्ष हल किए जाते "
+#~ "हैं और अनुमत सीमा में रहते हैं।"

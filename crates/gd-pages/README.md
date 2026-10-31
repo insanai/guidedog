@@ -32,7 +32,7 @@ let plugin = gd_pages::plugin_with(settings);
 | Guided publish | `publish_guided(&GuideOptions, &mut dyn Prompt)`, `Prompt` (`show`, `confirm`, `choose`), `GuideOptions`, `plan_lines`; inference: `parse_github_remote`, `origin_url`, `find_project`, `gh_token` |
 | Actions workflow | `render_workflow(&WorkflowOptions)`, `check_workflow`, `release_sha256`, `is_safe_workflow_name`, `ACTION_PINS` (reviewed commits), `WORKFLOW_PATH`, `SHA256_PLACEHOLDER` |
 | Building | `freeze_site(settings, config, dry_run, &mut build)`, `build_with_guidedog`, `guidedog_program`, `guidedog_version`, `GUIDEDOG_VARIABLE`; `Prompt::build` (default: start `guidedog`) |
-| guidedog commands | `Pages` adds `publish pages` and `pages workflow` to guidedog (`commands`, `run_command`; `command/extension.rs`), linked into `guidedog` through the host command context |
+| guidedog commands | `Pages` adds `publish pages` and `pages {init,auth,bind,setup,doctor,watch,status,recover,unbind,workflow}` to guidedog (`commands`, `run_command`; `command/extension.rs`), linked into `guidedog` through the host command context |
 | Command line | `command::{run, run_with, Program}` (`publish` is guided; `watch --serve[=PORT]` previews with `gd-serve`; `workflow [--write] [--check]`) |
 
 Exit statuses: 0 live or unchanged, 1 failed (nothing published), 2 usage or
@@ -79,7 +79,8 @@ unknown (run `recover`), 130 cancelled.
 ## Design notes
 
 - **guidedog's Pages commands are the plugin's.** `Pages` contributes `publish pages`
-  and `pages workflow` through gd-plugins' command
+  and the `pages` maintenance subcommands (`init`, `auth`, `bind`, `setup`, `doctor`,
+  `watch`, `status`, `recover`, `unbind`, `workflow`) through gd-plugins' command
   interface. Linked into guidedog they ask through its `CommandContext` and build with
   its engine (`HostPrompt`); `--guidedog`/`$GUIDEDOG_PAGES_GUIDEDOG` still name a
   program instead. A site build is a closure (`freeze_site`), so both paths share the

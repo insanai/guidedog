@@ -9,7 +9,7 @@ directives run through it; the spec is `docs/gds/records/0005-odin-domain.rst`.
 
 ```toml
 [dependencies]
-gd-odindoc = "0.7"
+gd-odindoc = "1.0.0-beta.8"
 ```
 
 We document an Odin package found under `lib/`:
@@ -35,7 +35,7 @@ fn main() {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-odindoc). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-odindoc --no-deps` (and on [docs.rs](https://docs.rs/gd-odindoc) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

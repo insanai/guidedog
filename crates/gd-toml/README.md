@@ -7,7 +7,7 @@ configurations. Depends only on `gd-report`.
 
 ```toml
 [dependencies]
-gd-toml = "0.7"
+gd-toml = "1.0.0-beta.8"
 ```
 
 We read a setting and write the table back:
@@ -26,7 +26,7 @@ fn main() {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-toml). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-toml --no-deps` (and on [docs.rs](https://docs.rs/gd-toml) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

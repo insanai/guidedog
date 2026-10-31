@@ -243,7 +243,7 @@ CLI resource policy
 ~~~~~~~~~~~~~~~~~~~
 
 
-*Superseded in part* by the draft "Memory budgets and what a build may read". That draft decides how a
+*Superseded in part* by GDS 0004 ("Memory budgets and what a build may read"). That record decides how a
 build's budget is reserved and shared (one budget per build, ``--budget``), what it counts
 and what it names as outside it, and which files a build, a graph, and Typst may read,
 trusted and under ``--untrusted``. The limits below stand.
@@ -497,11 +497,12 @@ Python or a Typst installation, and without a network download unless a document
 Typst package that is not cached. Optimization follows working behavior and measured
 evidence, not an earlier calendar milestone.
 
-Status on 29 September 2026: phases 1 and 2 are complete. Phase 3 is complete for
-CommonMark and native Typst and partial for RST, as its ledgers record. Phase 4 is
-implemented except the native Typst chapter contract.
-Phase 5's single binary works on macOS and Linux. Windows runtime, worker isolation, and
-font-license review remain.
+Historical checkpoint on 29 September 2026: phases 1 and 2 were complete; phase 3 was
+complete for CommonMark and native Typst and partial for RST; phase 4 was implemented
+except the native Typst chapter contract; and phase 5's single binary worked on macOS and
+Linux while Windows runtime, worker isolation, and font-license review remained (see
+*Decisions still requiring implementation evidence* below for the current ``1.0.0-beta.8``
+state).
 
 
 Security considerations
@@ -606,7 +607,7 @@ Windows runtime and clean-machine package checks passed for 0.6.2 on native runn
 (see :doc:`../evidence/plugin-acceptance-20261014`). Embedded font licenses are
 recorded with the fonts. They are no longer an open documentation item.
 GDS 0012 supersedes the earlier system-Graphviz packaging requirement.
-Unix release archives link Graphviz statically, Windows bundles its runtime, and published beta.6 and beta.7 archives passed clean-machine smoke tests on all five platforms.
+Unix release archives link Graphviz statically, Windows bundles its runtime, and published beta.1 through beta.8 archives passed clean-machine smoke tests on all five platforms.
 That packaging work is complete and is no longer an outstanding obligation of this record.
 The RST ledgers retain their pinned tests and conservative reader descriptor.
 

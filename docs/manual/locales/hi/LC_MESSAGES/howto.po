@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:11+0000\n"
+"POT-Creation-Date: 2026-10-31 15:41+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -93,22 +93,37 @@ msgstr "``template/rfc-template.rst``, नए मसौदों का टे�
 
 #: ../../howto/discussions.rst:33
 msgid ""
-"``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable "
-"PDF layout and shared theme copied from the binary;"
+"``_templates/layout.html``, ``_templates/discussion.typ``, and "
+"``_templates/theme.typ``, the editable HTML layout, PDF discussion "
+"layout, and shared PDF theme copied from the binary;"
 msgstr ""
-"``_templates/discussion.typ`` और ``_templates/theme.typ``, बाइनरी से कॉपी "
-"किया गया संपादन-योग्य PDF लेआउट और साझा थीम;"
+"``_templates/layout.html``, ``_templates/discussion.typ`` और "
+"``_templates/theme.typ``, बाइनरी से कॉपी किया गया संपादन-योग्य HTML "
+"लेआउट, PDF चर्चा लेआउट और साझा PDF थीम;"
 
 #: ../../howto/discussions.rst:34
-msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
-msgstr "``registry.rst`` और ``bundle.rst``, बनाई गई अनुक्रमणिका;"
+msgid ""
+"``_static/guidedog.css``, ``_static/guidedog.js``, and "
+"``_static/typography.js``, the editable stylesheets and scripts copied "
+"from the binary;"
+msgstr ""
+"``_static/guidedog.css``, ``_static/guidedog.js`` और "
+"``_static/typography.js``, बाइनरी से कॉपी की गई संपादन-योग्य स्टाइलशीट "
+"और स्क्रिप्ट;"
 
 #: ../../howto/discussions.rst:35
+msgid ""
+"``registry.rst`` and ``bundle.rst``, the generated index and catalog "
+"check list;"
+msgstr ""
+"``registry.rst`` और ``bundle.rst``, बनाई गई अनुक्रमणिका और कैटलॉग जाँच सूची;"
+
+#: ../../howto/discussions.rst:36
 msgid "``records/XXXXX-eds-process.rst``, a draft of our review process."
 msgstr ""
 "``records/XXXXX-eds-process.rst``, हमारी समीक्षा प्रक्रिया का मसौदा।"
 
-#: ../../howto/discussions.rst:37
+#: ../../howto/discussions.rst:38
 msgid ""
 "We edit the process draft to say how our project decides. To start from "
 "our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), "
@@ -126,17 +141,17 @@ msgstr ""
 "रिकॉर्ड पर लग सकते हैं। ``init`` नए कैटलॉग को उसकी जगह ले जाने से पहले "
 "जाँचता है। वह फ़ाइलों वाले फ़ोल्डर में कभी नहीं लिखता।"
 
-#: ../../howto/discussions.rst:44
+#: ../../howto/discussions.rst:45
 msgid "Write and review"
 msgstr "लिखना और समीक्षा"
 
-#: ../../howto/discussions.rst:47
+#: ../../howto/discussions.rst:48
 msgid ""
 "We run the commands in the catalog folder, or in any folder inside it."
 msgstr ""
 "हम कमांड कैटलॉग फ़ोल्डर में, या उसके अंदर किसी भी फ़ोल्डर में चलाते हैं।"
 
-#: ../../howto/discussions.rst:58
+#: ../../howto/discussions.rst:59
 msgid ""
 "A new draft has the number ``XXXXX``. Promotion gives it the next number "
 "and opens it for discussion. A state change needs ``--reason``, and "
@@ -149,11 +164,11 @@ msgstr ""
 "बिना उसे दिखाता है। ये डिफ़ॉल्ट हैं। अगला खंड बताता है कि इन्हें कैसे "
 "बदलें।"
 
-#: ../../howto/discussions.rst:63
+#: ../../howto/discussions.rst:64
 msgid "A record starts with its metadata, one field per line:"
 msgstr "रिकॉर्ड अपने मेटाडेटा से शुरू होता है, हर पंक्ति में एक फ़ील्ड:"
 
-#: ../../howto/discussions.rst:77
+#: ../../howto/discussions.rst:78
 msgid ""
 "Authors and labels are JSON lists. ``last-updated`` may stand for "
 "``updated``. A record may also carry ``category``, ``status``, and "
@@ -167,11 +182,11 @@ msgstr ""
 "है। HTML और PDF फ़ील्ड को Number, Title, Authors, Updated, Labels आदि "
 "नामों से दिखाते हैं, और सूचियों को सादे टेक्स्ट के रूप में।"
 
-#: ../../howto/discussions.rst:82
+#: ../../howto/discussions.rst:83
 msgid "Configure the lifecycle and numbering"
 msgstr "जीवनचक्र और क्रमांकन तय करना"
 
-#: ../../howto/discussions.rst:85
+#: ../../howto/discussions.rst:86
 msgid ""
 "``discussion.toml`` holds the catalog's settings. ``init`` writes every "
 "one of them, with comments. ``guidedog dsc config`` prints the settings "
@@ -183,7 +198,7 @@ msgstr ""
 "करता है। जिस कैटलॉग में यह फ़ाइल नहीं है, वह नीचे दिए डिफ़ॉल्ट मानता है। "
 "यही Guidedog के अपने GDS की प्रक्रिया है।"
 
-#: ../../howto/discussions.rst:122
+#: ../../howto/discussions.rst:123
 msgid ""
 "``[workflow.states.NAME]`` defines a state. ``next`` lists the states the "
 "``state`` command may move a record to. ``evidence = true`` asks for "
@@ -202,7 +217,7 @@ msgstr ""
 "प्रमोशन ही संख्या देता है। बिना संख्या के मसौदा केवल उन्हीं स्थितियों में "
 "जा सकता है जो उसकी अपनी ``next`` में हैं, जैसे ``abandoned``\\ ।"
 
-#: ../../howto/discussions.rst:129
+#: ../../howto/discussions.rst:130
 msgid ""
 "Numbers have at least ``width`` digits, padded with zeros. A number that "
 "needs more digits gets them, so 10000 follows 9999, and lists sort by "
@@ -219,7 +234,7 @@ msgstr ""
 "है। रिकॉर्डों को संख्या मिल जाने के बाद ``width`` बदलना सुरक्षित नहीं है: "
 "तब उनकी संख्याएँ उससे मेल नहीं खाएँगी।"
 
-#: ../../howto/discussions.rst:135
+#: ../../howto/discussions.rst:136
 msgid ""
 "``guidedog dsc`` checks the file whenever it reads the catalog. A mistake "
 "names the line and what to write instead:"
@@ -227,7 +242,7 @@ msgstr ""
 "``guidedog dsc`` जब भी कैटलॉग पढ़ता है, इस फ़ाइल को जाँचता है। गलती होने "
 "पर वह पंक्ति बताता है, और यह भी कि उसकी जगह क्या लिखें:"
 
-#: ../../howto/discussions.rst:150
+#: ../../howto/discussions.rst:151
 msgid ""
 "The process draft that ``init`` writes describes the lifecycle we "
 "configured. It has a table of the states and a diagram of the moves."
@@ -236,23 +251,35 @@ msgstr ""
 "वर्णन करता है। उसमें स्थितियों की टेबल और उनके बीच के बदलावों का आरेख "
 "होता है।"
 
-#: ../../howto/discussions.rst:153
+#: ../../howto/discussions.rst:154
 msgid "Build"
 msgstr "build"
 
-#: ../../howto/discussions.rst:161
+#: ../../howto/discussions.rst:162
 msgid ""
-"``guidedog dsc build`` writes the website to ``_build/html`` and one PDF "
-"per record to ``_build/pdf``. Naming a record writes only its PDF, to "
-"``_build/selected``, and leaves the complete output alone. Warnings stop "
-"the build."
+"``guidedog dsc build`` writes the website to ``_build/html`` and one "
+"standalone PDF per record to ``_build/pdf`` (there is no combined catalog "
+"PDF; ``index.rst``, ``registry.rst``, ``workflow.rst``, and ``bundle.rst`` "
+"serve HTML navigation and catalog validation). Naming a record writes only "
+"its PDF, to ``_build/selected``, and leaves the complete output alone. When "
+"``pdf_downloads`` in ``[html_context]`` names the folder of the record "
+"PDFs, relative to the root of the HTML output (for example ``pdf_downloads "
+"= \"pdf/\"`` when a multi-project site mounts the PDFs there), each HTML "
+"record page under ``records/`` offers a link to download that record's PDF. "
+"Warnings stop the build."
 msgstr ""
-"``guidedog dsc build`` वेबसाइट ``_build/html`` में और हर रिकॉर्ड का एक "
-"PDF ``_build/pdf`` में लिखता है। किसी रिकॉर्ड का नाम देने पर केवल उसका "
-"PDF ``_build/selected`` में लिखा जाता है, और पूरा आउटपुट जैसा था वैसा "
-"रहता है। चेतावनी आने पर build रुक जाता है।"
+"``guidedog dsc build`` वेबसाइट को ``_build/html`` में और हर रिकॉर्ड की एक "
+"स्वतंत्र PDF को ``_build/pdf`` में लिखता है (कोई संयुक्त कैटलॉग PDF नहीं "
+"होती; ``index.rst``, ``registry.rst``, ``workflow.rst`` और ``bundle.rst`` "
+"HTML नेविगेशन और कैटलॉग सत्यापन के काम आते हैं)। किसी एक रिकॉर्ड का नाम "
+"देने पर केवल उसकी PDF ``_build/selected`` में लिखी जाती है और पूरा आउटपुट "
+"वैसा ही रहता है। जब ``[html_context]`` में ``pdf_downloads`` रिकॉर्ड PDF "
+"वाले फ़ोल्डर का नाम दे, जो HTML आउटपुट के रूट के सापेक्ष हो (उदाहरण के लिए "
+"``pdf_downloads = \"pdf/\"``, जब मल्टी-प्रोजेक्ट साइट PDF वहाँ माउंट करती "
+"है), तो ``records/`` के नीचे हर HTML रिकॉर्ड पेज उस रिकॉर्ड की PDF डाउनलोड "
+"करने का लिंक देता है। चेतावनियाँ build रोक देती हैं।"
 
-#: ../../howto/discussions.rst:165
+#: ../../howto/discussions.rst:166
 msgid ""
 "The build is guidedog's own: the same build as ``guidedog build``, with "
 "the catalog as the project. Graphviz, Typst, and the other tools it needs "
@@ -266,11 +293,11 @@ msgstr ""
 "Typst से कंपाइल करता है; ``--typst=PATH`` अंतर्निहित कंपाइलर की जगह "
 "इस्तेमाल होने वाला Typst प्रोग्राम बताता है।"
 
-#: ../../howto/discussions.rst:167
+#: ../../howto/discussions.rst:168
 msgid "Discussion PDFs"
 msgstr "चर्चा रिकॉर्ड के PDF"
 
-#: ../../howto/discussions.rst:170
+#: ../../howto/discussions.rst:171
 msgid ""
 "Each RST record uses an RFC-style paper layout. The record opens with a "
 "metadata panel, state badges, a short status note and compact contents, "
@@ -285,7 +312,7 @@ msgstr ""
 "तथा कुल पेज दिखाते हैं। टेबलें और कैप्शन वाली कोड सूचियाँ कई पेजों में "
 "जारी रह सकती हैं।"
 
-#: ../../howto/discussions.rst:172
+#: ../../howto/discussions.rst:173
 msgid ""
 "The PDF builder recognizes the leading metadata, such as ``:eds-number:`` "
 "and ``:eds-title:``, for any catalog prefix. Existing catalogs without a "
@@ -299,7 +326,7 @@ msgstr ""
 "करते हैं। जब तक हम उनकी फ़ाइलें बदलते या हटाते नहीं, मौजूदा टेम्पलेट "
 "बदलाव बने रहते हैं। सामान्य किताबें अपना बुक टेम्पलेट ही रखती हैं।"
 
-#: ../../howto/discussions.rst:174
+#: ../../howto/discussions.rst:175
 msgid ""
 "The layout is embedded in the Guidedog binary. ``guidedog dsc init`` "
 "copies ``_templates/discussion.typ`` and its shared "
@@ -327,7 +354,7 @@ msgstr ""
 "``memo`` पैरामीटर विषय-सूची और स्थिति नोट को नियंत्रित करते हैं। "
 ":doc:`../templates` साझा PDF पैरामीटर समझाता है।"
 
-#: ../../howto/discussions.rst:176
+#: ../../howto/discussions.rst:177
 msgid ""
 "An ``--untrusted`` build uses the built-in discussion layout instead of "
 "running a project template. A record included as a chapter of a larger "
@@ -339,11 +366,11 @@ msgstr ""
 "गया रिकॉर्ड उस अध्याय में अपना मेटाडेटा बनाए रखता है; रूट दस्तावेज़ किताब "
 "का लेआउट चुनता है।"
 
-#: ../../howto/discussions.rst:178
+#: ../../howto/discussions.rst:179
 msgid "When an update is interrupted"
 msgstr "जब अपडेट बीच में रुक जाए"
 
-#: ../../howto/discussions.rst:181
+#: ../../howto/discussions.rst:182
 msgid ""
 "Commands that change records hold the catalog's lock, ``.eds.lock``. An "
 "update of several files first writes a journal, ``.eds-journal.json``. If "
@@ -353,7 +380,7 @@ msgstr ""
 "फ़ाइलों का अपडेट पहले एक जर्नल, ``.eds-journal.json``, लिखता है। अगर "
 "अपडेट बीच में रुक जाए, तो अगला कमांड यह बताता है:"
 
-#: ../../howto/discussions.rst:190
+#: ../../howto/discussions.rst:191
 msgid ""
 "Recovery puts back the files as they were. It refuses to overwrite a file "
 "someone edited since. ``guidedog dsc`` also checks each change before it "
@@ -365,7 +392,7 @@ msgstr ""
 "पहले हर बदलाव को जाँचता भी है। वह खाली या बीच में कटा रिकॉर्ड, और बने हुए "
 "हिस्से के बिना इंडेक्स अस्वीकार करता है।"
 
-#: ../../howto/discussions.rst:194
+#: ../../howto/discussions.rst:195
 msgid ""
 "``guidedog dsc`` keeps only each record's metadata in memory. It reads a "
 "record whole only to change it. So checking a large catalog stays fast "
@@ -375,11 +402,11 @@ msgstr ""
 "रिकॉर्ड को पूरा तभी पढ़ता है जब उसे बदलना हो। इसलिए बड़े कैटलॉग की जाँच "
 "भी तेज़ और हल्की रहती है।"
 
-#: ../../howto/discussions.rst:197
+#: ../../howto/discussions.rst:198
 msgid "Use the library"
 msgstr "लाइब्रेरी का उपयोग"
 
-#: ../../howto/discussions.rst:200
+#: ../../howto/discussions.rst:201
 msgid ""
 "The commands are one Rust crate, ``gd-discussion``. Its ``README.md`` "
 "shows how to load a catalog, plan a change, and apply it from our own "
@@ -389,7 +416,7 @@ msgstr ""
 "दिखाता है कि अपने प्रोग्राम से कैटलॉग कैसे लोड करें, बदलाव की योजना कैसे "
 "बनाएँ और उसे कैसे लागू करें:"
 
-#: ../../howto/discussions.rst:218
+#: ../../howto/discussions.rst:219
 msgid ""
 "``ds::plugin()`` is the whole ``guidedog dsc`` command line, as a plugin. "
 "A ``guidedog`` of our own links it beside its other plugins (see "
@@ -737,15 +764,15 @@ msgstr ""
 
 #: ../../howto/format-specific-content.rst:124
 msgid ""
-"**The ``latex`` tag in ``.. only::``**: For backward compatibility with "
-"legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias for PDF "
-"builds in ``.. only::`` expressions. In native Guidedog projects, prefer "
-"``.. only:: pdf``."
+"**The latex tag** (``.. only:: latex``): For backward compatibility "
+"with legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias "
+"for PDF builds in ``.. only::`` expressions. In native Guidedog "
+"projects, prefer ``.. only:: pdf``."
 msgstr ""
-"**``.. only::`` में ``latex`` टैग**: पुरानी Sphinx परियोजनाओं के साथ "
+"**latex टैग** (``.. only:: latex``): पुरानी Sphinx परियोजनाओं के साथ "
 "पश्चगामी अनुकूलता के लिए, Guidedog ``.. only::`` अभिव्यक्तियों में "
 "``latex`` को PDF निर्माण के उपनाम के रूप में पहचानता है। मूल Guidedog "
-"परियोजनाओं में, ``.. only:: pdf`` को प्राथमिकता दें।"
+"परियोजनाओं में ``.. only:: pdf`` को प्राथमिकता दें।"
 
 #: ../../howto/format-specific-content.rst:128
 msgid "3. Declare custom domain directives in conf.toml"
@@ -1645,27 +1672,29 @@ msgstr ""
 msgid ""
 "a C compiler (``cc``, Xcode's command-line tools, or MSVC), which Cargo "
 "uses to build the tree-sitter grammars and the cryptography in the "
-"``ring`` crate (TLS for HTTPS)."
+"``ring`` crate (TLS for HTTPS); and on Linux ``perl`` and ``make``, "
+"which Cargo uses to build the vendored OpenSSL linked by the embedded "
+"Typst package downloader."
 msgstr ""
 "एक C कंपाइलर (``cc``, Xcode के कमांड-लाइन टूल, या MSVC), जिससे Cargo "
 "tree-sitter ग्रामर और ``ring`` crate की क्रिप्टोग्राफ़ी (HTTPS के लिए "
-"TLS) build करता है।"
+"TLS) build करता है; और Linux पर ``perl`` तथा ``make``, जिनसे Cargo "
+"एम्बेडेड Typst पैकेज डाउनलोडर द्वारा लिंक किए गए वेंडर्ड OpenSSL को "
+"build करता है।"
 
 #: ../../howto/install.rst:42
 msgid ""
 "Nothing else is built by hand. The Typst compiler (0.15.1), the "
-"tree-sitter grammars for Python and Rust, and the HTTP client (``ureq`` "
-"with ``rustls``) are ordinary Cargo dependencies, compiled with the "
-"workspace. HTTPS needs no ``curl`` program, OpenSSL or system certificate "
-"store: the root certificates are built in. There are no native build "
-"scripts to run first."
+"tree-sitter grammars for Python and Rust, and the Guidedog HTTP client "
+"(``ureq`` with ``rustls`` and built-in root certificates) are ordinary "
+"Cargo dependencies, compiled with the workspace. There are no separate "
+"setup scripts to run first."
 msgstr ""
 "हाथ से और कुछ build नहीं करना पड़ता। Typst कंपाइलर (0.15.1), Python व "
-"Rust के tree-sitter ग्रामर और HTTP क्लाइंट (``rustls`` के साथ ``ureq``) "
-"सामान्य Cargo डिपेंडेंसी हैं, जो वर्कस्पेस के साथ ही कंपाइल होती हैं। "
-"HTTPS के लिए न ``curl`` प्रोग्राम चाहिए, न OpenSSL, न सिस्टम का "
-"सर्टिफ़िकेट स्टोर: रूट सर्टिफ़िकेट भीतर ही शामिल हैं। पहले से चलाने के "
-"लिए कोई नेटिव build स्क्रिप्ट नहीं है।"
+"Rust के tree-sitter ग्रामर और Guidedog का HTTP क्लाइंट (अंतर्निहित रूट "
+"सर्टिफ़िकेट और ``rustls`` के साथ ``ureq``) सामान्य Cargo डिपेंडेंसी "
+"हैं, जो वर्कस्पेस के साथ ही कंपाइल होती हैं। पहले से चलाने के लिए कोई "
+"अलग सेटअप स्क्रिप्ट नहीं है।"
 
 #: ../../howto/install.rst:46
 msgid "Release build"
@@ -1754,20 +1783,25 @@ msgstr "Typst: एम्बेडेड या स्थापित"
 #: ../../howto/install.rst:88
 msgid ""
 "By default the Typst compiler is linked into ``guidedog`` (the "
-"``embedded`` feature of the ``gd-typst`` crate). PDF then needs no other "
-"program. A build of ``gd-typst`` without that feature runs an installed "
-"``typst`` program (0.15.1) instead. Either way, "
+"``embedded`` feature of the ``gd-typst`` crate). PDF books and ``.. "
+"typst-diagram::`` directives then need no other program. A build of "
+"``gd-typst`` without that feature runs an installed ``typst`` program "
+"(pinned to 0.15.1) for PDF books, while ``.. typst-diagram::`` requires "
+"the embedded compiler (``typst.embedded``). For PDF books, "
 "``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) "
-"selects a program explicitly, and ``guidedog --version`` names the "
-"backend in use."
+"selects an external ``typst`` 0.15.1 program explicitly, and ``guidedog "
+"--version`` names the backend in use."
 msgstr ""
-"डिफ़ॉल्ट रूप से Typst कंपाइलर ``guidedog`` में लिंक होता है (``gd-typst`` "
-"crate की ``embedded`` फ़ीचर)। तब PDF के लिए किसी और प्रोग्राम की ज़रूरत "
-"नहीं होती। इस फ़ीचर के बिना बना ``gd-typst`` इसकी जगह स्थापित ``typst`` "
-"प्रोग्राम (0.15.1) चलाता है। दोनों ही स्थितियों में "
-"``--typst=/absolute/path/to/typst`` (या ``conf.toml`` में ``typst``) से "
-"प्रोग्राम स्पष्ट रूप से चुना जा सकता है, और ``guidedog --version`` बताता "
-"है कि कौन-सा बैकएंड इस्तेमाल हो रहा है।"
+"डिफ़ॉल्ट रूप से Typst कंपाइलर ``guidedog`` में लिंक होता है "
+"(``gd-typst`` crate की ``embedded`` फ़ीचर)। तब PDF किताबों और ``.. "
+"typst-diagram::`` निर्देशों के लिए किसी और प्रोग्राम की ज़रूरत नहीं "
+"होती। इस फ़ीचर के बिना बना ``gd-typst`` PDF किताबों के लिए स्थापित "
+"``typst`` प्रोग्राम (0.15.1 पर निर्धारित) चलाता है, जबकि ``.. "
+"typst-diagram::`` के लिए एम्बेडेड कंपाइलर (``typst.embedded``) आवश्यक "
+"है। PDF किताबों के लिए ``--typst=/absolute/path/to/typst`` (या "
+"``conf.toml`` में ``typst``) बाहरी ``typst`` 0.15.1 प्रोग्राम को स्पष्ट "
+"रूप से चुनता है, और ``guidedog --version`` बताता है कि कौन-सा बैकएंड "
+"इस्तेमाल हो रहा है।"
 
 #: ../../howto/install.rst:94
 msgid ""
@@ -1877,20 +1911,26 @@ msgstr "इन दस्तावेज़ों का रखरखाव"
 #: ../../howto/maintain-docs.rst:4
 msgid ""
 "Guidedog documents itself with Guidedog. The repository has four "
-"projects: ``docs/manual`` (this manual), ``docs/api`` (the Rust API "
-"reference of the crates), ``docs/gds`` (the design records), and "
-"``docs/site`` (the front page). The manual and GDS began with ``guidedog "
-"quickstart``. We edit their generated templates in place. Design records "
-"stay out of the manual's table of contents."
+"documentation projects and a root site manifest: ``docs/manual`` (this "
+"manual), ``docs/api`` (the standalone Rust API reference of the crates, "
+"also included in the manual's PDF appendix), ``docs/gds`` (the design "
+"records), ``docs/site`` (the website landing page and release notes), "
+"and ``docs/conf.toml`` (the multi-project SSG configuration that mounts "
+"``docs/site``, ``docs/manual``, and ``docs/gds``). Each project keeps "
+"its generated templates and static assets locally so we can edit them "
+"in place. Design records stay out of the manual's table of contents."
 msgstr ""
-"Guidedog अपना दस्तावेज़ीकरण खुद Guidedog से बनाता है। repository में चार "
-"प्रोजेक्ट हैं: ``docs/manual`` (यह मैनुअल), ``docs/api`` (crates का Rust "
-"API संदर्भ), ``docs/gds`` (डिज़ाइन रिकॉर्ड) और ``docs/site`` (मुख्य पेज)। "
-"मैनुअल और GDS ``guidedog quickstart`` से शुरू हुए थे। उनके बने हुए "
-"template हम वहीं संपादित करते हैं। डिज़ाइन रिकॉर्ड मैनुअल की विषय-सूची से "
-"बाहर रहते हैं।"
+"Guidedog अपना दस्तावेज़ीकरण खुद Guidedog से बनाता है। repository में "
+"चार दस्तावेज़ प्रोजेक्ट और एक रूट साइट मैनिफ़ेस्ट हैं: ``docs/manual`` "
+"(यह मैनुअल), ``docs/api`` (crates का स्वतंत्र Rust API संदर्भ, जो "
+"मैनुअल के PDF परिशिष्ट में भी शामिल है), ``docs/gds`` (डिज़ाइन "
+"रिकॉर्ड), ``docs/site`` (वेबसाइट का मुख्य पेज और रिलीज़ नोट्स), और "
+"``docs/conf.toml`` (मल्टी-प्रोजेक्ट SSG कॉन्फ़िगरेशन जो ``docs/site``, "
+"``docs/manual`` और ``docs/gds`` को माउंट करता है)। हर प्रोजेक्ट अपने "
+"जनित template और स्थिर एसेट स्थानीय रूप से रखता है ताकि हम उन्हें वहीं "
+"संपादित कर सकें। डिज़ाइन रिकॉर्ड मैनुअल की विषय-सूची से बाहर रहते हैं।"
 
-#: ../../howto/maintain-docs.rst:10
+#: ../../howto/maintain-docs.rst:12
 msgid ""
 "All documentation is reStructuredText under ``docs/``. The only Markdown "
 "files are each crate's ``README.md``, a short cheat sheet, and the files "
@@ -1902,11 +1942,11 @@ msgstr ""
 "हैं जो GitHub को रूट पर चाहिए। डिज़ाइन नोट्स, आंतरिक विवरण, लेजर और "
 "अनुरूपता टेबलें ``docs/manual/internals`` के अंदर पेज हैं।"
 
-#: ../../howto/maintain-docs.rst:15
+#: ../../howto/maintain-docs.rst:17
 msgid "Build the manual"
 msgstr "मैनुअल build करना"
 
-#: ../../howto/maintain-docs.rst:18
+#: ../../howto/maintain-docs.rst:20
 msgid ""
 "We build ``guidedog`` first (see :doc:`install`). Then, from the "
 "repository root:"
@@ -1914,7 +1954,7 @@ msgstr ""
 "पहले हम ``guidedog`` build करते हैं (:doc:`install` देखें)। फिर, "
 "repository के रूट से:"
 
-#: ../../howto/maintain-docs.rst:27
+#: ../../howto/maintain-docs.rst:29
 msgid ""
 "The PDF command creates one book, with links between its chapters. "
 "``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` "
@@ -1924,11 +1964,11 @@ msgstr ""
 "``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` एक "
 "ही कदम में build करके चलाता है।"
 
-#: ../../howto/maintain-docs.rst:31
+#: ../../howto/maintain-docs.rst:33
 msgid "The API reference"
 msgstr "API संदर्भ"
 
-#: ../../howto/maintain-docs.rst:34
+#: ../../howto/maintain-docs.rst:36
 msgid ""
 "``docs/api`` generates its pages from the crates' source with "
 "``rust_autoapi_crates`` (see :doc:`document-code`). The reference is the "
@@ -1941,7 +1981,7 @@ msgstr ""
 "आइटम पर ``///``)। साथ-साथ अपडेट रखने के लिए कोई अलग API पांडुलिपि नहीं "
 "है। हम गलती crate में ठीक करते हैं, फिर दोबारा build करते हैं:"
 
-#: ../../howto/maintain-docs.rst:44
+#: ../../howto/maintain-docs.rst:46
 msgid ""
 "A warning such as ``rust.autodoc.link`` names the doc comment and the "
 "link that does not resolve."
@@ -1949,11 +1989,11 @@ msgstr ""
 "``rust.autodoc.link`` जैसी चेतावनी उस डॉक कमेंट और उस लिंक का नाम बताती "
 "है जिसका लक्ष्य नहीं मिलता।"
 
-#: ../../howto/maintain-docs.rst:47
+#: ../../howto/maintain-docs.rst:49
 msgid "Build and check discussions"
 msgstr "चर्चा दस्तावेज़ build और जाँचना"
 
-#: ../../howto/maintain-docs.rst:57
+#: ../../howto/maintain-docs.rst:59
 msgid ""
 "``docs/gds`` is a discussion catalog like any other, so ``guidedog dsc`` "
 "runs in it (see :doc:`discussions`). It manages metadata, numbers, state, "
@@ -1972,36 +2012,45 @@ msgstr ""
 "रहती है। चुने हुए PDF का प्रीव्यू ``_build/selected/<artifact>/pdf`` "
 "इस्तेमाल करता है। ``_build/pdf`` में पूरा कैटलॉग जस का तस रहता है।"
 
-#: ../../howto/maintain-docs.rst:71
+#: ../../howto/maintain-docs.rst:72
 msgid ""
-"The ordinary project commands work too. The GDS project uses its own "
-"``conf.toml`` and its own ``_build`` directory. Read "
-"``docs/gds/workflow.rst`` for the authoring workflow."
+"The ordinary HTML project command works directly on ``docs/gds``, while "
+"``guidedog dsc build`` (or the ``discussion-records`` mount in "
+"``docs/conf.toml``) builds one standalone PDF per record without a "
+"combined index PDF. The GDS project uses its own ``conf.toml`` and its "
+"own ``_build`` directory. Read ``docs/gds/workflow.rst`` for the "
+"authoring workflow."
 msgstr ""
-"सामान्य प्रोजेक्ट कमांड भी चलते हैं। GDS का अपना ``conf.toml`` और "
-"``_build`` फ़ोल्डर है। लेखन प्रक्रिया ``docs/gds/workflow.rst`` में पढ़ें।"
+"सामान्य HTML प्रोजेक्ट कमांड सीधे ``docs/gds`` पर काम करता है, जबकि "
+"``guidedog dsc build`` (या ``docs/conf.toml`` में "
+"``discussion-records`` माउंट) बिना किसी संयुक्त इंडेक्स PDF के हर "
+"रिकॉर्ड के लिए एक स्वतंत्र PDF बनाता है। GDS प्रोजेक्ट अपना खुद का "
+"``conf.toml`` और अपना ``_build`` फ़ोल्डर इस्तेमाल करता है। लेखन "
+"प्रक्रिया के लिए ``docs/gds/workflow.rst`` पढ़ें।"
 
-#: ../../howto/maintain-docs.rst:75
+#: ../../howto/maintain-docs.rst:76
 msgid "Translations"
 msgstr "अनुवाद"
 
-#: ../../howto/maintain-docs.rst:78
+#: ../../howto/maintain-docs.rst:79
 msgid ""
-"The manual's catalogs are in ``docs/manual/locales``. After we change "
-"English text, we refresh them:"
+"Translation catalogs live in ``docs/manual/locales`` (for the manual "
+"and repository overview) and ``docs/site/locales`` (for the landing "
+"page and release notes). After we change English text, we refresh them:"
 msgstr ""
-"मैनुअल के कैटलॉग ``docs/manual/locales`` में हैं। अंग्रेज़ी टेक्स्ट बदलने "
-"के बाद हम उन्हें ताज़ा करते हैं:"
+"अनुवाद कैटलॉग ``docs/manual/locales`` (मैनुअल और repository परिचय के "
+"लिए) और ``docs/site/locales`` (मुख्य पेज और रिलीज़ नोट्स के लिए) में "
+"रहते हैं। अंग्रेज़ी पाठ बदलने के बाद हम उन्हें ताज़ा करते हैं:"
 
-#: ../../howto/maintain-docs.rst:86
+#: ../../howto/maintain-docs.rst:89
 msgid "See :doc:`../intl` for the translation workflow."
 msgstr "अनुवाद की प्रक्रिया के लिए :doc:`../intl` देखें।"
 
-#: ../../howto/maintain-docs.rst:88
+#: ../../howto/maintain-docs.rst:91
 msgid "Before publishing"
 msgstr "प्रकाशन से पहले"
 
-#: ../../howto/maintain-docs.rst:91
+#: ../../howto/maintain-docs.rst:94
 msgid ""
 "Check links and diagnostics. Inspect wide tables and code blocks. Render "
 "the PDF pages after changing typography. Test the HTML at desktop and "
@@ -2531,22 +2580,24 @@ msgstr "एटॉमिक commit हमारी साइट को इस त
 msgid ""
 "**Staging:** All newly rendered pages are written to a hidden staging "
 "folder (``.<target>.next``). For the default builders it sits in the "
-"build folder. For an output we name with ``-o``, it sits inside the "
-"output's one cache folder beside it (``.<target>.guidedog``), so the "
-"output gains a single hidden neighbour."
+"build folder. For a custom output folder passed to ``guidedog build -b "
+"html SOURCEDIR OUTPUTDIR``, it sits inside the output's one cache "
+"folder beside it (``.<target>.guidedog``), so the output gains a single "
+"hidden neighbour."
 msgstr ""
 "**स्टेजिंग:** नए रेंडर हुए सारे पेज एक छिपे स्टेजिंग फ़ोल्डर "
-"(``.<target>.next``) में लिखे जाते हैं। डिफ़ॉल्ट builders के लिए यह build "
-"फ़ोल्डर में होता है। ``-o`` से हमारे बताए आउटपुट के लिए यह आउटपुट के बगल "
-"वाले एकमात्र कैश फ़ोल्डर (``.<target>.guidedog``) के भीतर होता है, इसलिए "
+"(``.<target>.next``) में लिखे जाते हैं। डिफ़ॉल्ट builders के लिए यह "
+"build फ़ोल्डर में होता है। ``guidedog build -b html SOURCEDIR "
+"OUTPUTDIR`` को दिए गए कस्टम आउटपुट फ़ोल्डर के लिए यह आउटपुट के बगल वाले "
+"एकमात्र कैश फ़ोल्डर (``.<target>.guidedog``) के भीतर होता है, इसलिए "
 "आउटपुट के पास बस एक छिपा फ़ोल्डर और जुड़ता है।"
 
-#: ../../howto/publish.rst:53
+#: ../../howto/publish.rst:54
 msgid ""
 "**Isolation:** The live output folder stays untouched while pages compile."
 msgstr "**अलगाव:** पेज कंपाइल होते समय लाइव आउटपुट फ़ोल्डर अछूता रहता है।"
 
-#: ../../howto/publish.rst:54
+#: ../../howto/publish.rst:55
 msgid ""
 "**Failure safety:** If any page fails to render, or a warning becomes an "
 "error under ``-W``, the build abandons the staging folder. The live site "
@@ -2556,7 +2607,7 @@ msgstr ""
 "कोई चेतावनी त्रुटि बन जाती है, तो build स्टेजिंग फ़ोल्डर छोड़ देता है। "
 "लाइव साइट नहीं बदलती।"
 
-#: ../../howto/publish.rst:56
+#: ../../howto/publish.rst:57
 msgid ""
 "**Atomic swap:** Once all files are flushed, Guidedog switches the "
 "staging folder into place. Where the filesystem supports it, this is a "
@@ -2566,7 +2617,7 @@ msgstr ""
 "फ़ोल्डर को उसकी जगह पर ले आता है। जहाँ फ़ाइल सिस्टम इसका समर्थन करता है, "
 "वहाँ यह एक ही डायरेक्टरी अदला-बदली होती है।"
 
-#: ../../howto/publish.rst:58
+#: ../../howto/publish.rst:59
 msgid ""
 "**Interrupted recovery:** If a crash interrupts the swap, the next build "
 "reads the durable journal. It settles the interrupted commit instead of "
@@ -2576,39 +2627,39 @@ msgstr ""
 "अगला build स्थायी जर्नल पढ़ता है। यह अनुमान लगाने के बजाय रुके हुए commit "
 "को निपटाता है।"
 
-#: ../../howto/publish.rst:61
+#: ../../howto/publish.rst:62
 msgid "Standard build workflow"
 msgstr "सामान्य build क्रम"
 
-#: ../../howto/publish.rst:64
+#: ../../howto/publish.rst:65
 msgid ""
 "To build both HTML and PDF outputs into the default project output "
 "directory:"
 msgstr "HTML और PDF को डिफ़ॉल्ट आउटपुट फ़ोल्डर में बनाएँ:"
 
-#: ../../howto/publish.rst:71
+#: ../../howto/publish.rst:72
 msgid "Output locations:"
 msgstr "आउटपुट की जगह:"
 
-#: ../../howto/publish.rst:73
+#: ../../howto/publish.rst:74
 msgid "The HTML website is written to ``docs/manual/_build/html/``."
 msgstr "HTML साइट ``docs/manual/_build/html/`` में जाती है।"
 
-#: ../../howto/publish.rst:74
+#: ../../howto/publish.rst:75
 msgid "The PDF book is written to ``docs/manual/_build/pdf/``."
 msgstr "PDF किताब ``docs/manual/_build/pdf/`` में जाती है।"
 
-#: ../../howto/publish.rst:76
+#: ../../howto/publish.rst:77
 msgid ""
 "The ``-j auto`` flag parallelizes document parsing across all available "
 "CPU cores."
 msgstr "``-j auto`` उपलब्ध CPU कोर पर दस्तावेज़ समानांतर पढ़ता है।"
 
-#: ../../howto/publish.rst:78
+#: ../../howto/publish.rst:79
 msgid "Custom output directories"
 msgstr "आउटपुट फ़ोल्डर चुनना"
 
-#: ../../howto/publish.rst:81
+#: ../../howto/publish.rst:82
 msgid ""
 "To write the site to a folder of our choice (for example, in a CI/CD "
 "pipeline or a deployment script), we use the Sphinx-compatible command "
@@ -2617,11 +2668,11 @@ msgstr ""
 "साइट को अपनी पसंद के फ़ोल्डर में लिखने के लिए (जैसे CI/CD पाइपलाइन या "
 "deployment स्क्रिप्ट में) हम Sphinx-संगत कमांड रूप इस्तेमाल करते हैं:"
 
-#: ../../howto/publish.rst:88
+#: ../../howto/publish.rst:89
 msgid "Guidedog enforces safety constraints on output paths:"
 msgstr "आउटपुट पथ पर ये शर्तें लागू हैं:"
 
-#: ../../howto/publish.rst:90
+#: ../../howto/publish.rst:91
 msgid ""
 "Choose a dedicated output folder, such as ``_build/html`` inside the "
 "project or ``build/site`` beside it. The output must not be the source "
@@ -2632,7 +2683,7 @@ msgstr ""
 "``build/site``। आउटपुट सोर्स की जड़ या उसका पूर्वज फ़ोल्डर नहीं हो सकता, "
 "वरना संस्करण बदलते समय पूरा सोर्स प्रोजेक्ट बदल जाएगा।"
 
-#: ../../howto/publish.rst:93
+#: ../../howto/publish.rst:94
 msgid ""
 "For a custom destination such as ``build/site``, Guidedog keeps its "
 "internal caches in a sibling folder (such as "
@@ -2644,11 +2695,11 @@ msgstr ""
 "प्रकाशित फ़ोल्डर में केवल वे स्टैटिक फ़ाइलें रहती हैं जिन्हें हम deploy "
 "करते हैं।"
 
-#: ../../howto/publish.rst:97
+#: ../../howto/publish.rst:98
 msgid "Semantic checks and pre-flight validation"
 msgstr "अर्थ-संबंधी और प्रारंभिक जाँच"
 
-#: ../../howto/publish.rst:100
+#: ../../howto/publish.rst:101
 msgid ""
 "To check a project without writing HTML files to disk, we use the "
 "``dummy`` builder:"
@@ -2656,20 +2707,20 @@ msgstr ""
 "डिस्क पर HTML फ़ाइलें लिखे बिना प्रोजेक्ट जाँचने के लिए हम ``dummy`` "
 "builder इस्तेमाल करते हैं:"
 
-#: ../../howto/publish.rst:107
+#: ../../howto/publish.rst:108
 msgid "The dummy builder:"
 msgstr "dummy builder:"
 
-#: ../../howto/publish.rst:109
+#: ../../howto/publish.rst:110
 msgid "Reads and parses all documents."
 msgstr "सभी दस्तावेज़ पढ़ता और पार्स करता है।"
 
-#: ../../howto/publish.rst:110
+#: ../../howto/publish.rst:111
 msgid ""
 "Resolves all toctrees, headings, cross-references, and domain objects."
 msgstr "toctree, शीर्षक, क्रॉस-रेफ़रेंस और डोमेन ऑब्जेक्ट हल करता है।"
 
-#: ../../howto/publish.rst:111
+#: ../../howto/publish.rst:112
 msgid ""
 "Checks document references and domain objects (``-n`` enables nitpicky "
 "cross-reference checking). It does not make HTTP requests to test "
@@ -2678,11 +2729,11 @@ msgstr ""
 "दस्तावेज़ संदर्भ और डोमेन ऑब्जेक्ट जाँचता है। ``-n`` कड़ी क्रॉस-रेफ़रेंस "
 "जाँच चालू करता है। बाहरी URL जाँचने के लिए HTTP अनुरोध नहीं भेजता।"
 
-#: ../../howto/publish.rst:113
+#: ../../howto/publish.rst:114
 msgid "Exits with status 1 if any broken link or warning is found (``-W``)."
 msgstr "``-W`` के साथ टूटा संदर्भ या चेतावनी मिले तो एग्ज़िट कोड 1 देता है।"
 
-#: ../../howto/publish.rst:115
+#: ../../howto/publish.rst:116
 msgid ""
 "In continuous integration, the dummy builder is a fast check to run "
 "before the full site build."
@@ -2690,11 +2741,11 @@ msgstr ""
 "कंटीन्युअस इंटीग्रेशन (CI) में dummy builder पूरी साइट build करने से पहले "
 "चलाई जाने वाली एक तेज़ जाँच है।"
 
-#: ../../howto/publish.rst:118
+#: ../../howto/publish.rst:119
 msgid "Reproducible build timestamps"
 msgstr "दोहराए जा सकने वाले build समय"
 
-#: ../../howto/publish.rst:121
+#: ../../howto/publish.rst:122
 msgid ""
 "Documentation builds often embed timestamps (for example, in \"Last "
 "updated\" footer notices). When an automated deployment must give the "
@@ -2706,7 +2757,7 @@ msgstr ""
 "देने हों, तो हम मानक ``SOURCE_DATE_EPOCH`` वातावरण वेरिएबल से घड़ी को "
 "स्थिर कर देते हैं:"
 
-#: ../../howto/publish.rst:129
+#: ../../howto/publish.rst:130
 msgid ""
 "When this variable is set, Guidedog uses the specified Unix epoch "
 "timestamp instead of the current system clock for all date formatting, "
@@ -2726,15 +2777,15 @@ msgstr ""
 "build में मसौदों और भविष्य के लिए निर्धारित पेजों को शामिल करने के लिए "
 "``--preview`` दे सकते हैं। :doc:`static-publishing` देखें।"
 
-#: ../../howto/publish.rst:131
+#: ../../howto/publish.rst:132
 msgid "Deployment options"
 msgstr "deployment के तरीके"
 
-#: ../../howto/publish.rst:134
+#: ../../howto/publish.rst:135
 msgid "Once the build succeeds, we deploy the static files to our host:"
 msgstr "build सफल होने पर हम स्टैटिक फ़ाइलें अपने होस्ट पर deploy करते हैं:"
 
-#: ../../howto/publish.rst:136
+#: ../../howto/publish.rst:137
 msgid ""
 "**Static web servers (Nginx / Caddy / Apache):** Point the server's root "
 "directive directly to the built HTML directory."
@@ -2742,7 +2793,7 @@ msgstr ""
 "**वेब सर्वर (Nginx / Caddy / Apache):** बनी HTML डायरेक्टरी को सर्वर की "
 "जड़ बनाएँ।"
 
-#: ../../howto/publish.rst:138
+#: ../../howto/publish.rst:139
 msgid ""
 "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud "
 "Storage):** Sync the contents of ``_build/html`` to our bucket with the "
@@ -2752,11 +2803,11 @@ msgstr ""
 "क्लाउड प्रदाता के CLI टूल से ``_build/html`` की सामग्री अपने बकेट में "
 "सिंक करें।"
 
-#: ../../howto/publish.rst:140
+#: ../../howto/publish.rst:141
 msgid "**GitHub Pages:**"
 msgstr "**GitHub Pages:**"
 
-#: ../../howto/publish.rst:142
+#: ../../howto/publish.rst:143
 msgid ""
 "To deploy directly from our own machine, we run ``guidedog publish "
 "pages``. It asks for what is still missing (the repository, a token, the "
@@ -2768,7 +2819,7 @@ msgstr ""
 "फिर एक ही push में build और प्रकाशित करता है। ``guidedog pages`` यही चरण "
 "एक-एक करके देता है। :doc:`github-pages` देखें।"
 
-#: ../../howto/publish.rst:146
+#: ../../howto/publish.rst:147
 msgid ""
 "For automated deployments with GitHub Actions, ``guidedog pages "
 "workflow`` writes a workflow that builds and deploys the site. See "
@@ -2778,7 +2829,7 @@ msgstr ""
 "एक वर्कफ़्लो लिखता है जो साइट को build और deploy करता है। "
 ":doc:`github-pages` देखें।"
 
-#: ../../howto/publish.rst:148
+#: ../../howto/publish.rst:149
 msgid ""
 "For any other destination, we write a publisher plugin as described in "
 ":doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
@@ -2786,7 +2837,7 @@ msgstr ""
 "किसी और गंतव्य के लिए हम :doc:`../plugins` में बताए तरीके से एक publisher "
 "plugin लिखते हैं और उसे ``guidedog publish --publisher=ID`` से चलाते हैं।"
 
-#: ../../howto/publish.rst:151
+#: ../../howto/publish.rst:152
 msgid ""
 "On filesystems with directory exchange, the output path switches in one "
 "operation. The fallback uses two renames and can briefly leave that path "
@@ -3399,7 +3450,12 @@ msgid ""
 "``typst-diagram`` compiles the code with Guidedog's embedded Typst "
 "compiler and includes the resulting image in HTML and PDF. We need no "
 "separate figure task or installed Typst program."
-msgstr "हम RST या MyST दस्तावेज़ में सीधे Typst का चित्रण कोड लिख सकते हैं। ``typst-diagram`` इस कोड को Guidedog के अंतर्निहित Typst कंपाइलर से कंपाइल करता है और बने चित्र को HTML तथा PDF में शामिल करता है। हमें चित्रों के लिए अलग निर्माण कार्य या स्थापित Typst प्रोग्राम की आवश्यकता नहीं होती।"
+msgstr ""
+"हम RST या MyST दस्तावेज़ में सीधे Typst का चित्रण कोड लिख सकते हैं। "
+"``typst-diagram`` इस कोड को Guidedog के अंतर्निहित Typst कंपाइलर से "
+"कंपाइल करता है और बने चित्र को HTML तथा PDF में शामिल करता है। हमें "
+"चित्रों के लिए अलग निर्माण कार्य या स्थापित Typst प्रोग्राम की आवश्यकता "
+"नहीं होती।"
 
 #: ../../howto/typst-diagrams.rst:8
 msgid "A first drawing"
@@ -3417,7 +3473,9 @@ msgstr "निर्देश के मुख्य भाग से कंप�
 msgid ""
 "We use a MyST directive fence in Markdown. An ordinary ``typst`` code "
 "fence remains a source example."
-msgstr "Markdown में हम MyST निर्देश का फ़ेंस इस्तेमाल करते हैं। सामान्य ``typst`` कोड फ़ेंस स्रोत कोड का उदाहरण ही रहता है।"
+msgstr ""
+"Markdown में हम MyST निर्देश का फ़ेंस इस्तेमाल करते हैं। सामान्य "
+"``typst`` कोड फ़ेंस स्रोत कोड का उदाहरण ही रहता है।"
 
 #: ../../howto/typst-diagrams.rst:40
 msgid ""
@@ -3427,23 +3485,97 @@ msgid ""
 "``numfig = true``, a captioned diagram is a numbered figure and "
 "``:numref:`` can refer to its ``:name:``. We provide meaningful ``:alt:`` "
 "text because SVG text is drawn as outlines."
-msgstr "चित्र का डिफ़ॉल्ट प्रारूप SVG है, इसलिए वही वेक्टर चित्र वेबसाइट और पुस्तक में छोटा या बड़ा किया जा सकता है। ``:format: png`` प्रति इंच 144 पिक्सेल वाला PNG चुनता है। हम ``:class:`` और ``:align: left|center|right`` भी सेट कर सकते हैं। ``numfig = true`` होने पर शीर्षक वाले चित्र को संख्या मिलती है और ``:numref:`` से उसके ``:name:`` का संदर्भ दिया जा सकता है। हम अर्थपूर्ण ``:alt:`` पाठ देते हैं क्योंकि SVG के अक्षर रूपरेखाओं के रूप में बनाए जाते हैं।"
+msgstr ""
+"चित्र का डिफ़ॉल्ट प्रारूप SVG है, इसलिए वही वेक्टर चित्र वेबसाइट और "
+"पुस्तक में छोटा या बड़ा किया जा सकता है। ``:format: png`` प्रति इंच 144 "
+"पिक्सेल वाला PNG चुनता है। हम ``:class:`` और ``:align: "
+"left|center|right`` भी सेट कर सकते हैं। ``numfig = true`` होने पर शीर्षक "
+"वाले चित्र को संख्या मिलती है और ``:numref:`` से उसके ``:name:`` का "
+"संदर्भ दिया जा सकता है। हम अर्थपूर्ण ``:alt:`` पाठ देते हैं क्योंकि SVG "
+"के अक्षर रूपरेखाओं के रूप में बनाए जाते हैं।"
 
 #: ../../howto/typst-diagrams.rst:46
+msgid "``typst-diagram`` options"
+msgstr "``typst-diagram`` के विकल्प"
+
+#: ../../howto/typst-diagrams.rst:50
+msgid "Option"
+msgstr "विकल्प"
+
+#: ../../howto/typst-diagrams.rst:51
+msgid "Meaning"
+msgstr "अर्थ"
+
+#: ../../howto/typst-diagrams.rst:52
+msgid "``:alt: text``"
+msgstr "``:alt: text``"
+
+#: ../../howto/typst-diagrams.rst:53
+msgid "Alternative text describing the diagram's content."
+msgstr "आरेख की सामग्री का वर्णन करने वाला वैकल्पिक टेक्स्ट।"
+
+#: ../../howto/typst-diagrams.rst:54
+msgid "``:caption: text``"
+msgstr "``:caption: text``"
+
+#: ../../howto/typst-diagrams.rst:55
+msgid ""
+"Wraps the drawing in a figure with this caption (numbered when ``numfig "
+"= true``)."
+msgstr ""
+"ड्रॉइंग को इस शीर्षक वाले चित्र (figure) में लपेटता है (``numfig = "
+"true`` होने पर क्रमांकित)।"
+
+#: ../../howto/typst-diagrams.rst:56
+msgid "``:name: label``"
+msgstr "``:name: label``"
+
+#: ../../howto/typst-diagrams.rst:57
+msgid "Cross-reference anchor for ``:ref:`` and ``:numref:``."
+msgstr "``:ref:`` और ``:numref:`` के लिए पार-संदर्भ एंकर।"
+
+#: ../../howto/typst-diagrams.rst:58
+msgid "``:format: svg|png``"
+msgstr "``:format: svg|png``"
+
+#: ../../howto/typst-diagrams.rst:59
+msgid "Output image format: ``svg`` (default) or ``png`` (144 PPI)."
+msgstr "आउटपुट चित्र फ़ॉर्मैट: ``svg`` (डिफ़ॉल्ट) या ``png`` (144 PPI)।"
+
+#: ../../howto/typst-diagrams.rst:60
+msgid "``:align: left|center|right``"
+msgstr "``:align: left|center|right``"
+
+#: ../../howto/typst-diagrams.rst:61
+msgid "Horizontal placement of the image or figure."
+msgstr "चित्र या आकृति का क्षैतिज स्थान।"
+
+#: ../../howto/typst-diagrams.rst:62
+msgid "``:class: names``"
+msgstr "``:class: names``"
+
+#: ../../howto/typst-diagrams.rst:63
+msgid "Extra CSS class names added alongside ``typst-diagram``."
+msgstr "``typst-diagram`` के साथ जोड़े जाने वाले अतिरिक्त CSS क्लास नाम।"
+
+#: ../../howto/typst-diagrams.rst:65
 msgid "CeTZ and Fletcher"
 msgstr "CeTZ और Fletcher"
 
-#: ../../howto/typst-diagrams.rst:49
+#: ../../howto/typst-diagrams.rst:68
 msgid ""
 "We import packages explicitly with pinned versions. This CeTZ example "
 "uses the version shared by Fletcher 0.5.8."
-msgstr "हम निश्चित संस्करणों वाले पैकेज स्पष्ट रूप से आयात करते हैं। यह CeTZ उदाहरण वही संस्करण इस्तेमाल करता है जिसे Fletcher 0.5.8 भी इस्तेमाल करता है।"
+msgstr ""
+"हम निश्चित संस्करणों वाले पैकेज स्पष्ट रूप से आयात करते हैं। यह CeTZ "
+"उदाहरण वही संस्करण इस्तेमाल करता है जिसे Fletcher 0.5.8 भी इस्तेमाल करता "
+"है।"
 
-#: ../../howto/typst-diagrams.rst:65
+#: ../../howto/typst-diagrams.rst:84
 msgid "Fletcher supplies nodes and arrows."
 msgstr "Fletcher नोड और तीर प्रदान करता है।"
 
-#: ../../howto/typst-diagrams.rst:80
+#: ../../howto/typst-diagrams.rst:99
 msgid ""
 "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings apply "
 "to diagrams in both HTML and PDF. ``pdf_packages = \"offline\"`` uses "
@@ -3453,41 +3585,62 @@ msgid ""
 "with ``pdf_font_paths``. After installing a previously missing package or "
 "changing font files, we run a fresh ``guidedog build html -a`` command to "
 "redraw cached pages and reload the compiler's font store."
-msgstr "``pdf_packages``, ``pdf_fonts`` और ``pdf_font_paths`` सेटिंग HTML तथा PDF दोनों के आरेखों पर लागू होती हैं। ``pdf_packages = \"offline\"`` केवल Typst की पैकेज निर्देशिकाओं में पहले से स्थापित पैकेज इस्तेमाल करता है। डिफ़ॉल्ट सेटिंग अनुपलब्ध पैकेज डाउनलोड करने देती है। दोहराने योग्य टाइपोग्राफ़ी के लिए हम ``pdf_fonts = \"embedded\"`` सेट करते हैं और ``pdf_font_paths`` से परियोजना की फ़ॉन्ट निर्देशिकाएँ जोड़ते हैं। पहले अनुपलब्ध पैकेज स्थापित करने या फ़ॉन्ट फ़ाइल बदलने के बाद हम नई प्रक्रिया में ``guidedog build html -a`` चलाते हैं, ताकि कैश किए गए पृष्ठ दोबारा बनें और कंपाइलर का फ़ॉन्ट संग्रह दोबारा लोड हो।"
+msgstr ""
+"``pdf_packages``, ``pdf_fonts`` और ``pdf_font_paths`` सेटिंग HTML तथा PDF "
+"दोनों के आरेखों पर लागू होती हैं। ``pdf_packages = \"offline\"`` केवल "
+"Typst की पैकेज निर्देशिकाओं में पहले से स्थापित पैकेज इस्तेमाल करता है। "
+"डिफ़ॉल्ट सेटिंग अनुपलब्ध पैकेज डाउनलोड करने देती है। दोहराने योग्य "
+"टाइपोग्राफ़ी के लिए हम ``pdf_fonts = \"embedded\"`` सेट करते हैं और "
+"``pdf_font_paths`` से परियोजना की फ़ॉन्ट निर्देशिकाएँ जोड़ते हैं। पहले "
+"अनुपलब्ध पैकेज स्थापित करने या फ़ॉन्ट फ़ाइल बदलने के बाद हम नई प्रक्रिया "
+"में ``guidedog build html -a`` चलाते हैं, ताकि कैश किए गए पृष्ठ दोबारा "
+"बनें और कंपाइलर का फ़ॉन्ट संग्रह दोबारा लोड हो।"
 
-#: ../../howto/typst-diagrams.rst:86
+#: ../../howto/typst-diagrams.rst:105
 msgid "Shared helpers and existing files"
 msgstr "साझा सहायक कोड और मौजूदा फ़ाइलें"
 
-#: ../../howto/typst-diagrams.rst:89
+#: ../../howto/typst-diagrams.rst:108
 msgid ""
 "We can move common colors and drawing functions into a local ``.typ`` "
 "file. An inline diagram imports paths relative to the RST or Markdown "
 "file containing it. A directive inside an included document uses that "
 "document's folder."
-msgstr "हम सामान्य रंगों और चित्रण फ़ंक्शनों को स्थानीय ``.typ`` फ़ाइल में रख सकते हैं। दस्तावेज़ के भीतर का आरेख आयात पथों को उस RST या Markdown फ़ाइल के सापेक्ष हल करता है जिसमें वह लिखा है। शामिल किए गए दस्तावेज़ का निर्देश उसी दस्तावेज़ की निर्देशिका इस्तेमाल करता है।"
+msgstr ""
+"हम सामान्य रंगों और चित्रण फ़ंक्शनों को स्थानीय ``.typ`` फ़ाइल में रख "
+"सकते हैं। दस्तावेज़ के भीतर का आरेख आयात पथों को उस RST या Markdown फ़ाइल "
+"के सापेक्ष हल करता है जिसमें वह लिखा है। शामिल किए गए दस्तावेज़ का "
+"निर्देश उसी दस्तावेज़ की निर्देशिका इस्तेमाल करता है।"
 
-#: ../../howto/typst-diagrams.rst:101
+#: ../../howto/typst-diagrams.rst:120
 msgid ""
 "We can also retain a complete figure source file and let Guidedog build "
 "it. We give either a file argument or an inline body. Imports in the file "
 "resolve beside that file."
-msgstr "हम पूरे चित्र की स्रोत फ़ाइल को भी बनाए रख सकते हैं और Guidedog से उसका निर्माण करा सकते हैं। हम फ़ाइल आर्ग्युमेंट या दस्तावेज़ के भीतर का मुख्य भाग देते हैं, दोनों नहीं। फ़ाइल में लिखे आयात उसी फ़ाइल के सापेक्ष हल होते हैं।"
+msgstr ""
+"हम पूरे चित्र की स्रोत फ़ाइल को भी बनाए रख सकते हैं और Guidedog से उसका "
+"निर्माण करा सकते हैं। हम फ़ाइल आर्ग्युमेंट या दस्तावेज़ के भीतर का मुख्य "
+"भाग देते हैं, दोनों नहीं। फ़ाइल में लिखे आयात उसी फ़ाइल के सापेक्ष हल "
+"होते हैं।"
 
-#: ../../howto/typst-diagrams.rst:111
+#: ../../howto/typst-diagrams.rst:130
 msgid ""
 "Imported helpers and data files become build dependencies. Changing one "
 "redraws the affected HTML pages without changing their markup. We keep "
 "project imports below the source directory; symlinks leading outside it "
 "are refused. Absolute Typst imports start at that source directory."
-msgstr "आयात की गई सहायक और डेटा फ़ाइलें निर्माण की निर्भरताएँ बनती हैं। उनमें बदलाव होने पर मार्कअप बदले बिना संबंधित HTML पृष्ठों के चित्र दोबारा बनते हैं। हम परियोजना के आयात स्रोत निर्देशिका के भीतर रखते हैं; बाहर जाने वाले प्रतीकात्मक लिंक अस्वीकार किए जाते हैं। Typst के निरपेक्ष आयात इसी स्रोत निर्देशिका से शुरू होते हैं।"
+msgstr ""
+"आयात की गई सहायक और डेटा फ़ाइलें निर्माण की निर्भरताएँ बनती हैं। उनमें "
+"बदलाव होने पर मार्कअप बदले बिना संबंधित HTML पृष्ठों के चित्र दोबारा बनते "
+"हैं। हम परियोजना के आयात स्रोत निर्देशिका के भीतर रखते हैं; बाहर जाने "
+"वाले प्रतीकात्मक लिंक अस्वीकार किए जाते हैं। Typst के निरपेक्ष आयात इसी "
+"स्रोत निर्देशिका से शुरू होते हैं।"
 
-#: ../../howto/typst-diagrams.rst:116
-#| msgid "Static websites and articles"
+#: ../../howto/typst-diagrams.rst:135
 msgid "Page size and failures"
 msgstr "पृष्ठ का आकार और विफलताएँ"
 
-#: ../../howto/typst-diagrams.rst:119
+#: ../../howto/typst-diagrams.rst:138
 msgid ""
 "Guidedog prepends ``#set page(width: auto, height: auto, margin: 0pt)`` "
 "so the page fits the drawing. We write ordinary Typst content, without an "
@@ -3497,17 +3650,97 @@ msgid ""
 "most 4,096 distinct file lookups per diagram. Typst layout uses the "
 "compiler's own memory; these limits do not impose a compiler timeout or a "
 "total memory ceiling."
-msgstr "Guidedog शुरुआत में ``#set page(width: auto, height: auto, margin: 0pt)`` जोड़ता है ताकि पृष्ठ चित्र के अनुरूप हो। हम ``html.frame`` आवरण के बिना सामान्य Typst सामग्री लिखते हैं। प्रत्येक आरेख को सीमित माप वाला ठीक एक पृष्ठ बनाना चाहिए। निर्देश का मुख्य भाग अधिकतम 1 MiB हो सकता है; PNG निर्यात अधिकतम 1.6 करोड़ पिक्सेल और प्रत्येक भुजा पर 16,384 पिक्सेल की अनुमति देता है। अडैप्टर हर आरेख के लिए अधिकतम 4,096 अलग फ़ाइल खोजों का लेखा रखता है। Typst का लेआउट कंपाइलर की अपनी मेमोरी इस्तेमाल करता है; ये सीमाएँ कंपाइलर के लिए समय-सीमा या कुल मेमोरी की अधिकतम सीमा तय नहीं करतीं।"
+msgstr ""
+"Guidedog शुरुआत में ``#set page(width: auto, height: auto, margin: 0pt)`` "
+"जोड़ता है ताकि पृष्ठ चित्र के अनुरूप हो। हम ``html.frame`` आवरण के बिना "
+"सामान्य Typst सामग्री लिखते हैं। प्रत्येक आरेख को सीमित माप वाला ठीक एक "
+"पृष्ठ बनाना चाहिए। निर्देश का मुख्य भाग अधिकतम 1 MiB हो सकता है; PNG "
+"निर्यात अधिकतम 1.6 करोड़ पिक्सेल और प्रत्येक भुजा पर 16,384 पिक्सेल की "
+"अनुमति देता है। अडैप्टर हर आरेख के लिए अधिकतम 4,096 अलग फ़ाइल खोजों का "
+"लेखा रखता है। Typst का लेआउट कंपाइलर की अपनी मेमोरी इस्तेमाल करता है; ये "
+"सीमाएँ कंपाइलर के लिए समय-सीमा या कुल मेमोरी की अधिकतम सीमा तय नहीं करतीं।"
 
-#: ../../howto/typst-diagrams.rst:126
+#: ../../howto/typst-diagrams.rst:145
 msgid ""
-"If compilation fails, we see a warning at the directive and the source "
-"stays visible as code. The message includes the position within the "
-"diagram or imported Typst file. ``-W`` prevents that build from replacing "
-"the published site or book. ``--untrusted`` keeps diagram source visible "
-"and warns without running Typst. Text builds retain source without "
-"compiling it."
-msgstr "कंपाइलेशन विफल होने पर निर्देश के स्थान पर चेतावनी दिखती है और स्रोत कोड के रूप में दिखाई देता रहता है। संदेश में आरेख या आयात की गई Typst फ़ाइल का स्थान होता है। ``-W`` इस निर्माण को प्रकाशित वेबसाइट या पुस्तक बदलने से रोकता है। ``--untrusted`` Typst चलाए बिना आरेख का स्रोत बनाए रखता है और चेतावनी देता है। टेक्स्ट निर्माण भी स्रोत को कंपाइल किए बिना रखता है।"
+"If compilation fails, we see a ``build.typst-diagram`` warning at the "
+"directive and the source stays visible as code. The message includes "
+"the position within the diagram or imported Typst file. Giving neither "
+"or both of a file argument and an inline body reports "
+"``sphinx.typst.source``. A ``guidedog`` built without the ``embedded`` "
+"Typst feature reports ``typst.embedded``, and exceeding the host memory "
+"budget reports ``host.budget``. ``-W`` prevents a failed build from "
+"replacing the published site or book. ``--untrusted`` keeps diagram "
+"source visible and warns ``build.typst-diagram`` without running Typst. "
+"Text builds retain source without compiling it."
+msgstr ""
+"यदि कंपाइलेशन विफल होता है, तो निर्देश पर ``build.typst-diagram`` "
+"चेतावनी दिखती है और स्रोत कोड के रूप में दिखाई देता रहता है। संदेश में "
+"आरेख या आयातित Typst फ़ाइल के भीतर का स्थान होता है। फ़ाइल आर्ग्युमेंट "
+"और इनलाइन बॉडी में से कोई न देने या दोनों दे देने पर "
+"``sphinx.typst.source`` रिपोर्ट होता है। ``embedded`` Typst फ़ीचर के "
+"बिना बना ``guidedog`` ``typst.embedded`` रिपोर्ट करता है, और होस्ट "
+"मेमोरी बजट पार होने पर ``host.budget`` रिपोर्ट होता है। ``-W`` विफल "
+"build को प्रकाशित वेबसाइट या किताब बदलने से रोकता है। ``--untrusted`` "
+"बिना Typst चलाए आरेख स्रोत को दृश्य रखता है और ``build.typst-diagram`` "
+"चेतावनी देता है। टेक्स्ट निर्माण स्रोत को कंपाइल किए बिना रखते हैं।"
+
+#: ../../howto/typst-diagrams.rst:153
+msgid "Migrate existing figure files"
+msgstr "मौजूदा चित्र फ़ाइलों का माइग्रेशन"
+
+#: ../../howto/typst-diagrams.rst:156
+msgid ""
+"When a project previously ran ``typst compile`` by hand or in a "
+"Makefile to generate prebuilt ``.svg`` or ``.png`` files:"
+msgstr ""
+"जब किसी प्रोजेक्ट में पहले से बनी ``.svg`` या ``.png`` फ़ाइलें तैयार "
+"करने के लिए हाथ से या Makefile में ``typst compile`` चलाया जाता था:"
+
+#: ../../howto/typst-diagrams.rst:158
+msgid ""
+"Remove any explicit ``#set page(...)`` or ``html.frame(...)`` wrapper "
+"that existed only to crop the figure; Guidedog prepends ``#set "
+"page(width: auto, height: auto, margin: 0pt)`` automatically."
+msgstr ""
+"केवल आकृति को क्रॉप करने के लिए लगाए गए किसी भी स्पष्ट ``#set "
+"page(...)`` या ``html.frame(...)`` आवरण को हटा दें; Guidedog अपने आप "
+"पहले ``#set page(width: auto, height: auto, margin: 0pt)`` जोड़ देता है।"
+
+#: ../../howto/typst-diagrams.rst:159
+msgid ""
+"Replace ``.. figure:: figures/arch.svg`` (and its separate build "
+"script) with ``.. typst-diagram:: figures/arch.typ``, keeping "
+"``:caption:``, ``:alt:``, ``:name:`` and ``:align:`` on the directive."
+msgstr ""
+"``.. figure:: figures/arch.svg`` (और उसकी अलग build स्क्रिप्ट) के स्थान "
+"पर ``.. typst-diagram:: figures/arch.typ`` लिखें, तथा निर्देश पर "
+"``:caption:``, ``:alt:``, ``:name:`` और ``:align:`` बनाए रखें।"
+
+#: ../../howto/typst-diagrams.rst:160
+msgid ""
+"Delete the committed generated ``.svg`` or ``.png`` artifacts once "
+"``guidedog build html -W`` and ``guidedog build pdf -W`` succeed."
+msgstr ""
+"जब ``guidedog build html -W`` और ``guidedog build pdf -W`` सफल हो जाएँ, "
+"तब रिपॉज़िटरी में सहेजी गई जनित ``.svg`` या ``.png`` फ़ाइलें हटा दें।"
+
+#~ msgid ""
+#~ "``guidedog dsc build`` writes the website to ``_build/html`` and one "
+#~ "PDF per record to ``_build/pdf``. Naming a record writes only its PDF, "
+#~ "to ``_build/selected``, and leaves the complete output alone. Warnings "
+#~ "stop the build."
+#~ msgstr ""
+#~ "``guidedog dsc build`` वेबसाइट ``_build/html`` में और हर रिकॉर्ड का एक "
+#~ "PDF ``_build/pdf`` में लिखता है। किसी रिकॉर्ड का नाम देने पर केवल उसका "
+#~ "PDF ``_build/selected`` में लिखा जाता है, और पूरा आउटपुट जैसा था वैसा "
+#~ "रहता है। चेतावनी आने पर build रुक जाता है।"
+
+#~ msgid ""
+#~ "The manual's catalogs are in ``docs/manual/locales``. After we change "
+#~ "English text, we refresh them:"
+#~ msgstr ""
+#~ "मैनुअल के कैटलॉग ``docs/manual/locales`` में हैं। अंग्रेज़ी टेक्स्ट "
+#~ "बदलने के बाद हम उन्हें ताज़ा करते हैं:"
 
 #~ msgid ""
 #~ "**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. "

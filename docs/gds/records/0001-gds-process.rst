@@ -36,7 +36,7 @@ GDS decisions govern the whole product, not a renamed zenfmt file converter.
 
 A discussion explains one coherent proposal and the reasoning that makes it worth
 adopting. It can specify a feature, a format mapping, a process, or an assessment.
-A future user manual belongs outside GDS. The HTML index connects standalone
+The user manual belongs outside GDS (``docs/manual``). The HTML index connects standalone
 records; each record has its own PDF. There is no PDF index or combined PDF build.
 
 The process retains ZDS 0001's local placeholder drafts, maintainer-assigned
@@ -46,7 +46,7 @@ repository-based discussion. PEPs inform focused proposals, rationale, alternati
 and the distinction between editorial readiness and technical acceptance.
 We adopt these practices without claiming the governance or authority of those projects.
 
-This process is implemented by ``guidedog gds`` for reStructuredText records.
+This process is implemented by ``guidedog dsc`` for reStructuredText records.
 The register and lifecycle events record the maintainer-requested reconciliation
 of implementation status. The inherited process alone is not acceptance evidence.
 Its original wording remains in ``legacy/0001-zds-process.rst``.
@@ -65,7 +65,7 @@ from Sphinx where relevant. State whether a Sphinx feature is supported, adapted
 or out of scope. Sphinx compatibility is not inferred from RST support alone.
 
 Bug fixes preserving specified behavior, routine refactors, and additional tests
-usually amend an existing record or need no new record. The future user manual
+usually amend an existing record or need no new record. The user manual
 explains how to use Guidedog. Release notes state what shipped. GDS explains what
 was decided and why. Do not move normative design decisions into manual chapters.
 
@@ -185,8 +185,8 @@ Format records
 
 Retain the three ZDS 0001 requirements: a mapping table for each recognized source
 construct and its semantic representation; deliberate omissions with reasons; and
-round-trip expectations. Because this project currently has only HTML and PDF
-outputs, round-trip recovery may be unavailable. Say so rather than implying that
+round-trip expectations. Where a target has no source writer (HTML, PDF, or plain
+text, unlike ``guidedoc-rst-writer``), round-trip recovery is unavailable. Say so rather than implying that
 PDF can reconstruct source. Distinguish parsing coverage, target representation,
 policy refusal, intentional omission, and unfinished work.
 
@@ -239,7 +239,7 @@ the rest.
   safe even then, because outputs are staged and switched whole.
 - **Bounds checks stay on.** Indexing is always checked; ``get_unchecked`` and similar
   are not used.
-- **No ``unsafe`` outside foreign-function modules.** ``unsafe`` appears only at the
+- **No unsafe code outside foreign-function modules.** ``unsafe`` appears only at the
   boundaries with C (Graphviz, the platform credential stores, ``renameat2``, ``signal``,
   ``localtime_r``) and in test-only counting allocators. Every block has a
   ``// SAFETY:`` comment.
@@ -394,7 +394,7 @@ performance, and release. Performance labels do not authorize premature optimiza
 ``promote`` accepts an optional ``--number=N`` for maintainers and checks that it is
 unreserved in Guidedog records, explicit reservations, and local ``gds/NNNN`` branches when
 Git metadata is available. It never fetches remotely. Refuse numbers outside
-0001 through 9999, duplicates, and previously assigned GDS numbers. ``--discussion=URL`` records a
+0001 through 9999 for the default four-digit GDS catalog (GDS 0007 generalizes ``number_digits`` for custom catalogs), duplicates, and previously assigned GDS numbers. ``--discussion=URL`` records a
 real discussion URL when supplied. Otherwise its absence stays explicit. Number
 assignment is not design acceptance and does not automatically open a pull request.
 
@@ -445,9 +445,10 @@ assumptions in code. Review must separate implemented evidence from proposals an
 identify the owner of every resource boundary.
 
 A record's metadata, examples, and links are reviewed along with its specification.
-Diagram dependencies must be pinned if external packages are used. Current diagrams
-use Graphviz directives. Guidedog renders vector output without a downloaded
-Typst package. ``guidedog dsc check --render`` compiles the active records.
+Diagram dependencies must be pinned if external packages are used. Graphviz directives
+render vector output without any downloaded package, and ``typst-diagram`` directives
+(GDS 0014) compile embedded Typst drawings with explicit version-pinned ``@preview``
+imports when packages are used. ``guidedog dsc check --render`` compiles the active records.
 ``tools/check`` checks implementation sources. Documentation prose is exempt
 from the source width and procedure limits.
 
@@ -471,7 +472,7 @@ Alternatives considered
 A book would make individual proposals harder to discuss and assign stable status.
 A new PEP-style state machine would conflict with the existing ZDS process. Automatic
 numbering at draft creation would lose the local placeholder workflow. These options
-are not adopted. A future manual may still explain accepted behavior separately.
+are not adopted. The user manual explains accepted behavior separately.
 
 
 Acceptance criteria and unresolved questions
@@ -484,7 +485,7 @@ order, and uses locked, recoverable transactions for promotion and state changes
 Integration tests cover legal and illegal transitions, reserved numbers, dry runs,
 concurrent edits, interrupted journals, and recovery that preserves later edits.
 The actual RST template is exercised by ``tests/integration/tests/discussions/manual.rs``.
-All six active records are built separately as HTML and PDF during this review.
+All fourteen active records are built separately as HTML and PDF.
 The external discussion venue remains unassigned; no external approval is claimed.
 GDS 0002 retains the broader CLI obligations not completed for the beta.
 

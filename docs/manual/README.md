@@ -10,7 +10,7 @@ Start at [index.rst](index.rst), or see the other documentation projects:
 
 ## Overview
 
-- **Tutorials**: a first project, a small book, and a reusable HTML/PDF theme.
+- **Tutorials**: a first project, a small book, dynamic content and directives, and a reusable HTML/PDF theme.
 - **Topics**: writing, domains, projects, typography, mathematics, [Graphviz and Typst diagrams](topics/diagrams.rst), templates, media, translation.
 - **Practical tasks and reference**: CLI commands, configuration, formats, errors, compatibility.
 - **Document code**: Python (autodoc), Rust (`rust.rst`), Odin, and declared object types.

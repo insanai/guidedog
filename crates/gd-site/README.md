@@ -63,7 +63,7 @@ written), `build.template.{outside,link}`, `build.additional_page`,
   included; `assets()` written in the site unit), so no build-wide mutex is needed.
 - **Additional pages and plugin assets** check the site unit's own files
   (`gd_outputs::Unit::files`), not the previous generation's, so a page or asset never conflicts with itself on a rebuild.
-- **Theme files**: a project's own `_static/guidedog.css`, `guidedog.js` or
+- **Theme files**: a project's own `_static/guidedog.css`, `guidedog.js`, `typography.js` or
   `pygments.css` (in `html_static_path`) replaces the built-in one instead of being
   written over it; page assets are copied once each, in target order.
 - **Search**: a missing or damaged words file is a `build.search` warning, never a page

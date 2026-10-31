@@ -82,7 +82,7 @@ Reaching a bound is a report, not a crash. There are two kinds:
 ``host.budget`` (MEMORY BUDGET REACHED)
    The build reached the memory it may hold, its budget (``--budget=MIB``, 1 GiB by
    default). The budget counts what Guidedog reads and keeps: sources, included files,
-   and the PDF the embedded Typst compiler returns. The report names the step and the
+   compiled diagram images, and the PDF the embedded Typst compiler returns. The report names the step and the
    file that needed the memory. The hint names a budget that fits, as a number. For
    example::
 
@@ -134,6 +134,10 @@ Status  Meaning
 4       A file or an outside program failed: a path that cannot be read or written, a
         file that changed while it was read, or Typst not starting or not finishing.
 5       Guidedog failed internally, and the report asks us to report it.
+6       ``publish`` only: the host accepted the publication, but has not confirmed it
+        live.
+7       ``publish`` only: whether the publication was applied is not known; run the
+        publisher's ``recover`` command before publishing again.
 70      Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with the command
         that ran, the fault, and what ``guidedog --version`` prints, and says where to
         report it: the issue tracker our build names, or else whoever provided our

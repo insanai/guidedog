@@ -10,7 +10,7 @@ the source roots. Nothing is executed. `gd-autodoc` builds Sphinx autodoc output
 
 ```toml
 [dependencies]
-gd-pyscan = "0.7"
+gd-pyscan = "1.0.0-beta.8"
 ```
 
 We analyse a module without running it:
@@ -33,7 +33,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-pyscan). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-pyscan --no-deps` (and on [docs.rs](https://docs.rs/gd-pyscan) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

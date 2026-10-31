@@ -41,7 +41,7 @@ Readers and renderers
    ``guidedoc-rst`` (with ``guidedoc-rst-inline``), ``guidedoc-commonmark`` (CommonMark
    and MyST), ``guidedoc-sphinx`` (Sphinx directives, roles and domains, including the
    ``odin`` and ``rust`` domains), ``guidedoc-cpp``; ``guidedoc-html``,
-   ``guidedoc-typst``, and ``guidedoc-text``.
+   ``guidedoc-typst``, ``guidedoc-text``, and ``guidedoc-rst-writer``.
 
 ``guidedoc-defaults``
    The built-in registry, and the adapter that joins ``gd-highlight`` to the engine's
@@ -109,9 +109,10 @@ The boundary
 
 The workspace owns its tables as ``Vec`` and ``String`` values. It clears them between
 conversions and keeps their capacity, so the engine's own work in steady state allocates
-nothing. A test with a counting allocator checks it. Readers and renderers still build
-small scratch vectors per conversion. A second counting-allocator test bounds them per
-reader and renderer and checks that they do not grow (see :doc:`testing`). Growth driven by the input uses
+nothing. A test with a counting allocator checks it. Readers and renderers keep their
+working state in the workspace's ``Scratch`` store too; a second counting-allocator test
+bounds any remaining warmup or lossy-report allocations per reader and renderer pair and
+checks that they do not grow (see :doc:`memory` and :doc:`testing`). Growth driven by the input uses
 ``try_reserve`` and stays within ``Limits`` (nodes, text bytes, output bytes, reports,
 depth, work, stack, includes). So running out is a ``Capacity`` or ``Limit`` result,
 never a panic. A third-party compiler has its own allocation rules. The guarantee covers

@@ -8,7 +8,7 @@ independent of every other workspace crate. For large catalogs, see [docs/manual
 
 ```toml
 [dependencies]
-gd-gettext = "0.7"
+gd-gettext = "1.0.0-beta.8"
 ```
 
 We look up translations in a catalog:
@@ -24,7 +24,7 @@ fn main() -> Result<(), gd_gettext::Error> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-gettext). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-gettext --no-deps` (and on [docs.rs](https://docs.rs/gd-gettext) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

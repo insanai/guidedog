@@ -7,7 +7,7 @@ API over `serde_json` with a validating parser, an HTML-safe writer and Elm-styl
 
 ```toml
 [dependencies]
-gd-json = "0.7"
+gd-json = "1.0.0-beta.8"
 ```
 
 We parse JSON, read a field and write it back:
@@ -21,7 +21,7 @@ fn main() -> Result<(), gd_json::Error> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-json). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-json --no-deps` (and on [docs.rs](https://docs.rs/gd-json) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -147,14 +147,15 @@ msgstr "``host.budget``\\ （达到内存预算）"
 
 #: ../../errors.rst:83
 msgid ""
-"The build reached the memory it may hold, its budget (``--budget=MIB``, 1 "
-"GiB by default). The budget counts what Guidedog reads and keeps: "
-"sources, included files, and the PDF the embedded Typst compiler returns. "
-"The report names the step and the file that needed the memory. The hint "
-"names a budget that fits, as a number. For example:"
+"The build reached the memory it may hold, its budget (``--budget=MIB``, "
+"1 GiB by default). The budget counts what Guidedog reads and keeps: "
+"sources, included files, compiled diagram images, and the PDF the "
+"embedded Typst compiler returns. The report names the step and the file "
+"that needed the memory. The hint names a budget that fits, as a number. "
+"For example:"
 msgstr ""
 "构建达到了允许持有的内存，即预算（``--budget=MIB``，默认 1 GiB）。预算统计 Guidedog "
-"读取并保留的内容：源文件、被包含的文件，以及内嵌 Typst 编译器返回的 "
+"读取并保留的内容：源文件、被包含的文件、编译生成的图表图像，以及内嵌 Typst 编译器返回的 "
 "PDF。报告会指出需要这些内存的步骤和文件。提示会以数字给出一个够用的预算。例如："
 
 #: ../../errors.rst:91
@@ -291,10 +292,30 @@ msgid "Guidedog failed internally, and the report asks us to report it."
 msgstr "Guidedog 内部出错，报告会请我们提交问题。"
 
 #: ../../errors.rst:137
+msgid "6"
+msgstr "6"
+
+#: ../../errors.rst:137
+msgid ""
+"``publish`` only: the host accepted the publication, but has not "
+"confirmed it live."
+msgstr "仅限 ``publish``：托管方已接受发布请求，但尚未确认其已上线生效。"
+
+#: ../../errors.rst:139
+msgid "7"
+msgstr "7"
+
+#: ../../errors.rst:139
+msgid ""
+"``publish`` only: whether the publication was applied is not known; run "
+"the publisher's ``recover`` command before publishing again."
+msgstr "仅限 ``publish``：无法确定发布是否已生效；再次发布前请先运行发布器的 ``recover`` 命令。"
+
+#: ../../errors.rst:141
 msgid "70"
 msgstr "70"
 
-#: ../../errors.rst:137
+#: ../../errors.rst:141
 msgid ""
 "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
 "the command that ran, the fault, and what ``guidedog --version`` prints, "
@@ -306,17 +327,17 @@ msgstr ""
 "``guidedog --version`` "
 "的输出，并说明到哪里报告：我们所用构建版本指定的问题跟踪器，没有的话就是提供该构建版本的人。由于构建只在最后发布，崩溃时之前的输出保持不变。"
 
-#: ../../errors.rst:142
+#: ../../errors.rst:146
 msgid "130"
 msgstr "130"
 
-#: ../../errors.rst:142
+#: ../../errors.rst:146
 msgid ""
 "The command was interrupted with Ctrl+C. Published files were left "
 "unchanged."
 msgstr "命令被 Ctrl+C 中断。已发布的文件保持不变。"
 
-#: ../../errors.rst:145
+#: ../../errors.rst:149
 msgid ""
 "A build that fails for any reason leaves the previous output, and the "
 "records of what it built, as they were. We fix the problem and build "

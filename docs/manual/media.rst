@@ -59,7 +59,6 @@ For portable PDF download links, set ``html_baseurl`` to the published HTML site
 absolute HTTP or HTTPS address. The book then links to that site's copied files.
 Without it, the link remains source-relative. The PDF does not embed attachments.
 This setting does not upload files. Publish the HTML site before sharing the book.
-This behavior is available in Guidedog 0.6.3 and later.
 
 Theme files
 -----------

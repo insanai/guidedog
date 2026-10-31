@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -168,17 +168,19 @@ msgstr "``host.budget`` (मेमोरी बजट पूरा)"
 
 #: ../../errors.rst:83
 msgid ""
-"The build reached the memory it may hold, its budget (``--budget=MIB``, 1 "
-"GiB by default). The budget counts what Guidedog reads and keeps: "
-"sources, included files, and the PDF the embedded Typst compiler returns. "
-"The report names the step and the file that needed the memory. The hint "
-"names a budget that fits, as a number. For example:"
+"The build reached the memory it may hold, its budget (``--budget=MIB``, "
+"1 GiB by default). The budget counts what Guidedog reads and keeps: "
+"sources, included files, compiled diagram images, and the PDF the "
+"embedded Typst compiler returns. The report names the step and the file "
+"that needed the memory. The hint names a budget that fits, as a number. "
+"For example:"
 msgstr ""
 "build उस मेमोरी तक पहुँच गई जो वह रख सकती है, यानी उसका बजट "
-"(``--budget=MIB``, डिफ़ॉल्ट 1 GiB)। बजट वह गिनता है जो Guidedog पढ़ता और "
-"रखता है: सोर्स फ़ाइलें, शामिल फ़ाइलें, और वह PDF जो एम्बेडेड Typst "
-"कम्पाइलर लौटाता है। रिपोर्ट उस चरण और फ़ाइल का नाम बताती है जिसे मेमोरी "
-"चाहिए थी। संकेत पर्याप्त बजट एक संख्या के रूप में बताता है। उदाहरण के लिए:"
+"(``--budget=MIB``, डिफ़ॉल्ट 1 GiB)। बजट वह गिनता है जो Guidedog पढ़ता "
+"और रखता है: सोर्स फ़ाइलें, शामिल फ़ाइलें, कंपाइल किए गए आरेख चित्र, और "
+"वह PDF जो एम्बेडेड Typst कम्पाइलर लौटाता है। रिपोर्ट उस चरण और फ़ाइल का "
+"नाम बताती है जिसे मेमोरी चाहिए थी। संकेत पर्याप्त बजट एक संख्या के रूप "
+"में बताता है। उदाहरण के लिए:"
 
 #: ../../errors.rst:91
 msgid ""
@@ -336,10 +338,34 @@ msgstr ""
 "है।"
 
 #: ../../errors.rst:137
+msgid "6"
+msgstr "6"
+
+#: ../../errors.rst:137
+msgid ""
+"``publish`` only: the host accepted the publication, but has not "
+"confirmed it live."
+msgstr ""
+"केवल ``publish``: होस्ट ने प्रकाशन स्वीकार कर लिया है, पर उसके लाइव "
+"होने की पुष्टि अभी नहीं की है।"
+
+#: ../../errors.rst:139
+msgid "7"
+msgstr "7"
+
+#: ../../errors.rst:139
+msgid ""
+"``publish`` only: whether the publication was applied is not known; run "
+"the publisher's ``recover`` command before publishing again."
+msgstr ""
+"केवल ``publish``: प्रकाशन लागू हुआ या नहीं यह ज्ञात नहीं है; दोबारा "
+"प्रकाशित करने से पहले पब्लिशर का ``recover`` कमांड चलाएँ।"
+
+#: ../../errors.rst:141
 msgid "70"
 msgstr "70"
 
-#: ../../errors.rst:137
+#: ../../errors.rst:141
 msgid ""
 "Guidedog crashed. It prints ``GUIDEDOG CRASHED (internal error)`` with "
 "the command that ran, the fault, and what ``guidedog --version`` prints, "
@@ -353,17 +379,17 @@ msgstr ""
 "हमें यह build दिया। build केवल अंत में प्रकाशित होती हैं, इसलिए क्रैश "
 "होने पर पिछला आउटपुट अपनी जगह बना रहता है।"
 
-#: ../../errors.rst:142
+#: ../../errors.rst:146
 msgid "130"
 msgstr "130"
 
-#: ../../errors.rst:142
+#: ../../errors.rst:146
 msgid ""
 "The command was interrupted with Ctrl+C. Published files were left "
 "unchanged."
 msgstr "कमांड Ctrl+C से रोका गया। प्रकाशित फ़ाइलें नहीं बदलीं।"
 
-#: ../../errors.rst:145
+#: ../../errors.rst:149
 msgid ""
 "A build that fails for any reason leaves the previous output, and the "
 "records of what it built, as they were. We fix the problem and build "

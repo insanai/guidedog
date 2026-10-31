@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:02+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -85,20 +85,18 @@ msgid ""
 "HTML site's absolute HTTP or HTTPS address. The book then links to that "
 "site's copied files. Without it, the link remains source-relative. The "
 "PDF does not embed attachments. This setting does not upload files. "
-"Publish the HTML site before sharing the book. This behavior is available "
-"in Guidedog 0.6.3 and later."
+"Publish the HTML site before sharing the book."
 msgstr ""
 "PDF のダウンロードリンクをどこでも使えるようにするには、``html_baseurl`` に公開済み HTML サイトの HTTP または "
 "HTTPS "
 "の絶対アドレスを設定します。すると本は、そのサイトにコピーされたファイルにリンクします。設定しない場合、リンクはソースからの相対パスのままです。PDF "
-"には添付ファイルを埋め込みません。この設定でファイルがアップロードされるわけではないので、本を共有する前に HTML "
-"サイトを公開してください。この動作は Guidedog 0.6.3 以降で利用できます。"
+"には添付ファイルを埋め込みません。この設定でファイルがアップロードされるわけではないので、本を共有する前に HTML サイトを公開してください。"
 
-#: ../../media.rst:64
+#: ../../media.rst:63
 msgid "Theme files"
 msgstr "テーマのファイル"
 
-#: ../../media.rst:67
+#: ../../media.rst:66
 msgid ""
 "``_static`` holds the files the theme uses (style sheets, scripts, fonts, "
 "a logo), copied as they are into ``_static`` in the site. "
@@ -112,14 +110,16 @@ msgstr ""
 "``html_js_files``\\ 、\\ ``html_logo``\\ 、\\ ``html_favicon`` "
 "でファイルを指定します。本文のメディアは文書と同じ場所に置けば、一緒に移動してもリンクが保たれます。"
 
-#: ../../media.rst:73
+#: ../../media.rst:72
 msgid "Generated diagrams"
 msgstr "生成される図"
 
-#: ../../media.rst:76
+#: ../../media.rst:75
 msgid ""
 "We author Graphviz and Typst diagrams as source in the document. Guidedog "
 "creates their image assets during project builds and includes them in "
 "HTML and PDF. The :doc:`topics/diagrams` chapter covers both tools, "
 "captions, references and shared drawing libraries."
-msgstr "Graphviz と Typst の図を文書内のソースとして記述します。Guidedog はプロジェクトのビルド時に画像を生成し、HTML と PDF に組み込みます。:doc:`topics/diagrams` の章で、両方のツール、キャプション、参照、共通の描画ライブラリを説明します。"
+msgstr ""
+"Graphviz と Typst の図を文書内のソースとして記述します。Guidedog はプロジェクトのビルド時に画像を生成し、HTML と "
+"PDF に組み込みます。:doc:`topics/diagrams` の章で、両方のツール、キャプション、参照、共通の描画ライブラリを説明します。"

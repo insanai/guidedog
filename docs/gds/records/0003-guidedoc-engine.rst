@@ -4,7 +4,7 @@
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-09-29
-:gds-updated: 2026-10-15
+:gds-updated: 2026-10-31
 :gds-discussion: Local review; no external discussion URL assigned
 :gds-labels: ["architecture"]
 
@@ -662,6 +662,7 @@ Crate boundaries express dependency direction. File boundaries keep functions an
    crates/guidedoc-html/        semantic HTML encoding and escaping
    crates/guidedoc-typst/       Typst source encoding, math adapter, source maps
    crates/guidedoc-text/        plain text, as Sphinx's text builder writes it
+   crates/guidedoc-rst-writer/  reStructuredText writer for round-trip and conversion
    crates/guidedoc-defaults/    the built-in registry and the highlighter adapter
    crates/gd-host/              sessions, budget, confinement, publication, workers
    crates/gd-report/            Elm-style reports, text and JSON renderers
@@ -673,7 +674,7 @@ Crate boundaries express dependency direction. File boundaries keep functions an
    crates/gd-highlight/         code highlighting with Pygments' classes; independent
    crates/gd-graphdog/          Graphviz's C library for graphs; independent
    crates/gd-gettext/           gettext catalogs for translations; independent
-   cmd/graphdog/                a dot-compatible command over gd-graphdog
+   cmd/guidedog/                the single Guidedog executable (GDS 0012)
    tests/integration/           conformance, malformed input, goldens, integration
    tools/                       source-limit checks and repository tasks
    docs/gds/                    standalone discussions, index, template, and archive

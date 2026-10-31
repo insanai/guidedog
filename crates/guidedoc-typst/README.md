@@ -2,15 +2,15 @@
 
 **The Typst-source renderer of Guidedoc.** A validated document becomes one Typst source
 file: a fixed, trusted preamble of `gd-` helpers, then the body. It writes text only and
-depends on nothing but `guidedoc`; `gd-typst` compiles the result to PDF or HTML.
+depends on nothing but `guidedoc`; `gd-typst` compiles Typst source to PDF, HTML, SVG, or PNG.
 
 ## Use
 
 ```toml
 [dependencies]
-guidedoc-typst = "0.7"
-guidedoc = "0.7"
-guidedoc-commonmark = "0.7"
+guidedoc-typst = "1.0.0-beta.8"
+guidedoc = "1.0.0-beta.8"
+guidedoc-commonmark = "1.0.0-beta.8"
 ```
 
 We render CommonMark as Typst source, which Typst compiles to PDF:
@@ -30,7 +30,7 @@ fn main() -> Result<(), guidedoc::Fail> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/guidedoc-typst). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p guidedoc-typst --no-deps` (and on [docs.rs](https://docs.rs/guidedoc-typst) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

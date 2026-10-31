@@ -1,10 +1,12 @@
 Maintain this documentation
 ===========================
 
-Guidedog documents itself with Guidedog. The repository has four projects:
-``docs/manual`` (this manual), ``docs/api`` (the Rust API reference of the crates),
-``docs/gds`` (the design records), and ``docs/site`` (the front page).
-The manual and GDS began with ``guidedog quickstart``. We edit their generated templates in
+Guidedog documents itself with Guidedog. The repository has four documentation projects
+and a root site manifest: ``docs/manual`` (this manual), ``docs/api`` (the standalone Rust API
+reference of the crates, also included in the manual's PDF appendix), ``docs/gds`` (the design
+records), ``docs/site`` (the website landing page and release notes), and ``docs/conf.toml``
+(the multi-project SSG configuration that mounts ``docs/site``, ``docs/manual``, and ``docs/gds``).
+Each project keeps its generated templates and static assets locally so we can edit them in
 place. Design records stay out of the manual's table of contents.
 
 All documentation is reStructuredText under ``docs/``. The only Markdown files are each
@@ -66,22 +68,23 @@ It leaves the complete catalog in ``_build/pdf`` intact.
 
    target/release/guidedog dsc build guidedoc-engine --target=pdf --dir=docs/gds
    target/release/guidedog build html docs/gds -W
-   target/release/guidedog build pdf docs/gds -W
 
-The ordinary project commands work too.
+The ordinary HTML project command works directly on ``docs/gds``, while ``guidedog dsc build`` (or the ``discussion-records`` mount in ``docs/conf.toml``) builds one standalone PDF per record without a combined index PDF.
 The GDS project uses its own ``conf.toml`` and its own ``_build`` directory.
 Read ``docs/gds/workflow.rst`` for the authoring workflow.
 
 Translations
 ------------
 
-The manual's catalogs are in ``docs/manual/locales``. After we change English text,
+Translation catalogs live in ``docs/manual/locales`` (for the manual and repository overview) and ``docs/site/locales`` (for the landing page and release notes). After we change English text,
 we refresh them:
 
 .. code-block:: sh
 
-   target/release/guidedog build gettext docs/manual
-   target/release/guidedog intl update -l de -l es -l hi -l ja -l ko -l zh_CN docs/manual
+   target/release/guidedog build -b gettext docs/manual docs/manual/locales/templates
+   target/release/guidedog intl update -p docs/manual/locales/templates -l de -l es -l hi -l ja -l ko -l zh_CN docs/manual
+   target/release/guidedog build -b gettext docs/site docs/site/locales/templates
+   target/release/guidedog intl update -p docs/site/locales/templates -l de -l es -l hi -l ja -l ko -l zh_CN docs/site
 
 See :doc:`../intl` for the translation workflow.
 

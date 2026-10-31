@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 15:18+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -67,11 +67,11 @@ msgstr ""
 "<../_static/repository/theme/chapters/reading.rst>` 파일을 받습니다. 앞의 둘은 "
 "``orbit`` 폴더에, 셋째는 ``orbit/chapters`` 폴더에 저장합니다. 완성할 구조는 다음과 같습니다."
 
-#: ../../tutorial/a-custom-theme.rst:47
+#: ../../tutorial/a-custom-theme.rst:49
 msgid "2. Set the contract"
 msgstr "2. 설정 계약 정하기"
 
-#: ../../tutorial/a-custom-theme.rst:50
+#: ../../tutorial/a-custom-theme.rst:52
 msgid ""
 "The downloaded configuration selects the local template and static "
 "directories. ``html_css_files`` adds our stylesheet after the default "
@@ -81,11 +81,11 @@ msgstr ""
 "받은 설정은 로컬 템플릿과 정적 파일 디렉터리를 지정합니다. ``html_css_files`` 설정은 기본 CSS 뒤에 스타일을 "
 "추가하고, ``html_context`` 설정은 Jinja에 값을 전달합니다. PDF 이름도 명시하여 쉽게 찾도록 합니다."
 
-#: ../../tutorial/a-custom-theme.rst:57
+#: ../../tutorial/a-custom-theme.rst:59
 msgid "orbit/conf.toml"
 msgstr "orbit/conf.toml"
 
-#: ../../tutorial/a-custom-theme.rst:59
+#: ../../tutorial/a-custom-theme.rst:61
 msgid ""
 "All paths in this tutorial are project files. HTML templates are found "
 "through ``templates_path``. The PDF entry point is always "
@@ -96,11 +96,11 @@ msgstr ""
 "진입점은 항상 소스 디렉터리 아래의 ``_templates/book.typ``\\ 입니다. ``templates_path``\\ 를 "
 "바꿔도 이 위치는 바뀌지 않습니다."
 
-#: ../../tutorial/a-custom-theme.rst:63
+#: ../../tutorial/a-custom-theme.rst:65
 msgid "3. Extend the HTML layout"
 msgstr "3. HTML 레이아웃 확장하기"
 
-#: ../../tutorial/a-custom-theme.rst:66
+#: ../../tutorial/a-custom-theme.rst:68
 msgid ""
 "Save :download:`layout.html "
 "<../_static/repository/theme/_templates/layout.html>` as "
@@ -110,11 +110,11 @@ msgstr ""
 "<../_static/repository/theme/_templates/layout.html>` 파일을 "
 "``orbit/_templates/layout.html`` 경로에 저장하고 기존 파일 전체를 바꿉니다."
 
-#: ../../tutorial/a-custom-theme.rst:71
+#: ../../tutorial/a-custom-theme.rst:73
 msgid "orbit/_templates/layout.html"
 msgstr "orbit/_templates/layout.html"
 
-#: ../../tutorial/a-custom-theme.rst:73
+#: ../../tutorial/a-custom-theme.rst:75
 msgid ""
 "``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a "
 "template named ``layout.html`` would try to extend itself. ``super()`` "
@@ -126,7 +126,7 @@ msgstr ""
 "``super()`` 호출은 부모 블록을 남깁니다. 탐색, 검색, 테마 조작, 접근성 랜드마크는 기본 레이아웃에 맡기고 "
 "라벨·메타데이터·판 정보를 더합니다."
 
-#: ../../tutorial/a-custom-theme.rst:78
+#: ../../tutorial/a-custom-theme.rst:80
 msgid ""
 "A theme changes presentation. A build plugin changes source text, "
 "complete HTML or generated assets. Use :doc:`../plugins` when a template "
@@ -136,11 +136,11 @@ msgstr ""
 "테마는 표현을 바꾸고, 빌드 플러그인은 소스·완전한 HTML·생성 에셋을 바꿉니다. 템플릿으로 할 수 없는 작업에는 "
 ":doc:`../plugins` 문서를 참고하세요. 일반 레이아웃 변경에 네이티브 코드는 필요 없습니다."
 
-#: ../../tutorial/a-custom-theme.rst:82
+#: ../../tutorial/a-custom-theme.rst:84
 msgid "4. Give repeated markup one home"
 msgstr "4. 반복 마크업 모으기"
 
-#: ../../tutorial/a-custom-theme.rst:85
+#: ../../tutorial/a-custom-theme.rst:87
 msgid ""
 "Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. "
 "Save :download:`ui.html "
@@ -156,15 +156,15 @@ msgstr ""
 "<../_static/repository/theme/_templates/partials/edition.html>` 파일을 각각 "
 "저장합니다."
 
-#: ../../tutorial/a-custom-theme.rst:92
+#: ../../tutorial/a-custom-theme.rst:94
 msgid "orbit/_templates/macros/ui.html"
 msgstr "orbit/_templates/macros/ui.html"
 
-#: ../../tutorial/a-custom-theme.rst:96
+#: ../../tutorial/a-custom-theme.rst:98
 msgid "orbit/_templates/partials/edition.html"
 msgstr "orbit/_templates/partials/edition.html"
 
-#: ../../tutorial/a-custom-theme.rst:98
+#: ../../tutorial/a-custom-theme.rst:100
 msgid ""
 "A macro takes explicit inputs. An included partial uses the current "
 "page's context. Escape plain project values with ``|e``. Use ``pathto`` "
@@ -175,11 +175,11 @@ msgstr ""
 "``pathto`` 함수로 만드세요. ``chapters/reading.html`` 경로를 고정하면 중첩 페이지나 다른 빌더에서 "
 "깨집니다."
 
-#: ../../tutorial/a-custom-theme.rst:103
+#: ../../tutorial/a-custom-theme.rst:105
 msgid "5. Design for the reader's theme"
 msgstr "5. 독자의 테마에 맞추기"
 
-#: ../../tutorial/a-custom-theme.rst:106
+#: ../../tutorial/a-custom-theme.rst:108
 msgid ""
 "Save :download:`theme.css "
 "<../_static/repository/theme/_static/theme.css>` as "
@@ -188,33 +188,34 @@ msgstr ""
 ":download:`theme.css <../_static/repository/theme/_static/theme.css>` 파일을 "
 "``orbit/_static/theme.css`` 경로에 저장합니다."
 
-#: ../../tutorial/a-custom-theme.rst:111
+#: ../../tutorial/a-custom-theme.rst:113
 msgid "orbit/_static/theme.css"
 msgstr "orbit/_static/theme.css"
 
-#: ../../tutorial/a-custom-theme.rst:113
+#: ../../tutorial/a-custom-theme.rst:115
 msgid ""
-"The theme begins in light mode. The existing control selects light, dark "
-"or system and saves the choice. Explicit dark rules and the system media "
-"query use the same tokens. Typography and spacing stay shared. No new "
-"JavaScript is needed. Avoid a fixed ink color on a background whose theme "
-"can change."
+"The built-in theme follows the system scheme by default, and the "
+"existing control selects system, light or dark and saves the choice. "
+"Explicit dark rules and the system media query use the same tokens. "
+"Typography and spacing stay shared. No new JavaScript is needed. Avoid "
+"a fixed ink color on a background whose theme can change."
 msgstr ""
-"처음에는 밝은 모드입니다. 기존 조작부가 밝게·어둡게·시스템을 선택하고 기억합니다. 명시적인 다크 규칙과 시스템 미디어 쿼리에서 "
-"같은 변수를 쓰고, 글자 구성과 간격은 공유합니다. JavaScript를 더 넣을 필요 없습니다. 배경이 바뀌는 곳에 고정된 "
-"글자색만 쓰지 마세요."
+"내장 테마는 기본적으로 시스템 스킴을 따르며, 기존 조작부로 시스템·밝게·어둡게를 선택하고 기억합니다. 명시적인 다크 규칙과 "
+"시스템 미디어 쿼리에서 같은 토큰을 쓰고, 타이포그래피와 간격은 공유합니다. 새로운 JavaScript는 필요 없습니다. 배경 "
+"테마가 바뀌는 곳에 고정된 글자색만 쓰지 마세요."
 
-#: ../../tutorial/a-custom-theme.rst:118
+#: ../../tutorial/a-custom-theme.rst:120
 msgid ""
-"Browser hyphenation follows the page language. It is not Typst's "
-"paragraph optimizer. The manual's optional English web optimizer is "
-"described separately in :doc:`../topics/typography`. This example uses "
-"the browser's own layout."
+"``_static/typography.js`` optimizes desktop English paragraphs with "
+"Knuth-Plass line breaking and Liang hyphenation, while ``guidedog.css`` "
+"falls back cleanly to ``text-wrap: pretty`` when JavaScript is disabled "
+"or on narrow screens; see :doc:`../topics/typography`."
 msgstr ""
-"브라우저의 하이픈 처리는 페이지 언어를 따릅니다. Typst의 문단 최적화와는 다릅니다. 이 매뉴얼에서 선택적으로 쓰는 영어 웹 "
-"최적화는 :doc:`../topics/typography`\\ 에서 따로 설명합니다. 이 예제는 브라우저 자체 레이아웃을 사용합니다."
+"``_static/typography.js``\\ 는 데스크톱 영어 문단을 Knuth-Plass 줄바꿈과 Liang 하이픈 "
+"알고리즘으로 최적화하며, JavaScript가 꺼져 있거나 좁은 화면에서는 ``guidedog.css``\\ 가 "
+"``text-wrap: pretty``\\ 로 깔끔하게 대체됩니다(:doc:`../topics/typography` 참고)."
 
-#: ../../tutorial/a-custom-theme.rst:122
+#: ../../tutorial/a-custom-theme.rst:125
 msgid ""
 "Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in "
 "current Guidedog builds. Ordinary graphs retain their own colors. Older "
@@ -225,11 +226,11 @@ msgstr ""
 "색을 보존하며, 이전 호스트도 같은 DOT를 밝은 팔레트로 그립니다. 노드 의미와 인쇄 방식은 "
 ":doc:`../topics/diagrams` 문서를 참고하세요."
 
-#: ../../tutorial/a-custom-theme.rst:127
+#: ../../tutorial/a-custom-theme.rst:130
 msgid "6. Wrap the PDF book"
 msgstr "6. PDF 책 템플릿 감싸기"
 
-#: ../../tutorial/a-custom-theme.rst:130
+#: ../../tutorial/a-custom-theme.rst:133
 msgid ""
 "Save :download:`palette.typ "
 "<../_static/repository/theme/_templates/palette.typ>` and "
@@ -242,15 +243,15 @@ msgstr ""
 ":download:`book.typ <../_static/repository/theme/_templates/book.typ>` "
 "파일을 ``orbit/_templates`` 폴더에 저장합니다. 새 파일이며 옆의 ``base-book.typ`` 파일은 남깁니다."
 
-#: ../../tutorial/a-custom-theme.rst:136
+#: ../../tutorial/a-custom-theme.rst:139
 msgid "orbit/_templates/palette.typ"
 msgstr "orbit/_templates/palette.typ"
 
-#: ../../tutorial/a-custom-theme.rst:140
+#: ../../tutorial/a-custom-theme.rst:143
 msgid "orbit/_templates/book.typ"
 msgstr "orbit/_templates/book.typ"
 
-#: ../../tutorial/a-custom-theme.rst:142
+#: ../../tutorial/a-custom-theme.rst:145
 msgid ""
 "The host calls ``book`` with metadata and the chapter content. The "
 "wrapper forwards those values to the generated base and supplies our "
@@ -262,7 +263,7 @@ msgstr ""
 "팔레트를 지정합니다. ``body``\\ 를 스타일 함수 안으로 넘겨야 그 규칙이 적용 범위 안에 유지됩니다. 웹 스타일시트는 "
 "PDF에 영향을 주지 않고, Typst 템플릿은 HTML에 영향을 주지 않습니다."
 
-#: ../../tutorial/a-custom-theme.rst:147
+#: ../../tutorial/a-custom-theme.rst:150
 msgid ""
 "The base handles language-aware hyphenation and optimized line breaking. "
 "The wrapper keeps those rules, uses the matching blue accent and adds "
@@ -272,15 +273,15 @@ msgstr ""
 "기본 템플릿이 언어별 하이픈 처리와 최적화된 줄바꿈을 담당합니다. 래퍼는 이를 유지하면서 웹과 같은 파란 강조색과 문서 참조의 "
 "페이지 번호를 더합니다. PDF는 항상 밝은 인쇄용 팔레트를 사용합니다."
 
-#: ../../tutorial/a-custom-theme.rst:151
+#: ../../tutorial/a-custom-theme.rst:154
 msgid "7. Build and inspect both forms"
 msgstr "7. 두 형식 빌드하고 살펴보기"
 
-#: ../../tutorial/a-custom-theme.rst:154
+#: ../../tutorial/a-custom-theme.rst:157
 msgid "Run from the same parent directory as step 1:"
 msgstr "1단계와 같은 부모 디렉터리에서 실행합니다."
 
-#: ../../tutorial/a-custom-theme.rst:164
+#: ../../tutorial/a-custom-theme.rst:167
 msgid ""
 "Open the URL printed by ``serve``. Check the chapter and generated search "
 "page, not only the front page. Try light, dark and system modes. Resize "
@@ -291,7 +292,7 @@ msgstr ""
 "``serve`` 명령의 주소를 열고 첫 화면뿐 아니라 장과 검색 페이지도 확인합니다. 밝게·어둡게·시스템 모드와 좁은 화면을 "
 "시험하세요. 키보드로 탐색과 검색을 이용하고, 바닥글을 수정해 저장한 뒤 새로 고치세요. 의존 페이지가 다시 빌드됩니다."
 
-#: ../../tutorial/a-custom-theme.rst:169
+#: ../../tutorial/a-custom-theme.rst:172
 msgid ""
 "Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog "
 "adds the language suffix to the configured filename. Inspect the "
@@ -305,11 +306,11 @@ msgstr ""
 "``_build/html``, ``_build/dirhtml``, ``_build/singlehtml`` 아래에 있습니다. 서버는 "
 "``Ctrl+C`` 로 멈춥니다."
 
-#: ../../tutorial/a-custom-theme.rst:176
+#: ../../tutorial/a-custom-theme.rst:179
 msgid "8. Reuse and maintain the theme"
 msgstr "8. 테마 재사용과 유지보수"
 
-#: ../../tutorial/a-custom-theme.rst:179
+#: ../../tutorial/a-custom-theme.rst:182
 msgid ""
 "Create another project with ``guidedog quickstart``. Copy the finished "
 "``_templates`` directory and ``_static/theme.css`` into it. Add "
@@ -323,7 +324,7 @@ msgstr ""
 "[\"theme.css\"]``, 강조색, ``edition_label`` 값을 더하세요. 바닥글 링크는 새 프로젝트의 실제 문서로 "
 "바꾸고, 새 프로젝트의 메타데이터와 소스는 유지합니다."
 
-#: ../../tutorial/a-custom-theme.rst:185
+#: ../../tutorial/a-custom-theme.rst:188
 msgid ""
 "The copied PDF base makes the theme self-contained. When we upgrade "
 "Guidedog, we create a scratch quickstart project and compare its "
@@ -337,7 +338,7 @@ msgstr ""
 "HTML 레이아웃도 바뀔 수 있습니다. 완전한 레이아웃을 하나 더 두는 것보다 작은 블록 재정의가 유지하기 쉽습니다. 모든 변수와 "
 "블록은 :doc:`../templates` 문서를 참고하세요."
 
-#: ../../tutorial/a-custom-theme.rst:191
+#: ../../tutorial/a-custom-theme.rst:194
 msgid ""
 "If the build reports a missing ``base-book.typ``, finish the rename in "
 "step 1. If the label is blank, set ``edition_label`` in ``html_context``. "
@@ -535,6 +536,10 @@ msgid "Formulas and equations are in :doc:`../topics/mathematics`."
 msgstr "수식과 방정식은 :doc:`../topics/mathematics`\\ 에서 다룹니다."
 
 #: ../../tutorial/a-small-book.rst:165
+msgid "Graphviz and Typst diagrams are in :doc:`../topics/diagrams`."
+msgstr "Graphviz와 Typst 다이어그램은 :doc:`../topics/diagrams`\\ 에서 다룹니다."
+
+#: ../../tutorial/a-small-book.rst:166
 msgid "Custom styles and book fonts are in :doc:`../topics/typography`."
 msgstr "사용자 정의 스타일과 책 글꼴은 :doc:`../topics/typography`\\ 에서 다룹니다."
 
@@ -760,12 +765,12 @@ msgstr ""
 
 #: ../../tutorial/first-project.rst:9
 msgid ""
-"We need a working installation of Guidedog. For PDF output, Guidedog can "
-"use its embedded compiler or an installed Typst binary (0.15.1 or newer). "
+"We need a working installation of Guidedog. For PDF output, Guidedog "
+"can use its embedded compiler or an installed Typst binary (0.15.1). "
 "See :doc:`../howto/install`."
 msgstr ""
 "Guidedog이 설치되어 있어야 합니다. PDF 출력에는 Guidedog에 내장된 컴파일러나 설치된 Typst "
-"바이너리(0.15.1 이상)를 사용할 수 있습니다. :doc:`../howto/install` 문서를 참고하세요."
+"바이너리(0.15.1)를 사용할 수 있습니다. :doc:`../howto/install` 문서를 참고하세요."
 
 #: ../../tutorial/first-project.rst:12
 msgid "On macOS, we can install the official release with Homebrew:"
@@ -810,42 +815,55 @@ msgstr "``notes`` 디렉터리가 아직 없는 폴더에서 ``quickstart`` 명�
 msgid "Guidedog creates a complete, self-contained project:"
 msgstr "Guidedog이 완전하고 독립적인 프로젝트를 만듭니다."
 
-#: ../../tutorial/first-project.rst:82
+#: ../../tutorial/first-project.rst:87
 msgid "The files are:"
 msgstr "각 파일은 다음과 같습니다."
 
-#: ../../tutorial/first-project.rst:84
+#: ../../tutorial/first-project.rst:89
+msgid ""
+"``.gitignore``: Ignores ``_build/`` so generated files stay out of "
+"version control."
+msgstr "``.gitignore``: 생성된 파일이 버전 관리에 포함되지 않도록 ``_build/``\\ 를 무시합니다."
+
+#: ../../tutorial/first-project.rst:90
 msgid ""
 "``conf.toml``: Project settings (title, author, version, language, "
 "builders)."
 msgstr "``conf.toml``: 제목, 작성자, 버전, 언어, 빌더 설정."
 
-#: ../../tutorial/first-project.rst:85
+#: ../../tutorial/first-project.rst:91
 msgid ""
 "``index.rst``: The root document. It defines our front page and table of "
 "contents."
 msgstr "``index.rst``: 루트 문서입니다. 첫 페이지와 목차를 정의합니다."
 
-#: ../../tutorial/first-project.rst:86
+#: ../../tutorial/first-project.rst:92
 msgid "``_templates/layout.html``: The HTML website template (Jinja)."
 msgstr "``_templates/layout.html``: HTML 사이트 구조를 정하는 Jinja 템플릿."
 
-#: ../../tutorial/first-project.rst:87
+#: ../../tutorial/first-project.rst:93
 msgid ""
-"``_templates/book.typ``: The PDF book layout and typography template "
-"(Typst)."
-msgstr "``_templates/book.typ``: PDF의 레이아웃, 글자 구성, 표지를 정하는 Typst 템플릿."
+"``_templates/book.typ``, ``discussion.typ``, ``article.typ``, and "
+"``theme.typ``: The PDF book, discussion, standalone article, and shared "
+"typography templates (Typst)."
+msgstr ""
+"``_templates/book.typ``, ``discussion.typ``, ``article.typ``, "
+"``theme.typ``: PDF 책, 논의, 독립형 글, 공통 타이포그래피 템플릿(Typst)."
 
-#: ../../tutorial/first-project.rst:88
-msgid "``_static/``: CSS stylesheets and JavaScript enhancements."
-msgstr "``_static/``: CSS와 JavaScript 보조 기능."
+#: ../../tutorial/first-project.rst:94
+msgid ""
+"``_static/``: Editable CSS stylesheets (``guidedog.css``) and "
+"JavaScript enhancements (``guidedog.js`` and ``typography.js``)."
+msgstr ""
+"``_static/``: 편집 가능한 CSS 스타일시트(``guidedog.css``)와 JavaScript 향상 "
+"스크립트(``guidedog.js`` 및 ``typography.js``)."
 
-#: ../../tutorial/first-project.rst:89
+#: ../../tutorial/first-project.rst:95
 msgid ""
 "``assets/``: Folders for project images, diagrams, audio, and video files."
 msgstr "``assets/``: 프로젝트의 이미지, 다이어그램, 오디오, 비디오 파일을 담는 폴더입니다."
 
-#: ../../tutorial/first-project.rst:91
+#: ../../tutorial/first-project.rst:97
 msgid ""
 "Templates in Guidedog are ordinary files that we can see and edit. They "
 "live inside our project, not in an external theme or a system cache. We "
@@ -856,29 +874,29 @@ msgstr ""
 "사이트와 책의 디자인을 조정하고 싶으면 언제든 고칠 수 있습니다. 첫 빌드를 하면 생성된 출력을 담을 ``_build``\\ 가 "
 "만들어집니다."
 
-#: ../../tutorial/first-project.rst:96
+#: ../../tutorial/first-project.rst:102
 msgid "2. Write the first page"
 msgstr "2. 첫 페이지 쓰기"
 
-#: ../../tutorial/first-project.rst:99
+#: ../../tutorial/first-project.rst:105
 msgid ""
 "We open ``notes/index.rst`` in an editor and replace its contents with "
 "the following:"
 msgstr "편집기에서 ``notes/index.rst``\\ 를 열고 내용을 다음으로 바꿉니다."
 
-#: ../../tutorial/first-project.rst:121
+#: ../../tutorial/first-project.rst:127
 msgid "This page shows headings, mathematical notation, and a note."
 msgstr "이 페이지에는 제목, 수학 표기, 참고 상자가 들어 있습니다."
 
-#: ../../tutorial/first-project.rst:123
+#: ../../tutorial/first-project.rst:129
 msgid "3. Build and inspect the outputs"
 msgstr "3. 출력 빌드하고 확인하기"
 
-#: ../../tutorial/first-project.rst:126
+#: ../../tutorial/first-project.rst:132
 msgid "We compile our project into both HTML and PDF:"
 msgstr "프로젝트를 HTML과 PDF로 함께 컴파일합니다."
 
-#: ../../tutorial/first-project.rst:133
+#: ../../tutorial/first-project.rst:139
 msgid ""
 "The ``-W`` flag tells Guidedog to treat warnings as errors. With this "
 "flag in our routine checks, broken references and markup errors are "
@@ -887,11 +905,11 @@ msgstr ""
 "``-W`` 플래그를 주면 Guidedog은 경고를 오류로 처리합니다. 평소 점검에 이 플래그를 넣어 두면 깨진 참조와 마크업 "
 "오류를 일찍 잡을 수 있습니다."
 
-#: ../../tutorial/first-project.rst:136
+#: ../../tutorial/first-project.rst:142
 msgid "Now we inspect the output files:"
 msgstr "이제 출력 파일을 살펴봅니다."
 
-#: ../../tutorial/first-project.rst:138
+#: ../../tutorial/first-project.rst:144
 msgid ""
 "We open ``notes/_build/html/index.html`` in a web browser. We see a "
 "clean, responsive documentation website with a theme switch, search bar, "
@@ -900,7 +918,7 @@ msgstr ""
 "웹 브라우저에서 ``notes/_build/html/index.html``\\ 을 엽니다. 테마 전환, 검색창, 서식이 적용된 "
 "수식을 갖춘 깔끔한 반응형 문서 웹사이트가 보입니다."
 
-#: ../../tutorial/first-project.rst:140
+#: ../../tutorial/first-project.rst:146
 msgid ""
 "We open the PDF file in ``notes/_build/pdf/``. We see a book layout with "
 "running headers, page numbers, and typeset math."
@@ -908,7 +926,7 @@ msgstr ""
 "``notes/_build/pdf/``\\ 에 있는 PDF 파일을 엽니다. 머리글, 페이지 번호, 조판된 수식을 갖춘 책 레이아웃이 "
 "보입니다."
 
-#: ../../tutorial/first-project.rst:143
+#: ../../tutorial/first-project.rst:149
 msgid ""
 "Guidedog formats mathematics for each medium. The browser gets MathJax, "
 "and the PDF gets Typst's own vector formulas."
@@ -916,47 +934,47 @@ msgstr ""
 "Guidedog은 매체마다 알맞게 수식을 조판합니다. 브라우저에는 MathJax를, PDF에는 Typst 고유의 벡터 수식을 "
 "사용합니다."
 
-#: ../../tutorial/first-project.rst:146
+#: ../../tutorial/first-project.rst:152
 msgid "4. Live preview and incremental rebuilds"
 msgstr "4. 실시간 미리 보기와 증분 빌드"
 
-#: ../../tutorial/first-project.rst:149
+#: ../../tutorial/first-project.rst:155
 msgid "Guidedog includes a built-in development web server:"
 msgstr "Guidedog에는 개발용 서버가 내장되어 있습니다."
 
-#: ../../tutorial/first-project.rst:155
+#: ../../tutorial/first-project.rst:161
 msgid ""
 "The terminal prints a local URL, such as ``http://localhost:8000``. We "
 "open this address in a browser."
 msgstr "터미널에 ``http://localhost:8000`` 같은 로컬 URL이 출력됩니다. 이 주소를 브라우저에서 엽니다."
 
-#: ../../tutorial/first-project.rst:158
+#: ../../tutorial/first-project.rst:164
 msgid "Now we test the live editing loop:"
 msgstr "이제 실시간 편집 흐름을 시험해 봅니다."
 
-#: ../../tutorial/first-project.rst:162
+#: ../../tutorial/first-project.rst:168
 msgid ""
 "Editing and saving a file triggers an input check and a selective rebuild "
 "upon refreshing the browser."
 msgstr "파일을 편집하고 저장한 뒤 브라우저를 새로 고치면 입력 검사와 선택적 재빌드가 일어납니다."
 
-#: ../../tutorial/first-project.rst:162
+#: ../../tutorial/first-project.rst:168
 msgid "The live development cycle with guidedog serve."
 msgstr "guidedog serve의 실시간 개발 흐름."
 
-#: ../../tutorial/first-project.rst:181
+#: ../../tutorial/first-project.rst:187
 msgid "Edit ``notes/index.rst`` to add a new paragraph."
 msgstr "``notes/index.rst`` 문서에 단락을 추가합니다."
 
-#: ../../tutorial/first-project.rst:182
+#: ../../tutorial/first-project.rst:188
 msgid "Save the file."
 msgstr "파일을 저장합니다."
 
-#: ../../tutorial/first-project.rst:183
+#: ../../tutorial/first-project.rst:189
 msgid "Refresh the browser page."
 msgstr "브라우저 페이지를 새로 고칩니다."
 
-#: ../../tutorial/first-project.rst:185
+#: ../../tutorial/first-project.rst:191
 msgid ""
 "Before serving a requested page, Guidedog checks the project's inputs "
 "(sources, templates, static files and configuration) against its saved "
@@ -968,7 +986,7 @@ msgstr ""
 "비교합니다. 바뀐 입력이 있으면 브라우저 요청에 응답하기 전에 영향받은 문서만 다시 빌드합니다. 재빌드가 실패하면 이전 사이트를 "
 "유지하고 터미널에 문제를 알립니다."
 
-#: ../../tutorial/first-project.rst:191
+#: ../../tutorial/first-project.rst:197
 msgid ""
 "When we run a build without changing any files, Guidedog reuses the saved "
 "document trees and parses nothing again. See :doc:`../topics/projects` "
@@ -977,12 +995,12 @@ msgstr ""
 "아무 파일도 바꾸지 않고 빌드하면 Guidedog은 저장된 문서 트리를 재사용하며 아무것도 다시 파싱하지 않습니다. 판단 방식은 "
 ":doc:`../topics/projects` 문서를 참고하세요."
 
-#: ../../tutorial/first-project.rst:194
+#: ../../tutorial/first-project.rst:200
 msgid ""
 "We press ``Ctrl+C`` in the terminal to stop the server when we are done."
 msgstr "작업을 마치면 터미널에서 ``Ctrl+C``\\ 를 눌러 서버를 멈춥니다."
 
-#: ../../tutorial/first-project.rst:196
+#: ../../tutorial/first-project.rst:202
 msgid ""
 "Next, :doc:`a-small-book` shows how to organize several chapters and "
 "cross-references."
@@ -997,6 +1015,16 @@ msgid ""
 "We follow these pages in order. Each step produces a result we can "
 "inspect."
 msgstr "이 페이지들은 순서대로 따라갑니다. 단계마다 직접 확인할 수 있는 결과가 나옵니다."
+
+#~ msgid ""
+#~ "Browser hyphenation follows the page language. It is not Typst's "
+#~ "paragraph optimizer. The manual's optional English web optimizer is "
+#~ "described separately in :doc:`../topics/typography`. This example uses "
+#~ "the browser's own layout."
+#~ msgstr ""
+#~ "브라우저의 하이픈 처리는 페이지 언어를 따릅니다. Typst의 문단 최적화와는 다릅니다. 이 매뉴얼에서 선택적으로 쓰는 영어 "
+#~ "웹 최적화는 :doc:`../topics/typography`\\ 에서 따로 설명합니다. 이 예제는 브라우저 자체 레이아웃을 "
+#~ "사용합니다."
 
 #~ msgid ""
 #~ "This single declaration establishes a complete syntax contract: * ``.. "

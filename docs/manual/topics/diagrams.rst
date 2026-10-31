@@ -98,6 +98,7 @@ In MyST Markdown, we use a directive fence with the same options.
 
 A ``graphviz`` file argument reads a DOT file instead of an inline body.
 ``graph`` and ``digraph`` take the graph name as their argument and wrap the body's edges in the corresponding DOT graph.
+``:layout:`` (or Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout engine: ``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, ``twopi``, ``osage`` or ``patchwork``.
 A plain ``dot`` or ``graphviz`` Markdown fence also draws a graph; we use the directive form when we need options.
 
 Draw with Typst
@@ -203,9 +204,9 @@ After installing a previously missing package or editing fonts, we run a fresh `
 Project imports stay below the source directory, including through symlinks.
 Diagrams must produce one finite page; PNG export is limited to 16 million pixels and 16,384 pixels on either side.
 
-A failed drawing remains visible as source with a warning.
+A failed drawing remains visible as source with a warning (``build.graphviz`` or ``build.typst-diagram``; missing or duplicate directive sources report ``sphinx.graphviz.source`` or ``sphinx.typst.source``).
 We build with ``-W`` when a missing diagram must prevent publication.
-``--untrusted`` refuses Typst compilation and retains its source.
+``--untrusted`` refuses Typst compilation and external Graphviz resources and retains the source.
 Text builds show source without compiling a drawing.
 The :doc:`../howto/typst-diagrams` guide lists every option, source limit and migration step for existing figure files.
 
@@ -219,7 +220,7 @@ a dark page. Ordinary graphs therefore keep their chosen colors and receive a
 light panel in the default dark theme.
 
 For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to the
-directive. This is available in Guidedog 0.6.3 and later. Guidedog adds a fixed
+directive. Guidedog adds a fixed
 stylesheet inside the SVG image. Its dark media query follows the embedding
 page's ``color-scheme``, including the theme control's explicit selection.
 No script, external stylesheet or inline page SVG is needed.

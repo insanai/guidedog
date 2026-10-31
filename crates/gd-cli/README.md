@@ -50,8 +50,8 @@ subcommands and values.
   questions, and builds with this engine). A word guidedog does not know, or a
   `publish` target, is matched against `extensions()` (linked first, then registered
   programs, longest name wins, option values skipped); `--help` on one prints help from
-  its declaration. gd-cli depends only on gd-plugins; `cmd/guidedog` links the Pages and discussion
-  plugins (the dependency gate checks it). See docs/manual/internals/plugins.rst.
+  its declaration. gd-cli depends only on gd-plugins; `cmd/guidedog` links the Pages, discussion
+  and static-site (`ssg`) plugins (the dependency gate checks it). See docs/manual/internals/plugins.rst.
 - **Ctrl+C** is caught by the commands that must settle (convert, build, publish, plugin
   check, plugin commands), not globally in `main`: `serve` stops at once.
 - **Stdin is not locked** for the run (`StdinLines` reads on demand): `convert -` reads

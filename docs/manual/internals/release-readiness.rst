@@ -1,7 +1,7 @@
 Readiness for 1.0.0 beta
 ========================
 
-This page records what we checked before calling Guidedog a 1.0.0 beta, what we measured, and what is still open. It describes the state of 15 October 2026, at version 1.0.0-beta.1.
+This page records the initial readiness audit we ran before calling Guidedog a 1.0.0 beta, what we measured then, and what remained open at that checkpoint. It describes the state of 15 October 2026, at version ``1.0.0-beta.1``; see :doc:`../evidence/index` for the subsequent ``1.0.0-beta.2`` through ``1.0.0-beta.8`` release records and verification runs.
 
 What a beta promises
 --------------------
@@ -77,4 +77,4 @@ Known limits
 Recommendation
 --------------
 
-We published ``v1.0.0-beta.1`` after source qualification, platform archive smoke tests and Homebrew checks. :doc:`../evidence/release-1.0.0-beta.1` records the release, download checksums and automatic tap update. The work not yet done can follow in later betas.
+We published ``v1.0.0-beta.1`` after source qualification, platform archive smoke tests and Homebrew checks. :doc:`../evidence/release-1.0.0-beta.1` records that initial release, download checksums and automatic tap update, and :doc:`../evidence/index` tracks later beta releases (``v1.0.0-beta.2`` through ``v1.0.0-beta.8``).

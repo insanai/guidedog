@@ -62,8 +62,9 @@ gd-conf
    ``suggestion``), trust (``readable_roots``, ``confine_untrusted``), and ``Digest``.
 gd-theme
    Built-in HTML and Typst templates (``layout.html``, ``article.html``, ``landing.html``,
-   ``book.typ``, ``discussion.typ``, ``article.typ``, ``theme.typ``), CSS/JS assets, and
-   deterministic ``.gdt`` theme archive packing and ``guidedog-theme.lock`` verification.
+   ``book.typ``, ``discussion.typ``, ``article.typ``, ``theme.typ``), CSS/JS assets
+   (``guidedog.css``, ``guidedog.js``, ``typography.js``), and deterministic ``.gdt``
+   theme archive packing and ``guidedog-theme.lock`` verification.
 gd-migrate
    ``conf.py`` to ``conf.toml``, and ``guidedog quickstart``.
 gd-env
@@ -83,7 +84,8 @@ gd-resolve
    ``OutputBuilder`` trait.
 gd-link
    The link pass: rewrites a document's tree for one output (references, images,
-   numbers, ``only``, todo lists, ``postlist``, graphs) and renders the page.
+   numbers, ``only``, todo lists, ``postlist`` and rich excerpts, Graphviz graphs, and
+   ``typst-diagram`` figures) and renders the page.
 gd-read
    Incremental reading: parses changed documents, extracts leading ``PageMeta`` fields
    and symbols, and hosts autodoc, odindoc and rustdoc.
@@ -103,6 +105,9 @@ gd-ssg
    site assembly.
 gd-cli
    The command line, and ``run_with(linked)`` for custom binaries.
+gd-typst, gd-graphdog, gd-fetch, gd-git, gd-clock, gd-pages, gd-discussion
+   The sibling compiler, service and linked-plugin crates called by ``gd-link``,
+   ``gd-book``, ``gd-resolve``, ``gd-ssg`` and ``cmd/guidedog`` (see :doc:`crates`).
 
 Seams
 -----
@@ -110,12 +115,12 @@ Seams
 S1: gd-conf
 ~~~~~~~~~~~
 
-``load_config(dir, &LoadOptions) -> Result<Loaded, Problem>`` with ``LoadOptions { conf_dir, no_config, overrides, source, output }`` and ``Loaded { config, warnings, settings }``. ``Config`` keeps the general settings flat (``project``, ``root_doc``, ``exclude_patterns``, ``numfig``, ...) and groups the rest: ``mathjax``, ``intersphinx``, ``autodoc``, ``odin_api``, ``rust_api``, ``plugins``, ``html``, ``pdf``, ``graphviz``, ``myst``, ``intl``, and ``site`` (``SiteConfig``: ``base_url``, ``sitemap``, ``feeds``, ``taxonomies``, ``page_size``, ``collections``, ``mounts``, ``assets``, ``theme``). The Sphinx-compatible conf.toml keys stay flat while static publishing lives under ``[site]``. ``ObjectTypeDecl``, ``AutodocDefaultOption`` and ``IntersphinxProject`` are gd-conf's own types; the crates that need them convert. Failures are ``gd_host::Problem`` (``config.invalid``, ``cli.define``, ``project.missing``, exit 2) and warnings ``gd_report::Report``.
+``load_config(dir, &LoadOptions) -> Result<Loaded, Problem>`` with ``LoadOptions { conf_dir, no_config, overrides, source, output }`` and ``Loaded { config, warnings, settings }``. ``Config`` keeps the general settings flat (``project``, ``root_doc``, ``exclude_patterns``, ``numfig``, ...) and groups the rest: ``mathjax``, ``intersphinx``, ``autodoc``, ``ext`` (``ExtensionSettings``), ``odin_api``, ``rust_api``, ``plugins``, ``html``, ``pdf``, ``graphviz``, ``myst``, ``intl``, and ``site`` (``SiteConfig``: ``base_url``, ``sitemap``, ``feeds``, ``taxonomies``, ``page_size``, ``collections``, ``mounts``, ``assets``, ``theme``). The Sphinx-compatible conf.toml keys stay flat while static publishing lives under ``[site]``. ``ObjectTypeDecl``, ``AutodocDefaultOption`` and ``IntersphinxProject`` are gd-conf's own types; the crates that need them convert. Failures are ``gd_host::Problem`` (``config.invalid``, ``cli.define``, ``project.missing``, exit 2) and warnings ``gd_report::Report``.
 
 S2: gd-env
 ~~~~~~~~~~
 
-``DocId(u32)`` indexes ``Environment::docs`` (sorted by docname). ``Environment`` also persists ``ineligible_docs`` so documents withheld by ``:draft:``, ``:publish-at:`` or ``:expires-at:`` retain their cached ``DocInfo`` across clock-only builds without polluting active resolution tables. ``Digest`` is gd-conf's, re-exported. ``SourceFile { docname, path, relative, kind, generated }``; a generated page (an API page) carries its text and the files it was made from. ``DocInfo`` holds what the environment knows of a document, including ``page: PageMeta`` (extracted from the first root ``FieldList`` by ``page_metadata``), with ``Option`` for every "none" and a ``CachedFile { path, digest }`` for the object and the search words. ``PostlistSpec`` encodes and evaluates chronological article queries for ``postlist`` directives and collections. ``load_environment(path, settings, fresh, &budget)``, ``ENVIRONMENT_VERSION`` 29. ``ObjectStore`` writes ``objects/<docname>.<digest16>.gdo`` and loads it into a ``guidedoc::Workspace``. ``Lookup { kind: LookupKind, key }`` and ``Trace`` (each lookup once, including ``LookupKind::Template``, ``LookupKind::Postlist``, ``LookupKind::Navigation``, ``LookupKind::Excerpt``, and ``LookupKind::Mount``). ``Rendered { body, assets, trace, reports, failed }``. ``trait UiText: Sync { gettext, ngettext }``.
+``DocId(u32)`` indexes ``Environment::docs`` (sorted by docname). ``Environment`` also persists ``ineligible_docs`` so documents withheld by ``:draft:``, ``:publish-at:`` or ``:expires-at:`` retain their cached ``DocInfo`` across clock-only builds without polluting active resolution tables. ``Digest`` is gd-conf's, re-exported. ``SourceFile { docname, path, relative, kind, generated }``; a generated page (an API page) carries its text and the files it was made from. ``DocInfo`` holds what the environment knows of a document, including ``page: PageMeta`` (extracted from the first root ``FieldList`` by ``page_metadata``), with ``Option`` for every "none" and a ``CachedFile { path, digest }`` for the object and the search words. ``PostlistSpec`` encodes and evaluates chronological article queries for ``postlist`` directives and collections. ``load_environment(path, settings, fresh, &budget)``, ``ENVIRONMENT_VERSION`` 30. ``ObjectStore`` writes ``objects/<docname>.<digest16>.gdo`` and loads it into a ``guidedoc::Workspace``. ``Lookup { kind: LookupKind, key }`` and ``Trace`` (each lookup once, including ``LookupKind::FileContent``, ``LookupKind::Template``, ``LookupKind::Postlist``, ``LookupKind::Navigation``, ``LookupKind::Excerpt``, and ``LookupKind::Mount``). ``Rendered { body, assets, trace, reports, failed }``. ``trait UiText: Sync { gettext, ngettext }``.
 
 S3: gd-outputs
 ~~~~~~~~~~~~~~
@@ -171,7 +176,7 @@ warnings, settings, registry, plugins }`` is plain data. ``build(&project, kind,
 2. ``discover``, ``contents_root``, ``api_sources`` and ``with_generated``: the sources.
 3. ``load_intl`` and, except for gettext, ``localize_config``; ``build_dates`` (from ``options.now`` or the clock); ``load_intersphinx`` (no network when untrusted). The build stage becomes Reading.
 4. ``build_settings`` (reading settings, translations, trust, limits, plugins); ``load_environment`` and ``read_documents``; the documents' reports join the build's. Unless ``options.preview`` is set, the publication clock filter partitions ``env.docs`` into eligible ``docs`` and withheld ``ineligible_docs`` against ``now``.
-5. ``resolve``; the stage becomes Writing. A ``BuildView`` with ``output_settings``, and one ``match`` on ``BuilderKind``: ``SiteBuilder`` (html, dirhtml, singlehtml), ``PdfBuilder``, ``TextBuilder``, ``DummyBuilder``, ``GettextBuilder`` (with ``reread_document`` as its ``Reread``).
+5. ``resolve``; the stage becomes Writing. A ``BuildView`` with ``output_settings``, and one ``match`` on ``BuilderKind``: ``SiteBuilder`` (html, dirhtml, singlehtml), ``PdfBuilder``, ``TextBuilder``, ``DummyBuilder``, ``CoverageBuilder``, ``GettextBuilder`` (with ``reread_document`` as its ``Reread``).
 6. ``suppress_warnings``; then a build with an unread document (``build.read``) or, with ``-W``, any warning or error (``build.warnings``) abandons its generation; any other commits it. ``published`` and ``unsettled`` come from the commit.
 
 ``BuildResult::written`` and ``unchanged`` are the generation's units written and kept

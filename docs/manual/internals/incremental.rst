@@ -317,6 +317,11 @@ A page notes each lookup once (``gd_env::Trace``); the answer's digest covers:
    verify that the target file exists in the assembled output generation before
    committing.
 
+Typst diagrams
+~~~~~~~~~~~~~~
+
+When a page is rewritten, each ``typst-diagram`` compiles again. We track imported files by content through ``FileContent`` lookups, including failed data lookups. The asset filename hashes the compiled bytes, so helper edits produce new image URLs. Unchanged HTML units reuse their drawings and reports. PDF composition redraws diagrams before comparing the book inputs. After installing a missing package or changing font files, we run a fresh build process with ``-a`` to reload fonts and redraw cached pages.
+
 Publication
 -----------
 
@@ -350,8 +355,3 @@ saving the environment's JSON, and the site unit (inventory and index).
 Possible later work: ``guidedog serve`` keeping the environment, tables and object store
 in memory between rebuilds; a (size, modification time) prefilter before hashing a
 source.
-
-Typst diagrams
-~~~~~~~~~~~~~~
-
-When a page is rewritten, each ``typst-diagram`` compiles again. We track imported files by content through ``FileContent`` lookups, including failed data lookups. The asset filename hashes the compiled bytes, so helper edits produce new image URLs. Unchanged HTML units reuse their drawings and reports. PDF composition redraws diagrams before comparing the book inputs. After installing a missing package or changing font files, we run a fresh build process with ``-a`` to reload fonts and redraw cached pages.

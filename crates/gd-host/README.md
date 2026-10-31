@@ -11,7 +11,7 @@ use gd_host::{ArtifactRequest, Format, Target, catch_crash, catch_interrupts, co
 
 fn main() {
     catch_interrupts();
-    gd_host::install_crash_reporter(&std::env::args().collect::<Vec<_>>(), "guidedog 0.7.0");
+    gd_host::install_crash_reporter(&std::env::args().collect::<Vec<_>>(), "guidedog 1.0.0-beta.8");
     let status = catch_crash(|| {
         let registry = guidedoc_defaults::registry();
         let request = ArtifactRequest { input: "intro.rst", output: "intro.pdf",
@@ -52,7 +52,8 @@ cancelled.
   the Ctrl+C probe and described reports. Callers own their bytes (`Vec<u8>`).
 - **The budget is coarse.** It counts what the host holds that it can size before
   allocating: sources, included files (`Files` charges its ledger, a refusal is
-  `ResourceStatus::Limit`), and the PDF the embedded Typst returns (`Options::reserve`).
+  `ResourceStatus::Limit`), and the PDF, SVG or PNG outputs the embedded Typst and
+  Graphviz backends return (`Options::reserve`).
   A conversion's own memory is bounded by `Limits`, which `limits_within` lowers to the
   budget. Units wait for each other without deadlock (`join` -> `Unit` guard); the
   policy is raise or stop, and hints name `--budget=N`. `Ledger` takes `&self` (atomics)

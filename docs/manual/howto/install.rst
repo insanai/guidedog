@@ -37,11 +37,11 @@ Guidedog is a Cargo workspace. We need:
 * a Rust toolchain at the version ``rust-version`` names in the root ``Cargo.toml``
   (Rust 1.99 or newer; edition 2024), installed with ``rustup``;
 * the Graphviz library, because Guidedog links it (``libgvc`` and ``libcgraph``) to draw graphs in process. Either install the system's development files (``libgraphviz-dev`` on Debian and Ubuntu, ``graphviz-devel`` on Fedora, ``graphviz`` from Homebrew on macOS), or build static libraries with ``cargo xtask graphviz`` (see below);
-* a C compiler (``cc``, Xcode's command-line tools, or MSVC), which Cargo uses to build the tree-sitter grammars and the cryptography in the ``ring`` crate (TLS for HTTPS).
+* a C compiler (``cc``, Xcode's command-line tools, or MSVC), which Cargo uses to build the tree-sitter grammars and the cryptography in the ``ring`` crate (TLS for HTTPS); and on Linux ``perl`` and ``make``, which Cargo uses to build the vendored OpenSSL linked by the embedded Typst package downloader.
 
 Nothing else is built by hand. The Typst compiler (0.15.1), the tree-sitter grammars
-for Python and Rust, and the HTTP client (``ureq`` with ``rustls``) are ordinary Cargo dependencies, compiled with the workspace. HTTPS needs no ``curl`` program, OpenSSL or system certificate store: the root certificates are built in. There
-are no native build scripts to run first.
+for Python and Rust, and the Guidedog HTTP client (``ureq`` with ``rustls`` and built-in root certificates) are ordinary Cargo dependencies, compiled with the workspace. There
+are no separate setup scripts to run first.
 
 Release build
 -------------
@@ -86,9 +86,9 @@ Typst: embedded or installed
 ----------------------------
 
 By default the Typst compiler is linked into ``guidedog`` (the ``embedded`` feature of
-the ``gd-typst`` crate). PDF then needs no other program. A build of ``gd-typst`` without
-that feature runs an installed ``typst`` program (0.15.1) instead. Either way,
-``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) selects a program
+the ``gd-typst`` crate). PDF books and ``.. typst-diagram::`` directives then need no other program. A build of ``gd-typst`` without
+that feature runs an installed ``typst`` program (pinned to 0.15.1) for PDF books, while ``.. typst-diagram::`` requires the embedded compiler (``typst.embedded``). For PDF books,
+``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) selects an external ``typst`` 0.15.1 program
 explicitly, and ``guidedog --version`` names the backend in use.
 
 The embedded compiler removes the need to start a separate process. It does not remove
@@ -111,7 +111,7 @@ Before we propose a change, we run the same checks as the project's continuous i
 lengths and line widths. ``cargo xtask tables --check`` checks that the generated data tables match the upstream data in ``tools/data``. ``cargo xtask --help`` lists the other repository tasks: the website, the fonts, and the release steps.
 
 Built-in plugins
-================
+----------------
 
 The release has one executable. The discussion plugin adds ``guidedog dsc``. The static site plugin adds ``guidedog ssg``. The Pages plugin adds ``guidedog publish pages`` and ``guidedog pages`` maintenance commands. All three are linked into ``guidedog`` and use its services; no additional program or registration is needed.
 

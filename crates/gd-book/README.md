@@ -1,7 +1,7 @@
 # gd-book cheat sheet
 
 Guidedog's `pdf`, `text` and `dummy` builders, implementing `gd_resolve::OutputBuilder`:
-book composition and ordering, the book index, the Typst read roots and the bundled fonts.
+book, discussion-record and standalone-article PDF composition, the book index, the Typst read roots and the bundled fonts.
 
 ```rust
 use gd_resolve::OutputBuilder;

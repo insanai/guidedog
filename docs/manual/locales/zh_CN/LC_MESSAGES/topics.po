@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:11+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -32,7 +32,9 @@ msgid ""
 "We keep diagram source beside the explanation and let Guidedog build the "
 "image for HTML and PDF. Graphviz and Typst are included in the "
 "executable. We need no separate ``dot`` or ``typst`` program."
-msgstr "我们将图表源代码放在说明文字旁，由 Guidedog 为 HTML 和 PDF 构建图像。可执行文件已经包含 Graphviz 和 Typst。我们无需单独的 ``dot`` 或 ``typst`` 程序。"
+msgstr ""
+"我们将图表源代码放在说明文字旁，由 Guidedog 为 HTML 和 PDF 构建图像。可执行文件已经包含 Graphviz 和 "
+"Typst。我们无需单独的 ``dot`` 或 ``typst`` 程序。"
 
 #: ../../topics/diagrams.rst:12
 msgid "Choose the drawing tool"
@@ -96,7 +98,9 @@ msgid ""
 "We choose SVG for scalable drawings in both the browser and book. Typst "
 "diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
 "PNG files still work with ordinary image and figure directives."
-msgstr "我们选择 SVG，让图形在浏览器和书籍中都能缩放。Typst 图表也可以生成每英寸 144 像素的 PNG。已有的 SVG 和 PNG 文件仍可通过普通的图像和插图指令使用。"
+msgstr ""
+"我们选择 SVG，让图形在浏览器和书籍中都能缩放。Typst 图表也可以生成每英寸 144 像素的 PNG。已有的 SVG 和 PNG "
+"文件仍可通过普通的图像和插图指令使用。"
 
 #: ../../topics/diagrams.rst:36
 msgid "A flow chart"
@@ -138,51 +142,60 @@ msgstr "在 MyST Markdown 中，我们使用相同选项的指令围栏。"
 
 #: ../../topics/diagrams.rst:99
 msgid ""
-"A ``graphviz`` file argument reads a DOT file instead of an inline body. "
-"``graph`` and ``digraph`` take the graph name as their argument and wrap "
-"the body's edges in the corresponding DOT graph. A plain ``dot`` or "
-"``graphviz`` Markdown fence also draws a graph; we use the directive form "
-"when we need options."
-msgstr "``graphviz`` 的文件参数读取 DOT 文件，替代内联正文。``graph`` 和 ``digraph`` 以图名为参数，将正文中的边包裹在相应的 DOT 图定义中。普通的 ``dot`` 或 ``graphviz`` Markdown 围栏也能绘图；需要选项时，我们使用指令形式。"
+"A ``graphviz`` file argument reads a DOT file instead of an inline "
+"body. ``graph`` and ``digraph`` take the graph name as their argument "
+"and wrap the body's edges in the corresponding DOT graph. ``:layout:`` "
+"(or Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout "
+"engine: ``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, "
+"``twopi``, ``osage`` or ``patchwork``. A plain ``dot`` or ``graphviz`` "
+"Markdown fence also draws a graph; we use the directive form when we "
+"need options."
+msgstr ""
+"``graphviz`` 的文件参数读取 DOT 文件，替代内联正文。``graph`` 和 ``digraph`` "
+"以图名为参数，将正文中的边包裹在相应的 DOT 图定义中。``:layout:``\\ （或 Sphinx 的 "
+"``:graphviz_dot:`` 别名）用于选择 Graphviz 布局引擎：``dot``\\ "
+"（默认）、``neato``、``fdp``、``sfdp``、``circo``、``twopi``、``osage`` 或 "
+"``patchwork``。普通的 ``dot`` 或 ``graphviz`` Markdown 围栏也能绘图；需要选项时，我们使用指令形式。"
 
-#: ../../topics/diagrams.rst:103
+#: ../../topics/diagrams.rst:104
 msgid "Draw with Typst"
 msgstr "用 Typst 绘图"
 
-#: ../../topics/diagrams.rst:106
+#: ../../topics/diagrams.rst:107
 msgid ""
 "The ``typst-diagram`` directive compiles its body to an image. The page "
 "fits the drawing automatically. We can start with Typst's built-in shapes "
 "before adding a package."
 msgstr "``typst-diagram`` 指令将正文编译为图像。页面会自动适应图形。我们可以先使用 Typst 内置的形状，再添加包。"
 
-#: ../../topics/diagrams.rst:120
+#: ../../topics/diagrams.rst:121
 msgid "A drawing from Typst source."
 msgstr "由 Typst 源代码生成的图形。"
 
-#: ../../topics/diagrams.rst:126
+#: ../../topics/diagrams.rst:127
 msgid ""
 "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
 "An ordinary ``typst`` code fence displays source without compiling it."
-msgstr "在 MyST 中绘制相同图形时，围栏语言使用 ``{typst-diagram}``。普通的 ``typst`` 代码围栏只显示源代码，不进行编译。"
+msgstr ""
+"在 MyST 中绘制相同图形时，围栏语言使用 ``{typst-diagram}``。普通的 ``typst`` 代码围栏只显示源代码，不进行编译。"
 
-#: ../../topics/diagrams.rst:139
+#: ../../topics/diagrams.rst:140
 msgid ""
 "CeTZ supplies a drawing canvas and geometric operations. We import a "
 "specific package version so the source states its dependency."
 msgstr "CeTZ 提供画布和几何操作。我们导入特定版本的包，让源代码明确声明依赖。"
 
-#: ../../topics/diagrams.rst:156
+#: ../../topics/diagrams.rst:157
 msgid ""
 "Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
 "are useful when position carries meaning."
 msgstr "Fletcher 在 CeTZ 上构建节点和箭头图。当位置具有含义时，它提供的显式坐标十分有用。"
 
-#: ../../topics/diagrams.rst:172
+#: ../../topics/diagrams.rst:173
 msgid "Share source and refer to figures"
 msgstr "共享源代码并引用插图"
 
-#: ../../topics/diagrams.rst:175
+#: ../../topics/diagrams.rst:176
 msgid ""
 "Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` "
 "and ``:align:``. We enable ``numfig = true`` in ``conf.toml`` and refer "
@@ -191,15 +204,19 @@ msgid ""
 "this book. Alternative text explains the information conveyed by the "
 "drawing. It is especially useful for Typst SVGs, which draw letters as "
 "outlines."
-msgstr "两种指令都接受 ``:caption:``、``:alt:``、``:name:``、``:class:`` 和 ``:align:``。我们在 ``conf.toml`` 中启用 ``numfig = true``，通过 RST 的 ``:numref:`` 或 MyST 的 ``{numref}`` 引用有名称和图注的图形。例如，:numref:`chapter-typst-circle` 是本书的一幅编号插图。替代文本说明图形传达的信息。对于将文字绘制为轮廓的 Typst SVG，这尤其有用。"
+msgstr ""
+"两种指令都接受 ``:caption:``、``:alt:``、``:name:``、``:class:`` 和 ``:align:``。我们在 "
+"``conf.toml`` 中启用 ``numfig = true``，通过 RST 的 ``:numref:`` 或 MyST 的 "
+"``{numref}`` 引用有名称和图注的图形。例如，:numref:`chapter-typst-circle` "
+"是本书的一幅编号插图。替代文本说明图形传达的信息。对于将文字绘制为轮廓的 Typst SVG，这尤其有用。"
 
-#: ../../topics/diagrams.rst:181
+#: ../../topics/diagrams.rst:182
 msgid ""
 "For a larger drawing we keep Typst source in a file. Guidedog compiles it "
 "during the ordinary build."
 msgstr "较大的图形可以将 Typst 源代码保存在文件中。Guidedog 会在正常构建过程中编译它。"
 
-#: ../../topics/diagrams.rst:190
+#: ../../topics/diagrams.rst:191
 msgid ""
 "An inline diagram's imports resolve beside the document containing it. A "
 "file diagram's imports resolve beside its Typst file. We can therefore "
@@ -207,14 +224,16 @@ msgid ""
 "Changing an imported helper or data file redraws the affected HTML pages. "
 "Identical generated images keep their timestamps so unchanged PDF books "
 "remain cached."
-msgstr "内联图表的导入相对于包含它的文档解析。文件图表的导入相对于其 Typst 文件解析。因此，我们可以共享提供颜色、节点和时序图的本地辅助库。更改导入的辅助文件或数据文件会重新绘制受影响的 HTML 页面。相同的生成图像保留时间戳，使未更改的 PDF 书籍继续使用缓存。"
+msgstr ""
+"内联图表的导入相对于包含它的文档解析。文件图表的导入相对于其 Typst "
+"文件解析。因此，我们可以共享提供颜色、节点和时序图的本地辅助库。更改导入的辅助文件或数据文件会重新绘制受影响的 HTML "
+"页面。相同的生成图像保留时间戳，使未更改的 PDF 书籍继续使用缓存。"
 
-#: ../../topics/diagrams.rst:196
-#| msgid "Images and figures"
+#: ../../topics/diagrams.rst:197
 msgid "Packages, limits and failures"
 msgstr "包、限制与失败处理"
 
-#: ../../topics/diagrams.rst:199
+#: ../../topics/diagrams.rst:200
 msgid ""
 "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings "
 "govern Typst diagrams in both outputs. With ``pdf_packages = "
@@ -225,108 +244,122 @@ msgid ""
 "source directory, including through symlinks. Diagrams must produce one "
 "finite page; PNG export is limited to 16 million pixels and 16,384 pixels "
 "on either side."
-msgstr "``pdf_packages``、``pdf_fonts`` 和 ``pdf_font_paths`` 设置控制两种输出中的 Typst 图表。设置 ``pdf_packages = \"offline\"`` 时，编译器仅使用已经安装在 Typst 包目录中的包。默认会下载缺失的包。安装此前缺失的包或编辑字体后，我们在新进程中运行 ``guidedog build html -a``。项目导入必须留在源目录内，符号链接也不例外。图表必须生成一页尺寸有限的页面；PNG 上限为 1600 万像素，任一边不超过 16,384 像素。"
+msgstr ""
+"``pdf_packages``、``pdf_fonts`` 和 ``pdf_font_paths`` 设置控制两种输出中的 Typst "
+"图表。设置 ``pdf_packages = \"offline\"`` 时，编译器仅使用已经安装在 Typst "
+"包目录中的包。默认会下载缺失的包。安装此前缺失的包或编辑字体后，我们在新进程中运行 ``guidedog build html "
+"-a``。项目导入必须留在源目录内，符号链接也不例外。图表必须生成一页尺寸有限的页面；PNG 上限为 1600 万像素，任一边不超过 16,384 "
+"像素。"
 
-#: ../../topics/diagrams.rst:206
+#: ../../topics/diagrams.rst:207
 msgid ""
-"A failed drawing remains visible as source with a warning. We build with "
-"``-W`` when a missing diagram must prevent publication. ``--untrusted`` "
-"refuses Typst compilation and retains its source. Text builds show source "
-"without compiling a drawing. The :doc:`../howto/typst-diagrams` guide "
-"lists every option, source limit and migration step for existing figure "
-"files."
-msgstr "绘制失败的图形仍以源代码显示，并附有警告。缺少图表必须阻止发布时，我们使用 ``-W`` 构建。``--untrusted`` 拒绝 Typst 编译并保留源代码。文本构建显示源代码，不编译图形。:doc:`../howto/typst-diagrams` 列出了全部选项、源代码限制，以及已有图形文件的迁移步骤。"
+"A failed drawing remains visible as source with a warning "
+"(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
+"directive sources report ``sphinx.graphviz.source`` or "
+"``sphinx.typst.source``). We build with ``-W`` when a missing diagram "
+"must prevent publication. ``--untrusted`` refuses Typst compilation and "
+"external Graphviz resources and retains the source. Text builds show "
+"source without compiling a drawing. The :doc:`../howto/typst-diagrams` "
+"guide lists every option, source limit and migration step for existing "
+"figure files."
+msgstr ""
+"绘制失败的图形仍以源代码显示，并附带警告（``build.graphviz`` 或 "
+"``build.typst-diagram``；指令源码缺失或重复则报告 ``sphinx.graphviz.source`` 或 "
+"``sphinx.typst.source``）。缺少图表必须阻止发布时，我们使用 ``-W`` 构建。``--untrusted`` 拒绝 "
+"Typst 编译和外部 Graphviz "
+"资源并保留源代码。文本构建显示源代码，不编译图形。:doc:`../howto/typst-diagrams` "
+"列出了全部选项、源代码限制，以及已有图形文件的迁移步骤。"
 
-#: ../../topics/diagrams.rst:212
+#: ../../topics/diagrams.rst:213
 msgid "Light, dark and print"
 msgstr "浅色、深色与打印"
 
-#: ../../topics/diagrams.rst:215
+#: ../../topics/diagrams.rst:216
 msgid ""
 "Typst diagrams keep their authored colors and receive the same light "
 "panel as ordinary Graphviz images in the default dark theme. The adaptive "
 "Graphviz palette does not recolor Typst drawings."
-msgstr "Typst 图表保留作者指定的颜色，在默认深色主题中与普通 Graphviz 图像一样使用浅色底板。Graphviz 的自适应调色板不会重新着色 Typst 图形。"
+msgstr ""
+"Typst 图表保留作者指定的颜色，在默认深色主题中与普通 Graphviz 图像一样使用浅色底板。Graphviz 的自适应调色板不会重新着色 "
+"Typst 图形。"
 
-#: ../../topics/diagrams.rst:217
+#: ../../topics/diagrams.rst:218
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
 "colors and receive a light panel in the default dark theme."
 msgstr "画布透明不会改变图中文字的颜色。深色文字放在深色页面上可能消失。因此普通图保留原有配色，在默认深色主题下使用浅色面板。"
 
-#: ../../topics/diagrams.rst:221
+#: ../../topics/diagrams.rst:222
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
-"the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
-"adds a fixed stylesheet inside the SVG image. Its dark media query "
-"follows the embedding page's ``color-scheme``, including the theme "
-"control's explicit selection. No script, external stylesheet or inline "
-"page SVG is needed."
+"the directive. Guidedog adds a fixed stylesheet inside the SVG image. "
+"Its dark media query follows the embedding page's ``color-scheme``, "
+"including the theme control's explicit selection. No script, external "
+"stylesheet or inline page SVG is needed."
 msgstr ""
-"使用本手册的自适应配色时，在指令中加入 ``:class: graphviz-adaptive``。此功能适用于 Guidedog 0.6.3 "
-"及更高版本。Guidedog 在 SVG 内加入固定样式表；深色媒体查询跟随所在页面的 "
-"``color-scheme``，包括主题控件的明确选择。无须脚本、外部样式表或内联页面 SVG。"
+"使用本手册的自适应配色时，在指令中加入 ``:class: graphviz-adaptive``。Guidedog 会在 SVG "
+"图像内加入固定样式表；其深色媒体查询跟随所在页面的 ``color-scheme``，包括主题控件的明确选择。无须脚本、外部样式表或内联页面 SVG。"
 
-#: ../../topics/diagrams.rst:227
+#: ../../topics/diagrams.rst:228
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
 msgstr "标签要短。步骤用圆角框，输入用便笺形，持久存储用圆柱形。节点类区分深色配色中的角色："
 
-#: ../../topics/diagrams.rst:230
+#: ../../topics/diagrams.rst:231
 msgid "Semantic node classes"
 msgstr "表示语义的节点类"
 
-#: ../../topics/diagrams.rst:234
+#: ../../topics/diagrams.rst:235
 msgid "DOT class"
 msgstr "DOT 类"
 
-#: ../../topics/diagrams.rst:235
+#: ../../topics/diagrams.rst:236
 msgid "Role"
 msgstr "角色"
 
-#: ../../topics/diagrams.rst:236
+#: ../../topics/diagrams.rst:237
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:237
+#: ../../topics/diagrams.rst:238
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "源文件、配置或辅助材料；暖中性色。"
 
-#: ../../topics/diagrams.rst:238
+#: ../../topics/diagrams.rst:239
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:239
+#: ../../topics/diagrams.rst:240
 msgid "A produced artifact; blue."
 msgstr "生成的产物；蓝色。"
 
-#: ../../topics/diagrams.rst:240
+#: ../../topics/diagrams.rst:241
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:241
+#: ../../topics/diagrams.rst:242
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "可选扩展点；琥珀色、虚线边框。"
 
-#: ../../topics/diagrams.rst:242
+#: ../../topics/diagrams.rst:243
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:243
+#: ../../topics/diagrams.rst:244
 msgid "A decision; amber, with a diamond shape."
 msgstr "决策；琥珀色、菱形。"
 
-#: ../../topics/diagrams.rst:244
+#: ../../topics/diagrams.rst:245
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:245
+#: ../../topics/diagrams.rst:246
 msgid "A separate ownership or allocation boundary; violet."
 msgstr "独立的所有权或内存分配边界；紫色。"
 
-#: ../../topics/diagrams.rst:247
+#: ../../topics/diagrams.rst:248
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
@@ -338,7 +371,7 @@ msgstr ""
 "例如，``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` "
 "同时设定了浅色外观和对应的深色角色。类不会决定形状，也不会添加标签。我们要显式写出这些内容，这样图在黑白下也能看懂。未分类的步骤使用绿色。这套配色需要主动启用。如果图中的颜色本身承载数据，就不要使用它。"
 
-#: ../../topics/diagrams.rst:253
+#: ../../topics/diagrams.rst:254
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
@@ -351,11 +384,11 @@ msgstr ""
 "时同样选用浅色方案。请确保两套配色都清晰可读，并检查实际生成的书籍。仅凭透明背景，两者都无法保证。继承规则由 `CSS color-scheme "
 "规范 <https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ 定义。"
 
-#: ../../topics/diagrams.rst:259
+#: ../../topics/diagrams.rst:260
 msgid "Make the result legible"
 msgstr "让图表清晰易读"
 
-#: ../../topics/diagrams.rst:262
+#: ../../topics/diagrams.rst:263
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -363,7 +396,7 @@ msgid ""
 "all."
 msgstr "节点标签要短，较长规则写在图下。主路径尽量保持一个方向，返回边标明条件。除颜色外，也使用形状和文字；打印读者可能看不到颜色。"
 
-#: ../../topics/diagrams.rst:266
+#: ../../topics/diagrams.rst:267
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -371,7 +404,7 @@ msgid ""
 msgstr ""
 "提供替代文本和题注。检查窄浏览器窗口和 PDF 页面。若必须用极小字号才能放下，拆成两幅图。图片和插图尺寸见 :doc:`../media`\\ 。"
 
-#: ../../topics/diagrams.rst:270
+#: ../../topics/diagrams.rst:271
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
 "readable. Scroll inside the figure. The page itself keeps its width."
@@ -1082,56 +1115,75 @@ msgstr "HTML 文档的三栏阅读布局。"
 
 #: ../../topics/typography.rst:36
 msgid ""
-"**Light is the default.** The theme control also offers dark and system "
-"modes. It remembers the choice on the same browser origin. System mode "
-"follows the operating system. Printed HTML uses light colors. Content and "
-"navigation remain usable without JavaScript. The theme control and "
-"enhanced search are progressive enhancements."
+"The built-in theme follows the operating system by default, with light "
+"and dark choices; Guidedog's own documentation website defaults to the "
+"light reading edition. The theme control remembers the reader's choice "
+"on the same browser origin. Printed HTML uses light colors. Content and "
+"navigation remain usable without JavaScript. The theme control, "
+"enhanced search, and paragraph line breaking are progressive enhancements."
 msgstr ""
-"**默认浅色。** 主题控件也提供深色和系统模式，并记住同一浏览器来源上的选择。系统模式跟随操作系统。打印 HTML 使用浅色。禁用 "
-"JavaScript 后，内容和导航仍可用；主题控件与增强搜索属于渐进增强。"
+"内置主题默认跟随操作系统，并提供浅色与深色选项；Guidedog "
+"自身的文档网站默认采用浅色阅读版。主题控件会在同一浏览器源上记住读者的选择。打印 HTML 使用浅色配色。禁用 JavaScript "
+"后，内容和导航依然可用。主题控件、增强搜索和段落断行都属于渐进增强。"
 
-#: ../../topics/typography.rst:42
+#: ../../topics/typography.rst:43
 msgid ""
-"English prose can use paragraph-wide **Knuth-Plass line breaking** in the "
-"browser. A small template script measures the loaded font, builds boxes, "
-"spaces, and hyphenation penalties, and chooses breaks for the whole "
-"paragraph. Frank Liang's pattern method supplies English hyphenation "
-"candidates. The original TeX patterns and the libraries' licenses are "
-"bundled with the site."
+"Every initialized project (``guidedog quickstart``, ``guidedog ssg "
+"init``, and ``guidedog dsc init``) copies ``_static/typography.js`` "
+"beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a "
+"project owns and can edit its scripts directly. On desktop reading "
+"measures (``40rem`` and wider), English prose uses paragraph-wide "
+"**Knuth-Plass line breaking** in the browser across paragraphs, list "
+"items, definitions, admonitions, block quotes, and footnotes, while "
+"leaving tables, navigation trees, metadata headers, and figure captions "
+"ragged. The script measures the loaded font, builds boxes, glue, and "
+"hyphenation penalties, and chooses breaks for the whole block. Frank "
+"Liang's pattern method supplies English hyphenation candidates, and "
+"break penalty widths are discarded after a hyphenated break so "
+"following lines are measured accurately. Inline mathematics (after "
+"MathJax finishes), footnote references, superscripts, and subscripts "
+"are measured as inline atoms; links keep their markup, and inline code "
+"literals may break cleanly after ``/`` or ``::``. The original TeX "
+"patterns and the libraries' BSD notices are recorded in ``NOTICE``."
 msgstr ""
-"英文正文可在浏览器中使用整段 **Knuth-Plass "
-"断行**。小型模板脚本测量已加载的字体，构造盒子、空格和断词惩罚，再为整段选择换行点。Frank Liang "
-"的模式匹配法提供英文断词候选。网站附带原始 TeX 模式和各库许可证。"
+"每个初始化的项目（``guidedog quickstart``、``guidedog ssg init`` 和 ``guidedog dsc "
+"init``）都会在 ``_static/guidedog.css`` 与 ``_static/guidedog.js`` 旁一并复制 "
+"``_static/typography.js``，使项目直接拥有并可随时修改自己的脚本。在桌面阅读行宽（``40rem`` "
+"及以上）下，英文正文会在浏览器中对段落、列表项、定义项、告诫框、块引用和脚注执行整段范围的 **Knuth-Plass "
+"断行算法**，同时让表格、导航树、元数据页眉和插图图注保持自然参差排版。脚本会测量已加载的字体，构建盒子、弹性胶水与断字惩罚值，并为整个块选出断行位置。Frank "
+"Liang 的模式方法提供英文断字候选点，且连字符断行后会丢弃惩罚宽度，以便精确测量后续各行。行内数学公式（MathJax "
+"渲染完成后）、脚注引用、上标和下标按不可拆分的原子测量；链接保留原有标记，行内代码字面量则可在 ``/`` 或 ``::`` "
+"之后干净换行。原始 TeX 断字模式及各库的 BSD 许可声明均记录在 ``NOTICE`` 中。"
 
-#: ../../topics/typography.rst:48
+#: ../../topics/typography.rst:57
 msgid ""
 "The enhancement preserves emphasis and the exact source text. It "
-"recalculates when the reading measure changes. Copying within one "
-"optimized paragraph gives the source text, without visual line divisions "
-"or added hyphens. Printing restores the ordinary paragraph so the print "
-"layout can paginate it."
+"recalculates when the reading measure changes. Copying within or across "
+"typeset blocks gives the source text, without visual line divisions or "
+"added hyphens. Narrow screens (below ``40rem``) and printing restore "
+"ordinary layout so mobile browsers wrap naturally and print engines can "
+"paginate paragraphs."
 msgstr ""
-"增强排版保留强调和原始文字，正文宽度改变时重新计算。复制一个优化段落内的内容，得到的是源文，不含视觉换行或新增连字符。打印时恢复普通段落，交由打印布局分页。"
+"该增强排版保留强调格式与精确的原始文本，并在阅读行宽变化时重新计算。在已排版的块内或跨多个块复制时，得到的都是原始文本，不含视觉换行或额外添加的连字符。窄屏（小于 "
+"``40rem``）和打印会恢复普通布局，以便移动浏览器自然折行、打印引擎正常对段落分页。"
 
-#: ../../topics/typography.rst:53
+#: ../../topics/typography.rst:63
 msgid ""
-"Links, mathematics, code, interactive content, narrow measures, and other "
-"languages use native browser layout. So do paragraphs for which no "
-"suitably spaced solution exists. The site remains readable with "
-"JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` "
-"and ``text-wrap: pretty``. Those CSS properties alone are not a promise "
-"of Knuth-Plass optimization."
+"Other languages, narrow measures, JavaScript-disabled browsers, and "
+"paragraphs for which no suitably spaced solution exists use native "
+"browser layout with ``text-wrap: pretty`` (without greedy CSS "
+"justification or browser ``hyphens: auto``). That CSS property alone is "
+"not a promise of Knuth-Plass optimization."
 msgstr ""
-"链接、公式、代码、交互内容、窄栏以及其他语言使用浏览器原生排版；找不到合适间距方案的段落也是如此。禁用 JavaScript "
-"后网站依然可读。回退方案使用按语言生效的 ``hyphens: auto`` 和 ``text-wrap: pretty``。仅靠这两个 CSS "
-"属性，并不能保证 Knuth-Plass 优化。"
+"其他语言、窄行宽、禁用 JavaScript 的浏览器，以及找不到合适字距方案的段落，均使用带 ``text-wrap: pretty`` "
+"的浏览器原生布局（不启用贪婪的 CSS 两端对齐或浏览器的 ``hyphens: auto``）。单靠这一 CSS 属性并不保证 "
+"Knuth-Plass 优化。"
 
-#: ../../topics/typography.rst:59
+#: ../../topics/typography.rst:68
 msgid "The PDF page"
 msgstr "PDF 页面"
 
-#: ../../topics/typography.rst:62
+#: ../../topics/typography.rst:71
 msgid ""
 "The book and standalone article templates use the same Libertinus family "
 "as the web edition. They set justified paragraphs, optimized line "
@@ -1143,7 +1195,7 @@ msgstr ""
 "书籍模板和独立文章模板使用与网页版相同的 Libertinus "
 "字体，设置两端对齐段落、优化断行和按语言生效的断词，同时也控制间距、页眉、题注、代码块和表格线。字体、断词成本与段落宽度协同作用。强制换行通常不能正确修复松散段落。"
 
-#: ../../topics/typography.rst:64
+#: ../../topics/typography.rst:73
 msgid ""
 "Typst optimizes the PDF paragraphs. The web enhancement optimizes "
 "eligible prose. They share the source, fonts, and visual hierarchy. Their "
@@ -1157,11 +1209,11 @@ msgstr ""
 "<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_\\ "
 "。"
 
-#: ../../topics/typography.rst:69
+#: ../../topics/typography.rst:78
 msgid "Change the design"
 msgstr "修改设计"
 
-#: ../../topics/typography.rst:72
+#: ../../topics/typography.rst:81
 msgid ""
 "Edit ``_static/editorial.css`` for the documentation project's visual "
 "tokens. Edit ``_templates/layout.html`` for structure. Edit "
@@ -1178,7 +1230,7 @@ msgstr ""
 "调整讨论记录结构，编辑 ``_templates/article.typ`` 调整独立文章 "
 "PDF。这三种布局都会用共享的语言感知主题包裹正文内容。请保留阅读顺序、焦点指示、标签和足够的对比度。"
 
-#: ../../topics/typography.rst:74
+#: ../../topics/typography.rst:83
 msgid ""
 "Build both targets after a change. Inspect a page with code, a table, a "
 "diagram, and an equation. An attractive cover is not proof that the rest "
@@ -1495,7 +1547,9 @@ msgid ""
 "``image`` and ``figure``. We can also author Graphviz and Typst drawings "
 "directly in markup with automatic HTML and PDF assets; see "
 ":doc:`diagrams`."
-msgstr "我们使用 ``image`` 和 ``figure`` 加入插画、屏幕截图和已有图表。也可以直接在标记中编写 Graphviz 和 Typst 绘图，自动生成 HTML 和 PDF 图像资源；参见 :doc:`diagrams`。"
+msgstr ""
+"我们使用 ``image`` 和 ``figure`` 加入插画、屏幕截图和已有图表。也可以直接在标记中编写 Graphviz 和 Typst "
+"绘图，自动生成 HTML 和 PDF 图像资源；参见 :doc:`diagrams`。"
 
 #: ../../topics/writing.rst:274
 msgid "For an existing image:"
@@ -1710,6 +1764,18 @@ msgid ""
 "MyST Markdown supports the same directives and roles through fenced "
 "blocks:"
 msgstr "MyST Markdown 通过围栏块支持相同的指令和角色："
+
+#~ msgid ""
+#~ "English prose can use paragraph-wide **Knuth-Plass line breaking** in "
+#~ "the browser. A small template script measures the loaded font, builds "
+#~ "boxes, spaces, and hyphenation penalties, and chooses breaks for the "
+#~ "whole paragraph. Frank Liang's pattern method supplies English "
+#~ "hyphenation candidates. The original TeX patterns and the libraries' "
+#~ "licenses are bundled with the site."
+#~ msgstr ""
+#~ "英文正文可在浏览器中使用整段 **Knuth-Plass "
+#~ "断行**。小型模板脚本测量已加载的字体，构造盒子、空格和断词惩罚，再为整段选择换行点。Frank Liang "
+#~ "的模式匹配法提供英文断词候选。网站附带原始 TeX 模式和各库许可证。"
 
 #~ msgid "Diagrams that explain"
 #~ msgstr "用图表解释概念"

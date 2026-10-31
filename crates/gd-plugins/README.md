@@ -11,7 +11,7 @@ commands may offer no hooks (`Hooks::NONE`). Protocol and design details:
 
 ```toml
 [dependencies]
-gd-plugins = "0.7"
+gd-plugins = "1.0.0-beta.8"
 ```
 
 We write a build plugin that runs as its own program and upper-cases every source:
@@ -39,7 +39,7 @@ fn main() -> std::process::ExitCode {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-plugins). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-plugins --no-deps` (and on [docs.rs](https://docs.rs/gd-plugins) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## One implementation, two deployments
 

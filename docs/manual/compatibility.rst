@@ -144,7 +144,7 @@ Every extension in Sphinx's ``sphinx.ext`` package is built in. A project lists 
    * - ``duration``
      - The slowest documents to read, in the build summary and a JSON file (:doc:`sources-and-diagrams`).
    * - ``imgconverter``
-     - Accepted, and nothing runs: Typst reads SVG, PNG, JPEG and GIF itself. Other formats are reported (:doc:`sources-and-diagrams`).
+     - Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and PDF itself. Other formats are reported (:doc:`sources-and-diagrams`).
    * - ``myst_parser``
      - The implemented project Markdown layer.
 
@@ -164,11 +164,13 @@ roots. A symlink does not grant access outside that boundary.
 Templates, static files, includes, images, fonts, and API sources obey the same rule.
 
 Graphviz image resources are resolved relative to their document and confined.
+Supported image bytes are embedded in the drawing. ``imagepath`` and ``fontpath``
+do not expand the boundary. The embedded Typst compiler enforces the declared
+readable folders directly, while an external ``typst`` program runs with a private
+symlink root containing only those folders. This keeps book templates and preambles
+within the declared resources.
 
 ``typst-diagram`` is a Guidedog extension for RST and MyST projects, rather than a Sphinx extension contract. It compiles inline or file source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks remain examples. The embedded compiler uses the project's package and font policy; ``--untrusted`` refuses compilation. See :doc:`topics/diagrams`.
-Supported image bytes are embedded in the drawing. ``imagepath`` and ``fontpath``
-do not expand the boundary. Typst runs with a private root containing the readable
-folders. This keeps book templates and preambles within the declared resources.
 
 ``--untrusted`` narrows the read boundary to the source folder.
 It omits raw content, unsafe URLs, outside resources, project Typst templates,

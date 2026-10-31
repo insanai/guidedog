@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:11+0000\n"
+"POT-Creation-Date: 2026-10-31 15:41+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -94,23 +94,39 @@ msgstr ""
 
 #: ../../howto/discussions.rst:33
 msgid ""
-"``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable "
-"PDF layout and shared theme copied from the binary;"
+"``_templates/layout.html``, ``_templates/discussion.typ``, and "
+"``_templates/theme.typ``, the editable HTML layout, PDF discussion "
+"layout, and shared PDF theme copied from the binary;"
 msgstr ""
-"``_templates/discussion.typ`` y ``_templates/theme.typ``, la maquetación "
-"PDF editable y el tema compartido copiados desde el binario;"
+"``_templates/layout.html``, ``_templates/discussion.typ`` y "
+"``_templates/theme.typ``, el diseño HTML editable, la maquetación PDF "
+"de discusión y el tema PDF compartido copiados desde el binario;"
 
 #: ../../howto/discussions.rst:34
-msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
-msgstr "``registry.rst`` y ``bundle.rst``, el índice generado;"
+msgid ""
+"``_static/guidedog.css``, ``_static/guidedog.js``, and "
+"``_static/typography.js``, the editable stylesheets and scripts copied "
+"from the binary;"
+msgstr ""
+"``_static/guidedog.css``, ``_static/guidedog.js`` y "
+"``_static/typography.js``, las hojas de estilo y scripts editables "
+"copiados desde el binario;"
 
 #: ../../howto/discussions.rst:35
+msgid ""
+"``registry.rst`` and ``bundle.rst``, the generated index and catalog "
+"check list;"
+msgstr ""
+"``registry.rst`` y ``bundle.rst``, el índice generado y la lista de "
+"comprobación del catálogo;"
+
+#: ../../howto/discussions.rst:36
 msgid "``records/XXXXX-eds-process.rst``, a draft of our review process."
 msgstr ""
 "``records/XXXXX-eds-process.rst``, un borrador de nuestro proceso de "
 "revisión."
 
-#: ../../howto/discussions.rst:37
+#: ../../howto/discussions.rst:38
 msgid ""
 "We edit the process draft to say how our project decides. To start from "
 "our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), "
@@ -129,18 +145,18 @@ msgstr ""
 "nuevo antes de moverlo a su sitio. Nunca escribe en una carpeta que ya "
 "tenga archivos."
 
-#: ../../howto/discussions.rst:44
+#: ../../howto/discussions.rst:45
 msgid "Write and review"
 msgstr "Escribir y revisar"
 
-#: ../../howto/discussions.rst:47
+#: ../../howto/discussions.rst:48
 msgid ""
 "We run the commands in the catalog folder, or in any folder inside it."
 msgstr ""
 "Ejecutamos los comandos en la carpeta del catálogo o en cualquier carpeta "
 "dentro de ella."
 
-#: ../../howto/discussions.rst:58
+#: ../../howto/discussions.rst:59
 msgid ""
 "A new draft has the number ``XXXXX``. Promotion gives it the next number "
 "and opens it for discussion. A state change needs ``--reason``, and "
@@ -153,11 +169,11 @@ msgstr ""
 "``--dry-run`` muestra un cambio sin aplicarlo. Estos son los valores "
 "predeterminados; la sección siguiente explica cómo cambiarlos."
 
-#: ../../howto/discussions.rst:63
+#: ../../howto/discussions.rst:64
 msgid "A record starts with its metadata, one field per line:"
 msgstr "Un registro empieza con sus metadatos, un campo por línea:"
 
-#: ../../howto/discussions.rst:77
+#: ../../howto/discussions.rst:78
 msgid ""
 "Authors and labels are JSON lists. ``last-updated`` may stand for "
 "``updated``. A record may also carry ``category``, ``status``, and "
@@ -172,11 +188,11 @@ msgstr ""
 "como Number, Title, Authors, Updated, Labels, etc., con las listas como "
 "texto sin formato."
 
-#: ../../howto/discussions.rst:82
+#: ../../howto/discussions.rst:83
 msgid "Configure the lifecycle and numbering"
 msgstr "Configurar el ciclo de vida y la numeración"
 
-#: ../../howto/discussions.rst:85
+#: ../../howto/discussions.rst:86
 msgid ""
 "``discussion.toml`` holds the catalog's settings. ``init`` writes every "
 "one of them, with comments. ``guidedog dsc config`` prints the settings "
@@ -189,7 +205,7 @@ msgstr ""
 "valores predeterminados que siguen, que son el proceso del propio GDS de "
 "Guidedog."
 
-#: ../../howto/discussions.rst:122
+#: ../../howto/discussions.rst:123
 msgid ""
 "``[workflow.states.NAME]`` defines a state. ``next`` lists the states the "
 "``state`` command may move a record to. ``evidence = true`` asks for "
@@ -208,7 +224,7 @@ msgstr ""
 "número, un borrador solo puede pasar a los estados que enumera su propio "
 "``next``, como ``abandoned``."
 
-#: ../../howto/discussions.rst:129
+#: ../../howto/discussions.rst:130
 msgid ""
 "Numbers have at least ``width`` digits, padded with zeros. A number that "
 "needs more digits gets them, so 10000 follows 9999, and lists sort by "
@@ -225,7 +241,7 @@ msgstr ""
 "Cambiar ``width`` sí, una vez numerados los registros: sus números "
 "dejarían de coincidir."
 
-#: ../../howto/discussions.rst:135
+#: ../../howto/discussions.rst:136
 msgid ""
 "``guidedog dsc`` checks the file whenever it reads the catalog. A mistake "
 "names the line and what to write instead:"
@@ -233,7 +249,7 @@ msgstr ""
 "``guidedog dsc`` comprueba el archivo cada vez que lee el catálogo. Un "
 "error indica la línea y qué escribir en su lugar:"
 
-#: ../../howto/discussions.rst:150
+#: ../../howto/discussions.rst:151
 msgid ""
 "The process draft that ``init`` writes describes the lifecycle we "
 "configured. It has a table of the states and a diagram of the moves."
@@ -242,23 +258,36 @@ msgstr ""
 "que configuramos. Incluye una tabla de los estados y un diagrama de las "
 "transiciones."
 
-#: ../../howto/discussions.rst:153
+#: ../../howto/discussions.rst:154
 msgid "Build"
 msgstr "Compilar"
 
-#: ../../howto/discussions.rst:161
+#: ../../howto/discussions.rst:162
 msgid ""
-"``guidedog dsc build`` writes the website to ``_build/html`` and one PDF "
-"per record to ``_build/pdf``. Naming a record writes only its PDF, to "
-"``_build/selected``, and leaves the complete output alone. Warnings stop "
-"the build."
+"``guidedog dsc build`` writes the website to ``_build/html`` and one "
+"standalone PDF per record to ``_build/pdf`` (there is no combined catalog "
+"PDF; ``index.rst``, ``registry.rst``, ``workflow.rst``, and ``bundle.rst`` "
+"serve HTML navigation and catalog validation). Naming a record writes only "
+"its PDF, to ``_build/selected``, and leaves the complete output alone. When "
+"``pdf_downloads`` in ``[html_context]`` names the folder of the record "
+"PDFs, relative to the root of the HTML output (for example ``pdf_downloads "
+"= \"pdf/\"`` when a multi-project site mounts the PDFs there), each HTML "
+"record page under ``records/`` offers a link to download that record's PDF. "
+"Warnings stop the build."
 msgstr ""
 "``guidedog dsc build`` escribe el sitio web en ``_build/html`` y un PDF "
-"por registro en ``_build/pdf``. Si nombramos un registro, escribe solo su "
-"PDF, en ``_build/selected``, y no toca la salida completa. Las "
-"advertencias detienen la compilación."
+"independiente por registro en ``_build/pdf`` (no hay un PDF combinado del "
+"catálogo; ``index.rst``, ``registry.rst``, ``workflow.rst`` y "
+"``bundle.rst`` sirven para la navegación HTML y la validación del "
+"catálogo). Si se indica un registro, solo se escribe su PDF en "
+"``_build/selected`` sin tocar la salida completa. Cuando ``pdf_downloads`` "
+"en ``[html_context]`` indica la carpeta de los PDF de los registros, "
+"relativa a la raíz de la salida HTML (por ejemplo, ``pdf_downloads = "
+"\"pdf/\"`` cuando un sitio multiproyecto monta allí los PDF), cada página "
+"HTML de registro bajo ``records/`` ofrece un enlace para descargar el PDF "
+"de ese registro. Las advertencias detienen la compilación."
 
-#: ../../howto/discussions.rst:165
+#: ../../howto/discussions.rst:166
 msgid ""
 "The build is guidedog's own: the same build as ``guidedog build``, with "
 "the catalog as the project. Graphviz, Typst, and the other tools it needs "
@@ -273,11 +302,11 @@ msgstr ""
 "``--typst=PATH`` indica un programa Typst que se usará en lugar del "
 "compilador integrado."
 
-#: ../../howto/discussions.rst:167
+#: ../../howto/discussions.rst:168
 msgid "Discussion PDFs"
 msgstr "PDF de discusiones"
 
-#: ../../howto/discussions.rst:170
+#: ../../howto/discussions.rst:171
 msgid ""
 "Each RST record uses an RFC-style paper layout. The record opens with a "
 "metadata panel, state badges, a short status note and compact contents, "
@@ -293,7 +322,7 @@ msgstr ""
 "página y el total. Las tablas y los listados con leyenda pueden continuar "
 "entre páginas."
 
-#: ../../howto/discussions.rst:172
+#: ../../howto/discussions.rst:173
 msgid ""
 "The PDF builder recognizes the leading metadata, such as ``:eds-number:`` "
 "and ``:eds-title:``, for any catalog prefix. Existing catalogs without a "
@@ -308,7 +337,7 @@ msgstr ""
 "plantilla existentes hasta que sustituyamos o eliminemos sus archivos. "
 "Los libros ordinarios mantienen su plantilla de libro."
 
-#: ../../howto/discussions.rst:174
+#: ../../howto/discussions.rst:175
 msgid ""
 "The layout is embedded in the Guidedog binary. ``guidedog dsc init`` "
 "copies ``_templates/discussion.typ`` and its shared "
@@ -337,7 +366,7 @@ msgstr ""
 "opcionales ``contents`` y ``memo`` controlan el índice y la nota de "
 "situación. :doc:`../templates` describe los parámetros PDF compartidos."
 
-#: ../../howto/discussions.rst:176
+#: ../../howto/discussions.rst:177
 msgid ""
 "An ``--untrusted`` build uses the built-in discussion layout instead of "
 "running a project template. A record included as a chapter of a larger "
@@ -349,11 +378,11 @@ msgstr ""
 "incluido como capítulo de un libro mayor conserva sus metadatos en ese "
 "capítulo; el documento raíz selecciona la maquetación del libro."
 
-#: ../../howto/discussions.rst:178
+#: ../../howto/discussions.rst:179
 msgid "When an update is interrupted"
 msgstr "Si se interrumpe una actualización"
 
-#: ../../howto/discussions.rst:181
+#: ../../howto/discussions.rst:182
 msgid ""
 "Commands that change records hold the catalog's lock, ``.eds.lock``. An "
 "update of several files first writes a journal, ``.eds-journal.json``. If "
@@ -364,7 +393,7 @@ msgstr ""
 "diario, ``.eds-journal.json``. Si se detiene a medias, el siguiente "
 "comando lo indica:"
 
-#: ../../howto/discussions.rst:190
+#: ../../howto/discussions.rst:191
 msgid ""
 "Recovery puts back the files as they were. It refuses to overwrite a file "
 "someone edited since. ``guidedog dsc`` also checks each change before it "
@@ -376,7 +405,7 @@ msgstr ""
 "también comprueba cada cambio antes de escribir nada. Rechaza un registro "
 "vacío o truncado, y un índice sin su región generada."
 
-#: ../../howto/discussions.rst:194
+#: ../../howto/discussions.rst:195
 msgid ""
 "``guidedog dsc`` keeps only each record's metadata in memory. It reads a "
 "record whole only to change it. So checking a large catalog stays fast "
@@ -386,11 +415,11 @@ msgstr ""
 "Lee un registro completo únicamente para cambiarlo. Así, comprobar un "
 "catálogo grande sigue siendo rápido y ligero."
 
-#: ../../howto/discussions.rst:197
+#: ../../howto/discussions.rst:198
 msgid "Use the library"
 msgstr "Usar la biblioteca"
 
-#: ../../howto/discussions.rst:200
+#: ../../howto/discussions.rst:201
 msgid ""
 "The commands are one Rust crate, ``gd-discussion``. Its ``README.md`` "
 "shows how to load a catalog, plan a change, and apply it from our own "
@@ -400,7 +429,7 @@ msgstr ""
 "muestra cómo cargar un catálogo, planificar un cambio y aplicarlo desde "
 "nuestro propio programa:"
 
-#: ../../howto/discussions.rst:218
+#: ../../howto/discussions.rst:219
 msgid ""
 "``ds::plugin()`` is the whole ``guidedog dsc`` command line, as a plugin. "
 "A ``guidedog`` of our own links it beside its other plugins (see "
@@ -758,15 +787,15 @@ msgstr ""
 
 #: ../../howto/format-specific-content.rst:124
 msgid ""
-"**The ``latex`` tag in ``.. only::``**: For backward compatibility with "
-"legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias for PDF "
-"builds in ``.. only::`` expressions. In native Guidedog projects, prefer "
-"``.. only:: pdf``."
+"**The latex tag** (``.. only:: latex``): For backward compatibility "
+"with legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias "
+"for PDF builds in ``.. only::`` expressions. In native Guidedog "
+"projects, prefer ``.. only:: pdf``."
 msgstr ""
-"**La etiqueta ``latex`` en ``.. only::``**: Para compatibilidad con "
-"proyectos heredados de Sphinx, Guidedog reconoce ``latex`` como un alias "
-"para compilaciones PDF en expresiones ``.. only::``. En proyectos nativos "
-"de Guidedog, prefiera ``.. only:: pdf``."
+"**La etiqueta latex** (``.. only:: latex``): Para compatibilidad con "
+"proyectos heredados de Sphinx, Guidedog reconoce ``latex`` como un "
+"alias para compilaciones PDF en expresiones ``.. only::``. En proyectos "
+"nativos de Guidedog, prefiera ``.. only:: pdf``."
 
 #: ../../howto/format-specific-content.rst:128
 msgid "3. Declare custom domain directives in conf.toml"
@@ -1688,27 +1717,29 @@ msgstr ""
 msgid ""
 "a C compiler (``cc``, Xcode's command-line tools, or MSVC), which Cargo "
 "uses to build the tree-sitter grammars and the cryptography in the "
-"``ring`` crate (TLS for HTTPS)."
+"``ring`` crate (TLS for HTTPS); and on Linux ``perl`` and ``make``, "
+"which Cargo uses to build the vendored OpenSSL linked by the embedded "
+"Typst package downloader."
 msgstr ""
 "un compilador de C (``cc``, las herramientas de línea de comandos de "
-"Xcode o MSVC), que Cargo usa para compilar las gramáticas de tree-sitter "
-"y la criptografía del crate ``ring`` (TLS para HTTPS)."
+"Xcode o MSVC), que Cargo usa para compilar las gramáticas de "
+"tree-sitter y la criptografía del crate ``ring`` (TLS para HTTPS); y en "
+"Linux ``perl`` y ``make``, que Cargo usa para compilar el OpenSSL "
+"incluido que enlaza el descargador integrado de paquetes de Typst."
 
 #: ../../howto/install.rst:42
 msgid ""
 "Nothing else is built by hand. The Typst compiler (0.15.1), the "
-"tree-sitter grammars for Python and Rust, and the HTTP client (``ureq`` "
-"with ``rustls``) are ordinary Cargo dependencies, compiled with the "
-"workspace. HTTPS needs no ``curl`` program, OpenSSL or system certificate "
-"store: the root certificates are built in. There are no native build "
-"scripts to run first."
+"tree-sitter grammars for Python and Rust, and the Guidedog HTTP client "
+"(``ureq`` with ``rustls`` and built-in root certificates) are ordinary "
+"Cargo dependencies, compiled with the workspace. There are no separate "
+"setup scripts to run first."
 msgstr ""
-"No hay que compilar nada más a mano. El compilador de Typst (0.15.1), las "
-"gramáticas de tree-sitter para Python y Rust y el cliente HTTP (``ureq`` "
-"con ``rustls``) son dependencias normales de Cargo y se compilan con el "
-"workspace. HTTPS no necesita el programa ``curl``, ni OpenSSL, ni el "
-"almacén de certificados del sistema: los certificados raíz vienen "
-"integrados. No hay scripts de compilación nativos que ejecutar antes."
+"No hay que compilar nada más a mano. El compilador de Typst (0.15.1), "
+"las gramáticas de tree-sitter para Python y Rust y el cliente HTTP de "
+"Guidedog (``ureq`` con ``rustls`` y certificados raíz integrados) son "
+"dependencias normales de Cargo y se compilan con el workspace. No hay "
+"scripts de configuración aparte que ejecutar antes."
 
 #: ../../howto/install.rst:46
 msgid "Release build"
@@ -1797,20 +1828,25 @@ msgstr "Typst: integrado o instalado"
 #: ../../howto/install.rst:88
 msgid ""
 "By default the Typst compiler is linked into ``guidedog`` (the "
-"``embedded`` feature of the ``gd-typst`` crate). PDF then needs no other "
-"program. A build of ``gd-typst`` without that feature runs an installed "
-"``typst`` program (0.15.1) instead. Either way, "
+"``embedded`` feature of the ``gd-typst`` crate). PDF books and ``.. "
+"typst-diagram::`` directives then need no other program. A build of "
+"``gd-typst`` without that feature runs an installed ``typst`` program "
+"(pinned to 0.15.1) for PDF books, while ``.. typst-diagram::`` requires "
+"the embedded compiler (``typst.embedded``). For PDF books, "
 "``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) "
-"selects a program explicitly, and ``guidedog --version`` names the "
-"backend in use."
+"selects an external ``typst`` 0.15.1 program explicitly, and ``guidedog "
+"--version`` names the backend in use."
 msgstr ""
-"Por defecto, el compilador de Typst se enlaza dentro de ``guidedog`` (la "
-"feature ``embedded`` del crate ``gd-typst``). Así, el PDF no necesita "
-"ningún otro programa. Una compilación de ``gd-typst`` sin esa feature "
-"ejecuta en su lugar un programa ``typst`` instalado (0.15.1). En ambos "
-"casos, ``--typst=/absolute/path/to/typst`` (o ``typst`` en ``conf.toml``) "
-"selecciona un programa de forma explícita, y ``guidedog --version`` "
-"indica el backend que se está usando."
+"Por defecto, el compilador de Typst se enlaza dentro de ``guidedog`` "
+"(la feature ``embedded`` del crate ``gd-typst``). Así, los libros PDF y "
+"las directivas ``.. typst-diagram::`` no necesitan ningún otro "
+"programa. Una compilación de ``gd-typst`` sin esa feature ejecuta un "
+"programa ``typst`` instalado (fijado en 0.15.1) para los libros PDF, "
+"mientras que ``.. typst-diagram::`` requiere el compilador integrado "
+"(``typst.embedded``). Para libros PDF, "
+"``--typst=/absolute/path/to/typst`` (o ``typst`` en ``conf.toml``) "
+"selecciona de forma explícita un programa ``typst`` 0.15.1 externo, y "
+"``guidedog --version`` indica el backend en uso."
 
 #: ../../howto/install.rst:94
 msgid ""
@@ -1925,20 +1961,28 @@ msgstr "Mantener esta documentación"
 #: ../../howto/maintain-docs.rst:4
 msgid ""
 "Guidedog documents itself with Guidedog. The repository has four "
-"projects: ``docs/manual`` (this manual), ``docs/api`` (the Rust API "
-"reference of the crates), ``docs/gds`` (the design records), and "
-"``docs/site`` (the front page). The manual and GDS began with ``guidedog "
-"quickstart``. We edit their generated templates in place. Design records "
-"stay out of the manual's table of contents."
+"documentation projects and a root site manifest: ``docs/manual`` (this "
+"manual), ``docs/api`` (the standalone Rust API reference of the crates, "
+"also included in the manual's PDF appendix), ``docs/gds`` (the design "
+"records), ``docs/site`` (the website landing page and release notes), "
+"and ``docs/conf.toml`` (the multi-project SSG configuration that mounts "
+"``docs/site``, ``docs/manual``, and ``docs/gds``). Each project keeps "
+"its generated templates and static assets locally so we can edit them "
+"in place. Design records stay out of the manual's table of contents."
 msgstr ""
 "Guidedog se documenta a sí mismo con Guidedog. El repositorio tiene "
-"cuatro proyectos: ``docs/manual`` (este manual), ``docs/api`` (la "
-"referencia de la API de Rust de los crates), ``docs/gds`` (los registros "
-"de diseño) y ``docs/site`` (la portada). El manual y GDS nacieron de "
-"``guidedog quickstart``. Editamos sus plantillas generadas directamente. "
-"Los registros de diseño quedan fuera del índice del manual."
+"cuatro proyectos de documentación y un manifiesto raíz del sitio: "
+"``docs/manual`` (este manual), ``docs/api`` (la referencia "
+"independiente de la API de Rust de los crates, incluida también en el "
+"apéndice PDF del manual), ``docs/gds`` (los registros de diseño), "
+"``docs/site`` (la portada del sitio web y las notas de publicación) y "
+"``docs/conf.toml`` (la configuración SSG multiproyecto que monta "
+"``docs/site``, ``docs/manual`` y ``docs/gds``). Cada proyecto conserva "
+"localmente sus plantillas generadas y sus recursos estáticos para que "
+"podamos editarlos en el propio directorio. Los registros de diseño "
+"quedan fuera del índice del manual."
 
-#: ../../howto/maintain-docs.rst:10
+#: ../../howto/maintain-docs.rst:12
 msgid ""
 "All documentation is reStructuredText under ``docs/``. The only Markdown "
 "files are each crate's ``README.md``, a short cheat sheet, and the files "
@@ -1951,11 +1995,11 @@ msgstr ""
 "detalles internos, los registros y las tablas de conformidad son páginas "
 "bajo ``docs/manual/internals``."
 
-#: ../../howto/maintain-docs.rst:15
+#: ../../howto/maintain-docs.rst:17
 msgid "Build the manual"
 msgstr "Compilar el manual"
 
-#: ../../howto/maintain-docs.rst:18
+#: ../../howto/maintain-docs.rst:20
 msgid ""
 "We build ``guidedog`` first (see :doc:`install`). Then, from the "
 "repository root:"
@@ -1963,7 +2007,7 @@ msgstr ""
 "Primero compilamos ``guidedog`` (véase :doc:`install`). Después, desde la "
 "raíz del repositorio:"
 
-#: ../../howto/maintain-docs.rst:27
+#: ../../howto/maintain-docs.rst:29
 msgid ""
 "The PDF command creates one book, with links between its chapters. "
 "``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` "
@@ -1973,11 +2017,11 @@ msgstr ""
 "``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` "
 "compila y ejecuta en un solo paso."
 
-#: ../../howto/maintain-docs.rst:31
+#: ../../howto/maintain-docs.rst:33
 msgid "The API reference"
 msgstr "La referencia de la API"
 
-#: ../../howto/maintain-docs.rst:34
+#: ../../howto/maintain-docs.rst:36
 msgid ""
 "``docs/api`` generates its pages from the crates' source with "
 "``rust_autoapi_crates`` (see :doc:`document-code`). The reference is the "
@@ -1991,7 +2035,7 @@ msgstr ""
 "público). No hay ningún manuscrito de la API copiado que mantener "
 "sincronizado. Corregimos el error en el crate y volvemos a compilar:"
 
-#: ../../howto/maintain-docs.rst:44
+#: ../../howto/maintain-docs.rst:46
 msgid ""
 "A warning such as ``rust.autodoc.link`` names the doc comment and the "
 "link that does not resolve."
@@ -1999,11 +2043,11 @@ msgstr ""
 "Una advertencia como ``rust.autodoc.link`` nombra el comentario de "
 "documentación y el enlace que no se resuelve."
 
-#: ../../howto/maintain-docs.rst:47
+#: ../../howto/maintain-docs.rst:49
 msgid "Build and check discussions"
 msgstr "Compilar y comprobar las discusiones"
 
-#: ../../howto/maintain-docs.rst:57
+#: ../../howto/maintain-docs.rst:59
 msgid ""
 "``docs/gds`` is a discussion catalog like any other, so ``guidedog dsc`` "
 "runs in it (see :doc:`discussions`). It manages metadata, numbers, state, "
@@ -2023,37 +2067,46 @@ msgstr ""
 "vista previa de PDF seleccionada usa ``_build/selected/<artifact>/pdf`` y "
 "deja intacto el catálogo completo de ``_build/pdf``."
 
-#: ../../howto/maintain-docs.rst:71
+#: ../../howto/maintain-docs.rst:72
 msgid ""
-"The ordinary project commands work too. The GDS project uses its own "
-"``conf.toml`` and its own ``_build`` directory. Read "
-"``docs/gds/workflow.rst`` for the authoring workflow."
+"The ordinary HTML project command works directly on ``docs/gds``, while "
+"``guidedog dsc build`` (or the ``discussion-records`` mount in "
+"``docs/conf.toml``) builds one standalone PDF per record without a "
+"combined index PDF. The GDS project uses its own ``conf.toml`` and its "
+"own ``_build`` directory. Read ``docs/gds/workflow.rst`` for the "
+"authoring workflow."
 msgstr ""
-"También funcionan los comandos habituales del proyecto. GDS tiene su "
-"propio ``conf.toml`` y directorio ``_build``\\ . El flujo de autoría está "
-"en ``docs/gds/workflow.rst``\\ ."
+"El comando HTML habitual del proyecto funciona directamente sobre "
+"``docs/gds``, mientras que ``guidedog dsc build`` (o el montaje "
+"``discussion-records`` en ``docs/conf.toml``) genera un PDF "
+"independiente por registro sin un PDF de índice combinado. El proyecto "
+"GDS usa su propio ``conf.toml`` y su propio directorio ``_build``. "
+"Consulte ``docs/gds/workflow.rst`` para ver el flujo de autoría."
 
-#: ../../howto/maintain-docs.rst:75
+#: ../../howto/maintain-docs.rst:76
 msgid "Translations"
 msgstr "Traducciones"
 
-#: ../../howto/maintain-docs.rst:78
+#: ../../howto/maintain-docs.rst:79
 msgid ""
-"The manual's catalogs are in ``docs/manual/locales``. After we change "
-"English text, we refresh them:"
+"Translation catalogs live in ``docs/manual/locales`` (for the manual "
+"and repository overview) and ``docs/site/locales`` (for the landing "
+"page and release notes). After we change English text, we refresh them:"
 msgstr ""
-"Los catálogos del manual están en ``docs/manual/locales``. Después de "
-"cambiar el texto en inglés, los actualizamos:"
+"Los catálogos de traducción residen en ``docs/manual/locales`` (para el "
+"manual y la presentación del repositorio) y en ``docs/site/locales`` "
+"(para la portada y las notas de publicación). Tras modificar el texto "
+"en inglés, los actualizamos:"
 
-#: ../../howto/maintain-docs.rst:86
+#: ../../howto/maintain-docs.rst:89
 msgid "See :doc:`../intl` for the translation workflow."
 msgstr "El flujo de trabajo de traducción se describe en :doc:`../intl`."
 
-#: ../../howto/maintain-docs.rst:88
+#: ../../howto/maintain-docs.rst:91
 msgid "Before publishing"
 msgstr "Antes de publicar"
 
-#: ../../howto/maintain-docs.rst:91
+#: ../../howto/maintain-docs.rst:94
 msgid ""
 "Check links and diagnostics. Inspect wide tables and code blocks. Render "
 "the PDF pages after changing typography. Test the HTML at desktop and "
@@ -2594,25 +2647,27 @@ msgstr "Cómo protegen nuestro sitio los commits atómicos:"
 msgid ""
 "**Staging:** All newly rendered pages are written to a hidden staging "
 "folder (``.<target>.next``). For the default builders it sits in the "
-"build folder. For an output we name with ``-o``, it sits inside the "
-"output's one cache folder beside it (``.<target>.guidedog``), so the "
-"output gains a single hidden neighbour."
+"build folder. For a custom output folder passed to ``guidedog build -b "
+"html SOURCEDIR OUTPUTDIR``, it sits inside the output's one cache "
+"folder beside it (``.<target>.guidedog``), so the output gains a single "
+"hidden neighbour."
 msgstr ""
 "**Preparación:** Todas las páginas recién generadas se escriben en una "
 "carpeta de preparación oculta (``.<target>.next``). Con los builders "
 "predeterminados, está dentro de la carpeta de compilación. Para una "
-"salida que indicamos con ``-o``, está dentro de la única carpeta de caché "
-"que acompaña a la salida (``.<target>.guidedog``), de modo que la salida "
+"carpeta de salida personalizada pasada a ``guidedog build -b html "
+"SOURCEDIR OUTPUTDIR``, está dentro de la única carpeta de caché que "
+"acompaña a la salida (``.<target>.guidedog``), de modo que la salida "
 "solo gana una carpeta oculta a su lado."
 
-#: ../../howto/publish.rst:53
+#: ../../howto/publish.rst:54
 msgid ""
 "**Isolation:** The live output folder stays untouched while pages compile."
 msgstr ""
 "**Aislamiento:** La carpeta de salida publicada no se toca mientras se "
 "compilan las páginas."
 
-#: ../../howto/publish.rst:54
+#: ../../howto/publish.rst:55
 msgid ""
 "**Failure safety:** If any page fails to render, or a warning becomes an "
 "error under ``-W``, the build abandons the staging folder. The live site "
@@ -2622,7 +2677,7 @@ msgstr ""
 "advertencia se convierte en error con ``-W``, la compilación descarta la "
 "carpeta de preparación. El sitio publicado no cambia."
 
-#: ../../howto/publish.rst:56
+#: ../../howto/publish.rst:57
 msgid ""
 "**Atomic swap:** Once all files are flushed, Guidedog switches the "
 "staging folder into place. Where the filesystem supports it, this is a "
@@ -2633,7 +2688,7 @@ msgstr ""
 "sistema de archivos lo permite, esto es un único intercambio de "
 "directorios."
 
-#: ../../howto/publish.rst:58
+#: ../../howto/publish.rst:59
 msgid ""
 "**Interrupted recovery:** If a crash interrupts the swap, the next build "
 "reads the durable journal. It settles the interrupted commit instead of "
@@ -2643,40 +2698,40 @@ msgstr ""
 "intercambio, la siguiente compilación lee el diario persistente y "
 "completa el commit interrumpido en lugar de adivinar."
 
-#: ../../howto/publish.rst:61
+#: ../../howto/publish.rst:62
 msgid "Standard build workflow"
 msgstr "Flujo habitual"
 
-#: ../../howto/publish.rst:64
+#: ../../howto/publish.rst:65
 msgid ""
 "To build both HTML and PDF outputs into the default project output "
 "directory:"
 msgstr "Genere HTML y PDF en sus directorios predeterminados:"
 
-#: ../../howto/publish.rst:71
+#: ../../howto/publish.rst:72
 msgid "Output locations:"
 msgstr "Ubicaciones:"
 
-#: ../../howto/publish.rst:73
+#: ../../howto/publish.rst:74
 msgid "The HTML website is written to ``docs/manual/_build/html/``."
 msgstr "El sitio HTML se escribe en ``docs/manual/_build/html/``."
 
-#: ../../howto/publish.rst:74
+#: ../../howto/publish.rst:75
 msgid "The PDF book is written to ``docs/manual/_build/pdf/``."
 msgstr "El libro PDF se escribe en ``docs/manual/_build/pdf/``."
 
-#: ../../howto/publish.rst:76
+#: ../../howto/publish.rst:77
 msgid ""
 "The ``-j auto`` flag parallelizes document parsing across all available "
 "CPU cores."
 msgstr ""
 "``-j auto`` analiza documentos en paralelo con los núcleos disponibles."
 
-#: ../../howto/publish.rst:78
+#: ../../howto/publish.rst:79
 msgid "Custom output directories"
 msgstr "Elegir la salida"
 
-#: ../../howto/publish.rst:81
+#: ../../howto/publish.rst:82
 msgid ""
 "To write the site to a folder of our choice (for example, in a CI/CD "
 "pipeline or a deployment script), we use the Sphinx-compatible command "
@@ -2686,11 +2741,11 @@ msgstr ""
 "pipeline de CI/CD o en un script de despliegue), usamos la forma de "
 "comando compatible con Sphinx:"
 
-#: ../../howto/publish.rst:88
+#: ../../howto/publish.rst:89
 msgid "Guidedog enforces safety constraints on output paths:"
 msgstr "La salida debe respetar estas restricciones:"
 
-#: ../../howto/publish.rst:90
+#: ../../howto/publish.rst:91
 msgid ""
 "Choose a dedicated output folder, such as ``_build/html`` inside the "
 "project or ``build/site`` beside it. The output must not be the source "
@@ -2702,7 +2757,7 @@ msgstr ""
 "las fuentes ni una carpeta que la contenga, porque al sustituirla se "
 "reemplazaría el proyecto fuente."
 
-#: ../../howto/publish.rst:93
+#: ../../howto/publish.rst:94
 msgid ""
 "For a custom destination such as ``build/site``, Guidedog keeps its "
 "internal caches in a sibling folder (such as "
@@ -2714,11 +2769,11 @@ msgstr ""
 "``build/.site.guidedog/.doctrees``). Así, la carpeta publicada solo "
 "contiene los archivos estáticos que desplegamos."
 
-#: ../../howto/publish.rst:97
+#: ../../howto/publish.rst:98
 msgid "Semantic checks and pre-flight validation"
 msgstr "Verificación semántica previa"
 
-#: ../../howto/publish.rst:100
+#: ../../howto/publish.rst:101
 msgid ""
 "To check a project without writing HTML files to disk, we use the "
 "``dummy`` builder:"
@@ -2726,21 +2781,21 @@ msgstr ""
 "Para comprobar un proyecto sin escribir archivos HTML en disco, usamos el "
 "builder ``dummy``:"
 
-#: ../../howto/publish.rst:107
+#: ../../howto/publish.rst:108
 msgid "The dummy builder:"
 msgstr "El generador dummy:"
 
-#: ../../howto/publish.rst:109
+#: ../../howto/publish.rst:110
 msgid "Reads and parses all documents."
 msgstr "Lee y analiza todos los documentos."
 
-#: ../../howto/publish.rst:110
+#: ../../howto/publish.rst:111
 msgid ""
 "Resolves all toctrees, headings, cross-references, and domain objects."
 msgstr ""
 "Resuelve árboles de contenido, títulos, referencias y objetos de dominio."
 
-#: ../../howto/publish.rst:111
+#: ../../howto/publish.rst:112
 msgid ""
 "Checks document references and domain objects (``-n`` enables nitpicky "
 "cross-reference checking). It does not make HTTP requests to test "
@@ -2749,12 +2804,12 @@ msgstr ""
 "Comprueba referencias y objetos. ``-n`` activa la comprobación estricta "
 "de referencias; no envía solicitudes HTTP para probar URL externas."
 
-#: ../../howto/publish.rst:113
+#: ../../howto/publish.rst:114
 msgid "Exits with status 1 if any broken link or warning is found (``-W``)."
 msgstr ""
 "Con ``-W``, devuelve el estado 1 ante referencias rotas o advertencias."
 
-#: ../../howto/publish.rst:115
+#: ../../howto/publish.rst:116
 msgid ""
 "In continuous integration, the dummy builder is a fast check to run "
 "before the full site build."
@@ -2762,11 +2817,11 @@ msgstr ""
 "En integración continua, el builder dummy es una comprobación rápida que "
 "conviene ejecutar antes de compilar el sitio completo."
 
-#: ../../howto/publish.rst:118
+#: ../../howto/publish.rst:119
 msgid "Reproducible build timestamps"
 msgstr "Fechas reproducibles"
 
-#: ../../howto/publish.rst:121
+#: ../../howto/publish.rst:122
 msgid ""
 "Documentation builds often embed timestamps (for example, in \"Last "
 "updated\" footer notices). When an automated deployment must give the "
@@ -2779,7 +2834,7 @@ msgstr ""
 "ejecución, fijamos el reloj con la variable de entorno estándar "
 "``SOURCE_DATE_EPOCH``:"
 
-#: ../../howto/publish.rst:129
+#: ../../howto/publish.rst:130
 msgid ""
 "When this variable is set, Guidedog uses the specified Unix epoch "
 "timestamp instead of the current system clock for all date formatting, "
@@ -2800,17 +2855,17 @@ msgstr ""
 "explícito, o ``--preview`` para incluir borradores y páginas programadas "
 "para el futuro en una compilación local. Véase :doc:`static-publishing`."
 
-#: ../../howto/publish.rst:131
+#: ../../howto/publish.rst:132
 msgid "Deployment options"
 msgstr "Opciones de despliegue"
 
-#: ../../howto/publish.rst:134
+#: ../../howto/publish.rst:135
 msgid "Once the build succeeds, we deploy the static files to our host:"
 msgstr ""
 "Cuando la compilación termina bien, desplegamos los archivos estáticos en "
 "nuestro servidor:"
 
-#: ../../howto/publish.rst:136
+#: ../../howto/publish.rst:137
 msgid ""
 "**Static web servers (Nginx / Caddy / Apache):** Point the server's root "
 "directive directly to the built HTML directory."
@@ -2818,7 +2873,7 @@ msgstr ""
 "**Servidor estático (Nginx / Caddy / Apache):** Apuntamos la directiva "
 "raíz del servidor directamente al directorio HTML generado."
 
-#: ../../howto/publish.rst:138
+#: ../../howto/publish.rst:139
 msgid ""
 "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud "
 "Storage):** Sync the contents of ``_build/html`` to our bucket with the "
@@ -2828,11 +2883,11 @@ msgstr ""
 "Cloud Storage):** Sincronizamos el contenido de ``_build/html`` con "
 "nuestro bucket mediante la CLI del proveedor."
 
-#: ../../howto/publish.rst:140
+#: ../../howto/publish.rst:141
 msgid "**GitHub Pages:**"
 msgstr "**GitHub Pages:**"
 
-#: ../../howto/publish.rst:142
+#: ../../howto/publish.rst:143
 msgid ""
 "To deploy directly from our own machine, we run ``guidedog publish "
 "pages``. It asks for what is still missing (the repository, a token, the "
@@ -2845,7 +2900,7 @@ msgstr ""
 "``guidedog pages`` ofrece los mismos pasos uno a uno. Véase "
 ":doc:`github-pages`."
 
-#: ../../howto/publish.rst:146
+#: ../../howto/publish.rst:147
 msgid ""
 "For automated deployments with GitHub Actions, ``guidedog pages "
 "workflow`` writes a workflow that builds and deploys the site. See "
@@ -2855,7 +2910,7 @@ msgstr ""
 "workflow`` escribe un workflow que compila y despliega el sitio. Véase "
 ":doc:`github-pages`."
 
-#: ../../howto/publish.rst:148
+#: ../../howto/publish.rst:149
 msgid ""
 "For any other destination, we write a publisher plugin as described in "
 ":doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
@@ -2864,7 +2919,7 @@ msgstr ""
 "describe en :doc:`../plugins` y lo ejecutamos con ``guidedog publish "
 "--publisher=ID``."
 
-#: ../../howto/publish.rst:151
+#: ../../howto/publish.rst:152
 msgid ""
 "On filesystems with directory exchange, the output path switches in one "
 "operation. The fallback uses two renames and can briefly leave that path "
@@ -3516,7 +3571,12 @@ msgid ""
 "``typst-diagram`` compiles the code with Guidedog's embedded Typst "
 "compiler and includes the resulting image in HTML and PDF. We need no "
 "separate figure task or installed Typst program."
-msgstr "Podemos escribir código de dibujo de Typst directamente en un documento RST o MyST. ``typst-diagram`` lo compila con el compilador Typst integrado de Guidedog e incluye la imagen resultante en HTML y PDF. No necesitamos una tarea separada para las figuras ni un programa Typst instalado."
+msgstr ""
+"Podemos escribir código de dibujo de Typst directamente en un documento "
+"RST o MyST. ``typst-diagram`` lo compila con el compilador Typst "
+"integrado de Guidedog e incluye la imagen resultante en HTML y PDF. No "
+"necesitamos una tarea separada para las figuras ni un programa Typst "
+"instalado."
 
 #: ../../howto/typst-diagrams.rst:8
 msgid "A first drawing"
@@ -3534,7 +3594,9 @@ msgstr "Un círculo compilado a partir del cuerpo de la directiva."
 msgid ""
 "We use a MyST directive fence in Markdown. An ordinary ``typst`` code "
 "fence remains a source example."
-msgstr "En Markdown usamos un bloque de directiva MyST. Un bloque de código ``typst`` normal sigue siendo un ejemplo de código fuente."
+msgstr ""
+"En Markdown usamos un bloque de directiva MyST. Un bloque de código "
+"``typst`` normal sigue siendo un ejemplo de código fuente."
 
 #: ../../howto/typst-diagrams.rst:40
 msgid ""
@@ -3544,23 +3606,97 @@ msgid ""
 "``numfig = true``, a captioned diagram is a numbered figure and "
 "``:numref:`` can refer to its ``:name:``. We provide meaningful ``:alt:`` "
 "text because SVG text is drawn as outlines."
-msgstr "El formato predeterminado es SVG, de modo que el mismo dibujo vectorial escala en el sitio y el libro. ``:format: png`` selecciona PNG a 144 píxeles por pulgada. También podemos establecer ``:class:`` y ``:align: left|center|right``. Con ``numfig = true``, un dibujo con leyenda se convierte en figura numerada y ``:numref:`` puede referirse a su ``:name:``. Escribimos un texto ``:alt:`` significativo porque las letras del SVG se dibujan como contornos."
+msgstr ""
+"El formato predeterminado es SVG, de modo que el mismo dibujo vectorial "
+"escala en el sitio y el libro. ``:format: png`` selecciona PNG a 144 "
+"píxeles por pulgada. También podemos establecer ``:class:`` y ``:align: "
+"left|center|right``. Con ``numfig = true``, un dibujo con leyenda se "
+"convierte en figura numerada y ``:numref:`` puede referirse a su "
+"``:name:``. Escribimos un texto ``:alt:`` significativo porque las letras "
+"del SVG se dibujan como contornos."
 
 #: ../../howto/typst-diagrams.rst:46
+msgid "``typst-diagram`` options"
+msgstr "Opciones de ``typst-diagram``"
+
+#: ../../howto/typst-diagrams.rst:50
+msgid "Option"
+msgstr "Opción"
+
+#: ../../howto/typst-diagrams.rst:51
+msgid "Meaning"
+msgstr "Significado"
+
+#: ../../howto/typst-diagrams.rst:52
+msgid "``:alt: text``"
+msgstr "``:alt: text``"
+
+#: ../../howto/typst-diagrams.rst:53
+msgid "Alternative text describing the diagram's content."
+msgstr "Texto alternativo que describe el contenido del diagrama."
+
+#: ../../howto/typst-diagrams.rst:54
+msgid "``:caption: text``"
+msgstr "``:caption: text``"
+
+#: ../../howto/typst-diagrams.rst:55
+msgid ""
+"Wraps the drawing in a figure with this caption (numbered when ``numfig "
+"= true``)."
+msgstr ""
+"Envuelve el dibujo en una figura con este pie (numerada cuando ``numfig "
+"= true``)."
+
+#: ../../howto/typst-diagrams.rst:56
+msgid "``:name: label``"
+msgstr "``:name: label``"
+
+#: ../../howto/typst-diagrams.rst:57
+msgid "Cross-reference anchor for ``:ref:`` and ``:numref:``."
+msgstr "Ancla de referencia cruzada para ``:ref:`` y ``:numref:``."
+
+#: ../../howto/typst-diagrams.rst:58
+msgid "``:format: svg|png``"
+msgstr "``:format: svg|png``"
+
+#: ../../howto/typst-diagrams.rst:59
+msgid "Output image format: ``svg`` (default) or ``png`` (144 PPI)."
+msgstr ""
+"Formato de imagen de salida: ``svg`` (predeterminado) o ``png`` (144 PPI)."
+
+#: ../../howto/typst-diagrams.rst:60
+msgid "``:align: left|center|right``"
+msgstr "``:align: left|center|right``"
+
+#: ../../howto/typst-diagrams.rst:61
+msgid "Horizontal placement of the image or figure."
+msgstr "Alineación horizontal de la imagen o figura."
+
+#: ../../howto/typst-diagrams.rst:62
+msgid "``:class: names``"
+msgstr "``:class: names``"
+
+#: ../../howto/typst-diagrams.rst:63
+msgid "Extra CSS class names added alongside ``typst-diagram``."
+msgstr "Nombres de clases CSS adicionales añadidos junto a ``typst-diagram``."
+
+#: ../../howto/typst-diagrams.rst:65
 msgid "CeTZ and Fletcher"
 msgstr "CeTZ y Fletcher"
 
-#: ../../howto/typst-diagrams.rst:49
+#: ../../howto/typst-diagrams.rst:68
 msgid ""
 "We import packages explicitly with pinned versions. This CeTZ example "
 "uses the version shared by Fletcher 0.5.8."
-msgstr "Importamos los paquetes explícitamente con versiones fijadas. Este ejemplo de CeTZ usa la versión que también utiliza Fletcher 0.5.8."
+msgstr ""
+"Importamos los paquetes explícitamente con versiones fijadas. Este "
+"ejemplo de CeTZ usa la versión que también utiliza Fletcher 0.5.8."
 
-#: ../../howto/typst-diagrams.rst:65
+#: ../../howto/typst-diagrams.rst:84
 msgid "Fletcher supplies nodes and arrows."
 msgstr "Fletcher proporciona nodos y flechas."
 
-#: ../../howto/typst-diagrams.rst:80
+#: ../../howto/typst-diagrams.rst:99
 msgid ""
 "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings apply "
 "to diagrams in both HTML and PDF. ``pdf_packages = \"offline\"`` uses "
@@ -3570,41 +3706,63 @@ msgid ""
 "with ``pdf_font_paths``. After installing a previously missing package or "
 "changing font files, we run a fresh ``guidedog build html -a`` command to "
 "redraw cached pages and reload the compiler's font store."
-msgstr "Las opciones ``pdf_packages``, ``pdf_fonts`` y ``pdf_font_paths`` se aplican a los diagramas tanto en HTML como en PDF. ``pdf_packages = \"offline\"`` utiliza solo los paquetes ya instalados en los directorios de Typst. El valor predeterminado permite descargar paquetes ausentes. Para obtener tipografía reproducible establecemos ``pdf_fonts = \"embedded\"`` y añadimos directorios de fuentes del proyecto con ``pdf_font_paths``. Después de instalar un paquete antes ausente o cambiar archivos de fuentes, ejecutamos ``guidedog build html -a`` en un proceso nuevo para volver a dibujar las páginas almacenadas y recargar las fuentes del compilador."
+msgstr ""
+"Las opciones ``pdf_packages``, ``pdf_fonts`` y ``pdf_font_paths`` se "
+"aplican a los diagramas tanto en HTML como en PDF. ``pdf_packages = "
+"\"offline\"`` utiliza solo los paquetes ya instalados en los directorios "
+"de Typst. El valor predeterminado permite descargar paquetes ausentes. "
+"Para obtener tipografía reproducible establecemos ``pdf_fonts = "
+"\"embedded\"`` y añadimos directorios de fuentes del proyecto con "
+"``pdf_font_paths``. Después de instalar un paquete antes ausente o "
+"cambiar archivos de fuentes, ejecutamos ``guidedog build html -a`` en un "
+"proceso nuevo para volver a dibujar las páginas almacenadas y recargar "
+"las fuentes del compilador."
 
-#: ../../howto/typst-diagrams.rst:86
+#: ../../howto/typst-diagrams.rst:105
 msgid "Shared helpers and existing files"
 msgstr "Funciones compartidas y archivos existentes"
 
-#: ../../howto/typst-diagrams.rst:89
+#: ../../howto/typst-diagrams.rst:108
 msgid ""
 "We can move common colors and drawing functions into a local ``.typ`` "
 "file. An inline diagram imports paths relative to the RST or Markdown "
 "file containing it. A directive inside an included document uses that "
 "document's folder."
-msgstr "Podemos trasladar colores y funciones de dibujo comunes a un archivo ``.typ`` local. Un diagrama en el documento resuelve las importaciones respecto al archivo RST o Markdown que lo contiene. Una directiva en un documento incluido utiliza la carpeta de ese documento."
+msgstr ""
+"Podemos trasladar colores y funciones de dibujo comunes a un archivo "
+"``.typ`` local. Un diagrama en el documento resuelve las importaciones "
+"respecto al archivo RST o Markdown que lo contiene. Una directiva en un "
+"documento incluido utiliza la carpeta de ese documento."
 
-#: ../../howto/typst-diagrams.rst:101
+#: ../../howto/typst-diagrams.rst:120
 msgid ""
 "We can also retain a complete figure source file and let Guidedog build "
 "it. We give either a file argument or an inline body. Imports in the file "
 "resolve beside that file."
-msgstr "También podemos conservar un archivo fuente completo para la figura y dejar que Guidedog lo compile. Indicamos un argumento de archivo o un cuerpo en el documento. Las importaciones del archivo se resuelven junto a ese archivo."
+msgstr ""
+"También podemos conservar un archivo fuente completo para la figura y "
+"dejar que Guidedog lo compile. Indicamos un argumento de archivo o un "
+"cuerpo en el documento. Las importaciones del archivo se resuelven junto "
+"a ese archivo."
 
-#: ../../howto/typst-diagrams.rst:111
+#: ../../howto/typst-diagrams.rst:130
 msgid ""
 "Imported helpers and data files become build dependencies. Changing one "
 "redraws the affected HTML pages without changing their markup. We keep "
 "project imports below the source directory; symlinks leading outside it "
 "are refused. Absolute Typst imports start at that source directory."
-msgstr "Los archivos auxiliares y de datos importados pasan a ser dependencias de compilación. Al cambiarlos se redibujan las páginas HTML afectadas sin modificar su marcado. Mantenemos las importaciones del proyecto dentro del directorio fuente; se rechazan los enlaces simbólicos que salgan de él. Las importaciones absolutas de Typst parten de ese directorio."
+msgstr ""
+"Los archivos auxiliares y de datos importados pasan a ser dependencias de "
+"compilación. Al cambiarlos se redibujan las páginas HTML afectadas sin "
+"modificar su marcado. Mantenemos las importaciones del proyecto dentro "
+"del directorio fuente; se rechazan los enlaces simbólicos que salgan de "
+"él. Las importaciones absolutas de Typst parten de ese directorio."
 
-#: ../../howto/typst-diagrams.rst:116
-#| msgid "Static websites and articles"
+#: ../../howto/typst-diagrams.rst:135
 msgid "Page size and failures"
 msgstr "Tamaño de página y errores"
 
-#: ../../howto/typst-diagrams.rst:119
+#: ../../howto/typst-diagrams.rst:138
 msgid ""
 "Guidedog prepends ``#set page(width: auto, height: auto, margin: 0pt)`` "
 "so the page fits the drawing. We write ordinary Typst content, without an "
@@ -3614,17 +3772,100 @@ msgid ""
 "most 4,096 distinct file lookups per diagram. Typst layout uses the "
 "compiler's own memory; these limits do not impose a compiler timeout or a "
 "total memory ceiling."
-msgstr "Guidedog antepone ``#set page(width: auto, height: auto, margin: 0pt)`` para ajustar la página al dibujo. Escribimos contenido Typst normal, sin una envoltura ``html.frame``. Cada diagrama debe producir exactamente una página de dimensiones finitas. El cuerpo de la directiva se limita a 1 MiB; PNG permite hasta 16 millones de píxeles y 16.384 píxeles por lado. El adaptador registra hasta 4.096 consultas de archivos distintas por diagrama. La composición de Typst usa la memoria del compilador; estos límites no imponen un tiempo máximo ni un techo de memoria total."
+msgstr ""
+"Guidedog antepone ``#set page(width: auto, height: auto, margin: 0pt)`` "
+"para ajustar la página al dibujo. Escribimos contenido Typst normal, sin "
+"una envoltura ``html.frame``. Cada diagrama debe producir exactamente una "
+"página de dimensiones finitas. El cuerpo de la directiva se limita a 1 "
+"MiB; PNG permite hasta 16 millones de píxeles y 16.384 píxeles por lado. "
+"El adaptador registra hasta 4.096 consultas de archivos distintas por "
+"diagrama. La composición de Typst usa la memoria del compilador; estos "
+"límites no imponen un tiempo máximo ni un techo de memoria total."
 
-#: ../../howto/typst-diagrams.rst:126
+#: ../../howto/typst-diagrams.rst:145
 msgid ""
-"If compilation fails, we see a warning at the directive and the source "
-"stays visible as code. The message includes the position within the "
-"diagram or imported Typst file. ``-W`` prevents that build from replacing "
-"the published site or book. ``--untrusted`` keeps diagram source visible "
-"and warns without running Typst. Text builds retain source without "
-"compiling it."
-msgstr "Si falla la compilación, vemos una advertencia en la directiva y el código fuente permanece visible como código. El mensaje incluye la posición en el diagrama o archivo Typst importado. ``-W`` impide que esa compilación sustituya el sitio o libro publicado. ``--untrusted`` conserva el código del diagrama y advierte sin ejecutar Typst. Las compilaciones de texto conservan el código sin compilarlo."
+"If compilation fails, we see a ``build.typst-diagram`` warning at the "
+"directive and the source stays visible as code. The message includes "
+"the position within the diagram or imported Typst file. Giving neither "
+"or both of a file argument and an inline body reports "
+"``sphinx.typst.source``. A ``guidedog`` built without the ``embedded`` "
+"Typst feature reports ``typst.embedded``, and exceeding the host memory "
+"budget reports ``host.budget``. ``-W`` prevents a failed build from "
+"replacing the published site or book. ``--untrusted`` keeps diagram "
+"source visible and warns ``build.typst-diagram`` without running Typst. "
+"Text builds retain source without compiling it."
+msgstr ""
+"Si falla la compilación, vemos una advertencia ``build.typst-diagram`` "
+"en la directiva y el código fuente permanece visible como código. El "
+"mensaje incluye la posición dentro del diagrama o del archivo Typst "
+"importado. Indicar ni argumento de archivo ni cuerpo en línea, o ambos "
+"a la vez, produce ``sphinx.typst.source``. Un ``guidedog`` compilado "
+"sin la feature ``embedded`` de Typst informa ``typst.embedded``, y "
+"superar el presupuesto de memoria del host informa ``host.budget``. "
+"``-W`` impide que una compilación fallida sustituya el sitio o el libro "
+"publicado. ``--untrusted`` mantiene visible el código del diagrama y "
+"advierte con ``build.typst-diagram`` sin ejecutar Typst. Las "
+"compilaciones de texto conservan el código sin compilarlo."
+
+#: ../../howto/typst-diagrams.rst:153
+msgid "Migrate existing figure files"
+msgstr "Migrar archivos de figuras existentes"
+
+#: ../../howto/typst-diagrams.rst:156
+msgid ""
+"When a project previously ran ``typst compile`` by hand or in a "
+"Makefile to generate prebuilt ``.svg`` or ``.png`` files:"
+msgstr ""
+"Cuando un proyecto ejecutaba antes ``typst compile`` a mano o en un "
+"Makefile para generar archivos ``.svg`` o ``.png`` precompilados:"
+
+#: ../../howto/typst-diagrams.rst:158
+msgid ""
+"Remove any explicit ``#set page(...)`` or ``html.frame(...)`` wrapper "
+"that existed only to crop the figure; Guidedog prepends ``#set "
+"page(width: auto, height: auto, margin: 0pt)`` automatically."
+msgstr ""
+"Elimine cualquier envoltorio explícito ``#set page(...)`` o "
+"``html.frame(...)`` que solo sirviera para recortar la figura; Guidedog "
+"antepone ``#set page(width: auto, height: auto, margin: 0pt)`` "
+"automáticamente."
+
+#: ../../howto/typst-diagrams.rst:159
+msgid ""
+"Replace ``.. figure:: figures/arch.svg`` (and its separate build "
+"script) with ``.. typst-diagram:: figures/arch.typ``, keeping "
+"``:caption:``, ``:alt:``, ``:name:`` and ``:align:`` on the directive."
+msgstr ""
+"Sustituya ``.. figure:: figures/arch.svg`` (y su script de compilación "
+"aparte) por ``.. typst-diagram:: figures/arch.typ``, conservando "
+"``:caption:``, ``:alt:``, ``:name:`` y ``:align:`` en la directiva."
+
+#: ../../howto/typst-diagrams.rst:160
+msgid ""
+"Delete the committed generated ``.svg`` or ``.png`` artifacts once "
+"``guidedog build html -W`` and ``guidedog build pdf -W`` succeed."
+msgstr ""
+"Elimine del repositorio los artefactos ``.svg`` o ``.png`` generados "
+"una vez que ``guidedog build html -W`` y ``guidedog build pdf -W`` "
+"terminen con éxito."
+
+#~ msgid ""
+#~ "``guidedog dsc build`` writes the website to ``_build/html`` and one "
+#~ "PDF per record to ``_build/pdf``. Naming a record writes only its PDF, "
+#~ "to ``_build/selected``, and leaves the complete output alone. Warnings "
+#~ "stop the build."
+#~ msgstr ""
+#~ "``guidedog dsc build`` escribe el sitio web en ``_build/html`` y un "
+#~ "PDF por registro en ``_build/pdf``. Si nombramos un registro, escribe "
+#~ "solo su PDF, en ``_build/selected``, y no toca la salida completa. Las "
+#~ "advertencias detienen la compilación."
+
+#~ msgid ""
+#~ "The manual's catalogs are in ``docs/manual/locales``. After we change "
+#~ "English text, we refresh them:"
+#~ msgstr ""
+#~ "Los catálogos del manual están en ``docs/manual/locales``. Después de "
+#~ "cambiar el texto en inglés, los actualizamos:"
 
 #~ msgid ""
 #~ "**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. "

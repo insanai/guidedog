@@ -30,8 +30,9 @@ letters. ``init`` writes a complete catalog into a missing or empty folder:
   numbering;
 * ``conf.toml``, ``index.rst``, and ``workflow.rst``, an ordinary Guidedog project;
 * ``template/rfc-template.rst``, the template of new drafts;
-* ``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable PDF layout and shared theme copied from the binary;
-* ``registry.rst`` and ``bundle.rst``, the generated index;
+* ``_templates/layout.html``, ``_templates/discussion.typ``, and ``_templates/theme.typ``, the editable HTML layout, PDF discussion layout, and shared PDF theme copied from the binary;
+* ``_static/guidedog.css``, ``_static/guidedog.js``, and ``_static/typography.js``, the editable stylesheets and scripts copied from the binary;
+* ``registry.rst`` and ``bundle.rst``, the generated index and catalog check list;
 * ``records/XXXXX-eds-process.rst``, a draft of our review process.
 
 We edit the process draft to say how our project decides. To start from our own
@@ -158,9 +159,9 @@ Build
    guidedog dsc build
    guidedog dsc build cache-policy --target=pdf
 
-``guidedog dsc build`` writes the website to ``_build/html`` and one PDF per record to
-``_build/pdf``. Naming a record writes only its PDF, to ``_build/selected``, and leaves
-the complete output alone. Warnings stop the build.
+``guidedog dsc build`` writes the website to ``_build/html`` and one standalone PDF per record to
+``_build/pdf`` (there is no combined catalog PDF; ``index.rst``, ``registry.rst``, ``workflow.rst``, and ``bundle.rst`` serve HTML navigation and catalog validation). Naming a record writes only its PDF, to ``_build/selected``, and leaves
+the complete output alone. When ``pdf_downloads`` in ``[html_context]`` names the folder of the record PDFs, relative to the root of the HTML output (for example ``pdf_downloads = "pdf/"`` when a multi-project site mounts the PDFs there), each HTML record page under ``records/`` offers a link to download that record's PDF. Warnings stop the build.
 
 The build is guidedog's own: the same build as ``guidedog build``, with the catalog as the project. Graphviz, Typst, and the other tools it needs are guidedog's too. An older catalog of Typst records compiles each record with Typst; ``--typst=PATH`` names a Typst program to use instead of the embedded compiler.
 

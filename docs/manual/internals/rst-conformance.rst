@@ -193,7 +193,7 @@ Core
 ----
 
 Section subtitles would be represented as Subtitle if ``guidedoc``'s ``child_allowed``
-allowed Subtitle as a child of Section; ``crates/guidedoc/AST.md`` should then
+allowed Subtitle as a child of Section; :doc:`ast` should then
 list Subtitle under Section. Until then the reader uses a Paragraph of class
 ``section-subtitle``, which renders sensibly without renderer changes.
 

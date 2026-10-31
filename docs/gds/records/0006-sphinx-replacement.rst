@@ -4,7 +4,7 @@
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-09-29
-:gds-updated: 2026-10-15
+:gds-updated: 2026-10-31
 :gds-discussion: No external discussion URL assigned
 :gds-labels: ["architecture", "cli", "build"]
 
@@ -26,9 +26,10 @@ figures, conditional content, and stable link anchors. It designs the rest in it
 place of Python extensions, static analysis of source code in place of importing it,
 typed data and explicit state in place of runtime hooks. Where Sphinx's way is worse,
 Guidedog differs and says so in the support matrix. Typst is the PDF layer: the book
-template, a preamble, and raw Typst blocks. Plugins come later and will use the extension
-points this record introduces. There is no Makefile: the command line works on the
-project folder directly.
+template, a preamble, and raw Typst blocks (GDS 0014 later adds ``typst-diagram`` for
+embedded SVG and PNG figures). Native plugins follow in GDS 0009 and GDS 0010 on the
+extension points this record introduces. There is no Makefile: the command line works on
+the project folder directly.
 
 
 Motivation and scope
@@ -65,8 +66,9 @@ Principles
   final goal. Where Guidedog's design conflicts with Sphinx's Python runtime (executed
   ``conf.py``, extensions' ``setup()``, event hooks, imported code), Guidedog does not
   emulate the runtime: it has a migration path instead. ``guidedog migrate`` converts
-  literal settings and declared object types today. Later, a Guidedoc migration plugin
-  will help transfer supported Sphinx authoring features. A project that cannot be
+  literal settings and declared object types, GDS 0011 covers the remaining built-in
+  Sphinx extensions without running Python, and GDS 0009/0010 provide typed native
+  plugins. A project that cannot be
   migrated is told exactly what needs converting by hand.
 - **Honest.** Every difference from Sphinx is documented, with its reason, in the manual's
   support matrix; a comparison harness against pinned Sphinx measures the rest.
@@ -82,9 +84,10 @@ environment and incremental builds, the supported native directives and roles, t
 Python, C, C++, JavaScript, reStructuredText, and standard domains, generated index,
 search, and module-index pages, Guidedog's own Jinja implementation, CommonMark and supported
 MyST syntax, Graphviz graphs, static Python autodoc (source parsed, never run), themes,
-and the PDF book. Complete Sphinx compatibility is not a goal. Out of scope: executing
-``conf.py``, other Python extensions (autosummary, napoleon, viewcode, and projects' own),
-and third-party themes that need Python code.
+and the PDF book. Complete Sphinx compatibility is not a goal. Out of scope for this
+initial record: executing ``conf.py``, projects' own Python extensions, and third-party
+themes that need Python code (the remaining built-in Sphinx extensions, including
+``autosummary``, ``napoleon``, and ``viewcode``, were subsequently specified in GDS 0011).
 
 
 Specification
@@ -179,9 +182,13 @@ Project layout
      _static/                        _static/
        guidedog.css                    guidedog.css
        guidedog.js                     guidedog.js
+       typography.js                   typography.js
      _templates/                     _templates/
        layout.html                     layout.html
        book.typ                        book.typ
+       discussion.typ                  discussion.typ
+       article.typ                     article.typ
+       theme.typ                       theme.typ
      _build/                       .gitignore
                                    build/
 
@@ -192,7 +199,8 @@ the reStructuredText documentation, and an empty root ``toctree`` with ``:maxdep
 flags. ``.gitignore`` ignores the build directory and Guidedog's caches.
 
 The default templates are copied into the project, as editable files: ``layout.html``
-and ``guidedog.css``/``guidedog.js`` for HTML, and ``book.typ`` for the PDF book. A build uses
+and ``guidedog.css``/``guidedog.js``/``typography.js`` for HTML, and ``book.typ``,
+``discussion.typ``, ``article.typ``, and ``theme.typ`` for PDF layouts. A build uses
 the project's copy when it exists and the built-in one otherwise, so deleting a file
 restores the default.
 
@@ -252,8 +260,11 @@ with the closest known name. Supported settings, grouped as in the Sphinx docume
   ``sphinx.ext.graphviz`` (with ``graphviz_output_format`` and ``graphviz_dot_args``),
   ``sphinx.ext.intersphinx`` (see below), and ``sphinx.ext.autodoc`` (with Sphinx's
   ``autodoc_*`` settings, ``autoclass_content``, and ``autodoc_source_paths``, the folders its
-  Python source is read from), which Guidedog implements natively. Any other extension is
-  an error that names it and says it needs the future plugin system.
+  Python source is read from), plus the nine extensions later added in GDS 0011
+  (``napoleon``, ``autosummary``, ``apidoc``, ``viewcode``, ``linkcode``,
+  ``inheritance_diagram``, ``coverage``, ``duration``, and ``imgconverter``), which
+  Guidedog implements natively. Any other extension is an error that names it and points
+  to native plugins (GDS 0009, GDS 0010).
 
 ``conf.py`` is a Python program, so not all of it can become TOML. ``guidedog migrate`` reads
 it without running it: literal assignments, names bound earlier, string concatenation
@@ -291,6 +302,8 @@ Builders
      - message templates (``.pot``) per document or per folder
    * - ``dummy``
      - read and link every document, reporting what linking reports; no output
+   * - ``coverage``
+     - undocumented Python and C objects in ``_build/coverage/python.txt`` and ``c.txt`` (GDS 0011)
 
 
 The PDF book follows the toctree from its root document: each top-level toctree entry
@@ -592,6 +605,8 @@ The builder is split into crates by stage:
      - ``html``, ``dirhtml``, ``singlehtml``; ``pdf`` and ``text``.
    * - ``gd-serve``
      - The preview server and watching.
+   * - ``gd-theme``, ``gd-ssg``, ``gd-clock``
+     - Built-in templates/assets and ``.gdt`` packs; static site presets and mounts (GDS 0013); reproducible civil dates.
    * - ``gd-project``, ``gd-cli``
      - The coordinator (load, build, clean) and the command line.
 
@@ -711,9 +726,10 @@ Graphs
 
 ``sphinx.ext.graphviz``'s markup (``graphviz``, ``graph``, and ``digraph``, with every option)
 and Markdown's `````dot`` fences draw graphs. Graphviz is linked into Guidedog through
-``gd-graphdog``, a library over Graphviz's C library, linked from the system; no ``dot``
-program runs. Each graph is laid out once per distinct source and cached as an
-SVG in ``_images``; pages show it as an image and the book embeds the same SVG. A captioned
+``gd-graphdog``, a library over Graphviz's C library (statically linked in Unix release
+archives and bundled on Windows per GDS 0012, or linked from the system during source
+development); no ``dot`` program runs. Each graph is laid out in process and written to
+``_images``; pages embed an adaptive SVG and the book embeds an unlinked light-palette SVG. A captioned
 graph is a numbered figure. A graph with an error stays code, with a warning at its line.
 
 
@@ -721,8 +737,9 @@ Typst
 ~~~~~
 
 
-Typst files are not documents. They are the PDF layer: ``_templates/book.typ`` decides how
-the book looks, ``pdf_preamble`` adds rules and package imports, and ``.. raw:: typst``
+Typst files are not documents. They are the PDF and diagram layer: ``_templates/book.typ`` decides how
+the book looks, ``pdf_preamble`` adds rules and package imports, ``.. typst-diagram::``
+(GDS 0014) compiles embedded SVG and PNG figures for both HTML and PDF, and ``.. raw:: typst``
 (or a ``{raw} typst`` fence in Markdown) puts Typst markup into the book alone. Listing ``.typ`` in
 ``source_suffix`` is an error that says so.
 
@@ -781,7 +798,7 @@ above.
 
 ``sphinx.ext.autodoc`` reads Python source and never executes it. Sphinx imports the
 project's package, which runs its code during the build. Guidedog parses the files with
-tree-sitter (native/tree-sitter builds pinned, checksummed releases) and emulates what the
+tree-sitter (through the workspace's pinned tree-sitter crates) and emulates what the
 import would have produced. Python files are read only below ``autodoc_source_paths``, with
 the same link and confinement rules as includes, and each one read is a dependency of the
 page. What only running the code could reveal (computed values, objects made by
@@ -852,7 +869,8 @@ Open questions
 --------------
 
 
-The plugin interface is left to a later record.
+The plugin interface deferred by this record was subsequently specified and committed in
+GDS 0009 and GDS 0010.
 
 
 Rust API documentation

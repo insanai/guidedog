@@ -6,8 +6,8 @@ The built-in pieces Guidedog assembles around the engine.
 
 ```toml
 [dependencies]
-guidedoc-defaults = "0.7"
-guidedoc = "0.7"
+guidedoc-defaults = "1.0.0-beta.8"
+guidedoc = "1.0.0-beta.8"
 ```
 
 Every reader and renderer is in one registry, so one call converts:
@@ -22,7 +22,7 @@ fn main() -> Result<(), guidedoc::Fail> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/guidedoc-defaults). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p guidedoc-defaults --no-deps` (and on [docs.rs](https://docs.rs/guidedoc-defaults) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

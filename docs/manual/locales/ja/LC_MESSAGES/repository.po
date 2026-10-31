@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -62,50 +62,60 @@ msgstr "プロジェクトを始める"
 
 #: ../../repository.rst:25
 msgid ""
-"The project contains ``conf.toml``, ``index.rst``, "
-"``_templates/layout.html``, ``_templates/book.typ``, and ``_static/``. "
-"Templates are ordinary files we can edit. HTML provides navigation, "
-"search, code highlighting, diagrams, and equations. PDF books provide "
-"chapters, cross-references, figures, indexes, and language-aware "
-"typesetting."
+"The project contains ``conf.toml``, ``index.rst``, ``_templates/`` "
+"(``layout.html``, ``book.typ``, ``discussion.typ``, ``article.typ``, "
+"and ``theme.typ``), and ``_static/`` (``guidedog.css``, "
+"``guidedog.js``, and ``typography.js``). Templates and static assets "
+"are ordinary files we can edit locally. HTML provides navigation, "
+"search, code highlighting, diagrams, equations, and Knuth-Plass "
+"paragraph typesetting. PDF books provide chapters, cross-references, "
+"figures, indexes, and language-aware typesetting. We can embed Graphviz "
+"or Typst drawing source, including CeTZ and Fletcher, directly in RST "
+"and MyST with automatic HTML and PDF assets; see :doc:`topics/diagrams`."
 msgstr ""
-"プロジェクトには "
-"``conf.toml``、``index.rst``、``_templates/layout.html``、``_templates/book.typ``、``_static/`` "
-"が含まれます。テンプレートは普通のファイルなので、そのまま編集できます。HTML "
-"にはナビゲーション、検索、コードのハイライト、図、数式があります。PDF の本には章、相互参照、図、索引、言語に応じた組版があります。"
+"プロジェクトには ``conf.toml``、``index.rst``、``_templates/``\\ "
+"（``layout.html``、``book.typ``、``discussion.typ``、``article.typ``、``theme.typ``）、``_static/``\\ "
+"（``guidedog.css``、``guidedog.js``、``typography.js``）が含まれます。テンプレートと静的アセットは普通のファイルなので、手元で自由に編集できます。HTML "
+"にはナビゲーション、検索、コードのハイライト、図、数式、Knuth-Plass による段落組版があります。PDF "
+"の本には章、相互参照、図、索引、言語に応じた組版があります。CeTZ や Fletcher を含む Graphviz または Typst "
+"の作図ソースを RST や MyST に直接埋め込み、HTML と PDF "
+"用のアセットを自動生成できます。:doc:`topics/diagrams` を参照してください。"
 
-#: ../../repository.rst:30
+#: ../../repository.rst:34
 msgid ""
-"The default theme is light. Readers can choose dark or the system theme. "
-"The manual detects the browser language on its landing page and "
-"repository overview. A saved choice takes precedence. Direct links to an "
-"edition or chapter remain explicit requests."
+"The built-in theme follows the system theme by default, with light and "
+"dark choices; Guidedog's own documentation website defaults to the "
+"light reading edition. The website detects the browser language on its "
+"landing page and repository overview. A saved choice takes precedence. "
+"Direct links to an edition or chapter remain explicit requests."
 msgstr ""
-"既定のテーマはライトです。読者はダークやシステム設定に合わせたテーマも選べます。マニュアルの入口ページとリポジトリ概要では、ブラウザーの言語を検出します。保存済みの選択が優先されます。特定の版や章への直接リンクは、そのリンク先が明示的に指定されたものとして扱います。"
+"組み込みテーマは既定でシステム設定に従い、ライトとダークも選択できます。Guidedog "
+"自身のドキュメントサイトではライトの読書版を既定にしています。サイトのトップページとリポジトリ概要ではブラウザーの言語を検出します。保存済みの選択が優先されます。特定の版や章への直接リンクは、そのリンク先が明示的に指定されたものとして扱います。"
 
-#: ../../repository.rst:40
+#: ../../repository.rst:45
 msgid "Install"
 msgstr "インストール"
 
-#: ../../repository.rst:43
+#: ../../repository.rst:48
 msgid ""
 "Each `release <https://github.com/insanai/guidedog/releases>`__ has an "
 "archive for Linux, macOS, and Windows, with ``SHA256SUMS``. The Typst "
 "compiler and the tree-sitter parsers are compiled into ``guidedog``. "
-"Diagrams use the Graphviz library (``libgvc``). Where the system does not "
-"provide it, the archive's notes say how to install it. Fetching remote "
-"intersphinx inventories and publishing to GitHub Pages use the HTTP "
-"client built into ``guidedog``, so no ``curl`` program is needed. Check "
-"and install the archive:"
+"Unix archives link Graphviz statically, and the Windows ZIP bundles "
+"Graphviz DLLs, so nothing else needs to be installed at run time. "
+"Fetching remote intersphinx inventories and publishing to GitHub Pages "
+"use the HTTP client built into ``guidedog``, so no ``curl`` program is "
+"needed. Check and install the archive:"
 msgstr ""
 "各 `リリース <https://github.com/insanai/guidedog/releases>`__ には "
 "Linux、macOS、Windows 向けのアーカイブと ``SHA256SUMS`` があります。Typst コンパイラーと "
-"tree-sitter パーサーは ``guidedog`` に組み込まれています。図には Graphviz "
-"ライブラリ（``libgvc``）を使います。システムにない場合は、アーカイブ付属の説明にインストール方法があります。リモートの "
-"intersphinx インベントリの取得と GitHub Pages への公開には ``guidedog`` に組み込まれた HTTP "
-"クライアントを使うので、``curl`` プログラムは不要です。アーカイブを検証してインストールします："
+"tree-sitter パーサーは ``guidedog`` に組み込まれています。Unix 向けアーカイブは Graphviz "
+"を静的リンクし、Windows 向け ZIP には Graphviz の DLL "
+"が同梱されているため、実行時に追加でインストールするものは何もありません。リモートの intersphinx インベントリの取得と "
+"GitHub Pages への公開には ``guidedog`` に組み込まれた HTTP クライアントを使うので、``curl`` "
+"プログラムは不要です。アーカイブを検証してインストールします："
 
-#: ../../repository.rst:56
+#: ../../repository.rst:61
 msgid ""
 "The release notes describe each platform's requirements and limits. See "
 "the :doc:`installation guide <howto/install>` for the details."
@@ -113,35 +123,40 @@ msgstr ""
 "各プラットフォームの要件と制限はリリースノートに記載しています。詳しくは :doc:`インストールガイド <howto/install>` "
 "を参照してください。"
 
-#: ../../repository.rst:59
+#: ../../repository.rst:64
 msgid "Build from source"
 msgstr "ソースからビルドする"
 
-#: ../../repository.rst:62
+#: ../../repository.rst:67
 msgid ""
-"Install a Rust toolchain (the workspace's ``rust-version`` or later) and "
-"the Graphviz development files (``libgvc``, ``libcgraph``; for example "
-"``graphviz-dev`` on Debian and Ubuntu, or ``brew install graphviz``). "
-"Then, at the checkout root:"
+"Install a Rust toolchain (the workspace's ``rust-version`` or later), a "
+"C compiler, and the Graphviz development files (``libgvc``, "
+"``libcgraph``; for example ``libgraphviz-dev`` on Debian and Ubuntu, "
+"``graphviz-devel`` on Fedora, or ``brew install graphviz`` on macOS; on "
+"Linux, also ``perl`` and ``make`` for the embedded Typst package "
+"downloader's vendored OpenSSL). Then, at the checkout root:"
 msgstr ""
-"Rust ツールチェーン（ワークスペースの ``rust-version`` 以降）と Graphviz "
+"Rust ツールチェーン（ワークスペースの ``rust-version`` 以降）、C コンパイラー、Graphviz "
 "の開発用ファイル（``libgvc``、``libcgraph``。たとえば Debian や Ubuntu では "
-"``graphviz-dev``、macOS では ``brew install "
-"graphviz``）をインストールします。続いて、チェックアウトしたルートで次を実行します。"
-
-#: ../../repository.rst:73
-msgid ""
-"The ``typst`` crates are a default feature of ``gd-typst``. Without them, "
-"Guidedog runs an installed, pinned ``typst`` program for PDF output. "
-"`RELEASING.md "
-"<https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ describes "
-"the release workflow."
-msgstr ""
-"``typst`` クレート群は ``gd-typst`` の既定のフィーチャーです。これを無効にすると、Guidedog は PDF "
-"出力にインストール済みでバージョン固定の ``typst`` プログラムを使います。リリースの手順は `RELEASING.md "
-"<https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ に記載しています。"
+"``libgraphviz-dev``、Fedora では ``graphviz-devel``、macOS では ``brew "
+"install graphviz``。Linux では内蔵 Typst パッケージダウンローダーの同梱 OpenSSL 用に ``perl`` "
+"と ``make`` も必要）をインストールします。続いて、チェックアウトしたルートで次を実行します："
 
 #: ../../repository.rst:78
+msgid ""
+"The ``typst`` crates are a default feature of ``gd-typst``. Without "
+"them, Guidedog runs an installed ``typst`` 0.15.1 program for PDF "
+"books, while ``.. typst-diagram::`` requires the embedded compiler. "
+"`RELEASING.md "
+"<https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ "
+"describes the release workflow."
+msgstr ""
+"``typst`` クレート群は ``gd-typst`` の既定のフィーチャーです。これを無効にすると、Guidedog は PDF "
+"の本にインストール済みの ``typst`` 0.15.1 プログラムを使いますが、``.. typst-diagram::`` "
+"には内蔵コンパイラーが必須です。リリースの手順は `RELEASING.md "
+"<https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ に記載しています。"
+
+#: ../../repository.rst:83
 msgid ""
 "The workspace is split by responsibility. The engine crates "
 "(``guidedoc``, the readers and renderers, ``guidedoc-defaults``) use only "
@@ -155,30 +170,32 @@ msgstr ""
 "など）はエンジンに依存しません。プロジェクトビルダーとコマンドラインはその両方の上にあります。プログラムは ``cmd/`` "
 "にあります。:doc:`内部構造 <internals/index>` を参照してください。"
 
-#: ../../repository.rst:84
+#: ../../repository.rst:89
 msgid "Translate with Guidedog"
 msgstr "Guidedog で翻訳する"
 
-#: ../../repository.rst:97
+#: ../../repository.rst:102
 msgid ""
-"Translate and review ``msgstr`` values in the PO files. Guidedog extracts "
-"POT files, merges catalogs, reports progress, and builds each edition. It "
-"does not invent translations. Commands, paths, code, API names, and "
-"reference targets stay unchanged. Only the manual and repository overview "
-"are translated. API and GDS remain English. See the :doc:`manual build "
+"Translate and review ``msgstr`` values in the PO files. Guidedog "
+"extracts POT files, merges catalogs, reports progress, and builds each "
+"edition. It does not invent translations. Commands, paths, code, API "
+"names, and reference targets stay unchanged. The website landing page, "
+"the manual, and the repository overview are translated. The API "
+"reference and GDS remain English. See the :doc:`manual build "
 "instructions <howto/maintain-docs>` for assembling all editions and PDF "
 "books."
 msgstr ""
 "PO ファイルの ``msgstr`` を翻訳し、レビューします。Guidedog は POT "
 "ファイルの抽出、カタログのマージ、進捗の報告、各版のビルドを行いますが、翻訳を自動で作ることはしません。コマンド、パス、コード、API "
-"名、参照先は変更しません。翻訳するのはマニュアルとリポジトリ概要だけで、API と GDS は英語のままです。すべての版と PDF "
-"の本をまとめる方法は :doc:`マニュアルのビルド手順 <howto/maintain-docs>` を参照してください。"
+"名、参照先は変更しません。ウェブサイトのトップページ、マニュアル、リポジトリ概要を翻訳し、API リファレンスと GDS "
+"は英語のままにします。すべての版と PDF の本をまとめる方法は :doc:`マニュアルのビルド手順 "
+"<howto/maintain-docs>` を参照してください。"
 
-#: ../../repository.rst:103
+#: ../../repository.rst:108
 msgid "Extend and publish"
 msgstr "拡張と公開"
 
-#: ../../repository.rst:106
+#: ../../repository.rst:111
 msgid ""
 "Write a build plugin or a publisher with the :doc:`step-by-step plugin "
 "chapter <plugins>`. A plugin implements one Rust trait. The same value is "
@@ -198,11 +215,11 @@ msgstr ""
 "--timeout=SECONDS`` は、やり取り 1 回全体の時間を制限します（既定は 300 秒）。値は ``--wait`` "
 "より長くします。結果が不明な場合は、再度公開する前に復旧します。"
 
-#: ../../repository.rst:115
+#: ../../repository.rst:120
 msgid "Keep discussions"
 msgstr "議論を管理する"
 
-#: ../../repository.rst:118
+#: ../../repository.rst:123
 msgid ""
 "``guidedog dsc`` keeps proposals and decisions as reStructuredText "
 "records, one file each. It builds them into a website and PDF books. Each "
@@ -213,7 +230,7 @@ msgstr ""
 "PDF の本にビルドします。カタログにはそれぞれプレフィックスがあります。Guidedog の設計記録は ``gds`` "
 "を使い、別のプロジェクトなら ``eds`` などを使います。"
 
-#: ../../repository.rst:131
+#: ../../repository.rst:136
 msgid ""
 "A catalog's ``discussion.toml`` sets its lifecycle states, record types, "
 "and numbering. ``guidedog dsc config`` prints it. The commands come from "
@@ -228,39 +245,45 @@ msgstr ""
 "もそうしたカタログの一つで、そのフォルダーで ``guidedog dsc check`` を実行します。:doc:`議論カタログの管理 "
 "<howto/discussions>` を参照してください。"
 
-#: ../../repository.rst:134
+#: ../../repository.rst:139
 msgid "Publish static sites"
 msgstr "静的サイトを公開する"
 
-#: ../../repository.rst:137
+#: ../../repository.rst:142
 msgid ""
 "``guidedog ssg`` manages articles, research logs, collections, feeds, "
 "pinned theme archives, and multi-project websites from the same "
 "``conf.toml`` and document tree:"
 msgstr ""
-"``guidedog ssg`` は、同じ ``conf.toml`` とドキュメントツリーから、記事、研究ログ、コレクション、フィード、ピン留めされたテーマアーカイブ、およびマルチプロジェクトのウェブサイトを管理します："
+"``guidedog ssg`` は、同じ ``conf.toml`` "
+"とドキュメントツリーから、記事、研究ログ、コレクション、フィード、ピン留めされたテーマアーカイブ、およびマルチプロジェクトのウェブサイトを管理します："
 
-#: ../../repository.rst:148
+#: ../../repository.rst:153
 msgid ""
 "Pages marked with ``:pdf: article`` also build standalone print-quality "
 "PDFs alongside their HTML pages. Multi-project websites mount "
-"sub-projects (such as ``docs/manual``, ``docs/api``, and ``docs/gds``) "
-"declaratively through ``[[site.mounts]]``. See :doc:`Static site "
-"publishing <howto/static-publishing>`."
+"sub-projects (such as ``docs/site``, ``docs/manual``, and ``docs/gds``) "
+"declaratively through ``[[site.mounts]]``; ``docs/api`` builds as a "
+"standalone reference project and manual PDF appendix. See :doc:`Static "
+"site publishing <howto/static-publishing>`."
 msgstr ""
-"``:pdf: article`` を指定したページは、HTML ページと並んで印刷品質の単体 PDF も生成されます。マルチプロジェクトのウェブサイトでは、``[[site.mounts]]`` を使ってサブプロジェクト（``docs/manual``、``docs/api``、``docs/gds`` など）を宣言的にマウントできます。:doc:`静的サイトの公開 <howto/static-publishing>` を参照してください。"
+"``:pdf: article`` を指定したページは、HTML ページと並んで印刷品質の単体 PDF "
+"も生成されます。マルチプロジェクトのウェブサイトでは、``[[site.mounts]]`` "
+"を使ってサブプロジェクト（``docs/site``、``docs/manual``、``docs/gds`` "
+"など）を宣言的にマウントします。``docs/api`` は単体のリファレンスプロジェクトおよびマニュアル PDF "
+"の付録としてビルドされます。:doc:`静的サイトの公開 <howto/static-publishing>` を参照してください。"
 
-#: ../../repository.rst:150
+#: ../../repository.rst:155
 msgid "Read and embed"
 msgstr "読む・組み込む"
 
-#: ../../repository.rst:153
+#: ../../repository.rst:158
 msgid ""
 ":doc:`Manual <index>`: tutorials, topics, practical tasks, reference, and "
 "internals."
 msgstr ":doc:`マニュアル <index>`：チュートリアル、トピック、実践的な手順、リファレンス、内部構造。"
 
-#: ../../repository.rst:154
+#: ../../repository.rst:159
 msgid ""
 ":doc:`API reference <api/index>`: generated from the Rust source of the "
 "main crates and included in the manual's PDF appendix."
@@ -268,7 +291,7 @@ msgstr ""
 ":doc:`API リファレンス <api/index>`：主要なクレートの Rust ソースから生成し、マニュアル PDF "
 "の付録にも収録しています。"
 
-#: ../../repository.rst:156
+#: ../../repository.rst:161
 msgid ""
 ":download:`Engine guide <_static/repository/library-README.md>`: the "
 "``guidedoc`` crate's workspaces, requests, adapters, and conversion "
@@ -277,20 +300,20 @@ msgstr ""
 ":download:`エンジンガイド <_static/repository/library-README.md>`：``guidedoc`` "
 "クレートのワークスペース、リクエスト、アダプター、変換の例。"
 
-#: ../../repository.rst:158
+#: ../../repository.rst:163
 msgid ""
 ":doc:`Templates <templates>`: customize HTML with Jinja and books with "
 "Typst."
 msgstr ":doc:`テンプレート <templates>`：Jinja で HTML を、Typst で本をカスタマイズします。"
 
-#: ../../repository.rst:159
+#: ../../repository.rst:164
 msgid ""
 ":download:`GDS <_static/repository/gds-README.md>`: numbered design "
 "records and implementation decisions."
 msgstr ""
 ":download:`GDS <_static/repository/gds-README.md>`：番号付きの設計記録と実装上の判断。"
 
-#: ../../repository.rst:161
+#: ../../repository.rst:166
 msgid ""
 ":download:`Discussion library <_static/repository/discussion-README.md>`: "
 "the catalogs that ``guidedog dsc`` keeps."
@@ -298,7 +321,7 @@ msgstr ""
 ":download:`議論ライブラリ <_static/repository/discussion-README.md>`：``guidedog "
 "dsc`` が管理するカタログ。"
 
-#: ../../repository.rst:164
+#: ../../repository.rst:169
 msgid ""
 "Guidedoc works in a caller-owned, reusable workspace and returns "
 "structured diagnostics. The host manages files, budgets, caching, "
@@ -310,11 +333,11 @@ msgstr ""
 "は呼び出し元が所有する再利用可能なワークスペースで動作し、構造化された診断を返します。ファイル、予算、キャッシュ、公開、ネイティブコンパイラーはホストが管理します。``--untrusted`` "
 "は機能を制限しますが、プロセスのサンドボックスではなく、あらゆるネイティブ資源の使用を制限するものでもありません。"
 
-#: ../../repository.rst:168
+#: ../../repository.rst:173
 msgid "Credits and license"
 msgstr "謝辞とライセンス"
 
-#: ../../repository.rst:171
+#: ../../repository.rst:176
 msgid ""
 "Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** "
 "and **Kanak Rathore**. Contributions are welcome through issues and pull "
@@ -325,7 +348,7 @@ msgstr ""
 "が支援しました。Issue や Pull Request "
 "による貢献を歓迎します。ドキュメントのクレジットには名前やハンドルを使い、個人のメールアドレスは使いません。Git の識別情報は別に管理しています。"
 
-#: ../../repository.rst:176
+#: ../../repository.rst:181
 msgid ""
 "Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, "
 "Tree-sitter and Max Brunsfeld, Graphviz, and the Rust project."
@@ -333,7 +356,7 @@ msgstr ""
 "Sphinx と Georg Brandl、Docutils と David Goodger、Typst、Tree-sitter と Max "
 "Brunsfeld、Graphviz、そして Rust プロジェクトに感謝します。"
 
-#: ../../repository.rst:179
+#: ../../repository.rst:184
 msgid ""
 "Guidedog is released under the :download:`GNU Lesser General Public "
 "License v3.0 or later <_static/repository/LICENSE>` (LGPL-3.0-or-later), "
@@ -351,7 +374,7 @@ msgstr ""
 "Rust クレートなど、独自のライセンスが適用される第三者コンポーネントの一覧は :download:`NOTICE "
 "<_static/repository/NOTICE>` にあります。"
 
-#: ../../repository.rst:187
+#: ../../repository.rst:192
 msgid ""
 "An additional permission allows Guidedog to be linked and distributed "
 "with Graphviz. See :download:`NOTICE <_static/repository/NOTICE>`."

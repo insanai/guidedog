@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:11+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -33,7 +33,9 @@ msgid ""
 "We keep diagram source beside the explanation and let Guidedog build the "
 "image for HTML and PDF. Graphviz and Typst are included in the "
 "executable. We need no separate ``dot`` or ``typst`` program."
-msgstr "図のソースを説明のそばに置き、Guidedog で HTML と PDF 用の画像を生成します。Graphviz と Typst は実行ファイルに含まれます。別の ``dot`` や ``typst`` プログラムは不要です。"
+msgstr ""
+"図のソースを説明のそばに置き、Guidedog で HTML と PDF 用の画像を生成します。Graphviz と Typst "
+"は実行ファイルに含まれます。別の ``dot`` や ``typst`` プログラムは不要です。"
 
 #: ../../topics/diagrams.rst:12
 msgid "Choose the drawing tool"
@@ -97,7 +99,9 @@ msgid ""
 "We choose SVG for scalable drawings in both the browser and book. Typst "
 "diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
 "PNG files still work with ordinary image and figure directives."
-msgstr "ブラウザーと書籍で拡大縮小できる SVG を選びます。Typst の図は 144 ピクセル毎インチの PNG にもできます。既存の SVG と PNG は、通常の画像・図ディレクティブで引き続き使えます。"
+msgstr ""
+"ブラウザーと書籍で拡大縮小できる SVG を選びます。Typst の図は 144 ピクセル毎インチの PNG にもできます。既存の SVG と "
+"PNG は、通常の画像・図ディレクティブで引き続き使えます。"
 
 #: ../../topics/diagrams.rst:36
 msgid "A flow chart"
@@ -140,51 +144,63 @@ msgstr "MyST Markdown では同じオプションを持つディレクティブ�
 
 #: ../../topics/diagrams.rst:99
 msgid ""
-"A ``graphviz`` file argument reads a DOT file instead of an inline body. "
-"``graph`` and ``digraph`` take the graph name as their argument and wrap "
-"the body's edges in the corresponding DOT graph. A plain ``dot`` or "
-"``graphviz`` Markdown fence also draws a graph; we use the directive form "
-"when we need options."
-msgstr "``graphviz`` のファイル引数は、本文の代わりに DOT ファイルを読み込みます。``graph`` と ``digraph`` は図の名前を引数に取り、本文の辺を対応する DOT のグラフで囲みます。通常の ``dot`` または ``graphviz`` の Markdown フェンスでも描画できますが、オプションが必要な場合はディレクティブを使います。"
+"A ``graphviz`` file argument reads a DOT file instead of an inline "
+"body. ``graph`` and ``digraph`` take the graph name as their argument "
+"and wrap the body's edges in the corresponding DOT graph. ``:layout:`` "
+"(or Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout "
+"engine: ``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, "
+"``twopi``, ``osage`` or ``patchwork``. A plain ``dot`` or ``graphviz`` "
+"Markdown fence also draws a graph; we use the directive form when we "
+"need options."
+msgstr ""
+"``graphviz`` のファイル引数は、本文の代わりに DOT ファイルを読み込みます。``graph`` と ``digraph`` "
+"は図の名前を引数に取り、本文の辺を対応する DOT のグラフで囲みます。``:layout:``\\ （または Sphinx の "
+"``:graphviz_dot:`` エイリアス）で Graphviz のレイアウトエンジンを選択できます：``dot``\\ "
+"（既定）、``neato``、``fdp``、``sfdp``、``circo``、``twopi``、``osage``、``patchwork``。通常の "
+"``dot`` または ``graphviz`` の Markdown フェンスでも描画できますが、オプションが必要な場合はディレクティブを使います。"
 
-#: ../../topics/diagrams.rst:103
+#: ../../topics/diagrams.rst:104
 msgid "Draw with Typst"
 msgstr "Typst で描く"
 
-#: ../../topics/diagrams.rst:106
+#: ../../topics/diagrams.rst:107
 msgid ""
 "The ``typst-diagram`` directive compiles its body to an image. The page "
 "fits the drawing automatically. We can start with Typst's built-in shapes "
 "before adding a package."
-msgstr "``typst-diagram`` は本文を画像にコンパイルします。ページは自動的に図に合う大きさになります。パッケージを追加する前に、Typst 内蔵の図形から始められます。"
+msgstr ""
+"``typst-diagram`` は本文を画像にコンパイルします。ページは自動的に図に合う大きさになります。パッケージを追加する前に、Typst "
+"内蔵の図形から始められます。"
 
-#: ../../topics/diagrams.rst:120
+#: ../../topics/diagrams.rst:121
 msgid "A drawing from Typst source."
 msgstr "Typst ソースから生成した図。"
 
-#: ../../topics/diagrams.rst:126
+#: ../../topics/diagrams.rst:127
 msgid ""
 "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
 "An ordinary ``typst`` code fence displays source without compiling it."
-msgstr "MyST で同じ図を描く場合は、フェンス言語に ``{typst-diagram}`` を使います。通常の ``typst`` コードフェンスはコンパイルせずソースを表示します。"
+msgstr ""
+"MyST で同じ図を描く場合は、フェンス言語に ``{typst-diagram}`` を使います。通常の ``typst`` "
+"コードフェンスはコンパイルせずソースを表示します。"
 
-#: ../../topics/diagrams.rst:139
+#: ../../topics/diagrams.rst:140
 msgid ""
 "CeTZ supplies a drawing canvas and geometric operations. We import a "
 "specific package version so the source states its dependency."
 msgstr "CeTZ は描画キャンバスと幾何操作を提供します。依存関係をソースに明示するため、特定バージョンのパッケージをインポートします。"
 
-#: ../../topics/diagrams.rst:156
+#: ../../topics/diagrams.rst:157
 msgid ""
 "Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
 "are useful when position carries meaning."
 msgstr "Fletcher は CeTZ 上でノードと矢印の図を構築します。位置に意味がある場合、明示的な座標が役立ちます。"
 
-#: ../../topics/diagrams.rst:172
+#: ../../topics/diagrams.rst:173
 msgid "Share source and refer to figures"
 msgstr "ソースを共有し図を参照する"
 
-#: ../../topics/diagrams.rst:175
+#: ../../topics/diagrams.rst:176
 msgid ""
 "Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` "
 "and ``:align:``. We enable ``numfig = true`` in ``conf.toml`` and refer "
@@ -193,15 +209,20 @@ msgid ""
 "this book. Alternative text explains the information conveyed by the "
 "drawing. It is especially useful for Typst SVGs, which draw letters as "
 "outlines."
-msgstr "両方のディレクティブは ``:caption:``、``:alt:``、``:name:``、``:class:``、``:align:`` を受け付けます。``conf.toml`` で ``numfig = true`` を有効にし、名前とキャプションのある図を RST の ``:numref:`` または MyST の ``{numref}`` で参照します。例えば :numref:`chapter-typst-circle` は本書の番号付きの図です。代替テキストは図が伝える情報を説明します。文字を輪郭として描く Typst SVG で特に役立ちます。"
+msgstr ""
+"両方のディレクティブは ``:caption:``、``:alt:``、``:name:``、``:class:``、``:align:`` "
+"を受け付けます。``conf.toml`` で ``numfig = true`` を有効にし、名前とキャプションのある図を RST の "
+"``:numref:`` または MyST の ``{numref}`` で参照します。例えば "
+":numref:`chapter-typst-circle` "
+"は本書の番号付きの図です。代替テキストは図が伝える情報を説明します。文字を輪郭として描く Typst SVG で特に役立ちます。"
 
-#: ../../topics/diagrams.rst:181
+#: ../../topics/diagrams.rst:182
 msgid ""
 "For a larger drawing we keep Typst source in a file. Guidedog compiles it "
 "during the ordinary build."
 msgstr "大きな図の Typst ソースはファイルに保存します。Guidedog が通常のビルドでコンパイルします。"
 
-#: ../../topics/diagrams.rst:190
+#: ../../topics/diagrams.rst:191
 msgid ""
 "An inline diagram's imports resolve beside the document containing it. A "
 "file diagram's imports resolve beside its Typst file. We can therefore "
@@ -209,14 +230,16 @@ msgid ""
 "Changing an imported helper or data file redraws the affected HTML pages. "
 "Identical generated images keep their timestamps so unchanged PDF books "
 "remain cached."
-msgstr "文書内の図のインポートは、その文書を基準に解決します。ファイルによる図のインポートは、その Typst ファイルを基準に解決します。色、ノード、シーケンス図の補助ライブラリを共有できます。インポートした補助・データファイルを変更すると、該当する HTML ページを再描画します。同じ画像はタイムスタンプを保ち、変更のない PDF 書籍のキャッシュを維持します。"
+msgstr ""
+"文書内の図のインポートは、その文書を基準に解決します。ファイルによる図のインポートは、その Typst "
+"ファイルを基準に解決します。色、ノード、シーケンス図の補助ライブラリを共有できます。インポートした補助・データファイルを変更すると、該当する "
+"HTML ページを再描画します。同じ画像はタイムスタンプを保ち、変更のない PDF 書籍のキャッシュを維持します。"
 
-#: ../../topics/diagrams.rst:196
-#| msgid "Images and figures"
+#: ../../topics/diagrams.rst:197
 msgid "Packages, limits and failures"
 msgstr "パッケージ、制限、失敗時の扱い"
 
-#: ../../topics/diagrams.rst:199
+#: ../../topics/diagrams.rst:200
 msgid ""
 "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings "
 "govern Typst diagrams in both outputs. With ``pdf_packages = "
@@ -227,30 +250,47 @@ msgid ""
 "source directory, including through symlinks. Diagrams must produce one "
 "finite page; PNG export is limited to 16 million pixels and 16,384 pixels "
 "on either side."
-msgstr "``pdf_packages``、``pdf_fonts``、``pdf_font_paths`` は両出力の Typst の図を制御します。``pdf_packages = \"offline\"`` は Typst のパッケージディレクトリにあるパッケージだけを使います。既定では不足するものをダウンロードします。不足していたパッケージの導入やフォントの編集後は、新しいプロセスで ``guidedog build html -a`` を実行します。プロジェクトのインポートはシンボリックリンク経由でもソースディレクトリ内に制限されます。図は有限の寸法を持つ 1 ページである必要があり、PNG は 1,600 万ピクセル、各辺 16,384 ピクセルまでです。"
+msgstr ""
+"``pdf_packages``、``pdf_fonts``、``pdf_font_paths`` は両出力の Typst "
+"の図を制御します。``pdf_packages = \"offline\"`` は Typst "
+"のパッケージディレクトリにあるパッケージだけを使います。既定では不足するものをダウンロードします。不足していたパッケージの導入やフォントの編集後は、新しいプロセスで "
+"``guidedog build html -a`` "
+"を実行します。プロジェクトのインポートはシンボリックリンク経由でもソースディレクトリ内に制限されます。図は有限の寸法を持つ 1 "
+"ページである必要があり、PNG は 1,600 万ピクセル、各辺 16,384 ピクセルまでです。"
 
-#: ../../topics/diagrams.rst:206
+#: ../../topics/diagrams.rst:207
 msgid ""
-"A failed drawing remains visible as source with a warning. We build with "
-"``-W`` when a missing diagram must prevent publication. ``--untrusted`` "
-"refuses Typst compilation and retains its source. Text builds show source "
-"without compiling a drawing. The :doc:`../howto/typst-diagrams` guide "
-"lists every option, source limit and migration step for existing figure "
-"files."
-msgstr "描画に失敗した図は警告付きのソースとして残ります。図の欠落で公開を止めたい場合は ``-W`` でビルドします。``--untrusted`` は Typst のコンパイルを拒否しソースを保持します。テキストビルドは図をコンパイルせずにソースを表示します。:doc:`../howto/typst-diagrams` に全オプション、ソースの制限、既存の図ファイルの移行手順を記載しています。"
+"A failed drawing remains visible as source with a warning "
+"(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
+"directive sources report ``sphinx.graphviz.source`` or "
+"``sphinx.typst.source``). We build with ``-W`` when a missing diagram "
+"must prevent publication. ``--untrusted`` refuses Typst compilation and "
+"external Graphviz resources and retains the source. Text builds show "
+"source without compiling a drawing. The :doc:`../howto/typst-diagrams` "
+"guide lists every option, source limit and migration step for existing "
+"figure files."
+msgstr ""
+"描画に失敗した図は警告付きのソースとして残ります（``build.graphviz`` または "
+"``build.typst-diagram``；ディレクティブのソース未指定や重複は ``sphinx.graphviz.source`` "
+"または ``sphinx.typst.source`` を報告します）。図の欠落で公開を止めたい場合は ``-W`` "
+"でビルドします。``--untrusted`` は Typst のコンパイルと外部 Graphviz "
+"リソースを拒否しソースを保持します。テキストビルドは図をコンパイルせずにソースを表示します。:doc:`../howto/typst-diagrams` "
+"に全オプション、ソースの制限、既存の図ファイルの移行手順を記載しています。"
 
-#: ../../topics/diagrams.rst:212
+#: ../../topics/diagrams.rst:213
 msgid "Light, dark and print"
 msgstr "ライト、ダーク、印刷"
 
-#: ../../topics/diagrams.rst:215
+#: ../../topics/diagrams.rst:216
 msgid ""
 "Typst diagrams keep their authored colors and receive the same light "
 "panel as ordinary Graphviz images in the default dark theme. The adaptive "
 "Graphviz palette does not recolor Typst drawings."
-msgstr "Typst の図は指定した色を保持し、既定のダークテーマでは通常の Graphviz 画像と同じ明るいパネル上に表示されます。Graphviz の適応パレットは Typst の図を再着色しません。"
+msgstr ""
+"Typst の図は指定した色を保持し、既定のダークテーマでは通常の Graphviz 画像と同じ明るいパネル上に表示されます。Graphviz "
+"の適応パレットは Typst の図を再着色しません。"
 
-#: ../../topics/diagrams.rst:217
+#: ../../topics/diagrams.rst:218
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
@@ -258,78 +298,77 @@ msgid ""
 msgstr ""
 "背景を透明にしても文字色は変わりません。暗いページで暗い文字が消えないよう、通常の図は元の色を保ち、既定のダークテーマでは明るいパネルを使います。"
 
-#: ../../topics/diagrams.rst:221
+#: ../../topics/diagrams.rst:222
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
-"the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
-"adds a fixed stylesheet inside the SVG image. Its dark media query "
-"follows the embedding page's ``color-scheme``, including the theme "
-"control's explicit selection. No script, external stylesheet or inline "
-"page SVG is needed."
+"the directive. Guidedog adds a fixed stylesheet inside the SVG image. "
+"Its dark media query follows the embedding page's ``color-scheme``, "
+"including the theme control's explicit selection. No script, external "
+"stylesheet or inline page SVG is needed."
 msgstr ""
-"本書の可変配色には ``:class: graphviz-adaptive`` を加えます。Guidedog 0.6.3 以降で使えます。SVG "
-"内の固定 CSS が、明示的なテーマ選択を含む親ページの ``color-scheme`` に従います。スクリプト、外部 CSS、ページ内への "
-"SVG 展開は不要です。"
+"本書の可変配色には、ディレクティブに ``:class: graphviz-adaptive`` を加えます。Guidedog が SVG "
+"画像内に固定スタイルシートを追加し、そのダーク用メディアクエリーがテーマ切替の明示的な選択を含む親ページの ``color-scheme`` "
+"に従います。スクリプト、外部 CSS、ページ内への SVG 展開は不要です。"
 
-#: ../../topics/diagrams.rst:227
+#: ../../topics/diagrams.rst:228
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
 msgstr "短いラベルにします。手順は角丸、入力はメモ、永続ストレージは円柱とし、ダーク配色の役割をクラスで示します。"
 
-#: ../../topics/diagrams.rst:230
+#: ../../topics/diagrams.rst:231
 msgid "Semantic node classes"
 msgstr "意味を表すノードクラス"
 
-#: ../../topics/diagrams.rst:234
+#: ../../topics/diagrams.rst:235
 msgid "DOT class"
 msgstr "DOT クラス"
 
-#: ../../topics/diagrams.rst:235
+#: ../../topics/diagrams.rst:236
 msgid "Role"
 msgstr "役割"
 
-#: ../../topics/diagrams.rst:236
+#: ../../topics/diagrams.rst:237
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:237
+#: ../../topics/diagrams.rst:238
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "ソース、設定、補助資料。暖かい中間色。"
 
-#: ../../topics/diagrams.rst:238
+#: ../../topics/diagrams.rst:239
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:239
+#: ../../topics/diagrams.rst:240
 msgid "A produced artifact; blue."
 msgstr "生成物。青。"
 
-#: ../../topics/diagrams.rst:240
+#: ../../topics/diagrams.rst:241
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:241
+#: ../../topics/diagrams.rst:242
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "任意の拡張点。琥珀色、破線。"
 
-#: ../../topics/diagrams.rst:242
+#: ../../topics/diagrams.rst:243
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:243
+#: ../../topics/diagrams.rst:244
 msgid "A decision; amber, with a diamond shape."
 msgstr "判断。琥珀色、ひし形。"
 
-#: ../../topics/diagrams.rst:244
+#: ../../topics/diagrams.rst:245
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:245
+#: ../../topics/diagrams.rst:246
 msgid "A separate ownership or allocation boundary; violet."
 msgstr "所有権またはメモリ割り当ての独立した境界。紫。"
 
-#: ../../topics/diagrams.rst:247
+#: ../../topics/diagrams.rst:248
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
@@ -341,7 +380,7 @@ msgstr ""
 "たとえば ``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` "
 "は、ライト表示の見た目とダーク表示での役割を同時に指定します。クラスは形を選んだりラベルを付けたりはしません。形とラベルは明示的に書きます。そうすれば白黒でも図が読めます。分類されていない処理は緑です。この配色は使うと決めた場合にだけ適用されます。正確な色そのものがデータを表す図には使いません。"
 
-#: ../../topics/diagrams.rst:253
+#: ../../topics/diagrams.rst:254
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
@@ -355,11 +394,11 @@ msgstr ""
 "`CSS color-scheme の仕様 "
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ で定められています。"
 
-#: ../../topics/diagrams.rst:259
+#: ../../topics/diagrams.rst:260
 msgid "Make the result legible"
 msgstr "読みやすく仕上げる"
 
-#: ../../topics/diagrams.rst:262
+#: ../../topics/diagrams.rst:263
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -368,7 +407,7 @@ msgid ""
 msgstr ""
 "ノードのラベルは短く、長い規則は図の下で説明する。主経路は一方向を基本にし、戻りの辺に条件を付ける。色だけでなく形と文字も使う。印刷では色がないかもしれない。"
 
-#: ../../topics/diagrams.rst:266
+#: ../../topics/diagrams.rst:267
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -377,7 +416,7 @@ msgstr ""
 "代替テキストとキャプションを付け、狭いブラウザーと PDF で試す。小さすぎる字でなければ収まらない図は二つに分ける。寸法は "
 ":doc:`../media` を参照。"
 
-#: ../../topics/diagrams.rst:270
+#: ../../topics/diagrams.rst:271
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
 "readable. Scroll inside the figure. The page itself keeps its width."
@@ -1117,57 +1156,79 @@ msgstr "HTML 文書の 3 領域レイアウト。"
 
 #: ../../topics/typography.rst:36
 msgid ""
-"**Light is the default.** The theme control also offers dark and system "
-"modes. It remembers the choice on the same browser origin. System mode "
-"follows the operating system. Printed HTML uses light colors. Content and "
-"navigation remain usable without JavaScript. The theme control and "
-"enhanced search are progressive enhancements."
+"The built-in theme follows the operating system by default, with light "
+"and dark choices; Guidedog's own documentation website defaults to the "
+"light reading edition. The theme control remembers the reader's choice "
+"on the same browser origin. Printed HTML uses light colors. Content and "
+"navigation remain usable without JavaScript. The theme control, "
+"enhanced search, and paragraph line breaking are progressive enhancements."
 msgstr ""
-"**既定はライトです。** テーマ切替ではダークとシステムモードも選べ、同じブラウザーオリジン上で選択を記憶します。システムモードは OS "
-"の設定に従います。HTML の印刷にはライト配色を使います。JavaScript "
-"がなくても本文とナビゲーションはそのまま利用でき、テーマ切替と拡張検索は段階的な機能向上として提供されます。"
+"組み込みテーマは既定で OS の設定に従い、ライトとダークも選べます。Guidedog "
+"自身のドキュメントサイトではライトの読書版を既定にしています。テーマ切替は同じブラウザーオリジン上で読者の選択を記憶します。HTML "
+"の印刷にはライト配色を使います。JavaScript "
+"がなくても本文とナビゲーションはそのまま利用でき、テーマ切替、拡張検索、段落の行分割は段階的な機能向上として提供されます。"
 
-#: ../../topics/typography.rst:42
+#: ../../topics/typography.rst:43
 msgid ""
-"English prose can use paragraph-wide **Knuth-Plass line breaking** in the "
-"browser. A small template script measures the loaded font, builds boxes, "
-"spaces, and hyphenation penalties, and chooses breaks for the whole "
-"paragraph. Frank Liang's pattern method supplies English hyphenation "
-"candidates. The original TeX patterns and the libraries' licenses are "
-"bundled with the site."
+"Every initialized project (``guidedog quickstart``, ``guidedog ssg "
+"init``, and ``guidedog dsc init``) copies ``_static/typography.js`` "
+"beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a "
+"project owns and can edit its scripts directly. On desktop reading "
+"measures (``40rem`` and wider), English prose uses paragraph-wide "
+"**Knuth-Plass line breaking** in the browser across paragraphs, list "
+"items, definitions, admonitions, block quotes, and footnotes, while "
+"leaving tables, navigation trees, metadata headers, and figure captions "
+"ragged. The script measures the loaded font, builds boxes, glue, and "
+"hyphenation penalties, and chooses breaks for the whole block. Frank "
+"Liang's pattern method supplies English hyphenation candidates, and "
+"break penalty widths are discarded after a hyphenated break so "
+"following lines are measured accurately. Inline mathematics (after "
+"MathJax finishes), footnote references, superscripts, and subscripts "
+"are measured as inline atoms; links keep their markup, and inline code "
+"literals may break cleanly after ``/`` or ``::``. The original TeX "
+"patterns and the libraries' BSD notices are recorded in ``NOTICE``."
 msgstr ""
-"英文では段落全体の **Knuth-Plass 改行最適化** "
-"を使えます。テンプレートの小さなスクリプトがフォントを測り、ボックス、空白、ペナルティーを組み立て、段落全体の改行を選びます。英語の分綴候補には "
-"Frank Liang のパターン方式を使います。TeX の元パターンと各ライセンスもサイトに同梱します。"
+"初期化されたすべてのプロジェクト（``guidedog quickstart``、``guidedog ssg "
+"init``、``guidedog dsc init``）には ``_static/guidedog.css`` と "
+"``_static/guidedog.js`` の隣に ``_static/typography.js`` "
+"がコピーされるため、プロジェクト側でスクリプトを所有し直接編集できます。デスクトップの読書幅（``40rem`` "
+"以上）では、英語の本文は段落、リスト項目、定義リスト、注記ブロック、引用ブロック、脚注にわたってブラウザー上で段落全体の "
+"**Knuth-Plass 行分割** "
+"を行い、表、ナビゲーションツリー、メタデータヘッダー、図のキャプションは右揃えなしのラグド組のまま残します。スクリプトは読み込まれたフォントを計測してボックス・グルー・ハイフネーションのペナルティを構築し、ブロック全体の改行位置を選びます。Frank "
+"Liang "
+"のパターン法が英語のハイフネーション候補を提供し、ハイフン改行後のペナルティ幅は破棄されるため後続行も正確に計測されます。インライン数式（MathJax "
+"完了後）、脚注参照、上付き・下付き文字はインラインの不可分要素として計測され、リンクはマークアップを保ち、インラインコードは ``/`` や "
+"``::`` の直後できれいに折り返せます。元の TeX パターンと各ライブラリの BSD ライセンス表記は ``NOTICE`` に記録されています。"
 
-#: ../../topics/typography.rst:48
+#: ../../topics/typography.rst:57
 msgid ""
 "The enhancement preserves emphasis and the exact source text. It "
-"recalculates when the reading measure changes. Copying within one "
-"optimized paragraph gives the source text, without visual line divisions "
-"or added hyphens. Printing restores the ordinary paragraph so the print "
-"layout can paginate it."
+"recalculates when the reading measure changes. Copying within or across "
+"typeset blocks gives the source text, without visual line divisions or "
+"added hyphens. Narrow screens (below ``40rem``) and printing restore "
+"ordinary layout so mobile browsers wrap naturally and print engines can "
+"paginate paragraphs."
 msgstr ""
-"この機能は強調や元の文字列をそのまま保ち、行幅が変わると再計算します。最適化された一つの段落内をコピーすると、表示上の改行や追加されたハイフンを含まない元のテキストが得られます。印刷時には通常の段落に戻り、印刷レイアウトで改ページできるようになります。"
+"この機能は強調や元の文字列をそのまま保ち、行幅が変わると再計算します。組版されたブロックの内部や複数ブロックをまたいでコピーしても、表示上の改行や追加されたハイフンを含まない元のテキストが得られます。狭い画面（``40rem`` "
+"未満）や印刷時には通常のレイアウトに戻し、モバイルブラウザーでの自然な折り返しや印刷エンジンでの段落改ページを妨げません。"
 
-#: ../../topics/typography.rst:53
+#: ../../topics/typography.rst:63
 msgid ""
-"Links, mathematics, code, interactive content, narrow measures, and other "
-"languages use native browser layout. So do paragraphs for which no "
-"suitably spaced solution exists. The site remains readable with "
-"JavaScript disabled. The fallback uses language-aware ``hyphens: auto`` "
-"and ``text-wrap: pretty``. Those CSS properties alone are not a promise "
-"of Knuth-Plass optimization."
+"Other languages, narrow measures, JavaScript-disabled browsers, and "
+"paragraphs for which no suitably spaced solution exists use native "
+"browser layout with ``text-wrap: pretty`` (without greedy CSS "
+"justification or browser ``hyphens: auto``). That CSS property alone is "
+"not a promise of Knuth-Plass optimization."
 msgstr ""
-"リンク、数式、コード、インタラクティブな要素、狭い行幅、他の言語には、ブラウザー標準のレイアウトを使います。適切な字間の解が見つからない段落も同様です。JavaScript "
-"を無効にしてもサイトは読めます。フォールバックでは、言語に応じた ``hyphens: auto`` と ``text-wrap: "
-"pretty`` を使います。ただし、これらの CSS プロパティだけで Knuth-Plass の最適化が保証されるわけではありません。"
+"他の言語、狭い行幅、JavaScript を無効にしたブラウザー、および適切な字間の解が見つからない段落では、``text-wrap: "
+"pretty`` を指定したブラウザー標準のレイアウトを使います（CSS の貪欲な両端揃えやブラウザー任せの ``hyphens: "
+"auto`` は使いません）。この CSS プロパティ単独では Knuth-Plass の最適化は保証されません。"
 
-#: ../../topics/typography.rst:59
+#: ../../topics/typography.rst:68
 msgid "The PDF page"
 msgstr "PDF のページ"
 
-#: ../../topics/typography.rst:62
+#: ../../topics/typography.rst:71
 msgid ""
 "The book and standalone article templates use the same Libertinus family "
 "as the web edition. They set justified paragraphs, optimized line "
@@ -1179,7 +1240,7 @@ msgstr ""
 "書籍と単体記事のテンプレートは、Web 版と同じ Libertinus "
 "ファミリーを使います。両端揃えの段落、最適化された改行、言語に応じたハイフネーションを設定し、余白、柱、キャプション、コードブロック、表の罫線も制御します。フォント、ハイフネーションのコスト、段落幅は互いに連携して働きます。字間がゆるい段落に対して強制改行を入れるのは、たいてい適切な修正ではありません。"
 
-#: ../../topics/typography.rst:64
+#: ../../topics/typography.rst:73
 msgid ""
 "Typst optimizes the PDF paragraphs. The web enhancement optimizes "
 "eligible prose. They share the source, fonts, and visual hierarchy. Their "
@@ -1195,11 +1256,11 @@ msgstr ""
 "<https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/hyphens>`_ "
 "を参照してください。"
 
-#: ../../topics/typography.rst:69
+#: ../../topics/typography.rst:78
 msgid "Change the design"
 msgstr "デザインの変更"
 
-#: ../../topics/typography.rst:72
+#: ../../topics/typography.rst:81
 msgid ""
 "Edit ``_static/editorial.css`` for the documentation project's visual "
 "tokens. Edit ``_templates/layout.html`` for structure. Edit "
@@ -1217,7 +1278,7 @@ msgstr ""
 "で編集します。これら 3 "
 "つのレイアウトはいずれも、言語に応じた共通テーマで本文を包みます。読む順序、フォーカス表示、ラベル、十分なコントラストは損なわないようにしてください。"
 
-#: ../../topics/typography.rst:74
+#: ../../topics/typography.rst:83
 msgid ""
 "Build both targets after a change. Inspect a page with code, a table, a "
 "diagram, and an equation. An attractive cover is not proof that the rest "
@@ -1542,7 +1603,9 @@ msgid ""
 "``image`` and ``figure``. We can also author Graphviz and Typst drawings "
 "directly in markup with automatic HTML and PDF assets; see "
 ":doc:`diagrams`."
-msgstr "イラスト、スクリーンショット、既存の図は ``image`` と ``figure`` で組み込みます。また、Graphviz や Typst の図をマークアップ内で直接記述し、HTML と PDF 用の画像を自動生成できます。:doc:`diagrams` を参照してください。"
+msgstr ""
+"イラスト、スクリーンショット、既存の図は ``image`` と ``figure`` で組み込みます。また、Graphviz や Typst "
+"の図をマークアップ内で直接記述し、HTML と PDF 用の画像を自動生成できます。:doc:`diagrams` を参照してください。"
 
 #: ../../topics/writing.rst:274
 msgid "For an existing image:"
@@ -1760,6 +1823,18 @@ msgid ""
 "MyST Markdown supports the same directives and roles through fenced "
 "blocks:"
 msgstr "MyST Markdown では、フェンス付きブロックで同じディレクティブとロールを使えます。"
+
+#~ msgid ""
+#~ "English prose can use paragraph-wide **Knuth-Plass line breaking** in "
+#~ "the browser. A small template script measures the loaded font, builds "
+#~ "boxes, spaces, and hyphenation penalties, and chooses breaks for the "
+#~ "whole paragraph. Frank Liang's pattern method supplies English "
+#~ "hyphenation candidates. The original TeX patterns and the libraries' "
+#~ "licenses are bundled with the site."
+#~ msgstr ""
+#~ "英文では段落全体の **Knuth-Plass 改行最適化** "
+#~ "を使えます。テンプレートの小さなスクリプトがフォントを測り、ボックス、空白、ペナルティーを組み立て、段落全体の改行を選びます。英語の分綴候補には "
+#~ "Frank Liang のパターン方式を使います。TeX の元パターンと各ライセンスもサイトに同梱します。"
 
 #~ msgid "Diagrams that explain"
 #~ msgstr "図で説明する"

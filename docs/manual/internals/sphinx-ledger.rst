@@ -11,7 +11,7 @@ independently on the base reader's extension interface (guidedoc-rst's ``Extensi
 
 Status: **done** = implemented and tested; **partial** = implemented with a stated gap.
 Tests are in ``src/tests/``. Every directive also accepts the options listed; an
-unknown option is the base reader's ``rst.directive.option-unknown`` error.
+unknown option is the base reader's ``rst.directive.option.unknown`` error.
 
 Reader, configuration, interface
 --------------------------------
@@ -146,10 +146,30 @@ Directives
      - path, category, tags, author, series, year, sort (``date`` | ``-date``), style (``list`` | ``cards``), excerpts
      - done
      - ``body_edits_and_unused_templates_leave_other_pages_cached``
+   * - more
+     - none
+     - done
+     - ``body_edits_and_unused_templates_leave_other_pages_cached``
    * - graphviz, graph, digraph
      - alt, align, caption, layout, graphviz_dot, name, class; file argument
      - done
      - ``graphviz_directives``
+   * - typst-diagram
+     - alt, align, caption, name, class, format; file argument
+     - done
+     - ``diagrams_preserve_source_and_figure_options``, ``a_file_is_included_but_ambiguous_sources_are_refused``, ``ordinary_typst_code_is_never_marked_for_execution``
+   * - automodule, autoclass, autoexception, autofunction, autodecorator, automethod, autoproperty, autoattribute, autodata, autotype (through ``Config::autodoc``)
+     - members, undoc-members, no-index/noindex, no-index-entry, inherited-members, show-inheritance, private-members, special-members, imported-members, exclude-members, member-order, synopsis, platform, deprecated, annotation, no-value, class-doc-from, and ``no-*`` negations
+     - done
+     - ``autodoc_*`` in ``tests/``; ``autodoc_extensions``
+   * - autosummary (through ``Config::autodoc``)
+     - caption, class, toctree, nosignatures, recursive, signatures, template
+     - done
+     - ``autodoc_extensions``
+   * - inheritance-diagram (through ``Config::autodoc``)
+     - parts, private-bases, caption, top-classes, include-subclasses
+     - done
+     - ``sources``
    * - doctest, testcode, testoutput, testsetup, testcleanup (sphinx.ext.doctest; tests are not run): group argument; shown as Code_Block pycon / python / none, hidden (testsetup, testcleanup, ``:hide:``) as Comment
      - hide, options, pyversion, skipif, trim-doctest-flags, no-trim-doctest-flags; config ``trim_doctest_flags``
      - done
@@ -258,6 +278,9 @@ Domains
    * - odin roles: pkg, proc, type, const, var, field, enumerator, obj (``~``, leading ``.``, aliases followed); info fields param/parameter/arg/argument with type, result (named results), returns/return, rtype; toc names per ``toc_object_entries_show_parents``; odin:autopackage, autoproc, autoprocgroup, autotype, autoconst, autovar through ``Config::autodoc`` (domain "odin")
      - done
      - ``odin_roles_and_toc_entries``, ``odin_fields_and_no_index``, ``odin_generating_directives_need_a_host``
+   * - rust (Guidedog's own domain, ``src/domains/rust.rs``): crate, module, function, method, struct, enum, variant, union, trait, impl, type, const, static, macro, field, associatedtype, associatedconst, use; roles mod, fn, struct, enum, union, trait, variant, field, type, const, static, macro, any (``~`` cuts at ``.`` and ``::``); ids ``rust-<path>`` (``::`` written ``.``) and ``rust-module-<path>``
+     - done
+     - ``rust_domain``
    * - default-domain lookup of directives and roles, std fallback
      - done
      - ``default_domain_directives``, ``default_domain_changes_role_lookup``
@@ -299,4 +322,4 @@ myst-parser 0.16.1 or be a documented difference (see :doc:`commonmark-conforman
 Covered elsewhere
 -----------------
 
-- Reading allocates per read by design, so no test counts allocator calls. The extension interface for other dialects is covered by guidedoc-rst's own extension tests, and bounded C++ parsing by guidedoc-cpp's limit tests.
+- Steady-state reader and renderer allocations are bounded by ``tests/integration/tests/allocations.rs`` (see :doc:`memory` and :doc:`testing`). The extension interface for other dialects is covered by guidedoc-rst's own extension tests, and bounded C++ parsing by guidedoc-cpp's limit tests.

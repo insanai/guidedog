@@ -121,7 +121,7 @@ Raw Typst executes only when the raw-content policy allows it. ``--untrusted`` o
    * **Raw LaTeX** (``.. raw:: latex``): Not supported in PDF builds. Guidedog reports a
      ``typst.raw.foreign`` warning and omits the content because Typst cannot execute LaTeX commands.
    * **LaTeX Math** (``.. math::`` and ``:math:``): Supported commands translate into native Typst equations. Unsupported commands produce ``typst.math.unsupported`` and follow the math policy; see :doc:`../topics/mathematics`.
-   * **The ``latex`` tag in ``.. only::``**: For backward compatibility with legacy Sphinx projects,
+   * **The latex tag** (``.. only:: latex``): For backward compatibility with legacy Sphinx projects,
      Guidedog recognizes ``latex`` as an alias for PDF builds in ``.. only::`` expressions. In
      native Guidedog projects, prefer ``.. only:: pdf``.
 

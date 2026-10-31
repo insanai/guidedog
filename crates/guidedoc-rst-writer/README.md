@@ -10,9 +10,9 @@ Std-only, so conversion needs no external tool such as pandoc.
 
 ```toml
 [dependencies]
-guidedoc-rst-writer = "0.7"
-guidedoc = "0.7"
-guidedoc-commonmark = "0.7"
+guidedoc-rst-writer = "1.0.0-beta.8"
+guidedoc = "1.0.0-beta.8"
+guidedoc-commonmark = "1.0.0-beta.8"
 ```
 
 We render CommonMark as reStructuredText:
@@ -32,7 +32,7 @@ fn main() -> Result<(), guidedoc::Fail> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/guidedoc-rst-writer). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p guidedoc-rst-writer --no-deps` (and on [docs.rs](https://docs.rs/guidedoc-rst-writer) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

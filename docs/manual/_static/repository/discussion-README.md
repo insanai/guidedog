@@ -68,4 +68,4 @@ program `--typst` names), staged and themed like the HTML and PDF of a current c
 - Problems carry a line, an excerpt with caret (configuration mistakes) and a
   "Did you mean" suggestion (commands, options, states, labels, settings, records).
 
-Catalog initialization writes `_templates/discussion.typ` and `_templates/theme.typ` from the embedded Guidedog PDF theme. The discussion layout keeps its own metadata panel and contents; ordinary books use a separate layout.
+Catalog initialization writes `_templates/layout.html`, `_templates/discussion.typ`, and `_templates/theme.typ` plus `_static/guidedog.css`, `_static/guidedog.js`, and `_static/typography.js` from the embedded Guidedog theme. The discussion layout keeps its own metadata panel and contents; ordinary books use a separate layout.

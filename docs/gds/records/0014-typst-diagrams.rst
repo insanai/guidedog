@@ -91,7 +91,7 @@ RST writing reconstructs the directive and its options from the AST, retaining f
 We preserve drawing source when converting markup; we do not reconstruct it from rendered images or PDF.
 This directive is a Guidedog extension, not a claim of compatibility with a Sphinx Typst extension.
 
-The reusable ``gd-typst`` adapter owns image export, generated-source locations and file-read observation.
+The internal ``gd-typst`` adapter owns image export, generated-source locations and file-read observation.
 ``guidedoc-sphinx`` owns directive parsing, also reached by MyST's existing directive bridge.
 ``gd-link`` owns compilation policy, diagnostics, assets and image substitution.
 ``gd-read`` classifies captioned diagrams as figures.
@@ -140,8 +140,8 @@ Backwards compatibility
 We add a directive.
 Graphviz, ordinary code blocks and existing images retain their behavior.
 Projects using the new directive need no installed Typst program.
-Reusable compiler options gain defaulted fields, and the target enum gains SVG and PNG variants.
-These are source-level additions during the beta; exhaustive external matches need updating.
+Internal ``gd-typst`` compiler options gain defaulted fields, and the target enum gains SVG and PNG variants.
+These are workspace-internal additions during the beta (``gd-typst`` sets ``publish = false``).
 The environment schema changes so existing cached documents cannot preserve an unknown directive parse.
 
 Acceptance criteria and implementation status
@@ -154,19 +154,18 @@ Parser, compiler, RST writing and project integration fixtures cover both source
 We also compiled a temporary copy of jlavici's ``0002-lease.typ`` with its CeTZ 0.3.4 helpers and a Fletcher 0.5.8 diagram offline into HTML and PDF.
 The copy replaced the extraction-only ``html.frame`` wrapper with its drawing content; the jlavici checkout was not changed.
 The manual's combined Graphviz and Typst chapter builds into the 533-page English PDF, and the release smoke test exercises SVG and PNG with an empty PATH.
-On 31 October 2026, the Linux x86-64 workspace build and all 1,982 tests passed (198 suites; five intentionally ignored tests).
+On 31 October 2026, the Linux x86-64 workspace build and all 1,984 tests passed (198 suites; five intentionally ignored tests).
 ``cargo clippy --locked --workspace --all-targets -- -D warnings``, ``cargo fmt --all --check``, the nine data-table checks and the source limit checker passed.
 The source checker retains six pre-existing soft-width warnings and reports no limit violations.
 The compiler also passes its tests without the embedded feature.
 All six localized HTML editions build with ``-W``. The beta.8 preparation completes the related translations, including previously fuzzy entries.
-The implementation is a local candidate for ``1.0.0-beta.8``; the release commit still needs the normal platform CI and archive qualification before tagging.
-Cross-platform release qualification remains the responsibility of Verify and Release workflows.
+``v1.0.0-beta.8`` subsequently passed Linux and macOS CI, website deployment verification, and five-platform release-archive qualification (see ``docs/manual/evidence/release-1.0.0-beta.8.rst``).
 The maintainer requested promotion and implementation-status reconciliation on 31 October 2026; the lifecycle events below record assignment of 0014 and commitment.
 
 Open questions
 --------------
 
-No design questions remain. The maintainer authorized the beta.8 release after successful CI; platform qualification remains a release gate.
+No design questions remain. ``v1.0.0-beta.8`` shipped with full five-platform archive qualification.
 
 Review history
 --------------

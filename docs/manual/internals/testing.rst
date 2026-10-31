@@ -44,7 +44,7 @@ Which crate tests what
      - The CommonMark 0.31.2 specification and the MyST conformance corpus.
    * - ``guidedoc-sphinx``
      - Sphinx directives, roles and domains, and MyST under Sphinx.
-   * - ``guidedoc-html``, ``-typst``, ``-text``
+   * - ``guidedoc-html``, ``-typst``, ``-text``, ``-rst-writer``
      - Each renderer's output; ``guidedoc-defaults`` checks that a document holding
        every ``NodeKind`` renders with every built-in renderer.
    * - ``gd-read``, ``gd-resolve``, ``gd-link``, ``gd-site``, ``gd-book``, ``gd-project``
@@ -88,10 +88,21 @@ Each test binary of ``tests/integration`` groups one area, and each module insid
        Typst sources and packages), autodoc for Python and Odin sources, incremental
        rebuilds across builders, installed build plugins and the public plugin
        catalog, release versions, and the manual's copies of repository files.
+   * - ``autodoc_extensions``
+     - The autodoc family of Sphinx's built-in extensions end to end (``napoleon``,
+       ``autosummary``, ``apidoc``, and ``coverage``) over a Python package without
+       running Python.
+   * - ``sources``
+     - Source pages, source links, class diagrams, durations, and image conversion end
+       to end (``viewcode``, ``linkcode``, ``inheritance_diagram``, ``duration``, and
+       ``imgconverter``).
    * - ``discussions``
      - The discussion workflow through ``guidedog dsc``: new,
        promote, state changes and their rules, recovery from an interrupted change, the
        catalog lock, dates, configured workflows and numbering, and building catalogs.
+   * - ``gates``
+     - Repository-wide dependency, unsafe-code, diagnostic-hint, ASCII, and source-limit
+       checks (see below).
    * - ``manual_code``
      - Every ``code-block:: rust`` of the manual has a compiled twin with the same text;
        a block that only sketches an API is marked ``:class: sketch``.
@@ -111,8 +122,9 @@ Dependencies (``gates::dependencies``)
    only on its own layer or lower ones. The engine crates (``guidedoc*``) need nothing
    outside the workspace. The supporting libraries never depend on the engine. External
    crates are the chosen few (Typst only in ``gd-typst``, tree-sitter in ``gd-pyscan``
-   and ``gd-rustdoc``, ``serde_json`` in ``gd-json``). A new crate or dependency fails
-   the gate until it is placed in its table, with the reason in ``Cargo.toml``.
+   and ``gd-rustdoc``, ``serde_json`` in ``gd-json``, ``ureq`` and ``rustls`` in
+   ``gd-fetch``). A new crate or dependency fails the gate until it is placed in its
+   table, with the reason in ``Cargo.toml``.
 
 Unsafe code (``gates::unsafe_code``)
    The workspace denies ``unsafe_code``. Every crate without FFI also forbids it with
@@ -129,24 +141,30 @@ Hints (``gates::hints``)
    directions: an imperative clause that names something to act on, a "Did you mean"
    suggestion, or "Nothing to do:" with the reason. See :doc:`../errors`.
 
+Documentation ASCII (``gates::ascii``)
+   Scans English documentation sources and crate READMEs for typographic punctuation
+   (em-dashes, en-dashes, curly quotes, ellipses, non-breaking spaces, and Unicode
+   arrows) unless explicitly marked with an ``ascii-allow`` comment, keeping source
+   files plain ASCII while the renderers supply typographic punctuation.
+
 Documentation of the API
    The workspace lint ``missing_docs`` makes every public item documented, so no scan of the sources is needed for it. The README
    cheat sheets stay short fragments for reading, not doctests. The programs a reader
    would copy are the ``guidedoc-examples`` crate's examples and the manual's twins.
 
-Limits
-   ``cargo run -p check`` holds functions to 70 logical lines, files to 1,408 lines, and
-   lines to 99 (soft) and 108 (hard) characters, in ``crates``, ``cmd``, ``tools``,
-   ``examples`` and ``tests``.
+Limits (``gates::source`` and ``cargo run -p check``)
+   ``cargo run -p check`` and ``gates::source`` hold functions to 70 logical lines,
+   files to 1,408 lines, and lines to 99 (soft) and 108 (hard) characters, in
+   ``crates``, ``cmd``, ``tools``, ``examples`` and ``tests``.
 
 Allocation
 ----------
 
 Rust has no per-call allocator, and its global allocator aborts when memory runs out, so a test cannot refuse allocations one by one. Two counting-allocator tests check allocation instead. ``guidedoc`` proves that the engine core
 converts in steady state without allocating, and ``allocations`` bounds what the readers
-and renderers add. Their scratch vectors (block and inline item lists, anchor tables,
-renderer state) are still built per conversion. The ceilings record today's counts, to
-be lowered as that scratch moves into the workspace. Work driven by the input is
+and renderers add. Readers and renderers store their working state in ``guidedoc::Scratch``
+inside the workspace, so most pairs allocate nothing on repeated conversions; the
+ceilings record the small remaining warmup or lossy-report counts (see :doc:`memory`). Work driven by the input is
 bounded by ``Limits`` and the host budget, which return ``Capacity`` or ``Limit``
 results. The ``projects`` capacity tests check them through the real readers and
 renderers.

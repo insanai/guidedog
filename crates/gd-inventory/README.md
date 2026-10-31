@@ -6,7 +6,7 @@ Sphinx object inventories (`objects.inv`, versions 1 and 2), compressed with `gd
 
 ```toml
 [dependencies]
-gd-inventory = "0.7"
+gd-inventory = "1.0.0-beta.8"
 ```
 
 We write an inventory and read it back:
@@ -30,7 +30,7 @@ fn main() -> Result<(), gd_inventory::Error> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-inventory). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-inventory --no-deps` (and on [docs.rs](https://docs.rs/gd-inventory) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

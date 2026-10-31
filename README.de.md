@@ -17,9 +17,9 @@ guidedog build pdf docs
 guidedog serve docs
 ```
 
-Das Projekt enthält `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ` und `_static/`. Vorlagen sind gewöhnliche Dateien, die wir direkt bearbeiten können. HTML bietet Navigation, Suche, Syntaxhervorhebung, Diagramme und Gleichungen. PDF-Bücher bieten Kapitel, Querverweise, Abbildungen, Register und sprachgerechten Satz.
+Das Projekt enthält `conf.toml`, `index.rst`, `_templates/` (`layout.html`, `book.typ`, `discussion.typ`, `article.typ` und `theme.typ`) sowie `_static/` (`guidedog.css`, `guidedog.js` und `typography.js`). Vorlagen und statische Assets sind gewöhnliche Dateien, die wir lokal bearbeiten können. HTML bietet Navigation, Suche, Syntaxhervorhebung, Diagramme, Gleichungen und Knuth-Plass-Absatzsatz. PDF-Bücher bieten Kapitel, Querverweise, Abbildungen, Register und sprachgerechten Satz. Wir können Graphviz- oder Typst-Zeichnungsquelltext – einschließlich CeTZ und Fletcher – direkt in RST und MyST einbetten, wobei Assets für HTML und PDF automatisch erzeugt werden; siehe das [Diagrammkapitel](docs/manual/topics/diagrams.rst).
 
-Standardmäßig ist das helle Design aktiv; Leser können auf das dunkle Design oder die Systemeinstellung umschalten. Die Einstiegsseite des Handbuchs und die Repositoryübersicht erkennen die Browsersprache automatisch. Eine gespeicherte Auswahl hat Vorrang; direkte Links zu einer Sprachausgabe oder einem Kapitel bleiben ausdrückliche Anforderungen.
+Das eingebaute Design folgt standardmäßig der Systemeinstellung und bietet zusätzlich eine helle und eine dunkle Ansicht; Guidedogs eigene Dokumentationswebsite startet standardmäßig in der hellen Leseausgabe. Die Einstiegsseite der Website und die Repositoryübersicht erkennen die Browsersprache automatisch. Eine gespeicherte Auswahl hat Vorrang; direkte Links zu einer Sprachausgabe oder einem Kapitel bleiben ausdrückliche Anforderungen.
 
 ```sh
 guidedog convert notes.md --to pdf --output notes.pdf
@@ -58,7 +58,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-Die ausführbare Datei liegt unter `target/release`. Unter macOS mit Homebrew weisen wir dem Linker zuerst den Pfad zu Graphviz zu: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. Der Typst-Compiler ist standardmäßig eingebettet (das Feature `embedded` von `gd-typst`); ohne dieses Feature ruft Guidedog für PDFs ein installiertes `typst` 0.15.1 auf. Unter Linux linkt der Paket-Downloader des eingebetteten Compilers ein mitgeliefertes OpenSSL, das zum Kompilieren `perl` und `make` benötigt.
+Die ausführbare Datei liegt unter `target/release`. Unter macOS mit Homebrew weisen wir dem Linker zuerst den Pfad zu Graphviz zu: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. Der Typst-Compiler ist standardmäßig eingebettet (das Feature `embedded` von `gd-typst`); ohne dieses Feature ruft Guidedog für PDF-Bücher ein installiertes `typst` 0.15.1 auf, während `.. typst-diagram::` den eingebetteten Compiler erfordert. Unter Linux linkt der Paket-Downloader des eingebetteten Compilers ein mitgeliefertes OpenSSL, das zum Kompilieren `perl` und `make` benötigt.
 
 Führen Sie vor dem Einreichen einer Änderung dieselben Prüfungen wie die CI aus:
 
@@ -82,7 +82,7 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
     -D language=de -D 'html_extra_path=[]' -W
 ```
 
-Übersetzen und prüfen Sie die `msgstr`-Einträge in den PO-Dateien. Guidedog extrahiert POT-Dateien, führt Kataloge zusammen, berichtet über den Fortschritt und baut jede Sprachausgabe. Eigene Übersetzungen erfindet es nicht. Befehle, Pfade, Code, API-Namen und Verweisziele bleiben unverändert. Übersetzt werden nur das Handbuch und die Repositoryübersicht; API-Referenz und GDS bleiben auf Englisch. `cargo xtask build-site` fügt alle Sprachausgaben, ihre PDF-Bücher und die Diskussionen zur Gesamtwebsite zusammen.
+Übersetzen und prüfen Sie die `msgstr`-Einträge in den PO-Dateien. Guidedog extrahiert POT-Dateien, führt Kataloge zusammen, berichtet über den Fortschritt und baut jede Sprachausgabe. Eigene Übersetzungen erfindet es nicht. Befehle, Pfade, Code, API-Namen und Verweisziele bleiben unverändert. Übersetzt werden die Einstiegsseite der Website, das Handbuch und die Repositoryübersicht; API-Referenz und GDS bleiben auf Englisch. `cargo xtask build-site` fügt alle Sprachausgaben, ihre PDF-Bücher und die Diskussionen zur Gesamtwebsite zusammen.
 
 Auf GitHub wählen Leser die Sprache der README über die Links ganz oben. Die automatische Spracherkennung gehört zur erzeugten Dokumentationswebsite.
 
@@ -129,7 +129,7 @@ guidedog ssg publish posts/2026-04-17-zero-copy.rst
 guidedog ssg build site
 ```
 
-Seiten, die mit `:pdf: article` markiert sind, erzeugen neben ihrer HTML-Seite auch eigenständige PDFs in Druckqualität. Websites mit mehreren Teilprojekten binden Unterprojekte (wie `docs/manual`, `docs/api` und `docs/gds`) deklarativ über `[[site.mounts]]` ein. Siehe [Statische Websites veröffentlichen](docs/manual/howto/static-publishing.rst).
+Seiten, die mit `:pdf: article` markiert sind, erzeugen neben ihrer HTML-Seite auch eigenständige PDFs in Druckqualität. Websites mit mehreren Teilprojekten binden Unterprojekte (wie `docs/site`, `docs/manual` und `docs/gds`) deklarativ über `[[site.mounts]]` ein; `docs/api` wird als eigenständiges Referenzprojekt und als PDF-Anhang des Handbuchs gebaut. Siehe [Statische Websites veröffentlichen](docs/manual/howto/static-publishing.rst).
 
 ## Lesen und einbetten
 
@@ -140,7 +140,7 @@ Seiten, die mit `:pdf: article` markiert sind, erzeugen neben ihrer HTML-Seite a
 - [GDS](docs/gds/README.md): nummerierte Entwurfsaufzeichnungen und Implementierungsentscheidungen.
 - [Diskussionsbibliothek](crates/gd-discussion/README.md): die Kataloge, die `guidedog dsc` verwaltet.
 - [Plugin-Bibliothek](crates/gd-plugins/README.md): typisierte Build-Dienste und die Publisher-Schnittstelle, die `guidedog publish` und das eingebundene Pages-Plugin verwenden.
-- [Wiederverwendbare Crates](docs/manual/internals/crates.rst): die Engine, Bibliotheken, API-Generatoren und das Plugin-SDK, die andere Rust-Projekte über crates.io nutzen können, sowie ihre Abhängigkeiten untereinander.
+- [Wiederverwendbare Crates](docs/manual/internals/crates.rst): die Engine, Bibliotheken, API-Generatoren und das Plugin-SDK, die für den eigenständigen Einsatz aufgebaut sind (derzeit aus diesem Workspace gebaut, mit für crates.io reservierten Crate-Namen), sowie ihre Abhängigkeiten untereinander.
 
 Jedes Crate unter `crates/` enthält ein kurzes README zu seiner API und seinen Entwurfsentscheidungen. Guidedoc verwaltet seine Dokumenttabellen selbst und verwendet sie zwischen Konvertierungen wieder, sodass im eingeschwungenen Zustand kein neuer Speicher reserviert wird. Es liefert strukturierte Diagnosen samt Lösungshinweis zurück. Der Host übernimmt Dateien, Budgets, Caching, Veröffentlichung und die eingebetteten Compiler. `--untrusted` schränkt Fähigkeiten ein, ist jedoch keine Prozess-Sandbox und begrenzt nicht sämtliche nativen Ressourcen. Der Funktionsumfang der Beta richtet sich an vertrauenswürdige Dokumentationsprojekte unter Linux, macOS und Windows.
 

@@ -45,7 +45,7 @@ Every command accepts these:
      - Show the help of ``guidedog``, or of the command it follows.
    * - ``--version``
      - Show the versions of Guidedog, the Guidedoc engine (and its document schema),
-       the tree-sitter grammars, and the Typst backend in use.
+       the tree-sitter grammars, the Graphviz library (static or linked), and the Typst backend in use.
    * - ``--licenses``
      - Show Guidedog's licence and the notices of the libraries built in.
 
@@ -78,11 +78,13 @@ Exit codes
        publisher's ``recover``.
    * - ``70``
      - A crash; the previous published output remains available.
+   * - ``130``
+     - Interrupted with Ctrl+C; published files remain unchanged.
 
 Commands overview
 -----------------
 
-.. list-table:: CLI commands
+.. list-table:: Core CLI commands
    :header-rows: 1
    :widths: 30 70
 
@@ -106,25 +108,25 @@ Commands overview
      - Lists the readers and renderers built in, and the Typst backend.
    * - ``publish --publisher=ID``
      - Builds the project a publisher's configuration names, and publishes the site.
-   * - ``ssg init|new|draft|schedule|publish|status|build|theme``
-     - Scaffolds static sites, manages article publication lifecycles, packs or verifies portable themes, and assembles multi-project mounted sites.
    * - ``plugin COMMAND``
      - Registers, checks, lists, inspects, runs, or unregisters plugin programs.
 
-Plugins add commands of their own (see `Commands plugins add`_). The GitHub Pages plugin, linked into every ``guidedog``, adds publishing and maintenance commands:
+Plugins add commands of their own (see `Commands plugins add`_). Three plugins are linked into every ``guidedog`` executable:
 
-.. list-table:: Commands of the linked GitHub Pages plugin
+.. list-table:: Commands of linked plugins
    :header-rows: 1
-   :widths: 30 70
+   :widths: 38 62
 
    * - Command
      - What it does
    * - ``publish pages``
-     - Publishes to GitHub Pages, doing first whatever setup is still missing.
-   * - ``pages workflow``
-     - Writes a GitHub Actions workflow that builds and deploys the site.
-
-The discussion plugin, also linked into every ``guidedog``, adds ``dsc`` and its commands: ``guidedog dsc init``, ``new``, ``build``, and the rest (see `guidedog dsc`_). The static publishing plugin, likewise linked into every ``guidedog``, adds ``ssg`` and its commands: ``guidedog ssg init``, ``new``, ``draft``, ``schedule``, ``publish``, ``status``, ``build``, and ``theme`` (see `guidedog ssg`_).
+     - Publishes to GitHub Pages, doing first whatever setup is still missing (``pages``).
+   * - ``pages init|auth|bind|setup|doctor|watch|status|recover|unbind|workflow``
+     - Configures, authenticates, inspects, watches, recovers, or writes a GitHub Actions workflow for GitHub Pages (``pages``; see `guidedog pages`_).
+   * - ``dsc init|new|list|show|promote|state|index|check|build|recover|config``
+     - Manages numbered discussion catalogs and builds their HTML site and per-record PDFs (``dsc``; see `guidedog dsc`_).
+   * - ``ssg init|new|draft|schedule|publish|status|build|theme``
+     - Scaffolds static sites, manages article publication lifecycles, packs or verifies portable themes, and assembles multi-project mounted sites (``ssg``; see `guidedog ssg`_).
 
 A command word that is neither guidedog's nor a plugin's is a usage error (exit status 2). Its hint lists the commands, and suggests the closest of both kinds.
 
@@ -243,7 +245,7 @@ Builders:
      - Show only errors: no progress, summary, warnings or notes (``-W`` still counts
        the warnings).
    * - ``--untrusted``
-     - Leave out raw content, fetch nothing, and run no build plugin. This is a
+     - Leave out raw content, external Graphviz resources, and ``typst-diagram`` compilation; fetch nothing; and run no build plugin. This is a
        capability policy, not a process sandbox.
    * - ``--budget=MIB``
      - Memory the build may hold at once, from 1 to 1048576 (default: ``1024``).
@@ -711,7 +713,7 @@ Guidedog's configuration folder (``GUIDEDOG_CONFIG_DIR`` moves it):
    guidedog plugin check ./target/release/product-badge --project=docs --config=badge.toml
    guidedog plugin list
    guidedog plugin inspect product-badge
-   guidedog plugin run pages -- auth status
+   guidedog plugin run external-publisher -- status
    guidedog plugin unregister product-badge
 
 Subcommands:
@@ -728,8 +730,8 @@ Subcommands:
 * ``inspect ID``: an entry's declared build hooks (source, HTML, assets) or publisher
   capabilities, the commands it adds, and whether the program on disk is still the one
   registered.
-* ``run ID -- [ARGS...]``: runs a registered program's own commands, after checking its
-  SHA-256.
+* ``run ID -- [ARGS...]``: runs an external registered program's own commands, after checking its
+  SHA-256 (linked plugins run directly as ``guidedog <command>``, such as ``guidedog pages auth status``).
 * ``unregister ID``: removes the entry from ``plugins.toml``. The program, and anything
   it published, stay unchanged.
 
@@ -782,7 +784,9 @@ A plugin may add commands to guidedog, or targets to ``guidedog publish``. ``gui
      ...
      PLUGIN COMMANDS
        publish pages      Publish to GitHub Pages, doing whatever setup is missing (pages)
-       pages workflow     Print, write, or check a GitHub Actions workflow ... (pages)
+       pages              Configure, sign in, inspect, watch, or recover GitHub Pages (pages)
+       dsc                Keep and build a discussion catalog (dsc)
+       ssg                Scaffold static sites, manage articles, and build mounted sites (ssg)
 
 guidedog looks for a word it does not know (or a ``publish`` target) among the commands of the linked plugins first, then among those of the registered programs, and runs the plugin that adds it. ``--help`` after such a command prints its help, made from what the plugin declares. A plugin cannot replace one of guidedog's commands, and the first plugin to add a name keeps it.
 
@@ -855,7 +859,7 @@ each part. See :doc:`../howto/github-pages`.
    * - ``--credential=env``
      - Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without storing it.
    * - ``--guidedog=PATH``
-     - The ``guidedog`` that builds (default: ``GUIDEDOG_PAGES_GUIDEDOG``, then ``PATH``).
+     - The ``guidedog`` that builds (default: this ``guidedog`` executable when invoked through ``guidedog pages watch``, else ``GUIDEDOG_PAGES_GUIDEDOG``, then ``PATH``).
    * - ``--dry-run``, ``--wait=SECONDS``, ``--verbose``
      - ``publish``: plan only; how long to wait for the deployment; list every change.
    * - ``--adopt``, ``--yes``

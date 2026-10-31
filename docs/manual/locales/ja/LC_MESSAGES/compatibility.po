@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:02+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -480,11 +480,11 @@ msgstr "``imgconverter``"
 
 #: ../../compatibility.rst:147
 msgid ""
-"Accepted, and nothing runs: Typst reads SVG, PNG, JPEG and GIF itself. "
-"Other formats are reported (:doc:`sources-and-diagrams`)."
+"Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and "
+"PDF itself. Other formats are reported (:doc:`sources-and-diagrams`)."
 msgstr ""
-"受け付けますが、何も実行しません。Typst は SVG、PNG、JPEG、GIF を自分で読めます。それ以外の形式は報告します（\\ "
-":doc:`sources-and-diagrams`\\ ）。"
+"受け付けますが、何も実行しません。Typst は PNG、JPEG、GIF、SVG、WebP、PDF "
+"を自分で読めます。それ以外の形式は報告します（:doc:`sources-and-diagrams`）。"
 
 #: ../../compatibility.rst:148
 msgid "``myst_parser``"
@@ -541,29 +541,34 @@ msgstr ""
 #: ../../compatibility.rst:166
 msgid ""
 "Graphviz image resources are resolved relative to their document and "
-"confined."
-msgstr "Graphviz の画像リソースは文書を基準に解決され、読み取り境界内に制限されます。"
+"confined. Supported image bytes are embedded in the drawing. "
+"``imagepath`` and ``fontpath`` do not expand the boundary. The embedded "
+"Typst compiler enforces the declared readable folders directly, while "
+"an external ``typst`` program runs with a private symlink root "
+"containing only those folders. This keeps book templates and preambles "
+"within the declared resources."
+msgstr ""
+"Graphviz "
+"の画像リソースはドキュメントからの相対パスで解決され、境界内に閉じ込められます。対応する画像バイト列は図に埋め込まれます。``imagepath`` "
+"と ``fontpath`` が境界を広げることはありません。内蔵の Typst "
+"コンパイラは宣言された読み取り可能フォルダーを直接強制し、外部の ``typst`` "
+"プログラムはそれらのフォルダーだけを含む専用のシンボリックリンク・ルートで実行されます。これにより書籍テンプレートやプリアンブルは宣言されたリソース内に保たれます。"
 
-#: ../../compatibility.rst:168
-#| msgid ""
-#| "Graphviz image resources are resolved relative to their document and "
-#| "confined. Supported image bytes are embedded in the drawing. "
-#| "``imagepath`` and ``fontpath`` do not expand the boundary. Typst runs "
-#| "with a private root containing the readable folders. This keeps book "
-#| "templates and preambles within the declared resources."
+#: ../../compatibility.rst:173
 msgid ""
 "``typst-diagram`` is a Guidedog extension for RST and MyST projects, "
 "rather than a Sphinx extension contract. It compiles inline or file "
 "source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks "
 "remain examples. The embedded compiler uses the project's package and "
 "font policy; ``--untrusted`` refuses compilation. See "
-":doc:`topics/diagrams`. Supported image bytes are embedded in the "
-"drawing. ``imagepath`` and ``fontpath`` do not expand the boundary. Typst "
-"runs with a private root containing the readable folders. This keeps book "
-"templates and preambles within the declared resources."
-msgstr "``typst-diagram`` は RST と MyST のプロジェクト向けの Guidedog 独自拡張であり、Sphinx 拡張の互換契約ではありません。本文またはファイルのソースを HTML と PDF 用の SVG または PNG にコンパイルします。通常の Typst コードブロックは例として残ります。内蔵コンパイラはプロジェクトのパッケージ・フォント方針を使い、``--untrusted`` はコンパイルを拒否します。:doc:`topics/diagrams` を参照してください。対応する画像データは図に埋め込まれます。``imagepath`` と ``fontpath`` は境界を広げません。Typst は読み取り可能なフォルダーを含む専用ルートで動作し、書籍テンプレートや前文を宣言されたリソース内に保ちます。"
+":doc:`topics/diagrams`."
+msgstr ""
+"``typst-diagram`` は RST と MyST のプロジェクト向けの Guidedog 独自拡張であり、Sphinx "
+"拡張の互換契約ではありません。本文またはファイルのソースを HTML と PDF 用の SVG または PNG にコンパイルします。通常の "
+"Typst コードブロックは例として残ります。内蔵コンパイラはプロジェクトのパッケージ・フォント方針を使い、``--untrusted`` "
+"はコンパイルを拒否します。:doc:`topics/diagrams` を参照してください。"
 
-#: ../../compatibility.rst:173
+#: ../../compatibility.rst:175
 msgid ""
 "``--untrusted`` narrows the read boundary to the source folder. It omits "
 "raw content, unsafe URLs, outside resources, project Typst templates, and "
@@ -575,7 +580,7 @@ msgstr ""
 "URL、外部リソース、プロジェクトの Typst テンプレートとプリアンブルを診断付きで省きます。インベントリや Typst "
 "パッケージは取得しません。リソースを読むグラフはコードとして表示し、警告します。このモードはネイティブコンパイラのメモリや実行時間を制限しません。"
 
-#: ../../compatibility.rst:179
+#: ../../compatibility.rst:181
 msgid ""
 "The host budget defaults to 1 GiB. It is coarse: it counts the sources, "
 "included files, and PDF output the host holds, reserved before they are "
@@ -593,7 +598,7 @@ msgstr ""
 "で指定できます。作業メモリは常にメモリ上に置かれます。ディスクを使うモードはなく、``--memory=disk`` と "
 "``--disk-budget`` は拒否されます。"
 
-#: ../../compatibility.rst:186
+#: ../../compatibility.rst:188
 msgid ""
 "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document "
 "work. Changing a limit invalidates cached reading and output. Depth and "
@@ -607,11 +612,11 @@ msgstr ""
 "Graphviz、tree-sitter、Typst による割り当てはホスト予算の対象外です。それらに厳密な上限が必要な場合は、OS "
 "の制限を使います。:doc:`errors` と :doc:`internals/memory` を参照してください。"
 
-#: ../../compatibility.rst:192
+#: ../../compatibility.rst:194
 msgid "Verification and real projects"
 msgstr "検証と実際のプロジェクト"
 
-#: ../../compatibility.rst:195
+#: ../../compatibility.rst:197
 msgid ""
 "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx "
 "9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, "
@@ -632,7 +637,7 @@ msgstr ""
 "xtask verify-docutils`` は、それをバージョンを固定した Docutils 0.22.4 と照合します。98 "
 "個のツリーはすべて一致します。"
 
-#: ../../compatibility.rst:197
+#: ../../compatibility.rst:199
 msgid ""
 "On 15 October 2026 we built the manuals of CPython, Django and Flask as "
 "HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). "
@@ -645,7 +650,7 @@ msgstr ""
 "のビルドはすべて成功しました。リンクチェックで見つかった壊れた内部リンクは、CPython にある無害な 2 件だけです。Django と "
 "Flask のブックはビルドできました。CPython のブックには、12 GB のマシンに積まれていた以上のメモリが必要です。"
 
-#: ../../compatibility.rst:199
+#: ../../compatibility.rst:201
 msgid ""
 "Those projects contain unsupported Python extension constructs. Their "
 "diagnostics remain part of the evidence. A zero exit status does not mean "
@@ -656,8 +661,13 @@ msgstr ""
 "拡張の構文が含まれています。その診断も検証記録の一部です。終了ステータスがゼロでも、各プロジェクト独自のディレクティブがすべて再現されたわけではありません。診断ゼロでの公開が求められる場合は、``-W`` "
 "を付けて実行します。"
 
-#: ../../compatibility.rst:201
+#: ../../compatibility.rst:203
 msgid ""
 "The measurements describe the recorded workloads on the recorded machine. "
 "They are not universal speed or memory bounds."
 msgstr "これらの測定値は、記録したマシン上で記録した作業負荷を処理したときのものです。速度やメモリの普遍的な上限を示すものではありません。"
+
+#~ msgid ""
+#~ "Graphviz image resources are resolved relative to their document and "
+#~ "confined."
+#~ msgstr "Graphviz の画像リソースは文書を基準に解決され、読み取り境界内に制限されます。"

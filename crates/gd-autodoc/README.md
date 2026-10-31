@@ -10,8 +10,8 @@ time, members of classes outside the source roots) is a `Message` naming the obj
 
 ```toml
 [dependencies]
-gd-autodoc = "0.7"
-gd-pyscan = "0.7"
+gd-autodoc = "1.0.0-beta.8"
+gd-pyscan = "1.0.0-beta.8"
 ```
 
 We generate the `autoclass` output for a class:
@@ -42,7 +42,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-autodoc). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-autodoc --no-deps` (and on [docs.rs](https://docs.rs/gd-autodoc) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

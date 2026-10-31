@@ -1,7 +1,7 @@
 Crates: reusable and internal
 =============================
 
-Some of Guidedog's crates are useful beyond Guidedog. We publish those to crates.io and keep the rest internal to the program.
+Some of Guidedog's crates are useful beyond Guidedog. We structure those for independent reuse and ``cargo package`` (with crate names reserved for crates.io) and keep the rest internal to the program.
 
 Take one library
 ----------------
@@ -11,7 +11,7 @@ When another Rust program only needs to read TOML, we add one line to its ``Carg
 .. code-block:: toml
 
    [dependencies]
-   gd-toml = "0.7"
+   gd-toml = "1.0.0-beta.8"
 
 .. code-block:: rust
 
@@ -45,7 +45,7 @@ A program that needs only CommonMark and HTML registers ``guidedoc_commonmark::R
 Two groups
 ----------
 
-The **reusable** crates are the engine, the supporting libraries, the API generators and the plugin SDK. Each is published, has a README written for a reader who has never seen Guidedog, and keeps its API for other projects as well as for ours.
+The **reusable** crates are the engine, the supporting libraries, the API generators and the plugin SDK. Each is packageable (``publish`` is enabled, with names reserved for crates.io), has a README written for a reader who has never seen Guidedog, and keeps its API for other projects as well as for ours.
 
 The **internal** crates are the parts of the Guidedog program: configuration, the project builder, the site and book builders, translation, publication and the command line. They set ``publish = false``. Their APIs follow the program's needs and change with it, so we promise nothing about them to anyone else.
 
@@ -188,11 +188,11 @@ Every other package is internal:
 - the command line and its services: ``gd-cli``, ``gd-theme``, ``gd-discussion``, ``gd-ssg``, ``gd-fetch``, ``gd-git``, ``gd-typst`` and ``gd-clock``;
 - the programs under ``cmd/``, the tools under ``tools/``, the examples under ``examples/`` and the end-to-end tests under ``tests/integration``.
 
-``gd-theme`` embeds the built-in HTML and Typst templates (``layout.html``, ``article.html``, ``landing.html``, ``book.typ``, ``discussion.typ``, ``article.typ``, ``theme.typ``) and the browser assets (``guidedog.css``, ``guidedog.js``) so that ``quickstart``, ``gd-site`` and ``gd-book`` share one source without a runtime data folder. Its ``pack`` module encodes, decodes, and verifies deterministic ``.gdt`` theme archives and ``guidedog-theme.lock`` files offline.
+``gd-theme`` embeds the built-in HTML and Typst templates (``layout.html``, ``article.html``, ``landing.html``, ``book.typ``, ``discussion.typ``, ``article.typ``, ``theme.typ``) and the browser assets (``guidedog.css``, ``guidedog.js``, ``typography.js``) so that ``quickstart``, ``gd-site`` and ``gd-book`` share one source without a runtime data folder. Its ``pack`` module encodes, decodes, and verifies deterministic ``.gdt`` theme archives and ``guidedog-theme.lock`` files offline.
 
 ``gd-ssg`` implements the linked ``guidedog ssg`` plugin and authoring surface: site presets (``project``, ``journal``, ``research``), surgical front-matter and field-list transitions (``new``, ``draft``, ``schedule``, ``publish``, ``status``), explicit SHA-256-pinned ``.gdt`` theme installation, and multi-project ``[[site.mounts]]`` website assembly (``guidedog ssg build``). It owns no renderer; mounted builds run through the standard Guidedog project pipeline.
 
-``gd-typst`` embeds the Typst compiler. Keeping it internal keeps Typst's large dependency tree out of every reusable crate: ``guidedoc-typst`` writes Typst source as text, and only the program compiles it.
+``gd-typst`` embeds the Typst compiler and runs it both for PDF books and articles and for ``typst-diagram`` SVG and PNG figures. Keeping it internal keeps Typst's large dependency tree out of every reusable crate: ``guidedoc-typst`` writes Typst source as text, and only the program compiles it.
 
 ``gd-fetch`` reads URLs and files and sends HTTP requests for remote intersphinx inventories, pinned ``.gdt`` theme archives and the Pages publisher. It uses ``ureq``, a small blocking HTTP client, with ``rustls`` for TLS and Mozilla's root certificates built in (``webpki-roots``). Guidedog therefore needs no ``curl`` program, OpenSSL or system certificate store, and request headers never appear on a command line. The crate stays internal, so the reusable crates do not carry an HTTP stack.
 

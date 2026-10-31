@@ -7,7 +7,7 @@ Standard library only. Gzip is not provided: nothing uses it.
 
 ```toml
 [dependencies]
-gd-flate = "0.7"
+gd-flate = "1.0.0-beta.8"
 ```
 
 We compress, then decompress with a limit on the output, so a hostile input cannot exhaust memory:
@@ -21,7 +21,7 @@ fn main() -> Result<(), gd_flate::Error> {
 }
 ```
 
-The API documentation is on [docs.rs](https://docs.rs/gd-flate). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
+Build the API documentation locally with `cargo doc -p gd-flate --no-deps` (and on [docs.rs](https://docs.rs/gd-flate) once published to crates.io). This is one of Guidedog's reusable crates: [Crates](https://insanai.github.io/guidedog/manual/internals/crates.html) in the manual lists the others and how they depend on each other.
 
 ## Cheat sheet
 

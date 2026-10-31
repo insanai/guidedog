@@ -108,14 +108,14 @@ Code with the Python domain's processing (``fn`` adds ``()`` with
 ``add_function_parentheses``). The domain's ``map_target`` resolves ``crate::``,
 ``self::``, ``super::`` and ``Self::`` targets as in signatures.
 
-Open points
------------
+Shared role and collector seams
+-------------------------------
 
-- The shared ``~`` processing (``DOTTED``) shortens a title at its last ``.``. For Rust
-  it should also cut at ``::`` (``~a::b::Lexer`` shows ``Lexer``). Until the shared role
-  code does, such a title shows the whole path. The target is right.
-- The project's object collector joins ``module`` and ``fullname`` with ``.``. For the
-  rust domain it must join them with ``::`` to give the targets above.
+- The shared ``~`` processing (``DOTTED`` in ``roles.rs``) shortens a Rust title at
+  both ``.`` and ``::`` (``~a::b::Lexer`` shows ``Lexer``).
+- The project's object collector (``gd-read``) and cross-reference suggester
+  (``gd-resolve``) join ``module`` and ``fullname`` with ``::`` for the ``rust`` domain
+  rather than ``.``, matching the target paths above.
 
 Tests
 -----

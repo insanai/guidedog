@@ -166,7 +166,7 @@ The settings ``inheritance_graph_attrs``, ``inheritance_node_attrs`` and ``inher
    [inheritance_alias]
    "shapes.square.Square" = "Square"
 
-The graph is written as Sphinx writes it and drawn by the linked Graphviz, like a ``graphviz`` directive, so no ``dot`` program is needed. In HTML the drawing is an SVG with the ``graphviz-adaptive`` colours, and each node links to its class's description when the project has one. A class without a description is drawn without a link. The PDF embeds the same SVG. Text shows the classes as a list, each with its bases.
+The graph is written as Sphinx writes it and drawn by the linked Graphviz, like a ``graphviz`` directive, so no ``dot`` program is needed. In HTML the drawing is an SVG asset with the ``graphviz-adaptive`` colours (embedded with ``<object>`` when nodes carry links, or ``<img>`` otherwise), and each node links to its class's description when the project has one. A class without a description is drawn without a link. The PDF embeds a separate unlinked light SVG. Text shows the classes as a list, each with its bases.
 
 A name that is neither a class nor a module in the scan is reported as ``inheritance.class`` and left out. A diagram may hold at most 1,000 classes; a larger one is ``inheritance.limit`` and is not drawn. Loading ``conf.toml`` refuses an attribute name that is not a Graphviz identifier, and a value that is not a plain word, number or quoted string is quoted, so an attribute cannot change the rest of the graph.
 

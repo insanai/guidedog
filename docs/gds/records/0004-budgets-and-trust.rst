@@ -4,7 +4,7 @@
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-09-30
-:gds-updated: 2026-10-15
+:gds-updated: 2026-10-31
 :gds-discussion: No external discussion URL assigned
 :gds-labels: ["architecture", "build", "security"]
 
@@ -146,10 +146,13 @@ an untrusted build's confinement for that build only. A trusted build afterwards
 the include roots again (``a_trusted_build_after_an_untrusted_one_is_not_confined``).
 
 A graph under ``--untrusted`` reads no file. A graph naming one is shown as code with a
-warning.
+warning. Embedded ``typst-diagram`` directives (GDS 0014) are likewise not compiled under
+``--untrusted`` and are shown as code with a warning.
 
-The book runs only Typst that Guidedog generates. ``pdf_preamble`` and
-``_templates/book.typ`` are left out with a warning. Raw Typst is already omitted by the
+The book, discussion, and article PDF builders run only Typst that Guidedog generates.
+``pdf_preamble`` and project ``_templates/book.typ``, ``_templates/discussion.typ``, and
+``_templates/article.typ`` overrides are left out with a warning in favor of the embedded
+templates. Raw Typst is already omitted by the
 policy, and ``pdf_packages`` is ``offline``. The generated Typst escapes everything a
 document says (text, math, strings), so a document cannot add Typst code. It names only
 images and graphs that passed confinement.

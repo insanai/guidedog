@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -66,56 +66,69 @@ msgstr "प्रोजेक्ट शुरू करें"
 
 #: ../../repository.rst:25
 msgid ""
-"The project contains ``conf.toml``, ``index.rst``, "
-"``_templates/layout.html``, ``_templates/book.typ``, and ``_static/``. "
-"Templates are ordinary files we can edit. HTML provides navigation, "
-"search, code highlighting, diagrams, and equations. PDF books provide "
-"chapters, cross-references, figures, indexes, and language-aware "
-"typesetting."
+"The project contains ``conf.toml``, ``index.rst``, ``_templates/`` "
+"(``layout.html``, ``book.typ``, ``discussion.typ``, ``article.typ``, "
+"and ``theme.typ``), and ``_static/`` (``guidedog.css``, "
+"``guidedog.js``, and ``typography.js``). Templates and static assets "
+"are ordinary files we can edit locally. HTML provides navigation, "
+"search, code highlighting, diagrams, equations, and Knuth-Plass "
+"paragraph typesetting. PDF books provide chapters, cross-references, "
+"figures, indexes, and language-aware typesetting. We can embed Graphviz "
+"or Typst drawing source, including CeTZ and Fletcher, directly in RST "
+"and MyST with automatic HTML and PDF assets; see :doc:`topics/diagrams`."
 msgstr ""
-"प्रोजेक्ट में ``conf.toml``, ``index.rst``, ``_templates/layout.html``, "
-"``_templates/book.typ`` और ``_static/`` होते हैं। template साधारण फ़ाइलें "
-"हैं जिन्हें हम खुद बदल सकते हैं। HTML में नेविगेशन, खोज, कोड हाइलाइटिंग, "
-"आरेख और समीकरण मिलते हैं। PDF किताबों में अध्याय, पार-संदर्भ, चित्र, "
-"इंडेक्स और भाषा के अनुसार टाइपसेटिंग मिलती है।"
+"प्रोजेक्ट में ``conf.toml``, ``index.rst``, ``_templates/`` "
+"(``layout.html``, ``book.typ``, ``discussion.typ``, ``article.typ`` और "
+"``theme.typ``) तथा ``_static/`` (``guidedog.css``, ``guidedog.js`` और "
+"``typography.js``) होते हैं। टेम्पलेट और स्थिर एसेट साधारण फ़ाइलें हैं "
+"जिन्हें हम स्थानीय रूप से बदल सकते हैं। HTML में नेविगेशन, खोज, कोड "
+"हाइलाइटिंग, आरेख, समीकरण और Knuth-Plass अनुच्छेद टाइपसेटिंग मिलती है। "
+"PDF किताबों में अध्याय, पार-संदर्भ, चित्र, इंडेक्स और भाषा के अनुसार "
+"टाइपसेटिंग मिलती है। हम CeTZ और Fletcher सहित Graphviz या Typst ड्रॉइंग "
+"सोर्स को स्वचालित HTML और PDF एसेट्स के साथ सीधे RST और MyST में जोड़ "
+"सकते हैं; :doc:`topics/diagrams` देखें।"
 
-#: ../../repository.rst:30
+#: ../../repository.rst:34
 msgid ""
-"The default theme is light. Readers can choose dark or the system theme. "
-"The manual detects the browser language on its landing page and "
-"repository overview. A saved choice takes precedence. Direct links to an "
-"edition or chapter remain explicit requests."
+"The built-in theme follows the system theme by default, with light and "
+"dark choices; Guidedog's own documentation website defaults to the "
+"light reading edition. The website detects the browser language on its "
+"landing page and repository overview. A saved choice takes precedence. "
+"Direct links to an edition or chapter remain explicit requests."
 msgstr ""
-"डिफ़ॉल्ट theme लाइट है। पाठक डार्क या सिस्टम theme चुन सकते हैं। मैनुअल "
-"अपने मुख्य पेज और repository परिचय पर ब्राउज़र की भाषा पहचानता है। सहेजी "
-"गई पसंद को प्राथमिकता मिलती है। किसी संस्करण या अध्याय का सीधा लिंक "
-"स्पष्ट अनुरोध ही माना जाता है।"
+"अंतर्निहित theme डिफ़ॉल्ट रूप से सिस्टम theme का अनुसरण करती है, जिसमें "
+"लाइट और डार्क विकल्प भी हैं; Guidedog की अपनी दस्तावेज़ वेबसाइट "
+"डिफ़ॉल्ट रूप से हल्के पठन संस्करण का उपयोग करती है। वेबसाइट अपने मुख्य "
+"पेज और repository परिचय पर ब्राउज़र की भाषा पहचानती है। सहेजी गई पसंद "
+"को प्राथमिकता मिलती है। किसी संस्करण या अध्याय का सीधा लिंक स्पष्ट "
+"अनुरोध ही माना जाता है।"
 
-#: ../../repository.rst:40
+#: ../../repository.rst:45
 msgid "Install"
 msgstr "स्थापित करें"
 
-#: ../../repository.rst:43
+#: ../../repository.rst:48
 msgid ""
 "Each `release <https://github.com/insanai/guidedog/releases>`__ has an "
 "archive for Linux, macOS, and Windows, with ``SHA256SUMS``. The Typst "
 "compiler and the tree-sitter parsers are compiled into ``guidedog``. "
-"Diagrams use the Graphviz library (``libgvc``). Where the system does not "
-"provide it, the archive's notes say how to install it. Fetching remote "
-"intersphinx inventories and publishing to GitHub Pages use the HTTP "
-"client built into ``guidedog``, so no ``curl`` program is needed. Check "
-"and install the archive:"
+"Unix archives link Graphviz statically, and the Windows ZIP bundles "
+"Graphviz DLLs, so nothing else needs to be installed at run time. "
+"Fetching remote intersphinx inventories and publishing to GitHub Pages "
+"use the HTTP client built into ``guidedog``, so no ``curl`` program is "
+"needed. Check and install the archive:"
 msgstr ""
 "हर `रिलीज़ <https://github.com/insanai/guidedog/releases>`__ में Linux, "
 "macOS और Windows के लिए एक आर्काइव और ``SHA256SUMS`` होता है। Typst "
-"कंपाइलर और tree-sitter पार्सर ``guidedog`` के भीतर ही कंपाइल किए गए हैं। "
-"आरेख Graphviz लाइब्रेरी (``libgvc``) का उपयोग करते हैं। जहाँ सिस्टम इसे "
-"उपलब्ध नहीं कराता, वहाँ आर्काइव के नोट्स इसे इंस्टॉल करने का तरीका बताते "
-"हैं। रिमोट intersphinx इन्वेंटरी लाने और GitHub Pages पर प्रकाशित करने "
-"में ``guidedog`` में बना HTTP क्लाइंट इस्तेमाल होता है, इसलिए ``curl`` "
-"प्रोग्राम की ज़रूरत नहीं है। आर्काइव जाँचें और इंस्टॉल करें:"
+"कंपाइलर और tree-sitter पार्सर ``guidedog`` के भीतर ही कंपाइल किए गए "
+"हैं। Unix आर्काइव Graphviz को स्टैटिक रूप से लिंक करते हैं और Windows "
+"ZIP में Graphviz DLL शामिल होते हैं, इसलिए रनटाइम पर कुछ और इंस्टॉल "
+"करने की ज़रूरत नहीं होती। रिमोट intersphinx इन्वेंटरी लाने और GitHub "
+"Pages पर प्रकाशित करने में ``guidedog`` में बना HTTP क्लाइंट इस्तेमाल "
+"होता है, इसलिए ``curl`` प्रोग्राम की ज़रूरत नहीं है। आर्काइव जाँचें और "
+"इंस्टॉल करें:"
 
-#: ../../repository.rst:56
+#: ../../repository.rst:61
 msgid ""
 "The release notes describe each platform's requirements and limits. See "
 "the :doc:`installation guide <howto/install>` for the details."
@@ -123,37 +136,43 @@ msgstr ""
 "रिलीज़ नोट्स हर प्लेटफ़ॉर्म की ज़रूरतें और सीमाएँ बताते हैं। विवरण के लिए "
 ":doc:`इंस्टॉलेशन गाइड <howto/install>` देखें।"
 
-#: ../../repository.rst:59
+#: ../../repository.rst:64
 msgid "Build from source"
 msgstr "सोर्स से build करें"
 
-#: ../../repository.rst:62
+#: ../../repository.rst:67
 msgid ""
-"Install a Rust toolchain (the workspace's ``rust-version`` or later) and "
-"the Graphviz development files (``libgvc``, ``libcgraph``; for example "
-"``graphviz-dev`` on Debian and Ubuntu, or ``brew install graphviz``). "
-"Then, at the checkout root:"
+"Install a Rust toolchain (the workspace's ``rust-version`` or later), a "
+"C compiler, and the Graphviz development files (``libgvc``, "
+"``libcgraph``; for example ``libgraphviz-dev`` on Debian and Ubuntu, "
+"``graphviz-devel`` on Fedora, or ``brew install graphviz`` on macOS; on "
+"Linux, also ``perl`` and ``make`` for the embedded Typst package "
+"downloader's vendored OpenSSL). Then, at the checkout root:"
 msgstr ""
-"एक Rust टूलचेन (वर्कस्पेस का ``rust-version`` या उससे नया) और Graphviz की "
-"डेवलपमेंट फ़ाइलें (``libgvc``, ``libcgraph``; जैसे Debian और Ubuntu पर "
-"``graphviz-dev``, या ``brew install graphviz``) इंस्टॉल करें। फिर "
-"checkout की रूट पर चलाएँ:"
-
-#: ../../repository.rst:73
-msgid ""
-"The ``typst`` crates are a default feature of ``gd-typst``. Without them, "
-"Guidedog runs an installed, pinned ``typst`` program for PDF output. "
-"`RELEASING.md "
-"<https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ describes "
-"the release workflow."
-msgstr ""
-"``typst`` crate ``gd-typst`` का डिफ़ॉल्ट फ़ीचर हैं। इनके बिना Guidedog "
-"PDF आउटपुट के लिए इंस्टॉल किया हुआ, तय संस्करण वाला ``typst`` प्रोग्राम "
-"चलाता है। रिलीज़ की प्रक्रिया `RELEASING.md "
-"<https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ में बताई "
-"गई है।"
+"एक Rust टूलचेन (वर्कस्पेस का ``rust-version`` या उससे नया), एक C "
+"कंपाइलर और Graphviz की डेवलपमेंट फ़ाइलें (``libgvc``, ``libcgraph``; "
+"जैसे Debian और Ubuntu पर ``libgraphviz-dev``, Fedora पर "
+"``graphviz-devel``, या macOS पर ``brew install graphviz``; Linux पर "
+"एम्बेडेड Typst पैकेज डाउनलोडर के वेंडर्ड OpenSSL के लिए ``perl`` और "
+"``make`` भी) इंस्टॉल करें। फिर checkout की रूट पर चलाएँ:"
 
 #: ../../repository.rst:78
+msgid ""
+"The ``typst`` crates are a default feature of ``gd-typst``. Without "
+"them, Guidedog runs an installed ``typst`` 0.15.1 program for PDF "
+"books, while ``.. typst-diagram::`` requires the embedded compiler. "
+"`RELEASING.md "
+"<https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ "
+"describes the release workflow."
+msgstr ""
+"``typst`` crate ``gd-typst`` का डिफ़ॉल्ट फ़ीचर हैं। इनके बिना Guidedog "
+"PDF किताबों के लिए इंस्टॉल किया हुआ ``typst`` 0.15.1 प्रोग्राम चलाता "
+"है, जबकि ``.. typst-diagram::`` के लिए एम्बेडेड कंपाइलर आवश्यक है। "
+"रिलीज़ की प्रक्रिया `RELEASING.md "
+"<https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ में "
+"बताई गई है।"
+
+#: ../../repository.rst:83
 msgid ""
 "The workspace is split by responsibility. The engine crates "
 "(``guidedoc``, the readers and renderers, ``guidedoc-defaults``) use only "
@@ -171,33 +190,34 @@ msgstr ""
 "ऊपर हैं। प्रोग्राम ``cmd/`` में हैं। :doc:`आंतरिक संरचना "
 "<internals/index>` देखें।"
 
-#: ../../repository.rst:84
+#: ../../repository.rst:89
 msgid "Translate with Guidedog"
 msgstr "Guidedog से अनुवाद"
 
-#: ../../repository.rst:97
+#: ../../repository.rst:102
 msgid ""
-"Translate and review ``msgstr`` values in the PO files. Guidedog extracts "
-"POT files, merges catalogs, reports progress, and builds each edition. It "
-"does not invent translations. Commands, paths, code, API names, and "
-"reference targets stay unchanged. Only the manual and repository overview "
-"are translated. API and GDS remain English. See the :doc:`manual build "
+"Translate and review ``msgstr`` values in the PO files. Guidedog "
+"extracts POT files, merges catalogs, reports progress, and builds each "
+"edition. It does not invent translations. Commands, paths, code, API "
+"names, and reference targets stay unchanged. The website landing page, "
+"the manual, and the repository overview are translated. The API "
+"reference and GDS remain English. See the :doc:`manual build "
 "instructions <howto/maintain-docs>` for assembling all editions and PDF "
 "books."
 msgstr ""
-"PO फ़ाइलों में ``msgstr`` मानों का अनुवाद करें और उन्हें जाँचें। Guidedog "
-"POT फ़ाइलें निकालता है, कैटलॉग मिलाता है, प्रगति बताता है और हर संस्करण "
-"build करता है। वह अपनी ओर से अनुवाद नहीं गढ़ता। कमांड, पथ, कोड, API नाम "
-"और संदर्भ लक्ष्य जैसे हैं वैसे ही रहते हैं। केवल मैनुअल और repository "
-"परिचय का अनुवाद होता है; API और GDS अंग्रेज़ी में रहते हैं। सभी संस्करण "
-"और PDF किताबें एक साथ तैयार करने के लिए :doc:`मैनुअल build करने के "
-"निर्देश <howto/maintain-docs>` देखें।"
+"PO फ़ाइलों में ``msgstr`` मानों का अनुवाद करें और उन्हें जाँचें। "
+"Guidedog POT फ़ाइलें निकालता है, कैटलॉग मिलाता है, प्रगति बताता है और "
+"हर संस्करण build करता है। वह अपनी ओर से अनुवाद नहीं गढ़ता। कमांड, पथ, "
+"कोड, API नाम और संदर्भ लक्ष्य जैसे हैं वैसे ही रहते हैं। वेबसाइट का "
+"मुख्य पेज, मैनुअल और repository परिचय का अनुवाद होता है; API संदर्भ और "
+"GDS अंग्रेज़ी में रहते हैं। सभी संस्करण और PDF किताबें एक साथ तैयार "
+"करने के लिए :doc:`मैनुअल build करने के निर्देश <howto/maintain-docs>` देखें।"
 
-#: ../../repository.rst:103
+#: ../../repository.rst:108
 msgid "Extend and publish"
 msgstr "विस्तार और प्रकाशन"
 
-#: ../../repository.rst:106
+#: ../../repository.rst:111
 msgid ""
 "Write a build plugin or a publisher with the :doc:`step-by-step plugin "
 "chapter <plugins>`. A plugin implements one Rust trait. The same value is "
@@ -219,11 +239,11 @@ msgstr ""
 "(डिफ़ॉल्ट: 300 सेकंड)। हम इसे ``--wait`` से लंबा रखते हैं। परिणाम अज्ञात "
 "रहे तो दोबारा प्रकाशित करने से पहले हम रिकवरी करते हैं।"
 
-#: ../../repository.rst:115
+#: ../../repository.rst:120
 msgid "Keep discussions"
 msgstr "चर्चाएँ सँभालें"
 
-#: ../../repository.rst:118
+#: ../../repository.rst:123
 msgid ""
 "``guidedog dsc`` keeps proposals and decisions as reStructuredText "
 "records, one file each. It builds them into a website and PDF books. Each "
@@ -236,7 +256,7 @@ msgstr ""
 "रिकॉर्ड ``gds`` इस्तेमाल करते हैं, और कोई दूसरा प्रोजेक्ट ``eds`` "
 "इस्तेमाल कर सकता है।"
 
-#: ../../repository.rst:131
+#: ../../repository.rst:136
 msgid ""
 "A catalog's ``discussion.toml`` sets its lifecycle states, record types, "
 "and numbering. ``guidedog dsc config`` prints it. The commands come from "
@@ -252,38 +272,41 @@ msgstr ""
 "ही एक कैटलॉग है: हम उस फ़ोल्डर में ``guidedog dsc check`` चलाते हैं। "
 ":doc:`चर्चा कैटलॉग रखना <howto/discussions>` देखें।"
 
-#: ../../repository.rst:134
+#: ../../repository.rst:139
 msgid "Publish static sites"
 msgstr "स्थिर साइटें प्रकाशित करें"
 
-#: ../../repository.rst:137
+#: ../../repository.rst:142
 msgid ""
 "``guidedog ssg`` manages articles, research logs, collections, feeds, "
 "pinned theme archives, and multi-project websites from the same "
 "``conf.toml`` and document tree:"
 msgstr ""
 "``guidedog ssg`` एक ही ``conf.toml`` और दस्तावेज़ वृक्ष से लेख, शोध लॉग, "
-"संग्रह, फ़ीड, पिन किए गए थीम आर्काइव और बहु-प्रोजेक्ट वेबसाइटें सँभालता है:"
+"संग्रह, फ़ीड, पिन किए गए थीम आर्काइव और बहु-प्रोजेक्ट वेबसाइटें सँभालता "
+"है:"
 
-#: ../../repository.rst:148
+#: ../../repository.rst:153
 msgid ""
 "Pages marked with ``:pdf: article`` also build standalone print-quality "
 "PDFs alongside their HTML pages. Multi-project websites mount "
-"sub-projects (such as ``docs/manual``, ``docs/api``, and ``docs/gds``) "
-"declaratively through ``[[site.mounts]]``. See :doc:`Static site "
-"publishing <howto/static-publishing>`."
+"sub-projects (such as ``docs/site``, ``docs/manual``, and ``docs/gds``) "
+"declaratively through ``[[site.mounts]]``; ``docs/api`` builds as a "
+"standalone reference project and manual PDF appendix. See :doc:`Static "
+"site publishing <howto/static-publishing>`."
 msgstr ""
 "``:pdf: article`` से चिह्नित पेज अपने HTML पेजों के साथ-साथ स्वतंत्र, "
-"प्रिंट-गुणवत्ता वाली PDF भी बनाते हैं। बहु-प्रोजेक्ट वेबसाइटें ``[[site.mounts]]`` "
-"के माध्यम से उप-प्रोजेक्टों (जैसे ``docs/manual``, ``docs/api`` और ``docs/gds``) "
-"को घोषणात्मक रूप से माउंट करती हैं। :doc:`स्थिर साइट प्रकाशन "
-"<howto/static-publishing>` देखें।"
+"प्रिंट-गुणवत्ता वाली PDF भी बनाते हैं। बहु-प्रोजेक्ट वेबसाइटें "
+"``[[site.mounts]]`` के माध्यम से उप-प्रोजेक्टों (जैसे ``docs/site``, "
+"``docs/manual`` और ``docs/gds``) को घोषणात्मक रूप से माउंट करती हैं; "
+"``docs/api`` एक स्वतंत्र संदर्भ प्रोजेक्ट और मैनुअल के PDF परिशिष्ट के "
+"रूप में बनता है। :doc:`स्थिर साइट प्रकाशन <howto/static-publishing>` देखें।"
 
-#: ../../repository.rst:150
+#: ../../repository.rst:155
 msgid "Read and embed"
 msgstr "पढ़ें और एम्बेड करें"
 
-#: ../../repository.rst:153
+#: ../../repository.rst:158
 msgid ""
 ":doc:`Manual <index>`: tutorials, topics, practical tasks, reference, and "
 "internals."
@@ -291,7 +314,7 @@ msgstr ""
 ":doc:`मैनुअल <index>`: ट्यूटोरियल, विषय, व्यावहारिक काम, संदर्भ और आंतरिक "
 "संरचना।"
 
-#: ../../repository.rst:154
+#: ../../repository.rst:159
 msgid ""
 ":doc:`API reference <api/index>`: generated from the Rust source of the "
 "main crates and included in the manual's PDF appendix."
@@ -299,7 +322,7 @@ msgstr ""
 ":doc:`API संदर्भ <api/index>`: मुख्य crates के Rust सोर्स से बनता है और "
 "मैनुअल PDF के परिशिष्ट में भी शामिल है।"
 
-#: ../../repository.rst:156
+#: ../../repository.rst:161
 msgid ""
 ":download:`Engine guide <_static/repository/library-README.md>`: the "
 "``guidedoc`` crate's workspaces, requests, adapters, and conversion "
@@ -308,7 +331,7 @@ msgstr ""
 ":download:`इंजन गाइड <_static/repository/library-README.md>`: "
 "``guidedoc`` crate के कार्यक्षेत्र, अनुरोध, एडैप्टर और रूपांतरण उदाहरण।"
 
-#: ../../repository.rst:158
+#: ../../repository.rst:163
 msgid ""
 ":doc:`Templates <templates>`: customize HTML with Jinja and books with "
 "Typst."
@@ -316,7 +339,7 @@ msgstr ""
 ":doc:`template <templates>`: Jinja से HTML और Typst से किताबों को अपने "
 "हिसाब से ढालें।"
 
-#: ../../repository.rst:159
+#: ../../repository.rst:164
 msgid ""
 ":download:`GDS <_static/repository/gds-README.md>`: numbered design "
 "records and implementation decisions."
@@ -324,7 +347,7 @@ msgstr ""
 ":download:`GDS <_static/repository/gds-README.md>`: क्रमांकित डिज़ाइन "
 "रिकॉर्ड और कार्यान्वयन के निर्णय।"
 
-#: ../../repository.rst:161
+#: ../../repository.rst:166
 msgid ""
 ":download:`Discussion library <_static/repository/discussion-README.md>`: "
 "the catalogs that ``guidedog dsc`` keeps."
@@ -332,7 +355,7 @@ msgstr ""
 ":download:`चर्चा लाइब्रेरी <_static/repository/discussion-README.md>`: वे "
 "कैटलॉग जिन्हें ``guidedog dsc`` सँभालता है।"
 
-#: ../../repository.rst:164
+#: ../../repository.rst:169
 msgid ""
 "Guidedoc works in a caller-owned, reusable workspace and returns "
 "structured diagnostics. The host manages files, budgets, caching, "
@@ -345,11 +368,11 @@ msgstr ""
 "नेटिव कंपाइलर होस्ट सँभालता है। ``--untrusted`` क्षमताएँ सीमित करता है। "
 "यह प्रोसेस सैंडबॉक्स नहीं है, न ही सभी नेटिव संसाधनों के उपयोग की सीमा।"
 
-#: ../../repository.rst:168
+#: ../../repository.rst:173
 msgid "Credits and license"
 msgstr "श्रेय और लाइसेंस"
 
-#: ../../repository.rst:171
+#: ../../repository.rst:176
 msgid ""
 "Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** "
 "and **Kanak Rathore**. Contributions are welcome through issues and pull "
@@ -361,7 +384,7 @@ msgstr ""
 "है। दस्तावेज़ के श्रेय में नाम या हैंडल दिए जाते हैं, निजी ईमेल पते नहीं। "
 "Git पहचान की सेटिंग अलग से सँभाली जाती हैं।"
 
-#: ../../repository.rst:176
+#: ../../repository.rst:181
 msgid ""
 "Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, "
 "Tree-sitter and Max Brunsfeld, Graphviz, and the Rust project."
@@ -369,7 +392,7 @@ msgstr ""
 "Sphinx और Georg Brandl, Docutils और David Goodger, Typst, Tree-sitter और "
 "Max Brunsfeld, Graphviz, तथा Rust प्रोजेक्ट का धन्यवाद।"
 
-#: ../../repository.rst:179
+#: ../../repository.rst:184
 msgid ""
 "Guidedog is released under the :download:`GNU Lesser General Public "
 "License v3.0 or later <_static/repository/LICENSE>` (LGPL-3.0-or-later), "
@@ -388,7 +411,7 @@ msgstr ""
 "तृतीय-पक्ष घटकों की सूची भी जिनके अपने लाइसेंस लागू रहते हैं, जैसे साथ "
 "दिए गए फ़ॉन्ट और प्रोग्रामों में कंपाइल किए गए Rust crate।"
 
-#: ../../repository.rst:187
+#: ../../repository.rst:192
 msgid ""
 "An additional permission allows Guidedog to be linked and distributed "
 "with Graphviz. See :download:`NOTICE <_static/repository/NOTICE>`."

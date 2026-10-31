@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Guidedog Manual 0.6\n"
+"Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 06:11+0000\n"
+"POT-Creation-Date: 2026-10-31 15:41+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -83,21 +83,33 @@ msgstr "``template/rfc-template.rst``\\ ：新草稿的模板；"
 
 #: ../../howto/discussions.rst:33
 msgid ""
-"``_templates/discussion.typ`` and ``_templates/theme.typ``, the editable "
-"PDF layout and shared theme copied from the binary;"
+"``_templates/layout.html``, ``_templates/discussion.typ``, and "
+"``_templates/theme.typ``, the editable HTML layout, PDF discussion "
+"layout, and shared PDF theme copied from the binary;"
 msgstr ""
-"``_templates/discussion.typ`` 和 ``_templates/theme.typ``\\ "
-"：从二进制文件中复制出来的可编辑 PDF 版式和共享主题；"
+"``_templates/layout.html``、``_templates/discussion.typ`` 和 "
+"``_templates/theme.typ``：从二进制文件中复制出来的可编辑 HTML 布局、PDF 讨论版式和共享 PDF 主题；"
 
 #: ../../howto/discussions.rst:34
-msgid "``registry.rst`` and ``bundle.rst``, the generated index;"
-msgstr "``registry.rst`` 和 ``bundle.rst``\\ ：生成的索引；"
+msgid ""
+"``_static/guidedog.css``, ``_static/guidedog.js``, and "
+"``_static/typography.js``, the editable stylesheets and scripts copied "
+"from the binary;"
+msgstr ""
+"``_static/guidedog.css``、``_static/guidedog.js`` 和 "
+"``_static/typography.js``：从二进制文件中复制出来的可编辑样式表与脚本；"
 
 #: ../../howto/discussions.rst:35
+msgid ""
+"``registry.rst`` and ``bundle.rst``, the generated index and catalog "
+"check list;"
+msgstr "``registry.rst`` 和 ``bundle.rst``：生成的索引和目录检查清单；"
+
+#: ../../howto/discussions.rst:36
 msgid "``records/XXXXX-eds-process.rst``, a draft of our review process."
 msgstr "``records/XXXXX-eds-process.rst``：我们评审流程的草稿。"
 
-#: ../../howto/discussions.rst:37
+#: ../../howto/discussions.rst:38
 msgid ""
 "We edit the process draft to say how our project decides. To start from "
 "our own documents, we pass ``--config=FILE`` (a ``discussion.toml``), "
@@ -112,16 +124,16 @@ msgstr ""
 "（带 ``:eds-*:`` 字段的记录模板）。``--labels=a,b`` 限定记录可以使用的标签。``init`` "
 "会先检查新目录，再把它移到位。它从不写入已有文件的文件夹。"
 
-#: ../../howto/discussions.rst:44
+#: ../../howto/discussions.rst:45
 msgid "Write and review"
 msgstr "编写与评审"
 
-#: ../../howto/discussions.rst:47
+#: ../../howto/discussions.rst:48
 msgid ""
 "We run the commands in the catalog folder, or in any folder inside it."
 msgstr "我们在目录文件夹或其中任意子文件夹中运行这些命令。"
 
-#: ../../howto/discussions.rst:58
+#: ../../howto/discussions.rst:59
 msgid ""
 "A new draft has the number ``XXXXX``. Promotion gives it the next number "
 "and opens it for discussion. A state change needs ``--reason``, and "
@@ -131,11 +143,11 @@ msgstr ""
 "新草稿的编号是 ``XXXXX``。提升会给它分配下一个编号，并开放讨论。改变状态需要 ``--reason``，改为 ``committed`` "
 "还需要 ``--evidence``。``--dry-run`` 只显示更改而不实际执行。以上是默认设置，下一节介绍如何更改。"
 
-#: ../../howto/discussions.rst:63
+#: ../../howto/discussions.rst:64
 msgid "A record starts with its metadata, one field per line:"
 msgstr "记录以元数据开头，每行一个字段："
 
-#: ../../howto/discussions.rst:77
+#: ../../howto/discussions.rst:78
 msgid ""
 "Authors and labels are JSON lists. ``last-updated`` may stand for "
 "``updated``. A record may also carry ``category``, ``status``, and "
@@ -148,11 +160,11 @@ msgstr ""
 "与状态保持一致。HTML 和 PDF 将这些字段显示为 Number、Title、Authors、Updated、Labels "
 "等，列表显示为纯文本。"
 
-#: ../../howto/discussions.rst:82
+#: ../../howto/discussions.rst:83
 msgid "Configure the lifecycle and numbering"
 msgstr "配置生命周期和编号"
 
-#: ../../howto/discussions.rst:85
+#: ../../howto/discussions.rst:86
 msgid ""
 "``discussion.toml`` holds the catalog's settings. ``init`` writes every "
 "one of them, with comments. ``guidedog dsc config`` prints the settings "
@@ -162,7 +174,7 @@ msgstr ""
 "``discussion.toml`` 保存目录的设置。``init`` 会写出全部设置并附上注释。``guidedog dsc config`` "
 "打印当前生效的设置。没有该文件的目录遵循下面的默认值，也就是 Guidedog 自己的 GDS 所用的流程。"
 
-#: ../../howto/discussions.rst:122
+#: ../../howto/discussions.rst:123
 msgid ""
 "``[workflow.states.NAME]`` defines a state. ``next`` lists the states the "
 "``state`` command may move a record to. ``evidence = true`` asks for "
@@ -178,7 +190,7 @@ msgstr ""
 "的状态是关闭状态。从草稿状态进入开放状态只能通过提升，因为编号由提升分配。没有编号的草稿只能移到它自己的 ``next`` 所列的状态，例如 "
 "``abandoned``。"
 
-#: ../../howto/discussions.rst:129
+#: ../../howto/discussions.rst:130
 msgid ""
 "Numbers have at least ``width`` digits, padded with zeros. A number that "
 "needs more digits gets them, so 10000 follows 9999, and lists sort by "
@@ -191,33 +203,43 @@ msgstr ""
 "``start`` 开始编号。若设置了 ``limit``，它就是提升能分配的最大编号。以后修改 ``start`` 或 ``limit`` "
 "是安全的。但记录一旦编号，修改 ``width`` 就不安全了：已有的编号将不再与它相符。"
 
-#: ../../howto/discussions.rst:135
+#: ../../howto/discussions.rst:136
 msgid ""
 "``guidedog dsc`` checks the file whenever it reads the catalog. A mistake "
 "names the line and what to write instead:"
 msgstr "``guidedog dsc`` 每次读取目录时都会检查该文件。出错时，消息会指出所在行以及应改写成什么："
 
-#: ../../howto/discussions.rst:150
+#: ../../howto/discussions.rst:151
 msgid ""
 "The process draft that ``init`` writes describes the lifecycle we "
 "configured. It has a table of the states and a diagram of the moves."
 msgstr "``init`` 写出的流程草稿描述我们配置的生命周期，其中有一张状态表和一张状态转移图。"
 
-#: ../../howto/discussions.rst:153
+#: ../../howto/discussions.rst:154
 msgid "Build"
 msgstr "构建"
 
-#: ../../howto/discussions.rst:161
+#: ../../howto/discussions.rst:162
 msgid ""
-"``guidedog dsc build`` writes the website to ``_build/html`` and one PDF "
-"per record to ``_build/pdf``. Naming a record writes only its PDF, to "
-"``_build/selected``, and leaves the complete output alone. Warnings stop "
-"the build."
+"``guidedog dsc build`` writes the website to ``_build/html`` and one "
+"standalone PDF per record to ``_build/pdf`` (there is no combined catalog "
+"PDF; ``index.rst``, ``registry.rst``, ``workflow.rst``, and ``bundle.rst`` "
+"serve HTML navigation and catalog validation). Naming a record writes only "
+"its PDF, to ``_build/selected``, and leaves the complete output alone. When "
+"``pdf_downloads`` in ``[html_context]`` names the folder of the record "
+"PDFs, relative to the root of the HTML output (for example ``pdf_downloads "
+"= \"pdf/\"`` when a multi-project site mounts the PDFs there), each HTML "
+"record page under ``records/`` offers a link to download that record's PDF. "
+"Warnings stop the build."
 msgstr ""
-"``guidedog dsc build`` 将网站写入 ``_build/html``，并为每条记录生成一个 PDF，写入 "
-"``_build/pdf``。指定一条记录时，只把它的 PDF 写入 ``_build/selected``，不改动完整输出。出现警告即停止构建。"
+"``guidedog dsc build`` 将网站写入 ``_build/html``，并为每条记录在 ``_build/pdf`` 中生成一份独立 "
+"PDF（没有合并的总目录 PDF；``index.rst``、``registry.rst``、``workflow.rst`` 和 "
+"``bundle.rst`` 用于 HTML 导航与目录校验）。指定某条记录时，只将其 PDF 写入 "
+"``_build/selected``，不影响完整输出。当 ``[html_context]`` 中的 ``pdf_downloads`` 指定记录 "
+"PDF 所在的文件夹（相对于 HTML 输出的根目录）时（例如多项目网站将 PDF 挂载在那里时设为 ``pdf_downloads = "
+"\"pdf/\"``），``records/`` 下的每个 HTML 记录页面都会提供下载该记录 PDF 的链接。出现警告时构建即终止。"
 
-#: ../../howto/discussions.rst:165
+#: ../../howto/discussions.rst:166
 msgid ""
 "The build is guidedog's own: the same build as ``guidedog build``, with "
 "the catalog as the project. Graphviz, Typst, and the other tools it needs "
@@ -229,11 +251,11 @@ msgstr ""
 "Graphviz、Typst 等工具也都由 guidedog 自带。旧式的 Typst 记录目录会用 Typst "
 "编译每条记录；``--typst=PATH`` 可以指定一个 Typst 程序来代替内置编译器。"
 
-#: ../../howto/discussions.rst:167
+#: ../../howto/discussions.rst:168
 msgid "Discussion PDFs"
 msgstr "讨论记录 PDF"
 
-#: ../../howto/discussions.rst:170
+#: ../../howto/discussions.rst:171
 msgid ""
 "Each RST record uses an RFC-style paper layout. The record opens with a "
 "metadata panel, state badges, a short status note and compact contents, "
@@ -244,7 +266,7 @@ msgstr ""
 "每条 RST 记录都使用 RFC "
 "风格的文稿版式。记录开头包含元数据面板、状态徽章、简短的状态说明和紧凑目录，随后是正文。带编号的小节连续排版。页眉标明目录名和记录编号，页脚显示当前页码和总页数。表格和带题注的代码清单可以跨页延续。"
 
-#: ../../howto/discussions.rst:172
+#: ../../howto/discussions.rst:173
 msgid ""
 "The PDF builder recognizes the leading metadata, such as ``:eds-number:`` "
 "and ``:eds-title:``, for any catalog prefix. Existing catalogs without a "
@@ -255,7 +277,7 @@ msgstr ""
 "对于任意目录前缀，PDF 构建器都能识别开头的元数据（如 ``:eds-number:`` 和 "
 "``:eds-title:``）。未复制讨论模板的现有目录会使用当前内嵌的版式。在替换或删除模板文件之前，已有的模板定制会保持不变。普通图书仍使用其书籍模板。"
 
-#: ../../howto/discussions.rst:174
+#: ../../howto/discussions.rst:175
 msgid ""
 "The layout is embedded in the Guidedog binary. ``guidedog dsc init`` "
 "copies ``_templates/discussion.typ`` and its shared "
@@ -278,7 +300,7 @@ msgstr ""
 "包含可读字段标签和值的配对，所有值均以带引号的字符串形式传入。源文档标题提供标题文字及其锚点。模板在读取目录元数据时不假设固定的前缀或生命周期，其可选的 "
 "``contents`` 和 ``memo`` 参数用于控制目录和状态说明。共享的 PDF 参数详见 :doc:`../templates`。"
 
-#: ../../howto/discussions.rst:176
+#: ../../howto/discussions.rst:177
 msgid ""
 "An ``--untrusted`` build uses the built-in discussion layout instead of "
 "running a project template. A record included as a chapter of a larger "
@@ -288,11 +310,11 @@ msgstr ""
 "``--untrusted`` "
 "构建会使用内置的讨论版式，而不运行项目模板。如果某条记录作为更大图书中的一章被包含进去，它会在该章中保留自己的元数据，而整本书的版式由根文档决定。"
 
-#: ../../howto/discussions.rst:178
+#: ../../howto/discussions.rst:179
 msgid "When an update is interrupted"
 msgstr "更新中断时"
 
-#: ../../howto/discussions.rst:181
+#: ../../howto/discussions.rst:182
 msgid ""
 "Commands that change records hold the catalog's lock, ``.eds.lock``. An "
 "update of several files first writes a journal, ``.eds-journal.json``. If "
@@ -301,7 +323,7 @@ msgstr ""
 "修改记录的命令会持有目录锁 ``.eds.lock``\\ 。涉及多个文件的更新会先写入日志 ``.eds-journal.json``\\ "
 "。若更新中途停止，下一条命令会提示："
 
-#: ../../howto/discussions.rst:190
+#: ../../howto/discussions.rst:191
 msgid ""
 "Recovery puts back the files as they were. It refuses to overwrite a file "
 "someone edited since. ``guidedog dsc`` also checks each change before it "
@@ -311,7 +333,7 @@ msgstr ""
 "恢复会把文件还原为原来的样子。如果文件之后被人编辑过，恢复会拒绝覆盖它。``guidedog dsc`` "
 "还会在写入任何内容之前检查每项更改。它会拒绝空的或被截断的记录，以及缺少生成区域的索引。"
 
-#: ../../howto/discussions.rst:194
+#: ../../howto/discussions.rst:195
 msgid ""
 "``guidedog dsc`` keeps only each record's metadata in memory. It reads a "
 "record whole only to change it. So checking a large catalog stays fast "
@@ -319,11 +341,11 @@ msgid ""
 msgstr ""
 "``guidedog dsc`` 在内存中只保存每条记录的元数据，只有修改某条记录时才完整读取它。因此即使目录很大，检查依然快速，占用的内存也很少。"
 
-#: ../../howto/discussions.rst:197
+#: ../../howto/discussions.rst:198
 msgid "Use the library"
 msgstr "使用库"
 
-#: ../../howto/discussions.rst:200
+#: ../../howto/discussions.rst:201
 msgid ""
 "The commands are one Rust crate, ``gd-discussion``. Its ``README.md`` "
 "shows how to load a catalog, plan a change, and apply it from our own "
@@ -332,7 +354,7 @@ msgstr ""
 "这些命令就是一个 Rust crate：``gd-discussion``。它的 ``README.md`` "
 "说明了如何在我们自己的程序中加载目录、规划更改并应用更改："
 
-#: ../../howto/discussions.rst:218
+#: ../../howto/discussions.rst:219
 msgid ""
 "``ds::plugin()`` is the whole ``guidedog dsc`` command line, as a plugin. "
 "A ``guidedog`` of our own links it beside its other plugins (see "
@@ -634,14 +656,14 @@ msgstr ""
 
 #: ../../howto/format-specific-content.rst:124
 msgid ""
-"**The ``latex`` tag in ``.. only::``**: For backward compatibility with "
-"legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias for PDF "
-"builds in ``.. only::`` expressions. In native Guidedog projects, prefer "
-"``.. only:: pdf``."
+"**The latex tag** (``.. only:: latex``): For backward compatibility "
+"with legacy Sphinx projects, Guidedog recognizes ``latex`` as an alias "
+"for PDF builds in ``.. only::`` expressions. In native Guidedog "
+"projects, prefer ``.. only:: pdf``."
 msgstr ""
-"**``.. only::`` 中的 ``latex`` 标签**：为了向后兼容传统的 Sphinx 项目，Guidedog 在 ``.. "
-"only::`` 表达式中将 ``latex`` 识别为 PDF 构建的别名。在原生 Guidedog 项目中，请优先使用 ``.. only:: "
-"pdf``。"
+"**latex 标签**\\ （``.. only:: latex``）：为了向后兼容传统的 Sphinx 项目，Guidedog 在 "
+"``.. only::`` 表达式中将 ``latex`` 识别为 PDF 构建的别名。在原生 Guidedog 项目中，请优先使用 ``.. "
+"only:: pdf``。"
 
 #: ../../howto/format-specific-content.rst:128
 msgid "3. Declare custom domain directives in conf.toml"
@@ -1427,23 +1449,25 @@ msgstr ""
 msgid ""
 "a C compiler (``cc``, Xcode's command-line tools, or MSVC), which Cargo "
 "uses to build the tree-sitter grammars and the cryptography in the "
-"``ring`` crate (TLS for HTTPS)."
+"``ring`` crate (TLS for HTTPS); and on Linux ``perl`` and ``make``, "
+"which Cargo uses to build the vendored OpenSSL linked by the embedded "
+"Typst package downloader."
 msgstr ""
 "C 编译器（``cc``、Xcode 命令行工具或 MSVC），Cargo 用它构建 tree-sitter 语法以及 ``ring`` "
-"crate 中的密码学代码（HTTPS 所用的 TLS）。"
+"crate 中的密码学代码（HTTPS 所用的 TLS）；在 Linux 上还需要 ``perl`` 和 ``make``，Cargo "
+"用它们构建内嵌 Typst 包下载器所链接的内置 OpenSSL。"
 
 #: ../../howto/install.rst:42
 msgid ""
 "Nothing else is built by hand. The Typst compiler (0.15.1), the "
-"tree-sitter grammars for Python and Rust, and the HTTP client (``ureq`` "
-"with ``rustls``) are ordinary Cargo dependencies, compiled with the "
-"workspace. HTTPS needs no ``curl`` program, OpenSSL or system certificate "
-"store: the root certificates are built in. There are no native build "
-"scripts to run first."
+"tree-sitter grammars for Python and Rust, and the Guidedog HTTP client "
+"(``ureq`` with ``rustls`` and built-in root certificates) are ordinary "
+"Cargo dependencies, compiled with the workspace. There are no separate "
+"setup scripts to run first."
 msgstr ""
-"其他都不需要手动构建。Typst 编译器（0.15.1）、Python 和 Rust 的 tree-sitter 语法，以及 HTTP "
-"客户端（``ureq`` 加 ``rustls``）都是普通的 Cargo 依赖，随 workspace 一起编译。HTTPS 不需要 "
-"``curl`` 程序、OpenSSL 或系统证书库：根证书已经内置。没有需要预先运行的原生构建脚本。"
+"其他都不需要手动构建。Typst 编译器（0.15.1）、Python 和 Rust 的 tree-sitter 语法，以及 Guidedog "
+"HTTP 客户端（使用 ``rustls`` 和内置根证书的 ``ureq``）都是普通的 Cargo 依赖，随 workspace "
+"一起编译。没有需要预先运行的独立安装脚本。"
 
 #: ../../howto/install.rst:46
 msgid "Release build"
@@ -1520,17 +1544,21 @@ msgstr "Typst：内嵌还是外部安装"
 #: ../../howto/install.rst:88
 msgid ""
 "By default the Typst compiler is linked into ``guidedog`` (the "
-"``embedded`` feature of the ``gd-typst`` crate). PDF then needs no other "
-"program. A build of ``gd-typst`` without that feature runs an installed "
-"``typst`` program (0.15.1) instead. Either way, "
+"``embedded`` feature of the ``gd-typst`` crate). PDF books and ``.. "
+"typst-diagram::`` directives then need no other program. A build of "
+"``gd-typst`` without that feature runs an installed ``typst`` program "
+"(pinned to 0.15.1) for PDF books, while ``.. typst-diagram::`` requires "
+"the embedded compiler (``typst.embedded``). For PDF books, "
 "``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) "
-"selects a program explicitly, and ``guidedog --version`` names the "
-"backend in use."
+"selects an external ``typst`` 0.15.1 program explicitly, and ``guidedog "
+"--version`` names the backend in use."
 msgstr ""
 "默认情况下，Typst 编译器链接在 ``guidedog`` 中（``gd-typst`` crate 的 ``embedded`` "
-"feature）。这样生成 PDF 不需要其他程序。不带该 feature 构建的 ``gd-typst`` 会改为调用已安装的 "
-"``typst`` 程序（0.15.1）。无论哪种方式，都可以用 ``--typst=/absolute/path/to/typst`` （或 "
-"``conf.toml`` 中的 ``typst``）显式指定程序，``guidedog --version`` 会显示当前使用的后端。"
+"feature）。这样生成 PDF 书籍和编译 ``.. typst-diagram::`` 指令都不需要其他程序。不带该 feature "
+"构建的 ``gd-typst`` 在生成 PDF 书籍时会改为调用已安装的 ``typst`` 程序（固定为 0.15.1），而 ``.. "
+"typst-diagram::`` 则必须使用内嵌编译器（``typst.embedded``）。对于 PDF 书籍，可以用 "
+"``--typst=/absolute/path/to/typst``\\ （或 ``conf.toml`` 中的 "
+"``typst``）显式指定外部 ``typst`` 0.15.1 程序，``guidedog --version`` 会显示当前使用的后端。"
 
 #: ../../howto/install.rst:94
 msgid ""
@@ -1629,17 +1657,22 @@ msgstr "维护本项目的文档"
 #: ../../howto/maintain-docs.rst:4
 msgid ""
 "Guidedog documents itself with Guidedog. The repository has four "
-"projects: ``docs/manual`` (this manual), ``docs/api`` (the Rust API "
-"reference of the crates), ``docs/gds`` (the design records), and "
-"``docs/site`` (the front page). The manual and GDS began with ``guidedog "
-"quickstart``. We edit their generated templates in place. Design records "
-"stay out of the manual's table of contents."
+"documentation projects and a root site manifest: ``docs/manual`` (this "
+"manual), ``docs/api`` (the standalone Rust API reference of the crates, "
+"also included in the manual's PDF appendix), ``docs/gds`` (the design "
+"records), ``docs/site`` (the website landing page and release notes), "
+"and ``docs/conf.toml`` (the multi-project SSG configuration that mounts "
+"``docs/site``, ``docs/manual``, and ``docs/gds``). Each project keeps "
+"its generated templates and static assets locally so we can edit them "
+"in place. Design records stay out of the manual's table of contents."
 msgstr ""
-"Guidedog 用 Guidedog 编写自己的文档。仓库中有四个项目：``docs/manual`` （本手册）、``docs/api`` "
-"（各 crate 的 Rust API 参考）、``docs/gds`` （设计记录）和 ``docs/site`` （首页）。手册和 GDS "
-"最初由 ``guidedog quickstart`` 创建，我们直接修改生成的模板。设计记录不放进手册的目录树。"
+"Guidedog 用 Guidedog 编写自己的文档。仓库包含四个文档项目和一个根站点清单：``docs/manual``\\ "
+"（本手册）、``docs/api``\\ （各 crate 的独立 Rust API 参考，也收录在手册 PDF "
+"附录中）、``docs/gds``\\ （设计记录）、``docs/site``\\ （网站首页与发布说明），以及 "
+"``docs/conf.toml``\\ （挂载 ``docs/site``、``docs/manual`` 和 ``docs/gds`` "
+"的多项目 SSG 配置）。每个项目都在本地保存其生成的模板和静态资源，便于就地修改。设计记录不放进手册的目录树。"
 
-#: ../../howto/maintain-docs.rst:10
+#: ../../howto/maintain-docs.rst:12
 msgid ""
 "All documentation is reStructuredText under ``docs/``. The only Markdown "
 "files are each crate's ``README.md``, a short cheat sheet, and the files "
@@ -1650,17 +1683,17 @@ msgstr ""
 "``README.md`` （一份简短的速查表），以及 GitHub 需要放在根目录的文件。设计说明、内部实现、台账和一致性表格都是 "
 "``docs/manual/internals`` 下的页面。"
 
-#: ../../howto/maintain-docs.rst:15
+#: ../../howto/maintain-docs.rst:17
 msgid "Build the manual"
 msgstr "构建手册"
 
-#: ../../howto/maintain-docs.rst:18
+#: ../../howto/maintain-docs.rst:20
 msgid ""
 "We build ``guidedog`` first (see :doc:`install`). Then, from the "
 "repository root:"
 msgstr "先构建 ``guidedog`` （见 :doc:`install`），然后在仓库根目录运行："
 
-#: ../../howto/maintain-docs.rst:27
+#: ../../howto/maintain-docs.rst:29
 msgid ""
 "The PDF command creates one book, with links between its chapters. "
 "``cargo run --release -p guidedog-cmd -- build html docs/manual -W`` "
@@ -1669,11 +1702,11 @@ msgstr ""
 "PDF 命令生成一本书，各章之间互相链接。``cargo run --release -p guidedog-cmd -- build html "
 "docs/manual -W`` 可以一步完成编译和运行。"
 
-#: ../../howto/maintain-docs.rst:31
+#: ../../howto/maintain-docs.rst:33
 msgid "The API reference"
 msgstr "API 参考"
 
-#: ../../howto/maintain-docs.rst:34
+#: ../../howto/maintain-docs.rst:36
 msgid ""
 "``docs/api`` generates its pages from the crates' source with "
 "``rust_autoapi_crates`` (see :doc:`document-code`). The reference is the "
@@ -1685,17 +1718,17 @@ msgstr ""
 ":doc:`document-code`）。参考内容就是文档注释本身（每个公开项上的 ``///``），没有需要同步维护的 API "
 "文稿副本。发现错误时，我们修改 crate，然后重新构建："
 
-#: ../../howto/maintain-docs.rst:44
+#: ../../howto/maintain-docs.rst:46
 msgid ""
 "A warning such as ``rust.autodoc.link`` names the doc comment and the "
 "link that does not resolve."
 msgstr "``rust.autodoc.link`` 之类的警告会指出是哪条文档注释、哪个链接无法解析。"
 
-#: ../../howto/maintain-docs.rst:47
+#: ../../howto/maintain-docs.rst:49
 msgid "Build and check discussions"
 msgstr "构建并检查讨论文档"
 
-#: ../../howto/maintain-docs.rst:57
+#: ../../howto/maintain-docs.rst:59
 msgid ""
 "``docs/gds`` is a discussion catalog like any other, so ``guidedog dsc`` "
 "runs in it (see :doc:`discussions`). It manages metadata, numbers, state, "
@@ -1711,34 +1744,42 @@ msgstr ""
 "网站，并为每条记录单独生成 PDF。选择器只限制 PDF 的范围，HTML 始终是带有完整目录的完整网站。选定 PDF 的预览使用 "
 "``_build/selected/<artifact>/pdf``，不会影响 ``_build/pdf`` 中的完整目录。"
 
-#: ../../howto/maintain-docs.rst:71
+#: ../../howto/maintain-docs.rst:72
 msgid ""
-"The ordinary project commands work too. The GDS project uses its own "
-"``conf.toml`` and its own ``_build`` directory. Read "
-"``docs/gds/workflow.rst`` for the authoring workflow."
+"The ordinary HTML project command works directly on ``docs/gds``, while "
+"``guidedog dsc build`` (or the ``discussion-records`` mount in "
+"``docs/conf.toml``) builds one standalone PDF per record without a "
+"combined index PDF. The GDS project uses its own ``conf.toml`` and its "
+"own ``_build`` directory. Read ``docs/gds/workflow.rst`` for the "
+"authoring workflow."
 msgstr ""
-"普通项目命令也适用。GDS 项目使用自己的 ``conf.toml`` 和 ``_build`` 目录。编写流程见 "
-"``docs/gds/workflow.rst``\\ 。"
+"普通的 HTML 项目命令可直接用于 ``docs/gds``，而 ``guidedog dsc build``\\ （或 "
+"``docs/conf.toml`` 中的 ``discussion-records`` 挂载）会为每条记录构建一份独立 "
+"PDF，不生成合并的索引 PDF。GDS 项目使用自己的 ``conf.toml`` 和 ``_build`` 目录。编写流程见 "
+"``docs/gds/workflow.rst``。"
 
-#: ../../howto/maintain-docs.rst:75
+#: ../../howto/maintain-docs.rst:76
 msgid "Translations"
 msgstr "翻译"
 
-#: ../../howto/maintain-docs.rst:78
+#: ../../howto/maintain-docs.rst:79
 msgid ""
-"The manual's catalogs are in ``docs/manual/locales``. After we change "
-"English text, we refresh them:"
-msgstr "手册的翻译目录位于 ``docs/manual/locales``。修改英文文本后，我们这样更新它们："
+"Translation catalogs live in ``docs/manual/locales`` (for the manual "
+"and repository overview) and ``docs/site/locales`` (for the landing "
+"page and release notes). After we change English text, we refresh them:"
+msgstr ""
+"翻译目录位于 ``docs/manual/locales``\\ （用于手册和仓库概览）和 ``docs/site/locales``\\ "
+"（用于首页和发布说明）。修改英文内容后，按如下方式刷新："
 
-#: ../../howto/maintain-docs.rst:86
+#: ../../howto/maintain-docs.rst:89
 msgid "See :doc:`../intl` for the translation workflow."
 msgstr "翻译流程见 :doc:`../intl`。"
 
-#: ../../howto/maintain-docs.rst:88
+#: ../../howto/maintain-docs.rst:91
 msgid "Before publishing"
 msgstr "发布之前"
 
-#: ../../howto/maintain-docs.rst:91
+#: ../../howto/maintain-docs.rst:94
 msgid ""
 "Check links and diagnostics. Inspect wide tables and code blocks. Render "
 "the PDF pages after changing typography. Test the HTML at desktop and "
@@ -2206,84 +2247,86 @@ msgstr "原子提交如何保护网站："
 msgid ""
 "**Staging:** All newly rendered pages are written to a hidden staging "
 "folder (``.<target>.next``). For the default builders it sits in the "
-"build folder. For an output we name with ``-o``, it sits inside the "
-"output's one cache folder beside it (``.<target>.guidedog``), so the "
-"output gains a single hidden neighbour."
+"build folder. For a custom output folder passed to ``guidedog build -b "
+"html SOURCEDIR OUTPUTDIR``, it sits inside the output's one cache "
+"folder beside it (``.<target>.guidedog``), so the output gains a single "
+"hidden neighbour."
 msgstr ""
 "**暂存：** "
-"所有新渲染的页面都先写入一个隐藏的暂存文件夹（``.<target>.next``）。对于默认构建器，它位于构建文件夹中。对于我们用 ``-o`` "
-"指定的输出，它位于输出旁边唯一的缓存文件夹（``.<target>.guidedog``）中，因此输出旁边只会多出一个隐藏的文件夹。"
+"所有新渲染的页面都先写入一个隐藏的暂存文件夹（``.<target>.next``）。对于默认构建器，它位于构建文件夹中。对于传给 "
+"``guidedog build -b html SOURCEDIR OUTPUTDIR`` "
+"的自定义输出文件夹，它位于输出旁边唯一的缓存文件夹（``.<target>.guidedog``）中，因此输出旁边只会多出一个隐藏的文件夹。"
 
-#: ../../howto/publish.rst:53
+#: ../../howto/publish.rst:54
 msgid ""
 "**Isolation:** The live output folder stays untouched while pages compile."
 msgstr "**隔离：** 编译页面期间，线上输出目录保持不动。"
 
-#: ../../howto/publish.rst:54
+#: ../../howto/publish.rst:55
 msgid ""
 "**Failure safety:** If any page fails to render, or a warning becomes an "
 "error under ``-W``, the build abandons the staging folder. The live site "
 "stays unchanged."
 msgstr "**失败保护：** 只要有页面渲染失败，或在 ``-W`` 下有警告变成错误，构建就会放弃暂存目录，线上网站保持不变。"
 
-#: ../../howto/publish.rst:56
+#: ../../howto/publish.rst:57
 msgid ""
 "**Atomic swap:** Once all files are flushed, Guidedog switches the "
 "staging folder into place. Where the filesystem supports it, this is a "
 "single directory exchange."
 msgstr "**原子交换：** 所有文件写入磁盘后，Guidedog 把暂存目录切换到位。在支持的文件系统上，这是一次目录交换操作。"
 
-#: ../../howto/publish.rst:58
+#: ../../howto/publish.rst:59
 msgid ""
 "**Interrupted recovery:** If a crash interrupts the swap, the next build "
 "reads the durable journal. It settles the interrupted commit instead of "
 "guessing."
 msgstr "**中断恢复：** 如果切换过程中发生崩溃，下次构建会读取持久化日志，明确地完成被中断的提交，而不是靠猜测。"
 
-#: ../../howto/publish.rst:61
+#: ../../howto/publish.rst:62
 msgid "Standard build workflow"
 msgstr "常规构建流程"
 
-#: ../../howto/publish.rst:64
+#: ../../howto/publish.rst:65
 msgid ""
 "To build both HTML and PDF outputs into the default project output "
 "directory:"
 msgstr "将 HTML 和 PDF 构建到项目默认的输出目录："
 
-#: ../../howto/publish.rst:71
+#: ../../howto/publish.rst:72
 msgid "Output locations:"
 msgstr "输出位置："
 
-#: ../../howto/publish.rst:73
+#: ../../howto/publish.rst:74
 msgid "The HTML website is written to ``docs/manual/_build/html/``."
 msgstr "HTML 网站写入 ``docs/manual/_build/html/``。"
 
-#: ../../howto/publish.rst:74
+#: ../../howto/publish.rst:75
 msgid "The PDF book is written to ``docs/manual/_build/pdf/``."
 msgstr "PDF 书籍写入 ``docs/manual/_build/pdf/``。"
 
-#: ../../howto/publish.rst:76
+#: ../../howto/publish.rst:77
 msgid ""
 "The ``-j auto`` flag parallelizes document parsing across all available "
 "CPU cores."
 msgstr "``-j auto`` 使用所有可用 CPU 核心并行解析文档。"
 
-#: ../../howto/publish.rst:78
+#: ../../howto/publish.rst:79
 msgid "Custom output directories"
 msgstr "自定义输出目录"
 
-#: ../../howto/publish.rst:81
+#: ../../howto/publish.rst:82
 msgid ""
 "To write the site to a folder of our choice (for example, in a CI/CD "
 "pipeline or a deployment script), we use the Sphinx-compatible command "
 "form:"
 msgstr "要把网站写到自己指定的目录（例如在 CI/CD 流水线或部署脚本中），使用与 Sphinx 兼容的命令形式："
 
-#: ../../howto/publish.rst:88
+#: ../../howto/publish.rst:89
 msgid "Guidedog enforces safety constraints on output paths:"
 msgstr "Guidedog 对输出路径有以下约束："
 
-#: ../../howto/publish.rst:90
+#: ../../howto/publish.rst:91
 msgid ""
 "Choose a dedicated output folder, such as ``_build/html`` inside the "
 "project or ``build/site`` beside it. The output must not be the source "
@@ -2293,7 +2336,7 @@ msgstr ""
 "选择专用输出目录，例如项目内的 ``_build/html``，或项目旁的 "
 "``build/site``。输出不能是源目录本身或其上级目录，否则代际切换会替换整个源项目。"
 
-#: ../../howto/publish.rst:93
+#: ../../howto/publish.rst:94
 msgid ""
 "For a custom destination such as ``build/site``, Guidedog keeps its "
 "internal caches in a sibling folder (such as "
@@ -2303,51 +2346,51 @@ msgstr ""
 "输出到 ``build/site`` 这样的自定义位置时，Guidedog 把内部缓存放在同级目录中（如 "
 "``build/.site.guidedog/.doctrees``）。这样，发布目录中只有我们要部署的静态文件。"
 
-#: ../../howto/publish.rst:97
+#: ../../howto/publish.rst:98
 msgid "Semantic checks and pre-flight validation"
 msgstr "语义检查与构建前验证"
 
-#: ../../howto/publish.rst:100
+#: ../../howto/publish.rst:101
 msgid ""
 "To check a project without writing HTML files to disk, we use the "
 "``dummy`` builder:"
 msgstr "要检查项目但不把 HTML 文件写入磁盘，使用 ``dummy`` 构建器："
 
-#: ../../howto/publish.rst:107
+#: ../../howto/publish.rst:108
 msgid "The dummy builder:"
 msgstr "dummy 构建器会："
 
-#: ../../howto/publish.rst:109
+#: ../../howto/publish.rst:110
 msgid "Reads and parses all documents."
 msgstr "读取并解析所有文档。"
 
-#: ../../howto/publish.rst:110
+#: ../../howto/publish.rst:111
 msgid ""
 "Resolves all toctrees, headings, cross-references, and domain objects."
 msgstr "解析目录树、标题、交叉引用和域对象。"
 
-#: ../../howto/publish.rst:111
+#: ../../howto/publish.rst:112
 msgid ""
 "Checks document references and domain objects (``-n`` enables nitpicky "
 "cross-reference checking). It does not make HTTP requests to test "
 "external URLs."
 msgstr "检查文档引用和域对象，``-n`` 开启严格的交叉引用检查。它不会发送 HTTP 请求来测试外部网址。"
 
-#: ../../howto/publish.rst:113
+#: ../../howto/publish.rst:114
 msgid "Exits with status 1 if any broken link or warning is found (``-W``)."
 msgstr "若有未解析的链接或警告，``-W`` 使其以状态码 1 退出。"
 
-#: ../../howto/publish.rst:115
+#: ../../howto/publish.rst:116
 msgid ""
 "In continuous integration, the dummy builder is a fast check to run "
 "before the full site build."
 msgstr "在持续集成中，可以先用 dummy 构建器做一次快速检查，再构建完整网站。"
 
-#: ../../howto/publish.rst:118
+#: ../../howto/publish.rst:119
 msgid "Reproducible build timestamps"
 msgstr "可复现的构建时间"
 
-#: ../../howto/publish.rst:121
+#: ../../howto/publish.rst:122
 msgid ""
 "Documentation builds often embed timestamps (for example, in \"Last "
 "updated\" footer notices). When an automated deployment must give the "
@@ -2357,7 +2400,7 @@ msgstr ""
 "文档构建经常嵌入时间戳（例如页脚的“最后更新”提示）。如果自动部署要求每次运行生成完全相同的字节，就用标准环境变量 "
 "``SOURCE_DATE_EPOCH`` 固定时钟："
 
-#: ../../howto/publish.rst:129
+#: ../../howto/publish.rst:130
 msgid ""
 "When this variable is set, Guidedog uses the specified Unix epoch "
 "timestamp instead of the current system clock for all date formatting, "
@@ -2374,21 +2417,21 @@ msgstr ""
 "``:expires-at:`` 发布时间窗，或传入 ``--preview`` 在本地构建中包含草稿和尚未到期的定时页面。参见 "
 ":doc:`static-publishing`。"
 
-#: ../../howto/publish.rst:131
+#: ../../howto/publish.rst:132
 msgid "Deployment options"
 msgstr "部署方式"
 
-#: ../../howto/publish.rst:134
+#: ../../howto/publish.rst:135
 msgid "Once the build succeeds, we deploy the static files to our host:"
 msgstr "构建成功后，把静态文件部署到托管环境："
 
-#: ../../howto/publish.rst:136
+#: ../../howto/publish.rst:137
 msgid ""
 "**Static web servers (Nginx / Caddy / Apache):** Point the server's root "
 "directive directly to the built HTML directory."
 msgstr "**静态 Web 服务器（Nginx / Caddy / Apache）：** 将服务器根目录指向生成的 HTML 目录。"
 
-#: ../../howto/publish.rst:138
+#: ../../howto/publish.rst:139
 msgid ""
 "**Cloud storage buckets (AWS S3 / Cloudflare R2 / Google Cloud "
 "Storage):** Sync the contents of ``_build/html`` to our bucket with the "
@@ -2397,11 +2440,11 @@ msgstr ""
 "**云存储桶（AWS S3 / Cloudflare R2 / Google Cloud Storage）：** 用云服务商的命令行工具把 "
 "``_build/html`` 的内容同步到存储桶。"
 
-#: ../../howto/publish.rst:140
+#: ../../howto/publish.rst:141
 msgid "**GitHub Pages:**"
 msgstr "**GitHub Pages：**"
 
-#: ../../howto/publish.rst:142
+#: ../../howto/publish.rst:143
 msgid ""
 "To deploy directly from our own machine, we run ``guidedog publish "
 "pages``. It asks for what is still missing (the repository, a token, the "
@@ -2411,7 +2454,7 @@ msgstr ""
 "要直接从本机部署，运行 ``guidedog publish pages``。它会询问还缺少的信息（仓库、令牌、Pages "
 "设置），然后一次完成构建和推送发布。``guidedog pages`` 提供逐步执行的相同步骤。见 :doc:`github-pages`。"
 
-#: ../../howto/publish.rst:146
+#: ../../howto/publish.rst:147
 msgid ""
 "For automated deployments with GitHub Actions, ``guidedog pages "
 "workflow`` writes a workflow that builds and deploys the site. See "
@@ -2420,7 +2463,7 @@ msgstr ""
 "如果用 GitHub Actions 自动部署，``guidedog pages workflow`` 会生成一个构建并部署网站的工作流。见 "
 ":doc:`github-pages`。"
 
-#: ../../howto/publish.rst:148
+#: ../../howto/publish.rst:149
 msgid ""
 "For any other destination, we write a publisher plugin as described in "
 ":doc:`../plugins` and run it with ``guidedog publish --publisher=ID``."
@@ -2428,7 +2471,7 @@ msgstr ""
 "部署到其他目标时，按 :doc:`../plugins` 的说明编写发布插件，并用 ``guidedog publish "
 "--publisher=ID`` 运行。"
 
-#: ../../howto/publish.rst:151
+#: ../../howto/publish.rst:152
 msgid ""
 "On filesystems with directory exchange, the output path switches in one "
 "operation. The fallback uses two renames and can briefly leave that path "
@@ -2526,7 +2569,7 @@ msgid ""
 "to inspect unpublished pages locally. When keeping both public and "
 "preview outputs on disk, write the preview to a separate output directory:"
 msgstr ""
-"使用 ``guidedog build html --preview``（或 ``guidedog serve "
+"使用 ``guidedog build html --preview``\\ （或 ``guidedog serve "
 "--preview``）可在本地查看尚未发布的页面。如果需要在磁盘上同时保留公开输出和预览输出，请将预览写入单独的输出目录："
 
 #: ../../howto/static-publishing.rst:67
@@ -2635,7 +2678,7 @@ msgid ""
 "rather than the wall clock, producing identical bytes when eligible "
 "sources and metadata are unchanged."
 msgstr ""
-"HTML 和 dirhtml 构建器会使用所配置的 ``base_url``（包括任何托管路径前缀）输出 "
+"HTML 和 dirhtml 构建器会使用所配置的 ``base_url``\\ （包括任何托管路径前缀）输出 "
 "``sitemap.xml``、``rss.xml`` 和 "
 "``atom.xml``。这些发现文件的时间戳源自源文件元数据而非实时系统时钟，因此在满足条件的源文件和元数据未改变时会生成完全相同的字节。"
 
@@ -2696,21 +2739,21 @@ msgid ""
 "Dated articles select ``article.html`` by default; other pages select "
 "``page.html``, which extends ``layout.html``. Any page can choose a "
 "custom template in ``templates_path`` with ``:template: landing.html``, "
-"and ``:nosidebar: true`` hides the built-in navigation sidebar. Templates "
-"receive dates, authors, tags, category, series, summary, draft state and "
-"PDF links in ``page.meta``. Article templates also receive ``page.older`` "
-"and ``page.newer`` in publication order, ``page.taxonomies`` mapping each "
-"enabled taxonomy to ``{name, url}`` entries, and ``page.word_count`` and "
-"``page.reading_minutes`` (computed using ``myst_words_per_minute``, "
-"counting CJK characters individually)."
+"and ``:nosidebar: true`` hides the built-in navigation sidebar. "
+"Templates receive dates, authors, tags, category, series, summary, "
+"draft state and PDF links in ``page.meta``. Article templates also "
+"receive ``page.older`` and ``page.newer`` in publication order, "
+"``page.taxonomies`` mapping each enabled taxonomy to ``{name, url}`` "
+"entries, and ``page.word_count`` and ``page.reading_minutes`` (computed "
+"using ``myst_words_per_minute``, counting CJK characters individually)."
 msgstr ""
 "带日期的文章默认选用 ``article.html``；其他页面选用继承自 ``layout.html`` 的 "
-"``page.html``。任何页面都可以通过 ``:template: landing.html`` 选用 ``templates_path`` "
-"中的自定义模板，并通过 ``:nosidebar: true`` 隐藏内置的导航侧边栏。模板通过 ``page.meta`` "
-"接收日期、作者、标签、分类、系列、摘要、草稿状态和 PDF 链接。文章模板还会收到按发布顺序排列的 ``page.older`` 和 "
-"``page.newer``、将每个已启用分类法映射为 ``{name, url}`` 条目的 ``page.taxonomies``，以及 "
-"``page.word_count`` 和 ``page.reading_minutes``（按 "
-"``myst_words_per_minute`` 计算，中日韩字符逐字计入）。"
+"``page.html``。任何页面都可以通过 ``:template: landing.html`` 选用 "
+"``templates_path`` 中的自定义模板，并通过 ``:nosidebar: true`` 隐藏内置的导航侧边栏。模板通过 "
+"``page.meta`` 接收日期、作者、标签、分类、系列、摘要、草稿状态和 PDF 链接。文章模板还会收到按发布顺序排列的 "
+"``page.older`` 和 ``page.newer``、将每个已启用分类法映射为 ``{name, url}`` 条目的 "
+"``page.taxonomies``，以及 ``page.word_count`` 和 ``page.reading_minutes``\\ "
+"（按 ``myst_words_per_minute`` 计算，中日韩字符逐字计入）。"
 
 #: ../../howto/static-publishing.rst:181
 msgid ""
@@ -2818,17 +2861,17 @@ msgstr "挂载式构建在同一时钟下暂存所有项目和语言版本，并
 #: ../../howto/static-publishing.rst:260
 msgid ""
 "Supported mount builders are ``html``, ``dirhtml``, ``pdf`` and "
-"``discussion-pdf`` (which validates a discussion catalog under ``prefix`` "
-"and builds a PDF book for each active record). ``exclude`` filters a "
-"mount's relative output files with globs, and ``overrides`` passes ``-D`` "
-"setting assignments (with ``{language}``, ``{edition}``, ``{site_root}`` "
-"and ``{base_url}`` placeholders). Select languages through "
-"``editions.language`` rather than a ``language`` override so routing and "
-"translated output stay aligned. Nonempty ``version`` and ``release`` "
-"values from the root configuration propagate to every mount, and one "
-"publication clock governs the entire build."
+"``discussion-pdf`` (which validates a discussion catalog under "
+"``prefix`` and builds a PDF book for each active record). ``exclude`` "
+"filters a mount's relative output files with globs, and ``overrides`` "
+"passes ``-D`` setting assignments (with ``{language}``, ``{edition}``, "
+"``{site_root}`` and ``{base_url}`` placeholders). Select languages "
+"through ``editions.language`` rather than a ``language`` override so "
+"routing and translated output stay aligned. Nonempty ``version`` and "
+"``release`` values from the root configuration propagate to every "
+"mount, and one publication clock governs the entire build."
 msgstr ""
-"支持的挂载构建器包括 ``html``、``dirhtml``、``pdf`` 和 ``discussion-pdf``（后者会校验 "
+"支持的挂载构建器包括 ``html``、``dirhtml``、``pdf`` 和 ``discussion-pdf``\\ （后者会校验 "
 "``prefix`` 下的讨论目录，并为每条有效记录构建 PDF 图书）。``exclude`` 使用 glob "
 "模式过滤挂载项的相对输出文件，``overrides`` 传递 ``-D`` 配置赋值（支持 "
 "``{language}``、``{edition}``、``{site_root}`` 和 ``{base_url}`` 占位符）。请通过 "
@@ -2929,7 +2972,9 @@ msgid ""
 "``typst-diagram`` compiles the code with Guidedog's embedded Typst "
 "compiler and includes the resulting image in HTML and PDF. We need no "
 "separate figure task or installed Typst program."
-msgstr "我们可以直接在 RST 或 MyST 文档中编写 Typst 绘图代码。``typst-diagram`` 使用 Guidedog 内嵌的 Typst 编译器编译代码，并将生成的图像加入 HTML 和 PDF。我们无需单独的图像构建任务，也无需安装 Typst 程序。"
+msgstr ""
+"我们可以直接在 RST 或 MyST 文档中编写 Typst 绘图代码。``typst-diagram`` 使用 Guidedog 内嵌的 "
+"Typst 编译器编译代码，并将生成的图像加入 HTML 和 PDF。我们无需单独的图像构建任务，也无需安装 Typst 程序。"
 
 #: ../../howto/typst-diagrams.rst:8
 msgid "A first drawing"
@@ -2957,23 +3002,89 @@ msgid ""
 "``numfig = true``, a captioned diagram is a numbered figure and "
 "``:numref:`` can refer to its ``:name:``. We provide meaningful ``:alt:`` "
 "text because SVG text is drawn as outlines."
-msgstr "默认图像格式为 SVG，因此同一幅矢量图可以在网站和书籍中缩放。``:format: png`` 选择每英寸 144 像素的 PNG。我们还可以设置 ``:class:`` 和 ``:align: left|center|right``。启用 ``numfig = true`` 后，带说明的图形成为编号插图，``:numref:`` 可以引用其 ``:name:``。由于 SVG 中的文字以轮廓绘制，我们应提供有意义的 ``:alt:`` 文本。"
+msgstr ""
+"默认图像格式为 SVG，因此同一幅矢量图可以在网站和书籍中缩放。``:format: png`` 选择每英寸 144 像素的 "
+"PNG。我们还可以设置 ``:class:`` 和 ``:align: left|center|right``。启用 ``numfig = "
+"true`` 后，带说明的图形成为编号插图，``:numref:`` 可以引用其 ``:name:``。由于 SVG "
+"中的文字以轮廓绘制，我们应提供有意义的 ``:alt:`` 文本。"
 
 #: ../../howto/typst-diagrams.rst:46
+msgid "``typst-diagram`` options"
+msgstr "``typst-diagram`` 选项"
+
+#: ../../howto/typst-diagrams.rst:50
+msgid "Option"
+msgstr "选项"
+
+#: ../../howto/typst-diagrams.rst:51
+msgid "Meaning"
+msgstr "含义"
+
+#: ../../howto/typst-diagrams.rst:52
+msgid "``:alt: text``"
+msgstr "``:alt: text``"
+
+#: ../../howto/typst-diagrams.rst:53
+msgid "Alternative text describing the diagram's content."
+msgstr "描述图表内容的替代文本。"
+
+#: ../../howto/typst-diagrams.rst:54
+msgid "``:caption: text``"
+msgstr "``:caption: text``"
+
+#: ../../howto/typst-diagrams.rst:55
+msgid ""
+"Wraps the drawing in a figure with this caption (numbered when ``numfig "
+"= true``)."
+msgstr "将图形包裹在带此图注的插图中（``numfig = true`` 时自动编号）。"
+
+#: ../../howto/typst-diagrams.rst:56
+msgid "``:name: label``"
+msgstr "``:name: label``"
+
+#: ../../howto/typst-diagrams.rst:57
+msgid "Cross-reference anchor for ``:ref:`` and ``:numref:``."
+msgstr "供 ``:ref:`` 和 ``:numref:`` 使用的交叉引用锚点。"
+
+#: ../../howto/typst-diagrams.rst:58
+msgid "``:format: svg|png``"
+msgstr "``:format: svg|png``"
+
+#: ../../howto/typst-diagrams.rst:59
+msgid "Output image format: ``svg`` (default) or ``png`` (144 PPI)."
+msgstr "输出图像格式：``svg``\\ （默认）或 ``png``\\ （144 PPI）。"
+
+#: ../../howto/typst-diagrams.rst:60
+msgid "``:align: left|center|right``"
+msgstr "``:align: left|center|right``"
+
+#: ../../howto/typst-diagrams.rst:61
+msgid "Horizontal placement of the image or figure."
+msgstr "图像或插图的水平对齐方式。"
+
+#: ../../howto/typst-diagrams.rst:62
+msgid "``:class: names``"
+msgstr "``:class: names``"
+
+#: ../../howto/typst-diagrams.rst:63
+msgid "Extra CSS class names added alongside ``typst-diagram``."
+msgstr "与 ``typst-diagram`` 一并添加的额外 CSS 类名。"
+
+#: ../../howto/typst-diagrams.rst:65
 msgid "CeTZ and Fletcher"
 msgstr "CeTZ 和 Fletcher"
 
-#: ../../howto/typst-diagrams.rst:49
+#: ../../howto/typst-diagrams.rst:68
 msgid ""
 "We import packages explicitly with pinned versions. This CeTZ example "
 "uses the version shared by Fletcher 0.5.8."
 msgstr "我们显式导入固定版本的包。这个 CeTZ 示例使用与 Fletcher 0.5.8 相同的 CeTZ 版本。"
 
-#: ../../howto/typst-diagrams.rst:65
+#: ../../howto/typst-diagrams.rst:84
 msgid "Fletcher supplies nodes and arrows."
 msgstr "Fletcher 提供节点和箭头。"
 
-#: ../../howto/typst-diagrams.rst:80
+#: ../../howto/typst-diagrams.rst:99
 msgid ""
 "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings apply "
 "to diagrams in both HTML and PDF. ``pdf_packages = \"offline\"`` uses "
@@ -2983,41 +3094,49 @@ msgid ""
 "with ``pdf_font_paths``. After installing a previously missing package or "
 "changing font files, we run a fresh ``guidedog build html -a`` command to "
 "redraw cached pages and reload the compiler's font store."
-msgstr "``pdf_packages``、``pdf_fonts`` 和 ``pdf_font_paths`` 设置同时适用于 HTML 和 PDF 中的图表。``pdf_packages = \"offline\"`` 仅使用已经安装在 Typst 包目录中的包。默认设置允许下载缺失的包。为得到可重复的排版，我们设置 ``pdf_fonts = \"embedded\"``，并用 ``pdf_font_paths`` 添加项目字体目录。安装此前缺失的包或更改字体文件后，我们在新进程中运行 ``guidedog build html -a``，重新绘制缓存页面并重新加载编译器的字体库。"
+msgstr ""
+"``pdf_packages``、``pdf_fonts`` 和 ``pdf_font_paths`` 设置同时适用于 HTML 和 PDF "
+"中的图表。``pdf_packages = \"offline\"`` 仅使用已经安装在 Typst "
+"包目录中的包。默认设置允许下载缺失的包。为得到可重复的排版，我们设置 ``pdf_fonts = \"embedded\"``，并用 "
+"``pdf_font_paths`` 添加项目字体目录。安装此前缺失的包或更改字体文件后，我们在新进程中运行 ``guidedog build "
+"html -a``，重新绘制缓存页面并重新加载编译器的字体库。"
 
-#: ../../howto/typst-diagrams.rst:86
+#: ../../howto/typst-diagrams.rst:105
 msgid "Shared helpers and existing files"
 msgstr "共享辅助代码和已有文件"
 
-#: ../../howto/typst-diagrams.rst:89
+#: ../../howto/typst-diagrams.rst:108
 msgid ""
 "We can move common colors and drawing functions into a local ``.typ`` "
 "file. An inline diagram imports paths relative to the RST or Markdown "
 "file containing it. A directive inside an included document uses that "
 "document's folder."
-msgstr "我们可以将通用颜色和绘图函数移到本地 ``.typ`` 文件中。文档内的图表相对于包含它的 RST 或 Markdown 文件解析导入路径。被包含文档中的指令使用该文档所在的目录。"
+msgstr ""
+"我们可以将通用颜色和绘图函数移到本地 ``.typ`` 文件中。文档内的图表相对于包含它的 RST 或 Markdown "
+"文件解析导入路径。被包含文档中的指令使用该文档所在的目录。"
 
-#: ../../howto/typst-diagrams.rst:101
+#: ../../howto/typst-diagrams.rst:120
 msgid ""
 "We can also retain a complete figure source file and let Guidedog build "
 "it. We give either a file argument or an inline body. Imports in the file "
 "resolve beside that file."
 msgstr "我们也可以保留完整的图形源文件，让 Guidedog 构建它。我们只能提供文件参数或内联正文中的一种。文件中的导入相对于该文件解析。"
 
-#: ../../howto/typst-diagrams.rst:111
+#: ../../howto/typst-diagrams.rst:130
 msgid ""
 "Imported helpers and data files become build dependencies. Changing one "
 "redraws the affected HTML pages without changing their markup. We keep "
 "project imports below the source directory; symlinks leading outside it "
 "are refused. Absolute Typst imports start at that source directory."
-msgstr "导入的辅助文件和数据文件会成为构建依赖。更改它们会重新绘制相关 HTML 页面，无需修改标记。项目导入必须位于源目录内；指向目录外的符号链接会被拒绝。Typst 的绝对导入路径从源目录开始。"
+msgstr ""
+"导入的辅助文件和数据文件会成为构建依赖。更改它们会重新绘制相关 HTML "
+"页面，无需修改标记。项目导入必须位于源目录内；指向目录外的符号链接会被拒绝。Typst 的绝对导入路径从源目录开始。"
 
-#: ../../howto/typst-diagrams.rst:116
-#| msgid "Static websites and articles"
+#: ../../howto/typst-diagrams.rst:135
 msgid "Page size and failures"
 msgstr "页面尺寸与失败处理"
 
-#: ../../howto/typst-diagrams.rst:119
+#: ../../howto/typst-diagrams.rst:138
 msgid ""
 "Guidedog prepends ``#set page(width: auto, height: auto, margin: 0pt)`` "
 "so the page fits the drawing. We write ordinary Typst content, without an "
@@ -3027,17 +3146,83 @@ msgid ""
 "most 4,096 distinct file lookups per diagram. Typst layout uses the "
 "compiler's own memory; these limits do not impose a compiler timeout or a "
 "total memory ceiling."
-msgstr "Guidedog 在前面添加 ``#set page(width: auto, height: auto, margin: 0pt)``，使页面适合图形。我们编写普通 Typst 内容，不使用 ``html.frame`` 包装。每个图表必须恰好生成一页，且尺寸有限。指令正文上限为 1 MiB；PNG 导出最多允许 1600 万像素，任一边不超过 16,384 像素。适配器对每个图表最多跟踪 4,096 个不同文件查询。Typst 排版使用编译器自身的内存；这些限制并不构成编译器超时或总内存上限。"
+msgstr ""
+"Guidedog 在前面添加 ``#set page(width: auto, height: auto, margin: "
+"0pt)``，使页面适合图形。我们编写普通 Typst 内容，不使用 ``html.frame`` "
+"包装。每个图表必须恰好生成一页，且尺寸有限。指令正文上限为 1 MiB；PNG 导出最多允许 1600 万像素，任一边不超过 16,384 "
+"像素。适配器对每个图表最多跟踪 4,096 个不同文件查询。Typst 排版使用编译器自身的内存；这些限制并不构成编译器超时或总内存上限。"
 
-#: ../../howto/typst-diagrams.rst:126
+#: ../../howto/typst-diagrams.rst:145
 msgid ""
-"If compilation fails, we see a warning at the directive and the source "
-"stays visible as code. The message includes the position within the "
-"diagram or imported Typst file. ``-W`` prevents that build from replacing "
-"the published site or book. ``--untrusted`` keeps diagram source visible "
-"and warns without running Typst. Text builds retain source without "
-"compiling it."
-msgstr "编译失败时，我们会在指令位置看到警告，源代码仍以代码形式显示。消息包含图表或导入的 Typst 文件中的位置。``-W`` 阻止此次构建替换已发布的网站或书籍。``--untrusted`` 保留图表源代码并发出警告，不运行 Typst。文本构建保留源代码，不执行编译。"
+"If compilation fails, we see a ``build.typst-diagram`` warning at the "
+"directive and the source stays visible as code. The message includes "
+"the position within the diagram or imported Typst file. Giving neither "
+"or both of a file argument and an inline body reports "
+"``sphinx.typst.source``. A ``guidedog`` built without the ``embedded`` "
+"Typst feature reports ``typst.embedded``, and exceeding the host memory "
+"budget reports ``host.budget``. ``-W`` prevents a failed build from "
+"replacing the published site or book. ``--untrusted`` keeps diagram "
+"source visible and warns ``build.typst-diagram`` without running Typst. "
+"Text builds retain source without compiling it."
+msgstr ""
+"如果编译失败，指令处会显示 ``build.typst-diagram`` 警告，且源代码仍以代码形式可见。消息会指出图表或导入的 Typst "
+"文件中的位置。既未提供文件参数也未提供内联正文，或同时提供两者时，会报告 ``sphinx.typst.source``。未启用 "
+"``embedded`` Typst 特性构建的 ``guidedog`` 会报告 "
+"``typst.embedded``，超出宿主内存预算则会报告 ``host.budget``。``-W`` "
+"可防止失败的构建替换已发布的网站或书籍。``--untrusted`` 不运行 Typst，保留图表源码并发出 "
+"``build.typst-diagram`` 警告。纯文本构建保留源码而不进行编译。"
+
+#: ../../howto/typst-diagrams.rst:153
+msgid "Migrate existing figure files"
+msgstr "迁移现有的图形文件"
+
+#: ../../howto/typst-diagrams.rst:156
+msgid ""
+"When a project previously ran ``typst compile`` by hand or in a "
+"Makefile to generate prebuilt ``.svg`` or ``.png`` files:"
+msgstr "如果项目此前通过手动或 Makefile 运行 ``typst compile`` 来预生成 ``.svg`` 或 ``.png`` 文件："
+
+#: ../../howto/typst-diagrams.rst:158
+msgid ""
+"Remove any explicit ``#set page(...)`` or ``html.frame(...)`` wrapper "
+"that existed only to crop the figure; Guidedog prepends ``#set "
+"page(width: auto, height: auto, margin: 0pt)`` automatically."
+msgstr ""
+"删掉仅用于裁切图形的显式 ``#set page(...)`` 或 ``html.frame(...)`` 包装；Guidedog "
+"会自动在开头加上 ``#set page(width: auto, height: auto, margin: 0pt)``。"
+
+#: ../../howto/typst-diagrams.rst:159
+msgid ""
+"Replace ``.. figure:: figures/arch.svg`` (and its separate build "
+"script) with ``.. typst-diagram:: figures/arch.typ``, keeping "
+"``:caption:``, ``:alt:``, ``:name:`` and ``:align:`` on the directive."
+msgstr ""
+"将 ``.. figure:: figures/arch.svg``\\ （及其独立的构建脚本）替换为 ``.. "
+"typst-diagram:: figures/arch.typ``，并在指令上保留 "
+"``:caption:``、``:alt:``、``:name:`` 和 ``:align:``。"
+
+#: ../../howto/typst-diagrams.rst:160
+msgid ""
+"Delete the committed generated ``.svg`` or ``.png`` artifacts once "
+"``guidedog build html -W`` and ``guidedog build pdf -W`` succeed."
+msgstr ""
+"待 ``guidedog build html -W`` 和 ``guidedog build pdf -W`` "
+"构建成功后，删除仓库中已提交的 ``.svg`` 或 ``.png`` 生成产物。"
+
+#~ msgid ""
+#~ "``guidedog dsc build`` writes the website to ``_build/html`` and one "
+#~ "PDF per record to ``_build/pdf``. Naming a record writes only its PDF, "
+#~ "to ``_build/selected``, and leaves the complete output alone. Warnings "
+#~ "stop the build."
+#~ msgstr ""
+#~ "``guidedog dsc build`` 将网站写入 ``_build/html``，并为每条记录生成一个 PDF，写入 "
+#~ "``_build/pdf``。指定一条记录时，只把它的 PDF 写入 "
+#~ "``_build/selected``，不改动完整输出。出现警告即停止构建。"
+
+#~ msgid ""
+#~ "The manual's catalogs are in ``docs/manual/locales``. After we change "
+#~ "English text, we refresh them:"
+#~ msgstr "手册的翻译目录位于 ``docs/manual/locales``。修改英文文本后，我们这样更新它们："
 
 #~ msgid ""
 #~ "**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. "

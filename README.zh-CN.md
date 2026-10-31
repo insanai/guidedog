@@ -17,9 +17,9 @@ guidedog build pdf docs
 guidedog serve docs
 ```
 
-项目包含 `conf.toml`、`index.rst`、`_templates/layout.html`、`_templates/book.typ` 和 `_static/`。模板是普通文件，我们可以直接编辑。HTML 提供导航、搜索、代码高亮、图表和公式。PDF 图书提供章节、交叉引用、插图、索引及按语言优化的排版。
+项目包含 `conf.toml`、`index.rst`、`_templates/`（`layout.html`、`book.typ`、`discussion.typ`、`article.typ` 和 `theme.typ`）以及 `_static/`（`guidedog.css`、`guidedog.js` 和 `typography.js`）。模板和静态资源都是普通文件，可以在本地直接编辑。HTML 提供导航、搜索、代码高亮、图表、公式和 Knuth-Plass 段落排版。PDF 图书提供章节、交叉引用、插图、索引及按语言优化的排版。我们可以在 RST 和 MyST 中直接嵌入包括 CeTZ 和 Fletcher 在内的 Graphviz 或 Typst 绘图源码，并自动生成 HTML 与 PDF 资源；参见[图表章节](docs/manual/topics/diagrams.rst)。
 
-默认采用浅色主题，读者也可选择深色或跟随系统。手册首页和仓库概览会检测浏览器语言。已保存的选择优先；直接访问某个版本或章节的链接则视为明确请求。
+内置主题默认跟随系统主题，同时提供浅色和深色选项；Guidedog 自身的文档网站默认使用浅色阅读版。网站首页和仓库概览会检测浏览器语言。已保存的选择优先；直接访问某个版本或章节的链接则视为明确请求。
 
 ```sh
 guidedog convert notes.md --to pdf --output notes.pdf
@@ -58,7 +58,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-生成的可执行文件位于 `target/release`。在使用 Homebrew 的 macOS 上，先让链接器找到 Graphviz：`export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`。Typst 编译器默认内嵌（即 `gd-typst` 的 `embedded` 特性）；若不启用该特性，Guidedog 会调用系统中安装的 `typst` 0.15.1 生成 PDF。在 Linux 上，内嵌编译器的包下载器会链接随源码附带的 OpenSSL，构建它需要 `perl` 和 `make`。
+生成的可执行文件位于 `target/release`。在使用 Homebrew 的 macOS 上，先让链接器找到 Graphviz：`export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`。Typst 编译器默认内嵌（即 `gd-typst` 的 `embedded` 特性）；若不启用该特性，Guidedog 会调用系统中安装的 `typst` 0.15.1 生成 PDF 图书，而 `.. typst-diagram::` 则需要内嵌编译器。在 Linux 上，内嵌编译器的包下载器会链接随源码附带的 OpenSSL，构建它需要 `perl` 和 `make`。
 
 提交修改前，请运行与 CI 相同的检查：
 
@@ -82,7 +82,7 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
     -D language=de -D 'html_extra_path=[]' -W
 ```
 
-在 PO 文件中翻译并审阅 `msgstr` 的值。Guidedog 负责提取 POT 文件、合并消息目录、报告进度并构建各语言版本，不会自行编造译文。命令、路径、代码、API 名称和引用目标保持不变。仅翻译手册和仓库概览，API 与 GDS 保持英文。`cargo xtask build-site` 会将所有语言版本、对应的 PDF 图书和讨论记录汇总组装成网站。
+在 PO 文件中翻译并审阅 `msgstr` 的值。Guidedog 负责提取 POT 文件、合并消息目录、报告进度并构建各语言版本，不会自行编造译文。命令、路径、代码、API 名称和引用目标保持不变。网站首页、手册和仓库概览均提供翻译，API 参考与 GDS 保持英文。`cargo xtask build-site` 会将所有语言版本、对应的 PDF 图书和讨论记录汇总组装成网站。
 
 GitHub 上的读者可通过上方的链接选择 README 语言。自动语言检测由生成的文档网站提供。
 
@@ -129,7 +129,7 @@ guidedog ssg publish posts/2026-04-17-zero-copy.rst
 guidedog ssg build site
 ```
 
-标有 `:pdf: article` 的页面还会在生成 HTML 页面的同时生成具有印刷品质的独立 PDF。多项目网站通过 `[[site.mounts]]` 以声明方式挂载子项目（例如 `docs/manual`、`docs/api` 和 `docs/gds`）。参见[静态站点发布](docs/manual/howto/static-publishing.rst)。
+标有 `:pdf: article` 的页面还会在生成 HTML 页面的同时生成具有印刷品质的独立 PDF。多项目网站通过 `[[site.mounts]]` 以声明方式挂载子项目（例如 `docs/site`、`docs/manual` 和 `docs/gds`）；`docs/api` 则作为独立的参考文档项目及手册 PDF 附录构建。参见[静态站点发布](docs/manual/howto/static-publishing.rst)。
 
 ## 阅读与嵌入
 
@@ -140,7 +140,7 @@ guidedog ssg build site
 - [GDS](docs/gds/README.md)：带编号的设计记录和实现决策。
 - [讨论库](crates/gd-discussion/README.md)：`guidedog dsc` 所维护的目录。
 - [插件库](crates/gd-plugins/README.md)：带类型的构建服务，以及供 `guidedog publish` 和链接进来的 Pages 插件使用的发布器接口。
-- [可复用的 crate](docs/manual/internals/crates.rst)：供其他 Rust 项目从 crates.io 引入的引擎、库、API 生成器和插件 SDK，以及它们之间的依赖关系。
+- [可复用的 crate](docs/manual/internals/crates.rst)：面向独立使用而组织的引擎、库、API 生成器和插件 SDK（当前从此工作区构建，crate 名称已为 crates.io 预留），以及它们之间的依赖关系。
 
 `crates/` 下的每个 crate 都有一份简短的 README，介绍其 API 和设计决策。Guidedoc 持有自己的文档表并在多次转换间复用，因此在稳定状态下的转换实现零内存分配。它会返回带提示信息的结构化诊断。宿主负责管理文件、资源预算、缓存、发布和内嵌编译器。`--untrusted` 仅限制能力，并非进程沙箱，也不限制所有原生资源开销。Beta 版的适用范围是 Linux、macOS 和 Windows 上的可信文档项目。
 

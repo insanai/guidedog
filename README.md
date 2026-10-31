@@ -17,9 +17,9 @@ guidedog build pdf docs
 guidedog serve docs
 ```
 
-The project contains `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ`, and `_static/`. Templates are ordinary files that we can edit. HTML provides navigation, search, code highlighting, diagrams, and equations. PDF books provide chapters, cross-references, figures, indexes, and language-aware typesetting. We can embed Graphviz or Typst drawing source, including CeTZ and Fletcher, directly in RST and MyST with automatic HTML and PDF assets; see the [diagrams chapter](docs/manual/topics/diagrams.rst).
+The project contains `conf.toml`, `index.rst`, `_templates/` (`layout.html`, `book.typ`, `discussion.typ`, `article.typ`, and `theme.typ`), and `_static/` (`guidedog.css`, `guidedog.js`, and `typography.js`). Templates and static assets are ordinary files that we can edit locally. HTML provides navigation, search, code highlighting, diagrams, equations, and Knuth-Plass paragraph typesetting. PDF books provide chapters, cross-references, figures, indexes, and language-aware typesetting. We can embed Graphviz or Typst drawing source, including CeTZ and Fletcher, directly in RST and MyST with automatic HTML and PDF assets; see the [diagrams chapter](docs/manual/topics/diagrams.rst).
 
-The default theme is light. Readers can choose dark or the system theme. The manual detects the browser language on its landing page and repository overview. A saved choice takes precedence; direct links to an edition or chapter remain explicit requests.
+The built-in theme follows the system theme by default, with light and dark choices; Guidedog's own documentation website defaults to the light reading edition. The website detects the browser language on its landing page and repository overview. A saved choice takes precedence; direct links to an edition or chapter remain explicit requests.
 
 ```sh
 guidedog convert notes.md --to pdf --output notes.pdf
@@ -58,7 +58,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-The executable is in `target/release`. On macOS with Homebrew, point the linker at Graphviz first: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. The Typst compiler is embedded by default (the `embedded` feature of `gd-typst`); without it, Guidedog runs an installed `typst` 0.15.1 for PDF. On Linux, the embedded compiler's package downloader links a vendored OpenSSL, which needs `perl` and `make` to build.
+The executable is in `target/release`. On macOS with Homebrew, point the linker at Graphviz first: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. The Typst compiler is embedded by default (the `embedded` feature of `gd-typst`); without it, Guidedog runs an installed `typst` 0.15.1 for PDF books, while `.. typst-diagram::` requires the embedded compiler. On Linux, the embedded compiler's package downloader links a vendored OpenSSL, which needs `perl` and `make` to build.
 
 Before sending a change, run what CI runs:
 
@@ -82,7 +82,7 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
     -D language=de -D 'html_extra_path=[]' -W
 ```
 
-Translate and review `msgstr` values in the PO files. Guidedog extracts POT files, merges catalogs, reports progress, and builds each edition. It does not invent translations. Commands, paths, code, API names, and reference targets stay unchanged. Only the manual and repository overview are translated; API and GDS remain English. `cargo xtask build-site` assembles all editions, their PDF books, and the discussions into the website.
+Translate and review `msgstr` values in the PO files. Guidedog extracts POT files, merges catalogs, reports progress, and builds each edition. It does not invent translations. Commands, paths, code, API names, and reference targets stay unchanged. The website landing page, the manual, and the repository overview are translated; the API reference and GDS remain English. `cargo xtask build-site` assembles all editions, their PDF books, and the discussions into the website.
 
 GitHub readers choose a README language using the links above. Automatic language selection belongs to the generated documentation website.
 
@@ -129,7 +129,7 @@ guidedog ssg publish posts/2026-04-17-zero-copy.rst
 guidedog ssg build site
 ```
 
-Pages marked with `:pdf: article` also build standalone print-quality PDFs alongside their HTML pages. Multi-project websites mount sub-projects (such as `docs/manual`, `docs/api`, and `docs/gds`) declaratively through `[[site.mounts]]`. See [Static site publishing](docs/manual/howto/static-publishing.rst).
+Pages marked with `:pdf: article` also build standalone print-quality PDFs alongside their HTML pages. Multi-project websites mount sub-projects (such as `docs/site`, `docs/manual`, and `docs/gds`) declaratively through `[[site.mounts]]`; `docs/api` builds as a standalone reference project and manual PDF appendix. See [Static site publishing](docs/manual/howto/static-publishing.rst).
 
 ## Read and embed
 
@@ -140,7 +140,7 @@ Pages marked with `:pdf: article` also build standalone print-quality PDFs along
 - [GDS](docs/gds/README.md): numbered design records and implementation decisions.
 - [Discussion library](crates/gd-discussion/README.md): the catalogs that `guidedog dsc` keeps.
 - [Plugin library](crates/gd-plugins/README.md): typed build services and the publisher interface used by `guidedog publish` and the linked Pages plugin.
-- [Reusable crates](docs/manual/internals/crates.rst): the engine, libraries, API generators, and plugin SDK that other Rust projects can take from crates.io, and how they depend on each other.
+- [Reusable crates](docs/manual/internals/crates.rst): the engine, libraries, API generators, and plugin SDK structured for independent use (built from this workspace today, with crate names reserved for crates.io), and how they depend on each other.
 
 Each crate under `crates/` has a short README with its API and its design decisions. Guidedoc owns its document tables and reuses them between conversions, so a conversion in steady state allocates nothing. It returns structured diagnostics with a hint. The host manages files, budgets, caching, publication, and the embedded compilers. `--untrusted` restricts capabilities; it is not a process sandbox or a limit on all native resource use. The beta scope is trusted documentation projects on Linux, macOS and Windows.
 

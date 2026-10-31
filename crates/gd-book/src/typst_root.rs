@@ -61,12 +61,14 @@ impl Drop for TypstRoot {
 }
 
 /// The folders Typst may read, outermost only (one inside another is reached through
-/// the outer one): the readable roots, and the graphs folder when it exists.
+/// the outer one): the readable roots and existing generated-image folders.
 pub(crate) fn typst_folders(config: &Config) -> Vec<PathBuf> {
     let mut all = gd_conf::readable_roots(config);
-    let graphs = gd_env::doctrees_dir(config).join("graphs");
-    if graphs.is_dir() {
-        all.push(graphs);
+    for name in ["graphs", "diagrams"] {
+        let folder = gd_env::doctrees_dir(config).join(name);
+        if folder.is_dir() {
+            all.push(folder);
+        }
     }
     // Keep canonical drive prefixes and temporary-directory aliases consistent with
     // book_root, including when the cache directory was resolved by the generation.

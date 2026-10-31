@@ -179,14 +179,13 @@ fn resolved_path(path: &Path) -> PathBuf {
 }
 
 /// The folder the book's paths are relative to: the source folder, or the nearest
-/// folder that holds it, every include root, and the graphs folder (where graphs are
-/// drawn). Typst runs in a folder that holds only those (gd-book's typst root).
+/// folder that holds it, every include root, and the generated-image cache.
+/// Typst reads only the approved folders inside it (gd-book's typst root).
 pub fn book_root(config: &Config) -> PathBuf {
-    let graphs = gd_env::doctrees_dir(config).join("graphs");
-    let graphs = resolved_path(&graphs);
+    let drawings = resolved_path(&gd_env::doctrees_dir(config));
     let roots: Vec<_> = gd_conf::readable_roots(config).iter().map(|p| resolved_path(p)).collect();
     let mut root = resolved_path(&config.source_dir);
-    while !graphs.starts_with(&root) || !roots.iter().all(|r| r.starts_with(&root)) {
+    while !drawings.starts_with(&root) || !roots.iter().all(|r| r.starts_with(&root)) {
         match root.parent() {
             Some(parent) => root = parent.to_path_buf(),
             None => break,

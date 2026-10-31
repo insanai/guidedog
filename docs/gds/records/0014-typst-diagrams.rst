@@ -105,6 +105,7 @@ An existing asset with matching bytes keeps its modification time, so redrawing 
 We do not reuse an image merely because its source text has not changed.
 The existing staged output publication owns the final HTML and PDF assets.
 Scratch artifacts live under doctrees and are removed after use.
+The PDF typesetter can read the generated ``graphs`` and ``diagrams`` folders even when a mounted build keeps its cache outside the source tree; it gains no access to other cache folders.
 
 Rationale and alternatives
 --------------------------
@@ -179,6 +180,8 @@ Critique: duplicating Graphviz's figure rewrite would create two implementations
 Revision: share that rewrite and keep compiler-specific drawing in separate modules.
 
 2026-10-31, implementation review: preserve file-source arguments in RST writing; inlining a file's text would otherwise change the base directory of its imports. Reuse the existing streaming file digester for content dependencies. Keep the draft unnumbered and retain maintainer control of acceptance and release tagging.
+
+2026-10-31, mounted-site qualification: the website build exposed a missing PDF read-root grant for the generated diagram folder outside the source tree. Add only the generated-image folder to the existing allowlist, keep other cache folders private, and cover real mounted PDF builds with SVG and PNG.
 
 References
 ----------

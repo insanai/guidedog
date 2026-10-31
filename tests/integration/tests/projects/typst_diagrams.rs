@@ -123,6 +123,29 @@ fn untrusted_sources_are_retained_without_compilation() {
     lacks(&html, "_images/typst-");
 }
 
+#[test]
+fn mounted_pdf_books_read_both_generated_image_formats() {
+    let dir = Scratch::new("typst-mounted-pdf");
+    dir.write(
+        "conf.toml",
+        concat!(
+            "project = 'Site'\n[site]\n[[site.mounts]]\n",
+            "name = 'book'\nsource = 'manual'\noutput = 'book'\nbuilder = 'pdf'\n",
+        ),
+    );
+    dir.write("manual/conf.toml", "project = 'Diagrams'\npdf_packages = 'offline'\n");
+    dir.write(
+        "manual/index.rst",
+        concat!(
+            "Diagrams\n========\n\n.. typst-diagram::\n\n   #circle(radius: 12pt)\n\n",
+            ".. typst-diagram::\n   :format: png\n\n   #rect(width: 20pt, height: 20pt)\n",
+        ),
+    );
+    crate::support::cli(&dir.path, 0, &["ssg", "build", "."]);
+    let pdf = std::fs::read(dir.path.join("_build/site/book/diagrams-en.pdf")).unwrap();
+    assert!(pdf.starts_with(b"%PDF-"));
+}
+
 #[cfg(unix)]
 #[test]
 fn source_symlinks_cannot_escape_the_project() {

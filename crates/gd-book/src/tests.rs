@@ -90,6 +90,22 @@ fn typst_folders_keep_the_outermost() {
     assert_eq!(folders.len(), 2, "{folders:?}");
 }
 
+#[test]
+fn external_diagram_cache_does_not_expose_other_cached_files() {
+    let dir = TempDir::new("diagram folders");
+    let config = gd_conf::Config::new(dir.0.join("source"), dir.0.join("build"));
+    let diagrams = gd_env::doctrees_dir(&config).join("diagrams");
+    std::fs::create_dir_all(&config.source_dir).unwrap();
+    std::fs::create_dir_all(&diagrams).unwrap();
+    std::fs::create_dir_all(gd_env::doctrees_dir(&config).join("failed")).unwrap();
+    let folders = typst_folders(&config);
+    assert_eq!(folders.len(), 2, "{folders:?}");
+    assert!(folders.contains(&config.source_dir));
+    assert!(folders.contains(&diagrams));
+    assert!(!folders.contains(&gd_env::doctrees_dir(&config)));
+    assert!(diagrams.starts_with(gd_link::book_root(&config)));
+}
+
 /// A font list's missing family is a note (the next family stands in); other Typst
 /// warnings stay warnings.
 #[test]

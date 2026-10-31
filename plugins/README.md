@@ -4,7 +4,11 @@
 it describes plugins, and does not install, authorize, or run them. Guidedog reads
 nothing from it to decide what runs.
 
-The `pages` entry is the GitHub Pages publisher of [GDS 0008](../docs/gds/records/0008-github-pages-publishing.rst). It is linked into the single `guidedog` executable from [gd-pages](../crates/gd-pages). It adds `guidedog publish pages` and `guidedog pages` maintenance commands. No separate publisher binary or registration is needed.
+Three released plugins are linked into the single `guidedog` executable, so no separate binary or registration is needed:
+
+- `pages` ([GDS 0008](../docs/gds/records/0008-github-pages-publishing.rst), [gd-pages](../crates/gd-pages)): the GitHub Pages publisher, adding `guidedog publish pages` and `guidedog pages` maintenance commands.
+- `dsc` ([GDS 0007](../docs/gds/records/0007-discussion-catalogs.rst), [gd-discussion](../crates/gd-discussion)): discussion catalogs, adding `guidedog dsc`.
+- `ssg` ([GDS 0013](../docs/gds/records/0013-static-site-generation.rst), [gd-ssg](../crates/gd-ssg)): static site publishing, presets, pinned theme archives, and multi-project website mounts, adding `guidedog ssg`.
 
 Each entry names its ID, source, license, public maintainer names, description,
 service kind, status, the interface and protocol versions it speaks, and its design

@@ -5,7 +5,8 @@
 # api_version and protocol_version are the versions the plugin speaks, as gd-plugins
 # names them: API_VERSION (publishers, 1.1), PLUGIN_API_VERSION (build plugins, 1.0),
 # PROTOCOL_VERSION (guidedog-publisher, 1.0), and BUILD_PROTOCOL_VERSION
-# (guidedog-build-plugin, 1.0).
+# (guidedog-build-plugin, 1.0). A command plugin is a build plugin that adds commands to
+# the command line, so it speaks PLUGIN_API_VERSION.
 schema = 1
 
 [[plugins]]
@@ -25,9 +26,58 @@ protocol = "guidedog-publisher"
 protocol_version = "1.0"
 # The publisher is linked into the single Guidedog release executable.
 releases = [
+    { version = "1.0.0-beta.8", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.8" },
+    { version = "1.0.0-beta.7", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.7" },
+    { version = "1.0.0-beta.6", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.6" },
+    { version = "1.0.0-beta.5", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.5" },
+    { version = "1.0.0-beta.4", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.4" },
     { version = "1.0.0-beta.3", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.3" },
     { version = "1.0.0-beta.2", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.2" },
     { version = "1.0.0-beta.1", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.1" },
+]
+
+[[plugins]]
+id = "dsc"
+kind = "command"
+name = "Discussion catalogs"
+description = "Manage numbered reStructuredText proposals and decisions and publish HTML and per-record PDFs."
+status = "released"
+program = "guidedog"
+linked = true
+source = "https://github.com/insanai/guidedog/tree/main/crates/gd-discussion"
+license = "LGPL-3.0-or-later"
+maintainers = ["Vikrant Rathore"]
+designs = ["GDS 0007", "GDS 0009"]
+api_version = "1.0"
+releases = [
+    { version = "1.0.0-beta.8", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.8" },
+    { version = "1.0.0-beta.7", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.7" },
+    { version = "1.0.0-beta.6", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.6" },
+    { version = "1.0.0-beta.5", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.5" },
+    { version = "1.0.0-beta.4", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.4" },
+    { version = "1.0.0-beta.3", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.3" },
+    { version = "1.0.0-beta.2", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.2" },
+    { version = "1.0.0-beta.1", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.1" },
+]
+
+[[plugins]]
+id = "ssg"
+kind = "command"
+name = "Static site publishing"
+description = "Manage dated articles, collections, feeds, pinned theme archives, and multi-project website mounts."
+status = "released"
+program = "guidedog"
+linked = true
+source = "https://github.com/insanai/guidedog/tree/main/crates/gd-ssg"
+license = "LGPL-3.0-or-later"
+maintainers = ["Vikrant Rathore"]
+designs = ["GDS 0013", "GDS 0009"]
+api_version = "1.0"
+releases = [
+    { version = "1.0.0-beta.8", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.8" },
+    { version = "1.0.0-beta.7", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.7" },
+    { version = "1.0.0-beta.6", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.6" },
+    { version = "1.0.0-beta.5", archives = "https://github.com/insanai/guidedog/releases/tag/v1.0.0-beta.5" },
 ]
 
 [[plugins]]

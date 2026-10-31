@@ -6,24 +6,25 @@ uploaded by hand, and a published release is never changed.
 ## Workflows
 
 - **Verify** (`.github/workflows/ci.yml`) runs on every push to `main` and every pull
-  request, on Linux (x86-64) and macOS (Apple silicon): the source limits
+  request, on Linux (x86-64) and macOS (Apple silicon): `cargo fmt --all --check`, the source limits
   (`cargo run -p check`), the data tables (`cargo xtask tables --check`), `cargo build`, `cargo clippy` with warnings as errors,
-  `cargo test --workspace`, a real isolated Linux Secret Service check, the example
+  `cargo test --workspace`, the 1,000-article static-site benchmark, a real isolated Linux Secret Service check, the example
   programs, and the smoke tests of the built programs. Changes to documentation only
   are skipped, apart from the files the tests read; the Pages workflow builds the
   documentation.
 - **Release** (`.github/workflows/release.yml`) runs on a `v*` tag, or by hand as a
   candidate. Its jobs:
   - `version`: the tag, `VERSION`, the `[workspace.package]` version in `Cargo.toml`,
-    and later each program's `--version` agree (`cargo xtask release check-version`).
-  - `qualify`: requires a successful Verify run for the exact commit being released. Verify already ran the full suite on Linux and macOS, the source limits, data tables, Clippy, examples and credential-store checks. We reuse that result rather than compiling and running the full suite again. If it is missing, we run Verify for that commit and rerun Release after it passes.
+    each documentation project's `conf.toml` `release` setting, and later `guidedog --version`
+    agree (`cargo xtask release check-version`).
+  - `qualify`: requires a successful Verify run for the exact commit being released. Verify already ran the full suite on Linux and macOS, formatting, the source limits, data tables, Clippy, examples and credential-store checks. We reuse that result rather than compiling and running the full suite again. If it is missing, we run Verify for that commit and rerun Release after it passes.
   - `build`: per platform, natively on that platform, `cargo xtask release build` runs
-    `cargo build --release --locked` for `guidedog`, with the embedded Typst compiler and linked Pages and discussion plugins. Graphviz 16.1.0 is linked
+    `cargo build --release --locked` for `guidedog`, with the embedded Typst compiler and linked Pages, discussion, and static-site (`ssg`) plugins. On Linux and macOS, Graphviz 16.1.0 is linked
     statically: `cargo xtask graphviz` builds it (cached between runs) and the build
-    sets `GUIDEDOG_GRAPHVIZ_STATIC`. Full workspace tests run once on Linux and once on macOS in Verify; archive jobs do not recompile the suite with release optimization. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices, `SOURCE.txt`, and a build manifest
+    sets `GUIDEDOG_GRAPHVIZ_STATIC`; on Windows, the verified official Graphviz 16.1.0 DLLs are bundled beside `guidedog.exe`. Full workspace tests run once on Linux and once on macOS in Verify; archive jobs do not recompile the suite with release optimization. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices, `SOURCE.txt`, and a build manifest
     (`guidedog.build.json`).
   - `smoke`: each archive, unpacked on a fresh machine of its platform with nothing
-    installed, runs quickstart and builds HTML and PDF with an empty
+    installed, runs quickstart, static-site presets (`guidedog ssg`), and translation extraction/catalog updates, and builds HTML and PDF with an empty
     `PATH`; `guidedog dsc` keeps and builds a discussion catalog
     (`cargo xtask release smoke-discussion`); the linked Pages plugin initializes and stops safely offline (`smoke-pages`). Graphviz and embedded Typst SVG/PNG export are exercised by the HTML and PDF diagram builds, including local helper imports with an empty PATH and no package downloads.
   - `source`: the source archive (`git archive` of the tagged commit).
@@ -49,7 +50,7 @@ every other crate; release builds use `--locked`.
 | `macos-amd64` | `x86_64-apple-darwin` | `macos-15-intel` |
 | `windows-amd64` | `x86_64-pc-windows-msvc` | `windows-2022` |
 
-Each archive is built natively, with the static Graphviz built on that platform
+Each Unix archive is built natively, with the static Graphviz built on that platform
 (`cargo xtask graphviz`). The archives carry Graphviz's and Expat's licences
 (`COPYING-graphviz`, `COPYING-expat`), and `SOURCE.txt` names their source tarballs with
 their SHA-256. Windows ships a ZIP with the official Graphviz 16.1.0 DLLs and configuration beside `guidedog.exe`. The prepare action verifies the upstream archive SHA-256. A fresh Windows runner extracts the ZIP, checks the programs against the manifest, and runs HTML, PDF, discussion, Pages and graph rendering smoke tests.

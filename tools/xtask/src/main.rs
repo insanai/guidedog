@@ -46,8 +46,7 @@ Tasks:
                      conformance corpus, with a pinned Python Docutils
   release <STEP>     one step of a release (build, package, checksums, source, formula,
                      publish, check-version, check-run, credential-store, smoke,
-                     smoke-discussion, smoke-graphdog, smoke-pages,
-                     plugin-compatibility)
+                     smoke-discussion, smoke-pages, plugin-compatibility)
   sphinxdiff SPHINX_HTML GUIDEDOG_HTML [-v]
              [--warnings SPHINX_LOG GUIDEDOG_JSON_LOG SOURCE_DIR]
                      compare a project's HTML built by Sphinx with Guidedog's

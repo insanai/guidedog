@@ -1,7 +1,7 @@
 //! guidedog: builds HTML sites and PDF books from reStructuredText and Markdown. The
 //! whole command line is the gd-cli crate; this program chooses the plugins linked in
-//! (GitHub Pages and discussion catalogs), and adds the crash report and the stack its conversions
-//! are sized for.
+//! (GitHub Pages, discussion catalogs, and static site publishing), and adds the crash
+//! report and the stack its conversions are sized for.
 
 #![forbid(unsafe_code)]
 
@@ -25,8 +25,8 @@ fn main() -> ExitCode {
 }
 
 /// The plugins every `guidedog` links: the GitHub Pages publisher (`pages`), which also
-/// adds `guidedog publish pages` and `guidedog pages workflow`, and the discussion
-/// catalogs (`dsc`), which add `guidedog dsc init`, `new`, `promote`, `build`, and more.
+/// adds `guidedog publish pages` and `guidedog pages`, the discussion catalogs (`dsc`),
+/// which add `guidedog dsc`, and static site publishing (`ssg`), which adds `guidedog ssg`.
 fn linked_plugins() -> gd_plugins::Registry {
     // The plugins are valid by construction; an empty registry is the fallback a broken
     // build would still run with.

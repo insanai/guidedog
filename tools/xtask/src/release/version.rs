@@ -15,9 +15,11 @@ Checks that a release names one version everywhere, and prints it.
 
 Usage: cargo xtask release check-version [PROGRAM]
 
-  VERSION, Cargo.toml's [workspace.package] version, and the tag in GITHUB_REF (on a
-  tag build) must agree. With PROGRAM (build/guidedog, build/graphdog, ...), its --version
-  must also begin with its own name and the version.
+  VERSION, Cargo.toml's [workspace.package] version, the release setting of
+  docs/conf.toml and docs/{manual,api,gds,site}/conf.toml, and the tag in GITHUB_REF
+  (on a tag build) must agree. With PROGRAM
+  (such as build/guidedog), its --version must also begin with its own name and the
+  version.
 ";
 
 /// Runs `release check-version`.
@@ -66,6 +68,27 @@ pub(super) fn release_version(root: &Path) -> Result<String> {
             "Change the version in VERSION and Cargo.toml together.",
         ));
     }
+    for rel in [
+        "docs/conf.toml",
+        "docs/manual/conf.toml",
+        "docs/api/conf.toml",
+        "docs/gds/conf.toml",
+        "docs/site/conf.toml",
+    ] {
+        let conf_path = root.join(rel);
+        if conf_path.is_file() {
+            let found = conf_release(&read_text(&conf_path)?);
+            if found.as_deref() != Some(version.as_str()) {
+                let found = found.unwrap_or_default();
+                return Err(fail(
+                    "version-docs",
+                    "VERSIONS DIFFER",
+                    &format!("{rel} sets release = \"{found}\", but VERSION is {version}."),
+                    "Update release in each documentation project's conf.toml to match VERSION.",
+                ));
+            }
+        }
+    }
     let reference = std::env::var("GITHUB_REF").unwrap_or_default();
     if let Some(tag) = reference.strip_prefix("refs/tags/")
         && tag != format!("v{version}")
@@ -109,6 +132,21 @@ fn workspace_version(manifest: &str) -> Option<String> {
     None
 }
 
+/// The top-level `release` key in a documentation project's `conf.toml`.
+fn conf_release(conf: &str) -> Option<String> {
+    for line in conf.lines() {
+        let line = line.trim();
+        if line.starts_with('[') {
+            break;
+        }
+        let Some((key, value)) = line.split_once('=') else { continue };
+        if key.trim() == "release" {
+            return Some(value.trim().trim_matches('"').to_string());
+        }
+    }
+    None
+}
+
 /// Fails unless `program --version` begins with its own name and the version.
 pub(super) fn check_program(program: &Path, version: &str) -> Result<()> {
     let output = process::output(Command::new(program).arg("--version"))?;
@@ -136,5 +174,14 @@ mod tests {
         assert!(!is_version("0.7") && !is_version("0.7.0-") && !is_version("v0.7.0"));
         let manifest = "[package]\nversion = \"9\"\n[workspace.package]\nversion = \"0.7.0\"\n";
         assert_eq!(workspace_version(manifest).as_deref(), Some("0.7.0"));
+    }
+
+    #[test]
+    fn reads_the_top_level_release_of_a_conf_toml() {
+        let conf = "project = \"Demo\"\nrelease = \"1.0.0-beta.8\"\n[html_context]\n";
+        assert_eq!(conf_release(conf).as_deref(), Some("1.0.0-beta.8"));
+        // A release inside a table is not the project's release.
+        assert_eq!(conf_release("project = \"Demo\"\n[site]\nrelease = \"9\"\n"), None);
+        assert_eq!(conf_release("releases = 3\n"), None);
     }
 }

@@ -1,9 +1,37 @@
-Diagrams that explain
-=====================
+Diagrams with Graphviz and Typst
+================================
 
 Choose a diagram for a question. A flow chart explains a choice.
 A block diagram explains responsibility. A sequence explains ordering.
 A graph explains relationships. Use prose when it answers the question more directly.
+
+We keep diagram source beside the explanation and let Guidedog build the image for HTML and PDF.
+Graphviz and Typst are included in the executable.
+We need no separate ``dot`` or ``typst`` program.
+
+Choose the drawing tool
+-----------------------
+
+.. list-table:: Drawing tools
+   :header-rows: 1
+   :widths: 25 45 30
+
+   * - Tool
+     - Useful when
+     - Source
+   * - Graphviz
+     - We describe nodes and edges and want the layout engine to place them.
+     - DOT inside ``graphviz``, ``graph`` or ``digraph``.
+   * - Typst with CeTZ
+     - We need explicit geometry, custom shapes, plots or sequence layouts.
+     - Typst inside ``typst-diagram``.
+   * - Typst with Fletcher
+     - We need positioned nodes, mathematical labels and precise arrows.
+     - Typst inside ``typst-diagram`` with a pinned Fletcher import.
+
+We choose SVG for scalable drawings in both the browser and book.
+Typst diagrams can also produce PNG at 144 pixels per inch.
+Existing SVG and PNG files still work with ordinary image and figure directives.
 
 A flow chart
 ------------
@@ -57,8 +85,134 @@ Author a graph
 Guidedog renders them through Graphviz. HTML receives an SVG asset.
 PDF embeds the rendered drawing. Both use the same graph source.
 
+In MyST Markdown, we use a directive fence with the same options.
+
+.. code-block:: markdown
+
+   ```{graphviz}
+   :caption: Parsing precedes resolution
+   :alt: Source becomes a tree, then references are resolved
+
+   digraph pipeline { source -> tree -> resolved; }
+   ```
+
+A ``graphviz`` file argument reads a DOT file instead of an inline body.
+``graph`` and ``digraph`` take the graph name as their argument and wrap the body's edges in the corresponding DOT graph.
+A plain ``dot`` or ``graphviz`` Markdown fence also draws a graph; we use the directive form when we need options.
+
+Draw with Typst
+---------------
+
+The ``typst-diagram`` directive compiles its body to an image.
+The page fits the drawing automatically.
+We can start with Typst's built-in shapes before adding a package.
+
+.. code-block:: rst
+
+   .. typst-diagram::
+      :caption: A drawing from Typst source
+      :alt: A teal circle
+      :name: typst-circle
+
+      #circle(radius: 12pt, fill: rgb("#216553"), stroke: none)
+
+.. typst-diagram::
+   :caption: A drawing from Typst source.
+   :alt: A teal circle
+   :name: chapter-typst-circle
+
+   #circle(radius: 12pt, fill: rgb("#216553"), stroke: none)
+
+The same drawing in MyST uses ``{typst-diagram}`` as the fence language.
+An ordinary ``typst`` code fence displays source without compiling it.
+
+.. code-block:: markdown
+
+   ```{typst-diagram}
+   :caption: A drawing from Typst source
+   :alt: A teal circle
+   :format: png
+
+   #circle(radius: 12pt, fill: rgb("#216553"), stroke: none)
+   ```
+
+CeTZ supplies a drawing canvas and geometric operations.
+We import a specific package version so the source states its dependency.
+
+.. code-block:: rst
+
+   .. typst-diagram::
+      :caption: Two connected nodes
+      :alt: Two circles joined by a line
+
+      #import "@preview/cetz:0.3.4"
+      #cetz.canvas({
+        import cetz.draw: *
+        circle((0, 0), radius: 0.5)
+        circle((2, 0), radius: 0.5)
+        line((0.5, 0), (1.5, 0))
+      })
+
+Fletcher builds node-and-arrow diagrams on CeTZ.
+Its explicit coordinates are useful when position carries meaning.
+
+.. code-block:: rst
+
+   .. typst-diagram::
+      :caption: Source becomes an image
+      :alt: Source points to an image
+
+      #import "@preview/fletcher:0.5.8": diagram, node, edge
+      #diagram(
+        node((0, 0), [Source]),
+        node((1, 0), [Image]),
+        edge((0, 0), (1, 0), "->"),
+      )
+
+Share source and refer to figures
+---------------------------------
+
+Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` and ``:align:``.
+We enable ``numfig = true`` in ``conf.toml`` and refer to a named captioned drawing with ``:numref:`` in RST or ``{numref}`` in MyST.
+For example, :numref:`chapter-typst-circle` is a numbered figure in this book.
+Alternative text explains the information conveyed by the drawing.
+It is especially useful for Typst SVGs, which draw letters as outlines.
+
+For a larger drawing we keep Typst source in a file.
+Guidedog compiles it during the ordinary build.
+
+.. code-block:: rst
+
+   .. typst-diagram:: figures/architecture.typ
+      :caption: Project architecture
+      :alt: Components and their connections
+
+An inline diagram's imports resolve beside the document containing it.
+A file diagram's imports resolve beside its Typst file.
+We can therefore share a local helper library for colors, nodes and sequence diagrams.
+Changing an imported helper or data file redraws the affected HTML pages.
+Identical generated images keep their timestamps so unchanged PDF books remain cached.
+
+Packages, limits and failures
+-----------------------------
+
+The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings govern Typst diagrams in both outputs.
+With ``pdf_packages = "offline"``, the compiler uses only packages already installed in Typst's package directories.
+The default downloads missing packages.
+After installing a previously missing package or editing fonts, we run a fresh ``guidedog build html -a`` command.
+Project imports stay below the source directory, including through symlinks.
+Diagrams must produce one finite page; PNG export is limited to 16 million pixels and 16,384 pixels on either side.
+
+A failed drawing remains visible as source with a warning.
+We build with ``-W`` when a missing diagram must prevent publication.
+``--untrusted`` refuses Typst compilation and retains its source.
+Text builds show source without compiling a drawing.
+The :doc:`../howto/typst-diagrams` guide lists every option, source limit and migration step for existing figure files.
+
 Light, dark and print
 ---------------------
+
+Typst diagrams keep their authored colors and receive the same light panel as ordinary Graphviz images in the default dark theme. The adaptive Graphviz palette does not recolor Typst drawings.
 
 A transparent canvas does not change a graph's ink. Dark text can disappear on
 a dark page. Ordinary graphs therefore keep their chosen colors and receive a

@@ -282,6 +282,8 @@ A page notes each lookup once (``gd_env::Trace``); the answer's digest covers:
    The document's title, or that there is none.
 ``File``
    Whether the file exists.
+``FileContent``
+   The digest of a file read by a Typst diagram, including helper imports, data and package files; or that it is missing or unreadable. A source symlink that now leaves the source root is refused before hashing.
 ``Image``
    The file the image resolves to for this page (language variants included), its
    target in the output, and whether it exists.
@@ -348,3 +350,8 @@ saving the environment's JSON, and the site unit (inventory and index).
 Possible later work: ``guidedog serve`` keeping the environment, tables and object store
 in memory between rebuilds; a (size, modification time) prefilter before hashing a
 source.
+
+Typst diagrams
+~~~~~~~~~~~~~~
+
+When a page is rewritten, each ``typst-diagram`` compiles again. We track imported files by content through ``FileContent`` lookups, including failed data lookups. The asset filename hashes the compiled bytes, so helper edits produce new image URLs. Unchanged HTML units reuse their drawings and reports. PDF composition redraws diagrams before comparing the book inputs. After installing a missing package or changing font files, we run a fresh build process with ``-a`` to reload fonts and redraw cached pages.

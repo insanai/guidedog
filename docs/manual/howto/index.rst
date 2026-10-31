@@ -15,3 +15,4 @@ Each page starts from a concrete task. It names the command and the result.
    discussions
    static-publishing
    format-specific-content
+   typst-diagrams

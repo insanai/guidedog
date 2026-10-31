@@ -66,3 +66,8 @@ The compatibility page records pinned suites and real-project checks.
 Passing a CommonMark suite does not establish complete MyST coverage.
 Reading RST does not establish every Python extension's behavior.
 See :doc:`../compatibility`.
+
+Project diagrams
+----------------
+
+Project builds recognize Graphviz directives and the Guidedog ``typst-diagram`` directive in RST and MyST. The project link pass compiles diagrams and manages their image assets for HTML and PDF. A direct markup conversion retains the diagram as source code; it does not run the project asset pipeline. See :doc:`../topics/diagrams`.

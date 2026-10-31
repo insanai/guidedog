@@ -663,6 +663,7 @@ Other Sphinx constructs use existing kinds:
    Custom ``name``. The graphviz directives give their DOT CodeBlock{``graphviz`` = "1"} the
    same ``caption`` and Caption. Renderers show the Caption's content, or the attribute's
    text when there is no Caption.
+-  ``typst-diagram``: CodeBlock with Language ``typst``, Custom ``typst-diagram`` = "1", and ``typst-source`` naming the original document or included Typst file. Custom ``typst-file`` retains a file argument for RST writing. Custom ``format`` is ``svg`` or ``png``. Captions, names, classes, alternative text and alignment follow the Graphviz convention. The project link pass compiles this marked block into an Image, wrapped in a Figure when captioned. Ordinary Typst code blocks remain code.
 -  ``seealso``: Admonition{Seealso}; ``todo``: Admonition{Todo}; ``todolist``,
    ``sectionauthor``, ``moduleauthor``, ``codeauthor``: Directive{Name} with ``author``;
    ``postlist``: Directive{Name ``"postlist"``} with Custom ``limit`` (the optional

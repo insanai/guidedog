@@ -5,6 +5,12 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
+## Unreleased
+
+- Add `guidedog serve --host IP` for IPv4 and IPv6 network preview, retaining the loopback default.
+- Add RST and MyST `typst-diagram` directives with inline or file source, SVG or PNG export, captions, figure references and automatic HTML/PDF assets through the embedded Typst compiler. CeTZ, Fletcher and local helpers use ordinary pinned imports.
+- Track imported diagram files by content for incremental rebuilds. Apply the project's package and font settings, refuse compilation under `--untrusted`, enforce source-root confinement and bound single-page raster export.
+
 ## 1.0.0-beta.7 - 2026-10-17
 
 - Add author-defined rich article excerpts with a parsed `.. more::` boundary. Full HTML and PDF articles retain their complete content, and code examples remain literal.

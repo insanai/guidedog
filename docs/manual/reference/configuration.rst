@@ -670,6 +670,17 @@ Graphviz
      - ``""``
      - Accepted from ``conf.py`` and unused: Graphviz is linked into Guidedog.
 
+Typst diagrams
+--------------
+
+``typst-diagram`` uses the embedded compiler in HTML and PDF projects.
+We use ``pdf_packages`` (``"download"`` or ``"offline"``), ``pdf_fonts`` (``"system"`` or ``"embedded"``) and ``pdf_font_paths`` for both diagram outputs.
+These settings retain their defaults listed under PDF options.
+The directive's ``:format: svg|png`` selects its image format; SVG is the default and PNG uses 144 pixels per inch.
+There is no separate diagram executable setting, and ``typst`` continues to select the book compiler only.
+We import CeTZ and Fletcher explicitly with package versions.
+See :doc:`../topics/diagrams` for the complete authoring workflow and :doc:`../howto/typst-diagrams` for directive options and limits.
+
 MyST Markdown
 -------------
 

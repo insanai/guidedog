@@ -17,7 +17,7 @@ guidedog build pdf docs
 guidedog serve docs
 ```
 
-The project contains `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ`, and `_static/`. Templates are ordinary files that we can edit. HTML provides navigation, search, code highlighting, diagrams, and equations. PDF books provide chapters, cross-references, figures, indexes, and language-aware typesetting.
+The project contains `conf.toml`, `index.rst`, `_templates/layout.html`, `_templates/book.typ`, and `_static/`. Templates are ordinary files that we can edit. HTML provides navigation, search, code highlighting, diagrams, and equations. PDF books provide chapters, cross-references, figures, indexes, and language-aware typesetting. We can embed Graphviz or Typst drawing source, including CeTZ and Fletcher, directly in RST and MyST with automatic HTML and PDF assets; see the [diagrams chapter](docs/manual/topics/diagrams.rst).
 
 The default theme is light. Readers can choose dark or the system theme. The manual detects the browser language on its landing page and repository overview. A saved choice takes precedence; direct links to an edition or chapter remain explicit requests.
 

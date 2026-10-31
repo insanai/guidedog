@@ -25,7 +25,7 @@ uploaded by hand, and a published release is never changed.
   - `smoke`: each archive, unpacked on a fresh machine of its platform with nothing
     installed, runs quickstart and builds HTML and PDF with an empty
     `PATH`; `guidedog dsc` keeps and builds a discussion catalog
-    (`cargo xtask release smoke-discussion`); the linked Pages plugin initializes and stops safely offline (`smoke-pages`). Graphviz is exercised by the HTML and PDF diagram builds.
+    (`cargo xtask release smoke-discussion`); the linked Pages plugin initializes and stops safely offline (`smoke-pages`). Graphviz and embedded Typst SVG/PNG export are exercised by the HTML and PDF diagram builds, including local helper imports with an empty PATH and no package downloads.
   - `source`: the source archive (`git archive` of the tagged commit).
   - `homebrew`: renders `guidedog.rb`, which has no dependencies and
     installs `guidedog`, then installs and

@@ -9,7 +9,8 @@
     The page works without JavaScript: the navigation drawer on small screens is a
     checkbox and its label, and the search box sends the query to the search page.
     _static/guidedog.js adds the theme switch, live search, copy buttons for code, and
-    the highlighted section in "On this page". -#}
+    the highlighted section in "On this page"; _static/typography.js lays out English
+    prose with Knuth-Plass line breaking on wider screens. -#}
 {%- block doctype -%}<!DOCTYPE html>{%- endblock %}
 <html lang="{{ language }}">
 <head>
@@ -126,6 +127,17 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
     {%- endif %}
     {%- block document %}
     <article class="gd-article">
+      {#- In a discussion catalog, pdf_downloads names the folder of the record PDFs
+          below the output root; guidedog dsc init sets discussion_prefix. -#}
+      {%- if not ssg_no_pdf and pdf_downloads and discussion_prefix
+             and pagename[:8] == 'records/' %}
+      <p class="gd-download"><a type="application/pdf" href="{{ pathto_root }}
+        {{- pdf_downloads }}{{ discussion_prefix }}-{{ pagename[8:] }}-
+        {{- language }}.pdf">
+        <svg class="gd-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 4v11m-4.5-4.5L12 15l4.5-4.5M5 19.5h14"/></svg>
+        {{ _('Download this discussion as a PDF') }}</a></p>
+      {%- endif %}
 {% block body %}{{ body }}{% endblock %}
     </article>
     {%- endblock %}

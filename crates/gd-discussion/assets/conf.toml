@@ -10,13 +10,18 @@ version = "0.1"
 release = "0.1"
 
 extensions = ["sphinx.ext.graphviz"]
+templates_path = ["_templates"]
 exclude_patterns = ["_build", "template/**", "README*", "Thumbs.db", ".DS_Store"]
 language = "en"
 source_suffix = [".rst"]
 root_doc = "index"
 
 html_theme = "guidedog"
+html_static_path = ["_static"]
 html_title = @NAME_TOML@
 numfig = true
 
 pdf_paper_size = "a4"
+
+[html_context]
+discussion_prefix = "@PREFIX@"

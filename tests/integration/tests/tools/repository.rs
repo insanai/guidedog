@@ -1,5 +1,6 @@
 //! Repository files that must agree with each other: the manual's downloadable copies,
-//! the release version, and the public plugin catalog.
+//! the release version, the theme's words in the UI catalogs, and the public plugin
+//! catalog.
 
 use guidedog_tests::{read, repository_root, repository_text};
 
@@ -52,15 +53,61 @@ fn compare_trees(original: &std::path::Path, copy: &std::path::Path) {
 fn release_versions_follow_the_version_file() {
     let version = repository_text("VERSION").trim().to_string();
     assert!(!version.is_empty());
-    for project in ["manual", "api", "gds", "site"] {
-        let conf = repository_text(&format!("docs/{project}/conf.toml"));
+    for conf_path in [
+        "docs/conf.toml",
+        "docs/manual/conf.toml",
+        "docs/api/conf.toml",
+        "docs/gds/conf.toml",
+        "docs/site/conf.toml",
+    ] {
+        let conf = repository_text(conf_path);
         assert!(
             conf.contains(&format!("\nrelease = \"{version}\"\n")),
-            "docs/{project}/conf.toml does not set release = \"{version}\""
+            "{conf_path} does not set release = \"{version}\""
         );
     }
     let cargo = repository_text("Cargo.toml");
     assert!(cargo.contains(&format!("\nversion = \"{version}\"\n")), "Cargo.toml's version");
+}
+
+/// Every word the built-in HTML templates translate with `_()` is a msgid of the UI
+/// template, so each embedded catalog translates it (gd-i18n checks the catalogs
+/// against the template).
+#[test]
+fn theme_words_are_in_the_ui_catalog_template() {
+    let template = repository_text("crates/gd-i18n/locale/guidedog.pot");
+    for name in ["layout.html", "article.html", "landing.html"] {
+        let html = repository_text(&format!("crates/gd-theme/assets/{name}"));
+        for word in translated_words(&html) {
+            assert!(
+                template.contains(&format!("\nmsgid \"{word}\"\n")),
+                "{name} translates {word:?}; add it to crates/gd-i18n/locale/guidedog.pot \
+                 and to each catalog beside it"
+            );
+        }
+    }
+}
+
+/// The literal arguments of `_('...')` and `_("...")` in a Jinja template, outside its
+/// `{# ... #}` comments.
+fn translated_words(template: &str) -> Vec<&str> {
+    let mut code = Vec::new();
+    let mut rest = template;
+    while let Some(start) = rest.find("{#") {
+        code.push(&rest[..start]);
+        rest = rest[start..].find("#}").map_or("", |end| &rest[start + end + 2..]);
+    }
+    code.push(rest);
+    let mut words = Vec::new();
+    for part in code {
+        for quote in ['\'', '"'] {
+            let open = format!("_({quote}");
+            let close = format!("{quote})");
+            let calls = part.split(open.as_str()).skip(1);
+            words.extend(calls.filter_map(|call| call.split_once(close.as_str())).map(|w| w.0));
+        }
+    }
+    words
 }
 
 /// The public catalog is reviewed metadata: unique ids, a known status, and for a

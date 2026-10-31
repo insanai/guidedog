@@ -23,8 +23,10 @@ fn dsc_makes_keeps_and_builds_a_catalog() {
         &["init", "eds", "--prefix=eds", "--name=Enso Discussions", "--author=Ada"],
     );
     let dir = root.join("eds");
+    has(&root.read("eds/_templates/layout.html"), "gd-article");
     has(&root.read("eds/_templates/discussion.typ"), "record: (id:");
     has(&root.read("eds/_templates/theme.typ"), "configure-document");
+    has(&root.read("eds/_static/typography.js"), "knuth-plass");
     dsc(&dir, 0, &["new", "Cache policy", "--labels=architecture"]);
     dsc(&dir, 0, &["promote", "cache-policy"]);
     dsc(&dir, 0, &["state", "1", "--to=accepted", "--reason=Reviewed"]);

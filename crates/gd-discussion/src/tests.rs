@@ -265,14 +265,16 @@ fn slugs_come_from_titles_and_drafts_get_their_heading() {
 #[test]
 fn init_makes_a_whole_catalog_and_refuses_to_merge() {
     let (root, dir) = catalog_fixture("init");
-    assert_eq!(
-        std::fs::read_to_string(dir.join("_templates/discussion.typ")).unwrap(),
-        gd_theme::DISCUSSION_TYP
-    );
-    assert_eq!(
-        std::fs::read_to_string(dir.join("_templates/theme.typ")).unwrap(),
-        gd_theme::PDF_THEME_TYP
-    );
+    for (rel, expected) in [
+        ("_templates/layout.html", gd_theme::LAYOUT_HTML),
+        ("_templates/discussion.typ", gd_theme::DISCUSSION_TYP),
+        ("_templates/theme.typ", gd_theme::PDF_THEME_TYP),
+        ("_static/guidedog.css", gd_theme::GUIDEDOG_CSS),
+        ("_static/guidedog.js", gd_theme::GUIDEDOG_JS),
+        ("_static/typography.js", gd_theme::TYPOGRAPHY_JS),
+    ] {
+        assert_eq!(std::fs::read_to_string(dir.join(rel)).unwrap(), expected);
+    }
     let d = definition(&dir).unwrap().expect("a configuration");
     assert!(d.prefix.as_str() == "eds" && d.labels.is_empty());
     let c = load_catalog(&dir, &prefix("eds")).expect("a catalog");

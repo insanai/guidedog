@@ -90,8 +90,12 @@ pub fn init_plan(init: &Init) -> Result<Plan> {
         ("README.md", fill(README, init)),
         (".gitignore", fill(IGNORE, init)),
         ("template/rfc-template.rst", template),
+        ("_templates/layout.html", gd_theme::LAYOUT_HTML.to_string()),
         ("_templates/discussion.typ", gd_theme::DISCUSSION_TYP.to_string()),
         ("_templates/theme.typ", gd_theme::PDF_THEME_TYP.to_string()),
+        ("_static/guidedog.css", gd_theme::GUIDEDOG_CSS.to_string()),
+        ("_static/guidedog.js", gd_theme::GUIDEDOG_JS.to_string()),
+        ("_static/typography.js", gd_theme::TYPOGRAPHY_JS.to_string()),
         (path.as_str(), process),
     ];
     for (name, text) in files {

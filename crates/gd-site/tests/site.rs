@@ -93,6 +93,7 @@ fn html_writes_the_theme_the_indexes_and_the_search_index() {
     let kind = BuilderKind::Html;
     assert_eq!(p.read(kind, "_static/guidedog.css"), gd_theme::GUIDEDOG_CSS);
     assert_eq!(p.read(kind, "_static/guidedog.js"), gd_theme::GUIDEDOG_JS);
+    assert_eq!(p.read(kind, "_static/typography.js"), gd_theme::TYPOGRAPHY_JS);
     assert!(p.read(kind, "_static/pygments.css").contains(".highlight"));
     let genindex = p.read(kind, "genindex.html");
     assert!(genindex.contains("<a href=\"intro.html#index-0\">widget</a>"), "{genindex}");

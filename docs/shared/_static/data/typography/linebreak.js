@@ -106,8 +106,6 @@ Typeset.linebreak = (function () {
                 result.width += node.width;
                 result.stretch += node.stretch;
                 result.shrink += node.shrink;
-            } else if (node.type === 'penalty' && node.penalty !== linebreak.infinity) {
-                result.width += node.width;
             }
             return result;
         }

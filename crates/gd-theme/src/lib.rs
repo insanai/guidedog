@@ -24,6 +24,10 @@ pub const GUIDEDOG_CSS: &str = include_str!("../assets/guidedog.css");
 /// highlighting; pages work without it.
 pub const GUIDEDOG_JS: &str = include_str!("../assets/guidedog.js");
 
+/// `_static/typography.js`: self-contained Knuth-Plass paragraph line breaking and
+/// Liang English hyphenation; pages fall back to CSS `text-wrap: pretty` without it.
+pub const TYPOGRAPHY_JS: &str = include_str!("../assets/typography.js");
+
 /// `_templates/book.typ`: the Typst template of the PDF book.
 pub const BOOK_TYP: &str = include_str!("../assets/book.typ");
 
@@ -60,7 +64,7 @@ pub struct ThemeFile {
 }
 
 /// Every theme file, in the order quickstart writes them.
-pub const FILES: [ThemeFile; 7] = [
+pub const FILES: [ThemeFile; 8] = [
     ThemeFile { path: "_templates/layout.html", text: LAYOUT_HTML },
     ThemeFile { path: "_templates/book.typ", text: BOOK_TYP },
     ThemeFile { path: "_templates/discussion.typ", text: DISCUSSION_TYP },
@@ -68,6 +72,7 @@ pub const FILES: [ThemeFile; 7] = [
     ThemeFile { path: "_templates/theme.typ", text: PDF_THEME_TYP },
     ThemeFile { path: "_static/guidedog.css", text: GUIDEDOG_CSS },
     ThemeFile { path: "_static/guidedog.js", text: GUIDEDOG_JS },
+    ThemeFile { path: "_static/typography.js", text: TYPOGRAPHY_JS },
 ];
 
 /// The built-in text for a project-relative theme path, or `None` for other paths.

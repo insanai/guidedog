@@ -8,6 +8,7 @@ use gd_host::Problem;
 
 use gd_theme::{
     ARTICLE_TYP, BOOK_TYP, DISCUSSION_TYP, GUIDEDOG_CSS, GUIDEDOG_JS, LAYOUT_HTML, PDF_THEME_TYP,
+    TYPOGRAPHY_JS,
 };
 
 const QUICKSTART_CONF: &str = include_str!("../assets/quickstart/conf.toml");
@@ -74,9 +75,9 @@ impl Default for QuickstartOptions {
 }
 
 /// Creates a documentation project in `options.dir`: conf.toml, the root document,
-/// `.gitignore`, `_templates/layout.html`, the four PDF theme modules, `_static/guidedog.css` and
-/// `.js`, notes in the media folders, and the (empty) build folder. Returns the files
-/// it created, in order.
+/// `.gitignore`, `_templates/layout.html`, the four PDF theme modules,
+/// `_static/guidedog.css`, `_static/guidedog.js`, `_static/typography.js`, notes in the
+/// media folders, and the (empty) build folder. Returns the files it created, in order.
 ///
 /// Fails with `quickstart.exists` (exit 2) when a project or one of the files is already
 /// there (nothing is overwritten), or `host.io` (exit 4) when a file cannot be written;
@@ -155,6 +156,7 @@ fn quickstart_files(
         (o.dir.join(".gitignore"), substitute(QUICKSTART_GITIGNORE, &values)),
         (source.join("_static/guidedog.css"), GUIDEDOG_CSS.into()),
         (source.join("_static/guidedog.js"), GUIDEDOG_JS.into()),
+        (source.join("_static/typography.js"), TYPOGRAPHY_JS.into()),
         (source.join("_templates/layout.html"), LAYOUT_HTML.into()),
         (source.join("_templates/book.typ"), BOOK_TYP.into()),
         (source.join("_templates/discussion.typ"), DISCUSSION_TYP.into()),

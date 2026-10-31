@@ -41,13 +41,14 @@ fn quickstart_lays_out_a_sphinx_project() {
             ..Default::default()
         };
         let created = quickstart(&o).unwrap();
-        assert_eq!(created.len(), 13);
+        assert_eq!(created.len(), 14);
         let source = if separate { dir.join("source") } else { dir.clone() };
         for f in [
             "conf.toml",
             "index.rst",
             "_static/guidedog.css",
             "_static/guidedog.js",
+            "_static/typography.js",
             "_templates/layout.html",
             "_templates/book.typ",
             "_templates/discussion.typ",

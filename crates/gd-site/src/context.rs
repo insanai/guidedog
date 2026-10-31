@@ -159,7 +159,7 @@ fn project_names(view: &BuildView<'_>, ctx: &Value) {
 fn file_names(view: &BuildView<'_>, ctx: &Value, body: &str, root: &str) {
     let html = &view.config.html;
     ctx.set("css_files", file_list(root, &["pygments.css", "guidedog.css"], &html.css_files));
-    let js = file_list(root, &["guidedog.js"], &html.js_files);
+    let js = file_list(root, &["guidedog.js", "typography.js"], &html.js_files);
     mathjax_scripts(view.config, &js, body, root);
     ctx.set("script_files", js.clone());
     ctx.set("js_files", js);
@@ -188,7 +188,15 @@ fn template_value(v: &gd_toml::Value) -> Value {
 
 /// Guidedog's files, then the project's, as entries with a `url`.
 fn file_list(root: &str, builtin: &[&str], extra: &[String]) -> Value {
-    let names = builtin.iter().copied().chain(extra.iter().map(String::as_str));
+    let mut seen = Vec::new();
+    let names = builtin.iter().copied().chain(extra.iter().map(String::as_str)).filter(|name| {
+        if seen.contains(name) {
+            false
+        } else {
+            seen.push(*name);
+            true
+        }
+    });
     Value::list(names.map(|name| {
         let url =
             if name.contains("://") { name.to_string() } else { format!("{root}_static/{name}") };

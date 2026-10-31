@@ -68,7 +68,8 @@ pub(crate) fn write_site_files(
     write_index_pages(site, unit, reports)
 }
 
-/// guidedog.css, guidedog.js and pygments.css, unless `html_static_path` has its own.
+/// guidedog.css, guidedog.js, typography.js and pygments.css, unless `html_static_path`
+/// has its own.
 fn write_theme_files(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(), Problem> {
     let c = view.config;
     let project_has = |name: &str| {
@@ -78,6 +79,7 @@ fn write_theme_files(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(), Pr
     let files = [
         ("guidedog.css", gd_theme::GUIDEDOG_CSS),
         ("guidedog.js", gd_theme::GUIDEDOG_JS),
+        ("typography.js", gd_theme::TYPOGRAPHY_JS),
         ("pygments.css", pygments.as_str()),
     ];
     for (name, text) in files {

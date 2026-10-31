@@ -16,28 +16,38 @@ root_doc = "index"
 primary_domain = "rust"
 
 # Every listed crate gets pages, api/<crate>/<module>, and api/index lists them; the
-# index joins the root document's toctree. The engine first, then the libraries a host
-# or a plugin uses, then the project builder and the command line.
+# index joins the root document's toctree. All 26 reusable crates come first (the
+# engine, supporting libraries, API generators, and plugin SDK), followed by the main
+# internal host, project, and command-line crates.
 rust_autoapi_crates = [
   "../../crates/guidedoc",
   "../../crates/guidedoc-defaults",
   "../../crates/guidedoc-rst",
+  "../../crates/guidedoc-rst-inline",
   "../../crates/guidedoc-commonmark",
   "../../crates/guidedoc-sphinx",
+  "../../crates/guidedoc-cpp",
   "../../crates/guidedoc-html",
   "../../crates/guidedoc-typst",
   "../../crates/guidedoc-text",
+  "../../crates/guidedoc-rst-writer",
   "../../crates/gd-report",
-  "../../crates/gd-host",
+  "../../crates/gd-toml",
+  "../../crates/gd-json",
+  "../../crates/gd-sha",
+  "../../crates/gd-flate",
   "../../crates/gd-jinja",
   "../../crates/gd-highlight",
   "../../crates/gd-gettext",
-  "../../crates/gd-toml",
-  "../../crates/gd-json",
-  "../../crates/gd-typst",
   "../../crates/gd-graphdog",
+  "../../crates/gd-inventory",
+  "../../crates/gd-pyscan",
+  "../../crates/gd-autodoc",
+  "../../crates/gd-odindoc",
   "../../crates/gd-rustdoc",
   "../../crates/gd-plugins",
+  "../../crates/gd-host",
+  "../../crates/gd-typst",
   "../../crates/gd-discussion",
   "../../crates/gd-project",
   "../../crates/gd-cli",
@@ -59,8 +69,6 @@ templates_path = ["_templates"]
 html_static_path = ["_static", "../shared/_static"]
 include_roots = ["../shared"]
 html_css_files = ["editorial.css"]
-html_js_files = ["data/typography/linked-list.js", "data/typography/linebreak.js",
-                 "data/typography/hypher.js", "data/typography/english.js", "typography.js"]
 mathjax_path = "_static/data/mathjax/tex-svg-full.js"
 mathjax_config_path = "_static/math.js"
 

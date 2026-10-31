@@ -1,3 +1,4 @@
+#import "theme.typ": gd-palette, gd-serif, gd-sans, gd-mono, gd-script-fonts, configure-document
 // Guidedog's PDF book template. It is ordinary Typst: edit it freely, or delete it to
 // use Guidedog's built-in copy. The build calls it as
 //
@@ -7,9 +8,8 @@
 // be imported here, for example #import "@preview/cetz:0.4.2".
 // The Templates chapter of the Guidedog manual lists what the build passes in.
 //
-// The design: a serif text face with old-style figures, set justified with Knuth-Plass
-// line breaking and hyphenation in the document's language; bold serif chapter titles; a
-// two-sided page with a wider outer margin; chapters opening on a right-hand page.
+// A centered cover, teal chapter openings and a shared, language-aware reading theme.
+// Chapters keep their navigation, anchors and right-hand openings.
 #let book(
   title: "",
   author: "",
@@ -19,51 +19,29 @@
   paper: "a4",
   logo: none,
   copyright: "",
-  accent: rgb("#216553"),
+  accent: gd-palette.accent,
   numbering: false, // The build numbers headings itself; this says whether it did.
   version-label: "Version", // "Version" in the document language.
-  // Fonts, first available wins. This project bundles Libertinus through pdf_font_paths.
-  // Typst supplies New Computer Modern and DejaVu Sans Mono as fallback faces.
-  // The sans-serif list ends with a serif for restricted font collections.
-  serif: ("Libertinus Serif", "New Computer Modern"),
-  sans: ("Libertinus Sans", "Source Sans 3", "Fira Sans", "Noto Sans", "Liberation Sans",
-    "DejaVu Sans", "Libertinus Serif"),
-  mono: ("DejaVu Sans Mono",),
-  size: 11.2pt,
+  // Fonts, first available wins. Typst always has Libertinus Serif, New Computer
+  // Modern, and DejaVu Sans Mono; the sans-serif list ends with a serif so headings
+  // still work when only those are present (pdf_fonts = "embedded").
+  serif: gd-serif,
+  sans: gd-sans,
+  mono: gd-mono,
+  size: 10.6pt,
   // Follow cross-references to other pages with their page, as "Deployment (p. 42)":
   // set to n => [p. #n], in the document language.
   page-ref: none,
   body,
 ) = {
-  // One place names the sans-serif list, so Typst reports a missing family once.
+  show: configure-document.with(lang: lang, serif: serif, sans: sans, mono: mono,
+    size: size, accent: accent)
+  sans = sans + gd-script-fonts(lang)
   let sans-text = text.with(font: sans)
-  let ink = luma(28)
-  let quiet = luma(110)
-  let rule = luma(175)
-
-  // Language: "pt_BR" is lang "pt" and region "BR"; anything unusable is English, so
-  // hyphenation always has patterns.
-  let parts = lang.replace("_", "-").split("-")
-  let code = lower(parts.at(0))
-  if code.len() < 2 or code.len() > 3 or code.match(regex("^[a-z]+$")) == none { code = "en" }
-  let region = if parts.len() > 1 and parts.at(1).match(regex("^[A-Za-z]{2}$")) != none {
-    upper(parts.at(1))
-  } else { none }
-
-  state("gd-math-sans").update(_ => sans)
+  let ink = gd-palette.ink
+  let quiet = gd-palette.quiet
+  let rule = gd-palette.rule
   set document(title: title, author: if author == "" { () } else { author })
-  set text(font: serif, size: size, fill: ink, lang: code, region: region,
-    hyphenate: true, number-type: "old-style", ligatures: true, kerning: true, overhang: true,
-    // Knuth-Plass weighs these against loose lines: avoid runts (a lone short word on
-    // a paragraph's last line), widows, and orphans; hyphenate at normal cost.
-    costs: (hyphenation: 100%, runt: 220%, widow: 100%, orphan: 100%))
-  set par(justify: true, linebreaks: "optimized", leading: 0.61em, spacing: 0.7em,
-    first-line-indent: 1.15em,
-    // Micro-typography: word spaces flex a little, letters a hair, so lines fill
-    // without rivers.
-    justification-limits: (spacing: (min: 85%, max: 130%),
-      tracking: (min: -0.012em, max: 0.018em)))
-  set block(spacing: 1.05em)
   set list(indent: 0.6em, body-indent: 0.6em, marker: ([\u{2022}], [\u{2013}], [\u{b7}]))
   set enum(indent: 0.4em, body-indent: 0.6em)
   set terms(spacing: 1.05em)
@@ -99,14 +77,14 @@
     block(width: 100%, above: 0pt, below: 2.4em, sticky: true, {
       v(22mm)
       if number != none {
-        text(size: 44pt, weight: "light", fill: accent, number)
+        text(size: 18pt, weight: "bold", fill: accent, number)
         v(4mm)
       } else {
         line(length: 18mm, stroke: 2.2pt + accent)
         v(7mm)
       }
       set par(leading: 0.3em)
-      text(font: serif, size: 30pt, weight: "bold", tracking: -0.015em, it.body)
+      text(size: 30pt, weight: "bold", fill: accent, tracking: -0.01em, it.body)
       v(5mm)
       line(length: 100%, stroke: 0.5pt + rule)
     })
@@ -145,7 +123,7 @@
     // its continuation indented; a zero-width space gives an empty line its height.
     show linebreak: none
     show raw.line: line => block(spacing: 0.5em, { line; if line.text == "" { sym.zws } })
-    block(width: 100%, fill: rgb("#f6f5f1"), stroke: (left: 1.5pt + accent.lighten(55%)),
+    block(width: 100%, fill: gd-palette.paper, stroke: (left: 1.5pt + accent.lighten(55%)),
       inset: (left: 9pt, right: 8pt, y: 7pt), radius: (right: 2.5pt), breakable: true,
       above: 1.1em, below: 1.2em, it)
   }
@@ -223,36 +201,23 @@
   // ---- Title page and colophon ------------------------------------------------------
   let label-style(body) = sans-text(size: 9pt, weight: "bold", tracking: 0.12em,
     fill: accent, upper(body))
-  // A quiet book cover: the same ink, typefaces and grid as the reading pages.
-  page(paper: paper, margin: (x: 24mm, top: 24mm, bottom: 25mm), header: none,
-    footer: none, numbering: none, fill: rgb("#f7f3e8"))[
+  page(paper: paper, margin: (x: 30mm, top: 26mm, bottom: 26mm), header: none,
+    footer: none, numbering: none)[
     #set par(justify: false, first-line-indent: 0em)
-    #set text(hyphenate: false)
-    #grid(columns: (1fr, auto), label-style[GUIDEDOG / READING EDITION],
-      sans-text(size: 9pt, fill: quiet, version))
-    #v(6mm)
-    #line(length: 100%, stroke: 0.65pt + accent)
-    #v(29mm)
-    #block(width: 92%, text(font: serif, size: 48pt, weight: "bold", fill: ink,
-      tracking: -0.018em, par(leading: 0.32em, title)))
-    #v(10mm)
-    #sans-text(size: 15pt, fill: accent)[Rust library reference]
-    #v(1fr)
-    #grid(columns: (1fr, 1fr, 1fr), column-gutter: 7mm,
-      block(stroke: (top: 2pt + accent), inset: (top: 4mm))[
-        #label-style[01 / SOURCE] \ #text(size: 12pt)[Write with meaning.]
-      ],
-      block(stroke: (top: 2pt + accent), inset: (top: 4mm))[
-        #label-style[02 / STRUCTURE] \ #text(size: 12pt)[Make relations clear.]
-      ],
-      block(stroke: (top: 2pt + accent), inset: (top: 4mm))[
-        #label-style[03 / PUBLICATION] \ #text(size: 12pt)[Read on screen and paper.]
-      ])
-    #v(22mm)
-    #line(length: 100%, stroke: 0.65pt + rule)
-    #v(5mm)
-    #grid(columns: (1fr, auto), sans-text(size: 9.5pt, author),
-      sans-text(size: 9.5pt, fill: quiet, number-type: "lining", date))
+    #align(center + horizon)[
+      #if logo != none {
+        block(inset: 12pt, fill: gd-palette.soft, radius: 8pt, image(logo, height: 24mm))
+        v(12mm)
+      }
+      #line(length: 35mm, stroke: 2pt + accent)
+      #v(9mm)
+      #block(sans-text(size: 34pt, weight: "bold", tracking: -0.015em,
+        hyphenate: false, fill: ink, par(leading: 0.3em, title)))
+      #if version != "" { v(7mm); label-style[#version-label #version] }
+      #v(14mm)
+      #if author != "" { text(size: 13pt, author) }
+      #if date != "" { v(3mm); sans-text(size: 9pt, fill: quiet, date) }
+    ]
   ]
   page(paper: paper, margin: (x: 24mm, top: 26mm, bottom: 28mm), header: none,
     footer: none, numbering: none)[
@@ -267,11 +232,8 @@
   ]
 
   // ---- The page ----------------------------------------------------------------------
-  // A 128 mm reading measure, placed toward the spine
-  // with the larger margins outside and at the foot.
-  let letter = paper == "us-letter"
-  let margins = (inside: 28mm, outside: if letter { 58mm } else { 54mm },
-    top: 25mm, bottom: if letter { 30mm } else { 32mm })
+  // Balanced margins leave room for tables and diagrams without crowding the text.
+  let margins = (x: 31mm, top: 24mm, bottom: 25mm)
   let running = sans-text.with(size: 7.6pt, fill: quiet, tracking: 0.08em,
     number-type: "lining")
   let folio = sans-text.with(size: 8.5pt, weight: "bold", fill: ink,

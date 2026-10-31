@@ -34,9 +34,7 @@ include_roots = ["../shared"]
 pdf_font_paths = ["../shared/_static/data/fonts", "../shared/fonts"]
 html_extra_path = ["_editions"]
 html_css_files = ["editorial.css", "languages.css"]
-html_js_files = ["data/typography/linked-list.js", "data/typography/linebreak.js",
-                 "data/typography/hypher.js", "data/typography/english.js",
-                 "typography.js", "languages.js"]
+html_js_files = ["languages.js"]
 mathjax_path = "_static/data/mathjax/tex-svg-full.js"
 mathjax_config_path = "_static/math.js"
 html_title = "Guidedog Manual"
@@ -48,8 +46,8 @@ numfig = true
 
 pdf_paper_size = "a4"
 
-# The same generator supplies the separate API site (docs/api) and the book appendix:
-# the public API of Guidedog's main crates, read from their Rust source.
+# The same generator supplies the full standalone API project (docs/api) and this
+# curated 16-crate appendix in the manual's web edition and PDF book.
 rust_autoapi_crates = [
   "../../crates/guidedoc", "../../crates/guidedoc-defaults", "../../crates/guidedoc-rst",
   "../../crates/guidedoc-commonmark", "../../crates/guidedoc-sphinx",

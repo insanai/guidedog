@@ -9,7 +9,8 @@
     The page works without JavaScript: the navigation drawer on small screens is a
     checkbox and its label, and the search box sends the query to the search page.
     _static/guidedog.js adds the theme switch, live search, copy buttons for code, and
-    the highlighted section in "On this page". -#}
+    the highlighted section in "On this page"; _static/typography.js lays out English
+    prose with Knuth-Plass line breaking on wider screens. -#}
 {%- block doctype -%}<!DOCTYPE html>{%- endblock %}
 <html lang="{{ language }}" data-theme="light">
 <head>
@@ -68,7 +69,7 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
   {%- endif %}
   <ul class="rellinks">
     {%- block rootrellink %}
-    {#- In the published website (cargo xtask build-site), site_home is the way from this
+    {#- In the published website (docs/conf.toml), site_home is the way from this
         project's root up to the site's root. -#}
     {%- if site_home %}
     <li><a href="{{ pathto_root }}{{ site_home }}index.html">Home</a></li>
@@ -105,6 +106,7 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
 <div class="gd-page">
   <label class="gd-overlay" for="gd-nav-toggle" aria-hidden="true"></label>
   {%- block sidebar1 %}
+  {% if not nosidebar %}
   <aside class="gd-sidebar" id="gd-sidebar" aria-label="{{ _('Documentation') }}">
     <div class="gd-sidebar-inner">
       {%- block sidebartoc %}
@@ -112,6 +114,7 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
       {%- endblock %}
     </div>
   </aside>
+  {% endif %}
   {%- endblock %}
   <main id="content" class="gd-main" tabindex="-1">
     {%- block breadcrumbs %}
@@ -137,17 +140,15 @@ document.documentElement.dataset.theme=m}catch(e){}</script>
     <article class="gd-article">
       <div class="gd-bookmark"><span>Guidedog / Documentation</span>
         <span>{{ release or version }}</span></div>
-      {#- pdf_downloads, when set, is the folder below the project's root that holds the
-          PDF of each record (guidedog build pdf names it gds-RECORD-LANGUAGE.pdf) and of
-          the index (gds-index-LANGUAGE.pdf). cargo xtask build-site sets it. -#}
-      {%- if not ssg_no_pdf and pdf_downloads and (pagename[:8] == 'records/' or pagename == root_doc) %}
+      {#- pdf_downloads, when set in docs/conf.toml, is the folder below the project's
+          root that holds the standalone PDF of each active record
+          (gds-RECORD-LANGUAGE.pdf). -#}
+      {%- if not ssg_no_pdf and pdf_downloads and pagename[:8] == 'records/' %}
       <p class="gd-download"><a type="application/pdf" href="{{ pathto_root }}
-        {{- pdf_downloads }}gds-{{ pagename[8:] if pagename != root_doc else 'index' }}-
-        {{- language }}.pdf">
+        {{- pdf_downloads }}gds-{{ pagename[8:] }}-{{ language }}.pdf">
         <svg class="gd-icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 4v11m-4.5-4.5L12 15l4.5-4.5M5 19.5h14"/></svg>
-        {{- 'Download this discussion as a PDF' if pagename != root_doc else
-            'Download the process and the registry as a PDF' }}</a></p>
+        Download this discussion as a PDF</a></p>
       {%- endif %}
 {% block body %}{{ body }}{% endblock %}
     </article>

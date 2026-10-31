@@ -1,4 +1,4 @@
-//! Every node kind of AST.md, rendered and compiled.
+//! Every node kind of `docs/manual/internals/ast.rst`, rendered and compiled.
 
 use guidedoc::{
     AdmonitionKind, Align, AttributeKey as Key, CellInfo, Conformance, INVALID_NODE, LinkKind,
@@ -11,7 +11,7 @@ use crate::{PREAMBLE, RENDERER, VERSION};
 
 type R = Result<(), guidedoc::Fail>;
 
-/// Uses every node kind of AST.md at least once.
+/// Uses every node kind of `docs/manual/internals/ast.rst` at least once.
 fn build_everything(t: &mut Tb<'_, '_>) -> R {
     let title = t.open(K::Title, 0)?;
     t.text("Guide ")?;

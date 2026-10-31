@@ -1,7 +1,7 @@
 //! The MyST syntax (myst-parser 0.16.1): headings make sections, as in
 //! reStructuredText; footnotes collect at the end of the document; directives and roles
-//! run through the extension (`extension.rs`). Shapes follow AST.md, "Markdown (MyST)
-//! mapping".
+//! run through the extension (`extension.rs`). Shapes follow
+//! `docs/manual/internals/ast.rst`, "Markdown (MyST) mapping".
 
 mod blocks;
 mod directive;

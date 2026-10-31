@@ -1,5 +1,5 @@
-//! Tree shapes of the "commonmark" reader (AST.md, CommonMark mapping) and its bounds
-//! on hostile input.
+//! Tree shapes of the "commonmark" reader (`docs/manual/internals/ast.rst`, CommonMark
+//! mapping) and its bounds on hostile input.
 
 mod common;
 

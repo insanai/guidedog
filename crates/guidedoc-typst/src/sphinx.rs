@@ -1,6 +1,7 @@
-//! The Sphinx layer (AST.md, "Sphinx layer") in Typst: labels for every id, numbered
-//! captions and headings as the host numbered them, and styled blocks for version notes,
-//! signatures, horizontal lists, and grammars. The helpers are defined in the preamble.
+//! The Sphinx layer (`docs/manual/internals/ast.rst`, "Sphinx layer") in Typst: labels
+//! for every id, numbered captions and headings as the host numbered them, and styled
+//! blocks for version notes, signatures, horizontal lists, and grammars. The helpers are
+//! defined in the preamble.
 
 use guidedoc::{Label, ListStyle, NodeFlag, NodeId, NodeKind, label, split_label};
 

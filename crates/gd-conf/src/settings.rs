@@ -505,7 +505,7 @@ pub fn find_setting(key: &str) -> Option<&'static Setting> {
 }
 
 /// Whether `key` configures a Sphinx builder or extension Guidedog does not have
-/// (`latex_elements`, `napoleon_*`, ...): accepted with a warning, and ignored.
+/// (`latex_elements`, `epub_*`, `man_*`, ...): accepted with a warning, and ignored.
 pub fn is_foreign_setting(key: &str) -> bool {
     FOREIGN_PREFIXES.iter().any(|p| key.starts_with(p))
 }

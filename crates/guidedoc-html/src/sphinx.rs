@@ -1,5 +1,6 @@
 //! The Sphinx layer, rendered with Sphinx's element structure and class names, so
-//! styles written for Sphinx themes carry over. See AST.md, "Sphinx layer".
+//! styles written for Sphinx themes carry over. See `docs/manual/internals/ast.rst`,
+//! "Sphinx layer".
 
 use guidedoc::{Content, Label, NodeId, NodeKind, content_model, label, split_label};
 

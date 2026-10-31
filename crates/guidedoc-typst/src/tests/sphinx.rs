@@ -1,4 +1,4 @@
-//! Every Sphinx-layer kind and attribute of AST.md.
+//! Every Sphinx-layer kind and attribute of `docs/manual/internals/ast.rst`.
 
 use guidedoc::{
     AdmonitionKind, AttributeKey as Key, INVALID_NODE, LinkKind, ListInfo, ListStyle, NodeFlags,

@@ -10,6 +10,9 @@ beside it.
 - Add `guidedog serve --host IP` for IPv4 and IPv6 network preview, retaining the loopback default.
 - Add RST and MyST `typst-diagram` directives with inline or file source, SVG or PNG export, captions, figure references and automatic HTML/PDF assets through the embedded Typst compiler. CeTZ, Fletcher and local helpers use ordinary pinned imports.
 - Track imported diagram files by content for incremental rebuilds. Apply the project's package and font settings, refuse compilation under `--untrusted`, enforce source-root confinement and bound single-page raster export.
+- Ship `_static/typography.js` with the built-in theme: paragraph-wide Knuth-Plass line breaking and English hyphenation for desktop reading widths, loaded on every page and copied by `quickstart`, `ssg init` and `dsc init`. Inline math is measured after MathJax renders it.
+- Copy `layout.html`, `guidedog.css`, `guidedog.js` and `typography.js` into new discussion catalogs. Record pages link their PDF when `[html_context]` `pdf_downloads` names the PDF folder.
+- Give each `guidedog pages` maintenance command its own help summary, and check every documentation project's `release` in `cargo xtask release check-version`.
 
 ## 1.0.0-beta.7 - 2026-10-17
 

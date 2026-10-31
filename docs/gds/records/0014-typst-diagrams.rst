@@ -1,6 +1,6 @@
-:gds-number: XXXXX
+:gds-number: 0014
 :gds-title: Embedded Typst diagrams
-:gds-state: prediscussion
+:gds-state: committed
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-10-31
@@ -157,16 +157,15 @@ On 31 October 2026, the Linux x86-64 workspace build and all 1,982 tests passed 
 ``cargo clippy --locked --workspace --all-targets -- -D warnings``, ``cargo fmt --all --check``, the nine data-table checks and the source limit checker passed.
 The source checker retains six pre-existing soft-width warnings and reports no limit violations.
 The compiler also passes its tests without the embedded feature.
-All six localized HTML editions build with ``-W``; newly added prose uses English fallback where catalog translations are absent.
+All six localized HTML editions build with ``-W``. The beta.8 preparation completes the related translations, including previously fuzzy entries.
 The implementation is a local candidate for ``1.0.0-beta.8``; the release commit still needs the normal platform CI and archive qualification before tagging.
 Cross-platform release qualification remains the responsibility of Verify and Release workflows.
-This record remains an unnumbered proposal until a maintainer assigns its identity and lifecycle state.
+The maintainer requested promotion and implementation-status reconciliation on 31 October 2026; the lifecycle events below record assignment of 0014 and commitment.
 
 Open questions
 --------------
 
-The maintainer decides whether the verified changes warrant ``1.0.0-beta.8``.
-We do not create or push a release tag as part of implementation.
+No design questions remain. The maintainer authorized the beta.8 release after successful CI; platform qualification remains a release gate.
 
 Review history
 --------------
@@ -191,3 +190,27 @@ References
 * `CeTZ <https://typst.app/universe/package/cetz/>`_
 * `Fletcher <https://typst.app/universe/package/fletcher/>`_
 * ``../jlavici/tools/xtask/src/figures.rs`` and ``../jlavici/docs/jcd/figures/src/_jcd.typ``
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-10-31: prediscussion -> discussion. Maintainer requested promotion after
+   implementation review and local qualification
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-10-31: discussion -> accepted. Maintainer requested release and status
+   reconciliation; diagram design reviewed and implemented
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-10-31: accepted -> committed. RST and MyST diagrams, generated assets,
+   dependency tracking and documentation implemented
+   crates/gd-typst/src/tests/images.rs;
+   tests/integration/tests/projects/typst_diagrams.rs; 1982 passing workspace
+   tests; empty-PATH release smoke; manual HTML/PDF builds

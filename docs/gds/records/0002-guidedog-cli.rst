@@ -605,17 +605,19 @@ is not implemented. Typst is supported by standalone conversion and PDF template
 Windows runtime and clean-machine package checks passed for 0.6.2 on native runners
 (see :doc:`../evidence/plugin-acceptance-20261014`). Embedded font licenses are
 recorded with the fonts. They are no longer an open documentation item.
-Packaging must account for actual runtime dependencies: Graphviz is linked from the
-system. A clean machine distribution check remains a separate release gate. The RST ledgers
-no longer have the previously listed syntax gaps. Their pinned tests and
-conservative reader descriptor state the evidence accurately.
+GDS 0012 supersedes the earlier system-Graphviz packaging requirement.
+Unix release archives link Graphviz statically, Windows bundles its runtime, and published beta.6 and beta.7 archives passed clean-machine smoke tests on all five platforms.
+That packaging work is complete and is no longer an outstanding obligation of this record.
+The RST ledgers retain their pinned tests and conservative reader descriptor.
 
 These limits do not prevent a beta for trusted documentation projects on
 the five released platforms with the declared dependencies. They do prevent
-advertising hostile-input isolation or a dependency-free Linux executable.
+advertising hostile-input isolation. Linux archives still require the documented glibc baseline.
 
 Review history
 --------------
+
+2026-10-31, status audit: retain ``published`` because the worker and native Typst chapter contract remain unimplemented. Reconcile packaging with GDS 0012 and published five-platform archive evidence; packaging is no longer deferred. See :doc:`../evidence/status-review-20261031`.
 
 2026-10-31: expose the existing preview bind address as ``serve --host IP``. Retain loopback by default, validate IP literals before the initial build, and test real HTTP service through an all-interface binding. This amendment does not change the broader record's lifecycle state.
 

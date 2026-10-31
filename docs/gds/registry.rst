@@ -50,9 +50,9 @@ Discussion registry
      - committed
    * - 0013
      - :doc:`records/0013-static-site-generation`
-     - discussion
-   * - XXXXX
-     - :doc:`records/XXXXX-typst-diagrams`
-     - prediscussion
+     - committed
+   * - 0014
+     - :doc:`records/0014-typst-diagrams`
+     - committed
 
 .. gds-generated-end

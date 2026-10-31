@@ -4,7 +4,7 @@
 :gds-type: Process
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-09-29
-:gds-updated: 2026-10-16
+:gds-updated: 2026-10-31
 :gds-discussion: Local review; no external discussion URL assigned
 :gds-labels: ["process"]
 
@@ -306,7 +306,7 @@ Number assignment and validation
 Guidedog has its own number sequence. GDS 0001 defines this process; the next
 assignment was 0002 for the CLI. GDS 0003 is the engine record. Records 0004 through 0010
 cover budgets, the Odin domain, projects, discussion catalogs, GitHub Pages publishing,
-and plugins. The next available number is 0011.
+and plugins. Records 0011 through 0014 cover built-in extensions, single-executable releases, static publishing and embedded Typst diagrams. The next available number is 0015.
 Inherited zenfmt records do not reserve Guidedog numbers. New drafts retain ``XXXXX`` until a maintainer
 promotes them. Promotion chooses the next number after existing Guidedog records,
 explicit Guidedog reservations, and local ``gds/NNNN`` branches.

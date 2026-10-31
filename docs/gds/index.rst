@@ -21,3 +21,4 @@ The manual teaches use. These records explain the design.
    evidence/discussion-review-20261012
    evidence/plugin-acceptance-20261014
    evidence/builtin-extensions-20261015
+   evidence/status-review-20261031

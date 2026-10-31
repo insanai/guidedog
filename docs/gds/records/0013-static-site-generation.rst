@@ -1,10 +1,10 @@
 :gds-number: 0013
 :gds-title: Static Website and Article Publishing in Guidedog
-:gds-state: discussion
+:gds-state: committed
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-10-16
-:gds-updated: 2026-10-16
+:gds-updated: 2026-10-31
 :gds-discussion: Local review; no external discussion URL assigned
 :gds-labels: ["architecture", "build", "theme", "typst", "cli"]
 
@@ -522,3 +522,20 @@ Review history
 ::
 
    2026-10-16: prediscussion -> discussion. Assigned a permanent number and opened for discussion.
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-10-31: discussion -> accepted. Maintainer requested status audit; full
+   SSG contract shipped in beta.6 and rich excerpts in beta.7
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-10-31: accepted -> committed. All specified SSG behavior implemented and
+   qualified in published releases docs/manual/evidence/ssg-review.rst;
+   docs/manual/evidence/release-1.0.0-beta.6.rst;
+   docs/manual/evidence/release-1.0.0-beta.7.rst;
+   crates/gd-project/tests/ssg.rs; crates/gd-project/tests/ssg_benchmark.rs

@@ -19,6 +19,6 @@ Discussion reading order
    records/0011-sphinx-builtin-extensions
    records/0012-single-executable-release
    records/0013-static-site-generation
-   records/XXXXX-typst-diagrams
+   records/0014-typst-diagrams
 
 .. gds-generated-end

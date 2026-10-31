@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:28+0000\n"
+"POT-Creation-Date: 2026-10-31 06:11+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -3051,6 +3051,127 @@ msgstr ""
 "SHA-256（バージョン付きドメインタグ、長さ区切りでソートされたファイル名とファイルバイト列から計算）を記録します。インストール処理は "
 "``_themes/<TREE_SHA256>/`` を書き込んで同期し、``guidedog-theme.lock`` "
 "をアトミックに置き換える前にディレクトリとエンコードされたロックの両方を検証します。ビルド時にネットワーク経由でテーマを取得することは一切ありません。ロックされたツリーをオフラインで検証し、ファイルの欠落、変更、追加、またはシンボリックリンクによる置き換えがあった場合はフェイルクローズ（安全に終了）します。"
+
+#: ../../howto/typst-diagrams.rst:1
+msgid "Draw diagrams with Typst"
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:4
+msgid ""
+"We can put Typst drawing code directly in an RST or MyST document. "
+"``typst-diagram`` compiles the code with Guidedog's embedded Typst "
+"compiler and includes the resulting image in HTML and PDF. We need no "
+"separate figure task or installed Typst program."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:8
+msgid "A first drawing"
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:11
+msgid "We write the source as the directive's body."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:23
+msgid "A circle compiled from the directive body."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:28
+msgid ""
+"We use a MyST directive fence in Markdown. An ordinary ``typst`` code "
+"fence remains a source example."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:40
+msgid ""
+"The image defaults to SVG, so the same vector drawing scales in the "
+"website and book. ``:format: png`` selects a PNG at 144 pixels per inch. "
+"We can also set ``:class:`` and ``:align: left|center|right``. With "
+"``numfig = true``, a captioned diagram is a numbered figure and "
+"``:numref:`` can refer to its ``:name:``. We provide meaningful ``:alt:`` "
+"text because SVG text is drawn as outlines."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:46
+msgid "CeTZ and Fletcher"
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:49
+msgid ""
+"We import packages explicitly with pinned versions. This CeTZ example "
+"uses the version shared by Fletcher 0.5.8."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:65
+msgid "Fletcher supplies nodes and arrows."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:80
+msgid ""
+"The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings apply "
+"to diagrams in both HTML and PDF. ``pdf_packages = \"offline\"`` uses "
+"only packages already installed in Typst's package directories. The "
+"default permits downloads of missing packages. For repeatable typography "
+"we set ``pdf_fonts = \"embedded\"`` and add any project font directories "
+"with ``pdf_font_paths``. After installing a previously missing package or "
+"changing font files, we run a fresh ``guidedog build html -a`` command to "
+"redraw cached pages and reload the compiler's font store."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:86
+msgid "Shared helpers and existing files"
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:89
+msgid ""
+"We can move common colors and drawing functions into a local ``.typ`` "
+"file. An inline diagram imports paths relative to the RST or Markdown "
+"file containing it. A directive inside an included document uses that "
+"document's folder."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:101
+msgid ""
+"We can also retain a complete figure source file and let Guidedog build "
+"it. We give either a file argument or an inline body. Imports in the file "
+"resolve beside that file."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:111
+msgid ""
+"Imported helpers and data files become build dependencies. Changing one "
+"redraws the affected HTML pages without changing their markup. We keep "
+"project imports below the source directory; symlinks leading outside it "
+"are refused. Absolute Typst imports start at that source directory."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:116
+#, fuzzy
+#| msgid "Static websites and articles"
+msgid "Page size and failures"
+msgstr "静的ウェブサイトと記事"
+
+#: ../../howto/typst-diagrams.rst:119
+msgid ""
+"Guidedog prepends ``#set page(width: auto, height: auto, margin: 0pt)`` "
+"so the page fits the drawing. We write ordinary Typst content, without an "
+"``html.frame`` wrapper. A diagram must produce exactly one finite page. "
+"The directive body is limited to 1 MiB; PNG export permits at most 16 "
+"million pixels and 16,384 pixels on either side. The adapter tracks at "
+"most 4,096 distinct file lookups per diagram. Typst layout uses the "
+"compiler's own memory; these limits do not impose a compiler timeout or a "
+"total memory ceiling."
+msgstr ""
+
+#: ../../howto/typst-diagrams.rst:126
+msgid ""
+"If compilation fails, we see a warning at the directive and the source "
+"stays visible as code. The message includes the position within the "
+"diagram or imported Typst file. ``-W`` prevents that build from replacing "
+"the published site or book. ``--untrusted`` keeps diagram source visible "
+"and warns without running Typst. Text builds retain source without "
+"compiling it."
+msgstr ""
 
 #~ msgid ""
 #~ "**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. "

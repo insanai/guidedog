@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:28+0000\n"
+"POT-Creation-Date: 2026-10-31 06:11+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../../topics/diagrams.rst:1
-msgid "Diagrams that explain"
-msgstr "개념을 설명하는 다이어그램"
+msgid "Diagrams with Graphviz and Typst"
+msgstr ""
 
 #: ../../topics/diagrams.rst:4
 msgid ""
@@ -30,20 +30,91 @@ msgstr ""
 "글을 쓰세요."
 
 #: ../../topics/diagrams.rst:8
+msgid ""
+"We keep diagram source beside the explanation and let Guidedog build the "
+"image for HTML and PDF. Graphviz and Typst are included in the "
+"executable. We need no separate ``dot`` or ``typst`` program."
+msgstr ""
+
+#: ../../topics/diagrams.rst:12
+msgid "Choose the drawing tool"
+msgstr ""
+
+#: ../../topics/diagrams.rst:15
+msgid "Drawing tools"
+msgstr ""
+
+#: ../../topics/diagrams.rst:19
+msgid "Tool"
+msgstr ""
+
+#: ../../topics/diagrams.rst:20
+msgid "Useful when"
+msgstr ""
+
+#: ../../topics/diagrams.rst:21
+msgid "Source"
+msgstr ""
+
+#: ../../topics/diagrams.rst:22
+msgid "Graphviz"
+msgstr ""
+
+#: ../../topics/diagrams.rst:23
+msgid ""
+"We describe nodes and edges and want the layout engine to place them."
+msgstr ""
+
+#: ../../topics/diagrams.rst:24
+msgid "DOT inside ``graphviz``, ``graph`` or ``digraph``."
+msgstr ""
+
+#: ../../topics/diagrams.rst:25
+msgid "Typst with CeTZ"
+msgstr ""
+
+#: ../../topics/diagrams.rst:26
+msgid "We need explicit geometry, custom shapes, plots or sequence layouts."
+msgstr ""
+
+#: ../../topics/diagrams.rst:27
+msgid "Typst inside ``typst-diagram``."
+msgstr ""
+
+#: ../../topics/diagrams.rst:28
+msgid "Typst with Fletcher"
+msgstr ""
+
+#: ../../topics/diagrams.rst:29
+msgid "We need positioned nodes, mathematical labels and precise arrows."
+msgstr ""
+
+#: ../../topics/diagrams.rst:30
+msgid "Typst inside ``typst-diagram`` with a pinned Fletcher import."
+msgstr ""
+
+#: ../../topics/diagrams.rst:32
+msgid ""
+"We choose SVG for scalable drawings in both the browser and book. Typst "
+"diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
+"PNG files still work with ordinary image and figure directives."
+msgstr ""
+
+#: ../../topics/diagrams.rst:36
 msgid "A flow chart"
 msgstr "순서도"
 
-#: ../../topics/diagrams.rst:13
+#: ../../topics/diagrams.rst:41
 msgid ""
 "If the request fits the limits, the workspace buffer grows and conversion "
 "continues; otherwise the conversion ends with a Limit result."
 msgstr "요청이 한도 안에 들면 워크스페이스 버퍼가 커지고 변환이 계속됩니다. 그렇지 않으면 변환은 Limit 결과로 끝납니다."
 
-#: ../../topics/diagrams.rst:13
+#: ../../topics/diagrams.rst:41
 msgid "A conversion checks its limits before a buffer grows."
 msgstr "변환은 버퍼를 키우기 전에 한도를 확인합니다."
 
-#: ../../topics/diagrams.rst:33
+#: ../../topics/diagrams.rst:61
 msgid ""
 "The drawing names the decision at the growth step. It does not suggest "
 "that running out of room aborts the program: a bound produces a result "
@@ -52,11 +123,11 @@ msgstr ""
 "이 다이어그램은 버퍼를 키우는 단계에서 내리는 결정을 보여 줍니다. 공간이 모자라면 프로그램이 중단된다는 인상을 주지 않습니다. "
 "한도에 걸리면 호출자가 보고할 수 있는 결과가 나옵니다. 이 구분은 계약의 일부입니다."
 
-#: ../../topics/diagrams.rst:38
+#: ../../topics/diagrams.rst:66
 msgid "Author a graph"
 msgstr "그래프 작성"
 
-#: ../../topics/diagrams.rst:56
+#: ../../topics/diagrams.rst:84
 msgid ""
 "``graphviz``, ``graph``, and ``digraph`` are built in. Guidedog renders "
 "them through Graphviz. HTML receives an SVG asset. PDF embeds the "
@@ -65,11 +136,124 @@ msgstr ""
 "``graphviz``\\ , ``graph``\\ , ``digraph``\\ 는 내장되어 있습니다. Guidedog이 "
 "Graphviz로 렌더링해 HTML에는 SVG를, PDF에는 그림을 넣습니다. 그래프 소스는 같습니다."
 
-#: ../../topics/diagrams.rst:60
+#: ../../topics/diagrams.rst:88
+msgid "In MyST Markdown, we use a directive fence with the same options."
+msgstr ""
+
+#: ../../topics/diagrams.rst:99
+msgid ""
+"A ``graphviz`` file argument reads a DOT file instead of an inline body. "
+"``graph`` and ``digraph`` take the graph name as their argument and wrap "
+"the body's edges in the corresponding DOT graph. A plain ``dot`` or "
+"``graphviz`` Markdown fence also draws a graph; we use the directive form "
+"when we need options."
+msgstr ""
+
+#: ../../topics/diagrams.rst:103
+msgid "Draw with Typst"
+msgstr ""
+
+#: ../../topics/diagrams.rst:106
+msgid ""
+"The ``typst-diagram`` directive compiles its body to an image. The page "
+"fits the drawing automatically. We can start with Typst's built-in shapes "
+"before adding a package."
+msgstr ""
+
+#: ../../topics/diagrams.rst:120
+msgid "A drawing from Typst source."
+msgstr ""
+
+#: ../../topics/diagrams.rst:126
+msgid ""
+"The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
+"An ordinary ``typst`` code fence displays source without compiling it."
+msgstr ""
+
+#: ../../topics/diagrams.rst:139
+msgid ""
+"CeTZ supplies a drawing canvas and geometric operations. We import a "
+"specific package version so the source states its dependency."
+msgstr ""
+
+#: ../../topics/diagrams.rst:156
+msgid ""
+"Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
+"are useful when position carries meaning."
+msgstr ""
+
+#: ../../topics/diagrams.rst:172
+msgid "Share source and refer to figures"
+msgstr ""
+
+#: ../../topics/diagrams.rst:175
+msgid ""
+"Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` "
+"and ``:align:``. We enable ``numfig = true`` in ``conf.toml`` and refer "
+"to a named captioned drawing with ``:numref:`` in RST or ``{numref}`` in "
+"MyST. For example, :numref:`chapter-typst-circle` is a numbered figure in "
+"this book. Alternative text explains the information conveyed by the "
+"drawing. It is especially useful for Typst SVGs, which draw letters as "
+"outlines."
+msgstr ""
+
+#: ../../topics/diagrams.rst:181
+msgid ""
+"For a larger drawing we keep Typst source in a file. Guidedog compiles it "
+"during the ordinary build."
+msgstr ""
+
+#: ../../topics/diagrams.rst:190
+msgid ""
+"An inline diagram's imports resolve beside the document containing it. A "
+"file diagram's imports resolve beside its Typst file. We can therefore "
+"share a local helper library for colors, nodes and sequence diagrams. "
+"Changing an imported helper or data file redraws the affected HTML pages. "
+"Identical generated images keep their timestamps so unchanged PDF books "
+"remain cached."
+msgstr ""
+
+#: ../../topics/diagrams.rst:196
+#, fuzzy
+#| msgid "Images and figures"
+msgid "Packages, limits and failures"
+msgstr "이미지와 그림"
+
+#: ../../topics/diagrams.rst:199
+msgid ""
+"The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings "
+"govern Typst diagrams in both outputs. With ``pdf_packages = "
+"\"offline\"``, the compiler uses only packages already installed in "
+"Typst's package directories. The default downloads missing packages. "
+"After installing a previously missing package or editing fonts, we run a "
+"fresh ``guidedog build html -a`` command. Project imports stay below the "
+"source directory, including through symlinks. Diagrams must produce one "
+"finite page; PNG export is limited to 16 million pixels and 16,384 pixels "
+"on either side."
+msgstr ""
+
+#: ../../topics/diagrams.rst:206
+msgid ""
+"A failed drawing remains visible as source with a warning. We build with "
+"``-W`` when a missing diagram must prevent publication. ``--untrusted`` "
+"refuses Typst compilation and retains its source. Text builds show source "
+"without compiling a drawing. The :doc:`../howto/typst-diagrams` guide "
+"lists every option, source limit and migration step for existing figure "
+"files."
+msgstr ""
+
+#: ../../topics/diagrams.rst:212
 msgid "Light, dark and print"
 msgstr "밝은 모드, 어두운 모드, 인쇄"
 
-#: ../../topics/diagrams.rst:63
+#: ../../topics/diagrams.rst:215
+msgid ""
+"Typst diagrams keep their authored colors and receive the same light "
+"panel as ordinary Graphviz images in the default dark theme. The adaptive "
+"Graphviz palette does not recolor Typst drawings."
+msgstr ""
+
+#: ../../topics/diagrams.rst:217
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
@@ -78,7 +262,7 @@ msgstr ""
 "배경을 투명하게 해도 글자색은 변하지 않습니다. 어두운 페이지에서 어두운 글자가 사라지지 않도록 일반 그래프는 원래 색을 보존하고 "
 "기본 다크 테마에서 밝은 패널을 사용합니다."
 
-#: ../../topics/diagrams.rst:67
+#: ../../topics/diagrams.rst:221
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
 "the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
@@ -91,7 +275,7 @@ msgstr ""
 "지원합니다. SVG 내부의 고정 CSS가 명시적 테마 선택을 포함한 부모 페이지의 ``color-scheme`` 값을 따릅니다. "
 "스크립트, 외부 CSS, 인라인 페이지 SVG는 필요 없습니다."
 
-#: ../../topics/diagrams.rst:73
+#: ../../topics/diagrams.rst:227
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
@@ -99,59 +283,59 @@ msgstr ""
 "라벨은 짧게 씁니다. 단계는 둥근 상자, 입력은 메모, 영속 저장소는 원통으로 그리고, 노드 클래스로 다크 팔레트의 역할을 "
 "구분합니다."
 
-#: ../../topics/diagrams.rst:76
+#: ../../topics/diagrams.rst:230
 msgid "Semantic node classes"
 msgstr "의미를 나타내는 노드 클래스"
 
-#: ../../topics/diagrams.rst:80
+#: ../../topics/diagrams.rst:234
 msgid "DOT class"
 msgstr "DOT 클래스"
 
-#: ../../topics/diagrams.rst:81
+#: ../../topics/diagrams.rst:235
 msgid "Role"
 msgstr "역할"
 
-#: ../../topics/diagrams.rst:82
+#: ../../topics/diagrams.rst:236
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:83
+#: ../../topics/diagrams.rst:237
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "소스, 설정, 참고 자료. 따뜻한 중성색."
 
-#: ../../topics/diagrams.rst:84
+#: ../../topics/diagrams.rst:238
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:85
+#: ../../topics/diagrams.rst:239
 msgid "A produced artifact; blue."
 msgstr "생성 결과물. 파란색."
 
-#: ../../topics/diagrams.rst:86
+#: ../../topics/diagrams.rst:240
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:87
+#: ../../topics/diagrams.rst:241
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "선택적 확장 지점. 황색 계열과 점선 테두리."
 
-#: ../../topics/diagrams.rst:88
+#: ../../topics/diagrams.rst:242
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:89
+#: ../../topics/diagrams.rst:243
 msgid "A decision; amber, with a diamond shape."
 msgstr "판단. 황색 계열과 마름모."
 
-#: ../../topics/diagrams.rst:90
+#: ../../topics/diagrams.rst:244
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:91
+#: ../../topics/diagrams.rst:245
 msgid "A separate ownership or allocation boundary; violet."
 msgstr "별도의 소유권 또는 할당 경계. 보라색."
 
-#: ../../topics/diagrams.rst:93
+#: ../../topics/diagrams.rst:247
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
@@ -165,7 +349,7 @@ msgstr ""
 "고르거나 라벨을 붙이지 않습니다. 이런 것은 우리가 직접 적으므로 흑백으로 봐도 그림을 읽을 수 있습니다. 클래스가 없는 단계는 "
 "녹색을 씁니다. 이 팔레트는 원할 때만 쓰는 선택 사항입니다. 정확한 색 자체가 데이터를 나타내는 그림에는 적용하지 않습니다."
 
-#: ../../topics/diagrams.rst:99
+#: ../../topics/diagrams.rst:253
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
@@ -180,11 +364,11 @@ msgstr ""
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_\\ 에서 "
 "정의합니다."
 
-#: ../../topics/diagrams.rst:105
+#: ../../topics/diagrams.rst:259
 msgid "Make the result legible"
 msgstr "읽기 쉽게 다듬기"
 
-#: ../../topics/diagrams.rst:108
+#: ../../topics/diagrams.rst:262
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -194,7 +378,7 @@ msgstr ""
 "노드 레이블은 짧게 하고 긴 규칙은 아래에 설명하세요. 주 경로는 한 방향으로 두고 돌아오는 간선에 조건을 쓰세요. 색 외에 형태와 "
 "텍스트도 쓰세요. 인쇄물에는 색이 없을 수 있습니다."
 
-#: ../../topics/diagrams.rst:112
+#: ../../topics/diagrams.rst:266
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -203,7 +387,7 @@ msgstr ""
 "대체 텍스트와 캡션을 제공하고 좁은 브라우저와 PDF에서 확인하세요. 작은 글씨여야 들어가는 그림은 둘로 나누세요. 이미지 크기는 "
 ":doc:`../media`\\ 를 참고하세요."
 
-#: ../../topics/diagrams.rst:116
+#: ../../topics/diagrams.rst:270
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
 "readable. Scroll inside the figure. The page itself keeps its width."
@@ -1373,69 +1557,75 @@ msgstr "이미지와 그림"
 
 #: ../../topics/writing.rst:272
 msgid ""
-"We include illustrations, screenshots, and diagrams with ``image`` and "
-"``figure``:"
-msgstr "그림, 스크린샷, 다이어그램은 ``image``\\ 와 ``figure``\\ 로 넣습니다."
+"We include illustrations, screenshots, and prebuilt diagrams with "
+"``image`` and ``figure``. We can also author Graphviz and Typst drawings "
+"directly in markup with automatic HTML and PDF assets; see "
+":doc:`diagrams`."
+msgstr ""
 
-#: ../../topics/writing.rst:288
+#: ../../topics/writing.rst:274
+msgid "For an existing image:"
+msgstr ""
+
+#: ../../topics/writing.rst:290
 msgid ""
 "A ``figure`` wraps the image with a caption and an optional reference "
 "target."
 msgstr "``figure``\\ 는 이미지에 캡션을 붙이고, 필요하면 참조 대상도 붙입니다."
 
-#: ../../topics/writing.rst:290
+#: ../../topics/writing.rst:292
 msgid "Document structure with toctrees"
 msgstr "목차 트리로 문서 구성"
 
-#: ../../topics/writing.rst:293
+#: ../../topics/writing.rst:295
 msgid ""
 "The ``toctree`` directive creates the document hierarchy, navigation "
 "menus, and reading order for both the HTML site and the PDF book:"
 msgstr "``toctree`` 는 문서 계층, 탐색 메뉴, HTML과 PDF의 읽는 순서를 정의합니다."
 
-#: ../../topics/writing.rst:307
+#: ../../topics/writing.rst:309
 msgid "Common options for ``toctree``:"
 msgstr "``toctree`` 의 주요 옵션:"
 
-#: ../../topics/writing.rst:309
+#: ../../topics/writing.rst:311
 msgid ""
 "``:maxdepth: N``: Depth of heading levels to include in the table of "
 "contents."
 msgstr "``:maxdepth: N``: 목차에 포함할 제목 깊이입니다."
 
-#: ../../topics/writing.rst:310
+#: ../../topics/writing.rst:312
 msgid ""
 "``:caption: Title``: Category title displayed above the navigation "
 "entries."
 msgstr "``:caption: Title``: 탐색 항목 위에 표시할 범주 제목입니다."
 
-#: ../../topics/writing.rst:311
+#: ../../topics/writing.rst:313
 msgid "``:numbered:``: Adds section numbers to chapters and headings."
 msgstr "``:numbered:``: 장과 제목에 번호를 붙입니다."
 
-#: ../../topics/writing.rst:312
+#: ../../topics/writing.rst:314
 msgid ""
 "``:titlesonly:``: Lists only the top-level document titles, ignoring "
 "inner sections."
 msgstr "``:titlesonly:``: 문서 제목만 표시하고 내부 절은 생략합니다."
 
-#: ../../topics/writing.rst:313
+#: ../../topics/writing.rst:315
 msgid ""
 "``:hidden:``: Records the documents in the reading order without "
 "rendering an inline list."
 msgstr "``:hidden:``: 본문에 목록을 표시하지 않고 문서의 읽는 순서만 기록합니다."
 
-#: ../../topics/writing.rst:314
+#: ../../topics/writing.rst:316
 msgid ""
 "``:glob:``: Allows wildcard patterns to match documents (e.g. "
 "``tutorials/*``)."
 msgstr "``:glob:``: ``tutorials/*`` 같은 와일드카드로 문서를 선택할 수 있습니다."
 
-#: ../../topics/writing.rst:316
+#: ../../topics/writing.rst:318
 msgid "Dated post listings with ``postlist``"
 msgstr "``postlist``\\ 로 날짜별 포스트 목록 만들기"
 
-#: ../../topics/writing.rst:319
+#: ../../topics/writing.rst:321
 msgid ""
 "For articles, release notes, and research logs that carry ``:date:`` "
 "metadata, the ``postlist`` directive renders a reverse-chronological list "
@@ -1444,24 +1634,24 @@ msgstr ""
 "``:date:`` 메타데이터가 있는 글, 릴리스 노트, 연구 기록의 경우 ``postlist`` 지시문은 조건에 맞는 게시된 "
 "페이지들을 최신순으로 렌더링합니다:"
 
-#: ../../topics/writing.rst:329
+#: ../../topics/writing.rst:331
 msgid "Options for ``postlist``:"
 msgstr "``postlist`` 옵션:"
 
-#: ../../topics/writing.rst:331
+#: ../../topics/writing.rst:333
 msgid ""
 "Argument ``N``: Maximum number of matching posts to show; zero or an "
 "omitted argument includes every match."
 msgstr ""
 "인자 ``N``: 표시할 일치 포스트의 최대 개수입니다. ``0``\\ 이거나 인자를 생략하면 일치하는 모든 항목을 포함합니다."
 
-#: ../../topics/writing.rst:332
+#: ../../topics/writing.rst:334
 msgid ""
 "``:path: GLOB``: Restrict entries to document names matching the glob "
 "pattern."
 msgstr "``:path: GLOB``: 항목을 glob 패턴과 일치하는 문서 이름으로 제한합니다."
 
-#: ../../topics/writing.rst:333
+#: ../../topics/writing.rst:335
 msgid ""
 "``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: "
 "NAME``, ``:year: YYYY``: Filter entries by publication metadata."
@@ -1469,7 +1659,7 @@ msgstr ""
 "``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: "
 "NAME``, ``:year: YYYY``: 게시 메타데이터로 항목을 필터링합니다."
 
-#: ../../topics/writing.rst:334
+#: ../../topics/writing.rst:336
 msgid ""
 "``:sort: date`` or ``:sort: -date``: Order by oldest or newest "
 "publication instant, with docname breaking ties."
@@ -1477,12 +1667,12 @@ msgstr ""
 "``:sort: date`` 또는 ``:sort: -date``: 가장 오래된 게시 시점 또는 가장 최근 게시 시점 순으로 "
 "정렬하며, 시점이 같으면 문서 이름(docname)으로 순서를 정합니다."
 
-#: ../../topics/writing.rst:335
+#: ../../topics/writing.rst:337
 msgid ""
 "``:style: list`` or ``:style: cards``: Select the listing's CSS class."
 msgstr "``:style: list`` 또는 ``:style: cards``: 목록의 CSS 클래스를 선택합니다."
 
-#: ../../topics/writing.rst:336
+#: ../../topics/writing.rst:338
 msgid ""
 "``:excerpts:``: Render each entry's rich introduction before ``.. "
 "more::``, falling back to its plain-text ``:summary:`` when no boundary "
@@ -1491,71 +1681,71 @@ msgstr ""
 "``:excerpts:``: 각 항목의 ``.. more::`` 앞에 있는 서식이 있는 도입부를 렌더링하고, 경계가 없으면 일반 "
 "텍스트 ``:summary:``\\ 를 사용합니다."
 
-#: ../../topics/writing.rst:338
+#: ../../topics/writing.rst:340
 msgid ""
 "See :doc:`../howto/static-publishing` for collections, feeds, and "
 "scheduled publishing."
 msgstr "컬렉션, 피드, 예약 게시는 :doc:`../howto/static-publishing`\\ 을 참고하세요."
 
-#: ../../topics/writing.rst:340
+#: ../../topics/writing.rst:342
 msgid "Cross-references and links"
 msgstr "상호 참조와 링크"
 
-#: ../../topics/writing.rst:343
+#: ../../topics/writing.rst:345
 msgid ""
 "Explicit targets keep links stable, even when document files are renamed."
 msgstr "명시적 대상을 쓰면 문서 파일 이름이 바뀌어도 링크가 깨지지 않습니다."
 
-#: ../../topics/writing.rst:345
+#: ../../topics/writing.rst:347
 msgid "Target labels and ``:ref:``"
 msgstr "대상 레이블과 ``:ref:``"
 
-#: ../../topics/writing.rst:348
+#: ../../topics/writing.rst:350
 msgid "We place a target label directly before a heading, table, or figure:"
 msgstr "제목, 표, 그림 바로 앞에 대상 레이블을 둡니다."
 
-#: ../../topics/writing.rst:359
+#: ../../topics/writing.rst:361
 msgid "Any document in the project can refer to this target:"
 msgstr "프로젝트의 어느 문서에서든 이 대상을 참조할 수 있습니다."
 
-#: ../../topics/writing.rst:366
+#: ../../topics/writing.rst:368
 msgid "Document references with ``:doc:``"
 msgstr "``:doc:`` 문서 참조"
 
-#: ../../topics/writing.rst:369
+#: ../../topics/writing.rst:371
 msgid "We link to another document by its path, without the file extension:"
 msgstr "다른 문서에는 확장자를 뺀 경로로 연결합니다."
 
-#: ../../topics/writing.rst:375
+#: ../../topics/writing.rst:377
 msgid "Glossary terms with ``:term:``"
 msgstr "``:term:`` 용어 참조"
 
-#: ../../topics/writing.rst:378
+#: ../../topics/writing.rst:380
 msgid "We define terms with the ``glossary`` directive:"
 msgstr "용어는 ``glossary`` 지시문으로 정의합니다."
 
-#: ../../topics/writing.rst:390
+#: ../../topics/writing.rst:392
 msgid "We link to a glossary term with the ``:term:`` role:"
 msgstr "용어집의 용어에는 ``:term:`` 역할로 연결합니다."
 
-#: ../../topics/writing.rst:396
+#: ../../topics/writing.rst:398
 msgid "File downloads with ``:download:``"
 msgstr "``:download:`` 파일 다운로드"
 
-#: ../../topics/writing.rst:399
+#: ../../topics/writing.rst:401
 msgid ""
 "This copies a file to the output's download directory and links to it:"
 msgstr "파일을 출력의 다운로드 디렉터리로 복사하고 그 파일에 연결합니다."
 
-#: ../../topics/writing.rst:405
+#: ../../topics/writing.rst:407
 msgid "External and cross-mount links"
 msgstr "외부 링크와 마운트 간 링크"
 
-#: ../../topics/writing.rst:408
+#: ../../topics/writing.rst:410
 msgid "We link to external web addresses like this:"
 msgstr "외부 웹 주소에는 이렇게 연결합니다."
 
-#: ../../topics/writing.rst:414
+#: ../../topics/writing.rst:416
 msgid ""
 "In a multi-project website assembled with ``[[site.mounts]]``, we can "
 "also link to a mounted sub-project by its mount name using "
@@ -1564,33 +1754,41 @@ msgstr ""
 "``[[site.mounts]]``\\ 로 조립된 다중 프로젝트 웹사이트에서는 ``mount://<name>/<path>``\\ 를 "
 "사용해 마운트 이름으로 마운트된 하위 프로젝트에 연결할 수도 있습니다:"
 
-#: ../../topics/writing.rst:420
+#: ../../topics/writing.rst:422
 msgid ""
 "The mount names must match ``[[site.mounts]]`` and the paths must name "
 "current output files."
 msgstr "마운트 이름은 ``[[site.mounts]]``\\ 와 일치해야 하며 경로는 현재 출력 파일을 가리켜야 합니다."
 
-#: ../../topics/writing.rst:422
+#: ../../topics/writing.rst:424
 msgid "Substitutions and includes"
 msgstr "치환과 포함"
 
-#: ../../topics/writing.rst:425
+#: ../../topics/writing.rst:427
 msgid "We define reusable phrases, symbols, or images:"
 msgstr "재사용할 문구, 기호, 이미지를 정의합니다."
 
-#: ../../topics/writing.rst:434
+#: ../../topics/writing.rst:436
 msgid "To reuse reStructuredText content in several files:"
 msgstr "reStructuredText 내용을 여러 파일에서 재사용하려면 다음과 같이 합니다."
 
-#: ../../topics/writing.rst:440
+#: ../../topics/writing.rst:442
 msgid "MyST Markdown authoring"
 msgstr "MyST Markdown 작성"
 
-#: ../../topics/writing.rst:443
+#: ../../topics/writing.rst:445
 msgid ""
 "MyST Markdown supports the same directives and roles through fenced "
 "blocks:"
 msgstr "MyST Markdown은 펜스 블록으로 같은 지시문과 역할을 지원합니다."
+
+#~ msgid "Diagrams that explain"
+#~ msgstr "개념을 설명하는 다이어그램"
+
+#~ msgid ""
+#~ "We include illustrations, screenshots, and diagrams with ``image`` and "
+#~ "``figure``:"
+#~ msgstr "그림, 스크린샷, 다이어그램은 ``image``\\ 와 ``figure``\\ 로 넣습니다."
 
 #~ msgid ""
 #~ "``:excerpts:``: Render each entry's explicit ``:summary:`` below its "

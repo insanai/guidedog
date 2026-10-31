@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:28+0000\n"
+"POT-Creation-Date: 2026-10-31 06:11+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../../topics/diagrams.rst:1
-msgid "Diagrams that explain"
-msgstr "用图表解释概念"
+msgid "Diagrams with Graphviz and Typst"
+msgstr ""
 
 #: ../../topics/diagrams.rst:4
 msgid ""
@@ -28,31 +28,102 @@ msgid ""
 msgstr "按问题选择图示。流程图解释选择，框图解释职责，时序图解释顺序，关系图解释联系。文字能更直接回答时，就用文字。"
 
 #: ../../topics/diagrams.rst:8
+msgid ""
+"We keep diagram source beside the explanation and let Guidedog build the "
+"image for HTML and PDF. Graphviz and Typst are included in the "
+"executable. We need no separate ``dot`` or ``typst`` program."
+msgstr ""
+
+#: ../../topics/diagrams.rst:12
+msgid "Choose the drawing tool"
+msgstr ""
+
+#: ../../topics/diagrams.rst:15
+msgid "Drawing tools"
+msgstr ""
+
+#: ../../topics/diagrams.rst:19
+msgid "Tool"
+msgstr ""
+
+#: ../../topics/diagrams.rst:20
+msgid "Useful when"
+msgstr ""
+
+#: ../../topics/diagrams.rst:21
+msgid "Source"
+msgstr ""
+
+#: ../../topics/diagrams.rst:22
+msgid "Graphviz"
+msgstr ""
+
+#: ../../topics/diagrams.rst:23
+msgid ""
+"We describe nodes and edges and want the layout engine to place them."
+msgstr ""
+
+#: ../../topics/diagrams.rst:24
+msgid "DOT inside ``graphviz``, ``graph`` or ``digraph``."
+msgstr ""
+
+#: ../../topics/diagrams.rst:25
+msgid "Typst with CeTZ"
+msgstr ""
+
+#: ../../topics/diagrams.rst:26
+msgid "We need explicit geometry, custom shapes, plots or sequence layouts."
+msgstr ""
+
+#: ../../topics/diagrams.rst:27
+msgid "Typst inside ``typst-diagram``."
+msgstr ""
+
+#: ../../topics/diagrams.rst:28
+msgid "Typst with Fletcher"
+msgstr ""
+
+#: ../../topics/diagrams.rst:29
+msgid "We need positioned nodes, mathematical labels and precise arrows."
+msgstr ""
+
+#: ../../topics/diagrams.rst:30
+msgid "Typst inside ``typst-diagram`` with a pinned Fletcher import."
+msgstr ""
+
+#: ../../topics/diagrams.rst:32
+msgid ""
+"We choose SVG for scalable drawings in both the browser and book. Typst "
+"diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
+"PNG files still work with ordinary image and figure directives."
+msgstr ""
+
+#: ../../topics/diagrams.rst:36
 msgid "A flow chart"
 msgstr "流程图"
 
-#: ../../topics/diagrams.rst:13
+#: ../../topics/diagrams.rst:41
 msgid ""
 "If the request fits the limits, the workspace buffer grows and conversion "
 "continues; otherwise the conversion ends with a Limit result."
 msgstr "如果请求在限制范围内，工作区缓冲区会扩展，转换继续进行；否则转换以 Limit 结果结束。"
 
-#: ../../topics/diagrams.rst:13
+#: ../../topics/diagrams.rst:41
 msgid "A conversion checks its limits before a buffer grows."
 msgstr "转换在缓冲区扩展之前检查限制。"
 
-#: ../../topics/diagrams.rst:33
+#: ../../topics/diagrams.rst:61
 msgid ""
 "The drawing names the decision at the growth step. It does not suggest "
 "that running out of room aborts the program: a bound produces a result "
 "the caller can report. This distinction is part of the contract."
 msgstr "图中在扩展这一步标出了判断。它并不暗示空间不足会让程序中止：限制产生的是调用方可以报告的结果。这一区别属于契约的一部分。"
 
-#: ../../topics/diagrams.rst:38
+#: ../../topics/diagrams.rst:66
 msgid "Author a graph"
 msgstr "编写图表"
 
-#: ../../topics/diagrams.rst:56
+#: ../../topics/diagrams.rst:84
 msgid ""
 "``graphviz``, ``graph``, and ``digraph`` are built in. Guidedog renders "
 "them through Graphviz. HTML receives an SVG asset. PDF embeds the "
@@ -61,18 +132,131 @@ msgstr ""
 "``graphviz``\\ 、\\ ``graph`` 和 ``digraph`` 为内置指令。Guidedog 通过 Graphviz "
 "渲染；HTML 获得 SVG 资源，PDF 嵌入渲染后的图示，两者使用同一图源。"
 
-#: ../../topics/diagrams.rst:60
+#: ../../topics/diagrams.rst:88
+msgid "In MyST Markdown, we use a directive fence with the same options."
+msgstr ""
+
+#: ../../topics/diagrams.rst:99
+msgid ""
+"A ``graphviz`` file argument reads a DOT file instead of an inline body. "
+"``graph`` and ``digraph`` take the graph name as their argument and wrap "
+"the body's edges in the corresponding DOT graph. A plain ``dot`` or "
+"``graphviz`` Markdown fence also draws a graph; we use the directive form "
+"when we need options."
+msgstr ""
+
+#: ../../topics/diagrams.rst:103
+msgid "Draw with Typst"
+msgstr ""
+
+#: ../../topics/diagrams.rst:106
+msgid ""
+"The ``typst-diagram`` directive compiles its body to an image. The page "
+"fits the drawing automatically. We can start with Typst's built-in shapes "
+"before adding a package."
+msgstr ""
+
+#: ../../topics/diagrams.rst:120
+msgid "A drawing from Typst source."
+msgstr ""
+
+#: ../../topics/diagrams.rst:126
+msgid ""
+"The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
+"An ordinary ``typst`` code fence displays source without compiling it."
+msgstr ""
+
+#: ../../topics/diagrams.rst:139
+msgid ""
+"CeTZ supplies a drawing canvas and geometric operations. We import a "
+"specific package version so the source states its dependency."
+msgstr ""
+
+#: ../../topics/diagrams.rst:156
+msgid ""
+"Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
+"are useful when position carries meaning."
+msgstr ""
+
+#: ../../topics/diagrams.rst:172
+msgid "Share source and refer to figures"
+msgstr ""
+
+#: ../../topics/diagrams.rst:175
+msgid ""
+"Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` "
+"and ``:align:``. We enable ``numfig = true`` in ``conf.toml`` and refer "
+"to a named captioned drawing with ``:numref:`` in RST or ``{numref}`` in "
+"MyST. For example, :numref:`chapter-typst-circle` is a numbered figure in "
+"this book. Alternative text explains the information conveyed by the "
+"drawing. It is especially useful for Typst SVGs, which draw letters as "
+"outlines."
+msgstr ""
+
+#: ../../topics/diagrams.rst:181
+msgid ""
+"For a larger drawing we keep Typst source in a file. Guidedog compiles it "
+"during the ordinary build."
+msgstr ""
+
+#: ../../topics/diagrams.rst:190
+msgid ""
+"An inline diagram's imports resolve beside the document containing it. A "
+"file diagram's imports resolve beside its Typst file. We can therefore "
+"share a local helper library for colors, nodes and sequence diagrams. "
+"Changing an imported helper or data file redraws the affected HTML pages. "
+"Identical generated images keep their timestamps so unchanged PDF books "
+"remain cached."
+msgstr ""
+
+#: ../../topics/diagrams.rst:196
+#, fuzzy
+#| msgid "Images and figures"
+msgid "Packages, limits and failures"
+msgstr "图片与插图"
+
+#: ../../topics/diagrams.rst:199
+msgid ""
+"The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings "
+"govern Typst diagrams in both outputs. With ``pdf_packages = "
+"\"offline\"``, the compiler uses only packages already installed in "
+"Typst's package directories. The default downloads missing packages. "
+"After installing a previously missing package or editing fonts, we run a "
+"fresh ``guidedog build html -a`` command. Project imports stay below the "
+"source directory, including through symlinks. Diagrams must produce one "
+"finite page; PNG export is limited to 16 million pixels and 16,384 pixels "
+"on either side."
+msgstr ""
+
+#: ../../topics/diagrams.rst:206
+msgid ""
+"A failed drawing remains visible as source with a warning. We build with "
+"``-W`` when a missing diagram must prevent publication. ``--untrusted`` "
+"refuses Typst compilation and retains its source. Text builds show source "
+"without compiling a drawing. The :doc:`../howto/typst-diagrams` guide "
+"lists every option, source limit and migration step for existing figure "
+"files."
+msgstr ""
+
+#: ../../topics/diagrams.rst:212
 msgid "Light, dark and print"
 msgstr "浅色、深色与打印"
 
-#: ../../topics/diagrams.rst:63
+#: ../../topics/diagrams.rst:215
+msgid ""
+"Typst diagrams keep their authored colors and receive the same light "
+"panel as ordinary Graphviz images in the default dark theme. The adaptive "
+"Graphviz palette does not recolor Typst drawings."
+msgstr ""
+
+#: ../../topics/diagrams.rst:217
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
 "colors and receive a light panel in the default dark theme."
 msgstr "画布透明不会改变图中文字的颜色。深色文字放在深色页面上可能消失。因此普通图保留原有配色，在默认深色主题下使用浅色面板。"
 
-#: ../../topics/diagrams.rst:67
+#: ../../topics/diagrams.rst:221
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
 "the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
@@ -85,65 +269,65 @@ msgstr ""
 "及更高版本。Guidedog 在 SVG 内加入固定样式表；深色媒体查询跟随所在页面的 "
 "``color-scheme``，包括主题控件的明确选择。无须脚本、外部样式表或内联页面 SVG。"
 
-#: ../../topics/diagrams.rst:73
+#: ../../topics/diagrams.rst:227
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
 msgstr "标签要短。步骤用圆角框，输入用便笺形，持久存储用圆柱形。节点类区分深色配色中的角色："
 
-#: ../../topics/diagrams.rst:76
+#: ../../topics/diagrams.rst:230
 msgid "Semantic node classes"
 msgstr "表示语义的节点类"
 
-#: ../../topics/diagrams.rst:80
+#: ../../topics/diagrams.rst:234
 msgid "DOT class"
 msgstr "DOT 类"
 
-#: ../../topics/diagrams.rst:81
+#: ../../topics/diagrams.rst:235
 msgid "Role"
 msgstr "角色"
 
-#: ../../topics/diagrams.rst:82
+#: ../../topics/diagrams.rst:236
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:83
+#: ../../topics/diagrams.rst:237
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "源文件、配置或辅助材料；暖中性色。"
 
-#: ../../topics/diagrams.rst:84
+#: ../../topics/diagrams.rst:238
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:85
+#: ../../topics/diagrams.rst:239
 msgid "A produced artifact; blue."
 msgstr "生成的产物；蓝色。"
 
-#: ../../topics/diagrams.rst:86
+#: ../../topics/diagrams.rst:240
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:87
+#: ../../topics/diagrams.rst:241
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "可选扩展点；琥珀色、虚线边框。"
 
-#: ../../topics/diagrams.rst:88
+#: ../../topics/diagrams.rst:242
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:89
+#: ../../topics/diagrams.rst:243
 msgid "A decision; amber, with a diamond shape."
 msgstr "决策；琥珀色、菱形。"
 
-#: ../../topics/diagrams.rst:90
+#: ../../topics/diagrams.rst:244
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:91
+#: ../../topics/diagrams.rst:245
 msgid "A separate ownership or allocation boundary; violet."
 msgstr "独立的所有权或内存分配边界；紫色。"
 
-#: ../../topics/diagrams.rst:93
+#: ../../topics/diagrams.rst:247
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
@@ -155,7 +339,7 @@ msgstr ""
 "例如，``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` "
 "同时设定了浅色外观和对应的深色角色。类不会决定形状，也不会添加标签。我们要显式写出这些内容，这样图在黑白下也能看懂。未分类的步骤使用绿色。这套配色需要主动启用。如果图中的颜色本身承载数据，就不要使用它。"
 
-#: ../../topics/diagrams.rst:99
+#: ../../topics/diagrams.rst:253
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
@@ -168,11 +352,11 @@ msgstr ""
 "时同样选用浅色方案。请确保两套配色都清晰可读，并检查实际生成的书籍。仅凭透明背景，两者都无法保证。继承规则由 `CSS color-scheme "
 "规范 <https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ 定义。"
 
-#: ../../topics/diagrams.rst:105
+#: ../../topics/diagrams.rst:259
 msgid "Make the result legible"
 msgstr "让图表清晰易读"
 
-#: ../../topics/diagrams.rst:108
+#: ../../topics/diagrams.rst:262
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -180,7 +364,7 @@ msgid ""
 "all."
 msgstr "节点标签要短，较长规则写在图下。主路径尽量保持一个方向，返回边标明条件。除颜色外，也使用形状和文字；打印读者可能看不到颜色。"
 
-#: ../../topics/diagrams.rst:112
+#: ../../topics/diagrams.rst:266
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -188,7 +372,7 @@ msgid ""
 msgstr ""
 "提供替代文本和题注。检查窄浏览器窗口和 PDF 页面。若必须用极小字号才能放下，拆成两幅图。图片和插图尺寸见 :doc:`../media`\\ 。"
 
-#: ../../topics/diagrams.rst:116
+#: ../../topics/diagrams.rst:270
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
 "readable. Scroll inside the figure. The page itself keeps its width."
@@ -1308,92 +1492,98 @@ msgstr "图片与插图"
 
 #: ../../topics/writing.rst:272
 msgid ""
-"We include illustrations, screenshots, and diagrams with ``image`` and "
-"``figure``:"
-msgstr "我们用 ``image`` 和 ``figure`` 插入插图、截图和图表："
+"We include illustrations, screenshots, and prebuilt diagrams with "
+"``image`` and ``figure``. We can also author Graphviz and Typst drawings "
+"directly in markup with automatic HTML and PDF assets; see "
+":doc:`diagrams`."
+msgstr ""
 
-#: ../../topics/writing.rst:288
+#: ../../topics/writing.rst:274
+msgid "For an existing image:"
+msgstr ""
+
+#: ../../topics/writing.rst:290
 msgid ""
 "A ``figure`` wraps the image with a caption and an optional reference "
 "target."
 msgstr "``figure`` 为图片加上图注，还可以指定引用目标。"
 
-#: ../../topics/writing.rst:290
+#: ../../topics/writing.rst:292
 msgid "Document structure with toctrees"
 msgstr "用目录树组织文档"
 
-#: ../../topics/writing.rst:293
+#: ../../topics/writing.rst:295
 msgid ""
 "The ``toctree`` directive creates the document hierarchy, navigation "
 "menus, and reading order for both the HTML site and the PDF book:"
 msgstr "``toctree`` 定义文档层级、导航菜单，以及 HTML 和 PDF 的阅读顺序："
 
-#: ../../topics/writing.rst:307
+#: ../../topics/writing.rst:309
 msgid "Common options for ``toctree``:"
 msgstr "``toctree`` 的常用选项："
 
-#: ../../topics/writing.rst:309
+#: ../../topics/writing.rst:311
 msgid ""
 "``:maxdepth: N``: Depth of heading levels to include in the table of "
 "contents."
 msgstr "``:maxdepth: N``: 目录中包含的标题层级深度。"
 
-#: ../../topics/writing.rst:310
+#: ../../topics/writing.rst:312
 msgid ""
 "``:caption: Title``: Category title displayed above the navigation "
 "entries."
 msgstr "``:caption: Title``: 导航条目上方显示的分类标题。"
 
-#: ../../topics/writing.rst:311
+#: ../../topics/writing.rst:313
 msgid "``:numbered:``: Adds section numbers to chapters and headings."
 msgstr "``:numbered:``: 为章节和标题添加编号。"
 
-#: ../../topics/writing.rst:312
+#: ../../topics/writing.rst:314
 msgid ""
 "``:titlesonly:``: Lists only the top-level document titles, ignoring "
 "inner sections."
 msgstr "``:titlesonly:``: 只列出文档标题，不显示内部章节。"
 
-#: ../../topics/writing.rst:313
+#: ../../topics/writing.rst:315
 msgid ""
 "``:hidden:``: Records the documents in the reading order without "
 "rendering an inline list."
 msgstr "``:hidden:``: 记录文档阅读顺序，但不在正文中显示列表。"
 
-#: ../../topics/writing.rst:314
+#: ../../topics/writing.rst:316
 msgid ""
 "``:glob:``: Allows wildcard patterns to match documents (e.g. "
 "``tutorials/*``)."
 msgstr "``:glob:``: 允许用通配符匹配文档，例如 ``tutorials/*``。"
 
-#: ../../topics/writing.rst:316
+#: ../../topics/writing.rst:318
 msgid "Dated post listings with ``postlist``"
 msgstr "用 ``postlist`` 生成带日期的文章列表"
 
-#: ../../topics/writing.rst:319
+#: ../../topics/writing.rst:321
 msgid ""
 "For articles, release notes, and research logs that carry ``:date:`` "
 "metadata, the ``postlist`` directive renders a reverse-chronological list "
 "of matching published pages:"
 msgstr "对于带有 ``:date:`` 元数据的文章、版本说明和研究日志，``postlist`` 指令会按时间倒序渲染匹配的已发布页面列表："
 
-#: ../../topics/writing.rst:329
+#: ../../topics/writing.rst:331
 msgid "Options for ``postlist``:"
 msgstr "``postlist`` 的选项："
 
-#: ../../topics/writing.rst:331
+#: ../../topics/writing.rst:333
 msgid ""
 "Argument ``N``: Maximum number of matching posts to show; zero or an "
 "omitted argument includes every match."
 msgstr "参数 ``N``：最多显示的匹配文章数；为 0 或省略参数时包含全部匹配项。"
 
-#: ../../topics/writing.rst:332
+#: ../../topics/writing.rst:334
 msgid ""
 "``:path: GLOB``: Restrict entries to document names matching the glob "
 "pattern."
 msgstr "``:path: GLOB``：将条目限制为匹配该 glob 模式的文档名。"
 
-#: ../../topics/writing.rst:333
+#: ../../topics/writing.rst:335
 msgid ""
 "``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: "
 "NAME``, ``:year: YYYY``: Filter entries by publication metadata."
@@ -1401,18 +1591,18 @@ msgstr ""
 "``:category: NAME``、``:tags: TAG, ...``、``:author: NAME``、``:series: "
 "NAME``、``:year: YYYY``：按发布元数据筛选条目。"
 
-#: ../../topics/writing.rst:334
+#: ../../topics/writing.rst:336
 msgid ""
 "``:sort: date`` or ``:sort: -date``: Order by oldest or newest "
 "publication instant, with docname breaking ties."
 msgstr "``:sort: date`` 或 ``:sort: -date``：按发布时间从早到晚或从新到旧排序，时间相同时按文档名排序。"
 
-#: ../../topics/writing.rst:335
+#: ../../topics/writing.rst:337
 msgid ""
 "``:style: list`` or ``:style: cards``: Select the listing's CSS class."
 msgstr "``:style: list`` 或 ``:style: cards``：选择列表的 CSS 类。"
 
-#: ../../topics/writing.rst:336
+#: ../../topics/writing.rst:338
 msgid ""
 "``:excerpts:``: Render each entry's rich introduction before ``.. "
 "more::``, falling back to its plain-text ``:summary:`` when no boundary "
@@ -1421,71 +1611,71 @@ msgstr ""
 "``:excerpts:``：渲染每个条目在 ``.. more::`` 之前的富文本引言；没有分界标记时，使用其纯文本 "
 "``:summary:``。"
 
-#: ../../topics/writing.rst:338
+#: ../../topics/writing.rst:340
 msgid ""
 "See :doc:`../howto/static-publishing` for collections, feeds, and "
 "scheduled publishing."
 msgstr "关于集合、订阅源和定时发布，参见 :doc:`../howto/static-publishing`。"
 
-#: ../../topics/writing.rst:340
+#: ../../topics/writing.rst:342
 msgid "Cross-references and links"
 msgstr "交叉引用与链接"
 
-#: ../../topics/writing.rst:343
+#: ../../topics/writing.rst:345
 msgid ""
 "Explicit targets keep links stable, even when document files are renamed."
 msgstr "显式目标让链接保持稳定，即使文档文件改名也不受影响。"
 
-#: ../../topics/writing.rst:345
+#: ../../topics/writing.rst:347
 msgid "Target labels and ``:ref:``"
 msgstr "目标标签与 ``:ref:``"
 
-#: ../../topics/writing.rst:348
+#: ../../topics/writing.rst:350
 msgid "We place a target label directly before a heading, table, or figure:"
 msgstr "我们把目标标签直接放在标题、表格或插图之前："
 
-#: ../../topics/writing.rst:359
+#: ../../topics/writing.rst:361
 msgid "Any document in the project can refer to this target:"
 msgstr "项目中的任何文档都可以引用这个目标："
 
-#: ../../topics/writing.rst:366
+#: ../../topics/writing.rst:368
 msgid "Document references with ``:doc:``"
 msgstr "用 ``:doc:`` 引用文档"
 
-#: ../../topics/writing.rst:369
+#: ../../topics/writing.rst:371
 msgid "We link to another document by its path, without the file extension:"
 msgstr "我们按路径链接到其他文档，省略文件扩展名："
 
-#: ../../topics/writing.rst:375
+#: ../../topics/writing.rst:377
 msgid "Glossary terms with ``:term:``"
 msgstr "用 ``:term:`` 引用术语"
 
-#: ../../topics/writing.rst:378
+#: ../../topics/writing.rst:380
 msgid "We define terms with the ``glossary`` directive:"
 msgstr "我们用 ``glossary`` 指令定义术语："
 
-#: ../../topics/writing.rst:390
+#: ../../topics/writing.rst:392
 msgid "We link to a glossary term with the ``:term:`` role:"
 msgstr "我们用 ``:term:`` 角色链接到术语表中的术语："
 
-#: ../../topics/writing.rst:396
+#: ../../topics/writing.rst:398
 msgid "File downloads with ``:download:``"
 msgstr "用 ``:download:`` 提供文件下载"
 
-#: ../../topics/writing.rst:399
+#: ../../topics/writing.rst:401
 msgid ""
 "This copies a file to the output's download directory and links to it:"
 msgstr "下面的写法会把文件复制到输出的下载目录，并生成指向它的链接："
 
-#: ../../topics/writing.rst:405
+#: ../../topics/writing.rst:407
 msgid "External and cross-mount links"
 msgstr "外部链接与跨挂载链接"
 
-#: ../../topics/writing.rst:408
+#: ../../topics/writing.rst:410
 msgid "We link to external web addresses like this:"
 msgstr "链接到外部网址的写法如下："
 
-#: ../../topics/writing.rst:414
+#: ../../topics/writing.rst:416
 msgid ""
 "In a multi-project website assembled with ``[[site.mounts]]``, we can "
 "also link to a mounted sub-project by its mount name using "
@@ -1494,33 +1684,41 @@ msgstr ""
 "在通过 ``[[site.mounts]]`` 组装的多项目网站中，我们还可以使用 ``mount://<name>/<path>`` "
 "按挂载名链接到已挂载的子项目："
 
-#: ../../topics/writing.rst:420
+#: ../../topics/writing.rst:422
 msgid ""
 "The mount names must match ``[[site.mounts]]`` and the paths must name "
 "current output files."
 msgstr "挂载名必须与 ``[[site.mounts]]`` 一致，且路径必须指向当前的输出文件。"
 
-#: ../../topics/writing.rst:422
+#: ../../topics/writing.rst:424
 msgid "Substitutions and includes"
 msgstr "替换与包含"
 
-#: ../../topics/writing.rst:425
+#: ../../topics/writing.rst:427
 msgid "We define reusable phrases, symbols, or images:"
 msgstr "我们可以定义可复用的短语、符号或图片："
 
-#: ../../topics/writing.rst:434
+#: ../../topics/writing.rst:436
 msgid "To reuse reStructuredText content in several files:"
 msgstr "要在多个文件中复用 reStructuredText 内容："
 
-#: ../../topics/writing.rst:440
+#: ../../topics/writing.rst:442
 msgid "MyST Markdown authoring"
 msgstr "编写 MyST Markdown"
 
-#: ../../topics/writing.rst:443
+#: ../../topics/writing.rst:445
 msgid ""
 "MyST Markdown supports the same directives and roles through fenced "
 "blocks:"
 msgstr "MyST Markdown 通过围栏块支持相同的指令和角色："
+
+#~ msgid "Diagrams that explain"
+#~ msgstr "用图表解释概念"
+
+#~ msgid ""
+#~ "We include illustrations, screenshots, and diagrams with ``image`` and "
+#~ "``figure``:"
+#~ msgstr "我们用 ``image`` 和 ``figure`` 插入插图、截图和图表："
 
 #~ msgid ""
 #~ "``:excerpts:``: Render each entry's explicit ``:summary:`` below its "

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:28+0000\n"
+"POT-Creation-Date: 2026-10-31 06:11+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../../topics/diagrams.rst:1
-msgid "Diagrams that explain"
-msgstr "図で説明する"
+msgid "Diagrams with Graphviz and Typst"
+msgstr ""
 
 #: ../../topics/diagrams.rst:4
 msgid ""
@@ -29,20 +29,91 @@ msgstr ""
 "問いに合う図を選ぶ。フローチャートは選択、ブロック図は責任、シーケンス図は順序、グラフは関係を説明する。文章がより直接答えられるなら文章を使う。"
 
 #: ../../topics/diagrams.rst:8
+msgid ""
+"We keep diagram source beside the explanation and let Guidedog build the "
+"image for HTML and PDF. Graphviz and Typst are included in the "
+"executable. We need no separate ``dot`` or ``typst`` program."
+msgstr ""
+
+#: ../../topics/diagrams.rst:12
+msgid "Choose the drawing tool"
+msgstr ""
+
+#: ../../topics/diagrams.rst:15
+msgid "Drawing tools"
+msgstr ""
+
+#: ../../topics/diagrams.rst:19
+msgid "Tool"
+msgstr ""
+
+#: ../../topics/diagrams.rst:20
+msgid "Useful when"
+msgstr ""
+
+#: ../../topics/diagrams.rst:21
+msgid "Source"
+msgstr ""
+
+#: ../../topics/diagrams.rst:22
+msgid "Graphviz"
+msgstr ""
+
+#: ../../topics/diagrams.rst:23
+msgid ""
+"We describe nodes and edges and want the layout engine to place them."
+msgstr ""
+
+#: ../../topics/diagrams.rst:24
+msgid "DOT inside ``graphviz``, ``graph`` or ``digraph``."
+msgstr ""
+
+#: ../../topics/diagrams.rst:25
+msgid "Typst with CeTZ"
+msgstr ""
+
+#: ../../topics/diagrams.rst:26
+msgid "We need explicit geometry, custom shapes, plots or sequence layouts."
+msgstr ""
+
+#: ../../topics/diagrams.rst:27
+msgid "Typst inside ``typst-diagram``."
+msgstr ""
+
+#: ../../topics/diagrams.rst:28
+msgid "Typst with Fletcher"
+msgstr ""
+
+#: ../../topics/diagrams.rst:29
+msgid "We need positioned nodes, mathematical labels and precise arrows."
+msgstr ""
+
+#: ../../topics/diagrams.rst:30
+msgid "Typst inside ``typst-diagram`` with a pinned Fletcher import."
+msgstr ""
+
+#: ../../topics/diagrams.rst:32
+msgid ""
+"We choose SVG for scalable drawings in both the browser and book. Typst "
+"diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
+"PNG files still work with ordinary image and figure directives."
+msgstr ""
+
+#: ../../topics/diagrams.rst:36
 msgid "A flow chart"
 msgstr "フローチャート"
 
-#: ../../topics/diagrams.rst:13
+#: ../../topics/diagrams.rst:41
 msgid ""
 "If the request fits the limits, the workspace buffer grows and conversion "
 "continues; otherwise the conversion ends with a Limit result."
 msgstr "要求が制限内に収まれば、ワークスペースのバッファーが拡張され、変換が続きます。収まらなければ、変換は Limit の結果で終了します。"
 
-#: ../../topics/diagrams.rst:13
+#: ../../topics/diagrams.rst:41
 msgid "A conversion checks its limits before a buffer grows."
 msgstr "変換は、バッファーを拡張する前に制限を確認します。"
 
-#: ../../topics/diagrams.rst:33
+#: ../../topics/diagrams.rst:61
 msgid ""
 "The drawing names the decision at the growth step. It does not suggest "
 "that running out of room aborts the program: a bound produces a result "
@@ -50,11 +121,11 @@ msgid ""
 msgstr ""
 "図では、拡張の手前にある判断を明示しています。領域が足りなくなるとプログラムが中断する、という意味ではありません。上限に達すると、呼び出し側が報告できる結果が返ります。この違いは契約の一部です。"
 
-#: ../../topics/diagrams.rst:38
+#: ../../topics/diagrams.rst:66
 msgid "Author a graph"
 msgstr "グラフを書く"
 
-#: ../../topics/diagrams.rst:56
+#: ../../topics/diagrams.rst:84
 msgid ""
 "``graphviz``, ``graph``, and ``digraph`` are built in. Guidedog renders "
 "them through Graphviz. HTML receives an SVG asset. PDF embeds the "
@@ -63,11 +134,124 @@ msgstr ""
 "``graphviz``\\ 、\\ ``graph``\\ 、\\ ``digraph`` は組み込み。Guidedog が Graphviz "
 "で描画し、HTML は SVG、PDF は描画した図を使う。元のグラフは共通だ。"
 
-#: ../../topics/diagrams.rst:60
+#: ../../topics/diagrams.rst:88
+msgid "In MyST Markdown, we use a directive fence with the same options."
+msgstr ""
+
+#: ../../topics/diagrams.rst:99
+msgid ""
+"A ``graphviz`` file argument reads a DOT file instead of an inline body. "
+"``graph`` and ``digraph`` take the graph name as their argument and wrap "
+"the body's edges in the corresponding DOT graph. A plain ``dot`` or "
+"``graphviz`` Markdown fence also draws a graph; we use the directive form "
+"when we need options."
+msgstr ""
+
+#: ../../topics/diagrams.rst:103
+msgid "Draw with Typst"
+msgstr ""
+
+#: ../../topics/diagrams.rst:106
+msgid ""
+"The ``typst-diagram`` directive compiles its body to an image. The page "
+"fits the drawing automatically. We can start with Typst's built-in shapes "
+"before adding a package."
+msgstr ""
+
+#: ../../topics/diagrams.rst:120
+msgid "A drawing from Typst source."
+msgstr ""
+
+#: ../../topics/diagrams.rst:126
+msgid ""
+"The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
+"An ordinary ``typst`` code fence displays source without compiling it."
+msgstr ""
+
+#: ../../topics/diagrams.rst:139
+msgid ""
+"CeTZ supplies a drawing canvas and geometric operations. We import a "
+"specific package version so the source states its dependency."
+msgstr ""
+
+#: ../../topics/diagrams.rst:156
+msgid ""
+"Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
+"are useful when position carries meaning."
+msgstr ""
+
+#: ../../topics/diagrams.rst:172
+msgid "Share source and refer to figures"
+msgstr ""
+
+#: ../../topics/diagrams.rst:175
+msgid ""
+"Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` "
+"and ``:align:``. We enable ``numfig = true`` in ``conf.toml`` and refer "
+"to a named captioned drawing with ``:numref:`` in RST or ``{numref}`` in "
+"MyST. For example, :numref:`chapter-typst-circle` is a numbered figure in "
+"this book. Alternative text explains the information conveyed by the "
+"drawing. It is especially useful for Typst SVGs, which draw letters as "
+"outlines."
+msgstr ""
+
+#: ../../topics/diagrams.rst:181
+msgid ""
+"For a larger drawing we keep Typst source in a file. Guidedog compiles it "
+"during the ordinary build."
+msgstr ""
+
+#: ../../topics/diagrams.rst:190
+msgid ""
+"An inline diagram's imports resolve beside the document containing it. A "
+"file diagram's imports resolve beside its Typst file. We can therefore "
+"share a local helper library for colors, nodes and sequence diagrams. "
+"Changing an imported helper or data file redraws the affected HTML pages. "
+"Identical generated images keep their timestamps so unchanged PDF books "
+"remain cached."
+msgstr ""
+
+#: ../../topics/diagrams.rst:196
+#, fuzzy
+#| msgid "Images and figures"
+msgid "Packages, limits and failures"
+msgstr "画像と図"
+
+#: ../../topics/diagrams.rst:199
+msgid ""
+"The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings "
+"govern Typst diagrams in both outputs. With ``pdf_packages = "
+"\"offline\"``, the compiler uses only packages already installed in "
+"Typst's package directories. The default downloads missing packages. "
+"After installing a previously missing package or editing fonts, we run a "
+"fresh ``guidedog build html -a`` command. Project imports stay below the "
+"source directory, including through symlinks. Diagrams must produce one "
+"finite page; PNG export is limited to 16 million pixels and 16,384 pixels "
+"on either side."
+msgstr ""
+
+#: ../../topics/diagrams.rst:206
+msgid ""
+"A failed drawing remains visible as source with a warning. We build with "
+"``-W`` when a missing diagram must prevent publication. ``--untrusted`` "
+"refuses Typst compilation and retains its source. Text builds show source "
+"without compiling a drawing. The :doc:`../howto/typst-diagrams` guide "
+"lists every option, source limit and migration step for existing figure "
+"files."
+msgstr ""
+
+#: ../../topics/diagrams.rst:212
 msgid "Light, dark and print"
 msgstr "ライト、ダーク、印刷"
 
-#: ../../topics/diagrams.rst:63
+#: ../../topics/diagrams.rst:215
+msgid ""
+"Typst diagrams keep their authored colors and receive the same light "
+"panel as ordinary Graphviz images in the default dark theme. The adaptive "
+"Graphviz palette does not recolor Typst drawings."
+msgstr ""
+
+#: ../../topics/diagrams.rst:217
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
@@ -75,7 +259,7 @@ msgid ""
 msgstr ""
 "背景を透明にしても文字色は変わりません。暗いページで暗い文字が消えないよう、通常の図は元の色を保ち、既定のダークテーマでは明るいパネルを使います。"
 
-#: ../../topics/diagrams.rst:67
+#: ../../topics/diagrams.rst:221
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
 "the directive. This is available in Guidedog 0.6.3 and later. Guidedog "
@@ -88,65 +272,65 @@ msgstr ""
 "内の固定 CSS が、明示的なテーマ選択を含む親ページの ``color-scheme`` に従います。スクリプト、外部 CSS、ページ内への "
 "SVG 展開は不要です。"
 
-#: ../../topics/diagrams.rst:73
+#: ../../topics/diagrams.rst:227
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
 msgstr "短いラベルにします。手順は角丸、入力はメモ、永続ストレージは円柱とし、ダーク配色の役割をクラスで示します。"
 
-#: ../../topics/diagrams.rst:76
+#: ../../topics/diagrams.rst:230
 msgid "Semantic node classes"
 msgstr "意味を表すノードクラス"
 
-#: ../../topics/diagrams.rst:80
+#: ../../topics/diagrams.rst:234
 msgid "DOT class"
 msgstr "DOT クラス"
 
-#: ../../topics/diagrams.rst:81
+#: ../../topics/diagrams.rst:235
 msgid "Role"
 msgstr "役割"
 
-#: ../../topics/diagrams.rst:82
+#: ../../topics/diagrams.rst:236
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:83
+#: ../../topics/diagrams.rst:237
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "ソース、設定、補助資料。暖かい中間色。"
 
-#: ../../topics/diagrams.rst:84
+#: ../../topics/diagrams.rst:238
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:85
+#: ../../topics/diagrams.rst:239
 msgid "A produced artifact; blue."
 msgstr "生成物。青。"
 
-#: ../../topics/diagrams.rst:86
+#: ../../topics/diagrams.rst:240
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:87
+#: ../../topics/diagrams.rst:241
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "任意の拡張点。琥珀色、破線。"
 
-#: ../../topics/diagrams.rst:88
+#: ../../topics/diagrams.rst:242
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:89
+#: ../../topics/diagrams.rst:243
 msgid "A decision; amber, with a diamond shape."
 msgstr "判断。琥珀色、ひし形。"
 
-#: ../../topics/diagrams.rst:90
+#: ../../topics/diagrams.rst:244
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:91
+#: ../../topics/diagrams.rst:245
 msgid "A separate ownership or allocation boundary; violet."
 msgstr "所有権またはメモリ割り当ての独立した境界。紫。"
 
-#: ../../topics/diagrams.rst:93
+#: ../../topics/diagrams.rst:247
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
@@ -158,7 +342,7 @@ msgstr ""
 "たとえば ``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` "
 "は、ライト表示の見た目とダーク表示での役割を同時に指定します。クラスは形を選んだりラベルを付けたりはしません。形とラベルは明示的に書きます。そうすれば白黒でも図が読めます。分類されていない処理は緑です。この配色は使うと決めた場合にだけ適用されます。正確な色そのものがデータを表す図には使いません。"
 
-#: ../../topics/diagrams.rst:99
+#: ../../topics/diagrams.rst:253
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
@@ -172,11 +356,11 @@ msgstr ""
 "`CSS color-scheme の仕様 "
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ で定められています。"
 
-#: ../../topics/diagrams.rst:105
+#: ../../topics/diagrams.rst:259
 msgid "Make the result legible"
 msgstr "読みやすく仕上げる"
 
-#: ../../topics/diagrams.rst:108
+#: ../../topics/diagrams.rst:262
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -185,7 +369,7 @@ msgid ""
 msgstr ""
 "ノードのラベルは短く、長い規則は図の下で説明する。主経路は一方向を基本にし、戻りの辺に条件を付ける。色だけでなく形と文字も使う。印刷では色がないかもしれない。"
 
-#: ../../topics/diagrams.rst:112
+#: ../../topics/diagrams.rst:266
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -194,7 +378,7 @@ msgstr ""
 "代替テキストとキャプションを付け、狭いブラウザーと PDF で試す。小さすぎる字でなければ収まらない図は二つに分ける。寸法は "
 ":doc:`../media` を参照。"
 
-#: ../../topics/diagrams.rst:116
+#: ../../topics/diagrams.rst:270
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
 "readable. Scroll inside the figure. The page itself keeps its width."
@@ -1355,69 +1539,75 @@ msgstr "画像と図"
 
 #: ../../topics/writing.rst:272
 msgid ""
-"We include illustrations, screenshots, and diagrams with ``image`` and "
-"``figure``:"
-msgstr "イラスト、スクリーンショット、図は ``image`` と ``figure`` で挿入します。"
+"We include illustrations, screenshots, and prebuilt diagrams with "
+"``image`` and ``figure``. We can also author Graphviz and Typst drawings "
+"directly in markup with automatic HTML and PDF assets; see "
+":doc:`diagrams`."
+msgstr ""
 
-#: ../../topics/writing.rst:288
+#: ../../topics/writing.rst:274
+msgid "For an existing image:"
+msgstr ""
+
+#: ../../topics/writing.rst:290
 msgid ""
 "A ``figure`` wraps the image with a caption and an optional reference "
 "target."
 msgstr "``figure`` は画像にキャプションを付け、参照用のターゲットも指定できます。"
 
-#: ../../topics/writing.rst:290
+#: ../../topics/writing.rst:292
 msgid "Document structure with toctrees"
 msgstr "目次ツリーで構成する"
 
-#: ../../topics/writing.rst:293
+#: ../../topics/writing.rst:295
 msgid ""
 "The ``toctree`` directive creates the document hierarchy, navigation "
 "menus, and reading order for both the HTML site and the PDF book:"
 msgstr "``toctree`` は文書の階層、ナビゲーション、HTML と PDF の読み順を定義します。"
 
-#: ../../topics/writing.rst:307
+#: ../../topics/writing.rst:309
 msgid "Common options for ``toctree``:"
 msgstr "``toctree`` の主なオプション:"
 
-#: ../../topics/writing.rst:309
+#: ../../topics/writing.rst:311
 msgid ""
 "``:maxdepth: N``: Depth of heading levels to include in the table of "
 "contents."
 msgstr "``:maxdepth: N``: 目次に含める見出しの深さ。"
 
-#: ../../topics/writing.rst:310
+#: ../../topics/writing.rst:312
 msgid ""
 "``:caption: Title``: Category title displayed above the navigation "
 "entries."
 msgstr "``:caption: Title``: ナビゲーション項目の上に表示する分類名。"
 
-#: ../../topics/writing.rst:311
+#: ../../topics/writing.rst:313
 msgid "``:numbered:``: Adds section numbers to chapters and headings."
 msgstr "``:numbered:``: 章と見出しに番号を付けます。"
 
-#: ../../topics/writing.rst:312
+#: ../../topics/writing.rst:314
 msgid ""
 "``:titlesonly:``: Lists only the top-level document titles, ignoring "
 "inner sections."
 msgstr "``:titlesonly:``: 文書のタイトルだけを並べ、内部の見出しは省きます。"
 
-#: ../../topics/writing.rst:313
+#: ../../topics/writing.rst:315
 msgid ""
 "``:hidden:``: Records the documents in the reading order without "
 "rendering an inline list."
 msgstr "``:hidden:``: 本文内にリストを表示せず、読み順だけを記録します。"
 
-#: ../../topics/writing.rst:314
+#: ../../topics/writing.rst:316
 msgid ""
 "``:glob:``: Allows wildcard patterns to match documents (e.g. "
 "``tutorials/*``)."
 msgstr "``:glob:``: ``tutorials/*`` のようなワイルドカードで文書を選べます。"
 
-#: ../../topics/writing.rst:316
+#: ../../topics/writing.rst:318
 msgid "Dated post listings with ``postlist``"
 msgstr "``postlist`` による日付付き記事の一覧"
 
-#: ../../topics/writing.rst:319
+#: ../../topics/writing.rst:321
 msgid ""
 "For articles, release notes, and research logs that carry ``:date:`` "
 "metadata, the ``postlist`` directive renders a reverse-chronological list "
@@ -1426,23 +1616,23 @@ msgstr ""
 "``:date:`` メタデータを持つ記事、リリースノート、研究ログに対して、``postlist`` "
 "ディレクティブは条件に一致する公開済みページを新しい順の一覧として出力します："
 
-#: ../../topics/writing.rst:329
+#: ../../topics/writing.rst:331
 msgid "Options for ``postlist``:"
 msgstr "``postlist`` のオプション:"
 
-#: ../../topics/writing.rst:331
+#: ../../topics/writing.rst:333
 msgid ""
 "Argument ``N``: Maximum number of matching posts to show; zero or an "
 "omitted argument includes every match."
 msgstr "引数 ``N``: 表示する記事の最大件数。0 または省略時は一致するすべての記事を含めます。"
 
-#: ../../topics/writing.rst:332
+#: ../../topics/writing.rst:334
 msgid ""
 "``:path: GLOB``: Restrict entries to document names matching the glob "
 "pattern."
 msgstr "``:path: GLOB``: glob パターンに一致する文書名の項目に絞り込みます。"
 
-#: ../../topics/writing.rst:333
+#: ../../topics/writing.rst:335
 msgid ""
 "``:category: NAME``, ``:tags: TAG, ...``, ``:author: NAME``, ``:series: "
 "NAME``, ``:year: YYYY``: Filter entries by publication metadata."
@@ -1450,19 +1640,19 @@ msgstr ""
 "``:category: NAME``、``:tags: TAG, ...``、``:author: NAME``、``:series: "
 "NAME``、``:year: YYYY``: 公開メタデータで項目を絞り込みます。"
 
-#: ../../topics/writing.rst:334
+#: ../../topics/writing.rst:336
 msgid ""
 "``:sort: date`` or ``:sort: -date``: Order by oldest or newest "
 "publication instant, with docname breaking ties."
 msgstr ""
 "``:sort: date`` または ``:sort: -date``: 公開日時の古い順または新しい順に並べます（同時刻の場合は文書名順）。"
 
-#: ../../topics/writing.rst:335
+#: ../../topics/writing.rst:337
 msgid ""
 "``:style: list`` or ``:style: cards``: Select the listing's CSS class."
 msgstr "``:style: list`` または ``:style: cards``: 一覧の CSS クラスを選択します。"
 
-#: ../../topics/writing.rst:336
+#: ../../topics/writing.rst:338
 msgid ""
 "``:excerpts:``: Render each entry's rich introduction before ``.. "
 "more::``, falling back to its plain-text ``:summary:`` when no boundary "
@@ -1471,71 +1661,71 @@ msgstr ""
 "``:excerpts:``: 各項目の ``.. more::`` "
 "より前にある書式付き導入部をレンダリングします。境界がない場合はプレーンテキストの ``:summary:`` を使用します。"
 
-#: ../../topics/writing.rst:338
+#: ../../topics/writing.rst:340
 msgid ""
 "See :doc:`../howto/static-publishing` for collections, feeds, and "
 "scheduled publishing."
 msgstr "コレクション、フィード、予約公開については :doc:`../howto/static-publishing` を参照してください。"
 
-#: ../../topics/writing.rst:340
+#: ../../topics/writing.rst:342
 msgid "Cross-references and links"
 msgstr "相互参照とリンク"
 
-#: ../../topics/writing.rst:343
+#: ../../topics/writing.rst:345
 msgid ""
 "Explicit targets keep links stable, even when document files are renamed."
 msgstr "明示的なターゲットを使えば、文書ファイルの名前を変えてもリンクは壊れません。"
 
-#: ../../topics/writing.rst:345
+#: ../../topics/writing.rst:347
 msgid "Target labels and ``:ref:``"
 msgstr "ラベルと ``:ref:``"
 
-#: ../../topics/writing.rst:348
+#: ../../topics/writing.rst:350
 msgid "We place a target label directly before a heading, table, or figure:"
 msgstr "見出し、表、図の直前にターゲットのラベルを置きます。"
 
-#: ../../topics/writing.rst:359
+#: ../../topics/writing.rst:361
 msgid "Any document in the project can refer to this target:"
 msgstr "プロジェクト内のどの文書からも、このターゲットを参照できます。"
 
-#: ../../topics/writing.rst:366
+#: ../../topics/writing.rst:368
 msgid "Document references with ``:doc:``"
 msgstr "``:doc:`` による文書参照"
 
-#: ../../topics/writing.rst:369
+#: ../../topics/writing.rst:371
 msgid "We link to another document by its path, without the file extension:"
 msgstr "別の文書へは、拡張子を省いたパスでリンクします。"
 
-#: ../../topics/writing.rst:375
+#: ../../topics/writing.rst:377
 msgid "Glossary terms with ``:term:``"
 msgstr "``:term:`` による用語参照"
 
-#: ../../topics/writing.rst:378
+#: ../../topics/writing.rst:380
 msgid "We define terms with the ``glossary`` directive:"
 msgstr "用語は ``glossary`` ディレクティブで定義します。"
 
-#: ../../topics/writing.rst:390
+#: ../../topics/writing.rst:392
 msgid "We link to a glossary term with the ``:term:`` role:"
 msgstr "用語集の用語へは ``:term:`` ロールでリンクします。"
 
-#: ../../topics/writing.rst:396
+#: ../../topics/writing.rst:398
 msgid "File downloads with ``:download:``"
 msgstr "``:download:`` によるファイル配布"
 
-#: ../../topics/writing.rst:399
+#: ../../topics/writing.rst:401
 msgid ""
 "This copies a file to the output's download directory and links to it:"
 msgstr "次のように書くと、ファイルを出力先のダウンロード用ディレクトリにコピーし、そこへのリンクを作ります。"
 
-#: ../../topics/writing.rst:405
+#: ../../topics/writing.rst:407
 msgid "External and cross-mount links"
 msgstr "外部リンクとマウント間リンク"
 
-#: ../../topics/writing.rst:408
+#: ../../topics/writing.rst:410
 msgid "We link to external web addresses like this:"
 msgstr "外部の Web アドレスへは次のようにリンクします。"
 
-#: ../../topics/writing.rst:414
+#: ../../topics/writing.rst:416
 msgid ""
 "In a multi-project website assembled with ``[[site.mounts]]``, we can "
 "also link to a mounted sub-project by its mount name using "
@@ -1544,33 +1734,41 @@ msgstr ""
 "``[[site.mounts]]`` で組み立てたマルチプロジェクトのウェブサイトでは、``mount://<name>/<path>`` "
 "を使ってマウント名でサブプロジェクトへリンクすることもできます："
 
-#: ../../topics/writing.rst:420
+#: ../../topics/writing.rst:422
 msgid ""
 "The mount names must match ``[[site.mounts]]`` and the paths must name "
 "current output files."
 msgstr "マウント名は ``[[site.mounts]]`` と一致し、パスは現在の出力ファイルを指している必要があります。"
 
-#: ../../topics/writing.rst:422
+#: ../../topics/writing.rst:424
 msgid "Substitutions and includes"
 msgstr "置換と取り込み"
 
-#: ../../topics/writing.rst:425
+#: ../../topics/writing.rst:427
 msgid "We define reusable phrases, symbols, or images:"
 msgstr "再利用する語句、記号、画像を定義します。"
 
-#: ../../topics/writing.rst:434
+#: ../../topics/writing.rst:436
 msgid "To reuse reStructuredText content in several files:"
 msgstr "reStructuredText の内容を複数のファイルで再利用するには、次のようにします。"
 
-#: ../../topics/writing.rst:440
+#: ../../topics/writing.rst:442
 msgid "MyST Markdown authoring"
 msgstr "MyST Markdown を書く"
 
-#: ../../topics/writing.rst:443
+#: ../../topics/writing.rst:445
 msgid ""
 "MyST Markdown supports the same directives and roles through fenced "
 "blocks:"
 msgstr "MyST Markdown では、フェンス付きブロックで同じディレクティブとロールを使えます。"
+
+#~ msgid "Diagrams that explain"
+#~ msgstr "図で説明する"
+
+#~ msgid ""
+#~ "We include illustrations, screenshots, and diagrams with ``image`` and "
+#~ "``figure``:"
+#~ msgstr "イラスト、スクリーンショット、図は ``image`` と ``figure`` で挿入します。"
 
 #~ msgid ""
 #~ "``:excerpts:``: Render each entry's explicit ``:summary:`` below its "

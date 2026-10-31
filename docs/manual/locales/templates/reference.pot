@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-31 06:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -44,29 +44,29 @@ msgstr ""
 #: ../../reference/cli.rst:35
 #: ../../reference/cli.rst:154
 #: ../../reference/cli.rst:213
-#: ../../reference/cli.rst:342
-#: ../../reference/cli.rst:368
-#: ../../reference/cli.rst:421
-#: ../../reference/cli.rst:503
-#: ../../reference/cli.rst:573
-#: ../../reference/cli.rst:619
-#: ../../reference/cli.rst:682
-#: ../../reference/cli.rst:844
+#: ../../reference/cli.rst:345
+#: ../../reference/cli.rst:371
+#: ../../reference/cli.rst:424
+#: ../../reference/cli.rst:506
+#: ../../reference/cli.rst:576
+#: ../../reference/cli.rst:622
+#: ../../reference/cli.rst:685
+#: ../../reference/cli.rst:847
 msgid "Option"
 msgstr ""
 
 #: ../../reference/cli.rst:36
 #: ../../reference/cli.rst:155
 #: ../../reference/cli.rst:214
-#: ../../reference/cli.rst:343
-#: ../../reference/cli.rst:369
-#: ../../reference/cli.rst:422
-#: ../../reference/cli.rst:504
-#: ../../reference/cli.rst:574
-#: ../../reference/cli.rst:620
-#: ../../reference/cli.rst:683
-#: ../../reference/cli.rst:818
-#: ../../reference/cli.rst:845
+#: ../../reference/cli.rst:346
+#: ../../reference/cli.rst:372
+#: ../../reference/cli.rst:425
+#: ../../reference/cli.rst:507
+#: ../../reference/cli.rst:577
+#: ../../reference/cli.rst:623
+#: ../../reference/cli.rst:686
+#: ../../reference/cli.rst:821
+#: ../../reference/cli.rst:848
 msgid "Meaning"
 msgstr ""
 
@@ -136,10 +136,10 @@ msgstr ""
 
 #: ../../reference/cli.rst:61
 #: ../../reference/configuration.rst:236
-#: ../../reference/configuration.rst:694
-#: ../../reference/configuration.rst:779
-#: ../../reference/configuration.rst:1080
-#: ../../reference/configuration.rst:1129
+#: ../../reference/configuration.rst:705
+#: ../../reference/configuration.rst:790
+#: ../../reference/configuration.rst:1091
+#: ../../reference/configuration.rst:1140
 msgid "``0``"
 msgstr ""
 
@@ -181,7 +181,7 @@ msgid "A file operation or external program failed."
 msgstr ""
 
 #: ../../reference/cli.rst:72
-#: ../../reference/configuration.rst:775
+#: ../../reference/configuration.rst:786
 msgid "``5``"
 msgstr ""
 
@@ -599,7 +599,7 @@ msgid "Leave out raw content, fetch nothing, and run no build plugin. This is a 
 msgstr ""
 
 #: ../../reference/cli.rst:248
-#: ../../reference/cli.rst:454
+#: ../../reference/cli.rst:457
 msgid "``--budget=MIB``"
 msgstr ""
 
@@ -632,7 +632,7 @@ msgid "Nodes per document (default: ``1000000``)."
 msgstr ""
 
 #: ../../reference/cli.rst:260
-#: ../../reference/cli.rst:458
+#: ../../reference/cli.rst:461
 msgid "``--stack-kib=N``"
 msgstr ""
 
@@ -641,8 +641,8 @@ msgid "Stack for nested content (default: ``512``; at most what the reading thre
 msgstr ""
 
 #: ../../reference/cli.rst:263
-#: ../../reference/cli.rst:444
-#: ../../reference/cli.rst:526
+#: ../../reference/cli.rst:447
+#: ../../reference/cli.rst:529
 msgid "``--typst=PATH``"
 msgstr ""
 
@@ -651,7 +651,7 @@ msgid "The Typst program for PDF, overriding ``typst`` in ``conf.toml``."
 msgstr ""
 
 #: ../../reference/cli.rst:265
-#: ../../reference/cli.rst:591
+#: ../../reference/cli.rst:594
 msgid "``--preview``"
 msgstr ""
 
@@ -660,7 +660,7 @@ msgid "Include pages that would otherwise be withheld by ``:draft:``, ``:publish
 msgstr ""
 
 #: ../../reference/cli.rst:267
-#: ../../reference/cli.rst:593
+#: ../../reference/cli.rst:596
 msgid "``--now=RFC3339``"
 msgstr ""
 
@@ -684,918 +684,922 @@ msgstr ""
 msgid "Builds the HTML site and serves it on ``http://127.0.0.1:PORT/``. When sources, templates, static files, or ``conf.toml`` changed, it rebuilds before answering a request:"
 msgstr ""
 
-#: ../../reference/cli.rst:294
+#: ../../reference/cli.rst:295
+msgid "``--host IP`` selects an IPv4 or IPv6 bind address. The default is ``127.0.0.1``. We use ``--host 0.0.0.0`` for all IPv4 interfaces or ``--host ::`` for all IPv6 interfaces, then open the server machine's network address from another device. The preview has no authentication or TLS, so we expose it only on a network where this access is intended. Hostnames and combined address-port values are not accepted."
+msgstr ""
+
+#: ../../reference/cli.rst:297
 msgid "``--port PORT`` (``-p`` is quickstart's project name, not the port) chooses the port, from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, ``-D name=value`` and the build options of ``guidedog build``, including ``--preview`` and ``--now=RFC3339``, apply to every rebuild. Each rebuild reloads ``conf.toml``. A failed rebuild keeps the previous site and reports the problem. Ctrl+C stops the server."
 msgstr ""
 
-#: ../../reference/cli.rst:296
+#: ../../reference/cli.rst:299
 msgid "It serves ``_build/html``. It watches the source folder, the Odin and Rust API sources (``odin_autoapi_dirs``, ``odin_collections``, ``rust_autoapi_crates``), and the ``html_static_path``, ``html_extra_path``, ``templates_path``, ``include_roots``, ``autodoc_source_paths`` and ``locale_dirs`` folders outside the source folder. The build folder is never watched. Changes are found by file names, sizes and times. The check runs before an HTML page is answered:"
 msgstr ""
 
-#: ../../reference/cli.rst:313
+#: ../../reference/cli.rst:316
 msgid "guidedog clean"
 msgstr ""
 
-#: ../../reference/cli.rst:316
+#: ../../reference/cli.rst:319
 msgid "Removes the contents of the project's build folder, the environment cache included:"
 msgstr ""
 
-#: ../../reference/cli.rst:322
+#: ../../reference/cli.rst:325
 msgid "guidedog migrate"
 msgstr ""
 
-#: ../../reference/cli.rst:325
+#: ../../reference/cli.rst:328
 msgid "Converts a Sphinx ``conf.py`` (or an old ``guidedog.toml``) to ``conf.toml`` without running Python. Literal settings carry over. Anything Python would compute is reported and kept in ``conf.toml`` as a comment:"
 msgstr ""
 
-#: ../../reference/cli.rst:338
+#: ../../reference/cli.rst:341
 msgid "Options of migrate"
 msgstr ""
 
-#: ../../reference/cli.rst:344
+#: ../../reference/cli.rst:347
 msgid "``-o FILE``, ``--output FILE``"
 msgstr ""
 
-#: ../../reference/cli.rst:345
+#: ../../reference/cli.rst:348
 msgid "Write here instead of beside ``conf.py``; ``-`` prints it."
 msgstr ""
 
-#: ../../reference/cli.rst:346
-#: ../../reference/cli.rst:432
+#: ../../reference/cli.rst:349
+#: ../../reference/cli.rst:435
 msgid "``--force``"
 msgstr ""
 
-#: ../../reference/cli.rst:347
+#: ../../reference/cli.rst:350
 msgid "Replace an existing ``conf.toml``."
 msgstr ""
 
-#: ../../reference/cli.rst:349
+#: ../../reference/cli.rst:352
 msgid "guidedog intl"
 msgstr ""
 
-#: ../../reference/cli.rst:352
+#: ../../reference/cli.rst:355
 msgid "Keeps translation catalogs in step with the documents, as ``sphinx-intl`` does. First we write the message templates with ``guidedog build gettext``. ``update`` then creates ``locales/LANG/LC_MESSAGES/*.po``, or merges new templates into them. Translations stay, changed messages turn fuzzy, and removed ones become obsolete. To use the catalogs, we build with ``-D language=LANG``, or set ``language`` in ``conf.toml``."
 msgstr ""
 
-#: ../../reference/cli.rst:364
+#: ../../reference/cli.rst:367
 msgid "Options of intl"
 msgstr ""
 
-#: ../../reference/cli.rst:370
+#: ../../reference/cli.rst:373
 msgid "``-l LANG``, ``--language LANG``"
 msgstr ""
 
-#: ../../reference/cli.rst:371
+#: ../../reference/cli.rst:374
 msgid "A language; repeat it for several."
 msgstr ""
 
-#: ../../reference/cli.rst:372
+#: ../../reference/cli.rst:375
 msgid "``-p DIR``, ``--pot-dir DIR``"
 msgstr ""
 
-#: ../../reference/cli.rst:373
+#: ../../reference/cli.rst:376
 msgid "The templates (default: ``_build/gettext``)."
 msgstr ""
 
-#: ../../reference/cli.rst:374
+#: ../../reference/cli.rst:377
 msgid "``-d DIR``, ``--locale-dir DIR``"
 msgstr ""
 
-#: ../../reference/cli.rst:375
+#: ../../reference/cli.rst:378
 msgid "The catalogs (default: the first of ``locale_dirs``)."
 msgstr ""
 
-#: ../../reference/cli.rst:376
+#: ../../reference/cli.rst:379
 msgid "``-w N``, ``--line-width N``"
 msgstr ""
 
-#: ../../reference/cli.rst:377
+#: ../../reference/cli.rst:380
 msgid "Wrap lines at ``N`` characters (default: ``76``)."
 msgstr ""
 
-#: ../../reference/cli.rst:378
+#: ../../reference/cli.rst:381
 msgid "``--no-obsolete``"
 msgstr ""
 
-#: ../../reference/cli.rst:379
+#: ../../reference/cli.rst:382
 msgid "Drop messages the templates no longer have."
 msgstr ""
 
-#: ../../reference/cli.rst:380
+#: ../../reference/cli.rst:383
 msgid "``-c DIR``, ``-D name=value``"
 msgstr ""
 
-#: ../../reference/cli.rst:381
+#: ../../reference/cli.rst:384
 msgid "Where ``conf.toml`` is; override a setting."
 msgstr ""
 
-#: ../../reference/cli.rst:383
+#: ../../reference/cli.rst:386
 msgid "``stat`` prints, for each catalog, how many messages are translated, fuzzy, and untranslated."
 msgstr ""
 
-#: ../../reference/cli.rst:386
+#: ../../reference/cli.rst:389
 msgid "guidedog convert"
 msgstr ""
 
-#: ../../reference/cli.rst:389
+#: ../../reference/cli.rst:392
 msgid "Converts one file, or standard input, without a project or configuration:"
 msgstr ""
 
-#: ../../reference/cli.rst:399
+#: ../../reference/cli.rst:402
 msgid "The input format comes from ``--from`` or the input's suffix: ``.rst`` and ``.rest`` are reStructuredText, ``.md`` and ``.markdown`` CommonMark, ``.typ`` Typst. A Markdown file is plain CommonMark 0.31.2. ``--from myst`` reads it as MyST with the Sphinx layer instead, so roles such as ``{doc}`` and ``{ref}`` and directives such as ``{note}`` are understood. ``--from sphinx`` likewise reads reStructuredText with Sphinx's directives, roles, and domains. The output format comes from ``--to`` or the output's suffix (``.html``, ``.htm``, ``.pdf``, ``.rst``, ``.rest``). Only the options below apply to ``convert``."
 msgstr ""
 
-#: ../../reference/cli.rst:407
+#: ../../reference/cli.rst:410
 msgid "``--to rst`` writes reStructuredText with Guidedog's own writer (the ``rst`` renderer). It keeps the author's lines: each line break inside a source paragraph stays a line break, and the writer adds none of its own, so a converted page keeps the sentence and paragraph shape we wrote. It never splits inline markup, inline code, a role or a URL across lines. It uses one section adornment per level (``=``, ``-``, ``~``, ``^``, ...). It keeps roles, cross-references, and directives as Sphinx writes them. It reads the input without smart quotes, so quotes and dashes stay as written. Some things reStructuredText cannot express exactly (a hard line break, an image inside text, a link title). The writer comes as close as it can and reports a note. Typst input cannot be converted to reStructuredText."
 msgstr ""
 
-#: ../../reference/cli.rst:417
+#: ../../reference/cli.rst:420
 msgid "Options of convert"
 msgstr ""
 
-#: ../../reference/cli.rst:423
+#: ../../reference/cli.rst:426
 msgid "``-o FILE``, ``--output=FILE``"
 msgstr ""
 
-#: ../../reference/cli.rst:424
+#: ../../reference/cli.rst:427
 msgid "The destination, or ``-`` for standard output. Required."
 msgstr ""
 
-#: ../../reference/cli.rst:425
+#: ../../reference/cli.rst:428
 msgid "``--from=rst|sphinx|commonmark|myst|typst``"
 msgstr ""
 
-#: ../../reference/cli.rst:426
+#: ../../reference/cli.rst:429
 msgid "The input format (``restructuredtext``, ``md``, ``markdown`` and ``typ`` are accepted spellings)."
 msgstr ""
 
-#: ../../reference/cli.rst:428
+#: ../../reference/cli.rst:431
 msgid "``--to=html|pdf|rst``"
 msgstr ""
 
-#: ../../reference/cli.rst:429
+#: ../../reference/cli.rst:432
 msgid "The output format (``restructuredtext`` is an accepted spelling)."
 msgstr ""
 
-#: ../../reference/cli.rst:430
+#: ../../reference/cli.rst:433
 msgid "``--emit-typst=FILE``"
 msgstr ""
 
-#: ../../reference/cli.rst:431
+#: ../../reference/cli.rst:434
 msgid "Also write the generated Typst source (not for Typst input)."
 msgstr ""
 
-#: ../../reference/cli.rst:433
+#: ../../reference/cli.rst:436
 msgid "Replace an existing output file."
 msgstr ""
 
-#: ../../reference/cli.rst:434
+#: ../../reference/cli.rst:437
 msgid "``--raw=refuse|omit|allow``"
 msgstr ""
 
-#: ../../reference/cli.rst:435
+#: ../../reference/cli.rst:438
 msgid "Raw HTML or Typst content: fail (default), leave it out, or keep it."
 msgstr ""
 
-#: ../../reference/cli.rst:436
+#: ../../reference/cli.rst:439
 msgid "``--strict``"
 msgstr ""
 
-#: ../../reference/cli.rst:437
+#: ../../reference/cli.rst:440
 msgid "Treat warnings as failures."
 msgstr ""
 
-#: ../../reference/cli.rst:438
+#: ../../reference/cli.rst:441
 msgid "``--title=TEXT``, ``--lang=TAG``"
 msgstr ""
 
-#: ../../reference/cli.rst:439
+#: ../../reference/cli.rst:442
 msgid "The document's title and language."
 msgstr ""
 
-#: ../../reference/cli.rst:440
+#: ../../reference/cli.rst:443
 msgid "``--number-sections``"
 msgstr ""
 
-#: ../../reference/cli.rst:441
+#: ../../reference/cli.rst:444
 msgid "Number section headings."
 msgstr ""
 
-#: ../../reference/cli.rst:442
+#: ../../reference/cli.rst:445
 msgid "``--fragment``"
 msgstr ""
 
-#: ../../reference/cli.rst:443
+#: ../../reference/cli.rst:446
 msgid "Write the body only, not a complete document."
 msgstr ""
 
-#: ../../reference/cli.rst:445
+#: ../../reference/cli.rst:448
 msgid "The Typst program (default: the embedded compiler, else ``typst`` on ``PATH``)."
 msgstr ""
 
-#: ../../reference/cli.rst:446
+#: ../../reference/cli.rst:449
 msgid "``--font-path=DIR``"
 msgstr ""
 
-#: ../../reference/cli.rst:447
+#: ../../reference/cli.rst:450
 msgid "An extra font folder; repeat it for more."
 msgstr ""
 
-#: ../../reference/cli.rst:448
+#: ../../reference/cli.rst:451
 msgid "``--embedded-fonts-only``"
 msgstr ""
 
-#: ../../reference/cli.rst:449
+#: ../../reference/cli.rst:452
 msgid "Ignore system fonts, for reproducible PDFs."
 msgstr ""
 
-#: ../../reference/cli.rst:450
+#: ../../reference/cli.rst:453
 msgid "``--offline``"
 msgstr ""
 
-#: ../../reference/cli.rst:451
+#: ../../reference/cli.rst:454
 msgid "Use only Typst packages already on disk."
 msgstr ""
 
-#: ../../reference/cli.rst:452
+#: ../../reference/cli.rst:455
 msgid "``--package-cache=DIR``"
 msgstr ""
 
-#: ../../reference/cli.rst:453
+#: ../../reference/cli.rst:456
 msgid "The Typst package cache folder."
 msgstr ""
 
-#: ../../reference/cli.rst:455
+#: ../../reference/cli.rst:458
 msgid "The memory budget of the conversion (default: ``256``)."
 msgstr ""
 
-#: ../../reference/cli.rst:456
+#: ../../reference/cli.rst:459
 msgid "``--max-depth=N``, ``--max-nodes=N``"
 msgstr ""
 
-#: ../../reference/cli.rst:457
+#: ../../reference/cli.rst:460
 msgid "Nesting and node limits."
 msgstr ""
 
-#: ../../reference/cli.rst:459
+#: ../../reference/cli.rst:462
 msgid "Stack for nested content (default: ``512``, at most ``6144``)."
 msgstr ""
 
-#: ../../reference/cli.rst:461
+#: ../../reference/cli.rst:464
 msgid "The exit status is 0 for success, 1 for invalid or refused content, 2 for usage, 3 for a limit, 4 for a file or Typst failure, and 5 for an internal error. A failed conversion writes no output."
 msgstr ""
 
-#: ../../reference/cli.rst:465
+#: ../../reference/cli.rst:468
 msgid "guidedog formats"
 msgstr ""
 
-#: ../../reference/cli.rst:468
+#: ../../reference/cli.rst:471
 msgid "Reports the readers and renderers this executable actually has, with their versions and conformance (``planned``, ``partial``, ``conformant``). It also reports the Typst backend it found (embedded, or an installed program) and whether it is the pinned version."
 msgstr ""
 
-#: ../../reference/cli.rst:478
+#: ../../reference/cli.rst:481
 msgid "guidedog dsc"
 msgstr ""
 
-#: ../../reference/cli.rst:481
+#: ../../reference/cli.rst:484
 msgid "Keeps a discussion catalog and builds it. The commands come from the discussion plugin, which every ``guidedog`` links. They work on any catalog: its prefix, lifecycle, record types, and numbering are in its ``discussion.toml``. Each command works on the catalog the current folder is in, or the one ``--dir`` names. Guidedog's own design records are one catalog, in ``docs/gds``. :doc:`../howto/discussions` shows the whole workflow."
 msgstr ""
 
-#: ../../reference/cli.rst:497
+#: ../../reference/cli.rst:500
 msgid "``guidedog dsc build`` builds the catalog as a Guidedog project, as ``guidedog build`` does, with ``pdf_documents`` set to the record books and warnings as errors. ``guidedog dsc config`` prints the catalog's settings in effect, as ``discussion.toml``. ``guidedog dsc --help`` lists the commands; ``guidedog dsc COMMAND --help`` shows one command's options."
 msgstr ""
 
-#: ../../reference/cli.rst:499
+#: ../../reference/cli.rst:502
 msgid "Options of guidedog dsc"
 msgstr ""
 
-#: ../../reference/cli.rst:505
+#: ../../reference/cli.rst:508
 msgid "``--dir=DIR``"
 msgstr ""
 
-#: ../../reference/cli.rst:506
+#: ../../reference/cli.rst:509
 msgid "The catalog. By default, the one the current folder is in."
 msgstr ""
 
-#: ../../reference/cli.rst:507
+#: ../../reference/cli.rst:510
 msgid "``--prefix=NAME``"
 msgstr ""
 
-#: ../../reference/cli.rst:508
+#: ../../reference/cli.rst:511
 msgid "The prefix of a catalog without ``discussion.toml``; ``init`` needs it."
 msgstr ""
 
-#: ../../reference/cli.rst:509
+#: ../../reference/cli.rst:512
 msgid "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, ``--template=FILE``"
 msgstr ""
 
-#: ../../reference/cli.rst:510
+#: ../../reference/cli.rst:513
 msgid "The name, settings, process draft, and record template of a new catalog (``init``)."
 msgstr ""
 
-#: ../../reference/cli.rst:512
+#: ../../reference/cli.rst:515
 msgid "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 msgstr ""
 
-#: ../../reference/cli.rst:513
+#: ../../reference/cli.rst:516
 msgid "A new draft's author (default: Git's ``user.name``), labels, and file name (``new``; ``init`` takes the first two)."
 msgstr ""
 
-#: ../../reference/cli.rst:515
+#: ../../reference/cli.rst:518
 msgid "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 msgstr ""
 
-#: ../../reference/cli.rst:516
+#: ../../reference/cli.rst:519
 msgid "``list``: filter by state or label; include inherited records."
 msgstr ""
 
-#: ../../reference/cli.rst:517
+#: ../../reference/cli.rst:520
 msgid "``--number=N``, ``--discussion=URL``"
 msgstr ""
 
-#: ../../reference/cli.rst:518
+#: ../../reference/cli.rst:521
 msgid "The number and review link of a promotion; ``--number`` also selects a record to build."
 msgstr ""
 
-#: ../../reference/cli.rst:520
+#: ../../reference/cli.rst:523
 msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 msgstr ""
 
-#: ../../reference/cli.rst:521
+#: ../../reference/cli.rst:524
 msgid "A state change, why, and for ``committed`` the evidence."
 msgstr ""
 
-#: ../../reference/cli.rst:522
+#: ../../reference/cli.rst:525
 msgid "``--check``, ``--render``"
 msgstr ""
 
-#: ../../reference/cli.rst:523
+#: ../../reference/cli.rst:526
 msgid "``index``: check without writing; ``check``: also build the artifacts."
 msgstr ""
 
-#: ../../reference/cli.rst:524
+#: ../../reference/cli.rst:527
 msgid "``--target=html|pdf|both``"
 msgstr ""
 
-#: ../../reference/cli.rst:525
+#: ../../reference/cli.rst:528
 msgid "What ``build`` writes (default: both). A record selects one PDF."
 msgstr ""
 
-#: ../../reference/cli.rst:527
+#: ../../reference/cli.rst:530
 msgid "``build`` and ``check``: the Typst program for a catalog of older Typst records (default: the embedded compiler), and for the PDF books."
 msgstr ""
 
-#: ../../reference/cli.rst:529
+#: ../../reference/cli.rst:532
 msgid "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, ``-q``"
 msgstr ""
 
-#: ../../reference/cli.rst:530
+#: ../../reference/cli.rst:533
 msgid "Preview a change; machine-readable output; quiet success."
 msgstr ""
 
-#: ../../reference/cli.rst:532
+#: ../../reference/cli.rst:535
 msgid "The exit statuses are those of ``guidedog``. Problems about a catalog have codes in its prefix, such as ``eds.recovery-needed``."
 msgstr ""
 
-#: ../../reference/cli.rst:535
+#: ../../reference/cli.rst:538
 msgid "guidedog ssg"
 msgstr ""
 
-#: ../../reference/cli.rst:538
+#: ../../reference/cli.rst:541
 msgid "Scaffolds static websites, manages article lifecycles, packs and verifies portable theme archives, and builds multi-project mounted sites. The commands come from the static publishing plugin (``ssg``), which every ``guidedog`` links. Authoring commands rewrite only the leading metadata block (an RST field list or MyST YAML front matter) and leave body text, comments and line endings untouched. RFC 3339 timestamps require a time zone; date-only values start at midnight UTC."
 msgstr ""
 
-#: ../../reference/cli.rst:553
-#: ../../reference/cli.rst:714
+#: ../../reference/cli.rst:556
+#: ../../reference/cli.rst:717
 msgid "Subcommands:"
 msgstr ""
 
-#: ../../reference/cli.rst:555
+#: ../../reference/cli.rst:558
 msgid "``guidedog ssg init PATH [--preset=project|journal|research] [--title=TITLE] [--author=NAME] [--now=RFC3339]``: creates a complete static website in ``PATH`` using one of the built-in presets (``project`` by default, ``journal``, or ``research``). Sets ``project`` and ``author`` in ``conf.toml`` and stamps the initial post with today's UTC date (or ``--now``)."
 msgstr ""
 
-#: ../../reference/cli.rst:556
+#: ../../reference/cli.rst:559
 msgid "``guidedog ssg new PATH [--title=TITLE] [--template=NAME] [--now=RFC3339]``: creates a new draft article at ``PATH`` (``.rst`` or ``.md``) with ``:draft: true`` and ``:date: YYYY-MM-DD``. ``--title`` defaults to the file stem; ``--template`` sets ``:template: NAME`` when given."
 msgstr ""
 
-#: ../../reference/cli.rst:557
+#: ../../reference/cli.rst:560
 msgid "``guidedog ssg draft PATH [--now=RFC3339]``: marks an existing article at ``PATH`` as a draft (``:draft: true``), preserving its date and schedule. Normal builds withhold it while draft is true."
 msgstr ""
 
-#: ../../reference/cli.rst:558
+#: ../../reference/cli.rst:561
 msgid "``guidedog ssg schedule PATH --at=RFC3339 [--now=RFC3339]``: clears draft and expiration and sets ``:publish-at: RFC3339``. The article stays withheld until that instant; a past instant is accepted."
 msgstr ""
 
-#: ../../reference/cli.rst:559
+#: ../../reference/cli.rst:562
 msgid "``guidedog ssg publish PATH [--date=DATE] [--now=RFC3339]``: clears draft, schedule and expiration. ``--date`` sets a date or RFC 3339 instant that cannot be in the future. Without it, publishing retains an existing past date or uses today's UTC date when the old date is absent or in the future."
 msgstr ""
 
-#: ../../reference/cli.rst:560
+#: ../../reference/cli.rst:563
 msgid "``guidedog ssg status [PROJECT] [--now=RFC3339]``: lists every dated, draft, or scheduled document in ``PROJECT`` (default: ``.``) with its state (``published``, ``draft``, ``scheduled``, or ``expired``), its release date or timestamp, and its source path relative to the project."
 msgstr ""
 
-#: ../../reference/cli.rst:561
+#: ../../reference/cli.rst:564
 msgid "``guidedog ssg build [PROJECT] [--out=DIR] [--no-pdf] [--preview] [--now=RFC3339]``: builds every ``[[site.mounts]]`` entry (and each mount's ``[[site.mounts.editions]]``), copies ``[[site.assets]]``, verifies cross-mount targets and publishes the assembled site into ``--out`` (default: ``_build/site``) as one generation. ``--no-pdf`` skips ``pdf`` and ``discussion-pdf`` mounts; ``--preview`` includes withheld pages; ``--now`` fixes the publication clock across all mounts."
 msgstr ""
 
-#: ../../reference/cli.rst:563
+#: ../../reference/cli.rst:566
 msgid "Sitemaps and feeds are generated by each mounted project's own ``[site]`` settings. Assembly preserves their output paths; it does not merge them into an aggregate sitemap."
 msgstr ""
 
-#: ../../reference/cli.rst:565
+#: ../../reference/cli.rst:568
 msgid "``guidedog ssg theme pack DIR --out=FILE``: packs the ``_templates`` and ``_static`` trees of ``DIR`` into a deterministic ``.gdt`` theme archive at ``FILE``."
 msgstr ""
 
-#: ../../reference/cli.rst:566
+#: ../../reference/cli.rst:569
 msgid "``guidedog ssg theme install URL --sha256=HASH [--project=DIR]``: fetches a ``.gdt`` archive from ``URL`` (or a local path), checks its 64-hex-digit ``--sha256`` digest before unpacking, installs the tree under ``_themes/<tree-sha256>/`` in ``--project`` (default: ``.``), and writes ``guidedog-theme.lock``."
 msgstr ""
 
-#: ../../reference/cli.rst:567
+#: ../../reference/cli.rst:570
 msgid "``guidedog ssg theme verify [PROJECT]``: reads ``guidedog-theme.lock`` and verifies the installed ``_themes/<tree-sha256>/`` tree in ``PROJECT`` (default: ``.``) against ``tree_sha256`` without network access."
 msgstr ""
 
-#: ../../reference/cli.rst:569
+#: ../../reference/cli.rst:572
 msgid "Options of guidedog ssg"
 msgstr ""
 
-#: ../../reference/cli.rst:575
+#: ../../reference/cli.rst:578
 msgid "``--preset=project|journal|research``"
 msgstr ""
 
-#: ../../reference/cli.rst:576
+#: ../../reference/cli.rst:579
 msgid "``init``: the site layout preset (default: ``project``)."
 msgstr ""
 
-#: ../../reference/cli.rst:577
+#: ../../reference/cli.rst:580
 msgid "``--title=TITLE``"
 msgstr ""
 
-#: ../../reference/cli.rst:578
+#: ../../reference/cli.rst:581
 msgid "``init``, ``new``: the website or article title."
 msgstr ""
 
-#: ../../reference/cli.rst:579
+#: ../../reference/cli.rst:582
 msgid "``--author=NAME``"
 msgstr ""
 
-#: ../../reference/cli.rst:580
+#: ../../reference/cli.rst:583
 msgid "``init``: the website author."
 msgstr ""
 
-#: ../../reference/cli.rst:581
+#: ../../reference/cli.rst:584
 msgid "``--template=NAME``"
 msgstr ""
 
-#: ../../reference/cli.rst:582
+#: ../../reference/cli.rst:585
 msgid "``new``: the HTML layout template to set in ``:template:``."
 msgstr ""
 
-#: ../../reference/cli.rst:583
+#: ../../reference/cli.rst:586
 msgid "``--at=RFC3339``"
 msgstr ""
 
-#: ../../reference/cli.rst:584
+#: ../../reference/cli.rst:587
 msgid "``schedule``: the UTC release instant for ``:publish-at:``; required."
 msgstr ""
 
-#: ../../reference/cli.rst:585
+#: ../../reference/cli.rst:588
 msgid "``--date=DATE``"
 msgstr ""
 
-#: ../../reference/cli.rst:586
+#: ../../reference/cli.rst:589
 msgid "``publish``: the publication date (``YYYY-MM-DD`` or RFC 3339)."
 msgstr ""
 
-#: ../../reference/cli.rst:587
+#: ../../reference/cli.rst:590
 msgid "``--out=DIR``"
 msgstr ""
 
-#: ../../reference/cli.rst:588
+#: ../../reference/cli.rst:591
 msgid "``build``: the assembled site output folder (default: ``_build/site``); ``theme pack``: the destination ``.gdt`` archive file (required)."
 msgstr ""
 
-#: ../../reference/cli.rst:589
+#: ../../reference/cli.rst:592
 msgid "``--no-pdf``"
 msgstr ""
 
-#: ../../reference/cli.rst:590
+#: ../../reference/cli.rst:593
 msgid "``build``: skip ``pdf`` and ``discussion-pdf`` mounts."
 msgstr ""
 
-#: ../../reference/cli.rst:592
+#: ../../reference/cli.rst:595
 msgid "``build``: include draft, scheduled, and expired pages."
 msgstr ""
 
-#: ../../reference/cli.rst:594
+#: ../../reference/cli.rst:597
 msgid "``init``, ``new``, ``draft``, ``schedule``, ``publish``, ``status``, ``build``: fix the UTC clock used for timestamps and publication eligibility."
 msgstr ""
 
-#: ../../reference/cli.rst:595
+#: ../../reference/cli.rst:598
 msgid "``--sha256=HASH``"
 msgstr ""
 
-#: ../../reference/cli.rst:596
+#: ../../reference/cli.rst:599
 msgid "``theme install``: the required 64-digit hexadecimal SHA-256 of the ``.gdt`` archive."
 msgstr ""
 
-#: ../../reference/cli.rst:597
+#: ../../reference/cli.rst:600
 msgid "``--project=DIR``"
 msgstr ""
 
-#: ../../reference/cli.rst:598
+#: ../../reference/cli.rst:601
 msgid "``theme install``: the project root where ``_themes/`` and ``guidedog-theme.lock`` live (default: ``.``)."
 msgstr ""
 
-#: ../../reference/cli.rst:600
+#: ../../reference/cli.rst:603
 msgid "guidedog publish"
 msgstr ""
 
-#: ../../reference/cli.rst:603
+#: ../../reference/cli.rst:606
 msgid "Builds the project that a publisher's configuration names, as HTML with Guidedog's own engine. It freezes the site, and the publisher plans and publishes it:"
 msgstr ""
 
-#: ../../reference/cli.rst:611
+#: ../../reference/cli.rst:614
 msgid "The publisher is looked up among the plugins linked into this executable first, then in the machine's registry (``guidedog plugin register``). A build plugin is refused, because only publishers publish."
 msgstr ""
 
-#: ../../reference/cli.rst:615
+#: ../../reference/cli.rst:618
 msgid "Options of publish"
 msgstr ""
 
-#: ../../reference/cli.rst:621
+#: ../../reference/cli.rst:624
 msgid "``--publisher=ID``"
 msgstr ""
 
-#: ../../reference/cli.rst:622
+#: ../../reference/cli.rst:625
 msgid "The publisher."
 msgstr ""
 
-#: ../../reference/cli.rst:623
-#: ../../reference/cli.rst:846
+#: ../../reference/cli.rst:626
+#: ../../reference/cli.rst:849
 msgid "``--config=FILE``"
 msgstr ""
 
-#: ../../reference/cli.rst:624
+#: ../../reference/cli.rst:627
 msgid "The publisher's configuration, which names the project or site."
 msgstr ""
 
-#: ../../reference/cli.rst:625
+#: ../../reference/cli.rst:628
 msgid "``--dry-run``"
 msgstr ""
 
-#: ../../reference/cli.rst:626
+#: ../../reference/cli.rst:629
 msgid "Build and plan; write nothing to the target."
 msgstr ""
 
-#: ../../reference/cli.rst:627
+#: ../../reference/cli.rst:630
 msgid "``--wait=SECONDS``"
 msgstr ""
 
-#: ../../reference/cli.rst:628
+#: ../../reference/cli.rst:631
 msgid "How long to wait for the host to confirm the deployment, from 0 (do not wait) to 86400."
 msgstr ""
 
-#: ../../reference/cli.rst:630
+#: ../../reference/cli.rst:633
 msgid "``--timeout=SECONDS``"
 msgstr ""
 
-#: ../../reference/cli.rst:631
+#: ../../reference/cli.rst:634
 msgid "The bound on each whole exchange with the publisher, writing the request included, from 1 to 86400 (default: 300). Choose a value longer than ``--wait``."
 msgstr ""
 
-#: ../../reference/cli.rst:633
+#: ../../reference/cli.rst:636
 msgid "``--verbose``"
 msgstr ""
 
-#: ../../reference/cli.rst:634
+#: ../../reference/cli.rst:637
 msgid "List every change of the plan."
 msgstr ""
 
-#: ../../reference/cli.rst:636
+#: ../../reference/cli.rst:639
 msgid "A timeout or Ctrl+C after a possible write reports an unknown outcome (exit status 7). We then run the publisher's recovery command before retrying. Each invocation builds into its own private folder, which is removed afterwards. Concurrent invocations cannot change each other's snapshots. See :doc:`../plugins`."
 msgstr ""
 
-#: ../../reference/cli.rst:641
+#: ../../reference/cli.rst:644
 msgid "guidedog publish pages"
 msgstr ""
 
-#: ../../reference/cli.rst:644
+#: ../../reference/cli.rst:647
 msgid "``guidedog publish pages`` is the guided way to GitHub Pages; the GitHub Pages plugin adds it. It does whatever is still missing and asks only when it must. Then it builds and publishes:"
 msgstr ""
 
-#: ../../reference/cli.rst:647
+#: ../../reference/cli.rst:650
 msgid "``pages.toml``: written once, with the repository taken from the ``origin`` remote and the project from the nearest ``conf.toml`` (or as given)."
 msgstr ""
 
-#: ../../reference/cli.rst:649
+#: ../../reference/cli.rst:652
 msgid "A token: GitHub's device sign-in, stored in the system's credential store, or the GitHub CLI's token for this run only."
 msgstr ""
 
-#: ../../reference/cli.rst:651
+#: ../../reference/cli.rst:654
 msgid "The binding: the target is reviewed, and it asks us once to let this machine publish there."
 msgstr ""
 
-#: ../../reference/cli.rst:653
+#: ../../reference/cli.rst:656
 msgid "The Pages source: when Pages publishes another branch, or uses Actions, it asks us once to switch it."
 msgstr ""
 
-#: ../../reference/cli.rst:655
+#: ../../reference/cli.rst:658
 msgid "The publication: one push to the site's own branch, then a wait for the deployment."
 msgstr ""
 
-#: ../../reference/cli.rst:657
+#: ../../reference/cli.rst:660
 msgid "On a machine that is already set up, it publishes without a question. Without a terminal it never asks. A missing step then fails with a hint naming the command or option that does it. ``--yes`` answers the confirmations. It never signs in or replaces other work on our behalf. Its options are those of ``guidedog pages init`` and ``publish`` (``--config``, ``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); ``guidedog publish pages --help`` lists them. guidedog builds the project itself, with its own engine and linked plugins; ``--guidedog=PATH`` builds with another program instead. See :doc:`../howto/github-pages`."
 msgstr ""
 
-#: ../../reference/cli.rst:665
+#: ../../reference/cli.rst:668
 msgid "guidedog pages workflow"
 msgstr ""
 
-#: ../../reference/cli.rst:668
+#: ../../reference/cli.rst:671
 msgid "``guidedog pages workflow`` is added by the linked GitHub Pages plugin. It prints, writes, or checks a GitHub Actions workflow. The workflow installs this Guidedog release, builds the project, and deploys it with GitHub's Pages actions. We use it instead of publishing from our own machine when every push to the source branch should deploy."
 msgstr ""
 
-#: ../../reference/cli.rst:678
+#: ../../reference/cli.rst:681
 msgid "Options of pages workflow"
 msgstr ""
 
-#: ../../reference/cli.rst:684
+#: ../../reference/cli.rst:687
 msgid "``--write``, ``--force``"
 msgstr ""
 
-#: ../../reference/cli.rst:685
+#: ../../reference/cli.rst:688
 msgid "Write ``.github/workflows/docs-pages.yml`` instead of printing it; replace an existing one."
 msgstr ""
 
-#: ../../reference/cli.rst:687
+#: ../../reference/cli.rst:690
 msgid "``--check``"
 msgstr ""
 
-#: ../../reference/cli.rst:688
+#: ../../reference/cli.rst:691
 msgid "Check an existing workflow: an older release, a missing checksum, an unpinned action, ``pull_request_target``, a checkout that keeps its credentials."
 msgstr ""
 
-#: ../../reference/cli.rst:690
+#: ../../reference/cli.rst:693
 msgid "``--project=DIR``, ``--branch=NAME``"
 msgstr ""
 
-#: ../../reference/cli.rst:691
+#: ../../reference/cli.rst:694
 msgid "The project (default: ``docs``) and the source branch (default: ``main``)."
 msgstr ""
 
-#: ../../reference/cli.rst:692
+#: ../../reference/cli.rst:695
 msgid "``--version=X``, ``--sha256=HEX``, ``--offline``"
 msgstr ""
 
-#: ../../reference/cli.rst:693
+#: ../../reference/cli.rst:696
 msgid "The release to install, its archive's SHA-256 (default: read from the release's ``SHA256SUMS``), or a marked placeholder without network access."
 msgstr ""
 
-#: ../../reference/cli.rst:696
+#: ../../reference/cli.rst:699
 msgid "See :doc:`../howto/github-pages`."
 msgstr ""
 
-#: ../../reference/cli.rst:698
+#: ../../reference/cli.rst:701
 msgid "guidedog plugin"
 msgstr ""
 
-#: ../../reference/cli.rst:701
+#: ../../reference/cli.rst:704
 msgid "Records which plugin programs may run on this machine, in ``plugins.toml`` in Guidedog's configuration folder (``GUIDEDOG_CONFIG_DIR`` moves it):"
 msgstr ""
 
-#: ../../reference/cli.rst:716
+#: ../../reference/cli.rst:719
 msgid "``register ID PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS] [--yes]``: inspects the program after we confirm (``--yes`` skips the question) and records its SHA-256. The program must say it is ``ID``. A build plugin passes the qualification checks below before it is registered."
 msgstr ""
 
-#: ../../reference/cli.rst:720
+#: ../../reference/cli.rst:723
 msgid "``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: runs the qualification checks against a build plugin without changing the registry. A publisher is refused. We test a publisher with its own tests and ``guidedog publish --dry-run``."
 msgstr ""
 
-#: ../../reference/cli.rst:723
+#: ../../reference/cli.rst:726
 msgid "``list``: the registered programs, their IDs, paths, and kinds, beside the plugins linked into this executable."
 msgstr ""
 
-#: ../../reference/cli.rst:725
+#: ../../reference/cli.rst:728
 msgid "``inspect ID``: an entry's declared build hooks (source, HTML, assets) or publisher capabilities, the commands it adds, and whether the program on disk is still the one registered."
 msgstr ""
 
-#: ../../reference/cli.rst:728
+#: ../../reference/cli.rst:731
 msgid "``run ID -- [ARGS...]``: runs a registered program's own commands, after checking its SHA-256."
 msgstr ""
 
-#: ../../reference/cli.rst:730
+#: ../../reference/cli.rst:733
 msgid "``unregister ID``: removes the entry from ``plugins.toml``. The program, and anything it published, stay unchanged."
 msgstr ""
 
-#: ../../reference/cli.rst:733
+#: ../../reference/cli.rst:736
 msgid "Build plugins are selected by ``plugins`` in ``conf.toml`` and run during ``guidedog build``. ``guidedog publish`` accepts publishers only. ``--untrusted`` disables build plugins. See :doc:`../plugins` for the complete guide, an example, and configuration."
 msgstr ""
 
-#: ../../reference/cli.rst:737
+#: ../../reference/cli.rst:740
 msgid "Build-plugin qualification checks"
 msgstr ""
 
-#: ../../reference/cli.rst:740
+#: ../../reference/cli.rst:743
 msgid "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises the declared hooks in child processes: loading, repeated results, and cleanup. ``--project`` defaults to the current folder. A relative ``--config`` is relative to it. The request timeout defaults to 60 seconds. The program's SHA-256 must be the same before and after the checks. Publisher registration does not invoke publication. Passing checks is interoperability evidence, not a sandbox or a safety certificate."
 msgstr ""
 
-#: ../../reference/cli.rst:747
+#: ../../reference/cli.rst:750
 msgid "Custom binaries with linked plugins"
 msgstr ""
 
-#: ../../reference/cli.rst:750
+#: ../../reference/cli.rst:753
 msgid "The whole command line is the ``gd-cli`` crate. A Rust program can be a ``guidedog`` with plugins linked in, instead of registered as separate programs. It passes a ``gd_plugins::Registry`` of its plugins to ``gd_cli::run_with``. That function reads the process arguments and returns the exit status."
 msgstr ""
 
-#: ../../reference/cli.rst:769
+#: ../../reference/cli.rst:772
 msgid "The program accepts every command and option on this page. A selected plugin ID is looked up among the linked plugins first, then in the machine's registry. Linked plugins need no registration and no SHA-256 pin, because they are part of the executable. ``gd_cli::run`` is the same with no linked plugins. ``guidedog`` itself links three: the GitHub Pages plugin (``pages``), the discussion plugin (``dsc``), and the static publishing plugin (``ssg``). Each plugin is the same ``Plugin`` value its installed form serves with ``gd_plugins::serve_plugin`` (see :doc:`../plugins`)."
 msgstr ""
 
-#: ../../reference/cli.rst:771
+#: ../../reference/cli.rst:774
 msgid "Commands plugins add"
 msgstr ""
 
-#: ../../reference/cli.rst:774
+#: ../../reference/cli.rst:777
 msgid "A plugin may add commands to guidedog, or targets to ``guidedog publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a plugin's:"
 msgstr ""
 
-#: ../../reference/cli.rst:784
+#: ../../reference/cli.rst:787
 msgid "guidedog looks for a word it does not know (or a ``publish`` target) among the commands of the linked plugins first, then among those of the registered programs, and runs the plugin that adds it. ``--help`` after such a command prints its help, made from what the plugin declares. A plugin cannot replace one of guidedog's commands, and the first plugin to add a name keeps it."
 msgstr ""
 
-#: ../../reference/cli.rst:786
+#: ../../reference/cli.rst:789
 msgid "A linked plugin's command runs inside guidedog. A registered program's command runs as that program, started on our terminal after its SHA-256 is checked: it may ask questions, and its exit status is the command's. When either asks for a build, guidedog builds the project. The program's commands are read when it is registered, so a new version is registered again, as always."
 msgstr ""
 
-#: ../../reference/cli.rst:788
+#: ../../reference/cli.rst:791
 msgid "guidedog pages"
 msgstr ""
 
-#: ../../reference/cli.rst:791
+#: ../../reference/cli.rst:794
 msgid "The linked Pages plugin publishes through ``guidedog publish pages`` and exposes maintenance through ``guidedog pages``. Guidedog builds the project with its own engine. The step commands stay for scripts and for checking each part. See :doc:`../howto/github-pages`."
 msgstr ""
 
-#: ../../reference/cli.rst:813
+#: ../../reference/cli.rst:816
 msgid "Settings of pages.toml"
 msgstr ""
 
-#: ../../reference/cli.rst:817
+#: ../../reference/cli.rst:820
 msgid "Setting"
 msgstr ""
 
-#: ../../reference/cli.rst:819
+#: ../../reference/cli.rst:822
 msgid "``schema = 1``"
 msgstr ""
 
-#: ../../reference/cli.rst:820
+#: ../../reference/cli.rst:823
 msgid "The file's version; required."
 msgstr ""
 
-#: ../../reference/cli.rst:821
+#: ../../reference/cli.rst:824
 msgid "``repository = \"OWNER/REPO\"``"
 msgstr ""
 
-#: ../../reference/cli.rst:822
+#: ../../reference/cli.rst:825
 msgid "The GitHub.com repository; required."
 msgstr ""
 
-#: ../../reference/cli.rst:823
+#: ../../reference/cli.rst:826
 msgid "``branch = \"gh-pages\"``"
 msgstr ""
 
-#: ../../reference/cli.rst:824
+#: ../../reference/cli.rst:827
 msgid "The branch the site is published to: its own, never the default branch."
 msgstr ""
 
-#: ../../reference/cli.rst:825
+#: ../../reference/cli.rst:828
 msgid "``project = \"docs\"`` or ``site = \"build/site\"``"
 msgstr ""
 
-#: ../../reference/cli.rst:826
+#: ../../reference/cli.rst:829
 msgid "The Guidedog project to build, or the folder of a site built already; one of them, relative to ``pages.toml``."
 msgstr ""
 
-#: ../../reference/cli.rst:828
+#: ../../reference/cli.rst:831
 msgid "``profile = \"default\"``"
 msgstr ""
 
-#: ../../reference/cli.rst:829
+#: ../../reference/cli.rst:832
 msgid "The credential profile whose token publishes."
 msgstr ""
 
-#: ../../reference/cli.rst:830
+#: ../../reference/cli.rst:833
 msgid "``site_url``"
 msgstr ""
 
-#: ../../reference/cli.rst:831
+#: ../../reference/cli.rst:834
 msgid "The address readers open, and ``html_baseurl`` for the build (default: ``https://OWNER.github.io/REPO/``)."
 msgstr ""
 
-#: ../../reference/cli.rst:833
+#: ../../reference/cli.rst:836
 msgid "``strict = true``"
 msgstr ""
 
-#: ../../reference/cli.rst:834
+#: ../../reference/cli.rst:837
 msgid "Build with warnings as errors."
 msgstr ""
 
-#: ../../reference/cli.rst:835
+#: ../../reference/cli.rst:838
 msgid "``wait_seconds = 300``"
 msgstr ""
 
-#: ../../reference/cli.rst:836
+#: ../../reference/cli.rst:839
 msgid "How long ``publish`` waits for the deployment."
 msgstr ""
 
-#: ../../reference/cli.rst:837
+#: ../../reference/cli.rst:840
 msgid "``[watch] debounce_ms``, ``max_wait_ms``"
 msgstr ""
 
-#: ../../reference/cli.rst:838
+#: ../../reference/cli.rst:841
 msgid "How long ``watch`` lets sources settle, and the most it waits after a change."
 msgstr ""
 
-#: ../../reference/cli.rst:840
+#: ../../reference/cli.rst:843
 msgid "Options of guidedog pages"
 msgstr ""
 
-#: ../../reference/cli.rst:847
+#: ../../reference/cli.rst:850
 msgid "The configuration (default: ``pages.toml``)."
 msgstr ""
 
-#: ../../reference/cli.rst:848
+#: ../../reference/cli.rst:851
 msgid "``--profile=NAME``"
 msgstr ""
 
-#: ../../reference/cli.rst:849
+#: ../../reference/cli.rst:852
 msgid "The profile ``auth`` and ``init`` use (default: ``default``)."
 msgstr ""
 
-#: ../../reference/cli.rst:850
+#: ../../reference/cli.rst:853
 msgid "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, ``--branch=NAME``"
 msgstr ""
 
-#: ../../reference/cli.rst:851
+#: ../../reference/cli.rst:854
 msgid "``init``: what the new ``pages.toml`` says."
 msgstr ""
 
-#: ../../reference/cli.rst:852
+#: ../../reference/cli.rst:855
 msgid "``--credential=env``"
 msgstr ""
 
-#: ../../reference/cli.rst:853
+#: ../../reference/cli.rst:856
 msgid "Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without storing it."
 msgstr ""
 
-#: ../../reference/cli.rst:854
+#: ../../reference/cli.rst:857
 msgid "``--guidedog=PATH``"
 msgstr ""
 
-#: ../../reference/cli.rst:855
+#: ../../reference/cli.rst:858
 msgid "The ``guidedog`` that builds (default: ``GUIDEDOG_PAGES_GUIDEDOG``, then ``PATH``)."
 msgstr ""
 
-#: ../../reference/cli.rst:856
+#: ../../reference/cli.rst:859
 msgid "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 msgstr ""
 
-#: ../../reference/cli.rst:857
+#: ../../reference/cli.rst:860
 msgid "``publish``: plan only; how long to wait for the deployment; list every change."
 msgstr ""
 
-#: ../../reference/cli.rst:858
+#: ../../reference/cli.rst:861
 msgid "``--adopt``, ``--yes``"
 msgstr ""
 
-#: ../../reference/cli.rst:859
+#: ../../reference/cli.rst:862
 msgid "``bind``: let a branch of other work be replaced; answer yes to the question."
 msgstr ""
 
-#: ../../reference/cli.rst:860
+#: ../../reference/cli.rst:863
 msgid "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 msgstr ""
 
-#: ../../reference/cli.rst:861
+#: ../../reference/cli.rst:864
 msgid "``auth login``: the app; the repositories an OAuth App token may reach; open the browser; give the profile to another account."
 msgstr ""
 
-#: ../../reference/cli.rst:863
+#: ../../reference/cli.rst:866
 msgid "``--operation=COMMIT``"
 msgstr ""
 
-#: ../../reference/cli.rst:864
+#: ../../reference/cli.rst:867
 msgid "``status``: the publication to ask about (default: the last one)."
 msgstr ""
 
-#: ../../reference/cli.rst:865
+#: ../../reference/cli.rst:868
 msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
 msgstr ""
 
-#: ../../reference/cli.rst:866
+#: ../../reference/cli.rst:869
 msgid "How problems and results are written."
 msgstr ""
 
-#: ../../reference/cli.rst:868
+#: ../../reference/cli.rst:871
 msgid "Its exit statuses are those of ``guidedog publish``: 0 live or unchanged, 1 nothing published, 2 a usage or configuration problem, 4 a file, network or program failure, 6 accepted but not confirmed, 7 unknown until ``recover``, and 130 cancelled."
 msgstr ""
 
@@ -1673,17 +1677,17 @@ msgstr ""
 #: ../../reference/configuration.rst:454
 #: ../../reference/configuration.rst:583
 #: ../../reference/configuration.rst:655
-#: ../../reference/configuration.rst:682
-#: ../../reference/configuration.rst:764
-#: ../../reference/configuration.rst:812
-#: ../../reference/configuration.rst:896
-#: ../../reference/configuration.rst:943
-#: ../../reference/configuration.rst:992
-#: ../../reference/configuration.rst:1058
-#: ../../reference/configuration.rst:1091
-#: ../../reference/configuration.rst:1144
-#: ../../reference/configuration.rst:1185
-#: ../../reference/configuration.rst:1210
+#: ../../reference/configuration.rst:693
+#: ../../reference/configuration.rst:775
+#: ../../reference/configuration.rst:823
+#: ../../reference/configuration.rst:907
+#: ../../reference/configuration.rst:954
+#: ../../reference/configuration.rst:1003
+#: ../../reference/configuration.rst:1069
+#: ../../reference/configuration.rst:1102
+#: ../../reference/configuration.rst:1155
+#: ../../reference/configuration.rst:1196
+#: ../../reference/configuration.rst:1221
 msgid "Key"
 msgstr ""
 
@@ -1696,17 +1700,17 @@ msgstr ""
 #: ../../reference/configuration.rst:455
 #: ../../reference/configuration.rst:584
 #: ../../reference/configuration.rst:656
-#: ../../reference/configuration.rst:683
-#: ../../reference/configuration.rst:765
-#: ../../reference/configuration.rst:813
-#: ../../reference/configuration.rst:897
-#: ../../reference/configuration.rst:944
-#: ../../reference/configuration.rst:993
-#: ../../reference/configuration.rst:1059
-#: ../../reference/configuration.rst:1092
-#: ../../reference/configuration.rst:1145
-#: ../../reference/configuration.rst:1186
-#: ../../reference/configuration.rst:1211
+#: ../../reference/configuration.rst:694
+#: ../../reference/configuration.rst:776
+#: ../../reference/configuration.rst:824
+#: ../../reference/configuration.rst:908
+#: ../../reference/configuration.rst:955
+#: ../../reference/configuration.rst:1004
+#: ../../reference/configuration.rst:1070
+#: ../../reference/configuration.rst:1103
+#: ../../reference/configuration.rst:1156
+#: ../../reference/configuration.rst:1197
+#: ../../reference/configuration.rst:1222
 msgid "Type"
 msgstr ""
 
@@ -1719,17 +1723,17 @@ msgstr ""
 #: ../../reference/configuration.rst:456
 #: ../../reference/configuration.rst:585
 #: ../../reference/configuration.rst:657
-#: ../../reference/configuration.rst:684
-#: ../../reference/configuration.rst:766
-#: ../../reference/configuration.rst:814
-#: ../../reference/configuration.rst:898
-#: ../../reference/configuration.rst:945
-#: ../../reference/configuration.rst:994
-#: ../../reference/configuration.rst:1060
-#: ../../reference/configuration.rst:1093
-#: ../../reference/configuration.rst:1146
-#: ../../reference/configuration.rst:1187
-#: ../../reference/configuration.rst:1212
+#: ../../reference/configuration.rst:695
+#: ../../reference/configuration.rst:777
+#: ../../reference/configuration.rst:825
+#: ../../reference/configuration.rst:909
+#: ../../reference/configuration.rst:956
+#: ../../reference/configuration.rst:1005
+#: ../../reference/configuration.rst:1071
+#: ../../reference/configuration.rst:1104
+#: ../../reference/configuration.rst:1157
+#: ../../reference/configuration.rst:1198
+#: ../../reference/configuration.rst:1223
 msgid "Default"
 msgstr ""
 
@@ -1742,17 +1746,17 @@ msgstr ""
 #: ../../reference/configuration.rst:457
 #: ../../reference/configuration.rst:586
 #: ../../reference/configuration.rst:658
-#: ../../reference/configuration.rst:685
-#: ../../reference/configuration.rst:767
-#: ../../reference/configuration.rst:815
-#: ../../reference/configuration.rst:899
-#: ../../reference/configuration.rst:946
-#: ../../reference/configuration.rst:995
-#: ../../reference/configuration.rst:1061
-#: ../../reference/configuration.rst:1094
-#: ../../reference/configuration.rst:1147
-#: ../../reference/configuration.rst:1188
-#: ../../reference/configuration.rst:1213
+#: ../../reference/configuration.rst:696
+#: ../../reference/configuration.rst:778
+#: ../../reference/configuration.rst:826
+#: ../../reference/configuration.rst:910
+#: ../../reference/configuration.rst:957
+#: ../../reference/configuration.rst:1006
+#: ../../reference/configuration.rst:1072
+#: ../../reference/configuration.rst:1105
+#: ../../reference/configuration.rst:1158
+#: ../../reference/configuration.rst:1199
+#: ../../reference/configuration.rst:1224
 msgid "Description"
 msgstr ""
 
@@ -1804,39 +1808,39 @@ msgstr ""
 #: ../../reference/configuration.rst:625
 #: ../../reference/configuration.rst:660
 #: ../../reference/configuration.rst:669
-#: ../../reference/configuration.rst:786
-#: ../../reference/configuration.rst:821
-#: ../../reference/configuration.rst:825
-#: ../../reference/configuration.rst:843
-#: ../../reference/configuration.rst:855
-#: ../../reference/configuration.rst:860
-#: ../../reference/configuration.rst:865
-#: ../../reference/configuration.rst:910
-#: ../../reference/configuration.rst:918
-#: ../../reference/configuration.rst:954
-#: ../../reference/configuration.rst:963
-#: ../../reference/configuration.rst:1031
-#: ../../reference/configuration.rst:1035
-#: ../../reference/configuration.rst:1039
-#: ../../reference/configuration.rst:1063
-#: ../../reference/configuration.rst:1096
-#: ../../reference/configuration.rst:1100
-#: ../../reference/configuration.rst:1104
-#: ../../reference/configuration.rst:1108
-#: ../../reference/configuration.rst:1116
-#: ../../reference/configuration.rst:1120
-#: ../../reference/configuration.rst:1124
-#: ../../reference/configuration.rst:1136
-#: ../../reference/configuration.rst:1149
-#: ../../reference/configuration.rst:1153
-#: ../../reference/configuration.rst:1157
-#: ../../reference/configuration.rst:1161
-#: ../../reference/configuration.rst:1165
-#: ../../reference/configuration.rst:1190
-#: ../../reference/configuration.rst:1194
-#: ../../reference/configuration.rst:1198
-#: ../../reference/configuration.rst:1215
-#: ../../reference/configuration.rst:1219
+#: ../../reference/configuration.rst:797
+#: ../../reference/configuration.rst:832
+#: ../../reference/configuration.rst:836
+#: ../../reference/configuration.rst:854
+#: ../../reference/configuration.rst:866
+#: ../../reference/configuration.rst:871
+#: ../../reference/configuration.rst:876
+#: ../../reference/configuration.rst:921
+#: ../../reference/configuration.rst:929
+#: ../../reference/configuration.rst:965
+#: ../../reference/configuration.rst:974
+#: ../../reference/configuration.rst:1042
+#: ../../reference/configuration.rst:1046
+#: ../../reference/configuration.rst:1050
+#: ../../reference/configuration.rst:1074
+#: ../../reference/configuration.rst:1107
+#: ../../reference/configuration.rst:1111
+#: ../../reference/configuration.rst:1115
+#: ../../reference/configuration.rst:1119
+#: ../../reference/configuration.rst:1127
+#: ../../reference/configuration.rst:1131
+#: ../../reference/configuration.rst:1135
+#: ../../reference/configuration.rst:1147
+#: ../../reference/configuration.rst:1160
+#: ../../reference/configuration.rst:1164
+#: ../../reference/configuration.rst:1168
+#: ../../reference/configuration.rst:1172
+#: ../../reference/configuration.rst:1176
+#: ../../reference/configuration.rst:1201
+#: ../../reference/configuration.rst:1205
+#: ../../reference/configuration.rst:1209
+#: ../../reference/configuration.rst:1226
+#: ../../reference/configuration.rst:1230
 msgid "string"
 msgstr ""
 
@@ -1849,7 +1853,7 @@ msgid "The project's name (Sphinx's default)."
 msgstr ""
 
 #: ../../reference/configuration.rst:83
-#: ../../reference/configuration.rst:1115
+#: ../../reference/configuration.rst:1126
 msgid "``author``"
 msgstr ""
 
@@ -1872,19 +1876,19 @@ msgstr ""
 #: ../../reference/configuration.rst:597
 #: ../../reference/configuration.rst:609
 #: ../../reference/configuration.rst:670
-#: ../../reference/configuration.rst:787
-#: ../../reference/configuration.rst:1064
-#: ../../reference/configuration.rst:1105
-#: ../../reference/configuration.rst:1109
-#: ../../reference/configuration.rst:1117
-#: ../../reference/configuration.rst:1121
-#: ../../reference/configuration.rst:1125
-#: ../../reference/configuration.rst:1137
-#: ../../reference/configuration.rst:1158
-#: ../../reference/configuration.rst:1166
-#: ../../reference/configuration.rst:1195
-#: ../../reference/configuration.rst:1199
-#: ../../reference/configuration.rst:1220
+#: ../../reference/configuration.rst:798
+#: ../../reference/configuration.rst:1075
+#: ../../reference/configuration.rst:1116
+#: ../../reference/configuration.rst:1120
+#: ../../reference/configuration.rst:1128
+#: ../../reference/configuration.rst:1132
+#: ../../reference/configuration.rst:1136
+#: ../../reference/configuration.rst:1148
+#: ../../reference/configuration.rst:1169
+#: ../../reference/configuration.rst:1177
+#: ../../reference/configuration.rst:1206
+#: ../../reference/configuration.rst:1210
+#: ../../reference/configuration.rst:1231
 msgid "``\"\"``"
 msgstr ""
 
@@ -1918,7 +1922,7 @@ msgid "The full release, including alpha or beta tags (``\"1.0.0b1\"``)."
 msgstr ""
 
 #: ../../reference/configuration.rst:99
-#: ../../reference/configuration.rst:1189
+#: ../../reference/configuration.rst:1200
 msgid "``language``"
 msgstr ""
 
@@ -2010,20 +2014,20 @@ msgstr ""
 #: ../../reference/configuration.rst:525
 #: ../../reference/configuration.rst:621
 #: ../../reference/configuration.rst:664
-#: ../../reference/configuration.rst:687
-#: ../../reference/configuration.rst:721
-#: ../../reference/configuration.rst:725
-#: ../../reference/configuration.rst:741
-#: ../../reference/configuration.rst:782
-#: ../../reference/configuration.rst:817
-#: ../../reference/configuration.rst:847
-#: ../../reference/configuration.rst:901
-#: ../../reference/configuration.rst:914
-#: ../../reference/configuration.rst:948
-#: ../../reference/configuration.rst:958
-#: ../../reference/configuration.rst:997
-#: ../../reference/configuration.rst:1018
-#: ../../reference/configuration.rst:1023
+#: ../../reference/configuration.rst:698
+#: ../../reference/configuration.rst:732
+#: ../../reference/configuration.rst:736
+#: ../../reference/configuration.rst:752
+#: ../../reference/configuration.rst:793
+#: ../../reference/configuration.rst:828
+#: ../../reference/configuration.rst:858
+#: ../../reference/configuration.rst:912
+#: ../../reference/configuration.rst:925
+#: ../../reference/configuration.rst:959
+#: ../../reference/configuration.rst:969
+#: ../../reference/configuration.rst:1008
+#: ../../reference/configuration.rst:1029
+#: ../../reference/configuration.rst:1034
 msgid "array"
 msgstr ""
 
@@ -2044,20 +2048,20 @@ msgstr ""
 #: ../../reference/configuration.rst:526
 #: ../../reference/configuration.rst:622
 #: ../../reference/configuration.rst:665
-#: ../../reference/configuration.rst:742
-#: ../../reference/configuration.rst:818
-#: ../../reference/configuration.rst:848
-#: ../../reference/configuration.rst:902
-#: ../../reference/configuration.rst:949
-#: ../../reference/configuration.rst:959
-#: ../../reference/configuration.rst:1019
-#: ../../reference/configuration.rst:1024
-#: ../../reference/configuration.rst:1076
-#: ../../reference/configuration.rst:1113
-#: ../../reference/configuration.rst:1170
-#: ../../reference/configuration.rst:1174
-#: ../../reference/configuration.rst:1178
-#: ../../reference/configuration.rst:1203
+#: ../../reference/configuration.rst:753
+#: ../../reference/configuration.rst:829
+#: ../../reference/configuration.rst:859
+#: ../../reference/configuration.rst:913
+#: ../../reference/configuration.rst:960
+#: ../../reference/configuration.rst:970
+#: ../../reference/configuration.rst:1030
+#: ../../reference/configuration.rst:1035
+#: ../../reference/configuration.rst:1087
+#: ../../reference/configuration.rst:1124
+#: ../../reference/configuration.rst:1181
+#: ../../reference/configuration.rst:1185
+#: ../../reference/configuration.rst:1189
+#: ../../reference/configuration.rst:1214
 msgid "``[]``"
 msgstr ""
 
@@ -2193,34 +2197,34 @@ msgstr ""
 #: ../../reference/configuration.rst:533
 #: ../../reference/configuration.rst:541
 #: ../../reference/configuration.rst:545
-#: ../../reference/configuration.rst:697
-#: ../../reference/configuration.rst:701
-#: ../../reference/configuration.rst:705
-#: ../../reference/configuration.rst:709
-#: ../../reference/configuration.rst:713
-#: ../../reference/configuration.rst:729
-#: ../../reference/configuration.rst:737
-#: ../../reference/configuration.rst:749
-#: ../../reference/configuration.rst:753
-#: ../../reference/configuration.rst:835
-#: ../../reference/configuration.rst:839
-#: ../../reference/configuration.rst:851
-#: ../../reference/configuration.rst:873
-#: ../../reference/configuration.rst:877
-#: ../../reference/configuration.rst:881
-#: ../../reference/configuration.rst:885
-#: ../../reference/configuration.rst:922
-#: ../../reference/configuration.rst:926
-#: ../../reference/configuration.rst:967
-#: ../../reference/configuration.rst:971
-#: ../../reference/configuration.rst:1006
-#: ../../reference/configuration.rst:1010
-#: ../../reference/configuration.rst:1014
-#: ../../reference/configuration.rst:1027
-#: ../../reference/configuration.rst:1067
-#: ../../reference/configuration.rst:1071
-#: ../../reference/configuration.rst:1083
-#: ../../reference/configuration.rst:1132
+#: ../../reference/configuration.rst:708
+#: ../../reference/configuration.rst:712
+#: ../../reference/configuration.rst:716
+#: ../../reference/configuration.rst:720
+#: ../../reference/configuration.rst:724
+#: ../../reference/configuration.rst:740
+#: ../../reference/configuration.rst:748
+#: ../../reference/configuration.rst:760
+#: ../../reference/configuration.rst:764
+#: ../../reference/configuration.rst:846
+#: ../../reference/configuration.rst:850
+#: ../../reference/configuration.rst:862
+#: ../../reference/configuration.rst:884
+#: ../../reference/configuration.rst:888
+#: ../../reference/configuration.rst:892
+#: ../../reference/configuration.rst:896
+#: ../../reference/configuration.rst:933
+#: ../../reference/configuration.rst:937
+#: ../../reference/configuration.rst:978
+#: ../../reference/configuration.rst:982
+#: ../../reference/configuration.rst:1017
+#: ../../reference/configuration.rst:1021
+#: ../../reference/configuration.rst:1025
+#: ../../reference/configuration.rst:1038
+#: ../../reference/configuration.rst:1078
+#: ../../reference/configuration.rst:1082
+#: ../../reference/configuration.rst:1094
+#: ../../reference/configuration.rst:1143
 msgid "boolean"
 msgstr ""
 
@@ -2237,22 +2241,22 @@ msgstr ""
 #: ../../reference/configuration.rst:534
 #: ../../reference/configuration.rst:542
 #: ../../reference/configuration.rst:546
-#: ../../reference/configuration.rst:698
-#: ../../reference/configuration.rst:702
-#: ../../reference/configuration.rst:706
-#: ../../reference/configuration.rst:714
-#: ../../reference/configuration.rst:730
-#: ../../reference/configuration.rst:836
-#: ../../reference/configuration.rst:840
-#: ../../reference/configuration.rst:874
-#: ../../reference/configuration.rst:878
-#: ../../reference/configuration.rst:923
-#: ../../reference/configuration.rst:927
-#: ../../reference/configuration.rst:968
-#: ../../reference/configuration.rst:972
-#: ../../reference/configuration.rst:1002
-#: ../../reference/configuration.rst:1011
-#: ../../reference/configuration.rst:1015
+#: ../../reference/configuration.rst:709
+#: ../../reference/configuration.rst:713
+#: ../../reference/configuration.rst:717
+#: ../../reference/configuration.rst:725
+#: ../../reference/configuration.rst:741
+#: ../../reference/configuration.rst:847
+#: ../../reference/configuration.rst:851
+#: ../../reference/configuration.rst:885
+#: ../../reference/configuration.rst:889
+#: ../../reference/configuration.rst:934
+#: ../../reference/configuration.rst:938
+#: ../../reference/configuration.rst:979
+#: ../../reference/configuration.rst:983
+#: ../../reference/configuration.rst:1013
+#: ../../reference/configuration.rst:1022
+#: ../../reference/configuration.rst:1026
 msgid "``true``"
 msgstr ""
 
@@ -2275,20 +2279,20 @@ msgstr ""
 #: ../../reference/configuration.rst:427
 #: ../../reference/configuration.rst:444
 #: ../../reference/configuration.rst:518
-#: ../../reference/configuration.rst:710
-#: ../../reference/configuration.rst:738
-#: ../../reference/configuration.rst:750
-#: ../../reference/configuration.rst:754
-#: ../../reference/configuration.rst:852
-#: ../../reference/configuration.rst:882
-#: ../../reference/configuration.rst:886
-#: ../../reference/configuration.rst:1007
-#: ../../reference/configuration.rst:1028
-#: ../../reference/configuration.rst:1045
-#: ../../reference/configuration.rst:1068
-#: ../../reference/configuration.rst:1072
-#: ../../reference/configuration.rst:1084
-#: ../../reference/configuration.rst:1133
+#: ../../reference/configuration.rst:721
+#: ../../reference/configuration.rst:749
+#: ../../reference/configuration.rst:761
+#: ../../reference/configuration.rst:765
+#: ../../reference/configuration.rst:863
+#: ../../reference/configuration.rst:893
+#: ../../reference/configuration.rst:897
+#: ../../reference/configuration.rst:1018
+#: ../../reference/configuration.rst:1039
+#: ../../reference/configuration.rst:1056
+#: ../../reference/configuration.rst:1079
+#: ../../reference/configuration.rst:1083
+#: ../../reference/configuration.rst:1095
+#: ../../reference/configuration.rst:1144
 msgid "``false``"
 msgstr ""
 
@@ -2363,12 +2367,12 @@ msgstr ""
 #: ../../reference/configuration.rst:235
 #: ../../reference/configuration.rst:285
 #: ../../reference/configuration.rst:360
-#: ../../reference/configuration.rst:693
-#: ../../reference/configuration.rst:745
-#: ../../reference/configuration.rst:774
-#: ../../reference/configuration.rst:778
-#: ../../reference/configuration.rst:1079
-#: ../../reference/configuration.rst:1128
+#: ../../reference/configuration.rst:704
+#: ../../reference/configuration.rst:756
+#: ../../reference/configuration.rst:785
+#: ../../reference/configuration.rst:789
+#: ../../reference/configuration.rst:1090
+#: ../../reference/configuration.rst:1139
 msgid "integer"
 msgstr ""
 
@@ -2414,12 +2418,12 @@ msgstr ""
 #: ../../reference/configuration.rst:465
 #: ../../reference/configuration.rst:565
 #: ../../reference/configuration.rst:569
-#: ../../reference/configuration.rst:717
-#: ../../reference/configuration.rst:733
-#: ../../reference/configuration.rst:769
-#: ../../reference/configuration.rst:830
-#: ../../reference/configuration.rst:869
-#: ../../reference/configuration.rst:905
+#: ../../reference/configuration.rst:728
+#: ../../reference/configuration.rst:744
+#: ../../reference/configuration.rst:780
+#: ../../reference/configuration.rst:841
+#: ../../reference/configuration.rst:880
+#: ../../reference/configuration.rst:916
 msgid "table"
 msgstr ""
 
@@ -2430,12 +2434,12 @@ msgstr ""
 #: ../../reference/configuration.rst:466
 #: ../../reference/configuration.rst:566
 #: ../../reference/configuration.rst:570
-#: ../../reference/configuration.rst:718
-#: ../../reference/configuration.rst:734
-#: ../../reference/configuration.rst:770
-#: ../../reference/configuration.rst:831
-#: ../../reference/configuration.rst:870
-#: ../../reference/configuration.rst:906
+#: ../../reference/configuration.rst:729
+#: ../../reference/configuration.rst:745
+#: ../../reference/configuration.rst:781
+#: ../../reference/configuration.rst:842
+#: ../../reference/configuration.rst:881
+#: ../../reference/configuration.rst:917
 msgid "``{}``"
 msgstr ""
 
@@ -2503,7 +2507,7 @@ msgstr ""
 #: ../../reference/configuration.rst:315
 #: ../../reference/configuration.rst:321
 #: ../../reference/configuration.rst:588
-#: ../../reference/configuration.rst:1177
+#: ../../reference/configuration.rst:1188
 msgid "array of tables"
 msgstr ""
 
@@ -3133,933 +3137,941 @@ msgid "Accepted from ``conf.py`` and unused: Graphviz is linked into Guidedog."
 msgstr ""
 
 #: ../../reference/configuration.rst:673
-#: ../../reference/configuration.rst:678
-msgid "MyST Markdown"
+msgid "Typst diagrams"
 msgstr ""
 
 #: ../../reference/configuration.rst:676
+msgid "``typst-diagram`` uses the embedded compiler in HTML and PDF projects. We use ``pdf_packages`` (``\"download\"`` or ``\"offline\"``), ``pdf_fonts`` (``\"system\"`` or ``\"embedded\"``) and ``pdf_font_paths`` for both diagram outputs. These settings retain their defaults listed under PDF options. The directive's ``:format: svg|png`` selects its image format; SVG is the default and PNG uses 144 pixels per inch. There is no separate diagram executable setting, and ``typst`` continues to select the book compiler only. We import CeTZ and Fletcher explicitly with package versions. See :doc:`../topics/diagrams` for the complete authoring workflow and :doc:`../howto/typst-diagrams` for directive options and limits."
+msgstr ""
+
+#: ../../reference/configuration.rst:684
+#: ../../reference/configuration.rst:689
+msgid "MyST Markdown"
+msgstr ""
+
+#: ../../reference/configuration.rst:687
 msgid "The names are myst-parser 0.16.1's."
 msgstr ""
 
-#: ../../reference/configuration.rst:686
+#: ../../reference/configuration.rst:697
 msgid "``myst_enable_extensions``"
 msgstr ""
 
-#: ../../reference/configuration.rst:688
+#: ../../reference/configuration.rst:699
 msgid "``[\"dollarmath\"]``"
 msgstr ""
 
-#: ../../reference/configuration.rst:689
+#: ../../reference/configuration.rst:700
 msgid "Optional syntaxes: ``amsmath``, ``colon_fence``, ``deflist``, ``dollarmath``, ``fieldlist``, ``html_admonition``, ``html_image``, ``linkify``, ``replacements``, ``smartquotes``, ``substitution``, and ``tasklist``."
 msgstr ""
 
-#: ../../reference/configuration.rst:692
+#: ../../reference/configuration.rst:703
 msgid "``myst_heading_anchors``"
 msgstr ""
 
-#: ../../reference/configuration.rst:695
+#: ../../reference/configuration.rst:706
 msgid "Heading depth that gets slug anchors; ``0``: none."
 msgstr ""
 
-#: ../../reference/configuration.rst:696
+#: ../../reference/configuration.rst:707
 msgid "``myst_dmath_allow_labels``"
 msgstr ""
 
-#: ../../reference/configuration.rst:699
+#: ../../reference/configuration.rst:710
 msgid "``$$ ... $$ (label)`` labels an equation."
 msgstr ""
 
-#: ../../reference/configuration.rst:700
+#: ../../reference/configuration.rst:711
 msgid "``myst_dmath_allow_space``"
 msgstr ""
 
-#: ../../reference/configuration.rst:703
+#: ../../reference/configuration.rst:714
 msgid "Inline ``$`` math may start or end with a space."
 msgstr ""
 
-#: ../../reference/configuration.rst:704
+#: ../../reference/configuration.rst:715
 msgid "``myst_dmath_allow_digits``"
 msgstr ""
 
-#: ../../reference/configuration.rst:707
+#: ../../reference/configuration.rst:718
 msgid "Inline ``$`` math may touch digits."
 msgstr ""
 
-#: ../../reference/configuration.rst:708
+#: ../../reference/configuration.rst:719
 msgid "``myst_dmath_double_inline``"
 msgstr ""
 
-#: ../../reference/configuration.rst:711
+#: ../../reference/configuration.rst:722
 msgid "``$$ ... $$`` inside a paragraph is displayed math."
 msgstr ""
 
-#: ../../reference/configuration.rst:712
+#: ../../reference/configuration.rst:723
 msgid "``myst_linkify_fuzzy_links``"
 msgstr ""
 
-#: ../../reference/configuration.rst:715
+#: ../../reference/configuration.rst:726
 msgid "``linkify`` also links addresses without a scheme."
 msgstr ""
 
-#: ../../reference/configuration.rst:716
+#: ../../reference/configuration.rst:727
 msgid "``myst_substitutions``"
 msgstr ""
 
-#: ../../reference/configuration.rst:719
+#: ../../reference/configuration.rst:730
 msgid "Values for ``{{ name }}`` (the ``substitution`` syntax)."
 msgstr ""
 
-#: ../../reference/configuration.rst:720
+#: ../../reference/configuration.rst:731
 msgid "``myst_sub_delimiters``"
 msgstr ""
 
-#: ../../reference/configuration.rst:722
+#: ../../reference/configuration.rst:733
 msgid "``[\"{\", \"}\"]``"
 msgstr ""
 
-#: ../../reference/configuration.rst:723
+#: ../../reference/configuration.rst:734
 msgid "The two substitution characters, each doubled around a name."
 msgstr ""
 
-#: ../../reference/configuration.rst:724
+#: ../../reference/configuration.rst:735
 msgid "``myst_url_schemes``"
 msgstr ""
 
-#: ../../reference/configuration.rst:726
+#: ../../reference/configuration.rst:737
 msgid "``[\"http\", \"https\", \"mailto\", \"ftp\"]``"
 msgstr ""
 
-#: ../../reference/configuration.rst:727
+#: ../../reference/configuration.rst:738
 msgid "Schemes that make external links; empty: all."
 msgstr ""
 
-#: ../../reference/configuration.rst:728
+#: ../../reference/configuration.rst:739
 msgid "``myst_footnote_transition``"
 msgstr ""
 
-#: ../../reference/configuration.rst:731
+#: ../../reference/configuration.rst:742
 msgid "Put a transition before the footnotes."
 msgstr ""
 
-#: ../../reference/configuration.rst:732
+#: ../../reference/configuration.rst:743
 msgid "``myst_html_meta``"
 msgstr ""
 
-#: ../../reference/configuration.rst:735
+#: ../../reference/configuration.rst:746
 msgid "``meta`` elements for every Markdown page."
 msgstr ""
 
-#: ../../reference/configuration.rst:736
+#: ../../reference/configuration.rst:747
 msgid "``myst_commonmark_only``"
 msgstr ""
 
-#: ../../reference/configuration.rst:739
+#: ../../reference/configuration.rst:750
 msgid "CommonMark syntax only; headings still make sections."
 msgstr ""
 
-#: ../../reference/configuration.rst:740
+#: ../../reference/configuration.rst:751
 msgid "``myst_disable_syntax``"
 msgstr ""
 
-#: ../../reference/configuration.rst:743
+#: ../../reference/configuration.rst:754
 msgid "Syntax rules not parsed, by markdown-it's names."
 msgstr ""
 
-#: ../../reference/configuration.rst:744
+#: ../../reference/configuration.rst:755
 msgid "``myst_words_per_minute``"
 msgstr ""
 
-#: ../../reference/configuration.rst:746
+#: ../../reference/configuration.rst:757
 msgid "``200``"
 msgstr ""
 
-#: ../../reference/configuration.rst:747
+#: ../../reference/configuration.rst:758
 msgid "The reading speed of the reading-time estimate."
 msgstr ""
 
-#: ../../reference/configuration.rst:748
+#: ../../reference/configuration.rst:759
 msgid "``myst_dmath_enable``"
 msgstr ""
 
-#: ../../reference/configuration.rst:751
+#: ../../reference/configuration.rst:762
 msgid "Older spelling of ``dollarmath`` in ``myst_enable_extensions``."
 msgstr ""
 
-#: ../../reference/configuration.rst:752
+#: ../../reference/configuration.rst:763
 msgid "``myst_amsmath_enable``"
 msgstr ""
 
-#: ../../reference/configuration.rst:755
+#: ../../reference/configuration.rst:766
 msgid "Older spelling of ``amsmath`` in ``myst_enable_extensions``."
 msgstr ""
 
-#: ../../reference/configuration.rst:757
-#: ../../reference/configuration.rst:760
+#: ../../reference/configuration.rst:768
+#: ../../reference/configuration.rst:771
 msgid "Intersphinx"
 msgstr ""
 
-#: ../../reference/configuration.rst:768
+#: ../../reference/configuration.rst:779
 msgid "``intersphinx_mapping``"
 msgstr ""
 
-#: ../../reference/configuration.rst:771
+#: ../../reference/configuration.rst:782
 msgid "Other projects: name to ``[target URI, inventory]``. The inventory is ``\"\"`` (the ``objects.inv`` at the URI), a location, or a list of locations tried in order."
 msgstr ""
 
-#: ../../reference/configuration.rst:773
+#: ../../reference/configuration.rst:784
 msgid "``intersphinx_cache_limit``"
 msgstr ""
 
-#: ../../reference/configuration.rst:776
+#: ../../reference/configuration.rst:787
 msgid "Days a downloaded inventory is reused; below 0: always."
 msgstr ""
 
-#: ../../reference/configuration.rst:777
+#: ../../reference/configuration.rst:788
 msgid "``intersphinx_timeout``"
 msgstr ""
 
-#: ../../reference/configuration.rst:780
+#: ../../reference/configuration.rst:791
 msgid "Seconds a download may take; ``0``: no limit."
 msgstr ""
 
-#: ../../reference/configuration.rst:781
+#: ../../reference/configuration.rst:792
 msgid "``intersphinx_disabled_reftypes``"
 msgstr ""
 
-#: ../../reference/configuration.rst:783
+#: ../../reference/configuration.rst:794
 msgid "``[\"std:doc\"]``"
 msgstr ""
 
-#: ../../reference/configuration.rst:784
+#: ../../reference/configuration.rst:795
 msgid "Reference types that never resolve through inventories."
 msgstr ""
 
-#: ../../reference/configuration.rst:785
+#: ../../reference/configuration.rst:796
 msgid "``intersphinx_resolve_self``"
 msgstr ""
 
-#: ../../reference/configuration.rst:788
+#: ../../reference/configuration.rst:799
 msgid "A mapping name that refers to this project itself."
 msgstr ""
 
-#: ../../reference/configuration.rst:800
+#: ../../reference/configuration.rst:811
 msgid "Inventories are downloaded with the built-in HTTP client, which honours ``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing. See :doc:`../intersphinx`."
 msgstr ""
 
-#: ../../reference/configuration.rst:803
-#: ../../reference/configuration.rst:808
+#: ../../reference/configuration.rst:814
+#: ../../reference/configuration.rst:819
 msgid "Python autodoc"
 msgstr ""
 
-#: ../../reference/configuration.rst:806
+#: ../../reference/configuration.rst:817
 msgid "Guidedog reads Python source without importing it (see :doc:`../autodoc`)."
 msgstr ""
 
-#: ../../reference/configuration.rst:816
+#: ../../reference/configuration.rst:827
 msgid "``autodoc_source_paths``"
 msgstr ""
 
-#: ../../reference/configuration.rst:819
+#: ../../reference/configuration.rst:830
 msgid "Folders holding the packages, like ``sys.path``, relative to the source folder."
 msgstr ""
 
-#: ../../reference/configuration.rst:820
+#: ../../reference/configuration.rst:831
 msgid "``autoclass_content``"
 msgstr ""
 
-#: ../../reference/configuration.rst:822
+#: ../../reference/configuration.rst:833
 msgid "``\"class\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:823
+#: ../../reference/configuration.rst:834
 msgid "A class's docstring: ``\"class\"``, ``\"init\"``, or ``\"both\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:824
+#: ../../reference/configuration.rst:835
 msgid "``autodoc_class_signature``"
 msgstr ""
 
-#: ../../reference/configuration.rst:826
+#: ../../reference/configuration.rst:837
 msgid "``\"mixed\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:827
+#: ../../reference/configuration.rst:838
 msgid "``\"mixed\"`` shows the constructor's signature with the class; ``\"separated\"`` documents ``__init__`` apart."
 msgstr ""
 
-#: ../../reference/configuration.rst:829
+#: ../../reference/configuration.rst:840
 msgid "``autodoc_default_options``"
 msgstr ""
 
-#: ../../reference/configuration.rst:832
+#: ../../reference/configuration.rst:843
 msgid "Options for every ``auto*`` directive: an option's value, or ``true`` for a flag (``members = true``)."
 msgstr ""
 
-#: ../../reference/configuration.rst:834
+#: ../../reference/configuration.rst:845
 msgid "``autodoc_docstring_signature``"
 msgstr ""
 
-#: ../../reference/configuration.rst:837
+#: ../../reference/configuration.rst:848
 msgid "Read a signature from the docstring's first line."
 msgstr ""
 
-#: ../../reference/configuration.rst:838
+#: ../../reference/configuration.rst:849
 msgid "``autodoc_inherit_docstrings``"
 msgstr ""
 
-#: ../../reference/configuration.rst:841
+#: ../../reference/configuration.rst:852
 msgid "Members without a docstring take their parent class's."
 msgstr ""
 
-#: ../../reference/configuration.rst:842
+#: ../../reference/configuration.rst:853
 msgid "``autodoc_member_order``"
 msgstr ""
 
-#: ../../reference/configuration.rst:844
+#: ../../reference/configuration.rst:855
 msgid "``\"alphabetical\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:845
+#: ../../reference/configuration.rst:856
 msgid "``\"alphabetical\"``, ``\"bysource\"``, or ``\"groupwise\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:846
+#: ../../reference/configuration.rst:857
 msgid "``autodoc_mock_imports``"
 msgstr ""
 
-#: ../../reference/configuration.rst:849
+#: ../../reference/configuration.rst:860
 msgid "Accepted: nothing is imported, so nothing needs mocking."
 msgstr ""
 
-#: ../../reference/configuration.rst:850
+#: ../../reference/configuration.rst:861
 msgid "``autodoc_preserve_defaults``"
 msgstr ""
 
-#: ../../reference/configuration.rst:853
+#: ../../reference/configuration.rst:864
 msgid "Show default values as written in the source."
 msgstr ""
 
-#: ../../reference/configuration.rst:854
+#: ../../reference/configuration.rst:865
 msgid "``autodoc_typehints``"
 msgstr ""
 
-#: ../../reference/configuration.rst:856
+#: ../../reference/configuration.rst:867
 msgid "``\"signature\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:857
+#: ../../reference/configuration.rst:868
 msgid "Where type hints go: ``\"signature\"``, ``\"description\"``, ``\"none\"``, or ``\"both\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:859
+#: ../../reference/configuration.rst:870
 msgid "``autodoc_typehints_description_target``"
 msgstr ""
 
-#: ../../reference/configuration.rst:861
+#: ../../reference/configuration.rst:872
 msgid "``\"all\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:862
+#: ../../reference/configuration.rst:873
 msgid "Which parameters get types in the description: ``\"all\"``, ``\"documented\"``, or ``\"documented_params\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:864
+#: ../../reference/configuration.rst:875
 msgid "``autodoc_typehints_format``"
 msgstr ""
 
-#: ../../reference/configuration.rst:866
+#: ../../reference/configuration.rst:877
 msgid "``\"short\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:867
+#: ../../reference/configuration.rst:878
 msgid "``\"short\"`` or ``\"fully-qualified\"`` type names."
 msgstr ""
 
-#: ../../reference/configuration.rst:868
+#: ../../reference/configuration.rst:879
 msgid "``autodoc_type_aliases``"
 msgstr ""
 
-#: ../../reference/configuration.rst:871
+#: ../../reference/configuration.rst:882
 msgid "Type aliases kept as written: alias to its full name."
 msgstr ""
 
-#: ../../reference/configuration.rst:872
+#: ../../reference/configuration.rst:883
 msgid "``autodoc_use_type_comments``"
 msgstr ""
 
-#: ../../reference/configuration.rst:875
+#: ../../reference/configuration.rst:886
 msgid "Read ``# type:`` comments."
 msgstr ""
 
-#: ../../reference/configuration.rst:876
+#: ../../reference/configuration.rst:887
 msgid "``autodoc_warningiserror``"
 msgstr ""
 
-#: ../../reference/configuration.rst:879
+#: ../../reference/configuration.rst:890
 msgid "Treat a module autodoc cannot find as an error."
 msgstr ""
 
-#: ../../reference/configuration.rst:880
+#: ../../reference/configuration.rst:891
 msgid "``python_display_short_literal_types``"
 msgstr ""
 
-#: ../../reference/configuration.rst:883
+#: ../../reference/configuration.rst:894
 msgid "Write ``Literal[\"a\"]`` types as ``\"a\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:884
+#: ../../reference/configuration.rst:895
 msgid "``strip_signature_backslash``"
 msgstr ""
 
-#: ../../reference/configuration.rst:887
+#: ../../reference/configuration.rst:898
 msgid "Remove backslashes from signatures written in directives."
 msgstr ""
 
-#: ../../reference/configuration.rst:889
+#: ../../reference/configuration.rst:900
 msgid "Odin API documentation"
 msgstr ""
 
-#: ../../reference/configuration.rst:892
+#: ../../reference/configuration.rst:903
 msgid "Odin API pages"
 msgstr ""
 
-#: ../../reference/configuration.rst:900
+#: ../../reference/configuration.rst:911
 msgid "``odin_autoapi_dirs``"
 msgstr ""
 
-#: ../../reference/configuration.rst:903
+#: ../../reference/configuration.rst:914
 msgid "Folders whose Odin packages get API pages, relative to the source folder."
 msgstr ""
 
-#: ../../reference/configuration.rst:904
+#: ../../reference/configuration.rst:915
 msgid "``odin_collections``"
 msgstr ""
 
-#: ../../reference/configuration.rst:907
+#: ../../reference/configuration.rst:918
 msgid "Collection names to folders (``core = \"/opt/odin/core\"``), for imports such as ``core:fmt``."
 msgstr ""
 
-#: ../../reference/configuration.rst:909
+#: ../../reference/configuration.rst:920
 msgid "``odin_autoapi_root``"
 msgstr ""
 
-#: ../../reference/configuration.rst:911
+#: ../../reference/configuration.rst:922
 msgid "``\"api\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:912
-#: ../../reference/configuration.rst:956
+#: ../../reference/configuration.rst:923
+#: ../../reference/configuration.rst:967
 msgid "The folder of the generated pages, inside the source folder."
 msgstr ""
 
-#: ../../reference/configuration.rst:913
+#: ../../reference/configuration.rst:924
 msgid "``odin_autoapi_options``"
 msgstr ""
 
-#: ../../reference/configuration.rst:915
+#: ../../reference/configuration.rst:926
 msgid "``[\"members\", \"undoc-members\"]``"
 msgstr ""
 
-#: ../../reference/configuration.rst:916
+#: ../../reference/configuration.rst:927
 msgid "``members``, ``undoc-members``, and ``private-members``."
 msgstr ""
 
-#: ../../reference/configuration.rst:917
+#: ../../reference/configuration.rst:928
 msgid "``odin_autoapi_member_order``"
 msgstr ""
 
-#: ../../reference/configuration.rst:919
-#: ../../reference/configuration.rst:964
+#: ../../reference/configuration.rst:930
+#: ../../reference/configuration.rst:975
 msgid "``\"source\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:920
+#: ../../reference/configuration.rst:931
 msgid "``\"source\"``, ``\"alphabetical\"``, or ``\"groupwise\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:921
+#: ../../reference/configuration.rst:932
 msgid "``odin_autoapi_add_toctree_entry``"
 msgstr ""
 
-#: ../../reference/configuration.rst:924
-#: ../../reference/configuration.rst:969
+#: ../../reference/configuration.rst:935
+#: ../../reference/configuration.rst:980
 msgid "Add the API index to the root document's toctree."
 msgstr ""
 
-#: ../../reference/configuration.rst:925
+#: ../../reference/configuration.rst:936
 msgid "``odin_autoapi_generate_api_docs``"
 msgstr ""
 
-#: ../../reference/configuration.rst:928
+#: ../../reference/configuration.rst:939
 msgid "Generate the pages; ``false``: only the ``odin:auto*`` directives read the folders."
 msgstr ""
 
-#: ../../reference/configuration.rst:931
+#: ../../reference/configuration.rst:942
 msgid "See :doc:`../odin`."
 msgstr ""
 
-#: ../../reference/configuration.rst:933
+#: ../../reference/configuration.rst:944
 msgid "Rust API documentation"
 msgstr ""
 
-#: ../../reference/configuration.rst:936
+#: ../../reference/configuration.rst:947
 msgid "New in the Rust release of Guidedog. Crates are read with tree-sitter, never compiled. See :doc:`../howto/document-code` and the ``rust`` domain in :doc:`../topics/domains`."
 msgstr ""
 
-#: ../../reference/configuration.rst:939
+#: ../../reference/configuration.rst:950
 msgid "Rust API pages"
 msgstr ""
 
-#: ../../reference/configuration.rst:947
+#: ../../reference/configuration.rst:958
 msgid "``rust_autoapi_crates``"
 msgstr ""
 
-#: ../../reference/configuration.rst:950
+#: ../../reference/configuration.rst:961
 msgid "Crate folders (with ``Cargo.toml``, ``lib.rs``, ``main.rs`` or ``mod.rs``), or root ``.rs`` files, that get API pages, relative to the source folder. A missing folder is a ``config.rust`` warning."
 msgstr ""
 
-#: ../../reference/configuration.rst:953
+#: ../../reference/configuration.rst:964
 msgid "``rust_autoapi_root``"
 msgstr ""
 
-#: ../../reference/configuration.rst:955
+#: ../../reference/configuration.rst:966
 msgid "``\"rustapi\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:957
+#: ../../reference/configuration.rst:968
 msgid "``rust_autoapi_options``"
 msgstr ""
 
-#: ../../reference/configuration.rst:960
+#: ../../reference/configuration.rst:971
 msgid "``private-members`` (document private items, with their visibility), ``hidden-members`` (``#[doc(hidden)]`` items), and ``noindex``."
 msgstr ""
 
-#: ../../reference/configuration.rst:962
+#: ../../reference/configuration.rst:973
 msgid "``rust_autoapi_member_order``"
 msgstr ""
 
-#: ../../reference/configuration.rst:965
+#: ../../reference/configuration.rst:976
 msgid "``\"source\"`` or ``\"alphabetical\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:966
+#: ../../reference/configuration.rst:977
 msgid "``rust_autoapi_add_toctree_entry``"
 msgstr ""
 
-#: ../../reference/configuration.rst:970
+#: ../../reference/configuration.rst:981
 msgid "``rust_autoapi_generate_api_docs``"
 msgstr ""
 
-#: ../../reference/configuration.rst:973
+#: ../../reference/configuration.rst:984
 msgid "Generate the pages; ``false`` generates none."
 msgstr ""
 
-#: ../../reference/configuration.rst:981
+#: ../../reference/configuration.rst:992
 msgid "With ``--untrusted``, crate folders outside the source folder are not read."
 msgstr ""
 
-#: ../../reference/configuration.rst:983
-#: ../../reference/configuration.rst:988
+#: ../../reference/configuration.rst:994
+#: ../../reference/configuration.rst:999
 msgid "Internationalization"
 msgstr ""
 
-#: ../../reference/configuration.rst:986
+#: ../../reference/configuration.rst:997
 msgid "The names are Sphinx's. See :doc:`../intl`."
 msgstr ""
 
-#: ../../reference/configuration.rst:996
+#: ../../reference/configuration.rst:1007
 msgid "``locale_dirs``"
 msgstr ""
 
-#: ../../reference/configuration.rst:998
+#: ../../reference/configuration.rst:1009
 msgid "``[\"locales\"]``"
 msgstr ""
 
-#: ../../reference/configuration.rst:999
+#: ../../reference/configuration.rst:1010
 msgid "Folders of message catalogs, relative to the source folder."
 msgstr ""
 
-#: ../../reference/configuration.rst:1000
+#: ../../reference/configuration.rst:1011
 msgid "``gettext_compact``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1001
-#: ../../reference/configuration.rst:1044
+#: ../../reference/configuration.rst:1012
+#: ../../reference/configuration.rst:1055
 msgid "boolean or string"
 msgstr ""
 
-#: ../../reference/configuration.rst:1003
+#: ../../reference/configuration.rst:1014
 msgid "One catalog per top-level folder (``true``), one per document (``false``), or one catalog of that name."
 msgstr ""
 
-#: ../../reference/configuration.rst:1005
+#: ../../reference/configuration.rst:1016
 msgid "``gettext_uuid``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1008
+#: ../../reference/configuration.rst:1019
 msgid "Write a UUID with each message in the templates."
 msgstr ""
 
-#: ../../reference/configuration.rst:1009
+#: ../../reference/configuration.rst:1020
 msgid "``gettext_location``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1012
+#: ../../reference/configuration.rst:1023
 msgid "Write each message's source locations in the templates."
 msgstr ""
 
-#: ../../reference/configuration.rst:1013
+#: ../../reference/configuration.rst:1024
 msgid "``gettext_auto_build``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1016
+#: ../../reference/configuration.rst:1027
 msgid "Compile ``.po`` catalogs to ``.mo`` beside them during the build."
 msgstr ""
 
-#: ../../reference/configuration.rst:1017
+#: ../../reference/configuration.rst:1028
 msgid "``gettext_additional_targets``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1020
+#: ../../reference/configuration.rst:1031
 msgid "Also translate ``index``, ``literal-block``, ``doctest-block``, ``raw``, or ``image``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1022
+#: ../../reference/configuration.rst:1033
 msgid "``gettext_exclude_patterns``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1025
+#: ../../reference/configuration.rst:1036
 msgid "Document patterns left out of the templates only."
 msgstr ""
 
-#: ../../reference/configuration.rst:1026
+#: ../../reference/configuration.rst:1037
 msgid "``gettext_allow_fuzzy_translations``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1029
+#: ../../reference/configuration.rst:1040
 msgid "Use fuzzy translations too."
 msgstr ""
 
-#: ../../reference/configuration.rst:1030
+#: ../../reference/configuration.rst:1041
 msgid "``gettext_last_translator``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1032
+#: ../../reference/configuration.rst:1043
 msgid "``\"FULL NAME <EMAIL@ADDRESS>\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1033
+#: ../../reference/configuration.rst:1044
 msgid "The ``Last-Translator`` header of new catalogs."
 msgstr ""
 
-#: ../../reference/configuration.rst:1034
+#: ../../reference/configuration.rst:1045
 msgid "``gettext_language_team``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1036
+#: ../../reference/configuration.rst:1047
 msgid "``\"LANGUAGE <LL@li.org>\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1037
+#: ../../reference/configuration.rst:1048
 msgid "The ``Language-Team`` header of new catalogs."
 msgstr ""
 
-#: ../../reference/configuration.rst:1038
+#: ../../reference/configuration.rst:1049
 msgid "``figure_language_filename``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1040
+#: ../../reference/configuration.rst:1051
 msgid "``\"{root}.{language}{ext}\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1041
+#: ../../reference/configuration.rst:1052
 msgid "The file name of a translated image, from ``{root}``, ``{path}``, ``{docpath}``, ``{basename}``, ``{ext}``, and ``{language}``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1043
+#: ../../reference/configuration.rst:1054
 msgid "``translation_progress_classes``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1046
+#: ../../reference/configuration.rst:1057
 msgid "Mark translated and untranslated text with classes: ``true``, ``false``, ``\"translated\"``, or ``\"untranslated\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1049
+#: ../../reference/configuration.rst:1060
 msgid "Static publishing"
 msgstr ""
 
-#: ../../reference/configuration.rst:1052
+#: ../../reference/configuration.rst:1063
 msgid "The ``[site]`` table configures static website outputs: sitemaps, syndication feeds, taxonomy archives, filtered article collections, installed ``.gdt`` themes, and multi-project mounted site assembly (``guidedog ssg build``). Every setting is optional; when ``[site]`` is omitted, none of these outputs are written."
 msgstr ""
 
-#: ../../reference/configuration.rst:1054
+#: ../../reference/configuration.rst:1065
 msgid "Static publishing ([site])"
 msgstr ""
 
-#: ../../reference/configuration.rst:1062
+#: ../../reference/configuration.rst:1073
 msgid "``site.base_url``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1065
+#: ../../reference/configuration.rst:1076
 msgid "The absolute ``http://`` or ``https://`` root URL of the published site (trailing ``/`` is trimmed). Required when ``sitemap``, ``feeds``, or any collection's ``feeds`` is ``true``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1066
+#: ../../reference/configuration.rst:1077
 msgid "``site.sitemap``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1069
+#: ../../reference/configuration.rst:1080
 msgid "Write ``sitemap.xml`` at the output root."
 msgstr ""
 
-#: ../../reference/configuration.rst:1070
+#: ../../reference/configuration.rst:1081
 msgid "``site.feeds``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1073
+#: ../../reference/configuration.rst:1084
 msgid "Write ``rss.xml`` and ``atom.xml`` at the output root for all eligible dated documents."
 msgstr ""
 
-#: ../../reference/configuration.rst:1074
+#: ../../reference/configuration.rst:1085
 msgid "``site.taxonomies``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1075
-#: ../../reference/configuration.rst:1112
-#: ../../reference/configuration.rst:1169
-#: ../../reference/configuration.rst:1173
-#: ../../reference/configuration.rst:1202
+#: ../../reference/configuration.rst:1086
+#: ../../reference/configuration.rst:1123
+#: ../../reference/configuration.rst:1180
+#: ../../reference/configuration.rst:1184
+#: ../../reference/configuration.rst:1213
 msgid "array of strings"
 msgstr ""
 
-#: ../../reference/configuration.rst:1077
+#: ../../reference/configuration.rst:1088
 msgid "Archive kinds to generate automatically: ``\"tags\"``, ``\"category\"``, ``\"year\"``, ``\"authors\"``, and ``\"series\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1078
+#: ../../reference/configuration.rst:1089
 msgid "``site.page_size``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1081
+#: ../../reference/configuration.rst:1092
 msgid "Maximum articles per generated taxonomy archive page; ``0`` writes all entries on one page."
 msgstr ""
 
-#: ../../reference/configuration.rst:1082
+#: ../../reference/configuration.rst:1093
 msgid "``site.theme``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1085
+#: ../../reference/configuration.rst:1096
 msgid "Load the project's installed theme from ``_themes/<tree-sha256>/`` after verifying ``guidedog-theme.lock`` offline."
 msgstr ""
 
-#: ../../reference/configuration.rst:1087
+#: ../../reference/configuration.rst:1098
 msgid "Article collections ([[site.collections]])"
 msgstr ""
 
-#: ../../reference/configuration.rst:1095
-#: ../../reference/configuration.rst:1101
-#: ../../reference/configuration.rst:1156
-#: ../../reference/configuration.rst:1193
-#: ../../reference/configuration.rst:1218
+#: ../../reference/configuration.rst:1106
+#: ../../reference/configuration.rst:1112
+#: ../../reference/configuration.rst:1167
+#: ../../reference/configuration.rst:1204
+#: ../../reference/configuration.rst:1229
 msgid "``output``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1097
-#: ../../reference/configuration.rst:1150
-#: ../../reference/configuration.rst:1154
-#: ../../reference/configuration.rst:1191
-#: ../../reference/configuration.rst:1216
+#: ../../reference/configuration.rst:1108
+#: ../../reference/configuration.rst:1161
+#: ../../reference/configuration.rst:1165
+#: ../../reference/configuration.rst:1202
+#: ../../reference/configuration.rst:1227
 msgid "required"
 msgstr ""
 
-#: ../../reference/configuration.rst:1098
+#: ../../reference/configuration.rst:1109
 msgid "Portable relative output directory for the collection (for example, ``\"blog\"`` or ``\"notes/2026\"``); never a source path."
 msgstr ""
 
-#: ../../reference/configuration.rst:1099
+#: ../../reference/configuration.rst:1110
 msgid "``title``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1102
+#: ../../reference/configuration.rst:1113
 msgid "Heading for the generated collection pages."
 msgstr ""
 
-#: ../../reference/configuration.rst:1103
+#: ../../reference/configuration.rst:1114
 msgid "``path``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1106
+#: ../../reference/configuration.rst:1117
 msgid "Docname glob filter (for example, ``\"posts/*\"``); empty accepts every eligible dated document."
 msgstr ""
 
-#: ../../reference/configuration.rst:1107
+#: ../../reference/configuration.rst:1118
 msgid "``category``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1110
+#: ../../reference/configuration.rst:1121
 msgid "Required ``:category:`` value; empty accepts any category."
 msgstr ""
 
-#: ../../reference/configuration.rst:1111
+#: ../../reference/configuration.rst:1122
 msgid "``tags``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1114
+#: ../../reference/configuration.rst:1125
 msgid "Required ``:tags:`` values; an article must carry all listed tags."
 msgstr ""
 
-#: ../../reference/configuration.rst:1118
+#: ../../reference/configuration.rst:1129
 msgid "Required author name in ``:author:`` or ``:authors:``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1119
+#: ../../reference/configuration.rst:1130
 msgid "``series``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1122
+#: ../../reference/configuration.rst:1133
 msgid "Required ``:series:`` value."
 msgstr ""
 
-#: ../../reference/configuration.rst:1123
+#: ../../reference/configuration.rst:1134
 msgid "``year``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1126
+#: ../../reference/configuration.rst:1137
 msgid "Required four-digit publication year (``\"2026\"``); empty accepts all years."
 msgstr ""
 
-#: ../../reference/configuration.rst:1127
+#: ../../reference/configuration.rst:1138
 msgid "``page_size``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1130
+#: ../../reference/configuration.rst:1141
 msgid "Articles per collection page; ``0`` puts all matching articles on one page."
 msgstr ""
 
-#: ../../reference/configuration.rst:1131
+#: ../../reference/configuration.rst:1142
 msgid "``feeds``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1134
+#: ../../reference/configuration.rst:1145
 msgid "Write ``rss.xml`` and ``atom.xml`` inside this collection's ``output`` folder."
 msgstr ""
 
-#: ../../reference/configuration.rst:1135
+#: ../../reference/configuration.rst:1146
 msgid "``template``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1138
+#: ../../reference/configuration.rst:1149
 msgid "HTML layout template for the collection; empty uses ``collection.html``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1140
+#: ../../reference/configuration.rst:1151
 msgid "Mounted projects ([[site.mounts]])"
 msgstr ""
 
-#: ../../reference/configuration.rst:1148
+#: ../../reference/configuration.rst:1159
 msgid "``name``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1151
+#: ../../reference/configuration.rst:1162
 msgid "Portable single-segment mount identifier. Names must be unique ignoring ASCII case; cross-mount links use the exact configured spelling."
 msgstr ""
 
-#: ../../reference/configuration.rst:1152
-#: ../../reference/configuration.rst:1197
-#: ../../reference/configuration.rst:1214
+#: ../../reference/configuration.rst:1163
+#: ../../reference/configuration.rst:1208
+#: ../../reference/configuration.rst:1225
 msgid "``source``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1155
+#: ../../reference/configuration.rst:1166
 msgid "Project folder relative to the site configuration folder."
 msgstr ""
 
-#: ../../reference/configuration.rst:1159
+#: ../../reference/configuration.rst:1170
 msgid "Portable relative destination folder inside the assembled site; ``\"\"`` mounts at the website root."
 msgstr ""
 
-#: ../../reference/configuration.rst:1160
+#: ../../reference/configuration.rst:1171
 msgid "``builder``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1162
+#: ../../reference/configuration.rst:1173
 msgid "``\"html\"``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1163
+#: ../../reference/configuration.rst:1174
 msgid "Builder for this mount: ``\"html\"``, ``\"dirhtml\"``, ``\"pdf\"``, or ``\"discussion-pdf\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1164
+#: ../../reference/configuration.rst:1175
 msgid "``prefix``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1167
+#: ../../reference/configuration.rst:1178
 msgid "Discussion catalog prefix for ``builder = \"discussion-pdf\"``; empty uses ``\"gds\"``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1168
-#: ../../reference/configuration.rst:1201
+#: ../../reference/configuration.rst:1179
+#: ../../reference/configuration.rst:1212
 msgid "``overrides``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1171
+#: ../../reference/configuration.rst:1182
 msgid "``key=value`` setting overrides (as ``-D`` takes them) applied when building this mount. Use ``editions`` rather than ``language=...`` to build language variants."
 msgstr ""
 
-#: ../../reference/configuration.rst:1172
+#: ../../reference/configuration.rst:1183
 msgid "``exclude``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1175
+#: ../../reference/configuration.rst:1186
 msgid "Output path globs omitted when copying this mount into the assembled site."
 msgstr ""
 
-#: ../../reference/configuration.rst:1176
+#: ../../reference/configuration.rst:1187
 msgid "``editions``"
 msgstr ""
 
-#: ../../reference/configuration.rst:1179
+#: ../../reference/configuration.rst:1190
 msgid "Language editions for this mount (``[[site.mounts.editions]]``); when empty, the mount builds once in its configured language."
 msgstr ""
 
-#: ../../reference/configuration.rst:1181
+#: ../../reference/configuration.rst:1192
 msgid "Mount language editions ([[site.mounts.editions]])"
 msgstr ""
 
-#: ../../reference/configuration.rst:1192
+#: ../../reference/configuration.rst:1203
 msgid "Language code for this edition (such as ``\"en\"`` or ``\"zh_CN\"``), unique within the mount."
 msgstr ""
 
-#: ../../reference/configuration.rst:1196
+#: ../../reference/configuration.rst:1207
 msgid "Portable relative subdirectory beneath the mount's ``output`` folder; ``\"\"`` places this edition at the mount's root. Unique within the mount."
 msgstr ""
 
-#: ../../reference/configuration.rst:1200
+#: ../../reference/configuration.rst:1211
 msgid "Optional separate translated project folder relative to the site root; when empty, the mount's ``source`` is built with gettext catalogs for ``language``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1204
+#: ../../reference/configuration.rst:1215
 msgid "Extra ``key=value`` overrides applied after the mount's own ``overrides``."
 msgstr ""
 
-#: ../../reference/configuration.rst:1206
+#: ../../reference/configuration.rst:1217
 msgid "Shared site assets ([[site.assets]])"
 msgstr ""
 
-#: ../../reference/configuration.rst:1217
+#: ../../reference/configuration.rst:1228
 msgid "File or folder relative to the site configuration folder, copied once after all mounts build."
 msgstr ""
 
-#: ../../reference/configuration.rst:1221
+#: ../../reference/configuration.rst:1232
 msgid "Portable relative destination folder inside the assembled site; ``\"\"`` copies to the website root."
 msgstr ""
 
-#: ../../reference/configuration.rst:1261
+#: ../../reference/configuration.rst:1272
 msgid "Trust"
 msgstr ""
 
-#: ../../reference/configuration.rst:1264
+#: ../../reference/configuration.rst:1275
 msgid "``guidedog build --untrusted`` builds a project whose sources we did not write. Raw content is left out, nothing is fetched, and no build plugin runs. The project cannot widen what the build reads. ``include_roots`` and ``pdf_preamble`` are not used. Files and folders that lead outside the source folder (``html_logo``, ``html_favicon``, ``pdf_logo``, ``mathjax_config_path``, ``html_static_path``, ``html_extra_path``, ``templates_path``, ``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``, ``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. No Typst package is downloaded. Each dropped setting is a ``build.untrusted`` warning. This is a capability policy, not a process sandbox. See :doc:`cli`."
 msgstr ""
 
@@ -4213,6 +4225,14 @@ msgstr ""
 
 #: ../../reference/formats.rst:64
 msgid "``guidedog formats`` reports the executable's actual adapters. The compatibility page records pinned suites and real-project checks. Passing a CommonMark suite does not establish complete MyST coverage. Reading RST does not establish every Python extension's behavior. See :doc:`../compatibility`."
+msgstr ""
+
+#: ../../reference/formats.rst:70
+msgid "Project diagrams"
+msgstr ""
+
+#: ../../reference/formats.rst:73
+msgid "Project builds recognize Graphviz directives and the Guidedog ``typst-diagram`` directive in RST and MyST. The project link pass compiles diagrams and manages their image assets for HTML and PDF. A direct markup conversion retains the diagram as source code; it does not run the project asset pipeline. See :doc:`../topics/diagrams`."
 msgstr ""
 
 #: ../../reference/index.rst:1

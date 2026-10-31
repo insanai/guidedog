@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-10-31 06:02+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -603,9 +603,26 @@ msgstr ""
 #: ../../compatibility.rst:166
 msgid ""
 "Graphviz image resources are resolved relative to their document and "
-"confined. Supported image bytes are embedded in the drawing. "
-"``imagepath`` and ``fontpath`` do not expand the boundary. Typst runs "
-"with a private root containing the readable folders. This keeps book "
+"confined."
+msgstr ""
+
+#: ../../compatibility.rst:168
+#, fuzzy
+#| msgid ""
+#| "Graphviz image resources are resolved relative to their document and "
+#| "confined. Supported image bytes are embedded in the drawing. "
+#| "``imagepath`` and ``fontpath`` do not expand the boundary. Typst runs "
+#| "with a private root containing the readable folders. This keeps book "
+#| "templates and preambles within the declared resources."
+msgid ""
+"``typst-diagram`` is a Guidedog extension for RST and MyST projects, "
+"rather than a Sphinx extension contract. It compiles inline or file "
+"source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks "
+"remain examples. The embedded compiler uses the project's package and "
+"font policy; ``--untrusted`` refuses compilation. See "
+":doc:`topics/diagrams`. Supported image bytes are embedded in the "
+"drawing. ``imagepath`` and ``fontpath`` do not expand the boundary. Typst "
+"runs with a private root containing the readable folders. This keeps book "
 "templates and preambles within the declared resources."
 msgstr ""
 "Las imágenes de Graphviz se resuelven respecto al documento y quedan "
@@ -614,7 +631,7 @@ msgstr ""
 "una raíz privada que contiene los directorios legibles y mantiene las "
 "plantillas y preámbulos dentro de los recursos declarados."
 
-#: ../../compatibility.rst:171
+#: ../../compatibility.rst:173
 msgid ""
 "``--untrusted`` narrows the read boundary to the source folder. It omits "
 "raw content, unsafe URLs, outside resources, project Typst templates, and "
@@ -629,7 +646,7 @@ msgstr ""
 "muestran como código con una advertencia. Este modo no limita la memoria "
 "ni el tiempo de ejecución del compilador nativo."
 
-#: ../../compatibility.rst:177
+#: ../../compatibility.rst:179
 msgid ""
 "The host budget defaults to 1 GiB. It is coarse: it counts the sources, "
 "included files, and PDF output the host holds, reserved before they are "
@@ -651,7 +668,7 @@ msgstr ""
 "trabajo siempre permanece en memoria. No hay ningún modo respaldado en "
 "disco, y ``--memory=disk`` y ``--disk-budget`` se rechazan."
 
-#: ../../compatibility.rst:184
+#: ../../compatibility.rst:186
 msgid ""
 "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document "
 "work. Changing a limit invalidates cached reading and output. Depth and "
@@ -668,11 +685,11 @@ msgstr ""
 "usamos los límites del sistema operativo. Véanse :doc:`errors` y "
 ":doc:`internals/memory`."
 
-#: ../../compatibility.rst:190
+#: ../../compatibility.rst:192
 msgid "Verification and real projects"
 msgstr "Verificación y proyectos reales"
 
-#: ../../compatibility.rst:193
+#: ../../compatibility.rst:195
 msgid ""
 "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx "
 "9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, "
@@ -697,7 +714,7 @@ msgstr ""
 "y ``cargo xtask verify-docutils`` las contrasta con una versión fijada de "
 "Docutils 0.22.4. Los 98 árboles coinciden."
 
-#: ../../compatibility.rst:195
+#: ../../compatibility.rst:197
 msgid ""
 "On 15 October 2026 we built the manuals of CPython, Django and Flask as "
 "HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). "
@@ -712,7 +729,7 @@ msgstr ""
 "dos inofensivos en CPython. Los libros de Django y Flask se generaron; el "
 "de CPython necesita más memoria de la que tenía la máquina de 12 GB."
 
-#: ../../compatibility.rst:197
+#: ../../compatibility.rst:199
 msgid ""
 "Those projects contain unsupported Python extension constructs. Their "
 "diagnostics remain part of the evidence. A zero exit status does not mean "
@@ -725,7 +742,7 @@ msgstr ""
 "directivas privadas. Cuando la publicación exige cero diagnósticos, "
 "ejecutamos con ``-W``."
 
-#: ../../compatibility.rst:199
+#: ../../compatibility.rst:201
 msgid ""
 "The measurements describe the recorded workloads on the recorded machine. "
 "They are not universal speed or memory bounds."

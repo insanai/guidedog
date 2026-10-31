@@ -24,6 +24,8 @@ server.run(watch, |watch| {
 | Watching | `Watch { roots, skip }`, `Watch::stamp` |
 | Errors | `gd_host::Problem` `serve.listen` (exit 4) |
 
+The CLI accepts `guidedog serve docs --host 0.0.0.0 --port 8000` for network access and `--host ::` for IPv6. We open the machine's network address from another device. The default remains loopback.
+
 Behaviour: loopback by default, GET and HEAD only (405 otherwise), query and
 fragment ignored, percent-decoding, `..` and backslashes refused (400), `index.html`
 for folder paths, the 404 page, `Cache-Control: no-store`, `nosniff`,

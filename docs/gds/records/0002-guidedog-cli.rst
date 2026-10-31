@@ -4,7 +4,7 @@
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-09-29
-:gds-updated: 2026-10-15
+:gds-updated: 2026-10-31
 :gds-discussion: Local review; no external discussion URL assigned
 :gds-labels: ["cli"]
 
@@ -285,6 +285,7 @@ for RST and CommonMark and the Typst adapter for native Typst content.
    guidedog build html docs
    guidedog build pdf docs
    guidedog serve docs --port 8000
+   guidedog serve docs --host 0.0.0.0 --port 8000
 
 
 These commands are implemented in ``gd-project`` and ``gd-cli``.
@@ -293,6 +294,19 @@ Configuration is declarative TOML: source roots, entry document, navigation,
 targets, language, theme tokens, allowed resources, and build budgets. It is not
 executable Python. Built-in assets and templates are embedded into the executable.
 User overrides are explicit files in the project.
+
+
+Preview network binding
+~~~~~~~~~~~~~~~~~~~~~~~
+
+``serve --host IP`` accepts an IPv4 or IPv6 literal and passes it to ``gd_serve::ServeOptions::address``.
+The default is ``127.0.0.1``; ``0.0.0.0`` listens on all IPv4 interfaces and ``::`` listens on all IPv6 interfaces.
+The port remains a separate ``--port`` value, from 1 through 65535, with default 8000.
+Hostnames and combined address-port strings are usage errors before building.
+The printed URL uses ``SocketAddr`` formatting, including brackets around IPv6 addresses.
+For a wildcard binding we open the machine's network address on the client.
+The preview has no authentication or TLS, so we enable network access only where sharing the built documentation is intended.
+The default keeps existing local-only preview behavior.
 
 
 Project graph and stable names
@@ -600,9 +614,10 @@ These limits do not prevent a beta for trusted documentation projects on
 the five released platforms with the declared dependencies. They do prevent
 advertising hostile-input isolation or a dependency-free Linux executable.
 
-
 Review history
 --------------
+
+2026-10-31: expose the existing preview bind address as ``serve --host IP``. Retain loopback by default, validate IP literals before the initial build, and test real HTTP service through an all-interface binding. This amendment does not change the broader record's lifecycle state.
 
 
 29 September 2026: separates terminal and host policy from the allocation-free

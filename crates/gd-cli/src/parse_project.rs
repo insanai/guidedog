@@ -87,7 +87,7 @@ fn options_of(command: &str) -> Vec<&'static str> {
     let mut all: Vec<&str> = COMMON.iter().chain(own).copied().collect();
     if command == "serve" {
         all.retain(|o| *o != "-b" && *o != "-M");
-        all.push("--port");
+        all.extend(["--port", "--host"]);
     }
     all
 }
@@ -102,7 +102,7 @@ fn takes_value(command: &str, name: &str) -> bool {
         | "--disk-budget" | "--max-depth" | "--max-nodes" | "--stack-kib" | "--typst" | "-p"
         | "--project" | "--author" | "--version-name" | "-r" | "--release" | "-l"
         | "--language" | "--suffix" | "-o" | "--output" | "-w" | "--line-width" | "--pot-dir"
-        | "--locale-dir" | "--now" => true,
+        | "--locale-dir" | "--now" | "--host" => true,
         _ => false,
     }
 }
@@ -117,6 +117,7 @@ struct ProjectArgs {
     memory: MemoryMode,
     typst: Option<String>,
     port: Option<u16>,
+    host: Option<std::net::IpAddr>,
     load: LoadOptions,
     build: BuildOptions,
     quickstart: QuickstartCommand,
@@ -218,6 +219,15 @@ fn set_value(a: &mut ProjectArgs, command: &str, name: &str, value: &str) -> Res
         (_, "-D") => a.load.overrides.push(text),
         (_, "-t") => a.build.tags.push(text),
         (_, "--typst") => a.typst = Some(text),
+        (_, "--host") => {
+            a.host = Some(value.parse().map_err(|_| {
+                usage(
+                    "INVALID HOST",
+                    format!("`{value}` is not an IP address."),
+                    "Use --host 0.0.0.0 for network access, or --host :: for IPv6.",
+                )
+            })?);
+        }
         (_, "--now") => {
             a.build.now = Some(gd_clock::parse_timestamp(value).map_err(|e| {
                 usage(
@@ -323,8 +333,9 @@ fn finish(command: &str, mut a: ProjectArgs) -> Result<Command, Problem> {
         "serve" => {
             let dir = one_folder(command, &a.positional)?;
             let port = a.port.unwrap_or(8000);
+            let host = a.host.unwrap_or(std::net::Ipv4Addr::LOCALHOST.into());
             let build = typed_build(&mut a, dir, BuilderKind::Html);
-            Ok(Command::Serve(Box::new(ServeCommand { build, port })))
+            Ok(Command::Serve(Box::new(ServeCommand { build, host, port })))
         }
         "clean" => Ok(Command::Clean(CleanCommand { dir: one_folder(command, &a.positional)? })),
         "quickstart" => {

@@ -194,3 +194,25 @@ fn a_used_port_is_a_problem() {
     assert_eq!(problem.exit, 4);
     assert!(problem.hint.contains("--port"));
 }
+
+#[test]
+fn preview_can_bind_all_interfaces_and_serve_requests() {
+    let temp = site();
+    let server = Server::bind(ServeOptions {
+        site_dir: temp.0.join("html"),
+        address: std::net::Ipv4Addr::UNSPECIFIED.into(),
+        port: 0,
+        stop_on_interrupt: false,
+        ..Default::default()
+    })
+    .expect("bind all IPv4 interfaces");
+    assert!(server.address().ip().is_unspecified());
+    assert!(server.url().starts_with("http://0.0.0.0:"));
+    let port = server.address().port();
+    let stop = server.stop_handle();
+    let thread = thread::spawn(move || server.run(Watch::default(), |_| true).expect("run"));
+    let answer = get(SocketAddr::from(([127, 0, 0, 1], port)), "/");
+    stop.stop();
+    thread.join().expect("server thread");
+    assert!(answer.contains("<p>Home</p>"), "{answer}");
+}

@@ -184,7 +184,7 @@ pub(crate) fn serve(console: &mut Console<'_>, command: &ServeCommand, linked: &
         return status;
     }
     let mut host = Preview { console, command, linked, memory: &memory };
-    match ops::serve(&project, command.port, &mut host) {
+    match ops::serve(&project, command.host, command.port, &mut host) {
         Ok(()) => 0,
         Err(problem) => host.console.problem(&problem),
     }

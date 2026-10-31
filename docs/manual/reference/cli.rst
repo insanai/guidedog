@@ -289,7 +289,10 @@ it rebuilds before answering a request:
 
    guidedog serve docs
    guidedog serve docs --port 9000
+   guidedog serve docs --host 0.0.0.0 --port 8000
    guidedog serve docs --preview --now=2026-10-16T09:00:00Z
+
+``--host IP`` selects an IPv4 or IPv6 bind address. The default is ``127.0.0.1``. We use ``--host 0.0.0.0`` for all IPv4 interfaces or ``--host ::`` for all IPv6 interfaces, then open the server machine's network address from another device. The preview has no authentication or TLS, so we expose it only on a network where this access is intended. Hostnames and combined address-port values are not accepted.
 
 ``--port PORT`` (``-p`` is quickstart's project name, not the port) chooses the port, from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, ``-D name=value`` and the build options of ``guidedog build``, including ``--preview`` and ``--now=RFC3339``, apply to every rebuild. Each rebuild reloads ``conf.toml``. A failed rebuild keeps the previous site and reports the problem. Ctrl+C stops the server.
 

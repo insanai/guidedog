@@ -50,18 +50,19 @@ pub(crate) trait ServeHost {
     fn rebuild(&mut self) -> Option<Project>;
 }
 
-/// Serves the project's HTML output (`<build_dir>/html`) on the loopback `port`,
+/// Serves the project's HTML output (`<build_dir>/html`) on `address:port`,
 /// rebuilding through `host` before a page is served when a watched source changed
 /// (`gd_project::watch_roots`, the build folder skipped). Returns when the server stops
 /// (Ctrl+C); fails with `serve.listen` when the port cannot be used.
 pub(crate) fn serve(
     project: &Project,
+    address: std::net::IpAddr,
     port: u16,
     host: &mut dyn ServeHost,
 ) -> Result<(), Problem> {
     let site_dir = project.config.build_dir.join(BuilderKind::Html.name());
     let options =
-        gd_serve::ServeOptions { site_dir: site_dir.clone(), port, ..Default::default() };
+        gd_serve::ServeOptions { site_dir: site_dir.clone(), address, port, ..Default::default() };
     let server = gd_serve::Server::bind(options)?;
     host.serving(&site_dir, &server.url());
     let watch = watch_of(project);

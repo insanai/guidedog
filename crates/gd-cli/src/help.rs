@@ -238,7 +238,7 @@ const BUILD: &str = "  USAGE
     guidedog build [BUILDER] [PROJECT] [options]
     guidedog build -b BUILDER SOURCEDIR OUTPUTDIR   (sphinx-build form)
     guidedog build -M BUILDER SOURCEDIR BUILDDIR    (sphinx-build make mode)
-    guidedog clean [PROJECT]     guidedog serve [PROJECT] [--port 8000]
+    guidedog clean [PROJECT]     guidedog serve [PROJECT] [--host IP] [--port 8000]
 
   BUILDERS
     html dirhtml singlehtml pdf text gettext dummy coverage   (default: html)
@@ -265,6 +265,7 @@ const BUILD: &str = "  USAGE
     --typst=PATH       The Typst program for PDF
     -v                 Also show notes (Docutils' info messages)
     -q                 Only warnings and errors
+    --host IP          serve: bind address (default 127.0.0.1; 0.0.0.0 for network access)
     --port PORT        serve: the port (default 8000)
 
 ";

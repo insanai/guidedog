@@ -76,3 +76,5 @@ plugins go into `gd_project::LoadOptions`), `ops::build`, `ops::clean`, `ops::in
 `ops::ServeHost` (prints the "Serving" line, reloads and rebuilds on change). The
 project's conf.toml warnings are reported by the build (they count for `-W`), not again
 by the command.
+
+`guidedog serve --host IP` accepts IPv4 and IPv6 literals and defaults to `127.0.0.1`. We select `0.0.0.0` for all IPv4 interfaces or `::` for IPv6; `--port` remains separate. Invalid addresses are usage errors before the initial build.

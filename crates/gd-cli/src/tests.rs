@@ -554,3 +554,17 @@ fn quickstart_needs_a_name_and_an_author() {
     assert_eq!(status, 2);
     assert!(err.contains("PROJECT NAME AND AUTHOR ARE REQUIRED"), "{err}");
 }
+
+#[test]
+fn serve_accepts_ip_literals_and_keeps_loopback_as_default() {
+    for value in ["0.0.0.0", "192.0.2.1", "::", "::1"] {
+        let Ok(Command::Serve(command)) = parse(&["serve", "--host", value]) else { panic!() };
+        assert_eq!(command.host.to_string(), value);
+    }
+    let Ok(Command::Serve(command)) = parse(&["serve"]) else { panic!() };
+    assert!(command.host.is_loopback());
+    for value in ["localhost", "127.0.0.1:8000", "invalid"] {
+        assert_eq!(problem(&["serve", "--host", value]).title, "INVALID HOST");
+    }
+    assert_eq!(problem(&["build", "--host=0.0.0.0"]).title, "UNKNOWN OPTION");
+}

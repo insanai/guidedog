@@ -189,11 +189,13 @@ pub struct BuildCommand {
     pub typst: Option<String>,
 }
 
-/// `guidedog serve`: the HTML build it repeats, and the port.
+/// `guidedog serve`: the HTML build it repeats, and the listen address.
 #[derive(Debug, Clone)]
 pub struct ServeCommand {
     /// The build to run first and on every change (always `html`).
     pub build: BuildCommand,
+    /// `--host` (default 127.0.0.1).
+    pub host: std::net::IpAddr,
     /// `--port` (default 8000).
     pub port: u16,
 }

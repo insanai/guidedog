@@ -51,5 +51,8 @@ Discussion registry
    * - 0013
      - :doc:`records/0013-static-site-generation`
      - discussion
+   * - XXXXX
+     - :doc:`records/XXXXX-typst-diagrams`
+     - prediscussion
 
 .. gds-generated-end

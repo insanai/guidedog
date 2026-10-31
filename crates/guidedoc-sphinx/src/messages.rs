@@ -224,3 +224,13 @@ pub(crate) const AUTODOC_NESTED: Message = Message {
     message: "Autodoc directives generate autodoc directives more than {0} levels deep.",
     hint: "Look for a docstring that documents itself with automodule or autoclass.",
 };
+
+/// A diagram needs exactly one source.
+pub(crate) const TYPST_SOURCE: Message = Message {
+    code: "sphinx.typst.source",
+    severity: Severity::Warning,
+    status: Status::InvalidInput,
+    title: "TYPST DIAGRAM NEEDS ONE SOURCE",
+    message: "The directive {0} needs either content or a file argument.",
+    hint: "Give Typst source as the directive body or a file argument, not both.",
+};

@@ -14,6 +14,7 @@ mod python;
 mod reader;
 mod roles;
 mod toc;
+mod typst_diagrams;
 
 use std::sync::Arc;
 

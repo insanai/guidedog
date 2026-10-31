@@ -156,3 +156,5 @@ module; every message has a hint).
   (signatures, describing, scopes, xref lookup data). Its ids follow Sphinx exactly,
   each id piece written once (`PFidE`, not `PFiddE`).
 - **Reads allocate by design**, so no test counts allocator calls here.
+
+`typst-diagram` is a Guidedog directive, also available through MyST directive fences. It accepts inline content or one file argument, with `format` (`svg` or `png`), `alt`, `caption`, `name`, `class` and `align` options. Parsing produces a Typst `CodeBlock` marked `typst-diagram=1`; it never invokes a compiler. `typst-source` records the import origin and `typst-file` retains a file argument for RST writing. The project link pass compiles the marked block, while ordinary Typst code remains literal.

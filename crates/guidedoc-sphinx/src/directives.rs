@@ -39,6 +39,7 @@ pub(crate) enum Core {
     Acks,
     RstClass,
     Graphviz,
+    TypstDiagram,
     Doctest,
     Autodoc,
     Inheritance,
@@ -206,6 +207,12 @@ static CORE: &[CoreDirective] = &[
     core("more", Core::More, (A::None, false, C::None), &[]),
     core("acks", Core::Acks, (A::None, false, C::Required), &[]),
     core("rst-class", Core::RstClass, (A::Required, true, C::Optional), &[]),
+    core(
+        "typst-diagram",
+        Core::TypstDiagram,
+        (A::Optional, true, C::Optional),
+        crate::typst::OPTIONS,
+    ),
     core("graphviz", Core::Graphviz, (A::Optional, true, C::Optional), graphviz::OPTS_GRAPHVIZ),
     core("graph", Core::Graphviz, (A::Required, false, C::Required), graphviz::OPTS_GRAPHVIZ),
     core("digraph", Core::Graphviz, (A::Required, false, C::Required), graphviz::OPTS_GRAPHVIZ),
@@ -277,6 +284,7 @@ pub(crate) fn run_core(
         }
         Core::Acks => body::acks_directive(p, d),
         Core::RstClass => p.class_directive(d),
+        Core::TypstDiagram => crate::typst::diagram(p, d),
         Core::Graphviz => graphviz::graphviz_directive(p, d, c.name),
         Core::Doctest => doctest::doctest_directive(sx, p, d, c.name),
         Core::Autodoc => autodoc_directive(sx, p, d, "py"),

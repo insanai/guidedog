@@ -278,3 +278,48 @@ fn lossy_constructs_are_noted() {
     assert!(out.contains("a\nb"), "{out}");
     assert!(notes.iter().any(|c| c == "rst.write.lossy"), "{notes:?}");
 }
+
+#[test]
+fn typst_diagrams_round_trip_as_directives() {
+    let source = concat!(
+        ".. typst-diagram::\n   :caption: A *circle*\n   :alt: Round\n",
+        "   :format: png\n   :name: circle\n\n   #circle(radius: 12pt)\n",
+    );
+    let out = round_trip("sphinx", source);
+    assert!(out.contains(".. typst-diagram::"), "{out}");
+    assert!(out.contains(":format: png"), "{out}");
+    assert!(!out.contains("typst-source"), "{out}");
+}
+
+#[test]
+fn file_diagrams_keep_their_import_base_when_written() {
+    #[derive(Debug)]
+    struct Files;
+    impl guidedoc::ResourceProvider for Files {
+        fn provide(
+            &self,
+            _: &str,
+            name: &str,
+        ) -> Result<guidedoc::Resource, guidedoc::ResourceStatus> {
+            Ok(guidedoc::Resource {
+                canonical: name.to_owned(),
+                text: std::sync::Arc::from("#import \"helper.typ\": draw\n#draw\n"),
+            })
+        }
+    }
+    let mut request =
+        default_request("t.rst", ".. typst-diagram:: figures/a.typ\n", "sphinx", "rst");
+    request.policy = guidedoc::trusted_policy();
+    request.resources = Some(&Files);
+    let mut ws = Workspace::new();
+    let doc = read_document(&mut ws, &guidedoc_sphinx::reader(), &request).expect("file diagram");
+    let mut bytes = Vec::new();
+    let options = RenderOptions::default();
+    let mut reports = Reports::default();
+    reports.clear(64);
+    let mut ctx = RenderContext::new(doc, Emitter::new(&mut bytes), &options, &mut reports);
+    render_with(&mut ctx, Settings::default()).expect("writes a file directive");
+    let output = String::from_utf8(bytes).expect("UTF-8");
+    assert!(output.contains(".. typst-diagram:: figures/a.typ"), "{output}");
+    assert!(!output.contains("#import"), "file source must retain its directory: {output}");
+}

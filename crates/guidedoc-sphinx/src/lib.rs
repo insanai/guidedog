@@ -41,6 +41,7 @@ mod pyobject;
 mod roles;
 mod state;
 mod text;
+mod typst;
 
 #[cfg(test)]
 mod tests;

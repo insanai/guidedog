@@ -18,7 +18,7 @@ use crate::records;
 
 /// The environment's format version; an environment of another version is not read.
 /// Raise it whenever the saved form changes, so an older environment is rebuilt.
-pub const ENVIRONMENT_VERSION: u32 = 29;
+pub const ENVIRONMENT_VERSION: u32 = 30;
 
 /// A document's index in the environment, which the project tables are indexed by.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Default)]

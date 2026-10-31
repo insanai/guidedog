@@ -922,7 +922,7 @@ msgid ""
 "network address from another device. The preview has no authentication or "
 "TLS, so we expose it only on a network where this access is intended. "
 "Hostnames and combined address-port values are not accepted."
-msgstr ""
+msgstr "``--host IP`` selecciona una dirección IPv4 o IPv6 de escucha. El valor predeterminado es ``127.0.0.1``. Usamos ``--host 0.0.0.0`` para todas las interfaces IPv4 o ``--host ::`` para todas las interfaces IPv6, y abrimos desde otro dispositivo la dirección de red del servidor. La vista previa no tiene autenticación ni TLS, por lo que solo la exponemos en una red donde ese acceso sea intencionado. No se aceptan nombres de host ni valores que combinen dirección y puerto."
 
 #: ../../reference/cli.rst:297
 msgid ""
@@ -4301,7 +4301,7 @@ msgstr ""
 
 #: ../../reference/configuration.rst:673
 msgid "Typst diagrams"
-msgstr ""
+msgstr "Diagramas Typst"
 
 #: ../../reference/configuration.rst:676
 msgid ""
@@ -4316,7 +4316,7 @@ msgid ""
 "versions. See :doc:`../topics/diagrams` for the complete authoring "
 "workflow and :doc:`../howto/typst-diagrams` for directive options and "
 "limits."
-msgstr ""
+msgstr "``typst-diagram`` usa el compilador integrado en los proyectos HTML y PDF. Para ambas salidas usamos ``pdf_packages`` (``\"download\"`` o ``\"offline\"``), ``pdf_fonts`` (``\"system\"`` o ``\"embedded\"``) y ``pdf_font_paths``. Estas opciones mantienen los valores predeterminados indicados en las opciones PDF. ``:format: svg|png`` elige el formato; SVG es el predeterminado y PNG utiliza 144 píxeles por pulgada. No hay una opción de ejecutable independiente para diagramas; ``typst`` sigue seleccionando únicamente el compilador del libro. Importamos CeTZ y Fletcher explícitamente con sus versiones. El flujo completo se explica en :doc:`../topics/diagrams`; las opciones y límites están en :doc:`../howto/typst-diagrams`."
 
 #: ../../reference/configuration.rst:684
 #: ../../reference/configuration.rst:689
@@ -5687,10 +5687,9 @@ msgstr ""
 "todas las extensiones de Python. Véase :doc:`../compatibility`."
 
 #: ../../reference/formats.rst:70
-#, fuzzy
 #| msgid "Project information"
 msgid "Project diagrams"
-msgstr "Información del proyecto"
+msgstr "Diagramas del proyecto"
 
 #: ../../reference/formats.rst:73
 msgid ""
@@ -5699,7 +5698,7 @@ msgid ""
 "compiles diagrams and manages their image assets for HTML and PDF. A "
 "direct markup conversion retains the diagram as source code; it does not "
 "run the project asset pipeline. See :doc:`../topics/diagrams`."
-msgstr ""
+msgstr "Las compilaciones de proyectos reconocen las directivas Graphviz y la directiva ``typst-diagram`` de Guidedog en RST y MyST. La fase de enlace del proyecto compila los diagramas y gestiona sus imágenes para HTML y PDF. Una conversión directa del marcado conserva el diagrama como código fuente; no ejecuta la gestión de imágenes del proyecto. Véase :doc:`../topics/diagrams`."
 
 #: ../../reference/index.rst:1
 msgid "Reference"

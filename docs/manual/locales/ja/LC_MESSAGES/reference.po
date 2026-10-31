@@ -848,7 +848,7 @@ msgid ""
 "network address from another device. The preview has no authentication or "
 "TLS, so we expose it only on a network where this access is intended. "
 "Hostnames and combined address-port values are not accepted."
-msgstr ""
+msgstr "``--host IP`` は IPv4 または IPv6 の待ち受けアドレスを選択します。既定は ``127.0.0.1`` です。全 IPv4 インターフェースには ``--host 0.0.0.0``、全 IPv6 インターフェースには ``--host ::`` を使い、別の端末からサーバーのネットワークアドレスを開きます。プレビューに認証や TLS はないため、共有を意図したネットワークだけで公開します。ホスト名やアドレスとポートを結合した値は受け付けません。"
 
 #: ../../reference/cli.rst:297
 msgid ""
@@ -3984,7 +3984,7 @@ msgstr "``conf.py`` に書かれていても受け付けますが、使いませ
 
 #: ../../reference/configuration.rst:673
 msgid "Typst diagrams"
-msgstr ""
+msgstr "Typst の図"
 
 #: ../../reference/configuration.rst:676
 msgid ""
@@ -3999,7 +3999,7 @@ msgid ""
 "versions. See :doc:`../topics/diagrams` for the complete authoring "
 "workflow and :doc:`../howto/typst-diagrams` for directive options and "
 "limits."
-msgstr ""
+msgstr "``typst-diagram`` は HTML と PDF のプロジェクトで内蔵コンパイラを使います。どちらの画像出力にも ``pdf_packages``（``\"download\"`` または ``\"offline\"``）、``pdf_fonts``（``\"system\"`` または ``\"embedded\"``）、``pdf_font_paths`` を使います。既定値は PDF オプションに記載されたものと同じです。``:format: svg|png`` は画像形式を選択し、既定は SVG、PNG は 144 ピクセル毎インチです。図専用の実行プログラム設定はなく、``typst`` は引き続き書籍のコンパイラだけを選択します。CeTZ と Fletcher はバージョンを指定して明示的にインポートします。手順全体は :doc:`../topics/diagrams`、オプションと制限は :doc:`../howto/typst-diagrams` を参照してください。"
 
 #: ../../reference/configuration.rst:684
 #: ../../reference/configuration.rst:689
@@ -5289,10 +5289,9 @@ msgstr ""
 "全対応を、RST 読み取りは全 Python 拡張の再現を意味しない。\\ :doc:`../compatibility` を参照。"
 
 #: ../../reference/formats.rst:70
-#, fuzzy
 #| msgid "Project information"
 msgid "Project diagrams"
-msgstr "プロジェクト情報"
+msgstr "プロジェクトの図"
 
 #: ../../reference/formats.rst:73
 msgid ""
@@ -5301,7 +5300,7 @@ msgid ""
 "compiles diagrams and manages their image assets for HTML and PDF. A "
 "direct markup conversion retains the diagram as source code; it does not "
 "run the project asset pipeline. See :doc:`../topics/diagrams`."
-msgstr ""
+msgstr "プロジェクトのビルドは RST と MyST の Graphviz ディレクティブおよび Guidedog の ``typst-diagram`` を認識します。プロジェクトのリンク処理が図をコンパイルし、HTML と PDF の画像を管理します。マークアップの直接変換では図をソースコードとして保持し、プロジェクトの画像処理は実行しません。:doc:`../topics/diagrams` を参照してください。"
 
 #: ../../reference/index.rst:1
 msgid "Reference"

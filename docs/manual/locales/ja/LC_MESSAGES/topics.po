@@ -17,7 +17,7 @@ msgstr ""
 
 #: ../../topics/diagrams.rst:1
 msgid "Diagrams with Graphviz and Typst"
-msgstr ""
+msgstr "Graphviz と Typst による図"
 
 #: ../../topics/diagrams.rst:4
 msgid ""
@@ -33,71 +33,71 @@ msgid ""
 "We keep diagram source beside the explanation and let Guidedog build the "
 "image for HTML and PDF. Graphviz and Typst are included in the "
 "executable. We need no separate ``dot`` or ``typst`` program."
-msgstr ""
+msgstr "図のソースを説明のそばに置き、Guidedog で HTML と PDF 用の画像を生成します。Graphviz と Typst は実行ファイルに含まれます。別の ``dot`` や ``typst`` プログラムは不要です。"
 
 #: ../../topics/diagrams.rst:12
 msgid "Choose the drawing tool"
-msgstr ""
+msgstr "描画ツールを選ぶ"
 
 #: ../../topics/diagrams.rst:15
 msgid "Drawing tools"
-msgstr ""
+msgstr "描画ツール"
 
 #: ../../topics/diagrams.rst:19
 msgid "Tool"
-msgstr ""
+msgstr "ツール"
 
 #: ../../topics/diagrams.rst:20
 msgid "Useful when"
-msgstr ""
+msgstr "適した用途"
 
 #: ../../topics/diagrams.rst:21
 msgid "Source"
-msgstr ""
+msgstr "ソース"
 
 #: ../../topics/diagrams.rst:22
 msgid "Graphviz"
-msgstr ""
+msgstr "Graphviz"
 
 #: ../../topics/diagrams.rst:23
 msgid ""
 "We describe nodes and edges and want the layout engine to place them."
-msgstr ""
+msgstr "ノードと辺を記述し、配置をレイアウトエンジンに任せます。"
 
 #: ../../topics/diagrams.rst:24
 msgid "DOT inside ``graphviz``, ``graph`` or ``digraph``."
-msgstr ""
+msgstr "``graphviz``、``graph``、``digraph`` 内の DOT。"
 
 #: ../../topics/diagrams.rst:25
 msgid "Typst with CeTZ"
-msgstr ""
+msgstr "Typst と CeTZ"
 
 #: ../../topics/diagrams.rst:26
 msgid "We need explicit geometry, custom shapes, plots or sequence layouts."
-msgstr ""
+msgstr "明示的な幾何形状、独自の形、プロットやシーケンス配置が必要な場合です。"
 
 #: ../../topics/diagrams.rst:27
 msgid "Typst inside ``typst-diagram``."
-msgstr ""
+msgstr "``typst-diagram`` 内の Typst。"
 
 #: ../../topics/diagrams.rst:28
 msgid "Typst with Fletcher"
-msgstr ""
+msgstr "Typst と Fletcher"
 
 #: ../../topics/diagrams.rst:29
 msgid "We need positioned nodes, mathematical labels and precise arrows."
-msgstr ""
+msgstr "位置を指定したノード、数式ラベル、正確な矢印が必要な場合です。"
 
 #: ../../topics/diagrams.rst:30
 msgid "Typst inside ``typst-diagram`` with a pinned Fletcher import."
-msgstr ""
+msgstr "``typst-diagram`` 内の Typst と、バージョンを固定した Fletcher のインポート。"
 
 #: ../../topics/diagrams.rst:32
 msgid ""
 "We choose SVG for scalable drawings in both the browser and book. Typst "
 "diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
 "PNG files still work with ordinary image and figure directives."
-msgstr ""
+msgstr "ブラウザーと書籍で拡大縮小できる SVG を選びます。Typst の図は 144 ピクセル毎インチの PNG にもできます。既存の SVG と PNG は、通常の画像・図ディレクティブで引き続き使えます。"
 
 #: ../../topics/diagrams.rst:36
 msgid "A flow chart"
@@ -136,7 +136,7 @@ msgstr ""
 
 #: ../../topics/diagrams.rst:88
 msgid "In MyST Markdown, we use a directive fence with the same options."
-msgstr ""
+msgstr "MyST Markdown では同じオプションを持つディレクティブフェンスを使います。"
 
 #: ../../topics/diagrams.rst:99
 msgid ""
@@ -145,44 +145,44 @@ msgid ""
 "the body's edges in the corresponding DOT graph. A plain ``dot`` or "
 "``graphviz`` Markdown fence also draws a graph; we use the directive form "
 "when we need options."
-msgstr ""
+msgstr "``graphviz`` のファイル引数は、本文の代わりに DOT ファイルを読み込みます。``graph`` と ``digraph`` は図の名前を引数に取り、本文の辺を対応する DOT のグラフで囲みます。通常の ``dot`` または ``graphviz`` の Markdown フェンスでも描画できますが、オプションが必要な場合はディレクティブを使います。"
 
 #: ../../topics/diagrams.rst:103
 msgid "Draw with Typst"
-msgstr ""
+msgstr "Typst で描く"
 
 #: ../../topics/diagrams.rst:106
 msgid ""
 "The ``typst-diagram`` directive compiles its body to an image. The page "
 "fits the drawing automatically. We can start with Typst's built-in shapes "
 "before adding a package."
-msgstr ""
+msgstr "``typst-diagram`` は本文を画像にコンパイルします。ページは自動的に図に合う大きさになります。パッケージを追加する前に、Typst 内蔵の図形から始められます。"
 
 #: ../../topics/diagrams.rst:120
 msgid "A drawing from Typst source."
-msgstr ""
+msgstr "Typst ソースから生成した図。"
 
 #: ../../topics/diagrams.rst:126
 msgid ""
 "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
 "An ordinary ``typst`` code fence displays source without compiling it."
-msgstr ""
+msgstr "MyST で同じ図を描く場合は、フェンス言語に ``{typst-diagram}`` を使います。通常の ``typst`` コードフェンスはコンパイルせずソースを表示します。"
 
 #: ../../topics/diagrams.rst:139
 msgid ""
 "CeTZ supplies a drawing canvas and geometric operations. We import a "
 "specific package version so the source states its dependency."
-msgstr ""
+msgstr "CeTZ は描画キャンバスと幾何操作を提供します。依存関係をソースに明示するため、特定バージョンのパッケージをインポートします。"
 
 #: ../../topics/diagrams.rst:156
 msgid ""
 "Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
 "are useful when position carries meaning."
-msgstr ""
+msgstr "Fletcher は CeTZ 上でノードと矢印の図を構築します。位置に意味がある場合、明示的な座標が役立ちます。"
 
 #: ../../topics/diagrams.rst:172
 msgid "Share source and refer to figures"
-msgstr ""
+msgstr "ソースを共有し図を参照する"
 
 #: ../../topics/diagrams.rst:175
 msgid ""
@@ -193,13 +193,13 @@ msgid ""
 "this book. Alternative text explains the information conveyed by the "
 "drawing. It is especially useful for Typst SVGs, which draw letters as "
 "outlines."
-msgstr ""
+msgstr "両方のディレクティブは ``:caption:``、``:alt:``、``:name:``、``:class:``、``:align:`` を受け付けます。``conf.toml`` で ``numfig = true`` を有効にし、名前とキャプションのある図を RST の ``:numref:`` または MyST の ``{numref}`` で参照します。例えば :numref:`chapter-typst-circle` は本書の番号付きの図です。代替テキストは図が伝える情報を説明します。文字を輪郭として描く Typst SVG で特に役立ちます。"
 
 #: ../../topics/diagrams.rst:181
 msgid ""
 "For a larger drawing we keep Typst source in a file. Guidedog compiles it "
 "during the ordinary build."
-msgstr ""
+msgstr "大きな図の Typst ソースはファイルに保存します。Guidedog が通常のビルドでコンパイルします。"
 
 #: ../../topics/diagrams.rst:190
 msgid ""
@@ -209,13 +209,12 @@ msgid ""
 "Changing an imported helper or data file redraws the affected HTML pages. "
 "Identical generated images keep their timestamps so unchanged PDF books "
 "remain cached."
-msgstr ""
+msgstr "文書内の図のインポートは、その文書を基準に解決します。ファイルによる図のインポートは、その Typst ファイルを基準に解決します。色、ノード、シーケンス図の補助ライブラリを共有できます。インポートした補助・データファイルを変更すると、該当する HTML ページを再描画します。同じ画像はタイムスタンプを保ち、変更のない PDF 書籍のキャッシュを維持します。"
 
 #: ../../topics/diagrams.rst:196
-#, fuzzy
 #| msgid "Images and figures"
 msgid "Packages, limits and failures"
-msgstr "画像と図"
+msgstr "パッケージ、制限、失敗時の扱い"
 
 #: ../../topics/diagrams.rst:199
 msgid ""
@@ -228,7 +227,7 @@ msgid ""
 "source directory, including through symlinks. Diagrams must produce one "
 "finite page; PNG export is limited to 16 million pixels and 16,384 pixels "
 "on either side."
-msgstr ""
+msgstr "``pdf_packages``、``pdf_fonts``、``pdf_font_paths`` は両出力の Typst の図を制御します。``pdf_packages = \"offline\"`` は Typst のパッケージディレクトリにあるパッケージだけを使います。既定では不足するものをダウンロードします。不足していたパッケージの導入やフォントの編集後は、新しいプロセスで ``guidedog build html -a`` を実行します。プロジェクトのインポートはシンボリックリンク経由でもソースディレクトリ内に制限されます。図は有限の寸法を持つ 1 ページである必要があり、PNG は 1,600 万ピクセル、各辺 16,384 ピクセルまでです。"
 
 #: ../../topics/diagrams.rst:206
 msgid ""
@@ -238,7 +237,7 @@ msgid ""
 "without compiling a drawing. The :doc:`../howto/typst-diagrams` guide "
 "lists every option, source limit and migration step for existing figure "
 "files."
-msgstr ""
+msgstr "描画に失敗した図は警告付きのソースとして残ります。図の欠落で公開を止めたい場合は ``-W`` でビルドします。``--untrusted`` は Typst のコンパイルを拒否しソースを保持します。テキストビルドは図をコンパイルせずにソースを表示します。:doc:`../howto/typst-diagrams` に全オプション、ソースの制限、既存の図ファイルの移行手順を記載しています。"
 
 #: ../../topics/diagrams.rst:212
 msgid "Light, dark and print"
@@ -249,7 +248,7 @@ msgid ""
 "Typst diagrams keep their authored colors and receive the same light "
 "panel as ordinary Graphviz images in the default dark theme. The adaptive "
 "Graphviz palette does not recolor Typst drawings."
-msgstr ""
+msgstr "Typst の図は指定した色を保持し、既定のダークテーマでは通常の Graphviz 画像と同じ明るいパネル上に表示されます。Graphviz の適応パレットは Typst の図を再着色しません。"
 
 #: ../../topics/diagrams.rst:217
 msgid ""
@@ -1543,11 +1542,11 @@ msgid ""
 "``image`` and ``figure``. We can also author Graphviz and Typst drawings "
 "directly in markup with automatic HTML and PDF assets; see "
 ":doc:`diagrams`."
-msgstr ""
+msgstr "イラスト、スクリーンショット、既存の図は ``image`` と ``figure`` で組み込みます。また、Graphviz や Typst の図をマークアップ内で直接記述し、HTML と PDF 用の画像を自動生成できます。:doc:`diagrams` を参照してください。"
 
 #: ../../topics/writing.rst:274
 msgid "For an existing image:"
-msgstr ""
+msgstr "既存の画像の場合："
 
 #: ../../topics/writing.rst:290
 msgid ""

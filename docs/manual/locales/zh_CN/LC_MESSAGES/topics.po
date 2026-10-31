@@ -17,7 +17,7 @@ msgstr ""
 
 #: ../../topics/diagrams.rst:1
 msgid "Diagrams with Graphviz and Typst"
-msgstr ""
+msgstr "使用 Graphviz 和 Typst 绘制图表"
 
 #: ../../topics/diagrams.rst:4
 msgid ""
@@ -32,71 +32,71 @@ msgid ""
 "We keep diagram source beside the explanation and let Guidedog build the "
 "image for HTML and PDF. Graphviz and Typst are included in the "
 "executable. We need no separate ``dot`` or ``typst`` program."
-msgstr ""
+msgstr "我们将图表源代码放在说明文字旁，由 Guidedog 为 HTML 和 PDF 构建图像。可执行文件已经包含 Graphviz 和 Typst。我们无需单独的 ``dot`` 或 ``typst`` 程序。"
 
 #: ../../topics/diagrams.rst:12
 msgid "Choose the drawing tool"
-msgstr ""
+msgstr "选择绘图工具"
 
 #: ../../topics/diagrams.rst:15
 msgid "Drawing tools"
-msgstr ""
+msgstr "绘图工具"
 
 #: ../../topics/diagrams.rst:19
 msgid "Tool"
-msgstr ""
+msgstr "工具"
 
 #: ../../topics/diagrams.rst:20
 msgid "Useful when"
-msgstr ""
+msgstr "适用场景"
 
 #: ../../topics/diagrams.rst:21
 msgid "Source"
-msgstr ""
+msgstr "源代码"
 
 #: ../../topics/diagrams.rst:22
 msgid "Graphviz"
-msgstr ""
+msgstr "Graphviz"
 
 #: ../../topics/diagrams.rst:23
 msgid ""
 "We describe nodes and edges and want the layout engine to place them."
-msgstr ""
+msgstr "我们描述节点和边，由布局引擎决定它们的位置。"
 
 #: ../../topics/diagrams.rst:24
 msgid "DOT inside ``graphviz``, ``graph`` or ``digraph``."
-msgstr ""
+msgstr "``graphviz``、``graph`` 或 ``digraph`` 中的 DOT 代码。"
 
 #: ../../topics/diagrams.rst:25
 msgid "Typst with CeTZ"
-msgstr ""
+msgstr "Typst 与 CeTZ"
 
 #: ../../topics/diagrams.rst:26
 msgid "We need explicit geometry, custom shapes, plots or sequence layouts."
-msgstr ""
+msgstr "我们需要明确的几何位置、自定义形状、绘图或时序布局。"
 
 #: ../../topics/diagrams.rst:27
 msgid "Typst inside ``typst-diagram``."
-msgstr ""
+msgstr "``typst-diagram`` 中的 Typst 代码。"
 
 #: ../../topics/diagrams.rst:28
 msgid "Typst with Fletcher"
-msgstr ""
+msgstr "Typst 与 Fletcher"
 
 #: ../../topics/diagrams.rst:29
 msgid "We need positioned nodes, mathematical labels and precise arrows."
-msgstr ""
+msgstr "我们需要指定位置的节点、数学标签和精确箭头。"
 
 #: ../../topics/diagrams.rst:30
 msgid "Typst inside ``typst-diagram`` with a pinned Fletcher import."
-msgstr ""
+msgstr "``typst-diagram`` 中的 Typst 代码，并导入固定版本的 Fletcher。"
 
 #: ../../topics/diagrams.rst:32
 msgid ""
 "We choose SVG for scalable drawings in both the browser and book. Typst "
 "diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
 "PNG files still work with ordinary image and figure directives."
-msgstr ""
+msgstr "我们选择 SVG，让图形在浏览器和书籍中都能缩放。Typst 图表也可以生成每英寸 144 像素的 PNG。已有的 SVG 和 PNG 文件仍可通过普通的图像和插图指令使用。"
 
 #: ../../topics/diagrams.rst:36
 msgid "A flow chart"
@@ -134,7 +134,7 @@ msgstr ""
 
 #: ../../topics/diagrams.rst:88
 msgid "In MyST Markdown, we use a directive fence with the same options."
-msgstr ""
+msgstr "在 MyST Markdown 中，我们使用相同选项的指令围栏。"
 
 #: ../../topics/diagrams.rst:99
 msgid ""
@@ -143,44 +143,44 @@ msgid ""
 "the body's edges in the corresponding DOT graph. A plain ``dot`` or "
 "``graphviz`` Markdown fence also draws a graph; we use the directive form "
 "when we need options."
-msgstr ""
+msgstr "``graphviz`` 的文件参数读取 DOT 文件，替代内联正文。``graph`` 和 ``digraph`` 以图名为参数，将正文中的边包裹在相应的 DOT 图定义中。普通的 ``dot`` 或 ``graphviz`` Markdown 围栏也能绘图；需要选项时，我们使用指令形式。"
 
 #: ../../topics/diagrams.rst:103
 msgid "Draw with Typst"
-msgstr ""
+msgstr "用 Typst 绘图"
 
 #: ../../topics/diagrams.rst:106
 msgid ""
 "The ``typst-diagram`` directive compiles its body to an image. The page "
 "fits the drawing automatically. We can start with Typst's built-in shapes "
 "before adding a package."
-msgstr ""
+msgstr "``typst-diagram`` 指令将正文编译为图像。页面会自动适应图形。我们可以先使用 Typst 内置的形状，再添加包。"
 
 #: ../../topics/diagrams.rst:120
 msgid "A drawing from Typst source."
-msgstr ""
+msgstr "由 Typst 源代码生成的图形。"
 
 #: ../../topics/diagrams.rst:126
 msgid ""
 "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
 "An ordinary ``typst`` code fence displays source without compiling it."
-msgstr ""
+msgstr "在 MyST 中绘制相同图形时，围栏语言使用 ``{typst-diagram}``。普通的 ``typst`` 代码围栏只显示源代码，不进行编译。"
 
 #: ../../topics/diagrams.rst:139
 msgid ""
 "CeTZ supplies a drawing canvas and geometric operations. We import a "
 "specific package version so the source states its dependency."
-msgstr ""
+msgstr "CeTZ 提供画布和几何操作。我们导入特定版本的包，让源代码明确声明依赖。"
 
 #: ../../topics/diagrams.rst:156
 msgid ""
 "Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
 "are useful when position carries meaning."
-msgstr ""
+msgstr "Fletcher 在 CeTZ 上构建节点和箭头图。当位置具有含义时，它提供的显式坐标十分有用。"
 
 #: ../../topics/diagrams.rst:172
 msgid "Share source and refer to figures"
-msgstr ""
+msgstr "共享源代码并引用插图"
 
 #: ../../topics/diagrams.rst:175
 msgid ""
@@ -191,13 +191,13 @@ msgid ""
 "this book. Alternative text explains the information conveyed by the "
 "drawing. It is especially useful for Typst SVGs, which draw letters as "
 "outlines."
-msgstr ""
+msgstr "两种指令都接受 ``:caption:``、``:alt:``、``:name:``、``:class:`` 和 ``:align:``。我们在 ``conf.toml`` 中启用 ``numfig = true``，通过 RST 的 ``:numref:`` 或 MyST 的 ``{numref}`` 引用有名称和图注的图形。例如，:numref:`chapter-typst-circle` 是本书的一幅编号插图。替代文本说明图形传达的信息。对于将文字绘制为轮廓的 Typst SVG，这尤其有用。"
 
 #: ../../topics/diagrams.rst:181
 msgid ""
 "For a larger drawing we keep Typst source in a file. Guidedog compiles it "
 "during the ordinary build."
-msgstr ""
+msgstr "较大的图形可以将 Typst 源代码保存在文件中。Guidedog 会在正常构建过程中编译它。"
 
 #: ../../topics/diagrams.rst:190
 msgid ""
@@ -207,13 +207,12 @@ msgid ""
 "Changing an imported helper or data file redraws the affected HTML pages. "
 "Identical generated images keep their timestamps so unchanged PDF books "
 "remain cached."
-msgstr ""
+msgstr "内联图表的导入相对于包含它的文档解析。文件图表的导入相对于其 Typst 文件解析。因此，我们可以共享提供颜色、节点和时序图的本地辅助库。更改导入的辅助文件或数据文件会重新绘制受影响的 HTML 页面。相同的生成图像保留时间戳，使未更改的 PDF 书籍继续使用缓存。"
 
 #: ../../topics/diagrams.rst:196
-#, fuzzy
 #| msgid "Images and figures"
 msgid "Packages, limits and failures"
-msgstr "图片与插图"
+msgstr "包、限制与失败处理"
 
 #: ../../topics/diagrams.rst:199
 msgid ""
@@ -226,7 +225,7 @@ msgid ""
 "source directory, including through symlinks. Diagrams must produce one "
 "finite page; PNG export is limited to 16 million pixels and 16,384 pixels "
 "on either side."
-msgstr ""
+msgstr "``pdf_packages``、``pdf_fonts`` 和 ``pdf_font_paths`` 设置控制两种输出中的 Typst 图表。设置 ``pdf_packages = \"offline\"`` 时，编译器仅使用已经安装在 Typst 包目录中的包。默认会下载缺失的包。安装此前缺失的包或编辑字体后，我们在新进程中运行 ``guidedog build html -a``。项目导入必须留在源目录内，符号链接也不例外。图表必须生成一页尺寸有限的页面；PNG 上限为 1600 万像素，任一边不超过 16,384 像素。"
 
 #: ../../topics/diagrams.rst:206
 msgid ""
@@ -236,7 +235,7 @@ msgid ""
 "without compiling a drawing. The :doc:`../howto/typst-diagrams` guide "
 "lists every option, source limit and migration step for existing figure "
 "files."
-msgstr ""
+msgstr "绘制失败的图形仍以源代码显示，并附有警告。缺少图表必须阻止发布时，我们使用 ``-W`` 构建。``--untrusted`` 拒绝 Typst 编译并保留源代码。文本构建显示源代码，不编译图形。:doc:`../howto/typst-diagrams` 列出了全部选项、源代码限制，以及已有图形文件的迁移步骤。"
 
 #: ../../topics/diagrams.rst:212
 msgid "Light, dark and print"
@@ -247,7 +246,7 @@ msgid ""
 "Typst diagrams keep their authored colors and receive the same light "
 "panel as ordinary Graphviz images in the default dark theme. The adaptive "
 "Graphviz palette does not recolor Typst drawings."
-msgstr ""
+msgstr "Typst 图表保留作者指定的颜色，在默认深色主题中与普通 Graphviz 图像一样使用浅色底板。Graphviz 的自适应调色板不会重新着色 Typst 图形。"
 
 #: ../../topics/diagrams.rst:217
 msgid ""
@@ -1496,11 +1495,11 @@ msgid ""
 "``image`` and ``figure``. We can also author Graphviz and Typst drawings "
 "directly in markup with automatic HTML and PDF assets; see "
 ":doc:`diagrams`."
-msgstr ""
+msgstr "我们使用 ``image`` 和 ``figure`` 加入插画、屏幕截图和已有图表。也可以直接在标记中编写 Graphviz 和 Typst 绘图，自动生成 HTML 和 PDF 图像资源；参见 :doc:`diagrams`。"
 
 #: ../../topics/writing.rst:274
 msgid "For an existing image:"
-msgstr ""
+msgstr "对于已有图像："
 
 #: ../../topics/writing.rst:290
 msgid ""

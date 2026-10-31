@@ -830,7 +830,7 @@ msgid ""
 "network address from another device. The preview has no authentication or "
 "TLS, so we expose it only on a network where this access is intended. "
 "Hostnames and combined address-port values are not accepted."
-msgstr ""
+msgstr "``--host IP`` 选择 IPv4 或 IPv6 监听地址。默认值为 ``127.0.0.1``。我们使用 ``--host 0.0.0.0`` 监听所有 IPv4 接口，或用 ``--host ::`` 监听所有 IPv6 接口，然后从其他设备打开服务器的网络地址。预览服务没有身份验证或 TLS，因此我们只在确实需要共享访问的网络中开放它。不接受主机名或将地址和端口组合在一起的值。"
 
 #: ../../reference/cli.rst:297
 msgid ""
@@ -3898,7 +3898,7 @@ msgstr "可以从 ``conf.py`` 读取，但不会使用：Graphviz 已链接进 G
 
 #: ../../reference/configuration.rst:673
 msgid "Typst diagrams"
-msgstr ""
+msgstr "Typst 图表"
 
 #: ../../reference/configuration.rst:676
 msgid ""
@@ -3913,7 +3913,7 @@ msgid ""
 "versions. See :doc:`../topics/diagrams` for the complete authoring "
 "workflow and :doc:`../howto/typst-diagrams` for directive options and "
 "limits."
-msgstr ""
+msgstr "``typst-diagram`` 在 HTML 和 PDF 项目中使用内嵌编译器。两种图表输出都使用 ``pdf_packages``（``\"download\"`` 或 ``\"offline\"``）、``pdf_fonts``（``\"system\"`` 或 ``\"embedded\"``）和 ``pdf_font_paths``。这些设置沿用 PDF 选项列出的默认值。指令的 ``:format: svg|png`` 选择图像格式；默认为 SVG，PNG 使用每英寸 144 像素。没有单独的图表可执行程序设置，``typst`` 仍然只选择书籍编译器。我们显式指定版本导入 CeTZ 和 Fletcher。完整流程见 :doc:`../topics/diagrams`，指令选项和限制见 :doc:`../howto/typst-diagrams`。"
 
 #: ../../reference/configuration.rst:684
 #: ../../reference/configuration.rst:689
@@ -5173,10 +5173,9 @@ msgstr ""
 "测试不代表完整支持 MyST；能读取 RST 也不代表复现所有 Python 扩展。见 :doc:`../compatibility`\\ 。"
 
 #: ../../reference/formats.rst:70
-#, fuzzy
 #| msgid "Project information"
 msgid "Project diagrams"
-msgstr "项目信息"
+msgstr "项目图表"
 
 #: ../../reference/formats.rst:73
 msgid ""
@@ -5185,7 +5184,7 @@ msgid ""
 "compiles diagrams and manages their image assets for HTML and PDF. A "
 "direct markup conversion retains the diagram as source code; it does not "
 "run the project asset pipeline. See :doc:`../topics/diagrams`."
-msgstr ""
+msgstr "项目构建会识别 RST 和 MyST 中的 Graphviz 指令及 Guidedog 的 ``typst-diagram`` 指令。项目链接阶段编译图表并管理 HTML 和 PDF 的图像资源。直接转换标记时，图表保留为源代码，不运行项目的资源处理流程。参见 :doc:`../topics/diagrams`。"
 
 #: ../../reference/index.rst:1
 msgid "Reference"

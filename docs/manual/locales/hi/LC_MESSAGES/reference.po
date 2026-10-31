@@ -914,7 +914,7 @@ msgid ""
 "network address from another device. The preview has no authentication or "
 "TLS, so we expose it only on a network where this access is intended. "
 "Hostnames and combined address-port values are not accepted."
-msgstr ""
+msgstr "``--host IP`` IPv4 या IPv6 का बाइंड पता चुनता है। डिफ़ॉल्ट ``127.0.0.1`` है। सभी IPv4 इंटरफ़ेस के लिए हम ``--host 0.0.0.0`` और सभी IPv6 इंटरफ़ेस के लिए ``--host ::`` इस्तेमाल करते हैं, फिर दूसरे उपकरण से सर्वर का नेटवर्क पता खोलते हैं। पूर्वावलोकन में प्रमाणीकरण या TLS नहीं है, इसलिए हम इसे केवल ऐसे नेटवर्क पर उपलब्ध कराते हैं जहाँ यह पहुँच अपेक्षित है। होस्ट नाम और पते तथा पोर्ट को जोड़कर दिए गए मान स्वीकार नहीं किए जाते।"
 
 #: ../../reference/cli.rst:297
 msgid ""
@@ -4240,7 +4240,7 @@ msgstr ""
 
 #: ../../reference/configuration.rst:673
 msgid "Typst diagrams"
-msgstr ""
+msgstr "Typst आरेख"
 
 #: ../../reference/configuration.rst:676
 msgid ""
@@ -4255,7 +4255,7 @@ msgid ""
 "versions. See :doc:`../topics/diagrams` for the complete authoring "
 "workflow and :doc:`../howto/typst-diagrams` for directive options and "
 "limits."
-msgstr ""
+msgstr "``typst-diagram`` HTML और PDF परियोजनाओं में अंतर्निहित कंपाइलर इस्तेमाल करता है। दोनों आरेख आउटपुट के लिए हम ``pdf_packages`` (``\"download\"`` या ``\"offline\"``), ``pdf_fonts`` (``\"system\"`` या ``\"embedded\"``) और ``pdf_font_paths`` इस्तेमाल करते हैं। इनके डिफ़ॉल्ट मान PDF विकल्पों में दिए गए मान ही हैं। निर्देश का ``:format: svg|png`` चित्र प्रारूप चुनता है; SVG डिफ़ॉल्ट है और PNG प्रति इंच 144 पिक्सेल इस्तेमाल करता है। आरेख के लिए अलग निष्पादन योग्य प्रोग्राम की सेटिंग नहीं है; ``typst`` अब भी केवल पुस्तक का कंपाइलर चुनता है। हम संस्करण बताकर CeTZ और Fletcher स्पष्ट रूप से आयात करते हैं। पूरा लेखन क्रम :doc:`../topics/diagrams` में तथा निर्देश के विकल्प और सीमाएँ :doc:`../howto/typst-diagrams` में हैं।"
 
 #: ../../reference/configuration.rst:684
 #: ../../reference/configuration.rst:689
@@ -5605,10 +5605,9 @@ msgstr ""
 "नहीं। :doc:`../compatibility` देखें।"
 
 #: ../../reference/formats.rst:70
-#, fuzzy
 #| msgid "Project information"
 msgid "Project diagrams"
-msgstr "प्रोजेक्ट की जानकारी"
+msgstr "परियोजना के आरेख"
 
 #: ../../reference/formats.rst:73
 msgid ""
@@ -5617,7 +5616,7 @@ msgid ""
 "compiles diagrams and manages their image assets for HTML and PDF. A "
 "direct markup conversion retains the diagram as source code; it does not "
 "run the project asset pipeline. See :doc:`../topics/diagrams`."
-msgstr ""
+msgstr "परियोजना निर्माण RST और MyST में Graphviz निर्देश तथा Guidedog का ``typst-diagram`` निर्देश पहचानता है। परियोजना का लिंक चरण आरेख कंपाइल करता है और HTML तथा PDF के चित्र संसाधन सँभालता है। सीधे मार्कअप रूपांतरण में आरेख स्रोत कोड के रूप में रहता है; परियोजना की संसाधन प्रक्रिया नहीं चलती। :doc:`../topics/diagrams` देखें।"
 
 #: ../../reference/index.rst:1
 msgid "Reference"

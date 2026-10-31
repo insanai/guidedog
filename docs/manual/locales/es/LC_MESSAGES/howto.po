@@ -3508,7 +3508,7 @@ msgstr ""
 
 #: ../../howto/typst-diagrams.rst:1
 msgid "Draw diagrams with Typst"
-msgstr ""
+msgstr "Dibujar diagramas con Typst"
 
 #: ../../howto/typst-diagrams.rst:4
 msgid ""
@@ -3516,25 +3516,25 @@ msgid ""
 "``typst-diagram`` compiles the code with Guidedog's embedded Typst "
 "compiler and includes the resulting image in HTML and PDF. We need no "
 "separate figure task or installed Typst program."
-msgstr ""
+msgstr "Podemos escribir código de dibujo de Typst directamente en un documento RST o MyST. ``typst-diagram`` lo compila con el compilador Typst integrado de Guidedog e incluye la imagen resultante en HTML y PDF. No necesitamos una tarea separada para las figuras ni un programa Typst instalado."
 
 #: ../../howto/typst-diagrams.rst:8
 msgid "A first drawing"
-msgstr ""
+msgstr "Un primer dibujo"
 
 #: ../../howto/typst-diagrams.rst:11
 msgid "We write the source as the directive's body."
-msgstr ""
+msgstr "Escribimos el código fuente en el cuerpo de la directiva."
 
 #: ../../howto/typst-diagrams.rst:23
 msgid "A circle compiled from the directive body."
-msgstr ""
+msgstr "Un círculo compilado a partir del cuerpo de la directiva."
 
 #: ../../howto/typst-diagrams.rst:28
 msgid ""
 "We use a MyST directive fence in Markdown. An ordinary ``typst`` code "
 "fence remains a source example."
-msgstr ""
+msgstr "En Markdown usamos un bloque de directiva MyST. Un bloque de código ``typst`` normal sigue siendo un ejemplo de código fuente."
 
 #: ../../howto/typst-diagrams.rst:40
 msgid ""
@@ -3544,21 +3544,21 @@ msgid ""
 "``numfig = true``, a captioned diagram is a numbered figure and "
 "``:numref:`` can refer to its ``:name:``. We provide meaningful ``:alt:`` "
 "text because SVG text is drawn as outlines."
-msgstr ""
+msgstr "El formato predeterminado es SVG, de modo que el mismo dibujo vectorial escala en el sitio y el libro. ``:format: png`` selecciona PNG a 144 píxeles por pulgada. También podemos establecer ``:class:`` y ``:align: left|center|right``. Con ``numfig = true``, un dibujo con leyenda se convierte en figura numerada y ``:numref:`` puede referirse a su ``:name:``. Escribimos un texto ``:alt:`` significativo porque las letras del SVG se dibujan como contornos."
 
 #: ../../howto/typst-diagrams.rst:46
 msgid "CeTZ and Fletcher"
-msgstr ""
+msgstr "CeTZ y Fletcher"
 
 #: ../../howto/typst-diagrams.rst:49
 msgid ""
 "We import packages explicitly with pinned versions. This CeTZ example "
 "uses the version shared by Fletcher 0.5.8."
-msgstr ""
+msgstr "Importamos los paquetes explícitamente con versiones fijadas. Este ejemplo de CeTZ usa la versión que también utiliza Fletcher 0.5.8."
 
 #: ../../howto/typst-diagrams.rst:65
 msgid "Fletcher supplies nodes and arrows."
-msgstr ""
+msgstr "Fletcher proporciona nodos y flechas."
 
 #: ../../howto/typst-diagrams.rst:80
 msgid ""
@@ -3570,11 +3570,11 @@ msgid ""
 "with ``pdf_font_paths``. After installing a previously missing package or "
 "changing font files, we run a fresh ``guidedog build html -a`` command to "
 "redraw cached pages and reload the compiler's font store."
-msgstr ""
+msgstr "Las opciones ``pdf_packages``, ``pdf_fonts`` y ``pdf_font_paths`` se aplican a los diagramas tanto en HTML como en PDF. ``pdf_packages = \"offline\"`` utiliza solo los paquetes ya instalados en los directorios de Typst. El valor predeterminado permite descargar paquetes ausentes. Para obtener tipografía reproducible establecemos ``pdf_fonts = \"embedded\"`` y añadimos directorios de fuentes del proyecto con ``pdf_font_paths``. Después de instalar un paquete antes ausente o cambiar archivos de fuentes, ejecutamos ``guidedog build html -a`` en un proceso nuevo para volver a dibujar las páginas almacenadas y recargar las fuentes del compilador."
 
 #: ../../howto/typst-diagrams.rst:86
 msgid "Shared helpers and existing files"
-msgstr ""
+msgstr "Funciones compartidas y archivos existentes"
 
 #: ../../howto/typst-diagrams.rst:89
 msgid ""
@@ -3582,14 +3582,14 @@ msgid ""
 "file. An inline diagram imports paths relative to the RST or Markdown "
 "file containing it. A directive inside an included document uses that "
 "document's folder."
-msgstr ""
+msgstr "Podemos trasladar colores y funciones de dibujo comunes a un archivo ``.typ`` local. Un diagrama en el documento resuelve las importaciones respecto al archivo RST o Markdown que lo contiene. Una directiva en un documento incluido utiliza la carpeta de ese documento."
 
 #: ../../howto/typst-diagrams.rst:101
 msgid ""
 "We can also retain a complete figure source file and let Guidedog build "
 "it. We give either a file argument or an inline body. Imports in the file "
 "resolve beside that file."
-msgstr ""
+msgstr "También podemos conservar un archivo fuente completo para la figura y dejar que Guidedog lo compile. Indicamos un argumento de archivo o un cuerpo en el documento. Las importaciones del archivo se resuelven junto a ese archivo."
 
 #: ../../howto/typst-diagrams.rst:111
 msgid ""
@@ -3597,13 +3597,12 @@ msgid ""
 "redraws the affected HTML pages without changing their markup. We keep "
 "project imports below the source directory; symlinks leading outside it "
 "are refused. Absolute Typst imports start at that source directory."
-msgstr ""
+msgstr "Los archivos auxiliares y de datos importados pasan a ser dependencias de compilación. Al cambiarlos se redibujan las páginas HTML afectadas sin modificar su marcado. Mantenemos las importaciones del proyecto dentro del directorio fuente; se rechazan los enlaces simbólicos que salgan de él. Las importaciones absolutas de Typst parten de ese directorio."
 
 #: ../../howto/typst-diagrams.rst:116
-#, fuzzy
 #| msgid "Static websites and articles"
 msgid "Page size and failures"
-msgstr "Sitios web estáticos y artículos"
+msgstr "Tamaño de página y errores"
 
 #: ../../howto/typst-diagrams.rst:119
 msgid ""
@@ -3615,7 +3614,7 @@ msgid ""
 "most 4,096 distinct file lookups per diagram. Typst layout uses the "
 "compiler's own memory; these limits do not impose a compiler timeout or a "
 "total memory ceiling."
-msgstr ""
+msgstr "Guidedog antepone ``#set page(width: auto, height: auto, margin: 0pt)`` para ajustar la página al dibujo. Escribimos contenido Typst normal, sin una envoltura ``html.frame``. Cada diagrama debe producir exactamente una página de dimensiones finitas. El cuerpo de la directiva se limita a 1 MiB; PNG permite hasta 16 millones de píxeles y 16.384 píxeles por lado. El adaptador registra hasta 4.096 consultas de archivos distintas por diagrama. La composición de Typst usa la memoria del compilador; estos límites no imponen un tiempo máximo ni un techo de memoria total."
 
 #: ../../howto/typst-diagrams.rst:126
 msgid ""
@@ -3625,7 +3624,7 @@ msgid ""
 "the published site or book. ``--untrusted`` keeps diagram source visible "
 "and warns without running Typst. Text builds retain source without "
 "compiling it."
-msgstr ""
+msgstr "Si falla la compilación, vemos una advertencia en la directiva y el código fuente permanece visible como código. El mensaje incluye la posición en el diagrama o archivo Typst importado. ``-W`` impide que esa compilación sustituya el sitio o libro publicado. ``--untrusted`` conserva el código del diagrama y advierte sin ejecutar Typst. Las compilaciones de texto conservan el código sin compilarlo."
 
 #~ msgid ""
 #~ "**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. "

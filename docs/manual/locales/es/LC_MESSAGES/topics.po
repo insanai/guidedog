@@ -17,7 +17,7 @@ msgstr ""
 
 #: ../../topics/diagrams.rst:1
 msgid "Diagrams with Graphviz and Typst"
-msgstr ""
+msgstr "Diagramas con Graphviz y Typst"
 
 #: ../../topics/diagrams.rst:4
 msgid ""
@@ -36,71 +36,71 @@ msgid ""
 "We keep diagram source beside the explanation and let Guidedog build the "
 "image for HTML and PDF. Graphviz and Typst are included in the "
 "executable. We need no separate ``dot`` or ``typst`` program."
-msgstr ""
+msgstr "Mantenemos el código del diagrama junto a la explicación y dejamos que Guidedog cree la imagen para HTML y PDF. Graphviz y Typst están incluidos en el ejecutable. No necesitamos programas ``dot`` o ``typst`` separados."
 
 #: ../../topics/diagrams.rst:12
 msgid "Choose the drawing tool"
-msgstr ""
+msgstr "Elegir la herramienta de dibujo"
 
 #: ../../topics/diagrams.rst:15
 msgid "Drawing tools"
-msgstr ""
+msgstr "Herramientas de dibujo"
 
 #: ../../topics/diagrams.rst:19
 msgid "Tool"
-msgstr ""
+msgstr "Herramienta"
 
 #: ../../topics/diagrams.rst:20
 msgid "Useful when"
-msgstr ""
+msgstr "Útil cuando"
 
 #: ../../topics/diagrams.rst:21
 msgid "Source"
-msgstr ""
+msgstr "Código fuente"
 
 #: ../../topics/diagrams.rst:22
 msgid "Graphviz"
-msgstr ""
+msgstr "Graphviz"
 
 #: ../../topics/diagrams.rst:23
 msgid ""
 "We describe nodes and edges and want the layout engine to place them."
-msgstr ""
+msgstr "Describimos nodos y aristas y dejamos que el motor de composición los coloque."
 
 #: ../../topics/diagrams.rst:24
 msgid "DOT inside ``graphviz``, ``graph`` or ``digraph``."
-msgstr ""
+msgstr "DOT dentro de ``graphviz``, ``graph`` o ``digraph``."
 
 #: ../../topics/diagrams.rst:25
 msgid "Typst with CeTZ"
-msgstr ""
+msgstr "Typst con CeTZ"
 
 #: ../../topics/diagrams.rst:26
 msgid "We need explicit geometry, custom shapes, plots or sequence layouts."
-msgstr ""
+msgstr "Necesitamos geometría explícita, formas propias, gráficos o disposiciones de secuencias."
 
 #: ../../topics/diagrams.rst:27
 msgid "Typst inside ``typst-diagram``."
-msgstr ""
+msgstr "Typst dentro de ``typst-diagram``."
 
 #: ../../topics/diagrams.rst:28
 msgid "Typst with Fletcher"
-msgstr ""
+msgstr "Typst con Fletcher"
 
 #: ../../topics/diagrams.rst:29
 msgid "We need positioned nodes, mathematical labels and precise arrows."
-msgstr ""
+msgstr "Necesitamos nodos posicionados, etiquetas matemáticas y flechas precisas."
 
 #: ../../topics/diagrams.rst:30
 msgid "Typst inside ``typst-diagram`` with a pinned Fletcher import."
-msgstr ""
+msgstr "Typst dentro de ``typst-diagram`` con una importación de Fletcher de versión fija."
 
 #: ../../topics/diagrams.rst:32
 msgid ""
 "We choose SVG for scalable drawings in both the browser and book. Typst "
 "diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
 "PNG files still work with ordinary image and figure directives."
-msgstr ""
+msgstr "Elegimos SVG para dibujos escalables en el navegador y el libro. Los diagramas Typst también pueden producir PNG a 144 píxeles por pulgada. Los archivos SVG y PNG existentes siguen funcionando con las directivas normales de imágenes y figuras."
 
 #: ../../topics/diagrams.rst:36
 msgid "A flow chart"
@@ -145,7 +145,7 @@ msgstr ""
 
 #: ../../topics/diagrams.rst:88
 msgid "In MyST Markdown, we use a directive fence with the same options."
-msgstr ""
+msgstr "En MyST Markdown usamos un bloque de directiva con las mismas opciones."
 
 #: ../../topics/diagrams.rst:99
 msgid ""
@@ -154,44 +154,44 @@ msgid ""
 "the body's edges in the corresponding DOT graph. A plain ``dot`` or "
 "``graphviz`` Markdown fence also draws a graph; we use the directive form "
 "when we need options."
-msgstr ""
+msgstr "Un argumento de archivo de ``graphviz`` lee un archivo DOT en lugar de un cuerpo en el documento. ``graph`` y ``digraph`` reciben el nombre del grafo como argumento y envuelven las aristas del cuerpo en el grafo DOT correspondiente. Un bloque Markdown ``dot`` o ``graphviz`` normal también dibuja un grafo; usamos la directiva cuando necesitamos opciones."
 
 #: ../../topics/diagrams.rst:103
 msgid "Draw with Typst"
-msgstr ""
+msgstr "Dibujar con Typst"
 
 #: ../../topics/diagrams.rst:106
 msgid ""
 "The ``typst-diagram`` directive compiles its body to an image. The page "
 "fits the drawing automatically. We can start with Typst's built-in shapes "
 "before adding a package."
-msgstr ""
+msgstr "La directiva ``typst-diagram`` compila su cuerpo en una imagen. La página se ajusta automáticamente al dibujo. Podemos comenzar con las formas integradas de Typst antes de añadir un paquete."
 
 #: ../../topics/diagrams.rst:120
 msgid "A drawing from Typst source."
-msgstr ""
+msgstr "Un dibujo a partir de código Typst."
 
 #: ../../topics/diagrams.rst:126
 msgid ""
 "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
 "An ordinary ``typst`` code fence displays source without compiling it."
-msgstr ""
+msgstr "El mismo dibujo en MyST usa ``{typst-diagram}`` como lenguaje del bloque. Un bloque de código ``typst`` normal muestra el código sin compilarlo."
 
 #: ../../topics/diagrams.rst:139
 msgid ""
 "CeTZ supplies a drawing canvas and geometric operations. We import a "
 "specific package version so the source states its dependency."
-msgstr ""
+msgstr "CeTZ proporciona un lienzo y operaciones geométricas. Importamos una versión concreta del paquete para que el código declare su dependencia."
 
 #: ../../topics/diagrams.rst:156
 msgid ""
 "Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
 "are useful when position carries meaning."
-msgstr ""
+msgstr "Fletcher crea diagramas de nodos y flechas sobre CeTZ. Sus coordenadas explícitas son útiles cuando la posición tiene significado."
 
 #: ../../topics/diagrams.rst:172
 msgid "Share source and refer to figures"
-msgstr ""
+msgstr "Compartir código y referirse a figuras"
 
 #: ../../topics/diagrams.rst:175
 msgid ""
@@ -202,13 +202,13 @@ msgid ""
 "this book. Alternative text explains the information conveyed by the "
 "drawing. It is especially useful for Typst SVGs, which draw letters as "
 "outlines."
-msgstr ""
+msgstr "Ambas directivas aceptan ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` y ``:align:``. Activamos ``numfig = true`` en ``conf.toml`` y nos referimos a un dibujo con nombre y leyenda mediante ``:numref:`` en RST o ``{numref}`` en MyST. Por ejemplo, :numref:`chapter-typst-circle` es una figura numerada en este libro. El texto alternativo explica la información del dibujo. Resulta especialmente útil en los SVG de Typst, que dibujan las letras como contornos."
 
 #: ../../topics/diagrams.rst:181
 msgid ""
 "For a larger drawing we keep Typst source in a file. Guidedog compiles it "
 "during the ordinary build."
-msgstr ""
+msgstr "Para un dibujo mayor conservamos el código Typst en un archivo. Guidedog lo compila durante la compilación habitual."
 
 #: ../../topics/diagrams.rst:190
 msgid ""
@@ -218,13 +218,12 @@ msgid ""
 "Changing an imported helper or data file redraws the affected HTML pages. "
 "Identical generated images keep their timestamps so unchanged PDF books "
 "remain cached."
-msgstr ""
+msgstr "Las importaciones de un diagrama en el documento se resuelven junto al documento que lo contiene. Las de un diagrama en archivo se resuelven junto a su archivo Typst. Así podemos compartir una biblioteca local para colores, nodos y secuencias. Los cambios en archivos auxiliares o de datos importados redibujan las páginas HTML afectadas. Las imágenes generadas idénticas mantienen sus marcas de tiempo para conservar en caché los libros PDF sin cambios."
 
 #: ../../topics/diagrams.rst:196
-#, fuzzy
 #| msgid "Images and figures"
 msgid "Packages, limits and failures"
-msgstr "Imágenes y figuras"
+msgstr "Paquetes, límites y errores"
 
 #: ../../topics/diagrams.rst:199
 msgid ""
@@ -237,7 +236,7 @@ msgid ""
 "source directory, including through symlinks. Diagrams must produce one "
 "finite page; PNG export is limited to 16 million pixels and 16,384 pixels "
 "on either side."
-msgstr ""
+msgstr "Las opciones ``pdf_packages``, ``pdf_fonts`` y ``pdf_font_paths`` controlan los diagramas Typst en ambas salidas. Con ``pdf_packages = \"offline\"``, el compilador utiliza solo los paquetes ya instalados en los directorios de Typst. Por defecto descarga los ausentes. Después de instalar un paquete antes ausente o editar fuentes, ejecutamos ``guidedog build html -a`` en un proceso nuevo. Las importaciones del proyecto permanecen bajo el directorio fuente, incluso a través de enlaces simbólicos. Los diagramas deben producir una página de dimensiones finitas; PNG se limita a 16 millones de píxeles y 16.384 píxeles por lado."
 
 #: ../../topics/diagrams.rst:206
 msgid ""
@@ -247,7 +246,7 @@ msgid ""
 "without compiling a drawing. The :doc:`../howto/typst-diagrams` guide "
 "lists every option, source limit and migration step for existing figure "
 "files."
-msgstr ""
+msgstr "Un dibujo fallido permanece visible como código con una advertencia. Compilamos con ``-W`` cuando la ausencia de un diagrama debe impedir la publicación. ``--untrusted`` rechaza la compilación Typst y conserva el código. Las compilaciones de texto muestran el código sin compilar el dibujo. La guía :doc:`../howto/typst-diagrams` enumera todas las opciones, límites y pasos de migración para archivos de figuras existentes."
 
 #: ../../topics/diagrams.rst:212
 msgid "Light, dark and print"
@@ -258,7 +257,7 @@ msgid ""
 "Typst diagrams keep their authored colors and receive the same light "
 "panel as ordinary Graphviz images in the default dark theme. The adaptive "
 "Graphviz palette does not recolor Typst drawings."
-msgstr ""
+msgstr "Los diagramas Typst conservan sus colores y reciben el mismo panel claro que las imágenes Graphviz normales en el tema oscuro predeterminado. La paleta adaptativa de Graphviz no cambia los colores de los dibujos Typst."
 
 #: ../../topics/diagrams.rst:217
 msgid ""
@@ -1708,11 +1707,11 @@ msgid ""
 "``image`` and ``figure``. We can also author Graphviz and Typst drawings "
 "directly in markup with automatic HTML and PDF assets; see "
 ":doc:`diagrams`."
-msgstr ""
+msgstr "Incluimos ilustraciones, capturas y diagramas ya creados con ``image`` y ``figure``. También podemos escribir dibujos Graphviz y Typst directamente en el marcado y generar automáticamente sus imágenes HTML y PDF; véase :doc:`diagrams`."
 
 #: ../../topics/writing.rst:274
 msgid "For an existing image:"
-msgstr ""
+msgstr "Para una imagen existente:"
 
 #: ../../topics/writing.rst:290
 msgid ""

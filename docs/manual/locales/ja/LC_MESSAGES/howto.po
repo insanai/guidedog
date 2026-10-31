@@ -3054,7 +3054,7 @@ msgstr ""
 
 #: ../../howto/typst-diagrams.rst:1
 msgid "Draw diagrams with Typst"
-msgstr ""
+msgstr "Typst で図を描く"
 
 #: ../../howto/typst-diagrams.rst:4
 msgid ""
@@ -3062,25 +3062,25 @@ msgid ""
 "``typst-diagram`` compiles the code with Guidedog's embedded Typst "
 "compiler and includes the resulting image in HTML and PDF. We need no "
 "separate figure task or installed Typst program."
-msgstr ""
+msgstr "RST または MyST 文書に Typst の描画コードを直接記述できます。``typst-diagram`` は Guidedog 内蔵の Typst コンパイラでコードをコンパイルし、生成した画像を HTML と PDF に組み込みます。図専用のビルド処理や別途インストールした Typst プログラムは不要です。"
 
 #: ../../howto/typst-diagrams.rst:8
 msgid "A first drawing"
-msgstr ""
+msgstr "最初の図"
 
 #: ../../howto/typst-diagrams.rst:11
 msgid "We write the source as the directive's body."
-msgstr ""
+msgstr "ソースをディレクティブの本文に記述します。"
 
 #: ../../howto/typst-diagrams.rst:23
 msgid "A circle compiled from the directive body."
-msgstr ""
+msgstr "ディレクティブの本文からコンパイルした円。"
 
 #: ../../howto/typst-diagrams.rst:28
 msgid ""
 "We use a MyST directive fence in Markdown. An ordinary ``typst`` code "
 "fence remains a source example."
-msgstr ""
+msgstr "Markdown では MyST のディレクティブフェンスを使います。通常の ``typst`` コードフェンスはソース例として表示されます。"
 
 #: ../../howto/typst-diagrams.rst:40
 msgid ""
@@ -3090,21 +3090,21 @@ msgid ""
 "``numfig = true``, a captioned diagram is a numbered figure and "
 "``:numref:`` can refer to its ``:name:``. We provide meaningful ``:alt:`` "
 "text because SVG text is drawn as outlines."
-msgstr ""
+msgstr "既定の画像形式は SVG なので、同じベクトル図をサイトと書籍で拡大縮小できます。``:format: png`` は 144 ピクセル毎インチの PNG を選択します。``:class:`` と ``:align: left|center|right`` も指定できます。``numfig = true`` を設定すると、キャプション付きの図に番号が付き、``:numref:`` でその ``:name:`` を参照できます。SVG の文字は輪郭として描画されるため、意味のある ``:alt:`` テキストを記述します。"
 
 #: ../../howto/typst-diagrams.rst:46
 msgid "CeTZ and Fletcher"
-msgstr ""
+msgstr "CeTZ と Fletcher"
 
 #: ../../howto/typst-diagrams.rst:49
 msgid ""
 "We import packages explicitly with pinned versions. This CeTZ example "
 "uses the version shared by Fletcher 0.5.8."
-msgstr ""
+msgstr "バージョンを固定してパッケージを明示的にインポートします。この CeTZ の例は Fletcher 0.5.8 と共通のバージョンを使います。"
 
 #: ../../howto/typst-diagrams.rst:65
 msgid "Fletcher supplies nodes and arrows."
-msgstr ""
+msgstr "Fletcher はノードと矢印を提供します。"
 
 #: ../../howto/typst-diagrams.rst:80
 msgid ""
@@ -3116,11 +3116,11 @@ msgid ""
 "with ``pdf_font_paths``. After installing a previously missing package or "
 "changing font files, we run a fresh ``guidedog build html -a`` command to "
 "redraw cached pages and reload the compiler's font store."
-msgstr ""
+msgstr "``pdf_packages``、``pdf_fonts``、``pdf_font_paths`` は HTML と PDF の両方の図に適用されます。``pdf_packages = \"offline\"`` は Typst のパッケージディレクトリに既にあるパッケージだけを使います。既定では不足するパッケージのダウンロードを許可します。再現可能な組版には ``pdf_fonts = \"embedded\"`` を設定し、プロジェクトのフォントディレクトリを ``pdf_font_paths`` で追加します。不足していたパッケージのインストールやフォントファイルの変更後は、新しいプロセスで ``guidedog build html -a`` を実行し、キャッシュされたページの再描画とコンパイラのフォントの再読み込みを行います。"
 
 #: ../../howto/typst-diagrams.rst:86
 msgid "Shared helpers and existing files"
-msgstr ""
+msgstr "共通の補助コードと既存ファイル"
 
 #: ../../howto/typst-diagrams.rst:89
 msgid ""
@@ -3128,14 +3128,14 @@ msgid ""
 "file. An inline diagram imports paths relative to the RST or Markdown "
 "file containing it. A directive inside an included document uses that "
 "document's folder."
-msgstr ""
+msgstr "共通の色や描画関数をローカルの ``.typ`` ファイルに移せます。文書内の図は、その RST または Markdown ファイルを基準にインポートを解決します。取り込んだ文書内のディレクティブは、その文書のフォルダーを使います。"
 
 #: ../../howto/typst-diagrams.rst:101
 msgid ""
 "We can also retain a complete figure source file and let Guidedog build "
 "it. We give either a file argument or an inline body. Imports in the file "
 "resolve beside that file."
-msgstr ""
+msgstr "図のソースファイル全体を残し、Guidedog にビルドさせることもできます。ファイル引数か本文のどちらか一方を指定します。ファイル内のインポートは、そのファイルを基準に解決します。"
 
 #: ../../howto/typst-diagrams.rst:111
 msgid ""
@@ -3143,13 +3143,12 @@ msgid ""
 "redraws the affected HTML pages without changing their markup. We keep "
 "project imports below the source directory; symlinks leading outside it "
 "are refused. Absolute Typst imports start at that source directory."
-msgstr ""
+msgstr "インポートした補助ファイルやデータファイルはビルドの依存関係になります。それらを変更すると、マークアップを変更せずに関連する HTML ページを再描画します。プロジェクトのインポートはソースディレクトリ内に置き、外部へのシンボリックリンクは拒否します。Typst の絶対インポートは、このソースディレクトリを起点とします。"
 
 #: ../../howto/typst-diagrams.rst:116
-#, fuzzy
 #| msgid "Static websites and articles"
 msgid "Page size and failures"
-msgstr "静的ウェブサイトと記事"
+msgstr "ページサイズと失敗時の扱い"
 
 #: ../../howto/typst-diagrams.rst:119
 msgid ""
@@ -3161,7 +3160,7 @@ msgid ""
 "most 4,096 distinct file lookups per diagram. Typst layout uses the "
 "compiler's own memory; these limits do not impose a compiler timeout or a "
 "total memory ceiling."
-msgstr ""
+msgstr "Guidedog は ``#set page(width: auto, height: auto, margin: 0pt)`` を先頭に追加し、ページを図に合わせます。``html.frame`` で囲まず、通常の Typst 内容を記述します。図は有限の寸法を持つちょうど 1 ページを生成する必要があります。本文は 1 MiB まで、PNG は 1,600 万ピクセルまでで、各辺は 16,384 ピクセル以下です。アダプターは図ごとに最大 4,096 種類のファイル照会を追跡します。Typst のレイアウトはコンパイラ自身のメモリを使うため、これらはコンパイラのタイムアウトや総メモリ量の制限ではありません。"
 
 #: ../../howto/typst-diagrams.rst:126
 msgid ""
@@ -3171,7 +3170,7 @@ msgid ""
 "the published site or book. ``--untrusted`` keeps diagram source visible "
 "and warns without running Typst. Text builds retain source without "
 "compiling it."
-msgstr ""
+msgstr "コンパイルに失敗すると、ディレクティブの位置に警告が表示され、ソースはコードとして残ります。メッセージには図またはインポートした Typst ファイル内の位置が含まれます。``-W`` は失敗したビルドによる公開済みサイトや書籍の置き換えを防ぎます。``--untrusted`` は Typst を実行せず、図のソースを残して警告します。テキストビルドもコンパイルせずにソースを保持します。"
 
 #~ msgid ""
 #~ "**LaTeX Math** (``.. math::`` and ``:math:``): Fully supported. "

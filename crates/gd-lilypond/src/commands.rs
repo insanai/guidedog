@@ -137,6 +137,12 @@ pub const COMMANDS: &[Command] = &[
     Command { name: ")", phase: 1, status: CommandStatus::Implemented },
     Command { name: "\\", phase: 1, status: CommandStatus::Implemented },
     Command { name: "override", phase: 0, status: CommandStatus::Refused },
+    // Note-column shifts are chosen by the voice styles; explicit shifts are refused
+    // rather than reported as unknown.
+    Command { name: "shiftOn", phase: 0, status: CommandStatus::Refused },
+    Command { name: "shiftOnn", phase: 0, status: CommandStatus::Refused },
+    Command { name: "shiftOnnn", phase: 0, status: CommandStatus::Refused },
+    Command { name: "shiftOff", phase: 0, status: CommandStatus::Refused },
     Command { name: "revert", phase: 0, status: CommandStatus::Refused },
     Command { name: "tweak", phase: 0, status: CommandStatus::Refused },
     Command { name: "once", phase: 0, status: CommandStatus::Refused },

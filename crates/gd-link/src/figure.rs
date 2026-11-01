@@ -59,6 +59,9 @@ pub(crate) fn replace(
     rw.add_class(image, drawing.class)?;
     if drawing.class == "lilypond-music" {
         rw.add_custom(image, "music-fit", "1")?;
+        if drawing.path.extension().is_some_and(|extension| extension == "png") {
+            rw.add_custom(image, "raster-density", "1.5")?;
+        }
     }
     if drawing.interactive {
         // Shown so that its links work: an img element's links are not followed.

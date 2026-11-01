@@ -122,13 +122,18 @@ impl Html<'_, '_> {
             return Visit::Skip;
         }
         let narrow = self.doc.custom_attribute(id, "narrow-src");
+        let dense = self.doc.custom_attribute(id, "raster-density") == Some("1.5");
         if let Some(url) = narrow {
             self.w.put("<picture><source media=\"(max-width: 40rem)\" srcset=\"");
             self.w.esc(url);
+            if dense {
+                self.w.put(" 1.5x");
+            }
             self.w.put("\" />");
         }
         self.w.put("<img");
-        if !self.write_target("src", id) {
+        // A src fallback becomes an implicit 1x candidate and defeats the density hint.
+        if (!dense || !self.write_dense_image(id)) && !self.write_target("src", id) {
             self.w.put(" src=\"\"");
         }
         self.w.put(" alt=\"");
@@ -158,6 +163,18 @@ impl Html<'_, '_> {
             self.w.cr();
         }
         Visit::Skip
+    }
+
+    fn write_dense_image(&mut self, id: NodeId) -> bool {
+        let Some(link) = self.doc.link_info(id) else { return false };
+        let url = self.doc.text(link.destination);
+        if link.kind == LinkKind::External && !crate::escape::url_unsafe(url) {
+            self.w.put(" srcset=\"");
+            self.w.esc(url);
+            self.w.put(" 1.5x\"");
+            return true;
+        }
+        false
     }
 
     /// Writes a drawing whose links work (Custom `interactive`, an inheritance diagram):

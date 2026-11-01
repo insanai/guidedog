@@ -47,6 +47,9 @@ fn rst_and_myst_music_render_in_html_and_real_pdf() {
     has(&other, "lilypond-");
     has(&other, ".png");
     has(&other, "Music for 1 staff.");
+    assert_eq!(other.matches(" 1.5x").count(), 2);
+    has(&other, "<img srcset=");
+    lacks(&html, " 1.5x");
     build(&dir.path, 0, &["pdf", "-n", "-W"]);
     has(&dir.read("_build/pdf/book-en.typ"), "lilypond-");
     assert!(std::fs::read(dir.path.join("_build/pdf/demo-en.pdf")).unwrap().starts_with(b"%PDF-"));

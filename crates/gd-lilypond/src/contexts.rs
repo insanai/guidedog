@@ -37,10 +37,12 @@ impl Reader<'_> {
                 child.beam = None;
                 child.hairpin = None;
             }
-            let voice_context = is_context && cursor.ids.get(cursor.at + 1)
-                .and_then(|id| self.syntax.node(*id))
-                .is_some_and(|node| matches!(&node.kind,
-                    ExprKind::Atom(TokenKind::Word(kind) | TokenKind::Text(kind)) if kind == "Voice"));
+            let voice_context = is_context
+                && cursor
+                    .ids
+                    .get(cursor.at + 1)
+                    .and_then(|id| self.syntax.node(*id))
+                    .is_some_and(is_voice);
             if (!is_context || voice_context) && (explicit || branch > 0) {
                 child.direction = if branch == 0 { Direction::Up } else { Direction::Down };
                 if let Some(voice) = self.score.voices.get_mut(start.voice.0 as usize) {
@@ -253,4 +255,9 @@ impl Reader<'_> {
         }
         Ok(())
     }
+}
+
+fn is_voice(node: &crate::Expr) -> bool {
+    matches!(&node.kind, ExprKind::Atom(TokenKind::Word(kind) | TokenKind::Text(kind))
+        if kind == "Voice")
 }

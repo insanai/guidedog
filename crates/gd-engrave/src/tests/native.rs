@@ -142,6 +142,7 @@ fn lazy_text_faces_are_selected_only_during_shaping_and_record_their_source() {
             gd_score::TextStyle::Regular,
             &mut Vec::new(),
             &mut 100_000,
+            &mut None,
         )
         .unwrap();
         assert_eq!(run.sources, ["selected-font.otf"]);
@@ -316,4 +317,62 @@ fn primary_beam_ends_have_valid_quants_with_dense_inner_beams() {
             }));
         }
     }
+}
+
+#[test]
+fn text_outlines_charge_growth_and_work_before_they_accumulate() {
+    let fonts = load_fonts(&FontOptions {
+        regular: vec![FaceData { data: REGULAR, ..Default::default() }],
+        ..Default::default()
+    })
+    .unwrap();
+    let mut refuse = |_: usize| false;
+    let failed = crate::text::shape(
+        &fonts,
+        "Music",
+        12.0,
+        gd_score::TextStyle::Regular,
+        &mut Vec::new(),
+        &mut 100_000,
+        &mut Some(&mut refuse),
+    )
+    .unwrap_err();
+    assert_eq!(failed.kind, gd_score::ErrorKind::EngraveLimit);
+    let failed = crate::text::shape(
+        &fonts,
+        &"Music ".repeat(128),
+        12.0,
+        gd_score::TextStyle::Regular,
+        &mut Vec::new(),
+        &mut 2000,
+        &mut None,
+    )
+    .unwrap_err();
+    assert_eq!(failed.kind, gd_score::ErrorKind::EngraveLimit);
+}
+
+#[test]
+fn positioned_mark_allowance_is_shared_by_every_system() {
+    let fonts = load_fonts(&FontOptions::default()).unwrap();
+    let loaded = gd_lilypond::load_score(
+        r"{ c'1 | \break d'1 | }",
+        "limits.ly",
+        &mut gd_lilypond::Options::default(),
+    )
+    .unwrap();
+    let mut workspace = Engraver::default();
+    let drawing = workspace.engrave_score(&loaded.score, &fonts, &mut Options::default()).unwrap();
+    let maximum = drawing.systems.iter().map(|s| s.marks.len()).max().unwrap();
+    assert!(
+        workspace
+            .engrave_score(
+                &loaded.score,
+                &fonts,
+                &mut Options {
+                    limits: Limits { marks: maximum, ..Default::default() },
+                    ..Default::default()
+                }
+            )
+            .is_err()
+    );
 }

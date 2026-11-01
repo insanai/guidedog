@@ -76,6 +76,10 @@ impl Reader<'_> {
                 )
                 .hint("Move the time change to a measure boundary."));
             }
+            self.memory.take(
+                std::mem::size_of::<Measure>() * 2 + meter.beats.len() * 2,
+                Span::default(),
+            )?;
             push(
                 &mut self.score.measures,
                 Measure { number, start: at, end: next.min(end), meter: meter.clone() },

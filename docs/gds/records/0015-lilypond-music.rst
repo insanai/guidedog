@@ -1230,3 +1230,15 @@ A dense group can have no admissible candidate inside the declared quarter-space
 We therefore require allowed exposed primary ends, score inner-end wedges with a named quant weight, and include notehead and accidental collisions for every actual segment in the candidate cost.
 Scoring and SVG drawing share the same fractional segment endpoints.
 The dense-duration corpus and a primary-end geometry regression check this rule.
+
+Allocation review
+~~~~~~~~~~~~~~~~~
+
+The engraving entry point reserves bounded stage scratch and the retained worker capacities before preparing columns.
+This includes the largest temporary shaper expansion, using Rustybuzz's 64-glyph-per-input bound, and conservative font, column, band and snapshot allowances.
+Outline strings consult the caller's ledger before growth, stop at 65,536 bytes per glyph and consume work by serialized path length before accumulating in a text run.
+Text glyph ink is bounded to sixteen ems on either axis before it enters quarter-space bands.
+Generated SVG grouping reserves its tree and index buffers before insertion and rejects undefined glyph references transactionally.
+The positioned-mark limit applies across all systems in a drawing, and impossible system-window counts are refused before column allocation.
+Measure expansion consumes the reader's allocation allowance as well as its event-derived measure-count bound.
+These rules close paths that event and source limits alone did not cover.

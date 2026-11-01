@@ -13,6 +13,7 @@ pub(crate) struct Request<'a, 'f> {
     pub(crate) plan: &'a crate::prepare::Plan,
     pub(crate) indent: f64,
     pub(crate) suffix: f64,
+    pub(crate) remaining_marks: usize,
 }
 
 pub(crate) fn draw_system(
@@ -32,6 +33,7 @@ pub(crate) fn draw_system(
         measure: 0,
         warnings: Vec::new(),
         stem_marks: std::collections::BTreeMap::new(),
+        mark_limit: request.remaining_marks,
     };
     for staff_index in 0..score.staves.len() {
         draw.staff_system(request, staff_index, width)?;
@@ -65,6 +67,7 @@ pub(crate) struct Draw<'a, 'f, 'o, 'callback, 'work> {
     pub(crate) measure: u32,
     pub(crate) warnings: Vec<Error>,
     pub(crate) stem_marks: std::collections::BTreeMap<u32, usize>,
+    mark_limit: usize,
 }
 
 impl Draw<'_, '_, '_, '_, '_> {
@@ -235,7 +238,7 @@ impl Draw<'_, '_, '_, '_, '_> {
 
     pub(crate) fn add(&mut self, mark: Mark, bounds: Rect) -> Result<(), Error> {
         charge(self.work, 1)?;
-        if self.system.marks.len() >= self.options.limits.marks {
+        if self.system.marks.len() >= self.mark_limit {
             return Err(failure("The drawing exceeds the positioned-mark limit."));
         }
         push(

@@ -167,7 +167,7 @@ fn preface(
     plan: &crate::prepare::Plan,
     fonts: &crate::Fonts<'_>,
     measure: usize,
-    options: &Options<'_>,
+    options: &mut Options<'_>,
     work: &mut usize,
 ) -> Result<(f64, f64), Error> {
     let space = options.staff_size / 4.0;
@@ -185,6 +185,7 @@ fn preface(
                 gd_score::TextStyle::Regular,
                 &mut warnings,
                 work,
+                &mut options.reserve,
             )?;
             indent = indent.max(
                 shaped.advance / space + 1.5 + if score.groups.is_empty() { 0.0 } else { 2.1 },

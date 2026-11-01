@@ -85,8 +85,15 @@ impl Draw<'_, '_, '_, '_, '_> {
         size: f64,
         role: Role,
     ) -> Result<(), Error> {
-        let run =
-            crate::text::shape(self.fonts, text, size, style, &mut self.warnings, self.work)?;
+        let run = crate::text::shape(
+            self.fonts,
+            text,
+            size,
+            style,
+            &mut self.warnings,
+            self.work,
+            &mut self.options.reserve,
+        )?;
         let bounds = run.bounds.translated(at.x, at.y);
         self.add(Mark::Text { run, x: at.x, y: at.y, role }, bounds)
     }
@@ -186,6 +193,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                     TextStyle::Regular,
                     &mut self.warnings,
                     self.work,
+                    &mut self.options.reserve,
                 )?;
                 let x = x - run.advance / 2.0;
                 let bounds = run.bounds.translated(x, baseline);

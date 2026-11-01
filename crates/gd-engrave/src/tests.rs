@@ -139,3 +139,31 @@ fn svg_is_standalone_escaped_and_transactional_under_limits() {
     assert!(write_svg(&mut out, &engraving, &SvgOptions::default(), Some(&mut refuse)).is_err());
     assert_eq!(out, "prefix");
 }
+
+#[test]
+fn svg_rejects_a_missing_glyph_definition_without_changing_the_prefix() {
+    let drawing = Engraving {
+        width: 30.0,
+        height: 20.0,
+        systems: vec![System {
+            height: 20.0,
+            marks: vec![PositionedMark {
+                mark: Mark::Glyph {
+                    glyph: Glyph(65535),
+                    x: 5.0,
+                    y: 10.0,
+                    size: 4.5,
+                    role: Role::Notehead,
+                },
+                staff: gd_score::StaffId(0),
+                measure: 1,
+                bounds: Rect::default(),
+            }],
+            ..Default::default()
+        }],
+        ..Default::default()
+    };
+    let mut output = "prefix".to_string();
+    assert!(write_svg(&mut output, &drawing, &SvgOptions::default(), None).is_err());
+    assert_eq!(output, "prefix");
+}

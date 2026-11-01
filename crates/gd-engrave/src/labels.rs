@@ -11,6 +11,7 @@ pub(crate) fn event(
     event: &Event,
     fonts: &Fonts<'_>,
     work: &mut usize,
+    options: &mut crate::Options<'_>,
 ) -> Result<(), Error> {
     for annotation in &event.marks {
         charge(work, 1)?;
@@ -21,10 +22,18 @@ pub(crate) fn event(
             }
             _ => continue,
         };
-        text_bands(bands, fonts, text, style, size, false, work)?;
+        text_bands(bands, fonts, text, style, (size, false), work, &mut options.reserve)?;
     }
     if let EventKind::ChordName(text, _) = &event.kind {
-        text_bands(bands, fonts, text, TextStyle::Regular, 2.5, false, work)?;
+        text_bands(
+            bands,
+            fonts,
+            text,
+            TextStyle::Regular,
+            (2.5, false),
+            work,
+            &mut options.reserve,
+        )?;
     }
     Ok(())
 }
@@ -36,6 +45,7 @@ pub(crate) fn lyrics(
     staff: usize,
     fonts: &Fonts<'_>,
     work: &mut usize,
+    options: &mut crate::Options<'_>,
 ) -> Result<(), Error> {
     for verse in &score.lyrics {
         if score.voices[verse.voice.0 as usize].staff.0 as usize != staff {
@@ -48,7 +58,15 @@ pub(crate) fn lyrics(
                 Anchor::Note(reference) => score.events[reference.event.0 as usize].at,
             };
             if moment == at {
-                text_bands(bands, fonts, &syllable.text, TextStyle::Regular, 2.4, true, work)?;
+                text_bands(
+                    bands,
+                    fonts,
+                    &syllable.text,
+                    TextStyle::Regular,
+                    (2.4, true),
+                    work,
+                    &mut options.reserve,
+                )?;
             }
         }
     }
@@ -60,11 +78,12 @@ fn text_bands(
     fonts: &Fonts<'_>,
     text: &str,
     style: TextStyle,
-    size: f64,
-    centered: bool,
+    metrics: (f64, bool),
     work: &mut usize,
+    reserve: &mut Option<&mut crate::Reserve<'_>>,
 ) -> Result<(), Error> {
-    let run = crate::text::shape(fonts, text, size, style, &mut Vec::new(), work)?;
+    let (size, centered) = metrics;
+    let run = crate::text::shape(fonts, text, size, style, &mut Vec::new(), work, reserve)?;
     let mut bounds = run.bounds;
     let x = if centered { -run.advance / 2.0 } else { 0.0 };
     bounds = bounds.translated(x, if centered { 7.0 } else { -5.0 });

@@ -31,9 +31,15 @@ pub(crate) fn collect(
                     continue;
                 }
                 event_bands(&mut current, info, fonts, work)?;
-                crate::labels::event(&mut current, &score.events[id.0 as usize], fonts, work)?;
+                crate::labels::event(
+                    &mut current,
+                    &score.events[id.0 as usize],
+                    fonts,
+                    work,
+                    options,
+                )?;
             }
-            crate::labels::lyrics(&mut current, score, column.at, staff, fonts, work)?;
+            crate::labels::lyrics(&mut current, score, column.at, staff, fonts, work, options)?;
             if index + 1 == columns.len() {
                 add_rect(
                     &mut current,

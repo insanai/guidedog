@@ -25,6 +25,7 @@ mod layout;
 mod limits;
 mod marks;
 mod math;
+mod memory;
 mod multirests;
 mod prepare;
 mod rests;

@@ -13,7 +13,7 @@ pub struct Engraver {
     pub(crate) positions: Vec<f64>,
     pub(crate) plan: crate::prepare::Plan,
     pub(crate) rods: Vec<crate::Rod>,
-    local_rods: Vec<crate::Rod>,
+    pub(crate) local_rods: Vec<crate::Rod>,
 }
 
 impl Engraver {
@@ -27,10 +27,12 @@ impl Engraver {
     ) -> Result<Engraving, Error> {
         validate(score, options)?;
         let mut work = options.limits.work;
+        crate::memory::reserve(self, score, options, &mut work)?;
         let lines = self.prepare(score, fonts, options, &mut work)?;
         let space = options.staff_size / 4.0;
         let mut result = Engraving { summary: summary(score), ..Engraving::default() };
         let mut top = 0.0;
+        let mut marks = 0usize;
         for line in &lines {
             let (first, last) = (self.breaks[line.first].gap, self.breaks[line.last].gap);
             let x = self.line_positions(line, space, options, &mut work)?;
@@ -43,9 +45,11 @@ impl Engraver {
                 plan: &self.plan,
                 indent: self.breaks[line.first].indent * space,
                 suffix: self.breaks[line.last].suffix * space,
+                remaining_marks: options.limits.marks.saturating_sub(marks),
             };
             let (mut system, warnings) =
                 crate::drawing::draw_system(&request, options, &mut work)?;
+            marks += system.marks.len();
             result.warnings.extend(warnings);
             system.top = top;
             top += system.height + 2.0 * space;
@@ -187,6 +191,8 @@ fn validate(score: &Score, options: &Options<'_>) -> Result<(), Error> {
         || !options.staff_size.is_finite()
         || !(10.0..=40.0).contains(&options.staff_size)
         || score.events.len() > options.limits.events
+        || score.measures.len()
+            > options.limits.systems.saturating_mul(options.limits.measures_per_line)
         || score.measures.is_empty()
     {
         return Err(failure("Invalid music dimensions or event count."));

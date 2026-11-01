@@ -1,6 +1,6 @@
 use gd_score::{Error, TextStyle};
 
-use crate::fonts::outline;
+use crate::fonts::outline_reserved;
 use crate::limits::{charge, font_error};
 use crate::{Fonts, Rect};
 
@@ -39,6 +39,7 @@ pub(crate) fn shape(
     style: TextStyle,
     warnings: &mut Vec<Error>,
     work: &mut usize,
+    reserve: &mut Option<&mut crate::Reserve<'_>>,
 ) -> Result<TextRun, Error> {
     charge(work, text.len())?;
     if text.is_empty() {
@@ -75,24 +76,15 @@ pub(crate) fn shape(
             let end_byte = clusters.get(last).copied().unwrap_or(text.len());
             let cluster =
                 text.get(start..end_byte).ok_or_else(|| font_error("Invalid shaping cluster."))?;
-            let mut selected = None;
-            for candidate in faces {
-                charge(work, 1)?;
-                if candidate.covers(cluster) {
-                    let face = candidate.face()?;
-                    if cluster.chars().all(|c| c.is_control() || face.glyph_index(c).is_some()) {
-                        selected = Some((candidate, face));
-                        break;
-                    }
-                }
-            }
-            let (source, face) = selected.unwrap_or_else(|| {
+            let selected = fallback(faces, cluster, work)?;
+            if selected.is_none() {
                 warnings.push(
                     font_error(format!("No supplied face can draw the text cluster {cluster:?}."))
                         .warning(),
                 );
-                (first, first_face.clone())
-            });
+            }
+            let source = &faces[selected.unwrap_or(0)];
+            let face = source.face()?;
             note_source(&mut run, source);
             let fallback = shaped(&face, cluster);
             append(
@@ -102,9 +94,18 @@ pub(crate) fn shape(
                 fallback.glyph_positions(),
                 size,
                 work,
+                reserve,
             )?;
         } else {
-            append(&mut run, &first_face, &infos[at..end], &positions[at..end], size, work)?;
+            append(
+                &mut run,
+                &first_face,
+                &infos[at..end],
+                &positions[at..end],
+                size,
+                work,
+                reserve,
+            )?;
         }
         at = end;
     }
@@ -125,6 +126,7 @@ fn append(
     positions: &[rustybuzz::GlyphPosition],
     size: f64,
     work: &mut usize,
+    reserve: &mut Option<&mut crate::Reserve<'_>>,
 ) -> Result<(), Error> {
     let scale = size / f64::from(face.units_per_em());
     run.ascent = run.ascent.max(f64::from(face.ascender()) * scale);
@@ -140,13 +142,15 @@ fn append(
             -f64::from(position.y_offset) * scale,
         );
         if face.glyph_bounding_box(glyph).is_some() {
-            let (path, bounds) = outline(face, glyph, scale)?;
+            let (path, bounds) = outline_reserved(face, glyph, scale, reserve.as_deref_mut())?;
+            charge(work, path.len().saturating_add(128))?;
+            if bounds.right - bounds.left > size * 16.0 || bounds.bottom - bounds.top > size * 16.0
+            {
+                return Err(font_error("A text glyph exceeds the sixteen-em geometry bound."));
+            }
             let bounds = bounds.translated(x, y);
             run.bounds = if run.glyphs.is_empty() { bounds } else { run.bounds.union(bounds) };
-            run.glyphs
-                .try_reserve(1)
-                .map_err(|_| font_error("Cannot reserve text glyph outlines."))?;
-            run.glyphs.push(TextGlyph { outline: path, x, y });
+            crate::limits::push(&mut run.glyphs, TextGlyph { outline: path, x, y }, reserve)?;
         }
         run.advance += f64::from(position.x_advance) * scale;
     }
@@ -159,4 +163,21 @@ fn note_source(run: &mut TextRun, face: &crate::fonts::TextFace<'_>) {
     {
         run.sources.push(id.to_string());
     }
+}
+
+fn fallback(
+    faces: &[crate::fonts::TextFace<'_>],
+    text: &str,
+    work: &mut usize,
+) -> Result<Option<usize>, Error> {
+    for (index, candidate) in faces.iter().enumerate() {
+        charge(work, 1)?;
+        if candidate.covers(text) {
+            let face = candidate.face()?;
+            if text.chars().all(|c| c.is_control() || face.glyph_index(c).is_some()) {
+                return Ok(Some(index));
+            }
+        }
+    }
+    Ok(None)
 }

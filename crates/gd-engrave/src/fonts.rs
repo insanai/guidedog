@@ -244,10 +244,21 @@ pub(crate) fn outline(
     glyph: GlyphId,
     scale: f64,
 ) -> Result<(String, Rect), Error> {
-    let mut builder = PathBuilder { text: String::new(), scale };
-    let bounds = face
-        .outline_glyph(glyph, &mut builder)
-        .ok_or_else(|| font_error("A required glyph has no vector outline."))?;
+    outline_reserved(face, glyph, scale, None)
+}
+
+pub(crate) fn outline_reserved(
+    face: &Face<'_>,
+    glyph: GlyphId,
+    scale: f64,
+    reserve: Option<&mut crate::Reserve<'_>>,
+) -> Result<(String, Rect), Error> {
+    let mut builder = PathBuilder { text: String::new(), scale, reserve, failed: false };
+    let bounds = face.outline_glyph(glyph, &mut builder);
+    if builder.failed {
+        return Err(crate::limits::failure("The text outline exceeded its allocation allowance."));
+    }
+    let bounds = bounds.ok_or_else(|| font_error("A required glyph has no vector outline."))?;
     Ok((
         builder.text,
         Rect {
@@ -259,52 +270,72 @@ pub(crate) fn outline(
     ))
 }
 
-struct PathBuilder {
+struct PathBuilder<'r, 'callback> {
     text: String,
     scale: f64,
+    reserve: Option<&'r mut crate::Reserve<'callback>>,
+    failed: bool,
 }
 
-impl OutlineBuilder for PathBuilder {
+impl fmt::Write for PathBuilder<'_, '_> {
+    fn write_str(&mut self, text: &str) -> fmt::Result {
+        let needed = self.text.len().saturating_add(text.len());
+        if self.failed || needed > 65_536 {
+            self.failed = true;
+            return Err(fmt::Error);
+        }
+        if needed > self.text.capacity() {
+            let additional = (needed - self.text.capacity())
+                .max(self.text.capacity())
+                .max(256)
+                .min(65_536 - self.text.capacity());
+            if self.reserve.as_mut().is_some_and(|reserve| !reserve(additional))
+                || self.text.try_reserve_exact(additional).is_err()
+            {
+                self.failed = true;
+                return Err(fmt::Error);
+            }
+        }
+        self.text.push_str(text);
+        Ok(())
+    }
+}
+
+impl OutlineBuilder for PathBuilder<'_, '_> {
     fn move_to(&mut self, x: f32, y: f32) {
-        let _ = write!(
-            self.text,
-            "M{} {}",
-            Number(f64::from(x) * self.scale),
-            Number(f64::from(y) * self.scale)
-        );
+        let scale = self.scale;
+        let _ = write!(self, "M{} {}", Number(f64::from(x) * scale), Number(f64::from(y) * scale));
     }
     fn line_to(&mut self, x: f32, y: f32) {
-        let _ = write!(
-            self.text,
-            "L{} {}",
-            Number(f64::from(x) * self.scale),
-            Number(f64::from(y) * self.scale)
-        );
+        let scale = self.scale;
+        let _ = write!(self, "L{} {}", Number(f64::from(x) * scale), Number(f64::from(y) * scale));
     }
     fn quad_to(&mut self, x1: f32, y1: f32, x: f32, y: f32) {
+        let scale = self.scale;
         let _ = write!(
-            self.text,
+            self,
             "Q{} {} {} {}",
-            Number(f64::from(x1) * self.scale),
-            Number(f64::from(y1) * self.scale),
-            Number(f64::from(x) * self.scale),
-            Number(f64::from(y) * self.scale)
+            Number(f64::from(x1) * scale),
+            Number(f64::from(y1) * scale),
+            Number(f64::from(x) * scale),
+            Number(f64::from(y) * scale)
         );
     }
     fn curve_to(&mut self, x1: f32, y1: f32, x2: f32, y2: f32, x: f32, y: f32) {
+        let scale = self.scale;
         let _ = write!(
-            self.text,
+            self,
             "C{} {} {} {} {} {}",
-            Number(f64::from(x1) * self.scale),
-            Number(f64::from(y1) * self.scale),
-            Number(f64::from(x2) * self.scale),
-            Number(f64::from(y2) * self.scale),
-            Number(f64::from(x) * self.scale),
-            Number(f64::from(y) * self.scale)
+            Number(f64::from(x1) * scale),
+            Number(f64::from(y1) * scale),
+            Number(f64::from(x2) * scale),
+            Number(f64::from(y2) * scale),
+            Number(f64::from(x) * scale),
+            Number(f64::from(y) * scale)
         );
     }
     fn close(&mut self) {
-        self.text.push('Z');
+        let _ = self.write_char('Z');
     }
 }
 

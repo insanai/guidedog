@@ -120,3 +120,14 @@ fn articulation_shorthand_keeps_its_angle_outside_chord_delimiters() {
     assert_eq!(loaded.score.events.iter().map(|e| e.marks.len()).sum::<usize>(), 4);
     assert!(load_score("{ <c' e'4 }", "chord.ly", &mut Options::default()).is_err());
 }
+
+#[test]
+fn measure_expansion_consumes_the_same_memory_allowance_as_notes() {
+    let mut options = Options {
+        limits: Limits { memory_bytes: 4096, ..Limits::default() },
+        ..Options::default()
+    };
+    let failed = load_score("{ R1*100 }", "rests.ly", &mut options).unwrap_err();
+    assert_eq!(failed.error.kind, ErrorKind::ReadLimit);
+    assert!(failed.error.message.contains("memory"));
+}

@@ -110,10 +110,7 @@ fn document(
             system.first_measure,
             Number(system.top - base)
         )?;
-        let mut groups: BTreeMap<(u32, u32), Vec<&PositionedMark>> = BTreeMap::new();
-        for mark in &system.marks {
-            groups.entry((mark.staff.0, mark.measure)).or_default().push(mark);
-        }
+        let groups = groups(out, &system.marks, engraving)?;
         let mut staff = None;
         for ((staff_id, measure), marks) in groups {
             if staff != Some(staff_id) {
@@ -137,11 +134,40 @@ fn document(
     out.write_str("</g>\n</svg>\n")
 }
 
+fn groups<'a>(
+    out: &mut Writer<'_, '_, '_>,
+    marks: &'a [PositionedMark],
+    engraving: &Engraving,
+) -> Result<BTreeMap<(u32, u32), Vec<&'a PositionedMark>>, fmt::Error> {
+    let mut groups = BTreeMap::new();
+    for mark in marks {
+        if let Mark::Glyph { glyph, .. } = mark.mark
+            && !engraving.glyphs.contains_key(&glyph)
+        {
+            return Err(fmt::Error);
+        }
+        let group: &mut Vec<_> = match groups.entry((mark.staff.0, mark.measure)) {
+            std::collections::btree_map::Entry::Vacant(slot) => {
+                out.reserve_buffer(192)?;
+                slot.insert(Vec::new())
+            }
+            std::collections::btree_map::Entry::Occupied(slot) => slot.into_mut(),
+        };
+        if group.len() == group.capacity() {
+            let count = group.capacity().max(16);
+            out.reserve_buffer(count * std::mem::size_of::<&PositionedMark>())?;
+            group.try_reserve_exact(count).map_err(|_| fmt::Error)?;
+        }
+        group.push(mark);
+    }
+    Ok(groups)
+}
+
 fn write_mark(out: &mut Writer<'_, '_, '_>, mark: &Mark) -> fmt::Result {
     let role = mark.role().name();
     match mark {
         Mark::Glyph { glyph, x, y, size, .. } => {
-            if ![x, y, size].iter().all(|v| v.is_finite()) {
+            if ![x, y, size].iter().all(|v| v.is_finite()) || *size <= 0.0 {
                 return Err(fmt::Error);
             }
             writeln!(
@@ -232,6 +258,15 @@ struct Writer<'s, 'r, 'callback> {
     start: usize,
     limit: usize,
     reserve: Option<&'r mut Reserve<'callback>>,
+}
+
+impl Writer<'_, '_, '_> {
+    fn reserve_buffer(&mut self, bytes: usize) -> fmt::Result {
+        if self.reserve.as_mut().is_some_and(|reserve| !reserve(bytes)) {
+            return Err(fmt::Error);
+        }
+        Ok(())
+    }
 }
 
 impl Write for Writer<'_, '_, '_> {

@@ -20,69 +20,39 @@ msgid "Declaring object types"
 msgstr "オブジェクト型の宣言"
 
 #: ../../object-types.rst:4
-msgid ""
-"A project may need names that the standard domains do not know. We "
-"declare those object types in TOML. Guidedog can then create targets, "
-"index entries, and roles without loading a Python extension. The "
-"declaration states a syntax, not executable behavior."
-msgstr ""
-"標準ドメインにない名前が必要になることがあります。そのようなオブジェクト型は TOML で宣言します。これで Guidedog は、Python "
-"拡張を読み込まずに参照先、索引項目、ロールを作れます。宣言が表すのは構文であって、実行される処理ではありません。"
+msgid "A project may need names that the standard domains do not know. We declare those object types in TOML. Guidedog can then create targets, index entries, and roles without loading a Python extension. The declaration states a syntax, not executable behavior."
+msgstr "標準ドメインにない名前が必要になることがあります。そのようなオブジェクト型は TOML で宣言します。これで Guidedog は、Python 拡張を読み込まずに参照先、索引項目、ロールを作れます。宣言が表すのは構文であって、実行される処理ではありません。"
 
 #: ../../object-types.rst:8
 msgid "Targets: ``add_crossref_type``"
-msgstr "参照先：\\ ``add_crossref_type``"
+msgstr "参照ターゲット: ``add_crossref_type``"
 
 #: ../../object-types.rst:18
-msgid ""
-"``.. setting:: DEBUG`` then makes a target with the id ``setting-DEBUG`` "
-"and an index entry, and ``:setting:`DEBUG``` links to it, as in Sphinx. "
-"``index`` is Sphinx's ``indextemplate``: its type (``single``, ``pair``, "
-"``triple``, ``see``, ``seealso``) before the first colon, and the entry "
-"after it, with ``%s`` the name."
-msgstr ""
-"``.. setting:: DEBUG`` は ``setting-DEBUG`` という ID の参照先と索引項目を作り、\\ "
-"``:setting:`DEBUG``` からリンクできます。Sphinx と同じです。\\ ``index`` は Sphinx の "
-"``indextemplate`` に相当し、最初のコロンの前に種類（\\ ``single``\\ 、\\ ``pair``\\ 、\\ "
-"``triple``\\ 、\\ ``see``\\ 、\\ ``seealso``\\ ）、後に項目を書き、\\ ``%s`` が名前を表します。"
+msgid "``.. setting:: DEBUG`` then makes a target with the id ``setting-DEBUG`` and an index entry, and ``:setting:`DEBUG``` links to it, as in Sphinx. ``index`` is Sphinx's ``indextemplate``: its type (``single``, ``pair``, ``triple``, ``see``, ``seealso``) before the first colon, and the entry after it, with ``%s`` the name."
+msgstr "``.. setting:: DEBUG`` は ``setting-DEBUG`` という ID の参照先と索引項目を作り、\\ ``:setting:`DEBUG``` からリンクできます。Sphinx と同じです。\\ ``index`` は Sphinx の ``indextemplate`` に相当し、最初のコロンの前に種類（\\ ``single``\\ 、\\ ``pair``\\ 、\\ ``triple``\\ 、\\ ``see``\\ 、\\ ``seealso``\\ ）、後に項目を書き、\\ ``%s`` が名前を表します。"
 
 #: ../../object-types.rst:23
 msgid "Descriptions: ``add_object_type``"
-msgstr "説明：\\ ``add_object_type``"
+msgstr "オブジェクト記述: ``add_object_type``"
 
 #: ../../object-types.rst:36
-msgid ""
-"``.. django-admin:: migrate [app_label]`` then describes the command like "
-"any object: a signature, content, an id (``django-admin-migrate``), and "
-"an index entry. In Sphinx a ``parse_node`` function may read the "
-"signature. Here, fields set its usual work instead:"
-msgstr ""
-"これで ``.. django-admin:: migrate [app_label]`` "
-"は、ほかのオブジェクトと同じようにコマンドを記述します。シグネチャ、本文、ID（``django-admin-migrate``）、索引項目です。Sphinx "
-"では ``parse_node`` 関数がシグネチャを読むこともあります。Guidedog "
-"では、その代わりに次のフィールドで通常の処理を指定します。"
+msgid "``.. django-admin:: migrate [app_label]`` then describes the command like any object: a signature, content, an id (``django-admin-migrate``), and an index entry. In Sphinx a ``parse_node`` function may read the signature. Here, fields set its usual work instead:"
+msgstr "これで ``.. django-admin:: migrate [app_label]`` は、ほかのオブジェクトと同じようにコマンドを記述します。シグネチャ、本文、ID（``django-admin-migrate``）、索引項目です。Sphinx では ``parse_node`` 関数がシグネチャを読むこともあります。Guidedog では、その代わりに次のフィールドで通常の処理を指定します。"
 
 #: ../../object-types.rst:41
 msgid "``name``"
 msgstr "``name``"
 
 #: ../../object-types.rst:42
-msgid ""
-"``\"whole\"`` (the default): the object's name is its whole signature. "
-"``\"first-word\"``: the name is the signature up to its first space "
-"(``pdb``'s ``b(reak) [lineno]`` is named ``b(reak)``)."
-msgstr ""
-"``\"whole\"``\\ （既定）はシグネチャ全体を名前にします。\\ ``\"first-word\"`` "
-"は最初の空白までを使います。例えば ``pdb`` の ``b(reak) [lineno]`` の名前は ``b(reak)`` です。"
+msgid "``\"whole\"`` (the default): the object's name is its whole signature. ``\"first-word\"``: the name is the signature up to its first space (``pdb``'s ``b(reak) [lineno]`` is named ``b(reak)``)."
+msgstr "``\"whole\"``\\ （既定）はシグネチャ全体を名前にします。\\ ``\"first-word\"`` は最初の空白までを使います。例えば ``pdb`` の ``b(reak) [lineno]`` の名前は ``b(reak)`` です。"
 
 #: ../../object-types.rst:46
 msgid "``display``"
 msgstr "``display``"
 
 #: ../../object-types.rst:47
-msgid ""
-"How the signature is shown, ``%s`` standing for it. By default, as "
-"written."
+msgid "How the signature is shown, ``%s`` standing for it. By default, as written."
 msgstr "シグネチャの表示形式で、\\ ``%s`` がその値です。既定では原文のままです。"
 
 #: ../../object-types.rst:49
@@ -90,45 +60,25 @@ msgid "``program``"
 msgstr "``program``"
 
 #: ../../object-types.rst:50
-msgid ""
-"``true``: the name becomes the program that options described after it "
-"belong to, as ``.. program::`` makes it."
-msgstr ""
-"``true`` にすると、その名前が後続のオプションの所属するプログラムになります。\\ ``.. program::`` と同じです。"
+msgid "``true``: the name becomes the program that options described after it belong to, as ``.. program::`` makes it."
+msgstr "``true`` にすると、その名前が後続のオプションの所属するプログラムになります。\\ ``.. program::`` と同じです。"
 
 #: ../../object-types.rst:53
 msgid "Other names for directives"
 msgstr "ディレクティブの別名"
 
 #: ../../object-types.rst:56
-msgid ""
-"An extension may register one of Sphinx's own directives under another "
-"name:"
+msgid "An extension may register one of Sphinx's own directives under another name:"
 msgstr "拡張は Sphinx のディレクティブを別名で登録できます。"
 
 #: ../../object-types.rst:64
-msgid ""
-"A target without a domain is a standard directive, or one of the default "
-"domain's; a target such as ``py:function`` names its domain."
-msgstr ""
-"ドメインのない参照先は標準または既定ドメインのディレクティブです。\\ ``py:function`` のような参照先はドメインを明示します。"
+msgid "A target without a domain is a standard directive, or one of the default domain's; a target such as ``py:function`` names its domain."
+msgstr "ドメインを含まない指定先は、標準ディレクティブまたは既定ドメインのディレクティブを指します。``py:function`` のような指定先はドメインを明示します。"
 
 #: ../../object-types.rst:67
 msgid "Migrating"
 msgstr "移行"
 
 #: ../../object-types.rst:70
-msgid ""
-"``guidedog migrate`` finds each extension listed in ``conf.py`` that is a "
-"module of the project. It reads its ``add_crossref_type``, "
-"``add_object_type``, and ``add_directive`` calls without running them, "
-"and writes these tables. It reports what it cannot declare: a "
-"``parse_node`` function (set ``name``, ``display``, and ``program`` to "
-"match it) and directives, roles, and event handlers written in Python."
-msgstr ""
-"``guidedog migrate`` は、``conf.py`` "
-"に列挙された拡張のうち、プロジェクト内のモジュールであるものを探します。その中の "
-"``add_crossref_type``、``add_object_type``、``add_directive`` "
-"の呼び出しを実行せずに読み取り、これらの表を書き出します。宣言できないものは報告します。``parse_node`` "
-"関数（``name``、``display``、``program`` を設定して合わせます）と、Python "
-"で書かれたディレクティブ、ロール、イベントハンドラーです。"
+msgid "``guidedog migrate`` finds each extension listed in ``conf.py`` that is a module of the project. It reads its ``add_crossref_type``, ``add_object_type``, and ``add_directive`` calls without running them, and writes these tables. It reports what it cannot declare: a ``parse_node`` function (set ``name``, ``display``, and ``program`` to match it) and directives, roles, and event handlers written in Python."
+msgstr "``guidedog migrate`` は、``conf.py`` に列挙された拡張のうち、プロジェクト内のモジュールであるものを探します。その中の ``add_crossref_type``、``add_object_type``、``add_directive`` の呼び出しを実行せずに読み取り、これらの TOML テーブルを書き出します。宣言できないものとして、``parse_node`` 関数（``name``、``display``、``program`` を設定して合わせます）や、Python で書かれたディレクティブ、ロール、イベントハンドラーは診断として報告します。"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:01+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -138,9 +138,9 @@ msgid "``--licenses``"
 msgstr "``--licenses``"
 
 #: ../../reference/cli.rst:50
-msgid "Show Guidedog's licence and the notices of the libraries built in."
+msgid "Show Guidedog's license and the notices of the libraries built in."
 msgstr ""
-"Zeigt die Lizenz von Guidedog und die Hinweise der eingebauten "
+"Zeigt die Lizenz von Guidedog und die Lizenzhinweise der eingebauten "
 "Bibliotheken."
 
 #: ../../reference/cli.rst:52
@@ -220,7 +220,8 @@ msgstr "``5``"
 
 #: ../../reference/cli.rst:73
 msgid "An internal error; the diagnostic explains how to report it."
-msgstr "Interner Fehler; die Diagnose erläutert die Meldung."
+msgstr ""
+"Interner Fehler; die Diagnose erläutert, wie er gemeldet werden kann."
 
 #: ../../reference/cli.rst:74
 msgid "``6``"
@@ -1567,14 +1568,13 @@ msgid ""
 "zone; date-only values start at midnight UTC."
 msgstr ""
 "Erstellt Grundgerüste für statische Websites, verwaltet den "
-"Artikellebenszyklus, packt und prüft portable Theme-Archive und erstellt "
-"mandantenfähige Multi-Projekt-Websites. Die Befehle stammen aus dem "
-"Plugin für statische Websites (``ssg``), das in jedes ``guidedog`` "
-"eingebunden ist. Autoren-Befehle schreiben nur den führenden "
-"Metadatenblock (eine RST-Feldliste oder MyST-YAML-Frontmatter) um und "
-"lassen Textkörper, Kommentare und Zeilenenden unberührt. "
-"RFC-3339-Zeitstempel erfordern eine Zeitzone; reine Datumsangaben "
-"beginnen um Mitternacht UTC."
+"Artikellebenszyklus, packt und prüft portable Theme-Archive und stellt "
+"Multi-Projekt-Websites zusammen. Die Befehle stammen aus dem Plugin für "
+"statische Websites (``ssg``), das in jedes ``guidedog`` eingebunden ist. "
+"Befehle zum Verfassen schreiben nur den führenden Metadatenblock (eine "
+"RST-Feldliste oder MyST-YAML-Frontmatter) um und lassen Textkörper, "
+"Kommentare und Zeilenenden unberührt. RFC-3339-Zeitstempel erfordern eine "
+"Zeitzone; reine Datumsangaben beginnen um Mitternacht UTC."
 
 #: ../../reference/cli.rst:561 ../../reference/cli.rst:722
 msgid "Subcommands:"
@@ -1941,7 +1941,7 @@ msgid ""
 "removed afterwards. Concurrent invocations cannot change each other's "
 "snapshots. See :doc:`../plugins`."
 msgstr ""
-"Ein Timeout oder Ctrl+C nach einem möglichen Schreibvorgang meldet einen "
+"Ein Timeout oder Strg+C nach einem möglichen Schreibvorgang meldet einen "
 "unbekannten Ausgang (Exitstatus 7). Wir führen dann den "
 "Wiederherstellungsbefehl des Publishers aus, bevor wir es erneut "
 "versuchen. Jeder Aufruf baut in einen eigenen privaten Ordner, der danach "
@@ -2014,7 +2014,7 @@ msgid ""
 "Its options are those of ``guidedog pages init`` and ``publish`` "
 "(``--config``, ``--repository``, ``--project``, ``--branch``, "
 "``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); ``guidedog "
-"publish pages --help`` lists them. guidedog builds the project itself, "
+"publish pages --help`` lists them. Guidedog builds the project itself, "
 "with its own engine and linked plugins; ``--guidedog=PATH`` builds with "
 "another program instead. See :doc:`../howto/github-pages`."
 msgstr ""
@@ -2269,23 +2269,23 @@ msgstr "Befehle aus Plugins"
 
 #: ../../reference/cli.rst:782
 msgid ""
-"A plugin may add commands to guidedog, or targets to ``guidedog "
+"A plugin may add commands to ``guidedog``, or targets to ``guidedog "
 "publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
 "with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a "
 "plugin's:"
 msgstr ""
-"Ein Plugin kann Guidedog um Befehle ergänzen oder ``guidedog publish`` um "
-"Ziele. ``guidedog --help`` listet sie unter PLUGIN COMMANDS auf, jeweils "
-"mit der ID ihres Plugins, und ``guidedog plugin inspect ID`` zeigt die "
-"eines Plugins:"
+"Ein Plugin kann ``guidedog`` um Befehle ergänzen oder ``guidedog "
+"publish`` um Ziele. ``guidedog --help`` listet sie unter PLUGIN COMMANDS "
+"auf, jeweils mit der ID ihres Plugins, und ``guidedog plugin inspect ID`` "
+"zeigt die Befehle eines Plugins:"
 
 #: ../../reference/cli.rst:794
 msgid ""
-"guidedog looks for a word it does not know (or a ``publish`` target) "
+"Guidedog looks for a word it does not know (or a ``publish`` target) "
 "among the commands of the linked plugins first, then among those of the "
 "registered programs, and runs the plugin that adds it. ``--help`` after "
 "such a command prints its help, made from what the plugin declares. A "
-"plugin cannot replace one of guidedog's commands, and the first plugin to "
+"plugin cannot replace one of Guidedog's commands, and the first plugin to "
 "add a name keeps it."
 msgstr ""
 "Ein Wort, das Guidedog nicht kennt (oder ein ``publish``-Ziel), sucht es "
@@ -2298,14 +2298,14 @@ msgstr ""
 
 #: ../../reference/cli.rst:796
 msgid ""
-"A linked plugin's command runs inside guidedog. A registered program's "
-"command runs as that program, started on our terminal after its SHA-256 "
-"is checked: it may ask questions, and its exit status is the command's. "
-"When either asks for a build, guidedog builds the project. The program's "
-"commands are read when it is registered, so a new version is registered "
-"again, as always."
+"A linked plugin's command runs inside ``guidedog``. A registered "
+"program's command runs as that program, started on our terminal after its "
+"SHA-256 is checked: it may ask questions, and its exit status is the "
+"command's. When either asks for a build, Guidedog builds the project. The "
+"program's commands are read when it is registered, so a new version is "
+"registered again, as always."
 msgstr ""
-"Der Befehl eines gelinkten Plugins läuft innerhalb von Guidedog. Der "
+"Der Befehl eines gelinkten Plugins läuft innerhalb von ``guidedog``. Der "
 "Befehl eines registrierten Programms läuft als dieses Programm, gestartet "
 "in unserem Terminal, nachdem seine SHA-256-Prüfsumme geprüft wurde: Es "
 "darf Fragen stellen, und sein Exitstatus ist der des Befehls. Fordert "
@@ -2463,8 +2463,8 @@ msgid ""
 "Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without "
 "storing it."
 msgstr ""
-"Für diesen Befehl den Token aus ``GUIDEDOG_PAGES_TOKEN`` verwenden, ohne "
-"ihn zu speichern."
+"Für diesen Befehl das Token aus ``GUIDEDOG_PAGES_TOKEN`` verwenden, ohne "
+"es zu speichern."
 
 #: ../../reference/cli.rst:864
 msgid "``--guidedog=PATH``"
@@ -2715,6 +2715,7 @@ msgstr "Projektinformationen"
 #: ../../reference/configuration.rst:1442
 #: ../../reference/configuration.rst:1483
 #: ../../reference/configuration.rst:1508
+#: ../../reference/configuration.rst:1579
 msgid "Key"
 msgstr "Schlüssel"
 
@@ -2740,6 +2741,7 @@ msgstr "Schlüssel"
 #: ../../reference/configuration.rst:1443
 #: ../../reference/configuration.rst:1484
 #: ../../reference/configuration.rst:1509
+#: ../../reference/configuration.rst:1580
 msgid "Type"
 msgstr "Typ"
 
@@ -2765,6 +2767,7 @@ msgstr "Typ"
 #: ../../reference/configuration.rst:1444
 #: ../../reference/configuration.rst:1485
 #: ../../reference/configuration.rst:1510
+#: ../../reference/configuration.rst:1581
 msgid "Default"
 msgstr "Standard"
 
@@ -2790,6 +2793,7 @@ msgstr "Standard"
 #: ../../reference/configuration.rst:1445
 #: ../../reference/configuration.rst:1486
 #: ../../reference/configuration.rst:1511
+#: ../../reference/configuration.rst:1582
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -3034,7 +3038,7 @@ msgstr "``source_suffix``"
 
 #: ../../reference/configuration.rst:134
 msgid "string, array or table"
-msgstr "String, Array oder Tabelle"
+msgstr "Zeichenkette, Array oder Tabelle"
 
 #: ../../reference/configuration.rst:135
 msgid "``[\".rst\"]``"
@@ -3170,14 +3174,14 @@ msgstr "``include_roots``"
 #: ../../reference/configuration.rst:150
 msgid ""
 "Folders, relative to the source folder, that ``include``, "
-"``literalinclude``, images, graphs, logos and other files may also be "
-"read from. Sphinx reads any path; Guidedog reads only the source folder "
-"and these."
+"``literalinclude``, ``lilypond``, images, graphs, logos and other files "
+"may also be read from. Sphinx reads any path; Guidedog reads only the "
+"source folder and these."
 msgstr ""
 "Ordner relativ zum Quellordner, aus denen ``include``, "
-"``literalinclude``, Bilder, Graphen, Logos und andere Dateien zusätzlich "
-"gelesen werden dürfen. Sphinx liest jeden beliebigen Pfad; Guidedog liest "
-"nur den Quellordner und diese Ordner."
+"``literalinclude``, ``lilypond``, Bilder, Graphen, Logos und andere "
+"Dateien zusätzlich gelesen werden dürfen. Sphinx liest jeden beliebigen "
+"Pfad; Guidedog liest nur den Quellordner und diese Ordner."
 
 #: ../../reference/configuration.rst:153
 msgid "``templates_path``"
@@ -4063,6 +4067,7 @@ msgid "``html_title``"
 msgstr "``html_title``"
 
 #: ../../reference/configuration.rst:473
+#: ../../reference/configuration.rst:1593
 msgid "derived"
 msgstr "abgeleitet"
 
@@ -4343,8 +4348,9 @@ msgid "``\"a4\"``"
 msgstr "``\"a4\"``"
 
 #: ../../reference/configuration.rst:597
-msgid "The paper size (``\"a4\"``, ``\"us-letter\"``)."
-msgstr "Das Papierformat (``\"a4\"``, ``\"us-letter\"``)."
+msgid "The paper size (``\"a4\"``, ``\"letter\"``, or ``\"us-letter\"``)."
+msgstr ""
+"Das Papierformat (``\"a4\"``, ``\"letter\"`` oder ``\"us-letter\"``)."
 
 #: ../../reference/configuration.rst:598
 msgid "``pdf_logo``"
@@ -4647,7 +4653,7 @@ msgstr "``myst_footnote_transition``"
 
 #: ../../reference/configuration.rst:745
 msgid "Put a transition before the footnotes."
-msgstr "Setzt einen Übergang vor die Fußnoten."
+msgstr "Setzt eine Trennlinie (Transition) vor die Fußnoten."
 
 #: ../../reference/configuration.rst:746
 msgid "``myst_html_meta``"
@@ -4762,7 +4768,7 @@ msgstr "Ein Mapping-Name, der auf dieses Projekt selbst verweist."
 
 #: ../../reference/configuration.rst:814
 msgid ""
-"Inventories are downloaded with the built-in HTTP client, which honours "
+"Inventories are downloaded with the built-in HTTP client, which honors "
 "``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing. See "
 ":doc:`../intersphinx`."
 msgstr ""
@@ -5950,10 +5956,10 @@ msgid ""
 msgstr ""
 "Die Tabelle ``[site]`` konfiguriert die Ausgaben für statische Websites: "
 "Sitemaps, Syndikations-Feeds, Taxonomie-Archive, gefilterte "
-"Artikelsammlungen, installierte ``.gdt``-Themes und den Zusammenbau "
-"mandantenfähiger Multi-Projekt-Websites (``guidedog ssg build``). Jede "
-"Einstellung ist optional; wenn ``[site]`` weggelassen wird, wird keine "
-"dieser Ausgaben erzeugt."
+"Artikelsammlungen, installierte ``.gdt``-Themes und den Zusammenbau von "
+"Multi-Projekt-Websites (``guidedog ssg build``). Jede Einstellung ist "
+"optional; wenn ``[site]`` weggelassen wird, wird keine dieser Ausgaben "
+"erzeugt."
 
 #: ../../reference/configuration.rst:1352
 msgid "Static publishing ([site])"
@@ -6238,9 +6244,8 @@ msgid ""
 "build language variants."
 msgstr ""
 "Einstellungs-Overrides im Format ``key=value`` (wie von ``-D`` "
-"akzeptiert), die beim Erstellen dieses Mounts angewendet werden. "
-"Verwenden Sie ``editions`` anstelle von ``language=...``, um "
-"Sprachvarianten zu erstellen."
+"akzeptiert), die beim Erstellen dieses Mounts angewendet werden. Für "
+"Sprachvarianten ``editions`` anstelle von ``language=...`` verwenden."
 
 #: ../../reference/configuration.rst:1470
 msgid "``exclude``"
@@ -6362,43 +6367,81 @@ msgstr ""
 
 #: ../../reference/configuration.rst:1572
 msgid "Native music engraving"
-msgstr "Nativer Musiknotensatz"
+msgstr "Nativer Notensatz"
 
-#: ../../reference/configuration.rst:1575
+#: ../../reference/configuration.rst:1583
+msgid "``lilypond_staff_size``"
+msgstr "``lilypond_staff_size``"
+
+#: ../../reference/configuration.rst:1584
+#: ../../reference/configuration.rst:1588
+#: ../../reference/configuration.rst:1592
+msgid "float"
+msgstr "Gleitkommazahl"
+
+#: ../../reference/configuration.rst:1585
+msgid "``18``"
+msgstr "``18``"
+
+#: ../../reference/configuration.rst:1586
 msgid ""
-"``lilypond_staff_size`` sets the default five-line staff height in "
-"points, from 10 through 40; the default is 18. ``lilypond_html_width`` "
-"sets the wide HTML system measure in points; the default is 564. "
-"``lilypond_pdf_width`` sets the PDF system measure in points; when "
-"omitted, the selected template and ``pdf_paper_size`` determine it. "
-"Widths must be positive and no greater than 100,000 points. All three "
-"values are finite TOML numbers, and directive options override their "
-"project defaults."
+"Default five-line staff height in points, from ``10`` through ``40``."
 msgstr ""
-"``lilypond_staff_size`` legt die Standardhöhe des fünfzeiligen Systems in "
-"Punkt von 10 bis 40 fest; der Standard ist 18. ``lilypond_html_width`` "
-"legt die breite HTML-Systembreite in Punkt fest; der Standard ist 564. "
-"``lilypond_pdf_width`` legt die PDF-Systembreite in Punkt fest; fehlt der "
-"Wert, bestimmen die gewählte Vorlage und ``pdf_paper_size`` die Breite. "
-"Breiten müssen positiv und höchstens 100.000 Punkt sein. Alle drei Werte "
-"sind endliche TOML-Zahlen; Direktivenoptionen überschreiben die "
-"Projektstandards."
+"Standardhöhe des fünflinigen Notensystems in Punkt, von ``10`` bis ``40``."
 
 #: ../../reference/configuration.rst:1587
-msgid ""
-"The PDF templates declare their horizontal margin with ``// guidedog: "
-"margin-x = 31mm`` after their first import. Without a declaration, we "
-"assume 25 millimetres on each side. The built-in book, article and "
-"discussion margins are 31, 30 and 25 millimetres respectively. Text fonts "
-"use ``pdf_fonts`` and ``pdf_font_paths``. See :doc:`../topics/music` for "
-"directive syntax, layout, trust rules and limits."
+msgid "``lilypond_html_width``"
+msgstr "``lilypond_html_width``"
+
+#: ../../reference/configuration.rst:1589
+msgid "``564``"
+msgstr "``564``"
+
+#: ../../reference/configuration.rst:1590
+msgid "Wide HTML system measure in points (positive, at most ``100000``)."
 msgstr ""
-"Die PDF-Vorlagen deklarieren ihren horizontalen Rand mit ``// guidedog: "
-"margin-x = 31mm`` nach ihrem ersten Import. Ohne Deklaration nehmen wir "
-"25 Millimeter auf jeder Seite an. Die eingebauten Buch-, Artikel- und "
-"Diskussionsränder betragen 31, 30 beziehungsweise 25 Millimeter. "
-"Textschriften verwenden ``pdf_fonts`` und ``pdf_font_paths``. Syntax, "
-"Layout, Vertrauensregeln und Grenzen stehen in :doc:`../topics/music`."
+"Systembreite für das breite HTML-Layout in Punkt (positiv, höchstens "
+"``100000``)."
+
+#: ../../reference/configuration.rst:1591
+msgid "``lilypond_pdf_width``"
+msgstr "``lilypond_pdf_width``"
+
+#: ../../reference/configuration.rst:1594
+msgid ""
+"PDF system measure in points (positive, at most ``100000``); when "
+"omitted, derived from ``pdf_paper_size`` and the selected template's "
+"horizontal margin."
+msgstr ""
+"PDF-Systembreite in Punkt (positiv, höchstens ``100000``); fehlt der "
+"Wert, wird sie aus ``pdf_paper_size`` und dem horizontalen Rand der "
+"gewählten Vorlage abgeleitet."
+
+#: ../../reference/configuration.rst:1596
+msgid ""
+"All three values are finite TOML numbers, and directive options override "
+"their project defaults."
+msgstr ""
+"Alle drei Werte sind endliche TOML-Zahlen, und Direktivenoptionen "
+"überschreiben die Projektstandards."
+
+#: ../../reference/configuration.rst:1604
+msgid ""
+"The PDF templates declare their horizontal margin in their leading 256 "
+"lines with a comment such as ``// guidedog: margin-x = 31mm``. Without a "
+"declaration, we assume 25 millimeters on each side. The built-in book, "
+"article and discussion margins are 31, 30 and 25 millimeters "
+"respectively. Text fonts use ``pdf_fonts`` and ``pdf_font_paths``. See "
+":doc:`../topics/music` for directive syntax, layout, trust rules and "
+"limits."
+msgstr ""
+"Die PDF-Vorlagen deklarieren ihren horizontalen Rand in den ersten 256 "
+"Zeilen mit einem Kommentar wie ``// guidedog: margin-x = 31mm``. Ohne "
+"Deklaration nehmen wir 25 Millimeter auf jeder Seite an. Die eingebauten "
+"Buch-, Artikel- und Diskussionsränder betragen 31, 30 beziehungsweise 25 "
+"Millimeter. Textschriften verwenden ``pdf_fonts`` und ``pdf_font_paths``. "
+"Direktiven-Syntax, Layout, Vertrauensregeln und Grenzen stehen in "
+":doc:`../topics/music`."
 
 #: ../../reference/formats.rst:1
 msgid "Readers, renderers, and builders"

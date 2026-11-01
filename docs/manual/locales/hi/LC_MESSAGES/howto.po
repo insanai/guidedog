@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 10:17+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -254,7 +254,7 @@ msgstr ""
 
 #: ../../howto/discussions.rst:154
 msgid "Build"
-msgstr "build"
+msgstr "बिल्ड करना"
 
 #: ../../howto/discussions.rst:162
 msgid ""
@@ -282,15 +282,15 @@ msgstr ""
 
 #: ../../howto/discussions.rst:166
 msgid ""
-"The build is guidedog's own: the same build as ``guidedog build``, with "
+"The build is Guidedog's own: the same build as ``guidedog build``, with "
 "the catalog as the project. Graphviz, Typst, and the other tools it needs "
-"are guidedog's too. An older catalog of Typst records compiles each "
+"are Guidedog's too. An older catalog of Typst records compiles each "
 "record with Typst; ``--typst=PATH`` names a Typst program to use instead "
 "of the embedded compiler."
 msgstr ""
-"यह build guidedog का अपना है: वही build जो ``guidedog build`` करता है, बस "
+"यह बिल्ड Guidedog का अपना है: वही बिल्ड जो ``guidedog build`` करता है, बस "
 "कैटलॉग ही प्रोजेक्ट होता है। Graphviz, Typst और बाकी ज़रूरी टूल भी "
-"guidedog के अपने हैं। Typst रिकॉर्ड वाला कोई पुराना कैटलॉग हर रिकॉर्ड को "
+"Guidedog के अपने हैं। Typst रिकॉर्ड वाला कोई पुराना कैटलॉग हर रिकॉर्ड को "
 "Typst से कंपाइल करता है; ``--typst=PATH`` अंतर्निहित कंपाइलर की जगह "
 "इस्तेमाल होने वाला Typst प्रोग्राम बताता है।"
 
@@ -611,8 +611,8 @@ msgid ""
 "Content passes through format guards and object type tables to produce "
 "tailored web and print deliverables."
 msgstr ""
-"सामग्री अनुकूलित वेब और मुद्रण आउटपुट तैयार करने के लिए प्रारूप सुरक्षा "
-"और ऑब्जेक्ट प्रकार तालिकाओं से गुजरती है।"
+"अनुकूलित वेब और मुद्रण आउटपुट तैयार करने के लिए सामग्री प्रारूप-शर्तों "
+"(format guards) और ऑब्जेक्ट-प्रकार तालिकाओं से गुज़रती है।"
 
 #: ../../howto/format-specific-content.rst:10
 msgid "Content routing and directive handling for HTML and PDF outputs."
@@ -641,12 +641,12 @@ msgid ""
 "Place our script and stylesheet in ``_static/`` (e.g. "
 "``_static/interactive.js`` and ``_static/interactive.css``)."
 msgstr ""
-"स्क्रिप्ट और स्टाइलशीट को ``_static/`` में रखते हैं, जैसे "
-"``_static/interactive.js`` और ``_static/interactive.css``।"
+"अपनी स्क्रिप्ट और स्टाइलशीट को ``_static/`` में रखें (जैसे "
+"``_static/interactive.js`` और ``_static/interactive.css``)।"
 
 #: ../../howto/format-specific-content.rst:63
 msgid "Register them in ``conf.toml``:"
-msgstr "इन्हें ``conf.toml`` में दर्ज करते हैं:"
+msgstr "इन्हें ``conf.toml`` में दर्ज करें:"
 
 #: ../../howto/format-specific-content.rst:70
 msgid ""
@@ -661,8 +661,8 @@ msgid ""
 "For this self-contained example, write ``_static/interactive.js`` as "
 "follows:"
 msgstr ""
-"इस स्वतंत्र रूप से चलने वाले उदाहरण के लिए ``_static/interactive.js`` में "
-"यह लिखते हैं:"
+"इस स्वतंत्र रूप से चलने वाले उदाहरण के लिए ``_static/interactive.js`` को "
+"इस प्रकार लिखें:"
 
 #: ../../howto/format-specific-content.rst:81
 msgid ""
@@ -684,7 +684,7 @@ msgid ""
 "for printed pages, wrap the markup in ``.. only:: pdf``:"
 msgstr ""
 "मुद्रित पृष्ठों के लिए वेक्टर आकृतियाँ, अनुकूलित कॉलआउट बॉक्स, या विशेष "
-"टाइपोग्राफी शामिल करने के लिए, मार्कअप को ``.. only:: pdf`` में लपेटें:"
+"टाइपोग्राफ़ी शामिल करने के लिए, मार्कअप को ``.. only:: pdf`` में लपेटें:"
 
 #: ../../howto/format-specific-content.rst:106
 msgid ""
@@ -692,9 +692,8 @@ msgid ""
 "invoking the Typst compiler. The HTML builder automatically omits this "
 "block without emitting warnings."
 msgstr ""
-"Guidedog Typst कंपाइलर को लागू करने से पहले इस ब्लॉक को सीधे Typst "
-"दस्तावेज़ में उत्सर्जित करता है। HTML बिल्डर बिना किसी चेतावनी के इसे "
-"छोड़ देता है।"
+"Guidedog Typst कंपाइलर चलाने से पहले इस ब्लॉक को सीधे Typst दस्तावेज़ में "
+"लिख देता है। HTML बिल्डर बिना किसी चेतावनी के इसे छोड़ देता है।"
 
 #: ../../howto/format-specific-content.rst:109
 msgid ""
@@ -715,9 +714,9 @@ msgid ""
 "``--untrusted`` omits raw content and disables build plugins; it "
 "therefore cannot run these formatting and preprocessing examples."
 msgstr ""
-"कच्चा Typst कोड तभी चलता है जब कच्ची सामग्री की नीति इसकी अनुमति दे। "
-"``--untrusted`` कच्ची सामग्री हटा देता है और बिल्ड प्लगइन बंद कर देता है, "
-"इसलिए वह इन स्वरूपण और पूर्वप्रसंस्करण उदाहरणों को नहीं चला सकता।"
+"रॉ Typst कोड तभी चलता है जब रॉ-सामग्री नीति इसकी अनुमति दे। "
+"``--untrusted`` रॉ सामग्री छोड़ देता है और बिल्ड प्लगइन बंद कर देता है, "
+"इसलिए वह इन फ़ॉर्मेटिंग और प्रीप्रोसेसिंग उदाहरणों को नहीं चला सकता।"
 
 #: ../../howto/format-specific-content.rst:115
 msgid "**Why Typst and not LaTeX?**"
@@ -729,9 +728,9 @@ msgid ""
 "<https://typst.app/>`_, not TeX or LaTeX. Raw blocks are passed verbatim "
 "to the target rendering engine:"
 msgstr ""
-"Guidedog TeX या LaTeX के बजाय मूल `Typst <https://typst.app/>`_ के माध्यम "
-"से PDF पुस्तकें तैयार करता है। रॉ ब्लॉक सीधे लक्ष्य रेंडरिंग इंजन को "
-"सौंपे जाते हैं:"
+"Guidedog TeX या LaTeX के बजाय नेटिव `Typst <https://typst.app/>`_ के "
+"माध्यम से PDF पुस्तकें तैयार करता है। रॉ ब्लॉक जस के तस लक्ष्य रेंडरिंग "
+"इंजन को भेजे जाते हैं:"
 
 #: ../../howto/format-specific-content.rst:120
 msgid ""
@@ -758,9 +757,9 @@ msgid ""
 "``typst.math.unsupported`` and follow the math policy; see "
 ":doc:`../topics/mathematics`."
 msgstr ""
-"**LaTeX गणित** (``.. math::`` और ``:math:``): समर्थित कमांड मूल Typst "
+"**LaTeX गणित** (``.. math::`` और ``:math:``): समर्थित कमांड नेटिव Typst "
 "समीकरणों में बदलते हैं। असमर्थित कमांड ``typst.math.unsupported`` उत्पन्न "
-"करते हैं और गणित नीति के अनुसार संभाले जाते हैं; "
+"करते हैं और गणित नीति के अनुसार सँभाले जाते हैं; "
 ":doc:`../topics/mathematics` देखें।"
 
 #: ../../howto/format-specific-content.rst:124
@@ -772,7 +771,7 @@ msgid ""
 msgstr ""
 "**latex टैग** (``.. only:: latex``): पुरानी Sphinx परियोजनाओं के साथ "
 "पश्चगामी अनुकूलता के लिए, Guidedog ``.. only::`` अभिव्यक्तियों में "
-"``latex`` को PDF निर्माण के उपनाम के रूप में पहचानता है। मूल Guidedog "
+"``latex`` को PDF निर्माण के उपनाम के रूप में पहचानता है। नेटिव Guidedog "
 "परियोजनाओं में ``.. only:: pdf`` को प्राथमिकता दें।"
 
 #: ../../howto/format-specific-content.rst:128
@@ -862,10 +861,10 @@ msgid ""
 "many call sites, place this import in a project preamble selected by "
 "``pdf_preamble``."
 msgstr ""
-"फ़ंक्शन को स्पष्ट रूप से आयात करते हैं: पुस्तक टेम्पलेट के अपने आयात उसके "
+"फ़ंक्शन को स्पष्ट रूप से आयात करें: पुस्तक टेम्पलेट के अपने आयात उसके "
 "मॉड्यूल तक सीमित होते हैं और दस्तावेज़ की सामग्री को सहायक फ़ंक्शन उपलब्ध "
-"नहीं कराते। कई जगह बुलाने के लिए इस आयात को ``pdf_preamble`` से चुनी गई "
-"परियोजना की प्रस्तावना में रख सकते हैं।"
+"नहीं कराते। कई जगह कॉल करने के लिए इस आयात को ``pdf_preamble`` से चुने गए "
+"प्रोजेक्ट प्रीऐम्बल में रखें।"
 
 #: ../../howto/format-specific-content.rst:204
 msgid "6. Advanced: Preprocessing directives with a build plugin"
@@ -889,7 +888,7 @@ msgid ""
 "The plugin implements ``process_source``, intercepting the raw document "
 "text before parsing:"
 msgstr ""
-"प्लगइन पार्सिंग से पहले कच्चे दस्तावेज़ पाठ को इंटरसेप्ट करते हुए "
+"प्लगइन पार्सिंग से पहले दस्तावेज़ के रॉ (raw) पाठ को इंटरसेप्ट करते हुए "
 "``process_source`` लागू करता है:"
 
 #: ../../howto/format-specific-content.rst:256
@@ -1229,8 +1228,8 @@ msgid ""
 "the published site stays as it was."
 msgstr ""
 "``guidedog pages watch`` एक बार प्रकाशित करता है, फिर हर बार जब सोर्स "
-"फ़ाइलें बदलती हैं और ``debounce_ms`` तक शांत रहते हैं (पहले बदलाव के बाद "
-"अधिकतम ``max_wait_ms``), तब फिर से प्रकाशित करता है। विफल build या "
+"फ़ाइलें बदलती हैं और ``debounce_ms`` तक शांत रहती हैं (पहले बदलाव के बाद "
+"अधिकतम ``max_wait_ms``), तब फिर से प्रकाशित करता है। विफल बिल्ड या "
 "प्रकाशन की सूचना दी जाती है, और प्रकाशित साइट जैसी थी वैसी रहती है।"
 
 #: ../../howto/github-pages.rst:161
@@ -1279,7 +1278,7 @@ msgstr ""
 
 #: ../../howto/github-pages.rst:215
 msgid "Build and deploy with GitHub Actions"
-msgstr "GitHub Actions से build और deploy करें"
+msgstr "GitHub Actions से बिल्ड और डिप्लॉय करें"
 
 #: ../../howto/github-pages.rst:218
 msgid "We generate the workflow instead of copying it:"
@@ -1295,14 +1294,14 @@ msgid ""
 "workflow's checksum test fails on it, and the command exits with status 1 "
 "until we give ``--sha256``. Without ``--write`` it prints the workflow."
 msgstr ""
-"यह ``docs`` में रखे प्रोजेक्ट और सोर्स branch ``main`` के लिए "
+"यह ``docs`` में रखे प्रोजेक्ट और सोर्स ब्रांच ``main`` के लिए "
 "``.github/workflows/docs-pages.yml`` लिखता है (``--project=DIR``, "
-"``--branch=NAME``)। workflow Guidedog की यही रिलीज़ इंस्टॉल करता है "
+"``--branch=NAME``)। वर्कफ़्लो Guidedog की यही रिलीज़ इंस्टॉल करता है "
 "(``--version=X``)। आर्काइव का SHA-256 रिलीज़ की ``SHA256SUMS`` से पढ़ा "
 "जाता है, या ``--sha256`` से दिया जाता है। ``--offline`` साफ़ तौर पर "
-"चिह्नित प्लेसहोल्डर लिखता है। workflow की checksum जाँच उस पर विफल होता "
-"है, और जब तक हम ``--sha256`` नहीं देते, कमांड स्थिति 1 के साथ बाहर निकलता "
-"है। ``--write`` के बिना यह workflow को केवल प्रिंट करता है।"
+"चिह्नित प्लेसहोल्डर लिखता है। वर्कफ़्लो की चेकसम जाँच उस पर विफल होती है, "
+"और जब तक हम ``--sha256`` नहीं देते, कमांड स्थिति 1 के साथ बाहर निकलता है। "
+"``--write`` के बिना यह वर्कफ़्लो को केवल प्रिंट करता है।"
 
 #: ../../howto/github-pages.rst:232
 msgid ""
@@ -1546,16 +1545,16 @@ msgid ""
 "`GitHub's custom Pages workflows "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
 msgstr ""
-"`GitHub के custom Pages workflows "
-"<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
+"`GitHub के कस्टम Pages वर्कफ़्लो "
+"<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_।"
 
 #: ../../howto/github-pages.rst:408
 msgid ""
 "`Configure a Pages source "
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
 msgstr ""
-"`Pages का publishing source सेट करें "
-"<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
+"`Pages का प्रकाशन सोर्स सेट करें "
+"<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_।"
 
 #: ../../howto/github-pages.rst:409
 msgid ""
@@ -1563,7 +1562,7 @@ msgid ""
 "<https://github.com/actions/configure-pages/releases/tag/v6.0.0>`_."
 msgstr ""
 "`configure-pages v6.0.0 रिलीज़ "
-"<https://github.com/actions/configure-pages/releases/tag/v6.0.0>`_."
+"<https://github.com/actions/configure-pages/releases/tag/v6.0.0>`_।"
 
 #: ../../howto/index.rst:1
 msgid "Practical tasks"
@@ -1577,7 +1576,7 @@ msgstr "हर पेज एक ठोस काम से शुरू हो�
 
 #: ../../howto/install.rst:1
 msgid "Build and install Guidedog"
-msgstr "Guidedog build और इंस्टॉल करना"
+msgstr "Guidedog बिल्ड और इंस्टॉल करना"
 
 #: ../../howto/install.rst:4
 msgid "Install on macOS with Homebrew"
@@ -1594,16 +1593,18 @@ msgstr ""
 #: ../../howto/install.rst:15
 msgid ""
 "Homebrew selects the release archive for our processor and checks its "
-"SHA-256. The executable has the Typst compiler and Graphviz built in, so "
-"it needs nothing else at run time. We do not need a Rust toolchain, a "
-"Python environment, or a separate Typst installation to build HTML and "
-"PDF. The release requires macOS 12 or later."
+"SHA-256. The executable has the Typst compiler, Graphviz, and native "
+"music engraving built in, so it needs nothing else at run time. We do not "
+"need a Rust toolchain, a Python environment, or a separate Typst "
+"installation to build HTML and PDF. The release requires macOS 12 or "
+"later."
 msgstr ""
 "Homebrew हमारे प्रोसेसर के लिए रिलीज़ आर्काइव चुनता है और उसका SHA-256 "
-"जाँचता है। एग्ज़िक्यूटेबल में Typst कंपाइलर और Graphviz पहले से शामिल "
-"हैं, इसलिए चलते समय इसे और कुछ नहीं चाहिए। HTML और PDF build करने के लिए "
-"हमें Rust टूलचेन, Python वातावरण या अलग से Typst इंस्टॉल करने की ज़रूरत "
-"नहीं है। इस रिलीज़ के लिए macOS 12 या उससे नया संस्करण चाहिए।"
+"जाँचता है। एक्ज़ीक्यूटेबल में Typst कंपाइलर, Graphviz और नेटिव संगीत "
+"स्वरलिपि टाइपसेटिंग पहले से शामिल हैं, इसलिए रनटाइम पर इसे और कुछ नहीं "
+"चाहिए। HTML और PDF बिल्ड करने के लिए हमें Rust टूलचेन, Python वातावरण या "
+"अलग से Typst इंस्टॉल करने की ज़रूरत नहीं है। इस रिलीज़ के लिए macOS 12 या "
+"उससे नया संस्करण चाहिए।"
 
 #: ../../howto/install.rst:19
 msgid ""
@@ -1639,7 +1640,7 @@ msgstr ""
 
 #: ../../howto/install.rst:32
 msgid "Build from source"
-msgstr "सोर्स से build करें"
+msgstr "सोर्स से बिल्ड करें"
 
 #: ../../howto/install.rst:35
 msgid "Guidedog is a Cargo workspace. We need:"
@@ -1940,13 +1941,13 @@ msgid ""
 "conformance tables are pages under ``docs/manual/internals``."
 msgstr ""
 "सारा दस्तावेज़ीकरण ``docs/`` के अंदर reStructuredText में है। Markdown "
-"फ़ाइलें केवल हर crate की ``README.md`` (एक छोटी चीट शीट) और वे फ़ाइलें "
-"हैं जो GitHub को रूट पर चाहिए। डिज़ाइन नोट्स, आंतरिक विवरण, लेजर और "
-"अनुरूपता टेबलें ``docs/manual/internals`` के अंदर पेज हैं।"
+"फ़ाइलें केवल हर क्रेट की ``README.md``, एक संक्षिप्त चीट शीट, और वे "
+"फ़ाइलें हैं जो GitHub को रूट पर चाहिए। डिज़ाइन नोट्स, आंतरिक विवरण, लेजर "
+"और अनुरूपता टेबलें ``docs/manual/internals`` के अंदर पेज हैं।"
 
 #: ../../howto/maintain-docs.rst:17
 msgid "Build the manual"
-msgstr "मैनुअल build करना"
+msgstr "मैनुअल बिल्ड करना"
 
 #: ../../howto/maintain-docs.rst:20
 msgid ""
@@ -1993,7 +1994,7 @@ msgstr ""
 
 #: ../../howto/maintain-docs.rst:49
 msgid "Build and check discussions"
-msgstr "चर्चा दस्तावेज़ build और जाँचना"
+msgstr "चर्चा दस्तावेज़ बिल्ड और जाँचना"
 
 #: ../../howto/maintain-docs.rst:59
 msgid ""
@@ -2496,7 +2497,7 @@ msgstr ""
 
 #: ../../howto/publish.rst:1
 msgid "Build and publish documentation"
-msgstr "दस्तावेज़ build और प्रकाशित करना"
+msgstr "दस्तावेज़ बिल्ड और प्रकाशित करना"
 
 #: ../../howto/publish.rst:4
 msgid ""
@@ -2556,11 +2557,8 @@ msgstr ""
 "तैयारी असफल हो तो पिछली साइट जस की तस रहती है।"
 
 #: ../../howto/publish.rst:25
-msgid ""
-"Guidedog prepares a complete generation before deciding a journaled "
-"commit:"
-msgstr ""
-"Guidedog पूरा अगला संस्करण तैयार करने के बाद जर्नल वाला commit तय करता है:"
+msgid "The staging and switch sequence runs as follows:"
+msgstr "स्टेजिंग और स्विच का क्रम इस प्रकार चलता है:"
 
 #: ../../howto/publish.rst:29
 msgid ""
@@ -2585,14 +2583,14 @@ msgid ""
 "build folder. For a custom output folder passed to ``guidedog build -b "
 "html SOURCEDIR OUTPUTDIR``, it sits inside the output's one cache folder "
 "beside it (``.<target>.guidedog``), so the output gains a single hidden "
-"neighbour."
+"neighbor."
 msgstr ""
 "**स्टेजिंग:** नए रेंडर हुए सारे पेज एक छिपे स्टेजिंग फ़ोल्डर "
-"(``.<target>.next``) में लिखे जाते हैं। डिफ़ॉल्ट builders के लिए यह build "
+"(``.<target>.next``) में लिखे जाते हैं। डिफ़ॉल्ट बिल्डरों के लिए यह बिल्ड "
 "फ़ोल्डर में होता है। ``guidedog build -b html SOURCEDIR OUTPUTDIR`` को "
 "दिए गए कस्टम आउटपुट फ़ोल्डर के लिए यह आउटपुट के बगल वाले एकमात्र कैश "
-"फ़ोल्डर (``.<target>.guidedog``) के भीतर होता है, इसलिए आउटपुट के पास बस "
-"एक छिपा फ़ोल्डर और जुड़ता है।"
+"फ़ोल्डर (``.<target>.guidedog``) के भीतर रहता है, जिससे आउटपुट के पास "
+"केवल एक छिपा पड़ोसी फ़ोल्डर बनता है।"
 
 #: ../../howto/publish.rst:54
 msgid ""
@@ -3057,7 +3055,7 @@ msgstr ""
 "टेक्स्ट होता है, या सारांश न होने पर खाली रहता है। हम ``:summary:`` को "
 "फ़ॉर्मैट किए गए परिचय से अलग रखते हैं: फ़ीड और विवरण मेटाडेटा उसी सादे "
 "टेक्स्ट का उपयोग करते हैं। Tinkerer से माइग्रेशन में हम ``.. more::`` को "
-"रखकर साइट-विशिष्ट ब्राउज़र कोड की जगह मूल ``postlist`` डायरेक्टिव या "
+"रखकर साइट-विशिष्ट ब्राउज़र कोड की जगह नेटिव ``postlist`` डायरेक्टिव या "
 "संग्रह टेम्पलेट इस्तेमाल कर सकते हैं। रनटाइम प्लगइन या ब्राउज़र फ़ेच की "
 "ज़रूरत नहीं है।"
 
@@ -3598,8 +3596,8 @@ msgstr ""
 "डिफ़ॉल्ट सेटिंग अनुपलब्ध पैकेज डाउनलोड करने देती है। दोहराने योग्य "
 "टाइपोग्राफ़ी के लिए हम ``pdf_fonts = \"embedded\"`` सेट करते हैं और "
 "``pdf_font_paths`` से परियोजना की फ़ॉन्ट निर्देशिकाएँ जोड़ते हैं। पहले "
-"अनुपलब्ध पैकेज स्थापित करने या फ़ॉन्ट फ़ाइल बदलने के बाद हम नई प्रक्रिया "
-"में ``guidedog build html -a`` चलाते हैं, ताकि कैश किए गए पृष्ठ दोबारा "
+"अनुपलब्ध पैकेज स्थापित करने या फ़ॉन्ट फ़ाइल बदलने के बाद हम नए सिरे से "
+"``guidedog build html -a`` कमांड चलाते हैं, ताकि कैश किए गए पृष्ठ दोबारा "
 "बनें और कंपाइलर का फ़ॉन्ट संग्रह दोबारा लोड हो।"
 
 #: ../../howto/typst-diagrams.rst:105

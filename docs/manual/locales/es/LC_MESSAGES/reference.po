@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:01+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -137,7 +137,7 @@ msgid "``--licenses``"
 msgstr "``--licenses``"
 
 #: ../../reference/cli.rst:50
-msgid "Show Guidedog's licence and the notices of the libraries built in."
+msgid "Show Guidedog's license and the notices of the libraries built in."
 msgstr ""
 "Muestra la licencia de Guidedog y los avisos de las bibliotecas "
 "integradas."
@@ -380,8 +380,9 @@ msgid ""
 "Plugins add commands of their own (see `Commands plugins add`_). Three "
 "plugins are linked into every ``guidedog`` executable:"
 msgstr ""
-"Los plugins añaden sus propios comandos (véase `Commands plugins add`_). "
-"Tres plugins van enlazados en cada ejecutable ``guidedog``:"
+"Los plugins añaden sus propios comandos (véase `Comandos que añaden los "
+"plugins <Commands plugins add_>`_). Tres plugins van enlazados en cada "
+"ejecutable ``guidedog``:"
 
 #: ../../reference/cli.rst:116
 msgid "Commands of linked plugins"
@@ -1193,10 +1194,10 @@ msgid ""
 "filename."
 msgstr ""
 "Con ``--from sphinx`` o ``--from myst``, un argumento de archivo "
-"``lilypond`` sin grabar se convierte en una frase descriptiva en HTML y "
-"PDF, traducida con ``--lang``; su pie se omite junto con la partitura. La "
-"conversión nunca abre el archivo de la partitura; la conversión a RST "
-"conserva su directiva y nombre de archivo."
+"``lilypond`` sin tipografiar se convierte en una oración descriptiva en "
+"HTML y PDF, traducida con ``--lang``; su pie de figura se omite junto con "
+"la partitura. La conversión nunca abre el archivo de la partitura; la "
+"conversión a RST conserva su directiva y su nombre de archivo."
 
 #: ../../reference/cli.rst:425
 msgid "Options of convert"
@@ -1997,7 +1998,7 @@ msgid ""
 "Its options are those of ``guidedog pages init`` and ``publish`` "
 "(``--config``, ``--repository``, ``--project``, ``--branch``, "
 "``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); ``guidedog "
-"publish pages --help`` lists them. guidedog builds the project itself, "
+"publish pages --help`` lists them. Guidedog builds the project itself, "
 "with its own engine and linked plugins; ``--guidedog=PATH`` builds with "
 "another program instead. See :doc:`../howto/github-pages`."
 msgstr ""
@@ -2008,7 +2009,7 @@ msgstr ""
 "trabajo en nuestro nombre. Sus opciones son las de ``guidedog pages "
 "init`` y ``publish`` (``--config``, ``--repository``, ``--project``, "
 "``--branch``, ``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); "
-"``guidedog publish pages --help`` las enumera. guidedog compila el "
+"``guidedog publish pages --help`` las enumera. Guidedog compila el "
 "proyecto por sí mismo, con su propio motor y sus plugins enlazados; "
 "``--guidedog=PATH`` compila con otro programa en su lugar. Véase "
 ":doc:`../howto/github-pages`."
@@ -2025,12 +2026,12 @@ msgid ""
 "GitHub's Pages actions. We use it instead of publishing from our own "
 "machine when every push to the source branch should deploy."
 msgstr ""
-"``guidedog pages workflow`` es añadido por el plugin integrado de GitHub "
-"Pages. Imprime, escribe o comprueba un flujo de trabajo de GitHub "
-"Actions. El flujo de trabajo instala esta versión de Guidedog, compila el "
-"proyecto y lo despliega mediante las acciones de Pages de GitHub. Se "
-"utiliza en lugar de publicar desde nuestra propia máquina cuando cada "
-"push a la rama de origen debe desplegarse."
+"El plugin enlazado de GitHub Pages añade ``guidedog pages workflow``. "
+"Muestra, escribe o comprueba un flujo de trabajo de GitHub Actions. El "
+"flujo de trabajo instala esta versión de Guidedog, compila el proyecto y "
+"lo despliega mediante las acciones de GitHub Pages. Lo usamos en lugar de "
+"publicar desde nuestra propia máquina cuando cada push a la rama de "
+"origen debe desplegarse."
 
 #: ../../reference/cli.rst:686
 msgid "Options of pages workflow"
@@ -2250,49 +2251,49 @@ msgstr "Comandos que añaden los plugins"
 
 #: ../../reference/cli.rst:782
 msgid ""
-"A plugin may add commands to guidedog, or targets to ``guidedog "
+"A plugin may add commands to ``guidedog``, or targets to ``guidedog "
 "publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
 "with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a "
 "plugin's:"
 msgstr ""
-"Un plugin puede añadir comandos a guidedog, o destinos a ``guidedog "
+"Un plugin puede añadir comandos a ``guidedog``, o destinos a ``guidedog "
 "publish``. ``guidedog --help`` los enumera bajo PLUGIN COMMANDS, cada uno "
 "con el ID de su plugin, y ``guidedog plugin inspect ID`` muestra los de "
 "un plugin:"
 
 #: ../../reference/cli.rst:794
 msgid ""
-"guidedog looks for a word it does not know (or a ``publish`` target) "
+"Guidedog looks for a word it does not know (or a ``publish`` target) "
 "among the commands of the linked plugins first, then among those of the "
 "registered programs, and runs the plugin that adds it. ``--help`` after "
 "such a command prints its help, made from what the plugin declares. A "
-"plugin cannot replace one of guidedog's commands, and the first plugin to "
+"plugin cannot replace one of Guidedog's commands, and the first plugin to "
 "add a name keeps it."
 msgstr ""
-"guidedog busca una palabra que no conoce (o un destino de ``publish``) "
+"Guidedog busca una palabra que no conoce (o un destino de ``publish``) "
 "primero entre los comandos de los plugins enlazados y después entre los "
 "de los programas registrados, y ejecuta el plugin que la añade. "
 "``--help`` detrás de uno de esos comandos muestra su ayuda, generada a "
 "partir de lo que declara el plugin. Un plugin no puede reemplazar uno de "
-"los comandos de guidedog, y el primer plugin que añade un nombre se lo "
-"queda."
+"los comandos propios de Guidedog, y el primer plugin que añade un nombre "
+"se lo queda."
 
 #: ../../reference/cli.rst:796
 msgid ""
-"A linked plugin's command runs inside guidedog. A registered program's "
-"command runs as that program, started on our terminal after its SHA-256 "
-"is checked: it may ask questions, and its exit status is the command's. "
-"When either asks for a build, guidedog builds the project. The program's "
-"commands are read when it is registered, so a new version is registered "
-"again, as always."
+"A linked plugin's command runs inside ``guidedog``. A registered "
+"program's command runs as that program, started on our terminal after its "
+"SHA-256 is checked: it may ask questions, and its exit status is the "
+"command's. When either asks for a build, Guidedog builds the project. The "
+"program's commands are read when it is registered, so a new version is "
+"registered again, as always."
 msgstr ""
-"El comando de un plugin enlazado se ejecuta dentro de guidedog. El "
+"El comando de un plugin enlazado se ejecuta dentro de ``guidedog``. El "
 "comando de un programa registrado se ejecuta como ese programa, iniciado "
 "en nuestra terminal tras comprobar su SHA-256: puede hacer preguntas, y "
-"su estado de salida es el del comando. Cuando cualquiera de los dos pide "
-"una compilación, guidedog compila el proyecto. Los comandos del programa "
-"se leen al registrarlo, así que una versión nueva se vuelve a registrar, "
-"como siempre."
+"su estado de salida es el del comando. Cuando cualquiera de los dos "
+"solicita una compilación, Guidedog compila el proyecto. Los comandos del "
+"programa se leen al registrarlo, así que cada versión nueva vuelve a "
+"registrarse, como siempre."
 
 #: ../../reference/cli.rst:798
 msgid "guidedog pages"
@@ -2693,6 +2694,7 @@ msgstr "Información del proyecto"
 #: ../../reference/configuration.rst:1442
 #: ../../reference/configuration.rst:1483
 #: ../../reference/configuration.rst:1508
+#: ../../reference/configuration.rst:1579
 msgid "Key"
 msgstr "Clave"
 
@@ -2718,6 +2720,7 @@ msgstr "Clave"
 #: ../../reference/configuration.rst:1443
 #: ../../reference/configuration.rst:1484
 #: ../../reference/configuration.rst:1509
+#: ../../reference/configuration.rst:1580
 msgid "Type"
 msgstr "Tipo"
 
@@ -2743,6 +2746,7 @@ msgstr "Tipo"
 #: ../../reference/configuration.rst:1444
 #: ../../reference/configuration.rst:1485
 #: ../../reference/configuration.rst:1510
+#: ../../reference/configuration.rst:1581
 msgid "Default"
 msgstr "Valor predeterminado"
 
@@ -2768,6 +2772,7 @@ msgstr "Valor predeterminado"
 #: ../../reference/configuration.rst:1445
 #: ../../reference/configuration.rst:1486
 #: ../../reference/configuration.rst:1511
+#: ../../reference/configuration.rst:1582
 msgid "Description"
 msgstr "Descripción"
 
@@ -3012,7 +3017,7 @@ msgstr "``source_suffix``"
 
 #: ../../reference/configuration.rst:134
 msgid "string, array or table"
-msgstr "cadena, array o tabla"
+msgstr "cadena, lista o tabla"
 
 #: ../../reference/configuration.rst:135
 msgid "``[\".rst\"]``"
@@ -3148,14 +3153,14 @@ msgstr "``include_roots``"
 #: ../../reference/configuration.rst:150
 msgid ""
 "Folders, relative to the source folder, that ``include``, "
-"``literalinclude``, images, graphs, logos and other files may also be "
-"read from. Sphinx reads any path; Guidedog reads only the source folder "
-"and these."
+"``literalinclude``, ``lilypond``, images, graphs, logos and other files "
+"may also be read from. Sphinx reads any path; Guidedog reads only the "
+"source folder and these."
 msgstr ""
 "Carpetas, relativas a la carpeta de fuentes, desde las que también pueden "
-"leerse ``include``, ``literalinclude``, imágenes, grafos, logotipos y "
-"otros archivos. Sphinx lee cualquier ruta; Guidedog solo lee la carpeta "
-"de fuentes y estas."
+"leerse ``include``, ``literalinclude``, ``lilypond``, imágenes, grafos, "
+"logotipos y otros archivos. Sphinx lee cualquier ruta; Guidedog solo lee "
+"la carpeta de fuentes y estas."
 
 #: ../../reference/configuration.rst:153
 msgid "``templates_path``"
@@ -4050,6 +4055,7 @@ msgid "``html_title``"
 msgstr "``html_title``"
 
 #: ../../reference/configuration.rst:473
+#: ../../reference/configuration.rst:1593
 msgid "derived"
 msgstr "calculado"
 
@@ -4331,8 +4337,9 @@ msgid "``\"a4\"``"
 msgstr "``\"a4\"``"
 
 #: ../../reference/configuration.rst:597
-msgid "The paper size (``\"a4\"``, ``\"us-letter\"``)."
-msgstr "El tamaño del papel (``\"a4\"``, ``\"us-letter\"``)."
+msgid "The paper size (``\"a4\"``, ``\"letter\"``, or ``\"us-letter\"``)."
+msgstr ""
+"El tamaño del papel (``\"a4\"``, ``\"letter\"`` o ``\"us-letter\"``)."
 
 #: ../../reference/configuration.rst:598
 msgid "``pdf_logo``"
@@ -4750,7 +4757,7 @@ msgstr "Un nombre de mapeo que se refiere al propio proyecto."
 
 #: ../../reference/configuration.rst:814
 msgid ""
-"Inventories are downloaded with the built-in HTTP client, which honours "
+"Inventories are downloaded with the built-in HTTP client, which honors "
 "``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing. See "
 ":doc:`../intersphinx`."
 msgstr ""
@@ -6019,14 +6026,14 @@ msgstr "``site.taxonomies``"
 #: ../../reference/configuration.rst:1471
 #: ../../reference/configuration.rst:1500
 msgid "array of strings"
-msgstr "matriz de cadenas"
+msgstr "lista de cadenas"
 
 #: ../../reference/configuration.rst:1375
 msgid ""
 "Archive kinds to generate automatically: ``\"tags\"``, ``\"category\"``, "
 "``\"year\"``, ``\"authors\"``, and ``\"series\"``."
 msgstr ""
-"Tipos de archivo a generar automáticamente: ``\"tags\"``, "
+"Tipos de archivo que se generan automáticamente: ``\"tags\"``, "
 "``\"category\"``, ``\"year\"``, ``\"authors\"`` y ``\"series\"``."
 
 #: ../../reference/configuration.rst:1376
@@ -6226,8 +6233,8 @@ msgid ""
 "Builder for this mount: ``\"html\"``, ``\"dirhtml\"``, ``\"pdf\"``, or "
 "``\"discussion-pdf\"``."
 msgstr ""
-"Compilador para este montaje: ``\"html\"``, ``\"dirhtml\"``, ``\"pdf\"`` "
-"o ``\"discussion-pdf\"``."
+"Generador para este montaje: ``\"html\"``, ``\"dirhtml\"``, ``\"pdf\"`` o "
+"``\"discussion-pdf\"``."
 
 #: ../../reference/configuration.rst:1462
 msgid "``prefix``"
@@ -6253,8 +6260,8 @@ msgid ""
 "build language variants."
 msgstr ""
 "Ajustes de configuración ``key=value`` (como los acepta ``-D``) aplicados "
-"al compilar este montaje. Use ``editions`` en lugar de ``language=...`` "
-"para compilar variantes de idioma."
+"al compilar este montaje. Para compilar variantes de idioma se usa "
+"``editions`` en lugar de ``language=...``."
 
 #: ../../reference/configuration.rst:1470
 msgid "``exclude``"
@@ -6367,52 +6374,90 @@ msgstr ""
 "``templates_path``, ``locale_dirs``, ``pdf_font_paths``, "
 "``autodoc_source_paths``, ``odin_autoapi_dirs``, "
 "``rust_autoapi_crates``). La compilación integrada de ``typst-diagram`` "
-"se desactiva y no se descarga ningún paquete de Typst. La música "
-"``lilypond`` escrita en el documento se sigue grabando, pero se rechazan "
+"se desactiva y no se descarga ningún paquete de Typst. La notación "
+"``lilypond`` escrita en línea se sigue tipografiando, pero se rechazan "
 "sus argumentos de archivo y ``\\include``. Cada ajuste descartado produce "
 "una advertencia ``build.untrusted``. Es una política de capacidades, no "
-"un sandbox de procesos. Véase :doc:`cli`."
+"un aislamiento de procesos. Véase :doc:`cli`."
 
 #: ../../reference/configuration.rst:1572
 msgid "Native music engraving"
 msgstr "Grabado musical nativo"
 
-#: ../../reference/configuration.rst:1575
+#: ../../reference/configuration.rst:1583
+msgid "``lilypond_staff_size``"
+msgstr "``lilypond_staff_size``"
+
+#: ../../reference/configuration.rst:1584
+#: ../../reference/configuration.rst:1588
+#: ../../reference/configuration.rst:1592
+msgid "float"
+msgstr "flotante"
+
+#: ../../reference/configuration.rst:1585
+msgid "``18``"
+msgstr "``18``"
+
+#: ../../reference/configuration.rst:1586
 msgid ""
-"``lilypond_staff_size`` sets the default five-line staff height in "
-"points, from 10 through 40; the default is 18. ``lilypond_html_width`` "
-"sets the wide HTML system measure in points; the default is 564. "
-"``lilypond_pdf_width`` sets the PDF system measure in points; when "
-"omitted, the selected template and ``pdf_paper_size`` determine it. "
-"Widths must be positive and no greater than 100,000 points. All three "
-"values are finite TOML numbers, and directive options override their "
-"project defaults."
+"Default five-line staff height in points, from ``10`` through ``40``."
 msgstr ""
-"``lilypond_staff_size`` define la altura predeterminada del pentagrama en "
-"puntos, de 10 a 40; el valor predeterminado es 18. "
-"``lilypond_html_width`` define la anchura del sistema HTML ancho en "
-"puntos; el valor predeterminado es 564. ``lilypond_pdf_width`` define la "
-"anchura del sistema PDF en puntos; si se omite, la determinan la "
-"plantilla elegida y ``pdf_paper_size``. Las anchuras deben ser positivas "
-"y no superar 100.000 puntos. Los tres valores son números TOML finitos y "
-"las opciones de la directiva sustituyen los valores del proyecto."
+"Altura predeterminada del pentagrama de cinco líneas en puntos, de ``10`` "
+"a ``40``."
 
 #: ../../reference/configuration.rst:1587
-msgid ""
-"The PDF templates declare their horizontal margin with ``// guidedog: "
-"margin-x = 31mm`` after their first import. Without a declaration, we "
-"assume 25 millimetres on each side. The built-in book, article and "
-"discussion margins are 31, 30 and 25 millimetres respectively. Text fonts "
-"use ``pdf_fonts`` and ``pdf_font_paths``. See :doc:`../topics/music` for "
-"directive syntax, layout, trust rules and limits."
+msgid "``lilypond_html_width``"
+msgstr "``lilypond_html_width``"
+
+#: ../../reference/configuration.rst:1589
+msgid "``564``"
+msgstr "``564``"
+
+#: ../../reference/configuration.rst:1590
+msgid "Wide HTML system measure in points (positive, at most ``100000``)."
 msgstr ""
-"Las plantillas PDF declaran su margen horizontal con ``// guidedog: "
-"margin-x = 31mm`` tras la primera importación. Sin declaración suponemos "
-"25 milímetros a cada lado. Los márgenes integrados de libro, artículo y "
-"discusión son 31, 30 y 25 milímetros, respectivamente. Las fuentes de "
-"texto usan ``pdf_fonts`` y ``pdf_font_paths``. La sintaxis, el diseño, "
-"las reglas de confianza y los límites se describen en "
-":doc:`../topics/music`."
+"Anchura del sistema HTML ancho en puntos (positiva, como máximo "
+"``100000``)."
+
+#: ../../reference/configuration.rst:1591
+msgid "``lilypond_pdf_width``"
+msgstr "``lilypond_pdf_width``"
+
+#: ../../reference/configuration.rst:1594
+msgid ""
+"PDF system measure in points (positive, at most ``100000``); when "
+"omitted, derived from ``pdf_paper_size`` and the selected template's "
+"horizontal margin."
+msgstr ""
+"Anchura del sistema PDF en puntos (positiva, como máximo ``100000``); si "
+"se omite, se calcula a partir de ``pdf_paper_size`` y del margen "
+"horizontal de la plantilla elegida."
+
+#: ../../reference/configuration.rst:1596
+msgid ""
+"All three values are finite TOML numbers, and directive options override "
+"their project defaults."
+msgstr ""
+"Los tres valores son números TOML finitos y las opciones de la directiva "
+"tienen prioridad sobre los valores predeterminados del proyecto."
+
+#: ../../reference/configuration.rst:1604
+msgid ""
+"The PDF templates declare their horizontal margin in their leading 256 "
+"lines with a comment such as ``// guidedog: margin-x = 31mm``. Without a "
+"declaration, we assume 25 millimeters on each side. The built-in book, "
+"article and discussion margins are 31, 30 and 25 millimeters "
+"respectively. Text fonts use ``pdf_fonts`` and ``pdf_font_paths``. See "
+":doc:`../topics/music` for directive syntax, layout, trust rules and "
+"limits."
+msgstr ""
+"Las plantillas PDF declaran su margen horizontal en sus primeras 256 "
+"líneas mediante un comentario como ``// guidedog: margin-x = 31mm``. Sin "
+"declaración, suponemos 25 milímetros a cada lado. Los márgenes integrados "
+"de libro, artículo y discusión son de 31, 30 y 25 milímetros, "
+"respectivamente. Las fuentes de texto usan ``pdf_fonts`` y "
+"``pdf_font_paths``. Véase :doc:`../topics/music` para la sintaxis de la "
+"directiva, la maquetación, las reglas de confianza y los límites."
 
 #: ../../reference/formats.rst:1
 msgid "Readers, renderers, and builders"
@@ -6424,8 +6469,8 @@ msgid ""
 "tree. A builder coordinates a project and publishes its output. These are "
 "different responsibilities."
 msgstr ""
-"El lector entiende un lenguaje fuente; el renderizador escribe un árbol "
-"documental; el constructor coordina el proyecto y publica. Son "
+"Un lector interpreta un lenguaje fuente. Un renderizador escribe un árbol "
+"de documento. Un generador coordina un proyecto y publica su salida. Son "
 "responsabilidades diferentes."
 
 #: ../../reference/formats.rst:8

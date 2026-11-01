@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:28+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: ../../templates.rst:3
 msgid "Templates"
-msgstr "template"
+msgstr "टेम्पलेट"
 
 #: ../../templates.rst:6
 msgid ""
@@ -36,9 +36,9 @@ msgid ""
 "edit them. When we start a project with ``guidedog quickstart``, it "
 "writes the working templates into our project:"
 msgstr ""
-"Guidedog में template साधारण प्रोजेक्ट फ़ाइलें हैं। हम उन्हें देख भी सकते "
+"Guidedog में टेम्पलेट साधारण प्रोजेक्ट फ़ाइलें हैं। हम उन्हें देख भी सकते "
 "हैं और बदल भी सकते हैं। जब हम ``guidedog quickstart`` से प्रोजेक्ट शुरू "
-"करते हैं, तो यह काम करने वाले template हमारे प्रोजेक्ट में लिख देता है:"
+"करते हैं, तो यह काम करने वाले टेम्पलेट हमारे प्रोजेक्ट में लिख देता है:"
 
 #: ../../templates.rst:15
 msgid ""
@@ -83,11 +83,13 @@ msgstr ""
 
 #: ../../templates.rst:20
 msgid ""
-"``_static/guidedog.css`` and ``_static/guidedog.js`` supply default "
-"styles and client behaviors."
+"``_static/guidedog.css``, ``_static/guidedog.js``, and "
+"``_static/typography.js`` supply default styles, client behaviors, and "
+"browser paragraph line breaking."
 msgstr ""
-"``_static/guidedog.css`` और ``_static/guidedog.js`` डिफ़ॉल्ट स्टाइल और "
-"ब्राउज़र के व्यवहार देते हैं।"
+"``_static/guidedog.css``, ``_static/guidedog.js`` और "
+"``_static/typography.js`` डिफ़ॉल्ट स्टाइल, क्लाइंट व्यवहार और ब्राउज़र "
+"में अनुच्छेद पंक्ति-विभाजन प्रदान करते हैं।"
 
 #: ../../templates.rst:22
 msgid ""
@@ -96,14 +98,14 @@ msgid ""
 "cache. We edit them directly, rebuild with ``guidedog build``, and "
 "preview changes with ``guidedog serve``."
 msgstr ""
-"template प्रोजेक्ट फ़ोल्डर में या सामग्री-आधारित पिन किए गए थीम आर्काइव "
+"टेम्पलेट प्रोजेक्ट फ़ोल्डर में या सामग्री-आधारित पिन किए गए थीम आर्काइव "
 "में रहते हैं। वे किसी बाहरी पैकेज या बाइनरी कैश में छिपे नहीं होते। हम "
-"उन्हें सीधे बदलते हैं, ``guidedog build`` से दोबारा build करते हैं और "
+"उन्हें सीधे बदलते हैं, ``guidedog build`` से दोबारा बिल्ड करते हैं और "
 "``guidedog serve`` से बदलावों का प्रीव्यू देखते हैं।"
 
 #: ../../templates.rst:24
 msgid "HTML templates"
-msgstr "HTML template"
+msgstr "HTML टेम्पलेट"
 
 #: ../../templates.rst:27
 msgid ""
@@ -133,7 +135,7 @@ msgstr "Guidedog में तीन-स्तरीय template खोज, इ�
 
 #: ../../templates.rst:53
 msgid "Modular template structure"
-msgstr "मॉड्यूलर template संरचना"
+msgstr "मॉड्यूलर टेम्पलेट संरचना"
 
 #: ../../templates.rst:56
 msgid ""
@@ -171,11 +173,11 @@ msgstr "_templates/macros/components.html"
 
 #: ../../templates.rst:101
 msgid "Using macros in any template"
-msgstr "template में मैक्रो का इस्तेमाल"
+msgstr "किसी भी टेम्पलेट में मैक्रो का इस्तेमाल"
 
 #: ../../templates.rst:106
 msgid "Theme inheritance with ``!layout.html``"
-msgstr "``!layout.html`` से theme इनहेरिट करना"
+msgstr "``!layout.html`` से थीम इनहेरिट करना"
 
 #: ../../templates.rst:109
 msgid ""
@@ -388,7 +390,7 @@ msgstr "वर्तमान पेज की रूपरेखा दिख�
 
 #: ../../templates.rst:185
 msgid "Finding templates"
-msgstr "template खोजना"
+msgstr "टेम्पलेट खोजना"
 
 #: ../../templates.rst:188
 msgid "Guidedog searches three tiers in order:"
@@ -517,11 +519,11 @@ msgstr "``prev``\\ , ``next``"
 
 #: ../../templates.rst:225
 msgid ""
-"The neighbouring pages in reading order, with ``url`` (also ``link``) and "
+"The neighboring pages in reading order, with ``url`` (also ``link``) and "
 "``title``; none at either end."
 msgstr ""
-"पढ़ने के क्रम में पड़ोसी पेज, ``url`` (या ``link``\\ ) और ``title`` सहित; "
-"आरंभ और अंत में पड़ोसी नहीं होता।"
+"पढ़ने के क्रम में पड़ोसी पेज, ``url`` (तथा ``link``) और ``title`` सहित; "
+"दोनों सिरों पर कोई पड़ोसी नहीं होता।"
 
 #: ../../templates.rst:227
 msgid "``page``"
@@ -593,7 +595,7 @@ msgstr "``html_short_title``\\ , ``shorttitle``"
 
 #: ../../templates.rst:236
 msgid "``html_short_title``."
-msgstr "``html_short_title``\\ ."
+msgstr "``html_short_title``।"
 
 #: ../../templates.rst:237
 msgid "``root_doc``, ``master_doc``"
@@ -647,8 +649,8 @@ msgid "``accent``"
 msgstr "``accent``"
 
 #: ../../templates.rst:249
-msgid "``html_theme_options.accent``, the theme's colour."
-msgstr "theme का रंग ``html_theme_options.accent``\\ ।"
+msgid "``html_theme_options.accent``, the theme's color."
+msgstr "``html_theme_options.accent``, थीम का रंग।"
 
 #: ../../templates.rst:250
 msgid "``sourcelink_url``"
@@ -733,7 +735,7 @@ msgstr ""
 
 #: ../../templates.rst:274
 msgid "Pages made from templates"
-msgstr "template से बने पेज"
+msgstr "टेम्पलेट से बने पेज"
 
 #: ../../templates.rst:277
 msgid ""
@@ -864,7 +866,7 @@ msgstr ""
 
 #: ../../templates.rst:342
 msgid "PDF templates"
-msgstr "PDF template"
+msgstr "PDF टेम्पलेट"
 
 #: ../../templates.rst:345
 msgid ""
@@ -943,7 +945,7 @@ msgstr "``version``"
 
 #: ../../templates.rst:376
 msgid "``release``."
-msgstr "``release``\\ ."
+msgstr "``release``।"
 
 #: ../../templates.rst:377
 msgid "``date``"
@@ -963,7 +965,7 @@ msgstr "``lang``"
 
 #: ../../templates.rst:380
 msgid "``language``."
-msgstr "``language``\\ ."
+msgstr "``language``।"
 
 #: ../../templates.rst:381
 msgid "``paper``"
@@ -1023,7 +1025,7 @@ msgstr ""
 
 #: ../../templates.rst:397
 msgid "Modular Typst templates"
-msgstr "मॉड्यूलर Typst template"
+msgstr "मॉड्यूलर Typst टेम्पलेट"
 
 #: ../../templates.rst:400
 msgid ""
@@ -1059,26 +1061,32 @@ msgstr ""
 "``guidedog quickstart`` ``theme.typ``, ``book.typ``, ``discussion.typ`` "
 "और ``article.typ`` कॉपी करता है। ``guidedog dsc init`` साझा थीम और चर्चा "
 "लेआउट कॉपी करता है। चारों फ़ाइलें एक्ज़ीक्यूटेबल में अंतर्निहित हैं। "
-"प्रोजेक्ट लेआउट के बिना, बिल्डर अपने आप में पूर्ण अंतर्निहित template "
-"तैयार करता है; वह प्रोजेक्ट थीम नहीं पढ़ता। अविश्वसनीय (untrusted) बिल्ड "
-"भी वही अलग-थलग फ़ॉलबैक उपयोग करते हैं।"
+"प्रोजेक्ट लेआउट के बिना, बिल्डर अपने आप में पूर्ण अंतर्निहित टेम्पलेट "
+"तैयार करता है; वह प्रोजेक्ट थीम नहीं पढ़ता। अविश्वस्त (``--untrusted``) "
+"बिल्ड भी वही अलग-थलग फ़ॉलबैक उपयोग करते हैं।"
 
 #: ../../templates.rst:404
 msgid ""
 "We can edit ``theme.typ`` to change all three copied layouts together. "
-"Changes to files beneath ``_templates/``, including nested imported "
-"modules and assets, invalidate cached PDFs. The builder tracks directory "
-"membership as well, so adding or removing a module cannot leave a stale "
-"PDF. Template discovery stays inside the project's readable roots and "
-"permits at most 16,384 template inputs."
+"Keep or update ``// guidedog: margin-x = 31mm`` in the leading 256 lines "
+"when changing horizontal page margins so native ``lilypond`` scores match "
+"the text column; see :doc:`topics/music`. Changes to files beneath "
+"``_templates/``, including nested imported modules and assets, invalidate "
+"cached PDFs. The builder tracks directory membership as well, so adding "
+"or removing a module cannot leave a stale PDF. Template discovery stays "
+"inside the project's readable roots and permits at most 16,384 template "
+"inputs."
 msgstr ""
 "हम तीनों कॉपी किए गए लेआउट एक साथ बदलने के लिए ``theme.typ`` संपादित कर "
-"सकते हैं। ``_templates/`` के नीचे की फ़ाइलों में बदलाव—जिनमें नेस्टेड "
-"इम्पोर्ट किए गए मॉड्यूल और ऐसेट भी शामिल हैं—कैश की गई PDF को अमान्य कर "
-"देते हैं। बिल्डर डायरेक्टरी के सदस्यों पर भी नज़र रखता है, इसलिए किसी "
-"मॉड्यूल को जोड़ने या हटाने से पुरानी PDF बची नहीं रह सकती। template की "
-"खोज प्रोजेक्ट के पठनीय रूट के भीतर ही रहती है और अधिकतम 16,384 template "
-"इनपुट की अनुमति देती है।"
+"सकते हैं। क्षैतिज पृष्ठ हाशिए बदलते समय शुरुआती 256 पंक्तियों में ``// "
+"guidedog: margin-x = 31mm`` बनाए रखें या अपडेट करें ताकि नेटिव "
+"``lilypond`` संगीत स्वरलेख पाठ स्तंभ की चौड़ाई से मेल खाएँ; "
+":doc:`topics/music` देखें। ``_templates/`` के नीचे की फ़ाइलों में "
+"बदलाव—जिनमें नेस्टेड इम्पोर्ट किए गए मॉड्यूल और ऐसेट भी शामिल हैं—कैश की "
+"गई PDF को अमान्य कर देते हैं। बिल्डर डायरेक्टरी की सदस्यता पर भी नज़र "
+"रखता है, इसलिए किसी मॉड्यूल को जोड़ने या हटाने से पुरानी PDF बची नहीं रह "
+"सकती। टेम्पलेट की खोज प्रोजेक्ट के पठनीय रूट के भीतर ही रहती है और अधिकतम "
+"16,384 टेम्पलेट इनपुट की अनुमति देती है।"
 
 #: ../../templates.rst:406
 msgid ""
@@ -1104,7 +1112,7 @@ msgid ""
 "``.typ`` files under ``_templates/``. Standard Typst ``#import`` and "
 "``#include`` statements put them together:"
 msgstr ""
-"HTML template की तरह, Typst template भी एक ही फ़ाइल तक सीमित नहीं हैं। हम "
+"HTML टेम्पलेट की तरह, Typst टेम्पलेट भी एक ही फ़ाइल तक सीमित नहीं हैं। हम "
 "किताब की स्टाइलिंग, मैक्रो और कस्टम कवर को ``_templates/`` के नीचे कई "
 "``.typ`` फ़ाइलों में बाँट सकते हैं। Typst के मानक ``#import`` और "
 "``#include`` स्टेटमेंट उन्हें एक साथ जोड़ते हैं:"
@@ -1157,7 +1165,7 @@ msgstr ""
 
 #: ../../templates.rst:447
 msgid "What a template can use"
-msgstr "template क्या इस्तेमाल कर सकता है"
+msgstr "टेम्पलेट क्या इस्तेमाल कर सकता है"
 
 #: ../../templates.rst:450
 msgid "Typst packages"
@@ -1229,14 +1237,14 @@ msgid ""
 "see :doc:`tutorial/dynamic-content-and-directives` and "
 ":doc:`howto/format-specific-content`."
 msgstr ""
-"``.. only:: html`` इंटरैक्टिव वेब घटकों और कस्टम HTML को वेब संस्करण तक "
-"सीमित रखता है। ``.. only:: pdf`` वेक्टर फ़ॉर्मेटिंग, कॉलआउट और मूल Typst "
-"अभिव्यक्तियों को पुस्तक में रखता है (Sphinx परियोजनाओं के साथ अनुकूलता के "
-"लिए ``.. only:: latex`` को उपनाम के रूप में पहचाना जाता है)। क्योंकि "
-"Guidedog LaTeX के बजाय Typst से पुस्तकों की छपाई करता है, पुस्तक के लिए "
-"कच्चे ब्लॉक में ``.. raw:: typst`` का उपयोग होना चाहिए; शाब्दिक ``.. "
-"raw:: latex`` समर्थित नहीं है और PDF बिल्डर द्वारा छोड़ दिया जाता है। "
-"पुन: प्रयोज्य अर्थपूर्ण निर्देश बनाने के लिए "
+"``.. only:: html`` इंटरैक्टिव वेब घटकों और कस्टम HTML को वेब बिल्ड तक "
+"सीमित रखता है। ``.. only:: pdf`` वेक्टर फ़ॉर्मेटिंग, कॉलआउट और नेटिव "
+"Typst अभिव्यक्तियों को पुस्तक में रखता है (Sphinx परियोजनाओं के साथ "
+"अनुकूलता के लिए ``.. only:: latex`` को उपनाम के रूप में पहचाना जाता है)। "
+"क्योंकि Guidedog LaTeX के बजाय Typst से पुस्तकों की टाइपसेटिंग करता है, "
+"पुस्तक के रॉ (raw) ब्लॉक में ``.. raw:: typst`` का उपयोग होना चाहिए; "
+"शाब्दिक ``.. raw:: latex`` समर्थित नहीं है और PDF बिल्डर द्वारा छोड़ दिया "
+"जाता है। पुनः प्रयोज्य, अर्थपूर्ण निर्देश बनाने के लिए "
 ":doc:`tutorial/dynamic-content-and-directives` और "
 ":doc:`howto/format-specific-content` देखें।"
 
@@ -1249,10 +1257,11 @@ msgid ""
 "raw-content policy; untrusted builds omit it."
 msgstr ""
 "``theme.typ`` में परिभाषित फ़ंक्शन उसी मॉड्यूल तक सीमित रहता है। "
-"दस्तावेज़ के कच्चे Typst को उसे स्पष्ट रूप से आयात करना होगा या "
+"दस्तावेज़-स्तरीय रॉ Typst को उसे स्पष्ट रूप से आयात करना होगा या "
 "``pdf_preamble`` में दिए आयात का उपयोग करना होगा। पुस्तक टेम्पलेट के निजी "
-"आयात सहायक फ़ंक्शन को जनित दस्तावेज़ में उपलब्ध नहीं कराते। कच्चा Typst "
-"कच्ची सामग्री की नीति का पालन करता है; अविश्वसनीय बिल्ड इसे हटा देते हैं।"
+"आयात सहायक फ़ंक्शनों को जनित दस्तावेज़ में उपलब्ध नहीं कराते। रॉ Typst "
+"रॉ-सामग्री नीति का पालन करता है; अविश्वस्त (``--untrusted``) बिल्ड इसे "
+"छोड़ देते हैं।"
 
 #: ../../templates.rst:494
 msgid ""
@@ -1276,7 +1285,7 @@ msgstr ""
 
 #: ../../templates.rst:503
 msgid "Writing a new template"
-msgstr "नया template लिखना"
+msgstr "नया टेम्पलेट लिखना"
 
 #: ../../templates.rst:506
 msgid ""

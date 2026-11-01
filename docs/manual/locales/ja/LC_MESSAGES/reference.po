@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:01+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -130,8 +130,8 @@ msgid "``--licenses``"
 msgstr "``--licenses``"
 
 #: ../../reference/cli.rst:50
-msgid "Show Guidedog's licence and the notices of the libraries built in."
-msgstr "Guidedog のライセンスと、組み込まれたライブラリーの表示事項を表示します。"
+msgid "Show Guidedog's license and the notices of the libraries built in."
+msgstr "Guidedog のライセンスと、組み込まれているライブラリの著作権・ライセンス表記を表示します。"
 
 #: ../../reference/cli.rst:52
 msgid "Exit codes"
@@ -349,8 +349,8 @@ msgid ""
 "Plugins add commands of their own (see `Commands plugins add`_). Three "
 "plugins are linked into every ``guidedog`` executable:"
 msgstr ""
-"プラグインは独自のコマンドを追加します（`Commands plugins add`_ を参照）。すべての ``guidedog`` "
-"実行ファイルには 3 つのプラグインがリンクされています："
+"プラグインは独自のコマンドを追加します（`プラグインが追加するコマンド <Commands plugins add_>`_ を参照）。すべての "
+"``guidedog`` 実行ファイルには次の 3 つのプラグインがリンクされています。"
 
 #: ../../reference/cli.rst:116
 msgid "Commands of linked plugins"
@@ -417,8 +417,8 @@ msgid ""
 "(exit status 2). Its hint lists the commands, and suggests the closest of "
 "both kinds."
 msgstr ""
-"guidedog のものでもプラグインのものでもないコマンド語は、使い方の誤り (終了ステータス 2) "
-"です。ヒントにはコマンドの一覧が表示され、両方の種類から最も近いものが提案されます。"
+"Guidedog のものでもプラグインのものでもないコマンド語は、使い方の誤り（終了ステータス "
+"2）になります。ヒントにはコマンドの一覧が表示され、両方の種類から最も近いものが提案されます。"
 
 #: ../../reference/cli.rst:133
 msgid "guidedog quickstart"
@@ -658,9 +658,9 @@ msgid ""
 "repeatable. ``-D table.key=value`` sets one key of a table setting, such "
 "as ``html_context``, and keeps its other keys, as sphinx-build does."
 msgstr ""
-"このビルドに限り ``conf.toml`` の設定を上書きします (``-D language=de``)。繰り返し指定できます。``-D "
-"table.key=value`` は ``html_context`` "
-"などの表の設定のキーを一つだけ設定し、ほかのキーは残します。sphinx-build と同じ動作です。"
+"このビルドに限り ``conf.toml`` の設定を上書きします（``-D language=de``）。繰り返し指定できます。``-D "
+"table.key=value`` は ``html_context`` などのテーブル設定のキーを 1 "
+"つだけ設定し、ほかのキーはそのまま残します（``sphinx-build`` と同じ動作です）。"
 
 #: ../../reference/cli.rst:233
 msgid "``-t TAG``"
@@ -752,7 +752,7 @@ msgid ""
 "by the budget, so we raise ``--budget`` instead."
 msgstr ""
 "予算に達したら、確認せずに停止します。このオプションがない場合、端末では予算を引き上げるか停止するかを尋ね、端末のないビルドは停止します。``--memory=disk`` "
-"と ``--disk-budget`` (ワーキングメモリをディスクに置くためのもの) は ``cli.memory-disk`` "
+"と ``--disk-budget``\\ （ワーキングメモリをディスクに置くためのもの）は ``cli.memory-disk`` "
 "で拒否されます。ワーキングメモリは予算の範囲内で常にメモリ上に保持されるので、代わりに ``--budget`` を引き上げます。"
 
 #: ../../reference/cli.rst:258
@@ -859,7 +859,7 @@ msgid ""
 "before answering a request:"
 msgstr ""
 "HTML サイトをビルドし、``http://127.0.0.1:PORT/`` "
-"で配信します。ソース、テンプレート、静的ファイル、``conf.toml`` が変更されていれば、リクエストに応答する前に再ビルドします："
+"で配信します。ソース、テンプレート、静的ファイル、``conf.toml`` が変更されていれば、リクエストに応答する前に再ビルドします。"
 
 #: ../../reference/cli.rst:297
 msgid ""
@@ -904,7 +904,7 @@ msgstr ""
 "(``odin_autoapi_dirs``、``odin_collections``、``rust_autoapi_crates``)、そしてソースフォルダーの外にある "
 "``html_static_path``、``html_extra_path``、``templates_path``、``include_roots``、``autodoc_source_paths``、``locale_dirs`` "
 "の各フォルダーです。ビルドフォルダーは監視しません。変更はファイル名、サイズ、時刻で検出します。チェックは HTML "
-"ページに応答する前に行われます："
+"ページに応答する前に行われます。"
 
 #: ../../reference/cli.rst:318
 msgid "guidedog clean"
@@ -914,7 +914,7 @@ msgstr "guidedog clean"
 msgid ""
 "Removes the contents of the project's build folder, the environment cache "
 "included:"
-msgstr "プロジェクトのビルドフォルダーの中身を、環境のキャッシュも含めて削除します："
+msgstr "プロジェクトのビルドフォルダーの中身を、環境のキャッシュも含めて削除します。"
 
 #: ../../reference/cli.rst:327
 msgid "guidedog migrate"
@@ -927,9 +927,9 @@ msgid ""
 "Anything Python would compute is reported and kept in ``conf.toml`` as a "
 "comment:"
 msgstr ""
-"Sphinx の ``conf.py`` (または古い ``guidedog.toml``) を、Python を実行せずに "
+"Sphinx の ``conf.py``\\ （または古い ``guidedog.toml``）を、Python を実行せずに "
 "``conf.toml`` に変換します。リテラルの設定はそのまま引き継がれます。Python "
-"で計算される部分は報告され、``conf.toml`` にコメントとして残ります："
+"で計算される部分は報告され、``conf.toml`` にコメントとして残ります。"
 
 #: ../../reference/cli.rst:343
 msgid "Options of migrate"
@@ -1035,7 +1035,7 @@ msgstr "guidedog convert"
 #: ../../reference/cli.rst:394
 msgid ""
 "Converts one file, or standard input, without a project or configuration:"
-msgstr "プロジェクトや設定なしで、1 つのファイルまたは標準入力を変換します："
+msgstr "プロジェクトや設定なしで、1 つのファイルまたは標準入力を変換します。"
 
 #: ../../reference/cli.rst:404
 msgid ""
@@ -1386,7 +1386,7 @@ msgid ""
 "records (default: the embedded compiler), and for the PDF books."
 msgstr ""
 "``build`` と ``check``：古い Typst 記録のカタログと PDF の本に使う Typst "
-"プログラム（既定：組み込みのコンパイラ）。"
+"プログラム（既定：組み込みのコンパイラー）。"
 
 #: ../../reference/cli.rst:537
 msgid ""
@@ -1457,7 +1457,7 @@ msgstr ""
 "``guidedog ssg new PATH [--title=TITLE] [--template=NAME] "
 "[--now=RFC3339]``: ``:draft: true`` および ``:date: YYYY-MM-DD`` "
 "を持つ新しい下書き記事を ``PATH``\\ （``.rst`` または ``.md``）に作成します。``--title`` "
-"はデフォルトでファイル幹名になり、指定された場合は ``--template`` が ``:template: NAME`` を設定します。"
+"の既定値は拡張子を除いたファイル名で、``--template`` を指定すると ``:template: NAME`` が設定されます。"
 
 #: ../../reference/cli.rst:565
 msgid ""
@@ -1466,8 +1466,8 @@ msgid ""
 "Normal builds withhold it while draft is true."
 msgstr ""
 "``guidedog ssg draft PATH [--now=RFC3339]``: ``PATH`` "
-"の既存の記事を下書きとしてマークし（``:draft: true``）、その日付とスケジュールを保持します。通常のビルドでは、下書きが true "
-"の間はその記事を保留します。"
+"の既存記事を下書きとしてマークし（``:draft: true``）、日付と公開予定日時を保持します。通常のビルドでは、``draft`` が "
+"``true`` の間はその記事を公開対象から外します。"
 
 #: ../../reference/cli.rst:566
 msgid ""
@@ -1680,7 +1680,7 @@ msgid ""
 "publishes it:"
 msgstr ""
 "パブリッシャーの設定が指定するプロジェクトを、Guidedog 自身のエンジンで HTML "
-"としてビルドします。サイトを固定したうえで、パブリッシャーが公開の計画を立てて公開します："
+"としてビルドします。サイトを固定したうえで、パブリッシャーが公開の計画を立てて公開します。"
 
 #: ../../reference/cli.rst:619
 msgid ""
@@ -1773,7 +1773,7 @@ msgid ""
 "when it must. Then it builds and publishes:"
 msgstr ""
 "``guidedog publish pages`` は、GitHub Pages へのガイド付きの公開手順で、GitHub Pages "
-"プラグインが追加します。まだ足りないものを整え、必要なときだけ質問します。そのうえでビルドして公開します："
+"プラグインが追加します。まだ足りないものを整え、必要なときだけ質問します。そのうえでビルドして公開します。"
 
 #: ../../reference/cli.rst:655
 msgid ""
@@ -1820,17 +1820,17 @@ msgid ""
 "Its options are those of ``guidedog pages init`` and ``publish`` "
 "(``--config``, ``--repository``, ``--project``, ``--branch``, "
 "``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); ``guidedog "
-"publish pages --help`` lists them. guidedog builds the project itself, "
+"publish pages --help`` lists them. Guidedog builds the project itself, "
 "with its own engine and linked plugins; ``--guidedog=PATH`` builds with "
 "another program instead. See :doc:`../howto/github-pages`."
 msgstr ""
-"セットアップ済みのマシンでは、何も尋ねずに公開します。端末がない場合は一切尋ねません。その場合、足りない手順は失敗し、それを行うコマンドやオプションをヒントで示します。``--yes`` "
-"は確認にすべて同意します。代わりにサインインしたり、ほかの作業を置き換えたりすることはありません。オプションは ``guidedog pages "
-"init`` および ``publish`` "
+"セットアップ済みのマシンでは、何も尋ねずに公開します。端末がない場合は一切尋ねません。その場合、足りない手順は失敗し、必要なコマンドやオプションをヒントで示します。``--yes`` "
+"は確認にすべて同意します。代わりにサインインしたり、ほかの作業内容を置き換えたりすることはありません。オプションは ``guidedog "
+"pages init`` および ``publish`` "
 "と同じです（``--config``、``--repository``、``--project``、``--branch``、``--profile``、``--wait``、``--verbose``、``--dry-run``）。一覧は "
-"``guidedog publish pages --help`` で確認できます。プロジェクトは guidedog "
+"``guidedog publish pages --help`` で確認できます。プロジェクトは Guidedog "
 "自身のエンジンとリンク済みのプラグインでビルドします。``--guidedog=PATH`` "
-"を指定すると、代わりに別のプログラムでビルドします。:doc:`../howto/github-pages` を参照してください。"
+"を指定すると、代わりに別のプログラムでビルドします。詳しくは :doc:`../howto/github-pages` を参照してください。"
 
 #: ../../reference/cli.rst:673
 msgid "guidedog pages workflow"
@@ -1861,7 +1861,9 @@ msgstr "``--write``, ``--force``"
 msgid ""
 "Write ``.github/workflows/docs-pages.yml`` instead of printing it; "
 "replace an existing one."
-msgstr "``.github/workflows/docs-pages.yml`` を出力せずに書き込みます。既存のファイルは置き換えます。"
+msgstr ""
+"標準出力に表示する代わりに ``.github/workflows/docs-pages.yml`` に書き出します。``--force`` "
+"は既存のファイルを置き換えます。"
 
 #: ../../reference/cli.rst:695
 msgid "``--check``"
@@ -2044,41 +2046,42 @@ msgstr "プラグインが追加するコマンド"
 
 #: ../../reference/cli.rst:782
 msgid ""
-"A plugin may add commands to guidedog, or targets to ``guidedog "
+"A plugin may add commands to ``guidedog``, or targets to ``guidedog "
 "publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
 "with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a "
 "plugin's:"
 msgstr ""
-"プラグインは guidedog にコマンドを、または ``guidedog publish`` に公開先を追加できます。``guidedog "
-"--help`` はそれらを PLUGIN COMMANDS の下に、追加したプラグインの ID とともに一覧表示します。``guidedog "
-"plugin inspect ID`` は、そのプラグインのコマンドを表示します："
+"プラグインは ``guidedog`` にコマンドを、または ``guidedog publish`` "
+"に公開先を追加できます。``guidedog --help`` はそれらを PLUGIN COMMANDS の下に、追加したプラグインの ID "
+"とともに一覧表示します。``guidedog plugin inspect ID`` は、そのプラグインのコマンドを表示します。"
 
 #: ../../reference/cli.rst:794
 msgid ""
-"guidedog looks for a word it does not know (or a ``publish`` target) "
+"Guidedog looks for a word it does not know (or a ``publish`` target) "
 "among the commands of the linked plugins first, then among those of the "
 "registered programs, and runs the plugin that adds it. ``--help`` after "
 "such a command prints its help, made from what the plugin declares. A "
-"plugin cannot replace one of guidedog's commands, and the first plugin to "
+"plugin cannot replace one of Guidedog's commands, and the first plugin to "
 "add a name keeps it."
 msgstr ""
-"guidedog は知らない語（または ``publish`` "
+"Guidedog は未知のコマンド語（または ``publish`` "
 "の公開先）を、まずリンク済みのプラグインのコマンドから、次に登録済みのプログラムのコマンドから探し、それを追加したプラグインを実行します。そうしたコマンドの後に "
-"``--help`` を付けると、プラグインの宣言から作ったヘルプを表示します。プラグインが guidedog "
-"のコマンドを置き換えることはできず、同じ名前は最初に追加したプラグインのものになります。"
+"``--help`` を付けると、プラグインの宣言から生成したヘルプを表示します。プラグインが Guidedog "
+"本体のコマンドを置き換えることはできず、同名のコマンドは最初に追加したプラグインのものになります。"
 
 #: ../../reference/cli.rst:796
 msgid ""
-"A linked plugin's command runs inside guidedog. A registered program's "
-"command runs as that program, started on our terminal after its SHA-256 "
-"is checked: it may ask questions, and its exit status is the command's. "
-"When either asks for a build, guidedog builds the project. The program's "
-"commands are read when it is registered, so a new version is registered "
-"again, as always."
+"A linked plugin's command runs inside ``guidedog``. A registered "
+"program's command runs as that program, started on our terminal after its "
+"SHA-256 is checked: it may ask questions, and its exit status is the "
+"command's. When either asks for a build, Guidedog builds the project. The "
+"program's commands are read when it is registered, so a new version is "
+"registered again, as always."
 msgstr ""
-"リンク済みのプラグインのコマンドは guidedog の中で実行されます。登録済みのプログラムのコマンドは、SHA-256 "
-"を検証したうえで、そのプログラムとして同じ端末で起動されます。質問をすることもでき、その終了ステータスがコマンドの終了ステータスになります。どちらの場合も、ビルドを求められたら "
-"guidedog がプロジェクトをビルドします。プログラムのコマンドは登録時に読み込まれるので、新しいバージョンはいつもどおり登録し直します。"
+"リンク済みのプラグインのコマンドは ``guidedog`` の内部で実行されます。登録済みのプログラムのコマンドは、SHA-256 "
+"を検証したうえで、そのプログラムとして同じ端末で起動されます。対話的な確認を行うこともでき、その終了ステータスがコマンドの終了ステータスになります。どちらの場合も、ビルドが要求されたときは "
+"Guidedog "
+"がプロジェクトをビルドします。プログラムのコマンド一覧は登録時に読み込まれるため、新しいバージョンに更新した際は通常どおり再登録します。"
 
 #: ../../reference/cli.rst:798
 msgid "guidedog pages"
@@ -2240,37 +2243,37 @@ msgstr ""
 
 #: ../../reference/cli.rst:866
 msgid "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
-msgstr "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
+msgstr "``--dry-run``、``--wait=SECONDS``、``--verbose``"
 
 #: ../../reference/cli.rst:867
 msgid ""
 "``publish``: plan only; how long to wait for the deployment; list every "
 "change."
-msgstr "``publish``: 計画だけを行う、デプロイを待つ時間、すべての変更を一覧表示する。"
+msgstr "``publish``: 計画の作成のみ、デプロイ完了までの待機秒数、すべての変更の一覧表示。"
 
 #: ../../reference/cli.rst:868
 msgid "``--adopt``, ``--yes``"
-msgstr "``--adopt``, ``--yes``"
+msgstr "``--adopt``、``--yes``"
 
 #: ../../reference/cli.rst:869
 msgid ""
 "``bind``: let a branch of other work be replaced; answer yes to the "
 "question."
-msgstr "``bind``: 別の内容を持つブランチの置き換えを許可する、確認に yes と答える。"
+msgstr "``bind``: 別の作業内容があるブランチの置換許可、確認への自動同意（yes）。"
 
 #: ../../reference/cli.rst:870
 msgid ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 msgstr ""
-"``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
+"``--client-id=ID``、``--scope=public|private``、``--open``、``--replace``"
 
 #: ../../reference/cli.rst:871
 msgid ""
 "``auth login``: the app; the repositories an OAuth App token may reach; "
 "open the browser; give the profile to another account."
 msgstr ""
-"``auth login``: 使うアプリ、OAuth App "
-"のトークンがアクセスできるリポジトリ、ブラウザを開く、プロファイルを別のアカウントに切り替える。"
+"``auth login``: 使用するアプリ、OAuth App "
+"トークンがアクセスできるリポジトリの範囲、ブラウザーの起動、別アカウントへのプロファイルの切り替え。"
 
 #: ../../reference/cli.rst:873
 msgid "``--operation=COMMIT``"
@@ -2282,7 +2285,7 @@ msgstr "``status``：問い合わせる公開（既定: 直前の公開）。"
 
 #: ../../reference/cli.rst:875
 msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
-msgstr "``--diagnostics=text|json``, ``--color=auto|always|never``"
+msgstr "``--diagnostics=text|json``、``--color=auto|always|never``"
 
 #: ../../reference/cli.rst:876
 msgid "How problems and results are written."
@@ -2340,7 +2343,7 @@ msgid ""
 "``guidedog build -c DIR`` reads ``conf.toml`` from another folder. ``-C`` "
 "builds without one, with the defaults below."
 msgstr ""
-"Guidedog は ``conf.toml`` をまずプロジェクトフォルダーで探し、次に ``PROJECT/source`` "
+"Guidedog は ``conf.toml`` をまずプロジェクトフォルダーで探し、次に ``PROJECT/source``\\ "
 "（``quickstart --sep`` の分離レイアウトで、``build/`` が ``source/`` "
 "と並びます）、最後にこのファイルを含む最も近い親フォルダーで探します。``conf.toml`` "
 "のあるフォルダーがソースフォルダーです。ビルドフォルダーはその隣の ``_build``、分離レイアウトでは ``build`` "
@@ -2368,7 +2371,7 @@ msgstr "最小構成"
 #: ../../reference/configuration.rst:31
 msgid ""
 "A project needs only basic metadata. Omitted keys take their defaults:"
-msgstr "プロジェクトに必要なのは基本情報だけです。省略したキーには既定値が使われます："
+msgstr "プロジェクトに必要なのは基本情報だけです。省略したキーには既定値が使われます。"
 
 #: ../../reference/configuration.rst:46
 msgid "How settings are checked"
@@ -2395,7 +2398,7 @@ msgstr ""
 
 #: ../../reference/configuration.rst:57
 msgid "Some values are derived after reading:"
-msgstr "次の値は読み込み後に導出されます："
+msgstr "次の値は読み込み後に導出されます。"
 
 #: ../../reference/configuration.rst:59
 msgid "``release`` defaults to ``version``."
@@ -2454,6 +2457,7 @@ msgstr "プロジェクト情報"
 #: ../../reference/configuration.rst:1442
 #: ../../reference/configuration.rst:1483
 #: ../../reference/configuration.rst:1508
+#: ../../reference/configuration.rst:1579
 msgid "Key"
 msgstr "キー"
 
@@ -2479,6 +2483,7 @@ msgstr "キー"
 #: ../../reference/configuration.rst:1443
 #: ../../reference/configuration.rst:1484
 #: ../../reference/configuration.rst:1509
+#: ../../reference/configuration.rst:1580
 msgid "Type"
 msgstr "型"
 
@@ -2504,6 +2509,7 @@ msgstr "型"
 #: ../../reference/configuration.rst:1444
 #: ../../reference/configuration.rst:1485
 #: ../../reference/configuration.rst:1510
+#: ../../reference/configuration.rst:1581
 msgid "Default"
 msgstr "初期値"
 
@@ -2529,6 +2535,7 @@ msgstr "初期値"
 #: ../../reference/configuration.rst:1445
 #: ../../reference/configuration.rst:1486
 #: ../../reference/configuration.rst:1511
+#: ../../reference/configuration.rst:1582
 msgid "Description"
 msgstr "説明"
 
@@ -2900,12 +2907,12 @@ msgstr "``include_roots``"
 #: ../../reference/configuration.rst:150
 msgid ""
 "Folders, relative to the source folder, that ``include``, "
-"``literalinclude``, images, graphs, logos and other files may also be "
-"read from. Sphinx reads any path; Guidedog reads only the source folder "
-"and these."
+"``literalinclude``, ``lilypond``, images, graphs, logos and other files "
+"may also be read from. Sphinx reads any path; Guidedog reads only the "
+"source folder and these."
 msgstr ""
-"``include``、``literalinclude``、画像、グラフ、ロゴなどのファイルを追加で読み込めるフォルダー（ソースフォルダーからの相対パス）。Sphinx "
-"は任意のパスを読みますが、Guidedog が読むのはソースフォルダーとこれらのフォルダーだけです。"
+"``include``、``literalinclude``、``lilypond``、画像、グラフ、ロゴなどのファイルを追加で読み込めるフォルダー（ソースフォルダーからの相対パス）。Sphinx "
+"は任意のパスを読みますが、Guidedog が読み取るのはソースフォルダーとこれらのフォルダーだけです。"
 
 #: ../../reference/configuration.rst:153
 msgid "``templates_path``"
@@ -3479,7 +3486,7 @@ msgid ""
 "and ``program``."
 msgstr ""
 "独自のオブジェクトを記述・リンクするディレクティブとロールです。Sphinx の ``app.add_object_type`` "
-"に相当します。フィールドは ``directive`` （必須）、``role``、``index``、``name`` "
+"に相当します。フィールドは ``directive``\\ （必須）、``role``、``index``、``name``\\ "
 "（``\"whole\"`` または ``\"first-word\"``）、``display``、``program`` です。"
 
 #: ../../reference/configuration.rst:323
@@ -3491,8 +3498,8 @@ msgid ""
 "Targets and roles without a description, as ``app.add_crossref_type``. "
 "Fields: ``directive`` (required), ``role``, and ``index``."
 msgstr ""
-"説明を持たないターゲットとロールです。``app.add_crossref_type`` に相当します。フィールドは ``directive`` "
-"（必須）、``role``、``index`` です。"
+"説明を持たないターゲットとロールです。``app.add_crossref_type`` に相当します。フィールドは "
+"``directive``\\ （必須）、``role``、``index`` です。"
 
 #: ../../reference/configuration.rst:328
 msgid "``directive_aliases``"
@@ -3741,6 +3748,7 @@ msgid "``html_title``"
 msgstr "``html_title``"
 
 #: ../../reference/configuration.rst:473
+#: ../../reference/configuration.rst:1593
 msgid "derived"
 msgstr "自動生成"
 
@@ -4002,7 +4010,8 @@ msgstr "1 冊"
 msgid ""
 "The books: ``root`` (the first document), ``file``, ``title``, and "
 "``author``."
-msgstr "生成する本です。``root`` （最初のドキュメント）、``file``、``title``、``author`` を指定します。"
+msgstr ""
+"生成する本です。``root``\\ （最初のドキュメント）、``file``、``title``、``author`` を指定します。"
 
 #: ../../reference/configuration.rst:594
 msgid "``pdf_paper_size``"
@@ -4013,8 +4022,8 @@ msgid "``\"a4\"``"
 msgstr "``\"a4\"``"
 
 #: ../../reference/configuration.rst:597
-msgid "The paper size (``\"a4\"``, ``\"us-letter\"``)."
-msgstr "用紙サイズです（``\"a4\"``、``\"us-letter\"``）。"
+msgid "The paper size (``\"a4\"``, ``\"letter\"``, or ``\"us-letter\"``)."
+msgstr "用紙サイズです（``\"a4\"``、``\"letter\"``、または ``\"us-letter\"``）。"
 
 #: ../../reference/configuration.rst:598
 msgid "``pdf_logo``"
@@ -4178,11 +4187,11 @@ msgid ""
 "workflow and :doc:`../howto/typst-diagrams` for directive options and "
 "limits."
 msgstr ""
-"``typst-diagram`` は HTML と PDF のプロジェクトで内蔵コンパイラを使います。どちらの画像出力にも "
+"``typst-diagram`` は HTML と PDF のプロジェクトで内蔵コンパイラーを使います。どちらの画像出力にも "
 "``pdf_packages``\\ （``\"download\"`` または ``\"offline\"``）、``pdf_fonts``\\ "
 "（``\"system\"`` または ``\"embedded\"``）、``pdf_font_paths`` を使います。既定値は PDF "
 "オプションに記載されたものと同じです。``:format: svg|png`` は画像形式を選択し、既定は SVG、PNG は 144 "
-"ピクセル毎インチです。図専用の実行プログラム設定はなく、``typst`` は引き続き書籍のコンパイラだけを選択します。CeTZ と "
+"ピクセル毎インチです。図専用の実行プログラム設定はなく、``typst`` は引き続き書籍のコンパイラーだけを選択します。CeTZ と "
 "Fletcher はバージョンを指定して明示的にインポートします。手順全体は "
 ":doc:`../topics/diagrams`、オプションと制限は :doc:`../howto/typst-diagrams` "
 "を参照してください。"
@@ -4267,7 +4276,7 @@ msgstr "``myst_substitutions``"
 
 #: ../../reference/configuration.rst:733
 msgid "Values for ``{{ name }}`` (the ``substitution`` syntax)."
-msgstr "``{{ name }}`` （``substitution`` 構文）に入れる値。"
+msgstr "``{{ name }}``\\ （``substitution`` 構文）に入れる値です。"
 
 #: ../../reference/configuration.rst:734
 msgid "``myst_sub_delimiters``"
@@ -4368,8 +4377,8 @@ msgid ""
 "``\"\"`` (the ``objects.inv`` at the URI), a location, or a list of "
 "locations tried in order."
 msgstr ""
-"他のプロジェクト。名前を ``[target URI, inventory]`` に対応付けます。インベントリには ``\"\"`` （URI "
-"にある ``objects.inv``）、場所、または順に試す場所のリストを指定します。"
+"他のプロジェクトです。名前を ``[target URI, inventory]`` に対応付けます。インベントリには ``\"\"``\\ "
+"（URI にある ``objects.inv``）、場所、または順に試す場所のリストを指定します。"
 
 #: ../../reference/configuration.rst:787
 msgid "``intersphinx_cache_limit``"
@@ -4409,12 +4418,12 @@ msgstr "このプロジェクト自身を指すマッピング名。"
 
 #: ../../reference/configuration.rst:814
 msgid ""
-"Inventories are downloaded with the built-in HTTP client, which honours "
+"Inventories are downloaded with the built-in HTTP client, which honors "
 "``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing. See "
 ":doc:`../intersphinx`."
 msgstr ""
 "インベントリは組み込みの HTTP クライアントでダウンロードします。このクライアントは ``HTTPS_PROXY`` と "
-"``NO_PROXY`` に従います。``--untrusted`` では何も取得しません。:doc:`../intersphinx` "
+"``NO_PROXY`` に従います。``--untrusted`` では何も取得しません。詳しくは :doc:`../intersphinx` "
 "を参照してください。"
 
 #: ../../reference/configuration.rst:817
@@ -4665,7 +4674,7 @@ msgstr "``napoleon_use_admonition_for_examples``"
 
 #: ../../reference/configuration.rst:939
 msgid "Render ``Examples`` sections as admonitions rather than rubrics."
-msgstr "``Examples`` セクションを見出し（rubric）ではなく注記ブロック（admonition）として描画します。"
+msgstr "``Examples`` セクションを小見出し（rubric）ではなく注記ブロック（admonition）として描画します。"
 
 #: ../../reference/configuration.rst:940
 msgid "``napoleon_use_admonition_for_notes``"
@@ -4673,7 +4682,7 @@ msgstr "``napoleon_use_admonition_for_notes``"
 
 #: ../../reference/configuration.rst:943
 msgid "Render ``Notes`` sections as admonitions rather than rubrics."
-msgstr "``Notes`` セクションを見出しではなく注記ブロックとして描画します。"
+msgstr "``Notes`` セクションを小見出しではなく注記ブロックとして描画します。"
 
 #: ../../reference/configuration.rst:944
 msgid "``napoleon_use_admonition_for_references``"
@@ -4681,7 +4690,7 @@ msgstr "``napoleon_use_admonition_for_references``"
 
 #: ../../reference/configuration.rst:947
 msgid "Render ``References`` sections as admonitions rather than rubrics."
-msgstr "``References`` セクションを見出しではなく注記ブロックとして描画します。"
+msgstr "``References`` セクションを小見出しではなく注記ブロックとして描画します。"
 
 #: ../../reference/configuration.rst:948
 msgid "``napoleon_use_ivar``"
@@ -5352,7 +5361,7 @@ msgid ""
 "``private-members`` (document private items, with their visibility), "
 "``hidden-members`` (``#[doc(hidden)]`` items), and ``noindex``."
 msgstr ""
-"``private-members`` （非公開の項目を可視性とともに文書化）、``hidden-members`` "
+"``private-members``\\ （非公開の項目を可視性とともに文書化）、``hidden-members``\\ "
 "（``#[doc(hidden)]`` の項目）、``noindex``。"
 
 #: ../../reference/configuration.rst:1260
@@ -5908,36 +5917,71 @@ msgstr ""
 msgid "Native music engraving"
 msgstr "ネイティブの楽譜浄書"
 
-#: ../../reference/configuration.rst:1575
+#: ../../reference/configuration.rst:1583
+msgid "``lilypond_staff_size``"
+msgstr "``lilypond_staff_size``"
+
+#: ../../reference/configuration.rst:1584
+#: ../../reference/configuration.rst:1588
+#: ../../reference/configuration.rst:1592
+msgid "float"
+msgstr "浮動小数点数"
+
+#: ../../reference/configuration.rst:1585
+msgid "``18``"
+msgstr "``18``"
+
+#: ../../reference/configuration.rst:1586
 msgid ""
-"``lilypond_staff_size`` sets the default five-line staff height in "
-"points, from 10 through 40; the default is 18. ``lilypond_html_width`` "
-"sets the wide HTML system measure in points; the default is 564. "
-"``lilypond_pdf_width`` sets the PDF system measure in points; when "
-"omitted, the selected template and ``pdf_paper_size`` determine it. "
-"Widths must be positive and no greater than 100,000 points. All three "
-"values are finite TOML numbers, and directive options override their "
-"project defaults."
-msgstr ""
-"``lilypond_staff_size`` は五線の既定高を 10 から 40 ポイントで設定し、既定値は 18 "
-"です。``lilypond_html_width`` は広い HTML システムの幅をポイントで設定し、既定値は 564 "
-"です。``lilypond_pdf_width`` は PDF システムの幅をポイントで設定し、省略時はテンプレートと "
-"``pdf_paper_size`` から決めます。幅は正数で 100,000 ポイント以下にします。三つとも有限の TOML "
-"数値で、ディレクティブのオプションがプロジェクトの既定値を上書きします。"
+"Default five-line staff height in points, from ``10`` through ``40``."
+msgstr "5 線譜表の既定の高さ（ポイント単位、``10`` から ``40`` まで）。"
 
 #: ../../reference/configuration.rst:1587
+msgid "``lilypond_html_width``"
+msgstr "``lilypond_html_width``"
+
+#: ../../reference/configuration.rst:1589
+msgid "``564``"
+msgstr "``564``"
+
+#: ../../reference/configuration.rst:1590
+msgid "Wide HTML system measure in points (positive, at most ``100000``)."
+msgstr "広い画面向け HTML のシステム幅（ポイント単位、正の値かつ最大 ``100000``）。"
+
+#: ../../reference/configuration.rst:1591
+msgid "``lilypond_pdf_width``"
+msgstr "``lilypond_pdf_width``"
+
+#: ../../reference/configuration.rst:1594
 msgid ""
-"The PDF templates declare their horizontal margin with ``// guidedog: "
-"margin-x = 31mm`` after their first import. Without a declaration, we "
-"assume 25 millimetres on each side. The built-in book, article and "
-"discussion margins are 31, 30 and 25 millimetres respectively. Text fonts "
-"use ``pdf_fonts`` and ``pdf_font_paths``. See :doc:`../topics/music` for "
-"directive syntax, layout, trust rules and limits."
+"PDF system measure in points (positive, at most ``100000``); when "
+"omitted, derived from ``pdf_paper_size`` and the selected template's "
+"horizontal margin."
 msgstr ""
-"PDF テンプレートは最初のインポート後に ``// guidedog: margin-x = 31mm`` "
-"で左右余白を宣言します。宣言がなければ両側 25 ミリメートルを仮定します。組み込みの書籍、記事、討議テンプレートの余白はそれぞれ "
-"31、30、25 ミリメートルです。文字フォントは ``pdf_fonts`` と ``pdf_font_paths`` "
-"を使います。記法、配置、信頼規則、制限は :doc:`../topics/music` を参照します。"
+"PDF のシステム幅（ポイント単位、正の値かつ最大 ``100000``）。省略時は ``pdf_paper_size`` "
+"と選択されたテンプレートの左右余白から算出されます。"
+
+#: ../../reference/configuration.rst:1596
+msgid ""
+"All three values are finite TOML numbers, and directive options override "
+"their project defaults."
+msgstr "3 つとも有限の TOML 数値であり、ディレクティブのオプションはプロジェクトの既定値を上書きします。"
+
+#: ../../reference/configuration.rst:1604
+msgid ""
+"The PDF templates declare their horizontal margin in their leading 256 "
+"lines with a comment such as ``// guidedog: margin-x = 31mm``. Without a "
+"declaration, we assume 25 millimeters on each side. The built-in book, "
+"article and discussion margins are 31, 30 and 25 millimeters "
+"respectively. Text fonts use ``pdf_fonts`` and ``pdf_font_paths``. See "
+":doc:`../topics/music` for directive syntax, layout, trust rules and "
+"limits."
+msgstr ""
+"PDF テンプレートは先頭 256 行以内に ``// guidedog: margin-x = 31mm`` "
+"のようなコメントで左右余白を宣言します。宣言がない場合は片側 25 "
+"ミリメートルと仮定します。組み込みの書籍・記事・議論テンプレートの余白はそれぞれ 31、30、25 ミリメートルです。テキスト用フォントには "
+"``pdf_fonts`` と ``pdf_font_paths`` が使われます。ディレクティブの構文、レイアウト、信頼規則、上限については "
+":doc:`../topics/music` を参照してください。"
 
 #: ../../reference/formats.rst:1
 msgid "Readers, renderers, and builders"
@@ -5948,7 +5992,8 @@ msgid ""
 "A reader understands a source language. A renderer writes one document "
 "tree. A builder coordinates a project and publishes its output. These are "
 "different responsibilities."
-msgstr "リーダーはソース言語を理解し、レンダラーは一つの文書木を書き、ビルダーはプロジェクトを調整して公開する。それぞれ役割が異なる。"
+msgstr ""
+"リーダーはソース言語を解釈し、レンダラーは単一の文書ツリーを出力し、ビルダーはプロジェクト全体を調整して出力を公開します。これらはそれぞれ異なる責務です。"
 
 #: ../../reference/formats.rst:8
 msgid "Source routes"
@@ -6119,8 +6164,9 @@ msgid ""
 ":doc:`../compatibility`."
 msgstr ""
 "``guidedog formats`` "
-"は実行ファイルにあるアダプターを示す。互換性ページは固定テスト群と実プロジェクトの検証を記録する。CommonMark 合格は MyST "
-"全対応を、RST 読み取りは全 Python 拡張の再現を意味しない。\\ :doc:`../compatibility` を参照。"
+"は実行ファイルに組み込まれている実際のアダプターを表示します。互換性ページには、固定テストスイートと実プロジェクトによる検証結果を記録しています。CommonMark "
+"テストスイートへの合格は MyST の完全な網羅を意味するものではなく、RST の読み取り対応はすべての Python "
+"拡張の挙動再現を意味するものでもありません。詳しくは :doc:`../compatibility` を参照してください。"
 
 #: ../../reference/formats.rst:70
 msgid "Project diagrams"

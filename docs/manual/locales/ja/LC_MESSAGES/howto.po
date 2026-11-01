@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 10:17+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -51,7 +51,7 @@ msgstr ""
 msgid ""
 "Guidedog's own catalog is no exception. We run the same commands in "
 "``docs/gds``:"
-msgstr "Guidedog 自身のカタログも例外ではありません。``docs/gds`` で同じコマンドを実行します："
+msgstr "Guidedog 自身のカタログも例外ではありません。``docs/gds`` で同じコマンドを実行します。"
 
 #: ../../howto/discussions.rst:19
 msgid "Create a catalog"
@@ -63,8 +63,8 @@ msgid ""
 "to 16 lowercase letters. ``init`` writes a complete catalog into a "
 "missing or empty folder:"
 msgstr ""
-"プレフィックスは ``:eds-number:`` のように、カタログのフィールド名に使われる。2〜16 文字の小文字の英字で書く。\\ "
-"``init`` は、存在しないか空のフォルダーに完全なカタログを書き出す。"
+"プレフィックスは ``:eds-number:`` のように、カタログのフィールド名に使われます。2〜16 "
+"文字の英小文字で指定します。``init`` は、存在しないフォルダーまたは空のフォルダーに完全なカタログを書き出します。"
 
 #: ../../howto/discussions.rst:29
 msgid ""
@@ -90,8 +90,8 @@ msgid ""
 "``_templates/theme.typ``, the editable HTML layout, PDF discussion "
 "layout, and shared PDF theme copied from the binary;"
 msgstr ""
-"バイナリからコピーされた、編集可能な HTML レイアウト、PDF 議論レイアウト、共通 PDF テーマである "
-"``_templates/layout.html``、``_templates/discussion.typ``、``_templates/theme.typ``；"
+"``_templates/layout.html``、``_templates/discussion.typ``、``_templates/theme.typ``: "
+"バイナリからコピーされた、編集可能な HTML レイアウト、PDF 議論レイアウト、共通 PDF テーマ。"
 
 #: ../../howto/discussions.rst:34
 msgid ""
@@ -99,14 +99,14 @@ msgid ""
 "``_static/typography.js``, the editable stylesheets and scripts copied "
 "from the binary;"
 msgstr ""
-"バイナリからコピーされた、編集可能なスタイルシートとスクリプトである "
-"``_static/guidedog.css``、``_static/guidedog.js``、``_static/typography.js``；"
+"``_static/guidedog.css``、``_static/guidedog.js``、``_static/typography.js``: "
+"バイナリからコピーされた、編集可能なスタイルシートとスクリプト。"
 
 #: ../../howto/discussions.rst:35
 msgid ""
 "``registry.rst`` and ``bundle.rst``, the generated index and catalog "
 "check list;"
-msgstr "``registry.rst`` と ``bundle.rst``：生成された索引とカタログ検査リスト；"
+msgstr "``registry.rst`` と ``bundle.rst``: 自動生成された索引とカタログ検査リスト。"
 
 #: ../../howto/discussions.rst:36
 msgid "``records/XXXXX-eds-process.rst``, a draft of our review process."
@@ -122,9 +122,9 @@ msgid ""
 "new catalog before it moves it into place. It never writes into a folder "
 "that has files."
 msgstr ""
-"手順の草案を編集し、プロジェクトでの決め方を書きます。自分の文書から始める場合は、``--config=FILE`` "
-"（``discussion.toml``）、``--process=FILE`` "
-"（手順の本文。タイトルから始まるもの）、``--template=FILE`` （``:eds-*:`` "
+"手順の草案を編集し、プロジェクトでの決め方を書きます。自分の文書から始める場合は、``--config=FILE``\\ "
+"（``discussion.toml``）、``--process=FILE``\\ "
+"（手順の本文。タイトルから始まるもの）、``--template=FILE``\\ （``:eds-*:`` "
 "フィールドを持つ記録テンプレート）を渡します。``--labels=a,b`` で、記録に付けられるラベルを制限できます。``init`` "
 "は新しいカタログを検査してから所定の場所に移します。ファイルのあるフォルダーに書き込むことはありません。"
 
@@ -150,7 +150,7 @@ msgstr ""
 
 #: ../../howto/discussions.rst:64
 msgid "A record starts with its metadata, one field per line:"
-msgstr "記録はメタデータで始まる。1 行に 1 フィールドを書く。"
+msgstr "記録はメタデータから始まり、1 行に 1 フィールドずつ記述します。"
 
 #: ../../howto/discussions.rst:78
 msgid ""
@@ -215,7 +215,7 @@ msgid ""
 "``guidedog dsc`` checks the file whenever it reads the catalog. A mistake "
 "names the line and what to write instead:"
 msgstr ""
-"``guidedog dsc`` はカタログを読むたびにこのファイルを検査します。誤りがあれば、その行と、代わりに書くべき内容を示します："
+"``guidedog dsc`` はカタログを読むたびにこのファイルを検査します。誤りがあれば、その行と、代わりに書くべき内容を示します。"
 
 #: ../../howto/discussions.rst:151
 msgid ""
@@ -251,15 +251,16 @@ msgstr ""
 
 #: ../../howto/discussions.rst:166
 msgid ""
-"The build is guidedog's own: the same build as ``guidedog build``, with "
+"The build is Guidedog's own: the same build as ``guidedog build``, with "
 "the catalog as the project. Graphviz, Typst, and the other tools it needs "
-"are guidedog's too. An older catalog of Typst records compiles each "
+"are Guidedog's too. An older catalog of Typst records compiles each "
 "record with Typst; ``--typst=PATH`` names a Typst program to use instead "
 "of the embedded compiler."
 msgstr ""
-"ビルドは guidedog 自身のものです。``guidedog build`` と同じビルドを、カタログをプロジェクトとして実行します。必要な "
-"Graphviz や Typst などのツールも guidedog に含まれています。Typst 形式の古いカタログでは、各記録を Typst "
-"でコンパイルします。``--typst=PATH`` を指定すると、組み込みのコンパイラの代わりにその Typst プログラムを使います。"
+"ビルドは Guidedog 自身の機能で行われます。カタログを 1 つのプロジェクトとして ``guidedog build`` "
+"と同じビルドを実行します。必要な Graphviz や Typst などのツールも Guidedog に含まれています。Typst "
+"形式の古いカタログでは、各記録を Typst でコンパイルします。``--typst=PATH`` "
+"を指定すると、組み込みコンパイラーの代わりに指定した Typst プログラムを使います。"
 
 #: ../../howto/discussions.rst:168
 msgid "Discussion PDFs"
@@ -331,8 +332,8 @@ msgid ""
 "update of several files first writes a journal, ``.eds-journal.json``. If "
 "it stops part way, the next command says so:"
 msgstr ""
-"記録を変更するコマンドは、カタログのロック ``.eds.lock`` を保持する。複数ファイルの更新では、まずジャーナル "
-"``.eds-journal.json`` を書く。途中で止まった場合は、次のコマンドがそれを知らせる。"
+"記録を変更するコマンドは、カタログのロック ``.eds.lock`` を保持します。複数ファイルを更新する際は、まずジャーナル "
+"``.eds-journal.json`` を書き出します。途中で中断した場合は、次のコマンドがその旨を知らせます。"
 
 #: ../../howto/discussions.rst:191
 msgid ""
@@ -364,7 +365,7 @@ msgid ""
 "program:"
 msgstr ""
 "コマンドは 1 つの Rust クレート ``gd-discussion`` にまとまっています。その ``README.md`` "
-"に、自分のプログラムからカタログを読み込み、変更を計画して適用する方法を示しています："
+"に、自分のプログラムからカタログを読み込み、変更を計画して適用する方法を示しています。"
 
 #: ../../howto/discussions.rst:219
 msgid ""
@@ -399,7 +400,7 @@ msgid ""
 "effects, no runtime to install, and no foreign dependencies to resolve:"
 msgstr ""
 "Guidedog は、ソースファイルを抽象構文木に解析して API "
-"文書を抽出します。コードを実行したりインポートしたりすることはありません。そのため副作用がなく、ランタイムのインストールも、外部の依存関係の解決も不要です："
+"文書を抽出します。コードを実行したりインポートしたりすることはありません。そのため副作用がなく、ランタイムのインストールも、外部の依存関係の解決も不要です。"
 
 #: ../../howto/document-code.rst:16
 msgid ""
@@ -443,7 +444,7 @@ msgstr ""
 "何を表示するかは rustdoc の規則で決まります。``pub`` モジュールを通じて到達できる ``pub`` "
 "アイテムは、そのモジュールで文書化します。非公開モジュールのアイテムを ``pub use`` "
 "した場合は、再エクスポートした名前で文書化します。``#[doc(hidden)]`` のアイテム、``#[cfg(test)]`` "
-"のモジュール、テストは除外します。``rust_autoapi_options`` には ``private-members`` "
+"のモジュール、テストは除外します。``rust_autoapi_options`` には ``private-members``\\ "
 "（可視性を示してすべてを表示）、``hidden-members``、``noindex`` を追加できます。"
 
 #: ../../howto/document-code.rst:86
@@ -470,7 +471,7 @@ msgid ""
 "directives and roles. Hand-written pages can use them too."
 msgstr ""
 "ページは ``rust_autoapi_root`` の下に書き出します。索引ページが 1 つあり、文書化した各モジュールに 1 "
-"ページずつ作ります（``my_crate.rst``、``my_crate/parser.rst``）。``rust_autoapi_add_toctree_entry`` "
+"ページずつ作ります（``my_crate.rst``、``my_crate/parser.rst``）。``rust_autoapi_add_toctree_entry``\\ "
 "（既定）を有効にすると、索引ページがルート文書の toctree に加わります。``rust_autoapi_generate_api_docs "
 "= false`` の場合、Guidedog は設定を読むだけでページを生成しません。``rust`` のディレクティブとロールは "
 ":doc:`../topics/domains` で説明しています。手書きのページでも使えます。"
@@ -538,7 +539,7 @@ msgstr ""
 msgid ""
 "Content passes through format guards and object type tables to produce "
 "tailored web and print deliverables."
-msgstr "コンテンツはフォーマットガードと対象型テーブルを通過し、Web と印刷それぞれに最適化された成果物を生成します。"
+msgstr "コンテンツはフォーマットガードとオブジェクト型テーブルを通過し、Web と印刷それぞれに最適化された成果物を生成します。"
 
 #: ../../howto/format-specific-content.rst:10
 msgid "Content routing and directive handling for HTML and PDF outputs."
@@ -555,7 +556,7 @@ msgid ""
 "components:"
 msgstr ""
 "``.. only:: html`` と ``.. raw:: html`` ブロックを組み合わせて使用し、Web "
-"専用マークアップ、対話型計算機、埋め込み音声/動画コンポーネントを挿入します："
+"専用マークアップ、対話型計算機、埋め込み音声/動画コンポーネントを挿入します。"
 
 #: ../../howto/format-specific-content.rst:60
 msgid "To supply the supporting CSS and JavaScript:"
@@ -606,7 +607,7 @@ msgid ""
 "for printed pages, wrap the markup in ``.. only:: pdf``:"
 msgstr ""
 "印刷ページにベクター図形、専用コールアウトボックス、カスタムタイポグラフィを導入するには、マークアップを ``.. only:: pdf`` "
-"で囲みます："
+"で囲みます。"
 
 #: ../../howto/format-specific-content.rst:106
 msgid ""
@@ -614,7 +615,7 @@ msgid ""
 "invoking the Typst compiler. The HTML builder automatically omits this "
 "block without emitting warnings."
 msgstr ""
-"Guidedog は Typst コンパイラを呼び出す前に、このブロックを Typst ドキュメントへ直接出力します。HTML "
+"Guidedog は Typst コンパイラーを呼び出す前に、このブロックを Typst ドキュメントへ直接出力します。HTML "
 "ビルダーは警告を出さずに自動的にこのブロックを除外します。"
 
 #: ../../howto/format-specific-content.rst:109
@@ -649,15 +650,15 @@ msgid ""
 "to the target rendering engine:"
 msgstr ""
 "Guidedog は TeX や LaTeX ではなくネイティブの `Typst <https://typst.app/>`_ を通じて PDF "
-"書籍を生成します。raw ブロックは対象のレンダリングエンジンにそのまま逐語的に渡されます："
+"書籍を生成します。raw ブロックは対象のレンダリングエンジンにそのまま逐語的に渡されます。"
 
 #: ../../howto/format-specific-content.rst:120
 msgid ""
 "**Raw Typst** (``.. raw:: typst``): Rendered directly by the Typst "
 "compiler in PDF builds."
 msgstr ""
-"**Raw Typst** (``.. raw:: typst``)：PDF ビルドにおいて Typst "
-"コンパイラによって直接レンダリングされます。"
+"**Raw Typst**\\ （``.. raw:: typst``）：PDF ビルドにおいて Typst "
+"コンパイラーで直接レンダリングされます。"
 
 #: ../../howto/format-specific-content.rst:121
 msgid ""
@@ -665,7 +666,7 @@ msgid ""
 "reports a ``typst.raw.foreign`` warning and omits the content because "
 "Typst cannot execute LaTeX commands."
 msgstr ""
-"**Raw LaTeX** (``.. raw:: latex``)：PDF ビルドではサポートされません。Typst は LaTeX "
+"**Raw LaTeX**\\ （``.. raw:: latex``）：PDF ビルドではサポートされません。Typst は LaTeX "
 "コマンドを実行できないため、Guidedog は ``typst.raw.foreign`` 警告を報告し、コンテンツを除外します。"
 
 #: ../../howto/format-specific-content.rst:123
@@ -675,9 +676,9 @@ msgid ""
 "``typst.math.unsupported`` and follow the math policy; see "
 ":doc:`../topics/mathematics`."
 msgstr ""
-"**LaTeX 数式** (``.. math::`` と ``:math:``): 対応するコマンドはネイティブの Typst "
+"**LaTeX 数式**\\ （``.. math::`` と ``:math:``）：対応するコマンドはネイティブの Typst "
 "数式に変換されます。未対応のコマンドでは ``typst.math.unsupported`` "
-"が報告され、数式ポリシーに従って処理されます。:doc:`../topics/mathematics` を参照してください。"
+"が報告され、数式ポリシーに従って処理されます。詳しくは :doc:`../topics/mathematics` を参照してください。"
 
 #: ../../howto/format-specific-content.rst:124
 msgid ""
@@ -706,12 +707,12 @@ msgstr ""
 
 #: ../../howto/format-specific-content.rst:142
 msgid "Now authors can describe services across all documents:"
-msgstr "これで執筆者はすべてのドキュメントでサービスを記述できます："
+msgstr "これで執筆者はすべてのドキュメントでサービスを記述できます。"
 
 #: ../../howto/format-specific-content.rst:150
 msgid ""
 "Other documents can link directly to this service using the declared role:"
-msgstr "他のドキュメントから、宣言されたロールを使用してこのサービスへ直接リンクできます："
+msgstr "他のドキュメントから、宣言されたロールを使用してこのサービスへ直接リンクできます。"
 
 #: ../../howto/format-specific-content.rst:156
 msgid ""
@@ -759,11 +760,11 @@ msgid ""
 "define a reusable function in ``_templates/theme.typ``:"
 msgstr ""
 "複数のドキュメントに冗長な Typst コードをインライン記述する代わりに、``_templates/theme.typ`` "
-"で再利用可能な関数を定義します："
+"で再利用可能な関数を定義します。"
 
 #: ../../howto/format-specific-content.rst:191
 msgid "Call it concisely from reStructuredText:"
-msgstr "reStructuredText から簡潔に呼び出します："
+msgstr "reStructuredText から簡潔に呼び出します。"
 
 #: ../../howto/format-specific-content.rst:202
 msgid ""
@@ -794,7 +795,7 @@ msgstr ""
 msgid ""
 "The plugin implements ``process_source``, intercepting the raw document "
 "text before parsing:"
-msgstr "プラグインは ``process_source`` を実装し、解析前の未加工ドキュメントテキストをインターセプトします："
+msgstr "プラグインは ``process_source`` を実装し、解析前の未加工ドキュメントテキストをインターセプトします。"
 
 #: ../../howto/format-specific-content.rst:256
 msgid ""
@@ -872,7 +873,7 @@ msgstr "このマシンから 1 コマンドで公開する"
 
 #: ../../howto/github-pages.rst:47
 msgid "From the repository that holds our documentation, we run:"
-msgstr "ドキュメントのあるリポジトリで、次のコマンドを実行します："
+msgstr "ドキュメントのあるリポジトリで、次のコマンドを実行します。"
 
 #: ../../howto/github-pages.rst:53
 msgid ""
@@ -881,7 +882,7 @@ msgid ""
 "machine's permissions:"
 msgstr ""
 "まだ公開したことのないマシンでは、足りない手順をそれぞれ一度だけ実行し、何をしているかを表示します。GitHub "
-"やこのマシンの権限を変更する操作の前には、確認を求めます："
+"やこのマシンの権限を変更する操作の前には、確認を求めます。"
 
 #: ../../howto/github-pages.rst:56
 msgid ""
@@ -892,7 +893,7 @@ msgid ""
 "``pages.toml``. We can name both ourselves with "
 "``--repository=OWNER/REPO`` and ``--project=DIR``."
 msgstr ""
-"**設定。** ``pages.toml`` がない場合は、``git remote get-url origin`` （HTTPS または "
+"**設定。** ``pages.toml`` がない場合は、``git remote get-url origin``\\ （HTTPS または "
 "SSH の GitHub URL）からリポジトリを読み取り、確認を求めます。最も近いプロジェクト（``conf.toml`` "
 "のあるフォルダー。現在の場所、``docs``、またはその上位をリポジトリのルートまで探します）を見つけ、``pages.toml`` "
 "を書き出します。``--repository=OWNER/REPO`` と ``--project=DIR`` で、どちらも自分で指定できます。"
@@ -1010,7 +1011,7 @@ msgstr ""
 msgid ""
 "We authorize the target, point Pages at the branch, and check that "
 "everything is ready:"
-msgstr "公開先を承認し、Pages の公開元をブランチに向け、すべての準備が整っていることを確認します："
+msgstr "公開先を承認し、Pages の公開元をブランチに向け、すべての準備が整っていることを確認します。"
 
 #: ../../howto/github-pages.rst:121
 msgid ""
@@ -1044,7 +1045,7 @@ msgstr ""
 
 #: ../../howto/github-pages.rst:139
 msgid "The exit status says what happened:"
-msgstr "終了ステータスで結果が分かります："
+msgstr "終了ステータスで結果が分かります。"
 
 #: ../../howto/github-pages.rst:141
 msgid "0: the site is live or was already published."
@@ -1133,7 +1134,7 @@ msgstr ""
 "を作り、``systemctl --user enable --now docs-pages`` "
 "で開始します。ユーザーサービスからはデスクトップの Secret Service "
 "を使えます。それがないサーバーでは、``--credential=env`` でトークンを渡し、自分のアカウントだけが読める drop-in に "
-"``Environment=GUIDEDOG_PAGES_TOKEN=...`` を書きます："
+"``Environment=GUIDEDOG_PAGES_TOKEN=...`` を書きます。"
 
 #: ../../howto/github-pages.rst:206
 msgid ""
@@ -1147,7 +1148,7 @@ msgstr "GitHub Actions でビルドしてデプロイする"
 
 #: ../../howto/github-pages.rst:218
 msgid "We generate the workflow instead of copying it:"
-msgstr "ワークフローはコピーせず、生成します："
+msgstr "ワークフローはコピーせず、生成します。"
 
 #: ../../howto/github-pages.rst:225
 msgid ""
@@ -1301,7 +1302,7 @@ msgstr "``guidedog pages bind`` を実行してください。このマシンに
 
 #: ../../howto/github-pages.rst:384
 msgid "``pages.no-token``, ``pages.credential``"
-msgstr "``pages.no-token``, ``pages.credential``"
+msgstr "``pages.no-token``、``pages.credential``"
 
 #: ../../howto/github-pages.rst:385
 msgid ""
@@ -1320,12 +1321,12 @@ msgid ""
 "Give the token Contents: read and write for the repository, or approve it "
 "for the organization's single sign-on."
 msgstr ""
-"トークンにリポジトリの Contents: read and write を与えるか、組織のシングルサインオン (SSO) "
-"でトークンを承認してください。"
+"トークンにリポジトリの Contents: read and write "
+"を付与するか、組織のシングルサインオン（SSO）でトークンを承認してください。"
 
 #: ../../howto/github-pages.rst:389
 msgid "``pages.source``, ``pages.no-site``"
-msgstr "``pages.source``, ``pages.no-site``"
+msgstr "``pages.source``、``pages.no-site``"
 
 #: ../../howto/github-pages.rst:390
 msgid ""
@@ -1388,7 +1389,7 @@ msgid ""
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
 msgstr ""
 "`GitHub のカスタム Pages ワークフロー "
-"<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_."
+"<https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages>`_。"
 
 #: ../../howto/github-pages.rst:408
 msgid ""
@@ -1396,7 +1397,7 @@ msgid ""
 "<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
 msgstr ""
 "`Pages の公開元を設定する "
-"<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_."
+"<https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_。"
 
 #: ../../howto/github-pages.rst:409
 msgid ""
@@ -1404,7 +1405,7 @@ msgid ""
 "<https://github.com/actions/configure-pages/releases/tag/v6.0.0>`_."
 msgstr ""
 "`configure-pages v6.0.0 リリース "
-"<https://github.com/actions/configure-pages/releases/tag/v6.0.0>`_."
+"<https://github.com/actions/configure-pages/releases/tag/v6.0.0>`_。"
 
 #: ../../howto/index.rst:1
 msgid "Practical tasks"
@@ -1434,14 +1435,15 @@ msgstr ""
 #: ../../howto/install.rst:15
 msgid ""
 "Homebrew selects the release archive for our processor and checks its "
-"SHA-256. The executable has the Typst compiler and Graphviz built in, so "
-"it needs nothing else at run time. We do not need a Rust toolchain, a "
-"Python environment, or a separate Typst installation to build HTML and "
-"PDF. The release requires macOS 12 or later."
+"SHA-256. The executable has the Typst compiler, Graphviz, and native "
+"music engraving built in, so it needs nothing else at run time. We do not "
+"need a Rust toolchain, a Python environment, or a separate Typst "
+"installation to build HTML and PDF. The release requires macOS 12 or "
+"later."
 msgstr ""
-"Homebrew はプロセッサに合ったリリースアーカイブを選び、SHA-256 を検証します。実行ファイルには Typst コンパイラと "
-"Graphviz が組み込まれているので、実行時にほかに必要なものはありません。HTML と PDF のビルドに Rust "
-"ツールチェーン、Python 環境、Typst の別途インストールは不要です。macOS 12 以降が必要です。"
+"Homebrew はプロセッサに合ったリリースアーカイブを選び、SHA-256 を検証します。実行ファイルには Typst "
+"コンパイラー、Graphviz、ネイティブの楽譜浄書機能が組み込まれているため、実行時にほかに必要なものはありません。HTML と PDF "
+"のビルドに Rust ツールチェーン、Python 環境、Typst の別途インストールは不要です。macOS 12 以降が必要です。"
 
 #: ../../howto/install.rst:19
 msgid ""
@@ -1512,8 +1514,8 @@ msgid ""
 "Cargo uses to build the vendored OpenSSL linked by the embedded Typst "
 "package downloader."
 msgstr ""
-"C コンパイラ（``cc``、Xcode のコマンドラインツール、または MSVC）。Cargo はこれを使って tree-sitter の文法と "
-"``ring`` クレートの暗号処理（HTTPS 用の TLS）をビルドします。さらに Linux では、内蔵の Typst "
+"C コンパイラー（``cc``、Xcode のコマンドラインツール、または MSVC）。Cargo はこれを使って tree-sitter "
+"の文法と ``ring`` クレートの暗号処理（HTTPS 用の TLS）をビルドします。さらに Linux では、内蔵の Typst "
 "パッケージダウンローダーがリンクする同梱 OpenSSL を Cargo がビルドするために ``perl`` と ``make`` も必要です。"
 
 #: ../../howto/install.rst:42
@@ -1524,7 +1526,7 @@ msgid ""
 "Cargo dependencies, compiled with the workspace. There are no separate "
 "setup scripts to run first."
 msgstr ""
-"ほかに手作業でビルドするものはありません。Typst コンパイラ（0.15.1）、Python・Rust 用の tree-sitter "
+"ほかに手作業でビルドするものはありません。Typst コンパイラー（0.15.1）、Python・Rust 用の tree-sitter "
 "文法、Guidedog の HTTP クライアント（``rustls`` と組み込みルート証明書を使う ``ureq``）は通常の Cargo "
 "依存関係で、ワークスペースと一緒にコンパイルされます。事前に実行する個別のセットアップスクリプトもありません。"
 
@@ -1552,7 +1554,7 @@ msgid ""
 "on the machine that runs them. We build the same way:"
 msgstr ""
 "リリースアーカイブは Graphviz を静的にリンクしているので、実行するマシンに Graphviz "
-"は要りません。同じ方法でビルドするには、次のようにします："
+"は要りません。同じ方法でビルドするには、次のようにします。"
 
 #: ../../howto/install.rst:70
 msgid ""
@@ -1567,7 +1569,7 @@ msgid ""
 msgstr ""
 "``cargo xtask graphviz`` は Graphviz 16.1.0 と Expat 2.7.1 "
 "をダウンロードし、それぞれを固定した SHA-256 で検証してから、静的ライブラリを ``target/graphviz/16.1.0`` "
-"にビルドし、そのフォルダーを表示します。C と C++ のコンパイラ、``make``、``curl``、``tar``、``xz`` "
+"にビルドし、そのフォルダーを表示します。C と C++ のコンパイラー、``make``、``curl``、``tar``、``xz`` "
 "が必要で、数分かかります。ビルドには Guidedog が使うものだけが含まれます。dot と neato "
 "のレイアウトプラグイン（dot、neato、fdp、sfdp、circo、twopi、osage、patchwork）とコアのレンダラー（SVG "
 "と DOT）で、X11、cairo、gd、ltdl、zlib は含みません。そのため、静的ビルドで出力できるのは SVG とレイアウト済みの "
@@ -1619,11 +1621,11 @@ msgid ""
 "selects an external ``typst`` 0.15.1 program explicitly, and ``guidedog "
 "--version`` names the backend in use."
 msgstr ""
-"デフォルトでは、Typst コンパイラは ``guidedog`` にリンクされています（``gd-typst`` クレートの "
+"デフォルトでは、Typst コンパイラーは ``guidedog`` にリンクされています（``gd-typst`` クレートの "
 "``embedded`` フィーチャー）。そのため PDF の本にも ``.. typst-diagram::`` "
 "ディレクティブにもほかのプログラムは要りません。このフィーチャーなしでビルドした ``gd-typst`` は PDF "
 "の本に対してインストール済みの ``typst`` プログラム（0.15.1 に固定）を実行しますが、``.. typst-diagram::`` "
-"には内蔵コンパイラが必須です（``typst.embedded``）。``:format: png`` を指定した ``.. "
+"には内蔵コンパイラーが必須です（``typst.embedded``）。``:format: png`` を指定した ``.. "
 "lilypond::`` も同様で、SVG の楽譜はどちらのビルドでも使えます。PDF の本では "
 "``--typst=/absolute/path/to/typst``\\ （または ``conf.toml`` の ``typst``）で外部の "
 "``typst`` 0.15.1 プログラムを明示的に指定でき、``guidedog --version`` で使用中のバックエンドを確認できます。"
@@ -1634,7 +1636,7 @@ msgid ""
 "does not remove the compiler's own memory costs. ``--budget`` bounds what "
 "Guidedog itself holds."
 msgstr ""
-"組み込みコンパイラなら別プロセスを起動する必要はありません。ただし、コンパイラ自体のメモリコストはなくなりません。``--budget`` "
+"組み込みコンパイラーなら別プロセスを起動する必要はありません。ただし、コンパイラー自体のメモリコストはなくなりません。``--budget`` "
 "が制限するのは Guidedog 自身が保持するメモリです。"
 
 #: ../../howto/install.rst:97
@@ -1717,7 +1719,7 @@ msgstr ""
 "``guidedoc_rst::reader()``、``guidedoc_commonmark::MYST_READER``、``guidedoc_typst::renderer()``、``guidedoc_text::renderer()`` "
 "も同じ方法でレジストリに追加します。コードのハイライトは、``guidedoc-defaults`` "
 "クレートがハイライターをレンダラーにつなぎます。リクエストの ``RenderOptions`` の ``highlighter`` に "
-"``guidedoc_defaults::HtmlHighlighter`` （または "
+"``guidedoc_defaults::HtmlHighlighter``\\ （または "
 "``TypstHighlighter``）を渡します。段階的な呼び出し（``read_document``、``transform_document``、``check_render``、``render_document``）、リクエストのフィールド、各種制限はクレートの "
 "``README.md`` にまとめています。"
 
@@ -1753,7 +1755,7 @@ msgid ""
 "conformance tables are pages under ``docs/manual/internals``."
 msgstr ""
 "ドキュメントはすべて ``docs/`` 以下の reStructuredText です。Markdown ファイルは、各クレートの "
-"``README.md`` （短いチートシート）と、GitHub がルートに必要とするファイルだけです。設計メモ、内部構造、台帳、適合性の表は "
+"``README.md``\\ （短いチートシート）と、GitHub がルートに必要とするファイルだけです。設計メモ、内部構造、台帳、適合性の表は "
 "``docs/manual/internals`` 以下のページにします。"
 
 #: ../../howto/maintain-docs.rst:17
@@ -1844,7 +1846,7 @@ msgid ""
 "release notes). After we change English text, we refresh them:"
 msgstr ""
 "翻訳カタログは ``docs/manual/locales``\\ （マニュアルとリポジトリ概要用）と "
-"``docs/site/locales``\\ （トップページとリリースノート用）にあります。英語の本文を変更したら、次のように更新します："
+"``docs/site/locales``\\ （トップページとリリースノート用）にあります。英語の本文を変更したら、次のように更新します。"
 
 #: ../../howto/maintain-docs.rst:89
 msgid "See :doc:`../intl` for the translation workflow."
@@ -2320,10 +2322,8 @@ msgstr ""
 "が公開するのは、完全にそろった出力世代だけです。ホストは準備を終えてから、ジャーナル付きのコミットを確定するかどうかを決めます。準備に失敗しても、以前のサイトはそのまま残ります。"
 
 #: ../../howto/publish.rst:25
-msgid ""
-"Guidedog prepares a complete generation before deciding a journaled "
-"commit:"
-msgstr "完全な次世代を用意した後で、ジャーナルにコミットを記録します。"
+msgid "The staging and switch sequence runs as follows:"
+msgstr "ステージングと切り替えの手順は次のとおりです。"
 
 #: ../../howto/publish.rst:29
 msgid ""
@@ -2337,7 +2337,7 @@ msgstr "ステージングと世代の切り替え。"
 
 #: ../../howto/publish.rst:47
 msgid "How atomic commits protect our site:"
-msgstr "アトミックなコミットがサイトを守る仕組み："
+msgstr "アトミックなコミットがサイトを守る仕組みは次のとおりです。"
 
 #: ../../howto/publish.rst:49
 msgid ""
@@ -2346,12 +2346,13 @@ msgid ""
 "build folder. For a custom output folder passed to ``guidedog build -b "
 "html SOURCEDIR OUTPUTDIR``, it sits inside the output's one cache folder "
 "beside it (``.<target>.guidedog``), so the output gains a single hidden "
-"neighbour."
+"neighbor."
 msgstr ""
 "**ステージング：** "
-"新しくレンダリングしたページは、すべて隠しステージングフォルダー（``.<target>.next``）に書き出します。既定のビルダーでは、このフォルダーはビルドフォルダーの中にあります。``guidedog "
+"新しくレンダリングされたページは、すべて隠しステージングフォルダー（``.<target>.next``）に書き出されます。既定のビルダーでは、このフォルダーはビルドフォルダー内に置かれます。``guidedog "
 "build -b html SOURCEDIR OUTPUTDIR`` "
-"に渡したカスタム出力フォルダーでは、隣にある出力用の一つのキャッシュフォルダー（``.<target>.guidedog``）の中に置かれるので、出力の隣に増える隠しフォルダーは一つだけです。"
+"に渡したカスタム出力フォルダーでは、出力の隣にある唯一のキャッシュフォルダー（``.<target>.guidedog``）の内部に置かれるため、出力の隣に増える隠しフォルダーは "
+"1 つだけです。"
 
 #: ../../howto/publish.rst:54
 msgid ""
@@ -2612,7 +2613,7 @@ msgstr "執筆と公開状態"
 #: ../../howto/static-publishing.rst:9
 msgid ""
 "The ``guidedog ssg`` commands create and transition articles in place:"
-msgstr "``guidedog ssg`` コマンドは、その場で記事を作成し、公開状態を遷移させます:"
+msgstr "``guidedog ssg`` コマンドは、その場で記事を作成し、公開状態を遷移させます。"
 
 #: ../../howto/static-publishing.rst:16
 msgid ""
@@ -2638,7 +2639,7 @@ msgstr ""
 msgid ""
 "An article declares its metadata in the leading field list (or YAML front "
 "matter block):"
-msgstr "記事は、先頭のフィールドリスト（または YAML フロントマターブロック）でメタデータを宣言します:"
+msgstr "記事は、先頭のフィールドリスト（または YAML フロントマターブロック）でメタデータを宣言します。"
 
 #: ../../howto/static-publishing.rst:33
 msgid ""
@@ -2682,7 +2683,7 @@ msgid ""
 msgstr ""
 "ローカルで未公開ページを確認するには、``guidedog build html --preview``\\ （または ``guidedog "
 "serve "
-"--preview``）を使用します。公開出力とプレビュー出力の両方をディスクに保持する場合は、プレビューを別の出力ディレクトリに書き出します:"
+"--preview``）を使用します。公開出力とプレビュー出力の両方をディスクに保持する場合は、プレビューを別の出力ディレクトリに書き出します。"
 
 #: ../../howto/static-publishing.rst:67
 msgid "Collections, archives and feeds"
@@ -2692,7 +2693,7 @@ msgstr "コレクション、アーカイブ、フィード"
 msgid ""
 "Embed a chronological list of eligible articles in any page with ``.. "
 "postlist::``:"
-msgstr "``.. postlist::`` を使って、公開対象記事の時系列リストを任意のページに埋め込みます:"
+msgstr "``.. postlist::`` を使って、公開対象記事の時系列リストを任意のページに埋め込みます。"
 
 #: ../../howto/static-publishing.rst:80
 msgid ""
@@ -2786,7 +2787,7 @@ msgstr ""
 
 #: ../../howto/static-publishing.rst:144
 msgid "Enable site-wide discovery files in ``conf.toml``:"
-msgstr "``conf.toml`` でサイト全体のディスカバリーファイルを有効にします:"
+msgstr "``conf.toml`` でサイト全体のディスカバリーファイルを有効にします。"
 
 #: ../../howto/static-publishing.rst:153
 msgid ""
@@ -2804,7 +2805,7 @@ msgstr ""
 msgid ""
 "Generate taxonomy archives and paginated collections from the same "
 "``[site]`` table:"
-msgstr "同じ ``[site]`` テーブルからタクソノミーアーカイブとページネーション付きコレクションを生成します:"
+msgstr "同じ ``[site]`` テーブルからタクソノミーアーカイブとページネーション付きコレクションを生成します。"
 
 #: ../../howto/static-publishing.rst:172
 msgid ""
@@ -2832,8 +2833,8 @@ msgstr ""
 "でオーバーライドが指定されない限り ``collection.html`` がデフォルトになります。テンプレートは ``collection`` "
 "内で現在のページ番号、総ページ数、選択された投稿を受け取り、``collection.previous_url`` と "
 "``collection.next_url`` には相対 URL または ``None`` が設定されます。各投稿エントリーは "
-"``title``、``docname``、``date``、``url``、``summary``, "
-"``excerpt_html``、およびオプションの ``pdf_url`` を含む型付き ``meta`` 値を提供します。"
+"``title``、``docname``、``date``、``url``、``summary``、``excerpt_html``、およびオプションの "
+"``pdf_url`` を含む型付き ``meta`` 値を提供します。"
 
 #: ../../howto/static-publishing.rst:174
 msgid ""
@@ -2903,7 +2904,7 @@ msgstr "スターターサイト"
 
 #: ../../howto/static-publishing.rst:186
 msgid "Initialize a complete starter project with one of three presets:"
-msgstr "3 つのプリセットのいずれかを使用して完全なスタータープロジェクトを初期化します:"
+msgstr "3 つのプリセットのいずれかを使用して完全なスタータープロジェクトを初期化します。"
 
 #: ../../howto/static-publishing.rst:193
 msgid ""
@@ -2929,8 +2930,8 @@ msgid ""
 "``base_url`` in ``conf.toml`` before publishing feeds or sitemaps."
 msgstr ""
 "3 つのプリセットはいずれも編集可能な HTML、CSS、Typst "
-"テーマファイルをコピーし、既存の送信先の上書きを拒否します。フィードやサイトマップを公開する前に、``conf.toml`` のサンプル "
-"``base_url`` を更新してください。"
+"テーマファイルをコピーし、既存の出力先ディレクトリの上書きを拒否します。フィードやサイトマップを公開する前に、``conf.toml`` "
+"のサンプル ``base_url`` を更新してください。"
 
 #: ../../howto/static-publishing.rst:199
 msgid ""
@@ -2951,7 +2952,7 @@ msgstr "マウントされたプロジェクトとエディション"
 msgid ""
 "Assemble multiple Guidedog projects and language editions into one "
 "website from a root ``conf.toml``:"
-msgstr "ルート ``conf.toml`` から複数の Guidedog プロジェクトと言語エディションを 1 つのウェブサイトにまとめます:"
+msgstr "ルート ``conf.toml`` から複数の Guidedog プロジェクトと言語エディションを 1 つのウェブサイトにまとめます。"
 
 #: ../../howto/static-publishing.rst:234
 msgid ""
@@ -3011,7 +3012,7 @@ msgstr ""
 
 #: ../../howto/static-publishing.rst:262
 msgid "Link across mounts with the ``mount://`` scheme:"
-msgstr "``mount://`` スキームを使用してマウント間をリンクします:"
+msgstr "``mount://`` スキームを使用してマウント間をリンクします。"
 
 #: ../../howto/static-publishing.rst:268
 msgid ""
@@ -3053,7 +3054,7 @@ msgid ""
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
 msgstr ""
 "``_templates/`` と ``_static/`` を含むディレクトリをポータブルな ``.gdt`` "
-"アーカイブにパッケージ化し、明示的な SHA-256 ピンを指定してインストールします:"
+"アーカイブにパッケージ化し、明示的な SHA-256 ピンを指定してインストールします。"
 
 #: ../../howto/static-publishing.rst:282
 msgid ""
@@ -3108,7 +3109,7 @@ msgid ""
 "separate figure task or installed Typst program."
 msgstr ""
 "RST または MyST 文書に Typst の描画コードを直接記述できます。``typst-diagram`` は Guidedog 内蔵の "
-"Typst コンパイラでコードをコンパイルし、生成した画像を HTML と PDF に組み込みます。図専用のビルド処理や別途インストールした "
+"Typst コンパイラーでコードをコンパイルし、生成した画像を HTML と PDF に組み込みます。図専用のビルド処理や別途インストールした "
 "Typst プログラムは不要です。"
 
 #: ../../howto/typst-diagrams.rst:8
@@ -3143,10 +3144,11 @@ msgid ""
 "``:numref:`` can refer to its ``:name:``. We provide meaningful ``:alt:`` "
 "text because SVG text is drawn as outlines."
 msgstr ""
-"既定の画像形式は SVG なので、同じベクトル図をサイトと書籍で拡大縮小できます。``:format: png`` は 144 ピクセル毎インチの "
-"PNG を選択します。``:class:`` と ``:align: left|center|right`` も指定できます。``numfig = "
-"true`` を設定すると、キャプション付きの図に番号が付き、``:numref:`` でその ``:name:`` を参照できます。SVG "
-"の文字は輪郭として描画されるため、意味のある ``:alt:`` テキストを記述します。"
+"既定の画像形式は SVG なので、同じベクター図をサイトと書籍の両方で拡大縮小できます。``:format: png`` は解像度 144 "
+"PPI（1 インチあたり 144 ピクセル）の PNG を選択します。``:class:`` と ``:align: "
+"left|center|right`` も指定できます。``numfig = true`` "
+"を設定すると、キャプション付きの図に番号が付き、``:numref:`` でその ``:name:`` を参照できます。SVG "
+"の文字はアウトラインとして描画されるため、意味のある ``:alt:`` テキストを指定してください。"
 
 #: ../../howto/typst-diagrams.rst:46
 msgid "``typst-diagram`` options"
@@ -3241,7 +3243,7 @@ msgstr ""
 "のパッケージディレクトリに既にあるパッケージだけを使います。既定では不足するパッケージのダウンロードを許可します。再現可能な組版には "
 "``pdf_fonts = \"embedded\"`` を設定し、プロジェクトのフォントディレクトリを ``pdf_font_paths`` "
 "で追加します。不足していたパッケージのインストールやフォントファイルの変更後は、新しいプロセスで ``guidedog build html "
-"-a`` を実行し、キャッシュされたページの再描画とコンパイラのフォントの再読み込みを行います。"
+"-a`` を実行し、キャッシュされたページの再描画とコンパイラーのフォントの再読み込みを行います。"
 
 #: ../../howto/typst-diagrams.rst:105
 msgid "Shared helpers and existing files"
@@ -3296,7 +3298,7 @@ msgstr ""
 "を先頭に追加し、ページを図に合わせます。``html.frame`` で囲まず、通常の Typst 内容を記述します。図は有限の寸法を持つちょうど "
 "1 ページを生成する必要があります。本文は 1 MiB まで、PNG は 1,600 万ピクセルまでで、各辺は 16,384 "
 "ピクセル以下です。アダプターは図ごとに最大 4,096 種類のファイル照会を追跡します。Typst "
-"のレイアウトはコンパイラ自身のメモリを使うため、これらはコンパイラのタイムアウトや総メモリ量の制限ではありません。"
+"のレイアウトはコンパイラー自身のメモリを使うため、これらはコンパイラーのタイムアウトや総メモリ量の制限ではありません。"
 
 #: ../../howto/typst-diagrams.rst:145
 msgid ""
@@ -3329,7 +3331,7 @@ msgid ""
 "to generate prebuilt ``.svg`` or ``.png`` files:"
 msgstr ""
 "これまで手作業や Makefile で ``typst compile`` を実行してビルド済みの ``.svg`` や ``.png`` "
-"ファイルを生成していたプロジェクトでは、次の手順で移行できます："
+"ファイルを生成していたプロジェクトでは、次の手順で移行できます。"
 
 #: ../../howto/typst-diagrams.rst:158
 msgid ""

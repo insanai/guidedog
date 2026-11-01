@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:01+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -128,8 +128,8 @@ msgid "``--licenses``"
 msgstr "``--licenses``"
 
 #: ../../reference/cli.rst:50
-msgid "Show Guidedog's licence and the notices of the libraries built in."
-msgstr "Guidedog의 라이선스와 내장된 라이브러리의 고지문을 표시합니다."
+msgid "Show Guidedog's license and the notices of the libraries built in."
+msgstr "Guidedog의 라이선스와 내장된 라이브러리의 고지 사항을 표시합니다."
 
 #: ../../reference/cli.rst:52
 msgid "Exit codes"
@@ -347,8 +347,8 @@ msgid ""
 "Plugins add commands of their own (see `Commands plugins add`_). Three "
 "plugins are linked into every ``guidedog`` executable:"
 msgstr ""
-"플러그인은 자체 명령을 추가합니다(`Commands plugins add`_ 참고). 모든 ``guidedog`` 실행 파일에는 세 "
-"개의 플러그인이 링크되어 있습니다:"
+"플러그인은 자체 명령을 추가합니다(`플러그인이 추가하는 명령 <Commands plugins add_>`_ 참고). 모든 "
+"``guidedog`` 실행 파일에는 세 개의 플러그인이 링크되어 있습니다:"
 
 #: ../../reference/cli.rst:116
 msgid "Commands of linked plugins"
@@ -801,8 +801,8 @@ msgid ""
 "Include pages that would otherwise be withheld by ``:draft:``, "
 "``:publish-at:`` in the future, or ``:expires-at:`` in the past."
 msgstr ""
-"``:draft:``, 미래의 ``:publish-at:`` 또는 과거의 ``:expires-at:`` 에 의해 보류될 페이지를 "
-"빌드에 포함합니다."
+"``:draft:``, 미래 시각의 ``:publish-at:``, 또는 과거 시각의 ``:expires-at:`` 때문에 보류되는 "
+"페이지를 빌드에 포함합니다."
 
 #: ../../reference/cli.rst:269 ../../reference/cli.rst:601
 msgid "``--now=RFC3339``"
@@ -884,11 +884,11 @@ msgid ""
 "reloads ``conf.toml``. A failed rebuild keeps the previous site and "
 "reports the problem. Ctrl+C stops the server."
 msgstr ""
-"``--port PORT`` (``-p`` 는 quickstart의 프로젝트 이름이며 포트가 아님)는 1부터 65535까지의 포트를 "
-"선택합니다(기본값: ``8000``). ``-c``, ``-C``, ``-D name=value`` 및 ``--preview``, "
-"``--now=RFC3339`` 를 포함한 ``guidedog build`` 의 빌드 옵션이 모든 재빌드에 적용됩니다. 재빌드할 "
-"때마다 ``conf.toml`` 을 다시 로드합니다. 재빌드에 실패하면 이전 사이트를 유지하고 문제를 보고합니다. Ctrl+C로 "
-"서버를 중지합니다."
+"``--port PORT``\\ (``-p``\\ 는 quickstart의 프로젝트 이름이며 포트가 아님)는 1부터 65535까지의 "
+"포트를 선택합니다(기본값: ``8000``). ``-c``, ``-C``, ``-D name=value``\\ 와 "
+"``--preview``, ``--now=RFC3339``\\ 를 포함한 ``guidedog build``\\ 의 빌드 옵션이 모든 "
+"재빌드에 적용됩니다. 재빌드할 때마다 ``conf.toml``\\ 을 다시 불러옵니다. 재빌드에 실패하면 이전 사이트를 유지하고 "
+"문제를 보고합니다. Ctrl+C로 서버를 중지합니다."
 
 #: ../../reference/cli.rst:301
 msgid ""
@@ -1027,7 +1027,7 @@ msgstr "``conf.toml``\\ 의 위치를 지정하고, 설정을 덮어씁니다."
 msgid ""
 "``stat`` prints, for each catalog, how many messages are translated, "
 "fuzzy, and untranslated."
-msgstr "``stat``\\ 는 카탈로그마다 번역된 메시지, fuzzy 메시지, 번역되지 않은 메시지가 몇 개인지 출력합니다."
+msgstr "``stat``\\ 은 카탈로그마다 번역된 메시지, fuzzy 메시지, 번역되지 않은 메시지가 몇 개인지 출력합니다."
 
 #: ../../reference/cli.rst:391
 msgid "guidedog convert"
@@ -1076,11 +1076,11 @@ msgid ""
 msgstr ""
 "``--to rst``\\ 는 Guidedog 자체 작성기(``rst`` 렌더러)로 reStructuredText를 씁니다. "
 "작성자가 나눈 줄을 그대로 지킵니다. 소스 문단 안의 줄바꿈은 줄바꿈으로 남고 작성기가 따로 줄을 바꾸지 않으므로, 변환한 페이지도 "
-"우리가 쓴 문장과 문단 모양을 유지합니다. 인라인 마크업, 인라인 코드, 역할, URL을 여러 줄로 나누지 않습니다. 수준마다 섹션 "
-"장식 문자를 하나씩(``=``, ``-``, ``~``, ``^``, ...) 씁니다. 역할, 상호 참조, 지시문은 Sphinx가 "
-"쓰는 형태 그대로 둡니다. 입력을 스마트 따옴표 없이 읽으므로 따옴표와 대시는 쓴 그대로 남습니다. reStructuredText로 "
-"정확히 표현할 수 없는 것도 있습니다(강제 줄바꿈, 텍스트 안의 이미지, 링크 제목). 이런 경우 작성기는 최대한 가깝게 쓰고 "
-"알림을 남깁니다. Typst 입력은 reStructuredText로 변환할 수 없습니다."
+"원래 작성한 문장과 문단 모양을 유지합니다. 인라인 마크업, 인라인 코드, 역할, URL을 여러 줄로 나누지 않습니다. 수준마다 "
+"섹션 장식 문자를 하나씩(``=``, ``-``, ``~``, ``^``, ...) 씁니다. 역할, 상호 참조, 지시문은 "
+"Sphinx가 쓰는 형태 그대로 둡니다. 입력을 스마트 따옴표 없이 읽으므로 따옴표와 대시는 쓴 그대로 남습니다. "
+"reStructuredText로 정확히 표현할 수 없는 것도 있습니다(강제 줄바꿈, 텍스트 안의 이미지, 링크 제목). 이런 경우 "
+"작성기는 최대한 가깝게 쓰고 알림을 남깁니다. Typst 입력은 reStructuredText로 변환할 수 없습니다."
 
 #: ../../reference/cli.rst:422
 msgid ""
@@ -1425,10 +1425,10 @@ msgid ""
 "comments and line endings untouched. RFC 3339 timestamps require a time "
 "zone; date-only values start at midnight UTC."
 msgstr ""
-"정적 웹사이트를 스캐폴딩하고, 글 라이프사이클을 관리하며, 이식 가능한 테마 아카이브를 패키징 및 검증하고, 여러 프로젝트가 "
-"마운트된 사이트를 빌드합니다. 이 명령들은 모든 ``guidedog`` 에 연결된 정적 발행 플러그인(``ssg``)에서 "
-"제공합니다. 작성 명령은 선두 메타데이터 블록(RST 필드 목록 또는 MyST YAML 프론트매터)만 다시 작성하며 본문 텍스트, "
-"주석 및 줄 끝은 그대로 유지합니다. RFC 3339 타임스탬프에는 시간대가 필요하며, 날짜만 지정된 값은 UTC 자정부터 "
+"정적 웹사이트의 기본 골격을 만들고, 글 수명 주기를 관리하며, 이식 가능한 테마 아카이브를 패키징·검증하고, 여러 프로젝트가 "
+"마운트된 사이트를 빌드합니다. 이 명령들은 모든 ``guidedog``\\ 에 링크된 정적 게시 플러그인(``ssg``)이 "
+"제공합니다. 작성 명령은 선두 메타데이터 블록(RST 필드 목록 또는 MyST YAML 프론트매터)만 다시 쓰며 본문 텍스트, "
+"주석, 줄바꿈 문자는 그대로 유지합니다. RFC 3339 타임스탬프에는 시간대가 필요하며, 날짜만 지정된 값은 UTC 자정에 "
 "시작됩니다."
 
 #: ../../reference/cli.rst:561 ../../reference/cli.rst:722
@@ -1445,10 +1445,10 @@ msgid ""
 "date (or ``--now``)."
 msgstr ""
 "``guidedog ssg init PATH [--preset=project|journal|research] "
-"[--title=TITLE] [--author=NAME] [--now=RFC3339]``: 기본 프리셋(기본값 "
-"``project``, ``journal`` 또는 ``research``) 중 하나를 사용하여 ``PATH`` 에 완전한 정적 "
-"웹사이트를 만듭니다. ``conf.toml`` 에 ``project`` 및 ``author`` 를 설정하고 오늘의 UTC 날짜(또는 "
-"``--now``)로 첫 글에 날짜를 기록합니다."
+"[--title=TITLE] [--author=NAME] [--now=RFC3339]``: 내장 프리셋(기본값 "
+"``project``, ``journal`` 또는 ``research``) 중 하나를 사용하여 ``PATH``\\ 에 완전한 정적 "
+"웹사이트를 만듭니다. ``conf.toml``\\ 에 ``project`` 및 ``author``\\ 를 설정하고 오늘의 UTC "
+"날짜(또는 ``--now``)를 첫 글에 기록합니다."
 
 #: ../../reference/cli.rst:564
 msgid ""
@@ -1459,9 +1459,9 @@ msgid ""
 "given."
 msgstr ""
 "``guidedog ssg new PATH [--title=TITLE] [--template=NAME] "
-"[--now=RFC3339]``: ``:draft: true`` 및 ``:date: YYYY-MM-DD`` 가 포함된 새 초안 글을 "
-"``PATH`` (``.rst`` 또는 ``.md``)에 만듭니다. ``--title`` 은 기본적으로 파일 이름에서 확장자를 "
-"제외한 부분으로 설정되며, ``--template`` 이 제공되면 ``:template: NAME`` 을 설정합니다."
+"[--now=RFC3339]``: ``:draft: true`` 및 ``:date: YYYY-MM-DD``\\ 가 포함된 새 초안 "
+"글을 ``PATH``\\ (``.rst`` 또는 ``.md``)에 만듭니다. ``--title``\\ 의 기본값은 확장자를 뺀 파일 "
+"이름이며, ``--template``\\ 을 지정하면 ``:template: NAME``\\ 을 설정합니다."
 
 #: ../../reference/cli.rst:565
 msgid ""
@@ -1469,8 +1469,8 @@ msgid ""
 "``PATH`` as a draft (``:draft: true``), preserving its date and schedule. "
 "Normal builds withhold it while draft is true."
 msgstr ""
-"``guidedog ssg draft PATH [--now=RFC3339]``: ``PATH`` 에 있는 기존 글을 초안으로 "
-"표시하여(``:draft: true``), 날짜와 일정을 유지합니다. 초안이 true인 동안 일반 빌드에서는 해당 글을 보류합니다."
+"``guidedog ssg draft PATH [--now=RFC3339]``: 날짜와 예약 일정을 유지한 채 ``PATH``\\ "
+"에 있는 기존 글을 초안(``:draft: true``)으로 표시합니다. 초안 상태인 동안 일반 빌드에서는 해당 글을 보류합니다."
 
 #: ../../reference/cli.rst:566
 msgid ""
@@ -1479,7 +1479,7 @@ msgid ""
 "withheld until that instant; a past instant is accepted."
 msgstr ""
 "``guidedog ssg schedule PATH --at=RFC3339 [--now=RFC3339]``: 초안 및 만료 설정을 "
-"지우고 ``:publish-at: RFC3339`` 로 설정합니다. 해당 시점까지 글은 보류 상태로 유지되며, 과거 시점도 "
+"지우고 ``:publish-at: RFC3339``\\ 로 설정합니다. 해당 시각까지 글은 보류 상태로 유지되며, 과거 시각도 "
 "허용됩니다."
 
 #: ../../reference/cli.rst:567
@@ -1490,9 +1490,9 @@ msgid ""
 "existing past date or uses today's UTC date when the old date is absent "
 "or in the future."
 msgstr ""
-"``guidedog ssg publish PATH [--date=DATE] [--now=RFC3339]``: 초안, 일정 및 만료 "
-"설정을 지웁니다. ``--date`` 는 미래일 수 없는 날짜 또는 RFC 3339 시점을 설정합니다. 지정하지 않으면 기존의 과거 "
-"날짜를 유지하거나, 이전 날짜가 없거나 미래 날짜인 경우 오늘의 UTC 날짜를 사용합니다."
+"``guidedog ssg publish PATH [--date=DATE] [--now=RFC3339]``: 초안, 예약 일정, "
+"만료 설정을 지웁니다. ``--date``\\ 는 미래가 아닌 날짜 또는 RFC 3339 시각을 설정합니다. 지정하지 않으면 기존의 "
+"과거 날짜를 유지하고, 기존 날짜가 없거나 미래 날짜이면 오늘의 UTC 날짜를 사용합니다."
 
 #: ../../reference/cli.rst:568
 msgid ""
@@ -1517,10 +1517,10 @@ msgid ""
 msgstr ""
 "``guidedog ssg build [PROJECT] [--out=DIR] [--no-pdf] [--preview] "
 "[--now=RFC3339]``: 모든 ``[[site.mounts]]`` 항목(및 각 마운트의 "
-"``[[site.mounts.editions]]``)을 빌드하고, ``[[site.assets]]`` 를 복사하며, 마운트 간 "
-"대상을 검증하고, 조립된 사이트를 단일 세대로 ``--out`` (기본값: ``_build/site``)에 발행합니다. "
-"``--no-pdf`` 는 ``pdf`` 및 ``discussion-pdf`` 마운트를 건너뜁니다. ``--preview`` 는 "
-"보류된 페이지를 포함합니다. ``--now`` 는 모든 마운트에 걸쳐 발행 시계를 고정합니다."
+"``[[site.mounts.editions]]``)을 빌드하고, ``[[site.assets]]``\\ 를 복사하며, 마운트 간 "
+"대상을 검증한 뒤 조립된 사이트를 단일 세대로 ``--out``\\ (기본값: ``_build/site``)에 게시합니다. "
+"``--no-pdf``\\ 는 ``pdf`` 및 ``discussion-pdf`` 마운트를 건너뛰고, ``--preview``\\ "
+"는 보류된 페이지를 포함하며, ``--now``\\ 는 모든 마운트에 걸쳐 게시 시계를 고정합니다."
 
 #: ../../reference/cli.rst:571
 msgid ""
@@ -1537,8 +1537,8 @@ msgid ""
 "``_static`` trees of ``DIR`` into a deterministic ``.gdt`` theme archive "
 "at ``FILE``."
 msgstr ""
-"``guidedog ssg theme pack DIR --out=FILE``: ``DIR`` 의 ``_templates`` 및 "
-"``_static`` 트리를 ``FILE`` 에 결정론적 ``.gdt`` 테마 아카이브로 묶습니다."
+"``guidedog ssg theme pack DIR --out=FILE``: ``DIR``\\ 의 ``_templates`` 및 "
+"``_static`` 트리를 결정론적 ``.gdt`` 테마 아카이브로 묶어 ``FILE``\\ 에 저장합니다."
 
 #: ../../reference/cli.rst:574
 msgid ""
@@ -1548,10 +1548,11 @@ msgid ""
 "under ``_themes/<tree-sha256>/`` in ``--project`` (default: ``.``), and "
 "writes ``guidedog-theme.lock``."
 msgstr ""
-"``guidedog ssg theme install URL --sha256=HASH [--project=DIR]``: ``URL`` "
-"(또는 로컬 경로)에서 ``.gdt`` 아카이브를 가져와 압축을 풀기 전에 64자리 16진수 ``--sha256`` 다이제스트를 "
-"확인하고, ``--project`` (기본값: ``.``)의 ``_themes/<tree-sha256>/`` 에 트리를 설치한 후 "
-"``guidedog-theme.lock`` 을 작성합니다."
+"``guidedog ssg theme install URL --sha256=HASH [--project=DIR]``: "
+"``URL``\\ (또는 로컬 경로)에서 ``.gdt`` 아카이브를 가져와 압축을 풀기 전에 64자리 16진수 "
+"``--sha256`` 다이제스트를 확인하고, ``--project``\\ (기본값: ``.``)의 "
+"``_themes/<tree-sha256>/``\\ 에 트리를 설치한 뒤 ``guidedog-theme.lock``\\ 을 "
+"작성합니다."
 
 #: ../../reference/cli.rst:575
 msgid ""
@@ -1559,9 +1560,9 @@ msgid ""
 "and verifies the installed ``_themes/<tree-sha256>/`` tree in ``PROJECT`` "
 "(default: ``.``) against ``tree_sha256`` without network access."
 msgstr ""
-"``guidedog ssg theme verify [PROJECT]``: ``guidedog-theme.lock`` 을 읽고 "
-"네트워크 접근 없이 ``PROJECT`` (기본값: ``.``)에 설치된 ``_themes/<tree-sha256>/`` 트리를 "
-"``tree_sha256`` 과 비교하여 검증합니다."
+"``guidedog ssg theme verify [PROJECT]``: ``guidedog-theme.lock``\\ 을 읽고 "
+"네트워크 접근 없이 ``PROJECT``\\ (기본값: ``.``)에 설치된 ``_themes/<tree-sha256>/`` 트리를 "
+"``tree_sha256``\\ 과 대조해 검증합니다."
 
 #: ../../reference/cli.rst:577
 msgid "Options of guidedog ssg"
@@ -1597,7 +1598,7 @@ msgstr "``--template=NAME``"
 
 #: ../../reference/cli.rst:590
 msgid "``new``: the HTML layout template to set in ``:template:``."
-msgstr "``new``: ``:template:`` 에 지정할 HTML 레이아웃 템플릿."
+msgstr "``new``: ``:template:``\\ 에 지정할 HTML 레이아웃 템플릿."
 
 #: ../../reference/cli.rst:591
 msgid "``--at=RFC3339``"
@@ -1606,7 +1607,7 @@ msgstr "``--at=RFC3339``"
 #: ../../reference/cli.rst:592
 msgid ""
 "``schedule``: the UTC release instant for ``:publish-at:``; required."
-msgstr "``schedule``: ``:publish-at:`` 에 대한 UTC 발행 시점(필수)."
+msgstr "``schedule``: ``:publish-at:``\\ 에 설정할 UTC 공개 시각(필수)."
 
 #: ../../reference/cli.rst:593
 msgid "``--date=DATE``"
@@ -1668,7 +1669,7 @@ msgid ""
 "``theme install``: the project root where ``_themes/`` and "
 "``guidedog-theme.lock`` live (default: ``.``)."
 msgstr ""
-"``theme install``: ``_themes/`` 및 ``guidedog-theme.lock`` 이 위치한 프로젝트 "
+"``theme install``: ``_themes/`` 및 ``guidedog-theme.lock``\\ 이 위치한 프로젝트 "
 "루트(기본값: ``.``)."
 
 #: ../../reference/cli.rst:608
@@ -1821,16 +1822,16 @@ msgid ""
 "Its options are those of ``guidedog pages init`` and ``publish`` "
 "(``--config``, ``--repository``, ``--project``, ``--branch``, "
 "``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); ``guidedog "
-"publish pages --help`` lists them. guidedog builds the project itself, "
+"publish pages --help`` lists them. Guidedog builds the project itself, "
 "with its own engine and linked plugins; ``--guidedog=PATH`` builds with "
 "another program instead. See :doc:`../howto/github-pages`."
 msgstr ""
 "이미 설정을 마친 컴퓨터에서는 아무것도 묻지 않고 게시합니다. 터미널이 없으면 절대 묻지 않습니다. 이때 빠진 단계가 있으면 "
-"실패하고, 그 단계를 처리하는 명령이나 옵션을 힌트로 알려 줍니다. ``--yes``\\ 는 확인 질문에 답합니다. 우리 대신 "
-"로그인하거나 다른 작업을 덮어쓰는 일은 절대 하지 않습니다. 옵션은 ``guidedog pages init``\\ 및 "
+"실패하고, 그 단계를 처리하는 명령이나 옵션을 힌트로 알려 줍니다. ``--yes``\\ 는 확인 질문에 답합니다. 사용자를 대신해 "
+"로그인하거나 다른 작업을 덮어쓰는 일은 절대 하지 않습니다. 옵션은 ``guidedog pages init`` 및 "
 "``publish``\\ 와 같습니다(``--config``, ``--repository``, ``--project``, "
 "``--branch``, ``--profile``, ``--wait``, ``--verbose``, ``--dry-run``). "
-"``guidedog publish pages --help``\\ 로 옵션 목록을 볼 수 있습니다. guidedog는 자체 엔진과 "
+"``guidedog publish pages --help``\\ 로 옵션 목록을 볼 수 있습니다. Guidedog은 자체 엔진과 "
 "링크된 플러그인으로 프로젝트를 직접 빌드하며, ``--guidedog=PATH``\\ 를 주면 다른 프로그램으로 빌드합니다. "
 ":doc:`../howto/github-pages`\\ 를 참고하세요."
 
@@ -1846,10 +1847,10 @@ msgid ""
 "GitHub's Pages actions. We use it instead of publishing from our own "
 "machine when every push to the source branch should deploy."
 msgstr ""
-"``guidedog pages workflow`` 는 연결된 GitHub Pages 플러그인에 의해 추가됩니다. GitHub "
-"Actions 워크플로를 출력하거나 작성하거나 확인합니다. 이 워크플로는 이번 Guidedog 릴리스를 설치하고, 프로젝트를 "
-"빌드하며, GitHub의 Pages 액션으로 배포합니다. 소스 브랜치에 푸시할 때마다 배포해야 할 때 로컬 머신에서 직접 발행하는 "
-"대신 사용할 수 있습니다."
+"``guidedog pages workflow``\\ 는 링크된 GitHub Pages 플러그인이 추가하는 명령으로, GitHub "
+"Actions 워크플로를 출력·작성·점검합니다. 이 워크플로는 현재 Guidedog 릴리스를 설치하고 프로젝트를 빌드한 뒤 "
+"GitHub의 Pages 액션으로 배포합니다. 소스 브랜치에 푸시할 때마다 배포해야 할 때 로컬 컴퓨터에서 직접 게시하는 대신 "
+"사용합니다."
 
 #: ../../reference/cli.rst:686
 msgid "Options of pages workflow"
@@ -1926,7 +1927,7 @@ msgid ""
 "registered."
 msgstr ""
 "``register ID PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS] "
-"[--yes]``: 우리가 확인하면 프로그램을 검사하고(``--yes``\\ 는 질문을 건너뜁니다) 그 SHA-256을 기록합니다. "
+"[--yes]``: 사용자 확인을 거친 뒤(``--yes``\\ 는 질문을 건너뜀) 프로그램을 검사하고 SHA-256을 기록합니다. "
 "프로그램은 자신이 ``ID``\\ 라고 밝혀야 합니다. 빌드 플러그인은 등록되기 전에 아래의 적격성 검사를 통과해야 합니다."
 
 #: ../../reference/cli.rst:728
@@ -2034,11 +2035,11 @@ msgid ""
 "installed form serves with ``gd_plugins::serve_plugin`` (see "
 ":doc:`../plugins`)."
 msgstr ""
-"프로그램은 이 페이지의 모든 명령과 옵션을 허용합니다. 선택한 플러그인 ID는 먼저 연결된 플러그인 중에서 찾고, 그 다음 머신의 "
-"레지스트리에서 찾습니다. 연결된 플러그인은 실행 파일의 일부이므로 등록이나 SHA-256 핀이 필요하지 않습니다. 연결된 플러그인이 "
-"없는 ``gd_cli::run`` 도 동일하게 동작합니다. ``guidedog`` 자체는 3개의 플러그인을 연결합니다. GitHub "
-"Pages 플러그인(``pages``), 논의 플러그인(``dsc``), 정적 발행 플러그인(``ssg``)입니다. 각 플러그인은 "
-"설치된 형태가 ``gd_plugins::serve_plugin`` 으로 제공하는 것과 동일한 ``Plugin`` "
+"프로그램은 이 페이지의 모든 명령과 옵션을 허용합니다. 선택한 플러그인 ID는 먼저 링크된 플러그인 중에서 찾고, 그다음 머신의 "
+"레지스트리에서 찾습니다. 링크된 플러그인은 실행 파일의 일부이므로 등록이나 SHA-256 고정이 필요하지 않습니다. 링크된 "
+"플러그인이 없는 ``gd_cli::run``\\ 도 동일하게 동작합니다. ``guidedog`` 자체는 GitHub Pages "
+"플러그인(``pages``), 논의 플러그인(``dsc``), 정적 게시 플러그인(``ssg``) 세 가지를 링크합니다. 각 "
+"플러그인은 설치형 프로그램이 ``gd_plugins::serve_plugin``\\ 으로 제공하는 것과 동일한 ``Plugin`` "
 "값입니다(:doc:`../plugins` 참고)."
 
 #: ../../reference/cli.rst:779
@@ -2047,40 +2048,41 @@ msgstr "플러그인이 추가하는 명령"
 
 #: ../../reference/cli.rst:782
 msgid ""
-"A plugin may add commands to guidedog, or targets to ``guidedog "
+"A plugin may add commands to ``guidedog``, or targets to ``guidedog "
 "publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
 "with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a "
 "plugin's:"
 msgstr ""
-"플러그인은 guidedog에 명령을 추가하거나 ``guidedog publish``\\ 에 대상을 추가할 수 있습니다. "
+"플러그인은 ``guidedog``\\ 에 명령을 추가하거나 ``guidedog publish``\\ 에 대상을 추가할 수 있습니다. "
 "``guidedog --help``\\ 는 이런 명령을 PLUGIN COMMANDS 아래에 각 플러그인 ID와 함께 보여 주고, "
 "``guidedog plugin inspect ID``\\ 는 플러그인 하나의 명령을 보여 줍니다:"
 
 #: ../../reference/cli.rst:794
 msgid ""
-"guidedog looks for a word it does not know (or a ``publish`` target) "
+"Guidedog looks for a word it does not know (or a ``publish`` target) "
 "among the commands of the linked plugins first, then among those of the "
 "registered programs, and runs the plugin that adds it. ``--help`` after "
 "such a command prints its help, made from what the plugin declares. A "
-"plugin cannot replace one of guidedog's commands, and the first plugin to "
+"plugin cannot replace one of Guidedog's commands, and the first plugin to "
 "add a name keeps it."
 msgstr ""
-"guidedog는 모르는 단어(또는 ``publish`` 대상)를 만나면 먼저 링크된 플러그인의 명령에서, 그다음 등록된 프로그램의 "
+"Guidedog은 모르는 단어(또는 ``publish`` 대상)를 만나면 먼저 링크된 플러그인의 명령에서, 그다음 등록된 프로그램의 "
 "명령에서 찾아 그 명령을 추가한 플러그인을 실행합니다. 이런 명령 뒤에 ``--help``\\ 를 붙이면 플러그인이 선언한 내용으로 "
-"만든 도움말을 출력합니다. 플러그인은 guidedog의 명령을 대체할 수 없으며, 같은 이름은 먼저 추가한 플러그인이 차지합니다."
+"만든 도움말을 출력합니다. 플러그인은 Guidedog의 명령을 대체할 수 없으며, 같은 이름은 먼저 추가한 플러그인이 차지합니다."
 
 #: ../../reference/cli.rst:796
 msgid ""
-"A linked plugin's command runs inside guidedog. A registered program's "
-"command runs as that program, started on our terminal after its SHA-256 "
-"is checked: it may ask questions, and its exit status is the command's. "
-"When either asks for a build, guidedog builds the project. The program's "
-"commands are read when it is registered, so a new version is registered "
-"again, as always."
+"A linked plugin's command runs inside ``guidedog``. A registered "
+"program's command runs as that program, started on our terminal after its "
+"SHA-256 is checked: it may ask questions, and its exit status is the "
+"command's. When either asks for a build, Guidedog builds the project. The "
+"program's commands are read when it is registered, so a new version is "
+"registered again, as always."
 msgstr ""
-"링크된 플러그인의 명령은 guidedog 안에서 실행됩니다. 등록된 프로그램의 명령은 SHA-256을 확인한 뒤 우리 터미널에서 그 "
-"프로그램으로 실행됩니다. 이 프로그램은 질문을 할 수 있고, 프로그램의 종료 상태가 곧 명령의 종료 상태입니다. 어느 쪽이든 빌드를 "
-"요청하면 guidedog가 프로젝트를 빌드합니다. 프로그램의 명령은 등록할 때 읽으므로, 새 버전은 언제나처럼 다시 등록합니다."
+"링크된 플러그인의 명령은 ``guidedog`` 안에서 실행됩니다. 등록된 프로그램의 명령은 SHA-256을 확인한 뒤 현재 "
+"터미널에서 해당 프로그램으로 실행됩니다. 이 프로그램은 질문을 할 수 있고, 프로그램의 종료 상태가 곧 명령의 종료 상태입니다. "
+"어느 쪽이든 빌드를 요청하면 Guidedog이 프로젝트를 빌드합니다. 프로그램의 명령은 등록할 때 읽으므로, 새 버전은 언제나처럼 "
+"다시 등록합니다."
 
 #: ../../reference/cli.rst:798
 msgid "guidedog pages"
@@ -2093,9 +2095,9 @@ msgid ""
 "project with its own engine. The step commands stay for scripts and for "
 "checking each part. See :doc:`../howto/github-pages`."
 msgstr ""
-"연결된 Pages 플러그인은 ``guidedog publish pages`` 를 통해 발행하고 ``guidedog pages`` 를 "
-"통해 유지 관리를 노출합니다. Guidedog은 자체 엔진으로 프로젝트를 빌드합니다. 개별 단계 명령은 스크립트 작성 및 각 부분 "
-"점검을 위해 유지됩니다. :doc:`../howto/github-pages` 를 참고하세요."
+"링크된 Pages 플러그인은 ``guidedog publish pages``\\ 를 통해 게시하고 ``guidedog "
+"pages``\\ 를 통해 유지 관리 명령을 제공합니다. Guidedog은 자체 엔진으로 프로젝트를 빌드합니다. 개별 단계 명령은 "
+"스크립트 작성 및 각 부분 점검을 위해 유지됩니다. :doc:`../howto/github-pages`\\ 를 참고하세요."
 
 #: ../../reference/cli.rst:823
 msgid "Settings of pages.toml"
@@ -2312,9 +2314,9 @@ msgid ""
 "existing project, and the Sphinx documentation describes the settings "
 "Guidedog shares with it."
 msgstr ""
-"모든 Guidedog 문서 프로젝트는 ``conf.toml``\\ 로 설정합니다. Guidedog는 이 파일을 TOML 데이터로 "
+"모든 Guidedog 문서 프로젝트는 ``conf.toml``\\ 로 설정합니다. Guidedog은 이 파일을 TOML 데이터로 "
 "읽을 뿐 코드를 실행하지 않습니다. 설정 이름은 Sphinx의 ``conf.py``\\ 와 같습니다. 그래서 ``guidedog "
-"migrate conf.py``\\ 로 기존 프로젝트를 변환할 수 있고, Guidedog와 Sphinx가 함께 쓰는 설정은 "
+"migrate conf.py``\\ 로 기존 프로젝트를 변환할 수 있고, Guidedog과 Sphinx가 함께 쓰는 설정은 "
 "Sphinx 문서의 설명을 그대로 참고할 수 있습니다."
 
 #: ../../reference/configuration.rst:9
@@ -2323,7 +2325,7 @@ msgid ""
 "top-level keys, as in ``conf.py``. A table setting is written as a TOML "
 "table (``[html_context]``) or an inline table."
 msgstr ""
-"이 페이지는 Guidedog가 읽는 모든 설정을 나열합니다. 설정은 ``conf.py``\\ 처럼 중첩 없는 최상위 키입니다. "
+"이 페이지는 Guidedog이 읽는 모든 설정을 나열합니다. 설정은 ``conf.py``\\ 처럼 중첩 없는 최상위 키입니다. "
 "테이블 설정은 TOML 테이블(``[html_context]``)이나 인라인 테이블로 씁니다."
 
 #: ../../reference/configuration.rst:13
@@ -2340,7 +2342,7 @@ msgid ""
 "``guidedog build -c DIR`` reads ``conf.toml`` from another folder. ``-C`` "
 "builds without one, with the defaults below."
 msgstr ""
-"Guidedog는 ``conf.toml``\\ 을 먼저 프로젝트 폴더에서 찾고, 다음으로 ``PROJECT/source``\\ "
+"Guidedog은 ``conf.toml``\\ 을 먼저 프로젝트 폴더에서 찾고, 다음으로 ``PROJECT/source``\\ "
 "(``quickstart --sep``\\ 의 분리 레이아웃으로, ``source/`` 옆에 ``build/``\\ 가 있음)에서, "
 "마지막으로 이 파일이 있는 가장 가까운 상위 폴더에서 찾습니다. ``conf.toml``\\ 이 있는 폴더가 소스 폴더입니다. 빌드 "
 "폴더는 그 옆의 ``_build``\\ 이고, 분리 레이아웃에서는 ``build``\\ 입니다. ``guidedog build -c "
@@ -2453,6 +2455,7 @@ msgstr "프로젝트 정보"
 #: ../../reference/configuration.rst:1442
 #: ../../reference/configuration.rst:1483
 #: ../../reference/configuration.rst:1508
+#: ../../reference/configuration.rst:1579
 msgid "Key"
 msgstr "키"
 
@@ -2478,6 +2481,7 @@ msgstr "키"
 #: ../../reference/configuration.rst:1443
 #: ../../reference/configuration.rst:1484
 #: ../../reference/configuration.rst:1509
+#: ../../reference/configuration.rst:1580
 msgid "Type"
 msgstr "형식"
 
@@ -2503,6 +2507,7 @@ msgstr "형식"
 #: ../../reference/configuration.rst:1444
 #: ../../reference/configuration.rst:1485
 #: ../../reference/configuration.rst:1510
+#: ../../reference/configuration.rst:1581
 msgid "Default"
 msgstr "기본값"
 
@@ -2528,6 +2533,7 @@ msgstr "기본값"
 #: ../../reference/configuration.rst:1445
 #: ../../reference/configuration.rst:1486
 #: ../../reference/configuration.rst:1511
+#: ../../reference/configuration.rst:1582
 msgid "Description"
 msgstr "설명"
 
@@ -2748,7 +2754,7 @@ msgstr "``\"index\"``"
 msgid ""
 "The document that starts the reading order. ``master_doc`` is its older "
 "name."
-msgstr "읽기 순서가 시작되는 문서입니다. ``master_doc``\\ 는 이 설정의 예전 이름입니다."
+msgstr "읽기 순서가 시작되는 문서입니다. ``master_doc``\\ 은 이 설정의 예전 이름입니다."
 
 #: ../../reference/configuration.rst:129
 msgid "``master_doc``"
@@ -2756,7 +2762,7 @@ msgstr "``master_doc``"
 
 #: ../../reference/configuration.rst:132
 msgid "The same setting as ``root_doc``."
-msgstr "``root_doc``\\ 와 같은 설정입니다."
+msgstr "``root_doc``\\ 과 같은 설정입니다."
 
 #: ../../reference/configuration.rst:133
 msgid "``source_suffix``"
@@ -2778,8 +2784,8 @@ msgid ""
 "is not a document."
 msgstr ""
 "소스 문서의 접미사입니다. ``\".rst\"``, ``[\".rst\", \".md\"]``, 또는 Sphinx 방식의 "
-"``{\".rst\" = \"restructuredtext\", \".md\" = \"markdown\"}``\\ 로 씁니다. "
-"``.md`` 문서는 MyST입니다. ``.typ``\\ 는 거부합니다. Typst는 PDF의 모양을 잡을 뿐, 문서가 아닙니다."
+"``{\".rst\" = \"restructuredtext\", \".md\" = \"markdown\"}``\\ 으로 씁니다. "
+"``.md`` 문서는 MyST입니다. ``.typ``\\ 은 거부합니다. Typst는 PDF의 모양을 잡을 뿐, 문서가 아닙니다."
 
 #: ../../reference/configuration.rst:139
 msgid "``exclude_patterns``"
@@ -2899,12 +2905,13 @@ msgstr "``include_roots``"
 #: ../../reference/configuration.rst:150
 msgid ""
 "Folders, relative to the source folder, that ``include``, "
-"``literalinclude``, images, graphs, logos and other files may also be "
-"read from. Sphinx reads any path; Guidedog reads only the source folder "
-"and these."
+"``literalinclude``, ``lilypond``, images, graphs, logos and other files "
+"may also be read from. Sphinx reads any path; Guidedog reads only the "
+"source folder and these."
 msgstr ""
-"``include``, ``literalinclude``, 이미지, 그래프, 로고 등의 파일을 추가로 읽을 수 있는 폴더입니다. "
-"소스 폴더 기준 상대 경로로 씁니다. Sphinx는 어떤 경로든 읽지만, Guidedog은 소스 폴더와 여기 적은 폴더만 읽습니다."
+"``include``, ``literalinclude``, ``lilypond``, 이미지, 그래프, 로고 등의 파일을 추가로 읽을 "
+"수 있는 폴더입니다. 소스 폴더 기준 상대 경로로 씁니다. Sphinx는 어떤 경로든 읽지만, Guidedog은 소스 폴더와 여기 "
+"적은 폴더만 읽습니다."
 
 #: ../../reference/configuration.rst:153
 msgid "``templates_path``"
@@ -2966,7 +2973,7 @@ msgstr "``default_role``"
 
 #: ../../reference/configuration.rst:180
 msgid "The role of text in single backquotes (``\"any\"``, ``\"py:obj\"``)."
-msgstr "백쿼트 하나로 감싼 텍스트의 역할입니다(``any``, ``py:obj``)."
+msgstr "백쿼트 하나로 감싼 텍스트의 역할입니다(``\"any\"``, ``\"py:obj\"``)."
 
 #: ../../reference/configuration.rst:181
 msgid "``primary_domain``"
@@ -2981,8 +2988,8 @@ msgid ""
 "The domain of directives and roles written without a prefix (``\"py\"``, "
 "``\"c\"``, ``\"cpp\"``, ``\"js\"``, ``\"odin\"``, ``\"rust\"``)."
 msgstr ""
-"접두사 없이 쓴 지시문과 역할의 도메인입니다(``py``, ``c``, ``cpp``, ``js``, ``odin``, "
-"``rust``)."
+"접두사 없이 쓴 지시문과 역할의 도메인입니다(``\"py\"``, ``\"c\"``, ``\"cpp\"``, ``\"js\"``, "
+"``\"odin\"``, ``\"rust\"``)."
 
 #: ../../reference/configuration.rst:186
 msgid "``highlight_language``"
@@ -3487,7 +3494,7 @@ msgid ""
 msgstr ""
 "사용자 정의 객체를 기술하고 링크하는 지시문과 역할입니다. Sphinx의 ``app.add_object_type``\\ 에 "
 "해당합니다. 필드: ``directive``\\ (필수), ``role``, ``index``, ``name``\\ "
-"(``whole`` 또는 ``first-word``), ``display``, ``program``."
+"(``\"whole\"`` 또는 ``\"first-word\"``), ``display``, ``program``."
 
 #: ../../reference/configuration.rst:323
 msgid "``crossref_types``"
@@ -3509,11 +3516,11 @@ msgstr "``directive_aliases``"
 msgid ""
 "New directive names for existing directives (``django-admin-option = "
 "\"option\"``)."
-msgstr "기존 지시문에 붙이는 새 이름입니다(``django-admin-option = option``)."
+msgstr "기존 지시문에 붙이는 새 이름입니다(``django-admin-option = \"option\"``)."
 
 #: ../../reference/configuration.rst:341
 msgid "See :doc:`../object-types`."
-msgstr ":doc:`../object-types`\\ 를 참고하세요."
+msgstr ":doc:`../object-types`\\ 을 참고하세요."
 
 #: ../../reference/configuration.rst:343
 #: ../../reference/configuration.rst:346
@@ -3681,7 +3688,8 @@ msgid ""
 "``[type, target]`` pairs exempt from nitpicky warnings (``[[\"py:class\", "
 "\"MyType\"]]``)."
 msgstr ""
-"nitpicky 경고에서 제외할 ``[type, target]`` 쌍입니다(``[[py:class, MyType]]``)."
+"nitpicky 경고에서 제외할 ``[type, target]`` 쌍입니다(``[[\"py:class\", "
+"\"MyType\"]]``)."
 
 #: ../../reference/configuration.rst:437
 msgid "``nitpick_ignore_regex``"
@@ -3747,6 +3755,7 @@ msgid "``html_title``"
 msgstr "``html_title``"
 
 #: ../../reference/configuration.rst:473
+#: ../../reference/configuration.rst:1593
 msgid "derived"
 msgstr "자동 생성"
 
@@ -4020,8 +4029,8 @@ msgid "``\"a4\"``"
 msgstr "``\"a4\"``"
 
 #: ../../reference/configuration.rst:597
-msgid "The paper size (``\"a4\"``, ``\"us-letter\"``)."
-msgstr "용지 크기입니다(``\"a4\"``, ``\"us-letter\"``)."
+msgid "The paper size (``\"a4\"``, ``\"letter\"``, or ``\"us-letter\"``)."
+msgstr "용지 크기입니다(``\"a4\"``, ``\"letter\"``, 또는 ``\"us-letter\"``)."
 
 #: ../../reference/configuration.rst:598
 msgid "``pdf_logo``"
@@ -4419,12 +4428,12 @@ msgstr "이 프로젝트 자신을 가리키는 매핑 이름입니다."
 
 #: ../../reference/configuration.rst:814
 msgid ""
-"Inventories are downloaded with the built-in HTTP client, which honours "
+"Inventories are downloaded with the built-in HTTP client, which honors "
 "``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing. See "
 ":doc:`../intersphinx`."
 msgstr ""
 "인벤토리는 내장 HTTP 클라이언트로 내려받으며, 이 클라이언트는 ``HTTPS_PROXY``\\ 와 ``NO_PROXY``\\ 를 "
-"따릅니다. ``--untrusted``\\ 를 주면 아무것도 가져오지 않습니다. :doc:`../intersphinx`\\ 를 "
+"따릅니다. ``--untrusted``\\ 를 주면 아무것도 가져오지 않습니다. :doc:`../intersphinx`\\ 을 "
 "참고하세요."
 
 #: ../../reference/configuration.rst:817
@@ -4435,7 +4444,7 @@ msgstr "Python autodoc"
 #: ../../reference/configuration.rst:820
 msgid ""
 "Guidedog reads Python source without importing it (see :doc:`../autodoc`)."
-msgstr "Guidedog는 Python 소스를 임포트하지 않고 읽습니다(:doc:`../autodoc` 참고)."
+msgstr "Guidedog은 Python 소스를 임포트하지 않고 읽습니다(:doc:`../autodoc` 참고)."
 
 #: ../../reference/configuration.rst:830
 msgid "``autodoc_source_paths``"
@@ -4599,7 +4608,7 @@ msgstr "``autodoc_warningiserror``"
 
 #: ../../reference/configuration.rst:893
 msgid "Treat a module autodoc cannot find as an error."
-msgstr "autodoc가 찾지 못한 모듈을 오류로 처리합니다."
+msgstr "autodoc이 찾지 못한 모듈을 오류로 처리합니다."
 
 #: ../../reference/configuration.rst:894
 msgid "``python_display_short_literal_types``"
@@ -5549,9 +5558,9 @@ msgid ""
 "(``guidedog ssg build``). Every setting is optional; when ``[site]`` is "
 "omitted, none of these outputs are written."
 msgstr ""
-"``[site]`` 테이블은 사이트맵, 신디케이션 피드, 분류 체계 아카이브, 필터링된 글 컬렉션, 설치된 ``.gdt`` 테마 및 "
-"다중 프로젝트 마운트 사이트 조립(``guidedog ssg build``)과 같은 정적 웹사이트 출력을 구성합니다. 모든 설정은 "
-"선택 사항이며, ``[site]`` 를 생략하면 이러한 출력이 작성되지 않습니다."
+"``[site]`` 테이블은 사이트맵, 신디케이션 피드, 분류 체계 아카이브, 필터링된 글 컬렉션, 설치된 ``.gdt`` 테마, "
+"다중 프로젝트 마운트 사이트 조립(``guidedog ssg build``) 같은 정적 웹사이트 출력을 구성합니다. 모든 설정은 "
+"선택 사항이며, ``[site]``\\ 를 생략하면 이러한 출력은 생성되지 않습니다."
 
 #: ../../reference/configuration.rst:1352
 msgid "Static publishing ([site])"
@@ -5567,8 +5576,8 @@ msgid ""
 "(trailing ``/`` is trimmed). Required when ``sitemap``, ``feeds``, or any "
 "collection's ``feeds`` is ``true``."
 msgstr ""
-"발행된 사이트의 절대 ``http://`` 또는 ``https://`` 루트 URL(끝의 ``/`` 는 제거됨). "
-"``sitemap``, ``feeds`` 또는 컬렉션의 ``feeds`` 가 ``true`` 일 때 필수입니다."
+"게시된 사이트의 절대 ``http://`` 또는 ``https://`` 루트 URL(끝의 ``/``\\ 는 제거됨). "
+"``sitemap``, ``feeds``, 또는 컬렉션의 ``feeds``\\ 가 ``true``\\ 일 때 필수입니다."
 
 #: ../../reference/configuration.rst:1364
 msgid "``site.sitemap``"
@@ -5576,7 +5585,7 @@ msgstr "``site.sitemap``"
 
 #: ../../reference/configuration.rst:1367
 msgid "Write ``sitemap.xml`` at the output root."
-msgstr "출력 루트에 ``sitemap.xml`` 을 작성합니다."
+msgstr "출력 루트에 ``sitemap.xml``\\ 을 작성합니다."
 
 #: ../../reference/configuration.rst:1368
 msgid "``site.feeds``"
@@ -5586,7 +5595,7 @@ msgstr "``site.feeds``"
 msgid ""
 "Write ``rss.xml`` and ``atom.xml`` at the output root for all eligible "
 "dated documents."
-msgstr "발행 대상인 모든 날짜가 지정된 문서에 대해 출력 루트에 ``rss.xml`` 및 ``atom.xml`` 을 작성합니다."
+msgstr "게시 대상인 날짜 지정 문서 전체에 대해 출력 루트에 ``rss.xml`` 및 ``atom.xml``\\ 을 작성합니다."
 
 #: ../../reference/configuration.rst:1372
 msgid "``site.taxonomies``"
@@ -5616,7 +5625,7 @@ msgstr "``site.page_size``"
 msgid ""
 "Maximum articles per generated taxonomy archive page; ``0`` writes all "
 "entries on one page."
-msgstr "생성된 분류 체계 아카이브 페이지당 최대 글 수. ``0`` 은 모든 항목을 한 페이지에 작성합니다."
+msgstr "생성된 분류 체계 아카이브 페이지당 최대 글 수. ``0``\\ 은 모든 항목을 한 페이지에 작성합니다."
 
 #: ../../reference/configuration.rst:1380
 msgid "``site.theme``"
@@ -5627,8 +5636,8 @@ msgid ""
 "Load the project's installed theme from ``_themes/<tree-sha256>/`` after "
 "verifying ``guidedog-theme.lock`` offline."
 msgstr ""
-"``guidedog-theme.lock`` 을 오프라인으로 검증한 후 ``_themes/<tree-sha256>/`` 에서 "
-"프로젝트의 설치된 테마를 로드합니다."
+"``guidedog-theme.lock``\\ 을 오프라인으로 검증한 뒤 ``_themes/<tree-sha256>/``\\ 에서 "
+"프로젝트에 설치된 테마를 불러옵니다."
 
 #: ../../reference/configuration.rst:1385
 msgid "Article collections ([[site.collections]])"
@@ -5694,7 +5703,7 @@ msgstr "필수 ``:tags:`` 값. 글은 나열된 모든 태그를 포함해야 �
 
 #: ../../reference/configuration.rst:1416
 msgid "Required author name in ``:author:`` or ``:authors:``."
-msgstr "``:author:`` 또는 ``:authors:`` 에 지정되어야 하는 필수 작성자 이름."
+msgstr "``:author:`` 또는 ``:authors:``\\ 에 지정되어야 하는 필수 작성자 이름."
 
 #: ../../reference/configuration.rst:1417
 msgid "``series``"
@@ -5722,7 +5731,7 @@ msgstr "``page_size``"
 msgid ""
 "Articles per collection page; ``0`` puts all matching articles on one "
 "page."
-msgstr "컬렉션 페이지당 글 수. ``0`` 은 일치하는 모든 글을 한 페이지에 담습니다."
+msgstr "컬렉션 페이지당 글 수. ``0``\\ 은 일치하는 모든 글을 한 페이지에 담습니다."
 
 #: ../../reference/configuration.rst:1429
 msgid "``feeds``"
@@ -5732,7 +5741,7 @@ msgstr "``feeds``"
 msgid ""
 "Write ``rss.xml`` and ``atom.xml`` inside this collection's ``output`` "
 "folder."
-msgstr "이 컬렉션의 ``output`` 폴더 내에 ``rss.xml`` 및 ``atom.xml`` 을 작성합니다."
+msgstr "이 컬렉션의 ``output`` 폴더 안에 ``rss.xml`` 및 ``atom.xml``\\ 을 작성합니다."
 
 #: ../../reference/configuration.rst:1433
 msgid "``template``"
@@ -5741,7 +5750,7 @@ msgstr "``template``"
 #: ../../reference/configuration.rst:1436
 msgid ""
 "HTML layout template for the collection; empty uses ``collection.html``."
-msgstr "컬렉션의 HTML 레이아웃 템플릿. 비어 있으면 ``collection.html`` 을 사용합니다."
+msgstr "컬렉션의 HTML 레이아웃 템플릿. 비어 있으면 ``collection.html``\\ 을 사용합니다."
 
 #: ../../reference/configuration.rst:1438
 msgid "Mounted projects ([[site.mounts]])"
@@ -5773,7 +5782,7 @@ msgstr "사이트 설정 폴더를 기준으로 한 프로젝트 폴더 경로."
 msgid ""
 "Portable relative destination folder inside the assembled site; ``\"\"`` "
 "mounts at the website root."
-msgstr "조립된 사이트 내부의 이식 가능한 상대 대상 폴더. ``\"\"`` 는 웹사이트 루트에 마운트합니다."
+msgstr "조립된 사이트 내부의 이식 가능한 상대 대상 폴더. ``\"\"``\\ 는 웹사이트 루트에 마운트합니다."
 
 #: ../../reference/configuration.rst:1458
 msgid "``builder``"
@@ -5800,8 +5809,8 @@ msgid ""
 "Discussion catalog prefix for ``builder = \"discussion-pdf\"``; empty "
 "uses ``\"gds\"``."
 msgstr ""
-"``builder = \"discussion-pdf\"`` 일 때의 논의 카탈로그 접두사. 비어 있으면 ``\"gds\"`` 를 "
-"사용합니다."
+"``builder = \"discussion-pdf\"``\\ 일 때의 논의 카탈로그 접두사. 비어 있으면 ``\"gds\"``\\ "
+"를 사용합니다."
 
 #: ../../reference/configuration.rst:1466
 #: ../../reference/configuration.rst:1499
@@ -5814,8 +5823,8 @@ msgid ""
 "building this mount. Use ``editions`` rather than ``language=...`` to "
 "build language variants."
 msgstr ""
-"이 마운트를 빌드할 때 적용되는 ``key=value`` 설정 재정의(``-D`` 가 받는 형식). 언어 변형을 빌드할 때는 "
-"``language=...`` 대신 ``editions`` 를 사용하세요."
+"이 마운트를 빌드할 때 적용되는 ``key=value`` 설정 재정의(``-D``\\ 가 받는 형식). 언어판을 빌드할 때는 "
+"``language=...`` 대신 ``editions``\\ 를 사용하세요."
 
 #: ../../reference/configuration.rst:1470
 msgid "``exclude``"
@@ -5853,8 +5862,8 @@ msgid ""
 "Portable relative subdirectory beneath the mount's ``output`` folder; "
 "``\"\"`` places this edition at the mount's root. Unique within the mount."
 msgstr ""
-"마운트의 ``output`` 폴더 아래의 이식 가능한 상대 하위 디렉터리. ``\"\"`` 는 이 에디션을 마운트 루트에 "
-"배치합니다. 마운트 내에서 고유해야 합니다."
+"마운트의 ``output`` 폴더 아래의 이식 가능한 상대 하위 디렉터리. ``\"\"``\\ 는 이 언어판을 마운트 루트에 "
+"배치합니다. 마운트 안에서 고유해야 합니다."
 
 #: ../../reference/configuration.rst:1498
 msgid ""
@@ -5862,8 +5871,8 @@ msgid ""
 "when empty, the mount's ``source`` is built with gettext catalogs for "
 "``language``."
 msgstr ""
-"사이트 루트 기준의 선택적 별도 번역 프로젝트 폴더. 비어 있으면 마운트의 ``source`` 가 ``language`` 에 대한 "
-"gettext 카탈로그를 사용하여 빌드됩니다."
+"사이트 루트 기준의 선택적 별도 번역 프로젝트 폴더. 비어 있으면 마운트의 ``source``\\ 가 ``language``\\ 에 "
+"대한 gettext 카탈로그를 사용하여 빌드됩니다."
 
 #: ../../reference/configuration.rst:1502
 msgid ""
@@ -5884,7 +5893,7 @@ msgstr "사이트 설정 폴더를 기준으로 한 파일 또는 폴더 경로�
 msgid ""
 "Portable relative destination folder inside the assembled site; ``\"\"`` "
 "copies to the website root."
-msgstr "조립된 사이트 내부의 이식 가능한 상대 대상 폴더. ``\"\"`` 는 웹사이트 루트에 복사합니다."
+msgstr "조립된 사이트 내부의 이식 가능한 상대 대상 폴더. ``\"\"``\\ 는 웹사이트 루트에 복사합니다."
 
 #: ../../reference/configuration.rst:1559
 msgid "Trust"
@@ -5906,7 +5915,7 @@ msgid ""
 "setting is a ``build.untrusted`` warning. This is a capability policy, "
 "not a process sandbox. See :doc:`cli`."
 msgstr ""
-"``guidedog build --untrusted``\\ 는 우리가 작성하지 않은 소스로 된 프로젝트를 빌드합니다. raw "
+"``guidedog build --untrusted``\\ 는 직접 작성하지 않은 외부 소스로 된 프로젝트를 빌드합니다. raw "
 "콘텐츠는 제외하고, 아무것도 가져오지 않으며, 빌드 플러그인도 실행하지 않습니다. 프로젝트가 빌드가 읽는 범위를 넓힐 수 없습니다. "
 "``include_roots``\\ 와 ``pdf_preamble``\\ 은 사용하지 않습니다. 소스 폴더 밖으로 이어지는 파일과 "
 "폴더(``html_logo``, ``html_favicon``, ``pdf_logo``, "
@@ -5922,36 +5931,70 @@ msgstr ""
 msgid "Native music engraving"
 msgstr "네이티브 악보 조판"
 
-#: ../../reference/configuration.rst:1575
+#: ../../reference/configuration.rst:1583
+msgid "``lilypond_staff_size``"
+msgstr "``lilypond_staff_size``"
+
+#: ../../reference/configuration.rst:1584
+#: ../../reference/configuration.rst:1588
+#: ../../reference/configuration.rst:1592
+msgid "float"
+msgstr "부동소수점"
+
+#: ../../reference/configuration.rst:1585
+msgid "``18``"
+msgstr "``18``"
+
+#: ../../reference/configuration.rst:1586
 msgid ""
-"``lilypond_staff_size`` sets the default five-line staff height in "
-"points, from 10 through 40; the default is 18. ``lilypond_html_width`` "
-"sets the wide HTML system measure in points; the default is 564. "
-"``lilypond_pdf_width`` sets the PDF system measure in points; when "
-"omitted, the selected template and ``pdf_paper_size`` determine it. "
-"Widths must be positive and no greater than 100,000 points. All three "
-"values are finite TOML numbers, and directive options override their "
-"project defaults."
-msgstr ""
-"``lilypond_staff_size``\\ 는 다섯 줄 보표의 기본 높이를 10부터 40포인트로 설정하며 기본값은 18입니다. "
-"``lilypond_html_width``\\ 는 넓은 HTML 시스템 너비를 포인트로 설정하며 기본값은 564입니다. "
-"``lilypond_pdf_width``\\ 는 PDF 시스템 너비를 포인트로 설정하며 생략하면 선택한 템플릿과 "
-"``pdf_paper_size``\\ 가 결정합니다. 너비는 양수이고 100,000포인트 이하여야 합니다. 세 값 모두 유한한 "
-"TOML 숫자이며 지시문 옵션이 프로젝트 기본값을 덮어씁니다."
+"Default five-line staff height in points, from ``10`` through ``40``."
+msgstr "포인트 단위의 기본 5선 보표 높이입니다(``10``\\ 에서 ``40`` 사이)."
 
 #: ../../reference/configuration.rst:1587
+msgid "``lilypond_html_width``"
+msgstr "``lilypond_html_width``"
+
+#: ../../reference/configuration.rst:1589
+msgid "``564``"
+msgstr "``564``"
+
+#: ../../reference/configuration.rst:1590
+msgid "Wide HTML system measure in points (positive, at most ``100000``)."
+msgstr "포인트 단위의 넓은 HTML 보표단(시스템) 행 너비입니다(양수, 최대 ``100000``)."
+
+#: ../../reference/configuration.rst:1591
+msgid "``lilypond_pdf_width``"
+msgstr "``lilypond_pdf_width``"
+
+#: ../../reference/configuration.rst:1594
 msgid ""
-"The PDF templates declare their horizontal margin with ``// guidedog: "
-"margin-x = 31mm`` after their first import. Without a declaration, we "
-"assume 25 millimetres on each side. The built-in book, article and "
-"discussion margins are 31, 30 and 25 millimetres respectively. Text fonts "
-"use ``pdf_fonts`` and ``pdf_font_paths``. See :doc:`../topics/music` for "
-"directive syntax, layout, trust rules and limits."
+"PDF system measure in points (positive, at most ``100000``); when "
+"omitted, derived from ``pdf_paper_size`` and the selected template's "
+"horizontal margin."
 msgstr ""
-"PDF 템플릿은 첫 가져오기 뒤에 ``// guidedog: margin-x = 31mm``\\ 로 수평 여백을 선언합니다. 선언이 "
-"없으면 양쪽을 25밀리미터로 가정합니다. 내장 책, 기사, 토론 템플릿의 여백은 각각 31, 30, 25밀리미터입니다. 텍스트 "
-"글꼴은 ``pdf_fonts``\\ 와 ``pdf_font_paths``\\ 를 사용합니다. 지시문 문법, 배치, 신뢰 규칙과 "
-"제한은 :doc:`../topics/music`\\ 을 참고합니다."
+"포인트 단위의 PDF 보표단(시스템) 행 너비입니다(양수, 최대 ``100000``). 생략하면 "
+"``pdf_paper_size``\\ 와 선택한 템플릿의 수평 여백에서 계산합니다."
+
+#: ../../reference/configuration.rst:1596
+msgid ""
+"All three values are finite TOML numbers, and directive options override "
+"their project defaults."
+msgstr "세 값 모두 유한한 TOML 숫자이며, 지시문 옵션이 프로젝트 기본값을 재정의합니다."
+
+#: ../../reference/configuration.rst:1604
+msgid ""
+"The PDF templates declare their horizontal margin in their leading 256 "
+"lines with a comment such as ``// guidedog: margin-x = 31mm``. Without a "
+"declaration, we assume 25 millimeters on each side. The built-in book, "
+"article and discussion margins are 31, 30 and 25 millimeters "
+"respectively. Text fonts use ``pdf_fonts`` and ``pdf_font_paths``. See "
+":doc:`../topics/music` for directive syntax, layout, trust rules and "
+"limits."
+msgstr ""
+"PDF 템플릿은 앞쪽 256줄 안에 ``// guidedog: margin-x = 31mm`` 같은 주석으로 수평 여백을 "
+"선언합니다. 선언이 없으면 양쪽 여백을 각 25밀리미터로 가정합니다. 내장 책, 글, 논의 템플릿의 여백은 각각 31, 30, "
+"25밀리미터입니다. 텍스트 글꼴은 ``pdf_fonts``\\ 와 ``pdf_font_paths``\\ 를 사용합니다. 지시문 "
+"문법, 배치, 신뢰 규칙과 한도는 :doc:`../topics/music`\\ 을 참고하세요."
 
 #: ../../reference/formats.rst:1
 msgid "Readers, renderers, and builders"
@@ -6135,7 +6178,7 @@ msgid ""
 msgstr ""
 "``guidedog formats``\\ 는 실행 파일의 실제 어댑터를 보여 줍니다. 호환성 페이지에는 고정 테스트 모음과 실제 "
 "프로젝트 검증이 기록되어 있습니다. CommonMark 통과가 전체 MyST 지원을, RST 읽기가 모든 Python 확장 동작을 "
-"증명하지는 않습니다. :doc:`../compatibility`\\ 를 참고하세요."
+"증명하지는 않습니다. :doc:`../compatibility`\\ 을 참고하세요."
 
 #: ../../reference/formats.rst:70
 msgid "Project diagrams"
@@ -6150,9 +6193,8 @@ msgid ""
 "run the project asset pipeline. See :doc:`../topics/diagrams`."
 msgstr ""
 "프로젝트 빌드는 RST와 MyST의 Graphviz 지시문과 Guidedog의 ``typst-diagram`` 지시문을 인식합니다. "
-"프로젝트 링크 단계가 다이어그램을 컴파일하고 HTML과 PDF의 이미지 리소스를 관리합니다. 마크업을 직접 변환하면 다이어그램을 "
-"소스 코드로 유지하고 프로젝트 이미지 처리 과정은 실행하지 않습니다. :doc:`../topics/diagrams`\\ 를 "
-"참고합니다."
+"프로젝트 링크 단계가 다이어그램을 컴파일하고 HTML과 PDF의 이미지 에셋을 관리합니다. 마크업을 직접 변환하면 다이어그램을 소스 "
+"코드로 유지하며 프로젝트 에셋 파이프라인은 실행하지 않습니다. :doc:`../topics/diagrams`\\ 을 참고하세요."
 
 #: ../../reference/formats.rst:75
 msgid ""

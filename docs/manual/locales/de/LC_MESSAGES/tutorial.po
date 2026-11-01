@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: ../../tutorial/a-custom-theme.rst:1
 msgid "Build a project theme"
-msgstr "Ein Projektthema gestalten"
+msgstr "Ein Projekt-Theme gestalten"
 
 #: ../../tutorial/a-custom-theme.rst:4
 msgid ""
@@ -37,28 +37,26 @@ msgstr "1. Mit einem echten Projekt beginnen"
 
 #: ../../tutorial/a-custom-theme.rst:11
 msgid ""
-"Use Guidedog 1.0.0-beta.5 or newer. Run this from the directory that will "
+"Use Guidedog 1.0.0-beta.9 or newer. Run this from the directory that will "
 "contain ``orbit``:"
 msgstr ""
-"Wir verwenden Guidedog 1.0.0-beta.5 oder neuer. Folgendes führen wir in "
+"Wir verwenden Guidedog 1.0.0-beta.9 oder neuer. Folgendes führen wir in "
 "dem Verzeichnis aus, das ``orbit`` enthalten soll:"
 
 #: ../../tutorial/a-custom-theme.rst:17
 msgid ""
 "Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` "
-"in the same directory. We also keep the generated ``theme.typ`` beside "
-"it. We keep the renamed book template: it supplies the tested page "
-"layout, cover, running heads, contents, code styles and optimized "
-"paragraph breaking."
+"in the same directory. Keep the generated ``theme.typ`` beside it; the "
+"renamed book template supplies the tested page layout, cover, running "
+"heads, contents, code styles and optimized paragraph breaking."
 msgstr ""
 "Wir benennen die generierte Datei ``orbit/_templates/book.typ`` im selben "
-"Verzeichnis in ``base-book.typ`` um. Auch die generierte Datei "
-"``theme.typ`` daneben behalten wir. Die umbenannte Buchvorlage bewahren "
-"wir auf: Sie liefert das erprobte Seitenlayout, die Titelseite, die "
-"Kolumnentitel, das Inhaltsverzeichnis, die Code-Stile und den optimierten "
-"Absatzumbruch."
+"Verzeichnis in ``base-book.typ`` um und behalten die generierte Datei "
+"``theme.typ`` daneben bei; die umbenannte Buchvorlage liefert das "
+"erprobte Seitenlayout, die Titelseite, die Kolumnentitel, das "
+"Inhaltsverzeichnis, die Code-Stile und den optimierten Absatzumbruch."
 
-#: ../../tutorial/a-custom-theme.rst:21
+#: ../../tutorial/a-custom-theme.rst:22
 msgid ""
 "Download :download:`conf.toml <../_static/repository/theme/conf.toml>`, "
 ":download:`index.rst <../_static/repository/theme/index.rst>` and "
@@ -74,11 +72,11 @@ msgstr ""
 "beiden speichern wir in ``orbit``, die dritte in ``orbit/chapters``. Das "
 "fertige Projekt enthält diese Dateien:"
 
-#: ../../tutorial/a-custom-theme.rst:49
+#: ../../tutorial/a-custom-theme.rst:50
 msgid "2. Set the contract"
 msgstr "2. Den Vertrag festlegen"
 
-#: ../../tutorial/a-custom-theme.rst:52
+#: ../../tutorial/a-custom-theme.rst:53
 msgid ""
 "The downloaded configuration selects the local template and static "
 "directories. ``html_css_files`` adds our stylesheet after the default "
@@ -90,11 +88,11 @@ msgstr ""
 "übergibt Projektwerte an Jinja. Ein ausdrücklicher PDF-Name macht die "
 "Ausgabe auffindbar."
 
-#: ../../tutorial/a-custom-theme.rst:59
+#: ../../tutorial/a-custom-theme.rst:60
 msgid "orbit/conf.toml"
 msgstr "orbit/conf.toml"
 
-#: ../../tutorial/a-custom-theme.rst:61
+#: ../../tutorial/a-custom-theme.rst:62
 msgid ""
 "All paths in this tutorial are project files. HTML templates are found "
 "through ``templates_path``. The PDF entry point is always "
@@ -106,11 +104,11 @@ msgstr ""
 "immer ``_templates/book.typ`` im Quellverzeichnis. Eine Änderung von "
 "``templates_path`` verschiebt ihn nicht."
 
-#: ../../tutorial/a-custom-theme.rst:65
+#: ../../tutorial/a-custom-theme.rst:66
 msgid "3. Extend the HTML layout"
 msgstr "3. Das HTML-Layout erweitern"
 
-#: ../../tutorial/a-custom-theme.rst:68
+#: ../../tutorial/a-custom-theme.rst:69
 msgid ""
 "Save :download:`layout.html "
 "<../_static/repository/theme/_templates/layout.html>` as "
@@ -121,11 +119,11 @@ msgstr ""
 "``orbit/_templates/layout.html`` und ersetzen damit die erzeugte Datei "
 "vollständig:"
 
-#: ../../tutorial/a-custom-theme.rst:73
+#: ../../tutorial/a-custom-theme.rst:74
 msgid "orbit/_templates/layout.html"
 msgstr "orbit/_templates/layout.html"
 
-#: ../../tutorial/a-custom-theme.rst:75
+#: ../../tutorial/a-custom-theme.rst:76
 msgid ""
 "``!layout.html`` selects Guidedog's built-in layout. Without ``!``, a "
 "template named ``layout.html`` would try to extend itself. ``super()`` "
@@ -133,28 +131,30 @@ msgid ""
 "accessible landmarks remain in the base layout. Our blocks add a label, "
 "metadata and an edition footer."
 msgstr ""
-"``!layout.html`` wählt das eingebaute Layout. Ohne ``!`` würde die "
-"Vorlage sich selbst erben. ``super()`` behält den Elternblock bei. "
-"Navigation, Suche, Themenwahl und zugängliche Seitenbereiche bleiben in "
-"der Basis; hinzu kommen Kennzeichnung, Metadaten und Editionsfußzeile."
+"``!layout.html`` wählt das eingebaute Layout von Guidedog. Ohne ``!`` "
+"würde eine Vorlage namens ``layout.html`` versuchen, sich selbst zu "
+"erweitern. ``super()`` behält den Inhalt des Elternblocks bei. "
+"Navigation, Suche, Theme-Umschalter und barrierefreie Seitenbereiche "
+"bleiben im Basislayout erhalten; unsere Blöcke ergänzen Kennzeichnung, "
+"Metadaten und Editionsfußzeile."
 
-#: ../../tutorial/a-custom-theme.rst:80
+#: ../../tutorial/a-custom-theme.rst:81
 msgid ""
 "A theme changes presentation. A build plugin changes source text, "
 "complete HTML or generated assets. Use :doc:`../plugins` when a template "
 "cannot express the required operation. Ordinary layout changes need no "
 "native code."
 msgstr ""
-"Themen ändern Gestaltung. Build-Plugins ändern Quelltext, vollständiges "
-"HTML oder Ressourcen. Wenn eine Vorlage nicht ausreicht, siehe "
-":doc:`../plugins`. Gewöhnliche Layoutänderungen benötigen keinen nativen "
-"Code."
+"Ein Theme ändert die Darstellung. Ein Build-Plugin ändert Quelltext, "
+"vollständiges HTML oder erzeugte Ressourcen. Wenn eine Vorlage nicht "
+"ausreicht, hilft :doc:`../plugins` weiter. Gewöhnliche Layoutänderungen "
+"benötigen keinen nativen Code."
 
-#: ../../tutorial/a-custom-theme.rst:84
+#: ../../tutorial/a-custom-theme.rst:85
 msgid "4. Give repeated markup one home"
 msgstr "4. Wiederholtes Markup zusammenfassen"
 
-#: ../../tutorial/a-custom-theme.rst:87
+#: ../../tutorial/a-custom-theme.rst:88
 msgid ""
 "Create ``orbit/_templates/macros`` and ``orbit/_templates/partials``. "
 "Save :download:`ui.html "
@@ -170,15 +170,15 @@ msgstr ""
 "<../_static/repository/theme/_templates/partials/edition.html>` unter den "
 "passenden Pfaden:"
 
-#: ../../tutorial/a-custom-theme.rst:94
+#: ../../tutorial/a-custom-theme.rst:95
 msgid "orbit/_templates/macros/ui.html"
 msgstr "orbit/_templates/macros/ui.html"
 
-#: ../../tutorial/a-custom-theme.rst:98
+#: ../../tutorial/a-custom-theme.rst:99
 msgid "orbit/_templates/partials/edition.html"
 msgstr "orbit/_templates/partials/edition.html"
 
-#: ../../tutorial/a-custom-theme.rst:100
+#: ../../tutorial/a-custom-theme.rst:101
 msgid ""
 "A macro takes explicit inputs. An included partial uses the current "
 "page's context. Escape plain project values with ``|e``. Use ``pathto`` "
@@ -191,11 +191,11 @@ msgstr ""
 "eingetragenes ``chapters/reading.html`` ginge auf einer verschachtelten "
 "Seite oder mit einem anderen HTML-Builder kaputt."
 
-#: ../../tutorial/a-custom-theme.rst:105
+#: ../../tutorial/a-custom-theme.rst:106
 msgid "5. Design for the reader's theme"
-msgstr "5. Die Themenwahl respektieren"
+msgstr "5. Das gewählte Farbschema berücksichtigen"
 
-#: ../../tutorial/a-custom-theme.rst:108
+#: ../../tutorial/a-custom-theme.rst:109
 msgid ""
 "Save :download:`theme.css "
 "<../_static/repository/theme/_static/theme.css>` as "
@@ -205,11 +205,11 @@ msgstr ""
 "<../_static/repository/theme/_static/theme.css>` als "
 "``orbit/_static/theme.css``:"
 
-#: ../../tutorial/a-custom-theme.rst:113
+#: ../../tutorial/a-custom-theme.rst:114
 msgid "orbit/_static/theme.css"
 msgstr "orbit/_static/theme.css"
 
-#: ../../tutorial/a-custom-theme.rst:115
+#: ../../tutorial/a-custom-theme.rst:116
 msgid ""
 "The built-in theme follows the system scheme by default, and the existing "
 "control selects system, light or dark and saves the choice. Explicit dark "
@@ -224,7 +224,7 @@ msgstr ""
 "JavaScript ist nicht nötig. Eine feste Schriftfarbe auf einem "
 "Hintergrund, dessen Theme wechseln kann, vermeiden wir."
 
-#: ../../tutorial/a-custom-theme.rst:120
+#: ../../tutorial/a-custom-theme.rst:121
 msgid ""
 "``_static/typography.js`` optimizes desktop English paragraphs with "
 "Knuth-Plass line breaking and Liang hyphenation, while ``guidedog.css`` "
@@ -237,7 +237,7 @@ msgstr ""
 "Bildschirmen sauber auf ``text-wrap: pretty`` zurückfällt; siehe "
 ":doc:`../topics/typography`."
 
-#: ../../tutorial/a-custom-theme.rst:125
+#: ../../tutorial/a-custom-theme.rst:126
 msgid ""
 "Diagrams with ``:class: graphviz-adaptive`` use the selected scheme in "
 "current Guidedog builds. Ordinary graphs retain their own colors. Older "
@@ -249,11 +249,11 @@ msgstr ""
 "denselben DOT-Text mit heller Palette. Klassen und Druck erklärt "
 ":doc:`../topics/diagrams`."
 
-#: ../../tutorial/a-custom-theme.rst:130
+#: ../../tutorial/a-custom-theme.rst:131
 msgid "6. Wrap the PDF book"
 msgstr "6. Die PDF-Buchvorlage umschließen"
 
-#: ../../tutorial/a-custom-theme.rst:133
+#: ../../tutorial/a-custom-theme.rst:134
 msgid ""
 "Save :download:`palette.typ "
 "<../_static/repository/theme/_templates/palette.typ>` and "
@@ -267,15 +267,15 @@ msgstr ""
 "``orbit/_templates``. Das sind neue Dateien; ``base-book.typ`` bleibt "
 "daneben liegen."
 
-#: ../../tutorial/a-custom-theme.rst:139
+#: ../../tutorial/a-custom-theme.rst:140
 msgid "orbit/_templates/palette.typ"
 msgstr "orbit/_templates/palette.typ"
 
-#: ../../tutorial/a-custom-theme.rst:143
+#: ../../tutorial/a-custom-theme.rst:144
 msgid "orbit/_templates/book.typ"
 msgstr "orbit/_templates/book.typ"
 
-#: ../../tutorial/a-custom-theme.rst:145
+#: ../../tutorial/a-custom-theme.rst:146
 msgid ""
 "The host calls ``book`` with metadata and the chapter content. The "
 "wrapper forwards those values to the generated base and supplies our "
@@ -289,7 +289,7 @@ msgstr ""
 "gelten ihre Regeln für den Inhalt. Das Web-Stylesheet wirkt nicht auf das "
 "PDF, und die Typst-Vorlage wirkt nicht auf das HTML."
 
-#: ../../tutorial/a-custom-theme.rst:150
+#: ../../tutorial/a-custom-theme.rst:151
 msgid ""
 "The base handles language-aware hyphenation and optimized line breaking. "
 "The wrapper keeps those rules, uses the matching blue accent and adds "
@@ -300,15 +300,15 @@ msgstr ""
 "Wrapper behält dies bei, ergänzt das gleiche Blau und Seitenzahlen an "
 "Dokumentverweisen. PDF nutzt stets die helle Druckpalette."
 
-#: ../../tutorial/a-custom-theme.rst:154
+#: ../../tutorial/a-custom-theme.rst:155
 msgid "7. Build and inspect both forms"
 msgstr "7. Beide Formen bauen und prüfen"
 
-#: ../../tutorial/a-custom-theme.rst:157
+#: ../../tutorial/a-custom-theme.rst:158
 msgid "Run from the same parent directory as step 1:"
 msgstr "Wir führen im selben Elternverzeichnis wie in Schritt 1 aus:"
 
-#: ../../tutorial/a-custom-theme.rst:167
+#: ../../tutorial/a-custom-theme.rst:168
 msgid ""
 "Open the URL printed by ``serve``. Check the chapter and generated search "
 "page, not only the front page. Try light, dark and system modes. Resize "
@@ -323,7 +323,7 @@ msgstr ""
 "Fuß-Teilvorlage, speichern und laden neu: Die Vorschau baut die "
 "Abhängigkeiten ihrer Vorlagen neu."
 
-#: ../../tutorial/a-custom-theme.rst:172
+#: ../../tutorial/a-custom-theme.rst:173
 msgid ""
 "Open ``orbit/_build/pdf/orbit-notes-en.pdf`` in a PDF reader. Guidedog "
 "adds the language suffix to the configured filename. Inspect the "
@@ -340,11 +340,11 @@ msgstr ""
 "``_build/dirhtml`` und ``_build/singlehtml``. Den Server beenden wir mit "
 "``Ctrl+C``."
 
-#: ../../tutorial/a-custom-theme.rst:179
+#: ../../tutorial/a-custom-theme.rst:180
 msgid "8. Reuse and maintain the theme"
 msgstr "8. Wiederverwenden und pflegen"
 
-#: ../../tutorial/a-custom-theme.rst:182
+#: ../../tutorial/a-custom-theme.rst:183
 msgid ""
 "Create another project with ``guidedog quickstart``. Copy the finished "
 "``_templates`` directory and ``_static/theme.css`` into it. Add "
@@ -361,7 +361,7 @@ msgstr ""
 "die es in diesem Projekt gibt. Metadaten und Quellbaum des neuen Projekts "
 "behalten wir bei."
 
-#: ../../tutorial/a-custom-theme.rst:188
+#: ../../tutorial/a-custom-theme.rst:189
 msgid ""
 "The copied PDF base makes the theme self-contained. When we upgrade "
 "Guidedog, we create a scratch quickstart project and compare its "
@@ -378,7 +378,7 @@ msgstr ""
 "Block-Overrides sind leichter zu pflegen als ein zweites vollständiges "
 "Layout. Alle Variablen und Blöcke beschreibt :doc:`../templates`."
 
-#: ../../tutorial/a-custom-theme.rst:194
+#: ../../tutorial/a-custom-theme.rst:195
 msgid ""
 "If the build reports a missing ``base-book.typ``, finish the rename in "
 "step 1. If the label is blank, set ``edition_label`` in ``html_context``. "
@@ -617,9 +617,9 @@ msgid ""
 "columns, callout cards, and vector typography."
 msgstr ""
 "Guidedog veröffentlicht denselben Dokumentenbaum als interaktive "
-"HTML-Website und als gesetztes PDF-Buch. Weblerner profitieren von "
+"HTML-Website und als gesetztes PDF-Buch. Web-Leser profitieren von "
 "interaktiven Rechnern, Suchfiltern und eingebetteten Widgets; Buchleser "
-"genießen ausgewogene Spalten, Hinweiskarten und Vektortypografie."
+"profitieren von ausgewogenen Spalten, Hinweiskarten und Vektortypografie."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:8
 msgid ""
@@ -657,11 +657,11 @@ msgstr "1. Das Projekt anlegen"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:59
 msgid "Start in a clean directory and run:"
-msgstr "Beginnen Sie in einem leeren Verzeichnis und führen Sie aus:"
+msgstr "Wir beginnen in einem leeren Verzeichnis und führen Folgendes aus:"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:65
 msgid "Move into the new directory:"
-msgstr "Wechseln Sie in das neue Verzeichnis:"
+msgstr "Wir wechseln in das neue Verzeichnis:"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:71
 msgid "2. Declare custom domain directives in conf.toml"
@@ -684,7 +684,7 @@ msgstr ""
 msgid ""
 "Open ``conf.toml`` and append the declaration for a ``metric`` directive:"
 msgstr ""
-"Öffnen Sie ``conf.toml`` und fügen Sie die Deklaration für eine "
+"Wir öffnen ``conf.toml`` und hängen die Deklaration für eine "
 "``metric``-Direktive an:"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:89
@@ -731,7 +731,7 @@ msgstr "3. Dokument mit Formatschutz verfassen"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:100
 msgid "Replace the contents of ``index.rst`` with the following document:"
-msgstr "Ersetzen Sie den Inhalt von ``index.rst`` durch folgendes Dokument:"
+msgstr "Wir ersetzen den Inhalt von ``index.rst`` durch folgendes Dokument:"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:147
 msgid ""
@@ -755,7 +755,7 @@ msgstr "4. Beide Publikationen erstellen und prüfen"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:152
 msgid "Build the HTML website:"
-msgstr "Erstellen Sie die HTML-Website:"
+msgstr "Wir bauen die HTML-Website:"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:158
 msgid ""
@@ -786,7 +786,7 @@ msgstr "Der PDF-Hinweisblock entfällt vollständig und ohne Warnungen."
 
 #: ../../tutorial/dynamic-content-and-directives.rst:164
 msgid "Now build the PDF book:"
-msgstr "Erstellen Sie nun das PDF-Buch:"
+msgstr "Nun bauen wir das PDF-Buch:"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:170
 msgid ""
@@ -827,7 +827,7 @@ msgstr ""
 #: ../../tutorial/dynamic-content-and-directives.rst:191
 msgid "In any document, invoke the function inside a raw Typst block:"
 msgstr ""
-"Rufen Sie die Funktion in einem beliebigen Dokument innerhalb eines "
+"In einem beliebigen Dokument rufen wir die Funktion innerhalb eines "
 "Typst-Raw-Blocks auf:"
 
 #: ../../tutorial/dynamic-content-and-directives.rst:202

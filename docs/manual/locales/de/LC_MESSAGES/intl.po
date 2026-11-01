@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -101,7 +101,10 @@ msgstr ""
 msgid ""
 "Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a "
 "message once its translation is right. Fuzzy translations are not used."
-msgstr "Wir übersetzen, indem wir jedes ``msgstr`` ausfüllen. Sobald die Übersetzung eines Eintrags stimmt, entfernen wir dessen Zeile ``#, fuzzy``. Unsichere Übersetzungen werden nicht verwendet."
+msgstr ""
+"Wir übersetzen, indem wir jedes ``msgstr`` ausfüllen. Sobald die "
+"Übersetzung eines Eintrags stimmt, entfernen wir dessen Zeile ``#, "
+"fuzzy``. Als *fuzzy* markierte Übersetzungen werden nicht verwendet."
 
 #: ../../intl.rst:67
 msgid "See how far the translation is, as ``sphinx-intl stat`` does:"
@@ -179,8 +182,8 @@ msgid ""
 "and their titles:"
 msgstr ""
 "Verweise müssen gleich bleiben. Eine Übersetzung behält jeden Verweis "
-"ihrer Nachricht in derselben Schreibweise bei und darf nur den Text "
-"drumherum und die Titel der Verweise ändern:"
+"ihrer Nachricht in derselben Schreibweise bei und darf nur den umgebenden "
+"Text und die Titel der Verweise ändern:"
 
 #: ../../intl.rst:111
 msgid ""
@@ -327,7 +330,7 @@ msgstr "``gettext_allow_fuzzy_translations``"
 
 #: ../../intl.rst:155
 msgid "Use fuzzy translations too. Default ``false``."
-msgstr "Verwendet auch fuzzy-Übersetzungen. Vorgabe: ``false``\\ ."
+msgstr "Verwendet auch Fuzzy-Übersetzungen. Vorgabe: ``false``."
 
 #: ../../intl.rst:156
 msgid "``gettext_exclude_patterns``"
@@ -391,15 +394,15 @@ msgstr "Die Oberflächentexte von Guidedog"
 msgid ""
 "Guidedog writes some words itself: admonition titles, \"Added in version "
 "2.1\", \"Fig. 1\", \"Contents\", the page layout's \"Previous\", "
-"\"Next\", \"Navigation\", and \"Search\", the search and index pages, and "
-"the book's \"Version\". They come from the text domain ``guidedog``, "
-"looked up in this order:"
+"\"Next\", \"Navigation\", and \"Search\", the search and index pages, "
+"generated musical score descriptions, and the book's \"Version\". They "
+"come from the text domain ``guidedog``, looked up in this order:"
 msgstr ""
 "Einige Wörter schreibt Guidedog selbst: Titel von Hinweisboxen, „Added in "
 "version 2.1“, „Fig. 1“, „Contents“, die Layouttexte „Previous“, „Next“, "
-"„Navigation“ und „Search“, die Such- und Indexseiten sowie „Version“ im "
-"Buch. Sie stammen aus der Textdomäne ``guidedog`` und werden in dieser "
-"Reihenfolge gesucht:"
+"„Navigation“ und „Search“, die Such- und Indexseiten, erzeugte "
+"Beschreibungen von Musikpartituren sowie „Version“ im Buch. Sie stammen "
+"aus der Textdomäne ``guidedog`` und werden in dieser Reihenfolge gesucht:"
 
 #: ../../intl.rst:179
 msgid "``locales/LANGUAGE/LC_MESSAGES/guidedog.po`` of the project,"
@@ -414,25 +417,29 @@ msgstr ""
 
 #: ../../intl.rst:181
 msgid ""
-"the catalog built into Guidedog, for German, Spanish, French, Japanese, "
-"Brazilian Portuguese, Russian, and Simplified Chinese."
+"the catalog built into Guidedog, for German, Spanish, French, Hindi, "
+"Japanese, Korean, Brazilian Portuguese, Russian, and Simplified Chinese."
 msgstr ""
-"Der eingebaute Katalog für Deutsch, Spanisch, Französisch, Japanisch, "
-"brasilianisches Portugiesisch, Russisch und vereinfachtes Chinesisch."
+"Der in Guidedog eingebaute Katalog für Deutsch, Spanisch, Französisch, "
+"Hindi, Japanisch, Koreanisch, brasilianisches Portugiesisch, Russisch und "
+"vereinfachtes Chinesisch."
 
 #: ../../intl.rst:184
 msgid ""
 "The English words are the message identifiers. They are Sphinx's where "
 "Sphinx has the same word, so a project's ``sphinx.po`` keeps working. A "
 "project can override any word, or add a language, with its own "
-"``guidedog.po``."
+"``guidedog.po``. Single-file ``guidedog convert --lang=TAG`` uses the "
+"built-in catalog for the same labels in HTML and PDF output."
 msgstr ""
 "Die englischen Wörter sind die Nachrichtenkennungen. Wo Sphinx dasselbe "
 "Wort hat, sind es die von Sphinx, sodass die ``sphinx.po`` eines Projekts "
 "weiter funktioniert. Mit einer eigenen ``guidedog.po`` kann ein Projekt "
-"jedes Wort überschreiben oder eine Sprache hinzufügen."
+"jedes Wort überschreiben oder eine Sprache hinzufügen. Bei einzelnen "
+"Dateien verwendet ``guidedog convert --lang=TAG`` den eingebauten Katalog "
+"für dieselben Beschriftungen in der HTML- und PDF-Ausgabe."
 
-#: ../../intl.rst:188
+#: ../../intl.rst:190
 msgid ""
 "Templates translate with ``_()``, ``gettext()``, and ``ngettext()``, as "
 "Sphinx's templates do:"
@@ -440,7 +447,7 @@ msgstr ""
 "Vorlagen übersetzen wie bei Sphinx mit ``_()``\\ , ``gettext()`` und "
 "``ngettext()``\\ :"
 
-#: ../../intl.rst:196
+#: ../../intl.rst:198
 msgid ""
 "``numfig_format``, ``html_title``, and ``html_short_title`` follow the "
 "language unless ``conf.toml`` sets them."
@@ -448,11 +455,11 @@ msgstr ""
 "``numfig_format``\\ , ``html_title`` und ``html_short_title`` folgen der "
 "Sprache, sofern sie nicht in ``conf.toml`` gesetzt sind."
 
-#: ../../intl.rst:199
+#: ../../intl.rst:201
 msgid "Dates"
 msgstr "Datumsangaben"
 
-#: ../../intl.rst:202
+#: ../../intl.rst:204
 msgid ""
 "``|today|``, the book's date, and a page's ``last_updated`` are formatted "
 "as Sphinx formats them. ``today_fmt`` and ``html_last_updated_fmt`` are "
@@ -472,12 +479,12 @@ msgstr ""
 "oben genannten Sprachen stammen aus dem Unicode CLDR. Andere Sprachen "
 "verwenden Englisch, wie Sphinx bei einer Sprache, die Babel nicht kennt."
 
-#: ../../intl.rst:209
+#: ../../intl.rst:211
 msgid ""
 "The date is the local date, in the local time zone. We set "
 "``SOURCE_DATE_EPOCH`` (seconds since 1970, in UTC) to build reproducibly, "
 "with the same dates on every machine."
 msgstr ""
 "Das Datum ist das lokale Datum in der lokalen Zeitzone. Für "
-"reproduzierbare Builds mit denselben Daten auf jedem Rechner setzen wir "
-"``SOURCE_DATE_EPOCH`` (Sekunden seit 1970, in UTC)."
+"reproduzierbare Builds mit denselben Datumsangaben auf jedem Rechner "
+"setzen wir ``SOURCE_DATE_EPOCH`` (Sekunden seit 1970, in UTC)."

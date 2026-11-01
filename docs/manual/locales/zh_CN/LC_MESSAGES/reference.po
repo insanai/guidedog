@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:01+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -127,8 +127,8 @@ msgid "``--licenses``"
 msgstr "``--licenses``"
 
 #: ../../reference/cli.rst:50
-msgid "Show Guidedog's licence and the notices of the libraries built in."
-msgstr "显示 Guidedog 的许可证以及内置库的声明。"
+msgid "Show Guidedog's license and the notices of the libraries built in."
+msgstr "显示 Guidedog 的许可证及内置依赖库的版权声明。"
 
 #: ../../reference/cli.rst:52
 msgid "Exit codes"
@@ -346,7 +346,8 @@ msgid ""
 "Plugins add commands of their own (see `Commands plugins add`_). Three "
 "plugins are linked into every ``guidedog`` executable:"
 msgstr ""
-"插件会添加各自的命令（参见 `Commands plugins add`_）。每个 ``guidedog`` 可执行文件都内置链接了三个插件："
+"插件还可以添加自己的命令（参见 `插件添加的命令 <Commands plugins add_>`_）。每个 ``guidedog`` "
+"可执行文件都内置链接了三个插件："
 
 #: ../../reference/cli.rst:116
 msgid "Commands of linked plugins"
@@ -497,7 +498,7 @@ msgstr "``--sep``, ``--no-sep``"
 msgid ""
 "Separate ``source/`` and ``build/`` folders, or keep the sources at the "
 "root with ``_build`` beside them (the default)."
-msgstr "分离 ``source/`` 和 ``build/`` 文件夹，或把源文件放在根目录，旁边放 ``_build`` （默认）。"
+msgstr "分离 ``source/`` 和 ``build/`` 文件夹，或把源文件放在根目录，旁边放 ``_build``\\ （默认）。"
 
 #: ../../reference/cli.rst:173
 msgid "``--suffix EXT``"
@@ -515,7 +516,7 @@ msgstr "guidedog build"
 msgid ""
 "Reads the sources and resolves toctrees and cross-references. It "
 "publishes the output as one complete generation:"
-msgstr "读取源文件，解析目录树和交叉引用，然后将输出作为一个完整的输出代次发布："
+msgstr "读取源文件，解析目录树与交叉引用，并将构建产物整批原子发布："
 
 #: ../../reference/cli.rst:192
 msgid ""
@@ -737,7 +738,7 @@ msgid ""
 "by the budget, so we raise ``--budget`` instead."
 msgstr ""
 "达到预算时直接停止，不再询问。不加此选项时，在终端中会询问是提高预算还是停止；没有终端的构建会直接停止。``--memory=disk`` 和 "
-"``--disk-budget`` （把工作内存放到磁盘上）会以 ``cli.memory-disk`` "
+"``--disk-budget``\\ （把工作内存放到磁盘上）会以 ``cli.memory-disk`` "
 "拒绝。工作内存始终保存在内存中，并受预算约束，因此我们改为提高 ``--budget``。"
 
 #: ../../reference/cli.rst:258
@@ -787,7 +788,7 @@ msgid ""
 "Include pages that would otherwise be withheld by ``:draft:``, "
 "``:publish-at:`` in the future, or ``:expires-at:`` in the past."
 msgstr ""
-"包含原本会被 ``:draft:``、未来的 ``:publish-at:`` 或过去的 ``:expires-at:`` 扣留的页面。"
+"纳入因 ``:draft:``、尚未到期的 ``:publish-at:`` 或已过期的 ``:expires-at:`` 而原本暂不发布的页面。"
 
 #: ../../reference/cli.rst:269 ../../reference/cli.rst:601
 msgid "``--now=RFC3339``"
@@ -800,8 +801,9 @@ msgid ""
 "``--now=2026-10-16T09:00:00Z``) instead of the system clock or "
 "``SOURCE_DATE_EPOCH``."
 msgstr ""
-"根据此 UTC 明确时刻（例如 ``--now=2026-10-16T09:00:00Z``）而非系统时钟或 "
-"``SOURCE_DATE_EPOCH`` 评估发布时间戳（``:publish-at:`` 和 ``:expires-at:``）及默认构建日期。"
+"以指定的 UTC 时刻（如 ``--now=2026-10-16T09:00:00Z``）代替系统时钟或 "
+"``SOURCE_DATE_EPOCH``，据此判定发布时间戳（``:publish-at:`` 与 "
+"``:expires-at:``）及默认构建日期。"
 
 #: ../../reference/cli.rst:272
 msgid ""
@@ -907,7 +909,7 @@ msgid ""
 "Anything Python would compute is reported and kept in ``conf.toml`` as a "
 "comment:"
 msgstr ""
-"无需运行 Python，即可把 Sphinx 的 ``conf.py`` （或旧的 ``guidedog.toml``）转换为 "
+"无需运行 Python，即可把 Sphinx 的 ``conf.py``\\ （或旧的 ``guidedog.toml``）转换为 "
 "``conf.toml``。字面量设置会直接迁移。凡是需要 Python 计算的内容都会被报告，并以注释形式保留在 ``conf.toml`` 中："
 
 #: ../../reference/cli.rst:343
@@ -1064,8 +1066,9 @@ msgid ""
 "opens the score file; conversion to RST preserves its directive and "
 "filename."
 msgstr ""
-"使用 ``--from sphinx`` 或 ``--from myst`` 时，未排版的 ``lilypond`` 文件参数在 HTML 和 "
-"PDF 中转换为说明语句，并通过 ``--lang`` 翻译；其图注随乐谱一并省略。转换过程不会打开乐谱文件；转换为 RST 时保留其指令和文件名。"
+"使用 ``--from sphinx`` 或 ``--from myst`` 时，未排印的 ``lilypond`` 文件参数会在 HTML 和 "
+"PDF 中转为一句本地化说明（按 ``--lang`` 翻译），图注随乐谱一并略去。转换过程不会打开乐谱文件；转换为 RST "
+"时则保留原指令与文件名。"
 
 #: ../../reference/cli.rst:425
 msgid "Options of convert"
@@ -1407,9 +1410,9 @@ msgid ""
 msgstr ""
 "``guidedog ssg init PATH [--preset=project|journal|research] "
 "[--title=TITLE] [--author=NAME] [--now=RFC3339]``：使用内置预设之一（默认为 "
-"``project``，或 ``journal``、``research``）在 ``PATH`` 中创建一个完整的静态网站。在 "
-"``conf.toml`` 中设置 ``project`` 和 ``author``，并使用今天的 UTC 日期（或 "
-"``--now``）为初始文章盖上时间戳。"
+"``project``，可选 ``journal`` 或 ``research``）在 ``PATH`` 下创建完整的静态网站，在 "
+"``conf.toml`` 中写入 ``project`` 与 ``author``，并将初始示例文章的日期设为当天 UTC 日期（或 "
+"``--now`` 指定的时间）。"
 
 #: ../../reference/cli.rst:564
 msgid ""
@@ -1420,9 +1423,9 @@ msgid ""
 "given."
 msgstr ""
 "``guidedog ssg new PATH [--title=TITLE] [--template=NAME] "
-"[--now=RFC3339]``：在 ``PATH`` 处创建一个带有 ``:draft: true`` 和 ``:date: "
-"YYYY-MM-DD`` 的新草稿文章（``.rst`` 或 ``.md``）。``--title`` 默认为文件名词干；指定时 "
-"``--template`` 设置 ``:template: NAME``。"
+"[--now=RFC3339]``：在 ``PATH`` 处新建草稿文章（``.rst`` 或 ``.md``），自动写入 ``:draft: "
+"true`` 与 ``:date: YYYY-MM-DD``。``--title`` 默认为不含扩展名的文件名；指定 ``--template`` "
+"时会写入 ``:template: NAME``。"
 
 #: ../../reference/cli.rst:565
 msgid ""
@@ -1431,7 +1434,7 @@ msgid ""
 "Normal builds withhold it while draft is true."
 msgstr ""
 "``guidedog ssg draft PATH [--now=RFC3339]``：将 ``PATH`` "
-"处的已有文章标记为草稿（``:draft: true``），保留其日期和排期。当 draft 为 true 时，正常构建会将其扣留。"
+"处的已有文章标为草稿（``:draft: true``），保留原有日期与排期。``draft`` 为 ``true`` 期间，常规构建暂不发布该文。"
 
 #: ../../reference/cli.rst:566
 msgid ""
@@ -1439,8 +1442,8 @@ msgid ""
 "and expiration and sets ``:publish-at: RFC3339``. The article stays "
 "withheld until that instant; a past instant is accepted."
 msgstr ""
-"``guidedog ssg schedule PATH --at=RFC3339 [--now=RFC3339]``：清除草稿和过期状态，并设置 "
-"``:publish-at: RFC3339``。文章在该时刻之前保持扣留；接受过去的时刻。"
+"``guidedog ssg schedule PATH --at=RFC3339 [--now=RFC3339]``：清除草稿与过期状态，并设置 "
+"``:publish-at: RFC3339``。到达该时刻前文章暂不发布；允许指定过去的时刻。"
 
 #: ../../reference/cli.rst:567
 msgid ""
@@ -1476,11 +1479,11 @@ msgid ""
 "withheld pages; ``--now`` fixes the publication clock across all mounts."
 msgstr ""
 "``guidedog ssg build [PROJECT] [--out=DIR] [--no-pdf] [--preview] "
-"[--now=RFC3339]``：构建每个 ``[[site.mounts]]`` 条目（以及每个挂载的 "
+"[--now=RFC3339]``：构建所有 ``[[site.mounts]]`` 挂载项（含各挂载项的 "
 "``[[site.mounts.editions]]``），复制 "
-"``[[site.assets]]``，验证跨挂载目标，并将组装后的站点作为单个世代发布到 ``--out``\\ "
-"（默认：``_build/site``）。``--no-pdf`` 跳过 ``pdf`` 和 ``discussion-pdf`` "
-"挂载；``--preview`` 包含被扣留的页面；``--now`` 在所有挂载中固定发布时钟。"
+"``[[site.assets]]``，校验跨挂载引用目标，并将组装完成的站点整批原子发布到 ``--out``\\ "
+"（默认：``_build/site``）。``--no-pdf`` 跳过 ``pdf`` 与 ``discussion-pdf`` "
+"挂载；``--preview`` 包含暂不发布的页面；``--now`` 为所有挂载统一固定发布时钟。"
 
 #: ../../reference/cli.rst:571
 msgid ""
@@ -1737,7 +1740,7 @@ msgid ""
 "``origin`` remote and the project from the nearest ``conf.toml`` (or as "
 "given)."
 msgstr ""
-"``pages.toml``：只写入一次，仓库取自 ``origin`` 远程，项目取自最近的 ``conf.toml`` （或使用指定的值）。"
+"``pages.toml``：只写入一次，仓库取自 ``origin`` 远程，项目取自最近的 ``conf.toml``\\ （或使用指定的值）。"
 
 #: ../../reference/cli.rst:657
 msgid ""
@@ -1772,16 +1775,16 @@ msgid ""
 "Its options are those of ``guidedog pages init`` and ``publish`` "
 "(``--config``, ``--repository``, ``--project``, ``--branch``, "
 "``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); ``guidedog "
-"publish pages --help`` lists them. guidedog builds the project itself, "
+"publish pages --help`` lists them. Guidedog builds the project itself, "
 "with its own engine and linked plugins; ``--guidedog=PATH`` builds with "
 "another program instead. See :doc:`../howto/github-pages`."
 msgstr ""
-"在已经设置好的机器上，它会直接发布，不提任何问题。没有终端时，它从不询问；这时缺少的步骤会失败，并提示完成该步骤的命令或选项。``--yes`` "
-"会自动应答各项确认。它从不替我们登录，也不会替换其他工作。它的选项与 ``guidedog pages init`` 和 ``publish`` "
-"相同（``--config``、``--repository``、``--project``、``--branch``、``--profile``、``--wait``、``--verbose``、``--dry-run``）；``guidedog "
-"publish pages --help`` 会列出这些选项。项目由 guidedog "
-"用自己的引擎和链接的插件直接构建；``--guidedog=PATH`` 可改用另一个程序构建。参见 "
-":doc:`../howto/github-pages`。"
+"在已完成配置的机器上，命令会直接发布而无需任何交互提问。无终端环境下绝不发起询问；若缺少前置步骤则直接报错，并在提示中给出完成该步骤所需的命令或选项。``--yes`` "
+"会自动确认各项提示，但绝不会代为登录账号或擅自覆盖非 Guidedog 发布的内容。支持的选项与 ``guidedog pages init`` "
+"及 ``publish`` "
+"一致（``--config``、``--repository``、``--project``、``--branch``、``--profile``、``--wait``、``--verbose``、``--dry-run``），可通过 "
+"``guidedog publish pages --help`` 查看。Guidedog 默认使用自身引擎和内联链接插件构建项目；指定 "
+"``--guidedog=PATH`` 时则改用其他程序构建。参见 :doc:`../howto/github-pages`。"
 
 #: ../../reference/cli.rst:673
 msgid "guidedog pages workflow"
@@ -1985,40 +1988,40 @@ msgstr "插件添加的命令"
 
 #: ../../reference/cli.rst:782
 msgid ""
-"A plugin may add commands to guidedog, or targets to ``guidedog "
+"A plugin may add commands to ``guidedog``, or targets to ``guidedog "
 "publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
 "with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a "
 "plugin's:"
 msgstr ""
-"插件可以为 guidedog 添加命令，或为 ``guidedog publish`` 添加目标。``guidedog --help`` 在 "
-"PLUGIN COMMANDS 下列出这些命令，并注明各自所属插件的 ID；``guidedog plugin inspect ID`` "
-"显示某个插件添加的命令："
+"插件可以向 ``guidedog`` 添加子命令，或向 ``guidedog publish`` 添加发布目标。``guidedog "
+"--help`` 会在 PLUGIN COMMANDS 下列出这些命令并标明所属插件 ID；``guidedog plugin inspect "
+"ID`` 则显示指定插件提供的命令："
 
 #: ../../reference/cli.rst:794
 msgid ""
-"guidedog looks for a word it does not know (or a ``publish`` target) "
+"Guidedog looks for a word it does not know (or a ``publish`` target) "
 "among the commands of the linked plugins first, then among those of the "
 "registered programs, and runs the plugin that adds it. ``--help`` after "
 "such a command prints its help, made from what the plugin declares. A "
-"plugin cannot replace one of guidedog's commands, and the first plugin to "
+"plugin cannot replace one of Guidedog's commands, and the first plugin to "
 "add a name keeps it."
 msgstr ""
-"遇到不认识的词（或 ``publish`` 目标）时，guidedog "
-"先在链接的插件的命令中查找，再到已注册程序的命令中查找，然后运行添加该命令的插件。在这样的命令后加 ``--help`` "
-"会打印它的帮助，内容来自插件的声明。插件不能替换 guidedog 自己的命令；同一个名称由最先添加它的插件保有。"
+"遇到未识别的子命令（或 ``publish`` 发布目标）时，Guidedog "
+"会先在内联链接插件的命令中查找，再查找已注册外部程序的命令，并运行提供该命令的插件。在这类命令后加 ``--help`` "
+"会根据插件声明打印帮助信息。插件不能覆盖 Guidedog 原有的内置命令；若名称冲突，由最先注册该名称的插件保留。"
 
 #: ../../reference/cli.rst:796
 msgid ""
-"A linked plugin's command runs inside guidedog. A registered program's "
-"command runs as that program, started on our terminal after its SHA-256 "
-"is checked: it may ask questions, and its exit status is the command's. "
-"When either asks for a build, guidedog builds the project. The program's "
-"commands are read when it is registered, so a new version is registered "
-"again, as always."
+"A linked plugin's command runs inside ``guidedog``. A registered "
+"program's command runs as that program, started on our terminal after its "
+"SHA-256 is checked: it may ask questions, and its exit status is the "
+"command's. When either asks for a build, Guidedog builds the project. The "
+"program's commands are read when it is registered, so a new version is "
+"registered again, as always."
 msgstr ""
-"链接的插件的命令在 guidedog 内部运行。已注册程序的命令则由该程序执行：guidedog 校验其 SHA-256 "
-"后，在我们的终端上启动它。它可以提问，它的退出状态就是命令的退出状态。无论哪种方式请求构建，都由 guidedog "
-"构建项目。程序的命令在注册时读取，因此新版本需要像往常一样重新注册。"
+"内联链接插件的命令在 ``guidedog`` 进程内运行；已注册外部程序的命令则会在校验 SHA-256 "
+"后直接在当前终端启动该程序，可与用户交互提问，其退出状态码即为命令的退出状态码。无论哪种插件请求构建项目，均由 Guidedog "
+"执行构建。外部插件声明的命令列表在注册时读取，因此升级插件版本后仍需按常规流程重新注册。"
 
 #: ../../reference/cli.rst:798
 msgid "guidedog pages"
@@ -2335,8 +2338,8 @@ msgid ""
 "``\"<project> documentation\"`` without a release). ``html_short_title`` "
 "defaults to ``html_title``."
 msgstr ""
-"``html_title`` 默认为 ``\"<project> <release> documentation\"`` （没有 release "
-"时为 ``\"<project> documentation\"``）。``html_short_title`` 默认为 "
+"``html_title`` 默认为 ``\"<project> <release> documentation\"``\\ （没有 "
+"release 时为 ``\"<project> documentation\"``）。``html_short_title`` 默认为 "
 "``html_title``。"
 
 #: ../../reference/configuration.rst:63
@@ -2382,6 +2385,7 @@ msgstr "项目信息"
 #: ../../reference/configuration.rst:1442
 #: ../../reference/configuration.rst:1483
 #: ../../reference/configuration.rst:1508
+#: ../../reference/configuration.rst:1579
 msgid "Key"
 msgstr "键"
 
@@ -2407,6 +2411,7 @@ msgstr "键"
 #: ../../reference/configuration.rst:1443
 #: ../../reference/configuration.rst:1484
 #: ../../reference/configuration.rst:1509
+#: ../../reference/configuration.rst:1580
 msgid "Type"
 msgstr "类型"
 
@@ -2432,6 +2437,7 @@ msgstr "类型"
 #: ../../reference/configuration.rst:1444
 #: ../../reference/configuration.rst:1485
 #: ../../reference/configuration.rst:1510
+#: ../../reference/configuration.rst:1581
 msgid "Default"
 msgstr "默认值"
 
@@ -2457,6 +2463,7 @@ msgstr "默认值"
 #: ../../reference/configuration.rst:1445
 #: ../../reference/configuration.rst:1486
 #: ../../reference/configuration.rst:1511
+#: ../../reference/configuration.rst:1582
 msgid "Description"
 msgstr "说明"
 
@@ -2827,12 +2834,13 @@ msgstr "``include_roots``"
 #: ../../reference/configuration.rst:150
 msgid ""
 "Folders, relative to the source folder, that ``include``, "
-"``literalinclude``, images, graphs, logos and other files may also be "
-"read from. Sphinx reads any path; Guidedog reads only the source folder "
-"and these."
+"``literalinclude``, ``lilypond``, images, graphs, logos and other files "
+"may also be read from. Sphinx reads any path; Guidedog reads only the "
+"source folder and these."
 msgstr ""
-"``include``、``literalinclude``、图片、图表、徽标及其他文件还可以从这些目录读取，路径相对于源目录。Sphinx "
-"可以读取任意路径；Guidedog 只读取源目录和这些目录。"
+"供 "
+"``include``、``literalinclude``、``lilypond``、图片、图表、徽标及其他文件额外读取的目录（相对于源目录解析）。Sphinx "
+"允许读取任意路径，而 Guidedog 仅读取源目录及此处列出的目录。"
 
 #: ../../reference/configuration.rst:153
 msgid "``templates_path``"
@@ -3400,8 +3408,9 @@ msgid ""
 "``index``, ``name`` (``\"whole\"`` or ``\"first-word\"``), ``display``, "
 "and ``program``."
 msgstr ""
-"用于描述和链接自定义对象的指令与角色，相当于 Sphinx 的 ``app.add_object_type``。字段：``directive`` "
-"（必填）、``role``、``index``、``name`` （``\"whole\"`` 或 "
+"用于描述和链接自定义对象的指令与角色，相当于 Sphinx 的 "
+"``app.add_object_type``。字段：``directive``\\ "
+"（必填）、``role``、``index``、``name``\\ （``\"whole\"`` 或 "
 "``\"first-word\"``）、``display`` 和 ``program``。"
 
 #: ../../reference/configuration.rst:323
@@ -3413,8 +3422,8 @@ msgid ""
 "Targets and roles without a description, as ``app.add_crossref_type``. "
 "Fields: ``directive`` (required), ``role``, and ``index``."
 msgstr ""
-"不带描述的目标与角色，相当于 ``app.add_crossref_type``。字段：``directive`` （必填）、``role`` 和 "
-"``index``。"
+"不带描述的目标与角色，相当于 ``app.add_crossref_type``。字段：``directive``\\ （必填）、``role`` "
+"和 ``index``。"
 
 #: ../../reference/configuration.rst:328
 msgid "``directive_aliases``"
@@ -3661,6 +3670,7 @@ msgid "``html_title``"
 msgstr "``html_title``"
 
 #: ../../reference/configuration.rst:473
+#: ../../reference/configuration.rst:1593
 msgid "derived"
 msgstr "自动推导"
 
@@ -3920,7 +3930,7 @@ msgstr "一本书"
 msgid ""
 "The books: ``root`` (the first document), ``file``, ``title``, and "
 "``author``."
-msgstr "要生成的书：``root`` （第一个文档）、``file``、``title`` 和 ``author``。"
+msgstr "要生成的书：``root``\\ （第一个文档）、``file``、``title`` 和 ``author``。"
 
 #: ../../reference/configuration.rst:594
 msgid "``pdf_paper_size``"
@@ -3931,8 +3941,8 @@ msgid "``\"a4\"``"
 msgstr "``\"a4\"``"
 
 #: ../../reference/configuration.rst:597
-msgid "The paper size (``\"a4\"``, ``\"us-letter\"``)."
-msgstr "纸张尺寸（``\"a4\"``、``\"us-letter\"``）。"
+msgid "The paper size (``\"a4\"``, ``\"letter\"``, or ``\"us-letter\"``)."
+msgstr "纸张尺寸（``\"a4\"``、``\"letter\"`` 或 ``\"us-letter\"``）。"
 
 #: ../../reference/configuration.rst:598
 msgid "``pdf_logo``"
@@ -4278,7 +4288,7 @@ msgid ""
 "``\"\"`` (the ``objects.inv`` at the URI), a location, or a list of "
 "locations tried in order."
 msgstr ""
-"其他项目：名称映射到 ``[target URI, inventory]``。清单可以是 ``\"\"`` （即该 URI 下的 "
+"其他项目：名称映射到 ``[target URI, inventory]``。清单可以是 ``\"\"``\\ （即该 URI 下的 "
 "``objects.inv``）、一个位置，或按顺序尝试的位置列表。"
 
 #: ../../reference/configuration.rst:787
@@ -4319,12 +4329,12 @@ msgstr "指代本项目自身的映射名称。"
 
 #: ../../reference/configuration.rst:814
 msgid ""
-"Inventories are downloaded with the built-in HTTP client, which honours "
+"Inventories are downloaded with the built-in HTTP client, which honors "
 "``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing. See "
 ":doc:`../intersphinx`."
 msgstr ""
-"清单通过内置的 HTTP 客户端下载，该客户端遵循 ``HTTPS_PROXY`` 和 ``NO_PROXY``。使用 "
-"``--untrusted`` 时不下载任何内容。参见 :doc:`../intersphinx`。"
+"清单通过内置 HTTP 客户端下载，支持 ``HTTPS_PROXY`` 和 ``NO_PROXY`` 环境变量。启用 "
+"``--untrusted`` 时不联网下载任何内容。参见 :doc:`../intersphinx`。"
 
 #: ../../reference/configuration.rst:817
 #: ../../reference/configuration.rst:822
@@ -4381,7 +4391,8 @@ msgstr "``autodoc_default_options``"
 msgid ""
 "Options for every ``auto*`` directive: an option's value, or ``true`` for "
 "a flag (``members = true``)."
-msgstr "所有 ``auto*`` 指令的默认选项：填写选项的值，标志选项则填 ``true`` （如 ``members = true``）。"
+msgstr ""
+"所有 ``auto*`` 指令的默认选项：填写选项的值，标志选项则填 ``true``\\ （如 ``members = true``）。"
 
 #: ../../reference/configuration.rst:848
 msgid "``autodoc_docstring_signature``"
@@ -4570,7 +4581,7 @@ msgstr "``napoleon_use_admonition_for_examples``"
 
 #: ../../reference/configuration.rst:939
 msgid "Render ``Examples`` sections as admonitions rather than rubrics."
-msgstr "将 ``Examples`` 小节渲染为告诫框而非小标题（rubric）。"
+msgstr "将 ``Examples`` 小节渲染为提示框而非小标题（rubric）。"
 
 #: ../../reference/configuration.rst:940
 msgid "``napoleon_use_admonition_for_notes``"
@@ -4578,7 +4589,7 @@ msgstr "``napoleon_use_admonition_for_notes``"
 
 #: ../../reference/configuration.rst:943
 msgid "Render ``Notes`` sections as admonitions rather than rubrics."
-msgstr "将 ``Notes`` 小节渲染为告诫框而非小标题。"
+msgstr "将 ``Notes`` 小节渲染为提示框而非小标题。"
 
 #: ../../reference/configuration.rst:944
 msgid "``napoleon_use_admonition_for_references``"
@@ -4586,7 +4597,7 @@ msgstr "``napoleon_use_admonition_for_references``"
 
 #: ../../reference/configuration.rst:947
 msgid "Render ``References`` sections as admonitions rather than rubrics."
-msgstr "将 ``References`` 小节渲染为告诫框而非小标题。"
+msgstr "将 ``References`` 小节渲染为提示框而非小标题。"
 
 #: ../../reference/configuration.rst:948
 msgid "``napoleon_use_ivar``"
@@ -5250,7 +5261,7 @@ msgid ""
 "``private-members`` (document private items, with their visibility), "
 "``hidden-members`` (``#[doc(hidden)]`` items), and ``noindex``."
 msgstr ""
-"``private-members`` （为私有项生成文档，并标出其可见性）、``hidden-members`` "
+"``private-members``\\ （为私有项生成文档，并标出其可见性）、``hidden-members``\\ "
 "（``#[doc(hidden)]`` 项）和 ``noindex``。"
 
 #: ../../reference/configuration.rst:1260
@@ -5776,45 +5787,80 @@ msgid ""
 "not a process sandbox. See :doc:`cli`."
 msgstr ""
 "``guidedog build --untrusted`` "
-"用于构建源文件并非由我们编写的项目。原始内容会被略去，不获取任何内容，也不运行任何构建插件。项目无法扩大构建可读取的范围。``include_roots`` "
+"用于构建非本人编写的外部项目源码。此时会略去原始透传内容（raw），不联网获取任何资源，也不运行任何构建插件。项目无法扩大构建可读取的目录范围，``include_roots`` "
 "和 ``pdf_preamble`` "
-"不会生效。指向源目录之外的文件和文件夹（``html_logo``、``html_favicon``、``pdf_logo``、``mathjax_config_path``、``html_static_path``、``html_extra_path``、``templates_path``、``locale_dirs``、``pdf_font_paths``、``autodoc_source_paths``、``odin_autoapi_dirs``、``rust_autoapi_crates``）会被略去。内嵌 "
-"``typst-diagram`` 编译被禁用，也不下载任何 Typst 包。文档中直接书写的 ``lilypond`` "
-"乐谱仍会刻印，但其文件参数和 ``\\include`` 会被拒绝。每个被舍弃的设置都会产生一条 ``build.untrusted`` "
-"警告。这是一种能力策略，而不是进程沙箱。参见 :doc:`cli`。"
+"均不生效。指向源目录之外的文件与目录配置（``html_logo``、``html_favicon``、``pdf_logo``、``mathjax_config_path``、``html_static_path``、``html_extra_path``、``templates_path``、``locale_dirs``、``pdf_font_paths``、``autodoc_source_paths``、``odin_autoapi_dirs``、``rust_autoapi_crates``）一律忽略。内嵌 "
+"``typst-diagram`` 编译会被禁用，也不下载任何 Typst 包。内联 ``lilypond`` 乐谱仍会排印，但拒绝其文件参数和 "
+"``\\include``。每项被忽略的配置都会产生一条 ``build.untrusted`` 警告。这是一种能力限制策略，而非进程沙箱。参见 "
+":doc:`cli`。"
 
 #: ../../reference/configuration.rst:1572
 msgid "Native music engraving"
 msgstr "原生乐谱排印"
 
-#: ../../reference/configuration.rst:1575
+#: ../../reference/configuration.rst:1583
+msgid "``lilypond_staff_size``"
+msgstr "``lilypond_staff_size``"
+
+#: ../../reference/configuration.rst:1584
+#: ../../reference/configuration.rst:1588
+#: ../../reference/configuration.rst:1592
+msgid "float"
+msgstr "浮点数"
+
+#: ../../reference/configuration.rst:1585
+msgid "``18``"
+msgstr "``18``"
+
+#: ../../reference/configuration.rst:1586
 msgid ""
-"``lilypond_staff_size`` sets the default five-line staff height in "
-"points, from 10 through 40; the default is 18. ``lilypond_html_width`` "
-"sets the wide HTML system measure in points; the default is 564. "
-"``lilypond_pdf_width`` sets the PDF system measure in points; when "
-"omitted, the selected template and ``pdf_paper_size`` determine it. "
-"Widths must be positive and no greater than 100,000 points. All three "
-"values are finite TOML numbers, and directive options override their "
-"project defaults."
-msgstr ""
-"``lilypond_staff_size`` 设置默认五线谱高度，单位为点，范围为 10 到 40，默认为 "
-"18。``lilypond_html_width`` 设置 HTML 宽版系统宽度，单位为点，默认为 "
-"564。``lilypond_pdf_width`` 设置 PDF 系统宽度，单位为点；省略时，由所选模板和 ``pdf_paper_size`` "
-"决定。宽度必须为正数且不超过 100,000 点。三个值都是有限 TOML 数值，指令选项覆盖项目默认值。"
+"Default five-line staff height in points, from ``10`` through ``40``."
+msgstr "五线谱默认谱表高度（单位：点），取值范围为 ``10`` 至 ``40``。"
 
 #: ../../reference/configuration.rst:1587
+msgid "``lilypond_html_width``"
+msgstr "``lilypond_html_width``"
+
+#: ../../reference/configuration.rst:1589
+msgid "``564``"
+msgstr "``564``"
+
+#: ../../reference/configuration.rst:1590
+msgid "Wide HTML system measure in points (positive, at most ``100000``)."
+msgstr "HTML 宽版谱行宽度，单位为点（正数，最大 ``100000``）。"
+
+#: ../../reference/configuration.rst:1591
+msgid "``lilypond_pdf_width``"
+msgstr "``lilypond_pdf_width``"
+
+#: ../../reference/configuration.rst:1594
 msgid ""
-"The PDF templates declare their horizontal margin with ``// guidedog: "
-"margin-x = 31mm`` after their first import. Without a declaration, we "
-"assume 25 millimetres on each side. The built-in book, article and "
-"discussion margins are 31, 30 and 25 millimetres respectively. Text fonts "
-"use ``pdf_fonts`` and ``pdf_font_paths``. See :doc:`../topics/music` for "
-"directive syntax, layout, trust rules and limits."
+"PDF system measure in points (positive, at most ``100000``); when "
+"omitted, derived from ``pdf_paper_size`` and the selected template's "
+"horizontal margin."
 msgstr ""
-"PDF 模板在首个导入语句之后用 ``// guidedog: margin-x = 31mm`` 声明水平页边距。没有声明时，我们假定每侧为 "
-"25 毫米。内置图书、文章和讨论模板的页边距分别为 31、30 和 25 毫米。文字字体使用 ``pdf_fonts`` 和 "
-"``pdf_font_paths``。指令语法、布局、信任规则和限制参见 :doc:`../topics/music`。"
+"PDF 谱行宽度，单位为点（正数，最大 ``100000``）；省略时根据 ``pdf_paper_size`` 与所选模板的水平页边距自动推算。"
+
+#: ../../reference/configuration.rst:1596
+msgid ""
+"All three values are finite TOML numbers, and directive options override "
+"their project defaults."
+msgstr "三项配置均为有限 TOML 数值，指令级选项可覆盖项目默认值。"
+
+#: ../../reference/configuration.rst:1604
+msgid ""
+"The PDF templates declare their horizontal margin in their leading 256 "
+"lines with a comment such as ``// guidedog: margin-x = 31mm``. Without a "
+"declaration, we assume 25 millimeters on each side. The built-in book, "
+"article and discussion margins are 31, 30 and 25 millimeters "
+"respectively. Text fonts use ``pdf_fonts`` and ``pdf_font_paths``. See "
+":doc:`../topics/music` for directive syntax, layout, trust rules and "
+"limits."
+msgstr ""
+"PDF 模板在前 256 行内通过 ``// guidedog: margin-x = 31mm`` "
+"这样的注释声明水平页边距；若未声明，默认按左右各 25 毫米计算。内置图书、文章和讨论模板的水平页边距分别为 31、30 和 25 "
+"毫米。文本字体遵循 ``pdf_fonts`` 和 ``pdf_font_paths`` 配置。指令语法、版式规则、信任边界与资源上限详见 "
+":doc:`../topics/music`。"
 
 #: ../../reference/formats.rst:1
 msgid "Readers, renderers, and builders"
@@ -5825,7 +5871,7 @@ msgid ""
 "A reader understands a source language. A renderer writes one document "
 "tree. A builder coordinates a project and publishes its output. These are "
 "different responsibilities."
-msgstr "读取器理解源语言；渲染器输出一棵文档树；构建器协调项目并发布输出。这是不同职责。"
+msgstr "读取器负责解析源标记语言；渲染器负责将单棵文档树渲染为目标格式；构建器负责统筹整个项目并发布产物。三者职责分明。"
 
 #: ../../reference/formats.rst:8
 msgid "Source routes"
@@ -5853,7 +5899,7 @@ msgstr "RST 与内置的 Sphinx 层"
 
 #: ../../reference/formats.rst:17
 msgid "Project graph to HTML, Typst/PDF, text, or catalogs."
-msgstr "将项目图生成 HTML、Typst/PDF、文本或翻译清单。"
+msgstr "将项目图输出为 HTML、Typst/PDF、纯文本或消息目录。"
 
 #: ../../reference/formats.rst:18
 msgid "Markdown in a project"
@@ -6020,7 +6066,7 @@ msgid ""
 "examples."
 msgstr ""
 "RST 和 MyST 的 ``lilypond`` 指令使用项目原生乐谱排印流水线。SVG 和 PNG 资源、图注、插图引用、窄屏 HTML "
-"布局和 PDF 系统图像见 :doc:`../topics/music`。普通 LilyPond 代码块仍是源码示例。"
+"布局以及 PDF 谱行图像详见 :doc:`../topics/music`。普通 LilyPond 代码块仍作为源码示例展示。"
 
 #: ../../reference/index.rst:1
 msgid "Reference"

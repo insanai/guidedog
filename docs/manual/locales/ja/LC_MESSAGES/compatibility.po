@@ -20,18 +20,8 @@ msgid "Compatibility with Sphinx"
 msgstr "Sphinx との互換性"
 
 #: ../../compatibility.rst:4
-msgid ""
-"Guidedog supports all of reStructuredText and all of Sphinx's built-in "
-"extensions. It supports them in its own way: the output serves the same "
-"purpose, but it is not identical to Sphinx's. Guidedog never runs Python, "
-"neither the configuration nor an extension. It measures compatibility "
-"feature by feature. **A successful build is evidence of a build, not "
-"proof of complete equivalence.**"
-msgstr ""
-"Guidedog は reStructuredText のすべてと、Sphinx の組み込み拡張のすべてに対応しています。ただし、対応の仕方は "
-"Guidedog 独自です。出力は同じ目的を果たしますが、Sphinx の出力とまったく同じではありません。Guidedog は Python "
-"を一切実行しません。設定ファイルも拡張も実行しません。互換性は機能ごとに測っています。\\ "
-"**ビルドが成功したことはビルドできたことの証拠であり、完全に同等であることの証明ではありません。**"
+msgid "Guidedog supports all of reStructuredText and all of Sphinx's built-in extensions. It supports them in its own way: the output serves the same purpose, but it is not identical to Sphinx's. Guidedog never runs Python, neither the configuration nor an extension. It measures compatibility feature by feature. **A successful build is evidence of a build, not proof of complete equivalence.**"
+msgstr "Guidedog は reStructuredText のすべてと、Sphinx の組み込み拡張のすべてに対応しています。ただし、対応の仕方は Guidedog 独自です。出力は同じ目的を果たしますが、Sphinx の出力とまったく同じではありません。Guidedog は Python を一切実行しません。設定ファイルも拡張も実行しません。互換性は機能ごとに測っています。\\ **ビルドが成功したことはビルドできたことの証拠であり、完全に同等であることの証明ではありません。**"
 
 #: ../../compatibility.rst:10
 msgid "Projects and publication"
@@ -54,20 +44,15 @@ msgid "Project layout and build flags"
 msgstr "プロジェクト構成とビルドオプション"
 
 #: ../../compatibility.rst:20
-msgid ""
-"Sphinx-style source and output directories; ``-a -E -W -n -D -t -j -b -M "
-"-c -C``."
-msgstr ""
-"Sphinx 形式のソース・出力ディレクトリとオプション：\\ ``-a -E -W -n -D -t -j -b -M -c -C``\\ 。"
+msgid "Sphinx-style source and output directories; ``-a -E -W -n -D -t -j -b -M -c -C``."
+msgstr "Sphinx 形式のソース・出力ディレクトリとオプション：\\ ``-a -E -W -n -D -t -j -b -M -c -C``\\ 。"
 
 #: ../../compatibility.rst:21
 msgid "Configuration"
 msgstr "設定"
 
 #: ../../compatibility.rst:22
-msgid ""
-"TOML data with familiar Sphinx names. Migration converts literals and "
-"reports computed values."
+msgid "TOML data with familiar Sphinx names. Migration converts literals and reports computed values."
 msgstr "Sphinx でおなじみの設定名を TOML データとして記述します。移行時はリテラルを変換し、計算が必要な値を報告します。"
 
 #: ../../compatibility.rst:23
@@ -75,33 +60,23 @@ msgid "HTML builders"
 msgstr "HTML ビルダー"
 
 #: ../../compatibility.rst:24
-msgid ""
-"``html``, ``dirhtml``, and ``singlehtml``. Single-page anchors include "
-"document names."
-msgstr ""
-"``html``\\ 、\\ ``dirhtml``\\ 、\\ ``singlehtml`` "
-"に対応します。単一ページのアンカーには文書名を含めます。"
+msgid "``html``, ``dirhtml``, and ``singlehtml``. Single-page anchors include document names."
+msgstr "``html``\\ 、\\ ``dirhtml``\\ 、\\ ``singlehtml`` に対応します。単一ページのアンカーには文書名を含めます。"
 
 #: ../../compatibility.rst:25
 msgid "Other builders"
 msgstr "その他のビルダー"
 
 #: ../../compatibility.rst:26
-msgid ""
-"``text``, ``gettext``, and ``dummy``. ``pdf`` uses Typst; ``latex`` and "
-"``latexpdf`` select that route."
-msgstr ""
-"``text``\\ 、\\ ``gettext``\\ 、\\ ``dummy`` に対応します。\\ ``pdf`` は Typst "
-"を使い、\\ ``latex`` と ``latexpdf`` も同じ経路を選びます。"
+msgid "``text``, ``gettext``, and ``dummy``. ``pdf`` uses Typst; ``latex`` and ``latexpdf`` select that route."
+msgstr "``text``\\ 、\\ ``gettext``\\ 、\\ ``dummy`` に対応します。\\ ``pdf`` は Typst を使い、\\ ``latex`` と ``latexpdf`` も同じ経路を選びます。"
 
 #: ../../compatibility.rst:27
 msgid "Templates"
 msgstr "テンプレート"
 
 #: ../../compatibility.rst:28
-msgid ""
-"Guidedog's Jinja implementation, typed ``html_context``, layout "
-"inheritance, and additional pages."
+msgid "Guidedog's Jinja implementation, typed ``html_context``, layout inheritance, and additional pages."
 msgstr "Guidedog の Jinja 実装、型を保持する ``html_context``\\ 、レイアウトの継承、追加ページ。"
 
 #: ../../compatibility.rst:29
@@ -109,9 +84,7 @@ msgid "Incremental work"
 msgstr "差分ビルド"
 
 #: ../../compatibility.rst:30
-msgid ""
-"Sources, dependencies, templates, configuration, and reference lookups "
-"invalidate affected output."
+msgid "Sources, dependencies, templates, configuration, and reference lookups invalidate affected output."
 msgstr "ソース、依存関係、テンプレート、設定、参照検索の変更で、関連する出力が無効になります。"
 
 #: ../../compatibility.rst:31
@@ -119,46 +92,20 @@ msgid "Publication"
 msgstr "公開"
 
 #: ../../compatibility.rst:32
-msgid ""
-"One complete generation. A failed build keeps the previous published "
-"generation."
+msgid "One complete generation. A failed build keeps the previous published generation."
 msgstr "完全な世代を一度に公開します。ビルドに失敗した場合は前の公開済み世代を保持します。"
 
 #: ../../compatibility.rst:34
-msgid ""
-"``-D`` accepts ``true`` and ``false``, or ``1`` and ``0``, for booleans. "
-"A project with ``contents`` and no ``index`` can use ``contents`` as its "
-"root, with a warning. Additional template pages use filenames at the site "
-"root, including under ``dirhtml``. See :doc:`templates` for the exact "
-"contract."
-msgstr ""
-"``-D`` の真偽値には ``true`` と ``false``\\ 、または ``1`` と ``0`` を使えます。\\ "
-"``index`` がなく ``contents`` があるプロジェクトでは、警告付きで ``contents`` "
-"をルートにできます。追加テンプレートページは ``dirhtml`` でもサイトのルートに置きます。詳しい規約は :doc:`templates` "
-"を参照してください。"
+msgid "``-D`` accepts ``true`` and ``false``, or ``1`` and ``0``, for booleans. A project with ``contents`` and no ``index`` can use ``contents`` as its root, with a warning. Additional template pages use filenames at the site root, including under ``dirhtml``. See :doc:`templates` for the exact contract."
+msgstr "``-D`` の真偽値には ``true`` と ``false``\\ 、または ``1`` と ``0`` を使えます。\\ ``index`` がなく ``contents`` があるプロジェクトでは、警告付きで ``contents`` をルートにできます。追加テンプレートページは ``dirhtml`` でもサイトのルートに置きます。詳しい規約は :doc:`templates` を参照してください。"
 
 #: ../../compatibility.rst:39
-msgid ""
-"An unchanged page reports its diagnostics again. Therefore ``-W`` has the "
-"same meaning on a clean build and an unchanged build. A deleted "
-"document's page is removed. Publication uses a recoverable journal. The "
-"next build settles an interrupted commit. See "
-":doc:`internals/publication` for the invariant and its platform boundary."
-msgstr ""
-"変更のないページでも診断を再表示するため、\\ ``-W`` "
-"は新規ビルドと変更のないビルドで同じ意味を持ちます。削除した文書のページは取り除きます。公開には復旧可能なジャーナルを使い、中断したコミットは次のビルドで処理します。不変条件とプラットフォーム上の制約は "
-":doc:`internals/publication` を参照してください。"
+msgid "An unchanged page reports its diagnostics again. Therefore ``-W`` has the same meaning on a clean build and an unchanged build. A deleted document's page is removed. Publication uses a recoverable journal. The next build settles an interrupted commit. See :doc:`internals/publication` for the invariant and its platform boundary."
+msgstr "変更のないページでも診断を再表示するため、\\ ``-W`` は新規ビルドと変更のないビルドで同じ意味を持ちます。削除した文書のページは取り除きます。公開には復旧可能なジャーナルを使い、中断したコミットは次のビルドで処理します。不変条件とプラットフォーム上の制約は :doc:`internals/publication` を参照してください。"
 
 #: ../../compatibility.rst:44
-msgid ""
-"``coverage`` comes with the ``coverage`` extension, described below. The "
-"builders ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest``, and "
-"``changes`` are unavailable. Their names receive a correction message. "
-"The repository's ``tools/linkcheck`` is a separate verification tool."
-msgstr ""
-"``coverage`` は ``coverage`` "
-"拡張とともに提供されます（後述）。``epub``、``man``、``texinfo``、``linkcheck``、``doctest``、``changes`` "
-"のビルダーはありません。これらを指定すると修正方法を報告します。リポジトリの ``tools/linkcheck`` は独立した検証ツールです。"
+msgid "``coverage`` comes with the ``coverage`` extension, described below. The builders ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest``, and ``changes`` are unavailable. Their names receive a correction message. The repository's ``tools/linkcheck`` is a separate verification tool."
+msgstr "``coverage`` は ``coverage`` 拡張とともに提供されます（後述）。``epub``、``man``、``texinfo``、``linkcheck``、``doctest``、``changes`` のビルダーはありません。これらを指定すると修正方法を報告します。リポジトリの ``tools/linkcheck`` は独立した検証ツールです。"
 
 #: ../../compatibility.rst:48
 msgid "Source languages"
@@ -181,11 +128,8 @@ msgid "reStructuredText"
 msgstr "reStructuredText"
 
 #: ../../compatibility.rst:58
-msgid ""
-"98 corpus sources match the compared Docutils trees and identifiers. The "
-"comparison excludes source positions and several bookkeeping attributes."
-msgstr ""
-"98 個のコーパスソースで、比較対象の Docutils の木と識別子が一致します。ソース位置と一部の内部管理属性は比較から除外しています。"
+msgid "98 corpus sources match the compared Docutils trees and identifiers. The comparison excludes source positions and several bookkeeping attributes."
+msgstr "98 個のコーパスソースで、比較対象の Docutils の木と識別子が一致します。ソース位置と一部の内部管理属性は比較から除外しています。"
 
 #: ../../compatibility.rst:59
 msgid "CommonMark 0.31.2"
@@ -197,129 +141,55 @@ msgstr "仕様の例 652 件がすべて通ります。"
 
 #: ../../compatibility.rst:61
 msgid "MyST 0.16.1 reference"
-msgstr "MyST 0.16.1 reference"
+msgstr "MyST 0.16.1 リファレンス"
 
 #: ../../compatibility.rst:62
-msgid ""
-"215 of 218 reader fixtures and 8 of 10 Sphinx fixture builds match. "
-"Remaining differences are recorded."
-msgstr ""
-"リーダーのテストケース 218 件中 215 件、Sphinx のビルドケース 10 件中 8 件が一致します。残る差分は記録しています。"
+msgid "215 of 218 reader fixtures and 8 of 10 Sphinx fixture builds match. Remaining differences are recorded."
+msgstr "リーダーのテストケース 218 件中 215 件、Sphinx のビルドケース 10 件中 8 件が一致します。残る差分は記録しています。"
 
 #: ../../compatibility.rst:64
-msgid ""
-"These are pinned tests. They do not imply compatibility with every later "
-"release. Run ``guidedog formats`` for the executable's reader and "
-"renderer evidence. The reader directories contain their conformance notes."
-msgstr ""
-"固定版でのテストであり、以後のすべての版との互換性を示すものではありません。\\ ``guidedog formats`` "
-"で実行ファイルのリーダーとレンダラーの検証結果を確認できます。各リーダーのディレクトリにも適合性の注記があります。"
+msgid "These are pinned tests. They do not imply compatibility with every later release. Run ``guidedog formats`` for the executable's reader and renderer evidence. The reader directories contain their conformance notes."
+msgstr "固定版でのテストであり、以後のすべての版との互換性を示すものではありません。\\ ``guidedog formats`` で実行ファイルのリーダーとレンダラーの検証結果を確認できます。各リーダーのディレクトリにも適合性の注記があります。"
 
 #: ../../compatibility.rst:68
-msgid ""
-"``rst_prolog`` follows leading bibliographic fields. ``rst_epilog`` "
-"follows the source. Neither is inserted into Markdown. ``only`` and "
-"``ifconfig`` keep their sections when the condition holds. Their "
-"placement can differ from Sphinx when a conditional section changes the "
-"surrounding section level. Section titles inside MyST ``eval-rst`` are "
-"errors."
-msgstr ""
-"``rst_prolog`` は冒頭の書誌フィールドの後に、\\ ``rst_epilog`` はソースの後に挿入します。Markdown "
-"にはどちらも挿入しません。\\ ``only`` と ``ifconfig`` "
-"は条件を満たす節を残します。条件付きの節が周囲の階層を変える場合、配置が Sphinx と異なることがあります。MyST の "
-"``eval-rst`` 内の節見出しはエラーです。"
+msgid "``rst_prolog`` follows leading bibliographic fields. ``rst_epilog`` follows the source. Neither is inserted into Markdown. ``only`` and ``ifconfig`` keep their sections when the condition holds. Their placement can differ from Sphinx when a conditional section changes the surrounding section level. Section titles inside MyST ``eval-rst`` are errors."
+msgstr "``rst_prolog`` は冒頭の書誌フィールドの後に、\\ ``rst_epilog`` はソースの後に挿入します。Markdown にはどちらも挿入しません。\\ ``only`` と ``ifconfig`` は条件を満たす節を残します。条件付きの節が周囲の階層を変える場合、配置が Sphinx と異なることがあります。MyST の ``eval-rst`` 内の節見出しはエラーです。"
 
 #: ../../compatibility.rst:74
 msgid "References and domains"
 msgstr "参照とドメイン"
 
 #: ../../compatibility.rst:77
-msgid ""
-"Guidedog implements toctrees, labels, glossaries, numbered sections and "
-"figures, ``ref``, ``doc``, ``numref``, ``term``, ``download``, ``any``, "
-"``keyword``, ``option``, ``envvar``, and ``token`` references. Objects "
-"can appear in toctrees, sidebars, and the page outline."
-msgstr ""
-"Guidedog は toctree、ラベル、用語集、節と図の番号付け、および ``ref``\\ 、\\ ``doc``\\ 、\\ "
-"``numref``\\ 、\\ ``term``\\ 、\\ ``download``\\ 、\\ ``any``\\ 、\\ "
-"``keyword``\\ 、\\ ``option``\\ 、\\ ``envvar``\\ 、\\ ``token`` "
-"参照を実装しています。オブジェクトは目次ツリー、サイドバー、ページのアウトラインに表示できます。"
+msgid "Guidedog implements toctrees, labels, glossaries, numbered sections and figures, ``ref``, ``doc``, ``numref``, ``term``, ``download``, ``any``, ``keyword``, ``option``, ``envvar``, and ``token`` references. Objects can appear in toctrees, sidebars, and the page outline."
+msgstr "Guidedog は toctree、ラベル、用語集、節と図の番号付け、および ``ref``\\ 、\\ ``doc``\\ 、\\ ``numref``\\ 、\\ ``term``\\ 、\\ ``download``\\ 、\\ ``any``\\ 、\\ ``keyword``\\ 、\\ ``option``\\ 、\\ ``envvar``\\ 、\\ ``token`` 参照を実装しています。オブジェクトは目次ツリー、サイドバー、ページのアウトラインに表示できます。"
 
 #: ../../compatibility.rst:82
-msgid ""
-"The standard, Python, C, C++, JavaScript, reStructuredText, and math "
-"domains are implemented. The Odin and Rust domains are Guidedog's own "
-"extensions. They describe packages or crates, declarations, signatures, "
-"and generated API pages. See :doc:`odin` and :doc:`rust` for their "
-"source-only discovery and limits."
-msgstr ""
-"標準、Python、C、C++、JavaScript、reStructuredText、数学の各ドメインを実装しています。Odin ドメインと "
-"Rust ドメインは Guidedog 独自の拡張で、パッケージやクレート、宣言、シグネチャ、生成される API "
-"ページを記述します。ソースだけを使う探索の仕組みと制限は :doc:`odin` と :doc:`rust` を参照してください。"
+msgid "The standard, Python, C, C++, JavaScript, reStructuredText, and math domains are implemented. The Odin and Rust domains are Guidedog's own extensions. They describe packages or crates, declarations, signatures, and generated API pages. See :doc:`odin` and :doc:`rust` for their source-only discovery and limits."
+msgstr "標準、Python、C、C++、JavaScript、reStructuredText、数学の各ドメインを実装しています。Odin ドメインと Rust ドメインは Guidedog 独自の拡張で、パッケージやクレート、宣言、シグネチャ、生成される API ページを記述します。ソースだけを使う探索の仕組みと制限は :doc:`odin` と :doc:`rust` を参照してください。"
 
 #: ../../compatibility.rst:87
-msgid ""
-"Parameter, return, exception, and variable fields form structured "
-"descriptions. Canonical names become aliases for references and "
-"inventories. Python defaults and annotations retain their source "
-"spelling. Sphinx may print them again through Python's unparser. C++ "
-"declarations publish Sphinx-compatible identifier versions and symbol "
-"inventories. Nesting limits still apply. Nested parentheses are parsed in "
-"linear time."
-msgstr ""
-"引数、戻り値、例外、変数のフィールドを構造化した説明にまとめます。正規名は参照とインベントリの別名になります。Python "
-"の既定値と注釈はソースの表記を保ちます。Sphinx は Python の unparser で再出力する場合があります。C++ 宣言は "
-"Sphinx 互換の識別子バージョンとシンボル一覧を公開します。入れ子の深さには制限があり、入れ子の括弧は線形時間で解析します。"
+msgid "Parameter, return, exception, and variable fields form structured descriptions. Canonical names become aliases for references and inventories. Python defaults and annotations retain their source spelling. Sphinx may print them again through Python's unparser. C++ declarations publish Sphinx-compatible identifier versions and symbol inventories. Nesting limits still apply. Nested parentheses are parsed in linear time."
+msgstr "引数、戻り値、例外、変数のフィールドを構造化した説明にまとめます。正規名は参照とインベントリの別名になります。Python の既定値と注釈はソースの表記を保ちます。Sphinx は Python の unparser で再出力する場合があります。C++ 宣言は Sphinx 互換の識別子バージョンとシンボル一覧を公開します。入れ子の深さには制限があり、入れ子の括弧は線形時間で解析します。"
 
 #: ../../compatibility.rst:94
-msgid ""
-"``numref`` substitutes one number slot and reports an unnumbered target. "
-"Section numbering follows reading order. A document is numbered once. A "
-"second numbered toctree reports the conflict. See the reference tests for "
-"format substitution and identifier details."
-msgstr ""
-"``numref`` は番号の差し込み位置を 1 つ置き換え、番号のない参照先を報告します。節番号は読む順に付きます。1 "
-"つの文書に番号を付けるのは一度だけです。2 つ目の番号付き toctree "
-"があると、その競合を報告します。書式の置換と識別子の詳細は、参照テストを確認してください。"
+msgid "``numref`` substitutes one number slot and reports an unnumbered target. Section numbering follows reading order. A document is numbered once. A second numbered toctree reports the conflict. See the reference tests for format substitution and identifier details."
+msgstr "``numref`` は番号の差し込み位置を 1 つ置き換え、番号のない参照先を報告します。節番号は読む順に付きます。1 つの文書に番号を付けるのは一度だけです。2 つ目の番号付き toctree があると、その競合を報告します。書式の置換と識別子の詳細は、参照テストを確認してください。"
 
 #: ../../compatibility.rst:99
-msgid ""
-"The general index, module index, and search are built in. Search matches "
-"word prefixes. It does not copy Sphinx's English stemming."
+msgid "The general index, module index, and search are built in. Search matches word prefixes. It does not copy Sphinx's English stemming."
 msgstr "総合索引、モジュール索引、検索を組み込みで備えています。検索は単語の前方一致で照合し、Sphinx の英語ステミングは再現しません。"
 
 #: ../../compatibility.rst:102
-msgid ""
-"Declarative object types replace a useful class of Python extension "
-"registrations. ``object_types``, ``crossref_types``, and "
-"``directive_aliases`` describe their data. A custom Python ``parse_node`` "
-"becomes declarative name, display, and program rules. Migration reports "
-"code it cannot express. See :doc:`object-types`."
-msgstr ""
-"宣言的なオブジェクト型で、よく使われる Python 拡張登録を置き換えられます。\\ ``object_types``\\ 、\\ "
-"``crossref_types``\\ 、\\ ``directive_aliases`` がデータを記述します。独自の Python "
-"``parse_node`` は名前・表示・プログラムの宣言規則に置き換えます。表せないコードは移行時に報告します。\\ "
-":doc:`object-types` を参照してください。"
+msgid "Declarative object types replace a useful class of Python extension registrations. ``object_types``, ``crossref_types``, and ``directive_aliases`` describe their data. A custom Python ``parse_node`` becomes declarative name, display, and program rules. Migration reports code it cannot express. See :doc:`object-types`."
+msgstr "宣言的なオブジェクト型で、よく使われる Python 拡張登録を置き換えられます。\\ ``object_types``\\ 、\\ ``crossref_types``\\ 、\\ ``directive_aliases`` がデータを記述します。独自の Python ``parse_node`` は名前・表示・プログラムの宣言規則に置き換えます。表せないコードは移行時に報告します。\\ :doc:`object-types` を参照してください。"
 
 #: ../../compatibility.rst:107 ../../compatibility.rst:112
 msgid "Built-in extensions"
 msgstr "組み込み拡張"
 
 #: ../../compatibility.rst:110
-msgid ""
-"Every extension in Sphinx's ``sphinx.ext`` package is built in. A project "
-"lists it by its Sphinx name in ``extensions``, and its directives, roles, "
-"settings and builders are there. The settings keep Sphinx's names and "
-"defaults, so ``guidedog migrate`` carries them over from ``conf.py``. "
-"Where Sphinx imports Python, Guidedog reads the source instead. Where "
-"Sphinx calls a program, Guidedog uses what it has built in. GDS 0011 "
-"records the design of each one."
-msgstr ""
-"Sphinx の ``sphinx.ext`` パッケージにある拡張は、すべて組み込みです。プロジェクトの ``extensions`` に "
-"Sphinx での名前を書けば、そのディレクティブ、ロール、設定、ビルダーが使えます。設定の名前と既定値は Sphinx "
-"と同じなので、``guidedog migrate`` が ``conf.py`` から引き継げます。Sphinx が Python "
-"をインポートするところでは、Guidedog はソースを読みます。Sphinx が外部プログラムを呼び出すところでは、Guidedog "
-"は組み込みの機能を使います。それぞれの設計は GDS 0011 に記録しています。"
+msgid "Every extension in Sphinx's ``sphinx.ext`` package is built in. A project lists it by its Sphinx name in ``extensions``, and its directives, roles, settings and builders are there. The settings keep Sphinx's names and defaults, so ``guidedog migrate`` carries them over from ``conf.py``. Where Sphinx imports Python, Guidedog reads the source instead. Where Sphinx calls a program, Guidedog uses what it has built in. GDS 0011 records the design of each one."
+msgstr "Sphinx の ``sphinx.ext`` パッケージにある拡張は、すべて組み込みです。プロジェクトの ``extensions`` に Sphinx での名前を書けば、そのディレクティブ、ロール、設定、ビルダーが使えます。設定の名前と既定値は Sphinx と同じなので、``guidedog migrate`` が ``conf.py`` から引き継げます。Sphinx が Python をインポートするところでは、Guidedog はソースを読みます。Sphinx が外部プログラムを呼び出すところでは、Guidedog は組み込みの機能を使います。それぞれの設計は GDS 0011 に記録しています。"
 
 #: ../../compatibility.rst:116
 msgid "Extension"
@@ -331,7 +201,7 @@ msgstr "Guidedog での扱い"
 
 #: ../../compatibility.rst:118
 msgid "``todo``, ``ifconfig``, ``extlinks``, ``autosectionlabel``"
-msgstr "``todo``\\ , ``ifconfig``\\ , ``extlinks``\\ , ``autosectionlabel``"
+msgstr "``todo``、``ifconfig``、``extlinks``、``autosectionlabel``"
 
 #: ../../compatibility.rst:119
 msgid "As in Sphinx. Hardcoded extlinks can receive a suggested role."
@@ -342,8 +212,7 @@ msgid "``graphviz``"
 msgstr "``graphviz``"
 
 #: ../../compatibility.rst:121
-msgid ""
-"Linked Graphviz produces static drawings. Resource confinement applies."
+msgid "Linked Graphviz produces static drawings. Resource confinement applies."
 msgstr "リンクした Graphviz が静的な図を生成します。リソースの範囲制限を適用します。"
 
 #: ../../compatibility.rst:122
@@ -351,8 +220,7 @@ msgid "``intersphinx``"
 msgstr "``intersphinx``"
 
 #: ../../compatibility.rst:123
-msgid ""
-"Local and fetched inventories. Fetching uses the built-in HTTP client."
+msgid "Local and fetched inventories. Fetching uses the built-in HTTP client."
 msgstr "ローカルのインベントリと取得したインベントリに対応します。取得には組み込みの HTTP クライアントを使います。"
 
 #: ../../compatibility.rst:124
@@ -368,9 +236,7 @@ msgid "``mathjax`` and ``imgmath``"
 msgstr "``mathjax`` と ``imgmath``"
 
 #: ../../compatibility.rst:127
-msgid ""
-"HTML mathematics uses MathJax. PDF translates its supported LaTeX subset "
-"to Typst."
+msgid "HTML mathematics uses MathJax. PDF translates its supported LaTeX subset to Typst."
 msgstr "HTML の数式は MathJax を使います。PDF は対応する LaTeX の部分集合を Typst に変換します。"
 
 #: ../../compatibility.rst:128
@@ -378,9 +244,7 @@ msgid "``doctest``"
 msgstr "``doctest``"
 
 #: ../../compatibility.rst:129
-msgid ""
-"The tests are shown, highlighted. Guidedog never runs Python, so it never "
-"runs them."
+msgid "The tests are shown, highlighted. Guidedog never runs Python, so it never runs them."
 msgstr "テストはハイライトして表示します。Guidedog は Python を実行しないため、テストを実行することはありません。"
 
 #: ../../compatibility.rst:130
@@ -396,95 +260,64 @@ msgid "``napoleon``"
 msgstr "``napoleon``"
 
 #: ../../compatibility.rst:133
-msgid ""
-"Google and NumPy docstring sections become the fields autodoc shows "
-"(:doc:`autodoc`)."
-msgstr ""
-"Google 形式と NumPy 形式の docstring のセクションを、autodoc が表示するフィールドに変換します（\\ "
-":doc:`autodoc`\\ ）。"
+msgid "Google and NumPy docstring sections become the fields autodoc shows (:doc:`autodoc`)."
+msgstr "Google 形式と NumPy 形式の docstring のセクションを、autodoc が表示するフィールドに変換します（\\ :doc:`autodoc`\\ ）。"
 
 #: ../../compatibility.rst:134
 msgid "``autosummary`` and ``apidoc``"
 msgstr "``autosummary`` と ``apidoc``"
 
 #: ../../compatibility.rst:135
-msgid ""
-"Summary tables and API pages are generated from the source, in memory. "
-"Nothing is written into the source folder (:doc:`autodoc`)."
-msgstr ""
-"要約テーブルと API ページは、ソースからメモリー上に生成します。ソースフォルダーには何も書き込みません（\\ :doc:`autodoc`\\ "
-"）。"
+msgid "Summary tables and API pages are generated from the source, in memory. Nothing is written into the source folder (:doc:`autodoc`)."
+msgstr "要約テーブルと API ページは、ソースからメモリー上に生成します。ソースフォルダーには何も書き込みません（\\ :doc:`autodoc`\\ ）。"
 
 #: ../../compatibility.rst:136
 msgid "``viewcode``"
 msgstr "``viewcode``"
 
 #: ../../compatibility.rst:137
-msgid ""
-"Highlighted source pages under ``_modules/``, linked to the descriptions "
-"and back (:doc:`sources-and-diagrams`)."
-msgstr ""
-"``_modules/`` の下にハイライトしたソースページを作り、記述との間を相互にリンクします（\\ "
-":doc:`sources-and-diagrams`\\ ）。"
+msgid "Highlighted source pages under ``_modules/``, linked to the descriptions and back (:doc:`sources-and-diagrams`)."
+msgstr "``_modules/`` の下にハイライトしたソースページを作り、記述との間を相互にリンクします（\\ :doc:`sources-and-diagrams`\\ ）。"
 
 #: ../../compatibility.rst:138
 msgid "``linkcode``"
 msgstr "``linkcode``"
 
 #: ../../compatibility.rst:139
-msgid ""
-"A URL template, ``linkcode_url``, replaces the Python function "
-"``linkcode_resolve`` (:doc:`sources-and-diagrams`)."
-msgstr ""
-"Python 関数 ``linkcode_resolve`` の代わりに、URL テンプレート ``linkcode_url`` を使います（\\ "
-":doc:`sources-and-diagrams`\\ ）。"
+msgid "A URL template, ``linkcode_url``, replaces the Python function ``linkcode_resolve`` (:doc:`sources-and-diagrams`)."
+msgstr "Python 関数 ``linkcode_resolve`` の代わりに、URL テンプレート ``linkcode_url`` を使います（\\ :doc:`sources-and-diagrams`\\ ）。"
 
 #: ../../compatibility.rst:140
 msgid "``inheritance_diagram``"
 msgstr "``inheritance_diagram``"
 
 #: ../../compatibility.rst:141
-msgid ""
-"Class graphs from the source, drawn by the linked Graphviz "
-"(:doc:`sources-and-diagrams`)."
-msgstr ""
-"ソースから得たクラスのグラフを、リンクされた Graphviz で描画します（\\ :doc:`sources-and-diagrams`\\ ）。"
+msgid "Class graphs from the source, drawn by the linked Graphviz (:doc:`sources-and-diagrams`)."
+msgstr "ソースから得たクラスのグラフを、リンクされた Graphviz で描画します（\\ :doc:`sources-and-diagrams`\\ ）。"
 
 #: ../../compatibility.rst:142
 msgid "``coverage``"
 msgstr "``coverage``"
 
 #: ../../compatibility.rst:143
-msgid ""
-"``guidedog build coverage`` writes ``python.txt`` from the source and the "
-"documents (:doc:`autodoc`)."
-msgstr ""
-"``guidedog build coverage`` がソースと文書から ``python.txt`` を書き出します（\\ "
-":doc:`autodoc`\\ ）。"
+msgid "``guidedog build coverage`` writes ``python.txt`` from the source and the documents (:doc:`autodoc`)."
+msgstr "``guidedog build coverage`` がソースと文書から ``python.txt`` を書き出します（\\ :doc:`autodoc`\\ ）。"
 
 #: ../../compatibility.rst:144
 msgid "``duration``"
 msgstr "``duration``"
 
 #: ../../compatibility.rst:145
-msgid ""
-"The slowest documents to read, in the build summary and a JSON file "
-"(:doc:`sources-and-diagrams`)."
-msgstr ""
-"読み込みに最も時間のかかった文書を、ビルドの要約と JSON ファイルに示します（\\ :doc:`sources-and-diagrams`\\ "
-"）。"
+msgid "The slowest documents to read, in the build summary and a JSON file (:doc:`sources-and-diagrams`)."
+msgstr "読み込みに最も時間のかかった文書を、ビルドの要約と JSON ファイルに示します（\\ :doc:`sources-and-diagrams`\\ ）。"
 
 #: ../../compatibility.rst:146
 msgid "``imgconverter``"
 msgstr "``imgconverter``"
 
 #: ../../compatibility.rst:147
-msgid ""
-"Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and PDF "
-"itself. Other formats are reported (:doc:`sources-and-diagrams`)."
-msgstr ""
-"受け付けますが、何も実行しません。Typst は PNG、JPEG、GIF、SVG、WebP、PDF "
-"を自分で読めます。それ以外の形式は報告します（:doc:`sources-and-diagrams`）。"
+msgid "Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and PDF itself. Other formats are reported (:doc:`sources-and-diagrams`)."
+msgstr "受け付けますが、何も実行しません。Typst は PNG、JPEG、GIF、SVG、WebP、PDF を自分で読めます。それ以外の形式は報告します（:doc:`sources-and-diagrams`）。"
 
 #: ../../compatibility.rst:148
 msgid "``myst_parser``"
@@ -495,190 +328,61 @@ msgid "The implemented project Markdown layer."
 msgstr "実装済みのプロジェクト用 Markdown 層です。"
 
 #: ../../compatibility.rst:151
-msgid ""
-"Reading source has limits that importing does not. Compiled modules, "
-"objects created at run time, external decorators, computed values and "
-"extension event hooks cannot be seen. Python 3.13 and the pinned Sphinx "
-"documenter tests provide the reference behavior. See :doc:`autodoc` for "
-"the full settings and exceptions."
-msgstr ""
-"ソースを読む方式には、インポートする方式にはない制約があります。コンパイル済みモジュール、実行時に作られるオブジェクト、外部のデコレーター、計算で求める値、拡張のイベントフックは見えません。Python "
-"3.13 と固定版の Sphinx の documenter テストを基準の動作としています。設定と例外の全体は :doc:`autodoc` "
-"を参照してください。"
+msgid "Reading source has limits that importing does not. Compiled modules, objects created at run time, external decorators, computed values and extension event hooks cannot be seen. Python 3.13 and the pinned Sphinx documenter tests provide the reference behavior. See :doc:`autodoc` for the full settings and exceptions."
+msgstr "ソースを読む方式には、インポートする方式にはない制約があります。コンパイル済みモジュール、実行時に作られるオブジェクト、外部のデコレーター、計算で求める値、拡張のイベントフックは見えません。Python 3.13 と固定版の Sphinx の documenter テストを基準の動作としています。設定と例外の全体は :doc:`autodoc` を参照してください。"
 
 #: ../../compatibility.rst:153
-msgid ""
-"A third-party extension, such as ``sphinx_design``, is not built in. "
-"Configuration that names one is refused, and ``guidedog migrate`` leaves "
-"it out with a note. An unknown directive or role is reported at its "
-"source location. **Its omitted content must be reviewed before "
-"publication.** Declared object types (:doc:`object-types`) and build "
-"plugins (:doc:`plugins`) cover many of them. Other theme names are "
-"accepted using Guidedog's theme implementation."
-msgstr ""
-"``sphinx_design`` "
-"のようなサードパーティー拡張は組み込まれていません。設定でこうした拡張を指定するとエラーになり、``guidedog migrate`` "
-"は注記を付けて除外します。不明なディレクティブやロールはソース位置付きで報告します。\\ **省かれた内容は公開前に必ず確認してください。**\\ "
-"その多くは、宣言したオブジェクト型（\\ :doc:`object-types`\\ ）やビルドプラグイン（\\ :doc:`plugins`\\ "
-"）で補えます。他のテーマ名も受け付けますが、Guidedog のテーマ実装を使います。"
+msgid "A third-party extension, such as ``sphinx_design``, is not built in. Configuration that names one is refused, and ``guidedog migrate`` leaves it out with a note. An unknown directive or role is reported at its source location. **Its omitted content must be reviewed before publication.** Declared object types (:doc:`object-types`) and build plugins (:doc:`plugins`) cover many of them. Other theme names are accepted using Guidedog's theme implementation."
+msgstr "``sphinx_design`` のようなサードパーティー拡張は組み込まれていません。設定でこうした拡張を指定するとエラーになり、``guidedog migrate`` は注記を付けて除外します。不明なディレクティブやロールはソース位置付きで報告します。\\ **省かれた内容は公開前に必ず確認してください。**\\ その多くは、宣言したオブジェクト型（\\ :doc:`object-types`\\ ）やビルドプラグイン（\\ :doc:`plugins`\\ ）で補えます。他のテーマ名も受け付けますが、Guidedog のテーマ実装を使います。"
 
 #: ../../compatibility.rst:158
 msgid "Trust and resource limits"
 msgstr "信頼とリソース制限"
 
 #: ../../compatibility.rst:161
-msgid ""
-"A normal build accepts the project's raw HTML and Typst, templates, and "
-"network inventories. Local reads stay within the source directory and "
-"explicitly shared roots. A symlink does not grant access outside that "
-"boundary. Templates, static files, includes, images, fonts, and API "
-"sources obey the same rule."
-msgstr ""
-"通常のビルドはプロジェクトの raw "
-"HTML・Typst、テンプレート、ネットワーク上のインベントリを許可します。ローカル読み取りはソースディレクトリと明示した共有ルート内に限ります。シンボリックリンクで範囲を広げることはできません。テンプレート、静的ファイル、include、画像、フォント、API "
-"ソースも同じ規則に従います。"
+msgid "A normal build accepts the project's raw HTML and Typst, templates, and network inventories. Local reads stay within the source directory and explicitly shared roots. A symlink does not grant access outside that boundary. Templates, static files, includes, images, fonts, and API sources obey the same rule."
+msgstr "通常のビルドはプロジェクトの raw HTML・Typst、テンプレート、ネットワーク上のインベントリを許可します。ローカル読み取りはソースディレクトリと明示した共有ルート内に限ります。シンボリックリンクで範囲を広げることはできません。テンプレート、静的ファイル、include、画像、フォント、API ソースも同じ規則に従います。"
 
 #: ../../compatibility.rst:166
-msgid ""
-"Graphviz image resources are resolved relative to their document and "
-"confined. Supported image bytes are embedded in the drawing. "
-"``imagepath`` and ``fontpath`` do not expand the boundary. The embedded "
-"Typst compiler enforces the declared readable folders directly, while an "
-"external ``typst`` program runs with a private symlink root containing "
-"only those folders. This keeps book templates and preambles within the "
-"declared resources."
-msgstr ""
-"Graphviz "
-"の画像リソースはドキュメントからの相対パスで解決され、境界内に閉じ込められます。対応する画像バイト列は図に埋め込まれます。``imagepath`` "
-"と ``fontpath`` が境界を広げることはありません。内蔵の Typst コンパイラは宣言された読み取り可能フォルダーを直接強制し、外部の "
-"``typst`` "
-"プログラムはそれらのフォルダーだけを含む専用のシンボリックリンク・ルートで実行されます。これにより書籍テンプレートやプリアンブルは宣言されたリソース内に保たれます。"
+msgid "Graphviz image resources are resolved relative to their document and confined. Supported image bytes are embedded in the drawing. ``imagepath`` and ``fontpath`` do not expand the boundary. The embedded Typst compiler enforces the declared readable folders directly, while an external ``typst`` program runs with a private symlink root containing only those folders. This keeps book templates and preambles within the declared resources."
+msgstr "Graphviz の画像リソースはドキュメントからの相対パスで解決され、境界内に閉じ込められます。対応する画像バイト列は図に埋め込まれます。``imagepath`` と ``fontpath`` が境界を広げることはありません。内蔵の Typst コンパイラーは宣言された読み取り可能フォルダーを直接強制し、外部の ``typst`` プログラムはそれらのフォルダーだけを含む専用のシンボリックリンク・ルートで実行されます。これにより書籍テンプレートやプリアンブルは宣言されたリソース内に保たれます。"
 
 #: ../../compatibility.rst:173
-msgid ""
-"``typst-diagram`` is a Guidedog extension for RST and MyST projects, "
-"rather than a Sphinx extension contract. It compiles inline or file "
-"source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks "
-"remain examples. The embedded compiler uses the project's package and "
-"font policy; ``--untrusted`` refuses compilation. See "
-":doc:`topics/diagrams`."
-msgstr ""
-"``typst-diagram`` は RST と MyST のプロジェクト向けの Guidedog 独自拡張であり、Sphinx "
-"拡張の互換契約ではありません。本文またはファイルのソースを HTML と PDF 用の SVG または PNG にコンパイルします。通常の "
-"Typst コードブロックは例として残ります。内蔵コンパイラはプロジェクトのパッケージ・フォント方針を使い、``--untrusted`` "
-"はコンパイルを拒否します。:doc:`topics/diagrams` を参照してください。"
+msgid "``typst-diagram`` is a Guidedog extension for RST and MyST projects, rather than a Sphinx extension contract. It compiles inline or file source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks remain examples. The embedded compiler uses the project's package and font policy; ``--untrusted`` refuses compilation. See :doc:`topics/diagrams`."
+msgstr "``typst-diagram`` は RST と MyST のプロジェクト向けの Guidedog 独自拡張であり、Sphinx 拡張の互換契約ではありません。本文またはファイルのソースを HTML と PDF 用の SVG または PNG にコンパイルします。通常の Typst コードブロックは例として残ります。内蔵コンパイラーはプロジェクトのパッケージ・フォント方針を使い、``--untrusted`` はコンパイルを拒否します。:doc:`topics/diagrams` を参照してください。"
 
 #: ../../compatibility.rst:175
-msgid ""
-"``lilypond`` is also a Guidedog extension, not "
-"``sphinxcontrib-lilypond``. It runs no LilyPond program; Guidedog reads a "
-"documented part of the LilyPond language and engraves it itself, as SVG "
-"or PNG for HTML and PDF. ``--untrusted`` still engraves inline notation, "
-"because the reader runs no program or Scheme code, but refuses file "
-"arguments and ``\\include``. See :doc:`topics/music`."
-msgstr ""
-"``lilypond`` も Guidedog の拡張であり、``sphinxcontrib-lilypond`` "
-"ではありません。LilyPond プログラムは実行しません。Guidedog は LilyPond 言語のうち文書化された部分を読み、HTML と "
-"PDF 向けに SVG または PNG として自ら浄書します。読み込み側はプログラムも Scheme "
-"コードも実行しないため、``--untrusted`` でも文書内に書いた記譜は浄書しますが、ファイル引数と ``\\include`` "
-"は拒否します。:doc:`topics/music` を参照してください。"
+msgid "``lilypond`` is also a Guidedog extension, not ``sphinxcontrib-lilypond``. It runs no LilyPond program; Guidedog reads a documented part of the LilyPond language and engraves it itself, as SVG or PNG for HTML and PDF. ``--untrusted`` still engraves inline notation, because the reader runs no program or Scheme code, but refuses file arguments and ``\\include``. See :doc:`topics/music`."
+msgstr "``lilypond`` も Guidedog の拡張であり、``sphinxcontrib-lilypond`` ではありません。LilyPond プログラムは実行しません。Guidedog は LilyPond 言語のうち文書化された部分を読み、HTML と PDF 向けに SVG または PNG として自ら浄書します。読み込み側はプログラムも Scheme コードも実行しないため、``--untrusted`` でも文書内に書いた記譜は浄書しますが、ファイル引数と ``\\include`` は拒否します。:doc:`topics/music` を参照してください。"
 
 #: ../../compatibility.rst:177
-msgid ""
-"``--untrusted`` narrows the read boundary to the source folder. It omits "
-"raw content, unsafe URLs, outside resources, project Typst templates, and "
-"preambles, with diagnostics. It fetches no inventories or Typst packages. "
-"Graphs that ask to read resources, and music that names a file, are shown "
-"as code with a warning. This mode does not bound the native compiler's "
-"memory or execution time."
-msgstr ""
-"``--untrusted`` は読み取り範囲をソースディレクトリに限定します。raw コンテンツ、安全でない "
-"URL、外部リソース、プロジェクトの Typst テンプレートとプリアンブルを診断付きで省きます。インベントリや Typst "
-"パッケージは取得しません。リソースを読むグラフと、ファイルを指定する楽譜はコードとして表示し、警告します。このモードはネイティブコンパイラのメモリや実行時間を制限しません。"
+msgid "``--untrusted`` narrows the read boundary to the source folder. It omits raw content, unsafe URLs, outside resources, project Typst templates, and preambles, with diagnostics. It fetches no inventories or Typst packages. Graphs that ask to read resources, and music that names a file, are shown as code with a warning. This mode does not bound the native compiler's memory or execution time."
+msgstr "``--untrusted`` は読み取り範囲をソースディレクトリに限定します。raw コンテンツ、安全でない URL、外部リソース、プロジェクトの Typst テンプレートとプリアンブルを診断付きで省きます。インベントリや Typst パッケージは取得しません。リソースを読むグラフと、ファイルを指定する楽譜はコードとして表示し、警告します。このモードはネイティブコンパイラーのメモリや実行時間を制限しません。"
 
 #: ../../compatibility.rst:183
-msgid ""
-"The host budget defaults to 1 GiB. It is coarse: it counts the sources, "
-"included files, and PDF output the host holds, reserved before they are "
-"read. Each worker reuses one workspace. The retained project graph and "
-"catalogs still consume memory as the project grows. Reading workers "
-"coordinate admission. A refused request reports the failing operation and "
-"a budget that fits. ``GUIDEDOG_AVAILABLE_MIB`` can supply known machine "
-"headroom. Working memory always stays in memory. There is no disk-backed "
-"mode, and ``--memory=disk`` and ``--disk-budget`` are refused."
-msgstr ""
-"ホストの予算は既定で 1 GiB です。この予算は大まかなもので、ホストが保持するソース、インクルードしたファイル、PDF "
-"出力を数え、読み込む前に予約します。各ワーカーは 1 "
-"つのワークスペースを再利用します。保持するプロジェクトグラフとカタログは、プロジェクトの成長に応じて引き続きメモリを使います。読み取りワーカーは処理の受け入れを互いに調整します。要求を拒否した場合は、失敗した操作と、収まる予算を報告します。マシンの空き容量が分かっている場合は "
-"``GUIDEDOG_AVAILABLE_MIB`` "
-"で指定できます。作業メモリは常にメモリ上に置かれます。ディスクを使うモードはなく、``--memory=disk`` と "
-"``--disk-budget`` は拒否されます。"
+msgid "The host budget defaults to 1 GiB. It is coarse: it counts the sources, included files, and PDF output the host holds, reserved before they are read. Each worker reuses one workspace. The retained project graph and catalogs still consume memory as the project grows. Reading workers coordinate admission. A refused request reports the failing operation and a budget that fits. ``GUIDEDOG_AVAILABLE_MIB`` can supply known machine headroom. Working memory always stays in memory. There is no disk-backed mode, and ``--memory=disk`` and ``--disk-budget`` are refused."
+msgstr "ホストの予算は既定で 1 GiB です。この予算は大まかなもので、ホストが保持するソース、インクルードしたファイル、PDF 出力を数え、読み込む前に予約します。各ワーカーは 1 つのワークスペースを再利用します。保持するプロジェクトグラフとカタログは、プロジェクトの成長に応じて引き続きメモリを使います。読み取りワーカーは処理の受け入れを互いに調整します。要求を拒否した場合は、失敗した操作と、収まる予算を報告します。マシンの空き容量が分かっている場合は ``GUIDEDOG_AVAILABLE_MIB`` で指定できます。作業メモリは常にメモリ上に置かれます。ディスクを使うモードはなく、``--memory=disk`` と ``--disk-budget`` は拒否されます。"
 
 #: ../../compatibility.rst:190
-msgid ""
-"``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document "
-"work. Changing a limit invalidates cached reading and output. Depth and "
-"stack capacity must agree. Native Graphviz, tree-sitter, and Typst "
-"allocations are outside the host budget. We use operating-system limits "
-"when those need a hard bound. See :doc:`errors` and "
-":doc:`internals/memory`."
-msgstr ""
-"``--max-depth``、``--max-nodes``、``--stack-kib`` "
-"は文書処理の量を制限します。制限値を変えると、読み取りと出力のキャッシュは無効になります。深さとスタック容量は互いに整合している必要があります。ネイティブの "
-"Graphviz、tree-sitter、Typst による割り当てはホスト予算の対象外です。それらに厳密な上限が必要な場合は、OS "
-"の制限を使います。:doc:`errors` と :doc:`internals/memory` を参照してください。"
+msgid "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document work. Changing a limit invalidates cached reading and output. Depth and stack capacity must agree. Native Graphviz, tree-sitter, and Typst allocations are outside the host budget. We use operating-system limits when those need a hard bound. See :doc:`errors` and :doc:`internals/memory`."
+msgstr "``--max-depth``、``--max-nodes``、``--stack-kib`` は文書処理の量を制限します。制限値を変えると、読み取りと出力のキャッシュは無効になります。深さとスタック容量は互いに整合している必要があります。ネイティブの Graphviz、tree-sitter、Typst による割り当てはホスト予算の対象外です。それらに厳密な上限が必要な場合は、OS の制限を使います。:doc:`errors` と :doc:`internals/memory` を参照してください。"
 
 #: ../../compatibility.rst:196
 msgid "Verification and real projects"
 msgstr "検証と実際のプロジェクト"
 
 #: ../../compatibility.rst:199
-msgid ""
-"``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx "
-"9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, "
-"body links, inventories, numbering, and diagnostics. The stored results "
-"explain each difference, for example precise source locations, stable "
-"reading-order numbering, and explicit reports for omitted target-specific "
-"raw content (:doc:`internals/sphinx-comparison`). The reader conformance "
-"tests (:doc:`internals/rst-conformance`, "
-":doc:`internals/commonmark-conformance`) keep their expected outputs, and "
-"``cargo xtask verify-docutils`` checks those against a pinned Docutils "
-"0.22.4. All 98 trees match."
-msgstr ""
-"``cargo xtask sphinxdiff-roots`` は、Sphinx 自身のテストルート 42 件を使って、Guidedog "
-"をバージョンを固定した Sphinx 9.1.0 "
-"と比較します。ページ、識別子、本文のリンク、インベントリ、番号付け、診断を確認します。保存した結果には、すべての差分の説明があります。たとえば、正確なソース位置、読む順に基づく安定した番号付け、出力形式専用の "
-"raw "
-"コンテンツを省いたときの明示的な報告です（:doc:`internals/sphinx-comparison`）。リーダーの適合性テスト（:doc:`internals/rst-conformance`、:doc:`internals/commonmark-conformance`）は期待出力を保持しています。``cargo "
-"xtask verify-docutils`` は、それをバージョンを固定した Docutils 0.22.4 と照合します。98 "
-"個のツリーはすべて一致します。"
+msgid "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx 9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, body links, inventories, numbering, and diagnostics. The stored results explain each difference, for example precise source locations, stable reading-order numbering, and explicit reports for omitted target-specific raw content (:doc:`internals/sphinx-comparison`). The reader conformance tests (:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) keep their expected outputs, and ``cargo xtask verify-docutils`` checks those against a pinned Docutils 0.22.4. All 98 trees match."
+msgstr "``cargo xtask sphinxdiff-roots`` は、Sphinx 自身のテストルート 42 件を使って、Guidedog をバージョンを固定した Sphinx 9.1.0 と比較します。ページ、識別子、本文のリンク、インベントリ、番号付け、診断を確認します。保存した結果には、すべての差分の説明があります。たとえば、正確なソース位置、読む順に基づく安定した番号付け、出力形式専用の raw コンテンツを省いたときの明示的な報告です（:doc:`internals/sphinx-comparison`）。リーダーの適合性テスト（:doc:`internals/rst-conformance`、:doc:`internals/commonmark-conformance`）は期待出力を保持しています。``cargo xtask verify-docutils`` は、それをバージョンを固定した Docutils 0.22.4 と照合します。98 個のツリーはすべて一致します。"
 
 #: ../../compatibility.rst:201
-msgid ""
-"On 15 October 2026 we built the manuals of CPython, Django and Flask as "
-"HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). "
-"Every HTML build succeeded, and the link check found no broken internal "
-"link besides two inert ones in CPython. The Django and Flask books built; "
-"the CPython book needs more memory than the 12 GB machine had."
-msgstr ""
-"2026 年 10 月 15 日に、CPython、Django、Flask のマニュアルを、手を加えずにクリーンな状態から HTML と PDF "
-"ブックとしてビルドしました（:doc:`evidence/manuals`）。HTML "
-"のビルドはすべて成功しました。リンクチェックで見つかった壊れた内部リンクは、CPython にある無害な 2 件だけです。Django と "
-"Flask のブックはビルドできました。CPython のブックには、12 GB のマシンに積まれていた以上のメモリが必要です。"
+msgid "On 15 October 2026 we built the manuals of CPython, Django and Flask as HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). Every HTML build succeeded, and the link check found no broken internal link besides two inert ones in CPython. The Django and Flask books built; the CPython book needs more memory than the 12 GB machine had."
+msgstr "2026 年 10 月 15 日に、CPython、Django、Flask のマニュアルを、手を加えずにクリーンな状態から HTML と PDF ブックとしてビルドしました（:doc:`evidence/manuals`）。HTML のビルドはすべて成功しました。リンクチェックで見つかった壊れた内部リンクは、CPython にある無害な 2 件だけです。Django と Flask のブックはビルドできました。CPython のブックには、12 GB のマシンに積まれていた以上のメモリが必要です。"
 
 #: ../../compatibility.rst:203
-msgid ""
-"Those projects contain unsupported Python extension constructs. Their "
-"diagnostics remain part of the evidence. A zero exit status does not mean "
-"all their private directives were reproduced. We run with ``-W`` when "
-"publishing requires zero diagnostics."
-msgstr ""
-"これらのプロジェクトには、未対応の Python "
-"拡張の構文が含まれています。その診断も検証記録の一部です。終了ステータスがゼロでも、各プロジェクト独自のディレクティブがすべて再現されたわけではありません。診断ゼロでの公開が求められる場合は、``-W`` "
-"を付けて実行します。"
+msgid "Those projects contain unsupported Python extension constructs. Their diagnostics remain part of the evidence. A zero exit status does not mean all their private directives were reproduced. We run with ``-W`` when publishing requires zero diagnostics."
+msgstr "これらのプロジェクトには、未対応の Python 拡張の構文が含まれています。その診断も検証記録の一部です。終了ステータスがゼロでも、各プロジェクト独自のディレクティブがすべて再現されたわけではありません。診断ゼロでの公開が求められる場合は、``-W`` を付けて実行します。"
 
 #: ../../compatibility.rst:205
-msgid ""
-"The measurements describe the recorded workloads on the recorded machine. "
-"They are not universal speed or memory bounds."
+msgid "The measurements describe the recorded workloads on the recorded machine. They are not universal speed or memory bounds."
 msgstr "これらの測定値は、記録したマシン上で記録した作業負荷を処理したときのものです。速度やメモリの普遍的な上限を示すものではありません。"

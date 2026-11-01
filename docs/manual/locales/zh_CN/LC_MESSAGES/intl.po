@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -67,7 +67,7 @@ msgstr ""
 msgid ""
 "Create or update the catalogs of each language, as ``sphinx-intl update`` "
 "does:"
-msgstr "像 ``sphinx-intl update`` 一样，为各语言创建或更新清单："
+msgstr "像 ``sphinx-intl update`` 一样，为各语言创建或更新消息目录："
 
 #: ../../intl.rst:53
 msgid ""
@@ -78,15 +78,16 @@ msgid ""
 "documents are kept at the end as obsolete (``#~``), so a translation can "
 "come back."
 msgstr ""
-"目录文件位于 ``locales/de/LC_MESSAGES/*.po``。之后再运行时，命令会像 ``msgmerge`` "
-"一样把新模板合并进去。已有译文会保留。源文本有变化的消息沿用旧译文，并标记为 *fuzzy* "
-"等待复核。文档中已不存在的消息作为废弃条目（``#~``）保留在末尾，以便译文日后还能恢复。"
+"消息目录文件位于 ``locales/de/LC_MESSAGES/*.po``。后续再次运行时，命令会像 ``msgmerge`` "
+"一样将新模板合并进去并保留已有译文。源文本发生变动的词条会沿用旧译文，并标记为\\ *fuzzy*\\ "
+"等待复核。文档中已不再出现的词条会作为废弃条目（``#~``）保留在文件末尾，以便日后恢复复用。"
 
 #: ../../intl.rst:59
 msgid ""
 "Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a "
 "message once its translation is right. Fuzzy translations are not used."
-msgstr "我们通过填写每个 ``msgstr`` 完成翻译。某条消息的翻译正确后，删除该消息的 ``#, fuzzy`` 行。模糊翻译不会被使用。"
+msgstr ""
+"翻译时逐条填写 ``msgstr``；核对无误后删掉对应的 ``#, fuzzy`` 标记行。带有模糊标记（fuzzy）的译文不会参与构建。"
 
 #: ../../intl.rst:67
 msgid "See how far the translation is, as ``sphinx-intl stat`` does:"
@@ -297,7 +298,7 @@ msgstr ""
 
 #: ../../intl.rst:159
 msgid "``gettext_last_translator``, ``gettext_language_team``"
-msgstr "``gettext_last_translator``\\ , ``gettext_language_team``"
+msgstr "``gettext_last_translator``、``gettext_language_team``"
 
 #: ../../intl.rst:160
 msgid "The template header's ``Last-Translator`` and ``Language-Team``."
@@ -341,12 +342,12 @@ msgstr "Guidedog 的界面用语"
 msgid ""
 "Guidedog writes some words itself: admonition titles, \"Added in version "
 "2.1\", \"Fig. 1\", \"Contents\", the page layout's \"Previous\", "
-"\"Next\", \"Navigation\", and \"Search\", the search and index pages, and "
-"the book's \"Version\". They come from the text domain ``guidedog``, "
-"looked up in this order:"
+"\"Next\", \"Navigation\", and \"Search\", the search and index pages, "
+"generated musical score descriptions, and the book's \"Version\". They "
+"come from the text domain ``guidedog``, looked up in this order:"
 msgstr ""
-"Guidedog 自身也生成文字：提示框标题、“Added in version 2.1”、“Fig. "
-"1”、“Contents”，页面布局中的“Previous”、“Next”、“Navigation”和“Search”，搜索页和索引页，以及书籍中的“Version”。这些来自 "
+"Guidedog 自身也会输出一些界面与版式文字：提示框标题、“Added in version 2.1”、“Fig. "
+"1”、“Contents”，页面布局中的“Previous”、“Next”、“Navigation”和“Search”，搜索页与索引页、自动生成的乐谱说明文字，以及图书中的“Version”。这些词条均来自 "
 "``guidedog`` 文本域，按以下顺序查找："
 
 #: ../../intl.rst:179
@@ -361,27 +362,29 @@ msgstr "项目的 ``locales/LANGUAGE/LC_MESSAGES/sphinx.po``\\ ，与 Sphinx 一
 
 #: ../../intl.rst:181
 msgid ""
-"the catalog built into Guidedog, for German, Spanish, French, Japanese, "
-"Brazilian Portuguese, Russian, and Simplified Chinese."
-msgstr "Guidedog 内置的清单，支持德语、西班牙语、法语、日语、巴西葡萄牙语、俄语及简体中文。"
+"the catalog built into Guidedog, for German, Spanish, French, Hindi, "
+"Japanese, Korean, Brazilian Portuguese, Russian, and Simplified Chinese."
+msgstr "Guidedog 内置的消息目录，支持德语、西班牙语、法语、印地语、日语、韩语、巴西葡萄牙语、俄语和简体中文。"
 
 #: ../../intl.rst:184
 msgid ""
 "The English words are the message identifiers. They are Sphinx's where "
 "Sphinx has the same word, so a project's ``sphinx.po`` keeps working. A "
 "project can override any word, or add a language, with its own "
-"``guidedog.po``."
+"``guidedog.po``. Single-file ``guidedog convert --lang=TAG`` uses the "
+"built-in catalog for the same labels in HTML and PDF output."
 msgstr ""
-"消息标识符就是英文原词。凡是 Sphinx 有相同词语的地方，都采用 Sphinx 的标识符，所以项目现有的 ``sphinx.po`` "
-"可以继续使用。项目可以用自己的 ``guidedog.po`` 覆盖任意词语，或添加一种语言。"
+"英文原文即为消息标识符（msgid）。凡是 Sphinx 已有的同类词条，均沿用 Sphinx 的标识符，因此项目现有的 "
+"``sphinx.po`` 可继续生效。项目也可以提供自己的 ``guidedog.po`` 来覆盖任意词条或新增语种。单文件转换命令 "
+"``guidedog convert --lang=TAG`` 同样使用内置消息目录来翻译 HTML 与 PDF 输出中的这些标签。"
 
-#: ../../intl.rst:188
+#: ../../intl.rst:190
 msgid ""
 "Templates translate with ``_()``, ``gettext()``, and ``ngettext()``, as "
 "Sphinx's templates do:"
 msgstr "模板与 Sphinx 一样使用 ``_()``\\ 、\\ ``gettext()`` 和 ``ngettext()`` 翻译："
 
-#: ../../intl.rst:196
+#: ../../intl.rst:198
 msgid ""
 "``numfig_format``, ``html_title``, and ``html_short_title`` follow the "
 "language unless ``conf.toml`` sets them."
@@ -389,11 +392,11 @@ msgstr ""
 "除非在 ``conf.toml`` 中明确设置，\\ ``numfig_format``\\ 、\\ ``html_title`` 和 "
 "``html_short_title`` 会跟随语言。"
 
-#: ../../intl.rst:199
+#: ../../intl.rst:201
 msgid "Dates"
 msgstr "日期"
 
-#: ../../intl.rst:202
+#: ../../intl.rst:204
 msgid ""
 "``|today|``, the book's date, and a page's ``last_updated`` are formatted "
 "as Sphinx formats them. ``today_fmt`` and ``html_last_updated_fmt`` are "
@@ -410,11 +413,11 @@ msgstr ""
 "%Y')``，可以在目录中翻译。上述语言的名称来自 Unicode CLDR。其他语言使用英文，与 Sphinx 处理 Babel "
 "不认识的语言时一样。"
 
-#: ../../intl.rst:209
+#: ../../intl.rst:211
 msgid ""
 "The date is the local date, in the local time zone. We set "
 "``SOURCE_DATE_EPOCH`` (seconds since 1970, in UTC) to build reproducibly, "
 "with the same dates on every machine."
 msgstr ""
-"日期是本地时区的本地日期。设置 ``SOURCE_DATE_EPOCH`` （自 1970 "
+"日期是本地时区的本地日期。设置 ``SOURCE_DATE_EPOCH``\\ （自 1970 "
 "年起的秒数，UTC）即可实现可重现构建，每台机器上的日期都相同。"

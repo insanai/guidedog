@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -57,7 +57,7 @@ msgstr ""
 
 #: ../../intl.rst:37
 msgid "Write the message templates with the ``gettext`` builder:"
-msgstr "Genere las plantillas de mensajes con ``gettext``\\ :"
+msgstr "Generamos las plantillas de mensajes con el generador ``gettext``:"
 
 #: ../../intl.rst:43
 msgid ""
@@ -99,7 +99,10 @@ msgstr ""
 msgid ""
 "Translate: fill in each ``msgstr``. Remove the ``#, fuzzy`` line of a "
 "message once its translation is right. Fuzzy translations are not used."
-msgstr "Traducimos rellenando cada ``msgstr``. Retiramos la línea ``#, fuzzy`` de un mensaje cuando su traducción es correcta. Las traducciones dudosas no se utilizan."
+msgstr ""
+"Traducimos rellenando cada ``msgstr``. Retiramos la línea ``#, fuzzy`` de "
+"un mensaje cuando su traducción es correcta. Las traducciones dudosas no "
+"se utilizan."
 
 #: ../../intl.rst:67
 msgid "See how far the translation is, as ``sphinx-intl stat`` does:"
@@ -107,11 +110,11 @@ msgstr "Vemos cuánto falta por traducir, como con ``sphinx-intl stat``:"
 
 #: ../../intl.rst:73
 msgid "Build in the language:"
-msgstr "Compile en ese idioma:"
+msgstr "Compilamos en ese idioma:"
 
 #: ../../intl.rst:80
 msgid "or set ``language = \"de\"`` in ``conf.toml``."
-msgstr "O establezca ``language = \"de\"`` en ``conf.toml``\\ ."
+msgstr "o establecemos ``language = \"de\"`` en ``conf.toml``."
 
 #: ../../intl.rst:82
 msgid ""
@@ -175,8 +178,9 @@ msgid ""
 "message, written the same way, and may only change the text around them "
 "and their titles:"
 msgstr ""
-"Las referencias deben mantenerse. Conserve todas con la misma sintaxis y "
-"cambie solo el texto y sus títulos:"
+"Las referencias deben mantenerse iguales. Cada traducción conserva todas "
+"las referencias del mensaje, escritas del mismo modo, y solo puede "
+"cambiar el texto que las rodea y sus títulos:"
 
 #: ../../intl.rst:111
 msgid ""
@@ -288,8 +292,9 @@ msgid ""
 "the document, the message, and its occurrence, so they are the same in "
 "every build."
 msgstr ""
-"Escribe un identificador por aparición, derivado del documento, mensaje y "
-"ocurrencia, estable entre builds."
+"Escribe un identificador por cada aparición de un mensaje. Guidedog los "
+"genera a partir del documento, el mensaje y su número de aparición, por "
+"lo que son idénticos en cada compilación."
 
 #: ../../intl.rst:148
 msgid "``gettext_auto_build``"
@@ -357,11 +362,11 @@ msgid ""
 "fields are ``{root}``, ``{path}``, ``{basename}``, ``{ext}``, "
 "``{docpath}``, and ``{language}``."
 msgstr ""
-"Archivo de imagen para el idioma de la construcción. Por defecto "
-"``\"{root}.{language}{ext}\"``\\ : con ``language = \"de\"``\\ , "
-"``img/logo.png`` pasa a ``img/logo.de.png`` si existe. Los campos son "
-"``{root}``\\ , ``{path}``\\ , ``{basename}``\\ , ``{ext}``\\ , "
-"``{docpath}`` y ``{language}``\\ ."
+"Archivo de imagen para el idioma de la compilación. Por defecto "
+"``\"{root}.{language}{ext}\"``: con ``language = \"de\"``, "
+"``img/logo.png`` pasa a ``img/logo.de.png`` si ese archivo existe. Los "
+"campos son ``{root}``, ``{path}``, ``{basename}``, ``{ext}``, "
+"``{docpath}`` y ``{language}``."
 
 #: ../../intl.rst:166
 msgid "``translation_progress_classes``"
@@ -386,14 +391,16 @@ msgstr "Los textos de la interfaz de Guidedog"
 msgid ""
 "Guidedog writes some words itself: admonition titles, \"Added in version "
 "2.1\", \"Fig. 1\", \"Contents\", the page layout's \"Previous\", "
-"\"Next\", \"Navigation\", and \"Search\", the search and index pages, and "
-"the book's \"Version\". They come from the text domain ``guidedog``, "
-"looked up in this order:"
+"\"Next\", \"Navigation\", and \"Search\", the search and index pages, "
+"generated musical score descriptions, and the book's \"Version\". They "
+"come from the text domain ``guidedog``, looked up in this order:"
 msgstr ""
-"Guidedog genera algunos textos: títulos de avisos, «Added in version "
-"2.1», «Fig. 1», «Contents», «Previous», «Next», «Navigation» y «Search» "
-"del diseño, páginas de búsqueda e índice y «Version» del libro. Proceden "
-"del dominio ``guidedog``\\ , consultado en este orden:"
+"Guidedog escribe por sí mismo algunas palabras: títulos de avisos, «Added "
+"in version 2.1», «Fig. 1», «Contents», los rótulos «Previous», «Next», "
+"«Navigation» y «Search» de la disposición de página, las páginas de "
+"búsqueda e índice, las descripciones generadas de partituras musicales y "
+"el «Version» del libro. Proceden del dominio de texto ``guidedog``, "
+"consultado en este orden:"
 
 #: ../../intl.rst:179
 msgid "``locales/LANGUAGE/LC_MESSAGES/guidedog.po`` of the project,"
@@ -408,26 +415,29 @@ msgstr ""
 
 #: ../../intl.rst:181
 msgid ""
-"the catalog built into Guidedog, for German, Spanish, French, Japanese, "
-"Brazilian Portuguese, Russian, and Simplified Chinese."
+"the catalog built into Guidedog, for German, Spanish, French, Hindi, "
+"Japanese, Korean, Brazilian Portuguese, Russian, and Simplified Chinese."
 msgstr ""
-"El catálogo integrado para alemán, español, francés, japonés, portugués "
-"de Brasil, ruso y chino simplificado."
+"El catálogo integrado en Guidedog para alemán, español, francés, hindi, "
+"japonés, coreano, portugués de Brasil, ruso y chino simplificado."
 
 #: ../../intl.rst:184
 msgid ""
 "The English words are the message identifiers. They are Sphinx's where "
 "Sphinx has the same word, so a project's ``sphinx.po`` keeps working. A "
 "project can override any word, or add a language, with its own "
-"``guidedog.po``."
+"``guidedog.po``. Single-file ``guidedog convert --lang=TAG`` uses the "
+"built-in catalog for the same labels in HTML and PDF output."
 msgstr ""
-"Los identificadores de los mensajes son los textos en inglés. Coinciden "
-"con los de Sphinx cuando Sphinx usa el mismo texto, así que el "
+"Los identificadores de los mensajes son las palabras en inglés. Coinciden "
+"con los de Sphinx cuando Sphinx usa la misma palabra, así que el "
 "``sphinx.po`` de un proyecto sigue funcionando. Un proyecto puede "
-"sustituir cualquier texto, o añadir un idioma, con su propio "
-"``guidedog.po``."
+"redefinir cualquier palabra, o añadir un idioma, con su propio "
+"``guidedog.po``. La conversión de un solo archivo con ``guidedog convert "
+"--lang=TAG`` usa el catálogo integrado para esas mismas etiquetas en la "
+"salida HTML y PDF."
 
-#: ../../intl.rst:188
+#: ../../intl.rst:190
 msgid ""
 "Templates translate with ``_()``, ``gettext()``, and ``ngettext()``, as "
 "Sphinx's templates do:"
@@ -435,7 +445,7 @@ msgstr ""
 "Las plantillas traducen con ``_()``\\ , ``gettext()`` y ``ngettext()``\\ "
 ", como en Sphinx:"
 
-#: ../../intl.rst:196
+#: ../../intl.rst:198
 msgid ""
 "``numfig_format``, ``html_title``, and ``html_short_title`` follow the "
 "language unless ``conf.toml`` sets them."
@@ -443,11 +453,11 @@ msgstr ""
 "``numfig_format``\\ , ``html_title`` y ``html_short_title`` siguen el "
 "idioma salvo que se fijen en ``conf.toml``\\ ."
 
-#: ../../intl.rst:199
+#: ../../intl.rst:201
 msgid "Dates"
 msgstr "Fechas"
 
-#: ../../intl.rst:202
+#: ../../intl.rst:204
 msgid ""
 "``|today|``, the book's date, and a page's ``last_updated`` are formatted "
 "as Sphinx formats them. ``today_fmt`` and ``html_last_updated_fmt`` are "
@@ -467,7 +477,7 @@ msgstr ""
 "idiomas anteriores. Los demás idiomas usan el inglés, como hace Sphinx "
 "con un idioma que Babel no conoce."
 
-#: ../../intl.rst:209
+#: ../../intl.rst:211
 msgid ""
 "The date is the local date, in the local time zone. We set "
 "``SOURCE_DATE_EPOCH`` (seconds since 1970, in UTC) to build reproducibly, "

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:28+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -35,7 +35,7 @@ msgid ""
 "edit them. When we start a project with ``guidedog quickstart``, it "
 "writes the working templates into our project:"
 msgstr ""
-"Guidedog의 템플릿은 평범한 프로젝트 파일입니다. 우리가 직접 보고 고칠 수 있습니다. ``guidedog "
+"Guidedog의 템플릿은 일반 프로젝트 파일이므로 직접 확인하고 편집할 수 있습니다. ``guidedog "
 "quickstart``\\ 로 프로젝트를 시작하면 바로 쓸 수 있는 템플릿이 프로젝트에 생성됩니다."
 
 #: ../../templates.rst:15
@@ -76,11 +76,12 @@ msgstr "``_templates/book.typ``\\ 은 PDF 책의 레이아웃, 타이포그래�
 
 #: ../../templates.rst:20
 msgid ""
-"``_static/guidedog.css`` and ``_static/guidedog.js`` supply default "
-"styles and client behaviors."
+"``_static/guidedog.css``, ``_static/guidedog.js``, and "
+"``_static/typography.js`` supply default styles, client behaviors, and "
+"browser paragraph line breaking."
 msgstr ""
-"``_static/guidedog.css``\\ 와 ``_static/guidedog.js``\\ 는 기본 스타일과 클라이언트 "
-"동작을 제공합니다."
+"``_static/guidedog.css``, ``_static/guidedog.js``, "
+"``_static/typography.js``\\ 는 기본 스타일, 클라이언트 동작, 브라우저 문단 줄바꿈을 제공합니다."
 
 #: ../../templates.rst:22
 msgid ""
@@ -132,8 +133,8 @@ msgid ""
 "subdirectories under the directories listed in ``templates_path`` (by "
 "default, ``[\"_templates\"]``):"
 msgstr ""
-"``templates_path`` 에 지정한 디렉터리 아래에서 템플릿을 여러 파일과 하위 디렉터리로 나눌 수 있습니다. 기본값은 "
-"``[\"_templates\"]`` 입니다."
+"``templates_path``\\ 에 지정한 디렉터리 아래에서 템플릿을 여러 파일과 하위 디렉터리로 나눌 수 있습니다. 기본값은 "
+"``[\"_templates\"]``\\ 입니다."
 
 #: ../../templates.rst:75
 msgid ""
@@ -164,7 +165,7 @@ msgstr "템플릿에서 매크로 사용"
 
 #: ../../templates.rst:106
 msgid "Theme inheritance with ``!layout.html``"
-msgstr "``!layout.html`` 로 테마 상속"
+msgstr "``!layout.html``\\ 로 테마 상속"
 
 #: ../../templates.rst:109
 msgid ""
@@ -203,7 +204,7 @@ msgstr "레이아웃 블록"
 msgid ""
 "Guidedog's built-in ``layout.html`` defines blocks matching Sphinx's "
 "conventions:"
-msgstr "내장 ``layout.html`` 은 Sphinx 관례에 대응하는 블록을 정의합니다."
+msgstr "Guidedog의 내장 ``layout.html``\\ 은 Sphinx 관례에 대응하는 블록을 정의합니다."
 
 #: ../../templates.rst:146
 msgid "Block"
@@ -219,7 +220,7 @@ msgstr "``doctype``"
 
 #: ../../templates.rst:149
 msgid "Document type declaration (default: ``<!DOCTYPE html>``)."
-msgstr "문서 형식 선언입니다. 기본값은 ``<!DOCTYPE html>`` 입니다."
+msgstr "문서 형식 선언입니다. 기본값은 ``<!DOCTYPE html>``\\ 입니다."
 
 #: ../../templates.rst:150
 msgid "``htmltitle``"
@@ -338,7 +339,7 @@ msgstr "``body``"
 
 #: ../../templates.rst:177
 msgid "Rendered HTML content of the current document (``{{ body }}``)."
-msgstr "현재 문서의 HTML 본문인 ``{{ body }}`` 입니다."
+msgstr "렌더링된 현재 문서의 HTML 본문(``{{ body }}``)입니다."
 
 #: ../../templates.rst:178
 msgid "``relbar2``"
@@ -494,11 +495,11 @@ msgstr "``prev``\\ , ``next``"
 
 #: ../../templates.rst:225
 msgid ""
-"The neighbouring pages in reading order, with ``url`` (also ``link``) and "
+"The neighboring pages in reading order, with ``url`` (also ``link``) and "
 "``title``; none at either end."
 msgstr ""
-"읽기 순서의 이전·다음 페이지로 ``url``\\ (\\ ``link``\\ 도 가능)과 ``title``\\ 을 갖습니다. 양 "
-"끝에서는 해당 페이지가 없습니다."
+"읽기 순서의 이전·다음 페이지로, ``url``\\ (``link``\\ 도 제공)과 ``title``\\ 을 갖습니다. 양 끝 "
+"페이지에서는 비어 있습니다."
 
 #: ../../templates.rst:227
 msgid "``page``"
@@ -622,8 +623,8 @@ msgid "``accent``"
 msgstr "``accent``"
 
 #: ../../templates.rst:249
-msgid "``html_theme_options.accent``, the theme's colour."
-msgstr "테마 색상 ``html_theme_options.accent``\\ ."
+msgid "``html_theme_options.accent``, the theme's color."
+msgstr "테마 색상인 ``html_theme_options.accent``."
 
 #: ../../templates.rst:250
 msgid "``sourcelink_url``"
@@ -832,7 +833,7 @@ msgid ""
 "Typst file that defines a ``book`` function. Guidedog writes the book's "
 "source as"
 msgstr ""
-"PDF 책은 Typst로 조판합니다. ``_templates/book.typ``\\ 는 ``book`` 함수를 정의하는 평범한 "
+"PDF 책은 Typst로 조판합니다. ``_templates/book.typ``\\ 은 ``book`` 함수를 정의하는 평범한 "
 "Typst 파일입니다. Guidedog은 책의 소스를 다음과 같이 씁니다."
 
 #: ../../templates.rst:355
@@ -1011,15 +1012,20 @@ msgstr ""
 #: ../../templates.rst:404
 msgid ""
 "We can edit ``theme.typ`` to change all three copied layouts together. "
-"Changes to files beneath ``_templates/``, including nested imported "
-"modules and assets, invalidate cached PDFs. The builder tracks directory "
-"membership as well, so adding or removing a module cannot leave a stale "
-"PDF. Template discovery stays inside the project's readable roots and "
-"permits at most 16,384 template inputs."
+"Keep or update ``// guidedog: margin-x = 31mm`` in the leading 256 lines "
+"when changing horizontal page margins so native ``lilypond`` scores match "
+"the text column; see :doc:`topics/music`. Changes to files beneath "
+"``_templates/``, including nested imported modules and assets, invalidate "
+"cached PDFs. The builder tracks directory membership as well, so adding "
+"or removing a module cannot leave a stale PDF. Template discovery stays "
+"inside the project's readable roots and permits at most 16,384 template "
+"inputs."
 msgstr ""
-"``theme.typ``\\ 을 편집하면 복사된 세 레이아웃을 한꺼번에 바꿀 수 있습니다. 중첩되어 import된 모듈과 에셋을 "
-"포함해 ``_templates/`` 아래의 파일이 바뀌면 캐시된 PDF가 무효화됩니다. 빌더는 디렉터리 구성원 목록도 추적하므로 "
-"모듈을 추가하거나 제거했을 때 오래된 PDF가 남지 않습니다. 템플릿 탐색은 프로젝트의 읽기 가능한 루트 안에서만 이루어지며 최대 "
+"``theme.typ``\\ 을 편집하면 복사된 세 레이아웃을 한꺼번에 바꿀 수 있습니다. 페이지 수평 여백을 바꿀 때는 네이티브 "
+"``lilypond`` 악보가 본문 열 너비에 맞도록 앞쪽 256줄 안의 ``// guidedog: margin-x = 31mm`` "
+"주석을 유지하거나 함께 수정하세요(:doc:`topics/music` 참고). 중첩되어 임포트된 모듈과 에셋을 포함해 "
+"``_templates/`` 아래의 파일이 바뀌면 캐시된 PDF가 무효화됩니다. 빌더는 디렉터리 구성원 목록도 추적하므로 모듈을 "
+"추가하거나 제거했을 때 오래된 PDF가 남지 않습니다. 템플릿 탐색은 프로젝트의 읽기 가능한 루트 안에서만 이루어지며 최대 "
 "16,384개의 템플릿 입력을 허용합니다."
 
 #: ../../templates.rst:406
@@ -1164,7 +1170,7 @@ msgstr ""
 "책 전용 원시 블록에는 반드시 ``.. raw:: typst``\\ 를 사용해야 합니다. 리터럴 ``.. raw:: "
 "latex``\\ 는 지원되지 않으며 PDF 빌더에서 생략됩니다. 재사용 가능한 의미론적 지시어 제작에 대해서는 "
 ":doc:`tutorial/dynamic-content-and-directives` 및 "
-":doc:`howto/format-specific-content`\\ 를 참조하세요."
+":doc:`howto/format-specific-content`\\ 을 참고하세요."
 
 #: ../../templates.rst:492
 msgid ""
@@ -1174,9 +1180,9 @@ msgid ""
 "helpers visible in the generated document. Raw Typst follows the "
 "raw-content policy; untrusted builds omit it."
 msgstr ""
-"``theme.typ`` 에 정의한 함수는 해당 모듈 안에서만 유효합니다. 문서의 raw Typst는 함수를 명시적으로 가져오거나 "
-"``pdf_preamble`` 의 가져오기를 사용해야 합니다. 책 템플릿의 내부 가져오기는 생성된 문서에 도우미 함수를 노출하지 "
-"않습니다. raw Typst는 원시 콘텐츠 정책을 따르며 신뢰하지 않는 빌드에서는 생략됩니다."
+"``theme.typ``\\ 에 정의한 함수는 해당 모듈 안에서만 유효합니다. 문서의 raw Typst는 함수를 명시적으로 "
+"가져오거나 ``pdf_preamble``\\ 의 가져오기를 사용해야 합니다. 책 템플릿의 내부 가져오기는 생성된 문서에 도우미 "
+"함수를 노출하지 않습니다. raw Typst는 원시 콘텐츠 정책을 따르며 신뢰하지 않는 빌드에서는 생략됩니다."
 
 #: ../../templates.rst:494
 msgid ""
@@ -1189,8 +1195,8 @@ msgid ""
 "publishes nothing. Its source remains in ``_build/.doctrees/failed`` at "
 "the path named by the error. Several books keep distinct failure sources."
 msgstr ""
-"Typst가 오류를 보고하면, 빌드는 오류가 우리 템플릿에 있든 생성된 책에 있든 파일과 줄을 알려 줍니다. PDF마다 생성된 "
-"소스가 ``_build/pdf/sources/<pdf-filename>.typ``\\ 에 따로 있습니다. 예를 들어 "
+"Typst가 오류를 보고하면, 오류가 프로젝트 템플릿에 있든 생성된 책에 있든 빌드가 해당 파일과 줄을 알려 줍니다. PDF마다 "
+"생성된 소스가 ``_build/pdf/sources/<pdf-filename>.typ``\\ 에 따로 있습니다. 예를 들어 "
 "``reference-en.pdf``\\ 의 소스는 ``sources/reference-en.pdf.typ``\\ 입니다. 책 한 "
 "권만 빌드할 때는 익숙한 확인용 사본 ``_build/pdf/book-<language>.typ``\\ 도 남깁니다. 빌드가 "
 "실패하면 아무것도 게시하지 않습니다. 그 소스는 ``_build/.doctrees/failed`` 안, 오류 메시지에 적힌 경로에 "

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -119,8 +119,8 @@ msgid ""
 "``--diagnostics=json`` writes each report as one JSON object per line on "
 "standard error, for editors and continuous integration:"
 msgstr ""
-"``--diagnostics=json`` は標準エラーに一行一個の JSON "
-"オブジェクトとして報告を書く。エディターや継続的インテグレーションから読める。"
+"``--diagnostics=json`` は各診断を標準エラーに 1 行 1 個の JSON "
+"オブジェクトとして書き出します。エディターや継続的インテグレーションから読み取れます。"
 
 #: ../../errors.rst:70
 msgid ""
@@ -145,7 +145,7 @@ msgstr "メモリが足りないとき"
 
 #: ../../errors.rst:80
 msgid "Reaching a bound is a report, not a crash. There are two kinds:"
-msgstr "上限に達しても、クラッシュせずに診断として報告します。上限には 2 種類あります："
+msgstr "上限に達しても、クラッシュせずに診断として報告します。上限には 2 種類あります。"
 
 #: ../../errors.rst:82
 msgid "``host.budget`` (MEMORY BUDGET REACHED)"
@@ -153,16 +153,17 @@ msgstr "``host.budget``\\ （メモリ予算の上限）"
 
 #: ../../errors.rst:83
 msgid ""
-"The build reached the memory it may hold, its budget (``--budget=MIB``, "
-"1 GiB by default). The budget counts what Guidedog reads and keeps: "
-"sources, included files, compiled diagram images, and the PDF the "
-"embedded Typst compiler returns. The report names the step and the file "
-"that needed the memory. The hint names a budget that fits, as a number. "
-"For example:"
+"The build reached the memory it may hold, its budget (``--budget=MIB``, 1 "
+"GiB by default). The budget counts what Guidedog reads and keeps: "
+"sources, included files, compiled diagram and musical score images (with "
+"their engraving scratch), and the PDF the embedded Typst compiler "
+"returns. The report names the step and the file that needed the memory. "
+"The hint names a budget that fits, as a number. For example:"
 msgstr ""
-"ビルドが保持できるメモリ、つまり予算（``--budget=MIB``、既定は 1 GiB）に達しました。予算は、Guidedog "
-"が読み込んで保持するもの、つまりソース、インクルードしたファイル、コンパイル済みの図画像、組み込みの Typst コンパイラが返す PDF "
-"を数えます。報告には、メモリを必要とした工程とファイルが示されます。ヒントは、収まる予算を数値で示します。次に例を示します："
+"ビルドが保持できるメモリ上限、つまり予算（``--budget=MIB``、既定は 1 GiB）に達しました。予算には、Guidedog "
+"が読み込んで保持するもの（ソース、インクルードしたファイル、コンパイル済みの図や楽譜の画像（浄書時の作業領域を含む）、組み込みの Typst "
+"コンパイラーが返す "
+"PDF）が計上されます。報告には、メモリを必要とした工程とファイルが示されます。ヒントには、収まる予算が数値で示されます。次に例を示します。"
 
 #: ../../errors.rst:91
 msgid ""
@@ -174,7 +175,7 @@ msgid ""
 msgstr ""
 "この数値は、2 つの値のうち大きい方です。1 つは、ビルドが保持していた量に、拒否された工程の要求量の 4 "
 "倍を加えた値です（工程は自身の出力と、書き込むコピーも保持するためです）。もう 1 つは、元の予算の 2 倍です。数値は 64 MiB "
-"単位で切り上げます。工程がマシンの空きメモリに収まる場合、数値はその空きメモリを超えません。収まらない場合は、ヒントがそのことを示します："
+"単位で切り上げます。工程がマシンの空きメモリに収まる場合、数値はその空きメモリを超えません。収まらない場合は、ヒントにその旨が示されます。"
 
 #: ../../errors.rst:99
 msgid ""
@@ -190,17 +191,16 @@ msgstr "``host.memory``\\ （メモリ不足）"
 #: ../../errors.rst:103
 msgid ""
 "The system could not provide a buffer the budget allowed. The command "
-"stops without using it. A build publishes nothing, a GDS change is "
-"applied whole or not at all, and ``convert`` writes a whole page or none. "
-"Free memory, or build with fewer threads (``-j 1``), and run the command "
-"again. Once a build has decided to publish, switching its output into "
-"place needs no further planning. So a refusal cannot stop a publication "
-"halfway. The next build finishes an interrupted publication."
+"stops without using it. A build publishes nothing, a discussion catalog "
+"change is applied whole or not at all, and ``convert`` writes a whole "
+"page or none. Free memory, or build with fewer threads (``-j 1``), and "
+"run the command again. Once a build has decided to publish, switching its "
+"output into place needs no further planning. So a refusal cannot stop a "
+"publication halfway. The next build finishes an interrupted publication."
 msgstr ""
-"予算内のバッファを、システムが用意できませんでした。コマンドはそのバッファを使わずに停止します。ビルドは何も公開せず、GDS "
-"の変更はすべて適用されるか一切適用されないかのどちらかで、``convert`` "
-"はページ全体を書き出すか何も書き出しません。メモリを空けるか、スレッドを減らして（``-j "
-"1``）ビルドし、コマンドを再実行してください。ビルドが公開を決めた後は、出力を所定の場所に切り替えるのに追加の準備は要りません。そのため、拒否によって公開が途中で止まることはありません。中断された公開は、次のビルドが完了させます。"
+"システムが予算内のバッファーを用意できませんでした。コマンドはそのバッファーを使わずに停止します。ビルドは何も公開せず、議論カタログの変更はすべて適用されるか一切適用されないかのどちらかで、``convert`` "
+"はページ全体を書き出すか何も書き出しません。メモリを空けるか、スレッド数を減らして（``-j "
+"1``）ビルドし、コマンドを再実行してください。ビルドが公開を決めた後は、出力を所定の場所に切り替えるのに追加の計画は不要です。そのため、割り当て拒否によって公開が途中で止まることはありません。中断された公開は、次のビルドが完了させます。"
 
 #: ../../errors.rst:110
 msgid ""
@@ -231,7 +231,7 @@ msgstr "各コマンドは次のいずれかのステータスで終了するた
 
 #: ../../errors.rst:123
 msgid "Status"
-msgstr "状態"
+msgstr "ステータス"
 
 #: ../../errors.rst:123
 msgid "Meaning"

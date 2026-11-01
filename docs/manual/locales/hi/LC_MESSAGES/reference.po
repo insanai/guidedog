@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:01+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -98,8 +98,8 @@ msgid ""
 "Explained reports (default), or one JSON object per report on standard "
 "error."
 msgstr ""
-"व्याख्या सहित रिपोर्ट (डिफ़ॉल्ट), या हर रिपोर्ट के लिए एक JSON ऑब्जेक्ट, "
-"मानक त्रुटि पर।"
+"व्याख्या सहित रिपोर्ट (डिफ़ॉल्ट), या स्टैंडर्ड एरर (stderr) पर हर रिपोर्ट "
+"के लिए एक JSON ऑब्जेक्ट।"
 
 #: ../../reference/cli.rst:42
 msgid "``-q``, ``--quiet``"
@@ -139,9 +139,9 @@ msgid "``--licenses``"
 msgstr "``--licenses``"
 
 #: ../../reference/cli.rst:50
-msgid "Show Guidedog's licence and the notices of the libraries built in."
+msgid "Show Guidedog's license and the notices of the libraries built in."
 msgstr ""
-"Guidedog का लाइसेंस और उसमें शामिल लाइब्रेरियों की सूचनाएँ दिखाता है।"
+"Guidedog का लाइसेंस और उसमें अंतर्निहित लाइब्रेरियों की सूचनाएँ दिखाता है।"
 
 #: ../../reference/cli.rst:52
 msgid "Exit codes"
@@ -585,7 +585,7 @@ msgstr ""
 
 #: ../../reference/cli.rst:198
 msgid "Builders:"
-msgstr "builder:"
+msgstr "बिल्डर:"
 
 #: ../../reference/cli.rst:200
 msgid ""
@@ -776,9 +776,9 @@ msgid ""
 "capability policy, not a process sandbox."
 msgstr ""
 "रॉ सामग्री, बाहरी Graphviz संसाधन, ``typst-diagram`` कंपाइलेशन और फ़ाइलों "
-"से पढ़ा स्वरलेख (``lilypond`` फ़ाइल तर्क और ``\\include``) छोड़ देता है; "
-"कुछ भी फ़ेच नहीं करता और कोई build plugin नहीं चलाता। यह क्षमता की नीति "
-"है, प्रक्रिया का सैंडबॉक्स नहीं।"
+"से पढ़ा संगीत (``lilypond`` फ़ाइल आर्ग्युमेंट और ``\\include``) छोड़ देता "
+"है; कुछ भी फ़ेच नहीं करता और कोई बिल्ड प्लगइन नहीं चलाता। यह क्षमताओं की "
+"नीति है, प्रोसेस सैंडबॉक्स नहीं।"
 
 #: ../../reference/cli.rst:250 ../../reference/cli.rst:462
 msgid "``--budget=MIB``"
@@ -1176,10 +1176,10 @@ msgid ""
 "filename."
 msgstr ""
 "``--from sphinx`` या ``--from myst`` के साथ, बिना स्वरांकन वाला "
-"``lilypond`` फ़ाइल तर्क HTML और PDF में वर्णनात्मक वाक्य बनता है, जिसका "
-"अनुवाद ``--lang`` से होता है; उसका कैप्शन स्वरलेख के साथ छोड़ दिया जाता "
-"है। रूपांतरण कभी संगीत फ़ाइल नहीं खोलता; RST में रूपांतरण उसका निर्देश और "
-"फ़ाइल नाम बनाए रखता है।"
+"``lilypond`` फ़ाइल आर्ग्युमेंट HTML और PDF में वर्णनात्मक वाक्य बनता है, "
+"जिसका अनुवाद ``--lang`` से होता है; उसका कैप्शन स्वरलेख के साथ छोड़ दिया "
+"जाता है। रूपांतरण कभी स्वरलेख फ़ाइल नहीं खोलता; RST में रूपांतरण उसका "
+"निर्देश और फ़ाइल नाम बनाए रखता है।"
 
 #: ../../reference/cli.rst:425
 msgid "Options of convert"
@@ -1637,12 +1637,13 @@ msgid ""
 msgstr ""
 "``guidedog ssg build [PROJECT] [--out=DIR] [--no-pdf] [--preview] "
 "[--now=RFC3339]``: प्रत्येक ``[[site.mounts]]`` प्रविष्टि (और प्रत्येक "
-"माउंट के ``[[site.mounts.editions]]``) को बनाता है, ``[[site.assets]]`` "
-"को कॉपी करता है, क्रॉस-माउंट लक्ष्यों को सत्यापित करता है और असेंबल की गई "
-"साइट को एक पीढ़ी के रूप में ``--out`` (डिफ़ॉल्ट: ``_build/site``) में "
-"प्रकाशित करता है। ``--no-pdf`` ``pdf`` और ``discussion-pdf`` माउंट्स को "
-"छोड़ देता है; ``--preview`` रोके गए पेजों को शामिल करता है; ``--now`` सभी "
-"माउंट्स में प्रकाशन घड़ी को ठीक करता है।"
+"माउंट के ``[[site.mounts.editions]]``) को बिल्ड करता है, "
+"``[[site.assets]]`` को कॉपी करता है, क्रॉस-माउंट लक्ष्यों को सत्यापित "
+"करता है और असेंबल की गई साइट को एक जनरेशन (संस्करण) के रूप में ``--out`` "
+"(डिफ़ॉल्ट: ``_build/site``) में प्रकाशित करता है। ``--no-pdf`` ``pdf`` और "
+"``discussion-pdf`` माउंट को छोड़ देता है; ``--preview`` रोके गए पेजों को "
+"शामिल करता है; ``--now`` सभी माउंट में प्रकाशन घड़ी का समय निश्चित करता "
+"है।"
 
 #: ../../reference/cli.rst:571
 msgid ""
@@ -1963,21 +1964,21 @@ msgid ""
 "Its options are those of ``guidedog pages init`` and ``publish`` "
 "(``--config``, ``--repository``, ``--project``, ``--branch``, "
 "``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); ``guidedog "
-"publish pages --help`` lists them. guidedog builds the project itself, "
+"publish pages --help`` lists them. Guidedog builds the project itself, "
 "with its own engine and linked plugins; ``--guidedog=PATH`` builds with "
 "another program instead. See :doc:`../howto/github-pages`."
 msgstr ""
 "जो मशीन पहले से सेट है, उस पर यह बिना कोई सवाल पूछे प्रकाशित करता है। "
-"टर्मिनल न हो तो यह कभी नहीं पूछता। तब कोई चरण बाकी हो तो यह विफल हो जाता "
-"है, और संकेत में वह कमांड या विकल्प बताता है जिससे वह चरण पूरा होता है। "
-"``--yes`` पुष्टि वाले सवालों का जवाब देता है। यह कभी हमारी ओर से साइन इन "
-"नहीं करता और न ही किसी दूसरे काम को बदलता है। इसके विकल्प वही हैं जो "
+"टर्मिनल न हो तो यह कभी नहीं पूछता। तब कोई चरण अधूरा होने पर यह विफल हो "
+"जाता है, और संकेत में वह कमांड या विकल्प बताता है जिससे वह चरण पूरा होता "
+"है। ``--yes`` पुष्टि वाले सवालों का जवाब देता है। यह कभी हमारी ओर से साइन "
+"इन नहीं करता और न ही किसी दूसरे काम को बदलता है। इसके विकल्प वही हैं जो "
 "``guidedog pages init`` और ``publish`` के हैं (``--config``, "
 "``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, "
 "``--verbose``, ``--dry-run``); ``guidedog publish pages --help`` इन्हें "
-"दिखाता है। guidedog प्रोजेक्ट को खुद build करता है, अपने इंजन और लिंक किए "
-"गए plugins के साथ; ``--guidedog=PATH`` से किसी दूसरे प्रोग्राम से build "
-"होता है। :doc:`../howto/github-pages` देखें।"
+"दिखाता है। Guidedog अपने इंजन और लिंक किए गए प्लगइन के साथ प्रोजेक्ट को "
+"स्वयं बिल्ड करता है; ``--guidedog=PATH`` से किसी दूसरे प्रोग्राम द्वारा "
+"बिल्ड किया जाता है। :doc:`../howto/github-pages` देखें।"
 
 #: ../../reference/cli.rst:673
 msgid "guidedog pages workflow"
@@ -2212,46 +2213,46 @@ msgstr "plugins द्वारा जोड़े गए कमांड"
 
 #: ../../reference/cli.rst:782
 msgid ""
-"A plugin may add commands to guidedog, or targets to ``guidedog "
+"A plugin may add commands to ``guidedog``, or targets to ``guidedog "
 "publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
 "with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a "
 "plugin's:"
 msgstr ""
-"plugin guidedog में कमांड, या ``guidedog publish`` के लिए target, जोड़ "
-"सकता है। ``guidedog --help`` इन्हें PLUGIN COMMANDS के नीचे दिखाता है, हर "
-"एक के साथ उसके plugin का ID, और ``guidedog plugin inspect ID`` किसी "
-"plugin के कमांड दिखाता है:"
+"कोई प्लगइन ``guidedog`` में कमांड या ``guidedog publish`` में लक्ष्य "
+"(target) जोड़ सकता है। ``guidedog --help`` इन्हें PLUGIN COMMANDS के नीचे "
+"उनके प्लगइन ID के साथ दिखाता है, और ``guidedog plugin inspect ID`` किसी "
+"प्लगइन के कमांड दिखाता है:"
 
 #: ../../reference/cli.rst:794
 msgid ""
-"guidedog looks for a word it does not know (or a ``publish`` target) "
+"Guidedog looks for a word it does not know (or a ``publish`` target) "
 "among the commands of the linked plugins first, then among those of the "
 "registered programs, and runs the plugin that adds it. ``--help`` after "
 "such a command prints its help, made from what the plugin declares. A "
-"plugin cannot replace one of guidedog's commands, and the first plugin to "
+"plugin cannot replace one of Guidedog's commands, and the first plugin to "
 "add a name keeps it."
 msgstr ""
-"जो शब्द (या ``publish`` target) guidedog नहीं जानता, उसे वह पहले लिंक किए "
-"गए plugins के कमांड में खोजता है, फिर रजिस्टर किए गए प्रोग्रामों के कमांड "
-"में, और जो plugin उसे जोड़ता है उसे चलाता है। ऐसे कमांड के बाद ``--help`` "
-"उसकी सहायता प्रिंट करता है, जो plugin की घोषणा से बनती है। plugin "
-"guidedog के किसी कमांड को बदल नहीं सकता, और कोई नाम सबसे पहले जोड़ने वाले "
-"plugin का ही रहता है।"
+"जो शब्द (या ``publish`` लक्ष्य) Guidedog नहीं पहचानता, उसे वह पहले लिंक "
+"किए गए प्लगइन के कमांड में खोजता है, फिर रजिस्टर किए गए प्रोग्रामों के "
+"कमांड में, और जो प्लगइन उसे जोड़ता है उसे चलाता है। ऐसे कमांड के बाद "
+"``--help`` उसकी सहायता प्रिंट करता है, जो प्लगइन की घोषणा से बनती है। "
+"प्लगइन Guidedog के किसी कमांड की जगह नहीं ले सकता, और कोई नाम सबसे पहले "
+"जोड़ने वाले प्लगइन का ही रहता है।"
 
 #: ../../reference/cli.rst:796
 msgid ""
-"A linked plugin's command runs inside guidedog. A registered program's "
-"command runs as that program, started on our terminal after its SHA-256 "
-"is checked: it may ask questions, and its exit status is the command's. "
-"When either asks for a build, guidedog builds the project. The program's "
-"commands are read when it is registered, so a new version is registered "
-"again, as always."
+"A linked plugin's command runs inside ``guidedog``. A registered "
+"program's command runs as that program, started on our terminal after its "
+"SHA-256 is checked: it may ask questions, and its exit status is the "
+"command's. When either asks for a build, Guidedog builds the project. The "
+"program's commands are read when it is registered, so a new version is "
+"registered again, as always."
 msgstr ""
-"लिंक किए गए plugin का कमांड guidedog के भीतर चलता है। रजिस्टर किए गए "
+"लिंक किए गए प्लगइन का कमांड ``guidedog`` के भीतर चलता है। रजिस्टर किए गए "
 "प्रोग्राम का कमांड उसी प्रोग्राम के रूप में चलता है, जिसे उसका SHA-256 "
 "जाँचने के बाद हमारे टर्मिनल पर शुरू किया जाता है: वह सवाल पूछ सकता है, और "
-"उसकी निकास स्थिति ही कमांड की निकास स्थिति होती है। जब इनमें से कोई build "
-"माँगता है, तो guidedog प्रोजेक्ट build करता है। प्रोग्राम के कमांड "
+"उसकी निकास स्थिति ही कमांड की निकास स्थिति होती है। जब इनमें से कोई बिल्ड "
+"माँगता है, तो Guidedog प्रोजेक्ट बिल्ड करता है। प्रोग्राम के कमांड "
 "रजिस्टर होते समय पढ़े जाते हैं, इसलिए नया संस्करण हमेशा की तरह दोबारा "
 "रजिस्टर किया जाता है।"
 
@@ -2654,6 +2655,7 @@ msgstr "प्रोजेक्ट की जानकारी"
 #: ../../reference/configuration.rst:1442
 #: ../../reference/configuration.rst:1483
 #: ../../reference/configuration.rst:1508
+#: ../../reference/configuration.rst:1579
 msgid "Key"
 msgstr "कुंजी"
 
@@ -2679,6 +2681,7 @@ msgstr "कुंजी"
 #: ../../reference/configuration.rst:1443
 #: ../../reference/configuration.rst:1484
 #: ../../reference/configuration.rst:1509
+#: ../../reference/configuration.rst:1580
 msgid "Type"
 msgstr "प्रकार"
 
@@ -2704,6 +2707,7 @@ msgstr "प्रकार"
 #: ../../reference/configuration.rst:1444
 #: ../../reference/configuration.rst:1485
 #: ../../reference/configuration.rst:1510
+#: ../../reference/configuration.rst:1581
 msgid "Default"
 msgstr "डिफ़ॉल्ट"
 
@@ -2729,6 +2733,7 @@ msgstr "डिफ़ॉल्ट"
 #: ../../reference/configuration.rst:1445
 #: ../../reference/configuration.rst:1486
 #: ../../reference/configuration.rst:1511
+#: ../../reference/configuration.rst:1582
 msgid "Description"
 msgstr "विवरण"
 
@@ -3107,14 +3112,14 @@ msgstr "``include_roots``"
 #: ../../reference/configuration.rst:150
 msgid ""
 "Folders, relative to the source folder, that ``include``, "
-"``literalinclude``, images, graphs, logos and other files may also be "
-"read from. Sphinx reads any path; Guidedog reads only the source folder "
-"and these."
+"``literalinclude``, ``lilypond``, images, graphs, logos and other files "
+"may also be read from. Sphinx reads any path; Guidedog reads only the "
+"source folder and these."
 msgstr ""
 "वे फ़ोल्डर (सोर्स फ़ोल्डर के सापेक्ष) जिनसे ``include``, "
-"``literalinclude``, इमेज, ग्राफ़, लोगो और दूसरी फ़ाइलें भी पढ़ी जा सकती "
-"हैं। Sphinx कोई भी पाथ पढ़ लेता है; Guidedog केवल सोर्स फ़ोल्डर और इन्हीं "
-"फ़ोल्डरों को पढ़ता है।"
+"``literalinclude``, ``lilypond``, चित्र, ग्राफ़, लोगो और अन्य फ़ाइलें भी "
+"पढ़ी जा सकती हैं। Sphinx कोई भी पथ पढ़ लेता है; Guidedog केवल सोर्स "
+"फ़ोल्डर और इन्हीं फ़ोल्डरों को पढ़ता है।"
 
 #: ../../reference/configuration.rst:153
 msgid "``templates_path``"
@@ -3177,7 +3182,7 @@ msgstr "``default_role``"
 
 #: ../../reference/configuration.rst:180
 msgid "The role of text in single backquotes (``\"any\"``, ``\"py:obj\"``)."
-msgstr "एक बैककोट में लिखे टेक्स्ट का रोल (``any``, ``py:obj``)।"
+msgstr "एकल बैककोट में लिखे टेक्स्ट का रोल (``\"any\"``, ``\"py:obj\"``)।"
 
 #: ../../reference/configuration.rst:181
 msgid "``primary_domain``"
@@ -3192,8 +3197,8 @@ msgid ""
 "The domain of directives and roles written without a prefix (``\"py\"``, "
 "``\"c\"``, ``\"cpp\"``, ``\"js\"``, ``\"odin\"``, ``\"rust\"``)."
 msgstr ""
-"बिना उपसर्ग लिखे निर्देशों और रोल का डोमेन (``py``, ``c``, ``cpp``, "
-"``js``, ``odin``, ``rust``)।"
+"बिना उपसर्ग लिखे निर्देशों और रोल का डोमेन (``\"py\"``, ``\"c\"``, "
+"``\"cpp\"``, ``\"js\"``, ``\"odin\"``, ``\"rust\"``)।"
 
 #: ../../reference/configuration.rst:186
 msgid "``highlight_language``"
@@ -3713,8 +3718,8 @@ msgid ""
 msgstr ""
 "कस्टम ऑब्जेक्ट का वर्णन करने और उनसे लिंक करने वाले निर्देश और रोल, "
 "Sphinx के ``app.add_object_type`` की तरह। फ़ील्ड: ``directive`` (ज़रूरी), "
-"``role``, ``index``, ``name`` (``whole`` या ``first-word``), ``display`` "
-"और ``program``।"
+"``role``, ``index``, ``name`` (``\"whole\"`` या ``\"first-word\"``), "
+"``display`` और ``program``।"
 
 #: ../../reference/configuration.rst:323
 msgid "``crossref_types``"
@@ -3736,7 +3741,7 @@ msgstr "``directive_aliases``"
 msgid ""
 "New directive names for existing directives (``django-admin-option = "
 "\"option\"``)."
-msgstr "मौजूदा निर्देशों के नए नाम (``django-admin-option = option``)।"
+msgstr "मौजूदा निर्देशों के नए नाम (``django-admin-option = \"option\"``)।"
 
 #: ../../reference/configuration.rst:341
 msgid "See :doc:`../object-types`."
@@ -3921,7 +3926,7 @@ msgid ""
 "\"MyType\"]]``)."
 msgstr ""
 "वे ``[type, target]`` जोड़े जिन पर nitpicky चेतावनी नहीं दी जाती "
-"(``[[py:class, MyType]]``)।"
+"(``[[\"py:class\", \"MyType\"]]``)।"
 
 #: ../../reference/configuration.rst:437
 msgid "``nitpick_ignore_regex``"
@@ -3991,6 +3996,7 @@ msgid "``html_title``"
 msgstr "``html_title``"
 
 #: ../../reference/configuration.rst:473
+#: ../../reference/configuration.rst:1593
 msgid "derived"
 msgstr "अपने आप तय होता है"
 
@@ -4269,8 +4275,8 @@ msgid "``\"a4\"``"
 msgstr "``\"a4\"``"
 
 #: ../../reference/configuration.rst:597
-msgid "The paper size (``\"a4\"``, ``\"us-letter\"``)."
-msgstr "काग़ज़ का आकार (``\"a4\"``, ``\"us-letter\"``)।"
+msgid "The paper size (``\"a4\"``, ``\"letter\"``, or ``\"us-letter\"``)."
+msgstr "काग़ज़ का आकार (``\"a4\"``, ``\"letter\"`` या ``\"us-letter\"``)।"
 
 #: ../../reference/configuration.rst:598
 msgid "``pdf_logo``"
@@ -4681,13 +4687,13 @@ msgstr "वह मैपिंग नाम जो इसी प्रोजे�
 
 #: ../../reference/configuration.rst:814
 msgid ""
-"Inventories are downloaded with the built-in HTTP client, which honours "
+"Inventories are downloaded with the built-in HTTP client, which honors "
 "``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing. See "
 ":doc:`../intersphinx`."
 msgstr ""
-"इन्वेंटरी बिल्ट-इन HTTP क्लाइंट से डाउनलोड होती हैं, जो ``HTTPS_PROXY`` "
-"और ``NO_PROXY`` का पालन करता है। ``--untrusted`` के साथ कुछ भी डाउनलोड "
-"नहीं होता। :doc:`../intersphinx` देखें।"
+"इन्वेंटरी अंतर्निहित HTTP क्लाइंट से डाउनलोड होती हैं, जो ``HTTPS_PROXY`` "
+"और ``NO_PROXY`` का पालन करता है। ``--untrusted`` कुछ भी डाउनलोड नहीं "
+"करता। :doc:`../intersphinx` देखें।"
 
 #: ../../reference/configuration.rst:817
 #: ../../reference/configuration.rst:822
@@ -6261,9 +6267,9 @@ msgid ""
 "setting is a ``build.untrusted`` warning. This is a capability policy, "
 "not a process sandbox. See :doc:`cli`."
 msgstr ""
-"``guidedog build --untrusted`` ऐसा प्रोजेक्ट build करता है जिसके सोर्स "
-"हमने नहीं लिखे। raw सामग्री छोड़ दी जाती है, कुछ भी डाउनलोड नहीं होता और "
-"कोई build plugin नहीं चलता। प्रोजेक्ट build के पढ़ने का दायरा नहीं बढ़ा "
+"``guidedog build --untrusted`` ऐसा प्रोजेक्ट बिल्ड करता है जिसके सोर्स "
+"हमने नहीं लिखे। रॉ सामग्री छोड़ दी जाती है, कुछ भी डाउनलोड नहीं होता और "
+"कोई बिल्ड प्लगइन नहीं चलता। प्रोजेक्ट बिल्ड के पढ़ने का दायरा नहीं बढ़ा "
 "सकता। ``include_roots`` और ``pdf_preamble`` इस्तेमाल नहीं होते। सोर्स "
 "फ़ोल्डर से बाहर ले जाने वाली फ़ाइलें और फ़ोल्डर (``html_logo``, "
 "``html_favicon``, ``pdf_logo``, ``mathjax_config_path``, "
@@ -6271,53 +6277,90 @@ msgstr ""
 "``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``, "
 "``odin_autoapi_dirs``, ``rust_autoapi_crates``) छोड़ दिए जाते हैं। "
 "अंतर्निहित ``typst-diagram`` कंपाइलेशन बंद रहता है और कोई Typst पैकेज "
-"डाउनलोड नहीं होता। दस्तावेज़ में लिखा ``lilypond`` स्वरलेख अब भी उकेरा "
-"जाता है, पर उसके फ़ाइल तर्क और ``\\include`` अस्वीकार होते हैं। हर छोड़ी "
-"गई सेटिंग पर ``build.untrusted`` चेतावनी आती है। यह क्षमताओं की नीति है, "
-"प्रोसेस सैंडबॉक्स नहीं। :doc:`cli` देखें।"
+"डाउनलोड नहीं होता। इनलाइन ``lilypond`` संगीत की स्वरलिपि टाइपसेटिंग "
+"(स्वरांकन) अब भी की जाती है, पर उसके फ़ाइल आर्ग्युमेंट और ``\\include`` "
+"अस्वीकार कर दिए जाते हैं। हर छोड़ी गई सेटिंग पर ``build.untrusted`` "
+"चेतावनी आती है। यह क्षमताओं की नीति है, प्रोसेस सैंडबॉक्स नहीं। "
+":doc:`cli` देखें।"
 
 #: ../../reference/configuration.rst:1572
 msgid "Native music engraving"
-msgstr "मूल संगीत स्वरलेख"
+msgstr "नेटिव संगीत स्वरलिपि टाइपसेटिंग"
 
-#: ../../reference/configuration.rst:1575
+#: ../../reference/configuration.rst:1583
+msgid "``lilypond_staff_size``"
+msgstr "``lilypond_staff_size``"
+
+#: ../../reference/configuration.rst:1584
+#: ../../reference/configuration.rst:1588
+#: ../../reference/configuration.rst:1592
+msgid "float"
+msgstr "फ़्लोट"
+
+#: ../../reference/configuration.rst:1585
+msgid "``18``"
+msgstr "``18``"
+
+#: ../../reference/configuration.rst:1586
 msgid ""
-"``lilypond_staff_size`` sets the default five-line staff height in "
-"points, from 10 through 40; the default is 18. ``lilypond_html_width`` "
-"sets the wide HTML system measure in points; the default is 564. "
-"``lilypond_pdf_width`` sets the PDF system measure in points; when "
-"omitted, the selected template and ``pdf_paper_size`` determine it. "
-"Widths must be positive and no greater than 100,000 points. All three "
-"values are finite TOML numbers, and directive options override their "
-"project defaults."
+"Default five-line staff height in points, from ``10`` through ``40``."
 msgstr ""
-"``lilypond_staff_size`` पाँच रेखाओं वाली स्वर-पंक्ति की डिफ़ॉल्ट ऊँचाई 10 "
-"से 40 पॉइंट में तय करता है; डिफ़ॉल्ट 18 है। ``lilypond_html_width`` चौड़े "
-"HTML सिस्टम की चौड़ाई पॉइंट में तय करता है; डिफ़ॉल्ट 564 है। "
-"``lilypond_pdf_width`` PDF सिस्टम की चौड़ाई पॉइंट में तय करता है; न देने "
-"पर चुना टेम्पलेट और ``pdf_paper_size`` इसे तय करते हैं। चौड़ाइयाँ धनात्मक "
-"और अधिकतम 100,000 पॉइंट होनी चाहिए। तीनों मान परिमित TOML संख्याएँ हैं और "
-"निर्देश विकल्प परियोजना डिफ़ॉल्ट बदलते हैं।"
+"पॉइंट में पाँच रेखाओं वाले स्टाफ़ की डिफ़ॉल्ट ऊँचाई, ``10`` से ``40`` तक।"
 
 #: ../../reference/configuration.rst:1587
+msgid "``lilypond_html_width``"
+msgstr "``lilypond_html_width``"
+
+#: ../../reference/configuration.rst:1589
+msgid "``564``"
+msgstr "``564``"
+
+#: ../../reference/configuration.rst:1590
+msgid "Wide HTML system measure in points (positive, at most ``100000``)."
+msgstr "पॉइंट में चौड़े HTML सिस्टम की चौड़ाई (धनात्मक, अधिकतम ``100000``)।"
+
+#: ../../reference/configuration.rst:1591
+msgid "``lilypond_pdf_width``"
+msgstr "``lilypond_pdf_width``"
+
+#: ../../reference/configuration.rst:1594
 msgid ""
-"The PDF templates declare their horizontal margin with ``// guidedog: "
-"margin-x = 31mm`` after their first import. Without a declaration, we "
-"assume 25 millimetres on each side. The built-in book, article and "
-"discussion margins are 31, 30 and 25 millimetres respectively. Text fonts "
-"use ``pdf_fonts`` and ``pdf_font_paths``. See :doc:`../topics/music` for "
-"directive syntax, layout, trust rules and limits."
+"PDF system measure in points (positive, at most ``100000``); when "
+"omitted, derived from ``pdf_paper_size`` and the selected template's "
+"horizontal margin."
 msgstr ""
-"PDF टेम्पलेट पहले इंपोर्ट के बाद ``// guidedog: margin-x = 31mm`` से "
-"क्षैतिज हाशिया घोषित करते हैं। घोषणा न होने पर हम दोनों ओर 25 मिलीमीटर "
-"मानते हैं। अंतर्निहित पुस्तक, लेख और चर्चा हाशिए क्रमशः 31, 30 और 25 "
-"मिलीमीटर हैं। पाठ फ़ॉन्ट ``pdf_fonts`` और ``pdf_font_paths`` उपयोग करते "
-"हैं। निर्देश सिंटैक्स, लेआउट, भरोसा नियम और सीमाओं के लिए "
-":doc:`../topics/music` देखें।"
+"पॉइंट में PDF सिस्टम की चौड़ाई (धनात्मक, अधिकतम ``100000``); न दिए जाने "
+"पर ``pdf_paper_size`` और चुने गए टेम्पलेट के क्षैतिज हाशिए से निकाली जाती "
+"है।"
+
+#: ../../reference/configuration.rst:1596
+msgid ""
+"All three values are finite TOML numbers, and directive options override "
+"their project defaults."
+msgstr ""
+"तीनों मान परिमित TOML संख्याएँ हैं, और निर्देश के विकल्प अपने प्रोजेक्ट "
+"डिफ़ॉल्ट को ओवरराइड करते हैं।"
+
+#: ../../reference/configuration.rst:1604
+msgid ""
+"The PDF templates declare their horizontal margin in their leading 256 "
+"lines with a comment such as ``// guidedog: margin-x = 31mm``. Without a "
+"declaration, we assume 25 millimeters on each side. The built-in book, "
+"article and discussion margins are 31, 30 and 25 millimeters "
+"respectively. Text fonts use ``pdf_fonts`` and ``pdf_font_paths``. See "
+":doc:`../topics/music` for directive syntax, layout, trust rules and "
+"limits."
+msgstr ""
+"PDF टेम्पलेट अपनी शुरुआती 256 पंक्तियों में ``// guidedog: margin-x = "
+"31mm`` जैसी टिप्पणी से क्षैतिज हाशिया घोषित करते हैं। घोषणा न होने पर हम "
+"दोनों ओर 25 मिलीमीटर मानते हैं। अंतर्निहित पुस्तक, लेख और चर्चा टेम्पलेट "
+"के हाशिए क्रमशः 31, 30 और 25 मिलीमीटर हैं। पाठ फ़ॉन्ट ``pdf_fonts`` और "
+"``pdf_font_paths`` उपयोग करते हैं। निर्देश सिंटैक्स, लेआउट, विश्वास "
+"नियमों और सीमाओं के लिए :doc:`../topics/music` देखें।"
 
 #: ../../reference/formats.rst:1
 msgid "Readers, renderers, and builders"
-msgstr "रीडर, रेंडरर और builder"
+msgstr "रीडर, रेंडरर और बिल्डर"
 
 #: ../../reference/formats.rst:4
 msgid ""
@@ -6325,7 +6368,7 @@ msgid ""
 "tree. A builder coordinates a project and publishes its output. These are "
 "different responsibilities."
 msgstr ""
-"रीडर सोर्स भाषा समझता है। रेंडरर एक दस्तावेज़ वृक्ष लिखता है। builder "
+"रीडर सोर्स भाषा समझता है। रेंडरर एक दस्तावेज़ वृक्ष लिखता है। बिल्डर "
 "प्रोजेक्ट का संयोजन और प्रकाशन करता है। ये अलग ज़िम्मेदारियाँ हैं।"
 
 #: ../../reference/formats.rst:8
@@ -6366,7 +6409,7 @@ msgstr "MyST-संगत Markdown परत"
 
 #: ../../reference/formats.rst:20
 msgid "The same project graph and builders."
-msgstr "वही प्रोजेक्ट ग्राफ़ और builder।"
+msgstr "वही प्रोजेक्ट ग्राफ़ और बिल्डर।"
 
 #: ../../reference/formats.rst:21
 msgid "``convert file.md`` / ``file.rst``"
@@ -6413,7 +6456,7 @@ msgstr ""
 
 #: ../../reference/formats.rst:34
 msgid "Builders"
-msgstr "builder"
+msgstr "बिल्डर"
 
 #: ../../reference/formats.rst:37
 msgid "``html``"
@@ -6438,7 +6481,7 @@ msgstr "``singlehtml``"
 
 #: ../../reference/formats.rst:44
 msgid "One main HTML page with document sections and local references."
-msgstr "दस्तावेज़ खंड और स्थानीय संदर्भ वाली एक मुख्य HTML पेज।"
+msgstr "दस्तावेज़ खंडों और स्थानीय संदर्भों वाला एक मुख्य HTML पेज।"
 
 #: ../../reference/formats.rst:46
 msgid "``pdf``"
@@ -6449,8 +6492,8 @@ msgid ""
 "Typst books defined by the project. LaTeX builder aliases select this "
 "route."
 msgstr ""
-"प्रोजेक्ट में तय Typst किताबें। LaTeX builder के एलियस यही रास्ता चुनते "
-"हैं।"
+"प्रोजेक्ट में तय Typst किताबें। LaTeX बिल्डर के उपनाम (alias) यही रास्ता "
+"चुनते हैं।"
 
 #: ../../reference/formats.rst:49
 msgid "``text``"
@@ -6466,7 +6509,7 @@ msgstr "``gettext``"
 
 #: ../../reference/formats.rst:53
 msgid "Message templates for translation."
-msgstr "अनुवाद के संदेश template।"
+msgstr "अनुवाद के संदेश टेम्पलेट।"
 
 #: ../../reference/formats.rst:55
 msgid "``dummy``"
@@ -6531,8 +6574,8 @@ msgid ""
 ":doc:`../topics/music`. Ordinary LilyPond code blocks remain source "
 "examples."
 msgstr ""
-"RST और MyST का ``lilypond`` निर्देश संगीत संकेतन के लिए परियोजना की मूल "
-"स्वरलेख प्रक्रिया उपयोग करता है। SVG और PNG ऐसेट, चित्र-विवरण, चित्र "
+"RST और MyST का ``lilypond`` निर्देश संगीत संकेतन के लिए परियोजना की नेटिव "
+"स्वरांकन पाइपलाइन उपयोग करता है। SVG और PNG ऐसेट, चित्र-विवरण, चित्र "
 "संदर्भ, संकरे HTML लेआउट और PDF सिस्टम चित्र :doc:`../topics/music` में "
 "बताए गए हैं। सामान्य LilyPond कोड ब्लॉक स्रोत उदाहरण ही रहते हैं।"
 

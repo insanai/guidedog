@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:28+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -76,11 +76,12 @@ msgstr "``_templates/book.typ`` は PDF の本のレイアウト、文字組み�
 
 #: ../../templates.rst:20
 msgid ""
-"``_static/guidedog.css`` and ``_static/guidedog.js`` supply default "
-"styles and client behaviors."
+"``_static/guidedog.css``, ``_static/guidedog.js``, and "
+"``_static/typography.js`` supply default styles, client behaviors, and "
+"browser paragraph line breaking."
 msgstr ""
-"``_static/guidedog.css`` と ``_static/guidedog.js`` "
-"は既定のスタイルとブラウザーの動作を提供します。"
+"``_static/guidedog.css``、``_static/guidedog.js``、``_static/typography.js`` "
+"は、既定のスタイル、クライアント側の動作、ブラウザー上の段落の行分割を提供します。"
 
 #: ../../templates.rst:22
 msgid ""
@@ -181,7 +182,7 @@ msgid ""
 "the mark, it would load the project's own ``_templates/layout.html`` "
 "again, recursively."
 msgstr ""
-"``{% extends \"!layout.html\" %}`` （または ``{% extends "
+"``{% extends \"!layout.html\" %}``\\ （または ``{% extends "
 "\"basic/layout.html\" "
 "%}``）は、テーマ本来のテンプレートを読み込むようローダーに指示します。感嘆符がないと、プロジェクト自身の "
 "``_templates/layout.html`` を再び読み込み、再帰してしまいます。"
@@ -374,7 +375,7 @@ msgstr "テンプレートの検索"
 
 #: ../../templates.rst:188
 msgid "Guidedog searches three tiers in order:"
-msgstr "Guidedog は 3 つの階層を順番に検索します："
+msgstr "Guidedog は 3 つの階層を順番に検索します。"
 
 #: ../../templates.rst:190
 msgid ""
@@ -458,7 +459,7 @@ msgstr "文書のタイトル。"
 
 #: ../../templates.rst:215
 msgid "``pagename``, ``docname``"
-msgstr "``pagename``\\ , ``docname``"
+msgstr "``pagename``、``docname``"
 
 #: ../../templates.rst:216
 msgid ""
@@ -489,14 +490,13 @@ msgstr "文書内の節を HTML で示します。節がなければ空です。
 
 #: ../../templates.rst:224
 msgid "``prev``, ``next``"
-msgstr "``prev``\\ , ``next``"
+msgstr "``prev``、``next``"
 
 #: ../../templates.rst:225
 msgid ""
-"The neighbouring pages in reading order, with ``url`` (also ``link``) and "
+"The neighboring pages in reading order, with ``url`` (also ``link``) and "
 "``title``; none at either end."
-msgstr ""
-"読む順で前後にあるページです。\\ ``url``\\ （\\ ``link`` も可）と ``title`` を持ち、端では存在しません。"
+msgstr "読書順で前後にあるページです。``url``\\ （``link`` も可）と ``title`` を持ち、両端では存在しません。"
 
 #: ../../templates.rst:227
 msgid "``page``"
@@ -537,15 +537,13 @@ msgstr ""
 "生成されたアーカイブページでは、``collection.title``、``collection.output``、``collection.page``\\ "
 "（1 "
 "始まり）、``collection.pages``、``collection.previous_url``、``collection.next_url``、``collection.posts`` "
-"が提供されます。各記事は ``title``、``docname``、``date``、``url``、``summary``, "
-"``excerpt_html``、``meta`` を含みます。前後の URL は相対パスで、両端では ``None`` "
-"になります。コレクションのフィードには RSS と Atom が使われます。"
+"が提供されます。各記事は "
+"``title``、``docname``、``date``、``url``、``summary``、``excerpt_html``、``meta`` "
+"を含みます。前後の URL は相対パスで、両端では ``None`` になります。コレクションのフィードには RSS と Atom が使われます。"
 
 #: ../../templates.rst:231
 msgid "``project``, ``version``, ``release``, ``copyright``, ``language``"
-msgstr ""
-"``project``\\ , ``version``\\ , ``release``\\ , ``copyright``\\ , "
-"``language``"
+msgstr "``project``、``version``、``release``、``copyright``、``language``"
 
 #: ../../templates.rst:232
 msgid "The settings of the same names."
@@ -553,7 +551,7 @@ msgstr "同名の設定値。"
 
 #: ../../templates.rst:233
 msgid "``html_title``, ``docstitle``"
-msgstr "``html_title``\\ , ``docstitle``"
+msgstr "``html_title``、``docstitle``"
 
 #: ../../templates.rst:234
 msgid "``html_title``, by default \"<project> <release> documentation\"."
@@ -561,15 +559,15 @@ msgstr "``html_title``\\ 。既定値は「<project> <release> documentation」�
 
 #: ../../templates.rst:235
 msgid "``html_short_title``, ``shorttitle``"
-msgstr "``html_short_title``\\ , ``shorttitle``"
+msgstr "``html_short_title``、``shorttitle``"
 
 #: ../../templates.rst:236
 msgid "``html_short_title``."
-msgstr "``html_short_title``\\ ."
+msgstr "``html_short_title``。"
 
 #: ../../templates.rst:237
 msgid "``root_doc``, ``master_doc``"
-msgstr "``root_doc``\\ , ``master_doc``"
+msgstr "``root_doc``、``master_doc``"
 
 #: ../../templates.rst:238
 msgid "The root document's name."
@@ -585,7 +583,7 @@ msgstr "ページからサイトのルートへのパスです。例は ``../``\
 
 #: ../../templates.rst:241
 msgid "``root_url``, ``search_url``, ``genindex_url``"
-msgstr "``root_url``\\ , ``search_url``\\ , ``genindex_url``"
+msgstr "``root_url``、``search_url``、``genindex_url``"
 
 #: ../../templates.rst:242
 msgid "Links to the root page, the search page, and the general index."
@@ -593,7 +591,7 @@ msgstr "ルートページ、検索ページ、総合索引へのリンク。"
 
 #: ../../templates.rst:243
 msgid "``css_files``, ``js_files``"
-msgstr "``css_files``\\ , ``js_files``"
+msgstr "``css_files``、``js_files``"
 
 #: ../../templates.rst:244
 msgid ""
@@ -605,7 +603,7 @@ msgstr ""
 
 #: ../../templates.rst:246
 msgid "``logo_url``, ``favicon_url``"
-msgstr "``logo_url``\\ , ``favicon_url``"
+msgstr "``logo_url``、``favicon_url``"
 
 #: ../../templates.rst:247
 msgid ""
@@ -617,8 +615,8 @@ msgid "``accent``"
 msgstr "``accent``"
 
 #: ../../templates.rst:249
-msgid "``html_theme_options.accent``, the theme's colour."
-msgstr "テーマの色 ``html_theme_options.accent``\\ 。"
+msgid "``html_theme_options.accent``, the theme's color."
+msgstr "テーマのアクセントカラー ``html_theme_options.accent``。"
 
 #: ../../templates.rst:250
 msgid "``sourcelink_url``"
@@ -645,8 +643,7 @@ msgid ""
 "``show_copyright``, ``show_sphinx``, ``show_guidedog``, ``has_source``, "
 "``show_source``"
 msgstr ""
-"``show_copyright``\\ , ``show_sphinx``\\ , ``show_guidedog``\\ , "
-"``has_source``\\ , ``show_source``"
+"``show_copyright``、``show_sphinx``、``show_guidedog``、``has_source``、``show_source``"
 
 #: ../../templates.rst:256
 msgid "The ``html_show_*`` and ``html_copy_source`` settings."
@@ -654,7 +651,7 @@ msgstr "``html_show_*`` と ``html_copy_source`` の設定。"
 
 #: ../../templates.rst:257
 msgid "``builder``, ``file_suffix``"
-msgstr "``builder``\\ , ``file_suffix``"
+msgstr "``builder``、``file_suffix``"
 
 #: ../../templates.rst:258
 msgid "The builder's name, such as ``html``, and the page suffix."
@@ -738,7 +735,7 @@ msgstr ""
 "テンプレートには、どの文書にも属さないページの変数が渡ります。``pagename`` はページ名（``index``）、``title`` と "
 "``body`` は空で、``pathto``、``toc``、``toctree()``、``html_context`` "
 "の値は通常のページと同じく使えます。このページは ``html``、``dirhtml``、``singlehtml`` "
-"のいずれでもサイトのルートに ``<name>.html`` "
+"のいずれでもサイトのルートに ``<name>.html``\\ "
 "（``html_file_suffix``）として書き出され、ビルドのたびに書き直されます。そのページのテンプレートを変更するとそのページが再ビルドされ、共有の基底テンプレートを変更するとそれを継承するすべてのページが再ビルドされます。"
 
 #: ../../templates.rst:304
@@ -776,9 +773,9 @@ msgid ""
 "has, such as ``genindex``, where Sphinx would write one of the two over "
 "the other."
 msgstr ""
-"名前はサイト直下のファイル名に限る。リンクがルート基準なので ``\"sub/page\"`` は警告（\\ "
-"``build.additional_page``\\ ）で拒否する。\\ ``genindex`` など既存ファイル名も拒否する。Sphinx "
-"では一方を上書きする場合だ。"
+"名前はサイト直下のファイル名に限られます。リンクがルート基準で作られるため、``\"sub/page\"`` "
+"は警告（``build.additional_page``）を出して拒否されます。``genindex`` "
+"のようにサイトに既存のファイル名も拒否されます（Sphinx では一方が他方を上書きしてしまうケースです）。"
 
 #: ../../templates.rst:317
 msgid ""
@@ -826,7 +823,7 @@ msgid ""
 "source as"
 msgstr ""
 "PDF の本は Typst で組版します。``_templates/book.typ`` は ``book`` 関数を定義する普通の Typst "
-"ファイルです。Guidedog は本のソースを次の形で書き出します"
+"ファイルです。Guidedog は本のソースを次の形で書き出します。"
 
 #: ../../templates.rst:355
 msgid ""
@@ -890,7 +887,7 @@ msgstr "``version``"
 
 #: ../../templates.rst:376
 msgid "``release``."
-msgstr "``release``\\ ."
+msgstr "``release``。"
 
 #: ../../templates.rst:377
 msgid "``date``"
@@ -908,7 +905,7 @@ msgstr "``lang``"
 
 #: ../../templates.rst:380
 msgid "``language``."
-msgstr "``language``\\ ."
+msgstr "``language``。"
 
 #: ../../templates.rst:381
 msgid "``paper``"
@@ -1001,15 +998,20 @@ msgstr ""
 #: ../../templates.rst:404
 msgid ""
 "We can edit ``theme.typ`` to change all three copied layouts together. "
-"Changes to files beneath ``_templates/``, including nested imported "
-"modules and assets, invalidate cached PDFs. The builder tracks directory "
-"membership as well, so adding or removing a module cannot leave a stale "
-"PDF. Template discovery stays inside the project's readable roots and "
-"permits at most 16,384 template inputs."
+"Keep or update ``// guidedog: margin-x = 31mm`` in the leading 256 lines "
+"when changing horizontal page margins so native ``lilypond`` scores match "
+"the text column; see :doc:`topics/music`. Changes to files beneath "
+"``_templates/``, including nested imported modules and assets, invalidate "
+"cached PDFs. The builder tracks directory membership as well, so adding "
+"or removing a module cannot leave a stale PDF. Template discovery stays "
+"inside the project's readable roots and permits at most 16,384 template "
+"inputs."
 msgstr ""
 "``theme.typ`` を編集すれば、コピーされた 3 "
-"つのレイアウトすべてをまとめて変更できます。入れ子でインポートされたモジュールやアセットを含め、``_templates/`` "
-"配下のファイルを変更するとキャッシュされた PDF "
+"つのレイアウトすべてをまとめて変更できます。ページの左右余白を変更する際は、ネイティブの ``lilypond`` "
+"楽譜の幅が本文の段幅と一致するよう、先頭 256 行以内にある ``// guidedog: margin-x = 31mm`` "
+"を残すか更新してください（詳しくは :doc:`topics/music` "
+"を参照）。入れ子でインポートされたモジュールやアセットを含め、``_templates/`` 配下のファイルを変更するとキャッシュされた PDF "
 "は無効化されます。ビルダーはディレクトリ内のファイル構成も追跡するため、モジュールを追加・削除した際に古い PDF "
 "が残ることはありません。テンプレートの探索はプロジェクトの読み取り可能なルート内に留まり、最大 16,384 個のテンプレート入力を許可します。"
 
@@ -1049,8 +1051,8 @@ msgid ""
 "caller's later body. The complete tutorial shows a working wrapper around "
 "the generated book template."
 msgstr ""
-"``apply-styles(body)`` "
-"は受け取った内容を規則の内側に置く必要があります。文字設定だけをして何も返さない関数では、呼び出し元の後続本文は変わりません。完全な手順では、生成した書籍を包む動作する例を示します。"
+"ここで ``apply-styles(body)`` "
+"は、受け取った内容をスタイルの規則で囲んで返す必要があります。文字設定だけを行い何も返さないヘルパー関数では、呼び出し元の後続本文は変わりません。チュートリアル本編では、生成された書籍テンプレートを包む実用的なラッパーの例を示しています。"
 
 #: ../../templates.rst:440
 msgid "Page breaks in captioned content"
@@ -1093,8 +1095,9 @@ msgid ""
 "on first use. Set ``pdf_packages = \"offline\"`` to build only with "
 "packages already on disk."
 msgstr ""
-"``#import \"@preview/cetz:0.4.2\"`` などのパッケージは初回にダウンロードして使える。\\ "
-"``pdf_packages = \"offline\"`` ならディスク上のものだけでビルドする。"
+"``#import \"@preview/cetz:0.4.2\"`` "
+"などのパッケージも利用でき、初回使用時にダウンロードされます。すでにディスク上にあるパッケージだけでビルドするには ``pdf_packages "
+"= \"offline\"`` を設定します。"
 
 #: ../../templates.rst:454
 msgid "Fonts"
@@ -1106,8 +1109,9 @@ msgid ""
 "folders with ``pdf_font_paths``, or set ``pdf_fonts = \"embedded\"`` to "
 "use only the fonts built into Typst, for byte-for-byte reproducible books."
 msgstr ""
-"``typst`` と同様にシステムフォントを使える。\\ ``pdf_font_paths`` でフォルダーを追加する。\\ "
-"``pdf_fonts = \"embedded\"`` なら Typst 内蔵だけを使い、バイト単位で再現可能な本を作れる。"
+"``typst`` コマンドと同様にシステムフォントを利用できます。``pdf_font_paths`` "
+"でフォルダーを追加するか、``pdf_fonts = \"embedded\"`` を設定して Typst "
+"内蔵フォントのみを使うことで、バイト単位で再現可能な書籍を作成できます。"
 
 #: ../../templates.rst:459
 msgid "A preamble"
@@ -1134,8 +1138,8 @@ msgid ""
 "only::`` guard with a matching ``.. raw::`` directive:"
 msgstr ""
 "ドキュメントは reStructuredText および Markdown です。Typst ファイルや HTML "
-"断片はそれ自体ではドキュメントではありません。一方の出力形式に固有のマークアップを他方を汚染せずに挿入するには、ブロックを対応する ``.. "
-"raw::`` ディレクティブを含む ``.. only::`` ガードで囲みます："
+"断片はそれ自体ではドキュメントではありません。一方の出力形式に固有のマークアップを他方に混入させずに挿入するには、対応する ``.. "
+"raw::`` ディレクティブを含む ``.. only::`` ガードでブロックを囲みます。"
 
 #: ../../templates.rst:484
 msgid ""

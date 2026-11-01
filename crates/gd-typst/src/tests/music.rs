@@ -10,6 +10,10 @@ fn rasterization_checks_dimensions_pixels_and_reservations() {
         assert_eq!(&png[..8], b"\x89PNG\r\n\x1a\n");
         assert_eq!(u32::from_be_bytes(png[16..20].try_into().expect("width")), 40);
         assert_eq!(u32::from_be_bytes(png[20..24].try_into().expect("height")), 20);
+        assert_eq!(&png[37..41], b"pHYs");
+        let resolution = u32::from_be_bytes(png[41..45].try_into().expect("resolution"));
+        assert!((f64::from(resolution) * 0.0254 - options.dpi).abs() < 0.02);
+        assert_eq!(png[49], 1);
     } else {
         assert_eq!(result, Err(RasterError::Disabled));
     }

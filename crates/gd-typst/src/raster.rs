@@ -85,7 +85,8 @@ pub fn rasterize_svg(svg: &[u8], options: &RasterOptions<'_>) -> Result<Vec<u8>,
     {
         return Err(RasterError::Limit);
     }
-    let allowance = svg.len().saturating_add(pixels as usize * 9 + 65536);
+    // Include the decoder's geometry, not just its borrowed source bytes.
+    let allowance = svg.len().saturating_mul(16).saturating_add(pixels as usize * 9 + 65536);
     if options.reserve.is_some_and(|reserve| !reserve(allowance)) {
         return Err(RasterError::Budget);
     }
@@ -117,12 +118,46 @@ fn render(svg: &[u8], options: &RasterOptions<'_>) -> Result<Vec<u8>, RasterErro
             pixel_per_pt: typst::utils::Scalar::new(options.dpi / 72.0),
             ..Default::default()
         };
-        typst_render::render(&page, &options)
+        let mut png = typst_render::render(&page, &options)
             .encode_png()
-            .map_err(|e| RasterError::Data(e.to_string()))
+            .map_err(|e| RasterError::Data(e.to_string()))?;
+        set_resolution(&mut png, options.pixel_per_pt.get() * 72.0)?;
+        Ok(png)
     }));
     typst::comemo::evict(0);
     result.map_err(|_| RasterError::Internal)?
+}
+
+#[cfg(feature = "embedded")]
+fn set_resolution(png: &mut Vec<u8>, dpi: f64) -> Result<(), RasterError> {
+    let per_meter = (dpi / 0.0254).round();
+    if !(1.0..=f64::from(u32::MAX)).contains(&per_meter) {
+        return Err(RasterError::Dimensions);
+    }
+    if png.len() < 33 || &png[12..16] != b"IHDR" {
+        return Err(RasterError::Internal);
+    }
+    // pHYs preserves typographic size when a PDF embeds the raster edition.
+    let mut chunk = [0u8; 21];
+    chunk[..4].copy_from_slice(&9u32.to_be_bytes());
+    chunk[4..8].copy_from_slice(b"pHYs");
+    chunk[8..12].copy_from_slice(&(per_meter as u32).to_be_bytes());
+    chunk[12..16].copy_from_slice(&(per_meter as u32).to_be_bytes());
+    chunk[16] = 1;
+    let mut crc = u32::MAX;
+    for byte in &chunk[4..17] {
+        crc ^= u32::from(*byte);
+        for _ in 0..8 {
+            crc = (crc >> 1) ^ (0xedb88320 & 0u32.wrapping_sub(crc & 1));
+        }
+    }
+    chunk[17..].copy_from_slice(&(!crc).to_be_bytes());
+    png.try_reserve_exact(chunk.len()).map_err(|_| RasterError::Budget)?;
+    let length = png.len();
+    png.resize(length + chunk.len(), 0);
+    png.copy_within(33..length, 33 + chunk.len());
+    png[33..54].copy_from_slice(&chunk);
+    Ok(())
 }
 
 #[cfg(not(feature = "embedded"))]

@@ -1,0 +1,19 @@
+# gd-engrave
+
+Native music geometry and standalone SVG output for GDS 0015.
+The crate borrows a `gd-score::Score` and explicit immutable font tables.
+It performs no file access, runs no program and has no global font registry.
+
+We load music and text tables with `load_fonts`, keep one `Engraver` per rendering thread and call `engrave_score` with a plain `Options` value.
+`engrave_svg` supplies the one-call path.
+`write_svg` selects complete systems, escapes accessible text and writes outlined glyphs without browser font dependencies.
+Its output and buffer growth have explicit limits.
+
+Spacing uses checked spring and rod inputs, conservative spanning-rod conversion and an exact piecewise-linear solver.
+Line breaking uses a bounded dynamic program and preserves forced endpoints without suppressing earlier lines.
+Staff and outside-mark placement uses piecewise-linear upper and lower skylines.
+The display list retains staff, measure and semantic mark identities for export and geometric audits.
+
+Bravura 1.482 and its SMuFL metadata are embedded unmodified from `third_party/bravura`.
+The build checks their recorded digests.
+Text faces come from the caller, with explicit regular, bold and italic fallback lists.

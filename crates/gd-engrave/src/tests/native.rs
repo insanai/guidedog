@@ -1,0 +1,78 @@
+use crate::*;
+
+const REGULAR: &[u8] =
+    include_bytes!("../../../../docs/shared/_static/data/fonts/LibertinusSerif-Regular.otf");
+
+fn draw(source: &str, width: f64) -> Engraving {
+    let loaded =
+        gd_lilypond::load_score(source, "native.ly", &mut gd_lilypond::Options::default())
+            .unwrap();
+    let fonts =
+        load_fonts(&FontOptions { regular: vec![REGULAR], ..FontOptions::default() }).unwrap();
+    Engraver::default()
+        .engrave_score(
+            &loaded.score,
+            &fonts,
+            &mut Options { line_width: width, ..Options::default() },
+        )
+        .unwrap()
+}
+
+#[test]
+fn complete_phrase_has_signatures_beams_accidentals_and_slurs() {
+    let engraving = draw(
+        r"\relative c'' { \key g \major \time 3/4
+        d4 g,8( a b c) | d4 g, g | e' c8( d e fis) | g4 g, g | }",
+        350.0,
+    );
+    let roles: Vec<_> =
+        engraving.systems.iter().flat_map(|s| &s.marks).map(|m| m.mark.role()).collect();
+    assert!(roles.contains(&Role::Signature));
+    assert!(roles.contains(&Role::Beam));
+    assert!(roles.contains(&Role::Slur));
+    assert_eq!(engraving.summary.measures, (1, 4));
+}
+
+#[test]
+fn every_ink_bound_fits_its_system_with_lyrics_and_ledgers() {
+    let engraving = draw(
+        r#"\new PianoStaff <<
+        \new Staff { c'''4 d''' e''' f''' } \addlyrics { Hel -- lo mu -- sic }
+        \new Staff { \clef bass c,,1 }
+    >>"#,
+        280.0,
+    );
+    for system in &engraving.systems {
+        for mark in &system.marks {
+            assert!(mark.bounds.top >= -0.001, "{:?}", mark.mark);
+            assert!(mark.bounds.bottom <= system.height + 0.001, "{:?}", mark.mark);
+        }
+    }
+}
+
+#[test]
+fn a_reused_workspace_is_byte_deterministic() {
+    let fonts =
+        load_fonts(&FontOptions { regular: vec![REGULAR], ..FontOptions::default() }).unwrap();
+    let a = gd_lilypond::load_score(
+        r"{ c'4( d' e' f') | g'1 }",
+        "a.ly",
+        &mut gd_lilypond::Options::default(),
+    )
+    .unwrap();
+    let b = gd_lilypond::load_score(
+        r"{ c''8 d'' e'' f'' g'' a'' b'' c''' }",
+        "b.ly",
+        &mut gd_lilypond::Options::default(),
+    )
+    .unwrap();
+    let mut workspace = Engraver::default();
+    let first = workspace.engrave_score(&a.score, &fonts, &mut Options::default()).unwrap();
+    let _ = workspace.engrave_score(&b.score, &fonts, &mut Options::default()).unwrap();
+    let second = workspace.engrave_score(&a.score, &fonts, &mut Options::default()).unwrap();
+    let mut first_svg = String::new();
+    let mut second_svg = String::new();
+    write_svg(&mut first_svg, &first, &SvgOptions::default(), None).unwrap();
+    write_svg(&mut second_svg, &second, &SvgOptions::default(), None).unwrap();
+    assert_eq!(first_svg, second_svg);
+}

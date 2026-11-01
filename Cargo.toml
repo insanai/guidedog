@@ -73,6 +73,7 @@ gd-conf = { path = "crates/gd-conf" }
 gd-clock = { path = "crates/gd-clock" }
 gd-score = { path = "crates/gd-score" }
 gd-lilypond = { path = "crates/gd-lilypond" }
+gd-engrave = { path = "crates/gd-engrave" }
 gd-rustdoc = { version = "1.0.0-beta.8", path = "crates/gd-rustdoc" }
 
 # External crates: only mature, self-contained ones that solve a genuinely large problem.
@@ -95,6 +96,10 @@ tree-sitter-rust = "0.24"
 serde_json = { version = "1.0.154", features = ["preserve_order"] }
 # serde's Deserializer/Visitor traits, for gd-json's validating parse and `from_value`.
 serde = "1"
+# Native music engraving needs complete OpenType outlines and text shaping. These mature
+# parsers are also the exact versions already used by the embedded Typst compiler.
+ttf-parser = "=0.25.1"
+rustybuzz = "=0.20.1"
 # HTTP and HTTPS for gd-fetch, replacing the system `curl` program so Guidedog is
 # self-contained. HTTPS (TLS, certificate checks) is a genuinely large problem; ureq is a
 # mature, small, blocking client and rustls a mature TLS stack in Rust, with Mozilla's root

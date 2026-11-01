@@ -1,0 +1,23 @@
+[package]
+name = "gd-engrave"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+description = "Bounded native music engraving with outlined SMuFL glyphs"
+
+[dependencies]
+gd-score.workspace = true
+gd-json.workspace = true
+ttf-parser.workspace = true
+rustybuzz.workspace = true
+
+[build-dependencies]
+gd-sha.workspace = true
+
+[dev-dependencies]
+gd-lilypond.workspace = true
+
+[lints]
+workspace = true

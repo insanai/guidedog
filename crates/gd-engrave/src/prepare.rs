@@ -62,6 +62,8 @@ pub(crate) struct EventInfo {
     pub(crate) stem_tip: f64,
     pub(crate) flags: u8,
     pub(crate) beam: Option<usize>,
+    pub(crate) beat: (usize, i64, i64),
+    pub(crate) tuplet: Option<usize>,
 }
 
 #[derive(Clone, Debug, Default)]

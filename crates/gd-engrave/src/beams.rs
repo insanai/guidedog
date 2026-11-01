@@ -8,16 +8,18 @@ const STEM_WEIGHT: f64 = 10.0;
 const SLOPE_WEIGHT: f64 = 25.0;
 const SHORT_STEM_WEIGHT: f64 = 100_000.0;
 const COLLISION_WEIGHT: f64 = 1_000_000.0;
+const QUANT_WEIGHT: f64 = 5.0;
 
 #[derive(Clone, Copy, Debug)]
-struct Stem {
+pub(crate) struct Stem {
     id: EventId,
-    x: f64,
+    pub(crate) x: f64,
     base: f64,
     ideal: f64,
     up: bool,
-    flags: u8,
+    pub(crate) flags: u8,
     scale: f64,
+    pub(crate) beat: (usize, i64, i64),
 }
 
 impl Draw<'_, '_, '_, '_, '_> {
@@ -48,14 +50,29 @@ impl Draw<'_, '_, '_, '_, '_> {
                     up: info.up,
                     flags: info.flags,
                     scale: info.head_scale,
+                    beat: info.beat,
                 });
             }
             if stems.len() < 2 {
                 continue;
             }
             let middle = (4.0 + f64::from(self.staff.0) * 9.0) * space;
-            let thickness = self.fonts.default_value("beamThickness", 0.5) * space;
-            let (left, right) = choose(&stems, group.up, middle, space, thickness, self.work)?;
+            let scale = stems.iter().map(|s| s.scale).fold(1.0, f64::min);
+            let thickness = self.fonts.default_value("beamThickness", 0.5) * space * scale;
+            let segments = crate::beam_segments::collect(&stems, space, self.work)?;
+            let distance =
+                thickness + self.fonts.default_value("beamSpacing", 0.25) * space * scale;
+            let metrics = Metrics { up: group.up, middle, space, thickness, distance };
+            let mut obstacles = Vec::new();
+            for mark in &self.system.marks {
+                charge(self.work, 1)?;
+                if mark.staff == self.staff
+                    && matches!(mark.mark.role(), Role::Notehead | Role::Accidental)
+                {
+                    obstacles.push(mark.bounds);
+                }
+            }
+            let (left, right) = choose(&stems, &segments, metrics, &obstacles, self.work)?;
             let first = stems[0].x;
             let width = (stems.last().map(|s| s.x).unwrap_or(first) - first).max(0.01);
             let at = |x: f64| left + (right - left) * (x - first) / width;
@@ -74,7 +91,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                 }
             }
             self.measure = request.first;
-            self.beam_segments(&stems, group.up, (left, right), thickness, space)?;
+            self.beam_segments(&stems, &segments, (left, right), metrics)?;
         }
         Ok(())
     }
@@ -82,69 +99,54 @@ impl Draw<'_, '_, '_, '_, '_> {
     fn beam_segments(
         &mut self,
         stems: &[Stem],
-        up: bool,
+        segments: &[crate::beam_segments::Segment],
         ends: (f64, f64),
-        thickness: f64,
-        space: f64,
+        metrics: Metrics,
     ) -> Result<(), Error> {
         let first = stems[0].x;
-        let last = stems.last().map(|s| s.x).unwrap_or(first);
-        let width = (last - first).max(0.01);
-        let side = if up { 1.0 } else { -1.0 };
-        let distance = thickness + self.fonts.default_value("beamSpacing", 0.25) * space;
-        let at = |x: f64| ends.0 + (ends.1 - ends.0) * (x - first) / width;
-        let levels = stems.iter().map(|s| s.flags).max().unwrap_or(0);
-        for level in 0..levels {
-            for (index, stem) in stems.iter().enumerate() {
-                if stem.flags <= level {
-                    continue;
-                }
-                let next = stems.get(index + 1).filter(|next| next.flags > level);
-                let previous = index
-                    .checked_sub(1)
-                    .and_then(|i| stems.get(i))
-                    .filter(|prev| prev.flags > level);
-                let (a, b) = if let Some(next) = next {
-                    (stem.x, next.x)
-                } else if previous.is_some() {
-                    continue;
-                } else {
-                    let right = stems.get(index + 1).map(|s| s.x - stem.x);
-                    let left = index.checked_sub(1).map(|i| stem.x - stems[i].x);
-                    if right.is_some() && (left.is_none() || index == 0) {
-                        (stem.x, stem.x + right.unwrap_or(space).min(1.25 * space))
-                    } else {
-                        (stem.x - left.unwrap_or(space).min(1.25 * space), stem.x)
-                    }
-                };
-                let offset = side * f64::from(level) * distance;
-                let points = [
-                    Point { x: a, y: at(a) + offset },
-                    Point { x: b, y: at(b) + offset },
-                    Point { x: b, y: at(b) + offset + side * thickness },
-                    Point { x: a, y: at(a) + offset + side * thickness },
-                ];
-                let bounds = Rect {
-                    left: a,
-                    right: b,
-                    top: points.iter().map(|p| p.y).fold(f64::INFINITY, f64::min),
-                    bottom: points.iter().map(|p| p.y).fold(f64::NEG_INFINITY, f64::max),
-                };
-                self.add(Mark::Polygon { points, role: Role::Beam }, bounds)?;
-            }
+        let width = (stems.last().map(|s| s.x).unwrap_or(first) - first).max(0.01);
+        let at = |x| ends.0 + (ends.1 - ends.0) * (x - first) / width;
+        let side = if metrics.up { 1.0 } else { -1.0 };
+        for segment in segments {
+            let offset = side * f64::from(segment.level) * metrics.distance;
+            let points = [
+                Point { x: segment.left, y: at(segment.left) + offset },
+                Point { x: segment.right, y: at(segment.right) + offset },
+                Point {
+                    x: segment.right,
+                    y: at(segment.right) + offset + side * metrics.thickness,
+                },
+                Point { x: segment.left, y: at(segment.left) + offset + side * metrics.thickness },
+            ];
+            let bounds = Rect {
+                left: segment.left,
+                right: segment.right,
+                top: points.iter().map(|p| p.y).fold(f64::INFINITY, f64::min),
+                bottom: points.iter().map(|p| p.y).fold(f64::NEG_INFINITY, f64::max),
+            };
+            self.add(Mark::Polygon { points, role: Role::Beam }, bounds)?;
         }
         Ok(())
     }
 }
 
-fn choose(
-    stems: &[Stem],
+#[derive(Clone, Copy)]
+struct Metrics {
     up: bool,
     middle: f64,
     space: f64,
     thickness: f64,
+    distance: f64,
+}
+
+fn choose(
+    stems: &[Stem],
+    segments: &[crate::beam_segments::Segment],
+    metrics: Metrics,
+    obstacles: &[Rect],
     work: &mut usize,
 ) -> Result<(f64, f64), Error> {
+    let Metrics { up, middle, space, thickness, distance } = metrics;
     let first = stems[0];
     let last = *stems.last().ok_or_else(|| failure("An empty beam has no endpoints."))?;
     let width = (last.x - first.x).max(0.01);
@@ -164,7 +166,7 @@ fn choose(
     let mut best = None;
     for a in -8..=8 {
         for b in -8..=8 {
-            charge(work, stems.len())?;
+            charge(work, stems.len() * 6)?;
             let left = ideal_left + f64::from(a) * 0.25 * space;
             let right = ideal_right + f64::from(b) * 0.25 * space;
             if forbidden(left, up, middle, space, thickness)
@@ -172,20 +174,36 @@ fn choose(
             {
                 continue;
             }
+            let side = if up { 1.0 } else { -1.0 };
             let slope = (right - left) / width;
-            let mut cost = SLOPE_WEIGHT * (slope - delta / width).powi(2);
+            charge(work, segments.len() * 2)?;
+            let inner_quants = segments
+                .iter()
+                .filter(|segment| segment.level > 0)
+                .flat_map(|segment| {
+                    [segment.left, segment.right].map(|x| {
+                        left + slope * (x - first.x) + side * f64::from(segment.level) * distance
+                    })
+                })
+                .filter(|y| forbidden(*y, up, middle, space, thickness))
+                .count();
+            let mut cost = SLOPE_WEIGHT * (slope - delta / width).powi(2)
+                + QUANT_WEIGHT * inner_quants as f64;
             for stem in stems {
                 let y = left + slope * (stem.x - first.x);
                 let length = if stem.up { stem.base - y } else { y - stem.base };
                 let natural = (stem.base - stem.ideal).abs().max(space);
                 cost += STEM_WEIGHT * ((length - natural) / natural).powi(2);
-                if length < 2.5 * space * stem.scale {
+                let minimum =
+                    (2.5 + f64::from(stem.flags.saturating_sub(2)) * 0.5) * space * stem.scale;
+                if length < minimum {
                     cost += SHORT_STEM_WEIGHT;
                 }
                 if length <= 0.75 * space {
                     cost += COLLISION_WEIGHT;
                 }
             }
+            cost += ink_cost(segments, first.x, (left, slope), metrics, obstacles, work)?;
             let tie = (slope.abs(), left + right);
             if best.is_none_or(|(old, old_tie, _, _)| cost < old || (cost == old && tie < old_tie))
             {
@@ -206,4 +224,37 @@ fn forbidden(y: f64, up: bool, middle: f64, space: f64, thickness: f64) -> bool 
         let line = (*v - middle) / space;
         (line - line.round()).abs() < 0.025
     })
+}
+
+fn ink_cost(
+    segments: &[crate::beam_segments::Segment],
+    origin: f64,
+    line: (f64, f64),
+    metrics: Metrics,
+    obstacles: &[Rect],
+    work: &mut usize,
+) -> Result<f64, Error> {
+    let side = if metrics.up { 1.0 } else { -1.0 };
+    let mut cost = 0.0;
+    for segment in segments {
+        let at = |x| {
+            line.0 + line.1 * (x - origin) + side * f64::from(segment.level) * metrics.distance
+        };
+        for obstacle in obstacles {
+            charge(work, 1)?;
+            let left = segment.left.max(obstacle.left);
+            let right = segment.right.min(obstacle.right);
+            if left >= right {
+                continue;
+            }
+            let a = at(left);
+            let b = at(right);
+            let top = a.min(b) + if metrics.up { 0.0 } else { -metrics.thickness };
+            let bottom = a.max(b) + if metrics.up { metrics.thickness } else { 0.0 };
+            if top < obstacle.bottom && bottom > obstacle.top {
+                cost += COLLISION_WEIGHT;
+            }
+        }
+    }
+    Ok(cost)
 }

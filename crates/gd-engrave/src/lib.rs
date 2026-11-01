@@ -5,6 +5,7 @@
 
 mod accidentals;
 mod bars;
+mod beam_segments;
 mod beaming;
 mod beams;
 mod bows;

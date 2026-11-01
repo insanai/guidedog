@@ -1098,7 +1098,8 @@ Each phase is complete when this evidence exists for its constructs:
 * Property tests: no input to ``load_score`` panics or exceeds its limits (also run under a fuzzer); ideal gaps never decrease with duration; the solver's gaps satisfy every original rod and sum to the measure; on random small scores, the breaker's result equals exhaustive search.
 * A collision audit run on every engraved test score.
   It checks marks by role against a table of allowed contacts (stems on noteheads, ledger lines through noteheads, beams on stems, bar lines and staff lines on everything they cross, slurs across staff lines) and reports any other overlap beyond a tolerance of 0.05 staff space.
-  It also checks that no beam end sits in a forbidden quant and no tie apex touches a staff line.
+  It also checks that exposed primary beam ends avoid forbidden quants and no tie apex touches a staff line.
+Secondary and fractional ends share the chosen slope and beam spacing; their quant wedges contribute to the placement cost instead of becoming independent hard constraints.
 * A reference corpus of at least forty examples covering the house style (Gould's chapters on spacing, beams, accidentals, ties and slurs, lyrics and multiple voices), stored as golden SVGs.
   CI compares them byte for byte on Linux and macOS; the release qualification compares them on all five release platforms.
   PNG output is compared by pixel difference within a tolerance.
@@ -1220,3 +1221,12 @@ Event and operation limits alone do not bound repeated text or cloned notation s
 The reader therefore accounts for these copies before expansion, with a separate allocation allowance and an optional conservative host reservation.
 A regression expands a large text attachment under a small allowance and requires a placed limit diagnostic.
 Transient music reservations belong to the directive, so a page containing many small examples does not retain every example's peak allocation until the page ends.
+
+Beam quantization review
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+A hard quant constraint on every secondary endpoint is overconstrained for a fixed slope and fixed beam spacing.
+A dense group can have no admissible candidate inside the declared quarter-space search even though it is ordinary notation.
+We therefore require allowed exposed primary ends, score inner-end wedges with a named quant weight, and include notehead and accidental collisions for every actual segment in the candidate cost.
+Scoring and SVG drawing share the same fractional segment endpoints.
+The dense-duration corpus and a primary-end geometry regression check this rule.

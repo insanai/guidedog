@@ -19,6 +19,7 @@ pub(crate) fn groups(
     work: &mut usize,
 ) -> Result<(), Error> {
     plan.beams.clear();
+    tuplets(plan, score, work)?;
     for spanner in &score.spanners {
         if spanner.kind != SpannerKind::Beam {
             continue;
@@ -39,26 +40,43 @@ pub(crate) fn groups(
         add(plan, score, events, true, fonts, options, work)?;
     }
     for voice in &score.voices {
-        let mut events = Vec::new();
-        let mut previous = None;
-        for id in &voice.events {
-            charge(work, 1)?;
-            let info = &plan.events[id.0 as usize];
-            let event = &score.events[id.0 as usize];
-            let eligible = matches!(&event.kind, EventKind::Chord(chord) if chord.auto_beam)
-                && info.flags > 0
-                && info.beam.is_none();
-            let key = if eligible { Some(beat_key(score, *id)?) } else { None };
-            if key != previous || !eligible {
-                add(plan, score, std::mem::take(&mut events), false, fonts, options, work)?;
-            }
-            if eligible {
-                push(&mut events, *id, &mut options.reserve)?;
-            }
-            previous = key;
-        }
-        add(plan, score, events, false, fonts, options, work)?;
+        automatic(plan, score, voice, fonts, options, work)?;
     }
+    Ok(())
+}
+
+fn automatic(
+    plan: &mut Plan,
+    score: &Score,
+    voice: &gd_score::Voice,
+    fonts: &Fonts<'_>,
+    options: &mut Options<'_>,
+    work: &mut usize,
+) -> Result<(), Error> {
+    let fastest = fastest(score, voice, work)?;
+    let mut events = Vec::new();
+    let mut previous = None;
+    for id in &voice.events {
+        charge(work, 1)?;
+        let event = &score.events[id.0 as usize];
+        let measure =
+            score.measures.partition_point(|m| m.start <= event.at.main).saturating_sub(1);
+        let beat = beat_key(score, *id, fastest[measure])?;
+        let info = &mut plan.events[id.0 as usize];
+        info.beat = beat;
+        let eligible = matches!(&event.kind, EventKind::Chord(chord) if chord.auto_beam)
+            && info.flags > 0
+            && info.beam.is_none();
+        let key = if eligible { Some((beat, info.tuplet)) } else { None };
+        if key != previous || !eligible {
+            add(plan, score, std::mem::take(&mut events), false, fonts, options, work)?;
+        }
+        if eligible {
+            push(&mut events, *id, &mut options.reserve)?;
+        }
+        previous = key;
+    }
+    add(plan, score, events, false, fonts, options, work)?;
     Ok(())
 }
 
@@ -112,7 +130,7 @@ fn add(
     push(&mut plan.beams, BeamGroup { events, up, manual }, &mut options.reserve)
 }
 
-fn beat_key(score: &Score, id: EventId) -> Result<(usize, i64, i64), Error> {
+fn beat_key(score: &Score, id: EventId, fastest: u16) -> Result<(usize, i64, i64), Error> {
     let event = &score.events[id.0 as usize];
     let measure = score.measures.partition_point(|m| m.start <= event.at.main).saturating_sub(1);
     if event.at.grace < Ratio::ZERO {
@@ -120,10 +138,10 @@ fn beat_key(score: &Score, id: EventId) -> Result<(usize, i64, i64), Error> {
     }
     let meter = &score.measures[measure].meter;
     let position = event.at.main.checked_sub(score.measures[measure].start)?;
-    let EventKind::Chord(chord) = &event.kind else {
+    let EventKind::Chord(_) = &event.kind else {
         return Ok((measure, 0, 0));
     };
-    let eighths = chord.duration.base.denominator() == 8;
+    let eighths = fastest <= 8;
     let beats = if !meter.beats.is_empty() {
         meter.beats.clone()
     } else if matches!((meter.numerator, meter.denominator), (3, 4 | 8)) && eighths {
@@ -147,4 +165,48 @@ fn beat_key(score: &Score, id: EventId) -> Result<(usize, i64, i64), Error> {
         }
     }
     Ok((measure, beats.len() as i64, i64::from(meter.denominator)))
+}
+
+fn fastest(score: &Score, voice: &gd_score::Voice, work: &mut usize) -> Result<Vec<u16>, Error> {
+    charge(work, score.measures.len())?;
+    let mut values = vec![0; score.measures.len()];
+    for id in &voice.events {
+        charge(work, 1)?;
+        let event = &score.events[id.0 as usize];
+        if event.at.grace < Ratio::ZERO {
+            continue;
+        }
+        if let EventKind::Chord(chord) = &event.kind {
+            let measure =
+                score.measures.partition_point(|m| m.start <= event.at.main).saturating_sub(1);
+            values[measure] = values[measure].max(chord.duration.base.denominator());
+        }
+    }
+    Ok(values)
+}
+
+fn tuplets(plan: &mut Plan, score: &Score, work: &mut usize) -> Result<(), Error> {
+    for (index, spanner) in score.spanners.iter().enumerate() {
+        if !matches!(spanner.kind, SpannerKind::Tuplet(_, _)) {
+            continue;
+        }
+        let start = &score.events[spanner.start.event.0 as usize];
+        let end = &score.events[spanner.end.event.0 as usize];
+        let voice = &score.voices[start.voice.0 as usize];
+        let first = voice.events.partition_point(|id| score.events[id.0 as usize].at < start.at);
+        let last = voice.events.partition_point(|id| score.events[id.0 as usize].at <= end.at);
+        for id in &voice.events[first..last] {
+            charge(work, 1)?;
+            let slot = &mut plan.events[id.0 as usize].tuplet;
+            let replace = slot.is_none_or(|old| {
+                let previous = &score.spanners[old];
+                score.events[previous.start.event.0 as usize].at <= start.at
+                    && score.events[previous.end.event.0 as usize].at >= end.at
+            });
+            if replace {
+                *slot = Some(index);
+            }
+        }
+    }
+    Ok(())
 }

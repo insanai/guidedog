@@ -253,3 +253,67 @@ fn silent_measures_compress_and_context_changes_have_courtesies() {
             && m.bounds.bottom <= system.height + 0.001));
     }
 }
+
+#[test]
+fn mixed_durations_and_grace_use_consistent_beat_groups() {
+    let fonts = load_fonts(&FontOptions::default()).unwrap();
+    for (source, expected) in [
+        (r"\relative c'' { c8 d16 e f8 g a16 b c8 d4 | }", vec![3, 2, 3]),
+        (r"\relative c'' { \grace { c16 d } c8 d e f g a b c | }", vec![2, 4, 4]),
+        (r"\relative c'' { \tuplet 3/2 { c8 d e } f8 g a2 | }", vec![3, 2]),
+    ] {
+        let loaded =
+            gd_lilypond::load_score(source, "groups.ly", &mut gd_lilypond::Options::default())
+                .unwrap();
+        let mut workspace = Engraver::default();
+        workspace.engrave_score(&loaded.score, &fonts, &mut Options::default()).unwrap();
+        assert_eq!(
+            workspace.plan.beams.iter().map(|group| group.events.len()).collect::<Vec<_>>(),
+            expected,
+            "{source}"
+        );
+    }
+}
+
+#[test]
+fn primary_beam_ends_have_valid_quants_with_dense_inner_beams() {
+    let drawing = draw(r"\relative c'' { c16 d32 e64 f128 g128 a8 b4 c2 | }", 350.0);
+    for system in &drawing.systems {
+        let lines: Vec<_> = system
+            .marks
+            .iter()
+            .filter_map(|m| match m.mark {
+                Mark::Line { from, role: Role::Staff, .. } => Some(from.y),
+                _ => None,
+            })
+            .collect();
+        let middle = lines.iter().sum::<f64>() / lines.len() as f64;
+        let polygons: Vec<_> = system
+            .marks
+            .iter()
+            .filter_map(|m| match m.mark {
+                Mark::Polygon { points, role: Role::Beam } => Some(points),
+                _ => None,
+            })
+            .collect();
+        assert!(polygons.len() >= 10);
+        let left = polygons.iter().map(|p| p[0].x).fold(f64::INFINITY, f64::min);
+        let right = polygons.iter().map(|p| p[1].x).fold(f64::NEG_INFINITY, f64::max);
+        for (edge, a, b) in [(left, 0, 3), (right, 1, 2)] {
+            // These notes have downward stems: the primary beam is the outermost lower strip.
+            let strip = polygons
+                .iter()
+                .filter(|p| (p[a].x - edge).abs() < 1e-9)
+                .max_by(|p, q| p[a].y.total_cmp(&q[a].y))
+                .unwrap();
+            let (top, bottom) = (strip[a].y.min(strip[b].y), strip[a].y.max(strip[b].y));
+            if bottom < middle - 9.0 || top > middle + 9.0 {
+                continue;
+            }
+            assert!([top, bottom, (top + bottom) / 2.0].iter().any(|y| {
+                let position = (y - middle) / 4.5;
+                (position - position.round()).abs() < 0.026
+            }));
+        }
+    }
+}

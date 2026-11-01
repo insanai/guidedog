@@ -54,6 +54,7 @@ impl Draw<'_, '_, '_, '_, '_> {
         }
         let above = spanner.direction == gd_score::Direction::Up;
         let y = middle + if above { -5.0 * space } else { 5.0 * space };
+        let start = self.system.marks.len();
         for side in [-1.0, 1.0] {
             self.line(
                 Point { x: first.x, y: y + side * left * 0.65 * space },
@@ -62,7 +63,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                 Role::Dynamic,
             )?;
         }
-        Ok(())
+        self.end_sign(start)
     }
 }
 

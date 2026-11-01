@@ -1,8 +1,10 @@
+use std::ops::Range;
+
 use gd_score::Error;
 
 use crate::limits::charge;
 use crate::skyline::{Segment, Skyline};
-use crate::{Bezier, Mark, Point, PositionedMark, Role, System};
+use crate::{Bezier, Mark, Point, PositionedMark, Rect, Role, System};
 
 #[derive(Debug)]
 struct Facing<'a> {
@@ -16,14 +18,17 @@ impl<'a> Facing<'a> {
     }
 }
 
+/// Places outside marks away from the staff and spaces the staves. `signs` lists the mark
+/// ranges that form one sign, such as a dynamic's letters, which move together.
 pub(crate) fn place(
     system: &mut System,
     staves: usize,
     space: f64,
     work: &mut usize,
     scratch: crate::Scratch<'_>,
+    signs: &[Range<usize>],
 ) -> Result<(), Error> {
-    outside(system, staves, space, work, scratch)?;
+    outside(system, (staves, signs), space, work, scratch)?;
     let mut envelopes: Vec<_> = (0..staves).map(|_| Facing::new(scratch)).collect();
     for placed in &system.marks {
         charge(work, 1)?;
@@ -51,7 +56,7 @@ pub(crate) fn place(
 
 fn outside(
     system: &mut System,
-    staves: usize,
+    (staves, signs): (usize, &[Range<usize>]),
     space: f64,
     work: &mut usize,
     scratch: crate::Scratch<'_>,
@@ -88,7 +93,8 @@ fn outside(
                     | Role::ChordName
             );
             for up in [true, false] {
-                place_role(system, &mut occupied, (staff, role, up, local), middle, space, work)?;
+                let spec = (staff, role, up, local);
+                place_role(system, &mut occupied, spec, (middle, space, signs), work)?;
             }
         }
     }
@@ -99,8 +105,7 @@ fn place_role(
     system: &mut System,
     occupied: &mut Facing<'_>,
     spec: (usize, Role, bool, bool),
-    middle: f64,
-    space: f64,
+    (middle, space, signs): (f64, f64, &[Range<usize>]),
     work: &mut usize,
 ) -> Result<(), Error> {
     let (staff, role, up, local) = spec;
@@ -134,13 +139,16 @@ fn place_role(
     } else {
         vec![indices]
     };
-    // Articulations, fingerings and text scripts are single marks, so two that overlap
-    // belong to different voices. Dynamics and tuplet numbers are drawn glyph by glyph,
-    // and their kerned glyphs overlap, so each of their clusters moves as one.
-    let single = matches!(role, Role::Articulation | Role::Fingering | Role::Script);
+    // Marks of one voice's signs never print over each other, so overlapping signs
+    // belong to different voices and stack outward. Text and lines above the music move
+    // as one band.
+    let layered = matches!(
+        role,
+        Role::Articulation | Role::Fingering | Role::Script | Role::Tuplet | Role::Dynamic
+    );
     for cluster in clusters {
-        if single {
-            for layer in layers(system, cluster, space, work)? {
+        if layered {
+            for layer in layers(system, signs_of(cluster, signs), space, work)? {
                 place_layer(system, occupied, layer, up, space, work)?;
             }
         } else {
@@ -150,22 +158,49 @@ fn place_role(
     Ok(())
 }
 
-/// Splits a cluster so marks that print over each other, such as the staccatos of two
-/// voices on one side, go to separate layers.
+/// Groups a cluster's marks into signs: a recorded range moves together, and every other
+/// mark is a sign of its own.
+fn signs_of(mut cluster: Vec<usize>, signs: &[Range<usize>]) -> Vec<Vec<usize>> {
+    let sign_start = |index: usize| {
+        let after = signs.partition_point(|range| range.start <= index);
+        after
+            .checked_sub(1)
+            .map(|found| &signs[found])
+            .filter(|range| range.contains(&index))
+            .map_or(index, |range| range.start)
+    };
+    cluster.sort_unstable();
+    let mut units: Vec<(usize, Vec<usize>)> = Vec::new();
+    for index in cluster {
+        let start = sign_start(index);
+        match units.last_mut() {
+            Some((last, unit)) if *last == start => unit.push(index),
+            _ => units.push((start, vec![index])),
+        }
+    }
+    units.into_iter().map(|(_, unit)| unit).collect()
+}
+
+/// Splits a cluster's signs into layers so signs that print over each other, such as
+/// the staccatos or dynamics of two voices on one side, go to separate layers.
 fn layers(
     system: &System,
-    cluster: Vec<usize>,
+    units: Vec<Vec<usize>>,
     space: f64,
     work: &mut usize,
 ) -> Result<Vec<Vec<usize>>, Error> {
-    let mut layers: Vec<Vec<usize>> = Vec::new();
-    for index in cluster {
-        let a = system.marks[index].bounds;
+    let bounds = |unit: &[usize]| {
+        let mut marks = unit.iter().map(|index| system.marks[*index].bounds);
+        let first = marks.next().unwrap_or_default();
+        marks.fold(first, Rect::union)
+    };
+    let mut layers: Vec<(Vec<Rect>, Vec<usize>)> = Vec::new();
+    for unit in units {
+        let a = bounds(&unit);
         let mut chosen = None;
-        for (number, layer) in layers.iter().enumerate() {
-            charge(work, layer.len())?;
-            let clashes = layer.iter().any(|other| {
-                let b = system.marks[*other].bounds;
+        for (number, (placed, _)) in layers.iter().enumerate() {
+            charge(work, placed.len())?;
+            let clashes = placed.iter().any(|b| {
                 a.right.min(b.right) - a.left.max(b.left) > 0.25 * space
                     && a.bottom.min(b.bottom) - a.top.max(b.top) > 0.25 * space
             });
@@ -174,12 +209,14 @@ fn layers(
                 break;
             }
         }
-        match chosen {
-            Some(number) => layers[number].push(index),
-            None => layers.push(vec![index]),
+        let number = chosen.unwrap_or(layers.len());
+        if number == layers.len() {
+            layers.push((Vec::new(), Vec::new()));
         }
+        layers[number].0.push(a);
+        layers[number].1.extend(unit);
     }
-    Ok(layers)
+    Ok(layers.into_iter().map(|(_, marks)| marks).collect())
 }
 
 fn place_layer(

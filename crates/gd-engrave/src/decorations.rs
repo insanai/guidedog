@@ -246,6 +246,7 @@ impl Draw<'_, '_, '_, '_, '_> {
     }
 
     fn dynamic(&mut self, text: &str, at: Point, size: f64) -> Result<(), Error> {
+        let start = self.system.marks.len();
         let mut x = at.x;
         for c in text.chars() {
             let name = dynamic_glyph(c).ok_or_else(|| {
@@ -261,7 +262,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                 .unwrap_or(1.0);
             x += (width + 0.05) * size;
         }
-        Ok(())
+        self.end_sign(start)
     }
 
     fn articulation(&mut self, name: &str, up: bool, at: Point, size: f64) -> Result<(), Error> {

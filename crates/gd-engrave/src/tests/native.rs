@@ -931,3 +931,19 @@ fn long_scores_fit_the_default_work_limit() {
     let engraving = draw(&format!("\\relative c' {{ {bars} }}"), 350.0);
     assert!(engraving.systems.len() >= 20);
 }
+
+#[test]
+fn dynamics_and_hairpins_of_two_voices_stack_instead_of_overprinting() {
+    let engraving = draw(r"<< { c''2\p d''\< e''1\! } \\ { c'2\f d'\> e'1\! } >>", 350.0);
+    let space = 18.0 / 4.0;
+    let signs = marks_of(&engraving, &[Role::Dynamic]);
+    // Each of these dynamics is one glyph and each hairpin line one mark, so any two
+    // marks that overlap substantially come from different voices.
+    for (i, a) in signs.iter().enumerate() {
+        for b in &signs[i + 1..] {
+            let wide = a.right.min(b.right) - a.left.max(b.left) > 0.25 * space;
+            let tall = a.bottom.min(b.bottom) - a.top.max(b.top) > 0.25 * space;
+            assert!(!(wide && tall), "{a:?} {b:?}");
+        }
+    }
+}

@@ -41,6 +41,7 @@ pub(crate) fn draw_system(
         measure: 0,
         warnings: Vec::new(),
         stem_marks: std::collections::BTreeMap::new(),
+        signs: Vec::new(),
         mark_limit: request.remaining_marks,
     };
     for staff_index in 0..score.staves.len() {
@@ -67,6 +68,7 @@ pub(crate) fn draw_system(
         space,
         draw.work,
         draw.options.scratch,
+        &draw.signs,
     )?;
     draw.groups(request)?;
     crate::vertical::fit(&mut draw.system, space, draw.work)?;
@@ -82,6 +84,8 @@ pub(crate) struct Draw<'a, 'f, 'o, 'callback, 'work> {
     pub(crate) measure: u32,
     pub(crate) warnings: Vec<Error>,
     pub(crate) stem_marks: std::collections::BTreeMap<u32, usize>,
+    /// Mark ranges that form one sign, such as a dynamic's letters, in drawing order.
+    pub(crate) signs: Vec<std::ops::Range<usize>>,
     mark_limit: usize,
 }
 
@@ -270,6 +274,17 @@ impl Draw<'_, '_, '_, '_, '_> {
                 )?;
             }
             _ => {}
+        }
+        Ok(())
+    }
+
+    /// Records the marks added since `start` as one sign, so vertical placement keeps
+    /// them together; a single mark needs no record.
+    pub(crate) fn end_sign(&mut self, start: usize) -> Result<(), Error> {
+        let end = self.system.marks.len();
+        if end > start + 1 {
+            self.signs.try_reserve(1).map_err(|_| failure("Cannot reserve a sign."))?;
+            self.signs.push(start..end);
         }
         Ok(())
     }

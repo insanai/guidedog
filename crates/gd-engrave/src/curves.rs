@@ -240,6 +240,7 @@ impl Draw<'_, '_, '_, '_, '_> {
     ) -> Result<(), Error> {
         let (items, width) = self.fonts.number_layout(text, prefix)?;
         let left = at.x - width * size * 0.5;
+        let start = self.system.marks.len();
         for (glyph, gx) in items {
             let data = self
                 .fonts
@@ -254,7 +255,7 @@ impl Draw<'_, '_, '_, '_, '_> {
             };
             self.add(Mark::Glyph { glyph, x, y: at.y, size, role }, bounds)?;
         }
-        Ok(())
+        self.end_sign(start)
     }
 }
 

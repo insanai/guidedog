@@ -20,5 +20,6 @@ Discussion reading order
    records/0012-single-executable-release
    records/0013-static-site-generation
    records/0014-typst-diagrams
+   records/XXXXX-lilypond-music
 
 .. gds-generated-end

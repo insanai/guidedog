@@ -45,7 +45,16 @@ pub(crate) fn replace_diagram(
         page,
         rw,
         id,
-        Drawing { path, source, class: "typst-diagram", interactive: false, adaptive: false },
+        Drawing {
+            path,
+            source,
+            class: "typst-diagram",
+            interactive: false,
+            adaptive: false,
+            alt: None,
+            narrow: None,
+            parts: Vec::new(),
+        },
     )
 }
 

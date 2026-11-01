@@ -16,6 +16,9 @@ pub(crate) struct Drawing<'a> {
     pub class: &'static str,
     pub interactive: bool,
     pub adaptive: bool,
+    pub alt: Option<String>,
+    pub narrow: Option<PathBuf>,
+    pub parts: Vec<PathBuf>,
 }
 
 pub(crate) fn replace(
@@ -35,6 +38,9 @@ pub(crate) fn replace(
         matches!(key, AttributeKey::Id | AttributeKey::Class)
             || (key == AttributeKey::Custom && name == "name")
     })?;
+    if !drawing.parts.is_empty() {
+        rw.add_custom(outer, "music", "1")?;
+    }
     let image = match caption {
         Some(_) => {
             page.decorate(rw, id, outer)?; // its figure number.
@@ -42,17 +48,31 @@ pub(crate) fn replace(
         }
         None => outer,
     };
-    let alt = doc.custom_attribute(id, "alt").unwrap_or_else(|| drawing.source.trim());
+    let alt = doc
+        .custom_attribute(id, "alt")
+        .or(drawing.alt.as_deref())
+        .unwrap_or_else(|| drawing.source.trim());
     rw.b.add_attribute_string(image, AttributeKey::Alt, alt)?;
     if let Some(align) = doc.custom_attribute(id, "align") {
         rw.b.add_attribute_string(image, AttributeKey::Align, align)?;
     }
     rw.add_class(image, drawing.class)?;
+    if drawing.class == "lilypond-music" {
+        rw.add_custom(image, "music-fit", "1")?;
+    }
     if drawing.interactive {
         // Shown so that its links work: an img element's links are not followed.
         rw.add_custom(image, "interactive", "1")?;
     }
-    if drawing.adaptive && caption.is_some() {
+    if let Some(path) = drawing.narrow {
+        let url = image_url(page, path);
+        rw.add_custom(image, "narrow-src", &url)?;
+    }
+    if !drawing.parts.is_empty() {
+        let urls: Vec<_> = drawing.parts.into_iter().map(|p| image_url(page, p)).collect();
+        rw.add_custom(image, "music-parts", &urls.join("\n"))?;
+    }
+    if drawing.adaptive {
         rw.add_class(image, "graphviz-adaptive")?;
     }
     let url = image_url(page, drawing.path);
@@ -77,7 +97,7 @@ pub(crate) fn replace(
 
 /// Where the page or the book finds the drawn graph; the page copies it to `_images`
 /// as it copies other images.
-fn image_url(page: &mut Page<'_>, path: PathBuf) -> String {
+pub(crate) fn image_url(page: &mut Page<'_>, path: PathBuf) -> String {
     if page.format == OutputFormat::Pdf {
         let book = book_path(page.config(), &path);
         page.assets.push(Asset { source: path, target: book.clone() });

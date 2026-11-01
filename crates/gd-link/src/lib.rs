@@ -36,6 +36,7 @@ mod graph_links;
 mod graph_theme;
 mod image;
 mod mounts;
+mod music;
 mod nav;
 mod only;
 mod page;
@@ -54,6 +55,7 @@ pub use graph_theme::{
     ADAPTIVE_CLASS, AdaptError, GRAPH_ADAPTIVE_CSS, adapt_graph, graph_adaptive,
 };
 pub use image::{book_path, book_root};
+pub use music::{MusicFonts, MusicSource, load_music_source};
 pub use nav::{
     NavItem, NavOptions, TocChild, doc_limit, nav_for_toctree, only_shown, section_number,
     toc_order, toctree_entries, top_sections, untitled, within,

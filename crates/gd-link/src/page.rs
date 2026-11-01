@@ -51,6 +51,12 @@ pub(crate) struct Page<'p> {
     pub spare: Option<&'p mut Workspace>,
     /// The worker's Graphviz context, started on the first graph.
     pub graphs: &'p OnceCell<Option<Context>>,
+    /// Reused by this rendering thread for every native music drawing.
+    pub engraver: &'p mut gd_engrave::Engraver,
+    /// Font tables owned by the build rather than a rendering thread.
+    pub music: Option<&'p crate::MusicFonts<'p>>,
+    /// The selected PDF template's text measure.
+    pub music_width: Option<f64>,
     /// The files and drawings the page holds of the build's budget.
     pub ledger: &'p Ledger<'p>,
     /// Images, downloads and graphs the page needs (in the book: the files it reads).
@@ -79,6 +85,15 @@ pub(crate) struct Warning<'a> {
     pub hint: &'a str,
 }
 
+pub(crate) struct Resources<'p> {
+    pub spare: &'p mut Workspace,
+    pub graphs: &'p OnceCell<Option<Context>>,
+    pub ledger: &'p Ledger<'p>,
+    pub engraver: &'p mut gd_engrave::Engraver,
+    pub music: Option<&'p crate::MusicFonts<'p>>,
+    pub music_width: Option<f64>,
+}
+
 impl<'p> Page<'p> {
     /// A page of document `id` to link for `format`.
     pub fn new(
@@ -86,9 +101,7 @@ impl<'p> Page<'p> {
         id: DocId,
         format: OutputFormat,
         depth: u32,
-        spare: &'p mut Workspace,
-        graphs: &'p OnceCell<Option<Context>>,
-        ledger: &'p Ledger<'p>,
+        resources: Resources<'p>,
     ) -> Page<'p> {
         Page {
             view,
@@ -96,9 +109,12 @@ impl<'p> Page<'p> {
             info: view.env.doc(id),
             format,
             depth,
-            spare: Some(spare),
-            graphs,
-            ledger,
+            spare: Some(resources.spare),
+            graphs: resources.graphs,
+            ledger: resources.ledger,
+            engraver: resources.engraver,
+            music: resources.music,
+            music_width: resources.music_width,
             assets: Vec::new(),
             trace: Trace::new(),
             reports: Vec::new(),
@@ -273,7 +289,9 @@ impl Rule for Page<'_> {
             }
             NodeKind::CodeBlock
                 if format != OutputFormat::Text
-                    && (graph::is_graph(self, doc, id) || flag(doc, id, "typst-diagram")) =>
+                    && (graph::is_graph(self, doc, id)
+                        || flag(doc, id, "typst-diagram")
+                        || flag(doc, id, "lilypond")) =>
             {
                 Action::Replace
             }
@@ -311,6 +329,9 @@ impl Rule for Page<'_> {
             NodeKind::Image => image::replace_image(self, rw, id),
             NodeKind::Link | NodeKind::Reference => crate::mounts::replace(self, rw, id),
             NodeKind::Title => self.replace_title(rw, id),
+            NodeKind::CodeBlock if flag(rw.doc, id, "lilypond") => {
+                crate::music::replace_music(self, rw, id)
+            }
             NodeKind::CodeBlock if flag(rw.doc, id, "typst-diagram") => {
                 crate::typst::replace_diagram(self, rw, id)
             }

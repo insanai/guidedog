@@ -24,6 +24,7 @@ pub struct Worker {
     pub(crate) ws: Workspace,
     spare: Workspace,
     graphs: OnceCell<Option<Context>>,
+    engraver: gd_engrave::Engraver,
 }
 
 impl std::fmt::Debug for Worker {
@@ -42,6 +43,10 @@ impl Worker {
 /// One page to render. Fill it with struct-update syntax.
 #[derive(Debug, Clone, Copy, Default)]
 pub struct PageRequest<'a> {
+    /// Shared build-owned music font tables; None loads them for this page when needed.
+    pub music: Option<&'a crate::MusicFonts<'a>>,
+    /// PDF text measure in points, supplied by the selected book template.
+    pub music_width: Option<f64>,
     /// The document.
     pub doc: DocId,
     /// The output it is linked for.
@@ -147,7 +152,7 @@ pub(crate) fn run_page(
     let Some(object) = &info.object else {
         return failed(out, no_object(&info.relative));
     };
-    let Worker { ws, spare, graphs } = worker;
+    let Worker { ws, spare, graphs, engraver } = worker;
     if let Err(e) = view.objects.load_object(ws, object, view.limits) {
         return failed(out, e.problem);
     }
@@ -157,9 +162,14 @@ pub(crate) fn run_page(
         request.doc,
         request.format,
         request.depth,
-        spare,
-        graphs,
-        &ledger,
+        crate::page::Resources {
+            spare,
+            graphs,
+            ledger: &ledger,
+            engraver,
+            music: request.music,
+            music_width: request.music_width,
+        },
     ));
     page.borrow_mut().excerpt = excerpt.is_some();
     let run =

@@ -128,6 +128,7 @@ fn discussion_front_matter_keeps_lists_and_unknown_fields_as_data() {
             renderer: "typst",
             options: render_options(&view, id, OutputFormat::Pdf),
             depth: 1,
+            ..Default::default()
         },
     );
     assert!(!page.failed, "{:?}", page.reports);

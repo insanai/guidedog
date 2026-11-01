@@ -16,6 +16,11 @@ pub(crate) fn render_bodies(
     labels: Option<&Labels>,
     docs: &[DocId],
 ) -> Vec<Option<Rendered>> {
+    let source = docs
+        .iter()
+        .any(|&id| view.env.doc(id).music)
+        .then(|| gd_link::load_music_source(view.config));
+    let fonts = source.as_ref().map(|source| source.load_fonts());
     let threads = view.options.jobs.threads(docs.len());
     let init = || (Worker::new(), HtmlHighlighter::new());
     gd_host::map_ordered(threads, docs, init, |(worker, highlighter), &doc| {
@@ -25,8 +30,15 @@ pub(crate) fn render_bodies(
         let mut options = render_options(view, doc, OutputFormat::Html);
         options.highlighter = Some(&*highlighter);
         options.labels = labels;
-        let request =
-            PageRequest { doc, format: OutputFormat::Html, renderer: "html", options, depth: 0 };
+        let request = PageRequest {
+            doc,
+            format: OutputFormat::Html,
+            renderer: "html",
+            options,
+            depth: 0,
+            music: fonts.as_ref(),
+            music_width: None,
+        };
         Some(render_page(view, worker, &request))
     })
 }

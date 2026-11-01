@@ -45,7 +45,16 @@ pub(crate) fn replace_graph(
         page,
         rw,
         id,
-        crate::figure::Drawing { path, source, class: "graphviz", interactive: linked, adaptive },
+        crate::figure::Drawing {
+            path,
+            source,
+            class: "graphviz",
+            interactive: linked,
+            adaptive,
+            alt: None,
+            narrow: None,
+            parts: Vec::new(),
+        },
     )
 }
 

@@ -121,6 +121,12 @@ impl Html<'_, '_> {
             }
             return Visit::Skip;
         }
+        let narrow = self.doc.custom_attribute(id, "narrow-src");
+        if let Some(url) = narrow {
+            self.w.put("<picture><source media=\"(max-width: 40rem)\" srcset=\"");
+            self.w.esc(url);
+            self.w.put("\" />");
+        }
         self.w.put("<img");
         if !self.write_target("src", id) {
             self.w.put(" src=\"\"");
@@ -145,6 +151,9 @@ impl Html<'_, '_> {
             self.write_classes(id, "");
         }
         self.w.put(" />");
+        if narrow.is_some() {
+            self.w.put("</picture>");
+        }
         if block {
             self.w.cr();
         }

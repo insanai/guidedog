@@ -351,6 +351,8 @@ pub struct CachedFile {
 /// What reading learned about one document.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct DocInfo {
+    /// A native music directive needs the build's shared font tables.
+    pub music: bool,
     /// A validated, author-defined excerpt boundary is present.
     pub excerpt: bool,
     /// Publication and presentation fields from the leading metadata block.

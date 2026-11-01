@@ -306,7 +306,7 @@ Number assignment and validation
 Guidedog has its own number sequence. GDS 0001 defines this process; the next
 assignment was 0002 for the CLI. GDS 0003 is the engine record. Records 0004 through 0010
 cover budgets, the Odin domain, projects, discussion catalogs, GitHub Pages publishing,
-and plugins. Records 0011 through 0014 cover built-in extensions, single-executable releases, static publishing and embedded Typst diagrams. The next available number is 0015.
+and plugins. Records 0011 through 0014 cover built-in extensions, single-executable releases, static publishing and embedded Typst diagrams. Record 0015 covers native LilyPond music engraving. The next available number is 0016.
 Inherited zenfmt records do not reserve Guidedog numbers. New drafts retain ``XXXXX`` until a maintainer
 promotes them. Promotion chooses the next number after existing Guidedog records,
 explicit Guidedog reservations, and local ``gds/NNNN`` branches.

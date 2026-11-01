@@ -54,8 +54,8 @@ Discussion registry
    * - 0014
      - :doc:`records/0014-typst-diagrams`
      - committed
-   * - XXXXX
-     - :doc:`records/XXXXX-lilypond-music`
-     - prediscussion
+   * - 0015
+     - :doc:`records/0015-lilypond-music`
+     - accepted
 
 .. gds-generated-end

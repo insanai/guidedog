@@ -1,6 +1,6 @@
-:gds-number: XXXXX
+:gds-number: 0015
 :gds-title: Engraved LilyPond music
-:gds-state: prediscussion
+:gds-state: accepted
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-11-01
@@ -40,7 +40,8 @@ It cannot be linked into Guidedog's single executable, and running it per exampl
 
 We therefore separate the notation from the engraver.
 We read the part of LilyPond's language that describes music (notes, rhythms, staves, voices, lyrics and common markings) and refuse the part that programs the engraver (Scheme, overrides and layout code).
-We engrave with algorithms from the published literature and from LilyPond's documented behavior and source, implemented in Rust.
+We independently implement algorithms from the published literature and LilyPond's documented behavior.
+Source references explain mathematical rules and interoperability checks; we do not translate or copy LilyPond implementation code into these crates.
 
 In scope:
 
@@ -145,7 +146,10 @@ The LilyPond profile
 
 We name the accepted language the *Guidedog LilyPond profile*.
 Every accepted input means what it means to LilyPond 2.24 to 2.26; where Guidedog draws something differently, the difference is one of house style, never of meaning.
-Every input outside the profile is refused with a report that names the construct and says what to do.
+Every input outside the implemented profile is refused with a report that names the construct and says what to do.
+The command table distinguishes implemented, planned, ignored and refused constructs.
+Planned commands are diagnosed as unsupported until their phase is complete; they must never be silently skipped.
+The implementation status lists the supported profile explicitly, and commitment requires all three phases.
 A few LilyPond leniencies become refusals; each is listed below.
 
 A body is a *file* when its top level contains ``\version``, ``\language``, ``\include``, ``\header``, ``\layout``, ``\score`` or an assignment.
@@ -267,6 +271,8 @@ Identifiers are newtypes; choices are enums matched exhaustively; tables are bui
 Callbacks follow ``gd-graphdog``: ``Option<&'a mut dyn FnMut(...)>`` fields named for what they decide.
 
 ``gd-score`` has no dependencies.
+It also owns the shared source identifiers, source spans and diagnostic data, so the reader and engraver use the same vocabulary without depending on each other.
+The ``gd-lilypond::error_report`` adapter places these diagnostics through ``gd-report``; the model itself does not depend on the report renderer.
 It is flat data: vectors of events and spanners indexed by newtype identifiers, not a graph of shared pointers.
 
 .. code-block:: rust
@@ -448,10 +454,13 @@ Both crates report problems with one shape, close to ``gd-graphdog``'s but with 
        pub message: String,     // one sentence
        pub hint: String,        // how to fix it, with "Did you mean ...?" when we can tell
    }
-   impl Error {
-       /// Places the error in the file its span names, as a `gd_report::Report`.
-       pub fn report(&self, files: &SourceFiles) -> gd_report::Report;
-   }
+   /// Places a shared diagnostic using the source files retained by the reader.
+   pub fn error_report(error: &Error, files: &SourceFiles) -> gd_report::Report;
+
+Source spans use byte offsets at UTF-8 boundaries and include an explicit file identifier.
+Includes preserve the including file when resolving nested paths and are checked for cycles before expansion.
+The source limit counts repeated expansions, not only distinct files.
+Diagnostics use a retained per-line source map when indentation differs or tabs occur; a single indentation count is sufficient only for uniformly indented bodies.
 
 A directive's body is not the RST file: the parser strips its indentation.
 ``guidedoc-sphinx`` therefore records, beside the body, the line on which it starts and the width of the indentation it removed (custom attributes ``lilypond-line`` and ``lilypond-indent``, also for MyST fences).
@@ -646,10 +655,11 @@ The cost :math:`C(b)` of the best breaking up to :math:`b` satisfies
 
    C(0) = 0, \qquad C(b) = \min_{a < b} \left( C(a) + \mathrm{demerits}(a, b) \right),
 
-with forced breaks admitting only :math:`a` at the previous forced break.
+with a forced break forbidding candidates that cross it.
+A line may start at any eligible break after the previous forced break; forcing an endpoint must not prohibit earlier lines in that interval.
 A candidate line stops growing once its rods alone exceed :math:`W` (or at the line limit of 128 measures), so each break looks back over a bounded window of :math:`w` measures, and breaking costs :math:`O(n w \, m \log m)` for :math:`n` measures.
 Before breaking, we compare :math:`\sum r / W` with the system limit, so a score that cannot fit is refused before the dynamic program runs.
-The result is the globally best set of breaks, not a greedy one: a loose line early can be avoided by a tighter one later.
+Within the declared 128-measure candidate window, the result is the best admissible set of breaks, not a greedy one: a loose line early can be avoided by a tighter one later.
 
 The last line is treated as TeX treats a paragraph's last line, and so is a score that fits on one line.
 With ``justify: auto``, a last line whose natural width (:math:`\lambda = 1`) fits is set at its natural width and adds no badness; a short example is therefore drawn at its natural width.
@@ -938,6 +948,10 @@ The parser is recursive descent with a depth counter; variable expansion and (ph
    * - Generated SVG and engraver buffers
      - charged through ``reserve`` to the build's memory ledger
 
+The reader and engraver also each have a default work limit of 8,000,000 operations.
+Token visits, expanded syntax nodes, spacing-candidate gaps, collision comparisons and candidate-curve samples consume work before they run.
+Exhausting this allowance is a limit diagnostic, including on malformed or adversarial input.
+A source limit alone does not bound quadratic layout work tightly enough for an untrusted build.
 The work of each stage is polynomial in these bounds: columns and spacing are :math:`O(m \log m)` per line, breaking is :math:`O(n w \, m \log m)` with :math:`w \le 128`, and beam and slur choices try a fixed number of candidates each.
 Buffers grow with ``try_reserve`` after ``reserve`` agrees, so a refused reservation is an error, not an abort.
 
@@ -1117,6 +1131,34 @@ It chose an in-house engraver over the LilyPond program and over Verovio, a scor
 * Critique: the dark-mode stylesheet relied on renderers ignoring a media query, and five-platform byte equality could not run in CI.
   Revision: only the HTML edition carries the stylesheet, through the existing adaptive class; CI compares SVGs on Linux and macOS and the release job on five platforms, and PNGs by pixel tolerance.
 
+2026-11-01, implementation review.
+
+* Critique: requiring every line before a forced break to start at the preceding forced break eliminates valid intermediate lines.
+  Revision: a candidate may not cross a forced break, but may start at any eligible break after the preceding one.
+* Critique: the 128-measure search window makes the global-optimum claim conditional, and polynomial work over 20,000 events can still be excessive.
+  Revision: state the admissible window precisely and charge parser and engraver operations to separate finite work budgets.
+* Critique: the common diagnostic API couples the engraver to the LilyPond reader through its source-file type.
+  Revision: keep spans and diagnostic data in the dependency-free score crate and report conversion in the reader adapter.
+* Critique: a constant body indent cannot recover exact source positions through tabs, differently indented lines or nested includes.
+  Revision: preserve a per-line source mapping and include identities; test multibyte text, included errors and nonuniform indentation.
+* Critique: a three-phase proposal could be marked complete after only basic note rendering, and unsupported commands could disappear during incremental development.
+  Revision: distinguish implemented and planned commands, reject planned constructs explicitly and require every phase before commitment.
+* Critique: a large native engraver needs reviewable evidence beyond successful compilation.
+  Revision: require recorded corpus checks, bounded-work failures, real HTML/PDF output and a final gap review, with an explicit status for every acceptance item.
+
+Documentation plan
+~~~~~~~~~~~~~~~~~~
+
+The manual gains a music-notation chapter under Topics, next to diagrams, with a live engraved example and LilyPond source beside it.
+It explains pitches and relative octaves, durations, chords, rests, voices, staff groups, lyrics, markings, grace notes and repeats for the implemented profile.
+A task guide covers file-based scores, nested includes, SVG and PNG, builder measures, narrow screens, multi-page PDFs, trust, limits and incremental builds.
+The directive reference lists every option and fallback; configuration reference lists the three settings and defaults.
+The built-in extension inventory, crate map, all three new crate READMEs, project README, changelog and release/license documentation describe the feature and its boundaries.
+The manual links to LilyPond's notation reference and SMuFL; references distinguish accepted notation from engraver programming.
+All six manual translations are refreshed and translated, with zero fuzzy or untranslated entries for the added material.
+The new chapter, examples and translated HTML/PDF books are built as part of qualification.
+An evidence record documents design review, implementation review, corpus inspection, deliberate engraving differences and every remaining gap before the state can become committed.
+
 References
 ----------
 
@@ -1137,3 +1179,18 @@ References
 * `SMuFL specification <https://w3c.github.io/smufl/latest/>`_ and `Bravura <https://github.com/steinbergmedia/bravura>`_
 * `Verovio <https://github.com/rism-digital/verovio>`_
 * `sphinxcontrib-lilypond <https://pypi.org/project/sphinxcontrib-lilypond>`_
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-11-01: prediscussion -> discussion. Review the native engraving design,
+   source mapping, bounded work and complete three-phase acceptance contract.
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-11-01: discussion -> accepted. Implement the reviewed three-crate design
+   and qualify each phase against the explicit profile and documentation
+   contract.

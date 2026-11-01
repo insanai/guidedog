@@ -51,6 +51,7 @@ Records:
   - [GDS 0012: Single Executable Release](records/0012-single-executable-release.rst)
   - [GDS 0013: Static Publishing](records/0013-static-site-generation.rst)
   - [GDS 0014: Typst Diagrams](records/0014-typst-diagrams.rst)
+  - [GDS 0015: Engraved LilyPond Music](records/0015-lilypond-music.rst)
 
 New drafts are created with number `XXXXX` (e.g. `guidedog dsc new "Feature title"`). Permanent numbers are assigned upon promotion into discussion.
 
@@ -65,4 +66,4 @@ All GDS metadata modifications (`new`, `promote`, `state`, and `index`) use tran
 Related documentation: the [user manual](../manual/) and the crate cheat sheets
 (`crates/*/README.md`).
 
-The [31 October 2026 status review](evidence/status-review-20261031.rst) audits all fourteen records. [GDS 0014](records/0014-typst-diagrams.rst) specifies embedded Typst diagrams. GDS 0002 remains published because its hostile-input worker and native Typst chapter contract are unfinished; all other current records are committed.
+The [31 October 2026 status review](evidence/status-review-20261031.rst) audits all fourteen records. [GDS 0014](records/0014-typst-diagrams.rst) specifies embedded Typst diagrams. GDS 0002 remains published because its hostile-input worker and native Typst chapter contract are unfinished; the other records in that audit are committed. GDS 0015 is accepted for implementation after the 1 November design review.

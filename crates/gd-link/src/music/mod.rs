@@ -55,11 +55,11 @@ fn read(
     ledger: &gd_host::Ledger<'_>,
 ) -> Result<gd_lilypond::Loaded, String> {
     let mut origin = source::origin(page, doc, id);
-    let mut text = doc.node_text(id).to_owned();
+    let mut text = std::borrow::Cow::Borrowed(doc.node_text(id));
     if let Some(name) = doc.custom_attribute(id, "lilypond-file") {
         let file = source::read(page, &origin, name).map_err(|e| e.message)?;
         origin = file.name.into();
-        text = file.text;
+        text = std::borrow::Cow::Owned(file.text);
     }
     let mut files = vec![origin.clone()];
     let mut include =
@@ -130,12 +130,7 @@ fn draw_held<'d>(
         diagnostics::report(page, doc, id, error, &loaded.files);
     }
     if page.format == OutputFormat::Pdf && engraving.width > options.line_width + 0.01 {
-        diagnostics::warn(
-            page,
-            doc,
-            id,
-            "Music exceeds the declared PDF text width and will be scaled to fit.".into(),
-        );
+        diagnostics::scaled(page, doc, id);
     }
     let alt = diagnostics::description(page, &engraving.summary);
     let path = assets::save(page, doc, id, &engraving, None, &alt, ledger)?;

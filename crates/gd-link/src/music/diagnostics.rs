@@ -49,6 +49,14 @@ pub(super) fn warn(page: &mut Page<'_>, doc: Document<'_>, id: NodeId, message: 
     );
 }
 
+pub(super) fn scaled(page: &mut Page<'_>, doc: Document<'_>, id: NodeId) {
+    page.warn(doc, doc.node(id).span, Warning {
+        code: "build.lilypond-scale", title: "MUSIC SCALED TO FIT", category: "",
+        message: "Music exceeds the declared PDF text width and will be scaled to fit.".into(),
+        hint: "Widen the music or correct the template margin declaration and lilypond_pdf_width.",
+    });
+}
+
 pub(super) fn description(page: &Page<'_>, summary: &gd_engrave::Summary) -> String {
     let text = page.view.ui.ngettext(
         "Music for %s staff.",

@@ -36,11 +36,11 @@ pub(super) fn read(
         page.trace.note_key(LookupKind::FileContent, &path.to_string_lossy());
         let bytes = gd_host::read_file(&path, Some(page.ledger), 256 * 1024)
             .map_err(|e| refusal(&e.to_string()))?;
-        let text = String::from_utf8(bytes).map_err(|_| refusal("Music must be UTF-8."))?;
-        return Ok(IncludedFile {
-            name: path.to_string_lossy().into_owned(),
-            text: text.strip_prefix('\u{feff}').unwrap_or(&text).to_owned(),
-        });
+        let mut text = String::from_utf8(bytes).map_err(|_| refusal("Music must be UTF-8."))?;
+        if text.starts_with('\u{feff}') {
+            text.drain(..3);
+        }
+        return Ok(IncludedFile { name: path.to_string_lossy().into_owned(), text });
     }
     Err(refusal(&format!("Cannot read music file `{name}` inside the source roots.")))
 }

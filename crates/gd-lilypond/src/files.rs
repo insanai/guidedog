@@ -45,7 +45,12 @@ impl std::error::Error for Failed {}
 pub fn error_report(error: &Error, files: &SourceFiles) -> gd_report::Report {
     let title = match error.kind {
         crate::ErrorKind::UnknownCommand => "UNKNOWN MUSIC COMMAND",
+        crate::ErrorKind::Unsupported if error.severity == Severity::Warning => {
+            "MUSIC METADATA IGNORED"
+        }
         crate::ErrorKind::Unsupported => "UNSUPPORTED LILYPOND",
+        crate::ErrorKind::Overfull => "OVERFULL MUSIC MEASURE",
+        crate::ErrorKind::Font if error.severity == Severity::Warning => "TEXT GLYPH NOT FOUND",
         crate::ErrorKind::BarCheck => "BAR CHECK FAILED",
         crate::ErrorKind::Lyrics => "UNUSED LYRICS",
         crate::ErrorKind::ReadLimit | crate::ErrorKind::EngraveLimit => "MUSIC LIMIT REACHED",

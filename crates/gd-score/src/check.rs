@@ -2,7 +2,8 @@ use crate::{
     Anchor, Error, ErrorKind, Event, EventKind, Meter, NoteRef, Ratio, Score, SpannerKind,
 };
 
-/// Borrows a score and checks reader-independent invariants in linear time.
+/// Borrows a score and checks reader-independent invariants.
+/// Visits events and references once, with logarithmic measure lookups for meter changes.
 /// Returns the first invalid reference, duration, ordering, pitch, meter or interval.
 pub fn check_score(score: &Score) -> Result<(), Error> {
     if score.staves.is_empty() || score.voices.is_empty() || score.events.is_empty() {

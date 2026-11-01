@@ -73,6 +73,7 @@ impl Reader<'_> {
         let mut syllables: Vec<Syllable> = Vec::new();
         while inner.peek().is_some() {
             self.work.take(1, inner.span())?;
+            self.memory.take(512, inner.span())?;
             let location = inner.span();
             if inner.symbol('-') {
                 if !inner.symbol('-') {
@@ -153,6 +154,7 @@ impl Reader<'_> {
         let mut syllables: Vec<Syllable> = Vec::new();
         while let Some(node) = cursor.peek() {
             self.work.take(1, node.span)?;
+            self.memory.take(512, node.span)?;
             if cursor.symbol('-') {
                 if !cursor.symbol('-') {
                     return Err(syntax_error(node.span, "A lyric hyphen uses --."));

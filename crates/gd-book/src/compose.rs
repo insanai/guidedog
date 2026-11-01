@@ -34,6 +34,8 @@ pub(crate) struct ChapterSpan {
 /// A composed book.
 #[derive(Debug, Default)]
 pub(crate) struct Book {
+    /// Selected PDF template text width, retained for diagnostic rerendering.
+    pub music_width: Option<f64>,
     /// The book's Typst source.
     pub source: String,
     /// Where each chapter lies in it.
@@ -80,6 +82,8 @@ impl Composer<'_, '_> {
                 builtin.to_string()
             }
         };
+        out.music_width =
+            Some(crate::music::text_width(&template, &self.view.config.pdf.paper_size));
         if article {
             self.write_article_cover(&mut out, book, root);
         } else {
@@ -221,8 +225,12 @@ impl Composer<'_, '_> {
             .filter(|&&id| !view.doc(id).failed)
             .map(|&doc| Job { doc, depth: depth_below(view, doc, root) })
             .collect();
-        let style =
-            PageStyle { format: OutputFormat::Pdf, renderer: "typst", labels: self.labels };
+        let style = PageStyle {
+            format: OutputFormat::Pdf,
+            renderer: "typst",
+            labels: self.labels,
+            music_width: out.music_width,
+        };
         let mut pages = jobs.iter().zip(render_pages(view, &jobs, style));
         // In a book of several documents, root sections introduce the chapters. In a
         // standalone document they are the book's navigation and stay in its outline.

@@ -10,6 +10,7 @@ mod capacity;
 mod directives;
 mod inventories;
 mod limits;
+mod music;
 mod publication;
 mod sphinx;
 mod sphinx_pages;

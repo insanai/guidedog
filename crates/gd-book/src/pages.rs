@@ -17,6 +17,8 @@ pub(crate) struct Job {
 /// How a builder's pages are rendered.
 #[derive(Clone, Copy)]
 pub(crate) struct PageStyle<'a> {
+    /// Selected PDF template text width in points.
+    pub music_width: Option<f64>,
     /// The format the link pass rewrites for.
     pub format: OutputFormat,
     /// The renderer's id; empty only links.
@@ -50,6 +52,8 @@ pub(crate) fn page_request<'a>(
         renderer: style.renderer,
         options,
         depth: job.depth,
+        music_width: style.music_width,
+        ..Default::default()
     }
 }
 
@@ -61,6 +65,11 @@ pub(crate) fn render_pages(
     jobs: &[Job],
     style: PageStyle<'_>,
 ) -> Vec<Rendered> {
+    let source = jobs
+        .iter()
+        .any(|job| view.env.doc(job.doc).music)
+        .then(|| gd_link::load_music_source(view.config));
+    let fonts = source.as_ref().map(|source| source.load_fonts());
     let threads = view.options.jobs.threads(jobs.len());
     let init = || (Worker::new(), TypstHighlighter::new());
     gd_host::map_ordered(threads, jobs, init, |(worker, highlighter), &job| {
@@ -68,7 +77,8 @@ pub(crate) fn render_pages(
         if gd_host::was_interrupted() {
             return Rendered { failed: true, ..Rendered::default() };
         }
-        let request = page_request(view, job, style, highlighter);
+        let mut request = page_request(view, job, style, highlighter);
+        request.music = fonts.as_ref();
         render_page(view, worker, &request)
     })
 }

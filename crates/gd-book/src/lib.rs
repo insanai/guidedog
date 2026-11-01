@@ -32,6 +32,7 @@ mod failure;
 mod fonts;
 mod inputs;
 mod layout;
+mod music;
 mod pages;
 mod pdf;
 mod text;

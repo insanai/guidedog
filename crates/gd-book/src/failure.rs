@@ -18,6 +18,7 @@ use crate::pages::{Job, PageStyle, page_request};
 
 /// A typeset book's source and where its pieces came from.
 pub(crate) struct BookSource<'a, 'b> {
+    pub music_width: Option<f64>,
     pub view: &'a BuildView<'b>,
     pub labels: Option<&'a Labels>,
     /// The generated Typst.
@@ -85,8 +86,12 @@ impl BookSource<'_, '_> {
         offset: usize,
     ) -> Option<Report> {
         let highlighter = TypstHighlighter::new();
-        let style =
-            PageStyle { format: OutputFormat::Pdf, renderer: "typst", labels: self.labels };
+        let style = PageStyle {
+            format: OutputFormat::Pdf,
+            renderer: "typst",
+            labels: self.labels,
+            music_width: self.music_width,
+        };
         let job = Job { doc: ch.doc, depth: ch.depth };
         let request = page_request(self.view, job, style, &highlighter);
         source_location(self.view, worker, &request, offset)

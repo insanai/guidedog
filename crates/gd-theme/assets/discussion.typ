@@ -1,4 +1,5 @@
 #import "theme.typ": gd-palette, gd-serif, gd-sans, gd-mono, gd-script-fonts, configure-document
+// guidedog: margin-x = 25mm
 // Guidedog's discussion paper. The PDF composer selects this layout for a record,
 // independently of book.typ. A project can override it with _templates/discussion.typ.
 // Record metadata arrives as strings, not executable source.

@@ -258,6 +258,7 @@ impl TypstRun<'_, '_> {
     /// The book's source as Typst saw it, shown as `shown_as`, in `root`.
     fn book_source<'s>(&'s self, shown_as: &'s Path, root: &'s Path) -> BookSource<'s, 's> {
         BookSource {
+            music_width: self.book.music_width,
             view: self.view,
             labels: self.labels,
             source: &self.book.source,

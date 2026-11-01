@@ -138,6 +138,10 @@ impl State<'_, '_> {
 
     /// Writes `#figure` around the image, with the caption; a legend follows.
     pub(crate) fn render_figure(&mut self, id: NodeId) {
+        if self.custom(id, "music") == "1" {
+            self.render_music_figure(id);
+            return;
+        }
         let doc = self.doc;
         self.emit("#figure(");
         if !self.custom(id, "number-label").is_empty() {
@@ -215,7 +219,15 @@ impl State<'_, '_> {
     /// links showing the alternative text, and audio and video name the recording.
     pub(crate) fn emit_image(&mut self, id: NodeId, block: bool) {
         let doc = self.doc;
+        if let Some(parts) = doc.custom_attribute(id, "music-parts") {
+            self.emit_music_parts(id, parts);
+            return;
+        }
         let path = doc.link_info(id).map_or("", |i| doc.text(i.destination));
+        if self.custom(id, "music-fit") == "1" {
+            self.emit_music_parts(id, path);
+            return;
+        }
         if is_remote(path) {
             self.emit_remote_image(id, path);
             return;
@@ -254,6 +266,37 @@ impl State<'_, '_> {
         if align.is_some() {
             self.byte(b')');
         }
+    }
+
+    fn render_music_figure(&mut self, id: NodeId) {
+        let doc = self.doc;
+        self.emit("#block(breakable: true)[\n");
+        for part in doc.children(id) {
+            if doc.kind(part) == NodeKind::Image {
+                self.emit("#");
+                self.emit_image(part, false);
+                self.emit("\n");
+            } else if doc.kind(part) == NodeKind::Caption {
+                self.emit("#block(above: 0.5em)[");
+                self.emit_caption_number(id);
+                self.wrap_inlines("", part, "]\n");
+            }
+        }
+        self.emit("]\n");
+    }
+
+    fn emit_music_parts(&mut self, id: NodeId, parts: &str) {
+        self.emit("block(breakable: true)[\n");
+        for path in parts.lines() {
+            self.emit("#block(breakable: false)[#layout(size => { let drawing = image(");
+            self.emit_string(path);
+            self.emit_alt(id);
+            self.emit("); if measure(drawing).width > size.width { image(");
+            self.emit_string(path);
+            self.emit_alt(id);
+            self.emit(", width: size.width) } else { drawing } })]\n");
+        }
+        self.emit("]");
     }
 
     fn emit_remote_image(&mut self, id: NodeId, path: &str) {

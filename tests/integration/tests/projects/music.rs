@@ -1,0 +1,102 @@
+//! Native music through real readers, builders, assets and embedded PDF compilation.
+
+use guidedog_tests::{Scratch, has, lacks};
+
+use crate::support::{both, build, project};
+
+fn setup(name: &str) -> Scratch {
+    let dir = project(name);
+    dir.write(
+        "conf.toml",
+        &format!(
+            "{}\npdf_packages = 'offline'\npdf_fonts = 'embedded'\nnumfig = true\n",
+            dir.read("conf.toml")
+                .replace("source_suffix = [\".rst\"]", "source_suffix = [\".rst\", \".md\"]")
+        ),
+    );
+    dir
+}
+
+#[test]
+fn rst_and_myst_music_render_in_html_and_real_pdf() {
+    let dir = setup("music-both");
+    dir.write(
+        "index.rst",
+        concat!(
+            "Music\n=====\n\n.. toctree::\n\n   other\n\n.. lilypond::\n",
+            "   :caption: A *melody*\n   :name: melody\n   :alt: Four notes\n\n",
+            "   \\relative c' { \\time 4/4 c4 d e f | }\n\nSee :numref:`melody`.\n"
+        ),
+    );
+    dir.write(
+        "other.md",
+        concat!(
+            "# Other\n\n```{lilypond}\n:format: png\n\n",
+            "\\relative c' { c4 d e f | }\n```\n"
+        ),
+    );
+    build(&dir.path, 0, &["html", "-n", "-W"]);
+    let html = dir.read("_build/html/index.html");
+    has(&html, "<picture>");
+    has(&html, "media=\"(max-width: 40rem)\"");
+    has(&html, "alt=\"Four notes\"");
+    has(&html, "id=\"melody\"");
+    has(&html, "<em>melody</em>");
+    has(&html, "href=\"#melody\">Fig. ");
+    let other = dir.read("_build/html/other.html");
+    has(&other, "lilypond-");
+    has(&other, ".png");
+    has(&other, "Music for 1 staff.");
+    build(&dir.path, 0, &["pdf", "-n", "-W"]);
+    has(&dir.read("_build/pdf/book-en.typ"), "lilypond-");
+    assert!(std::fs::read(dir.path.join("_build/pdf/demo-en.pdf")).unwrap().starts_with(b"%PDF-"));
+}
+
+#[test]
+fn confined_includes_invalidate_music_and_untrusted_inline_remains_available() {
+    let dir = setup("music-includes");
+    dir.write("index.rst", "Music\n=====\n\n.. lilypond:: sub/main.ly\n");
+    dir.write("sub/main.ly", "\\include \"notes.ly\"\n\\relative c' { \\notes }\n");
+    dir.write("sub/notes.ly", "notes = { c4 d e f | }\n");
+    build(&dir.path, 0, &["html", "-W"]);
+    let first = dir.read("_build/html/index.html");
+    has(&first, "lilypond-");
+    dir.write("sub/notes.ly", "notes = { c4 f e d | }\n");
+    build(&dir.path, 0, &["html", "-W"]);
+    assert_ne!(first, dir.read("_build/html/index.html"));
+    let refusal = build(&dir.path, 0, &["html", "--untrusted"]);
+    has(&both(&refusal), "disabled in --untrusted");
+    lacks(&dir.read("_build/html/index.html"), "_images/lilypond-");
+    dir.write("index.rst", "Music\n=====\n\n.. lilypond::\n\n   { c'4 d' e' f' | }\n");
+    build(&dir.path, 0, &["html", "--untrusted", "-W"]);
+    has(&dir.read("_build/html/index.html"), "_images/lilypond-");
+}
+
+#[test]
+fn systems_break_across_pdf_pages_and_caption_appears_once() {
+    let dir = setup("music-systems");
+    let source = "c'4 d' e' f' | \\break ".repeat(16);
+    dir.write("index.rst", &format!(
+        "Music\n=====\n\n.. lilypond::\n   :caption: Long melody\n   :name: long\n\n   {{ {source} }}\n"));
+    build(&dir.path, 0, &["pdf", "-W"]);
+    let source = dir.read("_build/pdf/book-en.typ");
+    has(&source, "#block(breakable: true)");
+    has(&source, "#layout(size =>");
+    assert_eq!(source.matches("Long melody").count(), 1);
+    assert!(source.matches("lilypond-").count() >= 16);
+}
+
+#[test]
+fn invalid_music_warns_at_its_original_source_line_and_strict_build_keeps_output() {
+    let dir = setup("music-diagnostics");
+    dir.write(
+        "index.rst",
+        "Music\n=====\n\nA paragraph.\n\n.. lilypond::\n\n   { c'4 \\unknown }\n",
+    );
+    let failed = build(&dir.path, 1, &["html", "-W"]);
+    let output = both(&failed);
+    has(&output, "UNKNOWN MUSIC COMMAND");
+    has(&output, "index.rst:8:");
+    build(&dir.path, 0, &["html"]);
+    lacks(&dir.read("_build/html/index.html"), "_images/lilypond-");
+}

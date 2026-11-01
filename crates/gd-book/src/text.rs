@@ -48,8 +48,12 @@ impl OutputBuilder for TextBuilder<'_> {
                 2,
             ));
         }
-        let style =
-            PageStyle { format: OutputFormat::Text, renderer: "text", labels: self.labels };
+        let style = PageStyle {
+            format: OutputFormat::Text,
+            renderer: "text",
+            labels: self.labels,
+            music_width: None,
+        };
         write_documents(view, generation, reports, style, Some(".txt"))
     }
 }
@@ -66,7 +70,12 @@ impl OutputBuilder for DummyBuilder {
         generation: &mut Generation,
         reports: &mut Vec<Report>,
     ) -> Result<(), Problem> {
-        let style = PageStyle { format: OutputFormat::Text, renderer: "", labels: None };
+        let style = PageStyle {
+            format: OutputFormat::Text,
+            renderer: "",
+            labels: None,
+            music_width: None,
+        };
         write_documents(view, generation, reports, style, None)
     }
 }

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 05:19+0000\n"
+"POT-Creation-Date: 2026-11-01 05:34+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -1021,7 +1021,6 @@ msgstr ""
 "참고하세요."
 
 #: ../../topics/music.rst:1
-#| msgid "Publication"
 msgid "Music notation"
 msgstr "악보 기보법"
 
@@ -1032,7 +1031,10 @@ msgid ""
 "bounded LilyPond notation profile and produces self-contained SVG or PNG. "
 "The reader and engraver are native Rust libraries. A project build needs "
 "no installed LilyPond program."
-msgstr "음악 예제를 설명 옆에 두고 Guidedog으로 웹사이트와 책에 쓸 악보를 조판합니다. ``lilypond`` 지시문은 범위가 정해진 LilyPond 기보 프로필을 읽어 독립적인 SVG나 PNG를 만듭니다. 판독기와 악보 조판기는 네이티브 Rust 라이브러리입니다. 프로젝트 빌드에는 설치된 LilyPond 프로그램이 필요하지 않습니다."
+msgstr ""
+"음악 예제를 설명 옆에 두고 Guidedog으로 웹사이트와 책에 쓸 악보를 조판합니다. ``lilypond`` 지시문은 범위가 "
+"정해진 LilyPond 기보 프로필을 읽어 독립적인 SVG나 PNG를 만듭니다. 판독기와 악보 조판기는 네이티브 Rust "
+"라이브러리입니다. 프로젝트 빌드에는 설치된 LilyPond 프로그램이 필요하지 않습니다."
 
 #: ../../topics/music.rst:9
 msgid "Write a melody"
@@ -1047,7 +1049,11 @@ msgid ""
 "``4`` is a quarter note and ``8`` is an eighth note. An omitted duration "
 "repeats the preceding duration. A vertical bar checks the measure "
 "boundary."
-msgstr "중괄호 안에 음높이와 음가를 씁니다. ``\\relative c'``\\ 에서 각 음높이는 앞 음과 가장 가까운 온음계 위치를 선택한 다음 아포스트로피나 쉼표를 적용합니다. 첫 음은 가온다인 ``c'``\\ 를 기준으로 삼습니다. 숫자는 음가의 분모를 나타냅니다. ``4``\\ 는 4분음표이고 ``8``\\ 은 8분음표입니다. 음가를 생략하면 앞의 값을 반복합니다. 세로줄은 마디 경계를 검사합니다."
+msgstr ""
+"중괄호 안에 음높이와 음가를 씁니다. ``\\relative c'``\\ 에서 각 음높이는 앞 음과 가장 가까운 온음계 위치를 "
+"선택한 다음 아포스트로피나 쉼표를 적용합니다. 첫 음은 가온다인 ``c'``\\ 를 기준으로 삼습니다. 숫자는 음가의 분모를 "
+"나타냅니다. ``4``\\ 는 4분음표이고 ``8``\\ 은 8분음표입니다. 음가를 생략하면 앞의 값을 반복합니다. 세로줄은 마디 "
+"경계를 검사합니다."
 
 #: ../../topics/music.rst:33
 msgid "A four-measure melody in G major and three-quarter time."
@@ -1062,12 +1068,11 @@ msgid ""
 "We refer to the caption with ``:numref:`music-melody``` when ``numfig = "
 "true``. A caption accepts inline markup. Without a caption, the directive "
 "produces an image."
-msgstr "``numfig = true``\\ 이면 ``:numref:`music-melody```\\ 로 캡션을 참조합니다. 캡션은 인라인 마크업을 허용합니다. 캡션이 없으면 지시문은 이미지를 만듭니다."
+msgstr ""
+"``numfig = true``\\ 이면 ``:numref:`music-melody```\\ 로 캡션을 참조합니다. 캡션은 인라인 "
+"마크업을 허용합니다. 캡션이 없으면 지시문은 이미지를 만듭니다."
 
 #: ../../topics/music.rst:47
-#| msgid ""
-#| "MyST Markdown supports the same directives and roles through fenced "
-#| "blocks:"
 msgid "MyST uses the same directive and options."
 msgstr "MyST도 같은 지시문과 옵션을 사용합니다."
 
@@ -1077,10 +1082,12 @@ msgid ""
 "fence remains a source example. A direct ``guidedog convert`` operation "
 "also retains directive source; engraving belongs to the project asset "
 "pipeline."
-msgstr "일반 ``code-block:: lilypond``\\ 나 단순한 Markdown ``lilypond`` 코드 울타리는 소스 예제로 남습니다. 직접 실행한 ``guidedog convert``\\ 도 지시문 소스를 보존합니다. 악보 조판은 프로젝트 자산 처리에서 수행합니다."
+msgstr ""
+"일반 ``code-block:: lilypond``\\ 나 단순한 Markdown ``lilypond`` 코드 울타리는 소스 예제로 "
+"남습니다. 직접 실행한 ``guidedog convert``\\ 도 지시문 소스를 보존합니다. 악보 조판은 프로젝트 자산 처리에서 "
+"수행합니다."
 
 #: ../../topics/music.rst:61
-#| msgid "Choose the drawing tool"
 msgid "Choose the notation"
 msgstr "기보법 선택"
 
@@ -1091,7 +1098,11 @@ msgid ""
 "``\\include \"english.ly\"``; examples include ``cs`` and ``df``. Deutsch "
 "adds ``h`` for B natural and ``b`` for B flat. These three language "
 "includes are built in and read no file."
-msgstr "기본 음이름 언어는 Nederlands입니다. ``cis``\\ 는 올림다, ``des``\\ 는 내림라입니다. ``\\language \"english\"``\\ 나 ``\\include \"english.ly\"``\\ 로 영어 음이름을 선택하며 ``cs``\\ 와 ``df``\\ 가 그 예입니다. Deutsch는 제자리 나음에 ``h``, 내림나에 ``b``\\ 를 추가합니다. 이 세 언어 포함 항목은 내장되어 파일을 읽지 않습니다."
+msgstr ""
+"기본 음이름 언어는 Nederlands입니다. ``cis``\\ 는 올림다, ``des``\\ 는 내림라입니다. "
+"``\\language \"english\"``\\ 나 ``\\include \"english.ly\"``\\ 로 영어 음이름을 "
+"선택하며 ``cs``\\ 와 ``df``\\ 가 그 예입니다. Deutsch는 제자리 나음에 ``h``, 내림나에 ``b``\\ 를 "
+"추가합니다. 이 세 언어 포함 항목은 내장되어 파일을 읽지 않습니다."
 
 #: ../../topics/music.rst:69
 msgid ""
@@ -1103,7 +1114,11 @@ msgid ""
 "mark forces an accidental, and a question mark requests a cautionary "
 "accidental. We put these marks after the pitch and before its duration: "
 "``cis'!4`` and ``c'?4``."
-msgstr "아포스트로피는 옥타브를 높이고 쉼표는 낮춥니다. ``\\fixed c' { ... }``\\ 는 앞 음을 따르지 않고 기준 옥타브를 고정합니다. ``\\transpose c ees { ... }``\\ 는 적힌 음높이와 조표를 이조합니다. 임시표는 음이름에 속하며 조표가 명시된 제자리음을 올림음으로 바꾸지는 않습니다. 느낌표는 임시표를 강제로 표시하고 물음표는 주의 임시표를 요청합니다. 이 표시는 음높이 뒤, 음가 앞에 ``cis'!4``\\ 나 ``c'?4``\\ 처럼 씁니다."
+msgstr ""
+"아포스트로피는 옥타브를 높이고 쉼표는 낮춥니다. ``\\fixed c' { ... }``\\ 는 앞 음을 따르지 않고 기준 옥타브를 "
+"고정합니다. ``\\transpose c ees { ... }``\\ 는 적힌 음높이와 조표를 이조합니다. 임시표는 음이름에 속하며 "
+"조표가 명시된 제자리음을 올림음으로 바꾸지는 않습니다. 느낌표는 임시표를 강제로 표시하고 물음표는 주의 임시표를 요청합니다. 이 "
+"표시는 음높이 뒤, 음가 앞에 ``cis'!4``\\ 나 ``c'?4``\\ 처럼 씁니다."
 
 #: ../../topics/music.rst:76
 msgid ""
@@ -1114,7 +1129,12 @@ msgid ""
 "chords: ``<c' e' g'>4``. ``q`` repeats the preceding chord. A tilde ties "
 "equal pitches; parentheses make slurs, and ``\\(`` with ``\\)`` makes a "
 "phrasing slur."
-msgstr "음가는 ``1``\\ 부터 ``128``\\ 까지이며 ``\\breve``\\ 는 겹온음표입니다. 점은 음가를 늘리고 ``*2/3``\\ 은 정확한 값을 비례 조정합니다. ``r``\\ 은 쉼표, ``s``\\ 는 보이지 않는 간격이며 ``R1*4``\\ 는 4분의 4박자에서 네 마디 쉼을 요청합니다. 꺾쇠괄호로 ``<c' e' g'>4``\\ 처럼 화음을 만듭니다. ``q``\\ 는 앞 화음을 반복합니다. 물결표는 같은 음높이를 붙임줄로 잇고, 소괄호는 이음줄을, ``\\(``\\ 와 ``\\)``\\ 는 프레이징 이음줄을 만듭니다."
+msgstr ""
+"음가는 ``1``\\ 부터 ``128``\\ 까지이며 ``\\breve``\\ 는 겹온음표입니다. 점은 음가를 늘리고 "
+"``*2/3``\\ 은 정확한 값을 비례 조정합니다. ``r``\\ 은 쉼표, ``s``\\ 는 보이지 않는 간격이며 "
+"``R1*4``\\ 는 4분의 4박자에서 네 마디 쉼을 요청합니다. 꺾쇠괄호로 ``<c' e' g'>4``\\ 처럼 화음을 "
+"만듭니다. ``q``\\ 는 앞 화음을 반복합니다. 물결표는 같은 음높이를 붙임줄로 잇고, 소괄호는 이음줄을, ``\\(``\\ 와 "
+"``\\)``\\ 는 프레이징 이음줄을 만듭니다."
 
 #: ../../topics/music.rst:83
 msgid "Supported notation families"
@@ -1136,10 +1156,11 @@ msgstr "보표 문맥"
 msgid ""
 "``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; treble, "
 "bass, alto, tenor and soprano clefs, with supported octave clefs."
-msgstr "``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; 높은음자리표, 낮은음자리표, 알토, 테너, 소프라노 음자리표와 지원하는 옥타브 음자리표."
+msgstr ""
+"``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; 높은음자리표, "
+"낮은음자리표, 알토, 테너, 소프라노 음자리표와 지원하는 옥타브 음자리표."
 
 #: ../../topics/music.rst:91
-#| msgid "Roles"
 msgid "Modes"
 msgstr "선법"
 
@@ -1147,7 +1168,9 @@ msgstr "선법"
 msgid ""
 "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
 "``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
-msgstr "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, ``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
+msgstr ""
+"``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
+"``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
 
 #: ../../topics/music.rst:93
 msgid "Rhythm and stems"
@@ -1158,7 +1181,10 @@ msgid ""
 "``\\tuplet 3/2``, ``\\times 2/3``, manual ``[`` and ``]`` beams, "
 "``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, "
 "``\\stemNeutral``."
-msgstr "``\\tuplet 3/2``, ``\\times 2/3``, 수동 ``[``\\ 와 ``]`` 음표 묶음, ``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, ``\\stemNeutral``."
+msgstr ""
+"``\\tuplet 3/2``, ``\\times 2/3``, 수동 ``[``\\ 와 ``]`` 음표 묶음, "
+"``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, "
+"``\\stemNeutral``."
 
 #: ../../topics/music.rst:95
 msgid "Expression"
@@ -1169,10 +1195,12 @@ msgid ""
 "Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through "
 "``\\ffff``, ``\\<``, ``\\>``, ``\\!``, literal scripts and single-item "
 "``\\markup`` with ``\\bold`` or ``\\italic``."
-msgstr "아티큘레이션, 1부터 5까지의 운지, ``\\pppp``\\ 부터 ``\\ffff``\\ 까지의 셈여림, ``\\<``, ``\\>``, ``\\!``, 리터럴 문자 지시와 ``\\bold``\\ 나 ``\\italic``\\ 을 쓰는 단일 항목 ``\\markup``."
+msgstr ""
+"아티큘레이션, 1부터 5까지의 운지, ``\\pppp``\\ 부터 ``\\ffff``\\ 까지의 셈여림, ``\\<``, "
+"``\\>``, ``\\!``, 리터럴 문자 지시와 ``\\bold``\\ 나 ``\\italic``\\ 을 쓰는 단일 항목 "
+"``\\markup``."
 
 #: ../../topics/music.rst:97
-#| msgid "reStructuredText"
 msgid "Structure"
 msgstr "구조"
 
@@ -1181,10 +1209,11 @@ msgid ""
 "Assignments, variable references, lexical ``\\include``, ``\\score``, "
 "``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, "
 "``StaffGroup``, ``ChoirStaff``."
-msgstr "할당, 변수 참조, 어휘적 ``\\include``, ``\\score``, ``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, ``StaffGroup``, ``ChoirStaff``."
+msgstr ""
+"할당, 변수 참조, 어휘적 ``\\include``, ``\\score``, ``\\new Staff``, ``\\new "
+"Voice``, ``PianoStaff``, ``GrandStaff``, ``StaffGroup``, ``ChoirStaff``."
 
 #: ../../topics/music.rst:99
-#| msgid "Documents and resources"
 msgid "Voices and lyrics"
 msgstr "성부와 가사"
 
@@ -1193,7 +1222,9 @@ msgid ""
 "At most two voices per staff; ``\\addlyrics``, ``\\lyricsto``, "
 "``\\lyricmode``, multiple verses, explicit syllable durations, hyphens "
 "and extenders."
-msgstr "보표당 최대 두 성부; ``\\addlyrics``, ``\\lyricsto``, ``\\lyricmode``, 여러 절, 명시적인 음절 음가, 하이픈과 연장선."
+msgstr ""
+"보표당 최대 두 성부; ``\\addlyrics``, ``\\lyricsto``, ``\\lyricmode``, 여러 절, 명시적인 "
+"음절 음가, 하이픈과 연장선."
 
 #: ../../topics/music.rst:101
 msgid "Grace and repetition"
@@ -1203,10 +1234,11 @@ msgstr "꾸밈음과 반복"
 msgid ""
 "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
 "``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
-msgstr "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, ``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+msgstr ""
+"``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
+"``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
 
 #: ../../topics/music.rst:103
-#| msgid "Images and figures"
 msgid "Labels and breaks"
 msgstr "라벨과 줄바꿈"
 
@@ -1214,7 +1246,9 @@ msgstr "라벨과 줄바꿈"
 msgid ""
 "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames "
 "\\chordmode``, ``\\break``, ``\\noBreak``."
-msgstr "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames \\chordmode``, ``\\break``, ``\\noBreak``."
+msgstr ""
+"``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames "
+"\\chordmode``, ``\\break``, ``\\noBreak``."
 
 #: ../../topics/music.rst:106
 msgid ""
@@ -1225,42 +1259,73 @@ msgid ""
 "not execute a LilyPond program. The complete command ledger and engraving "
 "contract are recorded in GDS 0015 in the repository's "
 "``docs/gds/records`` directory."
-msgstr "판독기는 버전 선언, 무시하는 머리말 메타데이터와 빈 레이아웃 또는 MIDI 블록을 허용합니다. Scheme, 음악 함수, 임의의 속성 변경, 오버라이드와 지원하지 않는 명령은 위치가 표시된 진단으로 거부합니다. 프로필은 고정된 악보 조판 양식을 정하며 LilyPond 프로그램을 실행하지 않습니다. 전체 명령 목록과 조판 규약은 저장소 ``docs/gds/records`` 디렉터리의 GDS 0015에 기록되어 있습니다."
+msgstr ""
+"판독기는 버전 선언, 무시하는 머리말 메타데이터와 빈 레이아웃 또는 MIDI 블록을 허용합니다. Scheme, 음악 함수, 임의의 "
+"속성 변경, 오버라이드와 지원하지 않는 명령은 위치가 표시된 진단으로 거부합니다. 프로필은 고정된 악보 조판 양식을 정하며 "
+"LilyPond 프로그램을 실행하지 않습니다. 전체 명령 목록과 조판 규약은 저장소 ``docs/gds/records`` 디렉터리의 "
+"GDS 0015에 기록되어 있습니다."
 
 #: ../../topics/music.rst:111
+msgid "Add expression and repeats"
+msgstr "표현과 반복 추가"
+
+#: ../../topics/music.rst:114
+msgid ""
+"We attach articulations and fingerings after a note: ``-.`` is staccato, "
+"``->`` is an accent, and ``-1`` selects the first finger. Dynamics set "
+"the intensity, and a hairpin continues until ``\\!`` or the next dynamic. "
+"We place a small grace group before a main note with ``\\grace``; "
+"``\\acciaccatura`` adds a slash, while ``\\afterGrace`` places the group "
+"after its main note. Grace time does not extend the measure."
+msgstr "음표 뒤에 아티큘레이션과 운지를 붙입니다. ``-.``\\ 는 스타카토, ``->``\\ 는 악센트이며 ``-1``\\ 은 첫째 손가락을 선택합니다. 셈여림은 강도를 정하며 헤어핀은 ``\\!`` 또는 다음 셈여림까지 이어집니다. ``\\grace``\\ 로 주음 앞에 작은 꾸밈음 묶음을 놓습니다. ``\\acciaccatura``\\ 는 사선을 더하고 ``\\afterGrace``\\ 는 주음 뒤에 묶음을 놓습니다. 꾸밈음의 시간은 마디를 늘리지 않습니다."
+
+#: ../../topics/music.rst:126
+msgid ""
+"We write a volta repeat once and give each ending in ``\\alternative``. "
+"The example has two passes with different final measures. ``\\repeat "
+"unfold`` expands its body instead of drawing repeat signs. Chord names "
+"use a separate ``\\new ChordNames \\chordmode`` context beside the staff, "
+"with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``."
+msgstr "볼타 반복은 한 번 쓰고 ``\\alternative``\\ 에 각 끝부분을 지정합니다. 예제는 마지막 마디가 다른 두 번의 연주입니다. ``\\repeat unfold``\\ 는 반복 기호 대신 본문을 펼칩니다. 화음 이름은 보표 옆의 별도 ``\\new ChordNames \\chordmode`` 문맥에 ``c1:maj7``, ``d:m7``, ``g:7`` 같은 표기로 씁니다."
+
+#: ../../topics/music.rst:138
 msgid "Combine staves and lyrics"
 msgstr "보표와 가사 결합"
 
-#: ../../topics/music.rst:114
+#: ../../topics/music.rst:141
 msgid ""
 "We use simultaneous contexts for a score with several staves. Instrument "
 "names use ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` "
 "block. Two voices on one staff use ``<< { ... } \\\\ { ... } >>``. Lyrics "
 "attach to a named voice, and separate ``\\lyricsto`` expressions make "
 "separate verses."
-msgstr "여러 보표가 있는 악보에는 동시 문맥을 사용합니다. 악기 이름은 ``\\with`` 블록의 ``instrumentName``\\ 과 ``shortInstrumentName``\\ 으로 지정합니다. 한 보표의 두 성부에는 ``<< { ... } \\\\ { ... } >>``\\ 를 사용합니다. 가사는 이름이 있는 성부에 연결하며 별도의 ``\\lyricsto`` 식은 별도의 절을 만듭니다."
+msgstr ""
+"여러 보표가 있는 악보에는 동시 문맥을 사용합니다. 악기 이름은 ``\\with`` 블록의 ``instrumentName``\\ 과 "
+"``shortInstrumentName``\\ 으로 지정합니다. 한 보표의 두 성부에는 ``<< { ... } \\\\ { ... "
+"} >>``\\ 를 사용합니다. 가사는 이름이 있는 성부에 연결하며 별도의 ``\\lyricsto`` 식은 별도의 절을 만듭니다."
 
-#: ../../topics/music.rst:120
+#: ../../topics/music.rst:147
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
-msgstr "피아노 보표 두 개. 위 보표에는 네 개의 4분음표와 Sing a short song 가사가 있고 베이스는 다음을 유지합니다."
+msgstr ""
+"피아노 보표 두 개. 위 보표에는 네 개의 4분음표와 Sing a short song 가사가 있고 베이스는 다음을 유지합니다."
 
-#: ../../topics/music.rst:120
+#: ../../topics/music.rst:147
 msgid "A named melody with a verse and a bass staff."
 msgstr "가사 한 절과 베이스 보표를 가진 이름 있는 선율."
 
-#: ../../topics/music.rst:130
+#: ../../topics/music.rst:157
 msgid "Read local files"
 msgstr "로컬 파일 읽기"
 
-#: ../../topics/music.rst:133
+#: ../../topics/music.rst:160
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
 msgstr "지시문은 인라인 본문 대신 로컬 파일을 지정할 수 있습니다. 소스 형식은 정확히 하나만 사용합니다."
 
-#: ../../topics/music.rst:142
+#: ../../topics/music.rst:169
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1269,100 +1334,113 @@ msgid ""
 "local lookups and selected text font files by content. Changing a "
 "dependency rebuilds the generated image. Identical output bytes retain "
 "the same asset name."
-msgstr "중첩된 ``\\include`` 경로는 포함하는 파일 옆에서 먼저 찾고, 다음으로 소스 디렉터리와 설정한 ``include_roots``\\ 에서 찾습니다. 심볼릭 링크 검사 후에도 해석된 경로는 허용된 루트 안에 있어야 합니다. 빌드는 소스 파일, 중첩 포함 파일, 실패한 로컬 조회와 선택한 텍스트 글꼴 파일을 내용으로 추적합니다. 의존성이 바뀌면 이미지를 다시 만듭니다. 출력 바이트가 같으면 자산 이름도 유지합니다."
+msgstr ""
+"중첩된 ``\\include`` 경로는 포함하는 파일 옆에서 먼저 찾고, 다음으로 소스 디렉터리와 설정한 "
+"``include_roots``\\ 에서 찾습니다. 심볼릭 링크 검사 후에도 해석된 경로는 허용된 루트 안에 있어야 합니다. 빌드는 "
+"소스 파일, 중첩 포함 파일, 실패한 로컬 조회와 선택한 텍스트 글꼴 파일을 내용으로 추적합니다. 의존성이 바뀌면 이미지를 다시 "
+"만듭니다. 출력 바이트가 같으면 자산 이름도 유지합니다."
 
-#: ../../topics/music.rst:148
+#: ../../topics/music.rst:175
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
 "before opening them. Text output retains source code and performs no "
 "engraving. A failed drawing also retains source code with a warning; "
 "``-W`` stops publication and preserves the preceding output."
-msgstr "판독기는 프로그램이나 Scheme 코드를 실행하지 않으므로 ``--untrusted``\\ 에서도 인라인 기보를 허용합니다. 파일 인자와 파일 시스템 포함은 열기 전에 거부합니다. 텍스트 출력은 소스를 보존하며 악보를 조판하지 않습니다. 그리기에 실패해도 경고와 함께 소스를 보존합니다. ``-W``\\ 는 게시를 중단하고 이전 출력을 유지합니다."
+msgstr ""
+"판독기는 프로그램이나 Scheme 코드를 실행하지 않으므로 ``--untrusted``\\ 에서도 인라인 기보를 허용합니다. 파일 "
+"인자와 파일 시스템 포함은 열기 전에 거부합니다. 텍스트 출력은 소스를 보존하며 악보를 조판하지 않습니다. 그리기에 실패해도 경고와 "
+"함께 소스를 보존합니다. ``-W``\\ 는 게시를 중단하고 이전 출력을 유지합니다."
 
-#: ../../topics/music.rst:153
+#: ../../topics/music.rst:180
 msgid "Set size and output"
 msgstr "크기와 출력 설정"
 
-#: ../../topics/music.rst:156
-#| msgid "Directives"
+#: ../../topics/music.rst:183
 msgid "Directive options"
 msgstr "지시문 옵션"
 
-#: ../../topics/music.rst:160
+#: ../../topics/music.rst:187
 msgid "Option"
 msgstr "옵션"
 
-#: ../../topics/music.rst:161
+#: ../../topics/music.rst:188
 msgid "Meaning"
 msgstr "의미"
 
-#: ../../topics/music.rst:162
+#: ../../topics/music.rst:189
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:163
+#: ../../topics/music.rst:190
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "이미지의 음악적 설명. 없으면 빌드가 현지화된 요약을 만듭니다."
 
-#: ../../topics/music.rst:164
+#: ../../topics/music.rst:191
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:165
+#: ../../topics/music.rst:192
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
 msgstr "그림 캡션, 참조 대상, CSS 클래스와 이미지 정렬이며 다이어그램 지시문을 따릅니다."
 
-#: ../../topics/music.rst:166
+#: ../../topics/music.rst:193
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:167
+#: ../../topics/music.rst:194
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "기본값은 ``svg``\\ 이며 ``png``\\ 는 인치당 144픽셀입니다."
 
-#: ../../topics/music.rst:168
+#: ../../topics/music.rst:195
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:169
+#: ../../topics/music.rst:196
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
 msgstr "다섯 줄 보표의 높이. 10부터 40포인트까지이며 기본값은 18포인트입니다."
 
-#: ../../topics/music.rst:170
+#: ../../topics/music.rst:197
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:171
+#: ../../topics/music.rst:198
 msgid ""
 "Available system width, in ``pt``, ``mm``, ``cm``, ``in``, ``px`` or a "
 "percentage of the builder's default width."
-msgstr "사용 가능한 시스템 너비. ``pt``, ``mm``, ``cm``, ``in``, ``px`` 또는 빌더 기본 너비의 백분율로 지정합니다."
+msgstr ""
+"사용 가능한 시스템 너비. ``pt``, ``mm``, ``cm``, ``in``, ``px`` 또는 빌더 기본 너비의 백분율로 "
+"지정합니다."
 
-#: ../../topics/music.rst:172
+#: ../../topics/music.rst:199
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:173
+#: ../../topics/music.rst:200
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
-msgstr "``auto``\\ 는 짧은 마지막 시스템의 자연 너비를 유지하고, ``all``\\ 은 모든 시스템을 늘리며, ``none``\\ 은 늘리기를 피합니다."
+msgstr ""
+"``auto``\\ 는 짧은 마지막 시스템의 자연 너비를 유지하고, ``all``\\ 은 모든 시스템을 늘리며, ``none``\\ "
+"은 늘리기를 피합니다."
 
-#: ../../topics/music.rst:175
+#: ../../topics/music.rst:202
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
 "See :doc:`../reference/configuration` for the setting contract."
-msgstr "프로젝트 기본값은 ``lilypond_staff_size``, ``lilypond_html_width``, ``lilypond_pdf_width``\\ 입니다. 숫자의 단위는 조판 포인트입니다. 설정 규약은 :doc:`../reference/configuration`\\ 을 참고합니다."
+msgstr ""
+"프로젝트 기본값은 ``lilypond_staff_size``, ``lilypond_html_width``, "
+"``lilypond_pdf_width``\\ 입니다. 숫자의 단위는 조판 포인트입니다. 설정 규약은 "
+":doc:`../reference/configuration`\\ 을 참고합니다."
 
-#: ../../topics/music.rst:179
+#: ../../topics/music.rst:206
 msgid ""
 "HTML also receives a narrow edition engraved at 225 points, with a staff "
 "height no greater than 14 points. The browser selects it below 40 rem "
@@ -1370,9 +1448,13 @@ msgid ""
 "When its system limit prevents it from being drawn, the wide image scales "
 "to the screen. SVG adapts its ink to the page's color scheme; PNG keeps a "
 "light background panel in dark mode."
-msgstr "HTML에는 너비 225포인트, 보표 높이 최대 14포인트로 조판한 좁은 판도 제공됩니다. 브라우저는 40 rem 미만에서 ``picture`` 요소로 이 판을 선택합니다. 이 판은 자체 시스템 줄바꿈을 갖습니다. 시스템 수 제한 때문에 그릴 수 없으면 넓은 이미지를 화면에 맞게 줄입니다. SVG는 페이지 색 구성에 맞게 잉크색을 바꾸고 PNG는 어두운 모드에서도 밝은 배경 패널을 유지합니다."
+msgstr ""
+"HTML에는 너비 225포인트, 보표 높이 최대 14포인트로 조판한 좁은 판도 제공됩니다. 브라우저는 40 rem 미만에서 "
+"``picture`` 요소로 이 판을 선택합니다. 이 판은 자체 시스템 줄바꿈을 갖습니다. 시스템 수 제한 때문에 그릴 수 없으면 "
+"넓은 이미지를 화면에 맞게 줄입니다. SVG는 페이지 색 구성에 맞게 잉크색을 바꾸고 PNG는 어두운 모드에서도 밝은 배경 패널을 "
+"유지합니다."
 
-#: ../../topics/music.rst:185
+#: ../../topics/music.rst:212
 msgid ""
 "PDF uses the selected template's text width and places music at its "
 "natural size. Built-in templates declare their horizontal margin after "
@@ -1382,14 +1464,17 @@ msgid ""
 "Oversized music scales to fit with a build warning. A score with several "
 "systems can break between systems across PDF pages, with its caption "
 "after the last system."
-msgstr "PDF는 선택한 템플릿의 본문 너비를 사용하고 악보를 자연 크기로 배치합니다. 내장 템플릿은 첫 가져오기 뒤에 ``// guidedog: margin-x = 31mm`` 같은 주석으로 수평 여백을 선언합니다. 선언이 없는 사용자 템플릿은 25밀리미터 여백으로 가정합니다. ``lilypond_pdf_width``\\ 가 계산한 너비를 덮어씁니다. 너무 넓은 악보는 빌드 경고와 함께 맞게 축소합니다. 여러 시스템의 악보는 시스템 사이에서 PDF 페이지를 나눌 수 있으며 캡션은 마지막 시스템 뒤에 옵니다."
+msgstr ""
+"PDF는 선택한 템플릿의 본문 너비를 사용하고 악보를 자연 크기로 배치합니다. 내장 템플릿은 첫 가져오기 뒤에 ``// "
+"guidedog: margin-x = 31mm`` 같은 주석으로 수평 여백을 선언합니다. 선언이 없는 사용자 템플릿은 25밀리미터 "
+"여백으로 가정합니다. ``lilypond_pdf_width``\\ 가 계산한 너비를 덮어씁니다. 너무 넓은 악보는 빌드 경고와 함께 "
+"맞게 축소합니다. 여러 시스템의 악보는 시스템 사이에서 PDF 페이지를 나눌 수 있으며 캡션은 마지막 시스템 뒤에 옵니다."
 
-#: ../../topics/music.rst:192
-#| msgid "Packages, limits and failures"
+#: ../../topics/music.rst:219
 msgid "Fonts, limits and references"
 msgstr "글꼴, 제한과 참고 문헌"
 
-#: ../../topics/music.rst:195
+#: ../../topics/music.rst:222
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1397,9 +1482,13 @@ msgid ""
 "browsers and PDF readers need no installed music font. PNG export "
 "requires the embedded renderer; SVG engraving remains available in builds "
 "without it."
-msgstr "악보는 SIL Open Font License의 수정하지 않은 Bravura 1.482 글꼴과 SMuFL 메타데이터를 사용합니다. 텍스트는 ``pdf_fonts``\\ 와 ``pdf_font_paths``\\ 에 따라 보통체, 굵은체, 기울임 대체 글꼴을 사용합니다. 글리프가 윤곽선이 되므로 브라우저와 PDF 리더에 음악 글꼴을 설치할 필요가 없습니다. PNG 내보내기에는 내장 렌더러가 필요하며, 내장하지 않은 빌드에서도 SVG 조판은 가능합니다."
+msgstr ""
+"악보는 SIL Open Font License의 수정하지 않은 Bravura 1.482 글꼴과 SMuFL 메타데이터를 사용합니다. "
+"텍스트는 ``pdf_fonts``\\ 와 ``pdf_font_paths``\\ 에 따라 보통체, 굵은체, 기울임 대체 글꼴을 "
+"사용합니다. 글리프가 윤곽선이 되므로 브라우저와 PDF 리더에 음악 글꼴을 설치할 필요가 없습니다. PNG 내보내기에는 내장 "
+"렌더러가 필요하며, 내장하지 않은 빌드에서도 SVG 조판은 가능합니다."
 
-#: ../../topics/music.rst:200
+#: ../../topics/music.rst:227
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, two voices per staff "
@@ -1409,9 +1498,13 @@ msgid ""
 "points. PNG is limited to 16 million pixels and 16,384 pixels on either "
 "side. A limit diagnostic identifies the source and suggests splitting the "
 "example."
-msgstr "예제 하나는 포함 파일까지 소스 최대 256 KiB, 포함 파일 32개, 깊이 64, 이벤트 20,000개, 보표 24개, 보표당 두 성부와 화음당 음표 머리 16개를 허용합니다. 판독기와 조판기는 각각 800만 연산으로 제한됩니다. 판독기의 확장 후 할당에는 별도의 64 MiB 한도가 있습니다. 그림은 최대 64개 시스템과 20,000포인트 높이입니다. PNG는 1,600만 픽셀, 각 변 16,384픽셀로 제한됩니다. 제한 진단은 소스를 식별하고 예제를 나누도록 안내합니다."
+msgstr ""
+"예제 하나는 포함 파일까지 소스 최대 256 KiB, 포함 파일 32개, 깊이 64, 이벤트 20,000개, 보표 24개, 보표당 "
+"두 성부와 화음당 음표 머리 16개를 허용합니다. 판독기와 조판기는 각각 800만 연산으로 제한됩니다. 판독기의 확장 후 할당에는 "
+"별도의 64 MiB 한도가 있습니다. 그림은 최대 64개 시스템과 20,000포인트 높이입니다. PNG는 1,600만 픽셀, 각 변 "
+"16,384픽셀로 제한됩니다. 제한 진단은 소스를 식별하고 예제를 나누도록 안내합니다."
 
-#: ../../topics/music.rst:207
+#: ../../topics/music.rst:234
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "
@@ -1421,7 +1514,14 @@ msgid ""
 "include Elaine Gould's *Behind Bars* and Ted Ross's *The Art of Music "
 "Engraving and Processing*. For other kinds of drawing, we use "
 ":doc:`diagrams`."
-msgstr "기보 문법은 `LilyPond 2.24 기보 참고서 <https://lilypond.org/doc/v2.24/Documentation/notation/>`_\\ 를 참고합니다. 글리프 정의는 `Standard Music Font Layout 사양 <https://www.w3.org/2021/03/smufl14/>`_\\ 과 `Bravura 프로젝트 <https://github.com/steinbergmedia/bravura>`_\\ 를 참고합니다. 조판 참고 문헌에는 Elaine Gould의 *Behind Bars*\\ 와 Ted Ross의 *The Art of Music Engraving and Processing*\\ 이 있습니다. 다른 그림에는 :doc:`diagrams`\\ 를 사용합니다."
+msgstr ""
+"기보 문법은 `LilyPond 2.24 기보 참고서 "
+"<https://lilypond.org/doc/v2.24/Documentation/notation/>`_\\ 를 참고합니다. 글리프 "
+"정의는 `Standard Music Font Layout 사양 "
+"<https://www.w3.org/2021/03/smufl14/>`_\\ 과 `Bravura 프로젝트 "
+"<https://github.com/steinbergmedia/bravura>`_\\ 를 참고합니다. 조판 참고 문헌에는 "
+"Elaine Gould의 *Behind Bars*\\ 와 Ted Ross의 *The Art of Music Engraving and "
+"Processing*\\ 이 있습니다. 다른 그림에는 :doc:`diagrams`\\ 를 사용합니다."
 
 #: ../../topics/projects.rst:1
 msgid "How a project works"

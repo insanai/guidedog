@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 05:19+0000\n"
+"POT-Creation-Date: 2026-11-01 05:34+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -972,7 +972,6 @@ msgstr ""
 "<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_\\ 。"
 
 #: ../../topics/music.rst:1
-#| msgid "Publication"
 msgid "Music notation"
 msgstr "乐谱记法"
 
@@ -983,7 +982,9 @@ msgid ""
 "bounded LilyPond notation profile and produces self-contained SVG or PNG. "
 "The reader and engraver are native Rust libraries. A project build needs "
 "no installed LilyPond program."
-msgstr "我们把音乐示例放在说明旁边，让 Guidedog 为网站和图书排印乐谱。``lilypond`` 指令读取有明确边界的 LilyPond 记谱子集，生成独立的 SVG 或 PNG。读取器和乐谱排印器都是原生 Rust 库。项目构建无需安装 LilyPond 程序。"
+msgstr ""
+"我们把音乐示例放在说明旁边，让 Guidedog 为网站和图书排印乐谱。``lilypond`` 指令读取有明确边界的 LilyPond "
+"记谱子集，生成独立的 SVG 或 PNG。读取器和乐谱排印器都是原生 Rust 库。项目构建无需安装 LilyPond 程序。"
 
 #: ../../topics/music.rst:9
 msgid "Write a melody"
@@ -998,7 +999,10 @@ msgid ""
 "``4`` is a quarter note and ``8`` is an eighth note. An omitted duration "
 "repeats the preceding duration. A vertical bar checks the measure "
 "boundary."
-msgstr "我们在花括号内编写音高和时值。在 ``\\relative c'`` 中，每个音高采用距离前一个音最近的自然音阶位置，再应用其撇号或逗号。第一个音以中央 C，即 ``c'`` 为参照。数字表示时值的分母；``4`` 是四分音符，``8`` 是八分音符。省略时值会沿用前一个时值。竖线检查小节边界。"
+msgstr ""
+"我们在花括号内编写音高和时值。在 ``\\relative c'`` "
+"中，每个音高采用距离前一个音最近的自然音阶位置，再应用其撇号或逗号。第一个音以中央 C，即 ``c'`` 为参照。数字表示时值的分母；``4`` "
+"是四分音符，``8`` 是八分音符。省略时值会沿用前一个时值。竖线检查小节边界。"
 
 #: ../../topics/music.rst:33
 msgid "A four-measure melody in G major and three-quarter time."
@@ -1013,12 +1017,11 @@ msgid ""
 "We refer to the caption with ``:numref:`music-melody``` when ``numfig = "
 "true``. A caption accepts inline markup. Without a caption, the directive "
 "produces an image."
-msgstr "当 ``numfig = true`` 时，我们用 ``:numref:`music-melody``` 引用图注。图注支持行内标记。没有图注时，指令生成图像。"
+msgstr ""
+"当 ``numfig = true`` 时，我们用 ``:numref:`music-melody``` "
+"引用图注。图注支持行内标记。没有图注时，指令生成图像。"
 
 #: ../../topics/music.rst:47
-#| msgid ""
-#| "MyST Markdown supports the same directives and roles through fenced "
-#| "blocks:"
 msgid "MyST uses the same directive and options."
 msgstr "MyST 使用相同的指令和选项。"
 
@@ -1028,10 +1031,11 @@ msgid ""
 "fence remains a source example. A direct ``guidedog convert`` operation "
 "also retains directive source; engraving belongs to the project asset "
 "pipeline."
-msgstr "普通的 ``code-block:: lilypond`` 或 Markdown ``lilypond`` 代码围栏仍然是源码示例。直接执行 ``guidedog convert`` 也会保留指令源码；乐谱排印由项目资源流水线完成。"
+msgstr ""
+"普通的 ``code-block:: lilypond`` 或 Markdown ``lilypond`` 代码围栏仍然是源码示例。直接执行 "
+"``guidedog convert`` 也会保留指令源码；乐谱排印由项目资源流水线完成。"
 
 #: ../../topics/music.rst:61
-#| msgid "Choose the drawing tool"
 msgid "Choose the notation"
 msgstr "选择记谱方式"
 
@@ -1042,7 +1046,10 @@ msgid ""
 "``\\include \"english.ly\"``; examples include ``cs`` and ``df``. Deutsch "
 "adds ``h`` for B natural and ``b`` for B flat. These three language "
 "includes are built in and read no file."
-msgstr "默认音名语言是 Nederlands：``cis`` 表示升 C，``des`` 表示降 D。我们用 ``\\language \"english\"`` 或 ``\\include \"english.ly\"`` 选择英语音名，例如 ``cs`` 和 ``df``。Deutsch 添加 ``h`` 表示本位 B，``b`` 表示降 B。这三种语言包含项是内置的，不读取文件。"
+msgstr ""
+"默认音名语言是 Nederlands：``cis`` 表示升 C，``des`` 表示降 D。我们用 ``\\language "
+"\"english\"`` 或 ``\\include \"english.ly\"`` 选择英语音名，例如 ``cs`` 和 "
+"``df``。Deutsch 添加 ``h`` 表示本位 B，``b`` 表示降 B。这三种语言包含项是内置的，不读取文件。"
 
 #: ../../topics/music.rst:69
 msgid ""
@@ -1054,7 +1061,11 @@ msgid ""
 "mark forces an accidental, and a question mark requests a cautionary "
 "accidental. We put these marks after the pitch and before its duration: "
 "``cis'!4`` and ``c'?4``."
-msgstr "撇号升高八度，逗号降低八度。``\\fixed c' { ... }`` 固定参照八度，不再跟随前面的音高。``\\transpose c ees { ... }`` 对书写音高和调号进行移调。变音记号属于音名；调号不会把明确写出的本位音变成升音。感叹号强制显示变音记号，问号请求提示性变音记号。这些符号写在音高之后、时值之前：``cis'!4`` 和 ``c'?4``。"
+msgstr ""
+"撇号升高八度，逗号降低八度。``\\fixed c' { ... }`` 固定参照八度，不再跟随前面的音高。``\\transpose c ees "
+"{ ... }`` "
+"对书写音高和调号进行移调。变音记号属于音名；调号不会把明确写出的本位音变成升音。感叹号强制显示变音记号，问号请求提示性变音记号。这些符号写在音高之后、时值之前：``cis'!4`` "
+"和 ``c'?4``。"
 
 #: ../../topics/music.rst:76
 msgid ""
@@ -1065,7 +1076,10 @@ msgid ""
 "chords: ``<c' e' g'>4``. ``q`` repeats the preceding chord. A tilde ties "
 "equal pitches; parentheses make slurs, and ``\\(`` with ``\\)`` makes a "
 "phrasing slur."
-msgstr "时值范围为 ``1`` 到 ``128``，``\\breve`` 表示二全音符。附点延长时值，``*2/3`` 按比例缩放其精确值。``r`` 表示休止符，``s`` 表示不可见占位符，``R1*4`` 请求四四拍中的四小节休止。尖括号构成和弦：``<c' e' g'>4``。``q`` 重复前一个和弦。波浪号连接同音高音符；圆括号形成连音线，``\\(`` 和 ``\\)`` 形成分句线。"
+msgstr ""
+"时值范围为 ``1`` 到 ``128``，``\\breve`` 表示二全音符。附点延长时值，``*2/3`` 按比例缩放其精确值。``r`` "
+"表示休止符，``s`` 表示不可见占位符，``R1*4`` 请求四四拍中的四小节休止。尖括号构成和弦：``<c' e' g'>4``。``q`` "
+"重复前一个和弦。波浪号连接同音高音符；圆括号形成连音线，``\\(`` 和 ``\\)`` 形成分句线。"
 
 #: ../../topics/music.rst:83
 msgid "Supported notation families"
@@ -1087,10 +1101,10 @@ msgstr "谱表上下文"
 msgid ""
 "``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; treble, "
 "bass, alto, tenor and soprano clefs, with supported octave clefs."
-msgstr "``\\clef``、``\\key``、``\\time``、``\\partial``、``\\bar``；高音、低音、中音、次中音和女高音谱号，以及支持的八度谱号。"
+msgstr ""
+"``\\clef``、``\\key``、``\\time``、``\\partial``、``\\bar``；高音、低音、中音、次中音和女高音谱号，以及支持的八度谱号。"
 
 #: ../../topics/music.rst:91
-#| msgid "Roles"
 msgid "Modes"
 msgstr "调式"
 
@@ -1098,7 +1112,9 @@ msgstr "调式"
 msgid ""
 "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
 "``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
-msgstr "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, ``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
+msgstr ""
+"``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
+"``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
 
 #: ../../topics/music.rst:93
 msgid "Rhythm and stems"
@@ -1109,7 +1125,9 @@ msgid ""
 "``\\tuplet 3/2``, ``\\times 2/3``, manual ``[`` and ``]`` beams, "
 "``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, "
 "``\\stemNeutral``."
-msgstr "``\\tuplet 3/2``、``\\times 2/3``、手动 ``[`` 和 ``]`` 符杠、``\\autoBeamOn``、``\\autoBeamOff``、``\\stemUp``、``\\stemDown``、``\\stemNeutral``。"
+msgstr ""
+"``\\tuplet 3/2``、``\\times 2/3``、手动 ``[`` 和 ``]`` "
+"符杠、``\\autoBeamOn``、``\\autoBeamOff``、``\\stemUp``、``\\stemDown``、``\\stemNeutral``。"
 
 #: ../../topics/music.rst:95
 msgid "Expression"
@@ -1120,10 +1138,12 @@ msgid ""
 "Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through "
 "``\\ffff``, ``\\<``, ``\\>``, ``\\!``, literal scripts and single-item "
 "``\\markup`` with ``\\bold`` or ``\\italic``."
-msgstr "奏法记号、1 到 5 的指法、``\\pppp`` 到 ``\\ffff`` 的力度、``\\<``、``\\>``、``\\!``、文字指示，以及带 ``\\bold`` 或 ``\\italic`` 的单项 ``\\markup``。"
+msgstr ""
+"奏法记号、1 到 5 的指法、``\\pppp`` 到 ``\\ffff`` "
+"的力度、``\\<``、``\\>``、``\\!``、文字指示，以及带 ``\\bold`` 或 ``\\italic`` 的单项 "
+"``\\markup``。"
 
 #: ../../topics/music.rst:97
-#| msgid "reStructuredText"
 msgid "Structure"
 msgstr "结构"
 
@@ -1132,10 +1152,11 @@ msgid ""
 "Assignments, variable references, lexical ``\\include``, ``\\score``, "
 "``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, "
 "``StaffGroup``, ``ChoirStaff``."
-msgstr "赋值、变量引用、词法 ``\\include``、``\\score``、``\\new Staff``、``\\new Voice``、``PianoStaff``、``GrandStaff``、``StaffGroup``、``ChoirStaff``。"
+msgstr ""
+"赋值、变量引用、词法 ``\\include``、``\\score``、``\\new Staff``、``\\new "
+"Voice``、``PianoStaff``、``GrandStaff``、``StaffGroup``、``ChoirStaff``。"
 
 #: ../../topics/music.rst:99
-#| msgid "Documents and resources"
 msgid "Voices and lyrics"
 msgstr "声部与歌词"
 
@@ -1144,7 +1165,8 @@ msgid ""
 "At most two voices per staff; ``\\addlyrics``, ``\\lyricsto``, "
 "``\\lyricmode``, multiple verses, explicit syllable durations, hyphens "
 "and extenders."
-msgstr "每个谱表最多两个声部；``\\addlyrics``、``\\lyricsto``、``\\lyricmode``、多段歌词、显式音节时值、连字符和延长线。"
+msgstr ""
+"每个谱表最多两个声部；``\\addlyrics``、``\\lyricsto``、``\\lyricmode``、多段歌词、显式音节时值、连字符和延长线。"
 
 #: ../../topics/music.rst:101
 msgid "Grace and repetition"
@@ -1154,10 +1176,11 @@ msgstr "装饰音与反复"
 msgid ""
 "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
 "``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
-msgstr "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, ``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+msgstr ""
+"``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
+"``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
 
 #: ../../topics/music.rst:103
-#| msgid "Images and figures"
 msgid "Labels and breaks"
 msgstr "标签与换行"
 
@@ -1165,7 +1188,9 @@ msgstr "标签与换行"
 msgid ""
 "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames "
 "\\chordmode``, ``\\break``, ``\\noBreak``."
-msgstr "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames \\chordmode``, ``\\break``, ``\\noBreak``."
+msgstr ""
+"``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames "
+"\\chordmode``, ``\\break``, ``\\noBreak``."
 
 #: ../../topics/music.rst:106
 msgid ""
@@ -1176,42 +1201,71 @@ msgid ""
 "not execute a LilyPond program. The complete command ledger and engraving "
 "contract are recorded in GDS 0015 in the repository's "
 "``docs/gds/records`` directory."
-msgstr "读取器接受版本声明、忽略的头部元数据，以及空的布局或 MIDI 块。它拒绝 Scheme、音乐函数、任意属性修改、覆盖设置和不支持的命令，并给出带源码位置的诊断。该子集描述固定的乐谱排印风格，不执行 LilyPond 程序。完整命令表和排印约定记录在仓库 ``docs/gds/records`` 目录中的 GDS 0015。"
+msgstr ""
+"读取器接受版本声明、忽略的头部元数据，以及空的布局或 MIDI 块。它拒绝 "
+"Scheme、音乐函数、任意属性修改、覆盖设置和不支持的命令，并给出带源码位置的诊断。该子集描述固定的乐谱排印风格，不执行 LilyPond "
+"程序。完整命令表和排印约定记录在仓库 ``docs/gds/records`` 目录中的 GDS 0015。"
 
 #: ../../topics/music.rst:111
+msgid "Add expression and repeats"
+msgstr "添加表情与反复"
+
+#: ../../topics/music.rst:114
+msgid ""
+"We attach articulations and fingerings after a note: ``-.`` is staccato, "
+"``->`` is an accent, and ``-1`` selects the first finger. Dynamics set "
+"the intensity, and a hairpin continues until ``\\!`` or the next dynamic. "
+"We place a small grace group before a main note with ``\\grace``; "
+"``\\acciaccatura`` adds a slash, while ``\\afterGrace`` places the group "
+"after its main note. Grace time does not extend the measure."
+msgstr "我们在音符之后添加奏法记号和指法：``-.`` 表示断奏，``->`` 表示重音，``-1`` 选择第一指。力度记号设置强度，渐强或渐弱线延续至 ``\\!`` 或下一个力度记号。我们用 ``\\grace`` 在主音前放置小装饰音组；``\\acciaccatura`` 添加斜线，``\\afterGrace`` 则把音组放在其主音之后。装饰音的时间不延长小节。"
+
+#: ../../topics/music.rst:126
+msgid ""
+"We write a volta repeat once and give each ending in ``\\alternative``. "
+"The example has two passes with different final measures. ``\\repeat "
+"unfold`` expands its body instead of drawing repeat signs. Chord names "
+"use a separate ``\\new ChordNames \\chordmode`` context beside the staff, "
+"with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``."
+msgstr "我们只书写一次反复主体，并在 ``\\alternative`` 中给出各个结尾。示例演奏两遍，末小节各不相同。``\\repeat unfold`` 展开其正文，不绘制反复记号。和弦名称在谱表旁使用独立的 ``\\new ChordNames \\chordmode`` 上下文，写法如 ``c1:maj7``、``d:m7`` 和 ``g:7``。"
+
+#: ../../topics/music.rst:138
 msgid "Combine staves and lyrics"
 msgstr "组合谱表与歌词"
 
-#: ../../topics/music.rst:114
+#: ../../topics/music.rst:141
 msgid ""
 "We use simultaneous contexts for a score with several staves. Instrument "
 "names use ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` "
 "block. Two voices on one staff use ``<< { ... } \\\\ { ... } >>``. Lyrics "
 "attach to a named voice, and separate ``\\lyricsto`` expressions make "
 "separate verses."
-msgstr "我们用同时发生的上下文表示多个谱表的总谱。乐器名称在 ``\\with`` 块中使用 ``instrumentName`` 和 ``shortInstrumentName``。同一谱表的两个声部使用 ``<< { ... } \\\\ { ... } >>``。歌词附加到有名称的声部，不同的 ``\\lyricsto`` 表达式形成不同的歌词段落。"
+msgstr ""
+"我们用同时发生的上下文表示多个谱表的总谱。乐器名称在 ``\\with`` 块中使用 ``instrumentName`` 和 "
+"``shortInstrumentName``。同一谱表的两个声部使用 ``<< { ... } \\\\ { ... } "
+">>``。歌词附加到有名称的声部，不同的 ``\\lyricsto`` 表达式形成不同的歌词段落。"
 
-#: ../../topics/music.rst:120
+#: ../../topics/music.rst:147
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
 msgstr "两个钢琴谱表；上谱表有四个四分音符及歌词 Sing a short song，低音声部持续奏 C。"
 
-#: ../../topics/music.rst:120
+#: ../../topics/music.rst:147
 msgid "A named melody with a verse and a bass staff."
 msgstr "带有一段歌词和低音谱表的命名旋律。"
 
-#: ../../topics/music.rst:130
+#: ../../topics/music.rst:157
 msgid "Read local files"
 msgstr "读取本地文件"
 
-#: ../../topics/music.rst:133
+#: ../../topics/music.rst:160
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
 msgstr "指令可以指定本地文件，代替内联正文。我们只使用一种来源形式。"
 
-#: ../../topics/music.rst:142
+#: ../../topics/music.rst:169
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1220,100 +1274,106 @@ msgid ""
 "local lookups and selected text font files by content. Changing a "
 "dependency rebuilds the generated image. Identical output bytes retain "
 "the same asset name."
-msgstr "嵌套的 ``\\include`` 路径先在包含文件旁解析，再查找源码目录及配置的 ``include_roots``。解析后的路径必须保持在允许的根目录内，符号链接检查后也是如此。构建按内容跟踪源码文件、嵌套包含项、本地缺失查找及选中的文字字体文件。依赖项改变会重新生成图像。相同的输出字节保留相同的资源名称。"
+msgstr ""
+"嵌套的 ``\\include`` 路径先在包含文件旁解析，再查找源码目录及配置的 "
+"``include_roots``。解析后的路径必须保持在允许的根目录内，符号链接检查后也是如此。构建按内容跟踪源码文件、嵌套包含项、本地缺失查找及选中的文字字体文件。依赖项改变会重新生成图像。相同的输出字节保留相同的资源名称。"
 
-#: ../../topics/music.rst:148
+#: ../../topics/music.rst:175
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
 "before opening them. Text output retains source code and performs no "
 "engraving. A failed drawing also retains source code with a warning; "
 "``-W`` stops publication and preserves the preceding output."
-msgstr "``--untrusted`` 允许内联记谱，因为读取器不运行程序或 Scheme 代码。它会在打开文件前拒绝文件参数和文件系统包含项。文本输出保留源码，不排印乐谱。绘制失败也会保留源码并发出警告；``-W`` 停止发布并保留上一次输出。"
+msgstr ""
+"``--untrusted`` 允许内联记谱，因为读取器不运行程序或 Scheme "
+"代码。它会在打开文件前拒绝文件参数和文件系统包含项。文本输出保留源码，不排印乐谱。绘制失败也会保留源码并发出警告；``-W`` "
+"停止发布并保留上一次输出。"
 
-#: ../../topics/music.rst:153
+#: ../../topics/music.rst:180
 msgid "Set size and output"
 msgstr "设置尺寸与输出"
 
-#: ../../topics/music.rst:156
-#| msgid "Directives"
+#: ../../topics/music.rst:183
 msgid "Directive options"
 msgstr "指令选项"
 
-#: ../../topics/music.rst:160
+#: ../../topics/music.rst:187
 msgid "Option"
 msgstr "选项"
 
-#: ../../topics/music.rst:161
+#: ../../topics/music.rst:188
 msgid "Meaning"
 msgstr "含义"
 
-#: ../../topics/music.rst:162
+#: ../../topics/music.rst:189
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:163
+#: ../../topics/music.rst:190
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "图像的音乐描述；省略时，构建会生成本地化摘要。"
 
-#: ../../topics/music.rst:164
+#: ../../topics/music.rst:191
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:165
+#: ../../topics/music.rst:192
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
 msgstr "图注、引用目标、CSS 类和图像对齐方式，与绘图指令一致。"
 
-#: ../../topics/music.rst:166
+#: ../../topics/music.rst:193
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:167
+#: ../../topics/music.rst:194
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "默认为 ``svg``，也可选择每英寸 144 像素的 ``png``。"
 
-#: ../../topics/music.rst:168
+#: ../../topics/music.rst:195
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:169
+#: ../../topics/music.rst:196
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
 msgstr "五线谱高度为 10 到 40 点，默认为 18 点。"
 
-#: ../../topics/music.rst:170
+#: ../../topics/music.rst:197
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:171
+#: ../../topics/music.rst:198
 msgid ""
 "Available system width, in ``pt``, ``mm``, ``cm``, ``in``, ``px`` or a "
 "percentage of the builder's default width."
 msgstr "可用系统宽度，单位为 ``pt``、``mm``、``cm``、``in``、``px``，或构建器默认宽度的百分比。"
 
-#: ../../topics/music.rst:172
+#: ../../topics/music.rst:199
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:173
+#: ../../topics/music.rst:200
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
 msgstr "``auto`` 让较短的最后一行谱表保持自然宽度；``all`` 拉伸每行谱表；``none`` 避免拉伸。"
 
-#: ../../topics/music.rst:175
+#: ../../topics/music.rst:202
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
 "See :doc:`../reference/configuration` for the setting contract."
-msgstr "项目默认设置为 ``lilypond_staff_size``、``lilypond_html_width`` 和 ``lilypond_pdf_width``。数值单位为排版点。设置约定参见 :doc:`../reference/configuration`。"
+msgstr ""
+"项目默认设置为 ``lilypond_staff_size``、``lilypond_html_width`` 和 "
+"``lilypond_pdf_width``。数值单位为排版点。设置约定参见 :doc:`../reference/configuration`。"
 
-#: ../../topics/music.rst:179
+#: ../../topics/music.rst:206
 msgid ""
 "HTML also receives a narrow edition engraved at 225 points, with a staff "
 "height no greater than 14 points. The browser selects it below 40 rem "
@@ -1321,9 +1381,12 @@ msgid ""
 "When its system limit prevents it from being drawn, the wide image scales "
 "to the screen. SVG adapts its ink to the page's color scheme; PNG keeps a "
 "light background panel in dark mode."
-msgstr "HTML 还会获得以 225 点宽度排印的窄版，谱表高度不超过 14 点。浏览器在宽度低于 40 rem 时通过 ``picture`` 元素选择它。窄版有自己的换行位置。如果谱表系统数量限制导致窄版无法绘制，宽版图像会缩放到屏幕宽度。SVG 的墨色适应页面配色；PNG 在深色模式下保持浅色背景面板。"
+msgstr ""
+"HTML 还会获得以 225 点宽度排印的窄版，谱表高度不超过 14 点。浏览器在宽度低于 40 rem 时通过 ``picture`` "
+"元素选择它。窄版有自己的换行位置。如果谱表系统数量限制导致窄版无法绘制，宽版图像会缩放到屏幕宽度。SVG 的墨色适应页面配色；PNG "
+"在深色模式下保持浅色背景面板。"
 
-#: ../../topics/music.rst:185
+#: ../../topics/music.rst:212
 msgid ""
 "PDF uses the selected template's text width and places music at its "
 "natural size. Built-in templates declare their horizontal margin after "
@@ -1333,14 +1396,16 @@ msgid ""
 "Oversized music scales to fit with a build warning. A score with several "
 "systems can break between systems across PDF pages, with its caption "
 "after the last system."
-msgstr "PDF 使用所选模板的正文宽度，并按自然尺寸放置乐谱。内置模板在首个导入语句之后用 ``// guidedog: margin-x = 31mm`` 这样的注释声明水平页边距。自定义模板未声明时，假定页边距为 25 毫米。``lilypond_pdf_width`` 覆盖推导出的宽度。过宽乐谱会缩放以适应宽度，并产生构建警告。含多个谱表系统的乐谱可以在系统之间跨 PDF 页面换页，图注位于最后一个系统之后。"
+msgstr ""
+"PDF 使用所选模板的正文宽度，并按自然尺寸放置乐谱。内置模板在首个导入语句之后用 ``// guidedog: margin-x = "
+"31mm`` 这样的注释声明水平页边距。自定义模板未声明时，假定页边距为 25 毫米。``lilypond_pdf_width`` "
+"覆盖推导出的宽度。过宽乐谱会缩放以适应宽度，并产生构建警告。含多个谱表系统的乐谱可以在系统之间跨 PDF 页面换页，图注位于最后一个系统之后。"
 
-#: ../../topics/music.rst:192
-#| msgid "Packages, limits and failures"
+#: ../../topics/music.rst:219
 msgid "Fonts, limits and references"
 msgstr "字体、限制与参考资料"
 
-#: ../../topics/music.rst:195
+#: ../../topics/music.rst:222
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1348,9 +1413,12 @@ msgid ""
 "browsers and PDF readers need no installed music font. PNG export "
 "requires the embedded renderer; SVG engraving remains available in builds "
 "without it."
-msgstr "乐谱使用未经修改的 Bravura 1.482 字体及 SMuFL 元数据，遵循 SIL Open Font License。文字遵循 ``pdf_fonts`` 和 ``pdf_font_paths``，提供常规、粗体和斜体回退字体。字形转换为轮廓，浏览器和 PDF 阅读器无需安装音乐字体。PNG 导出需要内嵌渲染器；未内嵌渲染器的构建仍可排印 SVG。"
+msgstr ""
+"乐谱使用未经修改的 Bravura 1.482 字体及 SMuFL 元数据，遵循 SIL Open Font License。文字遵循 "
+"``pdf_fonts`` 和 ``pdf_font_paths``，提供常规、粗体和斜体回退字体。字形转换为轮廓，浏览器和 PDF "
+"阅读器无需安装音乐字体。PNG 导出需要内嵌渲染器；未内嵌渲染器的构建仍可排印 SVG。"
 
-#: ../../topics/music.rst:200
+#: ../../topics/music.rst:227
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, two voices per staff "
@@ -1360,9 +1428,13 @@ msgid ""
 "points. PNG is limited to 16 million pixels and 16,384 pixels on either "
 "side. A limit diagnostic identifies the source and suggests splitting the "
 "example."
-msgstr "单个示例最多接受含包含文件在内的 256 KiB 源码、32 个包含文件、64 层嵌套、20,000 个事件、24 个谱表、每个谱表两个声部和每个和弦 16 个符头。读取器和排印器各有八百万次操作的工作上限。读取器展开后的分配另有 64 MiB 限额。单张图最多有 64 个谱表系统，高度不超过 20,000 点。PNG 限制为一千六百万像素，任一边不超过 16,384 像素。超限诊断会指出来源并建议拆分示例。"
+msgstr ""
+"单个示例最多接受含包含文件在内的 256 KiB 源码、32 个包含文件、64 层嵌套、20,000 个事件、24 "
+"个谱表、每个谱表两个声部和每个和弦 16 个符头。读取器和排印器各有八百万次操作的工作上限。读取器展开后的分配另有 64 MiB "
+"限额。单张图最多有 64 个谱表系统，高度不超过 20,000 点。PNG 限制为一千六百万像素，任一边不超过 16,384 "
+"像素。超限诊断会指出来源并建议拆分示例。"
 
-#: ../../topics/music.rst:207
+#: ../../topics/music.rst:234
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "
@@ -1372,7 +1444,13 @@ msgid ""
 "include Elaine Gould's *Behind Bars* and Ted Ross's *The Art of Music "
 "Engraving and Processing*. For other kinds of drawing, we use "
 ":doc:`diagrams`."
-msgstr "记谱语法参见 `LilyPond 2.24 记谱参考 <https://lilypond.org/doc/v2.24/Documentation/notation/>`_。字形定义参见 `Standard Music Font Layout 规范 <https://www.w3.org/2021/03/smufl14/>`_ 和 `Bravura 项目 <https://github.com/steinbergmedia/bravura>`_。排印参考书包括 Elaine Gould 的 *Behind Bars* 和 Ted Ross 的 *The Art of Music Engraving and Processing*。其他绘图使用 :doc:`diagrams`。"
+msgstr ""
+"记谱语法参见 `LilyPond 2.24 记谱参考 "
+"<https://lilypond.org/doc/v2.24/Documentation/notation/>`_。字形定义参见 "
+"`Standard Music Font Layout 规范 <https://www.w3.org/2021/03/smufl14/>`_ 和 "
+"`Bravura 项目 <https://github.com/steinbergmedia/bravura>`_。排印参考书包括 Elaine "
+"Gould 的 *Behind Bars* 和 Ted Ross 的 *The Art of Music Engraving and "
+"Processing*。其他绘图使用 :doc:`diagrams`。"
 
 #: ../../topics/projects.rst:1
 msgid "How a project works"

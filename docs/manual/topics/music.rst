@@ -108,6 +108,33 @@ It refuses Scheme, music functions, arbitrary property changes, overrides and un
 The profile describes a fixed engraving style; it does not execute a LilyPond program.
 The complete command ledger and engraving contract are recorded in GDS 0015 in the repository's ``docs/gds/records`` directory.
 
+Add expression and repeats
+--------------------------
+
+We attach articulations and fingerings after a note: ``-.`` is staccato, ``->`` is an accent, and ``-1`` selects the first finger.
+Dynamics set the intensity, and a hairpin continues until ``\!`` or the next dynamic.
+We place a small grace group before a main note with ``\grace``; ``\acciaccatura`` adds a slash, while ``\afterGrace`` places the group after its main note.
+Grace time does not extend the measure.
+
+.. code-block:: lilypond
+
+   \relative c'' {
+     \tempo "Andante" 4 = 88
+     \grace { d16 e } f4-1-. g-> a\p\< b | c1\f |
+   }
+
+We write a volta repeat once and give each ending in ``\alternative``.
+The example has two passes with different final measures.
+``\repeat unfold`` expands its body instead of drawing repeat signs.
+Chord names use a separate ``\new ChordNames \chordmode`` context beside the staff, with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``.
+
+.. code-block:: lilypond
+
+   \relative c' {
+     \repeat volta 2 { c4 d e f | }
+     \alternative { { g1 | } { c1 | } }
+   }
+
 Combine staves and lyrics
 -------------------------
 

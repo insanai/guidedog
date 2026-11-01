@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 05:19+0000\n"
+"POT-Creation-Date: 2026-11-01 05:34+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -1004,7 +1004,6 @@ msgstr ""
 "<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_ を参照。"
 
 #: ../../topics/music.rst:1
-#| msgid "Publication"
 msgid "Music notation"
 msgstr "楽譜の記法"
 
@@ -1015,7 +1014,10 @@ msgid ""
 "bounded LilyPond notation profile and produces self-contained SVG or PNG. "
 "The reader and engraver are native Rust libraries. A project build needs "
 "no installed LilyPond program."
-msgstr "音楽の例を説明のそばに置き、Guidedog でウェブサイトと書籍用に浄書します。``lilypond`` ディレクティブは範囲を定めた LilyPond 記法を読み、自己完結した SVG または PNG を生成します。読み取りと浄書はネイティブの Rust ライブラリで行います。プロジェクトのビルドに LilyPond プログラムのインストールは不要です。"
+msgstr ""
+"音楽の例を説明のそばに置き、Guidedog でウェブサイトと書籍用に浄書します。``lilypond`` ディレクティブは範囲を定めた "
+"LilyPond 記法を読み、自己完結した SVG または PNG を生成します。読み取りと浄書はネイティブの Rust "
+"ライブラリで行います。プロジェクトのビルドに LilyPond プログラムのインストールは不要です。"
 
 #: ../../topics/music.rst:9
 msgid "Write a melody"
@@ -1030,7 +1032,11 @@ msgid ""
 "``4`` is a quarter note and ``8`` is an eighth note. An omitted duration "
 "repeats the preceding duration. A vertical bar checks the measure "
 "boundary."
-msgstr "波括弧の中に音高と音価を書きます。``\\relative c'`` では、直前の音に最も近い全音階上の位置を選び、その後でアポストロフィやコンマを適用します。最初の音は中央ハの ``c'`` を基準にします。数字は音価の分母です。``4`` は四分音符、``8`` は八分音符です。音価を省略すると直前の値を繰り返します。縦棒は小節の境界を検査します。"
+msgstr ""
+"波括弧の中に音高と音価を書きます。``\\relative c'`` "
+"では、直前の音に最も近い全音階上の位置を選び、その後でアポストロフィやコンマを適用します。最初の音は中央ハの ``c'`` "
+"を基準にします。数字は音価の分母です。``4`` は四分音符、``8`` "
+"は八分音符です。音価を省略すると直前の値を繰り返します。縦棒は小節の境界を検査します。"
 
 #: ../../topics/music.rst:33
 msgid "A four-measure melody in G major and three-quarter time."
@@ -1045,12 +1051,11 @@ msgid ""
 "We refer to the caption with ``:numref:`music-melody``` when ``numfig = "
 "true``. A caption accepts inline markup. Without a caption, the directive "
 "produces an image."
-msgstr "``numfig = true`` のとき、``:numref:`music-melody``` でキャプションを参照します。キャプションではインラインのマークアップを使えます。キャプションがなければ、ディレクティブは画像を生成します。"
+msgstr ""
+"``numfig = true`` のとき、``:numref:`music-melody``` "
+"でキャプションを参照します。キャプションではインラインのマークアップを使えます。キャプションがなければ、ディレクティブは画像を生成します。"
 
 #: ../../topics/music.rst:47
-#| msgid ""
-#| "MyST Markdown supports the same directives and roles through fenced "
-#| "blocks:"
 msgid "MyST uses the same directive and options."
 msgstr "MyST でも同じディレクティブとオプションを使います。"
 
@@ -1060,10 +1065,12 @@ msgid ""
 "fence remains a source example. A direct ``guidedog convert`` operation "
 "also retains directive source; engraving belongs to the project asset "
 "pipeline."
-msgstr "通常の ``code-block:: lilypond`` や単純な Markdown の ``lilypond`` フェンスはソース例のままです。直接の ``guidedog convert`` 操作でもディレクティブのソースを保持します。浄書はプロジェクトのアセット処理で行います。"
+msgstr ""
+"通常の ``code-block:: lilypond`` や単純な Markdown の ``lilypond`` "
+"フェンスはソース例のままです。直接の ``guidedog convert`` "
+"操作でもディレクティブのソースを保持します。浄書はプロジェクトのアセット処理で行います。"
 
 #: ../../topics/music.rst:61
-#| msgid "Choose the drawing tool"
 msgid "Choose the notation"
 msgstr "記法を選ぶ"
 
@@ -1074,7 +1081,11 @@ msgid ""
 "``\\include \"english.ly\"``; examples include ``cs`` and ``df``. Deutsch "
 "adds ``h`` for B natural and ``b`` for B flat. These three language "
 "includes are built in and read no file."
-msgstr "音名の既定言語は Nederlands です。``cis`` は嬰ハ、``des`` は変ニです。``\\language \"english\"`` または ``\\include \"english.ly\"`` で英語の音名を選びます。例は ``cs`` と ``df`` です。Deutsch では ``h`` がロの本位音、``b`` が変ロになります。この三つの言語インクルードは組み込みで、ファイルを読みません。"
+msgstr ""
+"音名の既定言語は Nederlands です。``cis`` は嬰ハ、``des`` は変ニです。``\\language "
+"\"english\"`` または ``\\include \"english.ly\"`` で英語の音名を選びます。例は ``cs`` と "
+"``df`` です。Deutsch では ``h`` がロの本位音、``b`` "
+"が変ロになります。この三つの言語インクルードは組み込みで、ファイルを読みません。"
 
 #: ../../topics/music.rst:69
 msgid ""
@@ -1086,7 +1097,11 @@ msgid ""
 "mark forces an accidental, and a question mark requests a cautionary "
 "accidental. We put these marks after the pitch and before its duration: "
 "``cis'!4`` and ``c'?4``."
-msgstr "アポストロフィはオクターブを上げ、コンマは下げます。``\\fixed c' { ... }`` は直前の音を追わず、基準オクターブを固定します。``\\transpose c ees { ... }`` は音名の綴りと調号を移調します。変化記号は音名に属し、調号によって明示した本位音が嬰音に変わることはありません。感嘆符は変化記号を強制し、疑問符は注意用の変化記号を要求します。音高の後、音価の前に ``cis'!4`` や ``c'?4`` と書きます。"
+msgstr ""
+"アポストロフィはオクターブを上げ、コンマは下げます。``\\fixed c' { ... }`` "
+"は直前の音を追わず、基準オクターブを固定します。``\\transpose c ees { ... }`` "
+"は音名の綴りと調号を移調します。変化記号は音名に属し、調号によって明示した本位音が嬰音に変わることはありません。感嘆符は変化記号を強制し、疑問符は注意用の変化記号を要求します。音高の後、音価の前に "
+"``cis'!4`` や ``c'?4`` と書きます。"
 
 #: ../../topics/music.rst:76
 msgid ""
@@ -1097,7 +1112,11 @@ msgid ""
 "chords: ``<c' e' g'>4``. ``q`` repeats the preceding chord. A tilde ties "
 "equal pitches; parentheses make slurs, and ``\\(`` with ``\\)`` makes a "
 "phrasing slur."
-msgstr "音価は ``1`` から ``128`` までで、``\\breve`` は倍全音符です。付点は音価を延ばし、``*2/3`` は正確な値を比例変更します。``r`` は休符、``s`` は見えない間隔、``R1*4`` は四分の四拍子の四小節休符です。山括弧で ``<c' e' g'>4`` のように和音を書きます。``q`` は直前の和音を繰り返します。チルダは同じ音高をタイで結び、丸括弧はスラー、``\\(`` と ``\\)`` はフレージングスラーを作ります。"
+msgstr ""
+"音価は ``1`` から ``128`` までで、``\\breve`` は倍全音符です。付点は音価を延ばし、``*2/3`` "
+"は正確な値を比例変更します。``r`` は休符、``s`` は見えない間隔、``R1*4`` は四分の四拍子の四小節休符です。山括弧で ``<c' "
+"e' g'>4`` のように和音を書きます。``q`` は直前の和音を繰り返します。チルダは同じ音高をタイで結び、丸括弧はスラー、``\\(`` "
+"と ``\\)`` はフレージングスラーを作ります。"
 
 #: ../../topics/music.rst:83
 msgid "Supported notation families"
@@ -1119,10 +1138,10 @@ msgstr "五線のコンテキスト"
 msgid ""
 "``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; treble, "
 "bass, alto, tenor and soprano clefs, with supported octave clefs."
-msgstr "``\\clef``、``\\key``、``\\time``、``\\partial``、``\\bar``。ト音、ヘ音、アルト、テノール、ソプラノの各音部記号と、対応するオクターブ音部記号。"
+msgstr ""
+"``\\clef``、``\\key``、``\\time``、``\\partial``、``\\bar``。ト音、ヘ音、アルト、テノール、ソプラノの各音部記号と、対応するオクターブ音部記号。"
 
 #: ../../topics/music.rst:91
-#| msgid "Roles"
 msgid "Modes"
 msgstr "旋法"
 
@@ -1130,7 +1149,9 @@ msgstr "旋法"
 msgid ""
 "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
 "``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
-msgstr "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, ``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
+msgstr ""
+"``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
+"``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
 
 #: ../../topics/music.rst:93
 msgid "Rhythm and stems"
@@ -1141,7 +1162,9 @@ msgid ""
 "``\\tuplet 3/2``, ``\\times 2/3``, manual ``[`` and ``]`` beams, "
 "``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, "
 "``\\stemNeutral``."
-msgstr "``\\tuplet 3/2``、``\\times 2/3``、``[`` と ``]`` による手動連桁、``\\autoBeamOn``、``\\autoBeamOff``、``\\stemUp``、``\\stemDown``、``\\stemNeutral``。"
+msgstr ""
+"``\\tuplet 3/2``、``\\times 2/3``、``[`` と ``]`` "
+"による手動連桁、``\\autoBeamOn``、``\\autoBeamOff``、``\\stemUp``、``\\stemDown``、``\\stemNeutral``。"
 
 #: ../../topics/music.rst:95
 msgid "Expression"
@@ -1152,10 +1175,12 @@ msgid ""
 "Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through "
 "``\\ffff``, ``\\<``, ``\\>``, ``\\!``, literal scripts and single-item "
 "``\\markup`` with ``\\bold`` or ``\\italic``."
-msgstr "アーティキュレーション、1 から 5 の運指、``\\pppp`` から ``\\ffff`` の強弱、``\\<``、``\\>``、``\\!``、文字列の指示と ``\\bold`` または ``\\italic`` を使う単一項目の ``\\markup``。"
+msgstr ""
+"アーティキュレーション、1 から 5 の運指、``\\pppp`` から ``\\ffff`` "
+"の強弱、``\\<``、``\\>``、``\\!``、文字列の指示と ``\\bold`` または ``\\italic`` を使う単一項目の "
+"``\\markup``。"
 
 #: ../../topics/music.rst:97
-#| msgid "reStructuredText"
 msgid "Structure"
 msgstr "構造"
 
@@ -1164,10 +1189,11 @@ msgid ""
 "Assignments, variable references, lexical ``\\include``, ``\\score``, "
 "``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, "
 "``StaffGroup``, ``ChoirStaff``."
-msgstr "代入、変数参照、字句的な ``\\include``、``\\score``、``\\new Staff``、``\\new Voice``、``PianoStaff``、``GrandStaff``、``StaffGroup``、``ChoirStaff``。"
+msgstr ""
+"代入、変数参照、字句的な ``\\include``、``\\score``、``\\new Staff``、``\\new "
+"Voice``、``PianoStaff``、``GrandStaff``、``StaffGroup``、``ChoirStaff``。"
 
 #: ../../topics/music.rst:99
-#| msgid "Documents and resources"
 msgid "Voices and lyrics"
 msgstr "声部と歌詞"
 
@@ -1176,7 +1202,8 @@ msgid ""
 "At most two voices per staff; ``\\addlyrics``, ``\\lyricsto``, "
 "``\\lyricmode``, multiple verses, explicit syllable durations, hyphens "
 "and extenders."
-msgstr "五線ごとに最大二声。``\\addlyrics``、``\\lyricsto``、``\\lyricmode``、複数の節、音節の明示的な音価、ハイフン、延長線。"
+msgstr ""
+"五線ごとに最大二声。``\\addlyrics``、``\\lyricsto``、``\\lyricmode``、複数の節、音節の明示的な音価、ハイフン、延長線。"
 
 #: ../../topics/music.rst:101
 msgid "Grace and repetition"
@@ -1186,10 +1213,11 @@ msgstr "装飾音と反復"
 msgid ""
 "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
 "``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
-msgstr "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, ``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+msgstr ""
+"``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
+"``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
 
 #: ../../topics/music.rst:103
-#| msgid "Images and figures"
 msgid "Labels and breaks"
 msgstr "ラベルと改行"
 
@@ -1197,7 +1225,9 @@ msgstr "ラベルと改行"
 msgid ""
 "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames "
 "\\chordmode``, ``\\break``, ``\\noBreak``."
-msgstr "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames \\chordmode``, ``\\break``, ``\\noBreak``."
+msgstr ""
+"``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames "
+"\\chordmode``, ``\\break``, ``\\noBreak``."
 
 #: ../../topics/music.rst:106
 msgid ""
@@ -1208,42 +1238,72 @@ msgid ""
 "not execute a LilyPond program. The complete command ledger and engraving "
 "contract are recorded in GDS 0015 in the repository's "
 "``docs/gds/records`` directory."
-msgstr "読み取り器はバージョン宣言、無視されるヘッダーメタデータ、空のレイアウトまたは MIDI ブロックを受け入れます。Scheme、音楽関数、任意のプロパティ変更、オーバーライド、未対応のコマンドは、位置を示す診断で拒否します。この記法範囲は固定の浄書スタイルを定め、LilyPond プログラムを実行しません。全コマンドの一覧と浄書の規約は、リポジトリの ``docs/gds/records`` にある GDS 0015 に記録しています。"
+msgstr ""
+"読み取り器はバージョン宣言、無視されるヘッダーメタデータ、空のレイアウトまたは MIDI "
+"ブロックを受け入れます。Scheme、音楽関数、任意のプロパティ変更、オーバーライド、未対応のコマンドは、位置を示す診断で拒否します。この記法範囲は固定の浄書スタイルを定め、LilyPond "
+"プログラムを実行しません。全コマンドの一覧と浄書の規約は、リポジトリの ``docs/gds/records`` にある GDS 0015 "
+"に記録しています。"
 
 #: ../../topics/music.rst:111
+msgid "Add expression and repeats"
+msgstr "表情と反復を加える"
+
+#: ../../topics/music.rst:114
+msgid ""
+"We attach articulations and fingerings after a note: ``-.`` is staccato, "
+"``->`` is an accent, and ``-1`` selects the first finger. Dynamics set "
+"the intensity, and a hairpin continues until ``\\!`` or the next dynamic. "
+"We place a small grace group before a main note with ``\\grace``; "
+"``\\acciaccatura`` adds a slash, while ``\\afterGrace`` places the group "
+"after its main note. Grace time does not extend the measure."
+msgstr "音符の後にアーティキュレーションと運指を付けます。``-.`` はスタッカート、``->`` はアクセント、``-1`` は第1指です。強弱記号は強さを設定し、ヘアピンは ``\\!`` または次の強弱記号まで続きます。``\\grace`` は主音の前に小さな装飾音群を置き、``\\acciaccatura`` は斜線を加え、``\\afterGrace`` は主音の後に置きます。装飾音の時間は小節を延ばしません。"
+
+#: ../../topics/music.rst:126
+msgid ""
+"We write a volta repeat once and give each ending in ``\\alternative``. "
+"The example has two passes with different final measures. ``\\repeat "
+"unfold`` expands its body instead of drawing repeat signs. Chord names "
+"use a separate ``\\new ChordNames \\chordmode`` context beside the staff, "
+"with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``."
+msgstr "ヴォルタ反復は一度書き、``\\alternative`` に各終結部を指定します。この例は異なる最終小節で2回演奏します。``\\repeat unfold`` は反復記号を描かずに本文を展開します。和音名は五線の隣に独立した ``\\new ChordNames \\chordmode`` コンテキストを使い、``c1:maj7``、``d:m7``、``g:7`` のように綴ります。"
+
+#: ../../topics/music.rst:138
 msgid "Combine staves and lyrics"
 msgstr "五線と歌詞を組み合わせる"
 
-#: ../../topics/music.rst:114
+#: ../../topics/music.rst:141
 msgid ""
 "We use simultaneous contexts for a score with several staves. Instrument "
 "names use ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` "
 "block. Two voices on one staff use ``<< { ... } \\\\ { ... } >>``. Lyrics "
 "attach to a named voice, and separate ``\\lyricsto`` expressions make "
 "separate verses."
-msgstr "複数の五線を持つ楽譜には同時コンテキストを使います。楽器名は ``\\with`` ブロックの ``instrumentName`` と ``shortInstrumentName`` で指定します。一つの五線に二声を書くには ``<< { ... } \\\\ { ... } >>`` を使います。歌詞は名前付き声部に結び付け、別々の ``\\lyricsto`` 式で各節を作ります。"
+msgstr ""
+"複数の五線を持つ楽譜には同時コンテキストを使います。楽器名は ``\\with`` ブロックの ``instrumentName`` と "
+"``shortInstrumentName`` で指定します。一つの五線に二声を書くには ``<< { ... } \\\\ { ... } "
+">>`` を使います。歌詞は名前付き声部に結び付け、別々の ``\\lyricsto`` 式で各節を作ります。"
 
-#: ../../topics/music.rst:120
+#: ../../topics/music.rst:147
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
 msgstr "ピアノの二段譜。上段は四つの四分音符と Sing a short song の歌詞、低音はハ音を保ちます。"
 
-#: ../../topics/music.rst:120
+#: ../../topics/music.rst:147
 msgid "A named melody with a verse and a bass staff."
 msgstr "一節の歌詞と低音譜表を持つ名前付き旋律。"
 
-#: ../../topics/music.rst:130
+#: ../../topics/music.rst:157
 msgid "Read local files"
 msgstr "ローカルファイルを読む"
 
-#: ../../topics/music.rst:133
+#: ../../topics/music.rst:160
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
 msgstr "ディレクティブはインライン本文の代わりにローカルファイルを指定できます。ソース形式は必ず一つだけ使います。"
 
-#: ../../topics/music.rst:142
+#: ../../topics/music.rst:169
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1252,100 +1312,108 @@ msgid ""
 "local lookups and selected text font files by content. Changing a "
 "dependency rebuilds the generated image. Identical output bytes retain "
 "the same asset name."
-msgstr "入れ子の ``\\include`` パスは、読み込み元ファイルの隣、ソースディレクトリ、設定した ``include_roots`` の順に解決します。シンボリックリンクを検査した後も、解決先は許可されたルート内にある必要があります。ビルドはソース、入れ子のインクルード、見つからなかったローカル検索、選択した文字フォントを内容で追跡します。依存先が変わると画像を再生成します。出力バイトが同じならアセット名も同じです。"
+msgstr ""
+"入れ子の ``\\include`` パスは、読み込み元ファイルの隣、ソースディレクトリ、設定した ``include_roots`` "
+"の順に解決します。シンボリックリンクを検査した後も、解決先は許可されたルート内にある必要があります。ビルドはソース、入れ子のインクルード、見つからなかったローカル検索、選択した文字フォントを内容で追跡します。依存先が変わると画像を再生成します。出力バイトが同じならアセット名も同じです。"
 
-#: ../../topics/music.rst:148
+#: ../../topics/music.rst:175
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
 "before opening them. Text output retains source code and performs no "
 "engraving. A failed drawing also retains source code with a warning; "
 "``-W`` stops publication and preserves the preceding output."
-msgstr "読み取り器はプログラムや Scheme コードを実行しないため、``--untrusted`` でもインライン記譜を許可します。ファイル引数とファイルシステムのインクルードは開く前に拒否します。テキスト出力はソースを保持し、浄書しません。描画に失敗した場合も警告とソースを保持します。``-W`` は公開を止め、直前の出力を残します。"
+msgstr ""
+"読み取り器はプログラムや Scheme コードを実行しないため、``--untrusted`` "
+"でもインライン記譜を許可します。ファイル引数とファイルシステムのインクルードは開く前に拒否します。テキスト出力はソースを保持し、浄書しません。描画に失敗した場合も警告とソースを保持します。``-W`` "
+"は公開を止め、直前の出力を残します。"
 
-#: ../../topics/music.rst:153
+#: ../../topics/music.rst:180
 msgid "Set size and output"
 msgstr "寸法と出力を設定する"
 
-#: ../../topics/music.rst:156
-#| msgid "Directives"
+#: ../../topics/music.rst:183
 msgid "Directive options"
 msgstr "ディレクティブのオプション"
 
-#: ../../topics/music.rst:160
+#: ../../topics/music.rst:187
 msgid "Option"
 msgstr "オプション"
 
-#: ../../topics/music.rst:161
+#: ../../topics/music.rst:188
 msgid "Meaning"
 msgstr "意味"
 
-#: ../../topics/music.rst:162
+#: ../../topics/music.rst:189
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:163
+#: ../../topics/music.rst:190
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "画像の音楽的な説明。省略するとビルドが言語に合わせた概要を作ります。"
 
-#: ../../topics/music.rst:164
+#: ../../topics/music.rst:191
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:165
+#: ../../topics/music.rst:192
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
 msgstr "図のキャプション、参照先、CSS クラス、画像の配置。図表ディレクティブと同じです。"
 
-#: ../../topics/music.rst:166
+#: ../../topics/music.rst:193
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:167
+#: ../../topics/music.rst:194
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "既定は ``svg``。``png`` は 1 インチ当たり 144 ピクセルです。"
 
-#: ../../topics/music.rst:168
+#: ../../topics/music.rst:195
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:169
+#: ../../topics/music.rst:196
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
 msgstr "五線の高さ。10 から 40 ポイントで、既定は 18 ポイントです。"
 
-#: ../../topics/music.rst:170
+#: ../../topics/music.rst:197
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:171
+#: ../../topics/music.rst:198
 msgid ""
 "Available system width, in ``pt``, ``mm``, ``cm``, ``in``, ``px`` or a "
 "percentage of the builder's default width."
-msgstr "利用可能なシステム幅。``pt``、``mm``、``cm``、``in``、``px``、またはビルダーの既定幅に対する割合で指定します。"
+msgstr ""
+"利用可能なシステム幅。``pt``、``mm``、``cm``、``in``、``px``、またはビルダーの既定幅に対する割合で指定します。"
 
-#: ../../topics/music.rst:172
+#: ../../topics/music.rst:199
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:173
+#: ../../topics/music.rst:200
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
 msgstr "``auto`` は短い最終システムを自然幅に保ち、``all`` は全システムを伸ばし、``none`` は引き伸ばしを避けます。"
 
-#: ../../topics/music.rst:175
+#: ../../topics/music.rst:202
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
 "See :doc:`../reference/configuration` for the setting contract."
-msgstr "プロジェクトの既定値は ``lilypond_staff_size``、``lilypond_html_width``、``lilypond_pdf_width`` です。数値は組版ポイントを表します。設定の規約は :doc:`../reference/configuration` を参照します。"
+msgstr ""
+"プロジェクトの既定値は "
+"``lilypond_staff_size``、``lilypond_html_width``、``lilypond_pdf_width`` "
+"です。数値は組版ポイントを表します。設定の規約は :doc:`../reference/configuration` を参照します。"
 
-#: ../../topics/music.rst:179
+#: ../../topics/music.rst:206
 msgid ""
 "HTML also receives a narrow edition engraved at 225 points, with a staff "
 "height no greater than 14 points. The browser selects it below 40 rem "
@@ -1353,9 +1421,13 @@ msgid ""
 "When its system limit prevents it from being drawn, the wide image scales "
 "to the screen. SVG adapts its ink to the page's color scheme; PNG keeps a "
 "light background panel in dark mode."
-msgstr "HTML には幅 225 ポイント、五線高 14 ポイント以下で浄書した狭い版も渡します。ブラウザーは 40 rem 未満で ``picture`` 要素からこの版を選びます。この版は独自に改行します。システム数の上限で描画できない場合、広い画像を画面幅に縮小します。SVG のインク色はページの配色に適応し、PNG はダークモードでも明るい背景パネルを保ちます。"
+msgstr ""
+"HTML には幅 225 ポイント、五線高 14 ポイント以下で浄書した狭い版も渡します。ブラウザーは 40 rem 未満で "
+"``picture`` "
+"要素からこの版を選びます。この版は独自に改行します。システム数の上限で描画できない場合、広い画像を画面幅に縮小します。SVG "
+"のインク色はページの配色に適応し、PNG はダークモードでも明るい背景パネルを保ちます。"
 
-#: ../../topics/music.rst:185
+#: ../../topics/music.rst:212
 msgid ""
 "PDF uses the selected template's text width and places music at its "
 "natural size. Built-in templates declare their horizontal margin after "
@@ -1365,14 +1437,18 @@ msgid ""
 "Oversized music scales to fit with a build warning. A score with several "
 "systems can break between systems across PDF pages, with its caption "
 "after the last system."
-msgstr "PDF は選択したテンプレートの本文幅を使い、楽譜を自然な寸法で配置します。組み込みテンプレートは最初のインポートの後に ``// guidedog: margin-x = 31mm`` のようなコメントで左右余白を宣言します。宣言のない独自テンプレートでは 25 ミリメートルを仮定します。``lilypond_pdf_width`` は計算した幅を上書きします。幅を超える楽譜はビルド警告とともに縮小します。複数システムの楽譜はシステム間で PDF の改ページができ、キャプションは最後の後に置きます。"
+msgstr ""
+"PDF は選択したテンプレートの本文幅を使い、楽譜を自然な寸法で配置します。組み込みテンプレートは最初のインポートの後に ``// "
+"guidedog: margin-x = 31mm`` のようなコメントで左右余白を宣言します。宣言のない独自テンプレートでは 25 "
+"ミリメートルを仮定します。``lilypond_pdf_width`` "
+"は計算した幅を上書きします。幅を超える楽譜はビルド警告とともに縮小します。複数システムの楽譜はシステム間で PDF "
+"の改ページができ、キャプションは最後の後に置きます。"
 
-#: ../../topics/music.rst:192
-#| msgid "Packages, limits and failures"
+#: ../../topics/music.rst:219
 msgid "Fonts, limits and references"
 msgstr "フォント、制限、参考文献"
 
-#: ../../topics/music.rst:195
+#: ../../topics/music.rst:222
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1380,9 +1456,14 @@ msgid ""
 "browsers and PDF readers need no installed music font. PNG export "
 "requires the embedded renderer; SVG engraving remains available in builds "
 "without it."
-msgstr "楽譜には SIL Open Font License の未変更の Bravura 1.482 と SMuFL メタデータを使います。文字は ``pdf_fonts`` と ``pdf_font_paths`` に従い、通常、太字、斜体の代替書体を使います。字形を輪郭にするため、ブラウザーや PDF リーダーに音楽フォントをインストールする必要はありません。PNG 書き出しには組み込みレンダラーが必要です。組み込みなしのビルドでも SVG 浄書を使えます。"
+msgstr ""
+"楽譜には SIL Open Font License の未変更の Bravura 1.482 と SMuFL メタデータを使います。文字は "
+"``pdf_fonts`` と ``pdf_font_paths`` "
+"に従い、通常、太字、斜体の代替書体を使います。字形を輪郭にするため、ブラウザーや PDF "
+"リーダーに音楽フォントをインストールする必要はありません。PNG 書き出しには組み込みレンダラーが必要です。組み込みなしのビルドでも SVG "
+"浄書を使えます。"
 
-#: ../../topics/music.rst:200
+#: ../../topics/music.rst:227
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, two voices per staff "
@@ -1392,9 +1473,13 @@ msgid ""
 "points. PNG is limited to 16 million pixels and 16,384 pixels on either "
 "side. A limit diagnostic identifies the source and suggests splitting the "
 "example."
-msgstr "一つの例はインクルードを含むソース 256 KiB、インクルードファイル 32 個、深さ 64、イベント 20,000 個、五線 24 本、五線ごとに二声、和音ごとに符頭 16 個までです。読み取り器と浄書器には、それぞれ 800 万操作の上限があります。読み取り器の展開後の割り当てには別途 64 MiB の枠があります。描画は最大 64 システム、高さ 20,000 ポイントです。PNG は 1,600 万ピクセル、各辺 16,384 ピクセルまでです。制限の診断はソースを示し、例の分割を勧めます。"
+msgstr ""
+"一つの例はインクルードを含むソース 256 KiB、インクルードファイル 32 個、深さ 64、イベント 20,000 個、五線 24 "
+"本、五線ごとに二声、和音ごとに符頭 16 個までです。読み取り器と浄書器には、それぞれ 800 "
+"万操作の上限があります。読み取り器の展開後の割り当てには別途 64 MiB の枠があります。描画は最大 64 システム、高さ 20,000 "
+"ポイントです。PNG は 1,600 万ピクセル、各辺 16,384 ピクセルまでです。制限の診断はソースを示し、例の分割を勧めます。"
 
-#: ../../topics/music.rst:207
+#: ../../topics/music.rst:234
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "
@@ -1404,7 +1489,13 @@ msgid ""
 "include Elaine Gould's *Behind Bars* and Ted Ross's *The Art of Music "
 "Engraving and Processing*. For other kinds of drawing, we use "
 ":doc:`diagrams`."
-msgstr "記法は `LilyPond 2.24 の記譜リファレンス <https://lilypond.org/doc/v2.24/Documentation/notation/>`_ を参照します。字形は `Standard Music Font Layout 仕様 <https://www.w3.org/2021/03/smufl14/>`_ と `Bravura プロジェクト <https://github.com/steinbergmedia/bravura>`_ を参照します。浄書の参考文献には Elaine Gould の *Behind Bars* と Ted Ross の *The Art of Music Engraving and Processing* があります。他の図には :doc:`diagrams` を使います。"
+msgstr ""
+"記法は `LilyPond 2.24 の記譜リファレンス "
+"<https://lilypond.org/doc/v2.24/Documentation/notation/>`_ を参照します。字形は "
+"`Standard Music Font Layout 仕様 <https://www.w3.org/2021/03/smufl14/>`_ と "
+"`Bravura プロジェクト <https://github.com/steinbergmedia/bravura>`_ "
+"を参照します。浄書の参考文献には Elaine Gould の *Behind Bars* と Ted Ross の *The Art of "
+"Music Engraving and Processing* があります。他の図には :doc:`diagrams` を使います。"
 
 #: ../../topics/projects.rst:1
 msgid "How a project works"

@@ -219,8 +219,8 @@ pub struct Chord {
     pub notes: Vec<Note>,
     /// Written and sounding duration.
     pub duration: Duration,
-    /// Explicit stem direction, or automatic.
-    pub direction: Direction,
+    /// Explicit stem direction, including neutral; None uses the local voice policy.
+    pub direction: Option<Direction>,
     /// Whether automatic beaming applies at this event.
     pub auto_beam: bool,
     /// Whether grace stems are slashed.

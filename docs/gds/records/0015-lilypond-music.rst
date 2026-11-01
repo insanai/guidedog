@@ -693,6 +693,7 @@ In a single voice, a chord's stem goes down when its extreme notes lie more abov
 In a beamed group, the note farthest from the middle line decides for the group; a tie is broken by the majority of notes, then down.
 Voices one and three point up; voices two and four point down.
 A local voice policy belongs to each event, so changing it later does not rewrite earlier music; ``\oneVoice`` restores automatic single-voice directions.
+A chord's optional direction overrides that policy, including an explicit neutral direction from ``\stemNeutral``; changing stems does not erase the inner-voice column policy.
 A stem reaches 3.5 staff spaces beyond the notehead nearest its tip; it is lengthened to reach the middle line for notes far outside the staff, and for three or more flags.
 Stems attach at the notehead's SMuFL anchors ``stemUpSE`` and ``stemDownNW``.
 

@@ -108,7 +108,7 @@ fn independent_staves_do_not_inherit_polyphonic_stem_directions() {
     .unwrap();
     for event in &loaded.score.events {
         if let gd_score::EventKind::Chord(chord) = &event.kind {
-            assert_eq!(chord.direction, gd_score::Direction::Auto);
+            assert_eq!(chord.direction, None);
         }
     }
 }

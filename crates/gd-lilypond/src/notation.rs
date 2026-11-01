@@ -310,10 +310,18 @@ fn apply_state_toggle(name: &str, state: &mut State) -> bool {
         state.set_voice_style(style);
         return true;
     }
+    let stem = match name {
+        "stemUp" => Some(Direction::Up),
+        "stemDown" => Some(Direction::Down),
+        "stemNeutral" => Some(Direction::Auto),
+        _ => None,
+    };
+    if let Some(direction) = stem {
+        state.direction = direction;
+        state.stem_override = Some(direction);
+        return true;
+    }
     match name {
-        "stemUp" => state.direction = Direction::Up,
-        "stemDown" => state.direction = Direction::Down,
-        "stemNeutral" => state.direction = Direction::Auto,
         "slurUp" | "phrasingSlurUp" => state.slur_direction = Direction::Up,
         "slurDown" | "phrasingSlurDown" => state.slur_direction = Direction::Down,
         "slurNeutral" | "phrasingSlurNeutral" => state.slur_direction = Direction::Auto,

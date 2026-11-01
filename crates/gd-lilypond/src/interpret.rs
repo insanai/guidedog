@@ -52,6 +52,7 @@ pub(crate) struct State {
     pub(crate) pitch_mode: PitchMode,
     pub(crate) transpositions: Vec<(Pitch, Pitch)>,
     pub(crate) direction: Direction,
+    pub(crate) stem_override: Option<Direction>,
     pub(crate) slur_direction: Direction,
     pub(crate) tie_direction: Direction,
     pub(crate) dynamic_direction: Direction,
@@ -72,6 +73,7 @@ impl State {
     pub(crate) fn set_voice_style(&mut self, style: gd_score::VoiceStyle) {
         self.voice_style = Some(style);
         self.direction = style.direction();
+        self.stem_override = None;
         self.slur_direction = style.direction();
         self.tie_direction = style.direction();
         self.dynamic_direction = style.direction();
@@ -90,6 +92,7 @@ impl Default for State {
             pitch_mode: PitchMode::Absolute,
             transpositions: Vec::new(),
             direction: Direction::Auto,
+            stem_override: None,
             slur_direction: Direction::Auto,
             tie_direction: Direction::Auto,
             dynamic_direction: Direction::Auto,

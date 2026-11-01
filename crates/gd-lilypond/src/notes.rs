@@ -138,7 +138,7 @@ impl Reader<'_> {
             _ => EventKind::Chord(Chord {
                 notes,
                 duration,
-                direction: state.direction,
+                direction: state.stem_override,
                 auto_beam: state.auto_beam,
                 grace_slash: state.grace_slash,
             }),
@@ -199,7 +199,7 @@ impl Reader<'_> {
             EventKind::Chord(Chord {
                 notes,
                 duration,
-                direction: state.direction,
+                direction: state.stem_override,
                 auto_beam: state.auto_beam,
                 grace_slash: state.grace_slash,
             }),

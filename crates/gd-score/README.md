@@ -9,3 +9,4 @@ Errors retain source spans and corrective hints for the application's diagnostic
 
 A staff holds at most four voices.
 Each event can carry a local `VoiceStyle`; `None` inherits its voice's direction and `Single` restores automatic directions.
+A chord's optional direction overrides that policy; `Some(Direction::Auto)` requests neutral stems explicitly, while `None` inherits the policy.

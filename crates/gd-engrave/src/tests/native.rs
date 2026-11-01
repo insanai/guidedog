@@ -844,3 +844,18 @@ fn four_equal_rests_merge_and_different_rest_durations_do_not_overlap() {
         }
     }
 }
+
+#[test]
+fn explicit_stem_overrides_and_neutral_survive_inner_voice_policies() {
+    let drawing =
+        draw(r"{ \voiceThree c'''4 \stemNeutral c'''4 \voiceFour c'4 \stemUp c'4 }", 350.0);
+    let stems: Vec<_> = drawing.systems[0]
+        .marks
+        .iter()
+        .filter_map(|m| match m.mark {
+            Mark::Line { from, to, role: Role::Stem, .. } => Some(to.y < from.y),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(stems, [true, false, false, true]);
+}

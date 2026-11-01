@@ -120,18 +120,18 @@ fn resolve_pair(
 
 pub(crate) fn direction(score: &Score, event: &gd_score::Event) -> Direction {
     let EventKind::Chord(chord) = &event.kind else { return Direction::Auto };
-    let direction = if chord.direction == Direction::Auto {
-        event
-            .voice_style
-            .map(|style| style.direction())
-            .unwrap_or(score.voices[event.voice.0 as usize].direction)
-    } else {
-        chord.direction
-    };
+    let direction = chord.direction.unwrap_or_else(|| policy_direction(score, event));
     // Grace notes point up in a single voice, as LilyPond's grace settings make them.
     if direction == Direction::Auto && event.at.grace < gd_score::Ratio::ZERO {
         Direction::Up
     } else {
         direction
     }
+}
+
+pub(crate) fn policy_direction(score: &Score, event: &gd_score::Event) -> Direction {
+    event
+        .voice_style
+        .map(|style| style.direction())
+        .unwrap_or(score.voices[event.voice.0 as usize].direction)
 }

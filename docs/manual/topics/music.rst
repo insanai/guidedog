@@ -60,6 +60,61 @@ Conversion to RST retains the directive and its file argument.
 Direct HTML and PDF conversion keeps inline notation as code and names an unengraved file argument in a localized sentence, without opening the score file.
 Engraving belongs to the project asset pipeline.
 
+Learn from Beethoven's Joy theme
+--------------------------------
+
+We use four bars of the Joy theme from Beethoven's Symphony No. 9, finale, bars 92-95.
+We place the melody in C major and the treble register, keeping its rhythm and omitting the orchestration, slurs and dynamics.
+The `source score, page 8 <https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ shows the instrumental opening with half notes; some familiar vocal versions divide them into repeated quarter notes.
+
+.. code-block:: rst
+
+   .. lilypond::
+      :caption: Beethoven's Joy theme, four bars in C major.
+      :alt: A four-bar melody beginning E, F, G and ending with dotted-quarter E, eighth-note D and half-note D.
+
+      \fixed c' {
+        \clef treble
+        \key c \major
+        \time 4/4
+        e2 f4 g | g4 f e d | c2 d4 e | e4. d8 d2 |
+      }
+
+.. lilypond::
+   :caption: Beethoven's Joy theme, four bars in C major.
+   :alt: A four-bar melody beginning E, F, G and ending with dotted-quarter E, eighth-note D and half-note D.
+
+   \fixed c' {
+     \clef treble
+     \key c \major
+     \time 4/4
+     e2 f4 g | g4 f e d | c2 d4 e | e4. d8 d2 |
+   }
+
+In ``\fixed c'``, ``c`` is middle C and ``e`` is the E above it.
+The letters name pitches; ``\key c \major`` selects a key with no sharps or flats.
+
+In ``\time 4/4``, each bar holds four quarter-note beats.
+The first bar has ``e2`` for two beats, then ``f4`` and ``g`` for one beat each; ``g`` inherits the preceding duration.
+In the last bar, ``e4.`` lasts one and a half beats, ``d8`` half a beat, and ``d2`` two beats.
+The final D leaves the phrase open because this is an excerpt.
+
+For MyST, we put the same music inside the directive fence:
+
+.. code-block:: markdown
+
+   ```{lilypond}
+   :caption: Beethoven's Joy theme, four bars in C major.
+   :alt: A four-bar melody beginning E, F, G and ending with dotted-quarter E, eighth-note D and half-note D.
+
+   \fixed c' {
+     \clef treble
+     \key c \major
+     \time 4/4
+     e2 f4 g | g4 f e d | c2 d4 e | e4. d8 d2 |
+   }
+   ```
+
 Choose the notation
 -------------------
 
@@ -99,7 +154,7 @@ A tilde ties equal pitches; parentheses make slurs, and ``\(`` with ``\)`` makes
    * - Structure
      - Assignments, variable references, lexical ``\include``, ``\score``, ``\new Staff``, ``\new Voice``, ``PianoStaff``, ``GrandStaff``, ``StaffGroup``, ``ChoirStaff``.
    * - Voices and lyrics
-     - At most two voices per staff; ``\addlyrics``, ``\lyricsto``, ``\lyricmode``, multiple verses, explicit syllable durations, hyphens and extenders.
+     - At most four voices per staff; ``\addlyrics``, ``\lyricsto``, ``\lyricmode``, multiple verses, explicit syllable durations, hyphens and extenders.
    * - Grace and repetition
      - ``\grace``, ``\acciaccatura``, ``\appoggiatura``, ``\afterGrace``, ``\repeat volta``, ``\alternative``, ``\volta``, ``\fine``, ``\section``, ``\repeat unfold``, ``\compressEmptyMeasures``, ``\compressFullBarRests``.
    * - Labels and breaks
@@ -176,8 +231,21 @@ Combine staves and lyrics
 
 We use simultaneous contexts for a score with several staves.
 Instrument names use ``instrumentName`` and ``shortInstrumentName`` in a ``\with`` block.
-Two voices on one staff use ``<< { ... } \\ { ... } >>``.
+We separate up to four voices on one staff with ``\\`` inside ``<< ... >>``.
+Voices one and three have upward stems; voices two and four have downward stems.
+``\voiceOne``, ``\voiceTwo``, ``\voiceThree`` and ``\voiceFour`` select those policies explicitly, and ``\oneVoice`` restores automatic single-voice directions.
+Inner voices shift their note columns when needed; equal rests can share a glyph.
+A fifth voice on the same staff is refused.
 Lyrics attach to a named voice, and separate ``\lyricsto`` expressions make separate verses.
+
+.. code-block:: lilypond
+
+   <<
+     { \voiceOne c''1 } \\
+     { \voiceTwo c'1 } \\
+     { \voiceThree g'1 } \\
+     { \voiceFour e'1 }
+   >>
 
 .. lilypond::
    :caption: A named melody with a verse and a bass staff.
@@ -264,7 +332,7 @@ For CJK lyrics, we include a suitable CJK text face through ``pdf_font_paths``.
 When building this repository, ``cargo xtask fetch-fonts --music`` installs the pinned Noto Serif CJK face used by the mixed-script music corpus in ``docs/shared/fonts``.
 We can use that directory as a font path in our project.
 
-One example accepts at most 256 KiB of source including includes, 32 included files, depth 64, 20,000 events, 24 staves, two voices per staff and 16 heads per chord.
+One example accepts at most 256 KiB of source including includes, 32 included files, depth 64, 20,000 events, 24 staves, four voices per staff and 16 heads per chord.
 The reader and engraver each have a work limit of eight million operations.
 Expanded reader allocations have a separate 64 MiB allowance.
 A drawing has at most 64 systems and a height of 20,000 points.

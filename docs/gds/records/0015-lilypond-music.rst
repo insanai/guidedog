@@ -705,7 +705,7 @@ Dots sit in spaces: a note on a line has its dot in the space above, or below fo
 *Voices sharing a staff.*
 Voices sharing a staff share columns.
 Two noteheads at the same pitch share one head when their head glyphs and dots agree; otherwise, as for a half note against a quarter or a dotted against an undotted note, voice two's note moves right by a notehead width.
-Notes a second apart in opposite voices offset voice one's note to the right, so the heads do not overlap and the stems point away from each other.
+In the two-voice case, an uncrossed second shifts the lower, downward-stemmed voice right; when the voices cross, the upward-stemmed voice shifts right.
 A rest in voice one is raised to staff position 4 and one in voice two lowered to position -4, then moved further, by whole staff spaces, until it clears the other voice's skyline.
 With three or four voices, we place each column against all previously placed columns, in voice-policy order.
 We try zero shift first, then at most sixteen notehead-width steps, preferring right for voice three and left for voice four.

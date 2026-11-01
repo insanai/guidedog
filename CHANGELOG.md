@@ -7,6 +7,8 @@ beside it.
 
 ## Unreleased
 
+- Support four voices per staff, with local voice policies, bounded note-column separation and mixed-rest placement; teach a four-bar Beethoven melody in every manual edition.
+
 - Add native LilyPond notation in RST and MyST, with outlined Bravura SVG or PNG assets, figure references, narrow HTML layouts and PDF system breaks.
 - Read LilyPond 2.24 `\markup` in scripts, tempo and rehearsal marks and instrument names, including staff-group names, and refuse Scheme, layout and embedded-score markup with placed diagnostics.
 

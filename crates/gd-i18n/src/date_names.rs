@@ -20,7 +20,7 @@ pub(crate) struct DateNames {
     pub min_week_days: i64,
 }
 
-pub(crate) const DATE_NAMES: [DateNames; 8] = [
+pub(crate) const DATE_NAMES: [DateNames; 10] = [
     DateNames {
         language: "en",
         months_abbr: [
@@ -144,6 +144,45 @@ pub(crate) const DATE_NAMES: [DateNames; 8] = [
         min_week_days: 4,
     },
     DateNames {
+        language: "hi",
+        months_abbr: [
+            "जन॰",
+            "फ़र॰",
+            "मार्च",
+            "अप्रैल",
+            "मई",
+            "जून",
+            "जुलाई",
+            "अग॰",
+            "सित॰",
+            "अक्तू॰",
+            "नव॰",
+            "दिस॰",
+        ],
+        months_wide: [
+            "जनवरी",
+            "फ़रवरी",
+            "मार्च",
+            "अप्रैल",
+            "मई",
+            "जून",
+            "जुलाई",
+            "अगस्त",
+            "सितंबर",
+            "अक्तूबर",
+            "नवंबर",
+            "दिसंबर",
+        ],
+        days_abbr: ["सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि", "रवि"],
+        days_wide: ["सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार", "रविवार"],
+        am_pm: ["पूर्वाह्न", "अपराह्न"],
+        medium_date: "%-d %b %Y",
+        medium_time: "%-I:%M:%S %p",
+        medium_joined: "%x, %X",
+        first_week_day: 6,
+        min_week_days: 1,
+    },
+    DateNames {
         language: "ja",
         months_abbr: [
             "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月",
@@ -156,6 +195,23 @@ pub(crate) const DATE_NAMES: [DateNames; 8] = [
         am_pm: ["午前", "午後"],
         medium_date: "%Y/%m/%d",
         medium_time: "%-H:%M:%S",
+        medium_joined: "%x %X",
+        first_week_day: 6,
+        min_week_days: 1,
+    },
+    DateNames {
+        language: "ko",
+        months_abbr: [
+            "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월",
+        ],
+        months_wide: [
+            "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월",
+        ],
+        days_abbr: ["월", "화", "수", "목", "금", "토", "일"],
+        days_wide: ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],
+        am_pm: ["오전", "오후"],
+        medium_date: "%Y. %-m. %-d.",
+        medium_time: "%p %-I:%M:%S",
         medium_joined: "%x %X",
         first_week_day: 6,
         min_week_days: 1,

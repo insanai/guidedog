@@ -295,8 +295,10 @@ mod tests {
         expect("%b %d, %Y", &m, "en", "Sep 29, 2026");
         expect("%b %d, %Y", &m, "de", "Sept. 29, 2026");
         expect("%A %-d %B", &m, "fr", "mardi 29 septembre");
+        expect("%-d %B %Y (%A)", &m, "hi", "29 सितंबर 2026 (मंगलवार)");
         expect("%-d %B %Y", &m, "ru", "29 сентября 2026");
         expect("%Y年%m月%d日 (%a)", &m, "ja", "2026年09月29日 (火)");
+        expect("%Y년 %-m월 %-d일 (%a) %p", &m, "ko", "2026년 9월 29일 (화) 오전");
         // A regional language uses its base language, an unknown one English.
         expect("%B", &m, "pt_BR", "setembro");
         expect("%B", &m, "tlh", "September");

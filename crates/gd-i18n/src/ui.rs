@@ -129,11 +129,33 @@ mod tests {
         }
         for (language, text) in EMBEDDED {
             let cat = parse_po(text, language).unwrap_or_else(|e| panic!("{language}: {e}"));
+            let nplurals = cat.plural_rule().nplurals;
             for m in &template.messages {
                 let s = cat.translation(&m.id, None);
                 assert!(s.is_some_and(|s| !s.is_empty()), "{language} lacks {:?}", m.id);
                 let s = s.unwrap_or_default();
                 assert_eq!(s.matches("%s").count(), m.id.matches("%s").count(), "{language}");
+                assert_eq!(
+                    s.matches("%(key)s").count(),
+                    m.id.matches("%(key)s").count(),
+                    "{language}"
+                );
+                if let Some(plural) = &m.id_plural {
+                    let entry = cat
+                        .messages
+                        .iter()
+                        .find(|e| e.id == m.id && e.ctx == m.ctx)
+                        .expect("present");
+                    assert_eq!(entry.strs.len(), nplurals, "{language} plurals for {:?}", m.id);
+                    for form in &entry.strs {
+                        assert!(!form.is_empty(), "{language} empty plural for {:?}", m.id);
+                        assert_eq!(
+                            form.matches("%s").count(),
+                            plural.matches("%s").count(),
+                            "{language}"
+                        );
+                    }
+                }
             }
         }
     }

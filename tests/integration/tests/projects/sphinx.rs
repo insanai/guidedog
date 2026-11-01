@@ -260,7 +260,7 @@ fn dates_are_formatted_as_in_sphinx() {
     let page = dir.read("_build/html/index.html");
     has(&page, "Built Montag, 21. September 2026.");
     has(&page, "On 2026-09-21.");
-    has(&page, "Sept. 21, 2026"); // the translated default format, unless a catalog says.
+    has(&page, "Zuletzt aktualisiert am 21. Sept. 2026."); // the built-in catalog's date format.
     has(&dir.read("_build/html/notes.html"), "Montag, 21. September 2026");
 }
 

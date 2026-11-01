@@ -26,7 +26,7 @@ let (doc, counts) = translate_document(&mut ws, t)?;      // or TranslationPass:
 
 | Item | Does |
 |---|---|
-| `unit_of(doc, id, targets) -> Unit` | Sphinx's `is_translatable`: Inline, Literal, Parsed, Alt, Graphviz, Index, Caption, Entry, Meta, Contents, None |
+| `unit_of(doc, id, targets) -> Unit` | Sphinx's `is_translatable`: Inline, Literal, Parsed, Alt, Graphviz (a graph, diagram or LilyPond score's `:alt:`), Index, Caption, Entry, Meta, Contents, None |
 | `write_message(doc, id, &mut String)` | a node's msgid: its source text, lines joined with one space |
 | `index_parts(line)` | the translatable pieces of an index entry (`single: a; !b` gives a, b) |
 | `parse_target(name)`, `Targets` | `gettext_additional_targets` (`literal-block`, `doctest-block`, `raw`, `image`, `index`) |
@@ -52,13 +52,14 @@ not applied. An untouched document costs one scan (`Unchanged`). `progress` adds
 
 ## Built-in catalogs
 
-`locale/<language>/LC_MESSAGES/guidedog.po` (de, es, fr, ja, pt_BR, ru, zh_CN) are
-compiled in; `locale/guidedog.pot` lists every msgid Guidedog looks up (the test
-`embedded_catalogs_are_complete` checks each catalog translates all of them and keeps
-each `%s`). The translations were written for Guidedog by its authors, not copied from
-Sphinx's catalogs, although many msgids are Sphinx's English strings so a project's own
-`sphinx.po` overrides them. To add a language, copy the template, fill in each msgstr,
-set `Language` and `Plural-Forms`, and add it to `EMBEDDED` in `src/ui.rs`. A project
+`locale/<language>/LC_MESSAGES/guidedog.po` (de, es, fr, hi, ja, ko, pt_BR, ru, zh_CN)
+are compiled in; `locale/guidedog.pot` lists every msgid Guidedog looks up (the test
+`embedded_catalogs_are_complete` checks each catalog translates all of them, including
+plural forms, and keeps each `%s` and `%(key)s`). The translations were written for
+Guidedog by its authors, not copied from Sphinx's catalogs, although many msgids are
+Sphinx's English strings so a project's own `sphinx.po` overrides them. To add a
+language, copy the template, fill in each msgstr, set `Language` and `Plural-Forms`, and
+add it to `EMBEDDED` in `src/ui.rs` and `DATE_NAMES` in `src/date_names.rs`. A project
 can override any word without rebuilding: `locales/<language>/LC_MESSAGES/guidedog.po`.
 
 ## Design notes

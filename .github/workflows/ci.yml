@@ -61,6 +61,8 @@ jobs:
         run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - name: Tests
         run: cargo test --locked --workspace --no-fail-fast
+      - name: Fetch the pinned CJK music test face
+        run: cargo xtask fetch-fonts --music
       - name: Native music SVG, PNG and collision corpus
         run: cargo run --locked -p music-check
       - name: Bounded music reader and engraver fuzz corpus

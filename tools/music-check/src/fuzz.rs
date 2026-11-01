@@ -2,7 +2,9 @@ pub(crate) fn check(count: usize) -> Result<(), String> {
     if count == 0 || count > 10_000_000 {
         return Err("Use 1..10000000 fuzz cases.".into());
     }
-    let fonts = crate::corpus::fonts()?;
+    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+    let data = crate::fonts::load(&root)?;
+    let fonts = data.fonts()?;
     let mut engraver = gd_engrave::Engraver::default();
     let alphabet = b"{}<>[]()\\#$_ abcdefgrs012348.,'~|%\"*/=-\n";
     let mut seed = 0x7b41fcu64;

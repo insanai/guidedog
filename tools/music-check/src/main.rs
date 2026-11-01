@@ -4,6 +4,7 @@
 
 mod audit;
 mod corpus;
+mod fonts;
 mod fuzz;
 mod png;
 mod reference;

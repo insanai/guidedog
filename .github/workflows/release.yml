@@ -111,6 +111,8 @@ jobs:
           for program in guidedog; do
             cargo xtask release check-version "build/$program"
           done
+      - name: Fetch the pinned CJK music test face
+        run: cargo xtask fetch-fonts --music
       - name: Qualify native music on this release platform
         run: cargo run --locked -p music-check
       - name: Package Guidedog with notices and a manifest
@@ -186,6 +188,8 @@ jobs:
         run: cargo xtask release build
       - name: Test Windows libraries
         run: cargo test --locked -p gd-graphdog -p gd-clock -p gd-pages
+      - name: Fetch the pinned CJK music test face
+        run: cargo xtask fetch-fonts --music
       - name: Qualify native music on Windows
         run: cargo run --locked -p music-check
       - name: Package Windows programs and the Graphviz runtime

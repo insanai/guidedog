@@ -12,7 +12,9 @@ use crate::{Result, fail, process, repository_root};
 const HELP: &str = "\
 Fetches the Noto Serif CJK fonts the Chinese, Japanese and Korean PDF books use.
 
-Usage: cargo xtask fetch-fonts [DIR]
+Usage: cargo xtask fetch-fonts [--music] [DIR]
+
+  --music  fetch only the regular Simplified Chinese face used by music qualification
 
   DIR   where the fonts go (default: docs/shared/fonts)
 
@@ -53,14 +55,21 @@ const FONTS: [(&str, &str); 6] = [
 
 /// Runs `cargo xtask fetch-fonts`.
 pub(crate) fn main(args: &[String]) -> Result<()> {
-    let spec = Spec { command: "fetch-fonts", flags: &[], options: &[], help: HELP };
+    let spec = Spec { command: "fetch-fonts", flags: &["--music"], options: &[], help: HELP };
     let Some(parsed) = args::parse(args, &spec)? else { return Ok(()) };
     parsed.at_most(1, &spec)?;
     let dir = match parsed.positionals.first() {
         Some(dir) => absolute(Path::new(dir)),
         None => repository_root().join("docs/shared/fonts"),
     };
-    fetch_fonts(&dir)
+    if parsed.has("--music") {
+        create_dir(&dir)?;
+        let (path, sum) = FONTS[4];
+        let name = path.rsplit('/').next().unwrap_or(path);
+        fetch(&format!("{BASE}/{path}"), &dir.join(name), sum)
+    } else {
+        fetch_fonts(&dir)
+    }
 }
 
 /// Fetches every font into `dir` that is not already there with the right sum.

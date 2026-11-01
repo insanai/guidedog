@@ -12,6 +12,8 @@ Upstream variable-font SHA-256: 1191e07bfeb062d80e252eb85b0eafdfbda1e350707a2a60
 
 The CJK files are not kept in the repository (25 MB each): `cargo xtask fetch-fonts`
 downloads them from the source above and checks the SHA-256 sums below.
+`cargo xtask fetch-fonts --music` downloads only NotoSerifCJKsc-Regular.otf for
+the mixed-script native music corpus; the corpus loader verifies the same sum.
 
 These complete font files are for PDF, through pdf_font_paths. They are outside
 html_static_path and are not downloaded by web readers. The manual web edition

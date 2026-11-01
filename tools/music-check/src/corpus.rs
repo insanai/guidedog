@@ -1,27 +1,6 @@
 use std::path::Path;
 
-use gd_engrave::{Engraver, FaceData, FontOptions, Options, SvgOptions};
-
-const REGULAR: &[u8] =
-    include_bytes!("../../../docs/shared/_static/data/fonts/LibertinusSerif-Regular.otf");
-const BOLD: &[u8] =
-    include_bytes!("../../../docs/shared/_static/data/fonts/LibertinusSerif-Bold.otf");
-const ITALIC: &[u8] =
-    include_bytes!("../../../docs/shared/_static/data/fonts/LibertinusSerif-Italic.otf");
-const DEVANAGARI: &[u8] =
-    include_bytes!("../../../docs/shared/fonts/NotoSerifDevanagari-Regular.ttf");
-
-pub(crate) fn fonts() -> Result<gd_engrave::Fonts<'static>, String> {
-    let face = |data| FaceData { data, ..Default::default() };
-    gd_engrave::load_fonts(&FontOptions {
-        regular: vec![face(REGULAR), face(DEVANAGARI)],
-        bold: vec![face(BOLD), face(DEVANAGARI)],
-        italic: vec![face(ITALIC), face(DEVANAGARI)],
-        // Libertinus ships no bold italic; bold italic markup falls back to bold.
-        bold_italic: Vec::new(),
-    })
-    .map_err(|error| error.to_string())
-}
+use gd_engrave::{Engraver, Options, SvgOptions};
 
 pub(crate) fn check(root: &Path, update: bool) -> Result<(), String> {
     let directory = root.join("tests/integration/data/music");
@@ -35,7 +14,8 @@ pub(crate) fn check(root: &Path, update: bool) -> Result<(), String> {
     if sources.len() < 55 {
         return Err("The reference corpus needs at least fifty-five scores.".into());
     }
-    let fonts = fonts()?;
+    let data = crate::fonts::load(root)?;
+    let fonts = data.fonts()?;
     let mut workspace = Engraver::default();
     for source in &sources {
         let text = std::fs::read_to_string(source).map_err(|e| e.to_string())?;
@@ -52,9 +32,7 @@ pub(crate) fn check(root: &Path, update: bool) -> Result<(), String> {
                 &mut Options { line_width: 350.0, ..Default::default() },
             )
             .map_err(|e| format!("{name}: {e}"))?;
-        if !drawing.warnings.is_empty() {
-            return Err(format!("{name}: engrave warnings {:?}", drawing.warnings));
-        }
+
         audit(&drawing)
             .and_then(|()| crate::audit::check(&drawing))
             .and_then(|()| crate::audit::quants(&drawing))
@@ -66,6 +44,7 @@ pub(crate) fn check(root: &Path, update: bool) -> Result<(), String> {
                 &mut Options { staff_size: 14.0, line_width: 240.0, ..Default::default() },
             )
             .map_err(|e| format!("{name} (14pt): {e}"))?;
+
         audit(&compact)
             .and_then(|()| crate::audit::check(&compact))
             .and_then(|()| crate::audit::quants(&compact))
@@ -111,6 +90,9 @@ fn compare(source: &Path, svg: &str, png: &[u8], update: bool) -> Result<(), Str
 }
 
 pub(crate) fn audit(drawing: &gd_engrave::Engraving) -> Result<(), String> {
+    if !drawing.warnings.is_empty() {
+        return Err(format!("Engrave warnings: {:?}", drawing.warnings));
+    }
     for system in &drawing.systems {
         for placed in &system.marks {
             let bounds = placed.bounds;

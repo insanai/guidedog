@@ -11,7 +11,7 @@ impl Draw<'_, '_, '_, '_, '_> {
         middle: f64,
     ) -> Result<(), Error> {
         let score = request.score;
-        let measure = score.measures.iter().position(|m| m.number == request.first).unwrap_or(0);
+        let measure = request.measure_index;
         let Some(state) =
             request.plan.measures.get(measure).and_then(|m| m.get(self.staff.0 as usize))
         else {

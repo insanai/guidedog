@@ -80,7 +80,7 @@ impl Draw<'_, '_, '_, '_, '_> {
 
     /// Whether this system shows full names: it starts at the score's first measure.
     pub(crate) fn first_line(&self, request: &Request<'_, '_>) -> bool {
-        request.first == request.score.measures.first().map(|m| m.number).unwrap_or(1)
+        request.measure_index == 0
     }
 
     /// The name a group shows on this line.

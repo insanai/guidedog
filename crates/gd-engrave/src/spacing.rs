@@ -40,7 +40,7 @@ pub struct Solution {
 /// Borrows gaps and rods and solves for a positive finite width.
 /// Fails for invalid dimensions, rod indices, memory refusal or the default work limit.
 pub fn solve_spacing(springs: &[Spring], rods: &[Rod], width: f64) -> Result<Solution, Error> {
-    solve(springs, rods, width, &mut crate::Limits::default().work)
+    solve(springs, rods, width, &mut crate::Limits::default().work, crate::Scratch::default())
 }
 
 pub(crate) fn solve(
@@ -48,13 +48,13 @@ pub(crate) fn solve(
     rods: &[Rod],
     width: f64,
     work: &mut usize,
+    scratch: crate::Scratch<'_>,
 ) -> Result<Solution, Error> {
     charge(work, springs.len().saturating_add(rods.len()))?;
     if !width.is_finite() || width <= 0.0 || springs.len() > 100_000 {
         return Err(failure("Invalid spacing width or gap count."));
     }
-    // The gaps are transient and bounded by the spring count above, so they are reserved
-    // fallibly here rather than charged to the non-refunding reserve ledger.
+    // The caller holds the returned gaps; temporary sorting buffers have scoped charges.
     let mut gaps = Vec::new();
     gaps.try_reserve_exact(springs.len()).map_err(|_| failure("Cannot reserve spacing gaps."))?;
     for spring in springs {
@@ -69,15 +69,18 @@ pub(crate) fn solve(
         }
         gaps.push(spring.minimum);
     }
-    convert_rods(springs, rods, &mut gaps, work)?;
+    convert_rods(springs, rods, &mut gaps, work, scratch)?;
     let minimum: f64 = gaps.iter().sum();
     let natural: f64 = gaps.iter().zip(springs).map(|(r, s)| r.max(s.ideal)).sum();
     if !minimum.is_finite() || !natural.is_finite() {
         return Err(failure("The spacing widths overflowed."));
     }
     let overfull = minimum > width;
-    let stretch =
-        if overfull || width == minimum { 0.0 } else { find_stretch(springs, &gaps, width)? };
+    let stretch = if overfull || width == minimum {
+        0.0
+    } else {
+        find_stretch(springs, &gaps, width, scratch)?
+    };
     for (gap, spring) in gaps.iter_mut().zip(springs) {
         *gap = gap.max(stretch * spring.ideal);
     }
@@ -89,7 +92,9 @@ fn convert_rods(
     rods: &[Rod],
     gaps: &mut [f64],
     work: &mut usize,
+    scratch: crate::Scratch<'_>,
 ) -> Result<(), Error> {
+    let _order = scratch.hold(rods.len().saturating_mul(2 * size_of::<Rod>()))?;
     let mut order = Vec::new();
     order.try_reserve_exact(rods.len()).map_err(|_| failure("Cannot reserve spacing rods."))?;
     for rod in rods {
@@ -124,10 +129,16 @@ fn convert_rods(
     Ok(())
 }
 
-fn find_stretch(springs: &[Spring], rods: &[f64], width: f64) -> Result<f64, Error> {
+fn find_stretch(
+    springs: &[Spring],
+    rods: &[f64],
+    width: f64,
+    scratch: crate::Scratch<'_>,
+) -> Result<f64, Error> {
     if springs.is_empty() {
         return Ok(1.0);
     }
+    let _thresholds = scratch.hold(springs.len().saturating_mul(2 * size_of::<(f64, usize)>()))?;
     let mut thresholds = Vec::new();
     thresholds
         .try_reserve_exact(springs.len())

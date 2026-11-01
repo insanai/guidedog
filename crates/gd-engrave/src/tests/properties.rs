@@ -102,10 +102,10 @@ fn dynamic_breaking_matches_every_partition_of_small_scores() {
                     &springs,
                     &[],
                     &breaks,
-                    width,
-                    Justify::Auto,
+                    (width, Justify::Auto),
                     first..last,
                     &mut 100_000,
+                    Scratch::default(),
                 )
                 .unwrap();
                 if line.overfull && last > first + 1 && !breaks[last].forced {

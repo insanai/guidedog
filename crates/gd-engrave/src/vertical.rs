@@ -4,10 +4,16 @@ use crate::limits::charge;
 use crate::skyline::{Segment, Skyline};
 use crate::{Bezier, Mark, Point, PositionedMark, Role, System};
 
-#[derive(Clone, Debug, Default)]
-struct Facing {
-    upper: Skyline,
-    lower: Skyline,
+#[derive(Debug)]
+struct Facing<'a> {
+    upper: Skyline<'a>,
+    lower: Skyline<'a>,
+}
+
+impl<'a> Facing<'a> {
+    fn new(scratch: crate::Scratch<'a>) -> Self {
+        Self { upper: Skyline::new(scratch), lower: Skyline::new(scratch) }
+    }
 }
 
 pub(crate) fn place(
@@ -15,9 +21,10 @@ pub(crate) fn place(
     staves: usize,
     space: f64,
     work: &mut usize,
+    scratch: crate::Scratch<'_>,
 ) -> Result<(), Error> {
-    outside(system, staves, space, work)?;
-    let mut envelopes = vec![Facing::default(); staves];
+    outside(system, staves, space, work, scratch)?;
+    let mut envelopes: Vec<_> = (0..staves).map(|_| Facing::new(scratch)).collect();
     for placed in &system.marks {
         charge(work, 1)?;
         let old_middle = (4.0 + f64::from(placed.staff.0) * 9.0) * space;
@@ -42,7 +49,13 @@ pub(crate) fn place(
     Ok(())
 }
 
-fn outside(system: &mut System, staves: usize, space: f64, work: &mut usize) -> Result<(), Error> {
+fn outside(
+    system: &mut System,
+    staves: usize,
+    space: f64,
+    work: &mut usize,
+    scratch: crate::Scratch<'_>,
+) -> Result<(), Error> {
     let roles = [
         Role::Articulation,
         Role::Fingering,
@@ -57,7 +70,7 @@ fn outside(system: &mut System, staves: usize, space: f64, work: &mut usize) -> 
         Role::MeasureNumber,
     ];
     for staff in 0..staves {
-        let mut occupied = Facing::default();
+        let mut occupied = Facing::new(scratch);
         for mark in &system.marks {
             charge(work, 1)?;
             if mark.staff.0 as usize == staff && !roles.contains(&mark.mark.role()) {
@@ -84,7 +97,7 @@ fn outside(system: &mut System, staves: usize, space: f64, work: &mut usize) -> 
 
 fn place_role(
     system: &mut System,
-    occupied: &mut Facing,
+    occupied: &mut Facing<'_>,
     spec: (usize, Role, bool, bool),
     middle: f64,
     space: f64,
@@ -122,7 +135,7 @@ fn place_role(
         vec![indices]
     };
     for cluster in clusters {
-        let mut group = Facing::default();
+        let mut group = Facing::new(occupied.upper.scratch());
         for &index in &cluster {
             add(&mut group, &system.marks[index], 0.0, work)?;
         }
@@ -142,7 +155,7 @@ fn place_role(
 }
 
 fn add(
-    facing: &mut Facing,
+    facing: &mut Facing<'_>,
     mark: &PositionedMark,
     shift: f64,
     work: &mut usize,
@@ -201,7 +214,7 @@ fn add(
 }
 
 fn add_rect(
-    facing: &mut Facing,
+    facing: &mut Facing<'_>,
     bounds: crate::Rect,
     shift: f64,
     work: &mut usize,
@@ -229,7 +242,7 @@ fn add_rect(
 }
 
 fn add_curve(
-    facing: &mut Facing,
+    facing: &mut Facing<'_>,
     outer: Bezier,
     inner: Bezier,
     shift: f64,

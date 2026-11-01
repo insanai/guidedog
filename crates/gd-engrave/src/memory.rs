@@ -22,7 +22,6 @@ pub(crate) fn reserve(
         .saturating_add(syllables.saturating_mul(2));
     let snapshots = score.measures.len().saturating_mul(score.staves.len());
     let current_retained = retained(workspace);
-    let additional_retained = current_retained.saturating_sub(workspace.charged_retained);
     let bytes = columns
         .saturating_mul(256)
         .saturating_add(score.events.len().saturating_mul(32))
@@ -31,11 +30,10 @@ pub(crate) fn reserve(
         .saturating_add(snapshots.saturating_mul(size_of::<crate::prepare::StaffState>() * 2))
         .saturating_add(score.staves.len().saturating_mul(70 * 128))
         .saturating_add(text.saturating_mul(64 * 80).max(8 * 1024 * 1024))
-        .saturating_add(additional_retained);
+        .saturating_add(current_retained);
     if options.reserve.as_mut().is_some_and(|reserve| !reserve(bytes)) {
         return Err(failure("The memory ledger refused engraving scratch space."));
     }
-    workspace.charged_retained = workspace.charged_retained.max(current_retained);
     Ok(())
 }
 

@@ -16,12 +16,21 @@ impl Segment {
     }
 }
 
-#[derive(Clone, Debug, Default)]
-pub(crate) struct Skyline {
+#[derive(Debug, Default)]
+pub(crate) struct Skyline<'a> {
     pub(crate) segments: Vec<Segment>,
+    memory: crate::scratch::Reservation<'a>,
 }
 
-impl Skyline {
+impl<'a> Skyline<'a> {
+    pub(crate) fn new(scratch: crate::Scratch<'a>) -> Self {
+        Self { segments: Vec::new(), memory: crate::scratch::Reservation::empty(scratch) }
+    }
+
+    pub(crate) fn scratch(&self) -> crate::Scratch<'a> {
+        self.memory.scratch
+    }
+
     pub(crate) fn add(
         &mut self,
         segment: Segment,
@@ -31,27 +40,27 @@ impl Skyline {
         if segment.right <= segment.left {
             return Ok(());
         }
-        let next = Self { segments: vec![segment] };
-        *self = self.merge(&next, upper, work)?;
+        *self = self.merge(&[segment], upper, work)?;
         Ok(())
     }
 
     pub(crate) fn merge(
         &self,
-        other: &Self,
+        other: &[Segment],
         upper: bool,
         work: &mut usize,
     ) -> Result<Self, Error> {
-        // Merging builds a transient skyline bounded by its inputs. It is reserved with
-        // try_reserve and charged as work, not through the caller's reserve: that ledger
-        // never refunds, so charging every short-lived merge would count it many times.
-        let boundaries = boundaries(&self.segments, &other.segments, work)?;
+        let count = self.segments.len().saturating_add(other.len());
+        let _boundaries = self.scratch().hold(count.saturating_mul(2 * size_of::<f64>()))?;
+        let boundaries = boundaries(&self.segments, other, work)?;
         let (mut a, mut b) = (0, 0);
-        let mut result = Self::default();
-        // A crossing can split an interval in two, so each interval yields at most two.
+        // Both the old skyline and its replacement stay charged during a merge.
+        let capacity = boundaries.len().saturating_mul(2);
+        let memory = self.scratch().hold(capacity.saturating_mul(size_of::<Segment>()))?;
+        let mut result = Self { segments: Vec::new(), memory };
         result
             .segments
-            .try_reserve(boundaries.len().saturating_mul(2))
+            .try_reserve_exact(capacity)
             .map_err(|_| failure("Cannot reserve a skyline."))?;
         for pair in boundaries.windows(2) {
             charge(work, 1)?;
@@ -62,11 +71,11 @@ impl Skyline {
             while self.segments.get(a).is_some_and(|s| s.right <= left) {
                 a += 1;
             }
-            while other.segments.get(b).is_some_and(|s| s.right <= left) {
+            while other.get(b).is_some_and(|s| s.right <= left) {
                 b += 1;
             }
             let av = self.segments.get(a).copied().filter(|s| s.left <= left && s.right >= right);
-            let bv = other.segments.get(b).copied().filter(|s| s.left <= left && s.right >= right);
+            let bv = other.get(b).copied().filter(|s| s.left <= left && s.right >= right);
             match (av, bv) {
                 (Some(a), Some(b)) => result.overlap(a, b, left, right, upper),
                 (Some(a), None) | (None, Some(a)) => {
@@ -142,7 +151,7 @@ impl Skyline {
 fn boundaries(a: &[Segment], b: &[Segment], work: &mut usize) -> Result<Vec<f64>, Error> {
     let mut result = Vec::new();
     result
-        .try_reserve(2 * a.len().saturating_add(b.len()))
+        .try_reserve_exact(2 * a.len().saturating_add(b.len()))
         .map_err(|_| crate::limits::failure("Skyline boundaries exceeded memory."))?;
     let (mut left, mut right) = (0, 0);
     while left < 2 * a.len() || right < 2 * b.len() {

@@ -54,6 +54,8 @@ pub struct Options<'a> {
     pub limits: Limits,
     /// Optional caller-owned buffer-growth ledger.
     pub reserve: Option<&'a mut Reserve<'a>>,
+    /// Scoped reservations for short-lived spacing and skyline buffers.
+    pub scratch: crate::Scratch<'a>,
 }
 
 impl Default for Options<'_> {
@@ -65,6 +67,7 @@ impl Default for Options<'_> {
             optical_adjustment: 0.4,
             limits: Limits::default(),
             reserve: None,
+            scratch: crate::Scratch::default(),
         }
     }
 }
@@ -78,6 +81,7 @@ impl fmt::Debug for Options<'_> {
             .field("optical_adjustment", &self.optical_adjustment)
             .field("limits", &self.limits)
             .field("reserve", &self.reserve.is_some())
+            .field("scratch", &self.scratch)
             .finish()
     }
 }

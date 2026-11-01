@@ -132,3 +132,13 @@ These are different isolation boundaries.
 
 Large PDF books can consume much more memory than the host budget, because the Typst compiler's memory is outside it. We use operating-system limits when a hard bound is needed. See :doc:`../errors` for the
 user's choices when the budget is reached.
+
+Native music scratch
+--------------------
+
+The native engraver separates retained buffer growth from temporary layout storage.
+``gd_engrave::Options::scratch`` borrows reserve and release callbacks from the host ledger.
+A skyline owns its live segment reservation; replacement segments and boundary buffers remain charged while the old skyline is still alive.
+Spacing sort buffers, candidate rods and break-choice tables use scoped reservations that release on success and on failure.
+The host ledger's ``discharge`` operation returns these bytes immediately, so repeated merges consume their peak live memory rather than the sum of every intermediate allocation.
+Existing worker capacity is charged for each engraving because the callback can belong to a different ledger on the next call.

@@ -707,7 +707,7 @@ fn concave_beams_stay_level_and_three_eight_groups_whole_measure() {
 }
 
 #[test]
-fn reused_engraver_and_svg_aria_do_not_overcharge_or_duplicate() {
+fn reused_engraver_charges_each_ledger_and_svg_aria_is_not_duplicated() {
     let loaded =
         gd_lilypond::load_score("{ c'4 d' e' f' }", "m.ly", &mut gd_lilypond::Options::default())
             .unwrap();
@@ -728,7 +728,8 @@ fn reused_engraver_and_svg_aria_do_not_overcharge_or_duplicate() {
         let _ = engraver.engrave_score(&loaded.score, &fonts, &mut opts).unwrap();
         charged.push(turn);
     }
-    assert!(charged[3] < charged[0]);
+    // Each turn supplies a fresh ledger. Warm capacity still belongs to that call.
+    assert_eq!(charged[1], charged[3]);
 
     let drawing = draw("{ c'1 }", 200.0);
     let mut plain_svg = String::new();
@@ -746,4 +747,27 @@ fn reused_engraver_and_svg_aria_do_not_overcharge_or_duplicate() {
     .unwrap();
     assert!(titled_svg.contains("aria-labelledby=\"title\""));
     assert!(!titled_svg.contains("<desc "));
+}
+
+#[test]
+fn repeated_printed_measure_numbers_do_not_repeat_the_opening_signatures() {
+    let mut loaded = gd_lilypond::load_score(
+        r"{ c'1 | \break \key g \major g'1 | }",
+        "numbers.ly",
+        &mut gd_lilypond::Options::default(),
+    )
+    .unwrap();
+    for measure in &mut loaded.score.measures {
+        measure.number = 10;
+    }
+    let fonts = load_fonts(&FontOptions::default()).unwrap();
+    let drawing =
+        Engraver::default().engrave_score(&loaded.score, &fonts, &mut Options::default()).unwrap();
+    assert_eq!(drawing.systems.len(), 2);
+    let sharp = fonts.glyph("accidentalSharp").unwrap();
+    let marks = &drawing.systems[1].marks;
+    let signatures: Vec<_> = marks.iter().filter(|m| m.mark.role() == Role::Signature).collect();
+    assert_eq!(signatures.len(), 1);
+    assert!(matches!(signatures[0].mark, Mark::Glyph { glyph, .. } if glyph == sharp));
+    assert!(marks.iter().any(|m| m.mark.role() == Role::MeasureNumber));
 }

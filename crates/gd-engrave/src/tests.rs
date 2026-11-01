@@ -5,6 +5,7 @@ use crate::*;
 mod bows;
 mod native;
 mod properties;
+mod scratch;
 
 #[test]
 fn every_music_glyph_has_an_outline_and_finite_bounds() {

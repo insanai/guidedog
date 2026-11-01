@@ -51,18 +51,19 @@ pub fn break_lines(
     limits: &Limits,
 ) -> Result<Vec<Line>, Error> {
     let mut work = limits.work;
-    choose(springs, rods, breaks, width, justify, limits, &mut work)
+    choose(springs, rods, breaks, (width, justify), limits, &mut work, crate::Scratch::default())
 }
 
 pub(crate) fn choose(
     springs: &[Spring],
     rods: &[Rod],
     breaks: &[BreakPoint],
-    width: f64,
-    justify: Justify,
+    settings: (f64, Justify),
     limits: &Limits,
     work: &mut usize,
+    scratch: crate::Scratch<'_>,
 ) -> Result<Vec<Line>, Error> {
+    let (width, justify) = settings;
     if breaks.len() < 2
         || breaks[0].gap != 0
         || breaks.last().map(|b| b.gap) != Some(springs.len())
@@ -76,8 +77,10 @@ pub(crate) fn choose(
     {
         return Err(failure("Invalid measure boundaries or line width."));
     }
-    let mut costs = vec![f64::INFINITY; breaks.len()];
-    let mut chosen: Vec<Option<Line>> = vec![None; breaks.len()];
+    charge(work, breaks.len())?;
+    let _choices =
+        scratch.hold(breaks.len().saturating_mul(size_of::<f64>() + size_of::<Option<Line>>()))?;
+    let (mut costs, mut chosen) = choice_buffers(breaks.len())?;
     costs[0] = 0.0;
     for last in 1..breaks.len() {
         if breaks[last].forbidden && last + 1 < breaks.len() {
@@ -87,7 +90,15 @@ pub(crate) fn choose(
         for first in (lower..last).rev() {
             charge(work, 1)?;
             if costs[first].is_finite() {
-                let line = candidate(springs, rods, breaks, width, justify, first..last, work)?;
+                let line = candidate(
+                    springs,
+                    rods,
+                    breaks,
+                    (width, justify),
+                    first..last,
+                    work,
+                    scratch,
+                )?;
                 let allowed = !line.overfull || last == first + 1 || breaks[last].forced;
                 if allowed {
                     let badness = if line.overfull { 10_000.0 } else { badness(line.stretch) };
@@ -122,19 +133,35 @@ pub(crate) fn choose(
     Ok(result)
 }
 
+fn choice_buffers(count: usize) -> Result<(Vec<f64>, Vec<Option<Line>>), Error> {
+    let (mut costs, mut chosen) = (Vec::new(), Vec::new());
+    costs.try_reserve_exact(count).map_err(|_| failure("Cannot reserve line costs."))?;
+    chosen.try_reserve_exact(count).map_err(|_| failure("Cannot reserve line choices."))?;
+    costs.resize(count, f64::INFINITY);
+    chosen.resize(count, None);
+    Ok((costs, chosen))
+}
+
 pub(crate) fn candidate(
     springs: &[Spring],
     rods: &[Rod],
     breaks: &[BreakPoint],
-    width: f64,
-    justify: Justify,
+    settings: (f64, Justify),
     range: std::ops::Range<usize>,
     work: &mut usize,
+    scratch: crate::Scratch<'_>,
 ) -> Result<Line, Error> {
+    let (width, justify) = settings;
     let (first, last) = (range.start, range.end);
     let (start, end) = (breaks[first].gap, breaks[last].gap);
     let prefix = breaks[first].prefix + breaks[last].suffix;
+    let _local = scratch.hold(
+        rods.len()
+            .saturating_mul(size_of::<Rod>())
+            .saturating_add((end - start).saturating_mul(size_of::<f64>())),
+    )?;
     let mut local = Vec::new();
+    local.try_reserve_exact(rods.len()).map_err(|_| failure("Cannot reserve line rods."))?;
     for rod in rods {
         charge(work, 1)?;
         if rod.first >= start && rod.last <= end {
@@ -145,7 +172,7 @@ pub(crate) fn candidate(
             });
         }
     }
-    let solution = solve(&springs[start..end], &local, (width - prefix).max(0.01), work)?;
+    let solution = solve(&springs[start..end], &local, (width - prefix).max(0.01), work, scratch)?;
     let ragged = justify == Justify::None
         || (justify == Justify::Auto
             && last + 1 == breaks.len()

@@ -161,7 +161,6 @@ impl Plan {
                     }
                 }
             }
-            crate::voices::arrange(self, column, score, fonts, work)?;
             for ((staff, step, octave), alter) in changes {
                 states[staff].remembered.insert((step, octave), alter);
             }

@@ -171,6 +171,10 @@ fn draw_held<'d>(
     let mut reserve = |bytes| ledger.charge(bytes);
     let mut options = options::dimensions(page, doc, id)?;
     options.reserve = Some(&mut reserve);
+    let charge_scratch = |bytes| ledger.charge(bytes);
+    let release_scratch = |bytes| ledger.discharge(bytes);
+    options.scratch =
+        gd_engrave::Scratch { reserve: Some(&charge_scratch), release: Some(&release_scratch) };
     let engraving = page
         .engraver
         .engrave_score(&loaded.score, fonts, &mut options)

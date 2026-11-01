@@ -10,6 +10,7 @@ pub(crate) struct Request<'a, 'f> {
     pub(crate) columns: &'a [Column],
     pub(crate) positions: &'a [f64],
     pub(crate) first: u32,
+    pub(crate) measure_index: usize,
     pub(crate) plan: &'a crate::prepare::Plan,
     pub(crate) indent: f64,
     pub(crate) preface_end: f64,
@@ -45,7 +46,7 @@ pub(crate) fn draw_system(
     for staff_index in 0..score.staves.len() {
         draw.staff_system(request, staff_index, width)?;
     }
-    if request.first != score.measures.first().map(|m| m.number).unwrap_or(1) {
+    if request.measure_index != 0 {
         draw.staff = StaffId(0);
         draw.measure = 0;
         draw.number(
@@ -60,7 +61,13 @@ pub(crate) fn draw_system(
     draw.grace_slashes(request)?;
     draw.decorations(request)?;
     draw.spanners(request)?;
-    crate::vertical::place(&mut draw.system, score.staves.len(), space, draw.work)?;
+    crate::vertical::place(
+        &mut draw.system,
+        score.staves.len(),
+        space,
+        draw.work,
+        draw.options.scratch,
+    )?;
     draw.groups(request)?;
     crate::vertical::fit(&mut draw.system, space, draw.work)?;
     Ok((draw.system, draw.warnings))
@@ -100,7 +107,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                 Role::Staff,
             )?;
         }
-        let measure = score.measures.partition_point(|m| m.start < columns[0].at.main);
+        let measure = request.measure_index;
         let clef = request
             .plan
             .measures

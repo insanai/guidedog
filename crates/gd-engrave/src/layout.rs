@@ -14,7 +14,6 @@ pub struct Engraver {
     pub(crate) plan: crate::prepare::Plan,
     pub(crate) rods: Vec<crate::Rod>,
     pub(crate) local_rods: Vec<crate::Rod>,
-    pub(crate) charged_retained: usize,
 }
 
 impl Engraver {
@@ -37,11 +36,7 @@ impl Engraver {
         for line in &lines {
             let (first, last) = (self.breaks[line.first].gap, self.breaks[line.last].gap);
             let x = self.line_positions(line, space, options, &mut work)?;
-            let measure_idx = score
-                .measures
-                .iter()
-                .position(|m| m.number == self.breaks[line.first].measure)
-                .unwrap_or(0);
+            let measure_idx = line.first;
             let (_, _, preface_spaces) = columns::preface_widths(
                 score,
                 &self.columns,
@@ -57,6 +52,7 @@ impl Engraver {
                 columns: &self.columns[first..=last],
                 positions: &self.positions,
                 first: self.breaks[line.first].measure,
+                measure_index: line.first,
                 plan: &self.plan,
                 indent: self.breaks[line.first].indent * space,
                 preface_end: preface_spaces * space,
@@ -122,10 +118,10 @@ impl Engraver {
             &self.springs,
             &self.rods,
             &self.breaks,
-            (options.line_width / space - 0.3).max(0.1),
-            options.justify,
+            ((options.line_width / space - 0.3).max(0.1), options.justify),
             &options.limits,
             work,
+            options.scratch,
         )
     }
 
@@ -153,11 +149,13 @@ impl Engraver {
             }
         }
         let prefix = self.breaks[line.first].prefix;
+        let _gaps = options.scratch.hold((last - first).saturating_mul(size_of::<f64>()))?;
         let solution = crate::spacing::solve(
             &self.springs[first..last],
             &self.local_rods,
             (line.width - prefix - self.breaks[line.last].suffix).max(0.01),
             work,
+            options.scratch,
         )?;
         self.positions.clear();
         let mut x = prefix * space;

@@ -141,7 +141,20 @@ fn the_public_plugin_catalog_is_well_formed() {
     }
 }
 
-/// A MAJOR.MINOR.PATCH version as numbers, which compare in release order.
-fn version_numbers(version: &str) -> Vec<u64> {
-    version.split('.').map(|n| n.parse().unwrap_or(u64::MAX)).collect()
+/// A SemVer release or prerelease version as a tuple that compares in release order
+/// (`1.0.0-beta.8 < 1.0.0-beta.9 < 1.0.0`).
+fn version_numbers(version: &str) -> (Vec<u64>, bool, Vec<(bool, u64, String)>) {
+    let (core, pre) = version.split_once('-').unwrap_or((version, ""));
+    let nums = core.split('.').map(|n| n.parse().unwrap_or(u64::MAX)).collect();
+    let pre_parts = if pre.is_empty() {
+        Vec::new()
+    } else {
+        pre.split('.')
+            .map(|p| match p.parse::<u64>() {
+                Ok(n) => (false, n, String::new()),
+                Err(_) => (true, 0, p.to_owned()),
+            })
+            .collect()
+    };
+    (nums, pre.is_empty(), pre_parts)
 }

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 10:17+0000\n"
+"POT-Creation-Date: 2026-11-01 13:02+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -56,19 +56,19 @@ msgstr "所有命令都接受以下选项："
 
 #: ../../reference/cli.rst:35 ../../reference/cli.rst:156
 #: ../../reference/cli.rst:215 ../../reference/cli.rst:347
-#: ../../reference/cli.rst:373 ../../reference/cli.rst:426
-#: ../../reference/cli.rst:508 ../../reference/cli.rst:578
-#: ../../reference/cli.rst:624 ../../reference/cli.rst:687
-#: ../../reference/cli.rst:851
+#: ../../reference/cli.rst:373 ../../reference/cli.rst:429
+#: ../../reference/cli.rst:511 ../../reference/cli.rst:581
+#: ../../reference/cli.rst:627 ../../reference/cli.rst:690
+#: ../../reference/cli.rst:854
 msgid "Option"
 msgstr "选项"
 
 #: ../../reference/cli.rst:36 ../../reference/cli.rst:157
 #: ../../reference/cli.rst:216 ../../reference/cli.rst:348
-#: ../../reference/cli.rst:374 ../../reference/cli.rst:427
-#: ../../reference/cli.rst:509 ../../reference/cli.rst:579
-#: ../../reference/cli.rst:625 ../../reference/cli.rst:688
-#: ../../reference/cli.rst:825 ../../reference/cli.rst:852
+#: ../../reference/cli.rst:374 ../../reference/cli.rst:430
+#: ../../reference/cli.rst:512 ../../reference/cli.rst:582
+#: ../../reference/cli.rst:628 ../../reference/cli.rst:691
+#: ../../reference/cli.rst:828 ../../reference/cli.rst:855
 msgid "Meaning"
 msgstr "含义"
 
@@ -711,9 +711,11 @@ msgid ""
 "compilation, and music read from files (``lilypond`` file arguments and "
 "``\\include``); fetch nothing; and run no build plugin. This is a "
 "capability policy, not a process sandbox."
-msgstr "省略原始内容、外部 Graphviz 资源、``typst-diagram`` 编译以及从文件读取的乐谱（``lilypond`` 文件参数和 ``\\include``）；不获取任何资源，也不运行构建插件。这是一种能力限制策略，不是进程沙箱。"
+msgstr ""
+"省略原始内容、外部 Graphviz 资源、``typst-diagram`` 编译以及从文件读取的乐谱（``lilypond`` 文件参数和 "
+"``\\include``）；不获取任何资源，也不运行构建插件。这是一种能力限制策略，不是进程沙箱。"
 
-#: ../../reference/cli.rst:250 ../../reference/cli.rst:459
+#: ../../reference/cli.rst:250 ../../reference/cli.rst:462
 msgid "``--budget=MIB``"
 msgstr "``--budget=MIB``"
 
@@ -754,7 +756,7 @@ msgstr "``--max-nodes=N``"
 msgid "Nodes per document (default: ``1000000``)."
 msgstr "每个文档的节点数上限（默认：``1000000``）。"
 
-#: ../../reference/cli.rst:262 ../../reference/cli.rst:463
+#: ../../reference/cli.rst:262 ../../reference/cli.rst:466
 msgid "``--stack-kib=N``"
 msgstr "``--stack-kib=N``"
 
@@ -767,8 +769,8 @@ msgstr ""
 "用于嵌套内容的栈大小（默认：``512``；不超过读取线程拥有的栈，在 Linux 和 macOS 上为 6144）。请与 "
 "``--max-depth`` 一起调高。"
 
-#: ../../reference/cli.rst:265 ../../reference/cli.rst:449
-#: ../../reference/cli.rst:531
+#: ../../reference/cli.rst:265 ../../reference/cli.rst:452
+#: ../../reference/cli.rst:534
 msgid "``--typst=PATH``"
 msgstr "``--typst=PATH``"
 
@@ -776,7 +778,7 @@ msgstr "``--typst=PATH``"
 msgid "The Typst program for PDF, overriding ``typst`` in ``conf.toml``."
 msgstr "用于生成 PDF 的 Typst 程序，覆盖 ``conf.toml`` 中的 ``typst``。"
 
-#: ../../reference/cli.rst:267 ../../reference/cli.rst:596
+#: ../../reference/cli.rst:267 ../../reference/cli.rst:599
 msgid "``--preview``"
 msgstr "``--preview``"
 
@@ -787,7 +789,7 @@ msgid ""
 msgstr ""
 "包含原本会被 ``:draft:``、未来的 ``:publish-at:`` 或过去的 ``:expires-at:`` 扣留的页面。"
 
-#: ../../reference/cli.rst:269 ../../reference/cli.rst:598
+#: ../../reference/cli.rst:269 ../../reference/cli.rst:601
 msgid "``--now=RFC3339``"
 msgstr "``--now=RFC3339``"
 
@@ -920,7 +922,7 @@ msgstr "``-o FILE``, ``--output FILE``"
 msgid "Write here instead of beside ``conf.py``; ``-`` prints it."
 msgstr "写到这里，而不是写到 ``conf.py`` 旁边；``-`` 表示打印到标准输出。"
 
-#: ../../reference/cli.rst:351 ../../reference/cli.rst:437
+#: ../../reference/cli.rst:351 ../../reference/cli.rst:440
 msgid "``--force``"
 msgstr "``--force``"
 
@@ -1055,142 +1057,150 @@ msgstr ""
 "无法精确表达（硬换行、文本中的图片、链接标题），写出器会尽量接近，并给出一条提示。Typst 输入无法转换为 reStructuredText。"
 
 #: ../../reference/cli.rst:422
+msgid ""
+"With ``--from sphinx`` or ``--from myst``, an unengraved ``lilypond`` "
+"file argument becomes a descriptive sentence in HTML and PDF, translated "
+"with ``--lang``. Conversion never opens the score file; conversion to RST "
+"preserves its directive and filename."
+msgstr "使用 ``--from sphinx`` 或 ``--from myst`` 时，未排版的 ``lilypond`` 文件参数在 HTML 和 PDF 中转换为说明语句，并通过 ``--lang`` 翻译。转换过程不会打开乐谱文件；转换为 RST 时保留其指令和文件名。"
+
+#: ../../reference/cli.rst:425
 msgid "Options of convert"
 msgstr "convert 的选项"
 
-#: ../../reference/cli.rst:428
+#: ../../reference/cli.rst:431
 msgid "``-o FILE``, ``--output=FILE``"
 msgstr "``-o FILE``, ``--output=FILE``"
 
-#: ../../reference/cli.rst:429
+#: ../../reference/cli.rst:432
 msgid "The destination, or ``-`` for standard output. Required."
 msgstr "输出目标，或用 ``-`` 表示标准输出。必填。"
 
-#: ../../reference/cli.rst:430
+#: ../../reference/cli.rst:433
 msgid "``--from=rst|sphinx|commonmark|myst|typst``"
 msgstr "``--from=rst|sphinx|commonmark|myst|typst``"
 
-#: ../../reference/cli.rst:431
+#: ../../reference/cli.rst:434
 msgid ""
 "The input format (``restructuredtext``, ``md``, ``markdown`` and ``typ`` "
 "are accepted spellings)."
 msgstr "输入格式（也接受 ``restructuredtext``、``md``、``markdown`` 和 ``typ`` 这几种写法）。"
 
-#: ../../reference/cli.rst:433
+#: ../../reference/cli.rst:436
 msgid "``--to=html|pdf|rst``"
 msgstr "``--to=html|pdf|rst``"
 
-#: ../../reference/cli.rst:434
+#: ../../reference/cli.rst:437
 msgid "The output format (``restructuredtext`` is an accepted spelling)."
 msgstr "输出格式（也接受 ``restructuredtext`` 这种写法）。"
 
-#: ../../reference/cli.rst:435
+#: ../../reference/cli.rst:438
 msgid "``--emit-typst=FILE``"
 msgstr "``--emit-typst=FILE``"
 
-#: ../../reference/cli.rst:436
+#: ../../reference/cli.rst:439
 msgid "Also write the generated Typst source (not for Typst input)."
 msgstr "同时写出生成的 Typst 源码（不适用于 Typst 输入）。"
 
-#: ../../reference/cli.rst:438
+#: ../../reference/cli.rst:441
 msgid "Replace an existing output file."
 msgstr "覆盖已有的输出文件。"
 
-#: ../../reference/cli.rst:439
+#: ../../reference/cli.rst:442
 msgid "``--raw=refuse|omit|allow``"
 msgstr "``--raw=refuse|omit|allow``"
 
-#: ../../reference/cli.rst:440
+#: ../../reference/cli.rst:443
 msgid "Raw HTML or Typst content: fail (default), leave it out, or keep it."
 msgstr "原始 HTML 或 Typst 内容的处理方式：报错（默认）、省略或保留。"
 
-#: ../../reference/cli.rst:441
+#: ../../reference/cli.rst:444
 msgid "``--strict``"
 msgstr "``--strict``"
 
-#: ../../reference/cli.rst:442
+#: ../../reference/cli.rst:445
 msgid "Treat warnings as failures."
 msgstr "将警告视为失败。"
 
-#: ../../reference/cli.rst:443
+#: ../../reference/cli.rst:446
 msgid "``--title=TEXT``, ``--lang=TAG``"
 msgstr "``--title=TEXT``, ``--lang=TAG``"
 
-#: ../../reference/cli.rst:444
+#: ../../reference/cli.rst:447
 msgid "The document's title and language."
 msgstr "文档的标题和语言。"
 
-#: ../../reference/cli.rst:445
+#: ../../reference/cli.rst:448
 msgid "``--number-sections``"
 msgstr "``--number-sections``"
 
-#: ../../reference/cli.rst:446
+#: ../../reference/cli.rst:449
 msgid "Number section headings."
 msgstr "为章节标题编号。"
 
-#: ../../reference/cli.rst:447
+#: ../../reference/cli.rst:450
 msgid "``--fragment``"
 msgstr "``--fragment``"
 
-#: ../../reference/cli.rst:448
+#: ../../reference/cli.rst:451
 msgid "Write the body only, not a complete document."
 msgstr "只写出正文，而不是完整的文档。"
 
-#: ../../reference/cli.rst:450
+#: ../../reference/cli.rst:453
 msgid ""
 "The Typst program (default: the embedded compiler, else ``typst`` on "
 "``PATH``)."
 msgstr "Typst 程序（默认：内嵌编译器，没有时使用 ``PATH`` 中的 ``typst``）。"
 
-#: ../../reference/cli.rst:451
+#: ../../reference/cli.rst:454
 msgid "``--font-path=DIR``"
 msgstr "``--font-path=DIR``"
 
-#: ../../reference/cli.rst:452
+#: ../../reference/cli.rst:455
 msgid "An extra font folder; repeat it for more."
 msgstr "额外的字体文件夹；有多个时重复此选项。"
 
-#: ../../reference/cli.rst:453
+#: ../../reference/cli.rst:456
 msgid "``--embedded-fonts-only``"
 msgstr "``--embedded-fonts-only``"
 
-#: ../../reference/cli.rst:454
+#: ../../reference/cli.rst:457
 msgid "Ignore system fonts, for reproducible PDFs."
 msgstr "忽略系统字体，以生成可复现的 PDF。"
 
-#: ../../reference/cli.rst:455
+#: ../../reference/cli.rst:458
 msgid "``--offline``"
 msgstr "``--offline``"
 
-#: ../../reference/cli.rst:456
+#: ../../reference/cli.rst:459
 msgid "Use only Typst packages already on disk."
 msgstr "只使用磁盘上已有的 Typst 包。"
 
-#: ../../reference/cli.rst:457
+#: ../../reference/cli.rst:460
 msgid "``--package-cache=DIR``"
 msgstr "``--package-cache=DIR``"
 
-#: ../../reference/cli.rst:458
+#: ../../reference/cli.rst:461
 msgid "The Typst package cache folder."
 msgstr "Typst 包缓存文件夹。"
 
-#: ../../reference/cli.rst:460
+#: ../../reference/cli.rst:463
 msgid "The memory budget of the conversion (default: ``256``)."
 msgstr "转换的内存预算（默认：``256``）。"
 
-#: ../../reference/cli.rst:461
+#: ../../reference/cli.rst:464
 msgid "``--max-depth=N``, ``--max-nodes=N``"
 msgstr "``--max-depth=N``, ``--max-nodes=N``"
 
-#: ../../reference/cli.rst:462
+#: ../../reference/cli.rst:465
 msgid "Nesting and node limits."
 msgstr "嵌套深度和节点数的上限。"
 
-#: ../../reference/cli.rst:464
+#: ../../reference/cli.rst:467
 msgid "Stack for nested content (default: ``512``, at most ``6144``)."
 msgstr "用于嵌套内容的栈大小（默认：``512``，最大 ``6144``）。"
 
-#: ../../reference/cli.rst:466
+#: ../../reference/cli.rst:469
 msgid ""
 "The exit status is 0 for success, 1 for invalid or refused content, 2 for "
 "usage, 3 for a limit, 4 for a file or Typst failure, and 5 for an "
@@ -1199,11 +1209,11 @@ msgstr ""
 "退出状态：0 表示成功，1 表示内容无效或被拒绝，2 表示用法错误，3 表示达到限制，4 表示文件或 Typst 出错，5 "
 "表示内部错误。转换失败时不会写出任何输出。"
 
-#: ../../reference/cli.rst:470
+#: ../../reference/cli.rst:473
 msgid "guidedog formats"
 msgstr "guidedog formats"
 
-#: ../../reference/cli.rst:473
+#: ../../reference/cli.rst:476
 msgid ""
 "Reports the readers and renderers this executable actually has, with "
 "their versions and conformance (``planned``, ``partial``, "
@@ -1213,11 +1223,11 @@ msgstr ""
 "报告此可执行文件实际具备的读取器和渲染器，以及它们的版本和符合程度（``planned``、``partial``、``conformant``）。它还会报告找到的 "
 "Typst 后端（内嵌的，或已安装的程序），以及它是否为固定的版本。"
 
-#: ../../reference/cli.rst:483
+#: ../../reference/cli.rst:486
 msgid "guidedog dsc"
 msgstr "guidedog dsc"
 
-#: ../../reference/cli.rst:486
+#: ../../reference/cli.rst:489
 msgid ""
 "Keeps a discussion catalog and builds it. The commands come from the "
 "discussion plugin, which every ``guidedog`` links. They work on any "
@@ -1232,7 +1242,7 @@ msgstr ""
 "中。每条命令作用于当前文件夹所在的目录，或 ``--dir`` 指定的目录。Guidedog 自己的设计记录就是一个目录，位于 "
 "``docs/gds``。:doc:`../howto/discussions` 介绍完整的工作流程。"
 
-#: ../../reference/cli.rst:502
+#: ../../reference/cli.rst:505
 msgid ""
 "``guidedog dsc build`` builds the catalog as a Guidedog project, as "
 "``guidedog build`` does, with ``pdf_documents`` set to the record books "
@@ -1245,28 +1255,28 @@ msgstr ""
 "``discussion.toml`` 的形式打印目录当前生效的设置。``guidedog dsc --help`` "
 "列出所有命令；``guidedog dsc COMMAND --help`` 显示单条命令的选项。"
 
-#: ../../reference/cli.rst:504
+#: ../../reference/cli.rst:507
 msgid "Options of guidedog dsc"
 msgstr "guidedog dsc 的选项"
 
-#: ../../reference/cli.rst:510
+#: ../../reference/cli.rst:513
 msgid "``--dir=DIR``"
 msgstr "``--dir=DIR``"
 
-#: ../../reference/cli.rst:511
+#: ../../reference/cli.rst:514
 msgid "The catalog. By default, the one the current folder is in."
 msgstr "目录。默认为当前文件夹所在的目录。"
 
-#: ../../reference/cli.rst:512
+#: ../../reference/cli.rst:515
 msgid "``--prefix=NAME``"
 msgstr "``--prefix=NAME``"
 
-#: ../../reference/cli.rst:513
+#: ../../reference/cli.rst:516
 msgid ""
 "The prefix of a catalog without ``discussion.toml``; ``init`` needs it."
 msgstr "没有 ``discussion.toml`` 的目录的前缀；\\ ``init`` 需要它。"
 
-#: ../../reference/cli.rst:514
+#: ../../reference/cli.rst:517
 msgid ""
 "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
 "``--template=FILE``"
@@ -1274,73 +1284,73 @@ msgstr ""
 "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
 "``--template=FILE``"
 
-#: ../../reference/cli.rst:515
+#: ../../reference/cli.rst:518
 msgid ""
 "The name, settings, process draft, and record template of a new catalog "
 "(``init``)."
 msgstr "新目录的名称、设置、流程草稿和记录模板（\\ ``init``\\ ）。"
 
-#: ../../reference/cli.rst:517
+#: ../../reference/cli.rst:520
 msgid "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 msgstr "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 
-#: ../../reference/cli.rst:518
+#: ../../reference/cli.rst:521
 msgid ""
 "A new draft's author (default: Git's ``user.name``), labels, and file "
 "name (``new``; ``init`` takes the first two)."
 msgstr "新草稿的作者（默认：Git 的 ``user.name``）、标签和文件名（``new``；``init`` 接受前两项）。"
 
-#: ../../reference/cli.rst:520
+#: ../../reference/cli.rst:523
 msgid "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 msgstr "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 
-#: ../../reference/cli.rst:521
+#: ../../reference/cli.rst:524
 msgid "``list``: filter by state or label; include inherited records."
 msgstr "``list``：按状态或标签筛选；包含继承的记录。"
 
-#: ../../reference/cli.rst:522
+#: ../../reference/cli.rst:525
 msgid "``--number=N``, ``--discussion=URL``"
 msgstr "``--number=N``, ``--discussion=URL``"
 
-#: ../../reference/cli.rst:523
+#: ../../reference/cli.rst:526
 msgid ""
 "The number and review link of a promotion; ``--number`` also selects a "
 "record to build."
 msgstr "提升时使用的编号和评审链接；``--number`` 还可用于选择要构建的记录。"
 
-#: ../../reference/cli.rst:525
+#: ../../reference/cli.rst:528
 msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 msgstr "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 
-#: ../../reference/cli.rst:526
+#: ../../reference/cli.rst:529
 msgid "A state change, why, and for ``committed`` the evidence."
 msgstr "状态变更、原因，以及 ``committed`` 所需的证据。"
 
-#: ../../reference/cli.rst:527
+#: ../../reference/cli.rst:530
 msgid "``--check``, ``--render``"
 msgstr "``--check``, ``--render``"
 
-#: ../../reference/cli.rst:528
+#: ../../reference/cli.rst:531
 msgid ""
 "``index``: check without writing; ``check``: also build the artifacts."
 msgstr "``index``：只检查，不写入；``check``：同时构建产物。"
 
-#: ../../reference/cli.rst:529
+#: ../../reference/cli.rst:532
 msgid "``--target=html|pdf|both``"
 msgstr "``--target=html|pdf|both``"
 
-#: ../../reference/cli.rst:530
+#: ../../reference/cli.rst:533
 msgid "What ``build`` writes (default: both). A record selects one PDF."
 msgstr "``build`` 写出的内容（默认：两者）。指定一条记录时只选择它的 PDF。"
 
-#: ../../reference/cli.rst:532
+#: ../../reference/cli.rst:535
 msgid ""
 "``build`` and ``check``: the Typst program for a catalog of older Typst "
 "records (default: the embedded compiler), and for the PDF books."
 msgstr ""
 "``build`` 和 ``check``：用于旧式 Typst 记录目录的 Typst 程序（默认：内置编译器），也用于 PDF 图书。"
 
-#: ../../reference/cli.rst:534
+#: ../../reference/cli.rst:537
 msgid ""
 "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
 "``-q``"
@@ -1348,22 +1358,22 @@ msgstr ""
 "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
 "``-q``"
 
-#: ../../reference/cli.rst:535
+#: ../../reference/cli.rst:538
 msgid "Preview a change; machine-readable output; quiet success."
 msgstr "预览更改；机器可读的输出；成功时不输出。"
 
-#: ../../reference/cli.rst:537
+#: ../../reference/cli.rst:540
 msgid ""
 "The exit statuses are those of ``guidedog``. Problems about a catalog "
 "have codes in its prefix, such as ``eds.recovery-needed``."
 msgstr ""
 "退出状态与 ``guidedog`` 相同。与某个目录相关的问题，其代码以该目录的前缀开头，例如 ``eds.recovery-needed``。"
 
-#: ../../reference/cli.rst:540
+#: ../../reference/cli.rst:543
 msgid "guidedog ssg"
 msgstr "guidedog ssg"
 
-#: ../../reference/cli.rst:543
+#: ../../reference/cli.rst:546
 msgid ""
 "Scaffolds static websites, manages article lifecycles, packs and verifies "
 "portable theme archives, and builds multi-project mounted sites. The "
@@ -1377,11 +1387,11 @@ msgstr ""
 "均内置的静态发布插件（``ssg``）。创作命令仅重写前置元数据块（RST 字段列表或 MyST YAML front "
 "matter），正文文本、注释和行尾保持不变。RFC 3339 时间戳需要包含时区；仅包含日期的值自 UTC 午夜起算。"
 
-#: ../../reference/cli.rst:558 ../../reference/cli.rst:719
+#: ../../reference/cli.rst:561 ../../reference/cli.rst:722
 msgid "Subcommands:"
 msgstr "子命令："
 
-#: ../../reference/cli.rst:560
+#: ../../reference/cli.rst:563
 msgid ""
 "``guidedog ssg init PATH [--preset=project|journal|research] "
 "[--title=TITLE] [--author=NAME] [--now=RFC3339]``: creates a complete "
@@ -1396,7 +1406,7 @@ msgstr ""
 "``conf.toml`` 中设置 ``project`` 和 ``author``，并使用今天的 UTC 日期（或 "
 "``--now``）为初始文章盖上时间戳。"
 
-#: ../../reference/cli.rst:561
+#: ../../reference/cli.rst:564
 msgid ""
 "``guidedog ssg new PATH [--title=TITLE] [--template=NAME] "
 "[--now=RFC3339]``: creates a new draft article at ``PATH`` (``.rst`` or "
@@ -1409,7 +1419,7 @@ msgstr ""
 "YYYY-MM-DD`` 的新草稿文章（``.rst`` 或 ``.md``）。``--title`` 默认为文件名词干；指定时 "
 "``--template`` 设置 ``:template: NAME``。"
 
-#: ../../reference/cli.rst:562
+#: ../../reference/cli.rst:565
 msgid ""
 "``guidedog ssg draft PATH [--now=RFC3339]``: marks an existing article at "
 "``PATH`` as a draft (``:draft: true``), preserving its date and schedule. "
@@ -1418,7 +1428,7 @@ msgstr ""
 "``guidedog ssg draft PATH [--now=RFC3339]``：将 ``PATH`` "
 "处的已有文章标记为草稿（``:draft: true``），保留其日期和排期。当 draft 为 true 时，正常构建会将其扣留。"
 
-#: ../../reference/cli.rst:563
+#: ../../reference/cli.rst:566
 msgid ""
 "``guidedog ssg schedule PATH --at=RFC3339 [--now=RFC3339]``: clears draft "
 "and expiration and sets ``:publish-at: RFC3339``. The article stays "
@@ -1427,7 +1437,7 @@ msgstr ""
 "``guidedog ssg schedule PATH --at=RFC3339 [--now=RFC3339]``：清除草稿和过期状态，并设置 "
 "``:publish-at: RFC3339``。文章在该时刻之前保持扣留；接受过去的时刻。"
 
-#: ../../reference/cli.rst:564
+#: ../../reference/cli.rst:567
 msgid ""
 "``guidedog ssg publish PATH [--date=DATE] [--now=RFC3339]``: clears "
 "draft, schedule and expiration. ``--date`` sets a date or RFC 3339 "
@@ -1439,7 +1449,7 @@ msgstr ""
 "[--now=RFC3339]``：清除草稿、排期和过期状态。``--date`` 设置一个不能在未来的日期或 RFC 3339 "
 "时刻。如果不提供，发布时会保留现有的过去日期，或者在旧日期缺失或在未来时使用今天的 UTC 日期。"
 
-#: ../../reference/cli.rst:565
+#: ../../reference/cli.rst:568
 msgid ""
 "``guidedog ssg status [PROJECT] [--now=RFC3339]``: lists every dated, "
 "draft, or scheduled document in ``PROJECT`` (default: ``.``) with its "
@@ -1450,7 +1460,7 @@ msgstr ""
 "（默认：``.``）中所有带日期、草稿或已排期的文档及其状态（``published``、``draft``、``scheduled`` 或 "
 "``expired``）、发布日期或时间戳以及相对于项目的源路径。"
 
-#: ../../reference/cli.rst:566
+#: ../../reference/cli.rst:569
 msgid ""
 "``guidedog ssg build [PROJECT] [--out=DIR] [--no-pdf] [--preview] "
 "[--now=RFC3339]``: builds every ``[[site.mounts]]`` entry (and each "
@@ -1467,14 +1477,14 @@ msgstr ""
 "（默认：``_build/site``）。``--no-pdf`` 跳过 ``pdf`` 和 ``discussion-pdf`` "
 "挂载；``--preview`` 包含被扣留的页面；``--now`` 在所有挂载中固定发布时钟。"
 
-#: ../../reference/cli.rst:568
+#: ../../reference/cli.rst:571
 msgid ""
 "Sitemaps and feeds are generated by each mounted project's own ``[site]`` "
 "settings. Assembly preserves their output paths; it does not merge them "
 "into an aggregate sitemap."
 msgstr "站点地图和订阅源由各个挂载项目自身的 ``[site]`` 设置生成。组装过程会保留其输出路径；不会将它们合并为一个聚合的站点地图。"
 
-#: ../../reference/cli.rst:570
+#: ../../reference/cli.rst:573
 msgid ""
 "``guidedog ssg theme pack DIR --out=FILE``: packs the ``_templates`` and "
 "``_static`` trees of ``DIR`` into a deterministic ``.gdt`` theme archive "
@@ -1483,7 +1493,7 @@ msgstr ""
 "``guidedog ssg theme pack DIR --out=FILE``：将 ``DIR`` 的 ``_templates`` 和 "
 "``_static`` 目录树打包为位于 ``FILE`` 的确定性 ``.gdt`` 主题归档文件。"
 
-#: ../../reference/cli.rst:571
+#: ../../reference/cli.rst:574
 msgid ""
 "``guidedog ssg theme install URL --sha256=HASH [--project=DIR]``: fetches "
 "a ``.gdt`` archive from ``URL`` (or a local path), checks its "
@@ -1496,7 +1506,7 @@ msgstr ""
 "``--project``\\ （默认：``.``）中的 ``_themes/<tree-sha256>/`` 下，并写入 "
 "``guidedog-theme.lock``。"
 
-#: ../../reference/cli.rst:572
+#: ../../reference/cli.rst:575
 msgid ""
 "``guidedog ssg theme verify [PROJECT]``: reads ``guidedog-theme.lock`` "
 "and verifies the installed ``_themes/<tree-sha256>/`` tree in ``PROJECT`` "
@@ -1506,64 +1516,64 @@ msgstr ""
 "``tree_sha256`` 离线验证 ``PROJECT``\\ （默认：``.``）中已安装的 "
 "``_themes/<tree-sha256>/`` 目录树，无需网络访问。"
 
-#: ../../reference/cli.rst:574
+#: ../../reference/cli.rst:577
 msgid "Options of guidedog ssg"
 msgstr "guidedog ssg 的选项"
 
-#: ../../reference/cli.rst:580
+#: ../../reference/cli.rst:583
 msgid "``--preset=project|journal|research``"
 msgstr "``--preset=project|journal|research``"
 
-#: ../../reference/cli.rst:581
+#: ../../reference/cli.rst:584
 msgid "``init``: the site layout preset (default: ``project``)."
 msgstr "``init``：站点布局预设（默认：``project``）。"
 
-#: ../../reference/cli.rst:582
+#: ../../reference/cli.rst:585
 msgid "``--title=TITLE``"
 msgstr "``--title=TITLE``"
 
-#: ../../reference/cli.rst:583
+#: ../../reference/cli.rst:586
 msgid "``init``, ``new``: the website or article title."
 msgstr "``init``、``new``：网站或文章标题。"
 
-#: ../../reference/cli.rst:584
+#: ../../reference/cli.rst:587
 msgid "``--author=NAME``"
 msgstr "``--author=NAME``"
 
-#: ../../reference/cli.rst:585
+#: ../../reference/cli.rst:588
 msgid "``init``: the website author."
 msgstr "``init``：网站作者。"
 
-#: ../../reference/cli.rst:586
+#: ../../reference/cli.rst:589
 msgid "``--template=NAME``"
 msgstr "``--template=NAME``"
 
-#: ../../reference/cli.rst:587
+#: ../../reference/cli.rst:590
 msgid "``new``: the HTML layout template to set in ``:template:``."
 msgstr "``new``：在 ``:template:`` 中设置的 HTML 布局模板。"
 
-#: ../../reference/cli.rst:588
+#: ../../reference/cli.rst:591
 msgid "``--at=RFC3339``"
 msgstr "``--at=RFC3339``"
 
-#: ../../reference/cli.rst:589
+#: ../../reference/cli.rst:592
 msgid ""
 "``schedule``: the UTC release instant for ``:publish-at:``; required."
 msgstr "``schedule``：用于 ``:publish-at:`` 的 UTC 发布时刻；必填。"
 
-#: ../../reference/cli.rst:590
+#: ../../reference/cli.rst:593
 msgid "``--date=DATE``"
 msgstr "``--date=DATE``"
 
-#: ../../reference/cli.rst:591
+#: ../../reference/cli.rst:594
 msgid "``publish``: the publication date (``YYYY-MM-DD`` or RFC 3339)."
 msgstr "``publish``：发布日期（``YYYY-MM-DD`` 或 RFC 3339）。"
 
-#: ../../reference/cli.rst:592
+#: ../../reference/cli.rst:595
 msgid "``--out=DIR``"
 msgstr "``--out=DIR``"
 
-#: ../../reference/cli.rst:593
+#: ../../reference/cli.rst:596
 msgid ""
 "``build``: the assembled site output folder (default: ``_build/site``); "
 "``theme pack``: the destination ``.gdt`` archive file (required)."
@@ -1571,19 +1581,19 @@ msgstr ""
 "``build``：组装后的站点输出文件夹（默认：``_build/site``）；``theme pack``：目标 ``.gdt`` "
 "归档文件（必填）。"
 
-#: ../../reference/cli.rst:594
+#: ../../reference/cli.rst:597
 msgid "``--no-pdf``"
 msgstr "``--no-pdf``"
 
-#: ../../reference/cli.rst:595
+#: ../../reference/cli.rst:598
 msgid "``build``: skip ``pdf`` and ``discussion-pdf`` mounts."
 msgstr "``build``：跳过 ``pdf`` 和 ``discussion-pdf`` 挂载。"
 
-#: ../../reference/cli.rst:597
+#: ../../reference/cli.rst:600
 msgid "``build``: include draft, scheduled, and expired pages."
 msgstr "``build``：包含草稿、已排期和已过期的页面。"
 
-#: ../../reference/cli.rst:599
+#: ../../reference/cli.rst:602
 msgid ""
 "``init``, ``new``, ``draft``, ``schedule``, ``publish``, ``status``, "
 "``build``: fix the UTC clock used for timestamps and publication "
@@ -1592,21 +1602,21 @@ msgstr ""
 "``init``、``new``、``draft``、``schedule``、``publish``、``status``、``build``：固定用于时间戳和发布判定所依据的 "
 "UTC 时钟。"
 
-#: ../../reference/cli.rst:600
+#: ../../reference/cli.rst:603
 msgid "``--sha256=HASH``"
 msgstr "``--sha256=HASH``"
 
-#: ../../reference/cli.rst:601
+#: ../../reference/cli.rst:604
 msgid ""
 "``theme install``: the required 64-digit hexadecimal SHA-256 of the "
 "``.gdt`` archive."
 msgstr "``theme install``：``.gdt`` 归档所需的 64 位十六进制 SHA-256 校验和。"
 
-#: ../../reference/cli.rst:602
+#: ../../reference/cli.rst:605
 msgid "``--project=DIR``"
 msgstr "``--project=DIR``"
 
-#: ../../reference/cli.rst:603
+#: ../../reference/cli.rst:606
 msgid ""
 "``theme install``: the project root where ``_themes/`` and "
 "``guidedog-theme.lock`` live (default: ``.``)."
@@ -1614,18 +1624,18 @@ msgstr ""
 "``theme install``：存放 ``_themes/`` 和 ``guidedog-theme.lock`` "
 "的项目根目录（默认：``.``）。"
 
-#: ../../reference/cli.rst:605
+#: ../../reference/cli.rst:608
 msgid "guidedog publish"
 msgstr "guidedog publish"
 
-#: ../../reference/cli.rst:608
+#: ../../reference/cli.rst:611
 msgid ""
 "Builds the project that a publisher's configuration names, as HTML with "
 "Guidedog's own engine. It freezes the site, and the publisher plans and "
 "publishes it:"
 msgstr "构建发布器配置中指定的项目：用 Guidedog 自己的引擎生成 HTML，冻结网站，再由发布器规划并发布："
 
-#: ../../reference/cli.rst:616
+#: ../../reference/cli.rst:619
 msgid ""
 "The publisher is looked up among the plugins linked into this executable "
 "first, then in the machine's registry (``guidedog plugin register``). A "
@@ -1634,64 +1644,64 @@ msgstr ""
 "查找发布器时，先在链接进此可执行文件的插件中查找，再到本机的注册表（``guidedog plugin "
 "register``）中查找。构建插件会被拒绝，因为只有发布器才能发布。"
 
-#: ../../reference/cli.rst:620
+#: ../../reference/cli.rst:623
 msgid "Options of publish"
 msgstr "publish 的选项"
 
-#: ../../reference/cli.rst:626
+#: ../../reference/cli.rst:629
 msgid "``--publisher=ID``"
 msgstr "``--publisher=ID``"
 
-#: ../../reference/cli.rst:627
+#: ../../reference/cli.rst:630
 msgid "The publisher."
 msgstr "发布器。"
 
-#: ../../reference/cli.rst:628 ../../reference/cli.rst:853
+#: ../../reference/cli.rst:631 ../../reference/cli.rst:856
 msgid "``--config=FILE``"
 msgstr "``--config=FILE``"
 
-#: ../../reference/cli.rst:629
+#: ../../reference/cli.rst:632
 msgid "The publisher's configuration, which names the project or site."
 msgstr "发布器的配置，其中指定了项目或网站。"
 
-#: ../../reference/cli.rst:630
+#: ../../reference/cli.rst:633
 msgid "``--dry-run``"
 msgstr "``--dry-run``"
 
-#: ../../reference/cli.rst:631
+#: ../../reference/cli.rst:634
 msgid "Build and plan; write nothing to the target."
 msgstr "构建并规划，但不向目标写入任何内容。"
 
-#: ../../reference/cli.rst:632
+#: ../../reference/cli.rst:635
 msgid "``--wait=SECONDS``"
 msgstr "``--wait=SECONDS``"
 
-#: ../../reference/cli.rst:633
+#: ../../reference/cli.rst:636
 msgid ""
 "How long to wait for the host to confirm the deployment, from 0 (do not "
 "wait) to 86400."
 msgstr "等待托管方确认部署的时长，范围为 0（不等待）到 86400。"
 
-#: ../../reference/cli.rst:635
+#: ../../reference/cli.rst:638
 msgid "``--timeout=SECONDS``"
 msgstr "``--timeout=SECONDS``"
 
-#: ../../reference/cli.rst:636
+#: ../../reference/cli.rst:639
 msgid ""
 "The bound on each whole exchange with the publisher, writing the request "
 "included, from 1 to 86400 (default: 300). Choose a value longer than "
 "``--wait``."
 msgstr "与发布器每次完整交互（包括写入请求）的时间上限，范围为 1 到 86400（默认：300）。请选择比 ``--wait`` 更长的值。"
 
-#: ../../reference/cli.rst:638
+#: ../../reference/cli.rst:641
 msgid "``--verbose``"
 msgstr "``--verbose``"
 
-#: ../../reference/cli.rst:639
+#: ../../reference/cli.rst:642
 msgid "List every change of the plan."
 msgstr "列出计划中的每一项变更。"
 
-#: ../../reference/cli.rst:641
+#: ../../reference/cli.rst:644
 msgid ""
 "A timeout or Ctrl+C after a possible write reports an unknown outcome "
 "(exit status 7). We then run the publisher's recovery command before "
@@ -1703,11 +1713,11 @@ msgstr ""
 "7）。此时我们应先运行发布器的恢复命令，再重试。每次调用都在自己的私有文件夹中构建，结束后会删除该文件夹。并发的调用不会改动彼此的快照。见 "
 ":doc:`../plugins`。"
 
-#: ../../reference/cli.rst:646
+#: ../../reference/cli.rst:649
 msgid "guidedog publish pages"
 msgstr "guidedog publish pages"
 
-#: ../../reference/cli.rst:649
+#: ../../reference/cli.rst:652
 msgid ""
 "``guidedog publish pages`` is the guided way to GitHub Pages; the GitHub "
 "Pages plugin adds it. It does whatever is still missing and asks only "
@@ -1716,7 +1726,7 @@ msgstr ""
 "``guidedog publish pages`` 是发布到 GitHub Pages 的引导式方式，由 GitHub Pages "
 "插件添加。它会补齐尚缺的一切，只在必要时才询问。然后它会构建并发布："
 
-#: ../../reference/cli.rst:652
+#: ../../reference/cli.rst:655
 msgid ""
 "``pages.toml``: written once, with the repository taken from the "
 "``origin`` remote and the project from the nearest ``conf.toml`` (or as "
@@ -1724,31 +1734,31 @@ msgid ""
 msgstr ""
 "``pages.toml``：只写入一次，仓库取自 ``origin`` 远程，项目取自最近的 ``conf.toml`` （或使用指定的值）。"
 
-#: ../../reference/cli.rst:654
+#: ../../reference/cli.rst:657
 msgid ""
 "A token: GitHub's device sign-in, stored in the system's credential "
 "store, or the GitHub CLI's token for this run only."
 msgstr "令牌：通过 GitHub 设备登录获取并保存到系统凭据存储中，或仅在本次运行中使用 GitHub CLI 的令牌。"
 
-#: ../../reference/cli.rst:656
+#: ../../reference/cli.rst:659
 msgid ""
 "The binding: the target is reviewed, and it asks us once to let this "
 "machine publish there."
 msgstr "绑定：先核查目标，再询问我们一次，是否允许本机向该处发布。"
 
-#: ../../reference/cli.rst:658
+#: ../../reference/cli.rst:661
 msgid ""
 "The Pages source: when Pages publishes another branch, or uses Actions, "
 "it asks us once to switch it."
 msgstr "Pages 来源：如果 Pages 正在发布其他分支，或使用 Actions，会询问我们一次是否切换。"
 
-#: ../../reference/cli.rst:660
+#: ../../reference/cli.rst:663
 msgid ""
 "The publication: one push to the site's own branch, then a wait for the "
 "deployment."
 msgstr "发布：向网站自己的分支推送一次，然后等待部署完成。"
 
-#: ../../reference/cli.rst:662
+#: ../../reference/cli.rst:665
 msgid ""
 "On a machine that is already set up, it publishes without a question. "
 "Without a terminal it never asks. A missing step then fails with a hint "
@@ -1768,11 +1778,11 @@ msgstr ""
 "用自己的引擎和链接的插件直接构建；``--guidedog=PATH`` 可改用另一个程序构建。参见 "
 ":doc:`../howto/github-pages`。"
 
-#: ../../reference/cli.rst:670
+#: ../../reference/cli.rst:673
 msgid "guidedog pages workflow"
 msgstr "guidedog pages workflow"
 
-#: ../../reference/cli.rst:673
+#: ../../reference/cli.rst:676
 msgid ""
 "``guidedog pages workflow`` is added by the linked GitHub Pages plugin. "
 "It prints, writes, or checks a GitHub Actions workflow. The workflow "
@@ -1784,25 +1794,25 @@ msgstr ""
 "Actions 工作流。该工作流安装此 Guidedog 发行版，构建项目，并使用 GitHub 的 Pages "
 "动作进行部署。当每次推送到源分支都应触发部署时，我们用它代替从本机直接发布。"
 
-#: ../../reference/cli.rst:683
+#: ../../reference/cli.rst:686
 msgid "Options of pages workflow"
 msgstr "pages workflow 的选项"
 
-#: ../../reference/cli.rst:689
+#: ../../reference/cli.rst:692
 msgid "``--write``, ``--force``"
 msgstr "``--write``, ``--force``"
 
-#: ../../reference/cli.rst:690
+#: ../../reference/cli.rst:693
 msgid ""
 "Write ``.github/workflows/docs-pages.yml`` instead of printing it; "
 "replace an existing one."
 msgstr "写入 ``.github/workflows/docs-pages.yml`` 而不是输出它；替换已有的文件。"
 
-#: ../../reference/cli.rst:692
+#: ../../reference/cli.rst:695
 msgid "``--check``"
 msgstr "``--check``"
 
-#: ../../reference/cli.rst:693
+#: ../../reference/cli.rst:696
 msgid ""
 "Check an existing workflow: an older release, a missing checksum, an "
 "unpinned action, ``pull_request_target``, a checkout that keeps its "
@@ -1810,35 +1820,35 @@ msgid ""
 msgstr ""
 "检查已有的工作流：版本过旧、缺少校验和、action 未固定版本、使用 ``pull_request_target``、检出步骤保留了凭据。"
 
-#: ../../reference/cli.rst:695
+#: ../../reference/cli.rst:698
 msgid "``--project=DIR``, ``--branch=NAME``"
 msgstr "``--project=DIR``, ``--branch=NAME``"
 
-#: ../../reference/cli.rst:696
+#: ../../reference/cli.rst:699
 msgid ""
 "The project (default: ``docs``) and the source branch (default: ``main``)."
 msgstr "项目（默认：``docs``）和源分支（默认：``main``）。"
 
-#: ../../reference/cli.rst:697
+#: ../../reference/cli.rst:700
 msgid "``--version=X``, ``--sha256=HEX``, ``--offline``"
 msgstr "``--version=X``, ``--sha256=HEX``, ``--offline``"
 
-#: ../../reference/cli.rst:698
+#: ../../reference/cli.rst:701
 msgid ""
 "The release to install, its archive's SHA-256 (default: read from the "
 "release's ``SHA256SUMS``), or a marked placeholder without network access."
 msgstr ""
 "要安装的版本、其归档文件的 SHA-256（默认从该版本的 ``SHA256SUMS`` 读取），或者在不联网时写入一个带标记的占位符。"
 
-#: ../../reference/cli.rst:701
+#: ../../reference/cli.rst:704
 msgid "See :doc:`../howto/github-pages`."
 msgstr "参见 :doc:`../howto/github-pages`。"
 
-#: ../../reference/cli.rst:703
+#: ../../reference/cli.rst:706
 msgid "guidedog plugin"
 msgstr "guidedog plugin"
 
-#: ../../reference/cli.rst:706
+#: ../../reference/cli.rst:709
 msgid ""
 "Records which plugin programs may run on this machine, in "
 "``plugins.toml`` in Guidedog's configuration folder "
@@ -1847,7 +1857,7 @@ msgstr ""
 "在 Guidedog 配置目录的 ``plugins.toml`` 中记录本机允许运行的插件程序（``GUIDEDOG_CONFIG_DIR`` "
 "可更改该目录）："
 
-#: ../../reference/cli.rst:721
+#: ../../reference/cli.rst:724
 msgid ""
 "``register ID PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS] "
 "[--yes]``: inspects the program after we confirm (``--yes`` skips the "
@@ -1859,7 +1869,7 @@ msgstr ""
 "[--yes]``：经我们确认后检查程序（``--yes`` 跳过询问），并记录其 SHA-256。程序必须声明自己就是 "
 "``ID``。构建插件须先通过下面的资格检查才能注册。"
 
-#: ../../reference/cli.rst:725
+#: ../../reference/cli.rst:728
 msgid ""
 "``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: runs "
 "the qualification checks against a build plugin without changing the "
@@ -1870,13 +1880,13 @@ msgstr ""
 "[--timeout=SECONDS]``：对构建插件运行资格检查，不改动注册表。发布器会被拒绝；测试发布器请使用它自带的测试和 "
 "``guidedog publish --dry-run``。"
 
-#: ../../reference/cli.rst:728
+#: ../../reference/cli.rst:731
 msgid ""
 "``list``: the registered programs, their IDs, paths, and kinds, beside "
 "the plugins linked into this executable."
 msgstr "``list``：列出已注册的程序及其 ID、路径和类别，以及链接进本可执行文件的插件。"
 
-#: ../../reference/cli.rst:730
+#: ../../reference/cli.rst:733
 msgid ""
 "``inspect ID``: an entry's declared build hooks (source, HTML, assets) or "
 "publisher capabilities, the commands it adds, and whether the program on "
@@ -1884,7 +1894,7 @@ msgid ""
 msgstr ""
 "``inspect ID``：显示条目声明的构建钩子（源文本、HTML、资源）或发布能力、它添加的命令，以及磁盘上的程序是否仍是注册时的那个。"
 
-#: ../../reference/cli.rst:733
+#: ../../reference/cli.rst:736
 msgid ""
 "``run ID -- [ARGS...]``: runs an external registered program's own "
 "commands, after checking its SHA-256 (linked plugins run directly as "
@@ -1893,13 +1903,13 @@ msgstr ""
 "``run ID -- [ARGS...]``：先核对 SHA-256，再运行已注册外部程序自带的命令（内置链接的插件直接以 ``guidedog "
 "<command>`` 运行，例如 ``guidedog pages auth status``）。"
 
-#: ../../reference/cli.rst:735
+#: ../../reference/cli.rst:738
 msgid ""
 "``unregister ID``: removes the entry from ``plugins.toml``. The program, "
 "and anything it published, stay unchanged."
 msgstr "``unregister ID``：从 ``plugins.toml`` 删除该条目。程序本身及其发布过的内容保持不变。"
 
-#: ../../reference/cli.rst:738
+#: ../../reference/cli.rst:741
 msgid ""
 "Build plugins are selected by ``plugins`` in ``conf.toml`` and run during "
 "``guidedog build``. ``guidedog publish`` accepts publishers only. "
@@ -1910,11 +1920,11 @@ msgstr ""
 "期间运行。``guidedog publish`` 只接受发布器。``--untrusted`` 会禁用构建插件。完整指南、示例和配置见 "
 ":doc:`../plugins`。"
 
-#: ../../reference/cli.rst:742
+#: ../../reference/cli.rst:745
 msgid "Build-plugin qualification checks"
 msgstr "构建插件的资格检查"
 
-#: ../../reference/cli.rst:745
+#: ../../reference/cli.rst:748
 msgid ""
 "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises the "
 "declared hooks in child processes: loading, repeated results, and "
@@ -1930,11 +1940,11 @@ msgstr ""
 "以它为基准。请求时限默认 60 秒。检查前后程序的 SHA-256 "
 "必须一致。注册发布器时不会触发发布。通过检查只证明互操作性，既不是沙箱，也不是安全证书。"
 
-#: ../../reference/cli.rst:752
+#: ../../reference/cli.rst:755
 msgid "Custom binaries with linked plugins"
 msgstr "链接了插件的自定义可执行文件"
 
-#: ../../reference/cli.rst:755
+#: ../../reference/cli.rst:758
 msgid ""
 "The whole command line is the ``gd-cli`` crate. A Rust program can be a "
 "``guidedog`` with plugins linked in, instead of registered as separate "
@@ -1946,7 +1956,7 @@ msgstr ""
 "``guidedog``，而不必把插件注册为单独的程序。它把包含自身插件的 ``gd_plugins::Registry`` 传给 "
 "``gd_cli::run_with``。该函数读取进程参数并返回退出状态。"
 
-#: ../../reference/cli.rst:774
+#: ../../reference/cli.rst:777
 msgid ""
 "The program accepts every command and option on this page. A selected "
 "plugin ID is looked up among the linked plugins first, then in the "
@@ -1964,11 +1974,11 @@ msgstr ""
 "插件（``pages``）、讨论插件（``dsc``）和静态发布插件（``ssg``）。每个插件都是其安装形式通过 "
 "``gd_plugins::serve_plugin`` 提供的同一 ``Plugin`` 值（参见 :doc:`../plugins`）。"
 
-#: ../../reference/cli.rst:776
+#: ../../reference/cli.rst:779
 msgid "Commands plugins add"
 msgstr "插件添加的命令"
 
-#: ../../reference/cli.rst:779
+#: ../../reference/cli.rst:782
 msgid ""
 "A plugin may add commands to guidedog, or targets to ``guidedog "
 "publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
@@ -1979,7 +1989,7 @@ msgstr ""
 "PLUGIN COMMANDS 下列出这些命令，并注明各自所属插件的 ID；``guidedog plugin inspect ID`` "
 "显示某个插件添加的命令："
 
-#: ../../reference/cli.rst:791
+#: ../../reference/cli.rst:794
 msgid ""
 "guidedog looks for a word it does not know (or a ``publish`` target) "
 "among the commands of the linked plugins first, then among those of the "
@@ -1992,7 +2002,7 @@ msgstr ""
 "先在链接的插件的命令中查找，再到已注册程序的命令中查找，然后运行添加该命令的插件。在这样的命令后加 ``--help`` "
 "会打印它的帮助，内容来自插件的声明。插件不能替换 guidedog 自己的命令；同一个名称由最先添加它的插件保有。"
 
-#: ../../reference/cli.rst:793
+#: ../../reference/cli.rst:796
 msgid ""
 "A linked plugin's command runs inside guidedog. A registered program's "
 "command runs as that program, started on our terminal after its SHA-256 "
@@ -2005,11 +2015,11 @@ msgstr ""
 "后，在我们的终端上启动它。它可以提问，它的退出状态就是命令的退出状态。无论哪种方式请求构建，都由 guidedog "
 "构建项目。程序的命令在注册时读取，因此新版本需要像往常一样重新注册。"
 
-#: ../../reference/cli.rst:795
+#: ../../reference/cli.rst:798
 msgid "guidedog pages"
 msgstr "guidedog pages"
 
-#: ../../reference/cli.rst:798
+#: ../../reference/cli.rst:801
 msgid ""
 "The linked Pages plugin publishes through ``guidedog publish pages`` and "
 "exposes maintenance through ``guidedog pages``. Guidedog builds the "
@@ -2020,62 +2030,62 @@ msgstr ""
 "提供维护操作。Guidedog 使用其自带引擎构建项目。保留单步命令用于脚本编写及单独检查各个部分。参见 "
 ":doc:`../howto/github-pages`。"
 
-#: ../../reference/cli.rst:820
+#: ../../reference/cli.rst:823
 msgid "Settings of pages.toml"
 msgstr "pages.toml 的设置"
 
-#: ../../reference/cli.rst:824
+#: ../../reference/cli.rst:827
 msgid "Setting"
 msgstr "设置项"
 
-#: ../../reference/cli.rst:826
+#: ../../reference/cli.rst:829
 msgid "``schema = 1``"
 msgstr "``schema = 1``"
 
-#: ../../reference/cli.rst:827
+#: ../../reference/cli.rst:830
 msgid "The file's version; required."
 msgstr "文件格式的版本；必填。"
 
-#: ../../reference/cli.rst:828
+#: ../../reference/cli.rst:831
 msgid "``repository = \"OWNER/REPO\"``"
 msgstr "``repository = \"OWNER/REPO\"``"
 
-#: ../../reference/cli.rst:829
+#: ../../reference/cli.rst:832
 msgid "The GitHub.com repository; required."
 msgstr "GitHub.com 上的仓库；必填。"
 
-#: ../../reference/cli.rst:830
+#: ../../reference/cli.rst:833
 msgid "``branch = \"gh-pages\"``"
 msgstr "``branch = \"gh-pages\"``"
 
-#: ../../reference/cli.rst:831
+#: ../../reference/cli.rst:834
 msgid ""
 "The branch the site is published to: its own, never the default branch."
 msgstr "网站发布到的分支：专用分支，绝不能是默认分支。"
 
-#: ../../reference/cli.rst:832
+#: ../../reference/cli.rst:835
 msgid "``project = \"docs\"`` or ``site = \"build/site\"``"
 msgstr "``project = \"docs\"`` 或 ``site = \"build/site\"``"
 
-#: ../../reference/cli.rst:833
+#: ../../reference/cli.rst:836
 msgid ""
 "The Guidedog project to build, or the folder of a site built already; one "
 "of them, relative to ``pages.toml``."
 msgstr "要构建的 Guidedog 项目，或已构建好的网站所在的文件夹；二者选其一，路径相对于 ``pages.toml``\\ 。"
 
-#: ../../reference/cli.rst:835
+#: ../../reference/cli.rst:838
 msgid "``profile = \"default\"``"
 msgstr "``profile = \"default\"``"
 
-#: ../../reference/cli.rst:836
+#: ../../reference/cli.rst:839
 msgid "The credential profile whose token publishes."
 msgstr "用其令牌进行发布的凭据档案。"
 
-#: ../../reference/cli.rst:837
+#: ../../reference/cli.rst:840
 msgid "``site_url``"
 msgstr "``site_url``"
 
-#: ../../reference/cli.rst:838
+#: ../../reference/cli.rst:841
 msgid ""
 "The address readers open, and ``html_baseurl`` for the build (default: "
 "``https://OWNER.github.io/REPO/``)."
@@ -2083,49 +2093,49 @@ msgstr ""
 "读者访问的地址，也是构建时的 ``html_baseurl``\\ （默认：\\ "
 "``https://OWNER.github.io/REPO/``\\ ）。"
 
-#: ../../reference/cli.rst:840
+#: ../../reference/cli.rst:843
 msgid "``strict = true``"
 msgstr "``strict = true``"
 
-#: ../../reference/cli.rst:841
+#: ../../reference/cli.rst:844
 msgid "Build with warnings as errors."
 msgstr "将警告视为错误进行构建。"
 
-#: ../../reference/cli.rst:842
+#: ../../reference/cli.rst:845
 msgid "``wait_seconds = 300``"
 msgstr "``wait_seconds = 300``"
 
-#: ../../reference/cli.rst:843
+#: ../../reference/cli.rst:846
 msgid "How long ``publish`` waits for the deployment."
 msgstr "``publish`` 等待部署的时长。"
 
-#: ../../reference/cli.rst:844
+#: ../../reference/cli.rst:847
 msgid "``[watch] debounce_ms``, ``max_wait_ms``"
 msgstr "``[watch] debounce_ms``, ``max_wait_ms``"
 
-#: ../../reference/cli.rst:845
+#: ../../reference/cli.rst:848
 msgid ""
 "How long ``watch`` lets sources settle, and the most it waits after a "
 "change."
 msgstr "``watch`` 等待源文件静止的时长，以及首次变化后最长的等待时间。"
 
-#: ../../reference/cli.rst:847
+#: ../../reference/cli.rst:850
 msgid "Options of guidedog pages"
 msgstr "guidedog pages 的选项"
 
-#: ../../reference/cli.rst:854
+#: ../../reference/cli.rst:857
 msgid "The configuration (default: ``pages.toml``)."
 msgstr "配置文件（默认：\\ ``pages.toml``\\ ）。"
 
-#: ../../reference/cli.rst:855
+#: ../../reference/cli.rst:858
 msgid "``--profile=NAME``"
 msgstr "``--profile=NAME``"
 
-#: ../../reference/cli.rst:856
+#: ../../reference/cli.rst:859
 msgid "The profile ``auth`` and ``init`` use (default: ``default``)."
 msgstr "``auth`` 和 ``init`` 使用的档案（默认：\\ ``default``\\ ）。"
 
-#: ../../reference/cli.rst:857
+#: ../../reference/cli.rst:860
 msgid ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
@@ -2133,25 +2143,25 @@ msgstr ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
 
-#: ../../reference/cli.rst:858
+#: ../../reference/cli.rst:861
 msgid "``init``: what the new ``pages.toml`` says."
 msgstr "``init``：写入新 ``pages.toml`` 的内容。"
 
-#: ../../reference/cli.rst:859
+#: ../../reference/cli.rst:862
 msgid "``--credential=env``"
 msgstr "``--credential=env``"
 
-#: ../../reference/cli.rst:860
+#: ../../reference/cli.rst:863
 msgid ""
 "Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without "
 "storing it."
 msgstr "本次命令使用 ``GUIDEDOG_PAGES_TOKEN`` 中的令牌，且不保存它。"
 
-#: ../../reference/cli.rst:861
+#: ../../reference/cli.rst:864
 msgid "``--guidedog=PATH``"
 msgstr "``--guidedog=PATH``"
 
-#: ../../reference/cli.rst:862
+#: ../../reference/cli.rst:865
 msgid ""
 "The ``guidedog`` that builds (default: this ``guidedog`` executable when "
 "invoked through ``guidedog pages watch``, else "
@@ -2160,55 +2170,55 @@ msgstr ""
 "构建所用的 ``guidedog``\\ （默认：通过 ``guidedog pages watch`` 调用时为当前 ``guidedog`` "
 "可执行文件，否则依次使用 ``GUIDEDOG_PAGES_GUIDEDOG`` 和 ``PATH``）。"
 
-#: ../../reference/cli.rst:863
+#: ../../reference/cli.rst:866
 msgid "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 msgstr "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 
-#: ../../reference/cli.rst:864
+#: ../../reference/cli.rst:867
 msgid ""
 "``publish``: plan only; how long to wait for the deployment; list every "
 "change."
 msgstr "``publish``\\ ：只做规划；等待部署的时长；列出每一项变更。"
 
-#: ../../reference/cli.rst:865
+#: ../../reference/cli.rst:868
 msgid "``--adopt``, ``--yes``"
 msgstr "``--adopt``, ``--yes``"
 
-#: ../../reference/cli.rst:866
+#: ../../reference/cli.rst:869
 msgid ""
 "``bind``: let a branch of other work be replaced; answer yes to the "
 "question."
 msgstr "``bind``\\ ：允许替换包含其他内容的分支；对询问回答“是”。"
 
-#: ../../reference/cli.rst:867
+#: ../../reference/cli.rst:870
 msgid ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 msgstr ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 
-#: ../../reference/cli.rst:868
+#: ../../reference/cli.rst:871
 msgid ""
 "``auth login``: the app; the repositories an OAuth App token may reach; "
 "open the browser; give the profile to another account."
 msgstr "``auth login``\\ ：所用的应用；OAuth App 令牌可以访问的仓库；打开浏览器；把档案交给另一个账户。"
 
-#: ../../reference/cli.rst:870
+#: ../../reference/cli.rst:873
 msgid "``--operation=COMMIT``"
 msgstr "``--operation=COMMIT``"
 
-#: ../../reference/cli.rst:871
+#: ../../reference/cli.rst:874
 msgid "``status``: the publication to ask about (default: the last one)."
 msgstr "``status``：要查询的那次发布（默认：最近一次）。"
 
-#: ../../reference/cli.rst:872
+#: ../../reference/cli.rst:875
 msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
 msgstr "``--diagnostics=text|json``, ``--color=auto|always|never``"
 
-#: ../../reference/cli.rst:873
+#: ../../reference/cli.rst:876
 msgid "How problems and results are written."
 msgstr "问题和结果的输出方式。"
 
-#: ../../reference/cli.rst:875
+#: ../../reference/cli.rst:878
 msgid ""
 "Its exit statuses are those of ``guidedog publish``: 0 live or unchanged, "
 "1 nothing published, 2 a usage or configuration problem, 4 a file, "
@@ -5759,7 +5769,14 @@ msgid ""
 "but its file arguments and ``\\include`` are refused. Each dropped "
 "setting is a ``build.untrusted`` warning. This is a capability policy, "
 "not a process sandbox. See :doc:`cli`."
-msgstr "``guidedog build --untrusted`` 用于构建源文件并非由我们编写的项目。原始内容会被略去，不获取任何内容，也不运行任何构建插件。项目无法扩大构建可读取的范围。``include_roots`` 和 ``pdf_preamble`` 不会生效。指向源目录之外的文件和文件夹（``html_logo``、``html_favicon``、``pdf_logo``、``mathjax_config_path``、``html_static_path``、``html_extra_path``、``templates_path``、``locale_dirs``、``pdf_font_paths``、``autodoc_source_paths``、``odin_autoapi_dirs``、``rust_autoapi_crates``）会被略去。内嵌 ``typst-diagram`` 编译被禁用，也不下载任何 Typst 包。文档中直接书写的 ``lilypond`` 乐谱仍会刻印，但其文件参数和 ``\\include`` 会被拒绝。每个被舍弃的设置都会产生一条 ``build.untrusted`` 警告。这是一种能力策略，而不是进程沙箱。参见 :doc:`cli`。"
+msgstr ""
+"``guidedog build --untrusted`` "
+"用于构建源文件并非由我们编写的项目。原始内容会被略去，不获取任何内容，也不运行任何构建插件。项目无法扩大构建可读取的范围。``include_roots`` "
+"和 ``pdf_preamble`` "
+"不会生效。指向源目录之外的文件和文件夹（``html_logo``、``html_favicon``、``pdf_logo``、``mathjax_config_path``、``html_static_path``、``html_extra_path``、``templates_path``、``locale_dirs``、``pdf_font_paths``、``autodoc_source_paths``、``odin_autoapi_dirs``、``rust_autoapi_crates``）会被略去。内嵌 "
+"``typst-diagram`` 编译被禁用，也不下载任何 Typst 包。文档中直接书写的 ``lilypond`` "
+"乐谱仍会刻印，但其文件参数和 ``\\include`` 会被拒绝。每个被舍弃的设置都会产生一条 ``build.untrusted`` "
+"警告。这是一种能力策略，而不是进程沙箱。参见 :doc:`cli`。"
 
 #: ../../reference/configuration.rst:1572
 msgid "Native music engraving"

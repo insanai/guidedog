@@ -8,6 +8,7 @@ cargo xtask --help                       # every task
 cargo xtask tables --check               # generated tables match tools/data (CI)
 cargo xtask tables                       # regenerate them
 cargo xtask fetch-fonts                  # Noto Serif CJK into docs/shared/fonts
+cargo xtask fetch-fonts --music          # Only the pinned CJK music corpus face
 cargo xtask build-site [--no-pdf]        # the website into build/site
 cargo xtask release --help               # build, package, source, checksums, formula,
                                          # publish, check-version, check-run,

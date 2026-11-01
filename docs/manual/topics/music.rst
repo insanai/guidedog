@@ -56,7 +56,9 @@ MyST uses the same directive and options.
    ```
 
 An ordinary ``code-block:: lilypond`` or plain Markdown ``lilypond`` fence remains a source example.
-A direct ``guidedog convert`` operation also retains directive source; engraving belongs to the project asset pipeline.
+Conversion to RST retains the directive and its file argument.
+Direct HTML and PDF conversion keeps inline notation as code and names an unengraved file argument in a localized sentence, without opening the score file.
+Engraving belongs to the project asset pipeline.
 
 Choose the notation
 -------------------
@@ -257,6 +259,10 @@ Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the SIL Op
 Text follows ``pdf_fonts`` and ``pdf_font_paths``, with regular, bold and italic fallback faces.
 Glyphs become outlines, so browsers and PDF readers need no installed music font.
 PNG export requires the embedded renderer; SVG engraving remains available in builds without it.
+
+For CJK lyrics, we include a suitable CJK text face through ``pdf_font_paths``.
+When building this repository, ``cargo xtask fetch-fonts --music`` installs the pinned Noto Serif CJK face used by the mixed-script music corpus in ``docs/shared/fonts``.
+We can use that directory as a font path in our project.
 
 One example accepts at most 256 KiB of source including includes, 32 included files, depth 64, 20,000 events, 24 staves, two voices per staff and 16 heads per chord.
 The reader and engraver each have a work limit of eight million operations.

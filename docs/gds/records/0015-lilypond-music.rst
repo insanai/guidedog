@@ -1299,3 +1299,20 @@ A second review against LilyPond 2.24 and Gould's rules expanded the profile and
    docs/gds/evidence/native-music-20261101.rst; 48-score SVG/PNG and collision
    corpus; 12000 fuzz cases; 2065 workspace tests; seven HTML/PDF manual
    editions; strict Clippy, formatting, source and license checks.
+
+Follow-up qualification
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The mixed-script corpus now includes Chinese and Devanagari lyrics with fixed font bytes.
+CI and every native release job download the single pinned CJK face before running the corpus; the loader checks its digest again.
+At both staff sizes the corpus refuses missing-glyph and other engraving warnings.
+Direct HTML, text and PDF conversion names an unengraved file argument through a localized label without opening it; RST retains the original directive.
+
+``Options::scratch`` supplies reserve and release callbacks for temporary layout storage.
+Skyline segment owners retain their reservation while alive, including the overlap of old and replacement buffers during a merge.
+Spacing sort buffers, local rods and break-choice tables release their reservations on both success and error.
+The project adapter connects them to ``Ledger::charge`` and ``Ledger::discharge``; that refund operation avoids counting every intermediate merge cumulatively.
+Retained workspace capacity is accounted for each call because callers can replace the ledger between scores.
+
+System context uses a measure index, independently of its printed number, and voice-column arrangement runs after beam directions are final.
+The two-voice profile remains unchanged in this follow-up, as permitted by the maintainer's scope clarification; third and fourth voices need a separate note-column and collision-layout extension.

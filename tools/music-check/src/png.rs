@@ -1,6 +1,8 @@
 //! Decode the RGBA8 corpus PNGs and compare composited pixels with a small tolerance.
 
 pub(crate) fn compare(expected: &[u8], actual: &[u8]) -> Result<(), String> {
+    check_dpi(expected)?;
+    check_dpi(actual)?;
     let (width, height, expected) = decode(expected)?;
     let (other_width, other_height, actual) = decode(actual)?;
     if (width, height) != (other_width, other_height) {
@@ -74,6 +76,32 @@ pub(crate) fn decode(png: &[u8]) -> Result<(usize, usize, Vec<u8>), String> {
         }
     }
     Ok((width, height, pixels))
+}
+
+pub(crate) fn check_dpi(png: &[u8]) -> Result<(), String> {
+    if !png.starts_with(b"\x89PNG\r\n\x1a\n") {
+        return Err("Expected PNG.".into());
+    }
+    let mut at = 8usize;
+    while let Some(header) = png.get(at..at.saturating_add(8)) {
+        let length = number(&header[..4])?;
+        let data = png.get(at + 8..at.saturating_add(8 + length)).ok_or("Truncated PNG.")?;
+        if &header[4..8] == b"pHYs" {
+            if data.len() == 9
+                && number(&data[..4])? == 5669
+                && number(&data[4..8])? == 5669
+                && data[8] == 1
+            {
+                return Ok(());
+            }
+            return Err("PNG pHYs chunk does not record 144 DPI (5669 px/m).".into());
+        }
+        if &header[4..8] == b"IEND" {
+            break;
+        }
+        at = at.checked_add(12 + length).ok_or("PNG size overflow.")?;
+    }
+    Err("PNG is missing its 144 DPI pHYs chunk.".into())
 }
 
 fn number(bytes: &[u8]) -> Result<usize, String> {

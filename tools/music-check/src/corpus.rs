@@ -8,13 +8,15 @@ const BOLD: &[u8] =
     include_bytes!("../../../docs/shared/_static/data/fonts/LibertinusSerif-Bold.otf");
 const ITALIC: &[u8] =
     include_bytes!("../../../docs/shared/_static/data/fonts/LibertinusSerif-Italic.otf");
+const DEVANAGARI: &[u8] =
+    include_bytes!("../../../docs/shared/fonts/NotoSerifDevanagari-Regular.ttf");
 
 pub(crate) fn fonts() -> Result<gd_engrave::Fonts<'static>, String> {
     let face = |data| FaceData { data, ..Default::default() };
     gd_engrave::load_fonts(&FontOptions {
-        regular: vec![face(REGULAR)],
-        bold: vec![face(BOLD)],
-        italic: vec![face(ITALIC)],
+        regular: vec![face(REGULAR), face(DEVANAGARI)],
+        bold: vec![face(BOLD), face(DEVANAGARI)],
+        italic: vec![face(ITALIC), face(DEVANAGARI)],
         // Libertinus ships no bold italic; bold italic markup falls back to bold.
         bold_italic: Vec::new(),
     })
@@ -30,8 +32,8 @@ pub(crate) fn check(root: &Path, update: bool) -> Result<(), String> {
         .filter(|p| p.extension().is_some_and(|e| e == "ly"))
         .collect();
     sources.sort();
-    if sources.len() < 40 {
-        return Err("The reference corpus needs at least forty scores.".into());
+    if sources.len() < 55 {
+        return Err("The reference corpus needs at least fifty-five scores.".into());
     }
     let fonts = fonts()?;
     let mut workspace = Engraver::default();
@@ -50,10 +52,24 @@ pub(crate) fn check(root: &Path, update: bool) -> Result<(), String> {
                 &mut Options { line_width: 350.0, ..Default::default() },
             )
             .map_err(|e| format!("{name}: {e}"))?;
+        if !drawing.warnings.is_empty() {
+            return Err(format!("{name}: engrave warnings {:?}", drawing.warnings));
+        }
         audit(&drawing)
             .and_then(|()| crate::audit::check(&drawing))
             .and_then(|()| crate::audit::quants(&drawing))
             .map_err(|e| format!("{name}: {e}"))?;
+        let compact = workspace
+            .engrave_score(
+                &loaded.score,
+                &fonts,
+                &mut Options { staff_size: 14.0, line_width: 240.0, ..Default::default() },
+            )
+            .map_err(|e| format!("{name} (14pt): {e}"))?;
+        audit(&compact)
+            .and_then(|()| crate::audit::check(&compact))
+            .and_then(|()| crate::audit::quants(&compact))
+            .map_err(|e| format!("{name} (14pt): {e}"))?;
         let mut svg = String::new();
         gd_engrave::write_svg(&mut svg, &drawing, &SvgOptions::default(), None)
             .map_err(|e| e.to_string())?;
@@ -71,6 +87,7 @@ pub(crate) fn check(root: &Path, update: bool) -> Result<(), String> {
             },
         )
         .map_err(|e| format!("{name}: {e}"))?;
+        crate::png::check_dpi(&raster).map_err(|e| format!("{name}: {e}"))?;
         compare(source, &svg, &raster, update)?;
     }
     println!("{} music scores: geometry, SVG and PNG pixels checked.", sources.len());
@@ -93,7 +110,7 @@ fn compare(source: &Path, svg: &str, png: &[u8], update: bool) -> Result<(), Str
     crate::png::compare(&expected, png).map_err(|e| format!("{}: {e}", source.display()))
 }
 
-fn audit(drawing: &gd_engrave::Engraving) -> Result<(), String> {
+pub(crate) fn audit(drawing: &gd_engrave::Engraving) -> Result<(), String> {
     for system in &drawing.systems {
         for placed in &system.marks {
             let bounds = placed.bounds;

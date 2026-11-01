@@ -21,6 +21,8 @@ pub(crate) fn check(count: usize) -> Result<(), String> {
                 r"<< { cis'2 c'2 } \\ { c'2 s2 } >>",
                 r"{ \tuplet 3/2 { c'8 d' e' } c'2. }",
                 "{ c'4^\"音楽 संगीत ♫\" d' e' f' }",
+                r#"{ c'4^\markup { \bold "Allegro" \box \circle "A" \flat } d'2. }"#,
+                r"{\repeat volta 3 { c'1 } \alternative { \volta 1,2 { d'1 } \volta 3 { e'1 } }}",
                 r"x = { \x } \x",
                 r"{ \repeat unfold 999999999 { c'128 } }",
             ];
@@ -53,6 +55,7 @@ pub(crate) fn check(count: usize) -> Result<(), String> {
             };
             if let Ok(drawing) = engraver.engrave_score(&loaded.score, &fonts, &mut options) {
                 drawn += 1;
+                crate::corpus::audit(&drawing).map_err(|e| format!("fuzz #{index}: {e}"))?;
                 let _ = gd_engrave::write_svg(
                     &mut String::new(),
                     &drawing,

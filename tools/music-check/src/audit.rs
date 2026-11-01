@@ -6,7 +6,7 @@ pub(crate) fn check(drawing: &Engraving) -> Result<(), String> {
     for system in &drawing.systems {
         for (index, a) in system.marks.iter().enumerate() {
             for b in &system.marks[index + 1..] {
-                if allowed(a.mark.role(), b.mark.role()) || !a.bounds.overlaps(b.bounds, 0.225) {
+                if allowed(a, b) || !a.bounds.overlaps(b.bounds, 0.225) {
                     continue;
                 }
                 let region = Rect {
@@ -39,24 +39,73 @@ pub(crate) fn check(drawing: &Engraving) -> Result<(), String> {
     Ok(())
 }
 
-fn allowed(a: Role, b: Role) -> bool {
+/// The start points of two marks that are both lines.
+fn line_starts(
+    a: &PositionedMark,
+    b: &PositionedMark,
+) -> Option<(gd_engrave::Point, gd_engrave::Point)> {
+    match (&a.mark, &b.mark) {
+        (Mark::Line { from: p, .. }, Mark::Line { from: q, .. }) => Some((*p, *q)),
+        _ => None,
+    }
+}
+
+fn allowed(a: &PositionedMark, b: &PositionedMark) -> bool {
     use Role::*;
-    if matches!(a, Staff | Bar) || matches!(b, Staff | Bar) {
+    let (ra, rb) = (a.mark.role(), b.mark.role());
+    if matches!(ra, Staff) || matches!(rb, Staff) {
         return true;
     }
-    if a == b
-        && matches!(a, Signature | Instrument | Dynamic | Volta | Tuplet | Beam | Ledger | Rest)
-    {
-        return true;
+    if matches!((ra, rb), (Bar, Bar)) {
+        // A span bar continues a staff's bar line at the same x; any other bar contact
+        // is a collision.
+        return line_starts(a, b).is_some_and(|(p, q)| (p.x - q.x).abs() < 0.01);
+    }
+    if matches!(ra, Bar) || matches!(rb, Bar) {
+        // Spanners legitimately cross bar lines; text and names never touch them.
+        return matches!(
+            (ra, rb),
+            (Bar, Beam | Slur | Tie | Volta) | (Beam | Slur | Tie | Volta, Bar)
+        );
+    }
+    if ra == rb {
+        if ra == Beam {
+            return true;
+        }
+        if ra == Ledger {
+            // Two voices share a ledger line at the same height.
+            return line_starts(a, b).is_some_and(|(p, q)| (p.y - q.y).abs() < 0.01);
+        }
+        if ra == Instrument {
+            // A bracket is a line capped by glyphs; names and other furniture must not meet.
+            return matches!(
+                (&a.mark, &b.mark),
+                (Mark::Line { .. }, Mark::Glyph { .. }) | (Mark::Glyph { .. }, Mark::Line { .. })
+            );
+        }
+        if matches!(ra, Tuplet | Volta | Dynamic | Rest)
+            && matches!((&a.mark, &b.mark), (Mark::Line { .. }, Mark::Line { .. }))
+        {
+            return true;
+        }
+        if ra == Flag
+            && matches!(
+                (&a.mark, &b.mark),
+                (Mark::Line { .. }, Mark::Glyph { .. }) | (Mark::Glyph { .. }, Mark::Line { .. })
+            )
+        {
+            return true;
+        }
+        return false;
     }
     matches!(
-        (a, b),
+        (ra, rb),
         (Notehead, Stem | Ledger)
             | (Stem | Ledger, Notehead)
             | (Stem, Beam | Flag | Ledger)
             | (Beam | Flag | Ledger, Stem)
-            | (Flag, Beam)
-            | (Beam, Flag)
+            | (Flag, Beam | Ledger)
+            | (Beam | Ledger, Flag)
     )
 }
 
@@ -65,7 +114,7 @@ fn mask(drawing: &Engraving, mark: &PositionedMark, region: Rect) -> Result<Vec<
     if let Mark::Glyph { glyph, .. } = mark.mark {
         glyphs.insert(glyph, drawing.glyphs.get(&glyph).ok_or("Missing audit glyph.")?.clone());
     }
-    let drawing = Engraving {
+    let single = Engraving {
         width: drawing.width,
         height: drawing.height,
         glyphs,
@@ -78,19 +127,16 @@ fn mask(drawing: &Engraving, mark: &PositionedMark, region: Rect) -> Result<Vec<
         ..Default::default()
     };
     let mut svg = String::new();
-    gd_engrave::write_svg(&mut svg, &drawing, &SvgOptions::default(), None)
+    gd_engrave::write_svg(&mut svg, &single, &SvgOptions::default(), None)
         .map_err(|e| e.to_string())?;
-    let start = svg.find("viewBox=\"").ok_or("Missing audit viewport.")? + 9;
-    let end = start + svg[start..].find('"').ok_or("Missing audit viewport end.")?;
+    let tag_end = svg.find('>').ok_or("Missing SVG root tag.")?;
     let (width, height) = (region.right - region.left, region.bottom - region.top);
-    svg.replace_range(start..end, &format!("{} {} {width} {height}", region.left, region.top));
-    for (attribute, value) in [("width", width), ("height", height)] {
-        let start = svg.find(&format!("{attribute}=\"")).ok_or("Missing audit size.")?
-            + attribute.len()
-            + 2;
-        let end = start + svg[start..].find('"').ok_or("Missing audit size end.")?;
-        svg.replace_range(start..end, &format!("{value}pt"));
-    }
+    let replacement = format!(
+        "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{width}pt\" height=\"{height}pt\" \
+        viewBox=\"{} {} {width} {height}\" color=\"#000\">",
+        region.left, region.top
+    );
+    svg.replace_range(..=tag_end, &replacement);
     let png = gd_typst::rasterize_svg(
         svg.as_bytes(),
         &gd_typst::RasterOptions { width, height, dpi: 288.0, ..Default::default() },
@@ -102,7 +148,7 @@ fn mask(drawing: &Engraving, mark: &PositionedMark, region: Rect) -> Result<Vec<
 pub(crate) fn quants(drawing: &Engraving) -> Result<(), String> {
     for system in &drawing.systems {
         for mark in &system.marks {
-            let staff_lines: Vec<_> = system
+            let mut staff_lines: Vec<_> = system
                 .marks
                 .iter()
                 .filter_map(|line| {
@@ -118,20 +164,22 @@ pub(crate) fn quants(drawing: &Engraving) -> Result<(), String> {
             if staff_lines.len() != 5 {
                 return Err("A staff must have five lines.".into());
             }
+            staff_lines.sort_by(f64::total_cmp);
+            let space = (staff_lines[4] - staff_lines[0]) / 4.0;
             let middle = staff_lines.iter().sum::<f64>() / 5.0;
             if let Mark::Curve { outer, role: Role::Tie, .. } = mark.mark {
-                let apex = (outer.point(0.5).y - middle) / 4.5;
+                let apex = (outer.point(0.5).y - middle) / space;
                 if apex.abs() <= 2.1 && (apex - apex.round()).abs() < 0.14 {
                     return Err(format!("Tie apex touches a staff line: {apex}"));
                 }
             }
-            beam(system, mark, middle)?;
+            beam(system, mark, middle, space)?;
         }
     }
     Ok(())
 }
 
-fn beam(system: &System, mark: &PositionedMark, middle: f64) -> Result<(), String> {
+fn beam(system: &System, mark: &PositionedMark, middle: f64, space: f64) -> Result<(), String> {
     let Mark::Polygon { points, role: Role::Beam } = mark.mark else { return Ok(()) };
     let secondary = system.marks.iter().any(|other| {
         let Mark::Polygon { points: p, role: Role::Beam } = other.mark else {
@@ -167,10 +215,10 @@ fn beam(system: &System, mark: &PositionedMark, middle: f64) -> Result<(), Strin
             continue;
         }
         let values = [a.y, b.y, (a.y + b.y) / 2.0];
-        let outside = a.y.min(b.y) > middle + 9.0 || a.y.max(b.y) < middle - 9.0;
+        let outside = a.y.min(b.y) > middle + 2.0 * space || a.y.max(b.y) < middle - 2.0 * space;
         if !outside
             && !values.iter().any(|y| {
-                let position = (y - middle) / 4.5;
+                let position = (y - middle) / space;
                 (position - position.round()).abs() < 0.027
             })
         {

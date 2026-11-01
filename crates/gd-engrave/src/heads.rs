@@ -21,7 +21,9 @@ impl Draw<'_, '_, '_, '_, '_> {
         let mut ledgers = BTreeMap::<i16, (f64, f64)>::new();
         for head in &info.heads {
             let at = Point { x: x + head.at.x * space, y: middle + head.at.y * space };
-            self.glyph(info.head_glyph, at.x, at.y, size, Role::Notehead)?;
+            if !head.shared {
+                self.glyph(info.head_glyph, at.x, at.y, size, Role::Notehead)?;
+            }
             if (!head.continuation || line_start || head.accidental_forced)
                 && let Some(name) = head.accidental
             {
@@ -44,10 +46,10 @@ impl Draw<'_, '_, '_, '_, '_> {
                     )?;
                 }
             }
-            for dot in &head.dots {
+            for dot in head.dots.iter().filter(|_| !head.shared) {
                 self.glyph(
                     "augmentationDot",
-                    x + dot.x * space,
+                    x + (dot.x + info.voice_shift) * space,
                     middle + dot.y * space,
                     size,
                     Role::Dot,

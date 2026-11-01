@@ -32,6 +32,7 @@ impl StaffState {
 #[derive(Clone, Debug)]
 pub(crate) struct Head {
     pub(crate) note: u8,
+    pub(crate) shared: bool,
     pub(crate) at: Point,
     pub(crate) accidental: Option<&'static str>,
     pub(crate) accidental_x: f64,
@@ -47,6 +48,7 @@ pub(crate) struct EventInfo {
     pub(crate) staff: usize,
     pub(crate) state: StaffState,
     pub(crate) prefix: f64,
+    pub(crate) voice_shift: f64,
     pub(crate) previous_key: Option<Key>,
     pub(crate) notation_x: f64,
     pub(crate) heads: Vec<Head>,
@@ -104,7 +106,15 @@ impl Plan {
                 info.prefix = prefixes[info.staff];
                 info.state = state.snapshot();
                 if let EventKind::Chord(chord) = &event.kind {
-                    heads(info, chord, state, fonts, event.at.grace < Ratio::ZERO, work)?;
+                    heads(
+                        info,
+                        chord,
+                        state,
+                        fonts,
+                        event.at.grace < Ratio::ZERO,
+                        crate::voices::direction(score, event),
+                        work,
+                    )?;
                     for head in &mut info.heads {
                         head.continuation = score.spanners.iter().any(|s| {
                             s.kind == gd_score::SpannerKind::Tie
@@ -113,6 +123,7 @@ impl Plan {
                     }
                 }
             }
+            crate::voices::arrange(self, column, score, fonts, work)?;
             if let Some(snapshot) = self.measures.get_mut(measure)
                 && (snapshot.is_empty() || score.measures[measure].start == column.at.main)
             {
@@ -134,7 +145,9 @@ impl Plan {
             let staff = score.voices[event.voice.0 as usize].staff.0 as usize;
             let state = &mut states[staff];
             let info = &mut self.events[id.0 as usize];
-            info.heads.clear();
+            let mut heads = std::mem::take(&mut info.heads);
+            heads.clear();
+            *info = EventInfo { heads, ..Default::default() };
             info.id = *id;
             info.beam = None;
             info.previous_key = None;
@@ -172,6 +185,7 @@ fn heads(
     state: &mut StaffState,
     fonts: &Fonts<'_>,
     grace: bool,
+    direction: Direction,
     work: &mut usize,
 ) -> Result<(), Error> {
     charge(work, chord.notes.len())?;
@@ -194,7 +208,7 @@ fn heads(
         chord.notes.iter().map(|n| n.pitch.diatonic() - state.clef.middle()).collect();
     let low = positions.iter().min().copied().unwrap_or(0);
     let high = positions.iter().max().copied().unwrap_or(0);
-    info.up = match chord.direction {
+    info.up = match direction {
         Direction::Up => true,
         Direction::Down => false,
         Direction::Auto => low + high < 0,
@@ -217,6 +231,7 @@ fn heads(
             .collect();
         info.heads.push(Head {
             note: info.heads.len() as u8,
+            shared: false,
             at: Point { x: 0.0, y },
             accidental: shown.then_some(accidental(note.pitch.alter)),
             accidental_x: -1.2,
@@ -228,6 +243,7 @@ fn heads(
     }
     arrange_heads(info, fonts)?;
     stems(info, fonts)?;
+    crate::accidentals::arrange(info, fonts)?;
     Ok(())
 }
 
@@ -247,6 +263,7 @@ pub(crate) fn arrange_heads(info: &mut EventInfo, fonts: &Fonts<'_>) -> Result<(
         let shifted =
             previous.is_some_and(|(y, shifted)| (y - head.at.y).abs() == 0.5 && !shifted);
         head.at.x = if shifted { if info.up { width } else { -width } } else { 0.0 };
+        head.at.x += info.voice_shift;
         previous = Some((head.at.y, shifted));
         let ink = Rect {
             left: data.bounds.left * info.head_scale + head.at.x,
@@ -268,7 +285,7 @@ pub(crate) fn stems(info: &mut EventInfo, fonts: &Fonts<'_>) -> Result<(), Error
         .get(if info.up { "stemUpSE" } else { "stemDownNW" })
         .copied()
         .unwrap_or(Point { x: if info.up { 1.1 } else { 0.05 }, y: 0.0 });
-    info.stem_x = anchor.x * info.head_scale;
+    info.stem_x = anchor.x * info.head_scale + info.voice_shift;
     let top = info.heads.iter().map(|h| h.at.y).fold(f64::INFINITY, f64::min);
     let bottom = info.heads.iter().map(|h| h.at.y).fold(f64::NEG_INFINITY, f64::max);
     let length = if info.head_scale < 1.0 { 2.5 } else { 3.5 }

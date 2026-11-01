@@ -129,7 +129,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                         column.at.main == request.columns[0].at.main,
                     )?,
                     EventKind::Rest(duration) => {
-                        self.glyph(rest(duration.base), x, middle, space, Role::Rest)?;
+                        self.rest(event, duration, request, index, middle)?;
                     }
                     EventKind::Bar(style) => {
                         if index == 0
@@ -258,7 +258,7 @@ impl Draw<'_, '_, '_, '_, '_> {
     }
 }
 
-fn rest(base: Base) -> &'static str {
+pub(crate) fn rest_glyph(base: Base) -> &'static str {
     match base {
         Base::Breve => "restDoubleWhole",
         Base::Whole => "restWhole",

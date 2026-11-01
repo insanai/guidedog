@@ -85,13 +85,21 @@ fn add(
             below += usize::from(head.at.y > 0.0);
         }
     }
-    let up = bottom > -top || (bottom == -top && below > above);
+    let automatic = bottom > -top || (bottom == -top && below > above);
+    let up = events
+        .iter()
+        .find_map(|id| match crate::voices::direction(score, &score.events[id.0 as usize]) {
+            Direction::Up => Some(true),
+            Direction::Down => Some(false),
+            Direction::Auto => None,
+        })
+        .unwrap_or(automatic);
     let index = plan.beams.len();
     for id in &events {
         let info = &mut plan.events[id.0 as usize];
         info.beam = Some(index);
-        if let EventKind::Chord(chord) = &score.events[id.0 as usize].kind {
-            info.up = match chord.direction {
+        if let EventKind::Chord(_) = &score.events[id.0 as usize].kind {
+            info.up = match crate::voices::direction(score, &score.events[id.0 as usize]) {
                 Direction::Up => true,
                 Direction::Down => false,
                 Direction::Auto => up,

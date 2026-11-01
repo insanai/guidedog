@@ -3,6 +3,7 @@
 
 #![forbid(unsafe_code)]
 
+mod accidentals;
 mod bars;
 mod beaming;
 mod beams;
@@ -21,6 +22,7 @@ mod limits;
 mod marks;
 mod math;
 mod prepare;
+mod rests;
 mod rods;
 mod signatures;
 mod skyline;
@@ -28,6 +30,7 @@ mod spacing;
 mod svg;
 mod text;
 mod vertical;
+mod voices;
 
 pub use breaking::{BreakPoint, Line, break_lines};
 pub use fonts::{FaceData, FaceSource, FontOptions, Fonts, Glyph, GlyphData, load_fonts};

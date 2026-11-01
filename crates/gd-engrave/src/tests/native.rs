@@ -148,3 +148,46 @@ fn lazy_text_faces_are_selected_only_during_shaping_and_record_their_source() {
     }
     assert_eq!(source.0.load(std::sync::atomic::Ordering::Relaxed), 2);
 }
+
+#[test]
+fn simultaneous_voices_share_unisons_and_separate_seconds() {
+    let shared = draw(r"<< { c'4 d' e' f' } \\ { c'4 d' e' f' } >>", 280.0);
+    assert_eq!(
+        shared
+            .systems
+            .iter()
+            .flat_map(|s| &s.marks)
+            .filter(|mark| mark.mark.role() == Role::Notehead)
+            .count(),
+        4
+    );
+    let seconds = draw(r"<< { c'4 } \\ { d'4 } >>", 280.0);
+    let xs: Vec<_> = seconds
+        .systems
+        .iter()
+        .flat_map(|s| &s.marks)
+        .filter_map(|mark| match mark.mark {
+            Mark::Glyph { x, role: Role::Notehead, .. } => Some(x),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(xs.len(), 2);
+    assert!((xs[1] - xs[0]).abs() > 4.0);
+}
+
+#[test]
+fn chord_accidentals_have_disjoint_ink_columns() {
+    let drawing = draw(r"{ <cis' dis' eis' fis' gis' ais' bis'>1 }", 350.0);
+    let accidentals: Vec<_> = drawing
+        .systems
+        .iter()
+        .flat_map(|s| &s.marks)
+        .filter(|mark| mark.mark.role() == Role::Accidental)
+        .collect();
+    assert_eq!(accidentals.len(), 7);
+    for (index, mark) in accidentals.iter().enumerate() {
+        for other in &accidentals[index + 1..] {
+            assert!(!mark.bounds.overlaps(other.bounds, 0.0));
+        }
+    }
+}

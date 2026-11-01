@@ -85,7 +85,7 @@ fn event_bands(
                 fonts,
                 "augmentationDot",
                 info.head_scale,
-                info.prefix + dot.x,
+                info.prefix + info.voice_shift + dot.x,
                 dot.y,
                 work,
             )?;

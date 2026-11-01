@@ -53,18 +53,38 @@ const FONTS: [(&str, &str); 6] = [
     ),
 ];
 
+/// The face the native music corpus needs for its mixed-script lyrics. music-check reads
+/// it from docs/shared/fonts and checks the same sum (see the test below).
+const MUSIC_FONT: &str = "SimplifiedChinese/NotoSerifCJKsc-Regular.otf";
+
 /// Runs `cargo xtask fetch-fonts`.
 pub(crate) fn main(args: &[String]) -> Result<()> {
     let spec = Spec { command: "fetch-fonts", flags: &["--music"], options: &[], help: HELP };
     let Some(parsed) = args::parse(args, &spec)? else { return Ok(()) };
     parsed.at_most(1, &spec)?;
+    if parsed.has("--music") && !parsed.positionals.is_empty() {
+        // music-check only looks in docs/shared/fonts, so another folder would not help it.
+        return Err(fail(
+            "fonts",
+            "NO FOLDER WITH --MUSIC",
+            "music-check reads its face only from docs/shared/fonts.",
+            "Run cargo xtask fetch-fonts --music without a folder.",
+        ));
+    }
     let dir = match parsed.positionals.first() {
         Some(dir) => absolute(Path::new(dir)),
         None => repository_root().join("docs/shared/fonts"),
     };
     if parsed.has("--music") {
         create_dir(&dir)?;
-        let (path, sum) = FONTS[4];
+        let Some(&(path, sum)) = FONTS.iter().find(|(path, _)| *path == MUSIC_FONT) else {
+            return Err(fail(
+                "fonts",
+                "MUSIC FONT NOT LISTED",
+                "The music corpus face is missing from the font list.",
+                "Add it to FONTS in tools/xtask/src/fonts.rs.",
+            ));
+        };
         let name = path.rsplit('/').next().unwrap_or(path);
         fetch(&format!("{BASE}/{path}"), &dir.join(name), sum)
     } else {
@@ -103,4 +123,18 @@ fn fetch(url: &str, file: &Path, sum: &str) -> Result<()> {
         ));
     }
     rename(&part, file)
+}
+
+#[cfg(test)]
+mod tests {
+    /// music-check pins the same face by its own copy of the sum; the two must agree.
+    #[test]
+    fn music_check_pins_the_music_font_this_list_downloads() {
+        let Some((_, sum)) = super::FONTS.iter().find(|(path, _)| *path == super::MUSIC_FONT)
+        else {
+            panic!("{} is not in FONTS", super::MUSIC_FONT);
+        };
+        let loader = include_str!("../../music-check/src/fonts.rs");
+        assert!(loader.contains(&format!("const CJK_SUM: &str = \"{sum}\";")), "{sum}");
+    }
 }

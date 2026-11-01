@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:01+0000\n"
+"POT-Creation-Date: 2026-11-01 14:22+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -1227,7 +1227,15 @@ msgid ""
 "<https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_, "
 "shows the instrumental opening with half notes; some familiar vocal "
 "versions divide them into repeated quarter notes."
-msgstr "Usamos cuatro compases del tema de la Alegría de la Sinfonía n.º 9 de Beethoven, Op. 125, final, compases 92-95. Transponemos la melodía de re mayor a do mayor y la situamos en el registro de clave de sol, conservando su ritmo y omitiendo la orquestación, las ligaduras y la dinámica. La `partitura de CCARH/MuseData, página impresa 8 <https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ muestra el comienzo instrumental con blancas; algunas versiones vocales conocidas las dividen en negras repetidas."
+msgstr ""
+"Usamos cuatro compases del tema de la Alegría de la Sinfonía n.º 9 de "
+"Beethoven, Op. 125, final, compases 92-95. Transponemos la melodía de re "
+"mayor a do mayor y la situamos en el registro de clave de sol, "
+"conservando su ritmo y omitiendo la orquestación, las ligaduras y la "
+"dinámica. La `partitura de CCARH/MuseData, página impresa 8 "
+"<https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ "
+"muestra el comienzo instrumental con blancas; algunas versiones vocales "
+"conocidas las dividen en negras repetidas."
 
 #: ../../topics/music.rst:84
 msgid ""
@@ -1412,13 +1420,10 @@ msgstr "Voces y letras"
 
 #: ../../topics/music.rst:157
 msgid ""
-"At most four voices per staff; ``\\addlyrics``, ``\\lyricsto``, "
-"``\\lyricmode``, multiple verses, explicit syllable durations, hyphens "
-"and extenders."
-msgstr ""
-"Hasta cuatro voces por pentagrama; ``\\addlyrics``, ``\\lyricsto``, "
-"``\\lyricmode``, varias estrofas, duraciones explícitas de sílabas, "
-"guiones y extensores."
+"At most four voices sounding at once on a staff; ``\\addlyrics``, "
+"``\\lyricsto``, ``\\lyricmode``, multiple verses, explicit syllable "
+"durations, hyphens and extenders."
+msgstr "Hasta cuatro voces simultáneas por pentagrama; ``\\addlyrics``, ``\\lyricsto``, ``\\lyricmode``, varias estrofas, duraciones explícitas de sílabas, guiones y extensores."
 
 #: ../../topics/music.rst:158
 msgid "Grace and repetition"
@@ -1628,25 +1633,17 @@ msgid ""
 "``<< ... >>``. Voices one and three have upward stems; voices two and "
 "four have downward stems. ``\\voiceOne``, ``\\voiceTwo``, "
 "``\\voiceThree`` and ``\\voiceFour`` select those policies explicitly, "
-"and ``\\oneVoice`` restores automatic single-voice directions. Inner "
-"voices shift their note columns when needed; equal rests can share a "
-"glyph. A fifth voice on the same staff is refused. Lyrics attach to a "
-"named voice, and separate ``\\lyricsto`` expressions make separate verses."
-msgstr ""
-"Usamos contextos simultáneos para una partitura con varios pentagramas. "
-"Los nombres de instrumento usan ``instrumentName`` y "
-"``shortInstrumentName`` en un bloque ``\\with``. Separamos hasta cuatro "
-"voces en un pentagrama con ``\\`` dentro de ``<< ... >>``. Las voces "
-"primera y tercera tienen plicas ascendentes; la segunda y la cuarta, "
-"descendentes. ``\\voiceOne``, ``\\voiceTwo``, ``\\voiceThree`` y "
-"``\\voiceFour`` seleccionan esas reglas explícitamente, y ``\\oneVoice`` "
-"restaura las direcciones automáticas de una sola voz. Las voces "
-"interiores desplazan sus columnas de notas cuando es necesario; los "
-"silencios iguales pueden compartir un símbolo. Se rechaza una quinta voz "
-"en el mismo pentagrama. La letra se vincula a una voz con nombre, y "
-"expresiones ``\\lyricsto`` separadas crean estrofas separadas."
+"and ``\\oneVoice`` restores automatic single-voice directions. An inner "
+"voice beside another voice with the same stem direction stands at least "
+"half a notehead aside, and further when needed. Equal rests share a glyph "
+"only where no other voice sounds. Dynamics stay below the staff in every "
+"voice, as in LilyPond. At most four voices may sound at once on a staff; "
+"a fifth is refused, and so are ``\\shiftOn`` and its relatives, because "
+"the voice policies choose the shifts. Lyrics attach to a named voice, and "
+"separate ``\\lyricsto`` expressions make separate verses."
+msgstr "Usamos contextos simultáneos para una partitura con varios pentagramas. Los nombres de instrumento usan ``instrumentName`` y ``shortInstrumentName`` en un bloque ``\\with``. Separamos hasta cuatro voces en un pentagrama con ``\\`` dentro de ``<< ... >>``. Las voces primera y tercera tienen plicas ascendentes; la segunda y la cuarta, descendentes. ``\\voiceOne``, ``\\voiceTwo``, ``\\voiceThree`` y ``\\voiceFour`` seleccionan esas reglas explícitamente, y ``\\oneVoice`` restaura las direcciones automáticas de una sola voz. Una voz interior junto a otra con la misma dirección de plica se separa al menos media cabeza de nota, y más cuando hace falta. Los silencios iguales comparten un símbolo solo donde no suena otra voz. Las dinámicas quedan bajo el pentagrama en todas las voces, como en LilyPond. En un pentagrama pueden sonar a la vez como mucho cuatro voces; se rechaza una quinta, y también ``\\shiftOn`` y sus variantes, porque las reglas de las voces eligen los desplazamientos. La letra se vincula a una voz con nombre, y expresiones ``\\lyricsto`` separadas crean estrofas separadas."
 
-#: ../../topics/music.rst:241
+#: ../../topics/music.rst:243
 msgid ""
 "We can override stems with ``\\stemUp``, ``\\stemDown`` and "
 "``\\stemNeutral`` without changing the voice's column policy."
@@ -1654,7 +1651,7 @@ msgstr ""
 "Podemos cambiar las plicas con ``\\stemUp``, ``\\stemDown`` y "
 "``\\stemNeutral`` sin cambiar la regla de columnas de la voz."
 
-#: ../../topics/music.rst:253
+#: ../../topics/music.rst:255
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
@@ -1662,15 +1659,15 @@ msgstr ""
 "Dos pentagramas de piano; el superior tiene cuatro negras y las palabras "
 "Sing a short song, mientras el bajo mantiene do."
 
-#: ../../topics/music.rst:253
+#: ../../topics/music.rst:255
 msgid "A named melody with a verse and a bass staff."
 msgstr "Una melodía con nombre, una estrofa y un pentagrama de bajo."
 
-#: ../../topics/music.rst:263
+#: ../../topics/music.rst:265
 msgid "Read local files"
 msgstr "Leer archivos locales"
 
-#: ../../topics/music.rst:266
+#: ../../topics/music.rst:268
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
@@ -1678,7 +1675,7 @@ msgstr ""
 "Una directiva puede indicar un archivo local en lugar de contener código "
 "en línea. Usamos exactamente una forma de fuente."
 
-#: ../../topics/music.rst:275
+#: ../../topics/music.rst:277
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1697,7 +1694,7 @@ msgstr ""
 "cambio en una dependencia regenera la imagen. Los mismos bytes de salida "
 "conservan el mismo nombre de recurso."
 
-#: ../../topics/music.rst:281
+#: ../../topics/music.rst:283
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
@@ -1718,27 +1715,27 @@ msgstr ""
 "fallido conserva el código con una advertencia; ``-W`` detiene la "
 "publicación y mantiene la salida anterior."
 
-#: ../../topics/music.rst:286
+#: ../../topics/music.rst:288
 msgid "Set size and output"
 msgstr "Definir tamaño y salida"
 
-#: ../../topics/music.rst:289
+#: ../../topics/music.rst:291
 msgid "Directive options"
 msgstr "Opciones de la directiva"
 
-#: ../../topics/music.rst:293
+#: ../../topics/music.rst:295
 msgid "Option"
 msgstr "Opción"
 
-#: ../../topics/music.rst:294
+#: ../../topics/music.rst:296
 msgid "Meaning"
 msgstr "Significado"
 
-#: ../../topics/music.rst:295
+#: ../../topics/music.rst:297
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:296
+#: ../../topics/music.rst:298
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
@@ -1746,11 +1743,11 @@ msgstr ""
 "Descripción musical de la imagen; si falta, la compilación crea un "
 "resumen localizado."
 
-#: ../../topics/music.rst:297
+#: ../../topics/music.rst:299
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:298
+#: ../../topics/music.rst:300
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
@@ -1758,19 +1755,19 @@ msgstr ""
 "Pie de figura, destino de referencia, clases CSS y alineación de imagen, "
 "como en las directivas de diagramas."
 
-#: ../../topics/music.rst:299
+#: ../../topics/music.rst:301
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:300
+#: ../../topics/music.rst:302
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "``svg`` por defecto, o ``png`` a 144 píxeles por pulgada."
 
-#: ../../topics/music.rst:301
+#: ../../topics/music.rst:303
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:302
+#: ../../topics/music.rst:304
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
@@ -1778,11 +1775,11 @@ msgstr ""
 "Altura de un pentagrama de cinco líneas, de 10 a 40 puntos; el valor "
 "predeterminado es 18 puntos."
 
-#: ../../topics/music.rst:303
+#: ../../topics/music.rst:305
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:304
+#: ../../topics/music.rst:306
 msgid ""
 "Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's "
@@ -1792,11 +1789,11 @@ msgstr ""
 "``in``, ``px``, ``em``, ``rem``, ``ex``, ``ch`` o como porcentaje de la "
 "anchura predeterminada del constructor."
 
-#: ../../topics/music.rst:305
+#: ../../topics/music.rst:307
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:306
+#: ../../topics/music.rst:308
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
@@ -1804,7 +1801,7 @@ msgstr ""
 "``auto`` conserva la anchura natural de un último sistema corto; ``all`` "
 "estira todos los sistemas; ``none`` evita estirarlos."
 
-#: ../../topics/music.rst:308
+#: ../../topics/music.rst:310
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
@@ -1815,7 +1812,7 @@ msgstr ""
 "tipográficos. El contrato de configuración está en "
 ":doc:`../reference/configuration`."
 
-#: ../../topics/music.rst:312
+#: ../../topics/music.rst:314
 msgid ""
 "When a drawing is wider than 225 points, HTML also receives a narrow "
 "edition engraved at 225 points with a staff height no greater than 14 "
@@ -1833,7 +1830,7 @@ msgstr ""
 "escala a la pantalla. SVG adapta la tinta al esquema de color de la "
 "página; PNG mantiene un panel claro en modo oscuro."
 
-#: ../../topics/music.rst:318
+#: ../../topics/music.rst:320
 msgid ""
 "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; "
 "any other value renders as A4) and the selected template's horizontal "
@@ -1857,11 +1854,11 @@ msgstr ""
 "partitura con varios sistemas puede saltar de página PDF entre sistemas, "
 "con el pie después del último."
 
-#: ../../topics/music.rst:325
+#: ../../topics/music.rst:327
 msgid "Fonts, limits and references"
 msgstr "Fuentes, límites y referencias"
 
-#: ../../topics/music.rst:328
+#: ../../topics/music.rst:330
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1877,7 +1874,7 @@ msgstr ""
 "y lectores PDF no necesitan una fuente musical instalada. PNG requiere el "
 "renderizador integrado; el grabado SVG sigue disponible sin él."
 
-#: ../../topics/music.rst:333
+#: ../../topics/music.rst:335
 msgid ""
 "For CJK lyrics, we include a suitable CJK text face through "
 "``pdf_font_paths``. When building this repository, ``cargo xtask "
@@ -1891,27 +1888,19 @@ msgstr ""
 "de Noto Serif CJK utilizada por el corpus musical con escrituras mixtas. "
 "Podemos usar ese directorio como ruta de fuentes en nuestro proyecto."
 
-#: ../../topics/music.rst:337
+#: ../../topics/music.rst:339
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
-"included files, depth 64, 20,000 events, 24 staves, four voices per staff "
-"and 16 heads per chord. The reader and engraver each have a work limit of "
-"eight million operations. Expanded reader allocations have a separate 64 "
-"MiB allowance. A drawing has at most 64 systems and a height of 20,000 "
-"points. PNG is limited to 16 million pixels and 16,384 pixels on either "
-"side. A limit diagnostic identifies the source and suggests splitting the "
-"example."
-msgstr ""
-"Cada ejemplo acepta hasta 256 KiB de código contando inclusiones, 32 "
-"archivos incluidos, profundidad 64, 20.000 eventos, 24 pentagramas, "
-"cuatro voces por pentagrama y 16 cabezas por acorde. El lector y el "
-"grabador tienen cada uno un límite de ocho millones de operaciones. Las "
-"asignaciones expandidas del lector tienen un límite independiente de 64 "
-"MiB. Un dibujo tiene como máximo 64 sistemas y 20.000 puntos de altura. "
-"PNG se limita a 16 millones de píxeles y 16.384 píxeles por lado. El "
-"diagnóstico identifica la fuente y sugiere dividir el ejemplo."
+"included files, depth 64, 20,000 events, 24 staves, four voices sounding "
+"at once on a staff and 16 heads per chord. The reader and engraver each "
+"have a work limit of eight million operations. Expanded reader "
+"allocations have a separate 64 MiB allowance. A drawing has at most 64 "
+"systems and a height of 20,000 points. PNG is limited to 16 million "
+"pixels and 16,384 pixels on either side. A limit diagnostic identifies "
+"the source and suggests splitting the example."
+msgstr "Cada ejemplo acepta hasta 256 KiB de código contando inclusiones, 32 archivos incluidos, profundidad 64, 20.000 eventos, 24 pentagramas, cuatro voces simultáneas por pentagrama y 16 cabezas por acorde. El lector y el grabador tienen cada uno un límite de ocho millones de operaciones. Las asignaciones expandidas del lector tienen un límite independiente de 64 MiB. Un dibujo tiene como máximo 64 sistemas y 20.000 puntos de altura. PNG se limita a 16 millones de píxeles y 16.384 píxeles por lado. El diagnóstico identifica la fuente y sugiere dividir el ejemplo."
 
-#: ../../topics/music.rst:344
+#: ../../topics/music.rst:346
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "

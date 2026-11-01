@@ -154,7 +154,7 @@ A tilde ties equal pitches; parentheses make slurs, and ``\(`` with ``\)`` makes
    * - Structure
      - Assignments, variable references, lexical ``\include``, ``\score``, ``\new Staff``, ``\new Voice``, ``PianoStaff``, ``GrandStaff``, ``StaffGroup``, ``ChoirStaff``.
    * - Voices and lyrics
-     - At most four voices per staff; ``\addlyrics``, ``\lyricsto``, ``\lyricmode``, multiple verses, explicit syllable durations, hyphens and extenders.
+     - At most four voices sounding at once on a staff; ``\addlyrics``, ``\lyricsto``, ``\lyricmode``, multiple verses, explicit syllable durations, hyphens and extenders.
    * - Grace and repetition
      - ``\grace``, ``\acciaccatura``, ``\appoggiatura``, ``\afterGrace``, ``\repeat volta``, ``\alternative``, ``\volta``, ``\fine``, ``\section``, ``\repeat unfold``, ``\compressEmptyMeasures``, ``\compressFullBarRests``.
    * - Labels and breaks
@@ -234,8 +234,10 @@ Instrument names use ``instrumentName`` and ``shortInstrumentName`` in a ``\with
 We separate up to four voices on one staff with ``\\`` inside ``<< ... >>``.
 Voices one and three have upward stems; voices two and four have downward stems.
 ``\voiceOne``, ``\voiceTwo``, ``\voiceThree`` and ``\voiceFour`` select those policies explicitly, and ``\oneVoice`` restores automatic single-voice directions.
-Inner voices shift their note columns when needed; equal rests can share a glyph.
-A fifth voice on the same staff is refused.
+An inner voice beside another voice with the same stem direction stands at least half a notehead aside, and further when needed.
+Equal rests share a glyph only where no other voice sounds.
+Dynamics stay below the staff in every voice, as in LilyPond.
+At most four voices may sound at once on a staff; a fifth is refused, and so are ``\shiftOn`` and its relatives, because the voice policies choose the shifts.
 Lyrics attach to a named voice, and separate ``\lyricsto`` expressions make separate verses.
 
 We can override stems with ``\stemUp``, ``\stemDown`` and ``\stemNeutral`` without changing the voice's column policy.
@@ -334,7 +336,7 @@ For CJK lyrics, we include a suitable CJK text face through ``pdf_font_paths``.
 When building this repository, ``cargo xtask fetch-fonts --music`` installs the pinned Noto Serif CJK face used by the mixed-script music corpus in ``docs/shared/fonts``.
 We can use that directory as a font path in our project.
 
-One example accepts at most 256 KiB of source including includes, 32 included files, depth 64, 20,000 events, 24 staves, four voices per staff and 16 heads per chord.
+One example accepts at most 256 KiB of source including includes, 32 included files, depth 64, 20,000 events, 24 staves, four voices sounding at once on a staff and 16 heads per chord.
 The reader and engraver each have a work limit of eight million operations.
 Expanded reader allocations have a separate 64 MiB allowance.
 A drawing has at most 64 systems and a height of 20,000 points.

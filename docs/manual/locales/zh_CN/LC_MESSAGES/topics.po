@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:01+0000\n"
+"POT-Creation-Date: 2026-11-01 14:22+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -1052,7 +1052,11 @@ msgid ""
 "<https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_, "
 "shows the instrumental opening with half notes; some familiar vocal "
 "versions divide them into repeated quarter notes."
-msgstr "我们采用贝多芬《第九交响曲》作品125终乐章第92-95小节的四小节欢乐主题。我们将旋律从D大调移到C大调，并放在高音谱号音域，保留节奏，省略配器、连奏线和力度。`CCARH/MuseData 总谱印刷第8页 <https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ 的器乐开头使用二分音符；一些熟悉的声乐版本将其拆成重复的四分音符。"
+msgstr ""
+"我们采用贝多芬《第九交响曲》作品125终乐章第92-95小节的四小节欢乐主题。我们将旋律从D大调移到C大调，并放在高音谱号音域，保留节奏，省略配器、连奏线和力度。`CCARH/MuseData "
+"总谱印刷第8页 "
+"<https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ "
+"的器乐开头使用二分音符；一些熟悉的声乐版本将其拆成重复的四分音符。"
 
 #: ../../topics/music.rst:84
 msgid ""
@@ -1216,12 +1220,10 @@ msgstr "声部与歌词"
 
 #: ../../topics/music.rst:157
 msgid ""
-"At most four voices per staff; ``\\addlyrics``, ``\\lyricsto``, "
-"``\\lyricmode``, multiple verses, explicit syllable durations, hyphens "
-"and extenders."
-msgstr ""
-"每个谱表最多四个声部；支持 "
-"``\\addlyrics``、``\\lyricsto``、``\\lyricmode``、多段歌词、明确的音节时值、连字符和延长线。"
+"At most four voices sounding at once on a staff; ``\\addlyrics``, "
+"``\\lyricsto``, ``\\lyricmode``, multiple verses, explicit syllable "
+"durations, hyphens and extenders."
+msgstr "每个谱表最多四个同时发声的声部；支持 ``\\addlyrics``、``\\lyricsto``、``\\lyricmode``、多段歌词、明确的音节时值、连字符和延长线。"
 
 #: ../../topics/music.rst:158
 msgid "Grace and repetition"
@@ -1409,46 +1411,44 @@ msgid ""
 "``<< ... >>``. Voices one and three have upward stems; voices two and "
 "four have downward stems. ``\\voiceOne``, ``\\voiceTwo``, "
 "``\\voiceThree`` and ``\\voiceFour`` select those policies explicitly, "
-"and ``\\oneVoice`` restores automatic single-voice directions. Inner "
-"voices shift their note columns when needed; equal rests can share a "
-"glyph. A fifth voice on the same staff is refused. Lyrics attach to a "
-"named voice, and separate ``\\lyricsto`` expressions make separate verses."
-msgstr ""
-"我们使用同时上下文编写多个谱表的乐谱。乐器名称使用 ``\\with`` 块中的 ``instrumentName`` 和 "
-"``shortInstrumentName``。在一个谱表上，我们在 ``<< ... >>`` 内用 ``\\`` "
-"分隔最多四个声部。第一和第三声部的符干向上；第二和第四声部的符干向下。``\\voiceOne``、``\\voiceTwo``、``\\voiceThree`` "
-"和 ``\\voiceFour`` 明确选择这些规则，``\\oneVoice`` "
-"恢复单声部的自动方向。内声部按需横移音符列；相同的休止符可以共用一个符号。同一谱表上的第五声部会被拒绝。歌词附着于命名声部，独立的 "
-"``\\lyricsto`` 表达式形成不同段的歌词。"
+"and ``\\oneVoice`` restores automatic single-voice directions. An inner "
+"voice beside another voice with the same stem direction stands at least "
+"half a notehead aside, and further when needed. Equal rests share a glyph "
+"only where no other voice sounds. Dynamics stay below the staff in every "
+"voice, as in LilyPond. At most four voices may sound at once on a staff; "
+"a fifth is refused, and so are ``\\shiftOn`` and its relatives, because "
+"the voice policies choose the shifts. Lyrics attach to a named voice, and "
+"separate ``\\lyricsto`` expressions make separate verses."
+msgstr "我们使用同时上下文编写多个谱表的乐谱。乐器名称使用 ``\\with`` 块中的 ``instrumentName`` 和 ``shortInstrumentName``。在一个谱表上，我们在 ``<< ... >>`` 内用 ``\\`` 分隔最多四个声部。第一和第三声部的符干向上；第二和第四声部的符干向下。``\\voiceOne``、``\\voiceTwo``、``\\voiceThree`` 和 ``\\voiceFour`` 明确选择这些规则，``\\oneVoice`` 恢复单声部的自动方向。与同一符干方向声部并列的内声部至少横移半个符头，必要时移得更远。相同的休止符只在没有其他声部发声处共用一个符号。与 LilyPond 一样，力度记号在每个声部中都位于谱表下方。一个谱表上最多四个声部同时发声；第五个声部会被拒绝，``\\shiftOn`` 及其相关命令也会被拒绝，因为横移由声部规则决定。歌词附着于命名声部，独立的 ``\\lyricsto`` 表达式形成不同段的歌词。"
 
-#: ../../topics/music.rst:241
+#: ../../topics/music.rst:243
 msgid ""
 "We can override stems with ``\\stemUp``, ``\\stemDown`` and "
 "``\\stemNeutral`` without changing the voice's column policy."
 msgstr ""
 "我们可以用 ``\\stemUp``、``\\stemDown`` 和 ``\\stemNeutral`` 更改符干方向，而不改变声部的音符列规则。"
 
-#: ../../topics/music.rst:253
+#: ../../topics/music.rst:255
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
 msgstr "两个钢琴谱表；上谱表有四个四分音符及歌词 Sing a short song，低音声部持续奏 C。"
 
-#: ../../topics/music.rst:253
+#: ../../topics/music.rst:255
 msgid "A named melody with a verse and a bass staff."
 msgstr "带有一段歌词和低音谱表的命名旋律。"
 
-#: ../../topics/music.rst:263
+#: ../../topics/music.rst:265
 msgid "Read local files"
 msgstr "读取本地文件"
 
-#: ../../topics/music.rst:266
+#: ../../topics/music.rst:268
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
 msgstr "指令可以指定本地文件，代替内联正文。我们只使用一种来源形式。"
 
-#: ../../topics/music.rst:275
+#: ../../topics/music.rst:277
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1461,7 +1461,7 @@ msgstr ""
 "嵌套的 ``\\include`` 路径先在包含文件旁解析，再查找源码目录及配置的 "
 "``include_roots``。解析后的路径必须保持在允许的根目录内，符号链接检查后也是如此。构建按内容跟踪源码文件、嵌套包含项、本地缺失查找及选中的文字字体文件。依赖项改变会重新生成图像。相同的输出字节保留相同的资源名称。"
 
-#: ../../topics/music.rst:281
+#: ../../topics/music.rst:283
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
@@ -1477,65 +1477,65 @@ msgstr ""
 "源码而不排印乐谱。无法读取文件时（例如在非受信任构建中），输出会用一句话指明乐谱文件，而不是把其路径当作代码显示。绘制失败会保留源码并发出警告；``-W`` "
 "停止发布并保留上一次输出。"
 
-#: ../../topics/music.rst:286
+#: ../../topics/music.rst:288
 msgid "Set size and output"
 msgstr "设置尺寸与输出"
 
-#: ../../topics/music.rst:289
+#: ../../topics/music.rst:291
 msgid "Directive options"
 msgstr "指令选项"
 
-#: ../../topics/music.rst:293
+#: ../../topics/music.rst:295
 msgid "Option"
 msgstr "选项"
 
-#: ../../topics/music.rst:294
+#: ../../topics/music.rst:296
 msgid "Meaning"
 msgstr "含义"
 
-#: ../../topics/music.rst:295
+#: ../../topics/music.rst:297
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:296
+#: ../../topics/music.rst:298
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "图像的音乐描述；省略时，构建会生成本地化摘要。"
 
-#: ../../topics/music.rst:297
+#: ../../topics/music.rst:299
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:298
+#: ../../topics/music.rst:300
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
 msgstr "图注、引用目标、CSS 类和图像对齐方式，与绘图指令一致。"
 
-#: ../../topics/music.rst:299
+#: ../../topics/music.rst:301
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:300
+#: ../../topics/music.rst:302
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "默认为 ``svg``，也可选择每英寸 144 像素的 ``png``。"
 
-#: ../../topics/music.rst:301
+#: ../../topics/music.rst:303
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:302
+#: ../../topics/music.rst:304
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
 msgstr "五线谱高度为 10 到 40 点，默认为 18 点。"
 
-#: ../../topics/music.rst:303
+#: ../../topics/music.rst:305
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:304
+#: ../../topics/music.rst:306
 msgid ""
 "Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's "
@@ -1544,17 +1544,17 @@ msgstr ""
 "可用系统宽度，单位为 "
 "``pt``、``pc``、``mm``、``cm``、``Q``、``in``、``px``、``em``、``rem``、``ex``、``ch``，或构建器默认宽度的百分比。"
 
-#: ../../topics/music.rst:305
+#: ../../topics/music.rst:307
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:306
+#: ../../topics/music.rst:308
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
 msgstr "``auto`` 让较短的最后一行谱表保持自然宽度；``all`` 拉伸每行谱表；``none`` 避免拉伸。"
 
-#: ../../topics/music.rst:308
+#: ../../topics/music.rst:310
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
@@ -1563,7 +1563,7 @@ msgstr ""
 "项目默认设置为 ``lilypond_staff_size``、``lilypond_html_width`` 和 "
 "``lilypond_pdf_width``。数值单位为排版点。设置约定参见 :doc:`../reference/configuration`。"
 
-#: ../../topics/music.rst:312
+#: ../../topics/music.rst:314
 msgid ""
 "When a drawing is wider than 225 points, HTML also receives a narrow "
 "edition engraved at 225 points with a staff height no greater than 14 "
@@ -1577,7 +1577,7 @@ msgstr ""
 "``picture`` 元素选择它。窄版有自己的换行位置。如果谱表系统数量限制导致窄版无法绘制，宽版图像会缩放到屏幕宽度。SVG "
 "的墨色适应页面配色；PNG 在深色模式下保持浅色背景面板。"
 
-#: ../../topics/music.rst:318
+#: ../../topics/music.rst:320
 msgid ""
 "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; "
 "any other value renders as A4) and the selected template's horizontal "
@@ -1595,11 +1595,11 @@ msgstr ""
 "31mm`` 这样的注释声明水平页边距。自定义模板未声明时，假定页边距为 25 毫米。``lilypond_pdf_width`` "
 "覆盖推导出的宽度。过宽乐谱会缩放以适应宽度，并产生构建警告。含多个谱表系统的乐谱可以在系统之间跨 PDF 页面换页，图注位于最后一个系统之后。"
 
-#: ../../topics/music.rst:325
+#: ../../topics/music.rst:327
 msgid "Fonts, limits and references"
 msgstr "字体、限制与参考资料"
 
-#: ../../topics/music.rst:328
+#: ../../topics/music.rst:330
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1612,7 +1612,7 @@ msgstr ""
 "``pdf_fonts`` 和 ``pdf_font_paths``，提供常规、粗体和斜体回退字体。字形转换为轮廓，浏览器和 PDF "
 "阅读器无需安装音乐字体。PNG 导出需要内嵌渲染器；未内嵌渲染器的构建仍可排印 SVG。"
 
-#: ../../topics/music.rst:333
+#: ../../topics/music.rst:335
 msgid ""
 "For CJK lyrics, we include a suitable CJK text face through "
 "``pdf_font_paths``. When building this repository, ``cargo xtask "
@@ -1624,23 +1624,19 @@ msgstr ""
 "fetch-fonts --music`` 将混合文字音乐语料库使用的固定版本 Noto Serif CJK 字体安装到 "
 "``docs/shared/fonts``。我们可以将该目录用作项目的字体路径。"
 
-#: ../../topics/music.rst:337
+#: ../../topics/music.rst:339
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
-"included files, depth 64, 20,000 events, 24 staves, four voices per staff "
-"and 16 heads per chord. The reader and engraver each have a work limit of "
-"eight million operations. Expanded reader allocations have a separate 64 "
-"MiB allowance. A drawing has at most 64 systems and a height of 20,000 "
-"points. PNG is limited to 16 million pixels and 16,384 pixels on either "
-"side. A limit diagnostic identifies the source and suggests splitting the "
-"example."
-msgstr ""
-"单个示例最多接受含包含文件在内的 256 KiB 源码、32 个包含文件、64 层嵌套、20,000 个事件、24 "
-"个谱表、每个谱表四个声部和每个和弦 16 个符头。读取器和排印器各有八百万次操作的工作上限。读取器展开后的分配另有 64 MiB "
-"限额。单张图最多有 64 个谱表系统，高度不超过 20,000 点。PNG 限制为一千六百万像素，任一边不超过 16,384 "
-"像素。超限诊断会指出来源并建议拆分示例。"
+"included files, depth 64, 20,000 events, 24 staves, four voices sounding "
+"at once on a staff and 16 heads per chord. The reader and engraver each "
+"have a work limit of eight million operations. Expanded reader "
+"allocations have a separate 64 MiB allowance. A drawing has at most 64 "
+"systems and a height of 20,000 points. PNG is limited to 16 million "
+"pixels and 16,384 pixels on either side. A limit diagnostic identifies "
+"the source and suggests splitting the example."
+msgstr "单个示例最多接受含包含文件在内的 256 KiB 源码、32 个包含文件、64 层嵌套、20,000 个事件、24 个谱表、每个谱表四个同时发声的声部和每个和弦 16 个符头。读取器和排印器各有八百万次操作的工作上限。读取器展开后的分配另有 64 MiB 限额。单张图最多有 64 个谱表系统，高度不超过 20,000 点。PNG 限制为一千六百万像素，任一边不超过 16,384 像素。超限诊断会指出来源并建议拆分示例。"
 
-#: ../../topics/music.rst:344
+#: ../../topics/music.rst:346
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "

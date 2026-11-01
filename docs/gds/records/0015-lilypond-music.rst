@@ -209,7 +209,7 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - Forced and forbidden line breaks.
    * - 2
      - ``<< >>`` with ``\\``, ``\voiceOne``, ``\voiceTwo``, ``\voiceThree``, ``\voiceFour``, ``\oneVoice``, ``\new Voice``, ``\new Staff``, ``\new PianoStaff``, ``\new GrandStaff``, ``\new StaffGroup``, ``\new ChoirStaff``, ``\with { instrumentName = "..." shortInstrumentName = "..." }``, ``\set Staff.instrumentName`` (string or ``\markup``)
-     - At most four voices per staff; a fifth is refused.
+     - At most four voices sounding at once on a staff; a fifth is refused, as are explicit ``\shiftOn``, ``\shiftOnn``, ``\shiftOnnn`` and ``\shiftOff``.
    * - 2
      - Several verses, ``\new Lyrics`` with its own durations, and phrasing slurs ``\( \)``
      -
@@ -709,11 +709,15 @@ Two noteheads at the same pitch share one head when their head glyphs and dots a
 In the two-voice case, an uncrossed second shifts the lower, downward-stemmed voice right; when the voices cross, the upward-stemmed voice shifts right.
 A rest in voice one is raised to staff position 4 and one in voice two lowered to position -4, then moved further, by whole staff spaces, until it clears the other voice's skyline.
 With three or four voices, we place each column against all previously placed columns, in voice-policy order.
-We try zero shift first, then at most sixteen notehead-width steps, preferring right for voice three and left for voice four.
+An inner voice beside an earlier column with the same stem direction starts half a notehead width aside, as LilyPond's note collisions always shift it; otherwise we try zero shift first. Then we try at most sixteen notehead-width steps, preferring right for voice three and left for voice four.
 Candidate columns must clear other heads, stems and unattached flags; a compatible shared head has one upward and one downward stem.
 This also applies when only two of those voices sound at a moment.
 Accidentals and dots are then arranged across the whole staff column.
-Rests of equal duration at one moment are drawn once, using the earliest matching voice as owner.
+Rests of equal duration at one moment are drawn once, using the earliest matching voice as owner, when no other voice sounds there.
+Where shifted voices share a column, its heads form one unit for spacing, so every head of the next column stands right of all of them.
+Measure rests, tuplet brackets, articulations, fingerings and text scripts follow their voice's side, and scripts follow its shifted heads; overlapping marks of different voices stack outward.
+Dynamics stay below unless ``\dynamicUp`` asks otherwise, because LilyPond's polyphonic directions do not include dynamics.
+In polyphony a slur rises at most 2.5 staff spaces to clear other voices and may cross them, as LilyPond's slurs avoid only their own voice; a tie rises at most 1.5.
 Other rests move by whole staff spaces away from notes and previously placed rests, with a maximum of thirty-two trials and a clear refusal if they cannot fit.
 Same-side tie endpoints start or end beyond the actual stem edge.
 
@@ -1332,3 +1336,19 @@ We use four bars of Beethoven's Joy theme from Symphony No. 9, finale, bars 92-9
 We retain the instrumental melody's half-note opening and dotted rhythm, omit orchestration, slurs and dynamics, cite the source score, and explain the pitches and beat counts.
 The example source is checked by a pitch-and-duration regression and the image corpus.
 The manual includes copyable RST and MyST forms, a caption and accessible description; every manual translation covers the explanation and new voice limit.
+
+Four-voice review, 1 November 2026
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An independent review of the four-voice revision and its follow-ups found layout defects that the corpus did not exercise:
+
+* Critique: ties and slurs in voices three and four rose into spikes up to a hundred points tall, because the clearance formula divides by a small number near a curve's ends.
+  Revision: ties rise at most 1.5 staff spaces; in polyphony a slur rises at most 2.5 and may cross another voice, as LilyPond's slurs avoid only their own voice.
+* Critique: articulations, fingerings and dynamics of two voices on one side printed over each other at the column's x, and a left-shifted fourth voice could stand left of the previous beat.
+  Revision: scripts follow the shifted heads, overlapping single-glyph marks stack outward, and the heads of a column with shifted voices form one unit for spacing.
+* Critique: ``\voiceOne`` moved dynamics above the staff, a voice that began with ``<< \\ >>`` kept upward stems afterwards, measure rests and tuplet numbers ignored their voice, and identical accidentals of two voices printed twice.
+  Revision: dynamics keep their direction, as LilyPond's ``direction-polyphonic-grobs`` omit ``DynamicLineSpanner``; the voice record keeps its neutral direction; measure rests and tuplets follow the voice; one accidental serves voices that sound the same pitch.
+* Critique: the voice limit counted voice records, so five differently named voices failed although at most three sounded at once.
+  Revision: the reader and ``check_score`` count voices sounding at once, with a bound of sixty-four records per staff; ``\shiftOn`` and its relatives are refused instead of reported as unknown.
+* Critique: conversion renderers each knew the ``lilypond`` directive's attribute and message, and the music corpus fuzz target needed the 25 MB CJK download.
+  Revision: one engine helper names the unengraved score file; fuzzing runs without the CJK face, which CI caches by the font list's digest.

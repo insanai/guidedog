@@ -134,7 +134,7 @@ impl Pitch {
 
 fn pitch_range() -> Error {
     Error::new(ErrorKind::Pitch, "The pitch is outside octaves -3 through 6.")
-        .hint("Move the phrase closer to the staff or choose another clef.")
+        .hint("Use pitches in octaves -3 through 6; transpose the source phrase if needed.")
 }
 
 /// A diatonic key mode, represented as a rotation of the major scale.

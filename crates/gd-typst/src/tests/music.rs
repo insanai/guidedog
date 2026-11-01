@@ -2,7 +2,11 @@ use super::*;
 
 #[test]
 fn rasterization_checks_dimensions_pixels_and_reservations() {
-    let source = br#"<svg xmlns="http://www.w3.org/2000/svg" width="20pt" height="10pt" viewBox="0 0 20 10"><path d="M1 1L19 9" stroke="black"/></svg>"#;
+    let source = concat!(
+        r#"<svg xmlns="http://www.w3.org/2000/svg" width="20pt" height="10pt" "#,
+        r#"viewBox="0 0 20 10"><path d="M1 1L19 9" stroke="black"/></svg>"#,
+    )
+    .as_bytes();
     let options = RasterOptions { width: 20.0, height: 10.0, ..RasterOptions::default() };
     let result = rasterize_svg(source, &options);
     if EMBEDDED {

@@ -747,12 +747,14 @@ figcaption .legend { margin-top: .4rem; text-align: left; }
 /* Adaptive SVGs inherit the chosen scheme; ordinary artwork keeps a light panel. */
 :is(img, object).graphviz-adaptive { color-scheme: inherit; }
 :root[data-theme="dark"]
-  :is(img.graphviz, object.graphviz, .graphviz img, img.typst-diagram, img.lilypond-music):not(.graphviz-adaptive) {
+  :is(img.graphviz, object.graphviz, .graphviz img, img.typst-diagram,
+      img.lilypond-music):not(.graphviz-adaptive) {
   background: #fff; border-radius: 4px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"])
-    :is(img.graphviz, object.graphviz, .graphviz img, img.typst-diagram, img.lilypond-music):not(.graphviz-adaptive) {
+    :is(img.graphviz, object.graphviz, .graphviz img, img.typst-diagram,
+      img.lilypond-music):not(.graphviz-adaptive) {
     background: #fff; border-radius: 4px;
   }
 }

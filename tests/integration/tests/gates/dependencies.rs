@@ -24,6 +24,9 @@ const LAYERS: &[(&str, u8)] = &[
     ("gd-highlight", 0),
     ("gd-gettext", 0),
     ("gd-graphdog", 0),
+    ("gd-score", 0),
+    ("gd-lilypond", 0),
+    ("gd-engrave", 0),
     ("gd-inventory", 0),
     ("gd-theme", 0),
     ("gd-fetch", 0),
@@ -74,6 +77,7 @@ const LAYERS: &[(&str, u8)] = &[
     ("guidedog-tests", 6),
     ("check", 6),
     ("linkcheck", 6),
+    ("music-check", 6),
     ("xtask", 6),
 ];
 
@@ -123,6 +127,8 @@ const EXTERNAL: &[(&str, &[&str])] = &[
     ("typst-svg", &["gd-typst"]),
     ("typst-render", &["gd-typst"]),
     ("typst-kit", &["gd-typst"]),
+    ("ttf-parser", &["gd-engrave", "gd-typst"]),
+    ("rustybuzz", &["gd-engrave"]),
     ("tree-sitter", &["gd-pyscan", "gd-rustdoc"]),
     ("tree-sitter-python", &["gd-pyscan"]),
     ("tree-sitter-rust", &["gd-rustdoc"]),

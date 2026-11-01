@@ -17,6 +17,7 @@ embedded = [
 [dependencies]
 gd-report = { workspace = true }
 gd-clock = { workspace = true }
+# Discovers OpenType faces and coverage when the embedded compiler is disabled.
 ttf-parser.workspace = true
 # The Typst compiler (allowed by CLAUDE.md): fonts come from extra font directories and the
 # system first, then the embedded set; packages resolve like the typst CLI (data directory,

@@ -130,5 +130,5 @@ impl fmt::Display for Ratio {
 
 fn overflow() -> Error {
     Error::new(ErrorKind::TimeOverflow, "The exact musical time does not fit an i64 fraction.")
-        .hint("Use smaller duration multipliers and fewer nested tuplets.")
+        .hint("Use smaller duration multipliers in the input and fewer nested tuplets.")
 }

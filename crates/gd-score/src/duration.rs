@@ -53,7 +53,7 @@ impl Base {
             64 => Ok(Self::SixtyFourth),
             128 => Ok(Self::HundredTwentyEighth),
             _ => Err(Error::new(ErrorKind::Duration, "Unsupported note duration.")
-                .hint("Use a power of two from 1 to 128, or \\breve.")),
+                .hint("Use a duration number that is a power of two from 1 to 128, or \\breve.")),
         }
     }
 }

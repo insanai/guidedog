@@ -130,6 +130,7 @@ fn comparable(outline: &str, myst: bool, soft: bool) -> String {
         let body = line.trim_start();
         let mut body =
             if body == "soft-break" && !soft { "text \" \"".to_owned() } else { body.to_owned() };
+        body = without_music_locations(body);
         if let Some(at) = body.find(" ->").filter(|&a| {
             body[a + 3..].starts_with(|c: char| c.is_ascii_digit()) && !body.starts_with("code")
         }) {
@@ -161,6 +162,19 @@ fn comparable(outline: &str, myst: bool, soft: bool) -> String {
     let mut s = out.join("\n");
     s.push('\n');
     s
+}
+
+// Reformatting changes byte offsets and indentation, just as it changes source spans.
+// The re-read directive must retain its music and options, with a newly computed map.
+fn without_music_locations(mut body: String) -> String {
+    for name in ["lilypond-line", "lilypond-indent", "lilypond-map"] {
+        if let Some(start) = body.find(&format!(" @{name}=\"")) {
+            let open = start + name.len() + 4;
+            let end = body[open..].find('"').map_or(body.len(), |end| open + end + 1);
+            body.replace_range(start..end, "");
+        }
+    }
+    body
 }
 
 /// The MyST normalization: what the Markdown reader records that reStructuredText

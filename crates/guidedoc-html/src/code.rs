@@ -13,8 +13,7 @@ impl Html<'_, '_> {
     /// structure, and a caption wraps it in a literal-block-wrapper container that
     /// carries the ids.
     pub fn enter_code(&mut self, id: NodeId) -> Visit {
-        if let Some(file) = self.doc.custom_attribute(id, "lilypond-file") {
-            let message = label(self.options, Label::UnengravedScore).replace("%s", file);
+        if let Some(message) = guidedoc::unengraved_score(self.doc, id, self.options) {
             self.w.cr();
             self.open_tag("p", id, "");
             self.w.put_byte(b'>');

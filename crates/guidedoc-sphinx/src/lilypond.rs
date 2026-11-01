@@ -59,7 +59,7 @@ pub(crate) fn music(p: &mut Parser<'_, '_>, d: &Directive<'_>) -> Result<(), Fai
     } else {
         // The trusted link pass opens the file. An untrusted parse never reads it.
         let file = path_of(&d.arg);
-        p.custom(id, "lilypond-file", &file)?;
+        p.custom(id, guidedoc::SCORE_FILE_ATTRIBUTE, &file)?;
         body.push_str(&file);
         body.push('\n');
     }

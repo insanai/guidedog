@@ -65,9 +65,9 @@ pub use object::{load_object, write_object};
 pub use options::{
     ContentPolicy, ENGLISH_LABELS, Highlighter, LABEL_COUNT, Label, Labels, Limits, MapEntry,
     MathStyle, Pass, PassFn, PassOutcome, Policy, ReadExtension, ReadOptions, RenderOptions,
-    Request, Resource, ResourceProvider, ResourceStatus, Source, admonition_label, default_limits,
-    default_policy, default_read_options, default_request, label, read_extension, split_label,
-    trusted_policy,
+    Request, Resource, ResourceProvider, ResourceStatus, SCORE_FILE_ATTRIBUTE, Source,
+    admonition_label, default_limits, default_policy, default_read_options, default_request,
+    label, read_extension, split_label, trusted_policy, unengraved_score,
 };
 pub use report::{
     Arg, CORE_CAPACITY, CORE_DEPTH, CORE_NODES, CORE_STACK, CORE_UNHANDLED_KIND, CORE_UTF8,

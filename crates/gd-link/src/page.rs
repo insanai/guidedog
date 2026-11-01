@@ -294,7 +294,7 @@ impl Rule for Page<'_> {
                         || flag(doc, id, "lilypond")))
                     || (format == OutputFormat::Text
                         && flag(doc, id, "lilypond")
-                        && doc.custom_attribute(id, "lilypond-file").is_some()) =>
+                        && doc.custom_attribute(id, guidedoc::SCORE_FILE_ATTRIBUTE).is_some()) =>
             {
                 Action::Replace
             }

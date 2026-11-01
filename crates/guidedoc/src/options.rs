@@ -428,6 +428,22 @@ pub fn label<'a>(options: &RenderOptions<'a>, l: Label) -> &'a str {
     }
 }
 
+/// The custom attribute a `lilypond` directive with a file argument carries. The reader
+/// never opens the file; the project builder engraves it.
+pub const SCORE_FILE_ATTRIBUTE: &str = "lilypond-file";
+
+/// For a code block that stands for an unread score file, the sentence a renderer shows
+/// in its place, in the rendering language; None for any other node. Renderers call
+/// this instead of knowing the directive's attributes.
+pub fn unengraved_score(
+    doc: Document<'_>,
+    id: crate::NodeId,
+    options: &RenderOptions<'_>,
+) -> Option<String> {
+    let file = doc.custom_attribute(id, SCORE_FILE_ATTRIBUTE)?;
+    Some(label(options, Label::UnengravedScore).replace("%s", file))
+}
+
 /// Returns the title of an admonition kind; "" for a generic admonition.
 pub fn admonition_label<'a>(options: &RenderOptions<'a>, k: AdmonitionKind) -> &'a str {
     let l = match k {

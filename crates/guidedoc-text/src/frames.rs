@@ -114,8 +114,7 @@ impl State<'_, '_> {
 
     /// Writes a literal block indented three spaces; a caption comes first.
     pub fn render_code_block(&mut self, id: NodeId) {
-        if let Some(file) = self.doc.custom_attribute(id, "lilypond-file") {
-            let message = label(self.options, Label::UnengravedScore).replace("%s", file);
+        if let Some(message) = guidedoc::unengraved_score(self.doc, id, self.options) {
             self.block_start();
             self.write_lines(&message);
             self.block_end();

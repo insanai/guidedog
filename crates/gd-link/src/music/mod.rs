@@ -64,7 +64,7 @@ fn show_unengraved(
     if let Some(text) = text {
         return copy_code_with_text(page, rw, id, text);
     }
-    let Some(name) = rw.doc.custom_attribute(id, "lilypond-file") else {
+    let Some(name) = rw.doc.custom_attribute(id, guidedoc::SCORE_FILE_ATTRIBUTE) else {
         return rw.copy_node(page, id);
     };
     if let Ok(file) = source::read(page, &source::origin(page, rw.doc, id), name) {
@@ -73,7 +73,9 @@ fn show_unengraved(
     let span = rw.doc.node(id).span;
     let paragraph = rw.open(guidedoc::NodeKind::Paragraph, span)?;
     rw.moved_to(id, paragraph);
-    let message = page.view.ui.gettext("LilyPond score %s was not engraved.").replace("%s", name);
+    // The engine's label is the catalog message, so build and conversion say the same.
+    let msgid = guidedoc::ENGLISH_LABELS[guidedoc::Label::UnengravedScore as usize];
+    let message = page.view.ui.gettext(msgid).replace("%s", name);
     rw.add_plain(&message, span)?;
     rw.close(paragraph)
 }
@@ -93,7 +95,7 @@ fn copy_code_with_text(
     rw.b.set_text(copy, text_id);
     // The file has become literal source, so renderers must no longer treat it as a request.
     rw.copy_attributes(id, copy, |key, name| {
-        key != guidedoc::AttributeKey::Custom || name != "lilypond-file"
+        key != guidedoc::AttributeKey::Custom || name != guidedoc::SCORE_FILE_ATTRIBUTE
     })?;
     rw.b.copy_payload(rw.doc, id, copy)?;
     for child in rw.doc.children(id) {
@@ -111,7 +113,7 @@ fn read(
 ) -> Result<gd_lilypond::Loaded, String> {
     let mut origin = source::origin(page, doc, id);
     let mut text = std::borrow::Cow::Borrowed(doc.node_text(id));
-    if let Some(name) = doc.custom_attribute(id, "lilypond-file") {
+    if let Some(name) = doc.custom_attribute(id, guidedoc::SCORE_FILE_ATTRIBUTE) {
         let file = source::read(page, &origin, name).map_err(|e| e.message)?;
         origin = file.name.into();
         *external_text = Some(file.text.clone());
@@ -194,6 +196,8 @@ fn draw_held<'d>(
         assets::save(page, doc, id, &engraving, None, &alt, ledger)?
     };
     let mut narrow = None;
+    // The narrow pass charges its own estimate to this score's ledger while the wide
+    // charge is still held. The double count is conservative and ends with the ledger.
     if page.format == OutputFormat::Html && engraving.width > 225.0 {
         options.line_width = 225.0;
         options.staff_size = options.staff_size.min(14.0);

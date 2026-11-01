@@ -14,7 +14,9 @@ pub(super) fn report(
     report.severity = gd_report::Severity::Warning;
     if error.span.is_unplaced() {
         crate::page::locate(doc, doc.node(id).span, &mut report);
-    } else if error.span.file.0 == 0 && doc.custom_attribute(id, "lilypond-file").is_none() {
+    } else if error.span.file.0 == 0
+        && doc.custom_attribute(id, guidedoc::SCORE_FILE_ATTRIBUTE).is_none()
+    {
         let span = doc.node(id).span;
         let source = doc.source_str(span.source);
         let music = files.file(error.span.file).map(|f| f.text.as_str()).unwrap_or("");

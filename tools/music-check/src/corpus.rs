@@ -32,7 +32,6 @@ pub(crate) fn check(root: &Path, update: bool) -> Result<(), String> {
                 &mut Options { line_width: 350.0, ..Default::default() },
             )
             .map_err(|e| format!("{name}: {e}"))?;
-
         audit(&drawing)
             .and_then(|()| crate::audit::check(&drawing))
             .and_then(|()| crate::audit::quants(&drawing))
@@ -44,7 +43,6 @@ pub(crate) fn check(root: &Path, update: bool) -> Result<(), String> {
                 &mut Options { staff_size: 14.0, line_width: 240.0, ..Default::default() },
             )
             .map_err(|e| format!("{name} (14pt): {e}"))?;
-
         audit(&compact)
             .and_then(|()| crate::audit::check(&compact))
             .and_then(|()| crate::audit::quants(&compact))

@@ -16,20 +16,40 @@ const DEVANAGARI: &[u8] =
 const CJK_SUM: &str = "2a2eae2628df83556c54018c41e20fa532c1b862c5256ae8b3f23feb918d12ca";
 
 pub(crate) struct FontData {
-    cjk: Vec<u8>,
+    /// The pinned CJK face; None only for the fuzz target, which does not need it.
+    cjk: Option<Vec<u8>>,
 }
 
 impl FontData {
+    /// Whether the pinned CJK face is loaded.
+    pub(crate) fn has_cjk(&self) -> bool {
+        self.cjk.is_some()
+    }
+
     pub(crate) fn fonts(&self) -> Result<Fonts<'_>, String> {
         let face = |data| FaceData { data, ..Default::default() };
+        let with_fallbacks = |first: &'static [u8]| {
+            let mut faces = vec![face(first), face(DEVANAGARI)];
+            faces.extend(self.cjk.as_deref().map(face));
+            faces
+        };
         gd_engrave::load_fonts(&FontOptions {
-            regular: vec![face(REGULAR), face(DEVANAGARI), face(&self.cjk)],
-            bold: vec![face(BOLD), face(DEVANAGARI), face(&self.cjk)],
-            italic: vec![face(ITALIC), face(DEVANAGARI), face(&self.cjk)],
+            regular: with_fallbacks(REGULAR),
+            bold: with_fallbacks(BOLD),
+            italic: with_fallbacks(ITALIC),
             bold_italic: Vec::new(),
         })
         .map_err(|error| error.to_string())
     }
+}
+
+/// The corpus faces, with the CJK face when it is installed. The fuzz target checks
+/// bounds and determinism, not glyph coverage, so it runs without the download.
+pub(crate) fn load_for_fuzzing(root: &Path) -> FontData {
+    load(root).unwrap_or_else(|_| {
+        println!("The pinned CJK face is not installed; fuzzing without it.");
+        FontData { cjk: None }
+    })
 }
 
 pub(crate) fn load(root: &Path) -> Result<FontData, String> {
@@ -44,5 +64,5 @@ pub(crate) fn load(root: &Path) -> Result<FontData, String> {
     {
         return Err(format!("{} has the wrong checksum. {hint}", path.display()));
     }
-    Ok(FontData { cjk })
+    Ok(FontData { cjk: Some(cjk) })
 }

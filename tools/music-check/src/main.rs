@@ -26,7 +26,7 @@ fn main() -> std::process::ExitCode {
         [flag, count] if flag == "--fuzz" => count
             .parse::<usize>()
             .map_err(|_| "A fuzz count must be a positive integer.".to_string())
-            .and_then(fuzz::check),
+            .and_then(|count| fuzz::check(&root, count)),
         _ => Err("Use --help for the music qualification commands.".into()),
     };
     match result {

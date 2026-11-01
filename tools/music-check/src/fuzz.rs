@@ -11,12 +11,11 @@ const SEEDS: &[&str] = &[
     r"{ \repeat unfold 999999999 { c'128 } }",
 ];
 
-pub(crate) fn check(count: usize) -> Result<(), String> {
+pub(crate) fn check(root: &std::path::Path, count: usize) -> Result<(), String> {
     if count == 0 || count > 10_000_000 {
         return Err("Use 1..10000000 fuzz cases.".into());
     }
-    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
-    let data = crate::fonts::load(&root)?;
+    let data = crate::fonts::load_for_fuzzing(root);
     let fonts = data.fonts()?;
     let mut engraver = gd_engrave::Engraver::default();
     let alphabet = b"{}<>[]()\\#$_ abcdefgrs012348.,'~|%\"*/=-\n";
@@ -58,7 +57,11 @@ pub(crate) fn check(count: usize) -> Result<(), String> {
                 limits: gd_engrave::Limits { work: 200_000, ..Default::default() },
                 ..Default::default()
             };
-            if let Ok(drawing) = engraver.engrave_score(&loaded.score, &fonts, &mut options) {
+            if let Ok(mut drawing) = engraver.engrave_score(&loaded.score, &fonts, &mut options) {
+                // Without the pinned CJK face, missing glyphs say only that it is absent.
+                if !data.has_cjk() {
+                    drawing.warnings.retain(|w| w.kind != gd_score::ErrorKind::Font);
+                }
                 drawn += 1;
                 crate::corpus::audit(&drawing).map_err(|e| format!("fuzz #{index}: {e}"))?;
                 let _ = gd_engrave::write_svg(

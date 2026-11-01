@@ -3,7 +3,7 @@
 We run `cargo run --locked -p music-check` to compare all 63 scores in `tests/integration/data/music` with their golden SVG and PNG output.
 We first run `cargo xtask fetch-fonts --music` to download the single Noto Serif CJK SC regular face used by the corpus.
 Both the download task and the corpus loader verify its pinned SHA-256.
-CI and every release-platform job fetch it before qualification.
+CI and every release-platform job fetch it before qualification, caching it by the font list's digest.
 The tool owns its CJK bytes explicitly and uses fixed Libertinus and Devanagari faces, so host fonts cannot change its results.
 Score 58 combines Latin, Devanagari and Chinese lyrics without missing-glyph warnings.
 SVG must match byte for byte.
@@ -18,6 +18,7 @@ Composite rest bars, signatures, brackets and parts of a single dynamic string h
 `cargo run -p music-check -- --update` explicitly replaces goldens after a reviewed engraving change.
 `cargo run -p music-check -- --fuzz 12000` drives both native entry points with deterministic hostile bytes, Unicode, mutated notation, recursive bindings, explosive repeats and structured valid scores under small source, expansion and work limits.
 It reports the number of successful parses and engravings so a run cannot silently test only rejected syntax.
+The fuzz target checks bounds and determinism rather than glyph coverage, so it also runs without the CJK face and says so.
 
 For visual comparison, `cargo run -p music-check -- --reference /path/to/lilypond` invokes a separately installed LilyPond 2.24 oracle and writes SVGs, source wrappers, a log and six HTML comparison pages under `target/music-reference`.
 This program is a development oracle only; documentation builds never invoke it.

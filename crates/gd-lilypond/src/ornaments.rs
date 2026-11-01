@@ -121,7 +121,11 @@ impl Reader<'_> {
                 AnnotationKind::Articulation(name.clone())
             }
             ExprKind::Atom(TokenKind::Command(name)) if DYNAMICS.contains(&name.as_str()) => {
+                self.close_hairpin(state, span)?;
                 AnnotationKind::Dynamic(name.clone())
+            }
+            ExprKind::Atom(TokenKind::Command(name)) if name == "<" || name == ">" => {
+                return self.open_hairpin(state, name == "<", direction, span);
             }
             ExprKind::Atom(TokenKind::Command(name)) if self.variables.contains_key(name) => {
                 cursor.at -= 1;
@@ -165,8 +169,7 @@ impl Reader<'_> {
             }
             ")" => self.close_slur(state, true, span)?,
             "<" | ">" => {
-                self.close_hairpin(state, span)?;
-                state.hairpin = Some((self.last_ref(state, span)?, name == "<", span));
+                self.open_hairpin(state, name == "<", Direction::Down, span)?;
             }
             "!" => self.close_hairpin(state, span)?,
             "tempo" => {
@@ -291,13 +294,25 @@ impl Reader<'_> {
         )
     }
 
+    fn open_hairpin(
+        &mut self,
+        state: &mut State,
+        crescendo: bool,
+        direction: Direction,
+        span: Span,
+    ) -> Result<(), Error> {
+        self.close_hairpin(state, span)?;
+        state.hairpin = Some((self.last_ref(state, span)?, crescendo, direction, span));
+        Ok(())
+    }
+
     fn close_hairpin(&mut self, state: &mut State, span: Span) -> Result<(), Error> {
-        if let Some((start, crescendo, opening)) = state.hairpin.take() {
+        if let Some((start, crescendo, direction, opening)) = state.hairpin.take() {
             self.spanner(
                 start,
                 self.last_ref(state, span)?,
                 if crescendo { SpannerKind::Crescendo } else { SpannerKind::Decrescendo },
-                Direction::Down,
+                direction,
                 opening,
             )?;
         }

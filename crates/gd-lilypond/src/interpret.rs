@@ -56,7 +56,7 @@ pub(crate) struct State {
     pub(crate) ties: Vec<NoteRef>,
     pub(crate) slurs: Vec<(NoteRef, bool, Span)>,
     pub(crate) beam: Option<(NoteRef, Span)>,
-    pub(crate) hairpin: Option<(NoteRef, bool, Span)>,
+    pub(crate) hairpin: Option<(NoteRef, bool, Direction, Span)>,
     pub(crate) pending: Vec<gd_score::Annotation>,
     pub(crate) meter: Meter,
     pub(crate) grace_slash: bool,
@@ -195,7 +195,7 @@ impl<'a> Reader<'a> {
             .last()
             .map(|s| s.2)
             .or(state.beam.map(|s| s.1))
-            .or(state.hairpin.map(|s| s.2));
+            .or(state.hairpin.map(|s| s.3));
         if let Some(span) = span {
             return Err(syntax_error(span, "A slur, beam or hairpin is not closed."));
         }

@@ -44,7 +44,8 @@ impl Draw<'_, '_, '_, '_, '_> {
             left = 1.0 - left;
             right = 1.0 - right;
         }
-        let y = middle + 5.0 * space;
+        let above = spanner.direction == gd_score::Direction::Up;
+        let y = middle + if above { -5.0 * space } else { 5.0 * space };
         for side in [-1.0, 1.0] {
             self.line(
                 Point { x: first.x, y: y + side * left * 0.65 * space },

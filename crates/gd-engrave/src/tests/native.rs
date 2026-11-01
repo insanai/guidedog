@@ -486,3 +486,22 @@ fn a_complete_fallback_face_shapes_a_script_run_as_one_unit() {
         assert_eq!((a.x, a.y, &a.outline), (b.x, b.y, &b.outline));
     }
 }
+
+#[test]
+fn directed_hairpins_stay_on_the_requested_side_of_the_staff() {
+    let drawing = draw(r"{ c'2^\< d'2^\f }", 350.0);
+    let system = &drawing.systems[0];
+    let top = system
+        .marks
+        .iter()
+        .filter(|m| m.mark.role() == Role::Staff)
+        .map(|m| m.bounds.top)
+        .fold(f64::INFINITY, f64::min);
+    let lines: Vec<_> = system
+        .marks
+        .iter()
+        .filter(|m| matches!(m.mark, Mark::Line { role: Role::Dynamic, .. }))
+        .collect();
+    assert_eq!(lines.len(), 2);
+    assert!(lines.iter().all(|m| m.bounds.bottom < top));
+}

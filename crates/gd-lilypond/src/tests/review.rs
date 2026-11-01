@@ -144,3 +144,14 @@ fn beat_group_lists_and_grace_state_copies_respect_reader_limits() {
     let failed = load_score("\\grace { c'16 } d'4", "grace.ly", &mut options).unwrap_err();
     assert_eq!(failed.error.kind, ErrorKind::ReadLimit);
 }
+
+#[test]
+fn directed_dynamics_close_hairpins_and_preserve_their_side() {
+    let loaded = load(r"{ c'2^\< d'2^\f }");
+    assert_eq!(loaded.score.spanners.len(), 1);
+    assert_eq!(loaded.score.spanners[0].kind, SpannerKind::Crescendo);
+    assert_eq!(loaded.score.spanners[0].direction, gd_score::Direction::Up);
+    let loaded = load(r"{ c'2\< d'2_\p }");
+    assert_eq!(loaded.score.spanners.len(), 1);
+    assert_eq!(loaded.score.spanners[0].direction, gd_score::Direction::Down);
+}

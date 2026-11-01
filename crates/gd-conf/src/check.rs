@@ -28,6 +28,7 @@ pub fn check_config(
     check_documents(config, path)?;
     check_graphviz(config, path, warnings)?;
     check_pdf(config, path)?;
+    crate::music::check(config, path)?;
     check_toc(config, path)?;
     check_intl(config, path)?;
     crate::check_ext::check_extensions(config, path, warnings)

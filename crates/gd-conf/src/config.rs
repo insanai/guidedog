@@ -150,6 +150,8 @@ pub struct Config {
     pub pdf: PdfConfig,
     /// The `graphviz_*` settings.
     pub graphviz: GraphvizConfig,
+    /// The `lilypond_*` settings for native music engraving.
+    pub lilypond: crate::music::LilypondConfig,
     /// The `myst_*` settings.
     pub myst: MystConfig,
     /// Internationalization: `locale_dirs`, `gettext_*` and their relatives.
@@ -637,6 +639,7 @@ impl Config {
             html: HtmlConfig::default(),
             pdf: PdfConfig::default(),
             graphviz: GraphvizConfig::default(),
+            lilypond: crate::music::LilypondConfig::default(),
             myst: MystConfig::default(),
             intl: IntlConfig::default(),
             ext: ExtensionSettings::default(),

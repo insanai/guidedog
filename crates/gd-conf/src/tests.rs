@@ -6,6 +6,27 @@ use super::*;
 
 mod extensions;
 
+#[test]
+fn music_dimensions_are_numeric_points_with_checked_bounds() {
+    let (config, _, error) = load_text(
+        "lilypond_staff_size = 18.5\nlilypond_html_width = 480\nlilypond_pdf_width = 350\n",
+    );
+    assert!(error.is_empty(), "{error}");
+    assert_eq!(config.lilypond.staff_size, Some(18.5));
+    assert_eq!(config.lilypond.html_width, Some(480.0));
+    assert_eq!(config.lilypond.pdf_width, Some(350.0));
+    for invalid in [
+        "lilypond_staff_size = 9",
+        "lilypond_staff_size = 41",
+        "lilypond_staff_size = nan",
+        "lilypond_html_width = 0",
+        "lilypond_pdf_width = -1",
+        "lilypond_pdf_width = inf",
+    ] {
+        assert!(!load_text(invalid).2.is_empty(), "{invalid}");
+    }
+}
+
 pub(super) fn load_text(text: &str) -> (Config, Vec<String>, String) {
     let mut c = Config::new("/project", "/project/_build");
     let table = match gd_toml::parse(text) {

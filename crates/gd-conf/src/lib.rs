@@ -34,6 +34,7 @@ mod linkcode;
 mod load;
 mod mount_links;
 mod mounts;
+mod music;
 mod paths;
 mod pattern;
 mod settings;
@@ -65,6 +66,7 @@ pub use load::{
 };
 pub use mount_links::mount_target;
 pub use mounts::{SiteAsset, SiteEdition, SiteMount};
+pub use music::LilypondConfig;
 pub use paths::{absolute, clean_path, readable_roots, source_path};
 pub use pattern::{Pattern, PatternError};
 pub use settings::{

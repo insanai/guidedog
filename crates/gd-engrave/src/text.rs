@@ -55,10 +55,7 @@ pub(crate) fn shape(
         TextStyle::Italic if !fonts.italic.is_empty() => &fonts.italic,
         _ => &fonts.regular,
     };
-    let Some(first) = faces.first() else {
-        return Err(font_error("The score contains text but no text face was supplied."));
-    };
-    let first_face = first.face()?;
+    let (first, first_face) = primary(faces, text, work)?;
     let initial = shaped(&first_face, text);
     let infos = initial.glyph_infos();
     let positions = initial.glyph_positions();
@@ -85,8 +82,9 @@ pub(crate) fn shape(
                         .warning(),
                 );
             }
-            let source = &faces[selected.unwrap_or(0)];
-            let face = source.face()?;
+            let (source, face) = selected
+                .map(|(index, face)| (&faces[index], face))
+                .unwrap_or_else(|| (first, first_face.clone()));
             note_source(&mut run, source);
             let fallback = shaped(&face, cluster);
             append(
@@ -173,19 +171,37 @@ fn note_source(run: &mut TextRun, face: &crate::fonts::TextFace<'_>) {
     }
 }
 
-fn fallback(
-    faces: &[crate::fonts::TextFace<'_>],
+fn fallback<'f>(
+    faces: &[crate::fonts::TextFace<'f>],
     text: &str,
     work: &mut usize,
-) -> Result<Option<usize>, Error> {
+) -> Result<Option<(usize, rustybuzz::Face<'f>)>, Error> {
     for (index, candidate) in faces.iter().enumerate() {
-        charge(work, 1)?;
+        charge(work, text.len().saturating_add(1))?;
         if candidate.covers(text) {
             let face = candidate.face()?;
             if text.chars().all(|c| c.is_control() || face.glyph_index(c).is_some()) {
-                return Ok(Some(index));
+                return Ok(Some((index, face)));
             }
         }
     }
     Ok(None)
+}
+
+// Prefer one face for the whole run so fallback preserves script context.
+fn primary<'a, 'f>(
+    faces: &'a [crate::fonts::TextFace<'f>],
+    text: &str,
+    work: &mut usize,
+) -> Result<(&'a crate::fonts::TextFace<'f>, rustybuzz::Face<'f>), Error> {
+    let selected = fallback(faces, text, work)?;
+    let index = selected.as_ref().map(|(index, _)| *index).unwrap_or(0);
+    let source = faces
+        .get(index)
+        .ok_or_else(|| font_error("The score contains text but no text face was supplied."))?;
+    let face = match selected {
+        Some((_, face)) => face,
+        None => source.face()?,
+    };
+    Ok((source, face))
 }

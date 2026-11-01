@@ -430,12 +430,59 @@ fn a_pickup_uses_the_full_instrument_name_only_on_its_first_system() {
         350.0,
     );
     assert_eq!(drawing.systems.len(), 2);
-    let widths: Vec<_> = drawing.systems.iter().map(|system| {
-        system.marks.iter().find_map(|mark| {
-            if let Mark::Text { run, role: Role::Instrument, .. } = &mark.mark {
-                Some(run.advance)
-            } else { None }
-        }).unwrap()
-    }).collect();
+    let widths: Vec<_> = drawing
+        .systems
+        .iter()
+        .map(|system| {
+            system
+                .marks
+                .iter()
+                .find_map(|mark| {
+                    if let Mark::Text { run, role: Role::Instrument, .. } = &mark.mark {
+                        Some(run.advance)
+                    } else {
+                        None
+                    }
+                })
+                .unwrap()
+        })
+        .collect();
     assert!(widths[0] > widths[1]);
+}
+
+#[test]
+fn a_complete_fallback_face_shapes_a_script_run_as_one_unit() {
+    const HINDI: &[u8] =
+        include_bytes!("../../../../docs/shared/fonts/NotoSerifDevanagari-Regular.ttf");
+    let mixed = load_fonts(&FontOptions {
+        regular: vec![
+            FaceData { data: REGULAR, ..Default::default() },
+            FaceData { data: HINDI, ..Default::default() },
+        ],
+        ..Default::default()
+    })
+    .unwrap();
+    let direct = load_fonts(&FontOptions {
+        regular: vec![FaceData { data: HINDI, ..Default::default() }],
+        ..Default::default()
+    })
+    .unwrap();
+    let shape = |fonts: &Fonts<'_>| {
+        crate::text::shape(
+            fonts,
+            "संगीत की शिक्षा",
+            12.0,
+            gd_score::TextStyle::Regular,
+            &mut Vec::new(),
+            &mut 1_000_000,
+            &mut None,
+        )
+        .unwrap()
+    };
+    let (mixed, direct) = (shape(&mixed), shape(&direct));
+    assert_eq!(mixed.advance, direct.advance);
+    assert_eq!(mixed.glyphs.len(), direct.glyphs.len());
+    for (a, b) in mixed.glyphs.iter().zip(&direct.glyphs) {
+        assert_eq!((a.x, a.y, &a.outline), (b.x, b.y, &b.outline));
+    }
 }

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 13:27+0000\n"
+"POT-Creation-Date: 2026-11-01 13:40+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -1077,15 +1077,23 @@ msgid "Learn from Beethoven's Joy theme"
 msgstr "ベートーヴェンの歓喜の主題で学ぶ"
 
 #: ../../topics/music.rst:66
+#| msgid ""
+#| "We use four bars of the Joy theme from Beethoven's Symphony No. 9, "
+#| "finale, bars 92-95. We place the melody in C major and the treble "
+#| "register, keeping its rhythm and omitting the orchestration, slurs and "
+#| "dynamics. The `source score, page 8 "
+#| "<https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ "
+#| "shows the instrumental opening with half notes; some familiar vocal "
+#| "versions divide them into repeated quarter notes."
 msgid ""
-"We use four bars of the Joy theme from Beethoven's Symphony No. 9, "
-"finale, bars 92-95. We place the melody in C major and the treble "
-"register, keeping its rhythm and omitting the orchestration, slurs and "
-"dynamics. The `source score, page 8 "
+"We use four bars of the Joy theme from Beethoven's Symphony No. 9, Op. "
+"125, finale, bars 92-95. We transpose the melody from D major to C major "
+"and place it in the treble register, keeping its rhythm and omitting the "
+"orchestration, slurs and dynamics. The `source score, page 8 "
 "<https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ shows "
 "the instrumental opening with half notes; some familiar vocal versions "
 "divide them into repeated quarter notes."
-msgstr "ベートーヴェンの交響曲第9番の終楽章、第92-95小節にある歓喜の主題の4小節を使います。旋律をハ長調とト音記号の音域に移し、リズムを保ちながら管弦楽の伴奏、スラー、強弱を省略します。`元の総譜の8ページ <https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ では器楽の冒頭が二分音符で書かれています。よく知られた歌唱版の中には、これを同じ音の四分音符二つに分けたものもあります。"
+msgstr "ベートーヴェンの交響曲第9番、作品125の終楽章、第92-95小節にある歓喜の主題の4小節を使います。旋律をニ長調からハ長調に移調し、ト音記号の音域に置きます。リズムを保ちながら管弦楽の伴奏、スラー、強弱を省略します。`元の総譜の8ページ <https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ では器楽の冒頭が二分音符で書かれています。よく知られた歌唱版の中には、これを同じ音の四分音符二つに分けたものもあります。"
 
 #: ../../topics/music.rst:84
 msgid ""
@@ -1102,7 +1110,9 @@ msgid ""
 "In ``\\fixed c'``, ``c`` is middle C and ``e`` is the E above it. The "
 "letters name pitches; ``\\key c \\major`` selects a key with no sharps or "
 "flats."
-msgstr "``\\fixed c'`` では、``c`` は中央ハ、``e`` はその上のミです。文字が音高を表し、``\\key c \\major`` はシャープもフラットもない調を選びます。"
+msgstr ""
+"``\\fixed c'`` では、``c`` は中央ハ、``e`` はその上のミです。文字が音高を表し、``\\key c \\major`` "
+"はシャープもフラットもない調を選びます。"
 
 #: ../../topics/music.rst:97
 msgid ""
@@ -1111,7 +1121,10 @@ msgid ""
 "inherits the preceding duration. In the last bar, ``e4.`` lasts one and a "
 "half beats, ``d8`` half a beat, and ``d2`` two beats. The final D leaves "
 "the phrase open because this is an excerpt."
-msgstr "``\\time 4/4`` では、各小節に四分音符4拍が入ります。最初の小節は ``e2`` が2拍、続く ``f4`` と ``g`` が各1拍です。``g`` は直前の音価を引き継ぎます。最後の小節では、``e4.`` が1拍半、``d8`` が半拍、``d2`` が2拍です。抜粋なので、最後のレで楽句は未完のままです。"
+msgstr ""
+"``\\time 4/4`` では、各小節に四分音符4拍が入ります。最初の小節は ``e2`` が2拍、続く ``f4`` と ``g`` "
+"が各1拍です。``g`` は直前の音価を引き継ぎます。最後の小節では、``e4.`` が1拍半、``d8`` が半拍、``d2`` "
+"が2拍です。抜粋なので、最後のレで楽句は未完のままです。"
 
 #: ../../topics/music.rst:102
 msgid "For MyST, we put the same music inside the directive fence:"
@@ -1245,15 +1258,12 @@ msgid "Voices and lyrics"
 msgstr "声部と歌詞"
 
 #: ../../topics/music.rst:157
-#| msgid ""
-#| "At most two voices per staff; ``\\addlyrics``, ``\\lyricsto``, "
-#| "``\\lyricmode``, multiple verses, explicit syllable durations, hyphens "
-#| "and extenders."
 msgid ""
 "At most four voices per staff; ``\\addlyrics``, ``\\lyricsto``, "
 "``\\lyricmode``, multiple verses, explicit syllable durations, hyphens "
 "and extenders."
-msgstr "五線ごとに最大四声。``\\addlyrics``、``\\lyricsto``、``\\lyricmode``、複数の歌詞節、明示的な音節の音価、ハイフン、延長線に対応します。"
+msgstr ""
+"五線ごとに最大四声。``\\addlyrics``、``\\lyricsto``、``\\lyricmode``、複数の歌詞節、明示的な音節の音価、ハイフン、延長線に対応します。"
 
 #: ../../topics/music.rst:158
 msgid "Grace and repetition"
@@ -1447,29 +1457,41 @@ msgid ""
 "voices shift their note columns when needed; equal rests can share a "
 "glyph. A fifth voice on the same staff is refused. Lyrics attach to a "
 "named voice, and separate ``\\lyricsto`` expressions make separate verses."
-msgstr "複数の五線を持つ楽譜には同時コンテキストを使います。楽器名は ``\\with`` ブロックの ``instrumentName`` と ``shortInstrumentName`` で指定します。一つの五線では ``<< ... >>`` 内の ``\\`` で最大四声を区切ります。第1声と第3声の符尾は上向き、第2声と第4声は下向きです。``\\voiceOne``、``\\voiceTwo``、``\\voiceThree``、``\\voiceFour`` でこれらの規則を明示し、``\\oneVoice`` で単声の自動方向に戻します。内声の音符列は必要に応じて横にずれ、同じ休符は一つの記号を共有できます。同じ五線の第5声は拒否されます。歌詞は名前付きの声部に付け、別々の ``\\lyricsto`` 式で複数の歌詞節を作ります。"
+msgstr ""
+"複数の五線を持つ楽譜には同時コンテキストを使います。楽器名は ``\\with`` ブロックの ``instrumentName`` と "
+"``shortInstrumentName`` で指定します。一つの五線では ``<< ... >>`` 内の ``\\`` "
+"で最大四声を区切ります。第1声と第3声の符尾は上向き、第2声と第4声は下向きです。``\\voiceOne``、``\\voiceTwo``、``\\voiceThree``、``\\voiceFour`` "
+"でこれらの規則を明示し、``\\oneVoice`` "
+"で単声の自動方向に戻します。内声の音符列は必要に応じて横にずれ、同じ休符は一つの記号を共有できます。同じ五線の第5声は拒否されます。歌詞は名前付きの声部に付け、別々の "
+"``\\lyricsto`` 式で複数の歌詞節を作ります。"
 
-#: ../../topics/music.rst:251
+#: ../../topics/music.rst:241
+msgid ""
+"We can override stems with ``\\stemUp``, ``\\stemDown`` and "
+"``\\stemNeutral`` without changing the voice's column policy."
+msgstr "``\\stemUp``、``\\stemDown``、``\\stemNeutral`` で、声部の音符列の規則を変えずに符尾の方向を指定できます。"
+
+#: ../../topics/music.rst:253
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
 msgstr "ピアノの二段譜。上段は四つの四分音符と Sing a short song の歌詞、低音はハ音を保ちます。"
 
-#: ../../topics/music.rst:251
+#: ../../topics/music.rst:253
 msgid "A named melody with a verse and a bass staff."
 msgstr "一節の歌詞と低音譜表を持つ名前付き旋律。"
 
-#: ../../topics/music.rst:261
+#: ../../topics/music.rst:263
 msgid "Read local files"
 msgstr "ローカルファイルを読む"
 
-#: ../../topics/music.rst:264
+#: ../../topics/music.rst:266
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
 msgstr "ディレクティブはインライン本文の代わりにローカルファイルを指定できます。ソース形式は必ず一つだけ使います。"
 
-#: ../../topics/music.rst:273
+#: ../../topics/music.rst:275
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1482,7 +1504,7 @@ msgstr ""
 "入れ子の ``\\include`` パスは、読み込み元ファイルの隣、ソースディレクトリ、設定した ``include_roots`` "
 "の順に解決します。シンボリックリンクを検査した後も、解決先は許可されたルート内にある必要があります。ビルドはソース、入れ子のインクルード、見つからなかったローカル検索、選択した文字フォントを内容で追跡します。依存先が変わると画像を再生成します。出力バイトが同じならアセット名も同じです。"
 
-#: ../../topics/music.rst:279
+#: ../../topics/music.rst:281
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
@@ -1499,65 +1521,65 @@ msgstr ""
 "ソースを展開します。非信頼のビルドのようにファイルを読めない場合は、パスをコードとして示す代わりに、楽譜ファイルの名前を文で示します。描画に失敗した場合も警告とソースを保持します。``-W`` "
 "は公開を止め、直前の出力を残します。"
 
-#: ../../topics/music.rst:284
+#: ../../topics/music.rst:286
 msgid "Set size and output"
 msgstr "寸法と出力を設定する"
 
-#: ../../topics/music.rst:287
+#: ../../topics/music.rst:289
 msgid "Directive options"
 msgstr "ディレクティブのオプション"
 
-#: ../../topics/music.rst:291
+#: ../../topics/music.rst:293
 msgid "Option"
 msgstr "オプション"
 
-#: ../../topics/music.rst:292
+#: ../../topics/music.rst:294
 msgid "Meaning"
 msgstr "意味"
 
-#: ../../topics/music.rst:293
+#: ../../topics/music.rst:295
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:294
+#: ../../topics/music.rst:296
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "画像の音楽的な説明。省略するとビルドが言語に合わせた概要を作ります。"
 
-#: ../../topics/music.rst:295
+#: ../../topics/music.rst:297
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:296
+#: ../../topics/music.rst:298
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
 msgstr "図のキャプション、参照先、CSS クラス、画像の配置。図表ディレクティブと同じです。"
 
-#: ../../topics/music.rst:297
+#: ../../topics/music.rst:299
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:298
+#: ../../topics/music.rst:300
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "既定は ``svg``。``png`` は 1 インチ当たり 144 ピクセルです。"
 
-#: ../../topics/music.rst:299
+#: ../../topics/music.rst:301
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:300
+#: ../../topics/music.rst:302
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
 msgstr "五線の高さ。10 から 40 ポイントで、既定は 18 ポイントです。"
 
-#: ../../topics/music.rst:301
+#: ../../topics/music.rst:303
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:302
+#: ../../topics/music.rst:304
 msgid ""
 "Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's "
@@ -1565,17 +1587,17 @@ msgid ""
 msgstr ""
 "利用可能なシステム幅。``pt``、``pc``、``mm``、``cm``、``Q``、``in``、``px``、``em``、``rem``、``ex``、``ch``、またはビルダーの既定幅に対する割合で指定します。"
 
-#: ../../topics/music.rst:303
+#: ../../topics/music.rst:305
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:304
+#: ../../topics/music.rst:306
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
 msgstr "``auto`` は短い最終システムを自然幅に保ち、``all`` は全システムを伸ばし、``none`` は引き伸ばしを避けます。"
 
-#: ../../topics/music.rst:306
+#: ../../topics/music.rst:308
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
@@ -1585,7 +1607,7 @@ msgstr ""
 "``lilypond_staff_size``、``lilypond_html_width``、``lilypond_pdf_width`` "
 "です。数値は組版ポイントを表します。設定の規約は :doc:`../reference/configuration` を参照します。"
 
-#: ../../topics/music.rst:310
+#: ../../topics/music.rst:312
 msgid ""
 "When a drawing is wider than 225 points, HTML also receives a narrow "
 "edition engraved at 225 points with a staff height no greater than 14 "
@@ -1600,7 +1622,7 @@ msgstr ""
 "要素からこの版を選びます。この版は独自に改行します。システム数の上限で描画できない場合、広い画像を画面幅に縮小します。SVG "
 "のインク色はページの配色に適応し、PNG はダークモードでも明るい背景パネルを保ちます。"
 
-#: ../../topics/music.rst:316
+#: ../../topics/music.rst:318
 msgid ""
 "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; "
 "any other value renders as A4) and the selected template's horizontal "
@@ -1620,11 +1642,11 @@ msgstr ""
 "は計算した幅を上書きします。幅を超える楽譜はビルド警告とともに縮小します。複数システムの楽譜はシステム間で PDF "
 "の改ページができ、キャプションは最後の後に置きます。"
 
-#: ../../topics/music.rst:323
+#: ../../topics/music.rst:325
 msgid "Fonts, limits and references"
 msgstr "フォント、制限、参考文献"
 
-#: ../../topics/music.rst:326
+#: ../../topics/music.rst:328
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1639,7 +1661,7 @@ msgstr ""
 "リーダーに音楽フォントをインストールする必要はありません。PNG 書き出しには組み込みレンダラーが必要です。組み込みなしのビルドでも SVG "
 "浄書を使えます。"
 
-#: ../../topics/music.rst:331
+#: ../../topics/music.rst:333
 msgid ""
 "For CJK lyrics, we include a suitable CJK text face through "
 "``pdf_font_paths``. When building this repository, ``cargo xtask "
@@ -1652,16 +1674,7 @@ msgstr ""
 "が複数の文字体系を含む音楽コーパス用の固定版 Noto Serif CJK を ``docs/shared/fonts`` "
 "にインストールします。このディレクトリをプロジェクトのフォントパスとして使用できます。"
 
-#: ../../topics/music.rst:335
-#| msgid ""
-#| "One example accepts at most 256 KiB of source including includes, 32 "
-#| "included files, depth 64, 20,000 events, 24 staves, two voices per "
-#| "staff and 16 heads per chord. The reader and engraver each have a work "
-#| "limit of eight million operations. Expanded reader allocations have a "
-#| "separate 64 MiB allowance. A drawing has at most 64 systems and a "
-#| "height of 20,000 points. PNG is limited to 16 million pixels and "
-#| "16,384 pixels on either side. A limit diagnostic identifies the source "
-#| "and suggests splitting the example."
+#: ../../topics/music.rst:337
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, four voices per staff "
@@ -1671,9 +1684,13 @@ msgid ""
 "points. PNG is limited to 16 million pixels and 16,384 pixels on either "
 "side. A limit diagnostic identifies the source and suggests splitting the "
 "example."
-msgstr "一つの例はインクルードを含むソース 256 KiB、インクルードファイル 32 個、深さ 64、イベント 20,000 個、五線 24 本、五線ごとに四声、和音ごとに符頭 16 個までです。読み取り器と浄書器には、それぞれ 800 万操作の上限があります。読み取り器の展開後の割り当てには別途 64 MiB の枠があります。描画は最大 64 システム、高さ 20,000 ポイントです。PNG は 1,600 万ピクセル、各辺 16,384 ピクセルまでです。制限の診断はソースを示し、例の分割を勧めます。"
+msgstr ""
+"一つの例はインクルードを含むソース 256 KiB、インクルードファイル 32 個、深さ 64、イベント 20,000 個、五線 24 "
+"本、五線ごとに四声、和音ごとに符頭 16 個までです。読み取り器と浄書器には、それぞれ 800 "
+"万操作の上限があります。読み取り器の展開後の割り当てには別途 64 MiB の枠があります。描画は最大 64 システム、高さ 20,000 "
+"ポイントです。PNG は 1,600 万ピクセル、各辺 16,384 ピクセルまでです。制限の診断はソースを示し、例の分割を勧めます。"
 
-#: ../../topics/music.rst:342
+#: ../../topics/music.rst:344
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "

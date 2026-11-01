@@ -63,8 +63,8 @@ Engraving belongs to the project asset pipeline.
 Learn from Beethoven's Joy theme
 --------------------------------
 
-We use four bars of the Joy theme from Beethoven's Symphony No. 9, finale, bars 92-95.
-We place the melody in C major and the treble register, keeping its rhythm and omitting the orchestration, slurs and dynamics.
+We use four bars of the Joy theme from Beethoven's Symphony No. 9, Op. 125, finale, bars 92-95.
+We transpose the melody from D major to C major and place it in the treble register, keeping its rhythm and omitting the orchestration, slurs and dynamics.
 The `source score, page 8 <https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ shows the instrumental opening with half notes; some familiar vocal versions divide them into repeated quarter notes.
 
 .. code-block:: rst
@@ -237,6 +237,8 @@ Voices one and three have upward stems; voices two and four have downward stems.
 Inner voices shift their note columns when needed; equal rests can share a glyph.
 A fifth voice on the same staff is refused.
 Lyrics attach to a named voice, and separate ``\lyricsto`` expressions make separate verses.
+
+We can override stems with ``\stemUp``, ``\stemDown`` and ``\stemNeutral`` without changing the voice's column policy.
 
 .. code-block:: lilypond
 

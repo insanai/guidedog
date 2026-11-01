@@ -1,0 +1,15 @@
+[package]
+name = "gd-lilypond"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+description = "A bounded reader for Guidedog's LilyPond notation profile"
+
+[dependencies]
+gd-score.workspace = true
+gd-report.workspace = true
+
+[lints]
+workspace = true

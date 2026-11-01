@@ -58,7 +58,8 @@ pub(crate) fn check(root: &Path, program: &str) -> Result<(), String> {
     if failures > 0 {
         return Err(format!("{failures} reference scores failed; see target/music-reference."));
     }
-    println!("{} LilyPond references and four review pages generated.", sources.len());
+    let pages = sources.len().div_ceil(12);
+    println!("{} LilyPond references and {pages} review pages generated.", sources.len());
     Ok(())
 }
 

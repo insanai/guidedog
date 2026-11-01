@@ -87,19 +87,19 @@ A tilde ties equal pitches; parentheses make slurs, and ``\(`` with ``\)`` makes
    * - Family
      - Examples
    * - Staff context
-     - ``\clef``, ``\key``, ``\time``, ``\partial``, ``\bar``; treble, bass, alto, tenor and soprano clefs, with supported octave clefs.
+     - ``\clef``, ``\key``, ``\time``, ``\numericTimeSignature``, ``\partial``, ``\bar``; treble, bass, alto, tenor and soprano clefs, with supported octave clefs.
    * - Modes
      - ``\major``, ``\minor``, ``\ionian``, ``\dorian``, ``\phrygian``, ``\lydian``, ``\mixolydian``, ``\aeolian``, ``\locrian``.
    * - Rhythm and stems
      - ``\tuplet 3/2``, ``\times 2/3``, manual ``[`` and ``]`` beams, ``\autoBeamOn``, ``\autoBeamOff``, ``\stemUp``, ``\stemDown``, ``\stemNeutral``.
    * - Expression
-     - Articulations, fingerings 1 through 5, dynamics from ``\pppp`` through ``\ffff``, ``\<``, ``\>``, ``\!``, literal scripts and single-item ``\markup`` with ``\bold`` or ``\italic``.
+     - Articulations, fingerings 1 through 5, dynamics from ``\pppp`` through ``\ffff``, ``\<``, ``\>``, ``\!``, literal scripts and structured ``\markup``.
    * - Structure
      - Assignments, variable references, lexical ``\include``, ``\score``, ``\new Staff``, ``\new Voice``, ``PianoStaff``, ``GrandStaff``, ``StaffGroup``, ``ChoirStaff``.
    * - Voices and lyrics
      - At most two voices per staff; ``\addlyrics``, ``\lyricsto``, ``\lyricmode``, multiple verses, explicit syllable durations, hyphens and extenders.
    * - Grace and repetition
-     - ``\grace``, ``\acciaccatura``, ``\appoggiatura``, ``\afterGrace``, ``\repeat volta``, ``\alternative``, ``\repeat unfold``.
+     - ``\grace``, ``\acciaccatura``, ``\appoggiatura``, ``\afterGrace``, ``\repeat volta``, ``\alternative``, ``\volta``, ``\fine``, ``\section``, ``\repeat unfold``, ``\compressEmptyMeasures``, ``\compressFullBarRests``.
    * - Labels and breaks
      - ``\tempo``, ``\mark``, ``\mark \default``, ``\new ChordNames \chordmode``, ``\break``, ``\noBreak``.
 
@@ -123,9 +123,9 @@ Grace time does not extend the measure.
      \grace { d16 e } f4-1-. g-> a\p\< b | c1\f |
    }
 
-We write a volta repeat once and give each ending in ``\alternative``.
+We write a volta repeat once and give each ending in ``\alternative``; ``\volta 1,2 { ... }`` labels combined endings, and ``\fine`` or ``\section`` marks a structural double bar.
 The example has two passes with different final measures.
-``\repeat unfold`` expands its body instead of drawing repeat signs.
+``\repeat unfold`` expands its body instead of drawing repeat signs, and ``\compressEmptyMeasures`` or ``\compressFullBarRests`` is accepted for multi-measure rests.
 Chord names use a separate ``\new ChordNames \chordmode`` context beside the staff, with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``.
 
 .. code-block:: lilypond
@@ -134,6 +134,40 @@ Chord names use a separate ``\new ChordNames \chordmode`` context beside the sta
      \repeat volta 2 { c4 d e f | }
      \alternative { { g1 | } { c1 | } }
    }
+
+Format text with ``\markup``
+----------------------------
+
+Scripts, ``\tempo``, ``\mark`` and instrument names accept a bounded LilyPond 2.24 ``\markup`` subset.
+Commands nest freely within the reader's depth limit, and top-level markup variables expand where a markup block expects text.
+
+.. list-table:: Supported ``\markup`` commands
+   :header-rows: 1
+   :widths: 28 72
+
+   * - Group
+     - Commands
+   * - Lists and columns
+     - ``\line``, ``\concat``, ``\column``, ``\center-column``, ``\right-column``, ``\dir-column`` and ``\var`` markup references.
+   * - Style and case
+     - ``\bold``, ``\italic``, ``\upright``, ``\normal-text``, ``\caps``, ``\smallCaps``, ``\sub`` and ``\super``.
+   * - Size
+     - ``\teeny``, ``\tiny``, ``\small``, ``\normalsize``, ``\large``, ``\huge``, ``\fontsize #n`` and ``\abs-fontsize #pt``.
+   * - Enclosures and spacing
+     - ``\box``, ``\rounded-box``, ``\circle``, ``\underline``, ``\parenthesize``, ``\bracket``, ``\hspace #n``, ``\vspace #n``, ``\raise #n`` and ``\lower #n``.
+   * - Music symbols
+     - ``\sharp``, ``\natural``, ``\flat``, ``\doublesharp``, ``\doubleflat``, ``\fermata``, ``\segno``, ``\coda``, ``\varcoda``, ``\dynamic`` and ``\musicglyph`` for mapped Feta glyph names.
+
+.. code-block:: lilypond
+
+   codaMark = \markup \rounded-box \bold { "To Coda " \coda }
+
+   \relative c'' {
+     \mark \codaMark
+     c4^\markup \concat { "sul " \italic "G" } d_\markup \dynamic "sfz" e f |
+   }
+
+Markup commands that run Scheme, alter layout properties, draw arbitrary paths or embed nested scores (such as ``\score``, ``\override``, ``\postscript``, ``\draw-line``, ``\path``, ``\epsfile`` and ``\markuplist``) are refused with a placed diagnostic.
 
 Combine staves and lyrics
 -------------------------
@@ -174,8 +208,8 @@ Identical output bytes retain the same asset name.
 
 ``--untrusted`` permits inline notation because the reader runs no program or Scheme code.
 It refuses file arguments and filesystem includes before opening them.
-Text output retains source code and performs no engraving.
-A failed drawing also retains source code with a warning; ``-W`` stops publication and preserves the preceding output.
+Trusted text output and fallback code blocks substitute external ``.ly`` source without engraving. When the file cannot be read, as in an untrusted build, the output names the score file in a sentence instead of showing its path as code.
+A failed drawing retains source code with a warning; ``-W`` stops publication and preserves the preceding output.
 
 Set size and output
 -------------------
@@ -195,7 +229,7 @@ Set size and output
    * - ``staff-size``
      - Height of a five-line staff, from 10 through 40 points; the default is 18 points.
    * - ``width``
-     - Available system width, in ``pt``, ``mm``, ``cm``, ``in``, ``px`` or a percentage of the builder's default width.
+     - Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, ``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's default width.
    * - ``justify``
      - ``auto`` keeps a short final system at its natural width; ``all`` stretches every system; ``none`` avoids stretching.
 
@@ -203,14 +237,14 @@ The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` and ``
 Their numeric values are typographic points.
 See :doc:`../reference/configuration` for the setting contract.
 
-HTML also receives a narrow edition engraved at 225 points, with a staff height no greater than 14 points.
+When a drawing is wider than 225 points, HTML also receives a narrow edition engraved at 225 points with a staff height no greater than 14 points.
 The browser selects it below 40 rem through a ``picture`` element.
 This edition has its own system breaks.
 When its system limit prevents it from being drawn, the wide image scales to the screen.
 SVG adapts its ink to the page's color scheme; PNG keeps a light background panel in dark mode.
 
-PDF uses the selected template's text width and places music at its natural size.
-Built-in templates declare their horizontal margin after the initial import with a comment such as ``// guidedog: margin-x = 31mm``.
+PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; any other value renders as A4) and the selected template's horizontal margin, then places music at its natural size.
+Built-in templates declare their horizontal margin in their leading 256 lines with a comment such as ``// guidedog: margin-x = 31mm``.
 A custom template without the declaration uses a 25 millimetre margin assumption.
 ``lilypond_pdf_width`` overrides the derived measure.
 Oversized music scales to fit with a build warning.

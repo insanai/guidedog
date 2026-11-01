@@ -8,6 +8,7 @@ beside it.
 ## Unreleased
 
 - Add native LilyPond notation in RST and MyST, with outlined Bravura SVG or PNG assets, figure references, narrow HTML layouts and PDF system breaks.
+- Read LilyPond 2.24 `\markup` in scripts, tempo and rehearsal marks and instrument names, including staff-group names, and refuse Scheme, layout and embedded-score markup with placed diagnostics.
 
 ## 1.0.0-beta.8 - 2026-10-31
 

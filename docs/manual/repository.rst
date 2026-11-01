@@ -31,6 +31,8 @@ cross-references, figures, indexes, and language-aware typesetting. We can embed
 or Typst drawing source, including CeTZ and Fletcher, directly in RST and MyST with
 automatic HTML and PDF assets; see :doc:`topics/diagrams`.
 
+We embed LilyPond notation directly in RST and MyST with the native ``lilypond`` directive, including staves, voices, lyrics and common markings; see :doc:`topics/music`. SVG and PNG figures work in HTML and PDF without an installed LilyPond program.
+
 The built-in theme follows the system theme by default, with light and dark choices;
 Guidedog's own documentation website defaults to the light reading edition. The website
 detects the browser language on its landing page and repository overview. A saved choice
@@ -76,7 +78,7 @@ Ubuntu, ``graphviz-devel`` on Fedora, or ``brew install graphviz`` on macOS; on 
    cargo run -p check                        # source limits
 
 The ``typst`` crates are a default feature of ``gd-typst``. Without them, Guidedog runs an
-installed ``typst`` 0.15.1 program for PDF books, while ``.. typst-diagram::`` requires the embedded compiler.
+installed ``typst`` 0.15.1 program for PDF books, while ``.. typst-diagram::`` and ``.. lilypond::`` with ``:format: png`` require the embedded compiler.
 `RELEASING.md <https://github.com/insanai/guidedog/blob/main/RELEASING.md>`__ describes the
 release workflow.
 

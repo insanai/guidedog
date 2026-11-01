@@ -283,7 +283,7 @@ A page notes each lookup once (``gd_env::Trace``); the answer's digest covers:
 ``File``
    Whether the file exists.
 ``FileContent``
-   The digest of a file read by a Typst diagram, including helper imports, data and package files; or that it is missing or unreadable. A source symlink that now leaves the source root is refused before hashing.
+   The digest of a file read by a Typst diagram or music directive, including helper imports, nested music includes, data, package and selected font files; or that it is missing or unreadable. A source or ``include_roots`` symlink that now leaves the allowed readable roots is refused before hashing.
 ``Image``
    The file the image resolves to for this page (language variants included), its
    target in the output, and whether it exists.
@@ -322,6 +322,16 @@ Typst diagrams
 
 When a page is rewritten, each ``typst-diagram`` compiles again. We track imported files by content through ``FileContent`` lookups, including failed data lookups. The asset filename hashes the compiled bytes, so helper edits produce new image URLs. Unchanged HTML units reuse their drawings and reports. PDF composition redraws diagrams before comparing the book inputs. After installing a missing package or changing font files, we run a fresh build process with ``-a`` to reload fonts and redraw cached pages.
 
+Native music
+~~~~~~~~~~~~
+
+A page records whether it contains a music directive in environment schema 31.
+The build discovers text faces once and loads selected files lazily across rendering workers.
+Music sources, nested includes, missing relative lookups and selected text font files become content dependencies.
+We check canonical confinement against the build's readable roots (including configured ``include_roots``) before observing a candidate file, so a denied symbolic link cannot cause the incremental hasher to read outside the allowed roots.
+Generated asset names hash the final bytes; an unchanged image keeps its name and modification time.
+Reader, engraving and raster reservations belong to a single directive and are released after that drawing, while font sources remain shared for the build.
+
 Publication
 -----------
 
@@ -355,13 +365,3 @@ saving the environment's JSON, and the site unit (inventory and index).
 Possible later work: ``guidedog serve`` keeping the environment, tables and object store
 in memory between rebuilds; a (size, modification time) prefilter before hashing a
 source.
-
-Native music
-~~~~~~~~~~~~
-
-A page records whether it contains a music directive in environment schema 31.
-The build discovers text faces once and loads selected files lazily across rendering workers.
-Music sources, nested includes, missing relative lookups and selected text font files become content dependencies.
-We check canonical confinement before observing a candidate file, so a denied symbolic link cannot cause the incremental hasher to read outside the allowed roots.
-Generated asset names hash the final bytes; an unchanged image keeps its name and modification time.
-Reader, engraving and raster reservations belong to a single directive and are released after that drawing, while font sources remain shared for the build.

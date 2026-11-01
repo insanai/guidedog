@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 05:19+0000\n"
+"POT-Creation-Date: 2026-11-01 10:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -609,7 +609,7 @@ msgid "``--untrusted``"
 msgstr ""
 
 #: ../../reference/cli.rst:248
-msgid "Leave out raw content, external Graphviz resources, and ``typst-diagram`` compilation; fetch nothing; and run no build plugin. This is a capability policy, not a process sandbox."
+msgid "Leave out raw content, external Graphviz resources, ``typst-diagram`` compilation, and music read from files (``lilypond`` file arguments and ``\\include``); fetch nothing; and run no build plugin. This is a capability policy, not a process sandbox."
 msgstr ""
 
 #: ../../reference/cli.rst:250
@@ -4765,7 +4765,7 @@ msgid "Trust"
 msgstr ""
 
 #: ../../reference/configuration.rst:1562
-msgid "``guidedog build --untrusted`` builds a project whose sources we did not write. Raw content is left out, nothing is fetched, and no build plugin runs. The project cannot widen what the build reads. ``include_roots`` and ``pdf_preamble`` are not used. Files and folders that lead outside the source folder (``html_logo``, ``html_favicon``, ``pdf_logo``, ``mathjax_config_path``, ``html_static_path``, ``html_extra_path``, ``templates_path``, ``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``, ``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. Embedded ``typst-diagram`` compilation is disabled and no Typst package is downloaded. Each dropped setting is a ``build.untrusted`` warning. This is a capability policy, not a process sandbox. See :doc:`cli`."
+msgid "``guidedog build --untrusted`` builds a project whose sources we did not write. Raw content is left out, nothing is fetched, and no build plugin runs. The project cannot widen what the build reads. ``include_roots`` and ``pdf_preamble`` are not used. Files and folders that lead outside the source folder (``html_logo``, ``html_favicon``, ``pdf_logo``, ``mathjax_config_path``, ``html_static_path``, ``html_extra_path``, ``templates_path``, ``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``, ``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. Embedded ``typst-diagram`` compilation is disabled and no Typst package is downloaded. Inline ``lilypond`` music is still engraved, but its file arguments and ``\\include`` are refused. Each dropped setting is a ``build.untrusted`` warning. This is a capability policy, not a process sandbox. See :doc:`cli`."
 msgstr ""
 
 #: ../../reference/configuration.rst:1572

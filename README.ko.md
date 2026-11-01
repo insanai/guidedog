@@ -60,7 +60,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-실행 파일은 `target/release`에 생성됩니다. Homebrew를 사용하는 macOS에서는 먼저 링커가 Graphviz를 찾도록 `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`를 설정하세요. Typst 컴파일러는 기본으로 내장됩니다(`gd-typst`의 `embedded` 기능). 이 기능을 끄면 Guidedog은 PDF 책 생성을 위해 시스템에 설치된 `typst` 0.15.1을 실행하며, `.. typst-diagram::`에는 내장 컴파일러가 필요합니다. Linux에서는 내장 컴파일러의 패키지 다운로더가 함께 번들된 OpenSSL을 링크하므로, 빌드할 때 `perl`과 `make`가 필요합니다.
+실행 파일은 `target/release`에 생성됩니다. Homebrew를 사용하는 macOS에서는 먼저 링커가 Graphviz를 찾도록 `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`를 설정하세요. Typst 컴파일러는 기본으로 내장됩니다(`gd-typst`의 `embedded` 기능). 이 기능을 끄면 Guidedog은 PDF 책 생성을 위해 시스템에 설치된 `typst` 0.15.1을 실행하며, `.. typst-diagram::`과 `:format: png`를 쓰는 `.. lilypond::`에는 내장 컴파일러가 필요합니다. Linux에서는 내장 컴파일러의 패키지 다운로더가 함께 번들된 OpenSSL을 링크하므로, 빌드할 때 `perl`과 `make`가 필요합니다.
 
 변경 사항을 보내기 전에 CI가 실행하는 검사를 수행하세요:
 

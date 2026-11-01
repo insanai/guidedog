@@ -44,8 +44,7 @@ What it does
   work as Sphinx users expect, and MyST Markdown can sit next to them.
 * **Translations.** Gettext catalogs carry a project into other languages. Chinese,
   Japanese, Korean, and Hindi text is laid out correctly on screen and on paper.
-* **Diagrams, math, and API pages.** Graphviz and Typst diagrams, LaTeX equations, and
-  API reference for Rust, Python, and Odin, read from source code.
+* **Diagrams, music, math, and API pages.** Graphviz and Typst diagrams, LilyPond music notation, LaTeX equations, and API reference for Rust, Python, and Odin, read from source code.
 * **Clear errors.** A message says what is wrong, where, and how to fix it. A failed
   build leaves the last good site in place.
 

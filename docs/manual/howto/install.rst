@@ -87,7 +87,7 @@ Typst: embedded or installed
 
 By default the Typst compiler is linked into ``guidedog`` (the ``embedded`` feature of
 the ``gd-typst`` crate). PDF books and ``.. typst-diagram::`` directives then need no other program. A build of ``gd-typst`` without
-that feature runs an installed ``typst`` program (pinned to 0.15.1) for PDF books, while ``.. typst-diagram::`` requires the embedded compiler (``typst.embedded``). For PDF books,
+that feature runs an installed ``typst`` program (pinned to 0.15.1) for PDF books, while ``.. typst-diagram::`` requires the embedded compiler (``typst.embedded``), and so does ``.. lilypond::`` with ``:format: png``; SVG music works in both builds. For PDF books,
 ``--typst=/absolute/path/to/typst`` (or ``typst`` in ``conf.toml``) selects an external ``typst`` 0.15.1 program
 explicitly, and ``guidedog --version`` names the backend in use.
 

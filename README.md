@@ -60,7 +60,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-The executable is in `target/release`. On macOS with Homebrew, point the linker at Graphviz first: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. The Typst compiler is embedded by default (the `embedded` feature of `gd-typst`); without it, Guidedog runs an installed `typst` 0.15.1 for PDF books, while `.. typst-diagram::` requires the embedded compiler. On Linux, the embedded compiler's package downloader links a vendored OpenSSL, which needs `perl` and `make` to build.
+The executable is in `target/release`. On macOS with Homebrew, point the linker at Graphviz first: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. The Typst compiler is embedded by default (the `embedded` feature of `gd-typst`); without it, Guidedog runs an installed `typst` 0.15.1 for PDF books, while `.. typst-diagram::` and `.. lilypond::` with `:format: png` require the embedded compiler. On Linux, the embedded compiler's package downloader links a vendored OpenSSL, which needs `perl` and `make` to build.
 
 Before sending a change, run what CI runs:
 

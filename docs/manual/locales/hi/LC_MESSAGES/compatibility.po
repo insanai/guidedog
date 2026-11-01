@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 10:17+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -519,11 +519,11 @@ msgstr "``imgconverter``"
 
 #: ../../compatibility.rst:147
 msgid ""
-"Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and "
-"PDF itself. Other formats are reported (:doc:`sources-and-diagrams`)."
+"Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and PDF "
+"itself. Other formats are reported (:doc:`sources-and-diagrams`)."
 msgstr ""
-"स्वीकार होता है, पर कुछ नहीं चलता: Typst PNG, JPEG, GIF, SVG, WebP और "
-"PDF खुद पढ़ता है। दूसरे फ़ॉर्मैट की सूचना दी जाती है "
+"स्वीकार होता है, पर कुछ नहीं चलता: Typst PNG, JPEG, GIF, SVG, WebP और PDF "
+"खुद पढ़ता है। दूसरे फ़ॉर्मैट की सूचना दी जाती है "
 "(:doc:`sources-and-diagrams`)।"
 
 #: ../../compatibility.rst:148
@@ -589,18 +589,17 @@ msgid ""
 "Graphviz image resources are resolved relative to their document and "
 "confined. Supported image bytes are embedded in the drawing. "
 "``imagepath`` and ``fontpath`` do not expand the boundary. The embedded "
-"Typst compiler enforces the declared readable folders directly, while "
-"an external ``typst`` program runs with a private symlink root "
-"containing only those folders. This keeps book templates and preambles "
-"within the declared resources."
+"Typst compiler enforces the declared readable folders directly, while an "
+"external ``typst`` program runs with a private symlink root containing "
+"only those folders. This keeps book templates and preambles within the "
+"declared resources."
 msgstr ""
 "Graphviz के चित्र संसाधन अपने दस्तावेज़ के सापेक्ष हल किए जाते हैं और "
 "सीमित रहते हैं। समर्थित चित्र बाइट्स आरेख में समाहित होते हैं। "
-"``imagepath`` और ``fontpath`` सीमा नहीं बढ़ाते। अंतर्निहित Typst "
-"कंपाइलर घोषित पठनीय फ़ोल्डरों को सीधे लागू करता है, जबकि बाहरी "
-"``typst`` प्रोग्राम एक निजी सिमलिंक रूट के साथ चलता है जिसमें केवल वही "
-"फ़ोल्डर होते हैं। इससे पुस्तक टेम्पलेट और प्रस्तावनाएँ घोषित संसाधनों "
-"के भीतर रहती हैं।"
+"``imagepath`` और ``fontpath`` सीमा नहीं बढ़ाते। अंतर्निहित Typst कंपाइलर "
+"घोषित पठनीय फ़ोल्डरों को सीधे लागू करता है, जबकि बाहरी ``typst`` "
+"प्रोग्राम एक निजी सिमलिंक रूट के साथ चलता है जिसमें केवल वही फ़ोल्डर होते "
+"हैं। इससे पुस्तक टेम्पलेट और प्रस्तावनाएँ घोषित संसाधनों के भीतर रहती हैं।"
 
 #: ../../compatibility.rst:173
 msgid ""
@@ -612,27 +611,33 @@ msgid ""
 ":doc:`topics/diagrams`."
 msgstr ""
 "``typst-diagram`` RST और MyST परियोजनाओं के लिए Guidedog का विस्तार है, "
-"Sphinx विस्तार का अनुबंध नहीं। यह दस्तावेज़ के भीतर या फ़ाइल के स्रोत "
-"को HTML तथा PDF के लिए SVG या PNG में कंपाइल करता है। सामान्य Typst कोड "
-"ब्लॉक उदाहरण ही रहते हैं। अंतर्निहित कंपाइलर परियोजना की पैकेज और "
-"फ़ॉन्ट नीति इस्तेमाल करता है; ``--untrusted`` कंपाइलेशन अस्वीकार करता "
-"है। :doc:`topics/diagrams` देखें।"
+"Sphinx विस्तार का अनुबंध नहीं। यह दस्तावेज़ के भीतर या फ़ाइल के स्रोत को "
+"HTML तथा PDF के लिए SVG या PNG में कंपाइल करता है। सामान्य Typst कोड "
+"ब्लॉक उदाहरण ही रहते हैं। अंतर्निहित कंपाइलर परियोजना की पैकेज और फ़ॉन्ट "
+"नीति इस्तेमाल करता है; ``--untrusted`` कंपाइलेशन अस्वीकार करता है। "
+":doc:`topics/diagrams` देखें।"
 
 #: ../../compatibility.rst:175
+msgid ""
+"``lilypond`` is also a Guidedog extension, not "
+"``sphinxcontrib-lilypond``. It runs no LilyPond program; Guidedog reads a "
+"documented part of the LilyPond language and engraves it itself, as SVG "
+"or PNG for HTML and PDF. ``--untrusted`` still engraves inline notation, "
+"because the reader runs no program or Scheme code, but refuses file "
+"arguments and ``\\include``. See :doc:`topics/music`."
+msgstr "``lilypond`` भी Guidedog का विस्तार है, ``sphinxcontrib-lilypond`` नहीं। यह कोई LilyPond प्रोग्राम नहीं चलाता; Guidedog LilyPond भाषा के एक प्रलेखित भाग को पढ़कर उसे स्वयं HTML और PDF के लिए SVG या PNG के रूप में उकेरता है। ``--untrusted`` दस्तावेज़ में लिखा स्वरलेख अब भी उकेरता है, क्योंकि पाठक कोई प्रोग्राम या Scheme कोड नहीं चलाता, पर फ़ाइल तर्क और ``\\include`` अस्वीकार करता है। :doc:`topics/music` देखें।"
+
+#: ../../compatibility.rst:177
 msgid ""
 "``--untrusted`` narrows the read boundary to the source folder. It omits "
 "raw content, unsafe URLs, outside resources, project Typst templates, and "
 "preambles, with diagnostics. It fetches no inventories or Typst packages. "
-"Graphs that ask to read resources are shown as code with a warning. This "
-"mode does not bound the native compiler's memory or execution time."
-msgstr ""
-"``--untrusted`` पढ़ने की सीमा सोर्स फ़ोल्डर तक रखता है। raw सामग्री, "
-"असुरक्षित URL, बाहरी संसाधन, प्रोजेक्ट के Typst template और प्रीऐम्बल "
-"निदान के साथ छोड़े जाते हैं। इन्वेंटरी या Typst पैकेज नहीं लाए जाते। "
-"संसाधन पढ़ने वाले ग्राफ़ चेतावनी के साथ कोड में दिखते हैं। यह मोड नेटिव "
-"कम्पाइलर की मेमोरी या चलने का समय सीमित नहीं करता।"
+"Graphs that ask to read resources, and music that names a file, are shown "
+"as code with a warning. This mode does not bound the native compiler's "
+"memory or execution time."
+msgstr "``--untrusted`` पढ़ने की सीमा सोर्स फ़ोल्डर तक रखता है। raw सामग्री, असुरक्षित URL, बाहरी संसाधन, प्रोजेक्ट के Typst template और प्रीऐम्बल निदान के साथ छोड़े जाते हैं। इन्वेंटरी या Typst पैकेज नहीं लाए जाते। संसाधन पढ़ने वाले ग्राफ़ और किसी फ़ाइल का नाम लेने वाला स्वरलेख चेतावनी के साथ कोड में दिखते हैं। यह मोड नेटिव कम्पाइलर की मेमोरी या चलने का समय सीमित नहीं करता।"
 
-#: ../../compatibility.rst:181
+#: ../../compatibility.rst:183
 msgid ""
 "The host budget defaults to 1 GiB. It is coarse: it counts the sources, "
 "included files, and PDF output the host holds, reserved before they are "
@@ -653,7 +658,7 @@ msgstr ""
 "में ही रहती है। डिस्क पर आधारित कोई मोड नहीं है, और ``--memory=disk`` तथा "
 "``--disk-budget`` अस्वीकार कर दिए जाते हैं।"
 
-#: ../../compatibility.rst:188
+#: ../../compatibility.rst:190
 msgid ""
 "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document "
 "work. Changing a limit invalidates cached reading and output. Depth and "
@@ -669,11 +674,11 @@ msgstr ""
 "ऑपरेटिंग सिस्टम की सीमाएँ इस्तेमाल करते हैं। :doc:`errors` और "
 ":doc:`internals/memory` देखें।"
 
-#: ../../compatibility.rst:194
+#: ../../compatibility.rst:196
 msgid "Verification and real projects"
 msgstr "सत्यापन और वास्तविक प्रोजेक्ट"
 
-#: ../../compatibility.rst:197
+#: ../../compatibility.rst:199
 msgid ""
 "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx "
 "9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, "
@@ -697,7 +702,7 @@ msgstr ""
 "हैं। ``cargo xtask verify-docutils`` उन्हें निश्चित Docutils 0.22.4 से "
 "मिलाकर जाँचता है। सभी 98 ट्री मेल खाते हैं।"
 
-#: ../../compatibility.rst:199
+#: ../../compatibility.rst:201
 msgid ""
 "On 15 October 2026 we built the manuals of CPython, Django and Flask as "
 "HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). "
@@ -712,7 +717,7 @@ msgstr ""
 "Django और Flask की पुस्तकें बन गईं; CPython की पुस्तक को 12 GB वाली उस "
 "मशीन से ज़्यादा मेमोरी चाहिए।"
 
-#: ../../compatibility.rst:201
+#: ../../compatibility.rst:203
 msgid ""
 "Those projects contain unsupported Python extension constructs. Their "
 "diagnostics remain part of the evidence. A zero exit status does not mean "
@@ -724,7 +729,7 @@ msgstr ""
 "उनके सभी निजी निर्देश दोहराए गए। जब प्रकाशन के लिए शून्य निदान ज़रूरी "
 "हों, तो हम ``-W`` के साथ चलाते हैं।"
 
-#: ../../compatibility.rst:203
+#: ../../compatibility.rst:205
 msgid ""
 "The measurements describe the recorded workloads on the recorded machine. "
 "They are not universal speed or memory bounds."

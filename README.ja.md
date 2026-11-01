@@ -60,7 +60,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-実行ファイルは `target/release` に生成されます。Homebrew を使う macOS では、先にリンカーへ Graphviz の場所を指定してください: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`。Typst コンパイラーは既定で組み込まれます（`gd-typst` の `embedded` フィーチャー）。これを無効にした場合、Guidedog は PDF の本の生成にインストール済みの `typst` 0.15.1 を呼び出しますが、`.. typst-diagram::` には組み込みコンパイラーが必要です。Linux では、組み込みコンパイラーのパッケージダウンローダーが同梱の OpenSSL をリンクするため、ビルドに `perl` と `make` が必要です。
+実行ファイルは `target/release` に生成されます。Homebrew を使う macOS では、先にリンカーへ Graphviz の場所を指定してください: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`。Typst コンパイラーは既定で組み込まれます（`gd-typst` の `embedded` フィーチャー）。これを無効にした場合、Guidedog は PDF の本の生成にインストール済みの `typst` 0.15.1 を呼び出しますが、`.. typst-diagram::` と `:format: png` を指定した `.. lilypond::` には組み込みコンパイラーが必要です。Linux では、組み込みコンパイラーのパッケージダウンローダーが同梱の OpenSSL をリンクするため、ビルドに `perl` と `make` が必要です。
 
 変更を送る前に、CI と同じチェックを実行してください。
 

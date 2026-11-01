@@ -60,7 +60,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-Die ausführbare Datei liegt unter `target/release`. Unter macOS mit Homebrew weisen wir dem Linker zuerst den Pfad zu Graphviz zu: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. Der Typst-Compiler ist standardmäßig eingebettet (das Feature `embedded` von `gd-typst`); ohne dieses Feature ruft Guidedog für PDF-Bücher ein installiertes `typst` 0.15.1 auf, während `.. typst-diagram::` den eingebetteten Compiler erfordert. Unter Linux linkt der Paket-Downloader des eingebetteten Compilers ein mitgeliefertes OpenSSL, das zum Kompilieren `perl` und `make` benötigt.
+Die ausführbare Datei liegt unter `target/release`. Unter macOS mit Homebrew weisen wir dem Linker zuerst den Pfad zu Graphviz zu: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. Der Typst-Compiler ist standardmäßig eingebettet (das Feature `embedded` von `gd-typst`); ohne dieses Feature ruft Guidedog für PDF-Bücher ein installiertes `typst` 0.15.1 auf, während `.. typst-diagram::` und `.. lilypond::` mit `:format: png` den eingebetteten Compiler erfordern. Unter Linux linkt der Paket-Downloader des eingebetteten Compilers ein mitgeliefertes OpenSSL, das zum Kompilieren `perl` und `make` benötigt.
 
 Führen Sie vor dem Einreichen einer Änderung dieselben Prüfungen wie die CI aus:
 

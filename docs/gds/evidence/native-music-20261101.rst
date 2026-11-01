@@ -12,20 +12,20 @@ Scope and evidence
 All three notation phases are implemented.
 The reader's command ledger distinguishes implemented notation, ignored metadata and refused programming constructs.
 Its profile tests exercise every accepted command and explicit refusals.
-The 48-score corpus covers pitch languages, relative and fixed octaves, transposition, accidentals, signatures, compound and grouped beats, pickups, exact durations, rests, chords, beams, tuplets, ties, slurs, articulations, fingerings, dynamics, text, lyrics, voices, staff groups, grace notes, repeats, tempo and chord names.
+The 58-score corpus covers pitch languages, relative and fixed octaves, transposition, accidentals, signatures, courtesy clefs and signatures, compound and grouped beats, pickups, exact durations, rests, chords, beams, tuplets, ties, slurs, articulations, fingerings, dynamics, structured ``\markup``, lyrics, voices, staff groups, grace notes, ``\volta`` repeats, tempo and chord names.
 There is no remaining implementation phase in this record.
 
-``cargo run --locked -p music-check`` checks finite ink frames, actual ink collisions by semantic role, exposed primary beam quants and tie apexes before comparing the SVG and PNG goldens.
+``cargo run --locked -p music-check`` checks finite ink frames, actual ink collisions by semantic role, exposed primary beam quants and tie apexes on both the 420-point standard edition and the 225-point compact edition before comparing the SVG and PNG goldens.
 SVG must match byte for byte.
 PNG dimensions must match; at most 0.2 percent of pixels may differ by more than eight channel levels, and mean channel error must remain below one percent.
 The alpha-mask collision check uses 288 pixels per inch after a bounding-box rejection, with the documented component contacts permitted.
-The 48 cases pass these checks.
+The 58 cases pass these checks.
 
 The deterministic fuzz run uses 12,000 hostile, mutated, Unicode and structured notation inputs under finite budgets.
-It produces 4,757 successful parses and 4,121 successful engravings.
+It produces 4,257 successful parses and 3,729 successful engravings.
 Spacing properties compare the solver with exhaustive active sets, preserve original spanning rods and verify monotone duration spacing.
 Line-breaking properties compare the dynamic program with every partition of small generated problems.
-Eight project tests exercise real HTML and PDF builds, captions, figure references, PNG, narrow editions, multi-system books, includes, missing-file invalidation, symbolic-link confinement, untrusted builds, localized descriptions and original source locations through MyST and included RST.
+Nine project tests exercise real HTML and PDF builds, captions, figure references, PNG, narrow editions, multi-system books, includes, missing-file invalidation, symbolic-link confinement, untrusted builds, localized descriptions and original source locations through MyST and included RST.
 
 Critique and corrections
 ------------------------
@@ -71,6 +71,8 @@ Critique and corrections
   Full names now belong only to the first system, including measure zero.
 * Per-cluster fallback could discard the shaping context of a script that one fallback face can draw completely.
   We now prefer a single covering face for the entire run before using cluster fallback, charge coverage scans by text length and compare Hindi fallback with direct whole-run shaping.
+* A second review expanded ``\markup`` to a bounded LilyPond 2.24 tree (lists, columns, styles, small caps, sub/superscripts, sizes, enclosures, spacing, music symbols and markup variables) and added ``\volta`` pass lists, ``\fine``, ``\section``, ``\compressEmptyMeasures``, ``\compressFullBarRests`` and ``\numericTimeSignature``.
+* The same review aligned pitchless ``\relative``, ``\transpose`` on ``\key`` tonics, implicit ``\acciaccatura`` and ``\appoggiatura`` slurs, manual-beam melismata, forward ``\lyricsto`` resolution, courtesy clefs and signatures, key cancellations, ``:..:`` bar merging, strictly level concave beams, 3/8 measure grouping, two-voice chord/dot placement, breakable PDF ``#figure`` blocks, 256-line template margin scanning across seven paper sizes, full CSS/print width units and external ``.ly`` fallback substitution.
 
 Reference engraving review
 --------------------------
@@ -109,6 +111,8 @@ Bravura remains unmodified at the commit and three file digests recorded in ``th
      - Written repeat structure and alternatives agree. Volta brackets have closing hooks. Tempo durations and jazz chord names use explicit text such as ``1/4 = 120`` and ``Cmaj7`` instead of a note glyph and triangle abbreviation.
    * - 47-48
      - Forced breaks and binding expansion agree. Guidedog justifies non-final systems by default while the reference wrapper keeps lines ragged right.
+   * - 49-58
+     - Added post-review regressions cover compound meters with multi-measure rests, courtesy clefs and key/time signatures across forced breaks, two-voice dotted seconds and unisons, concave beams, structured ``\markup`` columns/enclosures/glyphs, C-clef key signatures, ``\volta`` pass lists with ``\fine`` and ``:..:`` bars, beamed grace slurs, melismata with ``\lyricsto`` forward voices, and pitchless ``\relative`` with transposed keys.
 
 Documentation and release checks
 --------------------------------
@@ -129,12 +133,12 @@ The implementation base is commit ``c898dbe``, including whole-run text shaping,
 The following checks pass:
 
 * ``cargo build --locked --workspace --all-targets``.
-* ``cargo test --locked --workspace --no-fail-fast``: 2,067 passing tests across 205 test reports, including doctests.
+* ``cargo test --locked --workspace --no-fail-fast``: 2,082 passing tests across 205 test reports, including doctests.
 * ``cargo clippy --locked --workspace --all-targets -- -D warnings``.
 * ``cargo fmt --all --check``.
-* ``cargo run -p check``: 1,216 source files, zero limit violations; seven soft-width notices remain.
+* ``cargo run -p check``: 1,219 source files, zero limit violations; six soft-width notices remain.
 * ``cargo xtask check-music-font`` and ``cargo xtask release smoke target/debug/guidedog``, including native music in a real HTML site and PDF book and the bundled license notice.
-* The 48-score SVG, PNG and geometry corpus and the 12,000-case deterministic fuzz target.
+* The 58-score SVG, PNG and geometry corpus (standard and compact editions) and the 12,000-case deterministic fuzz target.
 * ``cargo test -p gd-typst --no-default-features`` for the standalone font and raster capability boundary.
 * Complete HTML and PDF manual builds with ``-W`` in English, German, Spanish, Japanese, Korean, Hindi and Simplified Chinese, including the live music chapter and the API appendix.
 * Catalog statistics for all six translated editions: zero fuzzy and zero untranslated entries.

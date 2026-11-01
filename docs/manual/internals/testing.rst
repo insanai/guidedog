@@ -15,6 +15,8 @@ Running the tests
    cargo clippy --workspace --all-targets  # lints, missing docs and unsafe code included
    cargo run -p check                      # function, file and line-length limits
    cargo xtask tables --check              # the data tables match tools/data
+   cargo xtask check-music-font            # Bravura font and metadata digests
+   cargo run -p music-check                # 58-score music geometry, SVG and PNG corpus
    cargo test -p guidedog-tests --test gates     # only the quality gates
    cargo test -p guidedog-tests --test projects  # one end-to-end group
 
@@ -47,6 +49,8 @@ Which crate tests what
    * - ``guidedoc-html``, ``-typst``, ``-text``, ``-rst-writer``
      - Each renderer's output; ``guidedoc-defaults`` checks that a document holding
        every ``NodeKind`` renders with every built-in renderer.
+   * - ``gd-score``, ``gd-lilypond``, ``gd-engrave``, ``tools/music-check``
+     - Exact rational time, the bounded LilyPond notation and ``\markup`` profile, spring-and-rod spacing, line breaking, 288-dpi ink-collision audits, SVG/PNG goldens and deterministic fuzzing.
    * - ``gd-read``, ``gd-resolve``, ``gd-link``, ``gd-site``, ``gd-book``, ``gd-project``
      - Reading, incremental rebuilds, resolution, the HTML and PDF builders, trust and
        budgets, through each crate's library API.
@@ -121,7 +125,8 @@ Dependencies (``gates::dependencies``)
    readers and renderers, defaults, host, project, command line, programs), and depends
    only on its own layer or lower ones. The engine crates (``guidedoc*``) need nothing
    outside the workspace. The supporting libraries never depend on the engine. External
-   crates are the chosen few (Typst only in ``gd-typst``, tree-sitter in ``gd-pyscan``
+   crates are the chosen few (Typst only in ``gd-typst``, ``ttf-parser`` and
+   ``rustybuzz`` in ``gd-engrave``, tree-sitter in ``gd-pyscan``
    and ``gd-rustdoc``, ``serde_json`` in ``gd-json``, ``ureq`` and ``rustls`` in
    ``gd-fetch``). A new crate or dependency fails the gate until it is placed in its
    table, with the reason in ``Cargo.toml``.

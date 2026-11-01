@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 10:17+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -480,8 +480,8 @@ msgstr "``imgconverter``"
 
 #: ../../compatibility.rst:147
 msgid ""
-"Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and "
-"PDF itself. Other formats are reported (:doc:`sources-and-diagrams`)."
+"Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and PDF "
+"itself. Other formats are reported (:doc:`sources-and-diagrams`)."
 msgstr ""
 "受け付けますが、何も実行しません。Typst は PNG、JPEG、GIF、SVG、WebP、PDF "
 "を自分で読めます。それ以外の形式は報告します（:doc:`sources-and-diagrams`）。"
@@ -543,15 +543,15 @@ msgid ""
 "Graphviz image resources are resolved relative to their document and "
 "confined. Supported image bytes are embedded in the drawing. "
 "``imagepath`` and ``fontpath`` do not expand the boundary. The embedded "
-"Typst compiler enforces the declared readable folders directly, while "
-"an external ``typst`` program runs with a private symlink root "
-"containing only those folders. This keeps book templates and preambles "
-"within the declared resources."
+"Typst compiler enforces the declared readable folders directly, while an "
+"external ``typst`` program runs with a private symlink root containing "
+"only those folders. This keeps book templates and preambles within the "
+"declared resources."
 msgstr ""
 "Graphviz "
 "の画像リソースはドキュメントからの相対パスで解決され、境界内に閉じ込められます。対応する画像バイト列は図に埋め込まれます。``imagepath`` "
-"と ``fontpath`` が境界を広げることはありません。内蔵の Typst "
-"コンパイラは宣言された読み取り可能フォルダーを直接強制し、外部の ``typst`` "
+"と ``fontpath`` が境界を広げることはありません。内蔵の Typst コンパイラは宣言された読み取り可能フォルダーを直接強制し、外部の "
+"``typst`` "
 "プログラムはそれらのフォルダーだけを含む専用のシンボリックリンク・ルートで実行されます。これにより書籍テンプレートやプリアンブルは宣言されたリソース内に保たれます。"
 
 #: ../../compatibility.rst:173
@@ -570,17 +570,25 @@ msgstr ""
 
 #: ../../compatibility.rst:175
 msgid ""
+"``lilypond`` is also a Guidedog extension, not "
+"``sphinxcontrib-lilypond``. It runs no LilyPond program; Guidedog reads a "
+"documented part of the LilyPond language and engraves it itself, as SVG "
+"or PNG for HTML and PDF. ``--untrusted`` still engraves inline notation, "
+"because the reader runs no program or Scheme code, but refuses file "
+"arguments and ``\\include``. See :doc:`topics/music`."
+msgstr "``lilypond`` も Guidedog の拡張であり、``sphinxcontrib-lilypond`` ではありません。LilyPond プログラムは実行しません。Guidedog は LilyPond 言語のうち文書化された部分を読み、HTML と PDF 向けに SVG または PNG として自ら浄書します。読み込み側はプログラムも Scheme コードも実行しないため、``--untrusted`` でも文書内に書いた記譜は浄書しますが、ファイル引数と ``\\include`` は拒否します。:doc:`topics/music` を参照してください。"
+
+#: ../../compatibility.rst:177
+msgid ""
 "``--untrusted`` narrows the read boundary to the source folder. It omits "
 "raw content, unsafe URLs, outside resources, project Typst templates, and "
 "preambles, with diagnostics. It fetches no inventories or Typst packages. "
-"Graphs that ask to read resources are shown as code with a warning. This "
-"mode does not bound the native compiler's memory or execution time."
-msgstr ""
-"``--untrusted`` は読み取り範囲をソースディレクトリに限定します。raw コンテンツ、安全でない "
-"URL、外部リソース、プロジェクトの Typst テンプレートとプリアンブルを診断付きで省きます。インベントリや Typst "
-"パッケージは取得しません。リソースを読むグラフはコードとして表示し、警告します。このモードはネイティブコンパイラのメモリや実行時間を制限しません。"
+"Graphs that ask to read resources, and music that names a file, are shown "
+"as code with a warning. This mode does not bound the native compiler's "
+"memory or execution time."
+msgstr "``--untrusted`` は読み取り範囲をソースディレクトリに限定します。raw コンテンツ、安全でない URL、外部リソース、プロジェクトの Typst テンプレートとプリアンブルを診断付きで省きます。インベントリや Typst パッケージは取得しません。リソースを読むグラフと、ファイルを指定する楽譜はコードとして表示し、警告します。このモードはネイティブコンパイラのメモリや実行時間を制限しません。"
 
-#: ../../compatibility.rst:181
+#: ../../compatibility.rst:183
 msgid ""
 "The host budget defaults to 1 GiB. It is coarse: it counts the sources, "
 "included files, and PDF output the host holds, reserved before they are "
@@ -598,7 +606,7 @@ msgstr ""
 "で指定できます。作業メモリは常にメモリ上に置かれます。ディスクを使うモードはなく、``--memory=disk`` と "
 "``--disk-budget`` は拒否されます。"
 
-#: ../../compatibility.rst:188
+#: ../../compatibility.rst:190
 msgid ""
 "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document "
 "work. Changing a limit invalidates cached reading and output. Depth and "
@@ -612,11 +620,11 @@ msgstr ""
 "Graphviz、tree-sitter、Typst による割り当てはホスト予算の対象外です。それらに厳密な上限が必要な場合は、OS "
 "の制限を使います。:doc:`errors` と :doc:`internals/memory` を参照してください。"
 
-#: ../../compatibility.rst:194
+#: ../../compatibility.rst:196
 msgid "Verification and real projects"
 msgstr "検証と実際のプロジェクト"
 
-#: ../../compatibility.rst:197
+#: ../../compatibility.rst:199
 msgid ""
 "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx "
 "9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, "
@@ -637,7 +645,7 @@ msgstr ""
 "xtask verify-docutils`` は、それをバージョンを固定した Docutils 0.22.4 と照合します。98 "
 "個のツリーはすべて一致します。"
 
-#: ../../compatibility.rst:199
+#: ../../compatibility.rst:201
 msgid ""
 "On 15 October 2026 we built the manuals of CPython, Django and Flask as "
 "HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). "
@@ -650,7 +658,7 @@ msgstr ""
 "のビルドはすべて成功しました。リンクチェックで見つかった壊れた内部リンクは、CPython にある無害な 2 件だけです。Django と "
 "Flask のブックはビルドできました。CPython のブックには、12 GB のマシンに積まれていた以上のメモリが必要です。"
 
-#: ../../compatibility.rst:201
+#: ../../compatibility.rst:203
 msgid ""
 "Those projects contain unsupported Python extension constructs. Their "
 "diagnostics remain part of the evidence. A zero exit status does not mean "
@@ -661,7 +669,7 @@ msgstr ""
 "拡張の構文が含まれています。その診断も検証記録の一部です。終了ステータスがゼロでも、各プロジェクト独自のディレクティブがすべて再現されたわけではありません。診断ゼロでの公開が求められる場合は、``-W`` "
 "を付けて実行します。"
 
-#: ../../compatibility.rst:203
+#: ../../compatibility.rst:205
 msgid ""
 "The measurements describe the recorded workloads on the recorded machine. "
 "They are not universal speed or memory bounds."

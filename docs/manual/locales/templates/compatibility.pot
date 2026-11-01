@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 10:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -354,33 +354,37 @@ msgid "``typst-diagram`` is a Guidedog extension for RST and MyST projects, rath
 msgstr ""
 
 #: ../../compatibility.rst:175
-msgid "``--untrusted`` narrows the read boundary to the source folder. It omits raw content, unsafe URLs, outside resources, project Typst templates, and preambles, with diagnostics. It fetches no inventories or Typst packages. Graphs that ask to read resources are shown as code with a warning. This mode does not bound the native compiler's memory or execution time."
+msgid "``lilypond`` is also a Guidedog extension, not ``sphinxcontrib-lilypond``. It runs no LilyPond program; Guidedog reads a documented part of the LilyPond language and engraves it itself, as SVG or PNG for HTML and PDF. ``--untrusted`` still engraves inline notation, because the reader runs no program or Scheme code, but refuses file arguments and ``\\include``. See :doc:`topics/music`."
 msgstr ""
 
-#: ../../compatibility.rst:181
+#: ../../compatibility.rst:177
+msgid "``--untrusted`` narrows the read boundary to the source folder. It omits raw content, unsafe URLs, outside resources, project Typst templates, and preambles, with diagnostics. It fetches no inventories or Typst packages. Graphs that ask to read resources, and music that names a file, are shown as code with a warning. This mode does not bound the native compiler's memory or execution time."
+msgstr ""
+
+#: ../../compatibility.rst:183
 msgid "The host budget defaults to 1 GiB. It is coarse: it counts the sources, included files, and PDF output the host holds, reserved before they are read. Each worker reuses one workspace. The retained project graph and catalogs still consume memory as the project grows. Reading workers coordinate admission. A refused request reports the failing operation and a budget that fits. ``GUIDEDOG_AVAILABLE_MIB`` can supply known machine headroom. Working memory always stays in memory. There is no disk-backed mode, and ``--memory=disk`` and ``--disk-budget`` are refused."
 msgstr ""
 
-#: ../../compatibility.rst:188
+#: ../../compatibility.rst:190
 msgid "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document work. Changing a limit invalidates cached reading and output. Depth and stack capacity must agree. Native Graphviz, tree-sitter, and Typst allocations are outside the host budget. We use operating-system limits when those need a hard bound. See :doc:`errors` and :doc:`internals/memory`."
 msgstr ""
 
-#: ../../compatibility.rst:194
+#: ../../compatibility.rst:196
 msgid "Verification and real projects"
 msgstr ""
 
-#: ../../compatibility.rst:197
+#: ../../compatibility.rst:199
 msgid "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx 9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, body links, inventories, numbering, and diagnostics. The stored results explain each difference, for example precise source locations, stable reading-order numbering, and explicit reports for omitted target-specific raw content (:doc:`internals/sphinx-comparison`). The reader conformance tests (:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) keep their expected outputs, and ``cargo xtask verify-docutils`` checks those against a pinned Docutils 0.22.4. All 98 trees match."
 msgstr ""
 
-#: ../../compatibility.rst:199
+#: ../../compatibility.rst:201
 msgid "On 15 October 2026 we built the manuals of CPython, Django and Flask as HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). Every HTML build succeeded, and the link check found no broken internal link besides two inert ones in CPython. The Django and Flask books built; the CPython book needs more memory than the 12 GB machine had."
 msgstr ""
 
-#: ../../compatibility.rst:201
+#: ../../compatibility.rst:203
 msgid "Those projects contain unsupported Python extension constructs. Their diagnostics remain part of the evidence. A zero exit status does not mean all their private directives were reproduced. We run with ``-W`` when publishing requires zero diagnostics."
 msgstr ""
 
-#: ../../compatibility.rst:203
+#: ../../compatibility.rst:205
 msgid "The measurements describe the recorded workloads on the recorded machine. They are not universal speed or memory bounds."
 msgstr ""

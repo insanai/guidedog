@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 05:34+0000\n"
+"POT-Creation-Date: 2026-11-01 10:36+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -1252,11 +1252,13 @@ msgstr "स्वर-पंक्ति संदर्भ"
 
 #: ../../topics/music.rst:90
 msgid ""
-"``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; treble, "
-"bass, alto, tenor and soprano clefs, with supported octave clefs."
+"``\\clef``, ``\\key``, ``\\time``, ``\\numericTimeSignature``, "
+"``\\partial``, ``\\bar``; treble, bass, alto, tenor and soprano clefs, "
+"with supported octave clefs."
 msgstr ""
-"``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; ट्रेबल, बास, "
-"आल्टो, टेनर और सोप्रानो क्लेफ़ तथा समर्थित सप्तक क्लेफ़।"
+"``\\clef``, ``\\key``, ``\\time``, ``\\numericTimeSignature``, "
+"``\\partial``, ``\\bar``; ट्रेबल, बास, आल्टो, टेनर और सोप्रानो क्लेफ़ तथा "
+"समर्थित सप्तक क्लेफ़।"
 
 #: ../../topics/music.rst:91
 msgid "Modes"
@@ -1291,12 +1293,11 @@ msgstr "अभिव्यक्ति"
 #: ../../topics/music.rst:96
 msgid ""
 "Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through "
-"``\\ffff``, ``\\<``, ``\\>``, ``\\!``, literal scripts and single-item "
-"``\\markup`` with ``\\bold`` or ``\\italic``."
+"``\\ffff``, ``\\<``, ``\\>``, ``\\!``, literal scripts and structured "
+"``\\markup``."
 msgstr ""
 "आर्टिकुलेशन, 1 से 5 तक उँगली क्रम, ``\\pppp`` से ``\\ffff`` तक तीव्रता, "
-"``\\<``, ``\\>``, ``\\!``, सीधे पाठ निर्देश और ``\\bold`` या ``\\italic`` "
-"वाला एकल ``\\markup`` आइटम।"
+"``\\<``, ``\\>``, ``\\!``, सीधे पाठ निर्देश और संरचित ``\\markup``।"
 
 #: ../../topics/music.rst:97
 msgid "Structure"
@@ -1333,10 +1334,14 @@ msgstr "अलंकार स्वर और पुनरावृत्ति
 #: ../../topics/music.rst:102
 msgid ""
 "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
-"``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+"``\\repeat volta``, ``\\alternative``, ``\\volta``, ``\\fine``, "
+"``\\section``, ``\\repeat unfold``, ``\\compressEmptyMeasures``, "
+"``\\compressFullBarRests``."
 msgstr ""
 "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
-"``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+"``\\repeat volta``, ``\\alternative``, ``\\volta``, ``\\fine``, "
+"``\\section``, ``\\repeat unfold``, ``\\compressEmptyMeasures``, "
+"``\\compressFullBarRests``।"
 
 #: ../../topics/music.rst:103
 msgid "Labels and breaks"
@@ -1379,22 +1384,143 @@ msgid ""
 "We place a small grace group before a main note with ``\\grace``; "
 "``\\acciaccatura`` adds a slash, while ``\\afterGrace`` places the group "
 "after its main note. Grace time does not extend the measure."
-msgstr "हम नोट के बाद आर्टिकुलेशन और उँगली क्रम जोड़ते हैं: ``-.`` स्टैकाटो है, ``->`` उच्चारण-बल है और ``-1`` पहली उँगली चुनता है। तीव्रता-चिह्न ध्वनि की तीव्रता तय करते हैं और हेयरपिन ``\\!`` या अगले तीव्रता-चिह्न तक चलता है। ``\\grace`` से मुख्य नोट के पहले छोटा अलंकार समूह रखते हैं; ``\\acciaccatura`` तिरछी रेखा जोड़ता है और ``\\afterGrace`` समूह को मुख्य नोट के बाद रखता है। अलंकार का समय मात्रा-खंड नहीं बढ़ाता।"
+msgstr ""
+"हम नोट के बाद आर्टिकुलेशन और उँगली क्रम जोड़ते हैं: ``-.`` स्टैकाटो है, "
+"``->`` उच्चारण-बल है और ``-1`` पहली उँगली चुनता है। तीव्रता-चिह्न ध्वनि "
+"की तीव्रता तय करते हैं और हेयरपिन ``\\!`` या अगले तीव्रता-चिह्न तक चलता "
+"है। ``\\grace`` से मुख्य नोट के पहले छोटा अलंकार समूह रखते हैं; "
+"``\\acciaccatura`` तिरछी रेखा जोड़ता है और ``\\afterGrace`` समूह को मुख्य "
+"नोट के बाद रखता है। अलंकार का समय मात्रा-खंड नहीं बढ़ाता।"
 
 #: ../../topics/music.rst:126
 msgid ""
-"We write a volta repeat once and give each ending in ``\\alternative``. "
-"The example has two passes with different final measures. ``\\repeat "
-"unfold`` expands its body instead of drawing repeat signs. Chord names "
-"use a separate ``\\new ChordNames \\chordmode`` context beside the staff, "
-"with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``."
-msgstr "हम वोल्टा पुनरावृत्ति एक बार लिखते हैं और हर अंत ``\\alternative`` में देते हैं। उदाहरण में अलग अंतिम मात्रा-खंड वाले दो चक्र हैं। ``\\repeat unfold`` पुनरावृत्ति चिह्न बनाने के बजाय अपना मुख्य भाग फैलाता है। कॉर्ड नाम स्वर-पंक्ति के पास अलग ``\\new ChordNames \\chordmode`` संदर्भ में लिखते हैं, जैसे ``c1:maj7``, ``d:m7`` और ``g:7``।"
+"We write a volta repeat once and give each ending in ``\\alternative``; "
+"``\\volta 1,2 { ... }`` labels combined endings, and ``\\fine`` or "
+"``\\section`` marks a structural double bar. The example has two passes "
+"with different final measures. ``\\repeat unfold`` expands its body "
+"instead of drawing repeat signs, and ``\\compressEmptyMeasures`` or "
+"``\\compressFullBarRests`` is accepted for multi-measure rests. Chord "
+"names use a separate ``\\new ChordNames \\chordmode`` context beside the "
+"staff, with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``."
+msgstr ""
+"हम वोल्टा पुनरावृत्ति एक बार लिखते हैं और हर अंत ``\\alternative`` में "
+"देते हैं; ``\\volta 1,2 { ... }`` संयुक्त अंतों पर लेबल लगाता है, और "
+"``\\fine`` या ``\\section`` संरचनात्मक दोहरी रेखा चिह्नित करता है। उदाहरण "
+"में अलग अंतिम मात्रा-खंड वाले दो चक्र हैं। ``\\repeat unfold`` "
+"पुनरावृत्ति चिह्न बनाने के बजाय अपना मुख्य भाग फैलाता है, और बहु-मात्रा "
+"विरामों के लिए ``\\compressEmptyMeasures`` या ``\\compressFullBarRests`` "
+"स्वीकार किया जाता है। कॉर्ड नाम स्वर-पंक्ति के पास अलग ``\\new ChordNames "
+"\\chordmode`` संदर्भ में लिखते हैं, जैसे ``c1:maj7``, ``d:m7`` और ``g:7``।"
 
 #: ../../topics/music.rst:138
+msgid "Format text with ``\\markup``"
+msgstr "``\\markup`` से पाठ का स्वरूपण"
+
+#: ../../topics/music.rst:141
+msgid ""
+"Scripts, ``\\tempo``, ``\\mark`` and instrument names accept a bounded "
+"LilyPond 2.24 ``\\markup`` subset. Commands nest freely within the "
+"reader's depth limit, and top-level markup variables expand where a "
+"markup block expects text."
+msgstr ""
+"पाठ निर्देश, ``\\tempo``, ``\\mark`` और वाद्य नाम LilyPond 2.24 के सीमित "
+"``\\markup`` उपसमुच्चय को स्वीकार करते हैं। पाठक की गहराई सीमा के भीतर "
+"कमांड स्वतंत्र रूप से नेस्ट हो सकते हैं, और शीर्ष-स्तरीय मार्कअप चर वहाँ "
+"विस्तार पाते हैं जहाँ मार्कअप ब्लॉक पाठ की अपेक्षा रखता है।"
+
+#: ../../topics/music.rst:144
+msgid "Supported ``\\markup`` commands"
+msgstr "समर्थित ``\\markup`` कमांड"
+
+#: ../../topics/music.rst:148
+msgid "Group"
+msgstr "समूह"
+
+#: ../../topics/music.rst:149
+msgid "Commands"
+msgstr "कमांड"
+
+#: ../../topics/music.rst:150
+msgid "Lists and columns"
+msgstr "सूचियाँ और स्तंभ"
+
+#: ../../topics/music.rst:151
+msgid ""
+"``\\line``, ``\\concat``, ``\\column``, ``\\center-column``, "
+"``\\right-column``, ``\\dir-column`` and ``\\var`` markup references."
+msgstr ""
+"``\\line``, ``\\concat``, ``\\column``, ``\\center-column``, "
+"``\\right-column``, ``\\dir-column`` और ``\\var`` मार्कअप संदर्भ।"
+
+#: ../../topics/music.rst:152
+msgid "Style and case"
+msgstr "शैली और अक्षर-रूप"
+
+#: ../../topics/music.rst:153
+msgid ""
+"``\\bold``, ``\\italic``, ``\\upright``, ``\\normal-text``, ``\\caps``, "
+"``\\smallCaps``, ``\\sub`` and ``\\super``."
+msgstr ""
+"``\\bold``, ``\\italic``, ``\\upright``, ``\\normal-text``, ``\\caps``, "
+"``\\smallCaps``, ``\\sub`` और ``\\super``।"
+
+#: ../../topics/music.rst:154
+msgid "Size"
+msgstr "आकार"
+
+#: ../../topics/music.rst:155
+msgid ""
+"``\\teeny``, ``\\tiny``, ``\\small``, ``\\normalsize``, ``\\large``, "
+"``\\huge``, ``\\fontsize #n`` and ``\\abs-fontsize #pt``."
+msgstr ""
+"``\\teeny``, ``\\tiny``, ``\\small``, ``\\normalsize``, ``\\large``, "
+"``\\huge``, ``\\fontsize #n`` और ``\\abs-fontsize #pt``।"
+
+#: ../../topics/music.rst:156
+msgid "Enclosures and spacing"
+msgstr "घेरे और अंतराल"
+
+#: ../../topics/music.rst:157
+msgid ""
+"``\\box``, ``\\rounded-box``, ``\\circle``, ``\\underline``, "
+"``\\parenthesize``, ``\\bracket``, ``\\hspace #n``, ``\\vspace #n``, "
+"``\\raise #n`` and ``\\lower #n``."
+msgstr ""
+"``\\box``, ``\\rounded-box``, ``\\circle``, ``\\underline``, "
+"``\\parenthesize``, ``\\bracket``, ``\\hspace #n``, ``\\vspace #n``, "
+"``\\raise #n`` और ``\\lower #n``।"
+
+#: ../../topics/music.rst:158
+msgid "Music symbols"
+msgstr "संगीत चिह्न"
+
+#: ../../topics/music.rst:159
+msgid ""
+"``\\sharp``, ``\\natural``, ``\\flat``, ``\\doublesharp``, "
+"``\\doubleflat``, ``\\fermata``, ``\\segno``, ``\\coda``, ``\\varcoda``, "
+"``\\dynamic`` and ``\\musicglyph`` for mapped Feta glyph names."
+msgstr ""
+"``\\sharp``, ``\\natural``, ``\\flat``, ``\\doublesharp``, "
+"``\\doubleflat``, ``\\fermata``, ``\\segno``, ``\\coda``, ``\\varcoda``, "
+"``\\dynamic`` तथा मैप किए गए Feta ग्लिफ़ नामों के लिए ``\\musicglyph``।"
+
+#: ../../topics/music.rst:170
+msgid ""
+"Markup commands that run Scheme, alter layout properties, draw arbitrary "
+"paths or embed nested scores (such as ``\\score``, ``\\override``, "
+"``\\postscript``, ``\\draw-line``, ``\\path``, ``\\epsfile`` and "
+"``\\markuplist``) are refused with a placed diagnostic."
+msgstr ""
+"Scheme चलाने वाले, लेआउट गुण बदलने वाले, मनमाने पथ खींचने वाले या नेस्टेड "
+"स्वरलेख जोड़ने वाले मार्कअप कमांड (जैसे ``\\score``, ``\\override``, "
+"``\\postscript``, ``\\draw-line``, ``\\path``, ``\\epsfile`` और "
+"``\\markuplist``) स्थान-सहित निदान के साथ अस्वीकार किए जाते हैं।"
+
+#: ../../topics/music.rst:172
 msgid "Combine staves and lyrics"
 msgstr "स्वर-पंक्तियाँ और बोल जोड़ना"
 
-#: ../../topics/music.rst:141
+#: ../../topics/music.rst:175
 msgid ""
 "We use simultaneous contexts for a score with several staves. Instrument "
 "names use ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` "
@@ -1408,7 +1534,7 @@ msgstr ""
 "``<< { ... } \\\\ { ... } >>`` से लिखते हैं। बोल नाम वाली आवाज़ से जुड़ते "
 "हैं और अलग ``\\lyricsto`` अभिव्यक्तियाँ अलग अंतरे बनाती हैं।"
 
-#: ../../topics/music.rst:147
+#: ../../topics/music.rst:181
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
@@ -1416,15 +1542,15 @@ msgstr ""
 "पियानो की दो स्वर-पंक्तियाँ; ऊपरी में चार चौथाई नोट और Sing a short song "
 "शब्द हैं, जबकि बास C बनाए रखता है।"
 
-#: ../../topics/music.rst:147
+#: ../../topics/music.rst:181
 msgid "A named melody with a verse and a bass staff."
 msgstr "एक अंतरे और बास स्वर-पंक्ति वाली नामित धुन।"
 
-#: ../../topics/music.rst:157
+#: ../../topics/music.rst:191
 msgid "Read local files"
 msgstr "स्थानीय फ़ाइलें पढ़ना"
 
-#: ../../topics/music.rst:160
+#: ../../topics/music.rst:194
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
@@ -1432,7 +1558,7 @@ msgstr ""
 "निर्देश इनलाइन मुख्य भाग के बजाय स्थानीय फ़ाइल का नाम दे सकता है। हम "
 "स्रोत का ठीक एक रूप उपयोग करते हैं।"
 
-#: ../../topics/music.rst:169
+#: ../../topics/music.rst:203
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1449,51 +1575,49 @@ msgstr ""
 "चुनी पाठ-फ़ॉन्ट फ़ाइलें उनकी सामग्री से ट्रैक करता है। निर्भरता बदलने पर "
 "चित्र फिर बनता है। समान आउटपुट बाइट वही ऐसेट नाम रखते हैं।"
 
-#: ../../topics/music.rst:175
+#: ../../topics/music.rst:209
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
-"before opening them. Text output retains source code and performs no "
-"engraving. A failed drawing also retains source code with a warning; "
-"``-W`` stops publication and preserves the preceding output."
-msgstr ""
-"``--untrusted`` इनलाइन संकेतन स्वीकार करता है क्योंकि पाठक कोई प्रोग्राम "
-"या Scheme कोड नहीं चलाता। वह फ़ाइल आर्ग्युमेंट और फ़ाइल-सिस्टम समावेश "
-"खोलने से पहले अस्वीकार करता है। पाठ आउटपुट स्रोत रखता है और स्वरलेख नहीं "
-"बनाता। चित्र विफल होने पर भी चेतावनी के साथ स्रोत बचता है; ``-W`` प्रकाशन "
-"रोककर पिछला आउटपुट रखता है।"
+"before opening them. Trusted text output and fallback code blocks "
+"substitute external ``.ly`` source without engraving. When the file "
+"cannot be read, as in an untrusted build, the output names the score file "
+"in a sentence instead of showing its path as code. A failed drawing "
+"retains source code with a warning; ``-W`` stops publication and "
+"preserves the preceding output."
+msgstr "``--untrusted`` इनलाइन संकेतन स्वीकार करता है क्योंकि पाठक कोई प्रोग्राम या Scheme कोड नहीं चलाता। वह फ़ाइल आर्ग्युमेंट और फ़ाइल-सिस्टम समावेश खोलने से पहले अस्वीकार करता है। विश्वसनीय पाठ आउटपुट और वैकल्पिक कोड ब्लॉक बिना स्वरलेख बनाए बाहरी ``.ly`` स्रोत रख देते हैं। जब फ़ाइल पढ़ी नहीं जा सकती, जैसे अविश्वसनीय बिल्ड में, तब आउटपुट उसके पथ को कोड के रूप में दिखाने के बजाय एक वाक्य में स्वरलेख फ़ाइल का नाम बताता है। चित्र विफल होने पर चेतावनी के साथ स्रोत बचता है; ``-W`` प्रकाशन रोककर पिछला आउटपुट रखता है।"
 
-#: ../../topics/music.rst:180
+#: ../../topics/music.rst:214
 msgid "Set size and output"
 msgstr "आकार और आउटपुट तय करना"
 
-#: ../../topics/music.rst:183
+#: ../../topics/music.rst:217
 msgid "Directive options"
 msgstr "निर्देश के विकल्प"
 
-#: ../../topics/music.rst:187
+#: ../../topics/music.rst:221
 msgid "Option"
 msgstr "विकल्प"
 
-#: ../../topics/music.rst:188
+#: ../../topics/music.rst:222
 msgid "Meaning"
 msgstr "अर्थ"
 
-#: ../../topics/music.rst:189
+#: ../../topics/music.rst:223
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:190
+#: ../../topics/music.rst:224
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "चित्र का संगीतमय विवरण; न होने पर बिल्ड स्थानीयकृत सारांश बनाता है।"
 
-#: ../../topics/music.rst:191
+#: ../../topics/music.rst:225
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:192
+#: ../../topics/music.rst:226
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
@@ -1501,19 +1625,19 @@ msgstr ""
 "चित्र-विवरण, संदर्भ लक्ष्य, CSS क्लास और चित्र संरेखण, आरेख निर्देशों के "
 "समान।"
 
-#: ../../topics/music.rst:193
+#: ../../topics/music.rst:227
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:194
+#: ../../topics/music.rst:228
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "डिफ़ॉल्ट ``svg``, या प्रति इंच 144 पिक्सेल वाला ``png``।"
 
-#: ../../topics/music.rst:195
+#: ../../topics/music.rst:229
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:196
+#: ../../topics/music.rst:230
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
@@ -1521,23 +1645,25 @@ msgstr ""
 "पाँच रेखाओं वाली स्वर-पंक्ति की ऊँचाई 10 से 40 पॉइंट; डिफ़ॉल्ट 18 पॉइंट "
 "है।"
 
-#: ../../topics/music.rst:197
+#: ../../topics/music.rst:231
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:198
+#: ../../topics/music.rst:232
 msgid ""
-"Available system width, in ``pt``, ``mm``, ``cm``, ``in``, ``px`` or a "
-"percentage of the builder's default width."
+"Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
+"``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's "
+"default width."
 msgstr ""
-"उपलब्ध सिस्टम चौड़ाई ``pt``, ``mm``, ``cm``, ``in``, ``px`` या बिल्डर की "
-"डिफ़ॉल्ट चौड़ाई के प्रतिशत में।"
+"उपलब्ध सिस्टम चौड़ाई ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
+"``px``, ``em``, ``rem``, ``ex``, ``ch`` या बिल्डर की डिफ़ॉल्ट चौड़ाई के "
+"प्रतिशत में।"
 
-#: ../../topics/music.rst:199
+#: ../../topics/music.rst:233
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:200
+#: ../../topics/music.rst:234
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
@@ -1545,7 +1671,7 @@ msgstr ""
 "``auto`` छोटे अंतिम सिस्टम को प्राकृतिक चौड़ाई पर रखता है; ``all`` हर "
 "सिस्टम खींचता है; ``none`` खींचने से बचता है।"
 
-#: ../../topics/music.rst:202
+#: ../../topics/music.rst:236
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
@@ -1555,46 +1681,51 @@ msgstr ""
 "``lilypond_pdf_width`` हैं। इनके संख्यात्मक मान मुद्रण पॉइंट हैं। सेटिंग "
 "अनुबंध के लिए :doc:`../reference/configuration` देखें।"
 
-#: ../../topics/music.rst:206
+#: ../../topics/music.rst:240
 msgid ""
-"HTML also receives a narrow edition engraved at 225 points, with a staff "
-"height no greater than 14 points. The browser selects it below 40 rem "
-"through a ``picture`` element. This edition has its own system breaks. "
-"When its system limit prevents it from being drawn, the wide image scales "
-"to the screen. SVG adapts its ink to the page's color scheme; PNG keeps a "
-"light background panel in dark mode."
+"When a drawing is wider than 225 points, HTML also receives a narrow "
+"edition engraved at 225 points with a staff height no greater than 14 "
+"points. The browser selects it below 40 rem through a ``picture`` "
+"element. This edition has its own system breaks. When its system limit "
+"prevents it from being drawn, the wide image scales to the screen. SVG "
+"adapts its ink to the page's color scheme; PNG keeps a light background "
+"panel in dark mode."
 msgstr ""
-"HTML को 225 पॉइंट चौड़ाई और अधिकतम 14 पॉइंट स्वर-पंक्ति ऊँचाई वाला संकरा "
-"संस्करण भी मिलता है। ब्राउज़र 40 rem से कम पर ``picture`` तत्व से इसे "
-"चुनता है। इसमें अपने सिस्टम-विराम होते हैं। सिस्टम सीमा के कारण यह न बन "
-"सके तो चौड़ा चित्र स्क्रीन के अनुसार छोटा होता है। SVG की स्याही पृष्ठ की "
-"रंग योजना के अनुसार बदलती है; PNG डार्क मोड में हल्का पृष्ठभूमि पैनल रखता "
-"है।"
+"जब कोई चित्र 225 पॉइंट से अधिक चौड़ा होता है, तब HTML को 225 पॉइंट चौड़ाई "
+"और अधिकतम 14 पॉइंट स्वर-पंक्ति ऊँचाई वाला संकरा संस्करण भी मिलता है। "
+"ब्राउज़र 40 rem से कम पर ``picture`` तत्व से इसे चुनता है। इसमें अपने "
+"सिस्टम-विराम होते हैं। सिस्टम सीमा के कारण यह न बन सके तो चौड़ा चित्र "
+"स्क्रीन के अनुसार छोटा होता है। SVG की स्याही पृष्ठ की रंग योजना के "
+"अनुसार बदलती है; PNG डार्क मोड में हल्का पृष्ठभूमि पैनल रखता है।"
 
-#: ../../topics/music.rst:212
+#: ../../topics/music.rst:246
 msgid ""
-"PDF uses the selected template's text width and places music at its "
-"natural size. Built-in templates declare their horizontal margin after "
-"the initial import with a comment such as ``// guidedog: margin-x = "
-"31mm``. A custom template without the declaration uses a 25 millimetre "
-"margin assumption. ``lilypond_pdf_width`` overrides the derived measure. "
-"Oversized music scales to fit with a build warning. A score with several "
-"systems can break between systems across PDF pages, with its caption "
-"after the last system."
+"PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; "
+"any other value renders as A4) and the selected template's horizontal "
+"margin, then places music at its natural size. Built-in templates declare "
+"their horizontal margin in their leading 256 lines with a comment such as "
+"``// guidedog: margin-x = 31mm``. A custom template without the "
+"declaration uses a 25 millimetre margin assumption. "
+"``lilypond_pdf_width`` overrides the derived measure. Oversized music "
+"scales to fit with a build warning. A score with several systems can "
+"break between systems across PDF pages, with its caption after the last "
+"system."
 msgstr ""
-"PDF चुने टेम्पलेट की पाठ चौड़ाई उपयोग करता है और संगीत को प्राकृतिक आकार "
-"में रखता है। अंतर्निहित टेम्पलेट पहले इंपोर्ट के बाद ``// guidedog: "
-"margin-x = 31mm`` जैसी टिप्पणी से क्षैतिज हाशिया बताते हैं। घोषणा रहित "
-"अपने टेम्पलेट में 25 मिलीमीटर हाशिया माना जाता है। ``lilypond_pdf_width`` "
-"निकाली गई चौड़ाई बदलता है। अधिक चौड़ा स्वरलेख बिल्ड चेतावनी के साथ अनुकूल "
-"आकार में छोटा होता है। कई सिस्टम वाला स्वरलेख सिस्टमों के बीच PDF पृष्ठ "
-"बदल सकता है और चित्र-विवरण अंतिम सिस्टम के बाद आता है।"
+"PDF अपनी पंक्ति चौड़ाई ``pdf_paper_size`` (``a4`` या ``letter``; कोई अन्य "
+"मान A4 माना जाता है) और चुने टेम्पलेट के क्षैतिज हाशिए से निकालता है, फिर "
+"संगीत को प्राकृतिक आकार में रखता है। अंतर्निहित टेम्पलेट अपनी शुरुआती 256 "
+"पंक्तियों में ``// guidedog: margin-x = 31mm`` जैसी टिप्पणी से क्षैतिज "
+"हाशिया बताते हैं। घोषणा रहित अपने टेम्पलेट में 25 मिलीमीटर हाशिया माना "
+"जाता है। ``lilypond_pdf_width`` निकाली गई चौड़ाई बदलता है। अधिक चौड़ा "
+"स्वरलेख बिल्ड चेतावनी के साथ अनुकूल आकार में छोटा होता है। कई सिस्टम वाला "
+"स्वरलेख सिस्टमों के बीच PDF पृष्ठ बदल सकता है और चित्र-विवरण अंतिम सिस्टम "
+"के बाद आता है।"
 
-#: ../../topics/music.rst:219
+#: ../../topics/music.rst:253
 msgid "Fonts, limits and references"
 msgstr "फ़ॉन्ट, सीमाएँ और संदर्भ"
 
-#: ../../topics/music.rst:222
+#: ../../topics/music.rst:256
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1610,7 +1741,7 @@ msgstr ""
 "फ़ॉन्ट स्थापित करना आवश्यक नहीं है। PNG निर्यात को अंतर्निहित रेंडरर "
 "चाहिए; उसके बिना भी SVG स्वरलेख उपलब्ध है।"
 
-#: ../../topics/music.rst:227
+#: ../../topics/music.rst:261
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, two voices per staff "
@@ -1629,7 +1760,7 @@ msgstr ""
 "PNG की सीमा 1.6 करोड़ पिक्सेल और हर तरफ 16,384 पिक्सेल है। सीमा निदान "
 "स्रोत बताता है और उदाहरण बाँटने का सुझाव देता है।"
 
-#: ../../topics/music.rst:234
+#: ../../topics/music.rst:268
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "

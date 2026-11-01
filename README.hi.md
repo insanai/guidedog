@@ -60,7 +60,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-एक्ज़ीक्यूटेबल `target/release` में मिलता है। Homebrew वाले macOS पर पहले लिंकर को Graphviz का पथ दें: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`। Typst कंपाइलर डिफ़ॉल्ट रूप से अंतर्निहित है (`gd-typst` का `embedded` फ़ीचर); इसके बिना Guidedog PDF पुस्तकों के लिए इंस्टॉल किया गया `typst` 0.15.1 चलाता है, जबकि `.. typst-diagram::` के लिए अंतर्निहित कंपाइलर आवश्यक है। Linux पर अंतर्निहित कंपाइलर का पैकेज डाउनलोडर साथ में रखे (vendored) OpenSSL को लिंक करता है, जिसे बिल्ड करने के लिए `perl` और `make` चाहिए।
+एक्ज़ीक्यूटेबल `target/release` में मिलता है। Homebrew वाले macOS पर पहले लिंकर को Graphviz का पथ दें: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`। Typst कंपाइलर डिफ़ॉल्ट रूप से अंतर्निहित है (`gd-typst` का `embedded` फ़ीचर); इसके बिना Guidedog PDF पुस्तकों के लिए इंस्टॉल किया गया `typst` 0.15.1 चलाता है, जबकि `.. typst-diagram::` और `:format: png` वाले `.. lilypond::` के लिए अंतर्निहित कंपाइलर आवश्यक है। Linux पर अंतर्निहित कंपाइलर का पैकेज डाउनलोडर साथ में रखे (vendored) OpenSSL को लिंक करता है, जिसे बिल्ड करने के लिए `perl` और `make` चाहिए।
 
 कोई बदलाव भेजने से पहले वही चलाएँ जो CI चलाता है:
 

@@ -60,7 +60,7 @@ cargo build --release -p guidedog-cmd
 target/release/guidedog --version
 ```
 
-生成的可执行文件位于 `target/release`。在使用 Homebrew 的 macOS 上，先让链接器找到 Graphviz：`export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`。Typst 编译器默认内嵌（即 `gd-typst` 的 `embedded` 特性）；若不启用该特性，Guidedog 会调用系统中安装的 `typst` 0.15.1 生成 PDF 图书，而 `.. typst-diagram::` 则需要内嵌编译器。在 Linux 上，内嵌编译器的包下载器会链接随源码附带的 OpenSSL，构建它需要 `perl` 和 `make`。
+生成的可执行文件位于 `target/release`。在使用 Homebrew 的 macOS 上，先让链接器找到 Graphviz：`export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`。Typst 编译器默认内嵌（即 `gd-typst` 的 `embedded` 特性）；若不启用该特性，Guidedog 会调用系统中安装的 `typst` 0.15.1 生成 PDF 图书，而 `.. typst-diagram::` 以及使用 `:format: png` 的 `.. lilypond::` 则需要内嵌编译器。在 Linux 上，内嵌编译器的包下载器会链接随源码附带的 OpenSSL，构建它需要 `perl` 和 `make`。
 
 提交修改前，请运行与 CI 相同的检查：
 

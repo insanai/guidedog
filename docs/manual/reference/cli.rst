@@ -245,7 +245,7 @@ Builders:
      - Show only errors: no progress, summary, warnings or notes (``-W`` still counts
        the warnings).
    * - ``--untrusted``
-     - Leave out raw content, external Graphviz resources, and ``typst-diagram`` compilation; fetch nothing; and run no build plugin. This is a
+     - Leave out raw content, external Graphviz resources, ``typst-diagram`` compilation, and music read from files (``lilypond`` file arguments and ``\include``); fetch nothing; and run no build plugin. This is a
        capability policy, not a process sandbox.
    * - ``--budget=MIB``
      - Memory the build may hold at once, from 1 to 1048576 (default: ``1024``).

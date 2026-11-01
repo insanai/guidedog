@@ -178,7 +178,7 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - ``\relative`` (with or without a start pitch), ``\fixed``, ``\transpose``
      - See "Interpretation".
    * - 1
-     - ``\clef`` (``treble``, ``bass``, ``alto``, ``tenor``, ``soprano``, ``treble_8``, ``bass_8``), ``\key`` with ``\major``, ``\minor`` and the church modes, ``\time`` with simple and compound meters and beat lists (``\time 2,2,3 7/8``), ``\partial`` at the start, bar checks ``|``, ``\bar`` with ``|``, ``||``, ``|.``, ``.|``, ``.|:``, ``:|.``, ``:..:``
+     - ``\clef`` (``treble``, ``bass``, ``alto``, ``tenor``, ``soprano``, ``treble_8``, ``bass_8``), ``\key`` with ``\major``, ``\minor`` and the church modes, ``\time`` with simple and compound meters and beat lists (``\time 2,2,3 7/8``), ``\numericTimeSignature``, ``\partial`` at the start, bar checks ``|``, ``\bar`` with ``|``, ``||``, ``|.``, ``.|``, ``.|:``, ``:|.``, ``:..:``
      - ``\time`` off a bar line, ``\partial`` after the start, and different meters on different staves are refused.
    * - 1
      - Ties ``~``, slurs ``( )``, manual beams ``[ ]``, ``\autoBeamOff``/``On``, ``\tuplet n/m``, ``\times m/n``, ``\stemUp``/``Down``/``Neutral``
@@ -190,13 +190,13 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - Dynamics ``\pppp`` to ``\ffff``, ``\mp``, ``\mf``, ``\fp``, ``\sf``, ``\sfz``, ``\rfz``; hairpins ``\<``, ``\>``, ``\!``
      -
    * - 1
-     - Text scripts ``^"text"`` and ``_"text"``; ``\markup`` with strings, ``\bold`` and ``\italic`` only
-     -
+     - Text scripts ``^"text"`` and ``_"text"``; structured LilyPond 2.24 ``\markup`` (lists, columns, styles, sizes, enclosures, spacing, music symbols and markup variables)
+     - Scheme, layout and embedded-score markup commands are refused.
    * - 1
      - Lyrics of one verse: ``\addlyrics``, ``\lyricsto``, ``\lyricmode``, hyphens ``--``, extenders ``__``, skips ``_``, and quoted syllables
      -
    * - 1
-     - Assignments of music, lyrics or strings (``melody = \relative c'' { ... }``) and their use (``\melody``)
+     - Assignments of music, lyrics, strings or ``\markup`` (``melody = \relative c'' { ... }``) and their use (``\melody``)
      - No Scheme values.
    * - 1
      - ``\include "file.ily"``
@@ -208,7 +208,7 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - ``\break``, ``\noBreak``
      - Forced and forbidden line breaks.
    * - 2
-     - ``<< >>`` with ``\\``, ``\voiceOne``, ``\voiceTwo``, ``\oneVoice``, ``\new Voice``, ``\new Staff``, ``\new PianoStaff``, ``\new GrandStaff``, ``\new StaffGroup``, ``\new ChoirStaff``, ``\with { instrumentName = "..." shortInstrumentName = "..." }``, ``\set Staff.instrumentName``
+     - ``<< >>`` with ``\\``, ``\voiceOne``, ``\voiceTwo``, ``\oneVoice``, ``\new Voice``, ``\new Staff``, ``\new PianoStaff``, ``\new GrandStaff``, ``\new StaffGroup``, ``\new ChoirStaff``, ``\with { instrumentName = "..." shortInstrumentName = "..." }``, ``\set Staff.instrumentName`` (string or ``\markup``)
      - At most two voices per staff; a third is refused.
    * - 2
      - Several verses, ``\new Lyrics`` with its own durations, and phrasing slurs ``\( \)``
@@ -217,10 +217,10 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - ``\grace``, ``\acciaccatura``, ``\appoggiatura``, ``\afterGrace``
      -
    * - 3
-     - ``\repeat volta n`` with ``\alternative``, drawn with repeat bar lines and volta brackets; ``\repeat unfold n``, expanded within limits
+     - ``\repeat volta n`` with ``\alternative`` and ``\volta`` pass lists, ``\fine`` and ``\section``, drawn with repeat bar lines and volta brackets; ``\repeat unfold n``, expanded within limits; ``\compressEmptyMeasures`` and ``\compressFullBarRests``
      -
    * - 3
-     - ``\tempo``, ``\mark \default`` and ``\mark "text"``
+     - ``\tempo``, ``\mark \default``, ``\mark "text"`` and ``\mark \markup ...``
      -
    * - 3
      - ``\new ChordNames`` with ``\chordmode`` chord names in common jazz spelling
@@ -503,11 +503,11 @@ The planned modules are:
    * - Crate
      - Modules
    * - ``gd-score``
-     - ``ratio``, ``moment``, ``pitch``, ``duration``, ``score``, ``check``, ``errors``
+     - ``ratio``, ``moment``, ``pitch``, ``duration``, ``markup``, ``score``, ``check``, ``error``
    * - ``gd-lilypond``
-     - ``lexer``, ``syntax``, ``parser``, ``include``, ``names`` (note-name languages), ``commands`` (the command table), ``relative``, ``contexts``, ``lyrics``, ``interpret``, ``files``, ``limits``, ``errors``
+     - ``lexer``, ``syntax``, ``parser``, ``include``, ``names`` (note-name languages), ``commands`` (the command table), ``markup``, ``notes``, ``contexts``, ``lyrics``, ``repeats``, ``ornaments``, ``interpret``, ``files``, ``limits``, ``error``
    * - ``gd-engrave``
-     - ``columns``, ``spacing`` (springs, rods, solver), ``breaking``, ``accidentals``, ``beaming`` (groups), ``stems``, ``beams`` (quanting), ``chords`` (heads, dots, accidental columns), ``voices`` (note-column shifts, rests), ``curves`` (ties, slurs), ``skyline``, ``vertical``, ``fonts`` (SMuFL tables, text faces), ``text``, ``marks``, ``svg``, ``math`` (deterministic functions), ``limits``, ``errors``
+     - ``columns``, ``spacing`` (springs, rods, solver), ``breaking``, ``accidentals``, ``beaming`` (groups), ``stems``, ``beams`` (quanting), ``heads``, ``dots``, ``voices`` (note-column shifts, rests), ``curves`` (ties, slurs), ``skyline``, ``vertical``, ``fonts`` (SMuFL tables, text faces), ``text``, ``markup``, ``drawing``, ``svg``, ``math`` (deterministic functions), ``limits``, ``error``
 
 Interpretation
 ~~~~~~~~~~~~~~
@@ -848,7 +848,7 @@ Every mark is filled or stroked with ``currentColor``, and the root sets ``color
 With ``adaptive``, a stylesheet adds ``color-scheme: light dark`` and, under ``@media screen and (prefers-color-scheme: dark)``, a light ink.
 Only the HTML edition is adaptive; the PDF and PNG editions carry no stylesheet, so they do not depend on how a renderer treats media queries.
 The document has ``role="img"``, a ``<title>`` from ``alt``, and a ``<desc>``.
-``gd-link`` words the engraving's ``Summary`` in the page's language through the UI catalog, for example "Two staves, piano, G major, 3/4, measures 1 to 8, with lyrics".
+``gd-link`` words the engraving's ``Summary`` in the page's language through the UI catalog, for example "Music for 2 staves. Piano. Key signature G major. Time signature 3/4. Measures 1-8. With lyrics."
 That description fills ``<desc>``, and also the alternative text when ``alt`` is absent; we never use the LilyPond source as alternative text, since it does not describe what a reader sees.
 Numbers are written with at most three decimals, trailing zeros removed.
 
@@ -998,13 +998,13 @@ Document model and conversions
      - Custom directive attributes
      - As specified above
    * - Engraved result (after the rewrite)
-     - ``Image`` with class ``lilypond``; custom ``narrow-src`` and ``narrow-width`` for the narrow edition; custom ``parts`` listing system images for PDF
+     - ``Image`` with class ``lilypond-music`` and custom ``music-fit``; custom ``narrow-src`` for the narrow edition; ``raster-density`` for 144-dpi PNG; custom ``music-parts`` listing system images for PDF
      - ``<picture>`` with ``<img>`` in HTML; one or several images in PDF
    * - ``code-block:: lilypond`` or `````lilypond``
      - Unmarked code block
      - Source example
 
-Text output keeps the source and caption without engraving.
+Text output keeps the source and caption without engraving; in a trusted build, a file argument's source replaces its path, and where the file cannot be read a sentence names it instead.
 The existing reStructuredText writer reconstructs the directive and its options from either RST or MyST input, keeping a file argument as a file argument so that ``\include`` paths keep their base folder.
 Read-write-read tests compare notation and options while allowing the new source locations to change.
 We never reconstruct LilyPond from a drawing.
@@ -1183,7 +1183,7 @@ Documentation plan
 
 The manual gains a music-notation chapter under Topics, next to diagrams, with a live engraved example and LilyPond source beside it.
 It explains pitches and relative octaves, durations, chords, rests, voices, staff groups, lyrics, markings, grace notes and repeats for the implemented profile.
-A task guide covers file-based scores, nested includes, SVG and PNG, builder measures, narrow screens, multi-page PDFs, trust, limits and incremental builds.
+The same chapter (``topics/music.rst``) covers file-based scores, nested includes, SVG and PNG, builder measures, narrow screens, multi-page PDFs, trust, limits and incremental builds.
 The directive reference lists every option and fallback; configuration reference lists the three settings and defaults.
 The built-in extension inventory, crate map, all three new crate READMEs, project README, changelog and release/license documentation describe the feature and its boundaries.
 The manual links to LilyPond's notation reference and SMuFL; references distinguish accepted notation from engraver programming.
@@ -1276,6 +1276,18 @@ It permits the component contacts within signatures, connected beams, brackets, 
 Only ends with no adjoining primary segment are exposed beam ends.
 The exhaustive tests compare spring solutions with every active set and line breaking with every partition of small generated scores.
 The deterministic fuzz target reports accepted and engraved inputs as well as total cases.
+
+Post-implementation review, 1 November 2026
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A second review against LilyPond 2.24 and Gould's rules expanded the profile and closed remaining semantic, geometric and builder gaps:
+
+* ``gd-score``, ``gd-lilypond`` and ``gd-engrave`` now represent and render a bounded LilyPond 2.24 ``\markup`` tree (lists, aligned columns, styles, small caps, sub/superscripts, relative and absolute sizes, enclosures, offsets, spacing, music symbols and markup variables) across scripts, ``\tempo``, ``\mark`` and instrument names, while refusing Scheme, layout and embedded-score markup commands explicitly.
+* ``\alternative`` supports ``\volta`` pass lists as well as sequential endings; ``\fine``, ``\section``, ``\compressEmptyMeasures``, ``\compressFullBarRests`` and ``\numericTimeSignature`` are accepted.
+* ``\relative`` without an explicit pitch uses LilyPond's absolute-octave middle reference (``f``); ``\transpose`` transposes ``\key`` tonics with diatonic spelling; ``\acciaccatura`` and ``\appoggiatura`` add implicit slurs to their main notes; melismata skip manual beams only when automatic beaming is off; ``\lyricsto`` resolves voices created later in simultaneous blocks.
+* Courtesy clefs and courtesy key/time signatures appear before line-start changes; key changes cancel dropped accidentals before drawing new sharps or flats; back-to-back ``:|.`` and ``.|:`` merge into ``:..:``; concave and equal-endpoint beams stay strictly horizontal; 3/8 groups across the whole measure; two-voice dots and chords use per-head X positions and voice-two downward dot preferences.
+* Multi-system PDF figures emit a single numbered ``#figure`` around a breakable block of system images, template margin comments are scanned in the leading 256 lines and measured on the paper the book renders (A4 or US letter), directive widths accept standard print and CSS units, narrow HTML ``<picture>`` editions are omitted when the wide drawing already fits inside 225 points, and external ``.ly`` source is substituted into trusted text and fallback code blocks.
+* ``music-check`` now audits both the standard 420-point and compact 225-point editions across 58 golden scores at 288 pixels per inch.
 
 .. rubric:: Lifecycle event
 

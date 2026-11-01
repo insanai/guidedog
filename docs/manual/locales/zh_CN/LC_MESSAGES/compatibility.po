@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 10:17+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -460,8 +460,8 @@ msgstr "``imgconverter``"
 
 #: ../../compatibility.rst:147
 msgid ""
-"Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and "
-"PDF itself. Other formats are reported (:doc:`sources-and-diagrams`)."
+"Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and PDF "
+"itself. Other formats are reported (:doc:`sources-and-diagrams`)."
 msgstr ""
 "会被接受，但不运行任何程序：Typst 自己就能读取 PNG、JPEG、GIF、SVG、WebP 和 "
 "PDF。其他格式会被报告（:doc:`sources-and-diagrams`）。"
@@ -521,10 +521,10 @@ msgid ""
 "Graphviz image resources are resolved relative to their document and "
 "confined. Supported image bytes are embedded in the drawing. "
 "``imagepath`` and ``fontpath`` do not expand the boundary. The embedded "
-"Typst compiler enforces the declared readable folders directly, while "
-"an external ``typst`` program runs with a private symlink root "
-"containing only those folders. This keeps book templates and preambles "
-"within the declared resources."
+"Typst compiler enforces the declared readable folders directly, while an "
+"external ``typst`` program runs with a private symlink root containing "
+"only those folders. This keeps book templates and preambles within the "
+"declared resources."
 msgstr ""
 "Graphviz 图像资源按所属文档的相对路径解析并受边界限制。受支持的图像字节会嵌入绘图中。``imagepath`` 和 "
 "``fontpath`` 不会扩大读取边界。内嵌 Typst 编译器直接强制执行声明的可读文件夹，而外部 ``typst`` "
@@ -545,16 +545,25 @@ msgstr ""
 
 #: ../../compatibility.rst:175
 msgid ""
+"``lilypond`` is also a Guidedog extension, not "
+"``sphinxcontrib-lilypond``. It runs no LilyPond program; Guidedog reads a "
+"documented part of the LilyPond language and engraves it itself, as SVG "
+"or PNG for HTML and PDF. ``--untrusted`` still engraves inline notation, "
+"because the reader runs no program or Scheme code, but refuses file "
+"arguments and ``\\include``. See :doc:`topics/music`."
+msgstr "``lilypond`` 同样是 Guidedog 扩展，而不是 ``sphinxcontrib-lilypond``。它不运行 LilyPond 程序；Guidedog 读取 LilyPond 语言中有文档说明的部分，自行将其刻印为用于 HTML 和 PDF 的 SVG 或 PNG。由于读取过程不运行任何程序或 Scheme 代码，``--untrusted`` 仍会刻印文档中直接书写的乐谱，但拒绝文件参数和 ``\\include``。参见 :doc:`topics/music`。"
+
+#: ../../compatibility.rst:177
+msgid ""
 "``--untrusted`` narrows the read boundary to the source folder. It omits "
 "raw content, unsafe URLs, outside resources, project Typst templates, and "
 "preambles, with diagnostics. It fetches no inventories or Typst packages. "
-"Graphs that ask to read resources are shown as code with a warning. This "
-"mode does not bound the native compiler's memory or execution time."
-msgstr ""
-"``--untrusted`` 将读取范围缩至源目录，省略原始内容、不安全 URL、外部资源、项目 Typst "
-"模板和前置内容，并给出诊断。它不获取清单或 Typst 包。请求读取资源的图表会以代码显示，并给出警告。此模式不限制原生编译器的内存或运行时间。"
+"Graphs that ask to read resources, and music that names a file, are shown "
+"as code with a warning. This mode does not bound the native compiler's "
+"memory or execution time."
+msgstr "``--untrusted`` 将读取范围缩至源目录，省略原始内容、不安全 URL、外部资源、项目 Typst 模板和前置内容，并给出诊断。它不获取清单或 Typst 包。请求读取资源的图表以及指定文件的乐谱会以代码显示，并给出警告。此模式不限制原生编译器的内存或运行时间。"
 
-#: ../../compatibility.rst:181
+#: ../../compatibility.rst:183
 msgid ""
 "The host budget defaults to 1 GiB. It is coarse: it counts the sources, "
 "included files, and PDF output the host holds, reserved before they are "
@@ -571,7 +580,7 @@ msgstr ""
 "提供已知的机器内存余量。工作内存始终留在内存中。没有基于磁盘的模式，``--memory=disk`` 和 ``--disk-budget`` "
 "会被拒绝。"
 
-#: ../../compatibility.rst:188
+#: ../../compatibility.rst:190
 msgid ""
 "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document "
 "work. Changing a limit invalidates cached reading and output. Depth and "
@@ -585,11 +594,11 @@ msgstr ""
 "的内存分配不计入主机预算；需要硬性上限时，我们使用操作系统的限制。参见 :doc:`errors` 和 "
 ":doc:`internals/memory`。"
 
-#: ../../compatibility.rst:194
+#: ../../compatibility.rst:196
 msgid "Verification and real projects"
 msgstr "验证与实际项目"
 
-#: ../../compatibility.rst:197
+#: ../../compatibility.rst:199
 msgid ""
 "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx "
 "9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, "
@@ -607,7 +616,7 @@ msgstr ""
 "进行对比，检查页面、标识符、正文链接、清单、编号和诊断。存储的结果解释了每一处差异，例如精确的源码位置、稳定的阅读顺序编号，以及对省略的目标专用原始内容给出明确报告（:doc:`internals/sphinx-comparison`）。读取器的一致性测试（:doc:`internals/rst-conformance`、:doc:`internals/commonmark-conformance`）保留了各自的预期输出，``cargo "
 "xtask verify-docutils`` 会用固定版本的 Docutils 0.22.4 核对这些输出。98 棵文档树全部一致。"
 
-#: ../../compatibility.rst:199
+#: ../../compatibility.rst:201
 msgid ""
 "On 15 October 2026 we built the manuals of CPython, Django and Flask as "
 "HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). "
@@ -620,7 +629,7 @@ msgstr ""
 "CPython 中两个无害的链接外，没有发现损坏的内部链接。Django 和 Flask 的书籍构建成功；CPython "
 "的书籍所需的内存超出了这台 12 GB 机器的容量。"
 
-#: ../../compatibility.rst:201
+#: ../../compatibility.rst:203
 msgid ""
 "Those projects contain unsupported Python extension constructs. Their "
 "diagnostics remain part of the evidence. A zero exit status does not mean "
@@ -630,7 +639,7 @@ msgstr ""
 "这些项目包含不受支持的 Python "
 "扩展结构，它们的诊断仍是证据的一部分。退出状态为零并不表示其所有私有指令都已复现。如果发布要求零诊断，我们使用 ``-W`` 运行。"
 
-#: ../../compatibility.rst:203
+#: ../../compatibility.rst:205
 msgid ""
 "The measurements describe the recorded workloads on the recorded machine. "
 "They are not universal speed or memory bounds."

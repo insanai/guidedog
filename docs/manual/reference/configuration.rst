@@ -1566,7 +1566,7 @@ and folders that lead outside the source folder (``html_logo``, ``html_favicon``
 ``pdf_logo``, ``mathjax_config_path``, ``html_static_path``, ``html_extra_path``,
 ``templates_path``, ``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``,
 ``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. Embedded ``typst-diagram``
-compilation is disabled and no Typst package is downloaded. Each dropped setting is a
+compilation is disabled and no Typst package is downloaded. Inline ``lilypond`` music is still engraved, but its file arguments and ``\include`` are refused. Each dropped setting is a
 ``build.untrusted`` warning. This is a capability policy, not a process sandbox. See :doc:`cli`.
 
 Native music engraving

@@ -15,7 +15,7 @@ The design uses restrained color, strong headings, serif reading text,
 and accessible navigation. It does not imitate an author's words or layout.
 
 This project was created with ``guidedog quickstart`` and is built by Guidedog.
-RST holds the prose. Graphviz and Typst hold the diagrams. LaTeX math notation holds equations.
+RST holds the prose. Graphviz and Typst hold the diagrams. LilyPond notation holds musical examples, and LaTeX math notation holds equations.
 Typst also defines the PDF book, discussion, and article templates.
 
 Implementation

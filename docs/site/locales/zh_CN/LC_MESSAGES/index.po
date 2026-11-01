@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 10:37+0000\n"
 "PO-Revision-Date: 2026-10-11 16:00+0800\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -82,24 +82,24 @@ msgstr "**翻译。** 用 gettext 目录把项目译成其他语言。中文、�
 
 #: ../../index.rst:47
 msgid ""
-"**Diagrams, math, and API pages.** Graphviz and Typst diagrams, LaTeX "
-"equations, and API reference for Rust, Python, and Odin, read from "
-"source code."
+"**Diagrams, music, math, and API pages.** Graphviz and Typst diagrams, "
+"LilyPond music notation, LaTeX equations, and API reference for Rust, "
+"Python, and Odin, read from source code."
 msgstr ""
-"**图表、公式与 API 页面。** Graphviz 与 Typst 图表、LaTeX 公式，以及从源代码读取的 Rust、Python 和 "
-"Odin API 参考。"
+"**图表、乐谱、公式与 API 页面。** Graphviz 与 Typst 图表、LilyPond 乐谱记法、LaTeX "
+"公式，以及从源代码读取的 Rust、Python 和 Odin API 参考。"
 
-#: ../../index.rst:49
+#: ../../index.rst:48
 msgid ""
 "**Clear errors.** A message says what is wrong, where, and how to fix it. "
 "A failed build leaves the last good site in place."
 msgstr "**清楚的错误信息。** 信息说明出了什么问题、在哪里、怎样修复。构建失败时，上一次成功的网站保持不变。"
 
-#: ../../index.rst:53
+#: ../../index.rst:52
 msgid "One program"
 msgstr "一个程序"
 
-#: ../../index.rst:56
+#: ../../index.rst:55
 msgid ""
 "The release provides one ``guidedog`` executable with PDF typesetting and "
 "diagram rendering included. We download the archive for our system, "
@@ -109,7 +109,7 @@ msgstr ""
 "发行版提供一个 ``guidedog`` 可执行文件，内含 PDF 排版和图表渲染功能。下载对应系统的归档包，解压后即可开始项目。在 "
 "Windows 上，请将随附的运行时文件保留在可执行文件旁边。"
 
-#: ../../index.rst:58
+#: ../../index.rst:57
 msgid ""
 "Configuration is a TOML file. Templates are plain files in our project, "
 "and we can edit them. The same command also manages static websites, "
@@ -119,17 +119,17 @@ msgstr ""
 "配置是一个 TOML 文件。模板是项目中的普通文件，可以直接编辑。同一个命令还通过内置链接的 ``ssg``、``pages`` 和 "
 "``dsc`` 插件管理静态网站、发布到 GitHub Pages 并维护讨论记录。"
 
-#: ../../index.rst:61
+#: ../../index.rst:60
 msgid "Write it, see both"
 msgstr "写一次，看两种结果"
 
-#: ../../index.rst:64
+#: ../../index.rst:63
 msgid ""
 "On the left is reStructuredText. On the right is what Guidedog made of it "
 "on this page. The PDF builder sets the same lines as a book page."
 msgstr "左边是 reStructuredText，右边是 Guidedog 在本页上用它生成的结果。PDF 构建器会把同样的内容排成书页。"
 
-#: ../../index.rst:69
+#: ../../index.rst:68
 msgid ""
 ".. note::\n"
 "\n"
@@ -165,56 +165,56 @@ msgstr ""
 "   * - ``pdf``\n"
 "     - PDF 图书"
 
-#: ../../index.rst:92
+#: ../../index.rst:91
 msgid "Guidedog reads our text once."
 msgstr "Guidedog 只读取一次我们写的文字。"
 
-#: ../../index.rst:94
+#: ../../index.rst:93
 msgid "The *same* files become a **website** and a **book**:"
 msgstr "*同一组* 文件既成为 **网站** 也成为 **图书**："
 
-#: ../../index.rst:100
+#: ../../index.rst:99
 msgid "Builder"
 msgstr "构建器"
 
-#: ../../index.rst:101
+#: ../../index.rst:100
 msgid "Result"
 msgstr "结果"
 
-#: ../../index.rst:102
+#: ../../index.rst:101
 msgid "``html``"
 msgstr "``html``"
 
-#: ../../index.rst:103
+#: ../../index.rst:102
 msgid "A website"
 msgstr "网站"
 
-#: ../../index.rst:104
+#: ../../index.rst:103
 msgid "``pdf``"
 msgstr "``pdf``"
 
-#: ../../index.rst:105
+#: ../../index.rst:104
 msgid "A PDF book"
 msgstr "PDF 图书"
 
-#: ../../index.rst:109
+#: ../../index.rst:108
 msgid ""
 "The `manual as a PDF book <manual-pdf_>`_ is an example of the result on "
 "paper. It is built from the same files as the manual's website."
 msgstr "`PDF 版手册 <manual-pdf_>`_ 就是纸面效果的一个例子。它和手册网站来自同一组文件。"
 
-#: ../../index.rst:113
+#: ../../index.rst:112
 msgid "Get started"
 msgstr "开始使用"
 
-#: ../../index.rst:116
+#: ../../index.rst:115
 msgid ""
 "Download the archive for our system from the `latest release "
 "<download_>`_, put ``guidedog`` on the ``PATH``, and create a project:"
 msgstr ""
 "从 `最新发布版本 <download_>`_ 下载对应系统的压缩包，把 ``guidedog`` 放到 ``PATH`` 中，然后创建一个项目："
 
-#: ../../index.rst:119
+#: ../../index.rst:118
 msgid ""
 "guidedog quickstart docs\n"
 "guidedog build html docs\n"
@@ -226,7 +226,7 @@ msgstr ""
 "guidedog build pdf docs\n"
 "guidedog serve docs"
 
-#: ../../index.rst:126
+#: ../../index.rst:125
 msgid ""
 "``quickstart`` writes ``conf.toml``, ``index.rst``, and templates we can "
 "edit. ``serve`` rebuilds the site while we write. The `tutorial "
@@ -238,18 +238,18 @@ msgstr ""
 "会在我们写作时重新构建网站。 `教程 <manual-tutorial_>`_ 带我们完成第一个项目。要从源代码构建 Guidedog，请安装 "
 "Rust，并按照 `仓库中的说明 <build_>`_ 操作。"
 
-#: ../../index.rst:132
+#: ../../index.rst:131
 msgid "Design discussions"
 msgstr "设计讨论"
 
-#: ../../index.rst:135
+#: ../../index.rst:134
 msgid ""
 "Guidedog's design decisions are written down as numbered discussions: the "
 "problem, the alternatives, the decision, and the evidence. We can read "
 "each one on the web or download it as a PDF."
 msgstr "Guidedog 的设计决定都写成了编号的讨论记录：问题、备选方案、决定和依据。每一篇我们都可以在网页上阅读，也可以下载 PDF。"
 
-#: ../../index.rst:139
+#: ../../index.rst:138
 msgid ""
 "Our own project can keep its discussions the same way, with ``guidedog "
 "dsc``. The `manual <manual-discussions_>`_ shows how."
@@ -257,15 +257,15 @@ msgstr ""
 "我们自己的项目也可以用同样的方式记录讨论，工具是 ``guidedog dsc``。 `手册 <manual-discussions_>`_ "
 "介绍了做法。"
 
-#: ../../index.rst:143
+#: ../../index.rst:142
 msgid "`Read the discussions <discussions_>`_"
 msgstr "`阅读设计讨论 <discussions_>`_"
 
-#: ../../index.rst:150
+#: ../../index.rst:149
 msgid "Recent releases"
 msgstr "近期版本"
 
-#: ../../index.rst:153
+#: ../../index.rst:152
 msgid ""
 "`All releases <releases/index.html>`_ | `Atom feed <releases/atom.xml>`_"
 msgstr "`所有版本 <releases/index.html>`_ | `Atom 订阅源 <releases/atom.xml>`_"

@@ -5,7 +5,7 @@ use crate::drawing::{Draw, Request};
 use crate::limits::charge;
 use crate::{Mark, Point, Role};
 
-impl Draw<'_, '_, '_, '_> {
+impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn decorations(&mut self, request: &Request<'_, '_>) -> Result<(), Error> {
         let space = self.options.staff_size / 4.0;
         for (staff_index, staff) in request.score.staves.iter().enumerate() {

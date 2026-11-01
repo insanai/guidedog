@@ -43,7 +43,7 @@ fn embedded_text_faces_include_separate_regular_bold_and_italic_handles() {
             .iter()
             .find(|f| f.family == "Libertinus Serif" && f.bold == bold && f.italic == italic)
             .expect("embedded serif style");
-        assert!(!face.data().is_empty());
+        assert!(!face.data().expect("font bytes").is_empty());
         assert_eq!(face.index, 0);
     }
 }

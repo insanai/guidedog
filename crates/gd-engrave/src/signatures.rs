@@ -4,7 +4,7 @@ use crate::drawing::{Draw, Request};
 use crate::prepare::accidental;
 use crate::{Point, Role};
 
-impl Draw<'_, '_, '_, '_> {
+impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn signatures(
         &mut self,
         request: &Request<'_, '_>,

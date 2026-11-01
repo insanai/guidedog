@@ -247,19 +247,34 @@ fn fonts(system: bool, paths: &[PathBuf]) -> &'static FontStore {
 }
 
 pub(crate) fn text_fonts(options: &Options<'_>) -> Vec<crate::TextFace> {
+    use crate::fonts::{Data, FontFile};
+    use std::any::Any;
     let store = fonts(!options.embedded_fonts_only, &options.font_paths);
+    let mut files = std::collections::BTreeMap::new();
     let mut faces = Vec::new();
     let mut index = 0;
     while let Some(info) = store.book().info(index) {
-        if let Some(font) = store.font(index) {
-            faces.push(crate::TextFace {
-                family: info.family.clone(),
-                index: font.index(),
-                bold: info.variant.weight.to_number() >= 600,
-                italic: info.variant.style != typst::text::FontStyle::Normal,
-                data: crate::fonts::Data::Embedded(font.data().clone()),
-            });
-        }
+        let Some(source) = store.source(index) else { break };
+        let (data, face_index) = if let Some(file) =
+            (source as &dyn Any).downcast_ref::<typst_kit::fonts::FontPath>()
+        {
+            let bytes =
+                files.entry(file.path.clone()).or_insert_with(|| FontFile::new(file.path.clone()));
+            (Data::File(std::sync::Arc::clone(bytes)), file.index)
+        } else if let Some(font) = source.load() {
+            (Data::Embedded(font.data().clone()), font.index())
+        } else {
+            index += 1;
+            continue;
+        };
+        faces.push(crate::TextFace {
+            family: info.family.clone(),
+            index: face_index,
+            bold: info.variant.weight.to_number() >= 600,
+            italic: info.variant.style != typst::text::FontStyle::Normal,
+            data,
+            coverage: Some(info.coverage.clone()),
+        });
         index += 1;
     }
     faces

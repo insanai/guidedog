@@ -44,8 +44,8 @@ pub(crate) fn draw_system(
     Ok((draw.system, draw.warnings))
 }
 
-pub(crate) struct Draw<'f, 'o, 'callback, 'work> {
-    pub(crate) fonts: &'f Fonts<'f>,
+pub(crate) struct Draw<'a, 'f, 'o, 'callback, 'work> {
+    pub(crate) fonts: &'a Fonts<'f>,
     pub(crate) options: &'o mut Options<'callback>,
     pub(crate) work: &'work mut usize,
     pub(crate) system: System,
@@ -55,7 +55,7 @@ pub(crate) struct Draw<'f, 'o, 'callback, 'work> {
     pub(crate) stem_marks: std::collections::BTreeMap<u32, usize>,
 }
 
-impl Draw<'_, '_, '_, '_> {
+impl Draw<'_, '_, '_, '_, '_> {
     fn staff_system(
         &mut self,
         request: &Request<'_, '_>,

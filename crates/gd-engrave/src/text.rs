@@ -28,6 +28,8 @@ pub struct TextRun {
     pub ascent: f64,
     /// Positive face descent in points.
     pub descent: f64,
+    /// Opaque identities of the text font sources actually selected during shaping.
+    pub sources: Vec<String>,
 }
 
 pub(crate) fn shape(
@@ -53,7 +55,8 @@ pub(crate) fn shape(
     let Some(first) = faces.first() else {
         return Err(font_error("The score contains text but no text face was supplied."));
     };
-    let initial = shaped(first, text);
+    let first_face = first.face()?;
+    let initial = shaped(&first_face, text);
     let infos = initial.glyph_infos();
     let positions = initial.glyph_positions();
     let mut clusters: Vec<usize> = infos.iter().map(|g| g.cluster as usize).collect();
@@ -61,6 +64,7 @@ pub(crate) fn shape(
     clusters.sort_unstable();
     clusters.dedup();
     let mut run = TextRun::default();
+    note_source(&mut run, first);
     let mut at = 0;
     while at < infos.len() {
         charge(work, 1)?;
@@ -71,27 +75,36 @@ pub(crate) fn shape(
             let end_byte = clusters.get(last).copied().unwrap_or(text.len());
             let cluster =
                 text.get(start..end_byte).ok_or_else(|| font_error("Invalid shaping cluster."))?;
-            let face = faces
-                .iter()
-                .find(|f| cluster.chars().all(|c| c.is_control() || f.glyph_index(c).is_some()));
-            let face = face.unwrap_or_else(|| {
+            let mut selected = None;
+            for candidate in faces {
+                charge(work, 1)?;
+                if candidate.covers(cluster) {
+                    let face = candidate.face()?;
+                    if cluster.chars().all(|c| c.is_control() || face.glyph_index(c).is_some()) {
+                        selected = Some((candidate, face));
+                        break;
+                    }
+                }
+            }
+            let (source, face) = selected.unwrap_or_else(|| {
                 warnings.push(
                     font_error(format!("No supplied face can draw the text cluster {cluster:?}."))
                         .warning(),
                 );
-                first
+                (first, first_face.clone())
             });
-            let fallback = shaped(face, cluster);
+            note_source(&mut run, source);
+            let fallback = shaped(&face, cluster);
             append(
                 &mut run,
-                face,
+                &face,
                 fallback.glyph_infos(),
                 fallback.glyph_positions(),
                 size,
                 work,
             )?;
         } else {
-            append(&mut run, first, &infos[at..end], &positions[at..end], size, work)?;
+            append(&mut run, &first_face, &infos[at..end], &positions[at..end], size, work)?;
         }
         at = end;
     }
@@ -138,4 +151,12 @@ fn append(
         run.advance += f64::from(position.x_advance) * scale;
     }
     Ok(())
+}
+
+fn note_source(run: &mut TextRun, face: &crate::fonts::TextFace<'_>) {
+    if let Some(id) = face.data.source.and_then(|source| source.id())
+        && !run.sources.iter().any(|source| source == id)
+    {
+        run.sources.push(id.to_string());
+    }
 }

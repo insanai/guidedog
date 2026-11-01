@@ -117,6 +117,15 @@ fn draw_held<'d>(
         .engraver
         .engrave_score(&loaded.score, fonts, &mut options)
         .map_err(|e| e.to_string())?;
+    for system in &engraving.systems {
+        for mark in &system.marks {
+            if let gd_engrave::Mark::Text { run, .. } = &mark.mark {
+                for source in &run.sources {
+                    page.trace.note_key(gd_env::LookupKind::FileContent, source);
+                }
+            }
+        }
+    }
     for error in &engraving.warnings {
         diagnostics::report(page, doc, id, error, &loaded.files);
     }

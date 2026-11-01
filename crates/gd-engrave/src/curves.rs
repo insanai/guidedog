@@ -4,7 +4,7 @@ use crate::drawing::{Draw, Request};
 use crate::limits::charge;
 use crate::{Bezier, Mark, Point, Rect, Role};
 
-impl Draw<'_, '_, '_, '_> {
+impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn spanners(&mut self, request: &Request<'_, '_>) -> Result<(), Error> {
         let score = request.score;
         let start = request.columns[0].at;

@@ -20,7 +20,7 @@ struct Stem {
     scale: f64,
 }
 
-impl Draw<'_, '_, '_, '_> {
+impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn beams(&mut self, request: &Request<'_, '_>) -> Result<(), Error> {
         let space = self.options.staff_size / 4.0;
         for group in &request.plan.beams {

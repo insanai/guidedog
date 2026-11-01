@@ -6,7 +6,7 @@ use crate::drawing::Draw;
 use crate::prepare::EventInfo;
 use crate::{Point, Role};
 
-impl Draw<'_, '_, '_, '_> {
+impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn heads(
         &mut self,
         chord: &Chord,

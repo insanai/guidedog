@@ -6,7 +6,7 @@ use crate::drawing::{Draw, Request};
 use crate::limits::charge;
 use crate::{Bezier, Mark, Point, Rect, Role};
 
-impl Draw<'_, '_, '_, '_> {
+impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn groups(&mut self, request: &Request<'_, '_>) -> Result<(), Error> {
         let space = self.options.staff_size / 4.0;
         for group in &request.score.groups {

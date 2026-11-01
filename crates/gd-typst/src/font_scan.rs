@@ -49,19 +49,18 @@ pub(crate) fn text_fonts(options: &Options<'_>) -> Vec<TextFace> {
             .extension()
             .and_then(|e| e.to_str())
             .is_some_and(|e| ["otf", "ttf", "ttc"].iter().any(|s| e.eq_ignore_ascii_case(s)))
-            && std::fs::metadata(&path).is_ok_and(|m| m.len() <= 256 * 1024 * 1024)
-            && let Ok(data) = std::fs::read(path)
+            && let Ok(data) = crate::fonts::read_font(&path)
         {
-            append(&mut faces, Arc::from(data));
+            append(&mut faces, &data, crate::fonts::FontFile::new(path));
         }
     }
     faces
 }
 
-fn append(faces: &mut Vec<TextFace>, data: Arc<[u8]>) {
-    let count = ttf_parser::fonts_in_collection(&data).unwrap_or(1).min(256);
+fn append(faces: &mut Vec<TextFace>, data: &[u8], file: Arc<crate::fonts::FontFile>) {
+    let count = ttf_parser::fonts_in_collection(data).unwrap_or(1).min(256);
     for index in 0..count {
-        let Ok(face) = ttf_parser::Face::parse(&data, index) else {
+        let Ok(face) = ttf_parser::Face::parse(data, index) else {
             continue;
         };
         let family = face
@@ -75,7 +74,29 @@ fn append(faces: &mut Vec<TextFace>, data: Arc<[u8]>) {
             index,
             bold: face.is_bold(),
             italic: face.is_italic(),
-            data: crate::fonts::Data::File(Arc::clone(&data)),
+            data: crate::fonts::Data::File(Arc::clone(&file)),
+            coverage: coverage(&face),
         });
     }
+}
+
+fn coverage(face: &ttf_parser::Face<'_>) -> Vec<(u32, u32)> {
+    let mut ranges: Vec<(u32, u32)> = Vec::new();
+    let Some(cmap) = face.tables().cmap else { return ranges };
+    for subtable in cmap.subtables.into_iter().filter(|table| table.is_unicode()) {
+        subtable.codepoints(|code| {
+            if code > 0x10ffff || ranges.len() >= 65536 {
+                return;
+            }
+            if let Some((_, last)) = ranges.last_mut()
+                && last.checked_add(1) == Some(code)
+            {
+                *last = code;
+            } else {
+                ranges.push((code, code));
+            }
+        });
+    }
+    ranges.sort_unstable();
+    ranges
 }

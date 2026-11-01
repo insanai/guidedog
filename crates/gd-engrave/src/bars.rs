@@ -4,7 +4,7 @@ use crate::drawing::{Draw, Request};
 use crate::limits::charge;
 use crate::{Point, Role};
 
-impl Draw<'_, '_, '_, '_> {
+impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn bar(&mut self, style: BarStyle, x: f64, middle: f64) -> Result<(), Error> {
         let space = self.options.staff_size / 4.0;
         let (thin, thick, gap) = (0.16 * space, 0.5 * space, 0.55 * space);

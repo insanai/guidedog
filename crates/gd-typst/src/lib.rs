@@ -50,7 +50,7 @@ use std::fmt;
 use std::path::{Path, PathBuf};
 
 pub use error::{Diagnostic, Error, Severity};
-pub use fonts::{TextFace, TextFonts, load_text_fonts};
+pub use fonts::{FontError, TextFace, TextFonts, load_text_fonts};
 pub use raster::{RasterError, RasterOptions, rasterize_svg};
 
 /// The Typst release Guidedog is built and tested with.

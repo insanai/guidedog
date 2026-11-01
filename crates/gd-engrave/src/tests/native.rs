@@ -114,3 +114,37 @@ fn groups_repeats_bars_and_measure_rests_have_distinct_geometry() {
         }
     }
 }
+
+#[test]
+fn lazy_text_faces_are_selected_only_during_shaping_and_record_their_source() {
+    struct Source(std::sync::atomic::AtomicUsize);
+    impl FaceSource for Source {
+        fn data(&self) -> Result<&[u8], gd_score::Error> {
+            self.0.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+            Ok(REGULAR)
+        }
+        fn id(&self) -> Option<&str> {
+            Some("selected-font.otf")
+        }
+    }
+    let source = Source(std::sync::atomic::AtomicUsize::new(0));
+    let fonts = load_fonts(&FontOptions {
+        regular: vec![FaceData { source: Some(&source), ..Default::default() }],
+        ..Default::default()
+    })
+    .unwrap();
+    assert_eq!(source.0.load(std::sync::atomic::Ordering::Relaxed), 0);
+    for _ in 0..2 {
+        let run = crate::text::shape(
+            &fonts,
+            "Music",
+            12.0,
+            gd_score::TextStyle::Regular,
+            &mut Vec::new(),
+            &mut 100_000,
+        )
+        .unwrap();
+        assert_eq!(run.sources, ["selected-font.otf"]);
+    }
+    assert_eq!(source.0.load(std::sync::atomic::Ordering::Relaxed), 2);
+}

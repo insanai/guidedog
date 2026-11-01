@@ -43,12 +43,63 @@ pub struct FontOptions<'f> {
 }
 
 /// One borrowed OpenType face; a collection needs its explicit face index.
-#[derive(Clone, Copy, Debug, Default)]
+#[derive(Clone, Copy, Default)]
 pub struct FaceData<'f> {
     /// Original font or collection bytes.
     pub data: &'f [u8],
     /// Face index; zero is the common single-font case.
     pub index: u32,
+    /// Optional lazy source; when present it supplies bytes instead of data.
+    pub source: Option<&'f dyn FaceSource>,
+}
+
+/// A build-owned immutable font source, loaded only when its coverage is needed.
+pub trait FaceSource: Sync {
+    /// Borrows original bytes for the lifetime of this source, or reports a load failure.
+    fn data(&self) -> Result<&[u8], Error>;
+    /// Tests discovered coverage before loading bytes. True may be provisional.
+    fn covers(&self, _character: char) -> bool {
+        true
+    }
+    /// Borrows an optional opaque dependency identity for the adapter to observe.
+    fn id(&self) -> Option<&str> {
+        None
+    }
+}
+
+impl fmt::Debug for FaceData<'_> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("FaceData")
+            .field("bytes", &self.data.len())
+            .field("index", &self.index)
+            .field("lazy", &self.source.is_some())
+            .finish()
+    }
+}
+
+pub(crate) struct TextFace<'f> {
+    pub(crate) data: FaceData<'f>,
+    parsed: Option<rustybuzz::Face<'f>>,
+}
+
+impl<'f> TextFace<'f> {
+    pub(crate) fn face(&self) -> Result<rustybuzz::Face<'f>, Error> {
+        if let Some(face) = &self.parsed {
+            return Ok(face.clone());
+        }
+        let bytes = match self.data.source {
+            Some(source) => source.data()?,
+            None => self.data.data,
+        };
+        rustybuzz::Face::from_slice(bytes, self.data.index)
+            .ok_or_else(|| font_error("A selected text face or collection index is malformed."))
+    }
+
+    pub(crate) fn covers(&self, text: &str) -> bool {
+        self.data.source.is_none_or(|source| {
+            text.chars().all(|character| character.is_control() || source.covers(character))
+        })
+    }
 }
 
 /// Explicit immutable font tables, safe to share between engraving threads.
@@ -56,9 +107,9 @@ pub struct Fonts<'f> {
     pub(crate) music: Face<'static>,
     pub(crate) glyphs: BTreeMap<Glyph, GlyphData>,
     names: BTreeMap<String, Glyph>,
-    pub(crate) regular: Vec<rustybuzz::Face<'f>>,
-    pub(crate) bold: Vec<rustybuzz::Face<'f>>,
-    pub(crate) italic: Vec<rustybuzz::Face<'f>>,
+    pub(crate) regular: Vec<TextFace<'f>>,
+    pub(crate) bold: Vec<TextFace<'f>>,
+    pub(crate) italic: Vec<TextFace<'f>>,
     pub(crate) defaults: BTreeMap<String, f64>,
 }
 
@@ -121,15 +172,17 @@ pub fn load_fonts<'f>(options: &FontOptions<'f>) -> Result<Fonts<'f>, Error> {
     Ok(fonts)
 }
 
-fn faces<'f>(bytes: &[FaceData<'f>]) -> Result<Vec<rustybuzz::Face<'f>>, Error> {
+fn faces<'f>(bytes: &[FaceData<'f>]) -> Result<Vec<TextFace<'f>>, Error> {
     let mut faces = Vec::new();
     faces
         .try_reserve_exact(bytes.len())
         .map_err(|_| font_error("Cannot allocate text face tables."))?;
-    for face in bytes {
-        faces.push(rustybuzz::Face::from_slice(face.data, face.index).ok_or_else(|| {
-            font_error("A supplied text face or collection index is malformed.")
-        })?);
+    for data in bytes {
+        let mut face = TextFace { data: *data, parsed: None };
+        if data.source.is_none() {
+            face.parsed = Some(face.face()?);
+        }
+        faces.push(face);
     }
     Ok(faces)
 }

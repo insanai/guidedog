@@ -81,8 +81,18 @@ fn dynamic_breaking_matches_every_partition_of_small_scores() {
             })
             .collect();
         let width = (seed % 12 + 14) as f64;
+        // Rods of one to three gaps, some binding, so the early stop in the breaker is
+        // checked against lines whose minimum width comes from rods, not springs alone.
+        let rods: Vec<_> = (0..6)
+            .filter(|i| (seed >> i) % 3 != 0)
+            .map(|i| {
+                let last = (i + 1 + (seed + i) % 3).min(7);
+                Rod { first: i, last, minimum: ((seed >> i) % 7 + 3) as f64 }
+            })
+            .collect();
         let chosen =
-            break_lines(&springs, &[], &breaks, width, Justify::Auto, &Limits::default()).unwrap();
+            break_lines(&springs, &rods, &breaks, width, Justify::Auto, &Limits::default())
+                .unwrap();
         let mut optimum = f64::INFINITY;
         for mask in 0..64usize {
             let endpoints: Vec<_> = std::iter::once(0)
@@ -98,11 +108,11 @@ fn dynamic_breaking_matches_every_partition_of_small_scores() {
                     cost = f64::INFINITY;
                     break;
                 }
-                let rods =
-                    crate::breaking::RodIndex::new(&[], &mut 100, Scratch::default()).unwrap();
+                let index =
+                    crate::breaking::RodIndex::new(&rods, &mut 100, Scratch::default()).unwrap();
                 let (line, _) = crate::breaking::candidate(
                     &springs,
-                    &rods,
+                    &index,
                     &breaks,
                     (width, Justify::Auto),
                     first..last,
@@ -135,4 +145,24 @@ fn demerit(line: &Line, breaks: &[BreakPoint]) -> f64 {
     };
     let penalty = f64::from(breaks[line.last].penalty);
     (10.0 + badness).powi(2) + if penalty < 0.0 { -penalty * penalty } else { penalty * penalty }
+}
+
+#[test]
+fn an_overfull_line_ending_at_a_forced_break_is_still_found() {
+    // Inner boundaries are forbidden, so the only legal line holds all three measures;
+    // it is overfull, which a forced end permits. The breaker's early stop must not
+    // give up on it.
+    let springs = vec![Spring { ideal: 10.0, minimum: 8.0 }; 3];
+    let breaks: Vec<_> = (0..=3)
+        .map(|gap| BreakPoint {
+            gap,
+            forced: gap == 0 || gap == 3,
+            forbidden: gap == 1 || gap == 2,
+            ..Default::default()
+        })
+        .collect();
+    let lines =
+        break_lines(&springs, &[], &breaks, 12.0, Justify::Auto, &Limits::default()).unwrap();
+    assert_eq!(lines.len(), 1);
+    assert!(lines[0].overfull && lines[0].first == 0 && lines[0].last == 3);
 }

@@ -100,3 +100,33 @@ fn invalid_music_warns_at_its_original_source_line_and_strict_build_keeps_output
     build(&dir.path, 0, &["html"]);
     lacks(&dir.read("_build/html/index.html"), "_images/lilypond-");
 }
+
+#[test]
+fn creating_a_missing_nested_include_rebuilds_the_page() {
+    let dir = setup("music-missing");
+    dir.write(
+        "index.rst",
+        concat!("Music\n=====\n\n.. lilypond::\n\n", "   \\include \"notes.ly\"\n   \\notes\n"),
+    );
+    build(&dir.path, 0, &["html"]);
+    lacks(&dir.read("_build/html/index.html"), "_images/lilypond-");
+    dir.write("notes.ly", "notes = { c'4 d' e' f' | }\n");
+    build(&dir.path, 0, &["html", "-W"]);
+    has(&dir.read("_build/html/index.html"), "_images/lilypond-");
+}
+
+#[cfg(unix)]
+#[test]
+fn music_files_and_includes_refuse_escaping_symbolic_links() {
+    let dir = setup("music-symlink");
+    let outside = Scratch::new("music-private");
+    outside.write("secret.ly", "{ c'1 }\n");
+    std::os::unix::fs::symlink(outside.path.join("secret.ly"), dir.path.join("score.ly")).unwrap();
+    for source in
+        [".. lilypond:: score.ly\n", concat!(".. lilypond::\n\n", "   \\include \"score.ly\"\n")]
+    {
+        dir.write("index.rst", &format!("Music\n=====\n\n{source}"));
+        let result = build(&dir.path, 1, &["html", "-W"]);
+        has(&both(&result), "inside the source roots");
+    }
+}

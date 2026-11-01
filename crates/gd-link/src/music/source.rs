@@ -28,10 +28,10 @@ pub(super) fn read(
         candidates.push(page.config().source_dir.join(root).join(name));
     }
     for path in candidates {
-        page.trace.note_key(LookupKind::FileContent, &path.to_string_lossy());
         if !gd_host::confined(page.view.roots, &path) {
             continue;
         }
+        page.trace.note_key(LookupKind::FileContent, &path.to_string_lossy());
         let Ok(path) = path.canonicalize() else { continue };
         page.trace.note_key(LookupKind::FileContent, &path.to_string_lossy());
         let bytes = gd_host::read_file(&path, Some(page.ledger), 256 * 1024)

@@ -147,3 +147,83 @@ The following checks pass:
 We inspected the English book's music pages and all four LilyPond comparison pages.
 The accepted three-phase implementation and documentation contract is complete.
 The release matrices retain the platform qualification requirement before any subsequent release is packaged.
+
+Follow-up review
+----------------
+
+The follow-up starts from ``f36e37b``, after the maintainer's reader, markup, layout and integration fixes.
+The implementation is split into ``3be4c68`` (CJK qualification), ``0f0a869`` (conversion fallbacks), ``67ba13c`` (scratch accounting and layout cleanup) and ``bbf2dea`` (documentation and translations).
+
+We reviewed the remaining findings and their error paths:
+
+* The mixed-script score now contains Chinese and Devanagari lyrics.
+  The corpus owns its downloaded CJK font bytes instead of depending on installed host fonts.
+  Both download and load verify the pinned SHA-256 digest, and both staff sizes reject engraving warnings.
+  We downloaded the face into a fresh directory and inspected the generated score image.
+* Direct conversion describes a file argument without reading the score file.
+  Integration tests cover RST and MyST input, HTML and PDF output, German localization and RST round trips.
+  After a trusted project build reads the file, it removes the file-argument marker from the fallback code block so the renderer displays the actual source.
+* Scoped reservations now follow skyline segment owners and the temporary spacing and breaking buffers.
+  Replacement storage is charged while the old skyline is alive, and failed merges leave the original reservation intact.
+  Regression tests exercise memory refusal, exhausted work, early errors and owner destruction.
+  Repeated merges exceed the cumulative allocation allowance while staying within the live-memory allowance.
+* Each engraving accounts for existing worker capacity because its caller can supply a new ledger.
+  System setup uses the measure index rather than a possibly repeated printed number.
+  Voice-column arrangement runs once, after beam directions are final.
+
+The maintainer then extended the follow-up to complete third and fourth voices.
+``a8f5e3e`` adds event-local voice policies and a four-voice model and reader limit.
+``e5d2780`` records the expanded implementation and teaching-example contract.
+``3aaa518`` adds bounded multi-column placement, shared-rest ownership, rest clearance and same-side tie endpoint clearance.
+``fa5d455`` adds the checked Beethoven excerpt.
+
+The implementation review found and corrected three cases beyond lifting the reader limit:
+
+* When only voices one and three sound at a moment, their stems still need the multi-column collision search.
+* Unattached flags need their own measured footprint when we place another voice's heads and stems.
+* A tie on the stem side must attach beyond the actual stem edge; an interior-only curve audit can miss contact near its endpoint.
+
+The new regressions cover all 81 assignments of three nearby pitches to four voices, four unisons with alternating stem directions, local policy reset, mixed rest durations and fifth-voice refusal.
+Scores 59-62 add raster collision audits for three voices, dense four-voice seconds and accidentals, mixed rests and named voices with lyrics and a system-crossing tie.
+Score 63 and a pitch-and-duration test check the manual's four-bar Beethoven excerpt against the instrumental Joy theme, finale, bars 92-95, in the CCARH score on page 8.
+The manual gives copyable RST and MyST forms and explains the exact beat counts in all six translations.
+The CJK download and corpus steps are configured for CI and native release jobs; local checks do not establish remote platform results.
+
+The final direction-policy review found that an inherited policy could mask ``\stemNeutral``.
+Commit ``481e87b`` separates an optional stem override from the voice's column policy, retains neutral as an explicit override, and adds a regression for neutral and forced directions in inner voices.
+
+Independent Beethoven qualification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We created fresh RST and MyST projects under ``/tmp/guidedog-beethoven-verification``.
+The RST project contains the actual manual section; the MyST project activates its published directive fence.
+Both projects build HTML and PDF with warnings treated as errors.
+Their complete sets of standard and compact SVGs are byte-identical.
+
+We inspected the CCARH source score on page 8 and the generated English manual page, and compared the teaching engraving with LilyPond 2.24.4.
+We transcribed the original cello melody in D major into a separate LilyPond score in the temporary directory.
+An independent MIDI reader then compared that score with the teaching source: all thirteen pitches, every onset and every exact duration agree after moving down a whole tone and up an octave, a net ten semitones.
+The four measures total sixteen quarter-note beats.
+The temporary directory retains the source PDF, both LilyPond sources and outputs, the RST and MyST projects and builds, ``verified-notes.csv``, ``midi-check.txt``, ``svg-check.txt`` and ``report.txt``.
+
+The teaching review clarified the composition number, the change from D major to C major, and the distinction between the instrumental half-note opening and vocal versions with repeated quarters.
+The lesson identifies an excerpt and its open ending; it does not present four bars as the complete symphony.
+
+Final follow-up qualification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The final implementation includes ``481e87b`` and the documentation clarifications in ``61e531c``.
+All of the following checks pass on Linux x86-64:
+
+* The locked workspace build with all targets and the complete workspace test run: 2,099 passing tests across 205 reports, including doctests.
+* Strict workspace Clippy, formatting and the source-limit checker: 1,223 files, zero limit violations and six existing soft-width notices.
+* The Bravura digest and license check, release smoke test and standalone ``gd-typst`` tests without default features.
+* All 63 golden scores at both staff sizes, including actual raster-ink collision checks, and 12,000 deterministic fuzz cases: 4,357 parsed and 3,829 engraved.
+* LilyPond 2.24.4 compilation of all 63 reference scores; the comparison tool generates six review pages.
+* Fresh HTML and PDF project builds containing all four new polyphonic regression scores, with warnings treated as errors.
+* The independent Beethoven RST, MyST, MIDI, SVG and printed-page checks recorded above.
+* Complete HTML and PDF manual builds in English, German, Spanish, Japanese, Korean, Hindi and Simplified Chinese, with warnings treated as errors.
+* All six translation catalog statistics: zero fuzzy and zero untranslated entries.
+* The GDS website, the selected GDS 0015 PDF and the catalog check for all fifteen records.
+
+The four-voice extension, CJK qualification, conversion fallbacks, memory accounting, teaching example and documentation contract are complete.

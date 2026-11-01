@@ -12,17 +12,7 @@ use crate::console::Console;
 pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
     gd_host::catch_interrupts();
     let today = gd_clock::build_time().local().date.to_string();
-    let mut limits = guidedoc::default_limits();
-    if let Some(n) = c.max_depth {
-        limits.max_depth = n;
-    }
-    if let Some(n) = c.max_nodes {
-        limits.max_nodes = n;
-    }
-    limits.stack_bytes = match c.stack_kib {
-        Some(kib) => kib << 10,
-        None => gd_host::default_stack_budget(gd_host::WORKER_STACK_BYTES),
-    };
+    let limits = conversion_limits(c);
     let mut policy = guidedoc::default_policy();
     policy.raw = c.raw;
     policy.strict = c.strict;
@@ -34,6 +24,8 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
         guidedoc_defaults::ReaderSettings::default()
     };
     let reader = c.from.reader().unwrap_or("rst");
+    let (ui, _) = gd_i18n::ui_translator(&c.lang, &[], false);
+    let labels = gd_i18n::fill_labels(&ui);
     let request = ArtifactRequest {
         input: &c.input,
         output: &c.output,
@@ -46,6 +38,7 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
         read: guidedoc::ReadOptions { today: &today, ..settings.options(reader) },
         render: guidedoc::RenderOptions {
             title: &c.title,
+            labels: Some(&labels),
             language: &c.lang,
             section_numbers: c.number_sections,
             standalone: !c.fragment,
@@ -82,6 +75,21 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
         Delivered::Nothing => {}
     }
     0
+}
+
+fn conversion_limits(c: &ConvertCommand) -> guidedoc::Limits {
+    let mut limits = guidedoc::default_limits();
+    if let Some(n) = c.max_depth {
+        limits.max_depth = n;
+    }
+    if let Some(n) = c.max_nodes {
+        limits.max_nodes = n;
+    }
+    limits.stack_bytes = match c.stack_kib {
+        Some(kib) => kib << 10,
+        None => gd_host::default_stack_budget(gd_host::WORKER_STACK_BYTES),
+    };
+    limits
 }
 
 fn conformance(c: Conformance) -> &'static str {

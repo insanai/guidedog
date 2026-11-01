@@ -120,6 +120,13 @@ impl State<'_, '_> {
     /// gd-numbered; a caption makes it a listing figure with the caption on top.
     pub(crate) fn render_code(&mut self, id: NodeId, n: &Node, language: &str) {
         let doc = self.doc;
+        if let Some(file) = doc.custom_attribute(id, "lilypond-file") {
+            let message = guidedoc::label(self.options, guidedoc::Label::UnengravedScore)
+                .replace("%s", file);
+            self.emit_text(&message);
+            self.emit("\n\n");
+            return;
+        }
         let lang = doc.attribute(id, AttributeKey::Language).unwrap_or(language);
         let code = doc.text(n.text);
         let caption = self.custom(id, "caption");

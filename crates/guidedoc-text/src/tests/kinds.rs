@@ -412,3 +412,17 @@ fn remaining_kinds_render_as_text() {
          Body.\n",
     );
 }
+
+fn external_music(b: &mut Builder<'_>) -> Result<(), Fail> {
+    let id = open(b, K::CodeBlock)?;
+    b.add_custom_attribute(id, "lilypond-file", "unread.ly")?;
+    set_text(b, id, "unread.ly\n")?;
+    shut(b)
+}
+
+#[test]
+fn external_music_is_a_sentence_in_text_output() {
+    let rendered = render(external_music, frag());
+    assert_eq!(rendered.status, Status::Ok);
+    assert_eq!(rendered.text.trim(), "LilyPond score unread.ly was not engraved.");
+}

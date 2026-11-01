@@ -91,7 +91,10 @@ fn copy_code_with_text(
     rw.b.add_flags(copy, n.flags);
     let text_id = rw.b.add_text(text)?;
     rw.b.set_text(copy, text_id);
-    rw.copy_attributes(id, copy, |_, _| true)?;
+    // The file has become literal source, so renderers must no longer treat it as a request.
+    rw.copy_attributes(id, copy, |key, name| {
+        key != guidedoc::AttributeKey::Custom || name != "lilypond-file"
+    })?;
     rw.b.copy_payload(rw.doc, id, copy)?;
     for child in rw.doc.children(id) {
         rw.copy_node(page, child)?;

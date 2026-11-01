@@ -225,10 +225,11 @@ pub enum Label {
     Throws,
     Arguments,
     Availability,
+    UnengravedScore,
 }
 
 /// The number of labels.
-pub const LABEL_COUNT: usize = 36;
+pub const LABEL_COUNT: usize = 37;
 
 impl Label {
     /// Every label, in declaration order (`l as usize` is its index here).
@@ -269,6 +270,7 @@ impl Label {
         Label::Throws,
         Label::Arguments,
         Label::Availability,
+        Label::UnengravedScore,
     ];
 }
 
@@ -335,6 +337,7 @@ pub const ENGLISH_LABELS: [&str; LABEL_COUNT] = [
     "Throws",
     "Arguments",
     "Availability",
+    "LilyPond score %s was not engraved.",
 ];
 
 /// Writes highlighted HTML for a code block. It belongs to the caller's trust boundary.

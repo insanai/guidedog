@@ -7,6 +7,53 @@ use guidedog_tests::{Scratch, guidedog, has, lacks};
 use crate::flat;
 
 #[test]
+fn file_argument_music_is_named_without_opening_it_during_conversion() {
+    let dir = Scratch::new("convert-music-file");
+    dir.write("score.rst", ".. lilypond:: missing&score.ly\n");
+    dir.write("score.md", "```{lilypond} missing&score.ly\n```\n");
+    for (source, reader) in [("score.rst", "sphinx"), ("score.md", "myst")] {
+        let html = guidedog(
+            &dir.path,
+            0,
+            &["convert", source, "--from", reader, "--to", "html", "-o", "-"],
+        );
+        has(&html.out, "LilyPond score missing&amp;score.ly was not engraved.");
+        lacks(&html.out, "highlight-lilypond");
+        let rst = guidedog(
+            &dir.path,
+            0,
+            &["convert", source, "--from", reader, "--to", "rst", "-o", "-"],
+        );
+        has(&rst.out, ".. lilypond:: missing&score.ly");
+    }
+    let de = guidedog(
+        &dir.path,
+        0,
+        &["convert", "score.rst", "--from", "sphinx", "--lang", "de", "--to", "html", "-o", "-"],
+    );
+    has(&de.out, "LilyPond-Partitur");
+    guidedog(
+        &dir.path,
+        0,
+        &[
+            "convert",
+            "score.rst",
+            "--from",
+            "sphinx",
+            "--to",
+            "pdf",
+            "-o",
+            "score.pdf",
+            "--emit-typst",
+            "score.typ",
+        ],
+    );
+    has(&dir.read("score.typ"), r"LilyPond score missing\&score\.ly was not engraved\.");
+    lacks(&dir.read("score.typ"), "lang: \"lilypond\"");
+    assert!(std::fs::read(dir.path.join("score.pdf")).unwrap().starts_with(b"%PDF-"));
+}
+
+#[test]
 fn convert_reports_problems_with_directions() {
     let dir = Scratch::new("convert-problems");
     dir.write("broken.rst", "See missing_ here.\n");

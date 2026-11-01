@@ -17,7 +17,7 @@ templates into our project:
 * ``_templates/discussion.typ`` defines the discussion record layout (Typst).
 * ``_templates/article.typ`` defines the standalone print-quality article layout for pages with ``:pdf: article`` (Typst).
 * ``_templates/book.typ`` defines the PDF book layout, typography, and cover page (Typst).
-* ``_static/guidedog.css`` and ``_static/guidedog.js`` supply default styles and client behaviors.
+* ``_static/guidedog.css``, ``_static/guidedog.js``, and ``_static/typography.js`` supply default styles, client behaviors, and browser paragraph line breaking.
 
 Templates live in the project directory or in a content-addressed pinned theme archive. They are not hidden in an external package or binary cache. We edit them directly, rebuild with ``guidedog build``, and preview changes with ``guidedog serve``.
 
@@ -222,7 +222,7 @@ carry over.
    * - ``outline``
      - The document's own sections, as HTML; empty when it has none.
    * - ``prev``, ``next``
-     - The neighbouring pages in reading order, with ``url`` (also ``link``) and
+     - The neighboring pages in reading order, with ``url`` (also ``link``) and
        ``title``; none at either end.
    * - ``page``
      - ``page.meta`` contains ``date``, ``updated``, ``publish_at``, ``expires_at``, ``draft``, ``authors``, ``category``, ``tags``, ``series``, ``summary``, ``template``, ``pdf``, ``pdf_url`` and ``nosidebar``. Dated pages also provide ``page.word_count``, ``page.reading_minutes``, ``page.older``, ``page.newer`` and ``page.taxonomies``. Neighbors contain ``title``, ``url`` and ``date``, or are ``None`` at either end. Each enabled taxonomy maps to a list of ``name`` and ``url`` entries.
@@ -246,7 +246,7 @@ carry over.
    * - ``logo_url``, ``favicon_url``
      - ``html_logo`` and ``html_favicon`` below ``_static``; empty when unset.
    * - ``accent``
-     - ``html_theme_options.accent``, the theme's colour.
+     - ``html_theme_options.accent``, the theme's color.
    * - ``sourcelink_url``
      - The document's source below ``_sources``, when it is shown; otherwise empty.
    * - ``last_updated``
@@ -401,7 +401,7 @@ The default book, discussion, and article layouts share ``theme.typ``. It define
 
 ``guidedog quickstart`` copies ``theme.typ``, ``book.typ``, ``discussion.typ`` and ``article.typ``. ``guidedog dsc init`` copies the shared theme and discussion layout. All four files are embedded in the executable. Without a project layout, the builder composes a self-contained built-in template; it does not read a project theme. Untrusted builds use that same isolated fallback.
 
-We can edit ``theme.typ`` to change all three copied layouts together. Changes to files beneath ``_templates/``, including nested imported modules and assets, invalidate cached PDFs. The builder tracks directory membership as well, so adding or removing a module cannot leave a stale PDF. Template discovery stays inside the project's readable roots and permits at most 16,384 template inputs.
+We can edit ``theme.typ`` to change all three copied layouts together. Keep or update ``// guidedog: margin-x = 31mm`` in the leading 256 lines when changing horizontal page margins so native ``lilypond`` scores match the text column; see :doc:`topics/music`. Changes to files beneath ``_templates/``, including nested imported modules and assets, invalidate cached PDFs. The builder tracks directory membership as well, so adding or removing a module cannot leave a stale PDF. Template discovery stays inside the project's readable roots and permits at most 16,384 template inputs.
 
 To adopt a new default in an older project, we first keep a backup of our custom files. We can remove the copied layout to use the embedded version, or copy fresh files from a temporary ``guidedog quickstart`` project. We keep ``theme.typ`` beside the new layouts. A lone copied layout that imports a missing theme produces a Typst error. Guidedog never overwrites an existing customized template during a build.
 

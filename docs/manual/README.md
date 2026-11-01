@@ -63,7 +63,7 @@ The English build copies `_editions` into the site (`html_extra_path`), so build
 
 ## Repository copies
 
-`_static/repository/` holds byte-for-byte copies of repository files the manual offers as downloads (a documentation project publishes only its own files): `LICENSE`, `NOTICE`, the `guidedoc`, `gd-discussion` and GDS READMEs (`library-README.md`, `discussion-README.md`, `gds-README.md`), the plugin examples from `crates/gd-plugins/examples` (`build-plugin-badge.rs`, `build-plugin-main.rs`, `publisher.rs`), and the beta review. Copy the original over a copy when it changes.
+`_static/repository/` holds byte-for-byte copies of repository files the manual offers as downloads (a documentation project publishes only its own files): `LICENSE`, `COPYING`, `NOTICE`, the `guidedoc`, `gd-discussion` and GDS READMEs (`library-README.md`, `discussion-README.md`, `gds-README.md`), the plugin examples from `crates/gd-plugins/examples` (`build-plugin-badge.rs`, `build-plugin-main.rs`, `publisher.rs`), and `theme/` from `docs/manual/template/theme/`. Copy the original over a copy when it changes.
 
 ## License and credits
 

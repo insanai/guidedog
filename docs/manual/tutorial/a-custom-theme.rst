@@ -8,14 +8,15 @@ partial and macro, and a modular PDF template. It needs no plugin or compiler.
 1. Start with a real project
 ----------------------------
 
-Use Guidedog 1.0.0-beta.5 or newer. Run this from the directory that will contain ``orbit``:
+Use Guidedog 1.0.0-beta.9 or newer. Run this from the directory that will contain ``orbit``:
 
 .. code-block:: sh
 
    guidedog quickstart orbit -q -p "Orbit Field Notes" -a "Orbit contributors" -v 1.0
 
 Rename the generated ``orbit/_templates/book.typ`` to ``base-book.typ`` in the
-same directory. We also keep the generated ``theme.typ`` beside it. We keep the renamed book template: it supplies the tested page layout, cover,
+same directory. Keep the generated ``theme.typ`` beside it; the renamed book template
+supplies the tested page layout, cover,
 running heads, contents, code styles and optimized paragraph breaking.
 
 Download :download:`conf.toml <../_static/repository/theme/conf.toml>`,

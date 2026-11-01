@@ -148,8 +148,8 @@ Sources and reading
      - array
      - ``[]``
      - Folders, relative to the source folder, that ``include``, ``literalinclude``,
-       images, graphs, logos and other files may also be read from. Sphinx reads any
-       path; Guidedog reads only the source folder and these.
+       ``lilypond``, images, graphs, logos and other files may also be read from. Sphinx
+       reads any path; Guidedog reads only the source folder and these.
    * - ``templates_path``
      - array
      - ``[]``
@@ -594,7 +594,7 @@ PDF and Typst
    * - ``pdf_paper_size``
      - string
      - ``"a4"``
-     - The paper size (``"a4"``, ``"us-letter"``).
+     - The paper size (``"a4"``, ``"letter"``, or ``"us-letter"``).
    * - ``pdf_logo``
      - string
      - ``""``
@@ -811,7 +811,7 @@ Intersphinx
    python = ["https://docs.python.org/3/", ""]
    click = ["https://click.palletsprojects.com/", ["click.inv", ""]]
 
-Inventories are downloaded with the built-in HTTP client, which honours ``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing.
+Inventories are downloaded with the built-in HTTP client, which honors ``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing.
 See :doc:`../intersphinx`.
 
 Python autodoc
@@ -1572,10 +1572,27 @@ compilation is disabled and no Typst package is downloaded. Inline ``lilypond`` 
 Native music engraving
 ----------------------
 
-``lilypond_staff_size`` sets the default five-line staff height in points, from 10 through 40; the default is 18.
-``lilypond_html_width`` sets the wide HTML system measure in points; the default is 564.
-``lilypond_pdf_width`` sets the PDF system measure in points; when omitted, the selected template and ``pdf_paper_size`` determine it.
-Widths must be positive and no greater than 100,000 points.
+.. list-table::
+   :header-rows: 1
+   :widths: 28 16 14 42
+
+   * - Key
+     - Type
+     - Default
+     - Description
+   * - ``lilypond_staff_size``
+     - float
+     - ``18``
+     - Default five-line staff height in points, from ``10`` through ``40``.
+   * - ``lilypond_html_width``
+     - float
+     - ``564``
+     - Wide HTML system measure in points (positive, at most ``100000``).
+   * - ``lilypond_pdf_width``
+     - float
+     - derived
+     - PDF system measure in points (positive, at most ``100000``); when omitted, derived from ``pdf_paper_size`` and the selected template's horizontal margin.
+
 All three values are finite TOML numbers, and directive options override their project defaults.
 
 .. code-block:: toml
@@ -1584,8 +1601,8 @@ All three values are finite TOML numbers, and directive options override their p
    lilypond_html_width = 564
    lilypond_pdf_width = 419.53
 
-The PDF templates declare their horizontal margin with ``// guidedog: margin-x = 31mm`` after their first import.
-Without a declaration, we assume 25 millimetres on each side.
-The built-in book, article and discussion margins are 31, 30 and 25 millimetres respectively.
+The PDF templates declare their horizontal margin in their leading 256 lines with a comment such as ``// guidedog: margin-x = 31mm``.
+Without a declaration, we assume 25 millimeters on each side.
+The built-in book, article and discussion margins are 31, 30 and 25 millimeters respectively.
 Text fonts use ``pdf_fonts`` and ``pdf_font_paths``.
 See :doc:`../topics/music` for directive syntax, layout, trust rules and limits.

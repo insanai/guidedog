@@ -202,7 +202,7 @@ for the equivalent construct, so renderers and the project host need nothing new
 |                                            | MathBlock{Custom label}                    |
 +--------------------------------------------+--------------------------------------------+
 | ``\begin{env}`` (amsmath)                  | MathBlock{Class ``amsmath``; Custom        |
-|                                            | nowrap}, labelled ``amsmath-N`` when       |
+|                                            | nowrap}, labeled ``amsmath-N`` when        |
 |                                            | numbered                                   |
 +--------------------------------------------+--------------------------------------------+
 | ``[text](url)`` of an allowed scheme,      | Link{External}                             |

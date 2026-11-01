@@ -19,9 +19,10 @@ The engine (reusable)
 Supporting libraries, API generators, and plugin SDK (reusable)
    ``gd-report`` (Elm-style reports), ``gd-toml``, ``gd-json``, ``gd-sha``, ``gd-flate``,
    ``gd-jinja``, ``gd-highlight``, ``gd-gettext``, ``gd-graphdog``, and ``gd-inventory``;
-   the static source scanners and API generators ``gd-pyscan``, ``gd-autodoc``,
-   ``gd-odindoc``, and ``gd-rustdoc``; and ``gd-plugins`` (the plugin SDK and process
-   protocol). None of these crates depends on the engine.
+   the native music libraries ``gd-score``, ``gd-lilypond``, and ``gd-engrave`` (kept
+   ``publish = false`` during the beta); the static source scanners and API generators
+   ``gd-pyscan``, ``gd-autodoc``, ``gd-odindoc``, and ``gd-rustdoc``; and ``gd-plugins``
+   (the plugin SDK and process protocol). None of these crates depends on the engine.
 
 Internal host, project builder, and command line (``publish = false``)
    ``gd-host`` (confined files, coarse budget, atomic publication, workers),

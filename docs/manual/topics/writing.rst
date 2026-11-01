@@ -269,7 +269,7 @@ The ``csv-table`` directive constructs a table from comma-separated values:
 Images and figures
 ------------------
 
-We include illustrations, screenshots, and prebuilt diagrams with ``image`` and ``figure``. We can also author Graphviz and Typst drawings directly in markup with automatic HTML and PDF assets; see :doc:`diagrams`.
+We include illustrations, screenshots, and prebuilt diagrams with ``image`` and ``figure``. We can also author Graphviz and Typst drawings and LilyPond musical notation directly in markup with automatic HTML and PDF assets; see :doc:`diagrams` and :doc:`music`.
 
 For an existing image:
 

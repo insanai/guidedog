@@ -47,7 +47,7 @@ Every command accepts these:
      - Show the versions of Guidedog, the Guidedoc engine (and its document schema),
        the tree-sitter grammars, the Graphviz library (static or linked), and the Typst backend in use.
    * - ``--licenses``
-     - Show Guidedog's licence and the notices of the libraries built in.
+     - Show Guidedog's license and the notices of the libraries built in.
 
 Exit codes
 ----------
@@ -667,7 +667,7 @@ it never asks. A missing step then fails with a hint naming the command or optio
 it. ``--yes`` answers the confirmations. It never signs in or replaces other work on
 our behalf. Its options are those of ``guidedog pages init`` and ``publish`` (``--config``,
 ``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, ``--verbose``,
-``--dry-run``); ``guidedog publish pages --help`` lists them. guidedog builds the project itself, with its own engine and linked plugins; ``--guidedog=PATH`` builds with another program instead.
+``--dry-run``); ``guidedog publish pages --help`` lists them. Guidedog builds the project itself, with its own engine and linked plugins; ``--guidedog=PATH`` builds with another program instead.
 See :doc:`../howto/github-pages`.
 
 guidedog pages workflow
@@ -779,7 +779,7 @@ The program accepts every command and option on this page. A selected plugin ID 
 Commands plugins add
 ~~~~~~~~~~~~~~~~~~~~
 
-A plugin may add commands to guidedog, or targets to ``guidedog publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a plugin's:
+A plugin may add commands to ``guidedog``, or targets to ``guidedog publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a plugin's:
 
 .. code-block:: console
 
@@ -791,9 +791,9 @@ A plugin may add commands to guidedog, or targets to ``guidedog publish``. ``gui
        dsc                Keep and build a discussion catalog (dsc)
        ssg                Scaffold static sites, manage articles, and build mounted sites (ssg)
 
-guidedog looks for a word it does not know (or a ``publish`` target) among the commands of the linked plugins first, then among those of the registered programs, and runs the plugin that adds it. ``--help`` after such a command prints its help, made from what the plugin declares. A plugin cannot replace one of guidedog's commands, and the first plugin to add a name keeps it.
+Guidedog looks for a word it does not know (or a ``publish`` target) among the commands of the linked plugins first, then among those of the registered programs, and runs the plugin that adds it. ``--help`` after such a command prints its help, made from what the plugin declares. A plugin cannot replace one of Guidedog's commands, and the first plugin to add a name keeps it.
 
-A linked plugin's command runs inside guidedog. A registered program's command runs as that program, started on our terminal after its SHA-256 is checked: it may ask questions, and its exit status is the command's. When either asks for a build, guidedog builds the project. The program's commands are read when it is registered, so a new version is registered again, as always.
+A linked plugin's command runs inside ``guidedog``. A registered program's command runs as that program, started on our terminal after its SHA-256 is checked: it may ask questions, and its exit status is the command's. When either asks for a build, Guidedog builds the project. The program's commands are read when it is registered, so a new version is registered again, as always.
 
 guidedog pages
 --------------

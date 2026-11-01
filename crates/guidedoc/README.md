@@ -159,3 +159,4 @@ ctx.put_scratch(work);
 - **Objects** use a field-by-field little-endian format, version 2 (with each source's
   usage); objects of another version are rebuilt.
 - **Working storage in the workspace.** Each adapter keeps a struct of reusable `Vec`s and `String`s in the workspace's `Scratch` store, a pool per type, so its buffers survive between conversions instead of being freed and allocated again (see docs/manual/internals/memory.rst).
+- **Standalone unengraved scores.** `SCORE_FILE_ATTRIBUTE`, `Label::UnengravedScore` and `unengraved_score` provide a localized fallback notice when a file-backed `lilypond` directive is rendered outside a full project build.

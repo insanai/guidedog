@@ -64,10 +64,11 @@ its source span.
 ## Layout
 
 `dispatch.rs` (the exhaustive kind routing), `blocks.rs`, `structure.rs` (lists),
-`inlines.rs`, `tables.rs` (tables, figures, images), `notes.rs` (footnotes, citations,
-substitutions), `sphinx.rs`, `settings.rs` (standalone set rules), `escape.rs`,
-`math/` (translator, special commands and environments, the command table),
-`preamble.typ`.
+`inlines.rs`, `tables.rs` (tables, figures, images, breakable multi-system `music-parts`
+and scale-to-fit `music-fit` scores, `raster-density`, and `unengraved_score`),
+`notes.rs` (footnotes, citations, substitutions), `sphinx.rs`, `settings.rs` (standalone
+set rules), `escape.rs`, `math/` (translator, special commands and environments, the
+command table), `preamble.typ`.
 
 ## Design notes
 

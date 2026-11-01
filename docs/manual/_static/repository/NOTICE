@@ -43,6 +43,9 @@ Rust crates compiled into the programs (versions as in Cargo.lock):
   tree-sitter-rust 0.24: MIT License. `guidedog --licenses` prints these notices.
 - serde_json 1 and serde 1 (crates/gd-json): MIT License or Apache License 2.0, at
   the user's option.
+- ttf-parser 0.25.1 and rustybuzz 0.20.1 (crates/gd-engrave, OpenType font outlines
+  and text shaping for music engraving; also used by Typst): MIT License or Apache
+  License 2.0 (ttf-parser), and MIT License (rustybuzz).
 - ureq 2 (crates/gd-fetch, HTTP and HTTPS): MIT License or Apache License 2.0, at
   the user's option. Its TLS stack: rustls 0.23 (Apache License 2.0, ISC License or
   MIT License, at the user's option); rustls-webpki (ISC License); rustls-pki-types
@@ -105,5 +108,5 @@ Test data
 Test corpora are used as data only and are not part of the built programs:
 Docutils sources (crates/guidedoc-rst/tests/data/docutils: public domain, with one
 BSD 2-Clause file), the MyST parser's test data
-(crates/guidedoc-commonmark/tests/data/myst: MIT License; see LICENSE there), and the
+(crates/guidedoc-sphinx/tests/data/myst: MIT License; see LICENSE there), and the
 CommonMark specification 0.31.2 (crates/guidedoc-commonmark/tests/data: CC BY-SA 4.0).

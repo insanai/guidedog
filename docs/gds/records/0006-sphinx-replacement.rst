@@ -120,7 +120,7 @@ Command line
    guidedog build [BUILDER] [PROJECT] [options]       # make-mode: _build/BUILDER
    guidedog build -b BUILDER SOURCEDIR OUTPUTDIR [FILES] [options]   # sphinx-build form
    guidedog clean [PROJECT]
-   guidedog serve [PROJECT] [--port 8000]            # autobuild: rebuild on change
+   guidedog serve [PROJECT] [--host IP] [--port 8000] # autobuild: rebuild on change
    guidedog migrate [conf.py]                         # literal settings to conf.toml
 
 
@@ -595,7 +595,7 @@ The builder is split into crates by stage:
      - Project tables and cross-reference resolution without the AST, intersphinx,
        inventories, and the index data.
    * - ``gd-link``
-     - The link pass and page rendering, navigation, graphs.
+     - The link pass and page rendering, navigation, graphs, diagrams, music.
    * - ``gd-read``
      - Incremental reading and the autodoc, odindoc and rustdoc hosts.
    * - ``gd-intl``, ``gd-i18n``

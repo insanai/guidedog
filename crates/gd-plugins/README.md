@@ -48,8 +48,8 @@ A plugin crate implements `BuildPlugin` (or `Publisher`) once and exposes
 
 - **linked** into a custom `guidedog` binary (Rust has no stable ABI, so plugins are
   linked at build time; no dylib loading):
-  `gd_cli::run_with(Registry::new(vec![badge::plugin()])?)` (planned gd-cli entry,
-  `fn run_with(linked: Registry) -> ExitCode`);
+  `gd_cli::run_with(Registry::new(vec![badge::plugin()])?)` (`fn run_with(linked:
+  Registry) -> ExitCode`);
 - **served** as an installed program by the crate's tiny `main`:
   `fn main() -> ExitCode { gd_plugins::serve_plugin(&badge::plugin()) }`, then
   `guidedog plugin register ID /path/to/program`.

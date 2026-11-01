@@ -163,7 +163,7 @@ Build
 ``_build/pdf`` (there is no combined catalog PDF; ``index.rst``, ``registry.rst``, ``workflow.rst``, and ``bundle.rst`` serve HTML navigation and catalog validation). Naming a record writes only its PDF, to ``_build/selected``, and leaves
 the complete output alone. When ``pdf_downloads`` in ``[html_context]`` names the folder of the record PDFs, relative to the root of the HTML output (for example ``pdf_downloads = "pdf/"`` when a multi-project site mounts the PDFs there), each HTML record page under ``records/`` offers a link to download that record's PDF. Warnings stop the build.
 
-The build is guidedog's own: the same build as ``guidedog build``, with the catalog as the project. Graphviz, Typst, and the other tools it needs are guidedog's too. An older catalog of Typst records compiles each record with Typst; ``--typst=PATH`` names a Typst program to use instead of the embedded compiler.
+The build is Guidedog's own: the same build as ``guidedog build``, with the catalog as the project. Graphviz, Typst, and the other tools it needs are Guidedog's too. An older catalog of Typst records compiles each record with Typst; ``--typst=PATH`` names a Typst program to use instead of the embedded compiler.
 
 Discussion PDFs
 ~~~~~~~~~~~~~~~

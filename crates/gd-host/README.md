@@ -52,8 +52,10 @@ cancelled.
   the Ctrl+C probe and described reports. Callers own their bytes (`Vec<u8>`).
 - **The budget is coarse.** It counts what the host holds that it can size before
   allocating: sources, included files (`Files` charges its ledger, a refusal is
-  `ResourceStatus::Limit`), and the PDF, SVG or PNG outputs the embedded Typst and
-  Graphviz backends return (`Options::reserve`).
+  `ResourceStatus::Limit`), the PDF, SVG or PNG outputs the embedded Typst, Graphviz
+  and LilyPond (`gd-lilypond`, `gd-engrave`) backends allocate (`Options::reserve`), and
+  scoped music-engraving scratch buffers (`Options::scratch` via `Ledger::charge` /
+  `Ledger::discharge`).
   A conversion's own memory is bounded by `Limits`, which `limits_within` lowers to the
   budget. Units wait for each other without deadlock (`join` -> `Unit` guard); the
   policy is raise or stop, and hints name `--budget=N`. `Ledger` takes `&self` (atomics)

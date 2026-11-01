@@ -78,7 +78,7 @@ and the `browser hyphenation contract <https://developer.mozilla.org/en-US/docs/
 Change the design
 -----------------
 
-Edit ``_static/editorial.css`` for the documentation project's visual tokens. Edit ``_templates/layout.html`` for structure. Edit ``_templates/theme.typ`` for the PDF palette and typography. Edit ``_templates/book.typ`` for book structure, ``_templates/discussion.typ`` for discussion structure, and ``_templates/article.typ`` for standalone article PDFs. All three layouts wrap their content with the shared language-aware theme. Keep reading order, focus indicators, labels, and sufficient contrast intact.
+Edit ``_static/guidedog.css`` (or a project stylesheet listed in ``html_css_files``) for the documentation project's visual tokens. Edit ``_templates/layout.html`` for structure. Edit ``_templates/theme.typ`` for the PDF palette and typography. Edit ``_templates/book.typ`` for book structure, ``_templates/discussion.typ`` for discussion structure, and ``_templates/article.typ`` for standalone article PDFs. All three layouts wrap their content with the shared language-aware theme. Keep reading order, focus indicators, labels, and sufficient contrast intact.
 
 Build both targets after a change. Inspect a page with code, a table,
 a diagram, and an equation. An attractive cover is not proof that the rest of the book works.

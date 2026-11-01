@@ -69,7 +69,7 @@ copied as they are into ``_static`` in the site. ``html_static_path`` lists it, 
 in it. Content media belongs with the documents instead, so that moving a document
 with its media keeps its links working.
 
-Generated diagrams
-------------------
+Generated diagrams and scores
+-----------------------------
 
-We author Graphviz and Typst diagrams as source in the document. Guidedog creates their image assets during project builds and includes them in HTML and PDF. The :doc:`topics/diagrams` chapter covers both tools, captions, references and shared drawing libraries.
+We author Graphviz and Typst diagrams, as well as LilyPond musical scores, as source in the document. Guidedog creates their image assets during project builds and includes them in HTML and PDF; see :doc:`topics/diagrams` and :doc:`topics/music`.

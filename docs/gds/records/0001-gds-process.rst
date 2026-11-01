@@ -4,7 +4,7 @@
 :gds-type: Process
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-09-29
-:gds-updated: 2026-10-31
+:gds-updated: 2026-11-01
 :gds-discussion: Local review; no external discussion URL assigned
 :gds-labels: ["process"]
 
@@ -446,9 +446,10 @@ identify the owner of every resource boundary.
 
 A record's metadata, examples, and links are reviewed along with its specification.
 Diagram dependencies must be pinned if external packages are used. Graphviz directives
-render vector output without any downloaded package, and ``typst-diagram`` directives
+render vector output without any downloaded package, ``typst-diagram`` directives
 (GDS 0014) compile embedded Typst drawings with explicit version-pinned ``@preview``
-imports when packages are used. ``guidedog dsc check --render`` compiles the active records.
+imports when packages are used, and ``lilypond`` directives (GDS 0015) engrave musical
+scores natively in process with the embedded Bravura font. ``guidedog dsc check --render`` compiles the active records.
 ``tools/check`` checks implementation sources. Documentation prose is exempt
 from the source width and procedure limits.
 
@@ -485,7 +486,7 @@ order, and uses locked, recoverable transactions for promotion and state changes
 Integration tests cover legal and illegal transitions, reserved numbers, dry runs,
 concurrent edits, interrupted journals, and recovery that preserves later edits.
 The actual RST template is exercised by ``tests/integration/tests/discussions/manual.rs``.
-All fourteen active records are built separately as HTML and PDF.
+All fifteen active records are built separately as HTML and PDF.
 The external discussion venue remains unassigned; no external approval is claimed.
 GDS 0002 retains the broader CLI obligations not completed for the beta.
 

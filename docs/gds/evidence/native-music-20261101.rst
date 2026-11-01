@@ -212,7 +212,7 @@ The lesson identifies an excerpt and its open ending; it does not present four b
 Final follow-up qualification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The final implementation includes ``481e87b`` and the documentation clarifications in ``61e531c``.
+The final implementation includes ``8d77245`` (covering ``481e87b``, ``61e531c`` and the subsequent polyphonic column-shift, linear beam/line-breaking, and stacked-dynamics refinements) plus the ``1.0.0-beta.9`` localized key-signature and SVG ``<title>``/``<desc>`` accessibility updates.
 All of the following checks pass on Linux x86-64:
 
 * The locked workspace build with all targets and the complete workspace test run: 2,099 passing tests across 205 reports, including doctests.

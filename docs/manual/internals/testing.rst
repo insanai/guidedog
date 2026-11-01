@@ -1,7 +1,7 @@
 Testing
 =======
 
-Guidedog is tested at three levels. Each crate tests its own behaviour. The
+Guidedog is tested at three levels. Each crate tests its own behavior. The
 ``guidedog-tests`` crate (``tests/integration``) drives the built programs end to end
 and holds the repository-wide quality gates. The compiler, Clippy and
 ``tools/check`` enforce the rules that can be stated as lints and limits.
@@ -16,7 +16,7 @@ Running the tests
    cargo run -p check                      # function, file and line-length limits
    cargo xtask tables --check              # the data tables match tools/data
    cargo xtask check-music-font            # Bravura font and metadata digests
-   cargo run -p music-check                # 58-score music geometry, SVG and PNG corpus
+   cargo run -p music-check                # 63-score music geometry, SVG and PNG corpus
    cargo test -p guidedog-tests --test gates     # only the quality gates
    cargo test -p guidedog-tests --test projects  # one end-to-end group
 
@@ -58,7 +58,7 @@ Which crate tests what
      - Argument parsing, help, versions, conversions in process (``gd_cli::run_in``
        with captured streams), and the program's exit statuses.
    * - ``gd-discussion``, ``gd-plugins``, ``gd-pages``, ``gd-serve``, ...
-     - Their own behaviour, with fixture programs and local servers where a protocol is
+     - Their own behavior, with fixture programs and local servers where a protocol is
        involved.
    * - ``tests/integration``
      - The user's view: whole projects built by the real ``guidedog``, and the
@@ -79,7 +79,7 @@ Each test binary of ``tests/integration`` groups one area, and each module insid
      - The manual's tutorials and the theme tutorial built as written (HTML, every
        address scheme, PDF); publication (a failed or ``-W`` build publishes nothing, a
        file that becomes a folder, unusable cached objects, truthful summaries); builds
-       without Python; Sphinx project behaviour (numbering, templates, ``html_context``,
+       without Python; Sphinx project behavior (numbering, templates, ``html_context``,
        additional pages, indexes, intersphinx, math, canonical names); budgets and
        capacity limits.
    * - ``sphinx``

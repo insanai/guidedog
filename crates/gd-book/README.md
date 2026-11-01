@@ -31,9 +31,11 @@ Warnings: `build.untrusted` (project book template left out), Typst's own.
   translated renderer labels are a field, the highlighter
   (`guidedoc_defaults::TypstHighlighter`) is made per worker thread.
 - **Book inputs come from the pages**: a chapter's `Rendered::assets` list the files its
-  Typst reads (images, graphs) with book paths as targets; with the template and the
-  logo they are the files the book unit stamps (path, size, time). No build-wide state
-  records them.
+  Typst reads (images, graphs, `typst-diagram` and `lilypond` diagram/system assets) with
+  book paths as targets; with the template and the logo they are the files the book unit
+  stamps (path, size, time). No build-wide state records them. PDF music line width is
+  derived from `pdf_paper_size` and `// guidedog: margin-x = ...` template headers unless
+  `lilypond_pdf_width` overrides it.
 - **Parallel rendering**: chapters and text pages render on `-j` workers
   (`gd_host::run_workers`), each owning a `gd_link::Worker`; results are written in
   reading/docname order, so output does not depend on the thread count.

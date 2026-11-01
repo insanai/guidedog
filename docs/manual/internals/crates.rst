@@ -154,7 +154,7 @@ Plugin SDK
 
 .. graphviz::
    :class: graphviz-adaptive
-   :caption: The libraries, generators and SDK that need another crate.
+   :caption: The published reusable libraries, generators and SDK that need another crate.
    :alt: gd-toml, gd-json and gd-graphdog need gd-report. gd-inventory needs gd-flate and gd-report. gd-plugins needs gd-report, gd-json, gd-toml and gd-sha. gd-autodoc needs gd-pyscan. gd-json uses serde_json; gd-pyscan and gd-rustdoc use tree-sitter.
 
    digraph libraries {

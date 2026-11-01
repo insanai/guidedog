@@ -41,7 +41,7 @@ What we verified
      - The manual, the GDS catalog, the site and the Rust API build with ``-W`` and no warnings. ``cargo xtask build-site`` builds the site in 7 languages with its PDF books.
    * - Packages
      - Each of the 26 publishable crates carries its README, ``LICENSE`` and ``COPYING``. All 26 names are free on crates.io.
-   * - Licence
+   * - License
      - Guidedog is released under the LGPL-3.0-or-later. NOTICE grants an additional permission to link Graphviz, which is under the Eclipse Public License 2.0.
 
 What we measured

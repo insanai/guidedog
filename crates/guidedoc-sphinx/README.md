@@ -158,3 +158,5 @@ module; every message has a hint).
 - **Reads allocate by design**, so no test counts allocator calls here.
 
 `typst-diagram` is a Guidedog directive, also available through MyST directive fences. It accepts inline content or one file argument, with `format` (`svg` or `png`), `alt`, `caption`, `name`, `class` and `align` options. Parsing produces a Typst `CodeBlock` marked `typst-diagram=1`; it never invokes a compiler. `typst-source` records the import origin and `typst-file` retains a file argument for RST writing. The project link pass compiles the marked block, while ordinary Typst code remains literal.
+
+`lilypond` is a Guidedog directive and MyST fence for native music engraving. It accepts inline notation or one `.ly` file argument, with `format` (`svg` or `png`), `alt`, `caption`, `name`, `class`, `align`, `staff-size`, `width` and `justify` options. Parsing produces a `CodeBlock` marked `lilypond=1` with `lilypond-source`, `lilypond-map` and `SCORE_FILE_ATTRIBUTE` (`lilypond-file`) without invoking an engraver; the project link pass engraves it.

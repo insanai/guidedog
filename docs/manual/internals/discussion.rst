@@ -65,8 +65,8 @@ For an RST record, the PDF composer and link pass share ``gd_link::discussion_re
 Command line
 ------------
 
-The command line is a plugin of guidedog (``plugin()``, ID ``dsc``). It adds commands only, no build hooks: ``guidedog dsc init``, ``new``, ``list``, ``show``, ``promote``, ``state``, ``index``, ``check``, ``build``, ``recover`` and ``config``. Their declarations (summaries, help, options) let guidedog show the help and parse the command line around them; the plugin reads its own arguments. There is one command for every catalog, and what is particular to GDS (its prefix, workflow, labels and numbering) is in ``docs/gds/discussion.toml``, as for any catalog.
+The command line is a plugin of Guidedog (``plugin()``, ID ``dsc``). It adds commands only, no build hooks: ``guidedog dsc init``, ``new``, ``list``, ``show``, ``promote``, ``state``, ``index``, ``check``, ``build``, ``recover`` and ``config``. Their declarations (summaries, help, options) let ``guidedog`` show the help and parse the command line around them; the plugin reads its own arguments. There is one command for every catalog, and what is particular to GDS (its prefix, workflow, labels and numbering) is in ``docs/gds/discussion.toml``, as for any catalog.
 
 The arguments are parsed by hand, with Elm-style usage reports: unknown options, colors, states, labels and records get a "Did you mean" suggestion from ``gd_report::suggest``. Reports are rendered by ``gd_report::render_text`` (or ``render_json`` with ``--diagnostics=json``) on the host's error stream; text from records is escaped with ``escape_terminal``. The tests run the commands through the plugin with a host over buffers.
 
-The commands have no crash reporter of their own: guidedog's crash report covers them.
+The commands have no crash reporter of their own: Guidedog's crash report covers them.

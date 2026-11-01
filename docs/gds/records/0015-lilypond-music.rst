@@ -181,10 +181,10 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - ``\clef`` (``treble``, ``bass``, ``alto``, ``tenor``, ``soprano``, ``treble_8``, ``bass_8``), ``\key`` with ``\major``, ``\minor`` and the church modes, ``\time`` with simple and compound meters and beat lists (``\time 2,2,3 7/8``), ``\numericTimeSignature``, ``\partial`` at the start, bar checks ``|``, ``\bar`` with ``|``, ``||``, ``|.``, ``.|``, ``.|:``, ``:|.``, ``:..:``
      - ``\time`` off a bar line, ``\partial`` after the start, and different meters on different staves are refused.
    * - 1
-     - Ties ``~``, slurs ``( )``, manual beams ``[ ]``, ``\autoBeamOff``/``On``, ``\tuplet n/m``, ``\times m/n``, ``\stemUp``/``Down``/``Neutral``
+     - Ties ``~``, slurs ``( )``, manual beams ``[ ]``, ``\autoBeamOff``/``On``, ``\tuplet n/m``, ``\times m/n``, ``\stemUp``/``Down``/``Neutral``, ``\slurUp``/``Down``/``Neutral``, ``\phrasingSlurUp``/``Down``/``Neutral``, ``\tieUp``/``Down``/``Neutral``, ``\dynamicUp``/``Down``/``Neutral``
      -
    * - 1
-     - Articulations ``-. -- -> -^ -_ -! -+``, the named forms (``\staccato``, ``\accent``, ``\tenuto``, ``\marcato``, ``\fermata``, ``\trill``, ``\turn``, ``\mordent``, ``\prall``), fingerings ``-1`` to ``-5``, direction prefixes ``^`` and ``_``
+     - Articulations ``-. -- -> -^ -_ -! -+``, the named forms (``\staccato``, ``\staccatissimo``, ``\portato``, ``\accent``, ``\tenuto``, ``\marcato``, ``\stopped``, ``\open``, ``\flageolet``, ``\thumb``, ``\fermata``, ``\trill``, ``\turn``, ``\mordent``, ``\prall``), fingerings ``-1`` to ``-5``, direction prefixes ``^`` and ``_``
      -
    * - 1
      - Dynamics ``\pppp`` to ``\ffff``, ``\mp``, ``\mf``, ``\fp``, ``\sf``, ``\sfz``, ``\rfz``; hairpins ``\<``, ``\>``, ``\!``
@@ -223,7 +223,7 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - ``\tempo``, ``\mark \default``, ``\mark "text"`` and ``\mark \markup ...``
      -
    * - 3
-     - ``\new ChordNames`` with ``\chordmode`` chord names in common jazz spelling
+     - ``\chords`` and ``\new ChordNames`` with ``\chordmode`` chord names in common jazz spelling
      -
 
 Scheme is accepted only as a literal value where the profile needs one: ``##t``, ``##f``, a number ``#3``, a string ``#"text"`` and a symbol ``#'up``.
@@ -318,7 +318,8 @@ It is flat data: vectors of events and spanners indexed by newtype identifiers, 
    }
 
    pub struct Event { pub voice: VoiceId, pub at: Moment, pub kind: EventKind, pub span: Span,
-                      pub marks: Vec<Annotation> }
+                      pub marks: Vec<Annotation>, pub voice_style: Option<VoiceStyle>,
+                      pub column_shift: Option<u8> }
    pub enum EventKind { Chord(Chord), Rest(Duration), Skip(Duration), MeasureRest(Duration),
                         Clef(Clef), Key(Key), Time(Meter), Bar(BarStyle), Break(BreakRule),
                         ChordName(String, Duration) }
@@ -388,6 +389,7 @@ One engraver serves one thread.
        pub regular: Vec<FaceData<'f>>,
        pub bold: Vec<FaceData<'f>>,
        pub italic: Vec<FaceData<'f>>,
+       pub bold_italic: Vec<FaceData<'f>>,
    }
    /// One selected face, borrowing the original bytes; index 0 is the common case.
    pub struct FaceData<'f> { pub data: &'f [u8], pub index: u32,
@@ -397,6 +399,11 @@ One engraver serves one thread.
    pub fn load_fonts<'f>(options: &FontOptions<'f>) -> Result<Fonts<'f>, Error>;
 
    pub type Reserve<'a> = dyn FnMut(usize) -> bool + 'a;
+   #[derive(Default, Clone, Copy)]
+   pub struct Scratch<'a> {
+       pub reserve: Option<&'a (dyn Fn(usize) -> bool + 'a)>,
+       pub release: Option<&'a (dyn Fn(usize) + 'a)>,
+   }
 
    pub struct Options<'a> {
        /// The measure: the width of a system, in points.
@@ -408,6 +415,8 @@ One engraver serves one thread.
        pub limits: Limits,
        /// Shown each buffer's growth in bytes before it happens; `false` refuses it.
        pub reserve: Option<&'a mut Reserve<'a>>,
+       /// Scoped temporary layout buffers, reserved before allocation and released on drop.
+       pub scratch: Scratch<'a>,
    }
    #[derive(Default)]
    pub enum Justify { #[default] Auto, All, None }
@@ -478,8 +487,8 @@ The source limit counts repeated expansions, not only distinct files.
 Diagnostics use a retained per-line source map when indentation differs or tabs occur; a single indentation count is sufficient only for uniformly indented bodies.
 
 A directive's body is not the RST file: the parser strips its indentation.
-``guidedoc-sphinx`` therefore records, beside the body, the line on which it starts and the width of the indentation it removed (custom attributes ``lilypond-line`` and ``lilypond-indent``, also for MyST fences).
-``gd-link`` maps a position in the body to the document by adding the line offset and the indentation, so a report's line, column and caret are exact in the RST or Markdown file.
+``guidedoc-sphinx`` therefore records, beside the body, a per-line source offset map in the custom attribute ``lilypond-map`` (also for MyST fences).
+``gd-link`` maps a position in the body to the document through ``lilypond-map``, so a report's line, column and caret are exact in the RST or Markdown file.
 A position in an included ``.ly`` file is reported in that file.
 
 The adapters stay small, but they touch the same places ``typst-diagram`` touches:
@@ -494,20 +503,20 @@ The adapters stay small, but they touch the same places ``typst-diagram`` touche
 * ``gd-typst``: one function that rasterizes an SVG at a given resolution, and one that returns the text faces its font policy selects.
 * ``gd-theme`` and ``gd-i18n``: the narrow-screen rules and the words of generated descriptions.
 
-The planned modules are:
+The implemented modules are:
 
-.. list-table:: Planned modules
+.. list-table:: Implemented modules
    :header-rows: 1
    :widths: 22 78
 
    * - Crate
      - Modules
    * - ``gd-score``
-     - ``ratio``, ``moment``, ``pitch``, ``duration``, ``markup``, ``score``, ``check``, ``error``
+     - ``ratio``, ``pitch``, ``duration``, ``markup``, ``score`` (including ``Moment``), ``check``, ``error``
    * - ``gd-lilypond``
-     - ``lexer``, ``syntax``, ``parser``, ``include``, ``names`` (note-name languages), ``commands`` (the command table), ``markup``, ``notes``, ``contexts``, ``lyrics``, ``repeats``, ``ornaments``, ``interpret``, ``files``, ``limits``, ``error``
+     - ``lexer``, ``cursor``, ``syntax``, ``parser``, ``names`` (note-name languages), ``commands`` (the command table), ``bindings``, ``markup``, ``notation``, ``notes``, ``contexts``, ``lyrics``, ``repeats``, ``ornaments``, ``interpret``, ``finish``, ``files``, ``memory``, ``limits``, ``error``
    * - ``gd-engrave``
-     - ``columns``, ``spacing`` (springs, rods, solver), ``breaking``, ``accidentals``, ``beaming`` (groups), ``stems``, ``beams`` (quanting), ``heads``, ``dots``, ``voices`` (note-column shifts, rests), ``curves`` (ties, slurs), ``skyline``, ``vertical``, ``fonts`` (SMuFL tables, text faces), ``text``, ``markup``, ``drawing``, ``svg``, ``math`` (deterministic functions), ``limits``, ``error``
+     - ``prepare``, ``columns``, ``spacing`` (springs, rods, solver), ``rods``, ``breaking``, ``layout``, ``geometry``, ``accidentals``, ``courtesy``, ``beaming`` (groups), ``beams`` (quanting), ``beam_segments``, ``heads``, ``dots``, ``rests``, ``multirests``, ``voices`` (note-column shifts, rests), ``curves``, ``bows``, ``hairpins``, ``tuplets``, ``decorations``, ``marks``, ``signatures``, ``bars``, ``groups``, ``labels``, ``lyrics``, ``footprints``, ``skyline``, ``vertical``, ``fonts`` (SMuFL tables, text faces), ``text``, ``markup``, ``drawing``, ``svg``, ``math``, ``memory``, ``scratch``, ``limits``, ``error``
 
 Interpretation
 ~~~~~~~~~~~~~~
@@ -840,7 +849,7 @@ A test checks that every glyph the engraver names exists in the tables, and ``ca
 SMuFL units are staff spaces, so the tables need no scaling until the drawing is written.
 
 Text (lyrics, instrument names, numbers in text, text scripts and markup) is shaped and turned into outlines in the engraver.
-Its faces come from the project's existing font policy, ``pdf_fonts`` and ``pdf_font_paths``, through ``gd-typst``, in regular, bold and italic.
+Its faces come from the project's existing font policy, ``pdf_fonts`` and ``pdf_font_paths``, through ``gd-typst``, in regular, bold, italic and bold-italic.
 With ``pdf_fonts = "embedded"`` the default is the Typst compiler's embedded serif face, so the drawing needs no system font.
 We shape with ``rustybuzz`` and read outlines with ``ttf-parser``.
 In the default build both are already compiled into Guidedog as dependencies of the embedded Typst compiler; we declare them once in ``[workspace.dependencies]``, pinned to the versions Typst uses, with a comment giving that reason, as the workspace rules require.
@@ -942,7 +951,7 @@ In the examples below, the directive body is indented by three spaces.
    Hint: Check the durations in measure 2: a 4/4 measure holds four quarters, and
    these hold three. Engraving continues.
 
-The stock codes are ``lilypond.syntax``, ``lilypond.empty``, ``lilypond.unknown-command``, ``lilypond.unsupported``, ``lilypond.pitch``, ``lilypond.duration``, ``lilypond.bar-check`` (a warning), ``lilypond.lyrics`` (a warning), ``lilypond.include``, ``lilypond.limit``, ``score.time-overflow``, ``engrave.overfull`` (a warning: one measure is wider than the measure and overflows it), ``engrave.font`` and ``engrave.limit``.
+The stock codes are ``lilypond.syntax``, ``lilypond.empty``, ``lilypond.unknown-command``, ``lilypond.unsupported``, ``lilypond.pitch``, ``lilypond.duration``, ``lilypond.bar-check`` (a warning), ``lilypond.lyrics`` (a warning), ``lilypond.include``, ``lilypond.limit``, ``score.invariant``, ``score.time-overflow``, ``engrave.overfull`` (a warning: one measure is wider than the measure and overflows it), ``engrave.font`` and ``engrave.limit``.
 The build's warning for a drawing not drawn is ``build.lilypond`` with the title "MUSIC NOT ENGRAVED".
 Suggestions use ``gd_report::suggest`` over the command table and the note names of the current language.
 
@@ -969,7 +978,7 @@ The parser is recursive descent with a depth counter; variable expansion and (ph
    * - Expanded reader allocation allowance
      - 64 MiB, including copied text and notation state
    * - Staves; voices per staff; notes per chord
-     - 24; 4; 16
+     - 32; 4 simultaneous voices per staff (64 voice records); 16
    * - Pitch range
      - octaves -3 to 6 in octave marks (about 25 ledger lines at most)
    * - Measures per line; systems per drawing

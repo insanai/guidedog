@@ -20,7 +20,7 @@ let text = run.process_source(&source, &config.language, &text)?;
 |---|---|
 | `BuilderKind` (`name`, `from_name`, `is_html`, `format`), `OutputFormat`, `BuildOptions`, `Jobs`, `BuildResult`, `BuildStage`, `BUILD_BUDGET` | build vocabulary |
 | `SourceFile { docname, path, relative, kind, generated: Option<Generated> }`, `SourceKind`, `discover`, `glob_match`, `is_excluded`, `contents_root`, `with_generated` | discovery |
-| `Environment { settings, docs, ineligible_docs }`, `DocInfo` and its infos, `DocId(u32)`, `ENVIRONMENT_VERSION` (30), `load_environment`, `dependencies_changed` | the environment |
+| `Environment { settings, docs, ineligible_docs }`, `DocInfo` and its infos, `DocId(u32)`, `ENVIRONMENT_VERSION` (31), `load_environment`, `dependencies_changed` | the environment |
 | `SourceLocation { domain, module, defined_in, fullname, anchor, path, line, end_line }` (`DocInfo::locations`) | where a described Python object is defined (viewcode, linkcode) |
 | `normalize_name`, `option_key` | the keys labels, terms and options are filed under |
 | `ObjectStore` (`save_object`, `load_object`, `save_search`, `load_bytes`, `sweep`), `CachedFile` | content-addressed cache |

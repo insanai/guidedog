@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:43+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -643,7 +643,7 @@ msgid "A = s^2"
 msgstr ""
 
 #: ../../topics/mathematics.rst:32
-msgid "The relation is :eq:`area-square`. Guidedog gives a labelled equation a stable target. The HTML builder supplies MathJax markup. The PDF renderer translates the supported LaTeX subset to Typst mathematics. An unsupported PDF command is reported. Arbitrary LaTeX packages are not evaluated."
+msgid "The relation is :eq:`area-square`. Guidedog gives a labeled equation a stable target. The HTML builder supplies MathJax markup. The PDF renderer translates the supported LaTeX subset to Typst mathematics. An unsupported PDF command is reported. Arbitrary LaTeX packages are not evaluated."
 msgstr ""
 
 #: ../../topics/mathematics.rst:38
@@ -811,7 +811,7 @@ msgid "Expression"
 msgstr ""
 
 #: ../../topics/music.rst:153
-msgid "Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through ``\\ffff``, ``\\<``, ``\\>``, ``\\!``, literal scripts and structured ``\\markup``."
+msgid "Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through ``\\ffff``, ``\\<``, ``\\>``, ``\\!``, slur/tie/dynamic direction commands, literal scripts and structured ``\\markup``."
 msgstr ""
 
 #: ../../topics/music.rst:154
@@ -843,7 +843,7 @@ msgid "Labels and breaks"
 msgstr ""
 
 #: ../../topics/music.rst:161
-msgid "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames \\chordmode``, ``\\break``, ``\\noBreak``."
+msgid "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\chords``, ``\\new ChordNames \\chordmode``, ``\\break``, ``\\noBreak``."
 msgstr ""
 
 #: ../../topics/music.rst:163
@@ -887,7 +887,7 @@ msgid "Lists and columns"
 msgstr ""
 
 #: ../../topics/music.rst:208
-msgid "``\\line``, ``\\concat``, ``\\column``, ``\\center-column``, ``\\right-column``, ``\\dir-column`` and ``\\var`` markup references."
+msgid "``\\line``, ``\\concat``, ``\\column``, ``\\left-column``, ``\\center-column``, ``\\right-column``, ``\\dir-column`` and markup variable references (such as ``\\codaMark``)."
 msgstr ""
 
 #: ../../topics/music.rst:209
@@ -903,7 +903,7 @@ msgid "Size"
 msgstr ""
 
 #: ../../topics/music.rst:212
-msgid "``\\teeny``, ``\\tiny``, ``\\small``, ``\\normalsize``, ``\\large``, ``\\huge``, ``\\fontsize #n`` and ``\\abs-fontsize #pt``."
+msgid "``\\teeny``, ``\\tiny``, ``\\small``, ``\\smaller``, ``\\large``, ``\\larger``, ``\\huge``, ``\\fontsize #n`` and ``\\abs-fontsize #pt``."
 msgstr ""
 
 #: ../../topics/music.rst:213
@@ -931,7 +931,7 @@ msgid "Combine staves and lyrics"
 msgstr ""
 
 #: ../../topics/music.rst:232
-msgid "We use simultaneous contexts for a score with several staves. Instrument names use ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` block. We separate up to four voices on one staff with ``\\\\`` inside ``<< ... >>``. Voices one and three have upward stems; voices two and four have downward stems. ``\\voiceOne``, ``\\voiceTwo``, ``\\voiceThree`` and ``\\voiceFour`` select those policies explicitly, and ``\\oneVoice`` restores automatic single-voice directions. An inner voice beside another voice with the same stem direction stands at least half a notehead aside, and further when needed. Equal rests share a glyph only where no other voice sounds. ``\\shiftOn``, ``\\shiftOnn`` and ``\\shiftOnnn`` move a voice's note columns one, two or three levels aside, and ``\\shiftOff`` sets the level to zero; a voice command restores its own level. Among voices with one stem direction, each lower level puts a column another half notehead aside: right for upward stems, left for downward ones. Dynamics stay below the staff in every voice, as in LilyPond; when two voices place signs at one moment, the later one stacks further out. At most four voices may sound at once on a staff; a fifth is refused. Lyrics attach to a named voice, and separate ``\\lyricsto`` expressions make separate verses."
+msgid "We use simultaneous contexts for a score with several staves. Staves and staff groups accept ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` block, and staves also accept ``\\set Staff.instrumentName`` and ``\\set Staff.shortInstrumentName``. We separate up to four voices on one staff with ``\\\\`` inside ``<< ... >>``. Voices one and three have upward stems; voices two and four have downward stems. ``\\voiceOne``, ``\\voiceTwo``, ``\\voiceThree`` and ``\\voiceFour`` select those policies explicitly, and ``\\oneVoice`` restores automatic single-voice directions. An inner voice beside another voice with the same stem direction stands at least half a notehead aside, and further when needed. Equal rests share a glyph only where no other voice sounds. ``\\shiftOn``, ``\\shiftOnn`` and ``\\shiftOnnn`` move a voice's note columns one, two or three levels aside, and ``\\shiftOff`` sets the level to zero; a voice command restores its own level. Among voices with one stem direction, each lower level puts a column another half notehead aside: right for upward stems, left for downward ones. Dynamics stay below the staff by default in every voice, as in LilyPond (unless ``\\dynamicUp`` or ``^`` places them above); when two voices place signs on the same side at one moment, the later one stacks further out. At most four voices may sound at once on a staff; a fifth is refused. Lyrics attach to a named voice, and separate ``\\lyricsto`` expressions make separate verses."
 msgstr ""
 
 #: ../../topics/music.rst:245
@@ -1035,7 +1035,7 @@ msgid "When a drawing is wider than 225 points, HTML also receives a narrow edit
 msgstr ""
 
 #: ../../topics/music.rst:322
-msgid "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; any other value renders as A4) and the selected template's horizontal margin, then places music at its natural size. Built-in templates declare their horizontal margin in their leading 256 lines with a comment such as ``// guidedog: margin-x = 31mm``. A custom template without the declaration uses a 25 millimetre margin assumption. ``lilypond_pdf_width`` overrides the derived measure. Oversized music scales to fit with a build warning. A score with several systems can break between systems across PDF pages, with its caption after the last system."
+msgid "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; any other value renders as A4) and the selected template's horizontal margin, then places music at its natural size. Built-in templates declare their horizontal margin in their leading 256 lines with a comment such as ``// guidedog: margin-x = 31mm``. A custom template without the declaration uses a 25 millimeter margin assumption. ``lilypond_pdf_width`` overrides the derived measure. Oversized music scales to fit with a build warning. A score with several systems can break between systems across PDF pages, with its caption after the last system."
 msgstr ""
 
 #: ../../topics/music.rst:329
@@ -1175,7 +1175,7 @@ msgid "Change the design"
 msgstr ""
 
 #: ../../topics/typography.rst:81
-msgid "Edit ``_static/editorial.css`` for the documentation project's visual tokens. Edit ``_templates/layout.html`` for structure. Edit ``_templates/theme.typ`` for the PDF palette and typography. Edit ``_templates/book.typ`` for book structure, ``_templates/discussion.typ`` for discussion structure, and ``_templates/article.typ`` for standalone article PDFs. All three layouts wrap their content with the shared language-aware theme. Keep reading order, focus indicators, labels, and sufficient contrast intact."
+msgid "Edit ``_static/guidedog.css`` (or a project stylesheet listed in ``html_css_files``) for the documentation project's visual tokens. Edit ``_templates/layout.html`` for structure. Edit ``_templates/theme.typ`` for the PDF palette and typography. Edit ``_templates/book.typ`` for book structure, ``_templates/discussion.typ`` for discussion structure, and ``_templates/article.typ`` for standalone article PDFs. All three layouts wrap their content with the shared language-aware theme. Keep reading order, focus indicators, labels, and sufficient contrast intact."
 msgstr ""
 
 #: ../../topics/typography.rst:83
@@ -1425,7 +1425,7 @@ msgid "Images and figures"
 msgstr ""
 
 #: ../../topics/writing.rst:272
-msgid "We include illustrations, screenshots, and prebuilt diagrams with ``image`` and ``figure``. We can also author Graphviz and Typst drawings directly in markup with automatic HTML and PDF assets; see :doc:`diagrams`."
+msgid "We include illustrations, screenshots, and prebuilt diagrams with ``image`` and ``figure``. We can also author Graphviz and Typst drawings and LilyPond musical notation directly in markup with automatic HTML and PDF assets; see :doc:`diagrams` and :doc:`music`."
 msgstr ""
 
 #: ../../topics/writing.rst:274

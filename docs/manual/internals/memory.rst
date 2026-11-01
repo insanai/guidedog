@@ -17,7 +17,7 @@ conversion, and a coarse budget for what the host holds.
            fontname="Helvetica", fontcolor="#16382f", fontsize=12, margin="0.18,0.1"];
      edge [color="#216553", fontname="Helvetica", fontcolor="#16382f", fontsize=10, arrowsize=0.7];
      budget [label=<<B>Host budget</B><BR/><FONT POINT-SIZE="11">--budget; reserve before reading</FONT>>];
-     held [label=<<B>What the host holds</B><BR/><FONT POINT-SIZE="11">Sources, includes, diagrams, PDF</FONT>>];
+     held [label=<<B>What the host holds</B><BR/><FONT POINT-SIZE="11">Sources, includes, diagrams, music, PDF</FONT>>];
      limits [label=<<B>Limits</B><BR/><FONT POINT-SIZE="11">Nodes, text, output, depth, stack</FONT>>];
      work [class="gd-output", shape=cylinder, fillcolor="#eef4fa",
            label=<<B>Workspace per worker</B><BR/><FONT POINT-SIZE="11">Vec and String buffers, reused</FONT>>];
@@ -98,7 +98,7 @@ The budget is coarse
 --------------------
 
 ``gd_host::Budget`` counts what the host holds that it can size before allocating:
-sources, included files, compiled diagram images, and the PDF the embedded Typst
+sources, included files, compiled diagram and musical score images (with their layout scratch), and the PDF the embedded Typst
 compiler returns. A ``Ledger``
 reserves bytes before the read and releases its charges when it is dropped, so a charge
 cannot outlive the storage it pays for. Rendering units that wait for room join the

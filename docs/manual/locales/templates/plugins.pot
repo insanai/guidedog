@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 01:54+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -233,11 +233,11 @@ msgid "A remote acceptance is not a live deployment. ``Accepted`` and ``Pending`
 msgstr ""
 
 #: ../../plugins.rst:338
-msgid "10. Add a command to guidedog"
+msgid "10. Add a command to Guidedog"
 msgstr ""
 
 #: ../../plugins.rst:341
-msgid "A plugin can also add commands to guidedog's own command line. The badge adds one:"
+msgid "A plugin can also add commands to ``guidedog``'s own command line. The badge adds one:"
 msgstr ""
 
 #: ../../plugins.rst:348
@@ -245,15 +245,15 @@ msgid "The GitHub Pages, discussion, and static site plugins work the same way: 
 msgstr ""
 
 #: ../../plugins.rst:366
-msgid "The words of the name decide where the command appears. ``badge preview`` is a new command; ``publish NAME`` is a target of ``guidedog publish``. A plugin cannot replace a command guidedog has. The summary, help and options we declare become the command's ``--help`` and its line under PLUGIN COMMANDS in ``guidedog --help``, and a mistyped name gets a \"Did you mean\" that knows our command."
+msgid "The words of the name decide where the command appears. ``badge preview`` is a new command; ``publish NAME`` is a target of ``guidedog publish``. A plugin cannot replace a command ``guidedog`` has. The summary, help and options we declare become the command's ``--help`` and its line under PLUGIN COMMANDS in ``guidedog --help``, and a mistyped name gets a \"Did you mean\" that knows our command."
 msgstr ""
 
 #: ../../plugins.rst:368
-msgid "The ``CommandContext`` is everything guidedog lends the command. ``print`` and ``eprint`` write to its output. ``ask`` and ``confirm`` put a question to the person, and answer nothing when nobody can be asked (a script, a CI job), so a command never hangs. ``build_project`` has guidedog build a project, HTML or PDF, into a folder we name, with its engine and its linked plugins. ``dir`` is the folder the command was started in, and ``config`` the plugin's configuration file when the project's ``plugin_configs`` names one. We return the exit status, or a ``Problem`` with a hint, which guidedog reports."
+msgid "The ``CommandContext`` is everything Guidedog lends the command. ``print`` and ``eprint`` write to its output. ``ask`` and ``confirm`` put a question to the person, and answer nothing when nobody can be asked (a script, a CI job), so a command never hangs. ``build_project`` has Guidedog build a project, HTML or PDF, into a folder we name, with its engine and its linked plugins. ``dir`` is the folder the command was started in, and ``config`` the plugin's configuration file when the project's ``plugin_configs`` names one. We return the exit status, or a ``Problem`` with a hint, which Guidedog reports."
 msgstr ""
 
 #: ../../plugins.rst:370
-msgid "The same command works in both deployments. Linked, it runs inside guidedog. Registered, guidedog starts our program with ``--guidedog-command`` and a request, on the same terminal, so questions and progress reach the person directly; ``serve_plugin`` answers that request without any code of ours. ``guidedog plugin inspect ID`` lists the commands a plugin adds."
+msgid "The same command works in both deployments. Linked, it runs inside ``guidedog``. Registered, ``guidedog`` starts our program with ``--guidedog-command`` and a request, on the same terminal, so questions and progress reach the person directly; ``serve_plugin`` answers that request without any code of ours. ``guidedog plugin inspect ID`` lists the commands a plugin adds."
 msgstr ""
 
 #: ../../plugins.rst:372

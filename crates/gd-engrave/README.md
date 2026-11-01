@@ -16,7 +16,7 @@ The display list retains staff, measure and semantic mark identities for export 
 
 Bravura 1.482 and its SMuFL metadata are embedded unmodified from `third_party/bravura`.
 The build checks their recorded digests.
-Text faces come from the caller, with explicit regular, bold and italic fallback lists.
+Text faces come from the caller, with explicit regular, bold, italic and bold-italic fallback lists.
 
 The corpus tool (`cargo run -p music-check`) checks 63 outlined SVGs, tolerant PNG pixels, actual role-ink contacts, primary beam quants and tie apexes across standard and compact staff sizes.
 The reader and engraver have separate finite work limits; text outline growth, temporary shaping and retained worker capacities consult the caller's reservation before allocation.
@@ -27,5 +27,5 @@ Spacing sorts, line-breaking choices, candidate rods and live skyline replacemen
 The host connects these callbacks to `Ledger::charge` and `Ledger::discharge`.
 Retained workspace capacities are included for every engraving because a reused worker can receive a fresh ledger.
 
-Three- and four-voice columns use a bounded placement against the other heads, stems and flags, with rightward shifts for voice three and leftward shifts for voice four.
+Three- and four-voice columns use a bounded placement against the other heads, stems and flags, with rightward shifts for voice three, leftward shifts for voice four, and explicit `\shiftOn`, `\shiftOnn`, `\shiftOnnn` and `\shiftOff` column-shift levels (`Event::column_shift`). Dynamics and outside marks placed on the same beat by multiple voices stack outward without overlap.
 The corpus includes dense unisons and seconds, mixed rests, named voices with lyrics and system-crossing ties, and a four-bar Beethoven teaching excerpt.

@@ -366,13 +366,13 @@ Resolution
    * - auto-numbered footnotes get the lowest numbers not used as names, in order
      - done
      - ``footnotes_are_numbered_and_referenced``
-   * - ``[#label]_`` refers to a labelled auto footnote; ``[#]_`` to unlabelled ones in order
+   * - ``[#label]_`` refers to a labeled auto footnote; ``[#]_`` to unlabeled ones in order
      - done
      - ``footnotes_are_numbered_and_referenced``
    * - ``[*]_`` refers to symbol footnotes in order; value = 1-based symbol ordinal
      - done
      - ``footnotes_are_numbered_and_referenced``, ``footnote_symbols_repeat``
-   * - manual ``[1]_`` refers to the footnote labelled 1
+   * - manual ``[1]_`` refers to the footnote labeled 1
      - done
      - ``footnotes_are_numbered_and_referenced``
    * - too many ``[#]_`` / ``[*]_``: error ``rst.footnote.references``; unknown labels unresolved
@@ -414,9 +414,9 @@ Resolution
    * - duplicate explicit targets: both names unusable, warning ``rst.target.duplicate``; names from embedded URIs only noted; indirect targets and aliases to one name agree
      - done
      - ``duplicate_explicit_targets``, ``duplicate_targets_quote_their_first_lines``; conformance ``extra/duplicate-targets.rst``
-   * - numbers of unlabelled auto footnotes as names (:literal:`\`2\`_`, and ``[2]_`` finds such a footnote, or any target named 2)
+   * - numbers of unlabeled auto footnotes as names (:literal:`\`2\`_`, and ``[2]_`` finds such a footnote, or any target named 2)
      - done
-     - ``unlabelled_footnote_numbers_are_names``; conformance ``data/footnote-targets.rst``
+     - ``unlabeled_footnote_numbers_are_names``; conformance ``data/footnote-targets.rst``
    * - chained targets: an internal target followed by another target takes its destination; before a comment, substitution definition, footnote, or citation it points at itself
      - done
      - ``chained_target_takes_the_uri``, ``external_and_internal_targets``; conformance ``extra/target-before-comment.rst``

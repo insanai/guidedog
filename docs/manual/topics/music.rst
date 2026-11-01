@@ -150,7 +150,7 @@ A tilde ties equal pitches; parentheses make slurs, and ``\(`` with ``\)`` makes
    * - Rhythm and stems
      - ``\tuplet 3/2``, ``\times 2/3``, manual ``[`` and ``]`` beams, ``\autoBeamOn``, ``\autoBeamOff``, ``\stemUp``, ``\stemDown``, ``\stemNeutral``.
    * - Expression
-     - Articulations, fingerings 1 through 5, dynamics from ``\pppp`` through ``\ffff``, ``\<``, ``\>``, ``\!``, literal scripts and structured ``\markup``.
+     - Articulations, fingerings 1 through 5, dynamics from ``\pppp`` through ``\ffff``, ``\<``, ``\>``, ``\!``, slur/tie/dynamic direction commands, literal scripts and structured ``\markup``.
    * - Structure
      - Assignments, variable references, lexical ``\include``, ``\score``, ``\new Staff``, ``\new Voice``, ``PianoStaff``, ``GrandStaff``, ``StaffGroup``, ``ChoirStaff``.
    * - Voices and lyrics
@@ -158,7 +158,7 @@ A tilde ties equal pitches; parentheses make slurs, and ``\(`` with ``\)`` makes
    * - Grace and repetition
      - ``\grace``, ``\acciaccatura``, ``\appoggiatura``, ``\afterGrace``, ``\repeat volta``, ``\alternative``, ``\volta``, ``\fine``, ``\section``, ``\repeat unfold``, ``\compressEmptyMeasures``, ``\compressFullBarRests``.
    * - Labels and breaks
-     - ``\tempo``, ``\mark``, ``\mark \default``, ``\new ChordNames \chordmode``, ``\break``, ``\noBreak``.
+     - ``\tempo``, ``\mark``, ``\mark \default``, ``\chords``, ``\new ChordNames \chordmode``, ``\break``, ``\noBreak``.
 
 The reader accepts version declarations, ignored header metadata and empty layout or MIDI blocks.
 It refuses Scheme, music functions, arbitrary property changes, overrides and unsupported commands with a placed diagnostic.
@@ -205,11 +205,11 @@ Commands nest freely within the reader's depth limit, and top-level markup varia
    * - Group
      - Commands
    * - Lists and columns
-     - ``\line``, ``\concat``, ``\column``, ``\center-column``, ``\right-column``, ``\dir-column`` and ``\var`` markup references.
+     - ``\line``, ``\concat``, ``\column``, ``\left-column``, ``\center-column``, ``\right-column``, ``\dir-column`` and markup variable references (such as ``\codaMark``).
    * - Style and case
      - ``\bold``, ``\italic``, ``\upright``, ``\normal-text``, ``\caps``, ``\smallCaps``, ``\sub`` and ``\super``.
    * - Size
-     - ``\teeny``, ``\tiny``, ``\small``, ``\normalsize``, ``\large``, ``\huge``, ``\fontsize #n`` and ``\abs-fontsize #pt``.
+     - ``\teeny``, ``\tiny``, ``\small``, ``\smaller``, ``\large``, ``\larger``, ``\huge``, ``\fontsize #n`` and ``\abs-fontsize #pt``.
    * - Enclosures and spacing
      - ``\box``, ``\rounded-box``, ``\circle``, ``\underline``, ``\parenthesize``, ``\bracket``, ``\hspace #n``, ``\vspace #n``, ``\raise #n`` and ``\lower #n``.
    * - Music symbols
@@ -230,7 +230,7 @@ Combine staves and lyrics
 -------------------------
 
 We use simultaneous contexts for a score with several staves.
-Instrument names use ``instrumentName`` and ``shortInstrumentName`` in a ``\with`` block.
+Staves and staff groups accept ``instrumentName`` and ``shortInstrumentName`` in a ``\with`` block, and staves also accept ``\set Staff.instrumentName`` and ``\set Staff.shortInstrumentName``.
 We separate up to four voices on one staff with ``\\`` inside ``<< ... >>``.
 Voices one and three have upward stems; voices two and four have downward stems.
 ``\voiceOne``, ``\voiceTwo``, ``\voiceThree`` and ``\voiceFour`` select those policies explicitly, and ``\oneVoice`` restores automatic single-voice directions.
@@ -238,7 +238,7 @@ An inner voice beside another voice with the same stem direction stands at least
 Equal rests share a glyph only where no other voice sounds.
 ``\shiftOn``, ``\shiftOnn`` and ``\shiftOnnn`` move a voice's note columns one, two or three levels aside, and ``\shiftOff`` sets the level to zero; a voice command restores its own level.
 Among voices with one stem direction, each lower level puts a column another half notehead aside: right for upward stems, left for downward ones.
-Dynamics stay below the staff in every voice, as in LilyPond; when two voices place signs at one moment, the later one stacks further out.
+Dynamics stay below the staff by default in every voice, as in LilyPond (unless ``\dynamicUp`` or ``^`` places them above); when two voices place signs on the same side at one moment, the later one stacks further out.
 At most four voices may sound at once on a staff; a fifth is refused.
 Lyrics attach to a named voice, and separate ``\lyricsto`` expressions make separate verses.
 
@@ -321,7 +321,7 @@ SVG adapts its ink to the page's color scheme; PNG keeps a light background pane
 
 PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; any other value renders as A4) and the selected template's horizontal margin, then places music at its natural size.
 Built-in templates declare their horizontal margin in their leading 256 lines with a comment such as ``// guidedog: margin-x = 31mm``.
-A custom template without the declaration uses a 25 millimetre margin assumption.
+A custom template without the declaration uses a 25 millimeter margin assumption.
 ``lilypond_pdf_width`` overrides the derived measure.
 Oversized music scales to fit with a build warning.
 A score with several systems can break between systems across PDF pages, with its caption after the last system.

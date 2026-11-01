@@ -52,7 +52,7 @@ What it does
 One program
 -----------
 
-The release provides one ``guidedog`` executable with PDF typesetting and diagram rendering included. We download the archive for our system, unpack it, and start a project. On Windows we keep the bundled runtime files beside the executable.
+The release provides one ``guidedog`` executable with PDF typesetting, diagram rendering, and music engraving included. We download the archive for our system, unpack it, and start a project. On Windows we keep the bundled runtime files beside the executable.
 
 Configuration is a TOML file. Templates are plain files in our project, and we can edit them. The same command also manages static websites, publishes to GitHub Pages, and keeps discussion records through its linked ``ssg``, ``pages``, and ``dsc`` plugins.
 

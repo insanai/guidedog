@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 10:17+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -125,7 +125,7 @@ msgid "``guidedog dsc build`` writes the website to ``_build/html`` and one stan
 msgstr ""
 
 #: ../../howto/discussions.rst:166
-msgid "The build is guidedog's own: the same build as ``guidedog build``, with the catalog as the project. Graphviz, Typst, and the other tools it needs are guidedog's too. An older catalog of Typst records compiles each record with Typst; ``--typst=PATH`` names a Typst program to use instead of the embedded compiler."
+msgid "The build is Guidedog's own: the same build as ``guidedog build``, with the catalog as the project. Graphviz, Typst, and the other tools it needs are Guidedog's too. An older catalog of Typst records compiles each record with Typst; ``--typst=PATH`` names a Typst program to use instead of the embedded compiler."
 msgstr ""
 
 #: ../../howto/discussions.rst:168
@@ -741,7 +741,7 @@ msgid "Use the official ``insanai/homebrew-guidedog`` tap on Apple silicon or In
 msgstr ""
 
 #: ../../howto/install.rst:15
-msgid "Homebrew selects the release archive for our processor and checks its SHA-256. The executable has the Typst compiler and Graphviz built in, so it needs nothing else at run time. We do not need a Rust toolchain, a Python environment, or a separate Typst installation to build HTML and PDF. The release requires macOS 12 or later."
+msgid "Homebrew selects the release archive for our processor and checks its SHA-256. The executable has the Typst compiler, Graphviz, and native music engraving built in, so it needs nothing else at run time. We do not need a Rust toolchain, a Python environment, or a separate Typst installation to build HTML and PDF. The release requires macOS 12 or later."
 msgstr ""
 
 #: ../../howto/install.rst:19
@@ -1242,7 +1242,7 @@ msgid "Guidedog publishes only complete output generations. The host finishes pr
 msgstr ""
 
 #: ../../howto/publish.rst:25
-msgid "Guidedog prepares a complete generation before deciding a journaled commit:"
+msgid "The staging and switch sequence runs as follows:"
 msgstr ""
 
 #: ../../howto/publish.rst:29
@@ -1258,7 +1258,7 @@ msgid "How atomic commits protect our site:"
 msgstr ""
 
 #: ../../howto/publish.rst:49
-msgid "**Staging:** All newly rendered pages are written to a hidden staging folder (``.<target>.next``). For the default builders it sits in the build folder. For a custom output folder passed to ``guidedog build -b html SOURCEDIR OUTPUTDIR``, it sits inside the output's one cache folder beside it (``.<target>.guidedog``), so the output gains a single hidden neighbour."
+msgid "**Staging:** All newly rendered pages are written to a hidden staging folder (``.<target>.next``). For the default builders it sits in the build folder. For a custom output folder passed to ``guidedog build -b html SOURCEDIR OUTPUTDIR``, it sits inside the output's one cache folder beside it (``.<target>.guidedog``), so the output gains a single hidden neighbor."
 msgstr ""
 
 #: ../../howto/publish.rst:54

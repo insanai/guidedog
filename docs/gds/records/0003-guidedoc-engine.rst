@@ -640,6 +640,7 @@ The libraries Guidedog is built from do not depend on ``guidedoc`` (their ``Carg
 - ``gd-rustdoc``: tree-sitter parses Rust with a heap stack too. Module trees, re-export chains, and items are bounded in depth and count.
 - ``gd-gettext`` bounds its plural expressions (100 levels, 128 nodes). Costs a hostile catalog could square are linear in it (or n log n). A PO field's continuation lines are gathered in a builder and copied once. A compiled catalog is validated once at load, and its hash table lookups stop after 64 probes. The fuzzy search of ``merge`` walks a length-sorted, trigram-ranked candidate list that stops where no candidate could win.
 - ``gd-highlight`` keeps nested lexer states in an explicit stack of 24 frames. ``gd-graphdog`` does not recurse (Graphviz's parser reports DOT nested 10,000 deep as an error).
+- ``gd-score``, ``gd-lilypond`` and ``gd-engrave`` (GDS 0015): rational time uses checked ``i64`` arithmetic; the LilyPond parser bounds nesting depth (64), source size (256 KiB), tokens, events and includes; and the engraver bounds systems, glyphs and skyline/layout scratch buffers.
 
 Alternatives. One shared guard crate would remove the small repetition of the frame-address guard in ``gd-jinja`` and ``gd-pyscan``, but would make every library depend on it. The guard is a dozen lines.
 
@@ -652,7 +653,7 @@ Crate boundaries express dependency direction. File boundaries keep functions an
 
 .. code-block:: text
 
-   cmd/guidedog/                the guidedog binary; composition and process exit only
+   cmd/guidedog/                the single Guidedog executable (GDS 0012); thin over gd-cli
    crates/guidedoc/             the engine core: AST, builder, validation, diagnostics, registry
    crates/guidedoc-commonmark/  CommonMark 0.31.2 and MyST syntax
    crates/guidedoc-rst/         RST blocks, directives, roles, resolution
@@ -673,10 +674,10 @@ Crate boundaries express dependency direction. File boundaries keep functions an
    crates/gd-jinja/             Jinja templates for pages; independent of Guidedoc
    crates/gd-highlight/         code highlighting with Pygments' classes; independent
    crates/gd-graphdog/          Graphviz's C library for graphs; independent
+   crates/gd-score .. gd-engrave native LilyPond music model, reader and engraver (GDS 0015)
    crates/gd-gettext/           gettext catalogs for translations; independent
-   cmd/guidedog/                the single Guidedog executable (GDS 0012)
    tests/integration/           conformance, malformed input, goldens, integration
-   tools/                       source-limit checks and repository tasks
+   tools/                       source-limit, music-corpus and repository tasks
    docs/gds/                    standalone discussions, index, template, and archive
 
 

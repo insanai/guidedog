@@ -13,7 +13,7 @@ Use the official ``insanai/homebrew-guidedog`` tap on Apple silicon or Intel Mac
    guidedog --version
 
 Homebrew selects the release archive for our processor and checks its SHA-256.
-The executable has the Typst compiler and Graphviz built in, so it needs nothing else at run time. We do not need a Rust toolchain, a Python environment, or a separate
+The executable has the Typst compiler, Graphviz, and native music engraving built in, so it needs nothing else at run time. We do not need a Rust toolchain, a Python environment, or a separate
 Typst installation to build HTML and PDF. The release requires macOS 12 or later.
 
 The package installs one executable, ``guidedog``. Its built-in plugins add GitHub Pages publishing (``guidedog publish pages`` and ``guidedog pages``; see :doc:`github-pages`), discussion catalogs (``guidedog dsc``; see :doc:`discussions`), and static site publishing (``guidedog ssg``; see :doc:`static-publishing`). The ``gd-graphdog`` library encapsulates Graphviz inside Guidedog.

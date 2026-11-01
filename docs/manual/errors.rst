@@ -82,7 +82,7 @@ Reaching a bound is a report, not a crash. There are two kinds:
 ``host.budget`` (MEMORY BUDGET REACHED)
    The build reached the memory it may hold, its budget (``--budget=MIB``, 1 GiB by
    default). The budget counts what Guidedog reads and keeps: sources, included files,
-   compiled diagram images, and the PDF the embedded Typst compiler returns. The report names the step and the
+   compiled diagram and musical score images (with their engraving scratch), and the PDF the embedded Typst compiler returns. The report names the step and the
    file that needed the memory. The hint names a budget that fits, as a number. For
    example::
 
@@ -101,7 +101,7 @@ Reaching a bound is a report, not a crash. There are two kinds:
 
 ``host.memory`` (OUT OF MEMORY)
    The system could not provide a buffer the budget allowed. The command stops without
-   using it. A build publishes nothing, a GDS change is applied whole or not at all, and
+   using it. A build publishes nothing, a discussion catalog change is applied whole or not at all, and
    ``convert`` writes a whole page or none. Free memory, or build with fewer threads
    (``-j 1``), and run the command again. Once a build has decided to publish, switching
    its output into place needs no further planning. So a refusal cannot stop a

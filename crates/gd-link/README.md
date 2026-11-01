@@ -1,8 +1,8 @@
 # gd-link cheat sheet
 
 The link pass of a Guidedog build and the rendering of a linked page: the rewriter,
-cross-references in the tree, navigation, the todolist, graphs and their theme, and
-discussion metadata.
+cross-references in the tree, navigation, the todolist, graphs and their theme, Typst
+diagrams, native LilyPond music engraving, and discussion metadata.
 
 ```rust
 let mut worker = gd_link::Worker::new();                 // one per rendering thread
@@ -23,6 +23,7 @@ let items = gd_link::nav_for_toctree(&view, doc, 0, NavOptions::default());
 | `book_root`, `book_path` | the paths the book reads files by |
 | `todo_order` | the documents a todolist copies from |
 | `adapt_graph`, `graph_adaptive`, `GRAPH_ADAPTIVE_CSS` | the adaptive graph theme |
+| `MusicSource`, `MusicFonts`, `load_music_source` | native `lilypond` music loading and engraving |
 | `module_page`, `MODULES_FOLDER`, `viewcode_pages` | sphinx.ext.viewcode's source pages (gd-site writes them) |
 | `discussion_field`, `discussion_prefix` | discussion metadata |
 
@@ -74,3 +75,5 @@ let items = gd_link::nav_for_toctree(&view, doc, 0, NavOptions::default());
   `BuildView::image_file` in gd-resolve, shared with lookup answers.
 
 Typst diagrams use `gd-typst` for embedded SVG or PNG export. The marked `typst-diagram` block shares generated-figure rewriting with Graphviz. Imports resolve beside their source, stay under the source root and record `FileContent` lookups. Assets are named by output digest and matching files keep their timestamps. Untrusted builds retain source with a warning; ordinary Typst code remains literal. Project package and font settings apply in both HTML and PDF.
+
+LilyPond blocks (`lilypond=1`) use `gd-lilypond` and `gd-engrave` (plus `gd-typst` for PNG rasterization) to emit outlined SVG or PNG assets, a `225pt` narrow HTML `<picture>` edition when wider, and per-system breakable PDF parts, with localized accessible `Summary` descriptions, confined `.ly` file/include reads, and `Ledger`-backed `Scratch` reservations.

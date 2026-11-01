@@ -109,7 +109,7 @@ as written, as they do in Sphinx.
 
 Docstrings are the strings Python would store: escapes processed and indentation
 removed as Python 3.13's compiler removes it. Attribute documentation comes from the
-places Sphinx's analyser reads: a ``#:`` comment after the assignment or on the lines
+places Sphinx's analyzer reads: a ``#:`` comment after the assignment or on the lines
 above it, and a string literal after it. A function's signature comes from its ``def``.
 A class's signature comes from its metaclass ``__call__``, ``__new__``, or ``__init__``, as Python finds it.
 A dataclass's or ``NamedTuple``'s signature comes from its fields. ``@overload`` variants replace the
@@ -136,7 +136,7 @@ it is documented with less than Sphinx would show.
 - Python extensions that handle autodoc's events (``autodoc-process-docstring``,
   ``autodoc-skip-member``, ...) do not run. napoleon is built in, below.
 - A module nested far deeper than real code (Python itself refuses 200 nested brackets;
-  Guidedog also refuses a ``+`` chain of a few hundred operands) is not analysed, with
+  Guidedog also refuses a ``+`` chain of a few hundred operands) is not analyzed, with
   the warning ``autodoc.too_deep``.
 - Work that multiplies is bounded. A name followed through imports and aliases stops
   after 48 steps along one path and 100,000 in all. A type alias or constant is expanded

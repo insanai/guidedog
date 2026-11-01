@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:01+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -115,7 +115,7 @@ msgid "``--licenses``"
 msgstr ""
 
 #: ../../reference/cli.rst:50
-msgid "Show Guidedog's licence and the notices of the libraries built in."
+msgid "Show Guidedog's license and the notices of the libraries built in."
 msgstr ""
 
 #: ../../reference/cli.rst:52
@@ -1326,7 +1326,7 @@ msgid "The publication: one push to the site's own branch, then a wait for the d
 msgstr ""
 
 #: ../../reference/cli.rst:665
-msgid "On a machine that is already set up, it publishes without a question. Without a terminal it never asks. A missing step then fails with a hint naming the command or option that does it. ``--yes`` answers the confirmations. It never signs in or replaces other work on our behalf. Its options are those of ``guidedog pages init`` and ``publish`` (``--config``, ``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); ``guidedog publish pages --help`` lists them. guidedog builds the project itself, with its own engine and linked plugins; ``--guidedog=PATH`` builds with another program instead. See :doc:`../howto/github-pages`."
+msgid "On a machine that is already set up, it publishes without a question. Without a terminal it never asks. A missing step then fails with a hint naming the command or option that does it. ``--yes`` answers the confirmations. It never signs in or replaces other work on our behalf. Its options are those of ``guidedog pages init`` and ``publish`` (``--config``, ``--repository``, ``--project``, ``--branch``, ``--profile``, ``--wait``, ``--verbose``, ``--dry-run``); ``guidedog publish pages --help`` lists them. Guidedog builds the project itself, with its own engine and linked plugins; ``--guidedog=PATH`` builds with another program instead. See :doc:`../howto/github-pages`."
 msgstr ""
 
 #: ../../reference/cli.rst:673
@@ -1438,15 +1438,15 @@ msgid "Commands plugins add"
 msgstr ""
 
 #: ../../reference/cli.rst:782
-msgid "A plugin may add commands to guidedog, or targets to ``guidedog publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a plugin's:"
+msgid "A plugin may add commands to ``guidedog``, or targets to ``guidedog publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each with the ID of its plugin, and ``guidedog plugin inspect ID`` shows a plugin's:"
 msgstr ""
 
 #: ../../reference/cli.rst:794
-msgid "guidedog looks for a word it does not know (or a ``publish`` target) among the commands of the linked plugins first, then among those of the registered programs, and runs the plugin that adds it. ``--help`` after such a command prints its help, made from what the plugin declares. A plugin cannot replace one of guidedog's commands, and the first plugin to add a name keeps it."
+msgid "Guidedog looks for a word it does not know (or a ``publish`` target) among the commands of the linked plugins first, then among those of the registered programs, and runs the plugin that adds it. ``--help`` after such a command prints its help, made from what the plugin declares. A plugin cannot replace one of Guidedog's commands, and the first plugin to add a name keeps it."
 msgstr ""
 
 #: ../../reference/cli.rst:796
-msgid "A linked plugin's command runs inside guidedog. A registered program's command runs as that program, started on our terminal after its SHA-256 is checked: it may ask questions, and its exit status is the command's. When either asks for a build, guidedog builds the project. The program's commands are read when it is registered, so a new version is registered again, as always."
+msgid "A linked plugin's command runs inside ``guidedog``. A registered program's command runs as that program, started on our terminal after its SHA-256 is checked: it may ask questions, and its exit status is the command's. When either asks for a build, Guidedog builds the project. The program's commands are read when it is registered, so a new version is registered again, as always."
 msgstr ""
 
 #: ../../reference/cli.rst:798
@@ -1708,6 +1708,7 @@ msgstr ""
 #: ../../reference/configuration.rst:1442
 #: ../../reference/configuration.rst:1483
 #: ../../reference/configuration.rst:1508
+#: ../../reference/configuration.rst:1579
 msgid "Key"
 msgstr ""
 
@@ -1733,6 +1734,7 @@ msgstr ""
 #: ../../reference/configuration.rst:1443
 #: ../../reference/configuration.rst:1484
 #: ../../reference/configuration.rst:1509
+#: ../../reference/configuration.rst:1580
 msgid "Type"
 msgstr ""
 
@@ -1758,6 +1760,7 @@ msgstr ""
 #: ../../reference/configuration.rst:1444
 #: ../../reference/configuration.rst:1485
 #: ../../reference/configuration.rst:1510
+#: ../../reference/configuration.rst:1581
 msgid "Default"
 msgstr ""
 
@@ -1783,6 +1786,7 @@ msgstr ""
 #: ../../reference/configuration.rst:1445
 #: ../../reference/configuration.rst:1486
 #: ../../reference/configuration.rst:1511
+#: ../../reference/configuration.rst:1582
 msgid "Description"
 msgstr ""
 
@@ -2142,7 +2146,7 @@ msgid "``include_roots``"
 msgstr ""
 
 #: ../../reference/configuration.rst:150
-msgid "Folders, relative to the source folder, that ``include``, ``literalinclude``, images, graphs, logos and other files may also be read from. Sphinx reads any path; Guidedog reads only the source folder and these."
+msgid "Folders, relative to the source folder, that ``include``, ``literalinclude``, ``lilypond``, images, graphs, logos and other files may also be read from. Sphinx reads any path; Guidedog reads only the source folder and these."
 msgstr ""
 
 #: ../../reference/configuration.rst:153
@@ -2898,6 +2902,7 @@ msgid "``html_title``"
 msgstr ""
 
 #: ../../reference/configuration.rst:473
+#: ../../reference/configuration.rst:1593
 msgid "derived"
 msgstr ""
 
@@ -3159,7 +3164,7 @@ msgid "``\"a4\"``"
 msgstr ""
 
 #: ../../reference/configuration.rst:597
-msgid "The paper size (``\"a4\"``, ``\"us-letter\"``)."
+msgid "The paper size (``\"a4\"``, ``\"letter\"``, or ``\"us-letter\"``)."
 msgstr ""
 
 #: ../../reference/configuration.rst:598
@@ -3502,7 +3507,7 @@ msgid "A mapping name that refers to this project itself."
 msgstr ""
 
 #: ../../reference/configuration.rst:814
-msgid "Inventories are downloaded with the built-in HTTP client, which honours ``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing. See :doc:`../intersphinx`."
+msgid "Inventories are downloaded with the built-in HTTP client, which honors ``HTTPS_PROXY`` and ``NO_PROXY``. ``--untrusted`` fetches nothing. See :doc:`../intersphinx`."
 msgstr ""
 
 #: ../../reference/configuration.rst:817
@@ -4776,12 +4781,50 @@ msgstr ""
 msgid "Native music engraving"
 msgstr ""
 
-#: ../../reference/configuration.rst:1575
-msgid "``lilypond_staff_size`` sets the default five-line staff height in points, from 10 through 40; the default is 18. ``lilypond_html_width`` sets the wide HTML system measure in points; the default is 564. ``lilypond_pdf_width`` sets the PDF system measure in points; when omitted, the selected template and ``pdf_paper_size`` determine it. Widths must be positive and no greater than 100,000 points. All three values are finite TOML numbers, and directive options override their project defaults."
+#: ../../reference/configuration.rst:1583
+msgid "``lilypond_staff_size``"
+msgstr ""
+
+#: ../../reference/configuration.rst:1584
+#: ../../reference/configuration.rst:1588
+#: ../../reference/configuration.rst:1592
+msgid "float"
+msgstr ""
+
+#: ../../reference/configuration.rst:1585
+msgid "``18``"
+msgstr ""
+
+#: ../../reference/configuration.rst:1586
+msgid "Default five-line staff height in points, from ``10`` through ``40``."
 msgstr ""
 
 #: ../../reference/configuration.rst:1587
-msgid "The PDF templates declare their horizontal margin with ``// guidedog: margin-x = 31mm`` after their first import. Without a declaration, we assume 25 millimetres on each side. The built-in book, article and discussion margins are 31, 30 and 25 millimetres respectively. Text fonts use ``pdf_fonts`` and ``pdf_font_paths``. See :doc:`../topics/music` for directive syntax, layout, trust rules and limits."
+msgid "``lilypond_html_width``"
+msgstr ""
+
+#: ../../reference/configuration.rst:1589
+msgid "``564``"
+msgstr ""
+
+#: ../../reference/configuration.rst:1590
+msgid "Wide HTML system measure in points (positive, at most ``100000``)."
+msgstr ""
+
+#: ../../reference/configuration.rst:1591
+msgid "``lilypond_pdf_width``"
+msgstr ""
+
+#: ../../reference/configuration.rst:1594
+msgid "PDF system measure in points (positive, at most ``100000``); when omitted, derived from ``pdf_paper_size`` and the selected template's horizontal margin."
+msgstr ""
+
+#: ../../reference/configuration.rst:1596
+msgid "All three values are finite TOML numbers, and directive options override their project defaults."
+msgstr ""
+
+#: ../../reference/configuration.rst:1604
+msgid "The PDF templates declare their horizontal margin in their leading 256 lines with a comment such as ``// guidedog: margin-x = 31mm``. Without a declaration, we assume 25 millimeters on each side. The built-in book, article and discussion margins are 31, 30 and 25 millimeters respectively. Text fonts use ``pdf_fonts`` and ``pdf_font_paths``. See :doc:`../topics/music` for directive syntax, layout, trust rules and limits."
 msgstr ""
 
 #: ../../reference/formats.rst:1

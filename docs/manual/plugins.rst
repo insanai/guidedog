@@ -335,10 +335,10 @@ A remote acceptance is not a live deployment. ``Accepted`` and ``Pending`` retur
 Never retry an uncertain write blindly. See :doc:`howto/github-pages` for the
 complete user workflow.
 
-10. Add a command to guidedog
+10. Add a command to Guidedog
 -----------------------------
 
-A plugin can also add commands to guidedog's own command line. The badge adds one:
+A plugin can also add commands to ``guidedog``'s own command line. The badge adds one:
 
 .. code-block:: console
 
@@ -363,11 +363,11 @@ The GitHub Pages, discussion, and static site plugins work the same way: ``guide
        Ok(0)
    }
 
-The words of the name decide where the command appears. ``badge preview`` is a new command; ``publish NAME`` is a target of ``guidedog publish``. A plugin cannot replace a command guidedog has. The summary, help and options we declare become the command's ``--help`` and its line under PLUGIN COMMANDS in ``guidedog --help``, and a mistyped name gets a "Did you mean" that knows our command.
+The words of the name decide where the command appears. ``badge preview`` is a new command; ``publish NAME`` is a target of ``guidedog publish``. A plugin cannot replace a command ``guidedog`` has. The summary, help and options we declare become the command's ``--help`` and its line under PLUGIN COMMANDS in ``guidedog --help``, and a mistyped name gets a "Did you mean" that knows our command.
 
-The ``CommandContext`` is everything guidedog lends the command. ``print`` and ``eprint`` write to its output. ``ask`` and ``confirm`` put a question to the person, and answer nothing when nobody can be asked (a script, a CI job), so a command never hangs. ``build_project`` has guidedog build a project, HTML or PDF, into a folder we name, with its engine and its linked plugins. ``dir`` is the folder the command was started in, and ``config`` the plugin's configuration file when the project's ``plugin_configs`` names one. We return the exit status, or a ``Problem`` with a hint, which guidedog reports.
+The ``CommandContext`` is everything Guidedog lends the command. ``print`` and ``eprint`` write to its output. ``ask`` and ``confirm`` put a question to the person, and answer nothing when nobody can be asked (a script, a CI job), so a command never hangs. ``build_project`` has Guidedog build a project, HTML or PDF, into a folder we name, with its engine and its linked plugins. ``dir`` is the folder the command was started in, and ``config`` the plugin's configuration file when the project's ``plugin_configs`` names one. We return the exit status, or a ``Problem`` with a hint, which Guidedog reports.
 
-The same command works in both deployments. Linked, it runs inside guidedog. Registered, guidedog starts our program with ``--guidedog-command`` and a request, on the same terminal, so questions and progress reach the person directly; ``serve_plugin`` answers that request without any code of ours. ``guidedog plugin inspect ID`` lists the commands a plugin adds.
+The same command works in both deployments. Linked, it runs inside ``guidedog``. Registered, ``guidedog`` starts our program with ``--guidedog-command`` and a request, on the same terminal, so questions and progress reach the person directly; ``serve_plugin`` answers that request without any code of ours. ``guidedog plugin inspect ID`` lists the commands a plugin adds.
 
 11. Version and distribute the contract
 ---------------------------------------

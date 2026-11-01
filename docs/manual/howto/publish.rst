@@ -22,7 +22,7 @@ Guidedog publishes only complete output generations.
 The host finishes preparation before it decides a journaled commit. A failed
 preparation leaves the previous site intact.
 
-Guidedog prepares a complete generation before deciding a journaled commit:
+The staging and switch sequence runs as follows:
 
 .. graphviz::
    :class: graphviz-adaptive
@@ -50,7 +50,7 @@ How atomic commits protect our site:
   (``.<target>.next``). For the default builders it sits in the build folder. For a custom
   output folder passed to ``guidedog build -b html SOURCEDIR OUTPUTDIR``, it sits inside the
   output's one cache folder beside it (``.<target>.guidedog``), so the output gains a single
-  hidden neighbour.
+  hidden neighbor.
 * **Isolation:** The live output folder stays untouched while pages compile.
 * **Failure safety:** If any page fails to render, or a warning becomes an error under ``-W``,
   the build abandons the staging folder. The live site stays unchanged.

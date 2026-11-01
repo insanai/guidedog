@@ -105,7 +105,7 @@ Memory
 ------
 
 - Values are owned: no arena or allocator guard is needed, and the standard allocator aborts rather than refusing small requests.
-- Lists that contain themselves leak (an ``Rc`` cycle); Jinja's own behaviour relies on a
+- Lists that contain themselves leak (an ``Rc`` cycle); Jinja's own behavior relies on a
   garbage collector.
 
 Why not minijinja
@@ -119,6 +119,6 @@ The decisive reason is bounds and safety. On hostile input, minijinja 3.0.0 over
 stack and aborts the process in cases where gd-jinja returns a ``Limit``
 error, and it has no output or memory limit. The second reason is that minijinja behaves
 differently from Jinja2 in scoping and escaping in ways its extension API cannot change. The
-third is that the thin layer needed to restore gd-jinja's behaviour is already about 900 lines,
+third is that the thin layer needed to restore gd-jinja's behavior is already about 900 lines,
 and it would keep growing toward a re-implementation of the builtins anyway. Speed and error
 quality are about equal, so neither changes the decision.

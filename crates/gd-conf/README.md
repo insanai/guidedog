@@ -17,7 +17,7 @@ let dropped = gd_conf::confine_untrusted(&mut c.clone()); // --untrusted
 
 | Item | Does |
 |---|---|
-| `Config` (+ `Config::new(source, build)`) | Sphinx's names and defaults; general settings flat, the rest grouped: `mathjax`, `intersphinx`, `autodoc`, `odin_api`, `rust_api`, `plugins`, `html`, `pdf`, `graphviz`, `myst`, `intl`, `site`, and `ext` (`ExtensionSettings`: `napoleon`, `autosummary`, `apidoc`, `viewcode`, `linkcode`, `inheritance`, `coverage`, `duration`, `image_converter`; GDS 0011) |
+| `Config` (+ `Config::new(source, build)`) | Sphinx's names and defaults; general settings flat, the rest grouped: `mathjax`, `intersphinx`, `autodoc`, `odin_api`, `rust_api`, `plugins`, `html`, `pdf`, `graphviz`, `lilypond`, `myst`, `intl`, `site`, and `ext` (`ExtensionSettings`: `napoleon`, `autosummary`, `apidoc`, `viewcode`, `linkcode`, `inheritance`, `coverage`, `duration`, `image_converter`; GDS 0011) |
 | `load_config(dir, &LoadOptions) -> Result<Loaded, Problem>` | find, read, `-D`, check, finish; `Loaded { config, warnings, settings: Digest }` |
 | `find_project`, `apply_table`, `apply_override`, `check_config`, `finish_config`, `merge_table` | the staged path |
 | `SETTINGS`, `Setting { name, kind }`, `SettingKind`, `find_setting`, `suggestion`, `is_foreign_setting`, `NATIVE_EXTENSIONS`, `KNOWN_THEMES` | the settings table (gd-migrate checks conf.py values against it) |

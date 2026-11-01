@@ -58,12 +58,14 @@ subcommands and values.
   stdin through the standard library, whose lock is not reentrant.
 - **`--version`** names Guidedog, Guidedoc and its schema, the tree-sitter crates (a
   test keeps them equal to Cargo.lock), the linked Graphviz, and the Typst backend.
-  `--licenses` prints NOTICE's third-party section.
+  `--licenses` prints NOTICE's third-party section and the embedded Bravura font
+  licence (SIL Open Font License 1.1).
 - **`plugin list`/`inspect`** show the linked plugins beside the registered programs.
 - **Discussion catalogs** are not gd-cli's: the discussion plugin (gd-discussion),
   which `cmd/guidedog` links, adds `guidedog dsc`.
 - `convert` and `formats` use `guidedoc_defaults::registry()` (readers rst, sphinx,
-  commonmark, myst).
+  commonmark, myst; renderers html, typst, text, rst); `convert --lang TAG` localizes
+  generated UI labels and unengraved external `.ly` score notices through `gd-i18n`.
 
 ## The project builder (`src/ops.rs`)
 

@@ -1,5 +1,6 @@
 #import "base-book.typ": book as base-book
 #import "palette.typ": palette
+// guidedog: margin-x = 31mm
 
 // Keep the host's parameters explicit. The final positional argument is content.
 #let book(

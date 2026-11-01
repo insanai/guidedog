@@ -3,7 +3,7 @@ Guidedog Manual
 
 **Write once. Explain well. Publish on the web and on paper.**
 
-Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one ``guidedog`` executable, with PDF typesetting and diagram rendering included.
+Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one ``guidedog`` executable, with PDF typesetting, diagram rendering, and music engraving included.
 
 A small project needs three things: a source document, a table of contents,
 and ``conf.toml``. Start with :doc:`tutorial/first-project`.

@@ -44,8 +44,8 @@ let options = guidedoc::RenderOptions { highlighter: Some(&highlighter), ..Defau
 
 | Item | Does |
 |---|---|
-| `registry()` | readers `rst`, `sphinx`, `commonmark`, `myst`; renderers `html`, `typst`, `text` |
-| `rst_options`, `sphinx_options`, `myst_options` | `ReadOptions` carrying the reader's own settings by type |
+| `registry()` | readers `rst`, `sphinx`, `commonmark`, `myst`; renderers `html`, `typst`, `text`, `rst` |
+| `rst_options`, `sphinx_options`, `myst_options`, `ReaderSettings` | `ReadOptions` carrying the reader's own settings by type (`ReaderSettings::{with_config, for_source, options}`) |
 | `HtmlHighlighter`, `TypstHighlighter` | `guidedoc::Highlighter` over `gd-highlight`; one per thread, buffer reused |
 
 ## Design notes

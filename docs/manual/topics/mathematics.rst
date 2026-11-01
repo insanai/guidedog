@@ -30,7 +30,7 @@ A side of length :math:`s` encloses area :math:`s^2`.
    A = s^2
 
 The relation is :eq:`area-square`.
-Guidedog gives a labelled equation a stable target.
+Guidedog gives a labeled equation a stable target.
 The HTML builder supplies MathJax markup. The PDF renderer translates the
 supported LaTeX subset to Typst mathematics.
 An unsupported PDF command is reported. Arbitrary LaTeX packages are not evaluated.

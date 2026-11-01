@@ -56,7 +56,10 @@ Options it reads (`guidedoc::RenderOptions`): `standalone`, `reference_profile`,
 
 An Image with Custom `interactive` (a drawing whose nodes link, such as an inheritance
 diagram) is written as `<object data="..." type="image/svg+xml">alt</object>`, since an
-`img` element does not follow the links of its SVG.
+`img` element does not follow the links of its SVG. An Image with Custom `narrow-src`
+(such as a wide music score with a `225pt` mobile edition) is wrapped in `<picture>` with
+a `(max-width: 40rem)` `<source>`, and standalone file-backed `lilypond` blocks emit the
+localized `unengraved_score` notice.
 
 ## Design notes
 

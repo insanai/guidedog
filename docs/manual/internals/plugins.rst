@@ -51,14 +51,14 @@ Selecting plugins in a build
 Command-line extensions
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-A plugin of either kind may also add commands to guidedog's command line. The GitHub Pages plugin adds two:
+A plugin of either kind may also add commands to ``guidedog``'s command line. The GitHub Pages plugin adds two:
 
 .. code-block:: console
 
    $ guidedog publish pages          # the guided publication
    $ guidedog pages workflow --write # the GitHub Actions route
 
-Neither is written in ``gd-cli``. The plugin declares them, and guidedog finds them when it meets a word it does not know.
+Neither is written in ``gd-cli``. The plugin declares them, and Guidedog finds them when it meets a word it does not know.
 
 Declaring
    ``BuildPlugin::commands`` and ``Publisher::commands`` return a list of ``CommandInfo``. Each has a ``path`` of 1 to 4 lowercase words (``["pages", "workflow"]``), a one-line ``summary``, plain-text ``help``, and the ``options`` it takes (``CommandOption``: a name such as ``--write``, a value placeholder such as ``DIR`` or nothing for a switch, and a summary). The default is no commands. A build plugin that only adds commands may offer no hooks (``Hooks::NONE``), as the discussion plugin (``guidedog dsc``) does; a session cannot load it. ``Registry::new`` checks the declarations: at most 32 commands, distinct names, bounded text. The declared options serve the help and the host's parsing; the plugin still reads its own arguments, so a command is free to have nested subcommands of its own.
@@ -70,7 +70,7 @@ Running
    What the host offers, and nothing more. Its methods are ``print`` and ``eprint`` (or ``streams`` for both writers at once), ``ask`` and ``confirm`` (they return no answer when ``interactive`` is false, so a script never hangs), and ``build_project(&BuildRequest)``, which has the host build a project with its own engine and linked plugins. A ``BuildRequest`` names the project, the output folder, the builder (``html`` by default, or ``pdf``, ``dirhtml``, ``singlehtml``, ``text``), ``-D`` overrides, the base URL and ``strict``. Its public fields say where the command runs (``dir``), the plugin's configuration file when the project's ``plugin_configs`` names one (``config``), the host program (``host_program``), the reporting choices (``interactive``, ``color``, ``json``, ``quiet``) and the ``cancel`` probe. The context borrows a ``CommandHost``, a trait with ``streams``, ``read_line`` and ``build_project``: ``gd-cli`` implements it over its console, tests over buffers.
 
 Dispatch in ``gd-cli``
-   ``extensions(&linked, machine)`` lists the commands of the linked plugins, then those of the registered programs (the machine registry is read only when the command line may name one). A name guidedog already has is skipped, except targets of ``publish``; an earlier plugin wins a name. The parser matches the longest path against the command line's words, skipping the values of options (guidedog's and every declared option that takes a value), so ``publish --config pages.toml`` never names a target ``pages.toml``. ``--help`` on a contributed command prints help made from its declaration, without running the plugin. ``guidedog --help`` lists the commands under PLUGIN COMMANDS with their plugin IDs, ``guidedog publish --help`` lists the targets, and "Did you mean" draws on both guidedog's commands and the plugins'. ``guidedog plugin inspect ID`` shows the commands a plugin adds.
+   ``extensions(&linked, machine)`` lists the commands of the linked plugins, then those of the registered programs (the machine registry is read only when the command line may name one). A name ``guidedog`` already has is skipped, except targets of ``publish``; an earlier plugin wins a name. The parser matches the longest path against the command line's words, skipping the values of options (Guidedog's and every declared option that takes a value), so ``publish --config pages.toml`` never names a target ``pages.toml``. ``--help`` on a contributed command prints help made from its declaration, without running the plugin. ``guidedog --help`` lists the commands under PLUGIN COMMANDS with their plugin IDs, ``guidedog publish --help`` lists the targets, and "Did you mean" draws on both Guidedog's commands and the plugins'. ``guidedog plugin inspect ID`` shows the commands a plugin adds.
 
 Which plugins are linked is the program's decision, not the command line's: ``cmd/guidedog`` passes ``Registry::new(vec![gd_pages::plugin(), gd_discussion::plugin(), gd_ssg::plugin()])`` to ``gd_cli::run_status``, and ``gd-cli`` depends only on ``gd-plugins``. The dependency gate holds that rule.
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-17 18:28+0000\n"
+"POT-Creation-Date: 2026-11-01 16:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -49,7 +49,7 @@ msgid "``_templates/book.typ`` defines the PDF book layout, typography, and cove
 msgstr ""
 
 #: ../../templates.rst:20
-msgid "``_static/guidedog.css`` and ``_static/guidedog.js`` supply default styles and client behaviors."
+msgid "``_static/guidedog.css``, ``_static/guidedog.js``, and ``_static/typography.js`` supply default styles, client behaviors, and browser paragraph line breaking."
 msgstr ""
 
 #: ../../templates.rst:22
@@ -366,7 +366,7 @@ msgid "``prev``, ``next``"
 msgstr ""
 
 #: ../../templates.rst:225
-msgid "The neighbouring pages in reading order, with ``url`` (also ``link``) and ``title``; none at either end."
+msgid "The neighboring pages in reading order, with ``url`` (also ``link``) and ``title``; none at either end."
 msgstr ""
 
 #: ../../templates.rst:227
@@ -454,7 +454,7 @@ msgid "``accent``"
 msgstr ""
 
 #: ../../templates.rst:249
-msgid "``html_theme_options.accent``, the theme's colour."
+msgid "``html_theme_options.accent``, the theme's color."
 msgstr ""
 
 #: ../../templates.rst:250
@@ -678,7 +678,7 @@ msgid "``guidedog quickstart`` copies ``theme.typ``, ``book.typ``, ``discussion.
 msgstr ""
 
 #: ../../templates.rst:404
-msgid "We can edit ``theme.typ`` to change all three copied layouts together. Changes to files beneath ``_templates/``, including nested imported modules and assets, invalidate cached PDFs. The builder tracks directory membership as well, so adding or removing a module cannot leave a stale PDF. Template discovery stays inside the project's readable roots and permits at most 16,384 template inputs."
+msgid "We can edit ``theme.typ`` to change all three copied layouts together. Keep or update ``// guidedog: margin-x = 31mm`` in the leading 256 lines when changing horizontal page margins so native ``lilypond`` scores match the text column; see :doc:`topics/music`. Changes to files beneath ``_templates/``, including nested imported modules and assets, invalidate cached PDFs. The builder tracks directory membership as well, so adding or removing a module cannot leave a stale PDF. Template discovery stays inside the project's readable roots and permits at most 16,384 template inputs."
 msgstr ""
 
 #: ../../templates.rst:406

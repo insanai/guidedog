@@ -173,17 +173,19 @@ Guidedog's own words
 
 Guidedog writes some words itself: admonition titles, "Added in version 2.1", "Fig. 1",
 "Contents", the page layout's "Previous", "Next", "Navigation", and "Search", the search
-and index pages, and the book's "Version". They come from the text domain ``guidedog``,
-looked up in this order:
+and index pages, generated musical score descriptions, and the book's "Version". They come
+from the text domain ``guidedog``, looked up in this order:
 
 1. ``locales/LANGUAGE/LC_MESSAGES/guidedog.po`` of the project,
 2. ``locales/LANGUAGE/LC_MESSAGES/sphinx.po`` of the project, as Sphinx reads it,
-3. the catalog built into Guidedog, for German, Spanish, French, Japanese, Brazilian
-   Portuguese, Russian, and Simplified Chinese.
+3. the catalog built into Guidedog, for German, Spanish, French, Hindi, Japanese,
+   Korean, Brazilian Portuguese, Russian, and Simplified Chinese.
 
 The English words are the message identifiers. They are Sphinx's where Sphinx has
 the same word, so a project's ``sphinx.po`` keeps working. A project can override any
-word, or add a language, with its own ``guidedog.po``.
+word, or add a language, with its own ``guidedog.po``. Single-file
+``guidedog convert --lang=TAG`` uses the built-in catalog for the same labels in HTML
+and PDF output.
 
 Templates translate with ``_()``, ``gettext()``, and ``ngettext()``, as Sphinx's
 templates do:

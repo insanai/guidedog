@@ -55,7 +55,8 @@ One budget, reserved before allocation
 
 - a document's read: its source (read again by the reading thread, so a source is held only while it is parsed; the digest is of what was parsed), and its includes (``Files::with_ledger``; a refusal is ``ResourceStatus::Limit``, reported as ``core.include.limit``);
 - a static file copied into the output, freed once written;
-- the PDF the embedded Typst compiler hands back (``gd_typst::Options::reserve``).
+- native LilyPond reading, layout scratch and generated score SVG/PNG assets (``gd_lilypond::Options::reserve``, ``gd_engrave::Options::reserve``, and ``gd_engrave::Options::scratch``; GDS 0015);
+- the PDF and diagram images the embedded Typst compiler hands back (``gd_typst::Options::reserve``).
 
 A reservation the budget refuses is never allocated. A refused ``try_reserve`` for a size the budget allowed is a ``Memory`` problem ("OUT OF MEMORY": the budget allows it, the system could not provide it).
 
@@ -147,7 +148,9 @@ the include roots again (``a_trusted_build_after_an_untrusted_one_is_not_confine
 
 A graph under ``--untrusted`` reads no file. A graph naming one is shown as code with a
 warning. Embedded ``typst-diagram`` directives (GDS 0014) are likewise not compiled under
-``--untrusted`` and are shown as code with a warning.
+``--untrusted`` and are shown as code with a warning. Inline ``lilypond`` directives
+(GDS 0015) are engraved in process without external execution, while ``.ly`` file arguments
+and ``\include`` are refused under ``--untrusted``.
 
 The book, discussion, and article PDF builders run only Typst that Guidedog generates.
 ``pdf_preamble`` and project ``_templates/book.typ``, ``_templates/discussion.typ``, and

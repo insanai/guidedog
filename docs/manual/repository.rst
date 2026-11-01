@@ -3,7 +3,7 @@ Guidedog
 
 **Write once. Explain well. Publish on the web and on paper.**
 
-Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one ``guidedog`` executable, with PDF typesetting and diagram rendering included.
+Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one ``guidedog`` executable, with PDF typesetting, diagram rendering, and music engraving included.
 
 Sphinx inspires the authoring workflow. Guidedog is an independent system: configuration is
 declarative TOML, API extraction is static, and Python configuration and extensions are
@@ -31,7 +31,31 @@ cross-references, figures, indexes, and language-aware typesetting. We can embed
 or Typst drawing source, including CeTZ and Fletcher, directly in RST and MyST with
 automatic HTML and PDF assets; see :doc:`topics/diagrams`.
 
-We embed LilyPond notation directly in RST and MyST with the native ``lilypond`` directive, including staves, voices, lyrics and common markings; see :doc:`topics/music`. SVG and PNG figures work in HTML and PDF without an installed LilyPond program.
+We embed LilyPond notation directly in RST and MyST with the native ``lilypond`` directive, including staves, up to four simultaneous voices per staff, lyrics, structured ``\markup``, and common markings; see :doc:`topics/music`. Outlined Bravura SVG and PNG figures work in HTML and multi-system PDF books without an installed LilyPond program:
+
+.. code-block:: rst
+
+   .. lilypond::
+      :caption: Beethoven's Joy theme, four bars in C major.
+      :alt: A four-bar melody beginning E, F, G and ending with dotted-quarter E, eighth-note D and half-note D.
+
+      \fixed c' {
+        \clef treble
+        \key c \major
+        \time 4/4
+        e2 f4 g | g4 f e d | c2 d4 e | e4. d8 d2 |
+      }
+
+.. lilypond::
+   :caption: Beethoven's Joy theme, four bars in C major.
+   :alt: A four-bar melody beginning E, F, G and ending with dotted-quarter E, eighth-note D and half-note D.
+
+   \fixed c' {
+     \clef treble
+     \key c \major
+     \time 4/4
+     e2 f4 g | g4 f e d | c2 d4 e | e4. d8 d2 |
+   }
 
 The built-in theme follows the system theme by default, with light and dark choices;
 Guidedog's own documentation website defaults to the light reading edition. The website
@@ -48,8 +72,8 @@ Install
 -------
 
 Each `release <https://github.com/insanai/guidedog/releases>`__ has an archive for Linux,
-macOS, and Windows, with ``SHA256SUMS``. The Typst compiler and the tree-sitter parsers are
-compiled into ``guidedog``. Unix archives link Graphviz statically, and the Windows ZIP
+macOS, and Windows, with ``SHA256SUMS``. The Typst compiler, the Bravura 1.482 music font,
+and the tree-sitter parsers are compiled into ``guidedog``. Unix archives link Graphviz statically, and the Windows ZIP
 bundles Graphviz DLLs, so nothing else needs to be installed at run time. Fetching remote
 intersphinx inventories and publishing to GitHub Pages use the HTTP client built into ``guidedog``, so no ``curl`` program is needed.
 Check and install the archive:
@@ -73,9 +97,13 @@ Ubuntu, ``graphviz-devel`` on Fedora, or ``brew install graphviz`` on macOS; on 
 .. code:: sh
 
    cargo build --release -p guidedog-cmd     # target/release/guidedog
-   cargo test --workspace
-   cargo clippy --workspace --all-targets
+   cargo fmt --all --check
    cargo run -p check                        # source limits
+   cargo xtask tables --check
+   cargo xtask check-music-font
+   cargo clippy --workspace --all-targets -- -D warnings
+   cargo test --workspace
+   cargo xtask fetch-fonts --music && cargo run -p music-check
 
 The ``typst`` crates are a default feature of ``gd-typst``. Without them, Guidedog runs an
 installed ``typst`` 0.15.1 program for PDF books, while ``.. typst-diagram::`` and ``.. lilypond::`` with ``:format: png`` require the embedded compiler.
@@ -180,8 +208,9 @@ Rathore**. Contributions are welcome through issues and pull requests. Documenta
 use names or handles, not personal email addresses. Git identity settings are managed
 separately.
 
-Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max
-Brunsfeld, Graphviz, and the Rust project.
+Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Steinberg Media
+Technologies and Daniel Spreadbury (Bravura and SMuFL), Tree-sitter and Max Brunsfeld,
+Graphviz, and the Rust project.
 
 Guidedog is released under the
 :download:`GNU Lesser General Public License v3.0 or later <_static/repository/LICENSE>`

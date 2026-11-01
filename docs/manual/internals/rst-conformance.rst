@@ -184,7 +184,7 @@ Deliberate differences
    * - The specialized roles (``named-reference``, ``anonymous-reference``, ``footnote-reference``, ``citation-reference``, ``substitution-reference``, ``target``, ``uri-reference``) are implemented; Docutils reports them as not implemented
      - the specification describes them; no corpus source uses them. Tests: ``specialized_roles_name_their_constructs``
    * - System messages are not written into the HTML page, so their ids (listed apart in ``ids.txt``) are not on it; the ids are given all the same, so every later id is Docutils'
-     - Guidedoc reports problems as diagnostics, not as page content, as Sphinx does (``keep_warnings = False`` removes them); the problematic text keeps its id. the HTML renderer's id test expects exactly the other ids
+     - Guidedoc reports problems as diagnostics, not as page content, as Sphinx does (``keep_warnings = False`` removes them); the problematic text keeps its id. The HTML renderer's id test expects exactly the other ids
    * - Smart quotes: Guidedoc's quotation marks come from its own table (CLDR delimiters)
      - they agree with Docutils for the corpus languages (en, de, fr, ru, ja, it, and de alternative quotes); other languages may differ where Docutils' tables differ from CLDR
 

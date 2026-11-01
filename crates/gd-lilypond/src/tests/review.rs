@@ -541,3 +541,46 @@ fn explicit_inner_voice_styles_are_local_and_one_voice_restores_neutral_policy()
 fn read_voices(source: &str) -> Result<Loaded, Failed> {
     load_score(source, "voices.ly", &mut Options::default())
 }
+
+#[test]
+fn beethoven_teaching_excerpt_keeps_the_instrumental_pitches_and_beat_counts() {
+    let loaded = load(include_str!("../../../../tests/integration/data/music/63-ode-to-joy.ly"));
+    assert!(loaded.warnings.is_empty());
+    assert_eq!(loaded.score.measures.len(), 4);
+    let notes: Vec<_> = loaded
+        .score
+        .events
+        .iter()
+        .filter_map(|event| match &event.kind {
+            EventKind::Chord(chord) => {
+                Some((chord.notes[0].pitch, chord.duration.time().unwrap()))
+            }
+            _ => None,
+        })
+        .collect();
+    use gd_score::Step::{C, D, E, F, G};
+    let pitches = [E, F, G, G, F, E, D, C, D, E, E, D, D];
+    let times = [
+        (1, 2),
+        (1, 4),
+        (1, 4),
+        (1, 4),
+        (1, 4),
+        (1, 4),
+        (1, 4),
+        (1, 2),
+        (1, 4),
+        (1, 4),
+        (3, 8),
+        (1, 8),
+        (1, 2),
+    ];
+    assert_eq!(notes.len(), pitches.len());
+    for ((pitch, time), (step, (num, den))) in notes.iter().zip(pitches.into_iter().zip(times)) {
+        assert_eq!(pitch.step, step);
+        assert_eq!(pitch.octave, 1);
+        assert_eq!(pitch.alter, gd_score::Alter::Natural);
+        assert_eq!(*time, Ratio::new(num, den).unwrap());
+    }
+    assert_eq!(loaded.score.measures.last().unwrap().end, Ratio::new(4, 1).unwrap());
+}

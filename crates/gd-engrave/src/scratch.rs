@@ -4,7 +4,9 @@ use std::fmt;
 
 use gd_score::Error;
 
-/// Borrowed memory callbacks for transient layout buffers; empty by default.
+/// Borrowed memory callbacks for transient layout buffers; empty by default. They are `Fn`,
+/// not `FnMut` like [`crate::Reserve`], because several reservations are live at once and
+/// each releases its own bytes when dropped.
 #[derive(Clone, Copy, Default)]
 pub struct Scratch<'a> {
     /// Reserves bytes before allocation; false stops the layout with a limit error.

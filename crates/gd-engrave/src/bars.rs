@@ -198,6 +198,18 @@ impl Draw<'_, '_, '_, '_, '_> {
             }
             let first = event.at.main.max(start);
             let last = finish.min(end);
+            // In polyphony a measure rest moves with its voice, as LilyPond's
+            // MultiMeasureRest does, so it clears the other voices' notes.
+            let direction = event
+                .voice_style
+                .map(|style| style.direction())
+                .unwrap_or(request.score.voices[event.voice.0 as usize].direction);
+            let middle = middle
+                + match direction {
+                    gd_score::Direction::Up => -2.0 * space,
+                    gd_score::Direction::Down => 2.0 * space,
+                    gd_score::Direction::Auto => 0.0,
+                };
             let (left, right) =
                 rest_span_bounds(request, self.staff.0 as usize, first, last, space, self.work)?;
             let count = request

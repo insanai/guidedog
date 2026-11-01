@@ -55,7 +55,22 @@ pub(crate) fn arrange_staff_column(
         return Ok(());
     }
     items.sort_by(|a, b| a.2.total_cmp(&b.2));
-    let outside = outside_in(items);
+    // Voices that sound one pitch with one accidental print it once, as LilyPond's
+    // accidental placement merges them; the column's accidentals stand left of every head.
+    let mut kept: Vec<(EventId, usize, f64)> = Vec::new();
+    for (id, idx, y) in items {
+        crate::limits::charge(work, kept.len())?;
+        let name = plan.events[id.0 as usize].heads[idx].accidental;
+        let duplicate = kept.iter().any(|(other, other_idx, other_y)| {
+            *other_y == y && plan.events[other.0 as usize].heads[*other_idx].accidental == name
+        });
+        if duplicate {
+            plan.events[id.0 as usize].heads[idx].accidental = None;
+        } else {
+            kept.push((id, idx, y));
+        }
+    }
+    let outside = outside_in(kept);
     let mut occupied: Vec<Bands> = Vec::new();
     for (id, idx, _) in outside {
         let info = &mut plan.events[id.0 as usize];

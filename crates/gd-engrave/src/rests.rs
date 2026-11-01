@@ -32,6 +32,8 @@ impl Draw<'_, '_, '_, '_, '_> {
         let line_start = request.columns[column].at.main == request.columns[0].at.main;
         let prefix = if line_start { 0.0 } else { request.plan.events[id.0 as usize].prefix };
         let x = request.positions[column] + prefix * space;
+        let nearby =
+            self.nearby_rests(x + data.bounds.left * space, x + data.bounds.right * space)?;
         for attempt in 0..32 {
             let ink = Rect {
                 left: x + data.bounds.left * space,
@@ -46,9 +48,10 @@ impl Draw<'_, '_, '_, '_, '_> {
                 if other.voice != event.voice && matches!(other.kind, EventKind::Chord(_)) {
                     let info = &request.plan.events[other_id.0 as usize];
                     if info.staff == self.staff.0 as usize {
+                        // A little side room keeps a rest off a neighbouring stem.
                         let bounds = Rect {
-                            left: x + info.bounds.left * space,
-                            right: x + info.bounds.right * space,
+                            left: x + info.bounds.left * space - 0.15 * space,
+                            right: x + info.bounds.right * space + 0.15 * space,
                             top: middle + info.bounds.top * space - 0.5 * space,
                             bottom: middle + info.bounds.bottom * space + 0.5 * space,
                         };
@@ -56,11 +59,9 @@ impl Draw<'_, '_, '_, '_, '_> {
                     }
                 }
             }
-            for previous in &self.system.marks {
+            for previous in &nearby {
                 charge(self.work, 1)?;
-                if previous.staff == self.staff && previous.mark.role() == Role::Rest {
-                    collision |= ink.overlaps(previous.bounds, 0.0);
-                }
+                collision |= ink.overlaps(*previous, 0.0);
             }
             if !collision {
                 break;
@@ -84,6 +85,26 @@ impl Draw<'_, '_, '_, '_, '_> {
     }
 }
 
+impl Draw<'_, '_, '_, '_, '_> {
+    /// Earlier rests of this staff within `left..right`, collected once per rest rather
+    /// than by scanning the whole system on every placement attempt.
+    fn nearby_rests(&mut self, left: f64, right: f64) -> Result<Vec<Rect>, Error> {
+        let mut nearby = Vec::new();
+        for previous in &self.system.marks {
+            charge(self.work, 1)?;
+            if previous.staff == self.staff
+                && previous.mark.role() == Role::Rest
+                && previous.bounds.right > left
+                && previous.bounds.left < right
+            {
+                nearby.try_reserve(1).map_err(|_| crate::limits::failure("Rest neighbours."))?;
+                nearby.push(previous.bounds);
+            }
+        }
+        Ok(nearby)
+    }
+}
+
 fn rest_direction(
     event: &Event,
     duration: &Duration,
@@ -93,12 +114,13 @@ fn rest_direction(
 ) -> Option<Direction> {
     let mut equal_rest = None;
     let mut any_other_rest = false;
+    let mut any_note = false;
     for other_id in &request.columns[column].events {
         let other = &request.score.events[other_id.0 as usize];
-        if other.voice != event.voice
-            && request.score.voices[other.voice.0 as usize].staff == staff
-            && let EventKind::Rest(rest) = other.kind
-        {
+        let same_staff = other.voice != event.voice
+            && request.score.voices[other.voice.0 as usize].staff == staff;
+        any_note |= same_staff && matches!(other.kind, EventKind::Chord(_));
+        if same_staff && let EventKind::Rest(rest) = other.kind {
             any_other_rest = true;
             if rest == *duration {
                 equal_rest = Some(equal_rest.map_or(other.voice, |old: gd_score::VoiceId| {
@@ -106,6 +128,11 @@ fn rest_direction(
                 }));
             }
         }
+    }
+    // Equal rests merge into one only when no other voice sounds there, as in LilyPond;
+    // beside a note each rest keeps its voice's side.
+    if any_note {
+        equal_rest = None;
     }
     if equal_rest.is_some_and(|voice| voice.0 < event.voice.0) {
         return None;

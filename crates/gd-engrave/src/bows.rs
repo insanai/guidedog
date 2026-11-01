@@ -22,6 +22,8 @@ pub(crate) struct Request<'a> {
     pub(crate) thickness: (f64, f64),
     pub(crate) obstacles: &'a [PositionedMark],
     pub(crate) staff: gd_score::StaffId,
+    /// The curve belongs to one of several voices on its staff.
+    pub(crate) polyphonic: bool,
 }
 
 pub(crate) fn choose(request: &Request<'_>, work: &mut usize) -> Result<(Bezier, Bezier), Error> {
@@ -52,7 +54,19 @@ pub(crate) fn choose(request: &Request<'_>, work: &mut usize) -> Result<(Bezier,
         for right in 0..7 {
             charge(work, 1)?;
             let mut pair = candidate(request, left, right);
-            let (height, variance, ties) = clearance(request, pair.0, &obstacles, work)?;
+            let (clear, variance, ties) = clearance(request, pair.0, &obstacles, work)?;
+            // Near a curve's ends the clearance formula divides by a small number, so an
+            // obstacle there could demand any height; past its cap the curve crosses it.
+            // A tie stays short. In polyphony, where other voices crowd a slur's ends, a
+            // slur rises at most 2.5 staff spaces and may cross another voice, as in
+            // LilyPond, whose slurs avoid only their own voice.
+            let height = if request.tie {
+                clear.curves.max(clear.notes).min(1.5 * request.space)
+            } else if request.polyphonic {
+                clear.curves.max(clear.notes).min(2.5 * request.space)
+            } else {
+                clear.curves.max(clear.notes)
+            };
             raise(&mut pair, height, request.up);
             if request.tie {
                 avoid_line(&mut pair, request);
@@ -70,13 +84,21 @@ pub(crate) fn choose(request: &Request<'_>, work: &mut usize) -> Result<(Bezier,
     best.map(|(_, pair)| pair).ok_or_else(|| crate::limits::failure("No curve candidate."))
 }
 
+/// How far a candidate must rise to clear other curves and to clear everything else.
+#[derive(Clone, Copy, Default)]
+struct Clearance {
+    curves: f64,
+    notes: f64,
+}
+
 fn clearance(
     request: &Request<'_>,
     curve: Bezier,
     obstacles: &[(crate::Rect, Role)],
     work: &mut usize,
-) -> Result<(f64, f64, f64), Error> {
-    let (mut extra, mut sum, mut squares, mut count, mut ties) = (0.0f64, 0.0, 0.0, 0.0, 0.0);
+) -> Result<(Clearance, f64, f64), Error> {
+    let mut extra = Clearance::default();
+    let (mut sum, mut squares, mut count, mut ties) = (0.0, 0.0, 0.0, 0.0);
     for sample in 1..=16 {
         let t = f64::from(sample) / 17.0;
         let point = curve.point(t);
@@ -88,7 +110,12 @@ fn clearance(
                 continue;
             }
             let depth = if request.up { point.y - bounds.top } else { bounds.bottom - point.y };
-            extra = extra.max((depth + 0.2 * request.space) / (3.0 * t * (1.0 - t)));
+            let needed = (depth + 0.2 * request.space) / (3.0 * t * (1.0 - t));
+            if matches!(role, Role::Tie | Role::Slur) {
+                extra.curves = extra.curves.max(needed);
+            } else {
+                extra.notes = extra.notes.max(needed);
+            }
             if *role == Role::Notehead {
                 let distance = depth / request.space;
                 sum += distance;

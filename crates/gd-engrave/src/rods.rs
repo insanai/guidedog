@@ -54,6 +54,7 @@ pub(crate) fn collect(
                         options,
                     )?;
                 }
+                voice_span_band(&mut current, column, plan, staff, fonts, work)?;
                 crate::labels::lyrics(
                     &mut current,
                     score,
@@ -196,6 +197,41 @@ fn event_bands(
             Rect { left: 0.0, right: info.base_prefix, top: -4.0, bottom: 4.0 },
             work,
         )?;
+    }
+    Ok(())
+}
+
+/// Where voices share a staff column and some are shifted sideways, the column's heads
+/// form one unit, as LilyPond's note columns do: a band across the whole staff keeps every
+/// head of the next column right of every head of this one, whatever their heights.
+fn voice_span_band(
+    current: &mut Bands,
+    column: &Column,
+    plan: &Plan,
+    staff: usize,
+    fonts: &Fonts<'_>,
+    work: &mut usize,
+) -> Result<(), Error> {
+    let (mut left, mut right, mut shifted) = (f64::INFINITY, f64::NEG_INFINITY, false);
+    for id in &column.events {
+        charge(work, 1)?;
+        let info = &plan.events[id.0 as usize];
+        if info.staff != staff || info.heads.is_empty() {
+            continue;
+        }
+        let glyph = fonts.glyph(info.head_glyph)?;
+        let bounds = fonts
+            .glyph_data(glyph)
+            .ok_or_else(|| failure("Missing glyph collision geometry."))?
+            .bounds;
+        for head in info.heads.iter().filter(|head| !head.shared) {
+            shifted |= head.at.x != 0.0 || info.voice_shift != 0.0;
+            left = left.min(info.prefix + head.at.x + bounds.left * info.head_scale);
+            right = right.max(info.prefix + head.at.x + bounds.right * info.head_scale);
+        }
+    }
+    if shifted && left < right {
+        add_rect(current, Rect { left, right, top: -6.0, bottom: 6.0 }, work)?;
     }
     Ok(())
 }

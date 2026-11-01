@@ -21,10 +21,11 @@ pub(super) fn arrange(
         let bounds = fonts.glyph_data(glyph).ok_or_else(|| failure("Missing voice head."))?.bounds;
         let width = (bounds.right - bounds.left) * info.head_scale + 0.3;
         let side = if rank(score, *id) == 4 { -1.0 } else { 1.0 };
+        let base = inner_offset(plan, &ordered[..index], *id, score) * width;
         let mut placed = false;
         for step in 0..=16 {
             charge(work, 1)?;
-            let shift = f64::from(step) * width * side;
+            let shift = (base + f64::from(step) * width) * side;
             move_column(&mut plan.events[id.0 as usize], shift, fonts, work)?;
             let mut collision = false;
             for previous in &ordered[..index] {
@@ -45,6 +46,19 @@ pub(super) fn arrange(
         }
     }
     share_heads(plan, &ordered, score, work)
+}
+
+/// An inner voice (three or four) beside an earlier column with the same stem direction
+/// starts half a head width aside, as LilyPond's note collisions always shift it, so two
+/// stems in one direction never read as a single chord.
+fn inner_offset(plan: &Plan, earlier: &[EventId], id: EventId, score: &Score) -> f64 {
+    let info = &plan.events[id.0 as usize];
+    let stemmed = |info: &EventInfo| stem(info).bottom > stem(info).top;
+    let beside = earlier.iter().any(|previous| {
+        let other = &plan.events[previous.0 as usize];
+        other.up == info.up && stemmed(other)
+    });
+    if rank(score, id) >= 3 && stemmed(info) && beside { 0.5 } else { 0.0 }
 }
 
 pub(super) fn rank(score: &Score, id: EventId) -> usize {

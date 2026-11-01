@@ -859,3 +859,66 @@ fn explicit_stem_overrides_and_neutral_survive_inner_voice_policies() {
         .collect();
     assert_eq!(stems, [true, false, false, true]);
 }
+
+fn marks_of(engraving: &Engraving, roles: &[Role]) -> Vec<Rect> {
+    let marks = engraving.systems.iter().flat_map(|s| &s.marks);
+    marks.filter(|m| roles.contains(&m.mark.role())).map(|m| m.bounds).collect()
+}
+
+#[test]
+fn inner_voice_ties_and_slurs_keep_a_bounded_height() {
+    let space = 18.0 / 4.0;
+    let ties = draw(r"<< { c''2 c''2 } \\ { c'2 c'2 } \\ { g'2~ g'2 } \\ { e'2~ e'2 } >>", 350.0);
+    for tie in marks_of(&ties, &[Role::Tie]) {
+        assert!(tie.bottom - tie.top < 3.0 * space, "{tie:?}");
+    }
+    let slurs =
+        draw(r"<< { c''4( d'' e'' f'') } \\ { c'4( d' e' f') } \\ { g'4( a' b' c'') } >>", 350.0);
+    for slur in marks_of(&slurs, &[Role::Slur]) {
+        assert!(slur.bottom - slur.top < 7.0 * space, "{slur:?}");
+    }
+}
+
+#[test]
+fn marks_of_voices_on_one_side_do_not_print_over_each_other() {
+    let engraving = draw(
+        r"<< { c''4-. d''-> e''\p f''-1 } \\ { c'4-. d'-> e'\p f'-1 }
+             \\ { g'4-. a'-> b'\f c''-2 } \\ { e'4-. f'-> g'\f a'-3 } >>",
+        350.0,
+    );
+    let space = 18.0 / 4.0;
+    let marks = marks_of(&engraving, &[Role::Articulation, Role::Fingering]);
+    for (i, a) in marks.iter().enumerate() {
+        for b in &marks[i + 1..] {
+            let wide = a.right.min(b.right) - a.left.max(b.left) > 0.25 * space;
+            let tall = a.bottom.min(b.bottom) - a.top.max(b.top) > 0.25 * space;
+            assert!(!(wide && tall), "{a:?} {b:?}");
+        }
+    }
+}
+
+#[test]
+fn shifted_voices_keep_their_columns_in_time_order() {
+    let engraving =
+        draw(r"<< { c''4 d''4 } \\ { c'4 d'4 } \\ { e''4 f''4 } \\ { g4 a4 } >>", 350.0);
+    let mut heads = marks_of(&engraving, &[Role::Notehead]);
+    heads.sort_by(|a, b| a.left.total_cmp(&b.left));
+    let (first, second) = heads.split_at(heads.len() / 2);
+    let right = first.iter().map(|h| h.right).fold(f64::MIN, f64::max);
+    let left = second.iter().map(|h| h.left).fold(f64::MAX, f64::min);
+    assert!(right < left, "{first:?} {second:?}");
+}
+
+#[test]
+fn measure_rests_and_tuplets_follow_their_voice() {
+    let engraving = draw(r"<< { d''1 } \\ { R1 } >>", 350.0);
+    let head = marks_of(&engraving, &[Role::Notehead])[0];
+    for rest in marks_of(&engraving, &[Role::Rest]) {
+        assert!(!rest.overlaps(head, 0.0), "{rest:?} {head:?}");
+    }
+    let tuplets = draw(r"<< { c''2 c''2 } \\ { \tuplet 3/2 { a8 b c' } d'4 e'2 } >>", 350.0);
+    let middle = 4.0 * 18.0 / 4.0;
+    for number in marks_of(&tuplets, &[Role::Tuplet]) {
+        assert!(number.top > middle, "{number:?}");
+    }
+}

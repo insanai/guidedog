@@ -35,7 +35,9 @@ impl Draw<'_, '_, '_, '_, '_> {
                     charge(self.work, 1)?;
                     let direction = request.score.voices[event.voice.0 as usize].direction;
                     let up = mark_above(mark, info.up, direction);
-                    let at = Point { x, y: middle + if up { -5.0 * space } else { 5.0 * space } };
+                    // A shifted voice's marks follow its noteheads, not the column.
+                    let y = middle + if up { -5.0 * space } else { 5.0 * space };
+                    let at = Point { x: x + info.voice_shift * space, y };
                     let first = self.system.marks.len();
                     self.annotation(mark, at, space, up)?;
                     self.separate_annotations(annotation_start, first, middle, up, space)?;

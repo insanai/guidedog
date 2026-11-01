@@ -23,6 +23,7 @@ fn sampled_curve_search_clears_inner_ink_and_honors_work_bounds() {
         thickness: (0.4, 0.9),
         obstacles: &[obstacle],
         staff: gd_score::StaffId(0),
+        polyphonic: false,
     };
     let (outer, _) = crate::bows::choose(&request, &mut 100_000).unwrap();
     for sample in 1..=16 {

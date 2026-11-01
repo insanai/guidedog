@@ -200,6 +200,10 @@ impl Draw<'_, '_, '_, '_, '_> {
             thickness: (end_thickness, middle_thickness),
             obstacles: &self.system.marks,
             staff: self.staff,
+            // In polyphony other voices' notes crowd a curve's ends.
+            polyphonic: context.score.events[spanner.start.event.0 as usize]
+                .voice_style
+                .is_some_and(|style| style != gd_score::VoiceStyle::Single),
         };
         let (outer, inner) = crate::bows::choose(&request, self.work)?;
         let bounds = curve_bounds(outer).union(curve_bounds(inner));

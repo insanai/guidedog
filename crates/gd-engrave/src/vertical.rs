@@ -134,22 +134,76 @@ fn place_role(
     } else {
         vec![indices]
     };
+    // Articulations, fingerings and text scripts are single marks, so two that overlap
+    // belong to different voices. Dynamics and tuplet numbers are drawn glyph by glyph,
+    // and their kerned glyphs overlap, so each of their clusters moves as one.
+    let single = matches!(role, Role::Articulation | Role::Fingering | Role::Script);
     for cluster in clusters {
-        let mut group = Facing::new(occupied.upper.scratch());
-        for &index in &cluster {
-            add(&mut group, &system.marks[index], 0.0, work)?;
-        }
-        let delta = if up {
-            -group.lower.distance(&occupied.upper, work)? - 0.25 * space
+        if single {
+            for layer in layers(system, cluster, space, work)? {
+                place_layer(system, occupied, layer, up, space, work)?;
+            }
         } else {
-            occupied.lower.distance(&group.upper, work)? + 0.25 * space
-        };
-        let delta = if delta.is_finite() { delta } else { 0.0 };
-        for index in cluster {
-            let mark = &mut system.marks[index];
-            translate(mark, 0.0, delta);
-            add(occupied, mark, 0.0, work)?;
+            place_layer(system, occupied, cluster, up, space, work)?;
         }
+    }
+    Ok(())
+}
+
+/// Splits a cluster so marks that print over each other, such as the staccatos of two
+/// voices on one side, go to separate layers.
+fn layers(
+    system: &System,
+    cluster: Vec<usize>,
+    space: f64,
+    work: &mut usize,
+) -> Result<Vec<Vec<usize>>, Error> {
+    let mut layers: Vec<Vec<usize>> = Vec::new();
+    for index in cluster {
+        let a = system.marks[index].bounds;
+        let mut chosen = None;
+        for (number, layer) in layers.iter().enumerate() {
+            charge(work, layer.len())?;
+            let clashes = layer.iter().any(|other| {
+                let b = system.marks[*other].bounds;
+                a.right.min(b.right) - a.left.max(b.left) > 0.25 * space
+                    && a.bottom.min(b.bottom) - a.top.max(b.top) > 0.25 * space
+            });
+            if !clashes {
+                chosen = Some(number);
+                break;
+            }
+        }
+        match chosen {
+            Some(number) => layers[number].push(index),
+            None => layers.push(vec![index]),
+        }
+    }
+    Ok(layers)
+}
+
+fn place_layer(
+    system: &mut System,
+    occupied: &mut Facing<'_>,
+    cluster: Vec<usize>,
+    up: bool,
+    space: f64,
+    work: &mut usize,
+) -> Result<(), Error> {
+    let mut group = Facing::new(occupied.upper.scratch());
+    for &index in &cluster {
+        add(&mut group, &system.marks[index], 0.0, work)?;
+    }
+    let delta = if up {
+        -group.lower.distance(&occupied.upper, work)? - 0.25 * space
+    } else {
+        occupied.lower.distance(&group.upper, work)? + 0.25 * space
+    };
+    let delta = if delta.is_finite() { delta } else { 0.0 };
+    for index in cluster {
+        let mark = &mut system.marks[index];
+        translate(mark, 0.0, delta);
+        add(occupied, mark, 0.0, work)?;
     }
     Ok(())
 }

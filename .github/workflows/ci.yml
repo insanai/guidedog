@@ -6,16 +6,21 @@ on:
   push:
     branches: [main]
     paths: &code
-      # Changes only to documentation skip this workflow (the Pages workflow still builds
-      # it), except the documents the tests read: README files, whose examples run, the
-      # tutorials, the GDS, and the manual's copies of repository files.
+      # Pure PO catalog or release-process prose edits skip this workflow (the Pages
+      # workflow still builds the documentation); everything read by workspace tests or
+      # release qualification triggers Verify.
       - '**'
       - '!docs/**'
       - '!**.md'
       - '**/README.md'
       - 'README*.md'
-      - 'docs/manual/tutorial/**'
+      - 'CHANGELOG.md'
+      - '.github/release-notes.md'
+      - 'docs/**/conf.toml'
+      - 'docs/**/*.rst'
+      - 'docs/**/*.typ'
       - 'docs/gds/**'
+      - 'docs/manual/template/**'
       - 'docs/manual/_static/repository/**'
   pull_request:
     paths: *code

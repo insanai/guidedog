@@ -146,6 +146,23 @@ fn intl_update_needs_templates() {
 }
 
 #[test]
+fn intl_update_skips_hidden_staging_folders() {
+    let dir = TempDir::new("hidden");
+    let config = config_in(&dir.0);
+    dir.write("src/_build/gettext/index.pot", "msgid \"Hello\"\nmsgstr \"\"\n");
+    dir.write("src/_build/gettext/.templates.next/stale.pot", "msgid \"Stale\"\nmsgstr \"\"\n");
+    dir.write("src/locales/de/LC_MESSAGES/.templates.next/stale.po", "msgid \"\"\nmsgstr \"\"\n");
+    let de = IntlOptions { languages: vec!["de".into()], ..IntlOptions::default() };
+    let mut files = Vec::new();
+    intl_update(&config, &de, &mut files).unwrap();
+    assert_eq!(files.len(), 1);
+    assert!(files[0].path.ends_with("de/LC_MESSAGES/index.po"));
+    files.clear();
+    intl_stat(&config, &de, &mut files).unwrap();
+    assert_eq!(files.len(), 1);
+}
+
+#[test]
 fn intl_update_reports_broken_catalogs() {
     let dir = TempDir::new("broken");
     let config = config_in(&dir.0);

@@ -221,10 +221,14 @@ pub(crate) fn catalog_files(dir: &Path, out: &mut Vec<PathBuf>) {
     files_with(dir, &["po", "mo"], out);
 }
 
-/// Collects the files below `dir` whose extension is one of `extensions`.
+/// Collects the files below `dir` whose extension is one of `extensions`, skipping
+/// hidden entries such as `.doctrees` or staged `.guidedog` directories.
 pub(crate) fn files_with(dir: &Path, extensions: &[&str], out: &mut Vec<PathBuf>) {
     let Ok(entries) = std::fs::read_dir(dir) else { return };
     for entry in entries.flatten() {
+        if entry.file_name().as_encoded_bytes().starts_with(b".") {
+            continue;
+        }
         let path = entry.path();
         if entry.file_type().is_ok_and(|t| t.is_dir()) {
             files_with(&path, extensions, out);

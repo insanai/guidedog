@@ -247,3 +247,17 @@ pub(crate) fn translate(placed: &mut PositionedMark, x: f64, y: f64) {
     }
     placed.bounds = placed.bounds.translated(x, y);
 }
+
+/// Includes furniture added after staff placement in the final drawing bounds.
+pub(crate) fn fit(system: &mut System, space: f64, work: &mut usize) -> Result<(), Error> {
+    let top = system.marks.iter().map(|m| m.bounds.top).fold(space, f64::min);
+    let shift = (space - top).max(0.0);
+    let mut bottom: f64 = 0.0;
+    for mark in &mut system.marks {
+        charge(work, 1)?;
+        translate(mark, 0.0, shift);
+        bottom = bottom.max(mark.bounds.bottom);
+    }
+    system.height = bottom + space;
+    Ok(())
+}

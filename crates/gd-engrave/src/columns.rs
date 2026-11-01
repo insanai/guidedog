@@ -152,7 +152,7 @@ fn preface(
 ) -> Result<(f64, f64), Error> {
     let space = options.staff_size / 4.0;
     let mut width: f64 = 0.0;
-    let mut indent: f64 = 0.0;
+    let mut indent: f64 = if score.groups.is_empty() { 0.0 } else { 2.1 };
     let mut warnings = Vec::new();
     for (staff_index, staff) in score.staves.iter().enumerate() {
         charge(work, 1)?;
@@ -166,7 +166,9 @@ fn preface(
                 &mut warnings,
                 work,
             )?;
-            indent = indent.max(shaped.advance / space + 1.5);
+            indent = indent.max(
+                shaped.advance / space + 1.5 + if score.groups.is_empty() { 0.0 } else { 2.1 },
+            );
         }
         if let Some(state) = plan.measures.get(measure).and_then(|m| m.get(staff_index)) {
             let key = state

@@ -1,4 +1,4 @@
-use gd_score::{Direction, Error, EventKind, NoteRef, Score, SpannerKind, StaffId};
+use gd_score::{Direction, Error, NoteRef, Score, SpannerKind};
 
 use crate::drawing::{Draw, Request};
 use crate::limits::charge;
@@ -19,7 +19,7 @@ impl Draw<'_, '_, '_, '_> {
             }
             self.staff = score.voices[a.voice.0 as usize].staff;
             let middle = (4.0 + f64::from(self.staff.0) * 9.0) * space;
-            charge(self.work, 2 * score.events.len())?;
+
             let first = endpoint(score, spanner.start, request, middle, space);
             let last = endpoint(score, spanner.end, request, middle, space);
             self.measure = request.first;
@@ -111,8 +111,7 @@ impl Draw<'_, '_, '_, '_> {
         if to.x <= from.x {
             return Ok(());
         }
-        let limit = if tie { space } else { 2.0 * space };
-        let ratio = if tie { 0.333 } else { 0.25 };
+
         let end_thickness = self.fonts.default_value(
             if tie { "tieEndpointThickness" } else { "slurEndpointThickness" },
             0.1,
@@ -121,14 +120,18 @@ impl Draw<'_, '_, '_, '_> {
             if tie { "tieMidpointThickness" } else { "slurMidpointThickness" },
             0.2,
         ) * space;
-        let (outer, inner) = bow(
+        let request = crate::bows::Request {
             from,
             to,
-            limit,
-            ratio,
-            if up { -1.0 } else { 1.0 },
-            (end_thickness, middle_thickness),
-        );
+            middle,
+            space,
+            up,
+            tie,
+            thickness: (end_thickness, middle_thickness),
+            obstacles: &self.system.marks,
+            staff: self.staff,
+        };
+        let (outer, inner) = crate::bows::choose(&request, self.work)?;
         let bounds = curve_bounds(outer).union(curve_bounds(inner));
         self.add(
             Mark::Curve { outer, inner, role: if tie { Role::Tie } else { Role::Slur } },
@@ -173,32 +176,11 @@ pub(crate) fn endpoint(
         .get(index)
         .copied()
         .unwrap_or_else(|| request.positions.last().copied().unwrap_or(0.0));
-    let staff = score.voices[event.voice.0 as usize].staff;
-    let clef = effective_clef(score, staff, event.at);
-    let y = if let EventKind::Chord(chord) = &event.kind {
-        middle
-            - f64::from(chord.notes[reference.note as usize].pitch.diatonic() - clef.middle())
-                * space
-                / 2.0
-    } else {
-        middle
-    };
-    Point { x, y }
-}
-
-pub(crate) fn effective_clef(
-    score: &Score,
-    staff: StaffId,
-    at: gd_score::Moment,
-) -> gd_score::Clef {
-    score
-        .events
-        .iter()
-        .filter(|e| e.at <= at && score.voices[e.voice.0 as usize].staff == staff)
-        .filter_map(|e| if let EventKind::Clef(clef) = e.kind { Some((e.at, clef)) } else { None })
-        .max_by_key(|(at, _)| *at)
-        .map(|(_, clef)| clef)
-        .unwrap_or_default()
+    let info = &request.plan.events[reference.event.0 as usize];
+    let head = info.heads.get(reference.note as usize);
+    let local = head.map(|head| head.at).unwrap_or_default();
+    let y = middle + local.y * space;
+    Point { x: x + (info.prefix + local.x) * space, y }
 }
 
 pub(crate) fn bow(

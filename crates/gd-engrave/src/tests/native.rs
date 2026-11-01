@@ -82,3 +82,35 @@ fn a_reused_workspace_is_byte_deterministic() {
     write_svg(&mut second_svg, &second, &SvgOptions::default(), None).unwrap();
     assert_eq!(first_svg, second_svg);
 }
+
+#[test]
+fn groups_repeats_bars_and_measure_rests_have_distinct_geometry() {
+    let engraving = draw(
+        r"\new StaffGroup <<
+        \new Staff { \repeat volta 2 { c'1 | } R1*3 }
+        \new Staff { \clef bass c1 | R1*3 }
+    >>",
+        350.0,
+    );
+    let marks: Vec<_> = engraving.systems.iter().flat_map(|s| &s.marks).collect();
+    assert!(marks.iter().any(|m| m.mark.role() == Role::Instrument));
+    let repeats = marks
+        .iter()
+        .filter(|m| {
+            matches!(m.mark, Mark::Glyph { glyph, .. }
+        if engraving.glyphs.get(&glyph).is_some_and(|g| g.name == "repeatDot"))
+        })
+        .count();
+    assert_eq!(repeats, 4);
+    assert!(marks.iter().any(|m| matches!(m.mark, Mark::Line {
+        role: Role::Rest, thickness, .. } if thickness > 3.0)));
+    for system in &engraving.systems {
+        for mark in &system.marks {
+            assert!(
+                mark.bounds.top >= -0.001 && mark.bounds.bottom <= system.height + 0.001,
+                "{:?}",
+                mark.mark
+            );
+        }
+    }
+}

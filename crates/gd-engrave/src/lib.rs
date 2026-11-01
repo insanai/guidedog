@@ -3,8 +3,10 @@
 
 #![forbid(unsafe_code)]
 
+mod bars;
 mod beaming;
 mod beams;
+mod bows;
 mod breaking;
 mod columns;
 mod curves;
@@ -12,6 +14,7 @@ mod decorations;
 mod drawing;
 mod fonts;
 mod geometry;
+mod groups;
 mod heads;
 mod layout;
 mod limits;

@@ -36,9 +36,11 @@ pub(crate) fn draw_system(
         draw.staff_system(request, staff_index, width)?;
     }
     draw.beams(request)?;
-    draw.spanners(request)?;
     draw.decorations(request)?;
+    draw.spanners(request)?;
     crate::vertical::place(&mut draw.system, score.staves.len(), space, draw.work)?;
+    draw.groups(request)?;
+    crate::vertical::fit(&mut draw.system, space, draw.work)?;
     Ok((draw.system, draw.warnings))
 }
 
@@ -88,12 +90,8 @@ impl Draw<'_, '_, '_, '_> {
         self.clef(clef, request.indent + space, middle, space)?;
         self.signatures(request, middle)?;
         self.staff_music(request, middle)?;
-        self.line(
-            Point { x: width, y: middle - 2.0 * space },
-            Point { x: width, y: middle + 2.0 * space },
-            0.16 * space,
-            Role::Bar,
-        )?;
+        self.measure_bars(request, middle)?;
+        self.measure_rests(request, middle)?;
         Ok(())
     }
 
@@ -130,15 +128,21 @@ impl Draw<'_, '_, '_, '_> {
                         middle,
                         column.at.main == request.columns[0].at.main,
                     )?,
-                    EventKind::Rest(duration) | EventKind::MeasureRest(duration) => {
+                    EventKind::Rest(duration) => {
                         self.glyph(rest(duration.base), x, middle, space, Role::Rest)?;
                     }
-                    EventKind::Bar(_) => self.line(
-                        Point { x, y: middle - 2.0 * space },
-                        Point { x, y: middle + 2.0 * space },
-                        0.16 * space,
-                        Role::Bar,
-                    )?,
+                    EventKind::Bar(style) => {
+                        if index == 0
+                            && matches!(
+                                style,
+                                gd_score::BarStyle::RepeatEnd | gd_score::BarStyle::Final
+                            )
+                        {
+                            continue;
+                        }
+                        self.bar(*style, x, middle)?;
+                    }
+                    EventKind::MeasureRest(_) => {}
                     EventKind::Key(_) | EventKind::Time(_) => self.signature_change(
                         event,
                         &request.plan.events[id.0 as usize],

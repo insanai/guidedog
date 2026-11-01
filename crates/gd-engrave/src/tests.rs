@@ -2,6 +2,7 @@
 
 use crate::*;
 
+mod bows;
 mod native;
 
 #[test]

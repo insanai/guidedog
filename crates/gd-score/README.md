@@ -7,6 +7,6 @@ We construct `Ratio` with `Ratio::new`, use its checked arithmetic for musical t
 Events, voices and staves have typed indices; ties and lyrics can identify individual chord heads.
 Errors retain source spans and corrective hints for the application's diagnostic adapter.
 
-A staff holds at most four voices.
+At most four voices of a staff sound at once; a staff keeps at most sixty-four voice records.
 Each event can carry a local `VoiceStyle`; `None` inherits its voice's direction and `Single` restores automatic directions.
 A chord's optional direction overrides that policy; `Some(Direction::Auto)` requests neutral stems explicitly, while `None` inherits the policy.

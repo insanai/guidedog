@@ -112,6 +112,10 @@ impl VoiceStyle {
     }
 }
 
+/// The most voice records one staff may hold. At most four of them may sound at once;
+/// finished voices stay as records so lyrics can still find them by name.
+pub const MAX_STAFF_VOICES: usize = 64;
+
 /// A connected group of contiguous staves.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct StaffGroup {

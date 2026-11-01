@@ -142,13 +142,28 @@ fn unplaced_spans_tonic_transposition_and_grace_invariants_behave_exact() {
     assert!(check_score(&s).is_err());
 }
 
+/// Adds a voice holding one note at `at`, which lasts the note's default duration.
+fn add_voice_note(s: &mut Score, at: Ratio) {
+    let voice = VoiceId(s.voices.len() as u32);
+    let id = EventId(s.events.len() as u32);
+    let mut event = s.events[0].clone();
+    event.voice = voice;
+    event.at = Moment { main: at, grace: Ratio::ZERO };
+    s.events.push(event);
+    s.voices.push(Voice { events: vec![id], ..Voice::default() });
+}
+
 #[test]
-fn score_validation_accepts_four_voices_and_rejects_a_fifth() {
+fn score_validation_counts_voices_sounding_at_once() {
     let mut s = score();
     for _ in 1..4 {
-        s.voices.push(Voice::default());
+        add_voice_note(&mut s, Ratio::ZERO);
     }
     check_score(&s).unwrap();
-    s.voices.push(Voice::default());
+    // A voice that begins when the others have ended does not sound with them.
+    let after = Ratio::ONE;
+    add_voice_note(&mut s, after);
+    check_score(&s).unwrap();
+    add_voice_note(&mut s, Ratio::ZERO);
     assert!(check_score(&s).unwrap_err().message.contains("four voices"));
 }

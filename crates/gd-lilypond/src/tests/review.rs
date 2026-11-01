@@ -525,7 +525,18 @@ fn four_implicit_voices_keep_time_styles_and_reject_a_fifth() {
     );
     assert!(loaded.score.events.iter().all(|event| event.at.main == gd_score::Ratio::ZERO));
     let failed = read_voices(r"<< { c1 } \\ { d1 } \\ { e1 } \\ { f1 } \\ { g1 } >>").unwrap_err();
-    assert!(failed.error.message.contains("four voices per staff"));
+    assert!(failed.error.message.contains("four voices sounding at once"));
+    // Finished voices do not count: five differently named voices, at most three at once.
+    let sequential = read_voices(
+        r#"\new Staff {
+            << \new Voice = "a" { \voiceOne c''1 } \new Voice = "b" { \voiceTwo c'1 } >>
+            << \new Voice = "c" { \voiceOne d''1 } \new Voice = "d" { \voiceTwo d'1 }
+               \new Voice = "e" { \voiceThree f'1 } >>
+        }"#,
+    )
+    .unwrap();
+    assert_eq!(sequential.score.voices.len(), 5);
+    assert!(gd_score::check_score(&sequential.score).is_ok());
 }
 
 #[test]

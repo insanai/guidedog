@@ -193,7 +193,8 @@ impl Reader<'_> {
         let reuse = self.can_reuse_staff();
         self.staff_contexts += 1;
         let staff = if reuse { StaffId(0) } else { self.alloc_staff(span)? };
-        child.voice = if reuse { VoiceId(0) } else { self.new_voice(staff, "", span)? };
+        child.voice =
+            if reuse { VoiceId(0) } else { self.new_voice(staff, "", child.at.main, span)? };
         if !name.is_empty() && self.score.voices[child.voice.0 as usize].name.is_empty() {
             self.score.voices[child.voice.0 as usize].name = name.into();
         }
@@ -299,27 +300,39 @@ impl Reader<'_> {
             if !name.is_empty() && !voice.name.is_empty() && voice.name != name {
                 continue;
             }
-            let free = voice.events.iter().all(|eid| {
-                let event = &self.score.events[eid.0 as usize];
-                let dur = event.kind.duration().and_then(|d| d.time().ok()).unwrap_or(Ratio::ZERO);
-                event.at.main.checked_add(dur).is_ok_and(|end| end <= at)
-            });
-            if free {
+            if self.voice_free(voice, at) {
                 return Ok(id);
             }
         }
-        self.new_voice(staff, name, span)
+        self.new_voice(staff, name, at, span)
     }
 
+    /// Whether a voice has finished by `at`. A voice's events are sequential and ordered,
+    /// so its last event ends last; only that one needs checking.
+    fn voice_free(&self, voice: &Voice, at: Ratio) -> bool {
+        voice.events.last().is_none_or(|id| {
+            let event = &self.score.events[id.0 as usize];
+            let time = event.kind.duration().and_then(|d| d.time().ok()).unwrap_or(Ratio::ZERO);
+            event.at.main.checked_add(time).is_ok_and(|end| end <= at)
+        })
+    }
+
+    /// Adds a voice to `staff` from `at`. Four voices may sound at once, as LilyPond's
+    /// voice styles describe; finished voices with other names do not count.
     pub(crate) fn new_voice(
         &mut self,
         staff: StaffId,
         name: &str,
+        at: Ratio,
         span: Span,
     ) -> Result<VoiceId, Error> {
-        let count = self.score.voices.iter().filter(|v| v.staff == staff).count();
+        let on_staff = || self.score.voices.iter().filter(move |v| v.staff == staff);
+        if on_staff().count() >= gd_score::MAX_STAFF_VOICES {
+            return Err(limit("voices per staff", span));
+        }
+        let count = on_staff().filter(|v| !self.voice_free(v, at)).count();
         if count >= 4 {
-            return Err(limit("four voices per staff", span));
+            return Err(limit("four voices sounding at once on a staff", span));
         }
         let id = VoiceId(self.score.voices.len() as u32);
         push(

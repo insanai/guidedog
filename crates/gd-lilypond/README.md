@@ -14,5 +14,5 @@ The command table distinguishes implemented notation, ignored metadata and refus
 Source, nesting, includes, events and work have explicit limits.
 Engraving and image export belong to the separate `gd-engrave` adapter.
 
-The reader accepts four voices per staff, with local `\voiceOne` through `\voiceFour` policies and `\oneVoice` to restore automatic directions.
+The reader accepts four voices sounding at once on a staff, with local `\voiceOne` through `\voiceFour` policies and `\oneVoice` to restore automatic directions.
 A fifth voice is refused at its source span.

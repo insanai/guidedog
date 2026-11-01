@@ -24,6 +24,7 @@ pub fn check_score(score: &Score) -> Result<(), Error> {
         }
     }
     check_voices(score)?;
+    check_simultaneous_voices(score)?;
     for event in &score.events {
         check_event(event).map_err(|error| error.or_at(event.span))?;
     }
@@ -48,18 +49,57 @@ pub fn check_score(score: &Score) -> Result<(), Error> {
     Ok(())
 }
 
+/// At most four voices of a staff may sound at once. A voice sounds from its first event
+/// to the end of its last; a sweep over those spans finds the most that overlap.
+fn check_simultaneous_voices(score: &Score) -> Result<(), Error> {
+    let mut spans = Vec::new();
+    spans
+        .try_reserve(score.voices.len().saturating_mul(2))
+        .map_err(|_| invalid("Cannot allocate score validation spans."))?;
+    for voice in &score.voices {
+        let (Some(first), Some(last)) = (voice.events.first(), voice.events.last()) else {
+            continue;
+        };
+        let (Some(first), Some(last)) =
+            (score.events.get(first.0 as usize), score.events.get(last.0 as usize))
+        else {
+            return Err(invalid("A voice names a missing event."));
+        };
+        let time = last.kind.duration().map(|d| d.time()).transpose()?.unwrap_or(Ratio::ZERO);
+        let end = last.at.main.checked_add(time)?;
+        if end > first.at.main {
+            // Ends sort before starts at the same moment, so a voice that ends where
+            // another begins does not overlap it.
+            spans.push((voice.staff, end, 0i32));
+            spans.push((voice.staff, first.at.main, 1i32));
+        }
+    }
+    spans.sort();
+    let mut sounding = [0i32; 24];
+    for (staff, _, delta) in spans {
+        let Some(count) = sounding.get_mut(staff.0 as usize) else {
+            return Err(invalid("A voice names a missing staff."));
+        };
+        *count += if delta == 1 { 1 } else { -1 };
+        if *count > 4 {
+            return Err(invalid("At most four voices of a staff may sound at once."));
+        }
+    }
+    Ok(())
+}
+
 fn check_voices(score: &Score) -> Result<(), Error> {
     let mut seen = Vec::new();
     seen.try_reserve(score.events.len())
         .map_err(|_| invalid("Cannot allocate score validation marks."))?;
     seen.resize(score.events.len(), false);
-    let mut counts = [0u8; 24];
+    let mut counts = [0usize; 24];
     for (index, voice) in score.voices.iter().enumerate() {
         let Some(count) = counts.get_mut(voice.staff.0 as usize) else {
             return Err(invalid("A voice names a missing staff."));
         };
-        if voice.staff.0 as usize >= score.staves.len() || *count >= 4 {
-            return Err(invalid("A staff must exist and may contain at most four voices."));
+        if voice.staff.0 as usize >= score.staves.len() || *count >= crate::MAX_STAFF_VOICES {
+            return Err(invalid("A staff must exist and hold a bounded number of voices."));
         }
         *count += 1;
         let mut previous = None;

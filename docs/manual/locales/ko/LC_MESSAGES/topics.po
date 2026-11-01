@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 05:19+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -39,63 +39,68 @@ msgstr ""
 "실행 파일에 포함됩니다. 별도의 ``dot`` 또는 ``typst`` 프로그램은 필요하지 않습니다."
 
 #: ../../topics/diagrams.rst:12
+msgid ""
+"For musical scores, we use the native notation workflow in :doc:`music`."
+msgstr "악보에는 :doc:`music`의 네이티브 기보 작업 흐름을 사용합니다."
+
+#: ../../topics/diagrams.rst:14
 msgid "Choose the drawing tool"
 msgstr "그리기 도구 선택"
 
-#: ../../topics/diagrams.rst:15
+#: ../../topics/diagrams.rst:17
 msgid "Drawing tools"
 msgstr "그리기 도구"
 
-#: ../../topics/diagrams.rst:19
+#: ../../topics/diagrams.rst:21
 msgid "Tool"
 msgstr "도구"
 
-#: ../../topics/diagrams.rst:20
+#: ../../topics/diagrams.rst:22
 msgid "Useful when"
 msgstr "적합한 경우"
 
-#: ../../topics/diagrams.rst:21
+#: ../../topics/diagrams.rst:23
 msgid "Source"
 msgstr "소스"
 
-#: ../../topics/diagrams.rst:22
+#: ../../topics/diagrams.rst:24
 msgid "Graphviz"
 msgstr "Graphviz"
 
-#: ../../topics/diagrams.rst:23
+#: ../../topics/diagrams.rst:25
 msgid ""
 "We describe nodes and edges and want the layout engine to place them."
 msgstr "노드와 간선을 설명하고 레이아웃 엔진이 위치를 정하도록 합니다."
 
-#: ../../topics/diagrams.rst:24
+#: ../../topics/diagrams.rst:26
 msgid "DOT inside ``graphviz``, ``graph`` or ``digraph``."
 msgstr "``graphviz``, ``graph`` 또는 ``digraph`` 안의 DOT."
 
-#: ../../topics/diagrams.rst:25
+#: ../../topics/diagrams.rst:27
 msgid "Typst with CeTZ"
 msgstr "Typst와 CeTZ"
 
-#: ../../topics/diagrams.rst:26
+#: ../../topics/diagrams.rst:28
 msgid "We need explicit geometry, custom shapes, plots or sequence layouts."
 msgstr "명시적 기하 배치, 사용자 정의 도형, 플롯 또는 시퀀스 레이아웃이 필요합니다."
 
-#: ../../topics/diagrams.rst:27
+#: ../../topics/diagrams.rst:29
 msgid "Typst inside ``typst-diagram``."
 msgstr "``typst-diagram`` 안의 Typst."
 
-#: ../../topics/diagrams.rst:28
+#: ../../topics/diagrams.rst:30
 msgid "Typst with Fletcher"
 msgstr "Typst와 Fletcher"
 
-#: ../../topics/diagrams.rst:29
+#: ../../topics/diagrams.rst:31
 msgid "We need positioned nodes, mathematical labels and precise arrows."
 msgstr "위치가 정해진 노드, 수학 레이블, 정밀한 화살표가 필요합니다."
 
-#: ../../topics/diagrams.rst:30
+#: ../../topics/diagrams.rst:32
 msgid "Typst inside ``typst-diagram`` with a pinned Fletcher import."
 msgstr "``typst-diagram`` 안의 Typst와 버전을 고정한 Fletcher 가져오기."
 
-#: ../../topics/diagrams.rst:32
+#: ../../topics/diagrams.rst:34
 msgid ""
 "We choose SVG for scalable drawings in both the browser and book. Typst "
 "diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
@@ -104,21 +109,21 @@ msgstr ""
 "브라우저와 책에서 확대 또는 축소할 수 있는 SVG를 선택합니다. Typst 다이어그램은 인치당 144픽셀의 PNG도 생성할 수 "
 "있습니다. 기존 SVG와 PNG 파일은 일반 이미지 및 그림 지시문으로 계속 사용할 수 있습니다."
 
-#: ../../topics/diagrams.rst:36
+#: ../../topics/diagrams.rst:38
 msgid "A flow chart"
 msgstr "순서도"
 
-#: ../../topics/diagrams.rst:41
+#: ../../topics/diagrams.rst:43
 msgid ""
 "If the request fits the limits, the workspace buffer grows and conversion "
 "continues; otherwise the conversion ends with a Limit result."
 msgstr "요청이 한도 안에 들면 워크스페이스 버퍼가 커지고 변환이 계속됩니다. 그렇지 않으면 변환은 Limit 결과로 끝납니다."
 
-#: ../../topics/diagrams.rst:41
+#: ../../topics/diagrams.rst:43
 msgid "A conversion checks its limits before a buffer grows."
 msgstr "변환은 버퍼를 키우기 전에 한도를 확인합니다."
 
-#: ../../topics/diagrams.rst:61
+#: ../../topics/diagrams.rst:63
 msgid ""
 "The drawing names the decision at the growth step. It does not suggest "
 "that running out of room aborts the program: a bound produces a result "
@@ -127,11 +132,11 @@ msgstr ""
 "이 다이어그램은 버퍼를 키우는 단계에서 내리는 결정을 보여 줍니다. 공간이 모자라면 프로그램이 중단된다는 인상을 주지 않습니다. "
 "한도에 걸리면 호출자가 보고할 수 있는 결과가 나옵니다. 이 구분은 계약의 일부입니다."
 
-#: ../../topics/diagrams.rst:66
+#: ../../topics/diagrams.rst:68
 msgid "Author a graph"
 msgstr "그래프 작성"
 
-#: ../../topics/diagrams.rst:84
+#: ../../topics/diagrams.rst:86
 msgid ""
 "``graphviz``, ``graph``, and ``digraph`` are built in. Guidedog renders "
 "them through Graphviz. HTML receives an SVG asset. PDF embeds the "
@@ -140,33 +145,32 @@ msgstr ""
 "``graphviz``\\ , ``graph``\\ , ``digraph``\\ 는 내장되어 있습니다. Guidedog이 "
 "Graphviz로 렌더링해 HTML에는 SVG를, PDF에는 그림을 넣습니다. 그래프 소스는 같습니다."
 
-#: ../../topics/diagrams.rst:88
+#: ../../topics/diagrams.rst:90
 msgid "In MyST Markdown, we use a directive fence with the same options."
 msgstr "MyST Markdown에서는 같은 옵션을 가진 지시문 펜스를 사용합니다."
 
-#: ../../topics/diagrams.rst:99
+#: ../../topics/diagrams.rst:101
 msgid ""
-"A ``graphviz`` file argument reads a DOT file instead of an inline "
-"body. ``graph`` and ``digraph`` take the graph name as their argument "
-"and wrap the body's edges in the corresponding DOT graph. ``:layout:`` "
-"(or Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout "
-"engine: ``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, "
-"``twopi``, ``osage`` or ``patchwork``. A plain ``dot`` or ``graphviz`` "
-"Markdown fence also draws a graph; we use the directive form when we "
-"need options."
+"A ``graphviz`` file argument reads a DOT file instead of an inline body. "
+"``graph`` and ``digraph`` take the graph name as their argument and wrap "
+"the body's edges in the corresponding DOT graph. ``:layout:`` (or "
+"Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout engine: "
+"``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, ``twopi``, "
+"``osage`` or ``patchwork``. A plain ``dot`` or ``graphviz`` Markdown "
+"fence also draws a graph; we use the directive form when we need options."
 msgstr ""
 "``graphviz``\\ 의 파일 인수는 문서 내 본문 대신 DOT 파일을 읽습니다. ``graph``\\ 와 "
 "``digraph``\\ 는 그래프 이름을 인수로 받고 본문의 간선을 해당 DOT 그래프로 감쌉니다. ``:layout:``\\ "
 "(또는 Sphinx의 ``:graphviz_dot:`` 별칭)은 Graphviz 레이아웃 엔진을 선택합니다: ``dot``\\ "
 "(기본값), ``neato``, ``fdp``, ``sfdp``, ``circo``, ``twopi``, ``osage``, "
-"``patchwork``. 일반 ``dot`` 또는 ``graphviz`` Markdown 펜스도 그래프를 그리지만 옵션이 "
-"필요하면 지시문 형식을 사용합니다."
+"``patchwork``. 일반 ``dot`` 또는 ``graphviz`` Markdown 펜스도 그래프를 그리지만 옵션이 필요하면 "
+"지시문 형식을 사용합니다."
 
-#: ../../topics/diagrams.rst:104
+#: ../../topics/diagrams.rst:106
 msgid "Draw with Typst"
 msgstr "Typst로 그리기"
 
-#: ../../topics/diagrams.rst:107
+#: ../../topics/diagrams.rst:109
 msgid ""
 "The ``typst-diagram`` directive compiles its body to an image. The page "
 "fits the drawing automatically. We can start with Typst's built-in shapes "
@@ -175,11 +179,15 @@ msgstr ""
 "``typst-diagram`` 지시문은 본문을 이미지로 컴파일합니다. 페이지는 그림에 자동으로 맞춰집니다. 패키지를 추가하기 전에 "
 "Typst 내장 도형으로 시작할 수 있습니다."
 
-#: ../../topics/diagrams.rst:121
+#: ../../topics/diagrams.rst:123
+msgid "A teal circle"
+msgstr "청록색 원"
+
+#: ../../topics/diagrams.rst:123
 msgid "A drawing from Typst source."
 msgstr "Typst 소스에서 생성한 그림."
 
-#: ../../topics/diagrams.rst:127
+#: ../../topics/diagrams.rst:129
 msgid ""
 "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
 "An ordinary ``typst`` code fence displays source without compiling it."
@@ -187,23 +195,23 @@ msgstr ""
 "MyST에서 같은 그림을 그릴 때는 펜스 언어로 ``{typst-diagram}``\\ 을 사용합니다. 일반 ``typst`` 코드 "
 "펜스는 소스를 컴파일하지 않고 표시합니다."
 
-#: ../../topics/diagrams.rst:140
+#: ../../topics/diagrams.rst:142
 msgid ""
 "CeTZ supplies a drawing canvas and geometric operations. We import a "
 "specific package version so the source states its dependency."
 msgstr "CeTZ는 그리기 캔버스와 기하 연산을 제공합니다. 소스가 의존성을 명시하도록 특정 버전의 패키지를 가져옵니다."
 
-#: ../../topics/diagrams.rst:157
+#: ../../topics/diagrams.rst:159
 msgid ""
 "Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
 "are useful when position carries meaning."
 msgstr "Fletcher는 CeTZ 위에서 노드와 화살표 다이어그램을 만듭니다. 위치에 의미가 있을 때 명시적 좌표가 유용합니다."
 
-#: ../../topics/diagrams.rst:173
+#: ../../topics/diagrams.rst:175
 msgid "Share source and refer to figures"
 msgstr "소스 공유와 그림 참조"
 
-#: ../../topics/diagrams.rst:176
+#: ../../topics/diagrams.rst:178
 msgid ""
 "Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` "
 "and ``:align:``. We enable ``numfig = true`` in ``conf.toml`` and refer "
@@ -219,13 +227,13 @@ msgstr ""
 ":numref:`chapter-typst-circle`\\ 은 이 책의 번호가 붙은 그림입니다. 대체 텍스트는 그림이 전달하는 "
 "정보를 설명합니다. 글자를 윤곽선으로 그리는 Typst SVG에서 특히 유용합니다."
 
-#: ../../topics/diagrams.rst:182
+#: ../../topics/diagrams.rst:184
 msgid ""
 "For a larger drawing we keep Typst source in a file. Guidedog compiles it "
 "during the ordinary build."
 msgstr "큰 그림의 Typst 소스는 파일에 보관합니다. Guidedog이 일반 빌드 중에 이를 컴파일합니다."
 
-#: ../../topics/diagrams.rst:191
+#: ../../topics/diagrams.rst:193
 msgid ""
 "An inline diagram's imports resolve beside the document containing it. A "
 "file diagram's imports resolve beside its Typst file. We can therefore "
@@ -238,11 +246,11 @@ msgstr ""
 "따라서 색상, 노드, 시퀀스 다이어그램용 로컬 보조 라이브러리를 공유할 수 있습니다. 가져온 보조 또는 데이터 파일을 변경하면 관련 "
 "HTML 페이지를 다시 그립니다. 같은 생성 이미지는 타임스탬프를 유지하므로 변경되지 않은 PDF 책의 캐시를 보존합니다."
 
-#: ../../topics/diagrams.rst:197
+#: ../../topics/diagrams.rst:199
 msgid "Packages, limits and failures"
 msgstr "패키지, 제한과 실패 처리"
 
-#: ../../topics/diagrams.rst:200
+#: ../../topics/diagrams.rst:202
 msgid ""
 "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings "
 "govern Typst diagrams in both outputs. With ``pdf_packages = "
@@ -261,7 +269,7 @@ msgstr ""
 "안에 있어야 합니다. 다이어그램은 유한한 크기의 한 페이지를 생성해야 하며 PNG는 최대 1,600만 픽셀, 각 변 "
 "16,384픽셀로 제한됩니다."
 
-#: ../../topics/diagrams.rst:207
+#: ../../topics/diagrams.rst:209
 msgid ""
 "A failed drawing remains visible as source with a warning "
 "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
@@ -277,14 +285,14 @@ msgstr ""
 "``build.typst-diagram``; 지시문 소스가 없거나 중복되면 ``sphinx.graphviz.source`` 또는 "
 "``sphinx.typst.source`` 보고). 다이어그램 누락 시 게시를 막아야 한다면 ``-W``\\ 로 빌드합니다. "
 "``--untrusted``\\ 는 Typst 컴파일과 외부 Graphviz 리소스를 거부하고 소스를 유지합니다. 텍스트 빌드는 "
-"그림을 컴파일하지 않고 소스를 표시합니다. :doc:`../howto/typst-diagrams`\\ 에는 모든 옵션, 소스 "
-"제한, 기존 그림 파일의 이전 절차가 있습니다."
+"그림을 컴파일하지 않고 소스를 표시합니다. :doc:`../howto/typst-diagrams`\\ 에는 모든 옵션, 소스 제한, "
+"기존 그림 파일의 이전 절차가 있습니다."
 
-#: ../../topics/diagrams.rst:213
+#: ../../topics/diagrams.rst:215
 msgid "Light, dark and print"
 msgstr "밝은 모드, 어두운 모드, 인쇄"
 
-#: ../../topics/diagrams.rst:216
+#: ../../topics/diagrams.rst:218
 msgid ""
 "Typst diagrams keep their authored colors and receive the same light "
 "panel as ordinary Graphviz images in the default dark theme. The adaptive "
@@ -293,7 +301,7 @@ msgstr ""
 "Typst 다이어그램은 작성한 색상을 유지하며 기본 어두운 테마에서 일반 Graphviz 이미지와 같은 밝은 패널에 표시됩니다. "
 "Graphviz의 적응형 팔레트는 Typst 그림의 색상을 바꾸지 않습니다."
 
-#: ../../topics/diagrams.rst:218
+#: ../../topics/diagrams.rst:220
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
@@ -302,19 +310,19 @@ msgstr ""
 "배경을 투명하게 해도 글자색은 변하지 않습니다. 어두운 페이지에서 어두운 글자가 사라지지 않도록 일반 그래프는 원래 색을 보존하고 "
 "기본 다크 테마에서 밝은 패널을 사용합니다."
 
-#: ../../topics/diagrams.rst:222
+#: ../../topics/diagrams.rst:224
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
-"the directive. Guidedog adds a fixed stylesheet inside the SVG image. "
-"Its dark media query follows the embedding page's ``color-scheme``, "
-"including the theme control's explicit selection. No script, external "
-"stylesheet or inline page SVG is needed."
+"the directive. Guidedog adds a fixed stylesheet inside the SVG image. Its "
+"dark media query follows the embedding page's ``color-scheme``, including "
+"the theme control's explicit selection. No script, external stylesheet or "
+"inline page SVG is needed."
 msgstr ""
-"매뉴얼의 적응형 팔레트를 쓰려면 지시문에 ``:class: graphviz-adaptive``\\ 를 추가합니다. "
-"Guidedog이 SVG 이미지 안에 고정 스타일시트를 넣으며, 다크 미디어 쿼리가 테마 조작부의 명시적 선택을 포함한 부모 "
-"페이지의 ``color-scheme`` 값을 따릅니다. 스크립트, 외부 스타일시트, 인라인 페이지 SVG는 필요 없습니다."
+"매뉴얼의 적응형 팔레트를 쓰려면 지시문에 ``:class: graphviz-adaptive``\\ 를 추가합니다. Guidedog이 "
+"SVG 이미지 안에 고정 스타일시트를 넣으며, 다크 미디어 쿼리가 테마 조작부의 명시적 선택을 포함한 부모 페이지의 "
+"``color-scheme`` 값을 따릅니다. 스크립트, 외부 스타일시트, 인라인 페이지 SVG는 필요 없습니다."
 
-#: ../../topics/diagrams.rst:228
+#: ../../topics/diagrams.rst:230
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
@@ -322,59 +330,59 @@ msgstr ""
 "라벨은 짧게 씁니다. 단계는 둥근 상자, 입력은 메모, 영속 저장소는 원통으로 그리고, 노드 클래스로 다크 팔레트의 역할을 "
 "구분합니다."
 
-#: ../../topics/diagrams.rst:231
+#: ../../topics/diagrams.rst:233
 msgid "Semantic node classes"
 msgstr "의미를 나타내는 노드 클래스"
 
-#: ../../topics/diagrams.rst:235
+#: ../../topics/diagrams.rst:237
 msgid "DOT class"
 msgstr "DOT 클래스"
 
-#: ../../topics/diagrams.rst:236
+#: ../../topics/diagrams.rst:238
 msgid "Role"
 msgstr "역할"
 
-#: ../../topics/diagrams.rst:237
+#: ../../topics/diagrams.rst:239
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:238
+#: ../../topics/diagrams.rst:240
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "소스, 설정, 참고 자료. 따뜻한 중성색."
 
-#: ../../topics/diagrams.rst:239
+#: ../../topics/diagrams.rst:241
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:240
+#: ../../topics/diagrams.rst:242
 msgid "A produced artifact; blue."
 msgstr "생성 결과물. 파란색."
 
-#: ../../topics/diagrams.rst:241
+#: ../../topics/diagrams.rst:243
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:242
+#: ../../topics/diagrams.rst:244
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "선택적 확장 지점. 황색 계열과 점선 테두리."
 
-#: ../../topics/diagrams.rst:243
+#: ../../topics/diagrams.rst:245
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:244
+#: ../../topics/diagrams.rst:246
 msgid "A decision; amber, with a diamond shape."
 msgstr "판단. 황색 계열과 마름모."
 
-#: ../../topics/diagrams.rst:245
+#: ../../topics/diagrams.rst:247
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:246
+#: ../../topics/diagrams.rst:248
 msgid "A separate ownership or allocation boundary; violet."
 msgstr "별도의 소유권 또는 할당 경계. 보라색."
 
-#: ../../topics/diagrams.rst:248
+#: ../../topics/diagrams.rst:250
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
@@ -388,7 +396,7 @@ msgstr ""
 "고르거나 라벨을 붙이지 않습니다. 이런 것은 우리가 직접 적으므로 흑백으로 봐도 그림을 읽을 수 있습니다. 클래스가 없는 단계는 "
 "녹색을 씁니다. 이 팔레트는 원할 때만 쓰는 선택 사항입니다. 정확한 색 자체가 데이터를 나타내는 그림에는 적용하지 않습니다."
 
-#: ../../topics/diagrams.rst:254
+#: ../../topics/diagrams.rst:256
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
@@ -403,11 +411,11 @@ msgstr ""
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_\\ 에서 "
 "정의합니다."
 
-#: ../../topics/diagrams.rst:260
+#: ../../topics/diagrams.rst:262
 msgid "Make the result legible"
 msgstr "읽기 쉽게 다듬기"
 
-#: ../../topics/diagrams.rst:263
+#: ../../topics/diagrams.rst:265
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -417,7 +425,7 @@ msgstr ""
 "노드 레이블은 짧게 하고 긴 규칙은 아래에 설명하세요. 주 경로는 한 방향으로 두고 돌아오는 간선에 조건을 쓰세요. 색 외에 형태와 "
 "텍스트도 쓰세요. 인쇄물에는 색이 없을 수 있습니다."
 
-#: ../../topics/diagrams.rst:267
+#: ../../topics/diagrams.rst:269
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -426,7 +434,7 @@ msgstr ""
 "대체 텍스트와 캡션을 제공하고 좁은 브라우저와 PDF에서 확인하세요. 작은 글씨여야 들어가는 그림은 둘로 나누세요. 이미지 크기는 "
 ":doc:`../media`\\ 를 참고하세요."
 
-#: ../../topics/diagrams.rst:271
+#: ../../topics/diagrams.rst:273
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
 "readable. Scroll inside the figure. The page itself keeps its width."
@@ -1012,6 +1020,409 @@ msgstr ""
 "<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_\\ 을 "
 "참고하세요."
 
+#: ../../topics/music.rst:1
+#| msgid "Publication"
+msgid "Music notation"
+msgstr "악보 기보법"
+
+#: ../../topics/music.rst:4
+msgid ""
+"We keep a musical example beside its explanation and let Guidedog engrave "
+"it for the website and the book. The ``lilypond`` directive reads a "
+"bounded LilyPond notation profile and produces self-contained SVG or PNG. "
+"The reader and engraver are native Rust libraries. A project build needs "
+"no installed LilyPond program."
+msgstr "음악 예제를 설명 옆에 두고 Guidedog으로 웹사이트와 책에 쓸 악보를 조판합니다. ``lilypond`` 지시문은 범위가 정해진 LilyPond 기보 프로필을 읽어 독립적인 SVG나 PNG를 만듭니다. 판독기와 악보 조판기는 네이티브 Rust 라이브러리입니다. 프로젝트 빌드에는 설치된 LilyPond 프로그램이 필요하지 않습니다."
+
+#: ../../topics/music.rst:9
+msgid "Write a melody"
+msgstr "선율 작성"
+
+#: ../../topics/music.rst:12
+msgid ""
+"We write pitches and durations inside braces. In ``\\relative c'``, each "
+"pitch takes the nearest diatonic position to the preceding pitch, then "
+"applies its apostrophes or commas. The first pitch uses the reference "
+"``c'``, which is middle C. A number gives the duration's denominator; "
+"``4`` is a quarter note and ``8`` is an eighth note. An omitted duration "
+"repeats the preceding duration. A vertical bar checks the measure "
+"boundary."
+msgstr "중괄호 안에 음높이와 음가를 씁니다. ``\\relative c'``에서 각 음높이는 앞 음과 가장 가까운 온음계 위치를 선택한 다음 아포스트로피나 쉼표를 적용합니다. 첫 음은 가온다인 ``c'``를 기준으로 삼습니다. 숫자는 음가의 분모를 나타냅니다. ``4``는 4분음표이고 ``8``은 8분음표입니다. 음가를 생략하면 앞의 값을 반복합니다. 세로줄은 마디 경계를 검사합니다."
+
+#: ../../topics/music.rst:33
+msgid "A four-measure melody in G major and three-quarter time."
+msgstr "사장조, 4분의 3박자의 네 마디 선율."
+
+#: ../../topics/music.rst:33
+msgid "A short melody in G major."
+msgstr "사장조의 짧은 선율."
+
+#: ../../topics/music.rst:43
+msgid ""
+"We refer to the caption with ``:numref:`music-melody``` when ``numfig = "
+"true``. A caption accepts inline markup. Without a caption, the directive "
+"produces an image."
+msgstr "``numfig = true``이면 ``:numref:`music-melody```로 캡션을 참조합니다. 캡션은 인라인 마크업을 허용합니다. 캡션이 없으면 지시문은 이미지를 만듭니다."
+
+#: ../../topics/music.rst:47
+#| msgid ""
+#| "MyST Markdown supports the same directives and roles through fenced "
+#| "blocks:"
+msgid "MyST uses the same directive and options."
+msgstr "MyST도 같은 지시문과 옵션을 사용합니다."
+
+#: ../../topics/music.rst:58
+msgid ""
+"An ordinary ``code-block:: lilypond`` or plain Markdown ``lilypond`` "
+"fence remains a source example. A direct ``guidedog convert`` operation "
+"also retains directive source; engraving belongs to the project asset "
+"pipeline."
+msgstr "일반 ``code-block:: lilypond``나 단순한 Markdown ``lilypond`` 코드 울타리는 소스 예제로 남습니다. 직접 실행한 ``guidedog convert``도 지시문 소스를 보존합니다. 악보 조판은 프로젝트 자산 처리에서 수행합니다."
+
+#: ../../topics/music.rst:61
+#| msgid "Choose the drawing tool"
+msgid "Choose the notation"
+msgstr "기보법 선택"
+
+#: ../../topics/music.rst:64
+msgid ""
+"The default pitch language is Nederlands: ``cis`` is C sharp and ``des`` "
+"is D flat. We select English names with ``\\language \"english\"`` or "
+"``\\include \"english.ly\"``; examples include ``cs`` and ``df``. Deutsch "
+"adds ``h`` for B natural and ``b`` for B flat. These three language "
+"includes are built in and read no file."
+msgstr "기본 음이름 언어는 Nederlands입니다. ``cis``는 올림다, ``des``는 내림라입니다. ``\\language \"english\"``나 ``\\include \"english.ly\"``로 영어 음이름을 선택하며 ``cs``와 ``df``가 그 예입니다. Deutsch는 제자리 나음에 ``h``, 내림나에 ``b``를 추가합니다. 이 세 언어 포함 항목은 내장되어 파일을 읽지 않습니다."
+
+#: ../../topics/music.rst:69
+msgid ""
+"Apostrophes raise octaves and commas lower them. ``\\fixed c' { ... }`` "
+"fixes the reference octave instead of following preceding pitches. "
+"``\\transpose c ees { ... }`` transposes spelled pitches and key "
+"signatures. Accidentals belong to the pitch name; a key signature does "
+"not change a written natural pitch into a sharp pitch. An exclamation "
+"mark forces an accidental, and a question mark requests a cautionary "
+"accidental. We put these marks after the pitch and before its duration: "
+"``cis'!4`` and ``c'?4``."
+msgstr "아포스트로피는 옥타브를 높이고 쉼표는 낮춥니다. ``\\fixed c' { ... }``는 앞 음을 따르지 않고 기준 옥타브를 고정합니다. ``\\transpose c ees { ... }``는 적힌 음높이와 조표를 이조합니다. 임시표는 음이름에 속하며 조표가 명시된 제자리음을 올림음으로 바꾸지는 않습니다. 느낌표는 임시표를 강제로 표시하고 물음표는 주의 임시표를 요청합니다. 이 표시는 음높이 뒤, 음가 앞에 ``cis'!4``나 ``c'?4``처럼 씁니다."
+
+#: ../../topics/music.rst:76
+msgid ""
+"Durations range from ``1`` through ``128``, with ``\\breve`` for a double "
+"whole note. Dots lengthen a duration, and ``*2/3`` scales its exact "
+"value. ``r`` is a rest, ``s`` is an invisible spacer, and ``R1*4`` "
+"requests four measures of rest in common time. Angle brackets make "
+"chords: ``<c' e' g'>4``. ``q`` repeats the preceding chord. A tilde ties "
+"equal pitches; parentheses make slurs, and ``\\(`` with ``\\)`` makes a "
+"phrasing slur."
+msgstr "음가는 ``1``부터 ``128``까지이며 ``\\breve``는 겹온음표입니다. 점은 음가를 늘리고 ``*2/3``은 정확한 값을 비례 조정합니다. ``r``은 쉼표, ``s``는 보이지 않는 간격이며 ``R1*4``는 4분의 4박자에서 네 마디 쉼을 요청합니다. 꺾쇠괄호로 ``<c' e' g'>4``처럼 화음을 만듭니다. ``q``는 앞 화음을 반복합니다. 물결표는 같은 음높이를 붙임줄로 잇고, 소괄호는 이음줄을, ``\\(``와 ``\\)``는 프레이징 이음줄을 만듭니다."
+
+#: ../../topics/music.rst:83
+msgid "Supported notation families"
+msgstr "지원하는 기보 유형"
+
+#: ../../topics/music.rst:87
+msgid "Family"
+msgstr "유형"
+
+#: ../../topics/music.rst:88
+msgid "Examples"
+msgstr "예제"
+
+#: ../../topics/music.rst:89
+msgid "Staff context"
+msgstr "보표 문맥"
+
+#: ../../topics/music.rst:90
+msgid ""
+"``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; treble, "
+"bass, alto, tenor and soprano clefs, with supported octave clefs."
+msgstr "``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; 높은음자리표, 낮은음자리표, 알토, 테너, 소프라노 음자리표와 지원하는 옥타브 음자리표."
+
+#: ../../topics/music.rst:91
+#| msgid "Roles"
+msgid "Modes"
+msgstr "선법"
+
+#: ../../topics/music.rst:92
+msgid ""
+"``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
+"``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
+msgstr "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, ``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
+
+#: ../../topics/music.rst:93
+msgid "Rhythm and stems"
+msgstr "리듬과 기둥"
+
+#: ../../topics/music.rst:94
+msgid ""
+"``\\tuplet 3/2``, ``\\times 2/3``, manual ``[`` and ``]`` beams, "
+"``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, "
+"``\\stemNeutral``."
+msgstr "``\\tuplet 3/2``, ``\\times 2/3``, 수동 ``[``와 ``]`` 음표 묶음, ``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, ``\\stemNeutral``."
+
+#: ../../topics/music.rst:95
+msgid "Expression"
+msgstr "표현"
+
+#: ../../topics/music.rst:96
+msgid ""
+"Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through "
+"``\\ffff``, ``\\<``, ``\\>``, ``\\!``, literal scripts and single-item "
+"``\\markup`` with ``\\bold`` or ``\\italic``."
+msgstr "아티큘레이션, 1부터 5까지의 운지, ``\\pppp``부터 ``\\ffff``까지의 셈여림, ``\\<``, ``\\>``, ``\\!``, 리터럴 문자 지시와 ``\\bold``나 ``\\italic``을 쓰는 단일 항목 ``\\markup``."
+
+#: ../../topics/music.rst:97
+#| msgid "reStructuredText"
+msgid "Structure"
+msgstr "구조"
+
+#: ../../topics/music.rst:98
+msgid ""
+"Assignments, variable references, lexical ``\\include``, ``\\score``, "
+"``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, "
+"``StaffGroup``, ``ChoirStaff``."
+msgstr "할당, 변수 참조, 어휘적 ``\\include``, ``\\score``, ``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, ``StaffGroup``, ``ChoirStaff``."
+
+#: ../../topics/music.rst:99
+#| msgid "Documents and resources"
+msgid "Voices and lyrics"
+msgstr "성부와 가사"
+
+#: ../../topics/music.rst:100
+msgid ""
+"At most two voices per staff; ``\\addlyrics``, ``\\lyricsto``, "
+"``\\lyricmode``, multiple verses, explicit syllable durations, hyphens "
+"and extenders."
+msgstr "보표당 최대 두 성부; ``\\addlyrics``, ``\\lyricsto``, ``\\lyricmode``, 여러 절, 명시적인 음절 음가, 하이픈과 연장선."
+
+#: ../../topics/music.rst:101
+msgid "Grace and repetition"
+msgstr "꾸밈음과 반복"
+
+#: ../../topics/music.rst:102
+msgid ""
+"``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
+"``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+msgstr "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, ``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+
+#: ../../topics/music.rst:103
+#| msgid "Images and figures"
+msgid "Labels and breaks"
+msgstr "라벨과 줄바꿈"
+
+#: ../../topics/music.rst:104
+msgid ""
+"``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames "
+"\\chordmode``, ``\\break``, ``\\noBreak``."
+msgstr "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames \\chordmode``, ``\\break``, ``\\noBreak``."
+
+#: ../../topics/music.rst:106
+msgid ""
+"The reader accepts version declarations, ignored header metadata and "
+"empty layout or MIDI blocks. It refuses Scheme, music functions, "
+"arbitrary property changes, overrides and unsupported commands with a "
+"placed diagnostic. The profile describes a fixed engraving style; it does "
+"not execute a LilyPond program. The complete command ledger and engraving "
+"contract are recorded in GDS 0015 in the repository's "
+"``docs/gds/records`` directory."
+msgstr "판독기는 버전 선언, 무시하는 머리말 메타데이터와 빈 레이아웃 또는 MIDI 블록을 허용합니다. Scheme, 음악 함수, 임의의 속성 변경, 오버라이드와 지원하지 않는 명령은 위치가 표시된 진단으로 거부합니다. 프로필은 고정된 악보 조판 양식을 정하며 LilyPond 프로그램을 실행하지 않습니다. 전체 명령 목록과 조판 규약은 저장소 ``docs/gds/records`` 디렉터리의 GDS 0015에 기록되어 있습니다."
+
+#: ../../topics/music.rst:111
+msgid "Combine staves and lyrics"
+msgstr "보표와 가사 결합"
+
+#: ../../topics/music.rst:114
+msgid ""
+"We use simultaneous contexts for a score with several staves. Instrument "
+"names use ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` "
+"block. Two voices on one staff use ``<< { ... } \\\\ { ... } >>``. Lyrics "
+"attach to a named voice, and separate ``\\lyricsto`` expressions make "
+"separate verses."
+msgstr "여러 보표가 있는 악보에는 동시 문맥을 사용합니다. 악기 이름은 ``\\with`` 블록의 ``instrumentName``과 ``shortInstrumentName``으로 지정합니다. 한 보표의 두 성부에는 ``<< { ... } \\\\ { ... } >>``를 사용합니다. 가사는 이름이 있는 성부에 연결하며 별도의 ``\\lyricsto`` 식은 별도의 절을 만듭니다."
+
+#: ../../topics/music.rst:120
+msgid ""
+"Two piano staves; the upper staff has four quarter notes and the words "
+"Sing a short song, while the bass holds C."
+msgstr "피아노 보표 두 개. 위 보표에는 네 개의 4분음표와 Sing a short song 가사가 있고 베이스는 다음을 유지합니다."
+
+#: ../../topics/music.rst:120
+msgid "A named melody with a verse and a bass staff."
+msgstr "가사 한 절과 베이스 보표를 가진 이름 있는 선율."
+
+#: ../../topics/music.rst:130
+msgid "Read local files"
+msgstr "로컬 파일 읽기"
+
+#: ../../topics/music.rst:133
+msgid ""
+"A directive can name a local file instead of containing an inline body. "
+"We use exactly one source form."
+msgstr "지시문은 인라인 본문 대신 로컬 파일을 지정할 수 있습니다. 소스 형식은 정확히 하나만 사용합니다."
+
+#: ../../topics/music.rst:142
+msgid ""
+"Nested ``\\include`` paths resolve beside the including file, then "
+"through the source directory and configured ``include_roots``. Resolved "
+"paths must stay inside the allowed roots, including after symbolic links "
+"are checked. The build tracks source files, nested includes, missing "
+"local lookups and selected text font files by content. Changing a "
+"dependency rebuilds the generated image. Identical output bytes retain "
+"the same asset name."
+msgstr "중첩된 ``\\include`` 경로는 포함하는 파일 옆에서 먼저 찾고, 다음으로 소스 디렉터리와 설정한 ``include_roots``에서 찾습니다. 심볼릭 링크 검사 후에도 해석된 경로는 허용된 루트 안에 있어야 합니다. 빌드는 소스 파일, 중첩 포함 파일, 실패한 로컬 조회와 선택한 텍스트 글꼴 파일을 내용으로 추적합니다. 의존성이 바뀌면 이미지를 다시 만듭니다. 출력 바이트가 같으면 자산 이름도 유지합니다."
+
+#: ../../topics/music.rst:148
+msgid ""
+"``--untrusted`` permits inline notation because the reader runs no "
+"program or Scheme code. It refuses file arguments and filesystem includes "
+"before opening them. Text output retains source code and performs no "
+"engraving. A failed drawing also retains source code with a warning; "
+"``-W`` stops publication and preserves the preceding output."
+msgstr "판독기는 프로그램이나 Scheme 코드를 실행하지 않으므로 ``--untrusted``에서도 인라인 기보를 허용합니다. 파일 인자와 파일 시스템 포함은 열기 전에 거부합니다. 텍스트 출력은 소스를 보존하며 악보를 조판하지 않습니다. 그리기에 실패해도 경고와 함께 소스를 보존합니다. ``-W``는 게시를 중단하고 이전 출력을 유지합니다."
+
+#: ../../topics/music.rst:153
+msgid "Set size and output"
+msgstr "크기와 출력 설정"
+
+#: ../../topics/music.rst:156
+#| msgid "Directives"
+msgid "Directive options"
+msgstr "지시문 옵션"
+
+#: ../../topics/music.rst:160
+msgid "Option"
+msgstr "옵션"
+
+#: ../../topics/music.rst:161
+msgid "Meaning"
+msgstr "의미"
+
+#: ../../topics/music.rst:162
+msgid "``alt``"
+msgstr "``alt``"
+
+#: ../../topics/music.rst:163
+msgid ""
+"Musical description for the image; otherwise the build constructs a "
+"localized summary."
+msgstr "이미지의 음악적 설명. 없으면 빌드가 현지화된 요약을 만듭니다."
+
+#: ../../topics/music.rst:164
+msgid "``caption``, ``name``, ``class``, ``align``"
+msgstr "``caption``, ``name``, ``class``, ``align``"
+
+#: ../../topics/music.rst:165
+msgid ""
+"Figure caption, reference target, CSS classes and image alignment, "
+"following the diagram directives."
+msgstr "그림 캡션, 참조 대상, CSS 클래스와 이미지 정렬이며 다이어그램 지시문을 따릅니다."
+
+#: ../../topics/music.rst:166
+msgid "``format``"
+msgstr "``format``"
+
+#: ../../topics/music.rst:167
+msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
+msgstr "기본값은 ``svg``이며 ``png``는 인치당 144픽셀입니다."
+
+#: ../../topics/music.rst:168
+msgid "``staff-size``"
+msgstr "``staff-size``"
+
+#: ../../topics/music.rst:169
+msgid ""
+"Height of a five-line staff, from 10 through 40 points; the default is 18 "
+"points."
+msgstr "다섯 줄 보표의 높이. 10부터 40포인트까지이며 기본값은 18포인트입니다."
+
+#: ../../topics/music.rst:170
+msgid "``width``"
+msgstr "``width``"
+
+#: ../../topics/music.rst:171
+msgid ""
+"Available system width, in ``pt``, ``mm``, ``cm``, ``in``, ``px`` or a "
+"percentage of the builder's default width."
+msgstr "사용 가능한 시스템 너비. ``pt``, ``mm``, ``cm``, ``in``, ``px`` 또는 빌더 기본 너비의 백분율로 지정합니다."
+
+#: ../../topics/music.rst:172
+msgid "``justify``"
+msgstr "``justify``"
+
+#: ../../topics/music.rst:173
+msgid ""
+"``auto`` keeps a short final system at its natural width; ``all`` "
+"stretches every system; ``none`` avoids stretching."
+msgstr "``auto``는 짧은 마지막 시스템의 자연 너비를 유지하고, ``all``은 모든 시스템을 늘리며, ``none``은 늘리기를 피합니다."
+
+#: ../../topics/music.rst:175
+msgid ""
+"The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
+"and ``lilypond_pdf_width``. Their numeric values are typographic points. "
+"See :doc:`../reference/configuration` for the setting contract."
+msgstr "프로젝트 기본값은 ``lilypond_staff_size``, ``lilypond_html_width``, ``lilypond_pdf_width``입니다. 숫자의 단위는 조판 포인트입니다. 설정 규약은 :doc:`../reference/configuration`을 참고합니다."
+
+#: ../../topics/music.rst:179
+msgid ""
+"HTML also receives a narrow edition engraved at 225 points, with a staff "
+"height no greater than 14 points. The browser selects it below 40 rem "
+"through a ``picture`` element. This edition has its own system breaks. "
+"When its system limit prevents it from being drawn, the wide image scales "
+"to the screen. SVG adapts its ink to the page's color scheme; PNG keeps a "
+"light background panel in dark mode."
+msgstr "HTML에는 너비 225포인트, 보표 높이 최대 14포인트로 조판한 좁은 판도 제공됩니다. 브라우저는 40 rem 미만에서 ``picture`` 요소로 이 판을 선택합니다. 이 판은 자체 시스템 줄바꿈을 갖습니다. 시스템 수 제한 때문에 그릴 수 없으면 넓은 이미지를 화면에 맞게 줄입니다. SVG는 페이지 색 구성에 맞게 잉크색을 바꾸고 PNG는 어두운 모드에서도 밝은 배경 패널을 유지합니다."
+
+#: ../../topics/music.rst:185
+msgid ""
+"PDF uses the selected template's text width and places music at its "
+"natural size. Built-in templates declare their horizontal margin after "
+"the initial import with a comment such as ``// guidedog: margin-x = "
+"31mm``. A custom template without the declaration uses a 25 millimetre "
+"margin assumption. ``lilypond_pdf_width`` overrides the derived measure. "
+"Oversized music scales to fit with a build warning. A score with several "
+"systems can break between systems across PDF pages, with its caption "
+"after the last system."
+msgstr "PDF는 선택한 템플릿의 본문 너비를 사용하고 악보를 자연 크기로 배치합니다. 내장 템플릿은 첫 가져오기 뒤에 ``// guidedog: margin-x = 31mm`` 같은 주석으로 수평 여백을 선언합니다. 선언이 없는 사용자 템플릿은 25밀리미터 여백으로 가정합니다. ``lilypond_pdf_width``가 계산한 너비를 덮어씁니다. 너무 넓은 악보는 빌드 경고와 함께 맞게 축소합니다. 여러 시스템의 악보는 시스템 사이에서 PDF 페이지를 나눌 수 있으며 캡션은 마지막 시스템 뒤에 옵니다."
+
+#: ../../topics/music.rst:192
+#| msgid "Packages, limits and failures"
+msgid "Fonts, limits and references"
+msgstr "글꼴, 제한과 참고 문헌"
+
+#: ../../topics/music.rst:195
+msgid ""
+"Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
+"SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
+"with regular, bold and italic fallback faces. Glyphs become outlines, so "
+"browsers and PDF readers need no installed music font. PNG export "
+"requires the embedded renderer; SVG engraving remains available in builds "
+"without it."
+msgstr "악보는 SIL Open Font License의 수정하지 않은 Bravura 1.482 글꼴과 SMuFL 메타데이터를 사용합니다. 텍스트는 ``pdf_fonts``와 ``pdf_font_paths``에 따라 보통체, 굵은체, 기울임 대체 글꼴을 사용합니다. 글리프가 윤곽선이 되므로 브라우저와 PDF 리더에 음악 글꼴을 설치할 필요가 없습니다. PNG 내보내기에는 내장 렌더러가 필요하며, 내장하지 않은 빌드에서도 SVG 조판은 가능합니다."
+
+#: ../../topics/music.rst:200
+msgid ""
+"One example accepts at most 256 KiB of source including includes, 32 "
+"included files, depth 64, 20,000 events, 24 staves, two voices per staff "
+"and 16 heads per chord. The reader and engraver each have a work limit of "
+"eight million operations. Expanded reader allocations have a separate 64 "
+"MiB allowance. A drawing has at most 64 systems and a height of 20,000 "
+"points. PNG is limited to 16 million pixels and 16,384 pixels on either "
+"side. A limit diagnostic identifies the source and suggests splitting the "
+"example."
+msgstr "예제 하나는 포함 파일까지 소스 최대 256 KiB, 포함 파일 32개, 깊이 64, 이벤트 20,000개, 보표 24개, 보표당 두 성부와 화음당 음표 머리 16개를 허용합니다. 판독기와 조판기는 각각 800만 연산으로 제한됩니다. 판독기의 확장 후 할당에는 별도의 64 MiB 한도가 있습니다. 그림은 최대 64개 시스템과 20,000포인트 높이입니다. PNG는 1,600만 픽셀, 각 변 16,384픽셀로 제한됩니다. 제한 진단은 소스를 식별하고 예제를 나누도록 안내합니다."
+
+#: ../../topics/music.rst:207
+msgid ""
+"For notation syntax, we consult the `LilyPond 2.24 notation reference "
+"<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "
+"definitions, we consult the `Standard Music Font Layout specification "
+"<https://www.w3.org/2021/03/smufl14/>`_ and the `Bravura project "
+"<https://github.com/steinbergmedia/bravura>`_. Engraving references "
+"include Elaine Gould's *Behind Bars* and Ted Ross's *The Art of Music "
+"Engraving and Processing*. For other kinds of drawing, we use "
+":doc:`diagrams`."
+msgstr "기보 문법은 `LilyPond 2.24 기보 참고서 <https://lilypond.org/doc/v2.24/Documentation/notation/>`_를 참고합니다. 글리프 정의는 `Standard Music Font Layout 사양 <https://www.w3.org/2021/03/smufl14/>`_과 `Bravura 프로젝트 <https://github.com/steinbergmedia/bravura>`_를 참고합니다. 조판 참고 문헌에는 Elaine Gould의 *Behind Bars*와 Ted Ross의 *The Art of Music Engraving and Processing*이 있습니다. 다른 그림에는 :doc:`diagrams`를 사용합니다."
+
 #: ../../topics/projects.rst:1
 msgid "How a project works"
 msgstr "프로젝트의 동작 방식"
@@ -1176,46 +1587,46 @@ msgstr "HTML 문서의 세 영역 읽기 레이아웃."
 msgid ""
 "The built-in theme follows the operating system by default, with light "
 "and dark choices; Guidedog's own documentation website defaults to the "
-"light reading edition. The theme control remembers the reader's choice "
-"on the same browser origin. Printed HTML uses light colors. Content and "
-"navigation remain usable without JavaScript. The theme control, "
-"enhanced search, and paragraph line breaking are progressive enhancements."
+"light reading edition. The theme control remembers the reader's choice on "
+"the same browser origin. Printed HTML uses light colors. Content and "
+"navigation remain usable without JavaScript. The theme control, enhanced "
+"search, and paragraph line breaking are progressive enhancements."
 msgstr ""
-"내장 테마는 기본적으로 운영체제를 따르며 밝은 모드와 어두운 모드도 선택할 수 있습니다. Guidedog 자체 문서 웹사이트는 "
-"밝은 읽기 판을 기본으로 사용합니다. 테마 조작부는 같은 브라우저 출처에서 독자의 선택을 기억합니다. 인쇄된 HTML은 밝은 "
-"색상을 사용합니다. JavaScript가 없어도 본문과 탐색은 그대로 사용할 수 있으며, 테마 조작부, 향상된 검색, 문단 "
-"줄바꿈은 점진적 향상입니다."
+"내장 테마는 기본적으로 운영체제를 따르며 밝은 모드와 어두운 모드도 선택할 수 있습니다. Guidedog 자체 문서 웹사이트는 밝은 "
+"읽기 판을 기본으로 사용합니다. 테마 조작부는 같은 브라우저 출처에서 독자의 선택을 기억합니다. 인쇄된 HTML은 밝은 색상을 "
+"사용합니다. JavaScript가 없어도 본문과 탐색은 그대로 사용할 수 있으며, 테마 조작부, 향상된 검색, 문단 줄바꿈은 점진적 "
+"향상입니다."
 
 #: ../../topics/typography.rst:43
 msgid ""
 "Every initialized project (``guidedog quickstart``, ``guidedog ssg "
 "init``, and ``guidedog dsc init``) copies ``_static/typography.js`` "
-"beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a "
-"project owns and can edit its scripts directly. On desktop reading "
-"measures (``40rem`` and wider), English prose uses paragraph-wide "
-"**Knuth-Plass line breaking** in the browser across paragraphs, list "
-"items, definitions, admonitions, block quotes, and footnotes, while "
-"leaving tables, navigation trees, metadata headers, and figure captions "
-"ragged. The script measures the loaded font, builds boxes, glue, and "
-"hyphenation penalties, and chooses breaks for the whole block. Frank "
-"Liang's pattern method supplies English hyphenation candidates, and "
-"break penalty widths are discarded after a hyphenated break so "
-"following lines are measured accurately. Inline mathematics (after "
-"MathJax finishes), footnote references, superscripts, and subscripts "
-"are measured as inline atoms; links keep their markup, and inline code "
-"literals may break cleanly after ``/`` or ``::``. The original TeX "
-"patterns and the libraries' BSD notices are recorded in ``NOTICE``."
+"beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a project "
+"owns and can edit its scripts directly. On desktop reading measures "
+"(``40rem`` and wider), English prose uses paragraph-wide **Knuth-Plass "
+"line breaking** in the browser across paragraphs, list items, "
+"definitions, admonitions, block quotes, and footnotes, while leaving "
+"tables, navigation trees, metadata headers, and figure captions ragged. "
+"The script measures the loaded font, builds boxes, glue, and hyphenation "
+"penalties, and chooses breaks for the whole block. Frank Liang's pattern "
+"method supplies English hyphenation candidates, and break penalty widths "
+"are discarded after a hyphenated break so following lines are measured "
+"accurately. Inline mathematics (after MathJax finishes), footnote "
+"references, superscripts, and subscripts are measured as inline atoms; "
+"links keep their markup, and inline code literals may break cleanly after "
+"``/`` or ``::``. The original TeX patterns and the libraries' BSD notices "
+"are recorded in ``NOTICE``."
 msgstr ""
 "초기화된 모든 프로젝트(``guidedog quickstart``, ``guidedog ssg init``, ``guidedog "
 "dsc init``)는 ``_static/guidedog.css`` 및 ``_static/guidedog.js`` 옆에 "
-"``_static/typography.js``\\ 를 복사하므로 프로젝트가 스크립트를 직접 소유하고 편집할 수 있습니다. "
-"데스크톱 읽기 너비(``40rem`` 이상)에서 영어 본문은 문단, 목록 항목, 정의, 알림 블록, 인용 블록, 각주 전반에 "
-"걸쳐 브라우저에서 문단 단위의 **Knuth-Plass 줄바꿈**\\ 을 적용하며, 표, 탐색 트리, 메타데이터 헤더, 그림 "
-"캡션은 끝을 맞추지 않은 채로 둡니다. 스크립트는 로드된 글꼴을 측정해 상자(box), 글루(glue), 하이픈 페널티를 "
-"구성하고 블록 전체의 줄바꿈 위치를 고릅니다. Frank Liang의 패턴 기법이 영어 하이픈 후보를 제공하며, 하이픈 줄바꿈 "
-"뒤에는 페널티 너비를 버려 다음 줄을 정확하게 측정합니다. 인라인 수식(MathJax 완료 후), 각주 참조, 위첨자, "
-"아래첨자는 인라인 원자로 측정되고, 링크는 마크업을 유지하며, 인라인 코드 리터럴은 ``/`` 또는 ``::`` 뒤에서 깔끔하게 "
-"줄바꿈할 수 있습니다. 원본 TeX 패턴과 라이브러리의 BSD 고지문은 ``NOTICE``\\ 에 기록되어 있습니다."
+"``_static/typography.js``\\ 를 복사하므로 프로젝트가 스크립트를 직접 소유하고 편집할 수 있습니다. 데스크톱 "
+"읽기 너비(``40rem`` 이상)에서 영어 본문은 문단, 목록 항목, 정의, 알림 블록, 인용 블록, 각주 전반에 걸쳐 "
+"브라우저에서 문단 단위의 **Knuth-Plass 줄바꿈**\\ 을 적용하며, 표, 탐색 트리, 메타데이터 헤더, 그림 캡션은 끝을 "
+"맞추지 않은 채로 둡니다. 스크립트는 로드된 글꼴을 측정해 상자(box), 글루(glue), 하이픈 페널티를 구성하고 블록 전체의 "
+"줄바꿈 위치를 고릅니다. Frank Liang의 패턴 기법이 영어 하이픈 후보를 제공하며, 하이픈 줄바꿈 뒤에는 페널티 너비를 버려 "
+"다음 줄을 정확하게 측정합니다. 인라인 수식(MathJax 완료 후), 각주 참조, 위첨자, 아래첨자는 인라인 원자로 측정되고, "
+"링크는 마크업을 유지하며, 인라인 코드 리터럴은 ``/`` 또는 ``::`` 뒤에서 깔끔하게 줄바꿈할 수 있습니다. 원본 TeX "
+"패턴과 라이브러리의 BSD 고지문은 ``NOTICE``\\ 에 기록되어 있습니다."
 
 #: ../../topics/typography.rst:57
 msgid ""

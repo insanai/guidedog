@@ -19,6 +19,8 @@ guidedog serve docs
 
 项目包含 `conf.toml`、`index.rst`、`_templates/`（`layout.html`、`book.typ`、`discussion.typ`、`article.typ` 和 `theme.typ`）以及 `_static/`（`guidedog.css`、`guidedog.js` 和 `typography.js`）。模板和静态资源都是普通文件，可以在本地直接编辑。HTML 提供导航、搜索、代码高亮、图表、公式和 Knuth-Plass 段落排版。PDF 图书提供章节、交叉引用、插图、索引及按语言优化的排版。我们可以在 RST 和 MyST 中直接嵌入包括 CeTZ 和 Fletcher 在内的 Graphviz 或 Typst 绘图源码，并自动生成 HTML 与 PDF 资源；参见[图表章节](docs/manual/topics/diagrams.rst)。
 
+我们通过原生 `lilypond` 指令在 RST 和 MyST 中直接嵌入 LilyPond 乐谱，包括谱表、声部、歌词和常用记号；参见[乐谱章节](docs/manual/topics/music.rst)。SVG 和 PNG 插图可用于 HTML 与 PDF，无需另行安装 LilyPond 程序。
+
 内置主题默认跟随系统主题，同时提供浅色和深色选项；Guidedog 自身的文档网站默认使用浅色阅读版。网站首页和仓库概览会检测浏览器语言。已保存的选择优先；直接访问某个版本或章节的链接则视为明确请求。
 
 ```sh

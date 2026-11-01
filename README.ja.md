@@ -19,6 +19,8 @@ guidedog serve docs
 
 プロジェクトには `conf.toml`、`index.rst`、`_templates/`（`layout.html`、`book.typ`、`discussion.typ`、`article.typ`、`theme.typ`）、`_static/`（`guidedog.css`、`guidedog.js`、`typography.js`）があります。テンプレートや静的アセットは、手元で直接編集できる普通のファイルです。HTML にはナビゲーション、検索、コードの強調、図、数式、Knuth-Plass 段落組版があり、PDF には章、相互参照、図、索引、言語に応じた組版があります。CeTZ や Fletcher を含む Graphviz または Typst の作図ソースを RST や MyST に直接埋め込み、HTML と PDF 向けのアセットを自動生成できます。詳しくは[図の章](docs/manual/topics/diagrams.rst)を参照してください。
 
+ネイティブの `lilypond` ディレクティブで、五線、声部、歌詞、一般的な記号を含む LilyPond 記法を RST と MyST に直接埋め込みます。[楽譜の章](docs/manual/topics/music.rst)を参照してください。LilyPond プログラムを別途インストールせずに、HTML と PDF で SVG と PNG の図を使えます。
+
 組み込みテーマは既定でシステム設定に従い、明るいテーマと暗いテーマも選べます。Guidedog 自身のドキュメントサイトは既定で明るい読書版を使います。サイトの入口ページとリポジトリ概要ではブラウザーの言語に合わせます。保存した選択が優先され、特定の版や章への直接リンクは尊重されます。
 
 ```sh

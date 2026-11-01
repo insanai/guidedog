@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 05:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -4768,6 +4768,18 @@ msgstr ""
 msgid "``guidedog build --untrusted`` builds a project whose sources we did not write. Raw content is left out, nothing is fetched, and no build plugin runs. The project cannot widen what the build reads. ``include_roots`` and ``pdf_preamble`` are not used. Files and folders that lead outside the source folder (``html_logo``, ``html_favicon``, ``pdf_logo``, ``mathjax_config_path``, ``html_static_path``, ``html_extra_path``, ``templates_path``, ``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``, ``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. Embedded ``typst-diagram`` compilation is disabled and no Typst package is downloaded. Each dropped setting is a ``build.untrusted`` warning. This is a capability policy, not a process sandbox. See :doc:`cli`."
 msgstr ""
 
+#: ../../reference/configuration.rst:1572
+msgid "Native music engraving"
+msgstr ""
+
+#: ../../reference/configuration.rst:1575
+msgid "``lilypond_staff_size`` sets the default five-line staff height in points, from 10 through 40; the default is 18. ``lilypond_html_width`` sets the wide HTML system measure in points; the default is 564. ``lilypond_pdf_width`` sets the PDF system measure in points; when omitted, the selected template and ``pdf_paper_size`` determine it. Widths must be positive and no greater than 100,000 points. All three values are finite TOML numbers, and directive options override their project defaults."
+msgstr ""
+
+#: ../../reference/configuration.rst:1587
+msgid "The PDF templates declare their horizontal margin with ``// guidedog: margin-x = 31mm`` after their first import. Without a declaration, we assume 25 millimetres on each side. The built-in book, article and discussion margins are 31, 30 and 25 millimetres respectively. Text fonts use ``pdf_fonts`` and ``pdf_font_paths``. See :doc:`../topics/music` for directive syntax, layout, trust rules and limits."
+msgstr ""
+
 #: ../../reference/formats.rst:1
 msgid "Readers, renderers, and builders"
 msgstr ""
@@ -4926,6 +4938,10 @@ msgstr ""
 
 #: ../../reference/formats.rst:73
 msgid "Project builds recognize Graphviz directives and the Guidedog ``typst-diagram`` directive in RST and MyST. The project link pass compiles diagrams and manages their image assets for HTML and PDF. A direct markup conversion retains the diagram as source code; it does not run the project asset pipeline. See :doc:`../topics/diagrams`."
+msgstr ""
+
+#: ../../reference/formats.rst:75
+msgid "The RST and MyST ``lilypond`` directive uses the native project engraving pipeline for musical notation. SVG and PNG assets, captions, figure references, narrow HTML layouts and PDF system images are described in :doc:`../topics/music`. Ordinary LilyPond code blocks remain source examples."
 msgstr ""
 
 #: ../../reference/index.rst:1

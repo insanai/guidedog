@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 05:19+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -38,63 +38,68 @@ msgstr ""
 "は実行ファイルに含まれます。別の ``dot`` や ``typst`` プログラムは不要です。"
 
 #: ../../topics/diagrams.rst:12
+msgid ""
+"For musical scores, we use the native notation workflow in :doc:`music`."
+msgstr "楽譜には :doc:`music` のネイティブ記譜処理を使います。"
+
+#: ../../topics/diagrams.rst:14
 msgid "Choose the drawing tool"
 msgstr "描画ツールを選ぶ"
 
-#: ../../topics/diagrams.rst:15
+#: ../../topics/diagrams.rst:17
 msgid "Drawing tools"
 msgstr "描画ツール"
 
-#: ../../topics/diagrams.rst:19
+#: ../../topics/diagrams.rst:21
 msgid "Tool"
 msgstr "ツール"
 
-#: ../../topics/diagrams.rst:20
+#: ../../topics/diagrams.rst:22
 msgid "Useful when"
 msgstr "適した用途"
 
-#: ../../topics/diagrams.rst:21
+#: ../../topics/diagrams.rst:23
 msgid "Source"
 msgstr "ソース"
 
-#: ../../topics/diagrams.rst:22
+#: ../../topics/diagrams.rst:24
 msgid "Graphviz"
 msgstr "Graphviz"
 
-#: ../../topics/diagrams.rst:23
+#: ../../topics/diagrams.rst:25
 msgid ""
 "We describe nodes and edges and want the layout engine to place them."
 msgstr "ノードと辺を記述し、配置をレイアウトエンジンに任せます。"
 
-#: ../../topics/diagrams.rst:24
+#: ../../topics/diagrams.rst:26
 msgid "DOT inside ``graphviz``, ``graph`` or ``digraph``."
 msgstr "``graphviz``、``graph``、``digraph`` 内の DOT。"
 
-#: ../../topics/diagrams.rst:25
+#: ../../topics/diagrams.rst:27
 msgid "Typst with CeTZ"
 msgstr "Typst と CeTZ"
 
-#: ../../topics/diagrams.rst:26
+#: ../../topics/diagrams.rst:28
 msgid "We need explicit geometry, custom shapes, plots or sequence layouts."
 msgstr "明示的な幾何形状、独自の形、プロットやシーケンス配置が必要な場合です。"
 
-#: ../../topics/diagrams.rst:27
+#: ../../topics/diagrams.rst:29
 msgid "Typst inside ``typst-diagram``."
 msgstr "``typst-diagram`` 内の Typst。"
 
-#: ../../topics/diagrams.rst:28
+#: ../../topics/diagrams.rst:30
 msgid "Typst with Fletcher"
 msgstr "Typst と Fletcher"
 
-#: ../../topics/diagrams.rst:29
+#: ../../topics/diagrams.rst:31
 msgid "We need positioned nodes, mathematical labels and precise arrows."
 msgstr "位置を指定したノード、数式ラベル、正確な矢印が必要な場合です。"
 
-#: ../../topics/diagrams.rst:30
+#: ../../topics/diagrams.rst:32
 msgid "Typst inside ``typst-diagram`` with a pinned Fletcher import."
 msgstr "``typst-diagram`` 内の Typst と、バージョンを固定した Fletcher のインポート。"
 
-#: ../../topics/diagrams.rst:32
+#: ../../topics/diagrams.rst:34
 msgid ""
 "We choose SVG for scalable drawings in both the browser and book. Typst "
 "diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
@@ -103,21 +108,21 @@ msgstr ""
 "ブラウザーと書籍で拡大縮小できる SVG を選びます。Typst の図は 144 ピクセル毎インチの PNG にもできます。既存の SVG と "
 "PNG は、通常の画像・図ディレクティブで引き続き使えます。"
 
-#: ../../topics/diagrams.rst:36
+#: ../../topics/diagrams.rst:38
 msgid "A flow chart"
 msgstr "フローチャート"
 
-#: ../../topics/diagrams.rst:41
+#: ../../topics/diagrams.rst:43
 msgid ""
 "If the request fits the limits, the workspace buffer grows and conversion "
 "continues; otherwise the conversion ends with a Limit result."
 msgstr "要求が制限内に収まれば、ワークスペースのバッファーが拡張され、変換が続きます。収まらなければ、変換は Limit の結果で終了します。"
 
-#: ../../topics/diagrams.rst:41
+#: ../../topics/diagrams.rst:43
 msgid "A conversion checks its limits before a buffer grows."
 msgstr "変換は、バッファーを拡張する前に制限を確認します。"
 
-#: ../../topics/diagrams.rst:61
+#: ../../topics/diagrams.rst:63
 msgid ""
 "The drawing names the decision at the growth step. It does not suggest "
 "that running out of room aborts the program: a bound produces a result "
@@ -125,11 +130,11 @@ msgid ""
 msgstr ""
 "図では、拡張の手前にある判断を明示しています。領域が足りなくなるとプログラムが中断する、という意味ではありません。上限に達すると、呼び出し側が報告できる結果が返ります。この違いは契約の一部です。"
 
-#: ../../topics/diagrams.rst:66
+#: ../../topics/diagrams.rst:68
 msgid "Author a graph"
 msgstr "グラフを書く"
 
-#: ../../topics/diagrams.rst:84
+#: ../../topics/diagrams.rst:86
 msgid ""
 "``graphviz``, ``graph``, and ``digraph`` are built in. Guidedog renders "
 "them through Graphviz. HTML receives an SVG asset. PDF embeds the "
@@ -138,32 +143,32 @@ msgstr ""
 "``graphviz``\\ 、\\ ``graph``\\ 、\\ ``digraph`` は組み込み。Guidedog が Graphviz "
 "で描画し、HTML は SVG、PDF は描画した図を使う。元のグラフは共通だ。"
 
-#: ../../topics/diagrams.rst:88
+#: ../../topics/diagrams.rst:90
 msgid "In MyST Markdown, we use a directive fence with the same options."
 msgstr "MyST Markdown では同じオプションを持つディレクティブフェンスを使います。"
 
-#: ../../topics/diagrams.rst:99
+#: ../../topics/diagrams.rst:101
 msgid ""
-"A ``graphviz`` file argument reads a DOT file instead of an inline "
-"body. ``graph`` and ``digraph`` take the graph name as their argument "
-"and wrap the body's edges in the corresponding DOT graph. ``:layout:`` "
-"(or Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout "
-"engine: ``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, "
-"``twopi``, ``osage`` or ``patchwork``. A plain ``dot`` or ``graphviz`` "
-"Markdown fence also draws a graph; we use the directive form when we "
-"need options."
+"A ``graphviz`` file argument reads a DOT file instead of an inline body. "
+"``graph`` and ``digraph`` take the graph name as their argument and wrap "
+"the body's edges in the corresponding DOT graph. ``:layout:`` (or "
+"Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout engine: "
+"``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, ``twopi``, "
+"``osage`` or ``patchwork``. A plain ``dot`` or ``graphviz`` Markdown "
+"fence also draws a graph; we use the directive form when we need options."
 msgstr ""
 "``graphviz`` のファイル引数は、本文の代わりに DOT ファイルを読み込みます。``graph`` と ``digraph`` "
 "は図の名前を引数に取り、本文の辺を対応する DOT のグラフで囲みます。``:layout:``\\ （または Sphinx の "
 "``:graphviz_dot:`` エイリアス）で Graphviz のレイアウトエンジンを選択できます：``dot``\\ "
 "（既定）、``neato``、``fdp``、``sfdp``、``circo``、``twopi``、``osage``、``patchwork``。通常の "
-"``dot`` または ``graphviz`` の Markdown フェンスでも描画できますが、オプションが必要な場合はディレクティブを使います。"
+"``dot`` または ``graphviz`` の Markdown "
+"フェンスでも描画できますが、オプションが必要な場合はディレクティブを使います。"
 
-#: ../../topics/diagrams.rst:104
+#: ../../topics/diagrams.rst:106
 msgid "Draw with Typst"
 msgstr "Typst で描く"
 
-#: ../../topics/diagrams.rst:107
+#: ../../topics/diagrams.rst:109
 msgid ""
 "The ``typst-diagram`` directive compiles its body to an image. The page "
 "fits the drawing automatically. We can start with Typst's built-in shapes "
@@ -172,11 +177,15 @@ msgstr ""
 "``typst-diagram`` は本文を画像にコンパイルします。ページは自動的に図に合う大きさになります。パッケージを追加する前に、Typst "
 "内蔵の図形から始められます。"
 
-#: ../../topics/diagrams.rst:121
+#: ../../topics/diagrams.rst:123
+msgid "A teal circle"
+msgstr "青緑色の円"
+
+#: ../../topics/diagrams.rst:123
 msgid "A drawing from Typst source."
 msgstr "Typst ソースから生成した図。"
 
-#: ../../topics/diagrams.rst:127
+#: ../../topics/diagrams.rst:129
 msgid ""
 "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
 "An ordinary ``typst`` code fence displays source without compiling it."
@@ -184,23 +193,23 @@ msgstr ""
 "MyST で同じ図を描く場合は、フェンス言語に ``{typst-diagram}`` を使います。通常の ``typst`` "
 "コードフェンスはコンパイルせずソースを表示します。"
 
-#: ../../topics/diagrams.rst:140
+#: ../../topics/diagrams.rst:142
 msgid ""
 "CeTZ supplies a drawing canvas and geometric operations. We import a "
 "specific package version so the source states its dependency."
 msgstr "CeTZ は描画キャンバスと幾何操作を提供します。依存関係をソースに明示するため、特定バージョンのパッケージをインポートします。"
 
-#: ../../topics/diagrams.rst:157
+#: ../../topics/diagrams.rst:159
 msgid ""
 "Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
 "are useful when position carries meaning."
 msgstr "Fletcher は CeTZ 上でノードと矢印の図を構築します。位置に意味がある場合、明示的な座標が役立ちます。"
 
-#: ../../topics/diagrams.rst:173
+#: ../../topics/diagrams.rst:175
 msgid "Share source and refer to figures"
 msgstr "ソースを共有し図を参照する"
 
-#: ../../topics/diagrams.rst:176
+#: ../../topics/diagrams.rst:178
 msgid ""
 "Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` "
 "and ``:align:``. We enable ``numfig = true`` in ``conf.toml`` and refer "
@@ -216,13 +225,13 @@ msgstr ""
 ":numref:`chapter-typst-circle` "
 "は本書の番号付きの図です。代替テキストは図が伝える情報を説明します。文字を輪郭として描く Typst SVG で特に役立ちます。"
 
-#: ../../topics/diagrams.rst:182
+#: ../../topics/diagrams.rst:184
 msgid ""
 "For a larger drawing we keep Typst source in a file. Guidedog compiles it "
 "during the ordinary build."
 msgstr "大きな図の Typst ソースはファイルに保存します。Guidedog が通常のビルドでコンパイルします。"
 
-#: ../../topics/diagrams.rst:191
+#: ../../topics/diagrams.rst:193
 msgid ""
 "An inline diagram's imports resolve beside the document containing it. A "
 "file diagram's imports resolve beside its Typst file. We can therefore "
@@ -235,11 +244,11 @@ msgstr ""
 "ファイルを基準に解決します。色、ノード、シーケンス図の補助ライブラリを共有できます。インポートした補助・データファイルを変更すると、該当する "
 "HTML ページを再描画します。同じ画像はタイムスタンプを保ち、変更のない PDF 書籍のキャッシュを維持します。"
 
-#: ../../topics/diagrams.rst:197
+#: ../../topics/diagrams.rst:199
 msgid "Packages, limits and failures"
 msgstr "パッケージ、制限、失敗時の扱い"
 
-#: ../../topics/diagrams.rst:200
+#: ../../topics/diagrams.rst:202
 msgid ""
 "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings "
 "govern Typst diagrams in both outputs. With ``pdf_packages = "
@@ -258,7 +267,7 @@ msgstr ""
 "を実行します。プロジェクトのインポートはシンボリックリンク経由でもソースディレクトリ内に制限されます。図は有限の寸法を持つ 1 "
 "ページである必要があり、PNG は 1,600 万ピクセル、各辺 16,384 ピクセルまでです。"
 
-#: ../../topics/diagrams.rst:207
+#: ../../topics/diagrams.rst:209
 msgid ""
 "A failed drawing remains visible as source with a warning "
 "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
@@ -271,17 +280,17 @@ msgid ""
 "figure files."
 msgstr ""
 "描画に失敗した図は警告付きのソースとして残ります（``build.graphviz`` または "
-"``build.typst-diagram``；ディレクティブのソース未指定や重複は ``sphinx.graphviz.source`` "
-"または ``sphinx.typst.source`` を報告します）。図の欠落で公開を止めたい場合は ``-W`` "
+"``build.typst-diagram``；ディレクティブのソース未指定や重複は ``sphinx.graphviz.source`` または "
+"``sphinx.typst.source`` を報告します）。図の欠落で公開を止めたい場合は ``-W`` "
 "でビルドします。``--untrusted`` は Typst のコンパイルと外部 Graphviz "
 "リソースを拒否しソースを保持します。テキストビルドは図をコンパイルせずにソースを表示します。:doc:`../howto/typst-diagrams` "
 "に全オプション、ソースの制限、既存の図ファイルの移行手順を記載しています。"
 
-#: ../../topics/diagrams.rst:213
+#: ../../topics/diagrams.rst:215
 msgid "Light, dark and print"
 msgstr "ライト、ダーク、印刷"
 
-#: ../../topics/diagrams.rst:216
+#: ../../topics/diagrams.rst:218
 msgid ""
 "Typst diagrams keep their authored colors and receive the same light "
 "panel as ordinary Graphviz images in the default dark theme. The adaptive "
@@ -290,7 +299,7 @@ msgstr ""
 "Typst の図は指定した色を保持し、既定のダークテーマでは通常の Graphviz 画像と同じ明るいパネル上に表示されます。Graphviz "
 "の適応パレットは Typst の図を再着色しません。"
 
-#: ../../topics/diagrams.rst:218
+#: ../../topics/diagrams.rst:220
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
@@ -298,77 +307,77 @@ msgid ""
 msgstr ""
 "背景を透明にしても文字色は変わりません。暗いページで暗い文字が消えないよう、通常の図は元の色を保ち、既定のダークテーマでは明るいパネルを使います。"
 
-#: ../../topics/diagrams.rst:222
+#: ../../topics/diagrams.rst:224
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
-"the directive. Guidedog adds a fixed stylesheet inside the SVG image. "
-"Its dark media query follows the embedding page's ``color-scheme``, "
-"including the theme control's explicit selection. No script, external "
-"stylesheet or inline page SVG is needed."
+"the directive. Guidedog adds a fixed stylesheet inside the SVG image. Its "
+"dark media query follows the embedding page's ``color-scheme``, including "
+"the theme control's explicit selection. No script, external stylesheet or "
+"inline page SVG is needed."
 msgstr ""
 "本書の可変配色には、ディレクティブに ``:class: graphviz-adaptive`` を加えます。Guidedog が SVG "
 "画像内に固定スタイルシートを追加し、そのダーク用メディアクエリーがテーマ切替の明示的な選択を含む親ページの ``color-scheme`` "
 "に従います。スクリプト、外部 CSS、ページ内への SVG 展開は不要です。"
 
-#: ../../topics/diagrams.rst:228
+#: ../../topics/diagrams.rst:230
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
 msgstr "短いラベルにします。手順は角丸、入力はメモ、永続ストレージは円柱とし、ダーク配色の役割をクラスで示します。"
 
-#: ../../topics/diagrams.rst:231
+#: ../../topics/diagrams.rst:233
 msgid "Semantic node classes"
 msgstr "意味を表すノードクラス"
 
-#: ../../topics/diagrams.rst:235
+#: ../../topics/diagrams.rst:237
 msgid "DOT class"
 msgstr "DOT クラス"
 
-#: ../../topics/diagrams.rst:236
+#: ../../topics/diagrams.rst:238
 msgid "Role"
 msgstr "役割"
 
-#: ../../topics/diagrams.rst:237
+#: ../../topics/diagrams.rst:239
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:238
+#: ../../topics/diagrams.rst:240
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "ソース、設定、補助資料。暖かい中間色。"
 
-#: ../../topics/diagrams.rst:239
+#: ../../topics/diagrams.rst:241
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:240
+#: ../../topics/diagrams.rst:242
 msgid "A produced artifact; blue."
 msgstr "生成物。青。"
 
-#: ../../topics/diagrams.rst:241
+#: ../../topics/diagrams.rst:243
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:242
+#: ../../topics/diagrams.rst:244
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "任意の拡張点。琥珀色、破線。"
 
-#: ../../topics/diagrams.rst:243
+#: ../../topics/diagrams.rst:245
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:244
+#: ../../topics/diagrams.rst:246
 msgid "A decision; amber, with a diamond shape."
 msgstr "判断。琥珀色、ひし形。"
 
-#: ../../topics/diagrams.rst:245
+#: ../../topics/diagrams.rst:247
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:246
+#: ../../topics/diagrams.rst:248
 msgid "A separate ownership or allocation boundary; violet."
 msgstr "所有権またはメモリ割り当ての独立した境界。紫。"
 
-#: ../../topics/diagrams.rst:248
+#: ../../topics/diagrams.rst:250
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
@@ -380,7 +389,7 @@ msgstr ""
 "たとえば ``source [class=\"gd-input\", shape=note, fillcolor=\"#fbfaf3\"]`` "
 "は、ライト表示の見た目とダーク表示での役割を同時に指定します。クラスは形を選んだりラベルを付けたりはしません。形とラベルは明示的に書きます。そうすれば白黒でも図が読めます。分類されていない処理は緑です。この配色は使うと決めた場合にだけ適用されます。正確な色そのものがデータを表す図には使いません。"
 
-#: ../../topics/diagrams.rst:254
+#: ../../topics/diagrams.rst:256
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
@@ -394,11 +403,11 @@ msgstr ""
 "`CSS color-scheme の仕様 "
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_ で定められています。"
 
-#: ../../topics/diagrams.rst:260
+#: ../../topics/diagrams.rst:262
 msgid "Make the result legible"
 msgstr "読みやすく仕上げる"
 
-#: ../../topics/diagrams.rst:263
+#: ../../topics/diagrams.rst:265
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -407,7 +416,7 @@ msgid ""
 msgstr ""
 "ノードのラベルは短く、長い規則は図の下で説明する。主経路は一方向を基本にし、戻りの辺に条件を付ける。色だけでなく形と文字も使う。印刷では色がないかもしれない。"
 
-#: ../../topics/diagrams.rst:267
+#: ../../topics/diagrams.rst:269
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -416,7 +425,7 @@ msgstr ""
 "代替テキストとキャプションを付け、狭いブラウザーと PDF で試す。小さすぎる字でなければ収まらない図は二つに分ける。寸法は "
 ":doc:`../media` を参照。"
 
-#: ../../topics/diagrams.rst:271
+#: ../../topics/diagrams.rst:273
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
 "readable. Scroll inside the figure. The page itself keeps its width."
@@ -994,6 +1003,409 @@ msgstr ""
 "`MathJax コンポーネント契約 "
 "<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_ を参照。"
 
+#: ../../topics/music.rst:1
+#| msgid "Publication"
+msgid "Music notation"
+msgstr "楽譜の記法"
+
+#: ../../topics/music.rst:4
+msgid ""
+"We keep a musical example beside its explanation and let Guidedog engrave "
+"it for the website and the book. The ``lilypond`` directive reads a "
+"bounded LilyPond notation profile and produces self-contained SVG or PNG. "
+"The reader and engraver are native Rust libraries. A project build needs "
+"no installed LilyPond program."
+msgstr "音楽の例を説明のそばに置き、Guidedog でウェブサイトと書籍用に浄書します。``lilypond`` ディレクティブは範囲を定めた LilyPond 記法を読み、自己完結した SVG または PNG を生成します。読み取りと浄書はネイティブの Rust ライブラリで行います。プロジェクトのビルドに LilyPond プログラムのインストールは不要です。"
+
+#: ../../topics/music.rst:9
+msgid "Write a melody"
+msgstr "旋律を書く"
+
+#: ../../topics/music.rst:12
+msgid ""
+"We write pitches and durations inside braces. In ``\\relative c'``, each "
+"pitch takes the nearest diatonic position to the preceding pitch, then "
+"applies its apostrophes or commas. The first pitch uses the reference "
+"``c'``, which is middle C. A number gives the duration's denominator; "
+"``4`` is a quarter note and ``8`` is an eighth note. An omitted duration "
+"repeats the preceding duration. A vertical bar checks the measure "
+"boundary."
+msgstr "波括弧の中に音高と音価を書きます。``\\relative c'`` では、直前の音に最も近い全音階上の位置を選び、その後でアポストロフィやコンマを適用します。最初の音は中央ハの ``c'`` を基準にします。数字は音価の分母です。``4`` は四分音符、``8`` は八分音符です。音価を省略すると直前の値を繰り返します。縦棒は小節の境界を検査します。"
+
+#: ../../topics/music.rst:33
+msgid "A four-measure melody in G major and three-quarter time."
+msgstr "ト長調、四分の三拍子の四小節の旋律。"
+
+#: ../../topics/music.rst:33
+msgid "A short melody in G major."
+msgstr "ト長調の短い旋律。"
+
+#: ../../topics/music.rst:43
+msgid ""
+"We refer to the caption with ``:numref:`music-melody``` when ``numfig = "
+"true``. A caption accepts inline markup. Without a caption, the directive "
+"produces an image."
+msgstr "``numfig = true`` のとき、``:numref:`music-melody``` でキャプションを参照します。キャプションではインラインのマークアップを使えます。キャプションがなければ、ディレクティブは画像を生成します。"
+
+#: ../../topics/music.rst:47
+#| msgid ""
+#| "MyST Markdown supports the same directives and roles through fenced "
+#| "blocks:"
+msgid "MyST uses the same directive and options."
+msgstr "MyST でも同じディレクティブとオプションを使います。"
+
+#: ../../topics/music.rst:58
+msgid ""
+"An ordinary ``code-block:: lilypond`` or plain Markdown ``lilypond`` "
+"fence remains a source example. A direct ``guidedog convert`` operation "
+"also retains directive source; engraving belongs to the project asset "
+"pipeline."
+msgstr "通常の ``code-block:: lilypond`` や単純な Markdown の ``lilypond`` フェンスはソース例のままです。直接の ``guidedog convert`` 操作でもディレクティブのソースを保持します。浄書はプロジェクトのアセット処理で行います。"
+
+#: ../../topics/music.rst:61
+#| msgid "Choose the drawing tool"
+msgid "Choose the notation"
+msgstr "記法を選ぶ"
+
+#: ../../topics/music.rst:64
+msgid ""
+"The default pitch language is Nederlands: ``cis`` is C sharp and ``des`` "
+"is D flat. We select English names with ``\\language \"english\"`` or "
+"``\\include \"english.ly\"``; examples include ``cs`` and ``df``. Deutsch "
+"adds ``h`` for B natural and ``b`` for B flat. These three language "
+"includes are built in and read no file."
+msgstr "音名の既定言語は Nederlands です。``cis`` は嬰ハ、``des`` は変ニです。``\\language \"english\"`` または ``\\include \"english.ly\"`` で英語の音名を選びます。例は ``cs`` と ``df`` です。Deutsch では ``h`` がロの本位音、``b`` が変ロになります。この三つの言語インクルードは組み込みで、ファイルを読みません。"
+
+#: ../../topics/music.rst:69
+msgid ""
+"Apostrophes raise octaves and commas lower them. ``\\fixed c' { ... }`` "
+"fixes the reference octave instead of following preceding pitches. "
+"``\\transpose c ees { ... }`` transposes spelled pitches and key "
+"signatures. Accidentals belong to the pitch name; a key signature does "
+"not change a written natural pitch into a sharp pitch. An exclamation "
+"mark forces an accidental, and a question mark requests a cautionary "
+"accidental. We put these marks after the pitch and before its duration: "
+"``cis'!4`` and ``c'?4``."
+msgstr "アポストロフィはオクターブを上げ、コンマは下げます。``\\fixed c' { ... }`` は直前の音を追わず、基準オクターブを固定します。``\\transpose c ees { ... }`` は音名の綴りと調号を移調します。変化記号は音名に属し、調号によって明示した本位音が嬰音に変わることはありません。感嘆符は変化記号を強制し、疑問符は注意用の変化記号を要求します。音高の後、音価の前に ``cis'!4`` や ``c'?4`` と書きます。"
+
+#: ../../topics/music.rst:76
+msgid ""
+"Durations range from ``1`` through ``128``, with ``\\breve`` for a double "
+"whole note. Dots lengthen a duration, and ``*2/3`` scales its exact "
+"value. ``r`` is a rest, ``s`` is an invisible spacer, and ``R1*4`` "
+"requests four measures of rest in common time. Angle brackets make "
+"chords: ``<c' e' g'>4``. ``q`` repeats the preceding chord. A tilde ties "
+"equal pitches; parentheses make slurs, and ``\\(`` with ``\\)`` makes a "
+"phrasing slur."
+msgstr "音価は ``1`` から ``128`` までで、``\\breve`` は倍全音符です。付点は音価を延ばし、``*2/3`` は正確な値を比例変更します。``r`` は休符、``s`` は見えない間隔、``R1*4`` は四分の四拍子の四小節休符です。山括弧で ``<c' e' g'>4`` のように和音を書きます。``q`` は直前の和音を繰り返します。チルダは同じ音高をタイで結び、丸括弧はスラー、``\\(`` と ``\\)`` はフレージングスラーを作ります。"
+
+#: ../../topics/music.rst:83
+msgid "Supported notation families"
+msgstr "対応する記法の種類"
+
+#: ../../topics/music.rst:87
+msgid "Family"
+msgstr "種類"
+
+#: ../../topics/music.rst:88
+msgid "Examples"
+msgstr "例"
+
+#: ../../topics/music.rst:89
+msgid "Staff context"
+msgstr "五線のコンテキスト"
+
+#: ../../topics/music.rst:90
+msgid ""
+"``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; treble, "
+"bass, alto, tenor and soprano clefs, with supported octave clefs."
+msgstr "``\\clef``、``\\key``、``\\time``、``\\partial``、``\\bar``。ト音、ヘ音、アルト、テノール、ソプラノの各音部記号と、対応するオクターブ音部記号。"
+
+#: ../../topics/music.rst:91
+#| msgid "Roles"
+msgid "Modes"
+msgstr "旋法"
+
+#: ../../topics/music.rst:92
+msgid ""
+"``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
+"``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
+msgstr "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, ``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
+
+#: ../../topics/music.rst:93
+msgid "Rhythm and stems"
+msgstr "リズムと符幹"
+
+#: ../../topics/music.rst:94
+msgid ""
+"``\\tuplet 3/2``, ``\\times 2/3``, manual ``[`` and ``]`` beams, "
+"``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, "
+"``\\stemNeutral``."
+msgstr "``\\tuplet 3/2``、``\\times 2/3``、``[`` と ``]`` による手動連桁、``\\autoBeamOn``、``\\autoBeamOff``、``\\stemUp``、``\\stemDown``、``\\stemNeutral``。"
+
+#: ../../topics/music.rst:95
+msgid "Expression"
+msgstr "表情"
+
+#: ../../topics/music.rst:96
+msgid ""
+"Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through "
+"``\\ffff``, ``\\<``, ``\\>``, ``\\!``, literal scripts and single-item "
+"``\\markup`` with ``\\bold`` or ``\\italic``."
+msgstr "アーティキュレーション、1 から 5 の運指、``\\pppp`` から ``\\ffff`` の強弱、``\\<``、``\\>``、``\\!``、文字列の指示と ``\\bold`` または ``\\italic`` を使う単一項目の ``\\markup``。"
+
+#: ../../topics/music.rst:97
+#| msgid "reStructuredText"
+msgid "Structure"
+msgstr "構造"
+
+#: ../../topics/music.rst:98
+msgid ""
+"Assignments, variable references, lexical ``\\include``, ``\\score``, "
+"``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, "
+"``StaffGroup``, ``ChoirStaff``."
+msgstr "代入、変数参照、字句的な ``\\include``、``\\score``、``\\new Staff``、``\\new Voice``、``PianoStaff``、``GrandStaff``、``StaffGroup``、``ChoirStaff``。"
+
+#: ../../topics/music.rst:99
+#| msgid "Documents and resources"
+msgid "Voices and lyrics"
+msgstr "声部と歌詞"
+
+#: ../../topics/music.rst:100
+msgid ""
+"At most two voices per staff; ``\\addlyrics``, ``\\lyricsto``, "
+"``\\lyricmode``, multiple verses, explicit syllable durations, hyphens "
+"and extenders."
+msgstr "五線ごとに最大二声。``\\addlyrics``、``\\lyricsto``、``\\lyricmode``、複数の節、音節の明示的な音価、ハイフン、延長線。"
+
+#: ../../topics/music.rst:101
+msgid "Grace and repetition"
+msgstr "装飾音と反復"
+
+#: ../../topics/music.rst:102
+msgid ""
+"``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
+"``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+msgstr "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, ``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+
+#: ../../topics/music.rst:103
+#| msgid "Images and figures"
+msgid "Labels and breaks"
+msgstr "ラベルと改行"
+
+#: ../../topics/music.rst:104
+msgid ""
+"``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames "
+"\\chordmode``, ``\\break``, ``\\noBreak``."
+msgstr "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames \\chordmode``, ``\\break``, ``\\noBreak``."
+
+#: ../../topics/music.rst:106
+msgid ""
+"The reader accepts version declarations, ignored header metadata and "
+"empty layout or MIDI blocks. It refuses Scheme, music functions, "
+"arbitrary property changes, overrides and unsupported commands with a "
+"placed diagnostic. The profile describes a fixed engraving style; it does "
+"not execute a LilyPond program. The complete command ledger and engraving "
+"contract are recorded in GDS 0015 in the repository's "
+"``docs/gds/records`` directory."
+msgstr "読み取り器はバージョン宣言、無視されるヘッダーメタデータ、空のレイアウトまたは MIDI ブロックを受け入れます。Scheme、音楽関数、任意のプロパティ変更、オーバーライド、未対応のコマンドは、位置を示す診断で拒否します。この記法範囲は固定の浄書スタイルを定め、LilyPond プログラムを実行しません。全コマンドの一覧と浄書の規約は、リポジトリの ``docs/gds/records`` にある GDS 0015 に記録しています。"
+
+#: ../../topics/music.rst:111
+msgid "Combine staves and lyrics"
+msgstr "五線と歌詞を組み合わせる"
+
+#: ../../topics/music.rst:114
+msgid ""
+"We use simultaneous contexts for a score with several staves. Instrument "
+"names use ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` "
+"block. Two voices on one staff use ``<< { ... } \\\\ { ... } >>``. Lyrics "
+"attach to a named voice, and separate ``\\lyricsto`` expressions make "
+"separate verses."
+msgstr "複数の五線を持つ楽譜には同時コンテキストを使います。楽器名は ``\\with`` ブロックの ``instrumentName`` と ``shortInstrumentName`` で指定します。一つの五線に二声を書くには ``<< { ... } \\\\ { ... } >>`` を使います。歌詞は名前付き声部に結び付け、別々の ``\\lyricsto`` 式で各節を作ります。"
+
+#: ../../topics/music.rst:120
+msgid ""
+"Two piano staves; the upper staff has four quarter notes and the words "
+"Sing a short song, while the bass holds C."
+msgstr "ピアノの二段譜。上段は四つの四分音符と Sing a short song の歌詞、低音はハ音を保ちます。"
+
+#: ../../topics/music.rst:120
+msgid "A named melody with a verse and a bass staff."
+msgstr "一節の歌詞と低音譜表を持つ名前付き旋律。"
+
+#: ../../topics/music.rst:130
+msgid "Read local files"
+msgstr "ローカルファイルを読む"
+
+#: ../../topics/music.rst:133
+msgid ""
+"A directive can name a local file instead of containing an inline body. "
+"We use exactly one source form."
+msgstr "ディレクティブはインライン本文の代わりにローカルファイルを指定できます。ソース形式は必ず一つだけ使います。"
+
+#: ../../topics/music.rst:142
+msgid ""
+"Nested ``\\include`` paths resolve beside the including file, then "
+"through the source directory and configured ``include_roots``. Resolved "
+"paths must stay inside the allowed roots, including after symbolic links "
+"are checked. The build tracks source files, nested includes, missing "
+"local lookups and selected text font files by content. Changing a "
+"dependency rebuilds the generated image. Identical output bytes retain "
+"the same asset name."
+msgstr "入れ子の ``\\include`` パスは、読み込み元ファイルの隣、ソースディレクトリ、設定した ``include_roots`` の順に解決します。シンボリックリンクを検査した後も、解決先は許可されたルート内にある必要があります。ビルドはソース、入れ子のインクルード、見つからなかったローカル検索、選択した文字フォントを内容で追跡します。依存先が変わると画像を再生成します。出力バイトが同じならアセット名も同じです。"
+
+#: ../../topics/music.rst:148
+msgid ""
+"``--untrusted`` permits inline notation because the reader runs no "
+"program or Scheme code. It refuses file arguments and filesystem includes "
+"before opening them. Text output retains source code and performs no "
+"engraving. A failed drawing also retains source code with a warning; "
+"``-W`` stops publication and preserves the preceding output."
+msgstr "読み取り器はプログラムや Scheme コードを実行しないため、``--untrusted`` でもインライン記譜を許可します。ファイル引数とファイルシステムのインクルードは開く前に拒否します。テキスト出力はソースを保持し、浄書しません。描画に失敗した場合も警告とソースを保持します。``-W`` は公開を止め、直前の出力を残します。"
+
+#: ../../topics/music.rst:153
+msgid "Set size and output"
+msgstr "寸法と出力を設定する"
+
+#: ../../topics/music.rst:156
+#| msgid "Directives"
+msgid "Directive options"
+msgstr "ディレクティブのオプション"
+
+#: ../../topics/music.rst:160
+msgid "Option"
+msgstr "オプション"
+
+#: ../../topics/music.rst:161
+msgid "Meaning"
+msgstr "意味"
+
+#: ../../topics/music.rst:162
+msgid "``alt``"
+msgstr "``alt``"
+
+#: ../../topics/music.rst:163
+msgid ""
+"Musical description for the image; otherwise the build constructs a "
+"localized summary."
+msgstr "画像の音楽的な説明。省略するとビルドが言語に合わせた概要を作ります。"
+
+#: ../../topics/music.rst:164
+msgid "``caption``, ``name``, ``class``, ``align``"
+msgstr "``caption``, ``name``, ``class``, ``align``"
+
+#: ../../topics/music.rst:165
+msgid ""
+"Figure caption, reference target, CSS classes and image alignment, "
+"following the diagram directives."
+msgstr "図のキャプション、参照先、CSS クラス、画像の配置。図表ディレクティブと同じです。"
+
+#: ../../topics/music.rst:166
+msgid "``format``"
+msgstr "``format``"
+
+#: ../../topics/music.rst:167
+msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
+msgstr "既定は ``svg``。``png`` は 1 インチ当たり 144 ピクセルです。"
+
+#: ../../topics/music.rst:168
+msgid "``staff-size``"
+msgstr "``staff-size``"
+
+#: ../../topics/music.rst:169
+msgid ""
+"Height of a five-line staff, from 10 through 40 points; the default is 18 "
+"points."
+msgstr "五線の高さ。10 から 40 ポイントで、既定は 18 ポイントです。"
+
+#: ../../topics/music.rst:170
+msgid "``width``"
+msgstr "``width``"
+
+#: ../../topics/music.rst:171
+msgid ""
+"Available system width, in ``pt``, ``mm``, ``cm``, ``in``, ``px`` or a "
+"percentage of the builder's default width."
+msgstr "利用可能なシステム幅。``pt``、``mm``、``cm``、``in``、``px``、またはビルダーの既定幅に対する割合で指定します。"
+
+#: ../../topics/music.rst:172
+msgid "``justify``"
+msgstr "``justify``"
+
+#: ../../topics/music.rst:173
+msgid ""
+"``auto`` keeps a short final system at its natural width; ``all`` "
+"stretches every system; ``none`` avoids stretching."
+msgstr "``auto`` は短い最終システムを自然幅に保ち、``all`` は全システムを伸ばし、``none`` は引き伸ばしを避けます。"
+
+#: ../../topics/music.rst:175
+msgid ""
+"The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
+"and ``lilypond_pdf_width``. Their numeric values are typographic points. "
+"See :doc:`../reference/configuration` for the setting contract."
+msgstr "プロジェクトの既定値は ``lilypond_staff_size``、``lilypond_html_width``、``lilypond_pdf_width`` です。数値は組版ポイントを表します。設定の規約は :doc:`../reference/configuration` を参照します。"
+
+#: ../../topics/music.rst:179
+msgid ""
+"HTML also receives a narrow edition engraved at 225 points, with a staff "
+"height no greater than 14 points. The browser selects it below 40 rem "
+"through a ``picture`` element. This edition has its own system breaks. "
+"When its system limit prevents it from being drawn, the wide image scales "
+"to the screen. SVG adapts its ink to the page's color scheme; PNG keeps a "
+"light background panel in dark mode."
+msgstr "HTML には幅 225 ポイント、五線高 14 ポイント以下で浄書した狭い版も渡します。ブラウザーは 40 rem 未満で ``picture`` 要素からこの版を選びます。この版は独自に改行します。システム数の上限で描画できない場合、広い画像を画面幅に縮小します。SVG のインク色はページの配色に適応し、PNG はダークモードでも明るい背景パネルを保ちます。"
+
+#: ../../topics/music.rst:185
+msgid ""
+"PDF uses the selected template's text width and places music at its "
+"natural size. Built-in templates declare their horizontal margin after "
+"the initial import with a comment such as ``// guidedog: margin-x = "
+"31mm``. A custom template without the declaration uses a 25 millimetre "
+"margin assumption. ``lilypond_pdf_width`` overrides the derived measure. "
+"Oversized music scales to fit with a build warning. A score with several "
+"systems can break between systems across PDF pages, with its caption "
+"after the last system."
+msgstr "PDF は選択したテンプレートの本文幅を使い、楽譜を自然な寸法で配置します。組み込みテンプレートは最初のインポートの後に ``// guidedog: margin-x = 31mm`` のようなコメントで左右余白を宣言します。宣言のない独自テンプレートでは 25 ミリメートルを仮定します。``lilypond_pdf_width`` は計算した幅を上書きします。幅を超える楽譜はビルド警告とともに縮小します。複数システムの楽譜はシステム間で PDF の改ページができ、キャプションは最後の後に置きます。"
+
+#: ../../topics/music.rst:192
+#| msgid "Packages, limits and failures"
+msgid "Fonts, limits and references"
+msgstr "フォント、制限、参考文献"
+
+#: ../../topics/music.rst:195
+msgid ""
+"Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
+"SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
+"with regular, bold and italic fallback faces. Glyphs become outlines, so "
+"browsers and PDF readers need no installed music font. PNG export "
+"requires the embedded renderer; SVG engraving remains available in builds "
+"without it."
+msgstr "楽譜には SIL Open Font License の未変更の Bravura 1.482 と SMuFL メタデータを使います。文字は ``pdf_fonts`` と ``pdf_font_paths`` に従い、通常、太字、斜体の代替書体を使います。字形を輪郭にするため、ブラウザーや PDF リーダーに音楽フォントをインストールする必要はありません。PNG 書き出しには組み込みレンダラーが必要です。組み込みなしのビルドでも SVG 浄書を使えます。"
+
+#: ../../topics/music.rst:200
+msgid ""
+"One example accepts at most 256 KiB of source including includes, 32 "
+"included files, depth 64, 20,000 events, 24 staves, two voices per staff "
+"and 16 heads per chord. The reader and engraver each have a work limit of "
+"eight million operations. Expanded reader allocations have a separate 64 "
+"MiB allowance. A drawing has at most 64 systems and a height of 20,000 "
+"points. PNG is limited to 16 million pixels and 16,384 pixels on either "
+"side. A limit diagnostic identifies the source and suggests splitting the "
+"example."
+msgstr "一つの例はインクルードを含むソース 256 KiB、インクルードファイル 32 個、深さ 64、イベント 20,000 個、五線 24 本、五線ごとに二声、和音ごとに符頭 16 個までです。読み取り器と浄書器には、それぞれ 800 万操作の上限があります。読み取り器の展開後の割り当てには別途 64 MiB の枠があります。描画は最大 64 システム、高さ 20,000 ポイントです。PNG は 1,600 万ピクセル、各辺 16,384 ピクセルまでです。制限の診断はソースを示し、例の分割を勧めます。"
+
+#: ../../topics/music.rst:207
+msgid ""
+"For notation syntax, we consult the `LilyPond 2.24 notation reference "
+"<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "
+"definitions, we consult the `Standard Music Font Layout specification "
+"<https://www.w3.org/2021/03/smufl14/>`_ and the `Bravura project "
+"<https://github.com/steinbergmedia/bravura>`_. Engraving references "
+"include Elaine Gould's *Behind Bars* and Ted Ross's *The Art of Music "
+"Engraving and Processing*. For other kinds of drawing, we use "
+":doc:`diagrams`."
+msgstr "記法は `LilyPond 2.24 の記譜リファレンス <https://lilypond.org/doc/v2.24/Documentation/notation/>`_ を参照します。字形は `Standard Music Font Layout 仕様 <https://www.w3.org/2021/03/smufl14/>`_ と `Bravura プロジェクト <https://github.com/steinbergmedia/bravura>`_ を参照します。浄書の参考文献には Elaine Gould の *Behind Bars* と Ted Ross の *The Art of Music Engraving and Processing* があります。他の図には :doc:`diagrams` を使います。"
+
 #: ../../topics/projects.rst:1
 msgid "How a project works"
 msgstr "プロジェクトの仕組み"
@@ -1158,10 +1570,10 @@ msgstr "HTML 文書の 3 領域レイアウト。"
 msgid ""
 "The built-in theme follows the operating system by default, with light "
 "and dark choices; Guidedog's own documentation website defaults to the "
-"light reading edition. The theme control remembers the reader's choice "
-"on the same browser origin. Printed HTML uses light colors. Content and "
-"navigation remain usable without JavaScript. The theme control, "
-"enhanced search, and paragraph line breaking are progressive enhancements."
+"light reading edition. The theme control remembers the reader's choice on "
+"the same browser origin. Printed HTML uses light colors. Content and "
+"navigation remain usable without JavaScript. The theme control, enhanced "
+"search, and paragraph line breaking are progressive enhancements."
 msgstr ""
 "組み込みテーマは既定で OS の設定に従い、ライトとダークも選べます。Guidedog "
 "自身のドキュメントサイトではライトの読書版を既定にしています。テーマ切替は同じブラウザーオリジン上で読者の選択を記憶します。HTML "
@@ -1172,25 +1584,25 @@ msgstr ""
 msgid ""
 "Every initialized project (``guidedog quickstart``, ``guidedog ssg "
 "init``, and ``guidedog dsc init``) copies ``_static/typography.js`` "
-"beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a "
-"project owns and can edit its scripts directly. On desktop reading "
-"measures (``40rem`` and wider), English prose uses paragraph-wide "
-"**Knuth-Plass line breaking** in the browser across paragraphs, list "
-"items, definitions, admonitions, block quotes, and footnotes, while "
-"leaving tables, navigation trees, metadata headers, and figure captions "
-"ragged. The script measures the loaded font, builds boxes, glue, and "
-"hyphenation penalties, and chooses breaks for the whole block. Frank "
-"Liang's pattern method supplies English hyphenation candidates, and "
-"break penalty widths are discarded after a hyphenated break so "
-"following lines are measured accurately. Inline mathematics (after "
-"MathJax finishes), footnote references, superscripts, and subscripts "
-"are measured as inline atoms; links keep their markup, and inline code "
-"literals may break cleanly after ``/`` or ``::``. The original TeX "
-"patterns and the libraries' BSD notices are recorded in ``NOTICE``."
+"beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a project "
+"owns and can edit its scripts directly. On desktop reading measures "
+"(``40rem`` and wider), English prose uses paragraph-wide **Knuth-Plass "
+"line breaking** in the browser across paragraphs, list items, "
+"definitions, admonitions, block quotes, and footnotes, while leaving "
+"tables, navigation trees, metadata headers, and figure captions ragged. "
+"The script measures the loaded font, builds boxes, glue, and hyphenation "
+"penalties, and chooses breaks for the whole block. Frank Liang's pattern "
+"method supplies English hyphenation candidates, and break penalty widths "
+"are discarded after a hyphenated break so following lines are measured "
+"accurately. Inline mathematics (after MathJax finishes), footnote "
+"references, superscripts, and subscripts are measured as inline atoms; "
+"links keep their markup, and inline code literals may break cleanly after "
+"``/`` or ``::``. The original TeX patterns and the libraries' BSD notices "
+"are recorded in ``NOTICE``."
 msgstr ""
-"初期化されたすべてのプロジェクト（``guidedog quickstart``、``guidedog ssg "
-"init``、``guidedog dsc init``）には ``_static/guidedog.css`` と "
-"``_static/guidedog.js`` の隣に ``_static/typography.js`` "
+"初期化されたすべてのプロジェクト（``guidedog quickstart``、``guidedog ssg init``、``guidedog "
+"dsc init``）には ``_static/guidedog.css`` と ``_static/guidedog.js`` の隣に "
+"``_static/typography.js`` "
 "がコピーされるため、プロジェクト側でスクリプトを所有し直接編集できます。デスクトップの読書幅（``40rem`` "
 "以上）では、英語の本文は段落、リスト項目、定義リスト、注記ブロック、引用ブロック、脚注にわたってブラウザー上で段落全体の "
 "**Knuth-Plass 行分割** "
@@ -1198,7 +1610,8 @@ msgstr ""
 "Liang "
 "のパターン法が英語のハイフネーション候補を提供し、ハイフン改行後のペナルティ幅は破棄されるため後続行も正確に計測されます。インライン数式（MathJax "
 "完了後）、脚注参照、上付き・下付き文字はインラインの不可分要素として計測され、リンクはマークアップを保ち、インラインコードは ``/`` や "
-"``::`` の直後できれいに折り返せます。元の TeX パターンと各ライブラリの BSD ライセンス表記は ``NOTICE`` に記録されています。"
+"``::`` の直後できれいに折り返せます。元の TeX パターンと各ライブラリの BSD ライセンス表記は ``NOTICE`` "
+"に記録されています。"
 
 #: ../../topics/typography.rst:57
 msgid ""
@@ -1221,8 +1634,8 @@ msgid ""
 "not a promise of Knuth-Plass optimization."
 msgstr ""
 "他の言語、狭い行幅、JavaScript を無効にしたブラウザー、および適切な字間の解が見つからない段落では、``text-wrap: "
-"pretty`` を指定したブラウザー標準のレイアウトを使います（CSS の貪欲な両端揃えやブラウザー任せの ``hyphens: "
-"auto`` は使いません）。この CSS プロパティ単独では Knuth-Plass の最適化は保証されません。"
+"pretty`` を指定したブラウザー標準のレイアウトを使います（CSS の貪欲な両端揃えやブラウザー任せの ``hyphens: auto`` "
+"は使いません）。この CSS プロパティ単独では Knuth-Plass の最適化は保証されません。"
 
 #: ../../topics/typography.rst:68
 msgid "The PDF page"

@@ -19,6 +19,8 @@ guidedog serve docs
 
 프로젝트에는 `conf.toml`, `index.rst`, `_templates/`(`layout.html`, `book.typ`, `discussion.typ`, `article.typ`, `theme.typ`), `_static/`(`guidedog.css`, `guidedog.js`, `typography.js`)이 들어 있습니다. 템플릿과 정적 에셋은 로컬에서 직접 편집할 수 있는 일반 파일입니다. HTML은 탐색, 검색, 코드 강조, 다이어그램, 수식, Knuth-Plass 문단 조판을 제공합니다. PDF 책은 장, 상호 참조, 그림, 색인, 언어에 맞춘 조판을 제공합니다. CeTZ와 Fletcher를 포함한 Graphviz 또는 Typst 드로잉 소스를 RST와 MyST에 직접 내장하면 HTML과 PDF 에셋이 자동으로 생성됩니다. 자세한 내용은 [다이어그램 장](docs/manual/topics/diagrams.rst)을 참고하세요.
 
+네이티브 `lilypond` 지시문으로 오선, 성부, 가사와 일반적인 기호를 포함한 LilyPond 악보를 RST와 MyST에 직접 넣습니다. [악보 장](docs/manual/topics/music.rst)을 참고합니다. LilyPond 프로그램을 따로 설치하지 않고 HTML과 PDF에서 SVG와 PNG 그림을 사용합니다.
+
 내장 테마는 기본으로 시스템 테마를 따르며 밝은 테마와 어두운 테마도 선택할 수 있습니다. Guidedog 자체 문서 웹사이트는 기본으로 밝은 읽기용 에디션을 사용합니다. 웹사이트 첫 페이지와 저장소 개요는 브라우저 언어를 감지합니다. 저장된 선택이 우선하며, 특정 언어판이나 장으로 바로 연결되는 링크는 명시적 요청으로 그대로 따릅니다.
 
 ```sh

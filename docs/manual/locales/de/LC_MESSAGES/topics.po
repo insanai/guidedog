@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"POT-Creation-Date: 2026-11-01 05:19+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -43,71 +43,76 @@ msgstr ""
 "noch ein ``typst``-Programm."
 
 #: ../../topics/diagrams.rst:12
+msgid ""
+"For musical scores, we use the native notation workflow in :doc:`music`."
+msgstr "Für Partituren verwenden wir den nativen Notensatz in :doc:`music`."
+
+#: ../../topics/diagrams.rst:14
 msgid "Choose the drawing tool"
 msgstr "Das Zeichenwerkzeug wählen"
 
-#: ../../topics/diagrams.rst:15
+#: ../../topics/diagrams.rst:17
 msgid "Drawing tools"
 msgstr "Zeichenwerkzeuge"
 
-#: ../../topics/diagrams.rst:19
+#: ../../topics/diagrams.rst:21
 msgid "Tool"
 msgstr "Werkzeug"
 
-#: ../../topics/diagrams.rst:20
+#: ../../topics/diagrams.rst:22
 msgid "Useful when"
 msgstr "Geeignet, wenn"
 
-#: ../../topics/diagrams.rst:21
+#: ../../topics/diagrams.rst:23
 msgid "Source"
 msgstr "Quelltext"
 
-#: ../../topics/diagrams.rst:22
+#: ../../topics/diagrams.rst:24
 msgid "Graphviz"
 msgstr "Graphviz"
 
-#: ../../topics/diagrams.rst:23
+#: ../../topics/diagrams.rst:25
 msgid ""
 "We describe nodes and edges and want the layout engine to place them."
 msgstr ""
 "Wir beschreiben Knoten und Kanten und lassen die Layout-Engine ihre "
 "Positionen bestimmen."
 
-#: ../../topics/diagrams.rst:24
+#: ../../topics/diagrams.rst:26
 msgid "DOT inside ``graphviz``, ``graph`` or ``digraph``."
 msgstr "DOT innerhalb von ``graphviz``, ``graph`` oder ``digraph``."
 
-#: ../../topics/diagrams.rst:25
+#: ../../topics/diagrams.rst:27
 msgid "Typst with CeTZ"
 msgstr "Typst mit CeTZ"
 
-#: ../../topics/diagrams.rst:26
+#: ../../topics/diagrams.rst:28
 msgid "We need explicit geometry, custom shapes, plots or sequence layouts."
 msgstr ""
 "Wir benötigen explizite Geometrie, eigene Formen, Plots oder "
 "Sequenzlayouts."
 
-#: ../../topics/diagrams.rst:27
+#: ../../topics/diagrams.rst:29
 msgid "Typst inside ``typst-diagram``."
 msgstr "Typst innerhalb von ``typst-diagram``."
 
-#: ../../topics/diagrams.rst:28
+#: ../../topics/diagrams.rst:30
 msgid "Typst with Fletcher"
 msgstr "Typst mit Fletcher"
 
-#: ../../topics/diagrams.rst:29
+#: ../../topics/diagrams.rst:31
 msgid "We need positioned nodes, mathematical labels and precise arrows."
 msgstr ""
 "Wir benötigen positionierte Knoten, mathematische Beschriftungen und "
 "präzise Pfeile."
 
-#: ../../topics/diagrams.rst:30
+#: ../../topics/diagrams.rst:32
 msgid "Typst inside ``typst-diagram`` with a pinned Fletcher import."
 msgstr ""
 "Typst innerhalb von ``typst-diagram`` mit einem Fletcher-Import fester "
 "Version."
 
-#: ../../topics/diagrams.rst:32
+#: ../../topics/diagrams.rst:34
 msgid ""
 "We choose SVG for scalable drawings in both the browser and book. Typst "
 "diagrams can also produce PNG at 144 pixels per inch. Existing SVG and "
@@ -118,11 +123,11 @@ msgstr ""
 "Vorhandene SVG- und PNG-Dateien funktionieren weiterhin mit gewöhnlichen "
 "Bild- und Abbildungsdirektiven."
 
-#: ../../topics/diagrams.rst:36
+#: ../../topics/diagrams.rst:38
 msgid "A flow chart"
 msgstr "Ein Flussdiagramm"
 
-#: ../../topics/diagrams.rst:41
+#: ../../topics/diagrams.rst:43
 msgid ""
 "If the request fits the limits, the workspace buffer grows and conversion "
 "continues; otherwise the conversion ends with a Limit result."
@@ -131,11 +136,11 @@ msgstr ""
 "die Konvertierung läuft weiter; andernfalls endet sie mit einem "
 "Limit-Ergebnis."
 
-#: ../../topics/diagrams.rst:41
+#: ../../topics/diagrams.rst:43
 msgid "A conversion checks its limits before a buffer grows."
 msgstr "Eine Konvertierung prüft ihre Limits, bevor ein Puffer wächst."
 
-#: ../../topics/diagrams.rst:61
+#: ../../topics/diagrams.rst:63
 msgid ""
 "The drawing names the decision at the growth step. It does not suggest "
 "that running out of room aborts the program: a bound produces a result "
@@ -146,11 +151,11 @@ msgstr ""
 "ein Ergebnis, das der Aufrufer melden kann. Diese Unterscheidung gehört "
 "zum Vertrag."
 
-#: ../../topics/diagrams.rst:66
+#: ../../topics/diagrams.rst:68
 msgid "Author a graph"
 msgstr "Einen Graphen erstellen"
 
-#: ../../topics/diagrams.rst:84
+#: ../../topics/diagrams.rst:86
 msgid ""
 "``graphviz``, ``graph``, and ``digraph`` are built in. Guidedog renders "
 "them through Graphviz. HTML receives an SVG asset. PDF embeds the "
@@ -160,38 +165,36 @@ msgstr ""
 "rendert mit Graphviz. HTML erhält SVG, PDF die gerenderte Zeichnung. "
 "Beide nutzen denselben Graphquelltext."
 
-#: ../../topics/diagrams.rst:88
+#: ../../topics/diagrams.rst:90
 msgid "In MyST Markdown, we use a directive fence with the same options."
 msgstr ""
 "In MyST Markdown verwenden wir einen Direktivenblock mit denselben "
 "Optionen."
 
-#: ../../topics/diagrams.rst:99
+#: ../../topics/diagrams.rst:101
 msgid ""
-"A ``graphviz`` file argument reads a DOT file instead of an inline "
-"body. ``graph`` and ``digraph`` take the graph name as their argument "
-"and wrap the body's edges in the corresponding DOT graph. ``:layout:`` "
-"(or Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout "
-"engine: ``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, "
-"``twopi``, ``osage`` or ``patchwork``. A plain ``dot`` or ``graphviz`` "
-"Markdown fence also draws a graph; we use the directive form when we "
-"need options."
+"A ``graphviz`` file argument reads a DOT file instead of an inline body. "
+"``graph`` and ``digraph`` take the graph name as their argument and wrap "
+"the body's edges in the corresponding DOT graph. ``:layout:`` (or "
+"Sphinx's ``:graphviz_dot:`` alias) selects the Graphviz layout engine: "
+"``dot`` (default), ``neato``, ``fdp``, ``sfdp``, ``circo``, ``twopi``, "
+"``osage`` or ``patchwork``. A plain ``dot`` or ``graphviz`` Markdown "
+"fence also draws a graph; we use the directive form when we need options."
 msgstr ""
 "Ein Dateiargument von ``graphviz`` liest eine DOT-Datei anstelle eines "
-"eingebetteten Rumpfs. ``graph`` und ``digraph`` nehmen den Graphnamen "
-"als Argument und umschließen die Kanten des Rumpfs mit dem "
-"entsprechenden DOT-Graphen. ``:layout:`` (oder der Sphinx-Alias "
-"``:graphviz_dot:``) wählt die Graphviz-Layout-Engine: ``dot`` "
-"(Standard), ``neato``, ``fdp``, ``sfdp``, ``circo``, ``twopi``, "
-"``osage`` oder ``patchwork``. Auch ein gewöhnlicher ``dot``- oder "
-"``graphviz``-Markdown-Codeblock zeichnet einen Graphen; für Optionen "
-"verwenden wir die Direktivenform."
+"eingebetteten Rumpfs. ``graph`` und ``digraph`` nehmen den Graphnamen als "
+"Argument und umschließen die Kanten des Rumpfs mit dem entsprechenden "
+"DOT-Graphen. ``:layout:`` (oder der Sphinx-Alias ``:graphviz_dot:``) "
+"wählt die Graphviz-Layout-Engine: ``dot`` (Standard), ``neato``, ``fdp``, "
+"``sfdp``, ``circo``, ``twopi``, ``osage`` oder ``patchwork``. Auch ein "
+"gewöhnlicher ``dot``- oder ``graphviz``-Markdown-Codeblock zeichnet einen "
+"Graphen; für Optionen verwenden wir die Direktivenform."
 
-#: ../../topics/diagrams.rst:104
+#: ../../topics/diagrams.rst:106
 msgid "Draw with Typst"
 msgstr "Mit Typst zeichnen"
 
-#: ../../topics/diagrams.rst:107
+#: ../../topics/diagrams.rst:109
 msgid ""
 "The ``typst-diagram`` directive compiles its body to an image. The page "
 "fits the drawing automatically. We can start with Typst's built-in shapes "
@@ -201,11 +204,15 @@ msgstr ""
 "Seite passt sich automatisch der Zeichnung an. Wir können mit Typsts "
 "eingebauten Formen beginnen, bevor wir ein Paket hinzufügen."
 
-#: ../../topics/diagrams.rst:121
+#: ../../topics/diagrams.rst:123
+msgid "A teal circle"
+msgstr "Ein türkisfarbener Kreis"
+
+#: ../../topics/diagrams.rst:123
 msgid "A drawing from Typst source."
 msgstr "Eine Zeichnung aus Typst-Quelltext."
 
-#: ../../topics/diagrams.rst:127
+#: ../../topics/diagrams.rst:129
 msgid ""
 "The same drawing in MyST uses ``{typst-diagram}`` as the fence language. "
 "An ordinary ``typst`` code fence displays source without compiling it."
@@ -214,7 +221,7 @@ msgstr ""
 "Blocksprache. Ein gewöhnlicher ``typst``-Codeblock zeigt Quelltext ohne "
 "Kompilierung."
 
-#: ../../topics/diagrams.rst:140
+#: ../../topics/diagrams.rst:142
 msgid ""
 "CeTZ supplies a drawing canvas and geometric operations. We import a "
 "specific package version so the source states its dependency."
@@ -223,7 +230,7 @@ msgstr ""
 "importieren eine bestimmte Paketversion, damit der Quelltext seine "
 "Abhängigkeit angibt."
 
-#: ../../topics/diagrams.rst:157
+#: ../../topics/diagrams.rst:159
 msgid ""
 "Fletcher builds node-and-arrow diagrams on CeTZ. Its explicit coordinates "
 "are useful when position carries meaning."
@@ -231,11 +238,11 @@ msgstr ""
 "Fletcher baut Knoten-Pfeil-Diagramme auf CeTZ auf. Seine expliziten "
 "Koordinaten helfen, wenn die Position Bedeutung trägt."
 
-#: ../../topics/diagrams.rst:173
+#: ../../topics/diagrams.rst:175
 msgid "Share source and refer to figures"
 msgstr "Quelltext teilen und auf Abbildungen verweisen"
 
-#: ../../topics/diagrams.rst:176
+#: ../../topics/diagrams.rst:178
 msgid ""
 "Both directives accept ``:caption:``, ``:alt:``, ``:name:``, ``:class:`` "
 "and ``:align:``. We enable ``numfig = true`` in ``conf.toml`` and refer "
@@ -254,7 +261,7 @@ msgstr ""
 "Dies ist besonders bei Typst-SVGs hilfreich, die Buchstaben als Konturen "
 "zeichnen."
 
-#: ../../topics/diagrams.rst:182
+#: ../../topics/diagrams.rst:184
 msgid ""
 "For a larger drawing we keep Typst source in a file. Guidedog compiles it "
 "during the ordinary build."
@@ -262,7 +269,7 @@ msgstr ""
 "Größere Zeichnungen halten wir als Typst-Quelltext in einer Datei. "
 "Guidedog kompiliert sie beim gewöhnlichen Build."
 
-#: ../../topics/diagrams.rst:191
+#: ../../topics/diagrams.rst:193
 msgid ""
 "An inline diagram's imports resolve beside the document containing it. A "
 "file diagram's imports resolve beside its Typst file. We can therefore "
@@ -279,11 +286,11 @@ msgstr ""
 "Identische erzeugte Bilder behalten ihre Zeitstempel, damit unveränderte "
 "PDF-Bücher zwischengespeichert bleiben."
 
-#: ../../topics/diagrams.rst:197
+#: ../../topics/diagrams.rst:199
 msgid "Packages, limits and failures"
 msgstr "Pakete, Grenzen und Fehler"
 
-#: ../../topics/diagrams.rst:200
+#: ../../topics/diagrams.rst:202
 msgid ""
 "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings "
 "govern Typst diagrams in both outputs. With ``pdf_packages = "
@@ -306,7 +313,7 @@ msgstr ""
 "Abmessungen erzeugen; PNG ist auf 16 Millionen Pixel und 16.384 Pixel je "
 "Seite begrenzt."
 
-#: ../../topics/diagrams.rst:207
+#: ../../topics/diagrams.rst:209
 msgid ""
 "A failed drawing remains visible as source with a warning "
 "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
@@ -319,20 +326,20 @@ msgid ""
 "figure files."
 msgstr ""
 "Eine fehlgeschlagene Zeichnung bleibt mit einer Warnung als Quelltext "
-"sichtbar (``build.graphviz`` oder ``build.typst-diagram``; fehlende "
-"oder doppelte Direktivenquellen melden ``sphinx.graphviz.source`` oder "
+"sichtbar (``build.graphviz`` oder ``build.typst-diagram``; fehlende oder "
+"doppelte Direktivenquellen melden ``sphinx.graphviz.source`` oder "
 "``sphinx.typst.source``). Wir bauen mit ``-W``, wenn eine fehlende "
 "Zeichnung die Veröffentlichung verhindern muss. ``--untrusted`` "
 "verweigert die Typst-Kompilierung sowie externe Graphviz-Ressourcen und "
 "behält den Quelltext. Text-Builds zeigen Quelltext ohne Kompilierung. "
-":doc:`../howto/typst-diagrams` beschreibt alle Optionen, "
-"Quelltextgrenzen und Migrationsschritte für vorhandene Abbildungsdateien."
+":doc:`../howto/typst-diagrams` beschreibt alle Optionen, Quelltextgrenzen "
+"und Migrationsschritte für vorhandene Abbildungsdateien."
 
-#: ../../topics/diagrams.rst:213
+#: ../../topics/diagrams.rst:215
 msgid "Light, dark and print"
 msgstr "Hell, dunkel und Druck"
 
-#: ../../topics/diagrams.rst:216
+#: ../../topics/diagrams.rst:218
 msgid ""
 "Typst diagrams keep their authored colors and receive the same light "
 "panel as ordinary Graphviz images in the default dark theme. The adaptive "
@@ -342,7 +349,7 @@ msgstr ""
 "Standarddesign dieselbe helle Fläche wie gewöhnliche Graphviz-Bilder. Die "
 "adaptive Graphviz-Palette färbt Typst-Zeichnungen nicht um."
 
-#: ../../topics/diagrams.rst:218
+#: ../../topics/diagrams.rst:220
 msgid ""
 "A transparent canvas does not change a graph's ink. Dark text can "
 "disappear on a dark page. Ordinary graphs therefore keep their chosen "
@@ -352,22 +359,22 @@ msgstr ""
 "Text lesbar bleibt, behalten gewöhnliche Grafiken ihre Farben und "
 "bekommen im dunklen Standardthema eine helle Fläche."
 
-#: ../../topics/diagrams.rst:222
+#: ../../topics/diagrams.rst:224
 msgid ""
 "For the manual's adaptive palette, add ``:class: graphviz-adaptive`` to "
-"the directive. Guidedog adds a fixed stylesheet inside the SVG image. "
-"Its dark media query follows the embedding page's ``color-scheme``, "
-"including the theme control's explicit selection. No script, external "
-"stylesheet or inline page SVG is needed."
+"the directive. Guidedog adds a fixed stylesheet inside the SVG image. Its "
+"dark media query follows the embedding page's ``color-scheme``, including "
+"the theme control's explicit selection. No script, external stylesheet or "
+"inline page SVG is needed."
 msgstr ""
 "Für die adaptive Palette des Handbuchs ergänzen wir ``:class: "
 "graphviz-adaptive`` an der Direktive. Guidedog fügt dann ein festes "
-"Stylesheet in das SVG-Bild ein. Dessen Media Query für den dunklen "
-"Modus folgt dem ``color-scheme`` der einbettenden Seite, auch einer "
+"Stylesheet in das SVG-Bild ein. Dessen Media Query für den dunklen Modus "
+"folgt dem ``color-scheme`` der einbettenden Seite, auch einer "
 "ausdrücklichen Wahl im Theme-Umschalter. Skripte, externe Stylesheets "
 "oder Inline-SVG in der Seite sind nicht nötig."
 
-#: ../../topics/diagrams.rst:228
+#: ../../topics/diagrams.rst:230
 msgid ""
 "Use short labels, rounded boxes for steps, notes for input and cylinders "
 "for durable stores. Node classes distinguish roles in the dark palette:"
@@ -376,59 +383,59 @@ msgstr ""
 "Notizen für Eingaben und Zylinder für dauerhafte Speicher. Knotenklassen "
 "unterscheiden die Rollen in der dunklen Palette:"
 
-#: ../../topics/diagrams.rst:231
+#: ../../topics/diagrams.rst:233
 msgid "Semantic node classes"
 msgstr "Semantische Knotenklassen"
 
-#: ../../topics/diagrams.rst:235
+#: ../../topics/diagrams.rst:237
 msgid "DOT class"
 msgstr "DOT-Klasse"
 
-#: ../../topics/diagrams.rst:236
+#: ../../topics/diagrams.rst:238
 msgid "Role"
 msgstr "Rolle"
 
-#: ../../topics/diagrams.rst:237
+#: ../../topics/diagrams.rst:239
 msgid "``gd-input``"
 msgstr "``gd-input``"
 
-#: ../../topics/diagrams.rst:238
+#: ../../topics/diagrams.rst:240
 msgid "Source, configuration or supporting material; warm neutral."
 msgstr "Quelle, Konfiguration oder Hilfsmaterial; warmer Neutralton."
 
-#: ../../topics/diagrams.rst:239
+#: ../../topics/diagrams.rst:241
 msgid "``gd-output``"
 msgstr "``gd-output``"
 
-#: ../../topics/diagrams.rst:240
+#: ../../topics/diagrams.rst:242
 msgid "A produced artifact; blue."
 msgstr "Erzeugtes Artefakt; blau."
 
-#: ../../topics/diagrams.rst:241
+#: ../../topics/diagrams.rst:243
 msgid "``gd-plugin``"
 msgstr "``gd-plugin``"
 
-#: ../../topics/diagrams.rst:242
+#: ../../topics/diagrams.rst:244
 msgid "An optional extension point; amber, with a dashed border."
 msgstr "Optionaler Erweiterungspunkt; bernsteinfarben und gestrichelt."
 
-#: ../../topics/diagrams.rst:243
+#: ../../topics/diagrams.rst:245
 msgid "``gd-choice``"
 msgstr "``gd-choice``"
 
-#: ../../topics/diagrams.rst:244
+#: ../../topics/diagrams.rst:246
 msgid "A decision; amber, with a diamond shape."
 msgstr "Entscheidung; bernsteinfarbene Raute."
 
-#: ../../topics/diagrams.rst:245
+#: ../../topics/diagrams.rst:247
 msgid "``gd-memory``"
 msgstr "``gd-memory``"
 
-#: ../../topics/diagrams.rst:246
+#: ../../topics/diagrams.rst:248
 msgid "A separate ownership or allocation boundary; violet."
 msgstr "Eine eigene Ownership- oder Allokationsgrenze; violett."
 
-#: ../../topics/diagrams.rst:248
+#: ../../topics/diagrams.rst:250
 msgid ""
 "For example, ``source [class=\"gd-input\", shape=note, "
 "fillcolor=\"#fbfaf3\"]`` sets both the light presentation and its dark "
@@ -445,7 +452,7 @@ msgstr ""
 "ist optional. Wir wenden sie nicht auf Grafiken an, deren genaue Farben "
 "Daten tragen."
 
-#: ../../topics/diagrams.rst:254
+#: ../../topics/diagrams.rst:256
 msgid ""
 "The light DOT attributes remain the PDF master. The book receives an SVG "
 "without the adaptive stylesheet. Printed HTML selects the light scheme "
@@ -461,11 +468,11 @@ msgstr ""
 "Die Vererbungsregel definiert die `CSS-Spezifikation zu color-scheme "
 "<https://www.w3.org/TR/css-color-adjust-1/#color-scheme-prop>`_."
 
-#: ../../topics/diagrams.rst:260
+#: ../../topics/diagrams.rst:262
 msgid "Make the result legible"
 msgstr "Das Ergebnis lesbar gestalten"
 
-#: ../../topics/diagrams.rst:263
+#: ../../topics/diagrams.rst:265
 msgid ""
 "Keep node labels short. Explain a longer rule below the drawing. Prefer "
 "one direction for the main path. Label a return edge with its condition. "
@@ -477,7 +484,7 @@ msgstr ""
 "beschriften wir mit ihrer Bedingung. Neben Farbe nutzen wir Form und "
 "Text, denn im Druck gibt es womöglich gar keine Farbe."
 
-#: ../../topics/diagrams.rst:267
+#: ../../topics/diagrams.rst:269
 msgid ""
 "Supply alternative text and a caption. Test narrow browser windows and "
 "the PDF page. If a diagram needs tiny type to fit, split it into two "
@@ -488,7 +495,7 @@ msgstr ""
 "um zu passen, teilen wir es in zwei Zeichnungen auf. Bild- und "
 "Abbildungsgrößen beschreibt :doc:`../media`."
 
-#: ../../topics/diagrams.rst:271
+#: ../../topics/diagrams.rst:273
 msgid ""
 "On narrow screens, captioned diagrams scroll horizontally to keep labels "
 "readable. Scroll inside the figure. The page itself keeps its width."
@@ -1139,6 +1146,409 @@ msgstr ""
 "`MathJax-Komponentenvertrag "
 "<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_\\ ."
 
+#: ../../topics/music.rst:1
+#| msgid "Publication"
+msgid "Music notation"
+msgstr "Musiknotation"
+
+#: ../../topics/music.rst:4
+msgid ""
+"We keep a musical example beside its explanation and let Guidedog engrave "
+"it for the website and the book. The ``lilypond`` directive reads a "
+"bounded LilyPond notation profile and produces self-contained SVG or PNG. "
+"The reader and engraver are native Rust libraries. A project build needs "
+"no installed LilyPond program."
+msgstr "Wir halten ein Musikbeispiel bei seiner Erklärung und lassen Guidedog den Notensatz für Website und Buch erzeugen. Die Direktive ``lilypond`` liest ein begrenztes LilyPond-Notationsprofil und erzeugt eigenständiges SVG oder PNG. Parser und Notensatz bestehen aus nativen Rust-Bibliotheken. Ein Projekt benötigt kein installiertes LilyPond-Programm."
+
+#: ../../topics/music.rst:9
+msgid "Write a melody"
+msgstr "Eine Melodie schreiben"
+
+#: ../../topics/music.rst:12
+msgid ""
+"We write pitches and durations inside braces. In ``\\relative c'``, each "
+"pitch takes the nearest diatonic position to the preceding pitch, then "
+"applies its apostrophes or commas. The first pitch uses the reference "
+"``c'``, which is middle C. A number gives the duration's denominator; "
+"``4`` is a quarter note and ``8`` is an eighth note. An omitted duration "
+"repeats the preceding duration. A vertical bar checks the measure "
+"boundary."
+msgstr "Wir schreiben Tonhöhen und Dauern in geschweifte Klammern. In ``\\relative c'`` nimmt jede Tonhöhe die nächste diatonische Position zur vorherigen ein und wendet dann ihre Apostrophe oder Kommata an. Der erste Ton verwendet den Bezugston ``c'``, das mittlere C. Eine Zahl gibt den Nenner der Dauer an; ``4`` ist eine Viertelnote, ``8`` eine Achtelnote. Eine fehlende Dauer wiederholt die vorherige. Ein senkrechter Strich prüft die Taktgrenze."
+
+#: ../../topics/music.rst:33
+msgid "A four-measure melody in G major and three-quarter time."
+msgstr "Eine viertaktige Melodie in G-Dur im Dreivierteltakt."
+
+#: ../../topics/music.rst:33
+msgid "A short melody in G major."
+msgstr "Eine kurze Melodie in G-Dur."
+
+#: ../../topics/music.rst:43
+msgid ""
+"We refer to the caption with ``:numref:`music-melody``` when ``numfig = "
+"true``. A caption accepts inline markup. Without a caption, the directive "
+"produces an image."
+msgstr "Mit ``:numref:`music-melody``` verweisen wir auf die Beschriftung, wenn ``numfig = true`` gilt. Eine Beschriftung erlaubt Inline-Auszeichnung. Ohne Beschriftung erzeugt die Direktive ein Bild."
+
+#: ../../topics/music.rst:47
+#| msgid ""
+#| "MyST Markdown supports the same directives and roles through fenced "
+#| "blocks:"
+msgid "MyST uses the same directive and options."
+msgstr "MyST verwendet dieselbe Direktive und dieselben Optionen."
+
+#: ../../topics/music.rst:58
+msgid ""
+"An ordinary ``code-block:: lilypond`` or plain Markdown ``lilypond`` "
+"fence remains a source example. A direct ``guidedog convert`` operation "
+"also retains directive source; engraving belongs to the project asset "
+"pipeline."
+msgstr "Ein gewöhnlicher ``code-block:: lilypond`` oder einfacher Markdown-Codezaun ``lilypond`` bleibt ein Quelltextbeispiel. Auch ``guidedog convert`` erhält den Direktivenquelltext; der Notensatz gehört zur Ressourcenverarbeitung des Projekts."
+
+#: ../../topics/music.rst:61
+#| msgid "Choose the drawing tool"
+msgid "Choose the notation"
+msgstr "Die Notation wählen"
+
+#: ../../topics/music.rst:64
+msgid ""
+"The default pitch language is Nederlands: ``cis`` is C sharp and ``des`` "
+"is D flat. We select English names with ``\\language \"english\"`` or "
+"``\\include \"english.ly\"``; examples include ``cs`` and ``df``. Deutsch "
+"adds ``h`` for B natural and ``b`` for B flat. These three language "
+"includes are built in and read no file."
+msgstr "Die voreingestellte Tonsprache ist Nederlands: ``cis`` bedeutet Cis und ``des`` Des. Englische Namen wählen wir mit ``\\language \"english\"`` oder ``\\include \"english.ly\"``; Beispiele sind ``cs`` und ``df``. Deutsch ergänzt ``h`` für H und ``b`` für B. Diese drei Spracheinbindungen sind eingebaut und lesen keine Datei."
+
+#: ../../topics/music.rst:69
+msgid ""
+"Apostrophes raise octaves and commas lower them. ``\\fixed c' { ... }`` "
+"fixes the reference octave instead of following preceding pitches. "
+"``\\transpose c ees { ... }`` transposes spelled pitches and key "
+"signatures. Accidentals belong to the pitch name; a key signature does "
+"not change a written natural pitch into a sharp pitch. An exclamation "
+"mark forces an accidental, and a question mark requests a cautionary "
+"accidental. We put these marks after the pitch and before its duration: "
+"``cis'!4`` and ``c'?4``."
+msgstr "Apostrophe erhöhen die Oktave, Kommata senken sie. ``\\fixed c' { ... }`` legt die Bezugsoktave fest, statt den vorherigen Tönen zu folgen. ``\\transpose c ees { ... }`` transponiert geschriebene Tonhöhen und Tonartvorzeichnungen. Versetzungszeichen gehören zum Tonnamen; eine Tonartvorzeichnung macht aus einem ausgeschriebenen natürlichen Ton keinen erhöhten Ton. Ein Ausrufezeichen erzwingt ein Versetzungszeichen, ein Fragezeichen setzt ein Erinnerungszeichen in Klammern. Diese Zeichen stehen nach der Tonhöhe und vor der Dauer: ``cis'!4`` und ``c'?4``."
+
+#: ../../topics/music.rst:76
+msgid ""
+"Durations range from ``1`` through ``128``, with ``\\breve`` for a double "
+"whole note. Dots lengthen a duration, and ``*2/3`` scales its exact "
+"value. ``r`` is a rest, ``s`` is an invisible spacer, and ``R1*4`` "
+"requests four measures of rest in common time. Angle brackets make "
+"chords: ``<c' e' g'>4``. ``q`` repeats the preceding chord. A tilde ties "
+"equal pitches; parentheses make slurs, and ``\\(`` with ``\\)`` makes a "
+"phrasing slur."
+msgstr "Dauern reichen von ``1`` bis ``128``; ``\\breve`` bezeichnet eine doppelte ganze Note. Punkte verlängern die Dauer, ``*2/3`` skaliert ihren exakten Wert. ``r`` ist eine Pause, ``s`` ein unsichtbarer Abstandshalter, und ``R1*4`` fordert vier Pausentakte im Viervierteltakt an. Winkelklammern bilden Akkorde: ``<c' e' g'>4``. ``q`` wiederholt den vorherigen Akkord. Eine Tilde bindet gleiche Tonhöhen; runde Klammern bilden Legatobögen, ``\\(`` und ``\\)`` einen Phrasierungsbogen."
+
+#: ../../topics/music.rst:83
+msgid "Supported notation families"
+msgstr "Unterstützte Notationsgruppen"
+
+#: ../../topics/music.rst:87
+msgid "Family"
+msgstr "Gruppe"
+
+#: ../../topics/music.rst:88
+msgid "Examples"
+msgstr "Beispiele"
+
+#: ../../topics/music.rst:89
+msgid "Staff context"
+msgstr "Notensystemkontext"
+
+#: ../../topics/music.rst:90
+msgid ""
+"``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; treble, "
+"bass, alto, tenor and soprano clefs, with supported octave clefs."
+msgstr "``\\clef``, ``\\key``, ``\\time``, ``\\partial``, ``\\bar``; Violin-, Bass-, Alt-, Tenor- und Sopranschlüssel sowie unterstützte oktavierende Schlüssel."
+
+#: ../../topics/music.rst:91
+#| msgid "Roles"
+msgid "Modes"
+msgstr "Modi"
+
+#: ../../topics/music.rst:92
+msgid ""
+"``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
+"``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
+msgstr "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, ``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
+
+#: ../../topics/music.rst:93
+msgid "Rhythm and stems"
+msgstr "Rhythmus und Hälse"
+
+#: ../../topics/music.rst:94
+msgid ""
+"``\\tuplet 3/2``, ``\\times 2/3``, manual ``[`` and ``]`` beams, "
+"``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, "
+"``\\stemNeutral``."
+msgstr "``\\tuplet 3/2``, ``\\times 2/3``, manuelle Balken mit ``[`` und ``]``, ``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, ``\\stemNeutral``."
+
+#: ../../topics/music.rst:95
+msgid "Expression"
+msgstr "Ausdruck"
+
+#: ../../topics/music.rst:96
+msgid ""
+"Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through "
+"``\\ffff``, ``\\<``, ``\\>``, ``\\!``, literal scripts and single-item "
+"``\\markup`` with ``\\bold`` or ``\\italic``."
+msgstr "Artikulationen, Fingersätze 1 bis 5, Dynamik von ``\\pppp`` bis ``\\ffff``, ``\\<``, ``\\>``, ``\\!``, wörtliche Textanweisungen und einteilige ``\\markup``-Angaben mit ``\\bold`` oder ``\\italic``."
+
+#: ../../topics/music.rst:97
+#| msgid "reStructuredText"
+msgid "Structure"
+msgstr "Struktur"
+
+#: ../../topics/music.rst:98
+msgid ""
+"Assignments, variable references, lexical ``\\include``, ``\\score``, "
+"``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, "
+"``StaffGroup``, ``ChoirStaff``."
+msgstr "Zuweisungen, Variablenverweise, lexikalisches ``\\include``, ``\\score``, ``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, ``StaffGroup``, ``ChoirStaff``."
+
+#: ../../topics/music.rst:99
+#| msgid "Documents and resources"
+msgid "Voices and lyrics"
+msgstr "Stimmen und Liedtexte"
+
+#: ../../topics/music.rst:100
+msgid ""
+"At most two voices per staff; ``\\addlyrics``, ``\\lyricsto``, "
+"``\\lyricmode``, multiple verses, explicit syllable durations, hyphens "
+"and extenders."
+msgstr "Höchstens zwei Stimmen pro System; ``\\addlyrics``, ``\\lyricsto``, ``\\lyricmode``, mehrere Strophen, ausdrückliche Silbendauern, Trennstriche und Verlängerungslinien."
+
+#: ../../topics/music.rst:101
+msgid "Grace and repetition"
+msgstr "Vorschläge und Wiederholungen"
+
+#: ../../topics/music.rst:102
+msgid ""
+"``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
+"``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+msgstr "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, ``\\repeat volta``, ``\\alternative``, ``\\repeat unfold``."
+
+#: ../../topics/music.rst:103
+#| msgid "Images and figures"
+msgid "Labels and breaks"
+msgstr "Beschriftungen und Umbrüche"
+
+#: ../../topics/music.rst:104
+msgid ""
+"``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames "
+"\\chordmode``, ``\\break``, ``\\noBreak``."
+msgstr "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\new ChordNames \\chordmode``, ``\\break``, ``\\noBreak``."
+
+#: ../../topics/music.rst:106
+msgid ""
+"The reader accepts version declarations, ignored header metadata and "
+"empty layout or MIDI blocks. It refuses Scheme, music functions, "
+"arbitrary property changes, overrides and unsupported commands with a "
+"placed diagnostic. The profile describes a fixed engraving style; it does "
+"not execute a LilyPond program. The complete command ledger and engraving "
+"contract are recorded in GDS 0015 in the repository's "
+"``docs/gds/records`` directory."
+msgstr "Der Parser akzeptiert Versionsangaben, ignorierte Kopfmetadaten und leere Layout- oder MIDI-Blöcke. Scheme, Musikfunktionen, beliebige Eigenschaftsänderungen, Overrides und nicht unterstützte Befehle werden mit einer verorteten Diagnose abgelehnt. Das Profil beschreibt einen festen Notensatzstil; es führt kein LilyPond-Programm aus. Die vollständige Befehlsliste und der Notensatzvertrag stehen in GDS 0015 im Verzeichnis ``docs/gds/records`` des Repositorys."
+
+#: ../../topics/music.rst:111
+msgid "Combine staves and lyrics"
+msgstr "Notensysteme und Liedtexte verbinden"
+
+#: ../../topics/music.rst:114
+msgid ""
+"We use simultaneous contexts for a score with several staves. Instrument "
+"names use ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` "
+"block. Two voices on one staff use ``<< { ... } \\\\ { ... } >>``. Lyrics "
+"attach to a named voice, and separate ``\\lyricsto`` expressions make "
+"separate verses."
+msgstr "Für eine Partitur mit mehreren Systemen verwenden wir gleichzeitige Kontexte. Instrumentennamen verwenden ``instrumentName`` und ``shortInstrumentName`` in einem ``\\with``-Block. Zwei Stimmen auf einem System verwenden ``<< { ... } \\\\ { ... } >>``. Liedtexte binden wir an eine benannte Stimme; getrennte ``\\lyricsto``-Ausdrücke erzeugen getrennte Strophen."
+
+#: ../../topics/music.rst:120
+msgid ""
+"Two piano staves; the upper staff has four quarter notes and the words "
+"Sing a short song, while the bass holds C."
+msgstr "Zwei Klaviersysteme; oben stehen vier Viertelnoten mit den Worten Sing a short song, während der Bass C hält."
+
+#: ../../topics/music.rst:120
+msgid "A named melody with a verse and a bass staff."
+msgstr "Eine benannte Melodie mit einer Strophe und einem Basssystem."
+
+#: ../../topics/music.rst:130
+msgid "Read local files"
+msgstr "Lokale Dateien lesen"
+
+#: ../../topics/music.rst:133
+msgid ""
+"A directive can name a local file instead of containing an inline body. "
+"We use exactly one source form."
+msgstr "Eine Direktive kann eine lokale Datei benennen, statt einen eingebetteten Rumpf zu enthalten. Wir verwenden genau eine Quelltextform."
+
+#: ../../topics/music.rst:142
+msgid ""
+"Nested ``\\include`` paths resolve beside the including file, then "
+"through the source directory and configured ``include_roots``. Resolved "
+"paths must stay inside the allowed roots, including after symbolic links "
+"are checked. The build tracks source files, nested includes, missing "
+"local lookups and selected text font files by content. Changing a "
+"dependency rebuilds the generated image. Identical output bytes retain "
+"the same asset name."
+msgstr "Verschachtelte ``\\include``-Pfade werden neben der einbindenden Datei aufgelöst, dann im Quellverzeichnis und den konfigurierten ``include_roots``. Aufgelöste Pfade müssen auch nach Prüfung symbolischer Links innerhalb der erlaubten Wurzeln bleiben. Der Build verfolgt Quelldateien, verschachtelte Einbindungen, fehlende lokale Suchziele und ausgewählte Textschriftdateien nach Inhalt. Eine geänderte Abhängigkeit baut das erzeugte Bild neu. Gleiche Ausgabebytes behalten denselben Ressourcennamen."
+
+#: ../../topics/music.rst:148
+msgid ""
+"``--untrusted`` permits inline notation because the reader runs no "
+"program or Scheme code. It refuses file arguments and filesystem includes "
+"before opening them. Text output retains source code and performs no "
+"engraving. A failed drawing also retains source code with a warning; "
+"``-W`` stops publication and preserves the preceding output."
+msgstr "``--untrusted`` erlaubt eingebettete Notation, weil der Parser weder Programme noch Scheme-Code ausführt. Dateiargumente und Dateisystemeinbindungen werden vor dem Öffnen abgelehnt. Textausgabe erhält den Quelltext und erzeugt keinen Notensatz. Auch eine fehlgeschlagene Zeichnung erhält den Quelltext mit einer Warnung; ``-W`` verhindert die Veröffentlichung und bewahrt die vorherige Ausgabe."
+
+#: ../../topics/music.rst:153
+msgid "Set size and output"
+msgstr "Größe und Ausgabe festlegen"
+
+#: ../../topics/music.rst:156
+#| msgid "Directives"
+msgid "Directive options"
+msgstr "Direktivenoptionen"
+
+#: ../../topics/music.rst:160
+msgid "Option"
+msgstr "Option"
+
+#: ../../topics/music.rst:161
+msgid "Meaning"
+msgstr "Bedeutung"
+
+#: ../../topics/music.rst:162
+msgid "``alt``"
+msgstr "``alt``"
+
+#: ../../topics/music.rst:163
+msgid ""
+"Musical description for the image; otherwise the build constructs a "
+"localized summary."
+msgstr "Musikalische Bildbeschreibung; andernfalls erzeugt der Build eine lokalisierte Zusammenfassung."
+
+#: ../../topics/music.rst:164
+msgid "``caption``, ``name``, ``class``, ``align``"
+msgstr "``caption``, ``name``, ``class``, ``align``"
+
+#: ../../topics/music.rst:165
+msgid ""
+"Figure caption, reference target, CSS classes and image alignment, "
+"following the diagram directives."
+msgstr "Abbildungsbeschriftung, Verweisziel, CSS-Klassen und Bildausrichtung wie bei den Diagrammdirektiven."
+
+#: ../../topics/music.rst:166
+msgid "``format``"
+msgstr "``format``"
+
+#: ../../topics/music.rst:167
+msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
+msgstr "Standardmäßig ``svg``, oder ``png`` mit 144 Pixeln pro Zoll."
+
+#: ../../topics/music.rst:168
+msgid "``staff-size``"
+msgstr "``staff-size``"
+
+#: ../../topics/music.rst:169
+msgid ""
+"Height of a five-line staff, from 10 through 40 points; the default is 18 "
+"points."
+msgstr "Höhe eines fünfzeiligen Notensystems von 10 bis 40 Punkt; der Standard ist 18 Punkt."
+
+#: ../../topics/music.rst:170
+msgid "``width``"
+msgstr "``width``"
+
+#: ../../topics/music.rst:171
+msgid ""
+"Available system width, in ``pt``, ``mm``, ``cm``, ``in``, ``px`` or a "
+"percentage of the builder's default width."
+msgstr "Verfügbare Systembreite in ``pt``, ``mm``, ``cm``, ``in``, ``px`` oder als Prozentsatz der Standardbreite des Builders."
+
+#: ../../topics/music.rst:172
+msgid "``justify``"
+msgstr "``justify``"
+
+#: ../../topics/music.rst:173
+msgid ""
+"``auto`` keeps a short final system at its natural width; ``all`` "
+"stretches every system; ``none`` avoids stretching."
+msgstr "``auto`` belässt ein kurzes letztes System bei seiner natürlichen Breite; ``all`` streckt jedes System; ``none`` vermeidet Streckung."
+
+#: ../../topics/music.rst:175
+msgid ""
+"The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
+"and ``lilypond_pdf_width``. Their numeric values are typographic points. "
+"See :doc:`../reference/configuration` for the setting contract."
+msgstr "Die Projektstandards sind ``lilypond_staff_size``, ``lilypond_html_width`` und ``lilypond_pdf_width``. Ihre Zahlenwerte sind typografische Punkte. Der Einstellungsvertrag steht in :doc:`../reference/configuration`."
+
+#: ../../topics/music.rst:179
+msgid ""
+"HTML also receives a narrow edition engraved at 225 points, with a staff "
+"height no greater than 14 points. The browser selects it below 40 rem "
+"through a ``picture`` element. This edition has its own system breaks. "
+"When its system limit prevents it from being drawn, the wide image scales "
+"to the screen. SVG adapts its ink to the page's color scheme; PNG keeps a "
+"light background panel in dark mode."
+msgstr "HTML erhält zusätzlich eine schmale, auf 225 Punkt gesetzte Fassung mit höchstens 14 Punkt Systemhöhe. Unter 40 rem wählt der Browser sie über ein ``picture``-Element. Diese Fassung hat eigene Systemumbrüche. Verhindert ihre Systemgrenze den Satz, wird das breite Bild auf Bildschirmbreite skaliert. SVG passt seine Zeichenfarbe an das Farbschema der Seite an; PNG behält im Dunkelmodus eine helle Hintergrundfläche."
+
+#: ../../topics/music.rst:185
+msgid ""
+"PDF uses the selected template's text width and places music at its "
+"natural size. Built-in templates declare their horizontal margin after "
+"the initial import with a comment such as ``// guidedog: margin-x = "
+"31mm``. A custom template without the declaration uses a 25 millimetre "
+"margin assumption. ``lilypond_pdf_width`` overrides the derived measure. "
+"Oversized music scales to fit with a build warning. A score with several "
+"systems can break between systems across PDF pages, with its caption "
+"after the last system."
+msgstr "PDF verwendet die Textbreite der gewählten Vorlage und setzt Musik in natürlicher Größe. Eingebaute Vorlagen deklarieren ihren horizontalen Rand nach dem ersten Import mit einem Kommentar wie ``// guidedog: margin-x = 31mm``. Bei eigenen Vorlagen ohne Deklaration nehmen wir 25 Millimeter Rand an. ``lilypond_pdf_width`` überschreibt die abgeleitete Breite. Zu breite Musik wird mit einer Buildwarnung passend skaliert. Eine Partitur mit mehreren Systemen kann zwischen Systemen über PDF-Seiten umbrechen; die Beschriftung folgt dem letzten System."
+
+#: ../../topics/music.rst:192
+#| msgid "Packages, limits and failures"
+msgid "Fonts, limits and references"
+msgstr "Schriften, Grenzen und Referenzen"
+
+#: ../../topics/music.rst:195
+msgid ""
+"Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
+"SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
+"with regular, bold and italic fallback faces. Glyphs become outlines, so "
+"browsers and PDF readers need no installed music font. PNG export "
+"requires the embedded renderer; SVG engraving remains available in builds "
+"without it."
+msgstr "Musik verwendet die unveränderte Schrift Bravura 1.482 und SMuFL-Metadaten unter der SIL Open Font License. Text folgt ``pdf_fonts`` und ``pdf_font_paths`` mit regulären, fetten und kursiven Ersatzschriften. Zeichen werden zu Konturen, sodass Browser und PDF-Leser keine installierte Musikschrift benötigen. PNG-Export braucht den eingebetteten Renderer; SVG-Notensatz bleibt auch ohne ihn verfügbar."
+
+#: ../../topics/music.rst:200
+msgid ""
+"One example accepts at most 256 KiB of source including includes, 32 "
+"included files, depth 64, 20,000 events, 24 staves, two voices per staff "
+"and 16 heads per chord. The reader and engraver each have a work limit of "
+"eight million operations. Expanded reader allocations have a separate 64 "
+"MiB allowance. A drawing has at most 64 systems and a height of 20,000 "
+"points. PNG is limited to 16 million pixels and 16,384 pixels on either "
+"side. A limit diagnostic identifies the source and suggests splitting the "
+"example."
+msgstr "Ein Beispiel akzeptiert höchstens 256 KiB Quelltext einschließlich Einbindungen, 32 eingebundene Dateien, Tiefe 64, 20.000 Ereignisse, 24 Systeme, zwei Stimmen pro System und 16 Köpfe pro Akkord. Parser und Notensatz haben jeweils ein Arbeitslimit von acht Millionen Operationen. Expandierte Parserallokationen haben ein eigenes Limit von 64 MiB. Eine Zeichnung hat höchstens 64 Systeme und 20.000 Punkt Höhe. PNG ist auf 16 Millionen Pixel und 16.384 Pixel je Seite begrenzt. Eine Grenzdiagnose nennt die Quelle und empfiehlt, das Beispiel aufzuteilen."
+
+#: ../../topics/music.rst:207
+msgid ""
+"For notation syntax, we consult the `LilyPond 2.24 notation reference "
+"<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "
+"definitions, we consult the `Standard Music Font Layout specification "
+"<https://www.w3.org/2021/03/smufl14/>`_ and the `Bravura project "
+"<https://github.com/steinbergmedia/bravura>`_. Engraving references "
+"include Elaine Gould's *Behind Bars* and Ted Ross's *The Art of Music "
+"Engraving and Processing*. For other kinds of drawing, we use "
+":doc:`diagrams`."
+msgstr "Für die Notationssyntax verwenden wir das `LilyPond-2.24-Notationshandbuch <https://lilypond.org/doc/v2.24/Documentation/notation/>`_. Für Zeichendefinitionen verwenden wir die `Standard Music Font Layout-Spezifikation <https://www.w3.org/2021/03/smufl14/>`_ und das `Bravura-Projekt <https://github.com/steinbergmedia/bravura>`_. Zum Notensatz dienen Elaine Goulds *Behind Bars* und Ted Rosss *The Art of Music Engraving and Processing*. Für andere Zeichnungen verwenden wir :doc:`diagrams`."
+
 #: ../../topics/projects.rst:1
 msgid "How a project works"
 msgstr "Wie ein Projekt funktioniert"
@@ -1327,58 +1737,57 @@ msgstr "Drei Lesebereiche der HTML-Dokumentation."
 msgid ""
 "The built-in theme follows the operating system by default, with light "
 "and dark choices; Guidedog's own documentation website defaults to the "
-"light reading edition. The theme control remembers the reader's choice "
-"on the same browser origin. Printed HTML uses light colors. Content and "
-"navigation remain usable without JavaScript. The theme control, "
-"enhanced search, and paragraph line breaking are progressive enhancements."
+"light reading edition. The theme control remembers the reader's choice on "
+"the same browser origin. Printed HTML uses light colors. Content and "
+"navigation remain usable without JavaScript. The theme control, enhanced "
+"search, and paragraph line breaking are progressive enhancements."
 msgstr ""
 "Das eingebaute Theme folgt standardmäßig dem Betriebssystem und bietet "
 "helle sowie dunkle Ansichten; die eigene Dokumentations-Website von "
 "Guidedog startet standardmäßig in der hellen Leseausgabe. Die "
 "Theme-Steuerung merkt sich die Wahl der Lesenden für dieselbe "
-"Browser-Origin. Gedrucktes HTML nutzt helle Farben. Inhalt und "
-"Navigation bleiben ohne JavaScript nutzbar. Theme-Steuerung, erweiterte "
-"Suche und Absatzumbruch sind progressive Ergänzungen."
+"Browser-Origin. Gedrucktes HTML nutzt helle Farben. Inhalt und Navigation "
+"bleiben ohne JavaScript nutzbar. Theme-Steuerung, erweiterte Suche und "
+"Absatzumbruch sind progressive Ergänzungen."
 
 #: ../../topics/typography.rst:43
 msgid ""
 "Every initialized project (``guidedog quickstart``, ``guidedog ssg "
 "init``, and ``guidedog dsc init``) copies ``_static/typography.js`` "
-"beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a "
-"project owns and can edit its scripts directly. On desktop reading "
-"measures (``40rem`` and wider), English prose uses paragraph-wide "
-"**Knuth-Plass line breaking** in the browser across paragraphs, list "
-"items, definitions, admonitions, block quotes, and footnotes, while "
-"leaving tables, navigation trees, metadata headers, and figure captions "
-"ragged. The script measures the loaded font, builds boxes, glue, and "
-"hyphenation penalties, and chooses breaks for the whole block. Frank "
-"Liang's pattern method supplies English hyphenation candidates, and "
-"break penalty widths are discarded after a hyphenated break so "
-"following lines are measured accurately. Inline mathematics (after "
-"MathJax finishes), footnote references, superscripts, and subscripts "
-"are measured as inline atoms; links keep their markup, and inline code "
-"literals may break cleanly after ``/`` or ``::``. The original TeX "
-"patterns and the libraries' BSD notices are recorded in ``NOTICE``."
+"beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a project "
+"owns and can edit its scripts directly. On desktop reading measures "
+"(``40rem`` and wider), English prose uses paragraph-wide **Knuth-Plass "
+"line breaking** in the browser across paragraphs, list items, "
+"definitions, admonitions, block quotes, and footnotes, while leaving "
+"tables, navigation trees, metadata headers, and figure captions ragged. "
+"The script measures the loaded font, builds boxes, glue, and hyphenation "
+"penalties, and chooses breaks for the whole block. Frank Liang's pattern "
+"method supplies English hyphenation candidates, and break penalty widths "
+"are discarded after a hyphenated break so following lines are measured "
+"accurately. Inline mathematics (after MathJax finishes), footnote "
+"references, superscripts, and subscripts are measured as inline atoms; "
+"links keep their markup, and inline code literals may break cleanly after "
+"``/`` or ``::``. The original TeX patterns and the libraries' BSD notices "
+"are recorded in ``NOTICE``."
 msgstr ""
 "Jedes neu angelegte Projekt (``guidedog quickstart``, ``guidedog ssg "
-"init`` und ``guidedog dsc init``) kopiert ``_static/typography.js`` "
-"neben ``_static/guidedog.css`` und ``_static/guidedog.js``, sodass das "
-"Projekt seine Skripte selbst besitzt und direkt bearbeiten kann. Auf "
+"init`` und ``guidedog dsc init``) kopiert ``_static/typography.js`` neben "
+"``_static/guidedog.css`` und ``_static/guidedog.js``, sodass das Projekt "
+"seine Skripte selbst besitzt und direkt bearbeiten kann. Auf "
 "Desktop-Satzbreiten (ab ``40rem``) verwendet englischer Fließtext im "
 "Browser absatzweiten **Knuth-Plass-Zeilenumbruch** in Absätzen, "
-"Listenelementen, Definitionen, Hinweisblöcken, Blockzitaten und "
-"Fußnoten, während Tabellen, Navigationsbäume, Metadatenköpfe und "
-"Bildunterschriften im Flattersatz bleiben. Das Skript vermisst die "
-"geladene Schrift, erzeugt Boxen, Zwischenräume (Glue) und Trennstrafen "
-"und wählt die Umbrüche für den gesamten Block. Frank Liangs "
-"Musterverfahren liefert englische Trennkandidaten, und Strafbreiten "
-"nach einem Trennumbruch werden verworfen, damit Folgezeilen exakt "
-"gemessen werden. Eingebettete Formeln (nach Abschluss von MathJax), "
-"Fußnotenverweise, Hoch- und Tiefstellungen werden als unteilbare "
-"Inline-Atome gemessen; Links behalten ihr Markup, und "
-"Inline-Codeliterale dürfen sauber nach ``/`` oder ``::`` umbrechen. Die "
-"ursprünglichen TeX-Muster und die BSD-Hinweise der Bibliotheken sind in "
-"``NOTICE`` festgehalten."
+"Listenelementen, Definitionen, Hinweisblöcken, Blockzitaten und Fußnoten, "
+"während Tabellen, Navigationsbäume, Metadatenköpfe und Bildunterschriften "
+"im Flattersatz bleiben. Das Skript vermisst die geladene Schrift, erzeugt "
+"Boxen, Zwischenräume (Glue) und Trennstrafen und wählt die Umbrüche für "
+"den gesamten Block. Frank Liangs Musterverfahren liefert englische "
+"Trennkandidaten, und Strafbreiten nach einem Trennumbruch werden "
+"verworfen, damit Folgezeilen exakt gemessen werden. Eingebettete Formeln "
+"(nach Abschluss von MathJax), Fußnotenverweise, Hoch- und Tiefstellungen "
+"werden als unteilbare Inline-Atome gemessen; Links behalten ihr Markup, "
+"und Inline-Codeliterale dürfen sauber nach ``/`` oder ``::`` umbrechen. "
+"Die ursprünglichen TeX-Muster und die BSD-Hinweise der Bibliotheken sind "
+"in ``NOTICE`` festgehalten."
 
 #: ../../topics/typography.rst:57
 msgid ""

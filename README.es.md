@@ -19,6 +19,8 @@ guidedog serve docs
 
 El proyecto contiene `conf.toml`, `index.rst`, `_templates/` (`layout.html`, `book.typ`, `discussion.typ`, `article.typ` y `theme.typ`) y `_static/` (`guidedog.css`, `guidedog.js` y `typography.js`). Las plantillas y los recursos estáticos son archivos corrientes que podemos editar localmente. HTML ofrece navegación, búsqueda, código resaltado, diagramas, ecuaciones y composición de párrafos Knuth-Plass. PDF ofrece capítulos, referencias, figuras, índices y composición adaptada al idioma. Podemos incrustar código fuente de dibujo en Graphviz o Typst, incluidos CeTZ y Fletcher, directamente en RST y MyST con generación automática de recursos para HTML y PDF; consulte el [capítulo de diagramas](docs/manual/topics/diagrams.rst).
 
+Incorporamos notación LilyPond directamente en RST y MyST con la directiva nativa `lilypond`, incluidos pentagramas, voces, letras y marcas habituales; véase el [capítulo de música](docs/manual/topics/music.rst). Las figuras SVG y PNG funcionan en HTML y PDF sin instalar LilyPond.
+
 El tema integrado sigue de forma predeterminada el tema del sistema, con opciones clara y oscura; el propio sitio de documentación de Guidedog usa por defecto la edición de lectura clara. La portada del sitio web y el resumen del repositorio detectan el idioma del navegador. La elección guardada tiene prioridad y se respetan los enlaces directos a una edición o capítulo.
 
 ```sh

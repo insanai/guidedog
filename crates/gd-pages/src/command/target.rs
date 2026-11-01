@@ -118,7 +118,7 @@ pub(crate) fn bind(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
             check its visibility in the repository's Pages settings.",
         );
     }
-    if !confirm(ctx.o, "Let this machine publish there with this account?") {
+    if !confirm(ctx, "Let this machine publish there with this account?") {
         return console.report(&not_confirmed("binding the target", ANSWER_OR_YES));
     }
     let bound =
@@ -211,7 +211,7 @@ pub(crate) fn setup(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
         "Make GitHub Pages publish {} from {}, folder /?",
         r.repository.full_name, c.branch
     );
-    if !confirm(ctx.o, &question) {
+    if !confirm(ctx, &question) {
         return console.report(&not_confirmed("changing the Pages source", ANSWER_OR_YES));
     }
     if let Err(p) = crate::setup(&client, &c, &r.site) {

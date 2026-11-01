@@ -164,11 +164,11 @@ impl<'a> Console<'a> {
 
 /// Asks `question` on the terminal and returns the answer. Without a terminal, or with
 /// `--yes`, it does not ask: `--yes` is yes, and no terminal is no.
-pub(crate) fn confirm(o: &Options, question: &str) -> bool {
-    if o.yes {
+pub(crate) fn confirm(ctx: &super::Context<'_>, question: &str) -> bool {
+    if ctx.o.yes {
         return true;
     }
-    if !std::io::stdin().is_terminal() {
+    if !ctx.interactive {
         return false;
     }
     eprint!("  {} [y/N] ", escape_terminal(question));

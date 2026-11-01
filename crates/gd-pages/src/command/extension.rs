@@ -147,8 +147,9 @@ fn run_maintenance(
         cancel: host.cancel.clone(),
         dir: Some(host.dir.clone()),
     };
+    let interactive = host.interactive;
     let (out, err) = host.streams();
-    super::run_with(&program, &words, out, err)
+    super::run_streams(&program, &words, out, err, interactive)
 }
 
 /// Runs the contributed command `name` with `args` and `settings`, through `host`.
@@ -178,7 +179,13 @@ pub(crate) fn run(
         settings.credential = Credential::Env;
     }
     let cancel = host.cancel.clone();
-    let ctx = Context { o: &o, settings: &settings, cancel: &cancel, dir: host.dir.clone() };
+    let ctx = Context {
+        o: &o,
+        settings: &settings,
+        cancel: &cancel,
+        dir: host.dir.clone(),
+        interactive: host.interactive,
+    };
     Ok(match word {
         "workflow" => {
             let (out, err) = host.streams();

@@ -59,8 +59,13 @@ fn watch_with_preview(ctx: &Context<'_>, console: &mut Console<'_>, c: &Config, 
     let stop = server.stop_handle();
     let (outer, ended) = (ctx.cancel.clone(), stop.clone());
     let cancel = Cancel::from_fn(move || outer.is_cancelled() || ended.is_stopped());
-    let inner =
-        Context { o: ctx.o, settings: ctx.settings, cancel: &cancel, dir: ctx.dir.clone() };
+    let inner = Context {
+        o: ctx.o,
+        settings: ctx.settings,
+        cancel: &cancel,
+        dir: ctx.dir.clone(),
+        interactive: ctx.interactive,
+    };
     std::thread::scope(|scope| {
         let ender = stop.clone();
         let serving = scope.spawn(move || {

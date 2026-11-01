@@ -1,6 +1,5 @@
 //! `publish`, `status`, and `recover`.
 
-use std::io::IsTerminal;
 use std::path::PathBuf;
 
 use gd_plugins::{BuildRequest, LoadOptions, Plugin, Problem, PublisherSession, Snapshot, State};
@@ -57,7 +56,7 @@ pub(crate) fn publish(ctx: &Context<'_>, console: &mut Console<'_>) -> i32 {
     if ctx.o.dry_run {
         return publish_once(ctx, console, true).0;
     }
-    let interactive = std::io::stdin().is_terminal() && !ctx.o.yes;
+    let interactive = ctx.interactive && !ctx.o.yes;
     let options = guide_options(ctx, interactive);
     let result = publish_guided(&options, &mut ConsolePrompt { console: &mut *console });
     match result {

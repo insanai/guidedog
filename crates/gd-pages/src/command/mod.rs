@@ -22,7 +22,7 @@ mod watch;
 mod windows_console;
 mod workflow;
 
-use std::io::Write;
+use std::io::{IsTerminal, Write};
 
 use gd_plugins::{Cancel, Problem};
 
@@ -182,15 +182,26 @@ pub fn run(program: &Program, args: &[String]) -> i32 {
         ));
     }
     let (mut out, mut err) = (std::io::stdout().lock(), std::io::stderr().lock());
-    run_with(program, args, &mut out, &mut err)
+    run_streams(program, args, &mut out, &mut err, std::io::stdin().is_terminal())
 }
 
-/// Runs the command line `args` writing to `out` and `err`; see [`run`].
+/// Runs the command line `args` writing to `out` and `err` without an interactive
+/// input terminal; see [`run`].
 pub fn run_with(
     program: &Program,
     args: &[String],
     out: &mut dyn Write,
     err: &mut dyn Write,
+) -> i32 {
+    run_streams(program, args, out, err, false)
+}
+
+pub(crate) fn run_streams(
+    program: &Program,
+    args: &[String],
+    out: &mut dyn Write,
+    err: &mut dyn Write,
+    interactive: bool,
 ) -> i32 {
     let (o, parsed) = parse(args);
     let mut console = Console::new(out, err, &o);
@@ -214,7 +225,7 @@ pub fn run_with(
         settings.credential = Credential::Env;
     }
     let dir = program.dir.clone().unwrap_or_else(|| std::path::PathBuf::from("."));
-    let ctx = Context { o: &o, settings: &settings, cancel: &program.cancel, dir };
+    let ctx = Context { o: &o, settings: &settings, cancel: &program.cancel, dir, interactive };
     match o.command.as_str() {
         "init" => target::init(&ctx, &mut console),
         "auth" => auth::run(&ctx, &mut console),
@@ -236,6 +247,7 @@ pub(crate) struct Context<'a> {
     pub settings: &'a Settings,
     pub cancel: &'a Cancel,
     pub dir: std::path::PathBuf,
+    pub interactive: bool,
 }
 
 impl Context<'_> {

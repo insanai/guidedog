@@ -108,6 +108,7 @@ fn check_meter(meter: &Meter) -> Result<(), Error> {
         || meter.numerator > 128
         || !meter.denominator.is_power_of_two()
         || meter.denominator > 128
+        || meter.beats.len() > 128
         || (!meter.beats.is_empty()
             && (meter.beats.contains(&0)
                 || meter.beats.iter().map(|n| u32::from(*n)).sum::<u32>()

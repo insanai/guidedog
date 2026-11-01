@@ -131,3 +131,16 @@ fn measure_expansion_consumes_the_same_memory_allowance_as_notes() {
     assert_eq!(failed.error.kind, ErrorKind::ReadLimit);
     assert!(failed.error.message.contains("memory"));
 }
+
+#[test]
+fn beat_group_lists_and_grace_state_copies_respect_reader_limits() {
+    let source = format!("\\time {} 4/4 c'1", "1,".repeat(129));
+    let failed = load_score(&source, "meter.ly", &mut Options::default()).unwrap_err();
+    assert!(failed.error.message.contains("128 beat groups"));
+    let mut options = Options {
+        limits: Limits { memory_bytes: 2048, ..Limits::default() },
+        ..Default::default()
+    };
+    let failed = load_score("\\grace { c'16 } d'4", "grace.ly", &mut options).unwrap_err();
+    assert_eq!(failed.error.kind, ErrorKind::ReadLimit);
+}

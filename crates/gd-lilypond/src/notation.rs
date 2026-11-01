@@ -134,6 +134,13 @@ impl Reader<'_> {
                 let numerator = if cursor.symbol(',') {
                     beats.push(first);
                     loop {
+                        self.work.take(1, cursor.span())?;
+                        if beats.len() >= 128 {
+                            return Err(syntax_error(
+                                span,
+                                "A meter has at most 128 beat groups.",
+                            ));
+                        }
                         beats.push(cursor.number()?);
                         if !cursor.symbol(',') {
                             break;

@@ -367,14 +367,14 @@ impl Reader<'_> {
         span: Span,
         depth: usize,
     ) -> Result<(), Error> {
-        let saved = state.clone();
+        let saved_at = state.at;
         if name == "afterGrace" {
             self.one(cursor, state, depth + 1)?;
         }
         let target = state.at;
         let parent_last = state.last;
         let first = self.score.events.len();
-        let mut child = state.clone();
+        let mut child = self.copy_state(state, span)?;
         child.grace_slash = name == "acciaccatura";
         self.one(cursor, &mut child, depth + 1)?;
         let total = child.at.main.checked_sub(target.main)?;
@@ -396,7 +396,7 @@ impl Reader<'_> {
         state.hairpin = child.hairpin;
         state.pitch_mode = child.pitch_mode;
         if name != "afterGrace" {
-            state.at = saved.at;
+            state.at = saved_at;
         }
         state.last = parent_last;
         Ok(())

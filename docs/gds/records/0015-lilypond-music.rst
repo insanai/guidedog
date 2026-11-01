@@ -47,7 +47,7 @@ In scope:
 
 * The ``lilypond`` directive in RST and its MyST fence, with inline source or a file argument.
 * The input profile of the section "The LilyPond profile", in three phases.
-* Horizontal spacing, line breaking, stems, beams, chords, accidentals, dots, ties, slurs, tuplets, articulations, dynamics, lyrics, multiple staves and two voices per staff.
+* Horizontal spacing, line breaking, stems, beams, chords, accidentals, dots, ties, slurs, tuplets, articulations, dynamics, lyrics, multiple staves and four voices per staff.
 * SVG and PNG drawings for the HTML and PDF builders, adaptive to the theme in HTML.
 * Diagnostics, limits and the trust policy.
 
@@ -55,7 +55,7 @@ Out of scope for this record:
 
 * Running the LilyPond program, and Scheme, ``\override``, ``\tweak`` and ``\paper`` code.
 * MIDI or audio output, playback and score following.
-* Tablature, percussion staves, figured bass, cross-staff notation, ancient notation, microtones, and more than two voices on a staff.
+* Tablature, percussion staves, figured bass, cross-staff notation, ancient notation, microtones, and more than four voices on a staff.
 * Inline music in a sentence (a role); see "Open questions".
 * Writing LilyPond from other formats, and reading MusicXML, MEI or ABC.
   The model admits such readers later.
@@ -208,8 +208,8 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - ``\break``, ``\noBreak``
      - Forced and forbidden line breaks.
    * - 2
-     - ``<< >>`` with ``\\``, ``\voiceOne``, ``\voiceTwo``, ``\oneVoice``, ``\new Voice``, ``\new Staff``, ``\new PianoStaff``, ``\new GrandStaff``, ``\new StaffGroup``, ``\new ChoirStaff``, ``\with { instrumentName = "..." shortInstrumentName = "..." }``, ``\set Staff.instrumentName`` (string or ``\markup``)
-     - At most two voices per staff; a third is refused.
+     - ``<< >>`` with ``\\``, ``\voiceOne``, ``\voiceTwo``, ``\voiceThree``, ``\voiceFour``, ``\oneVoice``, ``\new Voice``, ``\new Staff``, ``\new PianoStaff``, ``\new GrandStaff``, ``\new StaffGroup``, ``\new ChoirStaff``, ``\with { instrumentName = "..." shortInstrumentName = "..." }``, ``\set Staff.instrumentName`` (string or ``\markup``)
+     - At most four voices per staff; a fifth is refused.
    * - 2
      - Several verses, ``\new Lyrics`` with its own durations, and phrasing slurs ``\( \)``
      -
@@ -691,7 +691,8 @@ Positions with :math:`|p| \ge 6` need ledger lines, which extend beyond the note
 *Stems.*
 In a single voice, a chord's stem goes down when its extreme notes lie more above the middle line than below (:math:`p_{\max} + p_{\min} > 0`), up when the reverse holds, and down when they balance, following Gould and LilyPond.
 In a beamed group, the note farthest from the middle line decides for the group; a tie is broken by the majority of notes, then down.
-With two voices, voice one points up and voice two down.
+Voices one and three point up; voices two and four point down.
+A local voice policy belongs to each event, so changing it later does not rewrite earlier music; ``\oneVoice`` restores automatic single-voice directions.
 A stem reaches 3.5 staff spaces beyond the notehead nearest its tip; it is lengthened to reach the middle line for notes far outside the staff, and for three or more flags.
 Stems attach at the notehead's SMuFL anchors ``stemUpSE`` and ``stemDownNW``.
 
@@ -699,14 +700,21 @@ Stems attach at the notehead's SMuFL anchors ``stemUpSE`` and ``stemDownNW``.
 Noteheads a second apart sit on opposite sides of the stem.
 We walk the chord from the stem's base toward its tip; a note a second from the previous note, when that note is on the normal side, goes to the other side.
 For an up-stem the normal side is the left, and for a down-stem the right.
-Dots sit in spaces: a note on a line has its dot in the space above, or below for voice two, and clashing dots move to the nearest free space.
+Dots sit in spaces: a note on a line has its dot in the space above, or below for voices two and four, and clashing dots move to the nearest free space.
 
-*Two voices.*
+*Voices sharing a staff.*
 Voices sharing a staff share columns.
 Two noteheads at the same pitch share one head when their head glyphs and dots agree; otherwise, as for a half note against a quarter or a dotted against an undotted note, voice two's note moves right by a notehead width.
 Notes a second apart in opposite voices offset voice one's note to the right, so the heads do not overlap and the stems point away from each other.
 A rest in voice one is raised to staff position 4 and one in voice two lowered to position -4, then moved further, by whole staff spaces, until it clears the other voice's skyline.
-Rests of equal duration in both voices at one moment are drawn once, on the middle line.
+With three or four voices, we place each column against all previously placed columns, in voice-policy order.
+We try zero shift first, then at most sixteen notehead-width steps, preferring right for voice three and left for voice four.
+Candidate columns must clear other heads, stems and unattached flags; a compatible shared head has one upward and one downward stem.
+This also applies when only two of those voices sound at a moment.
+Accidentals and dots are then arranged across the whole staff column.
+Rests of equal duration at one moment are drawn once, using the earliest matching voice as owner.
+Other rests move by whole staff spaces away from notes and previously placed rests, with a maximum of thirty-two trials and a clear refusal if they cannot fit.
+Same-side tie endpoints start or end beyond the actual stem edge.
 
 *Accidentals.*
 An accidental is shown when a note's alteration differs from the staff's current state for that step and octave.
@@ -952,7 +960,7 @@ The parser is recursive descent with a depth counter; variable expansion and (ph
    * - Expanded reader allocation allowance
      - 64 MiB, including copied text and notation state
    * - Staves; voices per staff; notes per chord
-     - 24; 2; 16
+     - 24; 4; 16
    * - Pitch range
      - octaves -3 to 6 in octave marks (about 25 ledger lines at most)
    * - Measures per line; systems per drawing
@@ -1103,7 +1111,7 @@ The complete local checks below pass, including all translated books and workspa
 
 Phase 1 is one staff with one voice: the phase 1 profile, lyrics of one verse, beams, ties, slurs, tuplets, articulations, dynamics and hairpins, line breaking, SVG and PNG, the HTML and PDF builders with single images, diagnostics with exact positions, and limits.
 The score model includes grace moments, staff groups and voices from the start, so later phases do not change it.
-Phase 2 adds multiple staves and staff groups, two voices per staff, several verses, phrasing slurs, the narrow HTML edition and per-system PDF images.
+Phase 2 adds multiple staves and staff groups, four voices per staff, several verses, phrasing slurs, the narrow HTML edition and per-system PDF images.
 Phase 3 adds grace notes, repeats with voltas and alternatives, unfolded repeats, tempo and rehearsal marks, and chord names.
 Each phase is complete when this evidence exists for its constructs:
 
@@ -1129,7 +1137,6 @@ Open questions
 * Should the drawing carry a MIDI rendering or audio, and should the ``data-measure`` groups be scripted for playback highlighting?
 * Should projects be able to choose another SMuFL font (Leland or Petaluma, both under the Open Font License), or should the house style keep one?
 * Should the HTML edition re-break in the browser at any width, instead of offering two editions?
-* Should a third and fourth voice per staff be supported, with LilyPond's note-column shifts?
 * Should ``guidedog migrate`` convert ``sphinxcontrib-lilypond`` directives whose source lies in the profile?
 
 Review history
@@ -1315,4 +1322,12 @@ The project adapter connects them to ``Ledger::charge`` and ``Ledger::discharge`
 Retained workspace capacity is accounted for each call because callers can replace the ledger between scores.
 
 System context uses a measure index, independently of its printed number, and voice-column arrangement runs after beam directions are final.
-The two-voice profile remains unchanged in this follow-up, as permitted by the maintainer's scope clarification; third and fourth voices need a separate note-column and collision-layout extension.
+The maintainer subsequently extended this follow-up to complete third and fourth voices.
+The four-voice policy, bounded collision layout and fifth-voice refusal above are required parts of this revision.
+Qualification includes implicit and named voices, dense seconds and unisons, dots and accidentals, mixed-duration rests, beams, lyrics and ties across systems.
+
+The music chapter must also contain a small, live teaching example from a famous public-domain composition.
+We use four bars of Beethoven's Joy theme from Symphony No. 9, finale, bars 92-95, in C major and the treble register.
+We retain the instrumental melody's half-note opening and dotted rhythm, omit orchestration, slurs and dynamics, cite the source score, and explain the pitches and beat counts.
+The example source is checked by a pitch-and-duration regression and the image corpus.
+The manual includes copyable RST and MyST forms, a caption and accessible description; every manual translation covers the explanation and new voice limit.

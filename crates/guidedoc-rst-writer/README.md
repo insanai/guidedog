@@ -10,9 +10,9 @@ Std-only, so conversion needs no external tool such as pandoc.
 
 ```toml
 [dependencies]
-guidedoc-rst-writer = "1.0.0-beta.8"
-guidedoc = "1.0.0-beta.8"
-guidedoc-commonmark = "1.0.0-beta.8"
+guidedoc-rst-writer = "1.0.0-beta.9"
+guidedoc = "1.0.0-beta.9"
+guidedoc-commonmark = "1.0.0-beta.9"
 ```
 
 We render CommonMark as reStructuredText:

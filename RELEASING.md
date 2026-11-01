@@ -7,26 +7,28 @@ uploaded by hand, and a published release is never changed.
 
 - **Verify** (`.github/workflows/ci.yml`) runs on every push to `main` and every pull
   request, on Linux (x86-64) and macOS (Apple silicon): `cargo fmt --all --check`, the source limits
-  (`cargo run -p check`), the data tables (`cargo xtask tables --check`), `cargo build`, `cargo clippy` with warnings as errors,
-  `cargo test --workspace`, the 1,000-article static-site benchmark, a real isolated Linux Secret Service check, the example
-  programs, and the smoke tests of the built programs. Changes to documentation only
-  are skipped, apart from the files the tests read; the Pages workflow builds the
-  documentation.
+  (`cargo run -p check`), the data tables (`cargo xtask tables --check`), the pinned music font check
+  (`cargo xtask check-music-font`), `cargo build`, `cargo clippy` with warnings as errors,
+  `cargo test --workspace`, the native music SVG/PNG/collision and fuzz corpora (`cargo run -p music-check`),
+  the 1,000-article static-site benchmark, a real isolated Linux Secret Service check, the example
+  programs, and the smoke tests of the built programs. Pure translation-catalog or release-guide prose
+  edits skip Verify; everything read by workspace tests or release qualification runs it, and the Pages
+  workflow builds the documentation.
 - **Release** (`.github/workflows/release.yml`) runs on a `v*` tag, or by hand as a
   candidate. Its jobs:
   - `version`: the tag, `VERSION`, the `[workspace.package]` version in `Cargo.toml`,
     each documentation project's `conf.toml` `release` setting, and later `guidedog --version`
     agree (`cargo xtask release check-version`).
-  - `qualify`: requires a successful Verify run for the exact commit being released. Verify already ran the full suite on Linux and macOS, formatting, the source limits, data tables, Clippy, examples and credential-store checks. We reuse that result rather than compiling and running the full suite again. If it is missing, we run Verify for that commit and rerun Release after it passes.
+  - `qualify`: requires a successful Verify run for the exact commit being released. Verify already ran the full suite on Linux and macOS, formatting, the source limits, data tables, music font and corpus checks, Clippy, examples and credential-store checks. We reuse that result rather than compiling and running the full suite again. If it is missing, we run Verify for that commit and rerun Release after it passes.
   - `build`: per platform, natively on that platform, `cargo xtask release build` runs
-    `cargo build --release --locked` for `guidedog`, with the embedded Typst compiler and linked Pages, discussion, and static-site (`ssg`) plugins. On Linux and macOS, Graphviz 16.1.0 is linked
+    `cargo build --release --locked` for `guidedog`, with the embedded Typst compiler, embedded Bravura 1.482 music font, and linked Pages, discussion, and static-site (`ssg`) plugins. On Linux and macOS, Graphviz 16.1.0 is linked
     statically: `cargo xtask graphviz` builds it (cached between runs) and the build
-    sets `GUIDEDOG_GRAPHVIZ_STATIC`; on Windows, the verified official Graphviz 16.1.0 DLLs are bundled beside `guidedog.exe`. Full workspace tests run once on Linux and once on macOS in Verify; archive jobs do not recompile the suite with release optimization. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices, `SOURCE.txt`, and a build manifest
+    sets `GUIDEDOG_GRAPHVIZ_STATIC`; on Windows, the verified official Graphviz 16.1.0 DLLs are bundled beside `guidedog.exe`. Full workspace tests run once on Linux and once on macOS in Verify; archive jobs do not recompile the suite with release optimization. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices (`LICENSE`, `COPYING`, `NOTICE`, `COPYING-bravura`, and on Unix `COPYING-graphviz` and `COPYING-expat`), `SOURCE.txt`, and a build manifest
     (`guidedog.build.json`).
   - `smoke`: each archive, unpacked on a fresh machine of its platform with nothing
     installed, runs quickstart, static-site presets (`guidedog ssg`), and translation extraction/catalog updates, and builds HTML and PDF with an empty
     `PATH`; `guidedog dsc` keeps and builds a discussion catalog
-    (`cargo xtask release smoke-discussion`); the linked Pages plugin initializes and stops safely offline (`smoke-pages`). Graphviz and embedded Typst SVG/PNG export are exercised by the HTML and PDF diagram builds, including local helper imports with an empty PATH and no package downloads.
+    (`cargo xtask release smoke-discussion`); the linked Pages plugin initializes and stops safely offline (`smoke-pages`). Graphviz, embedded Typst SVG/PNG export, and native LilyPond music engraving are exercised by the HTML and PDF builds, including local helper imports with an empty PATH and no package downloads.
   - `source`: the source archive (`git archive` of the tagged commit).
   - `homebrew`: renders `guidedog.rb`, which has no dependencies and
     installs `guidedog`, then installs and
@@ -51,9 +53,10 @@ every other crate; release builds use `--locked`.
 | `windows-amd64` | `x86_64-pc-windows-msvc` | `windows-2022` |
 
 Each Unix archive is built natively, with the static Graphviz built on that platform
-(`cargo xtask graphviz`). The archives carry Graphviz's and Expat's licences
-(`COPYING-graphviz`, `COPYING-expat`), and `SOURCE.txt` names their source tarballs with
-their SHA-256. Windows ships a ZIP with the official Graphviz 16.1.0 DLLs and configuration beside `guidedog.exe`. The prepare action verifies the upstream archive SHA-256. A fresh Windows runner extracts the ZIP, checks the programs against the manifest, and runs HTML, PDF, discussion, Pages and graph rendering smoke tests.
+(`cargo xtask graphviz`). Every archive carries Bravura's license (`COPYING-bravura`), and
+Unix archives also carry Graphviz's and Expat's licenses (`COPYING-graphviz`,
+`COPYING-expat`), while `SOURCE.txt` names their source tarballs with their SHA-256.
+Windows ships a ZIP with the official Graphviz 16.1.0 DLLs and configuration beside `guidedog.exe`. The prepare action verifies the upstream archive SHA-256. A fresh Windows runner extracts the ZIP, checks the programs against the manifest, and runs HTML, PDF, discussion, Pages, graph rendering and music engraving smoke tests.
 
 ## Build a release locally
 
@@ -97,8 +100,8 @@ It prints a record of versions, pins and results, and exits 1 on any incompatibi
 5. Tag the verified commit and push the tag:
 
    ```sh
-   git tag -a v1.0.0-beta.8 -m "Guidedog 1.0.0-beta.8"
-   git push origin v1.0.0-beta.8
+   git tag -a v1.0.0-beta.9 -m "Guidedog 1.0.0-beta.9"
+   git push origin v1.0.0-beta.9
    ```
 
 6. The tagged run publishes the release when every job passes. Check the release page,
@@ -121,7 +124,7 @@ If every job of the tagged run passed except `publish` or `refresh` (a GitHub ou
 permissions problem), publish the files that run already built:
 
 1. Fix the cause, if it is in the repository settings.
-2. Run **Recover release publication** with the tag (`v1.0.0-beta.8`) and the ID of the tagged
+2. Run **Recover release publication** with the tag (`v1.0.0-beta.9`) and the ID of the tagged
    run (the number in its URL).
 
 It checks with `cargo xtask release check-run` that the run built that tag at the commit the
@@ -142,4 +145,4 @@ brew install insanai/guidedog/guidedog
 
 The tap's Update workflow checks published releases every hour, including beta versions, and selects the greatest version. We can also run it manually after publication with an explicit tag. It verifies the formula and checksum manifest against GitHub's asset digests, checks all four archive URLs and hashes, and installs and tests the candidate on Apple silicon and Intel macOS before committing it. The release workflow remains the source of the packages and formula; the tap does not rebuild the engine or change published assets. No cross-repository write token is needed.
 
-We publish `v1.0.0-beta.8` as a normal GitHub release. The version already identifies it as a beta. Scheduled tap updates include beta versions and follow the final release when its version is greater. The updater rejects downgrades.
+We publish `v1.0.0-beta.9` as a normal GitHub release. The version already identifies it as a beta. Scheduled tap updates include beta versions and follow the final release when its version is greater. The updater rejects downgrades.

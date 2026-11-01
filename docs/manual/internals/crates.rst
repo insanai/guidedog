@@ -11,7 +11,7 @@ When another Rust program only needs to read TOML, we add one line to its ``Carg
 .. code-block:: toml
 
    [dependencies]
-   gd-toml = "1.0.0-beta.8"
+   gd-toml = "1.0.0-beta.9"
 
 .. code-block:: rust
 

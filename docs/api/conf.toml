@@ -8,7 +8,7 @@ project = "Guidedog API"
 copyright = "2026, Vikrant Rathore"
 author = "Vikrant Rathore"
 version = "1.0"
-release = "1.0.0-beta.8"
+release = "1.0.0-beta.9"
 
 exclude_patterns = ["_build"]
 language = "en"
@@ -16,9 +16,9 @@ root_doc = "index"
 primary_domain = "rust"
 
 # Every listed crate gets pages, api/<crate>/<module>, and api/index lists them; the
-# index joins the root document's toctree. All 29 reusable crates come first (the
-# engine, supporting libraries, API generators, and plugin SDK), followed by the main
-# internal host, project, and command-line crates.
+# index joins the root document's toctree. All 26 reusable crates and the three native
+# music libraries come first (the engine, supporting libraries, API generators, and
+# plugin SDK), followed by the main internal host, project, and command-line crates.
 rust_autoapi_crates = [
   "../../crates/guidedoc",
   "../../crates/guidedoc-defaults",

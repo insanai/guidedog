@@ -8,9 +8,9 @@ depends on nothing but `guidedoc`; `gd-typst` compiles Typst source to PDF, HTML
 
 ```toml
 [dependencies]
-guidedoc-typst = "1.0.0-beta.8"
-guidedoc = "1.0.0-beta.8"
-guidedoc-commonmark = "1.0.0-beta.8"
+guidedoc-typst = "1.0.0-beta.9"
+guidedoc = "1.0.0-beta.9"
+guidedoc-commonmark = "1.0.0-beta.9"
 ```
 
 We render CommonMark as Typst source, which Typst compiles to PDF:

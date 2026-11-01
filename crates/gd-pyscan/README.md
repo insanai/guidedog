@@ -10,7 +10,7 @@ the source roots. Nothing is executed. `gd-autodoc` builds Sphinx autodoc output
 
 ```toml
 [dependencies]
-gd-pyscan = "1.0.0-beta.8"
+gd-pyscan = "1.0.0-beta.9"
 ```
 
 We analyse a module without running it:

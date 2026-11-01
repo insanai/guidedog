@@ -16,6 +16,7 @@ mod evidence;
 mod fonts;
 mod fsutil;
 mod graphviz;
+mod music_font;
 mod process;
 mod release;
 mod site;
@@ -39,6 +40,7 @@ Tasks:
                      build the website: landing page, manual, PDF books, discussions
   fetch-fonts [DIR]  fetch the Noto Serif CJK fonts the CJK PDF books use, checked
                      against their pinned SHA-256
+  check-music-font   verify the unmodified embedded Bravura font, metadata and license
   graphviz [--out DIR] [--jobs N]
                      build the static Graphviz libraries release binaries link
   rstref [--ids] DOCUTILS FIXTURES_DIR [SOURCE...]
@@ -111,6 +113,7 @@ fn run(args: &[String]) -> Result<()> {
         }
         Some("build-site") => site::main(rest),
         Some("fetch-fonts") => fonts::main(rest),
+        Some("check-music-font") => music_font::main(rest),
         Some("graphviz") => graphviz::main(rest),
         Some("release") => release::main(rest),
         Some("rstref") => docutils::main(rest),
@@ -122,6 +125,7 @@ fn run(args: &[String]) -> Result<()> {
             let tasks = [
                 "build-site",
                 "fetch-fonts",
+                "check-music-font",
                 "graphviz",
                 "release",
                 "rstref",

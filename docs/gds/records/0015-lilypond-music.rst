@@ -702,7 +702,7 @@ In a chord, accidentals are placed in columns to the left, in Gould's order: the
 Each accidental takes the column nearest the chord where its outline does not touch what is already there; outlines are bounding boxes refined by the SMuFL cut-outs (``cutOutNE``, ``cutOutSW`` and the others), so a flat can nest below a sharp.
 
 *Clefs.*
-A clef change mid-line is drawn with the smaller change glyph (``gClefChange`` and its relatives) before the note it applies to.
+A clef change mid-line is drawn with the smaller change glyph (``gClefSmall`` and its relatives from Bravura's optional-glyph metadata) before the note it applies to.
 A clef change at the start of a line also prints a courtesy clef at the end of the previous line.
 
 *Beam groups.*

@@ -67,13 +67,14 @@ pub(crate) fn typst_line(program: &str) -> String {
 /// components built in (NOTICE's third-party section).
 pub(crate) fn licenses_text() -> String {
     const NOTICE: &str = include_str!("../../../NOTICE");
+    const BRAVURA: &str = include_str!("../../../third_party/bravura/LICENSE.txt");
     let third_party = NOTICE.find("Third-party components").map_or(NOTICE, |at| &NOTICE[at..]);
     format!(
         "guidedog {}\nCopyright (C) 2026 Vikrant Rathore, with assistance from Ronak Rathore and \
          Kanak Rathore.\nReleased under the GNU Lesser General Public License v3.0 or later \
          (LGPL-3.0-or-later),\nwithout any warranty; see LICENSE, COPYING and NOTICE in the source, at\n\
          https://github.com/insanai/guidedog. For other licensing terms, contact the \
-         authors.\n\n{third_party}",
+         authors.\n\n{third_party}\nBravura font license\n====================\n{BRAVURA}",
         full_version()
     )
 }
@@ -125,5 +126,6 @@ mod tests {
     fn the_licenses_name_the_components() {
         let text = licenses_text();
         assert!(text.contains("LGPL-3.0-or-later") && text.contains("Typst"), "{text}");
+        assert!(text.contains("Bravura") && text.contains("SIL OPEN FONT LICENSE"));
     }
 }

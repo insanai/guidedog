@@ -1,0 +1,21 @@
+Bravura 1.482
+=============
+
+Upstream: https://github.com/steinbergmedia/bravura
+Tag: bravura-1.482
+Commit: 37b194378b710cc40e406ab6c4b07608bb9548ae
+
+The following upstream files are kept unmodified:
+
+  redist/otf/Bravura.otf -> Bravura.otf
+  redist/Bravura.json -> bravura_metadata.json
+  LICENSE.txt -> LICENSE.txt
+
+SHA256SUMS records their original byte digests.
+We check them with cargo xtask check-music-font and when gd-engrave builds.
+The SIL Open Font License 1.1 and the reserved font name remain with these files.
+
+The Rust glyph-name table records standard code points from SMuFL metadata:
+https://github.com/w3c/smufl/blob/60d1350f688431258302035d1ec46121d4dce958/metadata/glyphnames.json
+Optional glyph code points come from the unmodified Bravura metadata.
+The table records names and numeric assignments, not outlines or converted font data.

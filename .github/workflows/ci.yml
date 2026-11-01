@@ -53,6 +53,8 @@ jobs:
         run: cargo run --locked -p check
       - name: Data tables match tools/data
         run: cargo xtask tables --check
+      - name: Music font matches its pinned upstream files
+        run: cargo xtask check-music-font
       - name: Build
         run: cargo build --locked --workspace --all-targets
       - name: Clippy

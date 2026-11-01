@@ -150,6 +150,7 @@ fn archive(release: &Release<'_>, out: &Path, name: &str, programs: &[&str]) -> 
     for document in DOCUMENTS {
         copy(&release.root.join(document), &folder.join(document))?;
     }
+    copy(&release.root.join("third_party/bravura/LICENSE.txt"), &folder.join("COPYING-bravura"))?;
     if release.platform.package == "windows-amd64" {
         super::windows::copy_runtime(&folder)?;
     } else {

@@ -10,7 +10,8 @@ impl Draw<'_, '_, '_, '_, '_> {
         for (staff_index, staff) in request.score.staves.iter().enumerate() {
             self.staff = gd_score::StaffId(staff_index as u32);
             self.measure = 0;
-            let name = if request.first <= 1 { &staff.name } else { &staff.short_name };
+            let first = request.score.measures.first().map(|m| m.number).unwrap_or(1);
+            let name = if request.first == first { &staff.name } else { &staff.short_name };
             if !name.is_empty() {
                 self.text(
                     name,

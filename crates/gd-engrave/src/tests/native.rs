@@ -421,3 +421,21 @@ fn lyric_extenders_and_hairpins_continue_on_a_system_without_local_text() {
         );
     }
 }
+
+#[test]
+fn a_pickup_uses_the_full_instrument_name_only_on_its_first_system() {
+    let drawing = draw(
+        r#"\new Staff \with { instrumentName = "Piano" shortInstrumentName = "Pno." }
+        { \partial 4 c'4 | \break d'1 | }"#,
+        350.0,
+    );
+    assert_eq!(drawing.systems.len(), 2);
+    let widths: Vec<_> = drawing.systems.iter().map(|system| {
+        system.marks.iter().find_map(|mark| {
+            if let Mark::Text { run, role: Role::Instrument, .. } = &mark.mark {
+                Some(run.advance)
+            } else { None }
+        }).unwrap()
+    }).collect();
+    assert!(widths[0] > widths[1]);
+}

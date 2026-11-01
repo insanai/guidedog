@@ -51,6 +51,9 @@ pub(crate) fn text_fonts(options: &Options<'_>) -> Vec<TextFace> {
             .is_some_and(|e| ["otf", "ttf", "ttc"].iter().any(|s| e.eq_ignore_ascii_case(s)))
             && let Ok(data) = crate::fonts::read_font(&path)
         {
+            // The scan reads each file once for its faces' names and coverage, then lets
+            // the bytes go: a host may hold hundreds of fonts, and only the faces that
+            // shaping selects are read again, lazily.
             append(&mut faces, &data, crate::fonts::FontFile::new(path));
         }
     }

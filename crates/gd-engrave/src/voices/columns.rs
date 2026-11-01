@@ -14,13 +14,16 @@ pub(super) fn arrange(
     work: &mut usize,
 ) -> Result<(), Error> {
     let mut ordered = ids.to_vec();
-    ordered.sort_by_key(|id| rank(score, *id));
+    ordered.sort_by_key(|id| (shift_level(score, *id), rank(score, *id)));
     for (index, id) in ordered.iter().enumerate() {
         let info = &plan.events[id.0 as usize];
         let glyph = fonts.glyph(info.head_glyph)?;
         let bounds = fonts.glyph_data(glyph).ok_or_else(|| failure("Missing voice head."))?.bounds;
         let width = (bounds.right - bounds.left) * info.head_scale + 0.3;
-        let side = if rank(score, *id) == 4 { -1.0 } else { 1.0 };
+        // As in LilyPond, shifted columns move away from the stem: right for upward
+        // stems, left for downward ones.
+        let shifted_down = shift_level(score, *id) > 0 && !info.up;
+        let side = if shifted_down || rank(score, *id) == 4 { -1.0 } else { 1.0 };
         let base = inner_offset(plan, &ordered[..index], *id, score) * width;
         let mut placed = false;
         for step in 0..=16 {
@@ -48,17 +51,36 @@ pub(super) fn arrange(
     share_heads(plan, &ordered, score, work)
 }
 
-/// An inner voice (three or four) beside an earlier column with the same stem direction
-/// starts half a head width aside, as LilyPond's note collisions always shift it, so two
-/// stems in one direction never read as a single chord.
+/// A shifted column beside earlier columns with the same stem direction starts half a
+/// head width aside for each lower shift level among them, as LilyPond's note
+/// collisions shift it, so two stems in one direction never read as a single chord.
+/// Columns with equal levels start together.
 fn inner_offset(plan: &Plan, earlier: &[EventId], id: EventId, score: &Score) -> f64 {
     let info = &plan.events[id.0 as usize];
+    let level = shift_level(score, id);
     let stemmed = |info: &EventInfo| stem(info).bottom > stem(info).top;
-    let beside = earlier.iter().any(|previous| {
+    if level == 0 || !stemmed(info) {
+        return 0.0;
+    }
+    let mut lower = [false; 4];
+    for previous in earlier {
         let other = &plan.events[previous.0 as usize];
-        other.up == info.up && stemmed(other)
-    });
-    if rank(score, id) >= 3 && stemmed(info) && beside { 0.5 } else { 0.0 }
+        let other_level = shift_level(score, *previous);
+        if other.up == info.up && stemmed(other) && other_level < level {
+            lower[usize::from(other_level.min(3))] = true;
+        }
+    }
+    0.5 * lower.iter().filter(|seen| **seen).count() as f64
+}
+
+/// The column's shift level: the explicit one from `\shiftOn` and its relatives, else
+/// its voice policy's, where an unstyled third or fourth voice counts as an inner voice.
+fn shift_level(score: &Score, id: EventId) -> u8 {
+    let event = &score.events[id.0 as usize];
+    event.column_shift.unwrap_or_else(|| match event.voice_style {
+        Some(style) if style != VoiceStyle::Single => style.column_shift(),
+        _ => u8::from(rank(score, id) >= 3),
+    })
 }
 
 pub(super) fn rank(score: &Score, id: EventId) -> usize {

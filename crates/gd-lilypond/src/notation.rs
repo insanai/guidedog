@@ -310,6 +310,18 @@ fn apply_state_toggle(name: &str, state: &mut State) -> bool {
         state.set_voice_style(style);
         return true;
     }
+    // LilyPond's \shiftOff reverts the shift to zero, not to the voice policy's level.
+    let shift = match name {
+        "shiftOff" => Some(0),
+        "shiftOn" => Some(1),
+        "shiftOnn" => Some(2),
+        "shiftOnnn" => Some(3),
+        _ => None,
+    };
+    if let Some(level) = shift {
+        state.column_shift = Some(level);
+        return true;
+    }
     let stem = match name {
         "stemUp" => Some(Direction::Up),
         "stemDown" => Some(Direction::Down),

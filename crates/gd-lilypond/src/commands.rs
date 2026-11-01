@@ -112,6 +112,10 @@ pub const COMMANDS: &[Command] = &[
     Command { name: "voiceThree", phase: 2, status: CommandStatus::Implemented },
     Command { name: "voiceFour", phase: 2, status: CommandStatus::Implemented },
     Command { name: "oneVoice", phase: 2, status: CommandStatus::Implemented },
+    Command { name: "shiftOn", phase: 2, status: CommandStatus::Implemented },
+    Command { name: "shiftOnn", phase: 2, status: CommandStatus::Implemented },
+    Command { name: "shiftOnnn", phase: 2, status: CommandStatus::Implemented },
+    Command { name: "shiftOff", phase: 2, status: CommandStatus::Implemented },
     Command { name: "set", phase: 2, status: CommandStatus::Implemented },
     Command { name: "grace", phase: 3, status: CommandStatus::Implemented },
     Command { name: "acciaccatura", phase: 3, status: CommandStatus::Implemented },
@@ -137,12 +141,6 @@ pub const COMMANDS: &[Command] = &[
     Command { name: ")", phase: 1, status: CommandStatus::Implemented },
     Command { name: "\\", phase: 1, status: CommandStatus::Implemented },
     Command { name: "override", phase: 0, status: CommandStatus::Refused },
-    // Note-column shifts are chosen by the voice styles; explicit shifts are refused
-    // rather than reported as unknown.
-    Command { name: "shiftOn", phase: 0, status: CommandStatus::Refused },
-    Command { name: "shiftOnn", phase: 0, status: CommandStatus::Refused },
-    Command { name: "shiftOnnn", phase: 0, status: CommandStatus::Refused },
-    Command { name: "shiftOff", phase: 0, status: CommandStatus::Refused },
     Command { name: "revert", phase: 0, status: CommandStatus::Refused },
     Command { name: "tweak", phase: 0, status: CommandStatus::Refused },
     Command { name: "once", phase: 0, status: CommandStatus::Refused },

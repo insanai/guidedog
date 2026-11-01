@@ -45,6 +45,8 @@ pub(crate) enum PitchMode {
 pub(crate) struct State {
     pub(crate) voice: VoiceId,
     pub(crate) voice_style: Option<gd_score::VoiceStyle>,
+    /// Explicit column shift from `\shiftOn` and its relatives.
+    pub(crate) column_shift: Option<u8>,
     pub(crate) at: Moment,
     pub(crate) duration: Duration,
     pub(crate) scale: Ratio,
@@ -72,6 +74,8 @@ pub(crate) struct State {
 impl State {
     pub(crate) fn set_voice_style(&mut self, style: gd_score::VoiceStyle) {
         self.voice_style = Some(style);
+        // A voice policy sets its own column shift, replacing an earlier explicit one.
+        self.column_shift = None;
         self.direction = style.direction();
         self.stem_override = None;
         self.slur_direction = style.direction();
@@ -86,6 +90,7 @@ impl Default for State {
         Self {
             voice: VoiceId(0),
             voice_style: None,
+            column_shift: None,
             at: Moment::default(),
             duration: Duration::default(),
             scale: Ratio::ONE,

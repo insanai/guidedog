@@ -77,6 +77,7 @@ fn score() -> Score {
         events: vec![Event {
             voice: VoiceId(0),
             voice_style: None,
+            column_shift: None,
             at: Moment::default(),
             kind: EventKind::Chord(Chord { notes: vec![Note::default()], ..Chord::default() }),
             span: Span::default(),

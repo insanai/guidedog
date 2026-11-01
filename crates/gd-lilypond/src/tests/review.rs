@@ -612,3 +612,13 @@ fn voice_styles_leave_dynamics_and_later_stems_alone() {
     let last = after.score.events.last().unwrap();
     assert!(last.voice_style.is_none_or(|s| s == gd_score::VoiceStyle::Single), "{last:?}");
 }
+
+#[test]
+fn shift_commands_set_explicit_column_levels_until_a_voice_policy() {
+    let loaded = read_voices(
+        r"{ \voiceThree c'4 \shiftOff d' \shiftOnn e' \shiftOnnn f' \voiceFour g' \shiftOn a' }",
+    )
+    .unwrap();
+    let shifts: Vec<_> = loaded.score.events.iter().map(|event| event.column_shift).collect();
+    assert_eq!(shifts, [None, Some(0), Some(2), Some(3), None, Some(1)]);
+}

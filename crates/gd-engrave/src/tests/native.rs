@@ -947,3 +947,19 @@ fn dynamics_and_hairpins_of_two_voices_stack_instead_of_overprinting() {
         }
     }
 }
+
+#[test]
+fn explicit_shift_levels_order_columns_away_from_the_stem() {
+    let engraving = draw(
+        r"\new Staff << \new Voice { \voiceOne g''4 } \new Voice { \voiceThree e''4 }
+           \new Voice { \voiceOne \shiftOnn c''4 } \new Voice { \voiceTwo c'4 } >>",
+        350.0,
+    );
+    let mut upper: Vec<_> =
+        marks_of(&engraving, &[Role::Notehead]).into_iter().filter(|h| h.bottom < 40.0).collect();
+    upper.sort_by(|a, b| a.top.total_cmp(&b.top));
+    let [g, e, c] = upper[..] else { panic!("{upper:?}") };
+    // Levels 0, 1 and 2 stand half a column width apart, rightward for upward stems.
+    assert!(g.left < e.left && e.left < c.left, "{upper:?}");
+    assert!(((e.left - g.left) - (c.left - e.left)).abs() < 0.01, "{upper:?}");
+}

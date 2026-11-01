@@ -291,6 +291,7 @@ impl Reader<'_> {
             Event {
                 voice: state.voice,
                 voice_style: state.voice_style,
+                column_shift: state.column_shift,
                 at: state.at,
                 kind,
                 span,

@@ -110,6 +110,16 @@ impl VoiceStyle {
             Self::Two | Self::Four => Direction::Down,
         }
     }
+
+    /// Returns the note-column shift level of this policy: one for the inner voices
+    /// three and four, zero otherwise. Among columns with one stem direction, a higher
+    /// level stands further from the stem side's outer column.
+    pub fn column_shift(self) -> u8 {
+        match self {
+            Self::Three | Self::Four => 1,
+            Self::Single | Self::One | Self::Two => 0,
+        }
+    }
 }
 
 /// The most voice records one staff may hold. At most four of them may sound at once;
@@ -168,6 +178,9 @@ pub struct Event {
     pub voice: VoiceId,
     /// Local voice policy; None inherits the owning voice's default direction.
     pub voice_style: Option<VoiceStyle>,
+    /// Explicit note-column shift level, as LilyPond's `horizontal-shift`; None uses the
+    /// voice policy's level from [`VoiceStyle::column_shift`].
+    pub column_shift: Option<u8>,
     /// Exact start time.
     pub at: Moment,
     /// Musical meaning.

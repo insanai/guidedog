@@ -584,3 +584,20 @@ fn beethoven_teaching_excerpt_keeps_the_instrumental_pitches_and_beat_counts() {
     }
     assert_eq!(loaded.score.measures.last().unwrap().end, Ratio::new(4, 1).unwrap());
 }
+
+#[test]
+fn voice_styles_leave_dynamics_and_later_stems_alone() {
+    // LilyPond moves no dynamics with a voice: DynamicLineSpanner is not polyphonic.
+    let loaded = read_voices(r"<< { c''4\p d'' } \\ { c'4 d' } >>").unwrap();
+    let dynamic = loaded.score.events[0]
+        .marks
+        .iter()
+        .find(|m| matches!(m.kind, AnnotationKind::Dynamic(_)))
+        .unwrap();
+    assert_eq!(dynamic.direction, gd_score::Direction::Auto);
+    // The block's first voice styles only its own notes; later notes have neutral stems.
+    let after = read_voices(r"{ << { c''4 } \\ { e'4 } >> c'''4 d'''4 }").unwrap();
+    assert_eq!(after.score.voices[0].direction, gd_score::Direction::Auto);
+    let last = after.score.events.last().unwrap();
+    assert!(last.voice_style.is_none_or(|s| s == gd_score::VoiceStyle::Single), "{last:?}");
+}

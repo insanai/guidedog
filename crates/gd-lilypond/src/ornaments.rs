@@ -538,7 +538,9 @@ impl Reader<'_> {
                 NoteRef { event: start_id, note: 0 },
                 NoteRef { event: end_id, note: 0 },
                 SpannerKind::Tuplet(shown_num as u64, shown_den as u64),
-                Direction::Up,
+                // LilyPond's TupletBracket follows a polyphonic voice, and otherwise the
+                // stems; the engraver resolves Auto from them.
+                state.voice_style.map_or(Direction::Auto, |style| style.direction()),
                 span,
             )?;
         }

@@ -76,7 +76,8 @@ impl State {
         self.stem_override = None;
         self.slur_direction = style.direction();
         self.tie_direction = style.direction();
-        self.dynamic_direction = style.direction();
+        // LilyPond's polyphonic voices do not move dynamics: DynamicLineSpanner is not
+        // among its direction-polyphonic-grobs, so \dynamicUp and \dynamicDown stand.
     }
 }
 

@@ -91,12 +91,6 @@ impl Reader<'_> {
                 2 => gd_score::VoiceStyle::Three,
                 _ => gd_score::VoiceStyle::Four,
             });
-            if branch == 0
-                && !self.voice_has_rhythmic(start.voice)
-                && let Some(voice) = self.score.voices.get_mut(start.voice.0 as usize)
-            {
-                voice.direction = Direction::Up;
-            }
         }
         Ok(child)
     }

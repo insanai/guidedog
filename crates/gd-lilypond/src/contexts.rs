@@ -85,7 +85,13 @@ impl Reader<'_> {
                 .and_then(|id| self.syntax.node(*id))
                 .is_some_and(is_voice);
         if (!is_context || voice_context) && (explicit || branch > 0) {
-            child.direction = if branch == 0 { Direction::Up } else { Direction::Down };
+            child.voice_style = Some(match branch {
+                0 => gd_score::VoiceStyle::One,
+                1 => gd_score::VoiceStyle::Two,
+                2 => gd_score::VoiceStyle::Three,
+                _ => gd_score::VoiceStyle::Four,
+            });
+            child.direction = child.voice_style.unwrap_or_default().direction();
             if branch == 0
                 && !self.voice_has_rhythmic(start.voice)
                 && let Some(voice) = self.score.voices.get_mut(start.voice.0 as usize)
@@ -319,8 +325,8 @@ impl Reader<'_> {
         span: Span,
     ) -> Result<VoiceId, Error> {
         let count = self.score.voices.iter().filter(|v| v.staff == staff).count();
-        if count >= 2 {
-            return Err(limit("two voices per staff", span));
+        if count >= 4 {
+            return Err(limit("four voices per staff", span));
         }
         let id = VoiceId(self.score.voices.len() as u32);
         push(
@@ -328,7 +334,11 @@ impl Reader<'_> {
             Voice {
                 staff,
                 name: name.into(),
-                direction: if count == 0 { Direction::Auto } else { Direction::Down },
+                direction: match count {
+                    0 => Direction::Auto,
+                    2 => Direction::Up,
+                    _ => Direction::Down,
+                },
                 events: Vec::new(),
             },
             span,

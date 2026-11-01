@@ -60,7 +60,7 @@ pub struct Staff {
     pub short_name_markup: Option<Markup>,
 }
 
-/// One or two independent rhythmic sequences on a staff.
+/// One of at most four independent rhythmic sequences on a staff.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct Voice {
     /// Owning staff.
@@ -83,6 +83,33 @@ pub enum Direction {
     Up,
     /// Below the staff, or downward stems.
     Down,
+}
+
+/// A local polyphonic policy, independent of the owning voice's identity.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum VoiceStyle {
+    /// Choose stems by staff position, without an inner-voice shift.
+    #[default]
+    Single,
+    /// First voice: upward stems and the outer note column.
+    One,
+    /// Second voice: downward stems and the outer note column.
+    Two,
+    /// Third voice: upward stems, shifting right when columns conflict.
+    Three,
+    /// Fourth voice: downward stems, shifting left when columns conflict.
+    Four,
+}
+
+impl VoiceStyle {
+    /// Returns the stem and annotation side selected by this local policy.
+    pub fn direction(self) -> Direction {
+        match self {
+            Self::Single => Direction::Auto,
+            Self::One | Self::Three => Direction::Up,
+            Self::Two | Self::Four => Direction::Down,
+        }
+    }
 }
 
 /// A connected group of contiguous staves.
@@ -135,6 +162,8 @@ pub enum GroupKind {
 pub struct Event {
     /// Owning voice.
     pub voice: VoiceId,
+    /// Local voice policy; None inherits the owning voice's default direction.
+    pub voice_style: Option<VoiceStyle>,
     /// Exact start time.
     pub at: Moment,
     /// Musical meaning.

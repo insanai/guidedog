@@ -58,8 +58,8 @@ fn check_voices(score: &Score) -> Result<(), Error> {
         let Some(count) = counts.get_mut(voice.staff.0 as usize) else {
             return Err(invalid("A voice names a missing staff."));
         };
-        if voice.staff.0 as usize >= score.staves.len() || *count >= 2 {
-            return Err(invalid("A staff must exist and may contain at most two voices."));
+        if voice.staff.0 as usize >= score.staves.len() || *count >= 4 {
+            return Err(invalid("A staff must exist and may contain at most four voices."));
         }
         *count += 1;
         let mut previous = None;

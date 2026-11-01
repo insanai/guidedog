@@ -508,3 +508,36 @@ fn included_file_unclosed_braces_and_dangling_ties_keep_include_spans() {
     .unwrap_err();
     assert_eq!(error_report(&failed.error, &failed.files).path, "tie.ily");
 }
+
+#[test]
+fn four_implicit_voices_keep_time_styles_and_reject_a_fifth() {
+    let loaded = read_voices(r"<< { c''1 } \\ { c'1 } \\ { g'1 } \\ { e'1 } >>").unwrap();
+    assert_eq!(loaded.score.voices.len(), 4);
+    let styles: Vec<_> = loaded.score.events.iter().map(|event| event.voice_style).collect();
+    assert_eq!(
+        styles,
+        [
+            Some(gd_score::VoiceStyle::One),
+            Some(gd_score::VoiceStyle::Two),
+            Some(gd_score::VoiceStyle::Three),
+            Some(gd_score::VoiceStyle::Four),
+        ]
+    );
+    assert!(loaded.score.events.iter().all(|event| event.at.main == gd_score::Ratio::ZERO));
+    let failed = read_voices(r"<< { c1 } \\ { d1 } \\ { e1 } \\ { f1 } \\ { g1 } >>").unwrap_err();
+    assert!(failed.error.message.contains("four voices per staff"));
+}
+
+#[test]
+fn explicit_inner_voice_styles_are_local_and_one_voice_restores_neutral_policy() {
+    let loaded = read_voices(r"{ \voiceThree c'4 r4 \voiceFour d'4 \oneVoice e'4 }").unwrap();
+    let styles: Vec<_> = loaded.score.events.iter().map(|event| event.voice_style).collect();
+    use gd_score::VoiceStyle::{Four, Single, Three};
+    assert_eq!(styles, [Some(Three), Some(Three), Some(Four), Some(Single)]);
+    assert_eq!(Three.direction(), gd_score::Direction::Up);
+    assert_eq!(Four.direction(), gd_score::Direction::Down);
+}
+
+fn read_voices(source: &str) -> Result<Loaded, Failed> {
+    load_score(source, "voices.ly", &mut Options::default())
+}

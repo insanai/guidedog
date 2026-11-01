@@ -109,6 +109,8 @@ pub const COMMANDS: &[Command] = &[
     Command { name: "with", phase: 2, status: CommandStatus::Implemented },
     Command { name: "voiceOne", phase: 2, status: CommandStatus::Implemented },
     Command { name: "voiceTwo", phase: 2, status: CommandStatus::Implemented },
+    Command { name: "voiceThree", phase: 2, status: CommandStatus::Implemented },
+    Command { name: "voiceFour", phase: 2, status: CommandStatus::Implemented },
     Command { name: "oneVoice", phase: 2, status: CommandStatus::Implemented },
     Command { name: "set", phase: 2, status: CommandStatus::Implemented },
     Command { name: "grace", phase: 3, status: CommandStatus::Implemented },

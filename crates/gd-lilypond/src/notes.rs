@@ -288,7 +288,14 @@ impl Reader<'_> {
         };
         push(
             &mut self.score.events,
-            Event { voice: state.voice, at: state.at, kind, span, marks },
+            Event {
+                voice: state.voice,
+                voice_style: state.voice_style,
+                at: state.at,
+                kind,
+                span,
+                marks,
+            },
             span,
         )?;
         push(&mut self.score.voices[state.voice.0 as usize].events, id, span)?;

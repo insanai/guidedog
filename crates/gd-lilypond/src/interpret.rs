@@ -44,6 +44,7 @@ pub(crate) enum PitchMode {
 #[derive(Clone, Debug)]
 pub(crate) struct State {
     pub(crate) voice: VoiceId,
+    pub(crate) voice_style: Option<gd_score::VoiceStyle>,
     pub(crate) at: Moment,
     pub(crate) duration: Duration,
     pub(crate) scale: Ratio,
@@ -71,6 +72,7 @@ impl Default for State {
     fn default() -> Self {
         Self {
             voice: VoiceId(0),
+            voice_style: None,
             at: Moment::default(),
             duration: Duration::default(),
             scale: Ratio::ONE,

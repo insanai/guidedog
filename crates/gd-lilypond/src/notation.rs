@@ -298,10 +298,26 @@ impl Reader<'_> {
 }
 
 fn apply_state_toggle(name: &str, state: &mut State) -> bool {
+    let style = match name {
+        "oneVoice" => Some(gd_score::VoiceStyle::Single),
+        "voiceOne" => Some(gd_score::VoiceStyle::One),
+        "voiceTwo" => Some(gd_score::VoiceStyle::Two),
+        "voiceThree" => Some(gd_score::VoiceStyle::Three),
+        "voiceFour" => Some(gd_score::VoiceStyle::Four),
+        _ => None,
+    };
+    if let Some(style) = style {
+        state.voice_style = Some(style);
+        state.direction = style.direction();
+        state.slur_direction = style.direction();
+        state.tie_direction = style.direction();
+        state.dynamic_direction = style.direction();
+        return true;
+    }
     match name {
-        "stemUp" | "voiceOne" => state.direction = Direction::Up,
-        "stemDown" | "voiceTwo" => state.direction = Direction::Down,
-        "stemNeutral" | "oneVoice" => state.direction = Direction::Auto,
+        "stemUp" => state.direction = Direction::Up,
+        "stemDown" => state.direction = Direction::Down,
+        "stemNeutral" => state.direction = Direction::Auto,
         "slurUp" | "phrasingSlurUp" => state.slur_direction = Direction::Up,
         "slurDown" | "phrasingSlurDown" => state.slur_direction = Direction::Down,
         "slurNeutral" | "phrasingSlurNeutral" => state.slur_direction = Direction::Auto,

@@ -1,4 +1,5 @@
 #import "theme.typ": gd-palette, gd-serif, gd-sans, gd-mono, gd-script-fonts, gd-language, configure-document
+// guidedog: margin-x = 31mm
 // Guidedog's PDF book template. It is ordinary Typst: edit it freely, or delete it to
 // use Guidedog's built-in copy. The build calls it as
 //

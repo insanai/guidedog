@@ -84,7 +84,7 @@
 .gd-article :is(img.graphviz, object.graphviz, img.typst-diagram) {
   display: block; box-sizing: border-box; margin: 1.5rem auto;
 }
-.gd-article :is(img.graphviz-adaptive, object.graphviz-adaptive, .graphviz:has(:is(img, object).graphviz-adaptive)) {
+.gd-article :is(img.graphviz-adaptive:not(.lilypond-music), object.graphviz-adaptive, .graphviz:has(:is(img, object).graphviz-adaptive)) {
   background: var(--gd-bg-soft);
 }
 .gd-article .graphviz :is(img, svg, object) { display: block; max-width: 100%; margin: auto; }

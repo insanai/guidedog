@@ -1,4 +1,5 @@
 #import "theme.typ": *
+// guidedog: margin-x = 30mm
 // A continuous standalone article. Shared rules keep equations and figures consistent.
 #let book(title: "", author: "", version: "", date: "", lang: "en", paper: "a4",
   numbering: false, authors: (), updated: "", category: "", tags: (), summary: "",

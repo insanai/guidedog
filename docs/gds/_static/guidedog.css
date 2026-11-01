@@ -741,7 +741,7 @@ figcaption .legend { margin-top: .4rem; text-align: left; }
 }
 .align-left, [data-align="left"] { float: left; margin: .25rem 1.5rem 1rem 0; }
 .align-right, [data-align="right"] { float: right; margin: .25rem 0 1rem 1.5rem; }
-:is(img.graphviz, img.typst-diagram), .graphviz img, object.graphviz {
+:is(img.graphviz, img.typst-diagram, img.lilypond-music), .graphviz img, object.graphviz {
   max-width: 100%; height: auto;
 }
 /* Adaptive SVGs inherit the chosen scheme; ordinary artwork keeps a light panel. */
@@ -750,12 +750,20 @@ figcaption .legend { margin-top: .4rem; text-align: left; }
   :is(img.graphviz, object.graphviz, .graphviz img, img.typst-diagram):not(.graphviz-adaptive) {
   background: #fff; border-radius: 4px;
 }
+:root[data-theme="dark"] img.lilypond-music:not(.graphviz-adaptive) {
+  background: #f5f2ea; padding: .5rem .75rem; box-sizing: border-box; border-radius: 4px;
+}
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"])
     :is(img.graphviz, object.graphviz, .graphviz img, img.typst-diagram):not(.graphviz-adaptive) {
     background: #fff; border-radius: 4px;
   }
+  :root:not([data-theme="light"]) img.lilypond-music:not(.graphviz-adaptive) {
+    background: #f5f2ea; padding: .5rem .75rem; box-sizing: border-box; border-radius: 4px;
+  }
 }
+
+.gd-article figure:has(img.lilypond-music) { overflow-x: visible; }
 
 /* On narrow screens, keep graph labels readable inside a scrollable figure. */
 @media (max-width: 700px) {

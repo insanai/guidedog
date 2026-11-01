@@ -1314,7 +1314,7 @@ Follow-up qualification
 The mixed-script corpus now includes Chinese and Devanagari lyrics with fixed font bytes.
 CI and every native release job download the single pinned CJK face before running the corpus; the loader checks its digest again.
 At both staff sizes the corpus refuses missing-glyph and other engraving warnings.
-Direct HTML, text and PDF conversion names an unengraved file argument through a localized label without opening it; RST retains the original directive.
+Direct HTML and PDF conversion names an unengraved file argument through a localized label without opening it; RST retains the original directive.
 
 ``Options::scratch`` supplies reserve and release callbacks for temporary layout storage.
 Skyline segment owners retain their reservation while alive, including the overlap of old and replacement buffers during a merge.

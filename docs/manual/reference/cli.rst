@@ -419,7 +419,7 @@ reStructuredText cannot express exactly (a hard line break, an image inside text
 title). The writer comes as close as it can and reports a note. Typst input cannot be
 converted to reStructuredText.
 
-With ``--from sphinx`` or ``--from myst``, an unengraved ``lilypond`` file argument becomes a descriptive sentence in HTML and PDF, translated with ``--lang``.
+With ``--from sphinx`` or ``--from myst``, an unengraved ``lilypond`` file argument becomes a descriptive sentence in HTML and PDF, translated with ``--lang``; its caption is omitted with the score.
 Conversion never opens the score file; conversion to RST preserves its directive and filename.
 
 .. list-table:: Options of convert
@@ -444,7 +444,7 @@ Conversion never opens the score file; conversion to RST preserves its directive
    * - ``--strict``
      - Treat warnings as failures.
    * - ``--title=TEXT``, ``--lang=TAG``
-     - The document's title and language.
+     - The document's title and language. The language also translates Guidedog's own labels in HTML and PDF output, such as admonition titles.
    * - ``--number-sections``
      - Number section headings.
    * - ``--fragment``

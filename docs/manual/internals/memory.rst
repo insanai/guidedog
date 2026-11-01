@@ -142,3 +142,5 @@ A skyline owns its live segment reservation; replacement segments and boundary b
 Spacing sort buffers, candidate rods and break-choice tables use scoped reservations that release on success and on failure.
 The host ledger's ``discharge`` operation returns these bytes immediately, so repeated merges consume their peak live memory rather than the sum of every intermediate allocation.
 Existing worker capacity is charged for each engraving because the callback can belong to a different ledger on the next call.
+Scratch charges reach the build's shared budget, like every other reservation, so a score near a tight budget can be refused or accepted depending on what other threads hold at that moment; the drawing never changes, only whether it fits, and a refusal reports a budget that fits.
+An HTML score with a narrow edition engraves twice on one ledger, and the second estimate is charged while the first is still held; the double count is conservative and ends when the score's ledger is released.

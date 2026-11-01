@@ -65,7 +65,7 @@ Learn from Beethoven's Joy theme
 
 We use four bars of the Joy theme from Beethoven's Symphony No. 9, Op. 125, finale, bars 92-95.
 We transpose the melody from D major to C major and place it in the treble register, keeping its rhythm and omitting the orchestration, slurs and dynamics.
-The `source score, page 8 <https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_ shows the instrumental opening with half notes; some familiar vocal versions divide them into repeated quarter notes.
+The `CCARH/MuseData score, printed page 8 <https://williamwieland.com/piano/reading/Beethoven/OdetoJoy.pdf>`_, shows the instrumental opening with half notes; some familiar vocal versions divide them into repeated quarter notes.
 
 .. code-block:: rst
 

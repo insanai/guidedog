@@ -195,7 +195,7 @@ Commit ``481e87b`` separates an optional stem override from the voice's column p
 Independent Beethoven qualification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We created fresh RST and MyST projects under ``/tmp/guidedog-beethoven-verification``.
+We created fresh RST and MyST projects in a temporary directory.
 The RST project contains the actual manual section; the MyST project activates its published directive fence.
 Both projects build HTML and PDF with warnings treated as errors.
 Their complete sets of standard and compact SVGs are byte-identical.
@@ -204,7 +204,7 @@ We inspected the CCARH source score on page 8 and the generated English manual p
 We transcribed the original cello melody in D major into a separate LilyPond score in the temporary directory.
 An independent MIDI reader then compared that score with the teaching source: all thirteen pitches, every onset and every exact duration agree after moving down a whole tone and up an octave, a net ten semitones.
 The four measures total sixteen quarter-note beats.
-The temporary directory retains the source PDF, both LilyPond sources and outputs, the RST and MyST projects and builds, ``verified-notes.csv``, ``midi-check.txt``, ``svg-check.txt`` and ``report.txt``.
+These working files were not kept. Score 63 and its pitch-and-duration test are the durable record, and the steps above reproduce the comparison from the cited CCARH/MuseData score.
 
 The teaching review clarified the composition number, the change from D major to C major, and the distinction between the instrumental half-note opening and vocal versions with repeated quarters.
 The lesson identifies an excerpt and its open ending; it does not present four bars as the complete symphony.

@@ -2,6 +2,8 @@ use std::path::PathBuf;
 
 use super::*;
 
+mod music;
+
 /// A fresh, empty directory for one test, removed when dropped.
 struct TempDir(PathBuf);
 

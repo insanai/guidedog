@@ -246,6 +246,25 @@ fn fonts(system: bool, paths: &[PathBuf]) -> &'static FontStore {
     })
 }
 
+pub(crate) fn text_fonts(options: &Options<'_>) -> Vec<crate::TextFace> {
+    let store = fonts(!options.embedded_fonts_only, &options.font_paths);
+    let mut faces = Vec::new();
+    let mut index = 0;
+    while let Some(info) = store.book().info(index) {
+        if let Some(font) = store.font(index) {
+            faces.push(crate::TextFace {
+                family: info.family.clone(),
+                index: font.index(),
+                bold: info.variant.weight.to_number() >= 600,
+                italic: info.variant.style != typst::text::FontStyle::Normal,
+                data: crate::fonts::Data::Embedded(font.data().clone()),
+            });
+        }
+        index += 1;
+    }
+    faces
+}
+
 fn library(html: bool) -> &'static LazyHash<Library> {
     static PAGED: OnceLock<LazyHash<Library>> = OnceLock::new();
     static HTML: OnceLock<LazyHash<Library>> = OnceLock::new();

@@ -35,11 +35,20 @@ pub struct GlyphData {
 #[derive(Clone, Debug, Default)]
 pub struct FontOptions<'f> {
     /// Regular text faces.
-    pub regular: Vec<&'f [u8]>,
+    pub regular: Vec<FaceData<'f>>,
     /// Bold text faces, falling back to regular when empty.
-    pub bold: Vec<&'f [u8]>,
+    pub bold: Vec<FaceData<'f>>,
     /// Italic text faces, falling back to regular when empty.
-    pub italic: Vec<&'f [u8]>,
+    pub italic: Vec<FaceData<'f>>,
+}
+
+/// One borrowed OpenType face; a collection needs its explicit face index.
+#[derive(Clone, Copy, Debug, Default)]
+pub struct FaceData<'f> {
+    /// Original font or collection bytes.
+    pub data: &'f [u8],
+    /// Face index; zero is the common single-font case.
+    pub index: u32,
 }
 
 /// Explicit immutable font tables, safe to share between engraving threads.
@@ -112,22 +121,15 @@ pub fn load_fonts<'f>(options: &FontOptions<'f>) -> Result<Fonts<'f>, Error> {
     Ok(fonts)
 }
 
-fn faces<'f>(bytes: &[&'f [u8]]) -> Result<Vec<rustybuzz::Face<'f>>, Error> {
+fn faces<'f>(bytes: &[FaceData<'f>]) -> Result<Vec<rustybuzz::Face<'f>>, Error> {
     let mut faces = Vec::new();
     faces
         .try_reserve_exact(bytes.len())
         .map_err(|_| font_error("Cannot allocate text face tables."))?;
-    for data in bytes {
-        let count = ttf_parser::fonts_in_collection(data).unwrap_or(1);
-        if count > 256 {
-            return Err(font_error("A text font collection exceeds 256 faces."));
-        }
-        for index in 0..count {
-            faces.push(
-                rustybuzz::Face::from_slice(data, index)
-                    .ok_or_else(|| font_error("A supplied text face is malformed."))?,
-            );
-        }
+    for face in bytes {
+        faces.push(rustybuzz::Face::from_slice(face.data, face.index).ok_or_else(|| {
+            font_error("A supplied text face or collection index is malformed.")
+        })?);
     }
     Ok(faces)
 }

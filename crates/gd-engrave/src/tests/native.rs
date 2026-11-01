@@ -7,8 +7,11 @@ fn draw(source: &str, width: f64) -> Engraving {
     let loaded =
         gd_lilypond::load_score(source, "native.ly", &mut gd_lilypond::Options::default())
             .unwrap();
-    let fonts =
-        load_fonts(&FontOptions { regular: vec![REGULAR], ..FontOptions::default() }).unwrap();
+    let fonts = load_fonts(&FontOptions {
+        regular: vec![FaceData { data: REGULAR, ..FaceData::default() }],
+        ..FontOptions::default()
+    })
+    .unwrap();
     Engraver::default()
         .engrave_score(
             &loaded.score,
@@ -52,8 +55,11 @@ fn every_ink_bound_fits_its_system_with_lyrics_and_ledgers() {
 
 #[test]
 fn a_reused_workspace_is_byte_deterministic() {
-    let fonts =
-        load_fonts(&FontOptions { regular: vec![REGULAR], ..FontOptions::default() }).unwrap();
+    let fonts = load_fonts(&FontOptions {
+        regular: vec![FaceData { data: REGULAR, ..FaceData::default() }],
+        ..FontOptions::default()
+    })
+    .unwrap();
     let a = gd_lilypond::load_score(
         r"{ c'4( d' e' f') | g'1 }",
         "a.ly",

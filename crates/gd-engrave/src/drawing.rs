@@ -181,14 +181,13 @@ impl Draw<'_, '_, '_, '_> {
                     )?;
                 }
             }
-            EventKind::Time(meter)
-                if changed => {
-                    self.time_signature(
-                        meter,
-                        Point { x: x + info.notation_x * space, y: middle },
-                        space,
-                    )?;
-                }
+            EventKind::Time(meter) if changed => {
+                self.time_signature(
+                    meter,
+                    Point { x: x + info.notation_x * space, y: middle },
+                    space,
+                )?;
+            }
             _ => {}
         }
         Ok(())

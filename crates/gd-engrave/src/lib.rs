@@ -27,7 +27,7 @@ mod text;
 mod vertical;
 
 pub use breaking::{BreakPoint, Line, break_lines};
-pub use fonts::{FontOptions, Fonts, Glyph, GlyphData, load_fonts};
+pub use fonts::{FaceData, FontOptions, Fonts, Glyph, GlyphData, load_fonts};
 pub use geometry::{Bezier, Point, Rect};
 pub use layout::{Engraver, engrave_svg};
 pub use limits::{Limits, Options, Reserve};

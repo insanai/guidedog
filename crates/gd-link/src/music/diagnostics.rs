@@ -74,10 +74,9 @@ pub(super) fn description(page: &Page<'_>, summary: &gd_engrave::Summary) -> Str
         alt.push('.');
     }
     if let Some(key) = summary.key {
+        let name = super::keys::key_name(&page.config().language, page.view.ui, key);
         alt.push(' ');
-        alt.push_str(
-            &page.view.ui.gettext("Key signature %s.").replace("%s", &key_name(page, key)),
-        );
+        alt.push_str(&page.view.ui.gettext("Key signature %s.").replace("%s", &name));
     }
     if let Some(meter) = &summary.meter {
         alt.push(' ');
@@ -90,45 +89,22 @@ pub(super) fn description(page: &Page<'_>, summary: &gd_engrave::Summary) -> Str
         );
     }
     alt.push(' ');
-    alt.push_str(
-        &page
-            .view
-            .ui
-            .gettext("Measures %s.")
-            .replace("%s", &format!("{}-{}", summary.measures.0, summary.measures.1)),
-    );
+    if summary.measures.0 == summary.measures.1 {
+        alt.push_str(
+            &page.view.ui.gettext("Measure %s.").replace("%s", &summary.measures.0.to_string()),
+        );
+    } else {
+        alt.push_str(
+            &page
+                .view
+                .ui
+                .gettext("Measures %s.")
+                .replace("%s", &format!("{}-{}", summary.measures.0, summary.measures.1)),
+        );
+    }
     if summary.lyrics {
         alt.push(' ');
         alt.push_str(&page.view.ui.gettext("With lyrics."));
     }
     alt
-}
-
-fn key_name(page: &Page<'_>, key: gd_score::Key) -> String {
-    use gd_score::{Alter, Mode};
-    let step = ["C", "D", "E", "F", "G", "A", "B"][key.tonic.step.index() as usize];
-    let accidental = match key.tonic.alter {
-        Alter::DoubleFlat => "double flat",
-        Alter::Flat => "flat",
-        Alter::Natural => "",
-        Alter::Sharp => "sharp",
-        Alter::DoubleSharp => "double sharp",
-    };
-    let mode = match key.mode {
-        Mode::Major => "major",
-        Mode::Minor => "minor",
-        Mode::Dorian => "Dorian",
-        Mode::Phrygian => "Phrygian",
-        Mode::Lydian => "Lydian",
-        Mode::Mixolydian => "Mixolydian",
-        Mode::Locrian => "Locrian",
-    };
-    let mut name = step.to_string();
-    if !accidental.is_empty() {
-        name.push(' ');
-        name.push_str(&page.view.ui.gettext(accidental));
-    }
-    name.push(' ');
-    name.push_str(&page.view.ui.gettext(mode));
-    name
 }

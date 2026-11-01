@@ -3,6 +3,7 @@
 mod assets;
 mod diagnostics;
 mod fonts;
+mod keys;
 mod options;
 mod source;
 

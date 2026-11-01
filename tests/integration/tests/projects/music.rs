@@ -46,10 +46,20 @@ fn rst_and_myst_music_render_in_html_and_real_pdf() {
     has(&html, "id=\"melody\"");
     has(&html, "<em>melody</em>");
     has(&html, "href=\"#melody\">Fig. ");
+    let svg_name =
+        html.split("_images/").nth(1).and_then(|s| s.split('"').next()).expect("svg image path");
+    let svg = dir.read(&format!("_build/html/_images/{svg_name}"));
+    has(&svg, "<title id=\"title\">Four notes</title>");
+    has(
+        &svg,
+        "<desc id=\"description\">Music for 1 staff. Time signature 4/4. Measures 1-4.</desc>",
+    );
     let other = dir.read("_build/html/other.html");
     has(&other, "lilypond-");
     has(&other, ".png");
     has(&other, "Music for 1 staff.");
+    has(&other, "Measure 1.");
+    lacks(&other, "Measures 1-1.");
     assert_eq!(other.matches(" 1.5x").count(), 2);
     assert_eq!(other.matches("<picture>").count(), 1);
     has(&other, "<img srcset=");
@@ -157,13 +167,13 @@ fn generated_music_descriptions_follow_the_projects_ui_language() {
         "index.rst",
         concat!("Music\n=====\n\n.. lilypond::\n\n", "   { \\key g \\major c'4 d' e' f' | }\n"),
     );
-    for (language, staff, mode) in
-        [("de", "Notensystem", "Dur"), ("hi", "स्वर-पंक्ति", "मेजर"), ("ko", "보표", "장조")]
+    for (language, staff, key) in
+        [("de", "Notensystem", "G-Dur"), ("hi", "स्वर-पंक्ति", "G मेजर"), ("ko", "보표", "사장조")]
     {
         build(&dir.path, 0, &["html", "-W", "-D", &format!("language={language}")]);
         let html = dir.read("_build/html/index.html");
         has(&html, staff);
-        has(&html, mode);
+        has(&html, key);
     }
 }
 

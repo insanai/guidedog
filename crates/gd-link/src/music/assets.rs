@@ -19,11 +19,12 @@ pub(super) fn save(
     if !matches!(format, "svg" | "png") {
         return Err(format!("Unknown music image format `{format}`."));
     }
+    let title = doc.custom_attribute(id, "alt").unwrap_or(alt);
     let mut svg = String::new();
     let options = SvgOptions {
         systems: system.map(|index| index..index + 1),
-        title: alt,
-        description: "",
+        title,
+        description: alt,
         adaptive: format == "svg" && page.format == OutputFormat::Html,
         ..Default::default()
     };

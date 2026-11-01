@@ -168,3 +168,18 @@ fn score_validation_counts_voices_sounding_at_once() {
     add_voice_note(&mut s, Ratio::ZERO);
     assert!(check_score(&s).unwrap_err().message.contains("four voices"));
 }
+
+#[test]
+fn a_voice_that_rests_between_uses_does_not_sound_in_between() {
+    // Voice 0 sounds at 0 and again at 2; four other voices fill the moment 1 between.
+    let mut s = score();
+    let later = Ratio::new(2, 1).unwrap();
+    let mut event = s.events[0].clone();
+    event.at = Moment { main: later, grace: Ratio::ZERO };
+    s.events.push(event);
+    s.voices[0].events.push(EventId(1));
+    for _ in 0..4 {
+        add_voice_note(&mut s, Ratio::ONE);
+    }
+    check_score(&s).unwrap();
+}

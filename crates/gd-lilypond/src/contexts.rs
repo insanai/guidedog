@@ -332,7 +332,12 @@ impl Reader<'_> {
         }
         let count = on_staff().filter(|v| !self.voice_free(v, at)).count();
         if count >= 4 {
-            return Err(limit("four voices sounding at once on a staff", span));
+            return Err(Error::new(
+                crate::ErrorKind::ReadLimit,
+                "This voice would be the fifth sounding at once on its staff; at most four may.",
+            )
+            .at(span)
+            .hint("End a voice before the next begins, or put this one on its own staff."));
         }
         let id = VoiceId(self.score.voices.len() as u32);
         push(

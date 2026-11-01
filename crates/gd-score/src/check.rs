@@ -49,29 +49,28 @@ pub fn check_score(score: &Score) -> Result<(), Error> {
     Ok(())
 }
 
-/// At most four voices of a staff may sound at once. A voice sounds from its first event
-/// to the end of its last; a sweep over those spans finds the most that overlap.
+/// At most four voices of a staff may sound at once. A voice's events follow one another,
+/// so the events sounding at a moment count the voices sounding then; a sweep over event
+/// spans finds the most that overlap. A voice that rests between uses, such as a named
+/// voice reused later, does not count in between. Grace notes take no main time.
 fn check_simultaneous_voices(score: &Score) -> Result<(), Error> {
     let mut spans = Vec::new();
     spans
-        .try_reserve(score.voices.len().saturating_mul(2))
+        .try_reserve(score.events.len().saturating_mul(2))
         .map_err(|_| invalid("Cannot allocate score validation spans."))?;
-    for voice in &score.voices {
-        let (Some(first), Some(last)) = (voice.events.first(), voice.events.last()) else {
+    for event in &score.events {
+        let Some(duration) = event.kind.duration() else {
             continue;
         };
-        let (Some(first), Some(last)) =
-            (score.events.get(first.0 as usize), score.events.get(last.0 as usize))
-        else {
-            return Err(invalid("A voice names a missing event."));
+        let Some(voice) = score.voices.get(event.voice.0 as usize) else {
+            return Err(invalid("An event names a missing voice."));
         };
-        let time = last.kind.duration().map(|d| d.time()).transpose()?.unwrap_or(Ratio::ZERO);
-        let end = last.at.main.checked_add(time)?;
-        if end > first.at.main {
-            // Ends sort before starts at the same moment, so a voice that ends where
+        let end = event.at.main.checked_add(duration.time()?)?;
+        if event.at.grace == Ratio::ZERO && end > event.at.main {
+            // Ends sort before starts at the same moment, so an event that ends where
             // another begins does not overlap it.
             spans.push((voice.staff, end, 0i32));
-            spans.push((voice.staff, first.at.main, 1i32));
+            spans.push((voice.staff, event.at.main, 1i32));
         }
     }
     spans.sort();

@@ -525,7 +525,7 @@ fn four_implicit_voices_keep_time_styles_and_reject_a_fifth() {
     );
     assert!(loaded.score.events.iter().all(|event| event.at.main == gd_score::Ratio::ZERO));
     let failed = read_voices(r"<< { c1 } \\ { d1 } \\ { e1 } \\ { f1 } \\ { g1 } >>").unwrap_err();
-    assert!(failed.error.message.contains("four voices sounding at once"));
+    assert!(failed.error.message.contains("fifth sounding at once"), "{}", failed.error.message);
     // Finished voices do not count: five differently named voices, at most three at once.
     let sequential = read_voices(
         r#"\new Staff {
@@ -537,6 +537,17 @@ fn four_implicit_voices_keep_time_styles_and_reject_a_fifth() {
     .unwrap();
     assert_eq!(sequential.score.voices.len(), 5);
     assert!(gd_score::check_score(&sequential.score).is_ok());
+    // A named voice reused later does not sound while four others fill the bar between.
+    let reused = read_voices(
+        r#"\new Staff {
+            << \new Voice = "a" { \voiceOne c''1 } \new Voice = "b" { \voiceTwo c'1 } >>
+            << \new Voice = "c" { \voiceOne d''1 } \new Voice = "d" { \voiceTwo d'1 }
+               \new Voice = "e" { \voiceThree f'1 } \new Voice = "g" { \voiceFour b1 } >>
+            << \new Voice = "a" { \voiceOne e''1 } \new Voice = "b" { \voiceTwo e'1 } >>
+        }"#,
+    )
+    .unwrap();
+    assert!(gd_score::check_score(&reused.score).is_ok());
 }
 
 #[test]

@@ -121,7 +121,11 @@ impl Lexer<'_, '_> {
                 Ok(TokenKind::Number(self.source[start..self.at].to_string()))
             }
             c if c.is_alphabetic() => {
-                while self.peek().is_some_and(|c| c.is_alphabetic() || c == '_') {
+                while self.peek().is_some_and(|c| {
+                    c.is_alphabetic()
+                        || c == '_'
+                        || (c.is_ascii_digit() && self.source[start..self.at].contains('_'))
+                }) {
                     self.advance();
                 }
                 Ok(TokenKind::Word(self.source[start..self.at].to_string()))

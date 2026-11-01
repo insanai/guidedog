@@ -3,16 +3,28 @@
 
 #![forbid(unsafe_code)]
 
+mod bindings;
 mod commands;
+mod contexts;
+mod cursor;
 mod files;
+mod finish;
+mod interpret;
 mod lexer;
 mod limits;
+mod lyrics;
+mod names;
+mod notation;
+mod notes;
+mod ornaments;
 mod parser;
+mod repeats;
 mod syntax;
 
 pub use commands::{COMMANDS, Command, CommandStatus, command};
 pub use files::{Failed, SourceFile, SourceFiles, error_report};
 pub use gd_score::{Error, ErrorKind, FileId, Severity, Span};
+pub use interpret::interpret_syntax;
 pub use limits::Limits;
 pub use parser::parse_lilypond;
 pub use syntax::{Expr, ExprKind, Syntax, SyntaxId, Token, TokenKind};
@@ -76,6 +88,13 @@ pub struct Loaded {
     pub files: SourceFiles,
     /// Failed bar checks, ignored metadata and unused lyrics.
     pub warnings: Vec<Error>,
+}
+
+/// Parses and interprets borrowed source under the supplied bounds and include policy.
+/// Returns an owned score or a diagnostic with all files read before the failure.
+pub fn load_score(source: &str, name: &str, options: &mut Options<'_>) -> Result<Loaded, Failed> {
+    let syntax = parse_lilypond(source, name, options)?;
+    interpret_syntax(&syntax, &options.limits)
 }
 
 #[cfg(test)]

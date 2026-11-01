@@ -151,9 +151,15 @@ fn check_spanners(score: &Score) -> Result<(), Error> {
             let (EventKind::Chord(a), EventKind::Chord(b)) = (&start.kind, &end.kind) else {
                 return Err(invalid("A tie needs pitched notes at both ends."));
             };
+            let adjacent = if start.at.grace < Ratio::ZERO {
+                start.at.main == end.at.main
+                    && start.at.grace.checked_add(a.duration.time()?)? == end.at.grace
+            } else {
+                start.at.main.checked_add(a.duration.time()?)? == end.at.main
+            };
             if a.notes[spanner.start.note as usize].pitch
                 != b.notes[spanner.end.note as usize].pitch
-                || start.at.main.checked_add(a.duration.time()?)? != end.at.main
+                || !adjacent
             {
                 return Err(invalid("A tie needs equal pitches at adjacent rhythmic moments."));
             }

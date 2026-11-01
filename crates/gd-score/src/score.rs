@@ -290,7 +290,7 @@ pub enum SpannerKind {
     /// Explicit beam group.
     Beam,
     /// Ratio displayed above a tuplet.
-    Tuplet(u16, u16),
+    Tuplet(u64, u64),
     /// Increasing volume.
     Crescendo,
     /// Decreasing volume.

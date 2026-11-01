@@ -1,0 +1,212 @@
+use std::collections::BTreeMap;
+
+use gd_score::{
+    Direction, Duration, EventId, Meter, Moment, Note, NoteRef, Pitch, Ratio, Score, Staff,
+    StaffId, Voice, VoiceId,
+};
+
+use crate::cursor::Cursor;
+use crate::limits::{Work, limit};
+use crate::names::Language;
+use crate::parser::syntax_error;
+use crate::{
+    Error, ErrorKind, ExprKind, Failed, Limits, Loaded, Span, Syntax, SyntaxId, TokenKind,
+};
+
+/// Interprets a borrowed syntax arena under explicit expansion and event bounds.
+/// Returns a separate score and retained source, or the first placed diagnostic.
+pub fn interpret_syntax(syntax: &Syntax, limits: &Limits) -> Result<Loaded, Failed> {
+    let mut reader = Reader::new(syntax, limits);
+    let mut state = State::default();
+    let result = reader
+        .sequence(&syntax.roots, &mut state, 0)
+        .and_then(|()| reader.closed(&state))
+        .and_then(|()| reader.finish());
+    match result {
+        Ok(()) => Ok(Loaded {
+            score: reader.score,
+            files: syntax.files.clone(),
+            warnings: reader.warnings,
+        }),
+        Err(error) => Err(Failed { error, files: syntax.files.clone() }),
+    }
+}
+
+#[derive(Clone, Copy, Debug, Default)]
+pub(crate) enum PitchMode {
+    #[default]
+    Absolute,
+    Relative(Pitch),
+    Fixed(i8),
+}
+
+#[derive(Clone, Debug)]
+pub(crate) struct State {
+    pub(crate) voice: VoiceId,
+    pub(crate) at: Moment,
+    pub(crate) duration: Duration,
+    pub(crate) scale: Ratio,
+    pub(crate) language: Language,
+    pub(crate) pitch_mode: PitchMode,
+    pub(crate) transpositions: Vec<(Pitch, Pitch)>,
+    pub(crate) direction: Direction,
+    pub(crate) auto_beam: bool,
+    pub(crate) last_chord: Vec<Note>,
+    pub(crate) last: Option<EventId>,
+    pub(crate) ties: Vec<NoteRef>,
+    pub(crate) slurs: Vec<(NoteRef, bool, Span)>,
+    pub(crate) beam: Option<(NoteRef, Span)>,
+    pub(crate) hairpin: Option<(NoteRef, bool, Span)>,
+    pub(crate) pending: Vec<gd_score::Annotation>,
+    pub(crate) meter: Meter,
+    pub(crate) grace_slash: bool,
+}
+
+impl Default for State {
+    fn default() -> Self {
+        Self {
+            voice: VoiceId(0),
+            at: Moment::default(),
+            duration: Duration::default(),
+            scale: Ratio::ONE,
+            language: Language::default(),
+            pitch_mode: PitchMode::Absolute,
+            transpositions: Vec::new(),
+            direction: Direction::Auto,
+            auto_beam: true,
+            last_chord: Vec::new(),
+            last: None,
+            ties: Vec::new(),
+            slurs: Vec::new(),
+            beam: None,
+            hairpin: None,
+            pending: Vec::new(),
+            meter: Meter::default(),
+            grace_slash: false,
+        }
+    }
+}
+
+#[derive(Debug)]
+pub(crate) struct Reader<'a> {
+    pub(crate) syntax: &'a Syntax,
+    pub(crate) limits: &'a Limits,
+    pub(crate) work: Work,
+    pub(crate) score: Score,
+    pub(crate) warnings: Vec<Error>,
+    pub(crate) variables: BTreeMap<String, Vec<SyntaxId>>,
+    pub(crate) bar_checks: Vec<(Ratio, Span)>,
+    pub(crate) partial: Option<Ratio>,
+    pub(crate) scores: usize,
+    pub(crate) rehearsal: u16,
+    pub(crate) staff_contexts: usize,
+    pub(crate) pending_lyrics: Vec<crate::lyrics::PendingLyrics>,
+}
+
+impl<'a> Reader<'a> {
+    fn new(syntax: &'a Syntax, limits: &'a Limits) -> Self {
+        Self {
+            syntax,
+            limits,
+            work: Work::new(limits),
+            warnings: Vec::new(),
+            score: Score {
+                staves: vec![Staff::default()],
+                voices: vec![Voice { staff: StaffId(0), ..Voice::default() }],
+                ..Score::default()
+            },
+            variables: BTreeMap::new(),
+            bar_checks: Vec::new(),
+            partial: None,
+            scores: 0,
+            rehearsal: 0,
+            staff_contexts: 0,
+            pending_lyrics: Vec::new(),
+        }
+    }
+
+    pub(crate) fn sequence(
+        &mut self,
+        ids: &[SyntaxId],
+        state: &mut State,
+        depth: usize,
+    ) -> Result<(), Error> {
+        let mut cursor = Cursor::new(self.syntax, ids);
+        while cursor.peek().is_some() {
+            self.one(&mut cursor, state, depth)?;
+        }
+        Ok(())
+    }
+
+    pub(crate) fn one(
+        &mut self,
+        cursor: &mut Cursor<'_>,
+        state: &mut State,
+        depth: usize,
+    ) -> Result<(), Error> {
+        self.work.take(1, cursor.span())?;
+        if depth > self.limits.depth {
+            return Err(limit("expansion depth", cursor.span()));
+        }
+        let node = cursor.next()?;
+        match &node.kind {
+            ExprKind::Sequence(ids) => self.sequence(ids, state, depth + 1),
+            ExprKind::Simultaneous(ids) => self.simultaneous(ids, state, depth + 1),
+            ExprKind::Chord(ids) => self.chord(ids, cursor, state, node.span),
+            ExprKind::Atom(TokenKind::Word(word)) => {
+                if cursor.symbol('=') {
+                    self.assignment(word, cursor)
+                } else {
+                    self.note(word, cursor, state, node.span)
+                }
+            }
+            ExprKind::Atom(TokenKind::Command(name)) => {
+                self.command(name, cursor, state, node.span, depth)
+            }
+            ExprKind::Atom(TokenKind::Symbol('|')) => {
+                self.bar_checks.push((state.at.main, node.span));
+                Ok(())
+            }
+            ExprKind::Atom(TokenKind::Symbol(c)) if "~()[]-^_".contains(*c) => {
+                self.postfix(*c, cursor, state, node.span)
+            }
+            ExprKind::Atom(TokenKind::Symbol('#' | '$')) => Err(unsupported(node.span, "Scheme")),
+            _ => Err(syntax_error(
+                node.span,
+                "Expected notes, a music group or a supported command.",
+            )),
+        }
+    }
+
+    pub(crate) fn assignment(&mut self, name: &str, cursor: &mut Cursor<'_>) -> Result<(), Error> {
+        let start = cursor.at;
+        self.capture(cursor, 0)?;
+        self.variables.insert(name.to_string(), cursor.ids[start..cursor.at].to_vec());
+        Ok(())
+    }
+
+    pub(crate) fn closed(&self, state: &State) -> Result<(), Error> {
+        let span = state
+            .slurs
+            .last()
+            .map(|s| s.2)
+            .or(state.beam.map(|s| s.1))
+            .or(state.hairpin.map(|s| s.2));
+        if let Some(span) = span {
+            return Err(syntax_error(span, "A slur, beam or hairpin is not closed."));
+        }
+        if !state.ties.is_empty() {
+            return Err(syntax_error(Span::default(), "A tie has no following note."));
+        }
+        Ok(())
+    }
+}
+
+pub(crate) fn unsupported(span: Span, name: &str) -> Error {
+    Error::new(
+        ErrorKind::Unsupported,
+        format!("`{name}` is outside the Guidedog LilyPond profile."),
+    )
+    .at(span)
+    .hint("Use the documented notation profile. Guidedog engraves a fixed house style.")
+}

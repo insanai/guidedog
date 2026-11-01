@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:22+0000\n"
+"POT-Creation-Date: 2026-11-01 14:43+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -1600,29 +1600,19 @@ msgid ""
 "and ``\\oneVoice`` restores automatic single-voice directions. An inner "
 "voice beside another voice with the same stem direction stands at least "
 "half a notehead aside, and further when needed. Equal rests share a glyph "
-"only where no other voice sounds. Dynamics stay below the staff in every "
-"voice, as in LilyPond. At most four voices may sound at once on a staff; "
-"a fifth is refused, and so are ``\\shiftOn`` and its relatives, because "
-"the voice policies choose the shifts. Lyrics attach to a named voice, and "
-"separate ``\\lyricsto`` expressions make separate verses."
-msgstr ""
-"कई स्वर-पंक्तियों वाले स्वरलेख के लिए हम समकालिक संदर्भ उपयोग करते हैं। "
-"वाद्य नाम ``\\with`` खंड में ``instrumentName`` और "
-"``shortInstrumentName`` से दिए जाते हैं। हम एक स्वर-पंक्ति पर ``<< ... "
-">>`` के भीतर ``\\`` से अधिकतम चार आवाज़ें अलग करते हैं। पहली और तीसरी "
-"आवाज़ के डंठल ऊपर जाते हैं; दूसरी और चौथी के नीचे। ``\\voiceOne``, "
-"``\\voiceTwo``, ``\\voiceThree`` और ``\\voiceFour`` ये नीतियाँ स्पष्ट रूप "
-"से चुनते हैं, और ``\\oneVoice`` एकल आवाज़ की स्वतः दिशा वापस लाता है। "
-"समान डंडी-दिशा वाली किसी आवाज़ के पास की अंदर की आवाज़ कम से कम आधे "
-"नोटहेड जितनी हटकर रहती है, और ज़रूरत पड़ने पर और अधिक। समान विराम तभी एक "
-"चिह्न साझा करते हैं जब वहाँ कोई दूसरी आवाज़ न बज रही हो। LilyPond की तरह "
-"हर आवाज़ में तीव्रता चिह्न स्वर-पंक्ति के नीचे रहते हैं। एक स्वर-पंक्ति "
-"पर एक साथ अधिकतम चार आवाज़ें बज सकती हैं; पाँचवीं अस्वीकार होती है, और "
-"``\\shiftOn`` व उससे जुड़े आदेश भी, क्योंकि खिसकाव आवाज़ों के नियम तय "
-"करते हैं। गीत नामित आवाज़ से जुड़ते हैं, और अलग ``\\lyricsto`` "
-"अभिव्यक्तियाँ अलग पद बनाती हैं।"
+"only where no other voice sounds. ``\\shiftOn``, ``\\shiftOnn`` and "
+"``\\shiftOnnn`` move a voice's note columns one, two or three levels "
+"aside, and ``\\shiftOff`` sets the level to zero; a voice command "
+"restores its own level. Among voices with one stem direction, each lower "
+"level puts a column another half notehead aside: right for upward stems, "
+"left for downward ones. Dynamics stay below the staff in every voice, as "
+"in LilyPond; when two voices place signs at one moment, the later one "
+"stacks further out. At most four voices may sound at once on a staff; a "
+"fifth is refused. Lyrics attach to a named voice, and separate "
+"``\\lyricsto`` expressions make separate verses."
+msgstr "कई स्वर-पंक्तियों वाले स्वरलेख के लिए हम समकालिक संदर्भ उपयोग करते हैं। वाद्य नाम ``\\with`` खंड में ``instrumentName`` और ``shortInstrumentName`` से दिए जाते हैं। हम एक स्वर-पंक्ति पर ``<< ... >>`` के भीतर ``\\`` से अधिकतम चार आवाज़ें अलग करते हैं। पहली और तीसरी आवाज़ के डंठल ऊपर जाते हैं; दूसरी और चौथी के नीचे। ``\\voiceOne``, ``\\voiceTwo``, ``\\voiceThree`` और ``\\voiceFour`` ये नीतियाँ स्पष्ट रूप से चुनते हैं, और ``\\oneVoice`` एकल आवाज़ की स्वतः दिशा वापस लाता है। समान डंडी-दिशा वाली किसी आवाज़ के पास की अंदर की आवाज़ कम से कम आधे नोटहेड जितनी हटकर रहती है, और ज़रूरत पड़ने पर और अधिक। समान विराम तभी एक चिह्न साझा करते हैं जब वहाँ कोई दूसरी आवाज़ न बज रही हो। ``\\shiftOn``, ``\\shiftOnn`` और ``\\shiftOnnn`` किसी आवाज़ के नोट स्तंभों को एक, दो या तीन स्तर बगल में खिसकाते हैं, और ``\\shiftOff`` स्तर को शून्य कर देता है; आवाज़ का आदेश अपना स्तर वापस लाता है। समान डंडी-दिशा वाली आवाज़ों में हर निचला स्तर किसी स्तंभ को आधा नोटहेड और खिसकाता है: ऊपर की डंडियों के लिए दाईं ओर, नीचे की डंडियों के लिए बाईं ओर। LilyPond की तरह हर आवाज़ में तीव्रता चिह्न स्वर-पंक्ति के नीचे रहते हैं; जब दो आवाज़ें एक ही क्षण पर चिह्न रखती हैं, तो बाद वाला और बाहर रखा जाता है। एक स्वर-पंक्ति पर एक साथ अधिकतम चार आवाज़ें बज सकती हैं; पाँचवीं अस्वीकार होती है। गीत नामित आवाज़ से जुड़ते हैं, और अलग ``\\lyricsto`` अभिव्यक्तियाँ अलग पद बनाती हैं।"
 
-#: ../../topics/music.rst:243
+#: ../../topics/music.rst:245
 msgid ""
 "We can override stems with ``\\stemUp``, ``\\stemDown`` and "
 "``\\stemNeutral`` without changing the voice's column policy."
@@ -1630,7 +1620,7 @@ msgstr ""
 "हम आवाज़ के स्तंभ नियम को बदले बिना ``\\stemUp``, ``\\stemDown`` और "
 "``\\stemNeutral`` से डंठल की दिशा बदल सकते हैं।"
 
-#: ../../topics/music.rst:255
+#: ../../topics/music.rst:257
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
@@ -1638,15 +1628,15 @@ msgstr ""
 "पियानो की दो स्वर-पंक्तियाँ; ऊपरी में चार चौथाई नोट और Sing a short song "
 "शब्द हैं, जबकि बास C बनाए रखता है।"
 
-#: ../../topics/music.rst:255
+#: ../../topics/music.rst:257
 msgid "A named melody with a verse and a bass staff."
 msgstr "एक अंतरे और बास स्वर-पंक्ति वाली नामित धुन।"
 
-#: ../../topics/music.rst:265
+#: ../../topics/music.rst:267
 msgid "Read local files"
 msgstr "स्थानीय फ़ाइलें पढ़ना"
 
-#: ../../topics/music.rst:268
+#: ../../topics/music.rst:270
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
@@ -1654,7 +1644,7 @@ msgstr ""
 "निर्देश इनलाइन मुख्य भाग के बजाय स्थानीय फ़ाइल का नाम दे सकता है। हम "
 "स्रोत का ठीक एक रूप उपयोग करते हैं।"
 
-#: ../../topics/music.rst:277
+#: ../../topics/music.rst:279
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1671,7 +1661,7 @@ msgstr ""
 "चुनी पाठ-फ़ॉन्ट फ़ाइलें उनकी सामग्री से ट्रैक करता है। निर्भरता बदलने पर "
 "चित्र फिर बनता है। समान आउटपुट बाइट वही ऐसेट नाम रखते हैं।"
 
-#: ../../topics/music.rst:283
+#: ../../topics/music.rst:285
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
@@ -1691,37 +1681,37 @@ msgstr ""
 "होने पर चेतावनी के साथ स्रोत बचता है; ``-W`` प्रकाशन रोककर पिछला आउटपुट "
 "रखता है।"
 
-#: ../../topics/music.rst:288
+#: ../../topics/music.rst:290
 msgid "Set size and output"
 msgstr "आकार और आउटपुट तय करना"
 
-#: ../../topics/music.rst:291
+#: ../../topics/music.rst:293
 msgid "Directive options"
 msgstr "निर्देश के विकल्प"
 
-#: ../../topics/music.rst:295
+#: ../../topics/music.rst:297
 msgid "Option"
 msgstr "विकल्प"
 
-#: ../../topics/music.rst:296
+#: ../../topics/music.rst:298
 msgid "Meaning"
 msgstr "अर्थ"
 
-#: ../../topics/music.rst:297
+#: ../../topics/music.rst:299
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:298
+#: ../../topics/music.rst:300
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "चित्र का संगीतमय विवरण; न होने पर बिल्ड स्थानीयकृत सारांश बनाता है।"
 
-#: ../../topics/music.rst:299
+#: ../../topics/music.rst:301
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:300
+#: ../../topics/music.rst:302
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
@@ -1729,19 +1719,19 @@ msgstr ""
 "चित्र-विवरण, संदर्भ लक्ष्य, CSS क्लास और चित्र संरेखण, आरेख निर्देशों के "
 "समान।"
 
-#: ../../topics/music.rst:301
+#: ../../topics/music.rst:303
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:302
+#: ../../topics/music.rst:304
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "डिफ़ॉल्ट ``svg``, या प्रति इंच 144 पिक्सेल वाला ``png``।"
 
-#: ../../topics/music.rst:303
+#: ../../topics/music.rst:305
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:304
+#: ../../topics/music.rst:306
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
@@ -1749,11 +1739,11 @@ msgstr ""
 "पाँच रेखाओं वाली स्वर-पंक्ति की ऊँचाई 10 से 40 पॉइंट; डिफ़ॉल्ट 18 पॉइंट "
 "है।"
 
-#: ../../topics/music.rst:305
+#: ../../topics/music.rst:307
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:306
+#: ../../topics/music.rst:308
 msgid ""
 "Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's "
@@ -1763,11 +1753,11 @@ msgstr ""
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` या बिल्डर की डिफ़ॉल्ट चौड़ाई के "
 "प्रतिशत में।"
 
-#: ../../topics/music.rst:307
+#: ../../topics/music.rst:309
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:308
+#: ../../topics/music.rst:310
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
@@ -1775,7 +1765,7 @@ msgstr ""
 "``auto`` छोटे अंतिम सिस्टम को प्राकृतिक चौड़ाई पर रखता है; ``all`` हर "
 "सिस्टम खींचता है; ``none`` खींचने से बचता है।"
 
-#: ../../topics/music.rst:310
+#: ../../topics/music.rst:312
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
@@ -1785,7 +1775,7 @@ msgstr ""
 "``lilypond_pdf_width`` हैं। इनके संख्यात्मक मान मुद्रण पॉइंट हैं। सेटिंग "
 "अनुबंध के लिए :doc:`../reference/configuration` देखें।"
 
-#: ../../topics/music.rst:314
+#: ../../topics/music.rst:316
 msgid ""
 "When a drawing is wider than 225 points, HTML also receives a narrow "
 "edition engraved at 225 points with a staff height no greater than 14 "
@@ -1802,7 +1792,7 @@ msgstr ""
 "स्क्रीन के अनुसार छोटा होता है। SVG की स्याही पृष्ठ की रंग योजना के "
 "अनुसार बदलती है; PNG डार्क मोड में हल्का पृष्ठभूमि पैनल रखता है।"
 
-#: ../../topics/music.rst:320
+#: ../../topics/music.rst:322
 msgid ""
 "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; "
 "any other value renders as A4) and the selected template's horizontal "
@@ -1825,11 +1815,11 @@ msgstr ""
 "स्वरलेख सिस्टमों के बीच PDF पृष्ठ बदल सकता है और चित्र-विवरण अंतिम सिस्टम "
 "के बाद आता है।"
 
-#: ../../topics/music.rst:327
+#: ../../topics/music.rst:329
 msgid "Fonts, limits and references"
 msgstr "फ़ॉन्ट, सीमाएँ और संदर्भ"
 
-#: ../../topics/music.rst:330
+#: ../../topics/music.rst:332
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1845,7 +1835,7 @@ msgstr ""
 "फ़ॉन्ट स्थापित करना आवश्यक नहीं है। PNG निर्यात को अंतर्निहित रेंडरर "
 "चाहिए; उसके बिना भी SVG स्वरलेख उपलब्ध है।"
 
-#: ../../topics/music.rst:335
+#: ../../topics/music.rst:337
 msgid ""
 "For CJK lyrics, we include a suitable CJK text face through "
 "``pdf_font_paths``. When building this repository, ``cargo xtask "
@@ -1859,7 +1849,7 @@ msgstr ""
 "संस्करण ``docs/shared/fonts`` में स्थापित करता है। हम अपनी परियोजना में "
 "इस निर्देशिका को फ़ॉन्ट पथ के रूप में उपयोग कर सकते हैं।"
 
-#: ../../topics/music.rst:339
+#: ../../topics/music.rst:341
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, four voices sounding "
@@ -1878,7 +1868,7 @@ msgstr ""
 "ऊँचाई होती है। PNG की सीमा 1.6 करोड़ पिक्सेल और हर तरफ 16,384 पिक्सेल है। "
 "सीमा निदान स्रोत बताता है और उदाहरण बाँटने का सुझाव देता है।"
 
-#: ../../topics/music.rst:346
+#: ../../topics/music.rst:348
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "

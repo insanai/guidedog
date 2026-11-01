@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:22+0000\n"
+"POT-Creation-Date: 2026-11-01 14:43+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -1481,23 +1481,19 @@ msgid ""
 "and ``\\oneVoice`` restores automatic single-voice directions. An inner "
 "voice beside another voice with the same stem direction stands at least "
 "half a notehead aside, and further when needed. Equal rests share a glyph "
-"only where no other voice sounds. Dynamics stay below the staff in every "
-"voice, as in LilyPond. At most four voices may sound at once on a staff; "
-"a fifth is refused, and so are ``\\shiftOn`` and its relatives, because "
-"the voice policies choose the shifts. Lyrics attach to a named voice, and "
-"separate ``\\lyricsto`` expressions make separate verses."
-msgstr ""
-"여러 보표의 악보에는 동시 컨텍스트를 사용합니다. 악기 이름은 ``\\with`` 블록의 ``instrumentName``\\ 과 "
-"``shortInstrumentName``\\ 을 사용합니다. 보표 하나에서는 ``<< ... >>`` 안의 ``\\``\\ 로 "
-"최대 네 성부를 구분합니다. 첫째와 셋째 성부의 기둥은 위로, 둘째와 넷째 성부는 아래로 향합니다. ``\\voiceOne``, "
-"``\\voiceTwo``, ``\\voiceThree``, ``\\voiceFour``\\ 로 이 규칙을 명시하며, "
-"``\\oneVoice``\\ 는 단일 성부의 자동 방향을 복원합니다. 같은 기둥 방향의 성부 옆에 있는 내성은 최소한 음표 머리 "
-"절반만큼 옆으로 비켜 서며, 필요하면 더 비켜 섭니다. 같은 쉼표는 다른 성부가 울리지 않는 곳에서만 기호 하나를 공유합니다. "
-"LilyPond처럼 셈여림표는 모든 성부에서 보표 아래에 둡니다. 한 보표에서 동시에 울리는 성부는 최대 넷이며, 다섯째 성부와 "
-"``\\shiftOn`` 및 관련 명령은 거부합니다. 비켜 서기는 성부 규칙이 정하기 때문입니다. 가사는 이름 있는 성부에 붙이며, "
-"별도의 ``\\lyricsto`` 식으로 여러 절을 만듭니다."
+"only where no other voice sounds. ``\\shiftOn``, ``\\shiftOnn`` and "
+"``\\shiftOnnn`` move a voice's note columns one, two or three levels "
+"aside, and ``\\shiftOff`` sets the level to zero; a voice command "
+"restores its own level. Among voices with one stem direction, each lower "
+"level puts a column another half notehead aside: right for upward stems, "
+"left for downward ones. Dynamics stay below the staff in every voice, as "
+"in LilyPond; when two voices place signs at one moment, the later one "
+"stacks further out. At most four voices may sound at once on a staff; a "
+"fifth is refused. Lyrics attach to a named voice, and separate "
+"``\\lyricsto`` expressions make separate verses."
+msgstr "여러 보표의 악보에는 동시 컨텍스트를 사용합니다. 악기 이름은 ``\\with`` 블록의 ``instrumentName``\\ 과 ``shortInstrumentName``\\ 을 사용합니다. 보표 하나에서는 ``<< ... >>`` 안의 ``\\``\\ 로 최대 네 성부를 구분합니다. 첫째와 셋째 성부의 기둥은 위로, 둘째와 넷째 성부는 아래로 향합니다. ``\\voiceOne``, ``\\voiceTwo``, ``\\voiceThree``, ``\\voiceFour``\\ 로 이 규칙을 명시하며, ``\\oneVoice``\\ 는 단일 성부의 자동 방향을 복원합니다. 같은 기둥 방향의 성부 옆에 있는 내성은 최소한 음표 머리 절반만큼 옆으로 비켜 서며, 필요하면 더 비켜 섭니다. 같은 쉼표는 다른 성부가 울리지 않는 곳에서만 기호 하나를 공유합니다. ``\\shiftOn``, ``\\shiftOnn``, ``\\shiftOnnn``\\ 은 성부의 음표 열을 한 단계, 두 단계, 세 단계 옆으로 옮기고, ``\\shiftOff``\\ 는 단계를 0으로 합니다. 성부 명령은 자기 단계로 되돌립니다. 같은 기둥 방향의 성부 사이에서는 더 낮은 단계가 하나 있을 때마다 음표 열이 음표 머리 절반만큼 더 옮겨집니다. 기둥이 위로 향하면 오른쪽, 아래로 향하면 왼쪽입니다. LilyPond처럼 셈여림표는 모든 성부에서 보표 아래에 두며, 두 성부가 같은 순간에 기호를 두면 나중 기호를 더 바깥에 쌓습니다. 한 보표에서 동시에 울리는 성부는 최대 넷이며, 다섯째 성부는 거부합니다. 가사는 이름 있는 성부에 붙이며, 별도의 ``\\lyricsto`` 식으로 여러 절을 만듭니다."
 
-#: ../../topics/music.rst:243
+#: ../../topics/music.rst:245
 msgid ""
 "We can override stems with ``\\stemUp``, ``\\stemDown`` and "
 "``\\stemNeutral`` without changing the voice's column policy."
@@ -1505,28 +1501,28 @@ msgstr ""
 "``\\stemUp``, ``\\stemDown``, ``\\stemNeutral``\\ 로 성부의 음표 열 규칙을 바꾸지 않고 "
 "기둥 방향을 지정할 수 있습니다."
 
-#: ../../topics/music.rst:255
+#: ../../topics/music.rst:257
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
 msgstr ""
 "피아노 보표 두 개. 위 보표에는 네 개의 4분음표와 Sing a short song 가사가 있고 베이스는 다음을 유지합니다."
 
-#: ../../topics/music.rst:255
+#: ../../topics/music.rst:257
 msgid "A named melody with a verse and a bass staff."
 msgstr "가사 한 절과 베이스 보표를 가진 이름 있는 선율."
 
-#: ../../topics/music.rst:265
+#: ../../topics/music.rst:267
 msgid "Read local files"
 msgstr "로컬 파일 읽기"
 
-#: ../../topics/music.rst:268
+#: ../../topics/music.rst:270
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
 msgstr "지시문은 인라인 본문 대신 로컬 파일을 지정할 수 있습니다. 소스 형식은 정확히 하나만 사용합니다."
 
-#: ../../topics/music.rst:277
+#: ../../topics/music.rst:279
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1541,7 +1537,7 @@ msgstr ""
 "소스 파일, 중첩 포함 파일, 실패한 로컬 조회와 선택한 텍스트 글꼴 파일을 내용으로 추적합니다. 의존성이 바뀌면 이미지를 다시 "
 "만듭니다. 출력 바이트가 같으면 자산 이름도 유지합니다."
 
-#: ../../topics/music.rst:283
+#: ../../topics/music.rst:285
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
@@ -1557,65 +1553,65 @@ msgstr ""
 "치환합니다. 비신뢰 빌드처럼 파일을 읽을 수 없으면, 경로를 코드로 보여 주는 대신 악보 파일 이름을 문장으로 알립니다. 그리기에 "
 "실패하면 경고와 함께 소스를 보존합니다. ``-W``\\ 는 게시를 중단하고 이전 출력을 유지합니다."
 
-#: ../../topics/music.rst:288
+#: ../../topics/music.rst:290
 msgid "Set size and output"
 msgstr "크기와 출력 설정"
 
-#: ../../topics/music.rst:291
+#: ../../topics/music.rst:293
 msgid "Directive options"
 msgstr "지시문 옵션"
 
-#: ../../topics/music.rst:295
+#: ../../topics/music.rst:297
 msgid "Option"
 msgstr "옵션"
 
-#: ../../topics/music.rst:296
+#: ../../topics/music.rst:298
 msgid "Meaning"
 msgstr "의미"
 
-#: ../../topics/music.rst:297
+#: ../../topics/music.rst:299
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:298
+#: ../../topics/music.rst:300
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "이미지의 음악적 설명. 없으면 빌드가 현지화된 요약을 만듭니다."
 
-#: ../../topics/music.rst:299
+#: ../../topics/music.rst:301
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:300
+#: ../../topics/music.rst:302
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
 msgstr "그림 캡션, 참조 대상, CSS 클래스와 이미지 정렬이며 다이어그램 지시문을 따릅니다."
 
-#: ../../topics/music.rst:301
+#: ../../topics/music.rst:303
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:302
+#: ../../topics/music.rst:304
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "기본값은 ``svg``\\ 이며 ``png``\\ 는 인치당 144픽셀입니다."
 
-#: ../../topics/music.rst:303
+#: ../../topics/music.rst:305
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:304
+#: ../../topics/music.rst:306
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
 msgstr "다섯 줄 보표의 높이. 10부터 40포인트까지이며 기본값은 18포인트입니다."
 
-#: ../../topics/music.rst:305
+#: ../../topics/music.rst:307
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:306
+#: ../../topics/music.rst:308
 msgid ""
 "Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's "
@@ -1624,11 +1620,11 @@ msgstr ""
 "사용 가능한 시스템 너비. ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, ``px``, "
 "``em``, ``rem``, ``ex``, ``ch`` 또는 빌더 기본 너비의 백분율로 지정합니다."
 
-#: ../../topics/music.rst:307
+#: ../../topics/music.rst:309
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:308
+#: ../../topics/music.rst:310
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
@@ -1636,7 +1632,7 @@ msgstr ""
 "``auto``\\ 는 짧은 마지막 시스템의 자연 너비를 유지하고, ``all``\\ 은 모든 시스템을 늘리며, ``none``\\ "
 "은 늘리기를 피합니다."
 
-#: ../../topics/music.rst:310
+#: ../../topics/music.rst:312
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
@@ -1646,7 +1642,7 @@ msgstr ""
 "``lilypond_pdf_width``\\ 입니다. 숫자의 단위는 조판 포인트입니다. 설정 규약은 "
 ":doc:`../reference/configuration`\\ 을 참고합니다."
 
-#: ../../topics/music.rst:314
+#: ../../topics/music.rst:316
 msgid ""
 "When a drawing is wider than 225 points, HTML also receives a narrow "
 "edition engraved at 225 points with a staff height no greater than 14 "
@@ -1661,7 +1657,7 @@ msgstr ""
 "수 제한 때문에 그릴 수 없으면 넓은 이미지를 화면에 맞게 줄입니다. SVG는 페이지 색 구성에 맞게 잉크색을 바꾸고 PNG는 "
 "어두운 모드에서도 밝은 배경 패널을 유지합니다."
 
-#: ../../topics/music.rst:320
+#: ../../topics/music.rst:322
 msgid ""
 "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; "
 "any other value renders as A4) and the selected template's horizontal "
@@ -1680,11 +1676,11 @@ msgstr ""
 "가정합니다. ``lilypond_pdf_width``\\ 가 계산한 너비를 덮어씁니다. 너무 넓은 악보는 빌드 경고와 함께 맞게 "
 "축소합니다. 여러 시스템의 악보는 시스템 사이에서 PDF 페이지를 나눌 수 있으며 캡션은 마지막 시스템 뒤에 옵니다."
 
-#: ../../topics/music.rst:327
+#: ../../topics/music.rst:329
 msgid "Fonts, limits and references"
 msgstr "글꼴, 제한과 참고 문헌"
 
-#: ../../topics/music.rst:330
+#: ../../topics/music.rst:332
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1698,7 +1694,7 @@ msgstr ""
 "사용합니다. 글리프가 윤곽선이 되므로 브라우저와 PDF 리더에 음악 글꼴을 설치할 필요가 없습니다. PNG 내보내기에는 내장 "
 "렌더러가 필요하며, 내장하지 않은 빌드에서도 SVG 조판은 가능합니다."
 
-#: ../../topics/music.rst:335
+#: ../../topics/music.rst:337
 msgid ""
 "For CJK lyrics, we include a suitable CJK text face through "
 "``pdf_font_paths``. When building this repository, ``cargo xtask "
@@ -1711,7 +1707,7 @@ msgstr ""
 "Serif CJK 글꼴을 ``docs/shared/fonts``\\ 에 설치합니다. 이 디렉터리를 프로젝트의 글꼴 경로로 사용할 수 "
 "있습니다."
 
-#: ../../topics/music.rst:339
+#: ../../topics/music.rst:341
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, four voices sounding "
@@ -1727,7 +1723,7 @@ msgstr ""
 "후 할당에는 별도의 64 MiB 한도가 있습니다. 그림은 최대 64개 시스템과 20,000포인트 높이입니다. PNG는 1,600만 "
 "픽셀, 각 변 16,384픽셀로 제한됩니다. 제한 진단은 소스를 식별하고 예제를 나누도록 안내합니다."
 
-#: ../../topics/music.rst:346
+#: ../../topics/music.rst:348
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "

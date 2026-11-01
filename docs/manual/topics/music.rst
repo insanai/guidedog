@@ -236,8 +236,10 @@ Voices one and three have upward stems; voices two and four have downward stems.
 ``\voiceOne``, ``\voiceTwo``, ``\voiceThree`` and ``\voiceFour`` select those policies explicitly, and ``\oneVoice`` restores automatic single-voice directions.
 An inner voice beside another voice with the same stem direction stands at least half a notehead aside, and further when needed.
 Equal rests share a glyph only where no other voice sounds.
-Dynamics stay below the staff in every voice, as in LilyPond.
-At most four voices may sound at once on a staff; a fifth is refused, and so are ``\shiftOn`` and its relatives, because the voice policies choose the shifts.
+``\shiftOn``, ``\shiftOnn`` and ``\shiftOnnn`` move a voice's note columns one, two or three levels aside, and ``\shiftOff`` sets the level to zero; a voice command restores its own level.
+Among voices with one stem direction, each lower level puts a column another half notehead aside: right for upward stems, left for downward ones.
+Dynamics stay below the staff in every voice, as in LilyPond; when two voices place signs at one moment, the later one stacks further out.
+At most four voices may sound at once on a staff; a fifth is refused.
 Lyrics attach to a named voice, and separate ``\lyricsto`` expressions make separate verses.
 
 We can override stems with ``\stemUp``, ``\stemDown`` and ``\stemNeutral`` without changing the voice's column policy.

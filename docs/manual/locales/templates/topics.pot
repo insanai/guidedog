@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 14:22+0000\n"
+"POT-Creation-Date: 2026-11-01 14:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -931,130 +931,130 @@ msgid "Combine staves and lyrics"
 msgstr ""
 
 #: ../../topics/music.rst:232
-msgid "We use simultaneous contexts for a score with several staves. Instrument names use ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` block. We separate up to four voices on one staff with ``\\\\`` inside ``<< ... >>``. Voices one and three have upward stems; voices two and four have downward stems. ``\\voiceOne``, ``\\voiceTwo``, ``\\voiceThree`` and ``\\voiceFour`` select those policies explicitly, and ``\\oneVoice`` restores automatic single-voice directions. An inner voice beside another voice with the same stem direction stands at least half a notehead aside, and further when needed. Equal rests share a glyph only where no other voice sounds. Dynamics stay below the staff in every voice, as in LilyPond. At most four voices may sound at once on a staff; a fifth is refused, and so are ``\\shiftOn`` and its relatives, because the voice policies choose the shifts. Lyrics attach to a named voice, and separate ``\\lyricsto`` expressions make separate verses."
+msgid "We use simultaneous contexts for a score with several staves. Instrument names use ``instrumentName`` and ``shortInstrumentName`` in a ``\\with`` block. We separate up to four voices on one staff with ``\\\\`` inside ``<< ... >>``. Voices one and three have upward stems; voices two and four have downward stems. ``\\voiceOne``, ``\\voiceTwo``, ``\\voiceThree`` and ``\\voiceFour`` select those policies explicitly, and ``\\oneVoice`` restores automatic single-voice directions. An inner voice beside another voice with the same stem direction stands at least half a notehead aside, and further when needed. Equal rests share a glyph only where no other voice sounds. ``\\shiftOn``, ``\\shiftOnn`` and ``\\shiftOnnn`` move a voice's note columns one, two or three levels aside, and ``\\shiftOff`` sets the level to zero; a voice command restores its own level. Among voices with one stem direction, each lower level puts a column another half notehead aside: right for upward stems, left for downward ones. Dynamics stay below the staff in every voice, as in LilyPond; when two voices place signs at one moment, the later one stacks further out. At most four voices may sound at once on a staff; a fifth is refused. Lyrics attach to a named voice, and separate ``\\lyricsto`` expressions make separate verses."
 msgstr ""
 
-#: ../../topics/music.rst:243
+#: ../../topics/music.rst:245
 msgid "We can override stems with ``\\stemUp``, ``\\stemDown`` and ``\\stemNeutral`` without changing the voice's column policy."
 msgstr ""
 
-#: ../../topics/music.rst:255
+#: ../../topics/music.rst:257
 msgid "Two piano staves; the upper staff has four quarter notes and the words Sing a short song, while the bass holds C."
 msgstr ""
 
-#: ../../topics/music.rst:255
+#: ../../topics/music.rst:257
 msgid "A named melody with a verse and a bass staff."
 msgstr ""
 
-#: ../../topics/music.rst:265
+#: ../../topics/music.rst:267
 msgid "Read local files"
 msgstr ""
 
-#: ../../topics/music.rst:268
+#: ../../topics/music.rst:270
 msgid "A directive can name a local file instead of containing an inline body. We use exactly one source form."
 msgstr ""
 
-#: ../../topics/music.rst:277
+#: ../../topics/music.rst:279
 msgid "Nested ``\\include`` paths resolve beside the including file, then through the source directory and configured ``include_roots``. Resolved paths must stay inside the allowed roots, including after symbolic links are checked. The build tracks source files, nested includes, missing local lookups and selected text font files by content. Changing a dependency rebuilds the generated image. Identical output bytes retain the same asset name."
 msgstr ""
 
-#: ../../topics/music.rst:283
+#: ../../topics/music.rst:285
 msgid "``--untrusted`` permits inline notation because the reader runs no program or Scheme code. It refuses file arguments and filesystem includes before opening them. Trusted text output and fallback code blocks substitute external ``.ly`` source without engraving. When the file cannot be read, as in an untrusted build, the output names the score file in a sentence instead of showing its path as code. A failed drawing retains source code with a warning; ``-W`` stops publication and preserves the preceding output."
 msgstr ""
 
-#: ../../topics/music.rst:288
+#: ../../topics/music.rst:290
 msgid "Set size and output"
 msgstr ""
 
-#: ../../topics/music.rst:291
+#: ../../topics/music.rst:293
 msgid "Directive options"
 msgstr ""
 
-#: ../../topics/music.rst:295
+#: ../../topics/music.rst:297
 msgid "Option"
 msgstr ""
 
-#: ../../topics/music.rst:296
+#: ../../topics/music.rst:298
 msgid "Meaning"
 msgstr ""
 
-#: ../../topics/music.rst:297
+#: ../../topics/music.rst:299
 msgid "``alt``"
 msgstr ""
 
-#: ../../topics/music.rst:298
+#: ../../topics/music.rst:300
 msgid "Musical description for the image; otherwise the build constructs a localized summary."
 msgstr ""
 
-#: ../../topics/music.rst:299
+#: ../../topics/music.rst:301
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr ""
 
-#: ../../topics/music.rst:300
+#: ../../topics/music.rst:302
 msgid "Figure caption, reference target, CSS classes and image alignment, following the diagram directives."
 msgstr ""
 
-#: ../../topics/music.rst:301
+#: ../../topics/music.rst:303
 msgid "``format``"
 msgstr ""
 
-#: ../../topics/music.rst:302
+#: ../../topics/music.rst:304
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr ""
 
-#: ../../topics/music.rst:303
+#: ../../topics/music.rst:305
 msgid "``staff-size``"
 msgstr ""
 
-#: ../../topics/music.rst:304
+#: ../../topics/music.rst:306
 msgid "Height of a five-line staff, from 10 through 40 points; the default is 18 points."
 msgstr ""
 
-#: ../../topics/music.rst:305
+#: ../../topics/music.rst:307
 msgid "``width``"
 msgstr ""
 
-#: ../../topics/music.rst:306
+#: ../../topics/music.rst:308
 msgid "Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, ``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's default width."
 msgstr ""
 
-#: ../../topics/music.rst:307
+#: ../../topics/music.rst:309
 msgid "``justify``"
 msgstr ""
 
-#: ../../topics/music.rst:308
+#: ../../topics/music.rst:310
 msgid "``auto`` keeps a short final system at its natural width; ``all`` stretches every system; ``none`` avoids stretching."
 msgstr ""
 
-#: ../../topics/music.rst:310
+#: ../../topics/music.rst:312
 msgid "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` and ``lilypond_pdf_width``. Their numeric values are typographic points. See :doc:`../reference/configuration` for the setting contract."
 msgstr ""
 
-#: ../../topics/music.rst:314
+#: ../../topics/music.rst:316
 msgid "When a drawing is wider than 225 points, HTML also receives a narrow edition engraved at 225 points with a staff height no greater than 14 points. The browser selects it below 40 rem through a ``picture`` element. This edition has its own system breaks. When its system limit prevents it from being drawn, the wide image scales to the screen. SVG adapts its ink to the page's color scheme; PNG keeps a light background panel in dark mode."
 msgstr ""
 
-#: ../../topics/music.rst:320
+#: ../../topics/music.rst:322
 msgid "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; any other value renders as A4) and the selected template's horizontal margin, then places music at its natural size. Built-in templates declare their horizontal margin in their leading 256 lines with a comment such as ``// guidedog: margin-x = 31mm``. A custom template without the declaration uses a 25 millimetre margin assumption. ``lilypond_pdf_width`` overrides the derived measure. Oversized music scales to fit with a build warning. A score with several systems can break between systems across PDF pages, with its caption after the last system."
 msgstr ""
 
-#: ../../topics/music.rst:327
+#: ../../topics/music.rst:329
 msgid "Fonts, limits and references"
 msgstr ""
 
-#: ../../topics/music.rst:330
+#: ../../topics/music.rst:332
 msgid "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, with regular, bold and italic fallback faces. Glyphs become outlines, so browsers and PDF readers need no installed music font. PNG export requires the embedded renderer; SVG engraving remains available in builds without it."
 msgstr ""
 
-#: ../../topics/music.rst:335
+#: ../../topics/music.rst:337
 msgid "For CJK lyrics, we include a suitable CJK text face through ``pdf_font_paths``. When building this repository, ``cargo xtask fetch-fonts --music`` installs the pinned Noto Serif CJK face used by the mixed-script music corpus in ``docs/shared/fonts``. We can use that directory as a font path in our project."
 msgstr ""
 
-#: ../../topics/music.rst:339
+#: ../../topics/music.rst:341
 msgid "One example accepts at most 256 KiB of source including includes, 32 included files, depth 64, 20,000 events, 24 staves, four voices sounding at once on a staff and 16 heads per chord. The reader and engraver each have a work limit of eight million operations. Expanded reader allocations have a separate 64 MiB allowance. A drawing has at most 64 systems and a height of 20,000 points. PNG is limited to 16 million pixels and 16,384 pixels on either side. A limit diagnostic identifies the source and suggests splitting the example."
 msgstr ""
 
-#: ../../topics/music.rst:346
+#: ../../topics/music.rst:348
 msgid "For notation syntax, we consult the `LilyPond 2.24 notation reference <https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph definitions, we consult the `Standard Music Font Layout specification <https://www.w3.org/2021/03/smufl14/>`_ and the `Bravura project <https://github.com/steinbergmedia/bravura>`_. Engraving references include Elaine Gould's *Behind Bars* and Ted Ross's *The Art of Music Engraving and Processing*. For other kinds of drawing, we use :doc:`diagrams`."
 msgstr ""
 

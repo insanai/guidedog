@@ -209,7 +209,7 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - Forced and forbidden line breaks.
    * - 2
      - ``<< >>`` with ``\\``, ``\voiceOne``, ``\voiceTwo``, ``\voiceThree``, ``\voiceFour``, ``\oneVoice``, ``\new Voice``, ``\new Staff``, ``\new PianoStaff``, ``\new GrandStaff``, ``\new StaffGroup``, ``\new ChoirStaff``, ``\with { instrumentName = "..." shortInstrumentName = "..." }``, ``\set Staff.instrumentName`` (string or ``\markup``)
-     - At most four voices sounding at once on a staff; a fifth is refused, as are explicit ``\shiftOn``, ``\shiftOnn``, ``\shiftOnnn`` and ``\shiftOff``.
+     - At most four voices sounding at once on a staff; a fifth is refused. ``\shiftOn``, ``\shiftOnn``, ``\shiftOnnn`` and ``\shiftOff`` set explicit column shift levels.
    * - 2
      - Several verses, ``\new Lyrics`` with its own durations, and phrasing slurs ``\( \)``
      -
@@ -709,13 +709,17 @@ Two noteheads at the same pitch share one head when their head glyphs and dots a
 In the two-voice case, an uncrossed second shifts the lower, downward-stemmed voice right; when the voices cross, the upward-stemmed voice shifts right.
 A rest in voice one is raised to staff position 4 and one in voice two lowered to position -4, then moved further, by whole staff spaces, until it clears the other voice's skyline.
 With three or four voices, we place each column against all previously placed columns, in voice-policy order.
-An inner voice beside an earlier column with the same stem direction starts half a notehead width aside, as LilyPond's note collisions always shift it; otherwise we try zero shift first. Then we try at most sixteen notehead-width steps, preferring right for voice three and left for voice four.
+Each column has a shift level, LilyPond's ``horizontal-shift``: one for voices three and four, zero for the others, or the explicit level of ``\shiftOn`` (1), ``\shiftOnn`` (2), ``\shiftOnnn`` (3) or ``\shiftOff`` (0).
+We place columns in order of level, then voice policy.
+A column starts half a notehead width aside for each lower level among earlier columns with the same stem direction, as LilyPond's note collisions shift it: right for upward stems, left for downward ones; columns with equal levels start together.
+From there we try at most sixteen notehead-width steps in the same direction.
 Candidate columns must clear other heads, stems and unattached flags; a compatible shared head has one upward and one downward stem.
 This also applies when only two of those voices sound at a moment.
 Accidentals and dots are then arranged across the whole staff column.
 Rests of equal duration at one moment are drawn once, using the earliest matching voice as owner, when no other voice sounds there.
 Where shifted voices share a column, its heads form one unit for spacing, so every head of the next column stands right of all of them.
 Measure rests, tuplet brackets, articulations, fingerings and text scripts follow their voice's side, and scripts follow its shifted heads; overlapping marks of different voices stack outward.
+The drawing records which marks form one sign, such as a dynamic's letters, a tuplet's digits or a hairpin's two lines, so stacking moves whole signs and keeps kerned letters together.
 Dynamics stay below unless ``\dynamicUp`` asks otherwise, because LilyPond's polyphonic directions do not include dynamics.
 In polyphony a slur rises at most 2.5 staff spaces to clear other voices and may cross them, as LilyPond's slurs avoid only their own voice; a tie rises at most 1.5.
 Other rests move by whole staff spaces away from notes and previously placed rests, with a maximum of thirty-two trials and a clear refusal if they cannot fit.
@@ -1352,3 +1356,18 @@ An independent review of the four-voice revision and its follow-ups found layout
   Revision: the reader and ``check_score`` count voices sounding at once, with a bound of sixty-four records per staff; ``\shiftOn`` and its relatives are refused instead of reported as unknown.
 * Critique: conversion renderers each knew the ``lilypond`` directive's attribute and message, and the music corpus fuzz target needed the 25 MB CJK download.
   Revision: one engine helper names the unengraved score file; fuzzing runs without the CJK face, which CI caches by the font list's digest.
+
+Open-issue follow-up, 1 November 2026
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The four-voice review left four items open, now closed:
+
+* Critique: two voices' dynamics or hairpins at one moment printed over each other, because a dynamic is drawn glyph by glyph and its letters could not be told from another voice's sign.
+  Revision: the drawing records multi-glyph signs, and vertical placement stacks whole signs outward.
+* Critique: ``\shiftOn`` and its relatives were refused.
+  Revision: events carry an explicit column shift level, ordered and offset as in LilyPond's note-collision code; default four-voice layout is unchanged.
+* Critique: about sixty bars of beamed eighths exhausted the engraving work limit, because each line candidate scanned every rod, the breaker kept trying starts after a line overflowed, and each beam candidate tested every notehead in the system.
+  Revision: rods are indexed by their first gap, the search stops once no earlier start can fit unless the line ends at a forced break, and a beam tests only the notes beneath it; work now grows linearly, and the output is unchanged.
+  The breaking property test still matches a brute-force optimum.
+* Critique: catalogs kept obsolete messages.
+  Revision: the manual and site catalogs were updated with ``--no-obsolete``; their live translations are unchanged.

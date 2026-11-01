@@ -146,7 +146,7 @@ impl Parser<'_, '_> {
                 TokenKind::Symbol('{') => (Some(TokenKind::Symbol('}')), 0),
                 TokenKind::Symbol('<') => (Some(TokenKind::Symbol('>')), 1),
                 TokenKind::SimultaneousStart => (Some(TokenKind::SimultaneousEnd), 2),
-                TokenKind::Symbol('}' | '>') | TokenKind::SimultaneousEnd => {
+                TokenKind::Symbol('}') | TokenKind::SimultaneousEnd => {
                     return Err(syntax_error(token.span, "Unexpected closing delimiter."));
                 }
                 _ => (None, 0),

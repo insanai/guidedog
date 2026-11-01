@@ -112,3 +112,11 @@ fn independent_staves_do_not_inherit_polyphonic_stem_directions() {
         }
     }
 }
+
+#[test]
+fn articulation_shorthand_keeps_its_angle_outside_chord_delimiters() {
+    let loaded =
+        load_score(r"{ c'4-. d'-> e'-- f'-^ | }", "marks.ly", &mut Options::default()).unwrap();
+    assert_eq!(loaded.score.events.iter().map(|e| e.marks.len()).sum::<usize>(), 4);
+    assert!(load_score("{ <c' e'4 }", "chord.ly", &mut Options::default()).is_err());
+}

@@ -15,6 +15,16 @@ pub(crate) fn event(
 ) -> Result<(), Error> {
     for annotation in &event.marks {
         charge(work, 1)?;
+        if let AnnotationKind::Dynamic(text) = &annotation.kind {
+            let y = if annotation.direction == gd_score::Direction::Up { -5.0 } else { 5.0 };
+            let width = dynamic_width(fonts, text)?;
+            add_rect(
+                bands,
+                crate::Rect { left: 0.0, right: width + 0.4, top: y - 2.0, bottom: y + 1.0 },
+                work,
+            )?;
+            continue;
+        }
         let (text, style, size) = match &annotation.kind {
             AnnotationKind::Text(text, style) => (text.as_str(), *style, 2.4),
             AnnotationKind::Tempo(text) | AnnotationKind::Rehearsal(text) => {
@@ -22,7 +32,7 @@ pub(crate) fn event(
             }
             _ => continue,
         };
-        text_bands(bands, fonts, text, style, (size, false), work, &mut options.reserve)?;
+        text_bands(bands, fonts, text, style, (size, false, false), work, &mut options.reserve)?;
     }
     if let EventKind::ChordName(text, _) = &event.kind {
         text_bands(
@@ -30,7 +40,7 @@ pub(crate) fn event(
             fonts,
             text,
             TextStyle::Regular,
-            (2.5, false),
+            (2.5, false, false),
             work,
             &mut options.reserve,
         )?;
@@ -63,7 +73,7 @@ pub(crate) fn lyrics(
                     fonts,
                     &syllable.text,
                     TextStyle::Regular,
-                    (2.4, true),
+                    (2.4, true, syllable.hyphen),
                     work,
                     &mut options.reserve,
                 )?;
@@ -78,16 +88,28 @@ fn text_bands(
     fonts: &Fonts<'_>,
     text: &str,
     style: TextStyle,
-    metrics: (f64, bool),
+    metrics: (f64, bool, bool),
     work: &mut usize,
     reserve: &mut Option<&mut crate::Reserve<'_>>,
 ) -> Result<(), Error> {
-    let (size, centered) = metrics;
+    let (size, centered, hyphen) = metrics;
     let run = crate::text::shape(fonts, text, size, style, &mut Vec::new(), work, reserve)?;
     let mut bounds = run.bounds;
     let x = if centered { -run.advance / 2.0 } else { 0.0 };
     bounds = bounds.translated(x, if centered { 7.0 } else { -5.0 });
-    bounds.left -= 0.3;
-    bounds.right += 0.3;
+    let padding = if centered { run.word_space.max(0.3) } else { 0.3 };
+    bounds.left -= padding;
+    bounds.right += padding + if hyphen { 0.6 } else { 0.0 };
     add_rect(bands, bounds, work)
+}
+
+pub(crate) fn dynamic_width(fonts: &Fonts<'_>, text: &str) -> Result<f64, Error> {
+    let mut width = 0.0;
+    for character in text.chars() {
+        let name = crate::decorations::dynamic_glyph(character)
+            .ok_or_else(|| crate::limits::font_error("Unknown dynamic mark."))?;
+        let glyph = fonts.glyph(name)?;
+        width += fonts.glyph_data(glyph).map(|data| data.advance).unwrap_or(0.8);
+    }
+    Ok(width)
 }

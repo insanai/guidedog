@@ -376,3 +376,48 @@ fn positioned_mark_allowance_is_shared_by_every_system() {
             .is_err()
     );
 }
+
+#[test]
+fn simultaneous_conflicting_accidentals_leave_the_pitch_ambiguous() {
+    let drawing = draw(r"<< { cis'2 c'2 } \\ { c'2 s2 } >>", 350.0);
+    let accidentals: Vec<_> =
+        drawing.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Accidental).collect();
+    assert_eq!(accidentals.len(), 3);
+}
+
+#[test]
+fn long_initial_lyrics_and_annotations_fit_the_horizontal_frame() {
+    let drawing = draw(
+        r#"{ c'4^\markup "First" ^\markup "Second" d' e' f' }
+        \addlyrics { extraordinary words fit here }"#,
+        260.0,
+    );
+    for system in &drawing.systems {
+        for mark in &system.marks {
+            assert!(mark.bounds.left >= -0.001, "{:?}", mark.mark);
+            assert!(mark.bounds.right <= system.width + 0.001, "{:?}", mark.mark);
+        }
+        let scripts: Vec<_> =
+            system.marks.iter().filter(|m| m.mark.role() == Role::Script).collect();
+        assert_eq!(scripts.len(), 2);
+        assert!(!scripts[0].bounds.overlaps(scripts[1].bounds, 0.0));
+    }
+}
+
+#[test]
+fn lyric_extenders_and_hairpins_continue_on_a_system_without_local_text() {
+    let drawing = draw(
+        r"{ c'1(\p\< | \break d'1 | \break e'1)\f | }
+        \addlyrics { Ah __ }",
+        350.0,
+    );
+    assert_eq!(drawing.systems.len(), 3);
+    for system in &drawing.systems[..2] {
+        assert!(
+            system.marks.iter().any(|m| matches!(m.mark, Mark::Line { role: Role::Dynamic, .. }))
+        );
+        assert!(
+            system.marks.iter().any(|m| matches!(m.mark, Mark::Line { role: Role::Lyric, .. }))
+        );
+    }
+}

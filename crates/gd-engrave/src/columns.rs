@@ -24,6 +24,16 @@ pub(crate) fn collect(
         moments.entry(Moment { main: measure.start, grace: Ratio::ZERO }).or_default();
         moments.entry(Moment { main: measure.end, grace: Ratio::ZERO }).or_default();
     }
+    for verse in &score.lyrics {
+        for syllable in &verse.syllables {
+            charge(work, 1)?;
+            for anchor in [Some(syllable.anchor), syllable.extender].into_iter().flatten() {
+                if let gd_score::Anchor::Moment(at) = anchor {
+                    moments.entry(at).or_default();
+                }
+            }
+        }
+    }
     for (id, event) in score.events.iter().enumerate() {
         charge(work, 1)?;
         push(moments.entry(event.at).or_default(), EventId(id as u32), &mut options.reserve)?;

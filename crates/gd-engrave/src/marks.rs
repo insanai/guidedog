@@ -192,6 +192,8 @@ pub struct PositionedMark {
 /// One system's positioned geometry and vertical extent.
 #[derive(Clone, Debug, Default)]
 pub struct System {
+    /// Actual system ink width in points; zero uses the complete engraving width.
+    pub width: f64,
     /// Top in points from the complete drawing's origin.
     pub top: f64,
     /// Height in points, including lyrics and outside marks.

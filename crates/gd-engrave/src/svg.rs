@@ -58,9 +58,17 @@ pub fn write_svg(
     {
         return Err(failure("SVG dimensions must be positive and finite."));
     }
+    let width = if systems.len() == 1 && systems[0].width > 0.0 {
+        systems[0].width
+    } else {
+        engraving.width
+    };
+    if !width.is_finite() {
+        return Err(failure("Invalid SVG system width."));
+    }
     let start = out.len();
     let mut writer = Writer { out, start, limit: options.max_bytes, reserve };
-    let result = document(&mut writer, engraving, systems, base, height, options);
+    let result = document(&mut writer, engraving, systems, base, height, width, options);
     if result.is_err() {
         writer.out.truncate(start);
         return Err(failure("Cannot write SVG within the output or memory limit."));
@@ -74,15 +82,16 @@ fn document(
     systems: &[crate::System],
     base: f64,
     height: f64,
+    width: f64,
     options: &SvgOptions<'_>,
 ) -> fmt::Result {
     writeln!(
         out,
         "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{}pt\" height=\"{}pt\" \
         viewBox=\"0 0 {} {}\" role=\"img\" color=\"#000\" aria-labelledby=\"title description\">",
-        Number(engraving.width),
+        Number(width),
         Number(height),
-        Number(engraving.width),
+        Number(width),
         Number(height)
     )?;
     writeln!(

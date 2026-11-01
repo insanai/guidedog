@@ -46,6 +46,12 @@ impl Engraver {
                 indent: self.breaks[line.first].indent * space,
                 suffix: self.breaks[line.last].suffix * space,
                 remaining_marks: options.limits.marks.saturating_sub(marks),
+                clefs: crate::prepare::line_clefs(
+                    &self.plan,
+                    score,
+                    &self.columns[first..=last],
+                    &mut work,
+                )?,
             };
             let (mut system, warnings) =
                 crate::drawing::draw_system(&request, options, &mut work)?;
@@ -56,7 +62,10 @@ impl Engraver {
             if top > options.limits.height {
                 return Err(failure("The drawing exceeds its height limit."));
             }
-            result.width = result.width.max(x + space + self.breaks[line.last].suffix * space);
+            result.width = result
+                .width
+                .max(system.width)
+                .max(x + space + self.breaks[line.last].suffix * space);
             if line.overfull {
                 result.warnings.push(
                     gd_score::Error::new(
@@ -183,7 +192,9 @@ fn definitions(
 }
 
 fn validate(score: &Score, options: &Options<'_>) -> Result<(), Error> {
-    if !options.optical_adjustment.is_finite()
+    if !options.limits.height.is_finite()
+        || options.limits.height <= 0.0
+        || !options.optical_adjustment.is_finite()
         || !(0.0..=2.0).contains(&options.optical_adjustment)
         || !options.line_width.is_finite()
         || options.line_width <= 0.0
@@ -191,6 +202,7 @@ fn validate(score: &Score, options: &Options<'_>) -> Result<(), Error> {
         || !options.staff_size.is_finite()
         || !(10.0..=40.0).contains(&options.staff_size)
         || score.events.len() > options.limits.events
+        || score.spanners.len() > options.limits.marks
         || score.measures.len()
             > options.limits.systems.saturating_mul(options.limits.measures_per_line)
         || score.measures.is_empty()

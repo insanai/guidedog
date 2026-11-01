@@ -28,6 +28,8 @@ pub struct TextRun {
     pub ascent: f64,
     /// Positive face descent in points.
     pub descent: f64,
+    /// Largest word-space advance among the selected faces, in points.
+    pub word_space: f64,
     /// Opaque identities of the text font sources actually selected during shaping.
     pub sources: Vec<String>,
 }
@@ -131,6 +133,12 @@ fn append(
     let scale = size / f64::from(face.units_per_em());
     run.ascent = run.ascent.max(f64::from(face.ascender()) * scale);
     run.descent = run.descent.max(-f64::from(face.descender()) * scale);
+    let word_space = face
+        .glyph_index(' ')
+        .and_then(|glyph| face.glyph_hor_advance(glyph))
+        .map(|advance| f64::from(advance) * scale)
+        .unwrap_or(size * 0.25);
+    run.word_space = run.word_space.max(word_space);
     for (info, position) in infos.iter().zip(positions) {
         charge(work, 1)?;
         let glyph = ttf_parser::GlyphId(

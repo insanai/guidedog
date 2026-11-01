@@ -21,7 +21,7 @@ pub(crate) fn collect(
     out.clear();
     let staves = plan.events.iter().map(|e| e.staff + 1).max().unwrap_or(0);
     for staff in 0..staves {
-        let mut previous: Option<(usize, Bands)> = None;
+        let mut previous = BTreeMap::<i32, (usize, f64)>::new();
         for (index, column) in columns.iter().enumerate() {
             charge(work, 1)?;
             let mut current = Bands::new();
@@ -31,6 +31,9 @@ pub(crate) fn collect(
                     continue;
                 }
                 event_bands(&mut current, info, fonts, work)?;
+                crate::footprints::event(
+                    &mut current, info, &score.events[id.0 as usize], score, fonts, work,
+                )?;
                 crate::labels::event(
                     &mut current,
                     &score.events[id.0 as usize],
@@ -50,21 +53,23 @@ pub(crate) fn collect(
             if current.is_empty() {
                 continue;
             }
-            if let Some((first, previous)) = &previous {
-                let mut minimum: f64 = 0.0;
-                for (band, (left, _)) in &current {
-                    charge(work, 1)?;
-                    if let Some((_, right)) = previous.get(band) {
-                        minimum = minimum.max(right - left + 0.2);
+            let mut minima = BTreeMap::<usize, f64>::new();
+            for (band, (left, right)) in current {
+                charge(work, 1)?;
+                if let Some((first, edge)) = previous.insert(band, (index, right)) {
+                    let minimum = edge - left + 0.2;
+                    if minimum > 0.0 {
+                        minima.entry(first).and_modify(|m| *m = m.max(minimum)).or_insert(minimum);
                     }
                 }
-                if minimum > 0.0 {
-                    push(out, Rod { first: *first, last: index, minimum }, &mut options.reserve)?;
-                }
             }
-            previous = Some((index, current));
+            for (first, minimum) in minima {
+                push(out, Rod { first, last: index, minimum }, &mut options.reserve)?;
+            }
         }
     }
+    hairpins(out, score, columns, fonts, options, work)?;
+
     Ok(())
 }
 
@@ -150,7 +155,7 @@ pub(crate) fn add_rect(bands: &mut Bands, rect: Rect, work: &mut usize) -> Resul
     Ok(())
 }
 
-fn add_glyph(
+pub(crate) fn add_glyph(
     bands: &mut Bands,
     fonts: &Fonts<'_>,
     name: &str,
@@ -192,6 +197,40 @@ fn add_glyph(
                 })
                 .or_insert((left, right));
         }
+    }
+    Ok(())
+}
+
+fn hairpins(
+    out: &mut Vec<Rod>,
+    score: &gd_score::Score,
+    columns: &[Column],
+    fonts: &Fonts<'_>,
+    options: &mut Options<'_>,
+    work: &mut usize,
+) -> Result<(), Error> {
+    for spanner in &score.spanners {
+        charge(work, 1)?;
+        if !matches!(
+            spanner.kind,
+            gd_score::SpannerKind::Crescendo | gd_score::SpannerKind::Decrescendo
+        ) {
+            continue;
+        }
+        let a = &score.events[spanner.start.event.0 as usize];
+        let b = &score.events[spanner.end.event.0 as usize];
+        let first = columns.partition_point(|c| c.at < a.at);
+        let last = columns.partition_point(|c| c.at < b.at);
+        if first >= last {
+            continue;
+        }
+        let mut width: f64 = 0.0;
+        for annotation in &a.marks {
+            if let gd_score::AnnotationKind::Dynamic(text) = &annotation.kind {
+                width = width.max(crate::labels::dynamic_width(fonts, text)?);
+            }
+        }
+        push(out, Rod { first, last, minimum: width + 2.5 }, &mut options.reserve)?;
     }
     Ok(())
 }

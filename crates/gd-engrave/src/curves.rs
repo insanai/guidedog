@@ -1,4 +1,4 @@
-use gd_score::{Direction, Error, NoteRef, Score, SpannerKind};
+use gd_score::{Direction, Error, EventKind, NoteRef, Score, SpannerKind};
 
 use crate::drawing::{Draw, Request};
 use crate::limits::charge;
@@ -25,24 +25,10 @@ impl Draw<'_, '_, '_, '_, '_> {
             self.measure = request.first;
             match &spanner.kind {
                 SpannerKind::Tie | SpannerKind::Slur | SpannerKind::PhrasingSlur => {
-                    self.phrase(spanner, first, last, middle, space)?;
+                    self.phrase(request, spanner, first, last, middle)?;
                 }
                 SpannerKind::Crescendo | SpannerKind::Decrescendo => {
-                    let y = middle + 5.0 * space;
-                    let opening = 0.65 * space;
-                    let (left, right) = if spanner.kind == SpannerKind::Crescendo {
-                        (0.0, opening)
-                    } else {
-                        (opening, 0.0)
-                    };
-                    for side in [-1.0, 1.0] {
-                        self.line(
-                            Point { x: first.x, y: y + side * left },
-                            Point { x: last.x, y: y + side * right },
-                            0.16 * space,
-                            Role::Dynamic,
-                        )?;
-                    }
+                    self.hairpin(request, spanner, (first, last), middle)?;
                 }
                 SpannerKind::Beam => {}
                 SpannerKind::Tuplet(number, _) => {
@@ -102,18 +88,31 @@ impl Draw<'_, '_, '_, '_, '_> {
 
     fn phrase(
         &mut self,
+        context: &Request<'_, '_>,
         spanner: &gd_score::Spanner,
-        first: Point,
-        last: Point,
+        mut first: Point,
+        mut last: Point,
         middle: f64,
-        space: f64,
     ) -> Result<(), Error> {
+        let space = self.options.staff_size / 4.0;
         let tie = spanner.kind == SpannerKind::Tie;
+        let info = &context.plan.events[spanner.start.event.0 as usize];
         let up = match spanner.direction {
             Direction::Up => true,
             Direction::Down => false,
-            Direction::Auto => first.y < middle,
+            Direction::Auto if !tie => !info.up,
+            Direction::Auto => {
+                let mut heights: Vec<_> = info.heads.iter().map(|h| h.at.y).collect();
+                heights.sort_by(f64::total_cmp);
+                let y = info.heads[spanner.start.note as usize].at.y;
+                let center = heights[heights.len() / 2];
+                if y == center && heights.len() % 2 == 1 { !info.up } else { y < center }
+            }
         };
+        if !tie {
+            first = self.slur_attachment(context, spanner.start, first, up);
+            last = self.slur_attachment(context, spanner.end, last, up);
+        }
         let offset = if up { -0.65 * space } else { 0.65 * space };
         let from = Point { x: first.x + 1.1 * space, y: first.y + offset };
         let to = Point { x: last.x - 0.1 * space, y: last.y + offset };
@@ -149,6 +148,23 @@ impl Draw<'_, '_, '_, '_, '_> {
         Ok(())
     }
 
+    fn slur_attachment(
+        &self,
+        context: &Request<'_, '_>,
+        note: NoteRef,
+        point: Point,
+        up: bool,
+    ) -> Point {
+        let info = &context.plan.events[note.event.0 as usize];
+        if info.up == up
+            && let Some(index) = self.stem_marks.get(&note.event.0)
+            && let Mark::Line { to, .. } = self.system.marks[*index].mark
+        {
+            return to;
+        }
+        point
+    }
+
     pub(crate) fn number(
         &mut self,
         text: &str,
@@ -180,7 +196,7 @@ pub(crate) fn endpoint(
 ) -> Point {
     let event = &score.events[reference.event.0 as usize];
     let index = request.columns.partition_point(|column| column.at < event.at);
-    let x = request
+    let mut x = request
         .positions
         .get(index)
         .copied()
@@ -188,9 +204,32 @@ pub(crate) fn endpoint(
     let info = &request.plan.events[reference.event.0 as usize];
     let head = info.heads.get(reference.note as usize);
     let local = head.map(|head| head.at).unwrap_or_default();
-    let y = middle + local.y * space;
-    let prefix = if event.at.main == request.columns[0].at.main { 0.0 } else { info.prefix };
-    Point { x: x + (prefix + local.x) * space, y }
+    let first = request.columns[0].at;
+    let last = request.columns.last().map(|c| c.at).unwrap_or(first);
+    let before = event.at < first;
+    let after = event.at >= last;
+    let y = if before || after {
+        let clef = if before { request.clefs[info.staff].0 } else { request.clefs[info.staff].1 };
+        if let EventKind::Chord(chord) = &event.kind {
+            middle
+                - f64::from(chord.notes[reference.note as usize].pitch.diatonic() - clef.middle())
+                    * space
+                    / 2.0
+        } else {
+            middle
+        }
+    } else {
+        middle + local.y * space
+    };
+    if before {
+        x = request.indent + 0.5 * space;
+    } else if after {
+        x -= 0.5 * space;
+    } else {
+        let prefix = if event.at.main == first.main { 0.0 } else { info.prefix };
+        x += (prefix + local.x) * space;
+    }
+    Point { x, y }
 }
 
 pub(crate) fn bow(

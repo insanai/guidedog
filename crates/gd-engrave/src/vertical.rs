@@ -256,12 +256,17 @@ pub(crate) fn translate(placed: &mut PositionedMark, x: f64, y: f64) {
 pub(crate) fn fit(system: &mut System, space: f64, work: &mut usize) -> Result<(), Error> {
     let top = system.marks.iter().map(|m| m.bounds.top).fold(space, f64::min);
     let shift = (space - top).max(0.0);
+    let left = system.marks.iter().map(|m| m.bounds.left).fold(0.0, f64::min);
+    let horizontal = (-left).max(0.0);
+    let mut right: f64 = 0.0;
     let mut bottom: f64 = 0.0;
     for mark in &mut system.marks {
         charge(work, 1)?;
-        translate(mark, 0.0, shift);
+        translate(mark, horizontal, shift);
+        right = right.max(mark.bounds.right);
         bottom = bottom.max(mark.bounds.bottom);
     }
     system.height = bottom + space;
+    system.width = right;
     Ok(())
 }

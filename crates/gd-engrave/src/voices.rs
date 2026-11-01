@@ -61,6 +61,7 @@ pub(crate) fn arrange(
                 }
                 arrange_heads(info, fonts, work)?;
                 stems(info, fonts)?;
+                crate::accidentals::arrange(info, fonts, work)?;
             }
         }
     }

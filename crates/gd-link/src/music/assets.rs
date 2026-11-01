@@ -33,7 +33,10 @@ pub(super) fn save(
     let data = if format == "png" {
         let height = system.map(|i| drawing.systems[i].height).unwrap_or(drawing.height);
         let options = gd_typst::RasterOptions {
-            width: drawing.width,
+            width: system
+                .map(|i| drawing.systems[i].width)
+                .filter(|w| *w > 0.0)
+                .unwrap_or(drawing.width),
             height,
             reserve: Some(&reserve),
             ..Default::default()

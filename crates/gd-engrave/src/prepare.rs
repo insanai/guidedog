@@ -1,8 +1,6 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
-use gd_score::{
-    Alter, Base, Clef, Direction, Error, EventKind, Key, Meter, NoteRef, Ratio, Score, Step,
-};
+use gd_score::{Alter, Base, Clef, Direction, Error, EventKind, Key, Meter, Ratio, Score, Step};
 
 use crate::columns::Column;
 use crate::limits::{charge, failure, push};
@@ -13,7 +11,7 @@ pub(crate) struct StaffState {
     pub(crate) clef: Clef,
     pub(crate) key: Key,
     pub(crate) meter: Meter,
-    remembered: BTreeMap<(Step, i8), Alter>,
+    remembered: BTreeMap<(Step, i8), Option<Alter>>,
     measure: usize,
 }
 
@@ -27,6 +25,35 @@ impl StaffState {
             remembered: BTreeMap::new(),
         }
     }
+}
+
+type AccidentalChanges = BTreeMap<(usize, Step, i8), Option<Alter>>;
+
+fn accidental_changes(
+    column: &Column,
+    score: &Score,
+    work: &mut usize,
+) -> Result<AccidentalChanges, Error> {
+    let mut changes = AccidentalChanges::new();
+    for id in &column.events {
+        let event = &score.events[id.0 as usize];
+        let staff = score.voices[event.voice.0 as usize].staff.0 as usize;
+        if let EventKind::Chord(chord) = &event.kind {
+            for note in &chord.notes {
+                charge(work, 1)?;
+                let pitch = note.pitch;
+                changes
+                    .entry((staff, pitch.step, pitch.octave))
+                    .and_modify(|previous| {
+                        if *previous != Some(pitch.alter) {
+                            *previous = None;
+                        }
+                    })
+                    .or_insert(Some(pitch.alter));
+            }
+        }
+    }
+    Ok(changes)
 }
 
 #[derive(Clone, Debug)]
@@ -90,6 +117,13 @@ impl Plan {
         for _ in &score.measures {
             push(&mut self.measures, Vec::new(), &mut options.reserve)?;
         }
+        charge(work, score.spanners.len())?;
+        let tied: BTreeSet<_> = score
+            .spanners
+            .iter()
+            .filter(|s| s.kind == gd_score::SpannerKind::Tie)
+            .map(|s| (s.end.event.0, s.end.note))
+            .collect();
         let mut states = vec![StaffState::default(); score.staves.len()];
         for column in columns {
             charge(work, score.staves.len() + column.events.len())?;
@@ -102,6 +136,12 @@ impl Plan {
                 }
             }
             let prefixes = self.contexts(column, score, &mut states)?;
+            let changes = accidental_changes(column, score, work)?;
+            for (&(staff, step, octave), &alter) in &changes {
+                if alter.is_none() {
+                    states[staff].remembered.insert((step, octave), None);
+                }
+            }
             for id in &column.events {
                 let event = &score.events[id.0 as usize];
                 let info = &mut self.events[id.0 as usize];
@@ -120,14 +160,15 @@ impl Plan {
                         work,
                     )?;
                     for head in &mut info.heads {
-                        head.continuation = score.spanners.iter().any(|s| {
-                            s.kind == gd_score::SpannerKind::Tie
-                                && s.end == NoteRef { event: *id, note: head.note }
-                        });
+                        charge(work, tied.len().checked_ilog2().unwrap_or(0) as usize + 1)?;
+                        head.continuation = tied.contains(&(id.0, head.note));
                     }
                 }
             }
             crate::voices::arrange(self, column, score, fonts, work)?;
+            for ((staff, step, octave), alter) in changes {
+                states[staff].remembered.insert((step, octave), alter);
+            }
             if let Some(snapshot) = self.measures.get_mut(measure)
                 && (snapshot.is_empty() || score.measures[measure].start == column.at.main)
             {
@@ -231,9 +272,8 @@ fn heads(
             .remembered
             .get(&(note.pitch.step, note.pitch.octave))
             .copied()
-            .unwrap_or(signature[note.pitch.step.index() as usize]);
-        let shown = previous != note.pitch.alter || note.forced || note.cautionary;
-        state.remembered.insert((note.pitch.step, note.pitch.octave), note.pitch.alter);
+            .unwrap_or(Some(signature[note.pitch.step.index() as usize]));
+        let shown = previous != Some(note.pitch.alter) || note.forced || note.cautionary;
         let y = -f64::from(position) / 2.0;
         let dots = (0..chord.duration.dots)
             .map(|dot| Point {
@@ -255,7 +295,7 @@ fn heads(
     }
     arrange_heads(info, fonts, work)?;
     stems(info, fonts)?;
-    crate::accidentals::arrange(info, fonts)?;
+    crate::accidentals::arrange(info, fonts, work)?;
     Ok(())
 }
 
@@ -321,4 +361,28 @@ pub(crate) fn accidental(alter: Alter) -> &'static str {
         Alter::Sharp => "accidentalSharp",
         Alter::DoubleSharp => "accidentalDoubleSharp",
     }
+}
+
+pub(crate) fn line_clefs(
+    plan: &Plan,
+    score: &Score,
+    columns: &[Column],
+    work: &mut usize,
+) -> Result<[(Clef, Clef); 24], Error> {
+    let mut result = [(Clef::Treble, Clef::Treble); 24];
+    let measure =
+        score.measures.partition_point(|m| m.start <= columns[0].at.main).saturating_sub(1);
+    if let Some(states) = plan.measures.get(measure) {
+        for (index, state) in states.iter().enumerate() {
+            result[index] = (state.clef, state.clef);
+        }
+    }
+    for column in &columns[..columns.len().saturating_sub(1)] {
+        for id in &column.events {
+            charge(work, 1)?;
+            let info = &plan.events[id.0 as usize];
+            result[info.staff].1 = info.state.clef;
+        }
+    }
+    Ok(result)
 }

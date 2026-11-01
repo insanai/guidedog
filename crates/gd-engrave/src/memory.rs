@@ -14,11 +14,17 @@ pub(crate) fn reserve(
     work: &mut usize,
 ) -> Result<(), Error> {
     let (heads, text) = counts(score, work)?;
-    let columns = score.events.len().saturating_add(score.measures.len().saturating_mul(2));
+    let syllables = score.lyrics.iter().map(|verse| verse.syllables.len()).sum::<usize>();
+    let columns = score
+        .events
+        .len()
+        .saturating_add(score.measures.len().saturating_mul(2))
+        .saturating_add(syllables.saturating_mul(2));
     let snapshots = score.measures.len().saturating_mul(score.staves.len());
     let bytes = columns
         .saturating_mul(256)
         .saturating_add(score.events.len().saturating_mul(32))
+        .saturating_add(score.spanners.len().saturating_mul(96))
         .saturating_add(heads.saturating_mul(size_of::<crate::prepare::Head>() * 2 + 128))
         .saturating_add(snapshots.saturating_mul(size_of::<crate::prepare::StaffState>() * 2))
         .saturating_add(score.staves.len().saturating_mul(70 * 128))

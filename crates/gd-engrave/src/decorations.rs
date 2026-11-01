@@ -1,6 +1,5 @@
-use gd_score::{Anchor, AnnotationKind, Error, EventKind, NoteRef, TextStyle};
+use gd_score::{AnnotationKind, Error, EventKind, TextStyle};
 
-use crate::curves::endpoint;
 use crate::drawing::{Draw, Request};
 use crate::limits::charge;
 use crate::{Mark, Point, Role};
@@ -41,40 +40,84 @@ impl Draw<'_, '_, '_, '_, '_> {
                         Role::ChordName,
                     )?;
                 }
+                let annotation_start = self.system.marks.len();
                 for mark in &event.marks {
                     charge(self.work, 1)?;
-                    let up = mark.direction != gd_score::Direction::Down;
+                    let info = &request.plan.events[id.0 as usize];
+                    let direction = request.score.voices[event.voice.0 as usize].direction;
+                    let up = mark_above(mark, info.up, direction);
                     let at = Point { x, y: middle + if up { -5.0 * space } else { 5.0 * space } };
-                    match &mark.kind {
-                        AnnotationKind::Text(text, style) => {
-                            self.text(text, *style, at, 2.4 * space, Role::Script)?
-                        }
-                        AnnotationKind::Tempo(text) => {
-                            self.text(text, TextStyle::Bold, at, 2.5 * space, Role::Tempo)?;
-                        }
-                        AnnotationKind::Rehearsal(text) => {
-                            self.text(text, TextStyle::Bold, at, 2.5 * space, Role::Rehearsal)?;
-                        }
-                        AnnotationKind::Dynamic(text) => {
-                            self.dynamic(text, Point { x, y: middle + 5.0 * space }, space)?
-                        }
-                        AnnotationKind::Articulation(name) => {
-                            self.articulation(name, up, at, space)?
-                        }
-                        AnnotationKind::Fingering(number) => {
-                            self.number(
-                                &number.to_string(),
-                                "timeSig",
-                                at,
-                                space * 0.55,
-                                Role::Fingering,
-                            )?;
-                        }
-                    }
+                    let first = self.system.marks.len();
+                    self.annotation(mark, at, space, up)?;
+                    self.separate_annotations(annotation_start, first, middle, up, space)?;
                 }
             }
         }
         self.lyrics(request)
+    }
+
+    fn annotation(
+        &mut self,
+        mark: &gd_score::Annotation,
+        at: Point,
+        space: f64,
+        up: bool,
+    ) -> Result<(), Error> {
+        match &mark.kind {
+            AnnotationKind::Text(text, style) => {
+                self.text(text, *style, at, 2.4 * space, Role::Script)?
+            }
+            AnnotationKind::Tempo(text) => {
+                self.text(text, TextStyle::Bold, at, 2.5 * space, Role::Tempo)?;
+            }
+            AnnotationKind::Rehearsal(text) => {
+                self.text(text, TextStyle::Bold, at, 2.5 * space, Role::Rehearsal)?;
+            }
+            AnnotationKind::Dynamic(text) => self.dynamic(text, at, space)?,
+            AnnotationKind::Articulation(name) => self.articulation(name, up, at, space)?,
+            AnnotationKind::Fingering(number) => {
+                self.number(&number.to_string(), "timeSig", at, space * 0.55, Role::Fingering)?;
+            }
+        }
+        Ok(())
+    }
+
+    fn separate_annotations(
+        &mut self,
+        start: usize,
+        first: usize,
+        middle: f64,
+        up: bool,
+        space: f64,
+    ) -> Result<(), Error> {
+        let Some(bounds) =
+            self.system.marks[first..].iter().map(|m| m.bounds).reduce(crate::Rect::union)
+        else {
+            return Ok(());
+        };
+        let Some(role) = self.system.marks.get(first).map(|m| m.mark.role()) else {
+            return Ok(());
+        };
+        let mut shift: f64 = 0.0;
+        for previous in &self.system.marks[start..first] {
+            charge(self.work, 1)?;
+            if previous.mark.role() != role
+                || ((previous.bounds.top + previous.bounds.bottom) / 2.0 < middle) != up
+                || previous.bounds.right <= bounds.left
+                || previous.bounds.left >= bounds.right
+            {
+                continue;
+            }
+            if up {
+                shift = shift.min(previous.bounds.top - bounds.bottom - 0.25 * space);
+            } else {
+                shift = shift.max(previous.bounds.bottom - bounds.top + 0.25 * space);
+            }
+        }
+        for mark in &mut self.system.marks[first..] {
+            crate::vertical::translate(mark, 0.0, shift);
+        }
+        Ok(())
     }
 
     pub(crate) fn text(
@@ -101,15 +144,9 @@ impl Draw<'_, '_, '_, '_, '_> {
     fn dynamic(&mut self, text: &str, at: Point, size: f64) -> Result<(), Error> {
         let mut x = at.x;
         for c in text.chars() {
-            let name = match c {
-                'p' => "dynamicPiano",
-                'm' => "dynamicMezzo",
-                'f' => "dynamicForte",
-                'r' => "dynamicRinforzando",
-                's' => "dynamicSforzando",
-                'z' => "dynamicZ",
-                _ => continue,
-            };
+            let name = dynamic_glyph(c).ok_or_else(|| {
+                crate::limits::font_error("A dynamic contains an unsupported music character.")
+            })?;
             self.glyph(name, x, at.y, size, Role::Dynamic)?;
             let width = self
                 .fonts
@@ -159,65 +196,41 @@ impl Draw<'_, '_, '_, '_, '_> {
         }
         Ok(())
     }
+}
 
-    fn lyrics(&mut self, request: &Request<'_, '_>) -> Result<(), Error> {
-        let space = self.options.staff_size / 4.0;
-        let first = request.columns[0].at;
-        let last = request.columns.last().map(|c| c.at).unwrap_or(first);
-        let mut verses = vec![0usize; request.score.staves.len()];
-        for verse in &request.score.lyrics {
-            self.staff = request.score.voices[verse.voice.0 as usize].staff;
-            let middle = (4.0 + f64::from(self.staff.0) * 9.0) * space;
-            let row = verses[self.staff.0 as usize];
-            verses[self.staff.0 as usize] += 1;
-            let baseline = middle + (7.0 + row as f64 * 3.0) * space;
-            for syllable in &verse.syllables {
-                charge(self.work, 1)?;
-                let (moment, x) = match syllable.anchor {
-                    Anchor::Note(reference) => {
-                        let e = &request.score.events[reference.event.0 as usize];
-                        (e.at, endpoint(request.score, reference, request, middle, space).x)
-                    }
-                    Anchor::Moment(moment) => {
-                        let i = request.columns.partition_point(|c| c.at < moment);
-                        (moment, request.positions.get(i).copied().unwrap_or(0.0))
-                    }
-                };
-                if moment < first || moment >= last {
-                    continue;
-                }
-                let run = crate::text::shape(
-                    self.fonts,
-                    &syllable.text,
-                    2.4 * space,
-                    TextStyle::Regular,
-                    &mut self.warnings,
-                    self.work,
-                    &mut self.options.reserve,
-                )?;
-                let x = x - run.advance / 2.0;
-                let bounds = run.bounds.translated(x, baseline);
-                self.add(Mark::Text { run, x, y: baseline, role: Role::Lyric }, bounds)?;
-                if syllable.hyphen {
-                    self.line(
-                        Point { x: x + 2.0 * space, y: baseline - 0.7 * space },
-                        Point { x: x + 2.6 * space, y: baseline - 0.7 * space },
-                        0.12 * space,
-                        Role::Lyric,
-                    )?;
-                }
-                if let Some(Anchor::Note(NoteRef { event, note })) = syllable.extender {
-                    let to =
-                        endpoint(request.score, NoteRef { event, note }, request, middle, space);
-                    self.line(
-                        Point { x: x + 2.0 * space, y: baseline + 0.2 * space },
-                        Point { x: to.x, y: baseline + 0.2 * space },
-                        0.12 * space,
-                        Role::Lyric,
-                    )?;
+pub(crate) fn dynamic_glyph(character: char) -> Option<&'static str> {
+    Some(match character {
+        'p' => "dynamicPiano",
+        'm' => "dynamicMezzo",
+        'f' => "dynamicForte",
+        'r' => "dynamicRinforzando",
+        's' => "dynamicSforzando",
+        'z' => "dynamicZ",
+        _ => return None,
+    })
+}
+
+fn mark_above(mark: &gd_score::Annotation, stem_up: bool, voice: gd_score::Direction) -> bool {
+    use gd_score::Direction;
+    match mark.direction {
+        Direction::Up => true,
+        Direction::Down => false,
+        Direction::Auto => match &mark.kind {
+            AnnotationKind::Dynamic(_) => false,
+            AnnotationKind::Articulation(name)
+                if matches!(
+                    name.as_str(),
+                    "staccato" | "accent" | "tenuto" | "marcato" | "staccatissimo" | "portato"
+                ) =>
+            {
+                match voice {
+                    Direction::Up => true,
+                    Direction::Down => false,
+                    Direction::Auto => !stem_up,
                 }
             }
-        }
-        Ok(())
+            AnnotationKind::Fingering(_) => voice != Direction::Down,
+            _ => true,
+        },
     }
 }

@@ -14,6 +14,7 @@ pub(crate) struct Request<'a, 'f> {
     pub(crate) indent: f64,
     pub(crate) suffix: f64,
     pub(crate) remaining_marks: usize,
+    pub(crate) clefs: [(Clef, Clef); 24],
 }
 
 pub(crate) fn draw_system(

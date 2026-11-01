@@ -40,6 +40,8 @@ pub struct FontOptions<'f> {
     pub bold: Vec<FaceData<'f>>,
     /// Italic text faces, falling back to regular when empty.
     pub italic: Vec<FaceData<'f>>,
+    /// Bold italic text faces, falling back to bold, italic, then regular when empty.
+    pub bold_italic: Vec<FaceData<'f>>,
 }
 
 /// One borrowed OpenType face; a collection needs its explicit face index.
@@ -96,10 +98,14 @@ impl<'f> TextFace<'f> {
     }
 
     pub(crate) fn covers(&self, text: &str) -> bool {
-        self.data.source.is_none_or(|source| {
-            text.chars().all(|character| character.is_control() || source.covers(character))
-        })
+        self.data
+            .source
+            .is_none_or(|source| text.chars().all(|c| ignorable(c) || source.covers(c)))
     }
+}
+
+pub(crate) fn ignorable(character: char) -> bool {
+    character.is_control() || matches!(character, '\u{200c}' | '\u{200d}' | '\u{feff}')
 }
 
 /// Explicit immutable font tables, safe to share between engraving threads.
@@ -110,6 +116,7 @@ pub struct Fonts<'f> {
     pub(crate) regular: Vec<TextFace<'f>>,
     pub(crate) bold: Vec<TextFace<'f>>,
     pub(crate) italic: Vec<TextFace<'f>>,
+    pub(crate) bold_italic: Vec<TextFace<'f>>,
     pub(crate) defaults: BTreeMap<String, f64>,
 }
 
@@ -120,6 +127,7 @@ impl fmt::Debug for Fonts<'_> {
             .field("regular_faces", &self.regular.len())
             .field("bold_faces", &self.bold.len())
             .field("italic_faces", &self.italic.len())
+            .field("bold_italic_faces", &self.bold_italic.len())
             .finish()
     }
 }
@@ -140,6 +148,32 @@ impl Fonts<'_> {
 
     pub(crate) fn default_value(&self, name: &str, fallback: f64) -> f64 {
         self.defaults.get(name).copied().unwrap_or(fallback)
+    }
+
+    pub(crate) fn number_layout(
+        &self,
+        text: &str,
+        prefix: &str,
+    ) -> Result<(Vec<(Glyph, f64)>, f64), Error> {
+        let mut items = Vec::with_capacity(text.len());
+        let mut cursor = 0.0f64;
+        for (index, digit) in text.chars().enumerate() {
+            let glyph = self.glyph(&format!("{prefix}{digit}"))?;
+            let data = self
+                .glyph_data(glyph)
+                .ok_or_else(|| font_error("Missing digit glyph geometry."))?;
+            if index > 0 {
+                cursor += 0.12;
+            }
+            let x = cursor - data.bounds.left.min(0.0);
+            items.push((glyph, x));
+            cursor = x + data.advance.max(data.bounds.right);
+        }
+        Ok((items, cursor))
+    }
+
+    pub(crate) fn digits_width(&self, text: &str, prefix: &str) -> Result<f64, Error> {
+        Ok(self.number_layout(text, prefix)?.1)
     }
 }
 
@@ -165,6 +199,7 @@ pub fn load_fonts<'f>(options: &FontOptions<'f>) -> Result<Fonts<'f>, Error> {
         regular: faces(&options.regular)?,
         bold: faces(&options.bold)?,
         italic: faces(&options.italic)?,
+        bold_italic: faces(&options.bold_italic)?,
     };
     for (name, codepoint) in GLYPHS {
         load_glyph(&mut fonts, &metadata, name, *codepoint)?;
@@ -430,4 +465,12 @@ pub(crate) const GLYPHS: &[(&str, u32)] = &[
     ("tuplet7", 0xe887),
     ("tuplet8", 0xe888),
     ("tuplet9", 0xe889),
+    ("segno", 0xe047),
+    ("coda", 0xe048),
+    ("codaSquare", 0xe049),
+    ("caesura", 0xe4d1),
+    ("keyboardPedalPed", 0xe650),
+    ("keyboardPedalUp", 0xe655),
+    ("timeSigCommon", 0xe08a),
+    ("timeSigCutCommon", 0xe08b),
 ];

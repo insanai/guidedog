@@ -15,6 +15,8 @@ pub(crate) fn fonts() -> Result<gd_engrave::Fonts<'static>, String> {
         regular: vec![face(REGULAR)],
         bold: vec![face(BOLD)],
         italic: vec![face(ITALIC)],
+        // Libertinus ships no bold italic; bold italic markup falls back to bold.
+        bold_italic: Vec::new(),
     })
     .map_err(|error| error.to_string())
 }

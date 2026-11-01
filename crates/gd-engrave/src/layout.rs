@@ -14,6 +14,7 @@ pub struct Engraver {
     pub(crate) plan: crate::prepare::Plan,
     pub(crate) rods: Vec<crate::Rod>,
     pub(crate) local_rods: Vec<crate::Rod>,
+    pub(crate) charged_retained: usize,
 }
 
 impl Engraver {
@@ -36,7 +37,21 @@ impl Engraver {
         for line in &lines {
             let (first, last) = (self.breaks[line.first].gap, self.breaks[line.last].gap);
             let x = self.line_positions(line, space, options, &mut work)?;
-            let request = crate::drawing::Request {
+            let measure_idx = score
+                .measures
+                .iter()
+                .position(|m| m.number == self.breaks[line.first].measure)
+                .unwrap_or(0);
+            let (_, _, preface_spaces) = columns::preface_widths(
+                score,
+                &self.columns,
+                &self.plan,
+                fonts,
+                measure_idx,
+                options,
+                &mut work,
+            )?;
+            let mut request = crate::drawing::Request {
                 score,
                 fonts,
                 columns: &self.columns[first..=last],
@@ -44,6 +59,8 @@ impl Engraver {
                 first: self.breaks[line.first].measure,
                 plan: &self.plan,
                 indent: self.breaks[line.first].indent * space,
+                preface_end: preface_spaces * space,
+                staff_right: x + 0.08 * space,
                 suffix: self.breaks[line.last].suffix * space,
                 remaining_marks: options.limits.marks.saturating_sub(marks),
                 clefs: crate::prepare::line_clefs(
@@ -53,6 +70,7 @@ impl Engraver {
                     &mut work,
                 )?,
             };
+            request.staff_right = x + crate::bars::closing_bar_right(&request, &mut work)? * space;
             let (mut system, warnings) =
                 crate::drawing::draw_system(&request, options, &mut work)?;
             marks += system.marks.len();
@@ -62,10 +80,7 @@ impl Engraver {
             if top > options.limits.height {
                 return Err(failure("The drawing exceeds its height limit."));
             }
-            result.width = result
-                .width
-                .max(system.width)
-                .max(x + space + self.breaks[line.last].suffix * space);
+            result.width = result.width.max(system.width);
             if line.overfull {
                 result.warnings.push(
                     gd_score::Error::new(
@@ -107,7 +122,7 @@ impl Engraver {
             &self.springs,
             &self.rods,
             &self.breaks,
-            (options.line_width / space - 1.0).max(0.1),
+            (options.line_width / space - 0.3).max(0.1),
             options.justify,
             &options.limits,
             work,

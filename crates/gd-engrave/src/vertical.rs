@@ -49,6 +49,7 @@ fn outside(system: &mut System, staves: usize, space: f64, work: &mut usize) -> 
         Role::Tuplet,
         Role::Dynamic,
         Role::Script,
+        Role::ChordName,
         Role::Tempo,
         Role::Rehearsal,
         Role::Volta,
@@ -65,32 +66,76 @@ fn outside(system: &mut System, staves: usize, space: f64, work: &mut usize) -> 
         }
         let middle = (4.0 + staff as f64 * 9.0) * space;
         for role in roles {
+            let local = matches!(
+                role,
+                Role::Articulation
+                    | Role::Fingering
+                    | Role::Tuplet
+                    | Role::Script
+                    | Role::ChordName
+            );
             for up in [true, false] {
-                let mut group = Facing::default();
-                let mut indices = Vec::new();
-                for (index, mark) in system.marks.iter().enumerate() {
-                    charge(work, 1)?;
-                    let upper = (mark.bounds.top + mark.bounds.bottom) / 2.0 < middle;
-                    if mark.staff.0 as usize == staff && mark.mark.role() == role && upper == up {
-                        add(&mut group, mark, 0.0, work)?;
-                        indices.push(index);
-                    }
-                }
-                if indices.is_empty() {
-                    continue;
-                }
-                let delta = if up {
-                    -group.lower.distance(&occupied.upper, work)? - 0.25 * space
-                } else {
-                    occupied.lower.distance(&group.upper, work)? + 0.25 * space
-                };
-                let delta = if delta.is_finite() { delta } else { 0.0 };
-                for index in indices {
-                    let mark = &mut system.marks[index];
-                    translate(mark, 0.0, delta);
-                    add(&mut occupied, mark, 0.0, work)?;
-                }
+                place_role(system, &mut occupied, (staff, role, up, local), middle, space, work)?;
             }
+        }
+    }
+    Ok(())
+}
+
+fn place_role(
+    system: &mut System,
+    occupied: &mut Facing,
+    spec: (usize, Role, bool, bool),
+    middle: f64,
+    space: f64,
+    work: &mut usize,
+) -> Result<(), Error> {
+    let (staff, role, up, local) = spec;
+    let mut indices = Vec::new();
+    for (index, mark) in system.marks.iter().enumerate() {
+        charge(work, 1)?;
+        let upper = (mark.bounds.top + mark.bounds.bottom) / 2.0 < middle;
+        if mark.staff.0 as usize == staff && mark.mark.role() == role && upper == up {
+            indices.push(index);
+        }
+    }
+    if indices.is_empty() {
+        return Ok(());
+    }
+    let clusters = if local {
+        indices
+            .sort_by(|&a, &b| system.marks[a].bounds.left.total_cmp(&system.marks[b].bounds.left));
+        let mut groups: Vec<(Vec<usize>, f64)> = Vec::new();
+        for idx in indices {
+            let b = system.marks[idx].bounds;
+            if let Some((last_group, right)) = groups.last_mut()
+                && b.left <= *right + 0.4 * space
+            {
+                last_group.push(idx);
+                *right = right.max(b.right);
+            } else {
+                groups.push((vec![idx], b.right));
+            }
+        }
+        groups.into_iter().map(|(g, _)| g).collect()
+    } else {
+        vec![indices]
+    };
+    for cluster in clusters {
+        let mut group = Facing::default();
+        for &index in &cluster {
+            add(&mut group, &system.marks[index], 0.0, work)?;
+        }
+        let delta = if up {
+            -group.lower.distance(&occupied.upper, work)? - 0.25 * space
+        } else {
+            occupied.lower.distance(&group.upper, work)? + 0.25 * space
+        };
+        let delta = if delta.is_finite() { delta } else { 0.0 };
+        for index in cluster {
+            let mark = &mut system.marks[index];
+            translate(mark, 0.0, delta);
+            add(occupied, mark, 0.0, work)?;
         }
     }
     Ok(())

@@ -15,9 +15,17 @@ pub fn check_score(score: &Score) -> Result<(), Error> {
     if score.staves.len() > 24 {
         return Err(invalid("A score may contain at most 24 staves."));
     }
+    for staff in &score.staves {
+        if let Some(markup) = &staff.name_markup {
+            markup.check(0)?;
+        }
+        if let Some(markup) = &staff.short_name_markup {
+            markup.check(0)?;
+        }
+    }
     check_voices(score)?;
     for event in &score.events {
-        check_event(event).map_err(|error| error.at(event.span))?;
+        check_event(event).map_err(|error| error.or_at(event.span))?;
     }
     for group in &score.groups {
         if group.first.0 > group.last.0 || group.last.0 as usize >= score.staves.len() {
@@ -31,9 +39,9 @@ pub fn check_score(score: &Score) -> Result<(), Error> {
             return Err(invalid("A lyric verse names a missing voice."));
         }
         for syllable in &verse.syllables {
-            check_anchor(score, syllable.anchor)?;
+            check_anchor(score, syllable.anchor).map_err(|e| e.or_at(syllable.span))?;
             if let Some(end) = syllable.extender {
-                check_anchor(score, end)?;
+                check_anchor(score, end).map_err(|e| e.or_at(syllable.span))?;
             }
         }
     }
@@ -76,8 +84,16 @@ fn check_voices(score: &Score) -> Result<(), Error> {
 }
 
 fn check_event(event: &Event) -> Result<(), Error> {
+    if event.at.grace > Ratio::ZERO {
+        return Err(invalid("An event cannot have a positive grace offset."));
+    }
     if let Some(duration) = event.kind.duration() {
         duration.time()?;
+    }
+    for mark in &event.marks {
+        if let crate::AnnotationKind::Markup(markup, _) = &mark.kind {
+            markup.check(0)?;
+        }
     }
     match &event.kind {
         EventKind::Chord(chord) => {
@@ -130,12 +146,33 @@ fn check_measures(score: &Score) -> Result<(), Error> {
         }
         previous = Some(measure.end);
     }
+    if score.measures.is_empty() {
+        return Ok(());
+    }
     for event in &score.events {
         if let EventKind::Time(meter) = &event.kind {
             let index = score.measures.partition_point(|m| m.start < event.at.main);
-            let expected = score.measures.get(index).filter(|m| m.start == event.at.main);
-            if expected.is_some_and(|m| &m.meter != meter) {
-                return Err(invalid("All staves must use the same meter."));
+            let Some(expected) = score.measures.get(index).filter(|m| m.start == event.at.main)
+            else {
+                return Err(
+                    invalid("A meter change must fall on a measure boundary.").or_at(event.span)
+                );
+            };
+            if &expected.meter != meter {
+                return Err(invalid("All staves must use the same meter.").or_at(event.span));
+            }
+        }
+        if let EventKind::MeasureRest(duration) = &event.kind {
+            if event.at.grace != Ratio::ZERO {
+                return Err(invalid("A measure rest cannot be a grace event.").or_at(event.span));
+            }
+            let end = event.at.main.checked_add(duration.time()?)?;
+            let index = score.measures.partition_point(|m| m.start < event.at.main);
+            if score.measures.get(index).is_none_or(|m| m.start != event.at.main)
+                || !score.measures[index..].iter().any(|m| m.end == end)
+            {
+                return Err(invalid("A measure rest must align with measure boundaries.")
+                    .or_at(event.span));
             }
         }
     }
@@ -144,26 +181,29 @@ fn check_measures(score: &Score) -> Result<(), Error> {
 
 fn check_spanners(score: &Score) -> Result<(), Error> {
     for spanner in &score.spanners {
-        let start = endpoint(score, spanner.start)?;
-        let end = endpoint(score, spanner.end)?;
+        let start = endpoint(score, spanner.start).map_err(|e| e.or_at(spanner.span))?;
+        let end = endpoint(score, spanner.end).map_err(|e| e.or_at(spanner.span))?;
         if start.at > end.at || start.voice != end.voice {
-            return Err(invalid("A spanner must run forward within one voice.").at(spanner.span));
+            return Err(
+                invalid("A spanner must run forward within one voice.").or_at(spanner.span)
+            );
         }
         if matches!(spanner.kind, SpannerKind::Tie) {
             let (EventKind::Chord(a), EventKind::Chord(b)) = (&start.kind, &end.kind) else {
-                return Err(invalid("A tie needs pitched notes at both ends."));
+                return Err(invalid("A tie needs pitched notes at both ends.").or_at(spanner.span));
             };
+            let step = a.duration.time().map_err(|e| e.or_at(spanner.span))?;
             let adjacent = if start.at.grace < Ratio::ZERO {
-                start.at.main == end.at.main
-                    && start.at.grace.checked_add(a.duration.time()?)? == end.at.grace
+                start.at.main == end.at.main && start.at.grace.checked_add(step)? == end.at.grace
             } else {
-                start.at.main.checked_add(a.duration.time()?)? == end.at.main
+                end.at.grace == Ratio::ZERO && start.at.main.checked_add(step)? == end.at.main
             };
             if a.notes[spanner.start.note as usize].pitch
                 != b.notes[spanner.end.note as usize].pitch
                 || !adjacent
             {
-                return Err(invalid("A tie needs equal pitches at adjacent rhythmic moments."));
+                return Err(invalid("A tie needs equal pitches at adjacent rhythmic moments.")
+                    .or_at(spanner.span));
             }
         }
     }
@@ -193,7 +233,7 @@ fn check_anchor(score: &Score, anchor: Anchor) -> Result<(), Error> {
             }
         }
         Anchor::Moment(moment) => {
-            if moment.main < Ratio::ZERO && moment.grace > Ratio::ZERO {
+            if moment.grace > Ratio::ZERO {
                 return Err(invalid("A lyric moment has an invalid grace offset."));
             }
         }

@@ -168,9 +168,16 @@ fn every_profile_command_has_an_interpretation_example() {
             "afterGrace" => r"\afterGrace c4 { d16 e } f4".into(),
             "repeat" => r"\repeat unfold 2 { c4 d }".into(),
             "alternative" => r"\repeat volta 2 { c1 } \alternative { { d1 } { e1 } }".into(),
+            "volta" => {
+                r"\repeat volta 3 { c1 } \alternative { \volta 1,2 { d1 } \volta 3 { e1 } }".into()
+            }
+            "fine" | "section" => format!("c1 \\{name}"),
+            "compressEmptyMeasures" | "compressFullBarRests" => format!("\\{name} R1*2"),
+            "numericTimeSignature" => r"\numericTimeSignature \time 4/4 c1".into(),
             "tempo" => r#"\tempo "Allegro" 4 = 120 c1"#.into(),
             "mark" | "default" => r"\mark \default c1".into(),
             "chordmode" => r"\new ChordNames \chordmode { c1:maj7 d:m7 g:7 }".into(),
+            "chords" => r"\chords { c1:maj7 d:m7 g:7 }".into(),
             "<" | ">" => format!("c4 \\{name} d4 \\!"),
             "!" => r"c4 \< d4 \!".into(),
             "(" | ")" => r"c4\( d4\)".into(),

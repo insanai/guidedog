@@ -51,8 +51,9 @@ pub(crate) fn shape(
         return Err(font_error("Text exceeds the shaping bounds."));
     }
     let faces = match style {
-        TextStyle::Bold if !fonts.bold.is_empty() => &fonts.bold,
-        TextStyle::Italic if !fonts.italic.is_empty() => &fonts.italic,
+        TextStyle::BoldItalic if !fonts.bold_italic.is_empty() => &fonts.bold_italic,
+        TextStyle::Bold | TextStyle::BoldItalic if !fonts.bold.is_empty() => &fonts.bold,
+        TextStyle::Italic | TextStyle::BoldItalic if !fonts.italic.is_empty() => &fonts.italic,
         _ => &fonts.regular,
     };
     let (first, first_face) = primary(faces, text, work)?;
@@ -68,17 +69,15 @@ pub(crate) fn shape(
     let mut at = 0;
     while at < infos.len() {
         charge(work, 1)?;
-        let end = at + infos[at..].iter().take_while(|g| g.cluster == infos[at].cluster).count();
+        let mut end =
+            at + infos[at..].iter().take_while(|g| g.cluster == infos[at].cluster).count();
         if infos[at..end].iter().any(|g| g.glyph_id == 0) {
-            let start = infos[at].cluster as usize;
-            let last = clusters.partition_point(|c| *c <= start);
-            let end_byte = clusters.get(last).copied().unwrap_or(text.len());
-            let cluster =
-                text.get(start..end_byte).ok_or_else(|| font_error("Invalid shaping cluster."))?;
-            let selected = fallback(faces, cluster, work)?;
+            let (slice, selected, next_at) =
+                fallback_span(faces, text, infos, &clusters, at, end, work)?;
+            end = next_at;
             if selected.is_none() {
                 warnings.push(
-                    font_error(format!("No supplied face can draw the text cluster {cluster:?}."))
+                    font_error(format!("No supplied face can draw the text cluster {slice:?}."))
                         .warning(),
                 );
             }
@@ -86,7 +85,7 @@ pub(crate) fn shape(
                 .map(|(index, face)| (&faces[index], face))
                 .unwrap_or_else(|| (first, first_face.clone()));
             note_source(&mut run, source);
-            let fallback = shaped(&face, cluster);
+            let fallback = shaped(&face, slice);
             append(
                 &mut run,
                 &face,
@@ -171,6 +170,64 @@ fn note_source(run: &mut TextRun, face: &crate::fonts::TextFace<'_>) {
     }
 }
 
+fn cluster_range<'a>(
+    text: &'a str,
+    clusters: &[usize],
+    start: usize,
+) -> Result<(&'a str, usize), Error> {
+    let last = clusters.partition_point(|c| *c <= start);
+    let end_byte = clusters.get(last).copied().unwrap_or(text.len());
+    let slice = text.get(start..end_byte).ok_or_else(|| font_error("Invalid shaping cluster."))?;
+    Ok((slice, end_byte))
+}
+
+type FallbackSpan<'a, 'f> = (&'a str, Option<(usize, rustybuzz::Face<'f>)>, usize);
+
+fn fallback_span<'a, 'f>(
+    faces: &[crate::fonts::TextFace<'f>],
+    text: &'a str,
+    infos: &[rustybuzz::GlyphInfo],
+    clusters: &[usize],
+    at: usize,
+    mut end: usize,
+    work: &mut usize,
+) -> Result<FallbackSpan<'a, 'f>, Error> {
+    let start = infos[at].cluster as usize;
+    let (first_cluster, mut end_byte) = cluster_range(text, clusters, start)?;
+    let selected = fallback(faces, first_cluster, work)?;
+    let Some((target_idx, _)) = &selected else {
+        return Ok((first_cluster, None, end));
+    };
+    while end < infos.len() {
+        let next_end =
+            end + infos[end..].iter().take_while(|g| g.cluster == infos[end].cluster).count();
+        let next_start = infos[end].cluster as usize;
+        if next_start < end_byte {
+            break;
+        }
+        let (next_cluster, next_byte) = cluster_range(text, clusters, next_start)?;
+        let missing = infos[end..next_end].iter().any(|g| g.glyph_id == 0);
+        let space_bridge = next_cluster.chars().all(char::is_whitespace)
+            && next_end < infos.len()
+            && infos[next_end..]
+                .iter()
+                .take_while(|g| g.cluster == infos[next_end].cluster)
+                .any(|g| g.glyph_id == 0);
+        if !missing && !space_bridge {
+            break;
+        }
+        let same = fallback(faces, next_cluster, work)?
+            .is_some_and(|(idx, _)| idx == *target_idx || space_bridge);
+        if !same || next_byte < end_byte {
+            break;
+        }
+        end_byte = next_byte;
+        end = next_end;
+    }
+    let slice = text.get(start..end_byte).ok_or_else(|| font_error("Invalid fallback span."))?;
+    Ok((slice, selected, end))
+}
+
 fn fallback<'f>(
     faces: &[crate::fonts::TextFace<'f>],
     text: &str,
@@ -180,7 +237,7 @@ fn fallback<'f>(
         charge(work, text.len().saturating_add(1))?;
         if candidate.covers(text) {
             let face = candidate.face()?;
-            if text.chars().all(|c| c.is_control() || face.glyph_index(c).is_some()) {
+            if text.chars().all(|c| crate::fonts::ignorable(c) || face.glyph_index(c).is_some()) {
                 return Ok(Some((index, face)));
             }
         }

@@ -158,14 +158,23 @@ fn choose(
             s.ideal > first.ideal.max(last.ideal)
         }
     });
-    if concave {
+    let ideal_left = if concave {
         delta = 0.0;
-    }
-    let ideal_left = ((first.ideal + last.ideal - delta) / (0.5 * space)).round() * 0.25 * space;
+        let extreme = if up {
+            stems.iter().map(|s| s.ideal).fold(first.ideal, f64::min)
+        } else {
+            stems.iter().map(|s| s.ideal).fold(first.ideal, f64::max)
+        };
+        (extreme / (0.25 * space)).round() * 0.25 * space
+    } else {
+        ((first.ideal + last.ideal - delta) / (0.5 * space)).round() * 0.25 * space
+    };
     let ideal_right = ideal_left + delta;
+    let force_level = concave || (first.ideal - last.ideal).abs() < 0.01;
     let mut best = None;
     for a in -8..=8 {
-        for b in -8..=8 {
+        let b_range = if force_level { a..=a } else { -8..=8 };
+        for b in b_range {
             charge(work, stems.len() * 6)?;
             let left = ideal_left + f64::from(a) * 0.25 * space;
             let right = ideal_right + f64::from(b) * 0.25 * space;
@@ -188,21 +197,8 @@ fn choose(
                 .filter(|y| forbidden(*y, up, middle, space, thickness))
                 .count();
             let mut cost = SLOPE_WEIGHT * (slope - delta / width).powi(2)
-                + QUANT_WEIGHT * inner_quants as f64;
-            for stem in stems {
-                let y = left + slope * (stem.x - first.x);
-                let length = if stem.up { stem.base - y } else { y - stem.base };
-                let natural = (stem.base - stem.ideal).abs().max(space);
-                cost += STEM_WEIGHT * ((length - natural) / natural).powi(2);
-                let minimum =
-                    (2.5 + f64::from(stem.flags.saturating_sub(2)) * 0.5) * space * stem.scale;
-                if length < minimum {
-                    cost += SHORT_STEM_WEIGHT;
-                }
-                if length <= 0.75 * space {
-                    cost += COLLISION_WEIGHT;
-                }
-            }
+                + QUANT_WEIGHT * inner_quants as f64
+                + stem_cost(stems, first.x, left, slope, space);
             cost += ink_cost(segments, first.x, (left, slope), metrics, obstacles, work)?;
             let tie = (slope.abs(), left + right);
             if best.is_none_or(|(old, old_tie, _, _)| cost < old || (cost == old && tie < old_tie))
@@ -212,6 +208,24 @@ fn choose(
         }
     }
     best.map(|(_, _, a, b)| (a, b)).ok_or_else(|| failure("No valid beam quantization was found."))
+}
+
+fn stem_cost(stems: &[Stem], first_x: f64, left: f64, slope: f64, space: f64) -> f64 {
+    let mut cost = 0.0;
+    for stem in stems {
+        let y = left + slope * (stem.x - first_x);
+        let length = if stem.up { stem.base - y } else { y - stem.base };
+        let natural = (stem.base - stem.ideal).abs().max(space);
+        cost += STEM_WEIGHT * ((length - natural) / natural).powi(2);
+        let minimum = (2.5 + f64::from(stem.flags.saturating_sub(2)) * 0.5) * space * stem.scale;
+        if length < minimum {
+            cost += SHORT_STEM_WEIGHT;
+        }
+        if length <= 0.75 * space {
+            cost += COLLISION_WEIGHT;
+        }
+    }
+    cost
 }
 
 fn forbidden(y: f64, up: bool, middle: f64, space: f64, thickness: f64) -> bool {

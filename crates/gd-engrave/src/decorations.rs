@@ -1,4 +1,4 @@
-use gd_score::{AnnotationKind, Error, EventKind, TextStyle};
+use gd_score::{AnnotationKind, Error, EventKind, Markup, MarkupRole, TextStyle};
 
 use crate::drawing::{Draw, Request};
 use crate::limits::charge;
@@ -7,31 +7,20 @@ use crate::{Mark, Point, Role};
 impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn decorations(&mut self, request: &Request<'_, '_>) -> Result<(), Error> {
         let space = self.options.staff_size / 4.0;
-        for (staff_index, staff) in request.score.staves.iter().enumerate() {
-            self.staff = gd_score::StaffId(staff_index as u32);
-            self.measure = 0;
-            let first = request.score.measures.first().map(|m| m.number).unwrap_or(1);
-            let name = if request.first == first { &staff.name } else { &staff.short_name };
-            if !name.is_empty() {
-                self.text(
-                    name,
-                    TextStyle::Regular,
-                    Point { x: space, y: (4.0 + staff_index as f64 * 9.0) * space },
-                    2.3 * space,
-                    Role::Instrument,
-                )?;
-            }
-        }
+        self.instrument_names(request, space)?;
         for (index, column) in request.columns.iter().enumerate() {
             if index + 1 == request.columns.len() {
                 break;
             }
+            let line_start = column.at.main == request.columns[0].at.main;
             for id in &column.events {
                 let event = &request.score.events[id.0 as usize];
+                let info = &request.plan.events[id.0 as usize];
                 self.staff = request.score.voices[event.voice.0 as usize].staff;
                 let middle = (4.0 + f64::from(self.staff.0) * 9.0) * space;
                 self.measure = request.first;
-                let x = request.positions[index];
+                let x =
+                    request.positions[index] + if line_start { 0.0 } else { info.prefix * space };
                 if let EventKind::ChordName(name, _) = &event.kind {
                     self.text(
                         name,
@@ -44,7 +33,6 @@ impl Draw<'_, '_, '_, '_, '_> {
                 let annotation_start = self.system.marks.len();
                 for mark in &event.marks {
                     charge(self.work, 1)?;
-                    let info = &request.plan.events[id.0 as usize];
                     let direction = request.score.voices[event.voice.0 as usize].direction;
                     let up = mark_above(mark, info.up, direction);
                     let at = Point { x, y: middle + if up { -5.0 * space } else { 5.0 * space } };
@@ -55,6 +43,90 @@ impl Draw<'_, '_, '_, '_, '_> {
             }
         }
         self.lyrics(request)
+    }
+
+    fn instrument_names(&mut self, request: &Request<'_, '_>, space: f64) -> Result<(), Error> {
+        let first_line = self.first_line(request);
+        for (staff_index, staff) in request.score.staves.iter().enumerate() {
+            self.staff = gd_score::StaffId(staff_index as u32);
+            self.measure = 0;
+            let middle = (4.0 + staff_index as f64 * 9.0) * space;
+            let label = crate::labels::line_label(
+                first_line,
+                (&staff.name, staff.name_markup.as_ref()),
+                (&staff.short_name, staff.short_name_markup.as_ref()),
+            );
+            // A named group's label stands at the left edge; its staves' names follow it.
+            let mut x = space;
+            for group in &request.score.groups {
+                if (group.first.0..=group.last.0).contains(&(staff_index as u32)) {
+                    let own = self.group_label(group, first_line);
+                    let advance = crate::labels::label_advance(
+                        self.fonts,
+                        own,
+                        space,
+                        self.work,
+                        &mut self.options.reserve,
+                    )?;
+                    if advance > 0.0 {
+                        x += advance + space;
+                    }
+                }
+            }
+            self.instrument_label(label, x, middle, space)?;
+        }
+        Ok(())
+    }
+
+    /// Whether this system shows full names: it starts at the score's first measure.
+    pub(crate) fn first_line(&self, request: &Request<'_, '_>) -> bool {
+        request.first == request.score.measures.first().map(|m| m.number).unwrap_or(1)
+    }
+
+    /// The name a group shows on this line.
+    pub(crate) fn group_label<'g>(
+        &self,
+        group: &'g gd_score::StaffGroup,
+        first_line: bool,
+    ) -> (&'g str, Option<&'g Markup>) {
+        crate::labels::line_label(
+            first_line,
+            (&group.name, group.name_markup.as_ref()),
+            (&group.short_name, group.short_name_markup.as_ref()),
+        )
+    }
+
+    /// Draws an instrument name starting at `x`, centred on the staff line `middle`.
+    pub(crate) fn instrument_label(
+        &mut self,
+        label: (&str, Option<&Markup>),
+        x: f64,
+        middle: f64,
+        space: f64,
+    ) -> Result<(), Error> {
+        match label {
+            (_, Some(markup)) => {
+                let mut ctx = crate::markup::Context {
+                    fonts: self.fonts,
+                    space,
+                    warnings: &mut self.warnings,
+                    work: self.work,
+                    reserve: &mut self.options.reserve,
+                };
+                let run = crate::markup::shape(&mut ctx, markup, 2.3 * space, TextStyle::Regular)?;
+                let center_y = middle - (run.bounds.top + run.bounds.bottom) * 0.5;
+                let bounds = run.bounds.translated(x, center_y);
+                self.add(Mark::Text { run, x, y: center_y, role: Role::Instrument }, bounds)
+            }
+            ("", None) => Ok(()),
+            (name, None) => self.text(
+                name,
+                TextStyle::Regular,
+                Point { x, y: middle },
+                2.3 * space,
+                Role::Instrument,
+            ),
+        }
     }
 
     fn annotation(
@@ -73,6 +145,14 @@ impl Draw<'_, '_, '_, '_, '_> {
             }
             AnnotationKind::Rehearsal(text) => {
                 self.text(text, TextStyle::Bold, at, 2.5 * space, Role::Rehearsal)?;
+            }
+            AnnotationKind::Markup(markup, role) => {
+                let (style, size, mark_role) = match role {
+                    MarkupRole::Script => (TextStyle::Regular, 2.4 * space, Role::Script),
+                    MarkupRole::Tempo => (TextStyle::Bold, 2.5 * space, Role::Tempo),
+                    MarkupRole::Rehearsal => (TextStyle::Bold, 2.5 * space, Role::Rehearsal),
+                };
+                self.markup(markup, style, at, (size, space), mark_role)?;
             }
             AnnotationKind::Dynamic(text) => self.dynamic(text, at, space)?,
             AnnotationKind::Articulation(name) => self.articulation(name, up, at, space)?,
@@ -138,6 +218,27 @@ impl Draw<'_, '_, '_, '_, '_> {
             self.work,
             &mut self.options.reserve,
         )?;
+        let bounds = run.bounds.translated(at.x, at.y);
+        self.add(Mark::Text { run, x: at.x, y: at.y, role }, bounds)
+    }
+
+    pub(crate) fn markup(
+        &mut self,
+        markup: &Markup,
+        style: TextStyle,
+        at: Point,
+        metrics: (f64, f64),
+        role: Role,
+    ) -> Result<(), Error> {
+        let (size, space) = metrics;
+        let mut ctx = crate::markup::Context {
+            fonts: self.fonts,
+            space,
+            warnings: &mut self.warnings,
+            work: self.work,
+            reserve: &mut self.options.reserve,
+        };
+        let run = crate::markup::shape(&mut ctx, markup, size, style)?;
         let bounds = run.bounds.translated(at.x, at.y);
         self.add(Mark::Text { run, x: at.x, y: at.y, role }, bounds)
     }

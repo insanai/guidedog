@@ -1,6 +1,8 @@
 //! Text participates in horizontal clearance before line breaking chooses systems.
 
-use gd_score::{Anchor, AnnotationKind, Error, Event, EventKind, Moment, Score, TextStyle};
+use gd_score::{
+    Anchor, AnnotationKind, Error, Event, EventKind, MarkupRole, Moment, Score, TextStyle,
+};
 
 use crate::Fonts;
 use crate::limits::charge;
@@ -8,6 +10,7 @@ use crate::rods::{Bands, add_rect};
 
 pub(crate) fn event(
     bands: &mut Bands,
+    prefix: f64,
     event: &Event,
     fonts: &Fonts<'_>,
     work: &mut usize,
@@ -15,24 +18,61 @@ pub(crate) fn event(
 ) -> Result<(), Error> {
     for annotation in &event.marks {
         charge(work, 1)?;
-        if let AnnotationKind::Dynamic(text) = &annotation.kind {
-            let y = if annotation.direction == gd_score::Direction::Up { -5.0 } else { 5.0 };
-            let width = dynamic_width(fonts, text)?;
-            add_rect(
-                bands,
-                crate::Rect { left: 0.0, right: width + 0.4, top: y - 2.0, bottom: y + 1.0 },
-                work,
-            )?;
-            continue;
-        }
-        let (text, style, size) = match &annotation.kind {
-            AnnotationKind::Text(text, style) => (text.as_str(), *style, 2.4),
-            AnnotationKind::Tempo(text) | AnnotationKind::Rehearsal(text) => {
-                (text.as_str(), TextStyle::Bold, 2.5)
+        match &annotation.kind {
+            AnnotationKind::Dynamic(text) => {
+                let y = if annotation.direction == gd_score::Direction::Up { -5.0 } else { 5.0 };
+                let width = dynamic_width(fonts, text)?;
+                add_rect(
+                    bands,
+                    crate::Rect {
+                        left: prefix,
+                        right: prefix + width + 0.4,
+                        top: y - 2.0,
+                        bottom: y + 1.0,
+                    },
+                    work,
+                )?;
             }
-            _ => continue,
-        };
-        text_bands(bands, fonts, text, style, (size, false, false), work, &mut options.reserve)?;
+            AnnotationKind::Text(text, style) => {
+                text_bands(
+                    bands,
+                    fonts,
+                    text,
+                    *style,
+                    (prefix, 2.4, false, false),
+                    work,
+                    &mut options.reserve,
+                )?;
+            }
+            AnnotationKind::Tempo(text) | AnnotationKind::Rehearsal(text) => {
+                text_bands(
+                    bands,
+                    fonts,
+                    text,
+                    TextStyle::Bold,
+                    (prefix, 2.5, false, false),
+                    work,
+                    &mut options.reserve,
+                )?;
+            }
+            AnnotationKind::Markup(markup, role) => {
+                let (style, size) = match role {
+                    MarkupRole::Script => (TextStyle::Regular, 2.4),
+                    MarkupRole::Tempo | MarkupRole::Rehearsal => (TextStyle::Bold, 2.5),
+                };
+                let mut warnings = Vec::new();
+                let mut ctx = crate::markup::Context {
+                    fonts,
+                    space: 1.0,
+                    warnings: &mut warnings,
+                    work,
+                    reserve: &mut options.reserve,
+                };
+                let run = crate::markup::shape(&mut ctx, markup, size, style)?;
+                run_bands(bands, &run, (prefix, false, false), work)?;
+            }
+            AnnotationKind::Articulation(_) | AnnotationKind::Fingering(_) => {}
+        }
     }
     if let EventKind::ChordName(text, _) = &event.kind {
         text_bands(
@@ -40,7 +80,7 @@ pub(crate) fn event(
             fonts,
             text,
             TextStyle::Regular,
-            (2.5, false, false),
+            (prefix, 2.5, false, false),
             work,
             &mut options.reserve,
         )?;
@@ -51,12 +91,13 @@ pub(crate) fn event(
 pub(crate) fn lyrics(
     bands: &mut Bands,
     score: &Score,
-    at: Moment,
+    column: (Moment, f64),
     staff: usize,
     fonts: &Fonts<'_>,
     work: &mut usize,
     options: &mut crate::Options<'_>,
 ) -> Result<(), Error> {
+    let (at, prefix) = column;
     for verse in &score.lyrics {
         if score.voices[verse.voice.0 as usize].staff.0 as usize != staff {
             continue;
@@ -73,7 +114,7 @@ pub(crate) fn lyrics(
                     fonts,
                     &syllable.text,
                     TextStyle::Regular,
-                    (2.4, true, syllable.hyphen),
+                    (prefix, 2.4, true, syllable.hyphen),
                     work,
                     &mut options.reserve,
                 )?;
@@ -88,15 +129,24 @@ fn text_bands(
     fonts: &Fonts<'_>,
     text: &str,
     style: TextStyle,
-    metrics: (f64, bool, bool),
+    metrics: (f64, f64, bool, bool),
     work: &mut usize,
     reserve: &mut Option<&mut crate::Reserve<'_>>,
 ) -> Result<(), Error> {
-    let (size, centered, hyphen) = metrics;
+    let (prefix, size, centered, hyphen) = metrics;
     let run = crate::text::shape(fonts, text, size, style, &mut Vec::new(), work, reserve)?;
-    let mut bounds = run.bounds;
-    let x = if centered { -run.advance / 2.0 } else { 0.0 };
-    bounds = bounds.translated(x, if centered { 7.0 } else { -5.0 });
+    run_bands(bands, &run, (prefix, centered, hyphen), work)
+}
+
+fn run_bands(
+    bands: &mut Bands,
+    run: &crate::TextRun,
+    metrics: (f64, bool, bool),
+    work: &mut usize,
+) -> Result<(), Error> {
+    let (prefix, centered, hyphen) = metrics;
+    let x = prefix + if centered { -run.advance / 2.0 } else { 0.0 };
+    let mut bounds = run.bounds.translated(x, if centered { 7.0 } else { -5.0 });
     let padding = if centered { run.word_space.max(0.3) } else { 0.3 };
     bounds.left -= padding;
     bounds.right += padding + if hyphen { 0.6 } else { 0.0 };
@@ -104,12 +154,58 @@ fn text_bands(
 }
 
 pub(crate) fn dynamic_width(fonts: &Fonts<'_>, text: &str) -> Result<f64, Error> {
-    let mut width = 0.0;
+    let mut cursor = 0.0f64;
+    let mut right = 0.0f64;
     for character in text.chars() {
         let name = crate::decorations::dynamic_glyph(character)
             .ok_or_else(|| crate::limits::font_error("Unknown dynamic mark."))?;
         let glyph = fonts.glyph(name)?;
-        width += fonts.glyph_data(glyph).map(|data| data.advance).unwrap_or(0.8);
+        if let Some(data) = fonts.glyph_data(glyph) {
+            right = right.max(cursor + data.bounds.right);
+            cursor += data.advance + 0.05;
+        } else {
+            cursor += 0.85;
+            right = right.max(cursor);
+        }
     }
-    Ok(width)
+    Ok(right.max(cursor - 0.05).max(0.0))
+}
+
+/// The name a staff or group shows on a line: the full name on the first system, the
+/// abbreviation afterwards.
+pub(crate) fn line_label<'a>(
+    first_line: bool,
+    full: (&'a str, Option<&'a gd_score::Markup>),
+    short: (&'a str, Option<&'a gd_score::Markup>),
+) -> (&'a str, Option<&'a gd_score::Markup>) {
+    if first_line { full } else { short }
+}
+
+/// The advance of an instrument name in points; zero when there is none.
+pub(crate) fn label_advance<'cb>(
+    fonts: &Fonts<'_>,
+    label: (&str, Option<&gd_score::Markup>),
+    space: f64,
+    work: &mut usize,
+    reserve: &mut Option<&'cb mut crate::Reserve<'cb>>,
+) -> Result<f64, Error> {
+    let mut warnings = Vec::new();
+    match label {
+        (_, Some(markup)) => {
+            let mut ctx =
+                crate::markup::Context { fonts, space, warnings: &mut warnings, work, reserve };
+            Ok(crate::markup::shape(&mut ctx, markup, space * 2.3, TextStyle::Regular)?.advance)
+        }
+        ("", None) => Ok(0.0),
+        (name, None) => Ok(crate::text::shape(
+            fonts,
+            name,
+            space * 2.3,
+            TextStyle::Regular,
+            &mut warnings,
+            work,
+            reserve,
+        )?
+        .advance),
+    }
 }

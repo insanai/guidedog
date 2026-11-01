@@ -21,18 +21,34 @@ pub(crate) fn event(
             Direction::Down => 2.0,
             Direction::Auto => 0.0,
         } - if duration.base == gd_score::Base::Whole { 1.0 } else { 0.0 };
-        add_glyph(bands, fonts, crate::drawing::rest_glyph(duration.base), 1.0, 0.0, y, work)?;
+        add_glyph(
+            bands,
+            fonts,
+            crate::drawing::rest_glyph(duration.base),
+            1.0,
+            info.prefix,
+            y,
+            work,
+        )?;
         for dot in 0..duration.dots {
             add_glyph(
                 bands,
                 fonts,
                 "augmentationDot",
                 1.0,
-                1.7 + f64::from(dot) * 0.6,
+                info.prefix + 1.7 + f64::from(dot) * 0.6,
                 y - 0.5,
                 work,
             )?;
         }
+    } else if matches!(event.kind, EventKind::MeasureRest(_))
+        && crate::multirests::span(score, event.at.main, work)?.is_none()
+    {
+        add_rect(
+            bands,
+            Rect { left: info.prefix, right: info.prefix + 2.4, top: -1.5, bottom: 0.5 },
+            work,
+        )?;
     }
     for head in &info.heads {
         let position = (-head.at.y * 2.0).round() as i16;

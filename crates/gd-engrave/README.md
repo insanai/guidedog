@@ -18,6 +18,6 @@ Bravura 1.482 and its SMuFL metadata are embedded unmodified from `third_party/b
 The build checks their recorded digests.
 Text faces come from the caller, with explicit regular, bold and italic fallback lists.
 
-The corpus tool (`cargo run -p music-check`) checks 48 outlined SVGs, tolerant PNG pixels, actual role-ink contacts, primary beam quants and tie apexes.
+The corpus tool (`cargo run -p music-check`) checks 58 outlined SVGs, tolerant PNG pixels, actual role-ink contacts, primary beam quants and tie apexes across standard and compact staff sizes.
 The reader and engraver have separate finite work limits; text outline growth, temporary shaping and retained worker capacities consult the caller's reservation before allocation.
 Cross-system curves, lyric extenders and hairpins keep their continuation geometry, and `System::width` records the actual ink frame for per-system PNG and SVG export.

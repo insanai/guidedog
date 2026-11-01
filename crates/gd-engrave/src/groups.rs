@@ -9,24 +9,41 @@ use crate::{Bezier, Mark, Point, Rect, Role};
 impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn groups(&mut self, request: &Request<'_, '_>) -> Result<(), Error> {
         let space = self.options.staff_size / 4.0;
+        if request.score.staves.len() > 1 {
+            let last = StaffId((request.score.staves.len() - 1) as u32);
+            let top = staff_edge(&self.system.marks, StaffId(0), true);
+            let bottom = staff_edge(&self.system.marks, last, false);
+            self.staff = StaffId(0);
+            self.measure = 0;
+            self.line(
+                Point { x: request.indent, y: top },
+                Point { x: request.indent, y: bottom },
+                0.16 * space,
+                Role::Bar,
+            )?;
+        }
         for group in &request.score.groups {
             charge(self.work, self.system.marks.len())?;
             let top = staff_edge(&self.system.marks, group.first, true);
             let bottom = staff_edge(&self.system.marks, group.last, false);
             self.staff = group.first;
             self.measure = 0;
+            let first_line = self.first_line(request);
+            let label = self.group_label(group, first_line);
+            self.instrument_label(label, space, (top + bottom) / 2.0, space)?;
             let x = request.indent - 0.7 * space;
             match group.kind {
                 GroupKind::Brace => self.brace(x, top, bottom, space)?,
                 GroupKind::Bracket | GroupKind::Choir => {
+                    let bx = request.indent - 1.2 * space;
                     self.line(
-                        Point { x, y: top },
-                        Point { x, y: bottom },
+                        Point { x: bx + 0.225 * space, y: top },
+                        Point { x: bx + 0.225 * space, y: bottom },
                         0.45 * space,
                         Role::Instrument,
                     )?;
-                    self.glyph("bracketTop", x, top, space, Role::Instrument)?;
-                    self.glyph("bracketBottom", x, bottom, space, Role::Instrument)?;
+                    self.glyph("bracketTop", bx, top, space, Role::Instrument)?;
+                    self.glyph("bracketBottom", bx, bottom, space, Role::Instrument)?;
                 }
             }
             if group.kind != GroupKind::Choir {
@@ -36,6 +53,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                     if mark.staff == group.first
                         && let Mark::Line { from, to, thickness, role: Role::Bar } = mark.mark
                         && from.x == to.x
+                        && (from.x - request.indent).abs() > 0.01
                     {
                         bars.push((from.x, thickness));
                     }
@@ -43,12 +61,6 @@ impl Draw<'_, '_, '_, '_, '_> {
                 for (x, thickness) in bars {
                     self.line(Point { x, y: top }, Point { x, y: bottom }, thickness, Role::Bar)?;
                 }
-                self.line(
-                    Point { x: request.indent, y: top },
-                    Point { x: request.indent, y: bottom },
-                    0.16 * space,
-                    Role::Bar,
-                )?;
             }
         }
         Ok(())

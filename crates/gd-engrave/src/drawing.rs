@@ -12,6 +12,8 @@ pub(crate) struct Request<'a, 'f> {
     pub(crate) first: u32,
     pub(crate) plan: &'a crate::prepare::Plan,
     pub(crate) indent: f64,
+    pub(crate) preface_end: f64,
+    pub(crate) staff_right: f64,
     pub(crate) suffix: f64,
     pub(crate) remaining_marks: usize,
     pub(crate) clefs: [(Clef, Clef); 24],
@@ -24,7 +26,11 @@ pub(crate) fn draw_system(
 ) -> Result<(System, Vec<Error>), Error> {
     let Request { score, fonts, positions, first, .. } = *request;
     let space = options.staff_size / 4.0;
-    let width = positions.last().copied().unwrap_or(space) + space + request.suffix;
+    let width = if request.suffix > 0.0 {
+        positions.last().copied().unwrap_or(space) + request.suffix
+    } else {
+        request.staff_right
+    };
     let mut draw = Draw {
         fonts,
         options,
@@ -51,6 +57,7 @@ pub(crate) fn draw_system(
         )?;
     }
     draw.beams(request)?;
+    draw.grace_slashes(request)?;
     draw.decorations(request)?;
     draw.spanners(request)?;
     crate::vertical::place(&mut draw.system, score.staves.len(), space, draw.work)?;
@@ -103,6 +110,12 @@ impl Draw<'_, '_, '_, '_, '_> {
             .unwrap_or(Clef::Treble);
         self.clef(clef, request.indent + space, middle, space)?;
         self.signatures(request, middle)?;
+        if let Some(open_style) =
+            crate::bars::opening_bar(score, &columns[0], staff_index, measure == 0)
+        {
+            let (_, right) = crate::bars::style_extent(open_style);
+            self.bar(open_style, request.preface_end - right * space, middle)?;
+        }
         self.staff_music(request, middle)?;
         self.measure_bars(request, middle)?;
         self.measure_rests(request, middle)?;
@@ -130,10 +143,10 @@ impl Draw<'_, '_, '_, '_, '_> {
                 if score.voices[event.voice.0 as usize].staff != staff {
                     continue;
                 }
-                if index + 1 == columns.len() && event.kind.duration().is_some() {
+                if terminal && event.kind.duration().is_some() {
                     continue;
                 }
-                if index + 1 == columns.len()
+                if terminal
                     && matches!(
                         event.kind,
                         EventKind::Clef(_) | EventKind::Key(_) | EventKind::Time(_)
@@ -174,15 +187,32 @@ impl Draw<'_, '_, '_, '_, '_> {
                 column.at.main == request.columns[0].at.main,
             )?,
             EventKind::Rest(duration) => {
-                self.rest(event, duration, request, index, middle)?;
+                self.rest(id, event, duration, request, index, middle)?;
             }
             EventKind::Bar(style) => {
-                if index == 0
-                    && matches!(style, gd_score::BarStyle::RepeatEnd | gd_score::BarStyle::Final)
-                {
+                if index == 0 {
                     return Ok(());
                 }
-                self.bar(*style, x, middle)?;
+                let terminal = index + 1 == columns.len();
+                let score_end =
+                    request.score.measures.last().is_some_and(|m| m.end == column.at.main);
+                let effective =
+                    if terminal { crate::bars::closing_style(*style, score_end) } else { *style };
+                // A repeat start that a system end reduces to a single line adds nothing
+                // where another bar event of the staff already closes the system.
+                let staff = request.score.voices[event.voice.0 as usize].staff;
+                let stronger = terminal
+                    && effective == gd_score::BarStyle::Single
+                    && column.events.iter().any(|other| {
+                        let other = &request.score.events[other.0 as usize];
+                        request.score.voices[other.voice.0 as usize].staff == staff
+                            && matches!(other.kind, EventKind::Bar(s)
+                                if crate::bars::closing_style(s, score_end)
+                                    != gd_score::BarStyle::Single)
+                    });
+                if !stronger {
+                    self.bar(effective, x, middle)?;
+                }
             }
             EventKind::MeasureRest(_) => {}
             EventKind::Key(_) | EventKind::Time(_) => self.signature_change(

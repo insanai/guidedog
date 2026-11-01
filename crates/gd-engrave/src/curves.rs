@@ -1,4 +1,4 @@
-use gd_score::{Direction, Error, EventKind, NoteRef, Score, SpannerKind};
+use gd_score::{Direction, Error, EventKind, NoteRef, Score, Spanner, SpannerKind, TextStyle};
 
 use crate::drawing::{Draw, Request};
 use crate::limits::charge;
@@ -10,8 +10,11 @@ impl Draw<'_, '_, '_, '_, '_> {
         let start = request.columns[0].at;
         let end = request.columns.last().map(|c| c.at).unwrap_or(start);
         let space = self.options.staff_size / 4.0;
-        for spanner in &score.spanners {
+        let mut order: Vec<usize> = (0..score.spanners.len()).collect();
+        order.sort_by(|&ia, &ib| spanner_order(score, &score.spanners[ia], &score.spanners[ib]));
+        for spanner_idx in order {
             charge(self.work, 1)?;
+            let spanner = &score.spanners[spanner_idx];
             let a = &score.events[spanner.start.event.0 as usize];
             let b = &score.events[spanner.end.event.0 as usize];
             if a.at >= end || b.at < start {
@@ -19,7 +22,6 @@ impl Draw<'_, '_, '_, '_, '_> {
             }
             self.staff = score.voices[a.voice.0 as usize].staff;
             let middle = (4.0 + f64::from(self.staff.0) * 9.0) * space;
-
             let first = endpoint(score, spanner.start, request, middle, space);
             let last = endpoint(score, spanner.end, request, middle, space);
             self.measure = request.first;
@@ -35,66 +37,121 @@ impl Draw<'_, '_, '_, '_, '_> {
                     self.tuplet(request, spanner, *number, (first, last), middle)?;
                 }
                 SpannerKind::Volta(label) => {
-                    let finish = b.at.main.checked_add(
-                        b.kind
-                            .duration()
-                            .map(|d| d.time())
-                            .transpose()?
-                            .unwrap_or(gd_score::Ratio::ZERO),
-                    )?;
-                    let index = request.columns.partition_point(|column| column.at.main < finish);
-                    let x =
-                        request.positions.get(index).copied().unwrap_or_else(|| {
-                            request.positions.last().copied().unwrap_or(last.x)
-                        });
-                    self.volta(label, first, Point { x, ..last }, middle, space)?;
+                    self.volta_span(request, spanner, label, first, last, middle)?;
                 }
             }
         }
         Ok(())
     }
 
-    fn volta(
+    fn volta_span(
         &mut self,
+        request: &Request<'_, '_>,
+        spanner: &Spanner,
         label: &str,
         first: Point,
         last: Point,
         middle: f64,
+    ) -> Result<(), Error> {
+        let space = self.options.staff_size / 4.0;
+        let start = request.columns[0].at;
+        let end = request.columns.last().map(|c| c.at).unwrap_or(start);
+        let a = &request.score.events[spanner.start.event.0 as usize];
+        let b = &request.score.events[spanner.end.event.0 as usize];
+        let finish = b.at.main.checked_add(
+            b.kind.duration().map(|d| d.time()).transpose()?.unwrap_or(gd_score::Ratio::ZERO),
+        )?;
+        let open_left = a.at >= start;
+        let close_right = finish <= end.main;
+        let left_x = if open_left {
+            let a_idx = request.columns.partition_point(|c| c.at.main < a.at.main);
+            if a_idx == 0 {
+                request.preface_end + 0.15 * space
+            } else {
+                request.positions.get(a_idx).copied().unwrap_or(first.x) + 0.15 * space
+            }
+        } else {
+            request.preface_end + 0.2 * space
+        };
+        let right_x = if close_right {
+            let index = request.columns.partition_point(|column| column.at.main < finish);
+            let bar_x = request
+                .positions
+                .get(index)
+                .copied()
+                .unwrap_or_else(|| request.positions.last().copied().unwrap_or(last.x));
+            (bar_x - 0.15 * space).max(left_x + 1.2 * space)
+        } else {
+            request.staff_right.max(left_x + 1.2 * space)
+        };
+        self.volta(label, (left_x, right_x), (open_left, close_right), middle, space)
+    }
+
+    fn volta(
+        &mut self,
+        label: &str,
+        span_x: (f64, f64),
+        hooks: (bool, bool),
+        middle: f64,
         space: f64,
     ) -> Result<(), Error> {
+        let (left_x, right_x) = span_x;
+        let (open_left, close_right) = hooks;
         let y = middle - 7.0 * space;
-        self.line(
-            Point { x: first.x, y: y + space },
-            Point { x: first.x, y },
-            0.16 * space,
-            Role::Volta,
-        )?;
-        self.line(Point { x: first.x, y }, Point { x: last.x, y }, 0.16 * space, Role::Volta)?;
-        self.line(
-            Point { x: last.x, y },
-            Point { x: last.x, y: y + space },
-            0.16 * space,
-            Role::Volta,
-        )?;
-        self.number(
-            label,
-            "timeSig",
-            Point { x: first.x + space, y: y + space },
-            space * 0.6,
-            Role::Volta,
-        )?;
+        if open_left {
+            self.line(
+                Point { x: left_x, y: y + 1.5 * space },
+                Point { x: left_x, y },
+                0.16 * space,
+                Role::Volta,
+            )?;
+        }
+        self.line(Point { x: left_x, y }, Point { x: right_x, y }, 0.16 * space, Role::Volta)?;
+        if close_right {
+            self.line(
+                Point { x: right_x, y },
+                Point { x: right_x, y: y + 1.5 * space },
+                0.16 * space,
+                Role::Volta,
+            )?;
+        }
+        if open_left && !label.is_empty() {
+            let has_text_face = !self.fonts.regular.is_empty() || !self.fonts.bold.is_empty();
+            if has_text_face || !label.chars().all(|c| c.is_ascii_digit()) {
+                self.text(
+                    label,
+                    TextStyle::Bold,
+                    Point { x: left_x + 0.45 * space, y: y + 1.75 * space },
+                    1.9 * space,
+                    Role::Volta,
+                )?;
+            } else {
+                let digit_w = self.fonts.digits_width(label, "timeSig")? * space * 0.55;
+                self.number(
+                    label,
+                    "timeSig",
+                    Point { x: left_x + 0.45 * space + digit_w * 0.5, y: y + 1.65 * space },
+                    space * 0.55,
+                    Role::Volta,
+                )?;
+            }
+        }
         Ok(())
     }
 
     fn phrase(
         &mut self,
         context: &Request<'_, '_>,
-        spanner: &gd_score::Spanner,
+        spanner: &Spanner,
         mut first: Point,
         mut last: Point,
         middle: f64,
     ) -> Result<(), Error> {
         let space = self.options.staff_size / 4.0;
+        let sys_start = context.columns[0].at;
+        let sys_end = context.columns.last().map(|c| c.at).unwrap_or(sys_start);
+        let before = context.score.events[spanner.start.event.0 as usize].at < sys_start;
+        let after = context.score.events[spanner.end.event.0 as usize].at >= sys_end;
         let tie = spanner.kind == SpannerKind::Tie;
         let info = &context.plan.events[spanner.start.event.0 as usize];
         let up = match spanner.direction {
@@ -110,16 +167,26 @@ impl Draw<'_, '_, '_, '_, '_> {
             }
         };
         if !tie {
-            first = self.slur_attachment(context, spanner.start, first, up);
-            last = self.slur_attachment(context, spanner.end, last, up);
+            if !before {
+                first = self.slur_attachment(context, spanner.start, first, up);
+            }
+            if !after {
+                last = self.slur_attachment(context, spanner.end, last, up);
+            }
         }
         let offset = if up { -0.65 * space } else { 0.65 * space };
-        let from = Point { x: first.x + 1.1 * space, y: first.y + offset };
-        let to = Point { x: last.x - 0.1 * space, y: last.y + offset };
+        let from =
+            Point { x: if before { first.x } else { first.x + 1.1 * space }, y: first.y + offset };
+        let mut to = Point { x: last.x - 0.1 * space, y: last.y + offset };
+        if before && tie {
+            to.x = continued_tie_end(context, spanner, last.x, from.x, space).min(to.x);
+        }
+        if after && to.x < from.x + 0.8 * space {
+            to.x = (from.x + 0.8 * space).min(context.staff_right - 0.08 * space);
+        }
         if to.x <= from.x {
             return Ok(());
         }
-
         let end_thickness = self.fonts.default_value(
             if tie { "tieEndpointThickness" } else { "slurEndpointThickness" },
             0.1,
@@ -144,8 +211,7 @@ impl Draw<'_, '_, '_, '_, '_> {
         self.add(
             Mark::Curve { outer, inner, role: if tie { Role::Tie } else { Role::Slur } },
             bounds,
-        )?;
-        Ok(())
+        )
     }
 
     fn slur_attachment(
@@ -173,17 +239,59 @@ impl Draw<'_, '_, '_, '_, '_> {
         size: f64,
         role: Role,
     ) -> Result<(), Error> {
-        let width = text.len() as f64 * size * 0.7;
-        for (index, digit) in text.chars().enumerate() {
-            self.glyph(
-                &format!("{prefix}{digit}"),
-                at.x - width / 2.0 + index as f64 * size * 0.7,
-                at.y,
-                size,
-                role,
-            )?;
+        let (items, width) = self.fonts.number_layout(text, prefix)?;
+        let left = at.x - width * size * 0.5;
+        for (glyph, gx) in items {
+            let data = self
+                .fonts
+                .glyph_data(glyph)
+                .ok_or_else(|| crate::limits::failure("Missing digit glyph geometry."))?;
+            let x = left + gx * size;
+            let bounds = Rect {
+                left: x + data.bounds.left * size,
+                right: x + data.bounds.right * size,
+                top: at.y + data.bounds.top * size,
+                bottom: at.y + data.bounds.bottom * size,
+            };
+            self.add(Mark::Glyph { glyph, x, y: at.y, size, role }, bounds)?;
         }
         Ok(())
+    }
+}
+
+fn spanner_order(score: &Score, a: &Spanner, b: &Spanner) -> std::cmp::Ordering {
+    let rank = |kind: &SpannerKind| match kind {
+        SpannerKind::Tie => 0u8,
+        SpannerKind::Slur => 1,
+        SpannerKind::PhrasingSlur => 2,
+        SpannerKind::Tuplet(_, _) => 3,
+        SpannerKind::Crescendo | SpannerKind::Decrescendo => 4,
+        SpannerKind::Volta(_) => 5,
+        SpannerKind::Beam => 6,
+    };
+    let span_len = |s: &Spanner| {
+        let start = score.events[s.start.event.0 as usize].at;
+        let end = score.events[s.end.event.0 as usize].at;
+        end.main.checked_sub(start.main).unwrap_or_default()
+    };
+    rank(&a.kind).cmp(&rank(&b.kind)).then_with(|| span_len(a).cmp(&span_len(b)))
+}
+
+/// Where a tie continued on a new system ends: before the accidental its note restates.
+fn continued_tie_end(
+    context: &Request<'_, '_>,
+    spanner: &Spanner,
+    head_x: f64,
+    from_x: f64,
+    space: f64,
+) -> f64 {
+    let end = &context.plan.events[spanner.end.event.0 as usize];
+    match end.heads.get(spanner.end.note as usize) {
+        Some(head) if head.accidental.is_some() => {
+            let accidental_left = head_x + (head.accidental_x - head.at.x) * space;
+            (accidental_left - 0.2 * space).max(from_x + 0.5 * space)
+        }
+        _ => f64::INFINITY,
     }
 }
 
@@ -222,9 +330,9 @@ pub(crate) fn endpoint(
         middle + local.y * space
     };
     if before {
-        x = request.indent + 0.5 * space;
+        x = request.preface_end + 0.35 * space;
     } else if after {
-        x -= 0.5 * space;
+        x = request.positions.last().copied().unwrap_or(x) - 0.25 * space;
     } else {
         let prefix = if event.at.main == first.main { 0.0 } else { info.prefix };
         x += (prefix + local.x) * space;

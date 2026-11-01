@@ -1,9 +1,27 @@
 //! A chord's dots share a right column and choose the nearest free staff spaces.
 
-use crate::prepare::EventInfo;
+use gd_score::EventId;
+
+use crate::prepare::{EventInfo, Plan};
 
 pub(crate) fn arrange(info: &mut EventInfo) {
     let mut used = Vec::<f64>::new();
+    place_chord(info, info.bounds.right, &mut used);
+}
+
+pub(crate) fn arrange_staff_column(plan: &mut Plan, ids: &[EventId]) {
+    let right =
+        ids.iter().map(|id| plan.events[id.0 as usize].bounds.right).fold(0.0f64, f64::max);
+    let mut ordered = ids.to_vec();
+    ordered.sort_by_key(|id| !plan.events[id.0 as usize].up);
+    let mut used = Vec::<f64>::new();
+    for id in ordered {
+        let info = &mut plan.events[id.0 as usize];
+        place_chord(info, right, &mut used);
+    }
+}
+
+fn place_chord(info: &mut EventInfo, column_right: f64, used: &mut Vec<f64>) {
     let mut indices: Vec<_> = (0..info.heads.len()).collect();
     indices.sort_by(|&a, &b| info.heads[a].at.y.total_cmp(&info.heads[b].at.y));
     if info.dot_down {
@@ -26,9 +44,9 @@ pub(crate) fn arrange(info: &mut EventInfo) {
             })
             .unwrap_or(origin + 16.5);
         used.push(y);
-        for (index, dot) in head.dots.iter_mut().enumerate() {
+        for (dot_idx, dot) in head.dots.iter_mut().enumerate() {
             dot.y = y;
-            dot.x = info.bounds.right - info.voice_shift + 0.5 + index as f64 * 0.6;
+            dot.x = column_right - info.voice_shift + 0.5 + dot_idx as f64 * 0.6;
         }
     }
 }

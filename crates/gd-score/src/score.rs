@@ -1,13 +1,13 @@
-use crate::{Duration, Key, Pitch, Ratio, Span};
+use crate::{Duration, Key, Markup, MarkupRole, Pitch, Ratio, Span};
 
 /// A staff index in a score.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct StaffId(pub u32);
 /// A voice index in a score.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct VoiceId(pub u32);
 /// An event index in a score.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct EventId(pub u32);
 
 /// Exact whole-note time, with grace events ordered before their main note.
@@ -54,6 +54,10 @@ pub struct Staff {
     pub name: String,
     /// Abbreviation on subsequent systems.
     pub short_name: String,
+    /// Optional structured markup for the full instrument name.
+    pub name_markup: Option<Markup>,
+    /// Optional structured markup for the abbreviated instrument name.
+    pub short_name_markup: Option<Markup>,
 }
 
 /// One or two independent rhythmic sequences on a staff.
@@ -90,6 +94,29 @@ pub struct StaffGroup {
     pub last: StaffId,
     /// Brace or bracket.
     pub kind: GroupKind,
+    /// Full name of the whole group on the first system, beside its brace or bracket.
+    pub name: String,
+    /// Abbreviation of the group's name on subsequent systems.
+    pub short_name: String,
+    /// Optional structured markup for the group's full name.
+    pub name_markup: Option<Markup>,
+    /// Optional structured markup for the group's abbreviated name.
+    pub short_name_markup: Option<Markup>,
+}
+
+impl StaffGroup {
+    /// A group of `kind` over `first..=last` without a name.
+    pub fn new(first: StaffId, last: StaffId, kind: GroupKind) -> Self {
+        Self {
+            first,
+            last,
+            kind,
+            name: String::new(),
+            short_name: String::new(),
+            name_markup: None,
+            short_name_markup: None,
+        }
+    }
 }
 
 /// Visual grouping policy for staves.
@@ -323,6 +350,8 @@ pub enum AnnotationKind {
     Tempo(String),
     /// A rehearsal label.
     Rehearsal(String),
+    /// Rich formatted markup with its semantic role.
+    Markup(Markup, MarkupRole),
 }
 
 /// A text face chosen from the project's font policy.
@@ -335,6 +364,8 @@ pub enum TextStyle {
     Bold,
     /// Italic text.
     Italic,
+    /// Bold italic text, falling back to bold, then italic, when no such face exists.
+    BoldItalic,
 }
 
 /// A lyric attachment to a specific note or an independently timed lyric.

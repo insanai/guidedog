@@ -13,6 +13,7 @@ mod interpret;
 mod lexer;
 mod limits;
 mod lyrics;
+mod markup;
 mod memory;
 mod names;
 mod notation;

@@ -130,14 +130,22 @@ struct Parser<'a, 'w> {
 }
 
 impl Parser<'_, '_> {
-    fn group(&mut self, close: Option<TokenKind>, depth: usize) -> Result<Vec<SyntaxId>, Error> {
+    fn group(
+        &mut self,
+        open: Option<(TokenKind, Span)>,
+        depth: usize,
+    ) -> Result<Vec<SyntaxId>, Error> {
         let mut children = Vec::new();
         while let Some(token) = self.tokens.get(self.at) {
             self.work.take(1, token.span)?;
             if depth > self.limits.depth {
                 return Err(limit("syntax depth", token.span));
             }
-            if close.as_ref() == Some(&token.kind) {
+            let after_script = token.kind == TokenKind::Symbol('>')
+                && self.at > 0
+                && matches!(self.tokens[self.at - 1].kind, TokenKind::Symbol('-' | '^' | '_'))
+                && self.tokens[self.at - 1].span.end == token.span.start;
+            if !after_script && open.as_ref().map(|(k, _)| k) == Some(&token.kind) {
                 self.at += 1;
                 return Ok(children);
             }
@@ -152,7 +160,7 @@ impl Parser<'_, '_> {
                 _ => (None, 0),
             };
             let kind = if let Some(end) = end {
-                let nested = self.group(Some(end), depth + 1)?;
+                let nested = self.group(Some((end, token.span)), depth + 1)?;
                 match group {
                     0 => ExprKind::Sequence(nested),
                     1 => ExprKind::Chord(nested),
@@ -167,9 +175,8 @@ impl Parser<'_, '_> {
             push(&mut self.nodes, Expr { kind, span: token.span }, token.span)?;
             push(&mut children, id, token.span)?;
         }
-        if close.is_some() {
-            let span = self.tokens.last().map(|t| t.span).unwrap_or_default();
-            return Err(syntax_error(span, "The music group has no closing delimiter."));
+        if let Some((_, open_span)) = open {
+            return Err(syntax_error(open_span, "The music group has no closing delimiter."));
         }
         Ok(children)
     }

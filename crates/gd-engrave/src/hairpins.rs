@@ -21,6 +21,7 @@ impl Draw<'_, '_, '_, '_, '_> {
         let space = self.options.staff_size / 4.0;
         let (mut first, mut last) = endpoints;
         if a.at >= start {
+            let a_base = base_event_x(request, spanner.start.event, start, space);
             let width = a
                 .marks
                 .iter()
@@ -30,10 +31,17 @@ impl Draw<'_, '_, '_, '_, '_> {
                 })
                 .map(|text| crate::labels::dynamic_width(self.fonts, text))
                 .try_fold(0.0f64, |width, next| next.map(|next| width.max(next)))?;
-            first.x += (width + 0.5) * space;
+            first.x = if width > 0.0 {
+                first.x.max(a_base) + (width + 0.45) * space
+            } else {
+                first.x + 0.35 * space
+            };
         }
         if b.at < end {
-            last.x -= 0.5 * space;
+            let b_base = base_event_x(request, spanner.end.event, start, space);
+            let has_end_dyn = b.marks.iter().any(|m| matches!(m.kind, AnnotationKind::Dynamic(_)));
+            last.x =
+                if has_end_dyn { last.x.min(b_base) - 0.55 * space } else { last.x - 0.4 * space };
         }
         if last.x <= first.x {
             return Ok(());
@@ -56,6 +64,23 @@ impl Draw<'_, '_, '_, '_, '_> {
         }
         Ok(())
     }
+}
+
+fn base_event_x(
+    request: &Request<'_, '_>,
+    event_id: gd_score::EventId,
+    start: Moment,
+    space: f64,
+) -> f64 {
+    let event = &request.score.events[event_id.0 as usize];
+    let idx = request.columns.partition_point(|c| c.at < event.at);
+    let col_x = request.positions.get(idx).copied().unwrap_or(0.0);
+    let prefix = if event.at.main == start.main {
+        0.0
+    } else {
+        request.plan.events[event_id.0 as usize].prefix * space
+    };
+    col_x + prefix
 }
 
 fn progress(at: Moment, first: Moment, last: Moment) -> Result<f64, Error> {

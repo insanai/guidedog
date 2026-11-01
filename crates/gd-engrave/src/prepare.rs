@@ -74,6 +74,7 @@ pub(crate) struct EventInfo {
     pub(crate) id: gd_score::EventId,
     pub(crate) staff: usize,
     pub(crate) state: StaffState,
+    pub(crate) base_prefix: f64,
     pub(crate) prefix: f64,
     pub(crate) voice_shift: f64,
     pub(crate) dot_down: bool,
@@ -109,14 +110,7 @@ impl Plan {
         options: &mut Options<'_>,
         work: &mut usize,
     ) -> Result<(), Error> {
-        while self.events.len() < score.events.len() {
-            push(&mut self.events, EventInfo::default(), &mut options.reserve)?;
-        }
-        self.events.truncate(score.events.len());
-        self.measures.clear();
-        for _ in &score.measures {
-            push(&mut self.measures, Vec::new(), &mut options.reserve)?;
-        }
+        self.init_buffers(score, options)?;
         charge(work, score.spanners.len())?;
         let tied: BTreeSet<_> = score
             .spanners
@@ -125,7 +119,7 @@ impl Plan {
             .map(|s| (s.end.event.0, s.end.note))
             .collect();
         let mut states = vec![StaffState::default(); score.staves.len()];
-        for column in columns {
+        for (column_index, column) in columns.iter().enumerate() {
             charge(work, score.staves.len() + column.events.len())?;
             let measure =
                 score.measures.partition_point(|m| m.start <= column.at.main).saturating_sub(1);
@@ -135,7 +129,8 @@ impl Plan {
                     state.measure = measure;
                 }
             }
-            let prefixes = self.contexts(column, score, &mut states)?;
+            let prefixes =
+                self.contexts(columns, column_index, score, fonts, &mut states, work)?;
             let changes = accidental_changes(column, score, work)?;
             for (&(staff, step, octave), &alter) in &changes {
                 if alter.is_none() {
@@ -146,6 +141,7 @@ impl Plan {
                 let event = &score.events[id.0 as usize];
                 let info = &mut self.events[id.0 as usize];
                 let state = &mut states[info.staff];
+                info.base_prefix = prefixes[info.staff];
                 info.prefix = prefixes[info.staff];
                 info.state = state.snapshot();
                 info.dot_down = score.voices[event.voice.0 as usize].direction == Direction::Down;
@@ -176,15 +172,91 @@ impl Plan {
             }
         }
         crate::beaming::groups(self, score, fonts, options, work)?;
+        self.finalize_columns(score, columns, fonts, work)?;
         Ok(())
     }
+
+    fn init_buffers(&mut self, score: &Score, options: &mut Options<'_>) -> Result<(), Error> {
+        while self.events.len() < score.events.len() {
+            push(&mut self.events, EventInfo::default(), &mut options.reserve)?;
+        }
+        self.events.truncate(score.events.len());
+        self.measures.clear();
+        for _ in &score.measures {
+            push(&mut self.measures, Vec::new(), &mut options.reserve)?;
+        }
+        Ok(())
+    }
+
+    fn finalize_columns(
+        &mut self,
+        score: &Score,
+        columns: &[Column],
+        fonts: &Fonts<'_>,
+        work: &mut usize,
+    ) -> Result<(), Error> {
+        let staves = score.staves.len();
+        for (column_index, column) in columns.iter().enumerate() {
+            if column_index + 1 >= columns.len() {
+                break;
+            }
+            for id in &column.events {
+                let info = &mut self.events[id.0 as usize];
+                if !info.heads.is_empty() {
+                    info.voice_shift = 0.0;
+                    for head in &mut info.heads {
+                        head.shared = false;
+                    }
+                    arrange_heads(info, fonts, work)?;
+                    stems(info, fonts)?;
+                    crate::accidentals::arrange(info, fonts, work)?;
+                }
+            }
+            crate::voices::arrange(self, column, score, fonts, work)?;
+            if column_index == 0 {
+                continue;
+            }
+            let mut min_left = vec![0.0f64; staves];
+            for id in &column.events {
+                let info = &self.events[id.0 as usize];
+                if !info.heads.is_empty() {
+                    let left = chord_left_ink(info, fonts)?;
+                    min_left[info.staff] = min_left[info.staff].min(left);
+                }
+            }
+            for id in &column.events {
+                let info = &mut self.events[id.0 as usize];
+                if info.base_prefix > 0.0 {
+                    info.prefix = info.base_prefix - min_left[info.staff];
+                }
+            }
+        }
+        Ok(())
+    }
+
     fn contexts(
         &mut self,
-        column: &Column,
+        columns: &[Column],
+        column_index: usize,
         score: &Score,
+        fonts: &Fonts<'_>,
         states: &mut [StaffState],
+        work: &mut usize,
     ) -> Result<Vec<f64>, Error> {
+        let column = &columns[column_index];
         let mut prefixes = vec![0.0; states.len()];
+        let mut bar_left = vec![None; states.len()];
+        if column_index > 0 && column_index + 1 < columns.len() {
+            for (staff, slot) in prefixes.iter_mut().enumerate() {
+                if let Some(style) =
+                    crate::bars::column_bar_style(score, columns, column_index, staff, work)?
+                {
+                    let (left, right) = crate::bars::style_extent(style);
+                    *slot = right + 0.95;
+                    bar_left[staff] = Some(left);
+                }
+            }
+        }
         for id in &column.events {
             let event = &score.events[id.0 as usize];
             let staff = score.voices[event.voice.0 as usize].staff.0 as usize;
@@ -201,28 +273,24 @@ impl Plan {
             match &event.kind {
                 EventKind::Clef(clef) => {
                     state.clef = *clef;
-                    prefixes[staff] += 2.5;
+                    // A change at a bar line stands before the bar, as in LilyPond and
+                    // Gould; elsewhere it stands before the notes it applies to.
+                    match bar_left[staff] {
+                        Some(left) => info.notation_x = left - CLEF_BEFORE_BAR,
+                        None => prefixes[staff] += 2.5,
+                    }
                 }
                 EventKind::Key(key) => {
                     info.previous_key = Some(state.key);
-                    let old = state.key.alterations()?;
-                    let new = key.alterations()?;
-                    let canceled = old
-                        .iter()
-                        .zip(new)
-                        .filter(|(old, new)| **old != Alter::Natural && **old != *new)
-                        .count();
-                    prefixes[staff] += canceled as f64 * 0.8;
+                    let canceled = crate::signatures::cancel_width(fonts, state.key, *key)?;
                     state.key = *key;
                     state.remembered.clear();
-                    prefixes[staff] +=
-                        key.alterations()?.iter().filter(|a| **a != Alter::Natural).count() as f64
-                            * 0.9
-                            + 0.7;
+                    let printed = crate::signatures::key_width(fonts, *key)?;
+                    prefixes[staff] += canceled + printed + 0.7;
                 }
                 EventKind::Time(meter) => {
                     state.meter = meter.clone();
-                    prefixes[staff] += 2.5;
+                    prefixes[staff] += crate::signatures::meter_width(fonts, meter)? + 0.8;
                 }
                 _ => {}
             }
@@ -230,6 +298,39 @@ impl Plan {
         }
         Ok(prefixes)
     }
+}
+
+/// How far left of a bar line's left edge a clef change at that bar line begins, in staff
+/// spaces: the small clef's width and a gap.
+pub(crate) const CLEF_BEFORE_BAR: f64 = 2.7;
+
+fn chord_left_ink(info: &EventInfo, fonts: &Fonts<'_>) -> Result<f64, Error> {
+    let head_glyph = fonts.glyph(info.head_glyph)?;
+    let head_left = fonts.glyph_data(head_glyph).map(|d| d.bounds.left).unwrap_or(0.0);
+    let mut left = 0.0f64;
+    for head in &info.heads {
+        if !head.shared {
+            left = left.min(head.at.x + head_left * info.head_scale);
+        }
+        if (-head.at.y * 2.0).round().abs() >= 6.0 {
+            left = left.min(head.at.x - 0.4 * info.head_scale);
+        }
+        if (!head.continuation || head.accidental_forced)
+            && !head.shared
+            && let Some(name) = head.accidental
+        {
+            let glyph = fonts.glyph(name)?;
+            if let Some(data) = fonts.glyph_data(glyph) {
+                let pad = if head.cautionary {
+                    crate::accidentals::CAUTIONARY_PAD * info.head_scale
+                } else {
+                    0.0
+                };
+                left = left.min(head.accidental_x + data.bounds.left * info.head_scale - pad);
+            }
+        }
+    }
+    Ok(left)
 }
 
 fn heads(

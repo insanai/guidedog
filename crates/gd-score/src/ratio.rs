@@ -82,7 +82,11 @@ impl Ratio {
 
     fn reduce(mut num: i128, mut den: i128) -> Result<Self, Error> {
         if den == 0 {
-            return Err(overflow());
+            return Err(Error::new(
+                ErrorKind::Duration,
+                "A fraction or duration multiplier has a zero denominator.",
+            )
+            .hint("Use a positive denominator such as `*2/3` or `\\tuplet 3/2`."));
         }
         if den < 0 {
             num = -num;

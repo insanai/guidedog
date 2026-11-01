@@ -1,8 +1,19 @@
 use std::fmt;
 
 /// An index into a reader's retained source files.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub struct FileId(pub u32);
+
+impl FileId {
+    /// Unplaced source sentinel; file zero is the root input file.
+    pub const NONE: Self = Self(u32::MAX);
+}
+
+impl Default for FileId {
+    fn default() -> Self {
+        Self::NONE
+    }
+}
 
 /// A half-open byte range in a source file. The default is an unplaced diagnostic.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -13,6 +24,13 @@ pub struct Span {
     pub start: usize,
     /// Last byte, exclusive.
     pub end: usize,
+}
+
+impl Span {
+    /// Returns whether this span carries no source-file attachment.
+    pub fn is_unplaced(self) -> bool {
+        self.file == FileId::NONE
+    }
 }
 
 /// Whether processing can continue after a diagnostic.
@@ -113,6 +131,14 @@ impl Error {
     /// Attaches a source range, consuming and returning the diagnostic.
     pub fn at(mut self, span: Span) -> Self {
         self.span = span;
+        self
+    }
+
+    /// Attaches a fallback source range only when this diagnostic is still unplaced.
+    pub fn or_at(mut self, span: Span) -> Self {
+        if self.span.is_unplaced() {
+            self.span = span;
+        }
         self
     }
 

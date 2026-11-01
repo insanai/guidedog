@@ -1,14 +1,15 @@
 //! Courtesy signatures reserve a suffix and repeat the coming context at a system end.
 
-use gd_score::{Alter, Error, EventKind, Ratio, Score};
+use gd_score::{Error, EventKind, Ratio, Score};
 
-use crate::Point;
 use crate::drawing::{Draw, Request};
 use crate::limits::charge;
+use crate::{Fonts, Point};
 
 pub(crate) fn width(
     score: &Score,
     plan: &crate::prepare::Plan,
+    fonts: &Fonts<'_>,
     at: Ratio,
     work: &mut usize,
 ) -> Result<f64, Error> {
@@ -23,25 +24,18 @@ pub(crate) fn width(
         let (kind, width) = match &event.kind {
             EventKind::Clef(_) => (0, 2.5),
             EventKind::Key(key) => {
-                let old = plan.events[index].previous_key.unwrap_or_default().alterations()?;
-                let new = key.alterations()?;
-                let naturals = old
-                    .iter()
-                    .zip(new)
-                    .filter(|(old, new)| **old != Alter::Natural && **old != *new)
-                    .count();
-                let printed = new.iter().filter(|a| **a != Alter::Natural).count();
-                (1, naturals as f64 * 0.8 + printed as f64 * 0.9 + 0.7)
+                let old = plan.events[index].previous_key.unwrap_or_default();
+                let canceled = crate::signatures::cancel_width(fonts, old, *key)?;
+                let printed = crate::signatures::key_width(fonts, *key)?;
+                (1, canceled + printed + 0.5)
             }
-            EventKind::Time(meter) => (
-                2,
-                1.0 + meter.numerator.to_string().len().max(meter.denominator.to_string().len())
-                    as f64
-                    * 0.7,
-            ),
+            EventKind::Time(meter) => (2, crate::signatures::meter_width(fonts, meter)? + 0.6),
             _ => continue,
         };
         if !seen[staff][kind] {
+            if widths[staff] == 0.0 {
+                widths[staff] = 0.75;
+            }
             widths[staff] += width * 0.75 + 0.5;
         }
         seen[staff][kind] = true;
@@ -61,7 +55,8 @@ impl Draw<'_, '_, '_, '_, '_> {
         let Some(last) = request.columns.last() else { return Ok(()) };
         let space = self.options.staff_size / 4.0;
         let size = space * 0.75;
-        let mut x = request.positions.last().copied().unwrap_or(0.0) + 0.5 * space;
+        let bar_right = crate::bars::closing_bar_right(request, self.work)?;
+        let mut x = request.positions.last().copied().unwrap_or(0.0) + (bar_right + 0.5) * space;
         let mut seen = [false; 3];
         self.measure = 0;
         for id in &last.events {
@@ -94,17 +89,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                 }
                 EventKind::Time(meter) if !seen[2] => {
                     self.time_signature(meter, Point { x, y: middle }, size)?;
-                    (
-                        2,
-                        (1.0 + meter
-                            .numerator
-                            .to_string()
-                            .len()
-                            .max(meter.denominator.to_string().len())
-                            as f64
-                            * 0.7)
-                            * size,
-                    )
+                    (2, crate::signatures::meter_width(self.fonts, meter)? * size)
                 }
                 _ => continue,
             };

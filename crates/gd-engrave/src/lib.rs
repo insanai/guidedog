@@ -27,6 +27,7 @@ mod layout;
 mod limits;
 mod lyrics;
 mod marks;
+mod markup;
 mod math;
 mod memory;
 mod multirests;

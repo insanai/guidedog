@@ -1,10 +1,14 @@
-use gd_score::{Annotation, AnnotationKind, BarStyle, EventKind, NoteRef, SpannerKind, TextStyle};
+use gd_score::{
+    Annotation, AnnotationKind, BarStyle, Direction, Duration, EventId, EventKind, NoteRef,
+    SpannerKind, TextStyle,
+};
 
 use crate::cursor::Cursor;
 use crate::interpret::{Reader, State, unsupported};
+use crate::limits::limit;
 use crate::notes::read_duration;
 use crate::parser::syntax_error;
-use crate::{Error, ExprKind, Span, TokenKind};
+use crate::{Error, ExprKind, Span, SyntaxId, TokenKind};
 
 impl Reader<'_> {
     pub(crate) fn repeat(
@@ -28,24 +32,54 @@ impl Reader<'_> {
                     self.sequence(body, state, depth + 1)?;
                 }
             }
-            "volta" => {
-                self.emit(state, EventKind::Bar(BarStyle::RepeatStart), span)?;
-                self.sequence(body, state, depth + 1)?;
-                if cursor.command("alternative") {
-                    self.alternatives(cursor, state, span, depth, count)?;
-                } else {
-                    self.emit(state, EventKind::Bar(BarStyle::RepeatEnd), span)?;
-                }
-                if count != 2
-                    && let Some(last) = state.last
-                {
-                    self.score.events[last.0 as usize].marks.push(Annotation {
-                        kind: AnnotationKind::Text(format!("{count}x"), TextStyle::Regular),
-                        direction: gd_score::Direction::Up,
-                    });
-                }
-            }
+            "volta" => self.volta_repeat(body, cursor, state, span, depth, count)?,
             _ => return Err(unsupported(span, &format!("repeat {kind}"))),
+        }
+        Ok(())
+    }
+
+    fn volta_repeat(
+        &mut self,
+        body: &[SyntaxId],
+        cursor: &mut Cursor<'_>,
+        state: &mut State,
+        span: Span,
+        depth: usize,
+        count: u16,
+    ) -> Result<(), Error> {
+        self.emit(state, EventKind::Bar(BarStyle::RepeatStart), span)?;
+        let inline_alt = body.iter().position(|id| {
+            matches!(
+                self.syntax.node(*id).map(|n| &n.kind),
+                Some(ExprKind::Atom(TokenKind::Command(cmd))) if cmd == "alternative"
+            )
+        });
+        let has_alternatives = if let Some(pos) = inline_alt {
+            self.sequence(&body[..pos], state, depth + 1)?;
+            let mut inner = Cursor::new(self.syntax, &body[pos + 1..]);
+            self.alternatives(&mut inner, state, span, depth + 1, count)?;
+            if inner.peek().is_some() {
+                self.sequence(&body[pos + 1 + inner.at..], state, depth + 1)?;
+            }
+            true
+        } else {
+            self.sequence(body, state, depth + 1)?;
+            if cursor.command("alternative") {
+                self.alternatives(cursor, state, span, depth, count)?;
+                true
+            } else {
+                self.emit(state, EventKind::Bar(BarStyle::RepeatEnd), span)?;
+                false
+            }
+        };
+        if !has_alternatives
+            && count != 2
+            && let Some(last) = state.last
+        {
+            self.score.events[last.0 as usize].marks.push(Annotation {
+                kind: AnnotationKind::Text(format!("{count}x"), TextStyle::Regular),
+                direction: Direction::Up,
+            });
         }
         Ok(())
     }
@@ -58,64 +92,87 @@ impl Reader<'_> {
         depth: usize,
         count: u16,
     ) -> Result<(), Error> {
-        let alternatives = cursor.sequence()?;
-        if alternatives.is_empty() || alternatives.len() > usize::from(count) {
+        let raw = cursor.sequence()?;
+        let mut alt_cursor = Cursor::new(self.syntax, raw);
+        let mut branches = Vec::new();
+        while alt_cursor.peek().is_some() {
+            let label = if alt_cursor.command("volta") {
+                Some(read_volta_numbers(&mut alt_cursor, count, span)?)
+            } else {
+                None
+            };
+            let ids = alt_cursor.sequence().map_err(|_| {
+                syntax_error(alt_cursor.span(), "Each repeat alternative needs braces.")
+            })?;
+            branches.push((label, ids));
+        }
+        if branches.is_empty() || branches.len() > usize::from(count) {
             return Err(syntax_error(
                 span,
                 "Repeat alternatives must number from one to the repeat count.",
             ));
         }
-        for (index, id) in alternatives.iter().enumerate() {
-            let node = self
-                .syntax
-                .node(*id)
-                .ok_or_else(|| syntax_error(span, "Invalid alternative syntax."))?;
-            let ExprKind::Sequence(ids) = &node.kind else {
-                return Err(syntax_error(node.span, "Each repeat alternative needs braces."));
-            };
+        let extra = usize::from(count).saturating_sub(branches.len());
+        for (index, (explicit_label, ids)) in branches.iter().enumerate() {
             let first = self.score.events.len();
             self.sequence(ids, state, depth + 1)?;
-            let events: Vec<_> = self.score.events[first..]
-                .iter()
-                .enumerate()
-                .filter(|(_, e)| e.kind.duration().is_some())
-                .map(|(i, _)| gd_score::EventId((first + i) as u32))
-                .collect();
-            if let (Some(first), Some(last)) = (events.first(), events.last()) {
+            if let Some((start_id, end_id)) = self.volta_voice_span(first) {
+                let label = explicit_label.clone().unwrap_or_else(|| {
+                    if index == 0 && extra > 0 {
+                        format!("1.-{}.", 1 + extra)
+                    } else {
+                        format!("{}.", index + 1 + extra)
+                    }
+                });
                 self.spanner(
-                    NoteRef { event: *first, note: 0 },
-                    NoteRef { event: *last, note: 0 },
-                    SpannerKind::Volta((index + 1).to_string()),
-                    gd_score::Direction::Up,
+                    NoteRef { event: start_id, note: 0 },
+                    NoteRef { event: end_id, note: 0 },
+                    SpannerKind::Volta(label),
+                    Direction::Up,
                     span,
                 )?;
             }
-            self.emit(
-                state,
-                EventKind::Bar(if index + 1 < alternatives.len() {
-                    BarStyle::RepeatEnd
-                } else {
-                    BarStyle::Final
-                }),
-                span,
-            )?;
+            if index + 1 < branches.len() {
+                self.emit(state, EventKind::Bar(BarStyle::RepeatEnd), span)?;
+            }
         }
         Ok(())
+    }
+
+    fn volta_voice_span(&self, first: usize) -> Option<(EventId, EventId)> {
+        let target_voice = self.score.events[first..]
+            .iter()
+            .filter(|e| e.kind.duration().is_some())
+            .min_by_key(|e| (self.score.voices[e.voice.0 as usize].staff.0, e.voice.0))
+            .map(|e| e.voice)?;
+        let mut range = None;
+        for (i, event) in self.score.events[first..].iter().enumerate() {
+            if event.voice == target_voice && event.kind.duration().is_some() {
+                let id = EventId((first + i) as u32);
+                range = Some(match range {
+                    None => (id, id),
+                    Some((start, _)) => (start, id),
+                });
+            }
+        }
+        range
     }
 
     pub(crate) fn chord_names(
         &mut self,
         cursor: &mut Cursor<'_>,
         state: &mut State,
-        span: Span,
+        _span: Span,
+        depth: usize,
     ) -> Result<(), Error> {
-        let ids = cursor.sequence()?;
-        let mut inner = Cursor::new(self.syntax, ids);
-        while inner.peek().is_some() {
-            self.work.take(1, inner.span())?;
-            self.memory.take(512, inner.span())?;
+        let ids = self.chord_expression(cursor, depth)?;
+        let mut inner = Cursor::new(self.syntax, &ids);
+        while let Some(peek_node) = inner.peek() {
+            let item_span = peek_node.span;
+            self.work.take(1, item_span)?;
+            self.memory.take(512, item_span)?;
             if inner.symbol('|') {
-                self.bar_checks.push((state.at.main, span));
+                self.bar_checks.push((state.at.main, item_span));
                 continue;
             }
             let node = inner.next()?;
@@ -125,47 +182,100 @@ impl Reader<'_> {
                     "Chord mode needs a root and optional chord quality.",
                 ));
             };
-            let root = self.raw_pitch(word, &mut inner, state, node.span)?.pitch;
-            let written = read_duration(&mut inner, state.duration)?;
-            state.duration = written;
-            let duration =
-                gd_score::Duration { scale: written.scale.checked_mul(state.scale)?, ..written };
-            let mut text = pitch_name(root);
-            if inner.symbol(':') {
-                let mut quality = String::new();
-                while let Some(part) = inner.peek() {
-                    match &part.kind {
-                        ExprKind::Atom(TokenKind::Word(word)) if quality.is_empty() => {
-                            self.memory.take(word.len() + 32, part.span)?;
-                            quality.push_str(word)
-                        }
-                        ExprKind::Atom(TokenKind::Number(number)) => {
-                            self.memory.take(number.len() + 32, part.span)?;
-                            quality.push_str(number);
-                        }
-                        ExprKind::Atom(TokenKind::Symbol('.' | '+' | '-')) => {
-                            if let ExprKind::Atom(TokenKind::Symbol(c)) = part.kind {
-                                quality.push(c);
-                            }
-                        }
-                        _ => break,
-                    }
-                    inner.at += 1;
-                }
-                if !CHORD_QUALITIES.contains(&quality.as_str()) {
-                    return Err(unsupported(node.span, &format!("chord quality {quality}")));
-                }
-                text.push_str(&quality);
+            if matches!(word.as_str(), "r" | "s" | "R") {
+                let written = read_duration(&mut inner, state.duration)?;
+                state.duration = written;
+                let scale =
+                    written.scale.checked_mul(state.scale).map_err(|e| e.or_at(node.span))?;
+                self.emit(state, EventKind::Skip(Duration { scale, ..written }), node.span)?;
+                continue;
             }
-            if inner.symbol('/') {
-                let bass = inner.text()?;
-                let bass = state.language.pitch(bass, node.span)?;
-                text.push('/');
-                text.push_str(&pitch_name(bass));
-            }
+            let (text, duration) = self.read_chord_symbol(word, &mut inner, state, node.span)?;
             self.emit(state, EventKind::ChordName(text, duration), node.span)?;
         }
         Ok(())
+    }
+
+    fn chord_expression(
+        &self,
+        cursor: &mut Cursor<'_>,
+        depth: usize,
+    ) -> Result<Vec<SyntaxId>, Error> {
+        if depth > self.limits.depth {
+            return Err(limit("chord expansion", cursor.span()));
+        }
+        cursor.command("chordmode");
+        if let Some(ExprKind::Atom(TokenKind::Command(name))) = cursor.peek().map(|n| &n.kind)
+            && let Some(ids) = self.variables.get(name)
+        {
+            cursor.at += 1;
+            let mut inner = Cursor::new(self.syntax, ids);
+            return self.chord_expression(&mut inner, depth + 1);
+        }
+        let span = cursor.span();
+        let ids = cursor.sequence()?;
+        self.memory.take(ids.len() * 8 + 64, span)?;
+        Ok(ids.to_vec())
+    }
+
+    fn read_chord_symbol(
+        &self,
+        word: &str,
+        inner: &mut Cursor<'_>,
+        state: &mut State,
+        span: Span,
+    ) -> Result<(String, Duration), Error> {
+        let mut root = self.raw_pitch(word, inner, state, span)?.pitch;
+        for (from, to) in state.transpositions.iter().rev() {
+            root = root.transpose_tonic(*from, *to).map_err(|e| e.or_at(span))?;
+        }
+        let written = read_duration(inner, state.duration)?;
+        state.duration = written;
+        let scale = written.scale.checked_mul(state.scale).map_err(|e| e.or_at(span))?;
+        let duration = Duration { scale, ..written };
+        let mut text = pitch_name(root);
+        if inner.symbol(':') {
+            let quality = self.read_chord_quality(inner, span)?;
+            text.push_str(&quality);
+        }
+        if inner.symbol('/') {
+            let bass_node = inner.next()?;
+            let ExprKind::Atom(TokenKind::Word(bass_word)) = &bass_node.kind else {
+                return Err(syntax_error(bass_node.span, "Expected a chord bass pitch."));
+            };
+            let mut bass = self.raw_pitch(bass_word, inner, state, bass_node.span)?.pitch;
+            for (from, to) in state.transpositions.iter().rev() {
+                bass = bass.transpose_tonic(*from, *to).map_err(|e| e.or_at(bass_node.span))?;
+            }
+            text.push('/');
+            text.push_str(&pitch_name(bass));
+        }
+        Ok((text, duration))
+    }
+
+    fn read_chord_quality(&self, inner: &mut Cursor<'_>, span: Span) -> Result<String, Error> {
+        let mut quality = String::new();
+        while let Some(part) = inner.peek() {
+            match &part.kind {
+                ExprKind::Atom(TokenKind::Word(word)) if quality.is_empty() => {
+                    self.memory.take(word.len() + 32, part.span)?;
+                    quality.push_str(word);
+                }
+                ExprKind::Atom(TokenKind::Number(number)) => {
+                    self.memory.take(number.len() + 32, part.span)?;
+                    quality.push_str(number);
+                }
+                ExprKind::Atom(TokenKind::Symbol(c @ ('.' | '+' | '-'))) => {
+                    quality.push(*c);
+                }
+                _ => break,
+            }
+            inner.at += 1;
+        }
+        if !CHORD_QUALITIES.contains(&quality.as_str()) {
+            return Err(unsupported(span, &format!("chord quality {quality}")));
+        }
+        Ok(quality)
     }
 }
 
@@ -193,3 +303,24 @@ const CHORD_QUALITIES: &[&str] = &[
     "m", "min", "maj", "dim", "aug", "sus2", "sus4", "5", "6", "7", "9", "11", "13", "m7", "min7",
     "maj7", "dim7", "m7.5-", "7+", "7.5+", "7.5-", "sus", "7sus4",
 ];
+
+fn read_volta_numbers(cursor: &mut Cursor<'_>, count: u16, span: Span) -> Result<String, Error> {
+    let mut nums = Vec::new();
+    loop {
+        let num = cursor.number()?;
+        if num == 0 || num > count || nums.len() >= usize::from(count) {
+            return Err(syntax_error(span, "Volta ending number is outside the repeat count."));
+        }
+        nums.push(num);
+        if !cursor.symbol(',') {
+            break;
+        }
+    }
+    if nums.len() == 1 {
+        return Ok(format!("{}.", nums[0]));
+    }
+    if nums.windows(2).all(|pair| pair[1] == pair[0] + 1) {
+        return Ok(format!("{}.-{}.", nums[0], nums[nums.len() - 1]));
+    }
+    Ok(nums.iter().map(|n| format!("{n}.")).collect::<Vec<_>>().join(", "))
+}

@@ -32,16 +32,17 @@ impl Default for Limits {
 
 #[derive(Debug)]
 pub(crate) struct Work {
-    left: usize,
+    left: std::cell::Cell<usize>,
 }
 
 impl Work {
     pub(crate) fn new(limits: &Limits) -> Self {
-        Self { left: limits.work }
+        Self { left: std::cell::Cell::new(limits.work) }
     }
 
-    pub(crate) fn take(&mut self, count: usize, span: Span) -> Result<(), Error> {
-        self.left = self.left.checked_sub(count).ok_or_else(|| limit("reader work", span))?;
+    pub(crate) fn take(&self, count: usize, span: Span) -> Result<(), Error> {
+        let next = self.left.get().checked_sub(count).ok_or_else(|| limit("reader work", span))?;
+        self.left.set(next);
         Ok(())
     }
 }

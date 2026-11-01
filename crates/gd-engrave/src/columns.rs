@@ -121,7 +121,7 @@ pub(crate) fn breaks(
     for (index, measure) in score.measures.iter().enumerate() {
         charge(work, 1)?;
         let gap = columns.partition_point(|c| c.at.main < measure.start);
-        let (prefix, indent) = preface(score, plan, fonts, index, options, work)?;
+        let (prefix, indent) = preface(score, columns, plan, fonts, index, options, work)?;
         push(
             out,
             BreakPoint {
@@ -132,7 +132,7 @@ pub(crate) fn breaks(
                 suffix: if index == 0 {
                     0.0
                 } else {
-                    crate::courtesy::width(score, plan, measure.start, work)?
+                    crate::courtesy::width(score, plan, fonts, measure.start, work)?
                 },
                 ..BreakPoint::default()
             },
@@ -176,48 +176,99 @@ pub(crate) fn breaks(
     Ok(())
 }
 
+pub(crate) fn preface_widths(
+    score: &Score,
+    columns: &[Column],
+    plan: &crate::prepare::Plan,
+    fonts: &crate::Fonts<'_>,
+    measure: usize,
+    options: &mut Options<'_>,
+    work: &mut usize,
+) -> Result<(f64, f64, f64), Error> {
+    let mut sig_width: f64 = 0.0;
+    let indent = name_indent(score, fonts, measure == 0, options, work)?;
+    for staff_index in 0..score.staves.len() {
+        charge(work, 1)?;
+        if let Some(state) = plan.measures.get(measure).and_then(|m| m.get(staff_index)) {
+            let key_w = crate::signatures::key_width(fonts, state.key)?;
+            let meter_changed = measure == 0 || score.measures[measure - 1].meter != state.meter;
+            let meter_w = if meter_changed {
+                let gap = if key_w > 0.0 { 0.5 } else { 0.0 };
+                gap + crate::signatures::meter_width(fonts, &state.meter)?
+            } else {
+                0.0
+            };
+            sig_width = sig_width.max(4.2 + key_w + meter_w);
+        }
+    }
+    let gap = columns.partition_point(|c| c.at.main < score.measures[measure].start);
+    let open_bar = columns.get(gap).and_then(|col| {
+        (0..score.staves.len())
+            .filter_map(|staff| crate::bars::opening_bar(score, col, staff, measure == 0))
+            .map(crate::bars::style_extent)
+            .max_by(|a, b| (a.1 - a.0).total_cmp(&(b.1 - b.0)))
+    });
+    let sig_end = indent + sig_width.max(3.8);
+    let preface_end = match open_bar {
+        Some((left, right)) => sig_end + 0.6 - left + right,
+        None => sig_end,
+    };
+    let leading = leading_ink(score, plan, fonts, measure, work)?;
+    Ok((preface_end + 1.0 + leading, indent, preface_end))
+}
+
+/// The indent, in staff spaces, that instrument names and group names need. A group's
+/// name stands left of its staves' names, so their widths add up.
+fn name_indent(
+    score: &Score,
+    fonts: &crate::Fonts<'_>,
+    first_line: bool,
+    options: &mut Options<'_>,
+    work: &mut usize,
+) -> Result<f64, Error> {
+    use crate::labels::{label_advance, line_label};
+    let space = options.staff_size / 4.0;
+    let brace = if score.groups.is_empty() { 0.0 } else { 2.1 };
+    let mut advances = Vec::new();
+    for staff in &score.staves {
+        charge(work, 1)?;
+        let label = line_label(
+            first_line,
+            (&staff.name, staff.name_markup.as_ref()),
+            (&staff.short_name, staff.short_name_markup.as_ref()),
+        );
+        let advance = label_advance(fonts, label, space, work, &mut options.reserve)?;
+        push(&mut advances, advance, &mut options.reserve)?;
+    }
+    let mut widest = advances.iter().copied().fold(0.0, f64::max);
+    for group in &score.groups {
+        let label = line_label(
+            first_line,
+            (&group.name, group.name_markup.as_ref()),
+            (&group.short_name, group.short_name_markup.as_ref()),
+        );
+        let own = label_advance(fonts, label, space, work, &mut options.reserve)?;
+        if own > 0.0 {
+            let members = (group.first.0..=group.last.0)
+                .filter_map(|s| advances.get(s as usize).copied())
+                .fold(0.0, f64::max);
+            widest = widest.max(own + if members > 0.0 { members + space } else { 0.0 });
+        }
+    }
+    Ok(if widest > 0.0 { widest / space + 1.5 + brace } else { brace })
+}
+
 fn preface(
     score: &Score,
+    columns: &[Column],
     plan: &crate::prepare::Plan,
     fonts: &crate::Fonts<'_>,
     measure: usize,
     options: &mut Options<'_>,
     work: &mut usize,
 ) -> Result<(f64, f64), Error> {
-    let space = options.staff_size / 4.0;
-    let mut width: f64 = 0.0;
-    let mut indent: f64 = if score.groups.is_empty() { 0.0 } else { 2.1 };
-    let mut warnings = Vec::new();
-    for (staff_index, staff) in score.staves.iter().enumerate() {
-        charge(work, 1)?;
-        let name = if measure == 0 { &staff.name } else { &staff.short_name };
-        if !name.is_empty() {
-            let shaped = crate::text::shape(
-                fonts,
-                name,
-                space * 2.3,
-                gd_score::TextStyle::Regular,
-                &mut warnings,
-                work,
-                &mut options.reserve,
-            )?;
-            indent = indent.max(
-                shaped.advance / space + 1.5 + if score.groups.is_empty() { 0.0 } else { 2.1 },
-            );
-        }
-        if let Some(state) = plan.measures.get(measure).and_then(|m| m.get(staff_index)) {
-            let key = state
-                .key
-                .alterations()?
-                .iter()
-                .filter(|a| **a != gd_score::Alter::Natural)
-                .count();
-            let meter = measure == 0 || score.measures[measure - 1].meter != state.meter;
-            width = width.max(4.7 + key as f64 * 0.9 + if meter { 3.0 } else { 0.0 });
-        }
-    }
-    let leading = leading_ink(score, plan, fonts, measure, work)?;
-    Ok((indent + width.max(4.0) + 1.0 + leading, indent))
+    let (prefix, indent, _) = preface_widths(score, columns, plan, fonts, measure, options, work)?;
+    Ok((prefix, indent))
 }
 
 fn common_shortest(score: &Score, work: &mut usize) -> Result<Ratio, Error> {
@@ -264,12 +315,15 @@ fn leading_ink(
         }
         for head in &event.heads {
             left = left.min(head.at.x);
+            if (-head.at.y * 2.0).round().abs() >= 6.0 {
+                left = left.min(head.at.x - 0.4 * event.head_scale);
+            }
             if let Some(name) = head.accidental {
                 let glyph = fonts.glyph(name)?;
                 if let Some(data) = fonts.glyph_data(glyph) {
                     left = left.min(
                         head.accidental_x + data.bounds.left * event.head_scale
-                            - if head.cautionary { 0.6 } else { 0.0 },
+                            - if head.cautionary { 0.72 * event.head_scale } else { 0.0 },
                     );
                 }
             }

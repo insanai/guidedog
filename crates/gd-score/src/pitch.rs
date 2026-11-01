@@ -126,6 +126,16 @@ impl Pitch {
         Ok(pitch)
     }
 
+    /// Transposes an octave-invariant pitch class such as a key tonic or chord symbol root.
+    pub fn transpose_tonic(mut self, mut from: Self, mut to: Self) -> Result<Self, Error> {
+        self.octave = 0;
+        from.octave = 0;
+        to.octave = 0;
+        let mut transposed = self.transpose(from, to)?;
+        transposed.octave = 0;
+        Ok(transposed)
+    }
+
     /// Checks the profile's finite ledger-line range, returning a pitch diagnostic.
     pub fn check_range(self) -> Result<(), Error> {
         if (-3..=6).contains(&self.octave) { Ok(()) } else { Err(pitch_range()) }

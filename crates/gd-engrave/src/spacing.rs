@@ -53,6 +53,8 @@ pub(crate) fn solve(
     if !width.is_finite() || width <= 0.0 || springs.len() > 100_000 {
         return Err(failure("Invalid spacing width or gap count."));
     }
+    // The gaps are transient and bounded by the spring count above, so they are reserved
+    // fallibly here rather than charged to the non-refunding reserve ledger.
     let mut gaps = Vec::new();
     gaps.try_reserve_exact(springs.len()).map_err(|_| failure("Cannot reserve spacing gaps."))?;
     for spring in springs {

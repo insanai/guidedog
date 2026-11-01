@@ -11,56 +11,11 @@ impl Reader<'_> {
         }
         let node = cursor.next()?;
         match &node.kind {
-            ExprKind::Atom(TokenKind::Command(name)) => match name.as_str() {
-                "relative" => {
-                    if matches!(
-                        cursor.peek().map(|n| &n.kind),
-                        Some(ExprKind::Atom(TokenKind::Word(_)))
-                    ) {
-                        self.capture_pitch(cursor)?;
-                    }
-                    self.capture(cursor, depth + 1)?;
-                }
-                "fixed" | "transpose" => {
-                    self.capture_pitch(cursor)?;
-                    if name == "transpose" {
-                        self.capture_pitch(cursor)?;
-                    }
-                    self.capture(cursor, depth + 1)?;
-                }
-                "tuplet" | "times" => {
-                    cursor.ratio()?;
-                    self.capture(cursor, depth + 1)?;
-                }
-                "grace" | "acciaccatura" | "appoggiatura" | "lyricmode" | "chordmode" => {
-                    self.capture(cursor, depth + 1)?;
-                }
-                "afterGrace" => {
-                    self.capture(cursor, depth + 1)?;
-                    self.capture(cursor, depth + 1)?;
-                }
-                "repeat" => {
-                    cursor.text()?;
-                    cursor.number()?;
-                    self.capture(cursor, depth + 1)?;
-                    if cursor.command("alternative") {
-                        self.capture(cursor, depth + 1)?;
-                    }
-                }
-                "new" => {
-                    cursor.text()?;
-                    if cursor.symbol('=') {
-                        cursor.text()?;
-                    }
-                    if cursor.command("with") {
-                        cursor.sequence()?;
-                    }
-                    self.capture(cursor, depth + 1)?;
-                }
-                _ => {}
-            },
+            ExprKind::Atom(TokenKind::Command(name)) => {
+                self.capture_command(name, cursor, depth + 1)?
+            }
             ExprKind::Atom(TokenKind::Word(_)) | ExprKind::Chord(_) => {
-                self.capture_suffix(cursor)?
+                self.capture_suffix(cursor, depth + 1)?
             }
             ExprKind::Atom(TokenKind::Text(_))
             | ExprKind::Sequence(_)
@@ -75,6 +30,132 @@ impl Reader<'_> {
         Ok(())
     }
 
+    fn capture_command(
+        &self,
+        name: &str,
+        cursor: &mut Cursor<'_>,
+        depth: usize,
+    ) -> Result<(), Error> {
+        match name {
+            "relative" => {
+                if matches!(
+                    cursor.peek().map(|n| &n.kind),
+                    Some(ExprKind::Atom(TokenKind::Word(_)))
+                ) {
+                    self.capture_pitch(cursor)?;
+                }
+                self.capture(cursor, depth)
+            }
+            "fixed" | "transpose" => {
+                self.capture_pitch(cursor)?;
+                if name == "transpose" {
+                    self.capture_pitch(cursor)?;
+                }
+                self.capture(cursor, depth)
+            }
+            "tuplet" | "times" => {
+                cursor.ratio()?;
+                self.capture(cursor, depth)
+            }
+            "grace" | "acciaccatura" | "appoggiatura" | "lyricmode" | "chordmode" | "chords" => {
+                self.capture(cursor, depth)
+            }
+            "afterGrace" => {
+                self.capture(cursor, depth)?;
+                self.capture(cursor, depth)
+            }
+            "repeat" => {
+                cursor.text()?;
+                cursor.number()?;
+                self.capture(cursor, depth)?;
+                if cursor.command("alternative") {
+                    self.capture(cursor, depth)?;
+                }
+                Ok(())
+            }
+            "new" => {
+                cursor.text()?;
+                if cursor.symbol('=') {
+                    cursor.text()?;
+                }
+                if cursor.command("with") {
+                    cursor.sequence()?;
+                }
+                self.capture(cursor, depth)
+            }
+            _ => self.capture_notation(name, cursor, depth),
+        }
+    }
+
+    fn capture_notation(
+        &self,
+        name: &str,
+        cursor: &mut Cursor<'_>,
+        depth: usize,
+    ) -> Result<(), Error> {
+        match name {
+            "clef" | "language" | "version" | "bar" => {
+                cursor.text()?;
+            }
+            "key" => {
+                self.capture_pitch(cursor)?;
+                cursor.next()?;
+            }
+            "time" => {
+                let _ = cursor.number()?;
+                while cursor.symbol(',') {
+                    let _ = cursor.number()?;
+                }
+                if matches!(
+                    cursor.peek().map(|n| &n.kind),
+                    Some(ExprKind::Atom(TokenKind::Number(_)))
+                ) {
+                    let _ = cursor.number()?;
+                }
+                if cursor.symbol('/') {
+                    let _ = cursor.number()?;
+                }
+            }
+            "partial" => self.capture_suffix(cursor, depth)?,
+            "markup" => self.capture_markup(cursor, depth)?,
+            "mark" => {
+                if !cursor.command("default") {
+                    self.capture(cursor, depth)?;
+                }
+            }
+            "tempo" => {
+                if matches!(
+                    cursor.peek().map(|n| &n.kind),
+                    Some(ExprKind::Atom(TokenKind::Text(_)))
+                ) {
+                    let _ = cursor.next()?;
+                } else if cursor.command("markup") {
+                    self.capture_markup(cursor, depth)?;
+                }
+                if matches!(
+                    cursor.peek().map(|n| &n.kind),
+                    Some(ExprKind::Atom(TokenKind::Number(_)))
+                ) {
+                    self.capture_suffix(cursor, depth)?;
+                }
+            }
+            "set" => {
+                cursor.text()?;
+                if cursor.symbol('.') {
+                    cursor.text()?;
+                }
+                if cursor.symbol('=') {
+                    self.capture(cursor, depth)?;
+                }
+            }
+            "header" | "layout" | "midi" | "score" => {
+                cursor.sequence()?;
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
     fn capture_pitch(&self, cursor: &mut Cursor<'_>) -> Result<(), Error> {
         let node = cursor.next()?;
         if !matches!(node.kind, ExprKind::Atom(TokenKind::Word(_))) {
@@ -84,14 +165,39 @@ impl Reader<'_> {
         Ok(())
     }
 
-    fn capture_suffix(&self, cursor: &mut Cursor<'_>) -> Result<(), Error> {
+    fn capture_suffix(&self, cursor: &mut Cursor<'_>, depth: usize) -> Result<(), Error> {
         while let Some(node) = cursor.peek() {
             match &node.kind {
                 ExprKind::Atom(TokenKind::Symbol(
-                    '\'' | ',' | '!' | '?' | '.' | '=' | '*' | '/',
+                    '\'' | ',' | '!' | '?' | '.' | '=' | '*' | '/' | '~' | '(' | ')' | '[' | ']',
                 ))
                 | ExprKind::Atom(TokenKind::Number(_)) => cursor.at += 1,
-                ExprKind::Atom(TokenKind::Command(name)) if name == "breve" => cursor.at += 1,
+                ExprKind::Atom(TokenKind::Symbol('-' | '^' | '_')) => {
+                    cursor.at += 1;
+                    if let Some(next) = cursor.peek() {
+                        let is_markup = matches!(
+                            &next.kind,
+                            ExprKind::Atom(TokenKind::Command(c)) if c == "markup"
+                        );
+                        if is_markup {
+                            cursor.at += 1;
+                            self.capture_markup(cursor, depth + 1)?;
+                        } else {
+                            cursor.at += 1;
+                        }
+                    }
+                }
+                ExprKind::Atom(TokenKind::Command(name))
+                    if name == "breve"
+                        || matches!(name.as_str(), "(" | ")" | "<" | ">" | "!")
+                        || crate::ornaments::is_post_mark(name) =>
+                {
+                    cursor.at += 1;
+                }
+                ExprKind::Atom(TokenKind::Command(name)) if name == "markup" => {
+                    cursor.at += 1;
+                    self.capture_markup(cursor, depth + 1)?;
+                }
                 _ => break,
             }
         }

@@ -85,21 +85,32 @@ fn document(
     width: f64,
     options: &SvgOptions<'_>,
 ) -> fmt::Result {
+    let has_title = !options.title.is_empty();
+    let has_desc = !options.description.is_empty() && options.description != options.title;
+    let aria = match (has_title, has_desc) {
+        (true, true) => " aria-labelledby=\"title description\"",
+        (true, false) => " aria-labelledby=\"title\"",
+        (false, true) => " aria-labelledby=\"description\"",
+        (false, false) => "",
+    };
     writeln!(
         out,
         "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{}pt\" height=\"{}pt\" \
-        viewBox=\"0 0 {} {}\" role=\"img\" color=\"#000\" aria-labelledby=\"title description\">",
+        viewBox=\"0 0 {} {}\" role=\"img\" color=\"#000\"{aria}>",
         Number(width),
         Number(height),
         Number(width),
         Number(height)
     )?;
-    writeln!(
-        out,
-        "<title id=\"title\">{}\u{3c}/title><desc id=\"description\">{}\u{3c}/desc>",
-        Xml(options.title),
-        Xml(options.description)
-    )?;
+    if has_title || has_desc {
+        if has_title {
+            write!(out, "<title id=\"title\">{}\u{3c}/title>", Xml(options.title))?;
+        }
+        if has_desc {
+            write!(out, "<desc id=\"description\">{}\u{3c}/desc>", Xml(options.description))?;
+        }
+        out.write_char('\n')?;
+    }
     if options.adaptive {
         out.write_str(
             "<style>:root{color-scheme:light dark}\

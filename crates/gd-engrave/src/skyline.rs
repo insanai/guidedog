@@ -1,6 +1,6 @@
 use gd_score::Error;
 
-use crate::limits::charge;
+use crate::limits::{charge, failure};
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) struct Segment {
@@ -42,9 +42,17 @@ impl Skyline {
         upper: bool,
         work: &mut usize,
     ) -> Result<Self, Error> {
+        // Merging builds a transient skyline bounded by its inputs. It is reserved with
+        // try_reserve and charged as work, not through the caller's reserve: that ledger
+        // never refunds, so charging every short-lived merge would count it many times.
         let boundaries = boundaries(&self.segments, &other.segments, work)?;
         let (mut a, mut b) = (0, 0);
         let mut result = Self::default();
+        // A crossing can split an interval in two, so each interval yields at most two.
+        result
+            .segments
+            .try_reserve(boundaries.len().saturating_mul(2))
+            .map_err(|_| failure("Cannot reserve a skyline."))?;
         for pair in boundaries.windows(2) {
             charge(work, 1)?;
             let (left, right) = (pair[0], pair[1]);
@@ -133,6 +141,9 @@ impl Skyline {
 
 fn boundaries(a: &[Segment], b: &[Segment], work: &mut usize) -> Result<Vec<f64>, Error> {
     let mut result = Vec::new();
+    result
+        .try_reserve(2 * a.len().saturating_add(b.len()))
+        .map_err(|_| crate::limits::failure("Skyline boundaries exceeded memory."))?;
     let (mut left, mut right) = (0, 0);
     while left < 2 * a.len() || right < 2 * b.len() {
         charge(work, 1)?;

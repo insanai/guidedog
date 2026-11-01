@@ -53,7 +53,8 @@ impl Draw<'_, '_, '_, '_, '_> {
         let center = (first.x + last.x + 1.0 * space) / 2.0;
         self.number(&text, "tuplet", Point { x: center, y }, space, Role::Tuplet)?;
         if !beamed {
-            let gap = text.len() as f64 * 0.45 * space + 0.3 * space;
+            let digit_w = self.fonts.digits_width(&text, "tuplet")? * space;
+            let gap = digit_w * 0.5 + 0.35 * space;
             let line = y - 0.35 * space;
             for (left, right) in [(first.x, center - gap), (center + gap, last.x + space)] {
                 if right > left {

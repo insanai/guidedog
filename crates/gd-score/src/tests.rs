@@ -111,3 +111,32 @@ fn malformed_meter_groups_fail_before_their_sum_can_overflow() {
         EventKind::Time(Meter { numerator: 4, denominator: 4, beats: vec![u16::MAX; 100_000] });
     assert!(check_score(&s).is_err());
 }
+
+#[test]
+fn unplaced_spans_tonic_transposition_and_grace_invariants_behave_exact() {
+    assert!(Span::default().is_unplaced());
+    assert_eq!(Span::default().file, FileId::NONE);
+    let placed = Span { file: FileId(1), start: 2, end: 5 };
+    assert_eq!(Error::new(ErrorKind::Syntax, "x").or_at(placed).span, placed);
+    assert_eq!(Ratio::new(1, 0).unwrap_err().kind, ErrorKind::Duration);
+
+    let g = Pitch { step: Step::G, alter: Alter::Natural, octave: 0 };
+    let high_c = Pitch { step: Step::C, alter: Alter::Natural, octave: 5 };
+    assert_eq!(g.transpose_tonic(high_c, Pitch::default()).unwrap(), g);
+
+    let mut s = score();
+    s.events[0].at.grace = Ratio::new(1, 16).unwrap();
+    assert!(check_score(&s).is_err());
+    s.events[0].at.grace = Ratio::ZERO;
+    s.lyrics.push(LyricLine {
+        voice: VoiceId(0),
+        syllables: vec![Syllable {
+            text: "la".into(),
+            anchor: Anchor::Moment(Moment { main: Ratio::ONE, grace: Ratio::new(1, 8).unwrap() }),
+            hyphen: false,
+            extender: None,
+            span: Span::default(),
+        }],
+    });
+    assert!(check_score(&s).is_err());
+}

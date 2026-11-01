@@ -144,7 +144,9 @@ fn beat_key(score: &Score, id: EventId, fastest: u16) -> Result<(usize, i64, i64
     let eighths = fastest <= 8;
     let beats = if !meter.beats.is_empty() {
         meter.beats.clone()
-    } else if matches!((meter.numerator, meter.denominator), (3, 4 | 8)) && eighths {
+    } else if (meter.numerator, meter.denominator) == (3, 8)
+        || ((meter.numerator, meter.denominator) == (3, 4) && eighths)
+    {
         vec![meter.numerator]
     } else if matches!((meter.numerator, meter.denominator), (4, 4) | (2, 2)) && eighths {
         vec![meter.numerator / 2; 2]

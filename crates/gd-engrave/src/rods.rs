@@ -19,40 +19,49 @@ pub(crate) fn collect(
     work: &mut usize,
 ) -> Result<(), Error> {
     out.clear();
-    let staves = plan.events.iter().map(|e| e.staff + 1).max().unwrap_or(0);
+    let staves =
+        score.staves.len().max(plan.events.iter().map(|e| e.staff + 1).max().unwrap_or(0));
     for staff in 0..staves {
         let mut previous = BTreeMap::<i32, (usize, f64)>::new();
         for (index, column) in columns.iter().enumerate() {
             charge(work, 1)?;
             let mut current = Bands::new();
-            for id in &column.events {
-                let info = &plan.events[id.0 as usize];
-                if info.staff != staff {
-                    continue;
+            let terminal = index + 1 == columns.len();
+            add_column_bar_band(&mut current, score, columns, index, staff, terminal, work)?;
+            let mut col_prefix = 0.0f64;
+            if !terminal {
+                for id in &column.events {
+                    let info = &plan.events[id.0 as usize];
+                    if info.staff != staff {
+                        continue;
+                    }
+                    col_prefix = col_prefix.max(info.prefix);
+                    event_bands(&mut current, info, fonts, work)?;
+                    crate::footprints::event(
+                        &mut current,
+                        info,
+                        &score.events[id.0 as usize],
+                        score,
+                        fonts,
+                        work,
+                    )?;
+                    crate::labels::event(
+                        &mut current,
+                        info.prefix,
+                        &score.events[id.0 as usize],
+                        fonts,
+                        work,
+                        options,
+                    )?;
                 }
-                event_bands(&mut current, info, fonts, work)?;
-                crate::footprints::event(
+                crate::labels::lyrics(
                     &mut current,
-                    info,
-                    &score.events[id.0 as usize],
                     score,
-                    fonts,
-                    work,
-                )?;
-                crate::labels::event(
-                    &mut current,
-                    &score.events[id.0 as usize],
+                    (column.at, col_prefix),
+                    staff,
                     fonts,
                     work,
                     options,
-                )?;
-            }
-            crate::labels::lyrics(&mut current, score, column.at, staff, fonts, work, options)?;
-            if index + 1 == columns.len() {
-                add_rect(
-                    &mut current,
-                    Rect { left: 0.0, right: 0.1, top: -32.0, bottom: 64.0 },
-                    work,
                 )?;
             }
             if current.is_empty() {
@@ -74,7 +83,43 @@ pub(crate) fn collect(
         }
     }
     hairpins(out, score, columns, fonts, options, work)?;
+    Ok(())
+}
 
+fn add_column_bar_band(
+    current: &mut Bands,
+    score: &gd_score::Score,
+    columns: &[Column],
+    index: usize,
+    staff: usize,
+    terminal: bool,
+    work: &mut usize,
+) -> Result<(), Error> {
+    if index > 0
+        && let Some(style) = crate::bars::column_bar_style(score, columns, index, staff, work)?
+    {
+        let (bar_left, bar_right) = crate::bars::style_extent(style);
+        let (top, bottom) = if terminal { (-32.0, 64.0) } else { (-2.2, 2.2) };
+        // A clef change at this bar line is drawn before it, so it needs room there.
+        let clef_before = !terminal
+            && columns[index].events.iter().any(|id| {
+                let event = &score.events[id.0 as usize];
+                matches!(event.kind, gd_score::EventKind::Clef(_))
+                    && score.voices[event.voice.0 as usize].staff.0 as usize == staff
+            });
+        add_rect(
+            current,
+            Rect { left: bar_left - 0.55, right: bar_right + 0.2, top, bottom },
+            work,
+        )?;
+        if clef_before {
+            let left = bar_left - crate::prepare::CLEF_BEFORE_BAR - 0.45;
+            let rect = Rect { left, right: bar_left - 0.2, top: -3.6, bottom: 3.6 };
+            add_rect(current, rect, work)?;
+        }
+    } else if terminal {
+        add_rect(current, Rect { left: -0.5, right: 0.1, top: -32.0, bottom: 64.0 }, work)?;
+    }
     Ok(())
 }
 
@@ -85,16 +130,20 @@ fn event_bands(
     work: &mut usize,
 ) -> Result<(), Error> {
     for head in &info.heads {
-        add_glyph(
-            current,
-            fonts,
-            info.head_glyph,
-            info.head_scale,
-            info.prefix + head.at.x,
-            head.at.y,
-            work,
-        )?;
-        if let Some(name) = head.accidental {
+        if !head.shared {
+            add_glyph(
+                current,
+                fonts,
+                info.head_glyph,
+                info.head_scale,
+                info.prefix + head.at.x,
+                head.at.y,
+                work,
+            )?;
+        }
+        if !head.shared
+            && let Some(name) = head.accidental
+        {
             add_glyph(
                 current,
                 fonts,
@@ -106,7 +155,7 @@ fn event_bands(
             )?;
             cautionary_bands(current, info, head, name, fonts, work)?;
         }
-        for dot in &head.dots {
+        for dot in head.dots.iter().filter(|_| !head.shared) {
             add_glyph(
                 current,
                 fonts,
@@ -141,8 +190,12 @@ fn event_bands(
             )?;
         }
     }
-    if info.prefix > 0.0 {
-        add_rect(current, Rect { left: 0.0, right: info.prefix, top: -4.0, bottom: 4.0 }, work)?;
+    if info.base_prefix > 0.0 {
+        add_rect(
+            current,
+            Rect { left: 0.0, right: info.base_prefix, top: -4.0, bottom: 4.0 },
+            work,
+        )?;
     }
     Ok(())
 }
@@ -236,7 +289,13 @@ fn hairpins(
                 width = width.max(crate::labels::dynamic_width(fonts, text)?);
             }
         }
-        push(out, Rod { first, last, minimum: width + 2.5 }, &mut options.reserve)?;
+        let mut end_pad: f64 = 0.0;
+        for annotation in &b.marks {
+            if let gd_score::AnnotationKind::Dynamic(_) = &annotation.kind {
+                end_pad = 0.8;
+            }
+        }
+        push(out, Rod { first, last, minimum: width + end_pad + 2.8 }, &mut options.reserve)?;
     }
     Ok(())
 }
@@ -253,11 +312,12 @@ fn cautionary_bands(
         let data = fonts
             .glyph_data(fonts.glyph(name)?)
             .ok_or_else(|| failure("Missing cautionary accidental bounds."))?;
+        let pad = crate::accidentals::CAUTIONARY_PAD * info.head_scale;
         add_rect(
             current,
             Rect {
-                left: info.prefix + head.accidental_x + data.bounds.left * info.head_scale - 0.6,
-                right: info.prefix + head.accidental_x + data.bounds.right * info.head_scale + 0.6,
+                left: info.prefix + head.accidental_x + data.bounds.left * info.head_scale - pad,
+                right: info.prefix + head.accidental_x + data.bounds.right * info.head_scale + pad,
                 top: head.at.y + data.bounds.top * info.head_scale,
                 bottom: head.at.y + data.bounds.bottom * info.head_scale,
             },

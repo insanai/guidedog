@@ -1,10 +1,10 @@
 use std::collections::BTreeMap;
 
-use gd_score::{Base, Chord, Error};
+use gd_score::{Base, Chord, Error, EventKind};
 
-use crate::drawing::Draw;
+use crate::drawing::{Draw, Request};
 use crate::prepare::EventInfo;
-use crate::{Point, Role};
+use crate::{Mark, Point, Role};
 
 impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn heads(
@@ -25,6 +25,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                 self.glyph(info.head_glyph, at.x, at.y, size, Role::Notehead)?;
             }
             if (!head.continuation || line_start || head.accidental_forced)
+                && !head.shared
                 && let Some(name) = head.accidental
             {
                 let accidental_x = x + head.accidental_x * space;
@@ -70,6 +71,7 @@ impl Draw<'_, '_, '_, '_, '_> {
         self.stem(chord, info, x, middle, space)?;
         Ok(())
     }
+
     fn cautionary(
         &mut self,
         name: &str,
@@ -136,14 +138,56 @@ impl Draw<'_, '_, '_, '_, '_> {
                     Role::Flag,
                 )?;
             }
-            if chord.grace_slash {
-                let tip = middle + info.stem_tip * space;
-                self.line(
-                    Point { x: stem_x - 0.45 * space, y: tip + space },
-                    Point { x: stem_x + 0.75 * space, y: tip },
-                    0.16 * space,
-                    Role::Flag,
-                )?;
+        }
+        Ok(())
+    }
+
+    pub(crate) fn grace_slashes(&mut self, request: &Request<'_, '_>) -> Result<(), Error> {
+        let space = self.options.staff_size / 4.0;
+        for (index, column) in request.columns.iter().enumerate() {
+            if index + 1 >= request.columns.len() {
+                break;
+            }
+            let measure = request
+                .score
+                .measures
+                .partition_point(|m| m.start <= column.at.main)
+                .saturating_sub(1);
+            let number =
+                request.score.measures.get(measure).map(|m| m.number).unwrap_or(request.first);
+            for id in &column.events {
+                let event = &request.score.events[id.0 as usize];
+                let EventKind::Chord(chord) = &event.kind else { continue };
+                if !chord.grace_slash {
+                    continue;
+                }
+                let Some(&mark_idx) = self.stem_marks.get(&id.0) else { continue };
+                let Mark::Line { from, to, .. } = self.system.marks[mark_idx].mark else {
+                    continue;
+                };
+                let info = &request.plan.events[id.0 as usize];
+                self.staff = gd_score::StaffId(info.staff as u32);
+                self.measure = number;
+                let s = space * info.head_scale;
+                let beam_pad = if info.beam.is_some() {
+                    f64::from(info.flags.saturating_sub(1)) * 0.75 * s + 0.35 * s
+                } else {
+                    0.0
+                };
+                let (slash_from, slash_to) = if info.up {
+                    let cross = (to.y + 1.05 * s + beam_pad).min(from.y - 0.35 * s);
+                    (
+                        Point { x: from.x - 0.55 * s, y: cross + 0.45 * s },
+                        Point { x: from.x + 0.85 * s, y: (cross - 0.45 * s).max(to.y + 0.05 * s) },
+                    )
+                } else {
+                    let cross = (to.y - 1.05 * s - beam_pad).max(from.y + 0.35 * s);
+                    (
+                        Point { x: from.x - 0.55 * s, y: cross - 0.45 * s },
+                        Point { x: from.x + 0.85 * s, y: (cross + 0.45 * s).min(to.y - 0.05 * s) },
+                    )
+                };
+                self.line(slash_from, slash_to, 0.14 * space, Role::Flag)?;
             }
         }
         Ok(())

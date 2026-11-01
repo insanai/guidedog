@@ -25,7 +25,8 @@ impl Draw<'_, '_, '_, '_, '_> {
             let mut ink = Vec::new();
             for (index, syllable) in verse.syllables.iter().enumerate() {
                 charge(self.work, 1)?;
-                let (at, x) = anchor(request.score, syllable.anchor, request, middle, space);
+                let (at, x) =
+                    anchor(request.score, staff, syllable.anchor, request, middle, space);
                 if at < first || at >= last {
                     continue;
                 }
@@ -70,9 +71,10 @@ impl Draw<'_, '_, '_, '_, '_> {
         let space = self.options.staff_size / 4.0;
         let first = request.columns[0].at;
         let last = request.columns.last().map(|c| c.at).unwrap_or(first);
+        let staff = self.staff.0 as usize;
         for (index, syllable) in syllables.iter().enumerate() {
             charge(self.work, 1)?;
-            let (start, x) = anchor(request.score, syllable.anchor, request, middle, space);
+            let (start, x) = anchor(request.score, staff, syllable.anchor, request, middle, space);
             if start >= last {
                 continue;
             }
@@ -80,7 +82,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                 ink.binary_search_by_key(&index, |item| item.index).ok().map(|i| &ink[i]);
             let right = current.map(|item| item.x + item.run.advance + 0.25 * space).unwrap_or(x);
             if let Some(end) = syllable.extender {
-                let (at, to) = anchor(request.score, end, request, middle, space);
+                let (at, to) = anchor(request.score, staff, end, request, middle, space);
                 let inclusive = matches!(end, Anchor::Note(_));
                 if (at > first || (inclusive && at == first)) && to > right {
                     self.line(
@@ -95,7 +97,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                 && start >= first
                 && let Some(next) = syllables.get(index + 1)
             {
-                let (at, to) = anchor(request.score, next.anchor, request, middle, space);
+                let (at, to) = anchor(request.score, staff, next.anchor, request, middle, space);
                 let next_ink = ink
                     .binary_search_by_key(&(index + 1), |item| item.index)
                     .ok()
@@ -118,6 +120,7 @@ impl Draw<'_, '_, '_, '_, '_> {
 
 fn anchor(
     score: &Score,
+    staff: usize,
     anchor: Anchor,
     request: &Request<'_, '_>,
     middle: f64,
@@ -133,11 +136,25 @@ fn anchor(
             let last = request.columns.last().map(|c| c.at).unwrap_or(first);
             let index = request.columns.partition_point(|c| c.at < at);
             let x = if at < first {
-                request.indent + 0.5 * space
+                request.preface_end + 0.35 * space
             } else if at >= last {
-                request.positions.last().copied().unwrap_or(0.0) - 0.5 * space
+                request.positions.last().copied().unwrap_or(0.0) - 0.35 * space
             } else {
-                request.positions.get(index).copied().unwrap_or(0.0)
+                let prefix = if at.main == first.main {
+                    0.0
+                } else {
+                    request
+                        .columns
+                        .get(index)
+                        .into_iter()
+                        .flat_map(|col| &col.events)
+                        .filter_map(|id| {
+                            let info = &request.plan.events[id.0 as usize];
+                            (info.staff == staff).then_some(info.prefix)
+                        })
+                        .fold(0.0, f64::max)
+                };
+                request.positions.get(index).copied().unwrap_or(0.0) + prefix * space
             };
             (at, x)
         }

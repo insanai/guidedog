@@ -7,15 +7,18 @@ pub(crate) fn lex(
     limits: &Limits,
     work: &mut Work,
 ) -> Result<Vec<Token>, Error> {
-    let mut lexer = Lexer { source, file, at: 0, limits, work };
-    let mut tokens = Vec::new();
+    let mut lexer = Lexer { source, file, at: 0, in_chord: false, limits, work };
+    let mut tokens: Vec<Token> = Vec::new();
     while lexer.at < source.len() {
         lexer.space()?;
         if lexer.at == source.len() {
             break;
         }
         let start = lexer.at;
-        let kind = lexer.token()?;
+        let after_script = tokens.last().is_some_and(|prev| {
+            matches!(prev.kind, TokenKind::Symbol('-' | '^' | '_')) && prev.span.end == start
+        });
+        let kind = lexer.token(after_script)?;
         let span = lexer.span(start);
         lexer.work.take(1, span)?;
         push(&mut tokens, Token { kind, span }, span)?;
@@ -27,6 +30,7 @@ struct Lexer<'a, 'w> {
     source: &'a str,
     file: FileId,
     at: usize,
+    in_chord: bool,
     limits: &'a Limits,
     work: &'w mut Work,
 }
@@ -88,7 +92,7 @@ impl Lexer<'_, '_> {
         Err(self.syntax(start, "The block comment has no closing %}."))
     }
 
-    fn token(&mut self) -> Result<TokenKind, Error> {
+    fn token(&mut self, after_script: bool) -> Result<TokenKind, Error> {
         let start = self.at;
         let Some(c) = self.advance() else {
             return Err(self.syntax(start, "Expected a music token."));
@@ -98,7 +102,13 @@ impl Lexer<'_, '_> {
             '\\' => {
                 let word = self.at;
                 if self.peek().is_some_and(char::is_alphabetic) {
-                    while self.peek().is_some_and(char::is_alphabetic) {
+                    while self.peek().is_some_and(char::is_alphabetic)
+                        || (self.source[self.at..].starts_with('-')
+                            && self.source[self.at + 1..]
+                                .chars()
+                                .next()
+                                .is_some_and(char::is_alphabetic))
+                    {
                         self.advance();
                     }
                 } else if self.advance().is_none() {
@@ -110,9 +120,23 @@ impl Lexer<'_, '_> {
                 self.advance();
                 Ok(TokenKind::SimultaneousStart)
             }
-            '>' if self.peek() == Some('>') => {
+            '<' => {
+                self.in_chord = true;
+                Ok(TokenKind::Symbol('<'))
+            }
+            '>' if !self.in_chord && !after_script && self.peek() == Some('>') => {
                 self.advance();
                 Ok(TokenKind::SimultaneousEnd)
+            }
+            '>' => {
+                if !after_script {
+                    self.in_chord = false;
+                }
+                Ok(TokenKind::Symbol('>'))
+            }
+            '{' | '}' => {
+                self.in_chord = false;
+                Ok(TokenKind::Symbol(c))
             }
             c if c.is_ascii_digit() => {
                 while self.peek().is_some_and(|c| c.is_ascii_digit()) {
@@ -130,7 +154,7 @@ impl Lexer<'_, '_> {
                 }
                 Ok(TokenKind::Word(self.source[start..self.at].to_string()))
             }
-            c if "{}<>[](),'!?~|.*:/=+-^_#$".contains(c) => Ok(TokenKind::Symbol(c)),
+            c if "[](),'!?~|.*:/=+-^_#$;".contains(c) => Ok(TokenKind::Symbol(c)),
             _ => Err(self.syntax(start, "This character is not music notation in the profile.")),
         }
     }

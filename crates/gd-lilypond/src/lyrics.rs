@@ -1,4 +1,6 @@
-use gd_score::{Anchor, EventKind, LyricLine, NoteRef, SpannerKind, Syllable, VoiceId};
+use gd_score::{
+    Anchor, EventId, EventKind, LyricLine, Moment, NoteRef, SpannerKind, Syllable, VoiceId,
+};
 
 use crate::cursor::Cursor;
 use crate::interpret::{Reader, State};
@@ -72,9 +74,13 @@ impl Reader<'_> {
         let mut at = state.at;
         let mut syllables: Vec<Syllable> = Vec::new();
         while inner.peek().is_some() {
-            self.work.take(1, inner.span())?;
-            self.memory.take(512, inner.span())?;
             let location = inner.span();
+            self.work.take(1, location)?;
+            self.memory.take(512, location)?;
+            if inner.symbol('|') {
+                self.bar_checks.push((at.main, location));
+                continue;
+            }
             if inner.symbol('-') {
                 if !inner.symbol('-') {
                     return Err(syntax_error(location, "A lyric hyphen uses --."));
@@ -92,10 +98,11 @@ impl Reader<'_> {
                     continue;
                 }
                 duration = read_duration(&mut inner, duration)?;
-                at.main = at.main.checked_add(duration.time()?)?;
+                let step = duration.time().map_err(|e| e.or_at(location))?;
+                at.main = at.main.checked_add(step).map_err(|e| e.or_at(location))?;
                 continue;
             }
-            let text = self.copy_text(inner.text()?, location)?;
+            let (text, word_span) = self.read_syllable_text(&mut inner, false)?;
             duration = read_duration(&mut inner, duration)?;
             push(
                 &mut syllables,
@@ -104,11 +111,12 @@ impl Reader<'_> {
                     anchor: Anchor::Moment(at),
                     hyphen: false,
                     extender: None,
-                    span: location,
+                    span: word_span,
                 },
-                location,
+                word_span,
             )?;
-            at.main = at.main.checked_add(duration.time()?)?;
+            let step = duration.time().map_err(|e| e.or_at(word_span))?;
+            at.main = at.main.checked_add(step).map_err(|e| e.or_at(word_span))?;
         }
         push(&mut self.score.lyrics, LyricLine { voice: state.voice, syllables }, span)
     }
@@ -148,13 +156,16 @@ impl Reader<'_> {
         span: Span,
     ) -> Result<(), Error> {
         self.memory.take(self.score.events.len().saturating_mul(64), span)?;
-        let candidates = self.lyric_candidates(voice)?;
+        let candidates = self.lyric_candidates(voice, span)?;
         let mut at = 0usize;
         let mut cursor = Cursor::new(self.syntax, ids);
         let mut syllables: Vec<Syllable> = Vec::new();
         while let Some(node) = cursor.peek() {
             self.work.take(1, node.span)?;
             self.memory.take(512, node.span)?;
+            if cursor.symbol('|') {
+                continue;
+            }
             if cursor.symbol('-') {
                 if !cursor.symbol('-') {
                     return Err(syntax_error(node.span, "A lyric hyphen uses --."));
@@ -176,44 +187,97 @@ impl Reader<'_> {
                 }
                 continue;
             }
-            let text = self.copy_text(cursor.text()?, node.span)?;
-            if let Some((event, _)) = candidates.get(at) {
-                push(
-                    &mut syllables,
-                    Syllable {
-                        text,
-                        anchor: Anchor::Note(NoteRef { event: *event, note: 0 }),
-                        hyphen: false,
-                        extender: None,
-                        span: node.span,
-                    },
-                    node.span,
-                )?;
-            } else {
-                self.warnings.push(
-                    Error::new(ErrorKind::Lyrics, "A lyric syllable has no remaining note.")
-                        .at(node.span)
-                        .warning()
-                        .hint("Remove extra syllables or add lyric skips and melismata."),
-                );
-            }
+            let (text, word_span) = self.read_syllable_text(&mut cursor, true)?;
+            self.place_attached_syllable(&mut syllables, &candidates, at, text, word_span)?;
             at += 1;
         }
         push(&mut self.score.lyrics, LyricLine { voice, syllables }, span)
     }
 
+    fn place_attached_syllable(
+        &mut self,
+        syllables: &mut Vec<Syllable>,
+        candidates: &[(EventId, Option<EventId>)],
+        at: usize,
+        text: String,
+        span: Span,
+    ) -> Result<(), Error> {
+        if let Some((event, _)) = candidates.get(at) {
+            push(
+                syllables,
+                Syllable {
+                    text,
+                    anchor: Anchor::Note(NoteRef { event: *event, note: 0 }),
+                    hyphen: false,
+                    extender: None,
+                    span,
+                },
+                span,
+            )?;
+        } else {
+            self.warnings.push(
+                Error::new(ErrorKind::Lyrics, "A lyric syllable has no remaining note.")
+                    .at(span)
+                    .warning()
+                    .hint("Remove extra syllables or add lyric skips and melismata."),
+            );
+        }
+        Ok(())
+    }
+
+    fn read_syllable_text(
+        &self,
+        cursor: &mut Cursor<'_>,
+        allow_dot: bool,
+    ) -> Result<(String, Span), Error> {
+        let node = cursor.next()?;
+        let (mut text, is_word) = match &node.kind {
+            ExprKind::Atom(TokenKind::Text(s)) => (self.copy_text(s, node.span)?, false),
+            ExprKind::Atom(TokenKind::Word(s)) => (self.copy_text(s, node.span)?, true),
+            _ => return Err(syntax_error(node.span, "Expected a word or string.")),
+        };
+        let mut last_span = node.span;
+        if is_word {
+            while let Some(next) = cursor.peek() {
+                if next.span.file != last_span.file || next.span.start != last_span.end {
+                    break;
+                }
+                match &next.kind {
+                    ExprKind::Atom(TokenKind::Symbol(c))
+                        if matches!(c, ',' | '!' | '?' | ';' | '\'')
+                            || (allow_dot && matches!(c, '.' | ':')) =>
+                    {
+                        text.push(*c);
+                        last_span = next.span;
+                        cursor.at += 1;
+                    }
+                    ExprKind::Atom(TokenKind::Word(w)) if text.ends_with('\'') => {
+                        self.memory.take(w.len(), next.span)?;
+                        text.push_str(w);
+                        last_span = next.span;
+                        cursor.at += 1;
+                    }
+                    _ => break,
+                }
+            }
+        }
+        Ok((text, Span { file: node.span.file, start: node.span.start, end: last_span.end }))
+    }
+
     fn lyric_candidates(
         &mut self,
         voice: VoiceId,
-    ) -> Result<Vec<(gd_score::EventId, Option<gd_score::EventId>)>, Error> {
-        let mut result = Vec::new();
+        span: Span,
+    ) -> Result<Vec<(EventId, Option<EventId>)>, Error> {
         let events = self
             .score
             .voices
             .get(voice.0 as usize)
-            .ok_or_else(|| syntax_error(Span::default(), "Lyrics name a missing voice."))?
+            .ok_or_else(|| syntax_error(span, "Lyrics name a missing voice."))?
             .events
             .clone();
+        let melismas = self.voice_melismas(voice);
+        let mut result = Vec::new();
         for id in events {
             let event = &self.score.events[id.0 as usize];
             if !matches!(event.kind, EventKind::Chord(_))
@@ -223,21 +287,17 @@ impl Reader<'_> {
             }
             let mut covered = false;
             let mut end = None;
-            for spanner in &self.score.spanners {
+            for &(start_id, end_id, start_at, end_at) in &melismas {
                 self.work.take(1, event.span)?;
-                let a = &self.score.events[spanner.start.event.0 as usize];
-                let b = &self.score.events[spanner.end.event.0 as usize];
-                let melisma = match &spanner.kind {
-                    SpannerKind::Tie | SpannerKind::Slur | SpannerKind::PhrasingSlur => true,
-                    SpannerKind::Beam => matches!(&a.kind, EventKind::Chord(c) if !c.auto_beam),
-                    _ => false,
-                };
-                if !melisma || a.voice != voice {
-                    continue;
-                }
-                covered |= event.at > a.at && event.at <= b.at;
-                if id == spanner.start.event {
-                    end = Some(spanner.end.event);
+                covered |= event.at > start_at && event.at <= end_at;
+                if id == start_id {
+                    let reached = self.extend_melisma(end_id, &melismas);
+                    if end.is_none_or(|prev: EventId| {
+                        self.score.events[reached.0 as usize].at
+                            > self.score.events[prev.0 as usize].at
+                    }) {
+                        end = Some(reached);
+                    }
                 }
             }
             if !covered {
@@ -245,5 +305,42 @@ impl Reader<'_> {
             }
         }
         Ok(result)
+    }
+
+    fn voice_melismas(&self, voice: VoiceId) -> Vec<(EventId, EventId, Moment, Moment)> {
+        let mut out = Vec::new();
+        for spanner in &self.score.spanners {
+            let a = &self.score.events[spanner.start.event.0 as usize];
+            let b = &self.score.events[spanner.end.event.0 as usize];
+            let melisma = match &spanner.kind {
+                SpannerKind::Tie | SpannerKind::Slur | SpannerKind::PhrasingSlur => true,
+                SpannerKind::Beam => matches!(&a.kind, EventKind::Chord(c) if !c.auto_beam),
+                _ => false,
+            };
+            if melisma && a.voice == voice {
+                out.push((spanner.start.event, spanner.end.event, a.at, b.at));
+            }
+        }
+        out
+    }
+
+    fn extend_melisma(
+        &self,
+        mut current: EventId,
+        melismas: &[(EventId, EventId, Moment, Moment)],
+    ) -> EventId {
+        for _ in 0..melismas.len() {
+            let cur_at = self.score.events[current.0 as usize].at;
+            let next = melismas
+                .iter()
+                .filter(|&&(start_id, _, _, end_at)| start_id == current && end_at > cur_at)
+                .max_by_key(|&&(_, _, _, end_at)| end_at)
+                .map(|&(_, end_id, _, _)| end_id);
+            match next {
+                Some(next_id) => current = next_id,
+                None => break,
+            }
+        }
+        current
     }
 }

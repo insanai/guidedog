@@ -2,7 +2,7 @@ use gd_score::{Alter, Clef, Error, Key, Meter, Step};
 
 use crate::drawing::{Draw, Request};
 use crate::prepare::accidental;
-use crate::{Point, Role};
+use crate::{Fonts, Point, Role};
 
 impl Draw<'_, '_, '_, '_, '_> {
     pub(crate) fn signatures(
@@ -22,11 +22,8 @@ impl Draw<'_, '_, '_, '_, '_> {
         let width = self.key_signature(state.key, state.clef, Point { x, y: middle }, space)?;
         let meter_changed = measure == 0 || score.measures[measure - 1].meter != state.meter;
         if meter_changed {
-            self.time_signature(
-                &state.meter,
-                Point { x: x + width + 0.5 * space, y: middle },
-                space,
-            )?;
+            let gap = if width > 0.0 { 0.5 * space } else { 0.0 };
+            self.time_signature(&state.meter, Point { x: x + width + gap, y: middle }, space)?;
         }
         Ok(())
     }
@@ -48,15 +45,11 @@ impl Draw<'_, '_, '_, '_, '_> {
                 if alter == Alter::Natural || ((alter.semitones() > 0) != positive) {
                     continue;
                 }
+                let name = accidental(alter);
+                let step_w = glyph_step(self.fonts, name)?;
                 let y = signature_y(*step, alter.semitones() > 0, clef);
-                self.glyph(
-                    accidental(alter),
-                    at.x + offset,
-                    at.y + y * size,
-                    size,
-                    Role::Signature,
-                )?;
-                offset += 0.9 * size;
+                self.glyph(name, at.x + offset, at.y + y * size, size, Role::Signature)?;
+                offset += step_w * size;
             }
         }
         Ok(offset)
@@ -72,6 +65,7 @@ impl Draw<'_, '_, '_, '_, '_> {
     ) -> Result<f64, Error> {
         let previous = old.alterations()?;
         let next = new.alterations()?;
+        let step_w = glyph_step(self.fonts, "accidentalNatural")?;
         let mut offset = 0.0;
         for step in [Step::F, Step::C, Step::G, Step::D, Step::A, Step::E, Step::B] {
             let old = previous[step.index() as usize];
@@ -84,7 +78,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                     size,
                     Role::Signature,
                 )?;
-                offset += 0.8 * size;
+                offset += step_w * size;
             }
         }
         Ok(offset)
@@ -98,48 +92,117 @@ impl Draw<'_, '_, '_, '_, '_> {
     ) -> Result<(), Error> {
         let numerator = meter.numerator.to_string();
         let denominator = meter.denominator.to_string();
-        let width = numerator.len().max(denominator.len()) as f64 * 0.7 * size;
+        let width = meter_width(self.fonts, meter)? * size;
         self.number(
             &numerator,
             "timeSig",
-            Point { x: at.x + width / 2.0, y: at.y - size },
+            Point { x: at.x + width / 2.0, y: at.y - 1.05 * size },
             size,
             Role::Signature,
         )?;
         self.number(
             &denominator,
             "timeSig",
-            Point { x: at.x + width / 2.0, y: at.y + size },
+            Point { x: at.x + width / 2.0, y: at.y + 1.05 * size },
             size,
             Role::Signature,
         )
     }
 }
 
+pub(crate) fn key_width(fonts: &Fonts<'_>, key: Key) -> Result<f64, Error> {
+    let alterations = key.alterations()?;
+    let mut width = 0.0;
+    for alter in alterations {
+        if alter != Alter::Natural {
+            width += glyph_step(fonts, accidental(alter))?;
+        }
+    }
+    Ok(width)
+}
+
+pub(crate) fn cancel_width(fonts: &Fonts<'_>, old: Key, new: Key) -> Result<f64, Error> {
+    let previous = old.alterations()?;
+    let next = new.alterations()?;
+    let step = glyph_step(fonts, "accidentalNatural")?;
+    let count = previous
+        .iter()
+        .zip(next)
+        .filter(|(old, new)| **old != Alter::Natural && **old != *new)
+        .count();
+    Ok(count as f64 * step)
+}
+
+pub(crate) fn meter_width(fonts: &Fonts<'_>, meter: &Meter) -> Result<f64, Error> {
+    let num = fonts.digits_width(&meter.numerator.to_string(), "timeSig")?;
+    let den = fonts.digits_width(&meter.denominator.to_string(), "timeSig")?;
+    Ok(num.max(den))
+}
+
+fn glyph_step(fonts: &Fonts<'_>, name: &str) -> Result<f64, Error> {
+    let glyph = fonts.glyph(name)?;
+    let width = fonts
+        .glyph_data(glyph)
+        .map(|d| (d.bounds.right - d.bounds.left.min(0.0)).max(d.advance))
+        .unwrap_or(0.9);
+    Ok(width + 0.14)
+}
+
 fn signature_y(step: Step, sharp: bool, clef: Clef) -> f64 {
-    let index = match (step, sharp) {
-        (Step::F, true) => 17,
-        (Step::C, true) => 14,
-        (Step::G, true) => 18,
-        (Step::D, true) => 15,
-        (Step::A, true) => 12,
-        (Step::E, true) => 16,
-        (Step::B, true) => 13,
-        (Step::B, false) => 13,
-        (Step::E, false) => 16,
-        (Step::A, false) => 12,
-        (Step::D, false) => 15,
-        (Step::G, false) => 11,
-        (Step::C, false) => 14,
-        (Step::F, false) => 10,
+    let diatonic = match clef {
+        Clef::Tenor if sharp => match step {
+            Step::F => 3,
+            Step::C => 7,
+            Step::G => 4,
+            Step::D => 8,
+            Step::A => 5,
+            Step::E => 9,
+            Step::B => 6,
+        },
+        Clef::Soprano if sharp => match step {
+            Step::F => 10,
+            Step::C => 14,
+            Step::G => 11,
+            Step::D => 15,
+            Step::A => 12,
+            Step::E => 9,
+            Step::B => 13,
+        },
+        Clef::Soprano => match step {
+            Step::B => 13,
+            Step::E => 9,
+            Step::A => 12,
+            Step::D => 8,
+            Step::G => 11,
+            Step::C => 14,
+            Step::F => 10,
+        },
+        _ => {
+            let treble = match (step, sharp) {
+                (Step::F, true) => 17,
+                (Step::C, true) => 14,
+                (Step::G, true) => 18,
+                (Step::D, true) => 15,
+                (Step::A, true) => 12,
+                (Step::E, true) => 16,
+                (Step::B, true) => 13,
+                (Step::B, false) => 13,
+                (Step::E, false) => 16,
+                (Step::A, false) => 12,
+                (Step::D, false) => 15,
+                (Step::G, false) => 11,
+                (Step::C, false) => 14,
+                (Step::F, false) => 10,
+            };
+            let shift = match clef {
+                Clef::Treble => 0,
+                Clef::TrebleEight | Clef::Alto | Clef::Tenor => -7,
+                Clef::Bass => -14,
+                Clef::BassEight => -21,
+                Clef::Soprano => 0,
+            };
+            treble + shift
+        }
     };
-    let shift = match clef {
-        Clef::Bass => -14,
-        Clef::Treble => 0,
-        Clef::TrebleEight => -7,
-        Clef::BassEight => -21,
-        Clef::Alto | Clef::Tenor => -7,
-        Clef::Soprano => 0,
-    };
-    -f64::from(index + shift - clef.middle()) / 2.0
+    -f64::from(diatonic - clef.middle()) / 2.0
 }

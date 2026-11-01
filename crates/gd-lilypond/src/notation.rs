@@ -17,7 +17,16 @@ impl Reader<'_> {
         depth: usize,
     ) -> Result<(), Error> {
         if let Some(ids) = self.variables.get(name).cloned() {
-            return self.sequence(&ids, state, depth + 1);
+            let saved_duration = state.duration;
+            let saved_language = state.language;
+            if let Some((duration, language)) = self.variable_context.get(name) {
+                state.duration = *duration;
+                state.language = *language;
+            }
+            self.sequence(&ids, state, depth + 1)?;
+            state.duration = saved_duration;
+            state.language = saved_language;
+            return Ok(());
         }
         match name {
             "relative" | "fixed" | "transpose" => self.pitch_group(name, cursor, state, depth),
@@ -42,21 +51,10 @@ impl Reader<'_> {
                 Ok(())
             }
             "header" | "midi" | "layout" => self.metadata(name, cursor, span),
-            "clef" | "key" | "time" | "partial" | "bar" | "break" | "noBreak" => {
-                self.notation(name, cursor, state, span)
-            }
-            "stemUp" | "stemDown" | "stemNeutral" | "voiceOne" | "voiceTwo" | "oneVoice" => {
-                state.direction = match name {
-                    "stemUp" | "voiceOne" => Direction::Up,
-                    "stemDown" | "voiceTwo" => Direction::Down,
-                    _ => Direction::Auto,
-                };
-                Ok(())
-            }
-            "autoBeamOff" | "autoBeamOn" => {
-                state.auto_beam = name == "autoBeamOn";
-                Ok(())
-            }
+            "clef" | "key" | "time" | "partial" | "bar" | "break" | "noBreak" | "section"
+            | "fine" => self.notation(name, cursor, state, span),
+            "volta" => Err(syntax_error(span, "`\\volta` is only valid inside `\\alternative`.")),
+            _ if apply_state_toggle(name, state) => Ok(()),
             "tuplet" | "times" => self.tuplet(name, cursor, state, span, depth),
             "new" => self.context(cursor, state, span, depth),
             "set" => self.set_instrument(cursor, state, span),
@@ -65,7 +63,7 @@ impl Reader<'_> {
                 self.grace(name, cursor, state, span, depth)
             }
             "repeat" => self.repeat(cursor, state, span, depth),
-            "chordmode" => self.chord_names(cursor, state, span),
+            "chordmode" | "chords" => self.chord_names(cursor, state, span, depth),
             _ if self.mark_command(name, cursor, state, span)? => Ok(()),
             _ => Err(self.command_error(name, span)),
         }
@@ -119,41 +117,73 @@ impl Reader<'_> {
             "clef" => EventKind::Clef(read_clef(cursor.text()?, span)?),
             "key" => {
                 let mut tonic = self.pitch_argument(cursor, state)?;
+                tonic.octave = 0;
                 for (from, to) in state.transpositions.iter().rev() {
-                    tonic = tonic.transpose(*from, *to)?;
+                    tonic = tonic.transpose_tonic(*from, *to).map_err(|e| e.or_at(span))?;
                 }
                 let node = cursor.next()?;
                 let ExprKind::Atom(TokenKind::Command(mode)) = &node.kind else {
                     return Err(syntax_error(node.span, "A key needs a mode such as \\major."));
                 };
-                EventKind::Key(Key { tonic, mode: read_mode(mode, node.span)? })
+                let key = Key { tonic, mode: read_mode(mode, node.span)? };
+                key.alterations().map_err(|e| e.or_at(span))?;
+                EventKind::Key(key)
             }
             "time" => {
                 state.meter = self.meter(cursor, span)?;
                 EventKind::Time(state.meter.clone())
             }
-            "partial" => {
-                if self.partial.is_some()
-                    || self.score.events.iter().any(|e| e.kind.duration().is_some())
-                {
-                    return Err(syntax_error(
-                        span,
-                        "A pickup is allowed only once, before the first note.",
-                    ));
-                }
-                let duration = read_duration(cursor, state.duration)?.time()?;
-                self.partial = Some(duration);
-                state.at.main = duration.checked_neg()?;
-                for event in &mut self.score.events {
-                    event.at.main = state.at.main;
-                }
-                return Ok(());
-            }
+            "partial" => return self.partial(cursor, state, span),
             "bar" => EventKind::Bar(read_bar(cursor.text()?, span)?),
+            "section" => EventKind::Bar(BarStyle::Double),
+            "fine" => {
+                let mark = gd_score::Annotation {
+                    kind: gd_score::AnnotationKind::Text(
+                        "Fine".to_string(),
+                        gd_score::TextStyle::Italic,
+                    ),
+                    direction: Direction::Up,
+                };
+                if let Some(last) = state.last {
+                    self.score.events[last.0 as usize].marks.push(mark);
+                } else {
+                    state.pending.push(mark);
+                }
+                EventKind::Bar(BarStyle::Final)
+            }
             "break" => EventKind::Break(BreakRule::Force),
             _ => EventKind::Break(BreakRule::Forbid),
         };
         self.emit(state, kind, span)?;
+        Ok(())
+    }
+
+    fn partial(
+        &mut self,
+        cursor: &mut Cursor<'_>,
+        state: &mut State,
+        span: Span,
+    ) -> Result<(), Error> {
+        if self.voice_has_rhythmic(state.voice) {
+            return Err(syntax_error(span, "A pickup is allowed only before the first note."));
+        }
+        let duration = read_duration(cursor, state.duration)?.time().map_err(|e| e.or_at(span))?;
+        if let Some(existing) = self.partial {
+            if existing != duration {
+                return Err(syntax_error(
+                    span,
+                    "Different staves use different pickup durations.",
+                ));
+            }
+        } else {
+            self.partial = Some(duration);
+        }
+        state.at.main = duration.checked_neg().map_err(|e| e.or_at(span))?;
+        for event in &mut self.score.events {
+            if event.kind.duration().is_none() && event.at.main == gd_score::Ratio::ZERO {
+                event.at.main = state.at.main;
+            }
+        }
         Ok(())
     }
 
@@ -223,10 +253,20 @@ impl Reader<'_> {
                         return Err(unsupported(node.span, "Scheme"));
                     }
                 }
+            } else if body.command("markup") {
+                let _ = self.read_markup(&mut body, 0)?;
             } else {
                 let node = body.next()?;
-                if !matches!(node.kind, ExprKind::Atom(TokenKind::Text(_))) {
-                    return Err(syntax_error(node.span, "Header values must be literal strings."));
+                match &node.kind {
+                    ExprKind::Atom(TokenKind::Text(_)) => {}
+                    ExprKind::Atom(TokenKind::Command(var))
+                        if self.variables.contains_key(var) => {}
+                    _ => {
+                        return Err(syntax_error(
+                            node.span,
+                            "Header values must be literal strings or \\markup.",
+                        ));
+                    }
                 }
             }
         }
@@ -242,7 +282,7 @@ impl Reader<'_> {
         );
     }
 
-    fn command_error(&self, name: &str, span: Span) -> Error {
+    pub(crate) fn command_error(&self, name: &str, span: Span) -> Error {
         if crate::command(name).is_some() {
             return unsupported(span, &format!("\\{name}"));
         }
@@ -255,6 +295,28 @@ impl Reader<'_> {
             .at(span)
             .hint(hint)
     }
+}
+
+fn apply_state_toggle(name: &str, state: &mut State) -> bool {
+    match name {
+        "stemUp" | "voiceOne" => state.direction = Direction::Up,
+        "stemDown" | "voiceTwo" => state.direction = Direction::Down,
+        "stemNeutral" | "oneVoice" => state.direction = Direction::Auto,
+        "slurUp" | "phrasingSlurUp" => state.slur_direction = Direction::Up,
+        "slurDown" | "phrasingSlurDown" => state.slur_direction = Direction::Down,
+        "slurNeutral" | "phrasingSlurNeutral" => state.slur_direction = Direction::Auto,
+        "tieUp" => state.tie_direction = Direction::Up,
+        "tieDown" => state.tie_direction = Direction::Down,
+        "tieNeutral" => state.tie_direction = Direction::Auto,
+        "dynamicUp" => state.dynamic_direction = Direction::Up,
+        "dynamicDown" => state.dynamic_direction = Direction::Down,
+        "dynamicNeutral" => state.dynamic_direction = Direction::Auto,
+        "autoBeamOff" => state.auto_beam = false,
+        "autoBeamOn" => state.auto_beam = true,
+        "compressEmptyMeasures" | "compressFullBarRests" | "numericTimeSignature" => {}
+        _ => return false,
+    }
+    true
 }
 
 fn read_clef(name: &str, span: Span) -> Result<Clef, Error> {

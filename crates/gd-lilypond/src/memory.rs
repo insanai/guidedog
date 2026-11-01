@@ -53,6 +53,7 @@ pub(crate) fn annotation_bytes(annotation: &Annotation) -> usize {
         | AnnotationKind::Dynamic(text)
         | AnnotationKind::Tempo(text)
         | AnnotationKind::Rehearsal(text) => text.len(),
+        AnnotationKind::Markup(markup, _) => return markup.approx_bytes(),
         AnnotationKind::Fingering(_) => 0,
     };
     text.saturating_add(128)

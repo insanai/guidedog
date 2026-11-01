@@ -116,6 +116,33 @@ fn groups_repeats_bars_and_measure_rests_have_distinct_geometry() {
 }
 
 #[test]
+fn a_group_name_stands_left_of_its_staff_names_and_between_its_staves() {
+    let engraving = draw(
+        r#"\new PianoStaff \with { instrumentName = "Piano" } <<
+        \new Staff \with { instrumentName = "RH" } { c''1 }
+        \new Staff \with { instrumentName = "LH" } { \clef bass c1 }
+    >>"#,
+        350.0,
+    );
+    let names: Vec<_> = engraving.systems[0]
+        .marks
+        .iter()
+        .filter(|m| matches!(m.mark, Mark::Text { role: Role::Instrument, .. }))
+        .map(|m| m.bounds)
+        .collect();
+    assert_eq!(names.len(), 3, "{names:?}");
+    let group = names.iter().min_by(|a, b| a.left.total_cmp(&b.left)).unwrap();
+    for staff in names.iter().filter(|b| b.left > group.left) {
+        assert!(staff.left > group.right, "{group:?} {staff:?}");
+    }
+    let (top, bottom) = names
+        .iter()
+        .filter(|b| b.left > group.left)
+        .fold((f64::MAX, f64::MIN), |(t, b), n| (t.min(n.top), b.max(n.bottom)));
+    assert!(group.top > top && group.bottom < bottom, "{group:?}");
+}
+
+#[test]
 fn lazy_text_faces_are_selected_only_during_shaping_and_record_their_source() {
     struct Source(std::sync::atomic::AtomicUsize);
     impl FaceSource for Source {
@@ -504,4 +531,219 @@ fn directed_hairpins_stay_on_the_requested_side_of_the_staff() {
         .collect();
     assert_eq!(lines.len(), 2);
     assert!(lines.iter().all(|m| m.bounds.bottom < top));
+}
+
+#[test]
+fn rich_markup_shapes_enclosures_columns_dynamics_and_music_glyphs() {
+    let drawing = draw(
+        r#"\new Staff \with {
+          instrumentName = \markup \center-column { "Clarinet" \concat { "in B" \flat } }
+        } \relative c'' {
+          \tempo \markup { \bold "Allegro" \italic "con brio" }
+          \mark \markup \box "A"
+          c4^\markup { \dynamic sfz \italic "espr." }
+          d4^\markup \circle "1"
+          e4_\markup \underline "ten."
+          f4^\markup \segno |
+        }"#,
+        380.0,
+    );
+    let marks = &drawing.systems[0].marks;
+    assert!(marks.iter().any(|m| m.mark.role() == Role::Instrument));
+    assert!(marks.iter().any(|m| m.mark.role() == Role::Tempo));
+    assert!(marks.iter().any(|m| m.mark.role() == Role::Rehearsal));
+    let mut svg = String::new();
+    write_svg(&mut svg, &drawing, &SvgOptions::default(), None).unwrap();
+    assert!(svg.contains("<path "));
+}
+
+#[test]
+fn mixed_latin_and_devanagari_string_shapes_contiguous_runs_and_records_sources() {
+    struct NamedFace(&'static str, &'static [u8]);
+    impl FaceSource for NamedFace {
+        fn data(&self) -> Result<&[u8], gd_score::Error> {
+            Ok(self.1)
+        }
+        fn id(&self) -> Option<&str> {
+            Some(self.0)
+        }
+    }
+    const HINDI: &[u8] =
+        include_bytes!("../../../../docs/shared/fonts/NotoSerifDevanagari-Regular.ttf");
+    let latin = NamedFace("latin.otf", REGULAR);
+    let hindi = NamedFace("hindi.ttf", HINDI);
+    let fonts = load_fonts(&FontOptions {
+        regular: vec![
+            FaceData { source: Some(&latin), ..Default::default() },
+            FaceData { source: Some(&hindi), ..Default::default() },
+        ],
+        ..Default::default()
+    })
+    .unwrap();
+    let mut warnings = Vec::new();
+    let run = crate::text::shape(
+        &fonts,
+        "αβγ संगीत की",
+        12.0,
+        gd_score::TextStyle::Regular,
+        &mut warnings,
+        &mut 1_000_000,
+        &mut None,
+    )
+    .unwrap();
+    assert!(warnings.is_empty());
+    assert!(run.sources.iter().any(|s| s == "latin.otf"));
+    assert!(run.sources.iter().any(|s| s == "hindi.ttf"));
+}
+
+#[test]
+fn c_clef_key_signatures_stay_within_staff_lines() {
+    for clef in ["alto", "tenor", "soprano"] {
+        for (tonic, mode) in [("cis", "major"), ("ces", "major")] {
+            let source = format!("\\clef {clef} \\key {tonic} \\{mode} c'1");
+            let drawing = draw(&source, 350.0);
+            let marks = &drawing.systems[0].marks;
+            let staff_top = marks
+                .iter()
+                .filter(|m| m.mark.role() == Role::Staff)
+                .map(|m| m.bounds.top)
+                .fold(f64::INFINITY, f64::min);
+            let staff_bottom = marks
+                .iter()
+                .filter(|m| m.mark.role() == Role::Staff)
+                .map(|m| m.bounds.bottom)
+                .fold(f64::NEG_INFINITY, f64::max);
+            let space = (staff_bottom - staff_top) / 4.0;
+            for sig in marks.iter().filter(|m| m.mark.role() == Role::Signature) {
+                let center = (sig.bounds.top + sig.bounds.bottom) * 0.5;
+                assert!(center >= staff_top - 0.6 * space, "{source}: {center} < {staff_top}");
+                assert!(
+                    center <= staff_bottom + 0.6 * space,
+                    "{source}: {center} > {staff_bottom}"
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn multi_voice_seconds_dots_and_accidentals_coordinate_horizontally() {
+    let drawing = draw(r"<< \relative c' { d4. c4. } \\ \relative c' { c4. d4. } >>", 350.0);
+    let heads: Vec<_> =
+        drawing.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Notehead).collect();
+    assert_eq!(heads.len(), 4);
+    // Marks are ordered by column: [col0_v1, col0_v2, col1_v1, col1_v2].
+    // Uncrossed second (d' above c'): lower voice shifts right.
+    assert!(heads[1].bounds.left > heads[0].bounds.left + 2.0);
+    // Crossed second (c' in voice 1 below d' in voice 2): upper-stem voice shifts right.
+    assert!(heads[2].bounds.left > heads[3].bounds.left + 2.0);
+    let dots: Vec<_> =
+        drawing.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Dot).collect();
+    assert_eq!(dots.len(), 4);
+    assert!((dots[0].bounds.left - dots[1].bounds.left).abs() < 0.01);
+
+    let acc = draw(r"<< \relative c' { fis2 } \\ \relative c' { f!2 } >>", 350.0);
+    let accs: Vec<_> =
+        acc.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Accidental).collect();
+    assert_eq!(accs.len(), 2);
+    assert!(
+        accs[0].bounds.right <= accs[1].bounds.left || accs[1].bounds.right <= accs[0].bounds.left
+    );
+}
+
+#[test]
+fn broken_voltas_and_continuation_ties_respect_system_boundaries() {
+    let drawing = draw(
+        r"\relative c' {
+          \key d \major
+          \repeat volta 3 { c1 | }
+          \alternative {
+            \volta 1,2 { g'1~ | \break g1 | }
+            \volta 3 { d1 \fine }
+          }
+        }",
+        320.0,
+    );
+    assert_eq!(drawing.systems.len(), 2);
+    let sys1_volta_lines = drawing.systems[0]
+        .marks
+        .iter()
+        .filter(|m| matches!(m.mark, Mark::Line { role: Role::Volta, .. }))
+        .count();
+    let sys2_volta_lines = drawing.systems[1]
+        .marks
+        .iter()
+        .filter(|m| matches!(m.mark, Mark::Line { role: Role::Volta, .. }))
+        .count();
+    // Open-ended broken volta on system 1 has left hook + top bar (2 lines);
+    // system 2 has continuation volta (2 lines) + complete volta 3 (3 lines) = 5 lines.
+    assert_eq!(sys1_volta_lines, 2);
+    assert_eq!(sys2_volta_lines, 5);
+    let sys2_sigs = drawing.systems[1]
+        .marks
+        .iter()
+        .filter(|m| m.mark.role() == Role::Signature)
+        .map(|m| m.bounds.right)
+        .fold(0.0f64, f64::max);
+    let sys2_tie = drawing.systems[1].marks.iter().find(|m| m.mark.role() == Role::Tie).unwrap();
+    assert!(sys2_tie.bounds.left > sys2_sigs);
+}
+
+#[test]
+fn concave_beams_stay_level_and_three_eight_groups_whole_measure() {
+    let drawing = draw(r"\relative c' { \time 3/8 c16 d e f g a | \stemUp c,8 c'' c, | }", 350.0);
+    let beams: Vec<_> = drawing.systems[0]
+        .marks
+        .iter()
+        .filter_map(|m| match &m.mark {
+            Mark::Polygon { points, role: Role::Beam } => Some((points[0].y, points[1].y)),
+            _ => None,
+        })
+        .collect();
+    // 3/8 with 6 sixteenths forms 5+5 polygons; bar 2 forms 2 concave polygons.
+    assert_eq!(beams.len(), 12);
+    assert!((beams[10].0 - beams[10].1).abs() < 0.01);
+    assert!((beams[11].0 - beams[11].1).abs() < 0.01);
+}
+
+#[test]
+fn reused_engraver_and_svg_aria_do_not_overcharge_or_duplicate() {
+    let loaded =
+        gd_lilypond::load_score("{ c'4 d' e' f' }", "m.ly", &mut gd_lilypond::Options::default())
+            .unwrap();
+    let fonts = load_fonts(&FontOptions {
+        regular: vec![FaceData { data: REGULAR, ..FaceData::default() }],
+        ..FontOptions::default()
+    })
+    .unwrap();
+    let mut engraver = Engraver::default();
+    let mut charged = Vec::new();
+    for _ in 0..4 {
+        let mut turn = 0usize;
+        let mut reserve = |bytes: usize| {
+            turn += bytes;
+            true
+        };
+        let mut opts = Options { reserve: Some(&mut reserve), ..Options::default() };
+        let _ = engraver.engrave_score(&loaded.score, &fonts, &mut opts).unwrap();
+        charged.push(turn);
+    }
+    assert!(charged[3] < charged[0]);
+
+    let drawing = draw("{ c'1 }", 200.0);
+    let mut plain_svg = String::new();
+    write_svg(&mut plain_svg, &drawing, &SvgOptions::default(), None).unwrap();
+    assert!(!plain_svg.contains("aria-labelledby"));
+    assert!(!plain_svg.contains("<title>"));
+
+    let mut titled_svg = String::new();
+    write_svg(
+        &mut titled_svg,
+        &drawing,
+        &SvgOptions { title: "Melody", description: "Melody", ..SvgOptions::default() },
+        None,
+    )
+    .unwrap();
+    assert!(titled_svg.contains("aria-labelledby=\"title\""));
+    assert!(!titled_svg.contains("<desc "));
 }

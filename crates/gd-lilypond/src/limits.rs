@@ -13,11 +13,20 @@ pub struct Limits {
     pub work: usize,
     /// Rhythmic and notation events after expansion.
     pub events: usize,
+    /// Conservative allocation allowance for expanded notation, including copied text.
+    pub memory_bytes: usize,
 }
 
 impl Default for Limits {
     fn default() -> Self {
-        Self { source_bytes: 256 * 1024, depth: 64, files: 32, work: 8_000_000, events: 20_000 }
+        Self {
+            source_bytes: 256 * 1024,
+            depth: 64,
+            files: 32,
+            work: 8_000_000,
+            events: 20_000,
+            memory_bytes: 64 * 1024 * 1024,
+        }
     }
 }
 

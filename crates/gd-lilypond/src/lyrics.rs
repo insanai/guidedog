@@ -24,7 +24,8 @@ impl Reader<'_> {
         span: Span,
         depth: usize,
     ) -> Result<(), Error> {
-        let target = if name == "lyricsto" { Some(cursor.text()?.to_string()) } else { None };
+        let target =
+            if name == "lyricsto" { Some(self.copy_text(cursor.text()?, span)?) } else { None };
         let voice = state
             .last
             .and_then(|id| self.score.events.get(id.0 as usize))
@@ -50,7 +51,10 @@ impl Reader<'_> {
             let mut inner = Cursor::new(self.syntax, ids);
             return self.lyric_expression(&mut inner, depth + 1);
         }
-        Ok(cursor.sequence()?.to_vec())
+        let span = cursor.span();
+        let ids = cursor.sequence()?;
+        self.memory.take(ids.len() * 8 + 64, span)?;
+        Ok(ids.to_vec())
     }
 
     pub(crate) fn timed_lyrics(
@@ -90,7 +94,7 @@ impl Reader<'_> {
                 at.main = at.main.checked_add(duration.time()?)?;
                 continue;
             }
-            let text = inner.text()?.to_string();
+            let text = self.copy_text(inner.text()?, location)?;
             duration = read_duration(&mut inner, duration)?;
             push(
                 &mut syllables,
@@ -142,6 +146,7 @@ impl Reader<'_> {
         voice: VoiceId,
         span: Span,
     ) -> Result<(), Error> {
+        self.memory.take(self.score.events.len().saturating_mul(64), span)?;
         let candidates = self.lyric_candidates(voice)?;
         let mut at = 0usize;
         let mut cursor = Cursor::new(self.syntax, ids);
@@ -169,7 +174,7 @@ impl Reader<'_> {
                 }
                 continue;
             }
-            let text = cursor.text()?.to_string();
+            let text = self.copy_text(cursor.text()?, node.span)?;
             if let Some((event, _)) = candidates.get(at) {
                 push(
                     &mut syllables,

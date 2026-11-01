@@ -238,6 +238,7 @@ impl Reader<'_> {
     ) -> Result<(), Error> {
         let ties = std::mem::take(&mut state.ties);
         for reference in ties {
+            self.memory.take(256, span)?;
             let EventKind::Chord(previous) = &self.score.events[reference.event.0 as usize].kind
             else {
                 return Err(syntax_error(span, "Only pitched notes can start a tie."));
@@ -255,7 +256,7 @@ impl Reader<'_> {
                     start: reference,
                     end: NoteRef { event: id, note: note as u8 },
                     kind: SpannerKind::Tie,
-                    direction: state.direction,
+                    direction: gd_score::Direction::Auto,
                     span,
                 },
                 span,

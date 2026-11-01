@@ -50,7 +50,7 @@ impl Reader<'_> {
                     push(&mut state.ties, NoteRef { event: last, note: note as u8 }, span)?;
                 }
             }
-            '(' => push(&mut state.slurs, (reference, false, span), span)?,
+            '(' => self.open_slur(state, reference, false, span)?,
             ')' => self.close_slur(state, false, span)?,
             '[' => {
                 if state.beam.is_some() {
@@ -86,7 +86,7 @@ impl Reader<'_> {
         let node = cursor.next()?;
         let annotation = match &node.kind {
             ExprKind::Atom(TokenKind::Text(text)) => {
-                AnnotationKind::Text(text.clone(), TextStyle::Regular)
+                AnnotationKind::Text(self.copy_text(text, node.span)?, TextStyle::Regular)
             }
             ExprKind::Atom(TokenKind::Number(number)) => {
                 let finger =
@@ -161,7 +161,7 @@ impl Reader<'_> {
         match name {
             "(" => {
                 let start = self.last_ref(state, span)?;
-                push(&mut state.slurs, (start, true, span), span)?;
+                self.open_slur(state, start, true, span)?;
             }
             ")" => self.close_slur(state, true, span)?,
             "<" | ">" => {
@@ -175,7 +175,9 @@ impl Reader<'_> {
                     cursor.peek().map(|n| &n.kind),
                     Some(ExprKind::Atom(TokenKind::Text(_)))
                 ) {
-                    text.push_str(cursor.text()?);
+                    let literal = cursor.text()?;
+                    self.memory.take(literal.len() + 128, span)?;
+                    text.push_str(literal);
                 }
                 if matches!(
                     cursor.peek().map(|n| &n.kind),
@@ -210,7 +212,7 @@ impl Reader<'_> {
                         .ok_or_else(|| limit("rehearsal labels", span))?;
                     rehearsal_name(self.rehearsal)
                 } else {
-                    cursor.text()?.to_string()
+                    self.copy_text(cursor.text()?, span)?
                 };
                 state.pending.push(Annotation {
                     kind: AnnotationKind::Rehearsal(text),
@@ -242,6 +244,7 @@ impl Reader<'_> {
     }
 
     fn annotate(&mut self, state: &mut State, mark: Annotation, span: Span) -> Result<(), Error> {
+        self.memory.take(crate::memory::annotation_bytes(&mark), span)?;
         if let Some(id) = state.last {
             push(&mut self.score.events[id.0 as usize].marks, mark, span)
         } else {
@@ -256,6 +259,20 @@ impl Reader<'_> {
                 .ok_or_else(|| syntax_error(span, "This mark needs a preceding note."))?,
             note: 0,
         })
+    }
+
+    fn open_slur(
+        &self,
+        state: &mut State,
+        start: NoteRef,
+        phrasing: bool,
+        span: Span,
+    ) -> Result<(), Error> {
+        if state.slurs.len() >= self.limits.depth {
+            return Err(limit("nested slurs", span));
+        }
+        self.memory.take(128, span)?;
+        push(&mut state.slurs, (start, phrasing, span), span)
     }
 
     fn close_slur(&mut self, state: &mut State, phrasing: bool, span: Span) -> Result<(), Error> {
@@ -295,6 +312,7 @@ impl Reader<'_> {
         direction: Direction,
         span: Span,
     ) -> Result<(), Error> {
+        self.memory.take(256, span)?;
         push(&mut self.score.spanners, Spanner { start, end, kind, direction, span }, span)
     }
 

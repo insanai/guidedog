@@ -64,6 +64,7 @@ fn includes_refuse_cycles_missing_policy_and_expansion_budgets() {
         &mut Options {
             limits: Limits { source_bytes: source.len() + 30, ..Limits::default() },
             include: Some(&mut repeated),
+            ..Options::default()
         },
     )
     .unwrap_err();

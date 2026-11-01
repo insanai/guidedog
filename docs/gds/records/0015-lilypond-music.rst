@@ -114,7 +114,8 @@ We write music as follows.
 
 The MyST fence begins with `````{lilypond}`` and carries the same colon options and body.
 An optional file argument supplies the whole source instead of the body; exactly one source is required.
-File arguments use the reader's confined include mechanism, as for ``typst-diagram``.
+File arguments are retained during markup parsing and opened by the trusted link pass through the project's confined read policy.
+This keeps a text conversion faithful without engraving and lets an untrusted build refuse a music file before it is read.
 Ordinary ``code-block:: lilypond`` blocks and `````lilypond`` fences remain source examples.
 
 .. list-table:: Directive options
@@ -136,7 +137,7 @@ Ordinary ``code-block:: lilypond`` blocks and `````lilypond`` fences remain sour
    * - ``justify``
      - ``auto`` (default), ``all`` or ``none``; see "Line breaking".
 
-The project gains three settings.
+The project gains three numeric settings, measured in typographic points.
 ``lilypond_staff_size`` is the default staff size.
 ``lilypond_html_width`` and ``lilypond_pdf_width`` override the builders' measures for themes and templates that change the column or the margins (see "HTML" and "PDF").
 House style is otherwise fixed: every project engraves with the same rules and the same music font; only text faces follow the project's font policy.
@@ -370,6 +371,7 @@ An overflow in ``Ratio`` arithmetic is an error (``score.time-overflow``), never
    pub fn interpret_syntax(syntax: &Syntax, limits: &Limits) -> Result<Loaded, Failed>;
 
 ``gd-engrave`` lays out and draws.
+Borrowed text faces carry an explicit collection index; reading every face of a collection into every style would mix regular, bold and italic text.
 ``Fonts`` is loaded once per build and shared by every thread: it borrows the font bytes and is ``Sync``.
 An ``Engraver`` is a workspace: it keeps its buffers (columns, springs, skylines, candidate scores) between scores, so a page with many examples allocates once.
 One engraver serves one thread.
@@ -379,10 +381,12 @@ One engraver serves one thread.
    /// Text faces in fallback order, per style. The music font is built in.
    #[derive(Default)]
    pub struct FontOptions<'f> {
-       pub regular: Vec<&'f [u8]>,
-       pub bold: Vec<&'f [u8]>,
-       pub italic: Vec<&'f [u8]>,
+       pub regular: Vec<FaceData<'f>>,
+       pub bold: Vec<FaceData<'f>>,
+       pub italic: Vec<FaceData<'f>>,
    }
+   /// One selected face, borrowing the original bytes; index 0 is the common case.
+   pub struct FaceData<'f> { pub data: &'f [u8], pub index: u32 }
    /// Parses the embedded Bravura font and metadata and the given faces into immutable
    /// tables. Borrows the faces for `'f`; fails when a face or the metadata is malformed.
    pub fn load_fonts<'f>(options: &FontOptions<'f>) -> Result<Fonts<'f>, Error>;
@@ -862,6 +866,7 @@ The theme keeps narrow-screen figures with a ``lilypond`` image from scrolling s
 *PDF.*
 The PDF builder engraves at the text width of the template in use.
 The margins live in the theme's Typst templates and differ between them (31 millimetres a side in ``book.typ``, 30 in ``article.typ``, 25 in ``discussion.typ``), so each built-in template declares its horizontal margin in a leading comment, ``// guidedog: margin-x = 31mm``.
+The declaration follows the initial shared-theme import so that the existing self-contained template assembler can remove that import without removing the margin contract.
 The builder subtracts twice that margin from the width of ``pdf_paper_size``: 148 millimetres for a book on A4.
 A copied or custom template keeps or writes the same declaration; without one, the builder assumes 25 millimetres, and ``lilypond_pdf_width`` overrides the result.
 The drawing is placed at its natural size, so an 18-point staff is 18 points on paper.
@@ -933,6 +938,8 @@ The parser is recursive descent with a depth counter; variable expansion and (ph
      - 32
    * - Events (notes, rests, chords) after expansion
      - 20,000
+   * - Expanded reader allocation allowance
+     - 64 MiB, including copied text and notation state
    * - Staves; voices per staff; notes per chord
      - 24; 2; 16
    * - Pitch range
@@ -953,7 +960,10 @@ Token visits, expanded syntax nodes, spacing-candidate gaps, collision compariso
 Exhausting this allowance is a limit diagnostic, including on malformed or adversarial input.
 A source limit alone does not bound quadratic layout work tightly enough for an untrusted build.
 The work of each stage is polynomial in these bounds: columns and spacing are :math:`O(m \log m)` per line, breaking is :math:`O(n w \, m \log m)` with :math:`w \le 128`, and beam and slur choices try a fixed number of candidates each.
-Buffers grow with ``try_reserve`` after ``reserve`` agrees, so a refused reservation is an error, not an abort.
+The reader reserves its conservative expanded-allocation allowance before interpretation and 256 bytes per source byte before parsing each source file.
+Copied strings and state, expanded nodes, spanners and lyric candidates consume the expanded allowance before allocation.
+The adapter owns a transient ledger for each drawing and releases its reservations after asset publication.
+Engraver buffers grow with ``try_reserve`` after ``reserve`` agrees, so a refused reservation is an error, not an abort.
 
 Document model and conversions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -984,7 +994,8 @@ Document model and conversions
      - Source example
 
 Text output keeps the source and caption without engraving.
-RST and MyST writing reconstruct the directive and its options, keeping a file argument as a file argument so that ``\include`` paths keep their base folder.
+The existing reStructuredText writer reconstructs the directive and its options from either RST or MyST input, keeping a file argument as a file argument so that ``\include`` paths keep their base folder.
+Read-write-read tests compare notation and options while allowing the new source locations to change.
 We never reconstruct LilyPond from a drawing.
 The directive is a Guidedog extension; we do not claim compatibility with ``sphinxcontrib-lilypond``, whose ``lily`` directive and role run the LilyPond program with a configurable preamble.
 The environment schema changes, so cached documents are parsed again.
@@ -1146,6 +1157,13 @@ It chose an in-house engraver over the LilyPond program and over Verovio, a scor
 * Critique: a large native engraver needs reviewable evidence beyond successful compilation.
   Revision: require recorded corpus checks, bounded-work failures, real HTML/PDF output and a final gap review, with an explicit status for every acceptance item.
 
+Implementation integration review, 1 November 2026.
+
+* File arguments must be refused before they are opened in an untrusted build, so the markup reader retains their paths and the trusted link pass performs the confined read.
+* The existing conversion renderer writes RST from both RST and MyST input; the music directive uses that path and retains file arguments, options and source text.
+* Text face data needs an explicit collection index to preserve style selection and avoid reading all collection faces as regular text.
+* Built-in templates start with an import that the standalone assembler removes; the margin declaration therefore follows that import rather than replacing its first line.
+
 Documentation plan
 ~~~~~~~~~~~~~~~~~~
 
@@ -1194,3 +1212,11 @@ References
    2026-11-01: discussion -> accepted. Implement the reviewed three-crate design
    and qualify each phase against the explicit profile and documentation
    contract.
+
+Resource review
+~~~~~~~~~~~~~~~
+
+Event and operation limits alone do not bound repeated text or cloned notation state.
+The reader therefore accounts for these copies before expansion, with a separate allocation allowance and an optional conservative host reservation.
+A regression expands a large text attachment under a small allowance and requires a placed limit diagnostic.
+Transient music reservations belong to the directive, so a page containing many small examples does not retain every example's peak allocation until the page ends.

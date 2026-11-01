@@ -30,6 +30,7 @@ fn parse(
     if source.len() > options.limits.source_bytes {
         return Err(limit("source bytes", Span::default()));
     }
+    reserve_source(source.len(), options, Span::default())?;
     push(
         &mut files.files,
         SourceFile { name: name.into(), text: source.into() },
@@ -100,6 +101,7 @@ fn expand_includes(
         if stack.contains(&included.name) {
             return Err(include_error(token.span, "The include chain contains a cycle."));
         }
+        reserve_source(included.text.len(), options, token.span)?;
         let id = FileId(files.files.len() as u32);
         push(stack, included.name.clone(), token.span)?;
         push(
@@ -177,4 +179,12 @@ pub(crate) fn syntax_error(span: Span, message: &str) -> Error {
     Error::new(ErrorKind::Syntax, message)
         .at(span)
         .hint("Check the LilyPond profile and balance braces, chords and simultaneous groups.")
+}
+
+fn reserve_source(bytes: usize, options: &Options<'_>, span: Span) -> Result<(), Error> {
+    let bytes = bytes.checked_mul(256).ok_or_else(|| limit("syntax memory", span))?;
+    if options.reserve.is_some_and(|reserve| !reserve(bytes)) {
+        return Err(limit("memory ledger", span));
+    }
+    Ok(())
 }

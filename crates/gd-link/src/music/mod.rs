@@ -52,6 +52,7 @@ fn read(
     page: &mut Page<'_>,
     doc: Document<'_>,
     id: NodeId,
+    ledger: &gd_host::Ledger<'_>,
 ) -> Result<gd_lilypond::Loaded, String> {
     let mut origin = source::origin(page, doc, id);
     let mut text = doc.node_text(id).to_owned();
@@ -63,10 +64,15 @@ fn read(
     let mut files = vec![origin.clone()];
     let mut include =
         |request: gd_lilypond::IncludeRequest<'_>| source::include(page, &mut files, request);
+    let reserve = |bytes| ledger.charge(bytes);
     let result = gd_lilypond::load_score(
         &text,
         &origin.to_string_lossy(),
-        &mut gd_lilypond::Options { include: Some(&mut include), ..Default::default() },
+        &mut gd_lilypond::Options {
+            include: Some(&mut include),
+            reserve: Some(&reserve),
+            ..Default::default()
+        },
     );
     match result {
         Ok(loaded) => {
@@ -88,8 +94,22 @@ fn draw<'d>(
     id: NodeId,
     fonts: &Fonts<'_>,
 ) -> Result<Drawing<'d>, String> {
-    let loaded = read(page, doc, id)?;
-    let ledger = page.ledger;
+    let ledger = page.ledger.budget().map(gd_host::Ledger::new).unwrap_or_default();
+    let result = draw_held(page, doc, id, fonts, &ledger);
+    if ledger.refused() > 0 {
+        page.ledger.charge(ledger.refused());
+    }
+    result
+}
+
+fn draw_held<'d>(
+    page: &mut Page<'_>,
+    doc: Document<'d>,
+    id: NodeId,
+    fonts: &Fonts<'_>,
+    ledger: &gd_host::Ledger<'_>,
+) -> Result<Drawing<'d>, String> {
+    let loaded = read(page, doc, id, ledger)?;
     let mut reserve = |bytes| ledger.charge(bytes);
     let mut options = options::dimensions(page, doc, id)?;
     options.reserve = Some(&mut reserve);
@@ -109,14 +129,14 @@ fn draw<'d>(
         );
     }
     let alt = diagnostics::description(page, &engraving.summary);
-    let path = assets::save(page, doc, id, &engraving, None, &alt)?;
-    let parts = pdf_parts(page, doc, id, &engraving, &alt)?;
+    let path = assets::save(page, doc, id, &engraving, None, &alt, ledger)?;
+    let parts = pdf_parts(page, doc, id, &engraving, &alt, ledger)?;
     let mut narrow = None;
     if page.format == OutputFormat::Html && options.line_width > 225.0 {
         options.line_width = 225.0;
         options.staff_size = options.staff_size.min(14.0);
         if let Ok(drawing) = page.engraver.engrave_score(&loaded.score, fonts, &mut options) {
-            narrow = Some(assets::save(page, doc, id, &drawing, None, &alt)?);
+            narrow = Some(assets::save(page, doc, id, &drawing, None, &alt, ledger)?);
         }
     }
     // The image and its SVG carry the same localized description.
@@ -139,11 +159,12 @@ fn pdf_parts(
     id: NodeId,
     drawing: &Engraving,
     alt: &str,
+    ledger: &gd_host::Ledger<'_>,
 ) -> Result<Vec<std::path::PathBuf>, String> {
     let mut parts = Vec::new();
     if page.format == OutputFormat::Pdf && drawing.systems.len() > 1 {
         for system in 0..drawing.systems.len() {
-            parts.push(assets::save(page, doc, id, drawing, Some(system), alt)?);
+            parts.push(assets::save(page, doc, id, drawing, Some(system), alt, ledger)?);
         }
     }
     Ok(parts)

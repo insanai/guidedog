@@ -108,7 +108,9 @@ impl Reader<'_> {
         }
         let node = cursor.next()?;
         match &node.kind {
-            ExprKind::Atom(TokenKind::Text(value) | TokenKind::Word(value)) => Ok(value.clone()),
+            ExprKind::Atom(TokenKind::Text(value) | TokenKind::Word(value)) => {
+                self.copy_text(value, node.span)
+            }
             ExprKind::Atom(TokenKind::Command(name)) => {
                 let ids: &[SyntaxId] = self
                     .variables

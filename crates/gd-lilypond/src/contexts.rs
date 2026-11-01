@@ -14,7 +14,7 @@ impl Reader<'_> {
         depth: usize,
     ) -> Result<(), Error> {
         let mut cursor = Cursor::new(self.syntax, ids);
-        let start = state.clone();
+        let start = self.copy_state(state, cursor.span())?;
         let mut end = state.at;
         let mut branch = 0;
         let explicit = ids.iter().any(|id| {
@@ -25,7 +25,7 @@ impl Reader<'_> {
             if cursor.command("\\") {
                 continue;
             }
-            let mut child = start.clone();
+            let mut child = self.copy_state(&start, cursor.span())?;
             let is_context = matches!(cursor.peek().map(|n| &n.kind),
                 Some(ExprKind::Atom(TokenKind::Command(name))) if name == "new");
             if branch > 0 && !is_context {
@@ -78,9 +78,10 @@ impl Reader<'_> {
         depth: usize,
     ) -> Result<(), Error> {
         let kind = cursor.text()?;
-        let name = if cursor.symbol('=') { cursor.text()?.to_string() } else { String::new() };
+        let name =
+            if cursor.symbol('=') { self.copy_text(cursor.text()?, span)? } else { String::new() };
         let properties = if cursor.command("with") { Some(cursor.sequence()?) } else { None };
-        let mut child = state.clone();
+        let mut child = self.copy_state(state, cursor.span())?;
         match kind {
             "Staff" => {
                 let reuse = self.can_reuse_staff();

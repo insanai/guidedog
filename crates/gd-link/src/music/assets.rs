@@ -13,6 +13,7 @@ pub(super) fn save(
     drawing: &Engraving,
     system: Option<usize>,
     alt: &str,
+    ledger: &gd_host::Ledger<'_>,
 ) -> Result<PathBuf, String> {
     let format = doc.custom_attribute(id, "format").unwrap_or("svg");
     if !matches!(format, "svg" | "png") {
@@ -26,7 +27,7 @@ pub(super) fn save(
         adaptive: format == "svg" && page.format == OutputFormat::Html,
         ..Default::default()
     };
-    let mut reserve = |bytes| page.ledger.charge(bytes);
+    let mut reserve = |bytes| ledger.charge(bytes);
     gd_engrave::write_svg(&mut svg, drawing, &options, Some(&mut reserve))
         .map_err(|e| e.to_string())?;
     let data = if format == "png" {

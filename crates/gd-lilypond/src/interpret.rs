@@ -92,6 +92,7 @@ pub(crate) struct Reader<'a> {
     pub(crate) syntax: &'a Syntax,
     pub(crate) limits: &'a Limits,
     pub(crate) work: Work,
+    pub(crate) memory: crate::memory::Memory,
     pub(crate) score: Score,
     pub(crate) warnings: Vec<Error>,
     pub(crate) variables: BTreeMap<String, Vec<SyntaxId>>,
@@ -109,6 +110,7 @@ impl<'a> Reader<'a> {
             syntax,
             limits,
             work: Work::new(limits),
+            memory: crate::memory::Memory::new(limits.memory_bytes),
             warnings: Vec::new(),
             score: Score {
                 staves: vec![Staff::default()],
@@ -145,6 +147,7 @@ impl<'a> Reader<'a> {
         depth: usize,
     ) -> Result<(), Error> {
         self.work.take(1, cursor.span())?;
+        self.memory.take(512, cursor.span())?;
         if depth > self.limits.depth {
             return Err(limit("expansion depth", cursor.span()));
         }
@@ -181,6 +184,7 @@ impl<'a> Reader<'a> {
     pub(crate) fn assignment(&mut self, name: &str, cursor: &mut Cursor<'_>) -> Result<(), Error> {
         let start = cursor.at;
         self.capture(cursor, 0)?;
+        self.memory.take(name.len() + (cursor.at - start) * 8 + 128, cursor.span())?;
         self.variables.insert(name.to_string(), cursor.ids[start..cursor.at].to_vec());
         Ok(())
     }

@@ -78,7 +78,7 @@ impl Reader<'_> {
         state: &mut State,
         depth: usize,
     ) -> Result<(), Error> {
-        let mut child = state.clone();
+        let mut child = self.copy_state(state, cursor.span())?;
         child.pitch_mode = match name {
             "relative" => {
                 let start = if matches!(

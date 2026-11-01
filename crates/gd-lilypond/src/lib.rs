@@ -13,6 +13,7 @@ mod interpret;
 mod lexer;
 mod limits;
 mod lyrics;
+mod memory;
 mod names;
 mod notation;
 mod notes;
@@ -68,6 +69,8 @@ pub struct Options<'a> {
     pub limits: Limits,
     /// Caller-owned include reader, borrowed only during parsing.
     pub include: Option<&'a mut Include<'a>>,
+    /// Reserves the complete conservative reader allowance before expansion.
+    pub reserve: Option<&'a dyn Fn(usize) -> bool>,
 }
 
 impl fmt::Debug for Options<'_> {
@@ -93,6 +96,12 @@ pub struct Loaded {
 /// Parses and interprets borrowed source under the supplied bounds and include policy.
 /// Returns an owned score or a diagnostic with all files read before the failure.
 pub fn load_score(source: &str, name: &str, options: &mut Options<'_>) -> Result<Loaded, Failed> {
+    if options.reserve.is_some_and(|reserve| !reserve(options.limits.memory_bytes)) {
+        return Err(Failed {
+            error: limits::limit("memory ledger", Span::default()),
+            files: SourceFiles::default(),
+        });
+    }
     let syntax = parse_lilypond(source, name, options)?;
     interpret_syntax(&syntax, &options.limits)
 }

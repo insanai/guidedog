@@ -192,7 +192,14 @@ fn adversarial_corpus_is_bounded_and_never_panics() {
             text.push(char::from(alphabet[(seed >> 32) as usize % alphabet.len()]));
         }
         let mut options = Options {
-            limits: Limits { work: 512, depth: 8, events: 64, source_bytes: 256, files: 2 },
+            limits: Limits {
+                work: 512,
+                depth: 8,
+                events: 64,
+                source_bytes: 256,
+                files: 2,
+                memory_bytes: 65536,
+            },
             ..Options::default()
         };
         let _ = load_score(&text, "fuzz.ly", &mut options);

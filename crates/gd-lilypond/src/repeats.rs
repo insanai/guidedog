@@ -113,6 +113,7 @@ impl Reader<'_> {
         let mut inner = Cursor::new(self.syntax, ids);
         while inner.peek().is_some() {
             self.work.take(1, inner.span())?;
+            self.memory.take(512, inner.span())?;
             if inner.symbol('|') {
                 self.bar_checks.push((state.at.main, span));
                 continue;
@@ -135,9 +136,13 @@ impl Reader<'_> {
                 while let Some(part) = inner.peek() {
                     match &part.kind {
                         ExprKind::Atom(TokenKind::Word(word)) if quality.is_empty() => {
+                            self.memory.take(word.len() + 32, part.span)?;
                             quality.push_str(word)
                         }
-                        ExprKind::Atom(TokenKind::Number(number)) => quality.push_str(number),
+                        ExprKind::Atom(TokenKind::Number(number)) => {
+                            self.memory.take(number.len() + 32, part.span)?;
+                            quality.push_str(number);
+                        }
                         ExprKind::Atom(TokenKind::Symbol('.' | '+' | '-')) => {
                             if let ExprKind::Atom(TokenKind::Symbol(c)) = part.kind {
                                 quality.push(c);

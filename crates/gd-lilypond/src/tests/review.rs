@@ -74,3 +74,24 @@ fn key_changes_before_staff_contexts_do_not_make_a_phantom_staff() {
     let loaded = load(r"<< \new ChordNames \chordmode { c1:maj7 } \new Staff { c'1 } >>");
     assert_eq!(loaded.score.staves.len(), 1);
 }
+
+#[test]
+fn repeated_text_and_copied_state_consume_memory_before_expansion() {
+    let text = "large ".repeat(512);
+    let source = format!("\\repeat unfold 200 {{ c'4 ^\"{text}\" }}");
+    let mut options = Options {
+        limits: Limits { memory_bytes: 64 * 1024, ..Limits::default() },
+        ..Options::default()
+    };
+    let failed = load_score(&source, "memory.ly", &mut options).unwrap_err();
+    assert_eq!(failed.error.kind, ErrorKind::ReadLimit);
+    assert!(failed.error.message.contains("memory"));
+    let refuse = |_: usize| false;
+    let failed = load_score(
+        "{ c4 }",
+        "refused.ly",
+        &mut Options { reserve: Some(&refuse), ..Options::default() },
+    )
+    .unwrap_err();
+    assert_eq!(failed.error.kind, ErrorKind::ReadLimit);
+}

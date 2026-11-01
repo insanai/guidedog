@@ -20,11 +20,25 @@ impl Draw<'_, '_, '_, '_, '_> {
             .fonts
             .glyph_data(glyph)
             .ok_or_else(|| crate::limits::failure("Missing rest bounds."))?;
-        let direction = request.score.voices[event.voice.0 as usize].direction;
+        let other_rest = request.columns[column].events.iter().find_map(|id| {
+            let other = &request.score.events[id.0 as usize];
+            (other.voice != event.voice
+                && request.score.voices[other.voice.0 as usize].staff == self.staff
+                && matches!(other.kind, EventKind::Rest(rest) if rest == *duration))
+            .then_some(other.voice)
+        });
+        if other_rest.is_some_and(|voice| voice.0 < event.voice.0) {
+            return Ok(());
+        }
+        let direction = if other_rest.is_some() {
+            Direction::Auto
+        } else {
+            request.score.voices[event.voice.0 as usize].direction
+        };
         let mut y = middle - if duration.base == Base::Whole { space } else { 0.0 };
         let side = if direction == Direction::Down { 1.0 } else { -1.0 };
         if direction != Direction::Auto {
-            y += side * space;
+            y += side * 2.0 * space;
         }
         let x = request.positions[column];
         for _ in 0..8 {

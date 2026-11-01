@@ -27,36 +27,8 @@ impl Engraver {
     ) -> Result<Engraving, Error> {
         validate(score, options)?;
         let mut work = options.limits.work;
-        columns::collect(&mut self.columns, score, options, &mut work)?;
-        self.plan.load(score, &self.columns, fonts, options, &mut work)?;
-        columns::springs(&mut self.springs, &self.columns, score, options, &mut work)?;
-        columns::breaks(
-            &mut self.breaks,
-            &self.columns,
-            score,
-            &self.plan,
-            fonts,
-            options,
-            &mut work,
-        )?;
-        crate::rods::collect(
-            &mut self.rods,
-            &self.columns,
-            &self.plan,
-            fonts,
-            options,
-            &mut work,
-        )?;
+        let lines = self.prepare(score, fonts, options, &mut work)?;
         let space = options.staff_size / 4.0;
-        let lines = crate::breaking::choose(
-            &self.springs,
-            &self.rods,
-            &self.breaks,
-            (options.line_width / space - 1.0).max(0.1),
-            options.justify,
-            &options.limits,
-            &mut work,
-        )?;
         let mut result = Engraving { summary: summary(score), ..Engraving::default() };
         let mut top = 0.0;
         for line in &lines {
@@ -70,6 +42,7 @@ impl Engraver {
                 first: self.breaks[line.first].measure,
                 plan: &self.plan,
                 indent: self.breaks[line.first].indent * space,
+                suffix: self.breaks[line.last].suffix * space,
             };
             let (mut system, warnings) =
                 crate::drawing::draw_system(&request, options, &mut work)?;
@@ -79,7 +52,7 @@ impl Engraver {
             if top > options.limits.height {
                 return Err(failure("The drawing exceeds its height limit."));
             }
-            result.width = result.width.max(x + space);
+            result.width = result.width.max(x + space + self.breaks[line.last].suffix * space);
             if line.overfull {
                 result.warnings.push(
                     gd_score::Error::new(
@@ -96,6 +69,38 @@ impl Engraver {
         definitions(&mut result, fonts, options)?;
         Ok(result)
     }
+    fn prepare(
+        &mut self,
+        score: &Score,
+        fonts: &Fonts<'_>,
+        options: &mut Options<'_>,
+        work: &mut usize,
+    ) -> Result<Vec<crate::Line>, Error> {
+        columns::collect(&mut self.columns, score, options, work)?;
+        self.plan.load(score, &self.columns, fonts, options, work)?;
+        columns::springs(&mut self.springs, &self.columns, score, &self.plan, options, work)?;
+        columns::breaks(&mut self.breaks, &self.columns, score, &self.plan, fonts, options, work)?;
+        crate::rods::collect(
+            &mut self.rods,
+            score,
+            &self.columns,
+            &self.plan,
+            fonts,
+            options,
+            work,
+        )?;
+        let space = options.staff_size / 4.0;
+        crate::breaking::choose(
+            &self.springs,
+            &self.rods,
+            &self.breaks,
+            (options.line_width / space - 1.0).max(0.1),
+            options.justify,
+            &options.limits,
+            work,
+        )
+    }
+
     fn line_positions(
         &mut self,
         line: &crate::Line,
@@ -174,7 +179,9 @@ fn definitions(
 }
 
 fn validate(score: &Score, options: &Options<'_>) -> Result<(), Error> {
-    if !options.line_width.is_finite()
+    if !options.optical_adjustment.is_finite()
+        || !(0.0..=2.0).contains(&options.optical_adjustment)
+        || !options.line_width.is_finite()
         || options.line_width <= 0.0
         || options.line_width > 100_000.0
         || !options.staff_size.is_finite()

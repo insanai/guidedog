@@ -49,8 +49,11 @@ impl Draw<'_, '_, '_, '_, '_> {
                         AnnotationKind::Text(text, style) => {
                             self.text(text, *style, at, 2.4 * space, Role::Script)?
                         }
-                        AnnotationKind::Tempo(text) | AnnotationKind::Rehearsal(text) => {
-                            self.text(text, TextStyle::Bold, at, 2.5 * space, Role::Script)?;
+                        AnnotationKind::Tempo(text) => {
+                            self.text(text, TextStyle::Bold, at, 2.5 * space, Role::Tempo)?;
+                        }
+                        AnnotationKind::Rehearsal(text) => {
+                            self.text(text, TextStyle::Bold, at, 2.5 * space, Role::Rehearsal)?;
                         }
                         AnnotationKind::Dynamic(text) => {
                             self.dynamic(text, Point { x, y: middle + 5.0 * space }, space)?
@@ -64,7 +67,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                                 "timeSig",
                                 at,
                                 space * 0.55,
-                                Role::Articulation,
+                                Role::Fingering,
                             )?;
                         }
                     }

@@ -12,6 +12,7 @@ pub(crate) struct Request<'a, 'f> {
     pub(crate) first: u32,
     pub(crate) plan: &'a crate::prepare::Plan,
     pub(crate) indent: f64,
+    pub(crate) suffix: f64,
 }
 
 pub(crate) fn draw_system(
@@ -21,7 +22,7 @@ pub(crate) fn draw_system(
 ) -> Result<(System, Vec<Error>), Error> {
     let Request { score, fonts, positions, first, .. } = *request;
     let space = options.staff_size / 4.0;
-    let width = positions.last().copied().unwrap_or(space) + space;
+    let width = positions.last().copied().unwrap_or(space) + space + request.suffix;
     let mut draw = Draw {
         fonts,
         options,
@@ -34,6 +35,17 @@ pub(crate) fn draw_system(
     };
     for staff_index in 0..score.staves.len() {
         draw.staff_system(request, staff_index, width)?;
+    }
+    if request.first != score.measures.first().map(|m| m.number).unwrap_or(1) {
+        draw.staff = StaffId(0);
+        draw.measure = 0;
+        draw.number(
+            &request.first.to_string(),
+            "timeSig",
+            Point { x: request.indent + space, y: -1.5 * space },
+            space * 0.5,
+            Role::MeasureNumber,
+        )?;
     }
     draw.beams(request)?;
     draw.decorations(request)?;
@@ -77,32 +89,34 @@ impl Draw<'_, '_, '_, '_, '_> {
                 Role::Staff,
             )?;
         }
-        let mut clef = Clef::Treble;
-        for event in &score.events {
-            charge(self.work, 1)?;
-            if event.at <= columns[0].at
-                && score.voices[event.voice.0 as usize].staff == staff
-                && let EventKind::Clef(value) = event.kind
-            {
-                clef = value;
-            }
-        }
+        let measure = score.measures.partition_point(|m| m.start < columns[0].at.main);
+        let clef = request
+            .plan
+            .measures
+            .get(measure)
+            .and_then(|m| m.get(staff_index))
+            .map(|state| state.clef)
+            .unwrap_or(Clef::Treble);
         self.clef(clef, request.indent + space, middle, space)?;
         self.signatures(request, middle)?;
         self.staff_music(request, middle)?;
         self.measure_bars(request, middle)?;
         self.measure_rests(request, middle)?;
+        self.courtesy(request, middle)?;
         Ok(())
     }
 
     fn staff_music(&mut self, request: &Request<'_, '_>, middle: f64) -> Result<(), Error> {
-        let Request { score, columns, positions, first, .. } = *request;
-        let space = self.options.staff_size / 4.0;
+        let Request { score, columns, first, .. } = *request;
         let staff = self.staff;
         for (index, column) in columns.iter().enumerate() {
-            let x = positions[index];
-            let measure =
-                score.measures.partition_point(|m| m.start <= column.at.main).saturating_sub(1);
+            let terminal = index + 1 == columns.len();
+            let measure = score
+                .measures
+                .partition_point(|m| {
+                    if terminal { m.start < column.at.main } else { m.start <= column.at.main }
+                })
+                .saturating_sub(1);
             let number = score.measures.get(measure).map(|m| m.number).unwrap_or(first);
             self.system.last_measure = self.system.last_measure.max(number);
             self.measure = number;
@@ -115,44 +129,66 @@ impl Draw<'_, '_, '_, '_, '_> {
                 if index + 1 == columns.len() && event.kind.duration().is_some() {
                     continue;
                 }
-                match &event.kind {
-                    EventKind::Clef(value) => {
-                        if index != 0 {
-                            self.clef(*value, x, middle, space * 0.75)?;
-                        }
-                    }
-                    EventKind::Chord(chord) => self.heads(
-                        chord,
-                        &request.plan.events[id.0 as usize],
-                        x,
-                        middle,
-                        column.at.main == request.columns[0].at.main,
-                    )?,
-                    EventKind::Rest(duration) => {
-                        self.rest(event, duration, request, index, middle)?;
-                    }
-                    EventKind::Bar(style) => {
-                        if index == 0
-                            && matches!(
-                                style,
-                                gd_score::BarStyle::RepeatEnd | gd_score::BarStyle::Final
-                            )
-                        {
-                            continue;
-                        }
-                        self.bar(*style, x, middle)?;
-                    }
-                    EventKind::MeasureRest(_) => {}
-                    EventKind::Key(_) | EventKind::Time(_) => self.signature_change(
-                        event,
-                        &request.plan.events[id.0 as usize],
-                        x,
-                        middle,
-                        column.at.main != columns[0].at.main,
-                    )?,
-                    EventKind::Skip(_) | EventKind::Break(_) | EventKind::ChordName(_, _) => {}
+                if index + 1 == columns.len()
+                    && matches!(
+                        event.kind,
+                        EventKind::Clef(_) | EventKind::Key(_) | EventKind::Time(_)
+                    )
+                {
+                    continue;
+                }
+                self.music_event(request, *id, index, middle)?;
+            }
+        }
+        Ok(())
+    }
+
+    fn music_event(
+        &mut self,
+        request: &Request<'_, '_>,
+        id: gd_score::EventId,
+        index: usize,
+        middle: f64,
+    ) -> Result<(), Error> {
+        let event = &request.score.events[id.0 as usize];
+        let columns = request.columns;
+        let column = &columns[index];
+        let x = request.positions[index];
+        let space = self.options.staff_size / 4.0;
+        match &event.kind {
+            EventKind::Clef(value) => {
+                if index != 0 {
+                    let info = &request.plan.events[id.0 as usize];
+                    self.clef(*value, x + info.notation_x * space, middle, space * 0.75)?;
                 }
             }
+            EventKind::Chord(chord) => self.heads(
+                chord,
+                &request.plan.events[id.0 as usize],
+                x,
+                middle,
+                column.at.main == request.columns[0].at.main,
+            )?,
+            EventKind::Rest(duration) => {
+                self.rest(event, duration, request, index, middle)?;
+            }
+            EventKind::Bar(style) => {
+                if index == 0
+                    && matches!(style, gd_score::BarStyle::RepeatEnd | gd_score::BarStyle::Final)
+                {
+                    return Ok(());
+                }
+                self.bar(*style, x, middle)?;
+            }
+            EventKind::MeasureRest(_) => {}
+            EventKind::Key(_) | EventKind::Time(_) => self.signature_change(
+                event,
+                &request.plan.events[id.0 as usize],
+                x,
+                middle,
+                column.at.main != columns[0].at.main,
+            )?,
+            EventKind::Skip(_) | EventKind::Break(_) | EventKind::ChordName(_, _) => {}
         }
         Ok(())
     }
@@ -236,23 +272,45 @@ impl Draw<'_, '_, '_, '_, '_> {
         thickness: f64,
         role: Role,
     ) -> Result<(), Error> {
-        let half = thickness / 2.0;
+        let dx = to.x - from.x;
+        let dy = to.y - from.y;
+        let length = (dx * dx + dy * dy).sqrt().max(0.001);
+        let horizontal = thickness * 0.5 * dy.abs() / length;
+        let vertical = thickness * 0.5 * dx.abs() / length;
         let bounds = Rect {
-            left: from.x.min(to.x) - half,
-            right: from.x.max(to.x) + half,
-            top: from.y.min(to.y) - half,
-            bottom: from.y.max(to.y) + half,
+            left: from.x.min(to.x) - horizontal,
+            right: from.x.max(to.x) + horizontal,
+            top: from.y.min(to.y) - vertical,
+            bottom: from.y.max(to.y) + vertical,
         };
         self.add(Mark::Line { from, to, thickness, role }, bounds)
     }
 
-    fn clef(&mut self, clef: Clef, x: f64, middle: f64, size: f64) -> Result<(), Error> {
+    pub(crate) fn clef(
+        &mut self,
+        clef: Clef,
+        x: f64,
+        middle: f64,
+        size: f64,
+    ) -> Result<(), Error> {
         let (name, offset) = match clef {
-            Clef::Treble | Clef::TrebleEight => ("gClef", 1.0),
-            Clef::Bass | Clef::BassEight => ("fClef", -1.0),
+            Clef::Treble => ("gClef", 1.0),
+            Clef::TrebleEight => ("gClef8vb", 1.0),
+            Clef::Bass => ("fClef", -1.0),
+            Clef::BassEight => ("fClef8vb", -1.0),
             Clef::Alto => ("cClef", 0.0),
             Clef::Tenor => ("cClef", -1.0),
             Clef::Soprano => ("cClef", 2.0),
+        };
+        let name = if size < self.options.staff_size / 4.0 {
+            match name {
+                "gClef" => "gClefSmall",
+                "fClef" => "fClefSmall",
+                "cClef" => "cClefSmall",
+                _ => name,
+            }
+        } else {
+            name
         };
         self.glyph(name, x, middle + offset * self.options.staff_size / 4.0, size, Role::Clef)
     }

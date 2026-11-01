@@ -45,9 +45,13 @@ pub(crate) fn place(
 fn outside(system: &mut System, staves: usize, space: f64, work: &mut usize) -> Result<(), Error> {
     let roles = [
         Role::Articulation,
+        Role::Fingering,
         Role::Tuplet,
+        Role::Slur,
         Role::Dynamic,
         Role::Script,
+        Role::Tempo,
+        Role::Rehearsal,
         Role::Volta,
         Role::Lyric,
         Role::MeasureNumber,

@@ -191,3 +191,65 @@ fn chord_accidentals_have_disjoint_ink_columns() {
         }
     }
 }
+
+#[test]
+fn tuplet_brackets_follow_the_complete_beam_group() {
+    let beamed = draw(r"\relative c' { \tuplet 3/2 { c8 d e } f4 g2 | }", 350.0);
+    let bracketed = draw(r"\relative c' { \tuplet 3/2 { c4 d e } f2 | }", 350.0);
+    let lines = |drawing: &Engraving| {
+        drawing
+            .systems
+            .iter()
+            .flat_map(|s| &s.marks)
+            .filter(|m| matches!(m.mark, Mark::Line { role: Role::Tuplet, .. }))
+            .count()
+    };
+    assert_eq!(lines(&beamed), 0);
+    assert_eq!(lines(&bracketed), 4);
+}
+
+#[test]
+fn dots_choose_separate_spaces_and_equal_voice_rests_share_one_glyph() {
+    let drawing = draw(r"{ <c' d' e'>2. r4 }", 350.0);
+    let dots: Vec<_> = drawing
+        .systems
+        .iter()
+        .flat_map(|s| &s.marks)
+        .filter(|m| m.mark.role() == Role::Dot)
+        .collect();
+    assert_eq!(dots.len(), 3);
+    for (index, dot) in dots.iter().enumerate() {
+        for other in &dots[index + 1..] {
+            assert!(!dot.bounds.overlaps(other.bounds, 0.0));
+        }
+    }
+    let shared = draw(r"<< { r1 } \\ { r1 } >>", 350.0);
+    assert_eq!(
+        shared
+            .systems
+            .iter()
+            .flat_map(|s| &s.marks)
+            .filter(|m| m.mark.role() == Role::Rest)
+            .count(),
+        1
+    );
+}
+
+#[test]
+fn silent_measures_compress_and_context_changes_have_courtesies() {
+    let four = draw("{ R1*4 }", 350.0);
+    let forty = draw("{ R1*40 }", 350.0);
+    assert!((four.width - forty.width).abs() < 0.01);
+    let drawing = draw(r"{ c'1 | \break \clef bass \key d \major \time 3/4 d2. | }", 350.0);
+    assert_eq!(drawing.systems.len(), 2);
+    let first = &drawing.systems[0];
+    assert!(first.marks.iter().any(|m| matches!(m.mark, Mark::Glyph { glyph, .. }
+        if drawing.glyphs.get(&glyph).is_some_and(|g| g.name == "fClefSmall"))));
+    assert!(drawing.systems[1].marks.iter().any(|m| m.mark.role() == Role::MeasureNumber));
+    for system in &drawing.systems {
+        assert!(system.marks.iter().all(|m| m.bounds.left >= -0.001
+            && m.bounds.right <= drawing.width + 0.001
+            && m.bounds.top >= -0.001
+            && m.bounds.bottom <= system.height + 0.001));
+    }
+}

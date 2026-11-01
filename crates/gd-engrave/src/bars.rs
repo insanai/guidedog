@@ -56,6 +56,14 @@ impl Draw<'_, '_, '_, '_, '_> {
             if request.score.measures.get(boundary).is_none_or(|m| m.end != column.at.main) {
                 continue;
             }
+            if index + 1 < request.columns.len()
+                && let Some((first, last, _)) =
+                    crate::multirests::span(request.score, column.at.main, self.work)?
+                && first < column.at.main
+                && column.at.main < last
+            {
+                continue;
+            }
             let explicit = column.events.iter().any(|id| {
                 let event = &request.score.events[id.0 as usize];
                 request.score.voices[event.voice.0 as usize].staff == self.staff
@@ -82,6 +90,16 @@ impl Draw<'_, '_, '_, '_, '_> {
                 continue;
             }
             let EventKind::MeasureRest(duration) = &event.kind else { continue };
+            charge(self.work, request.score.events.len())?;
+            let shared = request.score.events.iter().any(|other| {
+                other.voice.0 < event.voice.0
+                    && request.score.voices[other.voice.0 as usize].staff == self.staff
+                    && other.at == event.at
+                    && other.kind == event.kind
+            });
+            if shared {
+                continue;
+            }
             let finish = event.at.main.checked_add(duration.time()?)?;
             if finish <= start || event.at.main >= end {
                 continue;
@@ -103,32 +121,49 @@ impl Draw<'_, '_, '_, '_, '_> {
                 .count();
             let x = (left + right) / 2.0;
             if count <= 1 {
-                self.glyph("restWhole", x - 0.6 * space, middle - space, space, Role::Rest)?;
+                let meter =
+                    request.score.measures.iter().find(|m| m.start <= first && m.end >= last);
+                let two = Ratio::ONE.checked_add(Ratio::ONE)?;
+                let breve = meter
+                    .is_some_and(|m| m.end.checked_sub(m.start).is_ok_and(|time| time >= two));
+                self.glyph(
+                    if breve { "restDoubleWhole" } else { "restWhole" },
+                    x - 0.6 * space,
+                    middle - space,
+                    space,
+                    Role::Rest,
+                )?;
             } else {
-                let half = ((right - left) * 0.25).clamp(space, 4.0 * space);
-                self.line(
-                    Point { x: x - half, y: middle },
-                    Point { x: x + half, y: middle },
-                    0.8 * space,
-                    Role::Rest,
-                )?;
-                for x in [x - half, x + half] {
-                    self.line(
-                        Point { x, y: middle - space },
-                        Point { x, y: middle + space },
-                        0.16 * space,
-                        Role::Rest,
-                    )?;
-                }
-                self.number(
-                    &count.to_string(),
-                    "timeSig",
-                    Point { x, y: middle - 3.0 * space },
-                    space * 0.75,
-                    Role::Rest,
-                )?;
+                self.hbar(count, left, right, middle)?;
             }
         }
+        Ok(())
+    }
+    fn hbar(&mut self, count: usize, left: f64, right: f64, middle: f64) -> Result<(), Error> {
+        let space = self.options.staff_size / 4.0;
+        let x = (left + right) / 2.0;
+        let half = ((right - left) * 0.25).clamp(space, 4.0 * space);
+        self.line(
+            Point { x: x - half, y: middle },
+            Point { x: x + half, y: middle },
+            0.8 * space,
+            Role::Rest,
+        )?;
+        for x in [x - half, x + half] {
+            self.line(
+                Point { x, y: middle - space },
+                Point { x, y: middle + space },
+                0.16 * space,
+                Role::Rest,
+            )?;
+        }
+        self.number(
+            &count.to_string(),
+            "timeSig",
+            Point { x, y: middle - 3.0 * space },
+            space * 0.75,
+            Role::Rest,
+        )?;
         Ok(())
     }
 }

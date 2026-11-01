@@ -36,7 +36,7 @@ pub(crate) fn groups(
                 push(&mut events, *id, &mut options.reserve)?;
             }
         }
-        add(plan, score, events, true, fonts, options)?;
+        add(plan, score, events, true, fonts, options, work)?;
     }
     for voice in &score.voices {
         let mut events = Vec::new();
@@ -50,14 +50,14 @@ pub(crate) fn groups(
                 && info.beam.is_none();
             let key = if eligible { Some(beat_key(score, *id)?) } else { None };
             if key != previous || !eligible {
-                add(plan, score, std::mem::take(&mut events), false, fonts, options)?;
+                add(plan, score, std::mem::take(&mut events), false, fonts, options, work)?;
             }
             if eligible {
                 push(&mut events, *id, &mut options.reserve)?;
             }
             previous = key;
         }
-        add(plan, score, events, false, fonts, options)?;
+        add(plan, score, events, false, fonts, options, work)?;
     }
     Ok(())
 }
@@ -69,6 +69,7 @@ fn add(
     manual: bool,
     fonts: &Fonts<'_>,
     options: &mut Options<'_>,
+    work: &mut usize,
 ) -> Result<(), Error> {
     if events.len() < 2 {
         return Ok(());
@@ -105,7 +106,7 @@ fn add(
                 Direction::Auto => up,
             };
         }
-        arrange_heads(info, fonts)?;
+        arrange_heads(info, fonts, work)?;
         stems(info, fonts)?;
     }
     push(&mut plan.beams, BeamGroup { events, up, manual }, &mut options.reserve)

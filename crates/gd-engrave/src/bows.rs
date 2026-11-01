@@ -25,7 +25,14 @@ pub(crate) fn choose(request: &Request<'_>, work: &mut usize) -> Result<(Bezier,
         if mark.staff == request.staff
             && !matches!(
                 mark.mark.role(),
-                Role::Staff | Role::Bar | Role::Dynamic | Role::Lyric | Role::Script
+                Role::Staff
+                    | Role::Bar
+                    | Role::Dynamic
+                    | Role::Lyric
+                    | Role::Script
+                    | Role::Tempo
+                    | Role::Rehearsal
+                    | Role::Volta
             )
             && mark.bounds.left < request.to.x
             && mark.bounds.right > request.from.x

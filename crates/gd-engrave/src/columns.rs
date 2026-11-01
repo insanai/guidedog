@@ -41,6 +41,7 @@ pub(crate) fn springs(
     out: &mut Vec<Spring>,
     columns: &[Column],
     score: &Score,
+    plan: &crate::prepare::Plan,
     options: &mut Options<'_>,
     work: &mut usize,
 ) -> Result<(), Error> {
@@ -48,6 +49,11 @@ pub(crate) fn springs(
     let shortest = common_shortest(score, work)?.to_f64();
     for pair in columns.windows(2) {
         charge(work, pair[0].events.len().max(1))?;
+        if let Some((_, _, count)) = crate::multirests::span(score, pair[0].at.main, work)? {
+            let width = 8.0 / count as f64;
+            push(out, Spring { ideal: width, minimum: width }, &mut options.reserve)?;
+            continue;
+        }
         let duration = pair[0]
             .events
             .iter()
@@ -63,6 +69,17 @@ pub(crate) fn springs(
         } else {
             pair[1].at.main.checked_sub(pair[0].at.main)?.to_f64()
         };
+        let direction = |column: &Column| {
+            column.events.iter().find_map(|id| {
+                let info = &plan.events[id.0 as usize];
+                (!info.heads.is_empty()).then_some(info.up)
+            })
+        };
+        let optical = match (direction(&pair[0]), direction(&pair[1])) {
+            (Some(true), Some(false)) => options.optical_adjustment,
+            (Some(false), Some(true)) => -options.optical_adjustment,
+            _ => 0.0,
+        };
         let ideal = if duration >= shortest {
             1.2 * (2.0 + crate::math::log2(duration / shortest))
         } else {
@@ -70,7 +87,7 @@ pub(crate) fn springs(
         };
         push(
             out,
-            Spring { ideal: (ideal * delta / duration).max(0.8), minimum: 1.8 },
+            Spring { ideal: (ideal * delta / duration + optical).max(0.8), minimum: 1.8 },
             &mut options.reserve,
         )?;
     }
@@ -93,7 +110,18 @@ pub(crate) fn breaks(
         let (prefix, indent) = preface(score, plan, fonts, index, options, work)?;
         push(
             out,
-            BreakPoint { gap, measure: measure.number, prefix, indent, ..BreakPoint::default() },
+            BreakPoint {
+                gap,
+                measure: measure.number,
+                prefix,
+                indent,
+                suffix: if index == 0 {
+                    0.0
+                } else {
+                    crate::courtesy::width(score, plan, measure.start, work)?
+                },
+                ..BreakPoint::default()
+            },
             &mut options.reserve,
         )?;
     }
@@ -110,15 +138,7 @@ pub(crate) fn breaks(
     if let Some(first) = out.first_mut() {
         first.forced = true;
     }
-    for event in &score.events {
-        if let EventKind::Break(rule) = event.kind {
-            let index = out.partition_point(|b| columns[b.gap].at.main < event.at.main);
-            if let Some(boundary) = out.get_mut(index) {
-                boundary.forced |= rule == BreakRule::Force;
-                boundary.forbidden |= rule == BreakRule::Forbid;
-            }
-        }
-    }
+    break_commands(out, columns, score, work)?;
     for group in &plan.beams {
         if !group.manual {
             continue;
@@ -181,7 +201,8 @@ fn preface(
             width = width.max(4.0 + key as f64 * 0.9 + if meter { 3.0 } else { 0.0 });
         }
     }
-    Ok((indent + width.max(4.0) + 1.0, indent))
+    let leading = leading_ink(score, plan, fonts, measure, work)?;
+    Ok((indent + width.max(4.0) + 1.0 + leading, indent))
 }
 
 fn common_shortest(score: &Score, work: &mut usize) -> Result<Ratio, Error> {
@@ -210,4 +231,70 @@ fn common_shortest(score: &Score, work: &mut usize) -> Result<Ratio, Error> {
     }
     let common = counts.into_iter().max_by_key(|(_, count)| *count).map(|(time, _)| time);
     Ok(common.unwrap_or(Ratio::new(1, 8)?).min(Ratio::new(3, 16)?))
+}
+
+fn leading_ink(
+    score: &Score,
+    plan: &crate::prepare::Plan,
+    fonts: &crate::Fonts<'_>,
+    measure: usize,
+    work: &mut usize,
+) -> Result<f64, Error> {
+    let start = score.measures[measure].start;
+    let mut left: f64 = 0.0;
+    for event in &plan.events {
+        charge(work, 1)?;
+        if score.events[event.id.0 as usize].at.main != start {
+            continue;
+        }
+        for head in &event.heads {
+            left = left.min(head.at.x);
+            if let Some(name) = head.accidental {
+                let glyph = fonts.glyph(name)?;
+                if let Some(data) = fonts.glyph_data(glyph) {
+                    left = left.min(
+                        head.accidental_x + data.bounds.left * event.head_scale
+                            - if head.cautionary { 0.6 } else { 0.0 },
+                    );
+                }
+            }
+        }
+    }
+    Ok(-left)
+}
+
+fn break_commands(
+    out: &mut [BreakPoint],
+    columns: &[Column],
+    score: &Score,
+    work: &mut usize,
+) -> Result<(), Error> {
+    for event in &score.events {
+        charge(work, 1)?;
+        if matches!(
+            event.kind,
+            EventKind::Key(_)
+                | EventKind::Time(_)
+                | EventKind::Bar(
+                    gd_score::BarStyle::Double
+                        | gd_score::BarStyle::Final
+                        | gd_score::BarStyle::RepeatStart
+                        | gd_score::BarStyle::RepeatEnd
+                        | gd_score::BarStyle::RepeatBoth
+                )
+        ) {
+            let index = out.partition_point(|b| columns[b.gap].at.main < event.at.main);
+            if let Some(boundary) = out.get_mut(index) {
+                boundary.penalty = -20;
+            }
+        }
+        if let EventKind::Break(rule) = event.kind {
+            let index = out.partition_point(|b| columns[b.gap].at.main < event.at.main);
+            if let Some(boundary) = out.get_mut(index) {
+                boundary.forced |= rule == BreakRule::Force;
+                boundary.forbidden |= rule == BreakRule::Forbid;
+            }
+        }
+    }
+    Ok(())
 }

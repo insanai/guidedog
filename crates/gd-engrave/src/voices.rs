@@ -27,6 +27,7 @@ pub(crate) fn arrange(
             }
             let EventKind::Chord(chord_b) = &b.kind else { continue };
             let mut collision = false;
+            let mut seconds = false;
             let compatible = chord_a.duration.base == chord_b.duration.base
                 && chord_a.duration.dots == chord_b.duration.dots;
             for (head_b, note_b) in chord_b.notes.iter().enumerate() {
@@ -35,6 +36,7 @@ pub(crate) fn arrange(
                     let distance = (note_a.pitch.diatonic() - note_b.pitch.diatonic()).abs();
                     let shared = compatible && note_a.pitch == note_b.pitch;
                     collision |= distance <= 1 && !shared;
+                    seconds |= distance == 1;
                     if shared {
                         plan.events[second.0 as usize].heads[head_b].shared = true;
                     }
@@ -46,13 +48,18 @@ pub(crate) fn arrange(
                         head.shared = false;
                     }
                 }
-                let id = if !plan.events[second.0 as usize].up { *second } else { *first };
+                let shift_second = plan.events[second.0 as usize].up == seconds;
+                let id = if shift_second { *second } else { *first };
                 let info = &mut plan.events[id.0 as usize];
-                info.voice_shift = 1.3;
+                let glyph = fonts.glyph(info.head_glyph)?;
+                info.voice_shift = fonts
+                    .glyph_data(glyph)
+                    .map(|data| (data.bounds.right - data.bounds.left) * info.head_scale)
+                    .unwrap_or(1.3);
                 for head in &mut info.heads {
                     head.shared = false;
                 }
-                arrange_heads(info, fonts)?;
+                arrange_heads(info, fonts, work)?;
                 stems(info, fonts)?;
             }
         }

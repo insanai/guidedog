@@ -51,6 +51,12 @@ pub enum Role {
     Tuplet,
     /// Articulation or fingering.
     Articulation,
+    /// Fingering digit.
+    Fingering,
+    /// Tempo instruction.
+    Tempo,
+    /// Rehearsal label.
+    Rehearsal,
     /// Dynamic or hairpin.
     Dynamic,
     /// Lyric syllable, hyphen or extender.
@@ -87,6 +93,9 @@ impl Role {
             Self::Slur => "slur",
             Self::Tuplet => "tuplet",
             Self::Articulation => "articulation",
+            Self::Fingering => "fingering",
+            Self::Tempo => "tempo",
+            Self::Rehearsal => "rehearsal",
             Self::Dynamic => "dynamic",
             Self::Lyric => "lyric",
             Self::Instrument => "instrument",

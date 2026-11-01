@@ -49,6 +49,7 @@ pub(crate) struct EventInfo {
     pub(crate) state: StaffState,
     pub(crate) prefix: f64,
     pub(crate) voice_shift: f64,
+    pub(crate) dot_down: bool,
     pub(crate) previous_key: Option<Key>,
     pub(crate) notation_x: f64,
     pub(crate) heads: Vec<Head>,
@@ -105,6 +106,7 @@ impl Plan {
                 let state = &mut states[info.staff];
                 info.prefix = prefixes[info.staff];
                 info.state = state.snapshot();
+                info.dot_down = score.voices[event.voice.0 as usize].direction == Direction::Down;
                 if let EventKind::Chord(chord) = &event.kind {
                     heads(
                         info,
@@ -160,6 +162,14 @@ impl Plan {
                 }
                 EventKind::Key(key) => {
                     info.previous_key = Some(state.key);
+                    let old = state.key.alterations()?;
+                    let new = key.alterations()?;
+                    let canceled = old
+                        .iter()
+                        .zip(new)
+                        .filter(|(old, new)| **old != Alter::Natural && **old != *new)
+                        .count();
+                    prefixes[staff] += canceled as f64 * 0.8;
                     state.key = *key;
                     state.remembered.clear();
                     prefixes[staff] +=
@@ -241,13 +251,18 @@ fn heads(
             dots,
         });
     }
-    arrange_heads(info, fonts)?;
+    arrange_heads(info, fonts, work)?;
     stems(info, fonts)?;
     crate::accidentals::arrange(info, fonts)?;
     Ok(())
 }
 
-pub(crate) fn arrange_heads(info: &mut EventInfo, fonts: &Fonts<'_>) -> Result<(), Error> {
+pub(crate) fn arrange_heads(
+    info: &mut EventInfo,
+    fonts: &Fonts<'_>,
+    work: &mut usize,
+) -> Result<(), Error> {
+    charge(work, info.heads.len().saturating_mul(info.heads.len()).saturating_mul(40))?;
     let glyph = fonts.glyph(info.head_glyph)?;
     let data = fonts.glyph_data(glyph).ok_or_else(|| failure("Missing notehead bounds."))?;
     let width = (data.bounds.right - data.bounds.left) * info.head_scale;
@@ -274,6 +289,7 @@ pub(crate) fn arrange_heads(info: &mut EventInfo, fonts: &Fonts<'_>) -> Result<(
         bounds = Some(bounds.map(|b: Rect| b.union(ink)).unwrap_or(ink));
     }
     info.bounds = bounds.unwrap_or_default();
+    crate::dots::arrange(info);
     Ok(())
 }
 

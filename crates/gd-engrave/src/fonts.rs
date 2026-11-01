@@ -311,7 +311,9 @@ impl OutlineBuilder for PathBuilder {
 // SMuFL 1.4 code points and unmodified Bravura optional-glyph metadata.
 pub(crate) const GLYPHS: &[(&str, u32)] = &[
     ("gClef", 0xe050),
+    ("gClef8vb", 0xe052),
     ("fClef", 0xe062),
+    ("fClef8vb", 0xe064),
     ("cClef", 0xe05c),
     ("gClefSmall", 0xf472),
     ("fClefSmall", 0xf474),

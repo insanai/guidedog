@@ -46,15 +46,23 @@ impl Draw<'_, '_, '_, '_, '_> {
                 }
                 SpannerKind::Beam => {}
                 SpannerKind::Tuplet(number, _) => {
-                    self.number(
-                        &number.to_string(),
-                        "tuplet",
-                        Point { x: (first.x + last.x) / 2.0, y: middle - 5.0 * space },
-                        space,
-                        Role::Tuplet,
-                    )?;
+                    self.tuplet(request, spanner, *number, (first, last), middle)?;
                 }
-                SpannerKind::Volta(label) => self.volta(label, first, last, middle, space)?,
+                SpannerKind::Volta(label) => {
+                    let finish = b.at.main.checked_add(
+                        b.kind
+                            .duration()
+                            .map(|d| d.time())
+                            .transpose()?
+                            .unwrap_or(gd_score::Ratio::ZERO),
+                    )?;
+                    let index = request.columns.partition_point(|column| column.at.main < finish);
+                    let x =
+                        request.positions.get(index).copied().unwrap_or_else(|| {
+                            request.positions.last().copied().unwrap_or(last.x)
+                        });
+                    self.volta(label, first, Point { x, ..last }, middle, space)?;
+                }
             }
         }
         Ok(())
@@ -75,9 +83,10 @@ impl Draw<'_, '_, '_, '_, '_> {
             0.16 * space,
             Role::Volta,
         )?;
+        self.line(Point { x: first.x, y }, Point { x: last.x, y }, 0.16 * space, Role::Volta)?;
         self.line(
-            Point { x: first.x, y },
-            Point { x: last.x + 1.2 * space, y },
+            Point { x: last.x, y },
+            Point { x: last.x, y: y + space },
             0.16 * space,
             Role::Volta,
         )?;
@@ -180,7 +189,8 @@ pub(crate) fn endpoint(
     let head = info.heads.get(reference.note as usize);
     let local = head.map(|head| head.at).unwrap_or_default();
     let y = middle + local.y * space;
-    Point { x: x + (info.prefix + local.x) * space, y }
+    let prefix = if event.at.main == request.columns[0].at.main { 0.0 } else { info.prefix };
+    Point { x: x + (prefix + local.x) * space, y }
 }
 
 pub(crate) fn bow(

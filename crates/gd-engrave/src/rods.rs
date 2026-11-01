@@ -7,10 +7,11 @@ use crate::limits::{charge, failure, push};
 use crate::prepare::{EventInfo, Plan};
 use crate::{Fonts, Options, Rect, Rod};
 
-type Bands = BTreeMap<i32, (f64, f64)>;
+pub(crate) type Bands = BTreeMap<i32, (f64, f64)>;
 
 pub(crate) fn collect(
     out: &mut Vec<Rod>,
+    score: &gd_score::Score,
     columns: &[Column],
     plan: &Plan,
     fonts: &Fonts<'_>,
@@ -30,6 +31,15 @@ pub(crate) fn collect(
                     continue;
                 }
                 event_bands(&mut current, info, fonts, work)?;
+                crate::labels::event(&mut current, &score.events[id.0 as usize], fonts, work)?;
+            }
+            crate::labels::lyrics(&mut current, score, column.at, staff, fonts, work)?;
+            if index + 1 == columns.len() {
+                add_rect(
+                    &mut current,
+                    Rect { left: 0.0, right: 0.1, top: -32.0, bottom: 64.0 },
+                    work,
+                )?;
             }
             if current.is_empty() {
                 continue;
@@ -120,7 +130,7 @@ fn event_bands(
     Ok(())
 }
 
-fn add_rect(bands: &mut Bands, rect: Rect, work: &mut usize) -> Result<(), Error> {
+pub(crate) fn add_rect(bands: &mut Bands, rect: Rect, work: &mut usize) -> Result<(), Error> {
     for band in (rect.top * 4.0).floor() as i32..=(rect.bottom * 4.0).ceil() as i32 {
         charge(work, 1)?;
         bands

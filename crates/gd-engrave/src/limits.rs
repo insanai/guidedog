@@ -48,6 +48,8 @@ pub struct Options<'a> {
     pub staff_size: f64,
     /// Last-line and single-line spacing policy.
     pub justify: Justify,
+    /// Optical gap adjustment between opposite stem directions, in staff spaces.
+    pub optical_adjustment: f64,
     /// Finite work and size bounds.
     pub limits: Limits,
     /// Optional caller-owned buffer-growth ledger.
@@ -60,6 +62,7 @@ impl Default for Options<'_> {
             line_width: 564.0,
             staff_size: 18.0,
             justify: Justify::Auto,
+            optical_adjustment: 0.4,
             limits: Limits::default(),
             reserve: None,
         }
@@ -72,6 +75,7 @@ impl fmt::Debug for Options<'_> {
             .field("line_width", &self.line_width)
             .field("staff_size", &self.staff_size)
             .field("justify", &self.justify)
+            .field("optical_adjustment", &self.optical_adjustment)
             .field("limits", &self.limits)
             .field("reserve", &self.reserve.is_some())
             .finish()

@@ -30,20 +30,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                 let accidental_x = x + head.accidental_x * space;
                 self.glyph(name, accidental_x, at.y, size, Role::Accidental)?;
                 if head.cautionary {
-                    self.glyph(
-                        "accidentalParensLeft",
-                        accidental_x - 0.4 * size,
-                        at.y,
-                        size,
-                        Role::Accidental,
-                    )?;
-                    self.glyph(
-                        "accidentalParensRight",
-                        accidental_x + size,
-                        at.y,
-                        size,
-                        Role::Accidental,
-                    )?;
+                    self.cautionary(name, accidental_x, at.y, size)?;
                 }
             }
             for dot in head.dots.iter().filter(|_| !head.shared) {
@@ -83,6 +70,45 @@ impl Draw<'_, '_, '_, '_, '_> {
         self.stem(chord, info, x, middle, space)?;
         Ok(())
     }
+    fn cautionary(
+        &mut self,
+        name: &str,
+        accidental_x: f64,
+        y: f64,
+        size: f64,
+    ) -> Result<(), Error> {
+        let ink = self
+            .fonts
+            .glyph_data(self.fonts.glyph(name)?)
+            .ok_or_else(|| crate::limits::font_error("Missing accidental bounds."))?
+            .bounds;
+        let left = self
+            .fonts
+            .glyph_data(self.fonts.glyph("accidentalParensLeft")?)
+            .ok_or_else(|| crate::limits::font_error("Missing parenthesis bounds."))?
+            .bounds;
+        let right = self
+            .fonts
+            .glyph_data(self.fonts.glyph("accidentalParensRight")?)
+            .ok_or_else(|| crate::limits::font_error("Missing parenthesis bounds."))?
+            .bounds;
+        self.glyph(
+            "accidentalParensLeft",
+            accidental_x + (ink.left - 0.1 - left.right) * size,
+            y,
+            size,
+            Role::Accidental,
+        )?;
+        self.glyph(
+            "accidentalParensRight",
+            accidental_x + (ink.right + 0.1 - right.left) * size,
+            y,
+            size,
+            Role::Accidental,
+        )?;
+        Ok(())
+    }
+
     fn stem(
         &mut self,
         chord: &Chord,

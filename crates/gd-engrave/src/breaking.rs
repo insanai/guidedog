@@ -122,7 +122,7 @@ pub(crate) fn choose(
     Ok(result)
 }
 
-fn candidate(
+pub(crate) fn candidate(
     springs: &[Spring],
     rods: &[Rod],
     breaks: &[BreakPoint],

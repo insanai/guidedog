@@ -18,7 +18,7 @@ impl Draw<'_, '_, '_, '_, '_> {
             return Ok(());
         };
         let space = self.options.staff_size / 4.0;
-        let x = request.indent + 3.5 * space;
+        let x = request.indent + 4.2 * space;
         let width = self.key_signature(state.key, state.clef, Point { x, y: middle }, space)?;
         let meter_changed = measure == 0 || score.measures[measure - 1].meter != state.meter;
         if meter_changed {

@@ -29,7 +29,8 @@ pub(crate) fn arrange(
         let Some(data) = fonts.glyph_data(glyph) else { continue };
         let padding = if head.cautionary { 0.6 } else { 0.0 };
         let size = info.head_scale;
-        let mut x = info.bounds.left.min(0.0) - 0.3 - data.bounds.right * size - padding;
+        let ledger_left = if head.at.y.abs() >= 3.0 { head.at.x - 0.4 * size } else { 0.0 };
+        let mut x = info.bounds.left.min(ledger_left) - 0.3 - data.bounds.right * size - padding;
         let mut ink = Bands::new();
         add_glyph(&mut ink, fonts, name, size, 0.0, head.at.y, work)?;
         // Cautionary parentheses have no useful nesting cut-outs.

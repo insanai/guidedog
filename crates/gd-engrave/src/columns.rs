@@ -209,7 +209,7 @@ fn preface(
                 .filter(|a| **a != gd_score::Alter::Natural)
                 .count();
             let meter = measure == 0 || score.measures[measure - 1].meter != state.meter;
-            width = width.max(4.0 + key as f64 * 0.9 + if meter { 3.0 } else { 0.0 });
+            width = width.max(4.7 + key as f64 * 0.9 + if meter { 3.0 } else { 0.0 });
         }
     }
     let leading = leading_ink(score, plan, fonts, measure, work)?;

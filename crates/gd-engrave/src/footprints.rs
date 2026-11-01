@@ -24,7 +24,13 @@ pub(crate) fn event(
         add_glyph(bands, fonts, crate::drawing::rest_glyph(duration.base), 1.0, 0.0, y, work)?;
         for dot in 0..duration.dots {
             add_glyph(
-                bands, fonts, "augmentationDot", 1.0, 1.7 + f64::from(dot) * 0.6, y - 0.5, work,
+                bands,
+                fonts,
+                "augmentationDot",
+                1.0,
+                1.7 + f64::from(dot) * 0.6,
+                y - 0.5,
+                work,
             )?;
         }
     }

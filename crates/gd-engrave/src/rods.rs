@@ -32,7 +32,12 @@ pub(crate) fn collect(
                 }
                 event_bands(&mut current, info, fonts, work)?;
                 crate::footprints::event(
-                    &mut current, info, &score.events[id.0 as usize], score, fonts, work,
+                    &mut current,
+                    info,
+                    &score.events[id.0 as usize],
+                    score,
+                    fonts,
+                    work,
                 )?;
                 crate::labels::event(
                     &mut current,
@@ -99,6 +104,7 @@ fn event_bands(
                 head.at.y,
                 work,
             )?;
+            cautionary_bands(current, info, head, name, fonts, work)?;
         }
         for dot in &head.dots {
             add_glyph(
@@ -231,6 +237,32 @@ fn hairpins(
             }
         }
         push(out, Rod { first, last, minimum: width + 2.5 }, &mut options.reserve)?;
+    }
+    Ok(())
+}
+
+fn cautionary_bands(
+    current: &mut Bands,
+    info: &EventInfo,
+    head: &crate::prepare::Head,
+    name: &str,
+    fonts: &Fonts<'_>,
+    work: &mut usize,
+) -> Result<(), Error> {
+    if head.cautionary {
+        let data = fonts
+            .glyph_data(fonts.glyph(name)?)
+            .ok_or_else(|| failure("Missing cautionary accidental bounds."))?;
+        add_rect(
+            current,
+            Rect {
+                left: info.prefix + head.accidental_x + data.bounds.left * info.head_scale - 0.6,
+                right: info.prefix + head.accidental_x + data.bounds.right * info.head_scale + 0.6,
+                top: head.at.y + data.bounds.top * info.head_scale,
+                bottom: head.at.y + data.bounds.bottom * info.head_scale,
+            },
+            work,
+        )?;
     }
     Ok(())
 }

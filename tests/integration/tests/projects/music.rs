@@ -147,3 +147,19 @@ fn generated_music_descriptions_follow_the_projects_ui_language() {
         has(&html, mode);
     }
 }
+
+#[test]
+fn myst_and_included_rst_music_diagnostics_keep_the_original_file_and_line() {
+    let dir = setup("music-mapped-sources");
+    dir.write("index.rst", "Music\n=====\n\n.. toctree::\n\n   other\n");
+    dir.write("other.md", "# Other\n\n```{lilypond}\n\n{ c'4^\"é\" \\unknown }\n```\n");
+    let failed = build(&dir.path, 1, &["html", "-W"]);
+    let output = both(&failed);
+    has(&output, "other.md:5:");
+    has(&output, "{ c'4^\"é\" \\unknown }");
+    dir.write("other.md", "# Other\n\nOrdinary text.\n");
+    dir.write("index.rst", "Music\n=====\n\n.. include:: parts/fragment.rst\n");
+    dir.write("parts/fragment.rst", ".. lilypond::\n\n   { c'4\n     \\unknown }\n");
+    let failed = build(&dir.path, 1, &["html", "-W"]);
+    has(&both(&failed), "parts/fragment.rst:4:");
+}

@@ -174,10 +174,12 @@ pub fn unit_of(doc: Document<'_>, id: NodeId, targets: Targets) -> Unit {
     }
 }
 
-/// A code block is a diagram with alt text (graphviz), translated with the image target,
+/// A generated diagram has alt text translated with the image target,
 /// or a literal, translated with the literal-block target.
 fn code_block_unit(doc: Document<'_>, id: NodeId, targets: Targets) -> Unit {
-    let diagram = doc.custom_attribute(id, "graphviz").is_some();
+    let diagram = ["graphviz", "typst-diagram", "lilypond"]
+        .iter()
+        .any(|name| doc.custom_attribute(id, name).is_some());
     let alt = doc.custom_attribute(id, "alt").is_some();
     if diagram && alt && targets.image {
         Unit::Graphviz

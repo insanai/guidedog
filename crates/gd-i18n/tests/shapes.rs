@@ -306,3 +306,26 @@ fn links_reach_the_copies_of_their_targets() {
     doc.plain_text(link.resolved, &mut title);
     has(&title, "Einleitung");
 }
+
+fn read_music(ctx: &mut ReadContext<'_>) -> Result<(), Fail> {
+    let at = span(GRAPHVIZ, GRAPHVIZ);
+    let block = ctx.b.begin_node(NodeKind::CodeBlock, at)?;
+    ctx.b.add_custom_attribute(block, "lilypond", "1")?;
+    ctx.b.add_custom_attribute(block, "alt", "A score")?;
+    let code = ctx.b.add_text("{ c'1 }\n")?;
+    ctx.b.set_text(block, code);
+    ctx.b.end_node(block)
+}
+
+#[test]
+fn music_alt_is_translated_without_rewriting_notation() {
+    let po = "msgid \"A score\"\nmsgstr \"Eine Partitur\"\n";
+    let (translated, _) = translate(read_music, GRAPHVIZ, po, Targets::of(&[Target::Image]));
+    has(&translated, "@alt=\"Eine Partitur\"");
+    has(&translated, "{ c'1 }");
+    let mut workspace = Workspace::new();
+    assert_eq!(
+        extract(&mut workspace, read_music, GRAPHVIZ, Targets::of(&[Target::Image])),
+        ["A score"]
+    );
+}

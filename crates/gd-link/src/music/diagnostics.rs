@@ -61,6 +61,12 @@ pub(super) fn description(page: &Page<'_>, summary: &gd_engrave::Summary) -> Str
         alt.push_str(&summary.instruments.join(", "));
         alt.push('.');
     }
+    if let Some(key) = summary.key {
+        alt.push(' ');
+        alt.push_str(
+            &page.view.ui.gettext("Key signature %s.").replace("%s", &key_name(page, key)),
+        );
+    }
     if let Some(meter) = &summary.meter {
         alt.push(' ');
         alt.push_str(
@@ -84,4 +90,33 @@ pub(super) fn description(page: &Page<'_>, summary: &gd_engrave::Summary) -> Str
         alt.push_str(&page.view.ui.gettext("With lyrics."));
     }
     alt
+}
+
+fn key_name(page: &Page<'_>, key: gd_score::Key) -> String {
+    use gd_score::{Alter, Mode};
+    let step = ["C", "D", "E", "F", "G", "A", "B"][key.tonic.step.index() as usize];
+    let accidental = match key.tonic.alter {
+        Alter::DoubleFlat => "double flat",
+        Alter::Flat => "flat",
+        Alter::Natural => "",
+        Alter::Sharp => "sharp",
+        Alter::DoubleSharp => "double sharp",
+    };
+    let mode = match key.mode {
+        Mode::Major => "major",
+        Mode::Minor => "minor",
+        Mode::Dorian => "Dorian",
+        Mode::Phrygian => "Phrygian",
+        Mode::Lydian => "Lydian",
+        Mode::Mixolydian => "Mixolydian",
+        Mode::Locrian => "Locrian",
+    };
+    let mut name = step.to_string();
+    if !accidental.is_empty() {
+        name.push(' ');
+        name.push_str(&page.view.ui.gettext(accidental));
+    }
+    name.push(' ');
+    name.push_str(&page.view.ui.gettext(mode));
+    name
 }

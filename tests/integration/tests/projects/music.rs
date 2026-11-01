@@ -130,3 +130,20 @@ fn music_files_and_includes_refuse_escaping_symbolic_links() {
         has(&both(&result), "inside the source roots");
     }
 }
+
+#[test]
+fn generated_music_descriptions_follow_the_projects_ui_language() {
+    let dir = setup("music-localized-alt");
+    dir.write(
+        "index.rst",
+        concat!("Music\n=====\n\n.. lilypond::\n\n", "   { \\key g \\major c'4 d' e' f' | }\n"),
+    );
+    for (language, staff, mode) in
+        [("de", "Notensystem", "Dur"), ("hi", "स्वर-पंक्ति", "मेजर"), ("ko", "보표", "장조")]
+    {
+        build(&dir.path, 0, &["html", "-W", "-D", &format!("language={language}")]);
+        let html = dir.read("_build/html/index.html");
+        has(&html, staff);
+        has(&html, mode);
+    }
+}

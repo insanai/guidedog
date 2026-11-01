@@ -19,10 +19,12 @@ use guidedoc::{ENGLISH_LABELS, Label, Labels};
 pub const UI_DOMAIN: &str = "guidedog";
 
 /// The catalogs built into the binary, by language.
-const EMBEDDED: [(&str, &str); 7] = [
+const EMBEDDED: [(&str, &str); 9] = [
     ("de", include_str!("../locale/de/LC_MESSAGES/guidedog.po")),
     ("es", include_str!("../locale/es/LC_MESSAGES/guidedog.po")),
     ("fr", include_str!("../locale/fr/LC_MESSAGES/guidedog.po")),
+    ("hi", include_str!("../locale/hi/LC_MESSAGES/guidedog.po")),
+    ("ko", include_str!("../locale/ko/LC_MESSAGES/guidedog.po")),
     ("ja", include_str!("../locale/ja/LC_MESSAGES/guidedog.po")),
     ("pt_BR", include_str!("../locale/pt_BR/LC_MESSAGES/guidedog.po")),
     ("ru", include_str!("../locale/ru/LC_MESSAGES/guidedog.po")),

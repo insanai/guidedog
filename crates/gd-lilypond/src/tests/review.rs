@@ -95,3 +95,20 @@ fn repeated_text_and_copied_state_consume_memory_before_expansion() {
     .unwrap_err();
     assert_eq!(failed.error.kind, ErrorKind::ReadLimit);
 }
+
+#[test]
+fn independent_staves_do_not_inherit_polyphonic_stem_directions() {
+    let loaded = load_score(
+        r"\new PianoStaff <<
+        \new Staff { c'1 } \new Staff { c1 }
+    >>",
+        "staves.ly",
+        &mut Options::default(),
+    )
+    .unwrap();
+    for event in &loaded.score.events {
+        if let gd_score::EventKind::Chord(chord) = &event.kind {
+            assert_eq!(chord.direction, gd_score::Direction::Auto);
+        }
+    }
+}

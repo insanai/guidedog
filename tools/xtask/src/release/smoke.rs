@@ -196,7 +196,7 @@ pub(crate) fn smoke(program: &Path, external_typst: bool) -> Result<()> {
         (html.contains("class=\"graphviz\""), "the diagram is missing from index.html"),
         (html.contains("<svg"), "no SVG in index.html"),
         (html.contains("class=\"typst-diagram\""), "no embedded Typst diagram"),
-        (html.contains("class=\"lilypond\""), "no native music"),
+        (html.contains("class=\"lilypond-music"), "no native music"),
         (html.contains("id=\"tool.run\""), "autodoc did not document tool.run"),
     ];
     if let Some((_, what)) = checks.iter().find(|(ok, _)| !ok) {

@@ -81,6 +81,7 @@ pub(crate) fn choose(
     let _choices =
         scratch.hold(breaks.len().saturating_mul(size_of::<f64>() + size_of::<Option<Line>>()))?;
     let (mut costs, mut chosen) = choice_buffers(breaks.len())?;
+    let rods = RodIndex::new(rods, work, scratch)?;
     costs[0] = 0.0;
     for last in 1..breaks.len() {
         if breaks[last].forbidden && last + 1 < breaks.len() {
@@ -89,16 +90,9 @@ pub(crate) fn choose(
         let lower = last.saturating_sub(limits.measures_per_line);
         for first in (lower..last).rev() {
             charge(work, 1)?;
+            let (line, content) =
+                candidate(springs, &rods, breaks, (width, justify), first..last, work, scratch)?;
             if costs[first].is_finite() {
-                let line = candidate(
-                    springs,
-                    rods,
-                    breaks,
-                    (width, justify),
-                    first..last,
-                    work,
-                    scratch,
-                )?;
                 let allowed = !line.overfull || last == first + 1 || breaks[last].forced;
                 if allowed {
                     let badness = if line.overfull { 10_000.0 } else { badness(line.stretch) };
@@ -112,7 +106,11 @@ pub(crate) fn choose(
                     }
                 }
             }
-            if breaks[first].forced {
+            // A line's music alone needs at least `content`, and starting earlier only
+            // adds music, so once it exceeds the width every earlier start is overfull too.
+            // Overfull lines of several measures are refused unless they end at a forced
+            // break, so only then must the search go on.
+            if breaks[first].forced || (content > width && !breaks[last].forced) {
                 break;
             }
         }
@@ -142,35 +140,67 @@ fn choice_buffers(count: usize) -> Result<(Vec<f64>, Vec<Option<Line>>), Error> 
     Ok((costs, chosen))
 }
 
+/// Rods ordered by their first gap, so a line finds its own rods without scanning the
+/// whole score for every candidate.
+pub(crate) struct RodIndex<'r> {
+    rods: &'r [Rod],
+    order: Vec<usize>,
+    _held: crate::scratch::Reservation<'r>,
+}
+
+impl<'r> RodIndex<'r> {
+    /// Sorts the rods once; the reservation lasts as long as the index.
+    pub(crate) fn new(
+        rods: &'r [Rod],
+        work: &mut usize,
+        scratch: crate::Scratch<'r>,
+    ) -> Result<Self, Error> {
+        charge(work, rods.len().saturating_mul(rods.len().max(2).ilog2() as usize + 1))?;
+        let held = scratch.hold(rods.len().saturating_mul(size_of::<usize>()))?;
+        let mut order = Vec::new();
+        order.try_reserve_exact(rods.len()).map_err(|_| failure("Cannot reserve rod order."))?;
+        order.extend(0..rods.len());
+        order.sort_by_key(|&index| (rods[index].first, rods[index].last, index));
+        Ok(Self { rods, order, _held: held })
+    }
+
+    /// The rods that lie wholly within gaps `start..end`.
+    fn within(&self, start: usize, end: usize) -> impl Iterator<Item = &'r Rod> + '_ {
+        let from = self.order.partition_point(|&index| self.rods[index].first < start);
+        self.order[from..]
+            .iter()
+            .map(|&index| &self.rods[index])
+            .take_while(move |rod| rod.first < end)
+            .filter(move |rod| rod.last <= end)
+    }
+}
+
+/// Lays out one candidate line; also returns the least width its music needs without the
+/// prefatory and courtesy matter.
 pub(crate) fn candidate(
     springs: &[Spring],
-    rods: &[Rod],
+    rods: &RodIndex<'_>,
     breaks: &[BreakPoint],
     settings: (f64, Justify),
     range: std::ops::Range<usize>,
     work: &mut usize,
     scratch: crate::Scratch<'_>,
-) -> Result<Line, Error> {
+) -> Result<(Line, f64), Error> {
     let (width, justify) = settings;
     let (first, last) = (range.start, range.end);
     let (start, end) = (breaks[first].gap, breaks[last].gap);
     let prefix = breaks[first].prefix + breaks[last].suffix;
+    let count = rods.within(start, end).count();
+    charge(work, count)?;
     let _local = scratch.hold(
-        rods.len()
+        count
             .saturating_mul(size_of::<Rod>())
             .saturating_add((end - start).saturating_mul(size_of::<f64>())),
     )?;
     let mut local = Vec::new();
-    local.try_reserve_exact(rods.len()).map_err(|_| failure("Cannot reserve line rods."))?;
-    for rod in rods {
-        charge(work, 1)?;
-        if rod.first >= start && rod.last <= end {
-            local.push(Rod {
-                first: rod.first - start,
-                last: rod.last - start,
-                minimum: rod.minimum,
-            });
-        }
+    local.try_reserve_exact(count).map_err(|_| failure("Cannot reserve line rods."))?;
+    for rod in rods.within(start, end) {
+        local.push(Rod { first: rod.first - start, last: rod.last - start, minimum: rod.minimum });
     }
     let solution = solve(&springs[start..end], &local, (width - prefix).max(0.01), work, scratch)?;
     let ragged = justify == Justify::None
@@ -183,13 +213,14 @@ pub(crate) fn candidate(
     } else {
         solution.gaps.iter().sum()
     };
-    Ok(Line {
+    let line = Line {
         first,
         last,
         stretch,
         width: actual + prefix,
         overfull: solution.overfull || prefix >= width,
-    })
+    };
+    Ok((line, solution.minimum))
 }
 
 fn badness(stretch: f64) -> f64 {

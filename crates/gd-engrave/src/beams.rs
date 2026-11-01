@@ -63,15 +63,7 @@ impl Draw<'_, '_, '_, '_, '_> {
             let distance =
                 thickness + self.fonts.default_value("beamSpacing", 0.25) * space * scale;
             let metrics = Metrics { up: group.up, middle, space, thickness, distance };
-            let mut obstacles = Vec::new();
-            for mark in &self.system.marks {
-                charge(self.work, 1)?;
-                if mark.staff == self.staff
-                    && matches!(mark.mark.role(), Role::Notehead | Role::Accidental)
-                {
-                    obstacles.push(mark.bounds);
-                }
-            }
+            let obstacles = self.beam_obstacles(&segments)?;
             let (left, right) = choose(&stems, &segments, metrics, &obstacles, self.work)?;
             let first = stems[0].x;
             let width = (stems.last().map(|s| s.x).unwrap_or(first) - first).max(0.01);
@@ -137,6 +129,32 @@ struct Metrics {
     space: f64,
     thickness: f64,
     distance: f64,
+}
+
+impl Draw<'_, '_, '_, '_, '_> {
+    /// Noteheads and accidentals of this staff under a beam's segments. Only these can
+    /// meet the beam, and ink_cost ignores the rest, so the choice is unchanged while each
+    /// beam's cost stays local instead of growing with the system.
+    fn beam_obstacles(
+        &mut self,
+        segments: &[crate::beam_segments::Segment],
+    ) -> Result<Vec<Rect>, Error> {
+        let (left, right) = segments
+            .iter()
+            .fold((f64::INFINITY, f64::NEG_INFINITY), |r, s| (r.0.min(s.left), r.1.max(s.right)));
+        let mut obstacles = Vec::new();
+        for mark in &self.system.marks {
+            charge(self.work, 1)?;
+            if mark.staff == self.staff
+                && matches!(mark.mark.role(), Role::Notehead | Role::Accidental)
+                && mark.bounds.right > left
+                && mark.bounds.left < right
+            {
+                obstacles.push(mark.bounds);
+            }
+        }
+        Ok(obstacles)
+    }
 }
 
 fn choose(

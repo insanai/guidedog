@@ -98,9 +98,11 @@ fn dynamic_breaking_matches_every_partition_of_small_scores() {
                     cost = f64::INFINITY;
                     break;
                 }
-                let line = crate::breaking::candidate(
+                let rods =
+                    crate::breaking::RodIndex::new(&[], &mut 100, Scratch::default()).unwrap();
+                let (line, _) = crate::breaking::candidate(
                     &springs,
-                    &[],
+                    &rods,
                     &breaks,
                     (width, Justify::Auto),
                     first..last,

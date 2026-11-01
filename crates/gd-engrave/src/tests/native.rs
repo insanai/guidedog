@@ -922,3 +922,12 @@ fn measure_rests_and_tuplets_follow_their_voice() {
         assert!(number.top > middle, "{number:?}");
     }
 }
+
+#[test]
+fn long_scores_fit_the_default_work_limit() {
+    // Line breaking and beam quantization once scanned the whole score or system for each
+    // candidate, so sixty bars of beamed eighths exhausted the default work limit.
+    let bars = vec!["c8 d e f g f e d |"; 120].join(" ");
+    let engraving = draw(&format!("\\relative c' {{ {bars} }}"), 350.0);
+    assert!(engraving.systems.len() >= 20);
+}

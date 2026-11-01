@@ -38,8 +38,9 @@ Usage: cargo xtask <TASK> [OPTIONS]
 Tasks:
   build-site [--guidedog PATH] [--out DIR] [--no-pdf]
                      build the website: landing page, manual, PDF books, discussions
-  fetch-fonts [DIR]  fetch the Noto Serif CJK fonts the CJK PDF books use, checked
-                     against their pinned SHA-256
+  fetch-fonts [--music] [DIR]
+                     fetch the Noto Serif CJK fonts the CJK PDF books and music tests
+                     use, checked against their pinned SHA-256
   check-music-font   verify the unmodified embedded Bravura font, metadata and license
   graphviz [--out DIR] [--jobs N]
                      build the static Graphviz libraries release binaries link

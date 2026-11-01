@@ -1,0 +1,145 @@
+Native music implementation review, 1 November 2026
+===================================================
+
+We reviewed GDS 0015 before implementation, then reviewed the native reader, engraver and project integration against its complete three-phase contract.
+The implementation uses ``gd-score``, ``gd-lilypond`` and ``gd-engrave`` with explicit options, typed indices, borrowed fonts and reusable per-thread workspaces.
+The core libraries open no files, invoke no program and execute no Scheme.
+The project adapter supplies confined includes, diagnostics, dependencies and image publication.
+
+Scope and evidence
+------------------
+
+All three notation phases are implemented.
+The reader's command ledger distinguishes implemented notation, ignored metadata and refused programming constructs.
+Its profile tests exercise every accepted command and explicit refusals.
+The 48-score corpus covers pitch languages, relative and fixed octaves, transposition, accidentals, signatures, compound and grouped beats, pickups, exact durations, rests, chords, beams, tuplets, ties, slurs, articulations, fingerings, dynamics, text, lyrics, voices, staff groups, grace notes, repeats, tempo and chord names.
+There is no remaining implementation phase in this record.
+
+``cargo run --locked -p music-check`` checks finite ink frames, actual ink collisions by semantic role, exposed primary beam quants and tie apexes before comparing the SVG and PNG goldens.
+SVG must match byte for byte.
+PNG dimensions must match; at most 0.2 percent of pixels may differ by more than eight channel levels, and mean channel error must remain below one percent.
+The alpha-mask collision check uses 288 pixels per inch after a bounding-box rejection, with the documented component contacts permitted.
+The 48 cases pass these checks.
+
+The deterministic fuzz run uses 12,000 hostile, mutated, Unicode and structured notation inputs under finite budgets.
+It produces 4,757 successful parses and 4,121 successful engravings.
+Spacing properties compare the solver with exhaustive active sets, preserve original spanning rods and verify monotone duration spacing.
+Line-breaking properties compare the dynamic program with every partition of small generated problems.
+Eight project tests exercise real HTML and PDF builds, captions, figure references, PNG, narrow editions, multi-system books, includes, missing-file invalidation, symbolic-link confinement, untrusted builds, localized descriptions and original source locations through MyST and included RST.
+
+Critique and corrections
+------------------------
+
+* Simultaneous conflicting alterations updated staff state in event order.
+  We now update a moment atomically and leave conflicting pitches ambiguous until a subsequent explicit note resolves them.
+* Accidental columns used whole bounding rectangles, preventing useful nesting.
+  They now use quarter-space ink bands refined by the SMuFL cut-outs.
+* A column with unrelated ink could erase a previous band's clearance.
+  We now retain the last occupied column separately in each band and include ledger and rest footprints.
+* Cautionary parentheses touched ledger lines, and a flat signature touched its clef.
+  Their actual glyph bounds now determine placement and prefatory clearance.
+* Two voices needed consistent second and unison shifts, shared compatible heads and rests, free-space augmentation dots and stacked accidentals.
+  Dedicated geometry regressions exercise these cases.
+* Beam quantization constrained inner endpoints independently even though they share slope and spacing.
+  Exposed primary ends remain hard constraints; named costs score secondary wedges and all actual segment collisions.
+  Scoring and drawing share fractional endpoints.
+* Whole-curve skyline translation detached slurs from their notes.
+  Attached curves now retain their endpoints, with quarter-space attachment candidates, actual stem tips, sampled clearance and named scoring terms.
+  Other outside marks move around their ink.
+* Split spanners reused out-of-system note positions and ignored timed lyric anchors.
+  Continuations now clamp to system edges, use the active clef and retain hairpin aperture and lyric extenders.
+* Fixed lyric gaps and duplicate annotation baselines ignored shaped ink.
+  We now use word-space advances, actual syllable bounds, metric-based verse spacing and annotation stacking.
+* Long initial words could extend outside the horizontal frame.
+  Each system now records its actual ink width, including per-system SVG and PNG export.
+* PNG had no physical resolution, changing its natural PDF size.
+  PNG now includes checked ``pHYs`` metadata at its declared resolution.
+  HTML uses a 1.5x density descriptor for 144-dpi wide and narrow PNGs; a Chromium check confirms that their displayed width matches the SVG edition within pixel rounding.
+* Direction-prefixed dynamics did not terminate a hairpin, and hairpin placement ignored its requested side.
+  Directed marks now share the same termination path and preserve direction through the score model and geometry, with reader and drawing regressions.
+* A tie search scanned all spanners for each notehead.
+  An indexed lookup replaces it and consumes explicit work.
+* Event and operation limits did not account for all transient allocations.
+  Reader copies, measures and lyrics consume their expansion allowance; engraving reserves bounded scratch and retained capacities, outlines stop at 65,536 bytes per glyph, and the mark bound applies across the drawing.
+* Grace state copies bypassed the allowance, and malformed programmatic beat lists could overflow a sum.
+  Grace copies now use the same accounting helper, and beat lists are bounded before traversal or summation.
+* Failed dependency candidates could be observed before confinement.
+  Canonical confinement now precedes content observation, including symbolic-link targets.
+* The repository's dependency and round-trip gates did not know the new crates and location metadata.
+  The gate now records the native dependencies; semantic round-trip comparison ignores regenerated byte maps while source-location tests verify their original positions.
+* A pickup's following system could repeat the full instrument name despite reserving only its short form.
+  Full names now belong only to the first system, including measure zero.
+* Per-cluster fallback could discard the shaping context of a script that one fallback face can draw completely.
+  We now prefer a single covering face for the entire run before using cluster fallback, charge coverage scans by text length and compare Hindi fallback with direct whole-run shaping.
+
+Reference engraving review
+--------------------------
+
+We compiled all 48 inputs with the official LilyPond 2.24.4 Linux binary and inspected the four generated side-by-side SVG review pages.
+The tool and source wrappers are reproducible with ``music-check --reference /path/to/lilypond``.
+The wrappers create equivalent lyric contexts and request compressed multi-measure rests explicitly.
+The oracle is used only during development.
+
+The downloaded archive is ``lilypond-2.24.4-linux-x86_64.tar.gz`` from the official LilyPond GitLab generic package endpoint.
+Its SHA-256 is ``53bc1df875ee56dabe56ae1f0b4550237e0c9acc837b60f0ef8c42fc35a68641``.
+The endpoint is ``https://gitlab.com/api/v4/projects/lilypond%2Flilypond/packages/generic/lilypond/2.24.4/lilypond-2.24.4-linux-x86_64.tar.gz``.
+Bravura remains unmodified at the commit and three file digests recorded in ``third_party/bravura/PROVENANCE.txt``.
+
+.. list-table:: Reviewed differences in the house style
+   :header-rows: 1
+   :widths: 15 85
+
+   * - Cases
+     - Review
+   * - 01-07
+     - Pitch, spelling, octave and transposition meaning agrees; Bravura outlines and spring widths differ from LilyPond's font and spacing.
+   * - 08-14
+     - Cautionary parentheses, octave clefs and cancellation signs are present; clef clearance and optical sizes follow our measured glyph bounds. Common time prints numerically.
+   * - 15-21
+     - Meter groups, pickup, dots, exact scaled values and rests agree. Dense inner beam spacing and optical stem gaps follow the bounded scoring policy.
+   * - 22-25
+     - Compressed measure rests use a fixed-width H bar and count. Chord seconds and accidentals retain spelling; columns can differ because we use SMuFL cut-outs and a fixed outside-in order.
+   * - 26-31
+     - Ties and slurs remain attached and clear intervening ink. Curvature, endpoint clearance, beam slopes and tuplet number positions follow the bounded candidate search.
+   * - 32-37
+     - Articulations, fingerings, dynamic strings and lyrics are present. Libertinus text, lyric word spacing, hyphen positions and verse baselines differ from the oracle's text face and defaults.
+   * - 38-42
+     - Voice separation, staff groups and grace timing agree. Group braces are drawn geometrically; staff separation follows actual skylines rather than LilyPond's default spacing.
+   * - 43-46
+     - Written repeat structure and alternatives agree. Volta brackets have closing hooks. Tempo durations and jazz chord names use explicit text such as ``1/4 = 120`` and ``Cmaj7`` instead of a note glyph and triangle abbreviation.
+   * - 47-48
+     - Forced breaks and binding expansion agree. Guidedog justifies non-final systems by default while the reference wrapper keeps lines ragged right.
+
+Documentation and release checks
+--------------------------------
+
+The manual has a live music chapter beside the diagram chapter, plus directive and configuration references.
+The crate map, AST, incremental-build and compatibility ledgers, API appendix, crate READMEs, seven project READMEs and changelog describe the implementation.
+All six manual catalogs include translated descriptions, captions, options and limits, with no fuzzy or untranslated entries.
+Korean inline boundaries use escaped whitespace so grammatical particles do not break RST delimiters.
+Bravura's notice appears in ``NOTICE``, ``--licenses``, the manual's downloadable notice and release archives; the release smoke test checks it.
+CI runs the corpus on Linux and macOS; every native release build runs it on its own platform before packaging, including Windows.
+These workflow checks are configured here; this local qualification does not claim a remote five-platform run.
+
+Final local qualification
+-------------------------
+
+The complete qualification ran on Linux x86-64 with Rust 1.99.0.
+The implementation base is commit ``c898dbe``, including whole-run text shaping, directed hairpin termination, HTML PNG density and translated expression and repeat examples.
+The following checks pass:
+
+* ``cargo build --locked --workspace --all-targets``.
+* ``cargo test --locked --workspace --no-fail-fast``: 2,067 passing tests across 205 test reports, including doctests.
+* ``cargo clippy --locked --workspace --all-targets -- -D warnings``.
+* ``cargo fmt --all --check``.
+* ``cargo run -p check``: 1,216 source files, zero limit violations; seven soft-width notices remain.
+* ``cargo xtask check-music-font`` and ``cargo xtask release smoke target/debug/guidedog``, including native music in a real HTML site and PDF book and the bundled license notice.
+* The 48-score SVG, PNG and geometry corpus and the 12,000-case deterministic fuzz target.
+* ``cargo test -p gd-typst --no-default-features`` for the standalone font and raster capability boundary.
+* Complete HTML and PDF manual builds with ``-W`` in English, German, Spanish, Japanese, Korean, Hindi and Simplified Chinese, including the live music chapter and the API appendix.
+* Catalog statistics for all six translated editions: zero fuzzy and zero untranslated entries.
+* The GDS website with ``-W`` and the catalog check for all fifteen records.
+
+We inspected the English book's music pages and all four LilyPond comparison pages.
+The accepted three-phase implementation and documentation contract is complete.
+The release matrices retain the platform qualification requirement before any subsequent release is packaged.

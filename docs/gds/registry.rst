@@ -56,6 +56,6 @@ Discussion registry
      - committed
    * - 0015
      - :doc:`records/0015-lilypond-music`
-     - accepted
+     - committed
 
 .. gds-generated-end

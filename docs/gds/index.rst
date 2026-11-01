@@ -22,3 +22,4 @@ The manual teaches use. These records explain the design.
    evidence/plugin-acceptance-20261014
    evidence/builtin-extensions-20261015
    evidence/status-review-20261031
+   evidence/native-music-20261101

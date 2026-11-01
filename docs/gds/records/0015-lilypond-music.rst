@@ -1,6 +1,6 @@
 :gds-number: 0015
 :gds-title: Engraved LilyPond music
-:gds-state: accepted
+:gds-state: committed
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-11-01
@@ -243,7 +243,7 @@ Dependencies point one way; the two outer crates do not know each other, so anot
 
 .. graphviz::
    :caption: Crate dependencies. Arrows point from a crate to what it uses.
-   :alt: gd-link uses gd-lilypond and gd-engrave; both use gd-score and gd-report; gd-engrave uses ttf-parser and rustybuzz; guidedoc-sphinx parses the directive.
+   :alt: gd-link uses gd-lilypond and gd-engrave; both use gd-score; gd-lilypond adapts errors through gd-report; gd-engrave uses gd-json, ttf-parser and rustybuzz; guidedoc-sphinx parses the directive.
 
    digraph crates {
      graph [rankdir=TB, bgcolor="transparent", pad="0.3", nodesep="0.4", ranksep="0.4"];
@@ -256,9 +256,10 @@ Dependencies point one way; the two outer crates do not know each other, so anot
      engrave [label="gd-engrave\nlayout, glyphs, SVG"];
      score [label="gd-score\nthe music model"];
      report [label="gd-report"];
+     json [label="gd-json"];
      ext [label="ttf-parser, rustybuzz", fillcolor="#f4f1e8", color="#8a7a4a"];
      link -> lily; link -> engrave; lily -> score; engrave -> score;
-     lily -> report; engrave -> report; engrave -> ext;
+     lily -> report; engrave -> json; engrave -> ext;
    }
 
 All three crates set ``publish = false`` during the beta and follow the workspace rules: ``version.workspace = true``, shared lints, no ``unsafe``, no ``unwrap`` or ``expect`` on input-dependent values, functions of at most 70 logical lines, files of at most 1,408 lines, and a ``///`` comment on every public item saying what it borrows, returns and how it fails.
@@ -316,9 +317,11 @@ It is flat data: vectors of events and spanners indexed by newtype identifiers, 
        pub measures: Vec<Measure>,
    }
 
-   pub struct Event { pub voice: VoiceId, pub at: Moment, pub kind: EventKind, pub span: Span }
-   pub enum EventKind { Chord(Chord), Rest(Rest), Skip(Duration), MeasureRest(MeasureRest),
-                        Clef(Clef), Key(Key), Time(Meter), Bar(BarStyle), Break(BreakRule) }
+   pub struct Event { pub voice: VoiceId, pub at: Moment, pub kind: EventKind, pub span: Span,
+                      pub marks: Vec<Annotation> }
+   pub enum EventKind { Chord(Chord), Rest(Duration), Skip(Duration), MeasureRest(Duration),
+                        Clef(Clef), Key(Key), Time(Meter), Bar(BarStyle), Break(BreakRule),
+                        ChordName(String, Duration) }
 
    /// A syllable is anchored to a note (`\addlyrics`, `\lyricsto`) or to a moment
    /// (`\new Lyrics` with durations).
@@ -327,7 +330,7 @@ It is flat data: vectors of events and spanners indexed by newtype identifiers, 
    /// Checks the invariants every reader must establish: events sorted by moment within
    /// a voice, spanners that start before they end, anchors that exist, one meter for
    /// all staves. Borrows `score`; returns the first broken invariant.
-   pub fn check_score(score: &Score) -> Result<(), ScoreError>;
+   pub fn check_score(score: &Score) -> Result<(), Error>;
 
 ``Span`` is a ``FileId`` and a byte range; the score never holds LilyPond syntax.
 An overflow in ``Ratio`` arithmetic is an error (``score.time-overflow``), never a wrap or a panic.
@@ -351,6 +354,7 @@ An overflow in ``Ratio`` arithmetic is an error (``score.time-overflow``), never
    pub struct Options<'a> {
        pub limits: Limits,
        pub include: Option<&'a mut Include<'a>>,
+       pub reserve: Option<&'a dyn Fn(usize) -> bool>,
    }
 
    /// The text of every file read, indexed by `FileId`; file 0 is the given source.
@@ -386,7 +390,8 @@ One engraver serves one thread.
        pub italic: Vec<FaceData<'f>>,
    }
    /// One selected face, borrowing the original bytes; index 0 is the common case.
-   pub struct FaceData<'f> { pub data: &'f [u8], pub index: u32 }
+   pub struct FaceData<'f> { pub data: &'f [u8], pub index: u32,
+                            pub source: Option<&'f dyn FaceSource> }
    /// Parses the embedded Bravura font and metadata and the given faces into immutable
    /// tables. Borrows the faces for `'f`; fails when a face or the metadata is malformed.
    pub fn load_fonts<'f>(options: &FontOptions<'f>) -> Result<Fonts<'f>, Error>;
@@ -399,6 +404,7 @@ One engraver serves one thread.
        /// The height of a five-line staff, in points.
        pub staff_size: f64,
        pub justify: Justify,
+       pub optical_adjustment: f64,
        pub limits: Limits,
        /// Shown each buffer's growth in bytes before it happens; `false` refuses it.
        pub reserve: Option<&'a mut Reserve<'a>>,
@@ -415,9 +421,13 @@ One engraver serves one thread.
    }
 
    pub struct Engraving { pub width: f64, pub height: f64, pub systems: Vec<System>,
+                          pub glyphs: BTreeMap<Glyph, GlyphData>,
                           pub summary: Summary, pub warnings: Vec<Error> }
-   pub struct System { pub top: f64, pub height: f64, pub first_measure: u32,
-                       pub marks: Vec<Mark> }
+   pub struct System { pub top: f64, pub width: f64, pub height: f64,
+                       pub first_measure: u32, pub last_measure: u32,
+                       pub marks: Vec<PositionedMark> }
+   pub struct PositionedMark { pub mark: Mark, pub staff: StaffId,
+                               pub measure: u32, pub bounds: Rect }
    pub enum Mark {
        Glyph { glyph: Glyph, x: f64, y: f64, size: f64, role: Role },
        Line { from: Point, to: Point, thickness: f64, role: Role },
@@ -437,9 +447,10 @@ One engraver serves one thread.
        pub description: &'a str,
        /// Adds the screen stylesheet with the dark ink; for HTML only.
        pub adaptive: bool,
+       pub max_bytes: usize,
    }
    /// Writes the chosen systems of `engraving` as one SVG document into `out`. Fails
-   /// only when `reserve` refuses the growth of `out`.
+   /// on invalid geometry, missing glyphs, output limits or refused buffer growth.
    pub fn write_svg(out: &mut String, engraving: &Engraving, options: &SvgOptions<'_>,
                     reserve: Option<&mut Reserve<'_>>) -> Result<(), Error>;
 
@@ -1086,7 +1097,9 @@ The environment schema changes.
 Acceptance criteria and implementation status
 ---------------------------------------------
 
-This is a proposal; nothing is implemented.
+All three notation phases are implemented in the native reader, score model, engraver and project adapters.
+The qualification record is :doc:`../evidence/native-music-20261101`.
+The complete local checks below pass, including all translated books and workspace validation; the release matrices enforce the same corpus on each release platform.
 
 Phase 1 is one staff with one voice: the phase 1 profile, lyrics of one verse, beams, ties, slurs, tuplets, articulations, dynamics and hairpins, line breaking, SVG and PNG, the HTML and PDF builders with single images, diagnostics with exact positions, and limits.
 The score model includes grace moments, staff groups and voices from the start, so later phases do not change it.
@@ -1099,7 +1112,7 @@ Each phase is complete when this evidence exists for its constructs:
 * A collision audit run on every engraved test score.
   It checks marks by role against a table of allowed contacts (stems on noteheads, ledger lines through noteheads, beams on stems, bar lines and staff lines on everything they cross, slurs across staff lines) and reports any other overlap beyond a tolerance of 0.05 staff space.
   It also checks that exposed primary beam ends avoid forbidden quants and no tie apex touches a staff line.
-Secondary and fractional ends share the chosen slope and beam spacing; their quant wedges contribute to the placement cost instead of becoming independent hard constraints.
+  Secondary and fractional ends share the chosen slope and beam spacing; their quant wedges contribute to the placement cost instead of becoming independent hard constraints.
 * A reference corpus of at least forty examples covering the house style (Gould's chapters on spacing, beams, accidentals, ties and slurs, lyrics and multiple voices), stored as golden SVGs.
   CI compares them byte for byte on Linux and macOS; the release qualification compares them on all five release platforms.
   PNG output is compared by pixel difference within a tolerance.
@@ -1242,3 +1255,35 @@ Generated SVG grouping reserves its tree and index buffers before insertion and 
 The positioned-mark limit applies across all systems in a drawing, and impossible system-window counts are refused before column allocation.
 Measure expansion consumes the reader's allocation allowance as well as its event-derived measure-count bound.
 These rules close paths that event and source limits alone did not cover.
+
+Final geometry review
+~~~~~~~~~~~~~~~~~~~~~
+
+A role-ink corpus audit found cautionary parentheses touching ledger lines and a flat signature touching its clef.
+We now place parentheses from actual glyph bounds, reserve their rods and give prefatory clefs explicit clearance.
+Accidental state is updated atomically for each moment; conflicting simultaneous alterations leave that pitch ambiguous until a later explicit note resolves it.
+Accidental columns use quarter-space bands refined by the SMuFL cut-outs.
+Spacing retains the last occupied column separately for each vertical band, including ledger and rest footprints, so an intervening unrelated column cannot erase a spanning clearance.
+
+Slur candidates use quarter-space attachment offsets, actual stem tips when appropriate, sampled minimum height adjustment and named costs for attachments, slope, added height, clearance variance and ties.
+Attached curves remain fixed while the outside-mark skyline places text and annotations around them; translating a whole slur during outside placement would detach its ends.
+Tie apexes move to a staff space when they approach a staff line.
+Lyrics use shaped word spacing, actual text bounds and continuation anchors, including timed lyric moments.
+System frames include all horizontal ink, and PNG stores physical resolution so its PDF size matches SVG.
+
+The corpus audit rejects disallowed contacts using actual 288-dpi alpha masks after a bounding-box rejection.
+It permits the component contacts within signatures, connected beams, brackets, dynamic strings and composite measure rests in addition to the contacts listed above.
+Only ends with no adjoining primary segment are exposed beam ends.
+The exhaustive tests compare spring solutions with every active set and line breaking with every partition of small generated scores.
+The deterministic fuzz target reports accepted and engraved inputs as well as total cases.
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-11-01: accepted -> committed. Implement and review all three native
+   music phases, project integration, complete documentation and translations;
+   pass local qualification and wire platform corpus gates.
+   docs/gds/evidence/native-music-20261101.rst; 48-score SVG/PNG and collision
+   corpus; 12000 fuzz cases; 2065 workspace tests; seven HTML/PDF manual
+   editions; strict Clippy, formatting, source and license checks.

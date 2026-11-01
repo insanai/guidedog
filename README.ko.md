@@ -4,7 +4,7 @@
 
 **한 번 쓰고, 명확히 설명하고, 웹과 종이로 펴내세요.**
 
-Guidedog은 같은 reStructuredText 또는 Markdown 파일로 문서 웹사이트와 PDF 책을 만듭니다. 하나의 원본 파일을 관리하며 웹과 종이의 독자에게 전합니다. 릴리스는 PDF 조판과 다이어그램 렌더링을 포함한 실행 파일 `guidedog` 하나로 제공됩니다.
+Guidedog은 같은 reStructuredText 또는 Markdown 파일로 문서 웹사이트와 PDF 책을 만듭니다. 하나의 원본 파일을 관리하며 웹과 종이의 독자에게 전합니다. 릴리스는 PDF 조판, 다이어그램 렌더링, 악보 사보를 포함한 실행 파일 `guidedog` 하나로 제공됩니다.
 
 작성 흐름은 Sphinx에서 영감을 받았지만 Guidedog은 독립적인 시스템입니다. 설정은 선언형 TOML이며, API는 정적으로 추출하고, Python 설정이나 확장은 실행하지 않습니다. Sphinx와의 완전한 호환은 목표가 아닙니다.
 
@@ -19,7 +19,22 @@ guidedog serve docs
 
 프로젝트에는 `conf.toml`, `index.rst`, `_templates/`(`layout.html`, `book.typ`, `discussion.typ`, `article.typ`, `theme.typ`), `_static/`(`guidedog.css`, `guidedog.js`, `typography.js`)이 들어 있습니다. 템플릿과 정적 에셋은 로컬에서 직접 편집할 수 있는 일반 파일입니다. HTML은 탐색, 검색, 코드 강조, 다이어그램, 수식, Knuth-Plass 문단 조판을 제공합니다. PDF 책은 장, 상호 참조, 그림, 색인, 언어에 맞춘 조판을 제공합니다. CeTZ와 Fletcher를 포함한 Graphviz 또는 Typst 드로잉 소스를 RST와 MyST에 직접 내장하면 HTML과 PDF 에셋이 자동으로 생성됩니다. 자세한 내용은 [다이어그램 장](docs/manual/topics/diagrams.rst)을 참고하세요.
 
-네이티브 `lilypond` 지시문으로 오선, 성부, 가사와 일반적인 기호를 포함한 LilyPond 악보를 RST와 MyST에 직접 넣습니다. [악보 장](docs/manual/topics/music.rst)을 참고합니다. LilyPond 프로그램을 따로 설치하지 않고 HTML과 PDF에서 SVG와 PNG 그림을 사용합니다.
+네이티브 `lilypond` 지시문으로 보표, 보표당 최대 네 개의 동시 성부, 가사, 구조화된 `\markup`, 일반적인 악상·연주 기호를 포함한 LilyPond 악보를 RST와 MyST에 직접 내장할 수 있습니다. 자세한 내용은 [악보 기보법 장](docs/manual/topics/music.rst)을 참고하세요. LilyPond 프로그램을 별도로 설치하지 않아도 윤곽선 처리된 Bravura SVG와 PNG 악보 그림이 HTML과 여러 보표단(시스템)으로 이루어진 PDF 책에서 바로 동작합니다:
+
+```rst
+.. lilypond::
+   :caption: 베토벤 '환희' 주제, 다장조(C 장조) 네 마디.
+   :alt: E, F, G로 시작해 점4분음표 E, 8분음표 D, 2분음표 D로 끝나는 네 마디 선율.
+
+   \fixed c' {
+     \clef treble
+     \key c \major
+     \time 4/4
+     e2 f4 g | g4 f e d | c2 d4 e | e4. d8 d2 |
+   }
+```
+
+![Guidedog으로 사보한 베토벤 '환희' 주제(다장조 네 마디)](.github/ode-to-joy.svg)
 
 내장 테마는 기본으로 시스템 테마를 따르며 밝은 테마와 어두운 테마도 선택할 수 있습니다. Guidedog 자체 문서 웹사이트는 기본으로 밝은 읽기용 에디션을 사용합니다. 웹사이트 첫 페이지와 저장소 개요는 브라우저 언어를 감지합니다. 저장된 선택이 우선하며, 특정 언어판이나 장으로 바로 연결되는 링크는 명시적 요청으로 그대로 따릅니다.
 
@@ -33,7 +48,7 @@ API 문서는 소스를 실행하지 않고 정적으로 읽어 들입니다. Py
 
 ## 설치
 
-각 [릴리스](https://github.com/insanai/guidedog/releases)는 Linux(x86-64 및 ARM64)와 macOS(Apple Silicon 및 Intel)용 압축 파일, 그리고 Windows x86-64용 ZIP을 제공합니다. 각 압축 파일에는 `guidedog` 실행 파일과 고지 사항이 들어 있습니다. GitHub Pages 게시, 정적 사이트 게시, 논의 기록 관리는 링크된 내장 플러그인으로 제공되며, `gd-graphdog`는 Graphviz를 라이브러리로 캡슐화합니다. Typst 컴파일러가 내장되어 있고, tree-sitter가 함께 컴파일되어 있으며, Graphviz가 정적으로 링크되어 있으므로 별도로 설치할 것이 없습니다. Windows ZIP에는 Graphviz DLL이 함께 들어 있으므로 압축을 푼 폴더 전체를 한곳에 유지하세요. Linux는 glibc 2.35 이상, macOS는 버전 12 이상이 필요합니다. 시스템에 맞는 압축 파일과 `SHA256SUMS`를 내려받은 뒤 체크섬을 확인하고 설치합니다:
+각 [릴리스](https://github.com/insanai/guidedog/releases)는 Linux(x86-64 및 ARM64)와 macOS(Apple Silicon 및 Intel)용 압축 파일, 그리고 Windows x86-64용 ZIP을 제공합니다. 각 압축 파일에는 `guidedog` 실행 파일과 고지 사항이 들어 있습니다. GitHub Pages 게시, 정적 사이트 게시, 논의 기록 관리는 링크된 내장 플러그인으로 제공되며, `gd-graphdog`은 Graphviz를 라이브러리로 캡슐화합니다. Typst 컴파일러와 Bravura 1.482 악보 글꼴이 내장되어 있고, tree-sitter가 함께 컴파일되어 있으며, Graphviz가 정적으로 링크되어 있으므로 별도로 설치할 것이 없습니다. Windows ZIP에는 Graphviz DLL이 함께 들어 있으므로 압축을 푼 폴더 전체를 한곳에 유지하세요. Linux는 glibc 2.35 이상, macOS는 버전 12 이상이 필요합니다. 시스템에 맞는 압축 파일과 `SHA256SUMS`를 내려받은 뒤 체크섬을 확인하고 설치합니다:
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS에서는: shasum -a 256 -c --ignore-missing SHA256SUMS
@@ -65,9 +80,13 @@ target/release/guidedog --version
 변경 사항을 보내기 전에 CI가 실행하는 검사를 수행하세요:
 
 ```sh
-cargo test --workspace
-cargo clippy --workspace --all-targets
+cargo fmt --all --check
 cargo run -p check              # 소스 제한: 함수와 파일 길이, 줄 너비
+cargo xtask tables --check      # 생성된 유니코드, 엔티티, SMuFL 테이블
+cargo xtask check-music-font    # 고정된 Bravura 1.482 글꼴과 메타데이터
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
+cargo xtask fetch-fonts --music && cargo run -p music-check
 ```
 
 릴리스 절차는 [RELEASING.md](RELEASING.md)에 설명되어 있습니다.
@@ -117,7 +136,7 @@ guidedog dsc build
 
 카탈로그의 `discussion.toml`은 수명 주기 상태, 기록 유형, 번호 매기기 규칙을 설정하며, `guidedog dsc config`로 이를 출력할 수 있습니다. 이 명령들은 모든 `guidedog`에 링크된 논의 플러그인이 제공하므로 별도로 설치할 것이 없습니다. Guidedog 자체의 `docs/gds`도 이러한 카탈로그 중 하나이며, 해당 폴더에서 `guidedog dsc check`를 실행합니다. 자세한 내용은 [논의 카탈로그 관리하기](docs/manual/howto/discussions.rst)를 참고하세요.
 
-`gd-graphdog`는 Graphviz를 캡슐화한 라이브러리입니다. Guidedog은 프로세스 내에서 문서 다이어그램을 렌더링할 때 이 라이브러리를 사용하며, 별도의 CLI는 아닙니다.
+`gd-graphdog`은 Graphviz를 캡슐화한 라이브러리입니다. Guidedog은 프로세스 내에서 문서 다이어그램을 렌더링할 때 이 라이브러리를 사용하며, 별도의 CLI는 아닙니다.
 
 ## 정적 사이트 게시
 
@@ -131,7 +150,7 @@ guidedog ssg publish posts/2026-04-17-zero-copy.rst
 guidedog ssg build site
 ```
 
-`:pdf: article`이 표시된 페이지는 HTML 페이지와 함께 인쇄 품질의 독립 실행형 PDF로도 빌드됩니다. 다중 프로젝트 웹사이트는 `[[site.mounts]]`를 통해 하위 프로젝트(`docs/site`, `docs/manual`, `docs/gds` 등)를 선언적으로 마운트하며, `docs/api`는 독립 실행형 레퍼런스 프로젝트이자 매뉴얼 PDF의 부록으로 빌드됩니다. 자세한 내용은 [정적 사이트 게시](docs/manual/howto/static-publishing.rst)를 참고하세요.
+`:pdf: article`이 표시된 페이지는 HTML 페이지와 함께 인쇄 품질의 독립형 PDF로도 빌드됩니다. 다중 프로젝트 웹사이트는 `[[site.mounts]]`를 통해 하위 프로젝트(`docs/site`, `docs/manual`, `docs/gds` 등)를 선언적으로 마운트하며, `docs/api`는 독립형 레퍼런스 프로젝트이자 매뉴얼 PDF의 부록으로 빌드됩니다. 자세한 내용은 [정적 사이트 게시](docs/manual/howto/static-publishing.rst)를 참고하세요.
 
 ## 문서 읽기와 임베딩
 
@@ -150,6 +169,6 @@ guidedog ssg build site
 
 **Vikrant Rathore**가 만들고 **Ronak Rathore**와 **Kanak Rathore**가 도왔습니다. 이슈와 풀 리퀘스트를 통한 기여를 환영합니다. 문서의 기여자 표기에는 개인 이메일 주소 대신 이름이나 핸들을 사용하며, Git 신원 설정은 별도로 관리합니다.
 
-Sphinx와 Georg Brandl, Docutils와 David Goodger, Typst, Tree-sitter와 Max Brunsfeld, Graphviz, 그리고 Rust 프로젝트와 커뮤니티에 감사드립니다.
+Sphinx와 Georg Brandl, Docutils와 David Goodger, Typst, Steinberg Media Technologies와 Daniel Spreadbury(Bravura 및 SMuFL), Tree-sitter와 Max Brunsfeld, Graphviz, 그리고 Rust 프로젝트와 커뮤니티에 감사드립니다.
 
-Guidedog은 [GNU General Public License v3.0](COPYING)에 추가 허가를 더한 [GNU Lesser General Public License v3.0 이상](LICENSE)(LGPL-3.0-or-later)에 따라 배포됩니다. 다른 라이선스 조건이 필요하면 저자에게 문의하세요. [NOTICE](NOTICE)에는 저자에게 연락하는 방법과, Rust 크레이트 및 번들 글꼴처럼 자체 라이선스를 유지하는 서드파티 구성 요소 목록이 나와 있습니다. 추가 허가에 따라 Guidedog을 Graphviz와 링크하여 배포할 수 있으며, 자세한 내용은 [NOTICE](NOTICE)를 참고하세요.
+Guidedog은 [GNU General Public License v3.0](COPYING)에 추가 허가를 더한 [GNU Lesser General Public License v3.0 이상](LICENSE)(LGPL-3.0-or-later)에 따라 배포됩니다. 다른 라이선스 조건이 필요하면 저자에게 문의하세요. [NOTICE](NOTICE)에는 저자에게 연락하는 방법과, Rust 크레이트 및 번들 글꼴(SIL Open Font License 1.1에 따른 Bravura 포함)처럼 자체 라이선스를 유지하는 서드파티 구성 요소 목록이 나와 있습니다. 추가 허가에 따라 Guidedog을 Graphviz와 링크하여 배포할 수 있으며, 자세한 내용은 [NOTICE](NOTICE)를 참고하세요.

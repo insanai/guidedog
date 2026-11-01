@@ -4,7 +4,7 @@
 
 **一度書く。明快に伝える。Web と紙に届ける。**
 
-Guidedog は、同じ reStructuredText または Markdown ファイルから文書サイトと PDF の本を作ります。ひとつの原稿を管理し、Web と紙の読者に届けます。配布版には PDF の組版と図の描画を組み込んだ、ひとつの実行ファイル `guidedog` が含まれます。
+Guidedog は、同じ reStructuredText または Markdown ファイルから文書サイトと PDF の本を作ります。ひとつの原稿を管理し、Web と紙の読者に届けます。配布版には PDF の組版、図の描画、楽譜浄書を組み込んだ、ひとつの実行ファイル `guidedog` が含まれます。
 
 執筆の流れは Sphinx を参考にしています。ただし Guidedog は独立したシステムです。設定は宣言的な TOML、API 抽出は静的解析で行い、Python の設定や拡張を実行しません。Sphinx との完全互換は目標ではありません。
 
@@ -19,9 +19,24 @@ guidedog serve docs
 
 プロジェクトには `conf.toml`、`index.rst`、`_templates/`（`layout.html`、`book.typ`、`discussion.typ`、`article.typ`、`theme.typ`）、`_static/`（`guidedog.css`、`guidedog.js`、`typography.js`）があります。テンプレートや静的アセットは、手元で直接編集できる普通のファイルです。HTML にはナビゲーション、検索、コードの強調、図、数式、Knuth-Plass 段落組版があり、PDF には章、相互参照、図、索引、言語に応じた組版があります。CeTZ や Fletcher を含む Graphviz または Typst の作図ソースを RST や MyST に直接埋め込み、HTML と PDF 向けのアセットを自動生成できます。詳しくは[図の章](docs/manual/topics/diagrams.rst)を参照してください。
 
-ネイティブの `lilypond` ディレクティブで、五線、声部、歌詞、一般的な記号を含む LilyPond 記法を RST と MyST に直接埋め込みます。[楽譜の章](docs/manual/topics/music.rst)を参照してください。LilyPond プログラムを別途インストールせずに、HTML と PDF で SVG と PNG の図を使えます。
+ネイティブの `lilypond` ディレクティブで、譜表、1 譜表あたり最大 4 つの同時声部、歌詞、構造化された `\markup`、一般的な記号を含む LilyPond 記法を RST と MyST に直接埋め込めます。詳しくは[楽譜の章](docs/manual/topics/music.rst)を参照してください。LilyPond プログラムを別途インストールせずに、アウトライン化された Bravura の SVG・PNG 図版を HTML と複数システムにわたる PDF の本で使えます。
 
-組み込みテーマは既定でシステム設定に従い、明るいテーマと暗いテーマも選べます。Guidedog 自身のドキュメントサイトは既定で明るい読書版を使います。サイトの入口ページとリポジトリ概要ではブラウザーの言語に合わせます。保存した選択が優先され、特定の版や章への直接リンクは尊重されます。
+```rst
+.. lilypond::
+   :caption: ベートーヴェン「歓喜」の主題（ハ長調・4 小節）。
+   :alt: E、F、G で始まり、付点四分音符の E、八分音符の D、二分音符の D で終わる 4 小節の旋律。
+
+   \fixed c' {
+     \clef treble
+     \key c \major
+     \time 4/4
+     e2 f4 g | g4 f e d | c2 d4 e | e4. d8 d2 |
+   }
+```
+
+![Guidedog で浄書したベートーヴェン「歓喜」の主題（ハ長調・4 小節）](.github/ode-to-joy.svg)
+
+組み込みテーマは既定でシステム設定に従い、ライトとダークも選択できます。Guidedog 自身のドキュメントサイトでは読書向けのライト版を既定にしています。サイトのトップページとリポジトリ概要ではブラウザーの言語を自動検出します。保存済みの選択が優先され、特定の言語版や章への直接リンクは明示的な指定としてそのまま開かれます。
 
 ```sh
 guidedog convert notes.md --to pdf --output notes.pdf
@@ -33,7 +48,7 @@ API ドキュメントはソースコードを実行せずに読み取ります�
 
 ## インストール
 
-各[リリース](https://github.com/insanai/guidedog/releases)には、Linux（x86-64・ARM64）と macOS（Apple シリコン・Intel）向けのアーカイブ、および Windows x86-64 向けの ZIP が用意されています。各アーカイブには実行ファイル `guidedog` とライセンス表記が含まれます。GitHub Pages への公開、静的サイトの公開、議論の管理はリンク済みプラグインとして組み込まれており、`gd-graphdog` は Graphviz をライブラリとして内包しています。Typst コンパイラーの組み込み、tree-sitter のコンパイル時統合、Graphviz の静的リンクが済んでいるため、追加でインストールするものは何もありません。Windows 版 ZIP には Graphviz の DLL が同梱されているため、展開したフォルダー一式をそのまま同じ場所に置いて使います。Linux は glibc 2.35 以降、macOS はバージョン 12 以降が必要です。システムに合ったアーカイブと `SHA256SUMS` をダウンロードし、検証してインストールします。
+各[リリース](https://github.com/insanai/guidedog/releases)には、Linux（x86-64・ARM64）と macOS（Apple シリコン・Intel）向けのアーカイブ、および Windows x86-64 向けの ZIP が用意されています。各アーカイブには実行ファイル `guidedog` とライセンス表記が含まれます。GitHub Pages への公開、静的サイトの公開、議論の管理はリンク済みプラグインとして組み込まれており、`gd-graphdog` は Graphviz をライブラリとして内包しています。Typst コンパイラーと Bravura 1.482 音楽フォントの組み込み、tree-sitter のコンパイル時統合、Graphviz の静的リンクが済んでいるため、追加でインストールするものは何もありません。Windows 版 ZIP には Graphviz の DLL が同梱されているため、展開したフォルダー一式をそのまま同じ場所に置いて使います。Linux は glibc 2.35 以降、macOS はバージョン 12 以降が必要です。システムに合ったアーカイブと `SHA256SUMS` をダウンロードし、検証してインストールします。
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # macOS では: shasum -a 256 -c --ignore-missing SHA256SUMS
@@ -65,9 +80,13 @@ target/release/guidedog --version
 変更を送る前に、CI と同じチェックを実行してください。
 
 ```sh
-cargo test --workspace
-cargo clippy --workspace --all-targets
+cargo fmt --all --check
 cargo run -p check              # ソースの制限: 関数とファイルの長さ、行幅
+cargo xtask tables --check      # 自動生成された Unicode・実体参照・SMuFL テーブル
+cargo xtask check-music-font    # 固定された Bravura 1.482 フォントとメタデータ
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
+cargo xtask fetch-fonts --music && cargo run -p music-check
 ```
 
 リリースの手順は [RELEASING.md](RELEASING.md) に記載しています。
@@ -84,7 +103,7 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
     -D language=de -D 'html_extra_path=[]' -W
 ```
 
-PO ファイルの `msgstr` を翻訳し、内容を確認します。Guidedog は POT 抽出、カタログのマージ、進捗表示、各言語版のビルドを行いますが、翻訳文を自動生成することはありません。コマンド、パス、コード、API 名、参照ターゲットはそのまま維持します。翻訳対象はウェブサイトの入口ページ、マニュアル、リポジトリ概要で、API リファレンスと GDS は英語のままです。`cargo xtask build-site` は、すべての言語版とその PDF の本、および議論の記録をウェブサイトにまとめます。
+PO ファイルの `msgstr` を翻訳し、内容を確認します。Guidedog は POT 抽出、カタログのマージ、進捗表示、各言語版のビルドを行いますが、翻訳文を自動生成することはありません。コマンド、パス、コード、API 名、参照ターゲットはそのまま維持します。翻訳対象はウェブサイトのトップページ、マニュアル、リポジトリ概要で、API リファレンスと GDS は英語のままです。`cargo xtask build-site` は、すべての言語版とその PDF の本、および議論の記録をウェブサイトにまとめます。
 
 GitHub 上では冒頭のリンクから README の言語を選べます。言語の自動選択は生成された文書サイト側で行われます。
 
@@ -115,7 +134,7 @@ guidedog dsc state 1 --to=accepted --reason="Review converged"
 guidedog dsc build
 ```
 
-カタログの `discussion.toml` でライフサイクルの状態、記録の種類、番号付けを設定し、`guidedog dsc config` でその内容を表示できます。これらのコマンドはすべての `guidedog` にリンクされている議論プラグインが提供するため、追加でインストールするものは何もありません。Guidedog 自身の `docs/gds` もそうしたカタログの一つで、そのフォルダーで `guidedog dsc check` を実行しています。[議論カタログの管理](docs/manual/howto/discussions.rst)を参照してください。
+カタログの `discussion.toml` でライフサイクルの状態、記録の種類、番号付けを設定し、`guidedog dsc config` でその内容を表示できます。これらのコマンドはすべての `guidedog` にリンクされている議論プラグインが提供するため、追加でインストールするものは何もありません。Guidedog 自身の `docs/gds` もそうしたカタログの一つで、そのフォルダーで `guidedog dsc check` を実行できます。詳しくは[議論カタログの管理](docs/manual/howto/discussions.rst)を参照してください。
 
 `gd-graphdog` は Graphviz を内包するライブラリです。Guidedog はこれを使ってプロセス内でドキュメントの図を描画しており、独立した CLI ではありません。
 
@@ -131,7 +150,7 @@ guidedog ssg publish posts/2026-04-17-zero-copy.rst
 guidedog ssg build site
 ```
 
-`:pdf: article` を指定したページは、HTML ページと並んで印刷品質の単体 PDF も生成されます。マルチプロジェクトのウェブサイトでは、`[[site.mounts]]` を使ってサブプロジェクト（`docs/site`、`docs/manual`、`docs/gds` など）を宣言的にマウントできます。`docs/api` は独立したリファレンスプロジェクトおよびマニュアル PDF の付録としてビルドされます。[静的サイトの公開](docs/manual/howto/static-publishing.rst)を参照してください。
+`:pdf: article` を指定したページでは、HTML ページとあわせて印刷品質の単体 PDF も生成されます。マルチプロジェクトのウェブサイトでは、`[[site.mounts]]` を使ってサブプロジェクト（`docs/site`、`docs/manual`、`docs/gds` など）を宣言的にマウントできます。`docs/api` は独立したリファレンスプロジェクトおよびマニュアル PDF の付録としてビルドされます。詳しくは[静的サイトの公開](docs/manual/howto/static-publishing.rst)を参照してください。
 
 ## 読む・組み込む
 
@@ -150,6 +169,6 @@ guidedog ssg build site
 
 **Vikrant Rathore** が制作し、**Ronak Rathore** と **Kanak Rathore** が開発を支援しました。Issue や Pull Request による貢献を歓迎します。ドキュメントのクレジット表記には名前またはハンドルネームを使用し、個人のメールアドレスは記載しません。Git の識別情報は別途管理されます。
 
-Sphinx と Georg Brandl、Docutils と David Goodger、Typst、Tree-sitter と Max Brunsfeld、Graphviz、そして Rust プロジェクトとそのコミュニティに感謝します。
+Sphinx と Georg Brandl、Docutils と David Goodger、Typst、Steinberg Media Technologies と Daniel Spreadbury（Bravura および SMuFL）、Tree-sitter と Max Brunsfeld、Graphviz、そして Rust プロジェクトとそのコミュニティに感謝します。
 
-Guidedog は [GNU Lesser General Public License v3.0 以降](LICENSE)（LGPL-3.0-or-later）のもとで公開されています。LGPL は [GNU General Public License v3.0](COPYING) に追加の許可を与えたものです。その他のライセンス条件については作者にお問い合わせください。連絡方法と、Rust クレートや同梱フォントなど独自のライセンスが維持されるサードパーティ製コンポーネントの一覧は [NOTICE](NOTICE) に記載されています。また、追加の許可により、Guidedog を Graphviz とリンクして配布することが認められています。詳しくは [NOTICE](NOTICE) をご覧ください。
+Guidedog は [GNU Lesser General Public License v3.0 以降](LICENSE)（LGPL-3.0-or-later）のもとで公開されています。LGPL は [GNU General Public License v3.0](COPYING) に追加の許可を与えたものです。その他のライセンス条件については作者にお問い合わせください。連絡方法と、Rust クレートや同梱フォント（SIL Open Font License 1.1 のもとで提供される Bravura を含む）など独自のライセンスが維持されるサードパーティ製コンポーネントの一覧は [NOTICE](NOTICE) に記載されています。また、追加の許可により、Guidedog を Graphviz とリンクして配布することが認められています。詳しくは [NOTICE](NOTICE) をご覧ください。

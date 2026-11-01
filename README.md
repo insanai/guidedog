@@ -4,7 +4,7 @@
 
 **Write once. Explain well. Publish on the web and on paper.**
 
-Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one `guidedog` executable, with PDF typesetting and diagram rendering included.
+Guidedog builds a documentation website and a PDF book from the same reStructuredText or Markdown files. We keep one set of source files and publish it for readers on the web and on paper. The release provides one `guidedog` executable, with PDF typesetting, diagram rendering, and music engraving included.
 
 Sphinx inspires the authoring workflow. Guidedog is an independent system: configuration is declarative TOML, API extraction is static, and Python configuration and extensions are never executed. Complete Sphinx compatibility is not a goal.
 
@@ -19,7 +19,22 @@ guidedog serve docs
 
 The project contains `conf.toml`, `index.rst`, `_templates/` (`layout.html`, `book.typ`, `discussion.typ`, `article.typ`, and `theme.typ`), and `_static/` (`guidedog.css`, `guidedog.js`, and `typography.js`). Templates and static assets are ordinary files that we can edit locally. HTML provides navigation, search, code highlighting, diagrams, equations, and Knuth-Plass paragraph typesetting. PDF books provide chapters, cross-references, figures, indexes, and language-aware typesetting. We can embed Graphviz or Typst drawing source, including CeTZ and Fletcher, directly in RST and MyST with automatic HTML and PDF assets; see the [diagrams chapter](docs/manual/topics/diagrams.rst).
 
-We embed LilyPond notation directly in RST and MyST with the native `lilypond` directive, including staves, voices, lyrics and common markings; see the [music chapter](docs/manual/topics/music.rst). SVG and PNG figures work in HTML and PDF without an installed LilyPond program.
+We embed LilyPond notation directly in RST and MyST with the native `lilypond` directive, including staves, up to four simultaneous voices per staff, lyrics, structured `\markup`, and common markings; see the [music chapter](docs/manual/topics/music.rst). Outlined Bravura SVG and PNG figures work in HTML and multi-system PDF books without an installed LilyPond program:
+
+```rst
+.. lilypond::
+   :caption: Beethoven's Joy theme, four bars in C major.
+   :alt: A four-bar melody beginning E, F, G and ending with dotted-quarter E, eighth-note D and half-note D.
+
+   \fixed c' {
+     \clef treble
+     \key c \major
+     \time 4/4
+     e2 f4 g | g4 f e d | c2 d4 e | e4. d8 d2 |
+   }
+```
+
+![Beethoven's Joy theme, four bars in C major, engraved by Guidedog](.github/ode-to-joy.svg)
 
 The built-in theme follows the system theme by default, with light and dark choices; Guidedog's own documentation website defaults to the light reading edition. The website detects the browser language on its landing page and repository overview. A saved choice takes precedence; direct links to an edition or chapter remain explicit requests.
 
@@ -33,7 +48,7 @@ API documentation is read from source without running it: Python (`autodoc`), Od
 
 ## Install
 
-Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64) and macOS (Apple silicon and Intel), plus a Windows x86-64 ZIP. Each archive contains the `guidedog` executable and its notices. GitHub Pages publishing, static site publishing, and discussions are linked plugins; `gd-graphdog` encapsulates Graphviz as a library. The Typst compiler is embedded, tree-sitter is compiled in, and Graphviz is linked statically, so nothing else needs to be installed. The Windows ZIP bundles Graphviz DLLs; we keep the whole extracted folder together. Linux needs glibc 2.35 or later; macOS needs version 12 or later. We download the archive for our system and `SHA256SUMS`, then check and install it:
+Each [release](https://github.com/insanai/guidedog/releases) has an archive for Linux (x86-64 and ARM64) and macOS (Apple silicon and Intel), plus a Windows x86-64 ZIP. Each archive contains the `guidedog` executable and its notices. GitHub Pages publishing, static site publishing, and discussions are linked plugins; `gd-graphdog` encapsulates Graphviz as a library. The Typst compiler and Bravura 1.482 music font are embedded, tree-sitter is compiled in, and Graphviz is linked statically, so nothing else needs to be installed. The Windows ZIP bundles Graphviz DLLs; we keep the whole extracted folder together. Linux needs glibc 2.35 or later; macOS needs version 12 or later. We download the archive for our system and `SHA256SUMS`, then check and install it:
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # on macOS: shasum -a 256 -c --ignore-missing SHA256SUMS
@@ -65,9 +80,13 @@ The executable is in `target/release`. On macOS with Homebrew, point the linker 
 Before sending a change, run what CI runs:
 
 ```sh
-cargo test --workspace
-cargo clippy --workspace --all-targets
+cargo fmt --all --check
 cargo run -p check              # source limits: function and file length, line width
+cargo xtask tables --check      # generated Unicode, entity and SMuFL tables
+cargo xtask check-music-font    # pinned Bravura 1.482 font and metadata
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
+cargo xtask fetch-fonts --music && cargo run -p music-check
 ```
 
 [RELEASING.md](RELEASING.md) describes the release workflow.
@@ -150,6 +169,6 @@ Each crate under `crates/` has a short README with its API and its design decisi
 
 Created by **Vikrant Rathore**, with assistance from **Ronak Rathore** and **Kanak Rathore**. Contributions are welcome through issues and pull requests. Documentation credits use names or handles, not personal email addresses; Git identity settings are managed separately.
 
-Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Tree-sitter and Max Brunsfeld, Graphviz, and the Rust project and its community.
+Thanks to Sphinx and Georg Brandl, Docutils and David Goodger, Typst, Steinberg Media Technologies and Daniel Spreadbury (Bravura and SMuFL), Tree-sitter and Max Brunsfeld, Graphviz, and the Rust project and its community.
 
-Guidedog is released under the [GNU Lesser General Public License v3.0 or later](LICENSE) (LGPL-3.0-or-later), which adds permissions to the [GNU General Public License v3.0](COPYING). For other licensing terms, contact the authors. [NOTICE](NOTICE) says how to reach them and lists the third-party components, such as the Rust crates and the bundled fonts, that keep their own licenses. An additional permission allows Guidedog to be linked and distributed with Graphviz; see [NOTICE](NOTICE).
+Guidedog is released under the [GNU Lesser General Public License v3.0 or later](LICENSE) (LGPL-3.0-or-later), which adds permissions to the [GNU General Public License v3.0](COPYING). For other licensing terms, contact the authors. [NOTICE](NOTICE) says how to reach them and lists the third-party components, such as the Rust crates and the bundled fonts (including Bravura under the SIL Open Font License 1.1), that keep their own licenses. An additional permission allows Guidedog to be linked and distributed with Graphviz; see [NOTICE](NOTICE).

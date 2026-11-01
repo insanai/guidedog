@@ -4,7 +4,7 @@
 
 **Einmal schreiben. Klar erklären. Im Web und auf Papier veröffentlichen.**
 
-Guidedog erstellt eine Dokumentationswebsite und ein PDF-Buch aus denselben reStructuredText- oder Markdown-Dateien. Wir pflegen die Quelldateien an einer Stelle und veröffentlichen sie für Leser im Web und auf Papier. Jedes Release stellt eine einzige ausführbare Datei bereit, `guidedog`, in der PDF-Satz und Diagrammdarstellung bereits enthalten sind.
+Guidedog erstellt eine Dokumentationswebsite und ein PDF-Buch aus denselben reStructuredText- oder Markdown-Dateien. Wir pflegen die Quelldateien an einer Stelle und veröffentlichen sie für Leser im Web und auf Papier. Jedes Release stellt eine einzige ausführbare Datei bereit, `guidedog`, in der PDF-Satz, Diagrammdarstellung und Notensatz bereits enthalten sind.
 
 Sphinx dient als Vorbild für den Schreibablauf. Guidedog ist ein eigenständiges System: Die Konfiguration erfolgt deklarativ in TOML, die API-Analyse arbeitet statisch, und Python-Konfigurationen oder -Erweiterungen werden niemals ausgeführt. Vollständige Sphinx-Kompatibilität ist kein Ziel.
 
@@ -19,9 +19,24 @@ guidedog serve docs
 
 Das Projekt enthält `conf.toml`, `index.rst`, `_templates/` (`layout.html`, `book.typ`, `discussion.typ`, `article.typ` und `theme.typ`) sowie `_static/` (`guidedog.css`, `guidedog.js` und `typography.js`). Vorlagen und statische Assets sind gewöhnliche Dateien, die wir lokal bearbeiten können. HTML bietet Navigation, Suche, Syntaxhervorhebung, Diagramme, Gleichungen und Knuth-Plass-Absatzsatz. PDF-Bücher bieten Kapitel, Querverweise, Abbildungen, Register und sprachgerechten Satz. Wir können Graphviz- oder Typst-Zeichnungsquelltext – einschließlich CeTZ und Fletcher – direkt in RST und MyST einbetten, wobei Assets für HTML und PDF automatisch erzeugt werden; siehe das [Diagrammkapitel](docs/manual/topics/diagrams.rst).
 
-Wir betten LilyPond-Notation mit der nativen Direktive `lilypond` direkt in RST und MyST ein, einschließlich Notensystemen, Stimmen, Liedtexten und üblichen Zeichen; siehe das [Musikkapitel](docs/manual/topics/music.rst). SVG- und PNG-Abbildungen funktionieren in HTML und PDF ohne installiertes LilyPond-Programm.
+Wir betten LilyPond-Notation mit der nativen Direktive `lilypond` direkt in RST und MyST ein, einschließlich Notensystemen, bis zu vier gleichzeitigen Stimmen pro Notensystem, Liedtexten, strukturiertem `\markup` und gängigen Vortragszeichen; siehe das [Musikkapitel](docs/manual/topics/music.rst). Als Konturpfade gesetzte Bravura-SVG- und -PNG-Abbildungen funktionieren in HTML sowie in PDF-Büchern mit mehrsystemigem Notensatz ohne installiertes LilyPond-Programm:
 
-Das eingebaute Design folgt standardmäßig der Systemeinstellung und bietet zusätzlich eine helle und eine dunkle Ansicht; Guidedogs eigene Dokumentationswebsite startet standardmäßig in der hellen Leseausgabe. Die Einstiegsseite der Website und die Repositoryübersicht erkennen die Browsersprache automatisch. Eine gespeicherte Auswahl hat Vorrang; direkte Links zu einer Sprachausgabe oder einem Kapitel bleiben ausdrückliche Anforderungen.
+```rst
+.. lilypond::
+   :caption: Beethovens Freudenthema, vier Takte in C-Dur.
+   :alt: Eine viertaktige Melodie mit E, F, G am Anfang und punktierter Viertelnote E, Achtelnote D und halber Note D am Ende.
+
+   \fixed c' {
+     \clef treble
+     \key c \major
+     \time 4/4
+     e2 f4 g | g4 f e d | c2 d4 e | e4. d8 d2 |
+   }
+```
+
+![Beethovens Freudenthema, vier Takte in C-Dur, gesetzt mit Guidedog](.github/ode-to-joy.svg)
+
+Das eingebaute Design folgt standardmäßig der Systemeinstellung und bietet zusätzlich eine helle und eine dunkle Ansicht; Guidedogs eigene Dokumentationswebsite startet standardmäßig in der hellen Leseausgabe. Die Einstiegsseite der Website und die Repository-Übersicht erkennen die Browsersprache automatisch. Eine gespeicherte Auswahl hat Vorrang; direkte Links zu einer Sprachausgabe oder einem Kapitel gelten weiterhin als ausdrücklicher Wunsch.
 
 ```sh
 guidedog convert notes.md --to pdf --output notes.pdf
@@ -33,7 +48,7 @@ API-Dokumentation wird aus dem Quellcode gelesen, ohne ihn auszuführen: Python 
 
 ## Installieren
 
-Jedes [Release](https://github.com/insanai/guidedog/releases) bietet ein Archiv für Linux (x86-64 und ARM64) und macOS (Apple Silicon und Intel) sowie ein ZIP-Archiv für Windows (x86-64). Jedes Archiv enthält die ausführbare Datei `guidedog` samt Lizenzhinweisen. Die Veröffentlichung auf GitHub Pages, die Veröffentlichung statischer Websites und die Diskussionsverwaltung sind fest eingebundene Plugins; `gd-graphdog` kapselt Graphviz als Bibliothek. Der Typst-Compiler ist eingebettet, tree-sitter ist einkompiliert und Graphviz ist statisch gelinkt – es muss also nichts weiter installiert werden. Das Windows-ZIP enthält die benötigten Graphviz-DLLs; wir belassen den gesamten entpackten Ordner zusammen. Linux erfordert glibc 2.35 oder neuer, macOS Version 12 oder neuer. Wir laden das Archiv für unser System sowie `SHA256SUMS` herunter, prüfen die Prüfsumme und installieren das Programm:
+Jedes [Release](https://github.com/insanai/guidedog/releases) bietet ein Archiv für Linux (x86-64 und ARM64) und macOS (Apple Silicon und Intel) sowie ein ZIP-Archiv für Windows (x86-64). Jedes Archiv enthält die ausführbare Datei `guidedog` samt Lizenzhinweisen. Die Veröffentlichung auf GitHub Pages, die Veröffentlichung statischer Websites und die Diskussionsverwaltung sind fest eingebundene Plugins; `gd-graphdog` kapselt Graphviz als Bibliothek. Der Typst-Compiler und die Notenschrift Bravura 1.482 sind eingebettet, tree-sitter ist einkompiliert und Graphviz ist statisch gelinkt – es muss also nichts weiter installiert werden. Das Windows-ZIP enthält die benötigten Graphviz-DLLs; wir belassen den gesamten entpackten Ordner zusammen. Linux erfordert glibc 2.35 oder neuer, macOS Version 12 oder neuer. Wir laden das Archiv für unser System sowie `SHA256SUMS` herunter, prüfen die Prüfsumme und installieren das Programm:
 
 ```sh
 sha256sum -c --ignore-missing SHA256SUMS      # unter macOS: shasum -a 256 -c --ignore-missing SHA256SUMS
@@ -53,7 +68,7 @@ Die ausführbare Datei ist nicht codesigniert: Unter macOS entfernen wir die Qua
 
 ## Aus dem Quellcode bauen
 
-Installieren Sie Rust 1.99 oder neuer (mit [rustup](https://rustup.rs)), einen C-Compiler (die Grammatiken von tree-sitter sind in C geschrieben) sowie die Entwicklungsdateien von Graphviz: `libgraphviz-dev` unter Debian und Ubuntu, `graphviz-devel` unter Fedora, `graphviz` aus Homebrew unter macOS. (Alternativ lässt sich Graphviz wie in den Releases statisch bauen: `cargo xtask graphviz` und anschließend mit `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0` kompilieren; die Programme benötigen dann zur Laufzeit kein installiertes Graphviz.) Bauen Sie anschließend den Workspace:
+Wir installieren Rust 1.99 oder neuer (mit [rustup](https://rustup.rs)), einen C-Compiler (die Grammatiken von tree-sitter sind in C geschrieben) sowie die Entwicklungsdateien von Graphviz: `libgraphviz-dev` unter Debian und Ubuntu, `graphviz-devel` unter Fedora, `graphviz` aus Homebrew unter macOS. (Alternativ lässt sich Graphviz wie in den Releases statisch bauen: `cargo xtask graphviz` und anschließend mit `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0` kompilieren; die Programme benötigen dann zur Laufzeit kein installiertes Graphviz.) Anschließend bauen wir den Workspace:
 
 ```sh
 cargo build --release -p guidedog-cmd
@@ -62,12 +77,16 @@ target/release/guidedog --version
 
 Die ausführbare Datei liegt unter `target/release`. Unter macOS mit Homebrew weisen wir dem Linker zuerst den Pfad zu Graphviz zu: `export LIBRARY_PATH="$(brew --prefix graphviz)/lib"`. Der Typst-Compiler ist standardmäßig eingebettet (das Feature `embedded` von `gd-typst`); ohne dieses Feature ruft Guidedog für PDF-Bücher ein installiertes `typst` 0.15.1 auf, während `.. typst-diagram::` und `.. lilypond::` mit `:format: png` den eingebetteten Compiler erfordern. Unter Linux linkt der Paket-Downloader des eingebetteten Compilers ein mitgeliefertes OpenSSL, das zum Kompilieren `perl` und `make` benötigt.
 
-Führen Sie vor dem Einreichen einer Änderung dieselben Prüfungen wie die CI aus:
+Vor dem Einreichen einer Änderung führen wir dieselben Prüfungen wie die CI aus:
 
 ```sh
-cargo test --workspace
-cargo clippy --workspace --all-targets
+cargo fmt --all --check
 cargo run -p check              # Quellcodegrenzen: Funktions- und Dateilänge, Zeilenbreite
+cargo xtask tables --check      # generierte Unicode-, Entitäts- und SMuFL-Tabellen
+cargo xtask check-music-font    # fixierte Schrift Bravura 1.482 und Metadaten
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
+cargo xtask fetch-fonts --music && cargo run -p music-check
 ```
 
 [RELEASING.md](RELEASING.md) beschreibt den Release-Ablauf.
@@ -84,7 +103,7 @@ guidedog build -b html docs/manual docs/manual/_editions/de \
     -D language=de -D 'html_extra_path=[]' -W
 ```
 
-Übersetzen und prüfen Sie die `msgstr`-Einträge in den PO-Dateien. Guidedog extrahiert POT-Dateien, führt Kataloge zusammen, berichtet über den Fortschritt und baut jede Sprachausgabe. Eigene Übersetzungen erfindet es nicht. Befehle, Pfade, Code, API-Namen und Verweisziele bleiben unverändert. Übersetzt werden die Einstiegsseite der Website, das Handbuch und die Repositoryübersicht; API-Referenz und GDS bleiben auf Englisch. `cargo xtask build-site` fügt alle Sprachausgaben, ihre PDF-Bücher und die Diskussionen zur Gesamtwebsite zusammen.
+Wir übersetzen und prüfen die `msgstr`-Einträge in den PO-Dateien. Guidedog extrahiert POT-Dateien, führt Kataloge zusammen, berichtet über den Fortschritt und baut jede Sprachausgabe. Eigene Übersetzungen erfindet es nicht. Befehle, Pfade, Code, API-Namen und Verweisziele bleiben unverändert. Übersetzt werden die Einstiegsseite der Website, das Handbuch und die Repository-Übersicht; API-Referenz und GDS bleiben auf Englisch. `cargo xtask build-site` fügt alle Sprachausgaben, ihre PDF-Bücher und die Diskussionen zur Gesamtwebsite zusammen.
 
 Auf GitHub wählen Leser die Sprache der README über die Links ganz oben. Die automatische Spracherkennung gehört zur erzeugten Dokumentationswebsite.
 
@@ -100,7 +119,7 @@ guidedog pages workflow --write
 
 Für die skriptgesteuerte Einrichtung nutzen wir `guidedog pages init`, `auth import`, `bind` und `setup`. Mit dem generierten Workflow kann GitHub Actions die Website nach jedem Push automatisch bauen und bereitstellen. Siehe [Auf GitHub Pages veröffentlichen](docs/manual/howto/github-pages.rst).
 
-Build-Plugins transformieren Quelltext, vollständige HTML-Seiten und statische Assets über einen typisierten, versionierten Vertrag. Ein Plugin ist ein gewöhnliches Rust-Crate. Wir binden es mit `gd_cli::run_with` direkt in unser eigenes `guidedog` ein oder führen es als separates Programm aus, das `guidedog plugin register` über seinen SHA-256-Hash fixiert. Ein Plugin kann `guidedog` zudem um eigene Unterbefehle erweitern, die in `guidedog --help` aufgeführt werden. `guidedog publish --timeout=SECONDS` begrenzt jeden vollständigen Austausch mit einem Publisher (Standard: 300 Sekunden); wählen Sie einen Wert, der größer als `--wait` ist. Nach einem ungewissen Ausgang sollte vor einer erneuten Veröffentlichung die Wiederherstellung ausgeführt werden.
+Build-Plugins transformieren Quelltext, vollständige HTML-Seiten und statische Assets über einen typisierten, versionierten Vertrag. Ein Plugin ist ein gewöhnliches Rust-Crate. Wir binden es mit `gd_cli::run_with` direkt in unser eigenes `guidedog` ein oder führen es als separates Programm aus, das `guidedog plugin register` über seinen SHA-256-Hash fixiert. Ein Plugin kann `guidedog` zudem um eigene Unterbefehle erweitern, die in `guidedog --help` aufgeführt werden. `guidedog publish --timeout=SECONDS` begrenzt jeden vollständigen Austausch mit einem Publisher (Standard: 300 Sekunden); wir wählen einen Wert, der größer als `--wait` ist. Nach einem ungewissen Ausgang führen wir vor einer erneuten Veröffentlichung die Wiederherstellung aus.
 
 ## Diskussionen führen
 
@@ -150,6 +169,6 @@ Jedes Crate unter `crates/` enthält ein kurzes README zu seiner API und seinen 
 
 Erstellt von **Vikrant Rathore**, unter Mitwirkung von **Ronak Rathore** und **Kanak Rathore**. Beiträge über Issues und Pull Requests sind willkommen. Namensnennungen in der Dokumentation verwenden Namen oder Handles, keine persönlichen E-Mail-Adressen; Git-Identitätseinstellungen werden separat verwaltet.
 
-Dank gilt Sphinx und Georg Brandl, Docutils und David Goodger, Typst, Tree-sitter und Max Brunsfeld, Graphviz sowie dem Rust-Projekt und seiner Community.
+Dank gilt Sphinx und Georg Brandl, Docutils und David Goodger, Typst, Steinberg Media Technologies und Daniel Spreadbury (Bravura und SMuFL), Tree-sitter und Max Brunsfeld, Graphviz sowie dem Rust-Projekt und seiner Community.
 
-Guidedog wird unter der [GNU Lesser General Public License v3.0 oder neuer](LICENSE) (LGPL-3.0-or-later) veröffentlicht, die die [GNU General Public License v3.0](COPYING) um zusätzliche Berechtigungen ergänzt. Für andere Lizenzbedingungen wenden Sie sich bitte an die Autoren. [NOTICE](NOTICE) beschreibt, wie Sie die Autoren erreichen, und führt die Drittanbieterkomponenten auf – etwa die Rust-Crates und die mitgelieferten Schriftarten –, die unter ihren eigenen Lizenzen verbleiben. Eine zusätzliche Genehmigung gestattet es, Guidedog zusammen mit Graphviz zu linken und weiterzugeben; siehe [NOTICE](NOTICE).
+Guidedog wird unter der [GNU Lesser General Public License v3.0 oder neuer](LICENSE) (LGPL-3.0-or-later) veröffentlicht, die die [GNU General Public License v3.0](COPYING) um zusätzliche Berechtigungen ergänzt. Andere Lizenzbedingungen sind bei den Autoren erhältlich. [NOTICE](NOTICE) beschreibt die Kontaktmöglichkeiten und führt die Drittanbieterkomponenten auf – etwa die Rust-Crates und die mitgelieferten Schriftarten (darunter Bravura unter der SIL Open Font License 1.1) –, die unter ihren eigenen Lizenzen verbleiben. Eine zusätzliche Genehmigung gestattet es, Guidedog zusammen mit Graphviz zu linken und weiterzugeben; siehe [NOTICE](NOTICE).

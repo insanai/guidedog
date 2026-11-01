@@ -25,7 +25,7 @@ impl MusicSource {
                 (false, false) => options.regular.push(data),
                 (true, false) => options.bold.push(data),
                 (false, true) => options.italic.push(data),
-                (true, true) => {}
+                (true, true) => options.bold_italic.push(data),
             }
         }
         MusicFonts { loaded: gd_engrave::load_fonts(&options) }

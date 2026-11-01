@@ -288,10 +288,13 @@ impl Rule for Page<'_> {
                 if crate::mounts::is_mount(doc, id) { Action::Replace } else { Action::Copy }
             }
             NodeKind::CodeBlock
-                if format != OutputFormat::Text
+                if (format != OutputFormat::Text
                     && (graph::is_graph(self, doc, id)
                         || flag(doc, id, "typst-diagram")
-                        || flag(doc, id, "lilypond")) =>
+                        || flag(doc, id, "lilypond")))
+                    || (format == OutputFormat::Text
+                        && flag(doc, id, "lilypond")
+                        && doc.custom_attribute(id, "lilypond-file").is_some()) =>
             {
                 Action::Replace
             }

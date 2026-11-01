@@ -16,7 +16,7 @@ pub(crate) const OPTIONS: &[OptSpec] = &[
     opt("name", OptType::Text),
     opt("class", OptType::Class),
     choice("format", "svg png"),
-    opt("staff-size", OptType::TextRequired),
+    opt("staff-size", OptType::Length),
     opt("width", OptType::LengthPercent),
     choice("justify", "auto all none"),
 ];

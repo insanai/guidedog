@@ -298,11 +298,22 @@ fn target_answer(view: &BuildView<'_>, target: Option<&TargetRef>, d: &mut Diges
 /// Recheck source confinement before hashing a previously observed compiler input.
 fn file_content_answer(view: &BuildView<'_>, path: &Path, d: &mut Digester) {
     // A source symlink may have been retargeted since compilation. Never read its
-    // new bytes outside the diagram's source root while checking a trace.
-    let confined = !path.starts_with(&view.config.source_dir)
-        || path.canonicalize().ok().is_some_and(|real| {
+    // new bytes outside the build's readable roots while checking a trace.
+    let under_source = path.starts_with(&view.config.source_dir)
+        || view
+            .config
+            .include_roots
+            .iter()
+            .any(|root| path.starts_with(view.config.source_dir.join(root)));
+    let confined = if !under_source {
+        true
+    } else if !view.roots.is_empty() {
+        gd_host::confined(view.roots, path)
+    } else {
+        path.canonicalize().ok().is_some_and(|real| {
             view.config.source_dir.canonicalize().ok().is_some_and(|root| real.starts_with(root))
-        });
+        })
+    };
     match confined.then(|| gd_env::file_digest(path)).flatten() {
         Some(digest) => d.flag(true).digest(&digest),
         None => d.flag(false),

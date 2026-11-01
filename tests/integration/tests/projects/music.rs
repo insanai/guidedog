@@ -24,15 +24,18 @@ fn rst_and_myst_music_render_in_html_and_real_pdf() {
         "index.rst",
         concat!(
             "Music\n=====\n\n.. toctree::\n\n   other\n\n.. lilypond::\n",
-            "   :caption: A *melody*\n   :name: melody\n   :alt: Four notes\n\n",
-            "   \\relative c' { \\time 4/4 c4 d e f | }\n\nSee :numref:`melody`.\n"
+            "   :caption: A *melody*\n   :name: melody\n   :alt: Four notes\n",
+            "   :align: left\n\n",
+            "   \\relative c' { \\time 4/4 c4 d e f | g4 a b c | d4 c b a | g2 c,2 | }\n\n",
+            "See :numref:`melody`.\n"
         ),
     );
     dir.write(
         "other.md",
         concat!(
             "# Other\n\n```{lilypond}\n:format: png\n\n",
-            "\\relative c' { c4 d e f | }\n```\n"
+            "\\relative c' { c4 d e f | g4 a b c | d4 c b a | g2 c,2 | }\n```\n\n",
+            "```{lilypond}\n\n\\relative c' { c1 | }\n```\n"
         ),
     );
     build(&dir.path, 0, &["html", "-n", "-W"]);
@@ -48,10 +51,13 @@ fn rst_and_myst_music_render_in_html_and_real_pdf() {
     has(&other, ".png");
     has(&other, "Music for 1 staff.");
     assert_eq!(other.matches(" 1.5x").count(), 2);
+    assert_eq!(other.matches("<picture>").count(), 1);
     has(&other, "<img srcset=");
     lacks(&html, " 1.5x");
     build(&dir.path, 0, &["pdf", "-n", "-W"]);
-    has(&dir.read("_build/pdf/book-en.typ"), "lilypond-");
+    let typ = dir.read("_build/pdf/book-en.typ");
+    has(&typ, "lilypond-");
+    has(&typ, "gd-align(left,");
     assert!(std::fs::read(dir.path.join("_build/pdf/demo-en.pdf")).unwrap().starts_with(b"%PDF-"));
 }
 
@@ -79,11 +85,21 @@ fn confined_includes_invalidate_music_and_untrusted_inline_remains_available() {
 fn systems_break_across_pdf_pages_and_caption_appears_once() {
     let dir = setup("music-systems");
     let source = "c'4 d' e' f' | \\break ".repeat(16);
-    dir.write("index.rst", &format!(
-        "Music\n=====\n\n.. lilypond::\n   :caption: Long melody\n   :name: long\n\n   {{ {source} }}\n"));
+    dir.write(
+        "index.rst",
+        &format!(
+            concat!(
+                "Music\n=====\n\n.. lilypond::\n   :caption: Long melody\n",
+                "   :name: long\n\n   {{ {source} }}\n"
+            ),
+            source = source
+        ),
+    );
     build(&dir.path, 0, &["pdf", "-W"]);
     let source = dir.read("_build/pdf/book-en.typ");
     has(&source, "#block(breakable: true)");
+    has(&source, "#show figure: set block(breakable: true)");
+    has(&source, "#figure(");
     has(&source, "#layout(size =>");
     assert_eq!(source.matches("Long melody").count(), 1);
     assert!(source.matches("lilypond-").count() >= 16);
@@ -165,4 +181,30 @@ fn myst_and_included_rst_music_diagnostics_keep_the_original_file_and_line() {
     dir.write("parts/fragment.rst", ".. lilypond::\n\n   { c'4\n     \\unknown }\n");
     let failed = build(&dir.path, 1, &["html", "-W"]);
     has(&both(&failed), "parts/fragment.rst:4:");
+}
+
+#[test]
+fn external_music_file_renders_source_in_text_and_fallback_html() {
+    let dir = setup("music-external-fallback");
+    dir.write("index.rst", "Music\n=====\n\n.. lilypond:: score.ly\n");
+    dir.write("score.ly", "\\relative c' { c4 d e f | }\n");
+    build(&dir.path, 0, &["text", "-W"]);
+    let text = dir.read("_build/text/index.txt");
+    has(&text, "\\relative c' { c4 d e f | }");
+    lacks(&text, "score.ly");
+
+    dir.write("score.ly", "\\relative c' { c4 \\unknown }\n");
+    build(&dir.path, 0, &["html"]);
+    let html = dir.read("_build/html/index.html");
+    has(&html, "\\unknown");
+    lacks(&html, ">score.ly");
+
+    // Untrusted builds read no score file, so they name the file instead of showing its
+    // path as if it were LilyPond code.
+    build(&dir.path, 0, &["text", "--untrusted"]);
+    has(&dir.read("_build/text/index.txt"), "LilyPond score score.ly was not engraved.");
+    build(&dir.path, 0, &["html", "--untrusted"]);
+    let html = dir.read("_build/html/index.html");
+    has(&html, "LilyPond score score.ly was not engraved.");
+    lacks(&html, "language-lilypond");
 }

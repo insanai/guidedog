@@ -23,7 +23,7 @@ pub(super) fn save(
     let options = SvgOptions {
         systems: system.map(|index| index..index + 1),
         title: alt,
-        description: alt,
+        description: "",
         adaptive: format == "svg" && page.format == OutputFormat::Html,
         ..Default::default()
     };

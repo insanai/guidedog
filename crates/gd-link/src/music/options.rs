@@ -40,10 +40,24 @@ pub(super) fn dimensions<'a>(
 
 fn length(value: &str, base: f64) -> Result<f64, String> {
     let value = value.trim();
+    // The directive parser accepts every CSS length, but engraving needs one fixed measure
+    // for both builders, and a PDF page has no viewport.
+    if ["vmin", "vmax", "vw", "vh"].iter().any(|unit| value.ends_with(unit)) {
+        return Err(format!(
+            "Viewport unit in `{value}`: \
+             music needs a percentage of the measure or a fixed length."
+        ));
+    }
     let suffixes = [
+        ("rem", 12.0),
+        ("em", 12.0),
+        ("ex", 6.0),
+        ("ch", 6.0),
         ("pt", 1.0),
+        ("pc", 12.0),
         ("mm", 72.0 / 25.4),
         ("cm", 720.0 / 25.4),
+        ("Q", 72.0 / 101.6),
         ("in", 72.0),
         ("px", 0.75),
         ("%", base / 100.0),
@@ -57,4 +71,17 @@ fn length(value: &str, base: f64) -> Result<f64, String> {
         return Err(format!("Invalid music dimension `{value}`."));
     }
     Ok(points)
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn widths_accept_print_and_relative_units_but_not_viewport_units() {
+        assert_eq!(super::length("50%", 400.0), Ok(200.0));
+        assert_eq!(super::length("2in", 400.0), Ok(144.0));
+        for unit in ["80vw", "50vh", "10vmin", "10vmax"] {
+            let error = super::length(unit, 400.0).unwrap_err();
+            assert!(error.contains("Viewport unit"), "{error}");
+        }
+    }
 }

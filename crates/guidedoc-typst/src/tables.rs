@@ -138,9 +138,9 @@ impl State<'_, '_> {
 
     /// Writes `#figure` around the image, with the caption; a legend follows.
     pub(crate) fn render_figure(&mut self, id: NodeId) {
-        if self.custom(id, "music") == "1" {
-            self.render_music_figure(id);
-            return;
+        let music = self.custom(id, "music") == "1";
+        if music {
+            self.emit("#block(breakable: true)[#show figure: set block(breakable: true)\n");
         }
         let doc = self.doc;
         self.emit("#figure(");
@@ -174,6 +174,9 @@ impl State<'_, '_> {
             self.map_node(legend);
             self.emit("\n#gd-legend[\n");
             self.render_blocks(legend);
+            self.emit("]\n");
+        }
+        if music {
             self.emit("]\n");
         }
     }
@@ -268,24 +271,16 @@ impl State<'_, '_> {
         }
     }
 
-    fn render_music_figure(&mut self, id: NodeId) {
-        let doc = self.doc;
-        self.emit("#block(breakable: true)[\n");
-        for part in doc.children(id) {
-            if doc.kind(part) == NodeKind::Image {
-                self.emit("#");
-                self.emit_image(part, false);
-                self.emit("\n");
-            } else if doc.kind(part) == NodeKind::Caption {
-                self.emit("#block(above: 0.5em)[");
-                self.emit_caption_number(id);
-                self.wrap_inlines("", part, "]\n");
-            }
-        }
-        self.emit("]\n");
-    }
-
     fn emit_music_parts(&mut self, id: NodeId, parts: &str) {
+        let align = self
+            .doc
+            .attribute(id, AttributeKey::Align)
+            .filter(|a| matches!(*a, "left" | "center" | "right"));
+        if let Some(align) = align {
+            self.emit("gd-align(");
+            self.emit(align);
+            self.emit(", ");
+        }
         self.emit("block(breakable: true)[\n");
         for path in parts.lines() {
             self.emit("#block(breakable: false)[#layout(size => { let drawing = image(");
@@ -297,6 +292,9 @@ impl State<'_, '_> {
             self.emit(", width: size.width) } else { drawing } })]\n");
         }
         self.emit("]");
+        if align.is_some() {
+            self.byte(b')');
+        }
     }
 
     fn emit_remote_image(&mut self, id: NodeId, path: &str) {

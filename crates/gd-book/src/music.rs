@@ -3,15 +3,20 @@
 pub(crate) fn text_width(template: &str, paper: &str) -> f64 {
     let margin = template
         .lines()
-        .take(64)
+        .take(256)
         .find_map(|line| {
             let value = line.trim().strip_prefix("// guidedog: margin-x =")?.trim();
             let mm = value.strip_suffix("mm")?.trim().parse::<f64>().ok()?;
             (mm.is_finite() && (0.0..100.0).contains(&mm)).then_some(mm)
         })
         .unwrap_or(25.0);
-    let width = if matches!(paper, "letter" | "us-letter") { 215.9 } else { 210.0 };
-    (width - margin * 2.0) * 72.0 / 25.4
+    // The measure must follow the page the book actually renders, so it uses the same
+    // paper identifiers as the layout rather than a wider list of its own.
+    let width = match crate::layout::paper_size(paper) {
+        "us-letter" => 215.9,
+        _ => 210.0,
+    };
+    (width - margin * 2.0).max(40.0) * 72.0 / 25.4
 }
 
 #[cfg(test)]
@@ -21,6 +26,11 @@ mod tests {
         let width = super::text_width("#import x\n// guidedog: margin-x = 31mm\n", "a4");
         assert!((width - 148.0 * 72.0 / 25.4).abs() < 1e-9);
         assert!((super::text_width("", "letter") - 165.9 * 72.0 / 25.4).abs() < 1e-9);
+        // Papers the layout does not know render as A4, so music is measured as A4 too.
+        assert_eq!(super::text_width("", "a5"), super::text_width("", "a4"));
+        assert_eq!(super::text_width("", "legal"), super::text_width("", "a4"));
+        let deep = format!("{}// guidedog: margin-x = 30mm\n", "// header\n".repeat(120));
+        assert!((super::text_width(&deep, "a4") - 150.0 * 72.0 / 25.4).abs() < 1e-9);
         assert_eq!(
             super::text_width("// guidedog: margin-x = NaNmm", "a4"),
             super::text_width("", "a4")

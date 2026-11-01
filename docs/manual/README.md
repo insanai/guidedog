@@ -2,7 +2,7 @@
 
 This directory holds the source of the official **Guidedog manual**: tutorials, topic guides, practical tasks, the configuration and command reference, internals, and the translated editions.
 
-The manual is written in reStructuredText (`.rst`) with Graphviz and Typst diagrams and LaTeX math notation, and Guidedog builds it into an HTML website and PDF books.
+The manual is written in reStructuredText (`.rst`) with Graphviz and Typst diagrams, native LilyPond music and LaTeX math notation, and Guidedog builds it into an HTML website and PDF books.
 
 Start at [index.rst](index.rst), or see the other documentation projects:
 - [API reference](../api/README.md): the Rust API of Guidedog's main crates, generated from their source.
@@ -11,7 +11,7 @@ Start at [index.rst](index.rst), or see the other documentation projects:
 ## Overview
 
 - **Tutorials**: a first project, a small book, dynamic content and directives, and a reusable HTML/PDF theme.
-- **Topics**: writing, domains, projects, typography, mathematics, [Graphviz and Typst diagrams](topics/diagrams.rst), templates, media, translation.
+- **Topics**: writing, domains, projects, typography, mathematics, [Graphviz and Typst diagrams](topics/diagrams.rst), [music notation](topics/music.rst), templates, media, translation.
 - **Practical tasks and reference**: CLI commands, configuration, formats, errors, compatibility.
 - **Document code**: Python (autodoc), Rust (`rust.rst`), Odin, and declared object types.
 - **Internals**: the engine, invariants, publication, memory, and the design notes of the Rust crates.

@@ -71,3 +71,7 @@ Project diagrams
 ----------------
 
 Project builds recognize Graphviz directives and the Guidedog ``typst-diagram`` directive in RST and MyST. The project link pass compiles diagrams and manages their image assets for HTML and PDF. A direct markup conversion retains the diagram as source code; it does not run the project asset pipeline. See :doc:`../topics/diagrams`.
+
+The RST and MyST ``lilypond`` directive uses the native project engraving pipeline for musical notation.
+SVG and PNG assets, captions, figure references, narrow HTML layouts and PDF system images are described in :doc:`../topics/music`.
+Ordinary LilyPond code blocks remain source examples.

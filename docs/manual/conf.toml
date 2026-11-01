@@ -47,13 +47,14 @@ numfig = true
 pdf_paper_size = "a4"
 
 # The same generator supplies the full standalone API project (docs/api) and this
-# curated 16-crate appendix in the manual's web edition and PDF book.
+# curated 19-crate appendix in the manual's web edition and PDF book.
 rust_autoapi_crates = [
   "../../crates/guidedoc", "../../crates/guidedoc-defaults", "../../crates/guidedoc-rst",
   "../../crates/guidedoc-commonmark", "../../crates/guidedoc-sphinx",
   "../../crates/guidedoc-html", "../../crates/guidedoc-typst", "../../crates/guidedoc-text",
   "../../crates/gd-report", "../../crates/gd-host", "../../crates/gd-jinja",
   "../../crates/gd-highlight", "../../crates/gd-gettext", "../../crates/gd-plugins",
+  "../../crates/gd-score", "../../crates/gd-lilypond", "../../crates/gd-engrave",
   "../../crates/gd-project", "../../crates/gd-cli",
 ]
 rust_autoapi_root = "api"

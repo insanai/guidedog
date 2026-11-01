@@ -158,6 +158,11 @@ Directives
      - alt, align, caption, name, class, format; file argument
      - done
      - ``diagrams_preserve_source_and_figure_options``, ``a_file_is_included_but_ambiguous_sources_are_refused``, ``ordinary_typst_code_is_never_marked_for_execution``
+   * - lilypond
+     - alt, align, caption, name, class, format, staff-size, width, justify; inline source or file argument; original per-line source maps
+     - Native reader and engraver, localized descriptions, narrow HTML edition and per-system PDF images
+     - ``music_directives``, ``lilypond_projects``
+
    * - automodule, autoclass, autoexception, autofunction, autodecorator, automethod, autoproperty, autoattribute, autodata, autotype (through ``Config::autodoc``)
      - members, undoc-members, no-index/noindex, no-index-entry, inherited-members, show-inheritance, private-members, special-members, imported-members, exclude-members, member-order, synopsis, platform, deprecated, annotation, no-value, class-doc-from, and ``no-*`` negations
      - done

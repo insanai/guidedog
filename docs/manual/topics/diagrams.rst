@@ -9,6 +9,8 @@ We keep diagram source beside the explanation and let Guidedog build the image f
 Graphviz and Typst are included in the executable.
 We need no separate ``dot`` or ``typst`` program.
 
+For musical scores, we use the native notation workflow in :doc:`music`.
+
 Choose the drawing tool
 -----------------------
 

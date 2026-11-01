@@ -5,6 +5,10 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
+## Unreleased
+
+- Add native LilyPond notation in RST and MyST, with outlined Bravura SVG or PNG assets, figure references, narrow HTML layouts and PDF system breaks.
+
 ## 1.0.0-beta.8 - 2026-10-31
 
 - Add `guidedog serve --host IP` for IPv4 and IPv6 network preview, retaining the loopback default.

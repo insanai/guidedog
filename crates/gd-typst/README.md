@@ -33,3 +33,7 @@ an installed, pinned `typst` program.
   holding only links to them (gd-book still does for the typst program).
 
 Image export uses `Target::Svg` or `Target::Png` and requires exactly one finite page. PNG uses 144 pixels per inch, with at most 16 million pixels and 16,384 pixels on either side in the embedded backend. `source_path` places generated text below the root for relative imports. `observe_file` receives attempted file reads and can refuse them; both options apply to the embedded backend. No source file is written.
+
+`load_text_fonts` returns build-owned lazy text faces with explicit collection indices and coverage, for native music shaping.
+`rasterize_svg` borrows standalone outlined SVG and explicit point dimensions, then produces a transparent PNG with resolution metadata, without compiling document code or reading linked files.
+Its dimensions, pixel count and conservative peak-memory reservation are checked before decoding.

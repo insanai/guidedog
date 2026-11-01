@@ -16,7 +16,7 @@ root_doc = "index"
 primary_domain = "rust"
 
 # Every listed crate gets pages, api/<crate>/<module>, and api/index lists them; the
-# index joins the root document's toctree. All 26 reusable crates come first (the
+# index joins the root document's toctree. All 29 reusable crates come first (the
 # engine, supporting libraries, API generators, and plugin SDK), followed by the main
 # internal host, project, and command-line crates.
 rust_autoapi_crates = [
@@ -40,6 +40,7 @@ rust_autoapi_crates = [
   "../../crates/gd-highlight",
   "../../crates/gd-gettext",
   "../../crates/gd-graphdog",
+  "../../crates/gd-score", "../../crates/gd-lilypond", "../../crates/gd-engrave",
   "../../crates/gd-inventory",
   "../../crates/gd-pyscan",
   "../../crates/gd-autodoc",

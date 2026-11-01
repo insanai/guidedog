@@ -11,6 +11,7 @@ These chapters explain the model. They give us enough context to make a choice.
    projects
    mathematics
    diagrams
+   music
    typography
    ../templates
    ../media

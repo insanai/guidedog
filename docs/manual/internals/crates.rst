@@ -47,6 +47,8 @@ Two groups
 
 The **reusable** crates are the engine, the supporting libraries, the API generators and the plugin SDK. Each is packageable (``publish`` is enabled, with names reserved for crates.io), has a README written for a reader who has never seen Guidedog, and keeps its API for other projects as well as for ours.
 
+The three native music libraries remain unpublished during the beta, as GDS 0015 requires; their dependency direction and APIs still support independent use.
+
 The **internal** crates are the parts of the Guidedog program: configuration, the project builder, the site and book builders, translation, publication and the command line. They set ``publish = false``. Their APIs follow the program's needs and change with it, so we promise nothing about them to anyone else.
 
 The engine
@@ -121,6 +123,12 @@ The libraries never depend on the engine. That is why the engine can use them th
    GNU gettext PO and MO catalogs, plural forms, merging and statistics.
 ``gd-graphdog``
    Graphviz DOT to SVG, PNG or DOT with the Graphviz C library in process. It is the one crate that links a C library: the system's shared ``libgvc`` and ``libcgraph`` by default, or the static Graphviz that ``cargo xtask graphviz`` builds when ``GUIDEDOG_GRAPHVIZ_STATIC`` names it (as release builds do).
+``gd-score``
+   Exact checked rational time, spelled pitches and a flat score model with typed indices and source spans; no dependencies or file access.
+``gd-lilypond``
+   A bounded LilyPond notation reader over ``gd-score`` with explicit include callbacks, retained source files and structured diagnostics; no Scheme or external program execution.
+``gd-engrave``
+   Native score geometry, exact spring spacing, bounded optimal line breaking and outlined SVG over ``gd-score``, SMuFL metadata, Rustybuzz and ttf-parser; one explicit font set and reusable workspace per rendering thread.
 ``gd-inventory``
    Sphinx object inventories (``objects.inv``) for intersphinx.
 
@@ -192,7 +200,7 @@ Every other package is internal:
 
 ``gd-ssg`` implements the linked ``guidedog ssg`` plugin and authoring surface: site presets (``project``, ``journal``, ``research``), surgical front-matter and field-list transitions (``new``, ``draft``, ``schedule``, ``publish``, ``status``), explicit SHA-256-pinned ``.gdt`` theme installation, and multi-project ``[[site.mounts]]`` website assembly (``guidedog ssg build``). It owns no renderer; mounted builds run through the standard Guidedog project pipeline.
 
-``gd-typst`` embeds the Typst compiler and runs it both for PDF books and articles and for ``typst-diagram`` SVG and PNG figures. Keeping it internal keeps Typst's large dependency tree out of every reusable crate: ``guidedoc-typst`` writes Typst source as text, and only the program compiles it.
+``gd-typst`` embeds the Typst compiler and runs it both for PDF books and articles and for ``typst-diagram`` SVG and PNG figures. It also exposes lazy text-font handles and bounded standalone SVG rasterization for native music. Keeping it internal keeps Typst's large dependency tree out of every reusable crate: ``guidedoc-typst`` writes Typst source as text, and only the program compiles it.
 
 ``gd-fetch`` reads URLs and files and sends HTTP requests for remote intersphinx inventories, pinned ``.gdt`` theme archives and the Pages publisher. It uses ``ureq``, a small blocking HTTP client, with ``rustls`` for TLS and Mozilla's root certificates built in (``webpki-roots``). Guidedog therefore needs no ``curl`` program, OpenSSL or system certificate store, and request headers never appear on a command line. The crate stays internal, so the reusable crates do not carry an HTTP stack.
 

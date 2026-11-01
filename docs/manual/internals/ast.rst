@@ -664,6 +664,7 @@ Other Sphinx constructs use existing kinds:
    same ``caption`` and Caption. Renderers show the Caption's content, or the attribute's
    text when there is no Caption.
 -  ``typst-diagram``: CodeBlock with Language ``typst``, Custom ``typst-diagram`` = "1", and ``typst-source`` naming the original document or included Typst file. Custom ``typst-file`` retains a file argument for RST writing. Custom ``format`` is ``svg`` or ``png``. Captions, names, classes, alternative text and alignment follow the Graphviz convention. The project link pass compiles this marked block into an Image, wrapped in a Figure when captioned. Ordinary Typst code blocks remain code.
+-  ``lilypond``: CodeBlock with Language ``lilypond`` and Custom ``lilypond`` = "1". The node retains its body, file argument, options and a per-line byte mapping into the original source. The link pass reads confined files, loads the score and replaces the marked block with an Image or Figure; PDF can use a breakable sequence of system images. RST writing retains the directive, and ordinary LilyPond code blocks remain code.
 -  ``seealso``: Admonition{Seealso}; ``todo``: Admonition{Todo}; ``todolist``,
    ``sectionauthor``, ``moduleauthor``, ``codeauthor``: Directive{Name} with ``author``;
    ``postlist``: Directive{Name ``"postlist"``} with Custom ``limit`` (the optional

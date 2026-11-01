@@ -355,3 +355,13 @@ saving the environment's JSON, and the site unit (inventory and index).
 Possible later work: ``guidedog serve`` keeping the environment, tables and object store
 in memory between rebuilds; a (size, modification time) prefilter before hashing a
 source.
+
+Native music
+~~~~~~~~~~~~
+
+A page records whether it contains a music directive in environment schema 31.
+The build discovers text faces once and loads selected files lazily across rendering workers.
+Music sources, nested includes, missing relative lookups and selected text font files become content dependencies.
+We check canonical confinement before observing a candidate file, so a denied symbolic link cannot cause the incremental hasher to read outside the allowed roots.
+Generated asset names hash the final bytes; an unchanged image keeps its name and modification time.
+Reader, engraving and raster reservations belong to a single directive and are released after that drawing, while font sources remain shared for the build.

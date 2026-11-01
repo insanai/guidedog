@@ -85,7 +85,7 @@ gd-resolve
 gd-link
    The link pass: rewrites a document's tree for one output (references, images,
    numbers, ``only``, todo lists, ``postlist`` and rich excerpts, Graphviz graphs, and
-   ``typst-diagram`` figures) and renders the page.
+   ``typst-diagram`` and native ``lilypond`` figures) and renders the page.
 gd-read
    Incremental reading: parses changed documents, extracts leading ``PageMeta`` fields
    and symbols, and hosts autodoc, odindoc and rustdoc.
@@ -115,7 +115,7 @@ Seams
 S1: gd-conf
 ~~~~~~~~~~~
 
-``load_config(dir, &LoadOptions) -> Result<Loaded, Problem>`` with ``LoadOptions { conf_dir, no_config, overrides, source, output }`` and ``Loaded { config, warnings, settings }``. ``Config`` keeps the general settings flat (``project``, ``root_doc``, ``exclude_patterns``, ``numfig``, ...) and groups the rest: ``mathjax``, ``intersphinx``, ``autodoc``, ``ext`` (``ExtensionSettings``), ``odin_api``, ``rust_api``, ``plugins``, ``html``, ``pdf``, ``graphviz``, ``myst``, ``intl``, and ``site`` (``SiteConfig``: ``base_url``, ``sitemap``, ``feeds``, ``taxonomies``, ``page_size``, ``collections``, ``mounts``, ``assets``, ``theme``). The Sphinx-compatible conf.toml keys stay flat while static publishing lives under ``[site]``. ``ObjectTypeDecl``, ``AutodocDefaultOption`` and ``IntersphinxProject`` are gd-conf's own types; the crates that need them convert. Failures are ``gd_host::Problem`` (``config.invalid``, ``cli.define``, ``project.missing``, exit 2) and warnings ``gd_report::Report``.
+``load_config(dir, &LoadOptions) -> Result<Loaded, Problem>`` with ``LoadOptions { conf_dir, no_config, overrides, source, output }`` and ``Loaded { config, warnings, settings }``. ``Config`` keeps the general settings flat (``project``, ``root_doc``, ``exclude_patterns``, ``numfig``, ...) and groups the rest: ``mathjax``, ``intersphinx``, ``autodoc``, ``ext`` (``ExtensionSettings``), ``odin_api``, ``rust_api``, ``plugins``, ``html``, ``pdf``, ``graphviz``, ``music``, ``myst``, ``intl``, and ``site`` (``SiteConfig``: ``base_url``, ``sitemap``, ``feeds``, ``taxonomies``, ``page_size``, ``collections``, ``mounts``, ``assets``, ``theme``). The Sphinx-compatible conf.toml keys stay flat while static publishing lives under ``[site]``. ``ObjectTypeDecl``, ``AutodocDefaultOption`` and ``IntersphinxProject`` are gd-conf's own types; the crates that need them convert. Failures are ``gd_host::Problem`` (``config.invalid``, ``cli.define``, ``project.missing``, exit 2) and warnings ``gd_report::Report``.
 
 S2: gd-env
 ~~~~~~~~~~

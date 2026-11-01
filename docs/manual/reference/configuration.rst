@@ -1568,3 +1568,24 @@ and folders that lead outside the source folder (``html_logo``, ``html_favicon``
 ``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. Embedded ``typst-diagram``
 compilation is disabled and no Typst package is downloaded. Each dropped setting is a
 ``build.untrusted`` warning. This is a capability policy, not a process sandbox. See :doc:`cli`.
+
+Native music engraving
+----------------------
+
+``lilypond_staff_size`` sets the default five-line staff height in points, from 10 through 40; the default is 18.
+``lilypond_html_width`` sets the wide HTML system measure in points; the default is 564.
+``lilypond_pdf_width`` sets the PDF system measure in points; when omitted, the selected template and ``pdf_paper_size`` determine it.
+Widths must be positive and no greater than 100,000 points.
+All three values are finite TOML numbers, and directive options override their project defaults.
+
+.. code-block:: toml
+
+   lilypond_staff_size = 18
+   lilypond_html_width = 564
+   lilypond_pdf_width = 419.53
+
+The PDF templates declare their horizontal margin with ``// guidedog: margin-x = 31mm`` after their first import.
+Without a declaration, we assume 25 millimetres on each side.
+The built-in book, article and discussion margins are 31, 30 and 25 millimetres respectively.
+Text fonts use ``pdf_fonts`` and ``pdf_font_paths``.
+See :doc:`../topics/music` for directive syntax, layout, trust rules and limits.

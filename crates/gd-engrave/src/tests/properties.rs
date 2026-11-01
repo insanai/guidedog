@@ -1,6 +1,20 @@
 use crate::*;
 
 #[test]
+fn duration_space_is_monotone_and_continuous_at_the_shortest_duration() {
+    for shortest in [1.0 / 128.0, 1.0 / 16.0, 3.0 / 16.0] {
+        let mut previous = 0.0;
+        for numerator in 1..=1024 {
+            let duration = f64::from(numerator) / 512.0;
+            let ideal = crate::columns::duration_space(duration, shortest);
+            assert!(ideal >= previous);
+            previous = ideal;
+        }
+        assert!((crate::columns::duration_space(shortest, shortest) - 2.4).abs() < 1e-12);
+    }
+}
+
+#[test]
 fn spacing_matches_exhaustive_active_sets() {
     for seed in 0..256usize {
         let springs: Vec<_> = (0..5)

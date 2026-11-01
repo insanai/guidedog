@@ -90,11 +90,7 @@ pub(crate) fn springs(
             (Some(false), Some(true)) => -options.optical_adjustment,
             _ => 0.0,
         };
-        let ideal = if duration >= shortest {
-            1.2 * (2.0 + crate::math::log2(duration / shortest))
-        } else {
-            1.2 * (1.0 + duration / shortest)
-        };
+        let ideal = duration_space(duration, shortest);
         push(
             out,
             Spring { ideal: (ideal * delta / duration + optical).max(0.8), minimum: 1.8 },
@@ -102,6 +98,14 @@ pub(crate) fn springs(
         )?;
     }
     Ok(())
+}
+
+pub(crate) fn duration_space(duration: f64, shortest: f64) -> f64 {
+    if duration >= shortest {
+        1.2 * (2.0 + crate::math::log2(duration / shortest))
+    } else {
+        1.2 * (1.0 + duration / shortest)
+    }
 }
 
 pub(crate) fn breaks(

@@ -129,43 +129,7 @@ impl Reader<'_> {
                 EventKind::Key(Key { tonic, mode: read_mode(mode, node.span)? })
             }
             "time" => {
-                let first = cursor.number()?;
-                let mut beats = Vec::new();
-                let numerator = if cursor.symbol(',') {
-                    beats.push(first);
-                    loop {
-                        self.work.take(1, cursor.span())?;
-                        if beats.len() >= 128 {
-                            return Err(syntax_error(
-                                span,
-                                "A meter has at most 128 beat groups.",
-                            ));
-                        }
-                        beats.push(cursor.number()?);
-                        if !cursor.symbol(',') {
-                            break;
-                        }
-                    }
-                    cursor.number()?
-                } else {
-                    first
-                };
-                if !cursor.symbol('/') {
-                    return Err(syntax_error(span, "A meter needs n/d."));
-                }
-                let denominator = cursor.number()?;
-                if numerator == 0
-                    || numerator > 128
-                    || !denominator.is_power_of_two()
-                    || denominator > 128
-                    || beats.contains(&0)
-                    || (!beats.is_empty()
-                        && beats.iter().map(|n| u32::from(*n)).sum::<u32>()
-                            != u32::from(numerator))
-                {
-                    return Err(syntax_error(span, "Invalid meter or beaming-group sum."));
-                }
-                state.meter = gd_score::Meter { numerator, denominator, beats };
+                state.meter = self.meter(cursor, span)?;
                 EventKind::Time(state.meter.clone())
             }
             "partial" => {
@@ -191,6 +155,42 @@ impl Reader<'_> {
         };
         self.emit(state, kind, span)?;
         Ok(())
+    }
+
+    fn meter(&mut self, cursor: &mut Cursor<'_>, span: Span) -> Result<gd_score::Meter, Error> {
+        let first = cursor.number()?;
+        let mut beats = Vec::new();
+        let numerator = if cursor.symbol(',') {
+            beats.push(first);
+            loop {
+                self.work.take(1, cursor.span())?;
+                if beats.len() >= 128 {
+                    return Err(syntax_error(span, "A meter has at most 128 beat groups."));
+                }
+                beats.push(cursor.number()?);
+                if !cursor.symbol(',') {
+                    break;
+                }
+            }
+            cursor.number()?
+        } else {
+            first
+        };
+        if !cursor.symbol('/') {
+            return Err(syntax_error(span, "A meter needs n/d."));
+        }
+        let denominator = cursor.number()?;
+        if numerator == 0
+            || numerator > 128
+            || !denominator.is_power_of_two()
+            || denominator > 128
+            || beats.contains(&0)
+            || (!beats.is_empty()
+                && beats.iter().map(|n| u32::from(*n)).sum::<u32>() != u32::from(numerator))
+        {
+            return Err(syntax_error(span, "Invalid meter or beaming-group sum."));
+        }
+        Ok(gd_score::Meter { numerator, denominator, beats })
     }
 
     fn metadata(&mut self, name: &str, cursor: &mut Cursor<'_>, span: Span) -> Result<(), Error> {

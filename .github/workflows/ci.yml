@@ -61,6 +61,10 @@ jobs:
         run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - name: Tests
         run: cargo test --locked --workspace --no-fail-fast
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: docs/shared/fonts/NotoSerifCJKsc-Regular.otf
+          key: cjk-music-font-${{ hashFiles('tools/xtask/src/fonts.rs') }}
       - name: Fetch the pinned CJK music test face
         run: cargo xtask fetch-fonts --music
       - name: Native music SVG, PNG and collision corpus

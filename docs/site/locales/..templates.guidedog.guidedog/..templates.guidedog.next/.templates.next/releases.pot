@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Vikrant Rathore
+# This file is distributed under the same license as the Guidedog package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Guidedog 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-31 15:36+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Guidedog translation contributors\n"
+"Language-Team: Guidedog translation contributors\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../releases/1.0.0-beta.6.rst:8
+msgid "Guidedog 1.0.0-beta.6"
+msgstr ""
+
+#: ../../releases/1.0.0-beta.6.rst:11
+msgid "We can now publish dated articles alongside documentation pages. The new ``guidedog ssg`` commands create drafts, schedule release instants, publish articles and withhold them again. Both reStructuredText and Markdown use the same metadata and build-clock gate."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.6.rst:15
+msgid "We collect articles with ``.. postlist::`` and enable Atom, RSS and sitemap files through ``[site]`` in ``conf.toml``. A dated article uses the built-in article HTML layout, and ``:pdf: article`` adds a standalone PDF using the shared print theme. Project templates receive publication metadata through ``page.meta``."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.6.rst:19
+msgid "Release builds exclude drafts, future articles and expired articles before resolving navigation, links and public indices. Preview builds include them for local review. Clock-only changes reuse parsed documents, and successful rebuilds remove artifacts for pages that have become unpublished."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.6.rst:23
+msgid "Template dependencies follow the names requested during rendering, including dynamic and optional includes. Changing a template that no document uses leaves document pages cached. Navigation context reads and native calls have their own verifying traces. A 1,000-article benchmark checks cold and incremental work, including unchanged builds and isolated body edits."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.6.rst:28
+msgid "Named mounts assemble existing projects, language editions, shared assets and PDF books in one publication transaction. The Guidedog website itself now uses those mounts. Generated taxonomy archives and paginated collections share the publication gate and remove obsolete pages on successful rebuilds."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.6.rst:32
+msgid "Project, journal and research presets provide complete starting sites. Theme archives require an explicit SHA-256 pin, use canonical tree checksums and install atomically. Builds verify installed themes offline."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.6.rst:36
+msgid "We describe the commands and metadata in the `static publishing guide <https://insanai.github.io/guidedog/manual/howto/static-publishing.html>`_. GDS 0013 specifies the complete implementation and its release qualification."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.7.rst:8
+msgid "Guidedog 1.0.0-beta.7"
+msgstr ""
+
+#: ../../releases/1.0.0-beta.7.rst:11
+msgid "We can now select a rich introduction with ``.. more::``. Native postlists and collection templates preserve paragraphs, **emphasis**, links, lists and lead images during the build. The full article retains its complete content in HTML and PDF."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.7.rst:17
+msgid "We render collection introductions through ``post.excerpt_html`` and native listings through ``.. postlist::`` with ``:excerpts:``. Articles without a boundary keep the plain-text summary fallback. Feeds and description metadata continue to use ``:summary:`` independently."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.7.rst:21
+msgid "Excerpt links and resources are relative to their destination, including nested taxonomy archives and pagination. Repeated native listings use separate anchor namespaces. References to targets and footnotes beyond the boundary lead to the full article. Listings retain source-scoped reference and asset dependencies, and included-file edits rebuild them."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.7.rst:26
+msgid "This fixes `issue 3 <https://github.com/insanai/guidedog/issues/3>`_. We describe authoring, templates and Tinkerer migration in the `static publishing guide <https://insanai.github.io/guidedog/manual/howto/static-publishing.html>`_. The release also includes the SSG corrections and custom-directive documentation reviewed after beta.6. Every platform archive exercises rich excerpts in its complete SSG smoke test."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.8.rst:8
+msgid "Guidedog 1.0.0-beta.8"
+msgstr ""
+
+#: ../../releases/1.0.0-beta.8.rst:11
+msgid "We can now write Typst drawing source directly in an RST or MyST ``typst-diagram`` directive. Guidedog's embedded compiler generates SVG or PNG and includes it in the website and PDF book. CeTZ and Fletcher use ordinary version-pinned imports, and local helper libraries work without a separate figure-generation task."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.8.rst:17
+msgid "Diagrams support captions, alternative text, names, classes, alignment and numbered figure references. Imported helpers and data files are tracked by content, and identical generated images keep their timestamps so unchanged books remain cached. The project package and font settings apply to both outputs. Untrusted builds retain source without executing Typst, and image export requires one finite page with bounded PNG dimensions."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.8.rst:22
+msgid "For network preview we run ``guidedog serve docs --host 0.0.0.0 --port 8000``. ``--host ::`` selects IPv6, while the default remains loopback. The preview has no authentication or TLS, so we use network binding only where this sharing is intended."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.8.rst:26
+msgid "The `diagram chapter <https://insanai.github.io/guidedog/manual/topics/diagrams.html>`_ covers Graphviz and Typst together. The `Typst guide <https://insanai.github.io/guidedog/manual/howto/typst-diagrams.html>`_ explains every option, local imports, offline packages and migration from separate figure files. All six translated manuals include the new material. `GDS 0014 <https://insanai.github.io/guidedog/discussions/records/0014-typst-diagrams.html>`_ records the reviewed implementation. Every unpacked platform archive exercises SVG and PNG diagram generation with an empty PATH."
+msgstr ""

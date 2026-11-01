@@ -234,3 +234,13 @@ pub(crate) const TYPST_SOURCE: Message = Message {
     message: "The directive {0} needs either content or a file argument.",
     hint: "Give Typst source as the directive body or a file argument, not both.",
 };
+
+/// Music must have exactly one source, retained without running a reader or engraver.
+pub(crate) const LILYPOND_SOURCE: Message = Message {
+    code: "sphinx.lilypond.source",
+    severity: Severity::Warning,
+    status: Status::InvalidInput,
+    title: "MUSIC NEEDS ONE SOURCE",
+    message: "The directive {0} needs either content or a file argument.",
+    hint: "Give LilyPond notation as the directive body or a file argument, not both.",
+};

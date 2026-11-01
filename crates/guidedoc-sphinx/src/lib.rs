@@ -32,6 +32,7 @@ mod extension;
 mod glossary;
 mod graphviz;
 mod ids;
+mod lilypond;
 mod literalinclude;
 mod markdown;
 mod math;

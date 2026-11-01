@@ -86,7 +86,10 @@ impl Collector<'_, '_> {
             NodeKind::CodeBlock => {
                 // A graph is a figure; the caption's text without its markup, as Sphinx's
                 // clean_astext gives it.
-                let kind = if self.flag(target, "graphviz") || self.flag(target, "typst-diagram") {
+                let kind = if self.flag(target, "graphviz")
+                    || self.flag(target, "typst-diagram")
+                    || self.flag(target, "lilypond")
+                {
                     LabelKind::Figure
                 } else {
                     LabelKind::Code

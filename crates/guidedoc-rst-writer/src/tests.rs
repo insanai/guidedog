@@ -85,6 +85,44 @@ fn round_trip(reader: &str, source: &str) -> String {
 }
 
 #[test]
+fn music_directives_keep_sources_and_options_from_rst_and_myst() {
+    for (reader, source) in [
+        (
+            "sphinx",
+            concat!(
+                ".. lilypond::\n   :caption: A *melody*\n   :width: 80%\n",
+                "   :staff-size: 16\n   :justify: all\n\n   c'4 d' e' f'\n"
+            ),
+        ),
+        (
+            "myst",
+            concat!(
+                "```{lilypond}\n:caption: A *melody*\n:width: 80%\n",
+                ":staff-size: 16\n:justify: all\n\nc'4 d' e' f'\n```\n"
+            ),
+        ),
+    ] {
+        let (written, _, _) = write_with(reader, source, None);
+        for expected in [
+            ".. lilypond::",
+            ":caption: A *melody*",
+            ":width: 80%",
+            ":staff-size: 16",
+            ":justify: all",
+            "c'4 d' e' f'",
+        ] {
+            assert!(written.contains(expected), "missing {expected}: {written}");
+        }
+        assert!(!written.contains(":lilypond-map:"));
+        assert_eq!(write_with("sphinx", &written, None).0, written);
+    }
+    let (written, _, _) =
+        write_with("sphinx", ".. lilypond:: parts/tune.ly\n   :format: png\n", None);
+    assert_eq!(written.matches("parts/tune.ly").count(), 1);
+    assert!(written.contains(".. lilypond:: parts/tune.ly"));
+}
+
+#[test]
 fn sections_take_one_adornment_per_level() {
     let out = round_trip("rst", "Title\n#####\n\nA\n***\n\nB\n+++\n\nText.\n\nC\n***\n");
     assert!(out.starts_with("Title\n=====\n\nA\n----\n\nB\n~~~~\n"), "{out}");

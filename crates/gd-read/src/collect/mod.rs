@@ -315,7 +315,10 @@ impl Collector<'_, '_> {
     /// A code block with a caption is numbered: a graph as a figure, else as code.
     fn add_code_block(&mut self, id: NodeId) {
         if self.doc.custom_attribute(id, "caption").is_some() {
-            let kind = if self.flag(id, "graphviz") || self.flag(id, "typst-diagram") {
+            let kind = if self.flag(id, "graphviz")
+                || self.flag(id, "typst-diagram")
+                || self.flag(id, "lilypond")
+            {
                 LabelKind::Figure
             } else {
                 LabelKind::Code

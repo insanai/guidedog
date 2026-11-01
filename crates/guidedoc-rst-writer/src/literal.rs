@@ -15,6 +15,12 @@ const DERIVED: &[&str] = &[
     "typst-diagram",
     "typst-source",
     "typst-file",
+    "lilypond",
+    "lilypond-source",
+    "lilypond-file",
+    "lilypond-line",
+    "lilypond-indent",
+    "lilypond-map",
     "testnodetype",
     "groups",
     "number",
@@ -39,7 +45,10 @@ impl Writer<'_, '_> {
     /// A literal block (after "::") or a code-block directive with its options.
     pub fn code_block(&mut self, id: NodeId) {
         let announced = std::mem::take(&mut self.literal_announced);
-        if self.custom(id, "graphviz").is_some() || self.custom(id, "typst-diagram").is_some() {
+        if self.custom(id, "graphviz").is_some()
+            || self.custom(id, "typst-diagram").is_some()
+            || self.custom(id, "lilypond").is_some()
+        {
             self.diagram(id);
             return;
         }
@@ -138,8 +147,9 @@ impl Writer<'_, '_> {
     /// A diagram directive, retaining file sources and their relative import base.
     fn diagram(&mut self, id: NodeId) {
         let typst = self.custom(id, "typst-diagram").is_some();
+        let music = self.custom(id, "lilypond").is_some();
         let mut options: Vec<Opt> = Vec::new();
-        for key in ["layout", "caption", "format", "name"] {
+        for key in ["layout", "caption", "format", "name", "staff-size", "width", "justify"] {
             if let Some(v) = self.custom(id, key) {
                 options.push((key, v.to_owned()));
             }
@@ -147,11 +157,27 @@ impl Writer<'_, '_> {
         if let Some(alt) = self.attr(id, AttributeKey::Alt).or_else(|| self.custom(id, "alt")) {
             options.push(("alt", alt.to_owned()));
         }
-        self.common_options(id, if typst { &[] } else { &["graphviz"] }, &mut options);
+        self.common_options(id, if typst || music { &[] } else { &["graphviz"] }, &mut options);
         self.custom_options(id, DERIVED, &mut options);
-        let file = if typst { self.custom(id, "typst-file").unwrap_or("") } else { "" };
+        let file = if typst {
+            self.custom(id, "typst-file").unwrap_or("")
+        } else if music {
+            self.custom(id, "lilypond-file").unwrap_or("")
+        } else {
+            ""
+        };
         let file = file.to_owned();
-        self.directive_head(if typst { "typst-diagram" } else { "graphviz" }, &file, &options);
+        self.directive_head(
+            if typst {
+                "typst-diagram"
+            } else if music {
+                "lilypond"
+            } else {
+                "graphviz"
+            },
+            &file,
+            &options,
+        );
         if !file.is_empty() {
             return;
         }

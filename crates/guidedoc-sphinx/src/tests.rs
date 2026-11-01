@@ -9,6 +9,7 @@ mod directives;
 mod docfields;
 mod domains;
 mod glossary;
+mod lilypond;
 mod markdown;
 mod python;
 mod reader;

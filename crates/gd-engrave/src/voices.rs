@@ -1,5 +1,7 @@
 //! Simultaneous heads share compatible unisons and separate conflicting voice columns.
 
+mod columns;
+
 use std::collections::BTreeMap;
 
 use gd_score::{Direction, Error, EventId, EventKind, Score};
@@ -17,22 +19,23 @@ pub(crate) fn arrange(
     work: &mut usize,
 ) -> Result<(), Error> {
     let mut by_staff: BTreeMap<usize, Vec<EventId>> = BTreeMap::new();
-    for (index, first) in column.events.iter().enumerate() {
+    for first in &column.events {
         let a = &score.events[first.0 as usize];
-        let EventKind::Chord(chord_a) = &a.kind else { continue };
+        let EventKind::Chord(_) = &a.kind else { continue };
         let staff = score.voices[a.voice.0 as usize].staff.0 as usize;
         by_staff.entry(staff).or_default().push(*first);
-        for second in &column.events[index + 1..] {
-            charge(work, 1)?;
-            let b = &score.events[second.0 as usize];
-            if a.voice == b.voice || score.voices[b.voice.0 as usize].staff.0 as usize != staff {
-                continue;
-            }
-            let EventKind::Chord(chord_b) = &b.kind else { continue };
-            resolve_pair(plan, (*first, chord_a), (*second, chord_b), fonts, work)?;
-        }
     }
     for ids in by_staff.values() {
+        if ids.len() >= 3 || (ids.len() >= 2 && ids.iter().any(|id| columns::rank(score, *id) > 2))
+        {
+            columns::arrange(plan, ids, score, fonts, work)?;
+        } else if ids.len() == 2 {
+            let a = &score.events[ids[0].0 as usize];
+            let b = &score.events[ids[1].0 as usize];
+            if let (EventKind::Chord(a), EventKind::Chord(b)) = (&a.kind, &b.kind) {
+                resolve_pair(plan, (ids[0], a), (ids[1], b), fonts, work)?;
+            }
+        }
         if ids.len() >= 2 {
             crate::dots::arrange_staff_column(plan, ids);
             crate::accidentals::arrange_staff_column(plan, ids, fonts, work)?;
@@ -118,7 +121,10 @@ fn resolve_pair(
 pub(crate) fn direction(score: &Score, event: &gd_score::Event) -> Direction {
     let EventKind::Chord(chord) = &event.kind else { return Direction::Auto };
     let direction = if chord.direction == Direction::Auto {
-        score.voices[event.voice.0 as usize].direction
+        event
+            .voice_style
+            .map(|style| style.direction())
+            .unwrap_or(score.voices[event.voice.0 as usize].direction)
     } else {
         chord.direction
     };

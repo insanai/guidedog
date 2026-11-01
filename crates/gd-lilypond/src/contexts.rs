@@ -85,13 +85,12 @@ impl Reader<'_> {
                 .and_then(|id| self.syntax.node(*id))
                 .is_some_and(is_voice);
         if (!is_context || voice_context) && (explicit || branch > 0) {
-            child.voice_style = Some(match branch {
+            child.set_voice_style(match branch {
                 0 => gd_score::VoiceStyle::One,
                 1 => gd_score::VoiceStyle::Two,
                 2 => gd_score::VoiceStyle::Three,
                 _ => gd_score::VoiceStyle::Four,
             });
-            child.direction = child.voice_style.unwrap_or_default().direction();
             if branch == 0
                 && !self.voice_has_rhythmic(start.voice)
                 && let Some(voice) = self.score.voices.get_mut(start.voice.0 as usize)

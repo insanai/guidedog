@@ -68,6 +68,16 @@ pub(crate) struct State {
     pub(crate) grace_slash: bool,
 }
 
+impl State {
+    pub(crate) fn set_voice_style(&mut self, style: gd_score::VoiceStyle) {
+        self.voice_style = Some(style);
+        self.direction = style.direction();
+        self.slur_direction = style.direction();
+        self.tie_direction = style.direction();
+        self.dynamic_direction = style.direction();
+    }
+}
+
 impl Default for State {
     fn default() -> Self {
         Self {

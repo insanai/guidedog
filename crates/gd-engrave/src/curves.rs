@@ -154,18 +154,7 @@ impl Draw<'_, '_, '_, '_, '_> {
         let after = context.score.events[spanner.end.event.0 as usize].at >= sys_end;
         let tie = spanner.kind == SpannerKind::Tie;
         let info = &context.plan.events[spanner.start.event.0 as usize];
-        let up = match spanner.direction {
-            Direction::Up => true,
-            Direction::Down => false,
-            Direction::Auto if !tie => !info.up,
-            Direction::Auto => {
-                let mut heights: Vec<_> = info.heads.iter().map(|h| h.at.y).collect();
-                heights.sort_by(f64::total_cmp);
-                let y = info.heads[spanner.start.note as usize].at.y;
-                let center = heights[heights.len() / 2];
-                if y == center && heights.len() % 2 == 1 { !info.up } else { y < center }
-            }
-        };
+        let up = phrase_up(spanner, info);
         if !tie {
             if !before {
                 first = self.slur_attachment(context, spanner.start, first, up);
@@ -175,9 +164,15 @@ impl Draw<'_, '_, '_, '_, '_> {
             }
         }
         let offset = if up { -0.65 * space } else { 0.65 * space };
-        let from =
+        let mut from =
             Point { x: if before { first.x } else { first.x + 1.1 * space }, y: first.y + offset };
         let mut to = Point { x: last.x - 0.1 * space, y: last.y + offset };
+        if tie && !before && up && info.up {
+            from.x = from.x.max(stem_edge(context, spanner.start, first.x, space) + 0.2 * space);
+        }
+        if tie && !after && !up && !context.plan.events[spanner.end.event.0 as usize].up {
+            to.x = to.x.min(stem_edge(context, spanner.end, last.x, space) - 0.2 * space);
+        }
         if before && tie {
             to.x = continued_tie_end(context, spanner, last.x, from.x, space).min(to.x);
         }
@@ -381,5 +376,27 @@ fn curve_bounds(curve: Bezier) -> Rect {
         right: curve.from.x.max(curve.first.x).max(curve.second.x).max(curve.to.x),
         top: curve.from.y.min(curve.first.y).min(curve.second.y).min(curve.to.y),
         bottom: curve.from.y.max(curve.first.y).max(curve.second.y).max(curve.to.y),
+    }
+}
+
+/// Keeps a same-side tie endpoint beyond the note's actual stem edge.
+fn stem_edge(context: &Request<'_, '_>, note: NoteRef, head_x: f64, space: f64) -> f64 {
+    let info = &context.plan.events[note.event.0 as usize];
+    let local_x = info.heads[note.note as usize].at.x;
+    head_x + (info.stem_x - local_x) * space
+}
+
+fn phrase_up(spanner: &Spanner, info: &crate::prepare::EventInfo) -> bool {
+    match spanner.direction {
+        Direction::Up => true,
+        Direction::Down => false,
+        Direction::Auto if spanner.kind != SpannerKind::Tie => !info.up,
+        Direction::Auto => {
+            let mut heights: Vec<_> = info.heads.iter().map(|h| h.at.y).collect();
+            heights.sort_by(f64::total_cmp);
+            let y = info.heads[spanner.start.note as usize].at.y;
+            let center = heights[heights.len() / 2];
+            if y == center && heights.len() % 2 == 1 { !info.up } else { y < center }
+        }
     }
 }

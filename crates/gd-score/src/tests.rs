@@ -141,3 +141,14 @@ fn unplaced_spans_tonic_transposition_and_grace_invariants_behave_exact() {
     });
     assert!(check_score(&s).is_err());
 }
+
+#[test]
+fn score_validation_accepts_four_voices_and_rejects_a_fifth() {
+    let mut s = score();
+    for _ in 1..4 {
+        s.voices.push(Voice::default());
+    }
+    check_score(&s).unwrap();
+    s.voices.push(Voice::default());
+    assert!(check_score(&s).unwrap_err().message.contains("four voices"));
+}

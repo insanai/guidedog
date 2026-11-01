@@ -771,3 +771,76 @@ fn repeated_printed_measure_numbers_do_not_repeat_the_opening_signatures() {
     assert!(matches!(signatures[0].mark, Mark::Glyph { glyph, .. } if glyph == sharp));
     assert!(marks.iter().any(|m| m.mark.role() == Role::MeasureNumber));
 }
+
+#[test]
+fn four_unison_voices_keep_four_stems_and_separate_same_side_heads() {
+    let drawing = draw(
+        r"<< { \voiceOne c'4 } \\ { \voiceTwo c'4 } \\
+             { \voiceThree c'4 } \\ { \voiceFour c'4 } >>",
+        350.0,
+    );
+    let heads: Vec<_> =
+        drawing.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Notehead).collect();
+    assert_eq!(heads.len(), 3);
+    for (index, head) in heads.iter().enumerate() {
+        for other in &heads[index + 1..] {
+            assert!(!head.bounds.overlaps(other.bounds, 0.0));
+        }
+    }
+    let stems: Vec<_> = drawing.systems[0]
+        .marks
+        .iter()
+        .filter_map(|m| match m.mark {
+            Mark::Line { from, to, role: Role::Stem, .. } => Some(to.y < from.y),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(stems, [true, false, true, false]);
+    let neutral = draw(r"{ \voiceThree c'''4 \oneVoice c'''4 }", 350.0);
+    let stems: Vec<_> = neutral.systems[0]
+        .marks
+        .iter()
+        .filter_map(|m| match m.mark {
+            Mark::Line { from, to, role: Role::Stem, .. } => Some(to.y < from.y),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(stems, [true, false]);
+}
+
+#[test]
+fn four_voice_columns_separate_all_dense_pitch_permutations() {
+    let pitches = ["c'", "d'", "e'"];
+    for pattern in 0..81 {
+        let mut choice = pattern;
+        let mut parts = Vec::new();
+        for _ in 0..4 {
+            parts.push(format!("{{ {}4 }}", pitches[choice % 3]));
+            choice /= 3;
+        }
+        let source = format!("<< {} >>", parts.join(r" \\ "));
+        let drawing = draw(&source, 350.0);
+        let heads: Vec<_> =
+            drawing.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Notehead).collect();
+        for (index, head) in heads.iter().enumerate() {
+            for other in &heads[index + 1..] {
+                assert!(!head.bounds.overlaps(other.bounds, 0.0), "{source}");
+            }
+        }
+    }
+}
+
+#[test]
+fn four_equal_rests_merge_and_different_rest_durations_do_not_overlap() {
+    let equal = draw(r"<< { r1 } \\ { r1 } \\ { r1 } \\ { r1 } >>", 350.0);
+    assert_eq!(equal.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Rest).count(), 1);
+    let drawing = draw(r"<< { r4 } \\ { r2 } \\ { r8 } \\ { r4. } >>", 350.0);
+    let rests: Vec<_> =
+        drawing.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Rest).collect();
+    assert_eq!(rests.len(), 4);
+    for (index, rest) in rests.iter().enumerate() {
+        for other in &rests[index + 1..] {
+            assert!(!rest.bounds.overlaps(other.bounds, 0.0));
+        }
+    }
+}

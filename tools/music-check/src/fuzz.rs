@@ -1,3 +1,16 @@
+const SEEDS: &[&str] = &[
+    r"\relative c' { c8( d e f) g4~ g }",
+    r"<< { cis'2 c'2 } \\ { c'2 s2 } >>",
+    r"{ \tuplet 3/2 { c'8 d' e' } c'2. }",
+    "{ c'4^\"音楽 संगीत ♫\" d' e' f' }",
+    r#"{ c'4^\markup { \bold "Allegro" \box \circle "A" \flat } d'2. }"#,
+    r"{\repeat volta 3 { c'1 } \alternative { \volta 1,2 { d'1 } \volta 3 { e'1 } }}",
+    r"<< { c''4 d'' } \\ { c'2 } \\ { g'8 a' b' c'' } >>",
+    r"<< { c'4 } \\ { c'4 } \\ { cis'4 } \\ { d'4 } >>",
+    r"x = { \x } \x",
+    r"{ \repeat unfold 999999999 { c'128 } }",
+];
+
 pub(crate) fn check(count: usize) -> Result<(), String> {
     if count == 0 || count > 10_000_000 {
         return Err("Use 1..10000000 fuzz cases.".into());
@@ -18,16 +31,6 @@ pub(crate) fn check(count: usize) -> Result<(), String> {
         if index % 3 == 0 {
             text = structured(index, &mut seed);
         } else if index % 3 == 1 {
-            const SEEDS: &[&str] = &[
-                r"\relative c' { c8( d e f) g4~ g }",
-                r"<< { cis'2 c'2 } \\ { c'2 s2 } >>",
-                r"{ \tuplet 3/2 { c'8 d' e' } c'2. }",
-                "{ c'4^\"音楽 संगीत ♫\" d' e' f' }",
-                r#"{ c'4^\markup { \bold "Allegro" \box \circle "A" \flat } d'2. }"#,
-                r"{\repeat volta 3 { c'1 } \alternative { \volta 1,2 { d'1 } \volta 3 { e'1 } }}",
-                r"x = { \x } \x",
-                r"{ \repeat unfold 999999999 { c'128 } }",
-            ];
             text = SEEDS[index % SEEDS.len()].to_string();
             if index % 2 == 0 {
                 let cut = text

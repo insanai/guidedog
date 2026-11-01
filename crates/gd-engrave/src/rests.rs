@@ -32,7 +32,7 @@ impl Draw<'_, '_, '_, '_, '_> {
         let line_start = request.columns[column].at.main == request.columns[0].at.main;
         let prefix = if line_start { 0.0 } else { request.plan.events[id.0 as usize].prefix };
         let x = request.positions[column] + prefix * space;
-        for _ in 0..8 {
+        for attempt in 0..32 {
             let ink = Rect {
                 left: x + data.bounds.left * space,
                 right: x + data.bounds.right * space,
@@ -56,8 +56,17 @@ impl Draw<'_, '_, '_, '_, '_> {
                     }
                 }
             }
+            for previous in &self.system.marks {
+                charge(self.work, 1)?;
+                if previous.staff == self.staff && previous.mark.role() == Role::Rest {
+                    collision |= ink.overlaps(previous.bounds, 0.0);
+                }
+            }
             if !collision {
                 break;
+            }
+            if attempt == 31 {
+                return Err(crate::limits::failure("Cannot separate simultaneous rests."));
             }
             y += side * space;
         }
@@ -92,14 +101,19 @@ fn rest_direction(
         {
             any_other_rest = true;
             if rest == *duration {
-                equal_rest = Some(other.voice);
+                equal_rest = Some(equal_rest.map_or(other.voice, |old: gd_score::VoiceId| {
+                    gd_score::VoiceId(old.0.min(other.voice.0))
+                }));
             }
         }
     }
     if equal_rest.is_some_and(|voice| voice.0 < event.voice.0) {
         return None;
     }
-    let voice_dir = request.score.voices[event.voice.0 as usize].direction;
+    let voice_dir = event
+        .voice_style
+        .map(|style| style.direction())
+        .unwrap_or(request.score.voices[event.voice.0 as usize].direction);
     let dir = if equal_rest.is_some() {
         Direction::Auto
     } else if voice_dir != Direction::Auto {

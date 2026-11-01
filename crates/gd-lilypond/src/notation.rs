@@ -307,11 +307,7 @@ fn apply_state_toggle(name: &str, state: &mut State) -> bool {
         _ => None,
     };
     if let Some(style) = style {
-        state.voice_style = Some(style);
-        state.direction = style.direction();
-        state.slur_direction = style.direction();
-        state.tie_direction = style.direction();
-        state.dynamic_direction = style.direction();
+        state.set_voice_style(style);
         return true;
     }
     match name {

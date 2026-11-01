@@ -144,7 +144,7 @@ impl Plan {
                 info.base_prefix = prefixes[info.staff];
                 info.prefix = prefixes[info.staff];
                 info.state = state.snapshot();
-                info.dot_down = score.voices[event.voice.0 as usize].direction == Direction::Down;
+                info.dot_down = crate::voices::direction(score, event) == Direction::Down;
                 if let EventKind::Chord(chord) = &event.kind {
                     heads(
                         info,

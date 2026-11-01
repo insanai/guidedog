@@ -225,7 +225,8 @@ fn source_text(release: &Release<'_>, programs: &[&str]) -> String {
          Typst: embedded Typst 0.15.1. Graphviz: linked statically.\n\
          {}\
          Requires: {}.\n\
-         Licenses and notices: LICENSE, NOTICE, COPYING-graphviz and COPYING-expat.\n",
+         Licenses and notices: LICENSE, NOTICE, COPYING-graphviz, COPYING-expat,\n\
+         and COPYING-bravura.\n",
         platform.package,
         platform.target,
         programs.join(" "),

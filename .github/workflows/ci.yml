@@ -61,6 +61,10 @@ jobs:
         run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - name: Tests
         run: cargo test --locked --workspace --no-fail-fast
+      - name: Native music SVG, PNG and collision corpus
+        run: cargo run --locked -p music-check
+      - name: Bounded music reader and engraver fuzz corpus
+        run: cargo run --locked -p music-check -- --fuzz 12000
       - name: Large-site incremental SSG regression
         run: cargo test --locked -p gd-project --test ssg_benchmark -- --ignored --nocapture
       - name: Linux Secret Service with a real keyring

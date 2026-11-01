@@ -1,0 +1,19 @@
+[package]
+name = "music-check"
+description = "Native music corpus, pixel and hostile-input qualification"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+
+[dependencies]
+gd-score.workspace = true
+gd-lilypond.workspace = true
+gd-engrave.workspace = true
+gd-typst.workspace = true
+gd-flate.workspace = true
+gd-report.workspace = true
+
+[lints]
+workspace = true

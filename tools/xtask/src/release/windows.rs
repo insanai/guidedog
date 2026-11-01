@@ -78,6 +78,7 @@ pub(super) fn source_text(version: &str, commit: &str, rustc: &str, command: &st
          Official runtime: https://graphviz.org/download/\n\
          Archive: windows_10_cmake_Release_Graphviz-16.1.0-win64.zip\n\
          SHA256: 733e49626c492242eb8dca30ea627b6ead20710e207998c7933b4909d92d6abc\n\
+         Licenses: LICENSE, NOTICE and COPYING-bravura.\n\
          Keep the extracted folder together, including DLLs, config8 and notices.\n"
     )
 }

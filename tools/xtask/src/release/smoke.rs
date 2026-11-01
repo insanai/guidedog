@@ -132,6 +132,11 @@ Smoke
    #import \"diagrams/helper.typ\": draw
    #draw
 
+.. lilypond::
+   :alt: A native C major melody
+
+   { c'4 d' e' f' | \\break g'1 | }
+
 .. math::
 
    e^{i \\pi} + 1 = 0
@@ -164,6 +169,10 @@ pub(crate) fn smoke(program: &Path, external_typst: bool) -> Result<()> {
             &format!("{} does not embed Typst 0.15.1", program.display()),
         ));
     }
+    let licenses = runner.output(dir, &["--licenses"])?;
+    if !licenses.contains("Bravura") || !licenses.contains("SIL OPEN FONT LICENSE") {
+        return Err(smoke_failure("guidedog", "Bravura's license notice is missing"));
+    }
     runner.run(dir, &["quickstart", "docs", "-q", "-p", "Smoke", "-a", "Release"])?;
     write(&dir.join("docs/conf.toml"), SMOKE_CONF)?;
     write(&dir.join("docs/index.rst"), SMOKE_INDEX)?;
@@ -187,6 +196,7 @@ pub(crate) fn smoke(program: &Path, external_typst: bool) -> Result<()> {
         (html.contains("class=\"graphviz\""), "the diagram is missing from index.html"),
         (html.contains("<svg"), "no SVG in index.html"),
         (html.contains("class=\"typst-diagram\""), "no embedded Typst diagram"),
+        (html.contains("class=\"lilypond\""), "no native music"),
         (html.contains("id=\"tool.run\""), "autodoc did not document tool.run"),
     ];
     if let Some((_, what)) = checks.iter().find(|(ok, _)| !ok) {

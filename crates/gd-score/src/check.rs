@@ -25,6 +25,7 @@ pub fn check_score(score: &Score) -> Result<(), Error> {
     }
     check_voices(score)?;
     check_simultaneous_voices(score)?;
+    check_tablature(score)?;
     for event in &score.events {
         check_event(event).map_err(|error| error.or_at(event.span))?;
     }
@@ -44,6 +45,21 @@ pub fn check_score(score: &Score) -> Result<(), Error> {
             if let Some(end) = syllable.extender {
                 check_anchor(score, end).map_err(|e| e.or_at(syllable.span))?;
             }
+        }
+    }
+    Ok(())
+}
+
+/// Every chord on a tablature staff must have a string and fret for each note.
+fn check_tablature(score: &Score) -> Result<(), Error> {
+    for event in &score.events {
+        let EventKind::Chord(chord) = &event.kind else { continue };
+        let staff = score
+            .voices
+            .get(event.voice.0 as usize)
+            .and_then(|voice| score.staves.get(voice.staff.0 as usize));
+        if staff.is_some_and(|staff| staff.kind == crate::StaffKind::Tablature) {
+            crate::tab_positions(&chord.notes).map_err(|error| error.or_at(event.span))?;
         }
     }
     Ok(())
@@ -141,6 +157,9 @@ fn check_event(event: &Event) -> Result<(), Error> {
             }
             for note in &chord.notes {
                 note.pitch.check_range()?;
+                if note.string.is_some_and(|s| !(1..=6).contains(&s)) {
+                    return Err(invalid("A string number must be 1 through 6."));
+                }
             }
         }
         EventKind::Key(key) => {

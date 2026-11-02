@@ -47,9 +47,21 @@ pub struct Score {
     pub measures: Vec<Measure>,
 }
 
-/// One five-line staff.
+/// What a staff's lines stand for.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum StaffKind {
+    /// Five lines of standard notation.
+    #[default]
+    Standard,
+    /// Six lines of guitar tablature in [`crate::GUITAR_TUNING`], with fret numbers.
+    Tablature,
+}
+
+/// One staff of standard notation or tablature.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct Staff {
+    /// Standard notation or tablature.
+    pub kind: StaffKind,
     /// Full name on the first system.
     pub name: String,
     /// Abbreviation on subsequent systems.
@@ -253,6 +265,9 @@ pub struct Note {
     pub forced: bool,
     /// Put the accidental in parentheses.
     pub cautionary: bool,
+    /// Tablature string that plays the note, 1 for the highest; None lets tablature
+    /// choose, as [`crate::tab_positions`] describes.
+    pub string: Option<u8>,
 }
 
 /// A clef and optional octave displacement.

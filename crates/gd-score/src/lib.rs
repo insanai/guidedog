@@ -10,6 +10,7 @@ mod markup;
 mod pitch;
 mod ratio;
 mod score;
+mod tablature;
 
 pub use check::check_score;
 pub use duration::{Base, Duration};
@@ -18,6 +19,7 @@ pub use markup::{ColumnAlign, Enclosure, Markup, MarkupRole, StyleChange};
 pub use pitch::{Alter, Key, Mode, Pitch, Step};
 pub use ratio::Ratio;
 pub use score::*;
+pub use tablature::{GUITAR_TUNING, MAX_FRET, TabPosition, tab_positions};
 
 #[cfg(test)]
 mod tests;

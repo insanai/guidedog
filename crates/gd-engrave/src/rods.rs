@@ -47,7 +47,7 @@ pub(crate) fn collect(
                     )?;
                     crate::labels::event(
                         &mut current,
-                        info.prefix,
+                        info,
                         &score.events[id.0 as usize],
                         fonts,
                         work,

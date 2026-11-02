@@ -35,12 +35,13 @@ fn markup_bands(
 
 pub(crate) fn event(
     bands: &mut Bands,
-    prefix: f64,
+    info: &crate::prepare::EventInfo,
     event: &Event,
     fonts: &Fonts<'_>,
     work: &mut usize,
     options: &mut crate::Options<'_>,
 ) -> Result<(), Error> {
+    let prefix = info.prefix;
     for annotation in &event.marks {
         charge(work, 1)?;
         match &annotation.kind {
@@ -86,7 +87,7 @@ pub(crate) fn event(
             AnnotationKind::Breath => {
                 // A breathing sign takes its own room after the note, as LilyPond gives it
                 // a column of its own, so the next note always moves aside.
-                let x = prefix + crate::decorations::BREATH_X;
+                let x = prefix + info.voice_shift + crate::decorations::breath_x(info, fonts)?;
                 let rect = crate::Rect { left: x - 0.2, right: x + 1.0, top: -4.0, bottom: 4.0 };
                 add_rect(bands, rect, work)?;
             }

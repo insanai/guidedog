@@ -103,6 +103,16 @@ pub(crate) fn boxes(info: &EventInfo) -> impl Iterator<Item = Rect> + '_ {
     })
 }
 
+/// The right edge of the widest fret number `info` may print, relative to its column
+/// origin, in staff spaces, or zero when the chord prints none.
+pub(crate) fn frets_right(info: &EventInfo) -> f64 {
+    info.frets
+        .iter()
+        .filter(|fret| !fret.continuation || fret.at_bar)
+        .map(|fret| CENTER + fret.width / 2.0)
+        .fold(0.0, f64::max)
+}
+
 impl Draw<'_, '_, '_, '_, '_> {
     /// Draws the TAB clef at `x`, scaled to span the middle four strings.
     pub(crate) fn tab_clef(&mut self, x: f64, middle: f64) -> Result<(), Error> {

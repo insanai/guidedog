@@ -36,13 +36,19 @@ impl Draw<'_, '_, '_, '_, '_> {
                 for mark in &event.marks {
                     charge(self.work, 1)?;
                     // Default tablature shows no scripts, fingerings or dynamics; tempo and
-                    // rehearsal marks belong to the whole score and stay.
+                    // rehearsal marks belong to the whole score and stay, and so does a
+                    // breathing sign, which LilyPond prints above the top string.
                     let local = !matches!(
                         mark.kind,
                         AnnotationKind::Tempo(_)
                             | AnnotationKind::Rehearsal(_)
                             | AnnotationKind::Markup(_, MarkupRole::Tempo | MarkupRole::Rehearsal)
                     );
+                    if tab && mark.kind == AnnotationKind::Breath {
+                        let top = middle - crate::tablature::HALF_HEIGHT * space;
+                        self.breath(info, x + info.voice_shift * space, top, space)?;
+                        continue;
+                    }
                     if tab && local {
                         continue;
                     }
@@ -52,7 +58,7 @@ impl Draw<'_, '_, '_, '_, '_> {
                     let y = middle + if up { -5.0 * space } else { 5.0 * space };
                     let at = Point { x: x + info.voice_shift * space, y };
                     let first = self.system.marks.len();
-                    self.annotation(mark, at, space, up)?;
+                    self.annotation(mark, info, at, space, up)?;
                     self.separate_annotations(annotation_start, first, middle, up, space)?;
                 }
                 if !tab && let EventKind::Chord(chord) = &event.kind {
@@ -197,6 +203,7 @@ impl Draw<'_, '_, '_, '_, '_> {
     fn annotation(
         &mut self,
         mark: &gd_score::Annotation,
+        info: &crate::prepare::EventInfo,
         at: Point,
         space: f64,
         up: bool,
@@ -219,18 +226,9 @@ impl Draw<'_, '_, '_, '_, '_> {
                 };
                 self.markup(markup, style, at, (size, space), mark_role)?;
             }
-            AnnotationKind::Breath => {
-                // The comma stands just above the top line after the note; `at` is five
-                // spaces from the middle of the staff.
-                let y = at.y + 2.5 * space;
-                self.glyph(
-                    "breathMarkComma",
-                    at.x + BREATH_X * space,
-                    y,
-                    space,
-                    Role::Articulation,
-                )?;
-            }
+            // `at` is five spaces above the middle of the staff, so the top line is three
+            // spaces below it.
+            AnnotationKind::Breath => self.breath(info, at.x, at.y + 3.0 * space, space)?,
             AnnotationKind::Dynamic(text) => self.dynamic(text, at, space)?,
             AnnotationKind::Articulation(name) => self.articulation(name, up, at, space)?,
             AnnotationKind::Fingering(number) => {
@@ -390,9 +388,52 @@ pub(crate) fn dynamic_glyph(character: char) -> Option<&'static str> {
     })
 }
 
-/// Where a breathing sign stands after its note's column, in staff spaces: past a
-/// notehead and a little air.
-pub(crate) const BREATH_X: f64 = 1.7;
+impl Draw<'_, '_, '_, '_, '_> {
+    /// Draws a breathing sign after the note whose shifted origin is at `x`, half a space
+    /// above the staff's top line at `top`.
+    fn breath(
+        &mut self,
+        info: &crate::prepare::EventInfo,
+        x: f64,
+        top: f64,
+        space: f64,
+    ) -> Result<(), Error> {
+        let dx = breath_x(info, self.fonts)? * space;
+        self.glyph("breathMarkComma", x + dx, top - 0.5 * space, space, Role::Articulation)
+    }
+}
+
+/// Minimum offset of a breathing sign after its note's shifted origin, in staff spaces.
+const BREATH_X: f64 = 1.7;
+
+/// Where a breathing sign stands after its note's shifted origin, in staff spaces: past
+/// its heads, dots and upward flags, and at least [`BREATH_X`].
+pub(crate) fn breath_x(
+    info: &crate::prepare::EventInfo,
+    fonts: &crate::Fonts<'_>,
+) -> Result<f64, Error> {
+    // On a tab staff the sign clears the widest fret number instead of noteheads.
+    let mut right: f64 = crate::tablature::frets_right(info);
+    if !info.heads.is_empty() {
+        let head_w =
+            fonts.glyph_data(fonts.glyph(info.head_glyph)?).map_or(1.18, |d| d.bounds.right)
+                * info.head_scale;
+        for head in &info.heads {
+            right = right.max(head.at.x - info.voice_shift + head_w);
+            for dot in &head.dots {
+                right = right.max(dot.x + 0.4 * info.head_scale);
+            }
+        }
+        if info.flags > 0 && info.beam.is_none() && info.up {
+            let flag_w = fonts
+                .glyph_data(fonts.glyph(crate::heads::flag(info.flags, true))?)
+                .map_or(1.06, |d| d.bounds.right)
+                * info.head_scale;
+            right = right.max(info.stem_x - info.voice_shift + flag_w);
+        }
+    }
+    Ok((right + 0.45).max(BREATH_X))
+}
 
 fn mark_above(mark: &gd_score::Annotation, stem_up: bool, voice: gd_score::Direction) -> bool {
     use gd_score::Direction;

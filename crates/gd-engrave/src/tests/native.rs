@@ -1097,6 +1097,32 @@ fn metronome_marks_draw_a_note_symbol() {
 }
 
 #[test]
+fn breath_marks_clear_dots_flags_breves_and_shifted_voices() {
+    let dotted = draw(r"{ \time 4/4 f''2. \breathe g''4 | }", 350.0);
+    let comma = marks_of(&dotted, &[Role::Articulation])[0];
+    let dot = marks_of(&dotted, &[Role::Dot])[0];
+    assert!(comma.left > dot.right, "{comma:?} vs {dot:?}");
+
+    let flagged = draw(r"{ \time 4/4 a'8 \breathe r8 r2. | }", 350.0);
+    let comma = marks_of(&flagged, &[Role::Articulation])[0];
+    let flag = marks_of(&flagged, &[Role::Flag])[0];
+    assert!(comma.left > flag.right, "{comma:?} vs {flag:?}");
+
+    let breve = draw(r"{ \time 4/2 f''\breve \breathe | }", 350.0);
+    let comma = marks_of(&breve, &[Role::Articulation])[0];
+    let head = marks_of(&breve, &[Role::Notehead])[0];
+    assert!(comma.left > head.right, "{comma:?} vs {head:?}");
+
+    let shifted = draw(
+        r"\new Staff << { \voiceOne \shiftOn c''2 \breathe d''2 } \\ { \voiceTwo g'1 } >>",
+        350.0,
+    );
+    let comma = marks_of(&shifted, &[Role::Articulation])[0];
+    let heads = marks_of(&shifted, &[Role::Notehead]);
+    assert!(comma.left > heads[0].right && comma.right < heads[2].left, "{comma:?} vs {heads:?}");
+}
+
+#[test]
 fn solo_tab_staves_space_outer_strings_tied_breaks_and_omit_signature_gaps() {
     // A solo TabStaff with a wide key signature does not reserve blank signature space.
     let c_tab = draw(r"\new TabStaff { \key c \major e4 f g a }", 350.0);
@@ -1127,4 +1153,24 @@ fn solo_tab_staves_space_outer_strings_tied_breaks_and_omit_signature_gaps() {
         outer.systems[1].marks.iter().filter(|m| m.mark.role() == Role::Fret).collect();
     assert!(sys1_frets[0].bounds.left > sys1_clef.right);
     assert!(sys1_frets[0].bounds.right < sys1_frets[1].bounds.left);
+}
+
+#[test]
+fn tab_staves_print_breath_marks_above_the_top_string() {
+    let music = r"{ \time 4/4 e'4 g' g'2 \breathe | c'1 }";
+    let engraving = draw(
+        &format!(
+            r"\new StaffGroup << \new Staff {{ \clef treble_8 {music} }} \new TabStaff {music} >>"
+        ),
+        350.0,
+    );
+    let commas = staff_marks(&engraving, 1, &[Role::Articulation]);
+    assert_eq!(commas.len(), 1, "{commas:?}");
+    let strings = staff_marks(&engraving, 1, &[Role::Staff]);
+    let top = strings.iter().map(|line| line.top).fold(f64::MAX, f64::min);
+    assert!(commas[0].bottom <= top + 0.5, "{commas:?} above {top}");
+    // The comma follows the last fret number of the bar.
+    let frets = staff_marks(&engraving, 1, &[Role::Fret]);
+    let before = frets.iter().filter(|fret| fret.left < commas[0].left).count();
+    assert_eq!(before, 3, "{frets:?} {commas:?}");
 }

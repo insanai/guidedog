@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 16:03+0000\n"
+"POT-Creation-Date: 2026-11-02 02:37+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -2590,6 +2590,295 @@ msgid ""
 msgstr ""
 "ディレクトリ交換に対応したファイルシステムでは、出力パスは一度の操作で切り替わります。フォールバックでは名前変更を 2 "
 "回行うため、そのパスが一瞬存在しないことがあります。それでも、組み立て途中のツリーが見えることはありません。中断した切り替えは、ジャーナルからの復旧で完了するか元に戻します。複数のリクエストを送るクライアントは、二つの世代にまたがることがあります。閲覧セッション全体で一つのスナップショットを保証するものではありません。"
+
+#: ../../howto/songbook.rst:1
+msgid "Write a songbook"
+msgstr "歌集を作る"
+
+#: ../../howto/songbook.rst:4
+msgid ""
+"We can keep a songbook in Guidedog: the explanations in RST or Markdown, "
+"the music as text beside them, and one command that engraves the scores "
+"for a website and a printed book. In this task we write a complete song "
+"for voice, piano and guitar, with words, chord names and guitar "
+"tablature, and explain each part for students. We use *Mary Had a Little "
+"Lamb*: the tune is a traditional American melody, and the words are by "
+"Sarah Josepha Hale, published in 1830; both are in the public domain. "
+":doc:`../topics/music` describes every notation command we use."
+msgstr "Guidedog で歌集を作ることができます。説明は RST または Markdown で書き、楽譜はテキストとしてそのそばに置き、ウェブサイト用と印刷する本用の楽譜を 1 つのコマンドで浄書します。この課題では、歌詞、コードネーム、ギターのタブ譜を備えた、歌、ピアノ、ギターのための 1 曲を完成させ、各パートを生徒向けに説明します。題材は *Mary Had a Little Lamb*\\ （メリーさんのひつじ）です。旋律はアメリカの伝承曲で、歌詞は Sarah Josepha Hale が 1830 年に発表したものです。どちらもパブリックドメインです。ここで使う記譜コマンドは、すべて :doc:`../topics/music` で説明しています。"
+
+#: ../../howto/songbook.rst:9
+msgid "Start the project"
+msgstr "プロジェクトを始める"
+
+#: ../../howto/songbook.rst:12
+msgid "We create a project and a folder for the scores."
+msgstr "プロジェクトと、楽譜を置くフォルダーを作ります。"
+
+#: ../../howto/songbook.rst:19
+msgid ""
+"Each song gets a page, and each score a ``.ly`` file in ``scores``. The "
+"page explains the music; the file holds it. A score in its own file is "
+"easy to reuse on several pages, to compare in version control, and to "
+"open in LilyPond itself. We list the song's page in the ``toctree`` of "
+"``index.rst``:"
+msgstr "曲ごとに 1 ページを、楽譜ごとに ``scores`` 内の ``.ly`` ファイルを 1 つ用意します。ページは音楽を説明し、ファイルは音楽そのものを収めます。楽譜を独立したファイルにしておくと、複数のページで再利用したり、バージョン管理で変更を比べたり、LilyPond 本体で開いたりするのが簡単です。曲のページは ``index.rst`` の ``toctree`` に載せます。"
+
+#: ../../howto/songbook.rst:33
+msgid ""
+"We number the figures so that the text can refer to them, with this line "
+"in ``conf.toml``:"
+msgstr "本文から図を参照できるように、``conf.toml`` に次の行を書いて図に番号を付けます。"
+
+#: ../../howto/songbook.rst:39
+msgid "Write the tune"
+msgstr "旋律を書く"
+
+#: ../../howto/songbook.rst:42
+msgid ""
+"A tune is a sequence of pitches, each with a duration. We write it inside "
+"``\\fixed c' { ... }``, where a letter is a pitch in the octave of middle "
+"C: ``c`` is middle C, ``d`` the D above it, and so on up to ``b``. An "
+"apostrophe raises a pitch by an octave, and a comma lowers it."
+msgstr "旋律は音高の並びで、それぞれの音には音価があります。旋律は ``\\fixed c' { ... }`` の中に書きます。ここでは、文字は中央ハを含むオクターブの音高を表します。``c`` は中央ハ（ド）、``d`` はその上の D（レ）で、以下 ``b`` まで同様です。アポストロフィは音を 1 オクターブ上げ、コンマは 1 オクターブ下げます。"
+
+#: ../../howto/songbook.rst:46
+msgid ""
+"A number after a pitch is its duration: ``1`` is a whole note of four "
+"beats, ``2`` a half note of two beats, and ``4`` a quarter note of one "
+"beat. A pitch without a number keeps the duration of the pitch before it. "
+"``\\key c \\major`` gives the key, C major, which has no sharps or flats, "
+"and ``\\time 4/4`` gives the time signature: four quarter-note beats in "
+"each bar. A vertical bar ``|`` marks the end of a bar; Guidedog checks "
+"that each bar holds exactly four beats. ``\\bar \"|.\"`` draws the final "
+"double bar."
+msgstr "音高の後の数字は音価を表します。``1`` は 4 拍の全音符、``2`` は 2 拍の二分音符、``4`` は 1 拍の四分音符です。数字のない音は、直前の音の音価を引き継ぎます。``\\key c \\major`` は調を、シャープもフラットもないハ長調に定めます。``\\time 4/4`` は拍子記号を、1 小節に四分音符が 4 拍入る四分の四拍子に定めます。縦棒 ``|`` は小節の終わりを示し、Guidedog は各小節がちょうど 4 拍になっているかを検査します。``\\bar \"|.\"`` は曲の終わりの終止線を引きます。"
+
+#: ../../howto/songbook.rst:53
+msgid ""
+"Eight bars in C major and four-four time, starting E, D, C, D, and ending "
+"on a whole-note C."
+msgstr "E、D、C、D で始まり、全音符の C で終わる、ハ長調・四分の四拍子の 8 小節。"
+
+#: ../../howto/songbook.rst:53
+msgid "The tune of *Mary Had a Little Lamb*."
+msgstr "*Mary Had a Little Lamb* の旋律。"
+
+#: ../../howto/songbook.rst:63
+msgid ""
+":numref:`songbook-tune` has eight bars. The tune moves mostly by step, "
+"between the neighboring notes C, D and E, and leaps once, from E up to G "
+"in bar four. Count the beats in bar two: ``e`` and ``e`` take one beat "
+"each, and ``e2`` takes two, which makes four."
+msgstr ":numref:`songbook-tune` は 8 小節です。旋律はほとんどが隣り合う音 C、D、E の間を順次進行で動き、跳躍は 4 小節目の E から G への 1 回だけです。2 小節目の拍を数えてみましょう。``e`` と ``e`` がそれぞれ 1 拍、``e2`` が 2 拍で、合わせて 4 拍になります。"
+
+#: ../../howto/songbook.rst:67
+msgid "Add the words"
+msgstr "歌詞を付ける"
+
+#: ../../howto/songbook.rst:70
+msgid ""
+"A singer reads the words under the notes, one syllable under each note. "
+"We write the words in ``\\lyricmode``, with spaces between the syllables. "
+"Two hyphens, ``--``, join the syllables of one word, and Guidedog draws a "
+"short hyphen between them. The tune has 26 notes, so each verse needs "
+"exactly 26 syllables:"
+msgstr "歌い手は、音符の下に書かれた歌詞を 1 つの音符に 1 音節ずつ読みます。歌詞は ``\\lyricmode`` の中に、音節の間を空白で区切って書きます。ハイフン 2 つ（``--``）で 1 つの単語の音節をつなぐと、Guidedog はその間に短いハイフンを描きます。この旋律には音符が 26 個あるので、各番の歌詞にはちょうど 26 の音節が必要です。"
+
+#: ../../howto/songbook.rst:80
+msgid ""
+"To attach the words, we name the voice that sings the tune, ``\\new Voice "
+"= \"tune\"``, and give each verse its own ``\\new Lyrics \\lyricsto "
+"\"tune\"``. Guidedog places the syllables under the notes of that voice "
+"in order, and puts the verses one below the other."
+msgstr "歌詞を音符に結び付けるには、旋律を歌う声部に ``\\new Voice = \"tune\"`` のように名前を付け、各番の歌詞にそれぞれ ``\\new Lyrics \\lyricsto \"tune\"`` を与えます。Guidedog はその声部の音符の下に音節を順に配置し、各番の歌詞を上下に並べます。"
+
+#: ../../howto/songbook.rst:84
+msgid ""
+"The tune on one staff with two lines of words below: Mary had a little "
+"lamb, and Everywhere that Mary went."
+msgstr "1 段の譜表に書いた旋律と、その下の 2 行の歌詞「Mary had a little lamb」と「Everywhere that Mary went」。"
+
+#: ../../howto/songbook.rst:84
+msgid "The vocal part with two verses."
+msgstr "2 番までの歌詞を付けた歌のパート。"
+
+#: ../../howto/songbook.rst:106
+msgid ""
+"Hale's poem has more verses, but the next, \"It followed her to school "
+"one day\", has five syllables where the first bar has four notes. Singers "
+"divide a note for the extra syllable; a score shows that with a different "
+"rhythm, so our songbook keeps the two verses that fit the tune as written."
+msgstr "Hale の詩にはさらに続きがありますが、次の「It followed her to school one day」は、最初の小節の 4 つの音符に対して 5 音節あります。歌い手は余った音節のために音符を分けて歌いますが、楽譜ではそれを別のリズムで書き表すことになります。そこでこの歌集では、書かれたとおりの旋律に合う 2 番までを収めます。"
+
+#: ../../howto/songbook.rst:109
+msgid "Name the chords"
+msgstr "コードネームを付ける"
+
+#: ../../howto/songbook.rst:112
+msgid ""
+"Guitarists and pianists who accompany a singer read chord names above the "
+"staff. We write them in ``\\chordmode``: ``c1`` is a C major chord "
+"lasting a whole bar, ``g1`` a G major chord, and ``g:7`` a G seventh "
+"chord. The song needs only these three chords: C under the notes C, E and "
+"G, and G or G7 under D and B. A ``\\new ChordNames`` context draws the "
+"names above the next staff:"
+msgstr "歌の伴奏をするギタリストやピアニストは、譜表の上に書かれたコードネームを読みます。コードネームは ``\\chordmode`` の中に書きます。``c1`` は 1 小節全体にわたる C メジャーのコード、``g1`` は G メジャーのコード、``g:7`` は G セブンスのコードです。この曲に必要なコードは次の 3 つだけです。C、E、G の音には C を、D と B の音には G または G7 を付けます。``\\new ChordNames`` コンテキストは、すぐ後に続く譜表の上にコードネームを表示します。"
+
+#: ../../howto/songbook.rst:121
+msgid "Write the piano part"
+msgstr "ピアノのパートを書く"
+
+#: ../../howto/songbook.rst:124
+msgid ""
+"A piano part has two staves joined by a brace: ``\\new PianoStaff``. The "
+"upper staff is for the right hand, and the lower staff, with ``\\clef "
+"bass``, for the left hand."
+msgstr "ピアノのパートには、ブレースで結んだ 2 段の譜表、つまり大譜表 ``\\new PianoStaff`` を使います。上段は右手用で、``\\clef bass`` を指定した下段は左手用です。"
+
+#: ../../howto/songbook.rst:127
+msgid ""
+"The right hand plays the tune and, below it, a second voice a third "
+"lower. Two voices on one staff go inside ``<< ... >>``, separated by "
+"``\\\\``. Guidedog draws the first voice with stems up and the second "
+"with stems down, so a player can follow each line. The left hand plays "
+"the bass: the root and the fifth of each chord, as half notes."
+msgstr "右手は旋律と、その 3 度下を進む第 2 の声部を弾きます。1 つの譜表上の 2 つの声部は ``<< ... >>`` の中に書き、``\\\\`` で区切ります。Guidedog は第 1 声部を符幹上向きで、第 2 声部を符幹下向きで描くので、奏者はそれぞれの旋律線を追うことができます。左手はバスを受け持ち、各コードの根音と第 5 音を二分音符で弾きます。"
+
+#: ../../howto/songbook.rst:133
+msgid ""
+"Two piano staves; the right hand plays the tune with a second voice a "
+"third below, and the left hand plays half notes on C and G."
+msgstr "ピアノの 2 段の譜表。右手は旋律とその 3 度下の第 2 声部を弾き、左手は C と G の二分音符を弾きます。"
+
+#: ../../howto/songbook.rst:133
+msgid ""
+"The piano part: tune and harmony in the right hand, bass in the left."
+msgstr "ピアノのパート。右手は旋律と和声、左手はバスを弾きます。"
+
+#: ../../howto/songbook.rst:152
+msgid "Write the guitar part and its tablature"
+msgstr "ギターのパートとタブ譜を書く"
+
+#: ../../howto/songbook.rst:155
+msgid ""
+"Guitar music is written an octave above the sound, on a staff with "
+"``\\clef \"treble_8\"``; the small 8 under the clef says so. Our guitar "
+"part plays two voices on one staff, as a fingerstyle player does: the "
+"tune with stems up, and the bass with stems down."
+msgstr "ギターの楽譜は実音より 1 オクターブ高く、``\\clef \"treble_8\"`` を指定した譜表に書きます。音部記号の下の小さな 8 がそのことを示しています。このギターのパートは、フィンガースタイルの奏者がするように、1 つの譜表上で 2 つの声部を弾きます。符幹上向きの旋律と、符幹下向きのバスです。"
+
+#: ../../howto/songbook.rst:158
+msgid ""
+"Under the staff we add tablature with ``\\new TabStaff``. Its six lines "
+"are the six strings of the guitar, with the highest string at the top, "
+"and each number is the fret to press on that string; ``0`` is the open "
+"string. We give the tablature the same music as the staff, and Guidedog "
+"chooses the strings. It puts each note on the highest string that can "
+"play it, so the tune lies on the two highest strings and the bass on the "
+"two lowest, all in the first position of the left hand."
+msgstr "譜表の下には、``\\new TabStaff`` でタブ譜を加えます。タブ譜の 6 本の線はギターの 6 本の弦を表し、いちばん高い弦が上に来ます。各数字はその弦で押さえるフレットで、``0`` は開放弦です。タブ譜には譜表と同じ音楽を与え、弦は Guidedog が選びます。各音はそれを弾ける最も高い弦に置かれるので、旋律は高いほうの 2 本の弦に、バスは低いほうの 2 本の弦に収まり、すべて左手の第 1 ポジションで弾けます。"
+
+#: ../../howto/songbook.rst:164
+msgid ""
+"A guitar staff with the tune and a bass, above tablature; the first bar "
+"is frets 0, 3, 1 and 3 on the high strings with 3 and 3 on the low "
+"strings."
+msgstr "旋律とバスを書いたギターの譜表と、その下のタブ譜。最初の小節は、高音弦のフレット 0、3、1、3 と、低音弦のフレット 3、3 です。"
+
+#: ../../howto/songbook.rst:164
+msgid "The guitar part in standard notation and tablature."
+msgstr "五線譜とタブ譜で書いたギターのパート。"
+
+#: ../../howto/songbook.rst:179
+msgid ""
+"In the first bar of :numref:`songbook-guitar` the tune's E is the open "
+"first string, D the third fret of the second string, and C its first "
+"fret; the bass C is the third fret of the fifth string, and G the third "
+"fret of the sixth. To play a note on another string, we add a string "
+"number after it: ``e4\\2`` puts the E on the second string, at the fifth "
+"fret. The tablature leaves out the rhythm, which the staff above shows."
+msgstr ":numref:`songbook-guitar` の最初の小節では、旋律の E は 1 弦の開放弦、D は 2 弦の 3 フレット、C は同じ弦の 1 フレットです。バスの C は 5 弦の 3 フレット、G は 6 弦の 3 フレットです。音を別の弦で弾くには、音の後に弦番号を付けます。``e4\\2`` と書くと、E は 2 弦の 5 フレットに置かれます。タブ譜はリズムを省きます。リズムは上の譜表が示しています。"
+
+#: ../../howto/songbook.rst:183
+msgid "Combine the parts in one score"
+msgstr "パートを 1 つの楽譜にまとめる"
+
+#: ../../howto/songbook.rst:186
+msgid ""
+"The complete score stacks the parts from top to bottom: chord names, the "
+"voice with its verses, the piano and the guitar. To write each line of "
+"music once, we give it a name, such as ``melody = ...``, and use it with "
+"``\\melody`` wherever a part needs it. A line starting with ``%`` is a "
+"comment for the reader of the file. We save the score as "
+"``scores/mary-had-a-little-lamb.ly``:"
+msgstr "完成した楽譜では、上から順にコードネーム、歌詞付きの歌、ピアノ、ギターの各パートを積み重ねます。同じ音楽を一度だけ書けばすむように、それぞれに ``melody = ...`` のような名前を付け、パートで必要な箇所で ``\\melody`` として使います。``%`` で始まる行は、ファイルを読む人のためのコメントです。楽譜は ``scores/mary-had-a-little-lamb.ly`` として保存します。"
+
+#: ../../howto/songbook.rst:194
+msgid ""
+"On the song's page, ``mary.rst``, the directive names the file instead of "
+"holding the music:"
+msgstr "曲のページ ``mary.rst`` では、ディレクティブに音楽を直接書く代わりに、ファイル名を指定します。"
+
+#: ../../howto/songbook.rst:207
+msgid ""
+"A score for voice, piano and guitar with chord names and tablature, eight "
+"bars in C major."
+msgstr "コードネームとタブ譜を備えた、歌、ピアノ、ギターのための楽譜。ハ長調の 8 小節。"
+
+#: ../../howto/songbook.rst:207
+msgid "*Mary Had a Little Lamb*, for voice, piano and guitar."
+msgstr "歌、ピアノ、ギターのための *Mary Had a Little Lamb*。"
+
+#: ../../howto/songbook.rst:211
+msgid "Build the website and the book"
+msgstr "ウェブサイトと本をビルドする"
+
+#: ../../howto/songbook.rst:219
+msgid ""
+"Guidedog engraves each score for each output at that output's line width, "
+"so the website and the book each break the music into systems that fill "
+"their lines. On a narrow phone screen, the website shows an edition "
+"engraved for the narrow width. In the book, a long score breaks between "
+"systems across pages, with its caption after the last system. When we "
+"change a score file, the next build engraves it again; unchanged scores "
+"are kept."
+msgstr "Guidedog は各楽譜を出力ごとに、その出力の行幅で浄書します。そのため、ウェブサイトと本はそれぞれの行を満たすように音楽をシステムに分けます。幅の狭いスマートフォンの画面では、ウェブサイトは狭い幅向けに浄書した版を表示します。本では、長い楽譜はシステムの切れ目でページをまたいで分割され、キャプションは最後のシステムの後に置かれます。楽譜ファイルを変更すると、次のビルドでその楽譜を浄書し直します。変更のない楽譜はそのまま使われます。"
+
+#: ../../howto/songbook.rst:224
+msgid "Practice"
+msgstr "練習問題"
+
+#: ../../howto/songbook.rst:227
+msgid ""
+"These exercises extend the songbook. Build after each change and look at "
+"the result."
+msgstr "次の練習問題で歌集を広げていきます。変更するたびにビルドして、結果を確かめましょう。"
+
+#: ../../howto/songbook.rst:230
+msgid ""
+"Move the song to G major: wrap the whole score in ``\\transpose c g << "
+"... >>``. The key signature, the notes, the tablature and the chord names "
+"all move up a fifth."
+msgstr "曲をト長調に移します。楽譜全体を ``\\transpose c g << ... >>`` で囲みます。調号、音符、タブ譜、コードネームがすべて 5 度上に移ります。"
+
+#: ../../howto/songbook.rst:231
+msgid ""
+"Play the guitar tune higher on the neck: add ``\\2`` after each note of "
+"the first bar, and read the new frets in the tablature."
+msgstr "ギターの旋律をネックの高い位置で弾きます。最初の小節の各音符の後に ``\\2`` を付け、タブ譜で新しいフレットを読み取ります。"
+
+#: ../../howto/songbook.rst:232
+msgid ""
+"Add dynamics to the tune: write ``e4\\mf`` for its first note and "
+"``c1\\p`` for its last. A dynamic follows the note it belongs to."
+msgstr "旋律に強弱記号を付けます。最初の音符は ``e4\\mf``、最後の音符は ``c1\\p`` と書きます。強弱記号は、それが属する音符の後に書きます。"
+
+#: ../../howto/songbook.rst:233
+msgid ""
+"Write a second song in its own file and page, and refer to its figure "
+"from this page with ``:numref:``."
+msgstr "2 曲目を専用のファイルとページに書き、このページから ``:numref:`` でその図を参照します。"
 
 #: ../../howto/static-publishing.rst:1
 msgid "Static websites and articles"

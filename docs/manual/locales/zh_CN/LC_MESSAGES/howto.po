@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 16:03+0000\n"
+"POT-Creation-Date: 2026-11-02 02:37+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -2486,6 +2486,295 @@ msgid ""
 "snapshot for a whole browsing session."
 msgstr ""
 "在支持目录交换的文件系统上，输出路径一步完成切换。回退方案使用两次重命名，期间该路径可能短暂不存在，但绝不会暴露拼装到一半的目录树。日志恢复会完成或还原被中断的切换。客户端的多次请求可能跨越两代输出；构建并不保证整个浏览会话看到同一个快照。"
+
+#: ../../howto/songbook.rst:1
+msgid "Write a songbook"
+msgstr "编写歌曲集"
+
+#: ../../howto/songbook.rst:4
+msgid ""
+"We can keep a songbook in Guidedog: the explanations in RST or Markdown, "
+"the music as text beside them, and one command that engraves the scores "
+"for a website and a printed book. In this task we write a complete song "
+"for voice, piano and guitar, with words, chord names and guitar "
+"tablature, and explain each part for students. We use *Mary Had a Little "
+"Lamb*: the tune is a traditional American melody, and the words are by "
+"Sarah Josepha Hale, published in 1830; both are in the public domain. "
+":doc:`../topics/music` describes every notation command we use."
+msgstr "我们可以用 Guidedog 维护一本歌曲集：讲解用 RST 或 Markdown 书写，乐谱以文本形式放在讲解旁边，一条命令就能为网站和印刷图书排印全部乐谱。在本任务中，我们为人声、钢琴和吉他编写一首完整的歌曲，包括歌词、和弦名称和吉他六线谱，并为学生逐一讲解每个部分。我们选用 *Mary Had a Little Lamb*\\ （《玛丽有只小羊羔》）：曲调是一首美国传统旋律，歌词由 Sarah Josepha Hale 创作，于 1830 年发表；二者均属于公有领域。:doc:`../topics/music` 介绍了我们用到的每一条记谱命令。"
+
+#: ../../howto/songbook.rst:9
+msgid "Start the project"
+msgstr "创建项目"
+
+#: ../../howto/songbook.rst:12
+msgid "We create a project and a folder for the scores."
+msgstr "我们创建一个项目，并为乐谱建立一个文件夹。"
+
+#: ../../howto/songbook.rst:19
+msgid ""
+"Each song gets a page, and each score a ``.ly`` file in ``scores``. The "
+"page explains the music; the file holds it. A score in its own file is "
+"easy to reuse on several pages, to compare in version control, and to "
+"open in LilyPond itself. We list the song's page in the ``toctree`` of "
+"``index.rst``:"
+msgstr "每首歌占一个页面，每份乐谱则是 ``scores`` 中的一个 ``.ly`` 文件。页面讲解音乐，文件保存音乐。乐谱单独成为文件，便于在多个页面中复用、在版本控制中比较差异，也可以直接用 LilyPond 打开。我们把歌曲页面列入 ``index.rst`` 的 ``toctree``："
+
+#: ../../howto/songbook.rst:33
+msgid ""
+"We number the figures so that the text can refer to them, with this line "
+"in ``conf.toml``:"
+msgstr "为了让正文能够引用插图，我们在 ``conf.toml`` 中加入下面这一行，为插图编号："
+
+#: ../../howto/songbook.rst:39
+msgid "Write the tune"
+msgstr "编写曲调"
+
+#: ../../howto/songbook.rst:42
+msgid ""
+"A tune is a sequence of pitches, each with a duration. We write it inside "
+"``\\fixed c' { ... }``, where a letter is a pitch in the octave of middle "
+"C: ``c`` is middle C, ``d`` the D above it, and so on up to ``b``. An "
+"apostrophe raises a pitch by an octave, and a comma lowers it."
+msgstr "曲调是一串音高，每个音高都有自己的时值。我们把曲调写在 ``\\fixed c' { ... }`` 中，其中每个字母表示中央 C 所在八度内的一个音高：``c`` 是中央 C，``d`` 是其上方的 D，依此类推，直到 ``b``。撇号把音高升高一个八度，逗号则把它降低一个八度。"
+
+#: ../../howto/songbook.rst:46
+msgid ""
+"A number after a pitch is its duration: ``1`` is a whole note of four "
+"beats, ``2`` a half note of two beats, and ``4`` a quarter note of one "
+"beat. A pitch without a number keeps the duration of the pitch before it. "
+"``\\key c \\major`` gives the key, C major, which has no sharps or flats, "
+"and ``\\time 4/4`` gives the time signature: four quarter-note beats in "
+"each bar. A vertical bar ``|`` marks the end of a bar; Guidedog checks "
+"that each bar holds exactly four beats. ``\\bar \"|.\"`` draws the final "
+"double bar."
+msgstr "音高后面的数字表示它的时值：``1`` 是四拍的全音符，``2`` 是两拍的二分音符，``4`` 是一拍的四分音符。不带数字的音高沿用前一个音高的时值。``\\key c \\major`` 给出调性，即没有升降号的 C 大调；``\\time 4/4`` 给出拍号：以四分音符为一拍，每小节四拍。竖线 ``|`` 标记小节的结束；Guidedog 会检查每小节是否恰好四拍。``\\bar \"|.\"`` 绘制乐曲末尾的终止线。"
+
+#: ../../howto/songbook.rst:53
+msgid ""
+"Eight bars in C major and four-four time, starting E, D, C, D, and ending "
+"on a whole-note C."
+msgstr "C 大调、四四拍的八个小节，以 E、D、C、D 开始，以全音符 C 结束。"
+
+#: ../../howto/songbook.rst:53
+msgid "The tune of *Mary Had a Little Lamb*."
+msgstr "*Mary Had a Little Lamb* 的曲调。"
+
+#: ../../howto/songbook.rst:63
+msgid ""
+":numref:`songbook-tune` has eight bars. The tune moves mostly by step, "
+"between the neighboring notes C, D and E, and leaps once, from E up to G "
+"in bar four. Count the beats in bar two: ``e`` and ``e`` take one beat "
+"each, and ``e2`` takes two, which makes four."
+msgstr ":numref:`songbook-tune` 共有八个小节。曲调大多是级进，在相邻的 C、D、E 三个音之间移动，只在第四小节从 E 向上跳进到 G 一次。数一数第二小节的拍数：``e`` 和 ``e`` 各占一拍，``e2`` 占两拍，合起来正好四拍。"
+
+#: ../../howto/songbook.rst:67
+msgid "Add the words"
+msgstr "添加歌词"
+
+#: ../../howto/songbook.rst:70
+msgid ""
+"A singer reads the words under the notes, one syllable under each note. "
+"We write the words in ``\\lyricmode``, with spaces between the syllables. "
+"Two hyphens, ``--``, join the syllables of one word, and Guidedog draws a "
+"short hyphen between them. The tune has 26 notes, so each verse needs "
+"exactly 26 syllables:"
+msgstr "歌手看着音符下方的歌词演唱，每个音符下对应一个音节。我们在 ``\\lyricmode`` 中书写歌词，音节之间用空格分隔。两个连字符 ``--`` 把同一个单词的各个音节连起来，Guidedog 会在这些音节之间画一条短连字符。曲调共有 26 个音符，所以每段歌词恰好需要 26 个音节："
+
+#: ../../howto/songbook.rst:80
+msgid ""
+"To attach the words, we name the voice that sings the tune, ``\\new Voice "
+"= \"tune\"``, and give each verse its own ``\\new Lyrics \\lyricsto "
+"\"tune\"``. Guidedog places the syllables under the notes of that voice "
+"in order, and puts the verses one below the other."
+msgstr "为了把歌词挂接到曲调上，我们为演唱曲调的声部命名，即 ``\\new Voice = \"tune\"``，再为每段歌词各写一个 ``\\new Lyrics \\lyricsto \"tune\"``。Guidedog 按顺序把音节放在该声部的音符下方，并把各段歌词上下排列。"
+
+#: ../../howto/songbook.rst:84
+msgid ""
+"The tune on one staff with two lines of words below: Mary had a little "
+"lamb, and Everywhere that Mary went."
+msgstr "一行谱表上的曲调，下方有两行歌词：Mary had a little lamb 和 Everywhere that Mary went。"
+
+#: ../../howto/songbook.rst:84
+msgid "The vocal part with two verses."
+msgstr "带两段歌词的人声部分。"
+
+#: ../../howto/songbook.rst:106
+msgid ""
+"Hale's poem has more verses, but the next, \"It followed her to school "
+"one day\", has five syllables where the first bar has four notes. Singers "
+"divide a note for the extra syllable; a score shows that with a different "
+"rhythm, so our songbook keeps the two verses that fit the tune as written."
+msgstr "Hale 的诗还有更多段落，但下一段“It followed her to school one day”有五个音节，而第一小节只有四个音符。演唱时，歌手会把一个音符一分为二来容纳多出的音节；乐谱则要写成不同的节奏才能表示这一点，因此我们的歌曲集只保留与现有曲调完全契合的两段歌词。"
+
+#: ../../howto/songbook.rst:109
+msgid "Name the chords"
+msgstr "标注和弦名称"
+
+#: ../../howto/songbook.rst:112
+msgid ""
+"Guitarists and pianists who accompany a singer read chord names above the "
+"staff. We write them in ``\\chordmode``: ``c1`` is a C major chord "
+"lasting a whole bar, ``g1`` a G major chord, and ``g:7`` a G seventh "
+"chord. The song needs only these three chords: C under the notes C, E and "
+"G, and G or G7 under D and B. A ``\\new ChordNames`` context draws the "
+"names above the next staff:"
+msgstr "为歌手伴奏的吉他手和钢琴手看的是谱表上方的和弦名称。我们在 ``\\chordmode`` 中书写和弦：``c1`` 是持续一整小节的 C 大三和弦，``g1`` 是 G 大三和弦，``g:7`` 是 G 七和弦。这首歌只需要这三个和弦：C、E、G 这几个音下方用 C 和弦，D 和 B 下方用 G 或 G7 和弦。``\\new ChordNames`` 上下文会在紧接着的下一行谱表上方绘制和弦名称："
+
+#: ../../howto/songbook.rst:121
+msgid "Write the piano part"
+msgstr "编写钢琴部分"
+
+#: ../../howto/songbook.rst:124
+msgid ""
+"A piano part has two staves joined by a brace: ``\\new PianoStaff``. The "
+"upper staff is for the right hand, and the lower staff, with ``\\clef "
+"bass``, for the left hand."
+msgstr "钢琴部分由两行用大括号连在一起的谱表组成：``\\new PianoStaff``。上行谱表由右手演奏；下行谱表使用 ``\\clef bass``，由左手演奏。"
+
+#: ../../howto/songbook.rst:127
+msgid ""
+"The right hand plays the tune and, below it, a second voice a third "
+"lower. Two voices on one staff go inside ``<< ... >>``, separated by "
+"``\\\\``. Guidedog draws the first voice with stems up and the second "
+"with stems down, so a player can follow each line. The left hand plays "
+"the bass: the root and the fifth of each chord, as half notes."
+msgstr "右手演奏曲调，同时在曲调下方演奏低三度的第二声部。同一行谱表上的两个声部写在 ``<< ... >>`` 中，用 ``\\\\`` 分隔。Guidedog 把第一声部的符干画成朝上，第二声部的符干画成朝下，便于演奏者分辨每一条旋律线。左手演奏低音：每个和弦的根音和五音，均为二分音符。"
+
+#: ../../howto/songbook.rst:133
+msgid ""
+"Two piano staves; the right hand plays the tune with a second voice a "
+"third below, and the left hand plays half notes on C and G."
+msgstr "两行钢琴谱表：右手演奏曲调，并带有低三度的第二声部；左手在 C 和 G 上演奏二分音符。"
+
+#: ../../howto/songbook.rst:133
+msgid ""
+"The piano part: tune and harmony in the right hand, bass in the left."
+msgstr "钢琴部分：右手演奏曲调与和声，左手演奏低音。"
+
+#: ../../howto/songbook.rst:152
+msgid "Write the guitar part and its tablature"
+msgstr "编写吉他部分及其六线谱"
+
+#: ../../howto/songbook.rst:155
+msgid ""
+"Guitar music is written an octave above the sound, on a staff with "
+"``\\clef \"treble_8\"``; the small 8 under the clef says so. Our guitar "
+"part plays two voices on one staff, as a fingerstyle player does: the "
+"tune with stems up, and the bass with stems down."
+msgstr "吉他谱比实际音高高一个八度记写，使用带 ``\\clef \"treble_8\"`` 的谱表；谱号下方的小 8 正是表示这一点。我们的吉他部分像指弹演奏者那样，在一行谱表上演奏两个声部：曲调的符干朝上，低音的符干朝下。"
+
+#: ../../howto/songbook.rst:158
+msgid ""
+"Under the staff we add tablature with ``\\new TabStaff``. Its six lines "
+"are the six strings of the guitar, with the highest string at the top, "
+"and each number is the fret to press on that string; ``0`` is the open "
+"string. We give the tablature the same music as the staff, and Guidedog "
+"chooses the strings. It puts each note on the highest string that can "
+"play it, so the tune lies on the two highest strings and the bass on the "
+"two lowest, all in the first position of the left hand."
+msgstr "我们用 ``\\new TabStaff`` 在谱表下方添加六线谱。它的六条线就是吉他的六根弦，音最高的弦在最上方；每个数字表示要在这根弦上按的品，``0`` 表示空弦。我们给六线谱写入与谱表相同的音乐，由 Guidedog 选择用哪根弦。它把每个音放在能奏出这个音的最高的弦上，因此曲调落在最高的两根弦上，低音落在最低的两根弦上，左手全部处于第一把位。"
+
+#: ../../howto/songbook.rst:164
+msgid ""
+"A guitar staff with the tune and a bass, above tablature; the first bar "
+"is frets 0, 3, 1 and 3 on the high strings with 3 and 3 on the low "
+"strings."
+msgstr "吉他谱表上有曲调和低音，下方是六线谱；第一小节在高音弦上依次为第 0、3、1、3 品，在低音弦上为第 3、3 品。"
+
+#: ../../howto/songbook.rst:164
+msgid "The guitar part in standard notation and tablature."
+msgstr "以标准记谱法和六线谱记写的吉他部分。"
+
+#: ../../howto/songbook.rst:179
+msgid ""
+"In the first bar of :numref:`songbook-guitar` the tune's E is the open "
+"first string, D the third fret of the second string, and C its first "
+"fret; the bass C is the third fret of the fifth string, and G the third "
+"fret of the sixth. To play a note on another string, we add a string "
+"number after it: ``e4\\2`` puts the E on the second string, at the fifth "
+"fret. The tablature leaves out the rhythm, which the staff above shows."
+msgstr "在 :numref:`songbook-guitar` 的第一小节中，曲调的 E 是第 1 弦空弦，D 是第 2 弦第 3 品，C 是同一根弦的第 1 品；低音 C 是第 5 弦第 3 品，G 是第 6 弦第 3 品。要在另一根弦上演奏某个音，就在这个音后面加上弦号：``e4\\2`` 把 E 放在第 2 弦第 5 品上。六线谱省略节奏，节奏由上方的谱表表示。"
+
+#: ../../howto/songbook.rst:183
+msgid "Combine the parts in one score"
+msgstr "将各部分合成一份总谱"
+
+#: ../../howto/songbook.rst:186
+msgid ""
+"The complete score stacks the parts from top to bottom: chord names, the "
+"voice with its verses, the piano and the guitar. To write each line of "
+"music once, we give it a name, such as ``melody = ...``, and use it with "
+"``\\melody`` wherever a part needs it. A line starting with ``%`` is a "
+"comment for the reader of the file. We save the score as "
+"``scores/mary-had-a-little-lamb.ly``:"
+msgstr "完整的总谱从上到下依次排列各个部分：和弦名称、带歌词的人声、钢琴和吉他。为了让每一段音乐只写一次，我们给它起一个名字，例如 ``melody = ...``，然后在需要它的部分用 ``\\melody`` 引用。以 ``%`` 开头的行是写给文件读者的注释。我们把总谱保存为 ``scores/mary-had-a-little-lamb.ly``："
+
+#: ../../howto/songbook.rst:194
+msgid ""
+"On the song's page, ``mary.rst``, the directive names the file instead of "
+"holding the music:"
+msgstr "在歌曲页面 ``mary.rst`` 中，指令只指定乐谱文件，而不直接包含乐谱："
+
+#: ../../howto/songbook.rst:207
+msgid ""
+"A score for voice, piano and guitar with chord names and tablature, eight "
+"bars in C major."
+msgstr "一份为人声、钢琴和吉他而作的乐谱，带和弦名称和六线谱，C 大调，共八小节。"
+
+#: ../../howto/songbook.rst:207
+msgid "*Mary Had a Little Lamb*, for voice, piano and guitar."
+msgstr "*Mary Had a Little Lamb*，为人声、钢琴和吉他而作。"
+
+#: ../../howto/songbook.rst:211
+msgid "Build the website and the book"
+msgstr "构建网站和图书"
+
+#: ../../howto/songbook.rst:219
+msgid ""
+"Guidedog engraves each score for each output at that output's line width, "
+"so the website and the book each break the music into systems that fill "
+"their lines. On a narrow phone screen, the website shows an edition "
+"engraved for the narrow width. In the book, a long score breaks between "
+"systems across pages, with its caption after the last system. When we "
+"change a score file, the next build engraves it again; unchanged scores "
+"are kept."
+msgstr "Guidedog 按每种输出的行宽，为每种输出分别排印每份乐谱，因此网站和图书会各自把乐谱折成恰好填满其行宽的谱行。在窄小的手机屏幕上，网站会显示按窄宽度排印的版本。在图书中，较长的乐谱会在谱行之间跨页断开，图注位于最后一行谱之后。修改乐谱文件后，下一次构建会重新排印它；未改动的乐谱则沿用已有结果。"
+
+#: ../../howto/songbook.rst:224
+msgid "Practice"
+msgstr "练习"
+
+#: ../../howto/songbook.rst:227
+msgid ""
+"These exercises extend the songbook. Build after each change and look at "
+"the result."
+msgstr "下面的练习用来扩展这本歌曲集。每次修改后都构建一次，看看结果。"
+
+#: ../../howto/songbook.rst:230
+msgid ""
+"Move the song to G major: wrap the whole score in ``\\transpose c g << "
+"... >>``. The key signature, the notes, the tablature and the chord names "
+"all move up a fifth."
+msgstr "把歌曲移到 G 大调：用 ``\\transpose c g << ... >>`` 包住整份乐谱。调号、音符、六线谱以及和弦名称都会随之上移五度。"
+
+#: ../../howto/songbook.rst:231
+msgid ""
+"Play the guitar tune higher on the neck: add ``\\2`` after each note of "
+"the first bar, and read the new frets in the tablature."
+msgstr "在琴颈更高的位置弹奏吉他曲调：在第一小节的每个音后面加上 ``\\2``，然后在六线谱中读出新的品位。"
+
+#: ../../howto/songbook.rst:232
+msgid ""
+"Add dynamics to the tune: write ``e4\\mf`` for its first note and "
+"``c1\\p`` for its last. A dynamic follows the note it belongs to."
+msgstr "为曲调添加力度记号：第一个音写成 ``e4\\mf``，最后一个音写成 ``c1\\p``。力度记号写在它所属的音符之后。"
+
+#: ../../howto/songbook.rst:233
+msgid ""
+"Write a second song in its own file and page, and refer to its figure "
+"from this page with ``:numref:``."
+msgstr "在单独的文件和页面中编写第二首歌，并在本页用 ``:numref:`` 引用它的插图。"
 
 #: ../../howto/static-publishing.rst:1
 msgid "Static websites and articles"

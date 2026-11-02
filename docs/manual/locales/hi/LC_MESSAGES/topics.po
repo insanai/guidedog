@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 02:14+0000\n"
+"POT-Creation-Date: 2026-11-02 02:37+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -1400,10 +1400,20 @@ msgstr ""
 "शब्दांश अवधि, हाइफ़न और विस्तार रेखाएँ।"
 
 #: ../../topics/music.rst:158
+msgid "Guitar tablature"
+msgstr "गिटार टैबलेचर"
+
+#: ../../topics/music.rst:159
+msgid ""
+"``\\new TabStaff``, ``\\new TabVoice`` and string numbers ``\\1`` through "
+"``\\6``, for a six-string guitar in standard tuning."
+msgstr "``\\new TabStaff``, ``\\new TabVoice`` और ``\\1`` से ``\\6`` तक तार-संख्याएँ, मानक ट्यूनिंग वाले छह तार के गिटार के लिए।"
+
+#: ../../topics/music.rst:160
 msgid "Grace and repetition"
 msgstr "अलंकार स्वर और पुनरावृत्ति"
 
-#: ../../topics/music.rst:159
+#: ../../topics/music.rst:161
 msgid ""
 "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
 "``\\repeat volta``, ``\\alternative``, ``\\volta``, ``\\fine``, "
@@ -1415,11 +1425,11 @@ msgstr ""
 "``\\section``, ``\\repeat unfold``, ``\\compressEmptyMeasures``, "
 "``\\compressFullBarRests``।"
 
-#: ../../topics/music.rst:160
+#: ../../topics/music.rst:162
 msgid "Labels and breaks"
 msgstr "लेबल और पंक्ति-विराम"
 
-#: ../../topics/music.rst:161
+#: ../../topics/music.rst:163
 msgid ""
 "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\chords``, ``\\new "
 "ChordNames \\chordmode``, ``\\break``, ``\\noBreak``."
@@ -1427,7 +1437,7 @@ msgstr ""
 "``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\chords``, ``\\new "
 "ChordNames \\chordmode``, ``\\break``, ``\\noBreak``।"
 
-#: ../../topics/music.rst:163
+#: ../../topics/music.rst:165
 msgid ""
 "The reader accepts version declarations, ignored header metadata and "
 "empty layout or MIDI blocks. It refuses Scheme, music functions, "
@@ -1444,11 +1454,11 @@ msgstr ""
 "प्रोग्राम नहीं चलाता। पूरी कमांड सूची और स्वरांकन अनुबंध रिपॉज़िटरी के "
 "``docs/gds/records`` फ़ोल्डर में GDS 0015 में दर्ज हैं।"
 
-#: ../../topics/music.rst:168
+#: ../../topics/music.rst:170
 msgid "Add expression and repeats"
 msgstr "अभिव्यक्ति और पुनरावृत्ति जोड़ना"
 
-#: ../../topics/music.rst:171
+#: ../../topics/music.rst:173
 msgid ""
 "We attach articulations and fingerings after a note: ``-.`` is staccato, "
 "``->`` is an accent, and ``-1`` selects the first finger. Dynamics set "
@@ -1465,7 +1475,7 @@ msgstr ""
 "``\\afterGrace`` समूह को मुख्य नोट के बाद रखता है। ग्रेस नोट्स का समय "
 "मेज़र (बार) की लंबाई नहीं बढ़ाता।"
 
-#: ../../topics/music.rst:183
+#: ../../topics/music.rst:185
 msgid ""
 "We write a volta repeat once and give each ending in ``\\alternative``; "
 "``\\volta 1,2 { ... }`` labels combined endings, and ``\\fine`` or "
@@ -1486,11 +1496,11 @@ msgstr ""
 "अलग ``\\new ChordNames \\chordmode`` संदर्भ में लिखे जाते हैं, जैसे "
 "``c1:maj7``, ``d:m7`` और ``g:7``।"
 
-#: ../../topics/music.rst:195
+#: ../../topics/music.rst:197
 msgid "Format text with ``\\markup``"
 msgstr "``\\markup`` से पाठ का स्वरूपण"
 
-#: ../../topics/music.rst:198
+#: ../../topics/music.rst:200
 msgid ""
 "Scripts, ``\\tempo``, ``\\mark`` and instrument names accept a bounded "
 "LilyPond 2.24 ``\\markup`` subset. Commands nest freely within the "
@@ -1503,23 +1513,23 @@ msgstr ""
 "मार्कअप चर वहाँ विस्तार पाते हैं जहाँ मार्कअप ब्लॉक पाठ की अपेक्षा रखता "
 "है।"
 
-#: ../../topics/music.rst:201
+#: ../../topics/music.rst:203
 msgid "Supported ``\\markup`` commands"
 msgstr "समर्थित ``\\markup`` कमांड"
 
-#: ../../topics/music.rst:205
+#: ../../topics/music.rst:207
 msgid "Group"
 msgstr "समूह"
 
-#: ../../topics/music.rst:206
+#: ../../topics/music.rst:208
 msgid "Commands"
 msgstr "कमांड"
 
-#: ../../topics/music.rst:207
+#: ../../topics/music.rst:209
 msgid "Lists and columns"
 msgstr "सूचियाँ और स्तंभ"
 
-#: ../../topics/music.rst:208
+#: ../../topics/music.rst:210
 msgid ""
 "``\\line``, ``\\concat``, ``\\column``, ``\\left-column``, "
 "``\\center-column``, ``\\right-column``, ``\\dir-column`` and markup "
@@ -1529,11 +1539,11 @@ msgstr ""
 "``\\center-column``, ``\\right-column``, ``\\dir-column`` और मार्कअप चर "
 "संदर्भ (जैसे ``\\codaMark``)।"
 
-#: ../../topics/music.rst:209
+#: ../../topics/music.rst:211
 msgid "Style and case"
 msgstr "शैली और अक्षर-रूप"
 
-#: ../../topics/music.rst:210
+#: ../../topics/music.rst:212
 msgid ""
 "``\\bold``, ``\\italic``, ``\\upright``, ``\\normal-text``, ``\\caps``, "
 "``\\smallCaps``, ``\\sub`` and ``\\super``."
@@ -1541,11 +1551,11 @@ msgstr ""
 "``\\bold``, ``\\italic``, ``\\upright``, ``\\normal-text``, ``\\caps``, "
 "``\\smallCaps``, ``\\sub`` और ``\\super``।"
 
-#: ../../topics/music.rst:211
+#: ../../topics/music.rst:213
 msgid "Size"
 msgstr "आकार"
 
-#: ../../topics/music.rst:212
+#: ../../topics/music.rst:214
 msgid ""
 "``\\teeny``, ``\\tiny``, ``\\small``, ``\\smaller``, ``\\large``, "
 "``\\larger``, ``\\huge``, ``\\fontsize #n`` and ``\\abs-fontsize #pt``."
@@ -1553,11 +1563,11 @@ msgstr ""
 "``\\teeny``, ``\\tiny``, ``\\small``, ``\\smaller``, ``\\large``, "
 "``\\larger``, ``\\huge``, ``\\fontsize #n`` और ``\\abs-fontsize #pt``।"
 
-#: ../../topics/music.rst:213
+#: ../../topics/music.rst:215
 msgid "Enclosures and spacing"
 msgstr "घेरे और अंतराल"
 
-#: ../../topics/music.rst:214
+#: ../../topics/music.rst:216
 msgid ""
 "``\\box``, ``\\rounded-box``, ``\\circle``, ``\\underline``, "
 "``\\parenthesize``, ``\\bracket``, ``\\hspace #n``, ``\\vspace #n``, "
@@ -1567,11 +1577,11 @@ msgstr ""
 "``\\parenthesize``, ``\\bracket``, ``\\hspace #n``, ``\\vspace #n``, "
 "``\\raise #n`` और ``\\lower #n``।"
 
-#: ../../topics/music.rst:215
+#: ../../topics/music.rst:217
 msgid "Music symbols"
 msgstr "संगीत चिह्न"
 
-#: ../../topics/music.rst:216
+#: ../../topics/music.rst:218
 msgid ""
 "``\\sharp``, ``\\natural``, ``\\flat``, ``\\doublesharp``, "
 "``\\doubleflat``, ``\\fermata``, ``\\segno``, ``\\coda``, ``\\varcoda``, "
@@ -1581,7 +1591,7 @@ msgstr ""
 "``\\doubleflat``, ``\\fermata``, ``\\segno``, ``\\coda``, ``\\varcoda``, "
 "``\\dynamic`` तथा मैप किए गए Feta ग्लिफ़ नामों के लिए ``\\musicglyph``।"
 
-#: ../../topics/music.rst:227
+#: ../../topics/music.rst:229
 msgid ""
 "Markup commands that run Scheme, alter layout properties, draw arbitrary "
 "paths or embed nested scores (such as ``\\score``, ``\\override``, "
@@ -1593,11 +1603,11 @@ msgstr ""
 "``\\postscript``, ``\\draw-line``, ``\\path``, ``\\epsfile`` और "
 "``\\markuplist``) स्थान-सहित निदान के साथ अस्वीकार किए जाते हैं।"
 
-#: ../../topics/music.rst:229
+#: ../../topics/music.rst:231
 msgid "Combine staves and lyrics"
 msgstr "स्टाफ़ (स्वर-पंक्तियाँ) और बोल जोड़ना"
 
-#: ../../topics/music.rst:232
+#: ../../topics/music.rst:234
 msgid ""
 "We use simultaneous contexts for a score with several staves. Staves and "
 "staff groups accept ``instrumentName`` and ``shortInstrumentName`` in a "
@@ -1646,7 +1656,7 @@ msgstr ""
 "के बोल किसी नामित वॉइस से जुड़ते हैं, और अलग ``\\lyricsto`` अभिव्यक्तियाँ "
 "अलग अंतरे (पद) बनाती हैं।"
 
-#: ../../topics/music.rst:245
+#: ../../topics/music.rst:247
 msgid ""
 "We can override stems with ``\\stemUp``, ``\\stemDown`` and "
 "``\\stemNeutral`` without changing the voice's column policy."
@@ -1654,7 +1664,7 @@ msgstr ""
 "हम वॉइस की स्तंभ नीति बदले बिना ``\\stemUp``, ``\\stemDown`` और "
 "``\\stemNeutral`` से स्टेम (डंडी) की दिशा बदल सकते हैं।"
 
-#: ../../topics/music.rst:257
+#: ../../topics/music.rst:259
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
@@ -1662,15 +1672,63 @@ msgstr ""
 "पियानो के दो स्टाफ़; ऊपरी स्टाफ़ पर चार क्वार्टर नोट और Sing a short song "
 "शब्द हैं, जबकि बास स्टाफ़ C बनाए रखता है।"
 
-#: ../../topics/music.rst:257
+#: ../../topics/music.rst:259
 msgid "A named melody with a verse and a bass staff."
 msgstr "एक अंतरे और बास स्टाफ़ वाली नामित धुन।"
 
-#: ../../topics/music.rst:267
+#: ../../topics/music.rst:269
+msgid "Write guitar tablature"
+msgstr "गिटार टैबलेचर लिखना"
+
+#: ../../topics/music.rst:272
+msgid ""
+"A guitar part usually pairs a staff with tablature. ``\\new TabStaff`` "
+"draws six lines, one for each string of a guitar in standard tuning, with "
+"the highest string at the top, and a fret number on a string for each "
+"note. We write the same music for the staff and the tablature; guitar "
+"music sounds an octave below its written pitch, so the staff uses "
+"``\\clef \"treble_8\"``."
+msgstr "गिटार भाग में आम तौर पर स्टाफ़ के साथ टैबलेचर होता है। ``\\new TabStaff`` छह रेखाएँ बनाता है, मानक ट्यूनिंग वाले गिटार के हर तार के लिए एक, जिनमें सबसे ऊँचे सुर वाला तार सबसे ऊपर रहता है, और हर नोट के लिए किसी तार पर एक फ़्रेट संख्या लिखता है। हम स्टाफ़ और टैबलेचर के लिए एक ही संगीत लिखते हैं; गिटार का संगीत अपनी लिखी पिच से एक सप्तक नीचे बजता है, इसलिए स्टाफ़ ``\\clef \"treble_8\"`` का उपयोग करता है।"
+
+#: ../../topics/music.rst:285
+msgid ""
+"A guitar staff above six-line tablature; the notes E, D, C, D are played "
+"on frets 2, 0, 3 and 0, then a C major chord and two notes on the second "
+"string."
+msgstr "छह रेखाओं वाले टैबलेचर के ऊपर गिटार स्टाफ़; नोट E, D, C, D फ़्रेट 2, 0, 3 और 0 पर बजते हैं, फिर एक C मेजर कॉर्ड और दूसरे तार पर दो नोट।"
+
+#: ../../topics/music.rst:285
+msgid "A guitar part in standard notation and tablature."
+msgstr "मानक संकेतन और टैबलेचर में एक गिटार भाग।"
+
+#: ../../topics/music.rst:294
+msgid ""
+"Each note goes on the highest string that can play it, as LilyPond "
+"chooses by default: notes of a chord take the strings from the highest "
+"note down, each at fret 0 through 24. A string number after a note, such "
+"as ``c'4\\2``, names the string instead; inside a chord each note takes "
+"its own, as in ``<c\\5 e\\4>2``. A note that no free string can play, "
+"such as a C below the low E string, is refused with a placed diagnostic."
+msgstr "हर नोट सबसे ऊँचे सुर वाले उस तार पर जाता है जो उसे बजा सकता है, जैसा LilyPond डिफ़ॉल्ट रूप से चुनता है: कॉर्ड के नोट सबसे ऊँचे नोट से नीचे की ओर तार लेते हैं, और हर नोट फ़्रेट 0 से 24 के बीच बजता है। नोट के बाद लिखी तार-संख्या, जैसे ``c'4\\2``, इसके बजाय तार तय करती है; कॉर्ड के भीतर हर नोट अपनी तार-संख्या लेता है, जैसे ``<c\\5 e\\4>2`` में। जिस नोट को कोई अप्रयुक्त तार नहीं बजा सकता, जैसे निचले E तार से नीचे का C, उसे स्रोत-स्थान वाले निदान के साथ अस्वीकार किया जाता है।"
+
+#: ../../topics/music.rst:298
+msgid ""
+"The tab staff shows strings, fret numbers and bar lines with a TAB clef, "
+"as LilyPond's default tablature does. It omits key and time signatures, "
+"stems, beams, rests, ties, slurs and scripts, which the staff above "
+"shows. A tied note is not repeated, except at the start of a line, where "
+"its fret number stands in parentheses. ``\\new TabVoice`` holds one voice "
+"of a tab staff, and voices on a tab staff share its strings. Other "
+"tunings and instruments, rhythm in the tab staff and fret diagrams are "
+"outside the profile. :doc:`../howto/songbook` writes a complete song for "
+"voice, piano and guitar."
+msgstr "टैब स्टाफ़ TAB क्लेफ़ के साथ तार, फ़्रेट संख्याएँ और बार-रेखाएँ दिखाता है, जैसे LilyPond का डिफ़ॉल्ट टैबलेचर दिखाता है। वह की-सिग्नेचर और टाइम सिग्नेचर, स्टेम, बीम, विराम, टाई, स्लर और स्क्रिप्ट चिह्न छोड़ देता है; इन्हें ऊपर का स्टाफ़ दिखाता है। टाई से जुड़ा नोट दोहराया नहीं जाता, सिवाय पंक्ति की शुरुआत के, जहाँ उसकी फ़्रेट संख्या कोष्ठक में लिखी जाती है। ``\\new TabVoice`` टैब स्टाफ़ की एक वॉइस रखता है, और टैब स्टाफ़ की सभी वॉइस उसके तार साझा करती हैं। दूसरी ट्यूनिंग और दूसरे वाद्य, टैब स्टाफ़ में लय, और फ़्रेट आरेख इस प्रोफ़ाइल के बाहर हैं। :doc:`../howto/songbook` में गायन, पियानो और गिटार के लिए एक पूरा गीत लिखा गया है।"
+
+#: ../../topics/music.rst:305
 msgid "Read local files"
 msgstr "स्थानीय फ़ाइलें पढ़ना"
 
-#: ../../topics/music.rst:270
+#: ../../topics/music.rst:308
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
@@ -1678,7 +1736,7 @@ msgstr ""
 "निर्देश इनलाइन मुख्य भाग के बजाय स्थानीय फ़ाइल का नाम दे सकता है। हम "
 "स्रोत का ठीक एक रूप उपयोग करते हैं।"
 
-#: ../../topics/music.rst:279
+#: ../../topics/music.rst:317
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1695,7 +1753,7 @@ msgstr ""
 "चुनी पाठ-फ़ॉन्ट फ़ाइलें उनकी सामग्री से ट्रैक करता है। निर्भरता बदलने पर "
 "चित्र फिर बनता है। समान आउटपुट बाइट वही ऐसेट नाम रखते हैं।"
 
-#: ../../topics/music.rst:285
+#: ../../topics/music.rst:323
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
@@ -1715,37 +1773,37 @@ msgstr ""
 "नाम बताता है। चित्र विफल होने पर चेतावनी के साथ स्रोत कोड बना रहता है; "
 "``-W`` प्रकाशन रोककर पिछला आउटपुट सुरक्षित रखता है।"
 
-#: ../../topics/music.rst:290
+#: ../../topics/music.rst:328
 msgid "Set size and output"
 msgstr "आकार और आउटपुट तय करना"
 
-#: ../../topics/music.rst:293
+#: ../../topics/music.rst:331
 msgid "Directive options"
 msgstr "निर्देश के विकल्प"
 
-#: ../../topics/music.rst:297
+#: ../../topics/music.rst:335
 msgid "Option"
 msgstr "विकल्प"
 
-#: ../../topics/music.rst:298
+#: ../../topics/music.rst:336
 msgid "Meaning"
 msgstr "अर्थ"
 
-#: ../../topics/music.rst:299
+#: ../../topics/music.rst:337
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:300
+#: ../../topics/music.rst:338
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "चित्र का संगीतमय विवरण; न होने पर बिल्ड स्थानीयकृत सारांश बनाता है।"
 
-#: ../../topics/music.rst:301
+#: ../../topics/music.rst:339
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:302
+#: ../../topics/music.rst:340
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
@@ -1753,19 +1811,19 @@ msgstr ""
 "चित्र-विवरण, संदर्भ लक्ष्य, CSS क्लास और चित्र संरेखण, आरेख निर्देशों के "
 "समान।"
 
-#: ../../topics/music.rst:303
+#: ../../topics/music.rst:341
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:304
+#: ../../topics/music.rst:342
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "डिफ़ॉल्ट ``svg``, या प्रति इंच 144 पिक्सेल वाला ``png``।"
 
-#: ../../topics/music.rst:305
+#: ../../topics/music.rst:343
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:306
+#: ../../topics/music.rst:344
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
@@ -1773,11 +1831,11 @@ msgstr ""
 "पाँच रेखाओं वाले स्टाफ़ (स्वर-पंक्ति) की ऊँचाई, 10 से 40 पॉइंट तक; "
 "डिफ़ॉल्ट 18 पॉइंट है।"
 
-#: ../../topics/music.rst:307
+#: ../../topics/music.rst:345
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:308
+#: ../../topics/music.rst:346
 msgid ""
 "Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's "
@@ -1787,11 +1845,11 @@ msgstr ""
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` या बिल्डर की डिफ़ॉल्ट चौड़ाई के "
 "प्रतिशत में।"
 
-#: ../../topics/music.rst:309
+#: ../../topics/music.rst:347
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:310
+#: ../../topics/music.rst:348
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
@@ -1799,7 +1857,7 @@ msgstr ""
 "``auto`` छोटे अंतिम सिस्टम को प्राकृतिक चौड़ाई पर रखता है; ``all`` हर "
 "सिस्टम खींचता है; ``none`` खींचने से बचता है।"
 
-#: ../../topics/music.rst:312
+#: ../../topics/music.rst:350
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
@@ -1809,7 +1867,7 @@ msgstr ""
 "``lilypond_pdf_width`` हैं। इनके संख्यात्मक मान मुद्रण पॉइंट हैं। सेटिंग "
 "अनुबंध के लिए :doc:`../reference/configuration` देखें।"
 
-#: ../../topics/music.rst:316
+#: ../../topics/music.rst:354
 msgid ""
 "When a drawing is wider than 225 points, HTML also receives a narrow "
 "edition engraved at 225 points with a staff height no greater than 14 "
@@ -1826,7 +1884,7 @@ msgstr ""
 "स्क्रीन के अनुसार छोटा होता है। SVG की स्याही पृष्ठ की रंग योजना के "
 "अनुसार बदलती है; PNG डार्क मोड में हल्का पृष्ठभूमि पैनल रखता है।"
 
-#: ../../topics/music.rst:322
+#: ../../topics/music.rst:360
 msgid ""
 "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; "
 "any other value renders as A4) and the selected template's horizontal "
@@ -1849,11 +1907,11 @@ msgstr ""
 "साथ फ़िट होने के लिए छोटा हो जाता है। कई सिस्टम वाला स्वरलेख सिस्टमों के "
 "बीच PDF पृष्ठ बदल सकता है, और उसका कैप्शन अंतिम सिस्टम के बाद आता है।"
 
-#: ../../topics/music.rst:329
+#: ../../topics/music.rst:367
 msgid "Fonts, limits and references"
 msgstr "फ़ॉन्ट, सीमाएँ और संदर्भ"
 
-#: ../../topics/music.rst:332
+#: ../../topics/music.rst:370
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1869,7 +1927,7 @@ msgstr ""
 "फ़ॉन्ट इंस्टॉल करना आवश्यक नहीं है। PNG निर्यात को अंतर्निहित रेंडरर "
 "चाहिए; उसके बिना भी SVG स्वरांकन उपलब्ध रहता है।"
 
-#: ../../topics/music.rst:337
+#: ../../topics/music.rst:375
 msgid ""
 "For CJK lyrics, we include a suitable CJK text face through "
 "``pdf_font_paths``. When building this repository, ``cargo xtask "
@@ -1883,7 +1941,7 @@ msgstr ""
 "संस्करण ``docs/shared/fonts`` में स्थापित करता है। हम अपनी परियोजना में "
 "इस निर्देशिका को फ़ॉन्ट पथ के रूप में उपयोग कर सकते हैं।"
 
-#: ../../topics/music.rst:341
+#: ../../topics/music.rst:379
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, four voices sounding "
@@ -1903,7 +1961,7 @@ msgstr ""
 "करोड़ पिक्सेल और किसी भी भुजा पर 16,384 पिक्सेल है। सीमा पार होने पर "
 "निदान संदेश स्रोत की पहचान करता है और उदाहरण को बाँटने का सुझाव देता है।"
 
-#: ../../topics/music.rst:348
+#: ../../topics/music.rst:386
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "
@@ -2139,7 +2197,24 @@ msgid ""
 "inline code literals may break cleanly after ``/`` or ``::``. The "
 "original TeX patterns and the libraries' BSD notices are recorded in "
 "``NOTICE``."
-msgstr "हर आरंभ किया गया प्रोजेक्ट (``guidedog quickstart``, ``guidedog ssg init`` और ``guidedog dsc init``) ``_static/guidedog.css`` और ``_static/guidedog.js`` के साथ ``_static/typography.js`` कॉपी करता है ताकि प्रोजेक्ट अपनी स्क्रिप्ट का स्वामी रहे और उन्हें सीधे संपादित कर सके। डेस्कटॉप पठन चौड़ाई (``40rem`` और अधिक) पर, अंग्रेज़ी गद्य ब्राउज़र में अनुच्छेदों, सूची मदों, परिभाषाओं, ध्यानाकर्षण बॉक्स, ब्लॉक उद्धरणों, पादटिप्पणियों और पोस्ट सूचियों (उनके कार्ड सहित) में पूरे अनुच्छेद पर **Knuth-Plass पंक्ति-विभाजन** लागू करता है, जबकि तालिकाएँ, नेविगेशन वृक्ष, मेटाडेटा शीर्षक और चित्र कैप्शन असम (ragged) रहते हैं। स्क्रिप्ट लोड किए गए फ़ॉन्ट को मापती है, बॉक्स, ग्लू और हाइफ़नेशन दंड बनाती है, तथा पूरे ब्लॉक के लिए विभाजन चुनती है। Frank Liang की पैटर्न विधि अंग्रेज़ी हाइफ़नेशन विकल्प देती है, और हाइफ़न वाले विभाजन के बाद दंड की चौड़ाई छोड़ दी जाती है ताकि अगली पंक्तियाँ सटीक मापी जाएँ। इनलाइन गणित (MathJax पूरा होने के बाद), पादटिप्पणी संदर्भ, सुपरस्क्रिप्ट और सबस्क्रिप्ट इनलाइन परमाणु के रूप में मापे जाते हैं; लिंक अपना मार्कअप बनाए रखते हैं, और इनलाइन कोड लिटरल ``/`` या ``::`` के बाद साफ़ तौर पर टूट सकते हैं। मूल TeX पैटर्न और लाइब्रेरियों की BSD सूचनाएँ ``NOTICE`` में दर्ज हैं।"
+msgstr ""
+"हर आरंभ किया गया प्रोजेक्ट (``guidedog quickstart``, ``guidedog ssg "
+"init`` और ``guidedog dsc init``) ``_static/guidedog.css`` और "
+"``_static/guidedog.js`` के साथ ``_static/typography.js`` कॉपी करता है "
+"ताकि प्रोजेक्ट अपनी स्क्रिप्ट का स्वामी रहे और उन्हें सीधे संपादित कर "
+"सके। डेस्कटॉप पठन चौड़ाई (``40rem`` और अधिक) पर, अंग्रेज़ी गद्य ब्राउज़र "
+"में अनुच्छेदों, सूची मदों, परिभाषाओं, ध्यानाकर्षण बॉक्स, ब्लॉक उद्धरणों, "
+"पादटिप्पणियों और पोस्ट सूचियों (उनके कार्ड सहित) में पूरे अनुच्छेद पर "
+"**Knuth-Plass पंक्ति-विभाजन** लागू करता है, जबकि तालिकाएँ, नेविगेशन "
+"वृक्ष, मेटाडेटा शीर्षक और चित्र कैप्शन असम (ragged) रहते हैं। स्क्रिप्ट "
+"लोड किए गए फ़ॉन्ट को मापती है, बॉक्स, ग्लू और हाइफ़नेशन दंड बनाती है, तथा "
+"पूरे ब्लॉक के लिए विभाजन चुनती है। Frank Liang की पैटर्न विधि अंग्रेज़ी "
+"हाइफ़नेशन विकल्प देती है, और हाइफ़न वाले विभाजन के बाद दंड की चौड़ाई छोड़ "
+"दी जाती है ताकि अगली पंक्तियाँ सटीक मापी जाएँ। इनलाइन गणित (MathJax पूरा "
+"होने के बाद), पादटिप्पणी संदर्भ, सुपरस्क्रिप्ट और सबस्क्रिप्ट इनलाइन "
+"परमाणु के रूप में मापे जाते हैं; लिंक अपना मार्कअप बनाए रखते हैं, और "
+"इनलाइन कोड लिटरल ``/`` या ``::`` के बाद साफ़ तौर पर टूट सकते हैं। मूल TeX "
+"पैटर्न और लाइब्रेरियों की BSD सूचनाएँ ``NOTICE`` में दर्ज हैं।"
 
 #: ../../topics/typography.rst:57
 msgid ""

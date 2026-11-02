@@ -11,7 +11,7 @@ use gd_host::{ArtifactRequest, Format, Target, catch_crash, catch_interrupts, co
 
 fn main() {
     catch_interrupts();
-    gd_host::install_crash_reporter(&std::env::args().collect::<Vec<_>>(), "guidedog 1.0.0-beta.9");
+    gd_host::install_crash_reporter(&std::env::args().collect::<Vec<_>>(), "guidedog 1.0.0-beta.10");
     let status = catch_crash(|| {
         let registry = guidedoc_defaults::registry();
         let request = ArtifactRequest { input: "intro.rst", output: "intro.pdf",

@@ -7,7 +7,7 @@ hand in `src/ffi.rs`; links `-lgvc -lcgraph`, or a static Graphviz, see below).
 
 ```toml
 [dependencies]
-gd-graphdog = "1.0.0-beta.9"
+gd-graphdog = "1.0.0-beta.10"
 ```
 
 We render DOT to SVG. The Graphviz libraries `libgvc` and `libcgraph` must be installed (on Debian and Ubuntu, `sudo apt install libgraphviz-dev`):

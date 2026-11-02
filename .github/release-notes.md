@@ -1,15 +1,12 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.9 adds native LilyPond music engraving, translated score accessibility and multilingual documentation updates.
+Version 1.0.0-beta.10 adds guitar tablature to native LilyPond engraving and a practical songbook task.
 
-- **Native LilyPond notation.** Write `lilypond` directives in RST or MyST, inline or from a `.ly` file, without installing LilyPond. Guidedog's in-process reader (`gd-lilypond`), rational score model (`gd-score`) and native engraver (`gd-engrave`) produce outlined SVG or PNG assets with embedded Bravura 1.482 glyphs, numbered figure references, adaptive dark-mode web figures and multi-system PDF page breaks.
-- **Polyphony and markup.** Up to four voices sound together on a staff, with local voice policies, `\shiftOn` and its relatives, note-column separation, mixed-rest placement and stacked dynamics. LilyPond 2.24 `\markup` works in scripts, tempo and rehearsal marks and instrument or staff-group names; Scheme, layout and embedded-score markup are refused with placed diagnostics.
-- **Accessible and localized output.** Score SVGs carry `<title>` and `<desc>` elements alongside localized musical summaries and native key-signature orthography across all nine built-in UI languages. `guidedog convert` names an unengraved LilyPond score file in a sentence, `--lang` translates Guidedog's own labels in HTML and PDF output, and built-in CLDR date formatting now covers Hindi and Korean alongside the other seven UI languages.
-- **Bounded memory and trust.** Temporary layout buffers in `gd-engrave` reserve and release against `Options::scratch` so build budgets account for score layout accurately. Untrusted builds engrave inline notation in process while refusing external `.ly` files and `\include`.
-- **Responsive web typography.** `_static/typography.js` no longer freezes a page: repeated hyphenation exception words such as "project" made its line breaker loop forever, and long pages forced a full layout per paragraph. Projects created by `quickstart`, `ssg init` or `dsc init` keep their own copy of the script, so replace it with the new built-in file.
-- **Documentation and translations.** Every manual edition teaches a four-bar Beethoven melody in the music chapter, and all six translated manuals, website editions and README files have been reviewed for native idiom and terminology. GDS 0015 records the accepted design and qualification evidence.
+- **Guitar tablature.** `\new TabStaff` draws a six-string guitar part as tablature beside its staff, and `\1` to `\6` name a note's string. Guidedog chooses strings and frets as LilyPond does by default and draws LilyPond's default tablature: a TAB clef, fret numbers on broken string lines that read in light and dark themes, and tied notes repeated in parentheses only at the start of a line. GDS 0016 records the design.
+- **Write a songbook.** A new practical task writes *Mary Had a Little Lamb* for voice, piano and guitar: the tune, two verses, chord names, a two-voice piano part, and a guitar part with tablature, explained step by step for students and built as a website and a book. Every manual edition includes it.
+- **Even typography.** Paragraphs keep justification and hyphenation when one line is loose beside long inline code, a paragraph that fits on one line only by shrinking is no longer wrapped ragged, and post lists, cards included, are typeset like the rest of the page.
 
-The [music chapter](https://insanai.github.io/guidedog/manual/topics/music.html), [Beethoven Joy theme lesson](https://insanai.github.io/guidedog/manual/topics/music.html#learn-from-beethoven-s-joy-theme), [GDS 0015](https://insanai.github.io/guidedog/discussions/records/0015-lilypond-music.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.9/CHANGELOG.md) describe the behavior and limits.
+The [songbook task](https://insanai.github.io/guidedog/manual/howto/songbook.html), [music chapter](https://insanai.github.io/guidedog/manual/topics/music.html), [GDS 0016](https://insanai.github.io/guidedog/discussions/records/0016-guitar-tablature.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.10/CHANGELOG.md) describe the behavior and limits.
 
 ## Downloads
 
@@ -20,7 +17,7 @@ The [music chapter](https://insanai.github.io/guidedog/manual/topics/music.html)
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.9-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.10-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

@@ -5,6 +5,12 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
+## 1.0.0-beta.10 - 2026-11-02
+
+- Add guitar tablature to the LilyPond profile (GDS 0016): `\new TabStaff`, `\new TabVoice` and string numbers `\1` to `\6` for a six-string guitar in standard tuning. Notes take strings and frets as LilyPond chooses by default, and the tab staff is drawn as LilyPond's default tablature, with a TAB clef, fret numbers on broken string lines and tied notes repeated in parentheses only at the start of a line.
+- Add the practical task "Write a songbook": *Mary Had a Little Lamb* for voice, piano and guitar with tablature, written part by part with explanations for students, in every manual edition.
+- Justify and hyphenate paragraphs whose breaks the line breaker accepts, single lines that fit only by shrinking, and post lists, cards included. The landing page's release list now keeps the paragraph measure.
+
 ## 1.0.0-beta.9 - 2026-11-02
 
 - Add native LilyPond notation in RST and MyST, with outlined Bravura SVG or PNG assets, figure references, narrow HTML layouts and PDF system breaks. Up to four voices sound together on a staff, with local voice policies, `\shiftOn` and its relatives, note-column separation, mixed-rest placement and stacked dynamics. Every manual edition teaches a four-bar Beethoven melody.

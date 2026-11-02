@@ -9,7 +9,7 @@ directives run through it; the spec is `docs/gds/records/0005-odin-domain.rst`.
 
 ```toml
 [dependencies]
-gd-odindoc = "1.0.0-beta.9"
+gd-odindoc = "1.0.0-beta.10"
 ```
 
 We document an Odin package found under `lib/`:

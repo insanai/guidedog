@@ -19,7 +19,7 @@ guidedog serve docs
 
 프로젝트에는 `conf.toml`, `index.rst`, `_templates/`(`layout.html`, `book.typ`, `discussion.typ`, `article.typ`, `theme.typ`), `_static/`(`guidedog.css`, `guidedog.js`, `typography.js`)이 들어 있습니다. 템플릿과 정적 에셋은 로컬에서 직접 편집할 수 있는 일반 파일입니다. HTML은 탐색, 검색, 코드 강조, 다이어그램, 수식, Knuth-Plass 문단 조판을 제공합니다. PDF 책은 장, 상호 참조, 그림, 색인, 언어에 맞춘 조판을 제공합니다. CeTZ와 Fletcher를 포함한 Graphviz 또는 Typst 드로잉 소스를 RST와 MyST에 직접 내장하면 HTML과 PDF 에셋이 자동으로 생성됩니다. 자세한 내용은 [다이어그램 장](docs/manual/topics/diagrams.rst)을 참고하세요.
 
-네이티브 `lilypond` 지시문으로 보표, 보표당 최대 네 개의 동시 성부, 가사, 구조화된 `\markup`, 일반적인 악상·연주 기호를 포함한 LilyPond 악보를 RST와 MyST에 직접 내장할 수 있습니다. 자세한 내용은 [악보 기보법 장](docs/manual/topics/music.rst)을 참고하세요. LilyPond 프로그램을 별도로 설치하지 않아도 윤곽선 처리된 Bravura SVG와 PNG 악보 그림이 HTML과 여러 보표단(시스템)으로 이루어진 PDF 책에서 바로 동작합니다:
+네이티브 `lilypond` 지시문으로 보표, 보표당 최대 네 개의 동시 성부, 가사, 기타 타브 악보, 구조화된 `\markup`, 일반적인 악상·연주 기호를 포함한 LilyPond 악보를 RST와 MyST에 직접 내장할 수 있습니다. 자세한 내용은 [악보 기보법 장](docs/manual/topics/music.rst)과 [노래책 만들기](docs/manual/howto/songbook.rst)를 참고하세요. LilyPond 프로그램을 별도로 설치하지 않아도 윤곽선 처리된 Bravura SVG와 PNG 악보 그림이 HTML과 여러 보표단(시스템)으로 이루어진 PDF 책에서 바로 동작합니다:
 
 ```rst
 .. lilypond::

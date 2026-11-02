@@ -19,7 +19,7 @@ guidedog serve docs
 
 The project contains `conf.toml`, `index.rst`, `_templates/` (`layout.html`, `book.typ`, `discussion.typ`, `article.typ`, and `theme.typ`), and `_static/` (`guidedog.css`, `guidedog.js`, and `typography.js`). Templates and static assets are ordinary files that we can edit locally. HTML provides navigation, search, code highlighting, diagrams, equations, and Knuth-Plass paragraph typesetting. PDF books provide chapters, cross-references, figures, indexes, and language-aware typesetting. We can embed Graphviz or Typst drawing source, including CeTZ and Fletcher, directly in RST and MyST with automatic HTML and PDF assets; see the [diagrams chapter](docs/manual/topics/diagrams.rst).
 
-We embed LilyPond notation directly in RST and MyST with the native `lilypond` directive, including staves, up to four simultaneous voices per staff, lyrics, structured `\markup`, and common markings; see the [music chapter](docs/manual/topics/music.rst). Outlined Bravura SVG and PNG figures work in HTML and multi-system PDF books without an installed LilyPond program:
+We embed LilyPond notation directly in RST and MyST with the native `lilypond` directive, including staves, up to four simultaneous voices per staff, lyrics, guitar tablature, structured `\markup`, and common markings; see the [music chapter](docs/manual/topics/music.rst) and the [songbook task](docs/manual/howto/songbook.rst). Outlined Bravura SVG and PNG figures work in HTML and multi-system PDF books without an installed LilyPond program:
 
 ```rst
 .. lilypond::

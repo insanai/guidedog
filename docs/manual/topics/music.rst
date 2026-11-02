@@ -155,6 +155,8 @@ A tilde ties equal pitches; parentheses make slurs, and ``\(`` with ``\)`` makes
      - Assignments, variable references, lexical ``\include``, ``\score``, ``\new Staff``, ``\new Voice``, ``PianoStaff``, ``GrandStaff``, ``StaffGroup``, ``ChoirStaff``.
    * - Voices and lyrics
      - At most four voices sounding at once on a staff; ``\addlyrics``, ``\lyricsto``, ``\lyricmode``, multiple verses, explicit syllable durations, hyphens and extenders.
+   * - Guitar tablature
+     - ``\new TabStaff``, ``\new TabVoice`` and string numbers ``\1`` through ``\6``, for a six-string guitar in standard tuning.
    * - Grace and repetition
      - ``\grace``, ``\acciaccatura``, ``\appoggiatura``, ``\afterGrace``, ``\repeat volta``, ``\alternative``, ``\volta``, ``\fine``, ``\section``, ``\repeat unfold``, ``\compressEmptyMeasures``, ``\compressFullBarRests``.
    * - Labels and breaks
@@ -263,6 +265,42 @@ We can override stems with ``\stemUp``, ``\stemDown`` and ``\stemNeutral`` witho
      \new Staff { \clef bass c1 | }
    >>
    \lyricsto "melody" { Sing a short song }
+
+Write guitar tablature
+----------------------
+
+A guitar part usually pairs a staff with tablature.
+``\new TabStaff`` draws six lines, one for each string of a guitar in standard tuning, with the highest string at the top, and a fret number on a string for each note.
+We write the same music for the staff and the tablature; guitar music sounds an octave below its written pitch, so the staff uses ``\clef "treble_8"``.
+
+.. code-block:: lilypond
+
+   music = { e4 d c d | <c e g>2 c'4\2 b | }
+   \new StaffGroup <<
+     \new Staff { \clef "treble_8" \music }
+     \new TabStaff { \music }
+   >>
+
+.. lilypond::
+   :caption: A guitar part in standard notation and tablature.
+   :alt: A guitar staff above six-line tablature; the notes E, D, C, D are played on frets 2, 0, 3 and 0, then a C major chord and two notes on the second string.
+
+   music = { \time 4/4 e4 d c d | <c e g>2 c'4\2 b | }
+   \new StaffGroup <<
+     \new Staff { \clef "treble_8" \music }
+     \new TabStaff { \music }
+   >>
+
+Each note goes on the highest string that can play it, as LilyPond chooses by default: notes of a chord take the strings from the highest note down, each at fret 0 through 24.
+A string number after a note, such as ``c'4\2``, names the string instead; inside a chord each note takes its own, as in ``<c\5 e\4>2``.
+A note that no free string can play, such as a C below the low E string, is refused with a placed diagnostic.
+
+The tab staff shows strings, fret numbers and bar lines with a TAB clef, as LilyPond's default tablature does.
+It omits key and time signatures, stems, beams, rests, ties, slurs and scripts, which the staff above shows.
+A tied note is not repeated, except at the start of a line, where its fret number stands in parentheses.
+``\new TabVoice`` holds one voice of a tab staff, and voices on a tab staff share its strings.
+Other tunings and instruments, rhythm in the tab staff and fret diagrams are outside the profile.
+:doc:`../howto/songbook` writes a complete song for voice, piano and guitar.
 
 Read local files
 ----------------

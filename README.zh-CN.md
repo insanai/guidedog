@@ -19,7 +19,7 @@ guidedog serve docs
 
 项目包含 `conf.toml`、`index.rst`、`_templates/`（`layout.html`、`book.typ`、`discussion.typ`、`article.typ` 和 `theme.typ`）以及 `_static/`（`guidedog.css`、`guidedog.js` 和 `typography.js`）。模板和静态资源都是普通文件，可在本地直接编辑。HTML 提供导航、搜索、代码高亮、图表、公式及 Knuth-Plass 段落排版；PDF 图书提供章节、交叉引用、插图、索引及按语种优化的排版。可以在 RST 和 MyST 中直接嵌入 Graphviz 或 Typst 绘图源码（包括 CeTZ 与 Fletcher），自动生成适用于 HTML 与 PDF 的图形资源；参见[图表章节](docs/manual/topics/diagrams.rst)。
 
-借助原生 `lilypond` 指令，还可在 RST 和 MyST 中直接编写 LilyPond 乐谱，支持谱表、每行谱表最多四个同时发声的声部、歌词、结构化 `\markup` 及常用记号；参见[乐谱章节](docs/manual/topics/music.rst)。转曲后的 Bravura 字体 SVG 和 PNG 谱例可直接用于 HTML 与多行谱表跨页排版的 PDF 图书，无需另行安装 LilyPond 程序：
+借助原生 `lilypond` 指令，还可在 RST 和 MyST 中直接编写 LilyPond 乐谱，支持谱表、每行谱表最多四个同时发声的声部、歌词、吉他六线谱、结构化 `\markup` 及常用记号；参见[乐谱章节](docs/manual/topics/music.rst)和[编写歌曲集](docs/manual/howto/songbook.rst)。转曲后的 Bravura 字体 SVG 和 PNG 谱例可直接用于 HTML 与多行谱表跨页排版的 PDF 图书，无需另行安装 LilyPond 程序：
 
 ```rst
 .. lilypond::

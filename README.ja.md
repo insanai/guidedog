@@ -19,7 +19,7 @@ guidedog serve docs
 
 プロジェクトには `conf.toml`、`index.rst`、`_templates/`（`layout.html`、`book.typ`、`discussion.typ`、`article.typ`、`theme.typ`）、`_static/`（`guidedog.css`、`guidedog.js`、`typography.js`）があります。テンプレートや静的アセットは、手元で直接編集できる普通のファイルです。HTML にはナビゲーション、検索、コードの強調、図、数式、Knuth-Plass 段落組版があり、PDF には章、相互参照、図、索引、言語に応じた組版があります。CeTZ や Fletcher を含む Graphviz または Typst の作図ソースを RST や MyST に直接埋め込み、HTML と PDF 向けのアセットを自動生成できます。詳しくは[図の章](docs/manual/topics/diagrams.rst)を参照してください。
 
-ネイティブの `lilypond` ディレクティブで、譜表、1 譜表あたり最大 4 つの同時声部、歌詞、構造化された `\markup`、一般的な記号を含む LilyPond 記法を RST と MyST に直接埋め込めます。詳しくは[楽譜の章](docs/manual/topics/music.rst)を参照してください。LilyPond プログラムを別途インストールせずに、アウトライン化された Bravura の SVG・PNG 図版を HTML と複数システムにわたる PDF の本で使えます。
+ネイティブの `lilypond` ディレクティブで、譜表、1 譜表あたり最大 4 つの同時声部、歌詞、ギターのタブ譜、構造化された `\markup`、一般的な記号を含む LilyPond 記法を RST と MyST に直接埋め込めます。詳しくは[楽譜の章](docs/manual/topics/music.rst)と[歌集を作る](docs/manual/howto/songbook.rst)を参照してください。LilyPond プログラムを別途インストールせずに、アウトライン化された Bravura の SVG・PNG 図版を HTML と複数システムにわたる PDF の本で使えます。
 
 ```rst
 .. lilypond::

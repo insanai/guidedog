@@ -440,7 +440,8 @@
 
   Hypher.prototype.hyphenate = function (word) {
     if (Object.prototype.hasOwnProperty.call(this.exceptions, word)) {
-      return this.exceptions[word];
+      // A copy: callers may edit the result, and the stored exception must stay intact.
+      return this.exceptions[word].slice();
     }
     if (word.indexOf("\u00AD") !== -1) return [word];
 
@@ -1020,6 +1021,8 @@
     let total = 0;
     for (let at = offset, end = offset + length; at < end;) {
       const item = itemAt(map, at), stop = Math.min(end, item.end);
+      // Past the end of the text the last item cannot advance us; stop rather than spin.
+      if (stop <= at) break;
       total += item.atom
         ? item.width
         : width(item.node.data.slice(at - item.start, stop - item.start), fontOf(item));
@@ -1062,7 +1065,9 @@
 
   function pushSyllables(map, part, partStart, inCode, font, extra, nodes) {
     const letters = inCode ? null : part.match(wordPattern);
-    const fragments = letters ? hypher.hyphenate(letters[2]) : [part];
+    // Build a new array: the hyphenator's result must not carry this word's punctuation
+    // into the next occurrence of the same word.
+    const fragments = letters ? [...hypher.hyphenate(letters[2])] : [part];
     if (letters) {
       fragments[0] = letters[1] + fragments[0];
       fragments[fragments.length - 1] += letters[3];
@@ -1200,9 +1205,9 @@
     p.dataset.layout = "knuth-plass";
   }
 
-  function typeset(p) {
-    restore(p);
-    if (narrowMedia?.matches) return;
+  // Measures one restored paragraph and chooses its breaks without changing the page;
+  // returns null when the paragraph keeps the browser's layout.
+  function plan(p) {
     const style = getComputedStyle(p);
     const align = style.textAlign;
     if (
@@ -1212,30 +1217,38 @@
       align === "right" ||
       align === "end"
     ) {
-      return;
+      return null;
     }
     const measure = p.clientWidth;
-    if (measure < 380) return;
+    if (measure < 380) return null;
     const { map, text } = textMap(p);
-    if (!map.length || !text.trim()) return;
+    if (!map.length || !text.trim()) return null;
     const space = width(" ", fontOf({ element: p }));
     const nodes = nodesFor(text, map, space);
-    if (nodes.length > 1800) return;
+    if (nodes.length > 1800) return null;
     const breaks = breaker(nodes, [measure - 1], {
       tolerance: 2,
       maxTolerance: 4,
       demerits: { line: 10, flagged: 400, fitness: 3000 }
     });
-    if (breaks.length < 3 || breaks.at(-1).position !== nodes.length - 1) return;
-    if (breaks.slice(1, -1).some(b => b.ratio > 2.5 || b.ratio < -0.95)) return;
-    render(p, map, text, nodes, breaks, space);
+    if (breaks.length < 3 || breaks.at(-1).position !== nodes.length - 1) return null;
+    if (breaks.slice(1, -1).some(b => b.ratio > 2.5 || b.ratio < -0.95)) return null;
+    return { p, map, text, nodes, breaks, space };
   }
 
   let scheduled = false, printing = false;
+  // Restore every paragraph, then measure them all, then rewrite them all. Interleaving
+  // measurement with rewriting made the browser lay out the whole page once per
+  // paragraph, which froze long pages for many seconds.
   function run() {
     scheduled = false;
     if (printing) return;
-    for (const p of paragraphs) typeset(p);
+    for (const p of paragraphs) restore(p);
+    if (narrowMedia?.matches) return;
+    const plans = paragraphs.map(plan).filter(Boolean);
+    for (const { p, map, text, nodes, breaks, space } of plans) {
+      render(p, map, text, nodes, breaks, space);
+    }
   }
   function schedule() {
     if (scheduled || printing) return;

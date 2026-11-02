@@ -104,6 +104,7 @@ Review history
 
 On 2 November 2026 the maintainer asked for tablature beside the piano and vocal parts of a songbook chapter; this record proposes it and records the implementation.
 The same day the maintainer asked to close the gaps the first implementation left: string numbers now print as circled digits on standard staves, and GDS 0015's profile gains breath marks and metronome marks with note symbols.
+Checking the songbook against LilyPond 2.24 then showed two more differences from LilyPond's defaults, and GDS 0015 now follows them: 4/4 prints as C and 2/2 as cut C, and chord names raise their extensions, as in G with a raised 7.
 
 References
 ----------

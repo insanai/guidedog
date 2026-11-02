@@ -46,6 +46,7 @@ An apostrophe raises a pitch by an octave, and a comma lowers it.
 A number after a pitch is its duration: ``1`` is a whole note of four beats, ``2`` a half note of two beats, and ``4`` a quarter note of one beat.
 A pitch without a number keeps the duration of the pitch before it.
 ``\key c \major`` gives the key, C major, which has no sharps or flats, and ``\time 4/4`` gives the time signature: four quarter-note beats in each bar.
+It prints as the symbol C, for common time, as LilyPond prints it.
 A vertical bar ``|`` marks the end of a bar; Guidedog checks that each bar holds exactly four beats.
 ``\bar "|."`` draws the final double bar.
 
@@ -113,7 +114,7 @@ Name the chords
 ---------------
 
 Guitarists and pianists who accompany a singer read chord names above the staff.
-We write them in ``\chordmode``: ``c1`` is a C major chord lasting a whole bar, ``g1`` a G major chord, and ``g:7`` a G seventh chord.
+We write them in ``\chordmode``: ``c1`` is a C major chord lasting a whole bar, ``g1`` a G major chord, and ``g:7`` a G seventh chord, printed as G with a raised 7.
 The song needs only these three chords: C under the notes C, E and G, and G or G7 under D and B.
 A ``\new ChordNames`` context draws the names above the next staff:
 

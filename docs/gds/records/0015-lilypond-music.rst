@@ -178,7 +178,7 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - ``\relative`` (with or without a start pitch), ``\fixed``, ``\transpose``
      - See "Interpretation".
    * - 1
-     - ``\clef`` (``treble``, ``bass``, ``alto``, ``tenor``, ``soprano``, ``treble_8``, ``bass_8``), ``\key`` with ``\major``, ``\minor`` and the church modes, ``\time`` with simple and compound meters and beat lists (``\time 2,2,3 7/8``), ``\numericTimeSignature``, ``\partial`` at the start, bar checks ``|``, ``\bar`` with ``|``, ``||``, ``|.``, ``.|``, ``.|:``, ``:|.``, ``:..:``
+     - ``\clef`` (``treble``, ``bass``, ``alto``, ``tenor``, ``soprano``, ``treble_8``, ``bass_8``), ``\key`` with ``\major``, ``\minor`` and the church modes, ``\time`` with simple and compound meters and beat lists (``\time 2,2,3 7/8``), drawn as LilyPond draws them by default, with C for 4/4 and a C with a stroke for 2/2; ``\numericTimeSignature`` and ``\defaultTimeSignature``; ``\partial`` at the start, bar checks ``|``, ``\bar`` with ``|``, ``||``, ``|.``, ``.|``, ``.|:``, ``:|.``, ``:..:``
      - ``\time`` off a bar line, ``\partial`` after the start, and different meters on different staves are refused.
    * - 1
      - Ties ``~``, slurs ``( )``, manual beams ``[ ]``, ``\autoBeamOff``/``On``, ``\tuplet n/m``, ``\times m/n``, ``\stemUp``/``Down``/``Neutral``, ``\slurUp``/``Down``/``Neutral``, ``\phrasingSlurUp``/``Down``/``Neutral``, ``\tieUp``/``Down``/``Neutral``, ``\dynamicUp``/``Down``/``Neutral``
@@ -223,7 +223,7 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - ``\tempo`` with text, a metronome mark printed with a SMuFL note symbol, or both (``Allegro (quarter note = 120)``), ``\mark \default``, ``\mark "text"`` and ``\mark \markup ...``; ``\breathe``
      -
    * - 3
-     - ``\chords`` and ``\new ChordNames`` with ``\chordmode`` chord names in common jazz spelling
+     - ``\chords`` and ``\new ChordNames`` with ``\chordmode`` chord names in common jazz spelling, printed as LilyPond's default chord names: extensions raised, a triangle for a major seventh, a raised o or slashed o for diminished and half-diminished chords, and accidentals as music glyphs
      -
 
 Scheme is accepted only as a literal value where the profile needs one: ``##t``, ``##f``, a number ``#3``, a string ``#"text"`` and a symbol ``#'up``.
@@ -1308,7 +1308,7 @@ Post-implementation review, 1 November 2026
 A second review against LilyPond 2.24 and Gould's rules expanded the profile and closed remaining semantic, geometric and builder gaps:
 
 * ``gd-score``, ``gd-lilypond`` and ``gd-engrave`` now represent and render a bounded LilyPond 2.24 ``\markup`` tree (lists, aligned columns, styles, small caps, sub/superscripts, relative and absolute sizes, enclosures, offsets, spacing, music symbols and markup variables) across scripts, ``\tempo``, ``\mark`` and instrument names, while refusing Scheme, layout and embedded-score markup commands explicitly.
-* ``\alternative`` supports ``\volta`` pass lists as well as sequential endings; ``\fine``, ``\section``, ``\compressEmptyMeasures``, ``\compressFullBarRests`` and ``\numericTimeSignature`` are accepted.
+* ``\alternative`` supports ``\volta`` pass lists as well as sequential endings; ``\fine``, ``\section``, ``\compressEmptyMeasures``, ``\compressFullBarRests``, ``\numericTimeSignature`` and ``\defaultTimeSignature`` are accepted.
 * ``\relative`` without an explicit pitch uses LilyPond's absolute-octave middle reference (``f``); ``\transpose`` transposes ``\key`` tonics with diatonic spelling; ``\acciaccatura`` and ``\appoggiatura`` add implicit slurs to their main notes; melismata skip manual beams only when automatic beaming is off; ``\lyricsto`` resolves voices created later in simultaneous blocks.
 * Courtesy clefs and courtesy key/time signatures appear before line-start changes; key changes cancel dropped accidentals before drawing new sharps or flats; back-to-back ``:|.`` and ``.|:`` merge into ``:..:``; concave and equal-endpoint beams stay strictly horizontal; 3/8 groups across the whole measure; two-voice dots and chords use per-head X positions and voice-two downward dot preferences.
 * Multi-system PDF figures emit a single numbered ``#figure`` around a breakable block of system images, template margin comments are scanned in the leading 256 lines and measured on the paper the book renders (A4 or US letter), directive widths accept standard print and CSS units, narrow HTML ``<picture>`` editions are omitted when the wide drawing already fits inside 225 points, and external ``.ly`` source is substituted into trusted text and fallback code blocks.

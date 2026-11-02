@@ -95,6 +95,7 @@ In ``\fixed c'``, ``c`` is middle C and ``e`` is the E above it.
 The letters name pitches; ``\key c \major`` selects a key with no sharps or flats.
 
 In ``\time 4/4``, each bar holds four quarter-note beats.
+As in LilyPond, 4/4 prints as the symbol C, for common time, and 2/2 as a C with a stroke, for cut time; ``\numericTimeSignature`` prints them as numbers, and ``\defaultTimeSignature`` brings the symbols back.
 The first bar has ``e2`` for two beats, then ``f4`` and ``g`` for one beat each; ``g`` inherits the preceding duration.
 In the last bar, ``e4.`` lasts one and a half beats, ``d8`` half a beat, and ``d2`` two beats.
 The final D leaves the phrase open because this is an excerpt.
@@ -144,7 +145,7 @@ A tilde ties equal pitches; parentheses make slurs, and ``\(`` with ``\)`` makes
    * - Family
      - Examples
    * - Staff context
-     - ``\clef``, ``\key``, ``\time``, ``\numericTimeSignature``, ``\partial``, ``\bar``; treble, bass, alto, tenor and soprano clefs, with supported octave clefs.
+     - ``\clef``, ``\key``, ``\time``, ``\numericTimeSignature``, ``\defaultTimeSignature``, ``\partial``, ``\bar``; treble, bass, alto, tenor and soprano clefs, with supported octave clefs.
    * - Modes
      - ``\major``, ``\minor``, ``\ionian``, ``\dorian``, ``\phrygian``, ``\lydian``, ``\mixolydian``, ``\aeolian``, ``\locrian``.
    * - Rhythm and stems
@@ -197,6 +198,7 @@ We write a volta repeat once and give each ending in ``\alternative``; ``\volta 
 The example has two passes with different final measures.
 ``\repeat unfold`` expands its body instead of drawing repeat signs, and ``\compressEmptyMeasures`` or ``\compressFullBarRests`` is accepted for multi-measure rests.
 Chord names use a separate ``\new ChordNames \chordmode`` context beside the staff, with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``.
+They print as LilyPond's default chord names: ``g:7`` is G with a raised 7, ``c:maj7`` is C with a small raised triangle, and sharps and flats are music symbols.
 
 .. code-block:: lilypond
 

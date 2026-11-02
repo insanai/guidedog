@@ -1,0 +1,28 @@
+[package]
+name = "guidedoc-edit"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+description = "Editable source maps and source-preserving edits for reStructuredText and Markdown."
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+keywords = ["restructuredtext", "markdown", "source-map", "editor", "documentation"]
+categories = ["text-processing", "text-editors"]
+include = ["src/**", "README.md", "LICENSE", "COPYING"]
+
+[dependencies]
+guidedoc.workspace = true
+guidedoc-rst.workspace = true
+guidedoc-commonmark.workspace = true
+guidedoc-sphinx.workspace = true
+gd-report.workspace = true
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+# The JSON form's tests parse what it writes.
+gd-json.workspace = true

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 04:25+0000\n"
+"POT-Creation-Date: 2026-11-02 06:22+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -2663,40 +2663,39 @@ msgid ""
 "beat. A pitch without a number keeps the duration of the pitch before it. "
 "``\\key c \\major`` gives the key, C major, which has no sharps or flats, "
 "and ``\\time 4/4`` gives the time signature: four quarter-note beats in "
-"each bar. A vertical bar ``|`` marks the end of a bar; Guidedog checks "
-"that each bar holds exactly four beats. ``\\bar \"|.\"`` draws the final "
+"each bar. It prints as the symbol C, for common time, as LilyPond prints "
+"it. A vertical bar ``|`` marks the end of a bar; Guidedog checks that "
+"each bar holds exactly four beats. ``\\bar \"|.\"`` draws the final "
 "double bar."
-msgstr ""
-"음높이 뒤의 숫자는 음가입니다. ``1``\\ 은 네 박짜리 온음표, ``2``\\ 는 두 박짜리 2분음표, ``4``\\ 는 한 "
-"박짜리 4분음표입니다. 숫자가 없는 음은 앞 음의 음가를 그대로 이어받습니다. ``\\key c \\major``\\ 는 조를 "
-"다장조로 정합니다. 다장조에는 올림표도 내림표도 없습니다. ``\\time 4/4``\\ 는 박자표를 정하며, 한 마디에 4분음표 "
-"네 박이 들어갑니다. 세로줄 ``|``\\ 는 마디의 끝을 표시하고, Guidedog은 마디마다 정확히 네 박이 들어 있는지 "
-"검사합니다. ``\\bar \"|.\"`` 명령은 마지막 끝세로줄을 그립니다."
+msgstr "음높이 뒤의 숫자는 음가입니다. ``1``\\ 은 네 박짜리 온음표, ``2``\\ 는 두 박짜리 2분음표, ``4``\\ 는 한 박짜리 4분음표입니다. 숫자가 없는 음은 앞 음의 음가를 그대로 이어받습니다. ``\\key c \\major``\\ 는 조를 다장조로 정합니다. 다장조에는 올림표도 내림표도 없습니다. ``\\time 4/4``\\ 는 박자표를 정하며, 한 마디에 4분음표 네 박이 들어갑니다. LilyPond와 마찬가지로 이 박자표는 기호 C로 인쇄됩니다. 세로줄 ``|``\\ 는 마디의 끝을 표시하고, Guidedog은 마디마다 정확히 네 박이 들어 있는지 검사합니다. ``\\bar \"|.\"`` 명령은 마지막 끝세로줄을 그립니다."
 
-#: ../../howto/songbook.rst:53
+#: ../../howto/songbook.rst:54
 msgid ""
 "Eight bars in C major and four-four time, starting E, D, C, D, and ending "
 "on a whole-note C."
 msgstr "다장조, 4분의 4박자의 여덟 마디. E, D, C, D로 시작하고 온음표 C로 끝납니다."
 
-#: ../../howto/songbook.rst:53
+#: ../../howto/songbook.rst:54
 msgid "The tune of *Mary Had a Little Lamb*."
 msgstr "*Mary Had a Little Lamb*\\ 의 선율."
 
-#: ../../howto/songbook.rst:63
+#: ../../howto/songbook.rst:64
 msgid ""
 ":numref:`songbook-tune` has eight bars. The tune moves mostly by step, "
 "between the neighboring notes C, D and E; it leaps only in bar four, from "
 "E up to G, and back down to E at the start of bar five. Count the beats "
 "in bar two: ``e`` and ``e`` take one beat each, and ``e2`` takes two, "
 "which makes four."
-msgstr ":numref:`songbook-tune`\\ 의 선율은 여덟 마디입니다. 선율은 대부분 이웃한 음인 C, D, E 사이를 순차 진행하고, 넷째 마디에서만 E에서 G로 도약했다가 다섯째 마디 첫머리에서 다시 E로 내려옵니다. 둘째 마디의 박을 세어 보면 ``e``\\ 와 ``e``\\ 가 한 박씩, ``e2``\\ 가 두 박이므로 모두 네 박입니다."
+msgstr ""
+":numref:`songbook-tune`\\ 의 선율은 여덟 마디입니다. 선율은 대부분 이웃한 음인 C, D, E 사이를 순차 "
+"진행하고, 넷째 마디에서만 E에서 G로 도약했다가 다섯째 마디 첫머리에서 다시 E로 내려옵니다. 둘째 마디의 박을 세어 보면 "
+"``e``\\ 와 ``e``\\ 가 한 박씩, ``e2``\\ 가 두 박이므로 모두 네 박입니다."
 
-#: ../../howto/songbook.rst:67
+#: ../../howto/songbook.rst:68
 msgid "Add the words"
 msgstr "가사 붙이기"
 
-#: ../../howto/songbook.rst:70
+#: ../../howto/songbook.rst:71
 msgid ""
 "A singer reads the words under the notes, one syllable under each note. "
 "We write the words in ``\\lyricmode``, with spaces between the syllables. "
@@ -2708,7 +2707,7 @@ msgstr ""
 "띄어 씁니다. 한 단어의 음절은 하이픈 두 개(``--``)로 잇고, Guidedog은 그 사이에 짧은 하이픈을 그립니다. 선율에 "
 "음표가 26개 있으므로 각 절에는 음절이 정확히 26개 필요합니다:"
 
-#: ../../howto/songbook.rst:80
+#: ../../howto/songbook.rst:81
 msgid ""
 "To attach the words, we name the voice that sings the tune, ``\\new Voice "
 "= \"tune\"``, and give each verse its own ``\\new Lyrics \\lyricsto "
@@ -2719,7 +2718,7 @@ msgstr ""
 "``\\new Lyrics \\lyricsto \"tune\"``\\ 을 둡니다. Guidedog은 그 성부의 음표 아래에 음절을 "
 "차례로 놓고, 절은 하나씩 아래로 쌓습니다."
 
-#: ../../howto/songbook.rst:84
+#: ../../howto/songbook.rst:85
 msgid ""
 "The tune on one staff with two lines of words below: Mary had a little "
 "lamb, and Everywhere that Mary went."
@@ -2727,11 +2726,11 @@ msgstr ""
 "보표 하나에 선율이 있고, 그 아래에 Mary had a little lamb과 Everywhere that Mary went로 "
 "시작하는 가사 두 줄이 있습니다."
 
-#: ../../howto/songbook.rst:84
+#: ../../howto/songbook.rst:85
 msgid "The vocal part with two verses."
 msgstr "가사 두 절이 붙은 노래 파트."
 
-#: ../../howto/songbook.rst:106
+#: ../../howto/songbook.rst:107
 msgid ""
 "A singer breathes between phrases. The tune has two phrases of four bars, "
 "and ``\\breathe`` after the last note of bar four prints a comma above "
@@ -2740,38 +2739,37 @@ msgstr ""
 "가수는 악구와 악구 사이에서 숨을 쉽니다. 이 선율은 네 마디짜리 악구 두 개로 이루어지며, 넷째 마디의 마지막 음 뒤에 붙인 "
 "``\\breathe``\\ 는 가수가 숨을 쉬는 자리의 보표 위에 콤마 모양의 숨표를 찍습니다."
 
-#: ../../howto/songbook.rst:109
+#: ../../howto/songbook.rst:110
 msgid ""
 "Hale's poem has more verses, but the next, \"It followed her to school "
 "one day\", has eight syllables where the first two bars have seven notes. "
 "Singers divide a note for the extra syllable; a score shows that with a "
 "different rhythm, so our songbook keeps the two verses that fit the tune "
 "as written."
-msgstr "Hale의 시에는 절이 더 있지만, 다음 절인 \"It followed her to school one day\"는 음표가 일곱인 처음 두 마디에 음절이 여덟입니다. 가수는 남는 음절을 위해 음표 하나를 나누어 부르는데, 악보에서는 이를 다른 리듬으로 적어야 합니다. 그래서 이 노래책에는 적힌 선율에 그대로 맞는 두 절만 싣습니다."
+msgstr ""
+"Hale의 시에는 절이 더 있지만, 다음 절인 \"It followed her to school one day\"는 음표가 일곱인 "
+"처음 두 마디에 음절이 여덟입니다. 가수는 남는 음절을 위해 음표 하나를 나누어 부르는데, 악보에서는 이를 다른 리듬으로 적어야 "
+"합니다. 그래서 이 노래책에는 적힌 선율에 그대로 맞는 두 절만 싣습니다."
 
-#: ../../howto/songbook.rst:112
+#: ../../howto/songbook.rst:113
 msgid "Name the chords"
 msgstr "코드 이름 붙이기"
 
-#: ../../howto/songbook.rst:115
+#: ../../howto/songbook.rst:116
 msgid ""
 "Guitarists and pianists who accompany a singer read chord names above the "
 "staff. We write them in ``\\chordmode``: ``c1`` is a C major chord "
 "lasting a whole bar, ``g1`` a G major chord, and ``g:7`` a G seventh "
-"chord. The song needs only these three chords: C under the notes C, E and "
-"G, and G or G7 under D and B. A ``\\new ChordNames`` context draws the "
-"names above the next staff:"
-msgstr ""
-"노래를 반주하는 기타 연주자와 피아노 연주자는 보표 위의 코드 이름을 읽습니다. 코드 이름은 ``\\chordmode`` 안에 "
-"씁니다. ``c1``\\ 은 한 마디 내내 이어지는 C 메이저 코드, ``g1``\\ 은 G 메이저 코드, ``g:7``\\ 은 "
-"G7 코드입니다. 이 노래에는 이 세 코드만 있으면 됩니다. C, E, G 음 아래에는 C 코드를, D와 B 음 아래에는 G나 G7 "
-"코드를 붙입니다. ``\\new ChordNames`` 문맥은 바로 다음 보표 위에 코드 이름을 그립니다:"
+"chord, printed as G with a raised 7. The song needs only these three "
+"chords: C under the notes C, E and G, and G or G7 under D and B. A "
+"``\\new ChordNames`` context draws the names above the next staff:"
+msgstr "노래를 반주하는 기타 연주자와 피아노 연주자는 보표 위의 코드 이름을 읽습니다. 코드 이름은 ``\\chordmode`` 안에 씁니다. ``c1``\\ 은 한 마디 내내 이어지는 C 메이저 코드, ``g1``\\ 은 G 메이저 코드, ``g:7``\\ 은 G7 코드로, G 오른쪽 위에 작은 7을 붙여 인쇄됩니다. 이 노래에는 이 세 코드만 있으면 됩니다. C, E, G 음 아래에는 C 코드를, D와 B 음 아래에는 G나 G7 코드를 붙입니다. ``\\new ChordNames`` 문맥은 바로 다음 보표 위에 코드 이름을 그립니다:"
 
-#: ../../howto/songbook.rst:124
+#: ../../howto/songbook.rst:125
 msgid "Write the piano part"
 msgstr "피아노 파트 쓰기"
 
-#: ../../howto/songbook.rst:127
+#: ../../howto/songbook.rst:128
 msgid ""
 "A piano part has two staves joined by a brace: ``\\new PianoStaff``. The "
 "upper staff is for the right hand, and the lower staff, with ``\\clef "
@@ -2780,7 +2778,7 @@ msgstr ""
 "피아노 파트는 중괄호로 묶인 보표 두 개로 이루어지며, ``\\new PianoStaff``\\ 로 만듭니다. 위 보표는 오른손이, "
 "``\\clef bass``\\ 를 붙인 아래 보표는 왼손이 연주합니다."
 
-#: ../../howto/songbook.rst:130
+#: ../../howto/songbook.rst:131
 msgid ""
 "The right hand plays the tune and, below it, a second voice, mostly a "
 "third lower. Two voices on one staff go inside ``<< ... >>``, separated "
@@ -2788,24 +2786,28 @@ msgid ""
 "with stems down, so a player can follow each line. The left hand plays "
 "the bass in half notes, mostly the root and the fifth of each chord; in "
 "bar seven it rises from G to B, which leads to the final C."
-msgstr "오른손은 선율과 함께, 그 아래에서 대개 3도 낮은 둘째 성부를 연주합니다. 한 보표의 두 성부는 ``<< ... >>`` 안에 넣고 ``\\\\``\\ 로 구분합니다. Guidedog은 첫째 성부의 기둥을 위로, 둘째 성부의 기둥을 아래로 그리므로 연주자는 각 성부를 따라갈 수 있습니다. 왼손은 베이스를 맡아 2분음표로 연주하며, 대개 각 화음의 근음과 5음을 짚습니다. 일곱째 마디에서는 G에서 B로 올라가 마지막 C로 이어집니다."
+msgstr ""
+"오른손은 선율과 함께, 그 아래에서 대개 3도 낮은 둘째 성부를 연주합니다. 한 보표의 두 성부는 ``<< ... >>`` 안에 "
+"넣고 ``\\\\``\\ 로 구분합니다. Guidedog은 첫째 성부의 기둥을 위로, 둘째 성부의 기둥을 아래로 그리므로 연주자는 "
+"각 성부를 따라갈 수 있습니다. 왼손은 베이스를 맡아 2분음표로 연주하며, 대개 각 화음의 근음과 5음을 짚습니다. 일곱째 "
+"마디에서는 G에서 B로 올라가 마지막 C로 이어집니다."
 
-#: ../../howto/songbook.rst:136
+#: ../../howto/songbook.rst:137
 msgid ""
 "Two piano staves; the right hand plays the tune with a second voice a "
 "third below, and the left hand plays half notes on C and G."
 msgstr "피아노 보표 두 개. 오른손은 선율과 3도 아래의 둘째 성부를 연주하고, 왼손은 C와 G를 2분음표로 연주합니다."
 
-#: ../../howto/songbook.rst:136
+#: ../../howto/songbook.rst:137
 msgid ""
 "The piano part: tune and harmony in the right hand, bass in the left."
 msgstr "피아노 파트: 오른손은 선율과 화성, 왼손은 베이스."
 
-#: ../../howto/songbook.rst:155
+#: ../../howto/songbook.rst:156
 msgid "Write the guitar part and its tablature"
 msgstr "기타 파트와 타브 악보 쓰기"
 
-#: ../../howto/songbook.rst:158
+#: ../../howto/songbook.rst:159
 msgid ""
 "Guitar music is written an octave above the sound, on a staff with "
 "``\\clef \"treble_8\"``; the small 8 under the clef says so. Our guitar "
@@ -2816,7 +2818,7 @@ msgstr ""
 "음자리표 아래에 붙은 작은 8이 바로 그 표시입니다. 이 기타 파트는 핑거스타일 연주자처럼 한 보표에서 두 성부를 연주합니다. "
 "선율은 기둥을 위로, 베이스는 기둥을 아래로 그립니다."
 
-#: ../../howto/songbook.rst:161
+#: ../../howto/songbook.rst:162
 msgid ""
 "Under the staff we add tablature with ``\\new TabStaff``. Its six lines "
 "are the six strings of the guitar, with the highest string at the top, "
@@ -2825,9 +2827,13 @@ msgid ""
 "chooses the strings. It puts each note on the highest string that can "
 "play it, so the tune lies on the two highest strings and the bass on the "
 "three lowest, all in the first position of the left hand."
-msgstr "보표 아래에는 ``\\new TabStaff``\\ 로 타브 악보를 붙입니다. 타브 악보의 여섯 선은 기타의 여섯 줄이며, 가장 높은 줄이 맨 위에 옵니다. 각 숫자는 그 줄에서 누를 프렛이고, ``0``\\ 은 개방현입니다. 타브 악보에도 보표와 똑같은 음악을 적으면 어느 줄에서 칠지는 Guidedog이 정합니다. 각 음은 그 음을 낼 수 있는 가장 높은 줄에 놓이므로, 선율은 가장 높은 두 줄에, 베이스는 가장 낮은 세 줄에 놓이고 모두 왼손 1포지션에서 칠 수 있습니다."
+msgstr ""
+"보표 아래에는 ``\\new TabStaff``\\ 로 타브 악보를 붙입니다. 타브 악보의 여섯 선은 기타의 여섯 줄이며, 가장 "
+"높은 줄이 맨 위에 옵니다. 각 숫자는 그 줄에서 누를 프렛이고, ``0``\\ 은 개방현입니다. 타브 악보에도 보표와 똑같은 "
+"음악을 적으면 어느 줄에서 칠지는 Guidedog이 정합니다. 각 음은 그 음을 낼 수 있는 가장 높은 줄에 놓이므로, 선율은 가장 "
+"높은 두 줄에, 베이스는 가장 낮은 세 줄에 놓이고 모두 왼손 1포지션에서 칠 수 있습니다."
 
-#: ../../howto/songbook.rst:167
+#: ../../howto/songbook.rst:168
 msgid ""
 "A guitar staff with the tune and a bass, above tablature; the first bar "
 "is frets 0, 3, 1 and 3 on the high strings with 3 and 3 on the low "
@@ -2836,11 +2842,11 @@ msgstr ""
 "선율과 베이스가 적힌 기타 보표와 그 아래의 타브 악보. 첫 마디는 높은 줄에서 프렛 0, 3, 1, 3, 낮은 줄에서 프렛 3과 "
 "3입니다."
 
-#: ../../howto/songbook.rst:167
+#: ../../howto/songbook.rst:168
 msgid "The guitar part in standard notation and tablature."
 msgstr "오선 악보와 타브 악보로 적은 기타 파트."
 
-#: ../../howto/songbook.rst:182
+#: ../../howto/songbook.rst:183
 msgid ""
 "In the first bar of :numref:`songbook-guitar` the tune's E is the open "
 "first string, D the third fret of the second string, and C its first "
@@ -2853,11 +2859,11 @@ msgstr ""
 "줄 1프렛입니다. 베이스의 C는 5번 줄 3프렛, G는 6번 줄 3프렛입니다. 음을 다른 줄에서 치려면 음 뒤에 줄 번호를 "
 "붙입니다. ``e4\\2``\\ 는 E를 2번 줄 5프렛에 놓습니다. 리듬은 위 보표에 나오므로 타브 악보에서는 생략합니다."
 
-#: ../../howto/songbook.rst:186
+#: ../../howto/songbook.rst:187
 msgid "Combine the parts in one score"
 msgstr "파트를 한 악보로 합치기"
 
-#: ../../howto/songbook.rst:189
+#: ../../howto/songbook.rst:190
 msgid ""
 "The complete score stacks the parts from top to bottom: chord names, the "
 "voice with its verses, the piano and the guitar. To write each line of "
@@ -2870,29 +2876,36 @@ msgid ""
 "staves and the tablature show it too: the players lift at the end of the "
 "phrase with the singer. We save the score as "
 "``scores/mary-had-a-little-lamb.ly``:"
-msgstr "완성된 악보는 위에서 아래로 코드 이름, 가사가 붙은 노래, 피아노, 기타 순으로 파트를 쌓습니다. 같은 음악을 한 번만 쓰도록 음악 한 줄마다 ``melody = ...``\\ 처럼 이름을 붙이고, 파트에서 필요한 곳마다 ``\\melody``\\ 로 불러 씁니다. ``%``\\ 로 시작하는 줄은 파일을 읽는 사람을 위한 주석입니다. 노래 파트 위의 ``\\tempo \"Moderato\" 4 = 100``\\ 은 1분에 4분음표 100박의 보통 빠르기를 지시합니다. Guidedog은 이 빠르기말을 인쇄하고, 그 뒤 괄호 안에 음표 기호와 빠르기 수치를 적습니다. 숨표는 선율의 일부이므로 피아노와 기타 보표, 그리고 타브 악보에도 나타납니다. 연주자도 가수와 함께 악구 끝에서 손을 살짝 뗍니다. 악보는 ``scores/mary-had-a-little-lamb.ly``\\ 로 저장합니다:"
+msgstr ""
+"완성된 악보는 위에서 아래로 코드 이름, 가사가 붙은 노래, 피아노, 기타 순으로 파트를 쌓습니다. 같은 음악을 한 번만 쓰도록 "
+"음악 한 줄마다 ``melody = ...``\\ 처럼 이름을 붙이고, 파트에서 필요한 곳마다 ``\\melody``\\ 로 불러 "
+"씁니다. ``%``\\ 로 시작하는 줄은 파일을 읽는 사람을 위한 주석입니다. 노래 파트 위의 ``\\tempo "
+"\"Moderato\" 4 = 100``\\ 은 1분에 4분음표 100박의 보통 빠르기를 지시합니다. Guidedog은 이 "
+"빠르기말을 인쇄하고, 그 뒤 괄호 안에 음표 기호와 빠르기 수치를 적습니다. 숨표는 선율의 일부이므로 피아노와 기타 보표, 그리고 "
+"타브 악보에도 나타납니다. 연주자도 가수와 함께 악구 끝에서 손을 살짝 뗍니다. 악보는 "
+"``scores/mary-had-a-little-lamb.ly``\\ 로 저장합니다:"
 
-#: ../../howto/songbook.rst:199
+#: ../../howto/songbook.rst:200
 msgid ""
 "On the song's page, ``mary.rst``, the directive names the file instead of "
 "holding the music:"
 msgstr "노래 페이지인 ``mary.rst``\\ 에서는 지시문에 음악을 직접 넣지 않고 파일 이름을 적습니다:"
 
-#: ../../howto/songbook.rst:212
+#: ../../howto/songbook.rst:213
 msgid ""
 "A score for voice, piano and guitar with chord names and tablature, eight "
 "bars in C major."
 msgstr "코드 이름과 타브 악보가 있는 노래, 피아노, 기타용 악보. 다장조 여덟 마디."
 
-#: ../../howto/songbook.rst:212
+#: ../../howto/songbook.rst:213
 msgid "*Mary Had a Little Lamb*, for voice, piano and guitar."
 msgstr "노래, 피아노, 기타를 위한 *Mary Had a Little Lamb*."
 
-#: ../../howto/songbook.rst:216
+#: ../../howto/songbook.rst:217
 msgid "Build the website and the book"
 msgstr "웹사이트와 책 빌드하기"
 
-#: ../../howto/songbook.rst:224
+#: ../../howto/songbook.rst:225
 msgid ""
 "Guidedog engraves each score for each output at that output's line width, "
 "so the website and the book each break the music into systems that fill "
@@ -2907,17 +2920,17 @@ msgstr ""
 "페이지를 넘기며, 캡션은 마지막 보표단 뒤에 놓입니다. 악보 파일을 고치면 다음 빌드에서 다시 조판하고, 바뀌지 않은 악보는 그대로 "
 "둡니다."
 
-#: ../../howto/songbook.rst:229
+#: ../../howto/songbook.rst:230
 msgid "Practice"
 msgstr "연습 문제"
 
-#: ../../howto/songbook.rst:232
+#: ../../howto/songbook.rst:233
 msgid ""
 "These exercises extend the songbook. Build after each change and look at "
 "the result."
 msgstr "다음 연습 문제로 노래책을 넓혀 봅니다. 하나를 고칠 때마다 빌드하고 결과를 확인합니다."
 
-#: ../../howto/songbook.rst:235
+#: ../../howto/songbook.rst:236
 msgid ""
 "Move the song to G major: wrap the whole score in ``\\transpose c g << "
 "... >>``. The key signature, the notes, the tablature and the chord names "
@@ -2926,7 +2939,7 @@ msgstr ""
 "노래를 사장조로 옮깁니다. 악보 전체를 ``\\transpose c g << ... >>`` 안에 넣습니다. 조표, 음표, 타브 "
 "악보, 코드 이름이 모두 5도 위로 올라갑니다."
 
-#: ../../howto/songbook.rst:236
+#: ../../howto/songbook.rst:237
 msgid ""
 "Play the guitar tune higher on the neck: add ``\\2`` after each note of "
 "the first bar. A circled 2 appears over each note on the staff, and the "
@@ -2935,7 +2948,7 @@ msgstr ""
 "기타 선율을 지판의 더 높은 자리에서 연주합니다. 첫 마디의 각 음 뒤에 ``\\2``\\ 를 붙입니다. 그러면 보표의 각 음 위에 "
 "동그라미 친 2가 나타나고, 타브 악보에는 바뀐 프렛이 표시됩니다."
 
-#: ../../howto/songbook.rst:237
+#: ../../howto/songbook.rst:238
 msgid ""
 "Add dynamics to the tune: write ``e4\\mf`` for its first note and "
 "``c1\\p`` for its last. A dynamic follows the note it belongs to."
@@ -2943,7 +2956,7 @@ msgstr ""
 "선율에 셈여림을 붙입니다. 첫 음은 ``e4\\mf``, 마지막 음은 ``c1\\p``\\ 로 씁니다. 셈여림표는 자기가 속한 음 "
 "바로 뒤에 씁니다."
 
-#: ../../howto/songbook.rst:238
+#: ../../howto/songbook.rst:239
 msgid ""
 "Write a second song in its own file and page, and refer to its figure "
 "from this page with ``:numref:``."

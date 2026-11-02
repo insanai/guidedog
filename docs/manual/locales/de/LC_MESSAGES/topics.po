@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 04:25+0000\n"
+"POT-Creation-Date: 2026-11-02 06:22+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -1274,27 +1274,25 @@ msgstr ""
 
 #: ../../topics/music.rst:97
 msgid ""
-"In ``\\time 4/4``, each bar holds four quarter-note beats. The first bar "
-"has ``e2`` for two beats, then ``f4`` and ``g`` for one beat each; ``g`` "
-"inherits the preceding duration. In the last bar, ``e4.`` lasts one and a "
-"half beats, ``d8`` half a beat, and ``d2`` two beats. The final D leaves "
-"the phrase open because this is an excerpt."
-msgstr ""
-"In ``\\time 4/4`` enthält jeder Takt vier Viertelschläge. Der erste Takt "
-"hat ``e2`` für zwei Schläge, dann ``f4`` und ``g`` für jeweils einen "
-"Schlag; ``g`` übernimmt die vorherige Dauer. Im letzten Takt dauert "
-"``e4.`` eineinhalb Schläge, ``d8`` einen halben und ``d2`` zwei Schläge. "
-"Das abschließende D lässt die Phrase offen, weil dies ein Ausschnitt ist."
+"In ``\\time 4/4``, each bar holds four quarter-note beats. As in "
+"LilyPond, 4/4 prints as the symbol C, for common time, and 2/2 as a C "
+"with a stroke, for cut time; ``\\numericTimeSignature`` prints them as "
+"numbers, and ``\\defaultTimeSignature`` brings the symbols back. The "
+"first bar has ``e2`` for two beats, then ``f4`` and ``g`` for one beat "
+"each; ``g`` inherits the preceding duration. In the last bar, ``e4.`` "
+"lasts one and a half beats, ``d8`` half a beat, and ``d2`` two beats. The "
+"final D leaves the phrase open because this is an excerpt."
+msgstr "In ``\\time 4/4`` enthält jeder Takt vier Viertelschläge. Wie in LilyPond erscheint 4/4 als Zeichen C für den Viervierteltakt und 2/2 als durchgestrichenes C für den Alla-breve-Takt; ``\\numericTimeSignature`` setzt sie als Zahlen, und ``\\defaultTimeSignature`` stellt die Zeichen wieder her. Der erste Takt hat ``e2`` für zwei Schläge, dann ``f4`` und ``g`` für jeweils einen Schlag; ``g`` übernimmt die vorherige Dauer. Im letzten Takt dauert ``e4.`` eineinhalb Schläge, ``d8`` einen halben und ``d2`` zwei Schläge. Das abschließende D lässt die Phrase offen, weil dies ein Ausschnitt ist."
 
-#: ../../topics/music.rst:102
+#: ../../topics/music.rst:103
 msgid "For MyST, we put the same music inside the directive fence:"
 msgstr "Für MyST setzen wir dieselbe Musik in den Direktivenblock:"
 
-#: ../../topics/music.rst:118
+#: ../../topics/music.rst:119
 msgid "Choose the notation"
 msgstr "Die Notation wählen"
 
-#: ../../topics/music.rst:121
+#: ../../topics/music.rst:122
 msgid ""
 "The default pitch language is Nederlands: ``cis`` is C sharp and ``des`` "
 "is D flat. We select English names with ``\\language \"english\"`` or "
@@ -1308,7 +1306,7 @@ msgstr ""
 "und ``df``. Deutsch ergänzt ``h`` für H und ``b`` für B. Diese drei "
 "Spracheinbindungen sind eingebaut und lesen keine Datei."
 
-#: ../../topics/music.rst:126
+#: ../../topics/music.rst:127
 msgid ""
 "Apostrophes raise octaves and commas lower them. ``\\fixed c' { ... }`` "
 "fixes the reference octave instead of following preceding pitches. "
@@ -1328,7 +1326,7 @@ msgstr ""
 "ein Fragezeichen fordert eine Warnakzidenz an. Diese Zeichen stehen nach "
 "der Tonhöhe und vor der Dauer: ``cis'!4`` und ``c'?4``."
 
-#: ../../topics/music.rst:133
+#: ../../topics/music.rst:134
 msgid ""
 "Durations range from ``1`` through ``128``, with ``\\breve`` for a double "
 "whole note. Dots lengthen a duration, and ``*2/3`` scales its exact "
@@ -1347,37 +1345,34 @@ msgstr ""
 "Haltebogen; runde Klammern setzen Bindebögen (Legatobögen), ``\\(`` und "
 "``\\)`` einen Phrasierungsbogen."
 
-#: ../../topics/music.rst:140
+#: ../../topics/music.rst:141
 msgid "Supported notation families"
 msgstr "Unterstützte Notationsgruppen"
 
-#: ../../topics/music.rst:144
+#: ../../topics/music.rst:145
 msgid "Family"
 msgstr "Gruppe"
 
-#: ../../topics/music.rst:145
+#: ../../topics/music.rst:146
 msgid "Examples"
 msgstr "Beispiele"
 
-#: ../../topics/music.rst:146
+#: ../../topics/music.rst:147
 msgid "Staff context"
 msgstr "Notensystemkontext"
 
-#: ../../topics/music.rst:147
+#: ../../topics/music.rst:148
 msgid ""
 "``\\clef``, ``\\key``, ``\\time``, ``\\numericTimeSignature``, "
-"``\\partial``, ``\\bar``; treble, bass, alto, tenor and soprano clefs, "
-"with supported octave clefs."
-msgstr ""
-"``\\clef``, ``\\key``, ``\\time``, ``\\numericTimeSignature``, "
-"``\\partial``, ``\\bar``; Violin-, Bass-, Alt-, Tenor- und "
-"Sopranschlüssel sowie unterstützte oktavierende Schlüssel."
+"``\\defaultTimeSignature``, ``\\partial``, ``\\bar``; treble, bass, alto, "
+"tenor and soprano clefs, with supported octave clefs."
+msgstr "``\\clef``, ``\\key``, ``\\time``, ``\\numericTimeSignature``, ``\\defaultTimeSignature``, ``\\partial``, ``\\bar``; Violin-, Bass-, Alt-, Tenor- und Sopranschlüssel sowie unterstützte oktavierende Schlüssel."
 
-#: ../../topics/music.rst:148
+#: ../../topics/music.rst:149
 msgid "Modes"
 msgstr "Modi"
 
-#: ../../topics/music.rst:149
+#: ../../topics/music.rst:150
 msgid ""
 "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
 "``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
@@ -1385,11 +1380,11 @@ msgstr ""
 "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
 "``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
 
-#: ../../topics/music.rst:150
+#: ../../topics/music.rst:151
 msgid "Rhythm and stems"
 msgstr "Rhythmus und Notenhälse"
 
-#: ../../topics/music.rst:151
+#: ../../topics/music.rst:152
 msgid ""
 "``\\tuplet 3/2``, ``\\times 2/3``, manual ``[`` and ``]`` beams, "
 "``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, "
@@ -1399,11 +1394,11 @@ msgstr ""
 "``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, "
 "``\\stemNeutral``."
 
-#: ../../topics/music.rst:152
+#: ../../topics/music.rst:153
 msgid "Expression"
 msgstr "Ausdruck"
 
-#: ../../topics/music.rst:153
+#: ../../topics/music.rst:154
 msgid ""
 "Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through "
 "``\\ffff``, ``\\<``, ``\\>``, ``\\!``, ``\\breathe``, slur/tie/dynamic "
@@ -1414,11 +1409,11 @@ msgstr ""
 "für Binde- und Haltebögen sowie Dynamik, wörtliche Textanweisungen und "
 "strukturiertes ``\\markup``."
 
-#: ../../topics/music.rst:154
+#: ../../topics/music.rst:155
 msgid "Structure"
 msgstr "Struktur"
 
-#: ../../topics/music.rst:155
+#: ../../topics/music.rst:156
 msgid ""
 "Assignments, variable references, lexical ``\\include``, ``\\score``, "
 "``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, "
@@ -1428,11 +1423,11 @@ msgstr ""
 "``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, "
 "``StaffGroup``, ``ChoirStaff``."
 
-#: ../../topics/music.rst:156
+#: ../../topics/music.rst:157
 msgid "Voices and lyrics"
 msgstr "Stimmen und Liedtexte"
 
-#: ../../topics/music.rst:157
+#: ../../topics/music.rst:158
 msgid ""
 "At most four voices sounding at once on a staff; ``\\addlyrics``, "
 "``\\lyricsto``, ``\\lyricmode``, multiple verses, explicit syllable "
@@ -1442,11 +1437,11 @@ msgstr ""
 "``\\addlyrics``, ``\\lyricsto``, ``\\lyricmode``, mehrere Strophen, "
 "ausdrückliche Silbendauern, Silbentrennstriche und Verlängerungslinien."
 
-#: ../../topics/music.rst:158
+#: ../../topics/music.rst:159
 msgid "Guitar tablature"
 msgstr "Gitarrentabulatur"
 
-#: ../../topics/music.rst:159
+#: ../../topics/music.rst:160
 msgid ""
 "``\\new TabStaff``, ``\\new TabVoice`` and string numbers ``\\1`` through "
 "``\\6``, for a six-string guitar in standard tuning."
@@ -1454,11 +1449,11 @@ msgstr ""
 "``\\new TabStaff``, ``\\new TabVoice`` und die Saitennummern ``\\1`` bis "
 "``\\6`` für eine sechssaitige Gitarre in Standardstimmung."
 
-#: ../../topics/music.rst:160
+#: ../../topics/music.rst:161
 msgid "Grace and repetition"
 msgstr "Vorschläge und Wiederholungen"
 
-#: ../../topics/music.rst:161
+#: ../../topics/music.rst:162
 msgid ""
 "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
 "``\\repeat volta``, ``\\alternative``, ``\\volta``, ``\\fine``, "
@@ -1470,11 +1465,11 @@ msgstr ""
 "``\\section``, ``\\repeat unfold``, ``\\compressEmptyMeasures``, "
 "``\\compressFullBarRests``."
 
-#: ../../topics/music.rst:162
+#: ../../topics/music.rst:163
 msgid "Labels and breaks"
 msgstr "Beschriftungen und Umbrüche"
 
-#: ../../topics/music.rst:163
+#: ../../topics/music.rst:164
 msgid ""
 "``\\tempo`` with text, a metronome mark or both, ``\\mark``, ``\\mark "
 "\\default``, ``\\chords``, ``\\new ChordNames \\chordmode``, ``\\break``, "
@@ -1484,7 +1479,7 @@ msgstr ""
 "\\default``, ``\\chords``, ``\\new ChordNames \\chordmode``, ``\\break``, "
 "``\\noBreak``."
 
-#: ../../topics/music.rst:165
+#: ../../topics/music.rst:166
 msgid ""
 "The reader accepts version declarations, ignored header metadata and "
 "empty layout or MIDI blocks. It refuses Scheme, music functions, "
@@ -1502,11 +1497,11 @@ msgstr ""
 "vollständige Befehlsliste und der Notensatzvertrag stehen in GDS 0015 im "
 "Verzeichnis ``docs/gds/records`` des Repositorys."
 
-#: ../../topics/music.rst:170
+#: ../../topics/music.rst:171
 msgid "Add expression and repeats"
 msgstr "Ausdruck und Wiederholungen ergänzen"
 
-#: ../../topics/music.rst:173
+#: ../../topics/music.rst:174
 msgid ""
 "We attach articulations and fingerings after a note: ``-.`` is staccato, "
 "``->`` is an accent, and ``-1`` selects the first finger. Dynamics set "
@@ -1533,7 +1528,7 @@ msgstr ""
 "hinter einer Note druckt ein Atemzeichen, ein Komma über dem Notensystem, "
 "und schafft dafür Platz vor der nächsten Note."
 
-#: ../../topics/music.rst:188
+#: ../../topics/music.rst:189
 msgid ""
 "Andante, quarter note equals 88; grace notes before an F with a fingering "
 "and staccato, an accented G, A and B under a crescendo, a breath mark, "
@@ -1543,7 +1538,7 @@ msgstr ""
 "Fingersatz und Staccato, ein akzentuiertes G, A und H unter einem "
 "Crescendo, ein Atemzeichen, dann ein lautes C als ganze Note."
 
-#: ../../topics/music.rst:188
+#: ../../topics/music.rst:189
 msgid ""
 "A tempo with a metronome mark, grace notes, articulations, dynamics and a "
 "breath mark."
@@ -1551,7 +1546,7 @@ msgstr ""
 "Eine Tempobezeichnung mit Metronomangabe, Vorschläge, Artikulationen, "
 "Dynamik und ein Atemzeichen."
 
-#: ../../topics/music.rst:196
+#: ../../topics/music.rst:197
 msgid ""
 "We write a volta repeat once and give each ending in ``\\alternative``; "
 "``\\volta 1,2 { ... }`` labels combined endings, and ``\\fine`` or "
@@ -1560,24 +1555,17 @@ msgid ""
 "instead of drawing repeat signs, and ``\\compressEmptyMeasures`` or "
 "``\\compressFullBarRests`` is accepted for multi-measure rests. Chord "
 "names use a separate ``\\new ChordNames \\chordmode`` context beside the "
-"staff, with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``."
-msgstr ""
-"Wir schreiben eine Volta-Wiederholung einmal und geben die Voltenklammern "
-"in ``\\alternative`` an; ``\\volta 1,2 { ... }`` beschriftet "
-"zusammengefasste Durchgänge, und ``\\fine`` oder ``\\section`` setzt "
-"einen strukturellen Doppelstrich. Das Beispiel hat zwei Durchgänge mit "
-"unterschiedlichen Schlusstakten. ``\\repeat unfold`` expandiert seinen "
-"Rumpf, statt Wiederholungszeichen zu zeichnen, und "
-"``\\compressEmptyMeasures`` oder ``\\compressFullBarRests`` wird für "
-"Mehrtaktpausen akzeptiert. Akkordnamen verwenden einen eigenen Kontext "
-"``\\new ChordNames \\chordmode`` neben dem Notensystem mit Schreibweisen "
-"wie ``c1:maj7``, ``d:m7`` und ``g:7``."
+"staff, with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``. They "
+"print as LilyPond's default chord names: ``g:7`` is G with a raised 7, "
+"``c:maj7`` is C with a small raised triangle, and sharps and flats are "
+"music symbols."
+msgstr "Wir schreiben eine Volta-Wiederholung einmal und geben die Voltenklammern in ``\\alternative`` an; ``\\volta 1,2 { ... }`` beschriftet zusammengefasste Durchgänge, und ``\\fine`` oder ``\\section`` setzt einen strukturellen Doppelstrich. Das Beispiel hat zwei Durchgänge mit unterschiedlichen Schlusstakten. ``\\repeat unfold`` expandiert seinen Rumpf, statt Wiederholungszeichen zu zeichnen, und ``\\compressEmptyMeasures`` oder ``\\compressFullBarRests`` wird für Mehrtaktpausen akzeptiert. Akkordnamen verwenden einen eigenen Kontext ``\\new ChordNames \\chordmode`` neben dem Notensystem mit Schreibweisen wie ``c1:maj7``, ``d:m7`` und ``g:7``. Sie erscheinen wie LilyPonds Standard-Akkordnamen: ``g:7`` ist G mit hochgestellter 7, ``c:maj7`` C mit einem kleinen hochgestellten Dreieck, und Kreuze und Bs sind Notensatzzeichen."
 
-#: ../../topics/music.rst:208
+#: ../../topics/music.rst:210
 msgid "Format text with ``\\markup``"
 msgstr "Text mit ``\\markup`` gestalten"
 
-#: ../../topics/music.rst:211
+#: ../../topics/music.rst:213
 msgid ""
 "Scripts, ``\\tempo``, ``\\mark`` and instrument names accept a bounded "
 "LilyPond 2.24 ``\\markup`` subset. Commands nest freely within the "
@@ -1590,23 +1578,23 @@ msgstr ""
 "verschachteln, und auf oberster Ebene definierte Markup-Variablen werden "
 "dort eingesetzt, wo ein Markup-Block Text erwartet."
 
-#: ../../topics/music.rst:214
+#: ../../topics/music.rst:216
 msgid "Supported ``\\markup`` commands"
 msgstr "Unterstützte ``\\markup``-Befehle"
 
-#: ../../topics/music.rst:218
+#: ../../topics/music.rst:220
 msgid "Group"
 msgstr "Gruppe"
 
-#: ../../topics/music.rst:219
+#: ../../topics/music.rst:221
 msgid "Commands"
 msgstr "Befehle"
 
-#: ../../topics/music.rst:220
+#: ../../topics/music.rst:222
 msgid "Lists and columns"
 msgstr "Listen und Spalten"
 
-#: ../../topics/music.rst:221
+#: ../../topics/music.rst:223
 msgid ""
 "``\\line``, ``\\concat``, ``\\column``, ``\\left-column``, "
 "``\\center-column``, ``\\right-column``, ``\\dir-column`` and markup "
@@ -1616,11 +1604,11 @@ msgstr ""
 "``\\center-column``, ``\\right-column``, ``\\dir-column`` sowie "
 "Markup-Variablenverweise (wie ``\\codaMark``)."
 
-#: ../../topics/music.rst:222
+#: ../../topics/music.rst:224
 msgid "Style and case"
 msgstr "Schriftstil und Großschreibung"
 
-#: ../../topics/music.rst:223
+#: ../../topics/music.rst:225
 msgid ""
 "``\\bold``, ``\\italic``, ``\\upright``, ``\\normal-text``, ``\\caps``, "
 "``\\smallCaps``, ``\\sub`` and ``\\super``."
@@ -1628,11 +1616,11 @@ msgstr ""
 "``\\bold``, ``\\italic``, ``\\upright``, ``\\normal-text``, ``\\caps``, "
 "``\\smallCaps``, ``\\sub`` und ``\\super``."
 
-#: ../../topics/music.rst:224
+#: ../../topics/music.rst:226
 msgid "Size"
 msgstr "Größe"
 
-#: ../../topics/music.rst:225
+#: ../../topics/music.rst:227
 msgid ""
 "``\\teeny``, ``\\tiny``, ``\\small``, ``\\smaller``, ``\\large``, "
 "``\\larger``, ``\\huge``, ``\\fontsize #n`` and ``\\abs-fontsize #pt``."
@@ -1640,11 +1628,11 @@ msgstr ""
 "``\\teeny``, ``\\tiny``, ``\\small``, ``\\smaller``, ``\\large``, "
 "``\\larger``, ``\\huge``, ``\\fontsize #n`` und ``\\abs-fontsize #pt``."
 
-#: ../../topics/music.rst:226
+#: ../../topics/music.rst:228
 msgid "Enclosures and spacing"
 msgstr "Umrahmungen und Abstände"
 
-#: ../../topics/music.rst:227
+#: ../../topics/music.rst:229
 msgid ""
 "``\\box``, ``\\rounded-box``, ``\\circle``, ``\\underline``, "
 "``\\parenthesize``, ``\\bracket``, ``\\hspace #n``, ``\\vspace #n``, "
@@ -1654,11 +1642,11 @@ msgstr ""
 "``\\parenthesize``, ``\\bracket``, ``\\hspace #n``, ``\\vspace #n``, "
 "``\\raise #n`` und ``\\lower #n``."
 
-#: ../../topics/music.rst:228
+#: ../../topics/music.rst:230
 msgid "Music symbols"
 msgstr "Musiksymbole"
 
-#: ../../topics/music.rst:229
+#: ../../topics/music.rst:231
 msgid ""
 "``\\sharp``, ``\\natural``, ``\\flat``, ``\\doublesharp``, "
 "``\\doubleflat``, ``\\fermata``, ``\\segno``, ``\\coda``, ``\\varcoda``, "
@@ -1668,7 +1656,7 @@ msgstr ""
 "``\\doubleflat``, ``\\fermata``, ``\\segno``, ``\\coda``, ``\\varcoda``, "
 "``\\dynamic`` sowie ``\\musicglyph`` für zugeordnete Feta-Glyphennamen."
 
-#: ../../topics/music.rst:240
+#: ../../topics/music.rst:242
 msgid ""
 "Markup commands that run Scheme, alter layout properties, draw arbitrary "
 "paths or embed nested scores (such as ``\\score``, ``\\override``, "
@@ -1681,11 +1669,11 @@ msgstr ""
 "``\\path``, ``\\epsfile`` und ``\\markuplist``), werden mit einer "
 "verorteten Diagnose abgelehnt."
 
-#: ../../topics/music.rst:242
+#: ../../topics/music.rst:244
 msgid "Combine staves and lyrics"
 msgstr "Notensysteme und Liedtexte verbinden"
 
-#: ../../topics/music.rst:245
+#: ../../topics/music.rst:247
 msgid ""
 "We use simultaneous contexts for a score with several staves. Staves and "
 "staff groups accept ``instrumentName`` and ``shortInstrumentName`` in a "
@@ -1738,7 +1726,7 @@ msgstr ""
 "abgewiesen. Liedtext wird einer benannten Stimme zugeordnet, und "
 "getrennte ``\\lyricsto``-Ausdrücke erzeugen getrennte Strophen."
 
-#: ../../topics/music.rst:258
+#: ../../topics/music.rst:260
 msgid ""
 "We can override stems with ``\\stemUp``, ``\\stemDown`` and "
 "``\\stemNeutral`` without changing the voice's column policy."
@@ -1746,7 +1734,7 @@ msgstr ""
 "Wir können die Hälse mit ``\\stemUp``, ``\\stemDown`` und "
 "``\\stemNeutral`` steuern, ohne die Spaltenregel der Stimme zu ändern."
 
-#: ../../topics/music.rst:270
+#: ../../topics/music.rst:272
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
@@ -1754,15 +1742,15 @@ msgstr ""
 "Klaviersystem mit zwei Notensystemen; im oberen System stehen vier "
 "Viertelnoten mit den Worten Sing a short song, während der Bass C hält."
 
-#: ../../topics/music.rst:270
+#: ../../topics/music.rst:272
 msgid "A named melody with a verse and a bass staff."
 msgstr "Eine benannte Melodie mit einer Strophe und einem Basssystem."
 
-#: ../../topics/music.rst:280
+#: ../../topics/music.rst:282
 msgid "Write guitar tablature"
 msgstr "Gitarrentabulatur schreiben"
 
-#: ../../topics/music.rst:283
+#: ../../topics/music.rst:285
 msgid ""
 "A guitar part usually pairs a staff with tablature. ``\\new TabStaff`` "
 "draws six lines, one for each string of a guitar in standard tuning, with "
@@ -1778,7 +1766,7 @@ msgstr ""
 "Tabulatur dieselbe Musik; Gitarrenmusik klingt eine Oktave tiefer als "
 "notiert, daher verwendet das Notensystem ``\\clef \"treble_8\"``."
 
-#: ../../topics/music.rst:296
+#: ../../topics/music.rst:298
 msgid ""
 "A guitar staff above six-line tablature; the notes E, D, C, D are played "
 "on frets 2, 0, 3 and 0, then a C major chord and two notes on the second "
@@ -1788,11 +1776,11 @@ msgstr ""
 "D werden in den Bünden 2, 0, 3 und 0 gespielt, danach folgen ein "
 "C-Dur-Akkord und zwei Noten auf der zweiten Saite."
 
-#: ../../topics/music.rst:296
+#: ../../topics/music.rst:298
 msgid "A guitar part in standard notation and tablature."
 msgstr "Eine Gitarrenstimme in Notenschrift und Tabulatur."
 
-#: ../../topics/music.rst:305
+#: ../../topics/music.rst:307
 msgid ""
 "Each note goes on the highest string that can play it, as LilyPond "
 "chooses by default: notes of a chord take the strings from the highest "
@@ -1813,7 +1801,7 @@ msgstr ""
 "Eine Note, die auf keiner freien Saite spielbar ist, etwa ein C unter der "
 "tiefen E-Saite, wird mit einer verorteten Diagnose abgelehnt."
 
-#: ../../topics/music.rst:310
+#: ../../topics/music.rst:312
 msgid ""
 "The tab staff shows strings, fret numbers and bar lines with a TAB clef, "
 "as LilyPond's default tablature does. It omits key and time signatures, "
@@ -1824,13 +1812,25 @@ msgid ""
 "staff share its strings. Other tunings and instruments, rhythm in the tab "
 "staff and fret diagrams are outside the profile. :doc:`../howto/songbook` "
 "writes a complete song for voice, piano and guitar."
-msgstr "Das Tabulatursystem zeigt Saiten, Bundzahlen und Taktstriche mit einem TAB-Schlüssel, wie LilyPonds Standardtabulatur. Tonartvorzeichnungen und Taktangaben, Notenhälse, Balken, Pausen, Haltebögen, Bindebögen und Vortragszeichen lässt es weg; sie zeigt das Notensystem darüber. Ein Atemzeichen erscheint in beiden Systemen. Eine übergebundene Note wird nicht wiederholt, außer am Anfang einer Zeile, wo ihre Bundzahl in Klammern steht. ``\\new TabVoice`` enthält eine Stimme eines Tabulatursystems, und die Stimmen eines Tabulatursystems teilen sich seine Saiten. Andere Stimmungen und Instrumente, Rhythmus im Tabulatursystem und Griffdiagramme liegen außerhalb des Profils. :doc:`../howto/songbook` schreibt ein vollständiges Lied für Gesang, Klavier und Gitarre."
+msgstr ""
+"Das Tabulatursystem zeigt Saiten, Bundzahlen und Taktstriche mit einem "
+"TAB-Schlüssel, wie LilyPonds Standardtabulatur. Tonartvorzeichnungen und "
+"Taktangaben, Notenhälse, Balken, Pausen, Haltebögen, Bindebögen und "
+"Vortragszeichen lässt es weg; sie zeigt das Notensystem darüber. Ein "
+"Atemzeichen erscheint in beiden Systemen. Eine übergebundene Note wird "
+"nicht wiederholt, außer am Anfang einer Zeile, wo ihre Bundzahl in "
+"Klammern steht. ``\\new TabVoice`` enthält eine Stimme eines "
+"Tabulatursystems, und die Stimmen eines Tabulatursystems teilen sich "
+"seine Saiten. Andere Stimmungen und Instrumente, Rhythmus im "
+"Tabulatursystem und Griffdiagramme liegen außerhalb des Profils. "
+":doc:`../howto/songbook` schreibt ein vollständiges Lied für Gesang, "
+"Klavier und Gitarre."
 
-#: ../../topics/music.rst:317
+#: ../../topics/music.rst:319
 msgid "Read local files"
 msgstr "Lokale Dateien lesen"
 
-#: ../../topics/music.rst:320
+#: ../../topics/music.rst:322
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
@@ -1838,7 +1838,7 @@ msgstr ""
 "Eine Direktive kann eine lokale Datei benennen, statt einen eingebetteten "
 "Rumpf zu enthalten. Wir verwenden genau eine Quelltextform."
 
-#: ../../topics/music.rst:329
+#: ../../topics/music.rst:331
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1857,7 +1857,7 @@ msgstr ""
 "baut das erzeugte Bild neu. Gleiche Ausgabebytes behalten denselben "
 "Ressourcennamen."
 
-#: ../../topics/music.rst:335
+#: ../../topics/music.rst:337
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
@@ -1878,27 +1878,27 @@ msgstr ""
 "fehlgeschlagene Zeichnung behält den Quelltext mit einer Warnung bei; "
 "``-W`` verhindert die Veröffentlichung und bewahrt die vorherige Ausgabe."
 
-#: ../../topics/music.rst:340
+#: ../../topics/music.rst:342
 msgid "Set size and output"
 msgstr "Größe und Ausgabe festlegen"
 
-#: ../../topics/music.rst:343
+#: ../../topics/music.rst:345
 msgid "Directive options"
 msgstr "Direktivenoptionen"
 
-#: ../../topics/music.rst:347
+#: ../../topics/music.rst:349
 msgid "Option"
 msgstr "Option"
 
-#: ../../topics/music.rst:348
+#: ../../topics/music.rst:350
 msgid "Meaning"
 msgstr "Bedeutung"
 
-#: ../../topics/music.rst:349
+#: ../../topics/music.rst:351
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:350
+#: ../../topics/music.rst:352
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
@@ -1906,11 +1906,11 @@ msgstr ""
 "Musikalische Bildbeschreibung; andernfalls erzeugt der Build eine "
 "lokalisierte Zusammenfassung."
 
-#: ../../topics/music.rst:351
+#: ../../topics/music.rst:353
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:352
+#: ../../topics/music.rst:354
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
@@ -1918,19 +1918,19 @@ msgstr ""
 "Abbildungsbeschriftung, Verweisziel, CSS-Klassen und Bildausrichtung wie "
 "bei den Diagrammdirektiven."
 
-#: ../../topics/music.rst:353
+#: ../../topics/music.rst:355
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:354
+#: ../../topics/music.rst:356
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "Standardmäßig ``svg``, oder ``png`` mit 144 Pixeln pro Zoll."
 
-#: ../../topics/music.rst:355
+#: ../../topics/music.rst:357
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:356
+#: ../../topics/music.rst:358
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
@@ -1938,11 +1938,11 @@ msgstr ""
 "Höhe eines fünflinigen Notensystems von 10 bis 40 Punkt; der Standard ist "
 "18 Punkt."
 
-#: ../../topics/music.rst:357
+#: ../../topics/music.rst:359
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:358
+#: ../../topics/music.rst:360
 msgid ""
 "Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's "
@@ -1952,11 +1952,11 @@ msgstr ""
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` oder als Prozentsatz der "
 "Standardbreite des Builders."
 
-#: ../../topics/music.rst:359
+#: ../../topics/music.rst:361
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:360
+#: ../../topics/music.rst:362
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
@@ -1964,7 +1964,7 @@ msgstr ""
 "``auto`` belässt ein kurzes letztes System bei seiner natürlichen Breite; "
 "``all`` streckt jedes System; ``none`` vermeidet Streckung."
 
-#: ../../topics/music.rst:362
+#: ../../topics/music.rst:364
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
@@ -1975,7 +1975,7 @@ msgstr ""
 "typografische Punkte. Der Einstellungsvertrag steht in "
 ":doc:`../reference/configuration`."
 
-#: ../../topics/music.rst:366
+#: ../../topics/music.rst:368
 msgid ""
 "When a drawing is wider than 225 points, HTML also receives a narrow "
 "edition engraved at 225 points with a staff height no greater than 14 "
@@ -1993,7 +1993,7 @@ msgstr ""
 "skaliert. SVG passt seine Zeichenfarbe an das Farbschema der Seite an; "
 "PNG behält im Dunkelmodus eine helle Hintergrundfläche."
 
-#: ../../topics/music.rst:372
+#: ../../topics/music.rst:374
 msgid ""
 "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; "
 "any other value renders as A4) and the selected template's horizontal "
@@ -2017,11 +2017,11 @@ msgstr ""
 "Partitur mit mehreren Systemen kann zwischen den Systemen über PDF-Seiten "
 "hinweg umbrechen; die Beschriftung folgt nach dem letzten System."
 
-#: ../../topics/music.rst:379
+#: ../../topics/music.rst:381
 msgid "Fonts, limits and references"
 msgstr "Schriften, Grenzen und Referenzen"
 
-#: ../../topics/music.rst:382
+#: ../../topics/music.rst:384
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -2037,7 +2037,7 @@ msgstr ""
 "keine installierte Musikschrift benötigen. PNG-Export braucht den "
 "eingebetteten Renderer; SVG-Notensatz bleibt auch ohne ihn verfügbar."
 
-#: ../../topics/music.rst:387
+#: ../../topics/music.rst:389
 msgid ""
 "For CJK lyrics, we include a suitable CJK text face through "
 "``pdf_font_paths``. When building this repository, ``cargo xtask "
@@ -2051,7 +2051,7 @@ msgstr ""
 "den gemischtschriftlichen Musikkorpus in ``docs/shared/fonts``. Wir "
 "können dieses Verzeichnis als Schriftpfad in unserem Projekt verwenden."
 
-#: ../../topics/music.rst:391
+#: ../../topics/music.rst:393
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, four voices sounding "
@@ -2072,7 +2072,7 @@ msgstr ""
 "begrenzt. Eine Grenzdiagnose nennt die Quelle und empfiehlt, das Beispiel "
 "aufzuteilen."
 
-#: ../../topics/music.rst:398
+#: ../../topics/music.rst:400
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "

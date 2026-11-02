@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 04:25+0000\n"
+"POT-Creation-Date: 2026-11-02 06:22+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -1120,25 +1120,25 @@ msgstr ""
 
 #: ../../topics/music.rst:97
 msgid ""
-"In ``\\time 4/4``, each bar holds four quarter-note beats. The first bar "
-"has ``e2`` for two beats, then ``f4`` and ``g`` for one beat each; ``g`` "
-"inherits the preceding duration. In the last bar, ``e4.`` lasts one and a "
-"half beats, ``d8`` half a beat, and ``d2`` two beats. The final D leaves "
-"the phrase open because this is an excerpt."
-msgstr ""
-"``\\time 4/4`` では、各小節に四分音符4拍が入ります。最初の小節は ``e2`` が2拍、続く ``f4`` と ``g`` "
-"が各1拍です。``g`` は直前の音価を引き継ぎます。最後の小節では、``e4.`` が1拍半、``d8`` が半拍、``d2`` "
-"が2拍です。抜粋なので、最後のレで楽句は未完のままです。"
+"In ``\\time 4/4``, each bar holds four quarter-note beats. As in "
+"LilyPond, 4/4 prints as the symbol C, for common time, and 2/2 as a C "
+"with a stroke, for cut time; ``\\numericTimeSignature`` prints them as "
+"numbers, and ``\\defaultTimeSignature`` brings the symbols back. The "
+"first bar has ``e2`` for two beats, then ``f4`` and ``g`` for one beat "
+"each; ``g`` inherits the preceding duration. In the last bar, ``e4.`` "
+"lasts one and a half beats, ``d8`` half a beat, and ``d2`` two beats. The "
+"final D leaves the phrase open because this is an excerpt."
+msgstr "``\\time 4/4`` では、各小節に四分音符4拍が入ります。LilyPond と同じく、4/4 は記号 C で、2/2 は縦線の入った C（アラ・ブレーヴェ）で表示されます。``\\numericTimeSignature`` を使うと数字で表示され、``\\defaultTimeSignature`` で記号に戻ります。最初の小節は ``e2`` が2拍、続く ``f4`` と ``g`` が各1拍です。``g`` は直前の音価を引き継ぎます。最後の小節では、``e4.`` が1拍半、``d8`` が半拍、``d2`` が2拍です。抜粋なので、最後のレで楽句は未完のままです。"
 
-#: ../../topics/music.rst:102
+#: ../../topics/music.rst:103
 msgid "For MyST, we put the same music inside the directive fence:"
 msgstr "MyST では、同じ楽譜をディレクティブのフェンス内に記述します。"
 
-#: ../../topics/music.rst:118
+#: ../../topics/music.rst:119
 msgid "Choose the notation"
 msgstr "記法を選ぶ"
 
-#: ../../topics/music.rst:121
+#: ../../topics/music.rst:122
 msgid ""
 "The default pitch language is Nederlands: ``cis`` is C sharp and ``des`` "
 "is D flat. We select English names with ``\\language \"english\"`` or "
@@ -1151,7 +1151,7 @@ msgstr ""
 "``df`` です。Deutsch では ``h`` がロの本位音、``b`` "
 "が変ロになります。この三つの言語インクルードは組み込みで、ファイルを読みません。"
 
-#: ../../topics/music.rst:126
+#: ../../topics/music.rst:127
 msgid ""
 "Apostrophes raise octaves and commas lower them. ``\\fixed c' { ... }`` "
 "fixes the reference octave instead of following preceding pitches. "
@@ -1167,7 +1167,7 @@ msgstr ""
 "は音名の綴りと調号を移調します。臨時記号は音名そのものに含まれるため、調号によって記述上の幹音がシャープ付きの音に変わることはありません。感嘆符（``!``）は臨時記号の表示を強制し、疑問符（``?``）は親切臨時記号（確認用の臨時記号）を表示します。これらは音高の後、音価の前に "
 "``cis'!4`` や ``c'?4`` のように書きます。"
 
-#: ../../topics/music.rst:133
+#: ../../topics/music.rst:134
 msgid ""
 "Durations range from ``1`` through ``128``, with ``\\breve`` for a double "
 "whole note. Dots lengthen a duration, and ``*2/3`` scales its exact "
@@ -1182,46 +1182,45 @@ msgstr ""
 "e' g'>4`` のように和音を書きます。``q`` は直前の和音を繰り返します。チルダは同じ音高をタイで結び、丸括弧はスラー、``\\(`` "
 "と ``\\)`` はフレージングスラーを作ります。"
 
-#: ../../topics/music.rst:140
+#: ../../topics/music.rst:141
 msgid "Supported notation families"
 msgstr "対応する記法の種類"
 
-#: ../../topics/music.rst:144
+#: ../../topics/music.rst:145
 msgid "Family"
 msgstr "種類"
 
-#: ../../topics/music.rst:145
+#: ../../topics/music.rst:146
 msgid "Examples"
 msgstr "例"
 
-#: ../../topics/music.rst:146
+#: ../../topics/music.rst:147
 msgid "Staff context"
 msgstr "譜表コンテキスト"
 
-#: ../../topics/music.rst:147
+#: ../../topics/music.rst:148
 msgid ""
 "``\\clef``, ``\\key``, ``\\time``, ``\\numericTimeSignature``, "
-"``\\partial``, ``\\bar``; treble, bass, alto, tenor and soprano clefs, "
-"with supported octave clefs."
-msgstr ""
-"``\\clef``、``\\key``、``\\time``、``\\numericTimeSignature``、``\\partial``、``\\bar``。ト音、ヘ音、アルト、テノール、ソプラノの各音部記号と、対応するオクターブ音部記号。"
+"``\\defaultTimeSignature``, ``\\partial``, ``\\bar``; treble, bass, alto, "
+"tenor and soprano clefs, with supported octave clefs."
+msgstr "``\\clef``、``\\key``、``\\time``、``\\numericTimeSignature``、``\\defaultTimeSignature``、``\\partial``、``\\bar``。ト音、ヘ音、アルト、テノール、ソプラノの各音部記号と、対応するオクターブ音部記号。"
 
-#: ../../topics/music.rst:148
+#: ../../topics/music.rst:149
 msgid "Modes"
 msgstr "旋法"
 
-#: ../../topics/music.rst:149
+#: ../../topics/music.rst:150
 msgid ""
 "``\\major``, ``\\minor``, ``\\ionian``, ``\\dorian``, ``\\phrygian``, "
 "``\\lydian``, ``\\mixolydian``, ``\\aeolian``, ``\\locrian``."
 msgstr ""
 "``\\major``、``\\minor``、``\\ionian``、``\\dorian``、``\\phrygian``、``\\lydian``、``\\mixolydian``、``\\aeolian``、``\\locrian``。"
 
-#: ../../topics/music.rst:150
+#: ../../topics/music.rst:151
 msgid "Rhythm and stems"
 msgstr "リズムと符幹"
 
-#: ../../topics/music.rst:151
+#: ../../topics/music.rst:152
 msgid ""
 "``\\tuplet 3/2``, ``\\times 2/3``, manual ``[`` and ``]`` beams, "
 "``\\autoBeamOn``, ``\\autoBeamOff``, ``\\stemUp``, ``\\stemDown``, "
@@ -1230,11 +1229,11 @@ msgstr ""
 "``\\tuplet 3/2``、``\\times 2/3``、``[`` と ``]`` "
 "による手動連桁、``\\autoBeamOn``、``\\autoBeamOff``、``\\stemUp``、``\\stemDown``、``\\stemNeutral``。"
 
-#: ../../topics/music.rst:152
+#: ../../topics/music.rst:153
 msgid "Expression"
 msgstr "表情"
 
-#: ../../topics/music.rst:153
+#: ../../topics/music.rst:154
 msgid ""
 "Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through "
 "``\\ffff``, ``\\<``, ``\\>``, ``\\!``, ``\\breathe``, slur/tie/dynamic "
@@ -1244,11 +1243,11 @@ msgstr ""
 "の強弱記号、``\\<``、``\\>``、``\\!``、``\\breathe``、スラー・タイ・強弱記号の向き指定コマンド、文字列による奏法指示、構造化された "
 "``\\markup``。"
 
-#: ../../topics/music.rst:154
+#: ../../topics/music.rst:155
 msgid "Structure"
 msgstr "構造"
 
-#: ../../topics/music.rst:155
+#: ../../topics/music.rst:156
 msgid ""
 "Assignments, variable references, lexical ``\\include``, ``\\score``, "
 "``\\new Staff``, ``\\new Voice``, ``PianoStaff``, ``GrandStaff``, "
@@ -1257,11 +1256,11 @@ msgstr ""
 "代入、変数参照、字句的な ``\\include``、``\\score``、``\\new Staff``、``\\new "
 "Voice``、``PianoStaff``、``GrandStaff``、``StaffGroup``、``ChoirStaff``。"
 
-#: ../../topics/music.rst:156
+#: ../../topics/music.rst:157
 msgid "Voices and lyrics"
 msgstr "声部と歌詞"
 
-#: ../../topics/music.rst:157
+#: ../../topics/music.rst:158
 msgid ""
 "At most four voices sounding at once on a staff; ``\\addlyrics``, "
 "``\\lyricsto``, ``\\lyricmode``, multiple verses, explicit syllable "
@@ -1270,11 +1269,11 @@ msgstr ""
 "1 つの譜表上で同時に鳴る声部は最大 4 "
 "声部。``\\addlyrics``、``\\lyricsto``、``\\lyricmode``、複数の歌詞節（番）、明示的な音節の音価、ハイフン、延長線（エクステンダー）に対応します。"
 
-#: ../../topics/music.rst:158
+#: ../../topics/music.rst:159
 msgid "Guitar tablature"
 msgstr "ギターのタブ譜"
 
-#: ../../topics/music.rst:159
+#: ../../topics/music.rst:160
 msgid ""
 "``\\new TabStaff``, ``\\new TabVoice`` and string numbers ``\\1`` through "
 "``\\6``, for a six-string guitar in standard tuning."
@@ -1282,11 +1281,11 @@ msgstr ""
 "標準調弦の 6 弦ギター向けの ``\\new TabStaff``、``\\new TabVoice``、弦番号 ``\\1`` から "
 "``\\6``。"
 
-#: ../../topics/music.rst:160
+#: ../../topics/music.rst:161
 msgid "Grace and repetition"
 msgstr "装飾音と反復"
 
-#: ../../topics/music.rst:161
+#: ../../topics/music.rst:162
 msgid ""
 "``\\grace``, ``\\acciaccatura``, ``\\appoggiatura``, ``\\afterGrace``, "
 "``\\repeat volta``, ``\\alternative``, ``\\volta``, ``\\fine``, "
@@ -1297,11 +1296,11 @@ msgstr ""
 "volta``、``\\alternative``、``\\volta``、``\\fine``、``\\section``、``\\repeat "
 "unfold``、``\\compressEmptyMeasures``、``\\compressFullBarRests``。"
 
-#: ../../topics/music.rst:162
+#: ../../topics/music.rst:163
 msgid "Labels and breaks"
 msgstr "ラベルと改行"
 
-#: ../../topics/music.rst:163
+#: ../../topics/music.rst:164
 msgid ""
 "``\\tempo`` with text, a metronome mark or both, ``\\mark``, ``\\mark "
 "\\default``, ``\\chords``, ``\\new ChordNames \\chordmode``, ``\\break``, "
@@ -1311,7 +1310,7 @@ msgstr ""
 "\\default``、``\\chords``、``\\new ChordNames "
 "\\chordmode``、``\\break``、``\\noBreak``。"
 
-#: ../../topics/music.rst:165
+#: ../../topics/music.rst:166
 msgid ""
 "The reader accepts version declarations, ignored header metadata and "
 "empty layout or MIDI blocks. It refuses Scheme, music functions, "
@@ -1326,11 +1325,11 @@ msgstr ""
 "プログラムを実行しません。全コマンドの一覧と浄書の規約は、リポジトリの ``docs/gds/records`` にある GDS 0015 "
 "に記録しています。"
 
-#: ../../topics/music.rst:170
+#: ../../topics/music.rst:171
 msgid "Add expression and repeats"
 msgstr "表情と反復を加える"
 
-#: ../../topics/music.rst:173
+#: ../../topics/music.rst:174
 msgid ""
 "We attach articulations and fingerings after a note: ``-.`` is staccato, "
 "``->`` is an accent, and ``-1`` selects the first finger. Dynamics set "
@@ -1352,7 +1351,7 @@ msgstr ""
 "88)」と印刷するのと同じです。``\\tempo 4 = 88`` はメトロノーム記号だけを印刷します。音符の後の ``\\breathe`` "
 "は、譜表の上にコンマ形のブレス記号を印刷し、次の音符との間にその分の余白を空けます。"
 
-#: ../../topics/music.rst:188
+#: ../../topics/music.rst:189
 msgid ""
 "Andante, quarter note equals 88; grace notes before an F with a fingering "
 "and staccato, an accented G, A and B under a crescendo, a breath mark, "
@@ -1361,13 +1360,13 @@ msgstr ""
 "Andante、四分音符イコール 88。運指とスタッカートの付いた F の前の装飾音符、アクセントの付いた G、クレッシェンドのかかった A と "
 "B、ブレス記号、最後に強く奏する全音符の C。"
 
-#: ../../topics/music.rst:188
+#: ../../topics/music.rst:189
 msgid ""
 "A tempo with a metronome mark, grace notes, articulations, dynamics and a "
 "breath mark."
 msgstr "メトロノーム記号付きのテンポ、装飾音符、アーティキュレーション、強弱記号、ブレス記号。"
 
-#: ../../topics/music.rst:196
+#: ../../topics/music.rst:197
 msgid ""
 "We write a volta repeat once and give each ending in ``\\alternative``; "
 "``\\volta 1,2 { ... }`` labels combined endings, and ``\\fine`` or "
@@ -1376,20 +1375,17 @@ msgid ""
 "instead of drawing repeat signs, and ``\\compressEmptyMeasures`` or "
 "``\\compressFullBarRests`` is accepted for multi-measure rests. Chord "
 "names use a separate ``\\new ChordNames \\chordmode`` context beside the "
-"staff, with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``."
-msgstr ""
-"ヴォルタ反復（括弧付き反復）は本体を一度だけ書き、``\\alternative`` に各括弧（終結部）を指定します。``\\volta 1,2 "
-"{ ... }`` は複数の回をまとめた括弧番号を付け、``\\fine`` または ``\\section`` "
-"は構造上の複縦線を置きます。この譜例は最終小節の異なる 2 回分の演奏を表します。``\\repeat unfold`` "
-"は反復記号を描かずに演奏どおり展開し、複数小節休符（長休符）には ``\\compressEmptyMeasures`` と "
-"``\\compressFullBarRests`` も受け付けます。コードネームには譜表と並べて独立した ``\\new ChordNames "
-"\\chordmode`` コンテキストを使い、``c1:maj7``、``d:m7``、``g:7`` のように記述します。"
+"staff, with spellings such as ``c1:maj7``, ``d:m7`` and ``g:7``. They "
+"print as LilyPond's default chord names: ``g:7`` is G with a raised 7, "
+"``c:maj7`` is C with a small raised triangle, and sharps and flats are "
+"music symbols."
+msgstr "ヴォルタ反復（括弧付き反復）は本体を一度だけ書き、``\\alternative`` に各括弧（終結部）を指定します。``\\volta 1,2 { ... }`` は複数の回をまとめた括弧番号を付け、``\\fine`` または ``\\section`` は構造上の複縦線を置きます。この譜例は最終小節の異なる 2 回分の演奏を表します。``\\repeat unfold`` は反復記号を描かずに演奏どおり展開し、複数小節休符（長休符）には ``\\compressEmptyMeasures`` と ``\\compressFullBarRests`` も受け付けます。コードネームには譜表と並べて独立した ``\\new ChordNames \\chordmode`` コンテキストを使い、``c1:maj7``、``d:m7``、``g:7`` のように記述します。コードネームは LilyPond の既定のコードネームと同じ形で表示されます。``g:7`` は G の右上に小さな 7、``c:maj7`` は C の右上に小さな三角形を付け、シャープとフラットは音楽記号で表します。"
 
-#: ../../topics/music.rst:208
+#: ../../topics/music.rst:210
 msgid "Format text with ``\\markup``"
 msgstr "``\\markup`` でテキストを組む"
 
-#: ../../topics/music.rst:211
+#: ../../topics/music.rst:213
 msgid ""
 "Scripts, ``\\tempo``, ``\\mark`` and instrument names accept a bounded "
 "LilyPond 2.24 ``\\markup`` subset. Commands nest freely within the "
@@ -1399,23 +1395,23 @@ msgstr ""
 "文字指示、``\\tempo``、``\\mark``、楽器名では、範囲を定めた LilyPond 2.24 の ``\\markup`` "
 "サブセットを使えます。コマンドは読み取り器の深さ上限の範囲で自由に入れ子にでき、トップレベルのマークアップ変数はテキストを置く位置で展開されます。"
 
-#: ../../topics/music.rst:214
+#: ../../topics/music.rst:216
 msgid "Supported ``\\markup`` commands"
 msgstr "対応する ``\\markup`` コマンド"
 
-#: ../../topics/music.rst:218
+#: ../../topics/music.rst:220
 msgid "Group"
 msgstr "分類"
 
-#: ../../topics/music.rst:219
+#: ../../topics/music.rst:221
 msgid "Commands"
 msgstr "コマンド"
 
-#: ../../topics/music.rst:220
+#: ../../topics/music.rst:222
 msgid "Lists and columns"
 msgstr "行と列の配置"
 
-#: ../../topics/music.rst:221
+#: ../../topics/music.rst:223
 msgid ""
 "``\\line``, ``\\concat``, ``\\column``, ``\\left-column``, "
 "``\\center-column``, ``\\right-column``, ``\\dir-column`` and markup "
@@ -1424,22 +1420,22 @@ msgstr ""
 "``\\line``、``\\concat``、``\\column``、``\\left-column``、``\\center-column``、``\\right-column``、``\\dir-column``、およびマークアップ変数参照（``\\codaMark`` "
 "など）。"
 
-#: ../../topics/music.rst:222
+#: ../../topics/music.rst:224
 msgid "Style and case"
 msgstr "書体と字種"
 
-#: ../../topics/music.rst:223
+#: ../../topics/music.rst:225
 msgid ""
 "``\\bold``, ``\\italic``, ``\\upright``, ``\\normal-text``, ``\\caps``, "
 "``\\smallCaps``, ``\\sub`` and ``\\super``."
 msgstr ""
 "``\\bold``、``\\italic``、``\\upright``、``\\normal-text``、``\\caps``、``\\smallCaps``、``\\sub``、``\\super``。"
 
-#: ../../topics/music.rst:224
+#: ../../topics/music.rst:226
 msgid "Size"
 msgstr "サイズ"
 
-#: ../../topics/music.rst:225
+#: ../../topics/music.rst:227
 msgid ""
 "``\\teeny``, ``\\tiny``, ``\\small``, ``\\smaller``, ``\\large``, "
 "``\\larger``, ``\\huge``, ``\\fontsize #n`` and ``\\abs-fontsize #pt``."
@@ -1447,11 +1443,11 @@ msgstr ""
 "``\\teeny``、``\\tiny``、``\\small``、``\\smaller``、``\\large``、``\\larger``、``\\huge``、``\\fontsize "
 "#n``、``\\abs-fontsize #pt``。"
 
-#: ../../topics/music.rst:226
+#: ../../topics/music.rst:228
 msgid "Enclosures and spacing"
 msgstr "囲みと間隔"
 
-#: ../../topics/music.rst:227
+#: ../../topics/music.rst:229
 msgid ""
 "``\\box``, ``\\rounded-box``, ``\\circle``, ``\\underline``, "
 "``\\parenthesize``, ``\\bracket``, ``\\hspace #n``, ``\\vspace #n``, "
@@ -1460,11 +1456,11 @@ msgstr ""
 "``\\box``、``\\rounded-box``、``\\circle``、``\\underline``、``\\parenthesize``、``\\bracket``、``\\hspace "
 "#n``、``\\vspace #n``、``\\raise #n``、``\\lower #n``。"
 
-#: ../../topics/music.rst:228
+#: ../../topics/music.rst:230
 msgid "Music symbols"
 msgstr "音楽記号"
 
-#: ../../topics/music.rst:229
+#: ../../topics/music.rst:231
 msgid ""
 "``\\sharp``, ``\\natural``, ``\\flat``, ``\\doublesharp``, "
 "``\\doubleflat``, ``\\fermata``, ``\\segno``, ``\\coda``, ``\\varcoda``, "
@@ -1473,7 +1469,7 @@ msgstr ""
 "``\\sharp``、``\\natural``、``\\flat``、``\\doublesharp``、``\\doubleflat``、``\\fermata``、``\\segno``、``\\coda``、``\\varcoda``、``\\dynamic``、および対応する "
 "Feta グリフ名に対する ``\\musicglyph``。"
 
-#: ../../topics/music.rst:240
+#: ../../topics/music.rst:242
 msgid ""
 "Markup commands that run Scheme, alter layout properties, draw arbitrary "
 "paths or embed nested scores (such as ``\\score``, ``\\override``, "
@@ -1484,11 +1480,11 @@ msgstr ""
 "を実行するもの、レイアウト属性を変更するもの、任意のパスを描くもの、入れ子の楽譜を埋め込むもの（``\\score``、``\\override``、``\\postscript``、``\\draw-line``、``\\path``、``\\epsfile``、``\\markuplist`` "
 "など）は位置付きの診断で拒否します。"
 
-#: ../../topics/music.rst:242
+#: ../../topics/music.rst:244
 msgid "Combine staves and lyrics"
 msgstr "譜表と歌詞を組み合わせる"
 
-#: ../../topics/music.rst:245
+#: ../../topics/music.rst:247
 msgid ""
 "We use simultaneous contexts for a score with several staves. Staves and "
 "staff groups accept ``instrumentName`` and ``shortInstrumentName`` in a "
@@ -1530,7 +1526,7 @@ msgstr ""
 "つの譜表上で同時に鳴らせる声部は最大 4 声部で、第 5 声部は拒否されます。歌詞は名前付きの声部に紐付け、別々の ``\\lyricsto`` "
 "式で複数の歌詞節（番）を作ります。"
 
-#: ../../topics/music.rst:258
+#: ../../topics/music.rst:260
 msgid ""
 "We can override stems with ``\\stemUp``, ``\\stemDown`` and "
 "``\\stemNeutral`` without changing the voice's column policy."
@@ -1538,22 +1534,22 @@ msgstr ""
 "``\\stemUp``、``\\stemDown``、``\\stemNeutral`` "
 "を使えば、声部の音符列シフトの規則を変えずに符幹の向きを上書きできます。"
 
-#: ../../topics/music.rst:270
+#: ../../topics/music.rst:272
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
 msgstr ""
 "ピアノの 2 段譜表。上段には 4 つの四分音符と「Sing a short song」の歌詞があり、下段（バス）はハ音（C）を伸ばします。"
 
-#: ../../topics/music.rst:270
+#: ../../topics/music.rst:272
 msgid "A named melody with a verse and a bass staff."
 msgstr "一節の歌詞と低音譜表を持つ名前付き旋律。"
 
-#: ../../topics/music.rst:280
+#: ../../topics/music.rst:282
 msgid "Write guitar tablature"
 msgstr "ギターのタブ譜を書く"
 
-#: ../../topics/music.rst:283
+#: ../../topics/music.rst:285
 msgid ""
 "A guitar part usually pairs a staff with tablature. ``\\new TabStaff`` "
 "draws six lines, one for each string of a guitar in standard tuning, with "
@@ -1566,7 +1562,7 @@ msgstr ""
 "本の線を、いちばん高い弦を上にして描き、各音符に対して弦の上にフレット番号を置きます。譜表とタブ譜には同じ音楽を書きます。ギターの音楽は記譜より "
 "1 オクターブ低く鳴るため、譜表には ``\\clef \"treble_8\"`` を使います。"
 
-#: ../../topics/music.rst:296
+#: ../../topics/music.rst:298
 msgid ""
 "A guitar staff above six-line tablature; the notes E, D, C, D are played "
 "on frets 2, 0, 3 and 0, then a C major chord and two notes on the second "
@@ -1575,11 +1571,11 @@ msgstr ""
 "6 線のタブ譜の上にギターの譜表。E、D、C、D の音をフレット 2、0、3、0 で弾き、続いて C メジャーの和音と、2 弦上の 2 "
 "つの音を弾きます。"
 
-#: ../../topics/music.rst:296
+#: ../../topics/music.rst:298
 msgid "A guitar part in standard notation and tablature."
 msgstr "五線譜とタブ譜で書いたギターのパート。"
 
-#: ../../topics/music.rst:305
+#: ../../topics/music.rst:307
 msgid ""
 "Each note goes on the highest string that can play it, as LilyPond "
 "chooses by default: notes of a chord take the strings from the highest "
@@ -1597,7 +1593,7 @@ msgstr ""
 "のように各音がそれぞれの弦番号を持ちます。上の譜表では、各弦番号を丸囲みの数字で音符の上に印刷します。符幹下向きの声部では音符の下に印刷します。空いているどの弦でも弾けない音（たとえば低い "
 "E 弦より下の C）は、位置を示す診断で拒否します。"
 
-#: ../../topics/music.rst:310
+#: ../../topics/music.rst:312
 msgid ""
 "The tab staff shows strings, fret numbers and bar lines with a TAB clef, "
 "as LilyPond's default tablature does. It omits key and time signatures, "
@@ -1608,19 +1604,24 @@ msgid ""
 "staff share its strings. Other tunings and instruments, rhythm in the tab "
 "staff and fret diagrams are outside the profile. :doc:`../howto/songbook` "
 "writes a complete song for voice, piano and guitar."
-msgstr "タブ譜は、LilyPond の既定のタブ譜と同じく、TAB 記号とともに弦、フレット番号、小節線を表示します。調号と拍子記号、符幹、連桁、休符、タイ、スラー、奏法記号は省略します。これらは上の譜表が示します。ブレス記号は、上の譜表とタブ譜の両方に表示されます。タイで結ばれた音は繰り返し表示しません。ただし行の始まりでは、そのフレット番号を丸括弧に入れて示します。``\\new TabVoice`` はタブ譜の 1 つの声部を保持し、1 つのタブ譜上の声部は弦を共有します。ほかの調弦や楽器、タブ譜でのリズム表示、フレット・ダイアグラムは、この記法範囲の対象外です。:doc:`../howto/songbook` では、歌、ピアノ、ギターのための 1 曲を完成させます。"
+msgstr ""
+"タブ譜は、LilyPond の既定のタブ譜と同じく、TAB "
+"記号とともに弦、フレット番号、小節線を表示します。調号と拍子記号、符幹、連桁、休符、タイ、スラー、奏法記号は省略します。これらは上の譜表が示します。ブレス記号は、上の譜表とタブ譜の両方に表示されます。タイで結ばれた音は繰り返し表示しません。ただし行の始まりでは、そのフレット番号を丸括弧に入れて示します。``\\new "
+"TabVoice`` はタブ譜の 1 つの声部を保持し、1 "
+"つのタブ譜上の声部は弦を共有します。ほかの調弦や楽器、タブ譜でのリズム表示、フレット・ダイアグラムは、この記法範囲の対象外です。:doc:`../howto/songbook` "
+"では、歌、ピアノ、ギターのための 1 曲を完成させます。"
 
-#: ../../topics/music.rst:317
+#: ../../topics/music.rst:319
 msgid "Read local files"
 msgstr "ローカルファイルを読む"
 
-#: ../../topics/music.rst:320
+#: ../../topics/music.rst:322
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
 msgstr "ディレクティブはインライン本文の代わりにローカルファイルを指定できます。ソース形式は必ず一つだけ使います。"
 
-#: ../../topics/music.rst:329
+#: ../../topics/music.rst:331
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1633,7 +1634,7 @@ msgstr ""
 "入れ子の ``\\include`` パスは、読み込み元ファイルの隣、ソースディレクトリ、設定した ``include_roots`` "
 "の順に解決します。シンボリックリンクを検査した後も、解決先は許可されたルート内にある必要があります。ビルドはソース、入れ子のインクルード、見つからなかったローカル検索、選択した文字フォントを内容で追跡します。依存先が変わると画像を再生成します。出力バイトが同じならアセット名も同じです。"
 
-#: ../../topics/music.rst:335
+#: ../../topics/music.rst:337
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
@@ -1650,65 +1651,65 @@ msgstr ""
 "ソースを展開します。非信頼のビルドのようにファイルを読めない場合は、パスをコードとして示す代わりに、楽譜ファイルの名前を文で示します。描画に失敗した場合も警告とソースを保持します。``-W`` "
 "は公開を止め、直前の出力を残します。"
 
-#: ../../topics/music.rst:340
+#: ../../topics/music.rst:342
 msgid "Set size and output"
 msgstr "寸法と出力を設定する"
 
-#: ../../topics/music.rst:343
+#: ../../topics/music.rst:345
 msgid "Directive options"
 msgstr "ディレクティブのオプション"
 
-#: ../../topics/music.rst:347
+#: ../../topics/music.rst:349
 msgid "Option"
 msgstr "オプション"
 
-#: ../../topics/music.rst:348
+#: ../../topics/music.rst:350
 msgid "Meaning"
 msgstr "意味"
 
-#: ../../topics/music.rst:349
+#: ../../topics/music.rst:351
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:350
+#: ../../topics/music.rst:352
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "画像の音楽的な説明。省略するとビルドが言語に合わせた概要を作ります。"
 
-#: ../../topics/music.rst:351
+#: ../../topics/music.rst:353
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``、``name``、``class``、``align``"
 
-#: ../../topics/music.rst:352
+#: ../../topics/music.rst:354
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
 msgstr "図のキャプション、参照先、CSS クラス、画像の配置。図表ディレクティブと同じです。"
 
-#: ../../topics/music.rst:353
+#: ../../topics/music.rst:355
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:354
+#: ../../topics/music.rst:356
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "既定は ``svg``。``png`` は 1 インチ当たり 144 ピクセルです。"
 
-#: ../../topics/music.rst:355
+#: ../../topics/music.rst:357
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:356
+#: ../../topics/music.rst:358
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
 msgstr "五線の高さ。10 から 40 ポイントで、既定は 18 ポイントです。"
 
-#: ../../topics/music.rst:357
+#: ../../topics/music.rst:359
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:358
+#: ../../topics/music.rst:360
 msgid ""
 "Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's "
@@ -1716,17 +1717,17 @@ msgid ""
 msgstr ""
 "利用可能なシステム幅。``pt``、``pc``、``mm``、``cm``、``Q``、``in``、``px``、``em``、``rem``、``ex``、``ch``、またはビルダーの既定幅に対する割合で指定します。"
 
-#: ../../topics/music.rst:359
+#: ../../topics/music.rst:361
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:360
+#: ../../topics/music.rst:362
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
 msgstr "``auto`` は短い最終システムを自然幅に保ち、``all`` は全システムを伸ばし、``none`` は引き伸ばしを避けます。"
 
-#: ../../topics/music.rst:362
+#: ../../topics/music.rst:364
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
@@ -1736,7 +1737,7 @@ msgstr ""
 "``lilypond_staff_size``、``lilypond_html_width``、``lilypond_pdf_width`` "
 "です。数値は組版ポイント単位です。設定の仕様については :doc:`../reference/configuration` を参照してください。"
 
-#: ../../topics/music.rst:366
+#: ../../topics/music.rst:368
 msgid ""
 "When a drawing is wider than 225 points, HTML also receives a narrow "
 "edition engraved at 225 points with a staff height no greater than 14 "
@@ -1751,7 +1752,7 @@ msgstr ""
 "要素を通じてこの版を選択します。この版ではシステムの改行位置も独自に組まれます。システム数の上限により描画できない場合は、広い画像を画面幅に合わせて縮小します。SVG "
 "のインク色はページの配色に追従し、PNG はダークモードでも明るい背景パネルを保ちます。"
 
-#: ../../topics/music.rst:372
+#: ../../topics/music.rst:374
 msgid ""
 "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; "
 "any other value renders as A4) and the selected template's horizontal "
@@ -1772,11 +1773,11 @@ msgstr ""
 "は算出された幅を上書きします。幅を超える楽譜はビルド警告を出したうえで縮小されます。複数システムにわたる楽譜はシステム間で PDF "
 "のページをまたいで分割でき、キャプションは最後のシステムの後に置かれます。"
 
-#: ../../topics/music.rst:379
+#: ../../topics/music.rst:381
 msgid "Fonts, limits and references"
 msgstr "フォント、制限、参考文献"
 
-#: ../../topics/music.rst:382
+#: ../../topics/music.rst:384
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1791,7 +1792,7 @@ msgstr ""
 "リーダーに音楽フォントをインストールする必要はありません。PNG 書き出しには組み込みレンダラーが必要ですが、組み込みレンダラーなしのビルドでも "
 "SVG 浄書は利用できます。"
 
-#: ../../topics/music.rst:387
+#: ../../topics/music.rst:389
 msgid ""
 "For CJK lyrics, we include a suitable CJK text face through "
 "``pdf_font_paths``. When building this repository, ``cargo xtask "
@@ -1804,7 +1805,7 @@ msgstr ""
 "が複数の文字体系を含む音楽コーパス用の固定版 Noto Serif CJK を ``docs/shared/fonts`` "
 "にインストールします。このディレクトリをプロジェクトのフォントパスとして使用できます。"
 
-#: ../../topics/music.rst:391
+#: ../../topics/music.rst:393
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, four voices sounding "
@@ -1821,7 +1822,7 @@ msgstr ""
 "ポイントまで、PNG は 1,600 万ピクセルかつ各辺 16,384 "
 "ピクセルまでです。上限に達した際の診断メッセージは該当ソースを示し、譜例の分割を促します。"
 
-#: ../../topics/music.rst:398
+#: ../../topics/music.rst:400
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "

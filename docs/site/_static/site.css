@@ -145,7 +145,7 @@ body.gd-site { display: flex; flex-direction: column; min-height: 100vh; }
   content: ""; display: block; width: 2.3rem; height: 3px; margin-bottom: .8rem;
   background: var(--gd-link);
 }
-.gd-landing section > section > p { max-width: 42em; }
+.gd-landing section > section > :is(p, .postlist) { max-width: 42em; }
 .gd-landing .gd-features {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
   gap: 1rem; margin: 0; padding: 0; list-style: none;

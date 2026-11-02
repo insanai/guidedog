@@ -268,8 +268,8 @@ The workflow it writes is this one:
 
          - name: Install Guidedog
            env:
-             GUIDEDOG_VERSION: 1.0.0-beta.9
-             GUIDEDOG_SHA256: f9fb00c6b62c3abf8b5991dab329f4591a868604bbcbf7d7bcaada91b7135efd
+             GUIDEDOG_VERSION: 1.0.0-beta.10
+             GUIDEDOG_SHA256: 122b24d59aff93e2bda6d2f4af130680259675b5220f9ff104033dac5b82afa7
            run: |
              set -euo pipefail
              archive="$RUNNER_TEMP/guidedog-linux-amd64.tar.gz"

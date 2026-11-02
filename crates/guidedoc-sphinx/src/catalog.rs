@@ -229,6 +229,7 @@ fn declared_directives(config: &Config) -> Vec<DirectiveInfo> {
 }
 
 #[cfg(test)]
+#[allow(clippy::unwrap_used)] // a test failing on unexpected input is the point.
 mod tests {
     use super::*;
     use crate::config::{DirectiveAlias, Extlink, ObjectType};

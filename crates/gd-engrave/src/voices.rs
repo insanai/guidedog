@@ -23,6 +23,10 @@ pub(crate) fn arrange(
         let a = &score.events[first.0 as usize];
         let EventKind::Chord(_) = &a.kind else { continue };
         let staff = score.voices[a.voice.0 as usize].staff.0 as usize;
+        // Tablature voices share strings, not note columns: nothing moves aside.
+        if score.staves[staff].kind == gd_score::StaffKind::Tablature {
+            continue;
+        }
         by_staff.entry(staff).or_default().push(*first);
     }
     for ids in by_staff.values() {

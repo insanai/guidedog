@@ -118,10 +118,11 @@ impl Draw<'_, '_, '_, '_, '_> {
             BarStyle::Initial | BarStyle::RepeatStart => &[(0.0, thick), (gap, thin)],
             BarStyle::RepeatBoth => &[(-gap, thin), (0.0, thick), (gap, thin)],
         };
+        let half = if self.tab { crate::tablature::HALF_HEIGHT } else { 2.0 } * space;
         for &(dx, thickness) in lines {
             self.line(
-                Point { x: x + dx, y: middle - 2.0 * space },
-                Point { x: x + dx, y: middle + 2.0 * space },
+                Point { x: x + dx, y: middle - half },
+                Point { x: x + dx, y: middle + half },
                 thickness,
                 Role::Bar,
             )?;
@@ -131,7 +132,8 @@ impl Draw<'_, '_, '_, '_, '_> {
             (matches!(style, BarStyle::RepeatEnd | BarStyle::RepeatBoth), -1.8),
         ] {
             if active {
-                for dy in [-0.5, 0.5] {
+                let spread = if self.tab { 1.5 } else { 0.5 };
+                for dy in [-spread, spread] {
                     self.glyph(
                         "repeatDot",
                         x + dx * space,

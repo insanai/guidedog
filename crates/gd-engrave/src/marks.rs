@@ -27,6 +27,8 @@ pub enum Role {
     Signature,
     /// Pitched notehead.
     Notehead,
+    /// Fret number on a tablature string.
+    Fret,
     /// Ledger line through an outside note.
     Ledger,
     /// Stem.
@@ -81,6 +83,7 @@ impl Role {
             Self::Clef => "clef",
             Self::Signature => "signature",
             Self::Notehead => "notehead",
+            Self::Fret => "fret",
             Self::Ledger => "ledger",
             Self::Stem => "stem",
             Self::Flag => "flag",

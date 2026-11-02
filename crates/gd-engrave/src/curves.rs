@@ -17,7 +17,12 @@ impl Draw<'_, '_, '_, '_, '_> {
             let spanner = &score.spanners[spanner_idx];
             let a = &score.events[spanner.start.event.0 as usize];
             let b = &score.events[spanner.end.event.0 as usize];
-            if a.at >= end || b.at < start {
+            // Default tablature, as in LilyPond, shows no ties, slurs, hairpins or tuplets.
+            let tab = |event: &gd_score::Event| {
+                let staff = score.voices[event.voice.0 as usize].staff.0 as usize;
+                score.staves[staff].kind == gd_score::StaffKind::Tablature
+            };
+            if a.at >= end || b.at < start || tab(a) || tab(b) {
                 continue;
             }
             self.staff = score.voices[a.voice.0 as usize].staff;

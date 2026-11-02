@@ -124,7 +124,8 @@ fn add_column_bar_band(
     Ok(())
 }
 
-fn event_bands(
+/// Adds the bands of each unshared head of `info`: the head, its accidental and its dots.
+fn head_bands(
     current: &mut Bands,
     info: &EventInfo,
     fonts: &Fonts<'_>,
@@ -167,6 +168,19 @@ fn event_bands(
                 work,
             )?;
         }
+    }
+    Ok(())
+}
+
+fn event_bands(
+    current: &mut Bands,
+    info: &EventInfo,
+    fonts: &Fonts<'_>,
+    work: &mut usize,
+) -> Result<(), Error> {
+    head_bands(current, info, fonts, work)?;
+    for rect in crate::tablature::boxes(info) {
+        add_rect(current, rect, work)?;
     }
     if !info.heads.is_empty() {
         add_rect(

@@ -39,6 +39,7 @@ mod signatures;
 mod skyline;
 mod spacing;
 mod svg;
+mod tablature;
 mod text;
 mod tuplets;
 mod vertical;

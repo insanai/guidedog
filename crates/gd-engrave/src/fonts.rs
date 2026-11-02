@@ -381,6 +381,7 @@ pub(crate) const GLYPHS: &[(&str, u32)] = &[
     ("fClef", 0xe062),
     ("fClef8vb", 0xe064),
     ("cClef", 0xe05c),
+    ("6stringTabClef", 0xe06d),
     ("gClefSmall", 0xf472),
     ("fClefSmall", 0xf474),
     ("cClefSmall", 0xf473),

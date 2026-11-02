@@ -81,6 +81,8 @@ pub(crate) struct EventInfo {
     pub(crate) previous_key: Option<Key>,
     pub(crate) notation_x: f64,
     pub(crate) heads: Vec<Head>,
+    /// Fret numbers of a chord on a tab staff, which has no heads.
+    pub(crate) frets: Vec<crate::tablature::Fret>,
     pub(crate) head_glyph: &'static str,
     pub(crate) head_scale: f64,
     pub(crate) bounds: Rect,
@@ -146,19 +148,7 @@ impl Plan {
                 info.state = state.snapshot();
                 info.dot_down = crate::voices::policy_direction(score, event) == Direction::Down;
                 if let EventKind::Chord(chord) = &event.kind {
-                    heads(
-                        info,
-                        chord,
-                        state,
-                        fonts,
-                        event.at.grace < Ratio::ZERO,
-                        crate::voices::direction(score, event),
-                        work,
-                    )?;
-                    for head in &mut info.heads {
-                        charge(work, tied.len().checked_ilog2().unwrap_or(0) as usize + 1)?;
-                        head.continuation = tied.contains(&(id.0, head.note));
-                    }
+                    plan_chord(info, (score, event, chord), state, &tied, (fonts, options, work))?;
                 }
             }
             for ((staff, step, octave), alter) in changes {
@@ -330,6 +320,35 @@ fn chord_left_ink(info: &EventInfo, fonts: &Fonts<'_>) -> Result<f64, Error> {
         }
     }
     Ok(left)
+}
+
+/// Plans the heads of one chord, or on a tab staff its fret numbers, and marks the
+/// notes that continue a tie.
+fn plan_chord(
+    info: &mut EventInfo,
+    (score, event, chord): (&Score, &gd_score::Event, &gd_score::Chord),
+    state: &mut StaffState,
+    tied: &BTreeSet<(u32, u8)>,
+    (fonts, options, work): (&Fonts<'_>, &mut Options<'_>, &mut usize),
+) -> Result<(), Error> {
+    let grace = event.at.grace < Ratio::ZERO;
+    let lookup = tied.len().checked_ilog2().unwrap_or(0) as usize + 1;
+    let id = info.id.0;
+    if score.staves[info.staff].kind == gd_score::StaffKind::Tablature {
+        crate::tablature::plan(info, (chord, grace), fonts, options, work)?;
+        for fret in &mut info.frets {
+            charge(work, lookup)?;
+            fret.continuation = tied.contains(&(id, fret.note));
+        }
+        return Ok(());
+    }
+    let direction = crate::voices::direction(score, event);
+    heads(info, chord, state, fonts, grace, direction, work)?;
+    for head in &mut info.heads {
+        charge(work, lookup)?;
+        head.continuation = tied.contains(&(id, head.note));
+    }
+    Ok(())
 }
 
 fn heads(

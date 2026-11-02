@@ -31,8 +31,21 @@ impl Draw<'_, '_, '_, '_, '_> {
                     )?;
                 }
                 let annotation_start = self.system.marks.len();
+                let tab = request.score.staves[self.staff.0 as usize].kind
+                    == gd_score::StaffKind::Tablature;
                 for mark in &event.marks {
                     charge(self.work, 1)?;
+                    // Default tablature shows no scripts, fingerings or dynamics; tempo and
+                    // rehearsal marks belong to the whole score and stay.
+                    let local = !matches!(
+                        mark.kind,
+                        AnnotationKind::Tempo(_)
+                            | AnnotationKind::Rehearsal(_)
+                            | AnnotationKind::Markup(_, MarkupRole::Tempo | MarkupRole::Rehearsal)
+                    );
+                    if tab && local {
+                        continue;
+                    }
                     let direction = request.score.voices[event.voice.0 as usize].direction;
                     let up = mark_above(mark, info.up, direction);
                     // A shifted voice's marks follow its noteheads, not the column.

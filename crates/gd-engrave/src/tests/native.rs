@@ -963,3 +963,73 @@ fn explicit_shift_levels_order_columns_away_from_the_stem() {
     assert!(g.left < e.left && e.left < c.left, "{upper:?}");
     assert!(((e.left - g.left) - (c.left - e.left)).abs() < 0.01, "{upper:?}");
 }
+
+fn staff_marks(engraving: &Engraving, staff: u32, roles: &[Role]) -> Vec<Rect> {
+    let marks = engraving.systems.iter().flat_map(|s| &s.marks);
+    marks
+        .filter(|m| m.staff == gd_score::StaffId(staff) && roles.contains(&m.mark.role()))
+        .map(|m| m.bounds)
+        .collect()
+}
+
+#[test]
+fn tab_staves_put_fret_numbers_on_six_strings() {
+    let engraving = draw(r"\new TabStaff { e4 c'\2 <c e g>2 }", 350.0);
+    let space = 18.0 / 4.0;
+    let mut lines: Vec<f64> = staff_marks(&engraving, 0, &[Role::Staff])
+        .iter()
+        .map(|line| ((line.top + line.bottom) / 2.0 * 100.0).round() / 100.0)
+        .collect();
+    lines.sort_by(f64::total_cmp);
+    lines.dedup();
+    assert_eq!(lines.len(), 6, "{lines:?}");
+    for pair in lines.windows(2) {
+        assert!((pair[1] - pair[0] - 1.5 * space).abs() < 0.05, "{lines:?}");
+    }
+    let frets = staff_marks(&engraving, 0, &[Role::Fret]);
+    assert_eq!(frets.len(), 5, "{frets:?}");
+    // Every number sits centered on a string line.
+    for fret in &frets {
+        let center = (fret.top + fret.bottom) / 2.0;
+        assert!(lines.iter().any(|line| (line - center).abs() < 0.3 * space), "{fret:?}");
+    }
+    assert!(staff_marks(&engraving, 0, &[Role::Notehead, Role::Stem]).is_empty());
+}
+
+#[test]
+fn tab_staves_omit_rests_scripts_ties_and_signatures() {
+    let music = r"{ \time 3/4 e8( f) g4-. r\p | e2.~ | e2. }";
+    let engraving = draw(
+        &format!(
+            r"\new StaffGroup << \new Staff {{ \clef treble_8 {music} }} \new TabStaff {music} >>"
+        ),
+        350.0,
+    );
+    let hidden = [
+        Role::Rest,
+        Role::Articulation,
+        Role::Dynamic,
+        Role::Tie,
+        Role::Slur,
+        Role::Signature,
+        Role::Notehead,
+        Role::Stem,
+        Role::Beam,
+    ];
+    assert!(staff_marks(&engraving, 1, &hidden).is_empty());
+    assert!(!staff_marks(&engraving, 0, &[Role::Rest, Role::Tie]).is_empty());
+    // The tied continuation is not repeated: e8 f g and one tied E.
+    assert_eq!(staff_marks(&engraving, 1, &[Role::Fret]).len(), 4);
+}
+
+#[test]
+fn tab_ties_across_a_line_break_repeat_the_number_in_parentheses() {
+    let engraving = draw(r"\new TabStaff { e'1~ \break e'1 }", 350.0);
+    assert_eq!(engraving.systems.len(), 2);
+    let second = engraving.systems[1].marks.iter().filter(|m| m.mark.role() == Role::Fret);
+    let widths: Vec<f64> = second.map(|m| m.bounds.right - m.bounds.left).collect();
+    let first = engraving.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Fret);
+    let plain: Vec<f64> = first.map(|m| m.bounds.right - m.bounds.left).collect();
+    assert_eq!((plain.len(), widths.len()), (1, 1));
+    assert!(widths[0] > plain[0] * 2.0, "{plain:?} {widths:?}");
+}

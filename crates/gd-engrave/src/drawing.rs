@@ -42,6 +42,8 @@ pub(crate) fn draw_system(
         warnings: Vec::new(),
         stem_marks: std::collections::BTreeMap::new(),
         signs: Vec::new(),
+        tab_gaps: Vec::new(),
+        tab: false,
         mark_limit: request.remaining_marks,
     };
     for staff_index in 0..score.staves.len() {
@@ -86,6 +88,11 @@ pub(crate) struct Draw<'a, 'f, 'o, 'callback, 'work> {
     pub(crate) stem_marks: std::collections::BTreeMap<u32, usize>,
     /// Mark ranges that form one sign, such as a dynamic's letters, in drawing order.
     pub(crate) signs: Vec<std::ops::Range<usize>>,
+    /// Where fret numbers break the string lines of the tab staff being drawn: string,
+    /// left and right edges in points.
+    pub(crate) tab_gaps: Vec<(u8, f64, f64)>,
+    /// The staff being drawn is tablature.
+    pub(crate) tab: bool,
     mark_limit: usize,
 }
 
@@ -102,6 +109,11 @@ impl Draw<'_, '_, '_, '_, '_> {
         self.staff = staff;
         self.measure = 0;
         let middle = (4.0 + staff_index as f64 * 9.0) * space;
+        self.tab = score.staves[staff_index].kind == gd_score::StaffKind::Tablature;
+        if self.tab {
+            self.tab_clef(request.indent + space, middle)?;
+            return self.tab_staff(request, width, middle);
+        }
         for offset in -2..=2 {
             let y = middle + f64::from(offset) * space;
             self.line(
@@ -132,6 +144,31 @@ impl Draw<'_, '_, '_, '_, '_> {
         self.measure_rests(request, middle)?;
         self.courtesy(request, middle)?;
         Ok(())
+    }
+
+    /// The rest of a tab staff: its opening bar, fret numbers, bar lines and the string
+    /// lines broken around the numbers. It has no signatures, rests or courtesy signs.
+    fn tab_staff(
+        &mut self,
+        request: &Request<'_, '_>,
+        width: f64,
+        middle: f64,
+    ) -> Result<(), Error> {
+        let space = self.options.staff_size / 4.0;
+        let first = request.measure_index == 0;
+        if let Some(style) = crate::bars::opening_bar(
+            request.score,
+            &request.columns[0],
+            self.staff.0 as usize,
+            first,
+        ) {
+            let (_, right) = crate::bars::style_extent(style);
+            self.bar(style, request.preface_end - right * space, middle)?;
+        }
+        self.tab_gaps.clear();
+        self.staff_music(request, middle)?;
+        self.measure_bars(request, middle)?;
+        self.string_lines(request, (request.indent, width), middle)
     }
 
     fn staff_music(&mut self, request: &Request<'_, '_>, middle: f64) -> Result<(), Error> {
@@ -184,6 +221,12 @@ impl Draw<'_, '_, '_, '_, '_> {
         let x = request.positions[index];
         let space = self.options.staff_size / 4.0;
         match &event.kind {
+            EventKind::Clef(_) | EventKind::Rest(_) | EventKind::Key(_) | EventKind::Time(_)
+                if self.tab => {}
+            EventKind::Chord(_) if self.tab => {
+                let line_start = column.at.main == request.columns[0].at.main;
+                self.frets(&request.plan.events[id.0 as usize], x, middle, line_start)?;
+            }
             EventKind::Clef(value) => {
                 if index != 0 {
                     let info = &request.plan.events[id.0 as usize];

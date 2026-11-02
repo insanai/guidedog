@@ -39,7 +39,10 @@ pub fn tab_positions(notes: &[Note]) -> Result<Vec<TabPosition>, Error> {
         let Some(string) = note.string else { continue };
         let index = usize::from(string).wrapping_sub(1);
         if index >= GUITAR_TUNING.len() {
-            return Err(tab_error("A string number must be 1 through 6.", "Use \\1 to \\6."));
+            return Err(tab_error(
+                "A string number must be 1 through 6.",
+                "Use `\\1` through `\\6`, one for each guitar string.",
+            ));
         }
         if used[index] {
             return Err(tab_error(
@@ -65,8 +68,8 @@ pub fn tab_positions(notes: &[Note]) -> Result<Vec<TabPosition>, Error> {
             .ok_or_else(|| {
             tab_error(
                 "No free guitar string can play this pitch.",
-                "Standard tuning reaches from E2 (e,) to the 24th fret of E4; \
-                     move the note into that range or give the chord fewer notes.",
+                "Move the note between `e,` (the low E string) and the 24th fret of the \
+                     high E string, or give the chord fewer notes.",
             )
         })?;
         used[string] = true;

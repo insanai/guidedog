@@ -48,7 +48,7 @@ pub(crate) fn string_number(name: &str, span: Span) -> Result<u8, Error> {
         Ok(string)
     } else {
         Err(syntax_error(span, "A string number must be 1 through 6.")
-            .hint("Guidedog's tablature has the six strings of a guitar in standard tuning."))
+            .hint("Use `\\1` through `\\6`, the six strings of a guitar in standard tuning."))
     }
 }
 

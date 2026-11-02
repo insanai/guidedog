@@ -1080,4 +1080,18 @@ fn metronome_marks_draw_a_note_symbol() {
     };
     // "Allegro (", a note, a dot and " = 60)" shape into one run with the note glyphs.
     assert!(run.glyphs.len() >= "Allegro(=60)".len() + 2, "{}", run.glyphs.len());
+
+    // In `\tempo 4.. = 60`, the note and both augmentation dots share the lifted baseline
+    // and keep positive horizontal gaps between the note and each dot.
+    let double_dotted = draw(r"{ \tempo 4.. = 60 c'2.. r16 }", 350.0);
+    let Some(PositionedMark { mark: Mark::Text { run: met, .. }, .. }) =
+        double_dotted.systems.iter().flat_map(|s| &s.marks).find(|m| m.mark.role() == Role::Tempo)
+    else {
+        panic!("no double-dotted tempo");
+    };
+    assert!((met.glyphs[0].y - met.glyphs[1].y).abs() < 1e-6);
+    assert!((met.glyphs[1].y - met.glyphs[2].y).abs() < 1e-6);
+    assert!(met.glyphs[0].y < -1.0, "{}", met.glyphs[0].y);
+    assert!(met.glyphs[1].x > met.glyphs[0].x + 2.0);
+    assert!(met.glyphs[2].x > met.glyphs[1].x + 1.0);
 }

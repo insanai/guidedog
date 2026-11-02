@@ -206,10 +206,14 @@ fn music_glyph(
         ctx.reserve.as_deref_mut(),
     )?;
     charge(ctx.work, outline.len().saturating_add(64))?;
-    let dy = if bounds.bottom > 0.25 * music_space { -size * 0.32 } else { 0.0 };
-    let dx = (-bounds.left).max(0.0);
+    // SMuFL centers `metAugmentationDot` on the metronome notehead's origin with zero
+    // sidebearing, so it shares the notehead's baseline lift and takes a small lead-in.
+    let met_dot = name == "metAugmentationDot";
+    let dy = if met_dot || bounds.bottom > 0.25 * music_space { -size * 0.32 } else { 0.0 };
+    let lead = if met_dot { 0.2 * music_space } else { 0.0 };
+    let dx = (-bounds.left).max(0.0) + lead;
     let placed = bounds.translated(dx, dy);
-    let advance = (dx + bounds.right).max(data.advance * music_space);
+    let advance = (dx + bounds.right).max(lead + data.advance * music_space);
     let mut glyphs = Vec::new();
     push(&mut glyphs, TextGlyph { outline, x: dx, y: dy }, ctx.reserve)?;
     Ok(TextRun {

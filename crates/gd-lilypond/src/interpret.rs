@@ -135,6 +135,12 @@ pub(crate) struct Reader<'a> {
     pub(crate) staff_contexts: usize,
     pub(crate) explicit_voices: BTreeSet<VoiceId>,
     pub(crate) pending_lyrics: Vec<crate::lyrics::PendingLyrics>,
+    /// The time signature style that `\time` uses, set by `\numericTimeSignature` and
+    /// `\defaultTimeSignature`.
+    pub(crate) meter_style: gd_score::MeterStyle,
+    /// The style of the meter that holds before any `\time`: the last style command at or
+    /// before the start of the music.
+    pub(crate) opening_meter_style: gd_score::MeterStyle,
 }
 
 impl<'a> Reader<'a> {
@@ -159,6 +165,8 @@ impl<'a> Reader<'a> {
             staff_contexts: 0,
             explicit_voices: BTreeSet::new(),
             pending_lyrics: Vec::new(),
+            meter_style: gd_score::MeterStyle::default(),
+            opening_meter_style: gd_score::MeterStyle::default(),
         }
     }
 

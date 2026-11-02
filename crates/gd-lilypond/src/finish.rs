@@ -62,7 +62,7 @@ impl Reader<'_> {
             .range(..=at)
             .next_back()
             .map(|(_, (meter, _))| meter.clone())
-            .unwrap_or_default();
+            .unwrap_or_else(|| Meter { style: self.opening_meter_style, ..Meter::default() });
         let mut number = if at < Ratio::ZERO { 0u32 } else { 1 };
         while at < end {
             self.work.take(1, Span::default())?;

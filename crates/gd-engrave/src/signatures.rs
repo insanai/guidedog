@@ -1,4 +1,4 @@
-use gd_score::{Alter, Clef, Error, Key, Meter, Step};
+use gd_score::{Alter, Clef, Error, Key, Meter, MeterStyle, Step};
 
 use crate::drawing::{Draw, Request};
 use crate::prepare::accidental;
@@ -90,6 +90,9 @@ impl Draw<'_, '_, '_, '_, '_> {
         at: Point,
         size: f64,
     ) -> Result<(), Error> {
+        if let Some(name) = meter_symbol(meter) {
+            return self.glyph(name, at.x, at.y, size, Role::Signature);
+        }
         let numerator = meter.numerator.to_string();
         let denominator = meter.denominator.to_string();
         let width = meter_width(self.fonts, meter)? * size;
@@ -133,7 +136,23 @@ pub(crate) fn cancel_width(fonts: &Fonts<'_>, old: Key, new: Key) -> Result<f64,
     Ok(count as f64 * step)
 }
 
+/// The glyph that stands for `meter`, as LilyPond's default style draws 4/4 and 2/2, or
+/// `None` when the meter is drawn as numbers.
+fn meter_symbol(meter: &Meter) -> Option<&'static str> {
+    match (meter.style, meter.numerator, meter.denominator) {
+        (MeterStyle::Symbol, 4, 4) => Some("timeSigCommon"),
+        (MeterStyle::Symbol, 2, 2) => Some("timeSigCutCommon"),
+        _ => None,
+    }
+}
+
 pub(crate) fn meter_width(fonts: &Fonts<'_>, meter: &Meter) -> Result<f64, Error> {
+    if let Some(name) = meter_symbol(meter) {
+        let data = fonts
+            .glyph_data(fonts.glyph(name)?)
+            .ok_or_else(|| crate::limits::font_error("Missing time signature geometry."))?;
+        return Ok(data.advance.max(data.bounds.right));
+    }
     let num = fonts.digits_width(&meter.numerator.to_string(), "timeSig")?;
     let den = fonts.digits_width(&meter.denominator.to_string(), "timeSig")?;
     Ok(num.max(den))

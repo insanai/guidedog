@@ -747,3 +747,19 @@ fn breathe_follows_its_note_and_needs_one() {
     let alone = read_voices(r"{ \breathe c'1 }").unwrap_err();
     assert!(alone.error.message.contains("breath mark needs"), "{}", alone.error.message);
 }
+
+#[test]
+fn time_signature_style_commands_set_the_style_of_later_meters() {
+    use gd_score::MeterStyle;
+    let styles = |source: &str| -> Vec<MeterStyle> {
+        load(source).score.measures.iter().map(|m| m.meter.style).collect()
+    };
+    assert_eq!(styles(r"{ c'1 c'1 }"), [MeterStyle::Symbol; 2]);
+    // A style command at the start styles the meter that holds before any `\time`.
+    assert_eq!(styles(r"{ \numericTimeSignature c'1 c'1 }"), [MeterStyle::Numbers; 2]);
+    // Later, a style command changes no meter by itself; the next `\time` takes it.
+    assert_eq!(
+        styles(r"{ c'1 \numericTimeSignature c'1 \time 4/4 c'1 \defaultTimeSignature c'1 }"),
+        [MeterStyle::Symbol, MeterStyle::Symbol, MeterStyle::Numbers, MeterStyle::Numbers]
+    );
+}

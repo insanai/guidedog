@@ -120,7 +120,13 @@ impl Plan {
             .filter(|s| s.kind == gd_score::SpannerKind::Tie)
             .map(|s| (s.end.event.0, s.end.note))
             .collect();
-        let mut states = vec![StaffState::default(); score.staves.len()];
+        // The first measure's meter holds before any time change; its style may differ from
+        // the default, as after `\numericTimeSignature`.
+        let opening = StaffState {
+            meter: score.measures.first().map(|m| m.meter.clone()).unwrap_or_default(),
+            ..StaffState::default()
+        };
+        let mut states = vec![opening; score.staves.len()];
         for (column_index, column) in columns.iter().enumerate() {
             charge(work, score.staves.len() + column.events.len())?;
             let measure =

@@ -54,6 +54,10 @@ impl Reader<'_> {
             "clef" | "key" | "time" | "partial" | "bar" | "break" | "noBreak" | "section"
             | "fine" => self.notation(name, cursor, state, span),
             "volta" => Err(syntax_error(span, "`\\volta` is only valid inside `\\alternative`.")),
+            "numericTimeSignature" | "defaultTimeSignature" => {
+                self.meter_style(name, state);
+                Ok(())
+            }
             _ if apply_state_toggle(name, state) => Ok(()),
             "tuplet" | "times" => self.tuplet(name, cursor, state, span, depth),
             "new" => self.context(cursor, state, span, depth),
@@ -130,7 +134,8 @@ impl Reader<'_> {
                 EventKind::Key(key)
             }
             "time" => {
-                state.meter = self.meter(cursor, span)?;
+                state.meter =
+                    gd_score::Meter { style: self.meter_style, ..self.meter(cursor, span)? };
                 EventKind::Time(state.meter.clone())
             }
             "partial" => return self.partial(cursor, state, span),
@@ -220,7 +225,21 @@ impl Reader<'_> {
         {
             return Err(syntax_error(span, "Invalid meter or beaming-group sum."));
         }
-        Ok(gd_score::Meter { numerator, denominator, beats })
+        Ok(gd_score::Meter { numerator, denominator, beats, ..gd_score::Meter::default() })
+    }
+
+    /// Sets the style of later time signatures. As in LilyPond, the style changes no meter
+    /// by itself; a style command at the start also styles the meter that holds before any
+    /// `\time`.
+    fn meter_style(&mut self, name: &str, state: &State) {
+        self.meter_style = if name == "numericTimeSignature" {
+            gd_score::MeterStyle::Numbers
+        } else {
+            gd_score::MeterStyle::Symbol
+        };
+        if state.at.main <= gd_score::Ratio::ZERO {
+            self.opening_meter_style = self.meter_style;
+        }
     }
 
     fn metadata(&mut self, name: &str, cursor: &mut Cursor<'_>, span: Span) -> Result<(), Error> {
@@ -345,7 +364,7 @@ fn apply_state_toggle(name: &str, state: &mut State) -> bool {
         "dynamicNeutral" => state.dynamic_direction = Direction::Auto,
         "autoBeamOff" => state.auto_beam = false,
         "autoBeamOn" => state.auto_beam = true,
-        "compressEmptyMeasures" | "compressFullBarRests" | "numericTimeSignature" => {}
+        "compressEmptyMeasures" | "compressFullBarRests" => {}
         _ => return false,
     }
     true

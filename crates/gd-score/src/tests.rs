@@ -110,7 +110,7 @@ fn score_validation_refuses_dangling_and_duplicate_ids() {
 fn malformed_meter_groups_fail_before_their_sum_can_overflow() {
     let mut s = score();
     s.events[0].kind =
-        EventKind::Time(Meter { numerator: 4, denominator: 4, beats: vec![u16::MAX; 100_000] });
+        EventKind::Time(Meter { beats: vec![u16::MAX; 100_000], ..Meter::default() });
     assert!(check_score(&s).is_err());
 }
 

@@ -173,7 +173,7 @@ fn every_profile_command_has_an_interpretation_example() {
             }
             "fine" | "section" => format!("c1 \\{name}"),
             "compressEmptyMeasures" | "compressFullBarRests" => format!("\\{name} R1*2"),
-            "numericTimeSignature" => r"\numericTimeSignature \time 4/4 c1".into(),
+            "numericTimeSignature" | "defaultTimeSignature" => format!("\\{name} \\time 4/4 c1"),
             "tempo" => r#"\tempo "Allegro" 4 = 120 c1"#.into(),
             "mark" | "default" => r"\mark \default c1".into(),
             "chordmode" => r"\new ChordNames \chordmode { c1:maj7 d:m7 g:7 }".into(),

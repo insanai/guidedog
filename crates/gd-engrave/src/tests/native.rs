@@ -1174,3 +1174,24 @@ fn tab_staves_print_breath_marks_above_the_top_string() {
     let before = frets.iter().filter(|fret| fret.left < commas[0].left).count();
     assert_eq!(before, 3, "{frets:?} {commas:?}");
 }
+
+#[test]
+fn common_and_cut_time_print_as_symbols_unless_numbers_are_asked_for() {
+    let signature_glyphs = |source: &str| -> Vec<String> {
+        let engraving = draw(source, 350.0);
+        engraving
+            .systems
+            .iter()
+            .flat_map(|s| &s.marks)
+            .filter_map(|m| match m.mark {
+                Mark::Glyph { glyph, role: Role::Signature, .. } => {
+                    engraving.glyphs.get(&glyph).map(|g| g.name.clone())
+                }
+                _ => None,
+            })
+            .collect()
+    };
+    assert_eq!(signature_glyphs(r"{ c'1 \time 2/2 c'1 }"), ["timeSigCommon", "timeSigCutCommon"]);
+    assert_eq!(signature_glyphs(r"{ \numericTimeSignature c'1 }"), ["timeSig4", "timeSig4"]);
+    assert_eq!(signature_glyphs(r"{ \time 3/4 c'2. }"), ["timeSig3", "timeSig4"]);
+}

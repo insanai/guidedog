@@ -130,6 +130,7 @@ pub const COMMANDS: &[Command] = &[
     Command { name: "compressEmptyMeasures", phase: 3, status: CommandStatus::Implemented },
     Command { name: "compressFullBarRests", phase: 3, status: CommandStatus::Implemented },
     Command { name: "numericTimeSignature", phase: 3, status: CommandStatus::Implemented },
+    Command { name: "defaultTimeSignature", phase: 3, status: CommandStatus::Implemented },
     Command { name: "tempo", phase: 3, status: CommandStatus::Implemented },
     Command { name: "mark", phase: 3, status: CommandStatus::Implemented },
     Command { name: "default", phase: 3, status: CommandStatus::Implemented },

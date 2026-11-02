@@ -314,12 +314,25 @@ pub struct Meter {
     pub denominator: u16,
     /// Optional explicit beaming groups, whose sum is the numerator.
     pub beats: Vec<u16>,
+    /// How the time signature is drawn.
+    pub style: MeterStyle,
 }
 
 impl Default for Meter {
     fn default() -> Self {
-        Self { numerator: 4, denominator: 4, beats: Vec::new() }
+        Self { numerator: 4, denominator: 4, beats: Vec::new(), style: MeterStyle::default() }
     }
+}
+
+/// How a time signature is drawn.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum MeterStyle {
+    /// LilyPond's default: 4/4 as the common-time C, 2/2 as the cut-time C and every other
+    /// meter as numbers.
+    #[default]
+    Symbol,
+    /// Every meter as numbers, as `\numericTimeSignature` asks.
+    Numbers,
 }
 
 /// A visible bar-line shape.

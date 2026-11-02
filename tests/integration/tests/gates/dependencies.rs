@@ -49,6 +49,7 @@ const LAYERS: &[(&str, u8)] = &[
     ("guidedoc-typst", 1),
     ("guidedoc-text", 1),
     ("guidedoc-rst-writer", 1),
+    ("guidedoc-edit", 1),
     // 2: the built-in registry and its highlighter adapter.
     ("guidedoc-defaults", 2),
     // 3: the host: files, configuration, environment, outputs, serving, translation.
@@ -97,6 +98,7 @@ const REUSABLE: &[&str] = &[
     "guidedoc-text",
     "guidedoc-rst-writer",
     "guidedoc-defaults",
+    "guidedoc-edit",
     // Libraries.
     "gd-report",
     "gd-toml",

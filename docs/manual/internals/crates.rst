@@ -72,6 +72,8 @@ The engine crates use only the standard library, so they embed wherever Rust com
    The renderers: HTML, Typst source (compiled to PDF elsewhere), plain text as Sphinx's text builder writes it, and reStructuredText that reads back into the same tree.
 ``guidedoc-defaults``
    One registry with every reader and renderer and the code highlighter: ``guidedoc_defaults::registry()``.
+``guidedoc-edit``
+   Editable source maps of reStructuredText and Markdown documents, read with the Sphinx and MyST readers, and edits that keep every untouched byte (GDS 0017). It needs the readers and ``gd-report``.
 
 .. graphviz::
    :class: graphviz-adaptive

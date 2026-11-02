@@ -55,9 +55,59 @@ impl Draw<'_, '_, '_, '_, '_> {
                     self.annotation(mark, at, space, up)?;
                     self.separate_annotations(annotation_start, first, middle, up, space)?;
                 }
+                if !tab && let EventKind::Chord(chord) = &event.kind {
+                    let at = Point { x: x + info.voice_shift * space, y: middle };
+                    self.string_numbers(request, (event, chord), at, annotation_start)?;
+                }
             }
         }
         self.lyrics(request)
+    }
+
+    /// Draws the string numbers of a chord on a standard staff as circled digits, as
+    /// LilyPond does: above the staff, or below it in a voice with downward stems.
+    /// `at` is the column's notehead origin on the middle line.
+    fn string_numbers(
+        &mut self,
+        request: &Request<'_, '_>,
+        (event, chord): (&gd_score::Event, &gd_score::Chord),
+        at: Point,
+        annotation_start: usize,
+    ) -> Result<(), Error> {
+        let space = self.options.staff_size / 4.0;
+        let up =
+            crate::voices::policy_direction(request.score, event) != gd_score::Direction::Down;
+        let mut strings: Vec<_> = chord
+            .notes
+            .iter()
+            .filter_map(|note| note.string.map(|string| (note.pitch.chromatic(), string)))
+            .collect();
+        // Each number stacks further out, so the note farthest from the staff comes last.
+        strings.sort_by_key(|&(pitch, _)| if up { pitch } else { -pitch });
+        for (_, string) in strings {
+            charge(self.work, 1)?;
+            let markup = Markup::Framed(
+                gd_score::Enclosure::Circle,
+                Box::new(Markup::Text(string.to_string())),
+            );
+            let mut ctx = crate::markup::Context {
+                fonts: self.fonts,
+                space,
+                warnings: &mut self.warnings,
+                work: self.work,
+                reserve: &mut self.options.reserve,
+            };
+            let run = crate::markup::shape(&mut ctx, &markup, 1.8 * space, TextStyle::Regular)?;
+            let width = run.bounds.right - run.bounds.left;
+            let x = at.x + 0.59 * space - width / 2.0 - run.bounds.left;
+            let y = at.y + if up { -5.0 * space } else { 5.0 * space };
+            let first = self.system.marks.len();
+            let bounds = run.bounds.translated(x, y);
+            self.add(Mark::Text { run, x, y, role: Role::Fingering }, bounds)?;
+            self.end_sign(first)?;
+            self.separate_annotations(annotation_start, first, at.y, up, space)?;
+        }
+        Ok(())
     }
 
     fn instrument_names(&mut self, request: &Request<'_, '_>, space: f64) -> Result<(), Error> {

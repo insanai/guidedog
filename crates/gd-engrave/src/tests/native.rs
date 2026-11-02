@@ -1033,17 +1033,6 @@ fn tab_ties_across_a_line_break_repeat_the_number_in_parentheses() {
     assert_eq!((plain.len(), widths.len()), (1, 1));
     assert!(widths[0] > plain[0] * 2.0, "{plain:?} {widths:?}");
 }
-#[test]
-fn metronome_marks_draw_a_note_symbol() {
-    let engraving = draw(r#"{ \tempo "Allegro" 4. = 60 c'2. }"#, 350.0);
-    let tempo =
-        engraving.systems.iter().flat_map(|s| &s.marks).find(|m| m.mark.role() == Role::Tempo);
-    let Some(PositionedMark { mark: Mark::Text { run, .. }, .. }) = tempo else {
-        panic!("no tempo text");
-    };
-    // "Allegro (", a note, a dot and " = 60)" shape into one run with the note glyphs.
-    assert!(run.glyphs.len() >= "Allegro(=60)".len() + 2, "{}", run.glyphs.len());
-}
 
 #[test]
 fn breath_marks_stand_above_the_staff_and_make_room() {
@@ -1059,4 +1048,36 @@ fn breath_marks_stand_above_the_staff_and_make_room() {
     assert!(heads[0].right < commas[0].left && commas[0].right < heads[1].left, "{heads:?}");
     let before = marks_of(&plain, &[Role::Notehead]);
     assert!(heads[1].left - heads[0].left > before[1].left - before[0].left, "{before:?}");
+}
+
+#[test]
+fn string_numbers_are_circled_on_the_staff_and_absent_from_tablature() {
+    let music = r"{ \time 4/4 e'4\2 d' c'\3 b | << { e'1\2 } \\ { c1\5 } >> | }";
+    let engraving = draw(
+        &format!(
+            r"\new StaffGroup << \new Staff {{ \clef treble_8 {music} }} \new TabStaff {music} >>"
+        ),
+        350.0,
+    );
+    let numbers = staff_marks(&engraving, 0, &[Role::Fingering]);
+    assert_eq!(numbers.len(), 4, "{numbers:?}");
+    assert!(staff_marks(&engraving, 1, &[Role::Fingering]).is_empty());
+    // The lower voice's number goes below the staff, the others above it.
+    let lines = staff_marks(&engraving, 0, &[Role::Staff]);
+    let top = lines.iter().map(|line| line.top).fold(f64::MAX, f64::min);
+    let bottom = lines.iter().map(|line| line.bottom).fold(f64::MIN, f64::max);
+    assert_eq!(numbers.iter().filter(|n| n.bottom < top).count(), 3, "{numbers:?}");
+    assert_eq!(numbers.iter().filter(|n| n.top > bottom).count(), 1, "{numbers:?}");
+}
+
+#[test]
+fn metronome_marks_draw_a_note_symbol() {
+    let engraving = draw(r#"{ \tempo "Allegro" 4. = 60 c'2. }"#, 350.0);
+    let tempo =
+        engraving.systems.iter().flat_map(|s| &s.marks).find(|m| m.mark.role() == Role::Tempo);
+    let Some(PositionedMark { mark: Mark::Text { run, .. }, .. }) = tempo else {
+        panic!("no tempo text");
+    };
+    // "Allegro (", a note, a dot and " = 60)" shape into one run with the note glyphs.
+    assert!(run.glyphs.len() >= "Allegro(=60)".len() + 2, "{}", run.glyphs.len());
 }

@@ -633,3 +633,43 @@ fn shift_commands_set_explicit_column_levels_until_a_voice_policy() {
     let shifts: Vec<_> = loaded.score.events.iter().map(|event| event.column_shift).collect();
     assert_eq!(shifts, [None, Some(0), Some(2), Some(3), None, Some(1)]);
 }
+
+#[test]
+fn tab_staves_and_string_numbers_reach_the_score() {
+    let loaded = read_voices(
+        r#"<< \new Staff { \clef "treble_8" e4 c'\2 <c\5 e\4>2 }
+             \new TabStaff { e4 c'\2 <c\5 e\4>2 } >>"#,
+    )
+    .unwrap();
+    let kinds: Vec<_> = loaded.score.staves.iter().map(|staff| staff.kind).collect();
+    assert_eq!(kinds, [gd_score::StaffKind::Standard, gd_score::StaffKind::Tablature]);
+    let strings: Vec<Vec<Option<u8>>> = loaded
+        .score
+        .events
+        .iter()
+        .filter_map(|event| match &event.kind {
+            gd_score::EventKind::Chord(chord) => {
+                Some(chord.notes.iter().map(|note| note.string).collect())
+            }
+            _ => None,
+        })
+        .collect();
+    let expected = vec![vec![None], vec![Some(2)], vec![Some(5), Some(4)]];
+    assert_eq!(strings, [expected.clone(), expected].concat());
+    // A TabVoice is a voice of the tab staff.
+    let voiced = read_voices(r"\new TabStaff << \new TabVoice { e4 } >>").unwrap();
+    assert_eq!(voiced.score.staves[0].kind, gd_score::StaffKind::Tablature);
+}
+
+#[test]
+fn tablature_refuses_ambiguous_impossible_and_unplayable_strings() {
+    let ambiguous = read_voices(r"\new TabStaff { <c e>4\2 }").unwrap_err();
+    assert!(ambiguous.error.message.contains("ambiguous"), "{}", ambiguous.error.message);
+    let seventh = read_voices(r"{ c'4\7 }").unwrap_err();
+    assert!(seventh.error.message.contains("1 through 6"), "{}", seventh.error.message);
+    let low = read_voices(r"\new TabStaff { c,4 }").unwrap_err();
+    assert!(low.error.message.contains("No free guitar string"), "{}", low.error.message);
+    assert!(low.error.span.start > 0, "{:?}", low.error.span);
+    // A standard staff may hold any pitch; only tablature needs a string for it.
+    assert!(read_voices(r"\new Staff { c,4 }").is_ok());
+}

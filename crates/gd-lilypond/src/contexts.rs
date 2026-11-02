@@ -1,5 +1,6 @@
 use gd_score::{
-    Direction, EventKind, GroupKind, Markup, Ratio, Staff, StaffGroup, StaffId, Voice, VoiceId,
+    Direction, EventKind, GroupKind, Markup, Ratio, Staff, StaffGroup, StaffId, StaffKind, Voice,
+    VoiceId,
 };
 
 use crate::cursor::Cursor;
@@ -143,10 +144,15 @@ impl Reader<'_> {
         let properties = if cursor.command("with") { Some(cursor.sequence()?) } else { None };
         let mut child = self.copy_state(state, cursor.span())?;
         match kind {
-            "Staff" => self.staff_context(&name, properties, cursor, &mut child, span, depth)?,
-            "Voice" => {
+            "Staff" | "TabStaff" => {
+                let staff_kind =
+                    if kind == "TabStaff" { StaffKind::Tablature } else { StaffKind::Standard };
+                let context = (name.as_str(), staff_kind, properties);
+                self.staff_context(context, cursor, &mut child, span, depth)?;
+            }
+            "Voice" | "TabVoice" => {
                 if let Some(properties) = properties {
-                    self.reject_with_properties(properties, "Voice")?;
+                    self.reject_with_properties(properties, kind)?;
                 }
                 self.voice_context(&name, state.voice, cursor, &mut child, span, depth)?;
             }
@@ -181,10 +187,11 @@ impl Reader<'_> {
         Ok(())
     }
 
+    /// Opens a staff of `kind` (standard notation or tablature) named `name`, with
+    /// optional `\with` properties, and reads its music.
     fn staff_context(
         &mut self,
-        name: &str,
-        properties: Option<&[SyntaxId]>,
+        (name, kind, properties): (&str, StaffKind, Option<&[SyntaxId]>),
         cursor: &mut Cursor<'_>,
         child: &mut State,
         span: Span,
@@ -193,6 +200,7 @@ impl Reader<'_> {
         let reuse = self.can_reuse_staff();
         self.staff_contexts += 1;
         let staff = if reuse { StaffId(0) } else { self.alloc_staff(span)? };
+        self.score.staves[staff.0 as usize].kind = kind;
         child.voice =
             if reuse { VoiceId(0) } else { self.new_voice(staff, "", child.at.main, span)? };
         if !name.is_empty() && self.score.voices[child.voice.0 as usize].name.is_empty() {

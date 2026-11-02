@@ -33,7 +33,23 @@ const DYNAMICS: &[&str] =
     &["pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff", "fp", "sf", "sfz", "rfz"];
 
 pub(crate) fn is_post_mark(name: &str) -> bool {
-    ARTICULATIONS.contains(&name) || DYNAMICS.contains(&name)
+    ARTICULATIONS.contains(&name) || DYNAMICS.contains(&name) || is_string_number(name)
+}
+
+/// Whether `name` is a string number command such as `\2` (a single digit).
+pub(crate) fn is_string_number(name: &str) -> bool {
+    name.len() == 1 && name.as_bytes()[0].is_ascii_digit()
+}
+
+/// The string a string-number command names, or a placed error outside 1 to 6.
+pub(crate) fn string_number(name: &str, span: Span) -> Result<u8, Error> {
+    let string = name.as_bytes()[0] - b'0';
+    if (1..=6).contains(&string) {
+        Ok(string)
+    } else {
+        Err(syntax_error(span, "A string number must be 1 through 6.")
+            .hint("Guidedog's tablature has the six strings of a guitar in standard tuning."))
+    }
 }
 
 impl Reader<'_> {
@@ -262,6 +278,10 @@ impl Reader<'_> {
             self.annotate(state, Annotation { kind, direction: Direction::Auto }, span)?;
             return Ok(true);
         }
+        if is_string_number(name) {
+            self.set_string(state, string_number(name, span)?, span)?;
+            return Ok(true);
+        }
         if DYNAMICS.contains(&name) {
             self.close_hairpin(state, span)?;
             let kind = AnnotationKind::Dynamic(name.into());
@@ -269,6 +289,22 @@ impl Reader<'_> {
             return Ok(true);
         }
         self.other_mark(name, cursor, state, span)
+    }
+
+    /// Puts the preceding single note on `string`. In a chord each note takes its own
+    /// string number inside the angle brackets, as in `<c\3 e\2>`.
+    fn set_string(&mut self, state: &State, string: u8, span: Span) -> Result<(), Error> {
+        let last =
+            state.last.ok_or_else(|| syntax_error(span, "A string number needs a note."))?;
+        let EventKind::Chord(chord) = &mut self.score.events[last.0 as usize].kind else {
+            return Err(syntax_error(span, "A string number needs a note, not a rest."));
+        };
+        let [note] = chord.notes.as_mut_slice() else {
+            return Err(syntax_error(span, "A string number after a chord is ambiguous.")
+                .hint("Write it on a note inside the chord, such as `<c\\3 e\\2>4`."));
+        };
+        note.string = Some(string);
+        Ok(())
     }
 
     fn other_mark(

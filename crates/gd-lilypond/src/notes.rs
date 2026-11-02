@@ -9,7 +9,8 @@ use crate::limits::{limit, push};
 use crate::parser::syntax_error;
 use crate::{Error, ErrorKind, ExprKind, Span, SyntaxId, TokenKind};
 
-type ChordPostfixes = (Option<(gd_score::Direction, Span)>, Vec<gd_score::Annotation>);
+/// A chord note's tie (direction and place), its marks and its string number.
+type ChordPostfixes = (Option<(gd_score::Direction, Span)>, Vec<gd_score::Annotation>, Option<u8>);
 
 impl Reader<'_> {
     pub(crate) fn raw_pitch(
@@ -31,7 +32,7 @@ impl Reader<'_> {
         }
         let forced = cursor.symbol('!');
         let cautionary = cursor.symbol('?');
-        Ok(Note { pitch, forced, cautionary })
+        Ok(Note { pitch, forced, cautionary, string: None })
     }
 
     pub(crate) fn pitch_argument(
@@ -118,7 +119,8 @@ impl Reader<'_> {
                     pitch = pitch.transpose(*from, *to).map_err(|e| e.or_at(span))?;
                 }
                 pitch.check_range().map_err(|e| e.or_at(span))?;
-                repeated.push(Note { pitch, forced: false, cautionary: false });
+                // As in LilyPond, `q` repeats the pitches without their string numbers.
+                repeated.push(Note { pitch, ..Note::default() });
             }
             repeated
         } else if matches!(word, "r" | "s" | "R") {
@@ -172,7 +174,8 @@ impl Reader<'_> {
             let raw = self.raw_pitch(word, &mut inner, state, node.span)?;
             let (note, untransposed) = self.resolve_pitch(raw, &mut inner, state, node.span)?;
             first_mode.get_or_insert(state.pitch_mode);
-            let (tie_info, extra_marks) = self.chord_postfixes(&mut inner, state)?;
+            let (tie_info, extra_marks, string) = self.chord_postfixes(&mut inner, state)?;
+            let note = Note { string, ..note };
             chord_marks.extend(extra_marks);
             if let Some((tie_dir, t_span)) = tie_info {
                 tied.push((notes.len(), tie_dir, t_span));
@@ -220,8 +223,15 @@ impl Reader<'_> {
         let mut tie_span = None;
         let mut tie_dir = state.tie_direction;
         let mut marks = Vec::new();
+        let mut string = None;
         while let Some(post) = inner.peek() {
             match &post.kind {
+                ExprKind::Atom(TokenKind::Command(name))
+                    if crate::ornaments::is_string_number(name) =>
+                {
+                    string = Some(crate::ornaments::string_number(name, post.span)?);
+                    inner.at += 1;
+                }
                 ExprKind::Atom(TokenKind::Symbol('~')) => {
                     tie_span = Some(post.span);
                     inner.at += 1;
@@ -244,7 +254,7 @@ impl Reader<'_> {
                 _ => break,
             }
         }
-        Ok((tie_span.map(|s| (tie_dir, s)), marks))
+        Ok((tie_span.map(|s| (tie_dir, s)), marks, string))
     }
 
     pub(crate) fn emit(

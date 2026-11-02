@@ -1095,3 +1095,36 @@ fn metronome_marks_draw_a_note_symbol() {
     assert!(met.glyphs[1].x > met.glyphs[0].x + 2.0);
     assert!(met.glyphs[2].x > met.glyphs[1].x + 1.0);
 }
+
+#[test]
+fn solo_tab_staves_space_outer_strings_tied_breaks_and_omit_signature_gaps() {
+    // A solo TabStaff with a wide key signature does not reserve blank signature space.
+    let c_tab = draw(r"\new TabStaff { \key c \major e4 f g a }", 350.0);
+    let b_tab = draw(r"\new TabStaff { \key b \major e4 fis gis a }", 350.0);
+    let first_c = marks_of(&c_tab, &[Role::Fret])[0].left;
+    let first_b = marks_of(&b_tab, &[Role::Fret])[0].left;
+    assert!((first_c - first_b).abs() < 0.01, "{first_c} vs {first_b}");
+
+    // Two-digit frets on string 1 and string 6 clear internal bar lines and tied breaks.
+    let outer = draw(
+        r"\new TabStaff { f4\6 e'''4\1 f4\6 e'''4\1 | e'''1~\1 \break e'''8\1 d'''8\1 r2. }",
+        350.0,
+    );
+    assert_eq!(outer.systems.len(), 2);
+    let sys0_bars = outer.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Bar);
+    let sys0_frets: Vec<_> =
+        outer.systems[0].marks.iter().filter(|m| m.mark.role() == Role::Fret).collect();
+    for bar in sys0_bars {
+        for fret in &sys0_frets {
+            let overlap =
+                fret.bounds.left < bar.bounds.right && bar.bounds.left < fret.bounds.right;
+            assert!(!overlap, "{fret:?} overlaps {bar:?}");
+        }
+    }
+    let sys1_clef =
+        outer.systems[1].marks.iter().find(|m| m.mark.role() == Role::Clef).unwrap().bounds;
+    let sys1_frets: Vec<_> =
+        outer.systems[1].marks.iter().filter(|m| m.mark.role() == Role::Fret).collect();
+    assert!(sys1_frets[0].bounds.left > sys1_clef.right);
+    assert!(sys1_frets[0].bounds.right < sys1_frets[1].bounds.left);
+}

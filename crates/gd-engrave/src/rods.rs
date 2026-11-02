@@ -100,9 +100,13 @@ fn add_column_bar_band(
         && let Some(style) = crate::bars::column_bar_style(score, columns, index, staff, work)?
     {
         let (bar_left, bar_right) = crate::bars::style_extent(style);
-        let (top, bottom) = if terminal { (-32.0, 64.0) } else { (-2.2, 2.2) };
+        let tab =
+            score.staves.get(staff).is_some_and(|s| s.kind == gd_score::StaffKind::Tablature);
+        let half = if tab { crate::tablature::HALF_HEIGHT + 0.2 } else { 2.2 };
+        let (top, bottom) = if terminal { (-32.0, 64.0) } else { (-half, half) };
         // A clef change at this bar line is drawn before it, so it needs room there.
         let clef_before = !terminal
+            && !tab
             && columns[index].events.iter().any(|id| {
                 let event = &score.events[id.0 as usize];
                 matches!(event.kind, gd_score::EventKind::Clef(_))

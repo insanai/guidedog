@@ -189,6 +189,9 @@ pub(crate) fn preface_widths(
     let indent = name_indent(score, fonts, measure == 0, options, work)?;
     for staff_index in 0..score.staves.len() {
         charge(work, 1)?;
+        if score.staves[staff_index].kind == gd_score::StaffKind::Tablature {
+            continue;
+        }
         if let Some(state) = plan.measures.get(measure).and_then(|m| m.get(staff_index)) {
             let key_w = crate::signatures::key_width(fonts, state.key)?;
             let meter_changed = measure == 0 || score.measures[measure - 1].meter != state.meter;
@@ -326,6 +329,11 @@ fn leading_ink(
                             - if head.cautionary { 0.72 * event.head_scale } else { 0.0 },
                     );
                 }
+            }
+        }
+        for fret in &event.frets {
+            if !fret.continuation || fret.at_bar {
+                left = left.min(crate::tablature::CENTER - fret.width / 2.0);
             }
         }
     }

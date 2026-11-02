@@ -17,7 +17,7 @@ pub(crate) const HALF_HEIGHT: f64 = 3.75;
 
 /// Fret numbers are centered over the middle of where a notehead would stand, so they
 /// line up with the notes of a standard staff above.
-const CENTER: f64 = 0.59;
+pub(crate) const CENTER: f64 = 0.59;
 
 /// The size of a fret number in staff spaces.
 const SIZE: f64 = 1.7;
@@ -28,8 +28,6 @@ const GRACE: f64 = 0.7;
 /// One fret number of a tab chord.
 #[derive(Clone, Debug)]
 pub(crate) struct Fret {
-    /// Note index in the chord, for ties.
-    pub(crate) note: u8,
     /// String, 1 for the highest.
     pub(crate) string: u8,
     /// Fret number.
@@ -38,6 +36,8 @@ pub(crate) struct Fret {
     pub(crate) width: f64,
     /// The note continues a tie, so the number is not repeated.
     pub(crate) continuation: bool,
+    /// The chord begins a measure after the first, where a line break prints `(fret)`.
+    pub(crate) at_bar: bool,
 }
 
 /// The vertical place of `string` in staff spaces below the middle of the staff.
@@ -48,19 +48,28 @@ pub(crate) fn string_y(string: u8) -> f64 {
 /// Fills `info` with the fret numbers of a chord on a tab staff.
 pub(crate) fn plan(
     info: &mut EventInfo,
-    (chord, grace): (&Chord, bool),
+    (chord, grace, at_bar): (&Chord, bool, bool),
+    tied: &std::collections::BTreeSet<(u32, u8)>,
     fonts: &Fonts<'_>,
     options: &mut Options<'_>,
     work: &mut usize,
 ) -> Result<(), Error> {
     charge(work, chord.notes.len())?;
+    let lookup = tied.len().checked_ilog2().unwrap_or(0) as usize + 1;
     let space = options.staff_size / 4.0;
     let positions = gd_score::tab_positions(&chord.notes)?;
     info.head_scale = if grace { GRACE } else { 1.0 };
     for (note, position) in positions.iter().enumerate() {
+        charge(work, lookup)?;
+        let continuation = tied.contains(&(info.id.0, note as u8));
+        let text = if continuation && at_bar {
+            format!("({})", position.fret)
+        } else {
+            position.fret.to_string()
+        };
         let run = crate::text::shape(
             fonts,
-            &position.fret.to_string(),
+            &text,
             SIZE * info.head_scale * space,
             TextStyle::Regular,
             &mut Vec::new(),
@@ -68,11 +77,11 @@ pub(crate) fn plan(
             &mut options.reserve,
         )?;
         let fret = Fret {
-            note: note as u8,
             string: position.string,
             fret: position.fret,
             width: (run.bounds.right - run.bounds.left) / space,
-            continuation: false,
+            continuation,
+            at_bar,
         };
         push(&mut info.frets, fret, &mut options.reserve)?;
     }
@@ -82,7 +91,7 @@ pub(crate) fn plan(
 /// The horizontal room the fret numbers of `info` need, relative to the column, for
 /// spacing: one box per number with a little air.
 pub(crate) fn boxes(info: &EventInfo) -> impl Iterator<Item = Rect> + '_ {
-    info.frets.iter().filter(|fret| !fret.continuation).map(move |fret| {
+    info.frets.iter().filter(|fret| !fret.continuation || fret.at_bar).map(move |fret| {
         let center = info.prefix + CENTER;
         let y = string_y(fret.string);
         Rect {

@@ -212,6 +212,10 @@ impl Plan {
                     let left = chord_left_ink(info, fonts)?;
                     min_left[info.staff] = min_left[info.staff].min(left);
                 }
+                for fret in info.frets.iter().filter(|f| !f.continuation) {
+                    let left = crate::tablature::CENTER - fret.width / 2.0;
+                    min_left[info.staff] = min_left[info.staff].min(left);
+                }
             }
             for id in &column.events {
                 let info = &mut self.events[id.0 as usize];
@@ -233,6 +237,7 @@ impl Plan {
         work: &mut usize,
     ) -> Result<Vec<f64>, Error> {
         let column = &columns[column_index];
+        let tab_only = score.staves.iter().all(|s| s.kind == gd_score::StaffKind::Tablature);
         let mut prefixes = vec![0.0; states.len()];
         let mut bar_left = vec![None; states.len()];
         if column_index > 0 && column_index + 1 < columns.len() {
@@ -266,7 +271,8 @@ impl Plan {
                     // Gould; elsewhere it stands before the notes it applies to.
                     match bar_left[staff] {
                         Some(left) => info.notation_x = left - CLEF_BEFORE_BAR,
-                        None => prefixes[staff] += 2.5,
+                        None if !tab_only => prefixes[staff] += 2.5,
+                        None => {}
                     }
                 }
                 EventKind::Key(key) => {
@@ -274,12 +280,16 @@ impl Plan {
                     let canceled = crate::signatures::cancel_width(fonts, state.key, *key)?;
                     state.key = *key;
                     state.remembered.clear();
-                    let printed = crate::signatures::key_width(fonts, *key)?;
-                    prefixes[staff] += canceled + printed + 0.7;
+                    if !tab_only {
+                        let printed = crate::signatures::key_width(fonts, *key)?;
+                        prefixes[staff] += canceled + printed + 0.7;
+                    }
                 }
                 EventKind::Time(meter) => {
                     state.meter = meter.clone();
-                    prefixes[staff] += crate::signatures::meter_width(fonts, meter)? + 0.8;
+                    if !tab_only {
+                        prefixes[staff] += crate::signatures::meter_width(fonts, meter)? + 0.8;
+                    }
                 }
                 _ => {}
             }
@@ -335,12 +345,9 @@ fn plan_chord(
     let lookup = tied.len().checked_ilog2().unwrap_or(0) as usize + 1;
     let id = info.id.0;
     if score.staves[info.staff].kind == gd_score::StaffKind::Tablature {
-        crate::tablature::plan(info, (chord, grace), fonts, options, work)?;
-        for fret in &mut info.frets {
-            charge(work, lookup)?;
-            fret.continuation = tied.contains(&(id, fret.note));
-        }
-        return Ok(());
+        let at_bar = state.measure > 0
+            && score.measures.get(state.measure).is_some_and(|m| m.start == event.at.main);
+        return crate::tablature::plan(info, (chord, grace, at_bar), tied, fonts, options, work);
     }
     let direction = crate::voices::direction(score, event);
     heads(info, chord, state, fonts, grace, direction, work)?;

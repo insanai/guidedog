@@ -21,6 +21,9 @@ pub(crate) fn width(
             continue;
         }
         let staff = score.voices[event.voice.0 as usize].staff.0 as usize;
+        if score.staves.get(staff).is_some_and(|s| s.kind == gd_score::StaffKind::Tablature) {
+            continue;
+        }
         let (kind, width) = match &event.kind {
             EventKind::Clef(_) => (0, 2.5),
             EventKind::Key(key) => {

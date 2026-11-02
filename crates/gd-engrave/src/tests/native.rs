@@ -1033,3 +1033,15 @@ fn tab_ties_across_a_line_break_repeat_the_number_in_parentheses() {
     assert_eq!((plain.len(), widths.len()), (1, 1));
     assert!(widths[0] > plain[0] * 2.0, "{plain:?} {widths:?}");
 }
+#[test]
+fn metronome_marks_draw_a_note_symbol() {
+    let engraving = draw(r#"{ \tempo "Allegro" 4. = 60 c'2. }"#, 350.0);
+    let tempo =
+        engraving.systems.iter().flat_map(|s| &s.marks).find(|m| m.mark.role() == Role::Tempo);
+    let Some(PositionedMark { mark: Mark::Text { run, .. }, .. }) = tempo else {
+        panic!("no tempo text");
+    };
+    // "Allegro (", a note, a dot and " = 60)" shape into one run with the note glyphs.
+    assert!(run.glyphs.len() >= "Allegro(=60)".len() + 2, "{}", run.glyphs.len());
+}
+

@@ -246,9 +246,34 @@ fn pickups_marks_and_tempo_keep_their_moments() {
     assert!(mark.score.events.iter().any(|e| {
         e.marks.iter().any(|m| matches!(&m.kind, AnnotationKind::Rehearsal(s) if s == "A"))
     }));
+    // A metronome mark is a note symbol with its dot, then the rate, as LilyPond prints it;
+    // after text, the rate stands in parentheses.
+    use gd_score::{Markup, MarkupRole};
+    let glyph = |name: &str| Markup::MusicGlyph(name.into());
     let tempo = load(r"{ \tempo 4. = 80 c'2. }");
+    let scaled = |body: Vec<Markup>| Markup::Scaled {
+        scale_percent: 80,
+        shift_percent: 0,
+        body: Box::new(Markup::Concat(body)),
+    };
+    let dotted = Markup::Concat(vec![
+        scaled(vec![glyph("metNoteQuarterUp"), glyph("metAugmentationDot")]),
+        Markup::Text(" = 80".into()),
+    ]);
     assert!(tempo.score.events[0].marks.iter().any(
-        |m| matches!(&m.kind, AnnotationKind::Tempo(s) if s.contains("4.") || s.contains("1/4."))
+        |m| matches!(&m.kind, AnnotationKind::Markup(mark, MarkupRole::Tempo) if *mark == dotted)
+    ));
+    let labelled = load(r#"{ \tempo "Allegro" 2 = 60 c'1 }"#);
+    let line = Markup::Line(vec![
+        Markup::Text("Allegro".into()),
+        Markup::Concat(vec![
+            Markup::Text("(".into()),
+            scaled(vec![glyph("metNoteHalfUp")]),
+            Markup::Text(" = 60)".into()),
+        ]),
+    ]);
+    assert!(labelled.score.events[0].marks.iter().any(
+        |m| matches!(&m.kind, AnnotationKind::Markup(mark, MarkupRole::Tempo) if *mark == line)
     ));
     let ending = load(r"{ \repeat volta 2 { c'1 } \alternative { { d'1 } { e'1 } } f'1 }");
     assert!(

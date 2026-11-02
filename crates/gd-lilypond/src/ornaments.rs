@@ -380,27 +380,18 @@ impl Reader<'_> {
             if bpm == 0 {
                 return Err(syntax_error(span, "A tempo rate must be positive."));
             }
-            let dots = ".".repeat(usize::from(duration.dots));
-            let unit = if duration.base == Base::Breve {
-                format!("breve{dots}")
-            } else {
-                format!("1/{}{dots}", duration.base.denominator())
-            };
-            Some(format!("{unit} = {bpm}"))
+            Some((duration, bpm))
         } else {
             None
         };
+        // As LilyPond prints them: a note symbol for the beat unit, and parentheses
+        // around the rate when text precedes it, as in "Allegro (quarter = 120)".
         let markup = match (label, rate) {
-            (Some(Markup::Text(mut text)), Some(rate)) => {
-                if !text.is_empty() {
-                    text.push(' ');
-                }
-                text.push_str(&rate);
-                Markup::Text(text)
+            (Some(label), Some((unit, bpm))) => {
+                Markup::Line(vec![label, metronome(unit, bpm, true)])
             }
-            (Some(label), Some(rate)) => Markup::Line(vec![label, Markup::Text(rate)]),
             (Some(label), None) => label,
-            (None, Some(rate)) => Markup::Text(rate),
+            (None, Some((unit, bpm))) => metronome(unit, bpm, false),
             (None, None) => {
                 return Err(syntax_error(span, "A tempo needs text or a metronome rate."));
             }
@@ -742,4 +733,37 @@ fn rehearsal_name(mut n: u16) -> String {
         n /= 26;
     }
     chars.into_iter().rev().collect()
+}
+
+/// The metronome part of a tempo mark: the beat unit as a note symbol with its dots, an
+/// equals sign and the rate, in parentheses after a text label.
+fn metronome(unit: gd_score::Duration, bpm: u16, after_text: bool) -> Markup {
+    let note = match unit.base {
+        Base::Breve => "metNoteDoubleWhole",
+        Base::Whole => "metNoteWhole",
+        Base::Half => "metNoteHalfUp",
+        Base::Quarter => "metNoteQuarterUp",
+        Base::Eighth => "metNote8thUp",
+        Base::Sixteenth => "metNote16thUp",
+        Base::ThirtySecond => "metNote32ndUp",
+        Base::SixtyFourth => "metNote64thUp",
+        Base::HundredTwentyEighth => "metNote128thUp",
+    };
+    let mut parts = Vec::new();
+    if after_text {
+        parts.push(Markup::Text("(".into()));
+    }
+    let mut symbol = vec![Markup::MusicGlyph(note.into())];
+    for _ in 0..unit.dots {
+        symbol.push(Markup::MusicGlyph("metAugmentationDot".into()));
+    }
+    // The note stands on the baseline with its stem near the height of capitals.
+    parts.push(Markup::Scaled {
+        scale_percent: 80,
+        shift_percent: 0,
+        body: Box::new(Markup::Concat(symbol)),
+    });
+    let close = if after_text { ")" } else { "" };
+    parts.push(Markup::Text(format!(" = {bpm}{close}")));
+    Markup::Concat(parts)
 }

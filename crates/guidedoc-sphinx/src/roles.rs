@@ -122,7 +122,7 @@ pub(crate) struct XrefParts<'x> {
 const C: XrefFlags = XrefFlags::CODE;
 
 /// Sphinx's roles without a domain.
-static CORE_ROLES: &[RoleSpec] = &[
+pub(crate) static CORE_ROLES: &[RoleSpec] = &[
     RoleSpec::xref("any", C),
     RoleSpec::xref("download", C),
     RoleSpec::xref("eq", C),

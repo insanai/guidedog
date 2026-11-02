@@ -173,7 +173,7 @@ const OPTS_MATH: &[OptSpec] = &[
 ];
 
 /// The core directives. Names with a domain live in the domains' tables.
-static CORE: &[CoreDirective] = &[
+pub(crate) static CORE: &[CoreDirective] = &[
     core("toctree", Core::Toctree, (A::None, false, C::Optional), OPTS_TOCTREE),
     core("only", Core::Only, (A::Required, true, C::Optional), &[]),
     core("ifconfig", Core::Only, (A::Required, true, C::Required), &[]),

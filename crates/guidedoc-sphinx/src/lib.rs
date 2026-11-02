@@ -20,6 +20,7 @@
 #![forbid(unsafe_code)]
 
 mod autodoc;
+mod catalog;
 mod code;
 mod config;
 mod diff;
@@ -52,6 +53,9 @@ use guidedoc::{Conformance, Fail, ReadContext, Reader, SourceSpan};
 pub use autodoc::{
     AutodocMessage, AutodocOption, AutodocProvider, AutodocRequest, AutodocResult,
     INHERITANCE_DIAGRAM,
+};
+pub use catalog::{
+    DirectiveInfo, Origin, Requirement, RoleInfo, directives, find_directive, roles,
 };
 pub use config::{Autodoc, Config, DirectiveAlias, Extlink, ObjectType, TocParents};
 pub use graphviz::{EXTENSIONS, extension_supported};

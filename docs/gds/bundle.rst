@@ -21,5 +21,6 @@ Discussion reading order
    records/0013-static-site-generation
    records/0014-typst-diagrams
    records/0015-lilypond-music
+   records/0016-guitar-tablature
 
 .. gds-generated-end

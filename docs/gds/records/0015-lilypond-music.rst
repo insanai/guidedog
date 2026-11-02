@@ -55,7 +55,7 @@ Out of scope for this record:
 
 * Running the LilyPond program, and Scheme, ``\override``, ``\tweak`` and ``\paper`` code.
 * MIDI or audio output, playback and score following.
-* Tablature, percussion staves, figured bass, cross-staff notation, ancient notation, microtones, and more than four voices on a staff.
+* Percussion staves, figured bass, cross-staff notation, ancient notation, microtones, and more than four voices on a staff. Guitar tablature, first listed here, is added by GDS 0016.
 * Inline music in a sentence (a role); see "Open questions".
 * Writing LilyPond from other formats, and reading MusicXML, MEI or ABC.
   The model admits such readers later.

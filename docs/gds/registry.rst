@@ -57,5 +57,8 @@ Discussion registry
    * - 0015
      - :doc:`records/0015-lilypond-music`
      - committed
+   * - 0016
+     - :doc:`records/0016-guitar-tablature`
+     - accepted
 
 .. gds-generated-end

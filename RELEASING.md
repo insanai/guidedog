@@ -9,7 +9,7 @@ uploaded by hand, and a published release is never changed.
   request, on Linux (x86-64) and macOS (Apple silicon): `cargo fmt --all --check`, the source limits
   (`cargo run -p check`), the data tables (`cargo xtask tables --check`), the pinned music font check
   (`cargo xtask check-music-font`), `cargo build`, `cargo clippy` with warnings as errors,
-  `cargo test --workspace`, the native music SVG/PNG/collision and fuzz corpora (`cargo run -p music-check`),
+  `cargo test --workspace` (with the theme's scripts in headless Chrome), the native music SVG/PNG/collision and fuzz corpora (`cargo run -p music-check`),
   the 1,000-article static-site benchmark, a real isolated Linux Secret Service check, the example
   programs, and the smoke tests of the built programs. Pure translation-catalog or release-guide prose
   edits skip Verify; everything read by workspace tests or release qualification runs it, and the Pages

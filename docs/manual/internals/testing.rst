@@ -81,7 +81,10 @@ Each test binary of ``tests/integration`` groups one area, and each module insid
        file that becomes a folder, unusable cached objects, truthful summaries); builds
        without Python; Sphinx project behavior (numbering, templates, ``html_context``,
        additional pages, indexes, intersphinx, math, canonical names); budgets and
-       capacity limits.
+       capacity limits; the theme's scripts in headless Chromium or Chrome, where every
+       page must finish loading and typeset its paragraphs (``GUIDEDOG_BROWSER`` names the
+       browser; without one the check is skipped, unless ``GUIDEDOG_REQUIRE_BROWSER`` is set,
+       as in CI).
    * - ``sphinx``
      - ``rst_prolog``/``rst_epilog``, ``numref``, toctrees and their numbering, ``only``,
        object descriptions in the TOC, anchors and ids as Sphinx and Docutils give them,

@@ -286,7 +286,7 @@ We write the same music for the staff and the tablature; guitar music sounds an 
 
 .. code-block:: lilypond
 
-   music = { e4 d c d | <c e g>2 c'4\2 b | }
+   music = { \time 4/4 e4 d c d | <c e g>2 c'4\2 b | }
    \new StaffGroup <<
      \new Staff { \clef "treble_8" \music }
      \new TabStaff { \music }
@@ -308,7 +308,7 @@ On the staff above, each string number prints as a circled digit over its note, 
 A note that no free string can play, such as a C below the low E string, is refused with a placed diagnostic.
 
 The tab staff shows strings, fret numbers and bar lines with a TAB clef, as LilyPond's default tablature does.
-It omits key and time signatures, stems, beams, rests, ties, slurs and scripts, which the staff above shows.
+It omits key and time signatures, stems, beams, rests, ties, slurs and scripts, which the staff above shows; a breath mark appears on both.
 A tied note is not repeated, except at the start of a line, where its fret number stands in parentheses.
 ``\new TabVoice`` holds one voice of a tab staff, and voices on a tab staff share its strings.
 Other tunings and instruments, rhythm in the tab staff and fret diagrams are outside the profile.

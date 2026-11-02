@@ -9,13 +9,14 @@ melody = \fixed c' {
   e4 d c d | e e e e | d d e d | c1 \bar "|."
 }
 
-% A second voice for the pianist's right hand, a third below the tune.
+% A second voice for the pianist's right hand, mostly a third below the tune.
 harmony = \fixed c' {
   c4 b, a, b, | c c c2 | b,4 b, b,2 | c4 e e2 |
   c4 b, a, b, | c c c c | b, b, c b, | g,1
 }
 
-% The bass: the root and fifth of each chord, two beats each.
+% The bass, two beats a note: mostly the root and fifth of each chord, with B
+% leading to the final C.
 bass = \fixed c {
   c2 g, | c2 g, | g,2 d | c2 g, |
   c2 g, | c2 g, | g,2 b, | c1

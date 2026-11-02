@@ -61,7 +61,7 @@ A vertical bar ``|`` marks the end of a bar; Guidedog checks that each bar holds
    }
 
 :numref:`songbook-tune` has eight bars.
-The tune moves mostly by step, between the neighboring notes C, D and E, and leaps once, from E up to G in bar four.
+The tune moves mostly by step, between the neighboring notes C, D and E; it leaps only in bar four, from E up to G, and back down to E at the start of bar five.
 Count the beats in bar two: ``e`` and ``e`` take one beat each, and ``e2`` takes two, which makes four.
 
 Add the words
@@ -106,7 +106,7 @@ Guidedog places the syllables under the notes of that voice in order, and puts t
 A singer breathes between phrases.
 The tune has two phrases of four bars, and ``\breathe`` after the last note of bar four prints a comma above the staff where the singer takes a breath.
 
-Hale's poem has more verses, but the next, "It followed her to school one day", has five syllables where the first bar has four notes.
+Hale's poem has more verses, but the next, "It followed her to school one day", has eight syllables where the first two bars have seven notes.
 Singers divide a note for the extra syllable; a score shows that with a different rhythm, so our songbook keeps the two verses that fit the tune as written.
 
 Name the chords
@@ -127,10 +127,10 @@ Write the piano part
 A piano part has two staves joined by a brace: ``\new PianoStaff``.
 The upper staff is for the right hand, and the lower staff, with ``\clef bass``, for the left hand.
 
-The right hand plays the tune and, below it, a second voice a third lower.
+The right hand plays the tune and, below it, a second voice, mostly a third lower.
 Two voices on one staff go inside ``<< ... >>``, separated by ``\\``.
 Guidedog draws the first voice with stems up and the second with stems down, so a player can follow each line.
-The left hand plays the bass: the root and the fifth of each chord, as half notes.
+The left hand plays the bass in half notes, mostly the root and the fifth of each chord; in bar seven it rises from G to B, which leads to the final C.
 
 .. lilypond::
    :caption: The piano part: tune and harmony in the right hand, bass in the left.
@@ -161,7 +161,7 @@ Our guitar part plays two voices on one staff, as a fingerstyle player does: the
 Under the staff we add tablature with ``\new TabStaff``.
 Its six lines are the six strings of the guitar, with the highest string at the top, and each number is the fret to press on that string; ``0`` is the open string.
 We give the tablature the same music as the staff, and Guidedog chooses the strings.
-It puts each note on the highest string that can play it, so the tune lies on the two highest strings and the bass on the two lowest, all in the first position of the left hand.
+It puts each note on the highest string that can play it, so the tune lies on the two highest strings and the bass on the three lowest, all in the first position of the left hand.
 
 .. lilypond::
    :caption: The guitar part in standard notation and tablature.
@@ -190,8 +190,7 @@ The complete score stacks the parts from top to bottom: chord names, the voice w
 To write each line of music once, we give it a name, such as ``melody = ...``, and use it with ``\melody`` wherever a part needs it.
 A line starting with ``%`` is a comment for the reader of the file.
 ``\tempo "Moderato" 4 = 100`` above the voice asks for a moderate pace of 100 quarter-note beats a minute; Guidedog prints the word with a note symbol and the rate in parentheses.
-The breath mark is part of the tune, so the piano and guitar staves show it too: the players lift at the end of the phrase with the singer.
-The tablature leaves it out.
+The breath mark is part of the tune, so the piano and guitar staves and the tablature show it too: the players lift at the end of the phrase with the singer.
 We save the score as ``scores/mary-had-a-little-lamb.ly``:
 
 .. literalinclude:: scores/mary-had-a-little-lamb.ly

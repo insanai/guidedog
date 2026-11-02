@@ -8,9 +8,9 @@ MyST reader build on. Inline markup and resolution are `guidedoc-rst-inline`.
 
 ```toml
 [dependencies]
-guidedoc-rst = "1.0.0-beta.9"
-guidedoc = "1.0.0-beta.9"
-guidedoc-html = "1.0.0-beta.9"
+guidedoc-rst = "1.0.0-beta.10"
+guidedoc = "1.0.0-beta.10"
+guidedoc-html = "1.0.0-beta.10"
 ```
 
 We convert reStructuredText to HTML:

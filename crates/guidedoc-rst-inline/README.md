@@ -10,8 +10,8 @@ inline context, and calls `resolve` once when the document is parsed. Sphinx
 
 ```toml
 [dependencies]
-guidedoc-rst-inline = "1.0.0-beta.9"
-guidedoc = "1.0.0-beta.9"
+guidedoc-rst-inline = "1.0.0-beta.10"
+guidedoc = "1.0.0-beta.10"
 ```
 
 A reader parses the inline markup of a paragraph it has opened, then resolves references once per document:

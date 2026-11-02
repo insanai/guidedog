@@ -62,6 +62,16 @@ fn allowed(a: &PositionedMark, b: &PositionedMark) -> bool {
         return line_starts(a, b).is_some_and(|(p, q)| (p.x - q.x).abs() < 0.01);
     }
     if matches!(ra, Bar) || matches!(rb, Bar) {
+        // A group's bracket hooks cross the system's opening line where the group starts
+        // inside the system, as engraved scores draw them; group glyphs are the only
+        // instrument marks drawn as glyphs, so names, which are text, still may not.
+        let (bar, other) = if ra == Bar { (a, b) } else { (b, a) };
+        if other.mark.role() == Instrument
+            && matches!(bar.mark, Mark::Line { .. })
+            && matches!(other.mark, Mark::Glyph { .. })
+        {
+            return true;
+        }
         // Spanners legitimately cross bar lines; text and names never touch them.
         return matches!(
             (ra, rb),

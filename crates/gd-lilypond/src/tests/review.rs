@@ -673,3 +673,42 @@ fn tablature_refuses_ambiguous_impossible_and_unplayable_strings() {
     // A standard staff may hold any pitch; only tablature needs a string for it.
     assert!(read_voices(r"\new Staff { c,4 }").is_ok());
 }
+
+#[test]
+fn songbook_lesson_keeps_the_tune_verses_and_parts() {
+    let source = include_str!("../../../../docs/manual/howto/scores/mary-had-a-little-lamb.ly");
+    // The music corpus engraves the same file, so the lesson's score is qualified too.
+    let corpus =
+        include_str!("../../../../tests/integration/data/music/65-mary-had-a-little-lamb.ly");
+    assert_eq!(source, corpus, "copy the manual's score to the music corpus");
+    let loaded = load(source);
+    assert!(loaded.warnings.is_empty(), "{:?}", loaded.warnings);
+    assert_eq!(loaded.score.measures.len(), 8);
+    use gd_score::StaffKind::{Standard, Tablature};
+    let kinds: Vec<_> = loaded.score.staves.iter().map(|staff| staff.kind).collect();
+    assert_eq!(kinds, [Standard, Standard, Standard, Standard, Tablature]);
+    // The vocal staff carries the tune: 26 notes, 32 beats, in the tune's rhythm.
+    let tune: Vec<_> = loaded
+        .score
+        .events
+        .iter()
+        .filter(|event| loaded.score.voices[event.voice.0 as usize].staff.0 == 0)
+        .filter_map(|event| match &event.kind {
+            EventKind::Chord(chord) => {
+                Some((chord.notes[0].pitch, chord.duration.time().unwrap()))
+            }
+            _ => None,
+        })
+        .collect();
+    use gd_score::Step::{C, D, E, G};
+    let pitches = [E, D, C, D, E, E, E, D, D, D, E, G, G, E, D, C, D, E, E, E, E, D, D, E, D, C];
+    assert_eq!(tune.iter().map(|(pitch, _)| pitch.step).collect::<Vec<_>>(), pitches);
+    let beats: gd_score::Ratio =
+        tune.iter().fold(gd_score::Ratio::ZERO, |sum, (_, time)| sum.checked_add(*time).unwrap());
+    assert_eq!(beats, gd_score::Ratio::new(8, 1).unwrap());
+    // Each verse has one syllable for every note of the tune.
+    assert_eq!(loaded.score.lyrics.len(), 2);
+    for verse in &loaded.score.lyrics {
+        assert_eq!(verse.syllables.len(), pitches.len());
+    }
+}

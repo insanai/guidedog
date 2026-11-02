@@ -220,7 +220,7 @@ A file holds at most one ``\score`` block or one top-level music expression.
      - ``\repeat volta n`` with ``\alternative`` and ``\volta`` pass lists, ``\fine`` and ``\section``, drawn with repeat bar lines and volta brackets; ``\repeat unfold n``, expanded within limits; ``\compressEmptyMeasures`` and ``\compressFullBarRests``
      -
    * - 3
-     - ``\tempo``, ``\mark \default``, ``\mark "text"`` and ``\mark \markup ...``
+     - ``\tempo`` with text, a metronome mark printed with a SMuFL note symbol, or both (``Allegro (quarter note = 120)``), ``\mark \default``, ``\mark "text"`` and ``\mark \markup ...``; ``\breathe``
      -
    * - 3
      - ``\chords`` and ``\new ChordNames`` with ``\chordmode`` chord names in common jazz spelling
@@ -1380,3 +1380,14 @@ The four-voice review left four items open, now closed:
   The breaking property test still matches a brute-force optimum.
 * Critique: catalogs kept obsolete messages.
   Revision: the manual and site catalogs were updated with ``--no-obsolete``; their live translations are unchanged.
+
+Gap follow-up, 2 November 2026
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The maintainer asked to close three gaps found while writing the songbook task:
+
+* Critique: metronome marks printed their beat unit as text, such as ``1/4 = 120``.
+  Revision: the unit is a SMuFL metronome note with its dots, scaled beside the text, and the rate follows in parentheses after a label, as LilyPond prints ``\tempo "Allegro" 4 = 120``.
+* Critique: ``\breathe`` was outside the profile, though vocal music needs it.
+  Revision: a breath mark prints as a comma just above the staff after its note and takes its own room in the spacing; without a preceding note it is refused with a placed diagnostic.
+* Critique: string numbers chose tablature strings but did not print on standard staves; GDS 0016 records their circled digits.

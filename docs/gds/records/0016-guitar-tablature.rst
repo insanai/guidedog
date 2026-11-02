@@ -49,7 +49,7 @@ Placement fails, with a placed diagnostic, when a string number is outside 1 to 
 A string number follows a note (``c'4\2``) or a note inside a chord (``<c\5 e\4>2``).
 A string number after a whole chord is refused as ambiguous, with a hint to move it inside the angle brackets.
 ``q`` repeats a chord's pitches without their string numbers.
-On a standard staff a string number is read and kept but not drawn.
+On a standard staff a string number prints as a circled digit, as LilyPond prints it: above the staff, or below it in a voice with downward stems, stacked outward from the staff.
 
 *Engraving.*
 A tab staff has six lines a staff space and a half apart, a TAB clef scaled to the staff, and bar lines and repeat dots at its height.
@@ -97,13 +97,13 @@ Implemented for 1.0.0-beta.10 and awaiting release review:
 Open questions
 --------------
 
-LilyPond prints string numbers on a standard staff as circled digits; we read them but do not yet draw them there.
-Other tunings, ``\tabFullNotation`` and breath marks for the vocal staff are candidates for later revisions.
+Other tunings and ``\tabFullNotation`` are candidates for later revisions.
 
 Review history
 --------------
 
 On 2 November 2026 the maintainer asked for tablature beside the piano and vocal parts of a songbook chapter; this record proposes it and records the implementation.
+The same day the maintainer asked to close the gaps the first implementation left: string numbers now print as circled digits on standard staves, and GDS 0015's profile gains breath marks and metronome marks with note symbols.
 
 References
 ----------

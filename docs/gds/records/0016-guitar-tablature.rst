@@ -1,6 +1,6 @@
 :gds-number: 0016
 :gds-title: Guitar tablature
-:gds-state: accepted
+:gds-state: committed
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-11-02
@@ -85,7 +85,9 @@ Existing scores engrave as before; every staff defaults to ``StaffKind::Standard
 Acceptance criteria and implementation status
 ---------------------------------------------
 
-Implemented for 1.0.0-beta.10 and awaiting release review:
+Implemented and published in Guidedog 1.0.0-beta.10.
+The qualification record is :doc:`../evidence/guitar-tablature-20261102`.
+The implementation provides:
 
 * Placement unit tests, including an open C major chord, named strings and every refusal.
 * Reader tests for ``TabStaff``, ``TabVoice``, string numbers and diagnostics.
@@ -105,6 +107,7 @@ Review history
 On 2 November 2026 the maintainer asked for tablature beside the piano and vocal parts of a songbook chapter; this record proposes it and records the implementation.
 The same day the maintainer asked to close the gaps the first implementation left: string numbers now print as circled digits on standard staves, and GDS 0015's profile gains breath marks and metronome marks with note symbols.
 Checking the songbook against LilyPond 2.24 then showed two more differences from LilyPond's defaults, and GDS 0015 now follows them: 4/4 prints as C and 2/2 as cut C, and chord names raise their extensions, as in G with a raised 7.
+The implementation review, the LilyPond comparison and the published release's checks are recorded in :doc:`../evidence/guitar-tablature-20261102`.
 
 References
 ----------
@@ -127,3 +130,13 @@ References
    2026-11-02: discussion -> accepted. The maintainer asked for tablature beside
    the piano and vocal parts of a songbook; the design follows LilyPond's
    default tablature and is implemented, awaiting release review.
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-11-02: accepted -> committed. Implemented, reviewed against LilyPond
+   2.24.4 and published in Guidedog 1.0.0-beta.10.
+   docs/gds/evidence/guitar-tablature-20261102.rst; corpus scores 64-66 checked
+   for geometry, collisions, SVG and PNG; tablature fuzz seeds in 12000 cases;
+   Verify, release and Homebrew runs for v1.0.0-beta.10.

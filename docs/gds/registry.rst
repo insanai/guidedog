@@ -59,6 +59,6 @@ Discussion registry
      - committed
    * - 0016
      - :doc:`records/0016-guitar-tablature`
-     - accepted
+     - committed
 
 .. gds-generated-end

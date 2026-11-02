@@ -15,10 +15,14 @@ struct TempDir(PathBuf);
 
 impl TempDir {
     fn new(name: &str) -> TempDir {
+        // Tests run in parallel, and macOS clocks advance in microseconds, so two tests can
+        // read the same time; the counter keeps their folders apart.
+        static NEXT: AtomicUsize = AtomicUsize::new(0);
+        let count = NEXT.fetch_add(1, Ordering::Relaxed);
         let nanos =
             SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).map_or(0, |d| d.as_nanos());
-        let path =
-            std::env::temp_dir().join(format!("gd-serve-{name}-{}-{nanos}", std::process::id()));
+        let pid = std::process::id();
+        let path = std::env::temp_dir().join(format!("gd-serve-{name}-{pid}-{count}-{nanos}"));
         fs::create_dir_all(&path).expect("create temp dir");
         TempDir(path)
     }

@@ -11,8 +11,8 @@ pub(crate) fn check(root: &Path, update: bool) -> Result<(), String> {
         .filter(|p| p.extension().is_some_and(|e| e == "ly"))
         .collect();
     sources.sort();
-    if sources.len() < 63 {
-        return Err("The reference corpus needs at least sixty-three scores.".into());
+    if sources.len() < 64 {
+        return Err("The reference corpus needs at least sixty-four scores.".into());
     }
     let data = crate::fonts::load(root)?;
     let fonts = data.fonts()?;

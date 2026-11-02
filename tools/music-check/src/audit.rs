@@ -161,10 +161,16 @@ pub(crate) fn quants(drawing: &Engraving) -> Result<(), String> {
                     }
                 })
                 .collect();
-            if staff_lines.len() != 5 {
-                return Err("A staff must have five lines.".into());
-            }
             staff_lines.sort_by(f64::total_cmp);
+            // Tab string lines break around fret numbers, so count distinct heights.
+            staff_lines.dedup_by(|a, b| (*a - *b).abs() < 0.01);
+            if staff_lines.len() == 6 {
+                // A tab staff has no ties or beams to check.
+                continue;
+            }
+            if staff_lines.len() != 5 {
+                return Err("A staff must have five lines, or six for tablature.".into());
+            }
             let space = (staff_lines[4] - staff_lines[0]) / 4.0;
             let middle = staff_lines.iter().sum::<f64>() / 5.0;
             if let Mark::Curve { outer, role: Role::Tie, .. } = mark.mark {

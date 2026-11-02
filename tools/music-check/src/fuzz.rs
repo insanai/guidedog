@@ -9,6 +9,10 @@ const SEEDS: &[&str] = &[
     r"<< { c'4 } \\ { c'4 } \\ { cis'4 } \\ { d'4 } >>",
     r"x = { \x } \x",
     r"{ \repeat unfold 999999999 { c'128 } }",
+    r"\new TabStaff { e4 c'\2 <c\5 e\4 g>2~ <c e g>1 }",
+    r"<< \new Staff { c'8( d' e'4-. r2\p) } \new TabStaff { c'8( d' e'4-. r2\p) } >>",
+    r"\new TabStaff << { e'2 d' } \\ { c2 g, } >>",
+    r"\new TabStaff { \grace a16 b4 \tuplet 3/2 { c'8 d' e' } c,4 }",
 ];
 
 pub(crate) fn check(root: &std::path::Path, count: usize) -> Result<(), String> {

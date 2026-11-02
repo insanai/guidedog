@@ -8,7 +8,7 @@ partial and macro, and a modular PDF template. It needs no plugin or compiler.
 1. Start with a real project
 ----------------------------
 
-Use Guidedog 1.0.0-beta.10 or newer. Run this from the directory that will contain ``orbit``:
+Use Guidedog 1.0.0-beta.9 or newer. Run this from the directory that will contain ``orbit``:
 
 .. code-block:: sh
 

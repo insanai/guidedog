@@ -5,7 +5,7 @@ Guidedog follows [Semantic Versioning](https://semver.org). The version lives in
 inherits; `guidedog --version` reports it, with the Guidedoc engine and document schema
 beside it.
 
-## 1.0.0-beta.10 - 2026-11-02
+## 1.0.0-beta.9 - 2026-11-02
 
 - Add native LilyPond notation in RST and MyST, with outlined Bravura SVG or PNG assets, figure references, narrow HTML layouts and PDF system breaks. Up to four voices sound together on a staff, with local voice policies, `\shiftOn` and its relatives, note-column separation, mixed-rest placement and stacked dynamics. Every manual edition teaches a four-bar Beethoven melody.
 - Read LilyPond 2.24 `\markup` in scripts, tempo and rehearsal marks and instrument names, including staff-group names, and refuse Scheme, layout and embedded-score markup with placed diagnostics.
@@ -13,7 +13,7 @@ beside it.
 - Format localized musical key signatures and measure summaries natively across all nine UI languages, emit SVG `<title>` and `<desc>` accessibility elements on score images, add Hindi and Korean CLDR date names, complete the embedded UI catalogs, and review all six translated manuals and site editions.
 - Charge `gd-engrave`'s temporary layout buffers through `Options::scratch`, which reserves before each allocation and releases afterwards, so the build's memory budget sees them without counting them twice.
 - `guidedog intl update` and `intl stat` skip hidden staging folders, such as an interrupted build's `.templates.next`, instead of treating their catalogs as real ones.
-- Fix `_static/typography.js` freezing pages. The hyphenator's exception words were edited in place, so a word such as "project" repeated with punctuation made the line breaker loop forever. Paragraphs are now measured together and then rewritten, instead of forcing a full page layout for each one, so long API pages typeset in about a second rather than many. Projects created by `quickstart`, `ssg init` or `dsc init` own a copy of the script; replace it with the new built-in file. 1.0.0-beta.9 was tagged but not published because of this bug.
+- Fix `_static/typography.js` freezing pages. The hyphenator's exception words were edited in place, so a word such as "project" repeated with punctuation made the line breaker loop forever. Paragraphs are now measured together and then rewritten, instead of forcing a full page layout for each one, so long API pages typeset in about a second rather than many. Projects created by `quickstart`, `ssg init` or `dsc init` own a copy of the script; replace it with the new built-in file.
 
 ## 1.0.0-beta.8 - 2026-10-31
 

@@ -7,7 +7,7 @@ Standard library only.
 
 ```toml
 [dependencies]
-gd-sha = "1.0.0-beta.10"
+gd-sha = "1.0.0-beta.9"
 ```
 
 We hash bytes in one call, or stream them through `io::Write` (a file goes through `io::copy` without being loaded whole):

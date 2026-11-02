@@ -1,15 +1,15 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.10 adds native LilyPond music engraving, translated score accessibility and multilingual documentation updates.
+Version 1.0.0-beta.9 adds native LilyPond music engraving, translated score accessibility and multilingual documentation updates.
 
 - **Native LilyPond notation.** Write `lilypond` directives in RST or MyST, inline or from a `.ly` file, without installing LilyPond. Guidedog's in-process reader (`gd-lilypond`), rational score model (`gd-score`) and native engraver (`gd-engrave`) produce outlined SVG or PNG assets with embedded Bravura 1.482 glyphs, numbered figure references, adaptive dark-mode web figures and multi-system PDF page breaks.
 - **Polyphony and markup.** Up to four voices sound together on a staff, with local voice policies, `\shiftOn` and its relatives, note-column separation, mixed-rest placement and stacked dynamics. LilyPond 2.24 `\markup` works in scripts, tempo and rehearsal marks and instrument or staff-group names; Scheme, layout and embedded-score markup are refused with placed diagnostics.
 - **Accessible and localized output.** Score SVGs carry `<title>` and `<desc>` elements alongside localized musical summaries and native key-signature orthography across all nine built-in UI languages. `guidedog convert` names an unengraved LilyPond score file in a sentence, `--lang` translates Guidedog's own labels in HTML and PDF output, and built-in CLDR date formatting now covers Hindi and Korean alongside the other seven UI languages.
 - **Bounded memory and trust.** Temporary layout buffers in `gd-engrave` reserve and release against `Options::scratch` so build budgets account for score layout accurately. Untrusted builds engrave inline notation in process while refusing external `.ly` files and `\include`.
-- **Responsive web typography.** `_static/typography.js` no longer freezes a page: repeated hyphenation exception words such as "project" made its line breaker loop forever, and long pages forced a full layout per paragraph. Projects created by `quickstart`, `ssg init` or `dsc init` keep their own copy of the script, so replace it with the new built-in file. Version 1.0.0-beta.9 was tagged but never published because of this bug.
+- **Responsive web typography.** `_static/typography.js` no longer freezes a page: repeated hyphenation exception words such as "project" made its line breaker loop forever, and long pages forced a full layout per paragraph. Projects created by `quickstart`, `ssg init` or `dsc init` keep their own copy of the script, so replace it with the new built-in file.
 - **Documentation and translations.** Every manual edition teaches a four-bar Beethoven melody in the music chapter, and all six translated manuals, website editions and README files have been reviewed for native idiom and terminology. GDS 0015 records the accepted design and qualification evidence.
 
-The [music chapter](https://insanai.github.io/guidedog/manual/topics/music.html), [Beethoven Joy theme lesson](https://insanai.github.io/guidedog/manual/topics/music.html#learn-from-beethoven-s-joy-theme), [GDS 0015](https://insanai.github.io/guidedog/discussions/records/0015-lilypond-music.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.10/CHANGELOG.md) describe the behavior and limits.
+The [music chapter](https://insanai.github.io/guidedog/manual/topics/music.html), [Beethoven Joy theme lesson](https://insanai.github.io/guidedog/manual/topics/music.html#learn-from-beethoven-s-joy-theme), [GDS 0015](https://insanai.github.io/guidedog/discussions/records/0015-lilypond-music.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.9/CHANGELOG.md) describe the behavior and limits.
 
 ## Downloads
 
@@ -20,7 +20,7 @@ The [music chapter](https://insanai.github.io/guidedog/manual/topics/music.html)
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.10-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.9-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

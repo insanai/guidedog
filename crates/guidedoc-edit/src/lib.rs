@@ -1,37 +1,60 @@
-//! Editable source maps for reStructuredText and Markdown.
+//! Editable source maps and source-preserving edits for reStructuredText and Markdown.
 //!
 //! [`load_source_map`] reads one document with Guidedog's own readers (reStructuredText
 //! with the Sphinx layer, Markdown as MyST) and returns a tree of blocks: each block has
 //! a stable [`BlockKind`], the byte span of its whole markup, the spans of the text an
 //! author edits (without markup), the parts of a directive, and its children.
+//! [`apply_operation`] turns an [`Operation`], such as replacing a paragraph's text or
+//! moving a block, into minimal [`TextEdit`]s that leave every other byte untouched; it
+//! reads the result again and refuses an edit that would change the document's
+//! structure in any way the operation does not intend.
 //!
 //! ```
-//! use guidedoc_edit::{BlockKind, Format, MapOptions, load_source_map};
+//! use guidedoc_edit::{
+//!     BlockKind, Format, MapOptions, Operation, apply_operation, load_source_map,
+//! };
 //!
 //! let text = "Title\n=====\n\nSome *old* text.\n";
-//! let map = load_source_map(text, &MapOptions::new(Format::Rst));
+//! let options = MapOptions::new(Format::Rst);
+//! let map = load_source_map(text, &options);
 //! let para = map.find(BlockKind::Paragraph).unwrap();
 //! assert_eq!(map.content_text(para, text), "Some *old* text.");
+//! let op = Operation::ReplaceText { block: para, text: "New text." };
+//! let edit = apply_operation(text, &options, &op).unwrap();
+//! assert_eq!(edit.text, "Title\n=====\n\nNew text.\n");
 //! ```
 
 #![forbid(unsafe_code)]
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
+mod edit;
+mod error;
 mod gaps;
+mod items;
+mod json;
 mod lines;
 mod map;
+mod ops;
+mod options;
 mod parts;
+mod shape;
 mod walk;
 
 #[cfg(test)]
 mod tests;
 
+pub use edit::{
+    EditResult, Operation, OperationKind, Position, TextEdit, apply_edits, apply_operation,
+    block_operations, operations,
+};
+pub use error::EditError;
+pub use json::write_source_map_json;
 pub use map::{
     Block, BlockId, BlockKind, DirectiveParts, OptionParts, SourceMap, load_source_map,
 };
 
-/// The version of the source map's structure; it changes when a field or a kind changes
-/// meaning.
+/// The version of the source map's structure and of its JSON form
+/// ([`write_source_map_json`]); it changes when a field or a kind changes meaning.
 pub const SOURCE_MAP_VERSION: u32 = 1;
 
 /// The most blocks a map lists by default; a longer document maps its first blocks and

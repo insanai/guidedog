@@ -183,6 +183,23 @@ fn configuration_decides_directive_rules() {
 }
 
 #[test]
+fn json_lists_blocks_with_operations() {
+    let text = "Para.\n\n.. note::\n   :class: x\n\n   Inside.\n";
+    let map = map_of(Format::Rst, text);
+    let mut out = String::new();
+    write_source_map_json(&map, text, &mut out);
+    let value = gd_json::parse(&out).unwrap();
+    let blocks = value.get("blocks").and_then(|b| b.as_array()).unwrap();
+    assert_eq!(blocks.len(), 3);
+    assert_eq!(blocks[0].get("kind").and_then(|k| k.as_str()), Some("paragraph"));
+    let ops = blocks[0].get("operations").and_then(|o| o.as_array()).unwrap();
+    assert_eq!(ops[0].as_str(), Some("replace-text"));
+    let directive = blocks[1].get("directive").unwrap();
+    assert_eq!(directive.get("name").and_then(|n| n.as_str()), Some("note"));
+    assert!(out.contains("\"set-option\""), "{out}");
+}
+
+#[test]
 fn every_kind_has_a_stable_name() {
     for kind in BlockKind::ALL {
         assert_eq!(BlockKind::from_name(kind.name()), Some(kind));

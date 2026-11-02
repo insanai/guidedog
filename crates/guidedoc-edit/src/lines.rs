@@ -68,6 +68,22 @@ pub(crate) fn trim_end(text: &str, span: Span) -> Span {
     Span { start: span.start, end: span.start + kept.len() }
 }
 
+/// The offset after the line breaks and blank lines that follow `at`, stopping at the
+/// start of the next non-blank line (or the text's end).
+pub(crate) fn skip_blank_lines(text: &str, at: usize) -> usize {
+    let mut at = next_line(text, at);
+    while at < text.len() && is_blank(line_at(text, at)) {
+        at = next_line(text, at);
+    }
+    at
+}
+
+/// `prefix` with every character but white space (and `>` in Markdown quotes) turned
+/// into a space: the indentation that continues a block started after `prefix`.
+pub(crate) fn continuation(prefix: &str, keep_quotes: bool) -> String {
+    prefix.chars().map(|c| if c == '\t' || (keep_quotes && c == '>') { c } else { ' ' }).collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -79,7 +95,10 @@ mod tests {
         assert_eq!(line_end_trimmed(text, 6), 9);
         assert_eq!(line_at(text, 5), "  two");
         assert_eq!(previous_line(text, 6), Some(0));
+        assert_eq!(skip_blank_lines(text, 5), 12);
         assert_eq!(line_starts(text, Span { start: 1, end: 13 }), vec![0, 4, 11, 12]);
         assert_eq!(indent_of("  \tx"), 3);
+        assert_eq!(continuation("> - ", true), ">   ");
+        assert_eq!(continuation("#. ", false), "   ");
     }
 }
